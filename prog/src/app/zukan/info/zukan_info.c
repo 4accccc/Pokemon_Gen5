@@ -38,7 +38,7 @@
 #include "msg/msg_zkn.h"
 #include "msg/msg_zkn_type.h"
 #include "msg/msg_zkn_height.h"
-#include "msg/msg_zkn_gram.h"
+#include "msg/msg_zkn_weight.h"
 #include "msg/msg_zkn_comment_00.h"
 
 // zukan_info
@@ -879,7 +879,7 @@ static void Zukan_Info_CreateMessage( ZUKAN_INFO_WORK* work )
   msgdata_common = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_zkn_dat, work->heap_id );
   msgdata_kind = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_zkn_type_dat, work->heap_id );
   msgdata_height = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_zkn_height_dat, work->heap_id );
-  msgdata_weight = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_zkn_gram_dat, work->heap_id );
+  msgdata_weight = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_zkn_weight_dat, work->heap_id );
   msgdata_explain = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_zkn_comment_00_dat, work->heap_id );
 
   GFL_ARC_UTIL_TransVramPalette( ARCID_FONT, NARC_font_default_nclr, paltype,
@@ -933,7 +933,7 @@ static void Zukan_Info_CreateMessage( ZUKAN_INFO_WORK* work )
 
     // 例：ねずみポケモン
     Zukan_Info_DrawStr( work->heap_id, work->bmpwin[ZUKAN_INFO_MSG_NAME], msgdata_kind, work->print_que, work->font,
-                        ZKN_TYPE_000 + work->monsno_msg, 16, 23, PRINTSYS_LSB_Make(1,2,0), ZUKAN_INFO_ALIGN_LEFT, NULL );
+                        ZKN_TYPE_000 + work->monsno, 16, 23, PRINTSYS_LSB_Make(1,2,0), ZUKAN_INFO_ALIGN_LEFT, NULL );
     
     // たかさ
     Zukan_Info_DrawStr( work->heap_id, work->bmpwin[ZUKAN_INFO_MSG_PHYSICAL], msgdata_common, work->print_que, work->font,
@@ -945,15 +945,15 @@ static void Zukan_Info_CreateMessage( ZUKAN_INFO_WORK* work )
     
     // ？？？.？m  // 左上指定なら(40, 4)  // mとkgで小数点が揃うように
     Zukan_Info_DrawStr( work->heap_id, work->bmpwin[ZUKAN_INFO_MSG_PHYSICAL], msgdata_height, work->print_que, work->font,
-                        ZKN_HEIGHT_000 + work->monsno_msg, 94, 4, PRINTSYS_LSB_Make(1,2,0), ZUKAN_INFO_ALIGN_RIGHT, NULL );
+                        ZKN_HEIGHT_000_000 + work->monsno, 94, 4, PRINTSYS_LSB_Make(1,2,0), ZUKAN_INFO_ALIGN_RIGHT, NULL );
     
     // ？？？.？kg  // 左上指定なら(40,20)
     Zukan_Info_DrawStr( work->heap_id, work->bmpwin[ZUKAN_INFO_MSG_PHYSICAL], msgdata_weight, work->print_que, work->font,
-                        ZKN_GRAM_000 + work->monsno_msg, 100, 20, PRINTSYS_LSB_Make(1,2,0), ZUKAN_INFO_ALIGN_RIGHT, NULL );
+                        ZKN_WEIGHT_000_000 + work->monsno, 100, 20, PRINTSYS_LSB_Make(1,2,0), ZUKAN_INFO_ALIGN_RIGHT, NULL );
     
     // 例：かたい　きのみも　でんげきで
     Zukan_Info_DrawStr( work->heap_id, work->bmpwin[ZUKAN_INFO_MSG_EXPLAIN], msgdata_explain, work->print_que, work->font,
-                        ZKN_COMMENT_00_000 + work->monsno_msg, 4, 5, PRINTSYS_LSB_Make(0xF,2,0), ZUKAN_INFO_ALIGN_LEFT, NULL );      
+                        ZKN_COMMENT_00_000_000 + work->monsno, 4, 5, PRINTSYS_LSB_Make(0xF,2,0), ZUKAN_INFO_ALIGN_LEFT, NULL );      
     
     for( i=0; i<ZUKAN_INFO_MSG_MAX; i++ )
     {

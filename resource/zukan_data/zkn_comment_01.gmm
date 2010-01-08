@@ -1,0 +1,3993 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<?xml-stylesheet type="text/xsl" href="" ?>
+
+<gmml version="4.5">
+
+<head>
+	<create user="taya" host="W00146" date="2009-12-01T12:04:09"/>
+	<generator name="MessageEditor" version="4.9.2.5"/>
+</head>
+
+<body language="japanese">
+	<color>
+		<list entry="0" r="00" g="00" b="00" a="FF"/>
+		<list entry="1" r="FF" g="00" b="00" a="FF"/>
+		<list entry="2" r="00" g="00" b="FF" a="FF"/>
+		<list entry="3" r="00" g="8C" b="00" a="FF"/>
+	</color>
+
+	<tag-table>
+		<group entry="0" japanese="タググループ" english="タググループ">
+		</group>
+
+		<group entry="1" japanese="ポケモンＷＢ（単語）" english="PokemonDP" color="#c0c0c0">
+			<tag entry="00" japanese="トレーナー名" english="トレーナー名" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="01" japanese="ポケモン種族名" english="ポケモン種族名" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ポケモンの名前。
+ピカチュウとかフシギダネとか。</comment>
+				<comment language="english">ポケモンの名前。
+ピカチュウとかフシギダネとか。</comment>
+			</tag>
+			<tag entry="02" japanese="ポケモンニックネーム" english="ポケモンニックネーム" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ポケモンのニックネーム</comment>
+				<comment language="english">ポケモンのニックネーム</comment>
+			</tag>
+			<tag entry="03" japanese="ポケモンタイプ" english="ポケモンタイプ" view="EP" width="48" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">みず、くさ、ほのお…とか。</comment>
+				<comment language="english">みず、くさ、ほのお…とか。</comment>
+			</tag>
+			<tag entry="04" japanese="ポケモン分類" english="ポケモン分類" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">「DNAポケモン」など。</comment>
+				<comment language="english">「DNAポケモン」など。</comment>
+			</tag>
+			<tag entry="05" japanese="マップ名" english="マップ名" view="EP" width="120" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="06" japanese="とくせい名" english="とくせい名" view="EP" width="84" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="07" japanese="わざ名" english="わざ名" view="EP" width="84" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="08" japanese="せいかく" english="せいかく" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="09" japanese="どうぐ名" english="どうぐ名" view="EP" width="96" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="10" japanese="グッズ名" english="グッズ名" view="EP" length="8" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="11" japanese="ボックス名" english="ボックス名" view="EP" width="96" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="12" japanese="ポケモンニックネーム（正体）" english="ポケモンニックネーム（正体）" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">バトル用。イリュージョンの影響を受けないニックネーム取得。</comment>
+				<comment language="english">バトル用。イリュージョンの影響を受けないニックネーム取得。</comment>
+			</tag>
+			<tag entry="13" japanese="ステータス名" english="ステータス名" view="EP" width="74" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">たいりょく、こうげきりょく、ぼうぎょりょく、とくこう、とくぼう、すばやさ、かいひりつ、めいちゅう</comment>
+				<comment language="english">たいりょく、こうげきりょく、ぼうぎょりょく、とくこう、とくぼう、すばやさ、かいひりつ、めいちゅう</comment>
+			</tag>
+			<tag entry="14" japanese="トレーナー種別名" english="トレーナー種別名" view="EP" width="120" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">「たんぱんこぞう」「エリートトレーナー」など</comment>
+				<comment language="english">「たんぱんこぞう」「エリートトレーナー」など</comment>
+			</tag>
+			<tag entry="17" japanese="特殊状態名" english="特殊状態名" view="EP" width="48" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ポケモンの特殊状態です。</comment>
+				<comment language="english">ポケモンの特殊状態です。</comment>
+			</tag>
+			<tag entry="18" japanese="バッグのポケット名" english="バッグのポケット名" view="EP" width="132" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">バッグのポケットの名前。「ポケット」の部分も含む。</comment>
+				<comment language="english">バッグのポケットの名前。「ポケット」の部分も含む。</comment>
+			</tag>
+			<tag entry="26" japanese="カップ名" english="カップ名" view="EP" width="72" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">対戦のレギュレーション名</comment>
+				<comment language="english">対戦のレギュレーション名</comment>
+			</tag>
+			<tag entry="28" japanese="簡易会話単語" english="簡易会話単語" view="EP" width="84" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="31" japanese="アクセサリー名" english="アクセサリー名" view="EP" width="96" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ポケモンにつけるアクセサリー</comment>
+				<comment language="english">ポケモンにつけるアクセサリー</comment>
+			</tag>
+			<tag entry="32" japanese="ジム名" english="ジム名" view="EP" width="72" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="33" japanese="時間帯" english="時間帯" view="EP" width="48" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ぼうけんノートなどで使う</comment>
+				<comment language="english">ぼうけんノートなどで使う</comment>
+			</tag>
+			<tag entry="34" japanese="コンテスト名称" english="コンテスト名称" view="EP" width="120" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">コンテストのジャンル
+「○○○○○コンテスト」</comment>
+				<comment language="english">コンテストのジャンル
+「○○○○○コンテスト」</comment>
+			</tag>
+			<tag entry="35" japanese="コンテストランク" english="コンテストランク" view="EP" width="84" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">○○○○ランク
+「ランク」も含む</comment>
+				<comment language="english">○○○○ランク
+「ランク」も含む</comment>
+			</tag>
+			<tag entry="36" japanese="国名" english="国名" view="EP" width="216" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">プレイヤーが入力する、自分が住んでいる国名</comment>
+				<comment language="english">プレイヤーが入力する、自分が住んでいる国名</comment>
+			</tag>
+			<tag entry="37" japanese="地域名" english="地域名" view="EP" width="216" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">プレイヤーが入力する、自分が住んでいる地域名</comment>
+				<comment language="english">プレイヤーが入力する、自分が住んでいる地域名</comment>
+			</tag>
+			<tag entry="39" japanese="リボンの名前" english="リボンの名前" view="EP" width="168" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">リボンの名前</comment>
+				<comment language="english">リボンの名前</comment>
+			</tag>
+			<tag entry="40" japanese="広場ミニゲーム" english="広場ミニゲーム" view="EP" width="120" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">WiFi広場のミニゲーム名</comment>
+				<comment language="english">WiFi広場のミニゲーム名</comment>
+			</tag>
+			<tag entry="41" japanese="広場イベント名" english="広場イベント名" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">WiFi広場イベント名</comment>
+				<comment language="english">WiFi広場イベント名</comment>
+			</tag>
+			<tag entry="42" japanese="広場アイテム名" english="広場アイテム名" view="EP" width="120" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">WiFi広場のアイテム名</comment>
+				<comment language="english">WiFi広場のアイテム名</comment>
+			</tag>
+			<tag entry="43" japanese="日本の挨拶" english="日本の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">日本の挨拶</comment>
+				<comment language="english">日本の挨拶</comment>
+			</tag>
+			<tag entry="44" japanese="英語の挨拶" english="英語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">英語の挨拶</comment>
+				<comment language="english">英語の挨拶</comment>
+			</tag>
+			<tag entry="45" japanese="フランス語の挨拶" english="フランス語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">フランス語の挨拶</comment>
+				<comment language="english">フランス語の挨拶</comment>
+			</tag>
+			<tag entry="46" japanese="ドイツ語の挨拶" english="ドイツ語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ドイツ語の挨拶</comment>
+				<comment language="english">ドイツ語の挨拶</comment>
+			</tag>
+			<tag entry="47" japanese="イタリア語の挨拶" english="イタリア語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">イタリア語の挨拶</comment>
+				<comment language="english">イタリア語の挨拶</comment>
+			</tag>
+			<tag entry="48" japanese="スペイン語の挨拶" english="スペイン語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">スペイン語の挨拶</comment>
+				<comment language="english">スペイン語の挨拶</comment>
+			</tag>
+		</group>
+
+		<group entry="2" japanese="ポケモンＷＢ（数値）" english="ポケモンＷＢ（数値）" color="#c0c0c0">
+			<tag entry="00" japanese="１桁" english="１桁" view="EP" width="8" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="01" japanese="２桁" english="２桁" view="EP" width="16" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="02" japanese="３桁" english="３桁" view="EP" width="24" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="03" japanese="４桁" english="４桁" view="EP" width="32" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="04" japanese="５桁" english="５桁" view="EP" width="40" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="05" japanese="６桁" english="６桁" view="EP" width="48" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">
+</comment>
+				<comment language="english">
+</comment>
+			</tag>
+			<tag entry="06" japanese="７桁" english="７桁" view="EP" width="56" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="07" japanese="８桁" english="８桁" view="EP" width="64" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+		</group>
+
+		<group entry="189" japanese="汎用コントロール" english="汎用コントロール" color="#c0c0c0">
+			<tag entry="00" japanese="カラー変更" english="カラー変更" view="EP" length="0" line="1">
+				<parameter number="0" japanese="文字色番号" english="文字色番号" type="int8"/>
+				<parameter number="1" japanese="影色番号" english="影色番号" type="int8"/>
+				<parameter number="2" japanese="背景色番号" english="背景色番号" type="int8"/>
+				<comment language="japanese">システムのカラータグより細かい設定が可能な低レベル版。
+ほとんどの場合、システムタグを使えば問題ないと思います。</comment>
+				<comment language="english">システムのカラータグより細かい設定が可能な低レベル版。
+ほとんどの場合、システムタグを使えば問題ないと思います。</comment>
+			</tag>
+			<tag entry="01" japanese="カラー変更リセット" english="カラー変更リセット" view="EP" length="0" line="1"/>
+			<tag entry="02" japanese="Ｘセンタリング" english="Ｘセンタリング" view="EP" length="0" line="1"/>
+			<tag entry="03" japanese="Ｘ右寄せ" english="Ｘ右寄せ" view="EP" length="0" line="1">
+				<parameter number="0" japanese="右スペース" english="右スペース" type="int8"/>
+				<comment language="japanese">当該行の文字列を
+ウィンドウ内で右寄せします。</comment>
+				<comment language="english">当該行の文字列を
+ウィンドウ内で右寄せします。</comment>
+			</tag>
+			<tag entry="04" japanese="X加算" english="X加算" view="EP" length="0" line="1">
+				<parameter number="0" japanese="加算値" english="加算値" type="int8"/>
+				<comment language="japanese">描画X座標を加算します。
+使用は許可制です。</comment>
+				<comment language="english">描画X座標を加算します。
+使用は許可制です。</comment>
+			</tag>
+		</group>
+
+		<group entry="190" japanese="動的コントロール" english="Word" color="#c0c0c0">
+			<tag entry="00" japanese="ページ切り替え（行送り）" english="ページ切り替え（行送り）" view="EP" length="0" line="1"/>
+			<tag entry="01" japanese="ページ切り替え（クリア）" english="ページ切り替え（クリア）" view="EP" length="0" line="1"/>
+			<tag entry="02" japanese="ウェイト変更（単発）" english="ウェイト変更（単発）" view="EP" length="0" line="1">
+				<parameter number="0" japanese="フレーム数" english="フレーム数" type="int16"/>
+			</tag>
+			<tag entry="03" japanese="ウェイト変更（継続）" english="ウェイト変更（継続）" view="EP" length="0" line="1">
+				<parameter number="0" japanese="フレーム数" english="フレーム数" type="int16"/>
+			</tag>
+			<tag entry="04" japanese="ウェイトリセット" english="ウェイトリセット" view="EP" length="0" line="1"/>
+			<tag entry="05" japanese="コールバック引数変更（単発）" english="コールバック引数変更（単発）" view="EP" length="0" line="1">
+				<parameter number="0" japanese="引数" english="引数" type="int16"/>
+			</tag>
+			<tag entry="06" japanese="コールバック引数変更（継続）" english="コールバック引数変更（継続）" view="EP" length="0" line="1">
+				<parameter number="0" japanese="引数" english="引数" type="int16"/>
+			</tag>
+			<tag entry="07" japanese="コールバック引数リセット" english="コールバック引数リセット" view="EP" length="0" line="1"/>
+			<tag entry="08" japanese="描画領域クリア" english="描画領域クリア" view="EP" length="0" line="1"/>
+		</group>
+
+		<group entry="254" japanese="文字列展開" english="Word">
+		</group>
+
+		<set japanese="500%" english="500%" value="FF:01:サイズ:500"/>
+		<set japanese="400%" english="400%" value="FF:01:サイズ:400"/>
+		<set japanese="300%" english="300%" value="FF:01:サイズ:300"/>
+		<set japanese="200%" english="200%" value="FF:01:サイズ:200"/>
+		<set japanese="150%" english="150%" value="FF:01:サイズ:150"/>
+		<set japanese="100%" english="100%" value="FF:01:サイズ:100"/>
+		<set japanese="75%" english="75%" value="FF:01:サイズ:75"/>
+		<set japanese="50%" english="50%" value="FF:01:サイズ:50"/>
+		<set japanese="カラーデフォルト" english="Black" value="FF:00:色:0"/>
+		<set japanese="カラー１" english="Red" value="FF:00:色:1"/>
+		<set japanese="カラー２" english="Green" value="FF:00:色:2"/>
+		<set japanese="カラー３" english="Blue" value="FF:00:色:3"/>
+	</tag-table>
+
+	<columns>
+		<id position="0" width="117"/>
+		<group default=" 0:デフォルト" position="-1" width="100">
+			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
+		</group>
+		<number position="-1" width="100"/>
+		<comment position="1" width="100"/>
+		<erase position="-1" width="100"/>
+		<language japanese="JPN" english="JPN">
+			<message position="2" width="274"/>
+			<font default=" 0:large" position="4" width="109">
+				<list entry="0" file="W:\font\large.nftr"/>
+				<list entry="1" file="W:\font\small.nftr"/>
+			</font>
+			<size position="-1" width="100"/>
+			<space position="-1" width="100"/>
+			<width position="6" width="70"/>
+			<line position="-1" width="100"/>
+		</language>
+		<language japanese="JPN_KANJI" english="JPN_KANJI">
+			<message position="3" width="246"/>
+			<font default=" 0:large" position="5" width="106">
+				<list entry="0" file="W:\font\large.nftr"/>
+				<list entry="1" file="W:\font\small.nftr"/>
+			</font>
+			<size position="-1" width="100"/>
+			<space position="-1" width="100"/>
+			<width position="7" width="75"/>
+			<line position="-1" width="100"/>
+		</language>
+	</columns>
+
+	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
+		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
+		<band id="0" index="0" style="0000" width="530"/>
+		<band id="1" index="1" style="0000" width="165"/>
+		<band id="2" index="2" style="0000" width="697"/>
+		<band id="3" index="3" style="0000" width="697"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
+		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
+		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
+	</dialog>
+
+	<output default="デフォルト">
+		<target japanese="デフォルト" english="default" endian="big" encoding="Shift_JIS" letter-list-encoding="Shift_JIS" header-file-encoding="Shift_JIS" language="JPN">
+			<struct name="JMSMesgEntry" id="" message="mesgOffset">
+			</struct>
+			<entry sort="id" id-block="no" flowlabel-block="no"/>
+			<header divide="no" id-prefix="JMS_" query-prefix="JMS_QUERY_" flownode-prefix="JMS_FLOWNODE_" id="" struct="" query=""/>
+		</target>
+	</output>
+
+
+	<lock>
+		<operation add_message="no" header_setting="no" tag_setting="no" output_setting="no" display="no" sort="no" flowchart_window="no"/>
+	</lock>
+
+
+	<row id="ZKN_COMMENT_01_000_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_001_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_002_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_003_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_004_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_005_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_006_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_007_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_008_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_009_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_010_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_011_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_012_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_013_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_014_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_015_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_016_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_017_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_018_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_019_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_020_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_021_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_022_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_023_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_024_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_025_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_026_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_027_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_028_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_029_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_030_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_031_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_032_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_033_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_034_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_035_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_036_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_037_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_038_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_039_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_040_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_041_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_042_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_043_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_044_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_045_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_046_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_047_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_048_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_049_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_050_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_051_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_052_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_053_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_054_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_055_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_056_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_057_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_058_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_059_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_060_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_061_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_062_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_063_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_064_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_065_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_066_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_067_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_068_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_069_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_070_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_071_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_072_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_073_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_074_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_075_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_076_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_077_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_078_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_079_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_080_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_081_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_082_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_083_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_084_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_085_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_086_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_087_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_088_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_089_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_090_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_091_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_092_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_093_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_094_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_095_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_096_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_097_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_098_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_099_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_100_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_101_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_102_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_103_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_104_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_105_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_106_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_107_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_108_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_109_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_110_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_111_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_112_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_113_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_114_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_115_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_116_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_117_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_118_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_119_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_120_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_121_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_122_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_123_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_124_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_125_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_126_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_127_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_128_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_129_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_130_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_131_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_132_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_133_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_134_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_135_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_136_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_137_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_138_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_139_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_140_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_141_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_142_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_143_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_144_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_145_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_146_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_147_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_148_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_149_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_150_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_151_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_152_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_153_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_154_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_155_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_156_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_157_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_158_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_159_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_160_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_161_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_162_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_163_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_164_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_165_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_166_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_167_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_168_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_169_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_170_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_171_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_172_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_173_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_174_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_175_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_176_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_177_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_178_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_179_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_180_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_181_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_182_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_183_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_184_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_185_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_186_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_187_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_188_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_189_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_190_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_191_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_192_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_193_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_194_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_195_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_196_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_197_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_198_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_199_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_200_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_201_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_202_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_203_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_204_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_205_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_206_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_207_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_208_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_209_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_210_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_211_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_212_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_213_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_214_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_215_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_216_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_217_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_218_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_219_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_220_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_221_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_222_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_223_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_224_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_225_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_226_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_227_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_228_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_229_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_230_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_231_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_232_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_233_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_234_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_235_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_236_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_237_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_238_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_239_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_240_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_241_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_242_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_243_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_244_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_245_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_246_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_247_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_248_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_249_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_250_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_251_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_252_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_253_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_254_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_255_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_256_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_257_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_258_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_259_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_260_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_261_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_262_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_263_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_264_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_265_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_266_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_267_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_268_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_269_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_270_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_271_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_272_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_273_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_274_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_275_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_276_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_277_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_278_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_279_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_280_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_281_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_282_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_283_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_284_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_285_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_286_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_287_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_288_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_289_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_290_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_291_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_292_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_293_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_294_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_295_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_296_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_297_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_298_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_299_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_300_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_301_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_302_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_303_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_304_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_305_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_306_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_307_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_308_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_309_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_310_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_311_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_312_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_313_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_314_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_315_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_316_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_317_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_318_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_319_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_320_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_321_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_322_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_323_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_324_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_325_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_326_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_327_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_328_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_329_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_330_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_331_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_332_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_333_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_334_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_335_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_336_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_337_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_338_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_339_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_340_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_341_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_342_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_343_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_344_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_345_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_346_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_347_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_348_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_349_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_350_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_351_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_352_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_353_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_354_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_355_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_356_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_357_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_358_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_359_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_360_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_361_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_362_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_363_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_364_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_365_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_366_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_367_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_368_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_369_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_370_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_371_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_372_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_373_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_374_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_375_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_376_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_377_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_378_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_379_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_380_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_381_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_382_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_383_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_384_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_385_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_386_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_387_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_388_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_389_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_390_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_391_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_392_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_393_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_394_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_395_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_396_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_397_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_398_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_399_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_400_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_401_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_402_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_403_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_404_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_405_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_406_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_407_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_408_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_409_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_410_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_411_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_412_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_413_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_414_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_415_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_416_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_417_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_418_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_419_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_420_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_421_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_422_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_423_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_424_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_425_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_426_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_427_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_428_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_429_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_430_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_431_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_432_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_433_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_434_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_435_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_436_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_437_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_438_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_439_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_440_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_441_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_442_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_443_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_444_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_445_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_446_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_447_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_448_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_449_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_450_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_451_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_452_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_453_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_454_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_455_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_456_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_457_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_458_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_459_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_460_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_461_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_462_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_463_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_464_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_465_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_466_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_467_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_468_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_469_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_470_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_471_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_472_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_473_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_474_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_475_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_476_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_477_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_478_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_479_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_480_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_481_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_482_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_483_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_484_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_485_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_486_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_487_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_488_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_489_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_490_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_491_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_492_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_493_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_494_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_495_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_496_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_497_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_498_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_499_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_500_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_501_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_502_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_503_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_504_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_505_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_506_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_507_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_508_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_509_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_510_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_511_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_512_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_513_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_514_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_515_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_516_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_517_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_518_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_519_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_520_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_521_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_522_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_523_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_524_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_525_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_526_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_527_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_528_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_529_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_530_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_531_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_532_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_533_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_534_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_535_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_536_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_537_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_538_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_539_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_540_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_541_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_542_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_543_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_544_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_545_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_546_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_547_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_548_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_549_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_550_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_551_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_552_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_553_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_554_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_555_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_556_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_557_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_558_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_559_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_560_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_561_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_562_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_563_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_564_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_565_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_566_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_567_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_568_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_569_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_570_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_571_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_572_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_573_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_574_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_575_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_576_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_577_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_578_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_579_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_580_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_581_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_582_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_583_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_584_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_585_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_586_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_587_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_588_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_589_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_590_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_591_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_592_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_593_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_594_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_595_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_596_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_597_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_598_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_599_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_600_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_601_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_602_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_603_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_604_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_605_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_606_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_607_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_608_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_609_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_610_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_611_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_612_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_613_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_614_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_615_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_616_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_617_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_618_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_619_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_620_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_621_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_622_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_623_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_624_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_625_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_626_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_627_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_628_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_629_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_630_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_631_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_632_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_633_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_634_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_635_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_636_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_637_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_638_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_639_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_640_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_641_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_642_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_643_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_644_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_645_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_646_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_647_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_648_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_649_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_650_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_201_001">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_201_002">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_201_003">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_201_004">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_201_005">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_201_006">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_201_007">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_201_008">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_201_009">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_201_010">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_201_011">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_201_012">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_201_013">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_201_014">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_201_015">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_201_016">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_201_017">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_201_018">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_201_019">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_201_020">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_201_021">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_201_022">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_201_023">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_201_024">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_201_025">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_201_026">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_201_027">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_351_001">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_351_002">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_351_003">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_386_001">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_386_002">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_386_003">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_412_001">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_412_002">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_413_001">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_413_002">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_421_001">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_422_001">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_423_001">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_479_001">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_479_002">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_479_003">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_479_004">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_479_005">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_487_001">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_492_001">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_493_001">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_493_002">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_493_003">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_493_004">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_493_005">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_493_006">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_493_007">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_493_008">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_493_009">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_493_010">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_493_011">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_493_012">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_493_013">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_493_014">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_493_015">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_493_016">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_493_017">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_549_001">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_551_001">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_585_001">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_585_002">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_585_003">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_586_001">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_586_002">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_586_003">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_647_001">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_648_001">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_648_002">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_648_003">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_648_004">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<flowchart-group-list>
+		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
+	</flowchart-group-list>
+</body>
+
+</gmml>

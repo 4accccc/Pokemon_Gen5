@@ -169,7 +169,7 @@
   ARCID_WAZAEFF_GRA "wazaeffect/waza_eff_gra.narc"  #技エフェクト用グラフィックデータ
   ARCID_WORLDTRADE_GRA "worldtrade.narc"  #GTS用グラフィックデータ
   ARCID_CALENDER "calender.narc"  # カレンダー情報
-  ARCID_ZUKAN_DATA "zukan_data.narc"  #図鑑データ（金銀のを持ってきただけ）
+  ARCID_ZUKAN_DATA "zukan_data.narc"  #図鑑データ
     ARCID_B_BAG_GRA "b_bag_gra.narc"    #戦闘バッグ画面グラフィック
     ARCID_B_PLIST_GRA   "b_plist_gra.narc"    #戦闘ポケモンリスト画面グラフィック
   ARCID_GIMMICK_ASSIGN "fieldmap/gimmick_assign.narc" #ギミックアサインデータ
@@ -256,4 +256,6 @@
   ARCID_MIDI_DOWNLOAD "mididl.narc"  # MIDIファイルダウンロードテスト
   ARCID_BMODEL_TEXSET_OUTDOOR  "fieldmap/bmodel_texset_outdoor.narc"  #配置モデルテクスチャセットデータ（屋外）
   ARCID_BMODEL_TEXSET_INDOOR   "fieldmap/bmodel_texset_indoor.narc" #配置モデルテクスチャセットデータ（屋内）
+  ARCID_ZUKAN_AREA "zukan_area.narc"  # 図鑑で使用するポケモンの分布データ
+  ARCID_ZUKAN_DATA_OLD "zukan_data_old.narc"  #図鑑データ（金銀のを持ってきただけ）
 

@@ -36,6 +36,7 @@ SUBDIRS	=	wmi \
 			field_weather \
 			field_weather_light \
 			field_light \
+			zukan_data \
 			message\
 			fldmmdl \
 			encount \
@@ -98,7 +99,7 @@ SUBDIRS	=	wmi \
 			config \
 			narc_cpy \
 			pokeicon \
-			zukan_data \
+			zukan_data_old \
             b_bag \
             b_plist \
 		  regulation \

@@ -19,7 +19,7 @@
 //アーカイブ
 #include "arc_def.h"
 #include "msg/msg_battle_rec.h"
-#include "arc\zkn_sort_akstnhmyrw_idx.h"
+#include "../../../resource/zukan_data/zkn_sort_aiueo_idx.h"
 #include "arc\zukan_data.naix"
 
 //自分のモジュール
@@ -150,17 +150,17 @@ static u16 * ZUKANDATA_AllocSort50onData( HEAPID heapID, u32* p_arry_num );
 //=====================================
 static const u16 sc_zukansort_data_idx[]=
 {
-	ZKN_AKSTNHMYRW_IDX_A,
-	ZKN_AKSTNHMYRW_IDX_K,
-	ZKN_AKSTNHMYRW_IDX_S,
-	ZKN_AKSTNHMYRW_IDX_T,
-	ZKN_AKSTNHMYRW_IDX_N,
-	ZKN_AKSTNHMYRW_IDX_H,
-	ZKN_AKSTNHMYRW_IDX_M,
-	ZKN_AKSTNHMYRW_IDX_Y,
-	ZKN_AKSTNHMYRW_IDX_R,
-	ZKN_AKSTNHMYRW_IDX_W,
-	ZKN_AKSTNHMYRW_IDX_END,
+  ZKN_SORT_AIUEO_IDX_START_A,
+  ZKN_SORT_AIUEO_IDX_START_KA,
+  ZKN_SORT_AIUEO_IDX_START_SA,
+  ZKN_SORT_AIUEO_IDX_START_TA,
+  ZKN_SORT_AIUEO_IDX_START_NA,
+  ZKN_SORT_AIUEO_IDX_START_HA,
+  ZKN_SORT_AIUEO_IDX_START_MA,
+  ZKN_SORT_AIUEO_IDX_START_YA,
+  ZKN_SORT_AIUEO_IDX_START_RA,
+  ZKN_SORT_AIUEO_IDX_START_WA,
+  ZKN_SORT_AIUEO_IDX_ALL_END,
 };
 
 //----------------------------------------------------------------------------
