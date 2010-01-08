@@ -473,9 +473,11 @@ end
   }
 
   monsno = Hash::new
+  gra_hash = Hash::new
   monsname = []
   form = []
   machine = []
+  pokelist = []
   
   form[ 0 ] = FORM::new
   read_data.size.times {|i|
@@ -553,6 +555,8 @@ end
 
   gmm.make_row_index( "MONSNAME_", 0, "Å[Å[Å[Å[Å[" )
 
+  pokelist << "Å|Å|Å|Å|Å|\t999\tÉmÅ[É}Éã\tÉmÅ[É}Éã\tÅ|\tÅ|\n"
+
   cnt = 1
   other_form = 0
   monsno_max = 0
@@ -573,6 +577,7 @@ end
       end
     else
       monsno[ split_data[ PARA::POKENAME ] ] = cnt
+      gra_hash[ split_data[ PARA::GRA_NO ] ] = cnt
       monsname[ cnt - 1 ] = split_data[ PARA::POKENAME ]
       fp_monsno.print( "#define\t\t" )
       label_str = label.make_label( "MONSNO_", split_data[ PARA::POKENAME ] )
@@ -627,6 +632,16 @@ end
       write_lst_file( fp_lst, gra_no, form_name )
 
       gmm.make_row_index( "MONSNAME_", cnt, split_data[ PARA::POKENAME ] )
+
+      speabi1 = split_data[ PARA::SPEABI1 ]
+      if speabi1 == ""
+        speabi1 = "Å|"
+      end
+      speabi2 = split_data[ PARA::SPEABI2 ]
+      if speabi2 == ""
+        speabi2 = "Å|"
+      end
+      pokelist << "%s\t%s\t%s\t%s\t%s\t%s\n" % [ split_data[ PARA::POKENAME ], split_data[ PARA::GRA_NO ], split_data[ PARA::TYPE1 ], split_data[ PARA::TYPE2 ], speabi1, speabi2 ]
     end
     if split_data[ PARA::FORM_NAME ] != "" && split_data[ PARA::POKENAME ] != ""
       form[ monsno[ split_data[ PARA::POKENAME ] ] ].add_form_name( split_data[ PARA::FORM_NAME ] )
@@ -653,6 +668,14 @@ end
   monsno.size.times {|no|
     split_data = read_data[ no ].split(/,/)
     fp_hash.printf("\t\t\"%s\"=>%d,\n", split_data[ PARA::POKENAME ], form[ no ].get_form_max )
+  }
+  fp_hash.printf("\t}\n" )
+
+  #GraNo2ZukanNoÉnÉbÉVÉÖÉeÅ[ÉuÉã
+  fp_hash.printf("\t$gra2zukan_hash = {\n" )
+  gra_hash.size.times {|no|
+    split_data = read_data[ no ].split(/,/)
+    fp_hash.printf("\t\t\"%s\"=>%d,\n", split_data[ PARA::GRA_NO ], gra_hash[ split_data[ PARA::GRA_NO ] ] )
   }
   fp_hash.printf("\t}\n" )
   fp_hash.close
@@ -729,6 +752,15 @@ end
   fp_gra.close
   fp_lst.close
   fp_num.close
+	fp_wave.close
+	fp_bank.close
+
+  fp_pokelist = open( "pokelist.txt", "w" )
+  pokelist.sort!
+  pokelist.size.times {|i|
+    fp_pokelist.printf( "%s", pokelist[ i ] )
+  }
+	fp_pokelist.close
 
   fp_monsno.printf( "#define\t\tMONSNO_TAMAGO\t\t\t\t( %d )\n", monsno_max )
   fp_monsno.printf( "#define\t\tMONSNO_DAMETAMAGO\t\t( %d )\n", monsno_max + 1 )
