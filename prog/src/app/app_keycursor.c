@@ -128,6 +128,9 @@ APP_KEYCURSOR_WORK* APP_KEYCURSOR_Create( u16 n_col, BOOL is_decide_key, BOOL is
 //--------------------------------------------------------------
 void APP_KEYCURSOR_Delete( APP_KEYCURSOR_WORK *work )
 {
+  GF_ASSERT( work );
+  GF_ASSERT( work->bmp_cursor );
+
   GFL_BMP_Delete( work->bmp_cursor );
   GFL_HEAP_FreeMemory( work );
 }
@@ -144,6 +147,9 @@ void APP_KEYCURSOR_Delete( APP_KEYCURSOR_WORK *work )
 void APP_KEYCURSOR_Clear( APP_KEYCURSOR_WORK *work, GFL_BMP_DATA *bmp, u16 n_col )
 {
   u16 x,y,offs;
+  
+  GF_ASSERT( work );
+  GF_ASSERT( bmp );
   
   x = GFL_BMP_GetSizeX( bmp ) + CURSOR_BMP_DIFF_PX;
   y = GFL_BMP_GetSizeY( bmp ) + CURSOR_BMP_DIFF_PY;
@@ -164,6 +170,10 @@ void APP_KEYCURSOR_Clear( APP_KEYCURSOR_WORK *work, GFL_BMP_DATA *bmp, u16 n_col
 void APP_KEYCURSOR_Write( APP_KEYCURSOR_WORK *work, GFL_BMP_DATA *bmp, u16 n_col )
 {
   u16 x,y,offs;
+  
+  GF_ASSERT( work );
+  GF_ASSERT( bmp );
+  GF_ASSERT( work->bmp_cursor );
   
   APP_KEYCURSOR_Clear( work, bmp, n_col );
   
