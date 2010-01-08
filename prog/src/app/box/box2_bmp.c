@@ -333,6 +333,9 @@ enum {
 #define	PMV_DR_CGX_POS	( 0x6a * 0x20 )
 */
 
+#define	BMPBUTTON_CHR_NORMAL		( 0 )													// 通常のボタンキャラ番号
+#define	BMPBUTTON_CHR_TOUCHBAR	( BOX2MAIN_SELWIN_CGX_SIZ )		// タッチバー上のボタンキャラ番号
+
 
 //============================================================================================
 //	グローバル
@@ -507,7 +510,6 @@ void BOX2BMP_Init( BOX2_SYS_WORK * syswk )
 		syswk->app->win[i].win = GFL_BMPWIN_Create(
 															dat[0], dat[1], dat[2],
 															dat[3], dat[4], dat[5],
-//															GFL_BMP_CHRAREA_GET_F );
 															GFL_BMP_CHRAREA_GET_B );
 		dat += 6;
 	}
@@ -524,15 +526,6 @@ void BOX2BMP_Init( BOX2_SYS_WORK * syswk )
 //--------------------------------------------------------------------------------------------
 void BOX2BMP_Exit( BOX2_SYS_WORK * syswk )
 {
-/*
-	u16	i;
-
-	for( i=0; i<BOX2BMPWIN_ID_MAX; i++ ){
-		GFL_BMPWIN_Delete( &syswk->app->win[i] );
-	}
-
-	FontProc_UnloadFont( FONT_TOUCH );
-*/
 	u32	i;
 
 	for( i=0; i<BOX2BMPWIN_ID_MAX; i++ ){
@@ -563,7 +556,7 @@ void BOX2BMP_PrintUtilTrans( BOX2_APP_WORK * appwk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		BMPWINスクリーン転送
+ * @brief		BMPWINを配置してスクリーン転送
  *
  * @param		util		PRINT_UTIL
  *
@@ -576,6 +569,15 @@ static void PrintScreenTrans( PRINT_UTIL * util )
 	GFL_BG_LoadScreenV_Req( GFL_BMPWIN_GetFrame(util->win) );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		BMPWINを消してスクリーン転送
+ *
+ * @param		util		PRINT_UTIL
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void ClearScreen( PRINT_UTIL * util )
 {
 	GFL_BMPWIN_ClearScreen( util->win );
@@ -730,11 +732,11 @@ void BOX2BMP_DefStrPut( BOX2_SYS_WORK * syswk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * ポケモン名表示
+ * @brief		ポケモン名表示
  *
- * @param	appwk	ボックス画面アプリワーク
- * @param	info	表示データ
- * @param	winID	BMPWIN ID
+ * @param		appwk		ボックス画面アプリワーク
+ * @param		info		表示データ
+ * @param		winID		BMPWIN ID
  *
  * @return	none
  */
@@ -757,11 +759,11 @@ static void PokeNamePut( BOX2_APP_WORK * appwk, BOX2_POKEINFO_DATA * info, u32 w
 
 //--------------------------------------------------------------------------------------------
 /**
- * ニックネーム表示
+ * @brief		ニックネーム表示
  *
- * @param	appwk	ボックス画面アプリワーク
- * @param	info	表示データ
- * @param	winID	BMPWIN ID
+ * @param		appwk		ボックス画面アプリワーク
+ * @param		info		表示データ
+ * @param		winID		BMPWIN ID
  *
  * @return	none
  */
@@ -779,11 +781,11 @@ static void PokeNickNamePut( BOX2_APP_WORK * appwk, BOX2_POKEINFO_DATA * info, u
 
 //--------------------------------------------------------------------------------------------
 /**
- * レベル表示
+ * @brief		レベル表示
  *
- * @param	appwk	ボックス画面アプリワーク
- * @param	info	表示データ
- * @param	winID	BMPWIN ID
+ * @param		appwk		ボックス画面アプリワーク
+ * @param		info		表示データ
+ * @param		winID		BMPWIN ID
  *
  * @return	none
  */
@@ -812,11 +814,11 @@ static void PokeLvPut( BOX2_APP_WORK * appwk, BOX2_POKEINFO_DATA * info, u32 win
 
 //--------------------------------------------------------------------------------------------
 /**
- * 性別表示
+ * @brief		性別表示
  *
- * @param	appwk	ボックス画面アプリワーク
- * @param	info	表示データ
- * @param	winID	BMPWIN ID
+ * @param		appwk		ボックス画面アプリワーク
+ * @param		info		表示データ
+ * @param		winID		BMPWIN ID
  *
  * @return	none
  */
@@ -846,11 +848,11 @@ static void PokeSexPut( BOX2_APP_WORK * appwk, BOX2_POKEINFO_DATA * info, u32 wi
 
 //--------------------------------------------------------------------------------------------
 /**
- * 図鑑番号表示
+ * @brief		図鑑番号表示
  *
- * @param	appwk	ボックス画面アプリワーク
- * @param	info	表示データ
- * @param	winID	BMPWIN ID
+ * @param		syswk		ボックス画面システムワーク
+ * @param		info		表示データ
+ * @param		winID		BMPWIN ID
  *
  * @return	none
  */
@@ -893,11 +895,11 @@ static void PokeNumberPut( BOX2_SYS_WORK * syswk, BOX2_POKEINFO_DATA * info, u32
 
 //--------------------------------------------------------------------------------------------
 /**
- * 性格表示
+ * @brief		性格表示
  *
- * @param	appwk	ボックス画面アプリワーク
- * @param	info	表示データ
- * @param	winID	BMPWIN ID
+ * @param		appwk		ボックス画面アプリワーク
+ * @param		info		表示データ
+ * @param		winID		BMPWIN ID
  *
  * @return	none
  */
@@ -922,11 +924,11 @@ static void PokeSeikakuPut( BOX2_APP_WORK * appwk, BOX2_POKEINFO_DATA * info, u3
 
 //--------------------------------------------------------------------------------------------
 /**
- * 特性表示
+ * @brief		特性表示
  *
- * @param	appwk	ボックス画面アプリワーク
- * @param	info	表示データ
- * @param	winID	BMPWIN ID
+ * @param		appwk		ボックス画面アプリワーク
+ * @param		info		表示データ
+ * @param		winID		BMPWIN ID
  *
  * @return	none
  */
@@ -951,11 +953,11 @@ static void PokeTokuseiPut( BOX2_APP_WORK * appwk, BOX2_POKEINFO_DATA * info, u3
 
 //--------------------------------------------------------------------------------------------
 /**
- * 持ち物表示
+ * @brief		持ち物表示
  *
- * @param	appwk	ボックス画面アプリワーク
- * @param	info	表示データ
- * @param	winID	BMPWIN ID
+ * @param		appwk		ボックス画面アプリワーク
+ * @param		info		表示データ
+ * @param		winID		BMPWIN ID
  *
  * @return	none
  */
@@ -978,6 +980,17 @@ static void PokeItemPut( BOX2_APP_WORK * appwk, BOX2_POKEINFO_DATA * info, u32 w
 	PrintScreenTrans( &appwk->win[winID] );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		技表示
+ *
+ * @param		appwk		ボックス画面アプリワーク
+ * @param		info		表示データ
+ * @param		winID		BMPWIN ID
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void PokeWazaPut( BOX2_APP_WORK * appwk, BOX2_POKEINFO_DATA * info, u32 winID )
 {
 	GFL_MSGDATA * man;
@@ -1003,10 +1016,10 @@ static void PokeWazaPut( BOX2_APP_WORK * appwk, BOX2_POKEINFO_DATA * info, u32 w
 
 //--------------------------------------------------------------------------------------------
 /**
- * 上画面ポケモンデータ表示
+ * @brief		上画面ポケモンデータ表示
  *
- * @param	syswk	ボックス画面システムワーク
- * @param	info	表示データ
+ * @param		syswk	ボックス画面システムワーク
+ * @param		info	表示データ
  *
  * @return	none
  */
@@ -1031,9 +1044,9 @@ void BOX2BMP_PokeDataPut( BOX2_SYS_WORK * syswk, BOX2_POKEINFO_DATA * info )
 
 //--------------------------------------------------------------------------------------------
 /**
- * 上画面ポケモンデータ非表示
+ * @brief		上画面ポケモンデータ非表示
  *
- * @param	appwk	ボックス画面アプリワーク
+ * @param		appwk		ボックス画面アプリワーク
  *
  * @return	none
  */
@@ -1055,6 +1068,878 @@ void BOX2BMP_PokeDataOff( BOX2_APP_WORK * appwk )
 	ClearScreen( &appwk->win[BOX2BMPWIN_ID_TOKUSEI_STR] );
 	ClearScreen( &appwk->win[BOX2BMPWIN_ID_ITEM_STR] );
 }
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		ボタン作成（ボタン全体がＢＭＰ）
+ *
+ * @param		syswk		ボックス画面システムワーク
+ * @param		winID		BMPWIN ID
+ * @param		strID		文字列ＩＤ
+ * @param		cgx			ボタンキャラ番号
+ * @param		col			フォントカラー
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+static void MakeBmpButton( BOX2_SYS_WORK * syswk, u32 winID, const u32 strID, u16 cgx, PRINTSYS_LSB	col )
+{
+	GFL_BMPWIN * win;
+	GFL_BMP_DATA * bmp;
+	GFL_BMP_DATA * button;
+	STRBUF * str;
+	void * buf;
+	u8 * raw;
+	NNSG2dCharacterData * chr;
+	u8	frm, px, py, sx, sy;
+	u8	i;
+
+	win = syswk->app->win[ winID ].win;
+	bmp = GFL_BMPWIN_GetBmp( win );
+	frm = GFL_BMPWIN_GetFrame( win );
+	px  = GFL_BMPWIN_GetPosX( win );
+	py  = GFL_BMPWIN_GetPosY( win );
+	sx  = GFL_BMPWIN_GetSizeX( win );
+	sy  = GFL_BMPWIN_GetSizeY( win );
+
+	GFL_BMP_Clear( bmp, FNTCOL_SELWIN_OFF_B );
+
+	buf = GFL_ARC_UTIL_LoadBGCharacter( ARCID_BOX2_GRA, NARC_box_gra_selwin_lz_NCGR, TRUE, &chr, HEAPID_BOX_APP_L );
+	raw = chr->pRawData;
+	cgx *= 0x20;
+
+	// 左上
+	button = GFL_BMP_CreateWithData( &raw[cgx+0x20*0], 8, 8, GFL_BMP_16_COLOR, HEAPID_BOX_APP_L );
+	GFL_BMP_Print( button, bmp, 0, 0, 0, 0, 8, 8, GF_BMPPRT_NOTNUKI );
+	GFL_BMP_Delete( button );
+	// 右上
+	button = GFL_BMP_CreateWithData( &raw[cgx+0x20*2], 8, 8, GFL_BMP_16_COLOR, HEAPID_BOX_APP_L );
+	GFL_BMP_Print( button, bmp, 0, 0, (sx-1)*8, 0, 8, 8, GF_BMPPRT_NOTNUKI );
+	GFL_BMP_Delete( button );
+	// 左下
+	button = GFL_BMP_CreateWithData( &raw[cgx+0x20*9], 8, 8, GFL_BMP_16_COLOR, HEAPID_BOX_APP_L );
+	GFL_BMP_Print( button, bmp, 0, 0, 0, (sy-1)*8, 8, 8, GF_BMPPRT_NOTNUKI );
+	GFL_BMP_Delete( button );
+	// 右下
+	button = GFL_BMP_CreateWithData( &raw[cgx+0x20*11], 8, 8, GFL_BMP_16_COLOR, HEAPID_BOX_APP_L );
+	GFL_BMP_Print( button, bmp, 0, 0, (sx-1)*8, (sy-1)*8, 8, 8, GF_BMPPRT_NOTNUKI );
+	GFL_BMP_Delete( button );
+
+	// 左
+	button = GFL_BMP_CreateWithData( &raw[cgx+0x20*3], 8, 8, GFL_BMP_16_COLOR, HEAPID_BOX_APP_L );
+	for( i=1; i<sy-1; i++ ){
+		GFL_BMP_Print( button, bmp, 0, 0, 0, i*8, 8, 8, GF_BMPPRT_NOTNUKI );
+	}
+	GFL_BMP_Delete( button );
+	// 右
+	button = GFL_BMP_CreateWithData( &raw[cgx+0x20*5], 8, 8, GFL_BMP_16_COLOR, HEAPID_BOX_APP_L );
+	for( i=1; i<sy-1; i++ ){
+		GFL_BMP_Print( button, bmp, 0, 0, (sx-1)*8, i*8, 8, 8, GF_BMPPRT_NOTNUKI );
+	}
+	GFL_BMP_Delete( button );
+	// 上
+	button = GFL_BMP_CreateWithData( &raw[cgx+0x20*1], 8, 8, GFL_BMP_16_COLOR, HEAPID_BOX_APP_L );
+	for( i=1; i<sx-1; i++ ){
+		GFL_BMP_Print( button, bmp, 0, 0, i*8, 0, 8, 8, GF_BMPPRT_NOTNUKI );
+	}
+	GFL_BMP_Delete( button );
+	// 下
+	button = GFL_BMP_CreateWithData( &raw[cgx+0x20*10], 8, 8, GFL_BMP_16_COLOR, HEAPID_BOX_APP_L );
+	for( i=1; i<sx-1; i++ ){
+		GFL_BMP_Print( button, bmp, 0, 0, i*8, (sy-1)*8, 8, 8, GF_BMPPRT_NOTNUKI );
+	}
+	GFL_BMP_Delete( button );
+
+	GFL_HEAP_FreeMemory( buf );
+
+	str = GFL_MSG_CreateString( syswk->app->mman, strID );
+	PRINTTOOL_PrintColor(
+		&syswk->app->win[winID], syswk->app->que, 
+		sx*8/2, 4, str, syswk->app->font, col, PRINTTOOL_MODE_CENTER );
+	GFL_STR_DeleteBuffer( str );
+
+//	GFL_BMPWIN_TransVramCharacter( win );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		通常のボタン作成
+ *
+ * @param		syswk		ボックス画面システムワーク
+ * @param		winID		BMPWIN ID
+ * @param		strID		文字列ＩＤ
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+static void MakeNormalButton( BOX2_SYS_WORK * syswk, u32 winID, const u32 strID )
+{
+	MakeBmpButton( syswk, winID, strID, BMPBUTTON_CHR_NORMAL, FCOL_SELWIN_OFF );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		タッチバー上のボタン作成
+ *
+ * @param		syswk		ボックス画面システムワーク
+ * @param		winID		BMPWIN ID
+ * @param		strID		文字列ＩＤ
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+static void MakeTouchBarButton( BOX2_SYS_WORK * syswk, u32 winID, const u32 strID )
+{
+	MakeBmpButton( syswk, winID, strID, BMPBUTTON_CHR_TOUCHBAR, FCOL_SELWIN_OFF );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		ボタンＢＧウィンドウフレーム作成
+ *
+ * @param		wk			BGウィンフレームワーク
+ * @param		index		BGウィンフレームの番号
+ * @param		win			BMPWIN
+ *
+ * @return	none
+ *
+ *	枠なしのウィンドウ
+ */
+//--------------------------------------------------------------------------------------------
+static void ButtonBgFrmMake( BGWINFRM_WORK * wk, u32 index, GFL_BMPWIN * win )
+{
+	BGWINFRM_Add(
+		wk, index,
+		GFL_BMPWIN_GetFrame( win ),
+		GFL_BMPWIN_GetSizeX( win ),
+		GFL_BMPWIN_GetSizeY( win ) );
+	BGWINFRM_BmpWinOn( wk, index, win );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		ＢＧウィンドウフレーム作成：各メニュー
+ *
+ * @param		appwk		ボックス画面アプリワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+void BOX2BMP_PokeMenuBgFrmWkMake( BOX2_APP_WORK * appwk )
+{
+	ButtonBgFrmMake( appwk->wfrm, BOX2MAIN_WINFRM_MENU1, appwk->win[BOX2BMPWIN_ID_MENU1].win );
+	ButtonBgFrmMake( appwk->wfrm, BOX2MAIN_WINFRM_MENU2, appwk->win[BOX2BMPWIN_ID_MENU2].win );
+	ButtonBgFrmMake( appwk->wfrm, BOX2MAIN_WINFRM_MENU3, appwk->win[BOX2BMPWIN_ID_MENU3].win );
+	ButtonBgFrmMake( appwk->wfrm, BOX2MAIN_WINFRM_MENU4, appwk->win[BOX2BMPWIN_ID_MENU4].win );
+	ButtonBgFrmMake( appwk->wfrm, BOX2MAIN_WINFRM_MENU5, appwk->win[BOX2BMPWIN_ID_MENU5].win );
+	ButtonBgFrmMake( appwk->wfrm, BOX2MAIN_WINFRM_MENU6, appwk->win[BOX2BMPWIN_ID_MENU6].win );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		ＢＧウィンドウフレーム作成：「てもちポケモン」
+ *
+ * @param		appwk		ボックス画面アプリワーク
+ *
+ * @return	none
+ *
+ * @li	バトルボックスの場合は「バトルボックス」
+ */
+//--------------------------------------------------------------------------------------------
+void BOX2BMP_TemochiButtonBgFrmWkMake( BOX2_SYS_WORK * syswk )
+{
+	if( syswk->dat->callMode == BOX_MODE_BATTLE ){
+		MakeTouchBarButton( syswk, BOX2BMPWIN_ID_TEMOCHI, mes_boxbutton_01_03 );
+	}else{
+		MakeTouchBarButton( syswk, BOX2BMPWIN_ID_TEMOCHI, mes_boxbutton_01_01 );
+	}
+	ButtonBgFrmMake( syswk->app->wfrm, BOX2MAIN_WINFRM_POKE_BTN, syswk->app->win[BOX2BMPWIN_ID_TEMOCHI].win );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		ＢＧウィンドウフレーム作成：「ボックスリスト」
+ *
+ * @param		appwk		ボックス画面アプリワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+void BOX2BMP_BoxListButtonBgFrmWkMake( BOX2_SYS_WORK * syswk )
+{
+	MakeTouchBarButton( syswk, BOX2BMPWIN_ID_BOXLIST, mes_boxbutton_01_02 );
+	ButtonBgFrmMake( syswk->app->wfrm, BOX2MAIN_WINFRM_BOXLIST_BTN, syswk->app->win[BOX2BMPWIN_ID_BOXLIST].win );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		ボックス移動処理のボックス名表示
+ *
+ * @param		syswk		ボックス画面システムワーク
+ * @param		tray		トレイ番号
+ * @param		idx			OAMフォントのインデックス
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+void BOX2BMP_BoxNameWrite( BOX2_SYS_WORK * syswk, u32 tray, u32 idx )
+{
+	STRBUF * str;
+	u32	x;
+
+	str = GFL_STR_CreateBuffer( BOX_TRAYNAME_BUFSIZE, HEAPID_BOX_APP_L );
+
+	BOXDAT_GetBoxName( syswk->dat->sv_box, tray, str );
+	GFL_BMP_Clear( syswk->app->fobj[idx].bmp, 0 );
+	x = ( BOX2OBJ_FNTOAM_BOXNAME_SX * 8 - PRINTSYS_GetStrWidth( str, syswk->app->font, 0 ) ) / 2;
+	PRINTSYS_PrintColor( syswk->app->fobj[idx].bmp, x, 0, str, syswk->app->font, FCOL_FNTOAM );
+
+	GFL_STR_DeleteBuffer( str );
+
+	BmpOam_ActorBmpTrans( syswk->app->fobj[idx].oam );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		ボックス移動処理のボックス名表示（位置指定）
+ *
+ * @param		syswk		ボックス画面システムワーク
+ * @param		pos			配置位置
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+void BOX2BMP_BoxMoveNameWrite( BOX2_SYS_WORK * syswk, u32 pos )
+{
+	pos = syswk->box_mv_pos + pos;
+	if( pos >= syswk->trayMax ){
+		pos -= syswk->trayMax;
+	}
+
+	BOX2BMP_BoxNameWrite( syswk, pos, BOX2MAIN_FNTOAM_TRAY_NAME );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		ボックス移動処理の格納数表示
+ *
+ * @param		syswk		ボックス画面システムワーク
+ * @param		tray		トレイ番号
+ * @param		idx			OAMフォントのインデックス
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+void BOX2BMP_WriteTrayNum( BOX2_SYS_WORK * syswk, u32 tray, u32 idx )
+{
+	STRBUF * str;
+	u32	num;
+
+	str = GFL_MSG_CreateString( syswk->app->mman, mes_boxmenu_02_20 );
+	num = BOXDAT_GetPokeExistCount( syswk->dat->sv_box, tray );
+
+	WORDSET_RegisterNumber( syswk->app->wset, 0, num, 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+	WORDSET_ExpandStr( syswk->app->wset, syswk->app->exp, str );
+
+	GFL_BMP_Clear( syswk->app->fobj[idx].bmp, 0 );
+	if( num == BOX_MAX_POS ){
+		PRINTSYS_PrintColor(
+			syswk->app->fobj[idx].bmp, 0, 0, syswk->app->exp, syswk->app->nfnt, FCOL_FNTOAM_RED );
+	}else{
+		PRINTSYS_PrintColor(
+			syswk->app->fobj[idx].bmp, 0, 0, syswk->app->exp, syswk->app->nfnt, FCOL_FNTOAM );
+	}
+
+	GFL_STR_DeleteBuffer( str );
+
+	BmpOam_ActorBmpTrans( syswk->app->fobj[idx].oam );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		マーキングフレームのボタン描画
+ *
+ * @param		syswk		ボックス画面システムワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+void BOX2BMP_MarkingButtonPut( BOX2_SYS_WORK * syswk )
+{
+	MakeNormalButton( syswk, BMPWIN_MARK_ENTER, mes_boxbutton_03_01 );
+	MakeNormalButton( syswk, BMPWIN_MARK_CANCEL, mes_boxbutton_03_02 );
+
+	BGWINFRM_PaletteChange(
+		syswk->app->wfrm, BOX2MAIN_WINFRM_MARK,
+		BMPWIN_MARK_ENTER_PX, BMPWIN_MARK_ENTER_PY,
+		BMPWIN_MARK_ENTER_SX, BMPWIN_MARK_ENTER_SY,
+		BOX2MAIN_BG_PAL_SELWIN );
+	BGWINFRM_PaletteChange(
+		syswk->app->wfrm, BOX2MAIN_WINFRM_MARK,
+		BMPWIN_MARK_CANCEL_PX, BMPWIN_MARK_CANCEL_PY,
+		BMPWIN_MARK_CANCEL_SX, BMPWIN_MARK_CANCEL_SY,
+		BOX2MAIN_BG_PAL_SELWIN );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		マーキングフレームににBMPWINをセット
+ *
+ * @param		syswk		ボックス画面システムワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+void BOX2BMP_MarkingButtonFrmPut( BOX2_SYS_WORK * syswk )
+{
+	BGWINFRM_BmpWinOn( syswk->app->wfrm, BOX2MAIN_WINFRM_MARK, syswk->app->win[BMPWIN_MARK_ENTER].win );
+	BGWINFRM_BmpWinOn( syswk->app->wfrm, BOX2MAIN_WINFRM_MARK, syswk->app->win[BMPWIN_MARK_CANCEL].win );
+	BOX2BMP_MarkingButtonPut( syswk );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		メニュー作成
+ *
+ * @param		syswk		ボックス画面システムワーク
+ * @param		list		メニューリスト
+ * @param		max			メニュー数
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+void BOX2BMP_MenuStrPrint( BOX2_SYS_WORK * syswk, const BOX2BMP_BUTTON_LIST * list, u32 max )
+{
+	u32	i;
+	u16	sx, sy;
+
+	BGWINFRM_SizeGet( syswk->app->wfrm, BOX2MAIN_WINFRM_MENU1, &sx, &sy );
+
+	for( i=0; i<max; i++ ){
+		if( list[max-1-i].type == BOX2BMP_BUTTON_TYPE_WHITE ){
+			MakeNormalButton( syswk, BOX2BMPWIN_ID_MENU6-i, list[max-1-i].strID );
+			BGWINFRM_PaletteChange(
+				syswk->app->wfrm, BOX2MAIN_WINFRM_MENU6-i, 0, 0, sx, sy, BOX2MAIN_BG_PAL_SELWIN );
+		}else{
+/*
+			PokeMoveButtonPut( syswk, BOX2BMPWIN_ID_MENU6-i, list[max-1-i].strID );
+			BGWINFRM_PaletteChange(
+				syswk->app->wfrm, BOX2MAIN_WINFRM_MENU6-i, 0, 0, sx, sy, 2 );
+*/
+		}
+	}
+	// いらないものは消す
+	for( i=max; i<6; i++ ){
+		GFL_BMP_Clear( GFL_BMPWIN_GetBmp(syswk->app->win[BOX2BMPWIN_ID_MENU6-i].win), 0 );
+		GFL_BMPWIN_TransVramCharacter( syswk->app->win[BOX2BMPWIN_ID_MENU6-i].win );
+	}
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		メニュー非表示
+ *
+ * @param		syswk		ボックス画面システムワーク
+ * @param		max			メニュー数
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+void BOX2BMP_MenuVanish( BOX2_SYS_WORK * syswk, u32 max )
+{
+	u32	i;
+
+	for( i=0; i<max; i++ ){
+		ClearScreen( &syswk->app->win[BOX2BMPWIN_ID_MENU5-i] );
+	}
+}
+
+
+//============================================================================================
+//	システムウィンドウ
+//============================================================================================
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		システムウィンドウ表示
+ *
+ * @param		syswk		ボックス画面システムワーク
+ * @param		win			BMPWIN
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+static void SysWinPut( BOX2_SYS_WORK * syswk, GFL_BMPWIN * win )
+{
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(win), 15 );
+	BmpWinFrame_Write(
+		win, WINDOW_TRANS_OFF,
+		GFL_ARCUTIL_TRANSINFO_GetPos(syswk->app->syswinInfo), BOX2MAIN_BG_PAL_SYSWIN );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		システムウィンドウ非表示（ＶＢＬＡＮＫで転送）
+ *
+ * @param		appwk		ボックス画面アプリワーク
+ * @param		winID		BMPWIN ID
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+void BOX2BMP_SysWinVanish( BOX2_APP_WORK * appwk, u32 winID )
+{
+	BmpWinFrame_Clear( appwk->win[winID].win, WINDOW_TRANS_ON_V );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		システムウィンドウ非表示（即転送）
+ *
+ * @param		appwk		ボックス画面アプリワーク
+ * @param		winID		BMPWIN ID
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+void BOX2BMP_SysWinVanishTrans( BOX2_APP_WORK * appwk, u32 winID )
+{
+	BmpWinFrame_Clear( appwk->win[winID].win, WINDOW_TRANS_ON );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		システムメッセージ表示
+ *
+ * @param		syswk		ボックス画面システムワーク
+ * @param		strID		文字列ＩＤ
+ * @param		winID		BMPWIN ID
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+static void SysMesPut( BOX2_SYS_WORK * syswk, u32 strID, u32 winID )
+{
+	GFL_MSGDATA * man = BoxMsgManGet();
+
+	SysWinPut( syswk, syswk->app->win[winID].win );
+	ExStrPrint(
+		syswk->app, winID, man, strID, 0, 0, syswk->app->font, FCOL_W_BLACK );
+	PrintScreenTrans( &syswk->app->win[winID] );
+
+	GFL_MSG_Delete( man );
+
+	BOX2OBJ_VanishTouchBarButton( syswk );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		ボックス終了メッセージ表示
+ *
+ * @param		syswk		ボックス画面システムワーク
+ * @param		winID		BMPWIN ID
+ * @param		flg			タッチ or キー
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+void BOX2BMP_BoxEndMsgPut( BOX2_SYS_WORK * syswk, u32 winID, BOOL flg )
+{
+	if( flg == TRUE ){
+		SysMesPut( syswk, msg_boxmes_01_12, winID );
+	}else{
+		SysMesPut( syswk, msg_boxmes_01_13, winID );
+	}
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		アイテム取得チェックメッセージ表示
+ *
+ * @param		syswk		ボックス画面システムワーク
+ * @param		item		アイテム番号
+ * @param		winID		BMPWIN ID
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+void BOX2BMP_ItemGetCheckMsgPut( BOX2_SYS_WORK * syswk, u32 item, u32 winID )
+{
+	WORDSET_RegisterItemName( syswk->app->wset, 0, item );
+	SysMesPut( syswk, msg_boxmes_01_24, winID );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		メール取得エラーメッセージ表示
+ *
+ * @param		syswk		ボックス画面システムワーク
+ * @param		winID		BMPWIN ID
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+void BOX2BMP_MailGetErrorPut( BOX2_SYS_WORK * syswk, u32 winID )
+{
+	SysMesPut( syswk, msg_boxmes_01_25, winID );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		メール移動エラーメッセージ表示
+ *
+ * @param		syswk		ボックス画面システムワーク
+ * @param		winID		BMPWIN ID
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+void BOX2BMP_MailMoveErrorPut( BOX2_SYS_WORK * syswk, u32 winID )
+{
+	SysMesPut( syswk, msg_boxmes_04_01, winID );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		アイテム取得メッセージ表示
+ *
+ * @param		syswk		ボックス画面システムワーク
+ * @param		item		アイテム番号
+ * @param		winID		BMPWIN ID
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+void BOX2BMP_ItemGetMsgPut( BOX2_SYS_WORK * syswk, u32 item, u32 winID )
+{
+	WORDSET_RegisterItemName( syswk->app->wset, 0, item );
+	SysMesPut( syswk, msg_boxmes_01_16, winID );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		アイテム取得エラーメッセージ表示
+ *
+ * @param		syswk		ボックス画面システムワーク
+ * @param		winID		BMPWIN ID
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+void BOX2BMP_ItemGetErrorPut( BOX2_SYS_WORK * syswk, u32 winID )
+{
+	SysMesPut( syswk, msg_boxmes_01_15, winID );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		アイテムセットメッセージ表示
+ *
+ * @param		syswk		ボックス画面システムワーク
+ * @param		item		アイテム番号
+ * @param		winID		BMPWIN ID
+ *
+ * @return	none
+ *
+ *	item = 0 のときは、はっきんだまを持たせようとしたときのエラーとする
+ */
+//--------------------------------------------------------------------------------------------
+void BOX2BMP_ItemSetMsgPut( BOX2_SYS_WORK * syswk, u32 item, u32 winID )
+{
+	if( item == 0 ){
+		WORDSET_RegisterItemName( syswk->app->wset, 0, ITEM_HAKKINDAMA );
+		SysMesPut( syswk, msg_boxmes_05_01, winID );
+	}else if( ITEM_CheckMail( item ) == TRUE ){
+		SysMesPut( syswk, msg_boxmes_06_06, winID );
+	}else{
+		WORDSET_RegisterItemName( syswk->app->wset, 0, item );
+		SysMesPut( syswk, msg_boxmes_01_17, winID );
+	}
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		マーキングメッセージ表示
+ *
+ * @param		syswk		ボックス画面システムワーク
+ * @param		winID		BMPWIN ID
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+void BOX2BMP_MarkingMsgPut( BOX2_SYS_WORK * syswk, u32 winID )
+{
+	SysMesPut( syswk, msg_boxmes_01_37, winID );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		逃がすメッセージ表示
+ *
+ * @param		syswk		ボックス画面システムワーク
+ * @param		msgID		メッセージＩＤ
+ * @param		winID		BMPWIN ID
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+void BOX2BMP_PokeFreeMsgPut( BOX2_SYS_WORK * syswk, u32 msgID, u32 winID )
+{
+	u32	str;
+
+	switch( msgID ){
+	case BOX2BMP_MSGID_POKEFREE_CHECK:	// ほんとうに　にがしますか？
+		str = msg_boxmes_01_03;
+		break;
+
+	case BOX2BMP_MSGID_POKEFREE_ENTER:	// @0を　そとに　にがしてあげた
+		str = msg_boxmes_01_04;
+		WORDSET_RegisterPokeNickNamePPP(
+			syswk->app->wset, 0, BOX2MAIN_PPPGet(syswk,syswk->tray,syswk->get_pos) );
+		break;
+
+	case BOX2BMP_MSGID_POKEFREE_BY:		// ばいばい　@0！
+		str = msg_boxmes_01_05;
+		WORDSET_RegisterPokeNickNamePPP(
+			syswk->app->wset, 0, BOX2MAIN_PPPGet(syswk,syswk->tray,syswk->get_pos) );
+		break;
+
+	case BOX2BMP_MSGID_POKEFREE_EGG:	// タマゴを　にがすことは　できません！
+		str = msg_boxmes_01_33;
+		break;
+
+	case BOX2BMP_MSGID_POKEFREE_RETURN:	// @0が　もどってきちゃった！
+		str = msg_boxmes_01_34;
+		WORDSET_RegisterPokeNickNamePPP(
+			syswk->app->wset, 0, BOX2MAIN_PPPGet(syswk,syswk->tray,syswk->get_pos) );
+		break;
+
+	case BOX2BMP_MSGID_POKEFREE_FEAR:	// しんぱい　だったのかな……
+		str = msg_boxmes_01_35;
+		break;
+
+	case BOX2BMP_MSGID_POKEFREE_ONE:	// たたかうポケモンが　いなくなります！
+		str = msg_boxmes_01_07;
+		break;
+	}
+
+	SysMesPut( syswk, str, winID );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		ボックステーマ変更メッセージ表示
+ *
+ * @param		syswk		ボックス画面システムワーク
+ * @param		msgID		メッセージＩＤ
+ * @param		winID		BMPWIN ID
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+void BOX2BMP_BoxThemaMsgPut( BOX2_SYS_WORK * syswk, u32 msgID, u32 winID )
+{
+	u32	str;
+
+	switch( msgID ){
+	case BOX2BMP_MSGID_THEMA_INIT:		// このボックスを　どうしますか？
+		str = msg_boxmes_01_08;
+		break;
+
+	case BOX2BMP_MSGID_THEMA_JUMP:		// どのボックスに　ジャンプしますか？
+		str = msg_boxmes_01_09;
+		break;
+
+	case BOX2BMP_MSGID_THEMA_MES:			// どのテーマに　しますか？
+		str = msg_boxmes_01_10;
+		break;
+
+	case BOX2BMP_MSGID_THEMA_WALL:		// どの　かべがみに　しますか？
+		str = msg_boxmes_01_11;
+		break;
+	}
+
+	SysMesPut( syswk, str, winID );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		ポケモン選択メッセージ表示
+ *
+ * @param		syswk		ボックス画面システムワーク
+ * @param		pos			ポケモンの位置
+ * @param		msgID		メッセージＩＤ
+ * @param		winID		BMPWIN ID
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+void BOX2BMP_PokeSelectMsgPut( BOX2_SYS_WORK * syswk, u32 pos, u32 msgID, u32 winID )
+{
+	u32	str;
+
+	switch( msgID ){
+	case BOX2BMP_MSGID_PARTYIN_INIT:	// ポケモンを　タッチ！
+		str = msg_boxmes_01_19;
+		break;
+
+	case BOX2BMP_MSGID_PARTYIN_MENU:	// @01を　どうする？
+		str = msg_boxmes_01_01;
+		WORDSET_RegisterPokeNickNamePPP(
+			syswk->app->wset, 0, BOX2MAIN_PPPGet(syswk,syswk->tray,syswk->get_pos) );
+		break;
+
+	case BOX2BMP_MSGID_PARTYIN_ERR:		// てもちが　いっぱいです！
+		str = msg_boxmes_01_06;
+		break;
+
+	case BOX2BMP_MSGID_PARTYOUT_INIT:	// どこへ　あずける？
+		str = msg_boxmes_01_20;
+		break;
+
+	case BOX2BMP_MSGID_PARTYOUT_BOXMAX:	// このボックスは　いっぱいだ！
+		str = msg_boxmes_01_14;
+		break;
+
+/*		
+	case BOX2BMP_MSGID_PARTYOUT_CAPSULE:	// ボールカプセルを　はずしてください！
+		str = msg_boxmes_01_31;
+		break;
+*/
+
+	case BOX2BMP_MSGID_PARTYOUT_MAIL:	// メールを　はずしてください！
+		str = msg_boxmes_01_32;
+		break;
+	}
+
+	SysMesPut( syswk, str, winID );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		道具整理メッセージ表示
+ *
+ * @param		syswk		ボックス画面システムワーク
+ * @param		msgID		メッセージＩＤ
+ * @param		winID		BMPWIN ID
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+void BOX2BMP_ItemArrangeMsgPut( BOX2_SYS_WORK * syswk, u32 msgID, u32 winID )
+{
+	u32	str;
+
+	switch( msgID ){
+	case BOX2BMP_MSGID_ITEM_A_SET:				// どうぐを　もたせます
+		str = msg_boxmes_01_30;
+		break;
+
+	case BOX2BMP_MSGID_ITEM_A_INIT:				// @0を　どうしますか？
+		str = msg_boxmes_01_26;
+		WORDSET_RegisterItemName( syswk->app->wset, 0, syswk->app->get_item );
+		break;
+
+	case BOX2BMP_MSGID_ITEM_A_RET_CHECK:	// @0を　しまいますか？
+		str = msg_boxmes_01_28;
+		WORDSET_RegisterItemName( syswk->app->wset, 0, syswk->app->get_item );
+		break;
+
+	case BOX2BMP_MSGID_ITEM_A_RET:			// @0を　バッグに　いれた！
+		str = msg_boxmes_01_29;
+		WORDSET_RegisterItemName( syswk->app->wset, 0, syswk->app->get_item );
+		break;
+
+	case BOX2BMP_MSGID_ITEM_A_MAIL:			// メールをしまうことは　できません！
+		str = msg_boxmes_01_25;
+		break;
+
+	case BOX2BMP_MSGID_ITEM_A_EGG:			// タマゴは　どうぐを　もてません！
+		str = msg_boxmes_01_36;
+		break;
+
+	case BOX2BMP_MSGID_ITEM_A_MAX:			// バッグが　いっぱいです！
+		str = msg_boxmes_01_15;
+		break;
+
+	case BOX2BMP_MSGID_ITEM_A_MAIL_MOVE:	// メールは　いどうできません！
+		str = msg_boxmes_06_04;
+		break;
+	}
+
+	SysMesPut( syswk, str, winID );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		移動エラーメッセージ表示
+ *
+ * @param		syswk		ボックス画面システムワーク
+ * @param		errID		エラーＩＤ
+ * @param		winID		BMPWIN ID
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+void BOX2BMP_PutPokeMoveErrMsg( BOX2_SYS_WORK * syswk, u32 errID, u32 winID )
+{
+	u32	str;
+
+	switch( errID ){
+	case BOX2MAIN_ERR_CODE_MAIL:			// メールを持っている
+		str = msg_boxmes_06_01;
+		break;
+
+	case BOX2MAIN_ERR_CODE_BATTLE:		// 戦えるポケモンがいなくなる
+		str = msg_boxmes_06_03;
+		break;
+
+	case BOX2MAIN_ERR_CODE_EGG:				// タマゴはえらべない（バトルボックス専用）
+		str = msg_boxmes_06_07;
+		break;
+	}
+
+	SysMesPut( syswk, str, winID );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		「ねかせる」用メッセージ表示
+ *
+ * @param		syswk		ボックス画面システムワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+void BOX2BMP_SleepSelectMsgPut( BOX2_SYS_WORK * syswk )
+{
+	WORDSET_RegisterPokeNickNamePPP( syswk->app->wset, 0, BOX2MAIN_PPPGet(syswk,syswk->tray,syswk->get_pos) );
+	SysMesPut( syswk, msg_boxmes_06_08, BOX2BMPWIN_ID_MSG4 );
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//============================================================================================
+//============================================================================================
+//============================================================================================
+//============================================================================================
+//============================================================================================
+//	旧処理
+//============================================================================================
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1160,938 +2045,6 @@ u32 BOX2BMP_PokeItemInfoWrite( BOX2_SYS_WORK * syswk, u16 item )
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		ボタン作成（ボタン全体がＢＭＰ）
- *
- * @param		syswk		ボックス画面システムワーク
- * @param		winID		BMPWIN ID
- * @param		strID		文字列ＩＤ
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-static void MakeBmpButton( BOX2_SYS_WORK * syswk, u32 winID, const u32 strID, u16 cgx, PRINTSYS_LSB	col )
-{
-	GFL_BMPWIN * win;
-	GFL_BMP_DATA * bmp;
-	GFL_BMP_DATA * button;
-	STRBUF * str;
-	void * buf;
-	u8 * raw;
-	NNSG2dCharacterData * chr;
-	u8	frm, px, py, sx, sy;
-	u8	i;
-
-	win = syswk->app->win[ winID ].win;
-	bmp = GFL_BMPWIN_GetBmp( win );
-	frm = GFL_BMPWIN_GetFrame( win );
-	px  = GFL_BMPWIN_GetPosX( win );
-	py  = GFL_BMPWIN_GetPosY( win );
-	sx  = GFL_BMPWIN_GetSizeX( win );
-	sy  = GFL_BMPWIN_GetSizeY( win );
-
-	GFL_BMP_Clear( bmp, FNTCOL_SELWIN_OFF_B );
-
-	buf = GFL_ARC_UTIL_LoadBGCharacter( ARCID_BOX2_GRA, NARC_box_gra_selwin_lz_NCGR, TRUE, &chr, HEAPID_BOX_APP_L );
-	raw = chr->pRawData;
-	cgx *= 0x20;
-
-	// 左上
-	button = GFL_BMP_CreateWithData( &raw[cgx+0x20*0], 8, 8, GFL_BMP_16_COLOR, HEAPID_BOX_APP_L );
-	GFL_BMP_Print( button, bmp, 0, 0, 0, 0, 8, 8, GF_BMPPRT_NOTNUKI );
-	GFL_BMP_Delete( button );
-	// 右上
-	button = GFL_BMP_CreateWithData( &raw[cgx+0x20*2], 8, 8, GFL_BMP_16_COLOR, HEAPID_BOX_APP_L );
-	GFL_BMP_Print( button, bmp, 0, 0, (sx-1)*8, 0, 8, 8, GF_BMPPRT_NOTNUKI );
-	GFL_BMP_Delete( button );
-	// 左下
-	button = GFL_BMP_CreateWithData( &raw[cgx+0x20*9], 8, 8, GFL_BMP_16_COLOR, HEAPID_BOX_APP_L );
-	GFL_BMP_Print( button, bmp, 0, 0, 0, (sy-1)*8, 8, 8, GF_BMPPRT_NOTNUKI );
-	GFL_BMP_Delete( button );
-	// 右下
-	button = GFL_BMP_CreateWithData( &raw[cgx+0x20*11], 8, 8, GFL_BMP_16_COLOR, HEAPID_BOX_APP_L );
-	GFL_BMP_Print( button, bmp, 0, 0, (sx-1)*8, (sy-1)*8, 8, 8, GF_BMPPRT_NOTNUKI );
-	GFL_BMP_Delete( button );
-
-	// 左
-	button = GFL_BMP_CreateWithData( &raw[cgx+0x20*3], 8, 8, GFL_BMP_16_COLOR, HEAPID_BOX_APP_L );
-	for( i=1; i<sy-1; i++ ){
-		GFL_BMP_Print( button, bmp, 0, 0, 0, i*8, 8, 8, GF_BMPPRT_NOTNUKI );
-	}
-	GFL_BMP_Delete( button );
-	// 右
-	button = GFL_BMP_CreateWithData( &raw[cgx+0x20*5], 8, 8, GFL_BMP_16_COLOR, HEAPID_BOX_APP_L );
-	for( i=1; i<sy-1; i++ ){
-		GFL_BMP_Print( button, bmp, 0, 0, (sx-1)*8, i*8, 8, 8, GF_BMPPRT_NOTNUKI );
-	}
-	GFL_BMP_Delete( button );
-	// 上
-	button = GFL_BMP_CreateWithData( &raw[cgx+0x20*1], 8, 8, GFL_BMP_16_COLOR, HEAPID_BOX_APP_L );
-	for( i=1; i<sx-1; i++ ){
-		GFL_BMP_Print( button, bmp, 0, 0, i*8, 0, 8, 8, GF_BMPPRT_NOTNUKI );
-	}
-	GFL_BMP_Delete( button );
-	// 下
-	button = GFL_BMP_CreateWithData( &raw[cgx+0x20*10], 8, 8, GFL_BMP_16_COLOR, HEAPID_BOX_APP_L );
-	for( i=1; i<sx-1; i++ ){
-		GFL_BMP_Print( button, bmp, 0, 0, i*8, (sy-1)*8, 8, 8, GF_BMPPRT_NOTNUKI );
-	}
-	GFL_BMP_Delete( button );
-
-	GFL_HEAP_FreeMemory( buf );
-
-	str = GFL_MSG_CreateString( syswk->app->mman, strID );
-	PRINTTOOL_PrintColor(
-		&syswk->app->win[winID], syswk->app->que, 
-		sx*8/2, 4, str, syswk->app->font, col, PRINTTOOL_MODE_CENTER );
-	GFL_STR_DeleteBuffer( str );
-
-//	GFL_BMPWIN_TransVramCharacter( win );
-}
-
-#define	BMPBUTTON_CHR_NORMAL		( 0 )
-#define	BMPBUTTON_CHR_TOUCHBAR	( BOX2MAIN_SELWIN_CGX_SIZ )
-
-static void ButtonPut_S( BOX2_SYS_WORK * syswk, u32 winID, const u32 strID )
-{
-	MakeBmpButton( syswk, winID, strID, BMPBUTTON_CHR_NORMAL, FCOL_SELWIN_OFF );
-}
-
-static void PutTouchBarButton( BOX2_SYS_WORK * syswk, u32 winID, const u32 strID )
-{
-	MakeBmpButton( syswk, winID, strID, BMPBUTTON_CHR_TOUCHBAR, FCOL_SELWIN_OFF );
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * @brief		ボタンＢＧウィンドウフレーム作成
- *
- * @param		wk			BGウィンフレームワーク
- * @param		index		BGウィンフレームの番号
- * @param		win			BMPWIN
- *
- * @return	none
- *
- *	枠なしのウィンドウ
- */
-//--------------------------------------------------------------------------------------------
-static void ButtonBgFrmMake2( BGWINFRM_WORK * wk, u32 index, GFL_BMPWIN * win )
-{
-	BGWINFRM_Add(
-		wk, index,
-		GFL_BMPWIN_GetFrame( win ),
-		GFL_BMPWIN_GetSizeX( win ),
-		GFL_BMPWIN_GetSizeY( win ) );
-	BGWINFRM_BmpWinOn( wk, index, win );
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * @brief		ＢＧウィンドウフレーム作成：各メニュー
- *
- * @param		appwk		ボックス画面アプリワーク
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-void BOX2BMP_PokeMenuBgFrmWkMake( BOX2_APP_WORK * appwk )
-{
-	ButtonBgFrmMake2( appwk->wfrm, BOX2MAIN_WINFRM_MENU1, appwk->win[BOX2BMPWIN_ID_MENU1].win );
-	ButtonBgFrmMake2( appwk->wfrm, BOX2MAIN_WINFRM_MENU2, appwk->win[BOX2BMPWIN_ID_MENU2].win );
-	ButtonBgFrmMake2( appwk->wfrm, BOX2MAIN_WINFRM_MENU3, appwk->win[BOX2BMPWIN_ID_MENU3].win );
-	ButtonBgFrmMake2( appwk->wfrm, BOX2MAIN_WINFRM_MENU4, appwk->win[BOX2BMPWIN_ID_MENU4].win );
-	ButtonBgFrmMake2( appwk->wfrm, BOX2MAIN_WINFRM_MENU5, appwk->win[BOX2BMPWIN_ID_MENU5].win );
-	ButtonBgFrmMake2( appwk->wfrm, BOX2MAIN_WINFRM_MENU6, appwk->win[BOX2BMPWIN_ID_MENU6].win );
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * @brief		ＢＧウィンドウフレーム作成：「てもちポケモン」
- *
- * @param		appwk		ボックス画面アプリワーク
- *
- * @return	none
- *
- * @li	バトルボックスの場合は「バトルボックス」
- */
-//--------------------------------------------------------------------------------------------
-void BOX2BMP_TemochiButtonBgFrmWkMake( BOX2_SYS_WORK * syswk )
-{
-	if( syswk->dat->callMode == BOX_MODE_BATTLE ){
-		PutTouchBarButton( syswk, BOX2BMPWIN_ID_TEMOCHI, mes_boxbutton_01_03 );
-	}else{
-		PutTouchBarButton( syswk, BOX2BMPWIN_ID_TEMOCHI, mes_boxbutton_01_01 );
-	}
-	ButtonBgFrmMake2( syswk->app->wfrm, BOX2MAIN_WINFRM_POKE_BTN, syswk->app->win[BOX2BMPWIN_ID_TEMOCHI].win );
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * @brief		ＢＧウィンドウフレーム作成：「ボックスリスト」
- *
- * @param		appwk		ボックス画面アプリワーク
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-void BOX2BMP_BoxListButtonBgFrmWkMake( BOX2_SYS_WORK * syswk )
-{
-	PutTouchBarButton( syswk, BOX2BMPWIN_ID_BOXLIST, mes_boxbutton_01_02 );
-	ButtonBgFrmMake2( syswk->app->wfrm, BOX2MAIN_WINFRM_BOXLIST_BTN, syswk->app->win[BOX2BMPWIN_ID_BOXLIST].win );
-}
-
-
-//--------------------------------------------------------------------------------------------
-/**
- * @brief		手持ちポケモンフレームにBMPWINをセット
- *
- * @param		appwk		ボックス画面アプリワーク
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-/*
-void BOX2BMP_PartyCngButtonFrmPut( BOX2_APP_WORK * appwk )
-{
-	BGWINFRM_BmpWinOn( appwk->wfrm, BOX2MAIN_WINFRM_PARTY, appwk->win[BMPWIN_PARTY_CNG].win );
-}
-*/
-
-
-
-
-
-//--------------------------------------------------------------------------------------------
-/**
- * @brief		トレイ名表示
- *
- * @param		syswk		ボックス画面システムワーク
- * @param		cgx			背景キャラデータ
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-/*
-void BOX2BMP_TrayNamePut( BOX2_SYS_WORK * syswk, u8 * cgx )
-{
-	GFL_BMPWIN * win;
-	u8 * chr;
-	STRBUF * str;
-	u8	sx, sy;
-
-	win = syswk->app->win[BOX2BMPWIN_ID_TRAY_NAME].win;
-	chr = GFL_BMP_GetCharacterAdrs( GFL_BMPWIN_GetBmp(win) );
-	sx  = GFL_BMPWIN_GetScreenSizeX( win );
-	sy  = GFL_BMPWIN_GetScreenSizeY( win );
-	GFL_STD_MemCopy32( cgx, chr, sx*sy*0x20 );
-
-	str = GFL_STR_CreateBuffer( BOX_TRAYNAME_BUFSIZE, HEAPID_BOX_APP );
-	BOXDAT_GetBoxName( syswk->dat->sv_box, syswk->tray, str );
-	PRINTTOOL_PrintColor(
-		&syswk->app->win[BOX2BMPWIN_ID_TRAY_NAME], syswk->app->que,
-		sx*8/2, sy*8/2-8, str, syswk->app->font, FCOL_TRAYNAME, PRINTTOOL_MODE_CENTER );
-
-	GFL_STR_DeleteBuffer( str );
-}
-void BOX2BMP_TrayNamePut( BOX2_SYS_WORK * syswk, u8 * cgx, u32 chr, u32 sx, u32 sy )
-{
-	GF_BGL_BMPWIN * win;
-	STRBUF * str;
-	u32	i;
-
-	win = sys_AllocMemoryLo( HEAPID_BOX_APP, sizeof(GF_BGL_BMPWIN) );
-	GF_BGL_BmpWinAdd( syswk->app->bgl, win, GFL_BG_FRAME3_M, 0, 0, sx, sy, 0, chr );
-	MI_CpuCopy32( cgx, win->chrbuf, sx*sy*0x20 );
-
-	str = STRBUF_Create( BOX_TRAYNAME_BUFSIZE, HEAPID_BOX_APP );
-	BOXDAT_GetBoxName( syswk->dat->sv_box, syswk->tray, str );
-	StrPrintCore( win, str, sx*8/2, sy*8/2-8, FONT_SYSTEM, FNTCOL_TRAYNAME, STRPRINT_MODE_CENTER );
-	STRBUF_Delete( str );
-
-	GF_BGL_BmpWinCgxOn( win );
-	GF_BGL_BmpWinDel( win );
-	sys_FreeMemoryEz( win );
-}
-*/
-
-//--------------------------------------------------------------------------------------------
-/**
- * ボックス移動処理のボックス名・収納数表示
- *
- * @param	syswk	ボックス画面システムワーク
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-void BOX2BMP_BoxNameWrite( BOX2_SYS_WORK * syswk, u32 tray, u32 idx )
-{
-	STRBUF * str;
-	u32	x;
-
-	str = GFL_STR_CreateBuffer( BOX_TRAYNAME_BUFSIZE, HEAPID_BOX_APP_L );
-
-	BOXDAT_GetBoxName( syswk->dat->sv_box, tray, str );
-	GFL_BMP_Clear( syswk->app->fobj[idx].bmp, 0 );
-	x = ( BOX2OBJ_FNTOAM_BOXNAME_SX * 8 - PRINTSYS_GetStrWidth( str, syswk->app->font, 0 ) ) / 2;
-	PRINTSYS_PrintColor( syswk->app->fobj[idx].bmp, x, 0, str, syswk->app->font, FCOL_FNTOAM );
-
-	GFL_STR_DeleteBuffer( str );
-
-	BmpOam_ActorBmpTrans( syswk->app->fobj[idx].oam );
-}
-
-void BOX2BMP_BoxMoveNameWrite( BOX2_SYS_WORK * syswk, u32 pos )
-{
-	pos = syswk->box_mv_pos + pos;
-	if( pos >= syswk->trayMax ){
-		pos -= syswk->trayMax;
-	}
-
-	BOX2BMP_BoxNameWrite( syswk, pos, BOX2MAIN_FNTOAM_TRAY_NAME );
-
-/*
-	STRBUF * str;
-	u32	x;
-
-	pos = syswk->box_mv_pos + pos;
-	if( pos >= syswk->trayMax ){
-		pos -= syswk->trayMax;
-	}
-
-	str = GFL_STR_CreateBuffer( BOX_TRAYNAME_BUFSIZE, HEAPID_BOX_APP );
-
-	BOXDAT_GetBoxName( syswk->dat->sv_box, pos, str );
-	GFL_BMP_Clear( syswk->app->fobj[BOX2MAIN_FNTOAM_TRAY_NAME].bmp, 0 );
-	x = ( BOX2OBJ_FNTOAM_BOXNAME_SX * 8 - PRINTSYS_GetStrWidth( str, syswk->app->font, 0 ) ) / 2;
-	PRINTSYS_PrintColor( syswk->app->fobj[BOX2MAIN_FNTOAM_TRAY_NAME].bmp, x, 0, str, syswk->app->font, FCOL_FNTOAM );
-
-	GFL_STR_DeleteBuffer( str );
-
-	BmpOam_ActorBmpTrans( syswk->app->fobj[BOX2MAIN_FNTOAM_TRAY_NAME].oam );
-*/
-}
-
-// 格納数書き込み
-void BOX2BMP_WriteTrayNum( BOX2_SYS_WORK * syswk, u32 tray, u32 idx )
-{
-	STRBUF * str;
-	u32	num;
-
-	str = GFL_MSG_CreateString( syswk->app->mman, mes_boxmenu_02_20 );
-	num = BOXDAT_GetPokeExistCount( syswk->dat->sv_box, tray );
-
-	WORDSET_RegisterNumber( syswk->app->wset, 0, num, 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
-	WORDSET_ExpandStr( syswk->app->wset, syswk->app->exp, str );
-
-	GFL_BMP_Clear( syswk->app->fobj[idx].bmp, 0 );
-	if( num == BOX_MAX_POS ){
-		PRINTSYS_PrintColor(
-			syswk->app->fobj[idx].bmp, 0, 0, syswk->app->exp, syswk->app->nfnt, FCOL_FNTOAM_RED );
-	}else{
-		PRINTSYS_PrintColor(
-			syswk->app->fobj[idx].bmp, 0, 0, syswk->app->exp, syswk->app->nfnt, FCOL_FNTOAM );
-	}
-
-	GFL_STR_DeleteBuffer( str );
-
-	BmpOam_ActorBmpTrans( syswk->app->fobj[idx].oam );
-}
-
-
-
-//--------------------------------------------------------------------------------------------
-/**
- * @brief		「ポケモンいどう」ボタン作成（持ち物整理モードの場合は「もちものせいり」）
- *
- * @param		syswk		ボックス画面システムワーク
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-/*
-void BOX2BMP_ButtonPutIdou( BOX2_SYS_WORK * syswk )
-{
-	if( syswk->dat->callMode == BOX_MODE_ITEM ){
-		PokeMoveButtonPut( syswk, BOX2BMPWIN_ID_BOXLIST, mes_boxbutton_01_05 );
-	}else{
-		PokeMoveButtonPut( syswk, BOX2BMPWIN_ID_BOXLIST, mes_boxbutton_01_02 );
-	}
-}
-*/
-
-
-
-//--------------------------------------------------------------------------------------------
-/**
- * ＢＧウィンドウフレーム内のボタンに文字列描画
- *
- * @param	appwk	ボックス画面アプリワーク
- * @param	winID	BMPWIN ID
- * @param	strID	文字列ＩＤ
- *
- * @return	none
- *
- *	マーキングフレーム、手持ちポケモンフレームなど
- */
-//--------------------------------------------------------------------------------------------
-/*
-static void FrmStrPut( BOX2_APP_WORK * appwk, u32 winID, u32 strID )
-{
-	STRBUF * str;
-	u8	px;
-
-	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(appwk->win[winID].win), FRMBUTTON_BG_COL );
-	px  = GFL_BMPWIN_GetSizeX( appwk->win[winID].win ) * 8 / 2;
-	str = GFL_MSG_CreateString( appwk->mman, strID );
-	PRINTTOOL_PrintColor(
-		&appwk->win[winID], appwk->que, 
-		px, 0, str, appwk->font, FCOL_FRMBUTTN_OFF, PRINTTOOL_MODE_CENTER );
-	GFL_STR_DeleteBuffer( str );
-
-//	GFL_BMPWIN_TransVramCharacter( &appwk->win[winID] );
-}
-*/
-
-//--------------------------------------------------------------------------------------------
-/**
- * マーキングフレームのボタン描画
- *
- * @param	appwk	ボックス画面アプリワーク
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-void BOX2BMP_MarkingButtonPut( BOX2_SYS_WORK * syswk )
-{
-/*
-	FrmStrPut( appwk, BMPWIN_MARK_ENTER, mes_boxbutton_03_01 );
-	FrmStrPut( appwk, BMPWIN_MARK_CANCEL, mes_boxbutton_03_02 );
-*/
-	ButtonPut_S( syswk, BMPWIN_MARK_ENTER, mes_boxbutton_03_01 );
-	ButtonPut_S( syswk, BMPWIN_MARK_CANCEL, mes_boxbutton_03_02 );
-
-	BGWINFRM_PaletteChange(
-		syswk->app->wfrm, BOX2MAIN_WINFRM_MARK,
-		BMPWIN_MARK_ENTER_PX, BMPWIN_MARK_ENTER_PY,
-		BMPWIN_MARK_ENTER_SX, BMPWIN_MARK_ENTER_SY,
-		BOX2MAIN_BG_PAL_SELWIN );
-	BGWINFRM_PaletteChange(
-		syswk->app->wfrm, BOX2MAIN_WINFRM_MARK,
-		BMPWIN_MARK_CANCEL_PX, BMPWIN_MARK_CANCEL_PY,
-		BMPWIN_MARK_CANCEL_SX, BMPWIN_MARK_CANCEL_SY,
-		BOX2MAIN_BG_PAL_SELWIN );
-}
-
-
-
-//--------------------------------------------------------------------------------------------
-/**
- * @brief		マーキングフレームににBMPWINをセット
- *
- * @param		appwk		ボックス画面アプリワーク
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-void BOX2BMP_MarkingButtonFrmPut( BOX2_SYS_WORK * syswk )
-{
-	BGWINFRM_BmpWinOn( syswk->app->wfrm, BOX2MAIN_WINFRM_MARK, syswk->app->win[BMPWIN_MARK_ENTER].win );
-	BGWINFRM_BmpWinOn( syswk->app->wfrm, BOX2MAIN_WINFRM_MARK, syswk->app->win[BMPWIN_MARK_CANCEL].win );
-	BOX2BMP_MarkingButtonPut( syswk );
-}
-
-
-//--------------------------------------------------------------------------------------------
-/**
- * メニュー作成
- *
- * @param	syswk	ボックス画面システムワーク
- * @param	list	メニューリスト
- * @param	max		メニュー数
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-void BOX2BMP_MenuStrPrint( BOX2_SYS_WORK * syswk, const BOX2BMP_BUTTON_LIST * list, u32 max )
-{
-	u32	i;
-	u16	sx, sy;
-
-	BGWINFRM_SizeGet( syswk->app->wfrm, BOX2MAIN_WINFRM_MENU1, &sx, &sy );
-
-	for( i=0; i<max; i++ ){
-		if( list[max-1-i].type == BOX2BMP_BUTTON_TYPE_WHITE ){
-			ButtonPut_S( syswk, BOX2BMPWIN_ID_MENU6-i, list[max-1-i].strID );
-			BGWINFRM_PaletteChange(
-				syswk->app->wfrm, BOX2MAIN_WINFRM_MENU6-i, 0, 0, sx, sy, BOX2MAIN_BG_PAL_SELWIN );
-		}else{
-/*
-			PokeMoveButtonPut( syswk, BOX2BMPWIN_ID_MENU6-i, list[max-1-i].strID );
-			BGWINFRM_PaletteChange(
-				syswk->app->wfrm, BOX2MAIN_WINFRM_MENU6-i, 0, 0, sx, sy, 2 );
-*/
-		}
-	}
-	// いらないものは消す
-	for( i=max; i<6; i++ ){
-		GFL_BMP_Clear( GFL_BMPWIN_GetBmp(syswk->app->win[BOX2BMPWIN_ID_MENU6-i].win), 0 );
-		GFL_BMPWIN_TransVramCharacter( syswk->app->win[BOX2BMPWIN_ID_MENU6-i].win );
-	}
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * メニュー非表示
- *
- * @param	syswk	ボックス画面システムワーク
- * @param	max		メニュー数
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-void BOX2BMP_MenuVanish( BOX2_SYS_WORK * syswk, u32 max )
-{
-	u32	i;
-
-	for( i=0; i<max; i++ ){
-		ClearScreen( &syswk->app->win[BOX2BMPWIN_ID_MENU5-i] );
-	}
-}
-
-
-
-//============================================================================================
-//	システムウィンドウ
-//============================================================================================
-
-//--------------------------------------------------------------------------------------------
-/**
- * システムウィンドウ表示
- *
- * @param	win		BMPWIN
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-static void SysWinPut( BOX2_SYS_WORK * syswk, GFL_BMPWIN * win )
-{
-	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(win), 15 );
-	BmpWinFrame_Write(
-		win, WINDOW_TRANS_OFF,
-		GFL_ARCUTIL_TRANSINFO_GetPos(syswk->app->syswinInfo), BOX2MAIN_BG_PAL_SYSWIN );
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * システムウィンドウ非表示（ＶＢＬＡＮＫで転送）
- *
- * @param	appwk	ボックス画面アプリワーク
- * @param	winID	BMPWIN ID
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-void BOX2BMP_SysWinVanish( BOX2_APP_WORK * appwk, u32 winID )
-{
-	BmpWinFrame_Clear( appwk->win[winID].win, WINDOW_TRANS_ON_V );
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * システムウィンドウ非表示（転送なし）
- *
- * @param	appwk	ボックス画面アプリワーク
- * @param	winID	BMPWIN ID
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-/*
-void BOX2BMP_SysWinVanishEz( BOX2_APP_WORK * appwk, u32 winID )
-{
-	BmpWinFrame_Clear( appwk->win[winID].win, WINDOW_TRANS_OFF );
-}
-*/
-
-//--------------------------------------------------------------------------------------------
-/**
- * システムウィンドウ非表示（即転送）
- *
- * @param	appwk	ボックス画面アプリワーク
- * @param	winID	BMPWIN ID
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-void BOX2BMP_SysWinVanishTrans( BOX2_APP_WORK * appwk, u32 winID )
-{
-	BmpWinFrame_Clear( appwk->win[winID].win, WINDOW_TRANS_ON );
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * システムメッセージ表示
- *
- * @param	syswk	ボックス画面システムワーク
- * @param	strID	文字列ＩＤ
- * @param	winID	BMPWIN ID
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-static void SysMesPut( BOX2_SYS_WORK * syswk, u32 strID, u32 winID )
-{
-	GFL_MSGDATA * man = BoxMsgManGet();
-
-	SysWinPut( syswk, syswk->app->win[winID].win );
-	ExStrPrint(
-		syswk->app, winID, man, strID, 0, 0, syswk->app->font, FCOL_W_BLACK );
-	PrintScreenTrans( &syswk->app->win[winID] );
-
-	GFL_MSG_Delete( man );
-
-	BOX2OBJ_VanishTouchBarButton( syswk );
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * ボックス終了メッセージ表示
- *
- * @param	syswk	ボックス画面システムワーク
- * @param	winID	BMPWIN ID
- * @param	flg		タッチ or キー
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-void BOX2BMP_BoxEndMsgPut( BOX2_SYS_WORK * syswk, u32 winID, BOOL flg )
-{
-	if( flg == TRUE ){
-		SysMesPut( syswk, msg_boxmes_01_12, winID );
-	}else{
-		SysMesPut( syswk, msg_boxmes_01_13, winID );
-	}
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * アイテム取得チェックメッセージ表示
- *
- * @param	syswk	ボックス画面システムワーク
- * @param	item	アイテム番号
- * @param	winID	BMPWIN ID
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-void BOX2BMP_ItemGetCheckMsgPut( BOX2_SYS_WORK * syswk, u32 item, u32 winID )
-{
-	WORDSET_RegisterItemName( syswk->app->wset, 0, item );
-	SysMesPut( syswk, msg_boxmes_01_24, winID );
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * メール取得エラーメッセージ表示
- *
- * @param	syswk	ボックス画面システムワーク
- * @param	winID	BMPWIN ID
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-void BOX2BMP_MailGetErrorPut( BOX2_SYS_WORK * syswk, u32 winID )
-{
-	SysMesPut( syswk, msg_boxmes_01_25, winID );
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * メール移動エラーメッセージ表示
- *
- * @param	syswk	ボックス画面システムワーク
- * @param	winID	BMPWIN ID
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-void BOX2BMP_MailMoveErrorPut( BOX2_SYS_WORK * syswk, u32 winID )
-{
-	SysMesPut( syswk, msg_boxmes_04_01, winID );
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * アイテム取得メッセージ表示
- *
- * @param	syswk	ボックス画面システムワーク
- * @param	item	アイテム番号
- * @param	winID	BMPWIN ID
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-void BOX2BMP_ItemGetMsgPut( BOX2_SYS_WORK * syswk, u32 item, u32 winID )
-{
-	WORDSET_RegisterItemName( syswk->app->wset, 0, item );
-	SysMesPut( syswk, msg_boxmes_01_16, winID );
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * アイテム取得エラーメッセージ表示
- *
- * @param	syswk	ボックス画面システムワーク
- * @param	winID	BMPWIN ID
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-void BOX2BMP_ItemGetErrorPut( BOX2_SYS_WORK * syswk, u32 winID )
-{
-	SysMesPut( syswk, msg_boxmes_01_15, winID );
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * アイテムセットメッセージ表示
- *
- * @param	syswk	ボックス画面システムワーク
- * @param	item	アイテム番号
- * @param	winID	BMPWIN ID
- *
- * @return	none
- *
- *	item = 0 のときは、はっきんだまを持たせようとしたときのエラーとする
- */
-//--------------------------------------------------------------------------------------------
-void BOX2BMP_ItemSetMsgPut( BOX2_SYS_WORK * syswk, u32 item, u32 winID )
-{
-	if( item == 0 ){
-		WORDSET_RegisterItemName( syswk->app->wset, 0, ITEM_HAKKINDAMA );
-		SysMesPut( syswk, msg_boxmes_05_01, winID );
-	}else if( ITEM_CheckMail( item ) == TRUE ){
-		SysMesPut( syswk, msg_boxmes_06_06, winID );
-	}else{
-		WORDSET_RegisterItemName( syswk->app->wset, 0, item );
-		SysMesPut( syswk, msg_boxmes_01_17, winID );
-	}
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * マーキングメッセージ表示
- *
- * @param	syswk	ボックス画面システムワーク
- * @param	winID	BMPWIN ID
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-void BOX2BMP_MarkingMsgPut( BOX2_SYS_WORK * syswk, u32 winID )
-{
-	SysMesPut( syswk, msg_boxmes_01_37, winID );
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * 逃がすメッセージ表示
- *
- * @param	syswk	ボックス画面システムワーク
- * @param	msgID	メッセージＩＤ
- * @param	winID	BMPWIN ID
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-void BOX2BMP_PokeFreeMsgPut( BOX2_SYS_WORK * syswk, u32 msgID, u32 winID )
-{
-	u32	str;
-
-	switch( msgID ){
-	case BOX2BMP_MSGID_POKEFREE_CHECK:	// ほんとうに　にがしますか？
-		str = msg_boxmes_01_03;
-		break;
-
-	case BOX2BMP_MSGID_POKEFREE_ENTER:	// @0を　そとに　にがしてあげた
-		str = msg_boxmes_01_04;
-		WORDSET_RegisterPokeNickNamePPP(
-			syswk->app->wset, 0, BOX2MAIN_PPPGet(syswk,syswk->tray,syswk->get_pos) );
-		break;
-
-	case BOX2BMP_MSGID_POKEFREE_BY:		// ばいばい　@0！
-		str = msg_boxmes_01_05;
-		WORDSET_RegisterPokeNickNamePPP(
-			syswk->app->wset, 0, BOX2MAIN_PPPGet(syswk,syswk->tray,syswk->get_pos) );
-		break;
-
-	case BOX2BMP_MSGID_POKEFREE_EGG:	// タマゴを　にがすことは　できません！
-		str = msg_boxmes_01_33;
-		break;
-
-	case BOX2BMP_MSGID_POKEFREE_RETURN:	// @0が　もどってきちゃった！
-		str = msg_boxmes_01_34;
-		WORDSET_RegisterPokeNickNamePPP(
-			syswk->app->wset, 0, BOX2MAIN_PPPGet(syswk,syswk->tray,syswk->get_pos) );
-		break;
-
-	case BOX2BMP_MSGID_POKEFREE_FEAR:	// しんぱい　だったのかな……
-		str = msg_boxmes_01_35;
-		break;
-
-	case BOX2BMP_MSGID_POKEFREE_ONE:	// たたかうポケモンが　いなくなります！
-		str = msg_boxmes_01_07;
-		break;
-	}
-
-	SysMesPut( syswk, str, winID );
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * ボックステーマ変更メッセージ表示
- *
- * @param	syswk	ボックス画面システムワーク
- * @param	msgID	メッセージＩＤ
- * @param	winID	BMPWIN ID
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-void BOX2BMP_BoxThemaMsgPut( BOX2_SYS_WORK * syswk, u32 msgID, u32 winID )
-{
-	u32	str;
-
-	switch( msgID ){
-	case BOX2BMP_MSGID_THEMA_INIT:		// このボックスを　どうしますか？
-		str = msg_boxmes_01_08;
-		break;
-
-	case BOX2BMP_MSGID_THEMA_JUMP:		// どのボックスに　ジャンプしますか？
-		str = msg_boxmes_01_09;
-		break;
-
-	case BOX2BMP_MSGID_THEMA_MES:			// どのテーマに　しますか？
-		str = msg_boxmes_01_10;
-		break;
-
-	case BOX2BMP_MSGID_THEMA_WALL:		// どの　かべがみに　しますか？
-		str = msg_boxmes_01_11;
-		break;
-	}
-
-	SysMesPut( syswk, str, winID );
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * ポケモン選択メッセージ表示
- *
- * @param	syswk	ボックス画面システムワーク
- * @param	pos		ポケモンの位置
- * @param	msgID	メッセージＩＤ
- * @param	winID	BMPWIN ID
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-void BOX2BMP_PokeSelectMsgPut( BOX2_SYS_WORK * syswk, u32 pos, u32 msgID, u32 winID )
-{
-	u32	str;
-
-	switch( msgID ){
-	case BOX2BMP_MSGID_PARTYIN_INIT:	// ポケモンを　タッチ！
-		str = msg_boxmes_01_19;
-		break;
-
-	case BOX2BMP_MSGID_PARTYIN_MENU:	// @01を　どうする？
-		str = msg_boxmes_01_01;
-		WORDSET_RegisterPokeNickNamePPP(
-			syswk->app->wset, 0, BOX2MAIN_PPPGet(syswk,syswk->tray,syswk->get_pos) );
-		break;
-
-	case BOX2BMP_MSGID_PARTYIN_ERR:		// てもちが　いっぱいです！
-		str = msg_boxmes_01_06;
-		break;
-
-	case BOX2BMP_MSGID_PARTYOUT_INIT:	// どこへ　あずける？
-		str = msg_boxmes_01_20;
-		break;
-
-	case BOX2BMP_MSGID_PARTYOUT_BOXMAX:	// このボックスは　いっぱいだ！
-		str = msg_boxmes_01_14;
-		break;
-
-/*		
-	case BOX2BMP_MSGID_PARTYOUT_CAPSULE:	// ボールカプセルを　はずしてください！
-		str = msg_boxmes_01_31;
-		break;
-*/
-
-	case BOX2BMP_MSGID_PARTYOUT_MAIL:	// メールを　はずしてください！
-		str = msg_boxmes_01_32;
-		break;
-	}
-
-	SysMesPut( syswk, str, winID );
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * 道具整理メッセージ表示
- *
- * @param	syswk	ボックス画面システムワーク
- * @param	msgID	メッセージＩＤ
- * @param	winID	BMPWIN ID
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-void BOX2BMP_ItemArrangeMsgPut( BOX2_SYS_WORK * syswk, u32 msgID, u32 winID )
-{
-	u32	str;
-
-	switch( msgID ){
-	case BOX2BMP_MSGID_ITEM_A_SET:				// どうぐを　もたせます
-		str = msg_boxmes_01_30;
-		break;
-
-	case BOX2BMP_MSGID_ITEM_A_INIT:				// @0を　どうしますか？
-		str = msg_boxmes_01_26;
-		WORDSET_RegisterItemName( syswk->app->wset, 0, syswk->app->get_item );
-		break;
-
-	case BOX2BMP_MSGID_ITEM_A_RET_CHECK:	// @0を　しまいますか？
-		str = msg_boxmes_01_28;
-		WORDSET_RegisterItemName( syswk->app->wset, 0, syswk->app->get_item );
-		break;
-
-	case BOX2BMP_MSGID_ITEM_A_RET:			// @0を　バッグに　いれた！
-		str = msg_boxmes_01_29;
-		WORDSET_RegisterItemName( syswk->app->wset, 0, syswk->app->get_item );
-		break;
-
-	case BOX2BMP_MSGID_ITEM_A_MAIL:			// メールをしまうことは　できません！
-		str = msg_boxmes_01_25;
-		break;
-
-	case BOX2BMP_MSGID_ITEM_A_EGG:			// タマゴは　どうぐを　もてません！
-		str = msg_boxmes_01_36;
-		break;
-
-	case BOX2BMP_MSGID_ITEM_A_MAX:			// バッグが　いっぱいです！
-		str = msg_boxmes_01_15;
-		break;
-
-	case BOX2BMP_MSGID_ITEM_A_MAIL_MOVE:	// メールは　いどうできません！
-		str = msg_boxmes_06_04;
-		break;
-	}
-
-	SysMesPut( syswk, str, winID );
-}
-
-//--------------------------------------------------------------------------------------------
-/**
  * VBLANKで表示を実行するメッセージをセット
  *
  * @param	syswk	ボックス画面システムワーク
@@ -2179,31 +2132,139 @@ void BOX2BMP_VBlankMsgPut( BOX2_SYS_WORK * syswk, u32 winID )
 }
 */
 
-
-
-void BOX2BMP_PutPokeMoveErrMsg( BOX2_SYS_WORK * syswk, u32 errID, u32 winID )
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		手持ちポケモンフレームにBMPWINをセット
+ *
+ * @param		appwk		ボックス画面アプリワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+/*
+void BOX2BMP_PartyCngButtonFrmPut( BOX2_APP_WORK * appwk )
 {
-	u32	str;
+	BGWINFRM_BmpWinOn( appwk->wfrm, BOX2MAIN_WINFRM_PARTY, appwk->win[BMPWIN_PARTY_CNG].win );
+}
+*/
 
-	switch( errID ){
-	case BOX2MAIN_ERR_CODE_MAIL:			// メールを持っている
-		str = msg_boxmes_06_01;
-		break;
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		トレイ名表示
+ *
+ * @param		syswk		ボックス画面システムワーク
+ * @param		cgx			背景キャラデータ
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+/*
+void BOX2BMP_TrayNamePut( BOX2_SYS_WORK * syswk, u8 * cgx )
+{
+	GFL_BMPWIN * win;
+	u8 * chr;
+	STRBUF * str;
+	u8	sx, sy;
 
-	case BOX2MAIN_ERR_CODE_BATTLE:		// 戦えるポケモンがいなくなる
-		str = msg_boxmes_06_03;
-		break;
+	win = syswk->app->win[BOX2BMPWIN_ID_TRAY_NAME].win;
+	chr = GFL_BMP_GetCharacterAdrs( GFL_BMPWIN_GetBmp(win) );
+	sx  = GFL_BMPWIN_GetScreenSizeX( win );
+	sy  = GFL_BMPWIN_GetScreenSizeY( win );
+	GFL_STD_MemCopy32( cgx, chr, sx*sy*0x20 );
 
-	case BOX2MAIN_ERR_CODE_EGG:				// タマゴはえらべない（バトルボックス専用）
-		str = msg_boxmes_06_07;
-		break;
+	str = GFL_STR_CreateBuffer( BOX_TRAYNAME_BUFSIZE, HEAPID_BOX_APP );
+	BOXDAT_GetBoxName( syswk->dat->sv_box, syswk->tray, str );
+	PRINTTOOL_PrintColor(
+		&syswk->app->win[BOX2BMPWIN_ID_TRAY_NAME], syswk->app->que,
+		sx*8/2, sy*8/2-8, str, syswk->app->font, FCOL_TRAYNAME, PRINTTOOL_MODE_CENTER );
+
+	GFL_STR_DeleteBuffer( str );
+}
+void BOX2BMP_TrayNamePut( BOX2_SYS_WORK * syswk, u8 * cgx, u32 chr, u32 sx, u32 sy )
+{
+	GF_BGL_BMPWIN * win;
+	STRBUF * str;
+	u32	i;
+
+	win = sys_AllocMemoryLo( HEAPID_BOX_APP, sizeof(GF_BGL_BMPWIN) );
+	GF_BGL_BmpWinAdd( syswk->app->bgl, win, GFL_BG_FRAME3_M, 0, 0, sx, sy, 0, chr );
+	MI_CpuCopy32( cgx, win->chrbuf, sx*sy*0x20 );
+
+	str = STRBUF_Create( BOX_TRAYNAME_BUFSIZE, HEAPID_BOX_APP );
+	BOXDAT_GetBoxName( syswk->dat->sv_box, syswk->tray, str );
+	StrPrintCore( win, str, sx*8/2, sy*8/2-8, FONT_SYSTEM, FNTCOL_TRAYNAME, STRPRINT_MODE_CENTER );
+	STRBUF_Delete( str );
+
+	GF_BGL_BmpWinCgxOn( win );
+	GF_BGL_BmpWinDel( win );
+	sys_FreeMemoryEz( win );
+}
+*/
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		「ポケモンいどう」ボタン作成（持ち物整理モードの場合は「もちものせいり」）
+ *
+ * @param		syswk		ボックス画面システムワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+/*
+void BOX2BMP_ButtonPutIdou( BOX2_SYS_WORK * syswk )
+{
+	if( syswk->dat->callMode == BOX_MODE_ITEM ){
+		PokeMoveButtonPut( syswk, BOX2BMPWIN_ID_BOXLIST, mes_boxbutton_01_05 );
+	}else{
+		PokeMoveButtonPut( syswk, BOX2BMPWIN_ID_BOXLIST, mes_boxbutton_01_02 );
 	}
-
-	SysMesPut( syswk, str, winID );
 }
+*/
 
-void BOX2BMP_SleepSelectMsgPut( BOX2_SYS_WORK * syswk )
+//--------------------------------------------------------------------------------------------
+/**
+ * ＢＧウィンドウフレーム内のボタンに文字列描画
+ *
+ * @param	appwk	ボックス画面アプリワーク
+ * @param	winID	BMPWIN ID
+ * @param	strID	文字列ＩＤ
+ *
+ * @return	none
+ *
+ *	マーキングフレーム、手持ちポケモンフレームなど
+ */
+//--------------------------------------------------------------------------------------------
+/*
+static void FrmStrPut( BOX2_APP_WORK * appwk, u32 winID, u32 strID )
 {
-	WORDSET_RegisterPokeNickNamePPP( syswk->app->wset, 0, BOX2MAIN_PPPGet(syswk,syswk->tray,syswk->get_pos) );
-	SysMesPut( syswk, msg_boxmes_06_08, BOX2BMPWIN_ID_MSG4 );
+	STRBUF * str;
+	u8	px;
+
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(appwk->win[winID].win), FRMBUTTON_BG_COL );
+	px  = GFL_BMPWIN_GetSizeX( appwk->win[winID].win ) * 8 / 2;
+	str = GFL_MSG_CreateString( appwk->mman, strID );
+	PRINTTOOL_PrintColor(
+		&appwk->win[winID], appwk->que, 
+		px, 0, str, appwk->font, FCOL_FRMBUTTN_OFF, PRINTTOOL_MODE_CENTER );
+	GFL_STR_DeleteBuffer( str );
+
+//	GFL_BMPWIN_TransVramCharacter( &appwk->win[winID] );
 }
+*/
+
+//--------------------------------------------------------------------------------------------
+/**
+ * システムウィンドウ非表示（転送なし）
+ *
+ * @param	appwk	ボックス画面アプリワーク
+ * @param	winID	BMPWIN ID
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+/*
+void BOX2BMP_SysWinVanishEz( BOX2_APP_WORK * appwk, u32 winID )
+{
+	BmpWinFrame_Clear( appwk->win[winID].win, WINDOW_TRANS_OFF );
+}
+*/
