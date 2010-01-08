@@ -60,6 +60,8 @@ _EVENT_DATA_END
 //      話しかけが終了するまで、値を保証する必要があります
 //	LOCALWORK10⇒甲板部への移動ＰＯＳに使用しています
 //
+//	LOCALWORK11⇒船員のおじさんヒントで使用
+//
 //------------------------------------------------------------------//
 
 /**************************************************************/
@@ -153,7 +155,56 @@ EVENT_END
 /*		船員	トレーナーヒント１・左右で何人？			  */
 /**************************************************************/
 EVENT_START		ev_c03r0801_crew_02
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r0801_crew_02 )
+_TALK_OBJ_START()
+
+	IF $LOCALWORK11 == 0 THEN
+		
+		//ヒント　ききたい？
+		_BALLOONWIN_TALKOBJ_MSG( msg_c03r0801_crew_02 )
+
+		//LOCALWORK11に１追加
+		$LOCALWORK11= 1
+	
+	ELSE
+
+		//ヒント　ききたい？
+		_BALLOONWIN_TALKOBJ_MSG( msg_c03r0801_hint_03 )
+		
+	ENDIF
+	
+	_YES_NO_WIN( SCWK_ANSWER )
+	_BALLOONWIN_CLOSE()
+		
+	//はい
+	IF $SCWK_ANSWER == SCR_YES THEN
+
+		//ローカル変数を定義
+		DEFINE_LOCAL	LWK_LEFT
+		DEFINE_LOCAL	LWK_RIGHT
+			
+		//左側・右側のトレーナー数をサーチ
+		_PL_BOAT_GET_TR_NUM(PL_TR_SEARCH_TYPE_LEFT,LWK_LEFT)
+		_PL_BOAT_GET_TR_NUM(PL_TR_SEARCH_TYPE_RIGHT,LWK_RIGHT)
+			
+		//セリフ内にを格納
+		_NUMBER( 0, LWK_LEFT, 1 )
+		_NUMBER( 1, LWK_RIGHT, 1 )
+
+		//きょうは　なんにん　いるねー
+		_BALLOONWIN_TALKOBJ_MSG( msg_c03r0801_hint_01 )
+		_LAST_KEYWAIT()
+		_BALLOONWIN_CLOSE()
+		
+	//いいえ
+	ELSE
+			
+		//また　きがむいたら
+		_BALLOONWIN_TALKOBJ_MSG( msg_c03r0801_hint_02 )
+		_LAST_KEYWAIT()
+		_BALLOONWIN_CLOSE()
+			
+	ENDIF
+
 EVENT_END
 
 /**************************************************************/
@@ -174,7 +225,27 @@ EVENT_END
 /*		船員	トレーナーヒント２・ダブルルームに何人？	  */
 /**************************************************************/
 EVENT_START		ev_c03r0801_crew_05
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r0801_crew_05 )
+
+	//ローカル変数を定義
+	DEFINE_LOCAL	LWK_ROOM
+	
+	//遊覧船内のダブルルームに何人いるか？
+	_PL_BOAT_GET_TR_NUM(PL_TR_SEARCH_TYPE_DOUBLE,LWK_ROOM)
+	
+	//１人しかいない場合
+	IF $LWK_ROOM == 1 THEN
+		
+		//ひとりしか　いないよ
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r0801_crew_05 )
+
+	//２人以上いる場合
+	ELSE
+	
+		//ふたり　いじょう　いるね
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r0801_crew_06 )
+
+	ENDIF
+
 EVENT_END
 
 /**************************************************************/
@@ -602,8 +673,18 @@ EVENT_START		ev_pos_c03r0801_move_01
     _MAP_FADE_BLACK_IN()
 
     //@todo ここに甲板から戻ってくるアニメとかを書ける
-    
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_out )
+	_OBJ_ANIME_WAIT()
+
     _MAP_FADE_END_CHECK()
   ENDIF
 
 EVENT_END
+
+//--------------------------------------------------------------
+//			甲板部からの復帰アニメ
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_player_out
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+	

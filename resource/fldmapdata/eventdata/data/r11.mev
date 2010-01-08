@@ -1,5 +1,5 @@
 #event data
-#save date:2009/12/19 20:38:14
+#save date:2010/01/08 12:17:35
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r11.wms
 #SECTION START:OBJ_EVENT
@@ -54,7 +54,7 @@ EXIT_TYPE_NONE
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-616 0 8
+616 0 24
 #size
 1 1
 #event number: 1
@@ -71,7 +71,7 @@ EXIT_TYPE_NONE
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-616 0 -40
+616 0 -24
 #size
 1 1
 #event number: 2
@@ -88,7 +88,7 @@ EXIT_TYPE_NONE
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-616 0 -24
+616 0 -8
 #size
 1 1
 #event number: 3
@@ -105,7 +105,7 @@ EXIT_TYPE_NONE
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-616 0 -8
+616 0 8
 #size
 1 1
 #event number: 4
@@ -118,12 +118,12 @@ DOOR_ID_C08R0701_R11_EXIT01
 #Door Direction
 EXIT_DIR_RIGHT
 #Door Type
-EXIT_TYPE_MAT
+EXIT_TYPE_WALL
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--120 0 24
+-136 0 24
 #size
-1 3
+1 4
 #Map Event List Data End
 #SECTION End:DOOR_EVENT
