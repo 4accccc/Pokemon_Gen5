@@ -18,6 +18,25 @@
  *								定数定義
  */
 //=============================================================================
+enum
+{
+  //========================================================
+  // 値の変更OK
+  //========================================================
+  CURSOR_ANM_FRAME    = 4*2,  ///< アニメーションフレーム
+  CURSOR_BMP_DIFF_PX  = -11,  ///< カーソル表示位置X( 指定BMPの座標基準 )
+  CURSOR_BMP_DIFF_PY  = -9,   ///< カーソル表示位置Y( 指定BMPの座標基準 )
+
+  //========================================================
+  // 値を変更するときは他の領域にも手を入れないといけない値
+  //========================================================
+  CURSOR_ANM_NO_MAX = 3,   ///< アニメパターン数
+  CURSOR_BMP_SX     = 10,  ///< カーソル表示サイズX
+  CURSOR_BMP_SY     = 7,   ///< カーソル表示サイズY
+
+  CURSOR_BMP_CHR_X  = 2,
+  CURSOR_BMP_CHR_Y  = 2,
+};
 
 //=============================================================================
 /**
@@ -43,7 +62,7 @@ struct _APP_KEYCURSOR_WORK
 
 //=============================================================================
 /**
- *							プロトタイプ宣言
+ *							データテーブル
  */
 //=============================================================================
 
@@ -88,14 +107,14 @@ APP_KEYCURSOR_WORK* APP_KEYCURSOR_Create( u16 n_col, BOOL is_decide_key, BOOL is
 
   work = GFL_HEAP_AllocClearMemory( heap_id, sizeof(APP_KEYCURSOR_WORK) );
  
-  work->n_col = 15;
+  work->n_col = n_col;
   work->decide_key_flag = is_decide_key;
   work->decide_tp_flag  = is_decide_tp;
 
   // BMP生成
   work->bmp_cursor = GFL_BMP_CreateWithData(
         (u8*)sc_skip_cursor_character,
-        2, 2, GFL_BMP_16_COLOR, heap_id );
+        CURSOR_BMP_CHR_X, CURSOR_BMP_CHR_Y, GFL_BMP_16_COLOR, heap_id );
 
   return work;
 }
@@ -125,12 +144,11 @@ void APP_KEYCURSOR_Delete( APP_KEYCURSOR_WORK *work )
 void APP_KEYCURSOR_Clear( APP_KEYCURSOR_WORK *work, GFL_BMP_DATA *bmp, u16 n_col )
 {
   u16 x,y,offs;
-  u16 tbl[3] = { 0, 1, 2 };
   
-  x = GFL_BMP_GetSizeX( bmp ) - 11;
-  y = GFL_BMP_GetSizeY( bmp ) - 9;
-  offs = tbl[work->cursor_anm_no];
-  GFL_BMP_Fill( bmp, x, y+offs, 10, 7, n_col );
+  x = GFL_BMP_GetSizeX( bmp ) + CURSOR_BMP_DIFF_PX;
+  y = GFL_BMP_GetSizeY( bmp ) + CURSOR_BMP_DIFF_PY;
+  offs = work->cursor_anm_no; // 0, 1, 2
+  GFL_BMP_Fill( bmp, x, y+offs, CURSOR_BMP_SX, CURSOR_BMP_SY, n_col );
 //  HOSAKA_Printf("x=%d y=%d offs=%d \n",x,y,offs);
 }
 
@@ -146,23 +164,22 @@ void APP_KEYCURSOR_Clear( APP_KEYCURSOR_WORK *work, GFL_BMP_DATA *bmp, u16 n_col
 void APP_KEYCURSOR_Write( APP_KEYCURSOR_WORK *work, GFL_BMP_DATA *bmp, u16 n_col )
 {
   u16 x,y,offs;
-  u16 tbl[3] = { 0, 1, 2 };
   
   APP_KEYCURSOR_Clear( work, bmp, n_col );
   
   work->cursor_anm_frame++;
   
-  if( work->cursor_anm_frame >= 4*2 ){
+  if( work->cursor_anm_frame >= CURSOR_ANM_FRAME ){
     work->cursor_anm_frame = 0;
     work->cursor_anm_no++;
-    work->cursor_anm_no %= 3;
+    work->cursor_anm_no %= (CURSOR_ANM_NO_MAX);
   }
 
-  x = GFL_BMP_GetSizeX( bmp ) - 11;
-  y = GFL_BMP_GetSizeY( bmp ) - 9;
-  offs = tbl[work->cursor_anm_no];
+  x = GFL_BMP_GetSizeX( bmp ) - CURSOR_BMP_DIFF_PX;
+  y = GFL_BMP_GetSizeY( bmp ) - CURSOR_BMP_DIFF_PY;
+  offs = work->cursor_anm_no; // 0, 1, 2
   
-  GFL_BMP_Print( work->bmp_cursor, bmp, 0, 2, x, y+offs, 10, 7, 0x00 );
+  GFL_BMP_Print( work->bmp_cursor, bmp, 0, 2, x, y+offs, CURSOR_BMP_SX, CURSOR_BMP_SY, 0x00 );
 //  HOSAKA_Printf("x=%d y=%d offs=%d \n",x,y,offs);
 }
 

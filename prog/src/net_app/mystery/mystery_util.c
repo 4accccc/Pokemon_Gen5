@@ -358,7 +358,7 @@ void MYSTERY_TEXT_Main( MYSTERY_TEXT_WORK* p_wk )
       PRINTSTREAM_STATE state;
       state  = PRINTSYS_PrintStreamGetState( p_wk->p_stream );
 
-      APP_KEYCURSOR_Proc( p_wk->p_keycursor, p_wk->p_stream, p_wk->p_bmpwin );
+      APP_KEYCURSOR_Main( p_wk->p_keycursor, p_wk->p_stream, p_wk->p_bmpwin );
 
       switch( state )
       { 
