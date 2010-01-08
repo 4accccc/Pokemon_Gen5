@@ -42,6 +42,7 @@
 #define MATTR_ELECTORIC_FLOOR     (0x30)		//ビリビリ床
 #define MATTR_FLOAT_FLOOR         (0x31)		//浮遊石小揺れ
 #define MATTR_ELECTORIC_ROCK      (0x32)		//電気岩
+#define MATTR_UPDOWN_FLOOR        (0x33)		//自機上下揺れ
 #define MATTR_WATER_01            (0x3d)		//淡水（四季変化なし）
 #define MATTR_WATER_S01           (0x3e)		//淡水（四季変化あり）
 #define MATTR_SEA_01              (0x3f)		//海
