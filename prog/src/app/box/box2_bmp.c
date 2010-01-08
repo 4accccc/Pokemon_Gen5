@@ -338,7 +338,13 @@ enum {
 
 #define	BMPBUTTON_CHR_NORMAL		( 0 )				// 通常のボタンキャラ番号
 #define	BMPBUTTON_CHR_TOUCHBAR	( 0 )				// タッチバー上のボタンキャラ番号
-//#define	BMPBUTTON_CHR_TOUCHBAR	( BOX2MAIN_SELWIN_CGX_SIZ )		// タッチバー上のボタンキャラ番号
+
+#define	CANCEL_BUTTON_CHAR		( 9 )				// キャンセル用矢印キャラ番号
+#define	CANCEL_BUTTON_NULLCOL	( 5 )				// キャンセル用矢印抜き色
+#define	CANCEL_BUTTON_SX			( 16 )			// キャンセル用矢印Ｘサイズ
+#define	CANCEL_BUTTON_SY			( 8 )				// キャンセル用矢印Ｙサイズ
+#define	CANCEL_BUTTON_PX(a)		( (a-3)*8 )	// キャンセル用矢印表示Ｘ座標
+#define	CANCEL_BUTTON_PY			( 8 )				// キャンセル用矢印表示Ｙ座標
 
 
 //============================================================================================
@@ -1163,8 +1169,15 @@ static void MakeBmpButton(
 		buf = GFL_ARC_UTIL_LoadBGCharacter(
 						APP_COMMON_GetArcId(), NARC_app_menu_common_task_menu_NCGR, FALSE, &chr, HEAPID_BOX_APP_L );
 		raw = chr->pRawData;
-		button = GFL_BMP_CreateWithData( &raw[9*0x20], 16, 8, GFL_BMP_16_COLOR, HEAPID_BOX_APP_L );
-		GFL_BMP_Print( button, bmp, 0, 0, (sx-3)*8, 8, 16, 8, 5 );
+		button = GFL_BMP_CreateWithData(
+							&raw[CANCEL_BUTTON_CHAR*0x20],
+							CANCEL_BUTTON_SX, CANCEL_BUTTON_SY,
+							GFL_BMP_16_COLOR, HEAPID_BOX_APP_L );
+		GFL_BMP_Print(
+			button, bmp,
+			0, 0,
+			CANCEL_BUTTON_PX(sx), CANCEL_BUTTON_PY,
+			CANCEL_BUTTON_SX, CANCEL_BUTTON_SY, CANCEL_BUTTON_NULLCOL );
 		GFL_BMP_Delete( button );
 		GFL_HEAP_FreeMemory( buf );
 	}
