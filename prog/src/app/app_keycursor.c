@@ -30,13 +30,15 @@
 //--------------------------------------------------------------
 struct _APP_KEYCURSOR_WORK 
 {
-  u16 n_col;
-  u16 padding_16;
   GFL_BMP_DATA  *bmp_cursor;
   u8 cursor_anm_no;
   u8 cursor_anm_frame;
   u8 push_flag;
-  u8 padding[1];
+  u8 decide_key_flag : 1;
+  u8 decide_tp_flag : 1;
+  u8 padding : 6;
+  u16 n_col;
+  u16 padding_16;
 };
 
 //=============================================================================
@@ -72,17 +74,23 @@ static const u8 ALIGN4 sc_skip_cursor_character[128] = {
 /**
  * キー送りカーソル 初期化
  *  @param n_col      [IN] 透明色指定 0-15,GF_BMPPRT_NOTNUKI	
+ *  @param is_decide_key  [IN] TRUE:決定ボタン、キャンセルボタンでカーソルを消す。
+ *  @param is_decide_tp   [IN] TRUE:タッチでカーソルを消す。
  *  @param heapID     [IN] HEAPID ヒープID
  *  @retval nothing
  */
 //--------------------------------------------------------------
-APP_KEYCURSOR_WORK* APP_KEYCURSOR_Create( u16 n_col, HEAPID heap_id )
+APP_KEYCURSOR_WORK* APP_KEYCURSOR_Create( u16 n_col, BOOL is_decide_key, BOOL is_decide_tp, HEAPID heap_id )
 {
   APP_KEYCURSOR_WORK* work;
+  
+  GF_ASSERT( is_decide_key == TRUE || is_decide_tp == TRUE ); // どちらかがTRUEでないとカーソルが消えない。
 
   work = GFL_HEAP_AllocClearMemory( heap_id, sizeof(APP_KEYCURSOR_WORK) );
  
-  work->n_col   = 15;
+  work->n_col = 15;
+  work->decide_key_flag = is_decide_key;
+  work->decide_tp_flag  = is_decide_tp;
 
   // BMP生成
   work->bmp_cursor = GFL_BMP_CreateWithData(
@@ -170,7 +178,7 @@ void APP_KEYCURSOR_Write( APP_KEYCURSOR_WORK *work, GFL_BMP_DATA *bmp, u16 n_col
  *	@retval
  */
 //-----------------------------------------------------------------------------
-void APP_KEYCURSOR_Proc( APP_KEYCURSOR_WORK* work, PRINT_STREAM* stream, GFL_BMPWIN* msgwin )
+void APP_KEYCURSOR_Main( APP_KEYCURSOR_WORK* work, PRINT_STREAM* stream, GFL_BMPWIN* msgwin )
 {
   PRINTSTREAM_STATE state;
 
@@ -188,16 +196,32 @@ void APP_KEYCURSOR_Proc( APP_KEYCURSOR_WORK* work, PRINT_STREAM* stream, GFL_BMP
 
   case PRINTSTREAM_STATE_PAUSE : // 一時停止中
     // キー入力待ち
-    if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_DECIDE || ( GFL_UI_KEY_GetTrg() == PAD_BUTTON_CANCEL ) || GFL_UI_TP_GetTrg() )
     {
-      work->push_flag = TRUE;
-      APP_KEYCURSOR_Clear( work, GFL_BMPWIN_GetBmp(msgwin), work->n_col );
-    }
-    else
-    {
-      if( work->push_flag == FALSE )
+      BOOL is_decide = FALSE;
+
+      if( work->decide_key_flag )
       {
-        APP_KEYCURSOR_Write( work, GFL_BMPWIN_GetBmp(msgwin), work->n_col );
+        // キー入力
+        is_decide = ( GFL_UI_KEY_GetTrg() == PAD_BUTTON_DECIDE || GFL_UI_KEY_GetTrg() == PAD_BUTTON_CANCEL );
+      }
+
+      if( is_decide == FALSE && work->decide_tp_flag )
+      {
+        // タッチ入力
+        is_decide = GFL_UI_TP_GetTrg();
+      }
+
+      if( is_decide )
+      {
+        work->push_flag = TRUE;
+        APP_KEYCURSOR_Clear( work, GFL_BMPWIN_GetBmp(msgwin), work->n_col );
+      }
+      else
+      {
+        if( work->push_flag == FALSE )
+        {
+          APP_KEYCURSOR_Write( work, GFL_BMPWIN_GetBmp(msgwin), work->n_col );
+        }
       }
     }
 

@@ -35,14 +35,15 @@ typedef struct _APP_KEYCURSOR_WORK APP_KEYCURSOR_WORK;
 
 //--------------------------------------------------------------
 /**
- *  @brief  キー送りカーソル 初期化
- *	@param  in_msgwin  [IN] メッセージウィンドウ
- *  @param  n_col      [IN] 透明色指定 0-15,GF_BMPPRT_NOTNUKI	
- *  @param  heapID     [IN] HEAPID ヒープID
+ * キー送りカーソル 初期化
+ *  @param n_col      [IN] 透明色指定 0-15,GF_BMPPRT_NOTNUKI	
+ *  @param is_decide_key  [IN] TRUE:決定ボタン、キャンセルボタンでカーソルを消す。
+ *  @param is_decide_tp   [IN] TRUE:タッチでカーソルを消す。
+ *  @param heapID     [IN] HEAPID ヒープID
  *  @retval nothing
  */
 //--------------------------------------------------------------
-extern APP_KEYCURSOR_WORK* APP_KEYCURSOR_Create( u16 n_col, HEAPID heap_id );
+extern APP_KEYCURSOR_WORK* APP_KEYCURSOR_Create( u16 n_col, BOOL is_decide_key, BOOL is_decide_tp, HEAPID heap_id );
 
 //--------------------------------------------------------------
 /**
@@ -64,11 +65,11 @@ extern void APP_KEYCURSOR_Delete( APP_KEYCURSOR_WORK *work );
  *	@retval nothing
  */
 //-----------------------------------------------------------------------------
-extern void APP_KEYCURSOR_Proc( APP_KEYCURSOR_WORK* work, PRINT_STREAM* stream, GFL_BMPWIN* msgwin );
+extern void APP_KEYCURSOR_Main( APP_KEYCURSOR_WORK* work, PRINT_STREAM* stream, GFL_BMPWIN* msgwin );
 
 
 //====================================================================================
-// 以下、Procに内包されているので、基本的には外部から使用しない関数。念のため公開
+// 以下、Mainに内包されているので、基本的には外部から使用しない関数。念のため公開
 //====================================================================================
 
 

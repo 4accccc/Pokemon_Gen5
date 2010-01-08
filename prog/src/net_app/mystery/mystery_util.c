@@ -243,7 +243,7 @@ MYSTERY_TEXT_WORK * MYSTERY_TEXT_Init( u16 frm, u8 font_plt, PRINT_QUE *p_que, G
   p_wk->p_que     = p_que;
   p_wk->print_update  = MYSTERY_TEXT_TYPE_NONE;
 
-  p_wk->p_keycursor  = APP_KEYCURSOR_Create( 0, heapID );
+  p_wk->p_keycursor  = APP_KEYCURSOR_Create( 0, TRUE, TRUE, heapID );
 
   //バッファ作成
 	p_wk->p_strbuf	= GFL_STR_CreateBuffer( 512, heapID );
@@ -286,7 +286,7 @@ MYSTERY_TEXT_WORK * MYSTERY_TEXT_InitOneLine( u16 frm, u8 font_plt, PRINT_QUE *p
   p_wk->p_que     = p_que;
   p_wk->print_update  = MYSTERY_TEXT_TYPE_NONE;
 
-  p_wk->p_keycursor  = APP_KEYCURSOR_Create( p_wk->clear_chr, heapID );
+  p_wk->p_keycursor  = APP_KEYCURSOR_Create( p_wk->clear_chr, TRUE, TRUE, heapID );
 
   //バッファ作成
 	p_wk->p_strbuf	= GFL_STR_CreateBuffer( 512, heapID );

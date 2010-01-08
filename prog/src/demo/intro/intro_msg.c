@@ -150,7 +150,7 @@ INTRO_MSG_WORK* INTRO_MSG_Create( HEAPID heap_id )
   wk->win_dispwin = GFL_BMPWIN_Create( BG_FRAME_TEXT_M, 1, 19, 30, 4, PLTID_BG_TEXT_M, GFL_BMP_CHRAREA_GET_B );
 
   // ウィンドウカーソル初期化
-  wk->cursor_work = APP_KEYCURSOR_Create( 15, wk->heap_id );
+  wk->cursor_work = APP_KEYCURSOR_Create( 15, TRUE, TRUE, wk->heap_id );
 
   return wk;
 }
@@ -334,7 +334,7 @@ BOOL INTRO_MSG_PrintProc( INTRO_MSG_WORK* wk )
 
   if( wk->print_stream )
   {
-    APP_KEYCURSOR_Proc( wk->cursor_work, wk->print_stream, wk->win_dispwin );
+    APP_KEYCURSOR_Main( wk->cursor_work, wk->print_stream, wk->win_dispwin );
 
     state = PRINTSYS_PrintStreamGetState( wk->print_stream );
 
