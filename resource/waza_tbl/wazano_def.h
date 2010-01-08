@@ -453,7 +453,7 @@
 #define		WAZANO_DASUTOSYUUTO		( 441 )		//ダストシュート
 #define		WAZANO_AIANHEDDO			( 442 )		//アイアンヘッド
 #define		WAZANO_MAGUNETTOBOMU	( 443 )		//マグネットボム
-#define		WAZANO_SUTOONEZI			( 444 )		//ストーンエッジ
+#define		WAZANO_SUTOONEZZI			( 444 )		//ストーンエッジ
 #define		WAZANO_YUUWAKU				( 445 )		//ゆうわく
 #define		WAZANO_SUTERUSUROKKU	( 446 )		//ステルスロック
 #define		WAZANO_KUSAMUSUBI			( 447 )		//くさむすび

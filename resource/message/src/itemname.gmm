@@ -2986,8 +2986,8 @@
 	</row>
 
 	<row id="ITEMNAME_571">
-		<language name="JPN" width="256">だしゅつポッド</language>
-		<language name="JPN_KANJI" width="256">だしゅつポッド</language>
+		<language name="JPN" width="256">だっしゅつポッド</language>
+		<language name="JPN_KANJI" width="256">だっしゅつポッド</language>
 	</row>
 
 	<row id="ITEMNAME_572">
@@ -3128,6 +3128,61 @@
 	<row id="ITEMNAME_599">
 		<language name="JPN" width="256">ダークストーン</language>
 		<language name="JPN_KANJI" width="256">ダークストーン</language>
+	</row>
+
+	<row id="ITEMNAME_600">
+		<language name="JPN" width="256">わざマシン９３</language>
+		<language name="JPN_KANJI" width="256">わざマシン９３</language>
+	</row>
+
+	<row id="ITEMNAME_601">
+		<language name="JPN" width="256">わざマシン９４</language>
+		<language name="JPN_KANJI" width="256">わざマシン９４</language>
+	</row>
+
+	<row id="ITEMNAME_602">
+		<language name="JPN" width="256">わざマシン９５</language>
+		<language name="JPN_KANJI" width="256">わざマシン９５</language>
+	</row>
+
+	<row id="ITEMNAME_603">
+		<language name="JPN" width="256">わざマシン９６</language>
+		<language name="JPN_KANJI" width="256">わざマシン９６</language>
+	</row>
+
+	<row id="ITEMNAME_604">
+		<language name="JPN" width="256">わざマシン９７</language>
+		<language name="JPN_KANJI" width="256">わざマシン９７</language>
+	</row>
+
+	<row id="ITEMNAME_605">
+		<language name="JPN" width="256">わざマシン９８</language>
+		<language name="JPN_KANJI" width="256">わざマシン９８</language>
+	</row>
+
+	<row id="ITEMNAME_606">
+		<language name="JPN" width="256">わざマシン９９</language>
+		<language name="JPN_KANJI" width="256">わざマシン９９</language>
+	</row>
+
+	<row id="ITEMNAME_607">
+		<language name="JPN" width="256">わざマシン１００</language>
+		<language name="JPN_KANJI" width="256">わざマシン１００</language>
+	</row>
+
+	<row id="ITEMNAME_608">
+		<language name="JPN" width="256">わざマシン１０１</language>
+		<language name="JPN_KANJI" width="256">わざマシン１０１</language>
+	</row>
+
+	<row id="ITEMNAME_609">
+		<language name="JPN" width="256">トランシーバー</language>
+		<language name="JPN_KANJI" width="256">トランシーバー</language>
+	</row>
+
+	<row id="ITEMNAME_610">
+		<language name="JPN" width="256">ゴッドストーン</language>
+		<language name="JPN_KANJI" width="256">ゴッドストーン</language>
 	</row>
 
 

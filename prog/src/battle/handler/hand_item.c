@@ -538,7 +538,7 @@ static const struct {
   { ITEM_SIMETUKEBANDO,     HAND_ADD_ITEM_SimetukeBand    },  // しめつけバンド
   { ITEM_KYUUKON,           HAND_ADD_ITEM_Kyuukon         },  // きゅうこん
   { ITEM_ZYUUDENTI,         HAND_ADD_ITEM_Juudenti        },  // じゅうでんち
-  { ITEM_DASYUTUPODDO,      HAND_ADD_ITEM_DassyutuPod     },  // だしゅつポッド
+  { ITEM_DASSYUTUPODDO,     HAND_ADD_ITEM_DassyutuPod     },  // だっしゅつポッド
   { ITEM_HONOONOZYUERU,     HAND_ADD_ITEM_HonooNoJuel     },  // ほのおのジュエル
   { ITEM_MIZUNOZYUERU,      HAND_ADD_ITEM_MizuNoJuel      },  // みずのジュエル
   { ITEM_DENKINOZYUERU,     HAND_ADD_ITEM_DenkiNoJuel     },  // でんきのジュエル

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-12-28T17:38:02"/>
+	<create user="taya" host="W00146" date="2010-01-08T14:38:20"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -403,6 +403,10 @@
 
 	<row id="DBGF_LABEL_MUST_CRITICAL">
 		<language name="JPN" width="256">必ずきゅうしょ</language>
+	</row>
+
+	<row id="DBGF_LABEL_HIT100PER">
+		<language name="JPN" width="256">めいちゅう１００</language>
 	</row>
 
 	<row id="DBGF_LABEL_HP_CONST">
