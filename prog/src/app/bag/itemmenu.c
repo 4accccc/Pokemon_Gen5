@@ -139,7 +139,7 @@ static void _itemSellExit( FIELD_ITEMMENU_WORK* pWork );
 static void ITEM_Sub( FIELD_ITEMMENU_WORK* pWork, u8 sub_num );
 static void InputNum_Start( FIELD_ITEMMENU_WORK* pWork, BAG_INPUT_MODE mode );
 static void InputNum_Exit( FIELD_ITEMMENU_WORK* pWork );
-static void InputNum_Proc( FIELD_ITEMMENU_WORK* pWork );
+static void InputNum_Main( FIELD_ITEMMENU_WORK* pWork );
 static void InputNum_ButtonState( FIELD_ITEMMENU_WORK* pWork, BOOL on_off );
 static void SORT_Type( FIELD_ITEMMENU_WORK* pWork );
 static void SORT_ABC( FIELD_ITEMMENU_WORK* pWork );
@@ -824,6 +824,9 @@ static void _itemInnerUseWait( FIELD_ITEMMENU_WORK* pWork )
   {
     GFL_BG_ClearScreen(GFL_BG_FRAME3_M);
 
+    // 再描画
+    _windowRewrite(pWork);
+
     _CHANGE_STATE(pWork,_itemKindSelectMenu);
   }
 }
@@ -1343,7 +1346,7 @@ static void _itemTrashWait(FIELD_ITEMMENU_WORK* pWork)
   }
 
   // 数値入力主処理
-  InputNum_Proc( pWork );
+  InputNum_Main( pWork );
 
   if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_DECIDE)
   {
@@ -1463,7 +1466,7 @@ static void _itemSellInputWait( FIELD_ITEMMENU_WORK* pWork )
   }
 
   // 売るシーケンス入力処理
-  InputNum_Proc( pWork );
+  InputNum_Main( pWork );
 
   // @TODO バーアイコンなどタッチ対応も含めるのでラップする
   // 強制終了
@@ -1641,11 +1644,20 @@ static void _itemSellExit( FIELD_ITEMMENU_WORK* pWork )
 //-----------------------------------------------------------------------------
 static void ITEM_Sub( FIELD_ITEMMENU_WORK* pWork, u8 sub_num )
 {
-  // 手持ちからアイテム削除
-  MYITEM_SubItem(pWork->pMyItem, pWork->ret_item, sub_num, pWork->heapID );
+  BOOL rslt;
+  ITEM_ST * item = ITEMMENU_GetItem( pWork,ITEMMENU_GetItemIndex(pWork) ); // 選択中のアイテム
 
-  // カーソルが指す座標を下げる
-  pWork->curpos = MATH_IMax( 0, pWork->curpos-1 );
+  // 手持ちからアイテム削除
+  rslt = MYITEM_SubItem(pWork->pMyItem, pWork->ret_item, sub_num, pWork->heapID );
+
+  GF_ASSERT( rslt == TRUE );
+  
+  // アイテムがなくなった場合
+  if( MYITEM_GetItemNum( pWork->pMyItem, pWork->ret_item, pWork->heapID ) == 0 )
+  {
+    // カーソルが指す座標を下げる
+    pWork->curpos = MATH_IMax( 0, pWork->curpos-1 );
+  }
 }    
 
 //-----------------------------------------------------------------------------
@@ -1697,11 +1709,11 @@ static void InputNum_Exit( FIELD_ITEMMENU_WORK* pWork )
  *  @retval
  */
 //-----------------------------------------------------------------------------
-static void InputNum_Proc( FIELD_ITEMMENU_WORK* pWork )
+static void InputNum_Main( FIELD_ITEMMENU_WORK* pWork )
 {
-  ITEM_ST * item = ITEMMENU_GetItem( pWork,ITEMMENU_GetItemIndex(pWork) );
-  int backup = pWork->InputNum;
   int tp_result;
+  int backup = pWork->InputNum;
+  ITEM_ST * item = ITEMMENU_GetItem( pWork,ITEMMENU_GetItemIndex(pWork) ); // 選択中のアイテム
 
   const GFL_UI_TP_HITTBL tp_tbl[] =
   {
@@ -1721,6 +1733,9 @@ static void InputNum_Proc( FIELD_ITEMMENU_WORK* pWork )
     }
   };
 
+  //@TODO BTN/TP
+//  GFL_BMN_Main( pWork->pButton );
+
   // タッチ入力
   tp_result = GFL_UI_TP_HitCont( tp_tbl );
 
@@ -1732,6 +1747,7 @@ static void InputNum_Proc( FIELD_ITEMMENU_WORK* pWork )
   {
     pWork->countTouch = 0;
   }
+  
 
   if( pWork->countTouch == 1 || (pWork->countTouch > BAG_UI_TP_CUR_REPEAT_SYNC /*&& (pWork->countTouch % 8) == 0*/ ) )
   {
@@ -1767,28 +1783,30 @@ static void InputNum_Proc( FIELD_ITEMMENU_WORK* pWork )
   // キー入力
   if( tp_result == GFL_UI_TP_HIT_NONE )
   {
-    if(_GFL_UI_KEY_GetRepeat() == PAD_KEY_UP){
+    if(GFL_UI_KEY_GetRepeat() == PAD_KEY_UP){
       pWork->InputNum++;
     }
-    else if(_GFL_UI_KEY_GetRepeat() == PAD_KEY_DOWN){
+    else if(GFL_UI_KEY_GetRepeat() == PAD_KEY_DOWN){
       pWork->InputNum--;
     }
-    else if(_GFL_UI_KEY_GetRepeat() == PAD_KEY_RIGHT){
+    else if(GFL_UI_KEY_GetRepeat() == PAD_KEY_RIGHT){
       pWork->InputNum += 10;
     }
-    else if(_GFL_UI_KEY_GetRepeat() == PAD_KEY_LEFT){
+    else if(GFL_UI_KEY_GetRepeat() == PAD_KEY_LEFT){
       pWork->InputNum -= 10;
     }
   }
 
-  // カンストチェック
-  if(item->no < pWork->InputNum){
-    pWork->InputNum = item->no;
-  }
-  else if(pWork->InputNum < 1){
+  // 回り込み
+  if(item->no < pWork->InputNum)
+  {
     pWork->InputNum = 1;
   }
-
+  else if(pWork->InputNum < 1)
+  {
+    pWork->InputNum = item->no;
+  }
+  
   // 表示更新
   if(pWork->InputNum != backup)
   {
@@ -2698,7 +2716,6 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
     // タッチした瞬間でなければ抜ける
     return;
   }
-
 
   if(BAG_POKE_MAX > bttnid){
     int id2no[]={1,2,3,4,0};

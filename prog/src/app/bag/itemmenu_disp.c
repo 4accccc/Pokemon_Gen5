@@ -650,6 +650,7 @@ void ITEMDISP_upMessageRewrite(FIELD_ITEMMENU_WORK* pWork)
     // WINフレームの描画OFF
     GFL_BG_SetVisible( ITEMWIN_FRAME, VISIBLE_OFF );
     GFL_BG_SetVisible( ITEMREPORT_FRAME, VISIBLE_OFF );
+    GFL_DISP_GXS_SetVisibleControl( GX_BLEND_PLANEMASK_OBJ, VISIBLE_OFF );
     
     // キャラ転送
     GFL_BMPWIN_TransVramCharacter(pWork->winItemName);
@@ -663,6 +664,7 @@ void ITEMDISP_upMessageRewrite(FIELD_ITEMMENU_WORK* pWork)
     // WINフレームの描画ON
     GFL_BG_SetVisible( ITEMWIN_FRAME, VISIBLE_ON );
     GFL_BG_SetVisible( ITEMREPORT_FRAME, VISIBLE_ON );
+    GFL_DISP_GXS_SetVisibleControl( GX_BLEND_PLANEMASK_OBJ, VISIBLE_ON );
   }
 
   // 文字色設定
@@ -1645,8 +1647,10 @@ void ITEMDISP_WazaInfoWindowChange( FIELD_ITEMMENU_WORK *pWork )
   item = ITEMMENU_GetItem( pWork,ITEMMENU_GetItemIndex(pWork) );
   wazano = ITEM_GetWazaNo( item->id );
 
+  // アイテムがない／ダミー／非わざマシン
   if( (item==NULL) || (item->id==ITEM_DUMMY_DATA) || wazano==0 )
   {
+    // わざマシン用の表示を非表示にして抜ける
     GFL_BMPWIN_ClearScreen(pwin);
     GFL_CLACT_WK_SetDrawEnable( pWork->clwkWazaKind, FALSE );
     GFL_CLACT_WK_SetDrawEnable( pWork->clwkWazaType, FALSE );
