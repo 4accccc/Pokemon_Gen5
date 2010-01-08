@@ -863,3 +863,17 @@ BOOL MAPATTR_VALUE_CheckMirrorFloor( const MAPATTR_VALUE val )
 {
   return ( val == MATTR_MIRROR_01 );
 }
+
+//--------------------------------------------------------------
+/**
+ * アトリビュートバリュー　チェック　自機上下動床(ダッシュ無効)
+ * @param val MAPATTR_VALUE
+ * @retval BOOL FALSE=違う
+ *
+ * 上下動動作ギミックで実現しているため、はR10R0901でのみ有効です
+ */
+//--------------------------------------------------------------
+BOOL MAPATTR_VALUE_CheckUpDownFloor( const MAPATTR_VALUE val )
+{
+  return ( val == MATTR_UPDOWN_FLOOR );
+}

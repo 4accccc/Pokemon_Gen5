@@ -1916,16 +1916,26 @@ static void gjiki_SetMove_Walk(
   u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag )
 {
   u16 code;
-  
+ 
   GF_ASSERT( dir != DIR_NOT );
   
   if( debug_flag == TRUE ){
     code = AC_WALK_U_2F;
   }else if( key_cont & PAD_BUTTON_B ){
-    code = AC_DASH_U_4F;
-    
     if( FIELD_PLAYER_CheckIllegalOBJCode(gjiki->fld_player) == FALSE ){
       code = AC_WALK_U_4F;
+    }else{
+      MAPATTR attr;
+      VecFx32 pos;
+      FIELD_PLAYER_GetPos( gjiki->fld_player, &pos );
+      
+      code = AC_DASH_U_4F;
+      if( MMDL_GetMapPosAttr( mmdl, &pos, &attr )){
+        //è„â∫ìÆè∞Ç≈ÇÕÉ_ÉbÉVÉÖÇ»Çµ
+        if( MAPATTR_VALUE_CheckUpDownFloor( MAPATTR_GetAttrValue(attr) )){
+          code = AC_WALK_U_8F;
+        }
+      }
     }
   }else{
     code = AC_WALK_U_8F;

@@ -120,3 +120,4 @@ extern BOOL MAPATTR_VALUE_CheckDesertDeep( const MAPATTR_VALUE val );
 extern BOOL MAPATTR_VALUE_CheckSnowGrassLow( const MAPATTR_VALUE val );
 extern BOOL MAPATTR_VALUE_CheckSnowGrassHigh( const MAPATTR_VALUE val );
 extern BOOL MAPATTR_VALUE_CheckMirrorFloor( const MAPATTR_VALUE val );
+extern BOOL MAPATTR_VALUE_CheckUpDownFloor( const MAPATTR_VALUE val );
