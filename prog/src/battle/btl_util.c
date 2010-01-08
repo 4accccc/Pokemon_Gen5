@@ -84,3 +84,20 @@ void BTL_UTIL_Printf( const char* filename, int line, u32 strID, ... )
     }
   }
 }
+
+void BTL_UTIL_PrintfSimple( u32 strID, ... )
+{
+  if( PrintSysEnableFlag )
+  {
+    const char* fmt_str = BTL_DEBUGPRINT_GetFormatStr( strID );
+    if( fmt_str )
+    {
+      va_list vlist;
+
+      va_start( vlist, strID );
+      OS_TVPrintf( fmt_str, vlist );
+      va_end( vlist );
+    }
+  }
+}
+

@@ -677,9 +677,9 @@ BOOL BTL_NET_ReturnToServer( const void* data, u32 size )
   BTL_N_PrintfEx( PRINT_FLG, DBGSTR_NET_ReturnToServerTrying, size);
   if( result ){
     Sys->serverCmdReceived = FALSE;
-    BTL_N_PrintfSimpleEx( PRINT_FLG, " done!");
+    BTL_N_PrintfSimpleEx( PRINT_FLG, DBGSTR_done );
   }
-  BTL_N_PrintfSimpleEx( PRINT_FLG, "\n");
+  BTL_N_PrintfSimpleEx( PRINT_FLG, DBGSTR_LF );
   return result;
 }
 

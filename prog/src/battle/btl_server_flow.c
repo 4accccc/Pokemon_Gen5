@@ -794,7 +794,7 @@ SvflowResult BTL_SVFLOW_Start( BTL_SVFLOW_WORK* wk )
       wk->numEndActOrder = i+1;
       break;
     }
-    OS_TPrintf("[* SVF *]         Que WritePtr=%d\n", wk->que->writePtr );
+    BTL_N_Printf( DBGSTR_SVFL_QueWritePtr, wk->que->writePtr );
   }
 
   // 全アクション処理し終えた
@@ -2025,7 +2025,6 @@ static void scproc_MemberInCore( BTL_SVFLOW_WORK* wk, u8 clientID, u8 posIdx, u8
   BTL_POKEPARAM* bpp;
   u8 pokeID;
 
-  OS_TPrintf(" MemberIn : ClientID=%d, posIdx=%d, nextPokeIdx=%d\n", clientID, posIdx, nextPokeIdx);
 
   clwk = BTL_SERVER_GetClientWork( wk->server, clientID );
   GF_ASSERT(posIdx < clwk->numCoverPos);
@@ -2043,8 +2042,6 @@ static void scproc_MemberInCore( BTL_SVFLOW_WORK* wk, u8 clientID, u8 posIdx, u8
   }
   bpp = BTL_PARTY_GetMemberData( clwk->party, posIdx );
   pokeID = BPP_GetID( bpp );
-  OS_TPrintf(" INPoke = (%d - %p), tokusei=%d\n", pokeID, bpp, BPP_GetValue(bpp, BPP_TOKUSEI) );
-  BPP_DebugPrintTokuseiAdrs( bpp );
 
 
   BTL_HANDLER_TOKUSEI_Add( bpp );
@@ -2215,7 +2212,6 @@ static void scproc_TrainerItem_Root( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u1
     BtlPokePos targetPos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, targetPokeID );
     if( targetPos != BTL_POS_NULL )
     {
-      OS_TPrintf("PokeID=%d, Pos=%d, UseItemAct ON\n", targetPokeID, targetPos);
       SCQUE_PUT_ACT_EffectByPos( wk->que, targetPos, BTLEFF_USE_ITEM );
     }
   }
@@ -2720,8 +2716,6 @@ static BOOL scproc_MemberOutCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* outPoke )
 
   BTL_POSPOKE_PokeOut( &wk->pospokeWork, BPP_GetID(outPoke) );
   scproc_ClearPokeDependEffect( wk, outPoke );
-
-  OS_TPrintf("OutPoke = (%d - %p), tokusei=%d\n", BPP_GetID(outPoke), outPoke, BPP_GetValue(outPoke, BPP_TOKUSEI) );
 
   return TRUE;
 }
@@ -3794,8 +3788,6 @@ static BOOL scEvent_CheckHit( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker
 //----------------------------------------------------------------------------------
 static void scPut_WazaEffect( BTL_SVFLOW_WORK* wk, WazaID waza, const WAZAEFF_CTRL* effCtrl, u32 que_reserve_pos )
 {
-//  OS_TPrintf("[SVF] ReservedWazaEffCmd ... atkPos=%d, targetPos=%d\n",
-//      effCtrl->attackerPos, effCtrl->targetPos );
   SCQUE_PUT_ReservedPos( wk->que, que_reserve_pos, SC_ACT_WAZA_EFFECT,
           effCtrl->attackerPos, effCtrl->targetPos, waza );
 }
@@ -4870,7 +4862,6 @@ static void scEvent_DamageProcEnd( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* att
       }
       else
       {
-        OS_TPrintf("ターゲットがそもそもいません\n");
         BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_TARGET1, BTL_POKEID_NULL );
       }
       BTL_EVENTVAR_SetConstValue( BTL_EVAR_DAMAGE, damage_sum );
@@ -6456,7 +6447,9 @@ static BOOL scEvent_UnCategoryWaza( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* w
       targetMax = BTL_POKESET_GetCountMax( targets );
       targetCnt = BTL_POKESET_GetCount( targets );
       BTL_EVENTVAR_SetConstValue( BTL_EVAR_TARGET_POKECNT, targetCnt );
-      OS_TPrintf("未分類ワザ 攻撃PokeID=%d, 対象ポケ数=%d/%d\n", BPP_GetID(attacker), targetCnt, targetMax);
+
+      BTL_N_Printf( DBGSTR_SVFL_UncategoryWazaInfo, BPP_GetID(attacker), targetCnt, targetMax);
+
       for(i=0; i<targetCnt; ++i){
         bpp = BTL_POKESET_Get( targets, i );
         BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_TARGET1+i, BPP_GetID(bpp) );
@@ -9209,7 +9202,7 @@ static u16 scEvent_getWazaPower( BTL_SVFLOW_WORK* wk,
   BTL_EVENTVAR_Pop();
 
   power = BTL_CALC_MulRatio( power, ratio );
-  BTL_Printf("ワザ威力は%d  (ratio=%08x)\n", power, ratio);
+  BTL_N_Printf( DBGSTR_SVFL_WazaPower, power, ratio);
   return power;
 }
 //--------------------------------------------------------------------------
@@ -9261,20 +9254,19 @@ static u16 scEvent_getAttackPower( BTL_SVFLOW_WORK* wk,
         }
       }
 
-      if( BTL_EVENTVAR_GetValue( BTL_EVAR_GEN_FLAG ) )
-      {
+      // クリティカルチェック
+      if( BTL_EVENTVAR_GetValue( BTL_EVAR_GEN_FLAG ) ){
         power = BPP_GetValue_Base( calc_attacker, vid );
       }
       else
       {
         if( criticalFlag ){
           power = BPP_GetValue_Critical( calc_attacker, vid );
-//          OS_TPrintf("クリティカルで攻撃=%d\n", power);
         }else{
           power = BPP_GetValue( calc_attacker, vid );
-//          OS_TPrintf("通常ヒットで攻撃=%d\n", power);
         }
       }
+
       BTL_EVENTVAR_SetConstValue( BTL_EVAR_WAZAID, wazaParam->wazaID );
       BTL_EVENTVAR_SetConstValue( BTL_EVAR_WAZA_TYPE, wazaParam->wazaType );
       BTL_EVENTVAR_SetValue( BTL_EVAR_POWER, power );
@@ -9283,7 +9275,7 @@ static u16 scEvent_getAttackPower( BTL_SVFLOW_WORK* wk,
       power = BTL_EVENTVAR_GetValue( BTL_EVAR_POWER );
       ratio = BTL_EVENTVAR_GetValue( BTL_EVAR_RATIO );
       power = BTL_CALC_MulRatio( power, ratio );
-      OS_TPrintf("攻撃力=%d  (Critical=%d, ratio=%08x\n", power, criticalFlag, ratio);
+      BTL_N_Printf( DBGSTR_SVFL_AtkPower, power, criticalFlag, ratio);
     BTL_EVENTVAR_Pop();
     return power;
   }
@@ -9322,7 +9314,6 @@ static u16 scEvent_getDefenderGuard( BTL_SVFLOW_WORK* wk,
       guard = BPP_GetValue( defender, vid );
     }
   }
-  OS_TPrintf("変化前防御力=%d\n", guard);
 
   // てんこう「すなあらし」の時、いわタイプのとくぼう1.5倍
   if( (scEvent_GetWeather(wk) == BTL_WEATHER_SAND)
@@ -9345,7 +9336,7 @@ static u16 scEvent_getDefenderGuard( BTL_SVFLOW_WORK* wk,
   BTL_EVENTVAR_Pop();
 
   guard = BTL_CALC_MulRatio( guard, ratio );
-  OS_TPrintf("防御力=%d  (Critical=%d, ratio=%08x\n", guard, criticalFlag, ratio);
+  BTL_N_Printf( DBGSTR_SVFL_DefGuard, guard, criticalFlag, ratio);
   return guard;
 }
 //--------------------------------------------------------------------------

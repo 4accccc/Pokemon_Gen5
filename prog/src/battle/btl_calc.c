@@ -343,13 +343,11 @@ u8 BTL_CALC_HitCountMax( u8 numHitMax )
     u8  max, p, i;
 
     p = BTL_CALC_GetRand( 100 );
-    OS_TPrintf("HitCount P=%d\n", p);
     max = numHitMax - HIT_COUNT_MIN;
     for(i=0; i<HIT_COUNT_RANGE; i++)
     {
       if( p < perTbl[max][i] )
       {
-        OS_TPrintf("HitCount Break by [[%d]] - %d\n", max, i);
         break;
       }
     }

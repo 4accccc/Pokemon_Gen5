@@ -424,8 +424,5 @@ extern u8 BPP_CONFRONT_REC_GetCount( const BTL_POKEPARAM* bpp );
 extern u8 BPP_CONFRONT_REC_GetPokeID( const BTL_POKEPARAM* bpp, u8 idx );
 
 
-#ifdef PM_DEBUG
-extern void BPP_DebugPrintTokuseiAdrs( const BTL_POKEPARAM* bpp );
-#endif
 
 #endif

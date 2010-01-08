@@ -274,8 +274,6 @@ BTL_CLIENT* BTL_CLIENT_Create(
   BTL_CLIENT* wk = GFL_HEAP_AllocClearMemory( heapID, sizeof(BTL_CLIENT) );
   int i;
 
-  OS_TPrintf("Create Client ID=%d...\n", clientID);
-
   wk->myID = clientID;
   wk->heapID = heapID;
   wk->myType = clientType;
@@ -699,7 +697,7 @@ static BOOL selact_Root( BTL_CLIENT* wk, int* seq )
 
   case 3:
     // アクション選択開始
-    BTL_Printf("ACT選択(%d体目=ID:%d）開始します\n", wk->procPokeIdx, BPP_GetID(wk->procPoke));
+    BTL_N_Printf( DBGSTR_CLIENT_SelectActionStart, wk->procPokeIdx, BPP_GetID(wk->procPoke));
     BTLV_UI_SelectAction_Start( wk->viewCore, wk->procPoke, (wk->procPokeIdx!=0), wk->procAction );
     (*seq)++;
     break;
@@ -1132,9 +1130,10 @@ static BOOL is_action_unselectable( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, BT
   {
     WazaID waza = BPP_GetPrevWazaID( wk->procPoke );
     BtlPokePos pos = BPP_GetPrevTargetPos( wk->procPoke );
-    u8 waza_idx;
-    waza_idx = BPP_WAZA_SearchIdx( wk->procPoke, waza );
+    u8 waza_idx = BPP_WAZA_SearchIdx( wk->procPoke, waza );
+
     BTL_N_PrintfEx( PRINT_FLG, DBGSTR_CLIENT_WazaLockInfo, wk->myID, waza, waza_idx, pos);
+
     if( BPP_WAZA_GetPP(wk->procPoke, waza_idx) ){
       if( action ){
         BTL_ACTION_SetFightParam( action, waza, pos );

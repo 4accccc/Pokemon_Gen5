@@ -572,10 +572,6 @@ void BPP_SetBaseStatus( BTL_POKEPARAM* bpp, BppValueID vid, u16 value )
   BTL_Printf("ポケ[%d]の能力(%d)を%dに書き換えた\n", bpp->coreParam.myID, vid, value);
 }
 
-void BPP_DebugPrintTokuseiAdrs( const BTL_POKEPARAM* bpp )
-{
-  OS_TPrintf("Bpp = %p,  tok=%p\n", bpp, (void*)(&(bpp->tokusei)));
-}
 //=============================================================================================
 /**
  * 各種パラメータ取得
@@ -1448,7 +1444,6 @@ void BPP_WazaSick_TurnCheck( BTL_POKEPARAM* bpp, BtlSickTurnCheckFunc callbackFu
         BTL_Printf("ポケ[%d - %p], 状態異常[%d] 最大ターン=%d, counter=%d ->",
           bpp->coreParam.myID, bpp, sick, turnMax, bpp->wazaSickCounter[sick] );
         bpp->wazaSickCounter[sick] += n;
-        OS_TPrintf(" %d (adrs=%p)\n", bpp->wazaSickCounter[sick], &(bpp->wazaSickCounter[sick]));
 
         if( bpp->wazaSickCounter[sick] >= turnMax )
         {
@@ -2336,7 +2331,6 @@ BOOL BPP_AddExp( BTL_POKEPARAM* bpp, u32* expRest, BTL_LEVELUP_INFO* info )
       info->agi    = bpp->baseParam.agility - info->agi;
 
       bpp->coreParam.hp += info->hp;
-      OS_TPrintf("レベルアップしたのでHPが%dに増加\n", bpp->coreParam.hp);
       PP_Put((POKEMON_PARAM*)(bpp->coreParam.ppSrc), ID_PARA_hp, bpp->coreParam.hp );
 
 //      PP_Put( (POKEMON_PARAM*)(bpp->coreParam.ppSrc), ID_PARA_exp, bpp->exp );

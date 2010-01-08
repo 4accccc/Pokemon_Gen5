@@ -1004,7 +1004,6 @@ void BTL_HANDLER_Waza_Remove( const BTL_POKEPARAM* pp, WazaID waza )
 void BTL_HANDLER_Waza_RemoveForce( const BTL_POKEPARAM* pp, WazaID waza )
 {
   u8 pokeID = BPP_GetID( pp );
-  OS_TPrintf("ポケ[%d], ワザ[%d]のハンドラを強制削除\n", pokeID, waza);
   removeHandlerForce( pokeID, waza );
 }
 //----------------------------------------------------------------------------------
@@ -2902,11 +2901,9 @@ static void handler_Ikari_Exe( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
     if( BTL_EVENTVAR_GetValue(BTL_EVAR_WAZAID) == BTL_EVENT_FACTOR_GetSubID(myHandle) ){
-      OS_TPrintf("Poke[%d] いかりを出したのでスティックする\n", pokeID);
       work[ WORKIDX_STICK ] = 1;
     }else{
       const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
-      OS_TPrintf("Poke[%d] いかり以外のワザ出したのでハンドラ削除\n", pokeID);
       BTL_HANDLER_Waza_RemoveForce( bpp, BTL_EVENT_FACTOR_GetSubID(myHandle) );
     }
   }
@@ -5289,7 +5286,6 @@ static void handler_Encore( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk,
     WazaID  prevWaza;
 
     prevWaza = BPP_GetPrevWazaID( target );
-    OS_TPrintf("ターゲットの直前ワザ=%d\n", prevWaza);
 
     if( !BPP_CheckSick(target, WAZASICK_ENCORE)
     &&  (prevWaza != WAZANO_NULL)

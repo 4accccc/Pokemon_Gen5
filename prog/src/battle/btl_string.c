@@ -274,13 +274,13 @@ void BTL_STR_MakeStringStd( STRBUF* buf, BtlStrID_STD strID, u32 numArgs, ... )
     va_list   list;
     u32 i;
 
-    BTL_Printf("STD STR ID=%d, argCnt=%d\n", strID, numArgs);
+    BTL_N_Printf( DBGSTR_STR_StdStrInfo, strID, numArgs);
 
     va_start( list, numArgs );
     for(i=0; i<numArgs; ++i)
     {
       SysWork.args[i] = va_arg( list, int );
-      BTL_Printf("  arg(%d)=%d\n", i, SysWork.args[i]);
+      BTL_N_PrintfSimple( DBGSTR_STR_Arg, i, SysWork.args[i]);
     }
     va_end( list );
 
@@ -316,7 +316,7 @@ void BTL_STR_MakeStringStdWithArgArray( STRBUF* buf, BtlStrID_STD strID, const i
   };
   int i;
 
-  OS_TPrintf(" STD:strID=%d\n", strID);
+  BTL_N_Printf( DBGSTR_STR_StdStrID, strID);
 
   // ‘ÎÛw‰c‚É‚æ‚é•â³F‘ÎÛw‰cIDiBtlSidej‚Í args[0] ‚É“ü‚ê‚Ä‚¨‚­‚±‚Æ
   for(i=0; i<NELEMS(sideConvStrID); ++i)
@@ -325,7 +325,6 @@ void BTL_STR_MakeStringStdWithArgArray( STRBUF* buf, BtlStrID_STD strID, const i
     {
       if( !BTL_MAIN_IsPlayerSide(SysWork.mainModule, args[0]) ){
         ++strID;
-        OS_TPrintf("  ->=%d\n", strID);
       }
       break;
     }
@@ -436,7 +435,7 @@ void BTL_STR_MakeStringSet( STRBUF* buf, BtlStrID_SET strID, const int* args )
 
   int i;
 
-  OS_TPrintf("SET:StrID=%d\n", strID);
+  BTL_N_Printf(DBGSTR_STR_SetStrID, strID);
 
   for(i=0; i<NELEMS(funcTbl); i++)
   {
@@ -568,11 +567,12 @@ static void registerWords( const STRBUF* buf, const int* args, WORDSET* wset )
         if( argIdx >= argIdxDec ){
           argIdx -= argIdxDec;
         }
-        BTL_Printf("bufIdx=%d ....\n", bufIdx);
+        BTL_N_Printf( DBGSTR_PRINT_BufIdx, bufIdx);
+
         if( tagGrp == PRINTSYS_TAGGROUP_NUM )
         {
           u8 keta = PRINTSYS_GetTagIndex( sp ) + 1;
-          BTL_Printf("[TAG] SetNumber : keta=%d, value=%d\n", keta, args[argIdx] );
+          BTL_N_Printf( DBGSTR_STR_TagSetNumber, keta, args[argIdx] );
           WORDSET_RegisterNumber( wset, bufIdx, args[argIdx], keta, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
         }
         else
@@ -592,7 +592,7 @@ static void registerWords( const STRBUF* buf, const int* args, WORDSET* wset )
             clientID = BTL_CLIENT_MAX;
             break;
           case TAGIDX_POKE_NICKNAME:
-            BTL_Printf("setPokeNickName ID=%d ....\n", args[argIdx]);
+            BTL_N_Printf( DBGSTR_STR_SetPokeNickname, args[argIdx]);
             register_PokeNickname( args[argIdx], bufIdx );
             break;
           case TAGIDX_POKE_NICKNAME_TRUTH:
@@ -608,11 +608,11 @@ static void registerWords( const STRBUF* buf, const int* args, WORDSET* wset )
             WORDSET_RegisterTokuseiName( wset, bufIdx, args[argIdx] );
             break;
           case TAGIDX_WAZA_NAME:
-            BTL_Printf("[TAG] Set WazaName ... waza=%d\n", args[argIdx] );
+            BTL_N_Printf( DBGSTR_STR_SetTagWazaName, args[argIdx] );
             WORDSET_RegisterWazaName( wset, bufIdx, args[argIdx] );
             break;
           case TAGIDX_ITEM_NAME:
-            BTL_Printf("set Item Name argIdx=%d, ID=%d ....\n", argIdx, args[argIdx]);
+            BTL_N_Printf( DBGSTR_STR_SetItemName, argIdx, args[argIdx]);
             WORDSET_RegisterItemName( wset, bufIdx, args[argIdx] );
             break;
           case TAGIDX_POKETYPE_NAME:
@@ -653,7 +653,7 @@ static void ms_set_auto( STRBUF* dst, u16 strID, const int* args )
 //--------------------------------------------------------------
 static void ms_set_default( STRBUF* dst, u16 strID, const int* args )
 {
-  OS_TPrintf("ms set_std strID=%d, args[0]=%d, args[1]=%d\n", strID, args[0], args[1]);
+  BTL_N_Printf( DBGSTR_STR_SetPoke1, strID, args[0], args[1]);
 
   strID = get_setStrID( args[0], strID );
 
@@ -668,7 +668,7 @@ static void ms_set_default( STRBUF* dst, u16 strID, const int* args )
 //--------------------------------------------------------------
 static void ms_set_poke2( STRBUF* dst, u16 strID, const int* args )
 {
-  OS_TPrintf("ms set_poke2 strID=%d, args[0]=%d, args[1]=%d\n", strID, args[0], args[1]);
+  BTL_N_Printf( DBGSTR_STR_SetPoke2, strID, args[0], args[1]);
 
   strID = get_setStrID_Poke2( args[0], args[1], strID );
 
@@ -848,7 +848,6 @@ void BTL_STR_MakeWazaUIString( STRBUF* dst, u16 wazaID, u8 wazaPP, u8 wazaPPMax 
 //=============================================================================================
 void BTL_STR_MakeStringWazaOboeWithArgArray( STRBUF* buf, BtlStrID_WAZAOBOE strID, const int* args )
 {
-  BTL_Printf(" strID=%d\n", strID);
   ms_wazaoboe_simple( buf, strID, args );
 }
 

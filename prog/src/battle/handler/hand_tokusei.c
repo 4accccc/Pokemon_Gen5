@@ -4458,7 +4458,6 @@ static void handler_Monohiroi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
         }
       }
 
-      OS_TPrintf("今ターンアイテムを消費したポケモン=%d\n", mwk->consumedPokeCnt);
       // 今ターン、アイテムを消費したポケモンが１体以上いれば
       if( mwk->consumedPokeCnt )
       {

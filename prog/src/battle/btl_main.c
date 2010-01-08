@@ -64,7 +64,6 @@ static const u8 ClientBasePokeID[] = {
 
 struct _BTL_PARTY {
   BTL_POKEPARAM*  member[ TEMOTI_POKEMAX ];
-  POKEPARTY*      srcParty;
   u8  memberCount;
   u8  numCoverPos;
 };
@@ -177,8 +176,7 @@ static void PokeCon_Release( BTL_POKE_CONTAINER* pokecon );
 static int PokeCon_FindPokemon( const BTL_POKE_CONTAINER* pokecon, u8 clientID, u8 pokeID );
 static void BTL_PARTY_Initialize( BTL_PARTY* party );
 static void BTL_PARTY_AddMember( BTL_PARTY* party, BTL_POKEPARAM* member );
-static void   BTL_PARTY_AlivePokeToFirst( BTL_PARTY* party );
-static void BTL_PARTY_SetSrcParty( BTL_PARTY* party, POKEPARTY* srcParty );
+static void   BTL_PARTY_MoveAlivePokeToFirst( BTL_PARTY* party );
 static void trainerParam_Init( BTL_MAIN_MODULE* wk );
 static void trainerParam_Clear( BTL_MAIN_MODULE* wk );
 static void trainerParam_StorePlayer( BTL_TRAINER_DATA* dst, HEAPID heapID, const MYSTATUS* playerData );
@@ -1053,8 +1051,6 @@ static BOOL setup_comm_double( int* seq, void* work )
     wk->myOrgPos = BTL_MAIN_GetClientPokePos( wk, wk->myClientID, 0 );
     {
       u8 vpos = BTL_MAIN_BtlPosToViewPos( wk, wk->myOrgPos );
-      OS_TPrintf("[BTL] Multi=%d, MyClientID=%d,  MyOrgPos=%d vpos=%d\n",
-        sp->multiMode, wk->myClientID, wk->myOrgPos, vpos);
     }
     (*seq)++;
     return FALSE;
@@ -1404,7 +1400,6 @@ static BOOL setupseq_comm_create_server_client_double( BTL_MAIN_MODULE* wk, int*
 
     wk->server = BTL_SERVER_Create( wk, &wk->randomContext, &wk->pokeconForServer, bagMode, wk->heapID );
 
-    OS_TPrintf("SV:myClientID=%d\n", clientID);
     wk->client[clientID] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, sp->commMode, sp->netHandle,
         clientID, numCoverPos, BTL_CLIENT_TYPE_UI, bagMode, wk->heapID );
     BTL_SERVER_AttachLocalClient( wk->server, BTL_CLIENT_GetAdapter(wk->client[clientID]), clientID, numCoverPos );
@@ -1418,7 +1413,6 @@ static BOOL setupseq_comm_create_server_client_double( BTL_MAIN_MODULE* wk, int*
   // 自分がサーバではない
   else
   {
-    OS_TPrintf("CL:myClientID=%d\n", clientID);
     wk->client[ clientID ] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, sp->commMode, sp->netHandle,
         clientID, numCoverPos, BTL_CLIENT_TYPE_UI, bagMode, wk->heapID  );
 
@@ -2582,6 +2576,215 @@ BOOL BTL_MAINUTIL_IsFriendPokeID( u8 pokeID1, u8 pokeID2 )
   return side1 == side2;
 }
 
+POKEPARTY* BTL_MAIN_GetPlayerPokeParty( BTL_MAIN_MODULE* wk )
+{
+  srcParty_RefrectBtlParty( wk, wk->myClientID );
+  return srcParty_Get( wk, wk->myClientID );
+}
+POKEPARTY* BTL_MAIN_GetMultiPlayerPokeParty( BTL_MAIN_MODULE* wk )
+{
+  if( BTL_MAIN_IsMultiMode(wk) )
+  {
+    u8 friendClientID = GetFriendCrientID( wk->myClientID );
+    if( BTL_MAIN_IsExistClient(wk, friendClientID) ){
+      srcParty_RefrectBtlParty( wk, friendClientID );
+      return srcParty_Get( wk, friendClientID );
+    }
+  }
+  return NULL;
+}
+
+u8 BTL_MAIN_GetPlayerClientID( const BTL_MAIN_MODULE* wk )
+{
+  return wk->myClientID;
+}
+u8 BTL_MAIN_GetEnemyClientID( const BTL_MAIN_MODULE* wk, u8 idx )
+{
+  return BTL_MAIN_GetOpponentClientID( wk, wk->myClientID, idx );
+}
+/**
+ * プレイヤーのマルチ立ち位置(0 or 1）を取得
+ */
+u8 BTL_MAIN_GetPlayerMultiPos( const BTL_MAIN_MODULE* wk )
+{
+  if( BTL_MAIN_IsMultiMode(wk) ){
+    return (wk->myClientID & 1);
+  }
+  return 0;
+}
+
+u32 BTL_MAIN_GetOpponentClientID( const BTL_MAIN_MODULE* wk, u8 clientID, u8 idx )
+{
+  BtlPokePos pos = BTL_MAIN_GetClientPokePos( wk, clientID, 0 );
+  pos = BTL_MAIN_GetOpponentPokePos( wk, pos, idx );
+  return BTL_MAIN_BtlPosToClientID( wk, pos );
+}
+
+
+//=============================================================================================
+/**
+ * クライアント計算結果完了後のデータを、サーバ計算用データに上書きする
+ *
+ * @param   wk
+ *
+ */
+//=============================================================================================
+void BTL_MAIN_SyncServerCalcData( BTL_MAIN_MODULE* wk )
+{
+  #if 0
+  u32 i;
+  for(i=0; i<NELEMS(wk->pokeconForServer.pokeParam); ++i)
+  {
+    if( wk->pokeconForServer.pokeParam[i] != NULL )
+    {
+      BTL_POKEPARAM_Copy(
+        wk->pokeconForServer.pokeParam[i],
+        wk->pokeconForClient.pokeParam[i] );
+    }
+  }
+  #endif
+}
+
+//=============================================================================================
+/**
+ * プレイヤー使用アイテムをバッグから減らす
+ *
+ * @param   wk
+ * @param   clientID
+ * @param   itemID
+ */
+//=============================================================================================
+void  BTL_MAIN_DecrementPlayerItem( const BTL_MAIN_MODULE* wk, u8 clientID, u16 itemID )
+{
+  if( clientID == wk->myClientID )
+  {
+    MYITEM_SubItem( (MYITEM_PTR)(wk->setupParam->itemData), itemID, 1, wk->heapID );
+  }
+}
+//=============================================================================================
+/**
+ * アイテムデータポインタ取得
+ *
+ * @param   wk
+ *
+ * @retval  MYITEM_PTR
+ */
+//=============================================================================================
+MYITEM_PTR BTL_MAIN_GetItemDataPtr( BTL_MAIN_MODULE* wk )
+{
+  return wk->setupParam->itemData;
+}
+//=============================================================================================
+/**
+ * バッグカーソルデータ取得
+ *
+ * @param   wk
+ *
+ * @retval  BAG_CURSOR*
+ */
+//=============================================================================================
+BAG_CURSOR* BTL_MAIN_GetBagCursorData( BTL_MAIN_MODULE* wk )
+{
+  return wk->setupParam->bagCursor;
+}
+//=============================================================================================
+/**
+ * 録画モード有効かチェック
+ *
+ * @param   wk
+ *
+ * @retval  BOOL
+ */
+//=============================================================================================
+BOOL BTL_MAIN_IsRecordEnable( const BTL_MAIN_MODULE* wk )
+{
+  if( (wk->setupParam->recBuffer != NULL)
+  &&  (wk->setupParam->fRecordPlay == FALSE)
+  ){
+    return TRUE;
+  }
+  return FALSE;
+}
+
+
+//=============================================================================================
+/**
+ * デバッグフラグ取得
+ *
+ * @param   wk
+ * @param   flag
+ *
+ * @retval  BOOL
+ */
+//=============================================================================================
+BOOL BTL_MAIN_GetDebugFlag( const BTL_MAIN_MODULE* wk, BtlDebugFlag flag )
+{
+#ifdef PM_DEBUG
+  return BTL_SETUP_GetDebugFlag( wk->setupParam, flag );
+#endif
+  return FALSE;
+}
+
+//=============================================================================================
+/**
+ * 捕獲したポケモン位置の通知を受け付け
+ *
+ * @param   wk
+ * @param   pos
+ */
+//=============================================================================================
+void BTL_MAIN_NotifyCapturedPokePos( BTL_MAIN_MODULE* wk, BtlPokePos pos )
+{
+  if( wk->setupParam->capturedPokeIdx == TEMOTI_POKEMAX )
+  {
+    u8 clientID, posIdx;
+    btlPos_to_cliendID_and_posIdx( wk, pos, &clientID, &posIdx );
+    wk->setupParam->capturedPokeIdx = posIdx;
+    BTL_Printf("捕獲ポケ位置=%d, Index=%d\n", pos, posIdx );
+  }
+}
+//=============================================================================================
+/**
+ * おこずかいボーナス額の増量受け付け
+ *
+ * @param   wk
+ * @param   volume
+ */
+//=============================================================================================
+void BTL_MAIN_AddBonusMoney( BTL_MAIN_MODULE* wk, u32 volume )
+{
+  wk->bonusMoney += volume;
+  if( wk->bonusMoney > BTL_BONUS_MONEY_MAX ){
+    wk->bonusMoney = BTL_BONUS_MONEY_MAX;
+  }
+}
+//=============================================================================================
+/**
+ * おこずかいボーナス額の取得
+ *
+ * @param   wk
+ *
+ * @retval  u32
+ */
+//=============================================================================================
+u32 BTL_MAIN_GetBonusMoney( const BTL_MAIN_MODULE* wk )
+{
+  return wk->bonusMoney;
+}
+//=============================================================================================
+/**
+ * プレイヤー側が勝ったか判定
+ *
+ * @param   wk
+ *
+ * @retval  BtlResult
+ */
+//=============================================================================================
+BtlResult BTL_MAIN_ChecBattleResult( BTL_MAIN_MODULE* wk )
+{
+  return checkWinner( wk );
+}
+
 //=======================================================================================================
 // BTL_POKE_CONTAINER
 //=======================================================================================================
@@ -2638,7 +2841,6 @@ static void PokeCon_AddParty( BTL_POKE_CONTAINER* pokecon, BTL_MAIN_MODULE* wk, 
   POKEMON_PARAM* pp;
   u8 i;
 
-  OS_TPrintf(" CreateClient(%d)'s party ... numMembers=%d\n", clientID, poke_count);
   for(i=0; i<poke_count; ++i, ++pokeID)
   {
     pp = PokeParty_GetMemberPointer( party_src, i );
@@ -2650,7 +2852,6 @@ static void PokeCon_AddParty( BTL_POKE_CONTAINER* pokecon, BTL_MAIN_MODULE* wk, 
     }
     fIllusion = (BPP_GetValue( pokecon->pokeParam[pokeID], BPP_TOKUSEI) == POKETOKUSEI_IRYUUJON);
 
-    OS_TPrintf(" Create Client(%d)'s PokeParam ID=%d, adrs=%p\n", clientID, pokeID, pokecon->pokeParam[i]);
     BTL_PARTY_AddMember( party, pokecon->pokeParam[ pokeID ] );
   }
 
@@ -2660,7 +2861,7 @@ static void PokeCon_AddParty( BTL_POKE_CONTAINER* pokecon, BTL_MAIN_MODULE* wk, 
     BPP_SetViewSrcData( pokecon->pokeParam[ pokeID-1 ], pp );
   }
 
-  BTL_PARTY_AlivePokeToFirst( party );
+  BTL_PARTY_MoveAlivePokeToFirst( party );
 }
 static void PokeCon_Release( BTL_POKE_CONTAINER* pokecon )
 {
@@ -2881,29 +3082,35 @@ const BTL_PARTY* BTL_POKECON_GetPartyDataConst( const BTL_POKE_CONTAINER* wk, u3
   return &wk->party[ clientID ];
 }
 
-
 //=======================================================================================================
 // BTL_PARTY
 //=======================================================================================================
 
+/**
+ * 構造体初期化
+ */
 static void BTL_PARTY_Initialize( BTL_PARTY* party )
 {
   int i;
   party->memberCount = 0;
   party->numCoverPos = 0;
-  party->srcParty = NULL;
   for(i=0; i<TEMOTI_POKEMAX; i++)
   {
     party->member[i] = NULL;
   }
 }
-
+/**
+ * メンバー１体追加（初期化後に手持ちメンバー数分だけ行う）
+ */
 static void BTL_PARTY_AddMember( BTL_PARTY* party, BTL_POKEPARAM* member )
 {
   GF_ASSERT(party->memberCount < TEMOTI_POKEMAX);
   party->member[party->memberCount++] = member;
 }
-static void   BTL_PARTY_AlivePokeToFirst( BTL_PARTY* party )
+/**
+ * 戦える（生きていてタマゴでない）ポケモンを先頭に移動（初期化後に１度だけ行う）
+ */
+static void   BTL_PARTY_MoveAlivePokeToFirst( BTL_PARTY* party )
 {
   if( !BPP_IsFightEnable(party->member[0]) )
   {
@@ -2913,23 +3120,29 @@ static void   BTL_PARTY_AlivePokeToFirst( BTL_PARTY* party )
       if( BPP_IsFightEnable(party->member[idx]) )
       {
         BTL_PARTY_SwapMembers( party, 0, idx );
-        OS_TPrintf("先頭ポケが死んでるorタマゴの場合に戦える残りメンバー[%d]と入れ替え\n", idx);
         break;
       }
     }
   }
 }
-static void BTL_PARTY_SetSrcParty( BTL_PARTY* party, POKEPARTY* srcParty )
-{
-  if( party->srcParty == NULL ){
-    party->srcParty = srcParty;
-  }
-}
+/**
+ * メンバー数を返す
+ *
+ * @param   party
+ *
+ * @retval  u8
+ */
 u8 BTL_PARTY_GetMemberCount( const BTL_PARTY* party )
 {
   return party->memberCount;
 }
-
+/**
+ *  戦えるメンバー数を返す
+ *
+ * @param   party
+ *
+ * @retval  u8
+ */
 u8 BTL_PARTY_GetAliveMemberCount( const BTL_PARTY* party )
 {
   int i, cnt;
@@ -2940,10 +3153,15 @@ u8 BTL_PARTY_GetAliveMemberCount( const BTL_PARTY* party )
       cnt++;
     }
   }
-  BTL_Printf("パーティ[%p]の生きてる数カウント %d/%d\n", party, cnt, party->memberCount);
   return cnt;
 }
-
+/**
+ * 指定Index以降の戦えるメンバー数を返す
+ *
+ * @param   party
+ *
+ * @retval  u8
+ */
 u8 BTL_PARTY_GetAliveMemberCountRear( const BTL_PARTY* party, u8 startIdx )
 {
   int i, cnt;
@@ -2955,7 +3173,6 @@ u8 BTL_PARTY_GetAliveMemberCountRear( const BTL_PARTY* party, u8 startIdx )
   }
   return cnt;
 }
-
 /**
  * メンバーIndex からメンバーデータポインタ取得
  *
@@ -3046,7 +3263,14 @@ void BTL_PARTY_RotateMembers( BTL_PARTY* party, BtlRotateDir dir, BTL_POKEPARAM*
     }
   }
 }
-
+/**
+ * 特定ポケモンのパーティ内Indexを返す（データポインタ指定）
+ *
+ * @param   party
+ * @param   pokeID
+ *
+ * @retval  int   パーティ内Index（パーティに指定IDのポケモンが存在しない場合 -1）
+ */
 int BTL_PARTY_FindMember( const BTL_PARTY* party, const BTL_POKEPARAM* param )
 {
   int i;
@@ -3060,7 +3284,7 @@ int BTL_PARTY_FindMember( const BTL_PARTY* party, const BTL_POKEPARAM* param )
   return -1;
 }
 /**
- * pokeID -> メンバーIndex
+ * 特定ポケモンのパーティ内Indexを返す（PokeID指定）
  *
  * @param   party
  * @param   pokeID
@@ -3107,217 +3331,6 @@ void BTL_PARTY_SetFakeSrcMember( BTL_PARTY* party, u8 memberIdx )
     }
   }
 }
-
-
-POKEPARTY* BTL_MAIN_GetPlayerPokeParty( BTL_MAIN_MODULE* wk )
-{
-  srcParty_RefrectBtlParty( wk, wk->myClientID );
-  return srcParty_Get( wk, wk->myClientID );
-}
-POKEPARTY* BTL_MAIN_GetMultiPlayerPokeParty( BTL_MAIN_MODULE* wk )
-{
-  if( BTL_MAIN_IsMultiMode(wk) )
-  {
-    u8 friendClientID = GetFriendCrientID( wk->myClientID );
-    if( BTL_MAIN_IsExistClient(wk, friendClientID) ){
-      srcParty_RefrectBtlParty( wk, friendClientID );
-      return srcParty_Get( wk, friendClientID );
-    }
-  }
-  return NULL;
-}
-
-u8 BTL_MAIN_GetPlayerClientID( const BTL_MAIN_MODULE* wk )
-{
-  return wk->myClientID;
-}
-u8 BTL_MAIN_GetEnemyClientID( const BTL_MAIN_MODULE* wk, u8 idx )
-{
-  return BTL_MAIN_GetOpponentClientID( wk, wk->myClientID, idx );
-}
-/**
- * プレイヤーのマルチ立ち位置(0 or 1）を取得
- */
-u8 BTL_MAIN_GetPlayerMultiPos( const BTL_MAIN_MODULE* wk )
-{
-  if( BTL_MAIN_IsMultiMode(wk) ){
-    return (wk->myClientID & 1);
-  }
-  return 0;
-}
-
-u32 BTL_MAIN_GetOpponentClientID( const BTL_MAIN_MODULE* wk, u8 clientID, u8 idx )
-{
-  BtlPokePos pos = BTL_MAIN_GetClientPokePos( wk, clientID, 0 );
-  pos = BTL_MAIN_GetOpponentPokePos( wk, pos, idx );
-  return BTL_MAIN_BtlPosToClientID( wk, pos );
-}
-
-
-//=============================================================================================
-/**
- * クライアント計算結果完了後のデータを、サーバ計算用データに上書きする
- *
- * @param   wk
- *
- */
-//=============================================================================================
-void BTL_MAIN_SyncServerCalcData( BTL_MAIN_MODULE* wk )
-{
-  #if 0
-  u32 i;
-  for(i=0; i<NELEMS(wk->pokeconForServer.pokeParam); ++i)
-  {
-    if( wk->pokeconForServer.pokeParam[i] != NULL )
-    {
-      BTL_POKEPARAM_Copy(
-        wk->pokeconForServer.pokeParam[i],
-        wk->pokeconForClient.pokeParam[i] );
-    }
-  }
-  #endif
-}
-
-//=============================================================================================
-/**
- * プレイヤー使用アイテムをバッグから減らす
- *
- * @param   wk
- * @param   clientID
- * @param   itemID
- */
-//=============================================================================================
-void  BTL_MAIN_DecrementPlayerItem( const BTL_MAIN_MODULE* wk, u8 clientID, u16 itemID )
-{
-  if( clientID == wk->myClientID )
-  {
-    MYITEM_SubItem( (MYITEM_PTR)(wk->setupParam->itemData), itemID, 1, wk->heapID );
-  }
-}
-//=============================================================================================
-/**
- * アイテムデータポインタ取得
- *
- * @param   wk
- *
- * @retval  MYITEM_PTR
- */
-//=============================================================================================
-MYITEM_PTR BTL_MAIN_GetItemDataPtr( BTL_MAIN_MODULE* wk )
-{
-  return wk->setupParam->itemData;
-}
-//=============================================================================================
-/**
- * バッグカーソルデータ取得
- *
- * @param   wk
- *
- * @retval  BAG_CURSOR*
- */
-//=============================================================================================
-BAG_CURSOR* BTL_MAIN_GetBagCursorData( BTL_MAIN_MODULE* wk )
-{
-  return wk->setupParam->bagCursor;
-}
-//=============================================================================================
-/**
- * 録画モード有効かチェック
- *
- * @param   wk
- *
- * @retval  BOOL
- */
-//=============================================================================================
-BOOL BTL_MAIN_IsRecordEnable( const BTL_MAIN_MODULE* wk )
-{
-  if( (wk->setupParam->recBuffer != NULL)
-  &&  (wk->setupParam->fRecordPlay == FALSE)
-  ){
-    return TRUE;
-  }
-  return FALSE;
-}
-
-
-//=============================================================================================
-/**
- * デバッグフラグ取得
- *
- * @param   wk
- * @param   flag
- *
- * @retval  BOOL
- */
-//=============================================================================================
-BOOL BTL_MAIN_GetDebugFlag( const BTL_MAIN_MODULE* wk, BtlDebugFlag flag )
-{
-#ifdef PM_DEBUG
-  return BTL_SETUP_GetDebugFlag( wk->setupParam, flag );
-#endif
-  return FALSE;
-}
-
-//=============================================================================================
-/**
- * 捕獲したポケモン位置の通知を受け付け
- *
- * @param   wk
- * @param   pos
- */
-//=============================================================================================
-void BTL_MAIN_NotifyCapturedPokePos( BTL_MAIN_MODULE* wk, BtlPokePos pos )
-{
-  if( wk->setupParam->capturedPokeIdx == TEMOTI_POKEMAX )
-  {
-    u8 clientID, posIdx;
-    btlPos_to_cliendID_and_posIdx( wk, pos, &clientID, &posIdx );
-    wk->setupParam->capturedPokeIdx = posIdx;
-    BTL_Printf("捕獲ポケ位置=%d, Index=%d\n", pos, posIdx );
-  }
-}
-//=============================================================================================
-/**
- * おこずかいボーナス額の増量受け付け
- *
- * @param   wk
- * @param   volume
- */
-//=============================================================================================
-void BTL_MAIN_AddBonusMoney( BTL_MAIN_MODULE* wk, u32 volume )
-{
-  wk->bonusMoney += volume;
-  if( wk->bonusMoney > BTL_BONUS_MONEY_MAX ){
-    wk->bonusMoney = BTL_BONUS_MONEY_MAX;
-  }
-}
-//=============================================================================================
-/**
- * おこずかいボーナス額の取得
- *
- * @param   wk
- *
- * @retval  u32
- */
-//=============================================================================================
-u32 BTL_MAIN_GetBonusMoney( const BTL_MAIN_MODULE* wk )
-{
-  return wk->bonusMoney;
-}
-//=============================================================================================
-/**
- * プレイヤー側が勝ったか判定
- *
- * @param   wk
- *
- * @retval  BtlResult
- */
-//=============================================================================================
-BtlResult BTL_MAIN_ChecBattleResult( BTL_MAIN_MODULE* wk )
-{
-  return checkWinner( wk );
-}
-
 //----------------------------------------------------------------------------------------------
 // トレーナーパラメータ関連
 //----------------------------------------------------------------------------------------------

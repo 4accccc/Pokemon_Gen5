@@ -66,6 +66,7 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_CLIENT_RETURN_CMD_DONE:   return "ID[%d], 返信しました\n";
   case DBGSTR_SelectAction_Done:        return "アクション選択終了\n";
   case DBGSTR_CLIENT_SelectActionSkip:  return "ACT選択(%d体目）スキップ\n";
+  case DBGSTR_CLIENT_SelectActionStart: return "Action選択(%d体目=ID:%d）開始します\n";
   case DBGSTR_CLIENT_SelectActionDone:  return "カバー位置数(%d)終了、アクション送信へ\n";
   case DBGSTR_CLIENT_ReturnSeqDone:     return "返信シーケンス終了\n";
   case DBGSTR_CLIENT_WazaLockInfo:      return "ワザロック：Client[%d] 前回使ったワザは %d, idx=%d, targetPos=%d\n";
@@ -89,7 +90,42 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_CALCDMG_TypeAffInfo:      return "タイプ相性:%02d -> ダメージ値：%d\n";
   case DBGSTR_CALCDMG_DamageResult:     return "ダメ受けポケモン=%d, ratio=%08x, Damage=%d -> %d\n";
   case DBGSTR_CALCDMG_DamageMarume:     return "ダメ受けポケモンのＨＰ値にまるめ->%d\n";
+  case DBGSTR_STR_StdStrID:             return " STD:strID=%d\n";
+  case DBGSTR_STR_SetStrID:             return " SET:strID=%d\n";
+  case DBGSTR_STR_StdStrInfo:           return "STD STR ID=%d, argCnt=%d\n";
+  case DBGSTR_STR_Arg:                  return "  arg(%d)=%d\n";
+  case DBGSTR_STR_SetPoke1:             return "ms set_poke1 strID=%d, args[0]=%d, args[1]=%d\n";
+  case DBGSTR_STR_SetPoke2:             return "ms set_poke2 strID=%d, args[0]=%d, args[1]=%d\n";
+  case DBGSTR_PRINT_BufIdx:             return "bufIdx=%d ....\n";
+  case DBGSTR_STR_TagSetNumber:         return "[TAG] SetNumber : keta=%d, value=%d\n";
+  case DBGSTR_STR_SetPokeNickname:      return "setPokeNickName ID=%d ....\n";
+  case DBGSTR_STR_SetTagWazaName:       return "[TAG] Set WazaName ... waza=%d\n";
+  case DBGSTR_STR_SetItemName:          return "set Item Name argIdx=%d, ID=%d ....\n";
+  case DBGSTR_SVFL_AtkPower:            return "攻撃力=%d  (Critical=%d, ratio=%08x\n";
+  case DBGSTR_SVFL_DefGuard:            return "防御力=%d  (Critical=%d, ratio=%08x\n";
+  case DBGSTR_SVFL_WazaPower:           return "ワザ威力は%d  (ratio=%08x)\n";
+  case DBGSTR_SVFL_UncategoryWazaInfo:  return "未分類ワザ 攻撃PokeID=%d, 対象ポケ数=%d/%d\n";
+  case DBGSTR_SVFL_QueWritePtr:         return "[* SVF *]         Que WritePtr=%d\n";
+  case DBGSTR_SC_PutCmd:                return "[QUE]PutCmd=%d, Format=%02x, argCnt=%d, args=";
+  case DBGSTR_SC_ReservedPos:           return "[QUE]reserved pos=%d, wp=%d\n";
+  case DBGSTR_SC_WriteReservedPos:      return "[QUE]Write Reserved Pos ... pos=%d, cmd=%d";
+  case DBGSTR_SC_PutMsgParam:           return "[QUE] PUT MSG SC=%d, StrID=%d";
+  case DBGSTR_SC_PutMsg_SE:             return "  SE_ID=%d\n";
+  case DBGSTR_SC_ArgsEqual:             return " args = ";
+  case DBGSTR_EV_AddFactor:             return "[ADD] Factor=%p Depend=%d Type=%d, Pri=%06x [ADD]\n";
+  case DBGSTR_EV_DelFactor:             return "[DEL] DEL Factor=%p Depend=%d, Type=%d [DEL]\n";
+  case DBGSTR_EV_LinkInfoHeader:        return "***** [[EV Chain]] *****\n";
+  case DBGSTR_EV_LinkInfoFooder:        return "************************\n\n";
+  case DBGSTR_EV_LinkPtr:               return "%p->";
+  case DBGSTR_EV_LinkEmpty:             return " empty...\n";
+  case DBGSTR_EVAR_Push:                return "PUSH [%5d] SP=%d\n";
+  case DBGSTR_EVAR_Pop:                 return "Pop! [%5d] SP=%d\n";
 
+
+
+  case DBGSTR_val_comma:  return "%d,";
+  case DBGSTR_done: return "done!";
+  case DBGSTR_LF: return "\n";
 
   }
   return NULL;
