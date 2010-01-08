@@ -152,12 +152,15 @@ struct _CG_WIRELESS_MENU {
   HEAPID heapID;
   GFL_BMPWIN* buttonWin[_WINDOW_MAXNUM]; /// ウインドウ管理
 
+  GFL_BMPWIN* nameWin; /// ウインドウ管理
+
   GFL_BUTTON_MAN* pButton;
   GFL_MSGDATA *pMsgData;  //
   WORDSET *pWordSet;								// メッセージ展開用ワークマネージャー
   GFL_FONT* pFontHandle;
 	STRBUF*  pExpStrBuf;
   STRBUF* pStrBuf;
+  STRBUF* pStrBufTVTName;
   u32 bgchar;  //GFL_ARCUTIL_TRANSINFO
 	u32 subchar;
 
@@ -175,6 +178,7 @@ struct _CG_WIRELESS_MENU {
   APP_TASKMENU_WIN_WORK* pAppWin;
   EVENT_CG_WIRELESS_WORK * dbw;
   int windowNum;
+  int tvtIndex;
   GAMEDATA* gamedata;
   GAMESYS_WORK *gsys;
   int yoffset;
@@ -473,7 +477,15 @@ static void _modeInit(CG_WIRELESS_MENU* pWork)
 {
 
   pWork->pStrBuf = GFL_STR_CreateBuffer( _MESSAGE_BUF_NUM, pWork->heapID );
+  pWork->pStrBufTVTName = GFL_STR_CreateBuffer( _MESSAGE_BUF_NUM, pWork->heapID );
   pWork->pExpStrBuf = GFL_STR_CreateBuffer( _MESSAGE_BUF_NUM, pWork->heapID );
+
+
+  pWork->nameWin = GFL_BMPWIN_Create(GFL_BG_FRAME1_S,
+                                     _WIRLESSMAIN_TV_NAME_ST_X, _WIRLESSMAIN_TV_NAME_ST_Y,
+                                     _WIRLESSMAIN_TV_NAME_WIDTH, _WIRLESSMAIN_TV_NAME_HEIGHT,
+                                     _SUBLIST_NORMAL_PAL,GFL_BMP_CHRAREA_GET_F);
+
   
   pWork->pFontHandle = GFL_FONT_Create( ARCID_FONT , NARC_font_large_gftr , GFL_FONT_LOADTYPE_FILE , FALSE , pWork->heapID );
   pWork->pMsgData = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_cg_wireless_dat, pWork->heapID );
@@ -560,6 +572,8 @@ static void _workEnd(CG_WIRELESS_MENU* pWork)
   GFL_FONT_Delete(pWork->pFontHandle);
   GFL_STR_DeleteBuffer(pWork->pStrBuf);
   GFL_STR_DeleteBuffer(pWork->pExpStrBuf);
+  GFL_STR_DeleteBuffer(pWork->pStrBufTVTName);
+  GFL_BMPWIN_Delete(pWork->nameWin);
   
   GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_OFF );
 
@@ -696,25 +710,20 @@ static BOOL _modeSelectMenuButtonCallback(int bttnid,CG_WIRELESS_MENU* pWork)
       pWork->dbw->aTVT.gameData = pWork->gamedata;
       num = pIn->maxBeaconNum;
 
-      OS_GetMacAddress( selfMacAdr );
-
-      for( i = 0; i < num; i++ ){
-        if(WB_NET_COMM_TVT == GFL_NET_WLGetUserGameServiceId( i )){
-          if( CTVT_BCON_CheckCallSelf( GFL_NET_GetBeaconData(i) , selfMacAdr )){
-            u8 *macAddress = GFL_NET_GetBeaconMacAddress( i );
-            u8 ii;
-            pWork->dbw->aTVT.mode = CTM_CHILD;
-            for( ii=0;ii<6;ii++ )
-            {
-              pWork->dbw->aTVT.macAddress[ii] = macAddress[ii];
-            }
-            OS_TPrintf("子機になった\n");
-            break;
+      {
+        int index = WIH_DWC_TVTCallCheck();
+        if(index != -1){
+          u8 *macAddress = GFL_NET_GetBeaconMacAddress( index );
+          u8 ii;
+          pWork->dbw->aTVT.mode = CTM_CHILD;
+          for( ii=0;ii<6;ii++ )
+          {
+            pWork->dbw->aTVT.macAddress[ii] = macAddress[ii];
           }
+          OS_TPrintf("子機になった\n");
         }
       }
     }
-
     PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
     _CHANGE_STATE(pWork,_modeButtonFlash);
     break;
@@ -1134,6 +1143,44 @@ static void _UpdatePalletAnime(CG_WIRELESS_MENU* pWork )
   }
 }
 
+
+
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   テレビトランシーバーのBEACONを拾ったら、親の名前をセット
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+static void _setTVTParentName(CG_WIRELESS_MENU* pWork)
+{
+  int index = WIH_DWC_TVTCallCheck();
+
+  if(-1 != index ){
+    CTVT_COMM_BEACON *beacon = GFL_NET_GetBeaconData(index);
+    STRBUF* pName = GFL_STR_CreateBuffer( _MESSAGE_BUF_NUM, pWork->heapID );
+
+    GFL_STR_SetStringCodeOrderLength(pName,
+                                     beacon->name, CTVT_COMM_NAME_LEN);
+
+    if(FALSE==GFL_STR_CompareBuffer(pName, pWork->pStrBufTVTName)){
+
+      GFL_STR_SetStringCodeOrderLength(pWork->pStrBufTVTName,
+                                       beacon->name, CTVT_COMM_NAME_LEN);
+
+      GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->nameWin), 0 );
+
+      PRINTSYS_PrintColor(GFL_BMPWIN_GetBmp(pWork->nameWin), 0, 0,
+                        pWork->pStrBufTVTName, pWork->pFontHandle, APP_TASKMENU_ITEM_MSGCOLOR);
+      GFL_BMPWIN_TransVramCharacter(pWork->nameWin);
+      GFL_BMPWIN_MakeScreen(pWork->nameWin);
+    }
+    GFL_STR_DeleteBuffer(pName);
+   
+  }
+}
+
+
 //------------------------------------------------------------------------------
 /**
  * @brief   セーブ確認画面待機
@@ -1250,6 +1297,7 @@ static GFL_PROC_RESULT CG_WirelessMenuProcMain( GFL_PROC * proc, int * seq, void
   if(pWork->pAppWin){
     APP_TASKMENU_WIN_Update( pWork->pAppWin );
   }
+  _setTVTParentName(pWork);
 
   if(GFL_NET_IsInit()){
     pWork->bitold =  pWork->bit;

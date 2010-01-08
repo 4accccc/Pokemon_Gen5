@@ -539,8 +539,6 @@ static void _PaletteMake(C_GEAR_WORK* pWork,BOOL rmax,BOOL gmax,BOOL bmax,int ty
   int y=type,x;
   u16 r,g,b;
 
-  NET_PRINT("RGBT %d %d %d %d\n",rmax,gmax,bmax,type);
-
   for(x = 0 ; x < _CGEAR_NET_CHANGEPAL_NUM; x++){
     r = pWork->palBase[y][x] & 0x001f;
     g = pWork->palBase[y][x] & 0x03e0;

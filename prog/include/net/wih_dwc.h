@@ -48,4 +48,4 @@ extern void WIH_DWC_DeleteCFG(void);
 extern void WIH_DWC_ReloadCFG(void);
 
 //TVT‚ÉŽ©•ª‚ªŒÄ‚Î‚ê‚Ä‚¢‚é‚©‚Ç‚¤‚©
-extern BOOL WIH_DWC_TVTCallCheck(void);
+extern int WIH_DWC_TVTCallCheck(void);

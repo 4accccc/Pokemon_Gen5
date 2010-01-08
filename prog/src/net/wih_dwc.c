@@ -328,7 +328,7 @@ GAME_COMM_STATUS_BIT WIH_DWC_GetAllBeaconTypeBit(void)
   retcode |= GAME_COMM_STATUS_BIT_IRC;
 #endif
   
-  if(WIH_DWC_TVTCallCheck()){  //TVTは最優先
+  if(-1 != WIH_DWC_TVTCallCheck()){  //TVTは最優先
     retcode |= GAME_COMM_STATUS_BIT_WIRELESS_TR;
   }
   if(aNetStruct->gsid == WB_NET_PALACE_SERVICEID){  //パレスでつながっている判定
@@ -468,24 +468,28 @@ void WIH_DWC_ReloadCFG(void)
 //------------------------------------------------------------------------------
 /**
  * @brief   TVトランシーバーに呼ばれているかどうか
- * @retval  呼ばれてたらTRUE
+ * @retval  呼ばれてたらbeaconindexを返す 呼ばれて無い場合-1
  */
 //------------------------------------------------------------------------------
-BOOL WIH_DWC_TVTCallCheck(void)
+int WIH_DWC_TVTCallCheck(void)
 {
   u8 selfMacAdr[6];
   int i,num;
-  GFLNetInitializeStruct* pIn = GFL_NET_GetNETInitStruct();
 
-  num = pIn->maxBeaconNum;
-  OS_GetMacAddress( selfMacAdr );
+  if(GFL_NET_IsInit()){
+    GFLNetInitializeStruct* pIn = GFL_NET_GetNETInitStruct();
 
-  for( i = 0; i < num; i++ ){
-    if(WB_NET_COMM_TVT == GFL_NET_WLGetUserGameServiceId( i )){
-      if( CTVT_BCON_CheckCallSelf( GFL_NET_GetBeaconData(i) , selfMacAdr )){
-        return TRUE;
+    num = pIn->maxBeaconNum;
+    OS_GetMacAddress( selfMacAdr );
+
+    for( i = 0; i < num; i++ ){
+      int x = GFL_NET_WLGetUserGameServiceId( i );
+      if(WB_NET_COMM_TVT == x){
+        if( CTVT_BCON_CheckCallSelf( GFL_NET_GetBeaconData(i) , selfMacAdr )){
+        return i;
+        }
       }
     }
   }
-  return FALSE;
+  return -1;
 }
