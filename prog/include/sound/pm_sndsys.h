@@ -18,6 +18,11 @@
 #include "multiboot/wb_sound_palpark.sadl"
 #define GROUP_GLOBAL (0)
 #define SEQ_SE_END (1400)
+
+// とりあえずエラー回避用に定義
+#define BANK_MUS_WB_SHINKA	(1010)
+#define SEQ_BGM_SHINKA	(1010)
+
 #endif //MULTI_BOOT_MAKE
 //------------------------------------------------------------------
 /**
