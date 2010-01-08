@@ -43,6 +43,7 @@ typedef struct {
 // ボタンタイプ
 enum {
 	BOX2BMP_BUTTON_TYPE_WHITE = 0,	// 白
+	BOX2BMP_BUTTON_TYPE_CANCEL,			// キャンセル用
 //	BOX2BMP_BUTTON_TYPE_RED,				// 赤
 };
 

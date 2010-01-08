@@ -23,10 +23,11 @@
 
 #include "msg/msg_boxmenu.h"
 
-#include "app/app_menu_common.h"
 #include "app/bag.h"
 #include "app/p_status.h"
 #include "app/name_input.h"
+#include "app/app_menu_common.h"
+#include "app_menu_common.naix"
 
 #include "box2_main.h"
 #include "box2_bmp.h"
@@ -653,6 +654,17 @@ void BOX2MAIN_BgGraphicLoad( BOX2_SYS_WORK * syswk )
 	GFL_ARCHDL_UTIL_TransVramPalette(
 		ah, NARC_box_gra_selwin_NCLR, PALTYPE_MAIN_BG,
 		BOX2MAIN_BG_PAL_SELWIN*0x20, 0x40, HEAPID_BOX_APP );
+	{
+		NNSG2dPaletteData * pal;
+		void * buf;
+		u16 * dat;
+		buf = GFL_ARC_UTIL_LoadPalette(
+						APP_COMMON_GetArcId(), NARC_app_menu_common_task_menu_NCLR, &pal, HEAPID_BOX_APP_L );
+		dat = (u16 *)pal->pRawData;
+		GFL_BG_LoadPalette( GFL_BG_FRAME0_M, &dat[16*1+10], 2*2, BOX2MAIN_BG_PAL_SELWIN*0x20+10*2 );
+		GFL_BG_LoadPalette( GFL_BG_FRAME0_M, &dat[16*0+10], 2*2, (BOX2MAIN_BG_PAL_SELWIN+1)*0x20+10*2 );
+		GFL_HEAP_FreeMemory( buf );
+	}
 
 	GFL_ARCHDL_UTIL_TransVramBgCharacter(
 		ah, NARC_box_gra_box_s_bg3_lz_NCGR,

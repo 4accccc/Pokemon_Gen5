@@ -594,7 +594,7 @@ static const BOX2BMP_BUTTON_LIST PokeMenuStrTbl[] =
 	{ mes_boxbutton_02_02, BOX2BMP_BUTTON_TYPE_WHITE },		// もちもの
 	{ mes_boxbutton_02_03, BOX2BMP_BUTTON_TYPE_WHITE },		// マーキング
 	{ mes_boxbutton_02_04, BOX2BMP_BUTTON_TYPE_WHITE },		// にがす
-	{ mes_boxbutton_02_07, BOX2BMP_BUTTON_TYPE_WHITE }		// やめる
+	{ mes_boxbutton_02_07, BOX2BMP_BUTTON_TYPE_CANCEL }		// やめる
 };
 
 // メニュー文字列テーブル：つれていく
@@ -604,7 +604,7 @@ static const BOX2BMP_BUTTON_LIST PartyInMenuStrTbl[] =
 	{ mes_boxbutton_02_01, BOX2BMP_BUTTON_TYPE_WHITE },		// ようすをみる
 	{ mes_boxbutton_02_03, BOX2BMP_BUTTON_TYPE_WHITE },		// マーキング
 	{ mes_boxbutton_02_04, BOX2BMP_BUTTON_TYPE_WHITE },		// にがす
-	{ mes_boxbutton_02_07, BOX2BMP_BUTTON_TYPE_WHITE }		// やめる
+	{ mes_boxbutton_02_07, BOX2BMP_BUTTON_TYPE_CANCEL }		// やめる
 };
 
 // メニュー文字列テーブル：あずける
@@ -614,7 +614,7 @@ static const BOX2BMP_BUTTON_LIST PartyOutMenuStrTbl[] =
 	{ mes_boxbutton_02_01, BOX2BMP_BUTTON_TYPE_WHITE },		// ようすをみる
 	{ mes_boxbutton_02_03, BOX2BMP_BUTTON_TYPE_WHITE },		// マーキング
 	{ mes_boxbutton_02_04, BOX2BMP_BUTTON_TYPE_WHITE },		// にがす
-	{ mes_boxbutton_02_07, BOX2BMP_BUTTON_TYPE_WHITE }		// やめる
+	{ mes_boxbutton_02_07, BOX2BMP_BUTTON_TYPE_CANCEL }		// やめる
 };
 
 // メニュー文字テーブル：ボックステーマ変更
@@ -623,7 +623,7 @@ static const BOX2BMP_BUTTON_LIST ThemaMenuStrTbl[] =
 	{ mes_boxmenu_03_01, BOX2BMP_BUTTON_TYPE_WHITE },			// ジャンプする
 	{ mes_boxmenu_03_02, BOX2BMP_BUTTON_TYPE_WHITE },			// かべがみ
 	{ mes_boxmenu_03_03, BOX2BMP_BUTTON_TYPE_WHITE },			// なまえ
-	{ mes_boxmenu_03_04, BOX2BMP_BUTTON_TYPE_WHITE },			// やめる
+	{ mes_boxmenu_03_04, BOX2BMP_BUTTON_TYPE_CANCEL },		// やめる
 };
 
 // メニュー文字テーブル：壁紙メニュー
@@ -633,7 +633,7 @@ static const BOX2BMP_BUTTON_LIST WallPaperMenuStrTbl[] =
 	{ mes_boxmenu_04_02, BOX2BMP_BUTTON_TYPE_WHITE },			// ふうけい２
 	{ mes_boxmenu_04_03, BOX2BMP_BUTTON_TYPE_WHITE },			// ふうけい３
 	{ mes_boxmenu_04_04, BOX2BMP_BUTTON_TYPE_WHITE },			// エトセトラ
-	{ mes_boxmenu_04_31, BOX2BMP_BUTTON_TYPE_WHITE },			// もどる
+	{ mes_boxmenu_04_31, BOX2BMP_BUTTON_TYPE_CANCEL },		// もどる
 };
 
 // メニュー文字テーブル：壁紙メニュー（ふうけい１）
@@ -643,7 +643,7 @@ static const BOX2BMP_BUTTON_LIST WPLabel1MenuStrTbl[] =
 	{ mes_boxmenu_04_08, BOX2BMP_BUTTON_TYPE_WHITE },			// シティ
 	{ mes_boxmenu_04_09, BOX2BMP_BUTTON_TYPE_WHITE },			// さばく
 	{ mes_boxmenu_04_10, BOX2BMP_BUTTON_TYPE_WHITE },			// サバンナ
-	{ mes_boxmenu_04_31, BOX2BMP_BUTTON_TYPE_WHITE },			// もどる
+	{ mes_boxmenu_04_31, BOX2BMP_BUTTON_TYPE_CANCEL },		// もどる
 };
 
 // メニュー文字テーブル：壁紙メニュー（ふうけい２）
@@ -653,7 +653,7 @@ static const BOX2BMP_BUTTON_LIST WPLabel2MenuStrTbl[] =
 	{ mes_boxmenu_04_12, BOX2BMP_BUTTON_TYPE_WHITE },			// かざん
 	{ mes_boxmenu_04_13, BOX2BMP_BUTTON_TYPE_WHITE },			// ゆきやま
 	{ mes_boxmenu_04_14, BOX2BMP_BUTTON_TYPE_WHITE },			// どうくつ
-	{ mes_boxmenu_04_31, BOX2BMP_BUTTON_TYPE_WHITE },			// もどる
+	{ mes_boxmenu_04_31, BOX2BMP_BUTTON_TYPE_CANCEL },		// もどる
 };
 
 // メニュー文字テーブル：壁紙メニュー（ふうけい３）
@@ -663,7 +663,7 @@ static const BOX2BMP_BUTTON_LIST WPLabel3MenuStrTbl[] =
 	{ mes_boxmenu_04_16, BOX2BMP_BUTTON_TYPE_WHITE },			// かいてい
 	{ mes_boxmenu_04_17, BOX2BMP_BUTTON_TYPE_WHITE },			// かわ
 	{ mes_boxmenu_04_18, BOX2BMP_BUTTON_TYPE_WHITE },			// そら
-	{ mes_boxmenu_04_31, BOX2BMP_BUTTON_TYPE_WHITE },			// もどる
+	{ mes_boxmenu_04_31, BOX2BMP_BUTTON_TYPE_CANCEL },		// もどる
 };
 
 // メニュー文字テーブル：壁紙メニュー（エトセトラ）
@@ -673,7 +673,7 @@ static const BOX2BMP_BUTTON_LIST WPLabel4MenuStrTbl[] =
 	{ mes_boxmenu_04_20, BOX2BMP_BUTTON_TYPE_WHITE },			// きんぞく
 	{ mes_boxmenu_04_21, BOX2BMP_BUTTON_TYPE_WHITE },			// チェック
 	{ mes_boxmenu_04_22, BOX2BMP_BUTTON_TYPE_WHITE },			// シンプル
-	{ mes_boxmenu_04_31, BOX2BMP_BUTTON_TYPE_WHITE },			// もどる
+	{ mes_boxmenu_04_31, BOX2BMP_BUTTON_TYPE_CANCEL },		// もどる
 };
 
 // メニュー文字列テーブル：バトルボックス
@@ -682,7 +682,7 @@ static const BOX2BMP_BUTTON_LIST BattleBoxMenuStrTbl[] =
 	{ mes_boxbutton_02_09, BOX2BMP_BUTTON_TYPE_WHITE },		// いどうする
 	{ mes_boxbutton_02_01, BOX2BMP_BUTTON_TYPE_WHITE },		// ようすをみる
 	{ mes_boxbutton_02_02, BOX2BMP_BUTTON_TYPE_WHITE },		// もちもの
-	{ mes_boxbutton_02_07, BOX2BMP_BUTTON_TYPE_WHITE }		// やめる
+	{ mes_boxbutton_02_07, BOX2BMP_BUTTON_TYPE_CANCEL }		// やめる
 };
 
 // メニュー文字列テーブル：持ち物整理・持ち物あり
@@ -690,21 +690,21 @@ static const BOX2BMP_BUTTON_LIST ItemMenuStrTbl[] =
 {
 	{ mes_boxbutton_08_03, BOX2BMP_BUTTON_TYPE_WHITE },		// いどうする
 	{ mes_boxbutton_08_01, BOX2BMP_BUTTON_TYPE_WHITE },		// バッグへ
-	{ mes_boxbutton_02_07, BOX2BMP_BUTTON_TYPE_WHITE }		// やめる
+	{ mes_boxbutton_02_07, BOX2BMP_BUTTON_TYPE_CANCEL }		// やめる
 };
 
 // メニュー文字列テーブル：持ち物整理・持ち物なし
 static const BOX2BMP_BUTTON_LIST ItemNoneMenuStrTbl[] =
 {
 	{ mes_boxbutton_08_02, BOX2BMP_BUTTON_TYPE_WHITE },		// もたせる
-	{ mes_boxbutton_02_07, BOX2BMP_BUTTON_TYPE_WHITE }		// やめる
+	{ mes_boxbutton_02_07, BOX2BMP_BUTTON_TYPE_CANCEL }		// やめる
 };
 
 // メニュー文字列テーブル：ボックス整理メイン
 static const BOX2BMP_BUTTON_LIST SleepMenuStrTbl[] =
 {
 	{ mes_boxbutton_02_10, BOX2BMP_BUTTON_TYPE_WHITE },		// ねかせる
-	{ mes_boxbutton_02_07, BOX2BMP_BUTTON_TYPE_WHITE }		// やめる
+	{ mes_boxbutton_02_07, BOX2BMP_BUTTON_TYPE_CANCEL }		// やめる
 };
 
 

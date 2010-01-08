@@ -17,6 +17,9 @@
 #include "ui/print_tool.h"
 #include "item/item.h"
 
+#include "app/app_menu_common.h"
+#include "app_menu_common.naix"
+
 #include "msg/msg_boxmenu.h"
 #include "msg/msg_boxmes.h"
 
@@ -333,8 +336,9 @@ enum {
 #define	PMV_DR_CGX_POS	( 0x6a * 0x20 )
 */
 
-#define	BMPBUTTON_CHR_NORMAL		( 0 )													// 通常のボタンキャラ番号
-#define	BMPBUTTON_CHR_TOUCHBAR	( BOX2MAIN_SELWIN_CGX_SIZ )		// タッチバー上のボタンキャラ番号
+#define	BMPBUTTON_CHR_NORMAL		( 0 )				// 通常のボタンキャラ番号
+#define	BMPBUTTON_CHR_TOUCHBAR	( 0 )				// タッチバー上のボタンキャラ番号
+//#define	BMPBUTTON_CHR_TOUCHBAR	( BOX2MAIN_SELWIN_CGX_SIZ )		// タッチバー上のボタンキャラ番号
 
 
 //============================================================================================
@@ -1078,11 +1082,13 @@ void BOX2BMP_PokeDataOff( BOX2_APP_WORK * appwk )
  * @param		strID		文字列ＩＤ
  * @param		cgx			ボタンキャラ番号
  * @param		col			フォントカラー
+ * @param		ret			キャンセル用のボタンかどうか TRUE = キャンセル用
  *
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-static void MakeBmpButton( BOX2_SYS_WORK * syswk, u32 winID, const u32 strID, u16 cgx, PRINTSYS_LSB	col )
+static void MakeBmpButton(
+							BOX2_SYS_WORK * syswk, u32 winID, const u32 strID, u16 cgx, PRINTSYS_LSB	col, BOOL ret )
 {
 	GFL_BMPWIN * win;
 	GFL_BMP_DATA * bmp;
@@ -1117,11 +1123,11 @@ static void MakeBmpButton( BOX2_SYS_WORK * syswk, u32 winID, const u32 strID, u1
 	GFL_BMP_Print( button, bmp, 0, 0, (sx-1)*8, 0, 8, 8, GF_BMPPRT_NOTNUKI );
 	GFL_BMP_Delete( button );
 	// 左下
-	button = GFL_BMP_CreateWithData( &raw[cgx+0x20*9], 8, 8, GFL_BMP_16_COLOR, HEAPID_BOX_APP_L );
+	button = GFL_BMP_CreateWithData( &raw[cgx+0x20*6], 8, 8, GFL_BMP_16_COLOR, HEAPID_BOX_APP_L );
 	GFL_BMP_Print( button, bmp, 0, 0, 0, (sy-1)*8, 8, 8, GF_BMPPRT_NOTNUKI );
 	GFL_BMP_Delete( button );
 	// 右下
-	button = GFL_BMP_CreateWithData( &raw[cgx+0x20*11], 8, 8, GFL_BMP_16_COLOR, HEAPID_BOX_APP_L );
+	button = GFL_BMP_CreateWithData( &raw[cgx+0x20*8], 8, 8, GFL_BMP_16_COLOR, HEAPID_BOX_APP_L );
 	GFL_BMP_Print( button, bmp, 0, 0, (sx-1)*8, (sy-1)*8, 8, 8, GF_BMPPRT_NOTNUKI );
 	GFL_BMP_Delete( button );
 
@@ -1144,7 +1150,7 @@ static void MakeBmpButton( BOX2_SYS_WORK * syswk, u32 winID, const u32 strID, u1
 	}
 	GFL_BMP_Delete( button );
 	// 下
-	button = GFL_BMP_CreateWithData( &raw[cgx+0x20*10], 8, 8, GFL_BMP_16_COLOR, HEAPID_BOX_APP_L );
+	button = GFL_BMP_CreateWithData( &raw[cgx+0x20*7], 8, 8, GFL_BMP_16_COLOR, HEAPID_BOX_APP_L );
 	for( i=1; i<sx-1; i++ ){
 		GFL_BMP_Print( button, bmp, 0, 0, i*8, (sy-1)*8, 8, 8, GF_BMPPRT_NOTNUKI );
 	}
@@ -1152,6 +1158,18 @@ static void MakeBmpButton( BOX2_SYS_WORK * syswk, u32 winID, const u32 strID, u1
 
 	GFL_HEAP_FreeMemory( buf );
 
+	// キャンセル設定
+	if( ret == TRUE ){
+		buf = GFL_ARC_UTIL_LoadBGCharacter(
+						APP_COMMON_GetArcId(), NARC_app_menu_common_task_menu_NCGR, FALSE, &chr, HEAPID_BOX_APP_L );
+		raw = chr->pRawData;
+		button = GFL_BMP_CreateWithData( &raw[9*0x20], 16, 8, GFL_BMP_16_COLOR, HEAPID_BOX_APP_L );
+		GFL_BMP_Print( button, bmp, 0, 0, (sx-3)*8, 8, 16, 8, 5 );
+		GFL_BMP_Delete( button );
+		GFL_HEAP_FreeMemory( buf );
+	}
+
+	// 文字表示
 	str = GFL_MSG_CreateString( syswk->app->mman, strID );
 	PRINTTOOL_PrintColor(
 		&syswk->app->win[winID], syswk->app->que, 
@@ -1168,13 +1186,14 @@ static void MakeBmpButton( BOX2_SYS_WORK * syswk, u32 winID, const u32 strID, u1
  * @param		syswk		ボックス画面システムワーク
  * @param		winID		BMPWIN ID
  * @param		strID		文字列ＩＤ
+ * @param		ret			キャンセル用のボタンかどうか TRUE = キャンセル用
  *
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-static void MakeNormalButton( BOX2_SYS_WORK * syswk, u32 winID, const u32 strID )
+static void MakeNormalButton( BOX2_SYS_WORK * syswk, u32 winID, const u32 strID, BOOL ret )
 {
-	MakeBmpButton( syswk, winID, strID, BMPBUTTON_CHR_NORMAL, FCOL_SELWIN_OFF );
+	MakeBmpButton( syswk, winID, strID, BMPBUTTON_CHR_NORMAL, FCOL_SELWIN_OFF, ret );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1190,7 +1209,7 @@ static void MakeNormalButton( BOX2_SYS_WORK * syswk, u32 winID, const u32 strID 
 //--------------------------------------------------------------------------------------------
 static void MakeTouchBarButton( BOX2_SYS_WORK * syswk, u32 winID, const u32 strID )
 {
-	MakeBmpButton( syswk, winID, strID, BMPBUTTON_CHR_TOUCHBAR, FCOL_SELWIN_OFF );
+	MakeBmpButton( syswk, winID, strID, BMPBUTTON_CHR_TOUCHBAR, FCOL_SELWIN_OFF, FALSE );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1366,8 +1385,8 @@ void BOX2BMP_WriteTrayNum( BOX2_SYS_WORK * syswk, u32 tray, u32 idx )
 //--------------------------------------------------------------------------------------------
 void BOX2BMP_MarkingButtonPut( BOX2_SYS_WORK * syswk )
 {
-	MakeNormalButton( syswk, BMPWIN_MARK_ENTER, mes_boxbutton_03_01 );
-	MakeNormalButton( syswk, BMPWIN_MARK_CANCEL, mes_boxbutton_03_02 );
+	MakeNormalButton( syswk, BMPWIN_MARK_ENTER, mes_boxbutton_03_01, FALSE );
+	MakeNormalButton( syswk, BMPWIN_MARK_CANCEL, mes_boxbutton_03_02, TRUE );
 
 	BGWINFRM_PaletteChange(
 		syswk->app->wfrm, BOX2MAIN_WINFRM_MARK,
@@ -1417,16 +1436,12 @@ void BOX2BMP_MenuStrPrint( BOX2_SYS_WORK * syswk, const BOX2BMP_BUTTON_LIST * li
 
 	for( i=0; i<max; i++ ){
 		if( list[max-1-i].type == BOX2BMP_BUTTON_TYPE_WHITE ){
-			MakeNormalButton( syswk, BOX2BMPWIN_ID_MENU6-i, list[max-1-i].strID );
-			BGWINFRM_PaletteChange(
-				syswk->app->wfrm, BOX2MAIN_WINFRM_MENU6-i, 0, 0, sx, sy, BOX2MAIN_BG_PAL_SELWIN );
+			MakeNormalButton( syswk, BOX2BMPWIN_ID_MENU6-i, list[max-1-i].strID, FALSE );
 		}else{
-/*
-			PokeMoveButtonPut( syswk, BOX2BMPWIN_ID_MENU6-i, list[max-1-i].strID );
-			BGWINFRM_PaletteChange(
-				syswk->app->wfrm, BOX2MAIN_WINFRM_MENU6-i, 0, 0, sx, sy, 2 );
-*/
+			MakeNormalButton( syswk, BOX2BMPWIN_ID_MENU6-i, list[max-1-i].strID, TRUE );
 		}
+		BGWINFRM_PaletteChange(
+			syswk->app->wfrm, BOX2MAIN_WINFRM_MENU6-i, 0, 0, sx, sy, BOX2MAIN_BG_PAL_SELWIN );
 	}
 	// いらないものは消す
 	for( i=max; i<6; i++ ){
