@@ -1747,6 +1747,7 @@ void CGEAR_Main( C_GEAR_WORK* pWork,BOOL bAction )
         }
         
         if(bit & GAME_COMM_STATUS_BIT_WIRELESS_TR){
+          PMSND_PlaySE( SEQ_SE_SYS_35 );
           st = GAME_COMM_STATUS_WIRELESS_TR;
           _PaletteMake(pWork, PalleteONOFFTbl[st][0], PalleteONOFFTbl[st][1], PalleteONOFFTbl[st][2], 1);
         }
@@ -1761,6 +1762,9 @@ void CGEAR_Main( C_GEAR_WORK* pWork,BOOL bAction )
         else if(bit & GAME_COMM_STATUS_BIT_WIRELESS_FU){
           st = GAME_COMM_STATUS_WIRELESS_FU;
           _PaletteMake(pWork, PalleteONOFFTbl[st][0], PalleteONOFFTbl[st][1], PalleteONOFFTbl[st][2], 1);
+        }
+        if(!(bit & GAME_COMM_STATUS_BIT_WIRELESS_TR)){
+          PMSND_StopSE_byPlayerID( PMSND_GetSE_DefaultPlayerID(SEQ_SE_SYS_35) );
         }
 
       }
