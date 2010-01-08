@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-11-10T16:16:46"/>
+	<create user="matsumiya" host="W00207" date="2009-12-25T16:12:49"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -295,7 +295,8 @@
 	<row id="msg_c07r0301_badman_01">
 		<comment>♂
 ・HGSS（金銀）のハナダなどにいた
-　外国人のロケット団</comment>
+　外国人のロケット団
+・冬しか入れない</comment>
 		<attribute name="キャラ指定">BADMAN</attribute>
 		<language name="JPN" width="256">オー！　ワタシ
 メンバー・オブ・ロケットだん　ね！[BE:01:ページ切り替え（クリア）]
