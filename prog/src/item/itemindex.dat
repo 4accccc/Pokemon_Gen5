@@ -435,7 +435,7 @@ const ITEMDATA_INDEX ItemDataIndex[] =
 	{ NARC_item_data_item425_dat, NARC_item_icon_item_339_NCGR, NARC_item_icon_item_289_NCLR, AGB_ITEM_HIDENMASIN06 },
 	{ NARC_item_data_item426_dat, NARC_item_icon_item_339_NCGR, NARC_item_icon_item_291_NCLR, AGB_ITEM_HIDENMASIN07 },
 	{ NARC_item_data_item427_dat, NARC_item_icon_item_339_NCGR, NARC_item_icon_item_293_NCLR, AGB_ITEM_HIDENMASIN08 },
-	{ NARC_item_data_item428_dat, NARC_item_icon_item_dumy_NCGR, NARC_item_icon_item_dumy_NCLR, 0 },
+	{ NARC_item_data_item428_dat, NARC_item_icon_item_417_NCGR, NARC_item_icon_item_417_NCLR, 0 },
 	{ NARC_item_data_item429_dat, NARC_item_icon_item_418_NCGR, NARC_item_icon_item_418_NCLR, 0 },
 	{ NARC_item_data_item430_dat, NARC_item_icon_item_419_NCGR, NARC_item_icon_item_419_NCLR, 0 },
 	{ NARC_item_data_item431_dat, NARC_item_icon_item_500_NCGR, NARC_item_icon_item_500_NCLR, 0 },

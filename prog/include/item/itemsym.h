@@ -557,7 +557,7 @@
 #define ITEM_SIMETUKEBANDO		( 568 )		// しめつけバンド
 #define ITEM_KYUUKON		( 569 )		// きゅうこん
 #define ITEM_ZYUUDENTI		( 570 )		// じゅうでんち
-#define ITEM_DASYUTUPODDO		( 571 )		// だしゅつポッド
+#define ITEM_DASSYUTUPODDO		( 571 )		// だっしゅつポッド
 #define ITEM_HONOONOZYUERU		( 572 )		// ほのおのジュエル
 #define ITEM_MIZUNOZYUERU		( 573 )		// みずのジュエル
 #define ITEM_DENKINOZYUERU		( 574 )		// でんきのジュエル

@@ -3979,12 +3979,12 @@
 	</row>
 
 	<row id="ITEMINFO_428">
-		<language name="JPN" width="256">ー
-ー
-ー</language>
-		<language name="JPN_KANJI" width="256">ー
-ー
-ー</language>
+		<language name="JPN" width="256">たんけんに　やくだつ　べんりな
+どうぐが　はいった　ふくろ。
+ちかつうろに　はいれる。</language>
+		<language name="JPN_KANJI" width="256">たんけんに　やくだつ　べんりな
+どうぐが　はいった　ふくろ。
+ちかつうろに　はいれる。</language>
 	</row>
 
 	<row id="ITEMINFO_429">
