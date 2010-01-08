@@ -25,6 +25,8 @@
 #include "eventwork.h"  // for EVENTWORK_
 #include "../../../resource/fldmapdata/flagwork/flag_define.h"  // for SYS_FLAG_BIGFOUR_xxxx
 
+#include "map_attr_def.h"
+
 #define JET_BGATE_TMP_ASSIGN_ID (1)
 
 typedef struct JET_BGATE_SV_WORK{
@@ -160,9 +162,16 @@ void FLD_GIMMICK_JetBadgeGate_Init( GAMESYS_WORK* gsys )
  */
 static BOOL sub_MoveCheck( JET_BGATE_WORK* wk )
 {
-  s16 gz = MMDL_GetGridPosZ( wk->mmdl );
+  MAPATTR attr = FIELD_PLAYER_GetMapAttr( wk->fplayer );
 
-  if(gz > 10){
+  if(MAPATTR_IsEnable(attr) == FALSE){
+    return FALSE;
+  }
+  //アトリビュートチェック
+  if(MAPATTR_GetAttrValue(attr) == MATTR_UPDOWN_FLOOR ){
+    return TRUE;
+  }
+  if(MMDL_GetGridPosZ( wk->mmdl ) > 10){
     return TRUE;
   }
   return FALSE;
