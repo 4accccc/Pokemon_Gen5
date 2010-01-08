@@ -1595,7 +1595,8 @@ static void ActOrder_Proc( BTL_SVFLOW_WORK* wk, ACTION_ORDER_WORK* actOrder )
         scPut_CantAction( wk, bpp );
         break;
       case BTL_ACTION_NULL:
-        scPut_CantAction( wk, bpp );
+        BTL_N_Printf( DBGSTR_SVFL_ActOrder_Dead );
+//        scPut_CantAction( wk, bpp );
         break;
       }
 

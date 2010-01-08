@@ -606,7 +606,6 @@ static BOOL SubProc_UI_SelectAction( BTL_CLIENT* wk, int* seq )
 
   case 1:
     if( SelActProc_Call(wk) ){
-      BTL_N_PrintfEx( PRINT_FLG, DBGSTR_SelectAction_Done );
       return TRUE;
     }
     break;
@@ -665,7 +664,8 @@ static BOOL selact_Root( BTL_CLIENT* wk, int* seq )
   case 0:
     wk->procPoke = BTL_POKECON_GetClientPokeData( wk->pokeCon, wk->myID, wk->procPokeIdx );
     wk->procAction = &wk->actionParam[ wk->procPokeIdx ];
-    if( is_action_unselectable(wk, wk->procPoke,  wk->procAction) ){
+    if( is_action_unselectable(wk, wk->procPoke,  wk->procAction) )
+    {
       BTL_N_PrintfEx( PRINT_FLG, DBGSTR_CLIENT_SelectActionSkip, wk->procPokeIdx );
       SelActProc_Set( wk, selact_CheckFinish );
     }else{
@@ -697,8 +697,8 @@ static BOOL selact_Root( BTL_CLIENT* wk, int* seq )
 
   case 3:
     // アクション選択開始
-    BTL_N_Printf( DBGSTR_CLIENT_SelectActionStart, wk->procPokeIdx, BPP_GetID(wk->procPoke));
-    BTLV_UI_SelectAction_Start( wk->viewCore, wk->procPoke, (wk->procPokeIdx!=0), wk->procAction );
+    BTL_N_Printf( DBGSTR_CLIENT_SelectActionStart, wk->procPokeIdx, BPP_GetID(wk->procPoke), wk->checkedPokeCnt);
+    BTLV_UI_SelectAction_Start( wk->viewCore, wk->procPoke, (wk->checkedPokeCnt!=0), wk->procAction );
     (*seq)++;
     break;
 
@@ -955,8 +955,8 @@ static BOOL selact_Escape( BTL_CLIENT* wk, int* seq )
         // とくせい、ワザ効果等による禁止チェック
         if( code == BTL_CANTESC_NULL )
         {
-          wk->returnDataPtr = wk->procAction;
-          wk->returnDataSize = sizeof(wk->actionParam[0]);
+          wk->returnDataPtr = &(wk->actionParam[0]);
+          wk->returnDataSize = sizeof(wk->actionParam[0]) * wk->numCoverPos;
           SelActProc_Set( wk, selact_Finish );
         }
         else
@@ -1010,8 +1010,15 @@ static BOOL selact_Escape( BTL_CLIENT* wk, int* seq )
 static BOOL selact_CheckFinish( BTL_CLIENT* wk, int* seq )
 {
   BTLV_UI_Restart( wk->viewCore );
+
   wk->procPokeIdx++;
-  wk->checkedPokeCnt++;
+
+  if( BTL_ACTION_GetAction(wk->procAction) != BTL_ACTION_NULL ){
+    wk->checkedPokeCnt++;
+  }else{
+    BTL_N_PrintfEx( PRINT_FLG, DBGSTR_CLIENT_SelActPokeDead );
+  }
+
   if( wk->procPokeIdx >= wk->numCoverPos )
   {
     BTL_N_PrintfEx( PRINT_FLG, DBGSTR_CLIENT_SelectActionDone, wk->numCoverPos);
@@ -1113,6 +1120,7 @@ static BOOL is_action_unselectable( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, BT
   if( BPP_IsDead(wk->procPoke) )
   {
     if( action ){
+      OS_Printf("死んでるアクションセット->%p\n", action);
       BTL_ACTION_SetNULL( action );
     }
     return TRUE;

@@ -64,9 +64,9 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_ADAPTER_RECVED_A_CLIENT:  return " [Adapter] Received from AdapterID=%d\n";
   case DBGSTR_CLIENT_RETURN_CMD_START:  return "ID[%d], 返信開始へ\n";
   case DBGSTR_CLIENT_RETURN_CMD_DONE:   return "ID[%d], 返信しました\n";
-  case DBGSTR_SelectAction_Done:        return "アクション選択終了\n";
-  case DBGSTR_CLIENT_SelectActionSkip:  return "ACT選択(%d体目）スキップ\n";
-  case DBGSTR_CLIENT_SelectActionStart: return "Action選択(%d体目=ID:%d）開始します\n";
+  case DBGSTR_CLIENT_SelectActionSkip:  return "Act選択(%d体目）スキップ\n";
+  case DBGSTR_CLIENT_SelActPokeDead:    return "死んでてスキップなのでCheckedCntそのまま\n";
+  case DBGSTR_CLIENT_SelectActionStart: return "Act選択(%d体目=ID:%d）開始します  checked %d poke\n";
   case DBGSTR_CLIENT_SelectActionDone:  return "カバー位置数(%d)終了、アクション送信へ\n";
   case DBGSTR_CLIENT_ReturnSeqDone:     return "返信シーケンス終了\n";
   case DBGSTR_CLIENT_WazaLockInfo:      return "ワザロック：Client[%d] 前回使ったワザは %d, idx=%d, targetPos=%d\n";
@@ -106,6 +106,8 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_SVFL_ActOrder_Item:       return "【どうぐ】を処理。アイテム%dを、%d番の相手に。\n";
   case DBGSTR_SVFL_ActOrder_Change:     return "【ポケモン】を処理。位置%d <- ポケ%d \n";
   case DBGSTR_SVFL_ActOrder_Escape:     return "【にげる】を処理。\n";
+  case DBGSTR_SVFL_ActOrder_Dead:       return "【ひんし】なので何もせず\n";
+
   case DBGSTR_SVFL_CorrectTarget_Info:  return "攻撃ポケ[%d]（位置=%d） -> 狙ったポケ[%d]（位置=%d）死んでいるので補正する\n";
   case DBGSTR_SVFL_CorrectHitFarOn:     return "ワザ[%d] 遠隔ON の補正対象決定\n";
   case DBGSTR_SVFL_CorrectHitFarOff:    return "ワザ[%d] 遠隔OFF の補正対象決定\n";
