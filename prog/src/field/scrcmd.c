@@ -71,6 +71,7 @@
 #include "scrcmd_league_front.h"
 #include "scrcmd_palpark.h"
 #include "scrcmd_wfbc.h"
+#include "scrcmd_gimmick_st.h"
 
 #include "../../../resource/fldmapdata/script/usescript.h"
 

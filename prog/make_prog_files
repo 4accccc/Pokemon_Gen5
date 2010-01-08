@@ -187,6 +187,7 @@ SRCS  +=    $(SOUNDSRC) \
         field/scrcmd_player.c \
         field/scrcmd_proc.c \
         field/scrcmd_wifi_st.c \
+        field/scrcmd_gimmick_st.c \
         test/matsuda/wflby_debug.c \
         test/ariizumi/debug_pause.c \
         system/wazatype_icon.c \
@@ -614,6 +615,8 @@ SRCS_OVERLAY_FIELD_GYM_FLY = field/gym_fly.c
 #===> SRCS_OVERLAY_UNION_ROOM
 SRCS_OVERLAY_FIELD_GYM_ANTI = field/gym_anti.c
 
+#===> SRCS_OVERLAY_UNION_ROOM
+SRCS_OVERLAY_FIELD_GIMMICK_BGATE = field/field_gimmick_bgate_jet.c
 
 # マッパーサンプル
 #===> main

@@ -755,6 +755,16 @@
   NO_CMD()
   NO_CMD()
 
+  //バッジチェックゲート関連
+  DEF_CMD( EvCmdJetBadgeGateGimmickInit, EV_SEQ_JET_BADGE_GATE_GIMMICK_INIT )
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+  
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
 
   END_CMD
   //スクリプトコマンドテーブル終了

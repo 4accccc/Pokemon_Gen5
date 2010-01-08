@@ -6757,4 +6757,15 @@
   .short \retVal
   .endm
 
+//--------------------------------------------------------------
+/**
+ * @brief ジェットバッジチェックゲートギミック初期化 
+ */
+//--------------------------------------------------------------
+#define _JET_BADGE_GATE_GIMMICK_INIT( ) \
+    _ASM_JET_BADGE_GATE_GIMMICK_INIT
+
+  .macro  _ASM_JET_BADGE_GATE_GIMMICK_INIT
+  .short  EV_SEQ_JET_BADGE_GATE_GIMMICK_INIT
+  .endm
 

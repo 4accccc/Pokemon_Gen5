@@ -27,6 +27,7 @@
 #include "field_gimmick_d06.h"
 #include "field_gimmick_league_front01.h"
 #include "field_gimmick_league_front02.h"
+#include "field_gimmick_bgate_jet.h"
 
 extern void GYM_SetupTest(FIELDMAP_WORK *fieldWork);
 extern void GYM_EndTest(FIELDMAP_WORK *fieldWork);
@@ -37,6 +38,7 @@ FS_EXTERN_OVERLAY(field_gym_elec);
 FS_EXTERN_OVERLAY(field_gym_normal);
 FS_EXTERN_OVERLAY(field_gym_fly);
 FS_EXTERN_OVERLAY(field_gym_anti);
+FS_EXTERN_OVERLAY(field_gimmick_bgate);
 
 const static FSOverlayID FldGimmickOverlay[FLD_GIMMICK_MAX] = {
 	NULL,					//0:–³‚µ
@@ -70,6 +72,8 @@ const static FSOverlayID FldGimmickOverlay[FLD_GIMMICK_MAX] = {
   NULL,//D06_GIMMICK_Setup,
   NULL,//LEAGUE_FRONT_01_GIMMICK_Setup,
   NULL,//LEAGUE_FRONT_02_GIMMICK_Setup,
+  NULL,//GATE_GIMMICK_Setup,  // D03R0201
+  FS_OVERLAY_ID(field_gimmick_bgate),
 };
 
 const static FLD_GMK_SETUP_FUNC FldGimmickSetupFunc[FLD_GIMMICK_MAX] = {
@@ -105,6 +109,7 @@ const static FLD_GMK_SETUP_FUNC FldGimmickSetupFunc[FLD_GIMMICK_MAX] = {
   LEAGUE_FRONT_01_GIMMICK_Setup,
   LEAGUE_FRONT_02_GIMMICK_Setup,
   GATE_GIMMICK_Setup,  // D03R0201
+  FLD_GIMMICK_JetBadgeGate_Setup,  //R10R0701
 };
 
 const static FLD_GMK_END_FUNC FldGimmickEndFunc[FLD_GIMMICK_MAX] = {
@@ -140,9 +145,10 @@ const static FLD_GMK_END_FUNC FldGimmickEndFunc[FLD_GIMMICK_MAX] = {
   LEAGUE_FRONT_01_GIMMICK_End,
   LEAGUE_FRONT_02_GIMMICK_End,
   GATE_GIMMICK_End,  // D03R0201
+  FLD_GIMMICK_JetBadgeGate_End,  //R10R0701
 };
 
-const static FLD_GMK_END_FUNC FldGimmickMoveFunc[FLD_GIMMICK_MAX] = {
+const static FLD_GMK_MOVE_FUNC FldGimmickMoveFunc[FLD_GIMMICK_MAX] = {
 	NULL,					//0:–³‚µ
   GYM_MoveTest,
   H01_GIMMICK_Move,
@@ -175,6 +181,7 @@ const static FLD_GMK_END_FUNC FldGimmickMoveFunc[FLD_GIMMICK_MAX] = {
   LEAGUE_FRONT_01_GIMMICK_Move,
   LEAGUE_FRONT_02_GIMMICK_Move,
   GATE_GIMMICK_Move,  // D03R0201
+  FLD_GIMMICK_JetBadgeGate_Move,  //R10R0701
 };
 
 #if 0
