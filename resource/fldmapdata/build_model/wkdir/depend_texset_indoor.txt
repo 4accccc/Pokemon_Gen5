@@ -2429,7 +2429,7 @@ DEP_TEXSET_IMD_INDOOR054 = \
 	$(SRCDIR)/warp03.imd \
 	$(SRCDIR)/warp04.imd \
 	$(SRCDIR)/c09_04_sta.imd \
-	$(SRCDIR)/c09_04_tenga.imd \
+	$(SRCDIR)/c09_04_tengai.imd \
 	$(SRCDIR)/c09_04_obj01.imd
 
 texset/indoor054.imd: $(DEP_TEXSET_IMD_INDOOR054) texset/tmp/indoor054.list
