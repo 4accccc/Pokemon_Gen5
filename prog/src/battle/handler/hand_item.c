@@ -4375,10 +4375,13 @@ static const BtlEventHandlerTable* HAND_ADD_ITEM_DassyutuPod( u32* numElems )
 // ダメージ反応ハンドラ
 static void handler_DassyutuPod_Reaction( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  // 自分がダメージを受けたら、どうぐ使用ハンドラ呼び出し
+  // 自分がダメージを受けた側
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) == pokeID )
   {
-    BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_USE_ITEM, pokeID );
+    // 控えに交替可能メンバーがいるなら、どうぐ使用ハンドラ呼び出し
+    if( BTL_SVFTOOL_IsExistBenchPoke(flowWk, pokeID) ){
+      BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_USE_ITEM, pokeID );
+    }
   }
 }
 // どうぐ使用ハンドラ
@@ -4386,11 +4389,15 @@ static void handler_DassyutuPod_Use( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
-    BTL_HANDEX_PARAM_PUSHOUT* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_PUSHOUT, pokeID );
-    param->pokeID = pokeID;
+    if( BTL_SVFTOOL_IsExistBenchPoke(flowWk, pokeID) )
+    {
+      BTL_HANDEX_PARAM_PUSHOUT* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_PUSHOUT, pokeID );
+      param->pokeID = pokeID;
+      param->fForceChange = TRUE;
 
-    HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_DassyutuPod );
-    HANDEX_STR_AddArg( &param->exStr, pokeID );
+      HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_DassyutuPod );
+      HANDEX_STR_AddArg( &param->exStr, pokeID );
+    }
   }
 }
 

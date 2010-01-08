@@ -416,7 +416,8 @@ static void scproc_Fight_SimpleRecover( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_PO
 static BOOL scproc_RecoverHP( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 recoverHP );
 static void scproc_Fight_Ichigeki( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam, BTL_POKEPARAM* attacker, BTL_POKESET* targets );
 static void scproc_Fight_PushOut( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARAM* attacker, BTL_POKESET* targetRec );
-static BOOL scproc_PushOutCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_POKEPARAM* target, const BTL_HANDEX_STR_PARAMS* succeedMsg );
+static BOOL scproc_PushOutCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_POKEPARAM* target,
+  BOOL fForceChange, const BTL_HANDEX_STR_PARAMS* succeedMsg );
 static PushOutEffect check_pushout_effect( BTL_SVFLOW_WORK* wk );
 static u8 get_pushout_nextpoke_idx( BTL_SVFLOW_WORK* wk, const SVCL_WORK* clwk );
 static BOOL scEvent_CheckPushOutFail( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* target );
@@ -5974,7 +5975,7 @@ static void scproc_Fight_PushOut( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARA
   BTL_POKESET_SeekStart( targetRec );
   while( (target = BTL_POKESET_SeekNext(targetRec)) != NULL )
   {
-    if( scproc_PushOutCore(wk, attacker, target, NULL) ){
+    if( scproc_PushOutCore(wk, attacker, target, FALSE, NULL) ){
       wazaEffCtrl_SetEnable( &wk->wazaEffCtrl );
     }else{
       scPut_WazaFail( wk, attacker, waza );
@@ -5989,14 +5990,22 @@ static void scproc_Fight_PushOut( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARA
  * @param   wk
  * @param   attacker
  * @param   target
+ * @param   fForceChange  強制的に入れ替えモードで実行（FALSEならルール等に応じて自動判別）
  * @param   succeedMsg    成功時出力メッセージパラメータ
  *
  * @retval  BOOL    成功時TRUE
  */
 //----------------------------------------------------------------------------------
-static BOOL scproc_PushOutCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_POKEPARAM* target, const BTL_HANDEX_STR_PARAMS* succeedMsg )
+static BOOL scproc_PushOutCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_POKEPARAM* target,
+  BOOL fForceChange, const BTL_HANDEX_STR_PARAMS* succeedMsg )
 {
-  PushOutEffect eff = check_pushout_effect( wk );
+  PushOutEffect   eff;
+
+  if( fForceChange ){
+    eff = PUSHOUT_EFFECT_CHANGE;
+  }else{
+    eff = check_pushout_effect( wk );
+  }
 
   if( eff == PUSHOUT_EFFECT_MUSTFAIL ){
     return FALSE;
@@ -6051,8 +6060,6 @@ static BOOL scproc_PushOutCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BT
 //--------------------------------------------------------------------------
 /**
  * 「ふきとばし」系のワザ効果をバトルのルール等から判定する
- *
- * @retval  BOOL  必ず失敗するケースでTRUE
  */
 //--------------------------------------------------------------------------
 static PushOutEffect check_pushout_effect( BTL_SVFLOW_WORK* wk )
@@ -9883,6 +9890,43 @@ u8 BTL_SVFTOOL_GetClientCoverPosCount( BTL_SVFLOW_WORK* wk, u8 pokeID )
 }
 //--------------------------------------------------------------------------------------
 /**
+ * [ハンドラ用ツール] 自クライアントパーティ内、控えの開始Indexを取得
+ *
+ * @param   wk
+ * @param   pokeID
+ *
+ * @retval  u8
+ */
+//--------------------------------------------------------------------------------------
+u8 BTL_SVFTOOL_GetMyBenchIndex( BTL_SVFLOW_WORK* wk, u8 pokeID )
+{
+  u8 pos = BTL_SVFTOOL_GetClientCoverPosCount( wk, pokeID );
+  if( BTL_MAIN_GetRule(wk->mainModule) == BTL_RULE_ROTATION ){
+    ++pos;
+  }
+  return pos;
+}
+//--------------------------------------------------------------------------------------
+/**
+ * [ハンドラ用ツール] 自クライアントパーティに、控えのポケモン（戦闘可能な）がいるか
+ *
+ * @param   wk
+ * @param   pokeID
+ *
+ * @retval  BOOL
+ */
+//--------------------------------------------------------------------------------------
+BOOL BTL_SVFTOOL_IsExistBenchPoke( BTL_SVFLOW_WORK* wk, u8 pokeID )
+{
+  const BTL_PARTY* party = BTL_SVFTOOL_GetPartyData( wk, pokeID );
+  u8 startIdx = BTL_SVFTOOL_GetMyBenchIndex( wk, pokeID );
+  if( BTL_PARTY_GetAliveMemberCountRear(party, startIdx) ){
+    return TRUE;
+  }
+  return FALSE;
+}
+//--------------------------------------------------------------------------------------
+/**
  * [ハンドラ用ツール] 該当位置にいる生存しているポケモンIDを配列に格納＆数を返す
  *
  * @param   wk
@@ -11690,7 +11734,7 @@ static u8 scproc_HandEx_pushOut( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEA
   BTL_POKEPARAM* target = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID );
   BTL_POKEPARAM* attacker = BTL_POKECON_GetPokeParam( wk->pokeCon, param_header->userPokeID );
 
-  if( scproc_PushOutCore(wk, attacker, target, &param->exStr) ){
+  if( scproc_PushOutCore(wk, attacker, target, param->fForceChange, &param->exStr) ){
     return 1;
   }
   return 0;

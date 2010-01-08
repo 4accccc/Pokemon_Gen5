@@ -56,17 +56,6 @@ void BTL_UTIL_SetPrintType( BtlPrintType type )
   }
 }
 
-void BTL_UTIL_DumpPrintf( const char* caption, const void* data, u32 size )
-{
-  if( PrintSysEnableFlag )
-  {
-    BTL_DEBUGPRINT_PrintDump( caption, data, size );
-  }
-}
-
-#endif  /* #ifdef BTL_PRINT_SYSTEM_ENABLE */
-
-
 void BTL_UTIL_Printf( const char* filename, int line, u32 strID, ... )
 {
   if( PrintSysEnableFlag )
@@ -100,4 +89,14 @@ void BTL_UTIL_PrintfSimple( u32 strID, ... )
     }
   }
 }
+
+void BTL_UTIL_DumpPrintf( const char* caption, const void* data, u32 size )
+{
+  if( PrintSysEnableFlag )
+  {
+    BTL_DEBUGPRINT_PrintDump( caption, data, size );
+  }
+}
+
+#endif  /* #ifdef BTL_PRINT_SYSTEM_ENABLE */
 

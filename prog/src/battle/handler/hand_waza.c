@@ -6392,12 +6392,7 @@ static void handler_TonboGaeri( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
-    const BTL_PARTY* party = BTL_SVFTOOL_GetPartyData( flowWk, pokeID );
-    u8 numCoverPos = BTL_SVFTOOL_GetClientCoverPosCount( flowWk, pokeID );
-    if( BTL_SVFTOOL_GetRule(flowWk) == BTL_RULE_ROTATION ){
-      ++numCoverPos;
-    }
-    if( BTL_PARTY_GetAliveMemberCountRear(party, numCoverPos) )
+    if( BTL_SVFTOOL_IsExistBenchPoke(flowWk, pokeID) )
     {
       BTL_HANDEX_PARAM_CHANGE_MEMBER* param;
       BTL_HANDEX_PARAM_MESSAGE* msg_param;
@@ -6494,12 +6489,7 @@ static void handler_BatonTouch( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
-    const BTL_PARTY* party = BTL_SVFTOOL_GetPartyData( flowWk, pokeID );
-    u8 numCoverPos = BTL_SVFTOOL_GetClientCoverPosCount( flowWk, pokeID );
-    if( BTL_SVFTOOL_GetRule(flowWk) == BTL_RULE_ROTATION ){
-      ++numCoverPos;
-    }
-    if( BTL_PARTY_GetAliveMemberCountRear(party, numCoverPos) )
+    if( BTL_SVFTOOL_IsExistBenchPoke(flowWk, pokeID) )
     {
       BTL_HANDEX_PARAM_POSEFF_ADD* eff_param;
       BTL_HANDEX_PARAM_CHANGE_MEMBER* change_param;
@@ -7582,11 +7572,11 @@ static void handler_Nekonote( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
     u16* wazaAry = BTL_SVFTOOL_GetTmpWork( flowWk, arySize );
     const BTL_POKEPARAM* bpp;
 
-    u8 frontMemberCnt, memberCnt, wazaCnt, i;
+    u8 startIdx, memberCnt, wazaCnt, i;
 
-    frontMemberCnt = BTL_SVFTOOL_GetClientCoverPosCount( flowWk, pokeID );
+    startIdx = BTL_SVFTOOL_GetMyBenchIndex( flowWk, pokeID );
     memberCnt = BTL_PARTY_GetMemberCount( party );
-    for(i=frontMemberCnt, wazaCnt=0; i<memberCnt; ++i)
+    for(i=startIdx, wazaCnt=0; i<memberCnt; ++i)
     {
       bpp = BTL_PARTY_GetMemberDataConst( party, i );
       if( !BPP_IsDead(bpp) )
