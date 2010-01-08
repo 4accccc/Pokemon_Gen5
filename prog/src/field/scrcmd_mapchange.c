@@ -39,6 +39,7 @@
 //======================================================================
 //  proto
 //======================================================================
+static EXIT_DIR DirToExitDir( u16 dir );
 
 //======================================================================
 //  スクリプトコマンド：
@@ -72,7 +73,6 @@ VMCMD_RESULT EvCmdMapChange( VMHANDLE *core, void *wk )
   {
     GMEVENT * mapchange_event;
     GMEVENT * parent_event;
-    u16 dir = 0;
 
     VEC_Set(&appear_pos,
         GRID_TO_FX32(next_x),
@@ -82,7 +82,7 @@ VMCMD_RESULT EvCmdMapChange( VMHANDLE *core, void *wk )
     
     parent_event = GAMESYSTEM_GetEvent( gsys ); //現在のイベント
     mapchange_event = EVENT_ChangeMapPos( gsys, fieldmap,
-         zone_id, &appear_pos, dir );
+         zone_id, &appear_pos, DirToExitDir(dir) );
     GMEVENT_CallEvent( parent_event, mapchange_event );
   }
 
@@ -220,7 +220,6 @@ VMCMD_RESULT EvCmdMapChangeNoFade( VMHANDLE *core, void *wk )
   {
     GMEVENT * mapchange_event;
     GMEVENT * parent_event;
-    u16 dir = 0;
 
     VEC_Set(&appear_pos,
         GRID_TO_FX32(next_x),
@@ -230,9 +229,33 @@ VMCMD_RESULT EvCmdMapChangeNoFade( VMHANDLE *core, void *wk )
     
     parent_event = GAMESYSTEM_GetEvent( gsys ); //現在のイベント
     mapchange_event = EVENT_ChangeMapPosNoFade( gsys, fieldmap,
-         zone_id, &appear_pos, dir );
+         zone_id, &appear_pos, DirToExitDir(dir) );
     GMEVENT_CallEvent( parent_event, mapchange_event );
   }
 
   return VMCMD_RESULT_SUSPEND;
 }
+
+//======================================================================
+//
+//      ツール関数
+//
+//======================================================================
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static EXIT_DIR DirToExitDir( u16 dir )
+{
+  switch ( dir )
+  {
+  case DIR_UP:
+    return EXIT_DIR_UP;
+  case DIR_DOWN:
+    return EXIT_DIR_DOWN;
+  case DIR_LEFT:
+    return EXIT_DIR_LEFT;
+  case DIR_RIGHT:
+    return EXIT_DIR_RIGHT;
+  }
+  return EXIT_DIR_DOWN;
+}
+
