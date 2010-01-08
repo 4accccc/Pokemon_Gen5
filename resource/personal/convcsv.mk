@@ -21,6 +21,7 @@ WOTHASHFILE = wazaoboe_hash.rb
 GMMFILE = monsname.gmm
 SCRFILE = pokegra_wb.scr
 LSTFILE = pokegra_wb.lst
+POKELIST = pokelist.txt
 OTHERFORMFILE = otherform_wb.scr
 OTHERPLTTFILE = otherpltt_wb.scr
 OTHERLSTFILE = otherform_wb.lst
@@ -33,6 +34,7 @@ GMMDIR	= ../message/src/
 HASHDIR	= ../../tools/hash/
 SCRDIR = ../pokegra/
 LSTDIR = ../pokegra/conv/
+POKELISTDIR = ../../tools/btl_subway/
 
 #------------------------------------------------------------------------------
 #※サブディレクトリでもMakeしたい場合、ここにディレクトリ名を書く
@@ -52,9 +54,9 @@ include	$(NITROSYSTEM_ROOT)/build/buildtools/modulerules
 #------------------------------------------------------------------------------
 #	ファイル削除ルール
 #------------------------------------------------------------------------------
-LDIRT_CLEAN = $(TARGETDIR)$(HEADER) $(TARGETDIR)$(NUMHEADER) $(GMMDIR)$(GMMFILE) $(HASHDIR)$(MONSNOHASHFILE) $(HASHDIR)$(WOTHASHFILE) $(LSTDIR)*.lst $(SCRDIR)*.scr
+LDIRT_CLEAN = $(TARGETDIR)$(HEADER) $(TARGETDIR)$(NUMHEADER) $(GMMDIR)$(GMMFILE) $(HASHDIR)$(MONSNOHASHFILE) $(HASHDIR)$(WOTHASHFILE) $(LSTDIR)*.lst $(SCRDIR)*.scr $(POKELISTDIR)$(POKELIST)
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
-LDIRT_CLEAN += *.s $(HEADER) $(NUMHEADER) $(GMMFILE) $(MONSNOHASHFILE) $(WOTHASHFILE) $(LSTFILE) *.scr out_end
+LDIRT_CLEAN += *.s $(HEADER) $(NUMHEADER) $(GMMFILE) $(MONSNOHASHFILE) $(WOTHASHFILE) $(LSTFILE) $(POKELIST) *.scr out_end
 endif
 
 #------------------------------------------------------------------------------
@@ -70,7 +72,7 @@ out_end: personal_wb.csv
 	ruby ../../tools/personal_conv/personal_conv.rb $< ../message/template.gmm
 endif
 
-do-build: $(TARGETDIR)$(HEADER) $(TARGETDIR)$(NUMHEADER) $(GMMDIR)$(GMMFILE) $(HASHDIR)$(MONSNOHASHFILE) $(HASHDIR)$(WOTHASHFILE) $(SCRDIR)$(SCRFILE) $(LSTDIR)$(LSTFILE) $(LSTDIR)$(OTHERLSTFILE) $(SCRDIR)$(OTHERFORMFILE) $(SCRDIR)$(OTHERPLTTFILE)
+do-build: $(TARGETDIR)$(HEADER) $(TARGETDIR)$(NUMHEADER) $(GMMDIR)$(GMMFILE) $(HASHDIR)$(MONSNOHASHFILE) $(HASHDIR)$(WOTHASHFILE) $(SCRDIR)$(SCRFILE) $(LSTDIR)$(LSTFILE) $(LSTDIR)$(OTHERLSTFILE) $(SCRDIR)$(OTHERFORMFILE) $(SCRDIR)$(OTHERPLTTFILE) $(POKELISTDIR)$(POKELIST)
 
 $(TARGETDIR)$(HEADER):	$(HEADER)
 	$(COPY)	$(HEADER) $(TARGETDIR)
@@ -101,4 +103,7 @@ $(SCRDIR)$(OTHERPLTTFILE):	$(OTHERPLTTFILE)
 
 $(LSTDIR)$(OTHERLSTFILE):	$(OTHERLSTFILE)
 	$(COPY)	$(OTHERLSTFILE) $(LSTDIR)
+
+$(POKELISTDIR)$(POKELIST):	$(POKELIST)
+	$(COPY)	$(POKELIST) $(POKELISTDIR)
 
