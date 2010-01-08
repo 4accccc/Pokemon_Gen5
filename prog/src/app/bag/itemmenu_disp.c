@@ -86,12 +86,10 @@ enum
 #define _UP_ITEMREPORT_SIZEX (26)
 #define _UP_ITEMREPORT_SIZEY (9)
 
-
 #define _ITEMICON_SCR_X (14)
 #define _ITEMICON_SCR_Y (8)
 
 #define ITEM_LIST_NUM (8)
-
 
 typedef enum{
   _CLACT_PLT,
@@ -389,7 +387,6 @@ void ITEMDISP_graphicInit(FIELD_ITEMMENU_WORK* pWork)
   _createSubBg();
 
   GFL_FONTSYS_SetDefaultColor();
-  pWork->SysMsgQue = PRINTSYS_QUE_Create( pWork->heapID );
 
   pWork->bgchar = BmpWinFrame_GraphicSetAreaMan(GFL_BG_FRAME3_M,
                                                 _BUTTON_WIN_PAL, MENU_TYPE_SYSTEM, pWork->heapID);
@@ -734,8 +731,11 @@ void ITEMDISP_upMessageDelete(FIELD_ITEMMENU_WORK* pWork)
   GFL_BMPWIN_Delete(pWork->winItemReport);
   GFL_BMPWIN_Delete(pWork->winItemNum);
   GFL_BMPWIN_Delete(pWork->winWaza);
+
+  //@TODO 下画面
   GFL_BMPWIN_Delete(pWork->winNumFrame);
   GFL_BMPWIN_Delete(pWork->winSellGold);
+  GFL_BMPWIN_Delete(pWork->winPocketNone);
 
   GFL_CLACT_WK_Remove( pWork->scrollCur );
 
@@ -764,12 +764,32 @@ void ITEMDISP_upMessageDelete(FIELD_ITEMMENU_WORK* pWork)
  */
 //------------------------------------------------------------------------------
 
+static void _bmpwinPocketNoneMake(FIELD_ITEMMENU_WORK* pWork )
+{
+  GF_ASSERT( pWork->pStrBuf );
+
+  GFL_MSG_GetString(  pWork->MsgManager, msg_bag_item_none, pWork->pStrBuf );
+  
+  GFL_FONTSYS_SetColor( 0xf, 0xe, 0 ); // カラー指定
+  PRINTSYS_Print( GFL_BMPWIN_GetBmp( pWork->winPocketNone),
+      _WIN_POCKETNONE_POSX, _WIN_POCKETNONE_POSY,
+      pWork->pStrBuf, pWork->fontHandle );
+
+  GFL_BMPWIN_TransVramCharacter( pWork->winPocketNone );
+}
+
 void ITEMDISP_upMessageCreate(FIELD_ITEMMENU_WORK* pWork)
 {
-  pWork->winWaza= GFL_BMPWIN_Create(
-    ITEMREPORT_FRAME,
-    0, 19, 32, 5,
-    _SUBBUTTON_MSG_PAL, GFL_BMP_CHRAREA_GET_B );
+  // 下画面
+  pWork->winPocketNone = GFL_BMPWIN_Create(
+      GFL_BG_FRAME3_M,
+      _WIN_POCKETNONE_INITX, _WIN_POCKETNONE_INITY,
+      _WIN_POCKETNONE_SIZEX, _WIN_POCKETNONE_SIZEY,
+      _WIN_POCKETNONE_PAL, GFL_BMP_CHRAREA_GET_B );
+
+  // キャラクタを作っておく
+  _bmpwinPocketNoneMake( pWork );
+  GFL_BMPWIN_ClearScreen( pWork->winPocketNone );
 
   pWork->winNumFrame = GFL_BMPWIN_Create(
       GFL_BG_FRAME3_M,
@@ -782,6 +802,13 @@ void ITEMDISP_upMessageCreate(FIELD_ITEMMENU_WORK* pWork)
     _SELL_GOLD_DISP_INITX, _SELL_GOLD_DISP_INITY,
     _SELL_GOLD_DISP_SIZEX, _SELL_GOLD_DISP_SIZEY,
     _WINNUM_PAL, GFL_BMP_CHRAREA_GET_B );
+
+  // 上画面
+  pWork->winWaza= GFL_BMPWIN_Create(
+    ITEMREPORT_FRAME,
+    0, 19,
+    32, 5,
+    _SUBBUTTON_MSG_PAL, GFL_BMP_CHRAREA_GET_B );
 
   pWork->winItemName = GFL_BMPWIN_Create(
     ITEMREPORT_FRAME,
@@ -1115,8 +1142,21 @@ static void _cellmessage_printcolor( u16 itemtype )
 void ITEMDISP_CellMessagePrint( FIELD_ITEMMENU_WORK* pWork )
 {
   int i;
+  int length;
+
   // 文字色指定
   static u8 color_tbl[ ITEM_LIST_NUM ] = { 1, 0, 0, 0, 0, 0, 0, 1 };
+
+  // ポケット内のアイテムが0個の時は「なにもありません」
+  length = ITEMMENU_GetItemPocketNumber( pWork );
+  if( length == 0 )
+  {
+    GFL_BMPWIN_MakeTransWindow( pWork->winPocketNone );
+  }
+  else
+  {
+    GFL_BMPWIN_ClearTransWindow( pWork->winPocketNone );
+  }
 
   for(i = 0; i< ITEM_LIST_NUM ; i++){
     ITEM_ST * item;
@@ -1162,13 +1202,16 @@ void ITEMDISP_CellMessagePrint( FIELD_ITEMMENU_WORK* pWork )
       WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
       PRINTSYS_Print( pWork->listBmp[i], 0, 0, pWork->pExpStrBuf, pWork->fontHandle);
 
-      if( ITEM_GetBufParam( itemdata, ITEM_PRM_CNV ) == 0 ){
+      if( ITEM_GetBufParam( itemdata, ITEM_PRM_CNV ) == 0 )
+      {
         pWork->nListEnable[ i ] = 3;
       }
-      else if(ITEMMENU_GetPosCnvButtonItem(pWork,item->id)==-1){
+      else if(ITEMMENU_GetPosCnvButtonItem(pWork,item->id)==-1)
+      {
         pWork->nListEnable[ i ] = 2;
       }
-      else{
+      else
+      {
         pWork->nListEnable[ i ] = 1;
       }
       GFL_HEAP_FreeMemory( itemdata );

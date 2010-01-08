@@ -2907,9 +2907,6 @@ static GFL_PROC_RESULT FieldItemMenuProc_Init( GFL_PROC * proc, int * seq, void 
     pWork->oamlistpos = scr - 1;
   }
 
-  // グラフィック初期化
-  ITEMDISP_graphicInit(pWork);
-
   // 文字列初期化
   pWork->MsgManager = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE,
                                       NARC_message_bag_dat, pWork->heapID );
@@ -2923,8 +2920,12 @@ static GFL_PROC_RESULT FieldItemMenuProc_Init( GFL_PROC * proc, int * seq, void 
   pWork->pStrBuf = GFL_STR_CreateBuffer(200,pWork->heapID);
   pWork->pExpStrBuf = GFL_STR_CreateBuffer(200,pWork->heapID);
   pWork->WordSet    = WORDSET_Create( pWork->heapID );
+  pWork->SysMsgQue  = PRINTSYS_QUE_Create( pWork->heapID );
   pWork->fontHandle = GFL_FONT_Create( ARCID_FONT , NARC_font_large_gftr ,
                                        GFL_FONT_LOADTYPE_FILE , FALSE , pWork->heapID );
+ 
+  // グラフィック初期化
+  ITEMDISP_graphicInit(pWork);
 
   ITEMDISP_upMessageCreate(pWork);
   ITEMDISP_CellResourceCreate(pWork);
@@ -2946,7 +2947,7 @@ static GFL_PROC_RESULT FieldItemMenuProc_Init( GFL_PROC * proc, int * seq, void 
 
   ITEMDISP_BarMessageCreate( pWork );
 
-  pWork->pAppTaskRes  = APP_TASKMENU_RES_Create( GFL_BG_FRAME3_M, _SUBLIST_NORMAL_PAL,pWork->fontHandle, pWork->SysMsgQue, pWork->heapID  );
+  pWork->pAppTaskRes = APP_TASKMENU_RES_Create( GFL_BG_FRAME3_M, _SUBLIST_NORMAL_PAL, pWork->fontHandle, pWork->SysMsgQue, pWork->heapID );
 
   // ネットワーク初期化
   GFL_NET_WirelessIconEasy_HoldLCD( TRUE, pWork->heapID );

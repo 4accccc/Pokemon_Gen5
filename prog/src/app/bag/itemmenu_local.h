@@ -176,6 +176,7 @@ struct _FIELD_ITEMMENU_PARAM {
   u32 commonCell[5];
 
   u32 listRes[ITEM_LIST_NUM];  //アイテムリスト
+
   GFL_BMP_DATA* listBmp[ITEM_LIST_NUM];
   GFL_CLWK  *listCell[ITEM_LIST_NUM];     //アイテムの一覧OBJ
   u32 nListEnable[ITEM_LIST_NUM];
@@ -204,6 +205,7 @@ struct _FIELD_ITEMMENU_PARAM {
   GFL_BMPWIN* winGoldCap;
   GFL_BMPWIN* winGold;
   GFL_BMPWIN* winSellGold;
+  GFL_BMPWIN* winPocketNone; // ポケットが空の時のメッセージ表示
 
   APP_TASKMENU_WORK* pAppTask;
   APP_TASKMENU_ITEMWORK appitem[_SUBMENU_LISTMAX];
@@ -308,6 +310,15 @@ struct _FIELD_ITEMMENU_PARAM {
 #define _WINNUM_SIZEX (11)
 #define _WINNUM_SIZEY (2)
 #define _WINNUM_PAL (3)
+
+//「なにもありません」ウインドウの位置
+#define _WIN_POCKETNONE_INITX (18)
+#define _WIN_POCKETNONE_INITY (9)
+#define _WIN_POCKETNONE_SIZEX (12)
+#define _WIN_POCKETNONE_SIZEY (3)
+#define _WIN_POCKETNONE_POSX (0)  // PRINT時のドットずらし指定 X
+#define _WIN_POCKETNONE_POSY (4)  // PRINT時のドットずらし指定 Y
+#define _WIN_POCKETNONE_PAL (3)
 
 #define _WINNUM_SCR_INITX (16)
 #define _WINNUM_SCR_INITY (12)
