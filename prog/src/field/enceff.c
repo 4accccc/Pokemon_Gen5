@@ -29,7 +29,9 @@ typedef struct {
 static const ENCEFF_TBL EncEffTbl[] = {
   {ENCEFF_CreateEff1, ENCEFF_DrawEff1},
   {ENCEFF_CreateEff2, ENCEFF_DrawEff2},
-  {ENCEFF_CreateEff3, ENCEFF_DrawEff3},
+  {ENCEFF_PNL1_Create, ENCEFF_PNL_Draw},
+  {ENCEFF_PNL2_Create, ENCEFF_PNL_Draw},
+  {ENCEFF_PNL3_Create, ENCEFF_PNL_Draw},
 };
 
 //--------------------------------------------------------------
@@ -75,7 +77,7 @@ void ENCEFF_SetEncEff(ENCEFF_CNT_PTR ptr, GMEVENT * event, const ENCEFF_ID inID)
   GAMESYS_WORK * gsys = FIELDMAP_GetGameSysWork( ptr->FieldMapWork );
 
   int no;
-  no = GFUser_GetPublicRand(2);
+  no = GFUser_GetPublicRand(ENCEFFID_MAX);
 
   call_event = EncEffTbl[no].CreateFunc(gsys,fieldmap);
   //イベントコール

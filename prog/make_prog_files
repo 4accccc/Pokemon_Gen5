@@ -567,7 +567,10 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/enceff_prg.c \
         field/enceff1.c \
         field/enceff2.c \
-        field/enceff3.c
+        field/enceff_pnl.c \
+        field/enceff_pnl1.c \
+        field/enceff_pnl2.c \
+        field/enceff_pnl3.c
 
 # フィールド天気
 #===> SRCS_OVERLAY_FIELDMAP
