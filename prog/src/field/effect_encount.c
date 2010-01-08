@@ -314,8 +314,13 @@ BOOL EFFECT_ENC_GetDistanceToPlayer( FIELD_ENCOUNT* enc, u16* o_distance )
     if( dz < 0 ){
       dz *= -1;
     }
-    *o_distance = dx+dz;
+    if( dx > dz){
+      *o_distance = dx;
+    }else{
+      *o_distance = dz;
+    }
   }
+  return TRUE;
 }
 
 /*
