@@ -180,7 +180,19 @@ extern void	PMDSND_PresetSoundTbl( const u32* soundIdxTbl, u32 tblNum );
 extern void	PMSND_PresetGroup( u32 groupIdx );
 extern void	PMSND_ReleasePreset( void );
 
-
+//============================================================================================
+/**
+ *
+ *
+ * @brief	外部音楽データ再生
+ *
+ *
+ */
+//============================================================================================
+extern BOOL PMDSND_PresetExtraMusic( void* seqAdrs, void* bnkAdrs, u32 waveNo );
+extern BOOL PMDSND_PlayExtraMusic( void );
+extern void PMDSND_StopExtraMusic( void );
+extern void PMDSND_ReleaseExtraMusic( void );
 
 
 //サウンドテスト用
