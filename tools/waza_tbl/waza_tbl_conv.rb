@@ -99,6 +99,7 @@ end
 
   wazano = Hash::new
   wazaname = []
+  wazaname << "|||||||\n"
   
   #‹Zƒ‰ƒxƒ‹•gmmƒtƒ@ƒCƒ‹¶¬
   print "‹Zƒ‰ƒxƒ‹•gmmƒtƒ@ƒCƒ‹@¶¬’†\n"
@@ -144,6 +145,7 @@ end
       tame_waza << cnt
     end
     fp_wazano.print( "#define\t\t" )
+    wazaname << "%s\n" % [ split_data[ PARA::WAZANAME ] ]
     label_str = label.make_label( "WAZANO_", split_data[ PARA::WAZANAME ] )
     fp_wazano.print( label_str )
     tab_cnt = ( 19 - label_str.length ) / 2 + 2
@@ -185,6 +187,13 @@ end
   wazaname_gmm.close_gmm
   wazainfo_gmm.close_gmm
   atkmsg_gmm.close_gmm
+
+  fp_wazalist = open( "wazalist.txt", "w" )
+  wazaname.sort!
+  wazaname.size.times {|i|
+    fp_wazalist.printf( "%s", wazaname[ i ] )
+  }
+	fp_wazalist.close
 
   print "‹Zƒ‰ƒxƒ‹•gmmƒtƒ@ƒCƒ‹@¶¬I—¹\n"
 
