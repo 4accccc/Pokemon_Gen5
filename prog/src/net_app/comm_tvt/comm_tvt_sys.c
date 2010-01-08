@@ -12,6 +12,7 @@
 #include "system/main.h"
 #include "system/gfl_use.h"
 #include "system/wipe.h"
+#include "system/net_err.h"
 #include "app/app_menu_common.h"
 
 #include "arc_def.h"
@@ -50,6 +51,7 @@ struct _COMM_TVT_WORK
   COMM_TVT_MODE mode;
   COMM_TVT_MODE nextMode;
   BOOL isUpperFade;
+  BOOL isCommError;
 
   u8 connectNum;
   u8 selfIdx;
@@ -744,6 +746,7 @@ static GFL_PROC_RESULT COMM_TVT_Proc_Init( GFL_PROC * proc, int * seq , void *pw
   {
     work->initWork = pwk;
   }
+  work->isCommError = FALSE;
   
   COMM_TVT_Init( work );
   return GFL_PROC_RES_FINISH;
@@ -772,6 +775,7 @@ static GFL_PROC_RESULT COMM_TVT_Proc_Term( GFL_PROC * proc, int * seq , void *pw
   GFL_HEAP_DeleteHeap( HEAPID_COMM_TVT );
 
   CTVT_TPrintf("FinishCamera\n");
+
   return GFL_PROC_RES_FINISH;
 }
 
@@ -782,11 +786,14 @@ static GFL_PROC_RESULT COMM_TVT_Proc_Main( GFL_PROC * proc, int * seq , void *pw
 {
   COMM_TVT_WORK *work = mywk;
 
-  const BOOL ret = COMM_TVT_Main( work );
-  
-  
-  
-  if( ret == TRUE )
+  if( NetErr_App_CheckError() != NET_ERR_CHECK_NONE &&
+      work->isCommError == FALSE )
+  {
+    NetErr_App_ReqErrorDisp();
+    work->isCommError = TRUE;
+  }
+
+  if( COMM_TVT_Main( work ) == TRUE )
   {
     return GFL_PROC_RES_FINISH;
   }
