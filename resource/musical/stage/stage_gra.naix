@@ -145,8 +145,10 @@ enum {
 	NARC_stage_gra_mus_eff_01_spa = 131,
 	NARC_stage_gra_mus_eff_itemuse_spa = 132,
 	NARC_stage_gra_mus_eff_trans_1_spa = 133,
-	NARC_stage_gra_appeal_script_01_bin = 134,
-	NARC_stage_gra_sub_script_01_bin = 135
+	NARC_stage_gra_appeal_script_00_bin = 134,
+	NARC_stage_gra_appeal_script_01_bin = 135,
+	NARC_stage_gra_sub_script_00_bin = 136,
+	NARC_stage_gra_sub_script_01_bin = 137
 };
 
 /* NARC_STAGE_GRA_NAIX_ */

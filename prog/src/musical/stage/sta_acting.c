@@ -1063,16 +1063,15 @@ static void STA_ACT_StartScript( ACTING_WORK *work )
 
 void STA_ACT_StartAppealScript( ACTING_WORK *work , const u8 scriptNo , const u8 pokeNo )
 {
-  void *scriptData = GFL_ARCHDL_UTIL_Load( work->arcHandle , NARC_stage_gra_appeal_script_01_bin + scriptNo , FALSE , work->heapId );
+  void *scriptData = GFL_ARCHDL_UTIL_Load( work->arcHandle , NARC_stage_gra_appeal_script_00_bin + scriptNo , FALSE , work->heapId );
   const u8 rankScriptNo[4] = {0,1,2,2};
   
-  ARI_TPrintf("[%d][%d][%d]\n",pokeNo, rankScriptNo[work->pokeRank[pokeNo]] , 1<<pokeNo);
   STA_SCRIPT_SetSubScript( work->scriptSys , scriptData , rankScriptNo[work->pokeRank[pokeNo]] , 1<<pokeNo );
   
 }
 void STA_ACT_StartSubScript( ACTING_WORK *work , const u8 scriptNo , const u8 pokeTrgBit )
 {
-  void *scriptData = GFL_ARCHDL_UTIL_Load( work->arcHandle , NARC_stage_gra_sub_script_01_bin + scriptNo , FALSE , work->heapId );
+  void *scriptData = GFL_ARCHDL_UTIL_Load( work->arcHandle , NARC_stage_gra_sub_script_00_bin + scriptNo , FALSE , work->heapId );
   STA_SCRIPT_SetSubScript( work->scriptSys , scriptData , 0 , pokeTrgBit );
   
 }
