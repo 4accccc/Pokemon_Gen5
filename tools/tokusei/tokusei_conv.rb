@@ -73,6 +73,7 @@ end
   read_data.size.times {|i|
     split_data = read_data[ i ].split(/,/)
     fp_tokuno.print( "#define\t\t" )
+    tokuname << "%s\n" % [ split_data[ PARA::NAME ] ]
     label_str = label.make_label( "TOKUSYU_", split_data[ PARA::NAME ] )
     fp_tokuno.print( label_str )
     tab_cnt = ( 25 - label_str.length ) / 2 + 2
@@ -107,6 +108,13 @@ end
 
   tokuname_gmm.close_gmm
   tokuinfo_gmm.close_gmm
+
+  fp_speabi = open( "speabi.txt", "w" )
+  tokuname.sort!
+  tokuname.size.times {|i|
+    fp_speabi.printf( "%s", tokuname[ i ] )
+  }
+	fp_speabi.close
 
   print "特性ラベル＆gmmファイル　生成終了\n"
 
