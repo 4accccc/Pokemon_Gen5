@@ -175,8 +175,8 @@ void APP_KEYCURSOR_Write( APP_KEYCURSOR_WORK *work, GFL_BMP_DATA *bmp, u16 n_col
     work->cursor_anm_no %= (CURSOR_ANM_NO_MAX);
   }
 
-  x = GFL_BMP_GetSizeX( bmp ) - CURSOR_BMP_DIFF_PX;
-  y = GFL_BMP_GetSizeY( bmp ) - CURSOR_BMP_DIFF_PY;
+  x = GFL_BMP_GetSizeX( bmp ) + CURSOR_BMP_DIFF_PX;
+  y = GFL_BMP_GetSizeY( bmp ) + CURSOR_BMP_DIFF_PY;
   offs = work->cursor_anm_no; // 0, 1, 2
   
   GFL_BMP_Print( work->bmp_cursor, bmp, 0, 2, x, y+offs, CURSOR_BMP_SX, CURSOR_BMP_SY, 0x00 );
