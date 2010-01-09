@@ -537,8 +537,6 @@ typedef struct{
 	// 乱数用
 	u32 sRand;
 
-  int startScan;
-  
 	u32 SendSizeMax;
 	u32 ConnectNumMax;
 
@@ -557,6 +555,7 @@ typedef struct{
 	u16 negoIDRecv;
 	u16 beaconSendNum;
   u16 beaconScanNum;
+  s16 startScan;
 	HEAPID heapID;
 	/* 親機接続時に使用する設定 */
 	u8 sConnectionSsid[(WM_SIZE_CHILD_SSID/4)*4];
@@ -1652,8 +1651,17 @@ static void WH_StateOutStartScan(void *arg)
 		NET_PRINT("スキャン失敗\n");
 		return;
 	}
+
   
-  _pWmInfo->startScan=5;
+  if(_pWmInfo->startScan == -1){
+    if (!WH_StateInEndScan()){
+      WH_ChangeSysState(WH_SYSSTATE_ERROR);
+    }
+  }
+  else{
+    _pWmInfo->startScan=5;
+  }
+  
     
 	// チャンネルを変更して再スキャンを開始します。
 //	if (!WH_StateInStartScan()) {
@@ -1692,9 +1700,10 @@ BOOL WH_EndScan(void)
     //WM_EndScan(WH_StateOutEndScan);
     NET_PRINT("----%d ForceStop\n",_pWmInfo->startScan);
     
-    _pWmInfo->startScan=0;
+//    _pWmInfo->startScan = -1;
 //    return FALSE;
   }
+  _pWmInfo->startScan = -1;
 	_pWmInfo->sAutoConnectFlag = FALSE;
 	WH_ChangeSysState(WH_SYSSTATE_BUSY);
 	return TRUE;
@@ -2644,7 +2653,10 @@ int WH_GetConnectMode(void)
    ---------------------------------------------------------------------- */
 int WH_GetLastError(void)
 {
-	return _pWmInfo->sErrCode;
+  if(_pWmInfo){
+    return _pWmInfo->sErrCode;
+  }
+  return 0;
 }
 
 /*---------------------------------------------------------------------------*
@@ -3481,7 +3493,7 @@ BOOL WH_StepDS(const void *data)
 void WH_StepScan(void)
 {
   if(_pWmInfo){
-    if( _pWmInfo->startScan){
+    if( _pWmInfo->startScan>0){
       if (_pWmInfo->sSysState != WH_SYSSTATE_SCANNING){
         _pWmInfo->startScan=0;
       }
@@ -3493,6 +3505,9 @@ void WH_StepScan(void)
           if (!WH_StateInStartScan()) {
             WH_ChangeSysState(WH_SYSSTATE_ERROR);
           }
+        }
+        else{
+          _pWmInfo->startScan=1; //スキャンを戻す
         }
       }
     }
