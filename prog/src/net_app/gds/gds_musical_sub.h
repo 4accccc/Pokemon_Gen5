@@ -18,7 +18,7 @@ typedef enum
 	MUS_POKE_EQU_USER_HEAD,		//頭
 	MUS_POKE_EQU_USER_FACE,		//顔
 	MUS_POKE_EQU_USER_BODY,		//胴
-	MUS_POKE_EQU_USER_WAIST,		//腰
+	MUS_POKE_EQU_USER_WAIST,	//腰
 	MUS_POKE_EQU_USER_HAND_R,	//手(右手)
 	MUS_POKE_EQU_USER_HAND_L,	//手(左手)
 
@@ -66,7 +66,7 @@ typedef struct
   u16  pad :8;
   
   STRCODE trainerName[MUSICAL_TRAINER_NAME_LEN];  //トレーナー名
-  MUSICAL_SHOT_POKE_EQUIP equip[MUSICAL_ITEM_EQUIP_MAX];  //装備グッズデータ(８個
+  MUSICAL_SHOT_POKE_EQUIP equip[MUSICAL_ITEM_EQUIP_MAX];  //装備グッズデータ(７個
   
 }MUSICAL_SHOT_POKE;
 
@@ -76,15 +76,16 @@ typedef struct
 typedef struct
 {
   u32 bgNo   :5;  //背景番号
-  u32 spotBit:4;  //スポットライト対象(bit)
+  u32 spotBit:4;  //スポットライト対象(bit)(トップだったポケモン
   u32 year   :7;  //年
   u32 month  :5;  //月  これが０だったら無効データとみなす
   u32 day    :6;  //日
-  u32 pad    :5;
-  
-  STRCODE title[MUSICAL_PROGRAM_NAME_MAX];  //ミュージカルタイトル(日本18・海外36＋EOM
-  MUSICAL_SHOT_POKE shotPoke[MUSICAL_POKE_MAX]; //ポケモンデータ(４体
-}MUSICAL_SHOT_DATA;
+  u32 player :2;  //自分の番号
+  u32 pad    :3;
 
+  MUSICAL_SHOT_POKE shotPoke[MUSICAL_POKE_MAX]; //ポケモンデータ(４体
+  STRCODE title[MUSICAL_PROGRAM_NAME_MAX];  //ミュージカルタイトル(日本18・海外36＋EOM
+  u16 pad2;
+}MUSICAL_SHOT_DATA;
 
 #endif  //__GT_GDS_MUSICAL_SUB_H__
