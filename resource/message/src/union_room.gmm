@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsuda" host="W00142" date="2009-12-20T20:27:36"/>
+	<create user="matsuda" host="W00142" date="2010-01-06T22:36:08"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -3574,6 +3574,30 @@ msg_connect_union_08からの分岐メッセージ
 	<row id="msg_union_test_016_01" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,,,,#80ffff,#80ffff,,#80ffff,#80ffff,,#80ffff,,,#80ffff,,">
 		<language name="JPN" width="216" line="2">マルチバトルって　たのしい！</language>
 		<language name="JPN_KANJI" width="216" line="2">マルチバトルって　たのしい！</language>
+	</row>
+
+	<row id="msg_union_test_016_02" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,,,,#80ffff,#80ffff,,#80ffff,#80ffff,,#80ffff,,,#80ffff,,">
+		<language name="JPN" width="216" line="2">みんなで　ぐるぐるこうかん　しよう！
+きみも　さんかする？</language>
+		<language name="JPN_KANJI" width="216" line="2">みんなで　ぐるぐるこうかん　しよう！
+きみも　さんかする？</language>
+	</row>
+
+	<row id="msg_union_test_016_03" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,,,,#80ffff,#80ffff,,#80ffff,#80ffff,,#80ffff,,,#80ffff,,">
+		<language name="JPN" width="216" line="2">ぐるぐるこうかんって　たのしい！</language>
+		<language name="JPN_KANJI" width="216" line="2">ぐるぐるこうかんって　たのしい！</language>
+	</row>
+
+	<row id="msg_union_test_016_04" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,,,,#80ffff,#80ffff,,#80ffff,#80ffff,,#80ffff,,,#80ffff,,">
+		<language name="JPN" width="216" line="2">みんなで　おえかき　しよう！
+きみも　さんかする？</language>
+		<language name="JPN_KANJI" width="216" line="2">みんなで　おえかき　しよう！
+きみも　さんかする？</language>
+	</row>
+
+	<row id="msg_union_test_016_05" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,,,,#80ffff,#80ffff,,#80ffff,#80ffff,,#80ffff,,,#80ffff,,">
+		<language name="JPN" width="216" line="2">おえかきって　たのしい！</language>
+		<language name="JPN_KANJI" width="216" line="2">おえかきって　たのしい！</language>
 	</row>
 
 	<row id="msg_union_test_017" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,,,,#80ffff,#80ffff,,#80ffff,#80ffff,,#80ffff,,,#80ffff,,">

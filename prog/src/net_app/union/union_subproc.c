@@ -28,6 +28,8 @@
 #include "app\pms_input.h"
 #include "app\pms_select.h"
 #include "net_app/pokemontrade.h"
+#include "net_app/union_app.h"
+#include "union_comm_command.h"
 
 
 //==============================================================================
@@ -48,6 +50,7 @@ static GMEVENT_RESULT UnionSubProc_GameChangeEvent(GMEVENT * event, int * seq, v
 
 static BOOL SubEvent_TrainerCard(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys, FIELDMAP_WORK *fieldWork, void *pwk, GMEVENT * parent_event, GMEVENT **child_event, u8 *seq);
 static BOOL SubEvent_Trade(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys, FIELDMAP_WORK *fieldWork, void *pwk, GMEVENT * parent_event, GMEVENT **child_event, u8 *seq);
+static BOOL SubEvent_Minigame(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys, FIELDMAP_WORK *fieldWork, void *pwk, GMEVENT * parent_event, GMEVENT **child_event, u8 *seq);
 static BOOL SubEvent_ColosseumWarp(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys, FIELDMAP_WORK *fieldWork, void *pwk, GMEVENT * parent_event, GMEVENT **child_event, u8 *seq);
 static BOOL SubEvent_ColosseumWarpMulti(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys, FIELDMAP_WORK *fieldWork, void *pwk, GMEVENT * parent_event, GMEVENT **child_event, u8 *seq);
 static BOOL SubEvent_UnionWarp(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys, FIELDMAP_WORK *fieldWork, void *pwk, GMEVENT * parent_event, GMEVENT **child_event, u8 *seq);
@@ -59,6 +62,7 @@ static BOOL SubEvent_Chat(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys, FIELDMAP_
 //--------------------------------------------------------------
 //  オーバーレイ定義
 //--------------------------------------------------------------
+FS_EXTERN_OVERLAY(union_app);
 FS_EXTERN_OVERLAY(pokelist);
 FS_EXTERN_OVERLAY(poke_status);
 FS_EXTERN_OVERLAY(pokemon_trade);
@@ -88,6 +92,16 @@ static const struct{
     SubEvent_Trade,
     UNION_PLAY_CATEGORY_TRADE, 
     UNION_PLAY_CATEGORY_TALK,
+  },
+  {//UNION_SUBPROC_ID_PICTURE
+    SubEvent_Minigame,
+    UNION_PLAY_CATEGORY_PICTURE, 
+    UNION_PLAY_CATEGORY_UNION,
+  },
+  {//UNION_SUBPROC_ID_GURUGURU
+    SubEvent_Minigame,
+    UNION_PLAY_CATEGORY_GURUGURU, 
+    UNION_PLAY_CATEGORY_UNION,
   },
   {//UNION_SUBPROC_ID_COLOSSEUM_WARP_1VS1_SINGLE_FREE_SHOOTER
     SubEvent_ColosseumWarp,
@@ -393,6 +407,179 @@ static BOOL SubEvent_Trade(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys, FIELDMAP
   }
   
   (*seq)++;
+  return FALSE;
+}
+
+//--------------------------------------------------------------
+/**
+ * イベント：お絵かき
+ *
+ * @param   gsys		
+ * @param   unisys		
+ * @param   fieldWork		
+ * @param   pwk		
+ * @param   seq		
+ *
+ * @retval  GMEVENT *		
+ */
+//--------------------------------------------------------------
+static BOOL SubEvent_Minigame(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys, FIELDMAP_WORK *fieldWork, void *pwk, GMEVENT * parent_event, GMEVENT **child_event, u8 *seq)
+{
+  UNION_MY_SITUATION *situ = &unisys->my_situation;
+  enum{
+    _SEQ_FADEOUT,
+    _SEQ_FIELD_CLOSE,
+
+    _SEQ_INIT,
+    _SEQ_TIMING,
+    _SEQ_TIMING_WAIT,
+    _SEQ_BASIC_STATUS_REQ,
+    _SEQ_BASIC_STATUS_WAIT,
+    _SEQ_MYSTATUS_SEND,
+    _SEQ_MYSTATUS_WAIT,
+    _SEQ_START_BEFORE_TIMING,
+    _SEQ_START_BEFORE_TIMING_WAIT,
+    _SEQ_MINIGAME_PROC,
+    _SEQ_MINIGAME_PROC_WAIT,
+
+    _SEQ_FIELD_OPEN,
+    _SEQ_FADEIN,
+    _SEQ_FINISH,
+  };
+
+  if(unisys->alloc.uniapp != NULL){
+    UnionAppSystem_Update(unisys->alloc.uniapp, unisys);
+  }
+  
+  switch(*seq){
+  case _SEQ_FADEOUT:
+    {
+      GMEVENT* fade_event;
+      fade_event = EVENT_FieldFadeOut(gsys, fieldWork, 
+                                      FIELD_FADE_BLACK, FIELD_FADE_WAIT);
+      GMEVENT_CallEvent(parent_event, fade_event);
+    }
+		(*seq) ++;
+		break;
+	case _SEQ_FIELD_CLOSE:
+		GMEVENT_CallEvent(parent_event, EVENT_FieldClose(gsys, fieldWork));
+		(*seq) ++;
+		break;
+
+  case _SEQ_INIT:
+    {
+      int member_max;
+      
+      //フィールドをCLOSEしてからオーバーレイ読み込み
+      GFL_OVERLAY_Load( FS_OVERLAY_ID( union_app ) );
+      if(situ->play_category == UNION_PLAY_CATEGORY_PICTURE){
+        member_max = UNION_PICTURE_MEMBER_MAX;
+      }
+      else{ //UNION_PLAY_CATEGORY_GURUGURU
+        member_max = UNION_GURUGURU_MEMBER_MAX;
+      }
+      unisys->alloc.uniapp = UnionAppSystem_AllocAppWork(
+        HEAPID_WORLD, member_max,
+        GAMEDATA_GetMyStatus(unisys->uniparent->game_data));
+      if(situ->mycomm.intrude == TRUE){  //乱入時ならば親はすでにuniappを確保しているので同期の必要無し
+        *seq = _SEQ_BASIC_STATUS_REQ;
+      }
+      else{
+        (*seq)++;
+      }
+    }
+    //break;
+  case _SEQ_TIMING:
+    //本来ならフェードアウト後の真っ暗な画面で同期取りをしたくないが
+    //union_appのオーバーレイ配置がfieldmapと並列の為、ここで通信TblAdd後の同期を行う
+    GFL_NET_HANDLE_TimingSyncStart(
+      GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_MINIGAME_SETUP_AFTER);
+    (*seq)++;
+    break;
+  case _SEQ_TIMING_WAIT:
+		if(GFL_NET_HANDLE_IsTimingSync(
+		    GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_MINIGAME_SETUP_AFTER) == TRUE){
+      (*seq)++;
+    }
+    break;
+  
+  case _SEQ_BASIC_STATUS_REQ:
+    if(UnionSend_MinigameBasicStatusReq() == TRUE){
+      (*seq)++;
+    }
+    break;
+  case _SEQ_BASIC_STATUS_WAIT:
+    if(UnionAppSystem_CheckBasicStatus(unisys->alloc.uniapp) == TRUE){
+      (*seq)++;
+    }
+    break;
+  case _SEQ_MYSTATUS_SEND:
+    if(UnionSend_MinigameMystatusReq(Union_App_GetMemberNetBit(unisys->alloc.uniapp)) == TRUE){
+      (*seq)++;
+    }
+    break;
+  case _SEQ_MYSTATUS_WAIT:
+    if(UnionAppSystem_CheckMystatus(unisys->alloc.uniapp) == TRUE){
+      (*seq)++;
+    }
+    break;
+
+  case _SEQ_START_BEFORE_TIMING:
+    if(situ->mycomm.intrude == TRUE){  //乱入時ならば同期の変わりに乱入宣言を送信
+      if(UnionSend_MinigameIntrudeReady(Union_App_GetMemberNetBit(unisys->alloc.uniapp)) == TRUE){
+        *seq = _SEQ_MINIGAME_PROC;
+      }
+    }
+    else{ //乱入でない場合は同期取り
+      GFL_NET_HANDLE_TimingSyncStart(
+        GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_MINIGAME_START_BEFORE);
+      *seq = _SEQ_START_BEFORE_TIMING_WAIT;
+    }
+    break;
+	case _SEQ_START_BEFORE_TIMING_WAIT:
+		if(GFL_NET_HANDLE_IsTimingSync(
+		    GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_MINIGAME_START_BEFORE) == TRUE){
+      (*seq) = _SEQ_MINIGAME_PROC;
+    }
+    break;
+      
+	case _SEQ_MINIGAME_PROC:
+    OS_TPrintf("ミニゲームPROC呼び出し\n");
+    if(situ->play_category == UNION_PLAY_CATEGORY_PICTURE){
+  		//GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(pokelist), &PokeList_ProcData, plist);
+  	}
+  	else{ //UNION_PLAY_CATEGORY_GURUGURU
+  	  //GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(pokelist), &PokeList_ProcData, plist);
+    }
+		(*seq) ++;
+		break;
+	case _SEQ_MINIGAME_PROC_WAIT:
+		if(GAMESYSTEM_IsProcExists(gsys) != GFL_PROC_MAIN_NULL){
+      break;
+    }
+
+    UnionAppSystem_FreeAppWork(unisys->alloc.uniapp);
+    unisys->alloc.uniapp = NULL;
+    GFL_OVERLAY_Unload( FS_OVERLAY_ID( union_app ) );
+    *seq = _SEQ_FIELD_OPEN;
+    break;
+	case _SEQ_FIELD_OPEN:
+		GMEVENT_CallEvent(parent_event, EVENT_FieldOpen(gsys));
+		(*seq) ++;
+		break;
+	case _SEQ_FADEIN:
+    {
+      GMEVENT* fade_event;
+      fade_event = EVENT_FieldFadeIn_Black(gsys, fieldWork, FIELD_FADE_WAIT);
+      GMEVENT_CallEvent(parent_event, fade_event);
+    }
+		(*seq) ++;
+		break;
+	case _SEQ_FINISH:
+  default:
+    return TRUE;
+  }
+  
   return FALSE;
 }
 

@@ -21,6 +21,10 @@
 //==============================================================================
 ///一度に接続できる最大人数
 #define UNION_CONNECT_PLAYER_NUM      (5) //レコードコーナーが最大5人なので
+///ぐるぐる交換の参加人数
+#define UNION_GURUGURU_MEMBER_MAX     (4)
+///お絵かきの参加人数
+#define UNION_PICTURE_MEMBER_MAX      (4)
 
 ///ビーコンデータが有効なものである事を示す数値
 #define UNION_BEACON_VALID        (0x7a)
@@ -164,6 +168,10 @@ enum{
 
   UNION_TIMING_TRADE_PROC_BEFORE,       ///<ポケモン交換画面呼び出し前
   UNION_TIMING_TRADE_PROC_AFTER,        ///<ポケモン交換画面呼び出し後
+
+  UNION_TIMING_MINIGAME_PROC_BEFORE,    ///<ミニゲーム前の同期取り
+  UNION_TIMING_MINIGAME_SETUP_AFTER,    ///<ミニゲームセットアップ完了後の同期取り
+  UNION_TIMING_MINIGAME_START_BEFORE,   ///<ミニゲーム開始直前の同期取り
   
   UNION_TIMING_COLOSSEUM_PROC_BEFORE,   ///<コロシアム遷移前の同期取り
   UNION_TIMING_COLOSSEUM_MEMBER_ENTRY_AFTER,  ///<コロシアム：メンバー集まった後の同期取り
@@ -184,6 +192,8 @@ typedef enum{
   UNION_SUBPROC_ID_NULL,              ///<サブPROC無し
   UNION_SUBPROC_ID_TRAINERCARD,       ///<トレーナーカード
   UNION_SUBPROC_ID_TRADE,             ///<ポケモン交換
+  UNION_SUBPROC_ID_PICTURE,           ///<お絵かき
+  UNION_SUBPROC_ID_GURUGURU,          ///<ぐるぐる交換
   
   UNION_SUBPROC_ID_COLOSSEUM_WARP_START,
   UNION_SUBPROC_ID_COLOSSEUM_WARP_1VS1_SINGLE_FREE_SHOOTER = UNION_SUBPROC_ID_COLOSSEUM_WARP_START,
@@ -219,12 +229,24 @@ typedef enum{
 ///チャットログ保持数
 #define UNION_CHAT_LOG_MAX      (30)
 
+///ミニゲーム乱入希望の返事
+typedef enum{
+  UNION_MINIGAME_ENTRY_ANSWER_NULL,   ///<乱入希望結果は未受信
+  UNION_MINIGAME_ENTRY_ANSWER_OK,     ///<乱入OK
+  UNION_MINIGAME_ENTRY_ANSWER_NG,     ///<乱入NG
+}UNION_MINIGAME_ENTRY_ANSWER;
+
 
 //==============================================================================
 //  構造体定義
 //==============================================================================
 ///UNION_SYSTEM構造体の不定形ポインタ型
 typedef struct _UNION_SYSTEM * UNION_SYSTEM_PTR;
+
+///UNION_APP_WORK構造体の不定形ポインタ型
+typedef struct _UNION_APP_WORK * UNION_APP_PTR;
+///_UNION_APP_BASIC_STATUS構造体の不定形ポインタ型
+typedef struct _UNION_APP_BASIC_STATUS UNION_APP_BASIC;
 
 
 ///接続メンバーの情報
@@ -389,6 +411,7 @@ typedef struct{
 
 ///ユニオンルーム内で別途Allocされるワーク管理
 typedef struct{
+  UNION_APP_PTR uniapp;      ///<UNION_APP_WORK
   REGULATION *regulation;    ///<バトルレギュレーション
   REGULATION_PRINT_MSG *rpm; ///<レギュレーション内容を一覧表示
   PARTY_SELECT_LIST_PTR psl;  ///<手持ちorバトルボックス選択リストイベント

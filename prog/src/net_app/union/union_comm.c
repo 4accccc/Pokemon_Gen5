@@ -52,6 +52,7 @@ FS_EXTERN_OVERLAY(union_room);
 //==============================================================================
 static void UnionComm_InitCallback(void *pWork);
 static void	UnionComm_ExitCallback(void* pWork);
+static void UnionComm_MinigameUpdate(UNION_SYSTEM_PTR unisys);
 static void UnionComm_Colosseum_Update(UNION_SYSTEM_PTR unisys);
 static void UnionComm_BeaconSearch(UNION_SYSTEM_PTR unisys);
 static BOOL UnionBeacon_SetReceiveData(UNION_SYSTEM_PTR unisys, const UNION_BEACON *beacon, const u8 *beacon_mac_address);
@@ -451,6 +452,37 @@ void UnionComm_Update(int *seq, void *pwk, void *pWork)
   UnionComm_BeaconSearch(unisys);   //ビーコンサーチ
   
   UnionComm_Colosseum_Update(unisys); //コロシアム更新
+  
+  UnionComm_MinigameUpdate(unisys); //ミニゲーム更新
+}
+
+//--------------------------------------------------------------
+/**
+ * ミニゲーム更新処理
+ *
+ * @param   unisys		
+ */
+//--------------------------------------------------------------
+static void UnionComm_MinigameUpdate(UNION_SYSTEM_PTR unisys)
+{
+  if(GFL_NET_GetConnectNum() > 1){
+    //乱入希望NGの返事があるなら送信
+    if(unisys->minigame_entry_req_answer_ng_bit > 0){
+      if(UnionSend_MinigameEntryReqAnswerNG(unisys->minigame_entry_req_answer_ng_bit) == TRUE){
+        unisys->minigame_entry_req_answer_ng_bit = 0;
+      }
+    }
+    //乱入希望OKの返事があるなら送信
+    if(unisys->minigame_entry_req_answer_ok_bit > 0){
+      if(UnionSend_MinigameEntryReqAnswerOK(unisys->minigame_entry_req_answer_ok_bit) == TRUE){
+        unisys->minigame_entry_req_answer_ok_bit = 0;
+      }
+    }
+  }
+  else{
+    unisys->minigame_entry_req_answer_ng_bit = 0;
+    unisys->minigame_entry_req_answer_ok_bit = 0;
+  }
 }
 
 //--------------------------------------------------------------

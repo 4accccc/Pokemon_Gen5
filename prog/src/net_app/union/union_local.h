@@ -52,7 +52,10 @@ typedef struct _UNION_SYSTEM{
   FLDMSGPRINT *fldmsgprint;
   u8 fld_msgwin_stream_print_on;      ///<TRUE:stream出力中
   u8 overlay_load;                    ///<TRUE:ユニオンルームOVERLAYがロードされている
-  u8 padding[2];
+  u8 minigame_entry_answer;           ///<乱入希望の返事(UNION_MINIGAME_ENTRY_ANSWER)
+  u8 minigame_entry_req_answer_ok_bit;  ///<乱入希望の返事(OK) ビット管理
+  u8 minigame_entry_req_answer_ng_bit;  ///<乱入希望の返事(NG) ビット管理
+  u8 padding[3];
   
   UNION_MY_SITUATION my_situation;    ///<自分の状況
   UNION_BEACON my_beacon;             ///<自分の送信ビーコン

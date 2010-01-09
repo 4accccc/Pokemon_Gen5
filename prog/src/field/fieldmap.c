@@ -423,6 +423,11 @@ static void DrawEncEff(FIELDMAP_WORK * fieldWork);
 
 typedef void (*DRAW3DMODE_FUNC)(FIELDMAP_WORK * fieldWork);
 
+//--------------------------------------------------------------
+//  オーバーレイID
+//--------------------------------------------------------------
+FS_EXTERN_OVERLAY(field_intrude);
+
 
 //======================================================================
 //	フィールドマップ　生成　削除
@@ -546,6 +551,15 @@ static MAINSEQ_RESULT mainSeqFunc_setup_system(GAMESYS_WORK *gsys, FIELDMAP_WORK
 
   // タスクマネージャ
   fieldWork->taskManager = FIELD_TASK_MAN_Create( 10, fieldWork->heapID );
+
+  //ユニオンと侵入で読み込むオーバーレイを分ける
+  if( ZONEDATA_IsUnionRoom( fieldWork->map_id ) == TRUE
+      || ZONEDATA_IsColosseum( fieldWork->map_id ) == TRUE){
+//    GFL_OVERLAY_Load( FS_OVERLAY_ID( union_room ) );
+  }
+  else{
+    GFL_OVERLAY_Load( FS_OVERLAY_ID( field_intrude ) );
+  }
 
 	GFL_UI_StartFrameRateMode( GFL_UI_FRAMERATE_30 );
 	
@@ -809,7 +823,8 @@ static MAINSEQ_RESULT mainSeqFunc_ready(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
       EVENTDATA_SearchConnectIDBySphere(evdata, &fieldWork->now_pos);
   }
   //フィールドマップ用イベント起動チェックをセットする
-  if(fieldWork->map_id == ZONE_ID_UNION || fieldWork->map_id == ZONE_ID_CLOSSEUM || fieldWork->map_id == ZONE_ID_CLOSSEUM02){
+  if( ZONEDATA_IsUnionRoom( fieldWork->map_id ) == TRUE
+      || ZONEDATA_IsColosseum( fieldWork->map_id ) == TRUE){
     GAMESYSTEM_EVENT_EntryCheckFunc( gsys, FIELD_EVENT_CheckUnion, fieldWork );
   }
   else if( FIELDMAP_GetMapControlType( fieldWork ) == FLDMAP_CTRLTYPE_NOGRID ){
@@ -857,8 +872,13 @@ static MAINSEQ_RESULT mainSeqFunc_update_top(GAMESYS_WORK *gsys, FIELDMAP_WORK *
   FIELD_PLAYER_Update( fieldWork->field_player );
 
   //通信用処理(プレイヤーの座標の設定とか
-  IntrudeField_UpdateCommSystem( fieldWork, fieldWork->gsys, fieldWork->field_player ); 
-  Union_Main(GAMESYSTEM_GetGameCommSysPtr(gsys), fieldWork);
+  if( ZONEDATA_IsUnionRoom( fieldWork->map_id ) == TRUE
+      || ZONEDATA_IsColosseum( fieldWork->map_id ) == TRUE){
+    Union_Main(GAMESYSTEM_GetGameCommSysPtr(gsys), fieldWork);
+  }
+  else{
+    IntrudeField_UpdateCommSystem( fieldWork, fieldWork->gsys, fieldWork->field_player );
+  }
   
   FIELD_SUBSCREEN_Main(fieldWork->fieldSubscreenWork);
   if(fieldWork->debugWork){ FIELD_DEBUG_UpdateProc( fieldWork->debugWork ); }
@@ -1107,6 +1127,16 @@ static MAINSEQ_RESULT mainSeqFunc_end(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWo
 	GFL_BMPWIN_Exit();
 	
 	fldmap_BG_Exit( fieldWork );
+
+  //ユニオンと侵入で読み込むオーバーレイを分ける
+  if( ZONEDATA_IsUnionRoom( fieldWork->map_id ) == TRUE
+      || ZONEDATA_IsColosseum( fieldWork->map_id ) == TRUE){
+//    GFL_OVERLAY_Unload( FS_OVERLAY_ID( union_room ) );
+  }
+  else{
+    GFL_OVERLAY_Unload( FS_OVERLAY_ID( field_intrude ) );
+  }
+
   return MAINSEQ_RESULT_FINISH;
 }
 

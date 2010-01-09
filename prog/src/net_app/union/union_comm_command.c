@@ -19,6 +19,7 @@
 #include "union_types.h"
 #include "union_local.h"
 #include "colosseum.h"
+#include "net_app/union_app.h"
 
 
 //==============================================================================
@@ -33,6 +34,15 @@ static void _UnionRecv_TrainerCardParam(const int netID, const int size, const v
 static void _UnionRecv_ColosseumEntryStatus(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _UnionRecv_ColosseumEntryAnswer(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _UnionRecv_ColosseumEntryAllReady(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
+static void _UnionRecv_MinigameEntryReq(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
+static void _UnionRecv_MinigameEntryReqAnswerNG(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
+static void _UnionRecv_MinigameEntryReqAnswerOK(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
+static void _UnionRecv_MinigameBasicStatusReq(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
+static void _UnionRecv_MinigameBasicStatus(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
+static void _UnionRecv_MinigameMystatusReq(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
+static void _UnionRecv_MinigameMystatus(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
+static void _UnionRecv_MinigameIntrudeReady(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
+static void _UnionRecv_MinigameLeaveChild(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 
 
 //==============================================================================
@@ -48,6 +58,15 @@ const NetRecvFuncTable Union_CommPacketTbl[] = {
   {_UnionRecv_ColosseumEntryStatus, _RecvHugeBuffer},   //UNION_CMD_COLOSSEUM_ENTRY
   {_UnionRecv_ColosseumEntryAnswer, _RecvHugeBuffer},   //UNION_CMD_COLOSSEUM_ENTRY_ANSWER
   {_UnionRecv_ColosseumEntryAllReady, NULL},            //UNION_CMD_COLOSSEUM_ENTRY_ALL_READY
+  {_UnionRecv_MinigameEntryReq, NULL},                  //UNION_CMD_MINIGAME_ENTRY_REQ
+  {_UnionRecv_MinigameEntryReqAnswerNG, NULL},          //UNION_CMD_MINIGAME_ENTRY_REQ_ANSWER_NG
+  {_UnionRecv_MinigameEntryReqAnswerOK, NULL},          //UNION_CMD_MINIGAME_ENTRY_REQ_ANSWER_OK
+  {_UnionRecv_MinigameBasicStatusReq, NULL},            //UNION_CMD_MINIGAME_BASIC_STATUS_REQ
+  {_UnionRecv_MinigameBasicStatus, NULL},               //UNION_CMD_MINIGAME_BASIC_STATUS
+  {_UnionRecv_MinigameMystatusReq, NULL},               //UNION_CMD_MINIGAME_MYSTATUS_REQ
+  {_UnionRecv_MinigameMystatus, NULL},                  //UNION_CMD_MINIGAME_MYSTATUS
+  {_UnionRecv_MinigameIntrudeReady, NULL},              //UNION_CMD_MINIGAME_INTRUDE_READY
+  {_UnionRecv_MinigameLeaveChild, NULL},                //UNION_CMD_MINIGAME_LEAVE_CHILD
 };
 SDK_COMPILER_ASSERT(NELEMS(Union_CommPacketTbl) == UNION_CMD_NUM);
 
@@ -385,3 +404,393 @@ BOOL UnionSend_ColosseumEntryAllReady(void)
   return GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), UNION_CMD_COLOSSEUM_ENTRY_ALL_READY, 0, NULL);
 }
 
+//==============================================================================
+//  
+//==============================================================================
+//--------------------------------------------------------------
+/**
+ * @brief   コマンド受信：ミニゲーム乱入希望
+ * @param   netID      送ってきたID
+ * @param   size       パケットサイズ
+ * @param   pData      データ
+ * @param   pWork      ワークエリア
+ * @param   pHandle    受け取る側の通信ハンドル
+ * @retval  none  
+ */
+//--------------------------------------------------------------
+static void _UnionRecv_MinigameEntryReq(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
+{
+  UNION_SYSTEM_PTR unisys = pWork;
+  const MYSTATUS *myst = pData;
+  
+  OS_TPrintf("Recv:ミニゲーム乱入希望 net_id=%d\n", netID);
+  if(unisys->alloc.uniapp == NULL){
+    GF_ASSERT(0);
+    unisys->minigame_entry_req_answer_ng_bit |= 1 << netID;
+    return;
+  }
+  
+  if(UnionAppSystem_SetEntryUser(unisys->alloc.uniapp, netID, myst) == TRUE){
+    unisys->minigame_entry_req_answer_ok_bit |= 1 << netID;
+  }
+  else{
+    unisys->minigame_entry_req_answer_ng_bit |= 1 << netID;
+  }
+}
+
+//==================================================================
+/**
+ * データ送信：ミニゲーム乱入希望
+ * @param   
+ * @retval  BOOL		TRUE:送信成功。　FALSE:失敗
+ */
+//==================================================================
+BOOL UnionSend_MinigameEntryReq(UNION_SYSTEM_PTR unisys)
+{
+  unisys->minigame_entry_answer = UNION_MINIGAME_ENTRY_ANSWER_NULL;
+  return GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(), GFL_NET_NO_PARENTMACHINE, 
+    UNION_CMD_MINIGAME_ENTRY_REQ, MyStatus_GetWorkSize(), 
+    GAMEDATA_GetMyStatus(unisys->uniparent->game_data), FALSE, FALSE, FALSE);
+}
+
+//==============================================================================
+//  
+//==============================================================================
+//--------------------------------------------------------------
+/**
+ * @brief   コマンド受信：ミニゲーム乱入希望の返事(NG)
+ * @param   netID      送ってきたID
+ * @param   size       パケットサイズ
+ * @param   pData      データ
+ * @param   pWork      ワークエリア
+ * @param   pHandle    受け取る側の通信ハンドル
+ * @retval  none  
+ */
+//--------------------------------------------------------------
+static void _UnionRecv_MinigameEntryReqAnswerNG(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
+{
+  UNION_SYSTEM_PTR unisys = pWork;
+  const MYSTATUS *myst = pData;
+  
+  OS_TPrintf("Recv:ミニゲーム乱入希望の返事NG\n");
+  unisys->minigame_entry_answer = UNION_MINIGAME_ENTRY_ANSWER_NG;
+}
+
+//==================================================================
+/**
+ * データ送信：ミニゲーム乱入希望の返事(NG)
+ * @param   
+ * @retval  BOOL		TRUE:送信成功。　FALSE:失敗
+ */
+//==================================================================
+BOOL UnionSend_MinigameEntryReqAnswerNG(u8 send_bit)
+{
+  return GFL_NET_SendDataExBit(GFL_NET_HANDLE_GetCurrentHandle(), 
+    send_bit, 
+    UNION_CMD_MINIGAME_ENTRY_REQ_ANSWER_NG, 0, NULL, FALSE, FALSE, FALSE);
+}
+
+//==============================================================================
+//  
+//==============================================================================
+//--------------------------------------------------------------
+/**
+ * @brief   コマンド受信：ミニゲーム乱入希望の返事(OK)
+ * @param   netID      送ってきたID
+ * @param   size       パケットサイズ
+ * @param   pData      データ
+ * @param   pWork      ワークエリア
+ * @param   pHandle    受け取る側の通信ハンドル
+ * @retval  none  
+ */
+//--------------------------------------------------------------
+static void _UnionRecv_MinigameEntryReqAnswerOK(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
+{
+  UNION_SYSTEM_PTR unisys = pWork;
+  const MYSTATUS *myst = pData;
+  
+  OS_TPrintf("Recv:ミニゲーム乱入希望の返事OK\n");
+  unisys->minigame_entry_answer = UNION_MINIGAME_ENTRY_ANSWER_OK;
+}
+
+//==================================================================
+/**
+ * データ送信：ミニゲーム乱入希望の返事(OK)
+ * @param   
+ * @retval  BOOL		TRUE:送信成功。　FALSE:失敗
+ */
+//==================================================================
+BOOL UnionSend_MinigameEntryReqAnswerOK(u8 send_bit)
+{
+  return GFL_NET_SendDataExBit(GFL_NET_HANDLE_GetCurrentHandle(), 
+    send_bit, 
+    UNION_CMD_MINIGAME_ENTRY_REQ_ANSWER_OK, 0, NULL, FALSE, FALSE, FALSE);
+}
+
+//==============================================================================
+//  
+//==============================================================================
+//--------------------------------------------------------------
+/**
+ * @brief   コマンド受信：ミニゲーム基本情報リクエスト
+ * @param   netID      送ってきたID
+ * @param   size       パケットサイズ
+ * @param   pData      データ
+ * @param   pWork      ワークエリア
+ * @param   pHandle    受け取る側の通信ハンドル
+ * @retval  none  
+ */
+//--------------------------------------------------------------
+static void _UnionRecv_MinigameBasicStatusReq(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
+{
+  UNION_SYSTEM_PTR unisys = pWork;
+  
+  if(GFL_NET_IsParentMachine() == FALSE){
+    return;
+  }
+  
+  OS_TPrintf("MinigameBasicStatusReq受信 netID = %d\n", netID);
+  if(unisys->alloc.uniapp == NULL){
+    GF_ASSERT(unisys->alloc.uniapp != NULL);
+    return;
+  }
+  
+  UnionAppSystem_ReqBasicStatus(unisys->alloc.uniapp, netID);
+}
+
+//==================================================================
+/**
+ * データ送信：ミニゲーム基本情報リクエスト
+ * @param   yes_no    TRUE:はい　FALSE:いいえ
+ * @retval  BOOL		TRUE:送信成功。　FALSE:失敗
+ */
+//==================================================================
+BOOL UnionSend_MinigameBasicStatusReq(void)
+{
+  OS_TPrintf("SEND MinigameBasicStatusReq\n");
+  return GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(), GFL_NET_NO_PARENTMACHINE, 
+    UNION_CMD_MINIGAME_BASIC_STATUS_REQ, 0, NULL, FALSE, FALSE, FALSE);
+}
+
+//==============================================================================
+//  
+//==============================================================================
+//--------------------------------------------------------------
+/**
+ * @brief   コマンド受信：ミニゲーム基本情報
+ * @param   netID      送ってきたID
+ * @param   size       パケットサイズ
+ * @param   pData      データ
+ * @param   pWork      ワークエリア
+ * @param   pHandle    受け取る側の通信ハンドル
+ * @retval  none  
+ */
+//--------------------------------------------------------------
+static void _UnionRecv_MinigameBasicStatus(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
+{
+  UNION_SYSTEM_PTR unisys = pWork;
+  const UNION_APP_BASIC * appbasic = pData;
+  
+  if(GFL_NET_IsParentMachine() == TRUE){  //自分が親の場合は無視
+    return;
+  }
+  
+  OS_TPrintf("APP_BASIC受信\n");
+  if(unisys->alloc.uniapp == NULL){
+    GF_ASSERT(0);
+    return;
+  }
+  
+  UnionAppSystem_SetBasicStatus(unisys->alloc.uniapp, appbasic);
+}
+
+//==================================================================
+/**
+ * データ送信：ミニゲーム基本情報
+ * @param   yes_no    TRUE:はい　FALSE:いいえ
+ * @retval  BOOL		TRUE:送信成功。　FALSE:失敗
+ */
+//==================================================================
+BOOL UnionSend_MinigameBasicStatus(const UNION_APP_BASIC *app_basic, u8 send_bit)
+{
+  OS_TPrintf("SEND APP_BASIC\n");
+  return GFL_NET_SendDataExBit(GFL_NET_HANDLE_GetCurrentHandle(), 
+    send_bit, 
+    UNION_CMD_MINIGAME_BASIC_STATUS, UnionAppSystem_GetBasicSize(), app_basic, 
+    FALSE, FALSE, FALSE);
+}
+
+//==============================================================================
+//  
+//==============================================================================
+//--------------------------------------------------------------
+/**
+ * @brief   コマンド受信：ミニゲーム用MYSTATUS要求
+ * @param   netID      送ってきたID
+ * @param   size       パケットサイズ
+ * @param   pData      データ
+ * @param   pWork      ワークエリア
+ * @param   pHandle    受け取る側の通信ハンドル
+ * @retval  none  
+ */
+//--------------------------------------------------------------
+static void _UnionRecv_MinigameMystatusReq(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
+{
+  UNION_SYSTEM_PTR unisys = pWork;
+
+  if(unisys->alloc.uniapp == NULL){
+    GF_ASSERT(0);
+    return;
+  }
+  
+  OS_TPrintf("ミニゲーム用MYSTATUS Req受信 netID = %d\n", netID);
+  UnionAppSystem_ReqMystatus(unisys->alloc.uniapp, netID);
+}
+
+//==================================================================
+/**
+ * データ送信：ミニゲーム用MYSTATUS要求
+ * @param   yes_no    TRUE:はい　FALSE:いいえ
+ * @retval  BOOL		TRUE:送信成功。　FALSE:失敗
+ */
+//==================================================================
+BOOL UnionSend_MinigameMystatusReq(u8 send_bit)
+{
+  OS_TPrintf("SEND ミニゲーム用MYSTATUS Req\n");
+  return GFL_NET_SendDataExBit(GFL_NET_HANDLE_GetCurrentHandle(), 
+    send_bit, UNION_CMD_MINIGAME_MYSTATUS_REQ, 0, NULL, FALSE, FALSE, FALSE);
+}
+
+//==============================================================================
+//  
+//==============================================================================
+//--------------------------------------------------------------
+/**
+ * @brief   コマンド受信：ミニゲーム用MYSTATUS
+ * @param   netID      送ってきたID
+ * @param   size       パケットサイズ
+ * @param   pData      データ
+ * @param   pWork      ワークエリア
+ * @param   pHandle    受け取る側の通信ハンドル
+ * @retval  none  
+ */
+//--------------------------------------------------------------
+static void _UnionRecv_MinigameMystatus(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
+{
+  UNION_SYSTEM_PTR unisys = pWork;
+  const MYSTATUS *pMyst = pData;
+
+  if(unisys->alloc.uniapp == NULL){
+    GF_ASSERT(0);
+    return;
+  }
+  
+  OS_TPrintf("ミニゲーム用MYSTATUS受信 netID = %d\n", netID);
+  UnionAppSystem_SetMystatus(unisys->alloc.uniapp, netID, pMyst);
+}
+
+//==================================================================
+/**
+ * データ送信：ミニゲーム用MYSTATUS
+ * @param   yes_no    TRUE:はい　FALSE:いいえ
+ * @retval  BOOL		TRUE:送信成功。　FALSE:失敗
+ */
+//==================================================================
+BOOL UnionSend_MinigameMystatus(u8 send_bit, const MYSTATUS *myst)
+{
+  OS_TPrintf("SEND ミニゲーム用MYSTATUS\n");
+  return GFL_NET_SendDataExBit(GFL_NET_HANDLE_GetCurrentHandle(), 
+    send_bit, UNION_CMD_MINIGAME_MYSTATUS, MyStatus_GetWorkSize(), myst, FALSE, FALSE, FALSE);
+}
+
+//==============================================================================
+//  
+//==============================================================================
+//--------------------------------------------------------------
+/**
+ * @brief   コマンド受信：乱入の準備完了宣言
+ * @param   netID      送ってきたID
+ * @param   size       パケットサイズ
+ * @param   pData      データ
+ * @param   pWork      ワークエリア
+ * @param   pHandle    受け取る側の通信ハンドル
+ * @retval  none  
+ */
+//--------------------------------------------------------------
+static void _UnionRecv_MinigameIntrudeReady(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
+{
+  UNION_SYSTEM_PTR unisys = pWork;
+
+	if(netID == GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle())){
+    return; //自分のデータなので無視
+  }
+
+  if(unisys->alloc.uniapp == NULL){
+    GF_ASSERT(0);
+    return;
+  }
+  
+  OS_TPrintf("ミニゲーム 乱入準備完了受信 netID = %d\n", netID);
+  UnionAppSystem_SetIntrudeReady(unisys->alloc.uniapp, netID);
+}
+
+//==================================================================
+/**
+ * データ送信：乱入の準備完了宣言
+ * @param   yes_no    TRUE:はい　FALSE:いいえ
+ * @retval  BOOL		TRUE:送信成功。　FALSE:失敗
+ */
+//==================================================================
+BOOL UnionSend_MinigameIntrudeReady(u8 send_bit)
+{
+  OS_TPrintf("SEND ミニゲーム 乱入準備完了\n");
+  return GFL_NET_SendDataExBit(GFL_NET_HANDLE_GetCurrentHandle(), 
+    send_bit, UNION_CMD_MINIGAME_INTRUDE_READY, 0, NULL, FALSE, FALSE, FALSE);
+}
+
+//==============================================================================
+//  
+//==============================================================================
+//--------------------------------------------------------------
+/**
+ * @brief   コマンド受信：ミニゲームで子機の誰かが離脱しました
+ * @param   netID      送ってきたID
+ * @param   size       パケットサイズ
+ * @param   pData      データ
+ * @param   pWork      ワークエリア
+ * @param   pHandle    受け取る側の通信ハンドル
+ * @retval  none  
+ */
+//--------------------------------------------------------------
+static void _UnionRecv_MinigameLeaveChild(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
+{
+  UNION_SYSTEM_PTR unisys = pWork;
+  const NetID *leave_netid = pData;
+  
+	if(netID == GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle())){
+    return; //自分のデータなので無視
+  }
+
+  if(unisys->alloc.uniapp == NULL){
+    GF_ASSERT(0);
+    return;
+  }
+  
+  OS_TPrintf("Recv ミニゲームで子機が離脱 離脱netID = %d\n", *leave_netid);
+  UnionAppSystem_SetLeaveChild(unisys->alloc.uniapp, *leave_netid);
+}
+
+//==================================================================
+/**
+ * データ送信：ミニゲームで子機の誰かが離脱しました
+ * @param   yes_no    TRUE:はい　FALSE:いいえ
+ * @retval  BOOL		TRUE:送信成功。　FALSE:失敗
+ */
+//==================================================================
+BOOL UnionSend_MinigameLeaveChild(u8 send_bit, NetID leave_netid)
+{
+  OS_TPrintf("SEND ミニゲームで子機が離脱 離脱NetID=%d\n", leave_netid);
+  return GFL_NET_SendDataExBit(GFL_NET_HANDLE_GetCurrentHandle(), 
+    send_bit, UNION_CMD_MINIGAME_LEAVE_CHILD, sizeof(leave_netid), &leave_netid, 
+    FALSE, FALSE, FALSE);
+}

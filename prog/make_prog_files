@@ -377,13 +377,6 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
 				field/field_wfbc.c \
 				field/field_easytp.c \
 				field/field_comm_actor.c \
-				field/field_comm/intrude_field.c \
-				field/field_comm/intrude_minimono.c \
-				field/field_comm/intrude_monolith.c \
-				field/event_comm_talk.c \
-				field/event_comm_talked.c \
-				field/event_intrude.c \
-				field/event_intrude_subscreen.c \
 				field/event_subscreen.c \
         system/talkmsgwin.c \
 				net_app/irc_match/ircbattlemenu.c \
@@ -458,7 +451,6 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/scrcmd_shop.c \
         field/scrcmd_wifi.c \
         field/scrcmd_proc_fld.c \
-        field/scrcmd_intrude.c \
         field/scrcmd_encount.c \
         field/scrcmd_camera.c \
         field/scrcmd_fourkings.c \
@@ -472,8 +464,6 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/fieldmap_func.c \
         net_app/union/union_subdisp.c \
         net_app/union/union_chat.c \
-        field/field_comm/intrude_subdisp.c \
-        field/field_comm/intrude_message.c \
         field/field_comm/beacon_view.c \
         field/fldeff_footmark.c \
         field/fldeff_reflect.c \
@@ -549,7 +539,6 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/field_gimmick_league_front01.c \
         field/field_gimmick_league_front02.c \
         field/land_data_patch.c \
-        field/scrcmd_intrude_field.c \
         field/fldeff_iaigiri.c \
         field/gym_dragon.c \
         field/event_pokecen_pc.c \
@@ -564,6 +553,8 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/party_select_list.c \
         field/field_fk_sound_anime.c \
         field/field_bbd_color.c \
+				field/event_comm_talk.c \
+				field/event_comm_talked.c \
         field/enceff.c \
         field/enceff_prg.c \
         field/enceff1.c \
@@ -587,7 +578,21 @@ SRCS_OVERLAY_FIELD_WEATHER_RAIN = field/weather_rain.c
 SRCS_OVERLAY_FIELD_WEATHER_STORM = field/weather_storm.c \
                   field/weather_mirage.c
 
-#===> SRCS_OVERLAY_FIELDMAP
+# フィールドマップ上でのみ使用する侵入関連のソース
+#===> SRCS_OVERLAY_FIELD_WEATHER_SUNNY
+#===> SRCS_OVERLAY_FIELD_WEATHER_SNOW
+#===> SRCS_OVERLAY_FIELD_WEATHER_RAIN
+#===> SRCS_OVERLAY_FIELD_WEATHER_STORM
+SRCS_OVERLAY_FIELD_INTRUDE = field/field_comm/intrude_field.c \
+				field/field_comm/intrude_minimono.c \
+				field/field_comm/intrude_monolith.c \
+				field/event_intrude.c \
+				field/event_intrude_subscreen.c \
+        field/scrcmd_intrude.c \
+        field/field_comm/intrude_subdisp.c \
+        field/field_comm/intrude_message.c \
+        field/scrcmd_intrude_field.c
+
 #===> SRCS_OVERLAY_FIELD_WEATHER_SUNNY
 #===> SRCS_OVERLAY_FIELD_WEATHER_SNOW
 #===> SRCS_OVERLAY_FIELD_WEATHER_RAIN
@@ -601,26 +606,37 @@ SRCS_OVERLAY_UNION_ROOM = net_app/union/union_chara.c \
                           net_app/union/colosseum_tool.c \
                           net_app/comm_entry_menu.c
 
+# ユニオンルームでのミニゲーム制御	OVERLAY_FIELDMAPと並列の位置に配置
+#===> SRCS_OVERLAY_DEV_IRC
+SRCS_OVERLAY_UNION_APP = net_app/union/union_app.c
+
 # ジム
 #===> SRCS_OVERLAY_UNION_ROOM
+#===> SRCS_OVERLAY_FIELD_INTRUDE
 SRCS_OVERLAY_FIELD_GYM_INIT = field/gym_init.c
 
 #===> SRCS_OVERLAY_UNION_ROOM
+#===> SRCS_OVERLAY_FIELD_INTRUDE
 SRCS_OVERLAY_FIELD_GYM_INSECT = field/gym_insect.c
 
 #===> SRCS_OVERLAY_UNION_ROOM
+#===> SRCS_OVERLAY_FIELD_INTRUDE
 SRCS_OVERLAY_FIELD_GYM_ELEC = field/gym_elec.c
 
 #===> SRCS_OVERLAY_UNION_ROOM
+#===> SRCS_OVERLAY_FIELD_INTRUDE
 SRCS_OVERLAY_FIELD_GYM_NORMAL = field/gym_normal.c
 
 #===> SRCS_OVERLAY_UNION_ROOM
+#===> SRCS_OVERLAY_FIELD_INTRUDE
 SRCS_OVERLAY_FIELD_GYM_FLY = field/gym_fly.c
 
 #===> SRCS_OVERLAY_UNION_ROOM
+#===> SRCS_OVERLAY_FIELD_INTRUDE
 SRCS_OVERLAY_FIELD_GYM_ANTI = field/gym_anti.c
 
 #===> SRCS_OVERLAY_UNION_ROOM
+#===> SRCS_OVERLAY_FIELD_INTRUDE
 SRCS_OVERLAY_FIELD_GIMMICK_BGATE = field/field_gimmick_bgate_jet.c
 
 # マッパーサンプル
@@ -642,6 +658,7 @@ SRCS_OVERLAY_WATANABE_SAMPLE  = test/tetsu/sample/g3d_mapper.c \
 #===> SRCS_OVERLAY_DEV_WIRELESS
 #===> SRCS_OVERLAY_DEV_IRC
 #===> SRCS_OVERLAY_UNION_ROOM
+#===> SRCS_OVERLAY_FIELD_INTRUDE
 SRCS_OVERLAY_UI_COMMON = ui/ui_scene.c \
                          ui/ui_easy_clwk.c \
                          ui/touchbar.c \
@@ -657,6 +674,7 @@ SRCS_OVERLAY_CONFIG_PANEL = app/config_panel/config_panel2.c
 #===> SRCS_OVERLAY_DEV_WIFI
 #===> SRCS_OVERLAY_DEV_IRC
 #===> SRCS_OVERLAY_UNION_ROOM
+#===> SRCS_OVERLAY_FIELD_INTRUDE
 SRCS_OVERLAY_BAG = app/bag/itemmenu.c \
 												app/bag/itemmenu_disp.c \
 												app/bag/itemuse.c
@@ -726,6 +744,7 @@ SRCS_OVERLAY_TESTMODE = test/testmode.c
 #===> SRCS_OVERLAY_DEV_WIRELESS
 #===> SRCS_OVERLAY_DEV_WIFI
 #===> SRCS_OVERLAY_UNION_ROOM
+#===> SRCS_OVERLAY_FIELD_INTRUDE
 SRCS_OVERLAY_POKELIST = app/pokelist/pokelist.c \
 		app/pokelist/plist_sys.c \
 		app/pokelist/plist_plate.c \
@@ -1135,6 +1154,7 @@ SRCS_OVERLAY_WORLDTRADE	= net_app/wifi_worldtrade/worldtrade.c \
 #ポケモンステータス
 #===> SRCS_OVERLAY_DEV_WIFI
 #===> SRCS_OVERLAY_UNION_ROOM
+#===> SRCS_OVERLAY_FIELD_INTRUDE
 SRCS_OVERLAY_POKE_STATUS = app/p_status/p_sta_sys.c \
         app/p_status/p_status.c \
 		app/p_status/p_sta_sub.c \

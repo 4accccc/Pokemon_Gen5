@@ -98,6 +98,7 @@ static BOOL OneselfSeq_TradeUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *
 static BOOL OneselfSeq_IntrudeUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq);
 static BOOL OneselfSeq_ShutdownUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq);
 static BOOL OneselfSeq_Talk_Battle_Parent(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq);
+static BOOL OneselfSeq_MinigameUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq);
 static BOOL OneselfSeq_ColosseumUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq);
 static BOOL OneselfSeq_MultiColosseumUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq);
 static BOOL OneselfSeq_ColosseumMemberWaitUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq);
@@ -187,7 +188,7 @@ static const ONESELF_FUNC_DATA OneselfFuncTbl[] = {
   },
   {//UNION_STATUS_PICTURE
     NULL,
-    OneselfSeq_ShutdownUpdate,
+    OneselfSeq_MinigameUpdate,
     NULL,
   },
   {//UNION_STATUS_BATTLE_1VS1_SINGLE_FREE_SHOOTER
@@ -282,7 +283,7 @@ static const ONESELF_FUNC_DATA OneselfFuncTbl[] = {
   },
   {//UNION_STATUS_GURUGURU
     NULL,
-    OneselfSeq_ShutdownUpdate,
+    OneselfSeq_MinigameUpdate,
     NULL,
   },
   {//UNION_STATUS_RECORD
@@ -1565,6 +1566,9 @@ static BOOL OneselfSeq_TalkPlayGameUpdate_Parent(UNION_SYSTEM_PTR unisys, UNION_
     _REG_PRINT_TEMOTI_WAIT,
     _REG_PRINT_BBOX,
     _REG_PRINT_BBOX_WAIT,
+    
+    LOCALSEQ_MINIGAME_YESNO_SETUP,
+    LOCALSEQ_MINIGAME_YESNO,
   };
   
   buf_no = UNION_CHARA_GetCharaIndex_to_ParentNo(situ->mycomm.talk_obj_id);
@@ -1616,6 +1620,28 @@ static BOOL OneselfSeq_TalkPlayGameUpdate_Parent(UNION_SYSTEM_PTR unisys, UNION_
       }
       else{ //人数がいっぱい
         UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_016_01);
+        UnionOneself_ReqStatus(unisys, UNION_STATUS_NORMAL);
+        (*seq) = LOCALSEQ_END;
+      }
+      break;
+    case UNION_PLAY_CATEGORY_GURUGURU:  //ぐるぐる交換
+      if(unisys->receive_beacon[buf_no].beacon.connect_num < UnionMsg_GetMemberMax(play_category)){
+        UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_016_02);
+        (*seq) = LOCALSEQ_MINIGAME_YESNO_SETUP;
+      }
+      else{ //人数がいっぱい
+        UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_016_03);
+        UnionOneself_ReqStatus(unisys, UNION_STATUS_NORMAL);
+        (*seq) = LOCALSEQ_END;
+      }
+      break;
+    case UNION_PLAY_CATEGORY_PICTURE:   //お絵かき
+      if(unisys->receive_beacon[buf_no].beacon.connect_num < UnionMsg_GetMemberMax(play_category)){
+        UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_016_03);
+        (*seq) = LOCALSEQ_MINIGAME_YESNO_SETUP;
+      }
+      else{ //人数がいっぱい
+        UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_016_04);
         UnionOneself_ReqStatus(unisys, UNION_STATUS_NORMAL);
         (*seq) = LOCALSEQ_END;
       }
@@ -1704,6 +1730,31 @@ static BOOL OneselfSeq_TalkPlayGameUpdate_Parent(UNION_SYSTEM_PTR unisys, UNION_
         && (GFL_UI_KEY_GetTrg() & (PAD_BUTTON_DECIDE | PAD_BUTTON_CANCEL))){
       UnionMsg_Menu_RegulationDel(unisys);
       (*seq) = LOCALSEQ_END;
+    }
+    break;
+
+  case LOCALSEQ_MINIGAME_YESNO_SETUP:   //ミニゲーム「はい・いいえ」選択
+    if(UnionMsg_TalkStream_Check(unisys) == TRUE){
+      UnionMsg_YesNo_Setup(unisys, fieldWork);
+      (*seq)++;
+    }
+    break;
+  case LOCALSEQ_MINIGAME_YESNO:
+    {
+      BOOL result;
+      if(UnionMsg_YesNo_SelectLoop(unisys, &result) == TRUE){
+        UnionMsg_YesNo_Del(unisys);
+        if(result == FALSE){
+          UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_018);
+          UnionOneself_ReqStatus(unisys, UNION_STATUS_NORMAL);
+          (*seq) = LOCALSEQ_END;
+        }
+        else{
+          situ->mycomm.mainmenu_yesno_result = result;
+          UnionOneself_ReqStatus(unisys, UNION_STATUS_INTRUDE);
+          (*seq) = LOCALSEQ_END;
+        }
+      }
     }
     break;
   }
@@ -2038,6 +2089,12 @@ static BOOL OneselfSeq_IntrudeUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION
       case UNION_PLAY_CATEGORY_COLOSSEUM_MULTI:
         UnionOneself_ReqStatus(unisys, UNION_STATUS_BATTLE_MULTI);
         break;
+      case UNION_PLAY_CATEGORY_PICTURE:
+        UnionOneself_ReqStatus(unisys, UNION_STATUS_PICTURE);
+        break;
+      case UNION_PLAY_CATEGORY_GURUGURU:
+        UnionOneself_ReqStatus(unisys, UNION_STATUS_GURUGURU);
+        break;
       default:
         OS_TPrintf("設定されていないcategory = %d\n", situ->mycomm.mainmenu_select);
         GF_ASSERT(0);
@@ -2111,6 +2168,114 @@ static BOOL OneselfSeq_ShutdownUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATIO
     break;
   }
   
+  return FALSE;
+}
+
+//--------------------------------------------------------------
+/**
+ * ミニゲーム遷移：更新
+ *
+ * @param   unisys		
+ * @param   situ		
+ * @param   fieldWork		
+ * @param   seq		
+ *
+ * @retval  BOOL		
+ */
+//--------------------------------------------------------------
+static BOOL OneselfSeq_MinigameUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq)
+{
+  enum{
+    _SEQ_INIT,
+    _SEQ_TALK_WAIT,
+    _SEQ_TIMING_SEND,
+    _SEQ_TIMING_WAIT,
+    _SEQ_SUBPROC_SET,
+    _SEQ_SUBPROC_WAIT,
+    _SEQ_BEACON_RESTART,
+    _SEQ_INTRUDE_INIT,
+    _SEQ_INTRUDE_ANSWER_WAIT,
+    _SEQ_INTRUDE_NG,
+  };
+  
+  switch(*seq){
+  case _SEQ_INIT:
+    UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_talkboy_07_07);
+    (*seq)++;
+    break;
+  case _SEQ_TALK_WAIT:
+    if(UnionMsg_TalkStream_Check(unisys) == TRUE){
+      if(situ->mycomm.intrude == TRUE){
+        *seq = _SEQ_INTRUDE_INIT;
+      }
+      else{
+        (*seq)++;
+      }
+    }
+    break;
+  case _SEQ_TIMING_SEND:
+    GFL_NET_HANDLE_TimingSyncStart(
+      GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_MINIGAME_PROC_BEFORE);
+    OS_TPrintf("ミニゲーム遷移前の同期取り開始\n");
+    (*seq)++;
+    break;
+  case _SEQ_TIMING_WAIT:
+		if(GFL_NET_HANDLE_IsTimingSync(
+		    GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_MINIGAME_PROC_BEFORE) == TRUE){
+      OS_TPrintf("ミニゲーム遷移前の同期取り成功\n");
+      (*seq)++;
+    }
+    break;
+  case _SEQ_SUBPROC_SET:
+    if(situ->union_status == UNION_STATUS_PICTURE){
+      UnionSubProc_EventSet(unisys, UNION_SUBPROC_ID_PICTURE, NULL);
+    }
+    else{ //UNION_STATUS_GURUGURU
+      UnionSubProc_EventSet(unisys, UNION_SUBPROC_ID_GURUGURU, NULL);
+    }
+    (*seq)++;
+    break;
+  case _SEQ_SUBPROC_WAIT:
+    if(UnionSubProc_IsExits(unisys) == FALSE){
+      OS_TPrintf("サブPROC終了\n");
+      UnionComm_Req_Restarts(unisys);
+      (*seq)++;
+    }
+    break;
+  case _SEQ_BEACON_RESTART:
+    if(UnionComm_Check_ShutdownRestarts(unisys) == FALSE){
+      OS_TPrintf("ビーコンスキャン再開完了\n");
+      return TRUE;
+    }
+    break;
+    
+  case _SEQ_INTRUDE_INIT: //乱入時
+    if(UnionSend_MinigameEntryReq(unisys) == TRUE){
+      OS_TPrintf("ミニゲーム乱入希望送信\n");
+    }
+    (*seq)++;
+    break;
+  case _SEQ_INTRUDE_ANSWER_WAIT:
+    switch(unisys->minigame_entry_answer){
+    case UNION_MINIGAME_ENTRY_ANSWER_OK:
+      *seq = _SEQ_SUBPROC_SET;
+      break;
+    case UNION_MINIGAME_ENTRY_ANSWER_NG:  //親から乱入を拒否された
+      UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_006);
+      UnionComm_Req_ShutdownRestarts(unisys);
+      *seq = _SEQ_INTRUDE_NG;
+      break;
+    }
+    break;
+  case _SEQ_INTRUDE_NG:
+    if(UnionMsg_TalkStream_Check(unisys) == TRUE){
+      if(UnionComm_Check_ShutdownRestarts(unisys) == FALSE){
+        UnionMySituation_SetParam(unisys, UNION_MYSITU_PARAM_IDX_CONNECT_PC, NULL);
+        return TRUE;
+      }
+    }
+    break;
+  }
   return FALSE;
 }
 
