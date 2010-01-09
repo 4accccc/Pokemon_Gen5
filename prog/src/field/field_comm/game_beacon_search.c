@@ -370,7 +370,9 @@ static GBS_BEACON * GameBeacon_BeaconSearch(GAME_BEACON_SYS_PTR gbs, int *hit_in
   	{
       FIELD_BEACON_MSG_CheckBeacon( gbs->fbmSys , bcon_buff , GFL_NET_GetBeaconMacAddress(i) );
     	if(bcon_buff->member_num <= bcon_buff->member_max){
-    		OS_TPrintf("ビーコン受信　%d番 gsid = %d\n", i, bcon_buff->gsid);
+#if !defined(DEBUG_ONLY_FOR_ohno)
+        OS_TPrintf("ビーコン受信　%d番 gsid = %d\n", i, bcon_buff->gsid);
+#endif
     		if(target_index == -1){
           target_index = i;
         }

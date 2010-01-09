@@ -51,6 +51,7 @@
 #include "savedata/radar_save.h"
 #include "savedata/symbol_save.h"
 #include "savedata/my_pms_data.h"
+#include "savedata/battle_examination.h"
 
 //==============================================================================
 //  定数定義
@@ -81,7 +82,10 @@ enum{
   EXTRA_MM_REC_DL_2_MIRROR = EXTRA_MM_REC_DL_2 + SAVESIZE_EXTRA_BATTLE_REC,
   
   EXTRA_MM_CGEAR = EXTRA_MM_REC_DL_2_MIRROR + SAVESIZE_EXTRA_BATTLE_REC,
-  EXTRA_MM_STREAMING = EXTRA_MM_CGEAR + SAVESIZE_EXTRA_CGEAR_PICTURE,
+
+  EXTRA_MM_BATTLE_EXAMINATION = EXTRA_MM_CGEAR + SAVESIZE_EXTRA_CGEAR_PICTURE,
+
+  EXTRA_MM_STREAMING = EXTRA_MM_BATTLE_EXAMINATION + SAVESIZE_EXTRA_BATTLE_EXAMINATION,
 };
 
 
@@ -459,6 +463,14 @@ static const GFL_SAVEDATA_TABLE SaveDataTbl_Extra_CGEARPicture[] = {
     (FUNC_INIT_WORK)CGEAR_PICTURE_SAVE_Init,
   },
 };
+///バトル検定
+static const GFL_SAVEDATA_TABLE SaveDataTbl_Extra_BattleExamination[] = {
+  {
+    EXGMDATA_ID_BATTLE_EXAMINATION,
+    (FUNC_GET_SIZE)BATTLE_EXAMINATION_SAVE_GetWorkSize,
+    (FUNC_INIT_WORK)BATTLE_EXAMINATION_SAVE_Init,
+  },
+};
 ///ストリーミング
 static const GFL_SAVEDATA_TABLE SaveDataTbl_Extra_Streaming[] = {
   {
@@ -525,12 +537,20 @@ const GFL_SVLD_PARAM SaveParam_ExtraTbl[] = {
     SAVESIZE_EXTRA_BATTLE_REC,      //使用するバックアップ領域の大きさ
     MAGIC_NUMBER,
   },
-  {//外部セーブパラメータテーブル：ストリーミング(ミラーリング無)
+  {//外部セーブパラメータテーブル：CGEARの絵(ミラーリング無)
     SaveDataTbl_Extra_CGEARPicture,
     NELEMS(SaveDataTbl_Extra_CGEARPicture),
     EXTRA_MM_CGEAR,             //バックアップ領域先頭アドレス
     EXTRA_MM_CGEAR,             //ミラーリング領域先頭アドレス ※ミラー無し指定
     SAVESIZE_EXTRA_CGEAR_PICTURE,       //使用するバックアップ領域の大きさ
+    MAGIC_NUMBER,
+  },
+  {//外部セーブパラメータテーブル：バトル検定(ミラーリング無)
+    SaveDataTbl_Extra_BattleExamination,
+    NELEMS(SaveDataTbl_Extra_BattleExamination),
+    EXTRA_MM_BATTLE_EXAMINATION,             //バックアップ領域先頭アドレス
+    EXTRA_MM_BATTLE_EXAMINATION,             //ミラーリング領域先頭アドレス ※ミラー無し指定
+    SAVESIZE_EXTRA_BATTLE_EXAMINATION,       //使用するバックアップ領域の大きさ
     MAGIC_NUMBER,
   },
   {//外部セーブパラメータテーブル：ストリーミング(ミラーリング無)

@@ -52,6 +52,7 @@ SAVEDATASRC =   savedata/save_tbl.c \
         savedata/rndmatch_savedata.c \
         savedata/radar_save.c \
         savedata/symbol_save.c \
+				savedata/battle_examination.c \
         savedata/my_pms_data.c
 
 

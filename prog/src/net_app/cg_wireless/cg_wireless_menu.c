@@ -1176,7 +1176,10 @@ static void _setTVTParentName(CG_WIRELESS_MENU* pWork)
       GFL_BMPWIN_MakeScreen(pWork->nameWin);
     }
     GFL_STR_DeleteBuffer(pName);
-   
+    PMSND_PlaySE( SEQ_SE_SYS_35 );
+  }
+  else{
+    PMSND_StopSE_byPlayerID( PMSND_GetSE_DefaultPlayerID(SEQ_SE_SYS_35) );
   }
 }
 
@@ -1328,6 +1331,7 @@ static GFL_PROC_RESULT CG_WirelessMenuProcEnd( GFL_PROC * proc, int * seq, void 
 
   _workEnd(pWork);
   pParentWork->selectType = pWork->selectType;
+  PMSND_StopSE_byPlayerID( PMSND_GetSE_DefaultPlayerID(SEQ_SE_SYS_35) );
 
   GFL_PROC_FreeWork(proc);
 

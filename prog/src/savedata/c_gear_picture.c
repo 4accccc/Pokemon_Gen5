@@ -107,6 +107,7 @@ void CGEAR_PICTURE_SAVE_SetData(CGEAR_PICTURE_SAVEDATA* pSV, void* picture, void
 //----------------------------------------------------------
 //	セーブデータ取得のための関数
 //----------------------------------------------------------
+/*
 CGEAR_PICTURE_SAVEDATA* CGEAR_PICTURE_SAVE_GetCGearSaveData(SAVE_CONTROL_WORK* pSave)
 {
 	CGEAR_PICTURE_SAVEDATA* pData;
@@ -114,4 +115,4 @@ CGEAR_PICTURE_SAVEDATA* CGEAR_PICTURE_SAVE_GetCGearSaveData(SAVE_CONTROL_WORK* p
 	return pData;
 
 }
-
+*/

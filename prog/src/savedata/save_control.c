@@ -37,6 +37,7 @@ struct _SAVE_CONTROL_WORK{
 //==============================================================================
 ///セーブデータへのポインタ
 static SAVE_CONTROL_WORK *SaveControlWork = NULL;
+extern int BATTLE_EXAMINATION_SAVE_GetWorkSize(void);
 
 
 //---------------------------------------------------------------------------

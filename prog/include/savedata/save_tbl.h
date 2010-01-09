@@ -26,6 +26,8 @@
 #define SAVESIZE_EXTRA_BATTLE_REC   (SAVE_SECTOR_SIZE * 2)
 ///EXTRA領域でCGEAR画像が使用するセーブサイズ
 #define SAVESIZE_EXTRA_CGEAR_PICTURE   (SAVE_SECTOR_SIZE * 3)
+///EXTRA領域でバトル検定が使用するセーブサイズ
+#define SAVESIZE_EXTRA_BATTLE_EXAMINATION   (SAVE_SECTOR_SIZE * 1)
 ///EXTRA領域でストリーミングが使用するセーブサイズ
 #define SAVESIZE_EXTRA_STREAMING    (SAVE_SECTOR_SIZE * 32)  //128Kbyte
 
@@ -123,6 +125,11 @@ enum{
 ///外部セーブデータ識別ID：CGEARピクチャー
 enum{
   EXGMDATA_ID_CGEAR_PICTURE,
+};
+
+///外部セーブデータ識別ID：CGEARピクチャー
+enum{
+  EXGMDATA_ID_BATTLE_EXAMINATION,
 };
 
 ///外部セーブデータ識別ID：ストリーミング
