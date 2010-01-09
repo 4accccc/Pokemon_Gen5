@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-09T12:21:23"/>
+	<create user="matsumiya" host="W00207" date="2010-01-09T15:11:27"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -229,13 +229,13 @@
 	</tag-table>
 
 	<columns>
-		<id position="0" width="152"/>
+		<id position="0" width="191"/>
 		<group default=" 0:デフォルト" position="-1" width="100">
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="124"/>
+		<comment position="4" width="257"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -263,9 +263,9 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="24" top="190" right="729" bottom="810" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
+		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="543"/>
@@ -292,11 +292,141 @@
 	</lock>
 
 
-	<row id="msg_mapscript_dummy" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
-		<comment>？？？</comment>
-		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	<row id="msg_c05r0701_girl4_01">
+		<comment>♀
+・初回
+・はい/いいえ
+　はい→girl4_03
+　いいえ→girl4_04</comment>
+		<attribute name="キャラ指定">GIRL4
+お嬢様</attribute>
+		<language name="JPN" width="256">わざわざ　きてくださって
+かんしゃ　いたしますわ！▼
+あなたは　トレーナーさん？▼
+……　……　……
+……　……　……▼
+まあ　ポケモンずかん　を！
+それは　ステキ　ですわ！▼
+それでは　わたくしの　おねがい
+きいて　くださる　かしら？</language>
+		<language name="JPN_KANJI" width="256">わざわざ　きてくださって
+感謝いたしますわ！▼
+あなたは　トレーナーさん？▼
+……　……　……
+……　……　……▼
+まあ　ポケモン図鑑　を！
+それは　ステキ　ですわ！▼
+それでは　わたくしの　お願い
+きいて　くださる　かしら？</language>
+	</row>
+
+	<row id="msg_c05r0701_girl4_02">
+		<comment>♀
+・2回目以降
+　クエストを受けていても日が変われば
+　このメッセージから開始
+・はい/いいえ
+　はい→girl4_03
+　いいえ→girl4_04</comment>
+		<attribute name="キャラ指定">GIRL4
+お嬢様</attribute>
+		<language name="JPN" width="256">あら　トレーナーさん
+わざわざ　きてくださって　うれしいわ▼
+ほんじつも　わたくしの　おねがい
+きいて　くださる　かしら？</language>
+		<language name="JPN_KANJI" width="256">あら　トレーナーさん
+わざわざ　来てくださって　うれしいわ▼
+本日も　わたくしの　お願い
+きいて　くださる　かしら？</language>
+	</row>
+
+	<row id="msg_c05r0701_girl4_03">
+		<comment>♀
+・はい選択時
+・技マシンで覚えられる技の中からランダムで選択
+　ただし手持ちの技をサーチして重複しないこと
+・0＝指定した技名</comment>
+		<attribute name="キャラ指定">GIRL4
+お嬢様</attribute>
+		<language name="JPN" width="256">「[1:07:わざ名:0]」という　わざを
+おぼえた　ポケモンが　みたいわ！▼
+「[1:07:わざ名:0]」という　わざ　よ
+ほんじつちゅうに　よろしくね</language>
+		<language name="JPN_KANJI" width="256">「[1:07:わざ名:0]」という　技を
+おぼえた　ポケモンが　みたいわ！▼
+「[1:07:わざ名:0]」という　技よ
+本日中に　よろしくね</language>
+	</row>
+
+	<row id="msg_c05r0701_girl4_04">
+		<comment>♀
+・いいえ選択時
+・再度会話時はgirl4_02から</comment>
+		<attribute name="キャラ指定">GIRL4
+お嬢様</attribute>
+		<language name="JPN" width="256">あら？　わざわざ
+きてくださったわりに　つれないのね</language>
+		<language name="JPN_KANJI" width="256">あら？　わざわざ
+来てくださったわりに　つれないのね</language>
+	</row>
+
+	<row id="msg_c05r0701_girl4_05">
+		<comment>♀
+・条件提示後に会話で
+　条件を満たしていない
+・0＝指定した技名</comment>
+		<attribute name="キャラ指定">GIRL4
+お嬢様</attribute>
+		<language name="JPN" width="256">わたくしが　みたいのは
+「[1:07:わざ名:0]」を　おぼえた▽
+ポケモン！　よろしくね</language>
+		<language name="JPN_KANJI" width="256">わたくしが　みたいのは
+「[1:07:わざ名:0]」を　おぼえた▽
+ポケモン！　よろしくね</language>
+	</row>
+
+	<row id="msg_c05r0701_girl4_06">
+		<comment>♀
+・条件提示後に会話で
+　条件を満たしている
+・アイテム入手処理
+　仮でNo158「オボンのみ」
+・0＝指定した技名
+・1＝指定した技を覚えているポケモン
+　　　複数の場合はリストの上を優先</comment>
+		<attribute name="キャラ指定">GIRL4
+お嬢様</attribute>
+		<language name="JPN" width="256">まあ　あなたの　[1:01:ポケモン種族名:1]
+「[1:07:わざ名:0]」が　つかえるのね！▼
+わざわざ　おぼえさせたの？
+ステキ！▼
+これは　ほんの　きもち
+えんりょせずに　うけとって！▼</language>
+		<language name="JPN_KANJI" width="256">まあ　あなたの　[1:01:ポケモン種族名:1]
+「[1:07:わざ名:0]」が　使えるのね！▼
+わざわざ　おぼえさせたの？
+ステキ！▼
+これは　ほんの　気持ち
+遠慮せずに　受け取って！▼</language>
+	</row>
+
+	<row id="msg_c05r0701_girl4_07">
+		<comment>♀
+・アイテム入手後、自動で表示
+・日が変わるまで繰り返し
+・0＝指定した技名</comment>
+		<attribute name="キャラ指定">GIRL4
+お嬢様</attribute>
+		<language name="JPN" width="256">「[1:07:わざ名:0]」って　わざ
+じっさいに　つかうと▽
+どんな　かんじ　なのかしら？▼
+もちろん　あなたなら
+ステキに　つかいこなせますわね！</language>
+		<language name="JPN_KANJI" width="256">「[1:07:わざ名:0]」って　技
+実際に　使うと▽
+どんな　感じ　なのかしら？▼
+もちろん　あなたなら
+ステキに　使いこなせますわね！</language>
 	</row>
 
 	<flowchart-group-list>

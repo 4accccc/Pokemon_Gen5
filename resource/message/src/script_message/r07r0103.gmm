@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-20T13:01:54"/>
+	<create user="matsumiya" host="W00207" date="2010-01-08T16:47:31"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="346"/>
+		<comment position="4" width="271"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,32 +292,37 @@
 	</lock>
 
 
-	<row id="msg_r07r0103_doctor_01">
-		<comment>♂
-・戦闘後メッセージ
-・続けて画面暗転して回復処理</comment>
-		<attribute name="キャラ指定">DOCTOR
-（docotr_03）</attribute>
-		<language name="JPN" width="256">では　きみの　ポケモンを
-ちりょう　させて　もらうよ▼</language>
-		<language name="JPN_KANJI" width="256">では　きみの　ポケモンを
-治療させて　もらうよ▼</language>
+	<row id="msg_r07r0103_nurse_01">
+		<comment>♀
+・戦闘後、フィールドに復帰すると
+　自動でこのメッセージ表示
+・表示後、画面暗転＋回復SE＋回復処理</comment>
+		<attribute name="キャラ指定">トレーナー
+nurse_01</attribute>
+		<language name="JPN" width="256">それでは　ナースの　おしごと
+はじめちゃいます！▼</language>
+		<language name="JPN_KANJI" width="256">それでは　ナースの　お仕事
+始めちゃいます！▼</language>
 	</row>
 
-	<row id="msg_r07r0103_doctor_02">
-		<comment>♂
-・回復処理後、自動で表示
-　以降、繰り返し</comment>
-		<attribute name="キャラ指定">DOCTOR
-（docotr_03）</attribute>
-		<language name="JPN" width="256">わたしが　めざすのは
-せかいいちの　ドクター！▼
-まずは　トレーナーとしての　つよさで
-せかいいちに　なる　つもりさ</language>
-		<language name="JPN_KANJI" width="256">わたしが　目指すのは
-世界一の　ドクター！▼
-まずは　トレーナーとしての　強さで
-世界一に　なる　つもりさ</language>
+	<row id="msg_r07r0103_nurse_02">
+		<comment>♀
+・回復処理後
+・以降、繰り返し</comment>
+		<attribute name="キャラ指定">トレーナー
+nurse_01</attribute>
+		<language name="JPN" width="256">みんな　できることは　ちがいます▼
+で　あたしに　できるのは
+ポケモンを　げんきに　してあげること▼
+いろんな　ひと　ポケモンが
+いろんな　ことが　できるってのが▼
+ステキだと　おもうんですよね</language>
+		<language name="JPN_KANJI" width="256">みんな　できることは　違います▼
+で　あたしに　できるのは
+ポケモンを　元気に　してあげること▼
+いろんな　人　ポケモンが
+いろんな　ことが　できるってのが▼
+ステキだと　思うんですよね</language>
 	</row>
 
 	<flowchart-group-list>
