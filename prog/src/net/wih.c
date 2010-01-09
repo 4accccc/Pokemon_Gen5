@@ -695,7 +695,7 @@ static void _MainLoopScanBeaconData(void);
 
 
 ///再スキャンをかけるまでに空けるフレーム数
-#define SCAN_WAIT_FRAME     (5)
+#define SCAN_WAIT_FRAME     (1)
 
 
 #if defined(WMHIGH_DEBUG)
