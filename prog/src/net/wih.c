@@ -694,6 +694,9 @@ static void _MainLoopScanBeaconData(void);
 #endif
 
 
+///再スキャンをかけるまでに空けるフレーム数
+#define SCAN_WAIT_FRAME     (1)
+
 
 #if defined(WMHIGH_DEBUG)
 static const char *sStateNames[] = {
@@ -1577,7 +1580,7 @@ static void WH_StateOutStartScan(void *arg)
 		}
 		return;
 	}
-  _pWmInfo->startScan=5;
+  _pWmInfo->startScan=SCAN_WAIT_FRAME;
 
 	//  NET_PRINT("WH_StateOutStartScan %d",state);
 	switch (state) {
