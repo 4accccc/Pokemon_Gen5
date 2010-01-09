@@ -695,7 +695,7 @@ static void _MainLoopScanBeaconData(void);
 
 
 ///再スキャンをかけるまでに空けるフレーム数
-#define SCAN_WAIT_FRAME     (1)
+#define SCAN_WAIT_FRAME     (5)
 
 
 #if defined(WMHIGH_DEBUG)
@@ -1645,7 +1645,8 @@ static void WH_StateOutStartScan(void *arg)
 		}
 
 		if (_pWmInfo->sAutoConnectFlag && found){
-			if (!WH_StateInEndScan()){
+      _pWmInfo->startScan=0;
+      if (!WH_StateInEndScan()){
 				WH_ChangeSysState(WH_SYSSTATE_ERROR);
 			}
 			return;
