@@ -22,6 +22,7 @@
 #include "colosseum_tool.h"
 #include "union_subproc.h"
 #include "union_chat.h"
+#include "net/net_whpipe.h"
 
 
 //==============================================================================
@@ -449,6 +450,11 @@ void UnionComm_Update(int *seq, void *pwk, void *pWork)
     return; //切断→再開 の処理を実行中
   }
   
+  if(unisys->send_beacon_update == TRUE){
+    GFI_NET_BeaconSetInfo();
+    unisys->send_beacon_update = FALSE;
+  }
+
   UnionComm_BeaconSearch(unisys);   //ビーコンサーチ
   
   UnionComm_Colosseum_Update(unisys); //コロシアム更新
@@ -655,6 +661,7 @@ static void UnionComm_SetBeaconParam(UNION_SYSTEM_PTR unisys, UNION_BEACON *beac
   
   //送信データ完成
   beacon->data_valid = UNION_BEACON_VALID;
+  unisys->send_beacon_update = TRUE;
 }
 
 //--------------------------------------------------------------
