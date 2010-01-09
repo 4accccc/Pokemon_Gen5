@@ -1577,6 +1577,7 @@ static void WH_StateOutStartScan(void *arg)
 		}
 		return;
 	}
+  _pWmInfo->startScan=5;
 
 	//  NET_PRINT("WH_StateOutStartScan %d",state);
 	switch (state) {
@@ -1653,14 +1654,14 @@ static void WH_StateOutStartScan(void *arg)
 	}
 
   
-  if(_pWmInfo->startScan == -1){
-    if (!WH_StateInEndScan()){
-      WH_ChangeSysState(WH_SYSSTATE_ERROR);
-    }
-  }
-  else{
-    _pWmInfo->startScan=5;
-  }
+//  if(_pWmInfo->startScan == -1){
+  //  if (!WH_StateInEndScan()){
+    //  WH_ChangeSysState(WH_SYSSTATE_ERROR);
+//    }
+ // }
+ // else{
+  //  _pWmInfo->startScan=5;
+//  }
   
     
 	// チャンネルを変更して再スキャンを開始します。
