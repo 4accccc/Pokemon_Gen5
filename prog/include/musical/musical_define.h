@@ -62,6 +62,7 @@ typedef enum
 	MUS_POKE_EQU_USER_HEAD,		//頭
 	MUS_POKE_EQU_USER_FACE,		//顔
 	MUS_POKE_EQU_USER_BODY,		//胴
+	MUS_POKE_EQU_USER_WAIST,		//腰
 	MUS_POKE_EQU_USER_HAND_R,	//手(右手)
 	MUS_POKE_EQU_USER_HAND_L,	//手(左手)
 
@@ -138,7 +139,7 @@ typedef struct
 }
 MUSICAL_SHOT_POKE_EQUIP;
 
-//ポケモン１体のデータ  76byte
+//ポケモン１体のデータ  84byte
 typedef struct
 {
   u16 monsno; //ポケモン番号
@@ -148,11 +149,11 @@ typedef struct
   u16  pad :8;
   
   STRCODE trainerName[SAVELEN_PLAYER_NAME+EOM_SIZE];  //トレーナー名
-  MUSICAL_SHOT_POKE_EQUIP equip[MUSICAL_ITEM_EQUIP_MAX];  //装備グッズデータ(７個
+  MUSICAL_SHOT_POKE_EQUIP equip[MUSICAL_ITEM_EQUIP_MAX];  //装備グッズデータ(８個
   
 }MUSICAL_SHOT_POKE;
 
-//ミュージカルショットのデータ  384byte
+//ミュージカルショットのデータ  416byte
 typedef struct
 {
   u32 bgNo   :5;  //背景番号

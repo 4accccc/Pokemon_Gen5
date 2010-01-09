@@ -203,7 +203,14 @@ const BOOL  MUS_ITEM_DATA_CanEquipPosUserData( MUS_ITEM_DATA_WORK*  dataWork , c
     break;
 
   case MUS_POKE_EQU_USER_BODY:    //ì∑
-    if( dataWork->equipPosBit & (EPB_BODY|EPB_WAIST) )
+    if( dataWork->equipPosBit & (EPB_BODY) )
+    {
+      return TRUE;
+    }
+    break;
+
+  case MUS_POKE_EQU_USER_WAIST:    //ì∑
+    if( dataWork->equipPosBit & (EPB_WAIST) )
     {
       return TRUE;
     }
@@ -256,8 +263,14 @@ const BOOL  MUS_ITEM_DATA_CheckMainPosUserData( MUS_ITEM_DATA_WORK*  dataWork , 
     break;
 
   case MUS_POKE_EQU_USER_BODY:    //ì∑
-    if( dataWork->mainPos == MUS_POKE_EQU_TYPE_BODY ||
-        dataWork->mainPos == MUS_POKE_EQU_TYPE_WAIST )
+    if( dataWork->mainPos == MUS_POKE_EQU_TYPE_BODY )
+    {
+      return TRUE;
+    }
+    break;
+
+  case MUS_POKE_EQU_USER_WAIST:    //çò
+    if( dataWork->mainPos == MUS_POKE_EQU_TYPE_WAIST )
     {
       return TRUE;
     }
@@ -329,8 +342,11 @@ const MUS_POKE_EQUIP_USER MUS_ITEM_DATA_EquipPosToUserType( const MUS_POKE_EQUIP
     break;
 
   case MUS_POKE_EQU_BODY:     //ì∑
-  case MUS_POKE_EQU_WAIST:    //çò
     return MUS_POKE_EQU_USER_BODY;
+    break;
+
+  case MUS_POKE_EQU_WAIST:    //çò
+    return MUS_POKE_EQU_USER_WAIST;
     break;
 
   case MUS_POKE_EQU_HAND_R:   //âEéË
