@@ -903,7 +903,7 @@ void GFI_NET_BeaconSetInfo( void )
     pGF = (_GF_BSS_DATA_INFO*)pNetWL->gameInfoBuff;
     pGF->serviceNo = pInit->gsid;    // ƒQ[ƒ€‚Ì”Ô†
     pGF->GGID = pInit->ggid;
-#if PM_DEBUG
+#ifdef PM_DEBUG
     pGF->debugAloneTest = _DEBUG_ALONETEST;
 #else
     pGF->debugAloneTest = 0;
