@@ -329,6 +329,15 @@ LAND_DEPEND_LIST = \
 	$(DIR_OUTPUT)/c03_s00_00.3dppack \
 	$(DIR_OUTPUT)/c03_t00_00.3dppack \
 	$(DIR_OUTPUT)/c03_u00_00.3dppack \
+	$(DIR_OUTPUT)/palace04_00_00.3dppack \
+	$(DIR_OUTPUT)/palace05_00_00.3dppack \
+	$(DIR_OUTPUT)/palace06_00_00.3dppack \
+	$(DIR_OUTPUT)/palace07_00_00.3dppack \
+	$(DIR_OUTPUT)/palace08_00_00.3dppack \
+	$(DIR_OUTPUT)/palace09_00_00.3dppack \
+	$(DIR_OUTPUT)/palace10_00_00.3dppack \
+	$(DIR_OUTPUT)/palace11_00_00.3dppack \
+	$(DIR_OUTPUT)/palace12_00_00.3dppack \
 	$(DIR_OUTPUT)/m_dun0101_00_00.3dppack \
 	$(DIR_OUTPUT)/m_dun0101_01_00.3dppack \
 	$(DIR_OUTPUT)/m_dun0101_00_01.3dppack \

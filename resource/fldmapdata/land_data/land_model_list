@@ -329,6 +329,15 @@ LAND_TEMP_LIST = \
 	$(DIR_TEMP)/c03_s00_00.nsbmd \
 	$(DIR_TEMP)/c03_t00_00.nsbmd \
 	$(DIR_TEMP)/c03_u00_00.nsbmd \
+	$(DIR_TEMP)/palace04_00_00.nsbmd \
+	$(DIR_TEMP)/palace05_00_00.nsbmd \
+	$(DIR_TEMP)/palace06_00_00.nsbmd \
+	$(DIR_TEMP)/palace07_00_00.nsbmd \
+	$(DIR_TEMP)/palace08_00_00.nsbmd \
+	$(DIR_TEMP)/palace09_00_00.nsbmd \
+	$(DIR_TEMP)/palace10_00_00.nsbmd \
+	$(DIR_TEMP)/palace11_00_00.nsbmd \
+	$(DIR_TEMP)/palace12_00_00.nsbmd \
 	$(DIR_TEMP)/m_dun0101_00_00.nsbmd \
 	$(DIR_TEMP)/m_dun0101_01_00.nsbmd \
 	$(DIR_TEMP)/m_dun0101_00_01.nsbmd \
