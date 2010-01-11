@@ -113,7 +113,8 @@ typedef enum
 // 人のCOREデータ
 typedef struct 
 {
-  u8 data_in;   // 人の有無 TRUE FALSE
+  u8 data_in:4;   // 人の有無 TRUE FALSE
+  u8 parent_in:4; // 親情報の有無 TRUE FALSE
   u8 npc_id;    // 人物を特定するためのNPCID
   u8 mood;      // 機嫌
   u8 one_day_msk;// 1日の制限マスク FIELD_WFBC_ONEDAY_MSK
@@ -188,7 +189,7 @@ extern void FIELD_WFBC_CORE_SortData( FIELD_WFBC_CORE* p_wk, HEAPID heapID );
 // 街に入った！計算
 extern void FIELD_WFBC_CORE_CalcMoodInTown( FIELD_WFBC_CORE* p_wk );
 // 人を足しこむ
-extern void FIELD_WFBC_CORE_AddPeople( FIELD_WFBC_CORE* p_wk, const FIELD_WFBC_CORE_PEOPLE* cp_people );
+extern void FIELD_WFBC_CORE_AddPeople( FIELD_WFBC_CORE* p_wk, const MYSTATUS* cp_mystatus, const FIELD_WFBC_CORE_PEOPLE* cp_people );
 // 人を探す
 extern FIELD_WFBC_CORE_PEOPLE* FIELD_WFBC_CORE_GetNpcIDPeople( FIELD_WFBC_CORE* p_wk, u32 npc_id );
 // データから、MMDLヘッダーを生成
@@ -224,6 +225,7 @@ extern BOOL FIELD_WFBC_CORE_PEOPLE_IsBattle( const FIELD_WFBC_CORE_PEOPLE* cp_wk
 // 情報にアクセス
 extern void FIELD_WFBC_CORE_PEOPLE_SetParentData( FIELD_WFBC_CORE_PEOPLE* p_wk, const MYSTATUS* cp_mystatus );
 extern void FIELD_WFBC_CORE_PEOPLE_GetParentName( const FIELD_WFBC_CORE_PEOPLE* cp_wk, STRCODE* p_buff );
+extern BOOL FIELD_WFBC_CORE_PEOPLE_IsParentIn( const FIELD_WFBC_CORE_PEOPLE* cp_wk );
 extern u32 FIELD_WFBC_CORE_PEOPLE_GetParentID( const FIELD_WFBC_CORE_PEOPLE* cp_wk );
 extern u32 FIELD_WFBC_CORE_PEOPLE_GetNpcID( const FIELD_WFBC_CORE_PEOPLE* cp_wk );
 extern BOOL FIELD_WFBC_CORE_PEOPLE_IsMoodTakes( const FIELD_WFBC_CORE_PEOPLE* cp_wk );
@@ -406,6 +408,70 @@ extern BOOL FIELD_WFBC_CORE_ITEM_IsInItemData( const FIELD_WFBC_CORE_ITEM* cp_wk
 ///	データから、MMDLヘッダーを生成
 //=====================================
 extern MMDL_HEADER* FIELD_WFBC_CORE_ITEM_MMDLHeaderCreateHeapLo( const FIELD_WFBC_CORE_ITEM* cp_wk, u32 mapmode, FIELD_WFBC_CORE_TYPE type, HEAPID heapID );
+
+
+
+
+
+
+//-----------------------------------------------------------------------------
+/**
+ *					WFBCイベント管理ワーク
+*/
+//-----------------------------------------------------------------------------
+
+//-------------------------------------
+///	BCイベント定数
+//=====================================
+#define FIELD_WFBC_EVENT_NPC_WIN_TARGET_INIT (10)
+#define FIELD_WFBC_EVENT_NPC_WIN_TARGET_ADD (10)
+#define FIELD_WFBC_EVENT_NPC_WIN_TARGET_MAX (1000)
+
+//-------------------------------------
+///	イベントワーク
+//=====================================
+typedef union {
+  
+  // BC用ワーク
+  struct
+  {
+    u16 bc_npc_win_count;     // ボスイベント　BCの人に勝った数
+    u16 bc_npc_win_target;    // ボスイベント　BCの人の勝利目標数
+  };
+
+  // WF用ワーク
+  struct
+  {
+    u16 wf_poke_catch_item;   // 村長イベント　もらえるアイテム
+    u16 wf_poke_catch_monsno; // 村長イベント　もってきてもらいたいポケモンナンバー
+  };
+} FIELD_WFBC_EVENT;
+
+//-------------------------------------
+///	GAMEDATAから取得
+//=====================================
+extern FIELD_WFBC_EVENT* GAMEDATA_GetWFBCEventData( GAMEDATA * gamedata );
+
+
+//-------------------------------------
+///	ワーク操作
+//=====================================
+extern void FIELD_WFBC_EVENT_Clear( FIELD_WFBC_EVENT* p_wk );
+
+// BC
+extern u16 FIELD_WFBC_EVENT_GetBCNpcWinCount( const FIELD_WFBC_EVENT* cp_wk );
+extern void FIELD_WFBC_EVENT_AddBCNpcWinCount( FIELD_WFBC_EVENT* p_wk );
+extern u16 FIELD_WFBC_EVENT_GetBCNpcWinTarget( const FIELD_WFBC_EVENT* cp_wk );
+extern void FIELD_WFBC_EVENT_AddBCNpcWinTarget( FIELD_WFBC_EVENT* p_wk );
+
+// WF
+extern u16 FIELD_WFBC_EVENT_GetWFPokeCatchEventMonsNo( const FIELD_WFBC_EVENT* cp_wk );
+extern void FIELD_WFBC_EVENT_SetWFPokeCatchEventMonsNo( FIELD_WFBC_EVENT* p_wk, u16 mons_no );
+extern u16 FIELD_WFBC_EVENT_GetWFPokeCatchEventItem( const FIELD_WFBC_EVENT* cp_wk );
+extern void FIELD_WFBC_EVENT_SetWFPokeCatchEventItem( FIELD_WFBC_EVENT* p_wk, u16 item );
+
+
+
 
 #ifdef _cplusplus
 }	// extern "C"{

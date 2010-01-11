@@ -11,6 +11,7 @@
   .include  "scr_seq_def.h"
   .include  "msg_bc10.h"
   //.include  "bc10.h"
+  .include "../../../prog/src/field/scrcmd_wfbc_define.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -48,7 +49,7 @@ ev_bc_npc:
 	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_bc10_npc00 )
 
   // バトルへ飛ばす
-  _WFBC_GET_TRAINER_ID( SCWK_ANSWER )
+  _WFBC_GET_DATA( WFBC_GET_PARAM_BATTLE_TRAINER_ID, SCWK_ANSWER )
   _TRAINER_BTL_SET( SCWK_ANSWER, 0 )
   
   // WFBC　会話後処理

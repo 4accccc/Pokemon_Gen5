@@ -92,11 +92,11 @@ static void WFBC_CORE_SortPeopleArray( FIELD_WFBC_CORE_PEOPLE* p_array, HEAPID h
 // 人データをつめる
 static void WFBC_CORE_PackPeopleArray( FIELD_WFBC_CORE_PEOPLE* p_array );
 // 人データを押し出し設定
-static void WFBC_CORE_PushPeople( FIELD_WFBC_CORE* p_wk, const FIELD_WFBC_CORE_PEOPLE* cp_people );
+static void WFBC_CORE_PushPeople( FIELD_WFBC_CORE* p_wk, const MYSTATUS* cp_mystatus, const FIELD_WFBC_CORE_PEOPLE* cp_people );
 // 配列がいっぱいかチェック
 static BOOL WFBC_CORE_IsPeopleArrayFull( const FIELD_WFBC_CORE_PEOPLE* cp_array );
 // 人を入れる
-static void WFBC_CORE_PushPeopleArray( FIELD_WFBC_CORE_PEOPLE* p_array, const FIELD_WFBC_CORE_PEOPLE* cp_people );
+static FIELD_WFBC_CORE_PEOPLE* WFBC_CORE_PushPeopleArray( FIELD_WFBC_CORE_PEOPLE* p_array, const FIELD_WFBC_CORE_PEOPLE* cp_people );
 
 // 空いている人物ワークを取得
 static FIELD_WFBC_CORE_PEOPLE* WFBC_CORE_GetClearPeopleArray( FIELD_WFBC_CORE_PEOPLE* p_array );
@@ -105,7 +105,7 @@ static FIELD_WFBC_CORE_PEOPLE* WFBC_CORE_GetClearPeopleArray( FIELD_WFBC_CORE_PE
 //-------------------------------------
 ///	人物情報
 //=====================================
-static void WFBC_CORE_SetUpPeople( FIELD_WFBC_CORE_PEOPLE* p_people, u8 npc_id, const MYSTATUS* cp_mystatus, u16 mood );
+static void WFBC_CORE_SetUpPeople( FIELD_WFBC_CORE_PEOPLE* p_people, u8 npc_id, const MYSTATUS* cp_mystatus, u16 mood, BOOL parent_set );
 static BOOL WFBC_CORE_People_IsGoBack( const FIELD_WFBC_CORE_PEOPLE* cp_people );
 static BOOL WFBC_CORE_People_AddMood( FIELD_WFBC_CORE_PEOPLE* p_people, int add );
 
@@ -212,6 +212,7 @@ void FIELD_WFBC_CORE_SetUp( FIELD_WFBC_CORE* p_wk, const MYSTATUS* cp_mystatus, 
   FIELD_WFBC_PEOPLE_DATA_LOAD* p_loader;
   const FIELD_WFBC_PEOPLE_DATA* cp_data;
   u32 mood;
+  BOOL parent_set;
   GF_ASSERT( p_wk );
   
   p_wk->data_in = TRUE;
@@ -240,10 +241,12 @@ void FIELD_WFBC_CORE_SetUp( FIELD_WFBC_CORE* p_wk, const MYSTATUS* cp_mystatus, 
     
     if( p_wk->type == FIELD_WFBC_CORE_TYPE_BLACK_CITY ){
       mood = cp_data->mood_bc;
+      parent_set = TRUE;
     }else{
       mood = cp_data->mood_wf;
+      parent_set = FALSE;
     }
-    WFBC_CORE_SetUpPeople( p_people, set_npc_idx, cp_mystatus, mood );
+    WFBC_CORE_SetUpPeople( p_people, set_npc_idx, cp_mystatus, mood, parent_set );
   }
 
   FIELD_WFBC_PEOPLE_DATA_Delete( p_loader );
@@ -413,12 +416,14 @@ void FIELD_WFBC_CORE_CalcOneDataStart( GAMEDATA * gamedata, s32 diff_day, HEAPID
   BOOL result;
   FIELD_WFBC_CORE* p_wk;
   FIELD_WFBC_CORE_ITEM* p_item;
+  FIELD_WFBC_EVENT* p_event;
   u16 random;
   FIELD_WFBC_PEOPLE_DATA_LOAD* p_people_loader;
   const FIELD_WFBC_PEOPLE_DATA* cp_people_data;
 
   p_wk = GAMEDATA_GetMyWFBCCoreData( gamedata );
   p_item = GAMEDATA_GetWFBCItemData( gamedata );
+  p_event = GAMEDATA_GetWFBCEventData( gamedata );
   
 
   // 日にちがおかしくないかチェック
@@ -486,6 +491,45 @@ void FIELD_WFBC_CORE_CalcOneDataStart( GAMEDATA * gamedata, s32 diff_day, HEAPID
     }
   }
 
+
+  // WFならば、村長イベントを管理
+  if( p_wk->type == FIELD_WFBC_CORE_TYPE_WHITE_FOREST )
+  {
+    u32 people_num;
+    u32 rand_index;
+    u32 index_count;
+
+    // ポケモンの選定
+    people_num = FIELD_WFBC_CORE_GetPeopleNum( p_wk, MAPMODE_NORMAL );
+    if( people_num>0 )
+    {
+      people_num *= FIELD_WFBC_PEOPLE_ENC_POKE_MAX;
+      rand_index = GFUser_GetPublicRand( people_num );
+
+      index_count = 0;
+
+      // そのポケモンを探す
+      for( i=0; i<FIELD_WFBC_PEOPLE_MAX; i++ )
+      {
+        if( FIELD_WFBC_CORE_PEOPLE_IsInData( &p_wk->people[i] ) )
+        {
+          // 
+          index_count += FIELD_WFBC_PEOPLE_ENC_POKE_MAX;
+          if( index_count > rand_index )  // 大きくなったらその中にある
+          {
+            // その人の情報を読み込み
+            FIELD_WFBC_PEOPLE_DATA_Load( p_people_loader, p_wk->people[i].npc_id );
+            cp_people_data = FIELD_WFBC_PEOPLE_DATA_GetData( p_people_loader );
+
+            FIELD_WFBC_EVENT_SetWFPokeCatchEventMonsNo( p_event, cp_people_data->enc_monsno[ index_count % FIELD_WFBC_PEOPLE_ENC_POKE_MAX ] );
+            FIELD_WFBC_EVENT_SetWFPokeCatchEventItem( p_event, cp_people_data->goods_wf );
+          }
+        }
+      }
+
+    }
+  }
+
   FIELD_WFBC_PEOPLE_DATA_Delete( p_people_loader );
 }
 
@@ -526,9 +570,9 @@ void FIELD_WFBC_CORE_CalcMoodInTown( FIELD_WFBC_CORE* p_wk )
  *	@param	cp_people 格納する人
  */
 //-----------------------------------------------------------------------------
-void FIELD_WFBC_CORE_AddPeople( FIELD_WFBC_CORE* p_wk, const FIELD_WFBC_CORE_PEOPLE* cp_people )
+void FIELD_WFBC_CORE_AddPeople( FIELD_WFBC_CORE* p_wk, const MYSTATUS* cp_mystatus, const FIELD_WFBC_CORE_PEOPLE* cp_people )
 {
-  WFBC_CORE_PushPeople( p_wk, cp_people );
+  WFBC_CORE_PushPeople( p_wk, cp_mystatus, cp_people );
 }
 
 //----------------------------------------------------------------------------
@@ -806,6 +850,7 @@ void FIELD_WFBC_CORE_PEOPLE_SetParentData( FIELD_WFBC_CORE_PEOPLE* p_wk, const M
   GF_ASSERT( p_wk );
   GF_ASSERT( cp_mystatus );
 
+  p_wk->parent_in = TRUE;
   p_wk->parent_id = MyStatus_GetID( cp_mystatus );
   GFL_STD_MemCopy( MyStatus_GetMyName( cp_mystatus ), p_wk->parent, sizeof(STRCODE) * (PERSON_NAME_SIZE + EOM_SIZE) );
 }
@@ -822,6 +867,22 @@ void FIELD_WFBC_CORE_PEOPLE_GetParentName( const FIELD_WFBC_CORE_PEOPLE* cp_wk, 
 {
   GF_ASSERT( cp_wk );
   GFL_STD_MemCopy( cp_wk->parent, p_buff, sizeof(STRCODE) * (PERSON_NAME_SIZE + EOM_SIZE) );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  親情報があるかチェック
+ *
+ *	@param	cp_wk   ワーク
+ *
+ *	@retval TRUE  ある
+ *	@retval FALSE ない
+ */
+//-----------------------------------------------------------------------------
+BOOL FIELD_WFBC_CORE_PEOPLE_IsParentIn( const FIELD_WFBC_CORE_PEOPLE* cp_wk )
+{
+  GF_ASSERT( cp_wk );
+  return cp_wk->parent_in;
 }
 
 //----------------------------------------------------------------------------
@@ -1240,6 +1301,147 @@ MMDL_HEADER* FIELD_WFBC_CORE_ITEM_MMDLHeaderCreateHeapLo( const FIELD_WFBC_CORE_
 
 //-----------------------------------------------------------------------------
 /**
+ *					WFBCイベント管理ワーク
+*/
+//-----------------------------------------------------------------------------
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ワークのクリア
+ *
+ *	@param	p_wk 
+ */
+//-----------------------------------------------------------------------------
+void FIELD_WFBC_EVENT_Clear( FIELD_WFBC_EVENT* p_wk )
+{
+  GFL_STD_MemClear( p_wk, sizeof(FIELD_WFBC_EVENT) );
+  p_wk->bc_npc_win_target = FIELD_WFBC_EVENT_NPC_WIN_TARGET_INIT;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  BC　NPCに勝った数を取得
+ *
+ *	@param	sv  セーブワーク
+ *
+ *	@return 勝った数
+ */
+//-----------------------------------------------------------------------------
+u16 FIELD_WFBC_EVENT_GetBCNpcWinCount( const FIELD_WFBC_EVENT* cp_wk )
+{
+  GF_ASSERT(cp_wk);
+  return cp_wk->bc_npc_win_count;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  BC　NPCに勝った数を計算
+ *
+ *	@param	sv    セーブワーク
+ */
+//-----------------------------------------------------------------------------
+void FIELD_WFBC_EVENT_AddBCNpcWinCount( FIELD_WFBC_EVENT* p_wk )
+{
+  GF_ASSERT(p_wk);
+  p_wk->bc_npc_win_count ++;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  BC　NPCに勝つ目標数を取得
+ *
+ *	@param	sv  セーブワーク
+ *  
+ *	@return 目標数
+ */
+//-----------------------------------------------------------------------------
+u16 FIELD_WFBC_EVENT_GetBCNpcWinTarget( const FIELD_WFBC_EVENT* cp_wk )
+{
+  GF_ASSERT( cp_wk );
+  return cp_wk->bc_npc_win_target;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  BC　NPCに勝つ目標数を加算
+ *
+ *	@param	sv      セーブワーク
+ */
+//-----------------------------------------------------------------------------
+void FIELD_WFBC_EVENT_AddBCNpcWinTarget( FIELD_WFBC_EVENT* p_wk )
+{
+  GF_ASSERT( p_wk );
+  if( p_wk->bc_npc_win_target < FIELD_WFBC_EVENT_NPC_WIN_TARGET_MAX )
+  {
+    p_wk->bc_npc_win_target += FIELD_WFBC_EVENT_NPC_WIN_TARGET_ADD;
+  }
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  WF　村長　もってきてほしいポケモンナンバーの取得
+ *
+ *	@param	sv    セーブワーク
+ *
+ *	@return モンスターナンバー
+ */
+//-----------------------------------------------------------------------------
+u16 FIELD_WFBC_EVENT_GetWFPokeCatchEventMonsNo( const FIELD_WFBC_EVENT* cp_wk )
+{
+  GF_ASSERT( cp_wk );
+  return cp_wk->wf_poke_catch_monsno; 
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  WF　村長　もってきてほしいポケモンナンバー　設定
+ *
+ *	@param	sv        セーブワーク
+ *	@param	mons_no   モンスターナンバー
+ */
+//-----------------------------------------------------------------------------
+void FIELD_WFBC_EVENT_SetWFPokeCatchEventMonsNo( FIELD_WFBC_EVENT* p_wk, u16 mons_no )
+{
+  GF_ASSERT( p_wk );
+  p_wk->wf_poke_catch_monsno = mons_no;
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  WF 村長　ご褒美　アイテムナンバー　取得
+ *
+ *	@param	cp_wk   ワーク
+ *  
+ *	@return アイテムナンバー
+ */
+//-----------------------------------------------------------------------------
+u16 FIELD_WFBC_EVENT_GetWFPokeCatchEventItem( const FIELD_WFBC_EVENT* cp_wk )
+{
+  GF_ASSERT( cp_wk );
+  return cp_wk->wf_poke_catch_item;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  WF　村長　ご褒美　アイテム設定
+ *
+ *	@param	p_wk    ワーク
+ *	@param	item    アイテムナンバー
+ */
+//-----------------------------------------------------------------------------
+void FIELD_WFBC_EVENT_SetWFPokeCatchEventItem( FIELD_WFBC_EVENT* p_wk, u16 item )
+{
+  GF_ASSERT( p_wk );
+  p_wk->wf_poke_catch_item = item;
+}
+
+
+
+
+//-----------------------------------------------------------------------------
+/**
  *        private関数
  */
 //-----------------------------------------------------------------------------
@@ -1441,8 +1643,10 @@ static void WFBC_CORE_PackPeopleArray( FIELD_WFBC_CORE_PEOPLE* p_array )
  *	@param	cp_people     追加する人データ
  */
 //-----------------------------------------------------------------------------
-static void WFBC_CORE_PushPeople( FIELD_WFBC_CORE* p_wk, const FIELD_WFBC_CORE_PEOPLE* cp_people )
+static void WFBC_CORE_PushPeople( FIELD_WFBC_CORE* p_wk, const MYSTATUS* cp_mystatus, const FIELD_WFBC_CORE_PEOPLE* cp_people )
 {
+  FIELD_WFBC_CORE_PEOPLE* p_add_people;
+  
   GF_ASSERT( p_wk );
   GF_ASSERT( cp_people );
   
@@ -1454,7 +1658,8 @@ static void WFBC_CORE_PushPeople( FIELD_WFBC_CORE* p_wk, const FIELD_WFBC_CORE_P
   }
 
   // 通常世界の情報に追加
-  WFBC_CORE_PushPeopleArray( p_wk->people, cp_people );
+  p_add_people = WFBC_CORE_PushPeopleArray( p_wk->people, cp_people );
+  FIELD_WFBC_CORE_PEOPLE_SetParentData( p_add_people, cp_mystatus );
 }
 
 //----------------------------------------------------------------------------
@@ -1487,9 +1692,11 @@ static BOOL WFBC_CORE_IsPeopleArrayFull( const FIELD_WFBC_CORE_PEOPLE* cp_array 
  *
  *	@param	p_array     配列
  *	@param	cp_people   人
+ *
+ *	@retval 追加したワーク
  */
 //-----------------------------------------------------------------------------
-static void WFBC_CORE_PushPeopleArray( FIELD_WFBC_CORE_PEOPLE* p_array, const FIELD_WFBC_CORE_PEOPLE* cp_people )
+static FIELD_WFBC_CORE_PEOPLE* WFBC_CORE_PushPeopleArray( FIELD_WFBC_CORE_PEOPLE* p_array, const FIELD_WFBC_CORE_PEOPLE* cp_people )
 { 
   int i;
   
@@ -1499,6 +1706,8 @@ static void WFBC_CORE_PushPeopleArray( FIELD_WFBC_CORE_PEOPLE* p_array, const FI
     GFL_STD_MemCopy( &p_array[i-1], &p_array[i], sizeof(FIELD_WFBC_CORE_PEOPLE) );
   }
   GFL_STD_MemCopy( cp_people, &p_array[0], sizeof(FIELD_WFBC_CORE_PEOPLE) );
+
+  return &p_array[0];
 }
 
 
@@ -1537,9 +1746,12 @@ static FIELD_WFBC_CORE_PEOPLE* WFBC_CORE_GetClearPeopleArray( FIELD_WFBC_CORE_PE
  *
  *	@param	p_people  人物ワーク
  *	@param	npc_id    NPCID
+ *	@param  mystatus  プレイヤー情報
+ *	@param  mood      機嫌初期値
+ *	@param  parent_setプレイヤー情報を保存するか
  */
 //-----------------------------------------------------------------------------
-static void WFBC_CORE_SetUpPeople( FIELD_WFBC_CORE_PEOPLE* p_people, u8 npc_id, const MYSTATUS* cp_mystatus, u16 mood )
+static void WFBC_CORE_SetUpPeople( FIELD_WFBC_CORE_PEOPLE* p_people, u8 npc_id, const MYSTATUS* cp_mystatus, u16 mood, BOOL parent_set )
 {
   p_people->data_in = TRUE;
   p_people->npc_id  = npc_id;
@@ -1547,8 +1759,11 @@ static void WFBC_CORE_SetUpPeople( FIELD_WFBC_CORE_PEOPLE* p_people, u8 npc_id, 
   p_people->one_day_msk  = FIELD_WFBC_ONEDAY_MSK_INIT;
 
   // 親の設定
-  // 自分で初期化する
-  FIELD_WFBC_CORE_PEOPLE_SetParentData( p_people, cp_mystatus );
+  if( parent_set )
+  {
+    // 自分で初期化する
+    FIELD_WFBC_CORE_PEOPLE_SetParentData( p_people, cp_mystatus );
+  }
 }
 
 

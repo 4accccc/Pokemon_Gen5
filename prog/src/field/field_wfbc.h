@@ -127,7 +127,7 @@ extern void FIELD_WFBC_SetAwayPeople( FIELD_WFBC* p_wk, u32 npc_id );
 extern void FIELD_WFBC_AddTalkPointPeople( FIELD_WFBC* p_wk, u32 npc_id );
 
 // —š—ğ‚Ìl‚Ìî•ñ‚ğWordSet‚Éİ’è
-extern void FIELD_WFBC_SetWordSetParentPlayer( const FIELD_WFBC* cp_wk, WORDSET* p_wordset, u32 npc_id, HEAPID heapID );
+extern void FIELD_WFBC_SetWordSetParentPlayer( const FIELD_WFBC* cp_wk, WORDSET* p_wordset, u32 npc_id, u32 word_set_idx, HEAPID heapID );
 
 // ƒoƒgƒ‹‚µ‚½‚±‚Æ‚ğİ’è
 extern void FIELD_WFBC_SetBattlePeople( FIELD_WFBC* p_wk, u32 npc_id );

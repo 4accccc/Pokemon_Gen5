@@ -345,6 +345,22 @@ FIELD_WFBC_CORE_ITEM* GAMEDATA_GetWFBCItemData( GAMEDATA * gamedata )
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief  WFBCのイベントデータを取得する
+ *
+ *	@param	gamedata  ゲームデータ
+ *
+ *	@return イベント
+ */
+//-----------------------------------------------------------------------------
+FIELD_WFBC_EVENT* GAMEDATA_GetWFBCEventData( GAMEDATA * gamedata )
+{
+  RANDOMMAP_SAVE* save = RANDOMMAP_SAVE_GetRandomMapSave( gamedata->sv_control_ptr );
+  return RANDOMMAP_SAVE_GetEventData( save );
+}
+
+
+//----------------------------------------------------------------------------
+/**
  *	@brief  Palaceのコア情報設定
  *
  *	@param	gamedata  ゲームデータ

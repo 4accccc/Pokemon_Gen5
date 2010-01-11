@@ -59,3 +59,7 @@ extern void RANDOMMAP_SAVE_GetCoreWork( const RANDOMMAP_SAVE* sv, FIELD_WFBC_COR
 extern FIELD_WFBC_CORE_ITEM* RANDOMMAP_SAVE_GetItemData( RANDOMMAP_SAVE* sv );
 
 
+//----------------------------------------------------------
+// イベント用データ
+//----------------------------------------------------------
+extern FIELD_WFBC_EVENT* RANDOMMAP_SAVE_GetEventData( RANDOMMAP_SAVE* sv );

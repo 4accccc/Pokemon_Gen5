@@ -427,6 +427,16 @@
   DEF_CMD( EvCmdGetWirelessSaveMode, EV_SEQ_GET_WIRELESS_SAVEMODE ) 
   DEF_CMD( EvCmdGetShoes, EV_SEQ_GET_SHOES )
 
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+
   // 育て屋
   DEF_CMD( EvCmdCheckSodateyaHaveEgg, EV_SEQ_CHECK_SODATEYA_HAVE_EGG )
   DEF_CMD( EvCmdGetSodateyaEgg, EV_SEQ_GET_SODATEYA_EGG )
@@ -495,6 +505,25 @@
   DEF_CMD( EvCmdChgFormNo, EV_SEQ_CHG_FORM_NO )
   DEF_CMD( EvCmdGetPartyPosByMonsNo, EV_SEQ_GET_PARTY_POS_BY_MONSNO )
 
+  DEF_CMD( EvCmdCheckPartyPokeGetPlace, EV_SEQ_CHECK_TEMOTI_GETPLACE )
+  DEF_CMD( EvCmdGetPartyPokeGetDate, EV_SEQ_GET_TEMOTI_GETDATE )
+  NO_CMD()
+  NO_CMD()
+
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
 
   // ボックス関連
   DEF_CMD( EvCmdGetBoxPokeCount, EV_SEQ_GET_BOX_POKE_COUNT )
@@ -571,6 +600,11 @@
   DEF_CMD( EvCmdCallBagProc, EV_SEQ_CALL_BAG_PROC )
   DEF_CMD( EvCmdCallBoxProc, EV_SEQ_CALL_BOX_PROC )
   DEF_CMD( EvCmdCallMailBoxProc, EV_SEQ_CALL_MAILBOX_PROC )
+  NO_CMD()
+
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
   NO_CMD()
   
   //バトルサブウェイ関連
@@ -747,11 +781,11 @@
   //WFBC関連
   DEF_CMD( EvCmdWfbc_TalkStart, EV_SEQ_WFBC_TALKSTART )
   DEF_CMD( EvCmdWfbc_TalkEnd, EV_SEQ_WFBC_TALKEND )
-  DEF_CMD( EvCmdWfbc_GetBattleTrainerID, EV_SEQ_WFBC_GET_TRAINER_ID )
-  DEF_CMD( EvCmdWfbc_IsTakesIt, EV_SEQ_WFBC_CHECK_TAKES_IT )
+  DEF_CMD( EvCmdWfbc_GetData, EV_SEQ_WFBC_GET_DATA )
+  DEF_CMD( EvCmdWfbc_SetRirekiPlayerName, EV_SEQ_WFBC_SET_WORDSET_RIREKI_PLAYER_NAME )
 
-  DEF_CMD( EvCmdWfbc_IsRireki, EV_SEQ_WFBC_CHECK_RIREKI )
-  NO_CMD()
+  DEF_CMD( EvCmdWfbc_AddBCNpcWinNum, EV_SEQ_WFBC_ADD_BC_NPC_WIN_NUM )
+  DEF_CMD( EvCmdWfbc_AddBCNpcWinTarget, EV_SEQ_WFBC_ADD_BC_NPC_WIN_TARGET )
   NO_CMD()
   NO_CMD()
 

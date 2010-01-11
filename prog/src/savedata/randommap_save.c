@@ -28,10 +28,14 @@
 //	typedef struct
 //======================================================================
 #pragma mark [> struct
+
+
 struct _RANDOMMAP_SAVE
 {
   FIELD_WFBC_CORE mapdata;
   FIELD_WFBC_CORE_ITEM item;
+
+  FIELD_WFBC_EVENT event;
 };
 
 
@@ -106,6 +110,21 @@ FIELD_WFBC_CORE_ITEM* RANDOMMAP_SAVE_GetItemData( RANDOMMAP_SAVE* sv )
   return &sv->item;
 }
 
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  WFBCイベントセーブデータを取得
+ *
+ *	@param	sv  セーブワーク
+ *
+ *	@return セーブデータ
+ */
+//-----------------------------------------------------------------------------
+FIELD_WFBC_EVENT* RANDOMMAP_SAVE_GetEventData( RANDOMMAP_SAVE* sv )
+{
+  GF_ASSERT( sv );
+  return &sv->event;
+}
 
 
 

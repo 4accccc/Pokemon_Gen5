@@ -44,6 +44,8 @@
 
 #include "app/waza_oshie.h"  // for WAZAOSHIE_xxxx
 
+#include "msg/msg_place_name.h"  // for MAPNAME_xxxx
+
 
 //======================================================================
 //  define
@@ -1229,5 +1231,67 @@ VMCMD_RESULT EvCmdCheckRemaindWaza( VMHANDLE* core, void* wk )
   waza = WAZAOSHIE_GetRemaindWaza( poke, heap_id );
   *ret_wk = WAZAOSHIE_WazaTableChack( waza );
   GFL_HEAP_FreeMemory( waza );
+  return VMCMD_RESULT_CONTINUE;
+}
+
+
+//--------------------------------------------------------------
+/**
+ * @brief 捕獲場所IDの取得
+ * @param	core		仮想マシン制御構造体へのポインタ
+ * @param wk      SCRCMD_WORKへのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdCheckPartyPokeGetPlace( VMHANDLE* core, void* wk )
+{
+  SCRCMD_WORK*    work = (SCRCMD_WORK*)wk;
+  u16*          ret_wk = SCRCMD_GetVMWork( core, wk );       // 結果格納先ワーク
+  u16              pos = SCRCMD_GetVMWorkValue( core, wk );  // 判定ポケモン指定
+  u16              type = SCRCMD_GetVMWorkValue( core, wk );  // POKE_GET_PLACE_CHECK_～
+  GAMEDATA*      gdata = SCRCMD_WORK_GetGameData( work );
+  POKEPARTY*     party = GAMEDATA_GetMyPokemon( gdata );
+  POKEMON_PARAM* param = PokeParty_GetMemberPointer( party, pos );
+  u16 place;
+  static const u16 POKE_GET_PLACE_CHECK_PLACE[POKE_GET_PLACE_CHECK_MAX] = 
+  {
+    MAPNAME_WC10,
+  };
+
+  GF_ASSERT( type < POKE_GET_PLACE_CHECK_MAX );
+  
+  place = (u16)PP_Get( param, ID_PARA_get_place, NULL );
+  
+  if( place == POKE_GET_PLACE_CHECK_PLACE[ type ] ){
+    *ret_wk = TRUE;
+  }else{
+    *ret_wk = FALSE;
+  }
+  
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ * @brief 捕獲日時の取得
+ * @param	core		仮想マシン制御構造体へのポインタ
+ * @param wk      SCRCMD_WORKへのポインタ
+ * @retval VMCMD_RESULT
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdGetPartyPokeGetDate( VMHANDLE* core, void* wk )
+{
+  SCRCMD_WORK*    work = (SCRCMD_WORK*)wk;
+  u16*          ret_year = SCRCMD_GetVMWork( core, wk );       // 結果格納先ワーク
+  u16*          ret_month = SCRCMD_GetVMWork( core, wk );       // 結果格納先ワーク
+  u16*          ret_day = SCRCMD_GetVMWork( core, wk );       // 結果格納先ワーク
+  u16              pos = SCRCMD_GetVMWorkValue( core, wk );  // 判定ポケモン指定
+  GAMEDATA*      gdata = SCRCMD_WORK_GetGameData( work );
+  POKEPARTY*     party = GAMEDATA_GetMyPokemon( gdata );
+  POKEMON_PARAM* param = PokeParty_GetMemberPointer( party, pos );
+
+  *ret_year = (u16)PP_Get( param, ID_PARA_get_year, NULL );
+  *ret_month = (u16)PP_Get( param, ID_PARA_get_month, NULL );
+  *ret_day = (u16)PP_Get( param, ID_PARA_get_day, NULL );
   return VMCMD_RESULT_CONTINUE;
 }

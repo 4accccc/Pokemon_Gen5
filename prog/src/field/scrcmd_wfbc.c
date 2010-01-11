@@ -27,6 +27,7 @@
 
 #include "scrcmd_wfbc.h"
 
+#include "scrcmd_wfbc_define.h" 
 
 //-----------------------------------------------------------------------------
 /**
@@ -62,7 +63,6 @@ VMCMD_RESULT EvCmdWfbc_TalkStart( VMHANDLE *core, void *wk )
   FIELD_WFBC* p_wfbc = FLDMAPPER_GetWfbcWork( p_mapper );
   FIELD_PLAYER* p_player = FIELDMAP_GetFieldPlayer( fparam->fieldMap );
   const MMDLSYS * cp_mmdlsys = FIELDMAP_GetMMdlSys( fparam->fieldMap );
-  WORDSET* p_wordset = SCRIPT_GetMemberWork( sc, ID_EVSCR_WORDSET );
   s16 gx, gy, gz;
   MMDL* p_frontmmdl;
   u32 objid;
@@ -77,10 +77,6 @@ VMCMD_RESULT EvCmdWfbc_TalkStart( VMHANDLE *core, void *wk )
   // 会話スコア加算
   objid = MMDL_GetOBJID( p_frontmmdl );
   FIELD_WFBC_AddTalkPointPeople( p_wfbc, objid );
-
-
-  // ワードセットに履歴情報を設定しておく
-  FIELD_WFBC_SetWordSetParentPlayer( p_wfbc, p_wordset, objid, FIELDMAP_GetHeapID( fparam->fieldMap ) );
   
 	return VMCMD_RESULT_CONTINUE;
 }
@@ -99,7 +95,6 @@ VMCMD_RESULT EvCmdWfbc_TalkEnd( VMHANDLE *core, void *wk )
   FIELD_WFBC* p_wfbc = FLDMAPPER_GetWfbcWork( p_mapper );
   FIELD_PLAYER* p_player = FIELDMAP_GetFieldPlayer( fparam->fieldMap );
   const MMDLSYS * cp_mmdlsys = FIELDMAP_GetMMdlSys( fparam->fieldMap );
-  WORDSET* p_wordset = SCRIPT_GetMemberWork( sc, ID_EVSCR_WORDSET );
   s16 gx, gy, gz;
   MMDL* p_frontmmdl;
   u32 objid;
@@ -127,10 +122,10 @@ VMCMD_RESULT EvCmdWfbc_TalkEnd( VMHANDLE *core, void *wk )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  目の前の人のバトルトレーナーIDの取得
+ *	@brief  前の街（BC）の履歴にある人の名前をワードセットに設定
  */
 //-----------------------------------------------------------------------------
-VMCMD_RESULT EvCmdWfbc_GetBattleTrainerID( VMHANDLE *core, void *wk )
+VMCMD_RESULT EvCmdWfbc_SetRirekiPlayerName( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
@@ -139,13 +134,14 @@ VMCMD_RESULT EvCmdWfbc_GetBattleTrainerID( VMHANDLE *core, void *wk )
   FIELD_WFBC* p_wfbc = FLDMAPPER_GetWfbcWork( p_mapper );
   FIELD_PLAYER* p_player = FIELDMAP_GetFieldPlayer( fparam->fieldMap );
   const MMDLSYS * cp_mmdlsys = FIELDMAP_GetMMdlSys( fparam->fieldMap );
-  WORDSET* p_wordset = SCRIPT_GetMemberWork( sc, ID_EVSCR_WORDSET );
+  WORDSET** pp_wordset = SCRIPT_GetMemberWork( sc, ID_EVSCR_WORDSET );
   s16 gx, gy, gz;
   MMDL* p_frontmmdl;
   u32 objid;
-  const FIELD_WFBC_PEOPLE_DATA* cp_people_data;
+  const FIELD_WFBC_CORE_PEOPLE* cp_people_core;
   const FIELD_WFBC_PEOPLE* cp_people;
-	u16 *ret_wk	= SCRCMD_GetVMWork( core, work );
+  u16 idx = SCRCMD_GetVMWorkValue( core, wk );  // 
+  HEAPID heapID = SCRCMD_WORK_GetHeapID( work );
 
   // 目の前のグリッド取得
   FIELD_PLAYER_GetFrontGridPos( p_player, &gx, &gy, &gz );
@@ -154,58 +150,124 @@ VMCMD_RESULT EvCmdWfbc_GetBattleTrainerID( VMHANDLE *core, void *wk )
   // 目の前にいる人物を検索
   p_frontmmdl = MMDLSYS_SearchGridPos( cp_mmdlsys, gx, gz, FALSE );
 
-  // 会話スコア加算
+  // OBJID
+  objid = MMDL_GetOBJID( p_frontmmdl );
+
+  // ワードセットに設定
+  FIELD_WFBC_SetWordSetParentPlayer( p_wfbc, *pp_wordset, objid, idx, heapID );
+
+	return VMCMD_RESULT_CONTINUE;
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  WFBC  各情報の取得
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdWfbc_GetData( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  SCRIPT_FLDPARAM *fparam = SCRIPT_GetFieldParam( sc );
+  FLDMAPPER * p_mapper = FIELDMAP_GetFieldG3Dmapper( fparam->fieldMap );
+  FIELD_WFBC* p_wfbc = FLDMAPPER_GetWfbcWork( p_mapper );
+  FIELD_PLAYER* p_player = FIELDMAP_GetFieldPlayer( fparam->fieldMap );
+  const MMDLSYS * cp_mmdlsys = FIELDMAP_GetMMdlSys( fparam->fieldMap );
+  GAMESYS_WORK* p_gamesys = FIELDMAP_GetGameSysWork( fparam->fieldMap );
+  GAMEDATA* p_gamedata = GAMESYSTEM_GetGameData( p_gamesys );
+  FIELD_WFBC_EVENT* p_event = GAMEDATA_GetWFBCEventData( p_gamedata );
+  s16 gx, gy, gz;
+  MMDL* p_frontmmdl;
+  u32 objid;
+  const FIELD_WFBC_CORE_PEOPLE* cp_people_core;
+  const FIELD_WFBC_PEOPLE_DATA* cp_people_data;
+  const FIELD_WFBC_PEOPLE* cp_people;
+  u16 define = SCRCMD_GetVMWorkValue( core, wk );  // 
+	u16 *ret_wk	= SCRCMD_GetVMWork( core, work );
+
+  // 目の前のグリッド取得
+  FIELD_PLAYER_GetFrontGridPos( p_player, &gx, &gy, &gz );
+
+  // 目の前にいる人物を検索
+  p_frontmmdl = MMDLSYS_SearchGridPos( cp_mmdlsys, gx, gz, FALSE );
+
+  // OBJID
   objid = MMDL_GetOBJID( p_frontmmdl );
 
   // 人物情報取得
   cp_people = FIELD_WFBC_GetPeople( p_wfbc, objid );
   cp_people_data = FIELD_WFBC_PEOPLE_GetPeopleData( cp_people );
-
-  // トレーナーIDを返す
-  (*ret_wk) = cp_people_data->btl_trdata;
-
-	return VMCMD_RESULT_CONTINUE;
-}
-
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  連れて行ける状態なのかチェック
- */
-//-----------------------------------------------------------------------------
-VMCMD_RESULT EvCmdWfbc_IsTakesIt( VMHANDLE *core, void *wk )
-{
-  SCRCMD_WORK *work = wk;
-  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-  SCRIPT_FLDPARAM *fparam = SCRIPT_GetFieldParam( sc );
-  FLDMAPPER * p_mapper = FIELDMAP_GetFieldG3Dmapper( fparam->fieldMap );
-  FIELD_WFBC* p_wfbc = FLDMAPPER_GetWfbcWork( p_mapper );
-  FIELD_PLAYER* p_player = FIELDMAP_GetFieldPlayer( fparam->fieldMap );
-  const MMDLSYS * cp_mmdlsys = FIELDMAP_GetMMdlSys( fparam->fieldMap );
-  WORDSET* p_wordset = SCRIPT_GetMemberWork( sc, ID_EVSCR_WORDSET );
-  s16 gx, gy, gz;
-  MMDL* p_frontmmdl;
-  u32 objid;
-  const FIELD_WFBC_CORE_PEOPLE* cp_people_core;
-  const FIELD_WFBC_PEOPLE* cp_people;
-	u16 *ret_wk	= SCRCMD_GetVMWork( core, work );
-
-  // 目の前のグリッド取得
-  FIELD_PLAYER_GetFrontGridPos( p_player, &gx, &gy, &gz );
-
-
-  // 目の前にいる人物を検索
-  p_frontmmdl = MMDLSYS_SearchGridPos( cp_mmdlsys, gx, gz, FALSE );
-
-  // 会話スコア加算
-  objid = MMDL_GetOBJID( p_frontmmdl );
-
-  // 人物情報取得
-  cp_people = FIELD_WFBC_GetPeople( p_wfbc, objid );
   cp_people_core = FIELD_WFBC_PEOPLE_GetPeopleCore( cp_people );
 
-  // 機嫌値をチェック
-  (*ret_wk) = FIELD_WFBC_CORE_PEOPLE_IsMoodTakes( cp_people_core );
+
+  GF_ASSERT(define < WFBC_GET_PARAM_MAX);
+
+  switch( define )
+  {
+  // バトルトレーナーID
+  case WFBC_GET_PARAM_BATTLE_TRAINER_ID:
+    (*ret_wk) = cp_people_data->btl_trdata;
+    break;
+  // 街にいきたがるか
+  case WFBC_GET_PARAM_IS_TAKES_ID:
+    (*ret_wk) = FIELD_WFBC_CORE_PEOPLE_IsMoodTakes( cp_people_core );
+    break;
+  // 前にいたBCの街の履歴があるか
+  case WFBC_GET_PARAM_IS_RIREKI:
+    (*ret_wk) = FIELD_WFBC_CORE_PEOPLE_IsParentIn( cp_people_core );
+    break;
+  // 人口の取得
+  case WFBC_GET_PARAM_PEOPLE_NUM:
+    (*ret_wk) = FIELD_WFBC_GetPeopleNum( p_wfbc );
+    break;
+  // BC　NPC勝利数
+  case WFBC_GET_PARAM_BC_NPC_WIN_NUM:
+    (*ret_wk) = FIELD_WFBC_EVENT_GetBCNpcWinCount( p_event );
+    break;
+  // BC　NPC勝利目標数
+  case WFBC_GET_PARAM_BC_NPC_WIN_TARGET:
+    (*ret_wk) = FIELD_WFBC_EVENT_GetBCNpcWinTarget( p_event );
+    break;
+  // WF　村長イベント　ポケモンはいるか？
+  case WFBC_GET_PARAM_WF_IS_POKECATCH:
+    if( FIELD_WFBC_GetPeopleNum( p_wfbc ) == 0 ){
+      (*ret_wk) = FALSE;
+    }else{
+      (*ret_wk) = TRUE;
+    }
+    break;
+  // WF 村長イベント　ご褒美アイテムの取得
+  case WFBC_GET_PARAM_WF_ITEM:
+    (*ret_wk) = FIELD_WFBC_EVENT_GetWFPokeCatchEventItem( p_event );
+    break;
+  // WF 村長イベント　探すポケモンナンバーの取得
+  case WFBC_GET_PARAM_WF_POKE:
+    (*ret_wk) = FIELD_WFBC_EVENT_GetWFPokeCatchEventMonsNo( p_event );
+    break;
+
+  default:
+    GF_ASSERT(0);
+    break;
+  }
+	return VMCMD_RESULT_CONTINUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  BC　NPC勝利イベント　勝利数を加算
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdWfbc_AddBCNpcWinNum( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  SCRIPT_FLDPARAM *fparam = SCRIPT_GetFieldParam( sc );
+  GAMESYS_WORK* p_gamesys = FIELDMAP_GetGameSysWork( fparam->fieldMap );
+  GAMEDATA* p_gamedata = GAMESYSTEM_GetGameData( p_gamesys );
+  FIELD_WFBC_EVENT* p_event = GAMEDATA_GetWFBCEventData( p_gamedata );
+
+  FIELD_WFBC_EVENT_AddBCNpcWinCount( p_event );
 
 	return VMCMD_RESULT_CONTINUE;
 }
@@ -213,45 +275,21 @@ VMCMD_RESULT EvCmdWfbc_IsTakesIt( VMHANDLE *core, void *wk )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  前の街の履歴があるか？
+ *	@brief  BC　NPC勝利イベント　勝利目標数を加算
  */
 //-----------------------------------------------------------------------------
-VMCMD_RESULT EvCmdWfbc_IsRireki( VMHANDLE *core, void *wk )
+VMCMD_RESULT EvCmdWfbc_AddBCNpcWinTarget( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
   SCRIPT_FLDPARAM *fparam = SCRIPT_GetFieldParam( sc );
-  FLDMAPPER * p_mapper = FIELDMAP_GetFieldG3Dmapper( fparam->fieldMap );
-  FIELD_WFBC* p_wfbc = FLDMAPPER_GetWfbcWork( p_mapper );
-  FIELD_PLAYER* p_player = FIELDMAP_GetFieldPlayer( fparam->fieldMap );
-  const MMDLSYS * cp_mmdlsys = FIELDMAP_GetMMdlSys( fparam->fieldMap );
-  WORDSET* p_wordset = SCRIPT_GetMemberWork( sc, ID_EVSCR_WORDSET );
-  s16 gx, gy, gz;
-  MMDL* p_frontmmdl;
-  u32 objid;
-  const FIELD_WFBC_CORE_PEOPLE* cp_people_core;
-  const FIELD_WFBC_PEOPLE* cp_people;
-	u16 *ret_wk	= SCRCMD_GetVMWork( core, work );
+  GAMESYS_WORK* p_gamesys = FIELDMAP_GetGameSysWork( fparam->fieldMap );
+  GAMEDATA* p_gamedata = GAMESYSTEM_GetGameData( p_gamesys );
+  FIELD_WFBC_EVENT* p_event = GAMEDATA_GetWFBCEventData( p_gamedata );
 
-  // 目の前のグリッド取得
-  FIELD_PLAYER_GetFrontGridPos( p_player, &gx, &gy, &gz );
-
-
-  // 目の前にいる人物を検索
-  p_frontmmdl = MMDLSYS_SearchGridPos( cp_mmdlsys, gx, gz, FALSE );
-
-  // 会話スコア加算
-  objid = MMDL_GetOBJID( p_frontmmdl );
-
-  //@TODO 通信相手と違う人物が入っているかチェックする。 
-  {
-    // 機嫌値をチェック
-    (*ret_wk) = TRUE;
-  }
-
+  FIELD_WFBC_EVENT_AddBCNpcWinTarget( p_event );
 	return VMCMD_RESULT_CONTINUE;
 }
-
 
 
 

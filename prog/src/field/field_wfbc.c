@@ -645,10 +645,11 @@ void FIELD_WFBC_AddTalkPointPeople( FIELD_WFBC* p_wk, u32 npc_id )
  *	@param	cp_wk       ワーク
  *	@param	p_wordset   ワードセット
  *	@param	npc_id      NPCID
+ *	@param  word_set_idx  ワードセットのインデックス
  *	@param  heapID      ヒープID
  */ 
 //-----------------------------------------------------------------------------
-void FIELD_WFBC_SetWordSetParentPlayer( const FIELD_WFBC* cp_wk, WORDSET* p_wordset, u32 npc_id, HEAPID heapID )
+void FIELD_WFBC_SetWordSetParentPlayer( const FIELD_WFBC* cp_wk, WORDSET* p_wordset, u32 npc_id, u32 word_set_idx, HEAPID heapID )
 {
   MYSTATUS* p_mystatus;
   const FIELD_WFBC_PEOPLE* cp_people;
@@ -664,8 +665,7 @@ void FIELD_WFBC_SetWordSetParentPlayer( const FIELD_WFBC* cp_wk, WORDSET* p_word
   
 
   // ワードセットに設定
-  // @TODO 今wordsetのtmpBufがない
-  //WORDSET_RegisterPlayerName( p_wordset, 0, p_mystatus );
+  WORDSET_RegisterPlayerName( p_wordset, word_set_idx, p_mystatus );
 
 
   GFL_HEAP_FreeMemory( p_mystatus );

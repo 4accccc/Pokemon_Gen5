@@ -4456,6 +4456,48 @@
   .short  \pos
   .endm
 
+//--------------------------------------------------------------
+/**
+ * @def _CHECK_TEMOTI_GETPLACE
+ * @brief 指定手持ちポケモンの捕獲場所IDをチェック
+ *
+ * @param ret_wk      TRUE  チェックタイプと一致　FALSE　不一致
+ * @param poke_pos    手持ちポジション
+ * @param check_type  捕獲場所チェックタイプ　POKE_GET_PLACE_CHECK_～
+ *        prog/src/field/script_def.h
+ */
+//--------------------------------------------------------------
+#define _CHECK_TEMOTI_GETPLACE( ret_wk, poke_pos, check_type ) _ASM_CHECK_TEMOTI_GETPLACE ret_wk, poke_pos, check_type
+  
+
+  .macro  _ASM_CHECK_TEMOTI_GETPLACE ret_wk, poke_pos, check_type
+  .short  EV_SEQ_CHECK_TEMOTI_GETPLACE
+  .short  \ret_wk
+  .short  \poke_pos
+  .short  \check_type
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _GET_TEMOTI_GETDATE
+ * @brief 指定手持ちポケモンの捕獲日付を取得
+ *
+ * @param ret_year   捕獲年の格納先
+ * @param ret_month  捕獲月の格納先
+ * @param ret_day    捕獲日の格納先
+ * @param poke_pos  手持ちポジション
+ */
+//--------------------------------------------------------------
+#define _GET_TEMOTI_GETDATE( ret_year, ret_month, ret_day, poke_pos ) _ASM_GET_TEMOTI_GETDATE ret_year, ret_month, ret_day, poke_pos
+
+  .macro  _ASM_GET_TEMOTI_GETDATE ret_year, ret_month, ret_day, poke_pos
+  .short  EV_SEQ_GET_TEMOTI_GETPLACE
+  .short  \ret_year
+  .short  \ret_month
+  .short  \ret_day
+  .short  \poke_pos
+  .endm
+
 //======================================================================
 // お金
 //======================================================================
@@ -6711,50 +6753,59 @@
 
 //--------------------------------------------------------------
 /**
- *  _WFBC_GET_TRAINER_ID
- *  @brief WFBC:会話しているトレーナーIDを取得
+ *  _WFBC_GET_DATA
+ *  @brief WFBC:各種情報の取得
  *
- *  @param ret_val  戻り値  トレーナーID
+ *  @param data_type  取得したい情報のタイプ　prog/src/field/scrcmd_wfbc_define.h
+ *  @param ret_val    戻り値  データ
  */
 //--------------------------------------------------------------
-#define _WFBC_GET_TRAINER_ID( retVal ) \
-    _ASM_WFBC_GET_TRAINER_ID retVal
+#define _WFBC_GET_DATA( data_type, retVal ) \
+    _ASM_WFBC_GET_DATA data_type, retVal
 
-  .macro  _ASM_WFBC_GET_TRAINER_ID retVal
-  .short EV_SEQ_WFBC_GET_TRAINER_ID
+  .macro  _ASM_WFBC_GET_DATA data_type, retVal
+  .short EV_SEQ_WFBC_GET_DATA
+  .short \data_type
   .short \retVal
   .endm
 
 //--------------------------------------------------------------
 /**
- *  _WFBC_CHECK_TAKES_IT
- *  @brief WFBC:会話内容が、～にいってみたいになるのかチェック
- *
- *  @param ret_val  戻り値  ～にいってみたい
+ *  _WFBC_SET_WORDSET_RIREKI_PLAYER_NAME
+ *  @brief WFBC:履歴に入っている人の名前をワードセットに設定
  */
 //--------------------------------------------------------------
-#define _WFBC_CHECK_TAKES_IT( retVal ) \
-    _ASM_WFBC_CHECK_TAKES_IT retVal
+#define _WFBC_SET_WORDSET_RIREKI_PLAYER_NAME() \
+    _ASM_WFBC_SET_WORDSET_RIREKI_PLAYER_NAME
 
-  .macro  _ASM_WFBC_CHECK_TAKES_IT retVal
-  .short EV_SEQ_WFBC_CHECK_TAKES_IT
-  .short \retVal
+  .macro  _ASM_WFBC_SET_WORDSET_RIREKI_PLAYER_NAME
+  .short EV_SEQ_WFBC_SET_WORDSET_RIREKI_PLAYER_NAME
   .endm
 
 //--------------------------------------------------------------
 /**
- *  _WFBC_CHECK_RIREKI
- *  @brief WFBC:履歴があるのかチェック
- *
- *  @param ret_val  戻り値  トレーナーID
+ *  _WFBC_ADD_BC_NPC_WIN_NUM
+ *  @brief WFBC:BC NPC勝利数を加算
  */
 //--------------------------------------------------------------
-#define _WFBC_CHECK_RIREKI( retVal ) \
-    _ASM_WFBC_CHECK_RIREKI retVal
+#define _WFBC_ADD_BC_NPC_WIN_NUM() \
+    _ASM_WFBC_ADD_BC_NPC_WIN_NUM
 
-  .macro  _ASM_WFBC_CHECK_RIREKI retVal
-  .short EV_SEQ_WFBC_CHECK_RIREKI
-  .short \retVal
+  .macro  _ASM_WFBC_ADD_BC_NPC_WIN_NUM
+  .short EV_SEQ_WFBC_ADD_BC_NPC_WIN_NUM
+  .endm
+
+//--------------------------------------------------------------
+/**
+ *  _WFBC_ADD_BC_NPC_WIN_TARGET
+ *  @brief WFBC:BC NPC勝利数を加算
+ */
+//--------------------------------------------------------------
+#define _WFBC_ADD_BC_NPC_WIN_TARGET() \
+    _ASM_WFBC_ADD_BC_NPC_WIN_TARGET
+
+  .macro  _ASM_WFBC_ADD_BC_NPC_WIN_TARGET
+  .short EV_SEQ_WFBC_ADD_BC_NPC_WIN_TARGET
   .endm
 
 //--------------------------------------------------------------
