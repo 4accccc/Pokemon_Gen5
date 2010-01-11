@@ -16,6 +16,7 @@
 #pragma	once
 
 #include "savedata_def.h"
+#include <heap.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -120,6 +121,16 @@ extern SAVE_RESULT GFL_BACKUP_Save(GFL_SAVEDATA * sv);
  */
 //---------------------------------------------------------------------------
 extern BOOL GFL_BACKUP_Erase(GFL_SAVEDATA * sv, u32 heap_temp_id);
+
+//==================================================================
+/**
+ * フラッシュを工場出荷状態の値でクリアする
+ *
+ * @param   heap_id		    テンポラリヒープ
+ * @param   flash_size		フラッシュのサイズ(byte)
+ */
+//==================================================================
+extern void GFL_BACKUP_FlashErase(HEAPID heap_id, u32 flash_size);
 
 //---------------------------------------------------------------------------
 /**
