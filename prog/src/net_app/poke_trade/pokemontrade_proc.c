@@ -2465,7 +2465,7 @@ static GFL_PROC_RESULT PokemonTradeUnionNegoProcInit( GFL_PROC * proc, int * seq
     pWork->GTStype[i] = 0;  //
     pWork->GTSlv[i] = 1;  //
   }
-  pWork->pFriend = GAMEDATA_GetMyStatusPlayer(pParent->gamedata, 1);
+  pWork->pFriend = GAMEDATA_GetMyStatusPlayer(pParent->gamedata, 1-GFL_NET_SystemGetCurrentID());
 
   return PokemonTradeProcInit(proc,seq,pParent ,pWork,POKEMONTRADE_GTSNEGO);
 }

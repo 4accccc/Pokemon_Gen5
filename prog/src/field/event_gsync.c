@@ -52,7 +52,6 @@
 FS_EXTERN_OVERLAY(gamesync);
 FS_EXTERN_OVERLAY(fieldmap);
 FS_EXTERN_OVERLAY(wifi_login);
-extern const GFL_PROC_DATA WiFiLogin_ProcData;
 
 
 #define _LOCALMATCHNO (100)

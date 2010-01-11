@@ -18,12 +18,12 @@
  * @return	,,
  */
 //----------------------------------------------------------
-
+/*
 MYSTATUS* WIFI_STATUS_GetMyStatus(WIFI_STATUS* pStatus)
 {
 	return &pStatus->aMyStatus;
 }
-
+*/
 
 //----------------------------------------------------------
 /**
@@ -31,12 +31,12 @@ MYSTATUS* WIFI_STATUS_GetMyStatus(WIFI_STATUS* pStatus)
  * @return	,,
  */
 //----------------------------------------------------------
-
+/*
 extern void WIFI_STATUS_SetMyStatus(WIFI_STATUS* pStatus, const MYSTATUS* pMy)
 {
 	MyStatus_Copy(pMy,&pStatus->aMyStatus);
 }
-
+*/
 //----------------------------------------------------------
 /**
  * @brief	  WifiStatus‚ð•Ô‚·
@@ -108,18 +108,6 @@ u8 WIFI_STATUS_GetVChatStatus(const WIFI_STATUS* pStatus)
 void WIFI_STATUS_SetVChatStatus(WIFI_STATUS* pStatus, u8 vct)
 {
 	pStatus->VChatStatus= vct;
-}
-
-//----------------------------------------------------------
-/**
- * @brief	  ƒQ[ƒ€’†‚Å‘¼‚Ìl‚ðŽó‚¯“ü‚ê‚ç‚ê‚È‚¢‚©‚Ç‚¤‚©‚ð•Ô‚·
- * @return	,,
- */
-//----------------------------------------------------------
-
-u8 WIFI_STATUS_GetActive(const WIFI_STATUS* pStatus)
-{
-	return pStatus->Active;
 }
 
 //----------------------------------------------------------

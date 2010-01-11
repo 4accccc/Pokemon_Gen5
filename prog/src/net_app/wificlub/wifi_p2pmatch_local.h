@@ -355,7 +355,7 @@ GAMEDATA* pGameData;
   u8     subCur;
   BOOL bInitMessage;		// 初回接続か
   GFL_PROC*		subProc;
-   u16 matchState[WIFIP2PMATCH_MEMBER_MAX];   ///<CNM_WFP2PMF_STATUS
+   u16 matchGameMode[WIFIP2PMATCH_MEMBER_MAX];   ///<CNM_WFP2PMF_STATUS
   int preConnect;			// 新しく来た友達(-1=なし)
   u16 battleCur;			// バトルタイプ選択メニューカーソル
   u16 singleCur[3];			// バトルの詳細部分のメニューカーソル
@@ -383,6 +383,7 @@ GAMEDATA* pGameData;
 
 
 extern void WifiP2PMatchRecvGameStatus(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
+extern void WifiP2PMatchRecvMyStatus(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 
 
 

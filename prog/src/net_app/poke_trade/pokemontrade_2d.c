@@ -1133,8 +1133,8 @@ static void  _PokeIconCgxLoad(POKEMON_TRADE_WORK* pWork )
   NNSG2dCharacterData* pCharData;
 
 
-  GF_ASSERT(MONSNO_MAX < 650);
-  pWork->pCharMem = GFL_HEAP_AllocMemory(pWork->heapID, 4*8*4*4*650 );
+  GF_ASSERT(MONSNO_MAX < 660);
+  pWork->pCharMem = GFL_HEAP_AllocMemory(pWork->heapID, 4*8*4*4*660 );
   
   for(i=0;i < MONSNO_MAX; i++){ //@todo フォルム違いを持ってくる必要あり
   

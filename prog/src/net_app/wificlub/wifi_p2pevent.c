@@ -30,6 +30,7 @@
 
 #include "net_app/comm_tvt_sys.h"  //TVトランシーバ
 #include "wifi_status.h"
+#include "net_app/wifi_login.h"
 
 
 //#include "net_app/balloon.h"
@@ -72,7 +73,7 @@ typedef struct{
   BATTLE_SETUP_PARAM para;
   int seq;
   u16* ret;
-  u8 lvLimit;
+  //u8 lvLimit;
   u8 bSingle;
   void* work;   // wifiPofin用ワーク
   u32 vchat;
@@ -119,26 +120,27 @@ static u32 P2P_FourWaitEnd( EV_P2PEVENT_WORK* p_wk ){ return P2P_MATCH_BOARD; }
 
 
 typedef struct {
-  u8 lvLimit;
+//  u8 lvLimit;
   u8 bSingle;
   u16 kind;
 } NextMatchKindTbl;
 
 NextMatchKindTbl aNextMatchKindTbl[] = {
-  {0,  0, P2P_EXIT},
-  {0,  0, P2P_EXIT},
-  {0,  0, P2P_EXIT},
-  {0,  0, P2P_TVT}, //WIFI_P2PMATCH_TRADE:   // TVトランシーバ
-  {0,  0, P2P_TRADE}, //WIFI_P2PMATCH_TRADE:   // ポケモントレード呼び出し
-  {0,  WIFI_GAME_BATTLE_SINGLE_ALL, P2P_BATTLE},   //バトル
-  {50, WIFI_GAME_BATTLE_SINGLE_FLAT, P2P_BATTLE}, 
-  {0,  WIFI_GAME_BATTLE_DOUBLE_ALL, P2P_BATTLE}, 
-  {50, WIFI_GAME_BATTLE_DOUBLE_FLAT, P2P_BATTLE}, 
-  {0,  WIFI_GAME_BATTLE_TRIPLE_ALL, P2P_BATTLE}, 
-  {50, WIFI_GAME_BATTLE_TRIPLE_FLAT, P2P_BATTLE}, 
-  {0,  WIFI_GAME_BATTLE_ROTATION_ALL, P2P_BATTLE}, 
-  {50, WIFI_GAME_BATTLE_ROTATION_FLAT, P2P_BATTLE}, 
-  {0,0, P2P_EXIT},   // 通信切断してます。終了します。
+  { 0, P2P_EXIT},
+  { 0, P2P_EXIT},
+  { 0, P2P_EXIT},
+  { 0, P2P_EXIT},
+  { 0, P2P_TVT}, //WIFI_P2PMATCH_TRADE:   // TVトランシーバ
+  { 0, P2P_TRADE}, //WIFI_P2PMATCH_TRADE:   // ポケモントレード呼び出し
+  { WIFI_GAME_BATTLE_SINGLE_ALL, P2P_BATTLE},   //バトル
+  { WIFI_GAME_BATTLE_SINGLE_FLAT, P2P_BATTLE}, 
+  { WIFI_GAME_BATTLE_DOUBLE_ALL, P2P_BATTLE}, 
+  { WIFI_GAME_BATTLE_DOUBLE_FLAT, P2P_BATTLE}, 
+  { WIFI_GAME_BATTLE_TRIPLE_ALL, P2P_BATTLE}, 
+  { WIFI_GAME_BATTLE_TRIPLE_FLAT, P2P_BATTLE}, 
+  { WIFI_GAME_BATTLE_ROTATION_ALL, P2P_BATTLE}, 
+  { WIFI_GAME_BATTLE_ROTATION_FLAT, P2P_BATTLE}, 
+  { 0, P2P_EXIT},   // 通信切断してます。終了します。
 };
 
 
@@ -181,7 +183,12 @@ static GFL_PROC_RESULT WifiClubProcMain( GFL_PROC * proc, int * seq, void * pwk,
   case P2P_INIT:
 
     ep2p->seq = P2P_MATCH_BOARD;
-/*
+
+
+//    WiFiLogin_ProcData
+//    GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(wifi_login), &WiFiLogin_ProcData, &dbw->login);
+
+    /*
     if(ep2p->pMatchParam->seq == WIFI_P2PMATCH_DPW){
       if( mydwc_checkMyGSID() ){
         ep2p->seq = P2P_FREE;  //コード取得済みの場合なにもしない
@@ -205,7 +212,7 @@ static GFL_PROC_RESULT WifiClubProcMain( GFL_PROC * proc, int * seq, void * pwk,
     }
     ep2p->seq = aNextMatchKindTbl[ep2p->pMatchParam->seq].kind;
     NET_PRINT("P2P_SELECT %d %d\n",ep2p->seq,ep2p->pMatchParam->seq);
-    ep2p->lvLimit = aNextMatchKindTbl[ep2p->pMatchParam->seq].lvLimit;
+    //ep2p->lvLimit = aNextMatchKindTbl[ep2p->pMatchParam->seq].lvLimit;
     ep2p->bSingle = aNextMatchKindTbl[ep2p->pMatchParam->seq].bSingle;
     GFL_OVERLAY_Unload(FS_OVERLAY_ID(wificlub));
 /*

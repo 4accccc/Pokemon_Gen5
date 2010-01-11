@@ -490,7 +490,6 @@ static const struct {
   u32  param;
 }_childMatchMenuList[] = {
   { msg_wifilobby_030, (u32)_CONNECTING },
-  //    { msg_wifilobby_031, (u32)_INFOVIEW },
   { msg_wifilobby_032, (u32)BMPMENULIST_CANCEL },
 };
 
@@ -526,7 +525,7 @@ static const BMPMENULIST_HEADER _childMatchMenuListHeader = {
 
 static void _ChildModeMatchMenuDisp( WIFIP2PMATCH_WORK *wk )
 {
-#if 0
+#if 1
     int i,length;
     BMPMENULIST_HEADER list_h;
     u16 friendNo,status,vchat;
@@ -538,8 +537,11 @@ static void _ChildModeMatchMenuDisp( WIFIP2PMATCH_WORK *wk )
     p_status = WifiFriendMatchStatusGet( friendNo - 1 );
     status = _WifiMyStatusGet( wk, p_status );
     vchat = WIFI_STATUS_GetVChatStatus(p_status);
-    wk->keepVChat = vchat;
-    vchat += WIFI_STATUS_GetVChatStatus( wk->pMatch );
+
+//  wk->keepVChat = vchat;
+
+
+  vchat += WIFI_STATUS_GetVChatStatus( wk->pMatch );
 
     // ‚»‚Ìl‚Ìî•ñ‚ğ•\¦
     //  WifiP2PMatch_UserDispOn_MyAcces( wk, friendNo, HEAPID_WIFIP2PMATCH );
