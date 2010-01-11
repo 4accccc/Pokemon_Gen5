@@ -343,12 +343,10 @@ static void mapCtrlHybrid_Main_Grid( FIELDMAP_WORK* p_fieldmap, FIELDMAP_CTRL_HY
   if(p_wk->last_move != PLAYER_MOVE_VALUE_WALK)
   {
     dir = mapCtrlHybrid_getKeyDir( p_wk, key_cont );
-    set_dir = dir;
   }
   else
   {
     dir = MMDL_GetDirMove( mmdl );
-    set_dir = MMDL_GetDirDisp( mmdl );
   }
 
 
@@ -377,6 +375,13 @@ static void mapCtrlHybrid_Main_Grid( FIELDMAP_WORK* p_fieldmap, FIELDMAP_CTRL_HY
         {
           // 動作チェンジ
           FIELD_PLAYER_GRID_Move( p_wk->p_player_grid, 0, 0 );
+
+          // 描画方向を求める
+          if(p_wk->last_move != PLAYER_MOVE_VALUE_WALK){
+            set_dir = dir;
+          }else{
+            set_dir = MMDL_GetDirDisp( mmdl );
+          }
           
           mapCtrlHybrid_ChangeGridToRail( p_fieldmap, p_wk, set_dir, &location );
           p_wk->last_move = PLAYER_MOVE_VALUE_STOP;
@@ -410,15 +415,10 @@ static void mapCtrlHybrid_Main_Rail( FIELDMAP_WORK* p_fieldmap, FIELDMAP_CTRL_HY
   
   mmdl = FIELD_PLAYER_GetMMdl( p_wk->p_player );
 
-  if(p_wk->last_move != PLAYER_MOVE_VALUE_WALK)
-  {
+  if(p_wk->last_move != PLAYER_MOVE_VALUE_WALK){
     dir = mapCtrlHybrid_getKeyDir( p_wk, key_cont );
-    set_dir = dir;
-  }
-  else
-  {
+  }else{
     dir = MMDL_GetDirMove( mmdl );
-    set_dir = MMDL_GetDirDisp( mmdl );
   }
 
 
@@ -447,6 +447,14 @@ static void mapCtrlHybrid_Main_Rail( FIELDMAP_WORK* p_fieldmap, FIELDMAP_CTRL_HY
         {
           // 動作チェンジ
           FIELD_PLAYER_NOGRID_Move( p_wk->p_player_nogrid, 0, 0 );
+
+          // 描画方向を求める
+          if(p_wk->last_move != PLAYER_MOVE_VALUE_WALK){
+            set_dir = dir;
+          }else{
+            set_dir = MMDL_GetDirDisp( mmdl );
+          }
+          
           mapCtrlHybrid_ChangeRailToGrid( p_fieldmap, p_wk, set_dir, &pos );
           p_wk->last_move = PLAYER_MOVE_VALUE_STOP;
           return ;
