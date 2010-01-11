@@ -65,8 +65,10 @@ typedef enum
   FIELD_PLAYER_NOGRID_MOVEBIT_SPIN_L      = (1<<3),
   ///描画右回転
   FIELD_PLAYER_NOGRID_MOVEBIT_SPIN_R      = (1<<4),
+  ///動作後強制右向き
+  FIELD_PLAYER_NOGRID_MOVEBIT_TURN_R      = (1<<5),
   ///最大
-  FIELD_PLAYER_NOGRID_MOVEBIT_BITMAX      = (1<<5),
+  FIELD_PLAYER_NOGRID_MOVEBIT_BITMAX      = (1<<6),
 }FIELD_PLAYER_NOGRID_MOVEBIT;
 
 #define FIELD_PLAYER_NOGRID_MOVEBIT_MAX (3)
@@ -95,6 +97,7 @@ typedef enum
   UNDER_ICE_R, //滑る床 右回転
   UNDER_ICE_JUMP_L, //滑る床 左ジャンプ
   UNDER_ICE_JUMP_R, //滑る床 右ジャンプ
+  UNDER_ICE_TURN_R, //滑る床 強制右向き
   UNDER_MAX,
 }UNDER;
 
@@ -194,6 +197,8 @@ static void nogrid_OnMoveBitSpinL( FIELD_PLAYER_NOGRID *nogrid );
 static void nogrid_OffMoveBitSpinL( FIELD_PLAYER_NOGRID *nogrid );
 static void nogrid_OnMoveBitSpinR( FIELD_PLAYER_NOGRID *nogrid );
 static void nogrid_OffMoveBitSpinR( FIELD_PLAYER_NOGRID *nogrid );
+static void nogrid_OnMoveBitTurnR( FIELD_PLAYER_NOGRID *nogrid );
+static void nogrid_OffMoveBitTurnR( FIELD_PLAYER_NOGRID *nogrid );
 
 static UNDER nogrid_CheckUnder( FIELD_PLAYER_NOGRID *nogrid, u16 dir );
 
@@ -206,6 +211,7 @@ static u16 nogrid_ControlUnderIceSpinL( FIELD_PLAYER_NOGRID *nogrid, u16 dir, BO
 static u16 nogrid_ControlUnderIceSpinR( FIELD_PLAYER_NOGRID *nogrid, u16 dir, BOOL debug );
 static u16 nogrid_ControlUnderIceJumpL( FIELD_PLAYER_NOGRID *nogrid, u16 dir, BOOL debug );
 static u16 nogrid_ControlUnderIceJumpR( FIELD_PLAYER_NOGRID *nogrid, u16 dir, BOOL debug );
+static u16 nogrid_ControlUnderIceTurnR( FIELD_PLAYER_NOGRID *nogrid, u16 dir, BOOL debug );
 
 
 static u16 (* const nogrid_ControlUnderFunc[ UNDER_MAX ])( FIELD_PLAYER_NOGRID *nogrid, u16 dir, BOOL debug ) = 
@@ -216,7 +222,7 @@ static u16 (* const nogrid_ControlUnderFunc[ UNDER_MAX ])( FIELD_PLAYER_NOGRID *
   nogrid_ControlUnderIceSpinR,
   nogrid_ControlUnderIceJumpL,
   nogrid_ControlUnderIceJumpR,
- 
+  nogrid_ControlUnderIceTurnR,
 };
 
 
@@ -2110,6 +2116,27 @@ static void nogrid_OffMoveBitSpinR( FIELD_PLAYER_NOGRID *nogrid )
   nogrid_OffMoveBit( nogrid, FIELD_PLAYER_NOGRID_MOVEBIT_SPIN_R );
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  動作後　強制的に右を向かせる　ON
+ */
+//-----------------------------------------------------------------------------
+static void nogrid_OnMoveBitTurnR( FIELD_PLAYER_NOGRID *nogrid )
+{
+  nogrid_OnMoveBit( nogrid, FIELD_PLAYER_NOGRID_MOVEBIT_TURN_R );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief　動作後　強制的に右を向かせる　OFF
+ */
+//-----------------------------------------------------------------------------
+static void nogrid_OffMoveBitTurnR( FIELD_PLAYER_NOGRID *nogrid )
+{
+  nogrid_OffMoveBit( nogrid, FIELD_PLAYER_NOGRID_MOVEBIT_TURN_R );
+}
+
+
 
 
 //--------------------------------------------------------------
@@ -2149,6 +2176,10 @@ static UNDER nogrid_CheckUnder( FIELD_PLAYER_NOGRID *nogrid, u16 dir )
     if( RAIL_ATTR_VALUE_CheckIceJumpR(val) == TRUE )
     {
       return ( UNDER_ICE_JUMP_R );
+    }
+    if( RAIL_ATTR_VALUE_CheckIceTurnR(val) == TRUE )
+    {
+      return ( UNDER_ICE_TURN_R );
     }
   }
   
@@ -2229,6 +2260,12 @@ static void nogrid_ControlUnder_Clear( FIELD_PLAYER_NOGRID *nogrid )
     MMDL_SetDirAll( mmdl, dir );
   }
 
+  // 強制的に右を向かせる？
+  if( nogrid_CheckMoveBit(nogrid, FIELD_PLAYER_NOGRID_MOVEBIT_TURN_R)  )
+  {
+    nogrid_OffMoveBitTurnR( nogrid );
+    MMDL_SetDirAll( mmdl, DIR_RIGHT );
+  }
 
 }
 
@@ -2398,6 +2435,27 @@ static u16 nogrid_ControlUnderIceJumpR( FIELD_PLAYER_NOGRID *nogrid, u16 dir, BO
     PMSND_PlaySE( SEQ_SE_DANSA );
   }
   return nogrid_ControlUnderIce( nogrid, dir, debug );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  氷すべり＋右強制向き
+ *
+ *	@param	nogrid
+ *	@param	dir
+ *	@param	debug 
+ */
+//-----------------------------------------------------------------------------
+static u16 nogrid_ControlUnderIceTurnR( FIELD_PLAYER_NOGRID *nogrid, u16 dir, BOOL debug )
+{
+  u16 ret_dir;
+
+  ret_dir = nogrid_ControlUnderIce( nogrid, dir, debug );
+  
+  // 動作後強制的に右向きに
+  nogrid_OnMoveBitTurnR( nogrid );
+
+  return ret_dir;
 }
 
 

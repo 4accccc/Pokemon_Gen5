@@ -359,7 +359,7 @@ BOOL RAIL_ATTR_VALUE_CheckIceJumpR( const MAPATTR_VALUE val )
  *	@retval TRUE FALSE
  */
 //-----------------------------------------------------------------------------
-BOOL RAIL_ATTR_VALUE_CheckTurnR( const MAPATTR_VALUE val )
+BOOL RAIL_ATTR_VALUE_CheckIceTurnR( const MAPATTR_VALUE val )
 {
   if( (val == MATTR_TURN_RIGHT) )
   {
