@@ -80,6 +80,7 @@ extern void FIELD_LIGHT_ReLoadDefault( FIELD_LIGHT* p_sys );
 ///	ライトフェード機能
 //=====================================
 extern void FIELD_LIGHT_COLORFADE_Start( FIELD_LIGHT* p_sys, GXRgb color, u32 insync, u32 outsync );
+extern void FIELD_LIGHT_COLORFADE_StartOneWay( FIELD_LIGHT* p_sys, GXRgb color, u32 sync );
 extern BOOL FIELD_LIGHT_COLORFADE_IsFade( const FIELD_LIGHT* cp_sys );
 
 //-------------------------------------

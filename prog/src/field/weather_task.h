@@ -228,6 +228,7 @@ extern void WEATHER_TASK_LIGHT_Set( WEATHER_TASK* p_wk, u32 arcid, u32 dataid );
 extern void WEATHER_TASK_LIGHT_Back( WEATHER_TASK* p_wk );
 
 extern void WEATHER_TASK_LIGHT_StartColorFade( WEATHER_TASK* p_wk, GXRgb color, u16 insync, u16 outsync );
+extern void WEATHER_TASK_LIGHT_StartColorFadeOneWay( WEATHER_TASK* p_wk, GXRgb color, u16 sync );
 extern BOOL WEATHER_TASK_LIGHT_IsColorFade( const WEATHER_TASK* cp_wk );
 
 

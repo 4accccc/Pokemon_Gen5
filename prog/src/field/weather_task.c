@@ -664,6 +664,20 @@ BOOL WEATHER_TASK_LIGHT_IsColorFade( const WEATHER_TASK* cp_wk )
 	return FIELD_LIGHT_COLORFADE_IsFade( cp_wk->p_light );
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カラーフェード　1方向のみ
+ *
+ *	@param	p_wk      ワーク
+ *	@param	color     色
+ *	@param	sync      シンク数
+ */
+//-----------------------------------------------------------------------------
+void WEATHER_TASK_LIGHT_StartColorFadeOneWay( WEATHER_TASK* p_wk, GXRgb color, u16 sync )
+{
+  FIELD_LIGHT_COLORFADE_StartOneWay( p_wk->p_light, color, sync );
+}
+
 
 //----------------------------------------------------------------------------
 /**

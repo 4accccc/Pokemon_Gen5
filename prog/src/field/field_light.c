@@ -83,6 +83,7 @@ enum {
   COLOR_FADE_SEQ_OUT,
   COLOR_FADE_SEQ_END,
 } ;
+#define COLOR_FADE_OUT_SKIP   (0xffff)
 
 
 //-------------------------------------
@@ -325,6 +326,7 @@ static void LIGHT_FADE_GetData( const LIGHT_FADE* cp_wk, LIGHT_DATA* p_data );
 /// カラーフェード
 //=====================================
 static void COLOR_FADE_Init( COLOR_FADE* p_wk, u16 insync, u16 outsync, GXRgb color );
+static void COLOR_FADE_InitOneWay( COLOR_FADE* p_wk, u16 insync, GXRgb color );
 static BOOL COLOR_FADE_Main( COLOR_FADE* p_wk, LIGHT_FADE* p_fade, const LIGHT_DATA* cp_refdata, const LIGHT_DATA* cp_nowdata );
 static BOOL COLOR_FADE_IsFade( const COLOR_FADE* cp_wk );
 
@@ -580,6 +582,22 @@ void FIELD_LIGHT_COLORFADE_Start( FIELD_LIGHT* p_sys, GXRgb color, u32 insync, u
   COLOR_FADE_Init( &p_sys->color_fade, insync, outsync, color );
   p_sys->seq = FIELD_LIGHT_SEQ_COLORFADE;
 }
+
+//----------------------------------------------------------------------------
+/**
+ *  @brief  １方向のみカラーフェード開始
+ *
+ *  @param  p_sys   システムワーク
+ *  @param  color   色
+ *	@param	sync    シンク数
+ */
+//-----------------------------------------------------------------------------
+void FIELD_LIGHT_COLORFADE_StartOneWay( FIELD_LIGHT* p_sys, GXRgb color, u32 sync )
+{
+  COLOR_FADE_InitOneWay( &p_sys->color_fade, sync, color );
+  p_sys->seq = FIELD_LIGHT_SEQ_COLORFADE;
+}
+
 
 //----------------------------------------------------------------------------
 /**
@@ -1710,8 +1728,8 @@ static void LIGHT_FADE_InitColor( LIGHT_FADE* p_wk, const LIGHT_DATA* cp_start, 
   RGB_FADE_Init( &p_wk->ambient, cp_start->ambient, end_color );
   RGB_FADE_Init( &p_wk->specular, cp_start->specular, end_color );
   RGB_FADE_Init( &p_wk->emission, cp_start->emission, end_color );
-  RGB_FADE_Init( &p_wk->fog_color, cp_start->fog_color, cp_start->fog_color );
-  RGB_FADE_Init( &p_wk->bg_color, cp_start->bg_color, cp_start->bg_color );
+  RGB_FADE_Init( &p_wk->fog_color, cp_start->fog_color, end_color );
+  RGB_FADE_Init( &p_wk->bg_color, cp_start->bg_color, end_color );
 }
 
 //----------------------------------------------------------------------------
@@ -1797,6 +1815,23 @@ static void COLOR_FADE_Init( COLOR_FADE* p_wk, u16 insync, u16 outsync, GXRgb co
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief  １方向カラーフェード
+ *
+ *	@param	p_wk      ワーク
+ *	@param	insync    シンクスウ
+ *	@param	color     色
+ */
+//-----------------------------------------------------------------------------
+static void COLOR_FADE_InitOneWay( COLOR_FADE* p_wk, u16 insync, GXRgb color )
+{
+  p_wk->seq   = COLOR_FADE_SEQ_INIT;
+  p_wk->insync  = insync;
+  p_wk->color   = color;
+  p_wk->outsync = COLOR_FADE_OUT_SKIP;
+}
+
+//----------------------------------------------------------------------------
+/**
  *  @brief  カラーフェードメイン
  *
  *  @param  p_wk    ワーク
@@ -1818,7 +1853,10 @@ static BOOL COLOR_FADE_Main( COLOR_FADE* p_wk, LIGHT_FADE* p_fade, const LIGHT_D
 
   case COLOR_FADE_SEQ_IN:
     if( !LIGHT_FADE_IsFade( p_fade ) ){
-      LIGHT_FADE_InitEx( p_fade, cp_refdata, cp_nowdata, p_wk->outsync );
+      // 色をもどすか？ OneWayなら戻さない
+      if( p_wk->outsync != COLOR_FADE_OUT_SKIP ){
+        LIGHT_FADE_InitEx( p_fade, cp_refdata, cp_nowdata, p_wk->outsync );
+      }
       p_wk->seq = COLOR_FADE_SEQ_OUT;
     }
     break;

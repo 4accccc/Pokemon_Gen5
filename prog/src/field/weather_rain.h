@@ -34,6 +34,15 @@ extern WEATHER_TASK_DATA c_WEATHER_TASK_DATA_RAIN;
 //-----------------------------------------------------------------------------
 extern WEATHER_TASK_DATA c_WEATHER_TASK_DATA_SPARKRAIN;
 
+
+//-----------------------------------------------------------------------------
+/**
+ *		ˆÚ“®ƒ|ƒPƒ‚ƒ“
+*/
+//-----------------------------------------------------------------------------
+extern WEATHER_TASK_DATA c_WEATHER_TASK_DATA_RAIKAMI;
+extern WEATHER_TASK_DATA c_WEATHER_TASK_DATA_KAZAKAMI;
+
 #ifdef _cplusplus
 }	// extern "C"{
 #endif

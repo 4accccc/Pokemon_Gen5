@@ -76,6 +76,8 @@ enum {
 #define		WEATHER_NO_SPARK			(4)				// 雷雨
 #define		WEATHER_NO_SNOWSTORM		(5)				// 吹雪
 #define		WEATHER_NO_ARARE			(6)				// 吹雪
+#define		WEATHER_NO_RAIKAMI			(7)				// ライカミ
+#define		WEATHER_NO_KAZAKAMI			(8)				// カザカミ
 
-#define		WEATHER_NO_MIRAGE			(7)				// 蜃気楼
+#define		WEATHER_NO_MIRAGE			(9)				// 蜃気楼
 

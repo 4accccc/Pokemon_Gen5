@@ -207,6 +207,18 @@ static const FIELD_WEATHER_DATA sc_FIELD_WEATHER_DATA[] = {
 		FS_OVERLAY_ID(field_weather_snow)
 	},
 
+	// ライカミ
+	{
+		&c_WEATHER_TASK_DATA_RAIKAMI,
+		FS_OVERLAY_ID(field_weather_rain)
+	},
+
+	// カザカミ
+	{
+		&c_WEATHER_TASK_DATA_RAIKAMI,
+		FS_OVERLAY_ID(field_weather_rain)
+	},
+
 	// 蜃気楼
 	{
 		&c_WEATHER_TASK_DATA_MIRAGE,

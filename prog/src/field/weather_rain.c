@@ -122,10 +122,25 @@
 enum{
 	WEATHER_SPARK_START_WAIT,
 	WEATHER_SPARK_SETUP,
+	WEATHER_SPARK_SPARK_DARK,		// 雷
+	WEATHER_SPARK_SPARK_DARK_WAIT,		// 雷
 	WEATHER_SPARK_SPARK,		// 雷
 	WEATHER_SPARK_SPARK_WAIT,	// 雷
 	WEATHER_SPARK_WAIT,
 };
+
+// 雷モード
+enum
+{
+  WEATHER_SPARK_MODE_NORMAL,
+  WEATHER_SPARK_MODE_RAIKAMI,
+  WEATHER_SPARK_MODE_MAX,
+};
+
+// ライカミ　雷
+#define WEATHER_SPARK_DARK_COLOR   ( GX_RGB(6,6,10) )
+#define WEATHER_SPARK_DARK_SYNC   ( 4 )
+#define WEATHER_SPARK_DARK_WAIT   ( 10 )
 
 // 雷テーブル数
 #define WEATHER_SPARK_TBL_MAX	( 4 )	// 4回まで繰り返すことが出来る
@@ -216,6 +231,53 @@ static const u8 sc_WEATHER_SPARK_FLASHOUT_SYNC[32] = {
 
 
 
+//-------------------------------------
+///	ライカミ　天気
+//=====================================
+#define	WEATHER_RAIKAMI_TIMING_MIN		(0)					// 雨を出すタイミング最小
+#define WEATHER_RAIKAMI_TIMING_MAX		(15)				// 雨を出すタイミング最大
+#define WEATHER_RAIKAMI_TIMING_ADD		(3)					// タイミングを減らす数
+#define WEATHER_RAIKAMI_ADD_START		(1)					// 最初の同時に雨を登録する数
+#define WEATHER_RAIKAMI_ADD_TIMING		(2)					// 雨のタイミングをこれ回変更したら１回増やす
+#define WEATHER_RAIKAMI_ADD			(1)						// 登録する数を増やす数
+#define WEATHER_RAIKAMI_ADD_END		(-1)					// 登録する数を増やす数
+#define	WEATHER_RAIKAMI_ADD_MAIN		(1)					// メインシーケンスでの登録する数
+
+/*== フェード無し開始の時 ==*/
+#define WEATHER_RAIKAMI_NOFADE_OBJ_START_NUM	( 20 )				// 開始時の散布するオブジェクトの数
+#define	WEATHER_RAIKAMI_NOFADE_OBJ_START_DUST_NUM	( 5 )		// 何個ずつ動作数を変更するか
+#define	WEATHER_RAIKAMI_NOFADE_OBJ_START_DUST_MOVE	( 1 )		// ずらす動作数の値
+
+/*== フォグ ==*/
+#define	WEATHER_RAIKAMI_FOG_TIMING		(80)						// に１回フォグテーブルを操作
+#define	WEATHER_RAIKAMI_FOG_TIMING_END	(50)						// に１回フォグテーブルを操作
+#define WEATHER_RAIKAMI_FOG_START_END	(1)					// このカウント動いてからフォグテーブルを操作
+#define WEATHER_RAIKAMI_FOG_OFS			(0x400)
+
+
+//  フェードインの処理
+enum
+{
+  WEATHER_RAIKAMI_FADEIN_SEQ_INIT,
+  WEATHER_RAIKAMI_FADEIN_SEQ_LIGHT_DARK,
+  WEATHER_RAIKAMI_FADEIN_SEQ_SPARK_00,
+  WEATHER_RAIKAMI_FADEIN_SEQ_SPARK_01,
+  WEATHER_RAIKAMI_FADEIN_SEQ_SPARK_02,
+  WEATHER_RAIKAMI_FADEIN_SEQ_OBJADD,
+
+  WEATHER_RAIKAMI_FADEIN_SEQ_END,
+};
+
+#define WEATHER_RAIKAMI_SPARK_DARK_COLOR   ( GX_RGB(4,4,8) )
+#define WEATHER_RAIKAMI_SPARK_DARK_SYNC   ( 8 )
+#define WEATHER_RAIKAMI_SPARK_COLOR ( GX_RGB( 30,30,8 ) )
+#define WEATHER_RAIKAMI_SPARK_INSYNC ( 4 )
+#define WEATHER_RAIKAMI_SPARK_OUTSYNC ( 60 )
+
+#define WEATHER_RAIKAMI_LIGHT_SPARK_WAIT ( 90 )
+#define WEATHER_RAIKAMI_LIGHT_DARKSPARK_WAIT ( 16 )
+
+
 //-----------------------------------------------------------------------------
 /**
  *					構造体宣言
@@ -247,7 +309,8 @@ typedef struct {
 ///	雷
 //=====================================
 typedef struct {
-	u16 seq;
+	u8 seq;
+  u8 mode;
 	u16 spark_type;
 	u16	spark_tbl_num;
 	u16 spark_tbl_count;
@@ -267,6 +330,19 @@ typedef struct {
 
 	WEATHER_SPARK_WORK	spark;
 } WEATHER_SPARKRAIN_WORK;
+
+
+
+//-------------------------------------
+///	雷雨
+//=====================================
+typedef struct {
+  s16 seq;
+  s16 wait;
+  
+
+	WEATHER_SPARK_WORK	spark;
+} WEATHER_RAIKAMI_WORK;
 
 //-----------------------------------------------------------------------------
 /**
@@ -304,9 +380,24 @@ static void WEATHER_SPARKRAIN_OBJ_Add( WEATHER_TASK* p_wk, int num, u32 heapID )
 
 
 //-------------------------------------
+///	カミシリーズ　ライカミ
+//=====================================
+static WEATHER_TASK_FUNC_RESULT WEATHER_RAIKAMI_Init( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, u32 heapID ); 
+static WEATHER_TASK_FUNC_RESULT WEATHER_RAIKAMI_FadeIn( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, u32 heapID ); 
+static WEATHER_TASK_FUNC_RESULT WEATHER_RAIKAMI_NoFade( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, u32 heapID ); 
+static WEATHER_TASK_FUNC_RESULT WEATHER_RAIKAMI_Main( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, u32 heapID ); 
+static WEATHER_TASK_FUNC_RESULT WEATHER_RAIKAMI_InitFadeOut( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, u32 heapID ); 
+static WEATHER_TASK_FUNC_RESULT WEATHER_RAIKAMI_FadeOut( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, u32 heapID ); 
+static WEATHER_TASK_FUNC_RESULT WEATHER_RAIKAMI_Exit( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, u32 heapID ); 
+static void WEATHER_RAIKAMI_OBJ_Move( WEATHER_OBJ_WORK* p_wk ); 
+static void WEATHER_RAIKAMI_OBJ_Add( WEATHER_TASK* p_wk, int num, u32 heapID ); 
+
+
+
+//-------------------------------------
 ///	雷
 //=====================================
-static void WEATHER_PARK_Init( WEATHER_SPARK_WORK* p_wk );
+static void WEATHER_PARK_Init( WEATHER_SPARK_WORK* p_wk, u8 mode );
 static void WEATHER_PARK_Exit( WEATHER_SPARK_WORK* p_wk );
 static void WEATHER_PARK_Main( WEATHER_SPARK_WORK* p_wk, WEATHER_TASK* p_sys );
 
@@ -390,6 +481,40 @@ WEATHER_TASK_DATA c_WEATHER_TASK_DATA_SPARKRAIN = {
 
 	// オブジェ動作関数
 	WEATHER_SPARKRAIN_OBJ_Move,
+};
+
+// ライカミ
+WEATHER_TASK_DATA c_WEATHER_TASK_DATA_RAIKAMI = {
+	//	グラフィック情報
+	ARCID_FIELD_WEATHER,			// アークID
+	TRUE,		// OAMを使用するか？
+	FALSE,		// BGを使用するか？
+	NARC_field_weather_rain_st_NCGR,			// OAM CG
+	NARC_field_weather_rain_NCLR,			// OAM PLTT
+	NARC_field_weather_rain_st_NCER,			// OAM CELL
+	NARC_field_weather_rain_st_NANR,			// OAM CELLANM
+	0,		// BGTEX
+	0,		// GXTexSizeS
+	0,		// GXTexSizeT
+	0,		// GXTexRepeat
+	0,		// GXTexFlip
+	0,		// GXTexFmt
+	0,		// GXTexPlttColor0
+
+	// ワークサイズ
+	sizeof(WEATHER_RAIKAMI_WORK),
+
+	// 管理関数
+	WEATHER_RAIKAMI_Init,		// 初期化
+	WEATHER_RAIKAMI_FadeIn,		// フェードイン
+	WEATHER_RAIKAMI_NoFade,		// フェードなし
+	WEATHER_RAIKAMI_Main,		// メイン処理
+	WEATHER_RAIKAMI_InitFadeOut,	// フェードアウト
+	WEATHER_RAIKAMI_FadeOut,		// フェードアウト
+	WEATHER_RAIKAMI_Exit,		// 破棄
+
+	// オブジェ動作関数
+	WEATHER_RAIKAMI_OBJ_Move,
 };
 
 
@@ -789,7 +914,7 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_SPARKRAIN_Init( WEATHER_TASK* p_wk, WEAT
 	p_local_wk = WEATHER_TASK_GetWorkData( p_wk );
 
 	// スパーク初期化
-	WEATHER_PARK_Init( &p_local_wk->spark );
+	WEATHER_PARK_Init( &p_local_wk->spark, WEATHER_SPARK_MODE_NORMAL );
 
 	// 作業領域の初期化
 	WEATHER_TASK_ObjFade_Init( p_wk, 
@@ -1176,6 +1301,341 @@ static void WEATHER_SPARKRAIN_OBJ_Add( WEATHER_TASK* p_wk, int num, u32 heapID )
 }
 
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ライカミ　天気  初期化
+ */
+//-----------------------------------------------------------------------------
+static WEATHER_TASK_FUNC_RESULT WEATHER_RAIKAMI_Init( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, u32 heapID )
+{
+  WEATHER_RAIKAMI_WORK* p_local_wk;
+
+	// ローカルワーク取得
+	p_local_wk = WEATHER_TASK_GetWorkData( p_wk );
+
+	// スパーク初期化
+	WEATHER_PARK_Init( &p_local_wk->spark, WEATHER_SPARK_MODE_RAIKAMI );
+
+	// 作業領域の初期化
+	WEATHER_TASK_ObjFade_Init( p_wk, 
+		WEATHER_RAIKAMI_ADD_START,	// obj登録数
+		WEATHER_RAIKAMI_TIMING_MAX,// 登録タイミング
+		WEATHER_RAIKAMI_ADD_MAIN,
+		WEATHER_RAIKAMI_TIMING_MIN,
+		-WEATHER_RAIKAMI_TIMING_ADD,
+		WEATHER_RAIKAMI_ADD_TIMING,
+		WEATHER_RAIKAMI_ADD,
+		WEATHER_RAIKAMI_OBJ_Add );
+	
+
+	// フォグの設定
+	WEATHER_TASK_FogSet( p_wk, WEATHER_FOG_SLOPE_DEFAULT, WEATHER_FOG_DEPTH_DEFAULT_START, fog_cont );
+
+  p_local_wk->wait      = 0;
+  p_local_wk->seq      = 0;
+
+	// スクロール処理の初期化
+	WEATHER_TASK_InitScrollDist( p_wk );
+
+
+	return WEATHER_TASK_FUNC_RESULT_FINISH;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ライカミ　フェードイン
+ */
+//-----------------------------------------------------------------------------
+static WEATHER_TASK_FUNC_RESULT WEATHER_RAIKAMI_FadeIn( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, u32 heapID )
+{
+  WEATHER_RAIKAMI_WORK* p_local_wk;
+  BOOL result;
+  BOOL fog_result;
+
+	// ローカルワーク取得
+	p_local_wk = WEATHER_TASK_GetWorkData( p_wk );
+  
+  switch( p_local_wk->seq )
+  {
+  case WEATHER_RAIKAMI_FADEIN_SEQ_INIT:
+    // ライト変更
+    WEATHER_TASK_LIGHT_Change( p_wk, ARCID_FIELD_WEATHER_LIGHT, NARC_field_weather_light_light_raikami_dat );
+
+    p_local_wk->seq++;
+    p_local_wk->wait = WEATHER_RAIKAMI_LIGHT_SPARK_WAIT;
+    break;
+
+  case WEATHER_RAIKAMI_FADEIN_SEQ_LIGHT_DARK:
+    p_local_wk->wait--;
+    if(p_local_wk->wait < 0)
+    {
+      p_local_wk->seq++;
+    }
+    break;
+
+  case WEATHER_RAIKAMI_FADEIN_SEQ_SPARK_00:
+    // ドデカイ雷を鳴らす。（LIGHTを暗くしてから）
+		WEATHER_TASK_LIGHT_StartColorFadeOneWay( p_wk, WEATHER_RAIKAMI_SPARK_DARK_COLOR, WEATHER_RAIKAMI_SPARK_DARK_SYNC );
+    p_local_wk->wait = WEATHER_RAIKAMI_LIGHT_DARKSPARK_WAIT;
+    p_local_wk->seq++;
+    break;
+
+  case WEATHER_RAIKAMI_FADEIN_SEQ_SPARK_01:
+    p_local_wk->wait --;
+    if( p_local_wk->wait < 0 )
+    {
+      // ドカーンといく
+		  WEATHER_TASK_LIGHT_StartColorFade( p_wk, WEATHER_RAIKAMI_SPARK_COLOR, WEATHER_RAIKAMI_SPARK_INSYNC, WEATHER_RAIKAMI_SPARK_OUTSYNC );
+      
+      // 雷SE再生
+      PMSND_PlaySE( WEATHER_SND_SE_SPARK );
+      p_local_wk->seq++;
+    }
+    break;
+
+  case WEATHER_RAIKAMI_FADEIN_SEQ_SPARK_02:
+    //if( WEATHER_TASK_LIGHT_IsColorFade( p_wk ) == FALSE ) // ここはまたない！
+    {
+      // 音
+      WEATHER_TASK_PlayLoopSnd( p_wk, WEATHER_SND_SE_HIGHRAIN );	
+
+
+      WEATHER_TASK_FogFadeIn_Init( p_wk,
+        WEATHER_FOG_SLOPE_DEFAULT, 
+        WEATHER_FOG_DEPTH_DEFAULT + WEATHER_RAIKAMI_FOG_OFS, 
+        WEATHER_RAIKAMI_FOG_TIMING,
+        fog_cont );
+
+      p_local_wk->seq++;
+    }
+    break;
+
+  case WEATHER_RAIKAMI_FADEIN_SEQ_OBJADD:
+
+	  result = WEATHER_TASK_ObjFade_Main( p_wk, heapID );	// 実行
+	  fog_result = WEATHER_TASK_FogFade_IsFade( p_wk );	// 実行
+    if( result && fog_result )
+    {
+			return WEATHER_TASK_FUNC_RESULT_FINISH;
+    }
+    break;
+
+  case WEATHER_RAIKAMI_FADEIN_SEQ_END:
+    return WEATHER_TASK_FUNC_RESULT_FINISH;
+
+  default:
+    GF_ASSERT(0);
+    break;
+  }
+
+	// スクロール処理
+	{
+		int x, y;
+		WEATHER_TASK_GetScrollDist( p_wk, &x, &y );
+		WEATHER_TASK_ScrollObj( p_wk, x, y );
+	}
+
+  return WEATHER_TASK_FUNC_RESULT_CONTINUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  フェードなし初期化
+ */
+//-----------------------------------------------------------------------------
+static WEATHER_TASK_FUNC_RESULT WEATHER_RAIKAMI_NoFade( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, u32 heapID )
+{
+  WEATHER_RAIKAMI_WORK* p_local_wk;
+  BOOL result;
+
+	// ローカルワーク取得
+	p_local_wk = WEATHER_TASK_GetWorkData( p_wk );
+
+
+	// 作業領域の初期化
+	WEATHER_TASK_ObjFade_Init( p_wk,
+		WEATHER_RAIKAMI_ADD_MAIN,	// obj登録数
+		WEATHER_RAIKAMI_TIMING_MIN,// 登録タイミング
+		WEATHER_RAIKAMI_ADD_MAIN,
+		WEATHER_RAIKAMI_TIMING_MIN,
+		-WEATHER_RAIKAMI_TIMING_ADD,
+		WEATHER_RAIKAMI_ADD_TIMING,
+		WEATHER_RAIKAMI_ADD,
+		WEATHER_RAIKAMI_OBJ_Add );
+	
+
+	// フォグの設定
+	WEATHER_TASK_FogSet( p_wk, WEATHER_FOG_SLOPE_DEFAULT, WEATHER_FOG_DEPTH_DEFAULT, fog_cont );
+
+	// オブジェクトを散らばす
+	WEATHER_TASK_DustObj( p_wk, WEATHER_RAIKAMI_OBJ_Add, WEATHER_RAIKAMI_NOFADE_OBJ_START_NUM, WEATHER_RAIKAMI_NOFADE_OBJ_START_DUST_NUM, WEATHER_RAIKAMI_NOFADE_OBJ_START_DUST_MOVE, heapID );
+
+  // 音
+  WEATHER_TASK_PlayLoopSnd( p_wk, WEATHER_SND_SE_HIGHRAIN );	
+
+  // ライト変更
+  WEATHER_TASK_LIGHT_Set( p_wk, ARCID_FIELD_WEATHER_LIGHT, NARC_field_weather_light_light_raikami_dat );
+
+	return WEATHER_TASK_FUNC_RESULT_FINISH;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  メイン処理
+ */
+//-----------------------------------------------------------------------------
+static WEATHER_TASK_FUNC_RESULT WEATHER_RAIKAMI_Main( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, u32 heapID )
+{
+  WEATHER_RAIKAMI_WORK* p_local_wk;
+	// ローカルワーク取得
+	p_local_wk = WEATHER_TASK_GetWorkData( p_wk );
+
+	// カウンタが0いかになったら雨登録
+	WEATHER_TASK_ObjFade_NoFadeMain( p_wk, heapID );
+
+
+	// スパークメイン
+	WEATHER_PARK_Main( &p_local_wk->spark, p_wk );
+
+	// スクロール処理
+	{
+		int x, y;
+		WEATHER_TASK_GetScrollDist( p_wk, &x, &y );
+		WEATHER_TASK_ScrollObj( p_wk, x, y );
+	}
+
+	return WEATHER_TASK_FUNC_RESULT_CONTINUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  フェードアウト処理
+ */ 
+//-----------------------------------------------------------------------------
+static WEATHER_TASK_FUNC_RESULT WEATHER_RAIKAMI_InitFadeOut( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, u32 heapID )
+{
+  WEATHER_RAIKAMI_WORK* p_local_wk;
+	// ローカルワーク取得
+	p_local_wk = WEATHER_TASK_GetWorkData( p_wk );
+
+	// obj
+	// フェードアウト設定
+	WEATHER_TASK_ObjFade_SetOut( p_wk,
+			0,
+			WEATHER_RAIKAMI_TIMING_MAX,
+			WEATHER_RAIKAMI_TIMING_ADD,
+			WEATHER_RAIKAMI_ADD_END );
+	
+	p_local_wk->wait = WEATHER_RAIKAMI_FOG_START_END;	// 同じくフォグ用
+
+
+	// 音
+	WEATHER_TASK_StopLoopSnd( p_wk );	
+
+	return WEATHER_TASK_FUNC_RESULT_FINISH;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  フェードアウト処理
+ */
+//-----------------------------------------------------------------------------
+static WEATHER_TASK_FUNC_RESULT WEATHER_RAIKAMI_FadeOut( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, u32 heapID )
+{
+  WEATHER_RAIKAMI_WORK* p_local_wk;
+	BOOL result;
+	BOOL fog_result;
+
+	// ローカルワーク取得
+	p_local_wk = WEATHER_TASK_GetWorkData( p_wk );
+
+	// オブジェクトフェード
+	result = WEATHER_TASK_ObjFade_Main( p_wk, heapID );	// 実行
+
+	// フォグ操作
+	if(p_local_wk->wait > 0){
+		p_local_wk->wait--;			// ワークが０になったらフォグを動かす
+		if( p_local_wk->wait == 0 ){
+
+			WEATHER_TASK_FogFadeOut_Init( p_wk,
+					WEATHER_FOG_DEPTH_DEFAULT_START, 
+					WEATHER_RAIKAMI_FOG_TIMING_END, fog_cont );
+		}
+	}else{
+	
+		if( fog_cont ){
+			fog_result = WEATHER_TASK_FogFade_IsFade( p_wk );
+		}else{
+			fog_result = TRUE;
+		}
+	
+		if( fog_result && result ){
+			// 登録数が０になったら終了するかチェック
+			// 自分の管理するあめが全て破棄されたら終了
+			if( WEATHER_TASK_GetActiveObjNum( p_wk ) == 0 ){//*/
+				
+				return WEATHER_TASK_FUNC_RESULT_FINISH;
+			}
+		}
+	}
+
+	// スクロール処理
+	{
+		int x, y;
+		WEATHER_TASK_GetScrollDist( p_wk, &x, &y );
+		WEATHER_TASK_ScrollObj( p_wk, x, y );
+	}
+
+	return WEATHER_TASK_FUNC_RESULT_CONTINUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  終了処理
+ *
+ *	@param	p_wk
+ *	@param	fog_cont
+ *	@param	heapID 
+ */
+//-----------------------------------------------------------------------------
+static WEATHER_TASK_FUNC_RESULT WEATHER_RAIKAMI_Exit( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, u32 heapID )
+{
+	WEATHER_RAIKAMI_WORK* p_local_wk;
+	// ローカルワーク取得
+	p_local_wk = WEATHER_TASK_GetWorkData( p_wk );
+
+	// FOG終了
+	WEATHER_TASK_FogClear( p_wk, fog_cont );
+
+	// ライト元に
+	WEATHER_TASK_LIGHT_Back( p_wk );
+
+	// スパーク初期化
+	WEATHER_PARK_Exit( &p_local_wk->spark );
+
+	return WEATHER_TASK_FUNC_RESULT_FINISH;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ライカミ　オブジェ　動作
+ */
+//-----------------------------------------------------------------------------
+static void WEATHER_RAIKAMI_OBJ_Move( WEATHER_OBJ_WORK* p_wk )
+{
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ライカミオブジェ　登録
+ */
+//-----------------------------------------------------------------------------
+static void WEATHER_RAIKAMI_OBJ_Add( WEATHER_TASK* p_wk, int num, u32 heapID )
+{
+}
+
+
+
 
 //----------------------------------------------------------------------------
 /**
@@ -1184,11 +1644,13 @@ static void WEATHER_SPARKRAIN_OBJ_Add( WEATHER_TASK* p_wk, int num, u32 heapID )
  *	@param	p_wk	ワーク
  */
 //-----------------------------------------------------------------------------
-static void WEATHER_PARK_Init( WEATHER_SPARK_WORK* p_wk )
+static void WEATHER_PARK_Init( WEATHER_SPARK_WORK* p_wk, u8 mode )
 {
 	GFL_STD_MemClear( p_wk, sizeof(WEATHER_SPARK_WORK) );
 
 	p_wk->wait = GFUser_GetPublicRand( WEATHER_SPARK_INIT_RAND );
+
+  p_wk->mode = mode;
 }
 
 //----------------------------------------------------------------------------
@@ -1263,9 +1725,31 @@ static void WEATHER_PARK_Main( WEATHER_SPARK_WORK* p_wk, WEATHER_TASK* p_sys )
 			}
 
 			p_wk->spark_tbl_count	= 0;
-			p_wk->seq				= WEATHER_SPARK_SPARK;
+			p_wk->seq				= WEATHER_SPARK_SPARK_DARK;
 		}
 		break;
+
+  case WEATHER_SPARK_SPARK_DARK:
+    if( p_wk->mode != WEATHER_SPARK_MODE_RAIKAMI )
+    {
+			p_wk->seq = WEATHER_SPARK_SPARK;
+    }
+    else
+    {
+      // ドデカイ雷を鳴らす。（LIGHTを暗くしてから）
+	  	WEATHER_TASK_LIGHT_StartColorFadeOneWay( p_sys, WEATHER_SPARK_DARK_COLOR, WEATHER_SPARK_DARK_SYNC );
+      p_wk->wait = WEATHER_SPARK_DARK_WAIT;
+			p_wk->seq				= WEATHER_SPARK_SPARK_DARK_WAIT;
+    }
+    break;
+
+  case WEATHER_SPARK_SPARK_DARK_WAIT:
+    p_wk->wait --;
+    if( p_wk->wait <= 0 )
+    {
+			p_wk->seq = WEATHER_SPARK_SPARK;
+    }
+    break;
 
 	case WEATHER_SPARK_SPARK:	// 雷
 		WEATHER_TASK_LIGHT_StartColorFade( p_sys, WEATHER_SPARK_GetColor(p_wk), p_wk->spark_data[ p_wk->spark_tbl_count ].insync, p_wk->spark_data[ p_wk->spark_tbl_count ].outsync );
@@ -1277,6 +1761,17 @@ static void WEATHER_PARK_Main( WEATHER_SPARK_WORK* p_wk, WEATHER_TASK* p_sys )
     p_wk->snd_wait = p_wk->spark_data[ p_wk->spark_tbl_count ].snd_wait;
     p_wk->snd_se = p_wk->spark_data[ p_wk->spark_tbl_count ].snd_se;
 
+    // 次の雷までのwait
+    // 最終雷が鳴り終わったら、ウエイト数を変更する
+    // (2/3)にする
+    if( p_wk->mode == WEATHER_SPARK_MODE_RAIKAMI )
+    {
+      if( (p_wk->spark_tbl_count+1) == p_wk->spark_tbl_num )
+      {
+        p_wk->wait = (p_wk->wait * 2) / 3;
+      }
+    }
+    
 //		OS_TPrintf( "color %d\n", p_wk->spark_data[ p_wk->spark_tbl_count ].spark_power );
 		
 		p_wk->seq	= WEATHER_SPARK_SPARK_WAIT;
@@ -1312,7 +1807,9 @@ static void WEATHER_PARK_Main( WEATHER_SPARK_WORK* p_wk, WEATHER_TASK* p_sys )
       }
     }
 		
-		p_wk->spark_data[ p_wk->spark_tbl_count ].wait --;
+    // モードにより頻度が変わる
+  	p_wk->spark_data[ p_wk->spark_tbl_count ].wait --;
+    
 		if( p_wk->spark_data[ p_wk->spark_tbl_count ].wait <= 0 ){
 			// 次のデータがあるなら次のデータへ
 			if( p_wk->spark_tbl_num > (p_wk->spark_tbl_count+1) ){
