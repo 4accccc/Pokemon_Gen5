@@ -81,7 +81,7 @@
 #define WEATHER_STORM_END_MAX		(35)						// 終了カウンタ最大
 #define WEATHER_STORM_END_NUM		(WEATHER_STORM_END_MAX - WEATHER_STORM_END_MIN)	// カウンタの値の数
 #define	WEATHER_STORM_END_DIV		((WEATHER_STORM_END_NUM / 4)+1)	// オブジェクトの種類を計算するとき割る値
-#define	WEATHER_STORM_START_X1		(262)						// ベースになるX開始座標	よこ用
+#define	WEATHER_STORM_START_X1		(-6)						// ベースになるX開始座標	よこ用
 #define	WEATHER_STORM_START_X1_RAN	(24)						// ベースになるX開始座標	よこ用
 #define WEATHER_STORM_START_Y1_MIN	( -64 )						//  Y開始座標最小
 #define	WEATHER_STORM_START_Y1_MAX	(192)						// Y開始座標最大
@@ -91,7 +91,7 @@
 
 #define WEATHER_STORM_STRONG_CHG	(6)						// 風がこの値以上になった時勢いを強くする
 
-static const int STORM_SPEED_X_TBL[WEATHER_STORM_SPEED_NUM] = {-6,-10,-10,-6,-10,-12,-20,-12};
+static const int STORM_SPEED_X_TBL[WEATHER_STORM_SPEED_NUM] = {6,10,10,6,10,12,20,12};
 static const int STORM_SPEED_Y_TBL[WEATHER_STORM_SPEED_NUM] = { 4, 4, 4, 8, 8, 4, 4, 4};	
 
 //-----------------------------------------------------------------------------
@@ -546,7 +546,7 @@ static void WEATHER_STORM_OBJ_Add( WEATHER_TASK* p_wk, int num, u32 heapID )
 		
 		GFL_CLACT_WK_SetAnmIndex( p_clwk, frame );
 		
-		mat.x = WEATHER_STORM_START_X1 + GFUser_GetPublicRand(WEATHER_STORM_START_X1_RAN);
+		mat.x = WEATHER_STORM_START_X1 - GFUser_GetPublicRand(WEATHER_STORM_START_X1_RAN);
 		mat.y = WEATHER_STORM_START_Y1_MIN + GFUser_GetPublicRand(WEATHER_STORM_START_Y1_MAX);
 
 		// 座標設定
@@ -572,6 +572,6 @@ static void WEATHER_STORM_SCROLL_Main( WEATHER_TASK* p_sys, WEATHER_STORM_WORK* 
 
 	// BG面を斜め上に動かす
 	p_wk->work[2] = (p_wk->work[2] + 6) % 256;
-	WEATHER_TASK_3DBG_SetScrollX( p_sys, (p_wk->work[2]*2) - x );
+	WEATHER_TASK_3DBG_SetScrollX( p_sys, (-p_wk->work[2]*2) - x );
 	WEATHER_TASK_3DBG_SetScrollY( p_sys, (-p_wk->work[2]*2) + y );
 }

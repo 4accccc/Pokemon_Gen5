@@ -62,13 +62,13 @@
 #define WEATHER_RAIN_FOG_OFS		(0x300)
 
 /*== 雨オブジェクト ==*/
-#define WEATHER_RAIN_SPEED_X		(-8)						// 横に進むスピード
+#define WEATHER_RAIN_SPEED_X		(8)						// 横に進むスピード
 #define WEATHER_RAIN_SPEED_Y		(16)						// たてに進むスピードベース
 #define	WEATHER_RAIN_END_MIN		(1)							// 終了カウンタ最小
 #define WEATHER_RAIN_END_MAX		(2)							// 終了カウンタ最大
-#define	WEATHER_RAIN_START_X_BASE	(0)							// ベースになるX開始座標
+#define	WEATHER_RAIN_START_X_BASE	(-72)							// ベースになるX開始座標
 #define	WEATHER_RAIN_MUL_X			(15)						// ベースに雨の種類分足す値
-#define	WEATHER_RAIN_START_X_MAX	(270)						// X開始座標乱数の最大値
+#define	WEATHER_RAIN_START_X_MAX	(256)						// X開始座標乱数の最大値
 #define	WEATHER_RAIN_START_Y		(-96)						// Y開始座標
 #define	WEATHER_RAIN_SPEED_ERR		(20)						// スピード補正値
 
@@ -102,11 +102,11 @@
 
 
 /*== 雨オブジェクト ==*/
-#define WEATHER_STRAIN_SPEED_X		(-20)						// 横に進むスピード
+#define WEATHER_STRAIN_SPEED_X		(20)						// 横に進むスピード
 #define WEATHER_STRAIN_SPEED_Y		(20)							// たてに進むスピードベース
 #define	WEATHER_STRAIN_END_MIN		(1)							// 終了カウンタ最小
 #define WEATHER_STRAIN_END_MAX		(2)							// 終了カウンタ最大
-#define	WEATHER_STRAIN_START_X		(0)							// ベースになるX開始座標
+#define	WEATHER_STRAIN_START_X		(-256)							// ベースになるX開始座標
 #define	WEATHER_STRAIN_START_X_MAX	(512)						// X開始座標乱数値
 #define	WEATHER_STRAIN_START_Y		(-80)						// Y開始座標
 #define	WEATHER_STRAIN_START_Y_MAX	(40)						// Y開始座標乱数値

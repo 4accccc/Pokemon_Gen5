@@ -153,7 +153,7 @@
 // オブジェ 
 #define	WEATHER_SNOW_S_END_MIN		(9)						// 終了カウンタ最小
 #define WEATHER_SNOW_S_END_MAX		(12)						// 終了カウンタ最大
-#define WEATHER_SNOW_S_START_X		(256)						// 横から出すときのX座標
+#define WEATHER_SNOW_S_START_X		(0)						// 横から出すときのX座標
 #define WEATHER_SNOW_S_START_X_RAN	(24)						// 横から出すときのX座標
 #define	WEATHER_SNOW_S_START_Y_BASE	(-32)							// ベースになるY開始座標
 #define	WEATHER_SNOW_S_START_Y_MAX	(168)						// X開始座標乱数の最大値
@@ -164,7 +164,7 @@
 
 #define WEATHER_SNOW_S_ADD_SP_TMG		(4)						// スピードを変更するタイミング
 #define WEATHER_SNOW_S_SP_UP			(8)						// この値以上の横スピードのときは派手にする
-static const int WEATHER_SSNOW_SPEED_X_SML[WEATHER_SNOW_S_ADD_SP_TMG_NUM] = {-7,-11,-15,-19};
+static const int WEATHER_SSNOW_SPEED_X_SML[WEATHER_SNOW_S_ADD_SP_TMG_NUM] = {7,11,15,19};
 static const int WEATHER_SSNOW_SPEED_Y_SML[WEATHER_SNOW_S_ADD_SP_TMG_NUM] = {3,6,3,6};	// たてに進むスピード
 
 
@@ -193,19 +193,20 @@ static const int WEATHER_SSNOW_SPEED_Y_SML[WEATHER_SNOW_S_ADD_SP_TMG_NUM] = {3,6
 #define WEATHER_ARARE_FOG_OFS		(0x300)
 
 /*== あられオブジェクト ==*/
-#define WEATHER_ARARE_SPEED_X		(-4)						// 横に進むスピード
+#define WEATHER_ARARE_SPEED_X		(4)						// 横に進むスピード
 #define WEATHER_ARARE_SPEED_Y		(10)						// たてに進むスピードベース
-#define WEATHER_ARARE_ADDSPEED_X	(2)						// 横に進むスピードに足すあたい
+#define WEATHER_ARARE_ADDSPEED_X	(-2)						// 横に進むスピードに足すあたい
 #define WEATHER_ARARE_ADDSPEED_Y	(3)						// たてに進むスピードに足すあたい
 #define	WEATHER_ARARE_END_MIN		(1)							// 終了カウンタ最小
-#define WEATHER_ARARE_END_MAX		(3)							// 終了カウンタ最大
-#define	WEATHER_ARARE_START_X_BASE	(0)							// ベースになるX開始座標
+#define WEATHER_ARARE_END_MAX		(4)							// 終了カウンタ最大
+#define	WEATHER_ARARE_START_X_BASE	(-64)							// ベースになるX開始座標
 #define	WEATHER_ARARE_MUL_X			(15)						// ベースに雨の種類分足す値
 #define	WEATHER_ARARE_START_X_MAX	(270)						// X開始座標乱数の最大値
-#define	WEATHER_ARARE_START_Y		(0)						// Y開始座標
+#define	WEATHER_ARARE_START_Y		(-8)						// Y開始座標
+#define	WEATHER_ARARE_START_Y_MAX	(16)						// Y開始座標
 #define	WEATHER_ARARE_SPEED_ERR		(23)						// スピード補正値
 
-#define WEATHER_ARARE_GROUND_SPEED_X		(-2)					// 着地後の横に進むスピード
+#define WEATHER_ARARE_GROUND_SPEED_X		(2)					// 着地後の横に進むスピード
 #define WEATHER_ARARE_GROUND_SPEED_Y		(2)						// 着地後の横に進むスピード
 
 // あられ確立
@@ -1691,7 +1692,7 @@ static void WEATHER_SNOW_S_OBJ_Add( WEATHER_TASK* p_wk, int num, u32 heapID )
 		obj_w[5] = WEATHER_SSNOW_SPEED_X_SML[tbl_num];
 		
 		// 座標を設定
-		mat.x = WEATHER_SNOW_S_START_X + GFUser_GetPublicRand(WEATHER_SNOW_S_START_X_RAN);
+		mat.x = WEATHER_SNOW_S_START_X - GFUser_GetPublicRand(WEATHER_SNOW_S_START_X_RAN);
 		mat.y = WEATHER_SNOW_S_START_Y_BASE + GFUser_GetPublicRand(WEATHER_SNOW_S_START_Y_MAX);
 
 		GFL_CLACT_WK_SetPos( p_clwk, &mat, CLSYS_DEFREND_MAIN );
@@ -1719,7 +1720,7 @@ static void WEATHER_SNOW_S_SCROLL_Main( WEATHER_TASK* p_sys, WEATHER_SNOW_S_WORK
 
 	// BG面を斜め上に動かす
 	p_wk->work[2] = (p_wk->work[2] + 6) % 256;
-	WEATHER_TASK_3DBG_SetScrollX( p_sys, (p_wk->work[2]*2) - x );
+	WEATHER_TASK_3DBG_SetScrollX( p_sys, (-p_wk->work[2]*2) - x );
 	WEATHER_TASK_3DBG_SetScrollY( p_sys, (-p_wk->work[2]*2) + y );
 }
 
@@ -2041,8 +2042,8 @@ static void WEATHER_ARARE_OBJ_Move( WEATHER_OBJ_WORK* p_wk )
 			if( (obj_w[2] - 1) >= 0 ){
 				obj_w[2] --;
 			}
-			if( (obj_w[4] + 1) <= 0 ){
-				obj_w[4] ++;
+			if( (obj_w[4] - 1) >= 0 ){
+				obj_w[4] --;
 			}
 		}
 		WEATHER_OBJ_WORK_SetPosNoTurn( p_wk, &mat );
@@ -2121,7 +2122,7 @@ static void WEATHER_ARARE_OBJ_Add( WEATHER_TASK* p_wk, int num, u32 heapID )
 		
 		// 座標を設定
 		mat.x = ( WEATHER_ARARE_START_X_BASE + (frame * WEATHER_ARARE_MUL_X) + (rand % WEATHER_ARARE_START_X_MAX) );
-		mat.y = WEATHER_ARARE_START_Y;
+		mat.y = WEATHER_ARARE_START_Y + (rand % WEATHER_ARARE_START_Y_MAX);
 		WEATHER_OBJ_WORK_SetPos( add_obj, &mat );
 
 		obj_w[6] = rand;			// 乱数保存
