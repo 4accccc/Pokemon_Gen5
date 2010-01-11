@@ -27,7 +27,6 @@ SAVEDATASRC =   savedata/save_tbl.c \
         savedata/c_gear_data.c \
         savedata/dreamworld_data.c \
         savedata/wifihistory.c \
-        savedata/wifi_status.c \
         savedata/wifilist.c \
         savedata/wifi_negotiation.c \
         savedata/mystery_data.c \
@@ -844,7 +843,9 @@ SRCS_OVERLAY_WIFICLUB =   net_app/wificlub/wifi_p2pmatchroom.c \
 							net_app/wificlub/comm_command_wfp2pmf.c \
 							net_app/wificlub/comm_command_wfp2pmf_func.c \
               net_app/wificlub/wifi_p2pmatchroom_map.c \
-              net_app/wificlub/wifi_p2pmatch.c
+              net_app/wificlub/wifi_p2pmatch.c \
+		 					net_app/wificlub/wifi_status.c
+
 
 
 # IRCマッチングアプリケーション ともだちコード交換

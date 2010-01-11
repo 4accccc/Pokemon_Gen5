@@ -9,43 +9,8 @@
 //============================================================================================
 
 #include "gflib.h"
-#include "savedata/wifi_status.h"
-#include "mystatus_local.h"
+#include "wifi_status.h"
 
-#define _POKEMON_NUM   (6)
-
-// dwc_rap.hにある定義分増やす事が可能
-// #define MYDWC_STATUS_DATA_SIZE_MAX (128)
-// WIFIフレンド情報サイズ DWCに189バイト可能とあるが、定義が無いので控えめサイズで決めうち
-// 増やしすぎると全体に重くなる
-
-
-struct _WIFI_STATUS{
-  u16 pokemonType[_POKEMON_NUM];                    //12
-  u16 hasItemType[_POKEMON_NUM];                   //24
-	MYSTATUS aMyStatus;   // MYSTATUS                          56
-	u8 VChatMac[6];       // ゲームを呼びかける人のMacアドレス 自分のMACだった場合開始      62
-	u8 MyMac[6];       // 自分のMacアドレス 68
-	u8 WifiMode;         // WIFIでのゲーム等の状態             69
-	u8 VChatStatus;       // VChatの状態                       70
-	u8 Active;          // VChatの状態                         71
-  u8 nation;           //  72
-  u8 area;             //  73
-	u8 dummy[124-73];  // 未来用 今は0   128
-};
-
-//----------------------------------------------------------
-/**
- * @brief	  構造体サイズを返す
- * @return	int		サイズ（バイト単位）
- */
-//----------------------------------------------------------
-
-int WIFI_STATUS_GetSize(void)
-{
-	return sizeof(WIFI_STATUS);
-
-}
 
 //----------------------------------------------------------
 /**
@@ -74,27 +39,52 @@ extern void WIFI_STATUS_SetMyStatus(WIFI_STATUS* pStatus, const MYSTATUS* pMy)
 
 //----------------------------------------------------------
 /**
- * @brief	  WifiModeを返す
+ * @brief	  WifiStatusを返す
  * @return	,,
  */
 //----------------------------------------------------------
 
-u8 WIFI_STATUS_GetWifiMode(const WIFI_STATUS* pStatus)
+u8 WIFI_STATUS_GetWifiStatus(const WIFI_STATUS* pStatus)
 {
-	return pStatus->WifiMode;
+	return pStatus->status;
 }
 
 //----------------------------------------------------------
 /**
- * @brief	  WifiModeを返す
+ * @brief	  WifiStatusを返す
  * @return	,,
  */
 //----------------------------------------------------------
 
-void WIFI_STATUS_SetWifiMode( WIFI_STATUS* pStatus, u8 mode)
+void WIFI_STATUS_SetWifiStatus( WIFI_STATUS* pStatus, u8 mode)
 {
-	 pStatus->WifiMode = mode;
+	 pStatus->status = mode;
 }
+
+//----------------------------------------------------------
+/**
+ * @brief	  GameModeを返す
+ * @return	,,
+ */
+//----------------------------------------------------------
+
+u8 WIFI_STATUS_GetGameMode(const WIFI_STATUS* pStatus)
+{
+	return pStatus->GameMode;
+}
+
+//----------------------------------------------------------
+/**
+ * @brief	  GameModeを返す
+ * @return	,,
+ */
+//----------------------------------------------------------
+
+void WIFI_STATUS_SetGameMode( WIFI_STATUS* pStatus, u8 mode)
+{
+	 pStatus->GameMode = mode;
+}
+
 
 //----------------------------------------------------------
 /**
@@ -193,25 +183,6 @@ void WIFI_STATUS_SetMyMac(WIFI_STATUS* pStatus)
 }
 
 
-void WIFI_STATUS_SetMonsNo(WIFI_STATUS* pStatus,int index,u16 no)
-{
-	pStatus->pokemonType[index] = no;
-}
-
-void WIFI_STATUS_SetItemNo(WIFI_STATUS* pStatus,int index,u16 no)
-{
-	pStatus->hasItemType[index] = no;
-}
-
-u16 WIFI_STATUS_GetMonsNo(WIFI_STATUS* pStatus,int index)
-{
-	return pStatus->pokemonType[index];
-}
-
-u16 WIFI_STATUS_GetItemNo(WIFI_STATUS* pStatus,int index)
-{
-	return pStatus->hasItemType[index];
-}
 
 
 void WIFI_STATUS_SetMyNation(WIFI_STATUS* pStatus,u8 no)

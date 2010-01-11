@@ -12,7 +12,7 @@
 
 
 #include <gflib.h>
-#include "savedata/wifi_status.h"
+#include "wifi_status.h"
 #include "savedata/wifilist.h"
 #include "savedata/config.h"
 #include "print/wordset.h"
@@ -121,7 +121,8 @@ enum{
   WIFIP2PMATCH_PARENT_RESTART,
   WIFIP2PMATCH_FIRST_SAVING,
   WIFIP2PMATCH_MODE_CANCEL_ENABLE_WAIT,
-  WIFIP2PMATCH_FIRST_SAVING2,
+  WIFIP2PMATCH_FIRST_SAVING2,       //70
+  WIFIP2PMATCH_MODE_CALLGAME_INIT, 
 
 };
 
@@ -162,7 +163,7 @@ typedef enum{
 	WF_VIEW_VCHAT,
 	WF_VIEW_STATUS_NUM,
 } WF_VIEW_STATUS_e;
-
+/*
 typedef enum{
 	WF_USERDISPTYPE_NRML,	// 通常
 	WF_USERDISPTYPE_MINI,	// ミニゲーム
@@ -173,7 +174,7 @@ typedef enum{
 	WF_USERDISPTYPE_BTRT,	// バトルルーレット
 	WF_USERDISPTYPE_NUM,
 } WF_USERDISPTYPE__e;
-
+*/
 // ユーザ表示ボタン数
 typedef enum{
 	MCV_USERD_BTTN_LEFT = 0,
@@ -231,8 +232,8 @@ typedef struct {
 	void* p_bttnbuff;
 	NNSG2dScreenData* p_bttnscrn;
 
-	void* p_userbuff[WF_USERDISPTYPE_NUM];
-	NNSG2dScreenData* p_userscrn[WF_USERDISPTYPE_NUM];
+	void* p_userbuff[1];
+	NNSG2dScreenData* p_userscrn[1];
 
 	void* p_useretcbuff;
 	NNSG2dScreenData* p_useretcscrn;
@@ -359,8 +360,11 @@ GAMEDATA* pGameData;
   u16 battleCur;			// バトルタイプ選択メニューカーソル
   u16 singleCur[3];			// バトルの詳細部分のメニューカーソル
   u16 bSingle;				// SINGLEバトル　ダブルバトルスイッチ
-  u16 keepStatus;			// 接続しようとしたら相手のステータスが変わったときのﾁｪｯｸ用
-  u16 keepVChat;			// 接続しようとしたらボイスチャット状態が変わったときのﾁｪｯｸ用
+
+ WIFI_STATUS targetStatus;  //接続しようとしている人のステータス
+
+//  u16 keepStatus;			// 接続しようとしたら相手のステータスが変わったときのﾁｪｯｸ用
+//  u16 keepVChat;			// 接続しようとしたらボイスチャット状態が変わったときのﾁｪｯｸ用
   u16 friendNo;			// 今つながっている友達ナンバー
   BOOL bRetryBattle;
    int vctEnc;

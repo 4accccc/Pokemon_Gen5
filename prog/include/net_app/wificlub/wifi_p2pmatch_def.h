@@ -25,7 +25,7 @@
 #define WIFI_P2PMATCH_DPW     (1)   // この後DPWへ移行する
 #define WIFI_P2PMATCH_P2P     (2)   // このままP2P処理に移行
 
-
+#if 0
 
 // P2PMATCH からの戻り値
 typedef enum {
@@ -49,6 +49,9 @@ typedef enum{
 	WIFI_BATTLEFLAG_DOUBLE,	// ダブルバトル
 	WIFI_BATTLEFLAG_MULTI,	// マルチバトル
 } WIFI_BATTLEFLAG;
+
+
+#endif
 
 #endif //__WIFI_P2PMATCH_DEF_H__
 

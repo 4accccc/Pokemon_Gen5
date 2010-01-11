@@ -11,6 +11,7 @@
 #include "net/network_define.h"
 
 #include "gamesystem/game_event.h"
+#include "gamesystem/btl_setup.h"
 
 #include "net_app/wificlub/wifi_p2pmatch.h"
 //#include "net_app/wificlub/wifi_p2pmatchfour.h"
@@ -28,6 +29,8 @@
 #include "field/event_wificlub.h"
 
 #include "net_app/comm_tvt_sys.h"  //TVトランシーバ
+#include "wifi_status.h"
+
 
 //#include "net_app/balloon.h"
 
@@ -122,20 +125,47 @@ typedef struct {
 } NextMatchKindTbl;
 
 NextMatchKindTbl aNextMatchKindTbl[] = {
-  {0, 0, 0},
-  {50,WIFI_BATTLEFLAG_SINGLE, P2P_BATTLE},   // WIFI_P2PMATCH_SBATTLE50:   // 通信対戦呼び出し
-  {100, WIFI_BATTLEFLAG_SINGLE, P2P_BATTLE}, // WIFI_P2PMATCH_SBATTLE100:   // 通信対戦呼び出し
-  {0, WIFI_BATTLEFLAG_SINGLE, P2P_BATTLE}, // WIFI_P2PMATCH_SBATTLE_FREE:   // 通信対戦呼び出し
-  {50,WIFI_BATTLEFLAG_DOUBLE, P2P_BATTLE}, //WIFI_P2PMATCH_DBATTLE50:   // 通信対戦呼び出し
-  {100,WIFI_BATTLEFLAG_DOUBLE, P2P_BATTLE}, //WIFI_P2PMATCH_DBATTLE100:   // 通信対戦呼び出し
-  {0,WIFI_BATTLEFLAG_DOUBLE, P2P_BATTLE}, //WIFI_P2PMATCH_DBATTLE_FREE:   // 通信対戦呼び出し
-  {0,0, P2P_TRADE}, //WIFI_P2PMATCH_TRADE:   // ポケモントレード呼び出し
-  {0,0, P2P_TVT}, //WIFI_P2PMATCH_TRADE:   // ポケモントレード呼び出し
+  {0,  0, P2P_EXIT},
+  {0,  0, P2P_EXIT},
+  {0,  0, P2P_EXIT},
+  {0,  0, P2P_TVT}, //WIFI_P2PMATCH_TRADE:   // TVトランシーバ
+  {0,  0, P2P_TRADE}, //WIFI_P2PMATCH_TRADE:   // ポケモントレード呼び出し
+  {0,  WIFI_GAME_BATTLE_SINGLE_ALL, P2P_BATTLE},   //バトル
+  {50, WIFI_GAME_BATTLE_SINGLE_FLAT, P2P_BATTLE}, 
+  {0,  WIFI_GAME_BATTLE_DOUBLE_ALL, P2P_BATTLE}, 
+  {50, WIFI_GAME_BATTLE_DOUBLE_FLAT, P2P_BATTLE}, 
+  {0,  WIFI_GAME_BATTLE_TRIPLE_ALL, P2P_BATTLE}, 
+  {50, WIFI_GAME_BATTLE_TRIPLE_FLAT, P2P_BATTLE}, 
+  {0,  WIFI_GAME_BATTLE_ROTATION_ALL, P2P_BATTLE}, 
+  {50, WIFI_GAME_BATTLE_ROTATION_FLAT, P2P_BATTLE}, 
   {0,0, P2P_EXIT},   // 通信切断してます。終了します。
-  {0,0, P2P_UTIL},   ////WIFIUTILへ飛びます
-  {0,0, P2P_SETEND}, //WIFI_P2PMATCH_DPW_END:  //DPWへいく場合
 };
 
+
+static void _battleSetting(EVENT_WIFICLUB_WORK* pClub,int gamemode)
+{
+  GAMEDATA* gamedata = GAMESYSTEM_GetGameData(pClub->gsys);
+  
+  switch(gamemode){
+  case WIFI_GAME_BATTLE_SINGLE_ALL:
+  case WIFI_GAME_BATTLE_SINGLE_FLAT:
+    BTL_SETUP_Single_Comm(
+      &pClub->para , gamedata , GFL_NET_HANDLE_GetCurrentHandle() , BTL_COMM_DS, HEAPID_PROC );
+    break;
+  case WIFI_GAME_BATTLE_DOUBLE_ALL:
+  case WIFI_GAME_BATTLE_DOUBLE_FLAT:
+    BTL_SETUP_Double_Comm( &pClub->para , gamedata , GFL_NET_HANDLE_GetCurrentHandle() , BTL_COMM_DS, HEAPID_PROC );
+    break;
+  case WIFI_GAME_BATTLE_TRIPLE_ALL:
+  case WIFI_GAME_BATTLE_TRIPLE_FLAT:
+    BTL_SETUP_Triple_Comm( &pClub->para , gamedata , GFL_NET_HANDLE_GetCurrentHandle() , BTL_COMM_DS, HEAPID_PROC );
+    break;
+  case WIFI_GAME_BATTLE_ROTATION_ALL:
+  case WIFI_GAME_BATTLE_ROTATION_FLAT:
+    BTL_SETUP_Rotation_Comm( &pClub->para , gamedata , GFL_NET_HANDLE_GetCurrentHandle() , BTL_COMM_DS, HEAPID_PROC );
+    break;
+  }
+}
 
 
 //==============================================================================
@@ -151,15 +181,18 @@ static GFL_PROC_RESULT WifiClubProcMain( GFL_PROC * proc, int * seq, void * pwk,
   case P2P_INIT:
 
     ep2p->seq = P2P_MATCH_BOARD;
+/*
     if(ep2p->pMatchParam->seq == WIFI_P2PMATCH_DPW){
       if( mydwc_checkMyGSID() ){
         ep2p->seq = P2P_FREE;  //コード取得済みの場合なにもしない
         *(ep2p->ret) = 0;
       }
     }
+   */
     break;
   case P2P_MATCH_BOARD:
     GFL_OVERLAY_Load(FS_OVERLAY_ID(wificlub));
+    WIFI_STATUS_SetMyMac(ep2p->pMatchParam->pMatch);
     GFL_PROC_SysCallProc(FS_OVERLAY_ID(wifi2dmap), &WifiP2PMatchProcData, ep2p->pMatchParam);
     ep2p->seq ++;
     break;
@@ -175,12 +208,14 @@ static GFL_PROC_RESULT WifiClubProcMain( GFL_PROC * proc, int * seq, void * pwk,
     ep2p->lvLimit = aNextMatchKindTbl[ep2p->pMatchParam->seq].lvLimit;
     ep2p->bSingle = aNextMatchKindTbl[ep2p->pMatchParam->seq].bSingle;
     GFL_OVERLAY_Unload(FS_OVERLAY_ID(wificlub));
+/*
     switch(ep2p->pMatchParam->seq){
     case WIFI_P2PMATCH_DPW_END:  //DPWへいく場合
       *(ep2p->ret) = 1;
       ep2p->seq = P2P_SETEND;
       break;
     }
+   */
     break;
   case P2P_BATTLE:
     {
@@ -196,9 +231,11 @@ static GFL_PROC_RESULT WifiClubProcMain( GFL_PROC * proc, int * seq, void * pwk,
     }
     break;
   case P2P_BATTLE_START:
-    pClub->para.rule = BTL_RULE_SINGLE;
-    pClub->para.netHandle = GFL_NET_HANDLE_GetCurrentHandle();
-    pClub->para.commPos = GFL_NET_GetNetID( GFL_NET_HANDLE_GetCurrentHandle() );
+
+    _battleSetting(pClub, ep2p->pMatchParam->seq);
+//    pClub->para.rule = BTL_RULE_SINGLE;
+//    pClub->para.netHandle = GFL_NET_HANDLE_GetCurrentHandle();
+//    pClub->para.commPos = GFL_NET_GetNetID( GFL_NET_HANDLE_GetCurrentHandle() );
     PMSND_PlayBGM(pClub->para.musicDefault);
 
     GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 1);
@@ -261,11 +298,10 @@ static GFL_PROC_RESULT WifiClubProcInit( GFL_PROC * proc, int * seq, void * pwk,
 
   GFL_STD_MemClear(ep2p, sizeof(EV_P2PEVENT_WORK));
   ep2p->pMatchParam = GFL_HEAP_AllocClearMemory(GetHeapLowID(HEAPID_PROC), sizeof(WIFIP2PMATCH_PROC_PARAM));
-  ep2p->pMatchParam->pMatch = GFL_HEAP_AllocClearMemory(GetHeapLowID(HEAPID_PROC), WIFI_STATUS_GetSize());
-  WIFI_STATUS_SetMyMac(ep2p->pMatchParam->pMatch);
+  ep2p->pMatchParam->pMatch = GFL_HEAP_AllocClearMemory(GetHeapLowID(HEAPID_PROC), sizeof( WIFI_STATUS ));
   ep2p->pMatchParam->pSaveData = pClub->ctrl;
   ep2p->pMatchParam->pGameData = GAMESYSTEM_GetGameData(pClub->gsys);
-  NET_PRINT("%x %x\n",(int)ep2p->pMatchParam->pMatch,(int)pClub->ctrl);
+//  NET_PRINT("%x %x\n",(int)ep2p->pMatchParam->pMatch,(int)pClub->ctrl);
 
   ep2p->pGameData =  GAMESYSTEM_GetGameData(pClub->gsys);
   ep2p->pWifiList = GAMEDATA_GetWiFiList(ep2p->pGameData);

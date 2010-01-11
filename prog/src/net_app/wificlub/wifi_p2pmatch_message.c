@@ -322,9 +322,6 @@ static void _curCallBack(BMPMENULIST_WORK * wk,u32 param,u8 mode)
  * @retval  none
  */
 //------------------------------------------------------------------
-#define WIFI_STSET_SINGLEBATTLE (WIFI_STATUS_NONE)    // 選択肢の無いものを割り当てる
-#define WIFI_STSET_DOUBLEBATTLE (WIFI_STATUS_VCT)
-#define WIFI_STSET_MINIGAME   (WIFI_STATUS_UNKNOWN)
 
 typedef struct {
   u32  str_id;
@@ -332,37 +329,42 @@ typedef struct {
 } _infoMenu;
 
 //  メニューリスト
-#define WIFI_PARENTINFO_MENULIST_MAX    ( 10 )
-#ifdef WFP2P_DEBUG_EXON
+//#define WIFI_PARENTINFO_MENULIST_MAX    ( 10 )
 #define WIFI_PARENTINFO_MENULIST_COMMON   ( 5 ) // 変動しない部分の数
-#else
-#define WIFI_PARENTINFO_MENULIST_COMMON   ( 4 ) // 変動しない部分の数
-#endif
-_infoMenu _parentInfoMenuList[ WIFI_PARENTINFO_MENULIST_MAX ] = {
-  // 変動しない部分
-  { msg_wifilobby_057, (u32)WIFI_STSET_SINGLEBATTLE },
-  { msg_wifilobby_058, (u32)WIFI_STSET_DOUBLEBATTLE },
-  { msg_wifilobby_025, (u32)WIFI_STATUS_TRADE_WAIT },
-  { msg_wifilobby_076, (u32)WIFI_STATUS_TVT_WAIT },
-  
-};
 
-static _infoMenu _endMenu = {
-  msg_wifilobby_032, (u32)BMPMENULIST_CANCEL
-  };
+_infoMenu _parentInfoMenuList[  ] = {
+  { msg_wifilobby_027, (u32)WIFI_GAME_VCT }, //VCT
+  { msg_wifilobby_076, (u32)WIFI_GAME_TVT }, //TVT
+  { msg_wifilobby_022, (u32)WIFI_GAME_BATTLE_SINGLE_ALL }, //対戦
+  { msg_wifilobby_025, (u32)WIFI_GAME_TRADE }, //CHANGE
+  { msg_wifilobby_032, (u32)BMPMENULIST_CANCEL }
+};
 
 
 _infoMenu _parentSingleInfoMenuList[] = {
-  { msg_wifilobby_059, (u32)WIFI_STATUS_SBATTLE_FREE_WAIT },
-  { msg_wifilobby_060, (u32)WIFI_STATUS_SBATTLE50_WAIT },
-  { msg_wifilobby_061, (u32)WIFI_STATUS_SBATTLE100_WAIT },
+  { msg_wifilobby_0571, (u32)WIFI_GAME_BATTLE_SINGLE_ALL }, //シングル
+  { msg_wifilobby_0572, (u32)WIFI_GAME_BATTLE_DOUBLE_ALL },   //ダブル
+  { msg_wifilobby_0573, (u32)WIFI_GAME_BATTLE_TRIPLE_ALL },  //トリプル
+  { msg_wifilobby_0574, (u32)WIFI_GAME_BATTLE_ROTATION_ALL },  //ローテーション
   { msg_wifilobby_032, (u32)BMPMENULIST_CANCEL },
 };
 
+#define _NORIMIT (0)
+#define _FLAT (1)
+
 _infoMenu _parentDoubleInfoMenuList[] = {
-  { msg_wifilobby_062, (u32)WIFI_STATUS_DBATTLE_FREE_WAIT },
-  { msg_wifilobby_063, (u32)WIFI_STATUS_DBATTLE50_WAIT },
-  { msg_wifilobby_064, (u32)WIFI_STATUS_DBATTLE100_WAIT },
+  { msg_wifilobby_060, (u32)_NORIMIT },  //せいげんなし
+  { msg_wifilobby_061, (u32)_FLAT },  //フラットルール
+  { msg_wifilobby_032, (u32)BMPMENULIST_CANCEL },
+};
+
+
+#define _SHOOTER_ON (0)
+#define _SHOOTER_OFF (1)
+
+_infoMenu _parentShooterInfoMenuList[] = {
+  { msg_wifilobby_062, (u32)_SHOOTER_ON },  //シューターあり
+  { msg_wifilobby_063, (u32)_SHOOTER_OFF },  //シューターなし
   { msg_wifilobby_032, (u32)BMPMENULIST_CANCEL },
 };
 
@@ -376,7 +378,7 @@ static BMPMENULIST_HEADER _parentInfoMenuListHeader = {
   WIFI_PARENTINFO_MENULIST_COMMON,// リスト項目数
   WIFI_PARENTINFO_MENULIST_COMMON,// 表示最大項目数
   0,            // ラベル表示Ｘ座標
-  8,            // 項目表示Ｘ座標
+  16,            // 項目表示Ｘ座標
   0,            // カーソル表示Ｘ座標
   0,            // 表示Ｙ座標
   FBMP_COL_BLACK,     // 文字色
@@ -405,7 +407,7 @@ static const BMPMENULIST_HEADER _parentInfoBattleMenuListHeader = {
   NELEMS(_parentSingleInfoMenuList),  // リスト項目数
   NELEMS(_parentSingleInfoMenuList),  // 表示最大項目数
   0,            // ラベル表示Ｘ座標
-  8,            // 項目表示Ｘ座標
+  16,            // 項目表示Ｘ座標
   0,            // カーソル表示Ｘ座標
   0,            // 表示Ｙ座標
   FBMP_COL_BLACK,     // 文字色
@@ -439,14 +441,6 @@ static void _ParentModeSelectMenu( WIFIP2PMATCH_WORK *wk )
   p_menu = _parentInfoMenuList;
 
 
-  // 終了の追加
-  {
-    length ++;      //  項目数追加
-    list_h.count ++;  // リスト最大項目数追加
-    list_h.line ++;   // リスト表示最大数追加
-
-    p_menu[ length-1 ] =_endMenu;
-  }
 
   wk->submenulist = BmpMenuWork_ListCreate( length , HEAPID_WIFIP2PMATCH );
   for(i=0; i< length ; i++){
@@ -509,7 +503,7 @@ static const BMPMENULIST_HEADER _childMatchMenuListHeader = {
   NELEMS(_childMatchMenuList),  // リスト項目数
   NELEMS(_childMatchMenuList),  // 表示最大項目数
   0,            // ラベル表示Ｘ座標
-  8,            // 項目表示Ｘ座標
+  16,            // 項目表示Ｘ座標
   0,            // カーソル表示Ｘ座標
   0,            // 表示Ｙ座標
   FBMP_COL_BLACK,     // 文字色
@@ -532,6 +526,7 @@ static const BMPMENULIST_HEADER _childMatchMenuListHeader = {
 
 static void _ChildModeMatchMenuDisp( WIFIP2PMATCH_WORK *wk )
 {
+#if 0
     int i,length;
     BMPMENULIST_HEADER list_h;
     u16 friendNo,status,vchat;
@@ -555,14 +550,12 @@ static void _ChildModeMatchMenuDisp( WIFIP2PMATCH_WORK *wk )
 
     for(i = 0; i < NELEMS(_childMatchMenuList);i++){
       if(i == 0){
-        if(_modeActive(status) || (status == WIFI_STATUS_NONE) ||
-           (status == WIFI_STATUS_PLAY_OTHER) ||
-           (status >= WIFI_STATUS_UNKNOWN)){  // もうしこむを出さない条件
+        if(WIFI_STATUS_PLAYING == status || status >= WIFI_STATUS_UNKNOWN){  // もうしこむを出さない条件
           list_h.line -= 1;
           list_h.count -= 1;
           length -= 1;
         }
-        else if(status == WIFI_STATUS_LOGIN_WAIT){
+        else if(status == WIFI_STATUS_WAIT){
           if(vchat == 2){
             BmpMenuWork_ListAddArchiveString( wk->submenulist, wk->MsgManager,
                                               msg_wifilobby_027,
@@ -606,6 +599,7 @@ static void _ChildModeMatchMenuDisp( WIFIP2PMATCH_WORK *wk )
     GFL_BMPWIN_TransVramCharacter(wk->SubListWin);
     GFL_BMPWIN_MakeScreen(wk->SubListWin);
     GFL_BG_LoadScreenReq(GFL_BG_FRAME2_M);
+#endif
 }
 
 //------------------------------------------------------------------
@@ -623,37 +617,25 @@ static void _battleSubMenuInit( WIFIP2PMATCH_WORK *wk, int ret )
   _infoMenu* pMenu;
 
   switch(ret){
-  case WIFI_STSET_SINGLEBATTLE:
+  case WIFI_GAME_BATTLE_SINGLE_ALL:
     pMenu = _parentSingleInfoMenuList;
     length = NELEMS(_parentSingleInfoMenuList);
     wk->bSingle = 1;
     list_h = _parentInfoBattleMenuListHeader;
     break;
-
+/*
   case WIFI_STSET_DOUBLEBATTLE:
     pMenu = _parentDoubleInfoMenuList;
     length = NELEMS(_parentDoubleInfoMenuList);
     wk->bSingle = 0;
     list_h = _parentInfoBattleMenuListHeader;
     break;
-
+*/
   }
 
   wk->submenulist = BmpMenuWork_ListCreate( length , HEAPID_WIFIP2PMATCH );
   for(i=0; i< length ; i++){
-    if( pMenu[i].str_id != msg_wifilobby_mg02 ){
-      BmpMenuWork_ListAddArchiveString( wk->submenulist, wk->MsgManager, pMenu[i].str_id, pMenu[i].param,HEAPID_WIFIP2PMATCH );
-    }else{
-    #if 0 //※check　WiFi広場削除
-      // ミニゲームはタグで表示する（ちょっとむりやりすぎ・・・）
-      WORDSET_RegisterWiFiLobbyGameName( wk->WordSet, 0, i );
-      GFL_MSG_GetString(  wk->MsgManager, pMenu[i].str_id, wk->pExpStrBuf );
-      WORDSET_ExpandStr( wk->WordSet, wk->TitleString, wk->pExpStrBuf );
-      BmpMenuWork_ListAddString( wk->submenulist, wk->TitleString, pMenu[i].param,HEAPID_WIFIP2PMATCH );
-    #else
-      GF_ASSERT(0); //WiFi広場関連の処理は削除
-    #endif
-    }
+    BmpMenuWork_ListAddArchiveString( wk->submenulist, wk->MsgManager, pMenu[i].str_id, pMenu[i].param,HEAPID_WIFIP2PMATCH );
   }
   wk->SubListWin = _BmpWinDel(wk->SubListWin);
   //BMPウィンドウ生成
@@ -677,6 +659,9 @@ static void _battleSubMenuInit( WIFIP2PMATCH_WORK *wk, int ret )
 
 }
 
+
+
+
 //------------------------------------------------------------------
 /**
  * $brief   自分の状態を表示
@@ -689,7 +674,7 @@ static void _userDataInfoDisp(WIFIP2PMATCH_WORK * wk)
   int col,sex, vct_icon;
   int msg_id;
   MYSTATUS* pMy = SaveData_GetMyStatus(wk->pSaveData);
-  u32 status;
+  u32 status,gamemode;
 
   if(!wk->MyInfoWin){
     return;
@@ -711,9 +696,10 @@ static void _userDataInfoDisp(WIFIP2PMATCH_WORK * wk)
     GFL_STR_DeleteBuffer(pSTRBUF);
   }
   status = _WifiMyStatusGet( wk, wk->pMatch );
+  gamemode = _WifiMyGameModeGet( wk, wk->pMatch );
   // msg_idとカラーを取得
-  msg_id = MCVSys_StatusMsgIdGet( status, &col );
-  if( status == WIFI_STATUS_VCT ){      // VCT中
+  msg_id = MCVSys_StatusMsgIdGet( status, gamemode, &col );
+  if( gamemode == WIFI_GAME_VCT && status == WIFI_STATUS_PLAYING ){      // VCT中
     if(GFL_NET_DWC_GetFriendIndex() == -1){
       GFL_MSG_GetString(wk->MsgManager, msg_id, wk->pExpStrBuf);
     }
@@ -737,7 +723,7 @@ static void _userDataInfoDisp(WIFIP2PMATCH_WORK * wk)
   // Frame1の対応する位置にアイコンを転送
   WifiP2PMatchFriendListStIconWrite( &wk->icon, GFL_BG_FRAME1_M,
                                      PLAYER_DISP_ICON_POS_X, PLAYER_DISP_ICON_POS_Y,
-                                     status );
+                                     status,gamemode );
   if( WIFI_STATUS_GetVChatStatus(wk->pMatch) ){
     vct_icon = PLAYER_DISP_ICON_IDX_NONE;
   }else{
@@ -875,5 +861,250 @@ static void FreeMessageWork( WIFIP2PMATCH_WORK *wk )
   PRINTSYS_QUE_Clear(wk->SysMsgQue);
   PRINTSYS_QUE_Delete(wk->SysMsgQue);
 
+}
+
+
+
+
+
+//----------------------------------------------------------------------------
+/**
+ *  @brief  ユーザーデータ表示
+ *
+ *  @param  wk  システムワーク
+ */
+//-----------------------------------------------------------------------------
+static void MCVSys_UserDispDraw( WIFIP2PMATCH_WORK *wk, u32 heapID )
+{
+  int sex;
+  int pal;
+
+  sex = WifiList_GetFriendInfo( wk->pList,
+                                wk->view.touch_friendNo - 1, WIFILIST_FRIEND_SEX );
+
+  if(sex == PM_FEMALE){
+    pal = MCV_PAL_BTTN+MCV_PAL_BTTNST_GIRL;
+  }else{
+    pal = MCV_PAL_BTTN+MCV_PAL_BTTNST_MAN;
+  }
+  GFL_BG_LoadScreen( GFL_BG_FRAME2_S, wk->view.p_userscrn[0]->rawData,
+                     wk->view.p_userscrn[0]->szByte,0 );
+  //  GFL_BG_ScreenBufSet( GFL_BG_FRAME2_S, wk->view.p_userscrn[wk->view.user_dispno]->rawData,
+  //      wk->view.p_userscrn[wk->view.user_dispno]->szByte );
+
+  GFL_BG_ChangeScreenPalette( GFL_BG_FRAME2_S, 0, 0,
+                              32, 24, pal );
+
+  // BG３面のスクリーンをクリア
+  GFL_BG_ClearFrame( GFL_BG_FRAME3_S);
+
+  MCVSys_UserDispDrawFrontierOffScrn( wk ); // 非表示スクリーン設定
+
+
+  // その人のことを描画
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->view.userWin), 0x0 );
+
+  // 描画
+  MCVSys_UserDispDrawType00( wk, heapID );
+
+  GFL_BG_LoadScreenV_Req( GFL_BG_FRAME2_S );
+  GFL_BMPWIN_TransVramCharacter(wk->view.userWin);
+
+  // メッセージ面の表示設定
+  GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG1, VISIBLE_OFF );
+  GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG3, VISIBLE_ON );
+}
+
+// 通常
+static void MCVSys_UserDispDrawType00( WIFIP2PMATCH_WORK *wk, u32 heapID )
+{
+  int sex;
+  int col;
+  int msg_id;
+  int friendNo;
+  int num;
+  int vct_icon;
+  WIFI_STATUS* p_status;
+  u32 status,gamemode;
+
+  friendNo = wk->view.touch_friendNo - 1;
+
+  sex = WifiList_GetFriendInfo( wk->pList, friendNo, WIFILIST_FRIEND_SEX );
+
+  // トレーナー名
+  if( sex == PM_MALE ){
+    _COL_N_BLUE;
+  }else{
+    _COL_N_RED;
+  }
+  MCVSys_FriendNameSet(wk, friendNo);
+  GFL_MSG_GetString(  wk->MsgManager, msg_wifilobby_033, wk->pExpStrBuf );
+  WORDSET_ExpandStr( wk->view.p_wordset, wk->TitleString, wk->pExpStrBuf );
+
+  PRINTSYS_Print( GFL_BMPWIN_GetBmp(wk->view.userWin), MCV_USERD_NAME_X, MCV_USERD_NAME_Y,
+                  wk->TitleString, wk->fontHandle);
+
+  p_status = WifiFriendMatchStatusGet( friendNo );
+  status = _WifiMyStatusGet( wk, p_status );
+  gamemode = _WifiMyGameModeGet( wk, p_status );
+
+  // 状態
+  msg_id = MCVSys_StatusMsgIdGet( status, gamemode, &col );
+  GFL_MSG_GetString(wk->MsgManager, msg_id, wk->pExpStrBuf);
+  PRINTSYS_Print( GFL_BMPWIN_GetBmp(wk->view.userWin), MCV_USERD_ST_X, MCV_USERD_ST_Y,
+                  wk->pExpStrBuf, wk->fontHandle);
+
+  // グループ
+  {
+    int sex = WifiList_GetFriendInfo(wk->pList, friendNo, WIFILIST_FRIEND_SEX);
+    WifiList_GetFriendName(wk->pList, friendNo, wk->pExpStrBuf);
+    WORDSET_RegisterWord( wk->WordSet, 0, wk->pExpStrBuf, sex, TRUE, PM_LANG);
+    //        GFL_HEAP_FreeMemory(pTarget);
+    GFL_MSG_GetString(  wk->MsgManager, msg_wifilobby_034, wk->pExpStrBuf );
+    WORDSET_ExpandStr( wk->view.p_wordset, wk->TitleString, wk->pExpStrBuf );
+    PRINTSYS_Print( GFL_BMPWIN_GetBmp(wk->view.userWin), MCV_USERD_GR_X, MCV_USERD_GR_Y,
+                    wk->TitleString, wk->fontHandle);
+  }
+
+  // 対戦成績
+  {
+    GFL_MSG_GetString(  wk->MsgManager, msg_wifilobby_035, wk->TitleString );
+    PRINTSYS_Print( GFL_BMPWIN_GetBmp(wk->view.userWin), MCV_USERD_VS_X, MCV_USERD_VS_Y,
+                    wk->TitleString, wk->fontHandle);
+    // かち
+    num = WifiList_GetFriendInfo(wk->pList, friendNo, WIFILIST_FRIEND_BATTLE_WIN);
+    WORDSET_RegisterNumber(wk->view.p_wordset, 0, num, 4, STR_NUM_DISP_SPACE, NUMBER_CODETYPE_DEFAULT);
+    GFL_MSG_GetString(  wk->MsgManager, msg_wifilobby_036, wk->pExpStrBuf );
+    WORDSET_ExpandStr( wk->view.p_wordset, wk->TitleString, wk->pExpStrBuf );
+    PRINTSYS_Print( GFL_BMPWIN_GetBmp(wk->view.userWin), MCV_USERD_VS_WIN_X, MCV_USERD_VS_WIN_Y,
+                    wk->TitleString, wk->fontHandle);
+    // まけ
+    num = WifiList_GetFriendInfo(wk->pList, friendNo, WIFILIST_FRIEND_BATTLE_LOSE);
+    WORDSET_RegisterNumber(wk->view.p_wordset, 0, num, 4, STR_NUM_DISP_SPACE, NUMBER_CODETYPE_DEFAULT);
+    GFL_MSG_GetString(  wk->MsgManager, msg_wifilobby_037, wk->pExpStrBuf );
+    WORDSET_ExpandStr( wk->view.p_wordset, wk->TitleString, wk->pExpStrBuf );
+    PRINTSYS_Print( GFL_BMPWIN_GetBmp(wk->view.userWin), MCV_USERD_VS_LOS_X, MCV_USERD_VS_WIN_Y,
+                    wk->TitleString, wk->fontHandle);
+  }
+  // ポケモン交換
+  {
+    GFL_MSG_GetString(  wk->MsgManager, msg_wifilobby_038, wk->TitleString );
+    PRINTSYS_Print( GFL_BMPWIN_GetBmp(wk->view.userWin), MCV_USERD_TR_X,  MCV_USERD_TR_Y,
+                    wk->TitleString, wk->fontHandle);
+
+    num = WifiList_GetFriendInfo(wk->pList, friendNo, WIFILIST_FRIEND_TRADE_NUM);
+    WORDSET_RegisterNumber(wk->view.p_wordset, 0, num, 4, STR_NUM_DISP_SPACE, NUMBER_CODETYPE_DEFAULT);
+    GFL_MSG_GetString(  wk->MsgManager, msg_wifilobby_039, wk->pExpStrBuf );
+    WORDSET_ExpandStr( wk->view.p_wordset, wk->TitleString, wk->pExpStrBuf );
+
+    PRINTSYS_Print( GFL_BMPWIN_GetBmp(wk->view.userWin), MCV_USERD_TRNUM_X, MCV_USERD_TR_Y,
+                    wk->TitleString, wk->fontHandle);
+  }
+
+
+  // 最後に遊んだ日付
+  {
+    GFL_MSG_GetString(  wk->MsgManager, msg_wifilobby_040, wk->TitleString );
+    PRINTSYS_Print( GFL_BMPWIN_GetBmp(wk->view.userWin), MCV_USERD_DAY_X, MCV_USERD_DAY_Y,
+                    wk->TitleString, wk->fontHandle);
+
+    num = WifiList_GetFriendInfo(wk->pList, friendNo, WIFILIST_FRIEND_LASTBT_DAY);
+    if(num!=0){
+      WORDSET_RegisterNumber(wk->view.p_wordset, 2, num, 2, STR_NUM_DISP_SPACE, NUMBER_CODETYPE_DEFAULT);
+      num = WifiList_GetFriendInfo(wk->pList, friendNo, WIFILIST_FRIEND_LASTBT_YEAR);
+      WORDSET_RegisterNumber(wk->view.p_wordset, 0, num, 4, STR_NUM_DISP_SPACE, NUMBER_CODETYPE_DEFAULT);
+      num = WifiList_GetFriendInfo(wk->pList, friendNo, WIFILIST_FRIEND_LASTBT_MONTH);
+      WORDSET_RegisterNumber(wk->view.p_wordset, 1, num, 2, STR_NUM_DISP_SPACE, NUMBER_CODETYPE_DEFAULT);
+      GFL_MSG_GetString(  wk->MsgManager, msg_wifilobby_041, wk->pExpStrBuf );
+      WORDSET_ExpandStr( wk->view.p_wordset, wk->TitleString, wk->pExpStrBuf );
+      PRINTSYS_Print( GFL_BMPWIN_GetBmp(wk->view.userWin), MCV_USERD_DAYNUM_X, MCV_USERD_DAY_Y,
+                      wk->TitleString, wk->fontHandle);
+    }
+  }
+
+  // アイコン
+  WifiP2PMatchFriendListStIconWrite(  &wk->icon, GFL_BG_FRAME2_S,
+                                      MCV_USERD_ICON_X, MCV_USERD_ICON_Y,
+                                      status,gamemode );
+  if( WIFI_STATUS_GetVChatStatus(p_status) ){
+    vct_icon = PLAYER_DISP_ICON_IDX_NONE;
+  }else{
+    vct_icon = PLAYER_DISP_ICON_IDX_VCTNOT;
+  }
+  WifiP2PMatchFriendListIconWrite( &wk->icon, GFL_BG_FRAME2_S,
+                                   MCV_USERD_VCTICON_X, MCV_USERD_ICON_Y,
+                                   vct_icon, 0 );
+
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *  @brief  フロンティア非表示モードのスクリーンに変更
+ *
+ *  @param  wk    ワーク
+ */
+//-----------------------------------------------------------------------------
+static void MCVSys_UserDispDrawFrontierOffScrn( WIFIP2PMATCH_WORK *wk )
+{
+  int i;
+  int roop;
+
+  // フロンティア施設数取得
+  roop = 1;//WF_USERDISPTYPE_NUM - WF_USERDISPTYPE_BLTW;
+
+  for( i=0; i<roop; i++ ){
+    GFL_BG_WriteScreenExpand( GFL_BG_FRAME2_S,
+                              MCV_USERD_NOFR_SCRN_X+(MCV_USERD_NOFR_SCRN_SIZX*i), MCV_USERD_NOFR_SCRN_Y,
+                              MCV_USERD_NOFR_SCRN_SIZX, MCV_USERD_NOFR_SCRN_SIZY,
+                              wk->view.p_useretcscrn->rawData,
+                              0, 0,
+                              wk->view.p_useretcscrn->screenWidth/8, wk->view.p_useretcscrn->screenHeight/8 );
+  }
+
+  // パレット変更
+  GFL_BG_ChangeScreenPalette( GFL_BG_FRAME2_S,
+                              MCV_USERD_NOFR_SCRN_X, MCV_USERD_NOFR_SCRN_Y,
+                              (MCV_USERD_NOFR_SCRN_SIZX*roop), MCV_USERD_NOFR_SCRN_SIZY,
+                              MCV_PAL_BTTN+MCV_PAL_BTTN_NONE );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *  @brief  状態に対応したメッセージデータ表示
+ *
+ *  @param  status  状態
+ *
+ *  @return メッセージデータ
+ */
+//-----------------------------------------------------------------------------
+static u32 MCVSys_StatusMsgIdGet( u32 status, u32 gamemode, int* col )
+{
+  u32 msg_id;
+  //  *col = _COL_N_BLACK;
+  _COL_N_BLACK;
+
+
+  if(status == WIFI_STATUS_PLAYING){
+    _COL_N_GRAY;
+  }
+  else{
+    _COL_N_BLACK;
+  }
+
+  {//WIFI_GAME_e参照
+    u32 message[]={msg_wifilobby_046,msg_wifilobby_046,msg_wifilobby_027, msg_wifilobby_076,
+    msg_wifilobby_025, msg_wifilobby_0571,msg_wifilobby_0571,msg_wifilobby_0572,msg_wifilobby_0572,
+    msg_wifilobby_0573,msg_wifilobby_0573,msg_wifilobby_0574,msg_wifilobby_0574,msg_wifilobby_056};
+
+    msg_id = gamemode;
+    if(gamemode > WIFI_GAME_UNKNOWN){
+      msg_id = WIFI_GAME_UNKNOWN;
+    }
+    
+    msg_id = message[msg_id];
+  }
+
+  return msg_id;
 }
 
