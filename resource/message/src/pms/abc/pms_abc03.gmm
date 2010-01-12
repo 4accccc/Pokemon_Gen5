@@ -461,36 +461,51 @@
 	</row>
 
 	<row id="search_abc_23">
+		<language name="JPN" width="216">えれきてす</language>
+		<language name="JPN_KANJI" width="216">えれきてす</language>
+	</row>
+
+	<row id="search_abc_24">
 		<language name="JPN" width="216">えれきねつと</language>
 		<language name="JPN_KANJI" width="216">えれきねつと</language>
 	</row>
 
-	<row id="search_abc_24">
+	<row id="search_abc_25">
 		<language name="JPN" width="216">えれきふる</language>
 		<language name="JPN_KANJI" width="216">えれきふる</language>
 	</row>
 
-	<row id="search_abc_25">
+	<row id="search_abc_26">
+		<language name="JPN" width="216">えれくす</language>
+		<language name="JPN_KANJI" width="216">えれくす</language>
+	</row>
+
+	<row id="search_abc_27">
 		<language name="JPN" width="216">えれくとほーる</language>
 		<language name="JPN_KANJI" width="216">えれくとほーる</language>
 	</row>
 
-	<row id="search_abc_26">
+	<row id="search_abc_28">
+		<language name="JPN" width="216">えれす</language>
+		<language name="JPN_KANJI" width="216">えれす</language>
+	</row>
+
+	<row id="search_abc_29">
 		<language name="JPN" width="216">えれふー</language>
 		<language name="JPN_KANJI" width="216">えれふー</language>
 	</row>
 
-	<row id="search_abc_27">
+	<row id="search_abc_30">
 		<language name="JPN" width="216">えんてい</language>
 		<language name="JPN_KANJI" width="216">えんてい</language>
 	</row>
 
-	<row id="search_abc_28">
+	<row id="search_abc_31">
 		<language name="JPN" width="216">えんへると</language>
 		<language name="JPN_KANJI" width="216">えんへると</language>
 	</row>
 
-	<row id="search_abc_29">
+	<row id="search_abc_32">
 		<language name="JPN" width="216">えんまく</language>
 		<language name="JPN_KANJI" width="216">えんまく</language>
 	</row>
