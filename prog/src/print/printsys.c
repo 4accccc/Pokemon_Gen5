@@ -11,8 +11,8 @@
 #include <gflib.h>
 #include <tcbl.h>
 
+#include "gamesystem/msgspeed.h"
 #include "print/printsys.h"
-
 
 
 //==============================================================
@@ -49,6 +49,14 @@ enum {
   JOB_COLORSTATE_CHANGE_REQ,
   JOB_COLORSTATE_CHANGE_DONE,
 
+};
+/**
+ *  速度コントロールタグパラメータ
+ */
+enum {
+  SPEED_CTRL_RESET = 0,
+  SPEED_CTRL_FAST,
+  SPEED_CTRL_SLOW,
 };
 
 
@@ -113,6 +121,16 @@ struct _PRINT_QUE {
 
 //--------------------------------------------------------------------------
 /**
+ *  Print Stream の文字送り速度パラメータ
+ */
+//--------------------------------------------------------------------------
+typedef struct {
+  u8  wait;           ///< 描画ごとに開ける間隔フレーム数
+  u8  putPerFrame;    ///< １度に描画する文字数
+}STREAM_SPEED_PARAM;
+
+//--------------------------------------------------------------------------
+/**
  *  Print Stream
  *
  *  会話ウィンドウ等、１定間隔で１文字ずつ描画，表示を行うための機構。
@@ -129,13 +147,16 @@ struct _PRINT_STREAM {
 
   const STRCODE* sp;
 
-  u16   org_wait;
-  u16   current_wait;
-  u16   wait;
+  u8    org_wait;
+  u8    current_wait;
+  u8    org_putPerFrame;
+  u8    current_putPerFrame;
+
+  u8   wait;
   u8    pauseReleaseFlag;
   u8    pauseWait;
   u8    clearColor;
-  u8    putPerFrame;
+
   u8    stopFlag;
   u8    callbackResult;
 
@@ -168,11 +189,12 @@ static void PrintQue_Core( PRINT_QUE* que, PRINT_JOB* job, const STRBUF* str );
 static void printJob_setup( PRINT_JOB* wk, GFL_FONT* font, GFL_BMP_DATA* dst, s16 org_x, s16 org_y );
 static void printJob_setColor( PRINT_JOB* wk, PRINTSYS_LSB color );
 static void printJob_finish( PRINT_JOB* job, const STRBUF* str );
-static const STRCODE* print_next_char( PRINT_JOB* wk, const STRCODE* sp );
+static const STRCODE* print_next_char( PRINT_JOB* wk, const STRCODE* sp, BOOL fSkipStreamTag );
 static void put1char_normal( GFL_BMP_DATA* dst, s16 xpos, s16 ypos, GFL_FONT* fontHandle, STRCODE charCode, GFL_FONT_SIZE* size );
 static void put1char_16to256( GFL_BMP_DATA* dst, s16 xpos, s16 ypos, GFL_FONT* fontHandle, STRCODE charCode, GFL_FONT_SIZE* size );
 static const STRCODE* ctrlGeneralTag( PRINT_JOB* wk, const STRCODE* sp );
 static const STRCODE* ctrlSystemTag( PRINT_JOB* wk, const STRCODE* sp );
+static void WaitValueToSpeedParam( int wait, STREAM_SPEED_PARAM* param );
 static void print_stream_task( GFL_TCBL* tcb, void* wk_adrs );
 static void ctrlStreamTag( PRINT_STREAM* wk );
 static u32 get_line_width( const STRCODE* sp, GFL_FONT* font, u16 margin, const STRCODE** endPtr );
@@ -356,7 +378,7 @@ BOOL PRINTSYS_QUE_Main( PRINT_QUE* que )
 
       while( *(que->sp) != EOM_CODE )
       {
-        que->sp = print_next_char( que->runningJob, que->sp );
+        que->sp = print_next_char( que->runningJob, que->sp, TRUE );
         diff = OS_GetTick() - start;
         if( diff > que->limitPerFrame )
         {
@@ -688,7 +710,7 @@ static void printJob_finish( PRINT_JOB* job, const STRBUF* str )
 
   while( *sp != EOM_CODE )
   {
-    sp = print_next_char( job, sp );
+    sp = print_next_char( job, sp, TRUE );
   }
 
   if( colorChanged )
@@ -709,7 +731,7 @@ static void printJob_finish( PRINT_JOB* job, const STRBUF* str )
  * @retval  const STRCODE*
  */
 //------------------------------------------------------------------
-static const STRCODE* print_next_char( PRINT_JOB* wk, const STRCODE* sp )
+static const STRCODE* print_next_char( PRINT_JOB* wk, const STRCODE* sp, BOOL fSkipStreamTag )
 {
   while( 1 )
   {
@@ -734,8 +756,12 @@ static const STRCODE* print_next_char( PRINT_JOB* wk, const STRCODE* sp )
         break;
 
       default:
-        sp = STR_TOOL_SkipTag( sp );
-        break;
+        if( fSkipStreamTag ){
+          sp = STR_TOOL_SkipTag( sp );
+          break;
+        }else{
+          return sp;
+        }
       }
       break;
 
@@ -966,19 +992,18 @@ PRINT_STREAM* PRINTSYS_PrintStreamCallBack(
 
   printJob_setup( &stwk->printJob, font, dstBmp, xpos, ypos );
 
-  if( wait >= 0 )
+
   {
-    stwk->putPerFrame = 1;
-  }
-  else
-  {
-    stwk->putPerFrame = -wait;
-    wait = 0;
+    STREAM_SPEED_PARAM  param;
+    WaitValueToSpeedParam( wait, &param );
+    stwk->org_putPerFrame = param.putPerFrame;
+    stwk->org_wait = param.wait;
   }
 
+  stwk->current_wait = stwk->org_wait;
+  stwk->current_putPerFrame = stwk->org_putPerFrame;
+
   stwk->sp = GFL_STR_GetStringCodePointer( str );
-  stwk->org_wait = wait;
-  stwk->current_wait = wait;
   stwk->wait = 0;
   stwk->callback_func = callback;
   stwk->org_arg = 0;
@@ -996,6 +1021,26 @@ PRINT_STREAM* PRINTSYS_PrintStreamCallBack(
 
   return stwk;
 }
+
+//----------------------------------------------------------------------------------
+/**
+ * wait値 -> スピードパラメータ変換
+ *
+ * @param   wait
+ * @param   param
+ */
+//----------------------------------------------------------------------------------
+static void WaitValueToSpeedParam( int wait, STREAM_SPEED_PARAM* param )
+{
+  if( wait >= 0 ){
+    param->putPerFrame = 1;
+    param->wait = wait;
+  }else{
+    param->putPerFrame = -wait;
+    param->wait = 0;
+  }
+}
+
 //=============================================================================================
 /**
  * プリントストリームをユーザプログラムが強制的に一時停止する
@@ -1118,7 +1163,7 @@ static void print_stream_task( GFL_TCBL* tcb, void* wk_adrs )
     if( wk->wait == 0 )
     {
       int i;
-      for(i=0; i<wk->putPerFrame; ++i)
+      for(i=0; i<wk->current_putPerFrame; ++i)
       {
         switch( *(wk->sp) ){
         case EOM_CODE:
@@ -1130,29 +1175,31 @@ static void print_stream_task( GFL_TCBL* tcb, void* wk_adrs )
           {
             ctrlStreamTag( wk );
             if( wk->state != PRINTSTREAM_STATE_RUNNING ){
-              i = wk->putPerFrame;  // for loop out
+              i = wk->current_putPerFrame;  // for loop out
             }
             break;
           }
           /* fallthru */
         default:
-          wk->sp = print_next_char( &wk->printJob, wk->sp );
-          if( *(wk->sp) == EOM_CODE )
           {
-            wk->state = PRINTSTREAM_STATE_DONE;
-          }
-          else
-          {
-            wk->wait = wk->current_wait;
-          }
+            wk->sp = print_next_char( &wk->printJob, wk->sp, FALSE );
+            if( *(wk->sp) == EOM_CODE )
+            {
+              wk->state = PRINTSTREAM_STATE_DONE;
+            }
+            else if( *(wk->sp) != CR_CODE )
+            {
+              wk->wait = wk->current_wait;
+            }
 
-          GFL_BMPWIN_TransVramCharacter( wk->dstWin );
-          if( wk->callback_func )
-          {
-            wk->callbackResult = wk->callback_func( wk->arg );
-            wk->arg = wk->current_arg;
+            GFL_BMPWIN_TransVramCharacter( wk->dstWin );
+            if( wk->callback_func )
+            {
+              wk->callbackResult = wk->callback_func( wk->arg );
+              wk->arg = wk->current_arg;
+            }
+            break;
           }
-          break;
         }
       }
     }
@@ -1235,10 +1282,40 @@ static void ctrlStreamTag( PRINT_STREAM* wk )
     wk->wait = STR_TOOL_GetTagParam( wk->sp, 0 );
     break;
   case PRINTSYS_CTRL_STREAM_SET_WAIT:
-    wk->current_wait = STR_TOOL_GetTagParam( wk->sp, 0 );;
+    wk->current_wait = STR_TOOL_GetTagParam( wk->sp, 0 );
     break;
   case PRINTSYS_CTRL_STREAM_RESET_WAIT:  ///< 描画ウェイトをデフォルトに戻す
     wk->current_wait = wk->org_wait;
+    break;
+  case PRINTSYS_CTRL_STREAM_SPEED_CTRL:
+    #ifndef MULTI_BOOT_MAKE
+    {
+      STREAM_SPEED_PARAM  param;
+      int wait;
+
+      u8 mode = STR_TOOL_GetTagParam( wk->sp, 0 );
+
+      switch( mode ){
+      case SPEED_CTRL_RESET:
+      default:
+        param.wait = wk->org_wait;
+        param.putPerFrame = wk->org_putPerFrame;
+        break;
+
+      case SPEED_CTRL_FAST:
+        wait = MSGSPEED_GetWaitFast();
+        WaitValueToSpeedParam( wait, &param );
+        break;
+
+      case SPEED_CTRL_SLOW:
+        wait = MSGSPEED_GetWaitSlow();
+        WaitValueToSpeedParam( wait, &param );
+        break;
+      }
+      wk->current_wait = param.wait;
+      wk->current_putPerFrame = param.putPerFrame;
+    }
+    #endif
     break;
   case PRINTSYS_CTRL_STREAM_CHANGE_ARGV: ///< コールバック引数を変更（１回）
     wk->arg = STR_TOOL_GetTagParam( wk->sp, 0 );;

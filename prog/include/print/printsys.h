@@ -643,6 +643,7 @@ typedef enum {
   PRINTSYS_CTRL_STREAM_SET_ARGV      = (0x0006), ///< コールバック引数を変更（永続）
   PRINTSYS_CTRL_STREAM_RESET_ARGV    = (0x0007), ///< コールバック引数をデフォルトに戻す
   PRINTSYS_CTRL_STREAM_FORCE_CLEAR   = (0x0008), ///< 強制描画クリア
+  PRINTSYS_CTRL_STREAM_SPEED_CTRL    = (0x0009), ///< 速度コントロール
 }PrintSysStreamCtrlCode;
 
 
