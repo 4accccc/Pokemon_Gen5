@@ -115,7 +115,7 @@ EVENT_START	ev_c08gym0101_leader8_01
 			_BALLOONWIN_CLOSE()
 
 			//わざマシン入手
-			_ITEM_EVENT_KEYWAIT( ITEM_WAZAMASIN01, 1 )
+			_ITEM_EVENT_KEYWAIT( ITEM_WAZAMASIN82, 1 )
 
 			//わざマシン中身解説
 			_ITEM_NAME( 0, ITEM_WAZAMASIN01 )
@@ -188,7 +188,7 @@ EVENT_START	ev_c08gym0101_leader8_01
 			_BALLOONWIN_CLOSE()
 
 			//わざマシン入手
-			_ITEM_EVENT_KEYWAIT( ITEM_WAZAMASIN01, 1 )
+			_ITEM_EVENT_KEYWAIT( ITEM_WAZAMASIN82, 1 )
 
 			//わざマシン中身解説
 			_ITEM_NAME( 0, ITEM_WAZAMASIN01 )
@@ -263,6 +263,7 @@ EVENT_END
 //	トレーナー接近
 //--------------------------------------------------------------
 	_ANIME_LABEL	anm_c08r0101_tr_com
+	_ANIME_DATA	AC_MARK_GYOE,1
 	_ANIME_DATA	AC_WALK_U_8F,2
 	_ANIME_DATA	AC_DIR_U,1
 	_ANIME_DATA	ACMD_END,0
