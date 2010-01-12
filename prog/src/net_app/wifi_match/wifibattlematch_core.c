@@ -33,6 +33,9 @@
 #include "print/printsys.h"
 #include "print/wordset.h"
 
+//  セーブデータ
+#include "savedata/dreamworld_data.h"
+
 //WIFIバトルマッチのモジュール
 #include "wifibattlematch_graphic.h"
 #include "wifibattlematch_view.h"
@@ -637,7 +640,6 @@ static int WIFIBATTLEMATCH_RND_SUBSEQ_Start( WIFIBATTLEMATCH_WORK *p_wk, WIFIBAT
     SEQ_START_CANCEL_SELECT,
     SEQ_WAIT_CANCEL_SELECT,
 
-
     SEQ_WAIT_MSG,
   };
 
@@ -694,13 +696,20 @@ static int WIFIBATTLEMATCH_RND_SUBSEQ_Start( WIFIBATTLEMATCH_WORK *p_wk, WIFIBAT
     break;
 
   case SEQ_CHECK_GPF:
-    if( 1 )
     { 
-      *p_subseq = SEQ_SELECT_MSG;
-    }
-    else
-    { 
-      *p_subseq = SEQ_SELECT_MSG;
+      SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( p_param->p_param->p_game_data );
+      DREAMWORLD_SAVEDATA *p_dream = DREAMWORLD_SV_GetDreamWorldSaveData( p_sv );
+      if( DREAMWORLD_SV_GetSignin( p_dream ) )
+      { 
+        *p_subseq = SEQ_SELECT_MSG;
+      }
+      else
+      { 
+
+        *p_subseq = 0;
+        p_param->retmode = WIFIBATTLEMATCH_CORE_RETMODE_FREE;
+        return WIFIBATTLEMATCH_RND_SUBSEQ_FREE_START;
+      }
     }
     break;
 
@@ -804,6 +813,7 @@ static int WIFIBATTLEMATCH_RND_SUBSEQ_Start( WIFIBATTLEMATCH_WORK *p_wk, WIFIBAT
       }
     }
     break;
+
 
     //-------------------------------------
     ///	共通

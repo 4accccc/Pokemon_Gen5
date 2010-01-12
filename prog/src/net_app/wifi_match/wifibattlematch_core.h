@@ -64,6 +64,7 @@ typedef struct
   BtlResult                   btl_result;   //[in ]バトル結果
   BtlResult                   btl_rule;     //[in ]バトルルール
   RNDMATCH_DATA               *p_rndmatch;  //[in ]セーブデータ
+
   //以下、[in ]常駐データ
   WIFIBATTLEMATCH_ENEMYDATA   *p_player_data;
   WIFIBATTLEMATCH_ENEMYDATA   *p_enemy_data;

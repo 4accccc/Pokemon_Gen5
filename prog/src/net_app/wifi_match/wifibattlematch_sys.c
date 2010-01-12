@@ -27,6 +27,7 @@
 //セーブデータ
 #include "savedata/battle_box_save.h"
 #include "savedata/wifihistory.h"
+#include "savedata/my_pms_data.h"
 
 //自分のモジュール
 #include "wifibattlematch_core.h"
@@ -250,7 +251,7 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_PROC_Init( GFL_PROC *p_proc, int *p_seq, 
   //データバッファ作成
   DATA_CreateBuffer( p_wk, HEAPID_WIFIBATTLEMATCH_SYS );
 
-  //自分のデータ設定( @todo レートとPMSはまだ )
+  //自分のデータ設定( @todo レートはまだ )
   { 
     WIFIBATTLEMATCH_ENEMYDATA *p_player;
 
@@ -272,7 +273,11 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_PROC_Init( GFL_PROC *p_proc, int *p_seq, 
       p_player->area    = WIFIHISTORY_GetMyArea(p_wifi_histroy); 
     }
     { 
-      PMSDAT_Init( &p_player->pms, PMS_TYPE_BATTLE_READY );
+      const MYPMS_DATA *cp_mypms;
+      SAVE_CONTROL_WORK *p_sv;
+      p_sv            = GAMEDATA_GetSaveControlWork(p_wk->p_param->p_game_data);
+      cp_mypms        = SaveData_GetMyPmsDataConst( p_sv );
+      MYPMS_GetPms( cp_mypms, MYPMS_PMS_TYPE_INTRODUCTION, &p_player->pms );
     }
     {
       POKEPARTY *p_temoti;
