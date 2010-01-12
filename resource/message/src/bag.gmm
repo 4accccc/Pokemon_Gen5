@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="genya_hosaka" host="W00159" date="2010-01-07T20:41:03"/>
+	<create user="genya_hosaka" host="W00159" date="2010-01-12T19:02:07"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -282,7 +282,7 @@
 		<comment position="1" width="236"/>
 		<erase position="-1" width="100"/>
 		<language japanese="JPN" english="JPN">
-			<message position="2" width="274"/>
+			<message position="2" width="266"/>
 			<font default=" 0:large" position="4" width="109">
 				<list entry="0" file="W:\font\large.nftr"/>
 				<list entry="1" file="W:\font\small.nftr"/>
@@ -305,7 +305,7 @@
 		</language>
 	</columns>
 
-	<dialog left="-868" top="184" right="-163" bottom="812" maximized="no" rayout="Vertical2">
+	<dialog left="-988" top="311" right="-283" bottom="932" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -810,9 +810,13 @@ const u8 msg_waza_machine01[]</comment>
 		<comment>バッグ / アイテム関連
 const u8 msg_waza_machine02[]
 ０＝わざ名</comment>
-		<language name="JPN" font=" 1:small">[1:07:わざ名:0]を
+		<language name="JPN" font=" 1:small">なかには　[1:07:わざ名:0]が
+きろく　されていた！▼
+[1:07:わざ名:0]を
 ポケモンに　おぼえさせますか？</language>
-		<language name="JPN_KANJI" font=" 1:small">[1:07:わざ名:0]を
+		<language name="JPN_KANJI" font=" 1:small">なかには　[1:07:わざ名:0]が
+きろく　されていた！▼
+[1:07:わざ名:0]を
 ポケモンに　おぼえさせますか？</language>
 	</row>
 
@@ -1419,17 +1423,6 @@ const u8 str_konanoryou[]
 		<comment>ポケットに何もない時に表示</comment>
 		<language name="JPN" width="160">もっていません</language>
 		<language name="JPN_KANJI" width="160">持っていません</language>
-	</row>
-
-	<row id="msg_bag_item_none0002" back-color="#ffff00,,,,,,#ffff00,#ffff00,,#ffff00,#ffff00,,,,,,,">
-		<language name="JPN" width="160">なかには　[1:07:わざ名:0]が
-きろく　されていた！▼
-[1:07:わざ名:0]を
-ポケモンに　おぼえさせますか？</language>
-		<language name="JPN_KANJI" width="160">なかには　[1:07:わざ名:0]が
-きろく　されていた！▼
-[1:07:わざ名:0]を
-ポケモンに　おぼえさせますか？</language>
 	</row>
 
 	<flowchart-group-list>
