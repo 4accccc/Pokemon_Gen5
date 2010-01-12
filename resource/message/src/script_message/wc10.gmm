@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tomoya_takahashi" host="W00148" date="2009-12-17T16:53:04"/>
+	<create user="ohmori" host="W00185" date="2010-01-12T18:57:50"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -265,13 +265,13 @@
 
 	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
+		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,11 +292,90 @@
 	</lock>
 
 
-	<row id="msg_wc10_npc00">
-		<comment>？？？</comment>
+	<row id="msg_wc10_npc00" back-color="#808080,,,#808080,,#808080,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
+		<comment>ダミーメッセージ</comment>
 		<attribute name="キャラ指定">？？？</attribute>
 		<language name="JPN" width="256">ホワイトフォレスト よいところ!</language>
 		<language name="JPN_KANJI" width="256">ホワイトフォレスト よいところ!</language>
+	</row>
+
+	<row id="msg_wc10r0101_girl1_01">
+		<attribute name="キャラ指定">GIRL1</attribute>
+		<language name="JPN" width="256">ここは　しずかで
+ほんとに　きもちいいなー！</language>
+		<language name="JPN_KANJI" width="256">ここは　静かで
+ほんとに　気持ちいいなー！</language>
+	</row>
+
+	<row id="msg_wc10r0101_middleman1_01">
+		<attribute name="キャラ指定">MIDDLEMAN1</attribute>
+		<language name="JPN" width="256">きに　かこまれていると
+からだも　こころも[BE:00:ページ切り替え（行送り）]
+しぜんになった　かんじだね</language>
+		<language name="JPN_KANJI" width="256">木に　囲まれていると
+体も　心も[BE:00:ページ切り替え（行送り）]
+自然になった　感じだね</language>
+	</row>
+
+	<row id="msg_wc10r0101_girl4_01">
+		<attribute name="キャラ指定">GIRL4</attribute>
+		<language name="JPN" width="256">とかいでの　くらしは
+なんだか　きゅうくつ　そうだね……</language>
+		<language name="JPN_KANJI" width="256">都会での　暮らしは
+なんだか　きゅうくつ　そうだね……</language>
+	</row>
+
+	<row id="msg_wc10r0101_man3_01">
+		<attribute name="キャラ指定">MAN3</attribute>
+		<language name="JPN" width="256">おいしい　くうき！
+きもちいい　かぜ！[BE:00:ページ切り替え（行送り）]
+うーん　じゅうじつ　してるなぁ～</language>
+		<language name="JPN_KANJI" width="256">おいしい　空気！
+気持ちいい　風！[BE:00:ページ切り替え（行送り）]
+うーん　充実してるなぁ～</language>
+	</row>
+
+	<row id="msg_wc10r0101_woman1_01">
+		<attribute name="キャラ指定">WOMAN1</attribute>
+		<language name="JPN" width="256">かわりのない　まいにち
+それが　いちばんの　しあわせね</language>
+		<language name="JPN_KANJI" width="256">変わりのない　毎日
+それが　一番の　幸せね</language>
+	</row>
+
+	<row id="msg_wc10r0101_girl3_01">
+		<attribute name="キャラ指定">GIRL3</attribute>
+		<language name="JPN" width="256">ポケモンも　しぜんのなかで
+くらしているのが　すきなんだね</language>
+		<language name="JPN_KANJI" width="256">ポケモンも　自然の中で
+暮らしているのが　好きなんだね</language>
+	</row>
+
+	<row id="msg_wc10r0101_middleman2_01">
+		<attribute name="キャラ指定">MIDDLEMAN2</attribute>
+		<language name="JPN" width="256">みんな　しんせつで
+だれにでも　やさしい！[BE:01:ページ切り替え（クリア）]
+みんなで　きょうりょくして
+いいもりに　したいな</language>
+		<language name="JPN_KANJI" width="256">みんな　親切で
+だれにでも　優しい！[BE:00:ページ切り替え（行送り）]
+みんなで　協力して　いい森に　したいな</language>
+	</row>
+
+	<row id="msg_wc10r0101_oldwoman1_01">
+		<attribute name="キャラ指定">OLDWOMAN1</attribute>
+		<language name="JPN" width="256">しぜんの　ちからは
+とても　いだいな　ものですよ[BE:01:ページ切り替え（クリア）]
+いきものを　よびよせ
+そして　たくさんの　めぐみを　くれる[BE:01:ページ切り替え（クリア）]
+にんげんには　まねできない
+ちからを　もっているんです</language>
+		<language name="JPN_KANJI" width="256">自然の　力は
+とても　偉大な　ものですよ[BE:01:ページ切り替え（クリア）]
+生き物を　呼び寄せ
+そして　たくさんの　恵みを　くれる[BE:01:ページ切り替え（クリア）]
+人間には　真似できない
+力を　持っているんです</language>
 	</row>
 
 	<flowchart-group-list>

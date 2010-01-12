@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tamada" host="W00139" date="2009-07-15T19:04:53"/>
+	<create user="ohmori" host="W00185" date="2010-01-12T18:44:43"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,9 +263,9 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="148" top="374" right="853" bottom="994" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
+		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="543"/>
@@ -292,11 +292,172 @@
 	</lock>
 
 
-	<row id="msg_mapscript_dummy">
-		<comment>？？？</comment>
-		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	<row id="msg_bc10r0401_gentleman_01" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+		<comment>♂</comment>
+		<attribute name="キャラ指定">GENTLEMAN(BCのボス）</attribute>
+		<language name="JPN" width="256">……
+ブラックシティへ　ようこそ……[BE:00:ページ切り替え（行送り）]
+ここは　ゆめと　よくぼう　そして[BE:00:ページ切り替え（行送り）]
+……よくぼうの　まちさ[BE:01:ページ切り替え（クリア）]
+そしておれは　そんな　よくぼう　うずまく
+ブラックシティの　ボスなのさ</language>
+		<language name="JPN_KANJI" width="256">……
+ブラックシティへ　ようこそ……[BE:00:ページ切り替え（行送り）]
+ここは　夢と　欲望　そして[BE:00:ページ切り替え（行送り）]
+……欲望の　街さ[BE:01:ページ切り替え（クリア）]
+そしておれは　そんな　欲望　うずまく
+ブラックシティの　ボスなのさ
+</language>
+	</row>
+
+	<row id="msg_bc10r0401_gentleman_02" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+		<attribute name="キャラ指定">GENTLEMAN(BCのボス）</attribute>
+		<language name="JPN" width="256">このまちには　よくぼうの　かたまりのような
+いきのいい　やつらが　そろっている……[BE:01:ページ切り替え（クリア）]
+……そうだな
+そんな　いきのいい　やつらを[BE:00:ページ切り替え（行送り）]
+[2:04:５桁:0]にん　たおしてみな[BE:01:ページ切り替え（クリア）]
+そしたら　おまえの　よくぼうも
+かなえてやるよ……</language>
+		<language name="JPN_KANJI" width="256">この街には　欲望の　かたまりのような
+活きのいい　奴らが　そろっている……[BE:01:ページ切り替え（クリア）]
+……そうだな
+そんな　活きのいい　奴らを[BE:00:ページ切り替え（行送り）]
+[2:04:５桁:0]にん　倒してみな[BE:01:ページ切り替え（クリア）]
+そしたら　おまえの　欲望も
+かなえてやるよ……</language>
+	</row>
+
+	<row id="msg_bc10r0401_gentleman_03" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+		<attribute name="キャラ指定">GENTLEMAN(BCのボス）</attribute>
+		<language name="JPN" width="256">いま　おまえが　たおしたにんずうは
+[2:04:５桁:1]にん[BE:01:ページ切り替え（クリア）]
+ハンッ
+まあ　がんばりな</language>
+		<language name="JPN_KANJI" width="256">いま　おまえが　倒した人数は
+[2:04:５桁:1]にん[BE:01:ページ切り替え（クリア）]
+ハンッ
+まあ　がんばりな</language>
+	</row>
+
+	<row id="msg_bc10r0401_gentleman_04" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+		<attribute name="キャラ指定">GENTLEMAN(BCのボス）</attribute>
+		<language name="JPN" width="256">おお？
+もう　[2:04:５桁:0]にんも　たおしたのか……[BE:00:ページ切り替え（行送り）]
+おまえ　いがいに　よくぶかいやつだな[BE:00:ページ切り替え（行送り）]
+はらのそこが　ギラギラしてるぜ[BE:01:ページ切り替え（クリア）]
+きにいった
+その　よくぼう　かなえてやるよ</language>
+		<language name="JPN_KANJI" width="256">おお？
+もう　[2:04:５桁:0]人も　倒したのか……[BE:00:ページ切り替え（行送り）]
+おまえ　以外に　欲深い奴だな[BE:00:ページ切り替え（行送り）]
+腹の底が　ギラギラしてるぜ[BE:01:ページ切り替え（クリア）]
+気に入った
+その　欲望　かなえてやるよ</language>
+	</row>
+
+	<row id="msg_bc10r0401_gentleman_05" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+		<attribute name="キャラ指定">GENTLEMAN(BCのボス）</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:2]は
+[2:04:５桁:3]円を　うけとった！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:2]は
+[2:04:５桁:3]円を　受け取った！</language>
+	</row>
+
+	<row id="msg_bc10r0401_gentleman_06" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+		<attribute name="キャラ指定">GENTLEMAN(BCのボス）</attribute>
+		<language name="JPN" width="256">つぎは　[2:04:５桁:4]にんまで
+たおしてみな[BE:01:ページ切り替え（クリア）]
+そして　おまえの　よくぶかい
+はらのそこ　みせてくれよ</language>
+		<language name="JPN_KANJI" width="256">次は　[2:04:５桁:4]人まで
+倒してみな[BE:01:ページ切り替え（クリア）]
+そして　おまえの　欲深い
+腹の底　見せてくれよ</language>
+	</row>
+
+	<row id="msg_bc10r0401_gentleman_07" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+		<attribute name="キャラ指定">GENTLEMAN(BCのボス）</attribute>
+		<language name="JPN" width="256">よう！
+おまえは　さいこうだな！[BE:01:ページ切り替え（クリア）]
+まさに
+ブラック　オブ　ブラック！[BE:01:ページ切り替え（クリア）]
+このまちで　いちばん
+まっくろな　やつさ！</language>
+		<language name="JPN_KANJI" width="256">よう！
+おまえは　最高だな！[BE:01:ページ切り替え（クリア）]
+まさに
+ブラック　オブ　ブラック！[BE:01:ページ切り替え（クリア）]
+この街で　一番
+まっくろな　奴さ！</language>
+	</row>
+
+	<row id="msg_bc10r0401_boy4_01">
+		<attribute name="キャラ指定">BOY4</attribute>
+		<language name="JPN" width="256">うう……
+あれもほしい　これもほしい</language>
+		<language name="JPN_KANJI" width="256">うう……
+あれも欲しい　これも欲しい</language>
+	</row>
+
+	<row id="msg_bc10r0401_middlewoman2_01">
+		<attribute name="キャラ指定">MIDDLEMAN2</attribute>
+		<language name="JPN" width="256">もっと　えらくなって
+もっと　かせぎたい！</language>
+		<language name="JPN_KANJI" width="256">もっと　偉くなって
+もっと　かせぎたい！</language>
+	</row>
+
+	<row id="msg_bc10r0401_man3_01">
+		<attribute name="キャラ指定">MAN3</attribute>
+		<language name="JPN" width="256">このまちでは　かねがあれば
+なんでも　てにはいるぜ！</language>
+		<language name="JPN_KANJI" width="256">この街では　金があれば
+何でも　手に入るぜ！</language>
+	</row>
+
+	<row id="msg_bc10r0401_middlewoman1_01">
+		<attribute name="キャラ指定">MIDDLEWOMAN1</attribute>
+		<language name="JPN" width="256">この　まちには　すべてがある！
+なにもかもが　ある！</language>
+		<language name="JPN_KANJI" width="256">この　街には　全てがある！
+何もかもが　ある！</language>
+	</row>
+
+	<row id="msg_bc10r0401_middleman1_01">
+		<attribute name="キャラ指定">MIDDLEMAN1</attribute>
+		<language name="JPN" width="256">うーん　もっと　かねになる
+いい　しごとは　ないか！？</language>
+		<language name="JPN_KANJI" width="256">うーん　もっと　金になる
+良い仕事は　ないか！？</language>
+	</row>
+
+	<row id="msg_bc10r0401_badman_01">
+		<attribute name="キャラ指定">BADMAN</attribute>
+		<language name="JPN" width="256">この　ポケモンは
+いったい　いくらで　うれるかな……</language>
+		<language name="JPN_KANJI" width="256">この　ポケモンは
+いったい　いくらで　売れるかな……</language>
+	</row>
+
+	<row id="msg_bc10r0401_woman3_01">
+		<attribute name="キャラ指定">WOMAN3</attribute>
+		<language name="JPN" width="256">ほしいものが　すべてある
+おかねさえ　あれば　あれば！</language>
+		<language name="JPN_KANJI" width="256">欲しいものが　全てある
+お金さえ　あれば　あれば！</language>
+	</row>
+
+	<row id="msg_bc10r0401_oldman1_01">
+		<attribute name="キャラ指定">OLDMAN1</attribute>
+		<language name="JPN" width="256">ぶんめいの　ちからとは
+すごいものだな……[BE:01:ページ切り替え（クリア）]
+ひとが　ほしいもの　すべて
+つくって　しまうのだからな</language>
+		<language name="JPN_KANJI" width="256">文明の　力とは
+すごいものだな……[BE:01:ページ切り替え（クリア）]
+人が欲しいもの　全て
+作って　しまうのだからな</language>
 	</row>
 
 	<flowchart-group-list>
