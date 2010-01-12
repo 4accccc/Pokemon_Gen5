@@ -72,10 +72,19 @@ INIT_EVENT_START	ev_recover_c09r0201
 		
 	ENDIF
 
-	//頂上にいるならカメラ設定を変更
+	//主人公が頂上にいる時の処理
 	IF $LOCALWORK0 == 1 THEN
 		
+		//カメラ設定を変更
 		_FOURKINGS_SET_TOP_CAMERA( 2 )
+		
+		//ローカル定義
+		DEFINE_LOCAL	BM_ANIME_ID_LIGHT1
+		DEFINE_LOCAL	BM_ANIME_ID_LIGHT2
+		
+		//たいまつ（四天王横と螺旋階段）アニメをループ再生
+		_BMODEL_DIRECT_ANIME_SET_LOOP( BM_ANIME_ID_LIGHT1, 24, 16 )
+		_BMODEL_DIRECT_ANIME_SET_LOOP( BM_ANIME_ID_LIGHT2, 16, 8 )
 		
 	ENDIF
 
@@ -250,6 +259,7 @@ EVENT_START	ev_pos_c09r0201_enter_01
 	DEFINE_LOCAL	BM_ANIME_ID1
 	DEFINE_LOCAL	BM_ANIME_ID2
 	DEFINE_LOCAL	BM_ANIME_ID3
+	DEFINE_LOCAL	BM_ANIME_ID4
 	
 	//扉のアニメコントローラを作成
 	_BMODEL_ANIME_CREATE( BM_ANIME_ID1, SCR_BMID_NULL, 8, 16 )
@@ -261,6 +271,8 @@ EVENT_START	ev_pos_c09r0201_enter_01
 	
 	//主人公：螺旋を登る
 	_FOURKINGS_WALKEVENT( 2 )
+	//螺旋階段にある炎のアニメをループ再生
+	_BMODEL_DIRECT_ANIME_SET_LOOP( BM_ANIME_ID4, 24, 16 )
 	
 	//主人公：上を向く
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_ply_move_01 )
@@ -273,21 +285,20 @@ EVENT_START	ev_pos_c09r0201_enter_01
 	//ドアが地面下から出てくる
 	_BMODEL_ANIME_SET( BM_ANIME_ID1, SCR_BMANM_DOOR_OPEN )
 	_BMODEL_ANIME_WAIT( BM_ANIME_ID1 )
-	
 	_BMODEL_ANIME_DELETE( BM_ANIME_ID1 )
 	
 	//主人公：上へ進む
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_ply_move_01 )
 	_OBJ_ANIME_WAIT()
 	
-	//ボス横にある炎のアニメコントローラを作成
+	//四天王横にある炎のアニメコントローラを作成
 	_BMODEL_ANIME_CREATE( BM_ANIME_ID2, SCR_BMID_NULL, 16, 8 )
 	//炎がつく
 	_BMODEL_ANIME_SET( BM_ANIME_ID2, 0 )
 	_BMODEL_ANIME_WAIT( BM_ANIME_ID2 )
 	_BMODEL_ANIME_DELETE( BM_ANIME_ID2 )
 	
-	//配置モデルのアニメをループ再生
+	//四天王横にある炎のアニメをループ再生
 	_BMODEL_DIRECT_ANIME_SET_LOOP( BM_ANIME_ID3, 16, 8 )
 	
 	//頂上に移動した
