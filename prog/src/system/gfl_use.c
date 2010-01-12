@@ -190,7 +190,8 @@ void GFLUser_Init(void)
   //MCSライブラリを拡張メモリにロード
 #ifdef PM_DEBUG
 #ifndef MULTI_BOOT_MAKE
-  if( OS_GetConsoleType() & OS_CONSOLE_ISDEBUGGER ){
+  if( OS_GetConsoleType() & OS_CONSOLE_ISDEBUGGER|OS_CONSOLE_TWLDEBUGGER ){
+    GF_ASSERT( OS_IsRunOnTwl() == FALSE );
     GFL_OVERLAY_Load( FS_OVERLAY_ID( mcs_lib ) );
 		GFL_MCS_Init();
   }
