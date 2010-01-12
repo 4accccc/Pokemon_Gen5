@@ -1213,6 +1213,8 @@ static void * FMenuCallProc_Bag(PROCLINK_WORK* wk, u32 param, EVENT_PROCLINK_CAL
   case EVENT_PROCLINK_CALL_BAG:
     //バッグを最初に呼び出したとき
     bag = BAG_CreateParam( gmData, &wk->icwk, BAG_MODE_FIELD, HEAPID_PROC );
+    BAG_SetItemUseCheck( bag, ITEMCHECK_CYCLE_RIDE, 1 );
+
     if( param != EVENT_PROCLINK_DATA_NONE )
     { 
       MYITEM_FieldBagPocketSet( bag->p_bagcursor, param );
