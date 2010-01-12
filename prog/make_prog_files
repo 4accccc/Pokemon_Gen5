@@ -194,7 +194,6 @@ SRCS  +=    $(SOUNDSRC) \
         system/wazatype_icon.c \
         net_app/union/union_gra_tool.c \
         net_app/union/union_beacon_tool.c \
-        test/camera_adjust_view.c \
         system/selbox.c \
         system/point_sel.c \
         system/cursor_move.c \
@@ -552,6 +551,7 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/party_select_list.c \
         field/field_fk_sound_anime.c \
         field/field_bbd_color.c \
+        test/camera_adjust_view.c \
 				field/event_comm_talk.c \
 				field/event_comm_talked.c \
         field/enceff.c \
