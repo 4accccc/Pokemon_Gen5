@@ -105,10 +105,8 @@ SRCS  +=    $(SOUNDSRC) \
 				field/event_shortcut_menu.c \
 				field/event_field_proclink.c \
         field/event_battle.c \
-        field/event_ircbattle.c \
         field/event_gsync.c \
         field/event_gtsnego.c \
-        field/event_cg_wireless.c \
         field/event_wifibattlematch.c \
         field/event_battlerecorder.c \
         field/event_debug_wifimatch.c \
@@ -307,6 +305,10 @@ SRCS  +=    $(SOUNDSRC) \
 # 要望・質問は森さんか大野にお願いします。
 #
 #
+
+
+
+
 # wifiプログラムのライブラリ libwcm$(TWL_LIBSUFFIX).a
 #===> main
 #LIB=>          libcps.$HYB.a
@@ -330,13 +332,24 @@ SRCS_OVERLAY_DEV_WIFILIB   = net/net_devwifi.c \
                 net/dwc_rapinitialize.c \
                 net/dwc_rapcommon.c
 
+
+# アンチWIFIプログラム
+# この領域はWIFIライブラリがない状態で自動で読み込まれるオーバーレイです
+# WIFI施設で必要ない常駐にあった物はここに配置してください
+# k.ohno 10.01.12
+#===> main
+SRCS_OVERLAY_NOTWIFI = field/event_ircbattle.c \
+        field/event_cg_wireless.c
+
+
+
 # wifiプログラム
 #===> SRCS_OVERLAY_DEV_WIFILIB
 #LIB=>          libvct.$HYB.a
 SRCS_OVERLAY_DEV_WIFI   = net/vchat.c
 
 # wirelessプログラム
-#===> main
+#===> SRCS_OVERLAY_NOTWIFI
 SRCS_OVERLAY_DEV_WIRELESS   =   net/net_devwireless.c \
                   net/net_whpipe.c \
                   net/wih.c

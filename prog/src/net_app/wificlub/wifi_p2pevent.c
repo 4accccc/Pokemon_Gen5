@@ -70,6 +70,7 @@ typedef struct{
   GAMEDATA* pGameData;
   WIFI_LIST* pWifiList;
   GAMESYS_WORK * gsys;
+  WIFILOGIN_PARAM     login;
   BATTLE_SETUP_PARAM para;
   int seq;
   u16* ret;
@@ -81,6 +82,7 @@ typedef struct{
 
 enum{
   P2P_INIT,
+  P2P_LOGIN,
   P2P_MATCH_BOARD,
   P2P_SELECT,
   P2P_BATTLE,
@@ -91,7 +93,6 @@ enum{
   P2P_TRADE_END,
   P2P_TVT,
   P2P_TVT_END,
-  P2P_UTIL,
   P2P_EXIT,
   P2P_FREE,
   P2P_SETEND,
@@ -178,24 +179,24 @@ static GFL_PROC_RESULT WifiClubProcMain( GFL_PROC * proc, int * seq, void * pwk,
   int len;
   EVENT_WIFICLUB_WORK* pClub = (void*)pwk;
   EV_P2PEVENT_WORK * ep2p = pClub->pWork;
+  GAMESYS_WORK * gsys = pClub->gsys;
 
   switch (ep2p->seq) {
   case P2P_INIT:
-
-    ep2p->seq = P2P_MATCH_BOARD;
-
-
-//    WiFiLogin_ProcData
-//    GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(wifi_login), &WiFiLogin_ProcData, &dbw->login);
-
-    /*
-    if(ep2p->pMatchParam->seq == WIFI_P2PMATCH_DPW){
-      if( mydwc_checkMyGSID() ){
-        ep2p->seq = P2P_FREE;  //コード取得済みの場合なにもしない
-        *(ep2p->ret) = 0;
-      }
+    ep2p->seq = P2P_LOGIN;
+    { //WIFI引数の設定
+      GFL_STD_MemClear( &ep2p->login, sizeof(WIFILOGIN_PARAM) );
+      ep2p->login.gamedata = GAMESYSTEM_GetGameData(pClub->gsys);
     }
-   */
+    GFL_PROC_SysCallProc( FS_OVERLAY_ID(wifi_login), &WiFiLogin_ProcData, &ep2p->login);
+    break;
+  case P2P_LOGIN:
+      if( ep2p->login.result == WIFILOGIN_RESULT_LOGIN ){
+        ep2p->seq = P2P_MATCH_BOARD;
+      }
+      else{ 
+        ep2p->seq = P2P_EXIT;
+      }
     break;
   case P2P_MATCH_BOARD:
     GFL_OVERLAY_Load(FS_OVERLAY_ID(wificlub));
@@ -285,9 +286,6 @@ COMM_TVT_INIT_WORK の mode に CTM_WIFI を渡して起動してください。
     ep2p->seq = P2P_MATCH_BOARD;
     break;
 
-  case P2P_UTIL:
-    GFL_PROC_SysCallProc(FS_OVERLAY_ID(wifi_util), &WifiUtilProcData, NULL);
-    break;
   case P2P_EXIT:
   case P2P_SETEND:
   case P2P_FREE:

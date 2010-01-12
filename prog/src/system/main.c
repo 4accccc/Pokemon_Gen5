@@ -59,6 +59,7 @@ static void DEBUG_StackOverCheck(void);
 //------------------------------------------------------------------
 //extern const	GFL_PROC_DATA CorpProcData;
 //FS_EXTERN_OVERLAY(title);
+FS_EXTERN_OVERLAY(notwifi);
 
 //------------------------------------------------------------------
 /**
@@ -202,6 +203,8 @@ static void GameVBlankFunc(void)
 static	void	GameInit(void)
 {
 	/* ユーザーレベルで必要な初期化をここに記述する */
+  //WIFIで必要ないプログラムオーバーレイの最初のロード
+  GFL_OVERLAY_Load( FS_OVERLAY_ID( notwifi ) );
 
 	//セーブ関連初期化
 	SaveControl_SystemInit(HEAPID_SAVE);
@@ -213,7 +216,7 @@ static	void	GameInit(void)
 #endif
 #endif  //PM_DEBUG
 	// 通信ブート処理 VBlank割り込み後に行うためここに記述、第二引数は表示用関数ポインタ
-	GFL_NET_Boot( GFL_HEAPID_APP, NULL, GFL_HEAPID_APP, HEAPID_NETWORK_FIX);
+  GFL_NET_Boot( GFL_HEAPID_APP, NULL, GFL_HEAPID_APP, HEAPID_NETWORK_FIX);
   // AP情報の取得
   WIH_DWC_CreateCFG(HEAPID_NETWORK_FIX);
   WIH_DWC_ReloadCFG();

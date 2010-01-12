@@ -19,6 +19,7 @@
 
 FS_EXTERN_OVERLAY(dev_wifi);
 FS_EXTERN_OVERLAY(dev_wifilib);
+FS_EXTERN_OVERLAY(notwifi);
 
 //-----------------------------------------------------------------==============
 //-----------------------------------------------------------------==============
@@ -88,11 +89,13 @@ void WifiList_Init(WIFI_LIST * list)
 
   GFL_STD_MemClear(list, sizeof(WIFI_LIST));
 
+  GFL_OVERLAY_Unload( FS_OVERLAY_ID( notwifi ) );
   GFL_OVERLAY_Load( FS_OVERLAY_ID( dev_wifi ) );
   GFL_OVERLAY_Load( FS_OVERLAY_ID( dev_wifilib ) );
   GFL_NET_WIFI_InitUserData(&list->my_dwcuser);  //GameSpyログイン用仮userコードの作成(絶対必要）
   GFL_OVERLAY_Unload( FS_OVERLAY_ID( dev_wifilib ) );
   GFL_OVERLAY_Unload( FS_OVERLAY_ID( dev_wifi ) );
+  GFL_OVERLAY_Load( FS_OVERLAY_ID( notwifi ) );
 
 }
 

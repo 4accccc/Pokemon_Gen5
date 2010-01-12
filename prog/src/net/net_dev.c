@@ -38,7 +38,9 @@ extern GFLNetDevTable *NET_GetIrcDeviceTable(void);
 extern GFLNetDevTable *NET_GetWirelessDeviceTable(void);
 extern GFLNetDevTable *NET_GetWifiDeviceTable(void);
 
+//SRCS_OVERLAY_NOTWIFI
 
+FS_EXTERN_OVERLAY(notwifi);
 FS_EXTERN_OVERLAY(dev_wifilib);
 FS_EXTERN_OVERLAY(dev_wifi);
 FS_EXTERN_OVERLAY(dev_wireless);
@@ -59,12 +61,14 @@ GFLNetDevTable* NET_DeviceLoad(int deviceNo)
   switch(deviceNo){
 #if SUPPORT_WIFI_	
 	case GFL_NET_TYPE_WIFI_GTS:
+    GFL_OVERLAY_Unload( FS_OVERLAY_ID( notwifi ) );
     GFL_OVERLAY_Load( FS_OVERLAY_ID( dev_wifilib ) );
     GFL_OVERLAY_Load( FS_OVERLAY_ID( dev_wifi ) );
 		GFL_OVERLAY_Load( FS_OVERLAY_ID(dpw_common) );
     return NET_GetWifiDeviceTable();
   case GFL_NET_TYPE_WIFI:
 #if SUPPORT_OVERLAY_
+    GFL_OVERLAY_Unload( FS_OVERLAY_ID( notwifi ) );
     GFL_OVERLAY_Load( FS_OVERLAY_ID( dev_wifilib ) );
     GFL_OVERLAY_Load( FS_OVERLAY_ID( dev_wifi ) );
 #endif
@@ -73,6 +77,7 @@ GFLNetDevTable* NET_DeviceLoad(int deviceNo)
 #if SUPPORT_WIFI_
   case GFL_NET_TYPE_WIFI_LOBBY:
 #if SUPPORT_OVERLAY_
+    GFL_OVERLAY_Unload( FS_OVERLAY_ID( notwifi ) );
     GFL_OVERLAY_Load( FS_OVERLAY_ID( dev_wifilib ) );
     GFL_OVERLAY_Load( FS_OVERLAY_ID( dev_wifi ) );
     //        GFL_OVERLAY_Load( FS_OVERLAY_ID( wifilobby_common ) );
@@ -118,12 +123,14 @@ void NET_DeviceUnload(int deviceNo)
     GFL_OVERLAY_Unload( FS_OVERLAY_ID( dpw_common ) );
     GFL_OVERLAY_Unload( FS_OVERLAY_ID( dev_wifilib ) );
     GFL_OVERLAY_Unload( FS_OVERLAY_ID( dev_wifi ) );
+    GFL_OVERLAY_Load( FS_OVERLAY_ID( notwifi ) );
 #endif
 		break;
   case GFL_NET_TYPE_WIFI:
 #if SUPPORT_OVERLAY_
     GFL_OVERLAY_Unload( FS_OVERLAY_ID( dev_wifilib ) );
     GFL_OVERLAY_Unload( FS_OVERLAY_ID( dev_wifi ) );
+    GFL_OVERLAY_Load( FS_OVERLAY_ID( notwifi ) );
 #endif
     break;
 #endif	//SUPPORT_WIFI_
@@ -132,6 +139,7 @@ void NET_DeviceUnload(int deviceNo)
 #if SUPPORT_OVERLAY_
     GFL_OVERLAY_Unload( FS_OVERLAY_ID( dev_wifilib ) );
     GFL_OVERLAY_Unload( FS_OVERLAY_ID( dev_wifi ) );
+    GFL_OVERLAY_Load( FS_OVERLAY_ID( notwifi ) );
     //        GFL_OVERLAY_Unload( FS_OVERLAY_ID( wifilobby_common ) );
 #endif
     break;

@@ -2589,9 +2589,12 @@ static int WifiP2PMatch_MainInit( WIFIP2PMATCH_WORK *wk, int seq )
 
     //@todo èÛë‘ÇæÇØÇ≈ê⁄ë±ÇêÿÇÈÇ©Ç«Ç§Ç©åªç›ñ¢ämíË
 
-    if( (gamemode == WIFI_GAME_TRADE) ||
-        (gamemode == WIFI_GAME_TVT)
-        )
+    if(gamemode == WIFI_GAME_NONE){
+      _myStatusChange(wk, WIFI_STATUS_WAIT, WIFI_GAME_LOGIN_WAIT);
+      _CHANGESTATE(wk,WIFIP2PMATCH_CONNECTING_INIT);
+    }
+    else
+//    if( (gamemode == WIFI_GAME_TRADE) ||    (gamemode == WIFI_GAME_TVT)    )
     { // åä∑íÜorÉ|ÉtÉBÉìÇ»ÇÁ
 
       // 080605 tomoya BTS:249ÇÃëŒèàÇÃÇΩÇﬂ
@@ -2606,7 +2609,11 @@ static int WifiP2PMatch_MainInit( WIFIP2PMATCH_WORK *wk, int seq )
       //            wk->pMatch->myMatchStatus.vchat = wk->pMatch->myMatchStatus.vchat_org;
       wk->timer = _RECONECTING_WAIT_TIME;
       _CHANGESTATE(wk,WIFIP2PMATCH_RECONECTING_WAIT);
+      
+//      _CHANGESTATE(wk,WIFIP2PMATCH_CONNECTING_INIT);
+      
     }
+    /*
     else
     {
       MainMenuMsgInit(wk);// BMPWINìoò^ÅEï`âÊ
@@ -2619,6 +2626,7 @@ static int WifiP2PMatch_MainInit( WIFIP2PMATCH_WORK *wk, int seq )
       GFL_NET_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle() ,_TIMING_BATTLE_END);
       _CHANGESTATE(wk,WIFIP2PMATCH_NEXTBATTLE_YESNO);
     }
+       */
   }
   else
   {        // ê⁄ë±Ç™Ç‹Çæ
