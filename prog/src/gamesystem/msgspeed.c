@@ -25,19 +25,19 @@
  */
 #if( (PM_LANG==LANG_JAPAN) || (PM_LANG==LANG_KOREA) )
 static const s8 WaitFrameTable[] = {
-  // 12,  // @todo 日本語版の最遅はこれくらい
     8,
     4,
     1,
-   -2,
+   -2,    // 最速
+   12,    // 最遅
 };
 #else
 static const s8 WaitFrameTable[] = {
- // 6,  // @ todo 欧米版の最遅はこれくらい
     4,
     2,
     0,
-   -4,
+   -4,  // 最速
+    6,  // 最遅
 };
 #endif
 
@@ -63,7 +63,7 @@ void MSGSPEED_InitSystem( const SAVE_CONTROL_WORK* ctrl )
 
 //=============================================================================================
 /**
- * ウェイトフレーム数取得
+ * 標準ウェイトフレーム数取得
  *
  * @retval  int   ウェイトフレーム数（この値を PRINTSYS_PrintStream 等の wait 値としてそのまま使う）
  */
@@ -81,6 +81,48 @@ int MSGSPEED_GetWait( void )
   }
 
   return WaitFrameTable[ speed ];
+}
+
+//=============================================================================================
+/**
+ * “速い”ウェイトフレーム数を取得（gmmでメッセージ速度コントロール 'FAST' にした時のフレーム数）
+ *
+ * @retval  int
+ */
+//=============================================================================================
+int MSGSPEED_GetWaitFast( void )
+{
+  CONFIG*  cfg = SaveData_GetConfig( (SAVE_CONTROL_WORK*)SaveCtrl );
+  MSGSPEED speed = CONFIG_GetMsgSpeed( cfg );
+
+  switch( speed ){
+  case MSGSPEED_SLOW:   speed = MSGSPEED_NORMAL; break;
+  case MSGSPEED_NORMAL: speed = MSGSPEED_FAST; break;
+  case MSGSPEED_FAST:   speed = MSGSPEED_FAST_EX; break;
+  }
+
+  return MSGSPEED_GetWaitByConfigParam( speed );
+}
+
+//=============================================================================================
+/**
+ * “遅い”ウェイトフレーム数を取得（gmmでメッセージ速度コントロール 'SLOW' にした時のフレーム数）
+ *
+ * @retval  int
+ */
+//=============================================================================================
+int MSGSPEED_GetWaitSlow( void )
+{
+  CONFIG*  cfg = SaveData_GetConfig( (SAVE_CONTROL_WORK*)SaveCtrl );
+  MSGSPEED speed = CONFIG_GetMsgSpeed( cfg );
+
+  switch( speed ){
+  case MSGSPEED_SLOW:   speed = MSGSPEED_SLOW_EX; break;
+  case MSGSPEED_NORMAL: speed = MSGSPEED_SLOW; break;
+  case MSGSPEED_FAST:   speed = MSGSPEED_NORMAL; break;
+  }
+
+  return MSGSPEED_GetWaitByConfigParam( speed );
 }
 
 //=============================================================================================
