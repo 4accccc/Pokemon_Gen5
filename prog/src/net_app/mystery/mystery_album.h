@@ -13,6 +13,7 @@
 #include <gflib.h>
 
 //ƒVƒXƒeƒ€
+#include "gamesystem/game_data.h"
 #include "print/wordset.h"
 #include "print/gf_font.h"
 #include "print/printsys.h"
@@ -48,6 +49,7 @@ typedef struct
   PRINT_QUE           *p_que;
   WORDSET             *p_word;
   GFL_MSGDATA         *p_msg;
+  GAMEDATA            *p_gamedata;
 } MYSTERY_ALBUM_SETUP;
 
 //-------------------------------------

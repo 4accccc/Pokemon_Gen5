@@ -208,6 +208,8 @@ static void SEQFUNC_DeleteCard( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
 static void SEQFUNC_SwapCard( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 static void SEQFUNC_End( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 
+static void SEQFUNC_DeleteMsg( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+
 //=============================================================================
 /**
  *          データ
@@ -318,7 +320,18 @@ MYSTERY_ALBUM_WORK * MYSTERY_ALBUM_Init( const MYSTERY_ALBUM_SETUP *cp_setup, HE
     }   
   }
 
-  p_wk->p_seq = MYSTERY_SEQ_Init( p_wk, SEQFUNC_MoveCursor, heapID );
+  { 
+    MYSTERY_SEQ_FUNCTION  start_seq;
+    if( p_wk->setup.mode == MYSTERY_ALBUM_MODE_VIEW )
+    { 
+      start_seq = SEQFUNC_MoveCursor;
+    }
+    else
+    { 
+      start_seq = SEQFUNC_DeleteMsg;
+    }
+    p_wk->p_seq = MYSTERY_SEQ_Init( p_wk, start_seq, heapID );
+  }
 
   Mystery_Album_InitDisplay( p_wk, heapID );
   Mystery_Album_CreateDisplay( p_wk, TRUE, 0, p_wk->now_page, heapID );
@@ -2101,9 +2114,18 @@ static void SEQFUNC_End( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs 
 { 
   enum
   { 
-    SEQ_CHECK,
     SEQ_INIT,
-    SEQ_MAIN,
+    SEQ_CHECK_MODE,
+
+    SEQ_DELETE_MSG_INIT,
+    SEQ_DELETE_YESNO_INIT,
+    SEQ_DELETE_YESNO_MAIN,
+
+    SEQ_CHECK_CHANGE,
+    SEQ_SAVE_MSG,
+    SEQ_SAVE_MSG_WAIT,
+    SEQ_SAVE_INIT,
+    SEQ_SAVE_MAIN,
     SEQ_EXIT,
   };
 
@@ -2111,10 +2133,89 @@ static void SEQFUNC_End( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs 
 
   switch( *p_seq )
   { 
-  case SEQ_CHECK:
+  case SEQ_INIT:
+    p_wk->p_text  = MYSTERY_TEXT_Init( MYSTERY_ALBUM_LIST_FRM, MYSTERY_ALBUM_FONT_PLT, p_wk->setup.p_que, p_wk->setup.p_font, HEAPID_MYSTERYGIFT );
+    MYSTERY_TEXT_WriteWindowFrame( p_wk->p_text, 1, MYSTERY_ALBUM_BG_FRM_S_PLT );
+    *p_seq  = SEQ_CHECK_MODE;
+    break;
+
+  case SEQ_CHECK_MODE:
+    if( p_wk->setup.mode == MYSTERY_ALBUM_MODE_VIEW )
+    { 
+      *p_seq  = SEQ_CHECK_CHANGE;
+    }
+    else
+    { 
+      if( MYSTERYDATA_CheckCardDataSpace( p_wk->setup.p_sv ) )
+      { 
+        *p_seq  = SEQ_CHECK_CHANGE;
+      }
+      else
+      { 
+        *p_seq  = SEQ_DELETE_MSG_INIT;
+      }
+    }
+    break;
+
+
+  case SEQ_DELETE_MSG_INIT:
+    MYSTERY_TEXT_Print( p_wk->p_text, p_wk->setup.p_msg, syachi_mystery_01_006, MYSTERY_TEXT_TYPE_STREAM ); 
+    *p_seq  = SEQ_DELETE_YESNO_INIT;
+    break;
+
+  case SEQ_DELETE_YESNO_INIT:
+    if( MYSTERY_TEXT_IsEndPrint( p_wk->p_text ) )
+    { 
+      MYSTERY_LIST_SETUP setup;
+      GFL_STD_MemClear( &setup, sizeof(MYSTERY_LIST_SETUP) );
+      setup.p_msg   = p_wk->setup.p_msg;
+      setup.p_font  = p_wk->setup.p_font;
+      setup.p_que   = p_wk->setup.p_que;
+      setup.strID[0]= syachi_mystery_01_021_yes;
+      setup.strID[1]= syachi_mystery_01_021_no;
+      setup.list_max= 2;
+      setup.frm     = MYSTERY_ALBUM_LIST_FRM;
+      setup.font_plt= MYSTERY_ALBUM_FONT_PLT;
+      setup.frm_plt = MYSTERY_ALBUM_BG_FRM_S_PLT;
+      setup.frm_chr = 1;
+      p_wk->p_list  = MYSTERY_LIST_Init( &setup, p_wk->heapID ); 
+
+      *p_seq  = SEQ_DELETE_YESNO_MAIN;
+    }
+    break;
+
+  case SEQ_DELETE_YESNO_MAIN:
+    { 
+      u32 ret;
+      ret = MYSTERY_LIST_Main( p_wk->p_list );
+      if( ret != MYSTERY_LIST_SELECT_NULL )
+      { 
+        MYSTERY_LIST_Exit( p_wk->p_list );
+        p_wk->p_list  = NULL;
+
+        if( ret == 0 )
+        { 
+          //はい
+          *p_seq  = SEQ_CHECK_CHANGE;
+        }
+        else
+        { 
+          //いいえ
+          if( p_wk->p_text )
+          { 
+            MYSTERY_TEXT_Exit( p_wk->p_text );
+            p_wk->p_text  = NULL;
+          }
+          MYSTERY_SEQ_SetNext( p_seqwk, SEQFUNC_MoveCursor );
+        }
+      }
+    }
+    break;
+
+  case SEQ_CHECK_CHANGE:
     if( p_wk->is_change )
     { 
-      *p_seq  = SEQ_INIT;
+      *p_seq  = SEQ_SAVE_MSG;
     }
     else
     { 
@@ -2122,26 +2223,41 @@ static void SEQFUNC_End( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs 
     }
     break;
 
-  case SEQ_INIT:
-    p_wk->p_text  = MYSTERY_TEXT_Init( MYSTERY_ALBUM_LIST_FRM, MYSTERY_ALBUM_FONT_PLT, p_wk->setup.p_que, p_wk->setup.p_font, HEAPID_MYSTERYGIFT );
-    MYSTERY_TEXT_WriteWindowFrame( p_wk->p_text, 1, MYSTERY_ALBUM_BG_FRM_S_PLT );
-    MYSTERY_TEXT_Print( p_wk->p_text, p_wk->setup.p_msg, syachi_mystery_01_016, MYSTERY_TEXT_TYPE_STREAM );
-    *p_seq  = SEQ_MAIN;
+  case SEQ_SAVE_MSG:
+    MYSTERY_TEXT_Print( p_wk->p_text, p_wk->setup.p_msg, syachi_mystery_01_016, MYSTERY_TEXT_TYPE_QUE );
+    *p_seq  = SEQ_SAVE_MSG_WAIT;
     break;
 
-  case SEQ_MAIN:
-    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE )
+  case SEQ_SAVE_MSG_WAIT:
+    if( MYSTERY_TEXT_IsEndPrint( p_wk->p_text ) )
     { 
-      if( p_wk->p_text )
+      *p_seq  = SEQ_SAVE_INIT;
+    }
+    break;
+
+  case SEQ_SAVE_INIT:
+    SaveControl_SaveAsyncInit( GAMEDATA_GetSaveControlWork(p_wk->setup.p_gamedata) );
+    *p_seq  = SEQ_SAVE_MAIN;
+    break;
+
+  case SEQ_SAVE_MAIN:
+    { 
+      SAVE_RESULT result  = SaveControl_SaveAsyncMain(GAMEDATA_GetSaveControlWork(p_wk->setup.p_gamedata) );
+      if( result == SAVE_RESULT_OK )
       { 
-        MYSTERY_TEXT_Exit( p_wk->p_text );
-        p_wk->p_text  = NULL;
+        *p_seq  = SEQ_EXIT;
       }
-      *p_seq  = SEQ_EXIT;
     }
     break;
 
   case SEQ_EXIT:
+
+    if( p_wk->p_text )
+    { 
+      MYSTERY_TEXT_Exit( p_wk->p_text );
+      p_wk->p_text  = NULL;
+    }
+
     MYSTERY_SEQ_End( p_seqwk );
     break;
   }
@@ -2151,7 +2267,60 @@ static void SEQFUNC_End( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs 
     MYSTERY_TEXT_Main( p_wk->p_text );
   }  
 }
+//----------------------------------------------------------------------------
+/**
+ *	@brief  メッセージ消去
+ *
+ *	@param	MYSTERY_SEQ_WORK *p_seqwk   シーケンス管理
+ *	@param	*p_seq              シーケンス
+ *	@param	*p_wk_adrs          ワーク
+ */
+//-----------------------------------------------------------------------------
+static void SEQFUNC_DeleteMsg( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+{
+  enum
+  { 
+    SEQ_INIT,
+    SEQ_MAIN,
+    SEQ_EXIT,
+  };
 
+  MYSTERY_ALBUM_WORK *p_wk  = p_wk_adrs;
+
+  switch( *p_seq )
+  { 
+  case SEQ_INIT:
+    p_wk->p_text  = MYSTERY_TEXT_Init( MYSTERY_ALBUM_LIST_FRM, MYSTERY_ALBUM_FONT_PLT, p_wk->setup.p_que, p_wk->setup.p_font, HEAPID_MYSTERYGIFT );
+    MYSTERY_TEXT_WriteWindowFrame( p_wk->p_text, 1, MYSTERY_ALBUM_BG_FRM_S_PLT );
+    MYSTERY_TEXT_Print( p_wk->p_text, p_wk->setup.p_msg, syachi_mystery_01_005, MYSTERY_TEXT_TYPE_STREAM );
+    break;
+
+  case SEQ_MAIN:
+    if( MYSTERY_TEXT_IsEndPrint( p_wk->p_text ) )
+    { 
+      if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE )
+      {
+        *p_seq  = SEQ_EXIT;
+      }
+    }
+    break;
+
+  case SEQ_EXIT:
+    if( p_wk->p_text )
+    { 
+      MYSTERY_TEXT_Exit( p_wk->p_text );
+      p_wk->p_text  = NULL;
+    }
+
+    MYSTERY_SEQ_SetNext( p_seqwk, SEQFUNC_MoveCursor );
+    break;
+  }
+
+  if( p_wk->p_text )
+  { 
+    MYSTERY_TEXT_Main( p_wk->p_text );
+  }  
+}
 
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 /**
@@ -2243,6 +2412,7 @@ MYSTERY_CARD_WORK * MYSTERY_CARD_Init( const MYSTERY_CARD_SETUP *cp_setup, HEAPI
     setup.p_que     = cp_setup->p_que;
     setup.p_word    = cp_setup->p_word;
     setup.p_msg     = cp_setup->p_msg;
+    setup.p_gamedata  = NULL;
  
     MYSTERY_CARD_DATA_Init( &p_wk->data, cp_setup->p_data, &setup, heapID );
   }

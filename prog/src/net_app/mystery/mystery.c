@@ -13,6 +13,7 @@
 
 //システム
 #include "system/main.h"
+#include "gamesystem/game_data.h"
 #include "system/gfl_use.h"
 #include "sound/pm_sndsys.h"
 #include "print/wordset.h"
@@ -262,6 +263,9 @@ typedef struct
   //引数
   MYSTERY_PARAM             *p_param;
 
+  //ゲームデータ
+  GAMEDATA                  *p_gamedata;
+
   //セーブデータ
   MYSTERY_DATA              *p_sv;
 
@@ -310,7 +314,8 @@ static void SEQFUNC_Demo( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
 static void SEQFUNC_CardAlbum( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );    //アルバム
 static void SEQFUNC_DeleteCard( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );   //カード１枚削除
 static void SEQFUNC_WifiLogin( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
-static void SEQFUNC_DisConnect( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void SEQFUNC_DisConnectEnd( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void SEQFUNC_DisConnectReturn( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 static void SEQFUNC_End( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 //-------------------------------------
 ///	UTIL  Mystery_utilのモジュールをパックしたもの
@@ -382,13 +387,16 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_PROC_Init( GFL_PROC *p_proc, int *p_seq, 
   GFL_OVERLAY_Load( FS_OVERLAY_ID(dpw_common));
 
   //ヒープ作成
-	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_MYSTERYGIFT, 0x30000 );
+	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_MYSTERYGIFT, 0x40000 );
 
 	//プロセスワーク作成
 	p_wk	= GFL_PROC_AllocWork( p_proc, sizeof(MYSTERY_WORK), HEAPID_MYSTERYGIFT );
 	GFL_STD_MemClear( p_wk, sizeof(MYSTERY_WORK) );	
   p_wk->p_param = p_param;
-  p_wk->p_sv    = SaveData_GetMysteryData(SaveControl_GetPointer());
+
+  p_wk->p_gamedata  = GAMEDATA_Create( HEAPID_MYSTERYGIFT );
+
+  p_wk->p_sv    = SaveData_GetMysteryData( GAMEDATA_GetSaveControlWork(p_wk->p_gamedata) );
 
 #ifdef DEBUG_SET_SAVEDATA
   MYSTERY_DEBUG_SetGiftData( &p_wk->data );
@@ -437,7 +445,7 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_PROC_Init( GFL_PROC *p_proc, int *p_seq, 
   p_wk->p_text  = MYSTERY_TEXT_Init( BG_FRAME_M_TEXT, PLT_BG_FONT_M, p_wk->p_que, p_wk->p_font, HEAPID_MYSTERYGIFT );
   MYSTERY_TEXT_WriteWindowFrame( p_wk->p_text, BG_CGX_OFS_M_TEXT, PLT_BG_TEXT_M );
 
-  p_wk->p_net   = MYSTERY_NET_Init( SaveControl_GetPointer(), HEAPID_MYSTERYGIFT );
+  p_wk->p_net   = MYSTERY_NET_Init( GAMEDATA_GetSaveControlWork(p_wk->p_gamedata), HEAPID_MYSTERYGIFT );
 
   return GFL_PROC_RES_FINISH;
 }
@@ -478,6 +486,9 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_PROC_Exit( GFL_PROC *p_proc, int *p_seq, 
 
   //グラフィック破棄
 	MYSTERY_GRAPHIC_Exit( p_wk->p_graphic );
+
+  //ゲームデータ破棄
+  GAMEDATA_Delete( p_wk->p_gamedata );
 
 	//プロセスワーク破棄
 	GFL_PROC_FreeWork( p_proc );
@@ -864,6 +875,11 @@ static void SEQFUNC_StartSelect( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_
     SEQ_NET_EXIT_RET,
     SEQ_NET_EXIT_RET_WAIT,
 
+    //カードがいっぱいで削除シーケンスへ
+    SEQ_FULL_YESNO_MSG,
+    SEQ_FULL_YESNO_INIT,
+    SEQ_FULL_YESNO_WAIT,
+
     SEQ_MSG_WAIT,
   };
 
@@ -889,11 +905,49 @@ static void SEQFUNC_StartSelect( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_
       {
         if( ret == 0 )
         { 
+          BOOL  is_full;
+          BOOL  is_no_recv  = TRUE;
+
           //おくりものをうけとる
           UTIL_DeleteMenu( p_wk );
-          MYSTERY_TEXT_Print( p_wk->p_text, p_wk->p_msg, syachi_mystery_01_002, MYSTERY_TEXT_TYPE_STREAM );
-          MYSTERY_SEQ_SetReservSeq( p_seqwk, SEQ_YESNO_INIT );
-          *p_seq  = SEQ_MSG_WAIT;
+
+          is_full = !MYSTERYDATA_CheckCardDataSpace( p_wk->p_sv );
+
+          //未取得の贈り物データがMAXかチェック
+          if( is_full )
+          { 
+            int i;
+            for( i = 0; i < GIFT_DATA_MAX; i++ )
+            { 
+              if( MYSTERYDATA_IsHavePresent( p_wk->p_sv, i ) )
+              { 
+                is_no_recv  = FALSE;
+              }
+            }
+          }
+
+          if( is_full )
+          { 
+            if( is_no_recv )
+            { 
+              //未取得の贈り物データがMAX
+              MYSTERY_TEXT_Print( p_wk->p_text, p_wk->p_msg, syachi_mystery_err_001, MYSTERY_TEXT_TYPE_STREAM );
+              MYSTERY_SEQ_SetReservSeq( p_seqwk, SEQ_INIT );
+              *p_seq  = SEQ_MSG_WAIT;
+            }
+            else
+            { 
+              //カードの数がMAX
+              *p_seq  = SEQ_FULL_YESNO_MSG;
+            }
+          }
+          else
+          { 
+            //通常時
+            MYSTERY_TEXT_Print( p_wk->p_text, p_wk->p_msg, syachi_mystery_01_002, MYSTERY_TEXT_TYPE_STREAM );
+            MYSTERY_SEQ_SetReservSeq( p_seqwk, SEQ_YESNO_INIT );
+            *p_seq  = SEQ_MSG_WAIT;
+          }
         }
         else if( ret == 1 )
         { 
@@ -1101,6 +1155,41 @@ static void SEQFUNC_StartSelect( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_
       *p_seq  = SEQ_INIT;
     }
     break;
+
+    //-------------------------------------
+    ///	カードいっぱいで整理シーケンスへ
+    //=====================================
+  case SEQ_FULL_YESNO_MSG:
+    MYSTERY_TEXT_Print( p_wk->p_text, p_wk->p_msg, syachi_mystery_err_005, MYSTERY_TEXT_TYPE_STREAM );
+    MYSTERY_SEQ_SetReservSeq( p_seqwk, SEQ_FULL_YESNO_INIT );
+    *p_seq  = SEQ_MSG_WAIT;
+    break;
+
+  case SEQ_FULL_YESNO_INIT:
+    UTIL_CreateList( p_wk, UTIL_LIST_TYPE_YESNO, HEAPID_MYSTERYGIFT );
+    *p_seq  = SEQ_FULL_YESNO_WAIT;
+    break;
+
+  case SEQ_FULL_YESNO_WAIT:
+    { 
+      u32 ret;
+      ret = MYSTERY_LIST_Main( p_wk->p_list );
+      if( ret != MYSTERY_LIST_SELECT_NULL )
+      { 
+        UTIL_DeleteList( p_wk );
+        if( ret == 0 )
+        { 
+          //はい
+          MYSTERY_SEQ_SetNext( p_seqwk, SEQFUNC_DeleteCard );
+        }
+        else if( ret == 1 )
+        { 
+          //いいえ
+          *p_seq  = SEQ_INIT;
+        }
+      }
+    }
+    break;
     
   case SEQ_MSG_WAIT:
     if( MYSTERY_TEXT_IsEndPrint( p_wk->p_text ) )
@@ -1250,9 +1339,9 @@ static void SEQFUNC_RecvGift( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
           NAGI_Printf( "TEXT : %s\n", text_buff );
           NAGI_Printf( "EV_ID: %d\n", p_wk->data.data.event_id );
           NAGI_Printf( "TYPE : %d\n",   p_wk->data.data.gift_type );
+          NAGI_Printf( "ONLYONE : %d\n",   p_wk->data.data.only_one_flag );
 
-          MYSTERY_SEQ_SetReservSeq( p_seqwk, SEQ_SELECT_GIFT_MSG );
-          *p_seq  = SEQ_MSG_WAIT;
+          *p_seq  = SEQ_SELECT_GIFT_MSG;
         }
         else
         { 
@@ -1267,8 +1356,7 @@ static void SEQFUNC_RecvGift( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
       if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE )
       { 
         //見つかった  本来Aボタンじゃない
-        MYSTERY_SEQ_SetReservSeq( p_seqwk, SEQ_SELECT_GIFT_MSG );
-        *p_seq  = SEQ_MSG_WAIT;
+        *p_seq  = SEQ_SELECT_GIFT_MSG;
       }
     }
 
@@ -1293,7 +1381,7 @@ static void SEQFUNC_RecvGift( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
   case SEQ_NO_GIFT_WAIT:
     if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE )
     { 
-      MYSTERY_SEQ_SetNext( p_seqwk, SEQFUNC_StartSelect );
+      MYSTERY_SEQ_SetNext( p_seqwk, SEQFUNC_DisConnectReturn );
     }
     break;
 
@@ -1313,6 +1401,7 @@ static void SEQFUNC_RecvGift( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
       { 
         if( ret == 0 )
         { 
+
           MYSTERY_TEXT_Print( p_wk->p_text, p_wk->p_msg, syachi_mystery_01_013, MYSTERY_TEXT_TYPE_STREAM );
           MYSTERY_SEQ_SetReservSeq( p_seqwk, SEQ_GIFT_YESNO_INIT );
           *p_seq  = SEQ_MSG_WAIT;
@@ -1344,7 +1433,17 @@ static void SEQFUNC_RecvGift( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
         { 
           //はい
           UTIL_DeleteMenu(p_wk);
-          MYSTERY_SEQ_SetNext( p_seqwk, SEQFUNC_Demo );
+
+          //すでに受け取っていたら、受け取れない
+          if( p_wk->data.data.only_one_flag && MYSTERYDATA_IsEventRecvFlag( p_wk->p_sv, p_wk->data.data.event_id ) )
+          { 
+            NAGI_Printf( "すでに受け取っていました\n" );
+            *p_seq = SEQ_SELECT_GIFT_MSG;
+          }
+          else
+          { 
+            MYSTERY_SEQ_SetNext( p_seqwk, SEQFUNC_Demo );
+          }
         }
         else if( ret == 1 )
         { 
@@ -1408,6 +1507,8 @@ static void SEQFUNC_Demo( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
   enum
   { 
     SEQ_INIT,
+    SEQ_SAVE_INIT,
+    SEQ_SAVE_MAIN,
     SEQ_RECV,
     SEQ_MSG_WAIT,
     SEQ_MSG_DECIDE,
@@ -1425,18 +1526,38 @@ static void SEQFUNC_Demo( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     { 
       GFL_CLUNIT	*p_unit	= MYSTERY_GRAPHIC_GetClunit( p_wk->p_graphic );
       MYSTERY_DEMO_Init( &p_wk->demo, p_unit, &p_wk->data, HEAPID_MYSTERYGIFT );
-      MYSTERY_TEXT_Print( p_wk->p_text, p_wk->p_msg, syachi_mystery_01_014, MYSTERY_TEXT_TYPE_STREAM );
-      *p_seq  = SEQ_RECV;
+      MYSTERY_TEXT_Print( p_wk->p_text, p_wk->p_msg, syachi_mystery_01_014, MYSTERY_TEXT_TYPE_QUE );
+      *p_seq  = SEQ_SAVE_INIT;
+    }
+    break;
+
+  case SEQ_SAVE_INIT:
+    if( MYSTERY_TEXT_IsEndPrint(p_wk->p_text) )
+    { 
+      SaveControl_SaveAsyncInit( GAMEDATA_GetSaveControlWork(p_wk->p_gamedata) );
+      *p_seq  = SEQ_SAVE_MAIN;
+    }
+    break;
+
+  case SEQ_SAVE_MAIN:
+    { 
+      SAVE_RESULT result  = SaveControl_SaveAsyncMain(GAMEDATA_GetSaveControlWork(p_wk->p_gamedata));
+      MYSTERY_DEMO_Main( &p_wk->demo );
+      if( result == SAVE_RESULT_OK )
+      { 
+        *p_seq  = SEQ_RECV;
+      }
     }
     break;
 
   case SEQ_RECV:
-    MYSTERY_DEMO_Main( &p_wk->demo );
-    if( MYSTERY_DEMO_IsEnd(&p_wk->demo)
-        && MYSTERY_TEXT_IsEndPrint(p_wk->p_text) )
     { 
-      MYSTERY_TEXT_Print( p_wk->p_text, p_wk->p_msg, syachi_mystery_01_015, MYSTERY_TEXT_TYPE_STREAM );
-      *p_seq  = SEQ_MSG_WAIT;
+      MYSTERY_DEMO_Main( &p_wk->demo );
+      if( MYSTERY_DEMO_IsEnd(&p_wk->demo) )
+      { 
+        MYSTERY_TEXT_Print( p_wk->p_text, p_wk->p_msg, syachi_mystery_01_015, MYSTERY_TEXT_TYPE_STREAM );
+        *p_seq  = SEQ_MSG_WAIT;
+      }
     }
     break;
 
@@ -1494,7 +1615,7 @@ static void SEQFUNC_Demo( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     break;
 
   case SEQ_END:
-    MYSTERY_SEQ_SetNext( p_seqwk, SEQFUNC_DisConnect );
+    MYSTERY_SEQ_SetNext( p_seqwk, SEQFUNC_DisConnectEnd );
     break;
   }
 }
@@ -1537,6 +1658,84 @@ static void SEQFUNC_CardAlbum( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk
       setup.p_que     = p_wk->p_que;
       setup.p_word    = p_wk->p_word;
       setup.p_msg     = p_wk->p_msg;
+      setup.p_gamedata  = p_wk->p_gamedata;
+      p_wk->p_album = MYSTERY_ALBUM_Init( &setup, HEAPID_MYSTERYGIFT );
+      *p_seq  = SEQ_MAIN;
+    }
+    break;
+  case SEQ_MAIN:
+    MYSTERY_ALBUM_Main( p_wk->p_album );
+    if( MYSTERY_ALBUM_IsEnd( p_wk->p_album ) )
+    { 
+      *p_seq  = SEQ_EXIT;
+    }
+    break;
+  case SEQ_EXIT:
+    MYSTERY_ALBUM_Exit( p_wk->p_album );
+    { 
+      ARCHANDLE	*	p_handle	= GFL_ARC_OpenDataHandle( ARCID_MYSTERY, HEAPID_MYSTERYGIFT );
+      //PLT
+      GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_mystery_fusigi_bg_00_NCLR,
+          PALTYPE_MAIN_BG, PLT_BG_BACK_M*0x20, 0x20, HEAPID_MYSTERYGIFT );
+      GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_mystery_fushigi_back_NCLR,
+          PALTYPE_MAIN_BG, PLT_BG_RECV_M*0x20, 0x20*6, HEAPID_MYSTERYGIFT );
+      //CHR
+      GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_mystery_fusigi_bg_00_NCGR, 
+          BG_FRAME_M_BACK2, 0, 0, FALSE, HEAPID_MYSTERYGIFT );
+      //SCR
+      GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_mystery_fusigi_bg_00_NSCR,
+          BG_FRAME_M_BACK2, 0, 0, FALSE, HEAPID_MYSTERYGIFT );
+      GFL_ARC_CloseDataHandle( p_handle );
+    }
+
+
+    MYSTERY_SEQ_SetNext( p_seqwk, SEQFUNC_StartSelect );
+    p_wk->p_text  = MYSTERY_TEXT_Init( BG_FRAME_M_TEXT, PLT_BG_FONT_M, p_wk->p_que, p_wk->p_font, HEAPID_MYSTERYGIFT );
+    MYSTERY_TEXT_WriteWindowFrame( p_wk->p_text, BG_CGX_OFS_M_TEXT, PLT_BG_TEXT_M );
+    break;
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	カードアルバム　カード削除
+ *
+ *	@param	MYSTERY_SEQ_WORK *p_seqwk	シーケンスワーク
+ *	@param	*p_seq					シーケンス
+ *	@param	*p_wk_adrs				ワーク
+ *
+ */
+//-----------------------------------------------------------------------------
+static void SEQFUNC_DeleteCard( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+{ 
+  enum
+  { 
+    SEQ_INIT,
+    SEQ_MAIN,
+    SEQ_EXIT,
+  };
+
+  MYSTERY_WORK  *p_wk     = p_wk_adrs;
+
+  switch( *p_seq )
+  { 
+  case SEQ_INIT:
+    { 
+      UTIL_DeleteMenu( p_wk );
+      MYSTERY_TEXT_Exit( p_wk->p_text );
+      p_wk->p_text  = NULL;
+    }
+    {
+      MYSTERY_ALBUM_SETUP setup;
+      GFL_STD_MemClear( &setup, sizeof(MYSTERY_LIST_SETUP) );
+      setup.mode  = MYSTERY_ALBUM_MODE_DELETE;
+      setup.p_clunit  = MYSTERY_GRAPHIC_GetClunit( p_wk->p_graphic );
+      setup.p_sv      = p_wk->p_sv;
+      setup.p_font    = p_wk->p_font;
+      setup.p_que     = p_wk->p_que;
+      setup.p_word    = p_wk->p_word;
+      setup.p_msg     = p_wk->p_msg;
+      setup.p_gamedata  = p_wk->p_gamedata;
       p_wk->p_album = MYSTERY_ALBUM_Init( &setup, HEAPID_MYSTERYGIFT );
       *p_seq  = SEQ_MAIN;
     }
@@ -1691,7 +1890,7 @@ static void SEQFUNC_WifiLogin( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	切断処理
+ *	@brief	切断処理しPROC終了
  *
  *	@param	MYSTERY_SEQ_WORK *p_seqwk	シーケンスワーク
  *	@param	*p_seq					シーケンス
@@ -1699,7 +1898,7 @@ static void SEQFUNC_WifiLogin( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk
  *
  */
 //-----------------------------------------------------------------------------
-static void SEQFUNC_DisConnect( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+static void SEQFUNC_DisConnectEnd( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
 { 
   enum
   { 
@@ -1736,6 +1935,57 @@ static void SEQFUNC_DisConnect( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
 
   case SEQ_END:
     MYSTERY_SEQ_SetNext( p_seqwk, SEQFUNC_FadeOut );
+    break;
+  }
+
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	切断処理しメニューへ
+ *
+ *	@param	MYSTERY_SEQ_WORK *p_seqwk	シーケンスワーク
+ *	@param	*p_seq					シーケンス
+ *	@param	*p_wk_adrs				ワーク
+ *
+ */
+//-----------------------------------------------------------------------------
+static void SEQFUNC_DisConnectReturn( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+{ 
+  enum
+  { 
+    SEQ_INIT,
+    SEQ_WAIT,
+    SEQ_END,
+  };
+  MYSTERY_WORK  *p_wk     = p_wk_adrs;
+
+  switch( *p_seq )
+  { 
+  case SEQ_INIT:
+    switch( p_wk->mode )
+    { 
+    case MYSTERY_NET_MODE_WIRELESS:
+      break;
+
+    case MYSTERY_NET_MODE_WIFI:
+      MYSTERY_NET_ChangeStateReq( p_wk->p_net, MYSTERY_NET_STATE_LOGOUT_WIFI );
+      break;
+
+    case MYSTERY_NET_MODE_IRC:
+      break;
+    }
+    *p_seq  = SEQ_WAIT;
+    break;
+
+  case SEQ_WAIT:
+    if( MYSTERY_NET_GetState( p_wk->p_net ) == MYSTERY_NET_STATE_WAIT )
+    { 
+      *p_seq  = SEQ_END;
+    }
+    break;
+
+  case SEQ_END:
+    MYSTERY_SEQ_SetNext( p_seqwk, SEQFUNC_StartSelect );
     break;
   }
 
