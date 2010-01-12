@@ -2788,13 +2788,14 @@ static BOOL debugMenuCallProc_WifiGts( DEBUG_MENU_EVENT_WORK *p_wk )
     p_gts->gts.connect          = 0;  
   
     OS_Printf( "GTS Start\n" );
+    return TRUE;
   }
   else
   { 
     OS_Printf( "GameSpyIDが不正なので、GTSを開始しなかった\n" );
+    return FALSE;
   }
 
-  return TRUE;
 }
 
 //----------------------------------------------------------------------------
