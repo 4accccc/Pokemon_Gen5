@@ -158,6 +158,7 @@ static BOOL TESTMODE_ITEM_SelectFuncTaya( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_SelectFuncSample1( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_SelectFuncMatsuda( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_SelectFuncSave( TESTMODE_WORK *work , const int idx );
+static BOOL TESTMODE_ITEM_SaveClear( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_SelectFuncSound( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_SelectFuncKagaya( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_SelectFuncAri( TESTMODE_WORK *work , const int idx );
@@ -221,6 +222,7 @@ static TESTMODE_MENU_LIST topMenu[] =
   {L"名前を選んで開始(処理負荷：サーチ)"    ,TESTMODE_ITEM_SelectFuncChangeSelectName },
   {L"RTC調整"             ,TESTMODE_ITEM_SelectFuncRTCEdit },
   {L"セーブ破かい"        ,TESTMODE_ITEM_SelectFuncSave },
+  {L"セーブを工場出荷状態にする"        ,TESTMODE_ITEM_SaveClear },
   {L"SOUND"               ,TESTMODE_ITEM_SelectFuncSound },
   {L"ミュージカル"        ,TESTMODE_ITEM_ChangeMusicalMenu },
   {L"MCS常駐接続"         ,TESTMODE_ITEM_ConnectMCS },
@@ -951,6 +953,21 @@ extern const GFL_PROC_DATA DebugSaveProcData;
 static BOOL TESTMODE_ITEM_SelectFuncSave( TESTMODE_WORK *work , const int idx )
 {
   TESTMODE_COMMAND_ChangeProc(work,FS_OVERLAY_ID(matsuda_debug), &DebugSaveProcData, NULL);
+  return TRUE;
+}
+
+//セーブを工場出荷状態にする
+static BOOL TESTMODE_ITEM_SaveClear( TESTMODE_WORK *work , const int idx )
+{
+  void *temp_save;
+  
+  temp_save = GFL_HEAP_AllocMemory(GFL_HEAPID_APP, SAVEFLASH_SIZE);
+	GFL_STD_MemFill(temp_save, SAVEFLASH_INIT_PARAM, SAVEFLASH_SIZE);
+	DEBUG_BACKUP_FlashSave(0, temp_save, SAVEFLASH_SIZE);
+	GFL_HEAP_FreeMemory(temp_save);
+
+	OS_ResetSystem(0);	//セーブ読み込み状況を更新する為、ソフトリセットする
+  
   return TRUE;
 }
 
