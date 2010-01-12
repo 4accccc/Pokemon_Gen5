@@ -3,73 +3,56 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fujiwara_maiko" host="W00194" date="2010-01-07T16:05:51" source="m_siten04_00_00.mb"/>
+	<create user="fujiwara_maiko" host="W00194" date="2010-01-10T20:38:46" source="m_siten04_00_00.ma"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="fujiwara_maiko" host="W00194" date="2010-01-07T16:05:51" source="m_siten04_00_00.mb"/>
+<original_create user="fujiwara_maiko" host="W00194" date="2010-01-10T20:38:46" source="m_siten04_00_00.ma"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
-	pos_scale="2"
+	pos_scale="4"
 	scaling_rule="standard"
 	vertex_style="direct"
 	magnify="1.000000"
 	tool_start_frame="0"
 	tex_matrix_mode="maya"
-	compress_node="merge" node_size="5 5"
+	compress_node="merge" node_size="13 8"
 	compress_material="on" material_size="4 4"
 	output_texture="used"
 	force_full_weight="off"
 	use_primitive_strip="on"
 />
 
-<box_test pos_scale="4" xyz="-1.187500 0.721436 4.421631" whd="2.000000 2.000000 0.000000"/>
+<box_test pos_scale="6" xyz="-0.384766 0.008789 1.001465" whd="4.279785 6.866455 2.454102"/>
 
-<tex_image_array size="12">
-	<tex_image index="0" name="hero04.1"
-		width="32" height="32" original_width="32" original_height="32"
-		format="palette16"
-		color0_mode="transparency"
-		palette_name="hero04.1_pl"
-		path="C:/home/wb_data3d/field/in54/chip/tex/hogo/hero04.1.tga"
+<tex_image_array size="7">
+	<tex_image index="0" name="c09_04_star"
+		width="8" height="32" original_width="8" original_height="32"
+		format="a5i3"
+		palette_name="c09_04_star_pl"
+		path="C:/home/wb_data3d/field/in54/chip/tex/c09_04_star.tga"
 	>
-		<bitmap size="256">
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 4430 0344 0000 0000 0000
-			0000 0000 f000 ee64 46ee 000f 0000 0000
-			0000 0000 6f00 8eee eee8 00f6 0000 0000
-			0000 0000 96f0 8eee eee8 0f69 0000 0000
-			0000 0000 96f0 eeee eeee 0f69 0000 0000
-			0000 0000 9662 eeee eeee 2669 0000 0000
-			0000 0000 666f eee9 9eee f666 0000 0000
-			0000 0000 666f 9996 6999 f666 0000 0000
-			0000 0000 666f 6666 6666 f666 0000 0000
-			0000 a000 66fb 3366 6633 bf66 000a 0000
-			0000 a000 66ff 3366 6633 ff66 000a 0000
-			0000 f000 6443 6666 6666 3446 000f 0000
-			0000 0000 444f 6664 4666 f444 0000 0000
-			0000 0000 4ff0 4444 4444 0ff4 0000 0000
-			0000 0000 43f0 4444 4444 0f34 0000 0000
-			0000 0000 ff00 44f3 3f44 00ff 0000 0000
-			0000 0000 f000 ffaf faff 000f 0000 0000
-			0000 0000 af00 17a1 1a11 00fa 0000 0000
-			0000 0000 1bfa 71ff ff11 afb1 0000 0000
-			0000 a000 fb7c 11a0 5a17 c7bf 000a 0000
-			0000 a000 0fbc 1d2f 5271 cbf7 000a 0000
-			0000 0000 00ff dd9f 77dd ff88 0000 0000
-			0000 0000 0000 993f 7399 0587 0000 0000
-			0000 0000 0000 f444 444f 0557 0000 0000
-			0000 0000 f000 0f33 33f0 0055 0000 0000
-			0000 0000 f000 0f22 22f0 000f 0000 0000
-			0000 0000 0000 00ff ff00 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
+		<bitmap size="128">
+			0000 1901 1919 0000 0000 2901 2939 0000
+			0000 2901 2951 0000 0000 2901 2961 0000
+			0000 2901 2981 0000 0000 2901 29a1 0000
+			0000 2901 29c1 0000 0000 2901 29e1 0000
+			0000 2901 29f9 0000 0000 2901 29f9 0000
+			0000 2901 29f9 0000 0000 2901 29f9 0000
+			0000 2901 29f9 0000 0000 2901 29f9 0000
+			0000 2901 29f9 0000 0000 2901 29f9 0000
+			0000 2901 29f9 0000 0000 2901 29f9 0000
+			0000 2901 29f9 0000 0000 2901 29f9 0000
+			0000 2901 29f9 0000 0000 2901 29f9 0000
+			0000 2901 29f9 0000 0000 2901 29f9 0000
+			0000 2901 29e1 0000 0000 2901 29c1 0000
+			0000 2901 29a1 0000 0000 2901 2981 0000
+			0000 2901 2969 0000 0000 2901 2951 0000
+			0000 2901 2939 0000 0000 2901 2939 0000
 		</bitmap>
 	</tex_image>
 	<tex_image index="1" name="hero04.10"
@@ -114,301 +97,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="2" name="hero04.11"
-		width="32" height="32" original_width="32" original_height="32"
-		format="palette16"
-		color0_mode="transparency"
-		palette_name="hero04.11_pl"
-		path="C:/home/wb_data3d/field/in54/chip/tex/hogo/hero04.11.tga"
-	>
-		<bitmap size="256">
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 4440 0444 0000 0000 0000
-			0000 0000 4000 ee64 46ee 000f 0000 0000
-			0000 0000 6f00 8eee ee98 00f6 0000 0000
-			0000 0000 96f0 8eee eee8 0f69 0000 0000
-			0000 0000 96f0 eeee ee9e 0f69 0000 0000
-			0000 0000 966f eeee e9ee f869 0000 0000
-			0000 0000 662f eee9 99ee fd86 0000 0000
-			0000 f000 6333 9996 6999 fd76 0055 0000
-			0000 0000 633f 6666 6666 58d6 0588 0000
-			0000 f000 6264 6666 6666 5d76 5888 0000
-			0000 0000 664f 6666 6666 8587 5888 0000
-			0000 f000 6444 6666 7666 8877 0588 0000
-			0000 3f00 4444 fbc4 feaf 5555 0055 0000
-			0000 f000 444f fbc4 febb 0acc 0000 0000
-			0000 0000 4ff0 4ba4 ccbb 0bcc 0000 0000
-			0000 0000 43f0 4f4f cbaa 00ab 0000 0000
-			0000 0000 ff00 4ff0 faf4 000f 0000 0000
-			0000 0000 0000 6fff 00f6 0000 0000 0000
-			0000 0000 f000 747b 0f17 0000 0000 0000
-			0000 0000 f000 f4fb 0fb1 0000 0000 0000
-			0000 0000 0000 11ff fccf 000f 0000 0000
-			0000 0000 0000 17f0 8bf1 00fc 0000 0000
-			0000 0000 0000 756f c477 00fc 0000 0000
-			0000 0000 0000 775f f577 000f 0000 0000
-			0000 0000 0000 775f 4577 0000 0000 0000
-			0000 0000 f000 5543 4455 000f 0000 0000
-			0000 0000 f000 00f3 fff0 0000 0000 0000
-			0000 0000 f000 0f22 0000 0000 0000 0000
-			0000 0000 0000 00ff 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-		</bitmap>
-	</tex_image>
-	<tex_image index="3" name="hero04.12"
-		width="32" height="32" original_width="32" original_height="32"
-		format="palette16"
-		color0_mode="transparency"
-		palette_name="hero04.12_pl"
-		path="C:/home/wb_data3d/field/in54/chip/tex/hogo/hero04.12.tga"
-	>
-		<bitmap size="256">
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 4440 0444 0000 0000 0000
-			0000 0000 4000 ee64 46ee 000f 0000 0000
-			0000 0000 6f00 8eee ee98 00f6 0000 0000
-			0000 0000 96f0 8eee eee8 0f69 0000 0000
-			0000 0000 96f0 eeee ee9e 0f69 0000 0000
-			0000 0000 966f eeee e9ee f869 0000 0000
-			0000 0000 662f eee9 99ee fd86 0000 0000
-			0000 f000 6333 9996 6999 fd76 0055 0000
-			0000 0000 633f 6666 6666 58d6 0588 0000
-			0000 f000 6264 6666 6666 5d76 5888 0000
-			0000 0000 664f 6666 6666 8587 5888 0000
-			0000 f000 6444 6666 7666 8877 0588 0000
-			0000 3f00 4444 fbc4 fea4 5555 0055 0000
-			0000 f000 444f fbc4 febb 0acc 0000 0000
-			0000 0000 4ff0 4ba4 ccbb 0bcc 0000 0000
-			0000 0000 43f0 4f4f cbaa 00ab 0000 0000
-			0000 0000 ff00 4ff0 faf4 000f 0000 0000
-			0000 0000 0000 6f00 75f6 000f 0000 0000
-			0000 0000 0000 7f00 bf47 000f 0000 0000
-			0000 0000 0000 dff0 ff13 0000 0000 0000
-			0000 0000 0000 bcf0 07d4 0000 0000 0000
-			0000 0000 0000 4c8f f7dd 0000 0000 0000
-			0000 0000 f000 84cc f658 0000 0000 0000
-			0000 0000 f000 74cc f577 0000 0000 0000
-			0000 0000 0000 77f4 0577 0000 0000 0000
-			0000 0000 f000 554f 4455 0000 0000 0000
-			0000 0000 0000 00ff 444f 00f2 0000 0000
-			0000 0000 0000 0000 24f0 00f4 0000 0000
-			0000 0000 0000 0000 ff00 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-		</bitmap>
-	</tex_image>
-	<tex_image index="4" name="hero04.2"
-		width="32" height="32" original_width="32" original_height="32"
-		format="palette16"
-		color0_mode="transparency"
-		palette_name="hero04.2_pl"
-		path="C:/home/wb_data3d/field/in54/chip/tex/hogo/hero04.2.tga"
-	>
-		<bitmap size="256">
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 4430 0344 0000 0000 0000
-			0000 0000 f000 ee64 46ee 000f 0000 0000
-			0000 0000 6f00 8eee eee8 00f6 0000 0000
-			0000 0000 96f0 8eee eee8 0f69 0000 0000
-			0000 0000 96f0 eeee eeee 0f69 0000 0000
-			0000 0000 9662 eeee eeee 2669 0000 0000
-			0000 0000 666f eee9 9eee f666 0000 0000
-			0000 0000 666f 9996 6999 f666 0000 0000
-			0000 0000 666f 6666 6666 f666 0000 0000
-			0000 a000 66fb 3366 6633 bf66 000a 0000
-			0000 a000 66ff 3366 6633 ff66 000a 0000
-			0000 f000 6443 6666 6666 3446 000f 0000
-			0000 0000 444f 6664 4666 f444 0000 0000
-			0000 0000 4ff0 4444 4444 0ff4 0000 0000
-			0000 0000 43f0 4444 4444 0f34 0000 0000
-			0000 0000 ff00 44f3 3f44 00ff 0000 0000
-			0000 0000 f000 ffaf faff 000f 0000 0000
-			0000 0000 bff0 17f1 1f11 00fa 0000 0000
-			0000 0000 b7bf 71ff 1f11 00fb 0000 0000
-			0000 0000 fbbf 11a0 fa17 0f7b 0000 0000
-			0000 0000 0ff0 1d2f f271 fcc5 0000 0000
-			0000 0000 0000 dd6f 772d fccf 0000 0000
-			0000 0000 0000 994f 7999 0ff7 0000 0000
-			0000 0000 0000 4444 5444 0557 0000 0000
-			0000 0000 0000 4444 f22f 0055 0000 0000
-			0000 0000 0000 044f 0ff0 0000 0000 0000
-			0000 0000 0000 f33f 0000 0000 0000 0000
-			0000 0000 0000 f22f 0000 0000 0000 0000
-			0000 0000 0000 0ff0 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-		</bitmap>
-	</tex_image>
-	<tex_image index="5" name="hero04.3"
-		width="32" height="32" original_width="32" original_height="32"
-		format="palette16"
-		color0_mode="transparency"
-		palette_name="hero04.3_pl"
-		path="C:/home/wb_data3d/field/in54/chip/tex/hogo/hero04.3.tga"
-	>
-		<bitmap size="256">
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 4430 0344 0000 0000 0000
-			0000 0000 f000 ee64 46ee 000f 0000 0000
-			0000 0000 6f00 8eee eee8 00f6 0000 0000
-			0000 0000 96f0 8eee eee8 0f69 0000 0000
-			0000 0000 96f0 eeee eeee 0f69 0000 0000
-			0000 0000 9662 eeee eeee 2669 0000 0000
-			0000 0000 666f eee9 9eee f666 0000 0000
-			0000 0000 666f 9996 6999 f666 0000 0000
-			0000 0000 666f 6666 6666 f666 0000 0000
-			0000 a000 66fb 3366 6633 bf66 000a 0000
-			0000 a000 66ff 3366 6633 ff66 000a 0000
-			0000 f000 6443 6666 6666 3446 000f 0000
-			0000 0000 444f 6664 4666 f444 0000 0000
-			0000 0000 4ff0 4444 4444 0ff4 0000 0000
-			0000 0000 43f0 4444 4444 0f34 0000 0000
-			0000 0000 ff00 44f3 3f44 00ff 0000 0000
-			0000 0000 f000 ffaf faff 000f 0000 0000
-			0000 0000 af00 1741 1f11 0ffb 0000 0000
-			0000 0000 bf00 71f1 ff11 fb7b 0000 0000
-			0000 0000 b7f0 11a4 5a17 fbbf 0000 0000
-			0000 0000 5ccf 1d2f 5271 0ff7 0000 0000
-			0000 0000 fccf dd6f 77dd 0f88 0000 0000
-			0000 0000 0ff0 993f 7999 0587 0000 0000
-			0000 0000 0000 4444 5444 0557 0000 0000
-			0000 0000 0000 f22f 4444 0055 0000 0000
-			0000 0000 0000 0ff0 f440 0000 0000 0000
-			0000 0000 0000 0000 f33f 0000 0000 0000
-			0000 0000 0000 0000 f22f 0000 0000 0000
-			0000 0000 0000 0000 0ff0 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-		</bitmap>
-	</tex_image>
-	<tex_image index="6" name="hero04.4"
-		width="32" height="32" original_width="32" original_height="32"
-		format="palette16"
-		color0_mode="transparency"
-		palette_name="hero04.4_pl"
-		path="C:/home/wb_data3d/field/in54/chip/tex/hogo/hero04.4.tga"
-	>
-		<bitmap size="256">
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 4430 0444 0000 0000 0000
-			0000 0000 f000 ee64 f6ee 000f 0000 0000
-			0000 0000 6f00 8eee eee8 00f6 0000 0000
-			0000 0000 96f0 8eee eee8 0f69 0000 0000
-			0000 0000 96f0 e99e e99e 0f69 0000 0000
-			0000 0000 966f eee9 9eee f669 0000 0000
-			0000 ff00 6663 88e9 9e88 3666 00ff 0000
-			0000 f000 666f 1776 6771 f666 000f 0000
-			0000 3f00 666f 7176 6717 f666 00f3 0000
-			0000 a3f0 67fb 1766 6671 bf76 0f3a 0000
-			0000 af00 7f3b 8887 7888 b3f7 00fa 0000
-			0000 a000 543b 8887 7888 b345 000a 0000
-			0000 0000 bfbf 55fe ef55 fbfb 0000 0000
-			0000 0000 ca3f ccfe efcc f3ac 0000 0000
-			0000 0000 a4f0 cccc cccc 0f4a 0000 0000
-			0000 0000 ff00 bcba abcb 0000 0000 0000
-			0000 0000 f000 aff1 1ffa 000f 0000 0000
-			0000 0000 df00 61a1 1a76 00fd 0000 0000
-			0000 0000 1bfa 91af fa47 afb1 0000 0000
-			0000 a000 fb7c 77a5 0ad9 c7bf 000a 0000
-			0000 a000 7fbc 9775 fade cbf0 000a 0000
-			0000 0000 88ff e167 461e ff00 0000 0000
-			0000 0000 7850 6647 f466 0000 0000 0000
-			0000 0000 7550 f445 f44f 0000 0000 0000
-			0000 0000 5500 0f43 34f0 000f 0000 0000
-			0000 0000 f000 0f22 22f0 000f 0000 0000
-			0000 0000 0000 00ff ff00 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-		</bitmap>
-	</tex_image>
-	<tex_image index="7" name="hero04.5"
-		width="32" height="32" original_width="32" original_height="32"
-		format="palette16"
-		color0_mode="transparency"
-		palette_name="hero04.5_pl"
-		path="C:/home/wb_data3d/field/in54/chip/tex/hogo/hero04.5.tga"
-	>
-		<bitmap size="256">
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 4430 0444 0000 0000 0000
-			0000 0000 f000 ee64 f6ee 000f 0000 0000
-			0000 0000 6f00 8eee eee8 00f6 0000 0000
-			0000 0000 96f0 8eee eee8 0f69 0000 0000
-			0000 0000 96f0 e99e e99e 0f69 0000 0000
-			0000 0000 966f eee9 9eee f669 0000 0000
-			0000 ff00 6663 88e9 9e88 3666 00ff 0000
-			0000 f000 666f 1776 6771 f666 000f 0000
-			0000 3f00 666f 7176 6717 f666 00f3 0000
-			0000 a3f0 67fb 1766 6671 bf76 0f3a 0000
-			0000 af00 7f3b 8887 7888 b3f7 00fa 0000
-			0000 a000 543b 8887 7888 b345 000a 0000
-			0000 0000 bfbf 55fe ef55 fbfb 0000 0000
-			0000 0000 ca3f ccfe efcc f3ac 0000 0000
-			0000 0000 a4f0 cccc cccc 0f4a 0000 0000
-			0000 0000 ff00 bcba abcb 0000 0000 0000
-			0000 0000 17f0 aff3 1ffa 000f 0000 0000
-			0000 0000 b7bf 61aa 1a76 00fd 0000 0000
-			0000 0000 fbbf 61af ba17 00a7 0000 0000
-			0000 0000 55f0 7735 fad9 0fcc 0000 0000
-			0000 0000 5750 9775 fade 0fcc 0000 0000
-			0000 0000 7850 e168 461e 00ff 0000 0000
-			0000 0000 7850 6642 4466 000f 0000 0000
-			0000 0000 7550 4444 ff44 0000 0000 0000
-			0000 0000 5500 f444 f33f 0000 0000 0000
-			0000 0000 0000 44f0 0ff0 0000 0000 0000
-			0000 0000 0000 f33f 0000 0000 0000 0000
-			0000 0000 0000 f22f 0000 0000 0000 0000
-			0000 0000 0000 0ff0 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-		</bitmap>
-	</tex_image>
-	<tex_image index="8" name="hero04.6"
-		width="32" height="32" original_width="32" original_height="32"
-		format="palette16"
-		color0_mode="transparency"
-		palette_name="hero04.6_pl"
-		path="C:/home/wb_data3d/field/in54/chip/tex/hogo/hero04.6.tga"
-	>
-		<bitmap size="256">
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 4430 0444 0000 0000 0000
-			0000 0000 f000 ee64 f6ee 000f 0000 0000
-			0000 0000 6f00 8eee eee8 00f6 0000 0000
-			0000 0000 96f0 8eee eee8 0f69 0000 0000
-			0000 0000 96f0 e99e e99e 0f69 0000 0000
-			0000 0000 966f eee9 9eee f669 0000 0000
-			0000 ff00 6663 88e9 9e88 3666 00ff 0000
-			0000 f000 666f 1776 6771 f666 000f 0000
-			0000 3f00 666f 7176 6717 f666 00f3 0000
-			0000 a3f0 67fb 1766 6671 bf76 0f3a 0000
-			0000 af00 7f3b 8887 7888 b3f7 00fa 0000
-			0000 a000 543b 8887 7888 b345 000a 0000
-			0000 0000 bfbf 55fe ef55 fbfb 0000 0000
-			0000 0000 ca3f ccfe efcc f3ac 0000 0000
-			0000 0000 a4f0 cccc cccc 0f4a 0000 0000
-			0000 0000 0000 bcba abcb 00ff 0000 0000
-			0000 0000 f000 aff1 3ffa 0f71 0000 0000
-			0000 0000 df00 61a1 aa76 fb7b 0000 0000
-			0000 0000 7a00 61ab 0a17 fbbf 0000 0000
-			0000 0000 ccf0 773f fad9 0ff0 0000 0000
-			0000 0000 ccf0 977f fade 0000 0000 0000
-			0000 0000 ff00 e167 461e 0000 0000 0000
-			0000 0000 7850 6644 f466 0000 0000 0000
-			0000 0000 7550 44ff f444 0000 0000 0000
-			0000 0000 5500 f33f 044f 0000 0000 0000
-			0000 0000 0000 0ff0 0f44 0000 0000 0000
-			0000 0000 0000 0000 f33f 0000 0000 0000
-			0000 0000 0000 0000 f22f 0000 0000 0000
-			0000 0000 0000 0000 0ff0 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-		</bitmap>
-	</tex_image>
-	<tex_image index="9" name="hero04.7"
+	<tex_image index="2" name="hero04.7"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
 		color0_mode="transparency"
@@ -450,7 +139,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="10" name="hero04.8"
+	<tex_image index="3" name="hero04.8"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
 		color0_mode="transparency"
@@ -492,7 +181,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="11" name="hero04.9"
+	<tex_image index="4" name="hero04.9"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
 		color0_mode="transparency"
@@ -534,115 +223,184 @@
 			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
+	<tex_image index="5" name="hero_hi.1"
+		width="32" height="32" original_width="32" original_height="32"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="hero_hi.1_pl"
+		path="C:/home/wb_data3d/field/in54/chip/tex/hogo/hero_hi.1.tga"
+	>
+		<bitmap size="256">
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 4430 0344 0000 0000 0000
+			0000 0000 f000 ee64 46ee 000f 0000 0000
+			0000 0000 6f00 8eee eee8 00f6 0000 0000
+			0000 0000 96f0 8eee eee8 0f69 0000 0000
+			0000 0000 96f0 eeee eeee 0f69 0000 0000
+			0000 0000 9662 eeee eeee 2669 0000 0000
+			0000 0000 666f eee9 9eee f666 0000 0000
+			0000 0000 666f 9996 6999 f666 0000 0000
+			0000 0000 666f 6666 6666 f666 0000 0000
+			0000 a000 66fb 3366 6633 bf66 000a 0000
+			0000 a000 66ff 3366 6633 ff66 000a 0000
+			0000 f000 6443 6666 6666 3446 000f 0000
+			0000 0000 444f 6664 4666 f444 0000 0000
+			0000 0000 4ff0 4444 4444 0ff4 0000 0000
+			0000 0000 43f0 4444 4444 0f34 0000 0000
+			0000 0000 ff00 44f3 3f44 00ff 0000 0000
+			0000 0000 f000 ffaf faff 000f 0000 0000
+			0000 0000 af00 17a1 1a11 00fa 0000 0000
+			0000 0000 1bfa 71ff ff11 afb1 0000 0000
+			0000 a000 fb7c 11a0 5a17 c7bf 000a 0000
+			0000 a000 0fbc 1d2f 5271 cbf7 000a 0000
+			0000 0000 00ff dd9f 77dd ff88 0000 0000
+			0000 0000 0000 993f 7399 0587 0000 0000
+			0000 0000 0000 f444 444f 0557 0000 0000
+			0000 0000 f000 0f33 33f0 0055 0000 0000
+			0000 0000 f000 0f22 22f0 000f 0000 0000
+			0000 0000 0000 00ff ff00 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+		</bitmap>
+	</tex_image>
+	<tex_image index="6" name="hika.1"
+		width="32" height="32" original_width="32" original_height="32"
+		format="a5i3"
+		palette_name="hika.1_pl"
+		path="C:/home/wb_data3d/field/in54/chip/tex/hogo/hika.1.tga"
+	>
+		<bitmap size="512">
+			0000 0000 0000 0000 1008 1810 1818 2018
+			2020 1820 1018 0810 0008 0000 0000 0000
+			0000 0000 0000 1000 1810 2020 2828 3030
+			3030 2830 2020 1018 0810 0000 0000 0000
+			0000 0000 0800 1810 2820 3830 4840 4848
+			4848 4040 3038 2028 1018 0008 0000 0000
+			0000 0000 1008 2018 3830 5048 6860 7070
+			7070 6068 4858 3038 2028 0810 0000 0000
+			0000 1000 2010 3828 5848 7868 9888 a0a0
+			a0a0 8898 7080 4858 3038 1020 0010 0000
+			0000 1008 2820 4838 7860 a090 b8b0 c8c0
+			c0c8 b0c0 98a8 6880 3850 2030 0818 0000
+			0000 1810 3828 6850 9880 c8b0 d8d0 e0d8
+			e0e0 d0d8 b8c8 88a0 5068 2838 1020 0008
+			0800 2018 4830 8868 c0a0 d8d0 e8e8 e8e8
+			e8e8 e0e8 d0e0 a8c0 7090 3850 1828 0010
+			1008 3018 6040 a080 d0c0 e8e0 e8e8 e8e8
+			e8f0 e8e8 e0e8 c8d8 88a8 4868 2030 0010
+			1808 3820 7858 b898 e0d0 e8e8 f0f0 f0f0
+			f0f0 e8e8 e8e8 d8e0 a0c0 5880 2840 1018
+			2010 4830 9068 d0b0 e8e0 e8e8 f0f0 f0f0
+			f0f0 f0f0 f0f0 e0e8 b8d0 7098 3050 1020
+			2010 5030 a078 d8c0 e8e8 f0e8 f0f0 f0f0
+			f0f0 f0f0 e8f0 e8f0 c8e0 80a8 3860 1828
+			2818 6038 b088 e0d0 e8e8 f0e8 f0f0 f0f0
+			f0f0 f0f0 f0f0 e8e8 d0e8 90b8 4868 1830
+			2818 6840 b890 e8d8 f0e8 f0f0 f0f0 f0f0
+			f0f0 f0f0 f0f0 e8e8 d8e8 a0c0 5070 2030
+			3018 7048 c098 e8e0 f0e8 f0f0 f0f0 f0f0
+			f0f0 f0f0 f0f0 e8f0 e0e8 a8c8 5878 2038
+			3020 7048 c8a0 e8e0 e8f0 f0f0 f0f0 f0f0
+			f0f0 f0f0 f0f0 e8e8 e0e8 a8d0 5880 2038
+			3020 7050 c8a0 e8e0 f0e8 f0f0 f0f0 f0f0
+			f0f0 f0f0 f0f0 e8e8 e0e8 a8d0 5880 2038
+			3020 7048 c0a0 e8e0 f0e8 f0f0 f0f0 f0f0
+			f0f0 f0f0 f0f0 e8f0 e0e8 a8d0 5880 2038
+			3018 6848 c098 e8d8 f0e8 f0f0 f0f0 f0f0
+			f0f0 f0f0 f0f0 e8f0 e0e8 a0c8 5078 2030
+			2818 6040 b890 e8d8 f0e8 f0f0 f0f0 f0f0
+			f0f0 f0f0 f0f0 f0e8 d8e8 98c0 4870 2030
+			2818 5838 a880 e0c8 f0e8 f0f0 f0f0 f0f0
+			f0f0 f0f0 f0f0 e8e8 d0e8 90b0 4868 1830
+			2018 5030 9870 d8c0 e8e8 f0e8 f0f0 f0f0
+			f0f0 f0f0 f0f0 e8f0 c8e0 80a8 4058 1828
+			1810 4028 8860 c8a8 e8e0 f0e8 f0f0 f0f0
+			f0f0 f0f0 f0f0 e0e8 b8d0 6890 3048 1020
+			1808 3828 7050 b898 e0d0 e8e8 e8f0 f0f0
+			f0f0 e8f0 e8f0 d0e0 a0c0 5878 2840 1018
+			1000 2818 5840 a078 d0b8 e8e0 e8e8 e8e8
+			e8e8 e8e8 e0e8 c0d8 88a8 4860 2030 0810
+			0800 2010 4830 8060 b898 d8c8 e8e8 e8e8
+			e8e8 e0e8 d0e0 a8c0 6888 3850 1828 0010
+			0000 1810 3820 6048 9880 c0b0 d8d0 e0d8
+			e0e0 d0d8 b8c8 88a0 5068 2838 1018 0008
+			0000 1000 2818 4838 7860 a088 c0b0 c8c0
+			c0c8 b8c0 90a8 6878 3850 2028 0810 0000
+			0000 0800 1810 3828 5040 7868 9088 a098
+			a0a0 8898 7080 4858 2838 1020 0810 0000
+			0000 0000 1008 2818 4030 5848 6860 7870
+			7878 6870 5058 3040 2028 1010 0008 0000
+			0000 0000 0800 1810 2820 3830 4840 5050
+			5050 4848 3840 2028 1018 0810 0000 0000
+			0000 0000 0000 1008 1810 2020 3028 3830
+			3830 2830 2028 1018 0810 0000 0000 0000
+		</bitmap>
+	</tex_image>
 </tex_image_array>
 
-<tex_palette_array size="12">
-	<tex_palette index="0" name="hero04.10_pl" color_size="16">
+<tex_palette_array size="7">
+	<tex_palette index="0" name="c09_04_star_pl" color_size="8">
+		4bdf 7fff 7fff 7fff 7fff 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="1" name="hero04.10_pl" color_size="16">
 		2e47 416b 28e7 1ca5 4d47 6af5 61e8 728e
 		7779 192d 3a7a 5f5f 35bd 7fff 0000 7fff
 	</tex_palette>
-	<tex_palette index="1" name="hero04.11_pl" color_size="16">
+	<tex_palette index="2" name="hero04.7_pl" color_size="16">
 		2e47 3554 416b 28e7 1ca5 4d47 6af5 61e8
 		728e 7779 192d 3a7a 5f5f 35bd 7fff 0000
 	</tex_palette>
-	<tex_palette index="2" name="hero04.12_pl" color_size="16">
+	<tex_palette index="3" name="hero04.8_pl" color_size="16">
 		2e47 3554 416b 28e7 1ca5 4d47 6af5 61e8
 		728e 7779 192d 3a7a 5f5f 35bd 7fff 0000
 	</tex_palette>
-	<tex_palette index="3" name="hero04.1_pl" color_size="16">
+	<tex_palette index="4" name="hero04.9_pl" color_size="16">
 		2e47 3554 416b 28e7 1ca5 4d47 6af5 61e8
 		728e 7779 192d 3a7a 5f5f 35bd 7fff 0000
 	</tex_palette>
-	<tex_palette index="4" name="hero04.2_pl" color_size="16">
-		2e47 3554 416b 28e7 1ca5 4d47 6af5 61e8
-		728e 7779 192d 3a7a 5f5f 35bd 7fff 0000
+	<tex_palette index="5" name="hero_hi.1_pl" color_size="16">
+		5312 5679 5e94 4e52 4a31 6672 777a 6ed2
+		7b36 7bbc 4675 5b3d 6fbf 56be 7fff 39ce
 	</tex_palette>
-	<tex_palette index="5" name="hero04.3_pl" color_size="16">
-		2e47 3554 416b 28e7 1ca5 4d47 6af5 61e8
-		728e 7779 192d 3a7a 5f5f 35bd 7fff 0000
-	</tex_palette>
-	<tex_palette index="6" name="hero04.4_pl" color_size="16">
-		2e47 3554 416b 28e7 1ca5 4d47 6af5 61e8
-		728e 7779 192d 3a7a 5f5f 35bd 7fff 0000
-	</tex_palette>
-	<tex_palette index="7" name="hero04.5_pl" color_size="16">
-		2e47 3554 416b 28e7 1ca5 4d47 6af5 61e8
-		728e 7779 192d 3a7a 5f5f 35bd 7fff 0000
-	</tex_palette>
-	<tex_palette index="8" name="hero04.6_pl" color_size="16">
-		2e47 3554 416b 28e7 1ca5 4d47 6af5 61e8
-		728e 7779 192d 3a7a 5f5f 35bd 7fff 0000
-	</tex_palette>
-	<tex_palette index="9" name="hero04.7_pl" color_size="16">
-		2e47 3554 416b 28e7 1ca5 4d47 6af5 61e8
-		728e 7779 192d 3a7a 5f5f 35bd 7fff 0000
-	</tex_palette>
-	<tex_palette index="10" name="hero04.8_pl" color_size="16">
-		2e47 3554 416b 28e7 1ca5 4d47 6af5 61e8
-		728e 7779 192d 3a7a 5f5f 35bd 7fff 0000
-	</tex_palette>
-	<tex_palette index="11" name="hero04.9_pl" color_size="16">
-		2e47 3554 416b 28e7 1ca5 4d47 6af5 61e8
-		728e 7779 192d 3a7a 5f5f 35bd 7fff 0000
+	<tex_palette index="6" name="hika.1_pl" color_size="8">
+		7fff 7fff 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
 </tex_palette_array>
 
 <material_array size="4">
-	<material index="0" name="hidari1"
-		light0="on" light1="off" light2="off" light3="off"
-		face="front"
-		alpha="31"
-		wire_mode="off"
-		polygon_mode="modulate"
-		polygon_id="0"
-		fog_flag="off"
-		depth_test_decal="off"
-		translucent_update_depth="off"
-		render_1_pixel="off"
-		far_clipping="off"
-		diffuse="25 25 25"
-		ambient="31 31 31"
-		specular="0 0 0"
-		emission="0 0 0"
-		shininess_table_flag="off"
-		tex_image_idx="1" tex_palette_idx="0"
-		tex_tiling="repeat repeat"
-		tex_scale="1.000000 1.000000"
-		tex_rotate="0.000000"
-		tex_translate="0.000000 0.000000"
-		tex_gen_mode="none"
-	/>
-	<material index="1" name="migi1"
+	<material index="0" name="c09_04_star_3"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
 		wire_mode="off"
 		polygon_mode="modulate"
 		polygon_id="0"
-		fog_flag="on"
+		fog_flag="off"
 		depth_test_decal="off"
 		translucent_update_depth="off"
 		render_1_pixel="off"
 		far_clipping="off"
 		diffuse="25 25 25"
-		ambient="31 31 31"
+		ambient="0 0 0"
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="1" tex_palette_idx="0"
+		tex_image_idx="0" tex_palette_idx="0"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="2" name="syoumen1"
-		light0="on" light1="off" light2="off" light3="off"
+	<material index="1" name="hero04_1"
+		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
 		wire_mode="off"
 		polygon_mode="modulate"
-		polygon_id="0"
+		polygon_id="3"
 		fog_flag="off"
 		depth_test_decal="off"
 		translucent_update_depth="off"
@@ -653,20 +411,20 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="1" tex_palette_idx="0"
+		tex_image_idx="5" tex_palette_idx="5"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="3" name="usiro1"
-		light0="on" light1="off" light2="off" light3="off"
+	<material index="2" name="hero04_2"
+		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
 		wire_mode="off"
 		polygon_mode="modulate"
-		polygon_id="0"
+		polygon_id="3"
 		fog_flag="off"
 		depth_test_decal="off"
 		translucent_update_depth="off"
@@ -677,7 +435,31 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="1" tex_palette_idx="0"
+		tex_image_idx="1" tex_palette_idx="1"
+		tex_tiling="repeat repeat"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
+	/>
+	<material index="3" name="hika_1"
+		light0="off" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="31"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="3"
+		fog_flag="off"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="25 25 25"
+		ambient="31 31 31"
+		specular="0 0 0"
+		emission="0 0 0"
+		shininess_table_flag="off"
+		tex_image_idx="6" tex_palette_idx="6"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -686,38 +468,40 @@
 	/>
 </material_array>
 
-<matrix_array size="4">
+<matrix_array size="7">
 	<matrix index="0" mtx_weight="1" node_idx="1"/>
 	<matrix index="1" mtx_weight="1" node_idx="2"/>
 	<matrix index="2" mtx_weight="1" node_idx="3"/>
 	<matrix index="3" mtx_weight="1" node_idx="4"/>
+	<matrix index="4" mtx_weight="1" node_idx="5"/>
+	<matrix index="5" mtx_weight="1" node_idx="6"/>
+	<matrix index="6" mtx_weight="1" node_idx="7"/>
 </matrix_array>
 
-<polygon_array size="4">
+<polygon_array size="7">
 	<polygon index="0" name="polygon0"
 		vertex_size="4" polygon_size="1"
 		triangle_size="0" quad_size="1"
-		volume_min="-4.000000 -4.000000 0.000000"
-		volume_max="4.000000 4.000000 0.000000"
-		volume_r="5.656738"
+		volume_min="-0.002930 -0.503174 7.006592"
+		volume_max="0.997070 0.496826 7.006592"
+		volume_r="7.094971"
 		mtx_prim_size="1"
-		nrm_flag="on" clr_flag="on" tex_flag="on"
+		nrm_flag="off" clr_flag="on" tex_flag="on"
 	>
 		<mtx_prim index="0">
-			<mtx_list size="1">0</mtx_list>
+			<mtx_list size="1">3</mtx_list>
 			<primitive_array size="1">
 				<primitive index="0" type="quads" vertex_size="4">
 					<mtx idx="0"/>
-					<tex st="0.000000 32.000000"/>
+					<tex st="8.000000 32.000000"/>
 					<clr rgb="31 31 31"/>
-					<nrm xyz="0.000000 0.000000 0.998047"/>
-					<pos_s xyz="-4.000000 -4.000000 0.000000"/>
-					<tex st="32.000000 32.000000"/>
-					<pos_xy xy="4.000000 -4.000000"/>
-					<tex st="32.000000 0.000000"/>
-					<pos_xy xy="4.000000 4.000000"/>
+					<pos_xyz xyz="-0.002930 -0.503174 7.006592"/>
+					<tex st="8.000000 0.000000"/>
+					<pos_xy xy="0.997070 -0.503174"/>
 					<tex st="0.000000 0.000000"/>
-					<pos_xy xy="-4.000000 4.000000"/>
+					<pos_xy xy="0.997070 0.496826"/>
+					<tex st="0.000000 32.000000"/>
+					<pos_xy xy="-0.002930 0.496826"/>
 				</primitive>
 			</primitive_array>
 		</mtx_prim>
@@ -725,9 +509,148 @@
 	<polygon index="1" name="polygon1"
 		vertex_size="4" polygon_size="1"
 		triangle_size="0" quad_size="1"
-		volume_min="-4.000000 -4.000000 0.000000"
-		volume_max="4.000000 4.000000 0.000000"
-		volume_r="5.656738"
+		volume_min="-0.002930 -0.503174 4.491455"
+		volume_max="0.997070 0.496826 4.491455"
+		volume_r="4.628418"
+		mtx_prim_size="1"
+		nrm_flag="off" clr_flag="on" tex_flag="on"
+	>
+		<mtx_prim index="0">
+			<mtx_list size="1">4</mtx_list>
+			<primitive_array size="1">
+				<primitive index="0" type="quads" vertex_size="4">
+					<mtx idx="0"/>
+					<tex st="8.000000 32.000000"/>
+					<clr rgb="31 31 31"/>
+					<pos_xyz xyz="-0.002930 -0.503174 4.491455"/>
+					<tex st="8.000000 0.000000"/>
+					<pos_xy xy="0.997070 -0.503174"/>
+					<tex st="0.000000 0.000000"/>
+					<pos_xy xy="0.997070 0.496826"/>
+					<tex st="0.000000 32.000000"/>
+					<pos_xy xy="-0.002930 0.496826"/>
+				</primitive>
+			</primitive_array>
+		</mtx_prim>
+	</polygon>
+	<polygon index="2" name="polygon2"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="-0.002930 -0.503174 7.006592"
+		volume_max="0.997070 0.496826 7.006592"
+		volume_r="7.094971"
+		mtx_prim_size="1"
+		nrm_flag="off" clr_flag="on" tex_flag="on"
+	>
+		<mtx_prim index="0">
+			<mtx_list size="1">5</mtx_list>
+			<primitive_array size="1">
+				<primitive index="0" type="quads" vertex_size="4">
+					<mtx idx="0"/>
+					<tex st="8.000000 32.000000"/>
+					<clr rgb="31 31 31"/>
+					<pos_xyz xyz="-0.002930 -0.503174 7.006592"/>
+					<tex st="8.000000 0.000000"/>
+					<pos_xy xy="0.997070 -0.503174"/>
+					<tex st="0.000000 0.000000"/>
+					<pos_xy xy="0.997070 0.496826"/>
+					<tex st="0.000000 32.000000"/>
+					<pos_xy xy="-0.002930 0.496826"/>
+				</primitive>
+			</primitive_array>
+		</mtx_prim>
+	</polygon>
+	<polygon index="3" name="polygon3"
+		vertex_size="24" polygon_size="12"
+		triangle_size="12" quad_size="0"
+		volume_min="-1.535400 -1.535400 0.000000"
+		volume_max="1.535400 1.535400 0.000000"
+		volume_r="1.535400"
+		mtx_prim_size="1"
+		nrm_flag="off" clr_flag="on" tex_flag="on"
+	>
+		<mtx_prim index="0">
+			<mtx_list size="1">0</mtx_list>
+			<primitive_array size="6">
+				<primitive index="0" type="triangle_strip" vertex_size="5">
+					<mtx idx="0"/>
+					<tex st="31.812500 16.000000"/>
+					<clr rgb="31 31 19"/>
+					<pos_xyz xyz="1.535400 0.000000 0.000000"/>
+					<tex st="29.687500 8.125000"/>
+					<pos_xy xy="1.329590 0.767578"/>
+					<tex st="16.000000 16.000000"/>
+					<clr rgb="31 31 31"/>
+					<pos_xy xy="0.000000 0.000000"/>
+					<tex st="23.875000 2.312500"/>
+					<clr rgb="31 31 19"/>
+					<pos_xy xy="0.767578 1.329590"/>
+					<tex st="16.000000 0.187500"/>
+					<pos_xy xy="0.000000 1.535400"/>
+				</primitive>
+				<primitive index="1" type="triangle_strip" vertex_size="4">
+					<tex st="31.812500 16.000000"/>
+					<pos_xy xy="1.535400 0.000000"/>
+					<tex st="16.000000 16.000000"/>
+					<clr rgb="31 31 31"/>
+					<pos_xy xy="0.000000 0.000000"/>
+					<tex st="29.687500 23.875000"/>
+					<clr rgb="31 31 19"/>
+					<pos_xy xy="1.329590 -0.767578"/>
+					<tex st="23.875000 29.687500"/>
+					<pos_xy xy="0.767578 -1.329590"/>
+				</primitive>
+				<primitive index="2" type="triangle_strip" vertex_size="4">
+					<pos_xy xy="0.767578 -1.329590"/>
+					<tex st="16.000000 16.000000"/>
+					<clr rgb="31 31 31"/>
+					<pos_xy xy="0.000000 0.000000"/>
+					<tex st="16.000000 31.812500"/>
+					<clr rgb="31 31 19"/>
+					<pos_xy xy="0.000000 -1.535400"/>
+					<tex st="8.125000 29.687500"/>
+					<pos_xy xy="-0.767578 -1.329590"/>
+				</primitive>
+				<primitive index="3" type="triangle_strip" vertex_size="4">
+					<pos_xy xy="-0.767578 -1.329590"/>
+					<tex st="16.000000 16.000000"/>
+					<clr rgb="31 31 31"/>
+					<pos_xy xy="0.000000 0.000000"/>
+					<tex st="2.312500 23.875000"/>
+					<clr rgb="31 31 19"/>
+					<pos_xy xy="-1.329590 -0.767578"/>
+					<tex st="0.187500 16.000000"/>
+					<pos_xy xy="-1.535400 0.000000"/>
+				</primitive>
+				<primitive index="4" type="triangle_strip" vertex_size="4">
+					<pos_xy xy="-1.535400 0.000000"/>
+					<tex st="16.000000 16.000000"/>
+					<clr rgb="31 31 31"/>
+					<pos_xy xy="0.000000 0.000000"/>
+					<tex st="2.312500 8.125000"/>
+					<clr rgb="31 31 19"/>
+					<pos_xy xy="-1.329590 0.767578"/>
+					<tex st="8.125000 2.312500"/>
+					<pos_xy xy="-0.767578 1.329590"/>
+				</primitive>
+				<primitive index="5" type="triangles" vertex_size="3">
+					<tex st="16.000000 0.187500"/>
+					<pos_xy xy="0.000000 1.535400"/>
+					<tex st="8.125000 2.312500"/>
+					<pos_xy xy="-0.767578 1.329590"/>
+					<tex st="16.000000 16.000000"/>
+					<clr rgb="31 31 31"/>
+					<pos_xy xy="0.000000 0.000000"/>
+				</primitive>
+			</primitive_array>
+		</mtx_prim>
+	</polygon>
+	<polygon index="4" name="polygon4"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="-1.000000 -1.000000 0.000000"
+		volume_max="1.000000 1.000000 0.000000"
+		volume_r="1.414307"
 		mtx_prim_size="1"
 		nrm_flag="off" clr_flag="on" tex_flag="on"
 	>
@@ -738,111 +661,109 @@
 					<mtx idx="0"/>
 					<tex st="0.000000 32.000000"/>
 					<clr rgb="31 31 31"/>
-					<pos_s xyz="-4.000000 -4.000000 0.000000"/>
+					<pos_s xyz="-1.000000 -1.000000 0.000000"/>
 					<tex st="32.000000 32.000000"/>
-					<pos_xy xy="4.000000 -4.000000"/>
+					<pos_xy xy="1.000000 -1.000000"/>
 					<tex st="32.000000 0.000000"/>
-					<pos_xy xy="4.000000 4.000000"/>
+					<pos_xy xy="1.000000 1.000000"/>
 					<tex st="0.000000 0.000000"/>
-					<pos_xy xy="-4.000000 4.000000"/>
+					<pos_xy xy="-1.000000 1.000000"/>
 				</primitive>
 			</primitive_array>
 		</mtx_prim>
 	</polygon>
-	<polygon index="2" name="polygon2"
+	<polygon index="5" name="polygon5"
 		vertex_size="4" polygon_size="1"
 		triangle_size="0" quad_size="1"
-		volume_min="-4.000000 -4.000000 0.000000"
-		volume_max="4.000000 4.000000 0.000000"
-		volume_r="5.656738"
+		volume_min="-1.000000 -1.000000 0.000000"
+		volume_max="1.000000 1.000000 0.000000"
+		volume_r="1.414307"
 		mtx_prim_size="1"
-		nrm_flag="on" clr_flag="on" tex_flag="on"
+		nrm_flag="off" clr_flag="on" tex_flag="on"
+	>
+		<mtx_prim index="0">
+			<mtx_list size="1">6</mtx_list>
+			<primitive_array size="1">
+				<primitive index="0" type="quads" vertex_size="4">
+					<mtx idx="0"/>
+					<tex st="0.000000 32.000000"/>
+					<clr rgb="31 31 31"/>
+					<pos_s xyz="-1.000000 -1.000000 0.000000"/>
+					<tex st="32.000000 32.000000"/>
+					<pos_xy xy="1.000000 -1.000000"/>
+					<tex st="32.000000 0.000000"/>
+					<pos_xy xy="1.000000 1.000000"/>
+					<tex st="0.000000 0.000000"/>
+					<pos_xy xy="-1.000000 1.000000"/>
+				</primitive>
+			</primitive_array>
+		</mtx_prim>
+	</polygon>
+	<polygon index="6" name="polygon6"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="-0.002930 -0.503174 7.006592"
+		volume_max="0.997070 0.496826 7.006592"
+		volume_r="7.094971"
+		mtx_prim_size="1"
+		nrm_flag="off" clr_flag="on" tex_flag="on"
 	>
 		<mtx_prim index="0">
 			<mtx_list size="1">2</mtx_list>
 			<primitive_array size="1">
 				<primitive index="0" type="quads" vertex_size="4">
 					<mtx idx="0"/>
-					<tex st="0.000000 32.000000"/>
+					<tex st="8.000000 32.000000"/>
 					<clr rgb="31 31 31"/>
-					<nrm xyz="0.000000 0.000000 0.998047"/>
-					<pos_s xyz="-4.000000 -4.000000 0.000000"/>
-					<tex st="32.000000 32.000000"/>
-					<pos_xy xy="4.000000 -4.000000"/>
-					<tex st="32.000000 0.000000"/>
-					<pos_xy xy="4.000000 4.000000"/>
+					<pos_xyz xyz="-0.002930 -0.503174 7.006592"/>
+					<tex st="8.000000 0.000000"/>
+					<pos_xy xy="0.997070 -0.503174"/>
 					<tex st="0.000000 0.000000"/>
-					<pos_xy xy="-4.000000 4.000000"/>
-				</primitive>
-			</primitive_array>
-		</mtx_prim>
-	</polygon>
-	<polygon index="3" name="polygon3"
-		vertex_size="4" polygon_size="1"
-		triangle_size="0" quad_size="1"
-		volume_min="-4.000000 -4.000000 0.000000"
-		volume_max="4.000000 4.000000 0.000000"
-		volume_r="5.656738"
-		mtx_prim_size="1"
-		nrm_flag="on" clr_flag="on" tex_flag="on"
-	>
-		<mtx_prim index="0">
-			<mtx_list size="1">3</mtx_list>
-			<primitive_array size="1">
-				<primitive index="0" type="quads" vertex_size="4">
-					<mtx idx="0"/>
+					<pos_xy xy="0.997070 0.496826"/>
 					<tex st="0.000000 32.000000"/>
-					<clr rgb="31 31 31"/>
-					<nrm xyz="0.000000 0.000000 0.998047"/>
-					<pos_s xyz="-4.000000 -4.000000 0.000000"/>
-					<tex st="32.000000 32.000000"/>
-					<pos_xy xy="4.000000 -4.000000"/>
-					<tex st="32.000000 0.000000"/>
-					<pos_xy xy="4.000000 4.000000"/>
-					<tex st="0.000000 0.000000"/>
-					<pos_xy xy="-4.000000 4.000000"/>
+					<pos_xy xy="-0.002930 0.496826"/>
 				</primitive>
 			</primitive_array>
 		</mtx_prim>
 	</polygon>
 </polygon_array>
 
-<node_array size="5">
-	<node index="0" name="group3" kind="null"
+<node_array size="8">
+	<node index="0" name="group10" kind="null"
 		parent="-1"
 		child="1"
 		brother_next="-1"
 		brother_prev="-1"
 		draw_mtx="off"
-		billboard="on"
+		billboard="off"
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="-2.998291 27.544922 70.748779"
+		translate="0.000000 0.000000 0.000000"
 		visibility="on"
 		display_size="0"
 	>
 	</node>
-	<node index="1" name="hidari" kind="mesh"
+	<node index="1" name="hikari2" kind="mesh"
 		parent="0"
 		child="-1"
 		brother_next="2"
 		brother_prev="-1"
 		draw_mtx="on"
-		billboard="on"
-		scale="1.000000 1.000000 1.000000"
+		billboard="off"
+		scale="0.000000 0.000000 0.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="0.002197 0.002197 0.000977"
+		translate="-8.533447 15.219482 132.813232"
 		visibility="on"
 		display_size="1"
-		vertex_size="4" polygon_size="1"
-		triangle_size="0" quad_size="1"
-		volume_min="-4.000000 -4.000000 0.000000"
-		volume_max="4.000000 4.000000 0.000000"
-		volume_r="5.656738"
+		vertex_size="24" polygon_size="12"
+		triangle_size="12" quad_size="0"
+		volume_min="-1.535400 -1.535400 0.000000"
+		volume_max="1.535400 1.535400 0.000000"
+		volume_r="1.535400"
 	>
-		<display index="0" material="0" polygon="0" priority="0"/>
+		<display index="0" material="3" polygon="3" priority="0"/>
 	</node>
-	<node index="2" name="migi" kind="mesh"
+	<node index="2" name="kaidan_mae" kind="mesh"
 		parent="0"
 		child="-1"
 		brother_next="3"
@@ -851,61 +772,121 @@
 		billboard="on"
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="0.002197 0.002197 0.000977"
+		translate="-8.612305 16.570313 135.459473"
 		visibility="on"
 		display_size="1"
 		vertex_size="4" polygon_size="1"
 		triangle_size="0" quad_size="1"
-		volume_min="-4.000000 -4.000000 0.000000"
-		volume_max="4.000000 4.000000 0.000000"
-		volume_r="5.656738"
+		volume_min="-1.000000 -1.000000 0.000000"
+		volume_max="1.000000 1.000000 0.000000"
+		volume_r="1.414307"
 	>
-		<display index="0" material="1" polygon="1" priority="0"/>
+		<display index="0" material="2" polygon="4" priority="0"/>
 	</node>
-	<node index="3" name="syoumen" kind="mesh"
+	<node index="3" name="pPlane68" kind="mesh"
 		parent="0"
 		child="-1"
 		brother_next="4"
 		brother_prev="2"
 		draw_mtx="on"
-		billboard="on"
-		scale="1.000000 1.000000 1.000000"
+		billboard="off"
+		scale="0.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="0.002197 0.002197 0.000977"
+		translate="242.340088 434.413574 -48.000000"
 		visibility="on"
 		display_size="1"
 		vertex_size="4" polygon_size="1"
 		triangle_size="0" quad_size="1"
-		volume_min="-4.000000 -4.000000 0.000000"
-		volume_max="4.000000 4.000000 0.000000"
-		volume_r="5.656738"
+		volume_min="-0.002930 -0.503174 7.006592"
+		volume_max="0.997070 0.496826 7.006592"
+		volume_r="7.094971"
 	>
-		<display index="0" material="2" polygon="2" priority="0"/>
+		<display index="0" material="0" polygon="6" priority="0"/>
 	</node>
-	<node index="4" name="usiro" kind="mesh"
+	<node index="4" name="pPlane68_2" kind="mesh"
+		parent="0"
+		child="-1"
+		brother_next="5"
+		brother_prev="3"
+		draw_mtx="on"
+		billboard="off"
+		scale="0.000000 1.000000 1.000000"
+		rotate="0.000000 0.000000 0.000000"
+		translate="242.340088 320.180908 109.070068"
+		visibility="on"
+		display_size="1"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="-0.002930 -0.503174 7.006592"
+		volume_max="0.997070 0.496826 7.006592"
+		volume_r="7.094971"
+	>
+		<display index="0" material="0" polygon="0" priority="0"/>
+	</node>
+	<node index="5" name="pPlane68_3" kind="mesh"
+		parent="0"
+		child="-1"
+		brother_next="6"
+		brother_prev="4"
+		draw_mtx="on"
+		billboard="off"
+		scale="0.000000 1.000000 1.000000"
+		rotate="0.000000 0.000000 0.000000"
+		translate="170.340088 378.413574 -4.333740"
+		visibility="on"
+		display_size="1"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="-0.002930 -0.503174 4.491455"
+		volume_max="0.997070 0.496826 4.491455"
+		volume_r="4.628418"
+	>
+		<display index="0" material="0" polygon="1" priority="0"/>
+	</node>
+	<node index="6" name="pPlane68_5" kind="mesh"
+		parent="0"
+		child="-1"
+		brother_next="7"
+		brother_prev="5"
+		draw_mtx="on"
+		billboard="off"
+		scale="0.112549 1.000000 1.000000"
+		rotate="0.000000 0.000000 45.000000"
+		translate="242.340088 320.180908 -39.650635"
+		visibility="on"
+		display_size="1"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="-0.002930 -0.503174 7.006592"
+		volume_max="0.997070 0.496826 7.006592"
+		volume_r="7.094971"
+	>
+		<display index="0" material="0" polygon="2" priority="0"/>
+	</node>
+	<node index="7" name="syoumen" kind="mesh"
 		parent="0"
 		child="-1"
 		brother_next="-1"
-		brother_prev="3"
+		brother_prev="6"
 		draw_mtx="on"
 		billboard="on"
-		scale="1.000000 1.000000 1.000000"
+		scale="0.000000 0.000000 0.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="0.000000 0.000000 0.000000"
+		translate="-8.612305 16.570313 135.459473"
 		visibility="on"
 		display_size="1"
 		vertex_size="4" polygon_size="1"
 		triangle_size="0" quad_size="1"
-		volume_min="-4.000000 -4.000000 0.000000"
-		volume_max="4.000000 4.000000 0.000000"
-		volume_r="5.656738"
+		volume_min="-1.000000 -1.000000 0.000000"
+		volume_max="1.000000 1.000000 0.000000"
+		volume_r="1.414307"
 	>
-		<display index="0" material="3" polygon="3" priority="0"/>
+		<display index="0" material="1" polygon="5" priority="0"/>
 	</node>
 </node_array>
 
-<output_info vertex_size="16" polygon_size="4"
-	triangle_size="0" quad_size="4"/>
+<output_info vertex_size="48" polygon_size="18"
+	triangle_size="12" quad_size="6"/>
 
 </body>
 
