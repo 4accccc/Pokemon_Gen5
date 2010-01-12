@@ -70,7 +70,7 @@ enum
 #define ITEMWIN_FRAME (GFL_BG_FRAME1_S)
 #define ITEMREPORT_FRAME (GFL_BG_FRAME2_S)
 
-#define _UP_ITEMNAME_INITX (5)
+#define _UP_ITEMNAME_INITX (8)
 #define _UP_ITEMNAME_INITY (5)
 #define _UP_ITEMNAME_SIZEX (14)
 #define _UP_ITEMNAME_SIZEY (3)
@@ -675,14 +675,27 @@ void ITEMDISP_upMessageRewrite(FIELD_ITEMMENU_WORK* pWork)
   if(wazano == 0)
   {
     // 一般
+    // アイテム名
     GFL_MSG_GetString(  pWork->MsgManager, MSG_ITEM_STR001, pWork->pStrBuf );
     WORDSET_RegisterItemName(pWork->WordSet, 0, item->id);
     WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
     PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->winItemName), 16, _UP_ITEMNAME_DOTOFS_Y, pWork->pExpStrBuf, pWork->fontHandle);
+
+    //「×」
+    GFL_MSG_GetString(  pWork->MsgManager, MSG_ITEM_STR002, pWork->pStrBuf );
+
+    WORDSET_RegisterNumber(pWork->WordSet, 0, item->no,
+                           3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
+    WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
+    PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->winItemNum), 0, _UP_ITEMNUM_DOTOFS_Y, pWork->pExpStrBuf, pWork->fontHandle);
+
+    // アイテムの個数
+    GFL_MSG_GetString(  pWork->MsgManagerItemInfo, item->id, pWork->pStrBuf );
+    PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->winItemReport), 0, 0, pWork->pStrBuf, pWork->fontHandle);
   }
   else
   {
-    // わざマシン
+    // わざマシン名
     GFL_MSG_GetString(  pWork->MsgManager, msg_bag_086, pWork->pStrBuf );
     WORDSET_RegisterNumber(pWork->WordSet, 0, ITEM_GetWazaMashineNo(item->id)+1,
                            2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
@@ -691,21 +704,12 @@ void ITEMDISP_upMessageRewrite(FIELD_ITEMMENU_WORK* pWork)
     PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->winItemName), 0, _UP_ITEMNAME_DOTOFS_Y, pWork->pExpStrBuf, pWork->fontHandle);
   }
 
-  GFL_MSG_GetString(  pWork->MsgManager, MSG_ITEM_STR002, pWork->pStrBuf );
-
-  WORDSET_RegisterNumber(pWork->WordSet, 0, item->no,
-                         3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
-  WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
-  PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->winItemNum), 0, _UP_ITEMNUM_DOTOFS_Y, pWork->pExpStrBuf, pWork->fontHandle);
-
-  GFL_MSG_GetString(  pWork->MsgManagerItemInfo, item->id, pWork->pStrBuf );
-  PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->winItemReport), 0, 0, pWork->pStrBuf, pWork->fontHandle);
-
   // キャラ転送
   GFL_BMPWIN_TransVramCharacter(pWork->winItemName);
   GFL_BMPWIN_TransVramCharacter(pWork->winItemNum);
   GFL_BMPWIN_TransVramCharacter(pWork->winItemReport);
 
+  // アイテムアイコン アニメーション
   _itemiconAnim(pWork, item->id);
 
   GFL_BG_LoadScreenV_Req( ITEMREPORT_FRAME );
