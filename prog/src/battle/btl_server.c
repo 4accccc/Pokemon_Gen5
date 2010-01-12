@@ -455,7 +455,7 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
   switch( *seq ){
   case 0:
     if( BTL_SVFLOW_MakeShooterChargeCommand(server->flowWork) ){
-      BTL_Printf("シューターチャージコマンド発行\n");
+      BTL_N_Printf( DBGSTR_SERVER_SendShooterChargeCmd );
       SetAdapterCmdEx( server, BTL_ACMD_SERVER_CMD, server->que->buffer, server->que->writePtr );
       (*seq)++;
     }else{
@@ -466,14 +466,14 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
   case 1:
     if( WaitAdapterCmd(server) )
     {
-      BTL_Printf("全クライアントでシューターチャージコマンド処理終了\n");
+      BTL_Printf( DBGSTR_SERVER_ShooterChargeCmdDoneAll );
       ResetAdapterCmd( server );
       (*seq)++;
     }
     break;
 
   case 2:
-    BTL_Printf("アクション選択コマンド発行\n");
+    BTL_N_Printf( DBGSTR_SERVER_SendActionSelectCmd );
     SetAdapterCmd( server, BTL_ACMD_SELECT_ACTION );
     (*seq)++;
     break;
@@ -481,10 +481,10 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
   case 3:
     if( WaitAdapterCmd(server) )
     {
-      BTL_Printf("アクション受け付け完了\n");
+      BTL_N_Printf( DBGSTR_SERVER_ActionSelectDoneAll );
       ResetAdapterCmd( server );
       server->flowResult = BTL_SVFLOW_Start( server->flowWork );
-      BTL_Printf("flow Result=%d\n", server->flowResult);
+      BTL_N_Printf( DBGSTR_SERVER_FlowResult, server->flowResult);
 
       if( SendActionRecord(server) ){
         (*seq)++;
@@ -545,7 +545,7 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
           return FALSE;
         }
       case SVFLOW_RESULT_BTL_SHOWDOWN:
-        BTL_Printf("決着！\n");
+        OS_TPrintf("決着！\n");
         setMainProc( server, ServerMain_ExitBattle );
         return FALSE;
       default:
@@ -635,7 +635,7 @@ static BOOL ServerMain_SelectPokemonIn( BTL_SERVER* server, int* seq )
       ResetAdapterCmd( server );
       SCQUE_Init( server->que );
       server->flowResult = BTL_SVFLOW_StartAfterPokeIn( server->flowWork );
-      BTL_Printf("サーバー処理結果=%d\n", server->flowResult );
+      BTL_N_Printf( DBGSTR_SERVER_FlowResult, server->flowResult );
 
       if( SendActionRecord(server) ){
         (*seq)++;

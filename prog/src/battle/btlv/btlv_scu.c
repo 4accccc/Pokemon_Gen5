@@ -1748,7 +1748,7 @@ void BTLV_SCU_StartMsg( BTLV_SCU* wk, const STRBUF* str, u16 wait )
   GFL_FONTSYS_SetColor( COLIDX_MSGWIN_LETTER, COLIDX_MSGWIN_SHADOW, COLIDX_MSGWIN_CLEAR );
 
   wk->printStream = PRINTSYS_PrintStream(
-        wk->win, 0, 0, str, wk->defaultFont, MSGSPEED_GetWait(), wk->tcbl, BTLV_TASKPRI_MAIN_WINDOW,
+        wk->win, 0, 0, str, wk->defaultFont, BTL_MAIN_GetPrintWait(wk->mainModule), wk->tcbl, BTLV_TASKPRI_MAIN_WINDOW,
         wk->heapID, COLIDX_MSGWIN_CLEAR
   );
   PRINTSYS_PrintStreamStop( wk->printStream );
@@ -2535,12 +2535,12 @@ BOOL BTLV_SCU_TokWin_DispWait( BTLV_SCU* wk, BtlPokePos pos )
 //=============================================================================================
 void BTLV_SCU_TokWin_HideStart( BTLV_SCU* wk, BtlPokePos pos )
 {
-  BtlSide side = BTL_MAINUTIL_PosToSide( pos );
+  BtlSide side = PokePosToTokwinSide( wk->mainModule, pos );
   tokwin_hide_first( &wk->tokWin[side] );
 }
 BOOL BTLV_SCU_TokWin_HideWait( BTLV_SCU* wk, BtlPokePos pos )
 {
-  BtlSide side = BTL_MAINUTIL_PosToSide( pos );
+  BtlSide side = PokePosToTokwinSide( wk->mainModule, pos );
   return tokwin_hide_progress( &wk->tokWin[side] );
 }
 //=============================================================================================

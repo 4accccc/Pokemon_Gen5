@@ -1352,7 +1352,7 @@ static BOOL setupseq_comm_notify_player_data( BTL_MAIN_MODULE* wk, int* seq )
 static BOOL setupseq_comm_create_server_client_single( BTL_MAIN_MODULE* wk, int* seq )
 {
   const BATTLE_SETUP_PARAM* sp = wk->setupParam;
-  u8 netID = sp->commPos;
+  u8 clientID = sp->commPos;
   u8 bagMode = checkBagMode( sp );
 
   // 自分がサーバ
@@ -1360,15 +1360,15 @@ static BOOL setupseq_comm_create_server_client_single( BTL_MAIN_MODULE* wk, int*
   {
     wk->server = BTL_SERVER_Create( wk, &wk->randomContext, &wk->pokeconForServer, bagMode, wk->heapID );
 
-    wk->client[netID] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, sp->commMode, sp->netHandle,
-        netID, 1, BTL_CLIENT_TYPE_UI, bagMode, wk->heapID );
-    BTL_SERVER_AttachLocalClient( wk->server, BTL_CLIENT_GetAdapter(wk->client[netID]), netID, 1 );
-    BTL_SERVER_ReceptionNetClient( wk->server, sp->commMode, sp->netHandle, !netID, 1 );
+    wk->client[clientID] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, sp->commMode, sp->netHandle,
+        clientID, 1, BTL_CLIENT_TYPE_UI, bagMode, wk->heapID );
+    BTL_SERVER_AttachLocalClient( wk->server, BTL_CLIENT_GetAdapter(wk->client[clientID]), clientID, 1 );
+    BTL_SERVER_ReceptionNetClient( wk->server, sp->commMode, sp->netHandle, !clientID, 1 );
   }
   // 自分がサーバではない
   else
   {
-    wk->client[ netID ] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, sp->commMode, sp->netHandle, netID, 1,
+    wk->client[ clientID ] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, sp->commMode, sp->netHandle, clientID, 1,
     BTL_CLIENT_TYPE_UI, bagMode, wk->heapID  );
   }
 
@@ -2033,10 +2033,13 @@ static inline BtlPokePos getTripleFrontPos( BtlPokePos pos )
 //=============================================================================================
 BOOL BTL_MAIN_IsExistClient( const BTL_MAIN_MODULE* wk, u8 clientID )
 {
-  if( clientID < BTL_CLIENT_MAX ){
-    return ( wk->client[ clientID ] != NULL );
+  int i;
+  for(i=0; i<BTL_CLIENT_MAX; ++i)
+  {
+    if( wk->posCoverClientID[i] == clientID ){
+      return TRUE;
+    }
   }
-  GF_ASSERT(0);
   return FALSE;
 }
 //=============================================================================================

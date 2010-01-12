@@ -3311,8 +3311,19 @@ static BOOL scProc_TOKWIN_In( BTL_CLIENT* wk, int* seq, const int* args )
 static BOOL scProc_TOKWIN_Out( BTL_CLIENT* wk, int* seq, const int* args )
 {
   BtlPokePos pos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, args[0] );
-  BTLV_QuitTokWin( wk->viewCore, pos );
-  return TRUE;
+  switch( *seq ){
+  case 0:
+    OS_TPrintf("   [CL] TokWinOut ... pokeID=%d, pos=%d\n", args[0], pos );
+    BTLV_QuitTokWin( wk->viewCore, pos );
+    (*seq)++;
+    break;
+  case 1:
+    if( BTLV_QuitTokWinWait(wk->viewCore, pos) ){
+      return TRUE;
+    }
+    break;
+  }
+  return FALSE;
 }
 
 static BOOL scProc_OP_HpMinus( BTL_CLIENT* wk, int* seq, const int* args )

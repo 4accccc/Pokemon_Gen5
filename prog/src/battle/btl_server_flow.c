@@ -847,11 +847,11 @@ static BOOL scproc_CheckShowdown( BTL_SVFLOW_WORK* wk )
       u8 side = BTL_MAIN_GetClientSide( wk->mainModule, i );
       if( BTL_PARTY_GetAliveMemberCount(party) )
       {
-        BTL_Printf("クライアント_%d (SIDE:%d) のポケはまだ何体か生きている\n", i, side);
+        BTL_N_Printf( DBGSTR_SVFL_ClientPokeStillAlive, i, side);
         pokeExist[ side ] = TRUE;
       }
       else{
-        BTL_Printf("クライアント_%d (SIDE:%d) のポケは全滅した\n", i, side);
+        BTL_N_Printf( DBGSTR_SVFL_ClientPokeDeadAll, i, side);
       }
     }
   }
