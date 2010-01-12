@@ -252,7 +252,7 @@ EVENT_START	ev_pos_c09r0201_enter_01
 	DEFINE_LOCAL	BM_ANIME_ID3
 	
 	//扉のアニメコントローラを作成
-	_BMODEL_ANIME_CREATE( BM_ANIME_ID1, SCR_BMID_NULL, 24, 16 )
+	_BMODEL_ANIME_CREATE( BM_ANIME_ID1, SCR_BMID_NULL, 8, 16 )
 	
 	//ドアを地面下に下げておく ※アニメを再生させすぐに停止させることで降りた状態を表現しています）
 	_BMODEL_ANIME_SET( BM_ANIME_ID1, SCR_BMANM_DOOR_OPEN )
