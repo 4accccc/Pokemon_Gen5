@@ -119,7 +119,7 @@ ev_leader4_btl:
 	_BALLOONWIN_CLOSE()
 
 	//【仮】わざマシン入手処理　入手わざマシンが未定
-	_ITEM_EVENT_KEYWAIT( ITEM_WAZAMASIN01, 1 )
+	_ITEM_EVENT_KEYWAIT( ITEM_WAZAMASIN72, 1 )
 
 	//リーダー：わざマシンの解説
 	_BALLOONWIN_TALKOBJ_MSG( msg_c04gym0101_leader_05 )

@@ -88,7 +88,6 @@ select_fossil:
   DEFINE_LOCAL LIST_ITEM_NO
   //「どの化石を復元する？」
   _BALLOONWIN_TALKOBJ_MSG( msg_kaseki_03 )
-  _BALLOONWIN_CLOSE()
 
   $FOSSIL_ITEM_NO = 0
 
@@ -156,6 +155,7 @@ select_fossil:
   _BMPMENU_MAKE_LIST( msg_kaseki_select_10, 0 )
 
   _BMPMENU_START()
+  _BALLOONWIN_CLOSE()
 
   //キャンセルチェック
   IF $LIST_SEL_RET != EV_WIN_B_CANCEL THEN
@@ -223,9 +223,14 @@ get_poke:
     _MONS_NAME(1, RECOVER_POKE)
     //システム：「プレーヤーはポケモンを手に入れた」
     _SYSWIN_MSG_DOWN( msg_kaseki_08 )
+    
+    //ポケモン入手ＭＥを再生 [091228斉藤マ]
+    _ME_PLAY( SEQ_ME_POKEGET )
+    _ME_WAIT()
+    
     _SYSWIN_CLOSE()
     //手持ちに追加(Lv25)
-    _ADD_POKEMON_TO_PARTY( SCWK_ANSWER, RECOVER_POKE, 0, 0, 25, 0 )
+    _ADD_POKEMON_TO_PARTY( SCWK_ANSWER, RECOVER_POKE, 0, TOKUSYU_NULL, 25, 0 )
     //ポケモン名をタグ0にセット
     _MONS_NAME(0, RECOVER_POKE)
     //システム：「ニックネームつける？」
@@ -355,7 +360,8 @@ _RET
 //化石復元受付:機械を触りに行く                       
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_fossil_go
-	_ANIME_DATA	AC_WALK_R_8F,5
+	_ANIME_DATA	AC_WALK_R_8F,2
+	_ANIME_DATA	AC_VANISH_ON,1
 	_ANIME_DATA	ACMD_END,0
 //----------------------------
 
@@ -363,6 +369,8 @@ _ANIME_LABEL	anm_fossil_go
 //化石復元受付:元の位置に戻ってくる                     
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_fossil_back
-	_ANIME_DATA	AC_WALK_L_8F,5
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_VANISH_OFF,1
+	_ANIME_DATA	AC_WALK_L_8F,2
 	_ANIME_DATA	ACMD_END,0
 //----------------------------

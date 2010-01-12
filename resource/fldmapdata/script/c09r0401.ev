@@ -244,31 +244,39 @@ EVENT_END
 EVENT_START	ev_pos_c09r0401_enter_01
 
 	//ローカル定義
-	DEFINE_LOCAL	BM_ANIME_ID
+	DEFINE_LOCAL	BM_ANIME_ID1
+	DEFINE_LOCAL	BM_ANIME_ID2
 
-	//ドアアニメコントローラの作成
-	_BMODEL_ANIME_CREATE( BM_ANIME_ID, SCR_BMID_NULL, 15, 15 )
+	//透明になる階段のアニメコントローラの作成
+	_BMODEL_ANIME_CREATE( BM_ANIME_ID1, SCR_BMID_NULL, 16, 24 )
 	
-	//ドアを地面下に下げておく ※アニメを再生させすぐに停止させることで降りた状態を表現しています）
-	_BMODEL_ANIME_SET( BM_ANIME_ID, SCR_BMANM_DOOR_OPEN )
-	_BMODEL_ANIME_STOP( BM_ANIME_ID )
+	//階段を表示しておく
+	_BMODEL_ANIME_SET( BM_ANIME_ID1, SCR_BMANM_DOOR_OPEN )
+	_BMODEL_ANIME_STOP( BM_ANIME_ID1 )	//アニメの最初が表示状態なのですぐに停止させる
 	
 	//主人公：螺旋を登る
 	_FOURKINGS_WALKEVENT( 4 )
 	
-	//主人公：上を向く
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_ply_move_01 )
-	_OBJ_ANIME_WAIT()
+	//登りきったところでウェイト
+	_TIME_WAIT( 30 )
+	
+	//階段が消える 徐々に透明になる
+	_BMODEL_ANIME_SET( BM_ANIME_ID1, SCR_BMANM_DOOR_OPEN )
+	_BMODEL_ANIME_WAIT( BM_ANIME_ID1 )
+	
+	_BMODEL_ANIME_DELETE( BM_ANIME_ID1 )
 	
 	//主人公：上へ進む
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_ply_move_01 )
 	_OBJ_ANIME_WAIT()
 	
-	//ドアが地面下から出てくる
-	_BMODEL_ANIME_SET( BM_ANIME_ID, SCR_BMANM_DOOR_OPEN )
-	_BMODEL_ANIME_WAIT( BM_ANIME_ID )
+	//天蓋が開く
+	//ドアアニメコントローラの作成
+	_BMODEL_ANIME_CREATE( BM_ANIME_ID2, SCR_BMID_NULL, 24, 16 )
+	_BMODEL_ANIME_SET( BM_ANIME_ID2, SCR_BMANM_DOOR_OPEN )
+	_BMODEL_ANIME_WAIT( BM_ANIME_ID2 )
+	_BMODEL_ANIME_DELETE( BM_ANIME_ID2 )
 	
-	_BMODEL_ANIME_DELETE( BM_ANIME_ID )
 	
 	//頂上に移動した
 	$LOCALWORK0 = 1
@@ -277,17 +285,10 @@ EVENT_END
 
 
 //--------------------------------------------------------------------
-//主人公：上を向く
-//--------------------------------------------------------------------
-_ANIME_LABEL	anm_stay_walk_u
-	_ANIME_DATA	AC_STAY_WALK_U_8F,1
-	_ANIME_DATA	ACMD_END,0
-
-
-//--------------------------------------------------------------------
 //主人公：上へ進む
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_ply_move_01
+	_ANIME_DATA	AC_WALK_R_8F,1
 	_ANIME_DATA	AC_WALK_U_8F,2
 	_ANIME_DATA	ACMD_END,0
 
