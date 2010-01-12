@@ -9,20 +9,21 @@
 #include <gflib.h>
 #include <procsys.h>
 #include <tcbl.h>
-#include "system\main.h"
-#include "print\printsys.h"
-#include "print\gf_font.h"
+#include "system/main.h"
+#include "print/printsys.h"
+#include "print/gf_font.h"
 #include "arc_def.h"
 #include "message.naix"
-#include "msg\msg_title.h"
+#include "msg/msg_title.h"
 #include "test/performance.h"
-#include "test/testmode.h"
 #include "font/font.naix"
+#include "system/gfl_use.h"
+
+#include "title/title.h"
+
 #include "title.naix"
 #include "title1.naix"
 #include "title/title.h"
-#include "title/startmenu.h"
-#include "system\gfl_use.h"
 
 #ifdef PM_DEBUG
 #include "corporate.h"
@@ -94,7 +95,7 @@ typedef struct{
 typedef struct {
 	u16						seq;
 	HEAPID				heapID;
-	int						mode;			///<次のメニュー画面へ引き渡すモード
+//	int						mode;			///<次のメニュー画面へ引き渡すモード
 	
 	SYS_CONTROL		CSys;
 	G2D_CONTROL		CG2d;
@@ -182,9 +183,9 @@ GFL_PROC_RESULT TitleProcInit( GFL_PROC * proc, int * seq, void * pwk, void * my
 
 #ifdef PM_DEBUG	// デバッグ用スキップ処理
 	if( pwk != NULL ){
-		u32 * corp = pwk;
-		if( *corp == CORPORATE_RET_DEBUG ){
-			tw->mode = PAD_BUTTON_SELECT;
+		TITLE_PARAM * prm = pwk;
+		if( prm->skipMode == CORPORATE_RET_DEBUG ){
+			prm->endMode = TITLE_END_DEBUG_CALL;
 			tw->seq = SEQ_SKIP;
 		}
 	}
@@ -202,6 +203,7 @@ GFL_PROC_RESULT TitleProcInit( GFL_PROC * proc, int * seq, void * pwk, void * my
 GFL_PROC_RESULT TitleProcMain( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
 	TITLE_WORK* tw = mywk;
+	TITLE_PARAM * prm = pwk;
 
 	switch(tw->seq){
 	case SEQ_INIT:
@@ -233,25 +235,27 @@ GFL_PROC_RESULT TitleProcMain( GFL_PROC * proc, int * seq, void * pwk, void * my
 		break;
 
 	case SEQ_MAIN:
-		{
-			// 入力判別処理
-			int trg = GFL_UI_KEY_GetTrg() & NEXT_PROC_MASK;
-				if(trg){
-				tw->mode = trg;	// ゲームモード選択/デバッグモード(SELECT)に進む
-				tw->seq = SEQ_NEXT;
-			}
-		}
-		if( GFL_UI_TP_GetTrg() == TRUE ){
-			tw->mode = 1;				// ゲームモード選択に進む(== push A button)
+		MainFunc(tw);
+#ifdef	PM_DEBUG
+		// デバッグメニューへ
+		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT ){
+			prm->endMode = TITLE_END_DEBUG_CALL;
 			tw->seq = SEQ_NEXT;
+			break;
+		}
+#endif	// PM_DEBUG
+		// ゲーム開始
+		if( GFL_UI_TP_GetTrg() == TRUE || ( GFL_UI_KEY_GetTrg() & NEXT_PROC_MASK ) ){
+			prm->endMode = TITLE_END_SELECT;
+			tw->seq = SEQ_NEXT;
+			break;
 		}
 		// 表示時間判別処理
 		tw->totalWait++;
 		if(tw->totalWait > TOTAL_WAIT){
-			tw->mode = 0;					// Corporate表記に戻る
+			prm->endMode = TITLE_END_TIMEOUT;
 			tw->seq = SEQ_NEXT;
 		}
-		MainFunc(tw);
 		break;
 
 	case SEQ_NEXT:
@@ -290,23 +294,9 @@ GFL_PROC_RESULT TitleProcMain( GFL_PROC * proc, int * seq, void * pwk, void * my
 //--------------------------------------------------------------------------
 GFL_PROC_RESULT TitleProcEnd( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
-	TITLE_WORK* tw = mywk;
-	int i, mode;
-	
-	mode = tw->mode;
-	
 	GFL_PROC_FreeWork(proc);
 	GFL_HEAP_DeleteHeap(HEAPID_TITLE_DEMO);
-	
-	if( !mode ){
-		GFL_PROC_SysSetNextProc(NO_OVERLAY_ID, &TitleControlProcData, NULL);
-#ifdef PM_DEBUG	// デバッグ用スキップ処理
-	} else if( mode & PAD_BUTTON_SELECT ){
-		GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(testmode), &TestMainProcData, NULL );
-#endif
-	} else {
-		GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(title), &StartMenuProcData, NULL);
-	}
+
 	return GFL_PROC_RES_FINISH;
 }
 
