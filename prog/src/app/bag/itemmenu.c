@@ -2829,7 +2829,7 @@ static void _VBlank( GFL_TCB *tcb, void *work )
 
 //-----------------------------------------------------------------------------
 /**
- *  @brief
+ *  @brief  アイテム選択メッセージ
  *
  *  @param  pWork
  *
@@ -2838,11 +2838,6 @@ static void _VBlank( GFL_TCB *tcb, void *work )
 //-----------------------------------------------------------------------------
 static void _startState(FIELD_ITEMMENU_WORK* pWork)
 {
-  ITEMDISP_SetVisible();
-
-  // 初期化
-  KTST_SetDraw( pWork ,GFL_UI_CheckTouchOrKey() == GFL_APP_END_KEY );
-
   if (GFL_FADE_CheckFade() == FALSE) {
     _CHANGE_STATE(pWork, _itemKindSelectMenu);
   }
@@ -2860,7 +2855,7 @@ static GFL_PROC_RESULT FieldItemMenuProc_Init( GFL_PROC * proc, int * seq, void 
   BAG_PARAM* pParam = ppWork;
   FIELD_ITEMMENU_WORK* pWork;
 
-  GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 0);
+//  GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 0);
 
   // ヒープ生成
   GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_ITEMMENU, 0x28000 );
@@ -2936,6 +2931,7 @@ static GFL_PROC_RESULT FieldItemMenuProc_Init( GFL_PROC * proc, int * seq, void 
 
   pWork->pButton = GFL_BMN_Create( bttndata, _BttnCallBack, pWork,  pWork->heapID );
 
+  // ワイプ開始
   WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEIN , WIPE_TYPE_FADEIN ,
                   WIPE_FADE_BLACK , FLD_SUBSCR_FADE_DIV , FLD_SUBSCR_FADE_SYNC , pWork->heapID );
 
@@ -2953,6 +2949,11 @@ static GFL_PROC_RESULT FieldItemMenuProc_Init( GFL_PROC * proc, int * seq, void 
   GFL_NET_WirelessIconEasy_HoldLCD( TRUE, pWork->heapID );
   GFL_NET_ChangeIconPosition(256-16, 0);
   GFL_NET_ReloadIcon();
+  
+  // 初期化
+  KTST_SetDraw( pWork ,GFL_UI_CheckTouchOrKey() == GFL_APP_END_KEY );
+  
+  ITEMDISP_SetVisible();
 
   _CHANGE_STATE(pWork, _startState);
   return GFL_PROC_RES_FINISH;
