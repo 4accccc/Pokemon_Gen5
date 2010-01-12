@@ -149,7 +149,11 @@ struct _TAG_MMDL
 	
   u8 gx_size; ///<グリッドX方向サイズ
   u8 gz_size; ///<グリッドZ方向サイズ
-  u8 padding[2]; ///<4byte余り
+  s8 offset_x; ///<オフセットX
+  s8 offset_y; ///<オフセットY
+  
+  s8 offset_z; ///<オフセットZ
+  u8 padding[3]; ///<4byte余り
   
 	GFL_TCB *pTCB;				///<動作関数TCB*
 	MMDLSYS *pMMdlSys;///<MMDLSYS*
@@ -241,72 +245,72 @@ struct _TAG_MMDL_ROCKPOS
 //	proto
 //======================================================================
 //MMDLSYS プロセス
-static void MMdlSys_DeleteProc( MMDLSYS *fos );
+static void mmdlsys_DeleteProc( MMDLSYS *fos );
 
 //MMDL 追加、削除
 static MMDL * mmdlsys_AddMMdlCore( MMDLSYS *fos,
     const MMDL_HEADER *header, int zone_id, const EVENTWORK *ev );
-static void MMdl_SetHeaderBefore( MMDL * mmdl, const MMDL_HEADER *head,
+static void mmdl_SetHeaderBefore( MMDL * mmdl, const MMDL_HEADER *head,
     const EVENTWORK *ev, const MMDLSYS *mmdlsys );
-static void MMdl_SetHeaderAfter(
+static void mmdl_SetHeaderAfter(
 	MMDL * mmdl, const MMDL_HEADER *head, void *sys );
-static void MMdl_SetHeaderPos(MMDL *mmdl,const MMDL_HEADER *head);
-static void MMdl_InitWork( MMDL * mmdl, MMDLSYS *sys, int zone_id );
-static void MMdl_InitDir( MMDL *mmdl );
-static void MMdl_InitCallMoveProcWork( MMDL * mmdl );
-static void MMdl_InitMoveWork( const MMDLSYS *fos, MMDL * mmdl );
-static void MMdl_InitMoveProc( const MMDLSYS *fos, MMDL * mmdl );
-static void MMdl_UpdateMove( MMDL * mmdl );
+static void mmdl_SetHeaderPos(MMDL *mmdl,const MMDL_HEADER *head);
+static void mmdl_InitWork( MMDL * mmdl, MMDLSYS *sys, int zone_id );
+static void mmdl_InitDir( MMDL *mmdl );
+static void mmdl_InitCallMoveProcWork( MMDL * mmdl );
+static void mmdl_InitMoveWork( const MMDLSYS *fos, MMDL * mmdl );
+static void mmdl_InitMoveProc( const MMDLSYS *fos, MMDL * mmdl );
+static void mmdl_UpdateMove( MMDL * mmdl );
 #if 0
-static void MMdlSys_CheckSetInitMoveWork( MMDLSYS *fos );
-static void MMdlSys_CheckSetInitDrawWork( MMDLSYS *fos );
+static void mmdlsys_CheckSetInitMoveWork( MMDLSYS *fos );
+static void mmdlsys_CheckSetInitDrawWork( MMDLSYS *fos );
 #endif
 
 //MMDL 動作関数
-static void MMdl_TCB_MoveProc( GFL_TCB * tcb, void *work );
-static void MMdl_TCB_DrawProc( MMDL * mmdl );
+static void mmdl_TCB_MoveProc( GFL_TCB * tcb, void *work );
+static void mmdl_TCB_DrawProc( MMDL * mmdl );
 
 //MMDL_SAVEDATA
-static void MMdl_SaveData_SaveMMdl(
+static void mmdl_SaveData_SaveMMdl(
 	const MMDL *mmdl, MMDL_SAVEWORK *save );
-static void MMdl_SaveData_LoadMMdl(
+static void mmdl_SaveData_LoadMMdl(
 	MMDL *mmdl, const MMDL_SAVEWORK *save, MMDLSYS *fos );
 
 //MMDLSYS 設定、参照
-static void MMdlSys_OnStatusBit(
+static void mmdlsys_OnStatusBit(
 	MMDLSYS *mmdlsys, MMDLSYS_STABIT bit );
-static void MMdlSys_OffStatusBit(
+static void mmdlsys_OffStatusBit(
 	MMDLSYS *mmdlsys, MMDLSYS_STABIT bit );
-static void MMdlSys_IncrementOBJCount( MMDLSYS *mmdlsys );
-static void MMdlSys_DecrementOBJCount( MMDLSYS *mmdlsys );
+static void mmdlsys_IncrementOBJCount( MMDLSYS *mmdlsys );
+static void mmdlsys_DecrementOBJCount( MMDLSYS *mmdlsys );
 
 //MMDLSYS ツール
-static MMDL * MMdlSys_SearchSpaceMMdl( const MMDLSYS *sys );
-static MMDL * MMdlSys_SearchAlies(
+static MMDL * mmdlsys_SearchSpaceMMdl( const MMDLSYS *sys );
+static MMDL * mmdlsys_SearchAlies(
 	const MMDLSYS *fos, int obj_id, int zone_id );
 
 //MMDL ツール
-static void MMdl_AddTCB( MMDL *mmdl, const MMDLSYS *sys );
-static void MMdl_DeleteTCB( MMDL *mmdl );
-static void MMdl_InitDrawWork( MMDL *mmdl );
-static void MMdl_InitCallDrawProcWork( MMDL * mmdl );
-static void MMdl_InitDrawEffectFlag( MMDL * mmdl );
-static void MMdl_ClearWork( MMDL *mmdl );
-static int MMdl_CheckHeaderAlies(
+static void mmdl_AddTCB( MMDL *mmdl, const MMDLSYS *sys );
+static void mmdl_DeleteTCB( MMDL *mmdl );
+static void mmdl_InitDrawWork( MMDL *mmdl );
+static void mmdl_InitCallDrawProcWork( MMDL * mmdl );
+static void mmdl_InitDrawEffectFlag( MMDL * mmdl );
+static void mmdl_ClearWork( MMDL *mmdl );
+static int mmdl_CheckHeaderAlies(
 		const MMDL *mmdl, int h_zone_id, int max,
 		const MMDL_HEADER *head );
-static MMDL * MMdl_SearchOBJIDZoneID(
+static MMDL * mmdl_SearchOBJIDZoneID(
 		const MMDLSYS *fos, int obj_id, int zone_id );
-static void MMdl_InitDrawStatus( MMDL * mmdl );
-static void MMdl_SetDrawDeleteStatus( MMDL * mmdl );
-static void MMdl_ChangeAliesOBJ(
+static void mmdl_InitDrawStatus( MMDL * mmdl );
+static void mmdl_SetDrawDeleteStatus( MMDL * mmdl );
+static void mmdl_ChangeAliesOBJ(
 	MMDL *mmdl, const MMDL_HEADER *head, int zone_id );
-static void MMdl_ChangeOBJAlies(
+static void mmdl_ChangeOBJAlies(
 	MMDL * mmdl, int zone_id, const MMDL_HEADER *head );
 
 //OBJCODE_PARAM
-static void MMdlSys_InitOBJCodeParam( MMDLSYS *mmdlsys, HEAPID heapID );
-static void MMdlSys_DeleteOBJCodeParam( MMDLSYS *mmdlsys );
+static void mmdlsys_InitOBJCodeParam( MMDLSYS *mmdlsys, HEAPID heapID );
+static void mmdlsys_DeleteOBJCodeParam( MMDLSYS *mmdlsys );
 
 //parts
 static u16 WorkOBJCode_GetOBJCode( const EVENTWORK *ev, u16 code );
@@ -316,7 +320,7 @@ static const MMDL_DRAW_PROC_LIST * DrawProcList_GetList(
 		MMDL_DRAWPROCNO no );
 static BOOL MMdlHeader_CheckAlies( const MMDL_HEADER *head );
 static int MMdlHeader_GetAliesZoneID( const MMDL_HEADER *head );
-static BOOL MMdlSys_CheckEventFlag( EVENTWORK *evwork, u16 flag_no );
+static BOOL mmdlsys_CheckEventFlag( EVENTWORK *evwork, u16 flag_no );
 
 //MMDL_ROCKPOS
 static BOOL mmdl_rockpos_CheckSetPos( const MMDL_ROCKPOS *rockpos );
@@ -346,7 +350,7 @@ MMDLSYS * MMDLSYS_CreateSystem(
 	fos->mmdl_max = max;
 	fos->sysHeapID = heapID;
   fos->rockpos = rockpos;
-	MMdlSys_InitOBJCodeParam( fos, heapID );
+	mmdlsys_InitOBJCodeParam( fos, heapID );
 	return( fos );
 }
 
@@ -359,7 +363,7 @@ MMDLSYS * MMDLSYS_CreateSystem(
 //--------------------------------------------------------------
 void MMDLSYS_FreeSystem( MMDLSYS *fos )
 {
-	MMdlSys_DeleteOBJCodeParam( fos );
+	mmdlsys_DeleteOBJCodeParam( fos );
 	GFL_HEAP_FreeMemory( fos->pMMdlBuf );
 	GFL_HEAP_FreeMemory( fos );
 }
@@ -394,7 +398,7 @@ void MMDLSYS_SetupProc( MMDLSYS *fos, HEAPID heapID,
   
   // ノーグリッド移動設定
 	fos->pNOGRIDMapper = pNOGRIDMapper;
-	MMdlSys_OnStatusBit( fos, MMDLSYS_STABIT_MOVE_INIT_COMP );
+	mmdlsys_OnStatusBit( fos, MMDLSYS_STABIT_MOVE_INIT_COMP );
 }
 
 //--------------------------------------------------------------
@@ -404,12 +408,12 @@ void MMDLSYS_SetupProc( MMDLSYS *fos, HEAPID heapID,
  * @retval	nothing
  */
 //--------------------------------------------------------------
-static void MMdlSys_DeleteProc( MMDLSYS *fos )
+static void mmdlsys_DeleteProc( MMDLSYS *fos )
 {
 	GFL_TCB_Exit( fos->pTCBSys );
 	GFL_HEAP_FreeMemory( fos->pTCBSysWork );
   GFL_ARC_CloseDataHandle( fos->arcH_res );
-	MMdlSys_OffStatusBit( fos, MMDLSYS_STABIT_MOVE_INIT_COMP );
+	mmdlsys_OffStatusBit( fos, MMDLSYS_STABIT_MOVE_INIT_COMP );
 }
 
 //--------------------------------------------------------------
@@ -428,7 +432,7 @@ void MMDLSYS_DeleteProc( MMDLSYS *fos )
     fos->targetCameraAngleYaw = NULL;
   }
   
-	MMdlSys_DeleteProc( fos );
+	mmdlsys_DeleteProc( fos );
 }
 
 //--------------------------------------------------------------
@@ -500,12 +504,12 @@ static MMDL * mmdlsys_AddMMdlCore( MMDLSYS *fos,
 	MMDL_HEADER header_data = *header;
 	const MMDL_HEADER *head = &header_data;
 	
-	mmdl = MMdlSys_SearchSpaceMMdl( fos );
+	mmdl = mmdlsys_SearchSpaceMMdl( fos );
 	GF_ASSERT( mmdl != NULL );
 	
-	MMdl_InitWork( mmdl, fos, zone_id );
-	MMdl_SetHeaderBefore( mmdl, head, ev, fos );
-  MMdl_InitDir( mmdl );
+	mmdl_InitWork( mmdl, fos, zone_id );
+	mmdl_SetHeaderBefore( mmdl, head, ev, fos );
+  mmdl_InitDir( mmdl );
   
   if( mmdl_rockpos_CheckPos(mmdl) == TRUE ){
     MMDL_OnStatusBit( mmdl,
@@ -514,17 +518,17 @@ static MMDL * mmdlsys_AddMMdlCore( MMDLSYS *fos,
   }
   
 	if( MMDLSYS_CheckStatusBit(fos,MMDLSYS_STABIT_MOVE_INIT_COMP) ){
-		MMdl_InitMoveWork( fos, mmdl );
-		MMdl_InitMoveProc( fos, mmdl );
+		mmdl_InitMoveWork( fos, mmdl );
+		mmdl_InitMoveProc( fos, mmdl );
 	}
 	
 	if( MMDLSYS_CheckStatusBit(fos,MMDLSYS_STABIT_DRAW_INIT_COMP) ){
-		MMdl_InitDrawWork( mmdl );
+		mmdl_InitDrawWork( mmdl );
 	}
 	
-	MMdlSys_IncrementOBJCount( (MMDLSYS*)MMDL_GetMMdlSys(mmdl) );
+	mmdlsys_IncrementOBJCount( (MMDLSYS*)MMDL_GetMMdlSys(mmdl) );
 	
-  MMdl_SetHeaderAfter( mmdl, head, NULL );
+  mmdl_SetHeaderAfter( mmdl, head, NULL );
 	return( mmdl );
 }
 
@@ -603,7 +607,7 @@ void MMDLSYS_SetMMdl( MMDLSYS *fos,
 	
 	do{
     if( MMdlHeader_CheckAlies(header) == TRUE ||
-        MMdlSys_CheckEventFlag(eventWork,header->event_flag) == FALSE ){
+        mmdlsys_CheckEventFlag(eventWork,header->event_flag) == FALSE ){
 		  mmdlsys_AddMMdlCore( fos, header, zone_id, eventWork );
     }
 #ifdef PM_DEBUG
@@ -645,7 +649,7 @@ MMDL * MMDLSYS_AddMMdlHeaderID( MMDLSYS *fos,
     {
       if( header->id == objID )
       {
-        if( MMdlSys_CheckEventFlag(
+        if( mmdlsys_CheckEventFlag(
               eventWork,header->event_flag) == FALSE )
         {
 		      mmdl = mmdlsys_AddMMdlCore( fos, header, zone_id, eventWork );
@@ -680,11 +684,11 @@ void MMDL_Delete( MMDL * mmdl )
 	
 	if( MMDL_CheckStatusBit(mmdl,MMDL_STABIT_MOVEPROC_INIT) ){
 		MMDL_CallMoveDeleteProc( mmdl );
-		MMdl_DeleteTCB( mmdl );
+		mmdl_DeleteTCB( mmdl );
 	}
 	
-	MMdlSys_DecrementOBJCount( (MMDLSYS*)(mmdl->pMMdlSys) );
-	MMdl_ClearWork( mmdl );
+	mmdlsys_DecrementOBJCount( (MMDLSYS*)(mmdl->pMMdlSys) );
+	mmdl_ClearWork( mmdl );
 }
 
 //--------------------------------------------------------------
@@ -722,11 +726,11 @@ void MMDLSYS_DeleteMMdl( const MMDLSYS *fos )
     
     if( MMDL_CheckStatusBit(mmdl,MMDL_STABIT_MOVEPROC_INIT) ){
       //MMDL_CallMoveDeleteProc( mmdl );
-      //MMdl_DeleteTCB( mmdl );
+      //mmdl_DeleteTCB( mmdl );
     }
     
-    MMdlSys_DecrementOBJCount( (MMDLSYS*)(mmdl->pMMdlSys) );
-    MMdl_ClearWork( mmdl );
+    mmdlsys_DecrementOBJCount( (MMDLSYS*)(mmdl->pMMdlSys) );
+    mmdl_ClearWork( mmdl );
 #endif
 	}
 }
@@ -742,10 +746,11 @@ void MMDLSYS_DeleteMMdl( const MMDLSYS *fos )
  * WKOBJCODE00等のワーク参照型OBJコードが来るとエラーとなる。
  */
 //--------------------------------------------------------------
-static void MMdl_SetHeaderBefore( MMDL * mmdl, const MMDL_HEADER *head,
+static void mmdl_SetHeaderBefore( MMDL * mmdl, const MMDL_HEADER *head,
     const EVENTWORK *ev, const MMDLSYS *mmdlsys )
 {
   u16 obj_code;
+  const OBJCODE_PARAM *param;
 
   obj_code = WorkOBJCode_GetOBJCode( ev, head->obj_code );
 	
@@ -763,6 +768,8 @@ static void MMdl_SetHeaderBefore( MMDL * mmdl, const MMDL_HEADER *head,
 	MMDL_SetMoveLimitX( mmdl, head->move_limit_x );
 	MMDL_SetMoveLimitZ( mmdl, head->move_limit_z );
   
+  param = MMDLSYS_GetOBJCodeParam( mmdlsys, obj_code );
+  
   if( obj_code == STOPPER ){ //サイズ設定。STOPPERはサイズ指定アリ
     mmdl->gx_size = head->param0;
     mmdl->gz_size = head->param1;
@@ -775,15 +782,18 @@ static void MMdl_SetHeaderBefore( MMDL * mmdl, const MMDL_HEADER *head,
       mmdl->gz_size++;
     }
   }else{
-    const OBJCODE_PARAM *prm = MMDLSYS_GetOBJCodeParam( mmdlsys, obj_code );
-    mmdl->gx_size = prm->size_width;
-    mmdl->gz_size = prm->size_depth;
+    mmdl->gx_size = param->size_width;
+    mmdl->gz_size = param->size_depth;
   }
+  
+  mmdl->offset_x = param->offs_x; //オフセット
+  mmdl->offset_y = param->offs_y;
+  mmdl->offset_z = param->offs_z;
   
   // 座標タイプにより、位置の初期化方法を変更
   if( head->pos_type == MMDL_HEADER_POSTYPE_GRID )
   {
-  	MMdl_SetHeaderPos( mmdl, head );
+  	mmdl_SetHeaderPos( mmdl, head );
   }
   else
   {
@@ -800,7 +810,7 @@ static void MMdl_SetHeaderBefore( MMDL * mmdl, const MMDL_HEADER *head,
  * @retval	nothing
  */
 //--------------------------------------------------------------
-static void MMdl_SetHeaderAfter(
+static void mmdl_SetHeaderAfter(
 	MMDL * mmdl, const MMDL_HEADER *head, void *sys )
 {
   // 座標タイプにより、位置の初期化方法を変更
@@ -818,7 +828,7 @@ static void MMdl_SetHeaderAfter(
  * @retval	nothing
  */
 //--------------------------------------------------------------
-static void MMdl_SetHeaderPos( MMDL *mmdl, const MMDL_HEADER *head )
+static void mmdl_SetHeaderPos( MMDL *mmdl, const MMDL_HEADER *head )
 {
   fx32 set_y;
 	VecFx32 vec;
@@ -872,7 +882,7 @@ static void MMdl_SetHeaderPos( MMDL *mmdl, const MMDL_HEADER *head )
  * @retval	nothing
  */
 //--------------------------------------------------------------
-static void MMdl_InitWork( MMDL * mmdl, MMDLSYS *sys, int zone_id )
+static void mmdl_InitWork( MMDL * mmdl, MMDLSYS *sys, int zone_id )
 {
 	mmdl->pMMdlSys = sys;
 	MMDL_SetZoneID( mmdl, zone_id );
@@ -896,7 +906,7 @@ static void MMdl_InitWork( MMDL * mmdl, MMDLSYS *sys, int zone_id )
  * @retval
  */
 //--------------------------------------------------------------
-static void MMdl_InitDir( MMDL *mmdl )
+static void mmdl_InitDir( MMDL *mmdl )
 {
 	MMDL_SetForceDirDisp( mmdl, MMDL_GetDirHeader(mmdl) );
 	MMDL_SetDirMove( mmdl, MMDL_GetDirHeader(mmdl) );
@@ -909,7 +919,7 @@ static void MMdl_InitDir( MMDL *mmdl )
  * @retval	nothing
  */
 //--------------------------------------------------------------
-static void MMdl_InitCallMoveProcWork( MMDL * mmdl )
+static void mmdl_InitCallMoveProcWork( MMDL * mmdl )
 {
 	mmdl->move_proc_list =
 		MoveProcList_GetList( MMDL_GetMoveCode(mmdl) );
@@ -922,10 +932,10 @@ static void MMdl_InitCallMoveProcWork( MMDL * mmdl )
  * @retval	nothing
  */
 //--------------------------------------------------------------
-static void MMdl_InitMoveWork( const MMDLSYS *fos, MMDL *mmdl )
+static void mmdl_InitMoveWork( const MMDLSYS *fos, MMDL *mmdl )
 {
-	MMdl_InitCallMoveProcWork( mmdl );
-	MMdl_AddTCB( mmdl, fos );
+	mmdl_InitCallMoveProcWork( mmdl );
+	mmdl_AddTCB( mmdl, fos );
 	MMDL_OnMoveBit( mmdl,
       MMDL_MOVEBIT_MOVE_START |
       MMDL_MOVEBIT_ATTR_GET_ERROR |
@@ -939,7 +949,7 @@ static void MMdl_InitMoveWork( const MMDLSYS *fos, MMDL *mmdl )
  *	@param	mmdl 
  */
 //-----------------------------------------------------------------------------
-static void MMdl_InitMoveProc( const MMDLSYS *fos, MMDL * mmdl )
+static void mmdl_InitMoveProc( const MMDLSYS *fos, MMDL * mmdl )
 {
   if( !MMDL_CheckStatusBit(mmdl,MMDL_STABIT_RAIL_MOVE) )
   {
@@ -958,7 +968,7 @@ static void MMdl_InitMoveProc( const MMDLSYS *fos, MMDL * mmdl )
  *	@param	mmdl 
  */
 //-----------------------------------------------------------------------------
-static void MMdl_UpdateMove( MMDL * mmdl )
+static void mmdl_UpdateMove( MMDL * mmdl )
 {
   GF_ASSERT( mmdl );
   if( !MMDL_CheckStatusBit( mmdl, MMDL_STABIT_RAIL_MOVE ) )
@@ -979,7 +989,7 @@ static void MMdl_UpdateMove( MMDL * mmdl )
  */
 //--------------------------------------------------------------
 #if 0
-static void MMdlSys_CheckSetInitMoveWork( MMDLSYS *fos )
+static void mmdlsys_CheckSetInitMoveWork( MMDLSYS *fos )
 {
 	u32 i = 0;
 	MMDL *mmdl;
@@ -987,7 +997,7 @@ static void MMdlSys_CheckSetInitMoveWork( MMDLSYS *fos )
 	while( MMDLSYS_SearchUseMMdl(fos,&mmdl,&i) == TRUE ){
 		if( MMDL_CheckStatusBit(mmdl,	//初期化関数呼び出しまだ
 			MMDL_STABIT_MOVEPROC_INIT) == 0 ){
-			MMdl_InitMoveProc( mmdl );
+			mmdl_InitMoveProc( mmdl );
 		}
 	}
 }
@@ -1001,14 +1011,14 @@ static void MMdlSys_CheckSetInitMoveWork( MMDLSYS *fos )
  */
 //--------------------------------------------------------------
 #if 0
-static void MMdlSys_CheckSetInitDrawWork( MMDLSYS *fos )
+static void mmdlsys_CheckSetInitDrawWork( MMDLSYS *fos )
 {
 	u32 i = 0;
 	MMDL *mmdl;
 	
 	while( MMDLSYS_SearchUseMMdl(fos,&mmdl,&i) == TRUE ){
 		if( MMDL_CheckMoveBitCompletedDrawInit(mmdl) == FALSE ){
-			MMdl_InitDrawWork( mmdl );
+			mmdl_InitDrawWork( mmdl );
 		}
 	}
 }
@@ -1037,7 +1047,7 @@ void MMDLSYS_Push( MMDLSYS *mmdlsys )
 	
 	while( MMDLSYS_SearchUseMMdl(mmdlsys,&mmdl,&no) == TRUE ){
 		{
-			MMdl_DeleteTCB( mmdl );
+			mmdl_DeleteTCB( mmdl );
 			MMDL_CallDrawPushProc( mmdl );
       
 			MMDL_OnMoveBit( mmdl,
@@ -1061,11 +1071,11 @@ void MMDLSYS_Pop( MMDLSYS *mmdlsys )
 	
 	while( MMDLSYS_SearchUseMMdl(mmdlsys,&mmdl,&no) == TRUE ){
 		{	//動作処理復帰
-			MMdl_InitMoveWork( mmdlsys, mmdl ); //ワーク初期化
+			mmdl_InitMoveWork( mmdlsys, mmdl ); //ワーク初期化
 			
       //初期化関数呼び出しまだ
 			if( MMDL_CheckStatusBit(mmdl,MMDL_STABIT_MOVEPROC_INIT) == 0 ){
-				MMdl_InitMoveProc( mmdlsys, mmdl );
+				mmdl_InitMoveProc( mmdlsys, mmdl );
 			}
 			
       //復元関数呼び出しが必要
@@ -1077,7 +1087,7 @@ void MMDLSYS_Pop( MMDLSYS *mmdlsys )
 		
 		{	//描画処理復帰
 			if( MMDL_CheckMoveBitCompletedDrawInit(mmdl) == FALSE ){
-				MMdl_InitDrawWork( mmdl );
+				mmdl_InitDrawWork( mmdl );
 			}
 			
 			if( MMDL_CheckMoveBit(mmdl,MMDL_MOVEBIT_DRAW_PUSH) ){
@@ -1087,7 +1097,7 @@ void MMDLSYS_Pop( MMDLSYS *mmdlsys )
 		}
 
     { //リカバリー
-      MMdl_InitDrawEffectFlag( mmdl );
+      mmdl_InitDrawEffectFlag( mmdl );
     }
 	}
 }
@@ -1138,7 +1148,7 @@ void MMDL_SAVEDATA_Save(
   save = savedata->SaveWorkBuf;
 	
 	while( MMDLSYS_SearchUseMMdl(mmdlsys,&mmdl,&no) == TRUE ){
-		MMdl_SaveData_SaveMMdl( mmdl, save );
+		mmdl_SaveData_SaveMMdl( mmdl, save );
 		save++;
 	}
 }
@@ -1160,8 +1170,8 @@ void MMDL_SAVEDATA_Load(
 	
 	while( no < MMDL_SAVEMMDL_MAX ){
 		if( (save->status_bit&MMDL_STABIT_USE) ){
-			mmdl = MMdlSys_SearchSpaceMMdl( mmdlsys );
-			MMdl_SaveData_LoadMMdl( mmdl, save, mmdlsys );
+			mmdl = mmdlsys_SearchSpaceMMdl( mmdlsys );
+			mmdl_SaveData_LoadMMdl( mmdl, save, mmdlsys );
 		}
 		save++;
 		no++;
@@ -1178,7 +1188,7 @@ void MMDL_SAVEDATA_Load(
  * @retval	nothing
  */
 //--------------------------------------------------------------
-static void MMdl_SaveData_SaveMMdl(
+static void mmdl_SaveData_SaveMMdl(
 	const MMDL *mmdl, MMDL_SAVEWORK *save )
 {
 	save->status_bit = MMDL_GetStatusBit( mmdl );
@@ -1222,10 +1232,10 @@ static void MMdl_SaveData_SaveMMdl(
  * @retval	nothing
  */
 //--------------------------------------------------------------
-static void MMdl_SaveData_LoadMMdl(
+static void mmdl_SaveData_LoadMMdl(
 	MMDL *mmdl, const MMDL_SAVEWORK *save, MMDLSYS *fos )
 {
-	MMdl_ClearWork( mmdl );
+	mmdl_ClearWork( mmdl );
 
 	mmdl->status_bit = save->status_bit;
 //	mmdl->move_bit = save->move_bit;
@@ -1301,10 +1311,10 @@ static void MMdl_SaveData_LoadMMdl(
 //--------------------------------------------------------------
 void MMDL_UpdateMoveProc( MMDL *mmdl )
 {
-	MMdl_UpdateMove( mmdl );
+	mmdl_UpdateMove( mmdl );
 	
 	if( MMDL_CheckStatusBitUse(mmdl) == TRUE ){
-		MMdl_TCB_DrawProc( mmdl );
+		mmdl_TCB_DrawProc( mmdl );
 	}
 }
 
@@ -1316,7 +1326,7 @@ void MMDL_UpdateMoveProc( MMDL *mmdl )
  * @retval	nothing
  */
 //--------------------------------------------------------------
-static void MMdl_TCB_MoveProc( GFL_TCB * tcb, void *work )
+static void mmdl_TCB_MoveProc( GFL_TCB * tcb, void *work )
 {
 	MMDL *mmdl = (MMDL *)work;
 	MMDL_UpdateMoveProc( mmdl );
@@ -1329,7 +1339,7 @@ static void MMdl_TCB_MoveProc( GFL_TCB * tcb, void *work )
  * @retval	nothing
  */
 //--------------------------------------------------------------
-static void MMdl_TCB_DrawProc( MMDL * mmdl )
+static void mmdl_TCB_DrawProc( MMDL * mmdl )
 {
 	const MMDLSYS *fos = MMDL_GetMMdlSys(mmdl);
 	
@@ -1482,7 +1492,7 @@ u32 MMDLSYS_CheckStatusBit(
  * @retval	nothing
  */
 //--------------------------------------------------------------
-static void MMdlSys_OnStatusBit(
+static void mmdlsys_OnStatusBit(
 	MMDLSYS *mmdlsys, MMDLSYS_STABIT bit )
 {
 	mmdlsys->status_bit |= bit;
@@ -1496,7 +1506,7 @@ static void MMdlSys_OnStatusBit(
  * @retval	nothing
  */
 //--------------------------------------------------------------
-static void MMdlSys_OffStatusBit(
+static void mmdlsys_OffStatusBit(
 	MMDLSYS *mmdlsys, MMDLSYS_STABIT bit )
 {
 	mmdlsys->status_bit &= ~bit;
@@ -1557,7 +1567,7 @@ HEAPID MMDLSYS_GetHeapID( const MMDLSYS *mmdlsys )
  * @retval	nothing
  */
 //--------------------------------------------------------------
-static void MMdlSys_IncrementOBJCount( MMDLSYS *mmdlsys )
+static void mmdlsys_IncrementOBJCount( MMDLSYS *mmdlsys )
 {
 	mmdlsys->mmdl_count++;
 }
@@ -1569,7 +1579,7 @@ static void MMdlSys_IncrementOBJCount( MMDLSYS *mmdlsys )
  * @retval	nothing
  */
 //--------------------------------------------------------------
-static void MMdlSys_DecrementOBJCount( MMDLSYS *mmdlsys )
+static void mmdlsys_DecrementOBJCount( MMDLSYS *mmdlsys )
 {
 	mmdlsys->mmdl_count--;
 	GF_ASSERT( mmdlsys->mmdl_count >= 0 );
@@ -3098,6 +3108,21 @@ u8 MMDL_GetGridSizeZ( const MMDL *mmdl )
   return( mmdl->gz_size );
 }
 
+//--------------------------------------------------------------
+/**
+ * MMDL 管理表設定オフセット座標を取得
+ * @param mmdl MMDL*
+ * @param pos 座標格納先
+ * @retval
+ */
+//--------------------------------------------------------------
+void MMDL_GetControlOffsetPos( const MMDL *mmdl, VecFx32 *pos )
+{
+  pos->x = NUM_FX32( mmdl->offset_x );
+  pos->y = NUM_FX32( mmdl->offset_y );
+  pos->z = NUM_FX32( mmdl->offset_z );
+}
+
 //======================================================================
 //	MMDLSYS ステータス操作
 //======================================================================
@@ -3128,9 +3153,9 @@ BOOL MMDLSYS_CheckCompleteDrawInit( const MMDLSYS *mmdlsys )
 void MMDLSYS_SetCompleteDrawInit( MMDLSYS *mmdlsys, BOOL flag )
 {
 	if( flag == TRUE ){
-		MMdlSys_OnStatusBit( mmdlsys, MMDLSYS_STABIT_DRAW_INIT_COMP );
+		mmdlsys_OnStatusBit( mmdlsys, MMDLSYS_STABIT_DRAW_INIT_COMP );
 	}else{
-		MMdlSys_OffStatusBit( mmdlsys, MMDLSYS_STABIT_DRAW_INIT_COMP );
+		mmdlsys_OffStatusBit( mmdlsys, MMDLSYS_STABIT_DRAW_INIT_COMP );
 	}
 }
 
@@ -3145,9 +3170,9 @@ void MMDLSYS_SetCompleteDrawInit( MMDLSYS *mmdlsys, BOOL flag )
 void MMDLSYS_SetJoinShadow( MMDLSYS *fos, BOOL flag )
 {
 	if( flag == FALSE ){
-		MMdlSys_OnStatusBit( fos, MMDLSYS_STABIT_SHADOW_JOIN_NOT );
+		mmdlsys_OnStatusBit( fos, MMDLSYS_STABIT_SHADOW_JOIN_NOT );
 	}else{
-		MMdlSys_OffStatusBit( fos, MMDLSYS_STABIT_SHADOW_JOIN_NOT );
+		mmdlsys_OffStatusBit( fos, MMDLSYS_STABIT_SHADOW_JOIN_NOT );
 	}
 }
 
@@ -3179,7 +3204,7 @@ BOOL MMDLSYS_CheckJoinShadow( const MMDLSYS *fos )
 //--------------------------------------------------------------
 void MMDLSYS_StopProc( MMDLSYS *mmdlsys )
 {
-	MMdlSys_OnStatusBit( mmdlsys,
+	mmdlsys_OnStatusBit( mmdlsys,
 		MMDLSYS_STABIT_MOVE_PROC_STOP|MMDLSYS_STABIT_DRAW_PROC_STOP );
 }
 
@@ -3192,7 +3217,7 @@ void MMDLSYS_StopProc( MMDLSYS *mmdlsys )
 //--------------------------------------------------------------
 void MMDLSYS_PlayProc( MMDLSYS *mmdlsys )
 {
-	MMdlSys_OffStatusBit( mmdlsys,
+	mmdlsys_OffStatusBit( mmdlsys,
 		MMDLSYS_STABIT_MOVE_PROC_STOP|MMDLSYS_STABIT_DRAW_PROC_STOP );
 }
 
@@ -4091,7 +4116,7 @@ MMDL * MMDLSYS_SearchOBJID( const MMDLSYS *fos, u16 id )
  * @retval	MMDL	空きのMMDL*　空きが無い場合はNULL
  */
 //--------------------------------------------------------------
-static MMDL * MMdlSys_SearchSpaceMMdl( const MMDLSYS *sys )
+static MMDL * mmdlsys_SearchSpaceMMdl( const MMDLSYS *sys )
 {
 	int i,max;
 	MMDL *mmdl;
@@ -4121,7 +4146,7 @@ static MMDL * MMdlSys_SearchSpaceMMdl( const MMDLSYS *sys )
  * @retval	MMDL	一致するMMDL*　一致無し=NULL
  */
 //--------------------------------------------------------------
-static MMDL * MMdlSys_SearchAlies(
+static MMDL * mmdlsys_SearchAlies(
 	const MMDLSYS *fos, int obj_id, int zone_id )
 {
 	u32 no = 0;
@@ -4175,7 +4200,7 @@ void MMDLSYS_DeleteZoneUpdateMMdl( MMDLSYS *fos )
  * @retval	nothing
  */
 //--------------------------------------------------------------
-static void MMdl_AddTCB( MMDL *mmdl, const MMDLSYS *sys )
+static void mmdl_AddTCB( MMDL *mmdl, const MMDLSYS *sys )
 {
 	int pri,code;
 	GFL_TCB * tcb;
@@ -4188,7 +4213,7 @@ static void MMdl_AddTCB( MMDL *mmdl, const MMDLSYS *sys )
 	}
 	
 	tcb = GFL_TCB_AddTask( MMDLSYS_GetTCBSYS((MMDLSYS*)sys),
-			MMdl_TCB_MoveProc, mmdl, pri );
+			mmdl_TCB_MoveProc, mmdl, pri );
 	GF_ASSERT( tcb != NULL );
 	
 	mmdl->pTCB = tcb;
@@ -4201,7 +4226,7 @@ static void MMdl_AddTCB( MMDL *mmdl, const MMDLSYS *sys )
  * @retval	nothing
  */
 //--------------------------------------------------------------
-static void MMdl_DeleteTCB( MMDL *mmdl )
+static void mmdl_DeleteTCB( MMDL *mmdl )
 {
 	GF_ASSERT( mmdl->pTCB );
 	GFL_TCB_DeleteTask( mmdl->pTCB );
@@ -4296,10 +4321,10 @@ void MMDL_ChangeMoveParam( MMDL *mmdl, const MMDL_HEADER *head )
 	const MMDLSYS *fos = MMDL_GetMMdlSys( mmdl );
   
 	MMDL_CallMoveDeleteProc( mmdl );
-  MMdl_SetHeaderBefore( mmdl, head, NULL, fos );
-	MMdl_InitCallMoveProcWork( mmdl );
-	MMdl_InitMoveProc( fos, mmdl );
-  MMdl_SetHeaderAfter( mmdl, head, NULL );
+  mmdl_SetHeaderBefore( mmdl, head, NULL, fos );
+	mmdl_InitCallMoveProcWork( mmdl );
+	mmdl_InitMoveProc( fos, mmdl );
+  mmdl_SetHeaderAfter( mmdl, head, NULL );
 }
 
 //--------------------------------------------------------------
@@ -4309,7 +4334,7 @@ void MMDL_ChangeMoveParam( MMDL *mmdl, const MMDL_HEADER *head )
  * @retval	nothing
  */
 //--------------------------------------------------------------
-static void MMdl_InitDrawWork( MMDL *mmdl )
+static void mmdl_InitDrawWork( MMDL *mmdl )
 {
 	const MMDLSYS *fos = MMDL_GetMMdlSys( mmdl );
 	
@@ -4327,7 +4352,7 @@ static void MMdl_InitDrawWork( MMDL *mmdl )
 	#endif
 	
 	if( MMDL_CheckMoveBitCompletedDrawInit(mmdl) == FALSE ){
-		MMdl_InitCallDrawProcWork( mmdl );
+		mmdl_InitCallDrawProcWork( mmdl );
 		MMDL_CallDrawInitProc( mmdl );
 		MMDL_OnMoveBitCompletedDrawInit( mmdl );
 	}
@@ -4340,7 +4365,7 @@ static void MMdl_InitDrawWork( MMDL *mmdl )
  * @retval	nothing
  */
 //--------------------------------------------------------------
-static void MMdl_InitCallDrawProcWork( MMDL * mmdl )
+static void mmdl_InitCallDrawProcWork( MMDL * mmdl )
 {
 	const MMDL_DRAW_PROC_LIST *list;
 	u16 code = MMDL_GetOBJCode( mmdl );
@@ -4357,7 +4382,7 @@ static void MMdl_InitCallDrawProcWork( MMDL * mmdl )
  * @retval	nothing
  */
 //--------------------------------------------------------------
-static void MMdl_InitDrawEffectFlag( MMDL * mmdl )
+static void mmdl_InitDrawEffectFlag( MMDL * mmdl )
 {
 	MMDL_OffMoveBit( mmdl,
 		MMDL_MOVEBIT_SHADOW_SET |
@@ -4378,7 +4403,7 @@ void MMDL_ChangeOBJID( MMDL * mmdl, u16 id )
 {
 	MMDL_SetOBJID( mmdl, id );
 	MMDL_OnMoveBitMoveStart( mmdl );
-	MMdl_InitDrawEffectFlag( mmdl );
+	mmdl_InitDrawEffectFlag( mmdl );
 }
 
 //--------------------------------------------------------------
@@ -4388,7 +4413,7 @@ void MMDL_ChangeOBJID( MMDL * mmdl, u16 id )
  * @retval	nothing
  */
 //--------------------------------------------------------------
-static void MMdl_ClearWork( MMDL *mmdl )
+static void mmdl_ClearWork( MMDL *mmdl )
 {
 	GFL_STD_MemClear( mmdl, MMDL_SIZE );
 }
@@ -4403,7 +4428,7 @@ static void MMdl_ClearWork( MMDL *mmdl )
  * @retval	int			RET_ALIES_NOT等
  */
 //--------------------------------------------------------------
-static int MMdl_CheckHeaderAlies(
+static int mmdl_CheckHeaderAlies(
 		const MMDL *mmdl, int h_zone_id, int max,
 		const MMDL_HEADER *head )
 {
@@ -4452,7 +4477,7 @@ static int MMdl_CheckHeaderAlies(
  * @retval	MMDL * MMDL *
  */
 //--------------------------------------------------------------
-static MMDL * MMdl_SearchOBJIDZoneID(
+static MMDL * mmdl_SearchOBJIDZoneID(
 		const MMDLSYS *fos, int obj_id, int zone_id )
 {
 	u32 no = 0;
@@ -4475,10 +4500,10 @@ static MMDL * MMdl_SearchOBJIDZoneID(
  * @retval	nothing
  */
 //--------------------------------------------------------------
-static void MMdl_InitDrawStatus( MMDL * mmdl )
+static void mmdl_InitDrawStatus( MMDL * mmdl )
 {
 	MMDL_OnMoveBit( mmdl, MMDL_MOVEBIT_MOVE_START );
-	MMdl_InitDrawEffectFlag( mmdl );
+	mmdl_InitDrawEffectFlag( mmdl );
 }
 
 //--------------------------------------------------------------
@@ -4488,7 +4513,7 @@ static void MMdl_InitDrawStatus( MMDL * mmdl )
  * @retval	nothing
  */
 //--------------------------------------------------------------
-static void MMdl_SetDrawDeleteStatus( MMDL * mmdl )
+static void mmdl_SetDrawDeleteStatus( MMDL * mmdl )
 {
 }
 
@@ -4501,7 +4526,7 @@ static void MMdl_SetDrawDeleteStatus( MMDL * mmdl )
  * @retval	nothing
  */
 //--------------------------------------------------------------
-static void MMdl_ChangeAliesOBJ(
+static void mmdl_ChangeAliesOBJ(
 	MMDL *mmdl, const MMDL_HEADER *head, int zone_id )
 {
 	GF_ASSERT( MMDL_CheckStatusBitAlies(mmdl) == TRUE );
@@ -4519,7 +4544,7 @@ static void MMdl_ChangeAliesOBJ(
  * @retval	nothing
  */
 //--------------------------------------------------------------
-static void MMdl_ChangeOBJAlies(
+static void mmdl_ChangeOBJAlies(
 	MMDL * mmdl, int zone_id, const MMDL_HEADER *head )
 {
 	GF_ASSERT( MMdlHeader_CheckAlies(head) == TRUE );
@@ -4599,7 +4624,7 @@ BOOL MMDL_CheckSameDataIDOnly(
  * @retval	nothing
  */
 //--------------------------------------------------------------
-static void MMdlSys_InitOBJCodeParam( MMDLSYS *mmdlsys, HEAPID heapID )
+static void mmdlsys_InitOBJCodeParam( MMDLSYS *mmdlsys, HEAPID heapID )
 {
 	u8 *p = GFL_ARC_LoadDataAlloc( ARCID_MMDL_PARAM, 
 			NARC_fldmmdl_mdlparam_fldmmdl_mdlparam_bin, heapID );
@@ -4614,7 +4639,7 @@ static void MMdlSys_InitOBJCodeParam( MMDLSYS *mmdlsys, HEAPID heapID )
  * @retval	nothing
  */
 //--------------------------------------------------------------
-static void MMdlSys_DeleteOBJCodeParam( MMDLSYS *mmdlsys )
+static void mmdlsys_DeleteOBJCodeParam( MMDLSYS *mmdlsys )
 {
 	GFL_HEAP_FreeMemory( mmdlsys->pOBJCodeParamBuf );
 	mmdlsys->pOBJCodeParamBuf = NULL;
@@ -4676,6 +4701,10 @@ const OBJCODE_PARAM_BUF_MDL * MMDL_GetOBJCodeParamBufMDL(
 {
   return (const OBJCODE_PARAM_BUF_MDL*)param->buf;
 }
+
+//======================================================================
+//  OBJCODE_PARAM 横幅、奥行、オフセット
+//======================================================================
 
 //======================================================================
 //	parts
@@ -4796,7 +4825,7 @@ static int MMdlHeader_GetAliesZoneID( const MMDL_HEADER *head )
  * @retval
  */
 //--------------------------------------------------------------
-static BOOL MMdlSys_CheckEventFlag( EVENTWORK *evwork, u16 flag_no )
+static BOOL mmdlsys_CheckEventFlag( EVENTWORK *evwork, u16 flag_no )
 {
 #if 0 //
   FIELDMAP_WORK *fieldMap = mmdlsys->fieldMapWork;
@@ -5228,9 +5257,20 @@ void MMDL_ChangeOBJCode( MMDL *mmdl, u16 code )
   }
   
   MMDL_SetOBJCode( mmdl, code );
+  
+  {
+    const OBJCODE_PARAM *param;
+    param = MMDLSYS_GetOBJCodeParam( fos, code );
+    mmdl->gx_size = param->size_width;
+    mmdl->gz_size = param->size_depth;
+    mmdl->offset_x = param->offs_x; //オフセット
+    mmdl->offset_y = param->offs_y;
+    mmdl->offset_z = param->offs_z;
+  }
+
   MMDL_OffMoveBitCompletedDrawInit( mmdl );
-  MMdl_InitDrawStatus( mmdl );
-  MMdl_InitDrawWork( mmdl );
+  mmdl_InitDrawStatus( mmdl );
+  mmdl_InitDrawWork( mmdl );
 }
 
 
@@ -5265,26 +5305,26 @@ MMDL * MMDL_BUFFER_LoadMMdl(
 {
 	MMDL *mmdl;
 	
-	mmdl = MMdlSys_SearchSpaceMMdl( fos );
+	mmdl = mmdlsys_SearchSpaceMMdl( fos );
 	GF_ASSERT( mmdl != NULL );
 	
 	OS_Printf( "MMDL LoadNo %d\n", no );
 	
 	*mmdl = buf->fldMMdlBuf[no];
 	
-	MMdl_InitWork( mmdl, fos );
+	mmdl_InitWork( mmdl, fos );
 	
 	if( MMDL_CheckStatusBit(mmdl,MMDL_STABIT_MOVEPROC_INIT) == 0 ){
-		MMdl_InitMoveWork( mmdl );
+		mmdl_InitMoveWork( mmdl );
 	}else{
-		MMdl_InitCallMoveProcWork( mmdl );
+		mmdl_InitCallMoveProcWork( mmdl );
 	}
 	
 	MMDL_OffMoveBitCompletedDrawInit( mmdl );
-	MMdl_InitDrawWork( mmdl );
+	mmdl_InitDrawWork( mmdl );
 	
-	MMdlSys_AddMMdlTCB( fos, mmdl );
-	MMdlSys_IncrementOBJCount( (MMDLSYS*)MMDL_GetMMdlSys(mmdl) );
+	mmdlsys_AddMMdlTCB( fos, mmdl );
+	mmdlsys_IncrementOBJCount( (MMDLSYS*)MMDL_GetMMdlSys(mmdl) );
 	
 	return( mmdl );
 }

@@ -877,6 +877,7 @@ extern s16 MMDL_GetHeightGrid( const MMDL * mmdl );
 extern MMDL_BLACTCONT * MMDL_GetBlActCont( MMDL *mmdl );
 extern u8 MMDL_GetGridSizeX( const MMDL *mmdl );
 extern u8 MMDL_GetGridSizeZ( const MMDL *mmdl );
+extern void MMDL_GetControlOffsetPos( const MMDL *mmdl, VecFx32 *pos );
 
 extern BOOL MMDLSYS_CheckCompleteDrawInit( const MMDLSYS *mmdlsys );
 extern void MMDLSYS_SetCompleteDrawInit( MMDLSYS *mmdlsys, BOOL flag );

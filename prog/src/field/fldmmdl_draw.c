@@ -269,13 +269,14 @@ void * MMDL_DrawArcDataAlloc( const MMDLSYS *fos, u32 datID, int fb )
 //--------------------------------------------------------------
 void MMDL_GetDrawVectorPos( const MMDL * fmmdl, VecFx32 *vec )
 {
-	VecFx32 vec_pos,vec_offs,vec_out,vec_attr;
+	VecFx32 vec_pos,vec_offs,vec_out,vec_attr,vec_ctrl;
 	
 	MMDL_GetVectorPos( fmmdl, &vec_pos );
 	MMDL_GetVectorDrawOffsetPos( fmmdl, &vec_offs );
 	MMDL_GetVectorOuterDrawOffsetPos( fmmdl, &vec_out );
 	MMDL_GetVectorAttrDrawOffsetPos( fmmdl, &vec_attr );
-	vec->x = vec_pos.x + vec_offs.x + vec_out.x + vec_attr.x;
-	vec->y = vec_pos.y + vec_offs.y + vec_out.y + vec_attr.y;
-	vec->z = vec_pos.z + vec_offs.z + vec_out.z + vec_attr.z;
+  MMDL_GetControlOffsetPos( fmmdl, &vec_ctrl );
+	vec->x = vec_pos.x + vec_offs.x + vec_out.x + vec_attr.x + vec_ctrl.x;
+	vec->y = vec_pos.y + vec_offs.y + vec_out.y + vec_attr.y + vec_ctrl.y;
+	vec->z = vec_pos.z + vec_offs.z + vec_out.z + vec_attr.z + vec_ctrl.z;
 }

@@ -139,6 +139,65 @@ static GMEVENT * gjiki_CheckMoveHitEvent(
 
 //--------------------------------------------------------------
 /**
+ * 怪力穴チェック
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+enum
+{
+  ANA_NON = 0,
+  ANA_NOT,
+  ANA_ALL,
+};
+
+static int kairiki_CheckAna( MMDL *mmdl, u16 dir, FLDMAPPER *mapper )
+{
+  int flag;
+  MAPATTR attr;
+  MAPATTR_VALUE attr_val;
+  u8 x0,x1,z0,z1;
+  VecFx32 pos,c_pos;
+  
+  MMDL_GetVectorPos( mmdl, &pos );
+  MMDL_TOOL_AddDirVector( dir, &pos, GRID_FX32 );
+  
+  x1 = MMDL_GetGridSizeX( mmdl );
+  z1 = MMDL_GetGridSizeZ( mmdl );
+  
+  flag = TRUE;
+
+  for( z0 = 0; z0 < z1; z0++, pos.z -= GRID_FX32 )
+  {
+    for( x0 = 0, c_pos = pos; x0 < x1; x0++, c_pos.x += GRID_FX32 )
+    {
+      attr = MAPATTR_GetAttribute( mapper, &c_pos );
+      attr_val = MAPATTR_GetAttrValue( attr );
+      
+      if( MAPATTR_GetHitchFlag(attr) )
+      {
+        if( MAPATTR_VALUE_CheckKairikiAna(attr_val) == FALSE )
+        {
+          return( ANA_NOT ); //怪力穴以外で障害
+        }
+      }
+      else //穴以外
+      {
+        flag = FALSE;
+      }
+    }
+  }
+  
+  if( flag == TRUE ) //全部穴
+  {
+    return( ANA_ALL );
+  }
+  
+  return( ANA_NON );
+}
+
+//--------------------------------------------------------------
+/**
  * 怪力移動チェック
  * @param gjiki FIELD_PLAYER_GRID
  * @param dir 移動方向。DIR_UP等
@@ -157,46 +216,42 @@ static GMEVENT * gjiki_CheckEventKairiki(
     {
       u16 code = MMDL_GetOBJCode( mmdl );
       
-      if( code == ROCK )
+      if( code == ROCK || code == BIGROCK || code == JUNK )
       {
         u32 ret;
-        BOOL flag;
+        int ana;
+        FIELDMAP_WORK *fieldmap;
+        FIELD_PLAYER *fld_player;
+        FLDMAPPER *mapper;
+          
         KAGAYA_Printf( "怪力岩ヒット\n" );
         
+        fld_player = FIELD_PLAYER_GRID_GetFieldPlayer( gjiki );
+        fieldmap = FIELD_PLAYER_GetFieldMapWork( fld_player );
+        mapper = FIELDMAP_GetFieldG3Dmapper( fieldmap );
+        
+        ana = kairiki_CheckAna( mmdl, dir, mapper );
         ret = MMDL_HitCheckMoveDir( mmdl, dir );
         ret &= ~MMDL_MOVEHITBIT_LIM; //移動制限は無視
         
-        flag = FALSE;
-        
         if( (ret & MMDL_MOVEHITBIT_ATTR) )
         {
-          VecFx32 pos;
-          MAPATTR attr;
-          MAPATTR_VALUE attr_val;
-          FIELDMAP_WORK *fieldmap;
-          FIELD_PLAYER *fld_player;
-          FLDMAPPER *mapper;
-          
-          fld_player = FIELD_PLAYER_GRID_GetFieldPlayer( gjiki );
-          fieldmap = FIELD_PLAYER_GetFieldMapWork( fld_player );
-          mapper = FIELDMAP_GetFieldG3Dmapper( fieldmap );
-          
-          MMDL_GetVectorPos( mmdl, &pos );
-          MMDL_TOOL_AddDirVector( dir, &pos, GRID_FX32 );
-          
-          attr = MAPATTR_GetAttribute( mapper, &pos );
-          attr_val = MAPATTR_GetAttrValue( attr );
-          
-          if( MAPATTR_VALUE_CheckKairikiAna(attr_val) == TRUE )
+          if( ana == ANA_ALL ) //穴ヒットである
           {
-            ret = MMDL_MOVEHITBIT_NON;
-            flag = TRUE;
+            ret &= ~MMDL_MOVEHITBIT_ATTR;
           }
         }
         
         if( ret == MMDL_MOVEHITBIT_NON )
         {
+          BOOL flag = FALSE;
           KAGAYA_Printf( "怪力開始\n" );
+          
+          if( ana == ANA_ALL )
+          {
+            flag = TRUE;
+          }
+          
           return( gjiki_SetEventKairiki(gjiki,dir,mmdl,flag) );
         }
       }
