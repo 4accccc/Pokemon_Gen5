@@ -3,7 +3,7 @@
 <ica version="1.6.0">
 
 <head>
-	<create user="fujiwara_maiko" host="W00194" date="2010-01-12T21:09:47" source="m_siten04_00_00.ma"/>
+	<create user="fujiwara_maiko" host="W00194" date="2010-01-12T23:34:52" source="m_siten04_00_00.ma"/>
 	<title>Character Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
@@ -24,18 +24,18 @@
 	tolerance_translate="0.100000"
 />
 
-<node_scale_data size="1">
-	1.000000
+<node_scale_data size="22">
+	1.000000 1.000000 0.966064 0.932129 0.898193 0.864258 0.830322 0.796387 0.762451 0.728516
+	0.694580 0.660645 0.626709 0.592773 0.558838 0.524902 0.490967 0.457031 0.423096 0.389160
+	0.355225 0.321289
 </node_scale_data>
 
 <node_rotate_data size="1">
 	0.000000
 </node_rotate_data>
 
-<node_translate_data size="24">
-	0.000000 -8.054688 377.663818 376.956055 376.248291 375.540527 374.832764 374.125244 373.417480 372.709717
-	372.001953 371.294189 370.586670 369.878906 369.171143 368.463379 367.755615 367.048096 366.340332 365.632568
-	364.924805 364.217041 363.509277 -127.753174
+<node_translate_data size="4">
+	0.000000 -40.019531 348.944824 -128.859375
 </node_translate_data>
 
 <node_anm_array size="3">
@@ -51,15 +51,15 @@
 		<translate_z frame_step="1" data_size="1" data_head="0"/>
 	</node_anm>
 	<node_anm index="1">
-		<scale_x frame_step="1" data_size="1" data_head="0"/>
+		<scale_x frame_step="1" data_size="21" data_head="1"/>
 		<scale_y frame_step="1" data_size="1" data_head="0"/>
 		<scale_z frame_step="1" data_size="1" data_head="0"/>
 		<rotate_x frame_step="1" data_size="1" data_head="0"/>
 		<rotate_y frame_step="1" data_size="1" data_head="0"/>
 		<rotate_z frame_step="1" data_size="1" data_head="0"/>
 		<translate_x frame_step="1" data_size="1" data_head="1"/>
-		<translate_y frame_step="1" data_size="21" data_head="2"/>
-		<translate_z frame_step="1" data_size="1" data_head="23"/>
+		<translate_y frame_step="1" data_size="1" data_head="2"/>
+		<translate_z frame_step="1" data_size="1" data_head="3"/>
 	</node_anm>
 	<node_anm index="2">
 		<scale_x frame_step="1" data_size="1" data_head="0"/>
