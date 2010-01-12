@@ -3,18 +3,18 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fujiwara_maiko" host="W00194" date="2009-12-10T22:47:03" source="c09gate_01.mb"/>
+	<create user="fujiwara_maiko" host="W00194" date="2010-01-12T20:04:59" source="c09gate_02.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="fujiwara_maiko" host="W00194" date="2009-12-10T22:47:03" source="c09gate_01.mb"/>
+<original_create user="fujiwara_maiko" host="W00194" date="2010-01-12T20:04:59" source="c09gate_02.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
-	pos_scale="3"
+	pos_scale="5"
 	scaling_rule="standard"
 	vertex_style="direct"
 	magnify="1.000000"
@@ -27,7 +27,7 @@
 	use_primitive_strip="on"
 />
 
-<box_test pos_scale="3" xyz="-3.000000 0.250000 -1.000000" whd="6.000000 4.000000 2.000000"/>
+<box_test pos_scale="5" xyz="3.250000 0.056396 -0.250000" whd="1.500000 1.005859 0.500000"/>
 
 <tex_image_array size="2">
 	<tex_image index="0" name="c09_mon.1"
@@ -35,7 +35,7 @@
 		format="palette16"
 		color0_mode="transparency"
 		palette_name="c09_mon.1_pl"
-		path="C:/home/wb_data3d/build_model/indoor/c09gate_01/tex/c09_mon.1.tga"
+		path="C:/home/wb_data3d/build_model/indoor/c09gate_02/tex/c09_mon.1.tga"
 	>
 		<bitmap size="64">
 			1111 4432 3444 1122 2222 3322 3333 2223
@@ -53,7 +53,7 @@
 		format="palette16"
 		color0_mode="transparency"
 		palette_name="c09_mon.2_pl"
-		path="C:/home/wb_data3d/build_model/indoor/c09gate_01/tex/c09_mon.2.tga"
+		path="C:/home/wb_data3d/build_model/indoor/c09gate_02/tex/c09_mon.2.tga"
 	>
 		<bitmap size="64">
 			1111 4432 3444 1122 2222 3322 3333 2223
@@ -113,9 +113,9 @@
 	<polygon index="0" name="polygon0"
 		vertex_size="4" polygon_size="1"
 		triangle_size="0" quad_size="1"
-		volume_min="-3.000000 0.250000 -1.000000"
-		volume_max="3.000000 0.250000 1.000000"
-		volume_r="3.172119"
+		volume_min="3.250000 0.062500 -0.250000"
+		volume_max="4.750000 0.062500 0.250000"
+		volume_r="4.757080"
 		mtx_prim_size="1"
 		nrm_flag="on" clr_flag="off" tex_flag="on"
 	>
@@ -126,13 +126,13 @@
 					<mtx idx="0"/>
 					<tex st="-59.687500 16.000000"/>
 					<nrm xyz="0.000000 0.998047 0.000000"/>
-					<pos_s xyz="-3.000000 0.250000 1.000000"/>
+					<pos_s xyz="3.250000 0.062500 0.250000"/>
 					<tex st="16.000000 16.000000"/>
-					<pos_xy xy="3.000000 0.250000"/>
+					<pos_xy xy="4.750000 0.062500"/>
 					<tex st="16.000000 0.000000"/>
-					<pos_xz xz="3.000000 -1.000000"/>
+					<pos_xz xz="4.750000 -0.250000"/>
 					<tex st="-59.687500 0.000000"/>
-					<pos_xy xy="-3.000000 0.250000"/>
+					<pos_xy xy="3.250000 0.062500"/>
 				</primitive>
 			</primitive_array>
 		</mtx_prim>
@@ -140,9 +140,9 @@
 	<polygon index="1" name="polygon1"
 		vertex_size="4" polygon_size="1"
 		triangle_size="0" quad_size="1"
-		volume_min="-3.000000 0.250000 0.000000"
-		volume_max="3.000000 4.250000 0.000000"
-		volume_r="5.202148"
+		volume_min="3.250000 0.062500 0.000000"
+		volume_max="4.750000 1.062500 0.000000"
+		volume_r="4.867432"
 		mtx_prim_size="1"
 		nrm_flag="on" clr_flag="off" tex_flag="on"
 	>
@@ -153,13 +153,13 @@
 					<mtx idx="0"/>
 					<tex st="-59.687500 16.000000"/>
 					<nrm xyz="0.000000 0.000000 0.998047"/>
-					<pos_s xyz="3.000000 0.250000 0.000000"/>
+					<pos_s xyz="4.750000 0.062500 0.000000"/>
 					<tex st="-59.687500 0.000000"/>
-					<pos_xy xy="3.000000 4.250000"/>
+					<pos_xy xy="4.750000 1.062500"/>
 					<tex st="16.000000 0.000000"/>
-					<pos_xy xy="-3.000000 4.250000"/>
+					<pos_xy xy="3.250000 1.062500"/>
 					<tex st="16.000000 16.000000"/>
-					<pos_xy xy="-3.000000 0.250000"/>
+					<pos_xy xy="3.250000 0.062500"/>
 				</primitive>
 			</primitive_array>
 		</mtx_prim>
@@ -188,16 +188,16 @@
 		brother_prev="-1"
 		draw_mtx="on"
 		billboard="off"
-		scale="1.000000 1.000000 1.000000"
+		scale="1.000000 0.904053 1.000000"
 		rotate="0.000000 0.000000 0.000000"
 		translate="0.000000 0.000000 0.000000"
 		visibility="on"
 		display_size="1"
 		vertex_size="4" polygon_size="1"
 		triangle_size="0" quad_size="1"
-		volume_min="-3.000000 0.250000 -1.000000"
-		volume_max="3.000000 0.250000 1.000000"
-		volume_r="3.172119"
+		volume_min="3.250000 0.062500 -0.250000"
+		volume_max="4.750000 0.062500 0.250000"
+		volume_r="4.757080"
 	>
 		<display index="0" material="0" polygon="0" priority="0"/>
 	</node>
@@ -215,9 +215,9 @@
 		display_size="1"
 		vertex_size="4" polygon_size="1"
 		triangle_size="0" quad_size="1"
-		volume_min="-3.000000 0.250000 0.000000"
-		volume_max="3.000000 4.250000 0.000000"
-		volume_r="5.202148"
+		volume_min="3.250000 0.062500 0.000000"
+		volume_max="4.750000 1.062500 0.000000"
+		volume_r="4.867432"
 	>
 		<display index="0" material="0" polygon="1" priority="0"/>
 	</node>
