@@ -10,16 +10,16 @@
 #include <procsys.h>
 #include <tcbl.h>
 #include "system/main.h"
+#include "system/gfl_use.h"
 #include "print/printsys.h"
 #include "print/gf_font.h"
 #include "arc_def.h"
 #include "message.naix"
 #include "msg/msg_title.h"
-#include "test/performance.h"
 #include "font/font.naix"
-#include "system/gfl_use.h"
-
-#include "title/title.h"
+#include "title/startmenu.h"
+#include "test/testmode.h"
+#include "test/performance.h"
 
 #include "title.naix"
 #include "title1.naix"
@@ -53,6 +53,16 @@ enum{
 	SEQ_END,
 	SEQ_SKIP,
 };
+
+// 終了モード
+enum {
+	END_SELECT = 0,
+	END_TIMEOUT,
+#ifdef	PM_DEBUG
+	END_DEBUG_CALL,
+#endif	// PM_DEBUG
+};
+
 
 //==============================================================================
 //	構造体定義
@@ -95,7 +105,7 @@ typedef struct{
 typedef struct {
 	u16						seq;
 	HEAPID				heapID;
-//	int						mode;			///<次のメニュー画面へ引き渡すモード
+	u32						mode;			///<次のメニュー画面へ引き渡すモード
 	
 	SYS_CONTROL		CSys;
 	G2D_CONTROL		CG2d;
@@ -183,9 +193,9 @@ GFL_PROC_RESULT TitleProcInit( GFL_PROC * proc, int * seq, void * pwk, void * my
 
 #ifdef PM_DEBUG	// デバッグ用スキップ処理
 	if( pwk != NULL ){
-		TITLE_PARAM * prm = pwk;
-		if( prm->skipMode == CORPORATE_RET_DEBUG ){
-			prm->endMode = TITLE_END_DEBUG_CALL;
+		u32 * corp = pwk;
+		if( *corp == CORPORATE_RET_DEBUG ){
+			tw->mode = END_DEBUG_CALL;
 			tw->seq = SEQ_SKIP;
 		}
 	}
@@ -203,7 +213,6 @@ GFL_PROC_RESULT TitleProcInit( GFL_PROC * proc, int * seq, void * pwk, void * my
 GFL_PROC_RESULT TitleProcMain( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
 	TITLE_WORK* tw = mywk;
-	TITLE_PARAM * prm = pwk;
 
 	switch(tw->seq){
 	case SEQ_INIT:
@@ -239,21 +248,21 @@ GFL_PROC_RESULT TitleProcMain( GFL_PROC * proc, int * seq, void * pwk, void * my
 #ifdef	PM_DEBUG
 		// デバッグメニューへ
 		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT ){
-			prm->endMode = TITLE_END_DEBUG_CALL;
+			tw->mode = END_DEBUG_CALL;
 			tw->seq = SEQ_NEXT;
 			break;
 		}
 #endif	// PM_DEBUG
 		// ゲーム開始
 		if( GFL_UI_TP_GetTrg() == TRUE || ( GFL_UI_KEY_GetTrg() & NEXT_PROC_MASK ) ){
-			prm->endMode = TITLE_END_SELECT;
+			tw->mode = END_SELECT;
 			tw->seq = SEQ_NEXT;
 			break;
 		}
 		// 表示時間判別処理
 		tw->totalWait++;
 		if(tw->totalWait > TOTAL_WAIT){
-			prm->endMode = TITLE_END_TIMEOUT;
+			tw->mode = END_TIMEOUT;
 			tw->seq = SEQ_NEXT;
 		}
 		break;
@@ -294,8 +303,21 @@ GFL_PROC_RESULT TitleProcMain( GFL_PROC * proc, int * seq, void * pwk, void * my
 //--------------------------------------------------------------------------
 GFL_PROC_RESULT TitleProcEnd( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
+	TITLE_WORK * tw = mywk;
+	u32	mode;
+
+	mode = tw->mode;
+
 	GFL_PROC_FreeWork(proc);
 	GFL_HEAP_DeleteHeap(HEAPID_TITLE_DEMO);
+
+	if( mode == END_SELECT ){
+		GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(title), &StartMenuProcData, NULL);
+#ifdef PM_DEBUG	// デバッグ用スキップ処理
+	}else if( mode == END_DEBUG_CALL ){
+		GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(testmode), &TestMainProcData, NULL );
+#endif	// PM_DEBUG
+	}
 
 	return GFL_PROC_RES_FINISH;
 }

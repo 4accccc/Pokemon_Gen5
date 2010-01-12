@@ -12,10 +12,8 @@
 #include <procsys.h>
 #include "system\main.h"
 #include "title/title.h"
-#include "title/startmenu.h"
 #include "demo/command_demo.h"
 #include "corporate.h"
-#include "test/testmode.h"
 
 
 //==============================================================================
@@ -39,7 +37,6 @@ const GFL_PROC_DATA TitleControlProcData = {
 static u32 CorpRet;										// 社名表示処理ワーク
 #endif
 static COMMANDDEMO_DATA	cdemo_data;		// デモ処理データ
-static TITLE_PARAM	TitleParam;				// タイトル処理データ
 
 
 //==============================================================================
@@ -90,22 +87,9 @@ static GFL_PROC_RESULT TitleControlProcMain( GFL_PROC * proc, int * seq, void * 
 
 	case 2:		// メインタイトル
 		if( cdemo_data.ret == COMMANDDEMO_RET_SKIP_DEBUG ){
-			TitleParam.skipMode = CORPORATE_RET_DEBUG;
-		}else{
-			TitleParam.skipMode = CorpRet;
+			CorpRet = CORPORATE_RET_DEBUG;
 		}
-		GFL_PROC_SysCallProc( FS_OVERLAY_ID(title), &TitleProcData, &TitleParam );
-		*seq = 3;
-		break;
-
-	case 3:		// メインタイトル終了
-		// ゲーム開始
-		if( TitleParam.endMode == TITLE_END_SELECT ){
-			GFL_PROC_SysCallProc( FS_OVERLAY_ID(title), &StartMenuProcData, NULL );
-		// デバッグメニュー呼び出し
-		}else if( TitleParam.endMode == TITLE_END_DEBUG_CALL ){
-			GFL_PROC_SysCallProc( FS_OVERLAY_ID(testmode), &TestMainProcData, NULL );
-		}
+		GFL_PROC_SysCallProc( FS_OVERLAY_ID(title), &TitleProcData, &CorpRet );
 		*seq = 0;
 		break;
 	}
@@ -125,15 +109,7 @@ static GFL_PROC_RESULT TitleControlProcMain( GFL_PROC * proc, int * seq, void * 
 		break;
 
 	case 2:		// メインタイトル
-		GFL_PROC_SysCallProc( FS_OVERLAY_ID(title), &TitleProcData, &TitleParam );
-		*seq = 3;
-		break;
-
-	case 3:		// メインタイトル終了
-		// ゲーム開始
-		if( TitleParam.endMode == TITLE_END_SELECT ){
-			GFL_PROC_SysCallProc( FS_OVERLAY_ID(title), &StartMenuProcData, NULL );
-		}
+		GFL_PROC_SysCallProc( FS_OVERLAY_ID(title), &TitleProcData, NULL );
 		*seq = 0;
 		break;
 	}
