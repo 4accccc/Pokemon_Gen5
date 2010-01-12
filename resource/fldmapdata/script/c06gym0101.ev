@@ -129,7 +129,7 @@ EVENT_START		ev_bg_c06gym0101_pokezou
 	//ジムバッジを取得している場合
 	ELSE
 	
-		//【仮】分岐処理・C02到着していないなら　到着フラグが動いていない！
+		//【仮】分岐処理・フラグの設定が仮
 		IF FLAG_OFF( SYS_FLAG_ARRIVE_C07 ) THEN
 			_PLAYER_NAME( 0 )
 			_SYSWIN_MSG_DOWN( msg_c06gym0101_statue_02 )
@@ -196,7 +196,7 @@ _TALK_OBJ_START()
 		_BALLOONWIN_CLOSE()
 
 		//わざマシン入手
-		_ITEM_EVENT_KEYWAIT( ITEM_WAZAMASIN01, 1 )
+		_ITEM_EVENT_KEYWAIT( ITEM_WAZAMASIN62, 1 )
 		
 		//わざマシンの解説
 		_BALLOONWIN_OBJMSG( msg_c06gym0101_leader_05 , C06GYM0101_LEADER6_01 )
