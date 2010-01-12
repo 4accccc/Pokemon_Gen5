@@ -356,7 +356,7 @@ BOOL INTRO_MSG_PrintProc( INTRO_MSG_WORK* wk )
 
     case PRINTSTREAM_STATE_RUNNING :  // 実行中
       // メッセージスキップ
-      if( (GFL_UI_KEY_GetCont() & MSG_SKIP_BTN) || GFL_UI_TP_GetTrg() )
+      if( (GFL_UI_KEY_GetCont() & MSG_SKIP_BTN) || GFL_UI_TP_GetCont() )
       {
         PRINTSYS_PrintStreamShortWait( wk->print_stream, 0 );
       }
