@@ -166,7 +166,7 @@ typedef enum {
   BTL_DEBUGFLAG_MUST_CRITICAL,  ///< 打撃ワザのクリティカル発生率を100％にする
   BTL_DEBUGFLAG_HP_CONST,       ///< HP減らない
   BTL_DEBUGFLAG_PP_CONST,       ///< PP減らない
-  BTL_DEBUGFLAG_SAME_RANDOM,    ///< 前回と同じ乱数のタネを使う
+  BTL_DEBUGFLAG_DMG_RAND_OFF,   ///< ダメージのランダム補正をオフ
 
   BTL_DEBUGFLAG_MAX,
 
