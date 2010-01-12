@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2010-01-12T19:58:25"/>
+	<create user="matsumiya" host="W00207" date="2010-01-12T20:15:29"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,14 +263,14 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="248" top="181" right="939" bottom="796" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="1" style="0000" width="530"/>
+		<band id="0" index="1" style="0000" width="516"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="543"/>
+		<band id="2" index="3" style="0000" width="529"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="697"/>
+		<band id="4" index="0" style="0000" width="683"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -293,9 +293,11 @@
 
 
 	<row id="msg_h04_whistle_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>♂：草笛演奏
+		<comment>♂：草笛担当
 ・弾いていないとき
-・はい/いいえ選択肢表示</comment>
+・はい/いいえ選択肢表示
+　はい→whistle_02
+　いいえ→whistle_03</comment>
 		<attribute name="キャラ指定">T
 草笛</attribute>
 		<language name="JPN" width="256">たそがれオヤジバンド▼
@@ -309,39 +311,49 @@
 	</row>
 
 	<row id="msg_h04_whistle_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>♂：草笛演奏
+		<comment>♂：草笛担当
 ・whistle_01表示後に、はい選択
 ・ISS起動</comment>
 		<attribute name="キャラ指定">T
 草笛</attribute>
-		<language name="JPN" width="256">それじゃ　くさぶえの　メロディ
-たのしんでください</language>
-		<language name="JPN_KANJI" width="256">それじゃ　くさぶえの　メロディ
-たのしんでください</language>
+		<language name="JPN" width="256">くさぶえの　メロディ
+きいてよ！　たのしんでよ！</language>
+		<language name="JPN_KANJI" width="256">くさぶえの　メロディ
+きいてよ！　たのしんでよ！</language>
 	</row>
 
 	<row id="msg_h04_whistle_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>♂：草笛演奏
+		<comment>♂：草笛担当
 ・whistle_01表示後に、いいえ選択</comment>
 		<attribute name="キャラ指定">T
 草笛</attribute>
-		<language name="JPN" width="256">……ですよね</language>
-		<language name="JPN_KANJI" width="256">……ですよね</language>
+		<language name="JPN" width="256">……ですよね
+では　たそがれています</language>
+		<language name="JPN_KANJI" width="256">……ですよね
+では　たそがれています</language>
 	</row>
 
 	<row id="msg_h04_whistle_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>♂：草笛演奏
-・弾いているとき</comment>
+		<comment>♂：草笛担当
+・弾いているとき
+・話しかけた時点でISS停止
+・はい/いいえ選択肢表示
+　はい→whistle_02
+　いいえ→whistle_03</comment>
 		<attribute name="キャラ指定">T
 草笛</attribute>
-		<language name="JPN" width="256">えんそうに　むちゅうだ！</language>
-		<language name="JPN_KANJI" width="256">えんそうに　むちゅうだ！</language>
+		<language name="JPN" width="256">どうしたの？
+まだ　くさぶえ　きく？</language>
+		<language name="JPN_KANJI" width="256">どうしたの？
+まだ　くさぶえ　きく？</language>
 	</row>
 
 	<row id="msg_h04_guitar_01">
-		<comment>♂：ギター演奏
+		<comment>♂：ギター担当
 ・弾いていないとき
-・はい/いいえ選択肢表示</comment>
+・はい/いいえ選択肢表示
+　はい→guitar_02
+　いいえ→guitar_03</comment>
 		<attribute name="キャラ指定">S
 ギター弾き</attribute>
 		<language name="JPN" width="256">たそがれオヤジバンド▼
@@ -353,7 +365,7 @@
 	</row>
 
 	<row id="msg_h04_guitar_02">
-		<comment>♂：ギター演奏
+		<comment>♂：ギター担当
 ・guitar_01表示後に、はい選択
 ・ISS起動</comment>
 		<attribute name="キャラ指定">S
@@ -365,27 +377,37 @@
 	</row>
 
 	<row id="msg_h04_guitar_03">
-		<comment>♂：ギター演奏
+		<comment>♂：ギター担当
 ・guitar_01表示後に、いいえ選択</comment>
 		<attribute name="キャラ指定">S
 ギター弾き</attribute>
-		<language name="JPN" width="256">……ですよね</language>
-		<language name="JPN_KANJI" width="256">……ですよね</language>
+		<language name="JPN" width="256">……ですよね
+では　たそがれています</language>
+		<language name="JPN_KANJI" width="256">……ですよね
+では　たそがれています</language>
 	</row>
 
 	<row id="msg_h04_guitar_04">
-		<comment>♂：ギター演奏
-・弾いているとき</comment>
+		<comment>♂：ギター担当
+・弾いているとき
+・話しかけた時点でISS停止
+・はい/いいえ選択肢表示
+　はい→guitar_02
+　いいえ→guitar_03</comment>
 		<attribute name="キャラ指定">S
 ギター弾き</attribute>
-		<language name="JPN" width="256">えんそうに　むちゅうだ！</language>
-		<language name="JPN_KANJI" width="256">えんそうに　むちゅうだ！</language>
+		<language name="JPN" width="256">どうですか？　まだ
+ギターの　おとを　ききますか？</language>
+		<language name="JPN_KANJI" width="256">どうですか？　まだ
+ギターの　おとを　ききますか？</language>
 	</row>
 
 	<row id="msg_h04_voice_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂：ボイスパーカッション
 ・弾いていないとき
-・はい/いいえ選択肢表示</comment>
+・はい/いいえ選択肢表示
+　はい→voice_02
+　いいえ→voice_03</comment>
 		<attribute name="キャラ指定">G
 ボイスパーカス</attribute>
 		<language name="JPN" width="256">たそがれオヤジバンド▼
@@ -417,17 +439,25 @@
 ・voice_01表示後に、いいえ選択</comment>
 		<attribute name="キャラ指定">G
 ボイスパーカス</attribute>
-		<language name="JPN" width="256">……ですよね</language>
-		<language name="JPN_KANJI" width="256">……ですよね</language>
+		<language name="JPN" width="256">……ですよね
+では　たそがれています</language>
+		<language name="JPN_KANJI" width="256">……ですよね
+では　たそがれています</language>
 	</row>
 
 	<row id="msg_h04_voice_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂：ボイスパーカッション
-・弾いているとき</comment>
+・弾いているとき
+・話しかけた時点でISS停止
+・はい/いいえ選択肢表示
+　はい→voice_02
+　いいえ→voice_03</comment>
 		<attribute name="キャラ指定">G
 ボイスパーカス</attribute>
-		<language name="JPN" width="256">ボイスパーカッションに　むちゅうだ！</language>
-		<language name="JPN_KANJI" width="256">ボイスパーカッションに　むちゅうだ！</language>
+		<language name="JPN" width="256">ねえねえ　ボイスパーカッション
+まだ　ききたいですよね？</language>
+		<language name="JPN_KANJI" width="256">ねえねえ　ボイスパーカッション
+まだ　ききたいですよね？</language>
 	</row>
 
 	<row id="msg_h04_leadsinger_01">
@@ -465,17 +495,23 @@
 ・leadsinger_01表示後に、いいえ選択</comment>
 		<attribute name="キャラ指定">R
 ボーカル</attribute>
-		<language name="JPN" width="256">……ですよね</language>
-		<language name="JPN_KANJI" width="256">……ですよね</language>
+		<language name="JPN" width="256">……ですよね
+では　たそがれています</language>
+		<language name="JPN_KANJI" width="256">……ですよね
+では　たそがれています</language>
 	</row>
 
 	<row id="msg_h04_leadsinger_04">
 		<comment>♂：ボーカル担当
-・弾いているとき</comment>
+・弾いているとき
+・話しかけた時点でISS停止
+・はい/いいえ選択肢表示</comment>
 		<attribute name="キャラ指定">R
 ボーカル</attribute>
-		<language name="JPN" width="256">うたに　むちゅうだ！</language>
-		<language name="JPN_KANJI" width="256">うたに　むちゅうだ！</language>
+		<language name="JPN" width="256">トレーナーはん　まだまだ
+うちの　ボーカル　きいてや！</language>
+		<language name="JPN_KANJI" width="256">トレーナーはん　まだまだ
+うちの　ボーカル　きいてや！</language>
 	</row>
 
 	<flowchart-group-list>
