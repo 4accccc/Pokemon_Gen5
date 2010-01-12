@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-22T13:42:26"/>
+	<create user="matsumiya" host="W00207" date="2010-01-12T18:02:33"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -274,7 +274,7 @@
 	</tag-table>
 
 	<columns>
-		<id position="0" width="163"/>
+		<id position="0" width="171"/>
 		<group default=" 0:デフォルト" position="-1" width="100">
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 		</group>
@@ -335,6 +335,45 @@
 		<operation add_message="no" header_setting="no" tag_setting="no" output_setting="no" display="no" sort="no" flowchart_window="no"/>
 	</lock>
 
+
+	<row id="msg_d02r0101_hakaim_stop1_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・c02ジムバッジ取得で削除
+・GRIDX=597
+　GRIDZ=583</comment>
+		<attribute name="キャラ指定">ＨＡＫＡＩＭ
+プラズマ団♂</attribute>
+		<language name="JPN" width="256">まちがった　かちかんを
+ハカイするためなら……</language>
+		<language name="JPN_KANJI" width="256">間違った　価値観を
+ハカイするためなら……</language>
+	</row>
+
+	<row id="msg_d02r0101_hakaim_stop2_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・c02ジムバッジ取得で削除
+・GRIDX=597
+　GRIDZ=584</comment>
+		<attribute name="キャラ指定">ＨＡＫＡＩＭ
+プラズマ団♂</attribute>
+		<language name="JPN" width="256">なかまが　ごうりゅう　したなら
+さくせんを　じっこうする！</language>
+		<language name="JPN_KANJI" width="256">仲間が　合流し次第
+作戦を　実行する！</language>
+	</row>
+
+	<row id="msg_d02r0101_hakaiw_stop1_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀
+・c02ジムバッジ取得で削除
+・GRIDX=597
+　GRIDZ=585</comment>
+		<attribute name="キャラ指定">ＨＡＫＡＩＷ
+プラズマ団♀</attribute>
+		<language name="JPN" width="256">すべての　ポケモンを　かいほうする……
+なんて　すばらしいんでしょう</language>
+		<language name="JPN_KANJI" width="256">すべての　ポケモンを　解放する……
+なんて　すばらしいんでしょう</language>
+	</row>
 
 	<row id="msg_d02r0101_leader3_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
