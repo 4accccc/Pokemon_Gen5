@@ -424,7 +424,7 @@ static void _pocketCursorChange(FIELD_ITEMMENU_WORK* pWork,int oldpocket, int ne
   MYITEM_FieldBagCursorGet(pWork->pBagCursor, newpocket, &cur, &scr );
   pWork->curpos = cur;
   pWork->oamlistpos = scr - 1;
-  ITEMDISP_scrollCursorChangePos(pWork, ITEMMENU_GetItemIndex(pWork));
+  ITEMDISP_ScrollCursorChangePos(pWork, ITEMMENU_GetItemIndex(pWork));
   ITEMDISP_PocketMessage(pWork, newpocket);
   ITEMDISP_ChangePocketCell( pWork,newpocket );
   ITEMDISP_ItemInfoWindowChange(pWork,newpocket);
@@ -696,17 +696,17 @@ static void _itemMovePosition(FIELD_ITEMMENU_WORK* pWork)
   }
 
   if( _itemScrollCheck(pWork) ){   // スクロールバーの操作
-    ITEMDISP_scrollCursorMove(pWork);
+    ITEMDISP_ScrollCursorMove(pWork);
 
     // 負荷軽減のためセルメッセージだけ更新
 //  ITEMDISP_CellMessagePrint(pWork);
   }
   else if(_itemMovePositionTouchItem(pWork)){ // アイテム移動モード時のアイテム部分タッチ処理
-    ITEMDISP_scrollCursorChangePos(pWork, ITEMMENU_GetItemIndex(pWork));
+    ITEMDISP_ScrollCursorChangePos(pWork, ITEMMENU_GetItemIndex(pWork));
     bChange = TRUE;
   }
   else if(_keyChangeItemCheck(pWork)){   // キーの操作
-    ITEMDISP_scrollCursorChangePos(pWork, ITEMMENU_GetItemIndex(pWork));
+    ITEMDISP_ScrollCursorChangePos(pWork, ITEMMENU_GetItemIndex(pWork));
     bChange = TRUE;
   }
   if(bChange){
@@ -783,7 +783,7 @@ static void _itemInnerUse( FIELD_ITEMMENU_WORK* pWork )
       WORDSET_RegisterPlayerName(pWork->WordSet, 0,  pWork->mystatus );
       WORDSET_RegisterItemName(pWork->WordSet, 1,  pWork->ret_item );
       WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
-      ITEMDISP_ItemInfoWindowDisp( pWork );
+      ITEMDISP_ItemInfoWindowDispEx( pWork, TRUE );
 
       // @TODO スプレー音が見当たらないのでとりあえずテキトーな音
       GFL_SOUND_PlaySE( SE_BAG_DECIDE );
@@ -793,7 +793,7 @@ static void _itemInnerUse( FIELD_ITEMMENU_WORK* pWork )
       // つかえなかった
       GFL_MSG_GetString( pWork->MsgManager, msg_bag_067, pWork->pStrBuf );
       WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
-      ITEMDISP_ItemInfoWindowDisp( pWork );
+      ITEMDISP_ItemInfoWindowDispEx( pWork, TRUE );
     }
 
     _CHANGE_STATE(pWork,_itemInnerUseWait);
@@ -1078,13 +1078,13 @@ static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* pWork)
   // タッチスクロール
   else if( _itemScrollCheck(pWork) )
   {
-    ITEMDISP_scrollCursorMove(pWork);
+    ITEMDISP_ScrollCursorMove(pWork);
     bChange = TRUE;
   }
   // キー操作
   else if( _keyMoveCheck(pWork) )
   {
-    ITEMDISP_scrollCursorChangePos(pWork, ITEMMENU_GetItemIndex(pWork));
+    ITEMDISP_ScrollCursorChangePos(pWork, ITEMMENU_GetItemIndex(pWork));
     bChange = TRUE;
   }
 
@@ -1197,7 +1197,7 @@ static void _itemTecniqueUseInit(FIELD_ITEMMENU_WORK* pWork)
   GFL_MSG_GetString( pWork->MsgManager, msg_bag_065, pWork->pStrBuf );
   WORDSET_RegisterWazaName(pWork->WordSet, 0, ITEM_GetWazaNo( pWork->ret_item ));
   WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
-  ITEMDISP_ItemInfoWindowDisp( pWork );
+  ITEMDISP_ItemInfoWindowDispEx( pWork, TRUE );
   _CHANGE_STATE(pWork,_itemTecniqueUseWait);
 }
 
@@ -2773,7 +2773,7 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
       }
 
       _ItemChange(pWork, nowno, ITEMMENU_GetItemIndex(pWork));
-      //      ITEMDISP_scrollCursorChangePos(pWork, ITEMMENU_GetItemIndex(pWork));
+      //      ITEMDISP_ScrollCursorChangePos(pWork, ITEMMENU_GetItemIndex(pWork));
       _windowRewrite(pWork);
 
       KTST_SetDraw( pWork, FALSE );

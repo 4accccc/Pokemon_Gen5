@@ -65,6 +65,8 @@ enum
   PALOFS_NUM_FRAME = 3,   ///< 数値入力フレーム
 };
 
+#define MSG_SKIP_BTN (PAD_BUTTON_A|PAD_BUTTON_B)
+
 #define ITEMWIN_FRAME (GFL_BG_FRAME1_S)
 #define ITEMREPORT_FRAME (GFL_BG_FRAME2_S)
 
@@ -737,7 +739,7 @@ void ITEMDISP_upMessageDelete(FIELD_ITEMMENU_WORK* pWork)
   GFL_BMPWIN_Delete(pWork->winSellGold);
   GFL_BMPWIN_Delete(pWork->winPocketNone);
 
-  GFL_CLACT_WK_Remove( pWork->scrollCur );
+  GFL_CLACT_WK_Remove( pWork->clwkScroll );
 
  if(pWork->cellicon!=NULL){
   GFL_CLACT_WK_Remove( pWork->cellicon );
@@ -1032,13 +1034,13 @@ void ITEMDISP_CellCreate( FIELD_ITEMMENU_WORK* pWork )
     cellInitData.bgpri = 2;
     cellInitData.anmseq = 0;
 
-    pWork->scrollCur = GFL_CLACT_WK_Create(
+    pWork->clwkScroll = GFL_CLACT_WK_Create(
       pWork->cellUnit ,
       pWork->cellRes[_NCG_CUR], pWork->cellRes[_PLT_CUR],  pWork->cellRes[_ANM_CUR],
       &cellInitData ,CLSYS_DEFREND_MAIN , pWork->heapID );
 
-    GFL_CLACT_WK_SetDrawEnable( pWork->scrollCur, TRUE );
-    GFL_CLACT_WK_SetAutoAnmFlag( pWork->scrollCur, TRUE );
+    GFL_CLACT_WK_SetDrawEnable( pWork->clwkScroll, TRUE );
+    GFL_CLACT_WK_SetAutoAnmFlag( pWork->clwkScroll, TRUE );
   }
 
   //選択カーソル
@@ -1147,14 +1149,24 @@ void ITEMDISP_CellMessagePrint( FIELD_ITEMMENU_WORK* pWork )
   // 文字色指定
   static u8 color_tbl[ ITEM_LIST_NUM ] = { 1, 0, 0, 0, 0, 0, 0, 1 };
 
-  // ポケット内のアイテムが0個の時は「なにもありません」
+  // ポケット内のアイテムが0個の時
   length = ITEMMENU_GetItemPocketNumber( pWork );
   if( length == 0 )
   {
+    // 「なにもありません」表示
     GFL_BMPWIN_MakeTransWindow( pWork->winPocketNone );
+    // バーを消す
+
+    // GFL_BG_WriteScreenFree( GFL_BG_FRAME2_S );
+    
+    {
+      void* adrs = GFL_BG_GetScreenBufferAdrs( GFL_BG_FRAME0_M );
+    }
+
   }
   else
   {
+    // 「なにもありません」非表示
     GFL_BMPWIN_ClearTransWindow( pWork->winPocketNone );
   }
 
@@ -1259,6 +1271,7 @@ void ITEMDISP_CellVramTrans( FIELD_ITEMMENU_WORK* pWork )
     HOSAKA_Printf("length=%d \n", length);
 
     GFL_CLACT_WK_SetDrawEnable( pWork->clwkCur, is_cur_draw );
+    GFL_CLACT_WK_SetDrawEnable( pWork->clwkScroll, is_cur_draw );
   }
 
   // リストOAM生成＆描画
@@ -1320,7 +1333,7 @@ void ITEMDISP_CellVramTrans( FIELD_ITEMMENU_WORK* pWork )
  * @retval  none
  */
 //------------------------------------------------------------------------------
-void ITEMDISP_scrollCursorMove(FIELD_ITEMMENU_WORK* pWork)
+void ITEMDISP_ScrollCursorMove(FIELD_ITEMMENU_WORK* pWork)
 {
   u32 x,y;
 
@@ -1332,9 +1345,9 @@ void ITEMDISP_scrollCursorMove(FIELD_ITEMMENU_WORK* pWork)
     if(y > _SCROLL_BOTTOM_Y){
       return;
     }
-    GFL_CLACT_WK_GetPos( pWork->scrollCur , &pos, CLWK_SETSF_NONE );
+    GFL_CLACT_WK_GetPos( pWork->clwkScroll , &pos, CLWK_SETSF_NONE );
     pos.y = y;
-    GFL_CLACT_WK_SetPos( pWork->scrollCur , &pos, CLWK_SETSF_NONE );
+    GFL_CLACT_WK_SetPos( pWork->clwkScroll , &pos, CLWK_SETSF_NONE );
   }
 }
 
@@ -1344,7 +1357,7 @@ void ITEMDISP_scrollCursorMove(FIELD_ITEMMENU_WORK* pWork)
  * @retval  none
  */
 //------------------------------------------------------------------------------
-void ITEMDISP_scrollCursorChangePos(FIELD_ITEMMENU_WORK* pWork, int num)
+void ITEMDISP_ScrollCursorChangePos(FIELD_ITEMMENU_WORK* pWork, int num)
 {
   u32 x,y;
 
@@ -1365,9 +1378,9 @@ void ITEMDISP_scrollCursorChangePos(FIELD_ITEMMENU_WORK* pWork, int num)
       GFL_SOUND_PlaySE( SE_BAG_SRIDE );
     }
 
-    GFL_CLACT_WK_GetPos( pWork->scrollCur , &pos, CLWK_SETSF_NONE );
+    GFL_CLACT_WK_GetPos( pWork->clwkScroll , &pos, CLWK_SETSF_NONE );
     pos.y = y;
-    GFL_CLACT_WK_SetPos( pWork->scrollCur ,  &pos, CLWK_SETSF_NONE );
+    GFL_CLACT_WK_SetPos( pWork->clwkScroll ,  &pos, CLWK_SETSF_NONE );
   }
 
   // カーソルを表示
@@ -1777,7 +1790,14 @@ void ITEMDISP_WazaInfoWindowChange( FIELD_ITEMMENU_WORK *pWork )
  */
 //------------------------------------------------------------------------------
 
-void ITEMDISP_ItemInfoWindowDisp( FIELD_ITEMMENU_WORK *pWork )
+//-----------------------------------------------------------------------------
+/**
+ * @brief   アイテム説明の文章をExpバッファに入れる
+ * @param   is_stream TRUE:ストリーム再生, FALSE:ベタ描画
+ * @retval  none
+ */
+//-----------------------------------------------------------------------------
+void ITEMDISP_ItemInfoWindowDispEx( FIELD_ITEMMENU_WORK* pWork, BOOL is_stream )
 {
   GFL_BMPWIN* pwin;
 
@@ -1792,47 +1812,33 @@ void ITEMDISP_ItemInfoWindowDisp( FIELD_ITEMMENU_WORK *pWork )
   GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pwin), 15);
   GFL_FONTSYS_SetColor(1, 2, 15);
 
-#if 1
-  PRINTSYS_Print( GFL_BMPWIN_GetBmp(pwin), 0, 0, pWork->pExpStrBuf, pWork->fontHandle);
-#else
-
-  //==============================================================================================
-  /**
-   * プリントストリームを利用した文字列描画（通常版 - コールバックなし）
-   *
-   * @param   dst     描画先Bitmap
-   * @param   xpos    描画開始Ｘ座標（ドット）
-   * @param   ypos    描画開始Ｙ座標（ドット）
-   * @param   str     文字列
-   * @param   font    フォントハンドラ
-   * @param   wait    １文字描画ごとのウェイトフレーム数（※）
-   * @param   tcbsys    使用するGFL_TCBLシステムポインタ
-   * @param   tcbpri    使用するタスクプライオリティ
-   * @param   heapID    使用するヒープID
-   *
-   * @retval  PRINT_STREAM* ストリームハンドル
-   *
-   * ※ wait に-2 以下の値を設定することで、毎フレーム２文字以上の描画を行う。-2（２文字）, -3（３文字）...
-   */
-  //==============================================================================================
-  //extern PRINT_STREAM* PRINTSYS_PrintStream(
-  //    GFL_BMPWIN* dst, u16 xpos, u16 ypos, const STRBUF* str, GFL_FONT* font,
-  //    int wait, GFL_TCBLSYS* tcbsys, u32 tcbpri, HEAPID heapID, u16 clearColor );
-
-
-#if 0
-  pWork->pStream = PRINTSYS_PrintStream(pwin ,0,0, pWork->pExpStrBuf, pWork->fontHandle,
-                                        MSGSPEED_GetWait(), pWork->pMsgTcblSys, 2, pWork->heapID, 15);
-#endif 
-
-
-#endif
+  if( is_stream == TRUE )
+  {
+    pWork->pStream = PRINTSYS_PrintStream(pwin ,0,0, pWork->pExpStrBuf, pWork->fontHandle,
+                      MSGSPEED_GetWait(), pWork->pMsgTcblSys, 2, pWork->heapID, 15);
+  }
+  else
+  {
+    PRINTSYS_Print( GFL_BMPWIN_GetBmp(pwin), 0, 0, pWork->pExpStrBuf, pWork->fontHandle);
+  }
 
   BmpWinFrame_Write( pwin, WINDOW_TRANS_ON_V, GFL_ARCUTIL_TRANSINFO_GetPos(pWork->bgchar), _BUTTON_WIN_PAL );
 
   GFL_BMPWIN_TransVramCharacter(pwin);
   GFL_BMPWIN_MakeScreen(pwin);
   GFL_BG_LoadScreenV_Req(GFL_BG_FRAME3_M);
+
+}
+
+//-----------------------------------------------------------------------------
+/**
+ * @brief   アイテム説明の文章をExpバッファに入れる
+ * @retval  none
+ */
+//-----------------------------------------------------------------------------
+void ITEMDISP_ItemInfoWindowDisp( FIELD_ITEMMENU_WORK *pWork )
+{
+  ITEMDISP_ItemInfoWindowDispEx( pWork, FALSE );
 }
 
 //------------------------------------------------------------------------------
@@ -1857,20 +1863,31 @@ void ITEMDISP_ItemInfoMessageMake( FIELD_ITEMMENU_WORK *pWork,int id )
 
 BOOL ITEMDISP_MessageEndCheck(FIELD_ITEMMENU_WORK* pWork)
 {
-  if(pWork->pStream){
+  if(pWork->pStream)
+  {
     int state = PRINTSYS_PrintStreamGetState( pWork->pStream );
-    switch(state){
-    case PRINTSTREAM_STATE_DONE:
+    switch(state)
+    {
+    case PRINTSTREAM_STATE_DONE: // 終了
       PRINTSYS_PrintStreamDelete( pWork->pStream );
       pWork->pStream = NULL;
       break;
-    case PRINTSTREAM_STATE_PAUSE:
-      if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_DECIDE || GFL_UI_TP_GetTrg() ){
+
+    case PRINTSTREAM_STATE_PAUSE: // 一時停止中
+      if( ( GFL_UI_KEY_GetTrg() & MSG_SKIP_BTN ) || GFL_UI_TP_GetTrg() )
+      {
         PRINTSYS_PrintStreamReleasePause( pWork->pStream );
       }
       break;
-    default:
+    case PRINTSTREAM_STATE_RUNNING :  // 実行中
+      // メッセージスキップ
+      if( ( GFL_UI_KEY_GetCont() & MSG_SKIP_BTN ) || GFL_UI_TP_GetCont() )
+      {
+        PRINTSYS_PrintStreamShortWait( pWork->pStream, 0 );
+      }
       break;
+    default:
+      GF_ASSERT(0);
     }
     return FALSE;  //まだ終わってない
   }

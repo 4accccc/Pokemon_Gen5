@@ -187,7 +187,7 @@ struct _FIELD_ITEMMENU_PARAM {
   GFL_CLUNIT *cellUnit;
   GFL_CLWK  *cellicon;
   GFL_CLWK  *clwkCur;
-  GFL_CLWK  *scrollCur;
+  GFL_CLWK  *clwkScroll;
   GFL_CLWK  *clwkPocketIcon;
   GFL_CLWK  *clwkWazaKind;
   GFL_CLWK  *clwkWazaType;
@@ -358,8 +358,8 @@ extern void ITEMDISP_CellResourceCreate( FIELD_ITEMMENU_WORK* pWork );
 extern void ITEMDISP_CellCreate( FIELD_ITEMMENU_WORK* pWork );
 extern void ITEMDISP_CellMessagePrint( FIELD_ITEMMENU_WORK* pWork );
 extern void ITEMDISP_CellVramTrans( FIELD_ITEMMENU_WORK* pWork );
-extern void ITEMDISP_scrollCursorMove(FIELD_ITEMMENU_WORK* pWork);
-extern void ITEMDISP_scrollCursorChangePos(FIELD_ITEMMENU_WORK* pWork, int num);
+extern void ITEMDISP_ScrollCursorMove(FIELD_ITEMMENU_WORK* pWork);
+extern void ITEMDISP_ScrollCursorChangePos(FIELD_ITEMMENU_WORK* pWork, int num);
 
 extern s32 ITEMMENU_SellPrice( int item_no, int input_num, HEAPID heapID );
 extern int ITEMMENU_GetItemIndex(FIELD_ITEMMENU_WORK* pWork);
@@ -374,6 +374,7 @@ extern void ITEMDISP_ListPlateSelectChange( FIELD_ITEMMENU_WORK* pWork , int sel
 extern void ITEMDISP_ItemInfoWindowChange(FIELD_ITEMMENU_WORK *pWork,int pocketno  );
 extern void ITEMDISP_WazaInfoWindowChange( FIELD_ITEMMENU_WORK *pWork );
 
+extern void ITEMDISP_ItemInfoWindowDispEx( FIELD_ITEMMENU_WORK *pWork, BOOL is_stream );
 extern void ITEMDISP_ItemInfoWindowDisp( FIELD_ITEMMENU_WORK *pWork );
 extern void ITEMDISP_ItemInfoMessageMake( FIELD_ITEMMENU_WORK *pWork,int id );
 extern BOOL ITEMDISP_MessageEndCheck(FIELD_ITEMMENU_WORK* pWork);
