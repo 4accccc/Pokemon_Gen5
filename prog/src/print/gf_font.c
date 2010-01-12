@@ -240,7 +240,7 @@ static void load_font_header( GFL_FONT* wk, u32 datID, BOOL fixedFontFlag, HEAPI
       GFL_ARC_LoadDataOfsByHandle( wk->fileHandle, datID, wk->fontHeader.ofsWidth,
             widthTblSize, (void*)(wk->widthTblTop) );
 
-      OS_TPrintf("[GF_FONT] WidthTableSize=%08x bytes\n", widthTblSize);
+//      OS_TPrintf("[GF_FONT] WidthTableSize=%08x bytes\n", widthTblSize);
     }
 
     // GlyphInfo
@@ -250,7 +250,7 @@ static void load_font_header( GFL_FONT* wk, u32 datID, BOOL fixedFontFlag, HEAPI
     wk->glyphCharH = wk->glyphInfo.cellHeight /8  + (wk->glyphInfo.cellHeight % 8 != 0);
     wk->glyphRemBits = (wk->glyphInfo.cellWidth * 2) % 8;
     if( wk->glyphRemBits == 0 ){ wk->glyphRemBits = 8; }
-    OS_TPrintf("[GF_FONT] CellW=%d, RemBits=%d\n", wk->glyphInfo.cellWidth, wk->glyphRemBits);
+//    OS_TPrintf("[GF_FONT] CellW=%d, RemBits=%d\n", wk->glyphInfo.cellWidth, wk->glyphRemBits);
 
     wk->ofsGlyphTop = wk->fontHeader.ofsGlyph + sizeof(NNSGlyphInfo);
     wk->glyphBuf = GFL_HEAP_AllocMemory( heapID, wk->glyphInfo.cellSize );
@@ -262,9 +262,9 @@ static void load_font_header( GFL_FONT* wk, u32 datID, BOOL fixedFontFlag, HEAPI
       GFL_ARC_LoadDataOfsByHandle( wk->fileHandle, datID, wk->fontHeader.ofsMap,
             mapTblSize, (void*)(wk->codeMapTop) );
 
-      OS_TPrintf("[GF_FONT] MapIdxTableSize=%08x bytes\n", mapTblSize);
-      OS_TPrintf("[GF_FONT] WidthTableOfs  = %08x\n", wk->fontHeader.ofsWidth);
-      OS_TPrintf("[GF_FONT] MapIdxTableOfs = %08x\n", wk->fontHeader.ofsMap);
+//      OS_TPrintf("[GF_FONT] MapIdxTableSize=%08x bytes\n", mapTblSize);
+//      OS_TPrintf("[GF_FONT] WidthTableOfs  = %08x\n", wk->fontHeader.ofsWidth);
+//      OS_TPrintf("[GF_FONT] MapIdxTableOfs = %08x\n", wk->fontHeader.ofsMap);
     }
   }
 }
@@ -336,19 +336,18 @@ static void setup_font_datas( GFL_FONT* wk, GFL_FONT_LOADTYPE loadType, HEAPID h
 static void setup_type_on_memory( GFL_FONT* wk, u8 cellW, u8 cellH, HEAPID heapID )
 {
   #if 1
-//  void* fontData = ArcUtil_Load( arcID, datID, FALSE, heapID, ALLOC_TOP );
   u32  fileSize, bitDataSize;
 
   fileSize = GFL_ARC_GetDataSizeByHandle( wk->fileHandle, wk->arcDatID );
   bitDataSize = fileSize - wk->ofsGlyphTop;
-  OS_TPrintf("[メモリ常駐型フォント] FileSize=0x%08x, Bitデータサイズ=0x%08xbyte\n", fileSize, bitDataSize);
+//  OS_TPrintf("[メモリ常駐型フォント] FileSize=0x%08x, Bitデータサイズ=0x%08xbyte\n", fileSize, bitDataSize);
 
   wk->fontBitData = GFL_HEAP_AllocMemory( heapID, bitDataSize );
 
   GFL_ARC_LoadDataOfsByHandle( wk->fileHandle, wk->arcDatID, wk->ofsGlyphTop,
             bitDataSize, wk->fontBitData );
 
-  OS_TPrintf("[メモリ常駐型フォント] Bitデータ読み込み完了\n");
+//  OS_TPrintf("[メモリ常駐型フォント] Bitデータ読み込み完了\n");
 
   wk->GetBitmapFunc = GetBitmapOnMemory;
   if( cellW==1 && cellH==1 )
