@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tamada" host="W00139" date="2009-07-15T19:04:53"/>
+	<create user="matsumiya" host="W00207" date="2010-01-12T14:07:36"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="124"/>
+		<comment position="4" width="287"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -292,11 +292,261 @@
 	</lock>
 
 
-	<row id="msg_mapscript_dummy">
-		<comment>？？？</comment>
-		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	<row id="msg_powerful_01">
+		<comment>♂：究極技教え
+・初めての会話
+・はい/いいえの選択肢表示
+　はい　→03
+　いいえ→04</comment>
+		<attribute name="キャラ指定">OLDMAN</attribute>
+		<language name="JPN" width="256">つよさを　もとめて
+こんなところまで　きおったか▼
+……よろしい▼
+その　ねついに　こたえて
+これぞ！　という　わざを　おしえよう▼
+きゅうきょくの　わざ！
+おぬしの　ポケモンに　おしえるのか？</language>
+		<language name="JPN_KANJI" width="256">強さを　求めて
+こんなところまで　来おったか▼
+……よろしい▼
+その　熱意に　応えて
+これぞ！　という　技を　教えよう▼
+究極の　技！
+おぬしの　ポケモンに　教えるのか？</language>
+	</row>
+
+	<row id="msg_powerful_02">
+		<comment>♂：究極技教え
+・２回目以降の会話
+　あるいは技を習得したあと
+・はい/いいえの選択肢表示
+　はい　→03
+　いいえ→04</comment>
+		<language name="JPN" width="256">きゅうきょくの　わざ！
+おぬしの　ポケモンに　おしえるのか？</language>
+		<language name="JPN_KANJI" width="256">究極の　技！
+おぬしの　ポケモンに　教えるのか？</language>
+	</row>
+
+	<row id="msg_powerful_03">
+		<comment>♂：究極技教え
+・はい選択時
+　メッセージ表示後、ポケモン選択画面に</comment>
+		<language name="JPN" width="256">どの　ポケモンに
+わざを　おぼえさせるのじゃ？▼</language>
+		<language name="JPN_KANJI" width="256">どの　ポケモンに
+技を　覚えさせるのじゃ？▼</language>
+	</row>
+
+	<row id="msg_powerful_04">
+		<comment>♂：究極技教え
+・いいえ選択時</comment>
+		<language name="JPN" width="256">ふむう　それも　よかろう……
+きがむけば　また　あしを　はこべよ</language>
+		<language name="JPN_KANJI" width="256">ふむう　それも　よかろう……
+気が向けば　また　足を運べよ</language>
+	</row>
+
+	<row id="msg_powerful_05">
+		<comment>・ポケモン選択
+　最初から覚えられないポケモン→06
+　タマゴ→07
+　なつき度たりない→08
+　すでに技を習得済み→09
+
+・覚えられるポケモンを選択
+　炎タイプ→10
+　水タイプ→11
+　草タイプ→12</comment>
+		<language name="JPN" width="256">では　どの　ポケモンに
+わざを　おぼえさせるのじゃ？</language>
+		<language name="JPN_KANJI" width="256">では　どの　ポケモンに
+技を　覚えさせるのじゃ？</language>
+	</row>
+
+	<row id="msg_powerful_06">
+		<comment>・最初から覚えられないポケモンを選択</comment>
+		<language name="JPN" width="256">その　ポケモンでは　おぼえられんぞ！
+はりがみを　よむのじゃ！　カッ！！</language>
+		<language name="JPN_KANJI" width="256">その　ポケモンでは　覚えられんぞ！
+張り紙を　読むのじゃ！　カッ！！</language>
+	</row>
+
+	<row id="msg_powerful_07">
+		<comment>・タマゴ選択</comment>
+		<language name="JPN" width="256">タマゴに　わざを　おしえることは
+わしとて　ふかのうじゃ！　カッ！！</language>
+		<language name="JPN_KANJI" width="256">タマゴに　技を　教えることは
+わしとて　不可能じゃ！　カッ！！</language>
+	</row>
+
+	<row id="msg_powerful_08">
+		<comment>・なつき度がたりないポケモンを選択</comment>
+		<language name="JPN" width="256">おぬしと　ポケモンの　きずなが
+たりておらぬぞ！　カッ！！</language>
+		<language name="JPN_KANJI" width="256">おぬしと　ポケモンの　きずなが
+足りておらぬぞ！　カッ！！</language>
+	</row>
+
+	<row id="msg_powerful_09">
+		<comment>・すでに技を習得済みのポケモンを選択</comment>
+		<language name="JPN" width="256">その　ポケモンは　すでに
+わざを　おぼえているぞ　カッ！！</language>
+		<language name="JPN_KANJI" width="256">その　ポケモンは　すでに
+技を　覚えているぞ　カッ！！</language>
+	</row>
+
+	<row id="msg_powerful_10">
+		<comment>・習得ＯＫで炎ポケモン選択
+・はい/いいえの選択肢表示
+　はい（わざ３つ以下）→13
+　はい（わざ４つ）→14
+　いいえ→04
+
+・0＝ポケモン名</comment>
+		<language name="JPN" width="256">[1:01:ポケモン種族名:0]に　ブラストバーンを
+おぼえさせるのじゃな！　カッ！！</language>
+		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:0]に　ブラストバーンを
+覚えさせるのじゃな！　カッ！！</language>
+	</row>
+
+	<row id="msg_powerful_11">
+		<comment>・習得ＯＫで水ポケモン選択
+・はい/いいえの選択肢表示
+　はい（わざ３つ以下）→13
+　はい（わざ４つ）→14
+　いいえ→04
+
+・0＝ポケモン名</comment>
+		<language name="JPN" width="256">[1:01:ポケモン種族名:0]に　ハイドロカノンを
+おぼえさせるのじゃな！　カッ！！</language>
+		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:0]に　ハイドロカノンを
+おぼえさせるのじゃな！　カッ！！</language>
+	</row>
+
+	<row id="msg_powerful_12">
+		<comment>・習得ＯＫで草ポケモン選択
+・はい/いいえの選択肢表示
+・はい/いいえの選択肢表示
+　はい（わざ３つ以下）→13
+　はい（わざ４つ）→14
+　いいえ→04
+
+・0＝ポケモン名</comment>
+		<language name="JPN" width="256">[1:01:ポケモン種族名:0]に　ハードプラントを
+おぼえさせるのじゃな！　カッ！！</language>
+		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:0]に　ハードプラントを
+覚えさせるのじゃな！　カッ！！</language>
+	</row>
+
+	<row id="msg_powerful_13" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・はいを選択
+・わざが３つ以下</comment>
+		<attribute name="キャラ指定">システム</attribute>
+		<language name="JPN" width="256">[1:01:ポケモン種族名:0]は　あたらしく
+[1:07:わざ名:1]を　おぼえた！</language>
+		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:0]は　新しく
+[1:07:わざ名:1]を　覚えた！</language>
+	</row>
+
+	<row id="msg_powerful_14" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・はいを選択
+・わざが４つ
+　再度、はい/いいえの選択肢表示</comment>
+		<attribute name="キャラ指定">システム</attribute>
+		<language name="JPN" width="256">[1:01:ポケモン種族名:0]は　あたらしく
+[1:07:わざ名:1]を　おぼえたい……！▼
+しかし　[1:01:ポケモン種族名:0]は
+すでに　わざを　４つ　おぼえている！▼
+[1:07:わざ名:1]の　かわりに
+ほかの　わざを　わすれさせますか？</language>
+		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:0]は　新しく
+[1:07:わざ名:1]を　覚えたい……！▼
+しかし　[1:01:ポケモン種族名:0]は
+すでに　技を　４つ　覚えている！▼
+[1:07:わざ名:1]の　代わりに
+他の　技を　忘れさせますか？</language>
+	</row>
+
+	<row id="msg_powerful_15" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・はい/いいえの選択肢表示
+　はい　→16
+　いいえ→18</comment>
+		<attribute name="キャラ指定">システム</attribute>
+		<language name="JPN" width="256">[1:07:わざ名:1]を
+わすれさせて　よろしいですね？</language>
+		<language name="JPN_KANJI" width="256">[1:07:わざ名:1]を
+忘れさせて　よろしいですね？</language>
+	</row>
+
+	<row id="msg_powerful_16" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<attribute name="キャラ指定">システム</attribute>
+		<language name="JPN" width="256">１　２の　……ポカン！▼
+[1:01:ポケモン種族名:0]は　[1:07:わざ名:1]の
+つかいかたを　きれいに　わすれた！▼
+そして……！▼
+[1:01:ポケモン種族名:0]は　あたらしく
+[1:07:わざ名:2]を　おぼえた！</language>
+		<language name="JPN_KANJI" width="256">１　２の　……ポカン！▼
+[1:01:ポケモン種族名:0]は　[1:07:わざ名:1]の
+使い方を　きれいに　忘れた！▼
+そして……！▼
+[1:01:ポケモン種族名:0]は　新しく
+[1:07:わざ名:2]を　覚えた！</language>
+	</row>
+
+	<row id="msg_powerful_17" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・いいえ選択
+・再度、はい/いいえの選択肢表示
+　はい　→18
+　いいえ→14</comment>
+		<attribute name="キャラ指定">システム</attribute>
+		<language name="JPN" width="256">それでは　[1:07:わざ名:1]を
+おぼえさせるのを　あきらめますか？</language>
+		<language name="JPN_KANJI" width="256">それでは　[1:07:わざ名:1]を
+覚えさせるのを　あきらめますか？</language>
+	</row>
+
+	<row id="msg_powerful_18" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<attribute name="キャラ指定">システム</attribute>
+		<language name="JPN" width="256">[1:01:ポケモン種族名:0]は　[1:07:わざ名:1]を
+おぼえずに　おわった！</language>
+		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:0]は　[1:07:わざ名:1]を
+覚えずに　終わった！</language>
+	</row>
+
+	<row id="msg_poster_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>ＢＧメッセージ
+・今後WBの最初3匹（の進化系)を追加</comment>
+		<attribute name="キャラ指定">ポスター</attribute>
+		<language name="JPN" width="256">ここに　しるした　ポケモンに
+きゅうきょくの　わざを　おしえる！▼
+もえる　ほのおの　ポケモン
+　リザードン　バクフーン▽
+　バシャーモ　ゴウカザル▽
+　？？？？？▼
+たゆたう　みずの　ポケモン
+　カメックス　オーダイル▽
+　ラグラージ　エンペルト▽
+　？？？？？▼
+しずかな　くさの　ポケモン
+　フシギバナ　メガニウム▽
+　ジュカイン　ドダイトス▽
+　？？？？？</language>
+		<language name="JPN_KANJI" width="256">ここに　記した　ポケモンに
+究極の　技を　教える！▼
+燃える　炎の　ポケモン
+　リザードン　バクフーン▽
+　バシャーモ　ゴウカザル▽
+　？？？？？▼
+たゆたう　水の　ポケモン
+　カメックス　オーダイル▽
+　ラグラージ　エンペルト▽
+　？？？？？▼
+静かな　草の　ポケモン
+　フシギバナ　メガニウム▽
+　ジュカイン　ドダイトス▽
+　？？？？？</language>
 	</row>
 
 	<flowchart-group-list>

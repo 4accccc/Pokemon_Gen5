@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-13T17:31:15"/>
+	<create user="matsumiya" host="W00207" date="2010-01-12T14:07:19"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -293,233 +293,254 @@
 
 
 	<row id="msg_badgeparty_01">
-		<comment>♀
-・はい/いいえの選択肢</comment>
-		<attribute name="キャラ指定">OLDWOMAN</attribute>
-		<language name="JPN" width="256">わたしは　ジムバッジに　こめられた
-おもいを　よみとることが　できるの▼
-くわしくいえば　ジムバッジを
-てにいれたとき　どんな　ポケモンと▽
-いっしょ　だったか　わかるのよ▼
+		<comment>・はい/いいえの選択肢
+　はい→03
+　いいえ→02</comment>
+		<attribute name="キャラ指定">ESPW
+サイキッカー♀</attribute>
+		<language name="JPN" width="256">わたしは
+ジムバッジに　こめられた　おもい……▼
+あなたと　いっしょに　たたかった
+ポケモンが　わかるのです▼
 あなたの　もっている
-ジムバッジを　みても　いい？▼</language>
-		<language name="JPN_KANJI" width="256">わたしは　ジムバッジに　こめられた
-おもいを　よみとることが　できるの▼
-くわしくいえば　ジムバッジを
-てにいれたとき　どんな　ポケモンと▽
-いっしょ　だったか　わかるのよ▼
+ジムバッジを　みても　いいですか？</language>
+		<language name="JPN_KANJI" width="256">わたしは
+ジムバッジに　こめられた　おもい……▼
+あなたと　いっしょに　たたかった
+ポケモンが　わかるのです▼
 あなたの　もっている
-ジムバッジを　みても　いい？▼</language>
+ジムバッジを　みても　いいですか？</language>
 	</row>
 
 	<row id="msg_badgeparty_02">
 		<comment>・いいえ選択時</comment>
-		<language name="JPN" width="256">・いいえ
-・やめる</language>
-		<language name="JPN_KANJI" width="256">・いいえ
-・やめる</language>
+		<language name="JPN" width="256">……わたしが　みなくても
+きちんと　おぼえているのですね</language>
+		<language name="JPN_KANJI" width="256">……わたしが　みなくても
+きちんと　おぼえているのですね</language>
 	</row>
 
 	<row id="msg_badgeparty_03">
-		<comment>・はい選択時</comment>
-		<language name="JPN" width="256">どの　ジムバッジですか？▼</language>
-		<language name="JPN_KANJI" width="256">どの　ジムバッジですか？▼</language>
+		<comment>・はい選択時
+・続けて選択肢表示</comment>
+		<language name="JPN" width="256">どの　ジムバッジを　みましょうか？</language>
+		<language name="JPN_KANJI" width="256">どの　ジムバッジを　みましょうか？</language>
 	</row>
 
 	<row id="msg_badgeparty_04">
 		<comment>・トライバッジ選択時
 ・続けて匹数に応じたメッセージ</comment>
 		<language name="JPN" width="256">あなたが　トライバッジを
-てにしたときの　ポケモンは……[BE:01:ページ切り替え（クリア）]</language>
+てにしたときの　ポケモンは……▼</language>
 		<language name="JPN_KANJI" width="256">あなたが　トライバッジを
-てにしたときの　ポケモンは……[BE:01:ページ切り替え（クリア）]</language>
+てにしたときの　ポケモンは……▼</language>
 	</row>
 
 	<row id="msg_badgeparty_05">
 		<comment>・ベーシックバッジ選択時
 ・続けて匹数に応じたメッセージ</comment>
 		<language name="JPN" width="256">あなたが　ベーシックバッジを
-てにしたときの　ポケモンは……[BE:01:ページ切り替え（クリア）]</language>
+てにしたときの　ポケモンは……▼</language>
 		<language name="JPN_KANJI" width="256">あなたが　ベーシックバッジを
-てにしたときの　ポケモンは……[BE:01:ページ切り替え（クリア）]</language>
+てにしたときの　ポケモンは……▼</language>
 	</row>
 
 	<row id="msg_badgeparty_06">
 		<comment>・ビートルバッジ選択時
 ・続けて匹数に応じたメッセージ</comment>
 		<language name="JPN" width="256">あなたが　ビートルバッジを
-てにしたときの　ポケモンは……[BE:01:ページ切り替え（クリア）]</language>
+てにしたときの　ポケモンは……▼</language>
 		<language name="JPN_KANJI" width="256">あなたが　ビートルバッジを
-てにしたときの　ポケモンは……[BE:01:ページ切り替え（クリア）]</language>
+てにしたときの　ポケモンは……▼</language>
 	</row>
 
 	<row id="msg_badgeparty_07">
 		<comment>・ボルトバッジ選択時
 ・続けて匹数に応じたメッセージ</comment>
 		<language name="JPN" width="256">あなたが　ボルトバッジを
-てにしたときの　ポケモンは……[BE:01:ページ切り替え（クリア）]</language>
+てにしたときの　ポケモンは……▼</language>
 		<language name="JPN_KANJI" width="256">あなたが　ボルトバッジを
-てにしたときの　ポケモンは……[BE:01:ページ切り替え（クリア）]</language>
+てにしたときの　ポケモンは……▼</language>
 	</row>
 
 	<row id="msg_badgeparty_08">
 		<comment>・クエイクバッジ選択時
 ・続けて匹数に応じたメッセージ</comment>
 		<language name="JPN" width="256">あなたが　クエイクバッジを
-てにしたときの　ポケモンは……[BE:01:ページ切り替え（クリア）]</language>
+てにしたときの　ポケモンは……▼</language>
 		<language name="JPN_KANJI" width="256">あなたが　クエイクバッジを
-てにしたときの　ポケモンは……[BE:01:ページ切り替え（クリア）]</language>
+てにしたときの　ポケモンは……▼</language>
 	</row>
 
 	<row id="msg_badgeparty_09">
 		<comment>・ジェットバッジ選択時
 ・続けて匹数に応じたメッセージ</comment>
 		<language name="JPN" width="256">あなたが　ジェットバッジを
-てにしたときの　ポケモンは……[BE:01:ページ切り替え（クリア）]</language>
+てにしたときの　ポケモンは……▼</language>
 		<language name="JPN_KANJI" width="256">あなたが　ジェットバッジを
-てにしたときの　ポケモンは……[BE:01:ページ切り替え（クリア）]</language>
+てにしたときの　ポケモンは……▼</language>
 	</row>
 
 	<row id="msg_badgeparty_10">
 		<comment>・アイシクルバッジ選択時
 ・続けて匹数に応じたメッセージ</comment>
 		<language name="JPN" width="256">あなたが　アイシクルバッジを
-てにしたときの　ポケモンは……[BE:01:ページ切り替え（クリア）]</language>
+てにしたときの　ポケモンは……▼</language>
 		<language name="JPN_KANJI" width="256">あなたが　アイシクルバッジを
-てにしたときの　ポケモンは……[BE:01:ページ切り替え（クリア）]</language>
+てにしたときの　ポケモンは……▼</language>
 	</row>
 
 	<row id="msg_badgeparty_11">
 		<comment>・レジェンドバッジ選択時
 ・続けて匹数に応じたメッセージ</comment>
 		<language name="JPN" width="256">あなたが　レジェンドバッジを
-てにしたときの　ポケモンは……[BE:01:ページ切り替え（クリア）]</language>
+てにしたときの　ポケモンは……▼</language>
 		<language name="JPN_KANJI" width="256">あなたが　レジェンドバッジを
-てにしたときの　ポケモンは……[BE:01:ページ切り替え（クリア）]</language>
+てにしたときの　ポケモンは……▼</language>
 	</row>
 
 	<row id="msg_badgeparty_12">
 		<comment>ポケモン１匹
-0＝ポケモン名</comment>
-		<language name="JPN" width="256">[1:01:ポケモン種族名:0]　ですねね</language>
-		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:0]　ですね</language>
+0＝ポケモン名
+・続けて18</comment>
+		<language name="JPN" width="256">[1:01:ポケモン種族名:0]　ですねね▼</language>
+		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:0]　ですね▼</language>
 	</row>
 
 	<row id="msg_badgeparty_13">
 		<comment>ポケモン２匹
-0＝ポケモン名
-1＝ポケモン名</comment>
-		<language name="JPN" width="256">[1:01:ポケモン種族名:0]　[1:01:ポケモン種族名:1]　　ですね</language>
-		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:0]　[1:01:ポケモン種族名:1]　　ですね</language>
+0＝ポケモン名/1＝ポケモン名
+・続けて18</comment>
+		<language name="JPN" width="256">[1:01:ポケモン種族名:0]　[1:01:ポケモン種族名:1]　ですね▼</language>
+		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:0]　[1:01:ポケモン種族名:1]　ですね▼</language>
 	</row>
 
 	<row id="msg_badgeparty_14">
 		<comment>ポケモン３匹
-0＝ポケモン名
-1＝ポケモン名
-2＝ポケモン名</comment>
-		<language name="JPN" width="256">[1:01:ポケモン種族名:0]　[1:01:ポケモン種族名:1]　[1:01:ポケモン種族名:2]　　ですね</language>
-		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:0]　[1:01:ポケモン種族名:1]　[1:01:ポケモン種族名:2]　　ですね</language>
+0＝ポケモン名/1＝ポケモン名
+2＝ポケモン名
+・続けて18</comment>
+		<language name="JPN" width="256">[1:01:ポケモン種族名:0]　[1:01:ポケモン種族名:1]
+[1:01:ポケモン種族名:2]　ですね▼</language>
+		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:0]　[1:01:ポケモン種族名:1]
+[1:01:ポケモン種族名:2]　ですね▼</language>
 	</row>
 
 	<row id="msg_badgeparty_15">
 		<comment>ポケモン４匹
-0＝ポケモン名
-1＝ポケモン名
-2＝ポケモン名
-3＝ポケモン名</comment>
+0＝ポケモン名/1＝ポケモン名
+2＝ポケモン名/3＝ポケモン名
+・続けて18</comment>
 		<language name="JPN" width="256">[1:01:ポケモン種族名:0]　[1:01:ポケモン種族名:1]
-[1:01:ポケモン種族名:2]　[1:01:ポケモン種族名:3]　　ですね</language>
+[1:01:ポケモン種族名:2]　[1:01:ポケモン種族名:3]　ですね▼</language>
 		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:0]　[1:01:ポケモン種族名:1]
-[1:01:ポケモン種族名:2]　[1:01:ポケモン種族名:3]　　ですね</language>
+[1:01:ポケモン種族名:2]　[1:01:ポケモン種族名:3]　ですね▼</language>
 	</row>
 
 	<row id="msg_badgeparty_16">
 		<comment>ポケモン５匹
-0＝ポケモン名
-1＝ポケモン名
-2＝ポケモン名
-3＝ポケモン名
-4＝ポケモン名</comment>
-		<language name="JPN" width="256">[1:01:ポケモン種族名:0]　[1:01:ポケモン種族名:1]　[1:01:ポケモン種族名:2]
-[1:01:ポケモン種族名:3]　[1:01:ポケモン種族名:4]　　ですね</language>
-		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:0]　[1:01:ポケモン種族名:1]　[1:01:ポケモン種族名:2]
-[1:01:ポケモン種族名:3]　[1:01:ポケモン種族名:4]　　ですね</language>
+0＝ポケモン名/1＝ポケモン名
+2＝ポケモン名/3＝ポケモン名
+4＝ポケモン名
+・続けて18</comment>
+		<language name="JPN" width="256">[1:01:ポケモン種族名:0]　[1:01:ポケモン種族名:1]
+[1:01:ポケモン種族名:2]　[1:01:ポケモン種族名:3]▽
+[1:01:ポケモン種族名:4]　ですね▼</language>
+		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:0]　[1:01:ポケモン種族名:1]
+[1:01:ポケモン種族名:2]　[1:01:ポケモン種族名:3]▽
+[1:01:ポケモン種族名:4]　ですね▼</language>
 	</row>
 
 	<row id="msg_badgeparty_17">
 		<comment>ポケモン６匹
-0＝ポケモン名
-1＝ポケモン名
-2＝ポケモン名
-3＝ポケモン名
-4＝ポケモン名
-5＝ポケモン名</comment>
-		<language name="JPN" width="256">[1:01:ポケモン種族名:0]　[1:01:ポケモン種族名:1]　[1:01:ポケモン種族名:2]
-[1:01:ポケモン種族名:3]　[1:01:ポケモン種族名:4]　[1:01:ポケモン種族名:5]　ですね</language>
-		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:0]　[1:01:ポケモン種族名:1]　[1:01:ポケモン種族名:2]
-[1:01:ポケモン種族名:3]　[1:01:ポケモン種族名:4]　[1:01:ポケモン種族名:5]　ですね</language>
+0＝ポケモン名/1＝ポケモン名
+2＝ポケモン名/3＝ポケモン名
+4＝ポケモン名/5＝ポケモン名
+・続けて18</comment>
+		<language name="JPN" width="256">[1:01:ポケモン種族名:0]　[1:01:ポケモン種族名:1]
+[1:01:ポケモン種族名:2]　[1:01:ポケモン種族名:3]▽
+[1:01:ポケモン種族名:4]　[1:01:ポケモン種族名:5]　ですね▼</language>
+		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:0]　[1:01:ポケモン種族名:1]
+[1:01:ポケモン種族名:2]　[1:01:ポケモン種族名:3]▽
+[1:01:ポケモン種族名:4]　[1:01:ポケモン種族名:5]　ですね▼</language>
 	</row>
 
-	<row id="msg_badgeparty_18" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_badgeparty_18">
+		<comment>・はい/いいえの選択肢
+　はい→選択肢表示
+　いいえ→02</comment>
+		<language name="JPN" width="256">ほかの　ジムバッジも　みましょうか？</language>
+		<language name="JPN_KANJI" width="256">ほかの　ジムバッジも　みましょうか？</language>
+	</row>
+
+	<row id="msg_badgeparty_selecrt_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>選択肢
 ・c01バッジ</comment>
+		<attribute name="キャラ指定">選択肢</attribute>
 		<language name="JPN" width="256">トライバッジ</language>
 		<language name="JPN_KANJI" width="256">トライバッジ</language>
 	</row>
 
-	<row id="msg_badgeparty_19" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_badgeparty_selecrt_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>選択肢
 ・c02バッジ</comment>
+		<attribute name="キャラ指定">選択肢</attribute>
 		<language name="JPN" width="256">ベーシックバッジ</language>
 		<language name="JPN_KANJI" width="256">ベーシックバッジ</language>
 	</row>
 
-	<row id="msg_badgeparty_20" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_badgeparty_selecrt_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>選択肢
 ・c03バッジ</comment>
+		<attribute name="キャラ指定">選択肢</attribute>
 		<language name="JPN" width="256">ビートルバッジ</language>
 		<language name="JPN_KANJI" width="256">ビートルバッジ</language>
 	</row>
 
-	<row id="msg_badgeparty_21" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_badgeparty_selecrt_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>選択肢
 ・c04バッジ</comment>
+		<attribute name="キャラ指定">選択肢</attribute>
 		<language name="JPN" width="256">ボルトバッジ</language>
 		<language name="JPN_KANJI" width="256">ボルトバッジ</language>
 	</row>
 
-	<row id="msg_badgeparty_22" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_badgeparty_selecrt_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>選択肢
 ・c05バッジ</comment>
+		<attribute name="キャラ指定">選択肢</attribute>
 		<language name="JPN" width="256">クエイクバッジ</language>
 		<language name="JPN_KANJI" width="256">クエイクバッジ</language>
 	</row>
 
-	<row id="msg_badgeparty_23" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_badgeparty_selecrt_06" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>選択肢
 ・c06バッジ</comment>
+		<attribute name="キャラ指定">選択肢</attribute>
 		<language name="JPN" width="256">ジェットバッジ</language>
 		<language name="JPN_KANJI" width="256">ジェットバッジ</language>
 	</row>
 
-	<row id="msg_badgeparty_24" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_badgeparty_selecrt_07" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>選択肢
 ・c07バッジ</comment>
+		<attribute name="キャラ指定">選択肢</attribute>
 		<language name="JPN" width="256">アイシクルバッジ</language>
 		<language name="JPN_KANJI" width="256">アイシクルバッジ</language>
 	</row>
 
-	<row id="msg_badgeparty_25" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_badgeparty_selecrt_08" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>選択肢
 ・c08バッジ</comment>
+		<attribute name="キャラ指定">選択肢</attribute>
 		<language name="JPN" width="256">レジェンドバッジ</language>
 		<language name="JPN_KANJI" width="256">レジェンドバッジ</language>
 	</row>
 
-	<row id="msg_badgeparty_26" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_badgeparty_selecrt_09" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>選択肢
 ・キャンセル</comment>
+		<attribute name="キャラ指定">選択肢</attribute>
 		<language name="JPN" width="256">やめる</language>
 		<language name="JPN_KANJI" width="256">やめる</language>
 	</row>
