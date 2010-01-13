@@ -39,13 +39,15 @@ GENERATE_DIR = $(PROJECT_ARCDIR)../src/field
 BIN_DIR_W	 = $(subst $(DQ),,$(WFBIN_DIR))
 BIN_DIR_B	 = $(subst $(DQ),,$(BFBIN_DIR))
 
-#アーカイブ依存ファイル
-NNSARC_DEPEND_FILES = 
 ARCW_LIST_FILE = $(subst $(DQ),,$(ARCW_LIST_FILENAME))
 ARCB_LIST_FILE = $(subst $(DQ),,$(ARCB_LIST_FILENAME))
 
 #リソース
 SRC_TEXT = $(subst $(DQ),,$(SRC_TXT_FILENAME))
+
+#アーカイブ依存ファイル
+MONSNO_HASH = $(PROJECT_ROOT)tools/hash/monsno_hash.rb
+NNSARC_DEPEND_FILES = $(SRC_TEXT) $(MONSNO_HASH) encount_common.def 
 
 #------------------------------------------------------------------------------
 #※サブディレクトリでもMakeしたい場合、ここにディレクトリ名を書く
@@ -79,9 +81,9 @@ $(GENERATE_DIR)/$(GENERATE_HEADER): $(GENERATE_HEADER)
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、バイナリ生成
 
-$(ARCW_LIST_FILE):$(SRC_TEXT) encount_common.def
+$(ARCW_LIST_FILE):$(NNSARC_DEPEND_FILES)
 	ruby encount_conv.rb
-$(ARCB_LIST_FILE):$(SRC_TEXT) encount_common.def
+$(ARCB_LIST_FILE):$(NNSARC_DEPEND_FILES)
 	ruby encount_conv.rb
 
 $(NARCNAME_W): $(ARCW_LIST_FILE) 
