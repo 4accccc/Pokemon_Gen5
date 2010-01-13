@@ -183,7 +183,7 @@ static BOOL TESTMODE_ITEM_DebugFight( TESTMODE_WORK *work , const int idx );
  */
 //------------------------------------------------------------------------
 #if defined DEBUG_ONLY_FOR_taya
-  #define QuickSelectFunc   TESTMODE_ITEM_SelectFuncTaya
+  #define QuickSelectFunc   TESTMODE_ITEM_DebugFight
 #elif defined DEBUG_ONLY_FOR_watanabe
   #define QuickSelectFunc   TESTMODE_ITEM_SelectFuncWatanabe
 #elif defined DEBUG_ONLY_FOR_tamada
@@ -960,14 +960,14 @@ static BOOL TESTMODE_ITEM_SelectFuncSave( TESTMODE_WORK *work , const int idx )
 static BOOL TESTMODE_ITEM_SaveClear( TESTMODE_WORK *work , const int idx )
 {
   void *temp_save;
-  
-  temp_save = GFL_HEAP_AllocMemory(GFL_HEAPID_APP, SAVEFLASH_SIZE);
-	GFL_STD_MemFill(temp_save, SAVEFLASH_INIT_PARAM, SAVEFLASH_SIZE);
-	DEBUG_BACKUP_FlashSave(0, temp_save, SAVEFLASH_SIZE);
-	GFL_HEAP_FreeMemory(temp_save);
 
-	OS_ResetSystem(0);	//セーブ読み込み状況を更新する為、ソフトリセットする
-  
+  temp_save = GFL_HEAP_AllocMemory(GFL_HEAPID_APP, SAVEFLASH_SIZE);
+  GFL_STD_MemFill(temp_save, SAVEFLASH_INIT_PARAM, SAVEFLASH_SIZE);
+  DEBUG_BACKUP_FlashSave(0, temp_save, SAVEFLASH_SIZE);
+  GFL_HEAP_FreeMemory(temp_save);
+
+  OS_ResetSystem(0);  //セーブ読み込み状況を更新する為、ソフトリセットする
+
   return TRUE;
 }
 
