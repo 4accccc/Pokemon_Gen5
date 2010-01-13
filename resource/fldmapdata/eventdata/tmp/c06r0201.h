@@ -15,5 +15,9 @@
 #define C06R0201_POKE3_01                  1
 #define C06R0201_WORKMAN_02                2
 #define C06R0201_WORKMAN_03                3
+#define C06R0201_INFORMATIONW_01           4
+#define C06R0201_VETERANW_01               5
+#define C06R0201_PILOT_01                  6
+#define C06R0201_MIDDLEMAN2_01             7
 
 #endif //ZONE_C06R0201_EVC_H

@@ -85,9 +85,15 @@ EVENT_END
 /*  R02 ママのイベントスクリプト*/
 /**************************************************************/
 EVENT_START   ev_pos_r02_mama_01
+
+	//==============フラグワーク操作==============//
 	
-	//BGMの再生
-	_START_EVENT_BGM(SEQ_BGM_E_TSURETEKE1 )
+	//R02のママを表示
+	_FLAG_RESET  ( FV_R02_MOTHER  )  
+	_OBJ_ADD(R02_MAMA_01)
+	
+	//============================================//
+	
 	_FLAG_RESET  ( FV_R02_MOTHER  )
 	
     DEFINE_LOCAL  LWK_PLAYER_POSX   
@@ -107,9 +113,30 @@ EVENT_START   ev_pos_r02_mama_01
         _OBJ_POS_CHANGE( R02_MAMA_01, 763, 0, 649, DIR_LEFT )
     DEFAULT  
     ENDSWITCH
-	
+
 	//プレイヤーの名前を取得
 	_PLAYER_NAME(0)
+	
+	//コール音再生
+	_SE_PLAY( SEQ_SE_SYS_35 )
+	//間を作る為のウェイト
+	_TIME_WAIT  ( 30 )
+	
+	_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_bikkuri_mark)
+	_OBJ_ANIME_WAIT()
+	
+	_SYSWIN_MSG_ALLPUT_DOWN( msg_r02_tvt_01 )
+	_SYSWIN_CLOSE()
+	
+	_SE_STOP()
+	
+	_WHITE_OUT()
+	_TIME_WAIT  ( 90 )
+	
+	_WHITE_IN()
+
+	//BGMの再生
+	_START_EVENT_BGM(SEQ_BGM_E_TSURETEKE1 )
 	
 	//ママが主人公を呼ぶ
 	_BALLOONWIN_OBJMSG( msg_r02_mama_01, R02_MAMA_01)
@@ -139,10 +166,6 @@ EVENT_START   ev_pos_r02_mama_01
 	//ママ「やっと　おいついた」
 	_BALLOONWIN_OBJMSG( msg_r02_mama_02, R02_MAMA_01)
 	_BALLOONWIN_CLOSE()
-	
-	//キーアイテムを入手ME
-
-
 
 	//ランニングシューズ入手処理
 	_GET_SHOES()

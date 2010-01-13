@@ -50,7 +50,7 @@ init_flags:
 	_FLAG_SET( FV_C01GYM0101_LEADERS )
 	
 	//R02・2番道路ランニングシューズイベントが始まるまで非表示
-	//_FLAG_SET(FV_R02_MOTHER)
+	_FLAG_SET(FV_R02_MOTHER)
 	
 	//C02：サポート・ライバル・アーティ・アロエを盗難事件が起きるまで非表示
 	_FLAG_SET( FV_C02_LEADER2)
