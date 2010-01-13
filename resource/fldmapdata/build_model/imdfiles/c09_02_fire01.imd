@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fujiwara_maiko" host="W00194" date="2010-01-12T20:55:50" source="c09_02_fire01.mb"/>
+	<create user="fujiwara_maiko" host="W00194" date="2010-01-13T19:54:08" source="c09_02_fire01.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="fujiwara_maiko" host="W00194" date="2010-01-12T20:55:50" source="c09_02_fire01.mb"/>
+<original_create user="fujiwara_maiko" host="W00194" date="2010-01-13T19:54:08" source="c09_02_fire01.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -29,7 +29,7 @@
 
 <box_test pos_scale="6" xyz="-5.801758 0.844238 -1.445068" whd="5.370850 2.331055 3.060547"/>
 
-<tex_image_array size="2">
+<tex_image_array size="3">
 	<tex_image index="0" name="c09_fire.4"
 		width="16" height="64" original_width="16" original_height="64"
 		format="a5i3"
@@ -176,14 +176,43 @@
 			0000 0000 0000 0000 0063 0000 0000 0000
 		</bitmap>
 	</tex_image>
+	<tex_image index="2" name="c09_fire.6"
+		width="16" height="64" original_width="16" original_height="64"
+		format="palette4"
+		color0_mode="transparency"
+		palette_name="c09_fire.6_pl"
+		path="C:/home/wb_data3d/build_model/indoor/c09_02_fire01/tex/c09_fire.6.tga"
+	>
+		<bitmap size="128">
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+		</bitmap>
+	</tex_image>
 </tex_image_array>
 
-<tex_palette_array size="2">
+<tex_palette_array size="3">
 	<tex_palette index="0" name="c09_fire.4_pl" color_size="8">
 		0000 019f 0abf 17ff 7fff 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="1" name="c09_fire.5_pl" color_size="8">
 		0000 019f 0abf 17ff 7fff 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="2" name="c09_fire.6_pl" color_size="4">
+		7fff 7fff 7fff 7fff
 	</tex_palette>
 </tex_palette_array>
 
@@ -205,7 +234,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="0" tex_palette_idx="0"
+		tex_image_idx="2" tex_palette_idx="2"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
