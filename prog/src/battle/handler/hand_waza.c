@@ -1502,8 +1502,8 @@ static void handler_KonoyubiTomare_Target( BTL_EVENT_FACTOR* myHandle, BTL_SVFLO
 {
   if( BTL_SVFTOOL_GetRule(flowWk) != BTL_RULE_SINGLE )
   {
-    if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) != pokeID )
-    {
+    u8 atkPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_ATK );
+    if (!BTL_MAINUTIL_IsFriendPokeID(pokeID, atkPokeID) ){
       BTL_EVENTVAR_RewriteValue( BTL_EVAR_POKEID_DEF, pokeID );
     }
   }
