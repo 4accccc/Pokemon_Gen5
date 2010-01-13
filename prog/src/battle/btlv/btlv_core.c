@@ -1147,6 +1147,23 @@ BOOL BTLV_WaitDeadAct( BTLV_CORE* wk )
 {
   return BTLV_SCU_WaitDeadAct( wk->scrnU );
 }
+//=============================================================================================
+/**
+ * ポケモン生き返りアクション開始
+ *
+ * @param   wk
+ * @param   pos   ひんしになったポケモンの位置ID
+ *
+ */
+//=============================================================================================
+void BTLV_StartReliveAct( BTLV_CORE* wk, BtlPokePos pos )
+{
+  BTLV_SCU_StartReliveAct( wk->scrnU, pos );
+}
+BOOL BTLV_WaitReliveAct( BTLV_CORE* wk )
+{
+  return BTLV_SCU_WaitReliveAct( wk->scrnU );
+}
 
 
 

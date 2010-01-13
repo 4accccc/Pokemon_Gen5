@@ -1986,7 +1986,6 @@ void BTLV_SCU_StartDeadAct( BTLV_SCU* wk, BtlPokePos pos )
   BTLV_EFFECT_DelGauge( BTL_MAIN_BtlPosToViewPos(wk->mainModule, pos) );
   BTLV_EFFECT_Hinshi( BTL_MAIN_BtlPosToViewPos(wk->mainModule, pos) );
 }
-
 //=============================================================================================
 /**
  * ポケモンひんしアクション終了待ち
@@ -2001,6 +2000,46 @@ BOOL BTLV_SCU_WaitDeadAct( BTLV_SCU* wk )
   //瀕死エフェクトが入ったらそれ待ちをいれる
   return !BTLV_EFFECT_CheckExecute();
 }
+
+//=============================================================================================
+/**
+ * ポケモン生き返りアクション開始
+ *
+ * @param   wk
+ * @param   pos   ひんしになったポケモンの位置ID
+ *
+ */
+//=============================================================================================
+void BTLV_SCU_StartReliveAct( BTLV_SCU* wk, BtlPokePos pos )
+{
+  BtlvMcssPos vpos = BTL_MAIN_BtlPosToViewPos( wk->mainModule, pos );
+  const BTL_POKEPARAM* bpp = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, pos );
+  if( bpp ){
+    OS_TPrintf("Pos[%d]=Vpos[%d] ポケ(%d)が生き返り\n", pos, vpos, BPP_GetID(bpp) );
+  }else{
+    GF_ASSERT(0);
+  }
+
+  BTLV_EFFECT_SetPokemon( BPP_GetViewSrcData(bpp), vpos );
+  statwin_disp_start( &wk->statusWin[pos] );
+
+}
+//=============================================================================================
+/**
+ * ポケモンひんしアクション終了待ち
+ *
+ * @param   wk
+ *
+ * @retval  BOOL
+ */
+//=============================================================================================
+BOOL BTLV_SCU_WaitReliveAct( BTLV_SCU* wk )
+{
+  return !BTLV_EFFECT_CheckExecute();
+}
+
+
+
 
 //--------------------------------------------------------
 // ポケモン退場アクション

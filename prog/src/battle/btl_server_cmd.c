@@ -139,6 +139,7 @@ static const u8 ServerCmdToFmtTbl[] = {
   SC_ARGFMT_555bit,           // SC_ACT_RANKUP
   SC_ARGFMT_555bit,           // SC_ACT_RANKDOWN
   SC_ARGFMT_1byte,            // SC_ACT_DEAD
+  SC_ARGFMT_1byte,            // SC_ACT_RELIVE
   SC_ARGFMT_1byte,            // SC_ACT_MEMBER_OUT
   SC_ARGFMT_5353bit,          // SC_ACT_MEMBER_IN
   SC_ARGFMT_44bit,            // SC_ACT_WEATHER_DMG,

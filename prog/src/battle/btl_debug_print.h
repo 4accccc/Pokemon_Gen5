@@ -113,6 +113,9 @@ typedef enum {
   DBGSTR_EVAR_Push,
   DBGSTR_EVAR_Pop,
 
+  DBGSTR_POSPOKE_Out,
+  DBGSTR_POSPOKE_In,
+
   DBGSTR_val_comma,
   DBGSTR_done,
   DBGSTR_LF,

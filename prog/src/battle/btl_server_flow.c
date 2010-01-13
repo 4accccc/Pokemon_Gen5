@@ -2211,7 +2211,7 @@ static void scproc_TrainerItem_Root( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u1
   {
     u8 targetPokeID = BPP_GetID( target );
     BtlPokePos targetPos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, targetPokeID );
-    if( targetPos != BTL_POS_NULL )
+    if( (targetPos != BTL_POS_NULL) && !BPP_IsDead(target) )
     {
       SCQUE_PUT_ACT_EffectByPos( wk->que, targetPos, BTLEFF_USE_ITEM );
     }
@@ -2489,9 +2489,11 @@ static u8 ItemEff_AllPP_Rcv( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID
 }
 static u8 ItemEff_HP_Rcv( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, u8 actParam )
 {
+  /*
   if( BTL_CALC_ITEM_GetParam(itemID, ITEM_PRM_DEATH_RCV) ){
     return ItemEff_Relive( wk, bpp, itemID, itemParam, actParam );
   }
+  */
 
   if( !BPP_IsHPFull(bpp)
   &&  !BPP_IsDead(bpp)
@@ -11750,6 +11752,16 @@ static u8 scproc_HandEx_relive( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEAD
   BPP_HpPlus( target, param->recoverHP );
   SCQUE_PUT_OP_HpPlus( wk->que, param->pokeID, param->recoverHP );
   wk->pokeDeadFlag[param->pokeID] = FALSE;
+
+  {
+    BtlPokePos targetPos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, param->pokeID );
+    if( targetPos != BTL_POS_NULL )
+    {
+      BTL_POSPOKE_PokeIn( &wk->pospokeWork, targetPos, param->pokeID, wk->pokeCon );
+      SCQUE_PUT_ACT_RelivePoke( wk->que, param->pokeID );
+    }
+  }
+
   handexSub_putString( wk, &param->exStr );
   return 1;
 }

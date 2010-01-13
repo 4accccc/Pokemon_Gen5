@@ -194,6 +194,7 @@ static BOOL scProc_ACT_WazaIchigeki( BTL_CLIENT* wk, int* seq, const int* args )
 static BOOL scProc_ACT_SickIcon( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_ConfDamage( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_Dead( BTL_CLIENT* wk, int* seq, const int* args );
+static BOOL scProc_ACT_Relive( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_RankDown( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_RankUp( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_WeatherDmg( BTL_CLIENT* wk, int* seq, const int* args );
@@ -1910,6 +1911,7 @@ static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq )
     { SC_ACT_SICK_ICON,         scProc_ACT_SickIcon       },
     { SC_ACT_CONF_DMG,          scProc_ACT_ConfDamage     },
     { SC_ACT_DEAD,              scProc_ACT_Dead           },
+    { SC_ACT_RELIVE,            scProc_ACT_Relive         },
     { SC_ACT_MEMBER_OUT,        scProc_ACT_MemberOut      },
     { SC_ACT_MEMBER_IN,         scProc_ACT_MemberIn       },
     { SC_ACT_RANKUP,            scProc_ACT_RankUp         },
@@ -2425,6 +2427,29 @@ static BOOL scProc_ACT_Dead( BTL_CLIENT* wk, int* seq, const int* args )
   }
   return FALSE;
 }
+/**
+ * 【アクション】ポケモン生き返り
+ */
+static BOOL scProc_ACT_Relive( BTL_CLIENT* wk, int* seq, const int* args )
+{
+  switch( *seq ){
+  case 0:
+    {
+      BtlPokePos pos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, args[0] );
+      BTLV_StartReliveAct( wk->viewCore, pos );
+      (*seq)++;
+    }
+    break;
+  case 1:
+    if( BTLV_WaitReliveAct(wk->viewCore) )
+    {
+      return TRUE;
+    }
+    break;
+  }
+  return FALSE;
+}
+
 /**
  * 【アクション】能力ランクダウン
  */
