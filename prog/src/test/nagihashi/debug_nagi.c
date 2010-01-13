@@ -386,13 +386,13 @@ static const LIST_SETUP_TBL sc_list_data_home[]	=
 		L"相性診断（ひとり）", LISTDATA_SEQ_PROC_COMPATIBLE_DEBUG
 	},
 	{	
+		L"運命値チェック", LISTDATA_SEQ_PROC_NAME_DEBUG,
+	},
+	{	
 		L"ポケモン２Dチェック", LISTDATA_SEQ_PROC_POKE2DCHECK,
 	},
 	{	
 		L"名前入力", LISTDATA_SEQ_PROC_NAMEIN,
-	},
-	{	
-		L"全部Yボタン",	LISTDATA_SEQ_SHORTCUTDATA_FULL,
 	},
 	{	
 		L"コンフィグ", LISTDATA_SEQ_PROC_CONFIG
