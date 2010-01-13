@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2010-01-13T13:16:47"/>
+	<create user="matsumiya" host="W00207" date="2010-01-13T17:02:32"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="211"/>
+		<comment position="4" width="234"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="130">
 		</attribute>
@@ -310,9 +310,30 @@
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_r02_mama_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r02_tvt_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・POSを踏むとコ
+　ＴＶトランシーバーのコール音再生＋
+　主人公頭上に！マーク表示
+・続けて
+　メッセージ表示後
+　tvt.gmmのmsg_transceiver_r02_01呼び出し
+・0＝主人公名前
+
+※現状ないので画面暗転などの対応で可</comment>
+		<attribute name="キャラ指定">システム
+TVトランシーバー</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]は
+ＴＶトランシーバーを　つなげた[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は
+ＴＶトランシーバーを　つなげた[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_r02_mama_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀：主人公ママ
-・最初、会話ウインドウのみ表示</comment>
+・画面切り替え後
+　主人公の背後にママ配置
+・主人公びっくりしてから
+　ママのほうを振り向く</comment>
 		<attribute name="キャラ指定">主人公ママ</attribute>
 		<language name="JPN" width="256">ママ『[1:00:トレーナー名:0][BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ママ『[1:00:トレーナー名:0][BE:01:ページ切り替え（クリア）]</language>
