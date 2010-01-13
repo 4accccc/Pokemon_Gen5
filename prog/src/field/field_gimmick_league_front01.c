@@ -58,11 +58,7 @@ typedef enum{
 //----------
 typedef enum{
   RES_LIFT_NSBMD,             // リフトのモデル
-  RES_LIFT_ALL_NSBTA,         // 四天王(全員)　　を倒した時のita
-  RES_LIFT_FIGHT_NSBTA,       // 四天王(格闘)　　を倒した時のita
-  RES_LIFT_EVIL_NSBTA,        // 四天王(悪)　　　を倒した時のita
-  RES_LIFT_GHOST_NSBTA,       // 四天王(ゴースト)を倒した時のita
-  RES_LIFT_ESPER_NSBTA,       // 四天王(エスパー)を倒した時のita
+  RES_LIFT_NSBTA,             // リフトのita
   RES_LIGHT_FIGHT_NSBMD,      // ライト(格闘)    モデル
   RES_LIGHT_FIGHT_OFF_NSBTA,  // ライト(格闘)    OFF
   RES_LIGHT_FIGHT_ON_NSBTA,   // ライト(格闘)    ON
@@ -80,11 +76,6 @@ typedef enum{
 static const GFL_G3D_UTIL_RES res_table[RES_NUM] = 
 {
   {ARCID, NARC_league_front_pl_ele_00_nsbmd,    GFL_G3D_UTIL_RESARC}, 
-  {ARCID, NARC_league_front_pl_ele_00_00_nsbta, GFL_G3D_UTIL_RESARC},
-  {ARCID, NARC_league_front_pl_ele_00_01_nsbta, GFL_G3D_UTIL_RESARC},
-  {ARCID, NARC_league_front_pl_ele_00_02_nsbta, GFL_G3D_UTIL_RESARC},
-  {ARCID, NARC_league_front_pl_ele_00_03_nsbta, GFL_G3D_UTIL_RESARC},
-  {ARCID, NARC_league_front_pl_ele_00_04_nsbta, GFL_G3D_UTIL_RESARC},
   {ARCID, NARC_league_front_pl_lite1_nsbmd,     GFL_G3D_UTIL_RESARC},
   {ARCID, NARC_league_front_pl_lite1_off_nsbta, GFL_G3D_UTIL_RESARC},
   {ARCID, NARC_league_front_pl_lite1_on_nsbta,  GFL_G3D_UTIL_RESARC},
@@ -102,20 +93,12 @@ static const GFL_G3D_UTIL_RES res_table[RES_NUM] =
 // アニメーション(リフト)
 //------------------------
 typedef enum{
-  LIFT_ANM_ALL,     // 四天王(全員)　　を倒した時のita
-  LIFT_ANM_FIGHT,   // 四天王(格闘)　　を倒した時のita 
-  LIFT_ANM_EVIL,    // 四天王(悪)　　　を倒した時のita
-  LIFT_ANM_GHOST,   // 四天王(ゴースト)を倒した時のita
-  LIFT_ANM_ESPER,   // 四天王(エスパー)を倒した時のita
+  LIFT_ANM_TA,  // テクスチャ アニメーション
   LIFT_ANM_NUM
 } LIFT_ANM_INDEX;
 static const GFL_G3D_UTIL_ANM anm_table_lift[LIFT_ANM_NUM] = 
 {
-  {RES_LIFT_ALL_NSBTA,   0},
-  {RES_LIFT_FIGHT_NSBTA, 0},
-  {RES_LIFT_EVIL_NSBTA,  0},
-  {RES_LIFT_GHOST_NSBTA, 0},
-  {RES_LIFT_ESPER_NSBTA, 0},
+  {RES_LIFT_NSBTA, 0},
 }; 
 //------------------------
 // アニメーション(ライト)
@@ -467,17 +450,10 @@ static void InitGimmick( LF01WORK* work, FIELDMAP_WORK* fieldmap )
     evil   = EVENTWORK_CheckEventFlag( evwork, SYS_FLAG_BIGFOUR_EVILWIN );
     ghost  = EVENTWORK_CheckEventFlag( evwork, SYS_FLAG_BIGFOUR_GHOSTWIN );
     esper  = EVENTWORK_CheckEventFlag( evwork, SYS_FLAG_BIGFOUR_ESPWIN );
-    // アニメ再生
+    // 各四天王クリアに応じたアニメを再生
     if( fight && evil && ghost && esper )
-    { // 四天王制覇
-      FLD_EXP_OBJ_ValidCntAnm( exobj_cnt, UNIT_GIMMICK, OBJ_LIFT, LIFT_ANM_ALL, TRUE );
-    }
-    else
-    { // 各四天王クリアに応じたアニメを再生
-      if( fight ){ FLD_EXP_OBJ_ValidCntAnm( exobj_cnt, UNIT_GIMMICK, OBJ_LIFT, LIFT_ANM_FIGHT, TRUE ); }
-      if( evil  ){ FLD_EXP_OBJ_ValidCntAnm( exobj_cnt, UNIT_GIMMICK, OBJ_LIFT, LIFT_ANM_EVIL,  TRUE ); }
-      if( ghost ){ FLD_EXP_OBJ_ValidCntAnm( exobj_cnt, UNIT_GIMMICK, OBJ_LIFT, LIFT_ANM_GHOST, TRUE ); }
-      if( esper ){ FLD_EXP_OBJ_ValidCntAnm( exobj_cnt, UNIT_GIMMICK, OBJ_LIFT, LIFT_ANM_ESPER, TRUE ); }
+    {
+      FLD_EXP_OBJ_ValidCntAnm( exobj_cnt, UNIT_GIMMICK, OBJ_LIFT, LIFT_ANM_TA, TRUE );
     }
   }
 
