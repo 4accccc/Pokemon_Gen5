@@ -47,8 +47,8 @@ enum
   SE_BAG_SRIDE        = SEQ_SE_SELECT1, ///< スライドバー
   SE_BAG_WAZA         = SEQ_SE_PC_LOGIN,  ///< ワザマシン起動音
   SE_BAG_SORT         = SEQ_SE_SYS_36,    ///< ソート音
+  SE_BAG_SPRAY        = SEQ_SE_DECIDE1,   ///< スプレー使用音
 };
-
 
 #define ITEMMENU_SCROLLBAR_ENABLE_NUM (7) // スクロールバーが有効になるアイテム数
 
@@ -234,10 +234,9 @@ struct _FIELD_ITEMMENU_PARAM {
   int menuNum;          //サブメニューの項目数
   int subListCursor;  //サブメニューのカーソル位置
   int submenuList[BAG_MENUTBL_MAX];  //サブメニューの項目
-  u32 NowAttr;
-  u32 FrontAttr;
 	u32 bgchar;
   BOOL bChange;   ///< CELL更新フラグ
+  BOOL bDispUpReq; ///< 上画面DISP切替(VBLANK中に判定、処理)
 
   enum BAG_NEXTPROC_ENUM ret_code;  //バッグメニューを終わる際の次の動作
   int ret_code2;
@@ -352,7 +351,9 @@ enum
 
 extern void _createSubBg(void);
 extern void ITEMDISP_graphicInit(FIELD_ITEMMENU_WORK* pWork);
+extern void ITEMDISP_upMessageSetDispVBlank( FIELD_ITEMMENU_WORK* pWork, BOOL on_off );
 extern void ITEMDISP_upMessageRewrite(FIELD_ITEMMENU_WORK* pWork);
+extern void ITEMDISP_upMessageClean(FIELD_ITEMMENU_WORK* pWork);
 extern void ITEMDISP_upMessageDelete(FIELD_ITEMMENU_WORK* pWork);
 extern void ITEMDISP_upMessageCreate(FIELD_ITEMMENU_WORK* pWork);
 //extern void ITEMDISP_RemoveSubDispItemIcon(FIELD_ITEMMENU_WORK* pWork);

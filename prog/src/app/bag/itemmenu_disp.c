@@ -635,13 +635,56 @@ void ITEMDISP_graphicDelete(FIELD_ITEMMENU_WORK* pWork)
                            GFL_ARCUTIL_TRANSINFO_GetSize(pWork->barbg));
 }
 
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  上画面：表示／非表示 
+ *
+ *	@param	FIELD_ITEMMENU_WORK* pWork
+ *	@param	on_off 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void ITEMDISP_upMessageSetDispVBlank( FIELD_ITEMMENU_WORK* pWork, BOOL on_off )
+{
+#if 0
+  // @TODO VBLANK中の動作にしては強引すぎないか？
+  ITEM_ST * item;
+  int wazano;
+  
+  item = ITEMMENU_GetItem( pWork,ITEMMENU_GetItemIndex(pWork) );
+  wazano = ITEM_GetWazaNo( item->id );
+  
+  // わざマシン用OAMアイコン
+  if( wazano > 0 )
+  {
+    GFL_CLACT_WK_SetDrawEnable( pWork->clwkWazaKind, on_off );
+    GFL_CLACT_WK_SetDrawEnable( pWork->clwkWazaType, on_off );
+  }
+  else
+  {
+    GFL_CLACT_WK_SetDrawEnable( pWork->clwkWazaKind, FALSE );
+    GFL_CLACT_WK_SetDrawEnable( pWork->clwkWazaType, FALSE );
+  }
+#endif
+
+  if( pWork->cellicon != NULL )
+  {
+    // アイテムOAMアイコン
+    GFL_CLACT_WK_SetDrawEnable( pWork->cellicon, on_off );
+  }
+  
+  // BG アイテム枠／テキスト
+  GFL_BG_SetVisible( ITEMWIN_FRAME, on_off );
+  GFL_BG_SetVisible( ITEMREPORT_FRAME, on_off );
+}
+
 //------------------------------------------------------------------------------
 /**
  * @brief   上画面のメッセージを再描画
  * @retval  none
  */
 //------------------------------------------------------------------------------
-
 void ITEMDISP_upMessageRewrite(FIELD_ITEMMENU_WORK* pWork)
 {
   int length;
@@ -664,36 +707,25 @@ void ITEMDISP_upMessageRewrite(FIELD_ITEMMENU_WORK* pWork)
   }
 #endif
 
+  // ワザマシンの説明追加
+  ITEMDISP_WazaInfoWindowChange(pWork);
+  
+  // アイテムがない／ダミー
+  if( (item==NULL) || (item->id==ITEM_DUMMY_DATA) )
+  {
+    // 上画面表示OFF
+    pWork->bDispUpReq = VISIBLE_OFF;
+    // 抜ける
+    return;
+  }
+  
+  // 上画面表示ON
+  pWork->bDispUpReq = VISIBLE_ON;
+
   // メッセージのCGXを消去
   GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->winItemName), 0 );
   GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->winItemNum), 0 );
   GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->winItemReport), 0 );
-  
-  // タッチ状態／アイテムがない／ダミー
-  if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH || (item==NULL) || (item->id==ITEM_DUMMY_DATA) )
-  {
-    // アイテムアイコンを削除（厳密にはメッセージではないが、便宜上ここで操作）
-    _itemiconDelete( pWork );
-
-    // WINフレームの描画OFF
-    GFL_BG_SetVisible( ITEMWIN_FRAME, VISIBLE_OFF );
-    GFL_BG_SetVisible( ITEMREPORT_FRAME, VISIBLE_OFF );
-    GFL_DISP_GXS_SetVisibleControl( GX_BLEND_PLANEMASK_OBJ, VISIBLE_OFF );
-    
-    // キャラ転送
-    GFL_BMPWIN_TransVramCharacter(pWork->winItemName);
-    GFL_BMPWIN_TransVramCharacter(pWork->winItemNum);
-    GFL_BMPWIN_TransVramCharacter(pWork->winItemReport);
-
-    return;
-  }
-  else
-  {
-    // WINフレームの描画ON
-    GFL_BG_SetVisible( ITEMWIN_FRAME, VISIBLE_ON );
-    GFL_BG_SetVisible( ITEMREPORT_FRAME, VISIBLE_ON );
-    GFL_DISP_GXS_SetVisibleControl( GX_BLEND_PLANEMASK_OBJ, VISIBLE_ON );
-  }
 
   // 文字色設定
   GFL_FONTSYS_SetColor( 0xf, 0xe, 0 );
@@ -742,6 +774,29 @@ void ITEMDISP_upMessageRewrite(FIELD_ITEMMENU_WORK* pWork)
   _itemiconAnim(pWork, item->id);
 
   GFL_BG_LoadScreenV_Req( ITEMREPORT_FRAME );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief
+ *
+ *	@param	pWork
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void ITEMDISP_upMessageClean(FIELD_ITEMMENU_WORK* pWork)
+{
+  // 上画面表示OFF
+  pWork->bDispUpReq = VISIBLE_OFF;
+    
+  // わざマシン用の説明文を非表示
+  // @TODO 復帰が上手くいくか要チェック
+  GFL_BMPWIN_ClearScreen(pWork->winWaza);
+
+  // ワザマシン用アイコンも非表示
+  GFL_CLACT_WK_SetDrawEnable( pWork->clwkWazaKind, FALSE );
+  GFL_CLACT_WK_SetDrawEnable( pWork->clwkWazaType, FALSE );
 }
 
 
@@ -878,9 +933,10 @@ void ITEMDISP_upMessageCreate(FIELD_ITEMMENU_WORK* pWork)
     GFL_ARC_CloseDataHandle( p_handle );
   }
 
+  // キー操作時のみ、上画面を更新
+  if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_KEY )
   {
     ITEMDISP_upMessageRewrite(pWork);
-    ITEMDISP_WazaInfoWindowChange(pWork);
   }
 
 }
@@ -1608,14 +1664,15 @@ void ITEMDISP_ChangePocketCell( FIELD_ITEMMENU_WORK* pWork,int pocketno )
 void ITEMDISP_ListPlateClear( FIELD_ITEMMENU_WORK* pWork )
 {
   //プレートの土台の絵
-  int i;
 
   //  for(i = 0 ; i < elementof(pWork->menuWin) ; i++){
   //  GFL_BMPWIN_ClearScreen(pWork->menuWin[i]);
   //  }
+
   //メッセージウインドのクリアも
   GFL_BMPWIN_ClearScreen(pWork->itemInfoDispWin);
   BmpWinFrame_Clear(pWork->itemInfoDispWin,WINDOW_TRANS_ON_V);
+
   GFL_BG_LoadScreenV_Req(GFL_BG_FRAME3_M);
 }
 
@@ -1763,26 +1820,25 @@ void ITEMDISP_WazaInfoWindowChange( FIELD_ITEMMENU_WORK *pWork )
   int pow;
   int hit;
 
-  GFL_BG_LoadScreenV_Req(ITEMWIN_FRAME);
+  GFL_BG_LoadScreenV_Req( ITEMWIN_FRAME );
   
   item = ITEMMENU_GetItem( pWork,ITEMMENU_GetItemIndex(pWork) );
   wazano = ITEM_GetWazaNo( item->id );
 
-  // タッチ状態／アイテムがない／ダミー／非わざマシン
-  if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH || (item==NULL) || (item->id==ITEM_DUMMY_DATA) || wazano==0 )
+  // アイテムがない／ダミー／非わざマシン
+  if((item==NULL) || (item->id==ITEM_DUMMY_DATA) || wazano==0 )
   {
     // わざマシン用の表示を非表示にして抜ける
     GFL_BMPWIN_ClearScreen(pwin);
+
     GFL_CLACT_WK_SetDrawEnable( pWork->clwkWazaKind, FALSE );
     GFL_CLACT_WK_SetDrawEnable( pWork->clwkWazaType, FALSE );
 
     return;
   }
-  else
-  {
-    GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pwin), 0 );
-    GFL_BMPWIN_MakeScreen(pwin);
-  }
+  
+  GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pwin), 0 );
+  GFL_BMPWIN_MakeScreen(pwin);
 
   ppnum = WAZADATA_GetMaxPP(wazano, 0);
   pow = WAZADATA_GetParam( wazano, WAZAPARAM_POWER );
@@ -1842,18 +1898,12 @@ void ITEMDISP_WazaInfoWindowChange( FIELD_ITEMMENU_WORK *pWork )
   WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
   PRINTSYS_Print( GFL_BMPWIN_GetBmp(pwin), 29*8, 4, pWork->pExpStrBuf, pWork->fontHandle);
 
-
+  // キャラクタ転送
   GFL_BMPWIN_TransVramCharacter(pwin);
 
 }
 
 
-//------------------------------------------------------------------------------
-/**
- * @brief   説明ウインドウ表示
- * @retval  none
- */
-//------------------------------------------------------------------------------
 
 //-----------------------------------------------------------------------------
 /**
@@ -1895,12 +1945,12 @@ void ITEMDISP_ItemInfoWindowDispEx( FIELD_ITEMMENU_WORK* pWork, BOOL is_stream )
 
 }
 
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 /**
- * @brief   アイテム説明の文章をExpバッファに入れる
+ * @brief   説明ウインドウ表示
  * @retval  none
  */
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void ITEMDISP_ItemInfoWindowDisp( FIELD_ITEMMENU_WORK *pWork )
 {
   ITEMDISP_ItemInfoWindowDispEx( pWork, FALSE );

@@ -57,7 +57,7 @@
 //@TODO Repeatフック
 static int _GFL_UI_KEY_GetRepeat( void )
 {
-  return GFL_UI_KEY_GetCont();
+  return GFL_UI_KEY_GetRepeat();
 }
 
 //=============================================================================
@@ -272,8 +272,16 @@ static void _windowCreate(FIELD_ITEMMENU_WORK* pWork)
 //-----------------------------------------------------------------------------
 static void _windowRewrite(FIELD_ITEMMENU_WORK* pWork)
 {
-  ITEMDISP_upMessageRewrite(pWork);
-  ITEMDISP_WazaInfoWindowChange(pWork);
+  // キー操作時のみ、上画面を更新
+  if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_KEY )
+  {
+    ITEMDISP_upMessageRewrite(pWork);
+  }
+  else
+  {
+    ITEMDISP_upMessageClean(pWork);
+  }
+
   ITEMDISP_CellMessagePrint(pWork);
   BTN_DrawCheckBox( pWork );
   pWork->bChange = TRUE;
@@ -812,8 +820,8 @@ static void _itemInnerUse( FIELD_ITEMMENU_WORK* pWork )
       WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
       ITEMDISP_ItemInfoWindowDispEx( pWork, TRUE );
 
-      // @TODO スプレー音が見当たらないのでとりあえずテキトーな音
-      GFL_SOUND_PlaySE( SE_BAG_DECIDE );
+      // スプレー音が見当たらないのでとりあえずテキトーな音
+      GFL_SOUND_PlaySE( SE_BAG_SPRAY );
     }
     else
     {
@@ -896,6 +904,10 @@ static void _itemSelectWait(FIELD_ITEMMENU_WORK* pWork)
       _CHANGE_STATE(pWork,_itemTrash);
     }
     else if(BAG_MENU_YAMERU==pWork->ret_code2){  //やめる
+      // タッチ状態で抜けたのならクリア
+      if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH ) {
+        ITEMDISP_upMessageClean( pWork ); // クリア
+      }
       // タッチ遷移なら非表示に
       KTST_SetDraw( pWork, (GFL_UI_CheckTouchOrKey() == GFL_APP_END_KEY) );
       _CHANGE_STATE(pWork, _itemKindSelectMenu);
@@ -2259,10 +2271,7 @@ static void KTST_SetDraw( FIELD_ITEMMENU_WORK* pWork, BOOL on_off )
   GFL_CLACT_WK_SetDrawEnable( pWork->clwkCur, on_off );
 
   // 上画面を消す
-  // @TODO 通信アイコン > リクエストタイプにする
-  GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ , on_off );
-  GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG1 , on_off );
-  GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG2 , on_off );
+  pWork->bDispUpReq = on_off;
 }
 
 //-----------------------------------------------------------------------------
@@ -2818,14 +2827,13 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
 
 //    ITEMDISP_ScrollCursorChangePos(pWork, ITEMMENU_GetItemIndex(pWork));
       _ItemChange(pWork, nowno, ITEMMENU_GetItemIndex(pWork));
+
+      // タッチ通知
+      KTST_SetDraw( pWork, FALSE ); 
       _windowRewrite(pWork);
 
-      KTST_SetDraw( pWork, FALSE );
-
-      // 上画面だけは表示
-      GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ , TRUE );
-      GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG1 , TRUE );
-      GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG2 , TRUE );
+      // 上画面表示
+      ITEMDISP_upMessageRewrite(pWork);
 
       _CHANGE_STATE(pWork,_itemSelectState);
     }
@@ -2843,9 +2851,9 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
     pWork->pocketno = pocketno;
     // ソートボタン表示切替
     SORT_ModeReset( pWork );
-    _windowRewrite(pWork);
 
     KTST_SetDraw( pWork, FALSE );
+    _windowRewrite(pWork);
   }
 
 
@@ -2862,14 +2870,19 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
 static void _VBlank( GFL_TCB *tcb, void *work )
 {
   FIELD_ITEMMENU_WORK* pWork = work;
+  
+  // 上画面、表示非表示切替
+  ITEMDISP_upMessageSetDispVBlank( pWork, pWork->bDispUpReq );
 
   GFL_CLACT_SYS_VBlankFunc(); //セルアクターVBlank
 
   // セルリスト更新
-  if(pWork->bChange){
+  if(pWork->bChange)
+  {
     ITEMDISP_CellVramTrans(pWork);
     pWork->bChange = FALSE;
   }
+
 }
 
 
@@ -3022,10 +3035,16 @@ static GFL_PROC_RESULT FieldItemMenuProc_Main( GFL_PROC * proc, int * seq, void 
   FIELD_ITEMMENU_WORK* pWork = mypWork;
   StateFunc* state = pWork->state;
 
-  if(state == NULL){
+  if(state == NULL)
+  {
+    // ワイプ ブラックアウト開始
+    WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT ,
+                    WIPE_FADE_BLACK , FLD_SUBSCR_FADE_DIV , FLD_SUBSCR_FADE_SYNC , pWork->heapID );
+
     return GFL_PROC_RES_FINISH;
   }
-  if( WIPE_SYS_EndCheck() != TRUE ){
+  else if( WIPE_SYS_EndCheck() != TRUE )
+  {
     return GFL_PROC_RES_CONTINUE;
   }
 
@@ -3052,7 +3071,7 @@ static GFL_PROC_RESULT FieldItemMenuProc_End( GFL_PROC * proc, int * seq, void *
 {
   FIELD_ITEMMENU_WORK* pWork = mypWork;
 
-  if (GFL_FADE_CheckFade() == TRUE) {
+  if (WIPE_SYS_EndCheck() != TRUE) {
     return GFL_PROC_RES_CONTINUE;
   }
 
