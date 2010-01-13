@@ -167,8 +167,8 @@
 #define FE_ELBOARD_TOUNAN                  151 /* 0x0097 電光掲示板用フラグ：Ｃ02博物館の盗難イベント発生ニュース */
 #define FE_ELBOARD_C02GYMWIN               152 /* 0x0098 電光掲示板用フラグ：Ｃ02ジムリーダー勝利フラグ */
 #define FE_SODATEYAOLDMAN_OPEN             153 /* 0x0099 育て屋にじいさんが戻ってくる（２匹預けられるようになる） */
-		/* not used   154(0x009a) */
-		/* not used   155(0x009b) */
+#define FE_BC10R0401_BOSS                  154 /* 0x009a ブラックシティ：ボス初回会話チェック */
+#define FE_WC10R0101_OLDMAN                155 /* 0x009b ホワイトシティ：村長初回会話チェック */
 		/* not used   156(0x009c) */
 		/* not used   157(0x009d) */
 		/* not used   158(0x009e) */
@@ -648,10 +648,10 @@
 #define FV_D08R0101_NONDRAW_01             624 /* 0x0270 リュウラセンの塔入り口：バッジ入手まで接続をブロックするための透明OBJ */
 #define FV_R03_SODATEYA_01                 625 /* 0x0271 ３番道路の育て屋じいさん */
 #define FV_D05R0201_PLASMA                 626 /* 0x0272 れいとうコンテナ：プラズマ団とライバル */
-		/* not used   627(0x0273) */
-		/* not used   628(0x0274) */
-		/* not used   629(0x0275) */
-		/* not used   630(0x0276) */
+#define FV_BC10R0401_B                     627 /* 0x0273 ブラックシティ：移住人口BのOBJ */
+#define FV_BC10R0401_C                     628 /* 0x0274 ブラックシティ：移住人口CのOBJ */
+#define FV_BC10R0401_D                     629 /* 0x0275 ブラックシティ：移住人口DのOBJ */
+#define FV_BC10R0401_E                     630 /* 0x0276 ブラックシティ：移住人口EのOBJ */
 		/* not used   631(0x0277) */
 		/* not used   632(0x0278) */
 		/* not used   633(0x0279) */
@@ -2501,7 +2501,7 @@
 #define TMFLG_WC10_ITEM_08                2727 /* 0x0aa7 WC10のアイテム０８ */
 #define TMFLG_WC10_ITEM_09                2728 /* 0x0aa8 WC10のアイテム０９ */
 #define TMFLG_WC10_ITEM_10                2729 /* 0x0aa9 WC10のアイテム１０ */
-		/* not used  2730(0x0aaa) */
+#define TMFLG_WC10_OLDMAN                 2730 /* 0x0aaa WC村長 */
 		/* not used  2731(0x0aab) */
 		/* not used  2732(0x0aac) */
 		/* not used  2733(0x0aad) */
