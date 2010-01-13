@@ -837,7 +837,11 @@ SRCS_OVERLAY_BATTLE =	battle/btl_main.c \
 			battle/btlv/btlv_core.c \
 			battle/btlv/btlv_scu.c \
 			battle/btlv/btlv_scd.c \
-			battle/btlv/btlv_stage.c \
+			battle/tr_ai/tr_ai.c
+
+# バトル描画
+#===> SRCS_OVERLAY_BATTLE
+SRCS_OVERLAY_BATTLE_VIEW = battle/btlv/btlv_stage.c \
 			battle/btlv/btlv_field.c \
 			battle/btlv/btlv_camera.c \
 			battle/btlv/btlv_effect.c \
@@ -849,11 +853,10 @@ SRCS_OVERLAY_BATTLE =	battle/btl_main.c \
 			battle/btlv/btlv_gauge.c \
 			battle/btlv/btlv_b_gauge.c \
 			battle/btlv/btlv_timer.c \
-			battle/btlv/btlv_bg.c \
-			battle/tr_ai/tr_ai.c
+			battle/btlv/btlv_bg.c
 
 # バトル用バッグ&ポケモンリスト共通ツール
-#===> SRCS_OVERLAY_BATTLE
+#===> SRCS_OVERLAY_BATTLE_VIEW
 SRCS_OVERLAY_BATTLE_B_APP = battle/app/b_app_tool.c
 
 # バトル用バッグ
