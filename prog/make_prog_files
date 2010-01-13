@@ -652,7 +652,7 @@ SRCS_OVERLAY_FIELD_GYM_ANTI = field/gym_anti.c
 SRCS_OVERLAY_FIELD_GIMMICK_BGATE = field/field_gimmick_bgate_jet.c
 
 # マッパーサンプル
-#===> main
+#===> SRCS_OVERLAY_DEV_IRC
 SRCS_OVERLAY_WATANABE_SAMPLE  = test/tetsu/sample/g3d_mapper.c \
         test/tetsu/sample/sample_net.c \
         test/tetsu/sample/g3dmapfunc/func_mapeditor_file.c \
@@ -745,11 +745,11 @@ SRCS_OVERLAY_ENCEFF_PNL3 = field/enceff_pnl3.c
 
 
 # サウンドデバッグ画面
-#===> main
+#===> SRCS_OVERLAY_DEV_IRC
 SRCS_OVERLAY_SOUND_DEBUG  = sound/snd_test2.c
 
 # 有泉デバッグ
-#===> main
+#===> SRCS_OVERLAY_DEV_IRC
 SRCS_OVERLAY_ARIIZUMI_DEBUG = test/ariizumi/debug_ariizumi.c
 
 # 田谷デバッグ
@@ -1222,7 +1222,7 @@ SRCS_OVERLAY_BATTLE_CHAMPIONSHIP = battle_championship/battle_championship.c \
 				net_app/irc_battle/irc_battle_subproc.c
 
 # 小幡デバッグ
-#===> main
+#===> SRCS_OVERLAY_DEV_IRC
 SRCS_OVERLAY_OBATA_DEBUG = test/obata/debug_obata_menu.c \
                            test/obata/debug_obata_menu_setup.c \
                            test/obata/debug_obata_demo_test.c \
@@ -1241,13 +1241,6 @@ SRCS_OVERLAY_OBATA_DEBUG = test/obata/debug_obata_menu.c \
 SRCS_OVERLAY_MCS_LIB = debug/gf_mcs.c \
 											 debug/mcs_resident.c
 
-#ITEMUSEライブラリ
-#===> SRCS_OVERLAY_FIELD_WEATHER_SUNNY
-#===> SRCS_OVERLAY_FIELD_WEATHER_SNOW
-#===> SRCS_OVERLAY_FIELD_WEATHER_RAIN
-#===> SRCS_OVERLAY_FIELD_WEATHER_STORM
-#SRCS_OVERLAY_ITEMUSE = 
-
 #D_NUMINPUTライブラリ
 #===> SRCS_OVERLAY_FIELD_WEATHER_SUNNY
 #===> SRCS_OVERLAY_FIELD_WEATHER_SNOW
@@ -1263,7 +1256,7 @@ SRCS_OVERLAY_D_NUMINPUT = field/event_debug_numinput.c
 SRCS_OVERLAY_D_IWASAWA = field/event_debug_mvpoke.c
 
 #マイクテスト
-#===> main
+#===> SRCS_OVERLAY_DEV_IRC
 SRCS_OVERLAY_MICTEST	= app/mictest/mictest.c
 
 #UIデバッグ(新規アプリ用テンプレート）
@@ -1434,7 +1427,7 @@ SRCS_OVERLAY_NAGIHASHI_DEBUG	= test/nagihashi/debug_nagi.c \
 																test/nagihashi/debug_poke2dcheck.c
 
 # 保坂デバッグ
-#===>main
+#===>SRCS_OVERLAY_DEV_IRC
 SRCS_OVERLAY_DEBUG_HOSAKA   = test/hosaka/debug_3d_demo.c
 
 # 3Dデモ再生アプリ
