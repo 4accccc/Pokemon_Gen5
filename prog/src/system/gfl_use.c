@@ -236,10 +236,13 @@ void GFLUser_Main(void)
 #ifdef PM_DEBUG
 #ifndef MULTI_BOOT_MAKE
   //MCSéÛêM
-  if( OS_GetConsoleType() & OS_CONSOLE_ISDEBUGGER ){
-	  GFL_MCS_Main();
-	  GFL_MCS_SNDVIEWER_Main();
-		GFL_MCS_Resident();
+  if( OS_GetConsoleType() & OS_CONSOLE_ISDEBUGGER|OS_CONSOLE_TWLDEBUGGER ){
+
+    if( OS_IsRunOnTwl() == FALSE ){
+      GFL_MCS_Main();
+      GFL_MCS_SNDVIEWER_Main();
+      GFL_MCS_Resident();
+    }
   }
 #endif MULTI_BOOT_MAKE
 #endif
@@ -267,8 +270,10 @@ void GFLUser_Exit(void)
 {
 #ifdef PM_DEBUG
 #ifndef MULTI_BOOT_MAKE
-  if( OS_GetConsoleType() & OS_CONSOLE_ISDEBUGGER ){
-	  GFL_MCS_Exit();
+  if( OS_GetConsoleType() & OS_CONSOLE_ISDEBUGGER| OS_CONSOLE_TWLDEBUGGER ){
+    if( OS_IsRunOnTwl() == FALSE ){
+	    GFL_MCS_Exit();
+    }
   }
 #endif //MULTI_BOOT_MAKE
 #endif
@@ -330,7 +335,9 @@ void GFLUser_VIntr(void)
 #ifndef MULTI_BOOT_MAKE
   //MCSéÛêM
   if( OS_GetConsoleType() & OS_CONSOLE_ISDEBUGGER|OS_CONSOLE_TWLDEBUGGER ){
-	  GFL_MCS_VIntrFunc();
+    if( OS_IsRunOnTwl() == FALSE ){
+	    GFL_MCS_VIntrFunc();
+    }
   }
 #endif //MULTI_BOOT_MAKE
 #endif
@@ -471,9 +478,13 @@ BOOL GFUser_SendHeapStatus(void);
 
 BOOL GFUser_SendHeapStatus(void)
 {
-  if( OS_GetConsoleType() & OS_CONSOLE_ISDEBUGGER ){
-		GFL_MCS_Resident_SendHeapStatus();
-		return TRUE;
+  if( OS_GetConsoleType() & OS_CONSOLE_ISDEBUGGER|OS_CONSOLE_TWLDEBUGGER ){
+    if( OS_IsRunOnTwl() == FALSE ){
+		  GFL_MCS_Resident_SendHeapStatus();
+  		return TRUE;
+    }else{
+	    return FALSE;
+    }
   }
 	return FALSE;
 }
