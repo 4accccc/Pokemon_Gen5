@@ -105,6 +105,7 @@ GMEVENT* EVENT_EntranceOut( GMEVENT* parent,
     EVENT_FUNC_EntranceOut_ExitTypeSP3,    //EXIT_TYPE_SP3
     EVENT_FUNC_EntranceOut_ExitTypeSP4,    //EXIT_TYPE_SP4
     EVENT_FUNC_EntranceOut_ExitTypeSP5,    //EXIT_TYPE_SP5
+    EVENT_FUNC_EntranceOut_ExitTypeNone,   //EXIT_TYPE_INTRUDE
   };
 
   // EXIT_TYPE‚ðŒˆ’è

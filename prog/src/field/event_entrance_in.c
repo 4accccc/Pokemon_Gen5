@@ -110,6 +110,7 @@ GMEVENT* EVENT_EntranceIn( GMEVENT* parent,
     EVENT_FUNC_EntranceIn_ExitTypeSP3,    //EXIT_TYPE_SP3
     EVENT_FUNC_EntranceIn_ExitTypeSP4,    //EXIT_TYPE_SP4
     EVENT_FUNC_EntranceIn_ExitTypeSP5,    //EXIT_TYPE_SP5
+    EVENT_FUNC_EntranceIn_ExitTypeNone,   //EXIT_TYPE_INTRUDE
   };
 
   // ÉCÉxÉìÉgçÏê¨

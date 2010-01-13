@@ -1738,7 +1738,9 @@ static void setFrontPos(const EV_REQUEST * req, VecFx32 * pos)
 static BOOL checkConnectIsFreeExit( const CONNECT_DATA * cnct )
 {
   EXIT_TYPE exit_type = CONNECTDATA_GetExitType( cnct );
-  return ( exit_type == EXIT_TYPE_NONE || exit_type == EXIT_TYPE_WARP );
+  return ( exit_type == EXIT_TYPE_NONE
+      || exit_type == EXIT_TYPE_WARP
+      || exit_type == EXIT_TYPE_INTRUDE );
 }
 
 //--------------------------------------------------------------
