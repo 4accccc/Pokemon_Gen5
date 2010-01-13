@@ -41,13 +41,13 @@ typedef enum{
 } GIMMICKWORK_DATA_INDEX;
 
 // リフトアップ時のパラメータ
-#define LIFT_UP_FRAME (30)
-#define LIFT_UP_CAMERA_X (0x000001f8 << FX32_SHIFT) 
-#define LIFT_UP_CAMERA_Y (0x00000075 << FX32_SHIFT) 
-#define LIFT_UP_CAMERA_Z (0x000002e8 << FX32_SHIFT)
-#define LIFT_UP_TARGET_X (0x000001f8 << FX32_SHIFT) 
-#define LIFT_UP_TARGET_Y (0xffffffb4 << FX32_SHIFT) 
-#define LIFT_UP_TARGET_Z (0x0000027a << FX32_SHIFT)
+#define LIFT_UP_FRAME (20)
+#define LIFT_UP_CAMERA_X (0x000001f9 << FX32_SHIFT) 
+#define LIFT_UP_CAMERA_Y (0x0000006d << FX32_SHIFT) 
+#define LIFT_UP_CAMERA_Z (0x00000329 << FX32_SHIFT)
+#define LIFT_UP_TARGET_X (0x000001f9 << FX32_SHIFT) 
+#define LIFT_UP_TARGET_Y (0x0000003c << FX32_SHIFT) 
+#define LIFT_UP_TARGET_Z (0x000002d0 << FX32_SHIFT)
 
 
 //==========================================================================================
@@ -336,6 +336,39 @@ void LEAGUE_FRONT_01_GIMMICK_Move( FIELDMAP_WORK* fieldmap )
     exobj_cnt = FIELDMAP_GetExpObjCntPtr( fieldmap );
     FLD_EXP_OBJ_PlayAnime( exobj_cnt );
   } 
+  {
+    static BOOL def = TRUE;
+    int key = GFL_UI_KEY_GetCont();
+    int trg = GFL_UI_KEY_GetTrg();
+    if( key & PAD_BUTTON_DEBUG )
+    {
+      if( trg & PAD_BUTTON_A )
+      {
+        FIELD_CAMERA* camera = FIELDMAP_GetFieldCamera( fieldmap );
+
+        if( def )
+        {
+          FLD_CAM_MV_PARAM moveParam;
+          FIELD_CAMERA_SetRecvCamParam( camera );
+          moveParam.Chk.Shift = FALSE;
+          moveParam.Chk.Pitch = FALSE;
+          moveParam.Chk.Yaw = FALSE;
+          moveParam.Chk.Dist = FALSE;
+          moveParam.Chk.Fovy = FALSE;
+          moveParam.Chk.Pos = TRUE;
+          VEC_Set( &moveParam.Core.CamPos, LIFT_UP_CAMERA_X, LIFT_UP_CAMERA_Y, LIFT_UP_CAMERA_Z ); 
+          VEC_Set( &moveParam.Core.TrgtPos, LIFT_UP_TARGET_X, LIFT_UP_TARGET_Y, LIFT_UP_TARGET_Z ); 
+          FIELD_CAMERA_SetLinerParamDirect( camera, 
+              &moveParam.Core.CamPos, &moveParam.Core.TrgtPos, &moveParam.Chk, LIFT_UP_FRAME );
+        }
+        else
+        {
+          FIELD_CAMERA_RecvLinerParamDefault( camera, LIFT_UP_FRAME );
+        }
+        def = !def; 
+      }
+    }
+  }
 }
 
 
@@ -534,7 +567,8 @@ static GMEVENT_RESULT LiftDownEvent( GMEVENT* event, int* seq, void* wk )
       moveParam.Chk.Pos = TRUE;
       VEC_Set( &moveParam.Core.CamPos, LIFT_UP_CAMERA_X, LIFT_UP_CAMERA_Y, LIFT_UP_CAMERA_Z ); 
       VEC_Set( &moveParam.Core.TrgtPos, LIFT_UP_TARGET_X, LIFT_UP_TARGET_Y, LIFT_UP_TARGET_Z ); 
-      FIELD_CAMERA_SetLinerParam( camera, &moveParam, LIFT_UP_FRAME );
+      FIELD_CAMERA_SetLinerParamDirect( camera, 
+          &moveParam.Core.CamPos, &moveParam.Core.TrgtPos, &moveParam.Chk, LIFT_UP_FRAME );
     }
     (*seq)++;
     OBATA_Printf( "GIMMICK-LF01 LIFT DOWN EVENT: seq ==> %d\n", *seq );
