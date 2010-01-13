@@ -6784,19 +6784,6 @@
 
 //--------------------------------------------------------------
 /**
- *  _WFBC_ADD_BC_NPC_WIN_NUM
- *  @brief WFBC:BC NPCèüóòêîÇâ¡éZ
- */
-//--------------------------------------------------------------
-#define _WFBC_ADD_BC_NPC_WIN_NUM() \
-    _ASM_WFBC_ADD_BC_NPC_WIN_NUM
-
-  .macro  _ASM_WFBC_ADD_BC_NPC_WIN_NUM
-  .short EV_SEQ_WFBC_ADD_BC_NPC_WIN_NUM
-  .endm
-
-//--------------------------------------------------------------
-/**
  *  _WFBC_ADD_BC_NPC_WIN_TARGET
  *  @brief WFBC:BC NPCèüóòêîÇâ¡éZ
  */

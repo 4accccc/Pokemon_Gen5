@@ -692,6 +692,27 @@ void FIELD_WFBC_SetBattlePeople( FIELD_WFBC* p_wk, u32 npc_id )
   WFBC_UpdateCore( p_wk );
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  バトルすることが出来るのかを返す
+ *
+ *	@param	p_wk      ワーク
+ *	@param	npc_id    NPCID
+ *
+ *	@retval TRUE    出来る
+ *	@retval FALSE   出来ない
+ */
+//-----------------------------------------------------------------------------
+BOOL FIELD_WFBC_IsBattlePeople( const FIELD_WFBC* cp_wk, u32 npc_id )
+{
+  const FIELD_WFBC_PEOPLE* cp_people;
+  GF_ASSERT( cp_wk );
+
+  cp_people = WFBC_GetConstPeople( cp_wk, npc_id );
+
+  return FIELD_WFBC_CORE_PEOPLE_IsBattle( &cp_people->people_local );
+}
+
 
 
 

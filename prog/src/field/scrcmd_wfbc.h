@@ -28,9 +28,6 @@ extern VMCMD_RESULT EvCmdWfbc_SetRirekiPlayerName( VMHANDLE *core, void *wk );
 // 各パラメータの取得
 extern VMCMD_RESULT EvCmdWfbc_GetData( VMHANDLE *core, void *wk );
 
-// BC　NPC勝った数加算
-extern VMCMD_RESULT EvCmdWfbc_AddBCNpcWinNum( VMHANDLE *core, void *wk );
-
 // BC NPC勝利目標値　加算
 extern VMCMD_RESULT EvCmdWfbc_AddBCNpcWinTarget( VMHANDLE *core, void *wk );
 

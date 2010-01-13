@@ -131,6 +131,7 @@ extern void FIELD_WFBC_SetWordSetParentPlayer( const FIELD_WFBC* cp_wk, WORDSET*
 
 // ÉoÉgÉãÇµÇΩÇ±Ç∆Çê›íË
 extern void FIELD_WFBC_SetBattlePeople( FIELD_WFBC* p_wk, u32 npc_id );
+extern BOOL FIELD_WFBC_IsBattlePeople( const FIELD_WFBC* cp_wk, u32 npc_id );
 
 
 
