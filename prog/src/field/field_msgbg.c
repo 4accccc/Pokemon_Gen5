@@ -2386,6 +2386,8 @@ BOOL FLDSYSWIN_STREAM_CheckAllPrintTrans( FLDSYSWIN_STREAM *sysWin )
 //======================================================================
 //  FLDTALKMSGWIN
 //======================================================================
+#define GIZA_SHAKE_Y (8)
+
 //--------------------------------------------------------------
 /// FLDTALKMSGWIN
 //--------------------------------------------------------------
@@ -2399,6 +2401,8 @@ struct _TAG_FLDTALKMSGWIN
   int talkMsgWinIdx;
   TALKMSGWIN_SYS *talkMsgWinSys; //FLDMSGBGより
   KEYCURSOR_WORK cursor_work;
+  
+  int shake_y;
 };
 
 //--------------------------------------------------------------
@@ -2446,6 +2450,10 @@ static void fldTalkMsgWin_Add(
   
   keyCursor_Init( &tmsg->cursor_work, fmb->heapID );
   
+  if( type == TALKMSGWIN_TYPE_GIZA ){
+    tmsg->shake_y = GIZA_SHAKE_Y;
+  }
+  
   KAGAYA_Printf( "ウィンドウ %d,%d,%d\n", pos->x, pos->y, pos->z );
 }
 
@@ -2470,6 +2478,7 @@ FLDTALKMSGWIN * FLDTALKMSGWIN_Add( FLDMSGBG *fmb,
       fmb->heapID, sizeof(FLDTALKMSGWIN) );
   tmsg->strBuf = GFL_STR_CreateBuffer(
 					FLDMSGBG_STRLEN, fmb->heapID );
+  
   GFL_MSG_GetString( msgData, msgID, tmsg->strBuf );
   fldTalkMsgWin_Add( fmb, tmsg, idx, pos, tmsg->strBuf, type );
   return( tmsg );
@@ -2574,6 +2583,21 @@ BOOL FLDTALKMSGWIN_Print( FLDTALKMSGWIN *tmsg )
       tmsg->talkMsgWinSys, tmsg->talkMsgWinIdx );
   state = PRINTSYS_PrintStreamGetState( stream );
   
+  { //shake
+    GFL_BG_SetScroll(
+        FLDMSGBG_BGFRAME, GFL_BG_SCROLL_Y_SET, tmsg->shake_y );
+    
+    if( tmsg->shake_y < 0 ){
+      tmsg->shake_y += 2;
+      
+      if( tmsg->shake_y > 0 ){
+        tmsg->shake_y = 0;
+      }
+    }
+
+    tmsg->shake_y = -tmsg->shake_y;
+  }
+  
   switch( state ){
   case PRINTSTREAM_STATE_RUNNING: //実行中
     tmsg->flag_cursor = CURSOR_FLAG_NONE;
@@ -2620,6 +2644,9 @@ BOOL FLDTALKMSGWIN_Print( FLDTALKMSGWIN *tmsg )
     }
     break;
   case PRINTSTREAM_STATE_DONE: //終了
+    { //shake
+      GFL_BG_SetScroll( FLDMSGBG_BGFRAME, GFL_BG_SCROLL_Y_SET, 0 );
+    }
     return( TRUE );
   }
   
@@ -2673,12 +2700,12 @@ static void fldPlainMsgWin_Add(
     TALKMSGWIN_CreateWindowAlone(
         plnwin->talkMsgWinSys, plnwin->talkMsgWinIdx,
 //        strBuf, 1, 2, 30, 5, GX_RGB(31,31,31), type );
-        strBuf, 1, 1, 30, 5, GX_RGB(31,31,31), type );
+        strBuf, 1, 1, 30, 4, GX_RGB(31,31,31), type );
   }else{
     TALKMSGWIN_CreateWindowAlone(
         plnwin->talkMsgWinSys, plnwin->talkMsgWinIdx,
 //        strBuf, 1, 17, 30, 5, GX_RGB(31,31,31), type );
-        strBuf, 1, 18, 30, 5, GX_RGB(31,31,31), type );
+        strBuf, 1, 18, 30, 4, GX_RGB(31,31,31), type );
   }
   
   TALKMSGWIN_OpenWindow( plnwin->talkMsgWinSys, plnwin->talkMsgWinIdx );

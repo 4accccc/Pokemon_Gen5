@@ -532,7 +532,6 @@ static void evtcb_NaminoriStart( GFL_TCB *tcb, void *wk )
 {
   FLDEFF_TASK *task;
   EVWORK_NAMINORI *work = wk;
-  PLAYER_MOVE_FORM form = FIELD_PLAYER_GetMoveForm( work->fld_player );
   MMDL *mmdl = FIELD_PLAYER_GetMMdl( work->fld_player );
   
   switch( work->seq )

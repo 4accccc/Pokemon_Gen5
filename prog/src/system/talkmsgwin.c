@@ -928,7 +928,7 @@ static void calcTailVtx0_refwin(	const TMSGWIN*	win,
 	int	ref_py = (GFL_BMPWIN_GetPosY(refwin->bmpwin)-1) * 8;
 	int	ref_sx = (GFL_BMPWIN_GetScreenSizeX(refwin->bmpwin)+2) * 8;
 	int	ref_sy = (GFL_BMPWIN_GetScreenSizeY(refwin->bmpwin)+2) * 8;
-
+  
 	if((px + sx) < ref_px){
 		//参照winの左への配置設定
 		*pTargetScrx = ref_px;
@@ -977,7 +977,13 @@ static u8 calcTailVtx1Vtx2( const TMSGWIN*	win,
 	int	tail_length;
 	u8	tailPat;
 	u16 ex1, ey1, ex2, ey2;
-
+  
+  { //BGスクロールを考慮
+    u8 frame = GFL_BMPWIN_GetFrame( win->bmpwin );
+    int scroll = GFL_BG_GetScrollY( frame );
+    py += scroll;
+  }
+  
 	switch(win->winPat){
 	default:
 	case TALKWIN_SETPAT_FLOAT:
@@ -1084,7 +1090,7 @@ static void calcWinVtx( const TMSGWIN*	win,
 	int	py = (GFL_BMPWIN_GetPosY(win->bmpwin)-1) * 8;
 	int	sx = GFL_BMPWIN_GetScreenSizeX(win->bmpwin) * 8;
 	int	sy = (GFL_BMPWIN_GetScreenSizeY(win->bmpwin)+2) * 8;
-
+  
 	NNS_G3dScrPosToWorldLine((px + 0),	(py + 0),		pWinVtx0, NULL );
 	NNS_G3dScrPosToWorldLine((px + sx),	(py + 0),		pWinVtx1, NULL );
 	NNS_G3dScrPosToWorldLine((px + 0),	(py + sy),	pWinVtx2, NULL );
