@@ -569,13 +569,8 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
 				field/event_comm_talk.c \
 				field/event_comm_talked.c \
         field/enceff.c \
-        field/enceff_prg.c \
         field/enceff1.c \
-        field/enceff2.c \
-        field/enceff_pnl.c \
-        field/enceff_pnl1.c \
-        field/enceff_pnl2.c \
-        field/enceff_pnl3.c
+        field/enceff2.c
 
 # フィールド天気
 #===> SRCS_OVERLAY_FIELDMAP
@@ -709,6 +704,29 @@ SRCS_OVERLAY_MONOLITH = field/field_comm/monolith_main.c \
 SRCS_OVERLAY_TOWNMAP = app/townmap/townmap.c \
 											 app/townmap/townmap_grh.c \
 											 app/townmap/townmap_data_sys.c
+
+# エンカウントエフェクト
+#===> SRCS_OVERLAY_FIELD_GYM_INIT
+#===> SRCS_OVERLAY_FIELD_GYM_INSECT
+#===> SRCS_OVERLAY_FIELD_GYM_ELEC
+#===> SRCS_OVERLAY_FIELD_GYM_NORMAL
+#===> SRCS_OVERLAY_FIELD_GYM_FLY
+#===> SRCS_OVERLAY_FIELD_GYM_ANTI
+#===> SRCS_OVERLAY_FIELD_GIMMICK_BGATE
+SRCS_OVERLAY_ENCEFF_PRG = field/enceff_prg.c
+
+#===> SRCS_OVERLAY_ENCEFF_PRG
+SRCS_OVERLAY_ENCEFF_PNL = field/enceff_pnl.c
+
+#===> SRCS_OVERLAY_ENCEFF_PNL
+SRCS_OVERLAY_ENCEFF_PNL1 = field/enceff_pnl1.c
+
+#===> SRCS_OVERLAY_ENCEFF_PNL
+SRCS_OVERLAY_ENCEFF_PNL2 = field/enceff_pnl2.c
+
+#===> SRCS_OVERLAY_ENCEFF_PNL
+SRCS_OVERLAY_ENCEFF_PNL3 = field/enceff_pnl3.c
+
 
 # サウンドデバッグ画面
 #===> main

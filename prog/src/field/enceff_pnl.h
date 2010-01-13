@@ -22,6 +22,7 @@ typedef struct PANEL_WK_tag
   VecFx32 Pos;
   VecFx32 Scale;
   VecFx32 Rot;
+  VecFx32 Spd;
   int Count;
   BOOL MoveOnFlg;
   BOOL MoveEndFlg;

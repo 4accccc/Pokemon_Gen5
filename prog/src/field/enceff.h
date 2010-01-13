@@ -19,6 +19,7 @@ typedef enum {
   ENCEFFID_2,
   ENCEFFID_3,
   ENCEFFID_4,
+  ENCEFFID_5,
   ENCEFFID_MAX,
 }ENCEFF_ID;
 
@@ -38,3 +39,7 @@ extern GMEVENT *ENCEFF_PNL1_Create(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork)
 extern GMEVENT *ENCEFF_PNL2_Create(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork);
 extern GMEVENT *ENCEFF_PNL3_Create(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork);
 extern void ENCEFF_PNL_Draw(ENCEFF_CNT_PTR ptr);
+
+extern void ENCEFF_LoadPanelEffOverlay(ENCEFF_CNT_PTR ptr);
+extern void ENCEFF_UnloadEffOverlay(ENCEFF_CNT_PTR ptr);
+

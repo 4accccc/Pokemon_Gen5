@@ -10,29 +10,44 @@
 
 #include "fieldmap.h"
 
+#define OVERLAY_STACK_MAX (3)
+#define OVERLAY_NONE  (-1)
+
 typedef GMEVENT* (*CREATE_FUNC)(GAMESYS_WORK *, FIELDMAP_WORK *);
 typedef void (*DRAW_FUNC)(ENCEFF_CNT_PTR);
 
+FS_EXTERN_OVERLAY(enceff_prg);
+FS_EXTERN_OVERLAY(enceff_pnl);
+FS_EXTERN_OVERLAY(enceff_pnl1);
+FS_EXTERN_OVERLAY(enceff_pnl2);
+FS_EXTERN_OVERLAY(enceff_pnl3);
 
 typedef struct ENCEFF_CNT_tag
 {
   void *Work;
   DRAW_FUNC DrawFunc;
   FIELDMAP_WORK *FieldMapWork;
+  int OverlayStack[OVERLAY_STACK_MAX];
+  int OverlayStackNum;
 }ENCEFF_CNT;
 
 typedef struct {
   CREATE_FUNC CreateFunc;
   DRAW_FUNC DrawFunc;
+  FSOverlayID OverlayID;
 }ENCEFF_TBL;
 
 static const ENCEFF_TBL EncEffTbl[] = {
-  {ENCEFF_CreateEff1, ENCEFF_DrawEff1},
-  {ENCEFF_CreateEff2, ENCEFF_DrawEff2},
-  {ENCEFF_PNL1_Create, ENCEFF_PNL_Draw},
-  {ENCEFF_PNL2_Create, ENCEFF_PNL_Draw},
-  {ENCEFF_PNL3_Create, ENCEFF_PNL_Draw},
+  {ENCEFF_CreateEff1, ENCEFF_DrawEff1, OVERLAY_NONE},
+  {ENCEFF_CreateEff2, ENCEFF_DrawEff2, OVERLAY_NONE},
+  {ENCEFF_PNL1_Create, ENCEFF_PNL_Draw, FS_OVERLAY_ID(enceff_pnl1)},
+  {ENCEFF_PNL2_Create, ENCEFF_PNL_Draw, FS_OVERLAY_ID(enceff_pnl2)},
+  {ENCEFF_PNL3_Create, ENCEFF_PNL_Draw, FS_OVERLAY_ID(enceff_pnl3)},
 };
+
+
+static void LoadOverlay(ENCEFF_CNT_PTR ptr, const inFSOverlayID);
+
 
 //--------------------------------------------------------------
 /**
@@ -46,6 +61,7 @@ ENCEFF_CNT_PTR ENCEFF_CreateCntPtr(const HEAPID inHeapID, FIELDMAP_WORK * fieldm
   ENCEFF_CNT_PTR ptr;
   ptr = GFL_HEAP_AllocClearMemory(inHeapID, sizeof(ENCEFF_CNT));
   ptr->FieldMapWork = fieldmap;
+  ptr->OverlayStackNum = 0;
   return ptr;
 }
 
@@ -58,6 +74,9 @@ ENCEFF_CNT_PTR ENCEFF_CreateCntPtr(const HEAPID inHeapID, FIELDMAP_WORK * fieldm
 //--------------------------------------------------------------
 void ENCEFF_DeleteCntPtr(ENCEFF_CNT_PTR ptr)
 {
+  //オーバーレイスタックがある場合はここでアンロード
+  ENCEFF_UnloadEffOverlay(ptr);
+  
   GFL_HEAP_FreeMemory( ptr );
 }
 
@@ -78,6 +97,13 @@ void ENCEFF_SetEncEff(ENCEFF_CNT_PTR ptr, GMEVENT * event, const ENCEFF_ID inID)
 
   int no;
   no = GFUser_GetPublicRand(ENCEFFID_MAX);
+  no = ENCEFFID_MAX-1;
+
+  //オーバーレイロード
+  if (EncEffTbl[no].OverlayID != OVERLAY_NONE)
+  {
+    LoadOverlay(ptr, EncEffTbl[no].OverlayID);
+  }
 
   call_event = EncEffTbl[no].CreateFunc(gsys,fieldmap);
   //イベントコール
@@ -116,4 +142,67 @@ void ENCEFF_Draw(ENCEFF_CNT_PTR ptr)
     ptr->DrawFunc(ptr);
   }
 }
+
+//--------------------------------------------------------------------------------------------
+/**
+ * オーバーレイをロードしてスタックする
+ *
+ * @param   ptr     コントローラポインタ
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+static void LoadOverlay(ENCEFF_CNT_PTR ptr, const inFSOverlayID)
+{
+  GFL_OVERLAY_Load( inFSOverlayID );
+  ptr->OverlayStack[ ptr->OverlayStackNum++ ] = inFSOverlayID;
+  GF_ASSERT( ptr->OverlayStackNum <= OVERLAY_STACK_MAX );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * パネルエフェクト用オーバーレイロード
+ *
+ * @param   ptr     コントローラポインタ
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+void ENCEFF_LoadPanelEffOverlay(ENCEFF_CNT_PTR ptr)
+{
+  //プログラム制御エフェクトオーバーレイロード
+  LoadOverlay(ptr, FS_OVERLAY_ID(enceff_prg));
+  //パネルエフェクトオーバーレイロード
+  LoadOverlay(ptr, FS_OVERLAY_ID(enceff_pnl));
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * エフェクト用オーバーレイアンロード
+ *
+ * @param   
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+void ENCEFF_UnloadEffOverlay(ENCEFF_CNT_PTR ptr)
+{
+  if (ptr->OverlayStackNum>0)
+  {
+    int idx;
+    while(ptr->OverlayStackNum>0)
+    {
+      idx = ptr->OverlayStackNum-1;
+      //アンロード
+      if ( ptr->OverlayStack[ idx ] != NULL )
+      {
+        GFL_OVERLAY_Unload( ptr->OverlayStack[ idx ] );
+      }
+      else GF_ASSERT_MSG(0,"Can not unload idx=%d\n", idx);
+
+      ptr->OverlayStackNum--;
+    }
+  }
+}
+
 

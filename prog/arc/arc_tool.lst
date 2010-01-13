@@ -258,4 +258,5 @@
   ARCID_BMODEL_TEXSET_INDOOR   "fieldmap/bmodel_texset_indoor.narc" #配置モデルテクスチャセットデータ（屋内）
   ARCID_ZUKAN_AREA "zukan_area.narc"  # 図鑑で使用するポケモンの分布データ
   ARCID_ZUKAN_DATA_OLD "zukan_data_old.narc"  #図鑑データ（金銀のを持ってきただけ）
+  ARCID_ENCEFF_MDL   "enceff_mdl.narc" #エンカウントエフェクトアーカイブ
 

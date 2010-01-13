@@ -22,10 +22,14 @@ static void StartFunc(PNL_EFF_WORK *work);
 
 GMEVENT *ENCEFF_PNL1_Create(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork)
 {
+  ENCEFF_CNT_PTR eff_cnt_ptr;
   GMEVENT * event;
   VecFx32 pos = {0, 0, FX32_ONE*(264)};
-  //オーバーレイロード
-  ;
+  
+  //オーバーレイロード(パネルエフェクトオーバーレイ)
+  eff_cnt_ptr = FIELDMAP_GetEncEffCntPtr(fieldWork);
+  ENCEFF_LoadPanelEffOverlay(eff_cnt_ptr);
+
   event = ENCEFF_PRG_Create( gsys, &pos, CreateEffMainEvt, ENCEFF_PNL_DrawMesh );
   
   return event;
