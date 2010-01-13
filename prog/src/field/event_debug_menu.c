@@ -25,6 +25,7 @@
 
 #include "event_debug_menu.h"
 #include "event_mapchange.h"
+#include "event_gamestart.h"
 
 #include "net_app/irc_match/ircbattlemenu.h"
 #include "event_ircbattle.h"

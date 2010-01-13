@@ -35,6 +35,7 @@
 #include "warpdata.h"			//WARPDATA_～
 #include "script.h"       //SCRIPT_CallScript
 #include "event_fieldmap_control.h" //
+#include "event_gamestart.h"
 #include "event_mapchange.h"
 
 #include "../../../resource/fldmapdata/script/common_scr_def.h" //SCRID_～
@@ -111,30 +112,6 @@ static GMEVENT_RESULT GMEVENT_NormalGameOver(GMEVENT * event, int * seq, void *w
 
 	switch (*seq) {
 	case 0:
-		//ワープIDで指定された戻り先へ
-    //この中ではフィールド復帰処理は動作しない！
-    MAPCHG_GameOver( param->gsys );
-		(*seq) ++;
-		break;
-
-	case 1:
-		//BGMフェードアウト
-		//Snd_BgmFadeOut( 0, 20 );
-		(*seq) ++;
-		break;
-
-	case 2:
-		//BGMフェードアウト待ち
-		/*if( Snd_FadeCheck() == 0 ) */{
-
-			//サウンドゲームオーバー処理
-			//Snd_GameOverSet();
-
-			(*seq) ++;
-		}
-		break;
-
-	case 3:
 		//警告BG以外を表示オフ
 		SetBrightness( BRIGHTNESS_BLACK, (PLANEMASK_ALL^PLANEMASK_BG3), MASK_MAIN_DISPLAY);
 		SetBrightness( BRIGHTNESS_BLACK, PLANEMASK_ALL, MASK_SUB_DISPLAY);
@@ -144,13 +121,13 @@ static GMEVENT_RESULT GMEVENT_NormalGameOver(GMEVENT * event, int * seq, void *w
 		(*seq) ++;
 		break;
 
-	case 4:
+	case 1:
 		//イベントコマンド：フィールドマッププロセス復帰
-    GMEVENT_CallEvent( event, EVENT_FieldOpen(param->gsys) );
+    GMEVENT_CallEvent( event, EVENT_GameOver(param->gsys) );
 		(*seq)++;
 		break;
 
-	case 5:
+	case 2:
 		//表示オフ解除
 		SetBrightness( BRIGHTNESS_NORMAL, PLANEMASK_ALL, MASK_DOUBLE_DISPLAY);
 

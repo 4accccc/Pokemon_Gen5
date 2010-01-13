@@ -18,6 +18,8 @@
 #include "field/fieldmap.h"
 
 #include "./event_fieldmap_control.h"
+#include "./event_fieldmap_control_local.h"
+#include "./event_gamestart.h"
 
 #include "system/main.h"      // HEAPID_PROC
 
@@ -36,6 +38,8 @@ typedef struct {
 	GAMESYS_WORK * gsys;
 	FIELDMAP_WORK * fieldmap;
 	GAMEDATA * gamedata;
+
+  BOOL unload_fieldinit;
 }FIELD_OPENCLOSE_WORK;
 //------------------------------------------------------------------
 //------------------------------------------------------------------
@@ -51,6 +55,11 @@ static GMEVENT_RESULT FieldCloseEvent(GMEVENT * event, int * seq, void *work)
 		break;
 	case 1:
 		if (GAMESYSTEM_IsProcExists(gsys) != GFL_PROC_MAIN_NULL) break;
+     
+    if( focw->unload_fieldinit ){
+      // フィールド初期化用オーバーレイ破棄
+      GAMESTART_OVERLAY_FIELD_INIT_UnLoad();
+    }
 		return GMEVENT_RES_FINISH;
 	}
 	return GMEVENT_RES_CONTINUE;
@@ -65,6 +74,21 @@ GMEVENT * EVENT_FieldClose(GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldmap)
 	focw->gsys = gsys;
 	focw->fieldmap = fieldmap;
 	focw->gamedata = GAMESYSTEM_GetGameData(gsys);
+  focw->unload_fieldinit = TRUE;
+	return event;
+}
+
+//------------------------------------------------------------------
+// event_mapchange専用
+//------------------------------------------------------------------
+GMEVENT * EVENT_FieldClose_FieldProcOnly(GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldmap)
+{
+	GMEVENT * event = GMEVENT_Create(gsys, NULL, FieldCloseEvent, sizeof(FIELD_OPENCLOSE_WORK));
+	FIELD_OPENCLOSE_WORK * focw = GMEVENT_GetEventWork(event);
+	focw->gsys = gsys;
+	focw->fieldmap = fieldmap;
+	focw->gamedata = GAMESYSTEM_GetGameData(gsys);
+  focw->unload_fieldinit = FALSE;
 	return event;
 }
 
@@ -106,8 +130,27 @@ GMEVENT * EVENT_FieldOpen(GAMESYS_WORK *gsys)
 	focw->gsys = gsys;
 	focw->fieldmap = NULL;
 	focw->gamedata = GAMESYSTEM_GetGameData(gsys);
+
+  // フィールド初期化用オーバーレイ読み込み
+  GAMESTART_OVERLAY_FIELD_INIT_Load();
+
 	return event;
 }
+
+//------------------------------------------------------------------
+// event_mapchange専用
+//------------------------------------------------------------------
+GMEVENT * EVENT_FieldOpen_FieldProcOnly(GAMESYS_WORK *gsys)
+{
+	GMEVENT * event = GMEVENT_Create(gsys, NULL, FieldOpenEvent, sizeof(FIELD_OPENCLOSE_WORK));
+	FIELD_OPENCLOSE_WORK * focw = GMEVENT_GetEventWork(event);
+	focw->gsys = gsys;
+	focw->fieldmap = NULL;
+	focw->gamedata = GAMESYSTEM_GetGameData(gsys);
+
+	return event;
+}
+
 
 
 //============================================================================================

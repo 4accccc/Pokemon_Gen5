@@ -32,6 +32,7 @@
 #include "sound/pm_sndsys.h"    //サウンドシステム参照
 
 #include "event_fldmmdl_control.h"
+#include "./event_fieldmap_control_local.h" // event_mapchange内限定のFieldOpen Close
 #include "field_place_name.h"   //FIELD_PLACE_NAME_DisplayForce
 
 #include "script.h"
@@ -88,6 +89,8 @@ static void setFirstBGM(GAMEDATA * gamedata, u16 zone_id);
 static void AssignGimmickID(GAMEDATA * gamedata, int inZoneID);
 
 static GMEVENT_RESULT EVENT_MapChangeNoFade(GMEVENT * event, int *seq, void*work);
+
+
 
 
 //============================================================================================
@@ -173,7 +176,7 @@ static GMEVENT_RESULT EVENT_FirstMapIn(GMEVENT * event, int *seq, void *work)
     (*seq)++;
     break;
   case 1:
-    GMEVENT_CallEvent(event, EVENT_FieldOpen(gsys));
+    GMEVENT_CallEvent(event, EVENT_FieldOpen_FieldProcOnly(gsys));
     (*seq)++;
     break;
   case 2:
@@ -248,6 +251,25 @@ static GMEVENT_RESULT EVENT_FirstMapIn(GMEVENT * event, int *seq, void *work)
   return GMEVENT_RES_CONTINUE;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  フィールドの新規開始初期化処理
+ *
+ *	@param	gsys  ゲームシステム
+ *
+ *	GAME_DATA の情報で、新規ゲーム開始時に行いたい処理を記述してください。
+ *
+ *	このタイミングで呼ばれる処理は、OVERLAY　FIELD_INITに配置してください。
+ */
+//-----------------------------------------------------------------------------
+static void GAME_FieldFirstInit( GAMESYS_WORK * gsys )
+{
+  GAMEDATA* gamedata = GAMESYSTEM_GetGameData(gsys);
+
+  // WFBC街自分の場所初期化
+  FIELD_WFBC_CORE_SetUp( GAMEDATA_GetMyWFBCCoreData(gamedata), GAMEDATA_GetMyStatus(gamedata), GFL_HEAPID_APP ); //heap はテンポラリ用
+  FIELD_WFBC_CORE_SetUpZoneData( GAMEDATA_GetMyWFBCCoreData(gamedata) );
+}
 
 //------------------------------------------------------------------
 /**
@@ -258,7 +280,7 @@ static GMEVENT_RESULT EVENT_FirstMapIn(GMEVENT * event, int *seq, void *work)
  * きちんと関数分割する必要がある
  */
 //------------------------------------------------------------------
-GMEVENT * EVENT_GameStart(GAMESYS_WORK * gsys, GAME_INIT_WORK * game_init_work)
+GMEVENT * EVENT_CallGameStart(GAMESYS_WORK * gsys, GAME_INIT_WORK * game_init_work)
 {
   FIRST_MAPIN_WORK * fmw;
   GMEVENT * event;
@@ -277,6 +299,7 @@ GMEVENT * EVENT_GameStart(GAMESYS_WORK * gsys, GAME_INIT_WORK * game_init_work)
     break;
   case GAMEINIT_MODE_FIRST:
     LOCATION_SetGameStart(&fmw->loc_req);
+    GAME_FieldFirstInit( gsys );  // フィールド情報の初期化
     break;
 #ifdef PM_DEBUG
   case GAMEINIT_MODE_DEBUG:
@@ -288,6 +311,8 @@ GMEVENT * EVENT_GameStart(GAMESYS_WORK * gsys, GAME_INIT_WORK * game_init_work)
     GFL_OVERLAY_Unload( FS_OVERLAY_ID(debug_data));
     
     LOCATION_DEBUG_SetDefaultPos(&fmw->loc_req, game_init_work->mapid);
+
+    GAME_FieldFirstInit( gsys );  // フィールド情報の初期化
     break;
 #endif //PM_DEBUG
   }
@@ -329,7 +354,7 @@ static GMEVENT_RESULT GameEndEvent(GMEVENT * event, int *seq, void *work)
       break;
     }
     //フィールドマップを終了待ち
-    GMEVENT_CallEvent(event, EVENT_FieldClose(gew->gsys, gew->fieldmap));
+    GMEVENT_CallEvent(event, EVENT_FieldClose_FieldProcOnly(gew->gsys, gew->fieldmap));
     (*seq)++;
     break;
   case 2:
@@ -348,7 +373,7 @@ static GMEVENT_RESULT GameEndEvent(GMEVENT * event, int *seq, void *work)
  * ポケモンに存在しないので、この関数はあくまでデバッグ用。
  */
 //------------------------------------------------------------------
-GMEVENT * DEBUG_EVENT_GameEnd( GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap)
+GMEVENT * DEBUG_EVENT_CallGameEnd( GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap)
 {
   GMEVENT * event = GMEVENT_Create(gsys, NULL, GameEndEvent, sizeof(GAME_END_WORK));
   GAME_END_WORK * gew = GMEVENT_GetEventWork(event);
@@ -461,7 +486,7 @@ static GMEVENT_RESULT EVENT_FUNC_MapChangeCore( GMEVENT* event, int* seq, void* 
   {
   case 0:
     //フィールドマップを終了待ち
-    GMEVENT_CallEvent(event, EVENT_FieldClose(gsys, fieldmap));
+    GMEVENT_CallEvent(event, EVENT_FieldClose_FieldProcOnly(gsys, fieldmap));
     (*seq)++;
     break;
   case 1:
@@ -497,7 +522,7 @@ static GMEVENT_RESULT EVENT_FUNC_MapChangeCore( GMEVENT* event, int* seq, void* 
     break;
   case 2:
     //フィールドマップを開始待ち
-    GMEVENT_CallEvent(event, EVENT_FieldOpen(gsys));
+    GMEVENT_CallEvent(event, EVENT_FieldOpen_FieldProcOnly(gsys));
     (*seq) ++;
     break;
   case 3:
@@ -1180,12 +1205,25 @@ GMEVENT * DEBUG_EVENT_ChangeToNextMap(GAMESYS_WORK * gsys, FIELDMAP_WORK * field
 //
 //
 //============================================================================================
+//-----------------------------------------------------------------------------
+/**
+ *      全滅時の処理
+ */
+//-----------------------------------------------------------------------------
+//-------------------------------------
+///	MAPCHANGE_GAMEOVER
+//=====================================
+typedef struct {
+  GAMESYS_WORK * gsys;
+} MAPCHANGE_GAMEOVER;
+
+
 //--------------------------------------------------------------
 /**
  * @brief 全滅時のマップ遷移処理（フィールド非生成時）
  */
 //--------------------------------------------------------------
-void MAPCHG_GameOver( GAMESYS_WORK * gsys )
+static void MAPCHG_GameOver( GAMESYS_WORK * gsys )
 {
   LOCATION loc_req;
   GAMEDATA * gamedata = GAMESYSTEM_GetGameData(gsys);
@@ -1216,6 +1254,53 @@ void MAPCHG_GameOver( GAMESYS_WORK * gsys )
 
   //ゲームオーバー時のフラグのクリア
   FIELD_FLAGCONT_INIT_GameOver( gamedata, loc_req.zone_id );
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief    ゲームオーバーイベント
+ */
+//-----------------------------------------------------------------------------
+static GMEVENT_RESULT GMEVENT_GameOver(GMEVENT * event, int * seq, void *work)
+{
+  MAPCHANGE_GAMEOVER* p_wk = work;
+
+  switch( *seq )
+  {
+  // 遷移先を設定
+  case 0:
+    MAPCHG_GameOver( p_wk->gsys );
+    (*seq) ++;
+    break;
+
+  // フィールドマップ開始
+  case 1:
+    GMEVENT_CallEvent( event, EVENT_FieldOpen_FieldProcOnly(p_wk->gsys) );
+    (*seq) ++;
+    break;
+
+  case 2:
+		return GMEVENT_RES_FINISH;
+  }
+	return GMEVENT_RES_CONTINUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  全滅時のマップ遷移処理
+ */
+//-----------------------------------------------------------------------------
+GMEVENT * EVENT_CallGameOver( GAMESYS_WORK * gsys )
+{
+  GAMEDATA * gamedata = GAMESYSTEM_GetGameData( gsys );
+	GMEVENT * event;
+  MAPCHANGE_GAMEOVER* p_wk;
+  event = GMEVENT_Create( gsys, NULL, GMEVENT_GameOver, sizeof(MAPCHANGE_GAMEOVER) );
+  p_wk = GMEVENT_GetEventWork( event );
+  p_wk->gsys = gsys;
+
+  return event;
 }
 
 //------------------------------------------------------------------
@@ -1523,7 +1608,7 @@ static void MAPCHG_setupMapTools( GAMESYS_WORK * gsys, const LOCATION * loc_req 
   default:
     GAMEDATA_SetSubScreenMode(gamedata, FIELD_SUBSCREEN_NORMAL);
     break;
-  } 
+  }
 
   //イベント起動データの読み込み
   EVENTDATA_SYS_Load(evdata, loc_req->zone_id, GAMEDATA_GetSeasonID(gamedata) );

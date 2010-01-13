@@ -152,8 +152,7 @@ void ZONEDATA_Close()
 //-----------------------------------------------------------------------------
 void ZONEDATA_SetChangeZoneID( ZONEDATA_CHANGE_ID id, BOOL flag )
 {
-// ここをNULLで止めてしまうとデバッグできないのでこうしてます  taya
-//    GF_ASSERT( data_handle );
+  GF_ASSERT( data_handle );
   if( data_handle != NULL )
   {
     GF_ASSERT( id < ZONEDATA_CHANGE_MAX );

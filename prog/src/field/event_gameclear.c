@@ -23,7 +23,7 @@
 #include "system/main.h"  //HEAPID_Å`
 
 #include "script.h"       //SCRIPT_CallScript
-#include "event_mapchange.h"
+#include "event_gamestart.h"
 
 #include "demo/demo3d.h"  //Demo3DProcData etc.
 #include "app/local_tvt_sys.h"  //LocalTvt_ProcData etc.

@@ -161,7 +161,7 @@ extern void GAMEDATA_ClearPalaceWFBCCoreData( GAMEDATA * gamedata );
 extern void FIELD_WFBC_CORE_CalcOneDataStart( GAMEDATA * gamedata, s32 diff_day, HEAPID heapID );
 
 //----------------------------------------------------------
-//  ZONEDATAの操作
+//  ZONEDATAの操作    『常駐』
 //----------------------------------------------------------
 extern void FIELD_WFBC_CORE_SetUpZoneData( const FIELD_WFBC_CORE* cp_wk );
 
@@ -170,11 +170,11 @@ extern void FIELD_WFBC_CORE_SetUpZoneData( const FIELD_WFBC_CORE* cp_wk );
 ///	FIELD_WFBC_CORE用関数
 //=====================================
 //ワークの全クリア
-extern void FIELD_WFBC_CORE_Clear( FIELD_WFBC_CORE* p_wk );
+extern void FIELD_WFBC_CORE_Clear( FIELD_WFBC_CORE* p_wk ); // 『常駐』
 extern void FIELD_WFBC_CORE_ClearNormal( FIELD_WFBC_CORE* p_wk );
 extern void FIELD_WFBC_CORE_ClearBack( FIELD_WFBC_CORE* p_wk );
 //街の情報をセットアップ
-extern void FIELD_WFBC_CORE_SetUp( FIELD_WFBC_CORE* p_wk, const MYSTATUS* cp_mystatus, HEAPID heapID );
+extern void FIELD_WFBC_CORE_SetUp( FIELD_WFBC_CORE* p_wk, const MYSTATUS* cp_mystatus, HEAPID tmp_heapID );
 //整合性チェック
 extern BOOL FIELD_WFBC_CORE_IsConfomity( const FIELD_WFBC_CORE* cp_wk );
 //データの調整  不正データの場合、正常な情報に書き換えます。
@@ -207,7 +207,8 @@ extern u32 FIELD_WFBC_CORE_DEBUG_GetRandomNpcID( const FIELD_WFBC_CORE* cp_wk );
 ///	FIELD_WFBC_CORE_PEOPLE用関数
 //=====================================
 //ワークのクリア
-extern void FIELD_WFBC_CORE_PEOPLE_Clear( FIELD_WFBC_CORE_PEOPLE* p_wk );
+extern void FIELD_WFBC_CORE_PEOPLE_Clear( FIELD_WFBC_CORE_PEOPLE* p_wk ); // 『常駐』
+
 //整合性チェック 
 extern BOOL FIELD_WFBC_CORE_PEOPLE_IsConfomity( const FIELD_WFBC_CORE_PEOPLE* cp_wk );
 //データの調整  不正データの場合、正常な情報に書き換えます。
@@ -384,6 +385,7 @@ extern FIELD_WFBC_CORE_ITEM* GAMEDATA_GetWFBCItemData( GAMEDATA * gamedata );
 
 //-------------------------------------
 ///	全体クリア
+// 常駐
 //=====================================
 extern void WFBC_CORE_ITEM_ClaerAll( FIELD_WFBC_CORE_ITEM* p_wk );
 
@@ -455,6 +457,7 @@ extern FIELD_WFBC_EVENT* GAMEDATA_GetWFBCEventData( GAMEDATA * gamedata );
 
 //-------------------------------------
 ///	ワーク操作
+//  常駐
 //=====================================
 extern void FIELD_WFBC_EVENT_Clear( FIELD_WFBC_EVENT* p_wk );
 

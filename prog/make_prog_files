@@ -89,7 +89,6 @@ SRCS  +=    $(SOUNDSRC) \
         gamesystem/btl_setup.c \
         map/dp3format.c \
         field/zonedata.c \
-        field/areadata.c \
         field/warpdata.c \
         field/location.c \
 				field/map_matrix.c \
@@ -99,8 +98,8 @@ SRCS  +=    $(SOUNDSRC) \
         field/field_status.c \
         field/event_gameover.c \
         field/event_gameclear.c \
+        field/event_gamestart.c \
         field/event_fieldmap_control.c \
-        field/event_mapchange.c \
         field/event_fieldmap_menu.c \
 				field/event_shortcut_menu.c \
 				field/event_field_proclink.c \
@@ -240,7 +239,6 @@ SRCS  +=    $(SOUNDSRC) \
         debug/debug_flg.c \
         debug/debug_hudson.c \
    		debug/debug_str_conv.c \
-        field/ev_time.c \
         field/pleasure_boat_st.c \
         field/scrcmd_pl_boat_init.c \
         gamesystem/comm_player_support.c \
@@ -369,8 +367,16 @@ SRCS_OVERLAY_DEV_IRC    =   net/net_devirc.c \
 SRCS_OVERLAY_WIFI_UTIL  = net/dwc_raputil.c
 
 
-# field
+# field初期化用
+# event_mapchange内でfield_procが生成される前に使用される処理
 #===> SRCS_OVERLAY_DEV_IRC
+SRCS_OVERLAY_FIELD_INIT		=	field/event_mapchange.c \
+        field/ev_time.c \
+        field/field_wfbc_data_local.c \
+        field/areadata.c
+
+# field
+#===> SRCS_OVERLAY_FIELD_INIT
 SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
 				field/fieldmap.c \
 				field/field_data.c \

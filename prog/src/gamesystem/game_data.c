@@ -204,9 +204,6 @@ GAMEDATA * GAMEDATA_Create(HEAPID heapID)
   for(i = 0; i < GAMEDATA_WFBC_ID_MAX; i++){
     FIELD_WFBC_CORE_Clear(&gd->wfbc[i]);
   }
-  // ŠXŽ©•ª‚ÌêŠ‰Šú‰»
-  FIELD_WFBC_CORE_SetUp( &gd->wfbc[GAMEDATA_WFBC_ID_MINE], GAMEDATA_GetMyStatus(gd), heapID );
-  FIELD_WFBC_CORE_SetUpZoneData( &gd->wfbc[GAMEDATA_WFBC_ID_MINE] );
   
   //•à”ƒJƒEƒ“ƒg
   gd->fieldmap_walk_count = 0;

@@ -26,14 +26,14 @@
  * @brief ゲーム開始イベント
  */
 //------------------------------------------------------------------
-extern GMEVENT * EVENT_GameStart(GAMESYS_WORK * gsys, GAME_INIT_WORK * game_init_work);
+extern GMEVENT * EVENT_CallGameStart(GAMESYS_WORK * gsys, GAME_INIT_WORK * game_init_work);
 
 //------------------------------------------------------------------
 /**
  * @brief デバッグ用：ゲーム終了
  */
 //------------------------------------------------------------------
-extern GMEVENT * DEBUG_EVENT_GameEnd( GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap);
+extern GMEVENT * DEBUG_EVENT_CallGameEnd( GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap);
 
 //------------------------------------------------------------------
 /**
@@ -180,6 +180,6 @@ extern void MAPCHANGE_setPlayerVanish(FIELDMAP_WORK * fieldmap, BOOL vanish_flag
  * @brief 全滅時のマップ遷移処理（フィールド非生成時）
  */
 //--------------------------------------------------------------
-extern void MAPCHG_GameOver( GAMESYS_WORK * gsys );
+extern GMEVENT * EVENT_CallGameOver( GAMESYS_WORK * gsys );
 
 

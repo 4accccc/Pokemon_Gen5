@@ -53,6 +53,7 @@ void RANDOMMAP_SAVE_InitWork(RANDOMMAP_SAVE *randomMapSave)
   // ƒNƒŠƒA
   FIELD_WFBC_CORE_Clear( &randomMapSave->mapdata );
   WFBC_CORE_ITEM_ClaerAll( &randomMapSave->item );
+  FIELD_WFBC_EVENT_Clear( &randomMapSave->event );
 
 }
 
