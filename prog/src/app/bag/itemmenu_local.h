@@ -162,9 +162,11 @@ struct _FIELD_ITEMMENU_PARAM {
   GFL_MSGDATA* MsgManager;		      ///< 名前入力メッセージデータマネージャー
   GFL_MSGDATA* MsgManagerItemInfo;	///< 名前入力メッセージデータマネージャー
   GFL_MSGDATA* MsgManagerPocket;
+  GFL_MSGDATA* MsgManagerItemName;
   WORDSET*    WordSet;							///< メッセージ展開用ワークマネージャー
   STRBUF*     pStrBuf;
 	STRBUF*     pExpStrBuf;
+	STRBUF*     pItemNameBuf;
   GFL_FONT*   fontHandle;
   MenuFunc*   menu_func[BAG_MENUTBL_MAX];
 	HEAPID      heapID;
@@ -365,6 +367,7 @@ extern s32 ITEMMENU_SellPrice( int item_no, int input_num, HEAPID heapID );
 extern int ITEMMENU_GetItemIndex(FIELD_ITEMMENU_WORK* pWork);
 extern int ITEMMENU_GetItemPocketNumber(FIELD_ITEMMENU_WORK* pWork);
 extern ITEM_ST* ITEMMENU_GetItem(FIELD_ITEMMENU_WORK* pWork,int no);
+extern void ITEMMENU_WordsetItemName( FIELD_ITEMMENU_WORK* pWork, u32 bufID, u32 itemID );
 
 extern void ITEMDISP_InitPocketCell( FIELD_ITEMMENU_WORK* pWork );
 extern void ITEMDISP_ChangePocketCell( FIELD_ITEMMENU_WORK* pWork,int pocketno );

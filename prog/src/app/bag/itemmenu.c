@@ -1,6 +1,6 @@
 //============================================================================================
 /**
- * @file    itemmenu.h
+ * @file    itemmenu.c
  * @brief   アイテムメニュー
  * @author  k.ohno
  * @author  genya hosaka (引継)
@@ -45,6 +45,7 @@
 //============================================================================================
 
 #define _1CHAR (8)
+#define BAG_HEAPSIZE ( 0x34000 ) // 0x28000
 
 //=============================================================================
 // 目次
@@ -355,6 +356,23 @@ int ITEMMENU_GetItemPocketNumber(FIELD_ITEMMENU_WORK* pWork)
     length = MYITEM_GetItemPocketNumber( pWork->pMyItem, pWork->pocketno);
   }
   return length;
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  アイテム名をレジスト
+ *
+ *	@param	FIELD_ITEMMENU_WORK* pWork
+ *	@param	bufID
+ *	@param	itemID 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void ITEMMENU_WordsetItemName( FIELD_ITEMMENU_WORK* pWork, u32 bufID, u32 itemID )
+{
+    GFL_MSG_GetString( pWork->MsgManagerItemName, itemID, pWork->pItemNameBuf );
+    WORDSET_RegisterWord( pWork->WordSet, bufID, pWork->pItemNameBuf, 0, TRUE, PM_LANG );
 }
 
 
@@ -785,7 +803,7 @@ static void _itemInnerUse( FIELD_ITEMMENU_WORK* pWork )
       // つかった
       GFL_MSG_GetString( pWork->MsgManager, msg_bag_066, pWork->pStrBuf );
       WORDSET_RegisterPlayerName(pWork->WordSet, 0,  pWork->mystatus );
-      WORDSET_RegisterItemName(pWork->WordSet, 1,  pWork->ret_item );
+      ITEMMENU_WordsetItemName( pWork, 1,  pWork->ret_item );
       WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
       ITEMDISP_ItemInfoWindowDispEx( pWork, TRUE );
 
@@ -1276,7 +1294,7 @@ static void _itemTrashYesNoWait(FIELD_ITEMMENU_WORK* pWork)
       ITEM_Sub( pWork, pWork->InputNum );
 
       GFL_MSG_GetString( pWork->MsgManager, msg_bag_055, pWork->pStrBuf );
-      WORDSET_RegisterItemName(pWork->WordSet, 0,  pWork->ret_item );
+      ITEMMENU_WordsetItemName( pWork, 0,  pWork->ret_item );
       WORDSET_RegisterNumber(pWork->WordSet, 1, pWork->InputNum,
                              3, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT);
       WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
@@ -1325,7 +1343,7 @@ static void _itemTrash(FIELD_ITEMMENU_WORK* pWork)
   InputNum_Start( pWork, BAG_INPUT_MODE_TRASH );
 
   GFL_MSG_GetString( pWork->MsgManager, msg_bag_054, pWork->pStrBuf );
-  WORDSET_RegisterItemName(pWork->WordSet, 0,  pWork->ret_item );
+  ITEMMENU_WordsetItemName( pWork, 0,  pWork->ret_item );
   WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
   ITEMDISP_ItemInfoWindowDisp( pWork );
 
@@ -1358,7 +1376,7 @@ static void _itemTrashWait(FIELD_ITEMMENU_WORK* pWork)
     InputNum_Exit( pWork );
 
     GFL_MSG_GetString( pWork->MsgManager, msg_bag_056, pWork->pStrBuf );
-    WORDSET_RegisterItemName(pWork->WordSet, 0,  pWork->ret_item );
+    ITEMMENU_WordsetItemName( pWork, 0,  pWork->ret_item );
     WORDSET_RegisterNumber(pWork->WordSet, 1, pWork->InputNum,
                            3, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT);
     WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
@@ -1414,7 +1432,7 @@ static void _itemSellInit( FIELD_ITEMMENU_WORK* pWork )
     {
       // 「○○○を　かいとることは　できません」
       GFL_MSG_GetString( pWork->MsgManager, mes_shop_093, pWork->pStrBuf );
-      WORDSET_RegisterItemName(pWork->WordSet, 0,  pWork->ret_item );
+      ITEMMENU_WordsetItemName( pWork, 0,  pWork->ret_item );
       WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf );
       ITEMDISP_ItemInfoWindowDisp( pWork );
 
@@ -1446,7 +1464,7 @@ static void _itemSellInit( FIELD_ITEMMENU_WORK* pWork )
 
   // 「○○○を　いくつ　うりますか？」
   GFL_MSG_GetString( pWork->MsgManager, mes_shop_094, pWork->pStrBuf );
-  WORDSET_RegisterItemName(pWork->WordSet, 0,  pWork->ret_item );
+  ITEMMENU_WordsetItemName( pWork, 0,  pWork->ret_item );
   WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
   ITEMDISP_ItemInfoWindowDisp( pWork );
 
@@ -1576,7 +1594,7 @@ static void _itemSellYesnoInput( FIELD_ITEMMENU_WORK* pWork )
 
           // 「○○○を　わたして XXXXXX円 うけとった」
           GFL_MSG_GetString( pWork->MsgManager, mes_shop_096, pWork->pStrBuf );
-          WORDSET_RegisterItemName(pWork->WordSet, 0,  pWork->ret_item );
+          ITEMMENU_WordsetItemName( pWork, 0,  pWork->ret_item );
           WORDSET_RegisterNumber(pWork->WordSet, 1, val, 6, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
           WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
           ITEMDISP_ItemInfoWindowDisp( pWork );
@@ -2826,6 +2844,8 @@ static void _VBlank( GFL_TCB *tcb, void *work )
   FIELD_ITEMMENU_WORK* pWork = work;
 
   GFL_CLACT_SYS_VBlankFunc(); //セルアクターVBlank
+
+  // セルリスト更新
   if(pWork->bChange){
     ITEMDISP_CellVramTrans(pWork);
     pWork->bChange = FALSE;
@@ -2864,7 +2884,7 @@ static GFL_PROC_RESULT FieldItemMenuProc_Init( GFL_PROC * proc, int * seq, void 
 //  GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 0);
 
   // ヒープ生成
-  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_ITEMMENU, 0x28000 );
+  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_ITEMMENU, BAG_HEAPSIZE );
   pWork = GFL_PROC_AllocWork( proc, sizeof(FIELD_ITEMMENU_WORK), HEAPID_ITEMMENU );
   GFL_STD_MemClear( pWork, sizeof(FIELD_ITEMMENU_WORK) );
 
@@ -2917,9 +2937,14 @@ static GFL_PROC_RESULT FieldItemMenuProc_Init( GFL_PROC * proc, int * seq, void 
 
   pWork->MsgManagerPocket = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE,
                                             NARC_message_itempocket_dat, pWork->heapID );
+  
+  pWork->MsgManagerItemName = GFL_MSG_Create( GFL_MSG_LOAD_FAST, ARCID_MESSAGE,
+                                            NARC_message_itemname_dat, pWork->heapID );
+
 
   pWork->pStrBuf = GFL_STR_CreateBuffer(200,pWork->heapID);
   pWork->pExpStrBuf = GFL_STR_CreateBuffer(200,pWork->heapID);
+  pWork->pItemNameBuf = GFL_STR_CreateBuffer(64,pWork->heapID);
   pWork->WordSet    = WORDSET_Create( pWork->heapID );
   pWork->SysMsgQue  = PRINTSYS_QUE_Create( pWork->heapID );
   pWork->fontHandle = GFL_FONT_Create( ARCID_FONT , NARC_font_large_gftr ,
@@ -3031,9 +3056,11 @@ static GFL_PROC_RESULT FieldItemMenuProc_End( GFL_PROC * proc, int * seq, void *
   GFL_MSG_Delete(pWork->MsgManager);
   GFL_MSG_Delete(pWork->MsgManagerItemInfo);
   GFL_MSG_Delete(pWork->MsgManagerPocket);
+  GFL_MSG_Delete(pWork->MsgManagerItemName);
 
   GFL_STR_DeleteBuffer(pWork->pStrBuf);
   GFL_STR_DeleteBuffer(pWork->pExpStrBuf);
+  GFL_STR_DeleteBuffer(pWork->pItemNameBuf);
   WORDSET_Delete(pWork->WordSet);
 
   ITEMDISP_BarMessageDelete( pWork );

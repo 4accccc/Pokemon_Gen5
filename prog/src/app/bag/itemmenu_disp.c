@@ -677,7 +677,7 @@ void ITEMDISP_upMessageRewrite(FIELD_ITEMMENU_WORK* pWork)
     // 一般
     // アイテム名
     GFL_MSG_GetString(  pWork->MsgManager, MSG_ITEM_STR001, pWork->pStrBuf );
-    WORDSET_RegisterItemName(pWork->WordSet, 0, item->id);
+    ITEMMENU_WordsetItemName( pWork, 0, item->id);
     WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
     PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->winItemName), 16, _UP_ITEMNAME_DOTOFS_Y, pWork->pExpStrBuf, pWork->fontHandle);
 
@@ -1143,6 +1143,8 @@ static void _cellmessage_printcolor( u16 itemtype )
  *  @param  FIELD_ITEMMENU_WORK* pWork
  *
  *  @retval
+ * 
+ *  @TODO おそらくここが一番のボトルネック
  */
 //-----------------------------------------------------------------------------
 void ITEMDISP_CellMessagePrint( FIELD_ITEMMENU_WORK* pWork )
@@ -1155,18 +1157,24 @@ void ITEMDISP_CellMessagePrint( FIELD_ITEMMENU_WORK* pWork )
 
   // ポケット内のアイテムが0個の時
   length = ITEMMENU_GetItemPocketNumber( pWork );
+
+  // スクロールバー表示切替
+  if( length > 5 )
+  {
+    // GFL_BG_WriteScreenFree( GFL_BG_FRAME2_S );
+    
+    {
+//      void* adrs = GFL_BG_GetScreenBufferAdrs( GFL_BG_FRAME0_M );
+    }
+  }
+  else
+  {
+  }
+
   if( length == 0 )
   {
     // 「なにもありません」表示
     GFL_BMPWIN_MakeTransWindow( pWork->winPocketNone );
-    // バーを消す
-
-    // GFL_BG_WriteScreenFree( GFL_BG_FRAME2_S );
-    
-    {
-      void* adrs = GFL_BG_GetScreenBufferAdrs( GFL_BG_FRAME0_M );
-    }
-
   }
   else
   {
@@ -1174,17 +1182,22 @@ void ITEMDISP_CellMessagePrint( FIELD_ITEMMENU_WORK* pWork )
     GFL_BMPWIN_ClearTransWindow( pWork->winPocketNone );
   }
 
-  for(i = 0; i< ITEM_LIST_NUM ; i++){
+  for(i = 0; i< ITEM_LIST_NUM ; i++)
+  {
     ITEM_ST * item;
 
     pWork->nListEnable[i]=FALSE;
 
-    if(pWork->oamlistpos+i < 0){
+    if(pWork->oamlistpos+i < 0)
+    {
       continue;
     }
+
     //    item = MYITEM_PosItemGet( pWork->pMyItem, pWork->pocketno,  pWork->oamlistpos+i  );
     item = ITEMMENU_GetItem( pWork , pWork->oamlistpos+i);
-    if((item==NULL) || (item->id==ITEM_DUMMY_DATA)){
+
+    if((item==NULL) || (item->id==ITEM_DUMMY_DATA))
+    {
       continue;
     }
 
@@ -1214,7 +1227,7 @@ void ITEMDISP_CellMessagePrint( FIELD_ITEMMENU_WORK* pWork )
       }
 
       GFL_MSG_GetString(  pWork->MsgManager, MSG_ITEM_STR001, pWork->pStrBuf );
-      WORDSET_RegisterItemName(pWork->WordSet, 0, item->id);
+      ITEMMENU_WordsetItemName( pWork, 0, item->id);
       WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
       PRINTSYS_Print( pWork->listBmp[i], 0, 0, pWork->pExpStrBuf, pWork->fontHandle);
 
@@ -1859,7 +1872,7 @@ void ITEMDISP_ItemInfoWindowDisp( FIELD_ITEMMENU_WORK *pWork )
 void ITEMDISP_ItemInfoMessageMake( FIELD_ITEMMENU_WORK *pWork,int id )
 {
   GFL_MSG_GetString( pWork->MsgManager, msg_bag_042, pWork->pStrBuf );
-  WORDSET_RegisterItemName(pWork->WordSet, 0, id);
+  ITEMMENU_WordsetItemName( pWork, 0, id);
   WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
 }
 
