@@ -56,8 +56,8 @@
 #include "item/itemtype_def.h"
 
 
-//#ifdef PM_DEBUG
 #if 0
+#ifdef PM_DEBUG
 // 速度測定
 static OSTick _debug_tick = 0;
 const char* _debug_chara;
@@ -83,6 +83,7 @@ static void _DebugTickCheck_End( void )
   _debug_tick = 0;
 }
 #endif // PM_DEBUG
+#endif
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
@@ -1176,7 +1177,6 @@ static void _cellmessage_printcolor( u16 itemtype )
  *
  *  @retval
  * 
- *  @TODO おそらくここが一番のボトルネック
  */
 //-----------------------------------------------------------------------------
 void ITEMDISP_CellMessagePrint( FIELD_ITEMMENU_WORK* pWork )
@@ -1186,8 +1186,6 @@ void ITEMDISP_CellMessagePrint( FIELD_ITEMMENU_WORK* pWork )
 
   // 文字色指定
   static u8 color_tbl[ ITEM_LIST_NUM ] = { 1, 0, 0, 0, 0, 0, 0, 1 };
-
-//  _DebugTickCheck_Start("ITEMDISP_CellMessagePrint");
 
   // ポケット内のアイテムが0個の時
   length = ITEMMENU_GetItemPocketNumber( pWork );
@@ -1223,7 +1221,7 @@ void ITEMDISP_CellMessagePrint( FIELD_ITEMMENU_WORK* pWork )
   {
     ITEM_ST * item;
 
-    pWork->nListEnable[i]=FALSE;
+    pWork->nListEnable[i] = FALSE;
 
     if(pWork->oamlistpos+i < 0)
     {
@@ -1243,6 +1241,7 @@ void ITEMDISP_CellMessagePrint( FIELD_ITEMMENU_WORK* pWork )
       void * itemdata;
       u8 backColor = 0x1;
 
+      //@TODO ページ切替時にロードするようにすれば、負荷が軽減される
       itemdata = ITEM_GetItemArcData( item->id, ITEM_GET_DATA, pWork->heapID );
 
       GFL_BMP_Clear(pWork->listBmp[i], backColor );
@@ -1283,8 +1282,6 @@ void ITEMDISP_CellMessagePrint( FIELD_ITEMMENU_WORK* pWork )
       GFL_HEAP_FreeMemory( itemdata );
     }
   }
-
-//  _DebugTickCheck_End();
 }
 
 
@@ -1339,51 +1336,54 @@ void ITEMDISP_CellVramTrans( FIELD_ITEMMENU_WORK* pWork )
   }
 
   // リストOAM生成＆描画
-  for(i = 0; i< ITEM_LIST_NUM ; i++){
+  for(i = 0; i< ITEM_LIST_NUM ; i++)
+  {
+    u32 dest_adrs = GFL_CLGRP_CGR_GetAddr( pWork->listRes[i], CLSYS_DRAW_MAIN);
+    u8* charbuff = GFL_BMP_GetCharacterAdrs(pWork->listBmp[i]);
+    u32 size = GFL_BMP_GetBmpDataSize(pWork->listBmp[i]);
+
+    DC_FlushRange(charbuff, size);
+
+    // 転送回数を減らせれば高速化できそうだが……
+#if 1
+    dest_adrs += (8)*32;
+    GX_LoadOBJ(&charbuff[8*32], dest_adrs, (32*4));
+    dest_adrs += (4)*32;
+    GX_LoadOBJ(&charbuff[(20*32)], dest_adrs, (32*4));
+
+    dest_adrs += (12)*32;
+    GX_LoadOBJ(&charbuff[4*32], dest_adrs, (32*4));
+    dest_adrs += (4)*32;
+    GX_LoadOBJ(&charbuff[(16*32)], dest_adrs, (32*4));
+
+    dest_adrs += (12)*32;
+    GX_LoadOBJ(&charbuff[0*32], dest_adrs, (32*4));
+    dest_adrs += (4)*32;
+    GX_LoadOBJ(&charbuff[(12*32)], dest_adrs, (32*4));
+#endif
+
+    if(pWork->nListEnable[i])
     {
-      u32 dest_adrs = GFL_CLGRP_CGR_GetAddr( pWork->listRes[i], CLSYS_DRAW_MAIN);
-      u8* charbuff = GFL_BMP_GetCharacterAdrs(pWork->listBmp[i]);
-      u32 size = GFL_BMP_GetBmpDataSize(pWork->listBmp[i]);
-
-      DC_FlushRange(charbuff, size);
-
-      dest_adrs += (8)*32;
-      GX_LoadOBJ(&charbuff[8*32], dest_adrs, (32*4));
-      dest_adrs += (4)*32;
-      GX_LoadOBJ(&charbuff[(20*32)], dest_adrs, (32*4));
-
-      dest_adrs += (12)*32;
-      GX_LoadOBJ(&charbuff[4*32], dest_adrs, (32*4));
-      dest_adrs += (4)*32;
-      GX_LoadOBJ(&charbuff[(16*32)], dest_adrs, (32*4));
-
-      dest_adrs += (12)*32;
-      GX_LoadOBJ(&charbuff[0*32], dest_adrs, (32*4));
-      dest_adrs += (4)*32;
-      GX_LoadOBJ(&charbuff[(12*32)], dest_adrs, (32*4));
-
-      if(pWork->nListEnable[i])
+      // 「たいせつなもの」のみマーカーを表示
+      if(pWork->pocketno == BAG_POKE_EVENT)
       {
-        // 「たいせつなもの」のみマーカーを表示
-        if(pWork->pocketno == BAG_POKE_EVENT)
-        {
-          GFL_CLACT_WK_SetAnmSeq( pWork->listMarkCell[i] , pWork->nListEnable[i]-1 );
-          GFL_CLACT_WK_SetDrawEnable( pWork->listMarkCell[i] , TRUE );
-        }
-        else
-        {
-          GFL_CLACT_WK_SetDrawEnable( pWork->listMarkCell[i] , FALSE );
-        }
-
-        GFL_CLACT_WK_SetDrawEnable( pWork->listCell[i] , TRUE );
+        GFL_CLACT_WK_SetAnmSeq( pWork->listMarkCell[i] , pWork->nListEnable[i]-1 );
+        GFL_CLACT_WK_SetDrawEnable( pWork->listMarkCell[i] , TRUE );
       }
       else
       {
         GFL_CLACT_WK_SetDrawEnable( pWork->listMarkCell[i] , FALSE );
-        GFL_CLACT_WK_SetDrawEnable( pWork->listCell[i] , FALSE );
       }
+
+      GFL_CLACT_WK_SetDrawEnable( pWork->listCell[i] , TRUE );
+    }
+    else
+    {
+      GFL_CLACT_WK_SetDrawEnable( pWork->listMarkCell[i] , FALSE );
+      GFL_CLACT_WK_SetDrawEnable( pWork->listCell[i] , FALSE );
     }
   }
+
 }
 
 //      GX_LoadOBJ(&charbuff[ 0*32], dest_adrs + (11)*32, (32*5));

@@ -673,7 +673,10 @@ static BOOL _itemMovePositionTouchItem(FIELD_ITEMMENU_WORK* pWork)
         }
       }
     }
-    if(0){
+
+#if 0
+    if(0)
+    {
       int length = ITEMMENU_GetItemPocketNumber( pWork);
       int num = (length * (y-_SCROLL_TOP_Y)) / ymax;
 
@@ -683,6 +686,8 @@ static BOOL _itemMovePositionTouchItem(FIELD_ITEMMENU_WORK* pWork)
         _posplus(pWork, length);
       }
     }
+#endif
+
     {
       int newno = ITEMMENU_GetItemIndex(pWork);
       _ItemChange(pWork, nowno, newno);
@@ -892,7 +897,7 @@ static void _itemSelectWait(FIELD_ITEMMENU_WORK* pWork)
     }
     else if(BAG_MENU_YAMERU==pWork->ret_code2){  //やめる
       // タッチ遷移なら非表示に
-      KTST_SetDraw( pWork, (GFL_UI_CheckTouchOrKey == GFL_APP_END_KEY) );
+      KTST_SetDraw( pWork, (GFL_UI_CheckTouchOrKey() == GFL_APP_END_KEY) );
       _CHANGE_STATE(pWork, _itemKindSelectMenu);
     }
     else if( BAG_MENU_TOUROKU==pWork->ret_code2 || BAG_MENU_KAIZYO==pWork->ret_code2 ){  //とうろく
@@ -928,7 +933,7 @@ static void _itemSelectWait(FIELD_ITEMMENU_WORK* pWork)
       _CHANGE_STATE(pWork,NULL);
     }
     else if(pWork->ret_item == ITEM_PARESUHEGOO){
-      pWork->ret_code = BAG_NEXTPROC_PALACEJUMP;  //@TODO 仮 パレスへゴー
+      pWork->ret_code = BAG_NEXTPROC_PALACEJUMP;  // パレスへゴー
       _CHANGE_STATE(pWork,NULL);
     }
     else if(pWork->ret_item>=ITEM_GURASUMEERU && pWork->ret_item<=ITEM_BURIKKUMEERU){
@@ -1676,8 +1681,23 @@ static void ITEM_Sub( FIELD_ITEMMENU_WORK* pWork, u8 sub_num )
   // アイテムがなくなった場合
   if( MYITEM_GetItemNum( pWork->pMyItem, pWork->ret_item, pWork->heapID ) == 0 )
   {
-    // カーソルが指す座標を下げる
-    pWork->curpos = MATH_IMax( 0, pWork->curpos-1 );
+    int length = ITEMMENU_GetItemPocketNumber( pWork);
+
+    // スクロールバーが無効なら
+    if( length < ITEMMENU_SCROLLBAR_ENABLE_NUM )
+    {
+      // カーソルが指す座標を下げる
+      pWork->curpos = MATH_IMax( 0, pWork->curpos-1 );
+    }
+    else
+    {
+      HOSAKA_Printf("pre oamlistpos=%d\n", pWork->oamlistpos);
+      // リストを下げる
+      pWork->oamlistpos = MATH_IMax( pWork->oamlistpos-1 , -1 );
+      pWork->bChange = TRUE;
+      
+      HOSAKA_Printf("oamlistpos=%d\n", pWork->oamlistpos);
+    }
   }
 }    
 
