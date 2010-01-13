@@ -30,13 +30,10 @@
 
 #include "arc_def.h"
 
-#ifdef DEBUG_ONLY_FOR_sogabe
-//#define DEBUG_PRINT_AI    ///<戦闘用デバッグプリントを有効にする
-#define FREEZE_BUG_CHECK    //フリーズバグ検証
+#ifdef PM_DEBUG
+#if defined DEBUG_ONLY_FOR_sogabe | defined DEBUG_ONLY_FOR_morimoto
+#define POINT_VIEW
 #endif
-
-#ifdef DEBUG_ONLY_FOR_shimoyamada
-//#define DEBUG_PRINT_AI    ///<戦闘用デバッグプリントを有効にする
 #endif
 
 //=========================================================================
@@ -110,13 +107,58 @@ enum
 };
 
 typedef enum{
-  COND_UNDER = 0,
-  COND_OVER,
-  COND_EQUAL,
-  COND_NOTEQUAL,
-  COND_BIT,
-  COND_NBIT,
+  COND_UNDER = 0,   //<
+  COND_OVER,        //>
+  COND_EQUAL,       //==
+  COND_NOTEQUAL,    //!=
+  COND_BIT,         //
+  COND_NBIT,        //
+  COND_OR_UNDER,    //<=
+  COND_OR_OVER,     //>=
 }BranchCond;
+
+//=========================================================================
+//  AI_THINK_BIT宣言
+//=========================================================================
+enum
+{
+  AI_THINK_NO_BASIC = 0,    //基本AI
+  AI_THINK_NO_STRONG,       //攻撃型AI
+  AI_THINK_NO_EXPERT,       //エキスパートAI
+  AI_THINK_NO_HOJO,         //補助技AI
+  AI_THINK_NO_GAMBLE,       //ギャンブルAI
+  AI_THINK_NO_DAMAGE,       //ダメージ重視AI
+  AI_THINK_NO_RELAY,        //リレー型AI
+  AI_THINK_NO_DOUBLE,       //ダブルバトルAI
+  AI_THINK_NO_HP_CHECK,     //HPで判断AI
+  AI_THINK_NO_WEATHER,      //天候技AI
+  AI_THINK_NO_HARASS,       //いやがらせAI
+
+  AI_THINK_NO_MV_POKE,      //移動ポケモン
+  AI_THINK_NO_SAFARI,       //サファリゾーン
+  AI_THINK_NO_GUIDE,        //ガイドバトル
+
+  AI_THINK_NO_MAX,          //
+};
+
+enum
+{
+  AI_THINK_BIT_BASIC    = 1 << AI_THINK_NO_BASIC,     //基本AI
+  AI_THINK_BIT_STRONG   = 1 << AI_THINK_NO_STRONG,    //攻撃型AI
+  AI_THINK_BIT_EXPERT   = 1 << AI_THINK_NO_EXPERT,    //エキスパートAI
+  AI_THINK_BIT_HOJO     = 1 << AI_THINK_NO_HOJO,      //補助技AI
+  AI_THINK_BIT_GAMBLE   = 1 << AI_THINK_NO_GAMBLE,    //ギャンブルAI
+  AI_THINK_BIT_DAMAGE   = 1 << AI_THINK_NO_DAMAGE,    //ダメージ重視AI
+  AI_THINK_BIT_RELAY    = 1 << AI_THINK_NO_RELAY,     //リレー型AI
+  AI_THINK_BIT_DOUBLE   = 1 << AI_THINK_NO_DOUBLE,    //ダブルバトルAI
+  AI_THINK_BIT_HP_CHECK = 1 << AI_THINK_NO_HP_CHECK,  //HPで判断AI
+  AI_THINK_BIT_WEATHER  = 1 << AI_THINK_NO_WEATHER,   //天候技AI
+  AI_THINK_BIT_HARASS   = 1 << AI_THINK_NO_HARASS,    //いやがらせAI
+  AI_THINK_BIT_MV_POKE  = 1 << AI_THINK_NO_MV_POKE,   //移動ポケモン
+  AI_THINK_BIT_SAFARI   = 1 << AI_THINK_NO_SAFARI,    //サファリゾーン
+  AI_THINK_BIT_GUIDE    = 1 << AI_THINK_NO_GUIDE,     //ガイドバトル
+};
+
 
 //-----------------------------------------------------------------------------
 //          プロトタイプ宣言
@@ -208,6 +250,7 @@ static  VMCMD_RESULT  AI_IF_MIKATA_ATTACK( VMHANDLE* vmh, void* context_work );
 static  VMCMD_RESULT  AI_CHECK_HAVE_TYPE( VMHANDLE* vmh, void* context_work );
 static  VMCMD_RESULT  AI_CHECK_HAVE_TOKUSEI( VMHANDLE* vmh, void* context_work );
 static  VMCMD_RESULT  AI_IF_ALREADY_MORAIBI( VMHANDLE* vmh, void* context_work );
+static  VMCMD_RESULT  AI_IF_HAVE_ITEM( VMHANDLE* vmh, void* context_work );
 static  VMCMD_RESULT  AI_FLDEFF_CHECK( VMHANDLE* vmh, void* context_work );
 static  VMCMD_RESULT  AI_CHECK_SIDEEFF_COUNT( VMHANDLE* vmh, void* context_work );
 static  VMCMD_RESULT  AI_IF_BENCH_HPDEC( VMHANDLE* vmh, void* context_work );
@@ -233,6 +276,7 @@ static  VMCMD_RESULT  AI_IFN_HINSHI( VMHANDLE* vmh, void* context_work );
 static  VMCMD_RESULT  AI_GET_TOKUSEI( VMHANDLE* vmh, void* context_work );
 static  VMCMD_RESULT  AI_IF_MIGAWARI( VMHANDLE* vmh, void* context_work );
 
+static  void  ai_if_rnd( VMHANDLE* vmh, TR_AI_WORK* tr_ai_work, BranchCond cond );
 static  void  ai_if_hp( VMHANDLE* vmh, TR_AI_WORK* tr_ai_work, BranchCond cond );
 static  void  ai_if_pokesick( VMHANDLE* vmh, TR_AI_WORK* tr_ai_work, BranchCond cond );
 static  void  ai_if_wazasick( VMHANDLE* vmh, TR_AI_WORK* tr_ai_work, BranchCond cond );
@@ -243,7 +287,11 @@ static  void  ai_if_wazano( VMHANDLE* vmh, TR_AI_WORK* tr_ai_work, BranchCond co
 static  void  ai_if_bench_cond( VMHANDLE* vmh, TR_AI_WORK* tr_ai_work, BranchCond cond );
 static  void  ai_if_waza_seq_no_jump( VMHANDLE* vmh, TR_AI_WORK* tr_ai_work, BranchCond cond );
 static  void  ai_if_para( VMHANDLE* vmh, TR_AI_WORK* tr_ai_work, BranchCond cond );
+static  void  ai_if_waza_hinshi( VMHANDLE* vmh, TR_AI_WORK* tr_ai_work, BranchCond cond );
 static  void  ai_if_have_waza( VMHANDLE* vmh, TR_AI_WORK* tr_ai_work, BranchCond cond );
+static  void  ai_if_have_waza_seqno( VMHANDLE* vmh, TR_AI_WORK* tr_ai_work, BranchCond cond );
+static  void  ai_if_chouhatsu( VMHANDLE* vmh, TR_AI_WORK* tr_ai_work, BranchCond cond );
+static  void  ai_if_hinshi( VMHANDLE* vmh, TR_AI_WORK* tr_ai_work, BranchCond cond );
 static  BOOL  branch_act( VMHANDLE* vmh, BranchCond cond, int src, int dst, int adrs );
 static  BtlPokePos get_poke_pos( TR_AI_WORK* tr_ai_work, int side );
 static  u32   get_table_data( int* adrs );
@@ -341,6 +389,7 @@ static const VMCMD_FUNC tr_ai_command_table[]={
   AI_CHECK_HAVE_TYPE,
   AI_CHECK_HAVE_TOKUSEI,
   AI_IF_ALREADY_MORAIBI,
+  AI_IF_HAVE_ITEM,
   AI_FLDEFF_CHECK,
   AI_CHECK_SIDEEFF_COUNT,
   AI_IF_BENCH_HPDEC,
@@ -392,19 +441,20 @@ static  const VM_INITIALIZER  vm_init={
  * @param[in] wk
  * @param[in] pokeCon
  * @param[in] ai_bit  起動するAIをビットで指定
- * @param[in] pos     起動するポケモンクライアントID
  * @param[in] heapID  ヒープID
  */
 //============================================================================================
-VMHANDLE* TR_AI_Init( const BTL_MAIN_MODULE* wk, const BTL_POKE_CONTAINER* pokeCon, u32 ai_bit, BtlPokePos pos, HEAPID heapID )
+VMHANDLE* TR_AI_Init( const BTL_MAIN_MODULE* wk, const BTL_POKE_CONTAINER* pokeCon, u32 ai_bit, HEAPID heapID )
 {
   VMHANDLE* vmh;
   TR_AI_WORK*  tr_ai_work = GFL_HEAP_AllocClearMemory( heapID, sizeof( TR_AI_WORK ) );
 
+  //AIBITの最大値チェック
+  GF_ASSERT( AI_THINK_NO_MAX < 32 );
+
   tr_ai_work->heapID = heapID;
   tr_ai_work->vmcmd_result = VMCMD_RESULT_CONTINUE;
   tr_ai_work->ai_bit_temp = ai_bit;
-  tr_ai_work->atk_btl_poke_pos = pos;
 
   tr_ai_work->handle = GFL_ARC_OpenDataHandle( ARCID_TR_AI, heapID );
 
@@ -434,6 +484,7 @@ BOOL  TR_AI_Main( VMHANDLE* vmh )
   TR_AI_WORK* tr_ai_work = (TR_AI_WORK*)VM_GetContext( vmh );
   BOOL  ret = FALSE;
 
+#if 0 //@todo ダブル未作成
   if( tr_ai_work->rule == BTL_RULE_SINGLE )
   {
     tr_ai_work->def_btl_poke_pos = tr_ai_work->atk_btl_poke_pos ^ 1;
@@ -443,6 +494,10 @@ BOOL  TR_AI_Main( VMHANDLE* vmh )
   {
     ret = waza_ai_double( vmh, tr_ai_work );
   }
+#else
+  tr_ai_work->def_btl_poke_pos = tr_ai_work->atk_btl_poke_pos ^ 1;
+  ret = waza_ai_single( vmh, tr_ai_work );
+#endif
 
   return ret;
 }
@@ -470,9 +525,10 @@ void  TR_AI_Exit( VMHANDLE* vmh )
  *
  * @param[in] vmh       仮想マシン制御構造体へのポインタ
  * @param[in] unselect  選べない技
+ * @param[in] pos       起動するポケモンクライアントID
  */
 //============================================================================================
-void  TR_AI_Start( VMHANDLE* vmh, u8* unselect )
+void  TR_AI_Start( VMHANDLE* vmh, u8* unselect, BtlPokePos pos )
 {
   TR_AI_WORK* tr_ai_work = (TR_AI_WORK*)VM_GetContext( vmh );
   int i;
@@ -485,6 +541,7 @@ void  TR_AI_Start( VMHANDLE* vmh, u8* unselect )
   tr_ai_work->calc_work = 0;
   tr_ai_work->status_flag = 0;
   tr_ai_work->ai_no = 0;
+  tr_ai_work->atk_btl_poke_pos = pos;
   tr_ai_work->ai_bit = tr_ai_work->ai_bit_temp;
 
   for( i = 0 ; i < PTL_WAZA_MAX ; i++ )
@@ -600,12 +657,12 @@ static  BOOL  waza_ai_single( VMHANDLE* vmh, TR_AI_WORK* tr_ai_work )
     tr_ai_work->select_waza_pos = poswork[ GFL_STD_MtRand( poscnt ) ];
   }
 
-#ifdef PM_DEBUG
+#ifdef POINT_VIEW
   {
     int i;
     for( i = 0 ; i < PTL_WAZA_MAX ; i++ )
     {
-//      OS_TPrintf( "waza%d:%d\n", i+1, tr_ai_work->waza_point[ i ] );
+      OS_TPrintf( "waza%d:%d\n", i+1, tr_ai_work->waza_point[ i ] );
     }
   }
 #endif
@@ -702,30 +759,45 @@ static  void  tr_ai_sequence( VMHANDLE* vmh, TR_AI_WORK* tr_ai_work )
 static  VMCMD_RESULT  AI_IF_RND_UNDER( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* tr_ai_work = (TR_AI_WORK*)context_work;
-  GF_ASSERT_MSG( 0, "未作成" );
+
+  ai_if_rnd( vmh, tr_ai_work, COND_UNDER );
 
   return tr_ai_work->vmcmd_result;
 }
 static  VMCMD_RESULT  AI_IF_RND_OVER( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* tr_ai_work = (TR_AI_WORK*)context_work;
-  GF_ASSERT_MSG( 0, "未作成" );
+
+  ai_if_rnd( vmh, tr_ai_work, COND_OVER );
 
   return tr_ai_work->vmcmd_result;
 }
 static  VMCMD_RESULT  AI_IF_RND_EQUAL( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* tr_ai_work = (TR_AI_WORK*)context_work;
-  GF_ASSERT_MSG( 0, "未作成" );
+
+  ai_if_rnd( vmh, tr_ai_work, COND_EQUAL );
 
   return tr_ai_work->vmcmd_result;
 }
 static  VMCMD_RESULT  AI_IFN_RND_EQUAL( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* tr_ai_work = (TR_AI_WORK*)context_work;
-  GF_ASSERT_MSG( 0, "未作成" );
+
+  ai_if_rnd( vmh, tr_ai_work, COND_NOTEQUAL );
 
   return tr_ai_work->vmcmd_result;
+}
+//------------------------------------------------------------
+//  ランダム分岐メイン
+//------------------------------------------------------------
+static  void  ai_if_rnd( VMHANDLE* vmh, TR_AI_WORK* tr_ai_work, BranchCond cond )
+{
+  int value = ( int )VMGetU32( vmh );
+  int adrs  = ( int )VMGetU32( vmh );
+  int rnd = GFL_STD_MtRand( 256 );
+
+  branch_act( vmh, cond, rnd, value, adrs );
 }
 
 //------------------------------------------------------------
@@ -742,9 +814,6 @@ static  VMCMD_RESULT  AI_INCDEC( VMHANDLE* vmh, void* context_work )
   {
     tr_ai_work->waza_point[ tr_ai_work->waza_pos ] = 0;
   }
-
-//  OS_TPrintf("INCDEC:\n",value);
-//  OS_TPrintf("pos:%d value:%d\n",tr_ai_work->waza_pos, value );
 
   return tr_ai_work->vmcmd_result;
 }
@@ -859,7 +928,7 @@ static  VMCMD_RESULT  AI_IFN_WAZASICK( VMHANDLE* vmh, void* context_work )
 static  void  ai_if_wazasick( VMHANDLE* vmh, TR_AI_WORK* tr_ai_work, BranchCond cond )
 {
   int side  = ( int )VMGetU32( vmh );
-  WazaSick  value = ( int )VMGetU32( vmh );
+  WazaSick  value = ( WazaSick )VMGetU32( vmh );
   int adrs  = ( int )VMGetU32( vmh );
   BtlPokePos  pos = get_poke_pos( tr_ai_work, side );
   BOOL  sick = BPP_CheckSick( get_bpp( tr_ai_work, pos ), value );
@@ -892,7 +961,7 @@ static  VMCMD_RESULT  AI_IFN_CONTFLG( VMHANDLE* vmh, void* context_work )
 static  void  ai_if_contflg( VMHANDLE* vmh, TR_AI_WORK* tr_ai_work, BranchCond cond )
 {
   int side  = ( int )VMGetU32( vmh );
-  BppContFlag value = ( int )VMGetU32( vmh );
+  BppContFlag value = ( BppContFlag )VMGetU32( vmh );
   int adrs  = ( int )VMGetU32( vmh );
   BtlPokePos  pos = get_poke_pos( tr_ai_work, side );
   BOOL contflg = BPP_CONTFLAG_Get( get_bpp( tr_ai_work, pos ), value );
@@ -925,7 +994,7 @@ static  VMCMD_RESULT  AI_IFN_SIDEEFF( VMHANDLE* vmh, void* context_work )
 static  void  ai_if_sideeff( VMHANDLE* vmh, TR_AI_WORK* tr_ai_work, BranchCond cond )
 {
   int side  = ( int )VMGetU32( vmh );
-  int value = ( int )VMGetU32( vmh );
+  BtlSideEffect value = ( BtlSideEffect )VMGetU32( vmh );
   int adrs  = ( int )VMGetU32( vmh );
   BtlPokePos  pos = get_poke_pos( tr_ai_work, side );
   BtlSideEffect sideeff = 0; //@todo 取得関数に置き換える必要がある
@@ -1071,16 +1140,42 @@ static  VMCMD_RESULT  AI_IFN_TABLE_JUMP( VMHANDLE* vmh, void* context_work )
 static  VMCMD_RESULT  AI_IF_HAVE_DAMAGE_WAZA( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* tr_ai_work = (TR_AI_WORK*)context_work;
+  int adrs = ( int )VMGetU32( vmh );
+  int i;
 
-  GF_ASSERT_MSG( 0, "未作成" );
+  for( i = 0 ; i < BPP_WAZA_GetCount( tr_ai_work->atk_bpp ) ; i++ )
+  {
+    if( WAZADATA_IsDamage( BPP_WAZA_GetID( tr_ai_work->atk_bpp, i ) ) )
+    {
+      break;
+    }
+  }
+
+  if( i < BPP_WAZA_GetCount( tr_ai_work->atk_bpp ) )
+  {
+    VMCMD_Jump( vmh, vmh->adrs + adrs );
+  }
 
   return tr_ai_work->vmcmd_result;
 }
 static  VMCMD_RESULT  AI_IFN_HAVE_DAMAGE_WAZA( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* tr_ai_work = (TR_AI_WORK*)context_work;
+  int adrs = ( int )VMGetU32( vmh );
+  int i;
 
-  GF_ASSERT_MSG( 0, "未作成" );
+  for( i = 0 ; i < BPP_WAZA_GetCount( tr_ai_work->atk_bpp ) ; i++ )
+  {
+    if( WAZADATA_IsDamage( BPP_WAZA_GetID( tr_ai_work->atk_bpp, i ) ) )
+    {
+      break;
+    }
+  }
+
+  if( i == BPP_WAZA_GetCount( tr_ai_work->atk_bpp ) )
+  {
+    VMCMD_Jump( vmh, vmh->adrs + adrs );
+  }
 
   return tr_ai_work->vmcmd_result;
 }
@@ -1156,7 +1251,7 @@ static  VMCMD_RESULT  AI_CHECK_TYPE( VMHANDLE* vmh, void* context_work )
 }
 
 //------------------------------------------------------------
-//  攻撃技かどうかのチェック（技の威力をワークに入れる)
+//  攻撃技かどうかのチェック（技の威力をワークに入れる)（HGSS時点で未使用コマンド）
 //------------------------------------------------------------
 static  VMCMD_RESULT  AI_CHECK_IRYOKU( VMHANDLE* vmh, void* context_work )
 {
@@ -1204,8 +1299,10 @@ static  VMCMD_RESULT  AI_COMP_POWER( VMHANDLE* vmh, void* context_work )
 static  VMCMD_RESULT  AI_CHECK_LAST_WAZA( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* tr_ai_work = (TR_AI_WORK*)context_work;
+  int side  = ( int )VMGetU32( vmh );
+  BtlPokePos  pos = get_poke_pos( tr_ai_work, side );
 
-  GF_ASSERT_MSG( 0, "未作成" );
+  tr_ai_work->calc_work = BPP_GetPrevWazaID( get_bpp( tr_ai_work, pos ) );
 
   return tr_ai_work->vmcmd_result;
 }
@@ -1318,8 +1415,6 @@ static  VMCMD_RESULT  AI_CHECK_WAZA_AISYOU( VMHANDLE* vmh, void* context_work )
   BtlTypeAff  aff = BTL_CALC_TypeAffMul( aff1, aff2 );
 
   //@todo とりあえず特性とかなにも考えずに単純に相性チェック
-
-//  OS_TPrintf("aff:%d\n",aff);
 
   branch_act( vmh, COND_EQUAL, aff, aisyou, adrs );
 
@@ -1475,7 +1570,7 @@ static  VMCMD_RESULT  AI_IF_WAZA_HINSHI( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* tr_ai_work = (TR_AI_WORK*)context_work;
 
-  GF_ASSERT_MSG( 0, "未作成" );
+  ai_if_waza_hinshi( vmh, tr_ai_work, COND_OR_UNDER );
 
   return tr_ai_work->vmcmd_result;
 }
@@ -1483,9 +1578,21 @@ static  VMCMD_RESULT  AI_IFN_WAZA_HINSHI( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* tr_ai_work = (TR_AI_WORK*)context_work;
 
-  GF_ASSERT_MSG( 0, "未作成" );
+  ai_if_waza_hinshi( vmh, tr_ai_work, COND_OVER );
 
   return tr_ai_work->vmcmd_result;
+}
+//------------------------------------------------------------
+//  技のダメージ計算をして相手が瀕死になるかチェックして分岐処理メイン
+//------------------------------------------------------------
+static  void  ai_if_waza_hinshi( VMHANDLE* vmh, TR_AI_WORK* tr_ai_work, BranchCond cond )
+{
+  int loss_flag = ( int )VMGetU32( vmh );
+  int adrs  = ( int )VMGetU32( vmh );
+  int hp = BPP_GetValue( tr_ai_work->def_bpp, BPP_HP );
+  int damage = 1; //@todo ダメージ取得処理が必要
+
+  branch_act( vmh, cond, hp, damage, adrs );
 }
 
 //------------------------------------------------------------
@@ -1574,7 +1681,7 @@ static  VMCMD_RESULT  AI_IF_HAVE_WAZA_SEQNO( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* tr_ai_work = (TR_AI_WORK*)context_work;
 
-  GF_ASSERT_MSG( 0, "未作成" );
+  ai_if_have_waza_seqno( vmh, tr_ai_work, COND_EQUAL );
 
   return tr_ai_work->vmcmd_result;
 }
@@ -1582,13 +1689,56 @@ static  VMCMD_RESULT  AI_IFN_HAVE_WAZA_SEQNO( VMHANDLE* vmh, void* context_work 
 {
   TR_AI_WORK* tr_ai_work = (TR_AI_WORK*)context_work;
 
-  GF_ASSERT_MSG( 0, "未作成" );
+  ai_if_have_waza_seqno( vmh, tr_ai_work, COND_NOTEQUAL );
 
   return tr_ai_work->vmcmd_result;
 }
+//------------------------------------------------------------
+//  特定の技シーケンスを持っているかのチェックをして分岐処理メイン
+//------------------------------------------------------------
+static  void  ai_if_have_waza_seqno( VMHANDLE* vmh, TR_AI_WORK* tr_ai_work, BranchCond cond )
+{
+  int side  = ( int )VMGetU32( vmh );
+  int seqno = ( int )VMGetU32( vmh );
+  int adrs  = ( int )VMGetU32( vmh );
+  BtlPokePos  pos = get_poke_pos( tr_ai_work, side );
+  int i;
+  BOOL  ret = FALSE;
+
+  switch( side ){
+  case CHECK_ATTACK:
+    for( i = 0 ; i < BPP_WAZA_GetCount( tr_ai_work->atk_bpp ) ; i++ )
+    {
+      int have_seqno = 0; //@todo 取得関数 BPP_WAZA_GetID( tr_ai_work->atk_bpp, i );
+      if( have_seqno == seqno )
+      {
+        ret = TRUE;
+        break;
+      }
+    }
+    break;
+  case CHECK_DEFENCE:
+    for( i = 0 ; i < PTL_WAZA_MAX ; i++ )
+    {
+      int have_seqno = 0; //@todo 取得関数 tr_ai_work->use_waza[ pos ][ i ];
+      if( have_seqno == seqno )
+      {
+        ret = TRUE;
+        break;
+      }
+    }
+    break;
+  default:
+    OS_Printf("ここにくるのは、おかしい\n");
+    break;
+  }
+
+  branch_act( vmh, cond, ret, TRUE, adrs );
+}
+
 
 //------------------------------------------------------------
-//  技の状態をチェックをして分岐
+//  技の状態をチェックをして分岐（HGSS時点で未使用コマンド）
 //------------------------------------------------------------
 static  VMCMD_RESULT  AI_IF_WAZA_CHECK_STATE( VMHANDLE* vmh, void* context_work )
 {
@@ -1745,7 +1895,7 @@ static  VMCMD_RESULT  AI_CHECK_RECYCLE_ITEM( VMHANDLE* vmh, void* context_work )
 }
 
 //------------------------------------------------------------
-//  ワークに入っている技ナンバーのタイプをチェック
+//  ワークに入っている技ナンバーのタイプをチェック（HGSS時点で未使用コマンド）
 //------------------------------------------------------------
 static  VMCMD_RESULT  AI_CHECK_WORKWAZA_TYPE( VMHANDLE* vmh, void* context_work )
 {
@@ -1763,7 +1913,9 @@ static  VMCMD_RESULT  AI_CHECK_WORKWAZA_POW( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* tr_ai_work = (TR_AI_WORK*)context_work;
 
-  GF_ASSERT_MSG( 0, "未作成" );
+  GF_ASSERT( tr_ai_work->calc_work < WAZANO_MAX );
+
+  tr_ai_work->calc_work = WAZADATA_GetPower( tr_ai_work->calc_work );
 
   return tr_ai_work->vmcmd_result;
 }
@@ -1775,7 +1927,7 @@ static  VMCMD_RESULT  AI_CHECK_WORKWAZA_SEQNO( VMHANDLE* vmh, void* context_work
 {
   TR_AI_WORK* tr_ai_work = (TR_AI_WORK*)context_work;
 
-  GF_ASSERT_MSG( 0, "未作成" );
+  tr_ai_work->calc_work = 0; //@todo 取得関数 tr_ai_work->calc_work;
 
   return tr_ai_work->vmcmd_result;
 }
@@ -1786,8 +1938,20 @@ static  VMCMD_RESULT  AI_CHECK_WORKWAZA_SEQNO( VMHANDLE* vmh, void* context_work
 static  VMCMD_RESULT  AI_CHECK_MAMORU_COUNT( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* tr_ai_work = (TR_AI_WORK*)context_work;
+  int side  = ( int )VMGetU32( vmh );
+  BtlPokePos  pos = get_poke_pos( tr_ai_work, side );
+  const BTL_POKEPARAM* bpp = get_bpp( tr_ai_work, pos );
 
-  GF_ASSERT_MSG( 0, "未作成" );
+  if( ( BPP_GetPrevWazaID( bpp ) != WAZANO_MAMORU ) &&
+      ( BPP_GetPrevWazaID( bpp ) != WAZANO_MIKIRI ) &&
+      ( BPP_GetPrevWazaID( bpp ) != WAZANO_KORAERU ) )
+  {
+    tr_ai_work->calc_work = 0;
+  }
+  else
+  {
+    tr_ai_work->calc_work = BPP_GetWazaContCounter( bpp );
+  }
 
   return tr_ai_work->vmcmd_result;
 }
@@ -1846,7 +2010,7 @@ static  VMCMD_RESULT  AI_IF_CHOUHATSU( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* tr_ai_work = (TR_AI_WORK*)context_work;
 
-  GF_ASSERT_MSG( 0, "未作成" );
+  ai_if_chouhatsu( vmh, tr_ai_work, COND_EQUAL );
 
   return tr_ai_work->vmcmd_result;
 }
@@ -1854,9 +2018,20 @@ static  VMCMD_RESULT  AI_IFN_CHOUHATSU( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* tr_ai_work = (TR_AI_WORK*)context_work;
 
-  GF_ASSERT_MSG( 0, "未作成" );
+  ai_if_chouhatsu( vmh, tr_ai_work, COND_NOTEQUAL );
 
   return tr_ai_work->vmcmd_result;
+}
+
+//------------------------------------------------------------
+//  挑発状態かチェックして分岐処理メイン
+//------------------------------------------------------------
+static  void  ai_if_chouhatsu( VMHANDLE* vmh, TR_AI_WORK* tr_ai_work, BranchCond cond )
+{
+  int adrs  = ( int )VMGetU32( vmh );
+  BOOL  value = BPP_CheckSick( tr_ai_work->def_bpp, WAZASICK_TYOUHATSU );
+
+  branch_act( vmh, cond, value, TRUE, adrs );
 }
 
 //------------------------------------------------------------
@@ -1878,8 +2053,20 @@ static  VMCMD_RESULT  AI_IF_MIKATA_ATTACK( VMHANDLE* vmh, void* context_work )
 static  VMCMD_RESULT  AI_CHECK_HAVE_TYPE( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* tr_ai_work = (TR_AI_WORK*)context_work;
+  int side  = ( int )VMGetU32( vmh );
+  PokeType  type  = ( PokeType )VMGetU32( vmh );
+  BtlPokePos  pos = get_poke_pos( tr_ai_work, side );
+  PokeTypePair  poke_type = BPP_GetPokeType( get_bpp( tr_ai_work, pos ) );
 
-  GF_ASSERT_MSG( 0, "未作成" );
+  if( ( PokeTypePair_GetType1( poke_type ) == type ) ||
+      ( PokeTypePair_GetType2( poke_type ) == type ) )
+  {
+    tr_ai_work->calc_work = HAVE_YES;
+  }
+  else
+  {
+    tr_ai_work->calc_work = HAVE_NO;
+  }
 
   return tr_ai_work->vmcmd_result;
 }
@@ -1893,9 +2080,7 @@ static  VMCMD_RESULT  AI_CHECK_HAVE_TOKUSEI( VMHANDLE* vmh, void* context_work )
   int side    = ( int )VMGetU32( vmh );
   int tokusei = ( int )VMGetU32( vmh );
   BtlPokePos  pos = get_poke_pos( tr_ai_work, side );
-  int have_tokusei;
-
-  have_tokusei = get_tokusei( tr_ai_work, side, pos );
+  int have_tokusei = get_tokusei( tr_ai_work, side, pos );
 
   if( have_tokusei == tokusei )
   {
@@ -1915,6 +2100,24 @@ static  VMCMD_RESULT  AI_CHECK_HAVE_TOKUSEI( VMHANDLE* vmh, void* context_work )
 static  VMCMD_RESULT  AI_IF_ALREADY_MORAIBI( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* tr_ai_work = (TR_AI_WORK*)context_work;
+
+  //@todo
+  GF_ASSERT_MSG( 0, "未作成" );
+
+  return tr_ai_work->vmcmd_result;
+}
+
+//------------------------------------------------------------
+//  アイテムを持っているかチェックして分岐
+//------------------------------------------------------------
+static  VMCMD_RESULT  AI_IF_HAVE_ITEM( VMHANDLE* vmh, void* context_work )
+{
+  TR_AI_WORK* tr_ai_work = (TR_AI_WORK*)context_work;
+  int side = ( int )VMGetU32( vmh );
+  int item = ( int )VMGetU32( vmh );
+  int adrs = ( int )VMGetU32( vmh );
+  BtlPokePos  pos = get_poke_pos( tr_ai_work, side );
+  u32 have_item = BPP_GetItem( get_bpp( tr_ai_work, pos ) );
 
   GF_ASSERT_MSG( 0, "未作成" );
 
@@ -2051,7 +2254,7 @@ static  VMCMD_RESULT  AI_CHECK_PP_REMAIN( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* tr_ai_work = (TR_AI_WORK*)context_work;
 
-  GF_ASSERT_MSG( 0, "未作成" );
+  tr_ai_work->calc_work = BPP_WAZA_GetPP( tr_ai_work->atk_bpp, tr_ai_work->waza_pos );
 
   return tr_ai_work->vmcmd_result;
 }
@@ -2083,7 +2286,7 @@ static  VMCMD_RESULT  AI_CHECK_WAZA_KIND( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* tr_ai_work = (TR_AI_WORK*)context_work;
 
-  GF_ASSERT_MSG( 0, "未作成" );
+  tr_ai_work->calc_work = WAZADATA_GetDamageType( tr_ai_work->waza_no );
 
   return tr_ai_work->vmcmd_result;
 }
@@ -2095,7 +2298,7 @@ static  VMCMD_RESULT  AI_CHECK_LAST_WAZA_KIND( VMHANDLE* vmh, void* context_work
 {
   TR_AI_WORK* tr_ai_work = (TR_AI_WORK*)context_work;
 
-  GF_ASSERT_MSG( 0, "未作成" );
+  tr_ai_work->calc_work = WAZADATA_GetDamageType( BPP_GetPrevWazaID( tr_ai_work->def_bpp ) );
 
   return tr_ai_work->vmcmd_result;
 }
@@ -2106,8 +2309,10 @@ static  VMCMD_RESULT  AI_CHECK_LAST_WAZA_KIND( VMHANDLE* vmh, void* context_work
 static  VMCMD_RESULT  AI_CHECK_AGI_RANK( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* tr_ai_work = (TR_AI_WORK*)context_work;
+  int side = ( int )VMGetU32( vmh );
+  BtlPokePos  pos = get_poke_pos( tr_ai_work, side );
 
-  GF_ASSERT_MSG( 0, "未作成" );
+  tr_ai_work->calc_work = 0;  //@todo 取得関数
 
   return tr_ai_work->vmcmd_result;
 }
@@ -2118,8 +2323,10 @@ static  VMCMD_RESULT  AI_CHECK_AGI_RANK( VMHANDLE* vmh, void* context_work )
 static  VMCMD_RESULT  AI_CHECK_SLOWSTART_TURN( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* tr_ai_work = (TR_AI_WORK*)context_work;
+  int side = ( int )VMGetU32( vmh );
+  BtlPokePos  pos = get_poke_pos( tr_ai_work, side );
 
-  GF_ASSERT_MSG( 0, "未作成" );
+  tr_ai_work->calc_work = BPP_GetTurnCount( get_bpp( tr_ai_work, pos ) );
 
   return tr_ai_work->vmcmd_result;
 }
@@ -2131,6 +2338,7 @@ static  VMCMD_RESULT  AI_IF_BENCH_DAMAGE_MAX( VMHANDLE* vmh, void* context_work 
 {
   TR_AI_WORK* tr_ai_work = (TR_AI_WORK*)context_work;
 
+  //@todo
   GF_ASSERT_MSG( 0, "未作成" );
 
   return tr_ai_work->vmcmd_result;
@@ -2143,6 +2351,7 @@ static  VMCMD_RESULT  AI_IF_HAVE_BATSUGUN( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* tr_ai_work = (TR_AI_WORK*)context_work;
 
+  //@todo
   GF_ASSERT_MSG( 0, "未作成" );
 
   return tr_ai_work->vmcmd_result;
@@ -2155,6 +2364,7 @@ static  VMCMD_RESULT  AI_IF_LAST_WAZA_DAMAGE_CHECK( VMHANDLE* vmh, void* context
 {
   TR_AI_WORK* tr_ai_work = (TR_AI_WORK*)context_work;
 
+  //@todo
   GF_ASSERT_MSG( 0, "未作成" );
 
   return tr_ai_work->vmcmd_result;
@@ -2166,8 +2376,29 @@ static  VMCMD_RESULT  AI_IF_LAST_WAZA_DAMAGE_CHECK( VMHANDLE* vmh, void* context
 static  VMCMD_RESULT  AI_CHECK_STATUS_UP( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* tr_ai_work = (TR_AI_WORK*)context_work;
+  int side = ( int )VMGetU32( vmh );
+  BtlPokePos  pos = get_poke_pos( tr_ai_work, side );
+  int i;
+  BppValueID  id_tbl[]={
+    BPP_ATTACK_RANK,
+    BPP_DEFENCE_RANK,
+    BPP_SP_ATTACK_RANK,
+    BPP_SP_DEFENCE_RANK,
+    BPP_AGILITY_RANK,
+    BPP_HIT_RATIO,
+    BPP_AVOID_RATIO,
+  };
 
-  GF_ASSERT_MSG( 0, "未作成" );
+  tr_ai_work->calc_work = 0;
+
+  for( i = 0 ; i < NELEMS( id_tbl ) ; i++ )
+  {
+    int rank = BPP_GetValue( get_bpp( tr_ai_work, pos ), id_tbl[ i ] );
+    if( rank > 6 )
+    {
+      tr_ai_work->calc_work += ( rank - 6 );
+    }
+  }
 
   return tr_ai_work->vmcmd_result;
 }
@@ -2188,7 +2419,7 @@ static  VMCMD_RESULT  AI_CHECK_STATUS_DIFF( VMHANDLE* vmh, void* context_work )
 }
 
 //------------------------------------------------------------
-//  指定した相手とのステータスをチェックして分岐
+//  指定した相手とのステータスをチェックして分岐（HGSS時点で未使用コマンド）
 //------------------------------------------------------------
 static  VMCMD_RESULT  AI_IF_CHECK_STATUS_UNDER( VMHANDLE* vmh, void* context_work )
 {
@@ -2222,6 +2453,7 @@ static  VMCMD_RESULT  AI_COMP_POWER_WITH_PARTNER( VMHANDLE* vmh, void* context_w
 {
   TR_AI_WORK* tr_ai_work = (TR_AI_WORK*)context_work;
 
+  //@todo
   GF_ASSERT_MSG( 0, "未作成" );
 
   return tr_ai_work->vmcmd_result;
@@ -2234,17 +2466,31 @@ static  VMCMD_RESULT  AI_IF_HINSHI( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* tr_ai_work = (TR_AI_WORK*)context_work;
 
-  GF_ASSERT_MSG( 0, "未作成" );
+  ai_if_hinshi( vmh, tr_ai_work, COND_EQUAL );
 
   return tr_ai_work->vmcmd_result;
 }
+
 static  VMCMD_RESULT  AI_IFN_HINSHI( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* tr_ai_work = (TR_AI_WORK*)context_work;
 
-  GF_ASSERT_MSG( 0, "未作成" );
+  ai_if_hinshi( vmh, tr_ai_work, COND_NOTEQUAL );
 
   return tr_ai_work->vmcmd_result;
+}
+
+//------------------------------------------------------------
+//  指定した相手が瀕死かチェックして分岐処理メイン
+//------------------------------------------------------------
+static  void  ai_if_hinshi( VMHANDLE* vmh, TR_AI_WORK* tr_ai_work, BranchCond cond )
+{
+  int side = ( int )VMGetU32( vmh );
+  int adrs = ( int )VMGetU32( vmh );
+  BtlPokePos  pos = get_poke_pos( tr_ai_work, side );
+  BOOL  hinshi = BPP_IsDead( get_bpp( tr_ai_work, pos ) );
+
+  branch_act( vmh, cond, hinshi, TRUE, adrs );
 }
 
 //------------------------------------------------------------
@@ -2254,6 +2500,7 @@ static  VMCMD_RESULT  AI_GET_TOKUSEI( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* tr_ai_work = (TR_AI_WORK*)context_work;
 
+  //@todo
   GF_ASSERT_MSG( 0, "未作成" );
 
   return tr_ai_work->vmcmd_result;
@@ -2326,7 +2573,19 @@ static  BOOL  branch_act( VMHANDLE* vmh, BranchCond cond, int src, int dst, int 
     }
     break;
   case COND_NBIT:
-    if( ( src & dst) == 0 )
+    if( ( src & dst ) == 0 )
+    {
+      branch = TRUE;
+    }
+    break;
+  case COND_OR_UNDER:
+    if( src <= dst )
+    {
+      branch = TRUE;
+    }
+    break;
+  case COND_OR_OVER:
+    if( src >= dst )
     {
       branch = TRUE;
     }
@@ -2514,3 +2773,4 @@ static  void  waza_no_stock( TR_AI_WORK* tr_ai_work )
     }
   }
 }
+

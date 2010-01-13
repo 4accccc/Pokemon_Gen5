@@ -35,25 +35,6 @@
 #define	AI_ENEMY_SAFARI		  5
 #define	AI_ENEMY_RESHUFFLE	6
 
-//=========================================================================
-//	AI_THINK_BIT宣言
-//=========================================================================
-
-#define	AI_THINK_BIT_BASIC		(0x00000001)			//基本AI
-#define	AI_THINK_BIT_ATTACK		(0x00000002)			//攻撃型AI
-#define	AI_THINK_BIT_EXPERT		(0x00000004)			//エキスパートAI
-#define	AI_THINK_BIT_HOJO		  (0x00000008)			//補助技AI
-#define	AI_THINK_BIT_GAMBLE		(0x00000010)			//ギャンブルAI
-#define	AI_THINK_BIT_DAMAGE		(0x00000020)			//ダメージ重視AI
-#define	AI_THINK_BIT_RILAY		(0x00000040)			//リレー型AI
-#define	AI_THINK_BIT_DOUBLE		(0x00000080)			//ダブルバトルAI
-#define	AI_THINK_BIT_HP_CHECK	(0x00000100)			//HPで判断AI
-#define	AI_THINK_BIT_WEATHER	(0x00000200)			//天候技AI
-#define	AI_THINK_BIT_HARASS		(0x00000400)			//いやがらせAI
-#define	AI_THINK_BIT_MV_POKE	(0x20000000)			//移動ポケモン
-#define	AI_THINK_BIT_SAFARI		(0x40000000)			//サファリゾーン
-#define	AI_THINK_BIT_GUIDE		(0x80000000)			//ガイドバトル
-
 //tr_ai.s waza_ai.cで使用（マクロでsideに指定する値）
 #define	CHECK_DEFENCE			    (0)
 #define	CHECK_ATTACK			    (1)

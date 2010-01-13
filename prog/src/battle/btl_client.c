@@ -698,7 +698,7 @@ static BOOL selact_Root( BTL_CLIENT* wk, int* seq )
 
   case 3:
     // アクション選択開始
-    BTL_N_Printf( DBGSTR_CLIENT_SelectActionStart, wk->procPokeIdx, BPP_GetID(wk->procPoke), wk->checkedPokeCnt);
+    BTL_N_Printf( DBGSTR_CLIENT_SelectActionStart, wk->procPokeIdx, BPP_GetID(wk->procPoke), wk->checkedPokeCnt );
     BTLV_UI_SelectAction_Start( wk->viewCore, wk->procPoke, (wk->checkedPokeCnt!=0), wk->procAction );
     (*seq)++;
     break;
@@ -1172,20 +1172,34 @@ static BOOL is_action_unselectable( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, BT
 //----------------------------------------------------------------------------------
 static BOOL is_waza_unselectable( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, BTL_ACTION_PARAM* action )
 {
+  u32 wazaCount = BPP_WAZA_GetCount( bpp );
+  u32 i;
+
   // ちょうはつ状態（ダメージワザしか選べない）は、選べるワザを持っていなければ「わるあがき」セットでスキップ
   if( BPP_CheckSick(bpp, WAZASICK_TYOUHATSU) )
   {
-    int i, cnt, max = BPP_WAZA_GetCount( bpp );
-    for(i=0; i<max; ++i){
+    for(i=0; i<wazaCount; ++i){
       if( BPP_WAZA_GetPP(bpp, i) && WAZADATA_IsDamage(BPP_WAZA_GetID(bpp, i)) ){
         break;
       }
     }
-    if( i == max ){
+    if( i == wazaCount ){
       setWaruagakiAction( action, wk, bpp );
       return TRUE;
     }
   }
+
+  // 残PPが全て0なら「わるあがき」
+  for(i=0; i<wazaCount; ++i){
+    if( BPP_WAZA_GetPP(bpp, i) ){
+      break;
+    }
+  }
+  if( i == wazaCount ){
+    setWaruagakiAction( action, wk, bpp );
+    return TRUE;
+  }
+
 
   return FALSE;
 }
@@ -1379,19 +1393,25 @@ static BtlCantEscapeCode is_prohibit_escape( BTL_CLIENT* wk, u8* pokeID, u16* to
 static BOOL SubProc_AI_SelectAction( BTL_CLIENT* wk, int* seq )
 {
   // @@@ この関数は現在しぬほど適当に作られている。taya
+  VMHANDLE* vmh;
   const BTL_POKEPARAM* pp;
-  u8 i = 0;
+  u32 ai_bit = 0;
+  u32 i = 0;
+
+  //@todo トレーナー戦なら本来はBattleSetupParamのトレーナーデータからAIビットを取得したい
+  if( BTL_MAIN_GetCompetitor( wk->mainModule ) == BTL_COMPETITOR_TRAINER ){
+    ai_bit = 0x01;
+  }
+  //@todo InitとExitはClientのInitとExit時にしたいけどとりあえず
+  vmh = TR_AI_Init( wk->mainModule, wk->pokeCon, ai_bit, wk->heapID );
 
   for(i=0; i<wk->numCoverPos; ++i)
   {
     pp = BTL_PARTY_GetMemberDataConst( wk->myParty, i );
     if( !BPP_IsDead(pp) )
     {
-      u8 wazaCount, wazaIdx, mypos, targetPos;
-      VMHANDLE* vmh;
+      u8 wazaCount, wazaIdx, targetPos;
       u32 ai_bit = 0;
-
-      mypos = BTL_MAIN_GetClientPokePos( wk->mainModule, wk->myID, i );
 
       if( BPP_CheckSick(pp, WAZASICK_ENCORE)
       ||  BPP_CheckSick(pp, WAZASICK_WAZALOCK)
@@ -1402,69 +1422,13 @@ static BOOL SubProc_AI_SelectAction( BTL_CLIENT* wk, int* seq )
         continue;
       }
 
-#if 0
       wazaCount = BPP_WAZA_GetCount( pp );
       {
         u8 usableWazaIdx[ PTL_WAZA_MAX ];
         WazaID waza;
         u8 j, cnt=0;
-        for(j=0, cnt=0; j<wazaCount; ++j){
-          if( BPP_WAZA_GetPP(pp, j) )
-          {
-            waza = BPP_WAZA_GetID( pp, j );
-            if( !is_unselectable_waza(wk, pp, waza, NULL) ){
-              usableWazaIdx[cnt++] = j;
-            }
-          }
-        }
-        if( cnt ){
-          cnt = GFL_STD_MtRand( cnt );
-          wazaIdx = usableWazaIdx[ cnt ];
-          targetPos = BTL_MAIN_GetOpponentPokePos( wk->mainModule, mypos, 0 );
-        }else{
-          setWaruagakiAction( &wk->actionParam[i], wk, pp );
-          continue;
-        }
-      }
-      // シングルでなければ、対象をランダムで決定する処理
-      if( BTL_MAIN_GetRule(wk->mainModule) != BTL_RULE_SINGLE )
-      {
-        enum {
-          CHECK_MAX = 2,
-        };
-        const BTL_POKEPARAM* targetPoke;
-        u8 j, p, aliveCnt;
-        u8 alivePokePos[ CHECK_MAX ];
-        aliveCnt = 0;
-        for(j=0; j<CHECK_MAX; ++j)
+        for(j=0, cnt=0; j<PTL_WAZA_MAX; ++j)
         {
-          p = BTL_MAIN_GetOpponentPokePos( wk->mainModule, mypos, j );
-          targetPoke = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, p );
-          if( !BPP_IsDead(targetPoke) )
-          {
-            alivePokePos[ aliveCnt++ ] = p;
-          }
-        }
-        if( aliveCnt )
-        {
-          u8 rndIdx = GFL_STD_MtRand(aliveCnt);
-          targetPos = alivePokePos[ rndIdx ];
-        }
-      }
-#else
-      //@todo トレーナー戦なら本来はBattleSetupParamのトレーナーデータからAIビットを取得したい
-      if( BTL_MAIN_GetCompetitor( wk->mainModule ) == BTL_COMPETITOR_TRAINER )
-      {
-        ai_bit = 0x01;
-      }
-      //@todo InitとExitはClientのInitとExit時にしたいけどとりあえず
-      vmh = TR_AI_Init( wk->mainModule, wk->pokeCon, ai_bit, mypos, wk->heapID );
-      wazaCount = BPP_WAZA_GetCount( pp );
-      {
-        u8 usableWazaIdx[ PTL_WAZA_MAX ];
-        WazaID waza;
-        u8 j, cnt=0;
-        for(j=0, cnt=0; j<PTL_WAZA_MAX; ++j){
           usableWazaIdx[ j ] = 0;
           if( j >= wazaCount ) continue;
           if( BPP_WAZA_GetPP(pp, j) )
@@ -1476,49 +1440,24 @@ static BOOL SubProc_AI_SelectAction( BTL_CLIENT* wk, int* seq )
             }
           }
         }
-        if( cnt ){
-          TR_AI_Start( vmh, usableWazaIdx );
+
+        if( cnt )
+        {
+          WazaID waza = BPP_WAZA_GetID( pp, wazaIdx );
+          u8  mypos = BTL_MAIN_GetClientPokePos( wk->mainModule, wk->myID, i );
+
+          TR_AI_Start( vmh, usableWazaIdx, mypos );
           TR_AI_Main( vmh );
           wazaIdx = TR_AI_GetSelectWazaPos( vmh );
           targetPos = TR_AI_GetSelectWazaDir( vmh );
+
+          waza = BPP_WAZA_GetID( pp, wazaIdx );
+          BTL_ACTION_SetFightParam( &wk->actionParam[i], waza, targetPos );
+
         }else{
           setWaruagakiAction( &wk->actionParam[i], wk, pp );
           continue;
         }
-      }
-      TR_AI_Exit( vmh );
-      // シングルでなければ、対象をランダムで決定する処理
-      if( BTL_MAIN_GetRule(wk->mainModule) != BTL_RULE_SINGLE )
-      {
-        enum {
-          CHECK_MAX = 2,
-        };
-        const BTL_POKEPARAM* targetPoke;
-        u8 j, p, aliveCnt;
-        u8 alivePokePos[ CHECK_MAX ];
-        aliveCnt = 0;
-        for(j=0; j<CHECK_MAX; ++j)
-        {
-          p = BTL_MAIN_GetOpponentPokePos( wk->mainModule, mypos, j );
-          targetPoke = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, p );
-          if( !BPP_IsDead(targetPoke) )
-          {
-            alivePokePos[ aliveCnt++ ] = p;
-          }
-        }
-
-        if( aliveCnt )
-        {
-          u8 rndIdx = GFL_STD_MtRand(aliveCnt);
-          targetPos = alivePokePos[ rndIdx ];
-        }
-      }
-#endif
-
-
-      {
-        WazaID waza = BPP_WAZA_GetID( pp, wazaIdx );
-        BTL_ACTION_SetFightParam( &wk->actionParam[i], waza, targetPos );
       }
     }
     else
@@ -1526,9 +1465,10 @@ static BOOL SubProc_AI_SelectAction( BTL_CLIENT* wk, int* seq )
       BTL_ACTION_SetNULL( &wk->actionParam[i] );
     }
   }
+  TR_AI_Exit( vmh );
+
   wk->returnDataPtr = &(wk->actionParam[0]);
   wk->returnDataSize = sizeof(wk->actionParam[0]) * wk->numCoverPos;
-
   return TRUE;
 }
 //--------------------------------------------------------------------------
