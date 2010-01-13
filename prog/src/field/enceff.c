@@ -97,8 +97,11 @@ void ENCEFF_SetEncEff(ENCEFF_CNT_PTR ptr, GMEVENT * event, const ENCEFF_ID inID)
 
   int no;
   no = GFUser_GetPublicRand(ENCEFFID_MAX);
+#ifdef PM_DEBUG
+#ifdef DEBUG_ONLY_FOR_saitou
   no = ENCEFFID_MAX-1;
-
+#endif
+#endif  
   //オーバーレイロード
   if (EncEffTbl[no].OverlayID != OVERLAY_NONE)
   {
