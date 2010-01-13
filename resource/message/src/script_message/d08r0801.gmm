@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-17T17:04:43"/>
+	<create user="matsumiya" host="W00207" date="2010-01-13T12:45:47"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -66,6 +66,11 @@
 			</tag>
 			<tag entry="11" japanese="ボックス名" english="ボックス名" view="EP" width="96" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="12" japanese="ポケモンニックネーム（正体）" english="ポケモンニックネーム（正体）" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">バトル用。イリュージョンの影響を受けないニックネーム取得。</comment>
+				<comment language="english">バトル用。イリュージョンの影響を受けないニックネーム取得。</comment>
 			</tag>
 			<tag entry="13" japanese="ステータス名" english="ステータス名" view="EP" width="74" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
@@ -137,9 +142,54 @@
 				<comment language="japanese">リボンの名前</comment>
 				<comment language="english">リボンの名前</comment>
 			</tag>
+			<tag entry="40" japanese="広場ミニゲーム" english="広場ミニゲーム" view="EP" width="120" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">WiFi広場のミニゲーム名</comment>
+				<comment language="english">WiFi広場のミニゲーム名</comment>
+			</tag>
+			<tag entry="41" japanese="広場イベント名" english="広場イベント名" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">WiFi広場イベント名</comment>
+				<comment language="english">WiFi広場イベント名</comment>
+			</tag>
+			<tag entry="42" japanese="広場アイテム名" english="広場アイテム名" view="EP" width="120" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">WiFi広場のアイテム名</comment>
+				<comment language="english">WiFi広場のアイテム名</comment>
+			</tag>
+			<tag entry="43" japanese="日本の挨拶" english="日本の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">日本の挨拶</comment>
+				<comment language="english">日本の挨拶</comment>
+			</tag>
+			<tag entry="44" japanese="英語の挨拶" english="英語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">英語の挨拶</comment>
+				<comment language="english">英語の挨拶</comment>
+			</tag>
+			<tag entry="45" japanese="フランス語の挨拶" english="フランス語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">フランス語の挨拶</comment>
+				<comment language="english">フランス語の挨拶</comment>
+			</tag>
+			<tag entry="46" japanese="ドイツ語の挨拶" english="ドイツ語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ドイツ語の挨拶</comment>
+				<comment language="english">ドイツ語の挨拶</comment>
+			</tag>
+			<tag entry="47" japanese="イタリア語の挨拶" english="イタリア語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">イタリア語の挨拶</comment>
+				<comment language="english">イタリア語の挨拶</comment>
+			</tag>
+			<tag entry="48" japanese="スペイン語の挨拶" english="スペイン語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">スペイン語の挨拶</comment>
+				<comment language="english">スペイン語の挨拶</comment>
+			</tag>
 		</group>
 
-		<group entry="2" japanese="ポケモンＷＢ（数値）" english="ポケモンＷＢ（数値）">
+		<group entry="2" japanese="ポケモンＷＢ（数値）" english="ポケモンＷＢ（数値）" color="#c0c0c0">
 			<tag entry="00" japanese="１桁" english="１桁" view="EP" width="8" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
 			</tag>
@@ -170,7 +220,7 @@
 			</tag>
 		</group>
 
-		<group entry="189" japanese="汎用コントロール" english="汎用コントロール">
+		<group entry="189" japanese="汎用コントロール" english="汎用コントロール" color="#c0c0c0">
 			<tag entry="00" japanese="カラー変更" english="カラー変更" view="EP" length="0" line="1">
 				<parameter number="0" japanese="文字色番号" english="文字色番号" type="int8"/>
 				<parameter number="1" japanese="影色番号" english="影色番号" type="int8"/>
@@ -189,9 +239,16 @@
 				<comment language="english">当該行の文字列を
 ウィンドウ内で右寄せします。</comment>
 			</tag>
+			<tag entry="04" japanese="X加算" english="X加算" view="EP" length="0" line="1">
+				<parameter number="0" japanese="加算値" english="加算値" type="int8"/>
+				<comment language="japanese">描画X座標を加算します。
+使用は許可制です。</comment>
+				<comment language="english">描画X座標を加算します。
+使用は許可制です。</comment>
+			</tag>
 		</group>
 
-		<group entry="190" japanese="動的コントロール" english="Word">
+		<group entry="190" japanese="動的コントロール" english="Word" color="#c0c0c0">
 			<tag entry="00" japanese="ページ切り替え（行送り）" english="ページ切り替え（行送り）" view="EP" length="0" line="1"/>
 			<tag entry="01" japanese="ページ切り替え（クリア）" english="ページ切り替え（クリア）" view="EP" length="0" line="1"/>
 			<tag entry="02" japanese="ウェイト変更（単発）" english="ウェイト変更（単発）" view="EP" length="0" line="1">
@@ -209,11 +266,21 @@
 			</tag>
 			<tag entry="07" japanese="コールバック引数リセット" english="コールバック引数リセット" view="EP" length="0" line="1"/>
 			<tag entry="08" japanese="描画領域クリア" english="描画領域クリア" view="EP" length="0" line="1"/>
+			<tag entry="09" japanese="速度コントロール" english="速度コントロール" view="EP" length="0" line="1">
+				<parameter number="0" japanese="モード" english="モード" type="int8"/>
+				<comment language="japanese">ユーザConfig設定に応じて
+相対的に速い（遅い）速度になるように、ウェイトフレーム値などを操作します。</comment>
+				<comment language="english">ユーザConfig設定に応じて
+相対的に速い（遅い）速度になるように、ウェイトフレーム値などを操作します。</comment>
+			</tag>
 		</group>
 
 		<group entry="254" japanese="文字列展開" english="Word">
 		</group>
 
+		<set japanese="RESET" english="RESET" value="BE:09:速度コントロール:0"/>
+		<set japanese="FAST" english="FAST" value="BE:09:速度コントロール:1"/>
+		<set japanese="SLOW" english="SLOW" value="BE:09:速度コントロール:2"/>
 		<set japanese="500%" english="500%" value="FF:01:サイズ:500"/>
 		<set japanese="400%" english="400%" value="FF:01:サイズ:400"/>
 		<set japanese="300%" english="300%" value="FF:01:サイズ:300"/>
@@ -263,9 +330,9 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="8" top="264" right="713" bottom="884" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
+		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="543"/>
@@ -297,14 +364,14 @@
 ・話しかけでイベント開始（暫定）
 ・はい/いいえ選択肢</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
-		<language name="JPN" width="256">Ｎ『ふうん……　キミ　なんだ
-どうして　ジャマを　するのかな？[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]ふうん……　キミ　なんだ
+どうして　ジャマを　するのかな？▼
 ポケモンを　たすける！　という
-ボクの　おもいが　わからないのかい？[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">Ｎ『ふうん……　キミか
+ボクの　おもいが　わからないのかい？[BE:09:速度コントロール:0]</language>
+		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]ふうん……　キミか
 どうして　ジャマを　する？▼
 ポケモンを　救う！　という
-ボクの　想い　理解できないのか？▼</language>
+ボクの　想い　理解できないのか？[BE:09:速度コントロール:0]</language>
 	</row>
 
 	<row id="msg_d08r0801_boss_02" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
@@ -312,20 +379,20 @@
 ・はい選択時
 ・メッセージ表示後、戦闘に</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
-		<language name="JPN" width="256">ひどい　はなし　だね[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">[BE:09:速度コントロール:1]ひどい　はなし　だね▼
 まあ　いいよ
-わかってもらえる　だなんては[BE:00:ページ切り替え（行送り）]
-きたい　していないから[BE:01:ページ切り替え（クリア）]
-だけど　ジャマは　させない！[BE:01:ページ切り替え（クリア）]
+わかってもらえる　だなんては▽
+きたい　していないから▼
+だけど　ジャマは　させない！▼
 ボクの　ともだちの　ちから……
-キミに　みせつけてあげるよ！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ひどい　はなし　だ▼
+キミに　みせつけてあげるよ！[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN_KANJI" width="256">[BE:09:速度コントロール:1]ひどい　はなし　だ▼
 まあ　いい
 わかってもらえる　だなんて▽
 期待していない▼
 だけど　ジャマは　させない！▼
 ボクの　友達の　力……
-キミに　みせつけよう！▼</language>
+キミに　みせつけよう！[BE:09:速度コントロール:0]▼</language>
 	</row>
 
 	<row id="msg_d08r0801_boss_03" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
@@ -333,20 +400,20 @@
 ・いいえ選択時
 ・メッセージ表示後、戦闘に</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
-		<language name="JPN" width="256">ほんとう　かい！
-それは　うれしいな[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">[BE:09:速度コントロール:1]ほんとう　かい！
+それは　うれしいな▼
 だけどね　キミ
-プラズマだんの　ジャマを　してるよね[BE:00:ページ切り替え（行送り）]
-だから　まずは　おしおき[BE:01:ページ切り替え（クリア）]
+プラズマだんの　ジャマを　してるよね▽
+だから　まずは　おしおき▼
 ボクの　ともだちの　ちから……
-キミに　みせつけてあげるよ！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">本当か！
+キミに　みせつけてあげるよ！[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN_KANJI" width="256">[BE:09:速度コントロール:1]本当か！
 それは　うれしいよ▼
 だけどね　キミ
 プラズマ団の　ジャマを　してるよね▽
 それは　ほめられた　ことじゃない▼
 ボクの　友達の　力……
-キミに　みせつけよう！▼</language>
+キミに　みせつけよう！[BE:09:速度コントロール:0]▼</language>
 	</row>
 
 	<row id="msg_d08r0801_boss_04" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
@@ -355,10 +422,10 @@
 ・このときＮと主人公の間に距離がある
 ・主人公が動くとsage2_01</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
-		<language name="JPN" width="256">Ｎ『まいったな……
-せっかく　ここまで　きたのに</language>
-		<language name="JPN_KANJI" width="256">Ｎ『まいったな……
-せっかく　ここまで　きたのに</language>
+		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]まいったな……
+せっかく　ここまで　きたのに[BE:09:速度コントロール:0]</language>
+		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]まいったな……
+せっかく　ここまで　きたのに[BE:09:速度コントロール:0]</language>
 	</row>
 
 	<row id="msg_d08r0801_sage2_01">
@@ -367,9 +434,9 @@
 　主人公に隣接、そのままポケモン勝負へ</comment>
 		<attribute name="キャラ指定">七人衆</attribute>
 		<language name="JPN" width="256">？？？『ええい！
-Ｎさまを　おたすけ　するのだ！[BE:01:ページ切り替え（クリア）]</language>
+Ｎさまを　おたすけ　するのだ！▼</language>
 		<language name="JPN_KANJI" width="256">？？？『ええい！
-Ｎさまを　お助け　するのだ！[BE:01:ページ切り替え（クリア）]</language>
+Ｎさまを　お助け　するのだ！▼</language>
 	</row>
 
 	<row id="msg_d08r0801_boss_05" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
@@ -380,10 +447,10 @@
 ・メッセージ表示後、次のフロアへ
 　画面外に消えると主人公操作可能に</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
-		<language name="JPN" width="256">Ｎ『そのトレーナーを　とおしてあげて
-すごいものを　みせてあげるから[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">Ｎ『そのトレーナーを　通してあげて
-すごいものを　みせてあげるから▼</language>
+		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]そのトレーナーを　とおしてあげて
+すごいものを　みせてあげるから[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]そのトレーナーを　通してあげて
+すごいものを　みせてあげるから[BE:09:速度コントロール:0]▼</language>
 	</row>
 
 	<row id="msg_d08r0801_sage2_02">

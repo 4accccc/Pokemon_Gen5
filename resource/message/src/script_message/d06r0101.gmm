@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-20T13:17:10"/>
+	<create user="matsumiya" host="W00207" date="2010-01-13T12:35:40"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -66,6 +66,11 @@
 			</tag>
 			<tag entry="11" japanese="ボックス名" english="ボックス名" view="EP" width="96" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="12" japanese="ポケモンニックネーム（正体）" english="ポケモンニックネーム（正体）" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">バトル用。イリュージョンの影響を受けないニックネーム取得。</comment>
+				<comment language="english">バトル用。イリュージョンの影響を受けないニックネーム取得。</comment>
 			</tag>
 			<tag entry="13" japanese="ステータス名" english="ステータス名" view="EP" width="74" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
@@ -137,9 +142,54 @@
 				<comment language="japanese">リボンの名前</comment>
 				<comment language="english">リボンの名前</comment>
 			</tag>
+			<tag entry="40" japanese="広場ミニゲーム" english="広場ミニゲーム" view="EP" width="120" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">WiFi広場のミニゲーム名</comment>
+				<comment language="english">WiFi広場のミニゲーム名</comment>
+			</tag>
+			<tag entry="41" japanese="広場イベント名" english="広場イベント名" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">WiFi広場イベント名</comment>
+				<comment language="english">WiFi広場イベント名</comment>
+			</tag>
+			<tag entry="42" japanese="広場アイテム名" english="広場アイテム名" view="EP" width="120" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">WiFi広場のアイテム名</comment>
+				<comment language="english">WiFi広場のアイテム名</comment>
+			</tag>
+			<tag entry="43" japanese="日本の挨拶" english="日本の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">日本の挨拶</comment>
+				<comment language="english">日本の挨拶</comment>
+			</tag>
+			<tag entry="44" japanese="英語の挨拶" english="英語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">英語の挨拶</comment>
+				<comment language="english">英語の挨拶</comment>
+			</tag>
+			<tag entry="45" japanese="フランス語の挨拶" english="フランス語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">フランス語の挨拶</comment>
+				<comment language="english">フランス語の挨拶</comment>
+			</tag>
+			<tag entry="46" japanese="ドイツ語の挨拶" english="ドイツ語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ドイツ語の挨拶</comment>
+				<comment language="english">ドイツ語の挨拶</comment>
+			</tag>
+			<tag entry="47" japanese="イタリア語の挨拶" english="イタリア語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">イタリア語の挨拶</comment>
+				<comment language="english">イタリア語の挨拶</comment>
+			</tag>
+			<tag entry="48" japanese="スペイン語の挨拶" english="スペイン語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">スペイン語の挨拶</comment>
+				<comment language="english">スペイン語の挨拶</comment>
+			</tag>
 		</group>
 
-		<group entry="2" japanese="ポケモンＷＢ（数値）" english="ポケモンＷＢ（数値）">
+		<group entry="2" japanese="ポケモンＷＢ（数値）" english="ポケモンＷＢ（数値）" color="#c0c0c0">
 			<tag entry="00" japanese="１桁" english="１桁" view="EP" width="8" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
 			</tag>
@@ -170,7 +220,7 @@
 			</tag>
 		</group>
 
-		<group entry="189" japanese="汎用コントロール" english="汎用コントロール">
+		<group entry="189" japanese="汎用コントロール" english="汎用コントロール" color="#c0c0c0">
 			<tag entry="00" japanese="カラー変更" english="カラー変更" view="EP" length="0" line="1">
 				<parameter number="0" japanese="文字色番号" english="文字色番号" type="int8"/>
 				<parameter number="1" japanese="影色番号" english="影色番号" type="int8"/>
@@ -189,9 +239,16 @@
 				<comment language="english">当該行の文字列を
 ウィンドウ内で右寄せします。</comment>
 			</tag>
+			<tag entry="04" japanese="X加算" english="X加算" view="EP" length="0" line="1">
+				<parameter number="0" japanese="加算値" english="加算値" type="int8"/>
+				<comment language="japanese">描画X座標を加算します。
+使用は許可制です。</comment>
+				<comment language="english">描画X座標を加算します。
+使用は許可制です。</comment>
+			</tag>
 		</group>
 
-		<group entry="190" japanese="動的コントロール" english="Word">
+		<group entry="190" japanese="動的コントロール" english="Word" color="#c0c0c0">
 			<tag entry="00" japanese="ページ切り替え（行送り）" english="ページ切り替え（行送り）" view="EP" length="0" line="1"/>
 			<tag entry="01" japanese="ページ切り替え（クリア）" english="ページ切り替え（クリア）" view="EP" length="0" line="1"/>
 			<tag entry="02" japanese="ウェイト変更（単発）" english="ウェイト変更（単発）" view="EP" length="0" line="1">
@@ -209,11 +266,21 @@
 			</tag>
 			<tag entry="07" japanese="コールバック引数リセット" english="コールバック引数リセット" view="EP" length="0" line="1"/>
 			<tag entry="08" japanese="描画領域クリア" english="描画領域クリア" view="EP" length="0" line="1"/>
+			<tag entry="09" japanese="速度コントロール" english="速度コントロール" view="EP" length="0" line="1">
+				<parameter number="0" japanese="モード" english="モード" type="int8"/>
+				<comment language="japanese">ユーザConfig設定に応じて
+相対的に速い（遅い）速度になるように、ウェイトフレーム値などを操作します。</comment>
+				<comment language="english">ユーザConfig設定に応じて
+相対的に速い（遅い）速度になるように、ウェイトフレーム値などを操作します。</comment>
+			</tag>
 		</group>
 
 		<group entry="254" japanese="文字列展開" english="Word">
 		</group>
 
+		<set japanese="RESET" english="RESET" value="BE:09:速度コントロール:0"/>
+		<set japanese="FAST" english="FAST" value="BE:09:速度コントロール:1"/>
+		<set japanese="SLOW" english="SLOW" value="BE:09:速度コントロール:2"/>
 		<set japanese="500%" english="500%" value="FF:01:サイズ:500"/>
 		<set japanese="400%" english="400%" value="FF:01:サイズ:400"/>
 		<set japanese="300%" english="300%" value="FF:01:サイズ:300"/>
@@ -263,15 +330,15 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="25" top="225" right="730" bottom="845" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
+		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -302,25 +369,25 @@
 ・0＝主人公名前</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
 		<language name="JPN" width="256">ホワイティ『もう！
-[1:00:トレーナー名:0]ったら　あぶなかったよ[BE:01:ページ切り替え（クリア）]
+[1:00:トレーナー名:0]ったら　あぶなかったよ▼
 あの　うかんでいる　いしって
-でんきを　おびているの[BE:01:ページ切り替え（クリア）]
+でんきを　おびているの▼
 うっかり　さわっちゃうと
-ビリッビリッ　しびれちゃうんだから！[BE:01:ページ切り替え（クリア）]</language>
+ビリッビリッ　しびれちゃうんだから！▼</language>
 		<language name="JPN_KANJI" width="256">ホワイティ『もう！
-[1:00:トレーナー名:0]ったら　危なかったよ[BE:01:ページ切り替え（クリア）]
+[1:00:トレーナー名:0]ったら　危なかったよ▼
 あの　浮かんでいる　石って
-電気を　帯びているの[BE:01:ページ切り替え（クリア）]
+電気を　帯びているの▼
 うっかり　さわっちゃうと
-ビリッビリッ　しびれちゃうんだから！[BE:01:ページ切り替え（クリア）]</language>
+ビリッビリッ　しびれちゃうんだから！▼</language>
 	</row>
 
 	<row id="msg_d06r0101_white_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・続けてmsg_d06r0101_hakase2_01</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
-		<language name="JPN" width="256">ですよね！　はかせ！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ですよね！　博士！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">ですよね！　はかせ！▼</language>
+		<language name="JPN_KANJI" width="256">ですよね！　博士！▼</language>
 	</row>
 
 	<row id="msg_d06r0101_hakase2_01">
@@ -333,21 +400,21 @@
 		<language name="JPN" width="256">アララギ『ハーイ！
 げんきだった？　[1:00:トレーナー名:0]！</language>
 		<language name="JPN_KANJI" width="256">アララギ『ハーイ！
-元気だった？　[1:00:トレーナー名:0]！[BE:01:ページ切り替え（クリア）]</language>
+元気だった？　[1:00:トレーナー名:0]！▼</language>
 	</row>
 
-	<row id="msg_d06r0101_hakase2_02">
+	<row id="msg_d06r0101_hakase2_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
 		<comment>♀
 ・数歩上に移動後
 　きょろきょろしてからこのメッセージを表示
 ・続けてmsg_d06r0101_hakase2_03</comment>
 		<attribute name="キャラ指定">博士（娘）</attribute>
 		<language name="JPN" width="256">……それにしても　きょうは
-いしの　ならびが　わるいなー！[BE:00:ページ切り替え（行送り）]
-いつもなら　すんなり　とおれるのに[BE:01:ページ切り替え（クリア）]</language>
+いしの　ならびが　わるいなー！▽
+いつもなら　すんなり　とおれるのに▼</language>
 		<language name="JPN_KANJI" width="256">……それにしても　今日は
-石の並びが　悪いなー！[BE:00:ページ切り替え（行送り）]
-いつもなら　すんなり　通れるのに[BE:01:ページ切り替え（クリア）]</language>
+石の並びが　悪いなー！▽
+いつもなら　すんなり　通れるのに▼</language>
 	</row>
 
 	<row id="msg_d06r0101_hakase2_03">
@@ -358,17 +425,17 @@
 　msg_d06r0101_hakase2_04表示</comment>
 		<attribute name="キャラ指定">博士（娘）</attribute>
 		<language name="JPN" width="256">ちょっと　パパに　たのまれて
-ギアンって　はぐるま　みたいな[BE:00:ページ切り替え（行送り）]
-ポケモンのこと　しらべているの[BE:01:ページ切り替え（クリア）]
+ギアルって　はぐるま　みたいな▽
+ポケモンのこと　しらべているの▼
 ポケモンずかんを
-おもちの　トレーナーさん！[BE:01:ページ切り替え（クリア）]
+おもちの　トレーナーさん！▼
 アナタも　どうくつのなか
 いろいろ　さがしてね</language>
 		<language name="JPN_KANJI" width="256">ちょっと　パパに　頼まれて
-ギアンって　歯車みたいな[BE:00:ページ切り替え（行送り）]
-ポケモンのこと　調べているの[BE:01:ページ切り替え（クリア）]
+ギアルって　歯車みたいな▽
+ポケモンのこと　調べているの▼
 ポケモン図鑑を
-お持ちの　トレーナーさん！[BE:01:ページ切り替え（クリア）]
+お持ちの　トレーナーさん！▼
 アナタも
 洞くつの中　いろいろ　探してね</language>
 	</row>
@@ -378,11 +445,11 @@
 ・d06r0201でのNとのイベント後まで繰り返し</comment>
 		<attribute name="キャラ指定">博士（娘）</attribute>
 		<language name="JPN" width="256">アララギ『ポケモンずかんを
-おもちの　トレーナーさん！[BE:01:ページ切り替え（クリア）]
+おもちの　トレーナーさん！▼
 アナタも　どうくつのなか
 いろいろ　さがしてね</language>
 		<language name="JPN_KANJI" width="256">アララギ『ポケモン図鑑を
-お持ちの　トレーナーさん！[BE:01:ページ切り替え（クリア）]
+お持ちの　トレーナーさん！▼
 アナタも
 洞くつの中　いろいろ　探してね</language>
 	</row>
@@ -393,10 +460,10 @@
 ・d06r0201でのNとのイベント後まで繰り返し</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
 		<language name="JPN" width="256">ホワイティ『アタシはね
-はかせの　ボディーガードなの！[BE:01:ページ切り替え（クリア）]
+はかせの　ボディーガードなの！▼
 って　そんな　ひつようないけど……</language>
 		<language name="JPN_KANJI" width="256">ホワイティ『アタシはね
-博士の　ボディーガードなの！[BE:01:ページ切り替え（クリア）]
+博士の　ボディーガードなの！▼
 って　そんな　必要ないけど……</language>
 	</row>
 
@@ -409,13 +476,13 @@
 ・続けてmsg_d06r0101_hakase2_06</comment>
 		<attribute name="キャラ指定">博士（娘）</attribute>
 		<language name="JPN" width="256">アララギ『ハーイ！
-なにか　みつかった？[BE:01:ページ切り替え（クリア）]
+なにか　みつかった？▼
 こっちは　おおよその　データを
-あつめおえたところ　かな[BE:01:ページ切り替え（クリア）]</language>
+あつめおえたところ　かな▼</language>
 		<language name="JPN_KANJI" width="256">アララギ『ハーイ！
-なにか　みつかった？[BE:01:ページ切り替え（クリア）]
+なにか　みつかった？▼
 こっちは　おおよその　データを
-集め終えたところ　かな[BE:01:ページ切り替え（クリア）]</language>
+集め終えたところ　かな▼</language>
 	</row>
 
 	<row id="msg_d06r0101_hakase2_06">
@@ -424,19 +491,19 @@
 ・続けてmsg_d06r0101_hakase2_06</comment>
 		<attribute name="キャラ指定">博士（娘）</attribute>
 		<language name="JPN" width="256">この　どうくつは　１０００ねんも
-むかしから　あるんだけど……[BE:01:ページ切り替え（クリア）]
-ギアンが　いたって　こんせきは
-１００ねんまえ　から　なのね[BE:01:ページ切り替え（クリア）]
+むかしから　あるんだけど……▼
+ギアルが　いたって　こんせきは
+１００ねんまえ　から　なのね▼
 そうなんだよねー
-ギアンは　とつぜんはっせい　した……[BE:00:ページ切り替え（行送り）]
-そういうことに　なるのよ！[BE:01:ページ切り替え（クリア）]</language>
+ギアルは　とつぜんはっせい　した……▽
+そういうことに　なるのよ！▼</language>
 		<language name="JPN_KANJI" width="256">この　洞くつは　１０００年も
-昔から　あるんだけど……[BE:01:ページ切り替え（クリア）]
-ギアンが　いたって　こんせきは
-１００年前から　なのね[BE:01:ページ切り替え（クリア）]
+昔から　あるんだけど……▼
+ギアルが　いたって　こんせきは
+１００年前から　なのね▼
 そうなんだよねー
-ギアンは　突然発生した……[BE:00:ページ切り替え（行送り）]
-そういうことに　なるのよ！[BE:01:ページ切り替え（クリア）]</language>
+ギアルは　突然発生した……▽
+そういうことに　なるのよ！▼</language>
 	</row>
 
 	<row id="msg_d06r0101_hakase2_07">
@@ -445,17 +512,17 @@
 ・続けてmsg_d06r0101_white_04</comment>
 		<attribute name="キャラ指定">博士（娘）</attribute>
 		<language name="JPN" width="256">ポケモンたちが
-どこから　きたのか[BE:00:ページ切り替え（行送り）]
-そして　どこへ　いくのか……[BE:01:ページ切り替え（クリア）]
+どこから　きたのか▽
+そして　どこへ　いくのか……▼
 それを　しることが　できれば
-わたしたちは　もっと　なかよくなれる[BE:00:ページ切り替え（行送り）]
-そう　しんじて　いるんだよねー[BE:01:ページ切り替え（クリア）]</language>
+わたしたちは　もっと　なかよくなれる▽
+そう　しんじて　いるんだよねー▼</language>
 		<language name="JPN_KANJI" width="256">ポケモンたちが
-どこから　来たのか[BE:00:ページ切り替え（行送り）]
-そして　どこへ　向かうのか……[BE:01:ページ切り替え（クリア）]
+どこから　来たのか▽
+そして　どこへ　向かうのか……▼
 それを　知ることが　できれば
-わたしたちは　もっと　親しくなれる[BE:00:ページ切り替え（行送り）]
-そう　信じているんだよねー[BE:01:ページ切り替え（クリア）]</language>
+わたしたちは　もっと　親しくなれる▽
+そう　信じているんだよねー▼</language>
 	</row>
 
 	<row id="msg_d06r0101_white_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -463,19 +530,19 @@
 ・主人公と隣接して（？）</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
 		<language name="JPN" width="256">ホワイティ『ねえねえ　[1:00:トレーナー名:0]！
-その　グローブ　なあに？[BE:01:ページ切り替え（クリア）]
+その　グローブ　なあに？▼
 ……　……　……
-……　……　……[BE:01:ページ切り替え（クリア）]
+……　……　……▼
 それで　いしを　さわれるの？
-しびれないの！？[BE:01:ページ切り替え（クリア）]
+しびれないの！？▼
 すごーい！　じゃあ
 フキヨセシティに　いけるんだ！</language>
 		<language name="JPN_KANJI" width="256">ホワイティ『ねえねえ　[1:00:トレーナー名:0]！
-その　グローブ　なあに？[BE:01:ページ切り替え（クリア）]
+その　グローブ　なあに？▼
 ……　……　……
-……　……　……[BE:01:ページ切り替え（クリア）]
+……　……　……▼
 それで　石を　触れるの？
-しびれないの！？[BE:01:ページ切り替え（クリア）]
+しびれないの！？▼
 すごーい！　じゃあ
 フキヨセシティに　行けるんだ！</language>
 	</row>
@@ -487,16 +554,16 @@
 　繰り返し表示</comment>
 		<attribute name="キャラ指定">博士（娘）</attribute>
 		<language name="JPN" width="256">アララギ『ポケモンたちが
-どこから　きたのか[BE:00:ページ切り替え（行送り）]
-そして　どこへ　いくのか……[BE:01:ページ切り替え（クリア）]
+どこから　きたのか▽
+そして　どこへ　いくのか……▼
 それを　しることが　できれば
-わたしたちは　もっと　なかよくなれる[BE:00:ページ切り替え（行送り）]
+わたしたちは　もっと　なかよくなれる▽
 そう　しんじて　いるんだよねー</language>
 		<language name="JPN_KANJI" width="256">アララギ『ポケモンたちが
-どこから　来たのか[BE:00:ページ切り替え（行送り）]
-そして　どこへ　向かうのか……[BE:01:ページ切り替え（クリア）]
+どこから　来たのか▽
+そして　どこへ　向かうのか……▼
 それを　知ることが　できれば
-わたしたちは　もっと　親しくなれる[BE:00:ページ切り替え（行送り）]
+わたしたちは　もっと　親しくなれる▽
 そう　信じているんだよねー</language>
 	</row>
 
@@ -520,18 +587,18 @@
 ・はい→msg_d06r0101_boss_02
 　いいえ→msg_d06r0101_boss_03</comment>
 		<attribute name="キャラ指定">N</attribute>
-		<language name="JPN" width="256">Ｎ『……さてと[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]……さてと▼
 ポケモンではなく
-じぶんの　ちからで　いしを　おし[BE:00:ページ切り替え（行送り）]
-みちを　きりひらいた……[BE:01:ページ切り替え（クリア）]
+じぶんの　ちからで　いしを　おし▽
+みちを　きりひらいた……▼
 そんな　じぶんと　むきあい
-ポケモンへの　おもいは　かわった？[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">Ｎ『……さてと[BE:01:ページ切り替え（クリア）]
+ポケモンへの　おもいは　かわったかい？[BE:09:速度コントロール:0]</language>
+		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]……さてと▼
 ポケモンではなく
-自分の　力で　石を押し[BE:00:ページ切り替え（行送り）]
-道を　切りひらいた……[BE:01:ページ切り替え（クリア）]
+自分の　力で　石を押し▽
+道を　切りひらいた……▼
 そんな　自分を　知り
-ポケモンへの　思いは　変わった？[BE:01:ページ切り替え（クリア）]</language>
+ポケモンへの　思いは　変わったかい？[BE:09:速度コントロール:0]</language>
 	</row>
 
 	<row id="msg_d06r0101_boss_02" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
@@ -539,16 +606,16 @@
 ・はい選択時
 ・メッセージ表示後、戦闘へ</comment>
 		<attribute name="キャラ指定">N</attribute>
-		<language name="JPN" width="256">Ｎ『……こころを　かえるため
-ここでの　キミの　こうどうは[BE:00:ページ切り替え（行送り）]
-コントロール　されていた……[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]……こころを　かえるため
+ここでの　キミの　こうどうは▽
+コントロール　されていた……▼
 こころがかわった　というなら
-さらに　キミのこころを　おる！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">Ｎ『……心を　変えるため
-ここでの　キミの　行動は[BE:00:ページ切り替え（行送り）]
-コントロール　されていた……[BE:01:ページ切り替え（クリア）]
+さらに　キミのこころを　おる！[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]……心を　変えるため
+ここでの　キミの　行動は▽
+コントロール　されていた……▼
 心が変わった　というなら
-さらに　キミの心を　折る！[BE:01:ページ切り替え（クリア）]</language>
+さらに　キミの心を　折る！[BE:09:速度コントロール:0]▼</language>
 	</row>
 
 	<row id="msg_d06r0101_boss_03" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
@@ -556,16 +623,16 @@
 ・いいえ選択時
 ・メッセージ表示後、戦闘へ</comment>
 		<attribute name="キャラ指定">N</attribute>
-		<language name="JPN" width="256">Ｎ『……こころを　かえるため
-ここでの　キミの　こうどうは[BE:00:ページ切り替え（行送り）]
-コントロール　されていた……[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]……こころを　かえるため
+ここでの　キミの　こうどうは▽
+コントロール　されていた……▼
 こころが　かわらない　というなら
-ボクが　キミのこころを　おる！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">Ｎ『……心を　変えるため
-ここでの　キミの　行動は[BE:00:ページ切り替え（行送り）]
-コントロール　されていた……[BE:01:ページ切り替え（クリア）]
+ボクが　キミのこころを　おる！[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]……心を　変えるため
+ここでの　キミの　行動は▽
+コントロール　されていた……▼
 心が変わらない　というなら
-ボクが　キミの心を　折る！[BE:01:ページ切り替え（クリア）]</language>
+ボクが　キミの心を　折る！[BE:09:速度コントロール:0]▼</language>
 	</row>
 
 	<row id="msg_d06r0101_boss_04" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
@@ -574,14 +641,14 @@
 （頭上に「？マーク」表示？）
 ・続けてmsg_d06r0101_white_06</comment>
 		<attribute name="キャラ指定">N</attribute>
-		<language name="JPN" width="256">Ｎ『……ふしぎだな[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]……ふしぎだな▼
 なぜ　キミのような　にんげんが
-ポケモンの　力を　ひきだせる？[BE:01:ページ切り替え（クリア）]
-……？[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">Ｎ『……不思議だな[BE:01:ページ切り替え（クリア）]
+ポケモンの　力を　ひきだせる？▼
+……？[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]……不思議だな▼
 なぜ　キミのような　人間が
-ポケモンの　力を　ひきだせる？[BE:01:ページ切り替え（クリア）]
-……？[BE:01:ページ切り替え（クリア）]</language>
+ポケモンの　力を　ひきだせる？▼
+……？[BE:09:速度コントロール:0]▼</language>
 	</row>
 
 	<row id="msg_d06r0101_white_06" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -590,8 +657,8 @@
 ・続けてmsg_d06r0101_white_07表示
 ・0＝主人公名前</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
-		<language name="JPN" width="256">ホワイティ『[1:00:トレーナー名:0]！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ホワイティ『[1:00:トレーナー名:0]！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">ホワイティ『[1:00:トレーナー名:0]！▼</language>
+		<language name="JPN_KANJI" width="256">ホワイティ『[1:00:トレーナー名:0]！▼</language>
 	</row>
 
 	<row id="msg_d06r0101_white_07" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -600,11 +667,11 @@
 ・続けてmsg_d06r0101_hakase2_09表示</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
 		<language name="JPN" width="256">ホワイティ『すごーい！！
-もうすぐ　フキヨセシティ　でしょ！[BE:00:ページ切り替え（行送り）]
-ぜんぶの　いしを　うごかしたんだ！[BE:01:ページ切り替え（クリア）]</language>
+もうすぐ　フキヨセシティ　でしょ！▽
+ぜんぶの　いしを　うごかしたんだ！▼</language>
 		<language name="JPN_KANJI" width="256">ホワイティ『すごーい！！
-もうすぐ　フキヨセシティ　でしょ！[BE:00:ページ切り替え（行送り）]
-全部の　石を　動かしたんだ！[BE:01:ページ切り替え（クリア）]</language>
+もうすぐ　フキヨセシティ　でしょ！▽
+全部の　石を　動かしたんだ！▼</language>
 	</row>
 
 	<row id="msg_d06r0101_hakase2_09">
@@ -615,38 +682,38 @@
 ・0＝主人公の名前</comment>
 		<attribute name="キャラ指定">博士（娘）</attribute>
 		<language name="JPN" width="256">アララギ『……ホワイティは
-みみが　いいのね[BE:01:ページ切り替え（クリア）]
+みみが　いいのね▼
 あんな　とおくからでも
-[1:00:トレーナー名:0]の　こえが　きこえるなんて[BE:01:ページ切り替え（クリア）]
+[1:00:トレーナー名:0]の　こえが　きこえるなんて▼
 で　[1:00:トレーナー名:0]
-そちらの　トレーナーは　どなた……？[BE:01:ページ切り替え（クリア）]</language>
+そちらの　トレーナーは　どなた……？▼</language>
 		<language name="JPN_KANJI" width="256">アララギ『……ホワイティは
-耳が　いいのね[BE:01:ページ切り替え（クリア）]
+耳が　いいのね▼
 あんな　遠くからでも
-[1:00:トレーナー名:0]の　声が　聞こえるなんて[BE:01:ページ切り替え（クリア）]
+[1:00:トレーナー名:0]の　声が　聞こえるなんて▼
 で　[1:00:トレーナー名:0]
-そちらの　トレーナーは　どなた……？[BE:01:ページ切り替え（クリア）]</language>
+そちらの　トレーナーは　どなた……？▼</language>
 	</row>
 
 	<row id="msg_d06r0101_boss_05" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>♂
 ・続けてmsg_d06r0101_hakase2_10表示</comment>
-		<language name="JPN" width="256">Ｎ『……アララギか[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]……アララギか▼
 はじめまして
-ワタクシの　なまえは　Ｎ[BE:01:ページ切り替え（クリア）]
+ワタクシの　なまえは　Ｎ▼
 にんげんの　かってな　ルールで
-ポケモンを　ぶんるいし[BE:00:ページ切り替え（行送り）]
-わかった　つもりになる……[BE:01:ページ切り替え（クリア）]
+ポケモンを　ぶんるいし▽
+わかった　つもりになる……▼
 そんな　ポケモンずかんが
-だいきらいな　モノ　です[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">Ｎ『……アララギか[BE:01:ページ切り替え（クリア）]
+だいきらいな　モノ　です[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]……アララギか▼
 はじめまして
-ワタクシの　名前は　Ｎ[BE:01:ページ切り替え（クリア）]
+ワタクシの　名前は　Ｎ▼
 人間の　勝手な　ルールで
-ポケモンを　分類し[BE:00:ページ切り替え（行送り）]
-理解した　つもりになる……[BE:01:ページ切り替え（クリア）]
+ポケモンを　分類し▽
+理解した　つもりになる……▼
 そんな　ポケモン図鑑を
-憎んでいる　モノ　です[BE:01:ページ切り替え（クリア）]</language>
+憎悪している　モノ　です[BE:09:速度コントロール:0]▼</language>
 	</row>
 
 	<row id="msg_d06r0101_hakase2_10">
@@ -654,23 +721,23 @@
 ・続けてmsg_d06r0101_boss_06表示</comment>
 		<attribute name="キャラ指定">博士（娘）</attribute>
 		<language name="JPN" width="256">アララギ『あら……
-ずいぶんと　きらわれているのね[BE:01:ページ切り替え（クリア）]
+ずいぶんと　きらわれているのね▼
 だけど　あなたの　いけんも
-ひとつの　かんがえかた　なら[BE:01:ページ切り替え（クリア）]
+ひとつの　かんがえかた　なら▼
 わたしの　ねがうところも　おなじく
-ひとつの　かんがえかた　だよね[BE:01:ページ切り替え（クリア）]
+ひとつの　かんがえかた　だよね▼
 ポケモンと　どう　つきあうべきか
-それは　ひとりひとりが　かんがえ[BE:00:ページ切り替え（行送り）]
-きめれば　いいんじゃない？[BE:01:ページ切り替え（クリア）]</language>
+それは　ひとりひとりが　かんがえ▽
+きめれば　いいんじゃない？▼</language>
 		<language name="JPN_KANJI" width="256">アララギ『あら……
-ずいぶんと　嫌われているようね[BE:01:ページ切り替え（クリア）]
+ずいぶんと　嫌われているようね▼
 だけど　あなたの　意見も
-ひとつの　考え方なら[BE:01:ページ切り替え（クリア）]
+ひとつの　考え方なら▼
 私の　願うところも
-同じく　ひとつの　考え方だよね[BE:01:ページ切り替え（クリア）]
+同じく　ひとつの　考え方だよね▼
 ポケモンと　どう　付き合うべきか
-それは　一人一人が　考え[BE:00:ページ切り替え（行送り）]
-決めれば　いいんじゃない？[BE:01:ページ切り替え（クリア）]</language>
+それは　一人一人が　考え▽
+決めれば　いいんじゃない？▼</language>
 	</row>
 
 	<row id="msg_d06r0101_boss_06" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
@@ -681,24 +748,24 @@
 ・画面外に消えると
 　続けてmsg_d06r0101_hakase2_11表示
 ・0＝主人公名前</comment>
-		<language name="JPN" width="256">Ｎ『……それでは
-まちがった　かんがえの　にんげんが[BE:00:ページ切り替え（行送り）]
-ポケモンを　くるしめる……[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]……それでは
+まちがった　かんがえの　にんげんが▽
+ポケモンを　くるしめる……▼
 そんな　おろかな　かのうせいを
-ボクは　みすごすわけには　いかない！[BE:01:ページ切り替え（クリア）]
+ボクは　みすごすわけには　いかない！▼
 だから　ボクは　ちからで　みせつける
-にんげんが　どうすればいいかを……[BE:01:ページ切り替え（クリア）]
+にんげんが　どうすればいいかを……▼
 そうしなければ
-ポケモンは　すくわれないからね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">Ｎ『……それでは
-間違った　考えの　人間が[BE:00:ページ切り替え（行送り）]
-ポケモンを　苦しめる……[BE:01:ページ切り替え（クリア）]
+ポケモンは　すくわれないからね[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]……それでは
+間違った　考えの　人間が▽
+ポケモンを　苦しめる……▼
 そんな　愚かな　可能性を
-ボクは　見過ごすわけには　いかない！[BE:01:ページ切り替え（クリア）]
+ボクは　見過ごすわけには　いかない！▼
 だから　ボクは　力で　みせつける
-人間が　どうすればいいかを……[BE:01:ページ切り替え（クリア）]
+人間が　どうすればいいかを……▼
 そうしなければ
-ポケモンは　救われないからね[BE:01:ページ切り替え（クリア）]</language>
+ポケモンは　救われないからね[BE:09:速度コントロール:0]▼</language>
 	</row>
 
 	<row id="msg_d06r0101_hakase2_11">
@@ -706,15 +773,15 @@
 ・続けてmsg_d06r0101_hakase2_12</comment>
 		<attribute name="キャラ指定">博士（娘）</attribute>
 		<language name="JPN" width="256">アララギ『……まあ　いきなり
-わかってもらえるとは　おもわないけど[BE:01:ページ切り替え（クリア）]
-かれとは　また　あわないと……[BE:01:ページ切り替え（クリア）]
+わかってもらえるとは　おもわないけど▼
+かれとは　また　あわないと……▼
 少しづつで　いい
-みんなの　きもちを　しってほしいな[BE:01:ページ切り替え（クリア）]</language>
+みんなの　きもちを　しってほしいな▼</language>
 		<language name="JPN_KANJI" width="256">アララギ『……まあ　いきなり
-わかってもらえるとは　思わないけど[BE:01:ページ切り替え（クリア）]
-彼とは　また　会わないと……[BE:01:ページ切り替え（クリア）]
+わかってもらえるとは　思わないけど▼
+彼とは　また　会わないと……▼
 少しづつで　いい
-みんなの　気持ちを　知ってほしいな[BE:01:ページ切り替え（クリア）]</language>
+みんなの　気持ちを　知ってほしいな▼</language>
 	</row>
 
 	<row id="msg_d06r0101_hakase2_12">
@@ -724,14 +791,14 @@
 ・続けてmsg_d06r0101_white_08</comment>
 		<attribute name="キャラ指定">博士（娘）</attribute>
 		<language name="JPN" width="256">さてと……
-もうすこし　データを　あつめるかなー[BE:01:ページ切り替え（クリア）]
+もうすこし　データを　あつめるかなー▼
 わたしたちと　ポケモンが
-もっと　なかよくなる　ためにも[BE:00:ページ切り替え（行送り）]
+もっと　なかよくなる　ためにも▽
 あいてのことを　しらないとね！</language>
 		<language name="JPN_KANJI" width="256">さてと……
-もう少し　データを　集めるかなー[BE:01:ページ切り替え（クリア）]
+もう少し　データを　集めるかなー▼
 わたしたちと　ポケモンが
-もっと　仲良くなる　ためにも[BE:00:ページ切り替え（行送り）]
+もっと　仲良くなる　ためにも▽
 相手のことを　知らないとね！</language>
 	</row>
 
@@ -741,12 +808,12 @@
 　画面外に消えると、主人公操作可能に
 ・0＝主人公名前</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
-		<language name="JPN" width="256">ホワイティ『えーっと　[1:00:トレーナー名:0]！[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">ホワイティ『えーっと　[1:00:トレーナー名:0]！▼
 わたし　いま　ボディガードだから
-はかせと　いっしょに　いくね！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ホワイティ『えーっと　[1:00:トレーナー名:0]！[BE:01:ページ切り替え（クリア）]
+はかせと　いっしょに　いくね！▼</language>
+		<language name="JPN_KANJI" width="256">ホワイティ『えーっと　[1:00:トレーナー名:0]！▼
 わたし　今　ボディガードだから
-博士と　一緒に　行くね！[BE:01:ページ切り替え（クリア）]</language>
+博士と　一緒に　行くね！▼</language>
 	</row>
 
 	<flowchart-group-list>
