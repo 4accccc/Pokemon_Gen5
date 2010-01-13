@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-21T14:15:48"/>
+	<create user="matsumiya" host="W00207" date="2010-01-13T11:49:03"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -567,8 +567,15 @@
 こうなるのは　しょうぶの　つね
 それを　ふまえて▽
 アタシも　してんのう　してますから！</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ
-１２３４５６７８９０１２３４５６７８</language>
+		<language name="JPN_KANJI" width="256">ごごごめんなさい！
+まず　ポケモンに　あやまらないと……▼
+アタシの　せいで
+つらい　おもいを　させちゃって▽
+ほんとうに　ゴメンね！▼
+ああ！　アナタは　わるくないです
+こうなるのは　しょうぶの　つね
+それを　ふまえて▽
+アタシも　してんのう　してますから！</language>
 	</row>
 
 	<row id="msg_c09r0101_bigfour1_07">

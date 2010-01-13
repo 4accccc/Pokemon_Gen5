@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-21T21:01:54"/>
+	<create user="matsumiya" host="W00207" date="2010-01-13T11:45:44"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -888,8 +888,9 @@ WOMAN2</attribute>
 認めた　実力者　なの！</language>
 	</row>
 
-	<row id="msg_c08_iss_01w">
+	<row id="msg_c08_iss_01w" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
+・WHITEver
 ・仮メッセージ</comment>
 		<attribute name="キャラクター">ISS</attribute>
 		<language name="JPN" width="256">……どう？
@@ -898,8 +899,9 @@ WOMAN2</attribute>
 コキュウの　調べは</language>
 	</row>
 
-	<row id="msg_c08_iss_01b">
+	<row id="msg_c08_iss_01b" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
+・BLACKver
 ・仮メッセージ</comment>
 		<attribute name="キャラクター">ISS</attribute>
 		<language name="JPN" width="256">いま　ふいているのって
