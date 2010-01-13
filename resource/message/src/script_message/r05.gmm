@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2010-01-13T15:40:54"/>
+	<create user="matsumiya" host="W00207" date="2010-01-13T16:14:40"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="542"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="696"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -619,7 +619,7 @@
 オレが新しいチャンピオンになる！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r05_cameraman_01" text-color=",,,,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r05_cameraman_01" text-color=",,,,,#ff0000,,,,,,,,,,,,,">
 		<comment>♂
 ・h02が通行不能時
 ・h02の手前辺りに配置</comment>
@@ -640,7 +640,7 @@
 なんとか　してくれるかも</language>
 	</row>
 
-	<row id="msg_r05_cameraman_02" text-color=",,,,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r05_cameraman_02" text-color=",,,,,#ff0000,,,,,,,,,,,,,">
 		<comment>♂
 ・h02が通行可能時(＝h02のデモ後)</comment>
 		<attribute name="キャラ指定">MAN2</attribute>
@@ -651,6 +651,36 @@
 		<language name="JPN_KANJI" width="256">どんな橋も　渡れないと　ダメだよな！[BE:01:ページ切り替え（クリア）]
 だって　橋は　世界を
 つなぐ　シンボル　なんだから！</language>
+	</row>
+
+	<row id="msg_r05_musician_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・戦闘後、自動で表示
+・グッズ「エレキギター」入手処理</comment>
+		<attribute name="キャラ指定">トレーナー
+musician_01</attribute>
+		<language name="JPN" width="256">しょうぶを　して　わかったよ▼
+オマエ　サイコーだぜ！
+これを　もっていけ！▼</language>
+		<language name="JPN_KANJI" width="256">勝負を　して　わかったよ▼
+オマエ　サイコーだぜ！
+これを　持っていけ！▼</language>
+	</row>
+
+	<row id="msg_r05_musician_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・グッズ入手後に話しかけたとき
+　以降繰り返し</comment>
+		<attribute name="キャラ指定">トレーナー
+musician_01</attribute>
+		<language name="JPN" width="256">グッズの　エレキギターを
+ポケモンに　もたせたければ▼
+ミュージックホールに　いってみな！
+きっと　サイコーだぜ！</language>
+		<language name="JPN_KANJI" width="256">グッズの　エレキギターを
+ポケモンに　持たせたければ▼
+ミュージックホールに　行ってみな！
+きっと　サイコーだぜ！</language>
 	</row>
 
 	<row id="msg_r05_sign1_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
