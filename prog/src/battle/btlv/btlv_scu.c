@@ -2015,7 +2015,7 @@ void BTLV_SCU_StartReliveAct( BTLV_SCU* wk, BtlPokePos pos )
   BtlvMcssPos vpos = BTL_MAIN_BtlPosToViewPos( wk->mainModule, pos );
   const BTL_POKEPARAM* bpp = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, pos );
   if( bpp ){
-    OS_TPrintf("Pos[%d]=Vpos[%d] É|ÉP(%d)Ç™ê∂Ç´ï‘ÇË\n", pos, vpos, BPP_GetID(bpp) );
+    BTL_N_Printf( DBGSTR_SCU_RelivePokeAct, pos, vpos, BPP_GetID(bpp) );
   }else{
     GF_ASSERT(0);
   }

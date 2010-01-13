@@ -172,7 +172,6 @@ static void setup_pokesel_param_dead( BTL_CLIENT* wk, u8 numSelect, BTL_POKESELE
 static void store_pokesel_to_action( BTL_CLIENT* wk, const BTL_POKESELECT_RESULT* res );
 static u8 storeMyChangePokePos( BTL_CLIENT* wk, BtlPokePos* myCoverPos );
 static BOOL SubProc_UI_SelectChangeOrEscape( BTL_CLIENT* wk, int* seq );
-static BOOL SubProc_UI_SelectPokemonForCover( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_UI_SelectPokemon( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_AI_SelectPokemon( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_REC_SelectPokemon( BTL_CLIENT* wk, int* seq );
@@ -1543,13 +1542,13 @@ static void store_pokesel_to_action( BTL_CLIENT* wk, const BTL_POKESELECT_RESULT
   {
     u8 clientID, posIdx, selIdx, i;
 
-    BTL_Printf("入れ替え%d体選んだ\n", res->cnt);
+    BTL_N_Printf( DBGSTR_CLIENT_PokeSelCnt, res->cnt);
 
     for(i=0; i<res->cnt; i++)
     {
       selIdx = res->selIdx[i];
       BTL_MAIN_BtlPosToClientID_and_PosIdx( wk->mainModule, wk->myChangePokePos[i], &clientID, &posIdx );
-      BTL_Printf("ポケモン入れ替え %d体目 <-> %d体目\n", posIdx, selIdx );
+      BTL_N_Printf( DBGSTR_CLIENT_PokeChangeIdx, posIdx, selIdx );
       BTL_ACTION_SetChangeParam( &wk->actionParam[i], posIdx, selIdx );
     }
     wk->returnDataPtr = &(wk->actionParam[0]);
@@ -1574,11 +1573,11 @@ static u8 storeMyChangePokePos( BTL_CLIENT* wk, BtlPokePos* myCoverPos )
   u32 i, cnt;
 
   numChangePoke = BTL_ADAPTER_GetRecvData( wk->adapter, (const void*)&changePokePos );
-  BTL_Printf(" 全Client, 選択すべきポケモン数=%d\n　位置=", numChangePoke);
+  BTL_N_Printf( DBGSTR_CLIENT_NumChangePokeBegin, numChangePoke);
   for(i=0; i<numChangePoke; ++i){
-    BTL_PrintfSimple("%d,", changePokePos[i]);
+    BTL_N_PrintfSimple( DBGSTR_val_comma, changePokePos[i]);
   }
-  BTL_PrintfSimple("\n");
+  BTL_N_PrintfSimple( DBGSTR_LF );
 
   for(i=0, cnt=0; i<numChangePoke; ++i)
   {
@@ -1586,7 +1585,7 @@ static u8 storeMyChangePokePos( BTL_CLIENT* wk, BtlPokePos* myCoverPos )
       myCoverPos[ cnt++ ] = changePokePos[ i ];
     }
   }
-  BTL_Printf(" 自分[%d]が選択すべきポケモン数=%d\n", wk->myID, cnt);
+  BTL_N_Printf( DBGSTR_CLIENT_NumChangePokeResult, wk->myID, cnt);
 
   return cnt;
 }
@@ -1627,7 +1626,7 @@ static BOOL SubProc_UI_SelectChangeOrEscape( BTL_CLIENT* wk, int* seq )
 }
 //----------------------------------------------------------------------------------
 /**
- * ポケが死んだ時の交換
+ * 入れ替え時の交換
  *
  * @param   wk
  * @param   seq
@@ -1635,88 +1634,6 @@ static BOOL SubProc_UI_SelectChangeOrEscape( BTL_CLIENT* wk, int* seq )
  * @retval  BOOL
  */
 //----------------------------------------------------------------------------------
-static BOOL SubProc_UI_SelectPokemonForCover( BTL_CLIENT* wk, int* seq )
-{
-  switch( *seq ){
-  case 0:
-    {
-      wk->myChangePokeCnt = storeMyChangePokePos( wk, wk->myChangePokePos );
-      if( wk->myChangePokeCnt )
-      {
-        wk->myPuttablePokeCnt = calcPuttablePokemons( wk, NULL );
-        if( wk->myPuttablePokeCnt )
-        {
-          if( (BTL_MAIN_GetCompetitor(wk->mainModule) == BTL_COMPETITOR_WILD)
-          &&  (BTL_MAIN_GetRule(wk->mainModule) == BTL_RULE_SINGLE)
-          ){
-            BTLV_StartSelectChangeOrEscape( wk->viewCore );
-            (*seq)++;
-          }
-          else{
-            (*seq) += 2;
-          }
-        }
-        else
-        {
-          BTL_Printf("myID=%d もう戦えるポケモンいない\n", wk->myID);
-          BTL_ACTION_SetChangeDepleteParam( &wk->actionParam[0] );
-          wk->returnDataPtr = &(wk->actionParam[0]);
-          wk->returnDataSize = sizeof(wk->actionParam[0]);
-          return TRUE;
-        }
-      }
-      else
-      {
-          BTL_Printf("myID=%d 誰も死んでない\n", wk->myID);
-          BTL_ACTION_SetNULL( &wk->actionParam[0] );
-          wk->returnDataPtr = &(wk->actionParam[0]);
-          wk->returnDataSize = sizeof(wk->actionParam[0]);
-          return TRUE;
-      }
-    }
-    break;
-
-  // 繰り出せるポケモンがいるが、入れ替えるか逃げるか判定（野生&&シングルのみ）
-  case 1:
-    {
-      u8 fSelect;
-      if( BTLV_WaitSelectChangeOrEscape( wk->viewCore, &fSelect ) )
-      {
-        if( fSelect ){
-          (*seq)++;
-        }else{
-          BTL_ACTION_SetEscapeParam( &wk->actionParam[0] );
-          wk->returnDataPtr = &(wk->actionParam[0]);
-          wk->returnDataSize = sizeof(wk->actionParam[0]);
-          return TRUE;
-        }
-      }
-    }
-    break;
-
-  case 2:
-    {
-       u8 numSelect = wk->myChangePokeCnt;
-
-       // 生きてるポケが出さなければいけない数に足りない場合、そこを諦める
-       if( numSelect > wk->myPuttablePokeCnt ){
-         numSelect = wk->myPuttablePokeCnt;
-       }
-       BTL_Printf("myID=%d 戦闘ポケが死んだ%d体選択\n", wk->myID, numSelect);
-       setup_pokesel_param_dead( wk, numSelect, &wk->pokeSelParam );
-       BTLV_StartPokeSelect( wk->viewCore, &wk->pokeSelParam, FALSE, &wk->pokeSelResult );
-    }
-
-    if( BTLV_WaitPokeSelect(wk->viewCore) )
-    {
-      store_pokesel_to_action( wk, &wk->pokeSelResult );
-      return TRUE;
-    }
-    break;
-  }
-
-  return FALSE;
-}
 static BOOL SubProc_UI_SelectPokemon( BTL_CLIENT* wk, int* seq )
 {
   switch( *seq ){
@@ -1737,14 +1654,14 @@ static BOOL SubProc_UI_SelectPokemon( BTL_CLIENT* wk, int* seq )
             numSelect = numPuttable;
           }
 
-          BTL_Printf("myID=%d 戦闘ポケが死んで %d体選択\n", wk->myID, numSelect);
+          BTL_N_Printf( DBGSTR_CLIENT_ChangePokeNum, wk->myID, numSelect);
           setup_pokesel_param_dead( wk, numSelect, &wk->pokeSelParam );
           BTLV_StartPokeSelect( wk->viewCore, &wk->pokeSelParam, FALSE, &wk->pokeSelResult );
           (*seq)++;
         }
         else
         {
-          BTL_Printf("myID=%d 戦えるポケいない\n", wk->myID);
+          BTL_N_Printf( DBGSTR_CLIENT_NoMorePuttablePoke, wk->myID);
           BTL_ACTION_SetChangeDepleteParam( &wk->actionParam[0] );
           wk->returnDataPtr = &(wk->actionParam[0]);
           wk->returnDataSize = sizeof(wk->actionParam[0]);
@@ -1753,11 +1670,11 @@ static BOOL SubProc_UI_SelectPokemon( BTL_CLIENT* wk, int* seq )
       }
       else
       {
-          BTL_Printf("myID=%d 誰も死んでない\n", wk->myID);
-          BTL_ACTION_SetNULL( &wk->actionParam[0] );
-          wk->returnDataPtr = &(wk->actionParam[0]);
-          wk->returnDataSize = sizeof(wk->actionParam[0]);
-          return TRUE;
+        BTL_N_Printf( DBGSTR_CLIENT_NotDeadMember, wk->myID);
+        BTL_ACTION_SetNULL( &wk->actionParam[0] );
+        wk->returnDataPtr = &(wk->actionParam[0]);
+        wk->returnDataSize = sizeof(wk->actionParam[0]);
+        return TRUE;
       }
     }
     break;

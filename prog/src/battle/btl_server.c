@@ -521,7 +521,7 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
         setMainProc_Root( server );
         break;
       case SVFLOW_RESULT_POKE_IN_REQ:
-        BTL_Printf("空き位置への新ポケ投入リクエスト受け付け\n");
+        BTL_N_Printf( DBGSTR_SV_PokeInReqForEmptyPos );
         {
           BtlCompetitor competitor = BTL_MAIN_GetCompetitor( server->mainModule );
           BtlRule rule = BTL_MAIN_GetRule( server->mainModule );
@@ -533,7 +533,7 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
         }
         break;
       case SVFLOW_RESULT_POKE_CHANGE:
-        BTL_Printf("ターン途中のポケ入れ替え発生\n");
+        BTL_N_Printf( DBGSTR_SV_ChangePokeOnTheTurn );
         GF_ASSERT( server->changePokeCnt );
         setMainProc( server, ServerMain_SelectPokemonChange );
         break;
@@ -695,7 +695,7 @@ static BOOL ServerMain_SelectPokemonChange( BTL_SERVER* server, int* seq )
 {
   switch( *seq ){
   case 0:
-    BTL_Printf("入れ替えポケモン選択へ  交替されるポケ数=%d\n", server->changePokeCnt);
+    BTL_N_Printf( DBGSTR_SV_StartChangePokeInfo, server->changePokeCnt);
     SetAdapterCmdEx( server, BTL_ACMD_SELECT_POKEMON_FOR_CHANGE, server->changePokePos,
         server->changePokeCnt*sizeof(server->changePokePos[0]) );
     (*seq)++;
@@ -704,11 +704,10 @@ static BOOL ServerMain_SelectPokemonChange( BTL_SERVER* server, int* seq )
   case 1:
     if( WaitAdapterCmd(server) )
     {
-      BTL_Printf("入れ替えポケモン選択後\n");
       ResetAdapterCmd( server );
       SCQUE_Init( server->que );
       server->flowResult = BTL_SVFLOW_StartAfterPokeChange( server->flowWork );
-      BTL_Printf("サーバー結果=%d\n", server->flowResult );
+      BTL_N_Printf( DBGSTR_SERVER_FlowResult, server->flowResult );
 
       if( SendActionRecord(server) ){
         (*seq)++;

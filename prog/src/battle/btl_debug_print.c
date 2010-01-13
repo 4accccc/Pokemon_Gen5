@@ -70,6 +70,16 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_CLIENT_SelectActionDone:  return "カバー位置数(%d)終了、アクション送信へ\n";
   case DBGSTR_CLIENT_ReturnSeqDone:     return "返信シーケンス終了\n";
   case DBGSTR_CLIENT_WazaLockInfo:      return "ワザロック：Client[%d] 前回使ったワザは %d, idx=%d, targetPos=%d\n";
+  case DBGSTR_CLIENT_NoMorePuttablePoke:  return "myID=%d もう戦えるポケモンいない\n";
+  case DBGSTR_CLIENT_NotDeadMember:     return "myID=%d 誰も死んでないから選ぶ必要なし\n";
+  case DBGSTR_CLIENT_ChangePokeNum:     return "myID=%d 空きがあるので %d体選択\n";
+  case DBGSTR_CLIENT_NumChangePokeBegin:return " 全Client, 選択すべきポケモン数=%d\n　位置=";
+  case DBGSTR_CLIENT_NumChangePokeResult: return " 自分[%d]が選択すべきポケモン数=%d\n";
+  case DBGSTR_CLIENT_PokeSelCnt:        return "入れ替え%d体選んだ\n";
+  case DBGSTR_CLIENT_PokeChangeIdx:     return "ポケモン入れ替え %d体目 <-> %d体目\n";
+  case DBGSTR_VCORE_PokeListStart:      return "交換リスト画面モード=%d\n";
+
+
   case DBGSTR_MAIN_SwapPartyMember:     return "パーティメンバー入れ替え %d <-> %d\n";
   case DBGSTR_NET_DecideClientID:       return "NetID:%d -> clientID=%d\n";
   case DBGSTR_NET_SendSucceed:          return "  送信成功\n";
@@ -128,6 +138,9 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_SVFL_HitCheckInfo2:       return "防御ポケ[%d]  回避Rank=%d\n";
   case DBGSTR_SVFL_HitCheckInfo3:       return "命中ランク=%d, 命中率=%d, 命中率補正=%08x\n";
   case DBGSTR_SVFL_HitCheckInfo4:       return "最終命中率 = %d\n";
+  case DBGSTR_SVFL_StartAfterPokeChange: return "ターン途中ポケモン入れ替え後のサーバーコマンド生成\n";
+  case DBGSTR_SVFL_PokeChangeRootInfo:  return "クライアント(%d)のポケモン(位置%d) を、%d番目のポケといれかえる\n";
+
   case DBGSTR_POSPOKE_Out:              return " poke[%d] out from pos[%d]\n";
   case DBGSTR_POSPOKE_In:               return " poke[%d] in to pos[%d]\n";
 
@@ -137,6 +150,10 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_SERVER_ShooterChargeCmdDoneAll: return "全クライアントでシューターチャージコマンド処理終了\n";
   case DBGSTR_SERVER_SendActionSelectCmd:     return "アクション選択コマンド発行\n";
   case DBGSTR_SERVER_ActionSelectDoneAll:     return "アクション受け付け完了\n";
+  case DBGSTR_SV_ChangePokeOnTheTurn:    return "ターン途中のポケ入れ替え発生\n";
+  case DBGSTR_SV_PokeInReqForEmptyPos:   return "空き位置への新ポケ投入リクエスト受け付け\n";
+  case DBGSTR_SV_StartChangePokeInfo:    return "入れ替えポケモン選択へ  交替されるポケ数=%d\n";
+
 
   case DBGSTR_SC_PutCmd:                return "[QUE]PutCmd=%d, Format=%02x, argCnt=%d, args=";
   case DBGSTR_SC_ReservedPos:           return "[QUE]reserved pos=%d, wp=%d\n";
@@ -152,6 +169,7 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_EV_LinkEmpty:             return " empty...\n";
   case DBGSTR_EVAR_Push:                return "PUSH [%5d] SP=%d\n";
   case DBGSTR_EVAR_Pop:                 return "Pop! [%5d] SP=%d\n";
+  case DBGSTR_SCU_RelivePokeAct:        return "Pos[%d]=Vpos[%d] ポケ(%d)が生き返り\n";
 
 
 

@@ -966,7 +966,7 @@ SvflowResult BTL_SVFLOW_StartAfterPokeChange( BTL_SVFLOW_WORK* wk )
   u16 clientID, posIdx;
   int i, j, actionCnt;
 
-  BTL_Printf("ひんしポケモン入れ替え選択後のサーバーコマンド生成\n");
+  BTL_N_Printf( DBGSTR_SVFL_StartAfterPokeChange );
 
   SCQUE_Init( wk->que );
 
@@ -987,7 +987,7 @@ SvflowResult BTL_SVFLOW_StartAfterPokeChange( BTL_SVFLOW_WORK* wk )
       if( action->gen.cmd != BTL_ACTION_CHANGE ){ continue; }
       if( action->change.depleteFlag ){ continue; }
 
-      BTL_Printf("クライアント(%d)のポケモン(位置%d) を、%d番目のポケといれかえる\n",
+      BTL_N_Printf( DBGSTR_SVFL_PokeChangeRootInfo,
             i, action->change.posIdx, action->change.memberIdx );
 
       scproc_MemberInForChange( wk, i, action->change.posIdx, action->change.memberIdx, TRUE );

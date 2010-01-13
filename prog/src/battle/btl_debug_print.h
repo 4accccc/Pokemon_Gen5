@@ -34,6 +34,14 @@ typedef enum {
   DBGSTR_CLIENT_SelectActionDone,
   DBGSTR_CLIENT_ReturnSeqDone,
   DBGSTR_CLIENT_WazaLockInfo,
+  DBGSTR_CLIENT_NoMorePuttablePoke,
+  DBGSTR_CLIENT_NotDeadMember,
+  DBGSTR_CLIENT_ChangePokeNum,
+  DBGSTR_CLIENT_NumChangePokeBegin,
+  DBGSTR_CLIENT_NumChangePokeResult,
+  DBGSTR_CLIENT_PokeSelCnt,
+  DBGSTR_CLIENT_PokeChangeIdx,
+
   DBGSTR_MAIN_SwapPartyMember,
   DBGSTR_NET_DecideClientID,
   DBGSTR_NET_SendSucceed,
@@ -91,6 +99,8 @@ typedef enum {
   DBGSTR_SVFL_HitCheckInfo2,
   DBGSTR_SVFL_HitCheckInfo3,
   DBGSTR_SVFL_HitCheckInfo4,
+  DBGSTR_SVFL_StartAfterPokeChange,
+  DBGSTR_SVFL_PokeChangeRootInfo,
 
   DBGSTR_SC_PutCmd,
   DBGSTR_SC_ReservedPos,
@@ -103,6 +113,9 @@ typedef enum {
   DBGSTR_SERVER_SendActionSelectCmd,
   DBGSTR_SERVER_ActionSelectDoneAll,
   DBGSTR_SERVER_FlowResult,
+  DBGSTR_SV_ChangePokeOnTheTurn,
+  DBGSTR_SV_PokeInReqForEmptyPos,
+  DBGSTR_SV_StartChangePokeInfo,
 
   DBGSTR_EV_AddFactor,
   DBGSTR_EV_DelFactor,
@@ -113,8 +126,11 @@ typedef enum {
   DBGSTR_EVAR_Push,
   DBGSTR_EVAR_Pop,
 
+  DBGSTR_VCORE_PokeListStart,
+
   DBGSTR_POSPOKE_Out,
   DBGSTR_POSPOKE_In,
+  DBGSTR_SCU_RelivePokeAct,
 
   DBGSTR_val_comma,
   DBGSTR_done,

@@ -620,7 +620,7 @@ void BTLV_StartPokeSelect( BTLV_CORE* wk, const BTL_POKESELECT_PARAM* param, BOO
   wk->plistData.font = wk->largeFontHandle;
   wk->plistData.heap = wk->heapID;
   wk->plistData.mode = param->bplMode;
-  BTL_Printf("交換リスト画面モード=%d\n", wk->plistData.mode);
+  BTL_N_Printf( DBGSTR_VCORE_PokeListStart, wk->plistData.mode);
   wk->plistData.end_flg = FALSE;
   wk->plistData.sel_poke = 0;
   wk->plistData.chg_waza = 0;
@@ -666,21 +666,24 @@ BOOL BTLV_WaitPokeSelect( BTLV_CORE* wk )
   case 2:
     if( wk->plistData.end_flg )
     {
-      BTL_Printf("ポケ選択おわった\n");
+      OS_TPrintf("ポケ選択おわった\n");
 
       if( wk->plistData.sel_poke != BPL_SEL_EXIT )
       {
         if( wk->plistData.mode == BPL_MODE_NORMAL ){
-          BTL_Printf("選んだポケは%d番目\n", wk->plistData.sel_poke);
+          OS_TPrintf("選んだポケは%d番目\n", wk->plistData.sel_poke);
           BTL_POKESELECT_RESULT_Push( wk->pokeselResult, wk->plistData.sel_poke );
         }
         else
         {
           u8 i;
-          for(i=0; i<NELEMS(wk->plistData.sel_pos); ++i){
-            if( wk->plistData.sel_pos[i] != BPL_SELPOS_NONE )
-            {
+          for(i=0; i<NELEMS(wk->plistData.sel_pos); ++i)
+          {
+            if( wk->plistData.sel_pos[i] != BPL_SELPOS_NONE ){
+              OS_TPrintf("  [%d]番目 選択された\n", i);
               BTL_POKESELECT_RESULT_Push( wk->pokeselResult, wk->plistData.sel_pos[i] );
+            }else{
+              OS_TPrintf("  [%d]番目 選択されていない\n", i );
             }
           }
         }
