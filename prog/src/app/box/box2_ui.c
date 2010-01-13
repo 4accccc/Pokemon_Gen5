@@ -61,61 +61,61 @@ static void CursorMoveCallBack_Move( void * work, int now_pos, int old_pos );
 static void CursorMoveCallBack_Touch( void * work, int now_pos, int old_pos );
 static void CursorMoveCallBack_Dummy( void * work, int now_pos, int old_pos );
 
-static void PartyOutMainCallBack_On( void * work, int now_pos, int old_pos );
+//static void PartyOutMainCallBack_On( void * work, int now_pos, int old_pos );
 static void PartyOutMainCallBack_Touch( void * work, int now_pos, int old_pos );
 
 //static void PartyOutBoxSelCallBack_On( void * work, int now_pos, int old_pos );
 //static void PartyOutBoxSelCallBack_Move( void * work, int now_pos, int old_pos );
 //static void PartyOutBoxSelCallBack_Touch( void * work, int now_pos, int old_pos );
 
-static void PartyInMainCallBack_On( void * work, int now_pos, int old_pos );
+//static void PartyInMainCallBack_On( void * work, int now_pos, int old_pos );
 static void PartyInMainCallBack_Touch( void * work, int now_pos, int old_pos );
 
-static void BoxArrangeMainCallBack_On( void * work, int now_pos, int old_pos );
+//static void BoxArrangeMainCallBack_On( void * work, int now_pos, int old_pos );
 static void BoxArrangeMainCallBack_Touch( void * work, int now_pos, int old_pos );
 static void BoxArrangeMainCallBack_Move( void * work, int now_pos, int old_pos );
 
-static void BoxArrangePokeMoveCallBack_On( void * work, int now_pos, int old_pos );
+//static void BoxArrangePokeMoveCallBack_On( void * work, int now_pos, int old_pos );
 static void BoxArrangePokeMoveCallBack_Move( void * work, int now_pos, int old_pos );
 static void BoxArrangePokeMoveCallBack_Touch( void * work, int now_pos, int old_pos );
 
-static void BoxArrangePartyPokeMoveCallBack_On( void * work, int now_pos, int old_pos );
+//static void BoxArrangePartyPokeMoveCallBack_On( void * work, int now_pos, int old_pos );
 static void BoxArrangePartyPokeMoveCallBack_Move( void * work, int now_pos, int old_pos );
 static void BoxArrangePartyPokeMoveCallBack_Touch( void * work, int now_pos, int old_pos );
 
-static void BoxArrangePartyMoveCallBack_On( void * work, int now_pos, int old_pos );
+//static void BoxArrangePartyMoveCallBack_On( void * work, int now_pos, int old_pos );
 static void BoxArrangePartyMoveCallBack_Move( void * work, int now_pos, int old_pos );
 static void BoxArrangePartyMoveCallBack_Touch( void * work, int now_pos, int old_pos );
 
-static void BoxItemArrangeMainCallBack_On( void * work, int now_pos, int old_pos );
+//static void BoxItemArrangeMainCallBack_On( void * work, int now_pos, int old_pos );
 static void BoxItemArrangeMainCallBack_Touch( void * work, int now_pos, int old_pos );
 static void BoxItemArrangeMainCallBack_Move( void * work, int now_pos, int old_pos );
 
-static void BoxItemArrangePartyMoveCallBack_On( void * work, int now_pos, int old_pos );
+//static void BoxItemArrangePartyMoveCallBack_On( void * work, int now_pos, int old_pos );
 static void BoxItemArrangePartyMoveCallBack_Move( void * work, int now_pos, int old_pos );
 static void BoxItemArrangePartyMoveCallBack_Touch( void * work, int now_pos, int old_pos );
 
-static void BoxThemaChgCallBack_On( void * work, int now_pos, int old_pos );
+//static void BoxThemaChgCallBack_On( void * work, int now_pos, int old_pos );
 static void BoxThemaChgCallBack_Move( void * work, int now_pos, int old_pos );
 static void BoxThemaChgCallBack_Touch( void * work, int now_pos, int old_pos );
 
-static void WallPaperChgCallBack_On( void * work, int now_pos, int old_pos );
+//static void WallPaperChgCallBack_On( void * work, int now_pos, int old_pos );
 static void WallPaperChgCallBack_Move( void * work, int now_pos, int old_pos );
 static void WallPaperChgCallBack_Touch( void * work, int now_pos, int old_pos );
 
-static void BoxJumpCallBack_On( void * work, int now_pos, int old_pos );
+//static void BoxJumpCallBack_On( void * work, int now_pos, int old_pos );
 static void BoxJumpCallBack_Move( void * work, int now_pos, int old_pos );
 static void BoxJumpCallBack_Touch( void * work, int now_pos, int old_pos );
 
-static void BattleBoxMainCallBack_On( void * work, int now_pos, int old_pos );
+//static void BattleBoxMainCallBack_On( void * work, int now_pos, int old_pos );
 static void BattleBoxMainCallBack_Move( void * work, int now_pos, int old_pos );
 static void BattleBoxMainCallBack_Touch( void * work, int now_pos, int old_pos );
 
-static void BattleBoxPartyMainCallBack_On( void * work, int now_pos, int old_pos );
+//static void BattleBoxPartyMainCallBack_On( void * work, int now_pos, int old_pos );
 static void BattleBoxPartyMainCallBack_Move( void * work, int now_pos, int old_pos );
 static void BattleBoxPartyMainCallBack_Touch( void * work, int now_pos, int old_pos );
 
-static void SleepMainCallBack_On( void * work, int now_pos, int old_pos );
+//static void SleepMainCallBack_On( void * work, int now_pos, int old_pos );
 static void SleepMainCallBack_Move( void * work, int now_pos, int old_pos );
 static void SleepMainCallBack_Touch( void * work, int now_pos, int old_pos );
 
@@ -146,7 +146,8 @@ static const CURSORMOVE_DATA PartyOutMainCursorMoveData[] =
 	{ 0, 0, 0, 0,	0, 0, 0, 0,	{ GFL_UI_TP_HIT_END, 0, 0, 0 } }
 };
 static const CURSORMOVE_CALLBACK PartyOutMainCallBack = {
-	PartyOutMainCallBack_On,
+//	PartyOutMainCallBack_On,
+	CursorMoveCallBack_On,
 	CursorMoveCallBack_Off,
 	CursorMoveCallBack_Move,
 	PartyOutMainCallBack_Touch
@@ -164,7 +165,8 @@ static const CURSORMOVE_DATA PartyOutBoxSelCursorMoveData[] =
 	{ 0, 0, 0, 0,	0, 0, 0, 0,	{ GFL_UI_TP_HIT_END, 0, 0, 0 } }
 };
 static const CURSORMOVE_CALLBACK PartyOutBoxSelCallBack = {
-	CursorMoveCallBack_Dummy,
+//	CursorMoveCallBack_Dummy,
+	CursorMoveCallBack_On,
 	CursorMoveCallBack_Off,
 	CursorMoveCallBack_Dummy,
 	CursorMoveCallBack_Dummy,
@@ -185,8 +187,8 @@ static const CURSORMOVE_DATA MarkingCursorMoveData[] =
 	{ 236,  66, 0, 0,	1, 5, 2, 3, { 68,  83, 220, 235 } },		// 03: ハート
 	{ 204,  90, 0, 0,	2, 6, 4, 5, { 92, 107, 188, 203 } },		// 04: ★
 	{ 236,  90, 0, 0,	3, 6, 4, 5, { 92, 107, 220, 235 } },		// 05: ◆
-	{ 212, 112, 0, 0,	CURSORMOVE_RETBIT|4, 7, 6, 6, { 112, 135, 178, 245 } },		// 06:「けってい」
-	{ 212, 136, 0, 0,	6, 7, 7, 7, { 136, 159, 178, 245 } },		// 07:「やめる」
+	{ 212, 112, 0, 0,	CURSORMOVE_RETBIT|4, 7, 6, 6, { 112, 135, 168, 255 } },		// 06:「けってい」
+	{ 212, 136, 0, 0,	6, 7, 7, 7, { 136, 159, 168, 255 } },		// 07:「やめる」
 
 	{ 0, 0, 0, 0,	0, 0, 0, 0,	{ GFL_UI_TP_HIT_END, 0, 0, 0 } }
 };
@@ -251,7 +253,8 @@ static const CURSORMOVE_DATA PartyInMainCursorMoveData[] =
 	{ 0, 0, 0, 0,	0, 0, 0, 0,	{ GFL_UI_TP_HIT_END, 0, 0, 0 } }
 };
 static const CURSORMOVE_CALLBACK PartyInMainCallBack = {
-	PartyInMainCallBack_On,
+//	PartyInMainCallBack_On,
+	CursorMoveCallBack_On,
 	CursorMoveCallBack_Off,
 	CursorMoveCallBack_Move,
 	PartyInMainCallBack_Touch,
@@ -263,12 +266,13 @@ static const CURSORMOVE_DATA BoxThemaChgCursorMoveData[] =
 	{ 212,  64, 0, 0,	3, 1, 0, 0, {  64,  87, 168, 255 } },		// 00: ジャンプする
 	{ 212,  88, 0, 0,	0, 2, 1, 1, {  88, 111, 168, 255 } },		// 01: かべがみ
 	{ 212, 112, 0, 0,	1, 3, 2, 2, { 112, 135, 168, 255 } },		// 02: なまえ
-	{ 212, 136, 0, 0,	2, 0, 3, 3, { 136, 159, 192, 255 } },		// 03: やめる
+	{ 212, 136, 0, 0,	2, 0, 3, 3, { 136, 159, 168, 255 } },		// 03: やめる
 
 	{ 0, 0, 0, 0,	0, 0, 0, 0,	{ GFL_UI_TP_HIT_END, 0, 0, 0 } }
 };
 static const CURSORMOVE_CALLBACK BoxThemaChgCallBack = {
-	BoxThemaChgCallBack_On,
+//	BoxThemaChgCallBack_On,
+	CursorMoveCallBack_On,
 	CursorMoveCallBack_Off,
 	BoxThemaChgCallBack_Move,
 	BoxThemaChgCallBack_Touch
@@ -281,12 +285,13 @@ static const CURSORMOVE_DATA WallPaperChgCursorMoveData[] =
 	{ 212,  64, 0, 0,	0, 2, 1, 1, {  64,  87, 168, 255 } },		// 01: メニュー２
 	{ 212,  88, 0, 0,	1, 3, 2, 2, {  88, 111, 168, 255 } },		// 02: メニュー３
 	{ 212, 112, 0, 0,	2, 4, 3, 3, { 112, 135, 168, 255 } },		// 03: メニュー４
-	{ 212, 136, 0, 0,	3, 0, 4, 4, { 136, 159, 192, 255 } },		// 04: もどる
+	{ 212, 136, 0, 0,	3, 0, 4, 4, { 136, 159, 168, 255 } },		// 04: もどる
 
 	{ 0, 0, 0, 0,	0, 0, 0, 0,	{ GFL_UI_TP_HIT_END, 0, 0, 0 } }
 };
 static const CURSORMOVE_CALLBACK WallPaperChgCallBack = {
-	WallPaperChgCallBack_On,
+//	WallPaperChgCallBack_On,
+	CursorMoveCallBack_On,
 	CursorMoveCallBack_Off,
 	WallPaperChgCallBack_Move,
 	WallPaperChgCallBack_Touch
@@ -349,7 +354,8 @@ static const CURSORMOVE_DATA BoxArrangeMainCursorMoveData[] =
 	{ 0, 0, 0, 0,	0, 0, 0, 0,	{ GFL_UI_TP_HIT_END, 0, 0, 0 } }
 };
 static const CURSORMOVE_CALLBACK BoxArrangeMainCallBack = {
-	BoxArrangeMainCallBack_On,
+//	BoxArrangeMainCallBack_On,
+	CursorMoveCallBack_On,
 	CursorMoveCallBack_Off,
 	BoxArrangeMainCallBack_Move,
 	BoxArrangeMainCallBack_Touch
@@ -411,7 +417,8 @@ static const CURSORMOVE_DATA BoxArrangePokeMoveCursorMoveData[] =
 	{ 0, 0, 0, 0,	0, 0, 0, 0,	{ GFL_UI_TP_HIT_END, 0, 0, 0 } }
 };
 static const CURSORMOVE_CALLBACK BoxArrangePokeMoveCallBack = {
-	BoxArrangePokeMoveCallBack_On,
+//	BoxArrangePokeMoveCallBack_On,
+	CursorMoveCallBack_On,
 	CursorMoveCallBack_Off,
 	BoxArrangePokeMoveCallBack_Move,
 	BoxArrangePokeMoveCallBack_Touch
@@ -442,7 +449,8 @@ static const CURSORMOVE_DATA BoxArrangePartyPokeCursorMoveData[] =
 	{ 0, 0, 0, 0,	0, 0, 0, 0,	{ GFL_UI_TP_HIT_END, 0, 0, 0 } }
 };
 static const CURSORMOVE_CALLBACK BoxArrangePartyPokeCallBack = {
-	BoxArrangePartyMoveCallBack_On,
+//	BoxArrangePartyMoveCallBack_On,
+	CursorMoveCallBack_On,
 	CursorMoveCallBack_Off,
 	BoxArrangePartyMoveCallBack_Move,
 	BoxArrangePartyMoveCallBack_Touch,
@@ -504,7 +512,8 @@ static const CURSORMOVE_DATA BoxArrangePartyPokeMoveCursorMoveData[] =
 	{ 0, 0, 0, 0,	0, 0, 0, 0,	{ GFL_UI_TP_HIT_END, 0, 0, 0 } }
 };
 static const CURSORMOVE_CALLBACK BoxArrangePartyPokeMoveCallBack = {
-	BoxArrangePartyPokeMoveCallBack_On,
+//	BoxArrangePartyPokeMoveCallBack_On,
+	CursorMoveCallBack_On,
 	CursorMoveCallBack_Off,
 	BoxArrangePartyPokeMoveCallBack_Move,
 	BoxArrangePartyPokeMoveCallBack_Touch
@@ -563,7 +572,8 @@ static const CURSORMOVE_DATA BoxItemArrangeMainCursorMoveData[] =
 	{ 0, 0, 0, 0,	0, 0, 0, 0,	{ GFL_UI_TP_HIT_END, 0, 0, 0 } }
 };
 static const CURSORMOVE_CALLBACK BoxItemArrangeMainCallBack = {
-	BoxItemArrangeMainCallBack_On,
+//	BoxItemArrangeMainCallBack_On,
+	CursorMoveCallBack_On,
 	CursorMoveCallBack_Off,
 	BoxItemArrangeMainCallBack_Move,
 	BoxItemArrangeMainCallBack_Touch
@@ -591,7 +601,8 @@ static const CURSORMOVE_DATA BoxItemArrangePartyPokeCursorMoveData[] =
 	{ 0, 0, 0, 0,	0, 0, 0, 0,	{ GFL_UI_TP_HIT_END, 0, 0, 0 } }
 };
 static const CURSORMOVE_CALLBACK BoxItemArrangePartyPokeCallBack = {
-	BoxItemArrangePartyMoveCallBack_On,
+//	BoxItemArrangePartyMoveCallBack_On,
+	CursorMoveCallBack_On,
 	CursorMoveCallBack_Off,
 	BoxItemArrangePartyMoveCallBack_Move,
 	BoxItemArrangePartyMoveCallBack_Touch,
@@ -612,7 +623,8 @@ static const CURSORMOVE_DATA BoxJumpCursorMoveData[] =
 	{ 0, 0, 0, 0,	0, 0, 0, 0,	{ GFL_UI_TP_HIT_END, 0, 0, 0 } }
 };
 static const CURSORMOVE_CALLBACK BoxJumpCallBack = {
-	BoxJumpCallBack_On,
+//	BoxJumpCallBack_On,
+	CursorMoveCallBack_On,
 	CursorMoveCallBack_Off,
 	BoxJumpCallBack_Move,
 	BoxJumpCallBack_Touch
@@ -673,7 +685,8 @@ static const CURSORMOVE_DATA BattleBoxMainCursorMoveData[] =
 	{ 0, 0, 0, 0,	0, 0, 0, 0,	{ GFL_UI_TP_HIT_END, 0, 0, 0 } }
 };
 static const CURSORMOVE_CALLBACK BattleBoxMainCallBack = {
-	BattleBoxMainCallBack_On,
+//	BattleBoxMainCallBack_On,
+	CursorMoveCallBack_On,
 	CursorMoveCallBack_Off,
 	BattleBoxMainCallBack_Move,
 	BattleBoxMainCallBack_Touch
@@ -702,7 +715,8 @@ static const CURSORMOVE_DATA BattleBoxPartyMainCursorMoveData[] =
 	{ 0, 0, 0, 0,	0, 0, 0, 0,	{ GFL_UI_TP_HIT_END, 0, 0, 0 } }
 };
 static const CURSORMOVE_CALLBACK BattleBoxPartyMainCallBack = {
-	BattleBoxPartyMainCallBack_On,
+//	BattleBoxPartyMainCallBack_On,
+	CursorMoveCallBack_On,
 	CursorMoveCallBack_Off,
 	BattleBoxPartyMainCallBack_Move,
 	BattleBoxPartyMainCallBack_Touch,
@@ -758,7 +772,8 @@ static const CURSORMOVE_DATA SleepMainCursorMoveData[] =
 	{ 0, 0, 0, 0,	0, 0, 0, 0,	{ GFL_UI_TP_HIT_END, 0, 0, 0 } }
 };
 static const CURSORMOVE_CALLBACK SleepMainCallBack = {
-	SleepMainCallBack_On,
+//	SleepMainCallBack_On,
+	CursorMoveCallBack_On,
 	CursorMoveCallBack_Off,
 	SleepMainCallBack_Move,
 	SleepMainCallBack_Touch
@@ -888,7 +903,15 @@ static const GFL_UI_TP_HITTBL PartyLeftHitTbl[] =
 //--------------------------------------------------------------------------------------------
 void BOX2UI_CursorMoveInit( BOX2_SYS_WORK * syswk )
 {
+	BOOL	flg;
 	u32		id;
+
+	// カーソル初期状態
+	if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH ){
+		flg = FALSE;
+	}else{
+		flg = TRUE;
+	}
 
 	switch( syswk->dat->callMode ){
 	case BOX_MODE_AZUKERU:
@@ -917,11 +940,14 @@ void BOX2UI_CursorMoveInit( BOX2_SYS_WORK * syswk )
 							MoveDataTable[id].dat,
 							MoveDataTable[id].cb,
 							syswk,
-							TRUE,
+							flg,
 							syswk->cur_rcv_pos,			// pos
 							HEAPID_BOX_APP );
 
+	CURSORMOVE_VanishModeSet( syswk->app->cmwk );
+
 	CursorObjMove( syswk, syswk->cur_rcv_pos );
+	BOX2OBJ_SetHandCursorOnOff( syswk, flg );
 
 	syswk->app->old_cur_pos = syswk->cur_rcv_pos;
 }
@@ -939,17 +965,22 @@ void BOX2UI_CursorMoveInit( BOX2_SYS_WORK * syswk )
 //--------------------------------------------------------------------------------------------
 void BOX2UI_CursorMoveChange( BOX2_SYS_WORK * syswk, u32 id, u32 pos )
 {
+	BOOL	flg = CURSORMOVE_CursorOnOffGet( syswk->app->cmwk );
+
 	BOX2UI_CursorMoveExit( syswk );
 
 	syswk->app->cmwk = CURSORMOVE_Create(
 							MoveDataTable[id].dat,
 							MoveDataTable[id].cb,
 							syswk,
-							TRUE,
+							flg,
 							pos,					// pos
 							HEAPID_BOX_APP );
 
+	CURSORMOVE_VanishModeSet( syswk->app->cmwk );
+
 	CursorObjMove( syswk, pos );
+	BOX2OBJ_SetHandCursorOnOff( syswk, flg );
 
 	syswk->app->old_cur_pos = pos;
 }
@@ -988,7 +1019,7 @@ void BOX2UI_PutHandCursor( BOX2_SYS_WORK * syswk, int pos )
 
 	pw = CURSORMOVE_GetMoveData( syswk->app->cmwk, pos );
 
-	BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_HAND_CURSOR, TRUE );
+//	BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_HAND_CURSOR, TRUE );
 
 	x = pw->px;
 	y = pw->py;
@@ -1026,9 +1057,10 @@ static void CursorMoveCallBack_On( void * work, int now_pos, int old_pos )
 {
 	BOX2_SYS_WORK * syswk = work;
 
-	CURSORMOVE_PosSet( syswk->app->cmwk, now_pos );
+//	CURSORMOVE_PosSet( syswk->app->cmwk, now_pos );
 
 	CursorObjMove( syswk, now_pos );
+	BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_HAND_CURSOR, TRUE );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1134,6 +1166,11 @@ u32 BOX2UI_PartyOutMain( BOX2_SYS_WORK * syswk )
 				return CURSORMOVE_NONE;
 			}
 			if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X ){
+				GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
+				return BOX2UI_PTOUT_MAIN_RETURN1;
+			}
+			if( ret == BOX2UI_PTOUT_MAIN_RETURN1 ){
+				GFL_UI_SetTouchOrKey( GFL_APP_END_TOUCH );
 				return BOX2UI_PTOUT_MAIN_RETURN1;
 			}
 			if( ret == BOX2UI_PTOUT_MAIN_RETURN2 ){
@@ -1170,6 +1207,7 @@ u32 BOX2UI_PartyOutMain( BOX2_SYS_WORK * syswk )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
+/*
 static void PartyOutMainCallBack_On( void * work, int now_pos, int old_pos )
 {
 	BOX2_SYS_WORK * syswk = work;
@@ -1197,6 +1235,7 @@ static void PartyOutMainCallBack_On( void * work, int now_pos, int old_pos )
 
 	CursorObjMove( syswk, now_pos );
 }
+*/
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1302,6 +1341,11 @@ u32 BOX2UI_PartyInMain( BOX2_SYS_WORK * syswk )
 				return CURSORMOVE_NONE;
 			}
 			if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X ){
+				GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
+				return BOX2UI_PTIN_MAIN_RETURN1;
+			}
+			if( ret == BOX2UI_PTIN_MAIN_RETURN1 ){
+				GFL_UI_SetTouchOrKey( GFL_APP_END_TOUCH );
 				return BOX2UI_PTIN_MAIN_RETURN1;
 			}
 			if( ret == BOX2UI_PTIN_MAIN_RETURN2 ){
@@ -1339,6 +1383,7 @@ u32 BOX2UI_PartyInMain( BOX2_SYS_WORK * syswk )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
+/*
 static void PartyInMainCallBack_On( void * work, int now_pos, int old_pos )
 {
 	BOX2_SYS_WORK * syswk = work;
@@ -1376,6 +1421,7 @@ static void PartyInMainCallBack_On( void * work, int now_pos, int old_pos )
 
 	CursorObjMove( syswk, now_pos );
 }
+*/
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1429,6 +1475,11 @@ u32 BOX2UI_BoxArrangeMain( BOX2_SYS_WORK * syswk )
 			return CURSORMOVE_NONE;
 		}
 		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X ){
+			GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
+			return BOX2UI_ARRANGE_MAIN_RETURN1;
+		}
+		if( ret == BOX2UI_ARRANGE_MAIN_RETURN1 ){
+			GFL_UI_SetTouchOrKey( GFL_APP_END_TOUCH );
 			return BOX2UI_ARRANGE_MAIN_RETURN1;
 		}
 		if( ret == BOX2UI_ARRANGE_MAIN_RETURN2 ){
@@ -1463,6 +1514,7 @@ u32 BOX2UI_BoxArrangeMain( BOX2_SYS_WORK * syswk )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
+/*
 static void BoxArrangeMainCallBack_On( void * work, int now_pos, int old_pos )
 {
 	BOX2_SYS_WORK * syswk;
@@ -1508,6 +1560,7 @@ static void BoxArrangeMainCallBack_On( void * work, int now_pos, int old_pos )
 
 	CursorObjMove( syswk, now_pos );
 }
+*/
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1601,6 +1654,7 @@ static void SetTouchBarIconPokeGet( BOX2_SYS_WORK * syswk, u32 pos )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
+/*
 static void BoxArrangePokeMoveCallBack_On( void * work, int now_pos, int old_pos )
 {
 	BOX2_SYS_WORK * syswk;
@@ -1625,6 +1679,7 @@ static void BoxArrangePokeMoveCallBack_On( void * work, int now_pos, int old_pos
 
 	syswk->app->old_cur_pos = now_pos;
 }
+*/
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1729,6 +1784,11 @@ u32 BOX2UI_BoxArrangePartyMoveMain( BOX2_SYS_WORK * syswk )
 			return CURSORMOVE_NONE;
 		}
 		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X ){
+			GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
+			return BOX2UI_ARRANGE_PARTY_RETURN1;
+		}
+		if( ret == BOX2UI_ARRANGE_PARTY_RETURN1 ){
+			GFL_UI_SetTouchOrKey( GFL_APP_END_TOUCH );
 			return BOX2UI_ARRANGE_PARTY_RETURN1;
 		}
 		if( ret == BOX2UI_ARRANGE_PARTY_RETURN2 ){
@@ -1763,6 +1823,7 @@ u32 BOX2UI_BoxArrangePartyMoveMain( BOX2_SYS_WORK * syswk )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
+/*
 static void BoxArrangePartyMoveCallBack_On( void * work, int now_pos, int old_pos )
 {
 	BOX2_SYS_WORK * syswk;
@@ -1796,6 +1857,7 @@ static void BoxArrangePartyMoveCallBack_On( void * work, int now_pos, int old_po
 
 	CursorObjMove( syswk, now_pos );
 }
+*/
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1868,6 +1930,7 @@ u32 BOX2UI_ArrangePartyPokeGetMain( BOX2_SYS_WORK * syswk )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
+/*
 static void BoxArrangePartyPokeMoveCallBack_On( void * work, int now_pos, int old_pos )
 {
 	BOX2_SYS_WORK * syswk = work;
@@ -1888,6 +1951,7 @@ static void BoxArrangePartyPokeMoveCallBack_On( void * work, int now_pos, int ol
 
 	syswk->app->old_cur_pos = now_pos;
 }
+*/
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1973,6 +2037,11 @@ u32 BOX2UI_BoxItemArrangeMain( BOX2_SYS_WORK * syswk )
 			return CURSORMOVE_NONE;
 		}
 		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X ){
+			GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
+			return BOX2UI_ITEM_MAIN_RETURN1;
+		}
+		if( ret == BOX2UI_ITEM_MAIN_RETURN1 ){
+			GFL_UI_SetTouchOrKey( GFL_APP_END_TOUCH );
 			return BOX2UI_ITEM_MAIN_RETURN1;
 		}
 		if( ret == BOX2UI_ITEM_MAIN_RETURN2 ){
@@ -2006,6 +2075,7 @@ u32 BOX2UI_BoxItemArrangeMain( BOX2_SYS_WORK * syswk )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
+/*
 static void BoxItemArrangeMainCallBack_On( void * work, int now_pos, int old_pos )
 {
 	BOX2_SYS_WORK * syswk;
@@ -2051,6 +2121,7 @@ static void BoxItemArrangeMainCallBack_On( void * work, int now_pos, int old_pos
 
 	CursorObjMove( syswk, now_pos );
 }
+*/
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -2125,6 +2196,11 @@ u32 BOX2UI_BoxItemArrangePartyMoveMain( BOX2_SYS_WORK * syswk )
 			return CURSORMOVE_NONE;
 		}
 		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X ){
+			GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
+			return BOX2UI_ITEM_PARTY_RETURN1;
+		}
+		if( ret == BOX2UI_ITEM_PARTY_RETURN1 ){
+			GFL_UI_SetTouchOrKey( GFL_APP_END_TOUCH );
 			return BOX2UI_ITEM_PARTY_RETURN1;
 		}
 		if( ret == BOX2UI_ITEM_PARTY_RETURN2 ){
@@ -2158,6 +2234,7 @@ u32 BOX2UI_BoxItemArrangePartyMoveMain( BOX2_SYS_WORK * syswk )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
+/*
 static void BoxItemArrangePartyMoveCallBack_On( void * work, int now_pos, int old_pos )
 {
 	BOX2_SYS_WORK * syswk = work;
@@ -2190,6 +2267,7 @@ static void BoxItemArrangePartyMoveCallBack_On( void * work, int now_pos, int ol
 
 	CursorObjMove( syswk, now_pos );
 }
+*/
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -2249,6 +2327,7 @@ static void BoxItemArrangePartyMoveCallBack_Touch( void * work, int now_pos, int
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
+/*
 static void BoxThemaChgCallBack_On( void * work, int now_pos, int old_pos )
 {
 	BOX2_SYS_WORK * syswk = work;
@@ -2256,6 +2335,7 @@ static void BoxThemaChgCallBack_On( void * work, int now_pos, int old_pos )
 	CURSORMOVE_PosSet( syswk->app->cmwk, now_pos );
 	CursorObjMove( syswk, now_pos );
 }
+*/
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -2311,6 +2391,7 @@ static void BoxThemaChgCallBack_Touch( void * work, int now_pos, int old_pos )
  * @return	動作結果
  */
 //--------------------------------------------------------------------------------------------
+/*
 static void WallPaperChgCallBack_On( void * work, int now_pos, int old_pos )
 {
 	BOX2_SYS_WORK * syswk = work;
@@ -2318,6 +2399,7 @@ static void WallPaperChgCallBack_On( void * work, int now_pos, int old_pos )
 	CURSORMOVE_PosSet( syswk->app->cmwk, now_pos );
 	CursorObjMove( syswk, now_pos );
 }
+*/
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -2373,6 +2455,7 @@ static void WallPaperChgCallBack_Touch( void * work, int now_pos, int old_pos )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
+/*
 static void BoxJumpCallBack_On( void * work, int now_pos, int old_pos )
 {
 	BOX2_SYS_WORK * syswk;
@@ -2392,6 +2475,7 @@ static void BoxJumpCallBack_On( void * work, int now_pos, int old_pos )
 
 	syswk->app->old_cur_pos = now_pos;
 }
+*/
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -2477,6 +2561,11 @@ u32 BOX2UI_BattleBoxMain( BOX2_SYS_WORK * syswk )
 			return CURSORMOVE_NONE;
 		}
 		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X ){
+			GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
+			return BOX2UI_BATTLEBOX_MAIN_RETURN1;
+		}
+		if( ret == BOX2UI_BATTLEBOX_MAIN_RETURN1 ){
+			GFL_UI_SetTouchOrKey( GFL_APP_END_TOUCH );
 			return BOX2UI_BATTLEBOX_MAIN_RETURN1;
 		}
 		if( ret == BOX2UI_BATTLEBOX_MAIN_RETURN2 ){
@@ -2512,11 +2601,12 @@ u32 BOX2UI_BattleBoxMain( BOX2_SYS_WORK * syswk )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
+/*
 static void BattleBoxMainCallBack_On( void * work, int now_pos, int old_pos )
 {
 	BOX2_SYS_WORK * syswk;
 	const CURSORMOVE_DATA * pw;
-	
+
 	syswk = work;
 
 	if( old_pos != CURSORMOVE_ONOFF_DIRECT ){
@@ -2555,6 +2645,7 @@ static void BattleBoxMainCallBack_On( void * work, int now_pos, int old_pos )
 
 	CursorObjMove( syswk, now_pos );
 }
+*/
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -2627,6 +2718,11 @@ u32 BOX2UI_BattleBoxPartyMain( BOX2_SYS_WORK * syswk )
 			return CURSORMOVE_NONE;
 		}
 		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X ){
+			GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
+			return BOX2UI_BATTLEBOX_PARTY_RETURN1;
+		}
+		if( ret == BOX2UI_BATTLEBOX_PARTY_RETURN1 ){
+			GFL_UI_SetTouchOrKey( GFL_APP_END_TOUCH );
 			return BOX2UI_BATTLEBOX_PARTY_RETURN1;
 		}
 		if( ret == BOX2UI_BATTLEBOX_PARTY_RETURN2 ){
@@ -2661,6 +2757,7 @@ u32 BOX2UI_BattleBoxPartyMain( BOX2_SYS_WORK * syswk )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
+/*
 static void BattleBoxPartyMainCallBack_On( void * work, int now_pos, int old_pos )
 {
 	BOX2_SYS_WORK * syswk = work;
@@ -2689,6 +2786,7 @@ static void BattleBoxPartyMainCallBack_On( void * work, int now_pos, int old_pos
 
 	CursorObjMove( syswk, now_pos );
 }
+*/
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -2791,6 +2889,7 @@ u32 BOX2UI_SleepMain( BOX2_SYS_WORK * syswk )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
+/*
 static void SleepMainCallBack_On( void * work, int now_pos, int old_pos )
 {
 	BOX2_SYS_WORK * syswk = work;
@@ -2825,7 +2924,9 @@ static void SleepMainCallBack_On( void * work, int now_pos, int old_pos )
 	CURSORMOVE_PosSet( syswk->app->cmwk, now_pos );
 
 	CursorObjMove( syswk, now_pos );
+	BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_HAND_CURSOR, TRUE );
 }
+*/
 
 //--------------------------------------------------------------------------------------------
 /**

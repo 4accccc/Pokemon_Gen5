@@ -2421,6 +2421,8 @@ extern int BOX2MAIN_VFuncItemGetTouch( BOX2_SYS_WORK * syswk );
 //--------------------------------------------------------------------------------------------
 extern int BOX2MAIN_VFuncItemArrangeMenuClose( BOX2_SYS_WORK * syswk );
 
+extern int BOX2MAIN_VFuncItemGetMenuClose( BOX2_SYS_WORK * syswk );
+
 //--------------------------------------------------------------------------------------------
 /**
  * VBLANK FUNC : アイテムアイコン入れ替え動作

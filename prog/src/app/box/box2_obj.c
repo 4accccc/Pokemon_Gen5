@@ -1960,6 +1960,11 @@ void BOX2OBJ_MovePokeIconHand( BOX2_SYS_WORK * syswk )
 	}
 
 	BOX2OBJ_SetPos( syswk->app, id, x, y, CLSYS_DEFREND_MAIN );
+	if( syswk->dat->callMode == BOX_MODE_ITEM ){
+		BOX2OBJ_ItemIconCursorMove( syswk->app );
+	}else{
+		BOX2OBJ_PokeCursorMove( syswk->app, BOX2OBJ_POKEICON_GET_POS );
+	}
 }
 
 
@@ -2745,6 +2750,26 @@ void BOX2OBJ_SetHandCursorAnm( BOX2_SYS_WORK * syswk, u32 anm )
 	BOX2OBJ_AnmSet( syswk->app, BOX2OBJ_ID_HAND_CURSOR, anm );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		手カーソル表示切り替え
+ *
+ * @param		syswk		ボックス画面システムワーク
+ * @param		flg			表示フラグ TRUE = 表示
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+void BOX2OBJ_SetHandCursorOnOff( BOX2_SYS_WORK * syswk, BOOL flg )
+{
+	if( flg == TRUE ){
+		if( CURSORMOVE_CursorOnOffGet( syswk->app->cmwk ) == TRUE ){
+			BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_HAND_CURSOR, TRUE );
+		}
+	}else{
+		BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_HAND_CURSOR, FALSE );
+	}
+}
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -2846,13 +2871,13 @@ void BOX2OBJ_PokeCursorVanish( BOX2_SYS_WORK * syswk, BOOL flg )
 	}
 }
 
-void BOX2OBJ_ChgPokeCursorPriority( BOX2_SYS_WORK * syswk )
+void BOX2OBJ_ChgPokeCursorPriority( BOX2_SYS_WORK * syswk, u32 pos )
 {
 	int	obj_pri, bg_pri;
 	u32	posID;
 	u32	i;
 
-	posID = syswk->app->pokeicon_id[ syswk->get_pos ];
+	posID = syswk->app->pokeicon_id[ pos ];
 	obj_pri = GFL_CLACT_WK_GetSoftPri( syswk->app->clwk[posID] );
 	bg_pri  = GFL_CLACT_WK_GetBgPri( syswk->app->clwk[posID] );
 

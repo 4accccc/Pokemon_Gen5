@@ -778,6 +778,18 @@ extern void BOX2OBJ_SetHandCursorAnm( BOX2_SYS_WORK * syswk, u32 anm );
 
 //--------------------------------------------------------------------------------------------
 /**
+ * @brief		手カーソル表示切り替え
+ *
+ * @param		syswk		ボックス画面システムワーク
+ * @param		flg			表示フラグ TRUE = 表示
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+extern void BOX2OBJ_SetHandCursorOnOff( BOX2_SYS_WORK * syswk, BOOL flg );
+
+//--------------------------------------------------------------------------------------------
+/**
  * アウトラインカーソル追加
  *
  * @param	syswk	ボックス画面システムワーク
@@ -800,7 +812,7 @@ extern void BOX2OBJ_PokeCursorAdd2( BOX2_SYS_WORK * syswk, u32 pos );
 //--------------------------------------------------------------------------------------------
 extern void BOX2OBJ_PokeCursorVanish( BOX2_SYS_WORK * syswk, BOOL flg );
 
-extern void BOX2OBJ_ChgPokeCursorPriority( BOX2_SYS_WORK * syswk );
+extern void BOX2OBJ_ChgPokeCursorPriority( BOX2_SYS_WORK * syswk, u32 pos );
 
 //--------------------------------------------------------------------------------------------
 /**
