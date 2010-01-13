@@ -441,11 +441,10 @@ static  const VM_INITIALIZER  vm_init={
  * @param[in] wk      
  * @param[in] pokeCon
  * @param[in] ai_bit  起動するAIをビットで指定
- * @param[in] pos     起動するポケモンクライアントID
  * @param[in] heapID  ヒープID
  */
 //============================================================================================
-VMHANDLE* TR_AI_Init( const BTL_MAIN_MODULE* wk, const BTL_POKE_CONTAINER* pokeCon, u32 ai_bit, BtlPokePos pos, HEAPID heapID )
+VMHANDLE* TR_AI_Init( const BTL_MAIN_MODULE* wk, const BTL_POKE_CONTAINER* pokeCon, u32 ai_bit, HEAPID heapID )
 {
   VMHANDLE* vmh;
   TR_AI_WORK*  tr_ai_work = GFL_HEAP_AllocClearMemory( heapID, sizeof( TR_AI_WORK ) );
@@ -456,7 +455,6 @@ VMHANDLE* TR_AI_Init( const BTL_MAIN_MODULE* wk, const BTL_POKE_CONTAINER* pokeC
   tr_ai_work->heapID = heapID;
   tr_ai_work->vmcmd_result = VMCMD_RESULT_CONTINUE;
   tr_ai_work->ai_bit_temp = ai_bit;
-  tr_ai_work->atk_btl_poke_pos = pos;
 
   tr_ai_work->handle = GFL_ARC_OpenDataHandle( ARCID_TR_AI, heapID );
 
@@ -527,9 +525,10 @@ void  TR_AI_Exit( VMHANDLE* vmh )
  *
  * @param[in] vmh       仮想マシン制御構造体へのポインタ
  * @param[in] unselect  選べない技
+ * @param[in] pos       起動するポケモンクライアントID
  */
 //============================================================================================
-void  TR_AI_Start( VMHANDLE* vmh, u8* unselect )
+void  TR_AI_Start( VMHANDLE* vmh, u8* unselect, BtlPokePos pos )
 {
   TR_AI_WORK* tr_ai_work = (TR_AI_WORK*)VM_GetContext( vmh );
   int i;
@@ -542,6 +541,7 @@ void  TR_AI_Start( VMHANDLE* vmh, u8* unselect )
 	tr_ai_work->calc_work = 0;
 	tr_ai_work->status_flag = 0;
 	tr_ai_work->ai_no = 0;
+  tr_ai_work->atk_btl_poke_pos = pos;
 	tr_ai_work->ai_bit = tr_ai_work->ai_bit_temp;
 
   for( i = 0 ; i < PTL_WAZA_MAX ; i++ )
