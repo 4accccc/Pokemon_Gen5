@@ -185,7 +185,8 @@ static  const int bgm_table[]={
   SEQ_BGM_VS_NORAPOKE,
 };
 
-FS_EXTERN_OVERLAY(battle_view);
+//FS_EXTERN_OVERLAY(battle_view);
+FS_EXTERN_OVERLAY(battle);
 
 //--------------------------------------------------------------------------
 /**
@@ -210,7 +211,8 @@ static GFL_PROC_RESULT EffectViewerProcInit( GFL_PROC * proc, int * seq, void * 
     GX_OBJVRAMMODE_CHAR_1D_32K,   // サブOBJマッピングモード
   };
 
-  GFL_OVERLAY_Load( FS_OVERLAY_ID( battle_view ) );
+//  GFL_OVERLAY_Load( FS_OVERLAY_ID( battle_view ) );
+  GFL_OVERLAY_Load( FS_OVERLAY_ID( battle ) );
 
   GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_SOGABE_DEBUG, 0xc0000 );
   evw = GFL_PROC_AllocWork( proc, sizeof( EFFECT_VIEWER_WORK ), HEAPID_SOGABE_DEBUG );
@@ -494,7 +496,8 @@ static GFL_PROC_RESULT EffectViewerProcExit( GFL_PROC * proc, int * seq, void * 
 
   GFL_HEAP_DeleteHeap( HEAPID_SOGABE_DEBUG );
 
-  GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle_view ) );
+//  GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle_view ) );
+  GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle ) );
 
   return GFL_PROC_RES_FINISH;
 }

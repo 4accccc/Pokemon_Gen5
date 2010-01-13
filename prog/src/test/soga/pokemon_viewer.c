@@ -294,7 +294,8 @@ static const GFL_UI_TP_HITTBL TP_HitTbl[] = {
   { GFL_UI_TP_HIT_END, 0, 0, 0 },
 };
 
-FS_EXTERN_OVERLAY(battle_view);
+//FS_EXTERN_OVERLAY(battle_view);
+FS_EXTERN_OVERLAY(battle);
 
 //--------------------------------------------------------------------------
 /**
@@ -319,7 +320,8 @@ static GFL_PROC_RESULT PokemonViewerProcInit( GFL_PROC * proc, int * seq, void *
     GX_OBJVRAMMODE_CHAR_1D_32K,   // サブOBJマッピングモード
   };
 
-  GFL_OVERLAY_Load(FS_OVERLAY_ID(battle_view));
+//  GFL_OVERLAY_Load(FS_OVERLAY_ID(battle_view));
+  GFL_OVERLAY_Load(FS_OVERLAY_ID(battle));
 
   GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_SOGABE_DEBUG, 0xc0000 );
   pvw = GFL_PROC_AllocWork( proc, sizeof( POKEMON_VIEWER_WORK ), HEAPID_SOGABE_DEBUG );
@@ -695,7 +697,8 @@ static GFL_PROC_RESULT PokemonViewerProcExit( GFL_PROC * proc, int * seq, void *
 
   GFL_HEAP_DeleteHeap( HEAPID_SOGABE_DEBUG );
 
-  GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle_view ) );
+//  GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle_view ) );
+  GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle ) );
 
   return GFL_PROC_RES_FINISH;
 }
