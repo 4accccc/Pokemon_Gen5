@@ -29,6 +29,8 @@
 
 #include "scrcmd_wfbc_define.h" 
 
+#include "msg/msg_place_name.h"  // for MAPNAME_xxxx
+
 //-----------------------------------------------------------------------------
 /**
  *					定数宣言
@@ -317,8 +319,61 @@ VMCMD_RESULT EvCmdWfbc_CheckWFTargetPokemon( VMHANDLE *core, void *wk )
   GAMEDATA* p_gamedata = SCRCMD_WORK_GetGameData( work );
   FIELD_WFBC_CORE* p_wfbc_core = GAMEDATA_GetMyWFBCCoreData( p_gamedata );
   FIELD_WFBC_EVENT* p_event = GAMEDATA_GetWFBCEventData( p_gamedata );
+  POKEPARTY * p_party = GAMEDATA_GetMyPokemon( p_gamedata );
+  u16 *ret_if_1 = SCRCMD_GetVMWork( core, wk ); // 第1分岐のフラグ
+  u16 *ret_if_2 = SCRCMD_GetVMWork( core, wk ); // 第2分岐のフラグ
+  u16 *ret_temoti   = SCRCMD_GetVMWork( core, wk ); // 手持ちインデックス
+  u32 max = PokeParty_GetPokeCount( p_party );
+  int  i;
+  POKEMON_PARAM * pp;
+  u32 target_monsno;
+  u32 monsno;
+  u32 mons_getplace;
+  u32 mons_year;
+  u32 mons_month;
+  u32 mons_day;
+  BOOL tamago;
+  RTCDate now_date;
 
+  // 目的の情報を取得
+  target_monsno = FIELD_WFBC_EVENT_GetWFPokeCatchEventMonsNo( p_event );
+  GFL_RTC_GetDate( &now_date );
+
+  //各条件の初期化
+  *ret_if_1 = FALSE;
+  *ret_if_2 = FALSE;
+  *ret_temoti = 0xffff;
   
+  // 手持ちの情報とチェック
+  for( i=0; i<max; i++ )
+  {
+    POKEMON_PARAM * pp = PokeParty_GetMemberPointer( p_party, i );
+
+    monsno    = PP_Get( pp, ID_PARA_monsno, NULL );
+    mons_year = PP_Get( pp, ID_PARA_get_year, NULL );
+    mons_month= PP_Get( pp, ID_PARA_get_month, NULL );
+    mons_day  = PP_Get( pp, ID_PARA_get_day, NULL );
+    mons_getplace = PP_Get( pp, ID_PARA_get_place, NULL );
+    tamago    = PP_Get( pp, ID_PARA_tamago_flag, NULL );
+
+    if( (monsno == target_monsno) && (tamago == FALSE) && (mons_getplace == MAPNAME_WC10) )
+    {
+      *ret_if_1 = TRUE;
+      if( (*ret_temoti) == 0xffff )
+      {  // 最初のヒットのみ
+        (*ret_temoti) = i;
+      }
+
+      
+      // 日時も一致？
+      if( (mons_year == now_date.year) && (mons_month == now_date.month) && (mons_day == now_date.day) )
+      {
+        *ret_if_2 = TRUE;
+        (*ret_temoti) = i;
+      }
+    }
+  }
+
 	return VMCMD_RESULT_CONTINUE;
 }
 

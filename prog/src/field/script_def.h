@@ -165,6 +165,7 @@
 #define SCR_BMID_PC             (4)       ///<配置モデル分類：パソコン
 #define SCR_BMID_PCEV_DOOR      (5)       ///<配置モデル分類：ポケセンエレベーター：ドア
 #define SCR_BMID_PCEV_FLOOR     (6)       ///<配置モデル分類：ポケセンエレベーター：フロア
+#define SCR_BMID_WARP           (7)       ///<配置モデル分類：ワープ
 
 #define  SCR_BMANM_DOOR_OPEN    (0)       ///<ドアアニメ：開く
 #define  SCR_BMANM_DOOR_CLOSE   (1)       ///<ドアアニメ：閉じる

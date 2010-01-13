@@ -6784,6 +6784,25 @@
 
 //--------------------------------------------------------------
 /**
+ *  _WFBC_CHECK_WF_TARGETPOKE
+ *  @brief WFBC:WF 目標ポケモンがいるのか？チェック
+ *  @param  ret_if1 種族NOが一致,卵じゃない、生息地がWF なら TRUE
+ *  @param  ret_if2 捕まえた日が今日  なら　TRUE
+ *  @param  ret_temoti_pos  ヒットしたポケモンの手持ち位置
+ */
+//--------------------------------------------------------------
+#define _WFBC_CHECK_WF_TARGETPOKE( ret_if1, ret_if2, ret_temoti_pos ) \
+    _ASM_WFBC_CHECK_WF_TARGETPOKE ret_if1, ret_if2, ret_temoti_pos
+
+  .macro  _ASM_WFBC_CHECK_WF_TARGETPOKE ret_if1, ret_if2, ret_temoti_pos
+  .short EV_SEQ_WFBC_CHECK_WF_TARGETPOKE
+  .short \ret_if1
+  .short \ret_if2
+  .short \ret_temoti_pos
+  .endm
+
+//--------------------------------------------------------------
+/**
  *  _WFBC_ADD_BC_NPC_WIN_TARGET
  *  @brief WFBC:BC NPC勝利数を加算
  */
