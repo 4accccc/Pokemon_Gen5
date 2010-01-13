@@ -3703,26 +3703,30 @@ static void handler_FusiginaMamori( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK*
   if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) == pokeID)
   &&  (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) != pokeID)
   ){
-    // ヌケニンなら
+    // ヌケニンで
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
     if( BPP_GetMonsNo(bpp) == MONSNO_NUKENIN )
     {
-      // 効果バツグン以外は無効
+      // ダメージワザの場合
       WazaID waza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
-      PokeType waza_type = WAZADATA_GetType( waza );
-      PokeTypePair myType = BPP_GetPokeType( bpp );
-      BtlTypeAff aff = BTL_CALC_TypeAffPair( waza_type, myType );
-      if( aff <= BTL_TYPEAFF_100 )
+      if( WAZADATA_IsDamage(waza) )
       {
-        if( BTL_EVENTVAR_RewriteValue(BTL_EVAR_NOEFFECT_FLAG, TRUE) )
+        // 効果バツグン以外は無効
+        PokeType waza_type = WAZADATA_GetType( waza );
+        PokeTypePair myType = BPP_GetPokeType( bpp );
+        BtlTypeAff aff = BTL_CALC_TypeAffPair( waza_type, myType );
+        if( aff <= BTL_TYPEAFF_100 )
         {
-          BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_TOKWIN_IN, pokeID );
+          if( BTL_EVENTVAR_RewriteValue(BTL_EVAR_NOEFFECT_FLAG, TRUE) )
           {
-            BTL_HANDEX_PARAM_MESSAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
-            HANDEX_STR_Setup( &param->str, BTL_STRTYPE_SET, BTL_STRID_SET_NoEffect );
-            HANDEX_STR_AddArg( &param->str, pokeID );
+            BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_TOKWIN_IN, pokeID );
+            {
+              BTL_HANDEX_PARAM_MESSAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
+              HANDEX_STR_Setup( &param->str, BTL_STRTYPE_SET, BTL_STRID_SET_NoEffect );
+              HANDEX_STR_AddArg( &param->str, pokeID );
+            }
+            BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_TOKWIN_OUT, pokeID );
           }
-          BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_TOKWIN_OUT, pokeID );
         }
       }
     }
