@@ -5344,6 +5344,7 @@ int BOX2MAIN_VFuncPokeMoveGetKey( BOX2_SYS_WORK * syswk )
 		break;
 
 	case 2:		// 手カーソル閉じる
+		PMSND_PlaySE( SE_BOX2_POKE_CATCH );
 		BOX2OBJ_SetHandCursorAnm( syswk, BOX2OBJ_ANM_HAND_CLOSE );
 		vf->seq++;
 	case 3:		// 手カーソルを上へ
@@ -5442,6 +5443,7 @@ int BOX2MAIN_VFuncPokeMovePutKey( BOX2_SYS_WORK * syswk )
 			PokeIconBufPosChange( syswk, work->dat );
 			BOX2OBJ_SetHandCursorAnm( syswk, BOX2OBJ_ANM_HAND_NORMAL );
 			BOX2OBJ_PokeCursorVanish( syswk, FALSE );
+			PMSND_PlaySE( SE_BOX2_POKE_PUT );
 			vf->seq = 0;
 			return 0;
 		}

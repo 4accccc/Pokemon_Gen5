@@ -2870,9 +2870,11 @@ u32 BOX2UI_SleepMain( BOX2_SYS_WORK * syswk )
 			CursorObjMove( syswk, now );
 			return CURSORMOVE_NONE;
 		}
+/*
 		if( ret == CURSORMOVE_CANCEL ){
 			return BOX2UI_SLEEP_MAIN_CLOSE;
 		}
+*/
 	}
 
 	return ret;
