@@ -199,11 +199,13 @@ u32 CURSORMOVE_Main( CURSORMOVE_WORK * wk )
 
 	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE ){
 //		Snd_SePlay( SEQ_SE_DP_DECIDE );		// 各アプリでSEが可変になる可能性がある
+		GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
 		return wk->cur_pos;
 	}
 
 	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL ){
 //		Snd_SePlay( SEQ_SE_DP_DECIDE );
+		GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
 		return CURSORMOVE_CANCEL;
 	}
 
@@ -319,6 +321,7 @@ static BOOL Main_TouchCheck( CURSORMOVE_WORK * wk, int * hit )
 				}
 				wk->func->touch( wk->work, wk->cur_pos, wk->old_pos );
 				*hit = cnt;
+				GFL_UI_SetTouchOrKey( GFL_APP_END_TOUCH );
 				break;
 			}
 		}
@@ -372,6 +375,8 @@ static u8 MoveVec( const CURSORMOVE_DATA * dat, u8 now, u8 mv )
 //--------------------------------------------------------------------------------------------
 static u32 Main_CursorOn( CURSORMOVE_WORK * wk )
 {
+	GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
+
 	wk->cur_flg  = TRUE;
 	wk->old_pos  = DEF_OLDPOS;
 	wk->save_pos = DEF_OLDPOS;
@@ -394,6 +399,8 @@ static u32 Main_CursorOn( CURSORMOVE_WORK * wk )
 static u32 Main_KeyMove( CURSORMOVE_WORK * wk, u8 mv, u8 ret )
 {
 	u8	tmp, old;
+
+	GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
 
 	// 移動先の記憶ビットチェック
 	if( ret & CURSORMOVE_RETBIT ){
