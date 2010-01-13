@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-22T15:49:23"/>
+	<create user="matsumiya" host="W00207" date="2010-01-13T19:25:19"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,40 +292,108 @@
 	</lock>
 
 
-	<row id="msg_c01r0501_black_01" text-color="#000000,,,#000000,,#000000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c01r0501_black_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
-・0＝主人公名
-・ジム挑戦可能フラグ</comment>
+・黒板をむいたままメッセージ表示
+・続けてblack_02</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">ブラッカー『おっ　[1:00:トレーナー名:0]
-ポケモンジムに　ちょうせん　するまえに[BE:00:ページ切り替え（行送り）]
-ここで　べんきょう　するのか？[BE:01:ページ切り替え（クリア）]
-さっきまで　ここに
-ジムリーダーが　いてさ[BE:00:ページ切り替え（行送り）]
-タイプのこと　はなしていたよ</language>
-		<language name="JPN_KANJI" width="256">ブラッカー『おっ　[1:00:トレーナー名:0]
-ポケモンジムに　挑戦する前に[BE:00:ページ切り替え（行送り）]
-ここで　勉強？[BE:01:ページ切り替え（クリア）]
-さっきまで　ここに
-ジムリーダーが　いてさ[BE:00:ページ切り替え（行送り）]
-タイプのこと　話していたよ</language>
+		<language name="JPN" width="256">ブラッカー『ポケモンが
+どくを　うけると▼
+たたかっている　あいだ
+どんどん　たいりょくが　へる▼
+ただし　たいりょくが　へるのは
+たたかっているとき　だけ　か……▼</language>
+		<language name="JPN_KANJI" width="256">ブラッカー『ポケモンが
+毒を　受けると▼
+戦っている　あいだ
+どんどん　体力が　減る▼
+ただし　体力が　減るのは
+戦っているとき　だけ　か……▼</language>
 	</row>
 
-	<row id="msg_c01r0501_black_02" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c01r0501_black_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
-・msg_c01r0501_black_01表示後
+・はい/いいえの選択肢表示
+　はい→black_03
+　いいえ→black_04
+・0＝主人公名</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">ん？　[1:00:トレーナー名:0]
+ここで　べんきょう　かい？▼
+さっきまで　ここに
+ジムリーダーが　いて　ポケモンの▽
+タイプのこと　はなしていたよ▼
+ひょっとして　ジムリーダーを
+さがしにきた　とか？</language>
+		<language name="JPN_KANJI" width="256">ん？　[1:00:トレーナー名:0]
+ここで　勉強かい？▼
+さっきまで　ここに
+ジムリーダーが　いて　ポケモンの▽
+タイプのこと　話していたよ▼
+ひょっとして　ジムリーダーを
+探しにきた　とか？</language>
+	</row>
+
+	<row id="msg_c01r0501_black_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・はい選択時
+・続けてblack_05</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">ジムリーダーと
+すれちがったのかな？▼</language>
+		<language name="JPN_KANJI" width="256">ジムリーダーと
+すれちがったのかな？▼</language>
+	</row>
+
+	<row id="msg_c01r0501_black_04" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・いいえ選択時
+・続けてblack_05</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">そんなこと　いわないでさ▼
+ジムリーダーと　たたかうことは
+トレーナーに　とって▽
+すごく　べんきょうに　なるからね▼</language>
+		<language name="JPN_KANJI" width="256">そんなこと　いわないでさ▼
+ジムリーダーと　戦うことは
+トレーナーに　とって▽
+すごく　勉強に　なるからね▼</language>
+	</row>
+
+	<row id="msg_c01r0501_black_05" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・アイテム入手処理
+　No155「オレンのみ」
+・入手後、続けてblack_06表示
+・0＝主人公名</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">そうだ　[1:00:トレーナー名:0]
+この　きのみを　あげるよ▼</language>
+		<language name="JPN_KANJI" width="256">そうだ　[1:00:トレーナー名:0]
+この　きのみを　あげるよ▼</language>
+	</row>
+
+	<row id="msg_c01r0501_black_06" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・black_05表示後は繰り返し
 ・c01ジムバッジ取得でここから削除</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">ブラッカー『ジムに　ちょうせん　するなら
-できるかぎり　いろんな　タイプの[BE:00:ページ切り替え（行送り）]
-ポケモンを　そろえたほうが　いい[BE:01:ページ切り替え（クリア）]
-あと　キズぐすりも　たくさん
-もっていたほうが　あんしん　かもな</language>
-		<language name="JPN_KANJI" width="256">ブラッカー『ジムに　挑戦するなら
-できるかぎり　いろんな　タイプの[BE:00:ページ切り替え（行送り）]
-ポケモンを　そろえたほうが　いい[BE:01:ページ切り替え（クリア）]
-あと　キズぐすり　とかも
-たくさん　持っていたほうが　安心だな</language>
+		<language name="JPN" width="256">ブラッカー『ポケモンに
+きのみを　もたせておけば▼
+たたかって　たいりょくが　へると
+かってに　たべてくれるんだ▼
+もっとも　キズぐすりの　ように
+ひとが　つくった　どうぐは▽
+もたせておいても　つかえないけどね▼
+じゃ　がんばって</language>
+		<language name="JPN_KANJI" width="256">ブラッカー『ポケモンに
+きのみを　持たせておけば▼
+戦って　体力が　減ると
+勝手に　食べてくれるんだ▼
+もっとも　キズぐすりの　ように
+人が　つくった　道具は▽
+持たせておいても　使えないけどね▼
+じゃ　がんばって</language>
 	</row>
 
 	<row id="msg_c01r0501_gentleman_01">
@@ -424,22 +492,24 @@
 		<language name="JPN_KANJI" width="256">どれについて　見ますか？</language>
 	</row>
 
-	<row id="msg_c01r0501_board_03" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c01r0501_board_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>ＢＧメッセージ
 ・どく選択
 ・続けてboard_02表示
 ※どくの仕様変更</comment>
 		<attribute name="キャラ指定">黒板</attribute>
 		<language name="JPN" width="256">どくを　うけると
-たいりょくが　へっていきます[BE:01:ページ切り替え（クリア）]
-せんとうの　あとも　どくは　のこり
-たたかうと　たいりょくが　へります[BE:01:ページ切り替え（クリア）]
-どくけしで　なおしましょう[BE:01:ページ切り替え（クリア）]</language>
+たたかっている　あいだ▽
+たいりょくが　へっていきます▼
+せんとうが　おわっても
+どくの　ままです▼
+どくけしで　なおしましょう▼</language>
 		<language name="JPN_KANJI" width="256">どくを　うけると
-体力が　減っていきます[BE:01:ページ切り替え（クリア）]
-戦闘のあとも　どくは　残り
-戦うと　体力が　減ります[BE:01:ページ切り替え（クリア）]
-どくけしで　治しましょう[BE:01:ページ切り替え（クリア）]</language>
+たたかっている　あいだ▽
+たいりょくが　へっていきます▼
+せんとうが　おわっても
+どくの　ままです▼
+どくけしで　なおしましょう▼</language>
 	</row>
 
 	<row id="msg_c01r0501_board_04" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">

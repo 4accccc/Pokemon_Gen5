@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-22T16:50:17"/>
+	<create user="matsumiya" host="W00207" date="2010-01-13T19:49:39"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -721,8 +721,8 @@
 ・ジムに入ると
 　主人公に隣接してメッセージ表示
 ・No???「おいしいみず」入手</comment>
-		<attribute name="キャラ指定">GLASSES
-サングラス</attribute>
+		<attribute name="キャラ指定">DANPEI
+ダンペイ</attribute>
 		<language name="JPN" width="256">ジムリーダーさがし
 たいへん　だったッすよね[BE:01:ページ切り替え（クリア）]
 これを　さしあげますよ</language>
@@ -735,6 +735,8 @@
 		<comment>♂
 ・ジムバッジ取得前＋アイテム入手後
 ・ジムバッジ取得まで繰り返し</comment>
+		<attribute name="キャラ指定">DANPEI
+ダンペイ</attribute>
 		<language name="JPN" width="256">ポケモンしょうぶの　きほんは
 タイプの　あいしょう　なんですよね[BE:01:ページ切り替え（クリア）]
 あいてのポケモンに　たいして
@@ -764,6 +766,8 @@
 	<row id="msg_c01gym0101_glasses_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・ジムバッジ取得後</comment>
+		<attribute name="キャラ指定">DANPEI
+ダンペイ</attribute>
 		<language name="JPN" width="256">ジムバッジを　てにいれた
 きょう　という　すばらしい　ひを[BE:00:ページ切り替え（行送り）]
 いつまでも　おぼえていてほしいッすね</language>

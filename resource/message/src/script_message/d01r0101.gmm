@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2010-01-13T12:26:37"/>
+	<create user="matsumiya" host="W00207" date="2010-01-13T22:17:39"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -279,7 +279,7 @@
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="255"/>
+		<comment position="4" width="376"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="96">
 		</attribute>
@@ -484,92 +484,377 @@
 	<row id="msg_d01r0101_white_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・Cギア登録後に
-　いあいぎりを終えるとマップ上から登場
+　いあいぎり後にPOSを踏むと画面左から登場
 ・主人公に隣接してメッセージ表示
 ・表示後、廃墟内に移動してきょろきょろ</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
 		<language name="JPN" width="256">ホワイティ『あっ　[1:00:トレーナー名:0]も
-おかしな　ゆめを　みせる[BE:00:ページ切り替え（行送り）]
 ふしぎな　ポケモンを　さがすの？▼</language>
 		<language name="JPN_KANJI" width="256">ホワイティ『あっ　[1:00:トレーナー名:0]も
-おかしな　夢を　見せる[BE:00:ページ切り替え（行送り）]
 不思議な　ポケモンを　探すの？▼</language>
 	</row>
 
 	<row id="msg_d01r0101_white_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
-・廃墟内のPOSを踏む前</comment>
+・廃墟内のPOS（GRIDX=23、GRIDZ=23）を踏むと
+ 主人公のほうを向いてメッセージ表示</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
 		<language name="JPN" width="256">ホワイティ『それにしても
 ゆめを　みせるって▽
 どんな　しくみ　なのかしら？</language>
 		<language name="JPN_KANJI" width="256">ホワイティ『それにしても
-夢を　見せるって[BE:00:ページ切り替え（行送り）]
+夢を　見せるって▽
 どんな　仕組み　なのかしら？</language>
 	</row>
 
 	<row id="msg_d01r0101_white_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
-・廃墟内のPOSを踏んだとき
+・廃墟内のPOS（GRIDX=25、GRIDZ=22~23）を踏んだとき
 ・主人公に隣接してメッセージ表示
-　その後、所定POSまで移動
-・移動すると下記のポケモンのアニメ
-　※何か遊びを入れたい</comment>
+　その後、所定POS（GRIDX=27、GRIDZ=16）まで移動
+・移動すると下記のポケモンのアニメ</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
-		<language name="JPN" width="256">ホワイティ『！[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">ホワイティ『！▼
 なんだか　かべの　むこうから
-ものおと　きこえなかった！？[BE:00:ページ切り替え（行送り）]
-ねえねえ　いってみようよ！</language>
+ものおと　きこえなかった！？▽
+ねえねえ　いってみようよ！▼</language>
 		<language name="JPN_KANJI" width="256">ホワイティ『！▼
 なんだか　壁の　向こうから
 物音　聞こえなかった！？▽
-ねえねえ　行ってみようよ！</language>
+ねえねえ　行ってみようよ！▼</language>
 	</row>
 
-	<row id="msg_d01r0101_poke_01">
+	<row id="msg_d01r0101_poke_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
 		<comment>ポケモン
-・アニメ後、画面外に移動</comment>
+・あわせて鳴き声
+・メッセージ表示後、画面上に移動し
+　POS（GRIDX=27、GRIDZ=27）に配置
+・続けてwhite_04</comment>
 		<attribute name="キャラ指定">ポケモン
-ムシャーナ</attribute>
+ムンナ</attribute>
 		<language name="JPN" width="256">ムンナ『……むううん▼</language>
 		<language name="JPN_KANJI" width="256">ムンナ『……むううん▼</language>
 	</row>
 
-	<row id="msg_d01r0101_white_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_d01r0101_white_04" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
-・上記ポケモンが移動後に表示
-・だいじなもの「？？？？？？？」取得</comment>
+・メッセージ表示後、画面上に移動
+・POS（GRIDX=27、GRIDZ=13）を踏むと
+　画面上からプラズマ団登場（ムンナの左右に配置）
+・続けてhakaiw_01</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
-		<language name="JPN" width="256">ホワイティ『いまの　ピンクいろのが
-ゆめをみせる　ポケモン……[BE:01:ページ切り替え（クリア）]
-あれ……　なに……？
-ねっ　[1:00:トレーナー名:0]　とってみて！</language>
-		<language name="JPN_KANJI" width="256">ホワイティ『今の　ピンク色のが
-夢を見せる　ポケモン……[BE:01:ページ切り替え（クリア）]
-あれ……　なに……？
-ねっ　[1:00:トレーナー名:0]　とってみて！</language>
+		<language name="JPN" width="256">ホワイティ『あっ　まってえ！▼</language>
+		<language name="JPN_KANJI" width="256">ホワイティ『あっ　待ってえ！▼</language>
 	</row>
 
-	<row id="msg_d01r0101_white_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_d01r0101_hakaiw_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,,,#80ffff,,,,,,,,,,,,,">
 		<comment>♀
-・だいじなもの「？？？？？？？」取得後に
-　メッセージ表示
-・以降、削除まで繰り返し
-・削除タイミング
-　r03でのイベント発動時</comment>
+・続けてhakaim_01</comment>
+		<attribute name="キャラ指定">プラズマ団♀</attribute>
+		<language name="JPN" width="256">？？？『ムンナ　みっけ！▼</language>
+		<language name="JPN_KANJI" width="256">？？？『ムンナ　みっけ！▼</language>
+	</row>
+
+	<row id="msg_d01r0101_hakaim_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂
+・続けてpoke_02</comment>
+		<attribute name="キャラ指定">プラズマ団♂</attribute>
+		<language name="JPN" width="256">？？？『ほら　ほら！
+ゆめのけむりを　だせ！▼</language>
+		<language name="JPN_KANJI" width="256">？？？『ほら　ほら！
+ゆめのけむりを　だせ！▼</language>
+	</row>
+
+	<row id="msg_d01r0101_poke_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>ポケモン
+・あわせて鳴き声
+・メッセージ表示後、ポケモンの動作モデル左右を見る
+・続けて_white_04</comment>
+		<attribute name="キャラ指定">ポケモン
+ムンナ</attribute>
+		<language name="JPN" width="256">ムンナ『……むう！▼</language>
+		<language name="JPN_KANJI" width="256">ムンナ『……むう！▼</language>
+	</row>
+
+	<row id="msg_d01r0101_white_05" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・続けてhakaim_02</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
-		<language name="JPN" width="256">ホワイティ『それ　マコモさんが
-さがしていた　「ゆめのけむり」だよね[BE:01:ページ切り替え（クリア）]
-[1:00:トレーナー名:0]　
-マコモさんに　とどけてあげて[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">ホワイティ『ちょっと！▼
+あなたたち　だあれ？▼
+なに　してるの！？▼</language>
+		<language name="JPN_KANJI" width="256">ホワイティ『ちょっと！▼
+あなたたち　だあれ？▼
+なに　してるの！？▼</language>
+	</row>
+
+	<row id="msg_d01r0101_hakaim_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂
+・続けてhakaiw_02</comment>
+		<attribute name="キャラ指定">プラズマ団♂</attribute>
+		<language name="JPN" width="256">？？？『わたしたちの　ことか？▼
+わたしたち　プラズマだんは
+ポケモンを　かいほう　するため▽
+にちや　たたかって　いるのだ▼</language>
+		<language name="JPN_KANJI" width="256">？？？『我々か？▼
+我々　プラズマ団は
+ポケモンを　解放　するため▽
+日夜　闘って　いるのだ▼</language>
+	</row>
+
+	<row id="msg_d01r0101_hakaiw_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,,,#80ffff,,,,,,,,,,,,,">
+		<comment>♀
+・続けてhakaimをムンナのほうを向かせてから
+　hakaim_03表示</comment>
+		<attribute name="キャラ指定">プラズマ団♀</attribute>
+		<language name="JPN" width="256">プラズマだん『なにを　してるのか？▼
+ムンナという　ポケモン
+ゆめのけむり　という▽
+ふしぎなガスを　だして　いろんな▽
+ゆめを　みせるそうじゃない▼
+それを　つかい　ひとびとが
+ポケモンを　てばなしたくなる……▽
+そんな　ゆめを　みせるのよ▼</language>
+		<language name="JPN_KANJI" width="256">プラズマ団『なにを　してるのか？▼
+ムンナという　ポケモン
+ゆめのけむり　という▽
+不思議なガスを　だして　いろんな▽
+夢を　みせるそうじゃない▼
+それを　使い　人々が
+ポケモンを　手放したくなる……▽
+そんな　夢を　みせるのよ▼</language>
+	</row>
+
+	<row id="msg_d01r0101_hakaim_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂
+・続けてwhite_06</comment>
+		<attribute name="キャラ指定">プラズマ団♂</attribute>
+		<language name="JPN" width="256">プラズマだん『おっ！
+ゆめのけむり　かいしゅう　せいこう！▼</language>
+		<language name="JPN_KANJI" width="256">プラズマ団『おっ！
+ゆめのけむり　回収成功！▼</language>
+	</row>
+
+	<row id="msg_d01r0101_white_06" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・続けてhakaiw_03</comment>
+		<attribute name="キャラ指定">友達♀</attribute>
+		<language name="JPN" width="256">ホワイティ『いま　ポケモンを　けって
+ゆめのけむりを　ださせたの？▼
+ひどい！　どうして？
+あなたたちも　トレーナーなんでしょ？▼</language>
+		<language name="JPN_KANJI" width="256">ホワイティ『いま　ポケモンを　けって
+ゆめのけむりを　ださせたの？▼
+ひどい！　どうして？
+あなたたちも　トレーナーなんでしょ？▼</language>
+	</row>
+
+	<row id="msg_d01r0101_hakaiw_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,,,#80ffff,,,,,,,,,,,,,">
+		<comment>♀
+・続けてhakaim_04</comment>
+		<attribute name="キャラ指定">プラズマ団♀</attribute>
+		<language name="JPN" width="256">プラズマだん『ワタシたちを
+くだらない　トレーナーなどと▽
+いっしょに　するな！▼
+ポケモンを　つかうのは
+おろかな　トレーナーどもに▽
+ポケモンの　すごさを　おしえるため！▼</language>
+		<language name="JPN_KANJI" width="256">プラズマ団『ワタシたちを
+くだらない　トレーナーなどと▽
+いっしょに　するな！▼
+ポケモンを　使うのは
+愚かな　トレーナーどもに▽
+ポケモンの　すごさを　教えるため！▼</language>
+	</row>
+
+	<row id="msg_d01r0101_hakaim_04" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂
+・続けてwhite_07</comment>
+		<attribute name="キャラ指定">プラズマ団♂</attribute>
+		<language name="JPN" width="256">プラズマだん『そして　力づくで
+ポケモンを　奪うほうが　早い▼
+というわけで
+おまえたちの　ポケモン▽
+私たちが　救い出そう！▼</language>
+		<language name="JPN_KANJI" width="256">プラズマ団『そして　力づくで
+ポケモンを　奪うほうが　早い▼
+というわけで
+おまえたちの　ポケモン▽
+私たちが　救い出そう！▼</language>
+	</row>
+
+	<row id="msg_d01r0101_white_07" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+		<comment>♀
+・メッセージ表示後、hakaimと戦闘に
+・勝利するとフィールドに戻りhakaiw_04表示
+・0＝主人公名</comment>
+		<attribute name="キャラ指定">友達♀</attribute>
+		<language name="JPN" width="256">ホワイティ『えええ！
+ちょっと　[1:00:トレーナー名:0]！▼</language>
+		<language name="JPN_KANJI" width="256">ホワイティ『えええ！
+ちょっと　[1:00:トレーナー名:0]！▼</language>
+	</row>
+
+	<row id="msg_d01r0101_hakaiw_04" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♀
+・メッセージ表示後、hakaiwと戦闘に
+・勝利するとフィールドに戻りhakaim_05表示
+　このときムンナの動作モデル削除済み</comment>
+		<attribute name="キャラ指定">プラズマ団♀</attribute>
+		<language name="JPN" width="256">プラズマだん『こどもだと
+おもって　みくびったか？▼
+まあいい
+つぎは　ワタシだ▼</language>
+		<language name="JPN_KANJI" width="256">プラズマ団『子供だと
+おもって　みくびったか？▼
+まあいい
+次は　ワタシだ▼</language>
+	</row>
+
+	<row id="msg_d01r0101_hakaim_05" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂
+・メッセージ表示後、画面暗転して
+　プラズマ団の動作モデルを削除
+・続けてwhite_08</comment>
+		<attribute name="キャラ指定">プラズマ団♂</attribute>
+		<language name="JPN" width="256">プラズマだん『……まさか
+ふたりして　まけるとはな！▼
+いまので　ムンナも　にげたようだし
+ここには　もう　ようは　ないな！▼</language>
+		<language name="JPN_KANJI" width="256">プラズマ団『……まさか
+二人して　負けるとはな！▼
+今ので　ムンナも　逃げたようだし
+ここには　もう　用は　ないな！▼</language>
+	</row>
+
+	<row id="msg_d01r0101_white_08" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・メッセージ表示後、移動してアイテム取得
+・再度主人公の隣に戻りwhite_09表示
+・0＝主人公名</comment>
+		<attribute name="キャラ指定">友達♀</attribute>
+		<language name="JPN" width="256">ホワイティ『ありがとう！
+[1:00:トレーナー名:0]　ありがとうね！▼
+あのまま　だったら
+ムンナって　ポケモン▽
+もっと　ひどいことに　あってたよ！▼
+あれ……？▼</language>
+		<language name="JPN_KANJI" width="256">ホワイティ『ありがとう！
+[1:00:トレーナー名:0]　ありがとうね！▼
+あのまま　だったら
+ムンナって　ポケモン▽
+もっと　ひどいことに　あってたよ！▼
+あれ……？▼</language>
+	</row>
+
+	<row id="msg_d01r0101_white_09" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・続けてinventor_01</comment>
+		<attribute name="キャラ指定">友達♀</attribute>
+		<language name="JPN" width="256">ホワイティ『これ……▼
+なかに　はいっているのって
+ムンナの　ゆめのけむり！？▼</language>
+		<language name="JPN_KANJI" width="256">ホワイティ『これ……▼
+なかに　はいっているのって
+ムンナの　ゆめのけむり！？▼</language>
+	</row>
+
+	<row id="msg_d01r0101_inventor_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>♀
+・まずメッセージだけ表示
+・続けてマコモ登場してから
+　inventor_02表示</comment>
+		<attribute name="キャラ指定">ASSISTANTW
+発明家</attribute>
+		<language name="JPN" width="256">[FF:01:サイズ:200]わっ！▼</language>
+		<language name="JPN_KANJI" width="256">[FF:01:サイズ:200]わっ！▼</language>
+	</row>
+
+	<row id="msg_d01r0101_inventor_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>♀
+・続けてwhite_10</comment>
+		<attribute name="キャラ指定">ASSISTANTW
+発明家</attribute>
+		<language name="JPN" width="256">マコモ『まちきれなくて　きちゃった▼
+あら　あなたたち　しりあい　なの？▼</language>
+		<language name="JPN_KANJI" width="256">マコモ『待ちきれなくて　来ちゃった▼
+あら　あなたたち　知り合い　なの？▼</language>
+	</row>
+
+	<row id="msg_d01r0101_white_10" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・続けてinventor_03</comment>
+		<attribute name="キャラ指定">友達♀</attribute>
+		<language name="JPN" width="256">ホワイティ『あっ　マコモさん
+これ　なんですけど……▼</language>
+		<language name="JPN_KANJI" width="256">ホワイティ『あっ　マコモさん
+これ　なんですけど……▼</language>
+	</row>
+
+	<row id="msg_d01r0101_inventor_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>♀
+・msg_c01r0102_inventor_05表示後と同じアニメ
+・続けてinventor_04</comment>
+		<attribute name="キャラ指定">ASSISTANTW
+発明家</attribute>
+		<language name="JPN" width="256">マコモ『なになに？▼</language>
+		<language name="JPN_KANJI" width="256">マコモ『なになに？▼</language>
+	</row>
+
+	<row id="msg_d01r0101_inventor_04" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>♀
+・メッセージ表示後、画面から退場
+・退場後、続けてwhite_11
+・0＝主人公名</comment>
+		<attribute name="キャラ指定">ASSISTANTW
+発明家</attribute>
+		<language name="JPN" width="256">ゆめのけむり！▼
+さすが　[1:00:トレーナー名:0]に　ホワイティ！
+アララギが　みこんだ　トレーナーね！▼
+これで　みんな　ハッピーな　ゆめを
+みられるように　なるわ！▼
+あなたたち　あとで
+あたしの　いえに　きてねー！！▼</language>
+		<language name="JPN_KANJI" width="256">ゆめのけむり！▼
+さすが　[1:00:トレーナー名:0]に　ホワイティ！
+アララギが　みこんだ　トレーナーね！▼
+これで　みんな　ハッピーな　夢を
+みられるように　なるわ！▼
+あなたたち　あとで
+あたしの　家に　来てねー！！▼</language>
+	</row>
+
+	<row id="msg_d01r0101_white_11" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・メッセージ表示後、主人公フリーに</comment>
+		<attribute name="キャラ指定">友達♀</attribute>
+		<language name="JPN" width="256">ホワイティ『ふええ　なんだか
+すっごく　ドタバタしちゃったねえ▼
+[1:00:トレーナー名:0]は
+マコモさんの　いえに　いってみたら？▼
 あたし？　あたしはね
-さっきの　ポケモン　さがしてみる！</language>
-		<language name="JPN_KANJI" width="256">ホワイティ『それ　マコモさんが
-探していた　「ゆめのけむり」だよね[BE:01:ページ切り替え（クリア）]
-[1:00:トレーナー名:0]　
-マコモさんに　届けてあげて[BE:01:ページ切り替え（クリア）]
+さっきの　ポケモン　さがすんだから！</language>
+		<language name="JPN_KANJI" width="256">ホワイティ『ふええ　なんだか
+すっごく　ドタバタしちゃったねえ▼
+[1:00:トレーナー名:0]は
+マコモさんの　家に　行ってみたら？▼
 あたし？　あたしはね
-さっきの　ポケモン　探してみる！</language>
+さっきの　ポケモン　探すんだから！</language>
+	</row>
+
+	<row id="msg_d01r0101_white_12" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・white_11表示以降繰り返し
+・r03でのプラズマ団イベント発生でここから削除</comment>
+		<attribute name="キャラ指定">友達♀</attribute>
+		<language name="JPN" width="256">ホワイティ『[1:00:トレーナー名:0]は
+マコモさんの　いえに　いってみたら？▼
+あたし？　あたしはね
+さっきの　ポケモン　さがすんだから！</language>
+		<language name="JPN_KANJI" width="256">ホワイティ『[1:00:トレーナー名:0]は
+マコモさんの　家に　行ってみたら？▼
+あたし？　あたしはね
+さっきの　ポケモン　探すんだから！</language>
 	</row>
 
 	<flowchart-group-list>

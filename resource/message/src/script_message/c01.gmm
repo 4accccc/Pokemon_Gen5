@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2010-01-13T11:24:13"/>
+	<create user="matsumiya" host="W00207" date="2010-01-13T19:49:51"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="526"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="680"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -312,19 +312,8 @@
 ちょっと　ついてきて！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c01_inventor_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♀
-・削除予定ラベル</comment>
-		<attribute name="キャラ指定">発明家</attribute>
-		<language name="JPN" width="256">no data</language>
-		<language name="JPN_KANJI" width="256">no data</language>
-	</row>
-
-	<row id="msg_c01_musical_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・7月末ROMミュージカル呼び出し
-※こいつのスクリプトは
-　コメント扱いにしておいてください</comment>
+	<row id="msg_c01_musical_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">MAN2</attribute>
 		<language name="JPN" width="256">きみ　かがやいているね！
 ミュージカル　やってみない？</language>
@@ -332,9 +321,8 @@
 ミュージカル　やってみない？</language>
 	</row>
 
-	<row id="msg_c01_musical_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・7月末ROMミュージカル呼び出し</comment>
+	<row id="msg_c01_musical_02" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">MAN2</attribute>
 		<language name="JPN" width="256">では　ミュージカルの　せかいを
 おもうぞんぶん　たのしんで！[BE:01:ページ切り替え（クリア）]</language>
@@ -342,9 +330,8 @@
 思う存分　楽しんで！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c01_musical_03" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・7月末ROMミュージカル呼び出し</comment>
+	<row id="msg_c01_musical_03" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">MAN2</attribute>
 		<language name="JPN" width="256">えんりょ　すること　ないのに……
 きがむいたら　また　はなしかけてよ</language>
@@ -352,33 +339,32 @@
 気が向いたら　また　話しかけてよ</language>
 	</row>
 
-	<row id="msg_c01_glasses_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c01_glasses_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・初期状態で配置済み
-・c01､ｄ01のジムリーダーと
-　c01r0501の友達♂と会話すれば
-　ここから削除</comment>
-		<attribute name="キャラ指定">GLASSES
-サングラス</attribute>
-		<language name="JPN" width="256">ジムリーダー　ですけど
-いま　ちょっと　いないんすよね[BE:01:ページ切り替え（クリア）]
-きっと　どこかで
-しゅぎょうを　してるんすよね[BE:01:ページ切り替え（クリア）]
-わるいんですけど　ちょうせん　するなら
+・c01r0501の友達♂と会話すれば
+　ここから削除
+・代わりにleader1_01登場</comment>
+		<attribute name="キャラ指定">DANPEI
+ダンペイ</attribute>
+		<language name="JPN" width="256">ジムリーダーですか？▼
+いま　いないんですよ
+トレーナーズスクール　ですかね▼
+わるいですけど　ちょうせん　するなら
 さがしてきて　ほしいんすよね</language>
-		<language name="JPN_KANJI" width="256">ジムリーダー　ですけど
-今　ちょっと　いないんすよね[BE:01:ページ切り替え（クリア）]
-きっと　どこかで
-修行を　してるんすよね[BE:01:ページ切り替え（クリア）]
-申し訳ないですけど　挑戦するなら
+		<language name="JPN_KANJI" width="256">ジムリーダーですか？▼
+今　いないんですよ
+トレーナーズスクール　ですかね▼
+わるいですけど　挑戦するなら
 探してきて　ほしいんすよね</language>
 	</row>
 
-	<row id="msg_c01_glasses_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c01_glasses_02" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・c01､ｄ01のジムリーダーと
 　c01r0501の友達♂と会話後
 　</comment>
+		<attribute name="キャラ指定">ダンペイ</attribute>
 		<language name="JPN" width="256">ジムリーダー　ですか？
 まだ　もどってきて　ないんすよね[BE:01:ページ切り替え（クリア）]
 いつもだと　ゆめのあとち　か
@@ -407,7 +393,7 @@
 [1:03:ポケモンタイプ:1]タイプが　にがて　なんですね[BE:01:ページ切り替え（クリア）]
 きちんと　たいさく　しておいたほうが
 いいと　おもいますよ[BE:01:ページ切り替え（クリア）]
-それでは　ジムで　まっていますね[BE:01:ページ切り替え（クリア）]</language>
+それでは　なかで　まっていますね[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">……え？　ぼくが　この街の
 ジムリーダー　ですけど[BE:00:ページ切り替え（行送り）]
 きみは……？[BE:01:ページ切り替え（クリア）]
@@ -419,7 +405,7 @@
 [1:03:ポケモンタイプ:1]タイプが　苦手　なんですね[BE:01:ページ切り替え（クリア）]
 きちんと　対策しておいたほうが
 いいと　思いますよ[BE:01:ページ切り替え（クリア）]
-それでは　ジムで　待っていますね[BE:01:ページ切り替え（クリア）]</language>
+それでは　中で　待っていますね[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_c01_stop_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -445,11 +431,12 @@
 自分の　実力を　試せ！</language>
 	</row>
 
-	<row id="msg_c01_stop_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c01_stop_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・r03側ストッパー
 ・C01ジムバッジ入手後で
-　PDWイベントクリア前</comment>
+　PDWイベントクリア前
+※メッセージ調整予定</comment>
 		<language name="JPN" width="256">さっき　はつめいか　とやらが
 おまえさんを　さがしていたぞ！</language>
 		<language name="JPN_KANJI" width="256">さっき　発明家が
@@ -516,8 +503,9 @@
 夢を見せる　ポケモンじゃな</language>
 	</row>
 
-	<row id="msg_c01_breederw_01">
-		<comment>♀</comment>
+	<row id="msg_c01_breederw_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♀
+・メッセージ修正予定</comment>
 		<attribute name="キャラ指定">BREEDERW
 ブリーダー♀</attribute>
 		<language name="JPN" width="256">この　まちには
@@ -585,6 +573,47 @@
 ほのおタイプの　ポケモンは
 みずタイプの　わざが　にがてなの[BE:01:ページ切り替え（クリア）]
 ほかにも　いろいろ　しってるよ！</language>
+	</row>
+
+	<row id="msg_c01_woman2a_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+		<comment>♀
+・GRIDX=792、GRIDZ=586
+※現状babygirlがいるところ
+※babygirlは
+　GRIDX=770、GRIDZ=597辺りに移動</comment>
+		<attribute name="キャラ指定">WOMAN2
+女性</attribute>
+		<language name="JPN" width="256">ゆめのあとち　で　きたえている
+トレーナーたちも　いるわ▼
+よければ　あなたも　いってみれば？
+なにか　はっけんが　あるかもよ</language>
+		<language name="JPN_KANJI" width="256">ゆめのあとち　で　きたえている
+トレーナーたちも　いるわ▼
+よければ　あなたも　いってみれば？
+なにか　はっけんが　あるかもよ</language>
+	</row>
+
+	<row id="msg_c01_fising_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・GRIDX=740、GRIDZ=582、右向き
+・アイテム入手処理
+・入手アイテム未定（暫定でわざマシン01）</comment>
+		<attribute name="キャラ指定">FISING</attribute>
+		<language name="JPN" width="256">よく　きたな
+そんな　おまえに　これをやろう▼</language>
+		<language name="JPN_KANJI" width="256">よく　きたな
+そんな　おまえに　これをやろう▼</language>
+	</row>
+
+	<row id="msg_c01_fising_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・アイテム入手後
+※仮メッセージ</comment>
+		<attribute name="キャラ指定">FISING</attribute>
+		<language name="JPN" width="256">ここで　つりを　しながら
+しずかに　くらしたいのだ</language>
+		<language name="JPN_KANJI" width="256">ここで　つりを　しながら
+しずかに　くらしたいのだ</language>
 	</row>
 
 	<row id="msg_c01_sign1_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
