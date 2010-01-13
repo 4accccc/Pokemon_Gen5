@@ -25,7 +25,7 @@
 #define C05_BADMAN                         2
 #define C05_BABYGIRL1                      3
 #define C05_TRAINERM                       4
-#define C05_DRIVER                         5
+#define C05_TRAINERM_01                    5
 #define C05_SAGE_01                        6
 #define C05_HAKAI_01                       7
 #define C05_HAKAI_02                       8

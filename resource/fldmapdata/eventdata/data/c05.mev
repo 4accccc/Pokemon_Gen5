@@ -1,5 +1,5 @@
 #event data
-#save date:2009/12/19 18:22:26
+#save date:2010/01/13 19:21:25
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c05.wms
 #SECTION START:OBJ_EVENT
@@ -24,7 +24,7 @@ EV_TYPE_NORMAL
 #Flag Name
 0
 #Event Script Name
-SCRID_C05_TALKOBJ_WOMAN2
+SCRID_C05_WOMAN2
 #Direction Type Number
 DIR_RIGHT
 #Parameter 0 Number
@@ -55,7 +55,7 @@ EV_TYPE_NORMAL
 #Flag Name
 0
 #Event Script Name
-SCRID_C05_TALKOBJ_WORKMAN
+SCRID_C05_WORKMAN
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
@@ -71,7 +71,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-88 0 -616
+88 0 -632
 #event number: 2
 #type
 1
@@ -86,7 +86,7 @@ EV_TYPE_NORMAL
 #Flag Name
 0
 #Event Script Name
-SCRID_C05_TALKOBJ_BADMAN
+SCRID_C05_BADMAN
 #Direction Type Number
 DIR_LEFT
 #Parameter 0 Number
@@ -117,7 +117,7 @@ EV_TYPE_NORMAL
 #Flag Name
 0
 #Event Script Name
-SCRID_C05_TALKOBJ_BABYGIRL1
+SCRID_C05_BABYGIRL1
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
@@ -148,7 +148,7 @@ EV_TYPE_NORMAL
 #Flag Name
 0
 #Event Script Name
-SCRID_C05_TALKOBJ_TRAINERM
+SCRID_C05_TRAINERM_02
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
@@ -169,9 +169,9 @@ EVENTDATA_POSTYPE_GRID
 #type
 1
 #ID name
-C05_DRIVER
+C05_TRAINERM_01
 #OBJ CODE Number
-BOY1
+TRAINERM
 #MOVE CODE Number
 MV_LEFT
 #EVENT TYPE Number
@@ -179,7 +179,7 @@ EV_TYPE_NORMAL
 #Flag Name
 0
 #Event Script Name
-SCRID_C05_TALKOBJ_DRIVER
+SCRID_C05_TRAINERM_01
 #Direction Type Number
 DIR_LEFT
 #Parameter 0 Number

@@ -19,13 +19,13 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_c05_talkobj_woman2
-_EVENT_DATA    ev_c05_talkobj_babygirl1
-_EVENT_DATA    ev_c05_talkobj_backpackerw
-_EVENT_DATA    ev_c05_talkobj_trainerm
-_EVENT_DATA    ev_c05_talkobj_driver
-_EVENT_DATA    ev_c05_talkobj_badman
-_EVENT_DATA    ev_c05_talkobj_workman
+_EVENT_DATA    ev_c05_woman2
+_EVENT_DATA    ev_c05_babygirl1
+_EVENT_DATA    ev_c05_backpackerw
+_EVENT_DATA    ev_c05_trainerm_02
+_EVENT_DATA    ev_c05_trainerm_01
+_EVENT_DATA    ev_c05_badman
+_EVENT_DATA    ev_c05_workman
 _EVENT_DATA    ev_pos_c05_gymleader_01
 _EVENT_DATA    ev_pos_c05_gymleader_02
 _EVENT_DATA    ev_c05_businessman_01
@@ -194,49 +194,49 @@ EVENT_END
 /**************************************************************/
 /*  C05 WOMAN2の会話用イベントスクリプト                      */
 /**************************************************************/
-EVENT_START   ev_c05_talkobj_woman2
+EVENT_START   ev_c05_woman2
   _EASY_BALLOONWIN_TALKOBJ_MSG(msg_c05_woman2_01)
 EVENT_END
 
 /**************************************************************/
 /*  C05 BABYGIRL1の会話用イベントスクリプト                      */
 /**************************************************************/
-EVENT_START   ev_c05_talkobj_babygirl1
+EVENT_START   ev_c05_babygirl1
   _EASY_BALLOONWIN_TALKOBJ_MSG(msg_c05_babygirl1_01)
 EVENT_END
 
 /**************************************************************/
 /*  C05 BACKPACKERWの会話用イベントスクリプト                      */
 /**************************************************************/
-EVENT_START   ev_c05_talkobj_backpackerw
+EVENT_START   ev_c05_backpackerw
   _EASY_BALLOONWIN_TALKOBJ_MSG(msg_c05_backpackerw_01)
 EVENT_END
 
 /**************************************************************/
 /*  C05 TRAINERMの会話用イベントスクリプト                      */
 /**************************************************************/
-EVENT_START   ev_c05_talkobj_trainerm
+EVENT_START   ev_c05_trainerm_02
   _EASY_BALLOONWIN_TALKOBJ_MSG(msg_c05_trainerm_01)
 EVENT_END
 
 /**************************************************************/
-/*  C05 DRIVERの会話用イベントスクリプト                      */
+/*  C05 TRAINERM02の会話用イベントスクリプト                      */
 /**************************************************************/
-EVENT_START   ev_c05_talkobj_driver
+EVENT_START   ev_c05_trainerm_01
   _EASY_BALLOONWIN_TALKOBJ_MSG(msg_c05_driver_01)
 EVENT_END
 
 /**************************************************************/
 /*  C05 BADMANの会話用イベントスクリプト                      */
 /**************************************************************/
-EVENT_START   ev_c05_talkobj_badman
+EVENT_START   ev_c05_badman
   _EASY_BALLOONWIN_TALKOBJ_MSG(msg_c05_badman_01)
 EVENT_END
 
 /**************************************************************/
 /*  C05 WORKMANの会話用イベントスクリプト                      */
 /**************************************************************/
-EVENT_START   ev_c05_talkobj_workman
+EVENT_START   ev_c05_workman
   _EASY_BALLOONWIN_TALKOBJ_MSG(msg_c05_workman_01)
 EVENT_END
 
