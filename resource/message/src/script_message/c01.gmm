@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-20T17:43:08"/>
+	<create user="matsumiya" host="W00207" date="2010-01-13T11:24:13"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_c01_inventor_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c01_inventor_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・ジムバッジ取得後
 　POS（ジムの前）でイベント開始
@@ -312,7 +312,7 @@
 ちょっと　ついてきて！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c01_inventor_02" text-color="#000000,,,#ff0000,,#000000,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+	<row id="msg_c01_inventor_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・削除予定ラベル</comment>
 		<attribute name="キャラ指定">発明家</attribute>
@@ -320,7 +320,7 @@
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c01_musical_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+	<row id="msg_c01_musical_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・7月末ROMミュージカル呼び出し
 ※こいつのスクリプトは
@@ -352,7 +352,7 @@
 気が向いたら　また　話しかけてよ</language>
 	</row>
 
-	<row id="msg_c01_glasses_01" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c01_glasses_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・初期状態で配置済み
 ・c01､ｄ01のジムリーダーと
@@ -374,7 +374,7 @@
 探してきて　ほしいんすよね</language>
 	</row>
 
-	<row id="msg_c01_glasses_02" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c01_glasses_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・c01､ｄ01のジムリーダーと
 　c01r0501の友達♂と会話後
@@ -389,7 +389,7 @@
 トレーナーズスクールに　いるんすけど</language>
 	</row>
 
-	<row id="msg_c01_leader1_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c01_leader1_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・？マーク表示後にメッセージ表示
 ・表示後、ジム方面に移動
@@ -422,7 +422,7 @@
 それでは　ジムで　待っていますね[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c01_stop_01" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c01_stop_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・r03側ストッパー
 ・C01ジムバッジ入手前
@@ -445,7 +445,7 @@
 自分の　実力を　試せ！</language>
 	</row>
 
-	<row id="msg_c01_stop_02" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c01_stop_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・r03側ストッパー
 ・C01ジムバッジ入手後で
@@ -456,7 +456,7 @@
 おまえさんを　探していたぞ！</language>
 	</row>
 
-	<row id="msg_c01_stop_03" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c01_stop_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・r03側ストッパー
 ・C01ジムバッジ入手後かつ
@@ -473,7 +473,7 @@
 何があっても　大丈夫だろ！</language>
 	</row>
 
-	<row id="msg_c01_badman_01" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,,">
+	<row id="msg_c01_badman_01">
 		<comment>♂</comment>
 		<attribute name="キャラ指定">BADMAN
 不良</attribute>
@@ -487,7 +487,7 @@
 ポケモンを　くりだすんだよなあ……</language>
 	</row>
 
-	<row id="msg_c01_boy2_01" text-color="#000000,,,#000000,,#000000,,,,,,,,,,,,,">
+	<row id="msg_c01_boy2_01">
 		<comment>♂</comment>
 		<attribute name="キャラ指定">BOY2
 少年（活発）</attribute>
@@ -503,10 +503,9 @@
 ジムリーダーに　教えてもらったんだ</language>
 	</row>
 
-	<row id="msg_c01_cleaningm_01" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,,">
+	<row id="msg_c01_cleaningm_01">
 		<comment>♂</comment>
-		<attribute name="キャラ指定">CLEANINGM
-清掃員</attribute>
+		<attribute name="キャラ指定">OLDMAN</attribute>
 		<language name="JPN" width="256">はいきょ　にはね
 やせいの　ポケモンが　すみついておる[BE:01:ページ切り替え（クリア）]
 なかでも　めずらしいのは
@@ -517,7 +516,7 @@
 夢を見せる　ポケモンじゃな</language>
 	</row>
 
-	<row id="msg_c01_breederw_01" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,,">
+	<row id="msg_c01_breederw_01">
 		<comment>♀</comment>
 		<attribute name="キャラ指定">BREEDERW
 ブリーダー♀</attribute>
@@ -533,7 +532,7 @@
 初心者トレーナーが　多いわ</language>
 	</row>
 
-	<row id="msg_c01_woman2_01" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,,">
+	<row id="msg_c01_woman2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♀
 ・メッセージ修正予定</comment>
 		<attribute name="キャラ指定">WOMAN2
@@ -546,7 +545,7 @@
 飛び交っているか　わかるんだって！</language>
 	</row>
 
-	<row id="msg_c01_babygirl1_01" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c01_babygirl1_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・ランダムメッセージ</comment>
 		<attribute name="キャラ指定">BABYGIRL1</attribute>
@@ -560,7 +559,7 @@
 ほかにも　いろいろ　しってるよ！</language>
 	</row>
 
-	<row id="msg_c01_babygirl1_02" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c01_babygirl1_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・ランダムメッセージ</comment>
 		<attribute name="キャラ指定">BABYGIRL1</attribute>
@@ -574,7 +573,7 @@
 ほかにも　いろいろ　しってるよ！</language>
 	</row>
 
-	<row id="msg_c01_babygirl1_03" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c01_babygirl1_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・ランダムメッセージ</comment>
 		<attribute name="キャラ指定">BABYGIRL1</attribute>
@@ -588,7 +587,7 @@
 ほかにも　いろいろ　しってるよ！</language>
 	</row>
 
-	<row id="msg_c01_sign1_01" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c01_sign1_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>看板分類：タウンマップ</comment>
 		<attribute name="キャラ指定">看板：街</attribute>
 		<language name="JPN" width="256">ここは　サンヨウシティ
@@ -597,14 +596,14 @@
 サンヨウとは　３つ並ぶ　星のこと</language>
 	</row>
 
-	<row id="msg_c01_sign2_01" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c01_sign2_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>d01の案内看板
 ・仮</comment>
 		<language name="JPN" width="256">このさき　ゆめのあとち</language>
 		<language name="JPN_KANJI" width="256">この先　夢の跡地</language>
 	</row>
 
-	<row id="msg_c01_sign3_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c01_sign3_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>トレーナーズスクール用</comment>
 		<language name="JPN" width="256">ポケモンの　ために　まなぶ
 トレーナーズ　スクール</language>

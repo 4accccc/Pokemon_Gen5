@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-21T15:15:50"/>
+	<create user="matsumiya" host="W00207" date="2010-01-13T11:25:03"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -441,7 +441,7 @@
 チュートリアル　メッセージ予定</language>
 	</row>
 
-	<row id="msg_c01r0102_inventor_09" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,,,,,,,,">
+	<row id="msg_c01r0102_inventor_09" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,,,,,,,,">
 		<comment>♀
 ・PDW関連メッセージの予定</comment>
 		<attribute name="キャラ指定">発明家</attribute>
@@ -453,7 +453,7 @@
 		<comment>♀
 ・会話後、パソコンメニューの
 　「だれかのパソコン」が
-　「？？？のパソコン」に変更</comment>
+　「ショウロのパソコン」に変更</comment>
 		<attribute name="キャラ指定">ＧＩＲＬ3
 パソコン管理者</attribute>
 		<language name="JPN" width="256">あなた　トレーナー？[BE:01:ページ切り替え（クリア）]
@@ -493,7 +493,7 @@
 その　パソコンを使って　いいですよ</language>
 	</row>
 
-	<row id="msg_c01r0101_books_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c01r0101_books_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>本棚
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">本棚</attribute>

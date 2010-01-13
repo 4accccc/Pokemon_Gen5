@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-17T16:46:31"/>
+	<create user="matsumiya" host="W00207" date="2010-01-13T11:21:49"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -66,6 +66,11 @@
 			</tag>
 			<tag entry="11" japanese="ボックス名" english="ボックス名" view="EP" width="96" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="12" japanese="ポケモンニックネーム（正体）" english="ポケモンニックネーム（正体）" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">バトル用。イリュージョンの影響を受けないニックネーム取得。</comment>
+				<comment language="english">バトル用。イリュージョンの影響を受けないニックネーム取得。</comment>
 			</tag>
 			<tag entry="13" japanese="ステータス名" english="ステータス名" view="EP" width="74" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
@@ -137,9 +142,54 @@
 				<comment language="japanese">リボンの名前</comment>
 				<comment language="english">リボンの名前</comment>
 			</tag>
+			<tag entry="40" japanese="広場ミニゲーム" english="広場ミニゲーム" view="EP" width="120" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">WiFi広場のミニゲーム名</comment>
+				<comment language="english">WiFi広場のミニゲーム名</comment>
+			</tag>
+			<tag entry="41" japanese="広場イベント名" english="広場イベント名" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">WiFi広場イベント名</comment>
+				<comment language="english">WiFi広場イベント名</comment>
+			</tag>
+			<tag entry="42" japanese="広場アイテム名" english="広場アイテム名" view="EP" width="120" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">WiFi広場のアイテム名</comment>
+				<comment language="english">WiFi広場のアイテム名</comment>
+			</tag>
+			<tag entry="43" japanese="日本の挨拶" english="日本の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">日本の挨拶</comment>
+				<comment language="english">日本の挨拶</comment>
+			</tag>
+			<tag entry="44" japanese="英語の挨拶" english="英語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">英語の挨拶</comment>
+				<comment language="english">英語の挨拶</comment>
+			</tag>
+			<tag entry="45" japanese="フランス語の挨拶" english="フランス語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">フランス語の挨拶</comment>
+				<comment language="english">フランス語の挨拶</comment>
+			</tag>
+			<tag entry="46" japanese="ドイツ語の挨拶" english="ドイツ語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ドイツ語の挨拶</comment>
+				<comment language="english">ドイツ語の挨拶</comment>
+			</tag>
+			<tag entry="47" japanese="イタリア語の挨拶" english="イタリア語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">イタリア語の挨拶</comment>
+				<comment language="english">イタリア語の挨拶</comment>
+			</tag>
+			<tag entry="48" japanese="スペイン語の挨拶" english="スペイン語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">スペイン語の挨拶</comment>
+				<comment language="english">スペイン語の挨拶</comment>
+			</tag>
 		</group>
 
-		<group entry="2" japanese="ポケモンＷＢ（数値）" english="ポケモンＷＢ（数値）">
+		<group entry="2" japanese="ポケモンＷＢ（数値）" english="ポケモンＷＢ（数値）" color="#c0c0c0">
 			<tag entry="00" japanese="１桁" english="１桁" view="EP" width="8" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
 			</tag>
@@ -170,7 +220,7 @@
 			</tag>
 		</group>
 
-		<group entry="189" japanese="汎用コントロール" english="汎用コントロール">
+		<group entry="189" japanese="汎用コントロール" english="汎用コントロール" color="#c0c0c0">
 			<tag entry="00" japanese="カラー変更" english="カラー変更" view="EP" length="0" line="1">
 				<parameter number="0" japanese="文字色番号" english="文字色番号" type="int8"/>
 				<parameter number="1" japanese="影色番号" english="影色番号" type="int8"/>
@@ -189,9 +239,16 @@
 				<comment language="english">当該行の文字列を
 ウィンドウ内で右寄せします。</comment>
 			</tag>
+			<tag entry="04" japanese="X加算" english="X加算" view="EP" length="0" line="1">
+				<parameter number="0" japanese="加算値" english="加算値" type="int8"/>
+				<comment language="japanese">描画X座標を加算します。
+使用は許可制です。</comment>
+				<comment language="english">描画X座標を加算します。
+使用は許可制です。</comment>
+			</tag>
 		</group>
 
-		<group entry="190" japanese="動的コントロール" english="Word">
+		<group entry="190" japanese="動的コントロール" english="Word" color="#c0c0c0">
 			<tag entry="00" japanese="ページ切り替え（行送り）" english="ページ切り替え（行送り）" view="EP" length="0" line="1"/>
 			<tag entry="01" japanese="ページ切り替え（クリア）" english="ページ切り替え（クリア）" view="EP" length="0" line="1"/>
 			<tag entry="02" japanese="ウェイト変更（単発）" english="ウェイト変更（単発）" view="EP" length="0" line="1">
@@ -209,11 +266,21 @@
 			</tag>
 			<tag entry="07" japanese="コールバック引数リセット" english="コールバック引数リセット" view="EP" length="0" line="1"/>
 			<tag entry="08" japanese="描画領域クリア" english="描画領域クリア" view="EP" length="0" line="1"/>
+			<tag entry="09" japanese="速度コントロール" english="速度コントロール" view="EP" length="0" line="1">
+				<parameter number="0" japanese="モード" english="モード" type="int8"/>
+				<comment language="japanese">ユーザConfig設定に応じて
+相対的に速い（遅い）速度になるように、ウェイトフレーム値などを操作します。</comment>
+				<comment language="english">ユーザConfig設定に応じて
+相対的に速い（遅い）速度になるように、ウェイトフレーム値などを操作します。</comment>
+			</tag>
 		</group>
 
 		<group entry="254" japanese="文字列展開" english="Word">
 		</group>
 
+		<set japanese="RESET" english="RESET" value="BE:09:速度コントロール:0"/>
+		<set japanese="FAST" english="FAST" value="BE:09:速度コントロール:1"/>
+		<set japanese="SLOW" english="SLOW" value="BE:09:速度コントロール:2"/>
 		<set japanese="500%" english="500%" value="FF:01:サイズ:500"/>
 		<set japanese="400%" english="400%" value="FF:01:サイズ:400"/>
 		<set japanese="300%" english="300%" value="FF:01:サイズ:300"/>
@@ -263,9 +330,9 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="13" top="204" right="718" bottom="824" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
+		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="543"/>
@@ -292,109 +359,109 @@
 	</lock>
 
 
-	<row id="msg_c04p01_boss_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c04p01_boss_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>♂
 ・pos（GRIDX=20.GRIDZ=12^16）を踏むと
 　画面右から登場してメッセージ表示
 ・表示後、画面左へ連れて行かれる（暫定）</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
-		<language name="JPN" width="256">Ｎ『……キミは　プラズマだんを
-さがして　いるんだろう？[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]……キミは　プラズマだんを
+さがして　いるんだろう？▼
 ならば　かんらんしゃに　のればいい
-たかい　ところからで　あれば[BE:00:ページ切り替え（行送り）]
-みのがすことも　ないだろう[BE:01:ページ切り替え（クリア）]
-こっちに　きたまえ[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">Ｎ『……キミは　プラズマ団を
-探して　いるんだろう？[BE:01:ページ切り替え（クリア）]
+たかい　ところからで　あれば▽
+みのがすことも　ないだろう▼
+こっちに　きたまえ[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]……キミは　プラズマ団を
+探して　いるんだろう？▼
 ならば　観覧車に　のればいい
-高い　ところからで　あれば[BE:00:ページ切り替え（行送り）]
-見逃すとも　ないだろう[BE:01:ページ切り替え（クリア）]
-こっちに　来たまえ[BE:01:ページ切り替え（クリア）]</language>
+高い　ところからで　あれば▽
+見逃すとも　ないだろう▼
+こっちに　来たまえ[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="msg_c04p01_boss_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c04p01_boss_02" back-color="#8080ff,,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・メッセージ表示後、観覧車に乗る演出
 ・観覧車デモに切り替え
 　観覧車内でのメッセージは別ファイルで管理予定</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
-		<language name="JPN" width="256">Ｎ『さあ　のりたまえ[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">Ｎ『さあ　乗りたまえ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]さあ　のりたまえ[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]さあ　乗りたまえ[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="msg_c04p01_boss_03" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c04p01_boss_03" back-color="#8080ff,,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・観覧車から降りてきて
 　主人公と向き合いメッセージ表示
 ・はい/いいえの選択
 　どちらを選んだか保存しておく</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
-		<language name="JPN" width="256">Ｎ『さて　[1:00:トレーナー名:0]……[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]さて　[1:00:トレーナー名:0]……▼
 たびをつづけて　キミは
-きれいごとばかりを　いう[BE:00:ページ切り替え（行送り）]
-にんげんの　みにくさに　きづいたかい？</language>
-		<language name="JPN_KANJI" width="256">Ｎ『さて　[1:00:トレーナー名:0]……[BE:01:ページ切り替え（クリア）]
+きれいごとばかりを　いう▽
+にんげんの　みにくさに　きづいたかい？[BE:09:速度コントロール:0]</language>
+		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]さて　[1:00:トレーナー名:0]……▼
 旅を続けて　キミは
-きれいごとばかりを　いう[BE:00:ページ切り替え（行送り）]
-人間の　醜さに　気づいたかい？</language>
+きれいごとばかりを　いう▽
+人間の　醜さに　気づいたかい？[BE:09:速度コントロール:0]</language>
 	</row>
 
-	<row id="msg_c04p01_boss_04" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c04p01_boss_04" back-color="#8080ff,,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・はい選択時
 ・トレーナー戦闘に</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
-		<language name="JPN" width="256">Ｎ『その　へんじ……　ほんとうか
-どうか　たしかめさせてもらうよ[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">Ｎ『その返事……
-本当かどうか　確かめさせてもらうよ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]その　へんじ……　ほんとうか
+どうか　たしかめさせてもらうよ[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]その返事……
+本当かどうか　確かめさせてもらうよ[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="msg_c04p01_boss_05" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c04p01_boss_05" back-color="#8080ff,,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・いいえ選択時
 ・トレーナー戦闘に</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
-		<language name="JPN" width="256">Ｎ『やれやれ……だ[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]やれやれ……だ▼
 にんげんは　うらおもてが　ありすぎる
-じぶんを　よりよく　みせようと[BE:00:ページ切り替え（行送り）]
-むりをする……　ときには　ウソをつく[BE:01:ページ切り替え（クリア）]
+じぶんを　よりよく　みせようと▽
+むりをする……　ときには　ウソをつく▼
 ポケモンのように
-しぜんで　いられない[BE:01:ページ切り替え（クリア）]
+しぜんで　いられない▼
 キミが　しょうぶで　まけそうになったとき
-どんなエゴを　むきだしにするか[BE:00:ページ切り替え（行送り）]
-そのことを　おしえてあげるよ[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">Ｎ『やれやれ……だ[BE:01:ページ切り替え（クリア）]
+どんなエゴを　むきだしにするか▽
+そのことを　おしえてあげるよ[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]やれやれ……だ▼
 人間は　裏表が　ありすぎる
-自分を　より良く見せようと[BE:00:ページ切り替え（行送り）]
-無理をする……　時にはウソをつく[BE:01:ページ切り替え（クリア）]
+自分を　より良く見せようと▽
+無理をする……　時にはウソをつく▼
 ポケモンのように
-自然で　いられない[BE:01:ページ切り替え（クリア）]
+自然で　いられない▼
 キミが　勝負で　負けそうになったとき
-どんなエゴを　むきだしにするか[BE:00:ページ切り替え（行送り）]
-そのことを　教えてあげるよ[BE:01:ページ切り替え（クリア）]</language>
+どんなエゴを　むきだしにするか▽
+そのことを　教えてあげるよ[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="msg_c04p01_boss_06" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c04p01_boss_06" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>♂
 ・戦闘後
 ･メッセージ表示後、c04方面に移動
 ・画面外に消えると、主人公操作可能に</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
-		<language name="JPN" width="256">Ｎ『いま　しょうぶの　さなかに
-みえた　みらいの　ビジョン……[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]いま　しょうぶの　さなかに
+みえた　みらいの　ビジョン……▼
 そうか……　キミは
-そんな　しめいを　もつのか[BE:01:ページ切り替え（クリア）]
+そんな　しめいを　もつのか▼
 なるほど……　それが
-ボクが　とくべき　すうしき……[BE:00:ページ切り替え（行送り）]
-では　また会おう　[1:00:トレーナー名:0][BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">Ｎ『今　勝負の　さなかに
-見えた　未来のビジョン……[BE:01:ページ切り替え（クリア）]
+ボクが　とくべき　すうしき……▽
+では　また会おう　[1:00:トレーナー名:0][BE:09:速度コントロール:0]▼</language>
+		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]今　勝負の　さなかに
+見えた　未来のビジョン……▼
 そうか……
-キミは　そんな使命を　持つのか[BE:01:ページ切り替え（クリア）]
+キミは　そんな使命を　持つのか▼
 なるほど……
-それが　ボクが解くべき　数式……[BE:00:ページ切り替え（行送り）]
-では　また会おう　[1:00:トレーナー名:0][BE:01:ページ切り替え（クリア）]</language>
+それが　ボクが解くべき　数式……▽
+では　また会おう　[1:00:トレーナー名:0][BE:09:速度コントロール:0]▼</language>
 	</row>
 
 	<row id="msg_c04p01_clown1_01">
@@ -408,7 +475,7 @@
 ぐるぐるぐるぐるぐるりんこ！</language>
 	</row>
 
-	<row id="msg_c04p01_clown2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c04p01_clown2_01">
 		<comment>♂
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">CLOWN
@@ -419,7 +486,7 @@
 のぼる　のぼる　観覧車！</language>
 	</row>
 
-	<row id="msg_c04p01_middlewoman2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c04p01_middlewoman2_01">
 		<comment>♀
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">MIDDLEWOMAN2</attribute>
@@ -429,7 +496,7 @@
 心躍る　空間よね</language>
 	</row>
 
-	<row id="msg_c04p01_girl1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c04p01_girl1_01">
 		<comment>♀
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">GIRL1</attribute>

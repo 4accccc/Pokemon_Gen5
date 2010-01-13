@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-18T11:34:03"/>
+	<create user="matsumiya" host="W00207" date="2010-01-13T11:30:05"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_c04_hakaim1_01" text-color="#ff0000,,,#ff0000,,#ff0000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c04_hakaim1_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・pos（GRIDX=427~433、GRIDZ=476）を踏むとメッセージ表示
 ・続けてhakaim2_01</comment>
@@ -307,7 +307,7 @@
 プラズマ団　だからさ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c04_hakaim2_01" text-color="#ff0000,,,#ff0000,,#ff0000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c04_hakaim2_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・続けてoldman_01</comment>
 		<attribute name="キャラ指定">プラズマ団したっぱ♂</attribute>
@@ -321,7 +321,7 @@
 助かる　ポケモンも　いるってことだ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c04_oldman_01" text-color="#ff0000,,,#ff0000,,#ff0000,,#000000,,,#000000,,,#000000,,,#000000,,">
+	<row id="msg_c04_oldman_01">
 		<comment>♂
 ・メッセージ表示後、左右を振り向いてから
 　頭上に！マーク表示
@@ -332,7 +332,7 @@
 		<language name="JPN_KANJI" width="256">じいさん『なんという　ムチャを！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c04_oldman_02" text-color="#ff0000,,,#ff0000,,#ff0000,,#000000,,,#000000,,,#000000,,,#000000,,">
+	<row id="msg_c04_oldman_02">
 		<comment>♂
 ・続けてhakaim1_02</comment>
 		<attribute name="キャラ指定">OLDMAN
@@ -343,7 +343,7 @@
 助けてくれんか！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c04_hakaim1_02" text-color="#ff0000,,,#ff0000,,#ff0000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c04_hakaim1_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・メッセージ表示後、戦闘に
 ・ただしすごく弱くてOK（ポケセンに行く前なので）</comment>
@@ -356,7 +356,7 @@
 ジャマだては　させねえよ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c04_hakaim1_03" text-color="#ff0000,,,#ff0000,,#ff0000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c04_hakaim1_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・戦闘後、フィールドに復帰してこのメッセージ表示
 ・続けてhakaim2_02</comment>
@@ -365,7 +365,7 @@
 		<language name="JPN_KANJI" width="256">プラズマ団『！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c04_hakaim2_02" text-color="#ff0000,,,#ff0000,,#ff0000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c04_hakaim2_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・表示後、画面上（できれば右寄り）に移動
 ・画面外に消えるとoldman_03</comment>
@@ -378,7 +378,7 @@
 遊園地で　待ち合わせ　だぜ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c04_oldman_03" text-color="#ff0000,,,#ff0000,,#ff0000,,#000000,,,#000000,,,#000000,,,#000000,,">
+	<row id="msg_c04_oldman_03">
 		<comment>♂
 ・メッセージ表示後、アイテム入手処理
 　ItemNo421「わざマシン「そらをとぶ」」入手処理（暫定）</comment>
@@ -392,7 +392,7 @@
 遠慮せずに　もらってくれ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c04_oldman_04" text-color="#ff0000,,,#ff0000,,#ff0000,,#000000,,,#000000,,,#000000,,,#000000,,">
+	<row id="msg_c04_oldman_04">
 		<comment>♂
 ・アイテム入手後、自動で表示
 ・表示後、4番道路側に移動
@@ -414,7 +414,7 @@
 エライめに　あったもんじゃ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c04_white_01" text-color="#000000,,,#ff0000,,,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c04_white_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・ゲートをでたところでメッセージ表示
 ・続けて隣接してwhite_02</comment>
@@ -424,7 +424,7 @@
 		<language name="JPN_KANJI" width="256">ホワイティ『おーい　[1:00:トレーナー名:0]！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c04_white_02" text-color="#000000,,,#ff0000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c04_white_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・アイテム入手処理
 　ItemNo435「アクセサリーいれ」</comment>
@@ -436,7 +436,7 @@
 アナタにも　わけてあげるね！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c04_white_03" text-color="#000000,,,#ff0000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c04_white_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・アイテム入手後、自動で表示
 ・表示後、その場で一回転アニメ
@@ -455,7 +455,7 @@
 ミュージカルに　行くつもりなの！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c04_white_04" text-color="#000000,,,#ff0000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c04_white_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・表示後、画面上に移動
 ・画面外に消えると、主人公操作可能に</comment>
@@ -469,7 +469,7 @@
 じゃあねー！！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c04_leader_01" text-color="#000000,,,#ff0000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c04_leader_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
 ・c04ジムバッジ入手後
 ・pos（GRIDX=384、GRIDZ=437~439）を踏むと発動</comment>
@@ -483,7 +483,7 @@
 勝負が　長引いちゃった……[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c04_leader_02" text-color="#000000,,,#000000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c04_leader_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
 ・メッセージ表示後、r05側のゲートに消えていく
 ・動作モデルが消えると主人公操作可能</comment>
@@ -499,7 +499,7 @@
 橋の前で　待ってるね[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c04_footballm_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
+	<row id="msg_c04_footballm_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">FOOTBALLM
@@ -514,7 +514,7 @@
 足を　運んでみてくれ！</language>
 	</row>
 
-	<row id="msg_c04_clown_01" text-color="#000000,,,#000000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,,">
+	<row id="msg_c04_clown_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">CLOWN
@@ -533,7 +533,7 @@
 ポケモントレーナーが　いますから</language>
 	</row>
 
-	<row id="msg_c04_badman_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
+	<row id="msg_c04_badman_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">BADMAN
@@ -548,7 +548,7 @@
 もっと鍛えて　挑戦してやるよ！！</language>
 	</row>
 
-	<row id="msg_c04_middleman2_01" text-color="#000000,,,#000000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,,">
+	<row id="msg_c04_middleman2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">MIDDLEMAN2
@@ -559,7 +559,7 @@
 圧倒されて　声もでない</language>
 	</row>
 
-	<row id="msg_c04_backpackerw_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
+	<row id="msg_c04_backpackerw_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♀
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">BACKPACKERW
@@ -570,7 +570,7 @@
 いるだけで　気持ちも　ゴージャス！！</language>
 	</row>
 
-	<row id="msg_c04_girl3_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
+	<row id="msg_c04_girl3_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♀
 ・仮メッセージ
 ・babygirl1、middlewoman1とセット</comment>
@@ -582,7 +582,7 @@
 遊園地に　連れてきてもらったの！</language>
 	</row>
 
-	<row id="msg_c04_babygirl1_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
+	<row id="msg_c04_babygirl1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♀
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">BABYGIRL1
@@ -593,7 +593,7 @@
 あたし　かんらんしゃ　だいすきッ！！</language>
 	</row>
 
-	<row id="msg_c04_middlewoman1_02" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
+	<row id="msg_c04_middlewoman1_02" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♀
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">MIDDLEWOMAN1
@@ -604,7 +604,7 @@
 ジェットコースターなんですって！？</language>
 	</row>
 
-	<row id="msg_c04_sign1_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c04_sign1_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>看板分類：タウンマップ</comment>
 		<attribute name="キャラ指定">看板：街</attribute>
 		<language name="JPN" width="256">ライモンシティ
@@ -613,35 +613,35 @@
 稲妻きらめく　輝きの街</language>
 	</row>
 
-	<row id="msg_c04_sign2_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c04_sign2_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>看板分類：施設</comment>
 		<attribute name="キャラ指定">看板：街</attribute>
 		<language name="JPN" width="256">ビッグスタジアム</language>
 		<language name="JPN_KANJI" width="256">ビッグスタジアム</language>
 	</row>
 
-	<row id="msg_c04_sign3_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c04_sign3_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>看板分類：施設</comment>
 		<attribute name="キャラ指定">看板：街</attribute>
 		<language name="JPN" width="256">リトルコート</language>
 		<language name="JPN_KANJI" width="256">リトルコート</language>
 	</row>
 
-	<row id="msg_c04_sign4_01" text-color="#000000,,,#000000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c04_sign4_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>看板分類：施設</comment>
 		<attribute name="キャラ指定">看板：街</attribute>
 		<language name="JPN" width="256">バトル　サブウェイ</language>
 		<language name="JPN_KANJI" width="256">バトル　サブウェイ</language>
 	</row>
 
-	<row id="msg_c04_sign5_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c04_sign5_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>看板分類：施設</comment>
 		<attribute name="キャラ指定">看板：街</attribute>
 		<language name="JPN" width="256">ミュージカル　ホール</language>
 		<language name="JPN_KANJI" width="256">ミュージカル　ホール</language>
 	</row>
 
-	<row id="msg_c04_sign6_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#000000,,,#000000,,#ff0000,#000000,,,#000000,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c04_sign6_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
 		<comment>看板分類：タウンマップ
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">看板：街</attribute>

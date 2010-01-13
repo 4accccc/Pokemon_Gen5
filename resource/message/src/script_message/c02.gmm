@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-21T19:13:17"/>
+	<create user="matsumiya" host="W00207" date="2010-01-13T11:22:20"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -66,6 +66,11 @@
 			</tag>
 			<tag entry="11" japanese="ボックス名" english="ボックス名" view="EP" width="96" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="12" japanese="ポケモンニックネーム（正体）" english="ポケモンニックネーム（正体）" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">バトル用。イリュージョンの影響を受けないニックネーム取得。</comment>
+				<comment language="english">バトル用。イリュージョンの影響を受けないニックネーム取得。</comment>
 			</tag>
 			<tag entry="13" japanese="ステータス名" english="ステータス名" view="EP" width="74" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
@@ -137,9 +142,54 @@
 				<comment language="japanese">リボンの名前</comment>
 				<comment language="english">リボンの名前</comment>
 			</tag>
+			<tag entry="40" japanese="広場ミニゲーム" english="広場ミニゲーム" view="EP" width="120" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">WiFi広場のミニゲーム名</comment>
+				<comment language="english">WiFi広場のミニゲーム名</comment>
+			</tag>
+			<tag entry="41" japanese="広場イベント名" english="広場イベント名" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">WiFi広場イベント名</comment>
+				<comment language="english">WiFi広場イベント名</comment>
+			</tag>
+			<tag entry="42" japanese="広場アイテム名" english="広場アイテム名" view="EP" width="120" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">WiFi広場のアイテム名</comment>
+				<comment language="english">WiFi広場のアイテム名</comment>
+			</tag>
+			<tag entry="43" japanese="日本の挨拶" english="日本の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">日本の挨拶</comment>
+				<comment language="english">日本の挨拶</comment>
+			</tag>
+			<tag entry="44" japanese="英語の挨拶" english="英語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">英語の挨拶</comment>
+				<comment language="english">英語の挨拶</comment>
+			</tag>
+			<tag entry="45" japanese="フランス語の挨拶" english="フランス語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">フランス語の挨拶</comment>
+				<comment language="english">フランス語の挨拶</comment>
+			</tag>
+			<tag entry="46" japanese="ドイツ語の挨拶" english="ドイツ語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ドイツ語の挨拶</comment>
+				<comment language="english">ドイツ語の挨拶</comment>
+			</tag>
+			<tag entry="47" japanese="イタリア語の挨拶" english="イタリア語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">イタリア語の挨拶</comment>
+				<comment language="english">イタリア語の挨拶</comment>
+			</tag>
+			<tag entry="48" japanese="スペイン語の挨拶" english="スペイン語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">スペイン語の挨拶</comment>
+				<comment language="english">スペイン語の挨拶</comment>
+			</tag>
 		</group>
 
-		<group entry="2" japanese="ポケモンＷＢ（数値）" english="ポケモンＷＢ（数値）">
+		<group entry="2" japanese="ポケモンＷＢ（数値）" english="ポケモンＷＢ（数値）" color="#c0c0c0">
 			<tag entry="00" japanese="１桁" english="１桁" view="EP" width="8" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
 			</tag>
@@ -170,7 +220,7 @@
 			</tag>
 		</group>
 
-		<group entry="189" japanese="汎用コントロール" english="汎用コントロール">
+		<group entry="189" japanese="汎用コントロール" english="汎用コントロール" color="#c0c0c0">
 			<tag entry="00" japanese="カラー変更" english="カラー変更" view="EP" length="0" line="1">
 				<parameter number="0" japanese="文字色番号" english="文字色番号" type="int8"/>
 				<parameter number="1" japanese="影色番号" english="影色番号" type="int8"/>
@@ -189,9 +239,16 @@
 				<comment language="english">当該行の文字列を
 ウィンドウ内で右寄せします。</comment>
 			</tag>
+			<tag entry="04" japanese="X加算" english="X加算" view="EP" length="0" line="1">
+				<parameter number="0" japanese="加算値" english="加算値" type="int8"/>
+				<comment language="japanese">描画X座標を加算します。
+使用は許可制です。</comment>
+				<comment language="english">描画X座標を加算します。
+使用は許可制です。</comment>
+			</tag>
 		</group>
 
-		<group entry="190" japanese="動的コントロール" english="Word">
+		<group entry="190" japanese="動的コントロール" english="Word" color="#c0c0c0">
 			<tag entry="00" japanese="ページ切り替え（行送り）" english="ページ切り替え（行送り）" view="EP" length="0" line="1"/>
 			<tag entry="01" japanese="ページ切り替え（クリア）" english="ページ切り替え（クリア）" view="EP" length="0" line="1"/>
 			<tag entry="02" japanese="ウェイト変更（単発）" english="ウェイト変更（単発）" view="EP" length="0" line="1">
@@ -209,11 +266,21 @@
 			</tag>
 			<tag entry="07" japanese="コールバック引数リセット" english="コールバック引数リセット" view="EP" length="0" line="1"/>
 			<tag entry="08" japanese="描画領域クリア" english="描画領域クリア" view="EP" length="0" line="1"/>
+			<tag entry="09" japanese="速度コントロール" english="速度コントロール" view="EP" length="0" line="1">
+				<parameter number="0" japanese="モード" english="モード" type="int8"/>
+				<comment language="japanese">ユーザConfig設定に応じて
+相対的に速い（遅い）速度になるように、ウェイトフレーム値などを操作します。</comment>
+				<comment language="english">ユーザConfig設定に応じて
+相対的に速い（遅い）速度になるように、ウェイトフレーム値などを操作します。</comment>
+			</tag>
 		</group>
 
 		<group entry="254" japanese="文字列展開" english="Word">
 		</group>
 
+		<set japanese="RESET" english="RESET" value="BE:09:速度コントロール:0"/>
+		<set japanese="FAST" english="FAST" value="BE:09:速度コントロール:1"/>
+		<set japanese="SLOW" english="SLOW" value="BE:09:速度コントロール:2"/>
 		<set japanese="500%" english="500%" value="FF:01:サイズ:500"/>
 		<set japanese="400%" english="400%" value="FF:01:サイズ:400"/>
 		<set japanese="300%" english="300%" value="FF:01:サイズ:300"/>
@@ -292,7 +359,7 @@
 	</lock>
 
 
-	<row id="msg_c02_black_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c02_black_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・r03側のPOSを踏むと
 　画面左から出現
@@ -300,12 +367,12 @@
 ・メッセージ表示後、ライバル戦闘で連れ歩き</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
 		<language name="JPN" width="256">ブラッカー『まちに　ついたら　まず
-ポケモンセンターだろ？　こっちこいよ[BE:01:ページ切り替え（クリア）]</language>
+ポケモンセンターだろ？　こっちこいよ▼</language>
 		<language name="JPN_KANJI" width="256">ブラッカー『街に　着いたら　まず
-ポケモンセンターだろ？　こっち来いよ[BE:01:ページ切り替え（クリア）]</language>
+ポケモンセンターだろ？　こっち来いよ▼</language>
 	</row>
 
-	<row id="msg_c02_black_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c02_black_02" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・GRIDX=635
 　GRIDZ=599あたりで
@@ -315,16 +382,16 @@
 　ライバルだけ画面左へ移動
 ・画面外に消えると、主人公操作可能</comment>
 		<language name="JPN" width="256">このまま　まっすぐ　すすめば
-ポケモンセンターさ[BE:01:ページ切り替え（クリア）]
+ポケモンセンターさ▼
 じゃあ　オレ
-むこうの　そうこを　みてるから[BE:01:ページ切り替え（クリア）]</language>
+むこうの　そうこを　みてるから▼</language>
 		<language name="JPN_KANJI" width="256">このまま　まっすぐ進めば
-ポケモンセンターさ[BE:01:ページ切り替え（クリア）]
+ポケモンセンターさ▼
 じゃあ　オレ
-向こうの　倉庫を　見てるから[BE:01:ページ切り替え（クリア）]</language>
+向こうの　倉庫を　見てるから▼</language>
 	</row>
 
-	<row id="msg_c02_boss_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c02_boss_01" text-color="#000000,,,#000000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>♂
 ・ジムの前のPOSを踏むと
 　画面左から出現
@@ -332,96 +399,96 @@
 ・はい/いいえの選択
 　どちらを選んだか保存しておく</comment>
 		<attribute name="キャラ指定">N</attribute>
-		<language name="JPN" width="256">まよえる　トレーナーよ
-ポケモンたちを　じゆうにする……[BE:00:ページ切り替え（行送り）]
-その　けっしんは　ついたかい？[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">迷える　トレーナーよ
-ポケモンたちを　自由にする……[BE:00:ページ切り替え（行送り）]
-その　決心は　ついたかい？[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">[BE:09:速度コントロール:1]まよえる　トレーナーよ
+ポケモンたちを　じゆうにする……▽
+その　けっしんは　ついたかい？[BE:09:速度コントロール:0]</language>
+		<language name="JPN_KANJI" width="256">[BE:09:速度コントロール:1]迷える　トレーナーよ
+ポケモンたちを　自由にする……▽
+その　決心は　ついたかい？[BE:09:速度コントロール:0]</language>
 	</row>
 
-	<row id="msg_c02_boss_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c02_boss_02" text-color="#000000,,,#000000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>♂
 ・はい選択時
 ・トレーナー戦闘に</comment>
 		<attribute name="キャラ指定">N</attribute>
-		<language name="JPN" width="256">Ｎ『ボクを　からかっているね
-その　ボールの中……[BE:00:ページ切り替え（行送り）]
-キミに　したがう　ポケモンだらけだ[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]ボクを　からかっているね
+その　ボールの中……▽
+キミに　したがう　ポケモンだらけだ▼
 しかたない……
-ボクの　ともだちと　たたかいたまえ！[BE:01:ページ切り替え（クリア）]
+ボクの　ともだちと　たたかいたまえ！▼
 キミに　とらえられた　ポケモンを
-じゆうに　してあげるから……[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">Ｎ『ボクを　からかっているね
-その　ボールの中……[BE:00:ページ切り替え（行送り）]
-キミに従う　ポケモンだらけだ[BE:01:ページ切り替え（クリア）]
+じゆうに　してあげるから……[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]ボクを　からかっているね
+その　ボールの中……▽
+キミに従う　ポケモンだらけだ▼
 仕方ない……
-ボクの　友達と　戦いたまえ！[BE:01:ページ切り替え（クリア）]
+ボクの　友達と　戦いたまえ！▼
 キミに　捕らえられた　ポケモンを
-解放してあげるから……[BE:01:ページ切り替え（クリア）]</language>
+解放してあげるから……[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="msg_c02_boss_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c02_boss_03" text-color="#000000,,,#000000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>♂
 ・いいえ選択時
 ・トレーナー戦闘に</comment>
 		<attribute name="キャラ指定">N</attribute>
-		<language name="JPN" width="256">Ｎ『ボクに　さからうんだね
-その　ボールのなか……[BE:00:ページ切り替え（行送り）]
-キミに　したがう　ポケモンだらけ[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]ボクに　さからうんだね
+その　ボールのなか……▽
+キミに　したがう　ポケモンだらけ▼
 しかたない……
-ボクの　ともだちと　たたかいたまえ！[BE:01:ページ切り替え（クリア）]
+ボクの　ともだちと　たたかいたまえ！▼
 キミに　とらえられた　ポケモンを
-じゆうに　してあげるから……[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">Ｎ『ボクに　逆らうんだね
-その　ボールの中……[BE:00:ページ切り替え（行送り）]
-キミに従う　ポケモンだらけ[BE:01:ページ切り替え（クリア）]
+じゆうに　してあげるから……[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]ボクに　逆らうんだね
+その　ボールの中……▽
+キミに従う　ポケモンだらけ▼
 仕方ない……
-ボクの　友達と　戦いたまえ！[BE:01:ページ切り替え（クリア）]
+ボクの　友達と　戦いたまえ！▼
 キミに　捕らえられた　ポケモンを
-解放してあげるから……[BE:01:ページ切り替え（クリア）]</language>
+解放してあげるから……[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="msg_c02_boss_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c02_boss_04" text-color="#000000,,,#000000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>♂
 ・戦闘後
 ･メッセージ表示後、画面左方向へ
 　５歩移動
 ・続けてmsg_c02_boss_05</comment>
 		<attribute name="キャラ指定">N</attribute>
-		<language name="JPN" width="256">Ｎ『いまの　ボクの　ともだちとでは
-ポケモンを　すくいだせないか……[BE:01:ページ切り替え（クリア）]
-ボクには　ちからが　ひつようだ[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]いまの　ボクの　ともだちとでは
+ポケモンを　すくいだせないか……▼
+ボクには　ちからが　ひつようだ▼
 せかいの　みんなが　ボクの　りそうに
-さんせい　するような　そんな　ちから……[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">Ｎ『今の　友達とでは
-ポケモンを　救いだせないか……[BE:01:ページ切り替え（クリア）]
-ボクには　力が　必要だ[BE:01:ページ切り替え（クリア）]
+さんせい　するような　そんな　ちから……[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]今の　友達とでは
+ポケモンを　救いだせないか……▼
+ボクには　力が　必要だ▼
 世界の　みんなが　ボクの理想に
-賛同するための　力……[BE:01:ページ切り替え（クリア）]</language>
+賛同するための　力……[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="msg_c02_boss_05" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c02_boss_05" text-color="#000000,,,#000000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>♂
 ・
 ･メッセージ後、画面左方向へ
 ・画面外に消えると主人公操作可能に</comment>
 		<attribute name="キャラ指定">N</attribute>
-		<language name="JPN" width="256">Ｎ『せかいには
-かずおおくの　すうしきが　ある[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]せかいには
+かずおおくの　すうしきが　ある▼
 ほとんどの　ひとは
-すうしきを　にんしき　しても[BE:00:ページ切り替え（行送り）]
-その　いみは　りかいできない[BE:01:ページ切り替え（クリア）]
+すうしきを　にんしき　しても▽
+その　いみは　りかいできない▼
 それとおなじように　ボクのりそう
-だれが　りかい　できようか……[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">Ｎ『世の中に　数多くの　数式がある[BE:01:ページ切り替え（クリア）]
+だれが　りかい　できようか……[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]世の中に　数多くの　数式がある▼
 ほとんどの人は　数式自体を　認識しても
-その意味は　理解できない[BE:01:ページ切り替え（クリア）]
+その意味は　理解できない▼
 それと同じように　ボクの理想
-だれが　理解できようか……[BE:01:ページ切り替え（クリア）]</language>
+だれが　理解できようか……[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="msg_c02_leader3_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c02_leader3_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・盗難イベント中
 　ジム（＝博物館）の外に出ると
@@ -432,12 +499,12 @@
 		<attribute name="キャラ指定">アーティ
 C03ジムリーダー</attribute>
 		<language name="JPN" width="256">？？？『やあ　アロエさん
-なにか　いいカセキは　みつかったかい？[BE:01:ページ切り替え（クリア）]</language>
+なにか　いいカセキは　みつかったかい？▼</language>
 		<language name="JPN_KANJI" width="256">？？？『やあ　アロエさん
-なにか　いいカセキは　みつかったかい？[BE:01:ページ切り替え（クリア）]</language>
+なにか　いいカセキは　みつかったかい？▼</language>
 	</row>
 
-	<row id="msg_c02_leader2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+	<row id="msg_c02_leader2_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♀
 ・盗難イベント中
 ・続けて主人公と向き合って
@@ -445,68 +512,68 @@ C03ジムリーダー</attribute>
 		<attribute name="キャラ指定">アロエ
 C02ジムリーダー</attribute>
 		<language name="JPN" width="256">アロエ『あんた
-また　につまったのかい？[BE:01:ページ切り替え（クリア）]</language>
+また　につまったのかい？▼</language>
 		<language name="JPN_KANJI" width="256">アロエ『あんた
-また　創作に　煮詰まったのかい？[BE:01:ページ切り替え（クリア）]</language>
+また　創作に　煮詰まったのかい？▼</language>
 	</row>
 
-	<row id="msg_c02_leader2_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+	<row id="msg_c02_leader2_02" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♀
 ・盗難イベント中
 ・続けてmsg_c02_leader3_02表示</comment>
 		<attribute name="キャラ指定">アロエ
 C02ジムリーダー</attribute>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]！[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">[1:00:トレーナー名:0]！▼
 こいつさ　こうみえても
-ヒウンジムの　ジムリーダーで[BE:00:ページ切り替え（行送り）]
-アーティって　いうんだよ！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]！[BE:01:ページ切り替え（クリア）]
+ヒウンジムの　ジムリーダーで▽
+アーティって　いうんだよ！▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]！▼
 こいつさ　こうみえても
-ヒウンジムの　ジムリーダーで[BE:00:ページ切り替え（行送り）]
-アーティって　いうんだよ！[BE:01:ページ切り替え（クリア）]</language>
+ヒウンジムの　ジムリーダーで▽
+アーティって　いうんだよ！▼</language>
 	</row>
 
-	<row id="msg_c02_leader3_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c02_leader3_02" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・盗難イベント中
 ・続けてmsg_c02_leader2_03</comment>
 		<attribute name="キャラ指定">アーティ
 C03ジムリーダー</attribute>
 		<language name="JPN" width="256">アーティ『……んうん？
-なんとなく　きぶんてんかん　かな？[BE:01:ページ切り替え（クリア）]
+なんとなく　きぶんてんかん　かな？▼
 でさ　なんとなく　たいへんそうだけど
-ひょっとして　なんか　あった？[BE:01:ページ切り替え（クリア）]</language>
+ひょっとして　なんか　あった？▼</language>
 		<language name="JPN_KANJI" width="256">アーティ『……んうん？
-なんとなく　気分転換　かな？[BE:01:ページ切り替え（クリア）]
+なんとなく　気分転換　かな？▼
 でさ　なんとなく　大変そうだけど
-ひょっとして　なんか　あった？[BE:01:ページ切り替え（クリア）]</language>
+ひょっとして　なんか　あった？▼</language>
 	</row>
 
-	<row id="msg_c02_leader2_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+	<row id="msg_c02_leader2_03" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♀
 ・盗難イベント中
 ・続けてmsg_c02_white_01</comment>
 		<attribute name="キャラ指定">アロエ
 C02ジムリーダー</attribute>
 		<language name="JPN" width="256">アロエ『そうなんだよ！！
-てんじひんを　もっていかれてさ！[BE:01:ページ切り替え（クリア）]</language>
+てんじひんを　もっていかれてさ！▼</language>
 		<language name="JPN_KANJI" width="256">アロエ『そうなんだよ！！
-展示品を　ごっそり　持って行かれてさ！[BE:01:ページ切り替え（クリア）]</language>
+展示品を　ごっそり　持って行かれてさ！▼</language>
 	</row>
 
-	<row id="msg_c02_white_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c02_white_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>♀
 ・盗難イベント中
 ・博物館からサポート出てきてこのメッセージ
 ・0＝主人公名前</comment>
 		<attribute name="キャラ指定">サポート（友達♀）</attribute>
 		<language name="JPN" width="256">ホワイティ『ねえねえ　[1:00:トレーナー名:0]
-どうして　はくぶつかん　からっぽなの？[BE:01:ページ切り替え（クリア）]</language>
+どうして　はくぶつかん　からっぽなの？▼</language>
 		<language name="JPN_KANJI" width="256">ホワイティ『ねえねえ　[1:00:トレーナー名:0]
-どうして　博物館　空っぽなの？[BE:01:ページ切り替え（クリア）]</language>
+どうして　博物館　空っぽなの？▼</language>
 	</row>
 
-	<row id="msg_c02_black_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c02_black_03" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・盗難イベント中
 ・上記メッセージ表示後、画面左からきて
@@ -516,14 +583,14 @@ C02ジムリーダー</attribute>
 ・0＝主人公名前</comment>
 		<attribute name="キャラ指定">ライバル（友達♂）</attribute>
 		<language name="JPN" width="256">ブラッカー『[1:00:トレーナー名:0]
-ジムバッジ　てにいれたかよ？[BE:01:ページ切り替え（クリア）]
-って　なんだか　そうぞうしいな[BE:01:ページ切り替え（クリア）]</language>
+ジムバッジ　てにいれたかよ？▼
+って　なんだか　そうぞうしいな▼</language>
 		<language name="JPN_KANJI" width="256">ブラッカー『[1:00:トレーナー名:0]
-ジムバッジ　手に入れたかよ？[BE:01:ページ切り替え（クリア）]
-って　なんだか　騒々しいな[BE:01:ページ切り替え（クリア）]</language>
+ジムバッジ　手に入れたかよ？▼
+って　なんだか　騒々しいな▼</language>
 	</row>
 
-	<row id="msg_c02_leader2_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+	<row id="msg_c02_leader2_04" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♀
 ・盗難イベント中
 ・メッセージ表示後、画面右を向く
@@ -532,36 +599,36 @@ C02ジムリーダー</attribute>
 		<attribute name="キャラ指定">アロエ
 C02ジムリーダー</attribute>
 		<language name="JPN" width="256">アロエ『なんだいなんだい？
-このこたちは……？[BE:00:ページ切り替え（行送り）]
-あんたの　ともだちかい？[BE:01:ページ切り替え（クリア）]
+このこたちは……？▽
+あんたの　ともだちかい？▼
 ……　……　……
-……　……　……[BE:01:ページ切り替え（クリア）]
-なるほど　トレーナーなんだね！[BE:01:ページ切り替え（クリア）]
+……　……　……▼
+なるほど　トレーナーなんだね！▼
 それなら　てわけするよ
-あたしゃ　こっちね[BE:01:ページ切り替え（クリア）]</language>
+あたしゃ　こっちね▼</language>
 		<language name="JPN_KANJI" width="256">アロエ『なんだいなんだい？
-この子達は……？[BE:00:ページ切り替え（行送り）]
-アンタの　友達かい？[BE:01:ページ切り替え（クリア）]
+この子達は……？▽
+アンタの　友達かい？▼
 ……　……　……
-……　……　……[BE:01:ページ切り替え（クリア）]
-なるほど　トレーナーなんだね！[BE:01:ページ切り替え（クリア）]
+……　……　……▼
+なるほど　トレーナーなんだね！▼
 それなら　手分けするよ
-あたしゃ　こっちね[BE:01:ページ切り替え（クリア）]</language>
+あたしゃ　こっちね▼</language>
 	</row>
 
-	<row id="msg_c02_leader2_05" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+	<row id="msg_c02_leader2_05" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♀
 ・盗難イベント中
 ・続けてmsg_c02_leader2_06</comment>
 		<attribute name="キャラ指定">アロエ
 C02ジムリーダー</attribute>
 		<language name="JPN" width="256">そして　あんたたちは
-はくぶつかんに　のこってちょうだい！[BE:01:ページ切り替え（クリア）]</language>
+はくぶつかんに　のこってちょうだい！▼</language>
 		<language name="JPN_KANJI" width="256">そして　あんたたちは
-博物館に　残ってちょうだい！[BE:01:ページ切り替え（クリア）]</language>
+博物館に　残ってちょうだい！▼</language>
 	</row>
 
-	<row id="msg_c02_leader2_06" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+	<row id="msg_c02_leader2_06" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♀
 ・盗難イベント中
 ・0＝主人公名前
@@ -572,18 +639,18 @@ C02ジムリーダー</attribute>
 		<attribute name="キャラ指定">アロエ
 C02ジムリーダー</attribute>
 		<language name="JPN" width="256">で　アーティと　[1:00:トレーナー名:0]は
-ヤグルマのもりを　さがしておくれよ！[BE:01:ページ切り替え（クリア）]
+ヤグルマのもりを　さがしておくれよ！▼
 いい？　アーティ
-あんたが　あんない　してやんな[BE:01:ページ切り替え（クリア）]
-じゃ　たのんだよ！[BE:01:ページ切り替え（クリア）]</language>
+あんたが　あんない　してやんな▼
+じゃ　たのんだよ！▼</language>
 		<language name="JPN_KANJI" width="256">で　アーティと　[1:00:トレーナー名:0]は
-ヤグルマの森を　探しておくれよ！[BE:01:ページ切り替え（クリア）]
+ヤグルマの森を　探しておくれよ！▼
 いい？　アーティ
-あんたが　案内してやんな[BE:01:ページ切り替え（クリア）]
-じゃ　頼んだよ！[BE:01:ページ切り替え（クリア）]</language>
+あんたが　案内してやんな▼
+じゃ　頼んだよ！▼</language>
 	</row>
 
-	<row id="msg_c02_leader3_03" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c02_leader3_03" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・盗難イベント中
 ・主人公性別＝♂
@@ -592,16 +659,16 @@ C02ジムリーダー</attribute>
 		<attribute name="キャラ指定">アーティ
 C03ジムリーダー</attribute>
 		<language name="JPN" width="256">アーティ『さてさて……
-キミ……　[1:00:トレーナー名:0]くんだっけ？　[BE:01:ページ切り替え（クリア）]
+キミ……　[1:00:トレーナー名:0]くんだっけ？　▼
 じゃあ　いこうか
-ドロボウたいじ　とやらにさ[BE:01:ページ切り替え（クリア）]</language>
+ドロボウたいじ　とやらにさ▼</language>
 		<language name="JPN_KANJI" width="256">アーティ『さてさて……
-キミ……　[1:00:トレーナー名:0]くんだっけ？　[BE:01:ページ切り替え（クリア）]
+キミ……　[1:00:トレーナー名:0]くんだっけ？　▼
 じゃあ　行こうか
-ドロボウ退治　とやらにさ[BE:01:ページ切り替え（クリア）]</language>
+ドロボウ退治　とやらにさ▼</language>
 	</row>
 
-	<row id="msg_c02_leader3_04" text-color="#ff0000,,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c02_leader3_04" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・盗難イベント中
 ・主人公性別＝♀
@@ -611,46 +678,46 @@ C03ジムリーダー</attribute>
 		<attribute name="キャラ指定">アーティ
 C03ジムリーダー</attribute>
 		<language name="JPN" width="256">アーティ『さてさて……
-キミ……　[1:00:トレーナー名:0]さんだっけ？[BE:01:ページ切り替え（クリア）]
+キミ……　[1:00:トレーナー名:0]さんだっけ？▼
 じゃあ　いこうか
-ドロボウたいじ　とやらにさ[BE:01:ページ切り替え（クリア）]</language>
+ドロボウたいじ　とやらにさ▼</language>
 		<language name="JPN_KANJI" width="256">アーティ『さてさて……
-アナタ……　[1:00:トレーナー名:0]さんだっけ？[BE:01:ページ切り替え（クリア）]
+アナタ……　[1:00:トレーナー名:0]さんだっけ？▼
 じゃあ　行こうか
-ドロボウ退治　とやらにさ[BE:01:ページ切り替え（クリア）]</language>
+ドロボウ退治　とやらにさ▼</language>
 	</row>
 
-	<row id="msg_c02_white_02" text-color="#ff0000,,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c02_white_02" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>♀
 ・盗難イベント中
 ・ダウジングマシン追加
 ・0＝主人公名前</comment>
 		<attribute name="キャラ指定">サポート（友達♀）</attribute>
 		<language name="JPN" width="256">ホワイティ『あっ　[1:00:トレーナー名:0]
-これを　もっていってよ！[BE:01:ページ切り替え（クリア）]
+これを　もっていってよ！▼
 マコモさんから　あずかってたの
-ダウジングマシン！[BE:01:ページ切り替え（クリア）]</language>
+ダウジングマシン！▼</language>
 		<language name="JPN_KANJI" width="256">ホワイティ『あっ　[1:00:トレーナー名:0]
-これを　持って行ってよ！[BE:01:ページ切り替え（クリア）]
+これを　持って行ってよ！▼
 マコモさんから　預かってたの
-ダウジングマシン！[BE:01:ページ切り替え（クリア）]</language>
+ダウジングマシン！▼</language>
 	</row>
 
-	<row id="msg_c02_white_03" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c02_white_03" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>♀
 ・盗難イベント中
 ・続けてmsg_c02_black_04</comment>
 		<attribute name="キャラ指定">サポート（友達♀）</attribute>
 		<language name="JPN" width="256">ダウジングマシンを　つかうと
-めには　みえないけれど[BE:01:ページ切り替え（クリア）]
+めには　みえないけれど▼
 かくれている　どうぐの
-ばしょが　わかるんだって！[BE:01:ページ切り替え（クリア）]</language>
+ばしょが　わかるんだって！▼</language>
 		<language name="JPN_KANJI" width="256">ダウジングマシンを　つかうと
-目には見えないけれど　隠れている[BE:00:ページ切り替え（行送り）]
-道具の　場所が　わかるんだって！[BE:01:ページ切り替え（クリア）]</language>
+目には見えないけれど　隠れている▽
+道具の　場所が　わかるんだって！▼</language>
 	</row>
 
-	<row id="msg_c02_black_04" text-color="#ff0000,,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c02_black_04" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・盗難イベント中
 ・メッセージ表示後
@@ -663,7 +730,7 @@ C03ジムリーダー</attribute>
 博物館を　守れば　いいんだろ？</language>
 	</row>
 
-	<row id="msg_c02_leader2_07" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+	<row id="msg_c02_leader2_07" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♀
 ・盗難イベント中
 ・3番道路側のゲート近くに出現
@@ -672,72 +739,72 @@ C03ジムリーダー</attribute>
 		<attribute name="キャラ指定">アロエ
 C02ジムリーダー</attribute>
 		<language name="JPN" width="256">アロエ『こっちの　ほうには
-プラズマだん　いないみたいだけど[BE:01:ページ切り替え（クリア）]
+プラズマだん　いないみたいだけど▼
 ここを　うごくわけにも　いかないし
 あんた……　ヤグルマのもり　たのんだよ！</language>
 		<language name="JPN_KANJI" width="256">アロエ『こっちの　ほうには
-プラズマ団　いないみたいだけど[BE:01:ページ切り替え（クリア）]
+プラズマ団　いないみたいだけど▼
 ここを　動くわけにも　いかないし
 アンタ……　ヤグルマの森　たのんだよ！</language>
 	</row>
 
-	<row id="msg_c02_woman2_01">
+	<row id="msg_c02_woman2_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<comment>♀</comment>
 		<attribute name="キャラ指定">WOMAN2
 女性（金髪）</attribute>
 		<language name="JPN" width="256">だれも　つかっていない
-いふくの　こうじょうや　そうこを[BE:00:ページ切り替え（行送り）]
-おかねを　もってない　ひとたちが[BE:00:ページ切り替え（行送り）]
-アトリエとして　つかっていたの[BE:01:ページ切り替え（クリア）]
+いふくの　こうじょうや　そうこを▽
+おかねを　もってない　ひとたちが▽
+アトリエとして　つかっていたの▼
 それが　げいじゅつのまち　とよばれる
 シッポウシティの　はじまりね</language>
 		<language name="JPN_KANJI" width="256">だれも　使っていない
-衣服の　工場や　倉庫を[BE:00:ページ切り替え（行送り）]
-お金を　持っていない　人たちが[BE:00:ページ切り替え（行送り）]
-アトリエとして　使いだしたの[BE:01:ページ切り替え（クリア）]
+衣服の　工場や　倉庫を▽
+お金を　持っていない　人たちが▽
+アトリエとして　使いだしたの▼
 それが　芸術の街と　呼ばれる
 シッポウシティの　始まりね</language>
 	</row>
 
-	<row id="msg_c02_man2_01">
+	<row id="msg_c02_man2_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<comment>♂</comment>
 		<attribute name="キャラ指定">MAN2
 青年（金髪）</attribute>
-		<language name="JPN" width="256">そうこって　でかいもんな！[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">そうこって　でかいもんな！▼
 ポケモンを　おもうぞんぶん
 たたかわせたく　なるよな！</language>
-		<language name="JPN_KANJI" width="256">倉庫って　でかいもんな！[BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">倉庫って　でかいもんな！▼
 ポケモンを　思う存分
 戦わせたくなるよな！</language>
 	</row>
 
-	<row id="msg_c02_middlewoman2_01">
+	<row id="msg_c02_middlewoman2_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<comment>♀</comment>
 		<attribute name="キャラ指定">MIDDLEWOMAN2
 太ったおばさん</attribute>
 		<language name="JPN" width="256">ただの　そうこ　だったのに
-こんなに　にんきが　でるなんて……[BE:00:ページ切り替え（行送り）]
+こんなに　にんきが　でるなんて……▽
 おばさん　かちかんが　ゆらいじゃうわ</language>
 		<language name="JPN_KANJI" width="256">ただの　倉庫だったのに
-こんなに　人気が　でるなんて……[BE:00:ページ切り替え（行送り）]
+こんなに　人気が　でるなんて……▽
 おばさん　価値観が　揺らいじゃうわ</language>
 	</row>
 
-	<row id="msg_c02_backpackerw_01">
+	<row id="msg_c02_backpackerw_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<comment>♀</comment>
 		<attribute name="キャラ指定">BACKPACKERW
 バックパッカー♀</attribute>
 		<language name="JPN" width="256">シッポウシティは　オシャレどが
-たかくて　あこがれの　まち　なの！[BE:01:ページ切り替え（クリア）]
+たかくて　あこがれの　まち　なの！▼
 ほどよく　じみ　なのも
 かえって　かっこいいんだよね</language>
 		<language name="JPN_KANJI" width="256">シッポウシティは　オシャレ度が
-高くて　あこがれの　街なの！[BE:01:ページ切り替え（クリア）]
+高くて　あこがれの　街なの！▼
 ほどよく　地味なのも
 かえって　かっこいいんだよね</language>
 	</row>
 
-	<row id="msg_c02_accordion_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c02_accordion_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<comment>♂
 ・ISS用
 ・仮メッセージ</comment>
@@ -746,7 +813,7 @@ C02ジムリーダー</attribute>
 		<language name="JPN_KANJI" width="256">アコーディオンの　音色　どうですか？</language>
 	</row>
 
-	<row id="msg_c02_sign1_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c02_sign1_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>看板分類：タウンマップ</comment>
 		<attribute name="キャラ指定">看板：街</attribute>
 		<language name="JPN" width="256">ここは　シッポウシティ
@@ -755,22 +822,22 @@ C02ジムリーダー</attribute>
 シッポウは　七つの　宝物</language>
 	</row>
 
-	<row id="msg_c02_hakase2_sotne_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c02_hakase2_sotne_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀：d04r0601イベント後
 ・所定のpos（未定）を踏むとイベント発動
 ・続けてmsg_c02_leader2_sotne_01</comment>
 		<attribute name="キャラ指定">博士娘</attribute>
-		<language name="JPN" width="256">アララギ『ハーイ！　[1:00:トレーナー名:0][BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">アララギ『ハーイ！　[1:00:トレーナー名:0]▼
 れきしてきに　センセーションで
-トレーナーとして　めんどうで[BE:00:ページ切り替え（行送り）]
-すごいことに　まきこまれたわね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">アララギ『ハーイ！　[1:00:トレーナー名:0][BE:01:ページ切り替え（クリア）]
+トレーナーとして　めんどうで▽
+すごいことに　まきこまれたわね▼</language>
+		<language name="JPN_KANJI" width="256">アララギ『ハーイ！　[1:00:トレーナー名:0]▼
 歴史的に　センセーションで
-トレーナーとして　面倒で[BE:00:ページ切り替え（行送り）]
-すごいことに　巻き込まれたわね[BE:01:ページ切り替え（クリア）]</language>
+トレーナーとして　面倒で▽
+すごいことに　巻き込まれたわね▼</language>
 	</row>
 
-	<row id="msg_c02_leader2_sotne_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+	<row id="msg_c02_leader2_sotne_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♀：d04r0601イベント後
 ・博物館から出現
 　所定のpos（GRIDX=644、GRIDZ=582）に
@@ -779,67 +846,67 @@ C02ジムリーダー</attribute>
 ・博物館内のストーンの動作モデル削除
 ・続けてmsg_c02_hakase1_sotne_01</comment>
 		<attribute name="キャラ指定">c02ジムリーダー</attribute>
-		<language name="JPN" width="256">アロエ『……これで　いいんでしょ[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">アロエ『……これで　いいんでしょ▼
 この　ふるいいしが
-ドラゴンだって　いうのかい？[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">アロエ『……これで　いいんでしょ[BE:01:ページ切り替え（クリア）]
+ドラゴンだって　いうのかい？▼</language>
+		<language name="JPN_KANJI" width="256">アロエ『……これで　いいんでしょ▼
 この　ふるいいしが
-ドラゴンだって　いうのかい？[BE:01:ページ切り替え（クリア）]</language>
+ドラゴンだって　いうのかい？▼</language>
 	</row>
 
-	<row id="msg_c02_hakase1_sotne_01">
+	<row id="msg_c02_hakase1_sotne_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<comment>♂：d04r0601イベント後
 ・続けてmsg_c02_hakase2_sotne_02</comment>
 		<attribute name="キャラ指定">博士父</attribute>
 		<language name="JPN" width="256">アララギちち『うむ……
-あのあと　リュウラセンのとうを[BE:00:ページ切り替え（行送り）]
-ちょうさ　したところ[BE:01:ページ切り替え（クリア）]
+あのあと　リュウラセンのとうを▽
+ちょうさ　したところ▼
 ストーンと　リュウラセンのとう　から
-おなじ　じだいの[BE:00:ページ切り替え（行送り）]
-こんせきが　みつかったのだ[BE:01:ページ切り替え（クリア）]</language>
+おなじ　じだいの▽
+こんせきが　みつかったのだ▼</language>
 		<language name="JPN_KANJI" width="256">アララギちち『うむ……
-あのあと　リュウラセンの塔を[BE:00:ページ切り替え（行送り）]
-調査したところ[BE:01:ページ切り替え（クリア）]
+あのあと　リュウラセンの塔を▽
+調査したところ▼
 ストーンと　リュウラセンの塔　から
-同じ　時代の[BE:00:ページ切り替え（行送り）]
-こん跡が　みつかったのだ[BE:01:ページ切り替え（クリア）]</language>
+同じ　時代の▽
+こん跡が　みつかったのだ▼</language>
 	</row>
 
-	<row id="msg_c02_hakase2_sotne_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c02_hakase2_sotne_02" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀：d04r0601イベント後
 ・続けてmsg_c02_white_sotne_01</comment>
 		<attribute name="キャラ指定">博士娘</attribute>
 		<language name="JPN" width="256">アララギ『……しらべたのは
-アタシ　なんですけど[BE:01:ページ切り替え（クリア）]</language>
+アタシ　なんですけど▼</language>
 		<language name="JPN_KANJI" width="256">アララギ『……調べたのは
-アタシ　なんですけど[BE:01:ページ切り替え（クリア）]</language>
+アタシ　なんですけど▼</language>
 	</row>
 
-	<row id="msg_c02_white_sotne_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c02_white_sotne_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀：d04r0601イベント後
 ・続けてmsg_c02_leader2_sotne_01</comment>
 		<attribute name="キャラ指定">サポート</attribute>
 		<language name="JPN" width="256">ホワイティ『それにしても
-あのとき　プラズマだん　から[BE:00:ページ切り替え（行送り）]
-とりもどせて　よかったですね[BE:01:ページ切り替え（クリア）]</language>
+あのとき　プラズマだん　から▽
+とりもどせて　よかったですね▼</language>
 		<language name="JPN_KANJI" width="256">ホワイティ『それにしても
-あのとき　プラズマ団　から[BE:00:ページ切り替え（行送り）]
-取り戻せて　よかったですね[BE:01:ページ切り替え（クリア）]</language>
+あのとき　プラズマ団　から▽
+取り戻せて　よかったですね▼</language>
 	</row>
 
-	<row id="msg_c02_leader2_sotne_02" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+	<row id="msg_c02_leader2_sotne_02" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♀：d04r0601イベント後
 ・続けてmsg_c02_hakase1_sotne_02</comment>
 		<attribute name="キャラ指定">c02ジムリーダー</attribute>
 		<language name="JPN" width="256">アロエ『ああ　あのとき
-あんたたちが　いてくれて[BE:00:ページ切り替え（行送り）]
-ほんとうに　たすかったよ[BE:01:ページ切り替え（クリア）]</language>
+あんたたちが　いてくれて▽
+ほんとうに　たすかったよ▼</language>
 		<language name="JPN_KANJI" width="256">アロエ『ああ　あのとき
-あんたたちが　いてくれて[BE:00:ページ切り替え（行送り）]
-本当に　助かったよ[BE:01:ページ切り替え（クリア）]</language>
+あんたたちが　いてくれて▽
+本当に　助かったよ▼</language>
 	</row>
 
-	<row id="msg_c02_hakase1_sotne_02">
+	<row id="msg_c02_hakase1_sotne_02" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<comment>♂：d04r0601イベント後
 ・メッセージ表示後、主人公に隣接
 ・隣接時、アイテム入手処理
@@ -848,174 +915,174 @@ C02ジムリーダー</attribute>
 　d08r0701でのドラゴン出現デモと同じSE
 ・エフェクト終了後msg_c02_white_sotne_02</comment>
 		<attribute name="キャラ指定">博士父</attribute>
-		<language name="JPN" width="256">アララギ『で　[1:00:トレーナー名:0][BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">アララギ『で　[1:00:トレーナー名:0]▼
 Ｎが　かかげたのは
-これと　おなじ　いし　だったか？[BE:00:ページ切り替え（行送り）]
-きちんと　たしかめてくれないか？[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">アララギ『で　[1:00:トレーナー名:0][BE:01:ページ切り替え（クリア）]
+これと　おなじ　いし　だったか？▽
+きちんと　たしかめてくれないか？▼</language>
+		<language name="JPN_KANJI" width="256">アララギ『で　[1:00:トレーナー名:0]▼
 Ｎが　かかげたのは
-これと　同じ　石　だったか？[BE:00:ページ切り替え（行送り）]
-きちんと　確かめてくれないか？[BE:01:ページ切り替え（クリア）]</language>
+これと　同じ　石　だったか？▽
+きちんと　確かめてくれないか？▼</language>
 	</row>
 
-	<row id="msg_c02_white_sotne_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c02_white_sotne_02" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀：d04r0601イベント後
 ・続けてmsg_c02_champion_sotne_01</comment>
 		<attribute name="キャラ指定">サポート</attribute>
-		<language name="JPN" width="256">ホワイティ『！[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">ホワイティ『！▼
 いま！　[1:00:トレーナー名:0]が
-さわったら　うごきましたよね！？[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ホワイティ『！[BE:01:ページ切り替え（クリア）]
+さわったら　うごきましたよね！？▼</language>
+		<language name="JPN_KANJI" width="256">ホワイティ『！▼
 いま！　[1:00:トレーナー名:0]が
-触ったら　動きましたよね！？[BE:01:ページ切り替え（クリア）]</language>
+触ったら　動きましたよね！？▼</language>
 	</row>
 
-	<row id="msg_c02_champion_sotne_01w" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c02_champion_sotne_01w" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂：d04r0601イベント後
 ・WHITEver
 ・続けてmsg_c02_hakase2_sotne_03</comment>
 		<attribute name="キャラ指定">チャンピオン</attribute>
 		<language name="JPN" width="256">アデク『……そうか
-やはり　そうなのか[BE:01:ページ切り替え（クリア）]
+やはり　そうなのか▼
 [1:00:トレーナー名:0]
-この　ダークストーンは[BE:00:ページ切り替え（行送り）]
-おまえが　もっているべき　だな[BE:01:ページ切り替え（クリア）]</language>
+この　ダークストーンは▽
+おまえが　もっているべき　だな▼</language>
 		<language name="JPN_KANJI" width="256">アデク『……そうか
-やはり　そうなのか[BE:01:ページ切り替え（クリア）]
+やはり　そうなのか▼
 [1:00:トレーナー名:0]
-この　ダークストーンは[BE:00:ページ切り替え（行送り）]
-おまえが　持っているべき　だな[BE:01:ページ切り替え（クリア）]</language>
+この　ダークストーンは▽
+おまえが　持っているべき　だな▼</language>
 	</row>
 
-	<row id="msg_c02_champion_sotne_01b" back-color="#80ffff,,,#80ffff,,,,,,,,,,,,,,,">
+	<row id="msg_c02_champion_sotne_01b" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ffff,,,#80ffff,,,,,,,,,,,,,,,">
 		<comment>♂：d04r0601イベント後
 ・BLACKver
 ・続けてmsg_c02_hakase2_sotne_03</comment>
 		<attribute name="キャラ指定">チャンピオン</attribute>
 		<language name="JPN" width="256">アデク『……そうか
-やはり　そうなのか[BE:01:ページ切り替え（クリア）]
+やはり　そうなのか▼
 [1:00:トレーナー名:0]
-この　ライトストーンは[BE:00:ページ切り替え（行送り）]
-おまえが　もっているべき　だな[BE:01:ページ切り替え（クリア）]</language>
+この　ライトストーンは▽
+おまえが　もっているべき　だな▼</language>
 		<language name="JPN_KANJI" width="256">アデク『……そうか
-やはり　そうなのか[BE:01:ページ切り替え（クリア）]
+やはり　そうなのか▼
 [1:00:トレーナー名:0]
-この　ライトストーンは[BE:00:ページ切り替え（行送り）]
-おまえが　持っているべき　だな[BE:01:ページ切り替え（クリア）]</language>
+この　ライトストーンは▽
+おまえが　持っているべき　だな▼</language>
 	</row>
 
-	<row id="msg_c02_hakase2_sotne_03w" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c02_hakase2_sotne_03w" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀：d04r0601イベント後
 ・WHITEver
 ・続けてmsg_c02_champion_sotne_02</comment>
 		<attribute name="キャラ指定">博士娘</attribute>
 		<language name="JPN" width="256">アララギ『で　どうすれば
-その　ダークストーンを[BE:00:ページ切り替え（行送り）]
-ドラゴンに　もどせるんです？[BE:01:ページ切り替え（クリア）]
+その　ダークストーンを▽
+ドラゴンに　もどせるんです？▼
 また　リュウラセンのとう　に
-のぼれば　いいのでしょうか？[BE:01:ページ切り替え（クリア）]</language>
+のぼれば　いいのでしょうか？▼</language>
 		<language name="JPN_KANJI" width="256">アララギ『で　どうすれば
-その　ダークストーンを[BE:00:ページ切り替え（行送り）]
-ドラゴンに　戻せるんです？[BE:01:ページ切り替え（クリア）]
+その　ダークストーンを▽
+ドラゴンに　戻せるんです？▼
 また　リュウラセンの塔　に
-登れば　いいのでしょうか？[BE:01:ページ切り替え（クリア）]</language>
+登れば　いいのでしょうか？▼</language>
 	</row>
 
-	<row id="msg_c02_hakase2_sotne_03b" back-color="#80ff80,,,#80ff80,,,,,,,,,,,,,,,">
+	<row id="msg_c02_hakase2_sotne_03b" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,,,,,,,,,,,,,,">
 		<comment>♀：d04r0601イベント後
 ・BLACKver
 ・続けてmsg_c02_champion_sotne_02</comment>
 		<attribute name="キャラ指定">博士娘</attribute>
 		<language name="JPN" width="256">アララギ『で　どうすれば
-その　ライトストーンを[BE:00:ページ切り替え（行送り）]
-ドラゴンに　もどせるんです？[BE:01:ページ切り替え（クリア）]
+その　ライトストーンを▽
+ドラゴンに　もどせるんです？▼
 また　リュウラセンのとう　に
-のぼれば　いいのでしょうか？[BE:01:ページ切り替え（クリア）]</language>
+のぼれば　いいのでしょうか？▼</language>
 		<language name="JPN_KANJI" width="256">アララギ『で　どうすれば
-その　ライトストーンを[BE:00:ページ切り替え（行送り）]
-ドラゴンに　もどせるんです？[BE:01:ページ切り替え（クリア）]
+その　ライトストーンを▽
+ドラゴンに　もどせるんです？▼
 また　リュウラセンのとう　に
-のぼれば　いいのでしょうか？[BE:01:ページ切り替え（クリア）]</language>
+のぼれば　いいのでしょうか？▼</language>
 	</row>
 
-	<row id="msg_c02_champion_sotne_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c02_champion_sotne_02" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂：d04r0601イベント後
 ・続けてmsg_c02_hakase1_sotne_03</comment>
 		<attribute name="キャラ指定">チャンピオン</attribute>
 		<language name="JPN" width="256">アデク『いま　[1:00:トレーナー名:0]に
-はんのう　したであろう……[BE:01:ページ切り替え（クリア）]
+はんのう　したであろう……▼
 それは　[1:00:トレーナー名:0]が
-ドラゴンと　であったからに　ちがいない[BE:01:ページ切り替え（クリア）]</language>
+ドラゴンと　であったからに　ちがいない▼</language>
 		<language name="JPN_KANJI" width="256">アデク『いま　[1:00:トレーナー名:0]に
-反応　したであろう……[BE:01:ページ切り替え（クリア）]
+反応　したであろう……▼
 それは　[1:00:トレーナー名:0]が
-ドラゴンと　出会ったからに　違いない[BE:01:ページ切り替え（クリア）]</language>
+ドラゴンと　出会ったからに　違いない▼</language>
 	</row>
 
-	<row id="msg_c02_hakase1_sotne_03">
+	<row id="msg_c02_hakase1_sotne_03" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<comment>♂：d04r0601イベント後
 ・続けてmsg_c02_champion_sotne_03</comment>
 		<attribute name="キャラ指定">博士父</attribute>
-		<language name="JPN" width="256">アララギちち『そうだな……[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">アララギちち『そうだな……▼
 でないと　とうに　のぼった
-わしにも　はんのう　しないと[BE:00:ページ切り替え（行送り）]
-おかしい　ということになる[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">アララギちち『そうだな……[BE:01:ページ切り替え（クリア）]
+わしにも　はんのう　しないと▽
+おかしい　ということになる▼</language>
+		<language name="JPN_KANJI" width="256">アララギちち『そうだな……▼
 でないと　塔に　登った
-わしにも　反応しないと[BE:00:ページ切り替え（行送り）]
-おかしい　ということになる[BE:01:ページ切り替え（クリア）]</language>
+わしにも　反応しないと▽
+おかしい　ということになる▼</language>
 	</row>
 
-	<row id="msg_c02_champion_sotne_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c02_champion_sotne_03" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂：d04r0601イベント後
 ・メッセージ表示後、チャンピオンに「そらをとぶ」演出で
 　動作モデル削除
 ・続けてmsg_c02_hakase1_sotne_04</comment>
 		<attribute name="キャラ指定">チャンピオン</attribute>
-		<language name="JPN" width="256">アデク『めざめさせるには　Ｎに……[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">アデク『めざめさせるには　Ｎに……▼
 いや　もういっぴきの　ドラゴンと
-であう！　ということに　なるな[BE:01:ページ切り替え（クリア）]
+であう！　ということに　なるな▼
 というわけで　だ
-ソウリュウシティに　むかう[BE:01:ページ切り替え（クリア）]
+ソウリュウシティに　むかう▼
 あのまちの　ジムリーダーは
-ドラゴンつかい[BE:00:ページ切り替え（行送り）]
-なにや　おしえてくれるであろう[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">アデク『目覚めさせるには　Ｎに……[BE:01:ページ切り替え（クリア）]
+ドラゴンつかい▽
+なにや　おしえてくれるであろう▼</language>
+		<language name="JPN_KANJI" width="256">アデク『目覚めさせるには　Ｎに……▼
 いや　もう一匹の　ドラゴンと
-出会う！　ということに　なるな[BE:01:ページ切り替え（クリア）]
+出会う！　ということに　なるな▼
 というわけで　だ
-ソウリュウシティに　向かう[BE:01:ページ切り替え（クリア）]
+ソウリュウシティに　向かう▼
 あの街の　ジムリーダーは
-ドラゴン使い[BE:00:ページ切り替え（行送り）]
-なにや　教えてくれるであろう[BE:01:ページ切り替え（クリア）]</language>
+ドラゴン使い▽
+なにや　教えてくれるであろう▼</language>
 	</row>
 
-	<row id="msg_c02_hakase1_sotne_04w">
+	<row id="msg_c02_hakase1_sotne_04w" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<comment>♂：d04r0601イベント後
 ・WHITEver
 ・続けてmsg_c02_hakase2_sotne_03</comment>
 		<attribute name="キャラ指定">博士父</attribute>
 		<language name="JPN" width="256">アララギちち『……[1:00:トレーナー名:0]よ
-おまえさんが　その　ダークストーンを[BE:00:ページ切り替え（行送り）]
-てにいれたのは　うんめい　なのかもな[BE:01:ページ切り替え（クリア）]</language>
+おまえさんが　その　ダークストーンを▽
+てにいれたのは　うんめい　なのかもな▼</language>
 		<language name="JPN_KANJI" width="256">アララギちち『……[1:00:トレーナー名:0]よ
-おまえさんが　その　ダークストーンを[BE:00:ページ切り替え（行送り）]
-手に入れたのは　運命　なのかもな[BE:01:ページ切り替え（クリア）]</language>
+おまえさんが　その　ダークストーンを▽
+手に入れたのは　運命　なのかもな▼</language>
 	</row>
 
-	<row id="msg_c02_hakase1_sotne_04b">
+	<row id="msg_c02_hakase1_sotne_04b" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<comment>♂：d04r0601イベント後
 ・BLACKver
 ・続けてmsg_c02_hakase2_sotne_03</comment>
 		<language name="JPN" width="256">アララギちち『……[1:00:トレーナー名:0]よ
-おまえさんが　その　ライトストーンを[BE:00:ページ切り替え（行送り）]
-てにいれたのは　うんめい　なのかもな[BE:01:ページ切り替え（クリア）]</language>
+おまえさんが　その　ライトストーンを▽
+てにいれたのは　うんめい　なのかもな▼</language>
 		<language name="JPN_KANJI" width="256">アララギちち『……[1:00:トレーナー名:0]よ
-おまえさんが　その　ライトストーンを[BE:00:ページ切り替え（行送り）]
-手に入れたのは　運命　なのかもな[BE:01:ページ切り替え（クリア）]</language>
+おまえさんが　その　ライトストーンを▽
+手に入れたのは　運命　なのかもな▼</language>
 	</row>
 
-	<row id="msg_c02_hakase2_sotne_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c02_hakase2_sotne_04" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀：d04r0601イベント後
 ・msg_c02_champion_sotne_03表示後
 ・表示後、博士父と博士娘、画面右へ移動する
@@ -1023,46 +1090,46 @@ C02ジムリーダー</attribute>
 ・動作モデルが画面外に消えると主人公、操作可能に</comment>
 		<attribute name="キャラ指定">博士娘</attribute>
 		<language name="JPN" width="256">アララギ『ドラゴンが
-どんな　そんざい　だったのか[BE:00:ページ切り替え（行送り）]
-しらべるため　アタシたちは[BE:00:ページ切り替え（行送り）]
-けんきゅうじょに　もどるわね[BE:01:ページ切り替え（クリア）]
+どんな　そんざい　だったのか▽
+しらべるため　アタシたちは▽
+けんきゅうじょに　もどるわね▼
 ……なにが　あっても
-あなたなら　だいじょうぶよ　きっと！[BE:01:ページ切り替え（クリア）]</language>
+あなたなら　だいじょうぶよ　きっと！▼</language>
 		<language name="JPN_KANJI" width="256">アララギ『ドラゴンが　どんな存在なのか
-調べるため　アタシたちは[BE:00:ページ切り替え（行送り）]
-研究所に　戻るわね[BE:01:ページ切り替え（クリア）]
+調べるため　アタシたちは▽
+研究所に　戻るわね▼
 ……なにが　あっても
-あなたなら　大丈夫よ　きっと！[BE:01:ページ切り替え（クリア）]</language>
+あなたなら　大丈夫よ　きっと！▼</language>
 	</row>
 
-	<row id="msg_c02_leader2_sotne_03" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+	<row id="msg_c02_leader2_sotne_03" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♀：d04r0601イベント後
 ・msg_c02_champion_sotne_03表示後、繰り返し
 ・別マップに行くとここから削除</comment>
 		<attribute name="キャラ指定">c02ジムリーダー</attribute>
-		<language name="JPN" width="256">アロエ『あんしん　しな！[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">アロエ『あんしん　しな！▼
 アンタに　なにか　あれば
 あたしたちが　かけつけるからさ！</language>
-		<language name="JPN_KANJI" width="256">アロエ『安心しな！[BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">アロエ『安心しな！▼
 アンタに　なにか　あれば
 あたしたちが　駆けつけるからさ！</language>
 	</row>
 
-	<row id="msg_c02_white_sotne_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c02_white_sotne_03" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀：d04r0601イベント後
 ・msg_c02_champion_sotne_03表示後、繰り返し
 ・別マップに行くとここから削除</comment>
 		<attribute name="キャラ指定">サポート</attribute>
 		<language name="JPN" width="256">ホワイティ『どうして……
-どうして　[1:00:トレーナー名:0]なの？[BE:01:ページ切り替え（クリア）]
+どうして　[1:00:トレーナー名:0]なの？▼
 [1:00:トレーナー名:0]が
-その　いしを　もつ　ってことは[BE:01:ページ切り替え（クリア）]
+その　いしを　もつ　ってことは▼
 Ｎって　ひととも
 たたかうって　ことだよね……</language>
 		<language name="JPN_KANJI" width="256">ホワイティ『どうして……
-どうして　[1:00:トレーナー名:0]なの？[BE:01:ページ切り替え（クリア）]
+どうして　[1:00:トレーナー名:0]なの？▼
 [1:00:トレーナー名:0]が
-その　石を　持つ　ってことは[BE:01:ページ切り替え（クリア）]
+その　石を　持つ　ってことは▼
 Ｎって　人とも
 闘うって　ことだよね……</language>
 	</row>
