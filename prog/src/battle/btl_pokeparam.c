@@ -866,10 +866,13 @@ fx32 BPP_GetHPRatio( const BTL_POKEPARAM* pp )
 //=============================================================================================
 u8 BPP_WAZA_SearchIdx( const BTL_POKEPARAM* pp, WazaID waza )
 {
-  u32 i;
-  for(i=0; i<PTL_WAZA_MAX; ++i){
-    if( pp->waza[i].number == waza ){
-      return i;
+  if( waza != WAZANO_NULL )
+  {
+    u32 i;
+    for(i=0; i<PTL_WAZA_MAX; ++i){
+      if( pp->waza[i].number == waza ){
+        return i;
+      }
     }
   }
   return PTL_WAZA_MAX;

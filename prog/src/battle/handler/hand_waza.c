@@ -5591,6 +5591,7 @@ static void handler_Urami( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, 
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, targetPokeID );
     WazaID prev_waza = BPP_GetPrevWazaID( bpp );
     u8 wazaIdx = BPP_WAZA_SearchIdx( bpp, prev_waza );
+    OS_TPrintf("Urami : PrevWazaID=%d, idx=%d\n", prev_waza, wazaIdx);
 
     if( wazaIdx != PTL_WAZA_MAX )
     {
