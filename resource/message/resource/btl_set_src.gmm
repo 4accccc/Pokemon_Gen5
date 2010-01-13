@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2010-01-14T01:19:26"/>
+	<create user="taya" host="W00146" date="2010-01-14T01:28:41"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -2535,9 +2535,9 @@
 	<row id="BTL_STRID_SET_PokeNotExist">
 		<comment>アイテムコールなど：場に出ていない</comment>
 		<language name="JPN" width="216">…しかし　[1:02:ポケモンニックネーム:0]は
-バトルに　さんかしていなかった！</language>
+このばに　いなかった！</language>
 		<language name="JPN_KANJI" width="216">…しかし　[1:02:ポケモンニックネーム:0]は
-バトルに　参加していなかった！</language>
+この場に　いなかった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_PokeHaveNotItem">
