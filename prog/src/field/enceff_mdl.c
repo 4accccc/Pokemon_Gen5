@@ -14,7 +14,7 @@
 #include "arc/texViewTest.naix"
 
 //--------------------------------------------------------------
-/// ENCEFF1_WORK
+/// ENCEFF_MDL_WORK
 //--------------------------------------------------------------
 typedef struct
 {
@@ -30,12 +30,18 @@ typedef struct
 	GFL_G3D_RND*				g3DrndEff;
 	GFL_G3D_ANM*				g3DanmEff;
 	GFL_G3D_OBJ*				g3DobjEff;
-}ENCEFF1_WORK;
+  int MdlArcIdx;
+  int AnmArcIdx;
+}ENCEFF_MDL_WORK;
 
 //======================================================================
 //  proto
 //======================================================================
 static GMEVENT_RESULT ev_encEffectFunc( GMEVENT *event, int *seq, void *wk );
+
+static GMEVENT *CreateEffCommon(  GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork,
+                                  const int inMdl, const int inAnm  );
+
 
 //--------------------------------------------------------------
 /**
@@ -45,17 +51,39 @@ static GMEVENT_RESULT ev_encEffectFunc( GMEVENT *event, int *seq, void *wk );
  * @retval GMEVENT*
  */
 //--------------------------------------------------------------
-GMEVENT *ENCEFF_CreateEff1(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork)
+GMEVENT *ENCEFF_MDL_Create1(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork)
 {
   GMEVENT *event;
-  ENCEFF1_WORK *work;
-  
-  event = GMEVENT_Create( gsys, NULL, ev_encEffectFunc, sizeof(ENCEFF1_WORK) );
-  
-  work = GMEVENT_GetEventWork( event );
-	MI_CpuClear8( work, sizeof(ENCEFF1_WORK) );
+  event = CreateEffCommon( gsys, fieldWork,
+                           NARC_texViewTest_effect1_nsbmd,
+                           NARC_texViewTest_effect1_nsbca  );
+  return( event );
+}
 
+//--------------------------------------------------------------
+/**
+ * イベント作成共通
+ * @param gsys  GAMESYS_WORK
+ * @param fieldWork FIELDMAP_WORK
+ * @param inMdl   モデルアーカイブインデックス
+ * @param inAnm   アニメアーカイブインデックス
+ *
+ * @retval GMEVENT*
+ */
+//--------------------------------------------------------------
+static GMEVENT *CreateEffCommon(  GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork,
+                                  const int inMdl, const int inAnm  )
+{
+  GMEVENT *event;
+  ENCEFF_MDL_WORK *work;
+
+  event = GMEVENT_Create( gsys, NULL, ev_encEffectFunc, sizeof(ENCEFF_MDL_WORK) );
+  work = GMEVENT_GetEventWork( event );
+	MI_CpuClear8( work, sizeof(ENCEFF_MDL_WORK) );
   work->fieldWork = fieldWork;
+  work->MdlArcIdx = inMdl;
+  work->AnmArcIdx = inAnm;
+
   return( event );
 
 }
@@ -67,11 +95,11 @@ GMEVENT *ENCEFF_CreateEff1(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork)
  * @retval none
  */
 //--------------------------------------------------------------
-void ENCEFF_DrawEff1(ENCEFF_CNT_PTR ptr)
+void ENCEFF_MDL_Draw(ENCEFF_CNT_PTR ptr)
 {
   void *wk = ENCEFF_GetWork(ptr);
 
-  ENCEFF1_WORK *work = (ENCEFF1_WORK*)wk;
+  ENCEFF_MDL_WORK *work = (ENCEFF_MDL_WORK*)wk;
 
 	GFL_SCRNTEX_DrawDefault(work->g3DobjEff);
 }
@@ -87,7 +115,7 @@ void ENCEFF_DrawEff1(ENCEFF_CNT_PTR ptr)
 //--------------------------------------------------------------
 static GMEVENT_RESULT ev_encEffectFunc( GMEVENT *event, int *seq, void *wk )
 {
-  ENCEFF1_WORK *work = wk;
+  ENCEFF_MDL_WORK *work = wk;
   
   switch( (*seq) )
   {
@@ -126,8 +154,8 @@ static GMEVENT_RESULT ev_encEffectFunc( GMEVENT *event, int *seq, void *wk )
 		}
 
 		// リソース作成
-		work->g3DmdlEff = GFL_G3D_CreateResourceArc(ARCID_CAPTEX, NARC_texViewTest_effect1_nsbmd);
-		work->g3DicaEff = GFL_G3D_CreateResourceArc(ARCID_CAPTEX, NARC_texViewTest_effect1_nsbca);
+		work->g3DmdlEff = GFL_G3D_CreateResourceArc(ARCID_CAPTEX, work->MdlArcIdx);
+		work->g3DicaEff = GFL_G3D_CreateResourceArc(ARCID_CAPTEX, work->AnmArcIdx);
 		{
 			HEAPID heapID = FIELDMAP_GetHeapID(work->fieldWork);
 			work->g3DtexEff = GFL_SCRNTEX_CreateG3DresTex(heapID, SCRNTEX_VRAM_D);

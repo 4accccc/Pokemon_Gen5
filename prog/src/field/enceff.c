@@ -16,6 +16,7 @@
 typedef GMEVENT* (*CREATE_FUNC)(GAMESYS_WORK *, FIELDMAP_WORK *);
 typedef void (*DRAW_FUNC)(ENCEFF_CNT_PTR);
 
+FS_EXTERN_OVERLAY(enceff_mdl);
 FS_EXTERN_OVERLAY(enceff_prg);
 FS_EXTERN_OVERLAY(enceff_wav);
 FS_EXTERN_OVERLAY(enceff_pnl);
@@ -39,7 +40,7 @@ typedef struct {
 }ENCEFF_TBL;
 
 static const ENCEFF_TBL EncEffTbl[] = {
-  {ENCEFF_CreateEff1, ENCEFF_DrawEff1, OVERLAY_NONE},
+  {ENCEFF_MDL_Create1, ENCEFF_MDL_Draw, FS_OVERLAY_ID(enceff_mdl)},
   {ENCEFF_WAV_Create, ENCEFF_WAV_Draw, FS_OVERLAY_ID(enceff_wav)},
   {ENCEFF_PNL1_Create, ENCEFF_PNL_Draw, FS_OVERLAY_ID(enceff_pnl1)},
   {ENCEFF_PNL2_Create, ENCEFF_PNL_Draw, FS_OVERLAY_ID(enceff_pnl2)},
@@ -101,6 +102,7 @@ void ENCEFF_SetEncEff(ENCEFF_CNT_PTR ptr, GMEVENT * event, const ENCEFF_ID inID)
 #ifdef PM_DEBUG
 #ifdef DEBUG_ONLY_FOR_saitou
   no = ENCEFFID_MAX-1;
+  no = 0;
 #endif
 #endif
   //オーバーレイロード

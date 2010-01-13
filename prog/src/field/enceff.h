@@ -30,8 +30,8 @@ extern void *ENCEFF_GetWork(ENCEFF_CNT_PTR ptr);
 extern void ENCEFF_Draw(ENCEFF_CNT_PTR ptr);
 
 
-extern GMEVENT *ENCEFF_CreateEff1(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork);
-extern void ENCEFF_DrawEff1(ENCEFF_CNT_PTR ptr);
+extern GMEVENT *ENCEFF_MDL_Create1(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork);
+extern void ENCEFF_MDL_Draw(ENCEFF_CNT_PTR ptr);
 
 extern GMEVENT *ENCEFF_WAV_Create(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork);
 extern void ENCEFF_WAV_Draw(ENCEFF_CNT_PTR ptr);
