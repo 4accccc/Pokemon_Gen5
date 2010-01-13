@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-22T11:56:15"/>
+	<create user="matsumiya" host="W00207" date="2010-01-13T13:34:49"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -311,7 +311,7 @@
 		<language name="JPN_KANJI" width="256">ホワイティ『どきどき　するねー[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_t01r0401_hakase2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_t01r0401_hakase2_01">
 		<comment>♀
 ・アニメ後
 　続けてmsg_t01r0401_black_01表示</comment>
@@ -341,7 +341,7 @@
 名前ぐらい　知ってるよ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_t01r0401_hakase2_02" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_t01r0401_hakase2_02">
 		<comment>♀
 ・メッセージ表示後
 　3人の前を移動するアニメ
@@ -366,7 +366,7 @@
 の　つもり……[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_t01r0401_hakase2_03" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_t01r0401_hakase2_03">
 		<comment>♀
 ・はい/いいえの選択肢表示
 　はい→名前入力画面へ
@@ -392,7 +392,7 @@
 ニックネームを　つける？</language>
 	</row>
 
-	<row id="msg_t01r0401_hakase2_04" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_t01r0401_hakase2_04">
 		<comment>♀
 ・いいえ選択時の再確認
 ・はい/いいえの選択肢表示
@@ -406,7 +406,7 @@
 その　ニックネームで　オーケー？</language>
 	</row>
 
-	<row id="msg_t01r0401_hakase2_05" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_t01r0401_hakase2_05">
 		<comment>♀
 ・名前入力画面から復帰して
 　ニックネーム変わった
@@ -421,7 +421,7 @@
 すっごく　いい名前　よね！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_t01r0401_hakase2_06" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_t01r0401_hakase2_06">
 		<comment>♀
 ・名前入力画面から復帰して
 　ニックネーム変わっていない
@@ -436,7 +436,7 @@
 ま　それも　ありだよね[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_t01r0401_hakase2_07" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_t01r0401_hakase2_07">
 		<comment>♀
 ・続けてmsg_t01r0401_black_02表示</comment>
 		<attribute name="キャラ指定">HAKASE2
@@ -463,7 +463,7 @@
 		<language name="JPN_KANJI" width="256">ホワイティ『ポケモン図鑑……？[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_t01r0401_hakase2_08" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_t01r0401_hakase2_08">
 		<comment>♀
 ・メッセージ表示後、演出
 　その場で一回転など
@@ -484,7 +484,7 @@
 説明させて　もらうわね！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_t01r0401_hakase2_09" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_t01r0401_hakase2_09">
 		<comment>♀
 ・アニメなどの演出予定
 ・続けてmsg_t01r0401_doctor_jr_10表示</comment>
@@ -508,7 +508,7 @@
 ポケモンに　出会ってほしいのッ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_t01r0401_hakase2_10" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_t01r0401_hakase2_10">
 		<comment>♀
 ・はい/いいえの選択肢表示
 　はい→msg_t01r0401_doctor_jr_12
@@ -528,7 +528,7 @@
 冒険の　旅に　でかけるよね！</language>
 	</row>
 
-	<row id="msg_t01r0401_hakase2_11" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_t01r0401_hakase2_11">
 		<comment>♀
 ・いいえ選択時
 ・再度はい/いいえの選択肢表示
