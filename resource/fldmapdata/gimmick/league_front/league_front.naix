@@ -19,20 +19,16 @@ enum {
 	NARC_league_front_pl_lite4_nsbmd = 5,
 	NARC_league_front_pl_ele_01_nsbta = 6,
 	NARC_league_front_pl_ele_00_00_nsbta = 7,
-	NARC_league_front_pl_ele_00_01_nsbta = 8,
-	NARC_league_front_pl_ele_00_02_nsbta = 9,
-	NARC_league_front_pl_ele_00_03_nsbta = 10,
-	NARC_league_front_pl_ele_00_04_nsbta = 11,
-	NARC_league_front_pl_lite1_on_nsbta = 12,
-	NARC_league_front_pl_lite2_on_nsbta = 13,
-	NARC_league_front_pl_lite3_on_nsbta = 14,
-	NARC_league_front_pl_lite4_on_nsbta = 15,
-	NARC_league_front_pl_lite1_off_nsbta = 16,
-	NARC_league_front_pl_lite2_off_nsbta = 17,
-	NARC_league_front_pl_lite3_off_nsbta = 18,
-	NARC_league_front_pl_lite4_off_nsbta = 19,
-	NARC_league_front_pl_ele_00_ica_bin = 20,
-	NARC_league_front_pl_ele_01_ica_bin = 21
+	NARC_league_front_pl_lite1_on_nsbta = 8,
+	NARC_league_front_pl_lite2_on_nsbta = 9,
+	NARC_league_front_pl_lite3_on_nsbta = 10,
+	NARC_league_front_pl_lite4_on_nsbta = 11,
+	NARC_league_front_pl_lite1_off_nsbta = 12,
+	NARC_league_front_pl_lite2_off_nsbta = 13,
+	NARC_league_front_pl_lite3_off_nsbta = 14,
+	NARC_league_front_pl_lite4_off_nsbta = 15,
+	NARC_league_front_pl_ele_00_ica_bin = 16,
+	NARC_league_front_pl_ele_01_ica_bin = 17
 };
 
 /* NARC_LEAGUE_FRONT_NAIX_ */
