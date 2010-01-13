@@ -50,6 +50,7 @@ static GMEVENT *CreateEffMainEvt(GAMESYS_WORK *gsys)
 
   param.CharX = 2;
   param.CharY = 2;
+  param.InitFunc = NULL;
   param.StartFunc = StartFunc;
   param.MoveFunc = MoveFunc;
 

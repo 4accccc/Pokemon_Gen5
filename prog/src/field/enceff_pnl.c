@@ -32,8 +32,6 @@ typedef struct ENCEFF_PNL_WORK_tag
 
 static GMEVENT_RESULT EffMainEvt( GMEVENT* event, int* seq, void* work );
 
-static GMEVENT *CreateEffMainEvt(GAMESYS_WORK *gsys);
-
 static BOOL MoveMain(ENCEFF_PNL_WORK *evt_work);
 
 
@@ -114,6 +112,8 @@ GMEVENT *ENCEFF_PNL_CreateEffMainEvt(GAMESYS_WORK *gsys, PNL_EFF_PARAM *param)
       panel->MoveFunc = param->MoveFunc;
     }
     work->StartFunc = param->StartFunc;
+
+    if ( param->InitFunc != NULL ) param->InitFunc(&work->PnlEffWork);
 
   }
   return event;

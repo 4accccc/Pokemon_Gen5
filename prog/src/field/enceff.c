@@ -17,6 +17,7 @@ typedef GMEVENT* (*CREATE_FUNC)(GAMESYS_WORK *, FIELDMAP_WORK *);
 typedef void (*DRAW_FUNC)(ENCEFF_CNT_PTR);
 
 FS_EXTERN_OVERLAY(enceff_prg);
+FS_EXTERN_OVERLAY(enceff_wav);
 FS_EXTERN_OVERLAY(enceff_pnl);
 FS_EXTERN_OVERLAY(enceff_pnl1);
 FS_EXTERN_OVERLAY(enceff_pnl2);
@@ -39,7 +40,7 @@ typedef struct {
 
 static const ENCEFF_TBL EncEffTbl[] = {
   {ENCEFF_CreateEff1, ENCEFF_DrawEff1, OVERLAY_NONE},
-  {ENCEFF_CreateEff2, ENCEFF_DrawEff2, OVERLAY_NONE},
+  {ENCEFF_WAV_Create, ENCEFF_WAV_Draw, FS_OVERLAY_ID(enceff_wav)},
   {ENCEFF_PNL1_Create, ENCEFF_PNL_Draw, FS_OVERLAY_ID(enceff_pnl1)},
   {ENCEFF_PNL2_Create, ENCEFF_PNL_Draw, FS_OVERLAY_ID(enceff_pnl2)},
   {ENCEFF_PNL3_Create, ENCEFF_PNL_Draw, FS_OVERLAY_ID(enceff_pnl3)},
@@ -101,7 +102,7 @@ void ENCEFF_SetEncEff(ENCEFF_CNT_PTR ptr, GMEVENT * event, const ENCEFF_ID inID)
 #ifdef DEBUG_ONLY_FOR_saitou
   no = ENCEFFID_MAX-1;
 #endif
-#endif  
+#endif
   //オーバーレイロード
   if (EncEffTbl[no].OverlayID != OVERLAY_NONE)
   {
@@ -177,6 +178,21 @@ void ENCEFF_LoadPanelEffOverlay(ENCEFF_CNT_PTR ptr)
   LoadOverlay(ptr, FS_OVERLAY_ID(enceff_prg));
   //パネルエフェクトオーバーレイロード
   LoadOverlay(ptr, FS_OVERLAY_ID(enceff_pnl));
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * 頂点エフェクト用オーバーレイロード
+ *
+ * @param   ptr     コントローラポインタ
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+void ENCEFF_LoadVertexEffOverlay(ENCEFF_CNT_PTR ptr)
+{
+  //プログラム制御エフェクトオーバーレイロード
+  LoadOverlay(ptr, FS_OVERLAY_ID(enceff_prg));
 }
 
 //--------------------------------------------------------------------------------------------

@@ -6,14 +6,19 @@
  */
 //======================================================================
 
+#pragma once
+
 #include "gamesystem/gamesystem.h"  //for GMEVENT
 
 #define POLY_W_NUM_MAX  (32)
 #define POLY_H_NUM_MAX  (24)
 
+#define WORK_SIZE   (400)
+
 struct PNL_EFF_WORK_tag;
 struct PANEL_WK_tag;
 
+typedef void (*PANEL_INIT_FUNC)(struct PNL_EFF_WORK_tag *);
 typedef void (*PANEL_START_FUNC)(struct PNL_EFF_WORK_tag *);
 typedef BOOL (*PANEL_MOVE_FUNC)(struct PANEL_WK_tag *);
 
@@ -42,12 +47,14 @@ typedef struct PNL_EFF_WORK_tag
   MOVE_START_PRM StartPrm;
   u16 PanelNumW;
   u16 PanelNumH;
+  u8  Work[WORK_SIZE];
 }PNL_EFF_WORK;
 
 typedef struct PNL_EFF_PARAM_tag
 {
   int CharX;
   int CharY;
+  PANEL_INIT_FUNC InitFunc;
   PANEL_START_FUNC StartFunc;
   PANEL_MOVE_FUNC MoveFunc;
 }PNL_EFF_PARAM;
