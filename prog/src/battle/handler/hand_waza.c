@@ -7181,8 +7181,8 @@ static void handler_Waruagaki_CheckAffinity( BTL_EVENT_FACTOR* myHandle, BTL_SVF
   // 攻撃側が自分の時、ゴーストタイプへの相性をフラットにする
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
-    if( BTL_EVENTVAR_GetValue(BTL_EVAR_WAZA_TYPE) == POKETYPE_GHOST )
-    {
+    const BTL_POKEPARAM* target = BTL_SVFTOOL_GetPokeParam( flowWk, BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) );
+    if( BPP_IsMatchType(target, POKETYPE_GHOST) ){
       BTL_EVENTVAR_RewriteValue( BTL_EVAR_FLAT_FLAG, TRUE );
     }
   }
