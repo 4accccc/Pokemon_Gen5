@@ -159,7 +159,7 @@ void FLDEFF_KEMURI_SetMMdl( MMDL *fmmdl, FLDEFF_CTRL *fectrl )
   
   MMDL_GetVectorPos( fmmdl, &pos );
   pos.y += FX32_ONE*1;
-  pos.z += FX32_ONE*12;
+  pos.z += FX32_ONE*4;
   
   kemu = FLDEFF_CTRL_GetEffectWork( fectrl, FLDEFF_PROCID_KEMURI );
   head.eff_kemuri = kemu;

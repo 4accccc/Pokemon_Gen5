@@ -321,7 +321,7 @@ static void MMdl_ProcMoveEnd( MMDL * mmdl )
     MMdl_MapAttrProc_MoveEnd( mmdl );
   }
   
-  MMDL_OffStatusBit( mmdl,
+  MMDL_OffMoveBit( mmdl,
     MMDL_MOVEBIT_MOVE_END | MMDL_MOVEBIT_JUMP_END );
 }
 
