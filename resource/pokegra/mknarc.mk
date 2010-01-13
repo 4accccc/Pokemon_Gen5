@@ -52,6 +52,7 @@ NCGCFILE	:= $(wildcard $(RES_DIR)????_???c_*.ncg)
 NMCFILE		:= $(wildcard $(RES_DIR)*.nmc)
 NCEFILE		:= $(wildcard $(RES_DIR)*.nce)
 NCLFILE	:= $(wildcard $(RES_DIR)*.ncl)
+NCGCFILE	+= pfwb_migawari.ncg pbwb_migawari.ncg
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 .SUFFIXES:
