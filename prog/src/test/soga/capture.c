@@ -158,7 +158,7 @@ static  const int pokemon_pos_table[][2]={
   { BTLV_MCSS_POS_C, BTLV_MCSS_POS_D }
 };
 
-FS_EXTERN_OVERLAY(battle);
+FS_EXTERN_OVERLAY(battle_view);
 
 //--------------------------------------------------------------------------
 /**
@@ -183,7 +183,7 @@ static GFL_PROC_RESULT CaptureTestProcInit( GFL_PROC * proc, int * seq, void * p
     GX_OBJVRAMMODE_CHAR_1D_32K,   // サブOBJマッピングモード
   };
 
-  GFL_OVERLAY_Load(FS_OVERLAY_ID(battle));
+  GFL_OVERLAY_Load(FS_OVERLAY_ID(battle_view));
 
   GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_SOGABE_DEBUG, 0xc0000 );
   wk = GFL_PROC_AllocWork( proc, sizeof( SOGA_WORK ), HEAPID_SOGABE_DEBUG );

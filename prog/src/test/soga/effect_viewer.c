@@ -185,8 +185,7 @@ static  const int bgm_table[]={
   SEQ_BGM_VS_NORAPOKE,
 };
 
-FS_EXTERN_OVERLAY(battle);
-FS_EXTERN_OVERLAY(mcs_lib);
+FS_EXTERN_OVERLAY(battle_view);
 
 //--------------------------------------------------------------------------
 /**
@@ -211,8 +210,7 @@ static GFL_PROC_RESULT EffectViewerProcInit( GFL_PROC * proc, int * seq, void * 
     GX_OBJVRAMMODE_CHAR_1D_32K,   // サブOBJマッピングモード
   };
 
-  GFL_OVERLAY_Load( FS_OVERLAY_ID( battle ) );
-//  GFL_OVERLAY_Load( FS_OVERLAY_ID( mcs_lib ) );
+  GFL_OVERLAY_Load( FS_OVERLAY_ID( battle_view ) );
 
   GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_SOGABE_DEBUG, 0xc0000 );
   evw = GFL_PROC_AllocWork( proc, sizeof( EFFECT_VIEWER_WORK ), HEAPID_SOGABE_DEBUG );
@@ -283,6 +281,7 @@ static GFL_PROC_RESULT EffectViewerProcInit( GFL_PROC * proc, int * seq, void * 
     BTLV_EFFECT_Init( BTL_RULE_SINGLE, &bfs, evw->small_font, evw->heapID );
   }
 
+  evw->mons_no = MONSNO_WARUBIRU;
   set_pokemon( evw );
 
   //2D画面初期化
@@ -403,6 +402,32 @@ static GFL_PROC_RESULT EffectViewerProcMain( GFL_PROC * proc, int * seq, void * 
   EffectViewerSequence( evw );
   BTLV_EFFECT_Main();
 
+  if( ( rep & PAD_KEY_UP ) && ( evw->mons_no <= MONSNO_END ) )
+  { 
+    evw->mons_no++;
+    del_pokemon( evw );
+    set_pokemon( evw );
+  }
+  if( ( rep & PAD_KEY_DOWN ) && ( evw->mons_no ) )
+  { 
+    evw->mons_no--;
+    del_pokemon( evw );
+    set_pokemon( evw );
+  }
+
+  if( ( rep & PAD_KEY_RIGHT ) && ( evw->mons_no + 10 <=  MONSNO_END ) )
+  { 
+    evw->mons_no += 10;
+    del_pokemon( evw );
+    set_pokemon( evw );
+  }
+  if( ( rep & PAD_KEY_LEFT ) && ( evw->mons_no - 10 ) )
+  { 
+    evw->mons_no -= 10;
+    del_pokemon( evw );
+    set_pokemon( evw );
+  }
+
   if( trg & PAD_BUTTON_SELECT )
   {
     VecFx32 cam_pos, cam_target;
@@ -469,8 +494,7 @@ static GFL_PROC_RESULT EffectViewerProcExit( GFL_PROC * proc, int * seq, void * 
 
   GFL_HEAP_DeleteHeap( HEAPID_SOGABE_DEBUG );
 
-  GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle ) );
-//  GFL_OVERLAY_Unload( FS_OVERLAY_ID( mcs_lib ) );
+  GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle_view ) );
 
   return GFL_PROC_RES_FINISH;
 }
@@ -570,6 +594,11 @@ static  void  EffectViewerSequence( EFFECT_VIEWER_WORK *evw )
     }
     else if( cont == PAD_BUTTON_B ){
       BTLV_EFFVM_Start( BTLV_EFFECT_GetVMHandle(), BTLV_MCSS_POS_AA, BTLV_MCSS_POS_BB, evw->waza_no, NULL );
+      evw->ret_seq_no = evw->seq_no;
+      evw->seq_no = SEQ_EFFECT_WAIT;
+    }
+    else if( cont == PAD_BUTTON_X ){
+      BTLV_EFFECT_Add( BTLEFF_WEATHER_AME );
       evw->ret_seq_no = evw->seq_no;
       evw->seq_no = SEQ_EFFECT_WAIT;
     }
@@ -1360,7 +1389,7 @@ static  void  set_pokemon( EFFECT_VIEWER_WORK *evw )
   POKEMON_PARAM *pp = GFL_HEAP_AllocMemory( evw->heapID, POKETOOL_GetWorkSize() );
   PP_SetupEx( pp, 0, 0, 0, 0, 255 );
 
-  PP_Put( pp, ID_PARA_monsno, MONSNO_WARUBIRU );
+  PP_Put( pp, ID_PARA_monsno, evw->mons_no );
   PP_Put( pp, ID_PARA_id_no, 0x10 );
   BTLV_EFFECT_SetPokemon( pp, BTLV_MCSS_POS_AA );
   BTLV_EFFECT_SetPokemon( pp, BTLV_MCSS_POS_BB );
@@ -1370,8 +1399,14 @@ static  void  set_pokemon( EFFECT_VIEWER_WORK *evw )
 
 static  void  del_pokemon( EFFECT_VIEWER_WORK *evw )
 {
-  BTLV_MCSS_Del( BTLV_EFFECT_GetMcssWork(), BTLV_MCSS_POS_AA );
-  BTLV_MCSS_Del( BTLV_EFFECT_GetMcssWork(), BTLV_MCSS_POS_BB );
+  if( BTLV_EFFECT_CheckExist( BTLV_MCSS_POS_AA ) == TRUE )
+  { 
+    BTLV_MCSS_Del( BTLV_EFFECT_GetMcssWork(), BTLV_MCSS_POS_AA );
+  }
+  if( BTLV_EFFECT_CheckExist( BTLV_MCSS_POS_BB ) == TRUE )
+  { 
+    BTLV_MCSS_Del( BTLV_EFFECT_GetMcssWork(), BTLV_MCSS_POS_BB );
+  }
 }
 
 static  int ev_pow( int x, int y )
