@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-03T22:10:14"/>
+	<create user="matsumiya" host="W00207" date="2010-01-13T11:40:30"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_c05r0601_man3_01" text-color="#000000,,,,,#000000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c05r0601_man3_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・仮メッセージ
 ・売り子その１
@@ -304,7 +304,7 @@
 不思議な　漢方薬は　どうだい？</language>
 	</row>
 
-	<row id="msg_c05r0601_woman3_01" text-color="#000000,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c05r0601_woman3_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♀
 ・仮メッセージ
 ・上記OBJに隣接</comment>
@@ -319,7 +319,7 @@
 ポケモンも　ちょっと　苦手にしてるよ</language>
 	</row>
 
-	<row id="msg_c05r0601_woman2_01">
+	<row id="msg_c05r0601_woman2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♀
 ・仮メッセージ
 ・売り子その２</comment>
@@ -330,7 +330,7 @@
 なんでも　みていってくださいね</language>
 	</row>
 
-	<row id="msg_c05r0601_badman_01">
+	<row id="msg_c05r0601_badman_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
 ・仮メッセージ
 ・売り子その３</comment>
@@ -341,7 +341,7 @@
 今日は　お買い得だよ！</language>
 	</row>
 
-	<row id="msg_c05r0601_sunglasses_01">
+	<row id="msg_c05r0601_sunglasses_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
 ・仮メッセージ
 ・売り子その４</comment>
@@ -352,7 +352,7 @@
 なんでも　かってけー！</language>
 	</row>
 
-	<row id="msg_c05r0601_trainerw_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#404040,,,,,#404040,#404040,,,,,,#404040,,,,,,">
+	<row id="msg_c05r0601_trainerw_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・このメッセージラベルは削除</comment>
 		<attribute name="キャラ指定">TRAINERW</attribute>
@@ -364,7 +364,7 @@
 エネルギーを　感じちゃうね</language>
 	</row>
 
-	<row id="msg_c05r0601_trainerw_01w" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c05r0601_trainerw_01w">
 		<comment>♀
 ・WHITEver</comment>
 		<attribute name="キャラ指定">TRAINERW</attribute>
@@ -375,7 +375,7 @@
 きっと　便利な　街が　あるわ</language>
 	</row>
 
-	<row id="msg_c05r0601_trainerw_01b" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c05r0601_trainerw_01b">
 		<comment>♀
 ・BLACKver</comment>
 		<attribute name="キャラ指定">TRAINERW</attribute>
@@ -387,7 +387,7 @@
 季節を　大事にする　街が　あるわ</language>
 	</row>
 
-	<row id="msg_c05r0601_nurse_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#404040,,,,,#404040,#404040,,,,,,#404040,,,,,,">
+	<row id="msg_c05r0601_nurse_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・このメッセージラベルは削除</comment>
 		<attribute name="キャラ指定">NURSE</attribute>
@@ -399,7 +399,7 @@
 珍しい　品物も　手に入るわ！</language>
 	</row>
 
-	<row id="msg_c05r0601_nurse_01w" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c05r0601_nurse_01w">
 		<comment>♀
 ・WHITEver</comment>
 		<attribute name="キャラ指定">NURSE</attribute>
@@ -413,7 +413,7 @@
 野菜の　色あいも　変わるのよ！</language>
 	</row>
 
-	<row id="msg_c05r0601_nurse_01b" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c05r0601_nurse_01b">
 		<comment>♀
 ・BLACKver</comment>
 		<attribute name="キャラ指定">NURSE</attribute>
@@ -425,7 +425,7 @@
 そろっているのって　すごいよね</language>
 	</row>
 
-	<row id="msg_c05r0601_workman_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#404040,,,,,#404040,#404040,,,,,,#404040,,,,,,">
+	<row id="msg_c05r0601_workman_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・このメッセージラベルは削除</comment>
 		<attribute name="キャラ指定">WORKMAN</attribute>
@@ -435,7 +435,7 @@
 この　マーケットには　なんでも　そろう！</language>
 	</row>
 
-	<row id="msg_c05r0601_workman_01w" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c05r0601_workman_01w">
 		<comment>♂
 ・WHITEver</comment>
 		<attribute name="キャラ指定">WORKMAN</attribute>
@@ -449,7 +449,7 @@
 どこかに　つながっているんだよな</language>
 	</row>
 
-	<row id="msg_c05r0601_workman_01b" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c05r0601_workman_01b">
 		<comment>♂
 ・BLACKver</comment>
 		<attribute name="キャラ指定">WORKMAN</attribute>

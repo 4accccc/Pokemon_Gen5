@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-21T19:36:30"/>
+	<create user="matsumiya" host="W00207" date="2010-01-13T11:41:20"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -315,7 +315,7 @@
 		<band id="2" index="3" style="0000" width="540"/>
 		<band id="3" index="4" style="0000" width="155"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -336,7 +336,7 @@
 	</lock>
 
 
-	<row id="msg_c06_hakase1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c06_hakase1_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・pos（GRIDX=89、GRIDZ=296~299）で発動
 ・画面左上方向から
@@ -352,7 +352,7 @@
 [1:00:トレーナー名:0]だろ！！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c06_hakase1_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c06_hakase1_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・画面下向きでメッセージ表示
 ・ポケモン「ギアン」を
@@ -370,18 +370,18 @@
 [2:02:３桁:0]匹　か！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c06_hakase1_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c06_hakase1_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・続けてmsg_c06_hakase1_05
 （この処理は暫定）</comment>
 		<attribute name="キャラクター">博士１（父）</attribute>
-		<language name="JPN" width="256">おお！　ギアンを　つかまえておるのか！
+		<language name="JPN" width="256">おお！　ギアルを　つかまえておるのか！
 なかなかの　トレーナーじゃな！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">おお！　ギアンを　捕まえておるのか！
+		<language name="JPN_KANJI" width="256">おお！　ギアルを　捕まえておるのか！
 なかなかの　トレーナーじゃな！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c06_hakase1_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c06_hakase1_04" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・続けてmsg_c06_hakase1_05
 （この処理は暫定）</comment>
@@ -394,7 +394,7 @@
 だが　たいした　ポケモン図鑑　だ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c06_hakase1_05" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c06_hakase1_05" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・続けてmsg_c06_hakase1_06</comment>
 		<attribute name="キャラクター">博士１（父）</attribute>
@@ -422,7 +422,7 @@
 なんとも　うれしい　かぎりだ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c06_hakase1_06" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c06_hakase1_06" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・ポケモン図鑑に
 　フォルムチェンジ確認機能（仮）追加予定
@@ -437,7 +437,7 @@
 パワーアップ！　だな[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c06_hakase1_07" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c06_hakase1_07" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・続けてmsg_c06_leader6_01
 （この処理は暫定）</comment>
@@ -450,7 +450,7 @@
 いつでも　みられるように　なったぞ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c06_leader6_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c06_leader6_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・続けてmsg_c06_hakase1_08</comment>
 		<attribute name="キャラクター">c06ジムリーダー
@@ -461,7 +461,7 @@
 そちらの　トレーナーは？[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c06_hakase1_08" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c06_hakase1_08" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・フウロのほうを向いてメッセージ表示
 ※男女性別関係なくこの台詞
@@ -483,7 +483,7 @@
 イッシュを　旅しているのだ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c06_leader6_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c06_leader6_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・続けてmsg_c06_hakase1_09</comment>
 		<attribute name="キャラクター">c06ジムリーダー
@@ -496,7 +496,7 @@
 わあ！　とっても　楽しみ！！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c06_hakase1_09" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c06_hakase1_09" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・主人公を向いてメッセージ表示
 ・続けてmsg_c06_hakase1_10</comment>
@@ -511,7 +511,7 @@
 ぶっとんで　おるからな！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c06_hakase1_10" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c06_hakase1_10" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・フウロの方を向いてメッセージ表示
 ・続けてmsg_c06_leader6_03</comment>
@@ -522,7 +522,7 @@
 また　なにかあったら　頼むぞ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c06_leader6_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c06_leader6_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・続けてmsg_c06_hakase1_11</comment>
 		<attribute name="キャラクター">c06ジムリーダー
@@ -537,7 +537,7 @@
 人は　乗せないんだよ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c06_hakase1_11" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c06_hakase1_11" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・メッセージ表示後、画面右方面に移動
 ・画面外に消えると
@@ -559,7 +559,7 @@
 また　会おうぞ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c06_leader6_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c06_leader6_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・画面右を向いてメッセージ表示
 ・続けてmsg_c06_leader6_05</comment>
@@ -575,7 +575,7 @@
 いまだに　信じられないな[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c06_leader6_05" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c06_leader6_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・主人公に隣接してメッセージ
 ・メッセージ表示後、画面左上に移動
@@ -594,7 +594,7 @@
 大歓迎しちゃうから！！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c06_boy3_01">
+	<row id="msg_c06_boy3_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
 ・仮メッセージ</comment>
 		<attribute name="キャラクター">BOY3</attribute>
@@ -608,7 +608,7 @@
 いっさいの　無駄が　ないんです！</language>
 	</row>
 
-	<row id="msg_c06_pilot_01">
+	<row id="msg_c06_pilot_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
 ・仮メッセージ</comment>
 		<attribute name="キャラクター">PILOT</attribute>
@@ -622,7 +622,7 @@
 そらをとぶ　って　技があるもんね</language>
 	</row>
 
-	<row id="msg_c06_girl2_01">
+	<row id="msg_c06_girl2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♀
 ・仮メッセージ</comment>
 		<attribute name="キャラクター">GIRL2</attribute>
@@ -638,7 +638,7 @@
 いかした　ねえちゃん　なんだから！</language>
 	</row>
 
-	<row id="msg_c06_rangerw_01">
+	<row id="msg_c06_rangerw_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♀
 ・仮メッセージ</comment>
 		<attribute name="キャラクター">RANGERW</attribute>
@@ -654,7 +654,7 @@
 その　精神は　変わらないわ</language>
 	</row>
 
-	<row id="msg_c06_workman_01">
+	<row id="msg_c06_workman_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
 ・仮メッセージ</comment>
 		<attribute name="キャラクター">WORKMAN</attribute>
@@ -668,7 +668,7 @@
 １日に　１便　ぐらいだしな</language>
 	</row>
 
-	<row id="msg_c06_woman1_01">
+	<row id="msg_c06_woman1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♀
 ・仮メッセージ</comment>
 		<attribute name="キャラクター">WOMAN1</attribute>

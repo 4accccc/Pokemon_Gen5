@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2010-01-12T11:05:02"/>
+	<create user="matsumiya" host="W00207" date="2010-01-13T11:40:44"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -430,6 +430,7 @@
 	</row>
 
 	<row id="msg_c05r0701_gentleman_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂</comment>
 		<attribute name="キャラ指定">GENTLEMAN</attribute>
 		<language name="JPN" width="256">ポケモンは　たくさん　いるだろ？▼
 その　しゅるいに　よって

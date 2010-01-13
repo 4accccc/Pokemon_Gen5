@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-18T11:42:43"/>
+	<create user="matsumiya" host="W00207" date="2010-01-13T11:33:48"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,37 +292,44 @@
 	</lock>
 
 
-	<row id="msg_c04r0302_white_01" text-color="#000000,,,#000000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+	<row id="msg_c04r0302_white_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#000000,,,#000000,,#ffffff,#000000,,,#000000,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c04r0302_white_02" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+	<row id="msg_c04r0302_white_02" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#000000,,,#000000,,#ffffff,#000000,,,#000000,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c04r0302_boss_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+	<row id="msg_c04r0302_boss_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#000000,,,#000000,,#ffffff,#000000,,,#000000,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c04r0302_boss_02" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+	<row id="msg_c04r0302_boss_02" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#000000,,,#000000,,#ffffff,#000000,,,#000000,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c04r0302_boss_03" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+	<row id="msg_c04r0302_boss_03" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#000000,,,#000000,,#ffffff,#000000,,,#000000,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c04r0302_boss_04" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+	<row id="msg_c04r0302_boss_04" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#000000,,,#000000,,#ffffff,#000000,,,#000000,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c04r0302_boss_05" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+	<row id="msg_c04r0302_boss_05" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#000000,,,#000000,,#ffffff,#000000,,,#000000,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
