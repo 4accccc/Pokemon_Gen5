@@ -44,6 +44,11 @@
  *					’è”éŒ¾
 */
 //=============================================================================
+#ifdef PM_DEBUG
+static int sc_debug_num = FX32_ONE;
+#endif
+
+
 //-------------------------------------
 ///	‰¹Šy
 //=====================================
@@ -742,6 +747,33 @@ static GFL_PROC_RESULT IRC_MENU_PROC_Main( GFL_PROC *p_proc, int *p_seq, void *p
 		break;
 
 	case SEQ_MAIN:
+    
+#ifdef PM_DEBUG
+    {
+      BOOL is_update  = FALSE;
+      if( GFL_UI_KEY_GetTrg() & PAD_KEY_UP )
+      { 
+        is_update = TRUE;
+        sc_debug_num  += FX32_CONST(0.1F);
+        OS_TFPrintf( 3, "0x%x \n", sc_debug_num );
+      }
+      if( GFL_UI_KEY_GetTrg() & PAD_KEY_DOWN )
+      { 
+        is_update = TRUE;
+        sc_debug_num  -= FX32_CONST(0.1F);
+        OS_TFPrintf( 3, "0x%x \n", sc_debug_num );
+      }
+
+      if( is_update )
+      { 
+
+        GFL_BG_SetScaleReq( sc_bgcnt_frame[GRAPHIC_BG_FRAME_S_TITLE], GFL_BG_SCALE_X_SET, sc_debug_num );
+        GFL_BG_SetScaleReq( sc_bgcnt_frame[GRAPHIC_BG_FRAME_S_TITLE], GFL_BG_SCALE_Y_SET, sc_debug_num );
+        GFL_BG_LoadScreenReq(sc_bgcnt_frame[GRAPHIC_BG_FRAME_S_TITLE]);
+      }
+    }
+#endif
+
 
 		p_wk->seq_function( p_wk, &p_wk->seq );
 		if( p_wk->is_end )
