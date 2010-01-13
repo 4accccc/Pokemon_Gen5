@@ -218,6 +218,7 @@ static int BoxArg_BoxEndYes( BOX2_SYS_WORK * syswk );
 static int BoxArg_BoxEndNo( BOX2_SYS_WORK * syswk );
 static int BoxArg_SleepYes( BOX2_SYS_WORK * syswk );
 static int BoxArg_SleepNo( BOX2_SYS_WORK * syswk );
+static int YesNo_MenuRcv( BOX2_SYS_WORK * syswk );
 
 static int BgButtonAnmSet( BOX2_SYS_WORK * syswk, u32 wfrmID, int next );
 static int MarkingButtonAnmSet( BOX2_SYS_WORK * syswk, u32 no, int next );
@@ -572,11 +573,11 @@ static const SUB_PROC_DATA SubProcFunc[] =
 static const YESNO_DATA YesNoFunc[] =
 {
 	// ボックス整理・道具を預かる？
-	{ BoxArg_ItemGetYes, MainSeq_ArrangePokeMenuRcv },
+	{ BoxArg_ItemGetYes, YesNo_MenuRcv },
 	// ボックス整理・ポケモンを逃がす？
 	{ BoxArg_PokeFreeYes, BoxArg_PokeFreeNo },
 	// 道具整理・アイテムしまう？
-	{ BoxItemArg_RetBagYes, MainSeq_ArrangePokeMenuRcv },
+	{ BoxItemArg_RetBagYes, YesNo_MenuRcv },
 	// ボックス終了する？（ボタン）
 	{ BoxArg_BoxEndYes, BoxArg_BoxEndNo },
 	// ボックス終了する？（キャンセル）
@@ -7187,6 +7188,14 @@ static int BoxArg_ItemGetYes( BOX2_SYS_WORK * syswk )
 		PMSND_PlaySE( SE_BOX2_WARNING );
 		BOX2BMP_ItemGetErrorPut( syswk, BOX2BMPWIN_ID_MSG1 );
 	}
+
+	if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH ){
+		CURSORMOVE_CursorOnOffSet( syswk->app->cmwk, FALSE );
+	}else{
+		CURSORMOVE_CursorOnOffSet( syswk->app->cmwk, TRUE );
+		BOX2OBJ_SetHandCursorOnOff( syswk, FALSE );
+	}
+
 	syswk->next_seq = BOX2SEQ_MAINSEQ_ARRANGE_POKEMENU_RCV;
 	return ChangeSequence( syswk, BOX2SEQ_MAINSEQ_TRGWAIT );
 }
@@ -7265,6 +7274,13 @@ static int BoxArg_PokeFreeNo( BOX2_SYS_WORK * syswk )
 //--------------------------------------------------------------------------------------------
 static int BoxItemArg_RetBagYes( BOX2_SYS_WORK * syswk )
 {
+	if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH ){
+		CURSORMOVE_CursorOnOffSet( syswk->app->cmwk, FALSE );
+	}else{
+		CURSORMOVE_CursorOnOffSet( syswk->app->cmwk, TRUE );
+		BOX2OBJ_SetHandCursorOnOff( syswk, FALSE );
+	}
+
 	if( MYITEM_AddItem( syswk->dat->myitem, syswk->app->get_item, 1, HEAPID_BOX_APP ) == TRUE ){
 		POKEMON_PASO_PARAM * ppp;
 		u16	item;
@@ -7434,6 +7450,26 @@ static int BoxArg_SleepNo( BOX2_SYS_WORK * syswk )
 
 //--------------------------------------------------------------------------------------------
 /**
+ * @brief		はい・いいえ処理：メニューに戻る（汎用）
+ *
+ * @param		syswk		ボックス画面システムワーク
+ *
+ * @return	次のシーケンス
+ */
+//--------------------------------------------------------------------------------------------
+static int YesNo_MenuRcv( BOX2_SYS_WORK * syswk )
+{
+	if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH ){
+		CURSORMOVE_CursorOnOffSet( syswk->app->cmwk, FALSE );
+	}else{
+		CURSORMOVE_CursorOnOffSet( syswk->app->cmwk, TRUE );
+		BOX2OBJ_SetHandCursorOnOff( syswk, FALSE );
+	}
+	return MainSeq_ArrangePokeMenuRcv( syswk );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
  * @brief		ＢＧボタンアニメセット
  *
  * @param		syswk			ボックス画面システムワーク
@@ -7549,8 +7585,10 @@ static int SubProcSet( BOX2_SYS_WORK * syswk, u8 type )
 	// カーソルの初期状態を設定
 	if( CURSORMOVE_CursorOnOffGet( syswk->app->cmwk ) == TRUE ){
 		GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
+		OS_Printf( "キーです\n" );
 	}else{
 		GFL_UI_SetTouchOrKey( GFL_APP_END_TOUCH );
+		OS_Printf( "タッチです\n" );
 	}
 	syswk->subProcType = type;
 	syswk->next_seq = BOX2SEQ_MAINSEQ_SUB_PROCCALL;
