@@ -51,7 +51,7 @@ EVENT_START		ev_pos_c03ct_exit_01
 		_CAMERA_START()
 		
 		//POS１用カメラ
-		_CAMERA_MOVE_BY_ID( C3_CAM_04 , 30 )
+		_C03CENTER_CAMERA_MOVE( C3_CAM_04 , 30 )
 		
 		//カメラ移動待ち
 		_CAMERA_WAIT_MOVE()	
@@ -69,7 +69,7 @@ EVENT_START		ev_pos_c03ct_exit_01
 		_CAMERA_START()
 		
 		//POS１用カメラ
-		_CAMERA_MOVE_BY_ID( C3_CAM_01 , 30 )
+		_C03CENTER_CAMERA_MOVE( C3_CAM_01 , 30 )
 		
 		//カメラ移動待ち
 		_CAMERA_WAIT_MOVE()	
@@ -87,7 +87,7 @@ EVENT_START		ev_pos_c03ct_exit_01
 		_CAMERA_START()
 		
 		//POS１用カメラ
-		_CAMERA_MOVE_BY_ID( C3_CAM_01 , 30 )
+		_C03CENTER_CAMERA_MOVE( C3_CAM_01 , 30 )
 		
 		//カメラ移動待ち
 		_CAMERA_WAIT_MOVE()	
@@ -105,7 +105,7 @@ EVENT_START		ev_pos_c03ct_exit_01
 		_CAMERA_START()
 		
 		//POS１用カメラ
-		_CAMERA_MOVE_BY_ID( C3_CAM_01 , 30 )
+		_C03CENTER_CAMERA_MOVE( C3_CAM_01 , 30 )
 		
 		//カメラ移動待ち
 		_CAMERA_WAIT_MOVE()	
@@ -123,7 +123,7 @@ EVENT_START		ev_pos_c03ct_exit_01
 		_CAMERA_START()
 		
 		//POS１用カメラ
-		_CAMERA_MOVE_BY_ID( C3_CAM_01 , 30 )
+		_C03CENTER_CAMERA_MOVE( C3_CAM_01 , 30 )
 		
 		//カメラ移動待ち
 		_CAMERA_WAIT_MOVE()	
@@ -141,7 +141,7 @@ EVENT_START		ev_pos_c03ct_exit_01
 		_CAMERA_START()
 		
 		//POS１用カメラ
-		_CAMERA_MOVE_BY_ID( C3_CAM_01 , 30 )
+		_C03CENTER_CAMERA_MOVE( C3_CAM_01 , 30 )
 		
 		//カメラ移動待ち
 		_CAMERA_WAIT_MOVE()	
@@ -174,7 +174,7 @@ EVENT_START		ev_pos_c03ct_exit_02
 		_CAMERA_START()
 		
 		//POS２用カメラ
-		_CAMERA_MOVE_BY_ID( C3_CAM_02 , 30 )
+		_C03CENTER_CAMERA_MOVE( C3_CAM_02 , 30 )
 		
 		//カメラ移動待ち
 		_CAMERA_WAIT_MOVE()	
@@ -192,7 +192,7 @@ EVENT_START		ev_pos_c03ct_exit_02
 		_CAMERA_START()
 		
 		//POS２用カメラ
-		_CAMERA_MOVE_BY_ID( C3_CAM_02 , 30 )
+		_C03CENTER_CAMERA_MOVE( C3_CAM_02 , 30 )
 		
 		//カメラ移動待ち
 		_CAMERA_WAIT_MOVE()	
@@ -210,7 +210,7 @@ EVENT_START		ev_pos_c03ct_exit_02
 		_CAMERA_START()
 		
 		//POS２用カメラ
-		_CAMERA_MOVE_BY_ID( C3_CAM_02 , 30 )
+		_C03CENTER_CAMERA_MOVE( C3_CAM_02 , 30 )
 		
 		//カメラ移動待ち
 		_CAMERA_WAIT_MOVE()	
@@ -228,7 +228,7 @@ EVENT_START		ev_pos_c03ct_exit_02
 		_CAMERA_START()
 		
 		//POS２用カメラ
-		_CAMERA_MOVE_BY_ID( C3_CAM_02 , 30 )
+		_C03CENTER_CAMERA_MOVE( C3_CAM_02 , 30 )
 		
 		//カメラ移動待ち
 		_CAMERA_WAIT_MOVE()	
@@ -246,7 +246,7 @@ EVENT_START		ev_pos_c03ct_exit_02
 		_CAMERA_START()
 		
 		//POS２用カメラ
-		_CAMERA_MOVE_BY_ID( C3_CAM_02 , 30 )
+		_C03CENTER_CAMERA_MOVE( C3_CAM_02 , 30 )
 		
 		//カメラ移動待ち
 		_CAMERA_WAIT_MOVE()	
@@ -264,7 +264,7 @@ EVENT_START		ev_pos_c03ct_exit_02
 		_CAMERA_START()
 		
 		//POS２用カメラ
-		_CAMERA_MOVE_BY_ID( C3_CAM_05 , 30 )
+		_C03CENTER_CAMERA_MOVE( C3_CAM_05 , 30 )
 		
 		//カメラ移動待ち
 		_CAMERA_WAIT_MOVE()	
@@ -297,7 +297,7 @@ EVENT_START		ev_pos_c03ct_exit_03
 		_CAMERA_START()
 		
 		//POS３用カメラ
-		_CAMERA_MOVE_BY_ID( C3_CAM_03 , 30 )
+		_C03CENTER_CAMERA_MOVE( C3_CAM_03 , 30 )
 		
 		//カメラ移動待ち
 		_CAMERA_WAIT_MOVE()	
@@ -315,7 +315,7 @@ EVENT_START		ev_pos_c03ct_exit_03
 		_CAMERA_START()
 		
 		//POS３用カメラ
-		_CAMERA_MOVE_BY_ID( C3_CAM_03 , 30 )
+		_C03CENTER_CAMERA_MOVE( C3_CAM_03 , 30 )
 		
 		//カメラ移動待ち
 		_CAMERA_WAIT_MOVE()	
@@ -333,7 +333,7 @@ EVENT_START		ev_pos_c03ct_exit_03
 		_CAMERA_START()
 		
 		//POS３用カメラ
-		_CAMERA_MOVE_BY_ID( C3_CAM_03 , 30 )
+		_C03CENTER_CAMERA_MOVE( C3_CAM_03 , 30 )
 		
 		//カメラ移動待ち
 		_CAMERA_WAIT_MOVE()	
@@ -351,7 +351,7 @@ EVENT_START		ev_pos_c03ct_exit_03
 		_CAMERA_START()
 		
 		//POS３用カメラ
-		_CAMERA_MOVE_BY_ID( C3_CAM_03 , 30 )
+		_C03CENTER_CAMERA_MOVE( C3_CAM_03 , 30 )
 		
 		//カメラ移動待ち
 		_CAMERA_WAIT_MOVE()	
@@ -372,7 +372,7 @@ EVENT_START		ev_pos_c03ct_exit_03
 		_CAMERA_START()
 		
 		//POS３用カメラ
-		_CAMERA_MOVE_BY_ID( C3_CAM_03 , 30 )
+		_C03CENTER_CAMERA_MOVE( C3_CAM_03 , 30 )
 		
 		//カメラ移動待ち
 		_CAMERA_WAIT_MOVE()	
@@ -405,7 +405,7 @@ EVENT_START		ev_pos_c03ct_exit_04
 		_CAMERA_START()
 		
 		//POS４用カメラ
-		_CAMERA_MOVE_BY_ID( C3_CAM_04 , 30 )
+		_C03CENTER_CAMERA_MOVE( C3_CAM_04 , 30 )
 		
 		//カメラ移動待ち
 		_CAMERA_WAIT_MOVE()	
@@ -423,7 +423,7 @@ EVENT_START		ev_pos_c03ct_exit_04
 		_CAMERA_START()
 		
 		//POS４用カメラ
-		_CAMERA_MOVE_BY_ID( C3_CAM_04 , 30 )
+		_C03CENTER_CAMERA_MOVE( C3_CAM_04 , 30 )
 		
 		//カメラ移動待ち
 		_CAMERA_WAIT_MOVE()	
@@ -441,7 +441,7 @@ EVENT_START		ev_pos_c03ct_exit_04
 		_CAMERA_START()
 		
 		//POS４用カメラ
-		_CAMERA_MOVE_BY_ID( C3_CAM_04 , 30 )
+		_C03CENTER_CAMERA_MOVE( C3_CAM_04 , 30 )
 		
 		//カメラ移動待ち
 		_CAMERA_WAIT_MOVE()	
@@ -459,7 +459,7 @@ EVENT_START		ev_pos_c03ct_exit_04
 		_CAMERA_START()
 		
 		//POS４用カメラ
-		_CAMERA_MOVE_BY_ID( C3_CAM_01 , 30 )
+		_C03CENTER_CAMERA_MOVE( C3_CAM_01 , 30 )
 		
 		//カメラ移動待ち
 		_CAMERA_WAIT_MOVE()	
@@ -477,7 +477,7 @@ EVENT_START		ev_pos_c03ct_exit_04
 		_CAMERA_START()
 		
 		//POS４用カメラ
-		_CAMERA_MOVE_BY_ID( C3_CAM_04 , 30 )
+		_C03CENTER_CAMERA_MOVE( C3_CAM_04 , 30 )
 		
 		//カメラ移動待ち
 		_CAMERA_WAIT_MOVE()	
@@ -495,7 +495,7 @@ EVENT_START		ev_pos_c03ct_exit_04
 		_CAMERA_START()
 		
 		//POS４用カメラ
-		_CAMERA_MOVE_BY_ID( C3_CAM_04 , 30 )
+		_C03CENTER_CAMERA_MOVE( C3_CAM_04 , 30 )
 
 		//カメラ移動待ち
 		_CAMERA_WAIT_MOVE()	
@@ -528,7 +528,7 @@ EVENT_START		ev_pos_c03ct_exit_05
 		_CAMERA_START()
 		
 		//POS５用カメラ
-		_CAMERA_MOVE_BY_ID( C3_CAM_05 , 30 )
+		_C03CENTER_CAMERA_MOVE( C3_CAM_05 , 30 )
 
 		//カメラ移動待ち
 		_CAMERA_WAIT_MOVE()	
@@ -546,7 +546,7 @@ EVENT_START		ev_pos_c03ct_exit_05
 		_CAMERA_START()
 		
 		//POS５用カメラ
-		_CAMERA_MOVE_BY_ID( C3_CAM_05 , 30 )
+		_C03CENTER_CAMERA_MOVE( C3_CAM_05 , 30 )
 
 		//カメラ移動待ち
 		_CAMERA_WAIT_MOVE()	
@@ -564,7 +564,7 @@ EVENT_START		ev_pos_c03ct_exit_05
 		_CAMERA_START()
 		
 		//POS５用カメラ
-		_CAMERA_MOVE_BY_ID( C3_CAM_02 , 30 )
+		_C03CENTER_CAMERA_MOVE( C3_CAM_02 , 30 )
 
 		//カメラ移動待ち
 		_CAMERA_WAIT_MOVE()	
@@ -582,7 +582,7 @@ EVENT_START		ev_pos_c03ct_exit_05
 		_CAMERA_START()
 		
 		//POS５用カメラ
-		_CAMERA_MOVE_BY_ID( C3_CAM_05 , 30 )
+		_C03CENTER_CAMERA_MOVE( C3_CAM_05 , 30 )
 
 		//カメラ移動待ち
 		_CAMERA_WAIT_MOVE()	
@@ -600,7 +600,7 @@ EVENT_START		ev_pos_c03ct_exit_05
 		_CAMERA_START()
 		
 		//POS５用カメラ
-		_CAMERA_MOVE_BY_ID( C3_CAM_05 , 30 )
+		_C03CENTER_CAMERA_MOVE( C3_CAM_05 , 30 )
 
 		//カメラ移動待ち
 		_CAMERA_WAIT_MOVE()	
@@ -618,7 +618,7 @@ EVENT_START		ev_pos_c03ct_exit_05
 		_CAMERA_START()
 		
 		//POS５用カメラ
-		_CAMERA_MOVE_BY_ID( C3_CAM_05 , 30 )
+		_C03CENTER_CAMERA_MOVE( C3_CAM_05 , 30 )
 
 		//カメラ移動待ち
 		_CAMERA_WAIT_MOVE()	

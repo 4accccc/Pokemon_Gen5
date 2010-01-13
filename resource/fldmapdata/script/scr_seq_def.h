@@ -6826,3 +6826,23 @@
   .short  EV_SEQ_JET_BADGE_GATE_GIMMICK_INIT
   .endm
 
+
+//--------------------------------------------------------------
+/**
+ * @brief C03中央部　画面遷移カメラ操作
+ * @param id        パラメータID    
+ * @param frame     移動フレーム
+ */
+//--------------------------------------------------------------
+#define _C03CENTER_CAMERA_MOVE( id, frame ) \
+    _ASM_C03CENTER_CAMERA_MOVE id, frame
+
+  .macro  _ASM_C03CENTER_CAMERA_MOVE id, frame
+  .short EV_SEQ_CAMERA_MOVE_BY_ID
+  .short \id
+  .short \frame
+  .short EV_SEQ_C03CENTER_PLAYERWAY
+  .short \frame
+  .endm
+  
+

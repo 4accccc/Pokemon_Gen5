@@ -547,7 +547,7 @@
   DEF_CMD( EvCmdBModelDirectChangeViewFlag, EV_SEQ_BMODEL_DIRECT_CHANGE_VIEW_FLAG )
   DEF_CMD( EvCmdBModelDirectAnimeSetLoop, EV_SEQ_BMODEL_DIRECT_ANIME_SET_LOOP )
 
-  NO_CMD()
+  DEF_CMD( EvCmdC03Center_ControlPlayerWay, EV_SEQ_C03CENTER_PLAYERWAY )
   NO_CMD()
   NO_CMD()
   NO_CMD()
