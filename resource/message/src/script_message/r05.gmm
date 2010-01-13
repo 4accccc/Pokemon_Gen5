@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2010-01-13T16:14:40"/>
+	<create user="matsumiya" host="W00207" date="2010-01-13T18:33:37"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -622,7 +622,7 @@
 	<row id="msg_r05_cameraman_01" text-color=",,,,,#ff0000,,,,,,,,,,,,,">
 		<comment>♂
 ・h02が通行不能時
-・h02の手前辺りに配置</comment>
+・会話時</comment>
 		<attribute name="キャラ指定">MAN2</attribute>
 		<language name="JPN" width="256">はしを　わたりたいなら
 ホドモエの　ジムリーダー……[BE:01:ページ切り替え（クリア）]
@@ -641,6 +641,27 @@
 	</row>
 
 	<row id="msg_r05_cameraman_02" text-color=",,,,,#ff0000,,,,,,,,,,,,,">
+		<comment>♂
+・h02が通行不能時
+・posを踏んだとき</comment>
+		<attribute name="キャラ指定">MAN2</attribute>
+		<language name="JPN" width="256">はしを　わたりたいなら
+ホドモエの　ジムリーダー……[BE:01:ページ切り替え（クリア）]
+は　ムリだよな
+はしの　むこうに　いるんだし[BE:01:ページ切り替え（クリア）]
+そうだな　ライモンシティの
+ジムリーダー　カミツレさん　だったら[BE:00:ページ切り替え（行送り）]
+なんとか　してくれるかも▼</language>
+		<language name="JPN_KANJI" width="256">橋を　渡りたいなら
+ホドモエの　ジムリーダー……[BE:01:ページ切り替え（クリア）]
+は　ムリだよな
+橋の向こうに　いるんだし[BE:01:ページ切り替え（クリア）]
+そうだな　ライモンシティの
+ジムリーダー　カミツレさん　だったら[BE:00:ページ切り替え（行送り）]
+なんとか　してくれるかも▼</language>
+	</row>
+
+	<row id="msg_r05_cameraman_03" text-color=",,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
 		<comment>♂
 ・h02が通行可能時(＝h02のデモ後)</comment>
 		<attribute name="キャラ指定">MAN2</attribute>
