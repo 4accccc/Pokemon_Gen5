@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-22T13:11:50"/>
+	<create user="matsumiya" host="W00207" date="2010-01-13T15:40:54"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -619,11 +619,11 @@
 オレが新しいチャンピオンになる！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r05_cameraman_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r05_cameraman_01" text-color=",,,,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・h02が通行不能時
 ・h02の手前辺りに配置</comment>
-		<attribute name="キャラ指定">CAMERAMAN</attribute>
+		<attribute name="キャラ指定">MAN2</attribute>
 		<language name="JPN" width="256">はしを　わたりたいなら
 ホドモエの　ジムリーダー……[BE:01:ページ切り替え（クリア）]
 は　ムリだよな
@@ -640,9 +640,10 @@
 なんとか　してくれるかも</language>
 	</row>
 
-	<row id="msg_r05_cameraman_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r05_cameraman_02" text-color=",,,,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・h02が通行可能時(＝h02のデモ後)</comment>
+		<attribute name="キャラ指定">MAN2</attribute>
 		<language name="JPN" width="256">どんな　はしも
 わたれないと　ダメだよな！[BE:01:ページ切り替え（クリア）]
 だって　はしは　せかいを
@@ -652,27 +653,27 @@
 つなぐ　シンボル　なんだから！</language>
 	</row>
 
-	<row id="msg_r05_sign1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_r05_sign1_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>看板分類：タウンマップ</comment>
 		<attribute name="キャラ指定">看板：道路</attribute>
 		<language name="JPN" width="256">５ばんどうろ</language>
 		<language name="JPN_KANJI" width="256">５番道路</language>
 	</row>
 
-	<row id="msg_r05_sign2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_r05_sign2_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>看板分類：タウンマップ</comment>
 		<attribute name="キャラ指定">看板：道路</attribute>
 		<language name="JPN" width="256">ホドモエのはねばし</language>
 		<language name="JPN_KANJI" width="256">ホドモエの跳ね橋</language>
 	</row>
 
-	<row id="msg_r05_sign3_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_r05_sign3_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>橋</comment>
 		<language name="JPN" width="256">おとくな　けいじばん</language>
 		<language name="JPN_KANJI" width="256">お得な　掲示板</language>
 	</row>
 
-	<row id="msg_r05_sign4_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_r05_sign4_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<attribute name="キャラ指定">看板：お得な掲示板</attribute>
 		<language name="JPN" width="256">おとくな　けいじばん</language>
 		<language name="JPN_KANJI" width="256">お得な　掲示板</language>

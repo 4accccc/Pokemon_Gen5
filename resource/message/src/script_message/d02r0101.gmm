@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2010-01-12T18:02:33"/>
+	<create user="matsumiya" host="W00207" date="2010-01-13T15:45:59"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -608,9 +608,8 @@
 	</row>
 
 	<row id="msg_d02r0101_sportsm_01">
-		<comment>♀
-・7月ROM用メッセージ</comment>
-		<attribute name="キャラ指定">SPORTSM</attribute>
+		<comment>♂</comment>
+		<attribute name="キャラ指定">MAN2</attribute>
 		<language name="JPN" width="256">まいにち　はしりつづけて
 めざすは　イッシュちほうの[BE:00:ページ切り替え（行送り）]
 マラソンチャンピオン！</language>
@@ -620,8 +619,7 @@
 	</row>
 
 	<row id="msg_d02r0101_mountain_01">
-		<comment>♀
-・7月ROM用メッセージ</comment>
+		<comment>♂</comment>
 		<attribute name="キャラ指定">MOUNTAIN</attribute>
 		<language name="JPN" width="256">この　もりのみち　だけどよ
 きった　きは　たしか……[BE:01:ページ切り替え（クリア）]
@@ -634,8 +632,7 @@
 	</row>
 
 	<row id="msg_d02r0101_assistantw_01">
-		<comment>♀
-・7月ROM用メッセージ</comment>
+		<comment>♀</comment>
 		<attribute name="キャラ指定">ASSISTANTW</attribute>
 		<language name="JPN" width="256">フィトンチッドって　しってる？[BE:01:ページ切り替え（クリア）]
 なんだか　よくわからないけど
