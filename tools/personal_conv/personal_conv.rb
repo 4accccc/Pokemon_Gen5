@@ -749,6 +749,29 @@ end
 	fp_lst.print( "egg/pmwb_egg_manafi_n.ncl\n" )
 	fp_lst.print( "egg/pmwb_egg_manafi_r.ncl\n" )
 
+  #Ç›Ç™ÇÌÇËêlå`Ç‡ì∆é©ÇÃéùÇøï˚ÇÇ∑ÇÈ
+  fp_gra.print( "\"pfwb_migawari.NCBR\"\n" )
+	fp_gra.print( "\"pfwb_migawari.NCER\"\n" )
+	fp_gra.print( "\"pfwb_migawari.NANR\"\n" )
+	fp_gra.print( "\"pfwb_migawari.NMCR\"\n" )
+	fp_gra.print( "\"pfwb_migawari.NMAR\"\n" )
+	fp_gra.print( "\"pfwb_migawari.NCEC\"\n" )
+  fp_gra.print( "\"pbwb_migawari.NCBR\"\n" )
+	fp_gra.print( "\"pbwb_migawari.NCER\"\n" )
+	fp_gra.print( "\"pbwb_migawari.NANR\"\n" )
+	fp_gra.print( "\"pbwb_migawari.NMCR\"\n" )
+	fp_gra.print( "\"pbwb_migawari.NMAR\"\n" )
+	fp_gra.print( "\"pbwb_migawari.NCEC\"\n" )
+	fp_gra.print( "\"pmwb_migawari.NCLR\"\n" )
+
+  fp_lst.print( "migawari/pfwb_migawari.ncg\n" )
+	fp_lst.print( "migawari/pfwb_migawari.nce\n" )
+	fp_lst.print( "migawari/pfwb_migawari.nmc\n" )
+  fp_lst.print( "migawari/pbwb_migawari.ncg\n" )
+	fp_lst.print( "migawari/pbwb_migawari.nce\n" )
+	fp_lst.print( "migawari/pbwb_migawari.nmc\n" )
+	fp_lst.print( "migawari/pmwb_migawari.ncl\n" )
+
   fp_gra.close
   fp_lst.close
   fp_num.close
