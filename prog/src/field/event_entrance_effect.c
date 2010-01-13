@@ -62,6 +62,7 @@ static GMEVENT_RESULT ExitEvent_DoorOut(GMEVENT * event, int *seq, void * work)
     SEQ_DOOROUT_WAIT_SOUND_LOAD,
     SEQ_DOOROUT_OPENANIME_START,
     SEQ_DOOROUT_CAMERA_ACT,
+    SEQ_DOOROUT_BGM_PLAY_START,
     SEQ_DOOROUT_FADEIN,
     SEQ_DOOROUT_OPENANIME_WAIT,
     SEQ_DOOROUT_PLAYER_STEP,
@@ -115,6 +116,15 @@ static GMEVENT_RESULT ExitEvent_DoorOut(GMEVENT * event, int *seq, void * work)
     if( fdaw->cam_anm_flag )
     {
       EVENT_CAMERA_ACT_CallDoorOutEvent( event, gsys, fieldmap );
+    }
+    *seq = SEQ_DOOROUT_BGM_PLAY_START;
+    break;
+
+  case SEQ_DOOROUT_BGM_PLAY_START:
+    { // BGM再生開始
+      GMEVENT* bgmEvent;
+      bgmEvent = EVENT_FieldSound_PlayStartFieldBGM( gsys );
+      GMEVENT_CallEvent( event, bgmEvent );
     }
     *seq = SEQ_DOOROUT_FADEIN;
     break;
@@ -224,6 +234,7 @@ static GMEVENT_RESULT ExitEvent_DoorIn(GMEVENT * event, int *seq, void * work)
     SEQ_DOORIN_CAMERA_ACT,
     SEQ_DOORIN_OPENANIME_WAIT,
     SEQ_DOORIN_PLAYER_ONESTEP,
+    SEQ_DOORIN_BGM_STAND_BY,
     SEQ_DOORIN_FADEOUT,
     SEQ_DOORIN_END,
   };
@@ -277,16 +288,19 @@ static GMEVENT_RESULT ExitEvent_DoorIn(GMEVENT * event, int *seq, void * work)
 
   case SEQ_DOORIN_PLAYER_ONESTEP:
     GMEVENT_CallEvent( event, EVENT_PlayerOneStepAnime(gsys, fieldmap) );
+    *seq = SEQ_DOORIN_BGM_STAND_BY;
+    break;
+
+  case SEQ_DOORIN_BGM_STAND_BY:
+    { // BGM再生準備
+      GMEVENT* bgmEvent;
+      bgmEvent = EVENT_FieldSound_StandByFieldBGM( gsys, fdaw->loc_req.zone_id );
+      GMEVENT_CallEvent( event, bgmEvent );
+    }
     *seq = SEQ_DOORIN_FADEOUT;
     break;
 
   case SEQ_DOORIN_FADEOUT:
-    { // BGM変更リクエスト
-      FIELD_SOUND* fsnd = GAMEDATA_GetFieldSound( gamedata );
-      PLAYER_WORK* player = GAMEDATA_GetPlayerWork( gamedata, 0 );
-      PLAYER_MOVE_FORM form = PLAYERWORK_GetMoveForm( player );
-      FIELD_SOUND_ChangePlayZoneBGM( fsnd, gamedata, form, fdaw->loc_req.zone_id );
-    }
     { // フェードアウト
       GMEVENT* fade_event;
       FIELD_STATUS* fstatus; 

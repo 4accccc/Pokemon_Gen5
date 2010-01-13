@@ -12,6 +12,8 @@
 
 #include "system/vm_cmd.h"
 
+#include "sound/pm_sndsys.h"
+
 #include "gamesystem/gamesystem.h"
 #include "gamesystem/game_event.h"
 

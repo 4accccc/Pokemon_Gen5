@@ -402,7 +402,7 @@ void WEATHER_TASK_Main( WEATHER_TASK* p_wk, u32 heapID )
 	case WEATHER_TASK_SEQ_CALL_FADEIN:
 
     // BGM 読み込み中は、この処理を行わない
-    if( FIELD_SOUND_CanPlayBGM( p_wk->cp_sound ) == FALSE )
+    if( PMSND_IsLoading() )
     {
       TOMOYA_Printf( "Weather BGM wait...\n" );
       break;
@@ -418,7 +418,7 @@ void WEATHER_TASK_Main( WEATHER_TASK* p_wk, u32 heapID )
 	case WEATHER_TASK_SEQ_CALL_NOFADE:		
 
     // BGM 読み込み中は、この処理を行わない
-    if( FIELD_SOUND_CanPlayBGM( p_wk->cp_sound ) == FALSE )
+    if( PMSND_IsLoading() )
     {
       TOMOYA_Printf( "Weather BGM wait...\n" );
       break;

@@ -743,9 +743,9 @@ static const BOOL MUSICAL_EVENT_InitField( GMEVENT *event, MUSICAL_EVENT_WORK *e
   switch( evWork->subSeq )
   {
   case 0:
-    FIELD_SOUND_FadeInPopBGM( fieldSound , 30 );
-    evWork->subSeq++;
-    break;
+    GMEVENT_CallEvent(event, EVENT_FieldSound_PopBGM(evWork->gsys, FSND_FADEOUT_NONE, FSND_FADEIN_NORMAL));
+    evWork->subSeq++; 
+    break; 
   case 1:
     GMEVENT_CallEvent(event, EVENT_FieldOpen(evWork->gsys));
     evWork->subSeq++;
@@ -758,7 +758,7 @@ static const BOOL MUSICAL_EVENT_InitField( GMEVENT *event, MUSICAL_EVENT_WORK *e
     }
     break;
   case 3:
-    if( PMSND_CheckFadeOnBGM() == FALSE )
+    if( FIELD_SOUND_IsBGMFade(fieldSound) == FALSE )
     {
       return TRUE;
     }
@@ -782,11 +782,14 @@ static const BOOL MUSICAL_EVENT_ExitField( GMEVENT *event, MUSICAL_EVENT_WORK *e
     evWork->subSeq++;
     break;
   case 1:
-    FIELD_SOUND_FadeOutPushBGM( fieldSound , 30 );
+    GMEVENT_CallEvent(event, EVENT_FieldSound_PushBGM(evWork->gsys, 30));
+    evWork->subSeq++;
+    break; 
+  case 2:
     GMEVENT_CallEvent(event, EVENT_FieldClose(evWork->gsys, fieldWork));
     evWork->subSeq++;
     break;
-  case 2:
+  case 3:
     if( FIELD_SOUND_IsBGMFade(fieldSound) == FALSE )
     {
       return TRUE;

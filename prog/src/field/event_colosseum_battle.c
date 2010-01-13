@@ -101,12 +101,7 @@ static GMEVENT_RESULT EVENT_ColosseumBattleMain(GMEVENT * event, int *  seq, voi
     }
     break;
   case 5:
-    {
-      GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
-      FIELD_SOUND *fsnd = GAMEDATA_GetFieldSound( gdata );
-      FIELD_SOUND_PushPlayEventBGM( fsnd, cbw->para.musicDefault );
-    }
-
+    GMEVENT_CallEvent(event, EVENT_FieldSound_PushPlayEventBGM(gsys, cbw->para.musicDefault)); 
     GAMESYSTEM_CallProc(gsys, NO_OVERLAY_ID, &BtlProcData, &cbw->para);
 //    GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 1);
     (*seq)++;
@@ -136,12 +131,10 @@ static GMEVENT_RESULT EVENT_ColosseumBattleMain(GMEVENT * event, int *  seq, voi
     (*seq) ++;
     break;
   case 9:
-    {
-      GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
-      FIELD_SOUND *fsnd = GAMEDATA_GetFieldSound( gdata );
-      FIELD_SOUND_PopBGM( fsnd );
-    }
-    PMSND_FadeInBGM(60);
+    GMEVENT_CallEvent(event, EVENT_FieldSound_PopBGM(gsys, FSND_FADEOUT_NONE, FSND_FADEIN_SLOW));
+    (*seq) ++;
+    break;
+  case 10:
     return GMEVENT_RES_FINISH;
   default:
     GF_ASSERT(0);

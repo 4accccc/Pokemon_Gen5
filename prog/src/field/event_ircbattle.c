@@ -69,6 +69,7 @@ enum _EVENT_IRCBATTLE {
   _WAIT_IRCBATTLE_MATCH,
   _BATTLE_MATCH_START,
   _TIMING_SYNC_CALL_BATTLE,
+  _PLAY_EVENT_BGM,
   _CALL_BATTLE,
   _WAIT_BATTLE,
   _CALL_IRCBATTLE_FRIEND,
@@ -79,6 +80,7 @@ enum _EVENT_IRCBATTLE {
   _WAIT_NET_END,
   _FIELD_OPEN,
   _FIELD_FADEIN,
+  _FIELD_POP_BGM,
   _FIELD_END,
 
   _FIELD_FADEOUT_IRCBATTLE,
@@ -197,6 +199,11 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
       (*seq) ++;
     }
     break;
+  case _PLAY_EVENT_BGM: 
+    GMEVENT_CallEvent(event, EVENT_FieldSound_PushPlayEventBGM( gsys, dbw->para->musicDefault ) );
+    dbw->push=TRUE;
+    (*seq) ++;
+    break;
   case _CALL_BATTLE:
     switch(dbw->selectType){
     case EVENTIRCBTL_ENTRYMODE_SINGLE:
@@ -223,13 +230,6 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
       break;
     }
     BATTLE_PARAM_SetPokeParty( dbw->para, dbw->pParty, BTL_CLIENT_PLAYER );
-
-    {
-      GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
-      FIELD_SOUND *fsnd = GAMEDATA_GetFieldSound( gdata );
-      FIELD_SOUND_PushPlayEventBGM( fsnd, dbw->para->musicDefault );
-      dbw->push=TRUE;
-    }
 
     GAMESYSTEM_CallProc(gsys, NO_OVERLAY_ID, &BtlProcData, dbw->para);
 //    GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 1);
@@ -292,14 +292,14 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
     }
     (*seq) ++;
     break;
-  case _FIELD_END:
+  case _FIELD_POP_BGM:
     if(dbw->push){
-      GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
-      FIELD_SOUND *fsnd = GAMEDATA_GetFieldSound( gdata );
-      FIELD_SOUND_PopBGM( fsnd );
+      GMEVENT_CallEvent(event, EVENT_FieldSound_PopBGM(gsys, FSND_FADEOUT_FAST, FSND_FADEIN_NONE));
       dbw->push=FALSE;
     }
-    PMSND_FadeInBGM(60);
+    (*seq) ++;
+    break;
+  case _FIELD_END:
     return GMEVENT_RES_FINISH;
 
   //相性チェックはプロセス移動

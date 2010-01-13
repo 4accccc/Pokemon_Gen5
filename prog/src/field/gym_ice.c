@@ -21,7 +21,7 @@
 
 #include "../../../resource/fldmapdata/gimmick/gym_ice/gym_ice_local_def.h"
 
-//#include "sound/pm_sndsys.h"
+#include "sound/pm_sndsys.h"
 #include "gym_ice_se_def.h"
 
 #include "field/fieldmap_proc.h"    //for FLDMAP_CTRLTYPE

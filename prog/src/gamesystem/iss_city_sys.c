@@ -14,6 +14,7 @@
 #include "field/field_const.h"
 #include "iss_city_unit.h"
 #include "../../../resource/fldmapdata/zonetable/zone_id.h"
+#include "sound/pm_sndsys.h"
 
 
 //===========================================================================================

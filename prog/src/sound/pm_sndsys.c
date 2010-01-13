@@ -1116,6 +1116,66 @@ static BOOL checkEndSoundPlayThread( void )
 	return OS_IsThreadTerminated(&soundLoadThread);
 }
 
+
+//-------------------------------------------------------------------------------------------- 
+/**
+ * @brief 分割ロード・再生
+ *
+ * @param no    再生するBGMナンバー
+ * @param seq   シーケンス管理ポインタ
+ * @param start TRUE で分割ロード開始, FALSE でシーケンスを進める
+ *
+ * @return 再生を開始したら TRUE
+ */
+//--------------------------------------------------------------------------------------------
+BOOL PMSND_PlayBGMdiv(u32 no, u32* seq, BOOL start)
+{
+	if(start == TRUE){
+		PMSND_StopBGM_CORE();
+		deleteSoundPlayThread();
+		(*seq) = 0; 
+	} else {
+		switch(*seq){
+		case 0:
+			NNS_SndArcSetLoadBlockSize(BGM_BLOCKLOAD_SIZE);	//分割ロード指定
+			createSoundPlayThread(no, THREADLOAD_SEQBANK);
+			(*seq)++;
+			break;
+		case 1:
+			if(checkEndSoundPlayThread() == TRUE){
+				SOUNDMAN_LoadHierarchyPlayer_forThread_heapsvSB();// サウンド階層構造用設定
+
+				createSoundPlayThread( no, THREADLOAD_WAVE);
+				(*seq)++;
+			} else {
+				OS_Sleep(1);
+			}
+			break;
+		case 2:
+			if(checkEndSoundPlayThread() == TRUE){
+				NNS_SndArcSetLoadBlockSize(0);	//分割ロードなしに復帰
+	
+				SOUNDMAN_LoadHierarchyPlayer_forThread_end(no);
+	
+				// サウンド再生開始
+				{
+					NNSSndHandle*	pBgmHandle = SOUNDMAN_GetHierarchyPlayerSndHandle();
+
+					NNS_SndArcPlayerStartSeqEx(pBgmHandle, PLAYER_BGM, -1, -1, no);
+					//NNS_SndPlayerSetVolume(pBgmHandle, 0);
+				}
+				(*seq)++;
+        return TRUE;
+      } else {
+        OS_Sleep(1);
+      }
+      break;
+		}
+	}
+	return FALSE;
+} 
+
+
 //============================================================================================
 /**
  *

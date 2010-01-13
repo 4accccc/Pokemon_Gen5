@@ -136,6 +136,9 @@ extern void	PMSND_PopBGM( void );
 //システムフェード（自動）フレーム設定
 extern void PMSND_SetSystemFadeFrames( int fadeOutFrame, int fadeInFrame );
 
+// 分割ロード・再生
+extern BOOL PMSND_PlayBGMdiv(u32 no, u32* seq, BOOL start);
+
 //============================================================================================
 /**
  *

@@ -512,14 +512,20 @@ VMCMD_RESULT EvCmdTrainerTypeGet( VMHANDLE *core, void *wk )
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdTrainerBgmSet( VMHANDLE *core, void *wk )
 {
-  u16 tr_id = SCRCMD_GetVMWorkValue(core,wk);
-  SCRCMD_WORK *work = wk;
-  GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
-  FIELD_SOUND *fsnd = GAMEDATA_GetFieldSound( gdata );
-  u32 type = TT_TrainerDataParaGet( tr_id, ID_TD_tr_type );
-  u32 seq = FIELD_SOUND_GetTrainerEyeBgmNo( type );
-  FIELD_SOUND_PushPlayEventBGM( fsnd, seq );
-  return VMCMD_RESULT_CONTINUE;
+  SCRCMD_WORK*  work = wk;
+  GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
+  GAMEDATA*    gdata = SCRCMD_WORK_GetGameData( work );
+  SCRIPT_WORK*    sc = SCRCMD_WORK_GetScriptWork( work );
+  u16          tr_id = SCRCMD_GetVMWorkValue(core,wk);
+  u32           type = TT_TrainerDataParaGet( tr_id, ID_TD_tr_type );
+  u32            seq = FIELD_SOUND_GetTrainerEyeBGM( type );
+
+  {
+    GMEVENT* event;
+    event = EVENT_FieldSound_PushPlayEventBGM( gsys, seq );
+    SCRIPT_CallEvent( sc, event );
+  }
+  return VMCMD_RESULT_SUSPEND;
 }
 
 //--------------------------------------------------------------

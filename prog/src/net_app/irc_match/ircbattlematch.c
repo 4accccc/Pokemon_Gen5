@@ -27,6 +27,8 @@
 #include "system/bmp_menulist.h"
 #include "system/bmp_menu.h"
 
+#include "sound/pm_sndsys.h"
+
 #include "msg/msg_ircbattle.h"
 #include "ircbattle.naix"
 #include "cg_comm.naix"

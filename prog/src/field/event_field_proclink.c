@@ -15,6 +15,7 @@
 #include "gamesystem/game_comm.h"
 #include "gamesystem/game_data.h"
 #include "gamesystem/game_event.h"
+#include "sound/pm_sndsys.h"
 
 //フィールド
 #include "field/field_msgbg.h"

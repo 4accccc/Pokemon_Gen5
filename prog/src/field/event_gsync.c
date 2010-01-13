@@ -68,7 +68,9 @@ enum _EVENT_IRCBATTLE {
   _TIMING_SYNC_CALL_BATTLE,
   _FIELD_OPEN,
   _FIELD_FADEIN,
+  _FIELD_POP_BGM,
   _FIELD_END,
+  _PLAY_FIELD_BGM,
   _FADEIN_WIFIUTIL,
   _CALL_GAMESYNC,
   _WAIT_GAMESYNCLOGIN,
@@ -137,13 +139,20 @@ static GMEVENT_RESULT EVENT_GSyncMain(GMEVENT * event, int *  seq, void * work)
     break;
   case _WAIT_IRCBATTLE_MATCH:
     if (GAMESYSTEM_IsProcExists(gsys) == GFL_PROC_MAIN_NULL){
-      *seq = _FADEIN_WIFIUTIL;
+      *seq = _PLAY_FIELD_BGM;
     }
     break;
-  case _FADEIN_WIFIUTIL:
+  case _PLAY_FIELD_BGM:
 		OS_EnableIrq();
    	PMSND_Init();
-    FIELD_SOUND_PlayBGM(dbw->PlayBGM);
+    { 
+      GMEVENT* sound_event;
+      sound_event = EVENT_FieldSound_ForcePlayBGM( gsys, dbw->PlayBGM );
+      GMEVENT_CallEvent( event, sound_event ); 
+    }
+    (*seq) = _FADEIN_WIFIUTIL;
+    break;
+  case _FADEIN_WIFIUTIL:
     GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_WHITEOUT, 16, 0, 1);
     (*seq) = _CALL_GAMESYNC_MENU;
     break;
@@ -159,22 +168,19 @@ static GMEVENT_RESULT EVENT_GSyncMain(GMEVENT * event, int *  seq, void * work)
     }
     (*seq) ++;
     break;
-  case _FIELD_END:
+  case _FIELD_POP_BGM:
     if(dbw->push){
-      GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
-      FIELD_SOUND *fsnd = GAMEDATA_GetFieldSound( gdata );
-      FIELD_SOUND_PopBGM( fsnd );
+      GMEVENT_CallEvent(event, EVENT_FieldSound_PopBGM(gsys, FSND_FADEOUT_FAST, FSND_FADEIN_NONE));
       dbw->push=FALSE;
     } 
+    (*seq) ++;
+    break;
+  case _FIELD_END:
     return GMEVENT_RES_FINISH;
     break;
   case _CALL_GAMESYNC:
-    {
-      GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
-      FIELD_SOUND *fsnd = GAMEDATA_GetFieldSound( gdata );
-      FIELD_SOUND_PushPlayEventBGM( fsnd, SEQ_BGM_GAME_SYNC );
-      dbw->push=TRUE;
-    }
+    GMEVENT_CallEvent(event, EVENT_FieldSound_PushPlayEventBGM(gsys, SEQ_BGM_GAME_SYNC));
+    dbw->push=TRUE;
     GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(wifi_login), &WiFiLogin_ProcData, &dbw->aLoginWork);
     (*seq)++;
     break;
@@ -206,9 +212,7 @@ static GMEVENT_RESULT EVENT_GSyncMain(GMEVENT * event, int *  seq, void * work)
         GX_SetDispSelect(GX_DISP_SELECT_MAIN_SUB);
         (*seq)=_CALL_GAMESYNC_MENU;
         if(dbw->push){
-          GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
-          FIELD_SOUND *fsnd = GAMEDATA_GetFieldSound( gdata );
-          FIELD_SOUND_PopBGM( fsnd );
+          GMEVENT_CallEvent(event, EVENT_FieldSound_PopBGM(gsys, FSND_FADEOUT_FAST, FSND_FADEIN_NONE));
           dbw->push=FALSE;
         }
       }

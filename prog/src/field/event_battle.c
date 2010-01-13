@@ -249,21 +249,25 @@ static GMEVENT_RESULT fieldBattleEvent(
 
   switch (*seq) {
   case 0:
-    // 戦闘用ＢＧＭセット
+    // BGM 退避
     switch ( FIELD_SOUND_GetBGMPushCount( fsnd ) )
     {
     case FSND_PUSHCOUNT_NONE:
       //通常フィールドBGM階層をPush
-      FIELD_SOUND_PushBGM( fsnd );
+      GMEVENT_CallEvent(event, EVENT_FieldSound_PushBGM( gsys, FSND_FADEOUT_NONE ));
       break;
-    case FSND_PUSHCOUNT_BASEBGM:
+    case FSND_PUSHCOUNT_BASE:
       //イベントBGM階層なので何もしない（ここにくるまでにPushされている）
       break;
-    case FSND_PUSHCOUNT_EVENTBGM:
+    case FSND_PUSHCOUNT_EVENT:
     case FSND_PUSHCOUNT_OVER:
       GF_ASSERT_MSG(0, "EventBattle:BGM階層を重ねすぎています！！\n");
     }
     bew->bgm_pushed_flag = TRUE;
+    (*seq)++;
+    break;
+  case 1:
+    // 戦闘用ＢＧＭセット
     PMSND_PlayBGM( bew->battle_param->musicDefault );
     //エンカウントエフェクト
 /**
@@ -273,11 +277,11 @@ static GMEVENT_RESULT fieldBattleEvent(
     ENCEFF_SetEncEff(FIELDMAP_GetEncEffCntPtr(fieldmap), event, 0);
     (*seq)++;
     break;
-  case 1:
+  case 2:
     GMEVENT_CallEvent(event, EVENT_FieldClose(gsys, fieldmap));
     (*seq)++;
     break;
-  case 2:
+  case 3:
     //侵入システムに戦闘中であることを伝える
     {
       FIELD_STATUS *fldstatus = GAMEDATA_GetFieldStatus(gamedata);
@@ -288,13 +292,13 @@ static GMEVENT_RESULT fieldBattleEvent(
     GMEVENT_CallProc( event, FS_OVERLAY_ID(battle), &BtlProcData, bew->battle_param );
     (*seq)++;
     break;
-  case 3:
+  case 4:
     bew->btlret_param.btlResult = bew->battle_param;
     bew->btlret_param.gameData  = gamedata;
     GMEVENT_CallProc( event, FS_OVERLAY_ID(battle_return), &BtlRet_ProcData, &bew->btlret_param );
     (*seq)++;
     break;
-  case 4:
+  case 5:
     //侵入システムにフィールド中であることを伝える
     {
       FIELD_STATUS *fldstatus = GAMEDATA_GetFieldStatus(gamedata);
@@ -305,19 +309,21 @@ static GMEVENT_RESULT fieldBattleEvent(
     PMSND_FadeOutBGM( BATTLE_BGM_FADEOUT_WAIT );
     (*seq) ++;
     break;
-  case 5:
+  case 6:
     if(bew->timeWait){
       bew->timeWait--;
     } else {
       (*seq) ++;
     }
     break;
-  case 6:
+  case 7: 
     if (bew->bgm_pushed_flag == TRUE) {
-      FIELD_SOUND_PopBGM( fsnd );
+      GMEVENT_CallEvent(event, EVENT_FieldSound_PopBGM(gsys, FSND_FADEOUT_FAST, FSND_FADEIN_NONE));
       bew->bgm_pushed_flag = FALSE;
     }
-
+    (*seq) ++;
+    break;
+  case 8: 
     //戦闘結果反映処理
     BEW_reflectBattleResult( bew, gamedata );
 
@@ -344,7 +350,7 @@ static GMEVENT_RESULT fieldBattleEvent(
     }
     (*seq) ++;
     break;
-  case 7:
+  case 9:
     {
       GMEVENT* fade_event;
       fade_event = EVENT_FieldFadeIn_Black(gsys, fieldmap, FIELD_FADE_WAIT);
@@ -352,7 +358,7 @@ static GMEVENT_RESULT fieldBattleEvent(
     }
     (*seq) ++;
     break;
-  case 8:
+  case 10:
     BEW_Destructor( bew );
     return GMEVENT_RES_FINISH;
   }

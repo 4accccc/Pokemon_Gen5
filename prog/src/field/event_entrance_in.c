@@ -148,12 +148,14 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeNone(GMEVENT * event, int *s
   switch ( *seq )
   {
   case 0:
-    { // BGM更新リクエスト
-      FIELD_SOUND* fsnd = GAMEDATA_GetFieldSound( gamedata );
-      PLAYER_WORK* player = GAMEDATA_GetPlayerWork( gamedata, 0 );
-      PLAYER_MOVE_FORM form = PLAYERWORK_GetMoveForm( player );
-      FIELD_SOUND_ChangePlayZoneBGM( fsnd, gamedata, form, event_work->location.zone_id );
+    { // BGM再生準備
+      GMEVENT* bgmEvent;
+      bgmEvent = EVENT_FieldSound_StandByFieldBGM( gsys, event_work->location.zone_id );
+      GMEVENT_CallEvent( event, bgmEvent );
     }
+    (*seq)++;
+    break;
+  case 1:
     { // フェードアウト
       GMEVENT* fade_event;
       FIELD_STATUS* fstatus; 
@@ -170,7 +172,7 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeNone(GMEVENT * event, int *s
     }
     ++ *seq;
     break;
-  case 1:
+  case 2:
     return GMEVENT_RES_FINISH;
   }
   return GMEVENT_RES_CONTINUE;
@@ -223,14 +225,22 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeStep(GMEVENT * event, int *s
       BGM_INFO_SYS* bgm_info = GAMEDATA_GetBGMInfoSys( gamedata );
       PLAYER_WORK* player = GAMEDATA_GetPlayerWork( gamedata, 0 );
       PLAYER_MOVE_FORM form = PLAYERWORK_GetMoveForm( player );
-      u32 bgm_next = FIELD_SOUND_GetFieldBGMNo( gamedata, form, event_work->location.zone_id );
+      u32 bgm_next = FIELD_SOUND_GetFieldBGM( gamedata, event_work->location.zone_id );
       u32 bgm_now = PMSND_GetBGMsoundNo();
       u8 iss_type_next = BGM_INFO_GetIssType( bgm_info, bgm_next ); 
       u8 iss_type_now = BGM_INFO_GetIssType( bgm_info, bgm_now ); 
       if( ( iss_type_next == ISS_TYPE_DUNGEON ) &&
           ( iss_type_now == ISS_TYPE_DUNGEON ) )
       {
-        FIELD_SOUND_FadeOutBGM( fsnd, 20 );
+        GMEVENT* sound_event;
+        sound_event = EVENT_FieldSound_FadeOutBGM( gsys, FSND_FADEOUT_FAST );
+        GMEVENT_CallEvent( event, sound_event );
+      }
+      else
+      {
+        GMEVENT* sound_event;
+        sound_event = EVENT_FieldSound_StandByFieldBGM( gsys, event_work->location.zone_id );
+        GMEVENT_CallEvent( event, sound_event );
       }
     }
     ++ *seq;

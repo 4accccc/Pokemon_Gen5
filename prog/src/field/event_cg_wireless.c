@@ -49,6 +49,7 @@ enum _EVENT_CG_WIRELESS {
   _FIELD_FADEOUT,
   _FIELD_OPEN,
   _FIELD_FADEIN,
+  _POP_BGM,
   _FIELD_END,
 };
 
@@ -80,11 +81,8 @@ static GMEVENT_RESULT EVENT_CG_WirelessMain(GMEVENT * event, int *  seq, void * 
     (*seq) = _CALL_CG_WIRELESS_MENU;
     break;
   case _CALL_CG_WIRELESS_MENU:
-    {
-      FIELD_SOUND *fsnd = GAMEDATA_GetFieldSound( gdata );
-      FIELD_SOUND_PushPlayEventBGM( fsnd, SEQ_BGM_GAME_SYNC );
-      dbw->push=TRUE;
-    }
+    GMEVENT_CallEvent(event, EVENT_FieldSound_PushPlayEventBGM(gsys, SEQ_BGM_GAME_SYNC));
+    dbw->push=TRUE;
     (*seq)++;
     //break throw
   case _CALL_CG_WIRELESS_MENU2:
@@ -145,13 +143,14 @@ static GMEVENT_RESULT EVENT_CG_WirelessMain(GMEVENT * event, int *  seq, void * 
     }
     (*seq) ++;
     break;
-  case _FIELD_END:
+  case _POP_BGM:
     if(dbw->push){
-      FIELD_SOUND *fsnd = GAMEDATA_GetFieldSound( gdata );
-      FIELD_SOUND_PopBGM( fsnd );
+      GMEVENT_CallEvent(event, EVENT_FieldSound_PopBGM(gsys, FSND_FADEOUT_NONE, FSND_FADEIN_SLOW));
       dbw->push=FALSE;
     }
-    PMSND_FadeInBGM(60);
+    (*seq) ++;
+    break;
+  case _FIELD_END: 
     return GMEVENT_RES_FINISH;
   default:
     GF_ASSERT(0);

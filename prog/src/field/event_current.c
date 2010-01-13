@@ -12,6 +12,7 @@
 #include "fieldmap.h"
 #include "event_current.h"
 
+#include "sound/pm_sndsys.h"
 #include "field_player.h"
 #include "fldmmdl.h"
 #include "fldmmdl_code.h"
@@ -25,8 +26,7 @@
 // ■定数
 //=============================================================================================
 // 処理シーケンス
-enum
-{
+enum{
   SEQ_START,  // イベント開始
   SEQ_MAIN,   // メイン処理
   SEQ_EXIT,   // イベント終了

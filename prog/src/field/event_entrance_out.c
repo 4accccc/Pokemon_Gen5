@@ -147,14 +147,22 @@ GMEVENT* EVENT_EntranceOut( GMEVENT* parent,
 //---------------------------------------------------------------------------------------
 static GMEVENT_RESULT EVENT_FUNC_EntranceOut_ExitTypeNone(GMEVENT * event, int *seq, void * work)
 {
-	EVENT_WORK*      event_work = work;
-	GAMESYS_WORK*    gsys       = event_work->gsys;
+	EVENT_WORK*    event_work = work;
+	GAMESYS_WORK*  gsys       = event_work->gsys;
 	FIELDMAP_WORK* fieldmap   = event_work->fieldmap;
-	GAMEDATA*        gamedata   = event_work->gdata;
+	GAMEDATA*      gamedata   = event_work->gdata;
 
-  switch (*seq)
+  switch( *seq )
   {
   case 0:
+    { // BGM再生開始
+      GMEVENT* bgmEvent;
+      bgmEvent = EVENT_FieldSound_PlayStartFieldBGM( gsys );
+      GMEVENT_CallEvent( event, bgmEvent );
+    }
+    ++ *seq;
+    break;
+  case 1:
     { // フェードイン
       GMEVENT* fade_event;
       FIELD_STATUS* fstatus; 
@@ -171,14 +179,14 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceOut_ExitTypeNone(GMEVENT * event, int *
     }
     ++ *seq;
     break;
-  case 1:
+  case 2:
     { 
       fieldmap = GAMESYSTEM_GetFieldMapWork(gsys);
       FIELD_PLACE_NAME_Display(FIELDMAP_GetPlaceNameSys(fieldmap), event_work->location.zone_id);
     }
     ++ *seq;
     break;
-  case 2:
+  case 3:
     return GMEVENT_RES_FINISH;
   }
   return GMEVENT_RES_CONTINUE;
@@ -228,7 +236,7 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceOut_ExitTypeStep(GMEVENT * event, int *
 
   switch (*seq)
   {
-  case 0: // 画面・BGMフェードイン
+  case 0: // 画面フェードイン
     { // フェードイン
       GMEVENT* fade_event;
       FIELD_STATUS* fstatus; 
@@ -243,6 +251,9 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceOut_ExitTypeStep(GMEVENT * event, int *
       }
       GMEVENT_CallEvent( event, fade_event );
     }
+    ++ *seq;
+    break;
+  case 1:  // BGMフェードイン
     { // 現在のBGMがダンジョンISS ==> BGMフェードイン
       FIELD_SOUND* fsnd = GAMEDATA_GetFieldSound( gamedata );
       BGM_INFO_SYS* bgm_info = GAMEDATA_GetBGMInfoSys( gamedata );
@@ -252,23 +263,31 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceOut_ExitTypeStep(GMEVENT * event, int *
       u8 iss_type_now = BGM_INFO_GetIssType( bgm_info, bgm_now ); 
       if( iss_type_now == ISS_TYPE_DUNGEON )
       {
-        FIELD_SOUND_FadeInBGM( fsnd, bgm_now, 20 );
+        GMEVENT* sound_event;
+        sound_event = EVENT_FieldSound_FadeInBGM( gsys, FSND_FADEIN_FAST );
+        GMEVENT_CallEvent( event, sound_event );
+      }
+      else
+      {
+        GMEVENT* sound_event;
+        sound_event = EVENT_FieldSound_PlayStartFieldBGM( gsys );
+        GMEVENT_CallEvent( event, sound_event );
       }
     }
     ++ *seq;
     break;
-  case 1:
+  case 2:
     { 
       fieldmap = GAMESYSTEM_GetFieldMapWork(gsys);
       FIELD_PLACE_NAME_Display(FIELDMAP_GetPlaceNameSys(fieldmap), event_work->location.zone_id);
     }
     ++ *seq;
     break;
-  case 2:
+  case 3:
     GMEVENT_CallEvent( event, EVENT_PlayerOneStepAnime(gsys, fieldmap) );
     ++ *seq;
     break;
-  case 3:
+  case 4:
     return GMEVENT_RES_FINISH;
   }
   return GMEVENT_RES_CONTINUE;

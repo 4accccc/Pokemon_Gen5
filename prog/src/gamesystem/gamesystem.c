@@ -284,7 +284,7 @@ static BOOL GameSystem_Main(GAMESYS_WORK * gsys)
   // FIELD_SOUNDメイン
   {
     FIELD_SOUND* fsnd = GAMEDATA_GetFieldSound( gsys->gamedata );
-    FIELD_SOUND_UpdateBGM( fsnd );
+    FIELD_SOUND_Main( fsnd );
   }
 	// ISSシステムメイン
 	ISS_SYS_Update( gsys->iss_sys );

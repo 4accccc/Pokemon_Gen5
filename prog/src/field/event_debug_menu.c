@@ -1012,18 +1012,17 @@ static GMEVENT_RESULT debugMenuMusicalSelectEvent(
         typedef void (* CHANGE_FUNC)(DEB_MENU_MUS_WORK*);
         CHANGE_FUNC func = (CHANGE_FUNC)ret;
         func(work);
-        {
-          GAMEDATA *gdata = GAMESYSTEM_GetGameData( work->gmSys );
-          FIELD_SOUND *fsnd = GAMEDATA_GetFieldSound( gdata );
-          FIELD_SOUND_PushBGM( fsnd );
-        }
-        GMEVENT_CallEvent(work->gmEvent, work->newEvent);
+        GMEVENT_CallEvent(work->gmEvent, EVENT_FieldSound_PushBGM(work->gmSys, FSND_FADEOUT_NONE));
         (*seq)++;
         return( GMEVENT_RES_CONTINUE );
       }
     }
     break;
   case 2:
+    GMEVENT_CallEvent(work->gmEvent, work->newEvent);
+    (*seq)++;
+    break;
+  case 3:
     if( work->musInitWork != NULL )
     {
       GFL_HEAP_FreeMemory( work->musInitWork->pokePara );
@@ -1045,16 +1044,14 @@ static GMEVENT_RESULT debugMenuMusicalSelectEvent(
       GFL_HEAP_FreeMemory( work->pokePara );
       work->pokePara = NULL;
     }
-    
-    {
-      GAMEDATA *gdata = GAMESYSTEM_GetGameData( work->gmSys );
-      FIELD_SOUND *fsnd = GAMEDATA_GetFieldSound( gdata );
-      FIELD_SOUND_PopBGM( fsnd );
-    }  
-    PMSND_FadeInBGM(60);
-    return( GMEVENT_RES_FINISH );
-    
+    (*seq)++;
     break;
+  case 4:
+    GMEVENT_CallEvent(event, EVENT_FieldSound_PopBGM(work->gmSys, FSND_FADEOUT_NONE, FSND_FADEIN_SLOW));
+    (*seq)++;
+    break;
+  case 5:
+    return( GMEVENT_RES_FINISH );
   }
   
   return GMEVENT_RES_CONTINUE ;

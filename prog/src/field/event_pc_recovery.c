@@ -30,6 +30,7 @@ typedef enum {
   SEQ_BALLSET,      // ボール設置
   SEQ_WAIT,         // 待ち
   SEQ_RECOV_ANIME,  // 回復アニメーション
+  SEQ_POP_BGM,      // BGM 復帰
   SEQ_EXIT,         // イベント終了
 } SEQID;
 
@@ -156,6 +157,11 @@ static GMEVENT_RESULT EVENT_FUNC_PcRecoveryAnime( GMEVENT* event, int* seq, void
     if( ANIME_START_WAIT < rw->seqCount )
     {
         StartRecoveryAnime( rw );
+        { // ME再生
+          GAMESYS_WORK* gsys;
+          gsys = FIELDMAP_GetGameSysWork( rw->fieldmap );
+          GMEVENT_CallEvent(event, EVENT_FieldSound_PushPlayJingleBGM(gsys, SEQ_ME_ASA ));
+        }
         ChangeSequence( rw, seq, SEQ_RECOV_ANIME );
     }
     break;
@@ -163,8 +169,16 @@ static GMEVENT_RESULT EVENT_FUNC_PcRecoveryAnime( GMEVENT* event, int* seq, void
     if( IsRecoveryAnimeEnd( rw ) )
     {
         StopRecoveryAnime( rw );
-        ChangeSequence( rw, seq, SEQ_EXIT );
+        ChangeSequence( rw, seq, SEQ_POP_BGM );
     }
+    break;
+  case SEQ_POP_BGM: // BGM復帰
+    {
+      GAMESYS_WORK* gsys;
+      gsys = FIELDMAP_GetGameSysWork( rw->fieldmap );
+      GMEVENT_CallEvent(event, EVENT_FieldSound_PopBGM(gsys, FSND_FADEOUT_NONE, FSND_FADEIN_FAST));
+    }
+    ChangeSequence( rw, seq, SEQ_EXIT );
     break;
   case SEQ_EXIT:  // イベント終了
     ExitEvent( rw );
@@ -317,15 +331,7 @@ static void StartRecoveryAnime( RECOVERY_WORK* work )
   if( work->machineObjSt )
   {
     G3DMAPOBJST_setAnime( work->bmMan, work->machineObjSt, 0, BMANM_REQ_START );
-  }
-
-  // ME再生
-  {
-    GAMESYS_WORK* gsys = FIELDMAP_GetGameSysWork( work->fieldmap );
-    GAMEDATA*    gdata = GAMESYSTEM_GetGameData( gsys );
-    FIELD_SOUND*  fsnd = GAMEDATA_GetFieldSound( gdata );
-    FIELD_SOUND_PushPlayJingleBGM( fsnd, SEQ_ME_ASA );
-  }
+  } 
 }
 
 //----------------------------------------------------------------------------------------
@@ -343,15 +349,7 @@ static void StopRecoveryAnime( RECOVERY_WORK* work )
   for( i=0; i<work->setBallNum; i++ )
   {
     FIELD_BMODEL_SetAnime( work->ballBM[i], 0, BMANM_REQ_STOP );
-  }
-
-  // BGM復帰
-  {
-    GAMESYS_WORK* gsys = FIELDMAP_GetGameSysWork( work->fieldmap );
-    GAMEDATA*    gdata = GAMESYSTEM_GetGameData( gsys );
-    FIELD_SOUND*  fsnd = GAMEDATA_GetFieldSound( gdata );
-    FIELD_SOUND_PopBGM( fsnd );
-  }
+  } 
 }
 
 //----------------------------------------------------------------------------------------

@@ -1139,19 +1139,20 @@ static VMCMD_RESULT EvCmdCommonProcFieldEventStart( VMHANDLE * core, void *wk )
 //--------------------------------------------------------------
 static VMCMD_RESULT EvCmdCommonProcFieldEventEnd( VMHANDLE * core, void *wk )
 {
-  SCRCMD_WORK *work = wk;
-  
-  //サウンド開放忘れ回避
-  {
-    GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
-    FIELD_SOUND *fsnd = GAMEDATA_GetFieldSound( gdata );
-    FIELD_SOUND_ForcePopBGM( fsnd );
-  }
+  SCRCMD_WORK*  work = wk;
+  GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
+  SCRIPT_WORK*    sc = SCRCMD_WORK_GetScriptWork( work );
   
   //動作モデルポーズ解除
   SCRCMD_SUB_PauseClearAll( work );
 
-  return VMCMD_RESULT_CONTINUE;
+  //サウンド開放忘れ回避
+  {
+    GMEVENT* event;
+    event = EVENT_FieldSound_AllPopBGM( gsys, FSND_FADEIN_NONE );
+    SCRIPT_CallEvent( sc, event );
+  }
+  return VMCMD_RESULT_SUSPEND;
 }
 
 //--------------------------------------------------------------

@@ -17,7 +17,7 @@
 //  struct  
 //======================================================================
 ///FIELD_SOUND
-typedef struct _TAG_FIELD_SOUND FIELD_SOUND;
+typedef struct _FIELD_SOUND FIELD_SOUND;
 
 //======================================================================
 //  extern

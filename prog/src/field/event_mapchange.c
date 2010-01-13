@@ -531,14 +531,6 @@ static GMEVENT_RESULT EVENT_FUNC_MapChangeCore( GMEVENT* event, int* seq, void* 
       FIELD_SOUND* fsnd = GAMEDATA_GetFieldSound( gamedata );
       if( FIELD_SOUND_IsBGMFade(fsnd) != TRUE )
       { 
-        PLAYER_WORK* player = GAMEDATA_GetPlayerWork( gamedata, 0 );
-        PLAYER_MOVE_FORM form = PLAYERWORK_GetMoveForm( player );
-        // @todo BGM変更リクエストを投げるタイミングをルール化する。
-        // 現在、それぞれのマップチェンジイベント内でBGM変更リクエストを投げているが、
-        // それを忘れている場合の保険として、Core内でもリクエストを出す。
-        // よって、1度のマップチェンジ内で2回呼ばれることもある。
-        // ==>同じBGMのリクエストなら問題ない。
-        FIELD_SOUND_ChangePlayZoneBGM( fsnd, gamedata, form, mcw->loc_req.zone_id );
         (*seq)++;
       }
     }
@@ -620,10 +612,14 @@ static GMEVENT_RESULT DEBUG_EVENT_QuickMapChange(GMEVENT * event, int *seq, void
     (*seq)++;
     break;
   case 2:
+    GMEVENT_CallEvent( event, EVENT_FieldSound_ChangeFieldBGM( gsys, mcw->loc_req.zone_id ) );
+    (*seq)++;
+    break;
+  case 3:
     GMEVENT_CallEvent( event, DEBUG_EVENT_QuickFadeIn( gsys, fieldmap ) );
     (*seq) ++;
     break;
-  case 3:
+  case 4:
     return GMEVENT_RES_FINISH; 
   }
   return GMEVENT_RES_CONTINUE;
@@ -647,9 +643,7 @@ static GMEVENT_RESULT EVENT_MapChangeNoFade(GMEVENT * event, int *seq, void*work
   case 1:
     { // BGM更新リクエスト
       FIELD_SOUND* fsnd = GAMEDATA_GetFieldSound( gamedata );
-      PLAYER_WORK* player = GAMEDATA_GetPlayerWork( gamedata, 0 );
-      PLAYER_MOVE_FORM form = PLAYERWORK_GetMoveForm( player );
-      FIELD_SOUND_ChangePlayZoneBGM( fsnd, gamedata, form, mcw->loc_req.zone_id );
+      FIELD_SOUND_FieldBGMChangeRequest( fsnd, gamedata, mcw->loc_req.zone_id );
     }
     (*seq)++;
     break;
@@ -1648,9 +1642,11 @@ static void setFirstBGM(GAMEDATA * gamedata, u16 zone_id)
   FIELD_SOUND* fsnd = GAMEDATA_GetFieldSound( gamedata );
   PLAYER_WORK *player = GAMEDATA_GetPlayerWork( gamedata, 0 );
   PLAYER_MOVE_FORM form = PLAYERWORK_GetMoveForm( player );
-  u32 no = FIELD_SOUND_GetFieldBGMNo( gamedata, form, zone_id );
+  u32 no = FIELD_SOUND_GetFieldBGM( gamedata, zone_id );
   OS_Printf("NEXT BGM NO=%d\n",no);
-  FIELD_SOUND_PlayNextBGM_Ex( fsnd, no, 0, 60 );// ゲーム開始時はBGMフェードインで始まる
+
+  // ゲーム開始時は BGM フェードイン
+  FIELD_SOUND_BGMChangeRequest( fsnd, no, 0, 60 );
 }
 //============================================================================================
 //============================================================================================

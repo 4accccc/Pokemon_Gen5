@@ -1,91 +1,124 @@
-//======================================================================
+///////////////////////////////////////////////////////////////////////////////////
 /**
- * @file	field_sound.c
- * @brief	フィールドのサウンド関連
- * @author	kagaya
- * @date	05.07.13
+ * @brief フィールドのサウンド制御
+ * @file  field_sound.h
+ * @author obata
+ * @date   2009.12.25
  */
-//======================================================================
+///////////////////////////////////////////////////////////////////////////////////
 #pragma once
-#include <gflib.h>
-#include "system/gfl_use.h"
-
-#include "gamesystem/gamesystem.h"
-#include "gamesystem/game_data.h"
-
-#include "sound/pm_sndsys.h"
-
+#include "gflib.h"
+#include "gamesystem/gamedata_def.h"  // for GAMEDATA
+#include "gamesystem/game_event.h"
 #include "field_sound_proc.h"
 
-//======================================================================
-//  define
-//======================================================================
-//--------------------------------------------------------------
-/// フィールドBGM退避回数
-//
-// フィールドBGM階層
-//                    ____ME(jingle
-//          ____EVENT(event,trainer...
-//  ____BASE(field
-//--------------------------------------------------------------
-typedef enum
-{
-  FSND_PUSHCOUNT_NONE = 0, ///<退避なし
-  FSND_PUSHCOUNT_BASEBGM = 1, ///<ベースBGM退避中
-  FSND_PUSHCOUNT_EVENTBGM, ///<イベントBGM退避中
-  FSND_PUSHCOUNT_OVER, ///<退避数オーバー
-}FSND_PUSHCOUNT;
 
-#define PLAY_NEXTBGM_FADEOUT_FRAME (60)
-#define PLAY_NEXTBGM_FADEIN_FRAME (0)
+//=================================================================================
+// ■定数
+//=================================================================================
+// BGM 退避回数
+typedef enum {
+  FSND_PUSHCOUNT_NONE,   // 退避なし
+  FSND_PUSHCOUNT_BASE,   // ベース BGM 退避中
+  FSND_PUSHCOUNT_EVENT,  // イベント BGM 退避中
+  FSND_PUSHCOUNT_OVER,   // 退避数オーバー
+  FSND_PUSHCOUNT_MAX = FSND_PUSHCOUNT_OVER-1  // 最大退避数
+} FSND_PUSHCOUNT;
 
-//======================================================================
-//  struct  
-//======================================================================
+// フェードイン速度
+typedef enum{
+  FSND_FADEIN_NONE,    // フェードなし
+  FSND_FADEIN_FAST,    // 短
+  FSND_FADEIN_NORMAL,  // 中
+  FSND_FADEIN_SLOW,    // 長
+  FSND_FADEIN_SPEED_NUM
+} FSND_FADEIN_SPEED;
 
-//======================================================================
-//  extern
-//======================================================================
-//フィールドBGM 再生
-extern void FIELD_SOUND_PlayBGM( u32 bgmNo );
-extern void FIELD_SOUND_PlayNextBGM_Ex( 
-    FIELD_SOUND* fsnd, u32 bgmNo, u16 fadeOutFrame, u16 fadeInFrame );
-#define FIELD_SOUND_PlayNextBGM( fsnd, bgmNo ) \
-        FIELD_SOUND_PlayNextBGM_Ex( fsnd, bgmNo, \
-            PLAY_NEXTBGM_FADEOUT_FRAME, PLAY_NEXTBGM_FADEIN_FRAME ) // 上記簡易版
-extern void FIELD_SOUND_ChangePlayZoneBGM(
-    FIELD_SOUND* fsnd, GAMEDATA* gdata, PLAYER_MOVE_FORM form, u32 zone_id );
-extern void FIELD_SOUND_PushPlayEventBGM( FIELD_SOUND *fsnd, u32 bgmno );
-extern void FIELD_SOUND_PushPlayJingleBGM( FIELD_SOUND *fsnd, u32 bgmno );
-extern BOOL FIELD_SOUND_CanPlayBGM( const FIELD_SOUND *fsnd );
+// フェードアウト速度
+typedef enum{
+  FSND_FADEOUT_NONE,    // フェードなし
+  FSND_FADEOUT_FAST,    // 短
+  FSND_FADEOUT_NORMAL,  // 中
+  FSND_FADEOUT_SLOW,    // 長
+  FSND_FADEOUT_SPEED_NUM
+} FSND_FADEOUT_SPEED;
+  
 
-// フィールドBGM フェード管理
-extern void FIELD_SOUND_UpdateBGM( FIELD_SOUND* fsnd );
 
-//フィールドBGM フェード
-extern void FIELD_SOUND_FadeInBGM( FIELD_SOUND* fsnd, u32 bgmNo, u16 frames );
-extern void FIELD_SOUND_FadeInPopBGM( FIELD_SOUND* fsnd, u16 frames );
-extern void FIELD_SOUND_FadeOutBGM( FIELD_SOUND* fsnd, u16 frames );
-extern void FIELD_SOUND_FadeOutPushBGM( FIELD_SOUND* fsnd, u16 frames );
-extern BOOL FIELD_SOUND_IsBGMFade( FIELD_SOUND* fsnd );
+#if 0  // field_sound_proc.h で宣言
+//=================================================================================
+// ■不完全型宣言
+//=================================================================================
+typedef struct _FIELD_SOUND FIELD_SOUND;
 
-#if 0
-//フィールドBGM トラック関連
-extern void FIELD_SOUND_ChangeBGMTrackAction( void );
-extern void FIELD_SOUND_ChangeBGMTrackStill( void );
-extern void FIELD_SOUND_ChangeBGMVolume( int vol );
-extern void FIELD_SOUND_ChangeBGMActionVolume( int vol );
+//=================================================================================
+// ■システム作成/破棄
+//=================================================================================
+extern FIELD_SOUND* FIELD_SOUND_Create( HEAPID heapID );
+extern void FIELD_SOUND_Delete( FIELD_SOUND *fsnd );
 #endif
 
-//フィールドBGM BGMナンバー
-extern u32 FIELD_SOUND_GetFieldBGMNo(
-    GAMEDATA *gdata, PLAYER_MOVE_FORM form, u32 zone_id );
 
-//トレーナー視線BGMナンバー
-extern u32 FIELD_SOUND_GetTrainerEyeBgmNo( u32 trtype );
+//=================================================================================
+// ■BGM 操作イベント
+//=================================================================================
+// 即時再生
+extern GMEVENT* EVENT_FieldSound_ForcePlayBGM( GAMESYS_WORK* gameSystem, u32 soundIdx );
 
-//フィールドBGM BGM退避、復帰
-extern FSND_PUSHCOUNT FIELD_SOUND_GetBGMPushCount( const FIELD_SOUND *fsnd );
-extern void FIELD_SOUND_PushBGM( FIELD_SOUND *fsnd );
-extern void FIELD_SOUND_PopBGM( FIELD_SOUND *fsnd );
-extern void FIELD_SOUND_ForcePopBGM( FIELD_SOUND *fsnd );
+// フェードイン / フェードアウト
+extern GMEVENT* EVENT_FieldSound_FadeInBGM( GAMESYS_WORK* gameSystem, 
+                                            FSND_FADEIN_SPEED fadeInSpeed );
+extern GMEVENT* EVENT_FieldSound_FadeOutBGM( GAMESYS_WORK* gameSystem, 
+                                             FSND_FADEOUT_SPEED fadeOutSpeed );
+
+// 退避 / 復帰
+extern GMEVENT* EVENT_FieldSound_PushBGM( GAMESYS_WORK* gameSystem, 
+                                          FSND_FADEOUT_SPEED fadeOutSpeed );
+extern GMEVENT* EVENT_FieldSound_PopBGM( GAMESYS_WORK* gameSystem, 
+                                         FSND_FADEOUT_SPEED fadeOutSpeed, 
+                                         FSND_FADEIN_SPEED fadeInSpeed );
+extern GMEVENT* EVENT_FieldSound_AllPopBGM( GAMESYS_WORK* gameSystem, 
+                                            FSND_FADEIN_SPEED fadeInSpeed );
+
+// イベントBGM / ME 再生
+extern GMEVENT* EVENT_FieldSound_PushPlayEventBGM( GAMESYS_WORK* gameSystem, u32 soundIdx );
+extern GMEVENT* EVENT_FieldSound_PushPlayJingleBGM( GAMESYS_WORK* gameSystem, u32 soundIdx ); 
+
+// BGM 変更
+extern GMEVENT* EVENT_FieldSound_ChangeFieldBGM( GAMESYS_WORK* gameSystem, u16 zoneID );
+extern GMEVENT* EVENT_FieldSound_StandByFieldBGM( GAMESYS_WORK* gameSystem, u16 zoneID );
+extern GMEVENT* EVENT_FieldSound_PlayStartFieldBGM( GAMESYS_WORK* gameSystem );
+
+
+//=================================================================================
+// ■BGM 変更リクエスト
+//=================================================================================
+extern BOOL FIELD_SOUND_BGMChangeRequest( FIELD_SOUND* fieldSound, 
+                                          u32 soundIdx, 
+                                          FSND_FADEOUT_SPEED fadeOutSpeed, 
+                                          FSND_FADEIN_SPEED fadeInSpeed );
+
+extern BOOL FIELD_SOUND_FieldBGMChangeRequest( FIELD_SOUND* fieldSound,
+                                               GAMEDATA* gameData, u16 zoneID );
+
+
+//=================================================================================
+// ■BGM 管理
+//=================================================================================
+extern void FIELD_SOUND_Main( FIELD_SOUND* fieldSound );
+
+
+//=================================================================================
+// ■取得
+//=================================================================================
+// フィールド BGM No.
+extern u32 FIELD_SOUND_GetFieldBGM( GAMEDATA* gdata, u32 zoneID ); 
+
+// トレーナー視線 BGM No.
+extern u32 FIELD_SOUND_GetTrainerEyeBGM( u32 trType );
+
+// BGM退避数の取得
+extern FSND_PUSHCOUNT FIELD_SOUND_GetBGMPushCount( const FIELD_SOUND* fieldSound );
+
+// フェード中かどうか
+extern BOOL FIELD_SOUND_IsBGMFade( const FIELD_SOUND* fieldSound );

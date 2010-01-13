@@ -2588,10 +2588,8 @@ static void gjiki_PlayBGM( FIELD_PLAYER_GRID *gjiki )
   GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( gjiki->fieldWork );
   GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
   FIELD_SOUND* fsnd = GAMEDATA_GetFieldSound( gdata );
-  PLAYER_MOVE_FORM form = FIELD_PLAYER_GetMoveForm( gjiki->fld_player );
   u32 zone_id = FIELDMAP_GetZoneID( gjiki->fieldWork );
-  u32 no = FIELD_SOUND_GetFieldBGMNo( gdata, form, zone_id );
-  FIELD_SOUND_PlayNextBGM( fsnd, no );
+  FIELD_SOUND_FieldBGMChangeRequest( fsnd, gdata, zone_id );
 }
 
 //--------------------------------------------------------------
