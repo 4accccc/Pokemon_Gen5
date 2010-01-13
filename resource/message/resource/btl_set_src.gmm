@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2010-01-13T19:31:41"/>
+	<create user="taya" host="W00146" date="2010-01-14T01:19:26"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -2530,6 +2530,22 @@
 ステータスを　もとに　もどした！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は　[1:09:どうぐ名:1]で
 ステータスを　もとに　もどした！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_PokeNotExist">
+		<comment>アイテムコールなど：場に出ていない</comment>
+		<language name="JPN" width="216">…しかし　[1:02:ポケモンニックネーム:0]は
+バトルに　さんかしていなかった！</language>
+		<language name="JPN_KANJI" width="216">…しかし　[1:02:ポケモンニックネーム:0]は
+バトルに　参加していなかった！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_PokeHaveNotItem">
+		<comment>アイテムコール：有効な道具を持ってない</comment>
+		<language name="JPN" width="216">…しかし　[1:02:ポケモンニックネーム:0]は
+つかえる　どうぐを　もっていなかった！</language>
+		<language name="JPN_KANJI" width="216">…しかし　[1:02:ポケモンニックネーム:0]は
+使える道具を　持っていなかった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_UseItem_TameSkip">
