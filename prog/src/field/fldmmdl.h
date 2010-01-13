@@ -338,7 +338,7 @@ typedef enum
 //  MMDL_DRAWPROCNO_ONEANM, ///<１パターンアニメ
   MMDL_DRAWPROCNO_PCWOMAN, ///<PC姉
   MMDL_DRAWPROCNO_TPOKE, ///<連れ歩きポケモン
-  MMDL_DRAWPROCNO_TPOKE_FLY, ///<連れ歩きポケモン 縦揺れ付き
+  MMDL_DRAWPROCNO_TPOKE_FLY, ///<連れ歩きポケモン(アニメ再生スピード1/2) 
   MMDL_DRAWPROCNO_MODEL, ///<ポリゴンモデル
   MMDL_DRAWPROCNO_FISHINGHERO, ///<釣り自機専用 new
   MMDL_DRAWPROCNO_YUREHERO, ///<尾瀬揺れ自機 new

@@ -33,7 +33,7 @@ const MMDL_DRAW_PROC_LIST * const
 //  &DATA_MMDL_DRAWPROCLIST_BlActOnePattern, //ビルボード1パターンアニメ
   &DATA_MMDL_DRAWPROCLIST_BlActPCWoman, //PCお姉さん
   &DATA_MMDL_DRAWPROCLIST_TsurePoke, //連れ歩きポケモン
-  &DATA_MMDL_DRAWPROCLIST_TsurePokeFly, //連れ歩きポケモン 縦揺れ付き
+  &DATA_MMDL_DRAWPROCLIST_TsurePoke, //連れ歩きポケモン(上下アニメスピード1/2 関数内で分岐してます)
   &DATA_MMDL_DRAWPROCLIST_Model, //モデル描画
   &DATA_MMDL_DRAWPROCLIST_FishingHero, //釣り自機
   &DATA_MMDL_DRAWPROCLIST_YureHero, //揺れ自機
