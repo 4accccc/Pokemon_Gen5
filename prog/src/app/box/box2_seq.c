@@ -7585,10 +7585,8 @@ static int SubProcSet( BOX2_SYS_WORK * syswk, u8 type )
 	// カーソルの初期状態を設定
 	if( CURSORMOVE_CursorOnOffGet( syswk->app->cmwk ) == TRUE ){
 		GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
-		OS_Printf( "キーです\n" );
 	}else{
 		GFL_UI_SetTouchOrKey( GFL_APP_END_TOUCH );
-		OS_Printf( "タッチです\n" );
 	}
 	syswk->subProcType = type;
 	syswk->next_seq = BOX2SEQ_MAINSEQ_SUB_PROCCALL;
