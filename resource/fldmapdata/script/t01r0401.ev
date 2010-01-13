@@ -322,6 +322,7 @@ _ANIME_LABEL	anm_zukan_doc_look_01
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_zukan_support_look_01
 	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	AC_MARK_HATENA,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
