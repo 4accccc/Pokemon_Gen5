@@ -25,6 +25,6 @@
 #define R05_BOY3_01                       12
 #define R05_GIRL2_01                      13
 #define R05_LEADER4_01                    14
-#define R05_CAMERAMAN_01                  15
+#define R05_MAN2_01                       15
 
 #endif //ZONE_R05_EVC_H

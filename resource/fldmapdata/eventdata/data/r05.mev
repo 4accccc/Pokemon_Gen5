@@ -1,5 +1,5 @@
 #event data
-#save date:2010/01/07 18:12:20
+#save date:2010/01/13 18:19:07
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r05.wms
 #SECTION START:OBJ_EVENT
@@ -479,17 +479,17 @@ EVENTDATA_POSTYPE_GRID
 #type
 1
 #ID name
-R05_CAMERAMAN_01
+R05_MAN2_01
 #OBJ CODE Number
-BOY1
+MAN2
 #MOVE CODE Number
-MV_RIGHT
+MV_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
 0
 #Event Script Name
-SCRID_R05_CAMERAMAN_01
+SCRID_R05_MAN2_01
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number

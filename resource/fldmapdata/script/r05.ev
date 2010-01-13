@@ -25,7 +25,7 @@ _EVENT_DATA    ev_r05_boy3_01
 _EVENT_DATA    ev_r05_girl2_01
 _EVENT_DATA    ev_pos_r05_h02demo_01	//H02開通イベント
 _EVENT_DATA    ev_pos_r05_h02stop_01	//H02側ストッパーイベント
-_EVENT_DATA    ev_r05_cameraman_01
+_EVENT_DATA    ev_r05_man2_01
 _EVENT_DATA    ev_bg_r05_board_01
 _EVENT_DATA    ev_bg_r05_board_02
 _EVENT_DATA    ev_bg_r05_board_03
@@ -391,11 +391,11 @@ _ANIME_LABEL	anm_rival_goaway_01
 /************************************************************/
 EVENT_START	ev_pos_r05_h02stop_01
 	//ストッパー：！マーク
-	_OBJ_ANIME( R05_CAMERAMAN_01, anm_obj_gyoe )
+	_OBJ_ANIME( R05_MAN2_01, anm_obj_gyoe )
 	_OBJ_ANIME_WAIT()
 
 	//カメラマン：橋を渡りたいなら
-	_BALLOONWIN_OBJMSG( msg_r05_cameraman_01 , R05_CAMERAMAN_01 )
+	_BALLOONWIN_OBJMSG( msg_r05_cameraman_02 , R05_MAN2_01 )
 	_BALLOONWIN_CLOSE()
 
 	//主人公：一歩下がる
@@ -422,9 +422,25 @@ _ANIME_LABEL	anm_player_back_01
 /************************************************************/
 /*					カメラマン（話しかけ）					*/
 /************************************************************/
-EVENT_START	ev_r05_cameraman_01
-	//【仮】開通前の話しかけメッセージが未対応　キー待ち有り版が必要になる
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_r05_cameraman_02 )
+EVENT_START	ev_r05_man2_01
+	_TALK_OBJ_START()
+	
+	//H02開通前後で分岐
+	IF $WK_SCENE_R05 >= 3 THEN
+		//開通後なら
+		
+		//どんな橋も渡れないとダメだよね！
+		_BALLOONWIN_TALKOBJ_MSG( msg_r05_cameraman_03 )
+	ELSE
+		//開通前なら
+		
+		//カミツレさんなら何とかしてくれるかも
+		_BALLOONWIN_TALKOBJ_MSG( msg_r05_cameraman_01 )
+	ENDIF
+	
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+	
 EVENT_END
 
 
