@@ -38,26 +38,6 @@ typedef enum {
 } BAG_MODE;
 
 
-// フィールドで使用・不使用チェックの収集に使用するID
-// ※新しく使用する道具が増えた場合はこのenum定義に新しい名前を追加する
-//   且つ、bag_param.hのBAG_SetItemUseCheck関数で道具使用・不使用の状態を格納する必要あり
-typedef enum {
-  ITEMCHECK_CYCLE_RIDE=0, // 自転車のる
-  ITEMCHECK_CYCLE_STOP,   // 自転車おりる
-  ITEMCHECK_TOWNMAP,      // タウンマップ
-  ITEMCHECK_WIFINOTE,     // ともだち手帳
-  ITEMCHECK_ANANUKENOHIMO,// あなぬけのヒモ
-  ITEMCHECK_AMAIMITU,     // あまいミツ
-  ITEMCHECK_TURIZAO,      // つりざお
-  ITEMCHECK_BATTLE_RECORDER,  // バトルレコーダー
-  ITEMCHECK_MAIL,         // メール
-  ITEMCHECK_SPLAY,        // スプレー
-  ITEMCHECK_MAX,
-
-} ITEMCHECK_ENABLE ;
-
-
-
 //=============================================================================
 /**
  *                構造体定義
@@ -79,7 +59,6 @@ typedef struct {
   ITEMCHECK_WORK      icwk;         ///< アイテムチェックワーク FMENU_EVENT_WORKからコピー。「つかう」が出ない状態であれば不必要
   BAG_MODE            mode;         ///< バッグ呼び出しモード
   BOOL                cycle_flg;    ///< 自転車かどうか？
-  u32                 item_enable;  ///< 1bit単位で道具が使えるかという許可情報が格納されている(itemmenu.h参照）
   // [OUT] 外部に返すメンバ
   enum BAG_NEXTPROC_ENUM   next_proc; ///< バッグから抜けるときの動作
   int ret_item; ///< 選択したアイテム
@@ -109,18 +88,4 @@ FS_EXTERN_OVERLAY( bag );
  */
 //-----------------------------------------------------------------------------
 extern BAG_PARAM* BAG_CreateParam( GAMEDATA* gmData, const ITEMCHECK_WORK* icwk, BAG_MODE mode, HEAPID heap_id );
-
-//=============================================================================================
-/**
- * @brief 指定の道具が使えるか許可・不許可情報を格納する(itemmenu.h内のenum定義ITEMCHECK_ENABLE)
- *
- * @param   param   BAG_PARAMのポインタ
- * @param   type    使う道具の種類（itemmenu.h内のenum定義ITEMCHECK_ENABLEから指定）
- * @param   check   0:使えない  1:使える
- *
- * @retval  none
- */
-//=============================================================================================
-extern void BAG_SetItemUseCheck( BAG_PARAM* param, ITEMCHECK_ENABLE type, BOOL check );
-
 

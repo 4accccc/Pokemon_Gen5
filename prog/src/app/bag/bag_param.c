@@ -59,7 +59,6 @@ BAG_PARAM* BAG_CreateParam( GAMEDATA* gmData, const ITEMCHECK_WORK* icwk, BAG_MO
   bag->p_mystatus   = GAMEDATA_GetMyStatus( gmData );
   bag->p_bagcursor  = GAMEDATA_GetBagCursor( gmData );
   bag->p_myitem     = GAMEDATA_GetMyItem( gmData );
-  bag->item_enable  = 0;
   
   if( icwk != NULL){
     GFL_STD_MemCopy(icwk , &bag->icwk, sizeof(ITEMCHECK_WORK));
@@ -71,22 +70,4 @@ BAG_PARAM* BAG_CreateParam( GAMEDATA* gmData, const ITEMCHECK_WORK* icwk, BAG_MO
   return bag;
 }
 
-
-//=============================================================================================
-/**
- * @brief 指定の道具が使えるか許可・不許可情報を格納する(itemmenu.h内のenum定義ITEMCHECK_ENABLE)
- *
- * @param   param   BAG_PARAMのポインタ
- * @param   type    使う道具の種類（itemmenu.h内のenum定義ITEMCHECK_ENABLEから指定）
- * @param   check   0:使えない  1:使える
- *
- * @retval  none
- */
-//=============================================================================================
-void BAG_SetItemUseCheck( BAG_PARAM* param, ITEMCHECK_ENABLE type, BOOL check )
-{
-  GF_ASSERT( type<ITEMCHECK_MAX );
-
-  param->item_enable |= (check<<type);
-}
 
