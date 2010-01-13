@@ -6069,7 +6069,10 @@ static BOOL scproc_PushOutCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BT
         {
           u8 nextPokeIdx = get_pushout_nextpoke_idx( wk, clwk );
           BTL_POKEPARAM* nextPoke = BTL_POKECON_GetClientPokeData( wk->pokeCon, clientID, nextPokeIdx );
-          u8 nextPokeID = BPP_GetID( nextPoke );
+          u8 nextPokeID;
+
+          OS_TPrintf("‚Ó‚«‚Æ‚Î‚³‚ê‚½ŽŸ‚Ìƒ|ƒPƒ‚ƒ“Idx=%d, Ptr=%p\n", nextPokeIdx, nextPoke);
+          nextPokeID = BPP_GetID( nextPoke );
 
           scproc_MemberOutCore( wk, target );
           if( succeedMsg != NULL ){
@@ -6137,7 +6140,11 @@ static u8 get_pushout_nextpoke_idx( BTL_SVFLOW_WORK* wk, const SVCL_WORK* clwk )
     }
   }
   GF_ASSERT( count );
-  return clwk->numCoverPos + BTL_CALC_GetRand( count );
+
+  {
+    i = BTL_CALC_GetRand( count );
+    return list[ i ];
+  }
 }
 
 //--------------------------------------------------------------------------
