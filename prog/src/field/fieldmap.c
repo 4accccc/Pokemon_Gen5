@@ -117,6 +117,9 @@
 #include "pleasure_boat.h"    //for PL_BOAT_
 #endif
 
+
+
+
 //======================================================================
 //	DEBUG’è‹`
 //======================================================================
@@ -2544,9 +2547,7 @@ static void zoneChange_SetMMdl( GAMEDATA *gdata,
 static void zoneChange_SetBGM( GAMEDATA *gdata, u32 zone_id )
 {
   FIELD_SOUND* fsnd = GAMEDATA_GetFieldSound( gdata );
-  PLAYER_WORK *player = GAMEDATA_GetPlayerWork( gdata, 0 );
-  PLAYER_MOVE_FORM form = PLAYERWORK_GetMoveForm( player );
-  FIELD_SOUND_ChangePlayZoneBGM( fsnd, gdata, form, zone_id );
+  FIELD_SOUND_FieldBGMChangeRequest( fsnd, gdata, zone_id );
 }
 
 //--------------------------------------------------------------
@@ -3233,12 +3234,7 @@ BOOL FIELDMAP_CheckMapFadeReqFlg( FIELDMAP_WORK * fieldWork  )
 //-----------------------------------------------------------------------------
 BOOL FIELDMAP_CheckCanSoundPlay( const FIELDMAP_WORK* fieldWork )
 {
-  const FIELD_SOUND* fsnd;
-
-  GF_ASSERT( fieldWork );
-  fsnd = GAMEDATA_GetFieldSound( fieldWork->gamedata );
-
-  return FIELD_SOUND_CanPlayBGM( fsnd );
+  return PMSND_IsLoading();
 }
 
 
