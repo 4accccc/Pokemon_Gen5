@@ -24,6 +24,15 @@ BOOL	SampleMain( void );
 
 #include "test/camera_adjust_view.h"
 #include "system/fld_wipe_3dobj.h"
+
+
+//------------------------------------------------------------------
+/**
+ * @brief   オーバーレイID宣言
+ */
+//------------------------------------------------------------------
+FS_EXTERN_OVERLAY(fieldmap);
+
 //============================================================================================
 //
 //
@@ -43,6 +52,10 @@ BOOL	SampleMain( void );
 static GFL_PROC_RESULT DebugWatanabeSample1ProcInit
 				( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
+  // CAMADJUST用のオーバーレイロード
+  GFL_OVERLAY_Load( FS_OVERLAY_ID(fieldmap) );
+
+  
 	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_WATANABE_DEBUG, 0x100000 );
 	SampleBoot( HEAPID_WATANABE_DEBUG );
 
@@ -79,6 +92,9 @@ static GFL_PROC_RESULT DebugWatanabeSample1ProcEnd
 	SampleEnd();
 	GFL_HEAP_DeleteHeap( HEAPID_WATANABE_DEBUG );
 
+
+  // CAMADJUST用のオーバーレイアンロード
+  GFL_OVERLAY_Unload( FS_OVERLAY_ID(fieldmap) );
 	return GFL_PROC_RES_FINISH;
 }
 

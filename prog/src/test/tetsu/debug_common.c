@@ -67,6 +67,15 @@ DWS_SYS*  DWS_SYS_Setup(HEAPID heapID);
 void      DWS_SYS_Framework(DWS_SYS* dws);
 void      DWS_SYS_Delete(DWS_SYS* dws);
 
+
+//------------------------------------------------------------------
+/**
+ * @brief   オーバーレイID宣言
+ */
+//------------------------------------------------------------------
+FS_EXTERN_OVERLAY(fieldmap);
+
+
 //============================================================================================
 /**
  *
@@ -167,6 +176,9 @@ DWS_SYS* DWS_SYS_Setup(HEAPID heapID)
 {
   DWS_SYS* dws = GFL_HEAP_AllocClearMemory(heapID, sizeof(DWS_SYS));
   dws->heapID = heapID;
+
+  // CAMADJUST用のオーバーレイロード
+  GFL_OVERLAY_Load( FS_OVERLAY_ID(fieldmap) );
 
   // VRAM全クリア
   GX_SetBankForLCDC(GX_VRAM_LCDC_ALL);
@@ -331,6 +343,9 @@ void DWS_SYS_Delete(DWS_SYS* dws)
   GFL_BG_FreeBGControl(TEXT_FRAME_S);
   GFL_BG_FreeBGControl(TEXT_FRAME_M);
   GFL_BG_Exit();
+
+  // CAMADJUST用のオーバーレイアンロード
+  GFL_OVERLAY_Unload( FS_OVERLAY_ID(fieldmap) );
 }
 
 
