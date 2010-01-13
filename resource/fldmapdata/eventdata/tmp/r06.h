@@ -11,7 +11,7 @@
 #define ZONE_R06_EVC_H
 
 #define R06_MOUNTAIN_01                    0
-#define R06_SPORTSW_01                     1
+#define R06_WOMAN2_01                      1
 #define TR_RANGERW_03                      2
 #define TR_SCIENTISTM_06                   3
 #define TR_RANGERM_03                      4

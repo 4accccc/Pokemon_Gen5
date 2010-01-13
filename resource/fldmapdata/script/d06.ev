@@ -100,7 +100,7 @@ EVENT_START    ev_pos_d06_leader5_01
 //デンチュラの巣を消す
 	_OBJ_DEL( D06_STOPPER_01 )
  	_FLAG_SET(FV_D06_STOPPER_01)
-//========================================//
+//========================================// 
 
 	//ヤーコンが振り向く
 	_OBJ_ANIME( D06_LEADER5_01,anm_leader5_muku_02)
@@ -111,6 +111,9 @@ EVENT_START    ev_pos_d06_leader5_01
 	//ヤーコンがアイテムをくれる
 	_BALLOONWIN_OBJMSG( msg_d06_leader_04, D06_LEADER5_01)
 	_BALLOONWIN_CLOSE()
+	
+	//アイテム入手処理
+	_ITEM_EVENT_KEYWAIT( ITEM_WAZAMASIN78, 1 )
 	
 	//わざマシンの解説
 	//ヤーコン:

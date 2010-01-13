@@ -1242,7 +1242,7 @@ EVENT_START		 ev_c02gym0201_book_01l
 			
 			//本棚が動くアニメーション
 			_GYM_NORMAL_MOVE_WALL(0)
-			_SE_WAIT()	
+			_SE_STOP()	
 	
 			_OBJ_ANIME( C02GYM0201_BOOK_01A, anm_book_open )
 			_OBJ_ANIME( C02GYM0201_BOOK_01B, anm_book_open )
