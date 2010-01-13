@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="sogabe" host="W00140" date="2009-11-02T20:56:04"/>
+	<create user="sogabe" host="W00140" date="2009-12-28T16:27:36"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -384,6 +384,10 @@
 
 	<row id="PVMSG_MONSNAME">
 		<language name="JPN">[2:02:３桁:0]：[1:01:ポケモン種族名:1]</language>
+	</row>
+
+	<row id="PVMSG_FORMNAME">
+		<language name="JPN">[2:01:２桁:0]／[2:01:２桁:1]</language>
 	</row>
 
 	<row id="EVMSG_CURSOR">
