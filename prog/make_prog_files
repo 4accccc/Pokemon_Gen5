@@ -522,8 +522,6 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/gimmick_obj_elboard.c \
         field/elboard_zone_data.c \
         field/scrcmd_gate.c \
-        field/gym_ground.c \
-        field/gym_ground_ent.c \
 				field/event_debug_beacon.c \
         field/field_g3dobj.c \
         field/fieldmap_tcb_camera_zoom.c \
@@ -546,7 +544,6 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/fskill_sorawotobu.c \
         field/event_look_elboard.c \
         field/event_season_display.c \
-        field/gym_ice.c \
         field/pleasure_boat.c \
         field/scrcmd_pl_boat.c \
         field/event_autoway.c \
@@ -559,7 +556,6 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/field_gimmick_league_front02.c \
         field/land_data_patch.c \
         field/fldeff_iaigiri.c \
-        field/gym_dragon.c \
         field/event_pokecen_pc.c \
         field/bsubway_scr.c \
         field/scrcmd_bsubway.c \
@@ -649,6 +645,22 @@ SRCS_OVERLAY_FIELD_GYM_ANTI = field/gym_anti.c
 
 #===> SRCS_OVERLAY_UNION_ROOM
 #===> SRCS_OVERLAY_FIELD_INTRUDE
+SRCS_OVERLAY_FIELD_GYM_GROUND_ENT = field/gym_ground_ent.c
+
+#===> SRCS_OVERLAY_UNION_ROOM
+#===> SRCS_OVERLAY_FIELD_INTRUDE
+SRCS_OVERLAY_FIELD_GYM_GROUND = field/gym_ground.c
+
+#===> SRCS_OVERLAY_UNION_ROOM
+#===> SRCS_OVERLAY_FIELD_INTRUDE
+SRCS_OVERLAY_FIELD_GYM_ICE = field/gym_ice.c
+
+#===> SRCS_OVERLAY_UNION_ROOM
+#===> SRCS_OVERLAY_FIELD_INTRUDE
+SRCS_OVERLAY_FIELD_GYM_DRAGON = field/gym_dragon.c
+
+#===> SRCS_OVERLAY_UNION_ROOM
+#===> SRCS_OVERLAY_FIELD_INTRUDE
 SRCS_OVERLAY_FIELD_GIMMICK_BGATE = field/field_gimmick_bgate_jet.c
 
 # マッパーサンプル
@@ -716,6 +728,10 @@ SRCS_OVERLAY_TOWNMAP = app/townmap/townmap.c \
 #===> SRCS_OVERLAY_FIELD_GYM_NORMAL
 #===> SRCS_OVERLAY_FIELD_GYM_FLY
 #===> SRCS_OVERLAY_FIELD_GYM_ANTI
+#===> SRCS_OVERLAY_FIELD_GYM_GROUND
+#===> SRCS_OVERLAY_FIELD_GYM_GROUND_ENT
+#===> SRCS_OVERLAY_FIELD_GYM_ICE
+#===> SRCS_OVERLAY_FIELD_GYM_DRAGON
 #===> SRCS_OVERLAY_FIELD_GIMMICK_BGATE
 SRCS_OVERLAY_ENCEFF_PRG = field/enceff_prg.c
 
@@ -725,6 +741,10 @@ SRCS_OVERLAY_ENCEFF_PRG = field/enceff_prg.c
 #===> SRCS_OVERLAY_FIELD_GYM_NORMAL
 #===> SRCS_OVERLAY_FIELD_GYM_FLY
 #===> SRCS_OVERLAY_FIELD_GYM_ANTI
+#===> SRCS_OVERLAY_FIELD_GYM_GROUND
+#===> SRCS_OVERLAY_FIELD_GYM_GROUND_ENT
+#===> SRCS_OVERLAY_FIELD_GYM_ICE
+#===> SRCS_OVERLAY_FIELD_GYM_DRAGON
 #===> SRCS_OVERLAY_FIELD_GIMMICK_BGATE
 SRCS_OVERLAY_ENCEFF_MDL = field/enceff_mdl.c
 
