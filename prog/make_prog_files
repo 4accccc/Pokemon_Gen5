@@ -574,8 +574,7 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         test/camera_adjust_view.c \
 				field/event_comm_talk.c \
 				field/event_comm_talked.c \
-        field/enceff.c \
-        field/enceff1.c
+        field/enceff.c
 
 # フィールド天気
 #===> SRCS_OVERLAY_FIELDMAP
@@ -719,6 +718,15 @@ SRCS_OVERLAY_TOWNMAP = app/townmap/townmap.c \
 #===> SRCS_OVERLAY_FIELD_GYM_ANTI
 #===> SRCS_OVERLAY_FIELD_GIMMICK_BGATE
 SRCS_OVERLAY_ENCEFF_PRG = field/enceff_prg.c
+
+#===> SRCS_OVERLAY_FIELD_GYM_INIT
+#===> SRCS_OVERLAY_FIELD_GYM_INSECT
+#===> SRCS_OVERLAY_FIELD_GYM_ELEC
+#===> SRCS_OVERLAY_FIELD_GYM_NORMAL
+#===> SRCS_OVERLAY_FIELD_GYM_FLY
+#===> SRCS_OVERLAY_FIELD_GYM_ANTI
+#===> SRCS_OVERLAY_FIELD_GIMMICK_BGATE
+SRCS_OVERLAY_ENCEFF_MDL = field/enceff_mdl.c
 
 #===> SRCS_OVERLAY_ENCEFF_PRG
 SRCS_OVERLAY_ENCEFF_PNL = field/enceff_pnl.c
