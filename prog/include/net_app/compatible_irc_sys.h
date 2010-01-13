@@ -40,8 +40,8 @@
 
 #define COMPATIBLE_IRC_SENDATA_CNT		(60)
 
-#define TITLE_STR_SCALE_X	(FX32_CONST(1.5f))
-#define TITLE_STR_SCALE_Y	(FX32_CONST(1.5f))
+#define TITLE_STR_SCALE_X	(FX32_CONST(1.0f))
+#define TITLE_STR_SCALE_Y	(FX32_CONST(1.0f))
 
 //-------------------------------------
 ///		タイミング
