@@ -540,17 +540,21 @@ static BOOL _itemScrollCheck(FIELD_ITEMMENU_WORK* pWork)
         _posplus(pWork, length);
         HOSAKA_Printf( "[%d] curpos=%d \n", i, pWork->curpos );
       }
+      
+      // スクロールバーOAM座標を変更
+      ITEMDISP_ScrollCursorMove(pWork);
+      // タッチ状態
+      KTST_SetDraw( pWork, FALSE );
 
       // リストが移動した時のみSE
       if( prelistpos != pWork->oamlistpos )
       {
         GFL_SOUND_PlaySE( SE_BAG_SRIDE );
+        return TRUE;
       }
     }
 
-    KTST_SetDraw( pWork, FALSE );
-    return TRUE;
-  }
+  } // if(GFL_UI_TP_GetPointCont(&x, &y) == TRUE)
 
   return FALSE;
 }
@@ -1067,8 +1071,8 @@ static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* pWork)
   // 並び替え
   else if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_SELECT)
   {
-    GFL_STD_MemClear(pWork->ScrollItem, sizeof(pWork->ScrollItem));
-    MYITEM_ITEM_STCopy(pWork->pMyItem, pWork->ScrollItem, pWork->pocketno, TRUE);  //取得
+    GFL_STD_MemClear( pWork->ScrollItem, sizeof( pWork->ScrollItem ) );
+    MYITEM_ITEM_STCopy( pWork->pMyItem, pWork->ScrollItem, pWork->pocketno, TRUE );  //取得
     pWork->moveMode = TRUE;
     GFL_CLACT_WK_SetAnmSeq( pWork->clwkCur , 2 );
 
@@ -1078,7 +1082,6 @@ static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* pWork)
   // タッチスクロール
   else if( _itemScrollCheck(pWork) )
   {
-    ITEMDISP_ScrollCursorMove(pWork);
     bChange = TRUE;
   }
   // キー操作
@@ -2218,6 +2221,7 @@ static void KTST_SetDraw( FIELD_ITEMMENU_WORK* pWork, BOOL on_off )
   GFL_CLACT_WK_SetDrawEnable( pWork->clwkCur, on_off );
 
   // 上画面を消す
+  // @TODO 通信アイコン > リクエストタイプにする
   GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ , on_off );
   GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG1 , on_off );
   GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG2 , on_off );
@@ -2764,16 +2768,18 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
         return;
       }
 
-      if(pWork->curpos != (bttnid-BUTTONID_ITEM_AREA)){
+      if(pWork->curpos != (bttnid-BUTTONID_ITEM_AREA))
+      {
         pWork->curpos = bttnid - BUTTONID_ITEM_AREA;
-        if(length <= ITEMMENU_GetItemIndex(pWork)){
+        if( length <= ITEMMENU_GetItemIndex(pWork) )
+        {
           pWork->curpos = backup;
           return;
         }
       }
 
+//    ITEMDISP_ScrollCursorChangePos(pWork, ITEMMENU_GetItemIndex(pWork));
       _ItemChange(pWork, nowno, ITEMMENU_GetItemIndex(pWork));
-      //      ITEMDISP_ScrollCursorChangePos(pWork, ITEMMENU_GetItemIndex(pWork));
       _windowRewrite(pWork);
 
       KTST_SetDraw( pWork, FALSE );

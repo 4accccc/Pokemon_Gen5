@@ -640,8 +640,8 @@ void ITEMDISP_upMessageRewrite(FIELD_ITEMMENU_WORK* pWork)
   GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->winItemNum), 0 );
   GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->winItemReport), 0 );
   
-  // アイテムがない／不正な場合は空表示
-  if( length==0 || (item==NULL) || (item->id==ITEM_DUMMY_DATA) )
+  // タッチ状態／アイテムがない／ダミー
+  if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH || (item==NULL) || (item->id==ITEM_DUMMY_DATA) )
   {
     // アイテムアイコンを削除（厳密にはメッセージではないが、便宜上ここで操作）
     _itemiconDelete( pWork );
@@ -1261,21 +1261,26 @@ void ITEMDISP_CellVramTrans( FIELD_ITEMMENU_WORK* pWork )
     GFL_CLACTPOS pos;
     int length;
     BOOL is_cur_draw;
+    BOOL is_scr_draw;
 
     GFL_CLACT_WK_GetPos( pWork->clwkCur , &pos, CLWK_SETSF_NONE );
     pos.y = CUR_OFFSET_Y * pWork->curpos + CUR_START_Y;
     GFL_CLACT_WK_SetPos( pWork->clwkCur ,  &pos, CLWK_SETSF_NONE );
-
-    GFL_CLACT_WK_SetAnmIndex( pWork->clwkCur, 0 );
-
-    // ポケット内のアイテムが0個の時は非表示
-    length      = ITEMMENU_GetItemPocketNumber( pWork );
-    is_cur_draw = (length!=0);
+    
+    // 現在のポケットのアイテム数取得
+    length = ITEMMENU_GetItemPocketNumber( pWork );
+    
+    // カーソル条件：ポケット内のアイテムが0個かつキー状態のとき
+    is_cur_draw = (length!=0) && GFL_UI_CheckTouchOrKey() == GFL_APP_END_KEY;
+    // スクロールバー条件：アイテムが５個以上
+    is_scr_draw = (length > 5);
 
     HOSAKA_Printf("length=%d \n", length);
 
+    // カーソル／スクロールバー非表示
+//    GFL_CLACT_WK_SetAnmIndex( pWork->clwkCur, 0 );
     GFL_CLACT_WK_SetDrawEnable( pWork->clwkCur, is_cur_draw );
-    GFL_CLACT_WK_SetDrawEnable( pWork->clwkScroll, is_cur_draw );
+    GFL_CLACT_WK_SetDrawEnable( pWork->clwkScroll, is_scr_draw );
   }
 
   // リストOAM生成＆描画
@@ -1707,8 +1712,8 @@ void ITEMDISP_WazaInfoWindowChange( FIELD_ITEMMENU_WORK *pWork )
   item = ITEMMENU_GetItem( pWork,ITEMMENU_GetItemIndex(pWork) );
   wazano = ITEM_GetWazaNo( item->id );
 
-  // アイテムがない／ダミー／非わざマシン
-  if( (item==NULL) || (item->id==ITEM_DUMMY_DATA) || wazano==0 )
+  // タッチ状態／アイテムがない／ダミー／非わざマシン
+  if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH || (item==NULL) || (item->id==ITEM_DUMMY_DATA) || wazano==0 )
   {
     // わざマシン用の表示を非表示にして抜ける
     GFL_BMPWIN_ClearScreen(pwin);
