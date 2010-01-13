@@ -373,6 +373,7 @@ SRCS_OVERLAY_WIFI_UTIL  = net/dwc_raputil.c
 SRCS_OVERLAY_FIELD_INIT		=	field/event_mapchange.c \
         field/ev_time.c \
         field/field_wfbc_data_local.c \
+        field/scrcmd_wfbc.c \
         field/areadata.c
 
 # field
@@ -567,7 +568,6 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/scrcmd_league_front.c \
         field/elboard_spnews_data.c \
         field/scrcmd_palpark.c \
-        field/scrcmd_wfbc.c \
         field/party_select_list.c \
         field/field_fk_sound_anime.c \
         field/field_bbd_color.c \

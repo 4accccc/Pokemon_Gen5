@@ -31,6 +31,9 @@ extern VMCMD_RESULT EvCmdWfbc_GetData( VMHANDLE *core, void *wk );
 // BC NPC勝利目標値　加算
 extern VMCMD_RESULT EvCmdWfbc_AddBCNpcWinTarget( VMHANDLE *core, void *wk );
 
+// WF 目的ポケモンを持っているのかチェック
+extern VMCMD_RESULT EvCmdWfbc_CheckWFTargetPokemon( VMHANDLE *core, void *wk );
+
 
 #ifdef _cplusplus
 }	// extern "C"{

@@ -305,5 +305,23 @@ VMCMD_RESULT EvCmdWfbc_AddBCNpcWinTarget( VMHANDLE *core, void *wk )
 	return VMCMD_RESULT_CONTINUE;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  WF  ターゲットポケモンを手持ちに持っているかチェック
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdWfbc_CheckWFTargetPokemon( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  GAMEDATA* p_gamedata = SCRCMD_WORK_GetGameData( work );
+  FIELD_WFBC_CORE* p_wfbc_core = GAMEDATA_GetMyWFBCCoreData( p_gamedata );
+  FIELD_WFBC_EVENT* p_event = GAMEDATA_GetWFBCEventData( p_gamedata );
+
+  
+	return VMCMD_RESULT_CONTINUE;
+}
+
+
 
 
