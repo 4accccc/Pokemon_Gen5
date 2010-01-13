@@ -1443,7 +1443,7 @@ static BOOL SubProc_AI_SelectAction( BTL_CLIENT* wk, int* seq )
 
         if( cnt )
         {
-          WazaID waza = BPP_WAZA_GetID( pp, wazaIdx );
+          WazaID waza;
           u8  mypos = BTL_MAIN_GetClientPokePos( wk->mainModule, wk->myID, i );
 
           TR_AI_Start( vmh, usableWazaIdx, mypos );
