@@ -320,7 +320,7 @@ static GMEVENT_RESULT FldMapMenuEvent( GMEVENT *event, int *seq, void *wk )
 			//FIELD_SUBSCREEN_Change(FIELDMAP_GetFieldSubscreenWork(mwk->fieldWork), mwk->return_subscreen_mode);
 
 			//アイテムコール
-			GFL_OVERLAY_Load( FS_OVERLAY_ID(itemuse) );
+			//GFL_OVERLAY_Load( FS_OVERLAY_ID(itemuse) );
 			p_item_event	= EVENT_FieldItemUse( mwk->link.select_param, mwk->gmSys, mwk->fieldWork );
 			GMEVENT_CallEvent(event, p_item_event );
 			mwk->state = FMENUSTATE_RETURN_ITEM;
@@ -328,7 +328,7 @@ static GMEVENT_RESULT FldMapMenuEvent( GMEVENT *event, int *seq, void *wk )
 		break;
 
 	case FMENUSTATE_RETURN_ITEM:
-		GFL_OVERLAY_Unload( FS_OVERLAY_ID(itemuse) );
+		//GFL_OVERLAY_Unload( FS_OVERLAY_ID(itemuse) );
 		return (GMEVENT_RES_FINISH);
  	}
 

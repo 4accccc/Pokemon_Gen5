@@ -51,5 +51,5 @@ extern GMEVENT* EVENT_CycleUse(FIELDMAP_WORK *fieldWork,GAMESYS_WORK *gsys);
 extern GMEVENT* EVENT_PalaceJumpUse(FIELDMAP_WORK *fieldWork,GAMESYS_WORK *gsys);
 
 ///オーバーレイＩＤ定義
-FS_EXTERN_OVERLAY(itemuse);
+//FS_EXTERN_OVERLAY(itemuse);
 

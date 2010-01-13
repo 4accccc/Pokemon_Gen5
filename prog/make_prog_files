@@ -339,7 +339,8 @@ SRCS_OVERLAY_DEV_WIFILIB   = net/net_devwifi.c \
 # k.ohno 10.01.12
 #===> main
 SRCS_OVERLAY_NOTWIFI = field/event_ircbattle.c \
-        field/event_cg_wireless.c
+        field/event_cg_wireless.c \
+        field/itemuse_event.c
 
 
 
@@ -1211,7 +1212,7 @@ SRCS_OVERLAY_MCS_LIB = debug/gf_mcs.c \
 #===> SRCS_OVERLAY_FIELD_WEATHER_SNOW
 #===> SRCS_OVERLAY_FIELD_WEATHER_RAIN
 #===> SRCS_OVERLAY_FIELD_WEATHER_STORM
-SRCS_OVERLAY_ITEMUSE = field/itemuse_event.c
+#SRCS_OVERLAY_ITEMUSE = 
 
 #D_NUMINPUTƒ‰ƒCƒuƒ‰ƒŠ
 #===> SRCS_OVERLAY_FIELD_WEATHER_SUNNY

@@ -351,7 +351,7 @@ static GMEVENT_RESULT ShortCutMenu_MainEvent( GMEVENT *p_event, int *p_seq, void
 			p_wk->p_link	= NULL;
 
 			//アイテムコール
-			GFL_OVERLAY_Load( FS_OVERLAY_ID(itemuse) );
+			//GFL_OVERLAY_Load( FS_OVERLAY_ID(itemuse) );
 			p_item_event	= EVENT_FieldItemUse( item, p_wk->p_gamesys, p_wk->p_fieldmap );
 			GMEVENT_CallEvent(p_event, p_item_event );
 
@@ -360,7 +360,7 @@ static GMEVENT_RESULT ShortCutMenu_MainEvent( GMEVENT *p_event, int *p_seq, void
 		break;
 
 	case SEQ_ITEM_RETURN:
-		GFL_OVERLAY_Unload( FS_OVERLAY_ID(itemuse) );
+		//GFL_OVERLAY_Unload( FS_OVERLAY_ID(itemuse) );
 
 		{
    		MMDLSYS *p_fldmdl = FIELDMAP_GetMMdlSys( p_wk->p_fieldmap );
@@ -476,7 +476,7 @@ static GMEVENT_RESULT ShortCutMenu_OneEvent( GMEVENT *p_event, int *p_seq, void 
 			p_wk->p_link	= NULL;
 
 			//アイテムコール
-			GFL_OVERLAY_Load( FS_OVERLAY_ID(itemuse) );
+			//GFL_OVERLAY_Load( FS_OVERLAY_ID(itemuse) );
 			p_item_event	= EVENT_FieldItemUse( item, p_wk->p_gamesys, p_wk->p_fieldmap );
 			GMEVENT_CallEvent(p_event, p_item_event );
 
@@ -485,7 +485,7 @@ static GMEVENT_RESULT ShortCutMenu_OneEvent( GMEVENT *p_event, int *p_seq, void 
 		break;
 
 	case SEQ_ITEM_RETURN:
-		GFL_OVERLAY_Unload( FS_OVERLAY_ID(itemuse) );
+		//GFL_OVERLAY_Unload( FS_OVERLAY_ID(itemuse) );
 		{
    		MMDLSYS *p_fldmdl = FIELDMAP_GetMMdlSys( p_wk->p_fieldmap );
       MMDLSYS_ClearPauseMoveProc( p_fldmdl );
