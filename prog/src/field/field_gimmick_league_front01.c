@@ -40,6 +40,15 @@ typedef enum{
   GIMMICKWORK_DATA_MAX = GIMMICKWORK_DATA_NUM - 1
 } GIMMICKWORK_DATA_INDEX;
 
+// リフトアップ時のパラメータ
+#define LIFT_UP_FRAME (30)
+#define LIFT_UP_CAMERA_X (0x000001f8 << FX32_SHIFT) 
+#define LIFT_UP_CAMERA_Y (0x00000075 << FX32_SHIFT) 
+#define LIFT_UP_CAMERA_Z (0x000002e8 << FX32_SHIFT)
+#define LIFT_UP_TARGET_X (0x000001f8 << FX32_SHIFT) 
+#define LIFT_UP_TARGET_Y (0xffffffb4 << FX32_SHIFT) 
+#define LIFT_UP_TARGET_Z (0x0000027a << FX32_SHIFT)
+
 
 //==========================================================================================
 // ■3Dリソース
@@ -509,11 +518,37 @@ typedef struct
 static GMEVENT_RESULT LiftDownEvent( GMEVENT* event, int* seq, void* wk )
 {
   LIFTDOWN_EVENTWORK* work = (LIFTDOWN_EVENTWORK*)wk;
+  FIELD_CAMERA* camera = FIELDMAP_GetFieldCamera( work->fieldmap );
 
   switch( *seq )
   {
-  // アニメ開始
+  // カメラ移動開始
   case 0:
+    { // 線形カメラ設定
+      FLD_CAM_MV_PARAM moveParam;
+      moveParam.Chk.Shift = FALSE;
+      moveParam.Chk.Pitch = FALSE;
+      moveParam.Chk.Yaw = FALSE;
+      moveParam.Chk.Dist = FALSE;
+      moveParam.Chk.Fovy = FALSE;
+      moveParam.Chk.Pos = TRUE;
+      VEC_Set( &moveParam.Core.CamPos, LIFT_UP_CAMERA_X, LIFT_UP_CAMERA_Y, LIFT_UP_CAMERA_Z ); 
+      VEC_Set( &moveParam.Core.TrgtPos, LIFT_UP_TARGET_X, LIFT_UP_TARGET_Y, LIFT_UP_TARGET_Z ); 
+      FIELD_CAMERA_SetLinerParam( camera, &moveParam, LIFT_UP_FRAME );
+    }
+    (*seq)++;
+    OBATA_Printf( "GIMMICK-LF01 LIFT DOWN EVENT: seq ==> %d\n", *seq );
+    break;
+  // カメラ移動終了待ち
+  case 1:
+    if( FIELD_CAMERA_CheckMvFunc(camera) == FALSE )
+    { 
+      (*seq)++; 
+      OBATA_Printf( "GIMMICK-LF01 LIFT DOWN EVENT: seq ==> %d\n", *seq );
+    }
+    break;
+  // リフト移動開始
+  case 2:
     {
       HEAPID heap_id;
       heap_id = FIELDMAP_GetHeapID( work->fieldmap );
@@ -523,8 +558,8 @@ static GMEVENT_RESULT LiftDownEvent( GMEVENT* event, int* seq, void* wk )
     ++(*seq);
     OBATA_Printf( "GIMMICK-LF01 LIFT DOWN EVENT: seq ==> %d\n", *seq );
     break;
-  // アニメ終了待ち
-  case 1:
+  // リフト移動終了待ち
+  case 3:
     // 自機, リフトの座標を更新
     {
       VecFx32 trans, pos;
@@ -562,7 +597,7 @@ static GMEVENT_RESULT LiftDownEvent( GMEVENT* event, int* seq, void* wk )
     }
     break;
   // フェードアウト
-  case 2:
+  case 4:
     {
       GMEVENT* new_event;
       new_event = EVENT_FieldFadeOut_Black( work->gsys, work->fieldmap, FIELD_FADE_WAIT );
@@ -572,7 +607,7 @@ static GMEVENT_RESULT LiftDownEvent( GMEVENT* event, int* seq, void* wk )
     OBATA_Printf( "GIMMICK-LF01 LIFT DOWN EVENT: seq ==> %d\n", *seq );
     break;
   // マップチェンジ
-  case 3:
+  case 5:
     {
       GMEVENT* new_event;
       VecFx32 pos;
@@ -585,7 +620,7 @@ static GMEVENT_RESULT LiftDownEvent( GMEVENT* event, int* seq, void* wk )
     OBATA_Printf( "GIMMICK-LF01 LIFT DOWN EVENT: seq ==> %d\n", *seq );
     break;
   // 次のイベントへ切り替え
-  case 4:
+  case 6:
     {
       GMEVENT* next_event;
       next_event = LEAGUE_FRONT_02_GIMMICK_GetLiftDownEvent( work->gsys, work->fieldmap );
@@ -595,7 +630,7 @@ static GMEVENT_RESULT LiftDownEvent( GMEVENT* event, int* seq, void* wk )
     OBATA_Printf( "GIMMICK-LF01 LIFT DOWN EVENT: seq ==> %d\n", *seq );
     break;
   // 終了
-  case 5:
+  case 7:
     OBATA_Printf( "GIMMICK-LF01 LIFT DOWN EVENT: seq ==> finish" );
     return GMEVENT_RES_FINISH;
   }
