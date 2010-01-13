@@ -27,7 +27,6 @@
 #include "font/font.naix"
 #include "message.naix"
 
-#include "pokemon_viewer_def.h"
 
 
 //============================================================================================
@@ -61,9 +60,6 @@
 #define VALUE_INFO_X     ( MONS_INFO_X )
 #define VALUE_INFO_Y     ( 48 - 8 )
 #define VALUE_INFO_Y_OFS ( 24 )
-
-#define NEW_POKEMON_START ( 500 )
-#define NEW_POKEMON_END ( NEW_POKEMON_START + NEW_POKEMON_COUNT - 1 )
 
 enum{
   BACK_COL = 0,
@@ -198,6 +194,7 @@ typedef struct
   int                   mcs_enable;
   POKEMON_PARAM*        pp;
   int                   mons_no[ BTLV_MCSS_POS_MAX ];
+  int                   form_no[ BTLV_MCSS_POS_MAX ];
   fx32                  value[ MODE_MAX ][ VALUE_MAX ][ BTLV_MCSS_POS_MAX ];
   GFL_BMPWIN*           bmpwin[ BMPWIN_MAX ];
   GFL_BMPWIN*           bmpwin2;
@@ -212,6 +209,7 @@ typedef struct
   int                   edit_type;
   int                   edit_keta;
   int                   edit_value;
+  int                   form_max;
   BTLV_MCSS_PROJECTION  proj;
 
   void*                 resource_data[ RESOURCE_MAX ][ BTLV_MCSS_POS_MAX ];
@@ -231,7 +229,7 @@ static  void  PokemonViewerCameraWork( POKEMON_VIEWER_WORK *pvw );
 
 static  void  TextPrint( POKEMON_VIEWER_WORK *pvw, int num, int bmpwin_num );
 static  void  PokemonViewerDrawInfo( POKEMON_VIEWER_WORK *pvw, BtlvMcssPos pos );
-static  void  PokemonViewerPP_Put( POKEMON_VIEWER_WORK *pvw, int mons_no );
+static  void  PokemonViewerPP_Put( POKEMON_VIEWER_WORK *pvw, int pos );
 
 static  void  MoveCamera( POKEMON_VIEWER_WORK *pvw );
 
@@ -296,8 +294,7 @@ static const GFL_UI_TP_HITTBL TP_HitTbl[] = {
   { GFL_UI_TP_HIT_END, 0, 0, 0 },
 };
 
-FS_EXTERN_OVERLAY(battle);
-//FS_EXTERN_OVERLAY(mcs_lib);
+FS_EXTERN_OVERLAY(battle_view);
 
 //--------------------------------------------------------------------------
 /**
@@ -322,8 +319,7 @@ static GFL_PROC_RESULT PokemonViewerProcInit( GFL_PROC * proc, int * seq, void *
     GX_OBJVRAMMODE_CHAR_1D_32K,   // サブOBJマッピングモード
   };
 
-  GFL_OVERLAY_Load(FS_OVERLAY_ID(battle));
-//  GFL_OVERLAY_Load(FS_OVERLAY_ID(mcs_lib));
+  GFL_OVERLAY_Load(FS_OVERLAY_ID(battle_view));
 
   GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_SOGABE_DEBUG, 0xc0000 );
   pvw = GFL_PROC_AllocWork( proc, sizeof( POKEMON_VIEWER_WORK ), HEAPID_SOGABE_DEBUG );
@@ -699,8 +695,7 @@ static GFL_PROC_RESULT PokemonViewerProcExit( GFL_PROC * proc, int * seq, void *
 
   GFL_HEAP_DeleteHeap( HEAPID_SOGABE_DEBUG );
 
-  GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle ) );
-//  GFL_OVERLAY_Unload( FS_OVERLAY_ID( mcs_lib ) );
+  GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle_view ) );
 
   return GFL_PROC_RES_FINISH;
 }
@@ -771,7 +766,7 @@ static  BOOL  PokemonViewerSubSequence( POKEMON_VIEWER_WORK *pvw )
     int cont = GFL_UI_KEY_GetCont();
     int trg = GFL_UI_KEY_GetTrg();
 
-    if( trg & PAD_BUTTON_X )
+    if( trg & PAD_BUTTON_DEBUG )
     {
       pvw->edit_type ^= 1;
       pvw->edit_mode = 1;
@@ -782,52 +777,57 @@ static  BOOL  PokemonViewerSubSequence( POKEMON_VIEWER_WORK *pvw )
       if( rep & PAD_KEY_UP )
       {
         pvw->mons_no[ pvw->edit_pos ]++;
+        pvw->form_no[ pvw->edit_pos ] = 0;
       }
       if( rep & PAD_KEY_DOWN )
       {
         pvw->mons_no[ pvw->edit_pos ]--;
+        pvw->form_no[ pvw->edit_pos ] = 0;
       }
       if( rep & PAD_KEY_LEFT )
       {
         pvw->mons_no[ pvw->edit_pos ] -= 10;
+        pvw->form_no[ pvw->edit_pos ] = 0;
       }
       if( rep & PAD_KEY_RIGHT )
       {
         pvw->mons_no[ pvw->edit_pos ] += 10;
+        pvw->form_no[ pvw->edit_pos ] = 0;
       }
       if( rep & PAD_BUTTON_L )
       {
         pvw->mons_no[ pvw->edit_pos ] -= 100;
+        pvw->form_no[ pvw->edit_pos ] = 0;
       }
       if( rep & PAD_BUTTON_R )
       {
         pvw->mons_no[ pvw->edit_pos ] += 100;
+        pvw->form_no[ pvw->edit_pos ] = 0;
       }
-#if 0
-      if( pvw->mons_no[ pvw->edit_pos ] < 0 )
-      {
-        pvw->mons_no[ pvw->edit_pos ] += NEW_POKEMON_END + 1;
+      if( ( rep & PAD_BUTTON_X ) && ( pvw->form_no[ pvw->edit_pos ] < pvw->form_max - 1 ) )
+      { 
+        pvw->form_no[ pvw->edit_pos ]++;
       }
-      if( pvw->mons_no[ pvw->edit_pos ] > NEW_POKEMON_END )
-      {
-        pvw->mons_no[ pvw->edit_pos ] -= NEW_POKEMON_END + 1;
+      if( ( rep & PAD_BUTTON_Y ) && ( pvw->form_no[ pvw->edit_pos ] > 0 ) )
+      { 
+        pvw->form_no[ pvw->edit_pos ]--;
       }
-#else
       if( pvw->mons_no[ pvw->edit_pos ] < 0 )
       {
         pvw->mons_no[ pvw->edit_pos ] += MONSNO_END + 1;
+        pvw->form_no[ pvw->edit_pos ] = 0;
       }
       if( pvw->mons_no[ pvw->edit_pos ] > MONSNO_END )
       {
         pvw->mons_no[ pvw->edit_pos ] -= MONSNO_END + 1;
+        pvw->form_no[ pvw->edit_pos ] = 0;
       }
-#endif
       if( rep != 0 )
       {
         if( BTLV_EFFECT_CheckExist( pvw->edit_pos ) == TRUE ){
             BTLV_EFFECT_DelPokemon( pvw->edit_pos );
         }
-        PokemonViewerPP_Put( pvw, pvw->mons_no[ pvw->edit_pos ] );
+        PokemonViewerPP_Put( pvw, pvw->edit_pos );
         set_pokemon( pvw, pvw->edit_pos );
       }
     }
@@ -989,7 +989,7 @@ static  BOOL  PokemonViewerSubSequence( POKEMON_VIEWER_WORK *pvw )
       pvw->edit_keta = 0;
       pvw->edit_value = VALUE_X;
       pvw->proj = BTLV_MCSS_PROJ_ORTHO;
-      PokemonViewerPP_Put( pvw, pvw->mons_no[ hit ] );
+      PokemonViewerPP_Put( pvw, hit );
       GFL_BG_SetVisible( GFL_BG_FRAME1_S,   VISIBLE_OFF );
       GFL_BG_SetVisible( GFL_BG_FRAME2_S,   VISIBLE_ON );
       ret = TRUE;
@@ -998,6 +998,7 @@ static  BOOL  PokemonViewerSubSequence( POKEMON_VIEWER_WORK *pvw )
 
   if( ret == TRUE )
   {
+    pvw->form_max = POKETOOL_GetPersonalParam( pvw->mons_no[ pvw->edit_pos ], 0, POKEPER_ID_form_max );
     PokemonViewerDrawInfo( pvw, pvw->edit_pos );
   }
 
@@ -1145,6 +1146,16 @@ static  void  PokemonViewerDrawInfo( POKEMON_VIEWER_WORK *pvw, BtlvMcssPos pos )
     str_src = GFL_MSG_CreateString( pvw->msg,  PVMSG_MONSNAME );
     WORDSET_ExpandStr( mons_info, str_dst, str_src );
     PRINTSYS_Print( GFL_BMPWIN_GetBmp( pvw->bmpwin2 ), MONS_INFO_X, MONS_INFO_Y, str_dst, pvw->font );
+
+    WORDSET_RegisterNumber( mons_info, 0, pvw->form_no[ pos ], 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
+    { 
+      int form_max = ( pvw->form_max == 0 ) ? 0 : pvw->form_max - 1;
+      WORDSET_RegisterNumber( mons_info, 1, form_max, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
+    }
+    str_src = GFL_MSG_CreateString( pvw->msg,  PVMSG_FORMNAME );
+    WORDSET_ExpandStr( mons_info, str_dst, str_src );
+    PRINTSYS_Print( GFL_BMPWIN_GetBmp( pvw->bmpwin2 ), MONS_INFO_X, MONS_INFO_Y + 16, str_dst, pvw->font );
+
     GFL_HEAP_FreeMemory( str_src );
     GFL_HEAP_FreeMemory( str_dst );
     WORDSET_Delete( mons_info );
@@ -1226,29 +1237,10 @@ static  void  PokemonViewerDrawInfo( POKEMON_VIEWER_WORK *pvw, BtlvMcssPos pos )
 //======================================================================
 //  POKEMON_PARAMセット
 //======================================================================
-static  void  PokemonViewerPP_Put( POKEMON_VIEWER_WORK *pvw, int mons_no )
+static  void  PokemonViewerPP_Put( POKEMON_VIEWER_WORK *pvw, int pos )
 {
-#if 0
-  if( mons_no >= NEW_POKEMON_START )
-  {
-    mons_no -= NEW_POKEMON_START;
-    mons_no += MONSNO_END + 1;
-  }
-  else if( mons_no > MONSNO_END )
-  {
-    mons_no = 0;
-  }
-#else
-  if( mons_no < 0 )
-  {
-    mons_no = MONSNO_END;
-  }
-  else if( mons_no > MONSNO_END )
-  {
-    mons_no = 0;
-  }
-#endif
-  PP_Put( pvw->pp, ID_PARA_monsno, mons_no );
+  PP_Put( pvw->pp, ID_PARA_monsno, pvw->mons_no[ pos ] );
+  PP_Put( pvw->pp, ID_PARA_form_no, pvw->form_no[ pos ] );
 }
 
 //======================================================================
