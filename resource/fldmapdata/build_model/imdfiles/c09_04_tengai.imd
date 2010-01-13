@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fujiwara_maiko" host="W00194" date="2010-01-12T23:44:16" source="m_siten04_00_00.ma"/>
+	<create user="fujiwara_maiko" host="W00194" date="2010-01-13T22:30:42" source="m_siten04_00_00.ma"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="fujiwara_maiko" host="W00194" date="2010-01-12T23:44:16" source="m_siten04_00_00.ma"/>
+<original_create user="fujiwara_maiko" host="W00194" date="2010-01-13T22:30:42" source="m_siten04_00_00.ma"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -27,7 +27,7 @@
 	use_primitive_strip="on"
 />
 
-<box_test pos_scale="6" xyz="-1.898438 4.400391 -3.248291" whd="2.546143 2.521240 1.399170"/>
+<box_test pos_scale="6" xyz="-3.398438 4.400391 -3.248291" whd="2.546143 2.521240 1.399170"/>
 
 <tex_image_array size="1">
 	<tex_image index="0" name="c09_04_katen1"
@@ -1359,7 +1359,7 @@
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="0.000000 0.000000 0.000000"
+		translate="-96.000000 0.000000 0.000000"
 		visibility="on"
 		display_size="0"
 	>
@@ -1371,7 +1371,7 @@
 		brother_prev="-1"
 		draw_mtx="on"
 		billboard="off"
-		scale="0.321289 1.000000 1.000000"
+		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
 		translate="-40.019531 348.944824 -128.859375"
 		visibility="on"
