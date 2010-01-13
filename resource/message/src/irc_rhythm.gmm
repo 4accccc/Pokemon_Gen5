@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="toru_nagihashi" host="W00160" date="2009-09-14T15:41:52"/>
+	<create user="suginaka_katsunori" host="W00161" date="2010-01-13T12:21:45"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,7 +305,7 @@
 		</language>
 	</columns>
 
-	<dialog left="-1122" top="250" right="-417" bottom="878" maximized="no" rayout="Vertical2">
+	<dialog left="24" top="140" right="729" bottom="760" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -334,10 +334,10 @@
 
 
 	<row id="RHYTHM_STR_000">
-		<language name="JPN" width="256">[FF:00:色:3][1:00:トレーナー名:0][FF:00:色:0]さんとの　[FF:00:色:2]リズム[FF:00:色:0]を　しらべます
-すきなように　タッチしましょう！</language>
-		<language name="JPN_KANJI" width="256">[FF:00:色:3][1:00:トレーナー名:0][FF:00:色:0]さんとの　[FF:00:色:2]リズム[FF:00:色:0]を　調べます
-好きなように　タッチしましょう！</language>
+		<language name="JPN" width="256">[FF:00:色:3][1:00:トレーナー名:0][FF:00:色:0]さんとの　リズムを　しらべます
+５びょうで　１０かい　タッチ　してください！</language>
+		<language name="JPN_KANJI" width="256">[FF:00:色:3][1:00:トレーナー名:0][FF:00:色:0]さんとの　リズムを　調べます
+５秒間で　１０回　タッチ　してください！</language>
 	</row>
 
 	<row id="RHYTHM_STR_001">
@@ -367,8 +367,8 @@
 	</row>
 
 	<row id="RHYTHM_BTN_000">
-		<language name="JPN" width="256">とじる</language>
-		<language name="JPN_KANJI" width="256">とじる</language>
+		<language name="JPN" width="256">もどる</language>
+		<language name="JPN_KANJI" width="256">もどる</language>
 	</row>
 
 	<row id="RHYTHM_DEBUG_001" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">

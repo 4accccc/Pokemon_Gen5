@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="toru_nagihashi" host="W00160" date="2009-09-11T17:40:06"/>
+	<create user="suginaka_katsunori" host="W00161" date="2010-01-13T12:18:36"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,7 +312,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -335,9 +335,9 @@
 
 	<row id="RESULT_STR_000">
 		<language name="JPN" width="256">[FF:00:色:3][1:00:トレーナー名:0][FF:00:色:0]さんと　[1:00:トレーナー名:1]さんの
-きになる　あいしょうは……</language>
+きになる　フィーリングは……</language>
 		<language name="JPN_KANJI" width="256">[FF:00:色:3][1:00:トレーナー名:0][FF:00:色:0]さんと　[1:00:トレーナー名:1]さんの
-気になる　相性は……</language>
+気になる　フィーリングは……</language>
 	</row>
 
 	<row id="RESULT_STR_001">
@@ -347,7 +347,7 @@
 
 	<row id="RESULT_TITLE_000">
 		<language name="JPN" width="256">けっかはっぴょう</language>
-		<language name="JPN_KANJI" width="256">けっかはっぴょう</language>
+		<language name="JPN_KANJI" width="256">結果発表</language>
 	</row>
 
 	<flowchart-group-list>
