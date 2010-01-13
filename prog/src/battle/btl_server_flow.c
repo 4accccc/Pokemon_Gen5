@@ -3696,7 +3696,7 @@ static void flowsub_checkNotEffect( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* w
 }
 //--------------------------------------------------------------------------
 /**
- * ワザ命中判定
+ * ワザ命中判定 -> 命中しなかった場合は targets から除外
  *
  * @param   wk
  * @param   attacker  [in] ワザを出すポケモン
@@ -3706,7 +3706,6 @@ static void flowsub_checkNotEffect( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* w
 //--------------------------------------------------------------------------
 static void flowsub_checkWazaAvoid( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam, const BTL_POKEPARAM* attacker, BTL_POKESET* targets )
 {
-  // 命中チェック -> 命中しなかった場合は targets から除外
   BTL_POKEPARAM* bpp;
   u8 pokeID[ BTL_POS_MAX ];
   u8 count = 0;
@@ -3793,15 +3792,18 @@ static BOOL scEvent_CheckHit( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker
     totalRank = roundValue( (int)(BTL_CALC_HITRATIO_MID + hitRank - avoidRank), BTL_CALC_HITRATIO_MIN, BTL_CALC_HITRATIO_MAX );
     totalPer  = BTL_CALC_HitPer( wazaHitPer, totalRank );
 
-    BTL_Printf("攻撃ポケ[%d]  命中Rank=%d  ワザ的中率=%d\n", BPP_GetID(attacker), hitRank, wazaHitPer );
-    BTL_Printf("防御ポケ[%d]  回避Rank=%d\n", BPP_GetID(defender), avoidRank );
-    BTL_Printf("命中ランク=%d, 命中率=%d, 命中率補正=%08x\n", totalRank, totalPer, ratio );
+    BTL_N_Printf( DBGSTR_SVFL_HitCheckInfo1, BPP_GetID(attacker), hitRank, wazaHitPer );
+    BTL_N_Printf( DBGSTR_SVFL_HitCheckInfo2, BPP_GetID(defender), avoidRank );
+    BTL_N_Printf( DBGSTR_SVFL_HitCheckInfo3, totalRank, totalPer, ratio );
 
     totalPer = BTL_CALC_MulRatio( totalPer, ratio );
     if( totalPer > 100 ){
       totalPer = 100;
     }
-    BTL_Printf("最終命中率 = %d\n", totalPer);
+    if( BTL_MAIN_GetDebugFlag(wk->mainModule, BTL_DEBUGFLAG_HIT100PER) ){
+      totalPer = 100;
+    }
+    BTL_N_Printf( DBGSTR_SVFL_HitCheckInfo4, totalPer);
 
     return perOccur( wk, totalPer );
   }
@@ -9239,7 +9241,7 @@ static u16 scEvent_getWazaPower( BTL_SVFLOW_WORK* wk,
   BTL_EVENTVAR_Pop();
 
   power = BTL_CALC_MulRatio( power, ratio );
-  BTL_N_Printf( DBGSTR_SVFL_WazaPower, power, ratio);
+  BTL_N_Printf( DBGSTR_SVFL_WazaPower, wazaParam->wazaID, power, ratio);
   return power;
 }
 //--------------------------------------------------------------------------
@@ -11354,10 +11356,11 @@ static u8 scproc_HandEx_PosEffAdd( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_H
 {
   const BTL_HANDEX_PARAM_POSEFF_ADD* param = (const BTL_HANDEX_PARAM_POSEFF_ADD*)(param_header);
 
-  BTL_Printf("位置エフェクトハンドラ生成:pos=%d, pokeID=%d\n", param->pos, param_header->userPokeID);
   if( BTL_HANDLER_POS_Add(param->effect, param->pos, param_header->userPokeID, param->param, param->param_cnt) != NULL ){
+    BTL_N_Printf( DBGSTR_SVFL_PosEffAdd, param->pos, param->effect, param_header->userPokeID);
     return 1;
   }
+  BTL_N_Printf( DBGSTR_SVFL_PosEffDupFail, param->pos, param->effect, param_header->userPokeID );
   return 0;
 }
 /**
@@ -11636,6 +11639,7 @@ static u8 scproc_HandEx_delayWazaDamage( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_P
   u8 result;
 
   scEvent_GetWazaParam( wk, param->wazaID, attacker, &wazaParam );
+  OS_TPrintf("時間差ワザ：ID=%d, type=%d, attacker=%d\n", wazaParam.wazaID, wazaParam.wazaType, param->attackerPokeID );
 
   // ワザメッセージ，エフェクト，ワザ出し確定
   que_reserve_pos = SCQUE_RESERVE_Pos( wk->que, SC_ACT_WAZA_EFFECT );
@@ -11650,13 +11654,13 @@ static u8 scproc_HandEx_delayWazaDamage( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_P
 
   // 対象ごとの無効チェック＆回避チェック
   flowsub_checkNotEffect( wk, &wazaParam, attacker, &wk->pokesetTarget );
-  flowsub_checkWazaAvoid( wk, &wazaParam, attacker, &wk->pokesetTarget );
+//  flowsub_checkWazaAvoid( wk, &wazaParam, attacker, &wk->pokesetTarget );
 
   // ワザエフェクト管理のバックアップを取り、システム初期化
   ctrlBackup = wk->wazaEffCtrl;
   wazaEffCtrl_Init( &wk->wazaEffCtrl, wk, attacker, &wk->pokesetTarget );
 
-  scproc_Fight_Damage_Root( wk, &wk->wazaParam, attacker, &wk->pokesetTarget );
+  scproc_Fight_Damage_Root( wk, &wazaParam, attacker, &wk->pokesetTarget );
 
   // ワザ効果あり確定→演出表示コマンド生成などへ
   result = wazaEffCtrl_IsEnable( &wk->wazaEffCtrl );

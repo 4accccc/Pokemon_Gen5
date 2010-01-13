@@ -117,11 +117,17 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_SVFL_CorrectResult:       return "補正後の対象ポケモンは 位置=%d, ID=%d\n";
   case DBGSTR_SVFL_AtkPower:            return "攻撃力=%d  (Critical=%d, ratio=%08x\n";
   case DBGSTR_SVFL_DefGuard:            return "防御力=%d  (Critical=%d, ratio=%08x\n";
-  case DBGSTR_SVFL_WazaPower:           return "ワザ威力は%d  (ratio=%08x)\n";
+  case DBGSTR_SVFL_WazaPower:           return "ワザ[%d] : 威力=%d  (ratio=%08x)\n";
   case DBGSTR_SVFL_UncategoryWazaInfo:  return "未分類ワザ 攻撃PokeID=%d, 対象ポケ数=%d/%d\n";
   case DBGSTR_SVFL_QueWritePtr:         return "[* SVF *]         Que WritePtr=%d\n";
-  case DBGSTR_SVFL_ClientPokeStillAlive:  return "クライアント_%d (SIDE:%d) のポケはまだ何体か生きている\n";
+  case DBGSTR_SVFL_ClientPokeStillAlive:return "クライアント_%d (SIDE:%d) のポケはまだ何体か生きている\n";
   case DBGSTR_SVFL_ClientPokeDeadAll:   return "クライアント_%d (SIDE:%d) のポケは全滅した\n";
+  case DBGSTR_SVFL_PosEffAdd:           return "位置エフェクトハンドラ生成: pos=%d, effect=%d, pokeID=%d\n";
+  case DBGSTR_SVFL_PosEffDupFail:       return "位置(%d)にPOSEffect[%d]ハンドラを追加失敗（使用ポケ=%d）\n";
+  case DBGSTR_SVFL_HitCheckInfo1:       return "攻撃ポケ[%d]  命中Rank=%d  ワザ的中率=%d\n";
+  case DBGSTR_SVFL_HitCheckInfo2:       return "防御ポケ[%d]  回避Rank=%d\n";
+  case DBGSTR_SVFL_HitCheckInfo3:       return "命中ランク=%d, 命中率=%d, 命中率補正=%08x\n";
+  case DBGSTR_SVFL_HitCheckInfo4:       return "最終命中率 = %d\n";
 
   case DBGSTR_SERVER_FlowResult:        return "サーバー処理結果=%d\n";
   case DBGSTR_SERVER_SendShooterChargeCmd:    return "シューターチャージコマンド発行\n";

@@ -459,6 +459,7 @@ static const BtlEventHandlerTable*  ADD_Negaigoto( u32* numElems );
 static void handler_Negaigoto( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable*  ADD_Miraiyoti( u32* numElems );
 static void handler_Miraiyoti( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void common_delayAttack( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, u8 targetPokeID, u16 strID );
 static const BtlEventHandlerTable*  ADD_HametuNoNegai( u32* numElems );
 static void handler_HametuNoNegai( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable*  ADD_Ieki( u32* numElems );
@@ -6251,7 +6252,7 @@ static void handler_Negaigoto( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
 }
 //----------------------------------------------------------------------------------
 /**
- * ‚Ý‚ç‚¢‚æ‚¿E‚Í‚ß‚Â‚Ì‚Ë‚ª‚¢
+ * ‚Ý‚ç‚¢‚æ‚¿
  */
 //----------------------------------------------------------------------------------
 static const BtlEventHandlerTable*  ADD_Miraiyoti( u32* numElems )
@@ -6266,25 +6267,30 @@ static void handler_Miraiyoti( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
-    BTL_HANDEX_PARAM_MESSAGE* msg_param;
-    BTL_HANDEX_PARAM_POSEFF_ADD* eff_param;
     u8 targetPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_TARGET1 );
-
-    eff_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_POSEFF_ADD, pokeID );
-    eff_param->effect = BTL_POSEFF_DELAY_ATTACK;
-    eff_param->pos = BTL_SVFTOOL_PokeIDtoPokePos( flowWk, targetPokeID );
-    eff_param->param[0] = 3;
-    eff_param->param[1] = BTL_EVENT_FACTOR_GetSubID( myHandle );
-    eff_param->param_cnt = 2;
-
-    msg_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
-    HANDEX_STR_Setup( &msg_param->str, BTL_STRTYPE_SET, BTL_STRID_SET_Miraiyoti );
-    HANDEX_STR_AddArg( &msg_param->str, pokeID );
+    common_delayAttack( myHandle, flowWk, pokeID, targetPokeID, BTL_STRID_SET_Miraiyoti );
   }
+}
+static void common_delayAttack( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, u8 targetPokeID, u16 strID )
+{
+  BTL_HANDEX_PARAM_MESSAGE* msg_param;
+  BTL_HANDEX_PARAM_POSEFF_ADD* eff_param;
+
+  eff_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_POSEFF_ADD, pokeID );
+  eff_param->effect = BTL_POSEFF_DELAY_ATTACK;
+  eff_param->pos = BTL_SVFTOOL_PokeIDtoPokePos( flowWk, targetPokeID );
+  eff_param->param[0] = 1;
+  eff_param->param[1] = BTL_EVENT_FACTOR_GetSubID( myHandle );
+  eff_param->param_cnt = 2;
+
+  msg_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
+  msg_param->header.failSkipFlag = TRUE;
+  HANDEX_STR_Setup( &msg_param->str, BTL_STRTYPE_SET, strID );
+  HANDEX_STR_AddArg( &msg_param->str, pokeID );
 }
 //----------------------------------------------------------------------------------
 /**
- * ‚Ý‚ç‚¢‚æ‚¿E‚Í‚ß‚Â‚Ì‚Ë‚ª‚¢
+ * ‚Í‚ß‚Â‚Ì‚Ë‚ª‚¢
  */
 //----------------------------------------------------------------------------------
 static const BtlEventHandlerTable*  ADD_HametuNoNegai( u32* numElems )
@@ -6299,20 +6305,8 @@ static void handler_HametuNoNegai( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
-    BTL_HANDEX_PARAM_MESSAGE* msg_param;
-    BTL_HANDEX_PARAM_POSEFF_ADD* eff_param;
     u8 targetPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_TARGET1 );
-
-    eff_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_POSEFF_ADD, pokeID );
-    eff_param->effect = BTL_POSEFF_DELAY_ATTACK;
-    eff_param->pos = BTL_SVFTOOL_PokeIDtoPokePos( flowWk, targetPokeID );
-    eff_param->param[0] = 3; // delay turn
-    eff_param->param[1] = BTL_EVENT_FACTOR_GetSubID( myHandle );
-    eff_param->param_cnt = 2;
-
-    msg_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
-    HANDEX_STR_Setup( &msg_param->str, BTL_STRTYPE_SET, BTL_STRID_SET_HametuNoNegai );
-    HANDEX_STR_AddArg( &msg_param->str, pokeID );
+    common_delayAttack( myHandle, flowWk, pokeID, targetPokeID, BTL_STRID_SET_HametuNoNegai );
   }
 }
 //----------------------------------------------------------------------------------

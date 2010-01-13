@@ -85,6 +85,12 @@ typedef enum {
   DBGSTR_SVFL_CorrectTargetHP,
   DBGSTR_SVFL_ClientPokeStillAlive,
   DBGSTR_SVFL_ClientPokeDeadAll,
+  DBGSTR_SVFL_PosEffAdd,
+  DBGSTR_SVFL_PosEffDupFail,
+  DBGSTR_SVFL_HitCheckInfo1,
+  DBGSTR_SVFL_HitCheckInfo2,
+  DBGSTR_SVFL_HitCheckInfo3,
+  DBGSTR_SVFL_HitCheckInfo4,
 
   DBGSTR_SC_PutCmd,
   DBGSTR_SC_ReservedPos,

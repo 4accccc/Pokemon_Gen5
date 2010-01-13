@@ -27,7 +27,12 @@ static BOOL PrintSysEnableFlag = FALSE;
 
 void BTL_UTIL_PRINTSYS_Init( void )
 {
-  if( OS_GetConsoleType() & OS_CONSOLE_ISDEBUGGER )
+  #ifdef SDK_TWL
+  u32 consoleMask = OS_CONSOLE_TWLDEBUGGER;
+  #else
+  u32 consoleMask = OS_CONSOLE_ISDEBUGGER;
+  #endif
+  if( OS_GetConsoleType() & consoleMask )
   {
     GFL_OVERLAY_Load( FS_OVERLAY_ID(battle_print) );
     PrintSysEnableFlag = TRUE;
