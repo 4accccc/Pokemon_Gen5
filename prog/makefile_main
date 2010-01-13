@@ -387,19 +387,31 @@ source:
 #	ソースあたりオブジェクトサイズ算出
 #----------------------------------------------------------------------------
 analyze:
+ifeq ($(TARGET_PLATFORM),TWL)
+	ruby ../tools/analyze/objsize/get_objsize.rb ./bin/$(TWL_BUILDTYPE)/$(TARGET_BIN:.srl=.tef).xmap|sort > analyze.result
+else
 	ruby ../tools/analyze/objsize/get_objsize.rb ./bin/$(TWL_BUILDTYPE)/$(TARGET_BIN:.srl=.nef).xmap|sort > analyze.result
+endif
 
 #----------------------------------------------------------------------------
 #	オーバーレイマップ可視化
 #----------------------------------------------------------------------------
 overlaymap:
+ifeq ($(TARGET_PLATFORM),TWL)
+	../tools/analyze/overlaymap/overlaymap $(PROJECT_PROGDIR)/bin/$(TWL_BUILDTYPE)/$(TARGET_BIN:.srl=.tef).xmap
+else
 	../tools/analyze/overlaymap/overlaymap $(PROJECT_PROGDIR)/bin/$(TWL_BUILDTYPE)/$(TARGET_BIN:.srl=.nef).xmap
+endif
 	#dot -Tpng ../tools/analyze/overlaymap/overlaymap.dot >overlaymap.png
 
 #----------------------------------------------------------------------------
 #----------------------------------------------------------------------------
 filesize:
+ifeq ($(TARGET_PLATFORM),TWL)
+		ruby ../tools/analyze/filesize/filesize.rb $(PROJECT_PROGDIR)/bin/$(TWL_BUILDTYPE)/$(TARGET_BIN:.srl=.tlf)
+else
 		ruby ../tools/analyze/filesize/filesize.rb $(PROJECT_PROGDIR)/bin/$(TWL_BUILDTYPE)/$(TARGET_BIN:.srl=.nlf)
+endif
 
 #----------------------------------------------------------------------------
 #	警告フィルタの適用
@@ -412,4 +424,5 @@ warning:
 #----------------------------------------------------------------------------
 echo_buildtype:
 	@echo $(TWL_BUILDTYPE)
+	@echo $(TARGET_BIN)
 
