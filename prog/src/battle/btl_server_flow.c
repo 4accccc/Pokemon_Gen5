@@ -371,6 +371,7 @@ static void scproc_Fight_Damage_Shrink( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_PO
 static BOOL scproc_AddShrinkCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, WazaID waza, u32 per );
 static void scproc_Fight_Damage_Drain( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARAM* attacker, BTL_POKESET* targets );
 static BOOL scproc_DrainCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_POKEPARAM* target, u16 drainHP );
+static void scEvent_DamageProcEnd( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, BTL_POKESET* targets, WazaID waza );
 static BOOL scEvent_CalcDamage( BTL_SVFLOW_WORK* wk,
     const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, const SVFL_WAZAPARAM* wazaParam,
     BtlTypeAff typeAff, fx32 targetDmgRatio, BOOL criticalFlag, u16* dstDamage );
@@ -571,7 +572,6 @@ static u32 scEvent_GetWazaShrinkPer( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEP
 static BOOL scEvent_CheckShrink( BTL_SVFLOW_WORK* wk,
   const BTL_POKEPARAM* target, WazaID waza, u32 per );
 static void scEvent_FailShrink( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target );
-static void scEvent_DamageProcEnd( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, BTL_POKESET* targets, WazaID waza );
 static BOOL scEvent_CheckRankEffectSuccess( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target,
   WazaRankEffect effect, u8 wazaUsePokeID, int volume );
 static void scEvent_RankEffect_Failed( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
@@ -654,6 +654,7 @@ static u8 scproc_HandEx_swapPoke( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HE
 static u8 scproc_HandEx_hensin( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
 static u8 scproc_HandEx_fakeBreak( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
 static u8 scproc_HandEx_juryokuCheck( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
+static u8 scproc_HandEx_effectByPos( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
 
 
 BTL_SVFLOW_WORK* BTL_SVFLOW_InitSystem(
@@ -4986,6 +4987,7 @@ static BOOL scEvent_CalcDamage( BTL_SVFLOW_WORK* wk,
       BTL_N_PrintfEx( PRINT_FLG, DBGSTR_CALCDMG_Critical, fxDamage);
     }
     //ランダム補正(100～85％)
+    if( !BTL_MAIN_GetDebugFlag(wk->mainModule, BTL_DEBUGFLAG_DMG_RAND_OFF) )
     {
       u16 ratio = 100 - BTL_CALC_GetRand( 16 );
 //      rawDamage = (rawDamage * ratio) / 100;
@@ -10524,7 +10526,8 @@ static BTL_HANDEX_PARAM_HEADER* Hem_PushWork( HANDLER_EXHIBISION_MANAGER* wk, Bt
     { BTL_HANDEX_SWAP_POKE,            sizeof(BTL_HANDEX_PARAM_SWAP_POKE)           },
     { BTL_HANDEX_HENSIN,               sizeof(BTL_HANDEX_PARAM_HENSIN)              },
     { BTL_HANDEX_FAKE_BREAK,           sizeof(BTL_HANDEX_PARAM_FAKE_BREAK)          },
-    { BTL_HANDEX_JURYOKU_CHECK,        sizeof(BTL_HANDEX_JURYOKU_CHECK)             },
+    { BTL_HANDEX_JURYOKU_CHECK,        sizeof(BTL_HANDEX_PARAM_HEADER)              },
+    { BTL_HANDEX_EFFECT_BY_POS,        sizeof(BTL_HANDEX_PARAM_EFFECT_BY_POS)       },
   };
   u32 size, i;
 
@@ -10706,6 +10709,7 @@ static BOOL scproc_HandEx_Root( BTL_SVFLOW_WORK* wk, u16 useItemID )
     case BTL_HANDEX_HENSIN:             fPrevSucceed = scproc_HandEx_hensin( wk, handEx_header ); break;
     case BTL_HANDEX_FAKE_BREAK:         fPrevSucceed = scproc_HandEx_fakeBreak( wk, handEx_header ); break;
     case BTL_HANDEX_JURYOKU_CHECK:      fPrevSucceed = scproc_HandEx_juryokuCheck( wk, handEx_header ); break;
+    case BTL_HANDEX_EFFECT_BY_POS:      fPrevSucceed = scproc_HandEx_effectByPos( wk, handEx_header ); break;
     default:
       GF_ASSERT_MSG(0, "illegal handEx type = %d, userPokeID=%d", handEx_header->equip, handEx_header->userPokeID);
     }
@@ -11802,7 +11806,6 @@ static u8 scproc_HandEx_sendLast( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HE
 {
   BTL_HANDEX_PARAM_SEND_LAST* param = (BTL_HANDEX_PARAM_SEND_LAST*)param_header;
 
-  BTL_Printf("先送り対象ポケ=%d\n", param->pokeID);
   if( ActOrder_SendLast(wk, param->pokeID) ){
     handexSub_putString( wk, &param->exStr );
     return 1;
@@ -11929,7 +11932,40 @@ static u8 scproc_HandEx_juryokuCheck( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARA
 
   return 1;
 }
+/**
+ * 位置指定エフェクト生成
+ * @return 成功時 1 / 失敗時 0
+ */
+static u8 scproc_HandEx_effectByPos( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header )
+{
+  const BTL_HANDEX_PARAM_EFFECT_BY_POS* param = (const BTL_HANDEX_PARAM_EFFECT_BY_POS*)(param_header);
 
+  if( param->fQueReserve )
+  {
+    if( param->pos_to != BTL_POS_NULL )
+    {
+      SCQUE_PUT_ReservedPos( wk->que, param->reservedQuePos, SC_ACT_EFFECT_BYVECTOR,
+          param->pos_from, param->pos_to, param->effectNo );
+    }
+    else
+    {
+      SCQUE_PUT_ReservedPos( wk->que, param->reservedQuePos, SC_ACT_EFFECT_BYPOS,
+          param->pos_from, param->effectNo );
+    }
+  }
+  else
+  {
+    if( param->pos_to != BTL_POS_NULL )
+    {
+      SCQUE_PUT_ACT_EffectByVector( wk->que, param->pos_from, param->pos_to, param->effectNo );
+    }
+    else
+    {
+      SCQUE_PUT_ACT_EffectByPos( wk->que, param->pos_from, param->effectNo );
+    }
+  }
+  return 1;
+}
 
 
 /*

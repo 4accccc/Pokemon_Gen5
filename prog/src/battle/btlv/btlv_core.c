@@ -1098,7 +1098,6 @@ BOOL BTLV_ACT_SimpleHPEffect_Wait( BTLV_CORE* wk )
 //=============================================================================================
 void BTLV_AddEffectByPos( BTLV_CORE* wk, BtlvMcssPos vpos, u16 effectNo )
 {
-  BTL_Printf("vpos=%d にエフェクト発動\n", vpos);
   BTLV_EFFECT_AddByPos( vpos, effectNo );
 }
 BOOL BTLV_WaitEffectByPos( BTLV_CORE* wk, BtlvMcssPos vpos )
@@ -1109,6 +1108,26 @@ BOOL BTLV_WaitEffectByPos( BTLV_CORE* wk, BtlvMcssPos vpos )
   return FALSE;
 }
 
+//=============================================================================================
+/**
+ * 開始＆終端位置指定汎用エフェクト開始
+ *
+ * @param   wk
+ * @param   vpos_from
+ * @param   vpos_to
+ */
+//=============================================================================================
+void BTLV_AddEffectByDir( BTLV_CORE* wk, BtlvMcssPos vpos_from, BtlvMcssPos vpos_to, u16 effectNo )
+{
+  BTLV_EFFECT_AddByDir( vpos_from, vpos_to, effectNo );
+}
+BOOL BTLV_WaitEffectByDir( BTLV_CORE* wk )
+{
+  if( !BTLV_EFFECT_CheckExecute() ){
+    return TRUE;
+  }
+  return FALSE;
+}
 
 
 //=============================================================================================

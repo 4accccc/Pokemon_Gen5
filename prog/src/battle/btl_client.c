@@ -210,6 +210,7 @@ static BOOL scProc_ACT_Rotation( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_ChangeTokusei( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_FakeDisable( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_EffectByPos( BTL_CLIENT* wk, int* seq, const int* args );
+static BOOL scProc_ACT_EffectByVector( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_TOKWIN_In( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_TOKWIN_Out( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_HpMinus( BTL_CLIENT* wk, int* seq, const int* args );
@@ -2032,6 +2033,7 @@ static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq )
     { SC_ACT_CHANGE_TOKUSEI,    scProc_ACT_ChangeTokusei  },
     { SC_ACT_FAKE_DISABLE,      scProc_ACT_FakeDisable    },
     { SC_ACT_EFFECT_BYPOS,      scProc_ACT_EffectByPos    },
+    { SC_ACT_EFFECT_BYVECTOR,   scProc_ACT_EffectByVector },
   };
 
 restart:
@@ -3277,6 +3279,36 @@ static BOOL scProc_ACT_EffectByPos( BTL_CLIENT* wk, int* seq, const int* args )
   }
   return FALSE;
 }
+//---------------------------------------------------------------------------------------
+/**
+ *  指定位置 -> 指定位置 にエフェクト発動
+ *  args .. [0]:開始位置指定  [1]:終端位置指定  [2]:エフェクト指定
+ */
+//---------------------------------------------------------------------------------------
+static BOOL scProc_ACT_EffectByVector( BTL_CLIENT* wk, int* seq, const int* args )
+{
+  switch( *seq ){
+  case 0:
+    {
+      BtlvMcssPos vpos_from = BTL_MAIN_BtlPosToViewPos( wk->mainModule, args[0] );
+      BtlvMcssPos vpos_to   = BTL_MAIN_BtlPosToViewPos( wk->mainModule, args[1] );
+
+      BTLV_AddEffectByDir( wk->viewCore, vpos_from, vpos_to, args[2] );
+      (*seq)++;
+    }
+    break;
+
+  default:
+    if( BTLV_WaitEffectByDir(wk->viewCore) ){
+      return TRUE;
+    }
+    break;
+  }
+  return FALSE;
+}
+
+
+
 
 //---------------------------------------------------------------------------------------
 /**
