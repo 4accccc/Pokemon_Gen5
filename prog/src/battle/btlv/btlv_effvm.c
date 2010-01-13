@@ -231,6 +231,7 @@ static  BOOL  VWF_EFFECT_END_CHECK( VMHANDLE *vmh, void *context_work );
 static  BOOL  VWF_WAIT_CHECK( VMHANDLE *vmh, void *context_work );
 
 //非公開関数群
+static  int           EFFVM_GetPokePosition( VMHANDLE *vmh, int pos_flag, BtlvMcssPos* pos );
 static  int           EFFVM_GetPosition( VMHANDLE *vmh, int pos_flag );
 static  int           EFFVM_ConvPosition( VMHANDLE *vmh, BtlvMcssPos position );
 static  int           EFFVM_RegistPtcNo( BTLV_EFFVM_WORK *bevw, ARCDATID datID );
@@ -1148,7 +1149,8 @@ static VMCMD_RESULT VMEC_EMITTER_CIRCLE_MOVE_ORTHO( VMHANDLE *vmh, void *context
 static VMCMD_RESULT VMEC_POKEMON_MOVE( VMHANDLE *vmh, void *context_work )
 {
   BTLV_EFFVM_WORK *bevw = ( BTLV_EFFVM_WORK* )context_work;
-  int   position;
+  BtlvMcssPos pos[ BTLV_MCSS_POS_MAX ];
+  int   pos_cnt = EFFVM_GetPokePosition( vmh, ( int )VMGetU32( vmh ), pos );
   int   type;
   VecFx32 move_pos;
   int   frame;
@@ -1159,8 +1161,6 @@ static VMCMD_RESULT VMEC_POKEMON_MOVE( VMHANDLE *vmh, void *context_work )
   OS_TPrintf("VMEC_POKEMON_MOVE\n");
 #endif DEBUG_OS_PRINT
 
-  position = EFFVM_GetPosition( vmh, ( int )VMGetU32( vmh ) );
-
   type        = ( int )VMGetU32( vmh );
   move_pos.x  = ( fx32 )VMGetU32( vmh );
   move_pos.y  = ( fx32 )VMGetU32( vmh );
@@ -1169,10 +1169,15 @@ static VMCMD_RESULT VMEC_POKEMON_MOVE( VMHANDLE *vmh, void *context_work )
   wait        = ( int )VMGetU32( vmh );
   count       = ( int )VMGetU32( vmh );
 
-  //立ち位置情報がエラーのときは、コマンド実行しない
-  if( position != BTLV_MCSS_POS_ERROR )
+  //立ち位置情報がないときは、コマンド実行しない
+  if( pos_cnt )
   {
-    BTLV_MCSS_MovePosition( BTLV_EFFECT_GetMcssWork(), position, type, &move_pos, frame, wait, count );
+    int i;
+
+    for( i = 0 ; i < pos_cnt ; i++ )
+    { 
+      BTLV_MCSS_MovePosition( BTLV_EFFECT_GetMcssWork(), pos[ i ], type, &move_pos, frame, wait, count );
+    }
   }
 
   return bevw->control_mode;
@@ -1190,7 +1195,8 @@ static VMCMD_RESULT VMEC_POKEMON_CIRCLE_MOVE( VMHANDLE *vmh, void *context_work 
 { 
   BTLV_EFFVM_WORK *bevw = ( BTLV_EFFVM_WORK* )context_work;
   BTLV_MCSS_MOVE_CIRCLE_PARAM bmmcp;
-  bmmcp.position = EFFVM_GetPosition( vmh, ( int )VMGetU32( vmh ) );
+  BtlvMcssPos pos[ BTLV_MCSS_POS_MAX ];
+  int pos_cnt = EFFVM_GetPokePosition( vmh, ( int )VMGetU32( vmh ), pos );
 
 #ifdef DEBUG_OS_PRINT
   OS_TPrintf("VMEC_POKEMON_CIRCLE_MOVE\n");
@@ -1205,12 +1211,18 @@ static VMCMD_RESULT VMEC_POKEMON_CIRCLE_MOVE( VMHANDLE *vmh, void *context_work 
   bmmcp.count             = ( int )VMGetU32( vmh ) >> FX32_SHIFT;
 	bmmcp.rotate_after_wait = ( int )VMGetU32( vmh );
 
-  //立ち位置情報がエラーのときは、コマンド実行しない
-  if( bmmcp.position != BTLV_MCSS_POS_ERROR )
+  //立ち位置情報がないときは、コマンド実行しない
+  if( pos_cnt )
   {
     if( bmmcp.count )
     { 
-      BTLV_MCSS_MoveCircle( BTLV_EFFECT_GetMcssWork(), &bmmcp );
+      int i;
+
+      for( i = 0 ; i < pos_cnt ; i++ )
+      { 
+        bmmcp.position = pos[ i ];
+        BTLV_MCSS_MoveCircle( BTLV_EFFECT_GetMcssWork(), &bmmcp );
+      }
     }
   }
 
@@ -1228,18 +1240,18 @@ static VMCMD_RESULT VMEC_POKEMON_CIRCLE_MOVE( VMHANDLE *vmh, void *context_work 
 static VMCMD_RESULT VMEC_POKEMON_SCALE( VMHANDLE *vmh, void *context_work )
 {
   BTLV_EFFVM_WORK *bevw = ( BTLV_EFFVM_WORK* )context_work;
-  int   position;
   int   type;
   VecFx32 scale;
   int   frame;
   int   wait;
   int   count;
+  BtlvMcssPos pos[ BTLV_MCSS_POS_MAX ];
+  int   pos_cnt = EFFVM_GetPokePosition( vmh, ( int )VMGetU32( vmh ), pos );
 
 #ifdef DEBUG_OS_PRINT
   OS_TPrintf("VMEC_POKEMON_SCALE\n");
 #endif DEBUG_OS_PRINT
 
-  position = EFFVM_GetPosition( vmh, ( int )VMGetU32( vmh ) );
   type    = ( int )VMGetU32( vmh );
   scale.x = ( fx32 )VMGetU32( vmh );
   scale.y = ( fx32 )VMGetU32( vmh );
@@ -1248,10 +1260,15 @@ static VMCMD_RESULT VMEC_POKEMON_SCALE( VMHANDLE *vmh, void *context_work )
   wait    = ( int )VMGetU32( vmh );
   count   = ( int )VMGetU32( vmh );
 
-  //立ち位置情報がエラーのときは、コマンド実行しない
-  if( position != BTLV_MCSS_POS_ERROR )
+  //立ち位置情報がないときは、コマンド実行しない
+  if( pos_cnt )
   {
-    BTLV_MCSS_MoveScale( BTLV_EFFECT_GetMcssWork(), position, type, &scale, frame, wait, count );
+    int i;
+
+    for( i = 0 ; i < pos_cnt ; i++ )
+    { 
+      BTLV_MCSS_MoveScale( BTLV_EFFECT_GetMcssWork(), pos[ i ], type, &scale, frame, wait, count );
+    }
   }
 
   return bevw->control_mode;
@@ -1268,7 +1285,8 @@ static VMCMD_RESULT VMEC_POKEMON_SCALE( VMHANDLE *vmh, void *context_work )
 static VMCMD_RESULT VMEC_POKEMON_ROTATE( VMHANDLE *vmh, void *context_work )
 {
   BTLV_EFFVM_WORK *bevw = ( BTLV_EFFVM_WORK* )context_work;
-  int   position;
+  BtlvMcssPos pos[ BTLV_MCSS_POS_MAX ];
+  int   pos_cnt = EFFVM_GetPokePosition( vmh, ( int )VMGetU32( vmh ), pos );
   int   type;
   VecFx32 rotate;
   int   frame;
@@ -1279,7 +1297,6 @@ static VMCMD_RESULT VMEC_POKEMON_ROTATE( VMHANDLE *vmh, void *context_work )
   OS_TPrintf("VMEC_POKEMON_ROTATE\n");
 #endif DEBUG_OS_PRINT
 
-  position = EFFVM_GetPosition( vmh, ( int )VMGetU32( vmh ) );
   type     = ( int )VMGetU32( vmh );
   rotate.x   = 0;
   rotate.y   = 0;
@@ -1288,10 +1305,15 @@ static VMCMD_RESULT VMEC_POKEMON_ROTATE( VMHANDLE *vmh, void *context_work )
   wait     = ( int )VMGetU32( vmh );
   count    = ( int )VMGetU32( vmh );
 
-  //立ち位置情報がエラーのときは、コマンド実行しない
-  if( position != BTLV_MCSS_POS_ERROR )
+  //立ち位置情報がないときは、コマンド実行しない
+  if( pos_cnt )
   {
-    BTLV_MCSS_MoveRotate( BTLV_EFFECT_GetMcssWork(), position, type, &rotate, frame, wait, count );
+    int i;
+
+    for( i = 0 ; i < pos_cnt ; i++ )
+    { 
+      BTLV_MCSS_MoveRotate( BTLV_EFFECT_GetMcssWork(), pos[ i ], type, &rotate, frame, wait, count );
+    }
   }
 
   return bevw->control_mode;
@@ -1308,7 +1330,8 @@ static VMCMD_RESULT VMEC_POKEMON_ROTATE( VMHANDLE *vmh, void *context_work )
 static VMCMD_RESULT VMEC_POKEMON_ALPHA( VMHANDLE *vmh, void *context_work )
 {
   BTLV_EFFVM_WORK *bevw = ( BTLV_EFFVM_WORK* )context_work;
-  int position;
+  BtlvMcssPos pos[ BTLV_MCSS_POS_MAX ];
+  int pos_cnt = EFFVM_GetPokePosition( vmh, ( int )VMGetU32( vmh ), pos );
   int type;
   int alpha;
   int frame;
@@ -1319,17 +1342,21 @@ static VMCMD_RESULT VMEC_POKEMON_ALPHA( VMHANDLE *vmh, void *context_work )
   OS_TPrintf("VMEC_POKEMON_ALPHA\n");
 #endif DEBUG_OS_PRINT
 
-  position = EFFVM_GetPosition( vmh, ( int )VMGetU32( vmh ) );
   type  = ( int )VMGetU32( vmh );
   alpha = ( int )VMGetU32( vmh );
   frame = ( int )VMGetU32( vmh );
   wait  = ( int )VMGetU32( vmh );
   count = ( int )VMGetU32( vmh );
 
-  //立ち位置情報がエラーのときは、コマンド実行しない
-  if( position != BTLV_MCSS_POS_ERROR )
+  //立ち位置情報がないときは、コマンド実行しない
+  if( pos_cnt )
   {
-    BTLV_MCSS_MoveAlpha( BTLV_EFFECT_GetMcssWork(), position, type, alpha, frame, wait, count );
+    int i;
+
+    for( i = 0 ; i < pos_cnt ; i++ )
+    { 
+      BTLV_MCSS_MoveAlpha( BTLV_EFFECT_GetMcssWork(), pos[ i ], type, alpha, frame, wait, count );
+    }
   }
 
   return bevw->control_mode;
@@ -1346,7 +1373,8 @@ static VMCMD_RESULT VMEC_POKEMON_ALPHA( VMHANDLE *vmh, void *context_work )
 static VMCMD_RESULT VMEC_POKEMON_SET_MEPACHI_FLAG( VMHANDLE *vmh, void *context_work )
 {
   BTLV_EFFVM_WORK *bevw = ( BTLV_EFFVM_WORK* )context_work;
-  int   position;
+  BtlvMcssPos pos[ BTLV_MCSS_POS_MAX ];
+  int   pos_cnt = EFFVM_GetPokePosition( vmh, ( int )VMGetU32( vmh ), pos );
   int   type;
   int   wait;
   int   count;
@@ -1355,19 +1383,22 @@ static VMCMD_RESULT VMEC_POKEMON_SET_MEPACHI_FLAG( VMHANDLE *vmh, void *context_
   OS_TPrintf("VMEC_POKEMON_SET_MEPACHI_FLAG\n");
 #endif DEBUG_OS_PRINT
 
-  position = EFFVM_GetPosition( vmh, ( int )VMGetU32( vmh ) );
   type     = ( int )VMGetU32( vmh );
   wait     = ( int )VMGetU32( vmh );
   count    = ( int )VMGetU32( vmh );
 
-  //立ち位置情報がエラーのときは、コマンド実行しない
-  if( position != BTLV_MCSS_POS_ERROR )
+  //立ち位置情報がないときは、コマンド実行しない
+  if( pos_cnt )
   {
+    int i;
     if( count == 0 )
     {
       count = 1;
     }
-    BTLV_MCSS_MoveBlink( BTLV_EFFECT_GetMcssWork(), position, type, wait, count );
+    for( i = 0 ; i < pos_cnt ; i++ )
+    { 
+      BTLV_MCSS_MoveBlink( BTLV_EFFECT_GetMcssWork(), pos[ i ], type, wait, count );
+    }
   }
 
   return bevw->control_mode;
@@ -1384,17 +1415,23 @@ static VMCMD_RESULT VMEC_POKEMON_SET_MEPACHI_FLAG( VMHANDLE *vmh, void *context_
 static VMCMD_RESULT VMEC_POKEMON_SET_ANM_FLAG( VMHANDLE *vmh, void *context_work )
 {
   BTLV_EFFVM_WORK *bevw = ( BTLV_EFFVM_WORK* )context_work;
-  int   position  = EFFVM_GetPosition( vmh, ( int )VMGetU32( vmh ) );
-  int   flag      = ( int )VMGetU32( vmh );
+  BtlvMcssPos pos[ BTLV_MCSS_POS_MAX ];
+  int pos_cnt = EFFVM_GetPokePosition( vmh, ( int )VMGetU32( vmh ), pos );
+  int flag    = ( int )VMGetU32( vmh );
 
 #ifdef DEBUG_OS_PRINT
   OS_TPrintf("VMEC_POKEMON_SET_ANM_FLAG\n");
 #endif DEBUG_OS_PRINT
 
-  //立ち位置情報がエラーのときは、コマンド実行しない
-  if( position != BTLV_MCSS_POS_ERROR )
+  //立ち位置情報がないときは、コマンド実行しない
+  if( pos_cnt )
   {
-    BTLV_MCSS_SetAnmStopFlag( BTLV_EFFECT_GetMcssWork(), position, flag );
+    int i;
+
+    for( i = 0 ; i < pos_cnt ; i++ )
+    { 
+      BTLV_MCSS_SetAnmStopFlag( BTLV_EFFECT_GetMcssWork(), pos[ i ], flag );
+    }
   }
 
   return bevw->control_mode;
@@ -1411,7 +1448,8 @@ static VMCMD_RESULT VMEC_POKEMON_SET_ANM_FLAG( VMHANDLE *vmh, void *context_work
 static VMCMD_RESULT VMEC_POKEMON_PAL_FADE( VMHANDLE *vmh, void *context_work )
 {
   BTLV_EFFVM_WORK *bevw = ( BTLV_EFFVM_WORK* )context_work;
-  int   position        = EFFVM_GetPosition( vmh, ( int )VMGetU32( vmh ) );
+  BtlvMcssPos pos[ BTLV_MCSS_POS_MAX ];
+  int   pos_cnt         = EFFVM_GetPokePosition( vmh, ( int )VMGetU32( vmh ), pos );
   int   start_evy       = ( int )VMGetU32( vmh );
   int   end_evy         = ( int )VMGetU32( vmh );
   int   wait            = ( int )VMGetU32( vmh );
@@ -1421,10 +1459,15 @@ static VMCMD_RESULT VMEC_POKEMON_PAL_FADE( VMHANDLE *vmh, void *context_work )
   OS_TPrintf("VMEC_POKEMON_PAL_FADE\n");
 #endif DEBUG_OS_PRINT
 
-  //立ち位置情報がエラーのときは、コマンド実行しない
-  if( position != BTLV_MCSS_POS_ERROR )
+  //立ち位置情報がないときは、コマンド実行しない
+  if( pos_cnt )
   {
-    BTLV_MCSS_SetPaletteFade( BTLV_EFFECT_GetMcssWork(), position, start_evy, end_evy, wait, rgb );
+    int i;
+
+    for( i = 0 ; i < pos_cnt ; i++ )
+    { 
+      BTLV_MCSS_SetPaletteFade( BTLV_EFFECT_GetMcssWork(), pos[ i ], start_evy, end_evy, wait, rgb );
+    }
   }
 
   return bevw->control_mode;
@@ -1441,17 +1484,22 @@ static VMCMD_RESULT VMEC_POKEMON_PAL_FADE( VMHANDLE *vmh, void *context_work )
 static VMCMD_RESULT VMEC_POKEMON_VANISH( VMHANDLE *vmh, void *context_work )
 {
   BTLV_EFFVM_WORK *bevw = ( BTLV_EFFVM_WORK* )context_work;
-  int   position  = EFFVM_GetPosition( vmh, ( int )VMGetU32( vmh ) );
+  BtlvMcssPos pos[ BTLV_MCSS_POS_MAX ];
+  int   pos_cnt   = EFFVM_GetPokePosition( vmh, ( int )VMGetU32( vmh ), pos );
   int   flag      = ( int )VMGetU32( vmh );
 
 #ifdef DEBUG_OS_PRINT
   OS_TPrintf("VMEC_POKEMON_VANISH\n");
 #endif DEBUG_OS_PRINT
 
-  //立ち位置情報がエラーのときは、コマンド実行しない
-  if( position != BTLV_MCSS_POS_ERROR )
+  //立ち位置情報がないときは、コマンド実行しない
+  if( pos_cnt )
   {
-    BTLV_MCSS_SetVanishFlag( BTLV_EFFECT_GetMcssWork(), position, flag );
+    int i;
+    for( i = 0 ; i < pos_cnt ; i++ )
+    { 
+      BTLV_MCSS_SetVanishFlag( BTLV_EFFECT_GetMcssWork(), pos[ i ], flag );
+    }
   }
 
   return bevw->control_mode;
@@ -1468,17 +1516,23 @@ static VMCMD_RESULT VMEC_POKEMON_VANISH( VMHANDLE *vmh, void *context_work )
 static VMCMD_RESULT VMEC_POKEMON_SHADOW_VANISH( VMHANDLE *vmh, void *context_work )
 {
   BTLV_EFFVM_WORK *bevw = ( BTLV_EFFVM_WORK* )context_work;
-  int   position  = EFFVM_GetPosition( vmh, ( int )VMGetU32( vmh ) );
+  BtlvMcssPos pos[ BTLV_MCSS_POS_MAX ];
+  int   pos_cnt   = EFFVM_GetPokePosition( vmh, ( int )VMGetU32( vmh ), pos );
   int   flag      = ( int )VMGetU32( vmh );
 
 #ifdef DEBUG_OS_PRINT
   OS_TPrintf("VMEC_POKEMON_SHADOW_VANISH\n");
 #endif DEBUG_OS_PRINT
 
-  //立ち位置情報がエラーのときは、コマンド実行しない
-  if( position != BTLV_MCSS_POS_ERROR )
+  //立ち位置情報がないときは、コマンド実行しない
+  if( pos_cnt )
   {
-    BTLV_MCSS_SetShadowVanishFlag( BTLV_EFFECT_GetMcssWork(), position, flag );
+    int i;
+
+    for( i = 0 ; i < pos_cnt ; i++ )
+    { 
+      BTLV_MCSS_SetShadowVanishFlag( BTLV_EFFECT_GetMcssWork(), pos[ i ], flag );
+    }
   }
 
   return bevw->control_mode;
@@ -1495,13 +1549,23 @@ static VMCMD_RESULT VMEC_POKEMON_SHADOW_VANISH( VMHANDLE *vmh, void *context_wor
 static VMCMD_RESULT VMEC_POKEMON_DEL( VMHANDLE *vmh, void *context_work )
 {
   BTLV_EFFVM_WORK *bevw = ( BTLV_EFFVM_WORK* )context_work;
-  int   position = EFFVM_GetPosition( vmh, ( int )VMGetU32( vmh ) );
+  BtlvMcssPos pos[ BTLV_MCSS_POS_MAX ];
+  int   pos_cnt = EFFVM_GetPokePosition( vmh, ( int )VMGetU32( vmh ), pos );
 
 #ifdef DEBUG_OS_PRINT
   OS_TPrintf("VMEC_POKEMON_DEL\n");
 #endif DEBUG_OS_PRINT
 
-  BTLV_EFFECT_DelPokemon( position );
+  //立ち位置情報がないときは、コマンド実行しない
+  if( pos_cnt )
+  {
+    int i;
+
+    for( i = 0 ; i < pos_cnt ; i++ )
+    { 
+      BTLV_EFFECT_DelPokemon( pos[ i ] );
+    }
+  }
 
   return bevw->control_mode;
 }
@@ -2681,6 +2745,151 @@ static  BOOL  VWF_WAIT_CHECK( VMHANDLE *vmh, void *context_work )
 //非公開関数群
 //============================================================================================
 /**
+ * @brief 立ち位置情報の取得（ポケモン操作関連専用）
+ *
+ * @param[in]   vmh       仮想マシン制御構造体へのポインタ
+ * @param[in]   pos_flag  取得したいポジションフラグ
+ * @param[out]  pos       取得したポジションの格納ワーク
+ *
+ * @retval  取得したポジション数
+ */
+//============================================================================================
+static  int   EFFVM_GetPokePosition( VMHANDLE *vmh, int pos_flag, BtlvMcssPos* pos )
+{
+  int pos_cnt = 1;
+  BTLV_EFFVM_WORK *bevw = (BTLV_EFFVM_WORK *)VM_GetContext( vmh );
+
+  switch( pos_flag ){
+  case BTLEFF_POKEMON_POS_AA:
+  case BTLEFF_POKEMON_POS_BB:
+  case BTLEFF_POKEMON_POS_A:
+  case BTLEFF_POKEMON_POS_B:
+  case BTLEFF_POKEMON_POS_C:
+  case BTLEFF_POKEMON_POS_D:
+  case BTLEFF_POKEMON_POS_E:
+  case BTLEFF_POKEMON_POS_F:
+  case BTLEFF_TRAINER_POS_AA:
+  case BTLEFF_TRAINER_POS_BB:
+  case BTLEFF_TRAINER_POS_A:
+  case BTLEFF_TRAINER_POS_B:
+  case BTLEFF_TRAINER_POS_C:
+  case BTLEFF_TRAINER_POS_D:
+    pos[ 0 ] = pos_flag;
+    break;
+  case BTLEFF_POKEMON_SIDE_ATTACK:    //攻撃側
+    pos[ 0 ] = bevw->attack_pos;
+    if( pos[ 0 ] == BTLV_MCSS_POS_ERROR )
+    { 
+      if( BTLV_EFFECT_CheckExist( BTLV_MCSS_POS_AA ) == TRUE )
+      { 
+        pos[ 0 ] = BTLV_MCSS_POS_AA;
+      }
+      else if( BTLV_EFFECT_CheckExist( BTLV_MCSS_POS_A ) == TRUE )
+      { 
+        pos[ 0 ] = BTLV_MCSS_POS_A;
+      }
+      else if( BTLV_EFFECT_CheckExist( BTLV_MCSS_POS_C ) == TRUE )
+      { 
+        pos[ 0 ] = BTLV_MCSS_POS_C;
+      }
+      else
+      { 
+        pos[ 0 ] = BTLV_MCSS_POS_E;
+      }
+    }
+    break;
+  case BTLEFF_POKEMON_SIDE_ATTACK_PAIR: //攻撃側ペア
+    if( bevw->attack_pos > BTLV_MCSS_POS_BB ){
+      pos[ 0 ] = bevw->attack_pos ^ BTLV_MCSS_POS_PAIR_BIT;
+    }
+    else{
+      pos[ 0 ] = BTLV_MCSS_POS_ERROR;
+    }
+    break;
+  case BTLEFF_POKEMON_SIDE_DEFENCE:   //防御側
+    //@todo 技のRANGEにあわせて対象となる立ち位置を返すようにしなければならない
+    pos[ 0 ] = bevw->defence_pos;
+    if( pos[ 0 ] == BTLV_MCSS_POS_ERROR )
+    { 
+      if( bevw->attack_pos & 1 )
+      { 
+        if( BTLV_EFFECT_CheckExist( BTLV_MCSS_POS_AA ) == TRUE )
+        { 
+          pos[ 0 ] = BTLV_MCSS_POS_AA;
+        }
+        else if( BTLV_EFFECT_CheckExist( BTLV_MCSS_POS_A ) == TRUE )
+        { 
+          pos[ 0 ] = BTLV_MCSS_POS_A;
+        }
+        else if( BTLV_EFFECT_CheckExist( BTLV_MCSS_POS_C ) == TRUE )
+        { 
+          pos[ 0 ] = BTLV_MCSS_POS_C;
+        }
+        else if( BTLV_EFFECT_CheckExist( BTLV_MCSS_POS_E ) == TRUE )
+        { 
+          pos[ 0 ] = BTLV_MCSS_POS_E;
+        }
+        else
+        { 
+          pos_cnt = 0;
+        }
+      }
+      else
+      { 
+        if( BTLV_EFFECT_CheckExist( BTLV_MCSS_POS_BB ) == TRUE )
+        { 
+          pos[ 0 ] = BTLV_MCSS_POS_BB;
+        }
+        else if( BTLV_EFFECT_CheckExist( BTLV_MCSS_POS_B ) == TRUE )
+        { 
+          pos[ 0 ] = BTLV_MCSS_POS_B;
+        }
+        else if( BTLV_EFFECT_CheckExist( BTLV_MCSS_POS_D ) == TRUE )
+        { 
+          pos[ 0 ] = BTLV_MCSS_POS_D;
+        }
+        else if( BTLV_EFFECT_CheckExist( BTLV_MCSS_POS_F ) == TRUE )
+        { 
+          pos[ 0 ] = BTLV_MCSS_POS_F;
+        }
+        else
+        { 
+          pos_cnt = 0;
+        }
+      }
+    }
+    break;
+  case BTLEFF_POKEMON_SIDE_DEFENCE_PAIR:  //防御側ペア
+    //@todo 技のRANGEにあわせて対象となる立ち位置を返すようにしなければならない
+    if( bevw->defence_pos > BTLV_MCSS_POS_BB ){
+      pos[ 0 ] = bevw->defence_pos ^ BTLV_MCSS_POS_PAIR_BIT;
+    }
+    else{
+      pos[ 0 ] = BTLV_MCSS_POS_ERROR;
+    }
+    break;
+  default:
+    OS_TPrintf("定義されていないフラグが指定されています\n");
+    GF_ASSERT( 0 );
+    break;
+  }
+
+  if( ( pos[ 0 ] != BTLV_MCSS_POS_ERROR ) && ( pos[ 0 ] < BTLV_MCSS_POS_MAX ) )
+  {
+    if( BTLV_EFFECT_CheckExist( pos[ 0 ] ) == TRUE )
+    {
+      pos[ 0 ] = EFFVM_ConvPosition( vmh, pos[ 0 ] );
+    }
+    else
+    {
+      pos[ 0 ] = BTLV_MCSS_POS_ERROR;
+    }
+  }
+
+  return pos_cnt;
+}
+//============================================================================================
+/**
  * @brief 立ち位置情報の取得
  *
  * @param[in] vmh     仮想マシン制御構造体へのポインタ
@@ -2827,9 +3036,16 @@ static  int   EFFVM_ConvPosition( VMHANDLE *vmh, BtlvMcssPos position )
 {
   BTLV_EFFVM_WORK *bevw = (BTLV_EFFVM_WORK *)VM_GetContext( vmh );
 
-  if( bevw->position_reverse_flag )
+  if( BTLV_EFFECT_CheckExist( position ) == TRUE )
   {
-    position ^= 1;
+    if( bevw->position_reverse_flag )
+    {
+      position ^= 1;
+    }
+  }
+  else
+  {
+    position = BTLV_MCSS_POS_ERROR;
   }
 
   return position;
