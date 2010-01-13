@@ -44,6 +44,7 @@ static void _DevSetNoChildErrorSet(BOOL bOn);
 static BOOL _DevIsConnectable(int index);
 static BOOL _DevIsVChat(void);
 static BOOL _DevIsNewPlayer(void);
+static void _DevSetClinetConnect(BOOL bEnable);
 static BOOL _DevLobbyLogin(const void* cp_loginprofile);
 static void _DevDebugSetRoom( u32 locktime, u32 random, u8 roomtype, u8 season );
 static BOOL _DevLobbyUpdateErrorCheck(void);
@@ -110,7 +111,7 @@ static GFLNetDevTable netDevTbl={
   NULL,	//DevConnectWorkInitFunc
   NULL,	//DevGetSendLockFlagFunc
   NULL,	//DevConnectWorkInitFunc
-	NULL, //DevSetClientConnectFunc DevSetClientConnect; ///< 子機がつながってよいかどうかハードレベルで調整
+	_DevSetClinetConnect, //DevSetClientConnectFunc DevSetClientConnect; ///< 子機がつながってよいかどうかハードレベルで調整
   NULL, //DevCrossScanFunc
 
   //-- 以下、Wi-Fi広場専用
@@ -476,6 +477,18 @@ static BOOL _DevIsNewPlayer(void)
   return GFL_NET_DWC_IsNewPlayer();
 }
 
+//------------------------------------------------------------------------------
+/**
+ * @brief   子機がつながってよいかどうかハードレベルで調整する
+ * @param   bEnable TRUE=許可
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+static void _DevSetClinetConnect(BOOL bEnable)
+{
+	GFL_NET_DWC_SetClinetConnect(bEnable);
+}
 
 //--------------------------------------------------------------
 /**

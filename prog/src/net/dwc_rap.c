@@ -81,7 +81,7 @@ typedef struct
   u8 friend_status[FRIENDLIST_MAXSIZE];   //WC_GetFriendStatusDataの戻り値
   u8 friendinfo[FRIENDLIST_MAXSIZE][MYDWC_STATUS_DATA_SIZE_MAX]; //WC_GetFriendStatusDataで得られる値
   u32 friendupdate_index;
-  u8 connectionUserData[DWC_CONNECTION_USERDATA_LEN];// 新機能 繋ぐ時のユーザーデータただし4バイト
+  u32 connectionUserData;// 新機能 繋ぐ時のユーザーデータただし4バイト
   
   int state;
   int stepMatchResult;
@@ -121,7 +121,7 @@ typedef struct
   u8 saveing;  //セーブ中に1
   u8 bFriendSave;  //ともだちコードセーブ中に更新がかからないようにするフラグ
   u8 bWiFiFriendGroup;  ///< 友達と行うサービスかどうか
-  u8 dummy;
+  u8 bConnectEnable;  ///< 接続許可と禁止を行う
 } MYDWC_WORK;
 
 // 親機のAID
@@ -309,7 +309,6 @@ int GFL_NET_DWC_startConnect(DWCUserData* pUserData, DWCFriendData* pFriendData)
       _dWork->friend_status[i] = DWC_STATUS_OFFLINE;
     }
   }
-
 
   // ユーザデータの状態をチェック。
   GFL_NET_DWC_showFriendInfo();
@@ -548,8 +547,13 @@ static void RandomNewClientCallback(int index,void *param)
 //------------------------------------------------------------------------------
 /**
  * @brief   新規接続クライアントの参加を決定する最終段階で、アプリケーション側に判断を求めるために呼び出されるコールバックです。
- * @param   index  新規接続クライアントが、DWC_ConnectToAnybodyAsync/DWC_ConnectToFriendsAsync/DWC_SetupGameServer/DWC_ConnectToGameServerAsync/DWC_ConnectToGameServerByGroupID関数のconnectionUserDataに設定した値を格納しているバッファへのポインタ。u8[DWC_CONNECTION_USERDATA_LEN]分のサイズ。
- * @param 	param  	コールバック用パラメータ
+ * @param   newClientUserData
+             新規接続クライアントが、
+            DWC_ConnectToAnybodyAsync/DWC_ConnectToFriendsAsync/DWC_SetupGameServer/
+            DWC_ConnectToGameServerAsync/DWC_ConnectToGameServerByGroupID
+            関数のconnectionUserDataに設定した値を格納しているバッファへのポインタ。
+            u8[DWC_CONNECTION_USERDATA_LEN]分のサイズ。
+ * @param 	param  	コールバック用ワーク
  * @retval  TRUE  	新規接続クライアントを受け入れる。
  * @retval  FALSE 	新規接続クライアントの受け入れを拒否する。
  */
@@ -558,7 +562,7 @@ static void RandomNewClientCallback(int index,void *param)
 
 static BOOL attemptCallback(u8 *newClientUserData,void *param)
 {
-  return TRUE;
+  return _dWork->bConnectEnable;
 }
 
 //==============================================================================
@@ -627,14 +631,14 @@ int GFL_NET_DWC_StartMatch( u8* keyStr,int numEntry, BOOL bParent, u32 timelimit
       numEntry,
       (const char*)_dWork->randommatch_query,
       ConnectToAnybodyCallback,
-      NULL,
+      GFL_NET_GetWork(),
       RandomNewClientCallback,
-      NULL,
+      GFL_NET_GetWork(),
       EvaluateAnybodyCallback,
-      NULL,
+      GFL_NET_GetWork(),
       attemptCallback,
-      _dWork->connectionUserData,
-      NULL
+      (u8*)&_dWork->connectionUserData,
+      GFL_NET_GetWork()
       )){
     return 0;
   }
@@ -2118,7 +2122,7 @@ BOOL GFL_NET_DWC_SetMyInfo( const void *data, int size )
 {
   MYDWC_DEBUGPRINT("upload status change(%p, %d)\n", data, size);
 
-  GF_ASSERT(size < MYDWC_STATUS_DATA_SIZE_MAX);
+  GF_ASSERT(size <= MYDWC_STATUS_DATA_SIZE_MAX);
   return DWC_SetOwnStatusData( data, size );
 }
 
@@ -2129,9 +2133,9 @@ BOOL GFL_NET_DWC_SetMyInfo( const void *data, int size )
  * @retval  データへのポインタ。中身は書き換えないで下さい。
  */
 //==============================================================================
-u8 *GFL_NET_DWC_GetFriendInfo( int index )
+void* GFL_NET_DWC_GetFriendInfo( int index )
 {
-  return _dWork->friendinfo[index];
+  return (void*)&_dWork->friendinfo[index];
 }
 
 //==============================================================================
@@ -2186,19 +2190,18 @@ int GFL_NET_DWC_StartGame( int target,int maxnum, BOOL bVCT )
   if ( target < 0 ){
     ans = DWC_SetupGameServer(DWC_TOPOLOGY_TYPE_FULLMESH,
                               (u8)num,
-                              SetupGameServerCallback, NULL,
-                              NewClientCallback, NULL,
+                              SetupGameServerCallback, GFL_NET_GetWork(),
+                              NewClientCallback, GFL_NET_GetWork(),
                               attemptCallback,
-                              _dWork->connectionUserData,
-                              NULL
+                              (u8*)&_dWork->connectionUserData,GFL_NET_GetWork()
                               );
     _dWork->matching_type = MDTYPE_PARENT;
   } else {
     ans = DWC_ConnectToGameServerAsync(DWC_TOPOLOGY_TYPE_FULLMESH,
-                                       target,ConnectToGameServerCallback,NULL,NewClientCallback,NULL,
+                                       target,ConnectToGameServerCallback,NULL,NewClientCallback,GFL_NET_GetWork(),
                                        attemptCallback,
-                                       _dWork->connectionUserData,
-                                       NULL
+                                       (u8*)&_dWork->connectionUserData,
+                                       GFL_NET_GetWork()
                                        );
     _dWork->matching_type = MDTYPE_CHILD;
   }
@@ -2877,6 +2880,37 @@ int GFL_NET_DWC_GetStepMatchResult(void)
 {
   return _dWork->stepMatchResult;
 }
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   子機がつながってよいかどうかハードレベルで調整する
+ * @param   bEnable TRUE=許可
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+void GFL_NET_DWC_SetClinetConnect(BOOL bEnable)
+{
+  _dWork->bConnectEnable = bEnable;
+}
+
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   接続する時にわたってくるIDを設定できる
+ * @param   data u32型のID
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+void GFL_NET_DWC_SetCconnectionUserData(u32 data)
+{
+  _dWork->connectionUserData = data;
+}
+
+
+
+
 
 
 #endif //GFL_NET_WIFI

@@ -57,24 +57,22 @@ typedef enum{
 //#define _POKEMON_NUM   (6)
 
 struct _WIFI_STATUS{
-  u32 profileID;                                 //プロファイルID
-//	MYSTATUS aMyStatus;   // MYSTATUS                           ROM LANGはこの中にある
-	u8 VChatMac[6];       // ゲームを呼びかける人のMacアドレス 自分のMACだった場合開始      
-	u8 MyMac[6];       // 自分のMacアドレス
-  u8 trainer_view;	// ユニオンルーム内での見た目
-  u8 pm_version;	// バージョン
-	u8 pm_lang;		  // 言語
-	u8 GameMode;         // WIFIでのゲーム等の状態         WIFI_GAME_e
-  u8 status;    // 自分の状態                           WIFI_STATUS_e
-  u8 nation;           //  国
-  u8 area;             //  地域
-  u8 shooter:1;    //シューター有り無し
-  u8 VChatStatus:1;       // VChatの状態
+  u32 profileID;                                 //プロファイルID      4
+	u8 VChatMac[6];       // ゲームを呼びかける人のMacアドレス 自分のMACだった場合開始      10
+	u8 MyMac[6];       // 自分のMacアドレス      16
+  u8 trainer_view;	// ユニオンルーム内での見た目  17
+  u8 pm_version;	// バージョン                         18
+	u8 pm_lang;		  // 言語                                19
+	u8 GameMode;         // WIFIでのゲーム等の状態         WIFI_GAME_e       20
+  u8 status;    // 自分の状態                           WIFI_STATUS_e   21
+  u8 nation;           //  国                           22
+  u8 area;             //  地域                        23
+  u8 shooter:1;    //シューター有り無し             24
+  u8 VChatStatus:1;       // VChatの状態 
   u8 sex:2;
   u8 dummybit:4;
-  u8 dummy2;   //上位バージョン用
-  u8 dummy3;   //上位バージョン用
-  u8 dummy4;   //上位バージョン用
+  u8 dummy2;   //上位バージョン用             25
+  u8 dummy3;   //上位バージョン用              26
 };
 
 

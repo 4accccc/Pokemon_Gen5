@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohno" host="W00141" date="2010-01-11T17:42:48"/>
+	<create user="ohno" host="W00141" date="2010-01-13T12:07:38"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -986,6 +986,21 @@ TVトランシーバーちゅう　です</language>
 あいてを　ぼしゅうちゅう　です</language>
 		<language name="JPN_KANJI" width="216">[1:00:トレーナー名:0]さんは　TVトランシーバー
 あいてを　ぼしゅうちゅう　です</language>
+	</row>
+
+	<row id="msg_wifilobby_081" back-color=",,,,,,#808080,#808080,,#808080,#808080,,,,,,,">
+		<comment>立っている人に話しかけて接続するメニューに使用</comment>
+		<language name="JPN" width="216">せつぞくする</language>
+		<language name="JPN_KANJI" width="216">せつぞくする</language>
+	</row>
+
+	<row id="msg_wifilobby_082" back-color=",,,,,,#808080,#808080,,#808080,#808080,,,,,,,">
+		<comment>自分が待機中に
+友達が話しかけてきた</comment>
+		<language name="JPN" width="216">[1:00:トレーナー名:0]さんが
+はなしかけて　きました！</language>
+		<language name="JPN_KANJI" width="216">[1:00:トレーナー名:0]さんが
+はなしかけて　きました！</language>
 	</row>
 
 	<flowchart-group-list>

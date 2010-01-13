@@ -12,7 +12,9 @@
 #include "net_wifi.h"
 #include "savedata/save_control.h"
 
-#define MYDWC_STATUS_DATA_SIZE_MAX (128)   /// WIFIフレンド情報サイズ DWCに189バイト可能とあるが、定義が無いので控えめサイズで決めうち
+/// WIFIフレンド情報サイズ DWCに189バイト可能とあるが、定義が無いので控えめサイズで決めうち
+/// 多くすると通信が重くなる為
+#define MYDWC_STATUS_DATA_SIZE_MAX (28)
 
 
 //==============================================================================
@@ -213,7 +215,7 @@ extern BOOL GFL_NET_DWC_SetMyInfo( const void *data, int size );
  * @retval  データへのポインタ。中身は書き換えないで下さい。
  */
 //==============================================================================
-extern u8 *GFL_NET_DWC_GetFriendInfo( int index );
+extern void* GFL_NET_DWC_GetFriendInfo( int index );
 
 //==============================================================================
 /**
@@ -433,6 +435,24 @@ extern BOOL GFL_NET_DWC_SetCancelState(void);
 
 extern int GFL_NET_DWC_GetStepMatchResult(void);
 
+//------------------------------------------------------------------------------
+/**
+ * @brief   子機がつながってよいかどうかハードレベルで調整する
+ * @param   bEnable TRUE=許可
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+extern void GFL_NET_DWC_SetClinetConnect(BOOL bEnable);
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   接続する時にわたってくるIDを設定できる
+ * @param   data u32型のID
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+extern void GFL_NET_DWC_SetCconnectionUserData(u32 data);
 
 //#include <ppwlobby/ppw_lobby.h>
 

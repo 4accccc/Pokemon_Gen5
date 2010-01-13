@@ -306,7 +306,6 @@ static GFL_PROC_RESULT WifiClubProcInit( GFL_PROC * proc, int * seq, void * pwk,
   ep2p->pMatchParam->pMatch = GFL_HEAP_AllocClearMemory(GetHeapLowID(HEAPID_PROC), sizeof( WIFI_STATUS ));
   ep2p->pMatchParam->pSaveData = pClub->ctrl;
   ep2p->pMatchParam->pGameData = GAMESYSTEM_GetGameData(pClub->gsys);
-//  NET_PRINT("%x %x\n",(int)ep2p->pMatchParam->pMatch,(int)pClub->ctrl);
 
   ep2p->pGameData =  GAMESYSTEM_GetGameData(pClub->gsys);
   ep2p->pWifiList = GAMEDATA_GetWiFiList(ep2p->pGameData);

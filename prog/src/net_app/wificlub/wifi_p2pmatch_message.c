@@ -485,11 +485,8 @@ enum{
 };
 
 
-static const struct {
-  u32  str_id;
-  u32  param;
-}_childMatchMenuList[] = {
-  { msg_wifilobby_030, (u32)_CONNECTING },
+static const _infoMenu _childMatchMenuList[] = {
+  { msg_wifilobby_081, (u32)_CONNECTING },
   { msg_wifilobby_032, (u32)BMPMENULIST_CANCEL },
 };
 
@@ -551,29 +548,10 @@ static void _ChildModeMatchMenuDisp( WIFIP2PMATCH_WORK *wk )
     i = 0;
 
     for(i = 0; i < NELEMS(_childMatchMenuList);i++){
-      if(i == 0){
-        if(WIFI_STATUS_PLAYING == status || status >= WIFI_STATUS_UNKNOWN){  // ‚à‚¤‚µ‚±‚Þ‚ðo‚³‚È‚¢ðŒ
-          list_h.line -= 1;
-          list_h.count -= 1;
-          length -= 1;
-        }
-        else if(status == WIFI_STATUS_WAIT){
-          if(vchat == 2){
-            BmpMenuWork_ListAddArchiveString( wk->submenulist, wk->MsgManager,
-                                              msg_wifilobby_027,
-                                              _childMatchMenuList[i].param,HEAPID_WIFIP2PMATCH );
-          }
-          else{
-            list_h.line -= 1;
-            list_h.count -= 1;
-            length -= 1;
-          }
-        }
-        else{
-          BmpMenuWork_ListAddArchiveString( wk->submenulist, wk->MsgManager,
-                                            _childMatchMenuList[i].str_id,
-                                            _childMatchMenuList[i].param,HEAPID_WIFIP2PMATCH );
-        }
+      if(i == 0 && (WIFI_STATUS_RECRUIT != status && status != WIFI_STATUS_PLAY_AND_RECRUIT && status != WIFI_STATUS_WAIT)){  // ‚à‚¤‚µ‚±‚Þ‚ðo‚³‚È‚¢ðŒ
+        list_h.line -= 1;
+        list_h.count -= 1;
+        length -= 1;
       }
       else{
         BmpMenuWork_ListAddArchiveString( wk->submenulist, wk->MsgManager,

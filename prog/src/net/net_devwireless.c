@@ -600,6 +600,13 @@ static void _DevSetNoChildErrorSet(BOOL bOn)
 	GFL_NET_WLSetDisconnectOtherError(bOn);
 }
 
+//------------------------------------------------------------------------------
+/**
+ * @brief   子機がつながってよいかどうかハードレベルで調整する
+ * @param   bEnable TRUE=許可
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
 
 static void _DevSetClinetConnect(BOOL bEnable)
 {
