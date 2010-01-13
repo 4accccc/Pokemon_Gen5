@@ -56,7 +56,6 @@ EVENT_START ev_pc
   WHILE $log_out == FALSE 
     // 「どこの パソコンに せつぞく …」
     _SYSWIN_MSG_DOWN( msg_pc_on_02 )
-    _AB_KEYWAIT()
     // 選択ウィンドウ表示
     _BMPMENU_INIT_EX( 1, 1, 0, TRUE, select_pos )
     IF $f_pcname == FALSE THEN
