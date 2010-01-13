@@ -56,6 +56,34 @@
 #include "item/itemtype_def.h"
 
 
+//#ifdef PM_DEBUG
+#if 0
+// 速度測定
+static OSTick _debug_tick = 0;
+const char* _debug_chara;
+static void _DebugTickCheck_Start( const char* chara )
+{
+  GF_ASSERT(_debug_tick == 0);
+  _debug_tick = OS_GetTick();
+  _debug_chara = chara;
+}
+static void _DebugTickCheck_End( void )
+{
+  OSTick t = OS_GetTick() - _debug_tick;
+  u64 s = OS_TicksToSeconds(t);
+  u64 mis = OS_TicksToMilliSeconds(t) % 1000;
+  u64 mcs = OS_TicksToMicroSeconds(t) % 1000000;
+  
+  OS_TPrintf( _debug_chara );
+  OS_TPrintf( " >> %d second : %d milli second : %d micro second  \n" ,
+      s,
+      mis,
+      mcs );
+
+  _debug_tick = 0;
+}
+#endif // PM_DEBUG
+
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 
@@ -986,8 +1014,12 @@ void ITEMDISP_CellResourceCreate( FIELD_ITEMMENU_WORK* pWork )
 
   for( i=0 ; i < ITEM_LIST_NUM ; i++ )
   {
-    pWork->listRes[i] = GFL_CLGRP_CGR_Register(  archandle , NARC_bag_bag_win01_d_NCGR , FALSE , CLSYS_DRAW_MAIN , pWork->heapID );
+    // OBJVRAM 64k地点からBMPとして使う
+//    u8 *vramAdr = (u8*)( (u32)G2_GetOBJCharPtr() + 0x10000 - (12*2*32)*i );
+//    pWork->listBmp[i] = GFL_BMP_CreateInVRAM( vramAdr, 12, 2, GFL_BMP_16_COLOR, pWork->heapID );
+
     pWork->listBmp[i] = GFL_BMP_Create( 12, 2, GFL_BMP_16_COLOR, pWork->heapID );
+    pWork->listRes[i] = GFL_CLGRP_CGR_Register(  archandle , NARC_bag_bag_win01_d_NCGR , FALSE , CLSYS_DRAW_MAIN , pWork->heapID );
   }
 
   // 男女でウィンドウカーソル用パレットを切替
@@ -1155,20 +1187,24 @@ void ITEMDISP_CellMessagePrint( FIELD_ITEMMENU_WORK* pWork )
   // 文字色指定
   static u8 color_tbl[ ITEM_LIST_NUM ] = { 1, 0, 0, 0, 0, 0, 0, 1 };
 
+//  _DebugTickCheck_Start("ITEMDISP_CellMessagePrint");
+
   // ポケット内のアイテムが0個の時
   length = ITEMMENU_GetItemPocketNumber( pWork );
 
   // スクロールバー表示切替
-  if( length > 5 )
+  if( length < ITEMMENU_SCROLLBAR_ENABLE_NUM )
   {
+    // 消す
+  }
+  else
+  {
+    // だす
     // GFL_BG_WriteScreenFree( GFL_BG_FRAME2_S );
     
     {
 //      void* adrs = GFL_BG_GetScreenBufferAdrs( GFL_BG_FRAME0_M );
     }
-  }
-  else
-  {
   }
 
   if( length == 0 )
@@ -1182,6 +1218,7 @@ void ITEMDISP_CellMessagePrint( FIELD_ITEMMENU_WORK* pWork )
     GFL_BMPWIN_ClearTransWindow( pWork->winPocketNone );
   }
 
+  //@TODO 現在表示されているリストの数を取得
   for(i = 0; i< ITEM_LIST_NUM ; i++)
   {
     ITEM_ST * item;
@@ -1215,7 +1252,7 @@ void ITEMDISP_CellMessagePrint( FIELD_ITEMMENU_WORK* pWork )
       {
       case 0:
         {
-          u16 type = ITEM_GetParam( item->id, ITEM_PRM_ITEM_TYPE, pWork->heapID );
+          u16 type = ITEM_GetBufParam( itemdata, ITEM_PRM_ITEM_TYPE );
           _cellmessage_printcolor( type );
         }
         break;
@@ -1246,6 +1283,8 @@ void ITEMDISP_CellMessagePrint( FIELD_ITEMMENU_WORK* pWork )
       GFL_HEAP_FreeMemory( itemdata );
     }
   }
+
+//  _DebugTickCheck_End();
 }
 
 
@@ -1285,15 +1324,18 @@ void ITEMDISP_CellVramTrans( FIELD_ITEMMENU_WORK* pWork )
     
     // カーソル条件：ポケット内のアイテムが0個かつキー状態のとき
     is_cur_draw = (length!=0) && GFL_UI_CheckTouchOrKey() == GFL_APP_END_KEY;
-    // スクロールバー条件：アイテムが５個以上
-    is_scr_draw = (length > 5);
+    // スクロールバー条件：アイテムが7個以上
+    is_scr_draw = (length >= ITEMMENU_SCROLLBAR_ENABLE_NUM);
 
     HOSAKA_Printf("length=%d \n", length);
 
     // カーソル／スクロールバー非表示
-//    GFL_CLACT_WK_SetAnmIndex( pWork->clwkCur, 0 );
     GFL_CLACT_WK_SetDrawEnable( pWork->clwkCur, is_cur_draw );
     GFL_CLACT_WK_SetDrawEnable( pWork->clwkScroll, is_scr_draw );
+
+    // アニメーションフレームを更新
+    GFL_CLACT_WK_SetAnmIndex( pWork->clwkCur, 0 );
+    GFL_CLACT_WK_SetAnmIndex( pWork->clwkScroll, 0 );
   }
 
   // リストOAM生成＆描画
@@ -1302,6 +1344,7 @@ void ITEMDISP_CellVramTrans( FIELD_ITEMMENU_WORK* pWork )
       u32 dest_adrs = GFL_CLGRP_CGR_GetAddr( pWork->listRes[i], CLSYS_DRAW_MAIN);
       u8* charbuff = GFL_BMP_GetCharacterAdrs(pWork->listBmp[i]);
       u32 size = GFL_BMP_GetBmpDataSize(pWork->listBmp[i]);
+
       DC_FlushRange(charbuff, size);
 
       dest_adrs += (8)*32;

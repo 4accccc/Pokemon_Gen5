@@ -50,6 +50,8 @@ enum
 };
 
 
+#define ITEMMENU_SCROLLBAR_ENABLE_NUM (7) // スクロールバーが有効になるアイテム数
+
 #define ITEM_LIST_NUM (8)
 #define _CELLUNIT_NUM (30)
 

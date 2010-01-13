@@ -54,7 +54,7 @@
 //  __TRASH     捨てる シーケンス
 //  __SELL      売る シーケンス
 
-//@TODO 一旦RepeatをContにしておく
+//@TODO Repeatフック
 static int _GFL_UI_KEY_GetRepeat( void )
 {
   return GFL_UI_KEY_GetCont();
@@ -529,8 +529,9 @@ static BOOL _itemScrollCheck(FIELD_ITEMMENU_WORK* pWork)
   };
 
   u32 x,y,i;
+  int length = ITEMMENU_GetItemPocketNumber(pWork);
 
-  if(GFL_UI_TP_GetPointCont(&x, &y) == TRUE)
+  if( length >= ITEMMENU_SCROLLBAR_ENABLE_NUM && GFL_UI_TP_GetPointCont(&x, &y) == TRUE )
   {
     // 範囲判定
     if((y <= _SCROLL_TOP_Y) || (y >= _SCROLL_BOTTOM_Y))
@@ -544,7 +545,6 @@ static BOOL _itemScrollCheck(FIELD_ITEMMENU_WORK* pWork)
     }
 
     {
-      int length = ITEMMENU_GetItemPocketNumber( pWork);
       int num = (length * (y-_SCROLL_TOP_Y)) / Y_MAX;
       int prelistpos = pWork->oamlistpos;
 
@@ -556,7 +556,7 @@ static BOOL _itemScrollCheck(FIELD_ITEMMENU_WORK* pWork)
       for(i = 0 ; i < num ; i++)
       {
         _posplus(pWork, length);
-        HOSAKA_Printf( "[%d] curpos=%d \n", i, pWork->curpos );
+//        HOSAKA_Printf( "[%d] curpos=%d \n", i, pWork->curpos );
       }
       
       // スクロールバーOAM座標を変更
@@ -572,7 +572,7 @@ static BOOL _itemScrollCheck(FIELD_ITEMMENU_WORK* pWork)
       }
     }
 
-  } // if(GFL_UI_TP_GetPointCont(&x, &y) == TRUE)
+  } // if( length >= ITEMMENU_SCROLLBAR_ENABLE_NUM && GFL_UI_TP_GetPointCont(&x, &y) == TRUE )
 
   return FALSE;
 }
@@ -3003,7 +3003,6 @@ static GFL_PROC_RESULT FieldItemMenuProc_Main( GFL_PROC * proc, int * seq, void 
   StateFunc* state = pWork->state;
 
   if(state == NULL){
-    GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, 0);
     return GFL_PROC_RES_FINISH;
   }
   if( WIPE_SYS_EndCheck() != TRUE ){
