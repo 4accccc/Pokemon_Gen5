@@ -3,7 +3,7 @@
 <itp version="1.6.0">
 
 <head>
-	<create user="fujiwara_maiko" host="W00194" date="2010-01-07T21:55:03" source="c09_02_fire02b.mb"/>
+	<create user="fujiwara_maiko" host="W00194" date="2010-01-07T21:43:55" source="c09_02_fire02a.mb"/>
 	<title>Texture Pattern Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
@@ -11,36 +11,38 @@
 <body>
 
 <tex_pattern_info
-	frame_size="13"
+	frame_size="16"
 	tool_start_frame="0"
-	tool_end_frame="12"
+	tool_end_frame="15"
 	compress_material="on" material_size="2 2"
 />
 
-<tex_pattern_list_data image_size="3" palette_size="3">
-	<image_name index="0" name="c09_fire.4"/>
-	<image_name index="1" name="c09_fire.5"/>
-	<image_name index="2" name="c09_fire.6"/>
-	<palette_name index="0" name="c09_fire.4_pl"/>
-	<palette_name index="1" name="c09_fire.5_pl"/>
-	<palette_name index="2" name="c09_fire.6_pl"/>
+<tex_pattern_list_data image_size="4" palette_size="4">
+	<image_name index="0" name="c09_fire.1"/>
+	<image_name index="1" name="c09_fire.2"/>
+	<image_name index="2" name="c09_fire.3"/>
+	<image_name index="3" name="c09_fire.6"/>
+	<palette_name index="0" name="c09_fire.1_pl"/>
+	<palette_name index="1" name="c09_fire.2_pl"/>
+	<palette_name index="2" name="c09_fire.3_pl"/>
+	<palette_name index="3" name="c09_fire.6_pl"/>
 </tex_pattern_list_data>
 
 <tex_pattern_data>
 	<frame_idx size="6">
-		0 0 3 6 9 12
+		0 3 6 12 15 0
 	</frame_idx>
 	<image_idx size="6">
-		2 0 1 0 1 0
+		0 1 2 1 0 3
 	</image_idx>
 	<palette_idx size="6">
-		2 0 1 0 1 0
+		0 1 2 1 0 3
 	</palette_idx>
 </tex_pattern_data>
 
 <tex_pattern_anm_array size="2">
-	<tex_pattern_anm index="0" material_name="c09_fire_1" data_size="1" data_head="0"/>
-	<tex_pattern_anm index="1" material_name="c09_fire_2" data_size="5" data_head="1"/>
+	<tex_pattern_anm index="0" material_name="c09_fire_1" data_size="5" data_head="0"/>
+	<tex_pattern_anm index="1" material_name="c09_fire_2" data_size="1" data_head="5"/>
 </tex_pattern_anm_array>
 
 </body>
