@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-16T11:32:29"/>
+	<create user="matsumiya" host="W00207" date="2010-01-13T15:31:16"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -294,7 +294,9 @@
 
 	<row id="msg_t04_01_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
-・夏だけ出現</comment>
+・いつもいる
+・ヒンバス進化アイテムをくれる
+　条件を満たせば何個でも？</comment>
 		<attribute name="キャラ指定">？？？</attribute>
 		<language name="JPN" width="256">テストメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>

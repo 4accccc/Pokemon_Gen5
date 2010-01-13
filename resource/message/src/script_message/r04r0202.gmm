@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-09T19:20:28"/>
+	<create user="matsumiya" host="W00207" date="2010-01-13T14:39:03"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_r04r0202_man3_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_r04r0202_man3_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>（汎用ビル）
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">MAN3</attribute>
@@ -302,7 +302,7 @@
 古代の城という　遺跡があるんだよ</language>
 	</row>
 
-	<row id="msg_r04r0202_boy2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_r04r0202_boy2_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>（汎用ビル）
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">BOY2</attribute>
@@ -312,7 +312,7 @@
 リゾートデザートで　みつけたんだ！</language>
 	</row>
 
-	<row id="msg_r04r0202_pokemon_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_r04r0202_pokemon_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>ポケモン
 ・</comment>
 		<attribute name="キャラ指定">POKE</attribute>
