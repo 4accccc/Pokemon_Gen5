@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-12-01T12:04:09"/>
+	<create user="taya" host="W00146" date="2010-01-12T20:32:26"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -266,11 +266,21 @@
 			</tag>
 			<tag entry="07" japanese="コールバック引数リセット" english="コールバック引数リセット" view="EP" length="0" line="1"/>
 			<tag entry="08" japanese="描画領域クリア" english="描画領域クリア" view="EP" length="0" line="1"/>
+			<tag entry="09" japanese="速度コントロール" english="速度コントロール" view="EP">
+				<parameter number="0" japanese="モード" english="モード" type="int8"/>
+				<comment language="japanese">ユーザConfig設定に応じて
+相対的に速い（遅い）速度になるように、ウェイトフレーム値などを操作します。</comment>
+				<comment language="english">ユーザConfig設定に応じて
+相対的に速い（遅い）速度になるように、ウェイトフレーム値などを操作します。</comment>
+			</tag>
 		</group>
 
 		<group entry="254" japanese="文字列展開" english="Word">
 		</group>
 
+		<set japanese="RESET" english="RESET" value="BE:09:速度コントロール:0"/>
+		<set japanese="FAST" english="FAST" value="BE:09:速度コントロール:1"/>
+		<set japanese="SLOW" english="SLOW" value="BE:09:速度コントロール:2"/>
 		<set japanese="500%" english="500%" value="FF:01:サイズ:500"/>
 		<set japanese="400%" english="400%" value="FF:01:サイズ:400"/>
 		<set japanese="300%" english="300%" value="FF:01:サイズ:300"/>
@@ -5581,10 +5591,6 @@
 		<language name="JPN" width="256">ME-ACCE</language>
 		<language name="JPN_KANJI" width="256">ME-ACCE</language>
 	</row>
-	<row id="msg_seq_me_wasure">
-		<language name="JPN" width="256">ME-WASURE</language>
-		<language name="JPN_KANJI" width="256">ME-WASURE</language>
-	</row>
 	<row id="msg_seq_me_kinomi">
 		<language name="JPN" width="256">ME-KINOMI</language>
 		<language name="JPN_KANJI" width="256">ME-KINOMI</language>
@@ -5637,6 +5643,10 @@
 		<language name="JPN" width="256">ME-END</language>
 		<language name="JPN_KANJI" width="256">ME-END</language>
 	</row>
+          <row id="msg_seq_1322">
+          <language name="JPN" width="256">dmy</language>
+          <language name="JPN_KANJI" width="256">dmy</language>
+          </row>
           <row id="msg_seq_1323">
           <language name="JPN" width="256">dmy</language>
           <language name="JPN_KANJI" width="256">dmy</language>
@@ -7505,37 +7515,37 @@
 		<language name="JPN" width="256">FLD-97</language>
 		<language name="JPN_KANJI" width="256">FLD-97</language>
 	</row>
-	<row id="msg_seq_se_dmy_124">
-		<language name="JPN" width="256">DMY-124</language>
-		<language name="JPN_KANJI" width="256">DMY-124</language>
+	<row id="msg_seq_se_brec_01">
+		<language name="JPN" width="256">BREC-01</language>
+		<language name="JPN_KANJI" width="256">BREC-01</language>
 	</row>
-	<row id="msg_seq_se_dmy_125">
-		<language name="JPN" width="256">DMY-125</language>
-		<language name="JPN_KANJI" width="256">DMY-125</language>
+	<row id="msg_seq_se_brec_02">
+		<language name="JPN" width="256">BREC-02</language>
+		<language name="JPN_KANJI" width="256">BREC-02</language>
 	</row>
-	<row id="msg_seq_se_dmy_126">
-		<language name="JPN" width="256">DMY-126</language>
-		<language name="JPN_KANJI" width="256">DMY-126</language>
+	<row id="msg_seq_se_brec_03">
+		<language name="JPN" width="256">BREC-03</language>
+		<language name="JPN_KANJI" width="256">BREC-03</language>
 	</row>
-	<row id="msg_seq_se_dmy_127">
-		<language name="JPN" width="256">DMY-127</language>
-		<language name="JPN_KANJI" width="256">DMY-127</language>
+	<row id="msg_seq_se_brec_04">
+		<language name="JPN" width="256">BREC-04</language>
+		<language name="JPN_KANJI" width="256">BREC-04</language>
 	</row>
-	<row id="msg_seq_se_dmy_128">
-		<language name="JPN" width="256">DMY-128</language>
-		<language name="JPN_KANJI" width="256">DMY-128</language>
+	<row id="msg_seq_se_brec_05">
+		<language name="JPN" width="256">BREC-05</language>
+		<language name="JPN_KANJI" width="256">BREC-05</language>
 	</row>
-	<row id="msg_seq_se_dmy_129">
-		<language name="JPN" width="256">DMY-129</language>
-		<language name="JPN_KANJI" width="256">DMY-129</language>
+	<row id="msg_seq_se_brec_06">
+		<language name="JPN" width="256">BREC-06</language>
+		<language name="JPN_KANJI" width="256">BREC-06</language>
 	</row>
-	<row id="msg_seq_se_dmy_130">
-		<language name="JPN" width="256">DMY-130</language>
-		<language name="JPN_KANJI" width="256">DMY-130</language>
+	<row id="msg_seq_se_brec_07">
+		<language name="JPN" width="256">BREC-07</language>
+		<language name="JPN_KANJI" width="256">BREC-07</language>
 	</row>
-	<row id="msg_seq_se_dmy_131">
-		<language name="JPN" width="256">DMY-131</language>
-		<language name="JPN_KANJI" width="256">DMY-131</language>
+	<row id="msg_seq_se_brec_08">
+		<language name="JPN" width="256">BREC-08</language>
+		<language name="JPN_KANJI" width="256">BREC-08</language>
 	</row>
 	<row id="msg_seq_se_dmy_132">
 		<language name="JPN" width="256">DMY-132</language>
