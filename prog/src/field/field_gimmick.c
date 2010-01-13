@@ -39,6 +39,10 @@ FS_EXTERN_OVERLAY(field_gym_normal);
 FS_EXTERN_OVERLAY(field_gym_fly);
 FS_EXTERN_OVERLAY(field_gym_anti);
 FS_EXTERN_OVERLAY(field_gimmick_bgate);
+FS_EXTERN_OVERLAY(field_gym_ground);
+FS_EXTERN_OVERLAY(field_gym_ground_ent);
+FS_EXTERN_OVERLAY(field_gym_ice);
+FS_EXTERN_OVERLAY(field_gym_dragon);
 
 const static FSOverlayID FldGimmickOverlay[FLD_GIMMICK_MAX] = {
 	NULL,					//0:–³‚µ
@@ -49,10 +53,10 @@ const static FSOverlayID FldGimmickOverlay[FLD_GIMMICK_MAX] = {
   FS_OVERLAY_ID(field_gym_anti),
   FS_OVERLAY_ID(field_gym_fly),
   FS_OVERLAY_ID(field_gym_insect),
-  NULL,//GYM_GROUND_Setup,
-  NULL,//GYM_GROUND_ENT_Setup,
-  NULL,//GYM_ICE_Setup,
-  NULL,//GYM_DRAGON_Setup,
+  FS_OVERLAY_ID(field_gym_ground),
+  FS_OVERLAY_ID(field_gym_ground_ent),
+  FS_OVERLAY_ID(field_gym_ice),
+  FS_OVERLAY_ID(field_gym_dragon),
   NULL,//H03_GIMMICK_Setup,
   NULL,//GATE_GIMMICK_Setup,  // C04R0601
   NULL,//GATE_GIMMICK_Setup,  // C08R0601
