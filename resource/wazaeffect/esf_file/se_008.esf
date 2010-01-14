@@ -18,8 +18,8 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\be_se_008_ring.spa
 SE再生	SEQ_SE_BE_SE_08	SE1	0	0	127	0	0
 SEパン	SE1	追従	攻撃側	攻撃側	0	60:0:0
 制御モード変更	逐次
-パーティクル再生（正射影）	be_se_008_ring	BE_SE_008_RING_SE_008_RING	攻撃側	方向無し	0:2:0
-パーティクル再生（正射影）	be_se_008_ring	BE_SE_008_RING_SE_008_BURN	攻撃側	方向無し	0:2:0
+パーティクル再生（正射影）	be_se_008_ring	BE_SE_008_RING_SE_008_RING	攻撃側	方向無し	0:2:0	2:2:2
+パーティクル再生（正射影）	be_se_008_ring	BE_SE_008_RING_SE_008_BURN	攻撃側	方向無し	0:2:0	2:2:2
 エフェクト終了待ち	すべて
 エフェクト終了
 &
