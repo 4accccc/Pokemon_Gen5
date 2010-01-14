@@ -206,8 +206,8 @@ use constant CATEGORY_OTHER					=> 13;	# カテゴリ
 	"こおり",
 	"やけど",
 	"どく",
-	"こんらん",
 	"どくどく",
+	"こんらん",
 	"メロメロ",
 	"バインド",
 	"あくむ",
@@ -324,6 +324,7 @@ sub main {
 		my $err_msg = "";
 		my $rec_num = 1;
 		foreach $line (@inFile) {
+#			$line =~ s/[\r]$//g;
 			my @elems = split_record( $line );
 			$err_msg .= storeRecord( \@elems, $rec_num );
 			my $outfile = make_outfile_name( $rec_num );
@@ -406,6 +407,7 @@ sub storeRecord {
 
 	my $numElems = @$refElems;
 	if( $numElems != IDX_FLG_End){
+		my $honrai =IDX_FLG_End; 
 		return $errorHeader . "データ量が不正です\n";
 	}
 
@@ -599,6 +601,7 @@ sub storeRecord {
 	# 各種フラグ
 	$i = IDX_FLG_Touch;
 	while( $i < IDX_FLG_End ){
+
 		$Record[ $i ] = $$refElems[ $i ];
 		$i++;
 	}
@@ -700,7 +703,7 @@ sub outputBin {
 		my $bitPos = 0;
 		for($i=IDX_FLG_Start; $i<IDX_FLG_End; $i++)
 		{
-			if( $Record[$i] ){
+			if( $Record[$i] != 0){
 				$flag |= (1 << $bitPos);
 			}
 			$cnt++;
