@@ -4,6 +4,18 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\w_328.spa
 #001
 %00
 パーティクルデータロード	w_328
+制御モード変更	継続
+SE再生	SEQ_SE_BE_SE_038	SE1	10	-3000	127	0	0
+SE再生	SEQ_SE_BE_SE_038	SE1	18	-2500	127	0	0
+SE再生	SEQ_SE_BE_SE_038	SE1	26	-2000	127	0	0
+SE再生	SEQ_SE_BE_SE_038	SE1	34	-1500	127	0	0
+SE再生	SEQ_SE_BE_SE_038	SE1	42	-1000	127	0	0
+SE再生	SEQ_SE_BE_SE_038	SE1	50	-500	127	0	0
+SE再生	SEQ_SE_BE_SE_038	SE1	58	0	127	0	0
+SE再生	SEQ_SE_BE_SE_037	SE2	0	0	20	0	0
+SEパン	SE1	追従	攻撃側	攻撃側	0	80:0:0
+SEパン	SE2	追従	攻撃側	攻撃側	0	80:0:0
+制御モード変更	逐次
 パーティクル再生（正射影）	w_328	W_328_328_SAND_TORNADO1	攻撃側	方向無し	0:0:0
 パーティクル再生（正射影）	w_328	W_328_328_SAND_TORNADO2	攻撃側	方向無し	0:0:0
 パーティクル再生（正射影）	w_328	W_328_328_SAND_TORNADO3	攻撃側	方向無し	0:0:0

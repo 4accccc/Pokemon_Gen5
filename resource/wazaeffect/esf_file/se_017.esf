@@ -16,6 +16,10 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\be_se_017_sack_down.spa
 %00
 パーティクルデータロード	be_se_017_sack_down
 パーティクル再生（正射影）	be_se_017_sack_down	BE_SE_017_SACK_DOWN_SE_017_SACK_DOWN	攻撃側	方向無し	0:2:0
+制御モード変更	継続
+SE再生	SEQ_SE_BE_SE_015	SE1	0	0	100	0	0
+SEパン	SE1	追従	攻撃側	攻撃側	0	256:0:0
+制御モード変更	逐次
 パーティクル再生（正射影）	be_se_017_sack_down	BE_SE_017_SACK_DOWN_SE_017_SACK_FIX	攻撃側	方向無し	0:2:0
 エフェクト終了待ち	すべて
 エフェクト終了
