@@ -249,6 +249,7 @@ static int BPL_SeqDeadErrRet( BPLIST_WORK * wk );
 static BOOL CheckDeadPoke( BPLIST_WORK * wk );
 static void SetDeadChangeData( BPLIST_WORK * wk );
 static BOOL CheckNextDeadSel( BPLIST_WORK * wk );
+static void SetSelPosCansel( BPLIST_WORK * wk );
 
 
 
@@ -768,6 +769,7 @@ static int BPL_SeqPokeSelect( BPLIST_WORK * wk )
       if( wk->dat->mode != BPL_MODE_CHG_DEAD ){
         PMSND_PlaySE( SEQ_SE_DECIDE2 );
         BattlePokeList_ButtonAnmInit( wk, BPL_BUTTON_RET );
+				SetSelPosCansel( wk );
         return SEQ_BPL_ENDSET;
       }else{
 				u8	pos1, pos2;
@@ -813,12 +815,13 @@ static int BPL_PokeItemUse( BPLIST_WORK * wk )
 {
   BPLIST_DATA * dat = wk->dat;
 
-  // とりあえず、タマゴには使えないようにしておく
+  // タマゴには使えない
   if( wk->poke[ BPLISTMAIN_GetListRow(wk,dat->sel_poke) ].egg != 0 ){
     GFL_MSG_GetString( wk->mman, mes_b_plist_m06, wk->msg_buf );
     BattlePokeList_TalkMsgSet( wk );
     wk->dat->sel_poke = BPL_SEL_EXIT;
     wk->ret_seq = SEQ_BPL_ENDSET;
+		SetSelPosCansel( wk );
     return SEQ_BPL_MSG_WAIT;
   }
 
@@ -828,6 +831,8 @@ static int BPL_PokeItemUse( BPLIST_WORK * wk )
     wk->ret_seq = SEQ_BPL_PAGECHG_PPRCV;
     return SEQ_BPL_BUTTON_WAIT;
   }
+
+	dat->sel_pos[0] = BPLISTMAIN_GetListRow( wk, dat->sel_poke );
 
   return SEQ_BPL_ENDSET;
 
@@ -920,6 +925,7 @@ static int BPL_SeqPokeIrekae( BPLIST_WORK * wk )
     if( BPL_IrekaeCheck( wk ) == TRUE ){
 			// 通常の入れ替え
 			if( wk->dat->mode != BPL_MODE_CHG_DEAD ){
+				wk->dat->sel_pos[0] = BPLISTMAIN_GetListRow( wk, wk->dat->sel_poke );
 	      return SEQ_BPL_ENDSET;
 			}
 			// 瀕死時の入れ替え
@@ -1399,11 +1405,15 @@ static int BPL_SeqWazaRcvSelect( BPLIST_WORK * wk )
     }
     break;
 */
-    if( wk->poke[dat->sel_poke].waza[ret].id == 0 ){ break; }
-    wk->dat->sel_wp = (u8)ret;
-    PMSND_PlaySE( SEQ_SE_DECIDE2 );
-    BattlePokeList_ButtonAnmInit( wk, BPL_BUTTON_WAZARCV1+ret );
-    return SEQ_BPL_ENDSET;
+		{
+			u8	pos = BPLISTMAIN_GetListRow( wk, wk->dat->sel_poke );
+	    if( wk->poke[pos].waza[ret].id == 0 ){ break; }
+	    wk->dat->sel_wp = (u8)ret;
+			wk->dat->sel_pos[0] = pos;
+	    PMSND_PlaySE( SEQ_SE_DECIDE2 );
+	    BattlePokeList_ButtonAnmInit( wk, BPL_BUTTON_WAZARCV1+ret );
+	    return SEQ_BPL_ENDSET;
+		}
 
   case BPLIST_UI_PPRCV_RETURN:    // もどる
   case CURSORMOVE_CANCEL:         // キャンセル
@@ -1742,6 +1752,7 @@ static int BPL_SeqStRcv( BPLIST_WORK * wk )
 //    BattleBag_SubItem( dat->bw, dat->item, dat->bag_page, dat->heap );
     BattlePokeList_TalkMsgSet( wk );
     wk->ret_seq = SEQ_BPL_ENDSET;
+		wk->dat->sel_pos[0] = pos;
     return SEQ_BPL_MSG_WAIT;
 
   case 4:   // 瀕死回復のために１度だけ呼ぶ
@@ -2303,30 +2314,6 @@ static void BPL_PokeDataMake( BPLIST_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static u8 BPL_PokemonSelect( BPLIST_WORK * wk )
 {
-/*
-  int ret = BPL_TPCheck( wk, Page1_HitRect );
-
-  if( ret == GFL_UI_TP_HIT_NONE ){
-    ret = BAPP_CursorMove( wk->cmv_wk );
-    if( ret == BAPP_CMV_CANCEL ){
-      ret = BPL_SEL_EXIT;
-    }else if( ret == BAPP_CMV_NONE ){
-      return FALSE;
-    }
-    if( ret == BPL_SEL_EXIT || BattlePokeList_PokeSetCheck( wk, ret ) != 0 ){
-      wk->dat->sel_poke = (u8)ret;
-      return TRUE;
-    }
-  }else{
-    if( ret == BPL_SEL_EXIT || BattlePokeList_PokeSetCheck( wk, ret ) != 0 ){
-      wk->dat->sel_poke = (u8)ret;
-      BattlePokeList_CursorOff( wk );
-      return TRUE;
-    }
-  }
-
-  return FALSE;
-*/
   u32 ret = CURSORMOVE_MainCont( wk->cmwk );
 
   switch( ret ){
@@ -3916,5 +3903,15 @@ static void SetDeadChangeData( BPLIST_WORK * wk )
 			wk->dat->sel_pos[i] = wk->dat->sel_poke;
 			break;
 		}
+	}
+}
+
+// キャンセル設定
+static void SetSelPosCansel( BPLIST_WORK * wk )
+{
+	u32	i;
+
+	for( i=0; i<BPL_SELNUM_MAX; i++ ){
+		wk->dat->sel_pos[i] = BPL_SELPOS_NONE;
 	}
 }

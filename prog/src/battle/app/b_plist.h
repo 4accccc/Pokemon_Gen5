@@ -54,6 +54,8 @@ typedef struct {
 	u8	change_sel[2];	// ダブル/トリプルですでに選択されているポケモン（いない場合はBPL_CHANGE_SEL_NONE）
 	u8	mode;						// リストモード
 
+	u8	sel_poke;				// 選択されたポケモン or 戻る　（初期位置用）
+
 	u16	item;						// アイテム
 	u16	chg_waza;				// いれかえ禁止技・新しく覚える技
 
@@ -61,11 +63,10 @@ typedef struct {
 	PALETTE_FADE_PTR pfd;	// パレットフェードデータ
 
 	// [in & out]
-	u8	sel_poke;									// 選択されたポケモン or 戻る
 	u8 * cursor_flg;							// カーソル表示フラグ
 
 	// [out]
-	u8	sel_pos[BPL_SELNUM_MAX];	// 選択されたポケモン
+	u8	sel_pos[BPL_SELNUM_MAX];	// 選択されたポケモン（キャンセル時は、全体がBPL_SELPOS_NONEになる）
 	u8	sel_wp;			// 選択された技位置
 	u8	end_flg;		// 終了フラグ
 
