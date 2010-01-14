@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2010-01-13T13:18:18"/>
+	<create user="matsumiya" host="W00207" date="2010-01-14T22:36:17"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,115 +292,239 @@
 	</lock>
 
 
-	<row id="msg_r03r0301_black_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="ｍｓg_r03r0301_black_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
-・pos（GRIDX=000、GRIDZ=000~000）で発動
-・はい/いいえの選択肢表示
-　はい→msg_r03r0301_black_04
-　いいえ→msg_r03r0301_black_02</comment>
+・pos（GRIDX=000、GRIDZ=000）を踏むと
+　メッセージ表示
+※現状のposでOKです
+・続けてhakaim1_01</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">ブラッカー『この　さきに
-ポケモンドロボウは　いる[BE:01:ページ切り替え（クリア）]
-２ｖｓ２で　いっきに　かたづけよう
-じゅんびは　いいよな？</language>
-		<language name="JPN_KANJI" width="256">ブラッカー『……この先に
-ポケモンドロボウが　いる[BE:01:ページ切り替え（クリア）]
-２ｖｓ２で　一気に　片付けよう
-準備は　いいよな？</language>
+		<language name="JPN" width="256">ブラッカー『[1:00:トレーナー名:0]　きをつけて！▼
+こいつら　はなしが　つうじないよ▼</language>
+		<language name="JPN_KANJI" width="256">ブラッカー『[1:00:トレーナー名:0]　気をつけて！▼
+こいつら　話が　通じないよ▼</language>
 	</row>
 
-	<row id="msg_r03r0301_black_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_r03r0301_hakaim1_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,,">
 		<comment>♂
-・いいえ選択時</comment>
-		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">ブラッカー『……わかった[BE:01:ページ切り替え（クリア）]
-あいつらが　にげないよう
-みはっているから[BE:00:ページ切り替え（行送り）]
-はやく　じゅんび　してきてくれ[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ブラッカー『……わかった[BE:01:ページ切り替え（クリア）]
-あいつらが　逃げないよう
-見張っているから[BE:00:ページ切り替え（行送り）]
-はやく　準備してきてくれ[BE:01:ページ切り替え（クリア）]</language>
+・主人公に隣接してメッセージ表示
+・メッセージ後、戦闘に</comment>
+		<attribute name="キャラ指定">プラズマ団♂その１</attribute>
+		<language name="JPN" width="256">プラズマだん『あんな　こどもに
+ポケモンは　つかいこなせない▼
+それでは　ポケモンが
+かわいそう　だろう？▼
+おまえらの　ポケモンも　おなじ
+われわれ　プラズマだんに　さしだせ▽
+というか　うばってやるよ！▼</language>
+		<language name="JPN_KANJI" width="256">プラズマだん『あんな　子供に
+ポケモンは　使いこなせない▼
+それでは　ポケモンが
+かわいそう　だろう？▼
+おまえらの　ポケモンも　同じ
+我々　プラズマ団に　さしだせ▽
+というか　奪ってやるよ！▼</language>
 	</row>
 
-	<row id="msg_r03r0301_black_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_r03r0301_hakaim1_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,,">
 		<comment>♂
-・いいえ選択後、再度会話
-・はい/いいえの選択肢表示
-　はい→msg_r03r0301_black_04
-　いいえ→msg_r03r0301_black_02</comment>
-		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">ブラッカー『２ｖｓ２で　かたづける
-じゅんびは　いいよな？</language>
-		<language name="JPN_KANJI" width="256">ブラッカー『２ｖｓ２で　片付ける
-準備は　いいよな？</language>
+・戦闘で勝利すると
+　フィールドに復帰して、このメッセージ表示
+・続けてblack_02</comment>
+		<attribute name="キャラ指定">プラズマ団♂その１</attribute>
+		<language name="JPN" width="256">プラズマだん『なぜだ！　なぜ
+ただしき　われわれが　まける！？▼</language>
+		<language name="JPN_KANJI" width="256">プラズマだん『なぜだ！　なぜ
+正しき　我々が　負ける！？▼</language>
 	</row>
 
-	<row id="msg_r03r0301_black_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="ｍｓg_r03r0301_black_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
-・はい選択時
-・続けてmsg_r03r0301_hakaim_01</comment>
+・主人公を向いてメッセージ表示
+・続けてhakaim2_01
+・0＝主人公名前</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">ブラッカー『おまえら……
-おとなが　ナニしてんだよ[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ブラッカー『おまえら……
-大人が　ナニしてんだよ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">ブラッカー『さすがだね　[1:00:トレーナー名:0]▼
+さあ　あのこから　とりあげた
+ポケモンを　かえしてください▼</language>
+		<language name="JPN_KANJI" width="256">ブラッカー『さすがだね　[1:00:トレーナー名:0]▼
+さあ　あの子から　取り上げた
+ポケモンを　返してください▼</language>
 	</row>
 
-	<row id="msg_r03r0301_hakaim_01">
+	<row id="msg_r03r0301_hakaim2_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,,">
 		<comment>♂
-・続けてmsg_r03r0301_black_05</comment>
-		<attribute name="キャラ指定">プラズマ団したっぱ</attribute>
+・メッセージのみ表示
+・ギザギザウインドウで
+・続けてhakaim2_02</comment>
+		<attribute name="キャラ指定">プラズマ団♂その２</attribute>
+		<language name="JPN" width="256">かえす　ひつようは　ないぜ！▼</language>
+		<language name="JPN_KANJI" width="256">返す　必要は　ないぜ！▼</language>
+	</row>
+
+	<row id="msg_r03r0301_hakaim2_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,,">
+		<comment>♂
+・hakaim2とhakaiw1、画面左から登場
+・所定位置に到達すると、このメッセージ表示
+・続けてhakaiw1_01</comment>
+		<attribute name="キャラ指定">プラズマ団♂その２</attribute>
+		<language name="JPN" width="256">プラズマだん『たいへん　だよな▼
+りかい　されない　ばかりか
+ジャマされる　なんて▼</language>
+		<language name="JPN_KANJI" width="256">プラズマ団『大変だよな▼
+理解されない　ばかりか
+ジャマされる　なんて▼</language>
+	</row>
+
+	<row id="msg_r03r0301_hakaiw1_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,,">
+		<comment>♀
+・続けてblack_03</comment>
+		<attribute name="キャラ指定">プラズマ団♀その１</attribute>
+		<language name="JPN" width="256">プラズマだん『あいては　ふたり
+われわれも　ふたり▼
+われわれの　けっそくを　みせつけ
+ただしいことを　おしえましょう▼</language>
+		<language name="JPN_KANJI" width="256">プラズマ団『相手は２人
+我々も　２人▼
+こちらの　結束力を　見せつけ
+我々が　正しいことを　教えましょう▼</language>
+	</row>
+
+	<row id="ｍｓg_r03r0301_black_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・プラズマ団を見たままメッセージ表示
+・続けて、主人公を見てblack_04</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">ブラッカー『まだ　いたとはね……▼
+それにしても　ポケモンドロボウが
+なにを　ひらきなおって　いるんだか▼</language>
+		<language name="JPN_KANJI" width="256">ブラッカー『まだ　いたとはね……▼
+それにしても　ポケモンドロボウが
+なにを　開き直って　いるんだか▼</language>
+	</row>
+
+	<row id="ｍｓg_r03r0301_black_04" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・メッセージ表示後に
+　ライバル、再度プラズマ団を見る
+・そしてダブルバトルに
+・0＝主人公名前</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]▼
+こちらの　コンビネーションで
+かれらが　まちがっていることを▽
+しょうめい　しよう▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]▼
+こちらの　コンビネーションで
+彼らが　間違っていることを▽
+証明しよう▼</language>
+	</row>
+
+	<row id="msg_r03r0301_hakaim2_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,,">
+		<comment>♂
+・戦闘で勝利すると
+　フィールドに復帰して、このメッセージ表示
+・続けてblack_05</comment>
+		<attribute name="キャラ指定">プラズマ団♂その２</attribute>
 		<language name="JPN" width="256">プラズマだん『おれたちは
-ポケモンを　かいほう　する！[BE:01:ページ切り替え（クリア）]
+おろかな　にんげんたち　から▽
+ポケモンを　かいほう　する！▼
 そのために　ポケモンを　うばう！
-これは　ただしいことだ！[BE:01:ページ切り替え（クリア）]</language>
+これは　ただしいことだろ！▼</language>
 		<language name="JPN_KANJI" width="256">プラズマ団『おれたちは
-ポケモンを　解放する！[BE:01:ページ切り替え（クリア）]
+愚かな　人間たちから▽
+ポケモンを　解放する！▼
 そのために　ポケモンを　奪う！
-これは　正しいことだ！[BE:01:ページ切り替え（クリア）]</language>
+これは　正しいことだろ！▼</language>
 	</row>
 
-	<row id="msg_r03r0301_black_05" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_r03r0301_black_05" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
-・メッセージ表示後、戦闘に</comment>
+・続けてhakaiw1_02</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">ブラッカー『うるせーよ！[BE:01:ページ切り替え（クリア）]
-どんな　りゆう　でも
-ひとのモノ　とったら　ドロボウだろ[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ブラッカー『うるせーよ！[BE:01:ページ切り替え（クリア）]
-どんな　理由でも
-ひとのモノ　とったら　ドロボウだろ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">ブラッカー『どんな　りゆう　でも
+ひとのモノを　とったら　ドロボウです▼</language>
+		<language name="JPN_KANJI" width="256">ブラッカー『どんな　理由でも
+ひとのモノを　とったら　ドロボウです▼</language>
 	</row>
 
-	<row id="msg_r03r0301_hakaim_03">
-		<comment>♂
-・戦闘後メッセージ
-・続けてmsg_r03r0301_black_06</comment>
-		<attribute name="キャラ指定">プラズマ団したっぱ</attribute>
-		<language name="JPN" width="256">プラズマだん『おまえたちの　ような
-ポケモントレーナーが[BE:00:ページ切り替え（行送り）]
-ポケモンを　くるしめて　いるぞ……[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">プラズマ団『おまえたちの　ような
-ポケモントレーナーが[BE:00:ページ切り替え（行送り）]
-ポケモンを　苦しめて　いるぞ……[BE:01:ページ切り替え（クリア）]</language>
+	<row id="msg_r03r0301_hakaiw1_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,,">
+		<comment>♀
+・続けてblack_06</comment>
+		<attribute name="キャラ指定">プラズマ団♀その１</attribute>
+		<language name="JPN" width="256">プラズマだん『あなたたちの　ような
+ポケモントレーナーが▽
+ポケモンを　くるしめているのよ……▼</language>
+		<language name="JPN_KANJI" width="256">プラズマ団『あなたたちの　ような
+ポケモントレーナーが▽
+ポケモンを　苦しめているのよ……▼</language>
 	</row>
 
-	<row id="msg_r03r0301_black_06">
+	<row id="msg_r03r0301_black_06" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
-・続けてmsg_r03r0301_hakaim_04</comment>
+・続けてhakaim1_03</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">ブラッカー『どうして　トレーナーが
-ポケモンを　くるしめているんだ！？[BE:01:ページ切り替え（クリア）]
-だいたい　おまえら　だって
-ポケモントレーナーだろう！！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ブラッカー『どうして　トレーナーが
-ポケモンを　苦しめているんだ！？[BE:01:ページ切り替え（クリア）]
-だいたい　おまえら　だって
-ポケモントレーナーだろう！！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">ブラッカー『……なぜ　トレーナーが
+ポケモンを　くるしめて　いるのか▽
+ちょっと　りかい　できないんだけど▼</language>
+		<language name="JPN_KANJI" width="256">ブラッカー『……なぜ　トレーナーが
+ポケモンを　苦しめて　いるのか▽
+ちょっと　理解できないんだけど▼</language>
 	</row>
 
-	<row id="msg_r03r0301_hakaim_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_r03r0301_hakaim1_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,,">
+		<comment>♂
+・メッセージ後、画面暗転し
+　その間にプラチナ団の動作も出る削除
+・画面復帰し続けてblack_07
+</comment>
+		<attribute name="キャラ指定">プラズマ団♂その１</attribute>
+		<language name="JPN" width="256">プラズマだん『……いつか
+じぶんたちの　おろかさに　きづけ▼
+ポケモンは　かえす……　だが
+この　ポケモンは　かわいそうだぞ▼</language>
+		<language name="JPN_KANJI" width="256">プラズマだん『……いつか
+自分たちの　愚かさに　気づけ▼
+ポケモンは　返す……　だが
+この　ポケモンは　かわいそうだぞ▼</language>
+	</row>
+
+	<row id="msg_r03r0301_black_07" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・画面右をみてメッセージ表示
+・続けてblack_08</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">ブラッカー『ポケモンを
+あいする　トレーナーが　いる▼
+トレーナーを
+しんじる　ポケモンが　いる▼
+これで　どうして　ポケモンが
+かわいそう　なのか　わからないね▼</language>
+		<language name="JPN_KANJI" width="256">ブラッカー『ポケモンを
+愛する　トレーナーが　いる▼
+トレーナーを
+信じる　ポケモンが　いる▼
+これで　どうして　ポケモンが
+かわいそう　なのか　わからないね▼</language>
+	</row>
+
+	<row id="msg_r03r0301_black_08" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・メッセージ後、r03方面に移動する
+　画面外に消えると主人公操作可能
+・0＝主人公名前</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">さてと……
+ポケモンを　かえしてくるよ▼
+[1:00:トレーナー名:0]！
+タッグバトル　おもしろかったよ▼</language>
+		<language name="JPN_KANJI" width="256">さてと……
+ポケモンを　返してくるよ▼
+[1:00:トレーナー名:0]！
+タッグバトル　おもしろかったよ▼</language>
+	</row>
+
+	<row id="msg_r03r0301_hakaim_04" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ff0000,,,#ff0000,,#ffffff,#ff0000,,,#ff0000,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・メッセージ表示後、画面暗転で
 　プラズマ団の動作モデル削除</comment>
@@ -411,32 +535,6 @@
 		<language name="JPN_KANJI" width="256">プラズマ団『われわれは　違う！[BE:01:ページ切り替え（クリア）]
 まあいい　いつか
 自分たちの　愚かさに　気づけ……[BE:01:ページ切り替え（クリア）]</language>
-	</row>
-
-	<row id="msg_r03r0301_black_07">
-		<comment>♂
-・出口のほうを向きながらメッセージ表示
-・続けて主人公と向き合ってmsg_r03r0301_black_08</comment>
-		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">ブラッカー『……フン！
-なに　いってんだか[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ブラッカー『……フン！
-なに　いってんだか[BE:01:ページ切り替え（クリア）]</language>
-	</row>
-
-	<row id="msg_r03r0301_black_08" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
-		<comment>♂
-・表示後、出口方面へ移動
-　画面外に消えると、主人公操作可能に</comment>
-		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">さてと……
-ポケモン　かえしてくるわ[BE:01:ページ切り替え（クリア）]
-[1:00:トレーナー名:0]！　おまえとの
-タッグ　おもしろかった！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">さてと……
-ポケモン　返してくるわ[BE:01:ページ切り替え（クリア）]
-[1:00:トレーナー名:0]！　おまえとの
-タッグ　おもしろかった！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<flowchart-group-list>

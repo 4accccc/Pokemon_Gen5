@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2010-01-13T13:17:24"/>
+	<create user="matsumiya" host="W00207" date="2010-01-14T18:51:37"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="258"/>
+		<comment position="4" width="285"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -347,7 +347,7 @@
 	<row id="msg_r03_black_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・戦闘後メッセージ
-・続けてmsg_r03_hakaim_01</comment>
+・続けてhakaim_01</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
 		<language name="JPN" width="256">ブラッカー『なるほどね
 おまえらしい　たたかいかた　じゃん！[BE:01:ページ切り替え（クリア）]</language>
@@ -359,7 +359,7 @@
 		<comment>♂
 ・会話ウインドウを出したまま
 　プラズマ団したっぱ♂×２、画面を右から左に移動
-・画面外に消えるとmsg_r03_black_03表示</comment>
+・画面外に消えるとblack_03表示</comment>
 		<attribute name="キャラ指定">プラズマ団したっぱ♂</attribute>
 		<language name="JPN" width="256">？？？『どけ　どけーッ！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">？？？『どけ　どけーッ！[BE:01:ページ切り替え（クリア）]</language>
@@ -367,7 +367,7 @@
 
 	<row id="msg_r03_black_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
-・続けて画面右を向いてmsg_r03_black_04</comment>
+・続けて画面右を向いてblack_04</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
 		<language name="JPN" width="256">ブラッカー『なんだよ　いまの……？[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ブラッカー『なんだよ　いまの……？[BE:01:ページ切り替え（クリア）]</language>
@@ -377,7 +377,7 @@
 		<comment>♂
 ・メッセージ表示後
 　サポートと送れて女の子が到着
-・続けてmsg_r03_white_01</comment>
+・続けてwhite_01</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
 		<language name="JPN" width="256">って　ホワイティ　じゃん
 なんで　はしってるんだよ？[BE:01:ページ切り替え（クリア）]</language>
@@ -387,7 +387,7 @@
 
 	<row id="msg_r03_white_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
-・続けてmsg_r03_black_05</comment>
+・続けてblack_05</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
 		<language name="JPN" width="256">ホワイティ『ねえねえ
 いまのれんちゅう　どっちにむかった？[BE:01:ページ切り替え（クリア）]</language>
@@ -398,7 +398,7 @@
 	<row id="msg_r03_black_05" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・画面左を向いてメッセージ表示
-・続けてmsg_r03_black_06</comment>
+・続けてblack_06</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
 		<language name="JPN" width="256">ブラッカー『あっち……[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ブラッカー『あっち……[BE:01:ページ切り替え（クリア）]</language>
@@ -407,16 +407,16 @@
 	<row id="msg_r03_black_06" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・画面右を向いてメッセージ表示
-・続けてmsg_r03_white_03</comment>
+・続けてwhite_03</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
 		<language name="JPN" width="256">だから　なんで　はしってるんだ？[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">だから　なんで　走ってるんだ？[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r03_white_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r03_white_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・画面左を向いたままメッセージ表示
-・続けてmsg_r03_babygirl1_01
+・続けてbabygirl1_01
 ・テキスト案「まるでポケモン名みたい！」を追加するかも？</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
 		<language name="JPN" width="256">ホワイティ『ああ　もう！
@@ -428,7 +428,7 @@
 	<row id="msg_r03_babygirl1_01">
 		<comment>♀
 ・サポートのほうを向いてメッセージ表示
-・続けてmsg_r03_white_03</comment>
+・続けてwhite_03</comment>
 		<attribute name="キャラ指定">BABYGIRL1
 女の子</attribute>
 		<language name="JPN" width="256">おんなのこ『……おねえちゃん
@@ -440,7 +440,7 @@
 	<row id="msg_r03_white_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・女の子の方を向いてメッセージ表示
-・続けてmsg_r03_black_07</comment>
+・続けてblack_07</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
 		<language name="JPN" width="256">ホワイティ『だいじょうぶ！
 だいじょうぶだから　なかないで！！[BE:01:ページ切り替え（クリア）]</language>
@@ -451,7 +451,7 @@
 	<row id="msg_r03_black_07" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・サポートのほうを向いてメッセージ表示
-・続けてmsg_r03_white_04</comment>
+・続けてwhite_04</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
 		<language name="JPN" width="256">ブラッカー『だーかーらー
 なんで　はしってたんだ？[BE:01:ページ切り替え（クリア）]</language>
@@ -462,7 +462,7 @@
 	<row id="msg_r03_white_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・ライバルのほうを向いてメッセージ表示
-・続けてmsg_r03_black_08</comment>
+・続けてblack_08</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
 		<language name="JPN" width="256">ホワイティ『きいてよ！[BE:01:ページ切り替え（クリア）]
 さっきの　れんちゅうに　このこの
@@ -502,10 +502,10 @@
 ブラッカーが　待ってるよ！</language>
 	</row>
 
-	<row id="msg_r03_white_06" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r03_white_06" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・ストッパー状態
-　posを踏んだとき
+　pos（GRIDX=715~717、GRIDZ=565）を踏んだとき
 ・r03r0301のイベントクリアまで繰り返し</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
 		<language name="JPN" width="256">ホワイティ『おねがい……
@@ -524,6 +524,83 @@
 ポケモン　とっちゃうの……？</language>
 		<language name="JPN_KANJI" width="256">おんなのこ『……どうして
 ポケモン　とっちゃうの……？</language>
+	</row>
+
+	<row id="msg_r03_black_08a" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・GRIDX=680、GRIDZ=554
+・話しかけたとき
+　pos（GRIDX=680、GRIDZ=555）をふんだとき
+・はい/いいえの選択肢表示
+　はい→black_08b
+　いいえ→black_08c</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">ブラッカー『……あいつら
+この　なかに　はいっていったよ▼
+で　[1:00:トレーナー名:0]
+ポケモンの　たいりょく　とか▽
+じゅんびは　ばんたん　なのか？</language>
+		<language name="JPN_KANJI" width="256">ブラッカー『……あいつら
+この　中に　入っていったよ▼
+で　[1:00:トレーナー名:0]
+ポケモンの　体力とか▽
+準備は　万端なのか？</language>
+	</row>
+
+	<row id="msg_r03_black_08b" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・はい選択時
+・メッセージ表示後、ライバル洞窟の中に入る</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">……じゃ　いくよ▼</language>
+		<language name="JPN_KANJI" width="256">……じゃ　いくよ▼</language>
+	</row>
+
+	<row id="msg_r03_black_08c" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・いいえ選択（話しかけの場合）</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">ひとの　ポケモンを
+うばうような　れんちゅうに▽
+まける　なんて　ゆるされない！▼
+ここで　まっているから
+はやく　じゅんび　してきなよ</language>
+		<language name="JPN_KANJI" width="256">人の　ポケモンを
+奪うような　連中に▽
+負けるなんて　許されない！▼
+ここで　待っているから
+早く　準備してきなよ</language>
+	</row>
+
+	<row id="msg_r03_black_08d" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,,,#80ff80,,,,,,,,,,,,,">
+		<comment>♂
+・いいえ選択時（posで起動時）
+・メッセージ表示後に主人公をを
+　GRIDX=680、GRIDZ=556に戻す</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">ひとの　ポケモンを
+うばうような　れんちゅうに▽
+まける　なんて　ゆるされない！▼
+ここで　まっているから
+はやく　じゅんび　してきなよ▼</language>
+		<language name="JPN_KANJI" width="256">人の　ポケモンを
+奪うような　連中に▽
+負けるなんて　許されない！▼
+ここで　待っているから
+早く　準備してきなよ▼</language>
+	</row>
+
+	<row id="msg_r03_black_08e" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・一度、いいえ選択後
+・処理はblack_08aと同じ</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">ブラッカー『[1:00:トレーナー名:0]
+ポケモンの　たいりょく　とか▽
+じゅんびは　ばんたん　なのか？</language>
+		<language name="JPN_KANJI" width="256">ブラッカー『[1:00:トレーナー名:0]
+ポケモンの　体力とか▽
+準備は　万端なのか？</language>
 	</row>
 
 	<row id="msg_r03_white_07" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -548,12 +625,12 @@
 ともだちで　よかった！！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r03_babygirl1_03">
+	<row id="msg_r03_babygirl1_03" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♀
 ・主人公性別：♂
 ・アイテム入手処理
 　「???」
-・続けてmsg_r03_white_09</comment>
+・続けて_white_09</comment>
 		<attribute name="キャラ指定">BABYGIRL1
 女の子</attribute>
 		<language name="JPN" width="256">おんなのこ『おにいちゃん
@@ -564,12 +641,12 @@
 おれいに　これを　あげるね！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r03_babygirl1_04">
+	<row id="msg_r03_babygirl1_04" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♀
 ・主人公性別：♀
 ・アイテム入手処理
 　「???」
-・続けてmsg_r03_white_09</comment>
+・続けて_white_09</comment>
 		<language name="JPN" width="256">おんなのこ『おねえちゃん
 ありがとう！！[BE:01:ページ切り替え（クリア）]
 おれいに　これを　あげるね！[BE:01:ページ切り替え（クリア）]</language>
