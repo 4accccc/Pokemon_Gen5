@@ -378,7 +378,8 @@ static GMEVENT_RESULT FieldBrightInEvent(GMEVENT * event, int *seq, void * work)
       GAMEDATA*       gdata = GAMESYSTEM_GetGameData( few->gsys );
       FIELD_STATUS* fstatus = GAMEDATA_GetFieldStatus( gdata );
 
-      if( FIELD_STATUS_GetSeasonDispFlag(fstatus) )  // if(季節表示フラグON)
+      if( (few->season_flag == FIELD_FADE_SEASON_ON) && 
+          FIELD_STATUS_GetSeasonDispFlag(fstatus) )  // if(季節表示ON)
       { // 四季表示
         u8 start, end;
         start = (FIELD_STATUS_GetSeasonDispLast( fstatus ) + 1) % PMSEASON_TOTAL;
@@ -390,9 +391,7 @@ static GMEVENT_RESULT FieldBrightInEvent(GMEVENT * event, int *seq, void * work)
         break;
       }
       else
-      {
-        GFL_FADE_SetMasterBrightReq(few->brightFadeMode, 16, 0, 0);
-
+      { 
         if ( few->bg_init_flag )
         {
           // BGモード設定と表示設定の復帰
@@ -403,6 +402,7 @@ static GMEVENT_RESULT FieldBrightInEvent(GMEVENT * event, int *seq, void * work)
           }
           FIELDMAP_InitBG(few->fieldmap);
         }
+        GFL_FADE_SetMasterBrightReq(few->brightFadeMode, 16, 0, 0);
       }
     }
 		(*seq) ++;
