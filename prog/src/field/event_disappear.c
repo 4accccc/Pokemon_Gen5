@@ -196,7 +196,20 @@ GMEVENT* EVENT_DISAPPEAR_Teleport( GMEVENT* parent,
  * @brief 退場イベント処理関数( 流砂 )
  */
 //------------------------------------------------------------------------------------------
-#define SAND_ANM_IDX (0)  // 流砂のアニメ番号
+// 流砂のアニメ番号
+#define SAND_ANM_IDX (0)  
+
+// シーケンス番号
+enum
+{
+  SEQ_INIT,                       // 初期設定
+  SEQ_SAND_ANIME_START,           // 流砂アニメ開始
+  SEQ_PLAYER_DRAW_ANIME_START,    // 自機が引き込まれる移動開始
+  SEQ_PLAYER_DRAW_ANIME_WAIT,     // 自機が引き込まれる移動終了待ち
+  SEQ_PLAYER_SALLOW_ANIME_START,  // 自機が飲み込まれる演出開始
+  SEQ_PLAYER_SALLOW_ANIME_WAIT,   // 自機が飲み込まれる演出終了
+  SEQ_EXIT,                       // 終了処理
+};
 
 static GMEVENT_RESULT EVENT_FUNC_DISAPPEAR_FallInSand( GMEVENT* event, int* seq, void* wk )
 {
@@ -208,30 +221,20 @@ static GMEVENT_RESULT EVENT_FUNC_DISAPPEAR_FallInSand( GMEVENT* event, int* seq,
 
   switch( *seq )
   {
-  case 0:
+  case SEQ_INIT:
     // カメラモードの設定
     work->cameraMode = FIELD_CAMERA_GetMode( camera );
     FIELD_CAMERA_ChangeMode( camera, FIELD_CAMERA_MODE_CALC_CAMERA_POS );
-    { // タスク登録
-      FIELD_TASK* move;
-      FIELD_TASK_MAN* man;
-      move = FIELD_TASK_TransPlayer( work->fieldmap, 120, &work->sandStreamPos );
-      man = FIELDMAP_GetTaskManager( work->fieldmap );
-      FIELD_TASK_MAN_AddTask( man, move, NULL );
-    }
-#if 0
-    // びっくりマーク表示
-    FLDEFF_GYOE_SetMMdlNonDepend( fectrl, mmdl, FLDEFF_GYOETYPE_GYOE, TRUE );
-    PMSND_PlaySE( SEQ_SE_FLD_15 );
-#endif
-    work->frame = 0;
-    ++( *seq );
+    *seq = SEQ_SAND_ANIME_START;
     break;
   // 流砂アニメーション開始
-  case 1:
+  case SEQ_SAND_ANIME_START:
+    // SE
+    PMSND_PlaySE( SEQ_SE_FLD_15 );
+    // 配置モデルのアニメ再生
     {
       FLDMAPPER* mapper = FIELDMAP_GetFieldG3Dmapper( work->fieldmap );
-      FIELD_BMODEL_MAN* man = FLDMAPPER_GetBuildModelManager( mapper );
+      FIELD_BMODEL_MAN* taskMan = FLDMAPPER_GetBuildModelManager( mapper );
       G3DMAPOBJST** objst;
       u32 objnum;
       FLDHIT_RECT rect;
@@ -240,11 +243,11 @@ static GMEVENT_RESULT EVENT_FUNC_DISAPPEAR_FallInSand( GMEVENT* event, int* seq,
       rect.right  = work->sandStreamPos.x + (FIELD_CONST_GRID_SIZE*2 << FX32_SHIFT);
       rect.top    = work->sandStreamPos.z - (FIELD_CONST_GRID_SIZE*2 << FX32_SHIFT);
       rect.bottom = work->sandStreamPos.z + (FIELD_CONST_GRID_SIZE*2 << FX32_SHIFT);
-      objst = FIELD_BMODEL_MAN_CreateObjStatusList( man, &rect, BM_SEARCH_ID_SANDSTREAM, &objnum ); 
+      objst = FIELD_BMODEL_MAN_CreateObjStatusList( taskMan, &rect, BM_SEARCH_ID_SANDSTREAM, &objnum ); 
       // 配置モデルを複製し, アニメーション再生
       if( objst[0] )
       {
-        work->bmSandStream = FIELD_BMODEL_Create( man, objst[0] );        // 複製
+        work->bmSandStream = FIELD_BMODEL_Create( taskMan, objst[0] );        // 複製
         FIELD_BMODEL_SetAnime( work->bmSandStream, SAND_ANM_IDX, BMANM_REQ_START );  // 再生
       }
       else
@@ -253,10 +256,51 @@ static GMEVENT_RESULT EVENT_FUNC_DISAPPEAR_FallInSand( GMEVENT* event, int* seq,
       }
       GFL_HEAP_FreeMemory( objst );
     }
-    ++( *seq );
+    *seq = SEQ_PLAYER_DRAW_ANIME_START;
+    break;
+  // 自機が引き込まれる移動開始
+  case SEQ_PLAYER_DRAW_ANIME_START:
+    // 自機移動タスク登録
+    { 
+      int animeFrame;
+      // アニメーションフレーム数を決定
+      { 
+        VecFx32 playerPos;
+        int playerGX, playerGZ;
+        int sandStreamGX, sandStreamGZ;
+        int distX, distZ;
+        FIELD_PLAYER_GetPos( player, &playerPos );
+        playerGX = FX32_TO_GRID( playerPos.x );
+        playerGZ = FX32_TO_GRID( playerPos.z );
+        sandStreamGX = FX32_TO_GRID( work->sandStreamPos.x );
+        sandStreamGZ = FX32_TO_GRID( work->sandStreamPos.z );
+        distX = playerGX - sandStreamGX;
+        distZ = playerGZ - sandStreamGZ;
+        if( distX < 0 ){ distX = -distX; }
+        if( distZ < 0 ){ distZ = -distZ; }
+        if( (distX == 0) && (distZ == 0) ){ animeFrame = 0; }
+        else if( (distX < 2) && (distZ < 2) ){ animeFrame = 60; }
+        else{ animeFrame = 120; }
+      }
+      // タスク登録
+      if( 0 < animeFrame )
+      {
+        FIELD_TASK* move;
+        FIELD_TASK_MAN* taskMan;
+        move = FIELD_TASK_TransPlayer( work->fieldmap, animeFrame, &work->sandStreamPos );
+        taskMan = FIELDMAP_GetTaskManager( work->fieldmap );
+        FIELD_TASK_MAN_AddTask( taskMan, move, NULL );
+        *seq = SEQ_PLAYER_DRAW_ANIME_WAIT;
+      }
+      else
+      {
+        *seq = SEQ_PLAYER_SALLOW_ANIME_START;
+      }
+    }
+    work->frame = 0;
     break;
   // タスク終了待ち&砂埃
-  case 2:
+  case SEQ_PLAYER_DRAW_ANIME_WAIT:
     // 流砂アニメが終了したら再生する
     if( work->bmSandStream )
     {
@@ -265,12 +309,13 @@ static GMEVENT_RESULT EVENT_FUNC_DISAPPEAR_FallInSand( GMEVENT* event, int* seq,
         FIELD_BMODEL_SetAnime( work->bmSandStream, SAND_ANM_IDX, BMANM_REQ_START );
       }
     }
-    { // 向きを変える
+    // 自機の向きを変える
+    { 
       int key = GFL_UI_KEY_GetCont();
-      if( key & PAD_KEY_UP )    MMDL_SetAcmd( mmdl, AC_STAY_WALK_U_4F );
-      if( key & PAD_KEY_DOWN )  MMDL_SetAcmd( mmdl, AC_STAY_WALK_D_4F );
-      if( key & PAD_KEY_LEFT )  MMDL_SetAcmd( mmdl, AC_STAY_WALK_L_4F );
-      if( key & PAD_KEY_RIGHT ) MMDL_SetAcmd( mmdl, AC_STAY_WALK_R_4F );
+      if( key & PAD_KEY_UP )    { MMDL_SetAcmd( mmdl, AC_STAY_WALK_U_4F ); }
+      if( key & PAD_KEY_DOWN )  { MMDL_SetAcmd( mmdl, AC_STAY_WALK_D_4F ); }
+      if( key & PAD_KEY_LEFT )  { MMDL_SetAcmd( mmdl, AC_STAY_WALK_L_4F ); }
+      if( key & PAD_KEY_RIGHT ) { MMDL_SetAcmd( mmdl, AC_STAY_WALK_R_4F ); }
     }
     // 砂埃
     if( work->frame++ % 10 == 0 )
@@ -279,49 +324,55 @@ static GMEVENT_RESULT EVENT_FUNC_DISAPPEAR_FallInSand( GMEVENT* event, int* seq,
     }
     // タスク終了チェック
     {
-      FIELD_TASK_MAN* man;
-      man = FIELDMAP_GetTaskManager( work->fieldmap );
-      if( FIELD_TASK_MAN_IsAllTaskEnd(man) )
+      FIELD_TASK_MAN* taskMan;
+      taskMan = FIELDMAP_GetTaskManager( work->fieldmap );
+      if( FIELD_TASK_MAN_IsAllTaskEnd(taskMan) )
       {
-        // 影を消す
-        MMDL_OnMoveBit( mmdl, MMDL_MOVEBIT_SHADOW_VANISH );     
-        // タスク登録
-        { 
-          VecFx32 vec;
-          FIELD_TASK* move;
-          FIELD_TASK* rot;
-          FIELD_TASK* zoom;
-          FIELD_TASK* fade_out;
-          FIELD_TASK_MAN* man;
-          VEC_Set( &vec, 0, -50<<FX32_SHIFT, 0 );
-          move     = FIELD_TASK_TransDrawOffset( work->fieldmap, 80, &vec );
-          rot      = FIELD_TASK_PlayerRotate( work->fieldmap, 80, 10 );
-          zoom     = FIELD_TASK_CameraLinearZoom( work->fieldmap, 30, ZOOM_IN_DIST );
-          fade_out = FIELD_TASK_Fade( work->fieldmap, GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, 0 );
-          man = FIELDMAP_GetTaskManager( work->fieldmap );
-          FIELD_TASK_MAN_AddTask( man, move, NULL );
-          FIELD_TASK_MAN_AddTask( man, rot, NULL );
-          FIELD_TASK_MAN_AddTask( man, zoom, NULL );
-          FIELD_TASK_MAN_AddTask( man, fade_out, zoom );
-        }
-        work->frame = 0;
-        ++( *seq );
+        *seq = SEQ_PLAYER_SALLOW_ANIME_START;
       }
     }
     break;
-  // タスクの終了待ち
-  case 3:
+  // 自機が飲み込まれるアニメーション開始
+  case SEQ_PLAYER_SALLOW_ANIME_START:
+    // 影を消す
+    MMDL_OnMoveBit( mmdl, MMDL_MOVEBIT_SHADOW_VANISH );
+    // タスク登録
     { 
-      FIELD_TASK_MAN* man;
-      man = FIELDMAP_GetTaskManager( work->fieldmap );
-      if( FIELD_TASK_MAN_IsAllTaskEnd(man) )
+      VecFx32 moveVec;
+      FIELD_TASK* moveTask;
+      FIELD_TASK* rotTask;
+      FIELD_TASK* zoomTask;
+      FIELD_TASK* fadeTask;
+      FIELD_TASK_MAN* taskMan;
+      VEC_Set( &moveVec, 0, -30<<FX32_SHIFT, 0 );
+      moveTask = FIELD_TASK_TransDrawOffset( work->fieldmap, 34, &moveVec );
+      rotTask  = FIELD_TASK_PlayerRotate( work->fieldmap, 34, 5 );
+      zoomTask = FIELD_TASK_CameraLinearZoom( work->fieldmap, 30, ZOOM_IN_DIST );
+      fadeTask = FIELD_TASK_Fade( work->fieldmap, GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, 0 );
+      taskMan = FIELDMAP_GetTaskManager( work->fieldmap );
+      FIELD_TASK_MAN_AddTask( taskMan, moveTask, NULL );
+      FIELD_TASK_MAN_AddTask( taskMan, rotTask, NULL );
+      FIELD_TASK_MAN_AddTask( taskMan, zoomTask, NULL );
+      FIELD_TASK_MAN_AddTask( taskMan, fadeTask, zoomTask );
+    }
+    work->frame = 0;
+    *seq = SEQ_PLAYER_SALLOW_ANIME_WAIT;
+    break;
+  // タスクの終了待ち
+  case SEQ_PLAYER_SALLOW_ANIME_WAIT:
+    { 
+      FIELD_TASK_MAN* taskMan;
+      taskMan = FIELDMAP_GetTaskManager( work->fieldmap );
+      if( FIELD_TASK_MAN_IsAllTaskEnd(taskMan) )
       {
-        ++( *seq );
+        *seq = SEQ_EXIT;
       }
     }
     break;
   // 終了
-  case 4:
+  case SEQ_EXIT:
+    // SE 停止
+    PMSND_StopSE();
     // カメラモードの復帰
     FIELD_CAMERA_ChangeMode( camera, work->cameraMode );
     // 登録した配置モデルを消去

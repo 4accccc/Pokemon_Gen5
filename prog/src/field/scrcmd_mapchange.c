@@ -154,7 +154,6 @@ VMCMD_RESULT EvCmdMapChangeBySandStream( VMHANDLE *core, void *wk )
     MMDL*           mmdl = FIELD_PLAYER_GetMMdl( player );
     FLDEFF_CTRL*  fectrl = FIELDMAP_GetFldEffCtrl( fieldmap );
     FLDEFF_GYOE_SetMMdlNonDepend( fectrl, mmdl, FLDEFF_GYOETYPE_GYOE, TRUE );
-    PMSND_PlaySE( SEQ_SE_FLD_15 );
   }
 #endif
 

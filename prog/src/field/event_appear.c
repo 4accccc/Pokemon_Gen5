@@ -203,21 +203,16 @@ static GMEVENT_RESULT EVENT_FUNC_APPEAR_Fall( GMEVENT* event, int* seq, void* wk
       MMDL_SetVectorDrawOffsetPos( mmdl, &offset );
     }
     { // フェードイン
-      GMEVENT* fade_event;
-      fade_event = EVENT_FieldFadeIn_Black( work->gsys, work->fieldmap,  FIELD_FADE_NO_WAIT );
-      GMEVENT_CallEvent( event, fade_event );
+      GMEVENT* fadeInEvent;
+      fadeInEvent = EVENT_FieldFadeIn_Black( work->gsys, work->fieldmap,  FIELD_FADE_NO_WAIT );
+      GMEVENT_CallEvent( event, fadeInEvent );
     }
     { // タスクの追加
-      FIELD_TASK* wait;
       FIELD_TASK* fall;
       FIELD_TASK_MAN* man;
-      u32 fadein_frame;
-      fadein_frame = GetSeasonDispEventFrame( work->gsys );  // 季節表示にかかる時間を取得
-      wait = FIELD_TASK_Wait( work->fieldmap, fadein_frame );
       fall = FIELD_TASK_PlayerFall( work->fieldmap, 40, 250 );
       man  = FIELDMAP_GetTaskManager( work->fieldmap ); 
-      FIELD_TASK_MAN_AddTask( man, wait, NULL );
-      FIELD_TASK_MAN_AddTask( man, fall, wait );
+      FIELD_TASK_MAN_AddTask( man, fall, NULL );
     }
     ++( *seq );
     break;
