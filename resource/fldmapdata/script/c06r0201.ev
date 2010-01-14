@@ -23,6 +23,10 @@ _EVENT_DATA    ev_c06r0201_workman_01
 _EVENT_DATA    ev_c06r0201_poke3_01
 _EVENT_DATA    ev_c06r0201_workman_02
 _EVENT_DATA    ev_c06r0201_workman_03
+_EVENT_DATA    ev_c06r0201_veteranw_01
+_EVENT_DATA    ev_c06r0201_informationw_01
+_EVENT_DATA    ev_c06r0201_middleman2_01
+_EVENT_DATA    ev_c06r0201_pilot_01
 _EVENT_DATA_END
 
 /**************************************************************/
@@ -64,3 +68,39 @@ EVENT_START		ev_c06r0201_workman_03
 	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_c06r0201_workman3_01)
 EVENT_END
 
+/**************************************************************/
+/*  c06r0201_veteranw_01　アイテム入手イベント*/
+/**************************************************************/
+EVENT_START   ev_c06r0201_veteranw_01
+	
+	//【仮】入手わざマシンについて仮
+	_EASY_TALK_ITEM_EVENT( ITEM_WAZAMASIN01, 1, FE_C06R0101_ITEMGET_01, msg_c06r0201_veteranw_01, msg_c06r0201_veteranw_02, msg_c06r0201_veteranw_02)
+	
+EVENT_END
+
+/**************************************************************/
+/*  c06r0201_informationw_01　一言メッセージ*/
+/**************************************************************/
+EVENT_START   ev_c06r0201_informationw_01
+
+	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_c06r0201_infomationw_01) 
+	
+EVENT_END
+
+/**************************************************************/
+/*  c06r0201_middleman2_01　一言メッセージ*/
+/**************************************************************/
+EVENT_START   ev_c06r0201_middleman2_01
+
+	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_c06r0201_middleman2_01) 
+	
+EVENT_END
+
+/**************************************************************/
+/*  c06r0201_pilot_01　一言メッセージ*/
+/**************************************************************/
+EVENT_START   ev_c06r0201_pilot_01
+
+	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_c06r0201_pilot_01) 
+	
+EVENT_END
