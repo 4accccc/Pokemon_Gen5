@@ -20,8 +20,8 @@ def CollectStr(vec, str)
       fix_str = fix_str + " \\"
       vec << fix_str
     else
-      printf("ERROR::Žw’è•¶Žš—ñ‚ÍŠù‚É‚ ‚é %s\n",str)
-      exit -1
+#      printf("ERROR::Žw’è•¶Žš—ñ‚ÍŠù‚É‚ ‚é %s\n",str)
+#      exit -1
     end
   end
 end
