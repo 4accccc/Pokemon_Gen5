@@ -1185,7 +1185,7 @@ SRCS_OVERLAY_WIFI2DMAP  = net_app/wifi2dmap/wifi_2dchar.c \
 #===> SRCS_OVERLAY_DEV_WIFI
 #===> SRCS_OVERLAY_DEV_WIRELESS
 #===> SRCS_OVERLAY_DEV_IRC
-#===> WIFI2DMAP
+#===> SRCS_OVERLAY_WIFI2DMAP
 SRCS_OVERLAY_WIFINOTE = app/wifi_note/wifi_note.c \
         app/codein/codein.c \
         app/codein/codein_pv.c \

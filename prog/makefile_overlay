@@ -9,7 +9,7 @@
 
 
 
-overlay/main.lsf:	make_prog_files
+overlay/main.lsf:	make_prog_files	overlay/overlaytool.rb
 	ruby overlay/overlaytool.rb
 
 lcf_def.txt: make_prog_files
