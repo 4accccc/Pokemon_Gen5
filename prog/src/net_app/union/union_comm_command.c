@@ -296,6 +296,8 @@ static void _UnionRecv_ColosseumEntryStatus(const int netID, const int size, con
   UNION_SYSTEM_PTR unisys = pWork;
   COLOSSEUM_SYSTEM_PTR clsys = unisys->colosseum_sys;
   const COLOSSEUM_BASIC_STATUS *p_basic = pData;
+  GAMEDATA *gamedata = GAMESYSTEM_GetGameData(unisys->uniparent->gsys);
+  u8 mac_address[6];
   
   if(clsys == NULL || clsys->cps == NULL || clsys->entry_menu == NULL){
     GF_ASSERT(0);
@@ -303,7 +305,9 @@ static void _UnionRecv_ColosseumEntryStatus(const int netID, const int size, con
   }
   
   OS_TPrintf("コロシアム：エントリー情報受信：net_id = %d\n", netID);
-  CommEntryMenu_Entry(clsys->entry_menu, netID, p_basic->name, p_basic->id, p_basic->sex, p_basic->force_entry);
+  OS_GetMacAddress(mac_address);
+  CommEntryMenu_Entry(clsys->entry_menu, netID, GAMEDATA_GetMyStatus(gamedata), 
+    p_basic->force_entry, mac_address);
 }
 
 //==================================================================

@@ -174,6 +174,7 @@ enum{
   UNION_TIMING_MINIGAME_START_BEFORE,   ///<ミニゲーム開始直前の同期取り
   
   UNION_TIMING_COLOSSEUM_PROC_BEFORE,   ///<コロシアム遷移前の同期取り
+  UNION_TIMING_COLOSSEUM_MEMBER_ENTRY_SETUP,  ///<募集システムセットアップ完了後の同期取り
   UNION_TIMING_COLOSSEUM_MEMBER_ENTRY_AFTER,  ///<コロシアム：メンバー集まった後の同期取り
   UNION_TIMING_COLOSSEUM_ADD_CMD_TBL_AFTER,   ///<コロシアム：通信テーブルを追加後
   UNION_TIMING_COLOSSEUM_CARD_BEFORE,   ///<コロシアム：全員分のトレーナーカード交換前

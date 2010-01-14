@@ -469,6 +469,7 @@ void Union_App_SetCallback(UNION_APP_PTR uniapp, UNION_APP_CALLBACK_ENTRY_FUNC e
 BOOL Union_App_Parent_EntryBlock(UNION_APP_PTR uniapp)
 {
   if(uniapp->entry_reserve_bit == 0){
+    GFL_NET_SetClientConnect(GFL_NET_HANDLE_GetCurrentHandle(), FALSE);
     uniapp->entry_block = TRUE;
     return TRUE;
   }
@@ -485,6 +486,7 @@ BOOL Union_App_Parent_EntryBlock(UNION_APP_PTR uniapp)
 //==================================================================
 void Union_App_Parent_ResetEntryBlock(UNION_APP_PTR uniapp)
 {
+  GFL_NET_SetClientConnect(GFL_NET_HANDLE_GetCurrentHandle(), TRUE);
   uniapp->entry_block = FALSE;
 }
 

@@ -2449,22 +2449,56 @@ static BOOL OneselfSeq_ColosseumMemberWaitUpdate(UNION_SYSTEM_PTR unisys, UNION_
       else{
         *seq = 100;
       }
-      UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_011);
+//      UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_011);
       break;
     }
     
     //マルチ：募集処理を行う
     if(GFL_NET_IsParentMachine() == TRUE){
-      clsys->entry_menu = CommEntryMenu_Setup(fieldWork, 
+      clsys->entry_menu = CommEntryMenu_Setup(
+        GAMEDATA_GetMyStatus(unisys->uniparent->game_data), fieldWork, 
         UnionMsg_GetMemberMax(situ->mycomm.mainmenu_select),
-        UnionMsg_GetMemberMax(situ->mycomm.mainmenu_select), HEAPID_UNION);
+        UnionMsg_GetMemberMax(situ->mycomm.mainmenu_select), HEAPID_UNION,
+        COMM_ENTRY_MODE_PARENT, COMM_ENTRY_GAMETYPE_COLOSSEUM, NULL);
     }
     else{
-      UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_011);
+//      UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_011);
+      if(situ->mycomm.intrude == FALSE){
+        clsys->entry_menu = CommEntryMenu_Setup(
+          GAMEDATA_GetMyStatus(unisys->uniparent->game_data), fieldWork, 
+          UnionMsg_GetMemberMax(situ->mycomm.mainmenu_select),
+          UnionMsg_GetMemberMax(situ->mycomm.mainmenu_select), HEAPID_UNION,
+          COMM_ENTRY_MODE_CHILD_PARENT_CONNECTED, COMM_ENTRY_GAMETYPE_COLOSSEUM, NULL);
+      }
+      else{
+        clsys->entry_menu = CommEntryMenu_Setup(
+          GAMEDATA_GetMyStatus(unisys->uniparent->game_data), fieldWork, 
+          UnionMsg_GetMemberMax(situ->mycomm.mainmenu_select),
+          UnionMsg_GetMemberMax(situ->mycomm.mainmenu_select), HEAPID_UNION,
+          COMM_ENTRY_MODE_CHILD_PARENT_DESIGNATE, COMM_ENTRY_GAMETYPE_COLOSSEUM, NULL);
+      }
     }
+
+    if(situ->mycomm.intrude == FALSE){
+      GFL_NET_HANDLE_TimingSyncStart(
+        GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_COLOSSEUM_MEMBER_ENTRY_SETUP);
+    }
+    
     (*seq)++;
     break;
   case 1:
+    if(situ->mycomm.intrude == FALSE){
+  		if(GFL_NET_HANDLE_IsTimingSync(
+  		    GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_COLOSSEUM_MEMBER_ENTRY_SETUP) == TRUE){
+        (*seq)++;
+      }
+    }
+    else{
+      (*seq)++;
+    }
+    break;
+  case 2:
+  #if 0
     if(UnionSend_ColosseumEntryStatus(&clsys->basic_status[my_net_id]) == TRUE){
       if(GFL_NET_IsParentMachine() == TRUE){
         (*seq)++;
@@ -2473,22 +2507,48 @@ static BOOL OneselfSeq_ColosseumMemberWaitUpdate(UNION_SYSTEM_PTR unisys, UNION_
         (*seq) = 100;
       }
     }
-    break;
-  case 2:
-    if(CommEntryMenu_Update(clsys->entry_menu) == TRUE){
-      (*seq)++;
-    }
-    for(i = 0; i < COMM_ENTRY_USER_MAX; i++){
-      COMM_ENTRY_ANSWER answer;
-      answer = CommEntryMenu_GetAnswer(clsys->entry_menu, i, FALSE);
-      if(answer != COMM_ENTRY_ANSWER_NULL){
-        if(UnionSend_ColosseumEntryAnswer(i, answer) == TRUE){
-          CommEntryMenu_SetSendFlag(clsys->entry_menu, i);
-        }
-      }
-    }
+  #else
+    (*seq)++;
+  #endif
     break;
   case 3:
+    {
+      COMM_ENTRY_RESULT entry_result;
+      
+      entry_result = CommEntryMenu_Update(clsys->entry_menu);
+      if(entry_result == COMM_ENTRY_RESULT_NULL){
+        break;
+      }
+      
+      CommEntryMenu_Exit(clsys->entry_menu);
+      switch(entry_result){
+      case COMM_ENTRY_RESULT_SUCCESS:      //メンバーが集まった
+        (*seq) = 100;
+        break;
+      case COMM_ENTRY_RESULT_CANCEL:       //キャンセルして終了
+        (*seq) = 200;
+        break;
+      case COMM_ENTRY_RESULT_ERROR:        //エラーで終了
+        (*seq) = 200; //※check　後で作成 とりあえずキャンセルと同じにしておく
+        break;
+      default:
+        GF_ASSERT(0);
+      }
+    #if 0
+      for(i = 0; i < COMM_ENTRY_USER_MAX; i++){
+        COMM_ENTRY_ANSWER answer;
+        answer = CommEntryMenu_GetAnswer(clsys->entry_menu, i, FALSE);
+        if(answer != COMM_ENTRY_ANSWER_NULL){
+          if(UnionSend_ColosseumEntryAnswer(i, answer) == TRUE){
+            CommEntryMenu_SetSendFlag(clsys->entry_menu, i);
+          }
+        }
+      }
+    #endif
+    }
+    break;
+  case 4:
+  #if 0
     {
       int count = 0;
       for(i = 0; i < COMM_ENTRY_USER_MAX; i++){
@@ -2512,25 +2572,23 @@ static BOOL OneselfSeq_ColosseumMemberWaitUpdate(UNION_SYSTEM_PTR unisys, UNION_
         }
       }
     }
+  #endif
     break;
     
-  case 100:
-    if(UnionMsg_TalkStream_Check(unisys) == TRUE){
-      if(clsys->mine.entry_answer == COMM_ENTRY_ANSWER_COMPLETION){
-        (*seq)++;
-      }
-      else if(clsys->mine.entry_answer == COMM_ENTRY_ANSWER_REFUSE){
-        UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_019);
-        UnionOneself_ReqStatus(unisys, UNION_STATUS_COLOSSEUM_LEAVE);
-        _PlayerMinePause(unisys, fieldWork, TRUE);
-        return TRUE;
-      }
-    }
+  case 100: //集まった
+    clsys->mine.entry_answer = COMM_ENTRY_ANSWER_COMPLETION;
+    UnionOneself_ReqStatus(unisys, UNION_STATUS_COLOSSEUM_FIRST_DATA_SHARING);
+    return TRUE;
+  
+  case 200: //キャンセル
+    UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_019);
+    (*seq)++;
     break;
-  case 101:
-    if(clsys->entry_all_ready == TRUE){
-      OS_TPrintf("全員集まった\n");
-      UnionOneself_ReqStatus(unisys, UNION_STATUS_COLOSSEUM_FIRST_DATA_SHARING);
+  case 201:
+    if(UnionMsg_TalkStream_Check(unisys) == TRUE){
+      clsys->mine.entry_answer = COMM_ENTRY_ANSWER_REFUSE;
+      UnionOneself_ReqStatus(unisys, UNION_STATUS_COLOSSEUM_LEAVE);
+      _PlayerMinePause(unisys, fieldWork, TRUE);
       return TRUE;
     }
     break;
