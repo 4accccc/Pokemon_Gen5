@@ -50,6 +50,11 @@ Static main
   StackSize	0x1800 0x800
 }
 
+Autoload EX_MEM_START
+{
+  Address		$EX_MEM_START_ADRS
+}
+
 Autoload ITCM
 {
   Address		0x01ff8000
@@ -60,11 +65,6 @@ Autoload DTCM
 {
   Address		$(ADDRESS_DTCM)
   Object		* (.dtcm)
-}
-
-Autoload EX_MEM_START
-{
-  Address		$EX_MEM_START_ADRS
 }
 
 #----------------------------------------------------------------------------
@@ -281,21 +281,23 @@ total_output += "#ここから下はoverlaytool.rbで自動生成されています\n\n"
 sections.each{|overlay_info|
   total_output += overlay_info.putOverlaySection()
 }
-total_output.gsub!("$EX_MEM_START_ADRS","0x02400000")
+#total_output.gsub!("$EX_MEM_START_ADRS","0x02400000")
 
 #NITRO用ファイルを作成する部分
 File.open(OUTPUT_LSFFILE, "w" ){|file|
   #NITROのLSFのファイルの$LIBを読み替える
-  file.puts total_output.gsub(".$HYB","")
+  file.puts total_output.gsub(".$HYB","").gsub("$EX_MEM_START_ADRS","0x02400000")
 }
 
 ##TWL用ファイルを作成する部分
 File.open(OUTPUT_TWL_LSFFILE, "w" ) {|file|
   #TWLのLSFファイルの$LIBを読み替える
-  file.puts total_output.gsub("$HYB","TWL.HYB")
+  file.puts total_output.gsub("$HYB","TWL.HYB").gsub("$EX_MEM_START_ADRS","0x0d000000")
   file.puts(bottom_lsf1)
   sections.each{|section|
-    file.printf("\tAfter\t%s\n",section.put_name )
+    if section.afterList.include?("EX_MEM_START") == false then
+      file.printf("\tAfter\t%s\n",section.put_name )
+    end
   }
   file.puts(bottom_lsf2)
 }
