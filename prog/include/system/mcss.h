@@ -93,6 +93,7 @@ extern	void						MCSS_Exit( MCSS_SYS_WORK *mcss_sys );
 extern	void						MCSS_Main( MCSS_SYS_WORK *mcss_sys );
 extern  void	          MCSS_SetCallBackFunc( MCSS_SYS_WORK *mcss_sys, MCSS_CALLBACK_FUNC* func, void* work );
 extern  void	          MCSS_SetCallBackWork( MCSS_SYS_WORK *mcss_sys, void* work );
+extern  void	          MCSS_ReloadResource( MCSS_SYS_WORK *mcss_sys, MCSS_WORK* mcss, MCSS_ADD_WORK* maw );
 extern	void						MCSS_Draw( MCSS_SYS_WORK *mcss_sys );
 extern	MCSS_WORK*			MCSS_Add( MCSS_SYS_WORK *mcss_sys, fx32	pos_x, fx32	pos_y, fx32	pos_z, const MCSS_ADD_WORK *maw );
 extern	void						MCSS_Del( MCSS_SYS_WORK *mcss_sys, MCSS_WORK *mcss );
