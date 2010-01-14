@@ -98,19 +98,6 @@ typedef enum {
 
 //--------------------------------------------------------------
 /**
- *  アクション選択ごとにクリアされるフラグセット
- */
-//--------------------------------------------------------------
-typedef enum {
-
-  BPP_ACTFLG_CANT_ACTION,   ///< アクション選択不可
-
-  BPP_ACTFLG_MAX,
-
-}BppActFlag;
-
-//--------------------------------------------------------------
-/**
  *  永続的に保持されるフラグセット
  */
 //--------------------------------------------------------------
@@ -127,6 +114,7 @@ typedef enum {
   BPP_CONTFLG_KIAIDAME,
   BPP_CONTFLG_POWERTRICK,
   BPP_CONTFLG_MIKURUNOMI,
+  BPP_CONTFLG_CANT_ACTION,      ///< 反動で動けない
 
   BPP_CONTFLG_MAX,
 
@@ -256,7 +244,6 @@ extern BOOL BPP_IsHPFull( const BTL_POKEPARAM* pp );
 extern BOOL BPP_IsPPFull( const BTL_POKEPARAM* pp, u8 wazaIdx );
 
 extern BOOL BPP_TURNFLAG_Get( const BTL_POKEPARAM* pp, BppTurnFlag flagID );
-extern BOOL BPP_GetActFlag( const BTL_POKEPARAM* pp, BppActFlag flagID );
 extern BOOL BPP_CONTFLAG_Get( const BTL_POKEPARAM* pp, BppContFlag flagID );
 extern u16 BPP_GetTurnCount( const BTL_POKEPARAM* pp );
 extern u16 BPP_GetAppearTurn( const BTL_POKEPARAM* pp );
@@ -365,8 +352,6 @@ extern BOOL BPP_Nemuri_CheckWake( BTL_POKEPARAM* pp );
 extern void BPP_TURNFLAG_Set( BTL_POKEPARAM* pp, BppTurnFlag flagID );
 extern void BPP_TURNFLAG_ForceOff( BTL_POKEPARAM* pp, BppTurnFlag flagID );
 extern void BPP_TurnCheck( BTL_POKEPARAM* pp );
-extern void BPP_ACTFLAG_Set( BTL_POKEPARAM* pp, BppActFlag flagID );
-extern void BPP_ACTFLAG_Clear( BTL_POKEPARAM* pp );
 extern void BPP_CONTFLAG_Set( BTL_POKEPARAM* pp, BppContFlag flagID );
 extern void BPP_CONTFLAG_Clear( BTL_POKEPARAM* pp, BppContFlag flagID );
 extern void BPP_ChangeTokusei( BTL_POKEPARAM* pp, PokeTokusei tok );

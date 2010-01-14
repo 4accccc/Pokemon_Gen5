@@ -1825,7 +1825,8 @@ static void handler_ReafGuard( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
     if( BTL_SVFTOOL_GetWeather(flowWk) == BTL_WEATHER_SHINE )
     {
       // É|ÉPÉÇÉìånèÛë‘àŸèÌÇ…ÇÕÇ»ÇÁÇ»Ç¢
-      if( BTL_EVENTVAR_GetValue(BTL_EVAR_SICKID) < POKESICK_MAX )
+      WazaSick sickID = BTL_EVENTVAR_GetValue( BTL_EVAR_SICKID );
+      if( BTL_CALC_IsBasicSickID(sickID) )
       {
         work[0] = BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_FLAG, TRUE );
       }
@@ -2845,6 +2846,7 @@ static void handler_Syncro( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk,
       if( attackPokeID != BTL_POKEID_NULL )
       {
         BTL_HANDEX_PARAM_ADD_SICK* param;
+        const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
 
         BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_TOKWIN_IN, pokeID );
 
@@ -2852,7 +2854,7 @@ static void handler_Syncro( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk,
         param->poke_cnt = 1;
         param->pokeID[0] = attackPokeID;
         param->sickID = sick;
-        param->sickCont = BPP_SICKCONT_MakePermanent();
+        BTL_CALC_MakeDefaultWazaSickCont( sick, bpp, &param->sickCont );
         param->fAlmost = TRUE;
 
         BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_TOKWIN_OUT, pokeID );

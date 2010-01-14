@@ -23,6 +23,7 @@
 #include "btl_server_cmd.h"
 
 #include "app\b_bag.h"
+#include "app\b_plist.h"
 #include "btlv\btlv_core.h"
 
 #include "btl_client.h"
@@ -167,12 +168,13 @@ static BOOL is_unselectable_waza( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, Waza
 static BtlCantEscapeCode is_prohibit_escape( BTL_CLIENT* wk, u8* pokeID, u16* tokuseiID );
 static BOOL SubProc_AI_SelectAction( BTL_CLIENT* wk, int* seq );
 static u8 calcPuttablePokemons( BTL_CLIENT* wk, u8* list );
-static void setup_pokesel_param_change( BTL_CLIENT* wk, BTL_POKESELECT_PARAM* param );
-static void setup_pokesel_param_dead( BTL_CLIENT* wk, u8 numSelect, BTL_POKESELECT_PARAM* param );
+static void setup_pokesel_param_change( BTL_CLIENT* wk, u8 mode, u8 numSelect, BTL_POKESELECT_PARAM* param, BTL_POKESELECT_RESULT* result );
 static void store_pokesel_to_action( BTL_CLIENT* wk, const BTL_POKESELECT_RESULT* res );
 static u8 storeMyChangePokePos( BTL_CLIENT* wk, BtlPokePos* myCoverPos );
 static BOOL SubProc_UI_SelectChangeOrEscape( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_UI_SelectPokemon( BTL_CLIENT* wk, int* seq );
+static BOOL SubProc_UI_SelectPokemonForChange( BTL_CLIENT* wk, int* seq );
+static BOOL SelectPokemonUI_Core( BTL_CLIENT* wk, int* seq, u8 mode );
 static BOOL SubProc_AI_SelectPokemon( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_REC_SelectPokemon( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_UI_RecordData( BTL_CLIENT* wk, int* seq );
@@ -293,6 +295,9 @@ BTL_CLIENT* BTL_CLIENT_Create(
   wk->myState = 0;
   wk->commWaitInfoOn = FALSE;
   wk->shooterEnergy = 0;
+  // @todo デバッグ用一時措置（シューターフル充電）
+//  wk->shooterEnergy = BTL_SHOOTER_ENERGY_MAX;
+
   wk->bagMode = bagMode;
   wk->escapeClientID = BTL_CLIENTID_NULL;
 
@@ -434,7 +439,7 @@ static ClientSubProc getSubProc( BTL_CLIENT* wk, BtlAdapterCmd cmd )
     },
 
     { BTL_ACMD_SELECT_POKEMON_FOR_CHANGE,
-       { SubProc_UI_SelectPokemon, SubProc_AI_SelectPokemon,  SubProc_REC_SelectPokemon  } },
+       { SubProc_UI_SelectPokemonForChange, SubProc_AI_SelectPokemon,  SubProc_REC_SelectPokemon  } },
 
     { BTL_ACMD_SERVER_CMD,
        { SubProc_UI_ServerCmd,     NULL,                      SubProc_REC_ServerCmd      } },
@@ -648,7 +653,7 @@ static BOOL selact_Start( BTL_CLIENT* wk, int* seq )
   wk->prevPokeIdx = -1;
   wk->checkedPokeCnt = 0;
 
-  setup_pokesel_param_change( wk, &wk->pokeSelParam );
+  setup_pokesel_param_change( wk, BPL_MODE_NORMAL, 1, &wk->pokeSelParam, &wk->pokeSelResult  );
   shooterCost_Init( wk );
 
   SelActProc_Set( wk, selact_Root );
@@ -669,7 +674,8 @@ static BOOL selact_Root( BTL_CLIENT* wk, int* seq )
     {
       BTL_N_PrintfEx( PRINT_FLG, DBGSTR_CLIENT_SelectActionSkip, wk->procPokeIdx );
       SelActProc_Set( wk, selact_CheckFinish );
-    }else{
+    }
+    else{
       (*seq)++;
     }
     break;
@@ -848,7 +854,7 @@ static BOOL selact_Fight( BTL_CLIENT* wk, int* seq )
 }
 //----------------------------------------------------------------------
 /**
- *  入れ替えポケモン選択
+ *  「ポケモン」選択後の入れ替えポケモン選択
  */
 //----------------------------------------------------------------------
 static BOOL selact_SelectChangePokemon( BTL_CLIENT* wk, int* seq )
@@ -1121,13 +1127,13 @@ static BOOL is_action_unselectable( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, BT
   if( BPP_IsDead(wk->procPoke) )
   {
     if( action ){
-      OS_Printf("死んでるアクションセット->%p\n", action);
+      // 死んでる状態のアクション内容セット
       BTL_ACTION_SetNULL( action );
     }
     return TRUE;
   }
   // アクション選択できない（攻撃の反動など）場合はスキップ
-  if( BPP_GetActFlag(wk->procPoke, BPP_ACTFLG_CANT_ACTION) )
+  if( BPP_CONTFLAG_Get(wk->procPoke, BPP_CONTFLG_CANT_ACTION) )
   {
     if( action ){
       BTL_ACTION_SetSkip( action );
@@ -1505,33 +1511,23 @@ static u8 calcPuttablePokemons( BTL_CLIENT* wk, u8* list )
 }
 //--------------------------------------------------------------------------
 /**
- * ポケモン選択画面用パラメータセット（アクション「ポケモン」で入れ替える時）
+ * ポケモン選択画面用パラメータセット
  *
  * @param   wk          クライアントモジュールハンドラ
+ * @param   mode
+ * @param   numSelect
  * @param   param       [out] 選択画面用パラメータを格納する
+ * @param   result      [out] 選択画面結果データ（初期化される）
  *
  */
 //--------------------------------------------------------------------------
-static void setup_pokesel_param_change( BTL_CLIENT* wk, BTL_POKESELECT_PARAM* param )
+static void setup_pokesel_param_change( BTL_CLIENT* wk, u8 mode, u8 numSelect, BTL_POKESELECT_PARAM* param, BTL_POKESELECT_RESULT* result )
 {
-  BTL_POKESELECT_PARAM_Init( param, wk->myParty, 1, BPL_MODE_NORMAL );
+  BTL_POKESELECT_PARAM_Init( param, wk->myParty, numSelect, mode );
   BTL_POKESELECT_PARAM_SetProhibitFighting( param, wk->numCoverPos );
+  BTL_POKESELECT_RESULT_Init( result, param );
 }
-//--------------------------------------------------------------------------
-/**
- * ポケモン選択画面用パラメータセット（自分のポケモンが瀕死になったとき）
- *
- * @param   wk          クライアントモジュールハンドラ
- * @param   numSelect   選択しなければいけない数
- * @param   param       [out] 選択画面用パラメータを格納する
- *
- */
-//--------------------------------------------------------------------------
-static void setup_pokesel_param_dead( BTL_CLIENT* wk, u8 numSelect, BTL_POKESELECT_PARAM* param )
-{
-  BTL_POKESELECT_PARAM_Init( param, wk->myParty, numSelect, BPL_MODE_CHG_DEAD );
-  BTL_POKESELECT_PARAM_SetProhibitFighting( param, wk->numCoverPos );
-}
+
 
 // ポケモン選択画面結果 -> 決定アクションパラメータに変換
 static void store_pokesel_to_action( BTL_CLIENT* wk, const BTL_POKESELECT_RESULT* res )
@@ -1626,7 +1622,7 @@ static BOOL SubProc_UI_SelectChangeOrEscape( BTL_CLIENT* wk, int* seq )
 }
 //----------------------------------------------------------------------------------
 /**
- * 入れ替え時の交換
+ * ひん死・生き返りで次に出すポケモンを選択
  *
  * @param   wk
  * @param   seq
@@ -1636,48 +1632,69 @@ static BOOL SubProc_UI_SelectChangeOrEscape( BTL_CLIENT* wk, int* seq )
 //----------------------------------------------------------------------------------
 static BOOL SubProc_UI_SelectPokemon( BTL_CLIENT* wk, int* seq )
 {
+  return SelectPokemonUI_Core( wk, seq, BPL_MODE_CHG_DEAD );
+}
+//----------------------------------------------------------------------------------
+/**
+ * バトンタッチなど生きているポケモンをターン途中に入れ替える
+ *
+ * @param   wk
+ * @param   seq
+ *
+ * @retval  BOOL
+ */
+//----------------------------------------------------------------------------------
+static BOOL SubProc_UI_SelectPokemonForChange( BTL_CLIENT* wk, int* seq )
+{
+  return SelectPokemonUI_Core( wk, seq, BPL_MODE_NO_CANCEL );
+}
+/**
+ *  ポケモン入れ替えコア処理
+ */
+static BOOL SelectPokemonUI_Core( BTL_CLIENT* wk, int* seq, u8 mode )
+{
   switch( *seq ){
   case 0:
+  {
+    wk->myChangePokeCnt = storeMyChangePokePos( wk, wk->myChangePokePos );
+
+    if( wk->myChangePokeCnt )
     {
-      wk->myChangePokeCnt = storeMyChangePokePos( wk, wk->myChangePokePos );
-
-      if( wk->myChangePokeCnt )
+      u8 numPuttable = calcPuttablePokemons( wk, NULL );
+      if( numPuttable )
       {
-        u8 numPuttable = calcPuttablePokemons( wk, NULL );
-        if( numPuttable )
-        {
-          u8 numSelect = wk->myChangePokeCnt;
+        u8 numSelect = wk->myChangePokeCnt;
 
-          // 生きてるポケが出さなければいけない数に足りない場合、そこを諦める
-          if( numSelect > numPuttable )
-          {
-            numSelect = numPuttable;
-          }
+        // 生きてるポケが出さなければいけない数に足りない場合、そこを諦める
+        if( numSelect > numPuttable ){
+          numSelect = numPuttable;
+        }
 
-          BTL_N_Printf( DBGSTR_CLIENT_ChangePokeNum, wk->myID, numSelect);
-          setup_pokesel_param_dead( wk, numSelect, &wk->pokeSelParam );
-          BTLV_StartPokeSelect( wk->viewCore, &wk->pokeSelParam, FALSE, &wk->pokeSelResult );
-          (*seq)++;
-        }
-        else
-        {
-          BTL_N_Printf( DBGSTR_CLIENT_NoMorePuttablePoke, wk->myID);
-          BTL_ACTION_SetChangeDepleteParam( &wk->actionParam[0] );
-          wk->returnDataPtr = &(wk->actionParam[0]);
-          wk->returnDataSize = sizeof(wk->actionParam[0]);
-          return TRUE;
-        }
+        BTL_N_Printf( DBGSTR_CLIENT_ChangePokeCmdInfo, wk->myID, numSelect, mode );
+        setup_pokesel_param_change( wk, mode, numSelect, &wk->pokeSelParam, &wk->pokeSelResult );
+
+        BTLV_StartPokeSelect( wk->viewCore, &wk->pokeSelParam, FALSE, &wk->pokeSelResult );
+        (*seq)++;
       }
       else
       {
-        BTL_N_Printf( DBGSTR_CLIENT_NotDeadMember, wk->myID);
-        BTL_ACTION_SetNULL( &wk->actionParam[0] );
+        BTL_N_Printf( DBGSTR_CLIENT_NoMorePuttablePoke, wk->myID);
+        BTL_ACTION_SetChangeDepleteParam( &wk->actionParam[0] );
         wk->returnDataPtr = &(wk->actionParam[0]);
         wk->returnDataSize = sizeof(wk->actionParam[0]);
         return TRUE;
       }
     }
-    break;
+    else
+    {
+      BTL_N_Printf( DBGSTR_CLIENT_NotDeadMember, wk->myID);
+      BTL_ACTION_SetNULL( &wk->actionParam[0] );
+      wk->returnDataPtr = &(wk->actionParam[0]);
+      wk->returnDataSize = sizeof(wk->actionParam[0]);
+      return TRUE;
+    }
+  }
+  break;
 
   case 1:
     if( BTLV_WaitPokeSelect(wk->viewCore) )
@@ -1690,6 +1707,7 @@ static BOOL SubProc_UI_SelectPokemon( BTL_CLIENT* wk, int* seq )
 
   return FALSE;
 }
+
 static BOOL SubProc_AI_SelectPokemon( BTL_CLIENT* wk, int* seq )
 {
   wk->myChangePokeCnt = storeMyChangePokePos( wk, wk->myChangePokePos );
@@ -1865,8 +1883,6 @@ static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq )
     { SC_OP_RESET_USED_WAZA,    scProc_OP_ResetUsedWaza   },
     { SC_OP_SET_CONTFLAG,       scProc_OP_SetContFlag     },
     { SC_OP_RESET_CONTFLAG,     scProc_OP_ResetContFlag   },
-    { SC_OP_SET_ACTFLAG,        scProc_OP_SetActFlag      },
-    { SC_OP_CLEAR_ACTFLAG,      scProc_OP_ClearActFlag    },
     { SC_OP_SET_TURNFLAG,       scProc_OP_SetTurnFlag     },
     { SC_OP_RESET_TURNFLAG,     scProc_OP_ResetTurnFlag   },
     { SC_OP_CHANGE_TOKUSEI,     scProc_OP_ChangeTokusei   },
@@ -3414,19 +3430,6 @@ static BOOL scProc_OP_ResetTurnFlag( BTL_CLIENT* wk, int* seq, const int* args )
 {
   BTL_POKEPARAM* pp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
   BPP_TURNFLAG_ForceOff( pp, args[1] );
-  return TRUE;
-}
-
-static BOOL scProc_OP_SetActFlag( BTL_CLIENT* wk, int* seq, const int* args )
-{
-  BTL_POKEPARAM* pp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
-  BPP_ACTFLAG_Set( pp, args[1] );
-  return TRUE;
-}
-static BOOL scProc_OP_ClearActFlag( BTL_CLIENT* wk, int* seq, const int* args )
-{
-  BTL_POKEPARAM* pp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
-  BPP_ACTFLAG_Clear( pp );
   return TRUE;
 }
 static BOOL scProc_OP_ChangeTokusei( BTL_CLIENT* wk, int* seq, const int* args )

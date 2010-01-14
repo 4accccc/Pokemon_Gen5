@@ -33,7 +33,6 @@ enum {
   RANK_CRITICAL_DEF = 0,
 
   TURNFLG_BUF_SIZE = (BPP_TURNFLG_MAX/8)+(BPP_TURNFLG_MAX%8!=0),
-  ACTFLG_BUF_SIZE  = (BPP_ACTFLG_MAX/8)+(BPP_ACTFLG_MAX%8!=0),
   CONTFLG_BUF_SIZE = (BPP_CONTFLG_MAX/8)+(BPP_CONTFLG_MAX%8!=0),
 
   TURNCOUNT_NULL = BTL_TURNCOUNT_MAX+1,
@@ -140,7 +139,6 @@ struct _BTL_POKEPARAM {
   u16 sameWazaCounter;        ///< 同じワザを何連続で出しているかカウンタ
   BtlPokePos  prevTargetPos;  ///< 直前に狙った相手
   u8  turnFlag[ TURNFLG_BUF_SIZE ];
-  u8  actFlag [ ACTFLG_BUF_SIZE ];
   u8  contFlag[ CONTFLG_BUF_SIZE ];
   u8  counter[ BPP_COUNTER_MAX ];
   BPP_WAZADMG_REC  wazaDamageRec[ WAZADMG_REC_TURN_MAX ][ WAZADMG_REC_MAX ];
@@ -779,20 +777,6 @@ BOOL BPP_TURNFLAG_Get( const BTL_POKEPARAM* pp, BppTurnFlag flagID )
 }
 //=============================================================================================
 /**
- * アクション毎クリアフラグの取得
- *
- * @param   pp
- * @param   flagID
- *
- * @retval  BOOL
- */
-//=============================================================================================
-BOOL BPP_GetActFlag( const BTL_POKEPARAM* pp, BppActFlag flagID )
-{
-  return flgbuf_get( pp->actFlag, flagID );
-}
-//=============================================================================================
-/**
  * 永続フラグ値取得
  *
  * @param   pp
@@ -1339,18 +1323,6 @@ void BPP_TURNFLAG_Set( BTL_POKEPARAM* pp, BppTurnFlag flagID )
 }
 //=============================================================================================
 /**
- * アクションごとフラグのセット
- *
- * @param   pp
- * @param   flagID
- */
-//=============================================================================================
-void BPP_ACTFLAG_Set( BTL_POKEPARAM* pp, BppActFlag flagID )
-{
-  flgbuf_set( pp->actFlag, flagID );
-}
-//=============================================================================================
-/**
  * 永続フラグのセット
  *
  * @param   pp
@@ -1396,7 +1368,7 @@ void BPP_CONTFLAG_Clear( BTL_POKEPARAM* pp, BppContFlag flagID )
 //=============================================================================================
 void BPP_SetWazaSick( BTL_POKEPARAM* bpp, WazaSick sick, BPP_SICK_CONT contParam )
 {
-  if( (sick < POKESICK_MAX) || (sick == WAZASICK_DOKUDOKU) )
+  if( BTL_CALC_IsBasicSickID(sick) )
   {
     PokeSick pokeSick = BPP_GetPokeSick( bpp );
     GF_ASSERT(pokeSick == POKESICK_NULL);
@@ -1528,7 +1500,7 @@ static void cureDependSick( BTL_POKEPARAM* bpp, WazaSick sickID  )
 //=============================================================================================
 void BPP_CureWazaSick( BTL_POKEPARAM* pp, WazaSick sick )
 {
-  if( sick < POKESICK_MAX )
+  if( BTL_CALC_IsBasicSickID(sick) )
   {
     BPP_CurePokeSick( pp );
   }
@@ -1813,17 +1785,6 @@ void BPP_TURNFLAG_ForceOff( BTL_POKEPARAM* bpp, BppTurnFlag flagID )
 }
 //=============================================================================================
 /**
- * アクションごとフラグのクリア
- *
- * @param   bpp
- */
-//=============================================================================================
-void BPP_ACTFLAG_Clear( BTL_POKEPARAM* bpp )
-{
-  flgbuf_clear( bpp->actFlag, sizeof(bpp->actFlag) );
-}
-//=============================================================================================
-/**
  * 死亡による各種状態クリア
  *
  * @param   pp
@@ -1831,7 +1792,6 @@ void BPP_ACTFLAG_Clear( BTL_POKEPARAM* bpp )
 //=============================================================================================
 void BPP_Clear_ForDead( BTL_POKEPARAM* bpp )
 {
-  flgbuf_clear( bpp->actFlag, sizeof(bpp->actFlag) );
   flgbuf_clear( bpp->turnFlag, sizeof(bpp->turnFlag) );
   flgbuf_clear( bpp->contFlag, sizeof(bpp->contFlag) );
 
@@ -1856,7 +1816,6 @@ void BPP_Clear_ForDead( BTL_POKEPARAM* bpp )
 //=============================================================================================
 void BPP_Clear_ForOut( BTL_POKEPARAM* bpp )
 {
-  flgbuf_clear( bpp->actFlag, sizeof(bpp->actFlag) );
   flgbuf_clear( bpp->turnFlag, sizeof(bpp->turnFlag) );
   /*
    * ※バトンタッチで引き継ぐ情報を記録しているため、

@@ -32,6 +32,7 @@
 // リスト処理定義
 enum {
 	BPL_MODE_NORMAL = 0,	// 通常のポケモン選択
+	BPL_MODE_NO_CANCEL,		// キャンセル無効のポケモン選択
 	BPL_MODE_CHG_DEAD,		// 瀕死入れ替え選択
 	BPL_MODE_ITEMUSE,			// アイテム使用
 	BPL_MODE_WAZASET,			// 技忘れ
@@ -47,12 +48,14 @@ typedef struct {
 
 	HEAPID	heap;			// ヒープID
 
-	BtlRule	rule;			// シングル／ダブル／トリプル
+	BtlRule	rule;			// シングル／ダブル／トリプル　※マルチバトル時のルールはダブル！
 
 	BOOL	multiMode;		// マルチバトルかどうか TRUE = マルチ, FALSE = それ以外
 	u8	multiPos;				// マルチの立ち位置
 	u8	change_sel[2];	// ダブル/トリプルですでに選択されているポケモン（いない場合はBPL_CHANGE_SEL_NONE）
 	u8	mode;						// リストモード
+
+	u8	sel_poke;				// 選択されたポケモン or 戻る　（初期位置用）
 
 	u16	item;						// アイテム
 	u16	chg_waza;				// いれかえ禁止技・新しく覚える技
@@ -61,11 +64,10 @@ typedef struct {
 	PALETTE_FADE_PTR pfd;	// パレットフェードデータ
 
 	// [in & out]
-	u8	sel_poke;									// 選択されたポケモン or 戻る
 	u8 * cursor_flg;							// カーソル表示フラグ
 
 	// [out]
-	u8	sel_pos[BPL_SELNUM_MAX];	// 選択されたポケモン
+	u8	sel_pos[BPL_SELNUM_MAX];	// 選択されたポケモン（キャンセル時は、全体がBPL_SELPOS_NONEになる）
 	u8	sel_wp;			// 選択された技位置
 	u8	end_flg;		// 終了フラグ
 

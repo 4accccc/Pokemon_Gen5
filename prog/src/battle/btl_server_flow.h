@@ -85,10 +85,10 @@ extern BTL_SVFLOW_WORK* BTL_SVFLOW_InitSystem(
 extern void BTL_SVFLOW_QuitSystem( BTL_SVFLOW_WORK* wk );
 
 extern BOOL BTL_SVFLOW_MakeShooterChargeCommand( BTL_SVFLOW_WORK* wk );
-extern SvflowResult BTL_SVFLOW_Start( BTL_SVFLOW_WORK* wk );
+extern SvflowResult BTL_SVFLOW_StartTurn( BTL_SVFLOW_WORK* wk );
 extern SvflowResult BTL_SVFLOW_Start_AfterPokemonIn( BTL_SVFLOW_WORK* wk );
 extern SvflowResult BTL_SVFLOW_StartAfterPokeIn( BTL_SVFLOW_WORK* wk );
-extern SvflowResult BTL_SVFLOW_StartAfterPokeChange( BTL_SVFLOW_WORK* wk );
+extern SvflowResult BTL_SVFLOW_ContinueAfterPokeChange( BTL_SVFLOW_WORK* wk );
 extern void BTL_SVFLOW_CreateRotationCommand( BTL_SVFLOW_WORK* wk, u8 clientID, BtlRotateDir dir );
 extern BOOL BTL_SVFLOW_CreatePlayerEscapeCommand( BTL_SVFLOW_WORK* wk );
 

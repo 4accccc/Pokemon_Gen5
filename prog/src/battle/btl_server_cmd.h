@@ -53,8 +53,6 @@ typedef enum {
   SC_OP_RESET_USED_WAZA,    ///< 連続ワザ使用カウンタリセット
   SC_OP_SET_CONTFLAG,       ///< 永続フラグセット
   SC_OP_RESET_CONTFLAG,     ///< 永続フラグリセット
-  SC_OP_SET_ACTFLAG,        ///< アクション毎フラグセット
-  SC_OP_CLEAR_ACTFLAG,      ///< アクション毎フラグオールクリア
   SC_OP_SET_TURNFLAG,       ///< ターンフラグセット
   SC_OP_RESET_TURNFLAG,     ///< ターンフラグ強制リセット
   SC_OP_CHANGE_TOKUSEI,     ///< とくせい書き換え
@@ -340,15 +338,6 @@ static inline void SCQUE_PUT_OP_ResetContFlag( BTL_SERVER_CMD_QUE* que, u8 pokeI
 {
   SCQUE_PUT_Common( que, SC_OP_RESET_CONTFLAG, pokeID, flag );
 }
-static inline void SCQUE_PUT_OP_SetActFlag( BTL_SERVER_CMD_QUE* que, u8 pokeID, BppActFlag flag )
-{
-  SCQUE_PUT_Common( que, SC_OP_SET_ACTFLAG, pokeID, flag );
-}
-static inline void SCQUE_PUT_OP_ClearActFlag( BTL_SERVER_CMD_QUE* que, u8 pokeID )
-{
-  SCQUE_PUT_Common( que, SC_OP_CLEAR_ACTFLAG, pokeID );
-}
-
 static inline void SCQUE_PUT_OP_ChangeTokusei( BTL_SERVER_CMD_QUE* que, u8 pokeID, u16 tokID )
 {
   SCQUE_PUT_Common( que, SC_OP_CHANGE_TOKUSEI, pokeID, tokID );

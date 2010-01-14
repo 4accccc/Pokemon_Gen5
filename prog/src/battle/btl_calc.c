@@ -388,6 +388,7 @@ u16 BTL_CALC_RecvWeatherDamage( const BTL_POKEPARAM* bpp, BtlWeather weather )
     return dmg;
   }
 }
+
 //=============================================================================================
 /**
  * ワザデータの状態異常継続パラメータ値から、バトルで使う状態異常継続パラメータ値へ変換
@@ -462,6 +463,21 @@ BPP_SICK_CONT BTL_CALC_MakeDefaultPokeSickCont( PokeSick sick )
 
   return cont;
 }
+
+//=============================================================================================
+/**
+ * 基本状態異常か
+ *
+ * @param   sickID
+ *
+ * @retval  BOOL
+ */
+//=============================================================================================
+BOOL BTL_CALC_IsBasicSickID( WazaSick sickID )
+{
+  return (sickID < POKESICK_MAX) || (sickID == WAZASICK_DOKUDOKU);
+}
+
 //=============================================================================================
 /**
  * ワザ系状態異常の継続パラメータ（ターン数型）を作成
@@ -514,15 +530,25 @@ void BTL_CALC_MakeDefaultWazaSickCont( WazaSick sick, const BTL_POKEPARAM* attac
 
   switch( sick ){
   case WAZASICK_MEROMERO:
-    cont->type = WAZASICK_CONT_POKE;
-    cont->poke.ID = BPP_GetID( attacker );
+    {
+      u8 pokeID = BPP_GetID( attacker );
+      *cont = BPP_SICKCONT_MakePoke( pokeID );
+    }
     break;
+
   case WAZASICK_KONRAN:
-    cont->type = WAZASICK_CONT_TURN;
-    cont->turn.count = BTL_CALC_RandRange( BTL_CONF_TURN_MIN, BTL_CONF_TURN_MAX );
+    {
+      u8 turns = BTL_CALC_RandRange( BTL_CONF_TURN_MIN, BTL_CONF_TURN_MAX );
+      *cont = BPP_SICKCONT_MakeTurn( turns );
+    }
     break;
+
+  case WAZASICK_DOKUDOKU:
+    *cont = BPP_SICKCONT_MakePermanentInc( BTL_MOUDOKU_INC_MAX );
+    break;
+
   default:
-    cont->type = WAZASICK_CONT_PERMANENT;
+    *cont = BPP_SICKCONT_MakePermanent();
     break;
   }
 }

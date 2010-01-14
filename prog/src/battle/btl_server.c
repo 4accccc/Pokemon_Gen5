@@ -483,7 +483,7 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
     {
       BTL_N_Printf( DBGSTR_SERVER_ActionSelectDoneAll );
       ResetAdapterCmd( server );
-      server->flowResult = BTL_SVFLOW_Start( server->flowWork );
+      server->flowResult = BTL_SVFLOW_StartTurn( server->flowWork );
       BTL_N_Printf( DBGSTR_SERVER_FlowResult, server->flowResult);
 
       if( SendActionRecord(server) ){
@@ -706,7 +706,7 @@ static BOOL ServerMain_SelectPokemonChange( BTL_SERVER* server, int* seq )
     {
       ResetAdapterCmd( server );
       SCQUE_Init( server->que );
-      server->flowResult = BTL_SVFLOW_StartAfterPokeChange( server->flowWork );
+      server->flowResult = BTL_SVFLOW_ContinueAfterPokeChange( server->flowWork );
       BTL_N_Printf( DBGSTR_SERVER_FlowResult, server->flowResult );
 
       if( SendActionRecord(server) ){
@@ -736,6 +736,10 @@ static BOOL ServerMain_SelectPokemonChange( BTL_SERVER* server, int* seq )
       BTL_MAIN_SyncServerCalcData( server->mainModule );
 
       switch( server->flowResult ){
+      case SVFLOW_RESULT_POKE_CHANGE:
+        (*seq) = 0;
+        break;
+
       case SVFLOW_RESULT_POKE_IN_REQ:
         setMainProc( server, ServerMain_SelectPokemonIn );
         break;

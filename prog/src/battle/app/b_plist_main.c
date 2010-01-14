@@ -249,6 +249,7 @@ static int BPL_SeqDeadErrRet( BPLIST_WORK * wk );
 static BOOL CheckDeadPoke( BPLIST_WORK * wk );
 static void SetDeadChangeData( BPLIST_WORK * wk );
 static BOOL CheckNextDeadSel( BPLIST_WORK * wk );
+static void SetSelPosCancel( BPLIST_WORK * wk );
 
 
 
@@ -469,12 +470,12 @@ void BattlePokeList_TaskAdd( BPLIST_DATA * dat )
   wk->dat->chg_waza = 20;
 //  wk->page = BPLIST_PAGE_PP_RCV;    // PP回復技選択ページ
 */
-/*
-  wk->dat->mode = BPL_MODE_CHG_DEAD;   // キャンセル不可
+
+//  wk->dat->mode = BPL_MODE_CHG_DEAD;   // 瀕死入れ替え時
 //  wk->dat->rule = BTL_RULE_SINGLE;
 //  wk->dat->rule = BTL_RULE_DOUBLE;
-	wk->dat->rule = BTL_RULE_TRIPLE;
-*/
+//	wk->dat->rule = BTL_RULE_TRIPLE;
+
 /*
 	// マルチ
 	wk->dat->multi_pp = wk->dat->pp;
@@ -703,7 +704,7 @@ static int BPL_SeqInit( BPLIST_WORK * wk )
 
   // マルチのときの初期位置補正
   if( wk->page == BPLIST_PAGE_SELECT &&
-    BattlePokeList_MultiPosCheck( wk, 0 ) == TRUE ){
+    BattlePokeList_MultiPosCheck( wk, BPLISTMAIN_GetListRow(wk,0) ) == TRUE ){
     wk->dat->sel_poke = 1;
   }
 
@@ -765,9 +766,34 @@ static int BPL_SeqPokeSelect( BPLIST_WORK * wk )
 
   if( BPL_PokemonSelect( wk ) == TRUE ){
     if( wk->dat->sel_poke == BPL_SEL_EXIT ){
+			// 瀕死いれかえ時
+      if( wk->dat->mode == BPL_MODE_CHG_DEAD ){
+				u8	pos1, pos2;
+				if( BPLISTMAIN_GetNewLog( wk, &pos1, &pos2, TRUE ) == TRUE ){
+					if( pos1 < pos2 ){
+						GF_ASSERT_MSG( pos1 < BPL_SELNUM_MAX, "pos1 = %d\n", pos1 );
+						wk->dat->sel_pos[pos1] = BPL_SELPOS_NONE;
+					}else{
+						GF_ASSERT_MSG( pos2 < BPL_SELNUM_MAX, "pos2 = %d\n", pos2 );
+						wk->dat->sel_pos[pos2] = BPL_SELPOS_NONE;
+					}
+					wk->chg_pos1 = pos1;
+					wk->chg_pos2 = pos2;
+					wk->btn_seq = 0;
+					return SEQ_BPL_POKECHG_DEAD;
+				}
+			// キャンセル無効以外
+			}else if( wk->dat->mode != BPL_MODE_NO_CANCEL ){
+        PMSND_PlaySE( SEQ_SE_DECIDE2 );
+        BattlePokeList_ButtonAnmInit( wk, BPL_BUTTON_RET );
+				SetSelPosCancel( wk );
+        return SEQ_BPL_ENDSET;
+			}
+/*
       if( wk->dat->mode != BPL_MODE_CHG_DEAD ){
         PMSND_PlaySE( SEQ_SE_DECIDE2 );
         BattlePokeList_ButtonAnmInit( wk, BPL_BUTTON_RET );
+				SetSelPosCancel( wk );
         return SEQ_BPL_ENDSET;
       }else{
 				u8	pos1, pos2;
@@ -785,6 +811,7 @@ static int BPL_SeqPokeSelect( BPLIST_WORK * wk )
 					return SEQ_BPL_POKECHG_DEAD;
 				}
 			}
+*/
     }else{
       PMSND_PlaySE( SEQ_SE_DECIDE2 );
       BattlePokeList_ButtonAnmInit( wk, BPL_BUTTON_POKE1+wk->dat->sel_poke );
@@ -813,12 +840,13 @@ static int BPL_PokeItemUse( BPLIST_WORK * wk )
 {
   BPLIST_DATA * dat = wk->dat;
 
-  // とりあえず、タマゴには使えないようにしておく
+  // タマゴには使えない
   if( wk->poke[ BPLISTMAIN_GetListRow(wk,dat->sel_poke) ].egg != 0 ){
     GFL_MSG_GetString( wk->mman, mes_b_plist_m06, wk->msg_buf );
     BattlePokeList_TalkMsgSet( wk );
     wk->dat->sel_poke = BPL_SEL_EXIT;
     wk->ret_seq = SEQ_BPL_ENDSET;
+		SetSelPosCancel( wk );
     return SEQ_BPL_MSG_WAIT;
   }
 
@@ -828,6 +856,8 @@ static int BPL_PokeItemUse( BPLIST_WORK * wk )
     wk->ret_seq = SEQ_BPL_PAGECHG_PPRCV;
     return SEQ_BPL_BUTTON_WAIT;
   }
+
+	dat->sel_pos[0] = BPLISTMAIN_GetListRow( wk, dat->sel_poke );
 
   return SEQ_BPL_ENDSET;
 
@@ -920,6 +950,7 @@ static int BPL_SeqPokeIrekae( BPLIST_WORK * wk )
     if( BPL_IrekaeCheck( wk ) == TRUE ){
 			// 通常の入れ替え
 			if( wk->dat->mode != BPL_MODE_CHG_DEAD ){
+				wk->dat->sel_pos[0] = BPLISTMAIN_GetListRow( wk, wk->dat->sel_poke );
 	      return SEQ_BPL_ENDSET;
 			}
 			// 瀕死時の入れ替え
@@ -1399,11 +1430,15 @@ static int BPL_SeqWazaRcvSelect( BPLIST_WORK * wk )
     }
     break;
 */
-    if( wk->poke[dat->sel_poke].waza[ret].id == 0 ){ break; }
-    wk->dat->sel_wp = (u8)ret;
-    PMSND_PlaySE( SEQ_SE_DECIDE2 );
-    BattlePokeList_ButtonAnmInit( wk, BPL_BUTTON_WAZARCV1+ret );
-    return SEQ_BPL_ENDSET;
+		{
+			u8	pos = BPLISTMAIN_GetListRow( wk, wk->dat->sel_poke );
+	    if( wk->poke[pos].waza[ret].id == 0 ){ break; }
+	    wk->dat->sel_wp = (u8)ret;
+			wk->dat->sel_pos[0] = pos;
+	    PMSND_PlaySE( SEQ_SE_DECIDE2 );
+	    BattlePokeList_ButtonAnmInit( wk, BPL_BUTTON_WAZARCV1+ret );
+	    return SEQ_BPL_ENDSET;
+		}
 
   case BPLIST_UI_PPRCV_RETURN:    // もどる
   case CURSORMOVE_CANCEL:         // キャンセル
@@ -1742,6 +1777,7 @@ static int BPL_SeqStRcv( BPLIST_WORK * wk )
 //    BattleBag_SubItem( dat->bw, dat->item, dat->bag_page, dat->heap );
     BattlePokeList_TalkMsgSet( wk );
     wk->ret_seq = SEQ_BPL_ENDSET;
+		wk->dat->sel_pos[0] = pos;
     return SEQ_BPL_MSG_WAIT;
 
   case 4:   // 瀕死回復のために１度だけ呼ぶ
@@ -1828,6 +1864,28 @@ static int BPL_SeqPPAllRcv( BPLIST_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static int BPL_SeqEndSet( BPLIST_WORK * wk )
 {
+	// マルチモード時の選択位置補正
+	if( BattlePokeList_MultiCheck( wk ) == TRUE ){
+		u32	i;
+		for( i=0; i<BPL_SELNUM_MAX; i++ ){
+			if( wk->dat->sel_pos[i] != BPL_SELPOS_NONE ){
+				wk->dat->sel_pos[i] /= 2;
+			}
+		}
+		wk->dat->sel_poke /= 2;
+	}
+/*
+	OS_Printf( "\n■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■\n" );
+	OS_Printf( "sel_poke = %d\n", wk->dat->sel_poke );
+	{
+		u32	i;
+		for( i=0; i<BPL_SELNUM_MAX; i++ ){
+			OS_Printf( "sel_pos = %d\n", wk->dat->sel_pos[i] );
+		}
+	}
+	OS_Printf( "■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■\n" );
+*/
+
   PaletteFadeReq(
     wk->pfd, PF_BIT_SUB_ALL, 0xffff, BATTLE_BAGLIST_FADE_SPEED, 0, 16, 0, wk->dat->tcb_sys );
   return SEQ_BPL_ENDWAIT;
@@ -2248,102 +2306,25 @@ static void BPL_PokeDataMake( BPLIST_WORK * wk )
 			}
 		}
 	}else{
-		POKEPARTY * pp1;
-		POKEPARTY * pp2;
-
-		if( wk->dat->multiPos == 0 ){
-			pp1 = wk->dat->pp;
-			pp2 = wk->dat->multi_pp;
-		}else{
-			pp1 = wk->dat->multi_pp;
-			pp2 = wk->dat->pp;
-		}
-
 	  for( i=0; i<TEMOTI_POKEMAX/2; i++ ){
-			if( i < PokeParty_GetPokeCount(pp1) ){
-				PokeDataMakeCore( wk, PokeParty_GetMemberPointer(pp1,i), &wk->poke[i] );
+			if( i < PokeParty_GetPokeCount(wk->dat->pp) ){
+				PokeDataMakeCore( wk, PokeParty_GetMemberPointer(wk->dat->pp,i), &wk->poke[i] );
 			}else{
 				PokeDataMakeCore( wk, NULL, &wk->poke[i] );
 			}
-			if( i < PokeParty_GetPokeCount(pp2) ){
-				PokeDataMakeCore( wk, PokeParty_GetMemberPointer(pp2,i), &wk->poke[i+3] );
+			if( i < PokeParty_GetPokeCount(wk->dat->multi_pp) ){
+				PokeDataMakeCore( wk, PokeParty_GetMemberPointer(wk->dat->multi_pp,i), &wk->poke[i+3] );
 			}else{
 				PokeDataMakeCore( wk, NULL, &wk->poke[i+3] );
 			}
 		}
 	}
 
-/*
-  u16 i, j;
 
-  for( i=0; i<PokeParty_GetPokeCount(wk->dat->pp); i++ ){
-    wk->poke[i].pp = PokeParty_GetMemberPointer( wk->dat->pp, i );
-    wk->poke[i].mons = PP_Get( wk->poke[i].pp, ID_PARA_monsno, NULL );
-
-    if( wk->poke[i].mons == 0 ){ continue; }
-
-    wk->poke[i].pow = PP_Get( wk->poke[i].pp, ID_PARA_pow, NULL );
-    wk->poke[i].def = PP_Get( wk->poke[i].pp, ID_PARA_def, NULL );
-    wk->poke[i].agi = PP_Get( wk->poke[i].pp, ID_PARA_agi, NULL );
-    wk->poke[i].spp = PP_Get( wk->poke[i].pp, ID_PARA_spepow, NULL );
-    wk->poke[i].spd = PP_Get( wk->poke[i].pp, ID_PARA_spedef, NULL );
-    wk->poke[i].hp  = PP_Get( wk->poke[i].pp, ID_PARA_hp, NULL );
-    wk->poke[i].mhp = PP_Get( wk->poke[i].pp, ID_PARA_hpmax, NULL );
-
-    wk->poke[i].type1 = (u8)PP_Get( wk->poke[i].pp, ID_PARA_type1, NULL );
-    wk->poke[i].type2 = (u8)PP_Get( wk->poke[i].pp, ID_PARA_type2, NULL );
-
-    wk->poke[i].lv  = (u8)PP_Get( wk->poke[i].pp, ID_PARA_level, NULL );
-    if( PP_Get( wk->poke[i].pp, ID_PARA_nidoran_nickname, NULL ) == TRUE ){
-      wk->poke[i].sex_put = 0;
-    }else{
-      wk->poke[i].sex_put = 1;
-    }
-    wk->poke[i].sex = PP_GetSex( wk->poke[i].pp );
-    wk->poke[i].st  = APP_COMMON_GetStatusIconAnime( wk->poke[i].pp );
-    wk->poke[i].egg = (u8)PP_Get( wk->poke[i].pp, ID_PARA_tamago_flag, NULL );
-
-    wk->poke[i].spa  = (u16)PP_Get( wk->poke[i].pp, ID_PARA_speabino, NULL );
-    wk->poke[i].item = (u16)PP_Get( wk->poke[i].pp, ID_PARA_item, NULL );
-
-    wk->poke[i].style     = (u8)PP_Get( wk->poke[i].pp, ID_PARA_style, NULL );
-    wk->poke[i].beautiful = (u8)PP_Get( wk->poke[i].pp, ID_PARA_beautiful, NULL );
-    wk->poke[i].cute      = (u8)PP_Get( wk->poke[i].pp, ID_PARA_cute, NULL );
-    wk->poke[i].clever    = (u8)PP_Get( wk->poke[i].pp, ID_PARA_clever, NULL );
-    wk->poke[i].strong    = (u8)PP_Get( wk->poke[i].pp, ID_PARA_strong, NULL );
-
-    wk->poke[i].cb = (u16)PP_Get( wk->poke[i].pp, ID_PARA_cb_id, NULL );
-    wk->poke[i].form = (u8)PP_Get( wk->poke[i].pp, ID_PARA_form_no, NULL );
-
-    wk->poke[i].now_exp     = PP_Get( wk->poke[i].pp, ID_PARA_exp, NULL );
-    wk->poke[i].now_lv_exp  = PP_GetMinExp( wk->poke[i].pp );
-    if( wk->poke[i].lv == 100 ){
-      wk->poke[i].next_lv_exp = wk->poke[i].now_lv_exp;
-    }else{
-      wk->poke[i].next_lv_exp = POKETOOL_GetMinExp(
-                                  wk->poke[i].mons, wk->poke[i].form, wk->poke[i].lv+1 );
-    }
-
-    for( j=0; j<4; j++ ){
-      BPL_POKEWAZA * waza = &wk->poke[i].waza[j];
-
-      waza->id   = PP_Get( wk->poke[i].pp, ID_PARA_waza1+j, NULL );
-      if( waza->id == 0 ){ continue; }
-      waza->pp   = PP_Get( wk->poke[i].pp, ID_PARA_pp1+j, NULL );
-      waza->mpp  = PP_Get( wk->poke[i].pp, ID_PARA_pp_count1+j, NULL );
-      waza->mpp  = WAZADATA_GetMaxPP( waza->id, waza->mpp );
-      waza->type = WAZADATA_GetParam( waza->id, WAZAPARAM_TYPE );
-      waza->kind = WAZADATA_GetParam( waza->id, WAZAPARAM_DAMAGE_TYPE );
-      waza->hit  = WAZADATA_GetParam( waza->id, WAZAPARAM_HITPER );
-      waza->pow  = WAZADATA_GetParam( waza->id, WAZAPARAM_POWER );
-    }
-  }
-*/
-/*
-	wk->poke[0].hp = 0;
-  wk->poke[1].hp = 0;
-  wk->poke[2].hp = 0;
-*/
+//	wk->poke[0].hp = 0;
+//  wk->poke[1].hp = 0;
+//  wk->poke[2].hp = 0;
+//  wk->poke[3].hp = 0;
 }
 
 //--------------------------------------------------------------------------------------------
@@ -2358,30 +2339,6 @@ static void BPL_PokeDataMake( BPLIST_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static u8 BPL_PokemonSelect( BPLIST_WORK * wk )
 {
-/*
-  int ret = BPL_TPCheck( wk, Page1_HitRect );
-
-  if( ret == GFL_UI_TP_HIT_NONE ){
-    ret = BAPP_CursorMove( wk->cmv_wk );
-    if( ret == BAPP_CMV_CANCEL ){
-      ret = BPL_SEL_EXIT;
-    }else if( ret == BAPP_CMV_NONE ){
-      return FALSE;
-    }
-    if( ret == BPL_SEL_EXIT || BattlePokeList_PokeSetCheck( wk, ret ) != 0 ){
-      wk->dat->sel_poke = (u8)ret;
-      return TRUE;
-    }
-  }else{
-    if( ret == BPL_SEL_EXIT || BattlePokeList_PokeSetCheck( wk, ret ) != 0 ){
-      wk->dat->sel_poke = (u8)ret;
-      BattlePokeList_CursorOff( wk );
-      return TRUE;
-    }
-  }
-
-  return FALSE;
-*/
   u32 ret = CURSORMOVE_MainCont( wk->cmwk );
 
   switch( ret ){
@@ -3198,11 +3155,14 @@ BOOL BattlePokeList_MultiCheck( BPLIST_WORK * wk )
 u8 BattlePokeList_MultiPosCheck( BPLIST_WORK * wk, u8 pos )
 {
   if( BattlePokeList_MultiCheck( wk ) == TRUE ){
+/*
 		if( wk->dat->multiPos == 0 ){
 			if( pos >= 3 ){ return TRUE; }
 		}else{
 			if( pos < 3 ){ return TRUE; }
 		}
+*/
+		if( pos >= 3 ){ return TRUE; }
 	}
 	return FALSE;
 
@@ -3326,7 +3286,7 @@ static BOOL FightPokeCheck( BPLIST_WORK * wk, u32 pos )
 
 	// マルチバトル時
 	if( BattlePokeList_MultiCheck( wk ) == TRUE ){
-    if( pos == 0 || pos == 1 ){
+    if( pos == 0 || pos == 3 ){
       return TRUE;
     }
 		return FALSE;
@@ -3887,6 +3847,11 @@ static BOOL CheckDeadPoke( BPLIST_WORK * wk )
 	u8	max;
 	u8	i;
 
+	// マルチバトル時
+	if( BattlePokeList_MultiCheck( wk ) == TRUE ){
+		return FALSE;
+	}
+
 	if( wk->dat->rule == BTL_RULE_SINGLE ){
 		return FALSE;
 	}else if( wk->dat->rule == BTL_RULE_DOUBLE ){
@@ -3928,6 +3893,11 @@ static BOOL CheckNextDeadSel( BPLIST_WORK * wk )
 	u8	max;
 	u8	i;
 
+	// マルチバトル時
+	if( BattlePokeList_MultiCheck( wk ) == TRUE ){
+		return FALSE;
+	}
+
 	if( wk->dat->rule == BTL_RULE_SINGLE ){
 		return FALSE;
 	}else if( wk->dat->rule == BTL_RULE_DOUBLE ){
@@ -3958,5 +3928,15 @@ static void SetDeadChangeData( BPLIST_WORK * wk )
 			wk->dat->sel_pos[i] = wk->dat->sel_poke;
 			break;
 		}
+	}
+}
+
+// キャンセル設定
+static void SetSelPosCancel( BPLIST_WORK * wk )
+{
+	u32	i;
+
+	for( i=0; i<BPL_SELNUM_MAX; i++ ){
+		wk->dat->sel_pos[i] = BPL_SELPOS_NONE;
 	}
 }

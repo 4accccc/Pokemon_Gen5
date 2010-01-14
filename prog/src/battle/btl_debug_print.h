@@ -36,7 +36,7 @@ typedef enum {
   DBGSTR_CLIENT_WazaLockInfo,
   DBGSTR_CLIENT_NoMorePuttablePoke,
   DBGSTR_CLIENT_NotDeadMember,
-  DBGSTR_CLIENT_ChangePokeNum,
+  DBGSTR_CLIENT_ChangePokeCmdInfo,
   DBGSTR_CLIENT_NumChangePokeBegin,
   DBGSTR_CLIENT_NumChangePokeResult,
   DBGSTR_CLIENT_PokeSelCnt,
@@ -101,6 +101,11 @@ typedef enum {
   DBGSTR_SVFL_HitCheckInfo4,
   DBGSTR_SVFL_StartAfterPokeChange,
   DBGSTR_SVFL_PokeChangeRootInfo,
+  DBGSTR_SVFL_UseItemCall,
+  DBGSTR_SVFL_ChangePokeReqInfo,
+  DBGSTR_SVFL_TurnStart_Result,
+  DBGSTR_SVFL_ActOrderMainStart,
+
 
   DBGSTR_SC_PutCmd,
   DBGSTR_SC_ReservedPos,
@@ -127,6 +132,9 @@ typedef enum {
   DBGSTR_EVAR_Pop,
 
   DBGSTR_VCORE_PokeListStart,
+  DBGSTR_VCORE_SelPokeEnd,
+  DBGSTR_VCORE_SelPokeEnd_Sel,
+  DBGSTR_VCORE_SelPokeEnd_Unsel,
 
   DBGSTR_POSPOKE_Out,
   DBGSTR_POSPOKE_In,

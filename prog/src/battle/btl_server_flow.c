@@ -221,8 +221,11 @@ struct _BTL_SVFLOW_WORK {
 /*--------------------------------------------------------------------------*/
 /* Prototypes                                                               */
 /*--------------------------------------------------------------------------*/
+static void clearPokeCantActionFlag( BTL_SVFLOW_WORK* wk );
+static u32 ActOrderProc_Main( BTL_SVFLOW_WORK* wk, u32 startOrderIdx );
+static BOOL ActOrderProc_PokeIn( BTL_SVFLOW_WORK* wk );
 static BOOL scproc_CheckShowdown( BTL_SVFLOW_WORK* wk );
-static void clear_poke_actflags( BTL_SVFLOW_WORK* wk );
+static void scproc_countup_shooter_energy( BTL_SVFLOW_WORK* wk );
 static BOOL reqChangePokeForServer( BTL_SVFLOW_WORK* wk );
 static void scproc_BeforeFirstFight( BTL_SVFLOW_WORK* wk );
 static void scproc_CheckFlyingAllPoke( BTL_SVFLOW_WORK* wk );
@@ -440,7 +443,6 @@ static void scproc_TurnCheck( BTL_SVFLOW_WORK* wk );
 static void   scproc_turncheck_CommSupport( BTL_SVFLOW_WORK* wk );
 static void scproc_turncheck_sub( BTL_SVFLOW_WORK* wk, BTL_POKESET* pokeSet, BtlEventType event_type );
 static void scEvent_TurnCheck( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp, BtlEventType event_type );
-static void scproc_countup_shooter_energy( BTL_SVFLOW_WORK* wk );
 static void scproc_turncheck_sick( BTL_SVFLOW_WORK* wk, BTL_POKESET* pokeSet );
 static u32 scEvent_SickDamage( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, WazaSick sickID, u32 damage );
 static void scproc_turncheck_side( BTL_SVFLOW_WORK* wk );
@@ -501,8 +503,6 @@ static void scPut_DecrementPP( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, u8 
 static void scPut_RecoverPP( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u8 wazaIdx, u8 volume, u16 itemID );
 static void scPut_UseItemAct( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
 static void scPut_ConsumeItem( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
-static void scPut_ActFlag_Set( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BppActFlag flagID );
-static void scPut_ActFlag_Clear( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
 static void scPut_SetContFlag( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BppContFlag flag );
 static void scPut_ResetContFlag( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BppContFlag flag );
 static void scPut_SetTurnFlag( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BppTurnFlag flag );
@@ -703,6 +703,8 @@ void BTL_SVFLOW_QuitSystem( BTL_SVFLOW_WORK* wk )
 }
 
 
+
+
 SvflowResult BTL_SVFLOW_Start_AfterPokemonIn( BTL_SVFLOW_WORK* wk )
 {
   SVCL_WORK* cw;
@@ -727,29 +729,9 @@ SvflowResult BTL_SVFLOW_Start_AfterPokemonIn( BTL_SVFLOW_WORK* wk )
 
   scproc_AfterMemberIn( wk );
 
-  // @@@ しぬこともあるかも?
+  // @@@ しぬこともあるか?  状態異常・天候などの効果はターンエンド時なので、ないかな
   return SVFLOW_RESULT_DEFAULT;
 }
-
-//--------------------------------------------------------------------------
-/**
- * シューターチャージコマンド生成
- *
- * @param   wk
- *
- * @retval  BOOL
- */
-//--------------------------------------------------------------------------
-BOOL BTL_SVFLOW_MakeShooterChargeCommand( BTL_SVFLOW_WORK* wk )
-{
-  SCQUE_Init( wk->que );
-
-  // シューターのエネルギーチャージ
-  scproc_countup_shooter_energy( wk );
-
-  return wk->que->writePtr != 0;
-}
-
 //--------------------------------------------------------------------------
 /**
  * サーバコマンド生成（通常の１ターン分コマンド生成）
@@ -759,43 +741,148 @@ BOOL BTL_SVFLOW_MakeShooterChargeCommand( BTL_SVFLOW_WORK* wk )
  * @retval  SvflowResult
  */
 //--------------------------------------------------------------------------
-SvflowResult BTL_SVFLOW_Start( BTL_SVFLOW_WORK* wk )
+SvflowResult BTL_SVFLOW_StartTurn( BTL_SVFLOW_WORK* wk )
 {
-  u8 numActPoke, alivePokeBefore, alivePokeAfter;
-  u8 i;
-
-  SCQUE_Init( wk->que );
-
-  BTL_EVENTVAR_CheckStackCleared();
-
   relivePokeRec_Init( wk );
   BTL_DEADREC_StartTurn( &wk->deadRec );
-  wk->numActOrder = 0;
-
   FlowFlg_ClearAll( wk );
   BTL_EVENT_StartTurn();
-  wk->flowResult =  SVFLOW_RESULT_DEFAULT;
-
-  clear_poke_actflags( wk );
 
   BTL_SERVER_InitChangePokemonReq( wk->server );
+  BTL_EVENTVAR_CheckStackCleared();
+  SCQUE_Init( wk->que );
+
+  clearPokeCantActionFlag( wk );
+
+  wk->flowResult =  SVFLOW_RESULT_DEFAULT;
+  wk->numActOrder = sortClientAction( wk, wk->actOrder, NELEMS(wk->actOrder) );
+  wk->numEndActOrder = ActOrderProc_Main( wk, 0 );
+  BTL_N_Printf( DBGSTR_SVFL_TurnStart_Result, wk->numEndActOrder, wk->numActOrder );
+
+  return wk->flowResult;
+}
+/**
+ *  全ポケモンの反動で動けない状態フラグをクリア
+ */
+static void clearPokeCantActionFlag( BTL_SVFLOW_WORK* wk )
+{
+  FRONT_POKE_SEEK_WORK  fps;
+  BTL_POKEPARAM* bpp;
+
+  FRONT_POKE_SEEK_InitWork( &fps, wk );
+  while( FRONT_POKE_SEEK_GetNext(&fps, wk, &bpp) )
+  {
+    if( BPP_CONTFLAG_Get(bpp, BPP_CONTFLG_CANT_ACTION) ){
+      scPut_ResetContFlag( wk, bpp, BPP_CONTFLG_CANT_ACTION );
+    }
+  }
+}
+//=============================================================================================
+/**
+ * サーバコマンド生成（ターン途中のポケモン入れ替え選択後、継続）
+ *
+ * @param   wk
+ *
+ * @retval  SvflowResult
+ */
+//=============================================================================================
+SvflowResult BTL_SVFLOW_ContinueAfterPokeChange( BTL_SVFLOW_WORK* wk )
+{
+  BTL_N_Printf( DBGSTR_SVFL_StartAfterPokeChange );
+
+  BTL_SERVER_InitChangePokemonReq( wk->server );
+  BTL_EVENTVAR_CheckStackCleared();
+  SCQUE_Init( wk->que );
+
+  wk->flowResult =  SVFLOW_RESULT_DEFAULT;
+
+  if( ActOrderProc_PokeIn(wk) ){
+    wk->flowResult = SVFLOW_RESULT_BTL_SHOWDOWN;
+    return wk->flowResult;
+  }
+
+  wk->numEndActOrder = ActOrderProc_Main( wk, wk->numEndActOrder );
+  return wk->flowResult;
+}
+//=============================================================================================
+/**
+ * サーバコマンド生成（ポケモン死亡・生き返りによるターン最初の入場処理）
+ *
+ * @param   wk
+ *
+ * @retval  SvflowResult
+ */
+//=============================================================================================
+SvflowResult BTL_SVFLOW_StartAfterPokeIn( BTL_SVFLOW_WORK* wk )
+{
+  const BTL_ACTION_PARAM* action;
+  u32 i;
+  u8 numDeadPoke;
+
+  BTL_SERVER_InitChangePokemonReq( wk->server );
+  BTL_EVENTVAR_CheckStackCleared();
+  SCQUE_Init( wk->que );
+
+  wk->flowResult =  SVFLOW_RESULT_DEFAULT;
+
+  BTL_Printf("空き位置にポケモン投入後のサーバーコマンド生成\n");
+
+  BTL_SERVER_InitChangePokemonReq( wk->server );
+
+  numDeadPoke = BTL_DEADREC_GetCount( &wk->deadRec, 0 );
+  wk->flowResult =  SVFLOW_RESULT_DEFAULT;
 
   wk->numActOrder = sortClientAction( wk, wk->actOrder, NELEMS(wk->actOrder) );
   wk->numEndActOrder = 0;
   for(i=0; i<wk->numActOrder; i++)
+  {
+    action = &wk->actOrder[i].action;
+    if( action->gen.cmd != BTL_ACTION_CHANGE ){ continue; }
+    if( action->change.depleteFlag ){ continue; }
+
+    BTL_Printf("クライアント_%d の位置_%d へ、%d番目のポケを出す\n",
+          wk->actOrder[i].clientID, action->change.posIdx, action->change.memberIdx );
+    scproc_MemberInForChange( wk, wk->actOrder[i].clientID, action->change.posIdx, action->change.memberIdx, TRUE );
+  }
+  scproc_AfterMemberIn( wk );
+
+  {
+    u8 numDeadPokeAfter = BTL_DEADREC_GetCount( &wk->deadRec, 0 );
+    return (numDeadPoke == numDeadPokeAfter)?  SVFLOW_RESULT_DEFAULT : SVFLOW_RESULT_POKE_IN_REQ;
+  }
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * コマンド生成コア（選択アクション配列から）
+ *
+ * @param   wk
+ * @param   startOrderIdx   開始アクションIndex
+ *
+ * @retval  u32   処理し終えたアクション数
+ */
+//----------------------------------------------------------------------------------
+static u32 ActOrderProc_Main( BTL_SVFLOW_WORK* wk, u32 startOrderIdx )
+{
+  u32 i;
+
+  BTL_N_Printf( DBGSTR_SVFL_ActOrderMainStart, startOrderIdx );
+
+  for(i=startOrderIdx; i<wk->numActOrder; i++)
   {
     ActOrder_Proc( wk, &wk->actOrder[i] );
 
     // 大爆発など同時全滅のケースは、死亡レコードを見れば解決するんじゃんと思ってる。
     if( scproc_CheckShowdown(wk) ){
       wk->flowResult = SVFLOW_RESULT_BTL_SHOWDOWN;
-      return wk->flowResult;
+      return i+1;
     }
 
     if( wk->flowResult !=  SVFLOW_RESULT_DEFAULT ){
-      wk->numEndActOrder = i+1;
+      OS_TPrintf("Result=%dによる中途サーバ返信\n");
       break;
     }
+
     BTL_N_Printf( DBGSTR_SVFL_QueWritePtr, wk->que->writePtr );
   }
 
@@ -804,13 +891,13 @@ SvflowResult BTL_SVFLOW_Start( BTL_SVFLOW_WORK* wk )
   {
     u8 numDeadPoke;
 
-    wk->numEndActOrder = wk->numActOrder;
+    OS_TPrintf("ターンチェック開始\n");
 
     // ターンチェック処理
     scproc_TurnCheck( wk );
     if( scproc_CheckShowdown(wk) ){
       wk->flowResult = SVFLOW_RESULT_BTL_SHOWDOWN;
-      return wk->flowResult;
+      return i;
     }
 
     numDeadPoke = BTL_DEADREC_GetCount( &wk->deadRec, 0 );
@@ -818,21 +905,69 @@ SvflowResult BTL_SVFLOW_Start( BTL_SVFLOW_WORK* wk )
     if( relivePokeRec_CheckNecessaryPokeIn(wk)
     ||  (numDeadPoke != 0)
     ){
-      BTL_Printf("新ポケ入場の必要あります\n");
       reqChangePokeForServer( wk );
-      return SVFLOW_RESULT_POKE_IN_REQ;
+      wk->flowResult = SVFLOW_RESULT_POKE_IN_REQ;
+      return i;
     }
-    return SVFLOW_RESULT_DEFAULT;
 
+    wk->flowResult = SVFLOW_RESULT_DEFAULT;
+    return i;
   }
   // まだアクションが残っているが入れ替え・逃げなど発生でサーバーへ返す
   else
   {
     // @@@ トンボがえりで…殴られた方が死んで終了の場合は引っ込む処理要らないねぇ。
     reqChangePokeForServer( wk );
-    return wk->flowResult;
+    return i;
   }
 }
+//----------------------------------------------------------------------------------
+/**
+ * コマンド生成（ポケモン入場アクションのみ処理）
+ *
+ * @param   wk
+ *
+ * @retval  BOOL  入場後の処理でポケモンが死亡、決着が付いた場合にTRUE
+ */
+//----------------------------------------------------------------------------------
+static BOOL ActOrderProc_PokeIn( BTL_SVFLOW_WORK* wk )
+{
+  SVCL_WORK* clwk;
+  const BTL_ACTION_PARAM* action;
+  u32 i, j, actionCnt;
+
+  for(i=0; i<BTL_CLIENT_MAX; ++i)
+  {
+    clwk = BTL_SERVER_GetClientWork( wk->server, i );
+    if( clwk == NULL ){
+      continue;
+    }
+    actionCnt = BTL_SVCL_GetNumActPoke( clwk );
+
+    for(j=0; j<actionCnt; ++j)
+    {
+      action = BTL_SVCL_GetPokeAction( clwk, j );
+      if( action->gen.cmd != BTL_ACTION_CHANGE ){ continue; }
+      if( action->change.depleteFlag ){ continue; }
+
+      BTL_N_Printf( DBGSTR_SVFL_PokeChangeRootInfo,
+            i, action->change.posIdx, action->change.memberIdx );
+
+      scproc_MemberInForChange( wk, i, action->change.posIdx, action->change.memberIdx, TRUE );
+    }
+  }
+  scproc_AfterMemberIn( wk );
+  return scproc_CheckShowdown( wk );
+}
+//----------------------------------------------------------------------------------
+/**
+ * 現在のパーティデータ比較し、決着がついたか判定
+ *
+ * @param   wk
+ *
+ * @retval  BOOL
+ */
+//----------------------------------------------------------------------------------
 static BOOL scproc_CheckShowdown( BTL_SVFLOW_WORK* wk )
 {
   u8  pokeExist[2];
@@ -863,28 +998,17 @@ static BOOL scproc_CheckShowdown( BTL_SVFLOW_WORK* wk )
   return FALSE;
 
 }
-//
-static void clear_poke_actflags( BTL_SVFLOW_WORK* wk )
-{
-  BTL_POKEPARAM* bpp;
-  FRONT_POKE_SEEK_WORK fps;
 
-  FRONT_POKE_SEEK_InitWork( &fps, wk );
-  while( FRONT_POKE_SEEK_GetNext( &fps, wk, &bpp ) )
-  {
-    scPut_ActFlag_Clear( wk, bpp );
-  }
-}
 
-//--------------------------------------------------------------------------
+//=============================================================================================
 /**
- * サーバコマンド生成（ポケモン死亡・生き返りによるターン最初の入場処理）
+ * サーバコマンド生成（逃げる処理）
  *
  * @param   wk
  *
  * @retval  BOOL    逃げることが出来たらTRUE
  */
-//--------------------------------------------------------------------------
+//=============================================================================================
 BOOL BTL_SVFLOW_CreatePlayerEscapeCommand( BTL_SVFLOW_WORK* wk )
 {
   u8 clientID = BTL_MAIN_GetPlayerClientID( wk->mainModule );
@@ -903,104 +1027,77 @@ BOOL BTL_SVFLOW_CreatePlayerEscapeCommand( BTL_SVFLOW_WORK* wk )
   }
 }
 
-//--------------------------------------------------------------------------
+//=============================================================================================
 /**
- * サーバコマンド生成（ポケモン死亡・生き返りによるターン最初の入場処理）
+ * シューターチャージコマンド生成
  *
  * @param   wk
  *
- * @retval  SvflowResult
+ * @retval  BOOL    コマンド生成したらTRUE
  */
-//--------------------------------------------------------------------------
-SvflowResult BTL_SVFLOW_StartAfterPokeIn( BTL_SVFLOW_WORK* wk )
+//=============================================================================================
+BOOL BTL_SVFLOW_MakeShooterChargeCommand( BTL_SVFLOW_WORK* wk )
 {
-  const BTL_ACTION_PARAM* action;
-  SVCL_WORK* clwk;
-  u16 clientID, posIdx;
-  u8 numDeadPoke;
-  int i, j, actionCnt;
-
-  BTL_Printf("空き位置にポケモン投入後のサーバーコマンド生成\n");
-
-  SCQUE_Init( wk->que );
-//  scproc_CheckFlyingAllPoke( wk );
-  BTL_SERVER_InitChangePokemonReq( wk->server );
-
-  numDeadPoke = BTL_DEADREC_GetCount( &wk->deadRec, 0 );
-
-//  BTL_DEADREC_StartTurn( &wk->deadRec );
-  wk->flowResult =  SVFLOW_RESULT_DEFAULT;
-
-  wk->numActOrder = sortClientAction( wk, wk->actOrder, NELEMS(wk->actOrder) );
-  wk->numEndActOrder = 0;
-  for(i=0; i<wk->numActOrder; i++)
-  {
-    action = &wk->actOrder[i].action;
-    if( action->gen.cmd != BTL_ACTION_CHANGE ){ continue; }
-    if( action->change.depleteFlag ){ continue; }
-
-    BTL_Printf("クライアント_%d の位置_%d へ、%d番目のポケを出す\n",
-          wk->actOrder[i].clientID, action->change.posIdx, action->change.memberIdx );
-    scproc_MemberInForChange( wk, wk->actOrder[i].clientID, action->change.posIdx, action->change.memberIdx, TRUE );
-  }
-  scproc_AfterMemberIn( wk );
-
-  {
-    u8 numDeadPokeAfter = BTL_DEADREC_GetCount( &wk->deadRec, 0 );
-    return (numDeadPoke == numDeadPokeAfter)?  SVFLOW_RESULT_DEFAULT : SVFLOW_RESULT_POKE_IN_REQ;
-  }
-}
-//--------------------------------------------------------------------------
-/**
- * サーバコマンド生成（ターン途中のポケモン入れ替え選択後）
- *
- * @param   wk
- *
- * @retval  SvflowResult
- */
-//--------------------------------------------------------------------------
-SvflowResult BTL_SVFLOW_StartAfterPokeChange( BTL_SVFLOW_WORK* wk )
-{
-  const BTL_ACTION_PARAM* action;
-  SVCL_WORK* clwk;
-  u16 clientID, posIdx;
-  int i, j, actionCnt;
-
-  BTL_N_Printf( DBGSTR_SVFL_StartAfterPokeChange );
-
   SCQUE_Init( wk->que );
 
-  wk->flowResult =  SVFLOW_RESULT_DEFAULT;
-  BTL_SERVER_InitChangePokemonReq( wk->server );
+  // シューターのエネルギーチャージ
+  scproc_countup_shooter_energy( wk );
 
-  for(i=0; i<BTL_CLIENT_MAX; ++i)
-  {
-    clwk = BTL_SERVER_GetClientWork( wk->server, i );
-    if( clwk == NULL ){
-      continue;
-    }
-    actionCnt = BTL_SVCL_GetNumActPoke( clwk );
-
-    for(j=0; j<actionCnt; ++j)
-    {
-      action = BTL_SVCL_GetPokeAction( clwk, j );
-      if( action->gen.cmd != BTL_ACTION_CHANGE ){ continue; }
-      if( action->change.depleteFlag ){ continue; }
-
-      BTL_N_Printf( DBGSTR_SVFL_PokeChangeRootInfo,
-            i, action->change.posIdx, action->change.memberIdx );
-
-      scproc_MemberInForChange( wk, i, action->change.posIdx, action->change.memberIdx, TRUE );
-    }
-  }
-  scproc_AfterMemberIn( wk );
-
-  return SVFLOW_RESULT_DEFAULT;
+  return wk->que->writePtr != 0;
 }
-
-
-
 //----------------------------------------------------------------------------------
+/**
+ * シューターのエネルギーチャージ計算＆各クライアントに通知
+ *
+ * @param   wk
+ */
+//----------------------------------------------------------------------------------
+static void scproc_countup_shooter_energy( BTL_SVFLOW_WORK* wk )
+{
+  if( wk->bagMode == BBAG_MODE_SHOOTER )
+  {
+    u32 i;
+    for(i=0; i<BTL_CLIENT_MAX; ++i)
+    {
+      if( !BTL_SERVER_IsClientEnable(wk->server, i) ){
+        continue;
+      }
+      if( BTL_MAIN_GetRule(wk->mainModule) != BTL_RULE_TRIPLE ){
+        SCQUE_PUT_OP_ShooterCharge( wk->que, i, 1 );
+      }else{
+        u8 myClientID, opponentClientID, emptyCnt, fEnable, p;
+        u8 emptyPos[ BTL_POSIDX_MAX ];
+
+        myClientID = BTL_MAIN_GetPlayerClientID( wk->mainModule );
+        opponentClientID = BTL_MAIN_GetOpponentClientID( wk->mainModule, myClientID, 0 );
+
+        fEnable = TRUE;
+        emptyCnt = BTL_POSPOKE_GetClientEmptyPos( &wk->pospokeWork, myClientID, emptyPos );
+        for(p=0; p<emptyCnt; ++p)
+        {
+          if( BTL_MAINUTIL_IsTripleCenterPos(emptyPos[p]) ){
+            fEnable = FALSE;  // 自分の中央が空いていたらチャージされない
+            break;
+          }
+        }
+        if( fEnable )
+        {
+          u8 value = 1 + emptyCnt;  // 基本は自分の空き位置 + 1
+          emptyCnt = BTL_POSPOKE_GetClientEmptyPos( &wk->pospokeWork, opponentClientID, emptyPos );
+          for(p=0; p<emptyCnt; ++p){
+            if( BTL_MAINUTIL_IsTripleCenterPos(emptyPos[p]) ){
+              value *= 2;   // 相手の中央が空いていたら２倍
+              break;
+            }
+          }
+          SCQUE_PUT_OP_ShooterCharge( wk->que, i, value );
+        }
+      }
+    }
+  }
+}
+
+//=============================================================================================
 /**
  * ローテーションコマンド生成（ローテーションバトルのみ）
  *
@@ -1008,7 +1105,7 @@ SvflowResult BTL_SVFLOW_StartAfterPokeChange( BTL_SVFLOW_WORK* wk )
  * @param   clientID
  * @param   dir
  */
-//----------------------------------------------------------------------------------
+//=============================================================================================
 void BTL_SVFLOW_CreateRotationCommand( BTL_SVFLOW_WORK* wk, u8 clientID, BtlRotateDir dir )
 {
   BTL_Printf("クライアント[%d]は回転方向 %d へローテ\n", clientID, dir);
@@ -1030,7 +1127,7 @@ void BTL_SVFLOW_CreateRotationCommand( BTL_SVFLOW_WORK* wk, u8 clientID, BtlRota
 }
 //----------------------------------------------------------------------------------
 /**
- *
+ * サーバに対し、各クライアントの空き位置を通知
  *
  * @param   wk
  *
@@ -1047,17 +1144,16 @@ static BOOL reqChangePokeForServer( BTL_SVFLOW_WORK* wk )
   for(clientID=0; clientID<BTL_CLIENT_MAX; ++clientID)
   {
     empty_pos_cnt = BTL_POSPOKE_GetClientEmptyPos( &wk->pospokeWork, clientID, posAry );
-    BTL_Printf( "クライアント[%d]   空いている位置の数=%d\n", clientID, empty_pos_cnt );
     if( empty_pos_cnt )
     {
       // 空いている位置を全てサーバへ通知
-      BTL_Printf( "  空いてる位置の数=%d  pos=", empty_pos_cnt );
+      BTL_N_Printf( DBGSTR_SVFL_ChangePokeReqInfo, clientID, empty_pos_cnt );
       for(i=0; i<empty_pos_cnt; ++i)
       {
         BTL_SERVER_RequestChangePokemon( wk->server, posAry[i] );
-        BTL_PrintfSimple( "%d,", posAry[i] );
+        BTL_N_PrintfSimple( DBGSTR_val_comma, posAry[i] );
       }
-      BTL_PrintfSimple( "\n" );
+      BTL_N_PrintfSimple( DBGSTR_LF );
       result = TRUE;
     }
   }
@@ -2095,6 +2191,7 @@ static void scproc_AfterMemberIn( BTL_SVFLOW_WORK* wk )
   while( FRONT_POKE_SEEK_GetNext(&fps, wk, &bpp) )
   {
     pokeID = BPP_GetID( bpp );
+    // @todo これホントはリクエストあった順にしないとダメか
     if( wk->pokeInFlag[ pokeID ] )
     {
       scEvent_AfterMemberIn( wk, bpp );
@@ -2176,9 +2273,17 @@ static void scproc_TrainerItem_Root( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u1
   };
 
   u8 clientID = BTL_MAINUTIL_PokeIDtoClientID( BPP_GetID(bpp) );
+  u8 targetPokeID;
   BTL_POKEPARAM* target = NULL;
   int i, itemParam;
   u32 hem_state;
+
+  // @@@ targetIdx = 自パーティの何番目のポケモンに使うか？という意味だが、マルチでも有効だと話が違ってきます
+  if( targetIdx != BTL_PARTY_MEMBER_MAX ){
+    BTL_PARTY* party = BTL_POKECON_GetPartyData( wk->pokeCon, clientID );
+    target = BTL_PARTY_GetMemberData( party, targetIdx );
+    targetPokeID = BPP_GetID( target );
+  }
 
   // ○○は××を使った！
   {
@@ -2190,7 +2295,7 @@ static void scproc_TrainerItem_Root( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u1
       args[1] = itemID;
       scPut_Message_StdEx( wk, BTL_STRID_STD_UseItem_Self, 2, args );
     }else{
-      SCQUE_PUT_MSG_STD_SE( wk->que, BTL_STRID_STD_UseItem_Shooter, SEQ_SE_SHOOTER, clientID, pokeID, itemID );
+      SCQUE_PUT_MSG_STD_SE( wk->que, BTL_STRID_STD_UseItem_Shooter, SEQ_SE_SHOOTER, clientID, targetPokeID, itemID );
     }
   }
 
@@ -2202,14 +2307,8 @@ static void scproc_TrainerItem_Root( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u1
     return;
   }
 
-  // @@@ targetIdx = 自パーティの何番目のポケモンに使うか？という意味だが、マルチでも有効だと話が違ってきます
-  if( targetIdx != BTL_PARTY_MEMBER_MAX ){
-    BTL_PARTY* party = BTL_POKECON_GetPartyData( wk->pokeCon, clientID );
-    target = BTL_PARTY_GetMemberData( party, targetIdx );
-  }
 
   {
-    u8 targetPokeID = BPP_GetID( target );
     BtlPokePos targetPos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, targetPokeID );
     if( (targetPos != BTL_POS_NULL) && !BPP_IsDead(target) )
     {
@@ -2220,8 +2319,16 @@ static void scproc_TrainerItem_Root( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u1
   // シューター独自のアイテム処理
   for(i=0; i<NELEMS(ShooterItemParam); ++i)
   {
-    if( itemID == ShooterItemParam[i].itemID ){
-      ShooterItemParam[i].func( wk, target, itemID, 0, actParam );
+    if( itemID == ShooterItemParam[i].itemID )
+    {
+      if( BTL_POSPOKE_GetPokeExistPos(&wk->pospokeWork, targetPokeID) != BTL_POS_NULL )
+      {
+        ShooterItemParam[i].func( wk, target, itemID, 0, actParam );
+      }
+      else
+      {
+        SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_PokeNotExist, targetPokeID );
+      }
       return;
     }
   }
@@ -2572,7 +2679,10 @@ static u8 ItemEff_Common_Rank( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 item
  */
 static u8 ShooterEff_ItemCall( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, u8 actParam )
 {
-  scproc_UseItemEquip( wk, bpp );
+  u8 pokeID = BPP_GetID( bpp );
+
+  BTL_N_Printf( DBGSTR_SVFL_UseItemCall, BPP_GetID(bpp) );
+  scproc_CheckItemReaction( wk, bpp );
   // @todo 使えるアイテムが無ければ「しかし効果が無かった」とか必要？
   return TRUE;
 }
@@ -3585,9 +3695,8 @@ static void scproc_Fight_WazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, 
   if( !BPP_IsDead(attacker) )
   {
     // 反動で動けなくなるワザ処理
-    // @todo ACTFLGってこれしかないから、何かもっと別の機構で代替したい
     if( WAZADATA_GetFlag(waza, WAZAFLAG_Tire) ){
-      scPut_ActFlag_Set( wk, attacker, BPP_ACTFLG_CANT_ACTION );
+      scPut_SetContFlag( wk, attacker, BPP_CONTFLG_CANT_ACTION );
     }
   }
 }
@@ -5396,7 +5505,7 @@ static BOOL scproc_AddSick( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, BTL_POKE
     {
       u32 hem_state = Hem_PushState( &wk->HEManager );
 
-      if( sick < POKESICK_MAX ){
+      if( BTL_CALC_IsBasicSickID(sick) ){
         scEvent_PokeSickFixed( wk, target, attacker, sick );
       }else if( sick == WAZASICK_IEKI ){
         scEvent_IekiFixed( wk, target );
@@ -6639,58 +6748,6 @@ static void scEvent_TurnCheck( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp, Bt
   BTL_EVENTVAR_Pop();
 }
 
-//----------------------------------------------------------------------------------
-/**
- * シューターのエネルギーチャージ計算＆各クライアントに通知
- *
- * @param   wk
- */
-//----------------------------------------------------------------------------------
-static void scproc_countup_shooter_energy( BTL_SVFLOW_WORK* wk )
-{
-  if( wk->bagMode == BBAG_MODE_SHOOTER )
-  {
-    u32 i;
-    for(i=0; i<BTL_CLIENT_MAX; ++i)
-    {
-      if( !BTL_SERVER_IsClientEnable(wk->server, i) ){
-        continue;
-      }
-      if( BTL_MAIN_GetRule(wk->mainModule) != BTL_RULE_TRIPLE ){
-        SCQUE_PUT_OP_ShooterCharge( wk->que, i, 1 );
-      }else{
-        u8 myClientID, opponentClientID, emptyCnt, fEnable, p;
-        u8 emptyPos[ BTL_POSIDX_MAX ];
-
-        myClientID = BTL_MAIN_GetPlayerClientID( wk->mainModule );
-        opponentClientID = BTL_MAIN_GetOpponentClientID( wk->mainModule, myClientID, 0 );
-
-        fEnable = TRUE;
-        emptyCnt = BTL_POSPOKE_GetClientEmptyPos( &wk->pospokeWork, myClientID, emptyPos );
-        for(p=0; p<emptyCnt; ++p)
-        {
-          if( BTL_MAINUTIL_IsTripleCenterPos(emptyPos[p]) ){
-            fEnable = FALSE;  // 自分の中央が空いていたらチャージされない
-            break;
-          }
-        }
-        if( fEnable )
-        {
-          u8 value = 1 + emptyCnt;  // 基本は自分の空き位置 + 1
-          emptyCnt = BTL_POSPOKE_GetClientEmptyPos( &wk->pospokeWork, opponentClientID, emptyPos );
-          for(p=0; p<emptyCnt; ++p){
-            if( BTL_MAINUTIL_IsTripleCenterPos(emptyPos[p]) ){
-              value *= 2;   // 相手の中央が空いていたら２倍
-              break;
-            }
-          }
-          SCQUE_PUT_OP_ShooterCharge( wk->que, i, value );
-        }
-      }
-    }
-  }
-}
-
 //------------------------------------------------------------------
 // サーバーフロー下請け： ターンチェック > 状態異常
 //------------------------------------------------------------------
@@ -7412,7 +7469,7 @@ static void scPut_WazaMsg( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, W
  * @param   wk
  * @param   bpp       対象ポケモン
  * @param   sick_id   状態異常コード
- * @param   itemID  アイテム使用による回復ならアイテムID／それ以外は ITEM_DUMMY_DATA
+ * @param   itemID    アイテム使用による回復ならアイテムID／それ以外は ITEM_DUMMY_DATA
  */
 //----------------------------------------------------------------------------------
 static WazaSick scPut_CureSick( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BtlWazaSickEx exSickCode, BPP_SICK_CONT* oldCont )
@@ -7425,7 +7482,8 @@ static WazaSick scPut_CureSick( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BtlWaza
 
     *oldCont = BPP_GetSickCont( bpp, sick );
 
-    if( sick < POKESICK_MAX ){
+    if( sick < POKESICK_MAX )
+    {
       BPP_CurePokeSick( bpp );
       SCQUE_PUT_OP_CurePokeSick( wk->que, pokeID );
       if ( BTL_POSPOKE_GetPokeExistPos(&wk->pospokeWork, BPP_GetID(bpp) != BTL_POS_NULL) ){
@@ -7943,35 +8001,6 @@ static void scPut_ConsumeItem( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
   BTL_HANDLER_ITEM_Remove( bpp );
   BPP_ConsumeItem( bpp );
   SCQUE_PUT_OP_ConsumeItem( wk->que, BPP_GetID(bpp) );
-}
-//----------------------------------------------------------------------------------
-/**
- * [Put]アクション毎フラグセット
- *
- * @param   wk
- * @param   bpp
- * @param   flagID
- */
-//----------------------------------------------------------------------------------
-static void scPut_ActFlag_Set( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BppActFlag flagID )
-{
-  u8 pokeID = BPP_GetID( bpp );
-  BPP_ACTFLAG_Set( bpp, flagID );
-  SCQUE_PUT_OP_SetActFlag( wk->que, pokeID, flagID );
-}
-//----------------------------------------------------------------------------------
-/**
- * [Put]アクション毎フラグクリア
- *
- * @param   wk
- * @param   bpp
- */
-//----------------------------------------------------------------------------------
-static void scPut_ActFlag_Clear( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
-{
-  u8 pokeID = BPP_GetID( bpp );
-  BPP_ACTFLAG_Clear( bpp );
-  SCQUE_PUT_OP_ClearActFlag( wk->que, pokeID );
 }
 //----------------------------------------------------------------------------------
 /**

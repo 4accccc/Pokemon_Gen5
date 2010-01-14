@@ -620,7 +620,6 @@ void BTLV_StartPokeSelect( BTLV_CORE* wk, const BTL_POKESELECT_PARAM* param, BOO
   wk->plistData.font = wk->largeFontHandle;
   wk->plistData.heap = wk->heapID;
   wk->plistData.mode = param->bplMode;
-  BTL_N_Printf( DBGSTR_VCORE_PokeListStart, wk->plistData.mode);
   wk->plistData.end_flg = FALSE;
   wk->plistData.sel_poke = 0;
   wk->plistData.chg_waza = 0;
@@ -630,9 +629,12 @@ void BTLV_StartPokeSelect( BTLV_CORE* wk, const BTL_POKESELECT_PARAM* param, BOO
   wk->plistData.pfd = BTLV_EFFECT_GetPfd();
   wk->plistData.chg_waza = fCantEsc;  // 逃げ・交換禁止フラグ
 
+  // 既に選択されているポケモンの位置情報を初期化
   {
-    u32 i, max = BTL_POKESELECT_RESULT_GetCount( result );
-    for(i=0; i<max; ++i)
+    u32 i, selectedPokeCnt = BTL_POKESELECT_RESULT_GetCount( result );
+
+    BTL_N_Printf( DBGSTR_VCORE_PokeListStart, wk->plistData.mode, selectedPokeCnt);
+    for(i=0; i<selectedPokeCnt; ++i)
     {
       if( i >= NELEMS(wk->plistData.change_sel) ){ break; }
       wk->plistData.change_sel[i] = BTL_POKESELECT_RESULT_Get( result, i );
@@ -642,7 +644,6 @@ void BTLV_StartPokeSelect( BTLV_CORE* wk, const BTL_POKESELECT_PARAM* param, BOO
     }
   }
 
-  BTL_POKESELECT_RESULT_Init( result, param );
   wk->pokeselResult = result;
   wk->selectItemSeq = 0;
 }
@@ -666,28 +667,24 @@ BOOL BTLV_WaitPokeSelect( BTLV_CORE* wk )
   case 2:
     if( wk->plistData.end_flg )
     {
-      OS_TPrintf("ポケ選択おわった\n");
+      u32 i;
 
-      if( wk->plistData.sel_poke != BPL_SEL_EXIT )
+      BTL_N_Printf( DBGSTR_VCORE_SelPokeEnd );
+
+      for(i=0; i<NELEMS(wk->plistData.sel_pos); ++i)
       {
-        if( wk->plistData.mode == BPL_MODE_NORMAL ){
-          OS_TPrintf("選んだポケは%d番目\n", wk->plistData.sel_poke);
-          BTL_POKESELECT_RESULT_Push( wk->pokeselResult, wk->plistData.sel_poke );
-        }
-        else
-        {
-          u8 i;
-          for(i=0; i<NELEMS(wk->plistData.sel_pos); ++i)
+        if( wk->plistData.sel_pos[i] != BPL_SELPOS_NONE ){
+          BTL_POKESELECT_RESULT_Push( wk->pokeselResult, wk->plistData.sel_pos[i] );
           {
-            if( wk->plistData.sel_pos[i] != BPL_SELPOS_NONE ){
-              OS_TPrintf("  [%d]番目 選択された\n", i);
-              BTL_POKESELECT_RESULT_Push( wk->pokeselResult, wk->plistData.sel_pos[i] );
-            }else{
-              OS_TPrintf("  [%d]番目 選択されていない\n", i );
-            }
+            u8 storeCnt = BTL_POKESELECT_RESULT_GetCount( wk->pokeselResult );
+            BTL_N_Printf( DBGSTR_VCORE_SelPokeEnd_Sel, i, storeCnt);
           }
         }
+        else{
+          BTL_N_Printf( DBGSTR_VCORE_SelPokeEnd_Unsel, i );
+        }
       }
+
       GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle_plist ) );
       BTLV_SCD_FadeIn( wk->scrnD );
       BTLV_SCD_Setup( wk->scrnD );

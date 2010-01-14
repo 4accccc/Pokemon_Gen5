@@ -68,6 +68,19 @@ void BTL_POKESELECT_PARAM_SetProhibit( BTL_POKESELECT_PARAM* param, BtlPokeselRe
   GF_ASSERT(idx<NELEMS(param->prohibit));
   param->prohibit[ idx ] = reason;
 }
+//=============================================================================================
+/**
+ * ‘I‘ð‚·‚é‚×‚«”‚ðŽæ“¾
+ *
+ * @param   param
+ *
+ * @retval  u8
+ */
+//=============================================================================================
+u8 BTL_POKESELECT_PARAM_GetNumSelect( const BTL_POKESELECT_PARAM* param )
+{
+  return param->numSelect;
+}
 
 
 
@@ -83,6 +96,7 @@ void BTL_POKESELECT_RESULT_Init( BTL_POKESELECT_RESULT *result, const BTL_POKESE
 {
   result->cnt = 0;
   result->max = param->numSelect;
+  OS_TPrintf(" PokeSelResult : max=%d\n", result->max);
 }
 //=============================================================================================
 /**

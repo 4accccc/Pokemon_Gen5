@@ -954,7 +954,7 @@ void BattlePokeList_ButtonPageScreenInit( BPLIST_WORK * wk, u8 page )
 				BPL_ButtonScreenWrite( wk, BPL_BUTTON_POKE1+i, BPL_BANM_PAT0, 1 );
 			}
 		}
-		if( wk->dat->mode == BPL_MODE_CHG_DEAD ){
+		if( wk->dat->mode == BPL_MODE_CHG_DEAD && wk->dat->mode == BPL_MODE_NO_CANCEL ){
 			BPLISTANM_RetButtonPut( wk );
 		}else{
 			BPL_ButtonScreenWrite( wk, BPL_BUTTON_RET, BPL_BANM_PAT0, 0 );

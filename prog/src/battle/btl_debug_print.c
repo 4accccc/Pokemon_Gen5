@@ -72,12 +72,15 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_CLIENT_WazaLockInfo:      return "ワザロック：Client[%d] 前回使ったワザは %d, idx=%d, targetPos=%d\n";
   case DBGSTR_CLIENT_NoMorePuttablePoke:  return "myID=%d もう戦えるポケモンいない\n";
   case DBGSTR_CLIENT_NotDeadMember:     return "myID=%d 誰も死んでないから選ぶ必要なし\n";
-  case DBGSTR_CLIENT_ChangePokeNum:     return "myID=%d 空きがあるので %d体選択\n";
+  case DBGSTR_CLIENT_ChangePokeCmdInfo: return "myID=%d %d体選択する必要あり mode=%d\n";
   case DBGSTR_CLIENT_NumChangePokeBegin:return " 全Client, 選択すべきポケモン数=%d\n　位置=";
   case DBGSTR_CLIENT_NumChangePokeResult: return " 自分[%d]が選択すべきポケモン数=%d\n";
   case DBGSTR_CLIENT_PokeSelCnt:        return "入れ替え%d体選んだ\n";
   case DBGSTR_CLIENT_PokeChangeIdx:     return "ポケモン入れ替え %d体目 <-> %d体目\n";
-  case DBGSTR_VCORE_PokeListStart:      return "交換リスト画面モード=%d\n";
+  case DBGSTR_VCORE_PokeListStart:      return "交換リスト画面  モード=%d   すでに%d体選択されている\n";
+  case DBGSTR_VCORE_SelPokeEnd:         return "ポケ選択おわった\n";
+  case DBGSTR_VCORE_SelPokeEnd_Sel:     return "  [%d]番目 選択された -> %d体 格納\n";
+  case DBGSTR_VCORE_SelPokeEnd_Unsel:   return "  [%d]番目 選択されていない\n";
 
 
   case DBGSTR_MAIN_SwapPartyMember:     return "パーティメンバー入れ替え %d <-> %d\n";
@@ -117,7 +120,6 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_SVFL_ActOrder_Change:     return "【ポケモン】を処理。位置%d <- ポケ%d \n";
   case DBGSTR_SVFL_ActOrder_Escape:     return "【にげる】を処理。\n";
   case DBGSTR_SVFL_ActOrder_Dead:       return "【ひんし】なので何もせず\n";
-
   case DBGSTR_SVFL_CorrectTarget_Info:  return "攻撃ポケ[%d]（位置=%d） -> 狙ったポケ[%d]（位置=%d）死んでいるので補正する\n";
   case DBGSTR_SVFL_CorrectHitFarOn:     return "ワザ[%d] 遠隔ON の補正対象決定\n";
   case DBGSTR_SVFL_CorrectHitFarOff:    return "ワザ[%d] 遠隔OFF の補正対象決定\n";
@@ -140,6 +142,11 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_SVFL_HitCheckInfo4:       return "最終命中率 = %d\n";
   case DBGSTR_SVFL_StartAfterPokeChange: return "ターン途中ポケモン入れ替え後のサーバーコマンド生成\n";
   case DBGSTR_SVFL_PokeChangeRootInfo:  return "クライアント(%d)のポケモン(位置%d) を、%d番目のポケといれかえる\n";
+  case DBGSTR_SVFL_UseItemCall:         return "シューター「アイテムコール」使用  対象Poke=%d\n";
+  case DBGSTR_SVFL_ChangePokeReqInfo:   return "クライアント[%d]   空いている位置の数=%d\n";
+  case DBGSTR_SVFL_TurnStart_Result:    return "【ターン開始コマンド】処理アクション %d / %d\n";
+  case DBGSTR_SVFL_ActOrderMainStart:   return "コマンド生成コア 処理アクション開始Index=%d\n";
+
 
   case DBGSTR_POSPOKE_Out:              return " poke[%d] out from pos[%d]\n";
   case DBGSTR_POSPOKE_In:               return " poke[%d] in to pos[%d]\n";

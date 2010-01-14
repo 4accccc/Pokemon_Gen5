@@ -313,6 +313,18 @@ void BTL_STR_MakeStringStdWithArgArray( STRBUF* buf, BtlStrID_STD strID, const i
     BTL_STRID_STD_WideGuard,
     BTL_STRID_STD_FastGuard,
     BTL_STRID_STD_Kinchoukan,
+    BTL_STRID_STD_SinpiNoMamori,
+    BTL_STRID_STD_SinpiNoMamoriOff,
+    BTL_STRID_STD_HikariNoKabe,
+    BTL_STRID_STD_HikariNoKabeOff,
+    BTL_STRID_STD_Reflector,
+    BTL_STRID_STD_ReflectorOff,
+    BTL_STRID_STD_SiroiKiri,
+    BTL_STRID_STD_SiroiKiriOff,
+    BTL_STRID_STD_Oikaze,
+    BTL_STRID_STD_OikazeOff,
+    BTL_STRID_STD_Omajinai,
+    BTL_STRID_STD_OmajinaiOff,
   };
   int i;
 
