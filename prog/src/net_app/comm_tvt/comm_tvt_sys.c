@@ -233,8 +233,15 @@ static const BOOL COMM_TVT_Main( COMM_TVT_WORK *work )
       return FALSE;
     }
     break;
+  case CTM_ERROR: //I—¹
+    return TRUE;
+    break;
   }
   
+  if( work->isCommError == TRUE )
+  {
+    work->nextMode = CTM_ERROR;
+  }
   if( work->mode != work->nextMode )
   {
     COMM_TVT_ChangeMode( work );
@@ -530,6 +537,7 @@ static void COMM_TVT_TermMessage( COMM_TVT_WORK *work )
   PRINTSYS_QUE_Delete( work->printQue );
   GFL_MSG_Delete( work->msgHandle );
   GFL_FONT_Delete( work->fontHandle );
+
 }
 
 //--------------------------------------------------------------------------
@@ -564,10 +572,10 @@ static void COMM_TVT_ChangeMode( COMM_TVT_WORK *work )
     CTVT_DRAW_InitMode( work , work->drawWork );
     break;
   case CTM_END: //I—¹
+  case CTM_ERROR: //I—¹
     CTVT_COMM_ExitComm( work , work->commWork );
     break;
   }
-  
   work->mode = work->nextMode;
 }
 
@@ -759,11 +767,6 @@ static GFL_PROC_RESULT COMM_TVT_Proc_Term( GFL_PROC * proc, int * seq , void *pw
 {
   COMM_TVT_WORK *work = mywk;
   
-  if( CTVT_COMM_IsExit(work,work->commWork) == FALSE )
-  {
-    return GFL_PROC_RES_CONTINUE;
-  }
-
   COMM_TVT_Term( work );
 
   if( pwk == NULL )

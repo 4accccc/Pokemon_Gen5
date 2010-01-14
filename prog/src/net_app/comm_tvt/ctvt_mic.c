@@ -136,6 +136,8 @@ CTVT_MIC_WORK* CTVT_MIC_Init( const HEAPID heapId )
 //--------------------------------------------------------------
 void CTVT_MIC_Term( CTVT_MIC_WORK *micWork )
 {
+  CTVT_MIC_StopRecord( micWork );
+
   CTVT_MIC_PlayWaveTerm( micWork );
 
   GFL_NET_Align32Free( micWork->recBuffer );

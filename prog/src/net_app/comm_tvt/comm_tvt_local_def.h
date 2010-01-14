@@ -95,6 +95,7 @@ typedef enum
   CTM_DRAW, //—‘‚«
 
   CTM_END,
+  CTM_ERROR,
 
 }COMM_TVT_MODE;
 
