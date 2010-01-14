@@ -44,21 +44,6 @@ typedef enum{
 } FSND_FADEOUT_SPEED;
   
 
-
-#if 0  // field_sound_proc.h で宣言
-//=================================================================================
-// ■不完全型宣言
-//=================================================================================
-typedef struct _FIELD_SOUND FIELD_SOUND;
-
-//=================================================================================
-// ■システム作成/破棄
-//=================================================================================
-extern FIELD_SOUND* FIELD_SOUND_Create( HEAPID heapID );
-extern void FIELD_SOUND_Delete( FIELD_SOUND *fsnd );
-#endif
-
-
 //=================================================================================
 // ■BGM 操作イベント
 //=================================================================================
@@ -80,9 +65,15 @@ extern GMEVENT* EVENT_FieldSound_PopBGM( GAMESYS_WORK* gameSystem,
 extern GMEVENT* EVENT_FieldSound_AllPopBGM( GAMESYS_WORK* gameSystem, 
                                             FSND_FADEIN_SPEED fadeInSpeed );
 
-// イベントBGM / ME 再生
+// 再生中のBGMを退避し, 次のBGMを鳴らす
 extern GMEVENT* EVENT_FieldSound_PushPlayEventBGM( GAMESYS_WORK* gameSystem, u32 soundIdx );
+
+// ME 再生
 extern GMEVENT* EVENT_FieldSound_PushPlayJingleBGM( GAMESYS_WORK* gameSystem, u32 soundIdx ); 
+
+// イベントBGM / フィールドBGM 再生
+extern GMEVENT* EVENT_FieldSound_PlayEventBGM( GAMESYS_WORK* gameSystem, u32 soundIdx );
+extern GMEVENT* EVENT_FieldSound_PlayFieldBGM( GAMESYS_WORK* gameSystem, u16 zoneID );
 
 // BGM 変更
 extern GMEVENT* EVENT_FieldSound_ChangeFieldBGM( GAMESYS_WORK* gameSystem, u16 zoneID );

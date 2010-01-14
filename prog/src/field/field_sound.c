@@ -712,6 +712,116 @@ GMEVENT* EVENT_FieldSound_PushPlayJingleBGM( GAMESYS_WORK* gameSystem, u32 sound
 
 //---------------------------------------------------------------------------------
 /**
+ * @brief イベントBGM再生イベント処理関数
+ */
+//---------------------------------------------------------------------------------
+static GMEVENT_RESULT PlayEventBGMEvent( GMEVENT* event, int* seq, void* wk )
+{
+  FSND_EVWORK* work;
+  FIELD_SOUND* fieldSound;
+
+  work = (FSND_EVWORK*)wk;
+  fieldSound = work->fieldSound;
+
+  switch( *seq )
+  {
+  case 0:  // BGM変更リクエスト発行
+    if( CanAcceptRequest( fieldSound, FSND_BGM_REQUEST_CHANGE ) )
+    {
+      ThrowRequest_CHANGE( fieldSound, work->soundIdx, work->fadeOutFrame, work->fadeInFrame );
+      (*seq)++;
+    }
+    break;
+  case 1:
+    return GMEVENT_RES_FINISH;
+  } 
+  return GMEVENT_RES_CONTINUE;
+}
+//---------------------------------------------------------------------------------
+/**
+ * @brief イベントBGM再生イベント 取得
+ *
+ * @param gameSystem
+ * @param soundIdx   再生するME
+ * 
+ * @return イベントBGM 再生イベント
+ */
+//---------------------------------------------------------------------------------
+GMEVENT* EVENT_FieldSound_PlayEventBGM( GAMESYS_WORK* gameSystem, u32 soundIdx )
+{
+  GMEVENT* event;
+  FSND_EVWORK* work;
+  GAMEDATA* gameData;
+
+  gameData = GAMESYSTEM_GetGameData( gameSystem );
+
+  event = GMEVENT_Create( gameSystem, NULL, PlayEventBGMEvent, sizeof(FSND_EVWORK) );
+  work = GMEVENT_GetEventWork( event );
+  work->gameSystem = gameSystem;
+  work->fieldSound = GAMEDATA_GetFieldSound( gameData );
+  work->soundIdx = soundIdx;
+  work->fadeOutFrame = GetFadeOutFrame(FSND_FADEOUT_FAST);
+  work->fadeInFrame = GetFadeInFrame(FSND_FADEIN_NONE);
+  return event;
+}
+
+//---------------------------------------------------------------------------------
+/**
+ * @brief フィールドBGM再生イベント処理関数
+ */
+//---------------------------------------------------------------------------------
+static GMEVENT_RESULT PlayFieldBGMEvent( GMEVENT* event, int* seq, void* wk )
+{
+  FSND_EVWORK* work;
+  FIELD_SOUND* fieldSound;
+
+  work = (FSND_EVWORK*)wk;
+  fieldSound = work->fieldSound;
+
+  switch( *seq )
+  {
+  case 0:  // BGM変更リクエスト発行
+    if( CanAcceptRequest( fieldSound, FSND_BGM_REQUEST_CHANGE ) )
+    {
+      ThrowRequest_CHANGE( fieldSound, work->soundIdx, work->fadeOutFrame, work->fadeInFrame );
+      (*seq)++;
+    }
+    break;
+  case 1:
+    return GMEVENT_RES_FINISH;
+  } 
+  return GMEVENT_RES_CONTINUE;
+}
+//---------------------------------------------------------------------------------
+/**
+ * @brief フィールドBGM再生イベント 取得
+ *
+ * @param gameSystem
+ * @param zoneID     BGMを再生するゾーンID
+ * 
+ * @return フィールドBGM 再生イベント
+ */
+//---------------------------------------------------------------------------------
+GMEVENT* EVENT_FieldSound_PlayFieldBGM( GAMESYS_WORK* gameSystem, u16 zoneID )
+{
+  GMEVENT* event;
+  FSND_EVWORK* work;
+  GAMEDATA* gameData;
+
+  gameData = GAMESYSTEM_GetGameData( gameSystem );
+
+  event = GMEVENT_Create( gameSystem, NULL, PlayEventBGMEvent, sizeof(FSND_EVWORK) );
+  work = GMEVENT_GetEventWork( event );
+  work->gameSystem = gameSystem;
+  work->fieldSound = GAMEDATA_GetFieldSound( gameData );
+  work->soundIdx = FIELD_SOUND_GetFieldBGM( gameData, zoneID );
+  work->fadeOutFrame = GetFadeOutFrame(FSND_FADEOUT_SLOW);
+  work->fadeInFrame = GetFadeInFrame(FSND_FADEIN_FAST);
+  return event;
+}
+
+//---------------------------------------------------------------------------------
+/**
  * @brief BGM変更イベント処理関数
  */
 //---------------------------------------------------------------------------------

@@ -59,7 +59,7 @@ static BOOL SoundSeFlag_IsSePlay( SCRIPT_WORK * sc );
  * BGM変更
  * @param  core    仮想マシン制御構造体へのポインタ
  * @retval VMCMD_RESULT
- * @note 現在再生中のBGMを退避し、指定BGMを再生している。
+ * @note 現在再生中のBGMを破棄し、指定BGMを再生している。
  */
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdBgmPlay( VMHANDLE *core, void *wk )
@@ -67,11 +67,11 @@ VMCMD_RESULT EvCmdBgmPlay( VMHANDLE *core, void *wk )
   SCRCMD_WORK*  work = wk;
   GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
   SCRIPT_WORK*    sc = SCRCMD_WORK_GetScriptWork( work );
-  u16      sound_idx = VMGetU16( core );
+  u16       soundIdx = VMGetU16( core );
 
   {
     GMEVENT* event;
-    event = EVENT_FieldSound_PushPlayEventBGM( gsys, sound_idx );
+    event = EVENT_FieldSound_PlayEventBGM( gsys, soundIdx );
     SCRIPT_CallEvent( sc, event );
   }
   return VMCMD_RESULT_SUSPEND;
@@ -187,18 +187,21 @@ VMCMD_RESULT EvCmdBgmFadeIn( VMHANDLE *core, void *wk )
  * 現在のマップのBGMを再生
  * @param  core    仮想マシン制御構造体へのポインタ
  * @retval VMCMD_RESULT
- * @note 再生とあるが、実際には退避したBGMの復帰を行っている。
+ * @note 再生中のBGMを破棄し, フィールドのBGMを再生する
  */
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdBgmNowMapPlay( VMHANDLE *core, void *wk )
 {
-  SCRCMD_WORK*  work = wk;
-  GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
-  SCRIPT_WORK*    sc = SCRCMD_WORK_GetScriptWork( work );
+  SCRCMD_WORK*       work = wk;
+  GAMESYS_WORK*      gsys = SCRCMD_WORK_GetGameSysWork( work );
+  FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  SCRIPT_WORK*         sc = SCRCMD_WORK_GetScriptWork( work );
 
   {
     GMEVENT* event;
-    event = EVENT_FieldSound_PopBGM( gsys, FSND_FADEOUT_SLOW, FSND_FADEIN_FAST );
+    u16 zoneID;
+    zoneID = FIELDMAP_GetZoneID( fieldmap );
+    event = EVENT_FieldSound_PlayFieldBGM( gsys, zoneID );
     SCRIPT_CallEvent( sc, event );
   }
   return VMCMD_RESULT_SUSPEND;
