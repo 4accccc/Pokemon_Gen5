@@ -61,9 +61,10 @@ EVENT_START	ev_c02gym0202_leader2_01
 	_FLAG_SET( FE_MUSEUM_TOUNAN )	//盗難イベントの開始
 	_CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_01, TRUE, TRUE )//博物館のマップを、破壊されたマップに
 	_FLAG_SET( FV_C02GYM0202_LEADER2 ) //ジム2室目からジムリーダーを消す
-	_FLAG_RESET( FV_D02R0101_LEADER2 )	//盗難イベント用アーティ表示
+	_FLAG_RESET( FV_D02R0101_LEADER3 )	//盗難イベント用アーティ表示
 	_FLAG_SET( FV_D02R0101_HAKAI )		//ヤグルマの森ストッパーの解除
 	_FLAG_RESET( FV_D02R0101_LEADER2 )	//D02のジムリーダー2を表示	
+	_FLAG_RESET( FV_D02_LEADER3 )	//D02のジムリーダー3を表示	
 	_FLAG_SET( FE_ELBOARD_C02GYMWIN )	//電光掲示板のニュースをセット
 	_FLAG_SET( FV_MUSEUM_TOUNAN )  //博物館内の骨がなくなる
 	_FLAG_SET( FV_MUSEUM_STONE )	//博物館内の石がなくなる
@@ -74,6 +75,9 @@ EVENT_START	ev_c02gym0202_leader2_01
 	//盗難事件のPOSイベントを有効にする
 	//C02gym0101のイベント
 	$WK_SCENE_C02GYM0101  = 2 
+	
+	//D02のイベント
+	$WK_SCENE_D02 = 1
 	
 	//C02のイベント
 	$WK_SCENE_C02 = 3
