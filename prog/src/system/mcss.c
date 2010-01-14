@@ -211,6 +211,20 @@ void	MCSS_SetCallBackWork( MCSS_SYS_WORK *mcss_sys, void* work )
   mcss_sys->callback_work = work;
 }
 
+//--------------------------------------------------------------------------
+/**
+ * @brief リソースの再読み込み
+ *
+ * @param[in]  mcss_sys MCSSシステム管理構造体のポインタ
+ * @param[in]  mcss     再読み込みするmcss
+ * @param[in]  maw      再読み込みするリソース
+ */
+//--------------------------------------------------------------------------
+void	MCSS_ReloadResource( MCSS_SYS_WORK *mcss_sys, MCSS_WORK* mcss, MCSS_ADD_WORK* maw )
+{ 
+  MCSS_LoadResource( mcss_sys, mcss->index, maw );
+}
+
 #ifndef USE_RENDER
 //独自描画
 //--------------------------------------------------------------------------
@@ -548,10 +562,19 @@ static	void	MCSS_DrawAct( MCSS_WORK *mcss,
 							  fx32 *pos_z_default )
 {
 	VecFx32	pos;
-  int polyID = ( node > 63 ) ? 63 : node;
-
+  int polyID;
 	//影のアルファ値計算
   const u8 shadow_alpha = (mcss->shadow_alpha == MCSS_SHADOW_ALPHA_AUTO ?(mcss->alpha/2):mcss->shadow_alpha); 
+
+  if( mcss->alpha == 31 )
+  { 
+    polyID = 0;
+  }
+  else
+  { 
+    polyID = ( node > 63 ) ? 63 : node;
+  }
+
 	if( mcss_ortho_mode ){
 		G3_OrthoW( FX32_CONST( 96 ),
 				   -FX32_CONST( 96 ),
@@ -571,7 +594,7 @@ static	void	MCSS_DrawAct( MCSS_WORK *mcss,
 	G3_PolygonAttr( GX_LIGHTMASK_NONE,				// no lights
                   GX_POLYGONMODE_MODULATE,	// modulation mode
                   GX_CULL_NONE,		    			// cull back
-                  node,        								// polygon ID(0 - 63)
+                  polyID,        						// polygon ID(0 - 63)
                   mcss->alpha,	       			// alpha(0 - 31)
                   GX_POLYGON_ATTR_MISC_NONE	// OR of GXPolygonAttrMisc's value
                 );
