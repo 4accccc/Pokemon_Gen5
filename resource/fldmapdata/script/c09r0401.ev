@@ -249,11 +249,11 @@ EVENT_START	ev_pos_c09r0401_enter_01
 	
 	//階段を表示しておく
 	_BMODEL_ANIME_SET( BM_ANIME_ID1, 0 )
-	_BMODEL_ANIME_STOP( BM_ANIME_ID1 )	//アニメの最初が表示状態なのですぐに停止させる
+	_BMODEL_ANIME_STOP( BM_ANIME_ID1 )	//アニメの最初が表示状態になっている。すぐに停止させることで階段を表示したままにしている
 	
-	//天蓋を開けておく
+	//天蓋を閉じておく
 	_BMODEL_ANIME_SET( BM_ANIME_ID2, 0 )
-	_BMODEL_ANIME_STOP( BM_ANIME_ID2 )	//アニメの最初が表示状態なのですぐに停止させる
+	_BMODEL_ANIME_STOP( BM_ANIME_ID2 )	//アニメの最初が閉じた状態になっている。すぐに停止させることで閉じたままにしている。
 	
 	//螺旋階段のアニメコントローラの作成
 	_BMODEL_ANIME_CREATE( BM_ANIME_ID3, SCR_BMID_NULL, 16, 16 )
@@ -265,10 +265,6 @@ EVENT_START	ev_pos_c09r0401_enter_01
 	
 	_BMODEL_ANIME_WAIT( BM_ANIME_ID3 )
 	_BMODEL_ANIME_DELETE( BM_ANIME_ID3 )
-	
-	//主人公：一歩前へ
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_ply_move_00 )
-	_OBJ_ANIME_WAIT()
 	
 	//登りきったところでウェイト
 	_TIME_WAIT( 16 )
@@ -282,11 +278,30 @@ EVENT_START	ev_pos_c09r0401_enter_01
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_ply_move_01 )
 	_OBJ_ANIME_WAIT()
 	
+	_CAMERA_START()		//カメラ操作開始
+	_CAMERA_PURGE()		//対象物とカメラのバインドを解く
+	
+	//カメラ操作
+	_CAMERA_MOVE( 6815,0,970752,1015808,1179935,380928,30 )	//一番最後の引数は移動にかかるフレーム数
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	
 	//天蓋が開く
 	_BMODEL_ANIME_SET( BM_ANIME_ID2, 0 )
 	_BMODEL_ANIME_WAIT( BM_ANIME_ID2 )
 	_BMODEL_ANIME_DELETE( BM_ANIME_ID2 )
 	
+	//カトレア：主人公前へ
+	_OBJ_ANIME( C09R0401_BIGFOUR4_01, anm_bigfour4_move_00 )
+	
+	_TIME_WAIT( 32 )
+	//カメラを主人公位置に戻す
+	_CAMERA_RECV_MOVE( 60 )	//カメラ復帰移動
+	
+	_OBJ_ANIME_WAIT()
+	
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	_CAMERA_BIND()		//カメラバインド
+	_CAMERA_END()		//カメラ操作終了
 	
 	//頂上に移動した
 	$LOCALWORK0 = 1
@@ -295,18 +310,22 @@ EVENT_END
 
 
 //--------------------------------------------------------------------
-//主人公：一歩前へ
-//--------------------------------------------------------------------
-_ANIME_LABEL	anm_ply_move_00
-	_ANIME_DATA	AC_WALK_U_8F,1
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------------
 //主人公：上へ進む
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_ply_move_01
 	_ANIME_DATA	AC_WALK_R_8F,1
-	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	AC_WALK_U_8F,3
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//カトレア：主人公前へ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_bigfour4_move_00
+	_ANIME_DATA	AC_WAIT_16F,1
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 

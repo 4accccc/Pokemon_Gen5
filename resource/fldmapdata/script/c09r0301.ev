@@ -253,10 +253,6 @@ EVENT_START	ev_pos_c09r0301_enter_01
 	//主人公：螺旋を登る
 	_FOURKINGS_WALKEVENT( 3 )
 	
-	//主人公：上を向く
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_ply_move_01 )
-	_OBJ_ANIME_WAIT()
-	
 	//主人公：上へ進む
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_ply_move_01 )
 	_OBJ_ANIME_WAIT()
@@ -271,14 +267,6 @@ EVENT_START	ev_pos_c09r0301_enter_01
 	$LOCALWORK0 = 1
 	
 EVENT_END
-
-
-//--------------------------------------------------------------------
-//主人公：上を向く
-//--------------------------------------------------------------------
-_ANIME_LABEL	anm_stay_walk_u
-	_ANIME_DATA	AC_STAY_WALK_U_8F,1
-	_ANIME_DATA	ACMD_END,0
 
 
 //--------------------------------------------------------------------

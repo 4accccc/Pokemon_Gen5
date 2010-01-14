@@ -263,10 +263,13 @@ EVENT_START	ev_pos_c09r0201_enter_01
 	_BMODEL_DIRECT_ANIME_SET_LOOP( SCR_BMID_NULL, 24, 16 )
 	
 	//主人公：上を向く
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_ply_move_01 )
-	_OBJ_ANIME_WAIT()
+//	_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_walk_u )
+//	_OBJ_ANIME_WAIT()
 	
-	//主人公：上へ進む
+	//登りきったところでウェイト
+	_TIME_WAIT( 30 )
+	
+	//主人公：上へ進む１
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_ply_move_01 )
 	_OBJ_ANIME_WAIT()
 	
@@ -275,14 +278,14 @@ EVENT_START	ev_pos_c09r0201_enter_01
 	_BMODEL_ANIME_WAIT( BM_ANIME_ID1 )
 	_BMODEL_ANIME_DELETE( BM_ANIME_ID1 )
 	
-	//主人公：上へ進む
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_ply_move_01 )
+	//主人公：上へ進む２
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_ply_move_02 )
 	_OBJ_ANIME_WAIT()
 	
 	//四天王横にある炎のアニメコントローラを作成
 	_BMODEL_ANIME_CREATE( BM_ANIME_ID2, SCR_BMID_NULL, 16, 8 )
 	//炎がつく
-	_BMODEL_ANIME_SET( BM_ANIME_ID2, 0 )
+	_BMODEL_ANIME_SET( BM_ANIME_ID2, 1 )
 	_BMODEL_ANIME_WAIT( BM_ANIME_ID2 )
 	_BMODEL_ANIME_DELETE( BM_ANIME_ID2 )
 	
@@ -303,9 +306,16 @@ _ANIME_LABEL	anm_stay_walk_u
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
-//主人公：上へ進む
+//主人公：上へ進む１
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_ply_move_01
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//主人公：上へ進む２
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_ply_move_02
 	_ANIME_DATA	AC_WALK_U_8F,2
 	_ANIME_DATA	ACMD_END,0
 

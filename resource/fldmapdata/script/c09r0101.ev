@@ -255,21 +255,10 @@ EVENT_START	ev_pos_c09r0101_enter_01
 	//主人公：螺旋を登り、直接四天王前へ
 	_FOURKINGS_WALKEVENT( 1 )
 	
-	//主人公：上へ進む
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_ply_move_01 )
-	_OBJ_ANIME_WAIT()
-	
 	//頂上に移動した
 	$LOCALWORK0 = 1
 	
 EVENT_END
-
-//--------------------------------------------------------------------
-//主人公：上へ進む
-//--------------------------------------------------------------------
-_ANIME_LABEL	anm_ply_move_01
-	_ANIME_DATA	AC_WALK_U_8F,2
-	_ANIME_DATA	ACMD_END,0
 
 
 /************************************************************/
