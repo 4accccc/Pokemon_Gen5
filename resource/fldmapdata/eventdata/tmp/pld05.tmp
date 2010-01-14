@@ -1,0 +1,5 @@
+#../data/pld05.mev
+../tmp/pld05.bin:../data/pld05.mev $(UNIQ_SCRIPTHEADER) ../tmp/pld05.h 
+	@echo ../data/pld05.mev
+	@ruby make_binary.rb $< $(UNIQ_SCRIPTHEADER) ../tmp/pld05.h 
+

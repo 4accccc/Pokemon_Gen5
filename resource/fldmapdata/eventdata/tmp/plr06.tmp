@@ -1,0 +1,5 @@
+#../data/plr06.mev
+../tmp/plr06.bin:../data/plr06.mev $(UNIQ_SCRIPTHEADER) ../tmp/plr06.h 
+	@echo ../data/plr06.mev
+	@ruby make_binary.rb $< $(UNIQ_SCRIPTHEADER) ../tmp/plr06.h 
+

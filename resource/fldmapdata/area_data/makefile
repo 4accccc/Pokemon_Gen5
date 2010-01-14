@@ -39,7 +39,7 @@ TEX_DEPEND_FILES	= $(NSBTX_DEPEND_FILENAME) $(NNSARC_DEPEND_FILENAME) $(NNSARC_T
 #------------------------------------------------------------------------------
 #※コンバート作業が必要なユーザーの名前を記述する
 #------------------------------------------------------------------------------
-USERS	=	tamada nakatsui fuchino lee_hyunjung tomoya_takahashi
+USERS	=	tamada nakatsui fuchino lee_hyunjung tomoya_takahashi obata_toshihiro
 
 #------------------------------------------------------------------------------
 #※ここに作成するnarc名を書く
