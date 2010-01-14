@@ -572,6 +572,8 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
 				field/event_comm_talk.c \
 				field/event_comm_talked.c \
 				field/fog_light_test.c \
+				net_app/comm_entry_menu.c \
+				net_app/comm_entry_menu_comm_command.c \
         field/enceff.c
 
 # フィールド天気
@@ -613,8 +615,7 @@ SRCS_OVERLAY_UNION_ROOM = net_app/union/union_chara.c \
                           net_app/union/union_oneself.c \
                           net_app/union/union_msg.c \
                           net_app/union/union_tool.c \
-                          net_app/union/colosseum_tool.c \
-                          net_app/comm_entry_menu.c
+                          net_app/union/colosseum_tool.c
 
 # ユニオンルームでのミニゲーム制御	OVERLAY_FIELDMAPと並列の位置に配置
 #===> SRCS_OVERLAY_DEV_IRC
