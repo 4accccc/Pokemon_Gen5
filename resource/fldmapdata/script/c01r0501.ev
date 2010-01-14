@@ -144,69 +144,112 @@ EVENT_END
 /*  C01R0501 RIVALの会話用イベントスクリプト				  */
 /**************************************************************/
 EVENT_START   ev_c01r0501_rival_01
-_TALK_OBJ_START()
+	//ライバルと既に話している場合
+	IF FLAG_ON( FE_C01R0501_RIVALTALK ) THEN
 
-	//ゆめのあとちに行っている場合
-	IF $WK_SCENE_D01R0101 >= 1 THEN
+		_CALL dir
 
-		//ライバルと既に話している場合
-		IF FLAG_ON( FE_C01R0501_RIVALTALK ) THEN
+		//ポケモンに　きのみを
+		_BALLOONWIN_OBJMSG( msg_c01r0501_black_06 , C01R0501_RIVAL_01 )
+		_LAST_KEYWAIT()
+		_BALLOONWIN_CLOSE()
+		
+		_OBJ_ANIME( C01R0501_RIVAL_01 ,anm_dir_up )
+		_OBJ_ANIME_WAIT()
 
-			_BALLOONWIN_TALKOBJ_MSG( msg_c01r0501_black_02 )
-			_LAST_KEYWAIT()
-			_BALLOONWIN_CLOSE()
-
-		//ライバルとまだ話していない場合
-		ELSE
-			
-			_PLAYER_NAME( 0 )
-			_BALLOONWIN_TALKOBJ_MSG( msg_c01r0501_black_01 )
-			_LAST_KEYWAIT()
-			_BALLOONWIN_CLOSE()
-			
-			//=========フラグワーク操作==========//
-	
-			//ジム前サングラスの消去
-			_FLAG_SET( FV_C01_GUIDE_01 )
-
-			//ジム前リーダーストッパーの開始
-			_FLAG_RESET( FV_C01_LEADER1_01 )
-
-			//ライバルと話した
-			_FLAG_SET( FE_C01R0501_RIVALTALK )
-
-			//===================================//
-
-		ENDIF
-
-	//ゆめのあとちに行っていない場合
+	//ライバルとまだ話していない場合
 	ELSE
 
-		//ライバルと既に話している場合
-		IF FLAG_ON( FE_C01R0501_RIVALTALK ) THEN
-
-			_BALLOONWIN_TALKOBJ_MSG( msg_c01r0501_black_02 )
-			_LAST_KEYWAIT()
-			_BALLOONWIN_CLOSE()
-
-		//ライバルとまだ話していない場合
-		ELSE
+		//ポケモンが　どくを　うけると
+		_BALLOONWIN_OBJMSG( msg_c01r0501_black_01 , C01R0501_RIVAL_01 )
+		_BALLOONWIN_CLOSE()
 		
-			_PLAYER_NAME( 0 )
-			_BALLOONWIN_TALKOBJ_MSG( msg_c01r0501_black_01 )
-			_LAST_KEYWAIT()
-			_BALLOONWIN_CLOSE()
+		_CALL dir
 		
-			//=========フラグワーク操作==========//
+		//ん？　ここで　べんきょう　かい
+		_PLAYER_NAME( 0 )
+		_BALLOONWIN_OBJMSG( msg_c01r0501_black_02 , C01R0501_RIVAL_01 )
+		_YES_NO_WIN( SCWK_ANSWER )
+		
+		//はいの場合
+		IF $SCWK_ANSWER == SCR_YES THEN
+			_BALLOONWIN_CLOSE()
 			
-			//ライバルと話した
-			_FLAG_SET( FE_C01R0501_RIVALTALK )
+			_BALLOONWIN_OBJMSG( msg_c01r0501_black_03 , C01R0501_RIVAL_01 )
+			_BALLOONWIN_CLOSE()
+		
+		//いいえの場合
+		ELSE
+			_BALLOONWIN_CLOSE()
 
-			//===================================//
-
+			_BALLOONWIN_OBJMSG( msg_c01r0501_black_04 , C01R0501_RIVAL_01 )
+			_BALLOONWIN_CLOSE()
+			
 		ENDIF
 		
+		//そうだ　この　きのみを　あげるよ
+		_PLAYER_NAME( 0 )
+		_BALLOONWIN_OBJMSG( msg_c01r0501_black_05 , C01R0501_RIVAL_01 )
+		_BALLOONWIN_CLOSE()
+		
+		//オレンのみ追加
+		_ITEM_EVENT_KEYWAIT(ITEM_ORENNOMI, 1)
+		
+		//ポケモンに　きのみを
+		_BALLOONWIN_OBJMSG( msg_c01r0501_black_06 , C01R0501_RIVAL_01 )
+		_LAST_KEYWAIT()
+		_BALLOONWIN_CLOSE()
+		
+		//=========フラグワーク操作==========//
+
+		//ジム前サングラスの消去
+		_FLAG_SET( FV_C01_GUIDE_01 )
+
+		//ジム前リーダーストッパーの開始
+		_FLAG_RESET( FV_C01_LEADER1_01 )
+
+		//ライバルと話した
+		_FLAG_SET( FE_C01R0501_RIVALTALK )
+
+		//===================================//
 	ENDIF
 
 EVENT_END
 
+dir:
+
+DEFINE_LOCAL	LWK_DIR
+
+_PLAYER_DIR_GET( LWK_DIR )
+SWITCH $LWK_DIR
+CASE DIR_LEFT THEN
+	_OBJ_ANIME( C01R0501_RIVAL_01, anm_dir_right )
+	_OBJ_ANIME_WAIT()
+CASE DIR_RIGHT THEN
+	_OBJ_ANIME( C01R0501_RIVAL_01, anm_dir_left )
+	_OBJ_ANIME_WAIT()
+CASE DIR_UP THEN
+	_OBJ_ANIME( C01R0501_RIVAL_01, anm_dir_down )
+	_OBJ_ANIME_WAIT()
+ENDSWITCH
+
+_RET
+
+//--------------------------------------------------------------
+//	方向を変える
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_dir_down
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_left
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_right
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+_ANIME_LABEL	anm_dir_up
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0

@@ -27,5 +27,13 @@
 #define TR_SCHOOLB_02                     13
 #define TR_SCHOOLG_02                     14
 #define TR_TANPAN_03                      15
+#define D02R0101_HAKAIM_STOP1_01          16
+#define D02R0101_HAKAIM_STOP2_01          17
+#define D02R0101_HAKAIW_STOP1_01          18
+#define D02R0101_HAKAIM_STOP3_01          19
+#define D02R0101_HAKAIM_STOP4_01          20
+#define D02R0101_HAKAIW_STOP2_01          21
+#define D02R0101_HAKAIW_STOP3_01          22
+#define D02R0101_HAKAIM_STOP5_01          23
 
 #endif //ZONE_D02R0101_EVC_H

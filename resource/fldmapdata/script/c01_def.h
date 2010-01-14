@@ -21,5 +21,7 @@
 #define SCRID_SCENE_C01_PDWGUIDE_01 (14)
 #define SCRID_C01_INVENTOR_01 (15)
 #define SCRID_ZONE_C01 (16)
+#define SCRID_C01_WOMAN2A_01 (17)
+#define SCRID_C01_FISING_01 (18)
 
 #endif //_C01_DEF_H_

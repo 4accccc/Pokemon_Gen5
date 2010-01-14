@@ -27,6 +27,12 @@ _EVENT_DATA		ev_d02r0101_leader3_01
 _EVENT_DATA		ev_pos_d02r0101_stop
 _EVENT_DATA		ev_pos_d02r0101_event_02
 _EVENT_DATA		ev_init_d02r0101
+_EVENT_DATA		ev_d02r0101_hakaim_stop1_01
+_EVENT_DATA		ev_d02r0101_hakaim_stop2_01
+_EVENT_DATA		ev_d02r0101_hakaim_stop3_01
+_EVENT_DATA		ev_d02r0101_hakaim_stop4_01
+_EVENT_DATA		ev_d02r0101_hakaiw_stop1_01
+_EVENT_DATA		ev_d02r0101_hakaiw_stop2_01
 _EVENT_DATA_END
 
 
@@ -42,7 +48,7 @@ _EVENT_DATA_END
 INIT_EVENT_START	ev_init_d02r0101
 
 	//シーンチェンジイベント後にジムリーダーアーティをストッパーの位置に移動
-	IF $WK_SCENE_D02R0101 == 1 THEN
+	IF $WK_SCENE_D02R0101 == 2 THEN
 		_OBJ_POS_CHANGE( D02R0101_LEADER3_01, 74, 0, 27, DIR_DOWN )
 	
 	ENDIF
@@ -92,8 +98,8 @@ EVENT_START		ev_pos_d02r0101_event_01
 	
 	//==============ワーク操作==============//
 	
-	//シーンチェンジイベント終了
-	$WK_SCENE_D02R0101 = 1
+	//アーティイベント終了
+	$WK_SCENE_D02R0101 = 2
 	
 	//======================================//
 	
@@ -433,7 +439,7 @@ EVENT_START		ev_pos_d02r0101_event_02
 	_FLAG_SET( FV_D02R0101_HAKAI )
 	
 	//盗難イベント終了
-	$WK_SCENE_D02R0101 = 2
+	$WK_SCENE_D02R0101 = 3
 
 	_FLAG_RESET( FE_MUSEUM_TOUNAN )	//盗難イベントの終了
 	_FLAG_RESET( FV_C02GYM0202_LEADER2 ) //ジム2室目にジムリーダー（アロエ）が戻る
@@ -575,3 +581,69 @@ _ANIME_LABEL	anm_player_tobu
 	_ANIME_DATA	AC_DIR_PAUSE_OFF,1
 	_ANIME_DATA	AC_DIR_R,1
 	_ANIME_DATA	ACMD_END,0
+
+/**************************************************************/
+/*	D02R0101	HAKAIM1の会話用イベントスクリプト			  */
+/**************************************************************/
+EVENT_START    ev_d02r0101_hakaim_stop1_01
+
+	_BALLOONWIN_OBJMSG( msg_d02r0101_hakaim_stop1_01 , D02R0101_HAKAIM_STOP1_01 )
+	_LAST_KEYWAIT()
+	_BALLOONWIN_CLOSE()
+
+EVENT_END
+
+/**************************************************************/
+/*	D02R0101	HAKAIM2の会話用イベントスクリプト			  */
+/**************************************************************/
+EVENT_START    ev_d02r0101_hakaim_stop2_01
+
+	_BALLOONWIN_OBJMSG( msg_d02r0101_hakaim_stop2_01 , D02R0101_HAKAIM_STOP2_01 )
+	_LAST_KEYWAIT()
+	_BALLOONWIN_CLOSE()
+
+EVENT_END
+
+/**************************************************************/
+/*	D02R0101	HAKAIM3の会話用イベントスクリプト			  */
+/**************************************************************/
+EVENT_START    ev_d02r0101_hakaim_stop3_01
+
+	_BALLOONWIN_OBJMSG( msg_d02r0101_hakaiw_stop3_01 , D02R0101_HAKAIM_STOP3_01 )
+	_LAST_KEYWAIT()
+	_BALLOONWIN_CLOSE()
+
+EVENT_END
+
+/**************************************************************/
+/*	D02R0101	HAKAIM4の会話用イベントスクリプト			  */
+/**************************************************************/
+EVENT_START    ev_d02r0101_hakaim_stop4_01
+
+	_BALLOONWIN_OBJMSG( msg_d02r0101_hakaiw_stop4_01 , D02R0101_HAKAIM_STOP4_01 )
+	_LAST_KEYWAIT()
+	_BALLOONWIN_CLOSE()
+
+EVENT_END
+
+/**************************************************************/
+/*	D02R0101	HAKAIW1の会話用イベントスクリプト			  */
+/**************************************************************/
+EVENT_START    ev_d02r0101_hakaiw_stop1_01
+
+	_BALLOONWIN_OBJMSG( msg_d02r0101_hakaiw_stop1_01 , D02R0101_HAKAIW_STOP1_01 )
+	_LAST_KEYWAIT()
+	_BALLOONWIN_CLOSE()
+
+EVENT_END
+
+/**************************************************************/
+/*	D02R0101	HAKAIW2の会話用イベントスクリプト			  */
+/**************************************************************/
+EVENT_START    ev_d02r0101_hakaiw_stop2_01
+
+	_BALLOONWIN_OBJMSG( msg_d02r0101_hakaiw_stop2_01 , D02R0101_HAKAIW_STOP2_01 )
+	_LAST_KEYWAIT()
+	_BALLOONWIN_CLOSE()
+
+EVENT_END

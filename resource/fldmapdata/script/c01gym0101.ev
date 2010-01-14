@@ -955,13 +955,7 @@ EVENT_START	ev_pos_c01gym0101_button_mizu_01
 		_SE_WAIT()
 		
 		//透明OBJの移動
-		_OBJ_ANIME( C01GYM0101_CURTAIN_01A, anm_curtain_open_a )
-		_OBJ_ANIME( C01GYM0101_CURTAIN_01B, anm_curtain_open_a )
-		_OBJ_ANIME( C01GYM0101_CURTAIN_01C, anm_curtain_open_a )
-		_OBJ_ANIME( C01GYM0101_CURTAIN_01D, anm_curtain_open_a )
-		_OBJ_ANIME( C01GYM0101_CURTAIN_01E, anm_curtain_open_b )
-		_OBJ_ANIME( C01GYM0101_CURTAIN_01F, anm_curtain_open_b )
-		_OBJ_ANIME( C01GYM0101_CURTAIN_01G, anm_curtain_open_b )
+		_OBJ_ANIME( C01GYM0101_CURTAIN_01, anm_curtain_open_a )
 		
 		//ＳＥ：カーテンが開く音
 		_SE_PLAY( SEQ_SE_FLD_43 )
@@ -994,14 +988,7 @@ EVENT_END
 //	カーテン開く Ａ～Ｄ
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_curtain_open_a
-	_ANIME_DATA	AC_WALK_L_8F,4
-	_ANIME_DATA	ACMD_END,0
-	
-//--------------------------------------------------------------
-//	カーテン開く Ｅ～Ｇ
-//--------------------------------------------------------------
-_ANIME_LABEL	anm_curtain_open_b
-	_ANIME_DATA	AC_WALK_R_8F,4
+	_ANIME_DATA	AC_WALK_L_4F,7
 	_ANIME_DATA	ACMD_END,0
 
 /**************************************************************/
@@ -1026,13 +1013,7 @@ EVENT_START	ev_pos_c01gym0101_button_kusa_02
 		_SE_WAIT()		
 		
 		//透明OBJの移動
-		_OBJ_ANIME( C01GYM0101_CURTAIN_02A, anm_curtain_open_a )
-		_OBJ_ANIME( C01GYM0101_CURTAIN_02B, anm_curtain_open_a )
-		_OBJ_ANIME( C01GYM0101_CURTAIN_02C, anm_curtain_open_a )
-		_OBJ_ANIME( C01GYM0101_CURTAIN_02D, anm_curtain_open_a )
-		_OBJ_ANIME( C01GYM0101_CURTAIN_02E, anm_curtain_open_b )
-		_OBJ_ANIME( C01GYM0101_CURTAIN_02F, anm_curtain_open_b )
-		_OBJ_ANIME( C01GYM0101_CURTAIN_02G, anm_curtain_open_b )
+		_OBJ_ANIME( C01GYM0101_CURTAIN_02, anm_curtain_open_a )
 			
 		//ＳＥ：カーテンが開く音
 		_SE_PLAY( SEQ_SE_FLD_43 )
@@ -1187,13 +1168,7 @@ EVENT_START	ev_pos_c01gym0101_button_honoo_03
 		_SE_WAIT()
 		
 		//透明OBJの移動
-		_OBJ_ANIME( C01GYM0101_CURTAIN_03A, anm_curtain_open_a )
-		_OBJ_ANIME( C01GYM0101_CURTAIN_03B, anm_curtain_open_a )
-		_OBJ_ANIME( C01GYM0101_CURTAIN_03C, anm_curtain_open_a )
-		_OBJ_ANIME( C01GYM0101_CURTAIN_03D, anm_curtain_open_a )
-		_OBJ_ANIME( C01GYM0101_CURTAIN_03E, anm_curtain_open_b )
-		_OBJ_ANIME( C01GYM0101_CURTAIN_03F, anm_curtain_open_b )
-		_OBJ_ANIME( C01GYM0101_CURTAIN_03G, anm_curtain_open_b )
+		_OBJ_ANIME( C01GYM0101_CURTAIN_03, anm_curtain_open_a )
 
 		//ＳＥ：カーテンが開く音
 		_SE_PLAY( SEQ_SE_FLD_43 )			

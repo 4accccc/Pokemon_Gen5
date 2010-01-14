@@ -20,9 +20,6 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA		ev_d02_girl2_01
-_EVENT_DATA		ev_d02_hakaim1_01
-_EVENT_DATA		ev_d02_hakaim2_01
-_EVENT_DATA		ev_d02_hakaiw_01
 _EVENT_DATA		ev_pos_d02_stop
 _EVENT_DATA_END
 
@@ -38,39 +35,6 @@ _EVENT_DATA_END
 /**************************************************************/
 EVENT_START    ev_d02_girl2_01
 	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d02_girl1_01 )
-EVENT_END
-
-/**************************************************************/
-/*  D02 HAKAIM1の会話用イベントスクリプト                     */
-/**************************************************************/
-EVENT_START    ev_d02_hakaim1_01
-
-	_BALLOONWIN_OBJMSG( msg_d02_hakaim1_01 , D02_HAKAIM1_01 )
-	_LAST_KEYWAIT()
-	_BALLOONWIN_CLOSE()
-
-EVENT_END
-
-/**************************************************************/
-/*  D02 HAKAIM1の会話用イベントスクリプト                     */
-/**************************************************************/
-EVENT_START    ev_d02_hakaim2_01
-	
-	_BALLOONWIN_OBJMSG( msg_d02_hakaim2_01 , D02_HAKAIM2_01 )
-	_LAST_KEYWAIT()
-	_BALLOONWIN_CLOSE()
-
-EVENT_END
-
-/**************************************************************/
-/*  D02 HAKAIM1の会話用イベントスクリプト                     */
-/**************************************************************/
-EVENT_START    ev_d02_hakaiw_01
-	
-	_BALLOONWIN_OBJMSG( msg_d02_hakaiw_01 , D02_HAKAIW_01 )
-	_LAST_KEYWAIT()
-	_BALLOONWIN_CLOSE()
-
 EVENT_END
 
 /**************************************************************/
@@ -99,7 +63,10 @@ EVENT_START    ev_pos_d02_stop
 	_FLAG_SET( FV_D02_LEADER3 )
 
 	//アーティストッパーイベント終了
-	$WK_SCENE_D02 = 1
+	$WK_SCENE_D02 = 2
+	
+	//D02R0101盗難イベント開始
+	$WK_SCENE_D02R0101 = 1
 
 	//========================================//
 

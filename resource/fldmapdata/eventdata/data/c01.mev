@@ -1,5 +1,5 @@
 #event data
-#save date:2009/12/25 11:05:39
+#save date:2010/01/14 13:04:40
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c01.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c01.wms
 #hold event type:
 1
 #hold event number:
-10
+12
 #event number: 0
 #type
 1
@@ -169,9 +169,9 @@ EVENTDATA_POSTYPE_GRID
 #type
 1
 #ID name
-C01_BABYGIRL1_01
+C01_WOMAN2A_01
 #OBJ CODE Number
-BABYGIRL1
+WOMAN2
 #MOVE CODE Number
 MV_DIR_RND
 #EVENT TYPE Number
@@ -179,7 +179,7 @@ EV_TYPE_NORMAL
 #Flag Name
 0
 #Event Script Name
-SCRID_C01_BABYGIRL1_01
+SCRID_C01_WOMAN2A_01
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
@@ -233,7 +233,7 @@ EVENTDATA_POSTYPE_GRID
 #ID name
 C01_GLASSES_01
 #OBJ CODE Number
-SUNGLASSES
+DANPEI
 #MOVE CODE Number
 MV_DMY
 #EVENT TYPE Number
@@ -320,6 +320,68 @@ DIR_RIGHT
 EVENTDATA_POSTYPE_GRID
 #position
 568 0 24
+#event number: 10
+#type
+1
+#ID name
+C01_FISING_01
+#OBJ CODE Number
+FISHING
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_C01_FISING_01
+#Direction Type Number
+DIR_RIGHT
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-184 0 152
+#event number: 11
+#type
+1
+#ID name
+C01_BABYGIRL1_01
+#OBJ CODE Number
+BABYGIRL1
+#MOVE CODE Number
+MV_DIR_RND
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_C01_BABYGIRL1_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+296 0 -72
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT

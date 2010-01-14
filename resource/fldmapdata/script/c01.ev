@@ -33,6 +33,8 @@ _EVENT_DATA		ev_c01_leader_01
 _EVENT_DATA		ev_scene_c01_pdwguide_01
 _EVENT_DATA		ev_c01_inventor_01
 _EVENT_DATA		ev_zone_c01
+_EVENT_DATA		ev_c01_woman2a_01
+_EVENT_DATA		ev_c01_fising_01
 _EVENT_DATA_END
 
 
@@ -220,9 +222,8 @@ _ANIME_LABEL	anm_oldman_tikaduku13
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_oldman_tikaduku14
-	_ANIME_DATA	AC_MARK_GYOE,1
 	_ANIME_DATA	AC_STAY_WALK_L_16F,1
-	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_MARK_GYOE,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
@@ -249,34 +250,10 @@ _ANIME_LABEL	anm_player_back
 	_ANIME_DATA	ACMD_END,0
 
 /**************************************************************/
-/*  C01 GLASSESのジムストッパー			                      */
+/*  C01 DANPEIのジムストッパー			                      */
 /**************************************************************/
 EVENT_START   ev_c01_glasses_01
-	_TALK_OBJ_START()
-	
-		//ライバルと話していない
-		IF FLAG_OFF( FE_C01R0501_RIVALTALK ) THEN
-			
-			//夢の跡地に行っている
-			IF $WK_SCENE_D01R0101 >= 1 THEN
-				_BALLOONWIN_TALKOBJ_MSG( msg_c01_glasses_02 )
-				_LAST_KEYWAIT()
-				_BALLOONWIN_CLOSE()
-			
-			ELSE
-				_BALLOONWIN_TALKOBJ_MSG( msg_c01_glasses_01 )
-				_LAST_KEYWAIT()
-				_BALLOONWIN_CLOSE()
-				
-			ENDIF
-		//ライバルと話している
-		ELSE
-			_BALLOONWIN_TALKOBJ_MSG( msg_c01_glasses_02 )
-			_LAST_KEYWAIT()
-			_BALLOONWIN_CLOSE()
-			
-		ENDIF
-		
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c01_glasses_01 )
 EVENT_END
 
 /**************************************************************/
@@ -415,10 +392,10 @@ EVENT_END
 //	発明家マコモ　自機前に
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_inventor_tikaduku
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
 	_ANIME_DATA	AC_MARK_GYOE,1
 	_ANIME_DATA	AC_WALK_R_8F,1
 	_ANIME_DATA	AC_WALK_U_8F,2
-	_ANIME_DATA	AC_DIR_U,1
 	_ANIME_DATA	ACMD_END,0
 	
 //--------------------------------------------------------------
@@ -436,3 +413,18 @@ _ANIME_LABEL	anm_player_yudo
 	_ANIME_DATA	AC_WALK_R_8F,1	
 	_ANIME_DATA	AC_DIR_R,1
 	_ANIME_DATA	ACMD_END,0
+
+/**************************************************************/
+/*	C01 WOMAN2 会話イベントスクリプト						  */
+/**************************************************************/
+EVENT_START		ev_c01_woman2a_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c01_woman2a_01 )
+EVENT_END
+
+/**************************************************************/
+/*	C01 FISING	アイテム入手イベントスクリプト				  */
+/**************************************************************/
+EVENT_START		ev_c01_fising_01
+	_EASY_TALK_ITEM_EVENT( ITEM_WAZAMASIN01, 1, FH_01, msg_c01_fising_01, msg_c01_fising_02, msg_c01_fising_02)
+EVENT_END
+

@@ -20,10 +20,12 @@
 #define C01_CLEANINGM_01                   2
 #define C01_WOMAN2_01                      3
 #define C01_BREEDERW_01                    4
-#define C01_BABYGIRL1_01                   5
+#define C01_WOMAN2A_01                     5
 #define C01_OLDMAN1_01                     6
 #define C01_GLASSES_01                     7
 #define C01_LEADER_01                      8
 #define C01_INVENTOR_01                    9
+#define C01_FISING_01                     10
+#define C01_BABYGIRL1_01                  11
 
 #endif //ZONE_C01_EVC_H
