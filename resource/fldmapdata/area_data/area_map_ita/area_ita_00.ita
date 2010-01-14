@@ -3,7 +3,7 @@
 <ita version="1.6.0">
 
 <head>
-	<create user="fuchino" host="W00152" date="2009-12-28T19:47:22" source="area_ita_00_091228_2.mb"/>
+	<create user="fuchino" host="W00152" date="2010-01-13T20:47:45" source="area_ita_00_100113.mb"/>
 	<title>Texture SRT Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
@@ -16,7 +16,7 @@
 	tool_end_frame="240"
 	interpolation="frame"
 	tex_matrix_mode="maya"
-	compress_material="on" material_size="15 15"
+	compress_material="on" material_size="14 14"
 	frame_step_mode="1"
 	tolerance_tex_scale="0.100000"
 	tolerance_tex_rotate="0.100000"
@@ -251,98 +251,98 @@
 </tex_translate_data>
 
 <tex_srt_anm_array size="14">
-	<tex_srt_anm index="0" material_name="sea_zanami2_lm1">
+	<tex_srt_anm index="0" material_name="sea_zanami2">
 		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
 		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
 		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
 		<tex_translate_s frame_step="1" data_size="240" data_head="0"/>
 		<tex_translate_t frame_step="1" data_size="1" data_head="0"/>
 	</tex_srt_anm>
-	<tex_srt_anm index="1" material_name="sea_zanami_lm1">
+	<tex_srt_anm index="1" material_name="sea_zanami">
 		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
 		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
 		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
 		<tex_translate_s frame_step="1" data_size="240" data_head="240"/>
 		<tex_translate_t frame_step="1" data_size="240" data_head="480"/>
 	</tex_srt_anm>
-	<tex_srt_anm index="2" material_name="sea_mizu1_lm2">
+	<tex_srt_anm index="2" material_name="sea_mizu1">
 		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
 		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
 		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
 		<tex_translate_s frame_step="1" data_size="240" data_head="720"/>
 		<tex_translate_t frame_step="1" data_size="240" data_head="720"/>
 	</tex_srt_anm>
-	<tex_srt_anm index="3" material_name="sea_mizu1_lm1">
+	<tex_srt_anm index="3" material_name="sea_mizu1_1">
 		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
 		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
 		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
 		<tex_translate_s frame_step="1" data_size="240" data_head="720"/>
 		<tex_translate_t frame_step="1" data_size="240" data_head="720"/>
 	</tex_srt_anm>
-	<tex_srt_anm index="4" material_name="sea_gake02_lm1">
+	<tex_srt_anm index="4" material_name="sea_gake02">
 		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
 		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
 		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
 		<tex_translate_s frame_step="1" data_size="1" data_head="0"/>
 		<tex_translate_t frame_step="1" data_size="240" data_head="960"/>
 	</tex_srt_anm>
-	<tex_srt_anm index="5" material_name="sea_asase02_lm1">
+	<tex_srt_anm index="5" material_name="sea_asase02">
 		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
 		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
 		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
 		<tex_translate_s frame_step="1" data_size="240" data_head="720"/>
 		<tex_translate_t frame_step="1" data_size="240" data_head="720"/>
 	</tex_srt_anm>
-	<tex_srt_anm index="6" material_name="mizu_sita2_lm1">
+	<tex_srt_anm index="6" material_name="mizu_sita2">
 		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
 		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
 		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
 		<tex_translate_s frame_step="1" data_size="240" data_head="1200"/>
 		<tex_translate_t frame_step="1" data_size="240" data_head="1200"/>
 	</tex_srt_anm>
-	<tex_srt_anm index="7" material_name="ike01_lm1">
+	<tex_srt_anm index="7" material_name="ike01">
 		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
 		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
 		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
 		<tex_translate_s frame_step="1" data_size="240" data_head="1440"/>
 		<tex_translate_t frame_step="1" data_size="240" data_head="1680"/>
 	</tex_srt_anm>
-	<tex_srt_anm index="8" material_name="ue_grass01_lm1">
+	<tex_srt_anm index="8" material_name="ue_grass01">
 		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
 		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
 		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
 		<tex_translate_s frame_step="1" data_size="240" data_head="0"/>
 		<tex_translate_t frame_step="1" data_size="240" data_head="0"/>
 	</tex_srt_anm>
-	<tex_srt_anm index="9" material_name="kawa01a_lm1">
+	<tex_srt_anm index="9" material_name="kawa01a">
 		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
 		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
 		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
 		<tex_translate_s frame_step="1" data_size="1" data_head="0"/>
 		<tex_translate_t frame_step="1" data_size="240" data_head="1920"/>
 	</tex_srt_anm>
-	<tex_srt_anm index="10" material_name="kawa01b_lm1">
+	<tex_srt_anm index="10" material_name="kawa01b">
 		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
 		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
 		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
 		<tex_translate_s frame_step="1" data_size="1" data_head="0"/>
 		<tex_translate_t frame_step="1" data_size="240" data_head="1920"/>
 	</tex_srt_anm>
-	<tex_srt_anm index="11" material_name="kawa01b_lm2">
+	<tex_srt_anm index="11" material_name="kawa01b_2">
 		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
 		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
 		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
 		<tex_translate_s frame_step="1" data_size="1" data_head="0"/>
 		<tex_translate_t frame_step="1" data_size="240" data_head="1920"/>
 	</tex_srt_anm>
-	<tex_srt_anm index="12" material_name="kawa01b_lm3">
+	<tex_srt_anm index="12" material_name="kawa01b_3">
 		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
 		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
 		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
 		<tex_translate_s frame_step="1" data_size="1" data_head="0"/>
 		<tex_translate_t frame_step="1" data_size="240" data_head="1920"/>
 	</tex_srt_anm>
-	<tex_srt_anm index="13" material_name="shore01_lm1">
+	<tex_srt_anm index="13" material_name="shore01">
 		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
 		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
 		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
