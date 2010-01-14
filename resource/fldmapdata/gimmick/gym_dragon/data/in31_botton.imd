@@ -3,18 +3,18 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="tanoue_reiko" host="W00192" date="2009-12-10T15:34:40" source="in31_botton.mb"/>
+	<create user="tanoue_reiko" host="W00192" date="2010-01-14T16:19:50" source="in31_botton.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="tanoue_reiko" host="W00192" date="2009-12-10T15:34:40" source="in31_botton.mb"/>
+<original_create user="tanoue_reiko" host="W00192" date="2010-01-14T16:19:50" source="in31_botton.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
-	pos_scale="2"
+	pos_scale="1"
 	scaling_rule="standard"
 	vertex_style="direct"
 	magnify="1.000000"
@@ -27,7 +27,7 @@
 	use_primitive_strip="on"
 />
 
-<box_test pos_scale="2" xyz="-2.000000 -6.000000 -2.000000" whd="4.000000 2.000000 4.000000"/>
+<box_test pos_scale="2" xyz="-2.000000 -2.000000 -2.000000" whd="4.000000 2.000000 4.000000"/>
 
 <tex_image_array size="2">
 	<tex_image index="0" name="gym08_b.1"
@@ -116,9 +116,9 @@
 	<polygon index="0" name="polygon0"
 		vertex_size="16" polygon_size="6"
 		triangle_size="0" quad_size="6"
-		volume_min="-2.000000 -8.000000 -2.000000"
-		volume_max="2.000000 -6.000000 2.000000"
-		volume_r="8.485352"
+		volume_min="-4.000000 -4.000000 -4.000000"
+		volume_max="4.000000 0.000000 4.000000"
+		volume_r="6.928223"
 		mtx_prim_size="1"
 		nrm_flag="off" clr_flag="on" tex_flag="on"
 	>
@@ -129,39 +129,39 @@
 					<mtx idx="0"/>
 					<tex st="-16.000000 0.000000"/>
 					<clr rgb="31 31 31"/>
-					<pos_s xyz="-2.000000 -6.000000 -2.000000"/>
+					<pos_s xyz="-4.000000 0.000000 -4.000000"/>
 					<tex st="-16.000000 16.000000"/>
-					<pos_xy xy="-2.000000 -8.000000"/>
+					<pos_xy xy="-4.000000 -4.000000"/>
 					<tex st="0.000000 0.000000"/>
-					<pos_yz yz="-6.000000 2.000000"/>
+					<pos_yz yz="0.000000 4.000000"/>
 					<tex st="0.000000 16.000000"/>
-					<pos_xy xy="-2.000000 -8.000000"/>
+					<pos_xy xy="-4.000000 -4.000000"/>
 					<tex st="16.000000 0.000000"/>
-					<pos_xy xy="2.000000 -6.000000"/>
+					<pos_xy xy="4.000000 0.000000"/>
 					<tex st="16.000000 16.000000"/>
-					<pos_xy xy="2.000000 -8.000000"/>
+					<pos_xy xy="4.000000 -4.000000"/>
 					<tex st="32.000000 0.000000"/>
-					<pos_yz yz="-6.000000 -2.000000"/>
+					<pos_yz yz="0.000000 -4.000000"/>
 					<tex st="32.000000 16.000000"/>
-					<pos_xy xy="2.000000 -8.000000"/>
+					<pos_xy xy="4.000000 -4.000000"/>
 				</primitive>
 				<primitive index="1" type="quad_strip" vertex_size="8">
 					<tex st="16.000000 -48.000000"/>
-					<pos_xz xz="2.000000 2.000000"/>
+					<pos_xz xz="4.000000 4.000000"/>
 					<tex st="0.000000 -48.000000"/>
-					<pos_xy xy="-2.000000 -8.000000"/>
+					<pos_xy xy="-4.000000 -4.000000"/>
 					<tex st="16.000000 -32.000000"/>
-					<pos_xz xz="2.000000 -2.000000"/>
+					<pos_xz xz="4.000000 -4.000000"/>
 					<tex st="0.000000 -32.000000"/>
-					<pos_xy xy="-2.000000 -8.000000"/>
+					<pos_xy xy="-4.000000 -4.000000"/>
 					<tex st="16.000000 -16.000000"/>
-					<pos_xy xy="2.000000 -6.000000"/>
+					<pos_xy xy="4.000000 0.000000"/>
 					<tex st="0.000000 -16.000000"/>
-					<pos_xy xy="-2.000000 -6.000000"/>
+					<pos_xy xy="-4.000000 0.000000"/>
 					<tex st="16.000000 0.000000"/>
-					<pos_xz xz="2.000000 2.000000"/>
+					<pos_xz xz="4.000000 4.000000"/>
 					<tex st="0.000000 0.000000"/>
-					<pos_xy xy="-2.000000 -6.000000"/>
+					<pos_xy xy="-4.000000 0.000000"/>
 				</primitive>
 			</primitive_array>
 		</mtx_prim>
@@ -178,14 +178,14 @@
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="0.000000 8.000000 0.000000"
+		translate="0.000000 0.000000 0.000000"
 		visibility="on"
 		display_size="1"
 		vertex_size="16" polygon_size="6"
 		triangle_size="0" quad_size="6"
-		volume_min="-2.000000 -8.000000 -2.000000"
-		volume_max="2.000000 -6.000000 2.000000"
-		volume_r="8.485352"
+		volume_min="-4.000000 -4.000000 -4.000000"
+		volume_max="4.000000 0.000000 4.000000"
+		volume_r="6.928223"
 	>
 		<display index="0" material="0" polygon="0" priority="0"/>
 	</node>
