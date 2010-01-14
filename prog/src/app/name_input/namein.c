@@ -1377,18 +1377,6 @@ static void KEYANM_Init( KEYANM_WORK *p_wk, NAMEIN_INPUTTYPE mode, HEAPID heapID
   //パレット破棄
   GFL_HEAP_FreeMemory( p_buff );
 
-
-  //キーモードがキーならばカーソル位置を押す
-  if( GFL_UI_CheckTouchOrKey() == GFL_APP_KTST_KEY )
-  { 
-    //モードボタン+カーソル位置押下のため
-    KEYANM_Start( p_wk, KEYANM_TYPE_MOVE, &p_wk->range, FALSE, mode );  
-  }
-  else
-  { 
-    //モードボタン押下のため
-    KEYANM_Start( p_wk, KEYANM_TYPE_NONE, &p_wk->range, FALSE, mode );  
-  }
 }
 //----------------------------------------------------------------------------
 /**
@@ -3393,6 +3381,28 @@ static void KEYBOARD_Init( KEYBOARD_WORK *p_wk, NAMEIN_INPUTTYPE mode, GFL_FONT 
 
   //描画
   KEYMAP_Print( &p_wk->keymap, &p_wk->util, p_que, p_font, heapID );
+
+
+ //キーモードがキーならばカーソル位置を押す
+  { 
+    GFL_RECT rect;
+    if( GFL_UI_CheckTouchOrKey() == GFL_APP_KTST_KEY )
+    { 
+      //モードボタン+カーソル位置押下のため
+      if( KEYMAP_GetRange( &p_wk->keymap, &p_wk->cursor, &rect ) )
+      { 
+        KEYANM_Start( &p_wk->keyanm, KEYANM_TYPE_MOVE, &rect, p_wk->is_shift, p_wk->mode );  
+      }
+    }
+    else
+    { 
+      //モードボタン押下のため
+      if( KEYMAP_GetRange( &p_wk->keymap, &p_wk->cursor, &rect ) )
+      { 
+        KEYANM_Start( &p_wk->keyanm, KEYANM_TYPE_NONE, &rect, p_wk->is_shift, p_wk->mode );  
+      }
+    }
+  }
 }
 //----------------------------------------------------------------------------
 /**
