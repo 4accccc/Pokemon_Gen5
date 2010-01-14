@@ -30,6 +30,9 @@
 
 #define POKEMON_MCS_ID			(0x58976557)
 #define	MCS_SEND_SIZE	( 0x1800 )
+
+#define	TWL_MCS_WAIT	( 120 )   //TWLとの接続では遅延が発生するので、ある程度待つ処理が必要
+
 //============================================================================================
 /**
  *	構造体宣言
@@ -98,7 +101,7 @@ BOOL	MCS_Init( HEAPID heapID )
 
 	// カートリッジ割り込みを有効にし、カートリッジ割り込み内で
   // NNS_McsCartridgeInterrupt()が呼ばれるようにする
-    OS_SetIrqFunction(OS_IE_CARTRIDGE, MCS_CartIntrFunc);
+  OS_SetIrqFunction(OS_IE_CARTRIDGE, MCS_CartIntrFunc);
 	(void)OS_EnableIrqMask(OS_IE_CARTRIDGE);
 
 	// デバイスのオープン
@@ -115,6 +118,18 @@ BOOL	MCS_Init( HEAPID heapID )
 		// OS_Printfによる出力
 		OS_Printf("device open\n");
 
+    //TWLは接続の移行に遅延があるためある程度ウェイトをもたせる
+    if( OS_GetConsoleType() & OS_CONSOLE_TWLDEBUGGER )
+    {
+      int wait = TWL_MCS_WAIT;
+      OS_Printf("Waiting server connect.\n");
+      do
+      {
+        SVC_WaitVBlankIntr();
+        wait--;
+      }while (! NNS_McsIsServerConnect() && ( wait ) );
+    }
+
 		// mcs文字列出力の初期化
 		NNS_McsInitPrint( mw->printBuffer, 1024 );
 
@@ -129,6 +144,9 @@ BOOL	MCS_Init( HEAPID heapID )
         // 受信コールバック関数の登録
 //		NNS_McsRegisterRecvCallback( &mw->recvCBInfo, MCS_CHANNEL1, MCS_DataRecvCallback, (u32)&mw->mw );
 
+    if( OS_GetConsoleType() & OS_CONSOLE_NITRO ){
+      return FALSE;
+    }
 		if( NNS_McsIsServerConnect() == FALSE )
 		{	
 			OS_TPrintf("接続に失敗しています\n");
@@ -722,6 +740,18 @@ BOOL	GFL_MCS_Open( void )
 		return FALSE;
 	}
 	OS_Printf("device open\n");
+
+  //TWLは接続の移行に遅延があるためある程度ウェイトをもたせる
+  if( OS_GetConsoleType() & OS_CONSOLE_TWLDEBUGGER )
+  {
+    int wait = TWL_MCS_WAIT;
+    OS_Printf("Waiting server connect.\n");
+    do
+    {
+      SVC_WaitVBlankIntr();
+      wait--;
+    }while (! NNS_McsIsServerConnect() && ( wait ) );
+  }
 
 	// mcs文字列出力の初期化
 	NNS_McsInitPrint( gflMCS->printBuf, MCS_PRINTBUF_SIZE );
