@@ -81,20 +81,6 @@ typedef struct {
 } FOG_LIGHT_TEST_WK;
 
 
-static u8 s_FOG_TBL[ 32 ] = {
-  0x80,0x80,0x80,0x80,
-  0x80,0x80,0x80,0x80,
-
-  0x80,0x80,0x80,0x80,
-  0x80,0x80,0x80,0x80,
-
-  0x80,0x80,0x80,0x80,
-  0x80,0x80,0x80,0x80,
-
-  0x80,0x80,0x80,0x80,
-  0x80,0x80,0x80,0x80,
-};
-
 //-----------------------------------------------------------------------------
 /**
  *					プロトタイプ宣言
@@ -171,7 +157,6 @@ static void FOG_LIGHT_TEST_Create( FLDMAPFUNC_WORK * p_taskwk, FIELDMAP_WORK * p
   
   // フォグテーブルを設定
   p_wk->p_fog = p_fog;
-  FIELD_FOG_SetTblAll( p_fog, s_FOG_TBL );
   FIELD_FOG_SetFlag( p_fog, TRUE );
   FIELD_FOG_SetSlope( p_fog, FIELD_FOG_SLOPE_0x8000 );
   FIELD_FOG_SetOffset( p_fog, 0 );
@@ -210,32 +195,12 @@ static void FOG_LIGHT_TEST_Delete( FLDMAPFUNC_WORK * p_taskwk, FIELDMAP_WORK * p
 static void FOG_LIGHT_TEST_Update( FLDMAPFUNC_WORK * p_taskwk, FIELDMAP_WORK * p_fieldmap, void * p_work )
 {
   FOG_LIGHT_TEST_WK* p_wk = p_work;
+  GAMESYS_WORK* p_gsys = FIELDMAP_GetGameSysWork( p_fieldmap );
   int i;
 
-  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT )
-  {
-    FLDMAPFUNC_Delete( p_taskwk );
+  // イベント中は動作しない
+  if( GAMESYSTEM_GetEvent(p_gsys) ) {
     return ;
-  }
-
-
-  if( GFL_UI_KEY_GetRepeat() & PAD_BUTTON_L )
-  {
-    for( i=0; i<32; i++ )
-    {
-      s_FOG_TBL[i] += 0x8;
-    }
-    OS_TPrintf( "FOG TBL %d\n", s_FOG_TBL[0] );
-    FIELD_FOG_SetTblAll( p_wk->p_fog, s_FOG_TBL );
-  }
-  else if( GFL_UI_KEY_GetRepeat() & PAD_BUTTON_R )
-  {
-    for( i=0; i<32; i++ )
-    {
-      s_FOG_TBL[i] -= 0x8;
-    }
-    OS_TPrintf( "FOG TBL %d\n", s_FOG_TBL[0] );
-    FIELD_FOG_SetTblAll( p_wk->p_fog, s_FOG_TBL );
   }
 
   if( GFL_UI_KEY_GetRepeat() & PAD_BUTTON_A )

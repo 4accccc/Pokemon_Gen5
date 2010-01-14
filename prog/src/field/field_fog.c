@@ -761,10 +761,60 @@ void FIELD_FOG_DEBUG_Control( FIELD_FOG_WORK* p_wk )
       FIELD_FOG_SetSlope( p_wk, slope );
     }
   }
+
+  // タッチで、フォグテーブルを操作
+  {
+    static s32 last_x;
+    static s32 last_y;
+    static u8 last_touch = FALSE;
+    u32 x, y;
+    s32 dist_x, dist_y;
+    u32 count_max;
+    s32 set_x, set_y;
+    int i;
+    
+    if( GFL_UI_TP_GetPointCont( &x, &y ) )
+    {
+      // ラストタッチがあるなら、ラストタッチから、今の場所までのフォグテーブルを変更
+      if( last_touch )
+      {
+        dist_y = (s32)y - last_y;
+        dist_x = (s32)x - last_x;
+        count_max = MATH_ABS(dist_y);
+        
+        for( i=0; i<count_max; i++ )
+        {
+          set_y = last_y + ((dist_y * i) / count_max);
+          set_x = last_x + ((dist_x * i) / count_max);
+          set_y /= 6;
+          if( (set_y < 32) && (set_y >= 0) )
+          {
+            p_wk->fog_tbl[ set_y ] = set_x/2;
+          }
+          p_wk->change = TRUE;
+        }
+      }
+      else
+      {
+        set_y = y/6;
+        p_wk->fog_tbl[ set_y ] = x/2;
+        p_wk->change = TRUE;
+      }
+      
+      last_touch = TRUE;
+      last_x = x;
+      last_y = y;
+    }
+    else
+    {
+      last_touch = FALSE;
+    }
+  }
 }
 
 void FIELD_FOG_DEBUG_PrintData( FIELD_FOG_WORK* p_wk, GFL_BMPWIN* p_win )
 {
+  int i;
 
   // フレーム
   WORDSET_RegisterNumber( p_wk->p_debug_wordset, 0, FIELD_FOG_GetOffset(p_wk), 5, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
@@ -774,6 +824,13 @@ void FIELD_FOG_DEBUG_PrintData( FIELD_FOG_WORK* p_wk, GFL_BMPWIN* p_win )
 
   WORDSET_ExpandStr( p_wk->p_debug_wordset, p_wk->p_debug_strbuff, p_wk->p_debug_strbuff_tmp );
   PRINTSYS_Print( GFL_BMPWIN_GetBmp( p_win ), 0, 0, p_wk->p_debug_strbuff, p_wk->p_debug_font );
+
+  // フォグテーブルを表示
+  GFL_BMP_Fill( GFL_BMPWIN_GetBmp( p_win ), 16, 48, 64, 32, 1 );
+  for( i=0; i<32; i++ )
+  {
+    GFL_BMP_Fill( GFL_BMPWIN_GetBmp( p_win ), 16 + (p_wk->fog_tbl[i]/3), 48 + i, 1, 1, 0xf );
+  }
 
   GFL_BMPWIN_TransVramCharacter( p_win );
 }
