@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tamada" host="W00139" date="2009-07-15T19:04:53"/>
+	<create user="ohmori" host="W00185" date="2010-01-14T21:54:06"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -297,6 +297,2406 @@
 		<attribute name="キャラ指定">？？？</attribute>
 		<language name="JPN" width="256">テストメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="plwc10_01_01">
+		<language name="JPN" width="256">おれBCに　いくんだ　いいだろ〜</language>
+		<language name="JPN_KANJI" width="256">おれBCに　いくんだ　いいだろ〜</language>
+	</row>
+
+	<row id="plwc10_01_02">
+		<language name="JPN" width="256">つまんない　BCにいきたいな…</language>
+		<language name="JPN_KANJI" width="256">つまんない　BCにいきたいな…</language>
+	</row>
+
+	<row id="plwc10_01_03">
+		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+	</row>
+
+	<row id="plwc10_01_04">
+		<language name="JPN" width="256">BCへ　つれてって！</language>
+		<language name="JPN_KANJI" width="256">BCへ　つれてって！</language>
+	</row>
+
+	<row id="plwc10_01_05">
+		<language name="JPN" width="256">そとに　つれだしてよー！</language>
+		<language name="JPN_KANJI" width="256">そとに　つれだしてよー！</language>
+	</row>
+
+	<row id="plwc10_01_06">
+		<language name="JPN" width="256">やっぱり　べつのBCヘいくね！</language>
+		<language name="JPN_KANJI" width="256">やっぱり　べつのBCヘいくね！</language>
+	</row>
+
+	<row id="plwc10_01_07">
+		<language name="JPN" width="256">うーん　やっぱりかんがえなおす！</language>
+		<language name="JPN_KANJI" width="256">うーん　やっぱりかんがえなおす！</language>
+	</row>
+
+	<row id="plwc10_01_08">
+		<language name="JPN" width="256">やったー！</language>
+		<language name="JPN_KANJI" width="256">やったー！</language>
+	</row>
+
+	<row id="plwc10_02_01">
+		<language name="JPN" width="256">おれBCに　いくんだ　いいだろ〜</language>
+		<language name="JPN_KANJI" width="256">おれBCに　いくんだ　いいだろ〜</language>
+	</row>
+
+	<row id="plwc10_02_02">
+		<language name="JPN" width="256">つまんない　BCにいきたいな…</language>
+		<language name="JPN_KANJI" width="256">つまんない　BCにいきたいな…</language>
+	</row>
+
+	<row id="plwc10_02_03">
+		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+	</row>
+
+	<row id="plwc10_02_04">
+		<language name="JPN" width="256">BCへ　つれてって！</language>
+		<language name="JPN_KANJI" width="256">BCへ　つれてって！</language>
+	</row>
+
+	<row id="plwc10_02_05">
+		<language name="JPN" width="256">そとに　つれだしてよー！</language>
+		<language name="JPN_KANJI" width="256">そとに　つれだしてよー！</language>
+	</row>
+
+	<row id="plwc10_02_06">
+		<language name="JPN" width="256">やっぱり　べつのBCヘいくね！</language>
+		<language name="JPN_KANJI" width="256">やっぱり　べつのBCヘいくね！</language>
+	</row>
+
+	<row id="plwc10_02_07">
+		<language name="JPN" width="256">うーん　やっぱりかんがえなおす！</language>
+		<language name="JPN_KANJI" width="256">うーん　やっぱりかんがえなおす！</language>
+	</row>
+
+	<row id="plwc10_02_08">
+		<language name="JPN" width="256">やったー！</language>
+		<language name="JPN_KANJI" width="256">やったー！</language>
+	</row>
+
+	<row id="plwc10_03_01">
+		<language name="JPN" width="256">おれBCに　いくんだ　いいだろ〜</language>
+		<language name="JPN_KANJI" width="256">おれBCに　いくんだ　いいだろ〜</language>
+	</row>
+
+	<row id="plwc10_03_02">
+		<language name="JPN" width="256">つまんない　BCにいきたいな…</language>
+		<language name="JPN_KANJI" width="256">つまんない　BCにいきたいな…</language>
+	</row>
+
+	<row id="plwc10_03_03">
+		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+	</row>
+
+	<row id="plwc10_03_04">
+		<language name="JPN" width="256">BCへ　つれてって！</language>
+		<language name="JPN_KANJI" width="256">BCへ　つれてって！</language>
+	</row>
+
+	<row id="plwc10_03_05">
+		<language name="JPN" width="256">そとに　つれだしてよー！</language>
+		<language name="JPN_KANJI" width="256">そとに　つれだしてよー！</language>
+	</row>
+
+	<row id="plwc10_03_06">
+		<language name="JPN" width="256">やっぱり　べつのBCヘいくね！</language>
+		<language name="JPN_KANJI" width="256">やっぱり　べつのBCヘいくね！</language>
+	</row>
+
+	<row id="plwc10_03_07">
+		<language name="JPN" width="256">うーん　やっぱりかんがえなおす！</language>
+		<language name="JPN_KANJI" width="256">うーん　やっぱりかんがえなおす！</language>
+	</row>
+
+	<row id="plwc10_03_08">
+		<language name="JPN" width="256">やったー！</language>
+		<language name="JPN_KANJI" width="256">やったー！</language>
+	</row>
+
+	<row id="plwc10_04_01">
+		<language name="JPN" width="256">おれBCに　いくんだ　いいだろ〜</language>
+		<language name="JPN_KANJI" width="256">おれBCに　いくんだ　いいだろ〜</language>
+	</row>
+
+	<row id="plwc10_04_02">
+		<language name="JPN" width="256">つまんない　BCにいきたいな…</language>
+		<language name="JPN_KANJI" width="256">つまんない　BCにいきたいな…</language>
+	</row>
+
+	<row id="plwc10_04_03">
+		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+	</row>
+
+	<row id="plwc10_04_04">
+		<language name="JPN" width="256">BCへ　つれてって！</language>
+		<language name="JPN_KANJI" width="256">BCへ　つれてって！</language>
+	</row>
+
+	<row id="plwc10_04_05">
+		<language name="JPN" width="256">そとに　つれだしてよー！</language>
+		<language name="JPN_KANJI" width="256">そとに　つれだしてよー！</language>
+	</row>
+
+	<row id="plwc10_04_06">
+		<language name="JPN" width="256">やっぱり　べつのBCヘいくね！</language>
+		<language name="JPN_KANJI" width="256">やっぱり　べつのBCヘいくね！</language>
+	</row>
+
+	<row id="plwc10_04_07">
+		<language name="JPN" width="256">うーん　やっぱりかんがえなおす！</language>
+		<language name="JPN_KANJI" width="256">うーん　やっぱりかんがえなおす！</language>
+	</row>
+
+	<row id="plwc10_04_08">
+		<language name="JPN" width="256">やったー！</language>
+		<language name="JPN_KANJI" width="256">やったー！</language>
+	</row>
+
+	<row id="plwc10_05_01">
+		<language name="JPN" width="256">おれBCに　いくんだ　いいだろ〜</language>
+		<language name="JPN_KANJI" width="256">おれBCに　いくんだ　いいだろ〜</language>
+	</row>
+
+	<row id="plwc10_05_02">
+		<language name="JPN" width="256">つまんない　BCにいきたいな…</language>
+		<language name="JPN_KANJI" width="256">つまんない　BCにいきたいな…</language>
+	</row>
+
+	<row id="plwc10_05_03">
+		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+	</row>
+
+	<row id="plwc10_05_04">
+		<language name="JPN" width="256">BCへ　つれてって！</language>
+		<language name="JPN_KANJI" width="256">BCへ　つれてって！</language>
+	</row>
+
+	<row id="plwc10_05_05">
+		<language name="JPN" width="256">そとに　つれだしてよー！</language>
+		<language name="JPN_KANJI" width="256">そとに　つれだしてよー！</language>
+	</row>
+
+	<row id="plwc10_05_06">
+		<language name="JPN" width="256">やっぱり　べつのBCヘいくね！</language>
+		<language name="JPN_KANJI" width="256">やっぱり　べつのBCヘいくね！</language>
+	</row>
+
+	<row id="plwc10_05_07">
+		<language name="JPN" width="256">うーん　やっぱりかんがえなおす！</language>
+		<language name="JPN_KANJI" width="256">うーん　やっぱりかんがえなおす！</language>
+	</row>
+
+	<row id="plwc10_05_08">
+		<language name="JPN" width="256">やったー！</language>
+		<language name="JPN_KANJI" width="256">やったー！</language>
+	</row>
+
+	<row id="plwc10_06_01">
+		<language name="JPN" width="256">おれBCに　いくんだ　いいだろ〜</language>
+		<language name="JPN_KANJI" width="256">おれBCに　いくんだ　いいだろ〜</language>
+	</row>
+
+	<row id="plwc10_06_02">
+		<language name="JPN" width="256">つまんない　BCにいきたいな…</language>
+		<language name="JPN_KANJI" width="256">つまんない　BCにいきたいな…</language>
+	</row>
+
+	<row id="plwc10_06_03">
+		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+	</row>
+
+	<row id="plwc10_06_04">
+		<language name="JPN" width="256">BCへ　つれてって！</language>
+		<language name="JPN_KANJI" width="256">BCへ　つれてって！</language>
+	</row>
+
+	<row id="plwc10_06_05">
+		<language name="JPN" width="256">そとに　つれだしてよー！</language>
+		<language name="JPN_KANJI" width="256">そとに　つれだしてよー！</language>
+	</row>
+
+	<row id="plwc10_06_06">
+		<language name="JPN" width="256">やっぱり　べつのBCヘいくね！</language>
+		<language name="JPN_KANJI" width="256">やっぱり　べつのBCヘいくね！</language>
+	</row>
+
+	<row id="plwc10_06_07">
+		<language name="JPN" width="256">うーん　やっぱりかんがえなおす！</language>
+		<language name="JPN_KANJI" width="256">うーん　やっぱりかんがえなおす！</language>
+	</row>
+
+	<row id="plwc10_06_08">
+		<language name="JPN" width="256">やったー！</language>
+		<language name="JPN_KANJI" width="256">やったー！</language>
+	</row>
+
+	<row id="plwc10_07_01">
+		<language name="JPN" width="256">おれBCに　いくんだ　いいだろ〜</language>
+		<language name="JPN_KANJI" width="256">おれBCに　いくんだ　いいだろ〜</language>
+	</row>
+
+	<row id="plwc10_07_02">
+		<language name="JPN" width="256">つまんない　BCにいきたいな…</language>
+		<language name="JPN_KANJI" width="256">つまんない　BCにいきたいな…</language>
+	</row>
+
+	<row id="plwc10_07_03">
+		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+	</row>
+
+	<row id="plwc10_07_04">
+		<language name="JPN" width="256">BCへ　つれてって！</language>
+		<language name="JPN_KANJI" width="256">BCへ　つれてって！</language>
+	</row>
+
+	<row id="plwc10_07_05">
+		<language name="JPN" width="256">そとに　つれだしてよー！</language>
+		<language name="JPN_KANJI" width="256">そとに　つれだしてよー！</language>
+	</row>
+
+	<row id="plwc10_07_06">
+		<language name="JPN" width="256">やっぱり　べつのBCヘいくね！</language>
+		<language name="JPN_KANJI" width="256">やっぱり　べつのBCヘいくね！</language>
+	</row>
+
+	<row id="plwc10_07_07">
+		<language name="JPN" width="256">うーん　やっぱりかんがえなおす！</language>
+		<language name="JPN_KANJI" width="256">うーん　やっぱりかんがえなおす！</language>
+	</row>
+
+	<row id="plwc10_07_08">
+		<language name="JPN" width="256">やったー！</language>
+		<language name="JPN_KANJI" width="256">やったー！</language>
+	</row>
+
+	<row id="plwc10_08_01">
+		<language name="JPN" width="256">おれBCに　いくんだ　いいだろ〜</language>
+		<language name="JPN_KANJI" width="256">おれBCに　いくんだ　いいだろ〜</language>
+	</row>
+
+	<row id="plwc10_08_02">
+		<language name="JPN" width="256">つまんない　BCにいきたいな…</language>
+		<language name="JPN_KANJI" width="256">つまんない　BCにいきたいな…</language>
+	</row>
+
+	<row id="plwc10_08_03">
+		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+	</row>
+
+	<row id="plwc10_08_04">
+		<language name="JPN" width="256">BCへ　つれてって！</language>
+		<language name="JPN_KANJI" width="256">BCへ　つれてって！</language>
+	</row>
+
+	<row id="plwc10_08_05">
+		<language name="JPN" width="256">そとに　つれだしてよー！</language>
+		<language name="JPN_KANJI" width="256">そとに　つれだしてよー！</language>
+	</row>
+
+	<row id="plwc10_08_06">
+		<language name="JPN" width="256">やっぱり　べつのBCヘいくね！</language>
+		<language name="JPN_KANJI" width="256">やっぱり　べつのBCヘいくね！</language>
+	</row>
+
+	<row id="plwc10_08_07">
+		<language name="JPN" width="256">うーん　やっぱりかんがえなおす！</language>
+		<language name="JPN_KANJI" width="256">うーん　やっぱりかんがえなおす！</language>
+	</row>
+
+	<row id="plwc10_08_08">
+		<language name="JPN" width="256">やったー！</language>
+		<language name="JPN_KANJI" width="256">やったー！</language>
+	</row>
+
+	<row id="plwc10_09_01">
+		<language name="JPN" width="256">おれBCに　いくんだ　いいだろ〜</language>
+		<language name="JPN_KANJI" width="256">おれBCに　いくんだ　いいだろ〜</language>
+	</row>
+
+	<row id="plwc10_09_02">
+		<language name="JPN" width="256">つまんない　BCにいきたいな…</language>
+		<language name="JPN_KANJI" width="256">つまんない　BCにいきたいな…</language>
+	</row>
+
+	<row id="plwc10_09_03">
+		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+	</row>
+
+	<row id="plwc10_09_04">
+		<language name="JPN" width="256">BCへ　つれてって！</language>
+		<language name="JPN_KANJI" width="256">BCへ　つれてって！</language>
+	</row>
+
+	<row id="plwc10_09_05">
+		<language name="JPN" width="256">そとに　つれだしてよー！</language>
+		<language name="JPN_KANJI" width="256">そとに　つれだしてよー！</language>
+	</row>
+
+	<row id="plwc10_09_06">
+		<language name="JPN" width="256">やっぱり　べつのBCヘいくね！</language>
+		<language name="JPN_KANJI" width="256">やっぱり　べつのBCヘいくね！</language>
+	</row>
+
+	<row id="plwc10_09_07">
+		<language name="JPN" width="256">うーん　やっぱりかんがえなおす！</language>
+		<language name="JPN_KANJI" width="256">うーん　やっぱりかんがえなおす！</language>
+	</row>
+
+	<row id="plwc10_09_08">
+		<language name="JPN" width="256">やったー！</language>
+		<language name="JPN_KANJI" width="256">やったー！</language>
+	</row>
+
+	<row id="plwc10_10_01">
+		<language name="JPN" width="256">おれBCに　いくんだ　いいだろ〜</language>
+		<language name="JPN_KANJI" width="256">おれBCに　いくんだ　いいだろ〜</language>
+	</row>
+
+	<row id="plwc10_10_02">
+		<language name="JPN" width="256">つまんない　BCにいきたいな…</language>
+		<language name="JPN_KANJI" width="256">つまんない　BCにいきたいな…</language>
+	</row>
+
+	<row id="plwc10_10_03">
+		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+	</row>
+
+	<row id="plwc10_10_04">
+		<language name="JPN" width="256">BCへ　つれてって！</language>
+		<language name="JPN_KANJI" width="256">BCへ　つれてって！</language>
+	</row>
+
+	<row id="plwc10_10_05">
+		<language name="JPN" width="256">そとに　つれだしてよー！</language>
+		<language name="JPN_KANJI" width="256">そとに　つれだしてよー！</language>
+	</row>
+
+	<row id="plwc10_10_06">
+		<language name="JPN" width="256">やっぱり　べつのBCヘいくね！</language>
+		<language name="JPN_KANJI" width="256">やっぱり　べつのBCヘいくね！</language>
+	</row>
+
+	<row id="plwc10_10_07">
+		<language name="JPN" width="256">うーん　やっぱりかんがえなおす！</language>
+		<language name="JPN_KANJI" width="256">うーん　やっぱりかんがえなおす！</language>
+	</row>
+
+	<row id="plwc10_10_08">
+		<language name="JPN" width="256">やったー！</language>
+		<language name="JPN_KANJI" width="256">やったー！</language>
+	</row>
+
+	<row id="plwc10_11_01">
+		<language name="JPN" width="256">おれBCに　いくんだ　いいだろ〜</language>
+		<language name="JPN_KANJI" width="256">おれBCに　いくんだ　いいだろ〜</language>
+	</row>
+
+	<row id="plwc10_11_02">
+		<language name="JPN" width="256">つまんない　BCにいきたいな…</language>
+		<language name="JPN_KANJI" width="256">つまんない　BCにいきたいな…</language>
+	</row>
+
+	<row id="plwc10_11_03">
+		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+	</row>
+
+	<row id="plwc10_11_04">
+		<language name="JPN" width="256">BCへ　つれてって！</language>
+		<language name="JPN_KANJI" width="256">BCへ　つれてって！</language>
+	</row>
+
+	<row id="plwc10_11_05">
+		<language name="JPN" width="256">そとに　つれだしてよー！</language>
+		<language name="JPN_KANJI" width="256">そとに　つれだしてよー！</language>
+	</row>
+
+	<row id="plwc10_11_06">
+		<language name="JPN" width="256">やっぱり　べつのBCヘいくね！</language>
+		<language name="JPN_KANJI" width="256">やっぱり　べつのBCヘいくね！</language>
+	</row>
+
+	<row id="plwc10_11_07">
+		<language name="JPN" width="256">うーん　やっぱりかんがえなおす！</language>
+		<language name="JPN_KANJI" width="256">うーん　やっぱりかんがえなおす！</language>
+	</row>
+
+	<row id="plwc10_11_08">
+		<language name="JPN" width="256">やったー！</language>
+		<language name="JPN_KANJI" width="256">やったー！</language>
+	</row>
+
+	<row id="plwc10_12_01">
+		<language name="JPN" width="256">おれBCに　いくんだ　いいだろ〜</language>
+		<language name="JPN_KANJI" width="256">おれBCに　いくんだ　いいだろ〜</language>
+	</row>
+
+	<row id="plwc10_12_02">
+		<language name="JPN" width="256">つまんない　BCにいきたいな…</language>
+		<language name="JPN_KANJI" width="256">つまんない　BCにいきたいな…</language>
+	</row>
+
+	<row id="plwc10_12_03">
+		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+	</row>
+
+	<row id="plwc10_12_04">
+		<language name="JPN" width="256">BCへ　つれてって！</language>
+		<language name="JPN_KANJI" width="256">BCへ　つれてって！</language>
+	</row>
+
+	<row id="plwc10_12_05">
+		<language name="JPN" width="256">そとに　つれだしてよー！</language>
+		<language name="JPN_KANJI" width="256">そとに　つれだしてよー！</language>
+	</row>
+
+	<row id="plwc10_12_06">
+		<language name="JPN" width="256">やっぱり　べつのBCヘいくね！</language>
+		<language name="JPN_KANJI" width="256">やっぱり　べつのBCヘいくね！</language>
+	</row>
+
+	<row id="plwc10_12_07">
+		<language name="JPN" width="256">うーん　やっぱりかんがえなおす！</language>
+		<language name="JPN_KANJI" width="256">うーん　やっぱりかんがえなおす！</language>
+	</row>
+
+	<row id="plwc10_12_08">
+		<language name="JPN" width="256">やったー！</language>
+		<language name="JPN_KANJI" width="256">やったー！</language>
+	</row>
+
+	<row id="plwc10_13_01">
+		<language name="JPN" width="256">おれBCに　いくんだ　いいだろ〜</language>
+		<language name="JPN_KANJI" width="256">おれBCに　いくんだ　いいだろ〜</language>
+	</row>
+
+	<row id="plwc10_13_02">
+		<language name="JPN" width="256">つまんない　BCにいきたいな…</language>
+		<language name="JPN_KANJI" width="256">つまんない　BCにいきたいな…</language>
+	</row>
+
+	<row id="plwc10_13_03">
+		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+	</row>
+
+	<row id="plwc10_13_04">
+		<language name="JPN" width="256">BCへ　つれてって！</language>
+		<language name="JPN_KANJI" width="256">BCへ　つれてって！</language>
+	</row>
+
+	<row id="plwc10_13_05">
+		<language name="JPN" width="256">そとに　つれだしてよー！</language>
+		<language name="JPN_KANJI" width="256">そとに　つれだしてよー！</language>
+	</row>
+
+	<row id="plwc10_13_06">
+		<language name="JPN" width="256">やっぱり　べつのBCヘいくね！</language>
+		<language name="JPN_KANJI" width="256">やっぱり　べつのBCヘいくね！</language>
+	</row>
+
+	<row id="plwc10_13_07">
+		<language name="JPN" width="256">うーん　やっぱりかんがえなおす！</language>
+		<language name="JPN_KANJI" width="256">うーん　やっぱりかんがえなおす！</language>
+	</row>
+
+	<row id="plwc10_13_08">
+		<language name="JPN" width="256">やったー！</language>
+		<language name="JPN_KANJI" width="256">やったー！</language>
+	</row>
+
+	<row id="plwc10_14_01">
+		<language name="JPN" width="256">おれBCに　いくんだ　いいだろ〜</language>
+		<language name="JPN_KANJI" width="256">おれBCに　いくんだ　いいだろ〜</language>
+	</row>
+
+	<row id="plwc10_14_02">
+		<language name="JPN" width="256">つまんない　BCにいきたいな…</language>
+		<language name="JPN_KANJI" width="256">つまんない　BCにいきたいな…</language>
+	</row>
+
+	<row id="plwc10_14_03">
+		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+	</row>
+
+	<row id="plwc10_14_04">
+		<language name="JPN" width="256">BCへ　つれてって！</language>
+		<language name="JPN_KANJI" width="256">BCへ　つれてって！</language>
+	</row>
+
+	<row id="plwc10_14_05">
+		<language name="JPN" width="256">そとに　つれだしてよー！</language>
+		<language name="JPN_KANJI" width="256">そとに　つれだしてよー！</language>
+	</row>
+
+	<row id="plwc10_14_06">
+		<language name="JPN" width="256">やっぱり　べつのBCヘいくね！</language>
+		<language name="JPN_KANJI" width="256">やっぱり　べつのBCヘいくね！</language>
+	</row>
+
+	<row id="plwc10_14_07">
+		<language name="JPN" width="256">うーん　やっぱりかんがえなおす！</language>
+		<language name="JPN_KANJI" width="256">うーん　やっぱりかんがえなおす！</language>
+	</row>
+
+	<row id="plwc10_14_08">
+		<language name="JPN" width="256">やったー！</language>
+		<language name="JPN_KANJI" width="256">やったー！</language>
+	</row>
+
+	<row id="plwc10_15_01">
+		<language name="JPN" width="256">おれBCに　いくんだ　いいだろ〜</language>
+		<language name="JPN_KANJI" width="256">おれBCに　いくんだ　いいだろ〜</language>
+	</row>
+
+	<row id="plwc10_15_02">
+		<language name="JPN" width="256">つまんない　BCにいきたいな…</language>
+		<language name="JPN_KANJI" width="256">つまんない　BCにいきたいな…</language>
+	</row>
+
+	<row id="plwc10_15_03">
+		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+	</row>
+
+	<row id="plwc10_15_04">
+		<language name="JPN" width="256">BCへ　つれてって！</language>
+		<language name="JPN_KANJI" width="256">BCへ　つれてって！</language>
+	</row>
+
+	<row id="plwc10_15_05">
+		<language name="JPN" width="256">そとに　つれだしてよー！</language>
+		<language name="JPN_KANJI" width="256">そとに　つれだしてよー！</language>
+	</row>
+
+	<row id="plwc10_15_06">
+		<language name="JPN" width="256">やっぱり　べつのBCヘいくね！</language>
+		<language name="JPN_KANJI" width="256">やっぱり　べつのBCヘいくね！</language>
+	</row>
+
+	<row id="plwc10_15_07">
+		<language name="JPN" width="256">うーん　やっぱりかんがえなおす！</language>
+		<language name="JPN_KANJI" width="256">うーん　やっぱりかんがえなおす！</language>
+	</row>
+
+	<row id="plwc10_15_08">
+		<language name="JPN" width="256">やったー！</language>
+		<language name="JPN_KANJI" width="256">やったー！</language>
+	</row>
+
+	<row id="plwc10_16_01">
+		<language name="JPN" width="256">おれBCに　いくんだ　いいだろ〜</language>
+		<language name="JPN_KANJI" width="256">おれBCに　いくんだ　いいだろ〜</language>
+	</row>
+
+	<row id="plwc10_16_02">
+		<language name="JPN" width="256">つまんない　BCにいきたいな…</language>
+		<language name="JPN_KANJI" width="256">つまんない　BCにいきたいな…</language>
+	</row>
+
+	<row id="plwc10_16_03">
+		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+	</row>
+
+	<row id="plwc10_16_04">
+		<language name="JPN" width="256">BCへ　つれてって！</language>
+		<language name="JPN_KANJI" width="256">BCへ　つれてって！</language>
+	</row>
+
+	<row id="plwc10_16_05">
+		<language name="JPN" width="256">そとに　つれだしてよー！</language>
+		<language name="JPN_KANJI" width="256">そとに　つれだしてよー！</language>
+	</row>
+
+	<row id="plwc10_16_06">
+		<language name="JPN" width="256">やっぱり　べつのBCヘいくね！</language>
+		<language name="JPN_KANJI" width="256">やっぱり　べつのBCヘいくね！</language>
+	</row>
+
+	<row id="plwc10_16_07">
+		<language name="JPN" width="256">うーん　やっぱりかんがえなおす！</language>
+		<language name="JPN_KANJI" width="256">うーん　やっぱりかんがえなおす！</language>
+	</row>
+
+	<row id="plwc10_16_08">
+		<language name="JPN" width="256">やったー！</language>
+		<language name="JPN_KANJI" width="256">やったー！</language>
+	</row>
+
+	<row id="plwc10_17_01">
+		<language name="JPN" width="256">おれBCに　いくんだ　いいだろ〜</language>
+		<language name="JPN_KANJI" width="256">おれBCに　いくんだ　いいだろ〜</language>
+	</row>
+
+	<row id="plwc10_17_02">
+		<language name="JPN" width="256">つまんない　BCにいきたいな…</language>
+		<language name="JPN_KANJI" width="256">つまんない　BCにいきたいな…</language>
+	</row>
+
+	<row id="plwc10_17_03">
+		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+	</row>
+
+	<row id="plwc10_17_04">
+		<language name="JPN" width="256">BCへ　つれてって！</language>
+		<language name="JPN_KANJI" width="256">BCへ　つれてって！</language>
+	</row>
+
+	<row id="plwc10_17_05">
+		<language name="JPN" width="256">そとに　つれだしてよー！</language>
+		<language name="JPN_KANJI" width="256">そとに　つれだしてよー！</language>
+	</row>
+
+	<row id="plwc10_17_06">
+		<language name="JPN" width="256">やっぱり　べつのBCヘいくね！</language>
+		<language name="JPN_KANJI" width="256">やっぱり　べつのBCヘいくね！</language>
+	</row>
+
+	<row id="plwc10_17_07">
+		<language name="JPN" width="256">うーん　やっぱりかんがえなおす！</language>
+		<language name="JPN_KANJI" width="256">うーん　やっぱりかんがえなおす！</language>
+	</row>
+
+	<row id="plwc10_17_08">
+		<language name="JPN" width="256">やったー！</language>
+		<language name="JPN_KANJI" width="256">やったー！</language>
+	</row>
+
+	<row id="plwc10_18_01">
+		<language name="JPN" width="256">おれBCに　いくんだ　いいだろ〜</language>
+		<language name="JPN_KANJI" width="256">おれBCに　いくんだ　いいだろ〜</language>
+	</row>
+
+	<row id="plwc10_18_02">
+		<language name="JPN" width="256">つまんない　BCにいきたいな…</language>
+		<language name="JPN_KANJI" width="256">つまんない　BCにいきたいな…</language>
+	</row>
+
+	<row id="plwc10_18_03">
+		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+	</row>
+
+	<row id="plwc10_18_04">
+		<language name="JPN" width="256">BCへ　つれてって！</language>
+		<language name="JPN_KANJI" width="256">BCへ　つれてって！</language>
+	</row>
+
+	<row id="plwc10_18_05">
+		<language name="JPN" width="256">そとに　つれだしてよー！</language>
+		<language name="JPN_KANJI" width="256">そとに　つれだしてよー！</language>
+	</row>
+
+	<row id="plwc10_18_06">
+		<language name="JPN" width="256">やっぱり　べつのBCヘいくね！</language>
+		<language name="JPN_KANJI" width="256">やっぱり　べつのBCヘいくね！</language>
+	</row>
+
+	<row id="plwc10_18_07">
+		<language name="JPN" width="256">うーん　やっぱりかんがえなおす！</language>
+		<language name="JPN_KANJI" width="256">うーん　やっぱりかんがえなおす！</language>
+	</row>
+
+	<row id="plwc10_18_08">
+		<language name="JPN" width="256">やったー！</language>
+		<language name="JPN_KANJI" width="256">やったー！</language>
+	</row>
+
+	<row id="plwc10_19_01">
+		<language name="JPN" width="256">おれBCに　いくんだ　いいだろ〜</language>
+		<language name="JPN_KANJI" width="256">おれBCに　いくんだ　いいだろ〜</language>
+	</row>
+
+	<row id="plwc10_19_02">
+		<language name="JPN" width="256">つまんない　BCにいきたいな…</language>
+		<language name="JPN_KANJI" width="256">つまんない　BCにいきたいな…</language>
+	</row>
+
+	<row id="plwc10_19_03">
+		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+	</row>
+
+	<row id="plwc10_19_04">
+		<language name="JPN" width="256">BCへ　つれてって！</language>
+		<language name="JPN_KANJI" width="256">BCへ　つれてって！</language>
+	</row>
+
+	<row id="plwc10_19_05">
+		<language name="JPN" width="256">そとに　つれだしてよー！</language>
+		<language name="JPN_KANJI" width="256">そとに　つれだしてよー！</language>
+	</row>
+
+	<row id="plwc10_19_06">
+		<language name="JPN" width="256">やっぱり　べつのBCヘいくね！</language>
+		<language name="JPN_KANJI" width="256">やっぱり　べつのBCヘいくね！</language>
+	</row>
+
+	<row id="plwc10_19_07">
+		<language name="JPN" width="256">うーん　やっぱりかんがえなおす！</language>
+		<language name="JPN_KANJI" width="256">うーん　やっぱりかんがえなおす！</language>
+	</row>
+
+	<row id="plwc10_19_08">
+		<language name="JPN" width="256">やったー！</language>
+		<language name="JPN_KANJI" width="256">やったー！</language>
+	</row>
+
+	<row id="plwc10_20_01">
+		<language name="JPN" width="256">おれBCに　いくんだ　いいだろ〜</language>
+		<language name="JPN_KANJI" width="256">おれBCに　いくんだ　いいだろ〜</language>
+	</row>
+
+	<row id="plwc10_20_02">
+		<language name="JPN" width="256">つまんない　BCにいきたいな…</language>
+		<language name="JPN_KANJI" width="256">つまんない　BCにいきたいな…</language>
+	</row>
+
+	<row id="plwc10_20_03">
+		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+	</row>
+
+	<row id="plwc10_20_04">
+		<language name="JPN" width="256">BCへ　つれてって！</language>
+		<language name="JPN_KANJI" width="256">BCへ　つれてって！</language>
+	</row>
+
+	<row id="plwc10_20_05">
+		<language name="JPN" width="256">そとに　つれだしてよー！</language>
+		<language name="JPN_KANJI" width="256">そとに　つれだしてよー！</language>
+	</row>
+
+	<row id="plwc10_20_06">
+		<language name="JPN" width="256">やっぱり　べつのBCヘいくね！</language>
+		<language name="JPN_KANJI" width="256">やっぱり　べつのBCヘいくね！</language>
+	</row>
+
+	<row id="plwc10_20_07">
+		<language name="JPN" width="256">うーん　やっぱりかんがえなおす！</language>
+		<language name="JPN_KANJI" width="256">うーん　やっぱりかんがえなおす！</language>
+	</row>
+
+	<row id="plwc10_20_08">
+		<language name="JPN" width="256">やったー！</language>
+		<language name="JPN_KANJI" width="256">やったー！</language>
+	</row>
+
+	<row id="plwc10_21_01">
+		<language name="JPN" width="256">おれBCに　いくんだ　いいだろ〜</language>
+		<language name="JPN_KANJI" width="256">おれBCに　いくんだ　いいだろ〜</language>
+	</row>
+
+	<row id="plwc10_21_02">
+		<language name="JPN" width="256">つまんない　BCにいきたいな…</language>
+		<language name="JPN_KANJI" width="256">つまんない　BCにいきたいな…</language>
+	</row>
+
+	<row id="plwc10_21_03">
+		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+	</row>
+
+	<row id="plwc10_21_04">
+		<language name="JPN" width="256">BCへ　つれてって！</language>
+		<language name="JPN_KANJI" width="256">BCへ　つれてって！</language>
+	</row>
+
+	<row id="plwc10_21_05">
+		<language name="JPN" width="256">そとに　つれだしてよー！</language>
+		<language name="JPN_KANJI" width="256">そとに　つれだしてよー！</language>
+	</row>
+
+	<row id="plwc10_21_06">
+		<language name="JPN" width="256">やっぱり　べつのBCヘいくね！</language>
+		<language name="JPN_KANJI" width="256">やっぱり　べつのBCヘいくね！</language>
+	</row>
+
+	<row id="plwc10_21_07">
+		<language name="JPN" width="256">うーん　やっぱりかんがえなおす！</language>
+		<language name="JPN_KANJI" width="256">うーん　やっぱりかんがえなおす！</language>
+	</row>
+
+	<row id="plwc10_21_08">
+		<language name="JPN" width="256">やったー！</language>
+		<language name="JPN_KANJI" width="256">やったー！</language>
+	</row>
+
+	<row id="plwc10_22_01">
+		<language name="JPN" width="256">おれBCに　いくんだ　いいだろ〜</language>
+		<language name="JPN_KANJI" width="256">おれBCに　いくんだ　いいだろ〜</language>
+	</row>
+
+	<row id="plwc10_22_02">
+		<language name="JPN" width="256">つまんない　BCにいきたいな…</language>
+		<language name="JPN_KANJI" width="256">つまんない　BCにいきたいな…</language>
+	</row>
+
+	<row id="plwc10_22_03">
+		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+	</row>
+
+	<row id="plwc10_22_04">
+		<language name="JPN" width="256">BCへ　つれてって！</language>
+		<language name="JPN_KANJI" width="256">BCへ　つれてって！</language>
+	</row>
+
+	<row id="plwc10_22_05">
+		<language name="JPN" width="256">そとに　つれだしてよー！</language>
+		<language name="JPN_KANJI" width="256">そとに　つれだしてよー！</language>
+	</row>
+
+	<row id="plwc10_22_06">
+		<language name="JPN" width="256">やっぱり　べつのBCヘいくね！</language>
+		<language name="JPN_KANJI" width="256">やっぱり　べつのBCヘいくね！</language>
+	</row>
+
+	<row id="plwc10_22_07">
+		<language name="JPN" width="256">うーん　やっぱりかんがえなおす！</language>
+		<language name="JPN_KANJI" width="256">うーん　やっぱりかんがえなおす！</language>
+	</row>
+
+	<row id="plwc10_22_08">
+		<language name="JPN" width="256">やったー！</language>
+		<language name="JPN_KANJI" width="256">やったー！</language>
+	</row>
+
+	<row id="plwc10_23_01">
+		<language name="JPN" width="256">おれBCに　いくんだ　いいだろ〜</language>
+		<language name="JPN_KANJI" width="256">おれBCに　いくんだ　いいだろ〜</language>
+	</row>
+
+	<row id="plwc10_23_02">
+		<language name="JPN" width="256">つまんない　BCにいきたいな…</language>
+		<language name="JPN_KANJI" width="256">つまんない　BCにいきたいな…</language>
+	</row>
+
+	<row id="plwc10_23_03">
+		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+	</row>
+
+	<row id="plwc10_23_04">
+		<language name="JPN" width="256">BCへ　つれてって！</language>
+		<language name="JPN_KANJI" width="256">BCへ　つれてって！</language>
+	</row>
+
+	<row id="plwc10_23_05">
+		<language name="JPN" width="256">そとに　つれだしてよー！</language>
+		<language name="JPN_KANJI" width="256">そとに　つれだしてよー！</language>
+	</row>
+
+	<row id="plwc10_23_06">
+		<language name="JPN" width="256">やっぱり　べつのBCヘいくね！</language>
+		<language name="JPN_KANJI" width="256">やっぱり　べつのBCヘいくね！</language>
+	</row>
+
+	<row id="plwc10_23_07">
+		<language name="JPN" width="256">うーん　やっぱりかんがえなおす！</language>
+		<language name="JPN_KANJI" width="256">うーん　やっぱりかんがえなおす！</language>
+	</row>
+
+	<row id="plwc10_23_08">
+		<language name="JPN" width="256">やったー！</language>
+		<language name="JPN_KANJI" width="256">やったー！</language>
+	</row>
+
+	<row id="plwc10_24_01">
+		<language name="JPN" width="256">おれBCに　いくんだ　いいだろ〜</language>
+		<language name="JPN_KANJI" width="256">おれBCに　いくんだ　いいだろ〜</language>
+	</row>
+
+	<row id="plwc10_24_02">
+		<language name="JPN" width="256">つまんない　BCにいきたいな…</language>
+		<language name="JPN_KANJI" width="256">つまんない　BCにいきたいな…</language>
+	</row>
+
+	<row id="plwc10_24_03">
+		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+	</row>
+
+	<row id="plwc10_24_04">
+		<language name="JPN" width="256">BCへ　つれてって！</language>
+		<language name="JPN_KANJI" width="256">BCへ　つれてって！</language>
+	</row>
+
+	<row id="plwc10_24_05">
+		<language name="JPN" width="256">そとに　つれだしてよー！</language>
+		<language name="JPN_KANJI" width="256">そとに　つれだしてよー！</language>
+	</row>
+
+	<row id="plwc10_24_06">
+		<language name="JPN" width="256">やっぱり　べつのBCヘいくね！</language>
+		<language name="JPN_KANJI" width="256">やっぱり　べつのBCヘいくね！</language>
+	</row>
+
+	<row id="plwc10_24_07">
+		<language name="JPN" width="256">うーん　やっぱりかんがえなおす！</language>
+		<language name="JPN_KANJI" width="256">うーん　やっぱりかんがえなおす！</language>
+	</row>
+
+	<row id="plwc10_24_08">
+		<language name="JPN" width="256">やったー！</language>
+		<language name="JPN_KANJI" width="256">やったー！</language>
+	</row>
+
+	<row id="plwc10_25_01">
+		<language name="JPN" width="256">おれBCに　いくんだ　いいだろ〜</language>
+		<language name="JPN_KANJI" width="256">おれBCに　いくんだ　いいだろ〜</language>
+	</row>
+
+	<row id="plwc10_25_02">
+		<language name="JPN" width="256">つまんない　BCにいきたいな…</language>
+		<language name="JPN_KANJI" width="256">つまんない　BCにいきたいな…</language>
+	</row>
+
+	<row id="plwc10_25_03">
+		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+	</row>
+
+	<row id="plwc10_25_04">
+		<language name="JPN" width="256">BCへ　つれてって！</language>
+		<language name="JPN_KANJI" width="256">BCへ　つれてって！</language>
+	</row>
+
+	<row id="plwc10_25_05">
+		<language name="JPN" width="256">そとに　つれだしてよー！</language>
+		<language name="JPN_KANJI" width="256">そとに　つれだしてよー！</language>
+	</row>
+
+	<row id="plwc10_25_06">
+		<language name="JPN" width="256">やっぱり　べつのBCヘいくね！</language>
+		<language name="JPN_KANJI" width="256">やっぱり　べつのBCヘいくね！</language>
+	</row>
+
+	<row id="plwc10_25_07">
+		<language name="JPN" width="256">うーん　やっぱりかんがえなおす！</language>
+		<language name="JPN_KANJI" width="256">うーん　やっぱりかんがえなおす！</language>
+	</row>
+
+	<row id="plwc10_25_08">
+		<language name="JPN" width="256">やったー！</language>
+		<language name="JPN_KANJI" width="256">やったー！</language>
+	</row>
+
+	<row id="plwc10_26_01">
+		<language name="JPN" width="256">おれBCに　いくんだ　いいだろ〜</language>
+		<language name="JPN_KANJI" width="256">おれBCに　いくんだ　いいだろ〜</language>
+	</row>
+
+	<row id="plwc10_26_02">
+		<language name="JPN" width="256">つまんない　BCにいきたいな…</language>
+		<language name="JPN_KANJI" width="256">つまんない　BCにいきたいな…</language>
+	</row>
+
+	<row id="plwc10_26_03">
+		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+	</row>
+
+	<row id="plwc10_26_04">
+		<language name="JPN" width="256">BCへ　つれてって！</language>
+		<language name="JPN_KANJI" width="256">BCへ　つれてって！</language>
+	</row>
+
+	<row id="plwc10_26_05">
+		<language name="JPN" width="256">そとに　つれだしてよー！</language>
+		<language name="JPN_KANJI" width="256">そとに　つれだしてよー！</language>
+	</row>
+
+	<row id="plwc10_26_06">
+		<language name="JPN" width="256">やっぱり　べつのBCヘいくね！</language>
+		<language name="JPN_KANJI" width="256">やっぱり　べつのBCヘいくね！</language>
+	</row>
+
+	<row id="plwc10_26_07">
+		<language name="JPN" width="256">うーん　やっぱりかんがえなおす！</language>
+		<language name="JPN_KANJI" width="256">うーん　やっぱりかんがえなおす！</language>
+	</row>
+
+	<row id="plwc10_26_08">
+		<language name="JPN" width="256">やったー！</language>
+		<language name="JPN_KANJI" width="256">やったー！</language>
+	</row>
+
+	<row id="plwc10_27_01">
+		<language name="JPN" width="256">おれBCに　いくんだ　いいだろ〜</language>
+		<language name="JPN_KANJI" width="256">おれBCに　いくんだ　いいだろ〜</language>
+	</row>
+
+	<row id="plwc10_27_02">
+		<language name="JPN" width="256">つまんない　BCにいきたいな…</language>
+		<language name="JPN_KANJI" width="256">つまんない　BCにいきたいな…</language>
+	</row>
+
+	<row id="plwc10_27_03">
+		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+	</row>
+
+	<row id="plwc10_27_04">
+		<language name="JPN" width="256">BCへ　つれてって！</language>
+		<language name="JPN_KANJI" width="256">BCへ　つれてって！</language>
+	</row>
+
+	<row id="plwc10_27_05">
+		<language name="JPN" width="256">そとに　つれだしてよー！</language>
+		<language name="JPN_KANJI" width="256">そとに　つれだしてよー！</language>
+	</row>
+
+	<row id="plwc10_27_06">
+		<language name="JPN" width="256">やっぱり　べつのBCヘいくね！</language>
+		<language name="JPN_KANJI" width="256">やっぱり　べつのBCヘいくね！</language>
+	</row>
+
+	<row id="plwc10_27_07">
+		<language name="JPN" width="256">うーん　やっぱりかんがえなおす！</language>
+		<language name="JPN_KANJI" width="256">うーん　やっぱりかんがえなおす！</language>
+	</row>
+
+	<row id="plwc10_27_08">
+		<language name="JPN" width="256">やったー！</language>
+		<language name="JPN_KANJI" width="256">やったー！</language>
+	</row>
+
+	<row id="plwc10_28_01">
+		<language name="JPN" width="256">おれBCに　いくんだ　いいだろ〜</language>
+		<language name="JPN_KANJI" width="256">おれBCに　いくんだ　いいだろ〜</language>
+	</row>
+
+	<row id="plwc10_28_02">
+		<language name="JPN" width="256">つまんない　BCにいきたいな…</language>
+		<language name="JPN_KANJI" width="256">つまんない　BCにいきたいな…</language>
+	</row>
+
+	<row id="plwc10_28_03">
+		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+	</row>
+
+	<row id="plwc10_28_04">
+		<language name="JPN" width="256">BCへ　つれてって！</language>
+		<language name="JPN_KANJI" width="256">BCへ　つれてって！</language>
+	</row>
+
+	<row id="plwc10_28_05">
+		<language name="JPN" width="256">そとに　つれだしてよー！</language>
+		<language name="JPN_KANJI" width="256">そとに　つれだしてよー！</language>
+	</row>
+
+	<row id="plwc10_28_06">
+		<language name="JPN" width="256">やっぱり　べつのBCヘいくね！</language>
+		<language name="JPN_KANJI" width="256">やっぱり　べつのBCヘいくね！</language>
+	</row>
+
+	<row id="plwc10_28_07">
+		<language name="JPN" width="256">うーん　やっぱりかんがえなおす！</language>
+		<language name="JPN_KANJI" width="256">うーん　やっぱりかんがえなおす！</language>
+	</row>
+
+	<row id="plwc10_28_08">
+		<language name="JPN" width="256">やったー！</language>
+		<language name="JPN_KANJI" width="256">やったー！</language>
+	</row>
+
+	<row id="plwc10_29_01">
+		<language name="JPN" width="256">おれBCに　いくんだ　いいだろ〜</language>
+		<language name="JPN_KANJI" width="256">おれBCに　いくんだ　いいだろ〜</language>
+	</row>
+
+	<row id="plwc10_29_02">
+		<language name="JPN" width="256">つまんない　BCにいきたいな…</language>
+		<language name="JPN_KANJI" width="256">つまんない　BCにいきたいな…</language>
+	</row>
+
+	<row id="plwc10_29_03">
+		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+	</row>
+
+	<row id="plwc10_29_04">
+		<language name="JPN" width="256">BCへ　つれてって！</language>
+		<language name="JPN_KANJI" width="256">BCへ　つれてって！</language>
+	</row>
+
+	<row id="plwc10_29_05">
+		<language name="JPN" width="256">そとに　つれだしてよー！</language>
+		<language name="JPN_KANJI" width="256">そとに　つれだしてよー！</language>
+	</row>
+
+	<row id="plwc10_29_06">
+		<language name="JPN" width="256">やっぱり　べつのBCヘいくね！</language>
+		<language name="JPN_KANJI" width="256">やっぱり　べつのBCヘいくね！</language>
+	</row>
+
+	<row id="plwc10_29_07">
+		<language name="JPN" width="256">うーん　やっぱりかんがえなおす！</language>
+		<language name="JPN_KANJI" width="256">うーん　やっぱりかんがえなおす！</language>
+	</row>
+
+	<row id="plwc10_29_08">
+		<language name="JPN" width="256">やったー！</language>
+		<language name="JPN_KANJI" width="256">やったー！</language>
+	</row>
+
+	<row id="plwc10_30_01">
+		<language name="JPN" width="256">おれBCに　いくんだ　いいだろ〜</language>
+		<language name="JPN_KANJI" width="256">おれBCに　いくんだ　いいだろ〜</language>
+	</row>
+
+	<row id="plwc10_30_02">
+		<language name="JPN" width="256">つまんない　BCにいきたいな…</language>
+		<language name="JPN_KANJI" width="256">つまんない　BCにいきたいな…</language>
+	</row>
+
+	<row id="plwc10_30_03">
+		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+	</row>
+
+	<row id="plwc10_30_04">
+		<language name="JPN" width="256">BCへ　つれてって！</language>
+		<language name="JPN_KANJI" width="256">BCへ　つれてって！</language>
+	</row>
+
+	<row id="plwc10_30_05">
+		<language name="JPN" width="256">そとに　つれだしてよー！</language>
+		<language name="JPN_KANJI" width="256">そとに　つれだしてよー！</language>
+	</row>
+
+	<row id="plwc10_30_06">
+		<language name="JPN" width="256">やっぱり　べつのBCヘいくね！</language>
+		<language name="JPN_KANJI" width="256">やっぱり　べつのBCヘいくね！</language>
+	</row>
+
+	<row id="plwc10_30_07">
+		<language name="JPN" width="256">うーん　やっぱりかんがえなおす！</language>
+		<language name="JPN_KANJI" width="256">うーん　やっぱりかんがえなおす！</language>
+	</row>
+
+	<row id="plwc10_30_08">
+		<language name="JPN" width="256">やったー！</language>
+		<language name="JPN_KANJI" width="256">やったー！</language>
+	</row>
+
+	<row id="plbc10_01_01">
+		<language name="JPN" width="256">おれWFに　いくんだ　いいだろ〜</language>
+		<language name="JPN_KANJI" width="256">おれWFに　いくんだ　いいだろ〜</language>
+	</row>
+
+	<row id="plbc10_01_02">
+		<language name="JPN" width="256">つまんない　WFにいきたいな…</language>
+		<language name="JPN_KANJI" width="256">つまんない　WFにいきたいな…</language>
+	</row>
+
+	<row id="plbc10_01_03">
+		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+	</row>
+
+	<row id="plbc10_01_04">
+		<language name="JPN" width="256">WFへ　つれてって！</language>
+		<language name="JPN_KANJI" width="256">WFへ　つれてって！</language>
+	</row>
+
+	<row id="plbc10_01_05">
+		<language name="JPN" width="256">そとに　つれだしてよー！</language>
+		<language name="JPN_KANJI" width="256">そとに　つれだしてよー！</language>
+	</row>
+
+	<row id="plbc10_01_06">
+		<language name="JPN" width="256">やっぱり　べつのWFヘいくね！</language>
+		<language name="JPN_KANJI" width="256">やっぱり　べつのWFヘいくね！</language>
+	</row>
+
+	<row id="plbc10_01_07">
+		<language name="JPN" width="256">うーん　やっぱりかんがえなおす！</language>
+		<language name="JPN_KANJI" width="256">うーん　やっぱりかんがえなおす！</language>
+	</row>
+
+	<row id="plbc10_01_08">
+		<language name="JPN" width="256">やったー！</language>
+		<language name="JPN_KANJI" width="256">やったー！</language>
+	</row>
+
+	<row id="plbc10_02_01">
+		<language name="JPN" width="256">おれWFに　いくんだ　いいだろ〜</language>
+		<language name="JPN_KANJI" width="256">おれWFに　いくんだ　いいだろ〜</language>
+	</row>
+
+	<row id="plbc10_02_02">
+		<language name="JPN" width="256">つまんない　WFにいきたいな…</language>
+		<language name="JPN_KANJI" width="256">つまんない　WFにいきたいな…</language>
+	</row>
+
+	<row id="plbc10_02_03">
+		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+	</row>
+
+	<row id="plbc10_02_04">
+		<language name="JPN" width="256">WFへ　つれてって！</language>
+		<language name="JPN_KANJI" width="256">WFへ　つれてって！</language>
+	</row>
+
+	<row id="plbc10_02_05">
+		<language name="JPN" width="256">そとに　つれだしてよー！</language>
+		<language name="JPN_KANJI" width="256">そとに　つれだしてよー！</language>
+	</row>
+
+	<row id="plbc10_02_06">
+		<language name="JPN" width="256">やっぱり　べつのWFヘいくね！</language>
+		<language name="JPN_KANJI" width="256">やっぱり　べつのWFヘいくね！</language>
+	</row>
+
+	<row id="plbc10_02_07">
+		<language name="JPN" width="256">うーん　やっぱりかんがえなおす！</language>
+		<language name="JPN_KANJI" width="256">うーん　やっぱりかんがえなおす！</language>
+	</row>
+
+	<row id="plbc10_02_08">
+		<language name="JPN" width="256">やったー！</language>
+		<language name="JPN_KANJI" width="256">やったー！</language>
+	</row>
+
+	<row id="plbc10_03_01">
+		<language name="JPN" width="256">おれWFに　いくんだ　いいだろ〜</language>
+		<language name="JPN_KANJI" width="256">おれWFに　いくんだ　いいだろ〜</language>
+	</row>
+
+	<row id="plbc10_03_02">
+		<language name="JPN" width="256">つまんない　WFにいきたいな…</language>
+		<language name="JPN_KANJI" width="256">つまんない　WFにいきたいな…</language>
+	</row>
+
+	<row id="plbc10_03_03">
+		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+	</row>
+
+	<row id="plbc10_03_04">
+		<language name="JPN" width="256">WFへ　つれてって！</language>
+		<language name="JPN_KANJI" width="256">WFへ　つれてって！</language>
+	</row>
+
+	<row id="plbc10_03_05">
+		<language name="JPN" width="256">そとに　つれだしてよー！</language>
+		<language name="JPN_KANJI" width="256">そとに　つれだしてよー！</language>
+	</row>
+
+	<row id="plbc10_03_06">
+		<language name="JPN" width="256">やっぱり　べつのWFヘいくね！</language>
+		<language name="JPN_KANJI" width="256">やっぱり　べつのWFヘいくね！</language>
+	</row>
+
+	<row id="plbc10_03_07">
+		<language name="JPN" width="256">うーん　やっぱりかんがえなおす！</language>
+		<language name="JPN_KANJI" width="256">うーん　やっぱりかんがえなおす！</language>
+	</row>
+
+	<row id="plbc10_03_08">
+		<language name="JPN" width="256">やったー！</language>
+		<language name="JPN_KANJI" width="256">やったー！</language>
+	</row>
+
+	<row id="plbc10_04_01">
+		<language name="JPN" width="256">おれWFに　いくんだ　いいだろ〜</language>
+		<language name="JPN_KANJI" width="256">おれWFに　いくんだ　いいだろ〜</language>
+	</row>
+
+	<row id="plbc10_04_02">
+		<language name="JPN" width="256">つまんない　WFにいきたいな…</language>
+		<language name="JPN_KANJI" width="256">つまんない　WFにいきたいな…</language>
+	</row>
+
+	<row id="plbc10_04_03">
+		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+	</row>
+
+	<row id="plbc10_04_04">
+		<language name="JPN" width="256">WFへ　つれてって！</language>
+		<language name="JPN_KANJI" width="256">WFへ　つれてって！</language>
+	</row>
+
+	<row id="plbc10_04_05">
+		<language name="JPN" width="256">そとに　つれだしてよー！</language>
+		<language name="JPN_KANJI" width="256">そとに　つれだしてよー！</language>
+	</row>
+
+	<row id="plbc10_04_06">
+		<language name="JPN" width="256">やっぱり　べつのWFヘいくね！</language>
+		<language name="JPN_KANJI" width="256">やっぱり　べつのWFヘいくね！</language>
+	</row>
+
+	<row id="plbc10_04_07">
+		<language name="JPN" width="256">うーん　やっぱりかんがえなおす！</language>
+		<language name="JPN_KANJI" width="256">うーん　やっぱりかんがえなおす！</language>
+	</row>
+
+	<row id="plbc10_04_08">
+		<language name="JPN" width="256">やったー！</language>
+		<language name="JPN_KANJI" width="256">やったー！</language>
+	</row>
+
+	<row id="plbc10_05_01">
+		<language name="JPN" width="256">おれWFに　いくんだ　いいだろ〜</language>
+		<language name="JPN_KANJI" width="256">おれWFに　いくんだ　いいだろ〜</language>
+	</row>
+
+	<row id="plbc10_05_02">
+		<language name="JPN" width="256">つまんない　WFにいきたいな…</language>
+		<language name="JPN_KANJI" width="256">つまんない　WFにいきたいな…</language>
+	</row>
+
+	<row id="plbc10_05_03">
+		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+	</row>
+
+	<row id="plbc10_05_04">
+		<language name="JPN" width="256">WFへ　つれてって！</language>
+		<language name="JPN_KANJI" width="256">WFへ　つれてって！</language>
+	</row>
+
+	<row id="plbc10_05_05">
+		<language name="JPN" width="256">そとに　つれだしてよー！</language>
+		<language name="JPN_KANJI" width="256">そとに　つれだしてよー！</language>
+	</row>
+
+	<row id="plbc10_05_06">
+		<language name="JPN" width="256">やっぱり　べつのWFヘいくね！</language>
+		<language name="JPN_KANJI" width="256">やっぱり　べつのWFヘいくね！</language>
+	</row>
+
+	<row id="plbc10_05_07">
+		<language name="JPN" width="256">うーん　やっぱりかんがえなおす！</language>
+		<language name="JPN_KANJI" width="256">うーん　やっぱりかんがえなおす！</language>
+	</row>
+
+	<row id="plbc10_05_08">
+		<language name="JPN" width="256">やったー！</language>
+		<language name="JPN_KANJI" width="256">やったー！</language>
+	</row>
+
+	<row id="plbc10_06_01">
+		<language name="JPN" width="256">おれWFに　いくんだ　いいだろ〜</language>
+		<language name="JPN_KANJI" width="256">おれWFに　いくんだ　いいだろ〜</language>
+	</row>
+
+	<row id="plbc10_06_02">
+		<language name="JPN" width="256">つまんない　WFにいきたいな…</language>
+		<language name="JPN_KANJI" width="256">つまんない　WFにいきたいな…</language>
+	</row>
+
+	<row id="plbc10_06_03">
+		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+	</row>
+
+	<row id="plbc10_06_04">
+		<language name="JPN" width="256">WFへ　つれてって！</language>
+		<language name="JPN_KANJI" width="256">WFへ　つれてって！</language>
+	</row>
+
+	<row id="plbc10_06_05">
+		<language name="JPN" width="256">そとに　つれだしてよー！</language>
+		<language name="JPN_KANJI" width="256">そとに　つれだしてよー！</language>
+	</row>
+
+	<row id="plbc10_06_06">
+		<language name="JPN" width="256">やっぱり　べつのWFヘいくね！</language>
+		<language name="JPN_KANJI" width="256">やっぱり　べつのWFヘいくね！</language>
+	</row>
+
+	<row id="plbc10_06_07">
+		<language name="JPN" width="256">うーん　やっぱりかんがえなおす！</language>
+		<language name="JPN_KANJI" width="256">うーん　やっぱりかんがえなおす！</language>
+	</row>
+
+	<row id="plbc10_06_08">
+		<language name="JPN" width="256">やったー！</language>
+		<language name="JPN_KANJI" width="256">やったー！</language>
+	</row>
+
+	<row id="plbc10_07_01">
+		<language name="JPN" width="256">おれWFに　いくんだ　いいだろ〜</language>
+		<language name="JPN_KANJI" width="256">おれWFに　いくんだ　いいだろ〜</language>
+	</row>
+
+	<row id="plbc10_07_02">
+		<language name="JPN" width="256">つまんない　WFにいきたいな…</language>
+		<language name="JPN_KANJI" width="256">つまんない　WFにいきたいな…</language>
+	</row>
+
+	<row id="plbc10_07_03">
+		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+	</row>
+
+	<row id="plbc10_07_04">
+		<language name="JPN" width="256">WFへ　つれてって！</language>
+		<language name="JPN_KANJI" width="256">WFへ　つれてって！</language>
+	</row>
+
+	<row id="plbc10_07_05">
+		<language name="JPN" width="256">そとに　つれだしてよー！</language>
+		<language name="JPN_KANJI" width="256">そとに　つれだしてよー！</language>
+	</row>
+
+	<row id="plbc10_07_06">
+		<language name="JPN" width="256">やっぱり　べつのWFヘいくね！</language>
+		<language name="JPN_KANJI" width="256">やっぱり　べつのWFヘいくね！</language>
+	</row>
+
+	<row id="plbc10_07_07">
+		<language name="JPN" width="256">うーん　やっぱりかんがえなおす！</language>
+		<language name="JPN_KANJI" width="256">うーん　やっぱりかんがえなおす！</language>
+	</row>
+
+	<row id="plbc10_07_08">
+		<language name="JPN" width="256">やったー！</language>
+		<language name="JPN_KANJI" width="256">やったー！</language>
+	</row>
+
+	<row id="plbc10_08_01">
+		<language name="JPN" width="256">おれWFに　いくんだ　いいだろ〜</language>
+		<language name="JPN_KANJI" width="256">おれWFに　いくんだ　いいだろ〜</language>
+	</row>
+
+	<row id="plbc10_08_02">
+		<language name="JPN" width="256">つまんない　WFにいきたいな…</language>
+		<language name="JPN_KANJI" width="256">つまんない　WFにいきたいな…</language>
+	</row>
+
+	<row id="plbc10_08_03">
+		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+	</row>
+
+	<row id="plbc10_08_04">
+		<language name="JPN" width="256">WFへ　つれてって！</language>
+		<language name="JPN_KANJI" width="256">WFへ　つれてって！</language>
+	</row>
+
+	<row id="plbc10_08_05">
+		<language name="JPN" width="256">そとに　つれだしてよー！</language>
+		<language name="JPN_KANJI" width="256">そとに　つれだしてよー！</language>
+	</row>
+
+	<row id="plbc10_08_06">
+		<language name="JPN" width="256">やっぱり　べつのWFヘいくね！</language>
+		<language name="JPN_KANJI" width="256">やっぱり　べつのWFヘいくね！</language>
+	</row>
+
+	<row id="plbc10_08_07">
+		<language name="JPN" width="256">うーん　やっぱりかんがえなおす！</language>
+		<language name="JPN_KANJI" width="256">うーん　やっぱりかんがえなおす！</language>
+	</row>
+
+	<row id="plbc10_08_08">
+		<language name="JPN" width="256">やったー！</language>
+		<language name="JPN_KANJI" width="256">やったー！</language>
+	</row>
+
+	<row id="plbc10_09_01">
+		<language name="JPN" width="256">おれWFに　いくんだ　いいだろ〜</language>
+		<language name="JPN_KANJI" width="256">おれWFに　いくんだ　いいだろ〜</language>
+	</row>
+
+	<row id="plbc10_09_02">
+		<language name="JPN" width="256">つまんない　WFにいきたいな…</language>
+		<language name="JPN_KANJI" width="256">つまんない　WFにいきたいな…</language>
+	</row>
+
+	<row id="plbc10_09_03">
+		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+	</row>
+
+	<row id="plbc10_09_04">
+		<language name="JPN" width="256">WFへ　つれてって！</language>
+		<language name="JPN_KANJI" width="256">WFへ　つれてって！</language>
+	</row>
+
+	<row id="plbc10_09_05">
+		<language name="JPN" width="256">そとに　つれだしてよー！</language>
+		<language name="JPN_KANJI" width="256">そとに　つれだしてよー！</language>
+	</row>
+
+	<row id="plbc10_09_06">
+		<language name="JPN" width="256">やっぱり　べつのWFヘいくね！</language>
+		<language name="JPN_KANJI" width="256">やっぱり　べつのWFヘいくね！</language>
+	</row>
+
+	<row id="plbc10_09_07">
+		<language name="JPN" width="256">うーん　やっぱりかんがえなおす！</language>
+		<language name="JPN_KANJI" width="256">うーん　やっぱりかんがえなおす！</language>
+	</row>
+
+	<row id="plbc10_09_08">
+		<language name="JPN" width="256">やったー！</language>
+		<language name="JPN_KANJI" width="256">やったー！</language>
+	</row>
+
+	<row id="plbc10_10_01">
+		<language name="JPN" width="256">おれWFに　いくんだ　いいだろ〜</language>
+		<language name="JPN_KANJI" width="256">おれWFに　いくんだ　いいだろ〜</language>
+	</row>
+
+	<row id="plbc10_10_02">
+		<language name="JPN" width="256">つまんない　WFにいきたいな…</language>
+		<language name="JPN_KANJI" width="256">つまんない　WFにいきたいな…</language>
+	</row>
+
+	<row id="plbc10_10_03">
+		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+	</row>
+
+	<row id="plbc10_10_04">
+		<language name="JPN" width="256">WFへ　つれてって！</language>
+		<language name="JPN_KANJI" width="256">WFへ　つれてって！</language>
+	</row>
+
+	<row id="plbc10_10_05">
+		<language name="JPN" width="256">そとに　つれだしてよー！</language>
+		<language name="JPN_KANJI" width="256">そとに　つれだしてよー！</language>
+	</row>
+
+	<row id="plbc10_10_06">
+		<language name="JPN" width="256">やっぱり　べつのWFヘいくね！</language>
+		<language name="JPN_KANJI" width="256">やっぱり　べつのWFヘいくね！</language>
+	</row>
+
+	<row id="plbc10_10_07">
+		<language name="JPN" width="256">うーん　やっぱりかんがえなおす！</language>
+		<language name="JPN_KANJI" width="256">うーん　やっぱりかんがえなおす！</language>
+	</row>
+
+	<row id="plbc10_10_08">
+		<language name="JPN" width="256">やったー！</language>
+		<language name="JPN_KANJI" width="256">やったー！</language>
+	</row>
+
+	<row id="plbc10_11_01">
+		<language name="JPN" width="256">おれWFに　いくんだ　いいだろ〜</language>
+		<language name="JPN_KANJI" width="256">おれWFに　いくんだ　いいだろ〜</language>
+	</row>
+
+	<row id="plbc10_11_02">
+		<language name="JPN" width="256">つまんない　WFにいきたいな…</language>
+		<language name="JPN_KANJI" width="256">つまんない　WFにいきたいな…</language>
+	</row>
+
+	<row id="plbc10_11_03">
+		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+	</row>
+
+	<row id="plbc10_11_04">
+		<language name="JPN" width="256">WFへ　つれてって！</language>
+		<language name="JPN_KANJI" width="256">WFへ　つれてって！</language>
+	</row>
+
+	<row id="plbc10_11_05">
+		<language name="JPN" width="256">そとに　つれだしてよー！</language>
+		<language name="JPN_KANJI" width="256">そとに　つれだしてよー！</language>
+	</row>
+
+	<row id="plbc10_11_06">
+		<language name="JPN" width="256">やっぱり　べつのWFヘいくね！</language>
+		<language name="JPN_KANJI" width="256">やっぱり　べつのWFヘいくね！</language>
+	</row>
+
+	<row id="plbc10_11_07">
+		<language name="JPN" width="256">うーん　やっぱりかんがえなおす！</language>
+		<language name="JPN_KANJI" width="256">うーん　やっぱりかんがえなおす！</language>
+	</row>
+
+	<row id="plbc10_11_08">
+		<language name="JPN" width="256">やったー！</language>
+		<language name="JPN_KANJI" width="256">やったー！</language>
+	</row>
+
+	<row id="plbc10_12_01">
+		<language name="JPN" width="256">おれWFに　いくんだ　いいだろ〜</language>
+		<language name="JPN_KANJI" width="256">おれWFに　いくんだ　いいだろ〜</language>
+	</row>
+
+	<row id="plbc10_12_02">
+		<language name="JPN" width="256">つまんない　WFにいきたいな…</language>
+		<language name="JPN_KANJI" width="256">つまんない　WFにいきたいな…</language>
+	</row>
+
+	<row id="plbc10_12_03">
+		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+	</row>
+
+	<row id="plbc10_12_04">
+		<language name="JPN" width="256">WFへ　つれてって！</language>
+		<language name="JPN_KANJI" width="256">WFへ　つれてって！</language>
+	</row>
+
+	<row id="plbc10_12_05">
+		<language name="JPN" width="256">そとに　つれだしてよー！</language>
+		<language name="JPN_KANJI" width="256">そとに　つれだしてよー！</language>
+	</row>
+
+	<row id="plbc10_12_06">
+		<language name="JPN" width="256">やっぱり　べつのWFヘいくね！</language>
+		<language name="JPN_KANJI" width="256">やっぱり　べつのWFヘいくね！</language>
+	</row>
+
+	<row id="plbc10_12_07">
+		<language name="JPN" width="256">うーん　やっぱりかんがえなおす！</language>
+		<language name="JPN_KANJI" width="256">うーん　やっぱりかんがえなおす！</language>
+	</row>
+
+	<row id="plbc10_12_08">
+		<language name="JPN" width="256">やったー！</language>
+		<language name="JPN_KANJI" width="256">やったー！</language>
+	</row>
+
+	<row id="plbc10_13_01">
+		<language name="JPN" width="256">おれWFに　いくんだ　いいだろ〜</language>
+		<language name="JPN_KANJI" width="256">おれWFに　いくんだ　いいだろ〜</language>
+	</row>
+
+	<row id="plbc10_13_02">
+		<language name="JPN" width="256">つまんない　WFにいきたいな…</language>
+		<language name="JPN_KANJI" width="256">つまんない　WFにいきたいな…</language>
+	</row>
+
+	<row id="plbc10_13_03">
+		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+	</row>
+
+	<row id="plbc10_13_04">
+		<language name="JPN" width="256">WFへ　つれてって！</language>
+		<language name="JPN_KANJI" width="256">WFへ　つれてって！</language>
+	</row>
+
+	<row id="plbc10_13_05">
+		<language name="JPN" width="256">そとに　つれだしてよー！</language>
+		<language name="JPN_KANJI" width="256">そとに　つれだしてよー！</language>
+	</row>
+
+	<row id="plbc10_13_06">
+		<language name="JPN" width="256">やっぱり　べつのWFヘいくね！</language>
+		<language name="JPN_KANJI" width="256">やっぱり　べつのWFヘいくね！</language>
+	</row>
+
+	<row id="plbc10_13_07">
+		<language name="JPN" width="256">うーん　やっぱりかんがえなおす！</language>
+		<language name="JPN_KANJI" width="256">うーん　やっぱりかんがえなおす！</language>
+	</row>
+
+	<row id="plbc10_13_08">
+		<language name="JPN" width="256">やったー！</language>
+		<language name="JPN_KANJI" width="256">やったー！</language>
+	</row>
+
+	<row id="plbc10_14_01">
+		<language name="JPN" width="256">おれWFに　いくんだ　いいだろ〜</language>
+		<language name="JPN_KANJI" width="256">おれWFに　いくんだ　いいだろ〜</language>
+	</row>
+
+	<row id="plbc10_14_02">
+		<language name="JPN" width="256">つまんない　WFにいきたいな…</language>
+		<language name="JPN_KANJI" width="256">つまんない　WFにいきたいな…</language>
+	</row>
+
+	<row id="plbc10_14_03">
+		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+	</row>
+
+	<row id="plbc10_14_04">
+		<language name="JPN" width="256">WFへ　つれてって！</language>
+		<language name="JPN_KANJI" width="256">WFへ　つれてって！</language>
+	</row>
+
+	<row id="plbc10_14_05">
+		<language name="JPN" width="256">そとに　つれだしてよー！</language>
+		<language name="JPN_KANJI" width="256">そとに　つれだしてよー！</language>
+	</row>
+
+	<row id="plbc10_14_06">
+		<language name="JPN" width="256">やっぱり　べつのWFヘいくね！</language>
+		<language name="JPN_KANJI" width="256">やっぱり　べつのWFヘいくね！</language>
+	</row>
+
+	<row id="plbc10_14_07">
+		<language name="JPN" width="256">うーん　やっぱりかんがえなおす！</language>
+		<language name="JPN_KANJI" width="256">うーん　やっぱりかんがえなおす！</language>
+	</row>
+
+	<row id="plbc10_14_08">
+		<language name="JPN" width="256">やったー！</language>
+		<language name="JPN_KANJI" width="256">やったー！</language>
+	</row>
+
+	<row id="plbc10_15_01">
+		<language name="JPN" width="256">おれWFに　いくんだ　いいだろ〜</language>
+		<language name="JPN_KANJI" width="256">おれWFに　いくんだ　いいだろ〜</language>
+	</row>
+
+	<row id="plbc10_15_02">
+		<language name="JPN" width="256">つまんない　WFにいきたいな…</language>
+		<language name="JPN_KANJI" width="256">つまんない　WFにいきたいな…</language>
+	</row>
+
+	<row id="plbc10_15_03">
+		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+	</row>
+
+	<row id="plbc10_15_04">
+		<language name="JPN" width="256">WFへ　つれてって！</language>
+		<language name="JPN_KANJI" width="256">WFへ　つれてって！</language>
+	</row>
+
+	<row id="plbc10_15_05">
+		<language name="JPN" width="256">そとに　つれだしてよー！</language>
+		<language name="JPN_KANJI" width="256">そとに　つれだしてよー！</language>
+	</row>
+
+	<row id="plbc10_15_06">
+		<language name="JPN" width="256">やっぱり　べつのWFヘいくね！</language>
+		<language name="JPN_KANJI" width="256">やっぱり　べつのWFヘいくね！</language>
+	</row>
+
+	<row id="plbc10_15_07">
+		<language name="JPN" width="256">うーん　やっぱりかんがえなおす！</language>
+		<language name="JPN_KANJI" width="256">うーん　やっぱりかんがえなおす！</language>
+	</row>
+
+	<row id="plbc10_15_08">
+		<language name="JPN" width="256">やったー！</language>
+		<language name="JPN_KANJI" width="256">やったー！</language>
+	</row>
+
+	<row id="plbc10_16_01">
+		<language name="JPN" width="256">おれWFに　いくんだ　いいだろ〜</language>
+		<language name="JPN_KANJI" width="256">おれWFに　いくんだ　いいだろ〜</language>
+	</row>
+
+	<row id="plbc10_16_02">
+		<language name="JPN" width="256">つまんない　WFにいきたいな…</language>
+		<language name="JPN_KANJI" width="256">つまんない　WFにいきたいな…</language>
+	</row>
+
+	<row id="plbc10_16_03">
+		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+	</row>
+
+	<row id="plbc10_16_04">
+		<language name="JPN" width="256">WFへ　つれてって！</language>
+		<language name="JPN_KANJI" width="256">WFへ　つれてって！</language>
+	</row>
+
+	<row id="plbc10_16_05">
+		<language name="JPN" width="256">そとに　つれだしてよー！</language>
+		<language name="JPN_KANJI" width="256">そとに　つれだしてよー！</language>
+	</row>
+
+	<row id="plbc10_16_06">
+		<language name="JPN" width="256">やっぱり　べつのWFヘいくね！</language>
+		<language name="JPN_KANJI" width="256">やっぱり　べつのWFヘいくね！</language>
+	</row>
+
+	<row id="plbc10_16_07">
+		<language name="JPN" width="256">うーん　やっぱりかんがえなおす！</language>
+		<language name="JPN_KANJI" width="256">うーん　やっぱりかんがえなおす！</language>
+	</row>
+
+	<row id="plbc10_16_08">
+		<language name="JPN" width="256">やったー！</language>
+		<language name="JPN_KANJI" width="256">やったー！</language>
+	</row>
+
+	<row id="plbc10_17_01">
+		<language name="JPN" width="256">おれWFに　いくんだ　いいだろ〜</language>
+		<language name="JPN_KANJI" width="256">おれWFに　いくんだ　いいだろ〜</language>
+	</row>
+
+	<row id="plbc10_17_02">
+		<language name="JPN" width="256">つまんない　WFにいきたいな…</language>
+		<language name="JPN_KANJI" width="256">つまんない　WFにいきたいな…</language>
+	</row>
+
+	<row id="plbc10_17_03">
+		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+	</row>
+
+	<row id="plbc10_17_04">
+		<language name="JPN" width="256">WFへ　つれてって！</language>
+		<language name="JPN_KANJI" width="256">WFへ　つれてって！</language>
+	</row>
+
+	<row id="plbc10_17_05">
+		<language name="JPN" width="256">そとに　つれだしてよー！</language>
+		<language name="JPN_KANJI" width="256">そとに　つれだしてよー！</language>
+	</row>
+
+	<row id="plbc10_17_06">
+		<language name="JPN" width="256">やっぱり　べつのWFヘいくね！</language>
+		<language name="JPN_KANJI" width="256">やっぱり　べつのWFヘいくね！</language>
+	</row>
+
+	<row id="plbc10_17_07">
+		<language name="JPN" width="256">うーん　やっぱりかんがえなおす！</language>
+		<language name="JPN_KANJI" width="256">うーん　やっぱりかんがえなおす！</language>
+	</row>
+
+	<row id="plbc10_17_08">
+		<language name="JPN" width="256">やったー！</language>
+		<language name="JPN_KANJI" width="256">やったー！</language>
+	</row>
+
+	<row id="plbc10_18_01">
+		<language name="JPN" width="256">おれWFに　いくんだ　いいだろ〜</language>
+		<language name="JPN_KANJI" width="256">おれWFに　いくんだ　いいだろ〜</language>
+	</row>
+
+	<row id="plbc10_18_02">
+		<language name="JPN" width="256">つまんない　WFにいきたいな…</language>
+		<language name="JPN_KANJI" width="256">つまんない　WFにいきたいな…</language>
+	</row>
+
+	<row id="plbc10_18_03">
+		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+	</row>
+
+	<row id="plbc10_18_04">
+		<language name="JPN" width="256">WFへ　つれてって！</language>
+		<language name="JPN_KANJI" width="256">WFへ　つれてって！</language>
+	</row>
+
+	<row id="plbc10_18_05">
+		<language name="JPN" width="256">そとに　つれだしてよー！</language>
+		<language name="JPN_KANJI" width="256">そとに　つれだしてよー！</language>
+	</row>
+
+	<row id="plbc10_18_06">
+		<language name="JPN" width="256">やっぱり　べつのWFヘいくね！</language>
+		<language name="JPN_KANJI" width="256">やっぱり　べつのWFヘいくね！</language>
+	</row>
+
+	<row id="plbc10_18_07">
+		<language name="JPN" width="256">うーん　やっぱりかんがえなおす！</language>
+		<language name="JPN_KANJI" width="256">うーん　やっぱりかんがえなおす！</language>
+	</row>
+
+	<row id="plbc10_18_08">
+		<language name="JPN" width="256">やったー！</language>
+		<language name="JPN_KANJI" width="256">やったー！</language>
+	</row>
+
+	<row id="plbc10_19_01">
+		<language name="JPN" width="256">おれWFに　いくんだ　いいだろ〜</language>
+		<language name="JPN_KANJI" width="256">おれWFに　いくんだ　いいだろ〜</language>
+	</row>
+
+	<row id="plbc10_19_02">
+		<language name="JPN" width="256">つまんない　WFにいきたいな…</language>
+		<language name="JPN_KANJI" width="256">つまんない　WFにいきたいな…</language>
+	</row>
+
+	<row id="plbc10_19_03">
+		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+	</row>
+
+	<row id="plbc10_19_04">
+		<language name="JPN" width="256">WFへ　つれてって！</language>
+		<language name="JPN_KANJI" width="256">WFへ　つれてって！</language>
+	</row>
+
+	<row id="plbc10_19_05">
+		<language name="JPN" width="256">そとに　つれだしてよー！</language>
+		<language name="JPN_KANJI" width="256">そとに　つれだしてよー！</language>
+	</row>
+
+	<row id="plbc10_19_06">
+		<language name="JPN" width="256">やっぱり　べつのWFヘいくね！</language>
+		<language name="JPN_KANJI" width="256">やっぱり　べつのWFヘいくね！</language>
+	</row>
+
+	<row id="plbc10_19_07">
+		<language name="JPN" width="256">うーん　やっぱりかんがえなおす！</language>
+		<language name="JPN_KANJI" width="256">うーん　やっぱりかんがえなおす！</language>
+	</row>
+
+	<row id="plbc10_19_08">
+		<language name="JPN" width="256">やったー！</language>
+		<language name="JPN_KANJI" width="256">やったー！</language>
+	</row>
+
+	<row id="plbc10_20_01">
+		<language name="JPN" width="256">おれWFに　いくんだ　いいだろ〜</language>
+		<language name="JPN_KANJI" width="256">おれWFに　いくんだ　いいだろ〜</language>
+	</row>
+
+	<row id="plbc10_20_02">
+		<language name="JPN" width="256">つまんない　WFにいきたいな…</language>
+		<language name="JPN_KANJI" width="256">つまんない　WFにいきたいな…</language>
+	</row>
+
+	<row id="plbc10_20_03">
+		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+	</row>
+
+	<row id="plbc10_20_04">
+		<language name="JPN" width="256">WFへ　つれてって！</language>
+		<language name="JPN_KANJI" width="256">WFへ　つれてって！</language>
+	</row>
+
+	<row id="plbc10_20_05">
+		<language name="JPN" width="256">そとに　つれだしてよー！</language>
+		<language name="JPN_KANJI" width="256">そとに　つれだしてよー！</language>
+	</row>
+
+	<row id="plbc10_20_06">
+		<language name="JPN" width="256">やっぱり　べつのWFヘいくね！</language>
+		<language name="JPN_KANJI" width="256">やっぱり　べつのWFヘいくね！</language>
+	</row>
+
+	<row id="plbc10_20_07">
+		<language name="JPN" width="256">うーん　やっぱりかんがえなおす！</language>
+		<language name="JPN_KANJI" width="256">うーん　やっぱりかんがえなおす！</language>
+	</row>
+
+	<row id="plbc10_20_08">
+		<language name="JPN" width="256">やったー！</language>
+		<language name="JPN_KANJI" width="256">やったー！</language>
+	</row>
+
+	<row id="plbc10_21_01">
+		<language name="JPN" width="256">おれWFに　いくんだ　いいだろ〜</language>
+		<language name="JPN_KANJI" width="256">おれWFに　いくんだ　いいだろ〜</language>
+	</row>
+
+	<row id="plbc10_21_02">
+		<language name="JPN" width="256">つまんない　WFにいきたいな…</language>
+		<language name="JPN_KANJI" width="256">つまんない　WFにいきたいな…</language>
+	</row>
+
+	<row id="plbc10_21_03">
+		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+	</row>
+
+	<row id="plbc10_21_04">
+		<language name="JPN" width="256">WFへ　つれてって！</language>
+		<language name="JPN_KANJI" width="256">WFへ　つれてって！</language>
+	</row>
+
+	<row id="plbc10_21_05">
+		<language name="JPN" width="256">そとに　つれだしてよー！</language>
+		<language name="JPN_KANJI" width="256">そとに　つれだしてよー！</language>
+	</row>
+
+	<row id="plbc10_21_06">
+		<language name="JPN" width="256">やっぱり　べつのWFヘいくね！</language>
+		<language name="JPN_KANJI" width="256">やっぱり　べつのWFヘいくね！</language>
+	</row>
+
+	<row id="plbc10_21_07">
+		<language name="JPN" width="256">うーん　やっぱりかんがえなおす！</language>
+		<language name="JPN_KANJI" width="256">うーん　やっぱりかんがえなおす！</language>
+	</row>
+
+	<row id="plbc10_21_08">
+		<language name="JPN" width="256">やったー！</language>
+		<language name="JPN_KANJI" width="256">やったー！</language>
+	</row>
+
+	<row id="plbc10_22_01">
+		<language name="JPN" width="256">おれWFに　いくんだ　いいだろ〜</language>
+		<language name="JPN_KANJI" width="256">おれWFに　いくんだ　いいだろ〜</language>
+	</row>
+
+	<row id="plbc10_22_02">
+		<language name="JPN" width="256">つまんない　WFにいきたいな…</language>
+		<language name="JPN_KANJI" width="256">つまんない　WFにいきたいな…</language>
+	</row>
+
+	<row id="plbc10_22_03">
+		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+	</row>
+
+	<row id="plbc10_22_04">
+		<language name="JPN" width="256">WFへ　つれてって！</language>
+		<language name="JPN_KANJI" width="256">WFへ　つれてって！</language>
+	</row>
+
+	<row id="plbc10_22_05">
+		<language name="JPN" width="256">そとに　つれだしてよー！</language>
+		<language name="JPN_KANJI" width="256">そとに　つれだしてよー！</language>
+	</row>
+
+	<row id="plbc10_22_06">
+		<language name="JPN" width="256">やっぱり　べつのWFヘいくね！</language>
+		<language name="JPN_KANJI" width="256">やっぱり　べつのWFヘいくね！</language>
+	</row>
+
+	<row id="plbc10_22_07">
+		<language name="JPN" width="256">うーん　やっぱりかんがえなおす！</language>
+		<language name="JPN_KANJI" width="256">うーん　やっぱりかんがえなおす！</language>
+	</row>
+
+	<row id="plbc10_22_08">
+		<language name="JPN" width="256">やったー！</language>
+		<language name="JPN_KANJI" width="256">やったー！</language>
+	</row>
+
+	<row id="plbc10_23_01">
+		<language name="JPN" width="256">おれWFに　いくんだ　いいだろ〜</language>
+		<language name="JPN_KANJI" width="256">おれWFに　いくんだ　いいだろ〜</language>
+	</row>
+
+	<row id="plbc10_23_02">
+		<language name="JPN" width="256">つまんない　WFにいきたいな…</language>
+		<language name="JPN_KANJI" width="256">つまんない　WFにいきたいな…</language>
+	</row>
+
+	<row id="plbc10_23_03">
+		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+	</row>
+
+	<row id="plbc10_23_04">
+		<language name="JPN" width="256">WFへ　つれてって！</language>
+		<language name="JPN_KANJI" width="256">WFへ　つれてって！</language>
+	</row>
+
+	<row id="plbc10_23_05">
+		<language name="JPN" width="256">そとに　つれだしてよー！</language>
+		<language name="JPN_KANJI" width="256">そとに　つれだしてよー！</language>
+	</row>
+
+	<row id="plbc10_23_06">
+		<language name="JPN" width="256">やっぱり　べつのWFヘいくね！</language>
+		<language name="JPN_KANJI" width="256">やっぱり　べつのWFヘいくね！</language>
+	</row>
+
+	<row id="plbc10_23_07">
+		<language name="JPN" width="256">うーん　やっぱりかんがえなおす！</language>
+		<language name="JPN_KANJI" width="256">うーん　やっぱりかんがえなおす！</language>
+	</row>
+
+	<row id="plbc10_23_08">
+		<language name="JPN" width="256">やったー！</language>
+		<language name="JPN_KANJI" width="256">やったー！</language>
+	</row>
+
+	<row id="plbc10_24_01">
+		<language name="JPN" width="256">おれWFに　いくんだ　いいだろ〜</language>
+		<language name="JPN_KANJI" width="256">おれWFに　いくんだ　いいだろ〜</language>
+	</row>
+
+	<row id="plbc10_24_02">
+		<language name="JPN" width="256">つまんない　WFにいきたいな…</language>
+		<language name="JPN_KANJI" width="256">つまんない　WFにいきたいな…</language>
+	</row>
+
+	<row id="plbc10_24_03">
+		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+	</row>
+
+	<row id="plbc10_24_04">
+		<language name="JPN" width="256">WFへ　つれてって！</language>
+		<language name="JPN_KANJI" width="256">WFへ　つれてって！</language>
+	</row>
+
+	<row id="plbc10_24_05">
+		<language name="JPN" width="256">そとに　つれだしてよー！</language>
+		<language name="JPN_KANJI" width="256">そとに　つれだしてよー！</language>
+	</row>
+
+	<row id="plbc10_24_06">
+		<language name="JPN" width="256">やっぱり　べつのWFヘいくね！</language>
+		<language name="JPN_KANJI" width="256">やっぱり　べつのWFヘいくね！</language>
+	</row>
+
+	<row id="plbc10_24_07">
+		<language name="JPN" width="256">うーん　やっぱりかんがえなおす！</language>
+		<language name="JPN_KANJI" width="256">うーん　やっぱりかんがえなおす！</language>
+	</row>
+
+	<row id="plbc10_24_08">
+		<language name="JPN" width="256">やったー！</language>
+		<language name="JPN_KANJI" width="256">やったー！</language>
+	</row>
+
+	<row id="plbc10_25_01">
+		<language name="JPN" width="256">おれWFに　いくんだ　いいだろ〜</language>
+		<language name="JPN_KANJI" width="256">おれWFに　いくんだ　いいだろ〜</language>
+	</row>
+
+	<row id="plbc10_25_02">
+		<language name="JPN" width="256">つまんない　WFにいきたいな…</language>
+		<language name="JPN_KANJI" width="256">つまんない　WFにいきたいな…</language>
+	</row>
+
+	<row id="plbc10_25_03">
+		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+	</row>
+
+	<row id="plbc10_25_04">
+		<language name="JPN" width="256">WFへ　つれてって！</language>
+		<language name="JPN_KANJI" width="256">WFへ　つれてって！</language>
+	</row>
+
+	<row id="plbc10_25_05">
+		<language name="JPN" width="256">そとに　つれだしてよー！</language>
+		<language name="JPN_KANJI" width="256">そとに　つれだしてよー！</language>
+	</row>
+
+	<row id="plbc10_25_06">
+		<language name="JPN" width="256">やっぱり　べつのWFヘいくね！</language>
+		<language name="JPN_KANJI" width="256">やっぱり　べつのWFヘいくね！</language>
+	</row>
+
+	<row id="plbc10_25_07">
+		<language name="JPN" width="256">うーん　やっぱりかんがえなおす！</language>
+		<language name="JPN_KANJI" width="256">うーん　やっぱりかんがえなおす！</language>
+	</row>
+
+	<row id="plbc10_25_08">
+		<language name="JPN" width="256">やったー！</language>
+		<language name="JPN_KANJI" width="256">やったー！</language>
+	</row>
+
+	<row id="plbc10_26_01">
+		<language name="JPN" width="256">おれWFに　いくんだ　いいだろ〜</language>
+		<language name="JPN_KANJI" width="256">おれWFに　いくんだ　いいだろ〜</language>
+	</row>
+
+	<row id="plbc10_26_02">
+		<language name="JPN" width="256">つまんない　WFにいきたいな…</language>
+		<language name="JPN_KANJI" width="256">つまんない　WFにいきたいな…</language>
+	</row>
+
+	<row id="plbc10_26_03">
+		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+	</row>
+
+	<row id="plbc10_26_04">
+		<language name="JPN" width="256">WFへ　つれてって！</language>
+		<language name="JPN_KANJI" width="256">WFへ　つれてって！</language>
+	</row>
+
+	<row id="plbc10_26_05">
+		<language name="JPN" width="256">そとに　つれだしてよー！</language>
+		<language name="JPN_KANJI" width="256">そとに　つれだしてよー！</language>
+	</row>
+
+	<row id="plbc10_26_06">
+		<language name="JPN" width="256">やっぱり　べつのWFヘいくね！</language>
+		<language name="JPN_KANJI" width="256">やっぱり　べつのWFヘいくね！</language>
+	</row>
+
+	<row id="plbc10_26_07">
+		<language name="JPN" width="256">うーん　やっぱりかんがえなおす！</language>
+		<language name="JPN_KANJI" width="256">うーん　やっぱりかんがえなおす！</language>
+	</row>
+
+	<row id="plbc10_26_08">
+		<language name="JPN" width="256">やったー！</language>
+		<language name="JPN_KANJI" width="256">やったー！</language>
+	</row>
+
+	<row id="plbc10_27_01">
+		<language name="JPN" width="256">おれWFに　いくんだ　いいだろ〜</language>
+		<language name="JPN_KANJI" width="256">おれWFに　いくんだ　いいだろ〜</language>
+	</row>
+
+	<row id="plbc10_27_02">
+		<language name="JPN" width="256">つまんない　WFにいきたいな…</language>
+		<language name="JPN_KANJI" width="256">つまんない　WFにいきたいな…</language>
+	</row>
+
+	<row id="plbc10_27_03">
+		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+	</row>
+
+	<row id="plbc10_27_04">
+		<language name="JPN" width="256">WFへ　つれてって！</language>
+		<language name="JPN_KANJI" width="256">WFへ　つれてって！</language>
+	</row>
+
+	<row id="plbc10_27_05">
+		<language name="JPN" width="256">そとに　つれだしてよー！</language>
+		<language name="JPN_KANJI" width="256">そとに　つれだしてよー！</language>
+	</row>
+
+	<row id="plbc10_27_06">
+		<language name="JPN" width="256">やっぱり　べつのWFヘいくね！</language>
+		<language name="JPN_KANJI" width="256">やっぱり　べつのWFヘいくね！</language>
+	</row>
+
+	<row id="plbc10_27_07">
+		<language name="JPN" width="256">うーん　やっぱりかんがえなおす！</language>
+		<language name="JPN_KANJI" width="256">うーん　やっぱりかんがえなおす！</language>
+	</row>
+
+	<row id="plbc10_27_08">
+		<language name="JPN" width="256">やったー！</language>
+		<language name="JPN_KANJI" width="256">やったー！</language>
+	</row>
+
+	<row id="plbc10_28_01">
+		<language name="JPN" width="256">おれWFに　いくんだ　いいだろ〜</language>
+		<language name="JPN_KANJI" width="256">おれWFに　いくんだ　いいだろ〜</language>
+	</row>
+
+	<row id="plbc10_28_02">
+		<language name="JPN" width="256">つまんない　WFにいきたいな…</language>
+		<language name="JPN_KANJI" width="256">つまんない　WFにいきたいな…</language>
+	</row>
+
+	<row id="plbc10_28_03">
+		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+	</row>
+
+	<row id="plbc10_28_04">
+		<language name="JPN" width="256">WFへ　つれてって！</language>
+		<language name="JPN_KANJI" width="256">WFへ　つれてって！</language>
+	</row>
+
+	<row id="plbc10_28_05">
+		<language name="JPN" width="256">そとに　つれだしてよー！</language>
+		<language name="JPN_KANJI" width="256">そとに　つれだしてよー！</language>
+	</row>
+
+	<row id="plbc10_28_06">
+		<language name="JPN" width="256">やっぱり　べつのWFヘいくね！</language>
+		<language name="JPN_KANJI" width="256">やっぱり　べつのWFヘいくね！</language>
+	</row>
+
+	<row id="plbc10_28_07">
+		<language name="JPN" width="256">うーん　やっぱりかんがえなおす！</language>
+		<language name="JPN_KANJI" width="256">うーん　やっぱりかんがえなおす！</language>
+	</row>
+
+	<row id="plbc10_28_08">
+		<language name="JPN" width="256">やったー！</language>
+		<language name="JPN_KANJI" width="256">やったー！</language>
+	</row>
+
+	<row id="plbc10_29_01">
+		<language name="JPN" width="256">おれWFに　いくんだ　いいだろ〜</language>
+		<language name="JPN_KANJI" width="256">おれWFに　いくんだ　いいだろ〜</language>
+	</row>
+
+	<row id="plbc10_29_02">
+		<language name="JPN" width="256">つまんない　WFにいきたいな…</language>
+		<language name="JPN_KANJI" width="256">つまんない　WFにいきたいな…</language>
+	</row>
+
+	<row id="plbc10_29_03">
+		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+	</row>
+
+	<row id="plbc10_29_04">
+		<language name="JPN" width="256">WFへ　つれてって！</language>
+		<language name="JPN_KANJI" width="256">WFへ　つれてって！</language>
+	</row>
+
+	<row id="plbc10_29_05">
+		<language name="JPN" width="256">そとに　つれだしてよー！</language>
+		<language name="JPN_KANJI" width="256">そとに　つれだしてよー！</language>
+	</row>
+
+	<row id="plbc10_29_06">
+		<language name="JPN" width="256">やっぱり　べつのWFヘいくね！</language>
+		<language name="JPN_KANJI" width="256">やっぱり　べつのWFヘいくね！</language>
+	</row>
+
+	<row id="plbc10_29_07">
+		<language name="JPN" width="256">うーん　やっぱりかんがえなおす！</language>
+		<language name="JPN_KANJI" width="256">うーん　やっぱりかんがえなおす！</language>
+	</row>
+
+	<row id="plbc10_29_08">
+		<language name="JPN" width="256">やったー！</language>
+		<language name="JPN_KANJI" width="256">やったー！</language>
+	</row>
+
+	<row id="plbc10_30_01">
+		<language name="JPN" width="256">おれWFに　いくんだ　いいだろ〜</language>
+		<language name="JPN_KANJI" width="256">おれWFに　いくんだ　いいだろ〜</language>
+	</row>
+
+	<row id="plbc10_30_02">
+		<language name="JPN" width="256">つまんない　WFにいきたいな…</language>
+		<language name="JPN_KANJI" width="256">つまんない　WFにいきたいな…</language>
+	</row>
+
+	<row id="plbc10_30_03">
+		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+	</row>
+
+	<row id="plbc10_30_04">
+		<language name="JPN" width="256">WFへ　つれてって！</language>
+		<language name="JPN_KANJI" width="256">WFへ　つれてって！</language>
+	</row>
+
+	<row id="plbc10_30_05">
+		<language name="JPN" width="256">そとに　つれだしてよー！</language>
+		<language name="JPN_KANJI" width="256">そとに　つれだしてよー！</language>
+	</row>
+
+	<row id="plbc10_30_06">
+		<language name="JPN" width="256">やっぱり　べつのWFヘいくね！</language>
+		<language name="JPN_KANJI" width="256">やっぱり　べつのWFヘいくね！</language>
+	</row>
+
+	<row id="plbc10_30_07">
+		<language name="JPN" width="256">うーん　やっぱりかんがえなおす！</language>
+		<language name="JPN_KANJI" width="256">うーん　やっぱりかんがえなおす！</language>
+	</row>
+
+	<row id="plbc10_30_08">
+		<language name="JPN" width="256">やったー！</language>
+		<language name="JPN_KANJI" width="256">やったー！</language>
 	</row>
 
 	<flowchart-group-list>
