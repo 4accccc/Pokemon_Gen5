@@ -39,7 +39,7 @@ LAND_DEPEND_LIST = \
 	$(DIR_OUTPUT)/map22_23.3dppack \
 	$(DIR_OUTPUT)/map21_22.3dppack \
 	$(DIR_OUTPUT)/map21_23.3dppack \
-	$(DIR_OUTPUT)/map19_22.3dppack \
+	$(DIR_OUTPUT)/map21_23.3dppack \
 	$(DIR_OUTPUT)/map20_22.3dppack \
 	$(DIR_OUTPUT)/map19_23.3dppack \
 	$(DIR_OUTPUT)/map20_23.3dppack \
@@ -338,6 +338,11 @@ LAND_DEPEND_LIST = \
 	$(DIR_OUTPUT)/palace10_00_00.3dppack \
 	$(DIR_OUTPUT)/palace11_00_00.3dppack \
 	$(DIR_OUTPUT)/palace12_00_00.3dppack \
+	$(DIR_OUTPUT)/map02_11.3dppack \
+	$(DIR_OUTPUT)/map05_11.3dppack \
+	$(DIR_OUTPUT)/map21_09.3dppack \
+	$(DIR_OUTPUT)/map24_09.3dppack \
+	$(DIR_OUTPUT)/map19_22.3dppack \
 	$(DIR_OUTPUT)/m_dun0101_00_00.3dppack \
 	$(DIR_OUTPUT)/m_dun0101_01_00.3dppack \
 	$(DIR_OUTPUT)/m_dun0101_00_01.3dppack \
@@ -550,6 +555,12 @@ LAND_DEPEND_LIST = \
 	$(DIR_OUTPUT)/m_dun1102_01_00.3dppack \
 	$(DIR_OUTPUT)/m_dun1102_01_01.3dppack \
 	$(DIR_OUTPUT)/m_dun1102_01_02.3dppack \
+	$(DIR_OUTPUT)/m_dun1102_01_02.3dppack \
+	$(DIR_OUTPUT)/m_dun1102_01_02.3dppack \
+	$(DIR_OUTPUT)/m_dun2101_00_00.3dppack \
+	$(DIR_OUTPUT)/m_dun2101_00_01.3dppack \
+	$(DIR_OUTPUT)/m_dun2102_00_00.3dppack \
+	$(DIR_OUTPUT)/m_dun2001_00_00.3dppack \
 	$(DIR_OUTPUT)/m_ruin01_00_00.3dppack \
 	$(DIR_OUTPUT)/m_gate01_00_00.3dppack \
 	$(DIR_OUTPUT)/m_pc01_00_00.3dppack \
@@ -712,6 +723,10 @@ LAND_DEPEND_LIST = \
 	$(DIR_OUTPUT)/m_baseball01_01_01.3dppack \
 	$(DIR_OUTPUT)/m_baseball01_00_01.3dppack \
 	$(DIR_OUTPUT)/m_un02_00_00.3dppack \
+	$(DIR_OUTPUT)/m_d12h01_00_00.3dppack \
+	$(DIR_OUTPUT)/m_d12h02_00_00.3dppack \
+	$(DIR_OUTPUT)/m_d12h03_00_00.3dppack \
+	$(DIR_OUTPUT)/m_tryhouse01_00_00.3dppack \
 	$(DIR_OUTPUT)/C3_00_00.ngpack \
 	$(DIR_OUTPUT)/C3_00_01.ngpack \
 	$(DIR_OUTPUT)/C3_01_00.ngpack \

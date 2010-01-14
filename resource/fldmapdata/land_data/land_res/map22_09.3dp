@@ -1,0 +1,6420 @@
+//3DPLB2 "C:\home\wb_data3d\field\out18\map22_09.3dpl"
+//view 0 -117.7508 0 5.005852 1 0 0 0 677.4535 640 507
+//view 1 209.9699 0 95.82391 1 0 0 0 1.195861 640 388
+//ganame C:\home\wb_data3d\field\pokewb.3at
+//layer 0 Layer1
+//fc N“ü‚Å‚«‚éŠâê ‰¡1 c1 ‚‚³0
+//fparam 0
+//fmodelat 0
+file -i "c:/home/wb_data3d/field/out00/chip/bedrock0_01_01_00.mb";
+rotate 0 360 0;
+move -56 16 88;
+//fc N“ü‚Å‚«‚éŠâê ‰¡1 c1 ‚‚³0
+//fparam 0
+//fmodelat 0
+duplicate -rr;
+rotate 0 360 0;
+move -216 16 232;
+//fc N“ü‚Å‚«‚éŠâê ‰¡1 c1 ‚‚³0
+//fparam 0
+//fmodelat 0
+duplicate -rr;
+rotate 0 360 0;
+move -232 16 152;
+//fc N“ü‚Å‚«‚éŠâê ‰¡1 c1 ‚‚³0
+//fparam 0
+//fmodelat 0
+duplicate -rr;
+rotate 0 360 0;
+move -120 16 152;
+//fc N“ü‚Å‚«‚éŠâê ‰¡1 c1 ‚‚³0
+//fparam 0
+//fmodelat 0
+duplicate -rr;
+rotate 0 360 0;
+move -232 16 136;
+//fc N“ü‚Å‚«‚éŠâê ‰¡1 c1 ‚‚³0
+//fparam 0
+//fmodelat 0
+duplicate -rr;
+rotate 0 360 0;
+move -104 16 232;
+//fc N“ü‚Å‚«‚éŠâê ‰¡1 c1 ‚‚³0
+//fparam 0
+//fmodelat 0
+duplicate -rr;
+rotate 0 360 0;
+move -232 16 232;
+//fc N“ü‚Å‚«‚éŠâê ‰¡1 c1 ‚‚³0
+//fparam 0
+//fmodelat 0
+duplicate -rr;
+rotate 0 360 0;
+move -120 16 232;
+//fc N“ü‚Å‚«‚éŠâê ‰¡2 c2 ‚‚³0
+//fparam 0
+//fmodelat 0
+file -i "c:/home/wb_data3d/field/out00/chip/bedrock0_02_02_00.mb";
+rotate 0 360 0;
+move -208 16 144;
+//fc N“ü‚Å‚«‚éŠâê ‰¡2 c2 ‚‚³0
+//fparam 0
+//fmodelat 0
+duplicate -rr;
+rotate 0 360 0;
+move -112 16 208;
+//fc N“ü‚Å‚«‚éŠâê ‰¡2 c2 ‚‚³0
+//fparam 0
+//fmodelat 0
+duplicate -rr;
+rotate 0 360 0;
+move -112 16 176;
+//fc N“ü‚Å‚«‚éŠâê ‰¡2 c2 ‚‚³0
+//fparam 0
+//fmodelat 0
+duplicate -rr;
+rotate 0 360 0;
+move -224 16 208;
+//fc N“ü‚Å‚«‚éŠâê ‰¡2 c2 ‚‚³0
+//fparam 0
+//fmodelat 0
+duplicate -rr;
+rotate 0 360 0;
+move -176 16 144;
+//fc N“ü‚Å‚«‚éŠâê ‰¡2 c2 ‚‚³0
+//fparam 0
+//fmodelat 0
+duplicate -rr;
+rotate 0 360 0;
+move -144 16 144;
+//fc N“ü‚Å‚«‚éŠâê ‰¡2 c2 ‚‚³0
+//fparam 0
+//fmodelat 0
+duplicate -rr;
+rotate 0 360 0;
+move -224 16 176;
+//fc N“ü‚Å‚«‚éŠâê ‰¡3 c3 ‚‚³0
+//fparam 0
+//fmodelat 0
+file -i "c:/home/wb_data3d/field/out00/chip/bedrock0_03_03_00.mb";
+rotate 0 360 0;
+move -88 16 72;
+//fc N“ü‚Å‚«‚éŠâê ‰¡3 c3 ‚‚³0
+//fparam 0
+//fmodelat 0
+duplicate -rr;
+rotate 0 360 0;
+move -88 16 24;
+//fc N“ü‚Å‚«‚éŠâê ‰¡4 c4 ‚‚³0
+//fparam 0
+//fmodelat 0
+file -i "c:/home/wb_data3d/field/out00/chip/bedrock0_04_04_00.mb";
+rotate 0 360 0;
+move -80 16 128;
+//fc N“ü‚Å‚«‚éŠâê ‰¡5 c5 ‚‚³0
+//fparam 0
+//fmodelat 0
+file -i "c:/home/wb_data3d/field/out00/chip/bedrock0_05_05_00.mb";
+rotate 0 360 0;
+move 136 16 40;
+//fc N“ü‚Å‚«‚éŠâê ‰¡5 c5 ‚‚³0
+//fparam 0
+//fmodelat 0
+duplicate -rr;
+rotate 0 360 0;
+move -168 16 200;
+//fc N“ü‚Å‚«‚éŠâê ‰¡5 c5 ‚‚³0
+//fparam 0
+//fmodelat 0
+duplicate -rr;
+rotate 0 360 0;
+move -24 16 40;
+//fc N“ü‚Å‚«‚éŠâê ‰¡5 c5 ‚‚³0
+//fparam 0
+//fmodelat 0
+duplicate -rr;
+rotate 0 360 0;
+move 56 16 40;
+//fc N“ü‚Å‚«‚éŠâê ‰¡8 c8 ‚‚³0
+//fparam 0
+//fmodelat 0
+file -i "c:/home/wb_data3d/field/out00/chip/bedrock0_08_08_00.mb";
+rotate 0 360 0;
+move -176 16 64;
+//fc N“ü‚Å‚«‚éŠâê ‰¡8 c8 ‚‚³0
+//fparam 0
+//fmodelat 0
+duplicate -rr;
+rotate 0 360 0;
+move -56 16 -64;
+//fc N“ü‚Å‚«‚éŠâê ‰¡8 c8 ‚‚³0
+//fparam 0
+//fmodelat 0
+duplicate -rr;
+rotate 0 360 0;
+move 64 16 -192;
+//fc N“ü‚Å‚«‚éŠâê ‰¡8 c8 ‚‚³0
+//fparam 0
+//fmodelat 0
+duplicate -rr;
+rotate 0 360 0;
+move -56 16 -192;
+//fc N“ü‚Å‚«‚éŠâê ‰¡8 c8 ‚‚³0
+//fparam 0
+//fmodelat 0
+duplicate -rr;
+rotate 0 360 0;
+move 192 16 -192;
+//fc N“ü‚Å‚«‚éŠâê ‰¡8 c8 ‚‚³0
+//fparam 0
+//fmodelat 0
+duplicate -rr;
+rotate 0 360 0;
+move 64 16 -64;
+//fc N“ü‚Å‚«‚éŠâê ‰¡8 c8 ‚‚³0
+//fparam 0
+//fmodelat 0
+duplicate -rr;
+rotate 0 360 0;
+move 192 16 -64;
+//fc N“ü•s‰Â‚ÌŠâê ‰¡1 c1 ‚‚³0
+//fparam 0
+//fmodelat 1
+file -i "c:/home/wb_data3d/field/out00/chip/bedrock1_01_01_00.mb";
+rotate 0 360 0;
+move -200 96 184;
+//fc N“ü•s‰Â‚ÌŠâê ‰¡1 c1 ‚‚³0
+//fparam 0
+//fmodelat 1
+duplicate -rr;
+rotate 0 360 0;
+move 152 96 -248;
+//fc N“ü•s‰Â‚ÌŠâê ‰¡1 c1 ‚‚³0
+//fparam 0
+//fmodelat 1
+duplicate -rr;
+rotate 0 360 0;
+move -216 96 184;
+//fc N“ü•s‰Â‚ÌŠâê ‰¡1 c1 ‚‚³0
+//fparam 0
+//fmodelat 1
+duplicate -rr;
+rotate 0 360 0;
+move 136 96 -248;
+//fc N“ü•s‰Â‚ÌŠâê ‰¡2 c2 ‚‚³0
+//fparam 0
+//fmodelat 1
+file -i "c:/home/wb_data3d/field/out00/chip/bedrock1_02_02_00.mb";
+rotate 0 360 0;
+move -208 96 208;
+//fc N“ü•s‰Â‚ÌŠâê ‰¡2 c2 ‚‚³0
+//fparam 0
+//fmodelat 1
+duplicate -rr;
+rotate 0 360 0;
+move 144 96 -224;
+//fc N“ü•s‰Â‚ÌŠâê ‰¡3 c3 ‚‚³0
+//fparam 0
+//fmodelat 1
+file -i "c:/home/wb_data3d/field/out00/chip/bedrock1_03_03_00.mb";
+rotate 0 360 0;
+move 232 96 -232;
+//fc N“ü•s‰Â‚ÌŠâê ‰¡3 c3 ‚‚³0
+//fparam 0
+//fmodelat 1
+duplicate -rr;
+rotate 0 360 0;
+move 232 96 -184;
+//fc N“ü•s‰Â‚ÌŠâê ‰¡3 c3 ‚‚³0
+//fparam 0
+//fmodelat 1
+duplicate -rr;
+rotate 0 360 0;
+move 184 96 -184;
+//fc N“ü•s‰Â‚ÌŠâê ‰¡3 c3 ‚‚³0
+//fparam 0
+//fmodelat 1
+duplicate -rr;
+rotate 0 360 0;
+move 184 96 -232;
+//fc ‘Œ´ ‰¡1 c1 ‚‚³0
+//fparam 0
+//fmodelat 0
+file -i "c:/home/wb_data3d/field/out00/chip/grass0_01_01_00.mb";
+rotate 0 360 0;
+move -200 32 -56;
+//fc ‘Œ´ ‰¡1 c1 ‚‚³0
+//fparam 0
+//fmodelat 0
+duplicate -rr;
+rotate 0 360 0;
+move -184 32 136;
+//fc ‘Œ´ ‰¡1 c1 ‚‚³0
+//fparam 0
+//fmodelat 0
+duplicate -rr;
+rotate 0 360 0;
+move -184 32 120;
+//fc ‘Œ´ ‰¡1 c1 ‚‚³0
+//fparam 0
+//fmodelat 0
+duplicate -rr;
+rotate 0 360 0;
+move -216 32 -56;
+//fc ‘Œ´ ‰¡2 c2 ‚‚³0
+//fparam 0
+//fmodelat 0
+file -i "c:/home/wb_data3d/field/out00/chip/grass0_02_02_00.mb";
+rotate 0 360 0;
+move -208 32 32;
+//fc ‘Œ´ ‰¡2 c2 ‚‚³0
+//fparam 0
+//fmodelat 0
+duplicate -rr;
+rotate 0 360 0;
+move -208 32 64;
+//fc ‘Œ´ ‰¡2 c2 ‚‚³0
+//fparam 0
+//fmodelat 0
+duplicate -rr;
+rotate 0 360 0;
+move -176 32 -48;
+//fc ‘Œ´ ‰¡2 c2 ‚‚³0
+//fparam 0
+//fmodelat 0
+duplicate -rr;
+rotate 0 360 0;
+move -160 32 128;
+//fc ‘Œ´ ‰¡2 c2 ‚‚³0
+//fparam 0
+//fmodelat 0
+duplicate -rr;
+rotate 0 360 0;
+move -208 32 128;
+//fc ‘Œ´ ‰¡2 c2 ‚‚³0
+//fparam 0
+//fmodelat 0
+duplicate -rr;
+rotate 0 360 0;
+move -208 32 -208;
+//fc ‘Œ´ ‰¡2 c2 ‚‚³0
+//fparam 0
+//fmodelat 0
+duplicate -rr;
+rotate 0 360 0;
+move -208 32 96;
+//fc ‘Œ´ ‰¡2 c2 ‚‚³0
+//fparam 0
+//fmodelat 0
+duplicate -rr;
+rotate 0 360 0;
+move -176 32 -208;
+//fc ‘Œ´ ‰¡2 c2 ‚‚³0
+//fparam 0
+//fmodelat 0
+duplicate -rr;
+rotate 0 360 0;
+move -208 32 -32;
+//fc ‘Œ´ ‰¡2 c2 ‚‚³0
+//fparam 0
+//fmodelat 0
+duplicate -rr;
+rotate 0 360 0;
+move -208 32 0;
+//fc ‘Œ´ ‰¡3 c3 ‚‚³0
+//fparam 0
+//fmodelat 0
+file -i "c:/home/wb_data3d/field/out00/chip/grass0_03_03_00.mb";
+rotate 0 360 0;
+move -168 32 -8;
+//fc ‘Œ´ ‰¡3 c3 ‚‚³0
+//fparam 0
+//fmodelat 0
+duplicate -rr;
+rotate 0 360 0;
+move -168 32 88;
+//fc ‘Œ´ ‰¡3 c3 ‚‚³0
+//fparam 0
+//fmodelat 0
+duplicate -rr;
+rotate 0 360 0;
+move 72 32 40;
+//fc ‘Œ´ ‰¡3 c3 ‚‚³0
+//fparam 0
+//fmodelat 0
+duplicate -rr;
+rotate 0 360 0;
+move -168 32 40;
+//fc ‘Œ´ ‰¡3 c3 ‚‚³0
+//fparam 0
+//fmodelat 0
+duplicate -rr;
+rotate 0 360 0;
+move 24 32 40;
+//fc ‘Œ´ ‰¡3 c3 ‚‚³0
+//fparam 0
+//fmodelat 0
+duplicate -rr;
+rotate 0 360 0;
+move -72 32 40;
+//fc ‘Œ´ ‰¡3 c3 ‚‚³0
+//fparam 0
+//fmodelat 0
+duplicate -rr;
+rotate 0 360 0;
+move -24 32 40;
+//fc ‘Œ´ ‰¡3 c3 ‚‚³0
+//fparam 0
+//fmodelat 0
+duplicate -rr;
+rotate 0 360 0;
+move -120 32 40;
+//fc ‘Œ´ ‰¡4 c4 ‚‚³0
+//fparam 0
+//fmodelat 0
+file -i "c:/home/wb_data3d/field/out00/chip/grass0_04_04_00.mb";
+rotate 0 360 0;
+move 64 32 -192;
+//fc ‘Œ´ ‰¡4 c4 ‚‚³0
+//fparam 0
+//fmodelat 0
+duplicate -rr;
+rotate 0 360 0;
+move -64 32 -192;
+//fc ‘Œ´ ‰¡4 c4 ‚‚³0
+//fparam 0
+//fmodelat 0
+duplicate -rr;
+rotate 0 360 0;
+move 0 32 -192;
+//fc ‘Œ´ ‰¡4 c4 ‚‚³0
+//fparam 0
+//fmodelat 0
+duplicate -rr;
+rotate 0 360 0;
+move -192 32 -160;
+//fc ‘Œ´ ‰¡4 c4 ‚‚³0
+//fparam 0
+//fmodelat 0
+duplicate -rr;
+rotate 0 360 0;
+move -192 32 -96;
+//fc ‘Œ´ ‰¡4 c4 ‚‚³0
+//fparam 0
+//fmodelat 0
+duplicate -rr;
+rotate 0 360 0;
+move -128 32 -192;
+//fc ‘Œ´ ‰¡5 c5 ‚‚³0
+//fparam 0
+//fmodelat 0
+file -i "c:/home/wb_data3d/field/out00/chip/grass0_05_05_00.mb";
+rotate 0 360 0;
+move -104 32 104;
+//fc ‘Œ´ ‰¡8 c8 ‚‚³0
+//fparam 0
+//fmodelat 0
+file -i "c:/home/wb_data3d/field/out00/chip/grass0_08_08_00.mb";
+rotate 0 360 0;
+move 32 32 -96;
+//fc ‘Œ´ ‰¡8 c8 ‚‚³0
+//fparam 0
+//fmodelat 0
+duplicate -rr;
+rotate 0 360 0;
+move -96 32 -96;
+//fc ŠC ‰¡32 c32 ‚‚³0
+//fparam 0
+//fmodelat 63
+file -i "c:/home/wb_data3d/field/out00/chip/sea0_32_32_00.mb";
+rotate 0 360 0;
+move 0 -24 0;
+//fc Å“¹ ‰¡1 c1 ‚‚³0
+//fparam 0
+//fmodelat 0
+file -i "c:/home/wb_data3d/field/out00/chip/turf0_01_01_00.mb";
+rotate 0 360 0;
+move -40 32 -8;
+//fc Å“¹ ‰¡1 c1 ‚‚³0
+//fparam 0
+//fmodelat 0
+duplicate -rr;
+rotate 0 360 0;
+move -56 32 -8;
+//fc Å“¹ ‰¡1 c1 ‚‚³0
+//fparam 0
+//fmodelat 0
+duplicate -rr;
+rotate 0 360 0;
+move 24 32 -8;
+//fc Å“¹ ‰¡1 c1 ‚‚³0
+//fparam 0
+//fmodelat 0
+duplicate -rr;
+rotate 0 360 0;
+move 40 32 -8;
+//fc Å“¹ ‰¡1 c1 ‚‚³0
+//fparam 0
+//fmodelat 0
+duplicate -rr;
+rotate 0 360 0;
+move -88 32 -8;
+//fc Å“¹ ‰¡1 c1 ‚‚³0
+//fparam 0
+//fmodelat 0
+duplicate -rr;
+rotate 0 360 0;
+move -24 32 -8;
+//fc Å“¹ ‰¡1 c1 ‚‚³0
+//fparam 0
+//fmodelat 0
+duplicate -rr;
+rotate 0 360 0;
+move 8 32 -8;
+//fc Å“¹ ‰¡1 c1 ‚‚³0
+//fparam 0
+//fmodelat 0
+duplicate -rr;
+rotate 0 360 0;
+move -8 32 -8;
+//fc Å“¹ ‰¡1 c1 ‚‚³0
+//fparam 0
+//fmodelat 0
+duplicate -rr;
+rotate 0 360 0;
+move -72 32 -8;
+//fc Å“¹ƒZƒbƒg2 ‰¡3 c3 ‚‚³0
+//fparam 0
+//fmodelat 0
+file -i "c:/home/wb_data3d/field/out00/chip/turfroad1_03_03_00.mb";
+rotate 0 -269.9998 0;
+move -120 32 -8;
+//fc Å“¹ƒZƒbƒg2 ‰¡3 c3 ‚‚³0
+//fparam 0
+//fmodelat 0
+duplicate -rr;
+rotate 0 270 0;
+move 72 32 -8;
+//fc Å“¹^‘¤ ‰¡2 c1 ‚‚³0
+//fparam 0
+//fmodelat 0
+file -i "c:/home/wb_data3d/field/out00/chip/turfside0_02_01_00.mb";
+rotate 0 360 0;
+move -80 32 -24;
+//fc Å“¹^‘¤ ‰¡2 c1 ‚‚³0
+//fparam 0
+//fmodelat 0
+duplicate -rr;
+rotate 0 180 0;
+move -80 32 8;
+//fc Å“¹^‘¤ ‰¡3 c1 ‚‚³0
+//fparam 0
+//fmodelat 0
+file -i "c:/home/wb_data3d/field/out00/chip/turfside0_03_01_00.mb";
+rotate 0 360 0;
+move -40 32 -24;
+//fc Å“¹^‘¤ ‰¡3 c1 ‚‚³0
+//fparam 0
+//fmodelat 0
+duplicate -rr;
+rotate 0 180 0;
+move -40 32 8;
+//fc Å“¹^‘¤ ‰¡4 c1 ‚‚³0
+//fparam 0
+//fmodelat 0
+file -i "c:/home/wb_data3d/field/out00/chip/turfside0_04_01_00.mb";
+rotate 0 360 0;
+move 16 32 -24;
+//fc Å“¹^‘¤ ‰¡4 c1 ‚‚³0
+//fparam 0
+//fmodelat 0
+duplicate -rr;
+rotate 0 180 0;
+move 16 32 8;
+//fc »•l ‰¡1 c1 ‚‚³0
+//fparam 0
+//fmodelat 25
+file -i "c:/home/wb_data3d/field/out18/chip/beach0_01_01_00.mb";
+rotate 0 360 0;
+move -248 0 8;
+//fc »•l ‰¡1 c1 ‚‚³0
+//fparam 0
+//fmodelat 25
+duplicate -rr;
+rotate 0 360 0;
+move -216 0 8;
+//fc »•l ‰¡1 c1 ‚‚³0
+//fparam 0
+//fmodelat 25
+duplicate -rr;
+rotate 0 360 0;
+move -232 0 8;
+//fc »•l ‰¡2 c2 ‚‚³0
+//fparam 0
+//fmodelat 25
+file -i "c:/home/wb_data3d/field/out18/chip/beach0_02_02_00.mb";
+rotate 0 360 0;
+move 144 0 -48;
+//fc »•l ‰¡2 c2 ‚‚³0
+//fparam 0
+//fmodelat 25
+duplicate -rr;
+rotate 0 360 0;
+move 144 0 -80;
+//fc »•l ‰¡2 c2 ‚‚³0
+//fparam 0
+//fmodelat 25
+duplicate -rr;
+rotate 0 360 0;
+move -32 0 16;
+//fc »•l ‰¡2 c2 ‚‚³0
+//fparam 0
+//fmodelat 25
+duplicate -rr;
+rotate 0 360 0;
+move 144 0 -112;
+//fc »•l ‰¡2 c2 ‚‚³0
+//fparam 0
+//fmodelat 25
+duplicate -rr;
+rotate 0 360 0;
+move -64 0 16;
+//fc »•l ‰¡3 c3 ‚‚³0
+//fparam 0
+//fmodelat 25
+file -i "c:/home/wb_data3d/field/out18/chip/beach0_03_03_00.mb";
+rotate 0 360 0;
+move 104 0 24;
+//fc »•l ‰¡3 c3 ‚‚³0
+//fparam 0
+//fmodelat 25
+duplicate -rr;
+rotate 0 360 0;
+move -232 0 88;
+//fc »•l ‰¡3 c3 ‚‚³0
+//fparam 0
+//fmodelat 25
+duplicate -rr;
+rotate 0 360 0;
+move 8 0 24;
+//fc »•l ‰¡3 c3 ‚‚³0
+//fparam 0
+//fmodelat 25
+duplicate -rr;
+rotate 0 360 0;
+move 184 0 -104;
+//fc »•l ‰¡3 c3 ‚‚³0
+//fparam 0
+//fmodelat 25
+duplicate -rr;
+rotate 0 360 0;
+move 232 0 -104;
+//fc »•l ‰¡3 c3 ‚‚³0
+//fparam 0
+//fmodelat 25
+duplicate -rr;
+rotate 0 360 0;
+move 56 0 24;
+//fc »•l ‰¡3 c3 ‚‚³0
+//fparam 0
+//fmodelat 25
+duplicate -rr;
+rotate 0 90 0;
+move -232 0 232;
+//fc »•l ‰¡3 c3 ‚‚³0
+//fparam 0
+//fmodelat 25
+duplicate -rr;
+rotate 0 360 0;
+move 184 0 -56;
+//fc »•l ‰¡3 c3 ‚‚³0
+//fparam 0
+//fmodelat 25
+duplicate -rr;
+rotate 0 360 0;
+move 184 0 120;
+//fc »•l ‰¡3 c3 ‚‚³0
+//fparam 0
+//fmodelat 25
+duplicate -rr;
+rotate 0 360 0;
+move 40 0 120;
+//fc »•l ‰¡3 c3 ‚‚³0
+//fparam 0
+//fmodelat 25
+duplicate -rr;
+rotate 0 360 0;
+move 88 0 120;
+//fc »•l ‰¡3 c3 ‚‚³0
+//fparam 0
+//fmodelat 25
+duplicate -rr;
+rotate 0 360 0;
+move -56 0 120;
+//fc »•l ‰¡3 c3 ‚‚³0
+//fparam 0
+//fmodelat 25
+duplicate -rr;
+rotate 0 360 0;
+move -232 0 136;
+//fc »•l ‰¡3 c3 ‚‚³0
+//fparam 0
+//fmodelat 25
+duplicate -rr;
+rotate 0 360 0;
+move 232 0 -56;
+//fc »•l ‰¡3 c3 ‚‚³0
+//fparam 0
+//fmodelat 25
+duplicate -rr;
+rotate 0 360 0;
+move -8 0 120;
+//fc »•l ‰¡3 c3 ‚‚³0
+//fparam 0
+//fmodelat 25
+duplicate -rr;
+rotate 0 360 0;
+move 104 0 72;
+//fc »•l ‰¡3 c3 ‚‚³0
+//fparam 0
+//fmodelat 25
+duplicate -rr;
+rotate 0 360 0;
+move -56 0 168;
+//fc »•l ‰¡3 c3 ‚‚³0
+//fparam 0
+//fmodelat 25
+duplicate -rr;
+rotate 0 360 0;
+move 136 0 120;
+//fc »•l ‰¡3 c3 ‚‚³0
+//fparam 0
+//fmodelat 25
+duplicate -rr;
+rotate 0 360 0;
+move 232 0 120;
+//fc »•l ‰¡3 c3 ‚‚³0
+//fparam 0
+//fmodelat 25
+duplicate -rr;
+rotate 0 360 0;
+move 56 0 72;
+//fc »•l ‰¡3 c3 ‚‚³0
+//fparam 0
+//fmodelat 25
+duplicate -rr;
+rotate 0 360 0;
+move 8 0 72;
+//fc »•l ‰¡3 c3 ‚‚³0
+//fparam 0
+//fmodelat 25
+duplicate -rr;
+rotate 0 360 0;
+move -232 0 40;
+//fc »•l ‰¡3 c3 ‚‚³0
+//fparam 0
+//fmodelat 25
+duplicate -rr;
+rotate 0 360 0;
+move -232 0 184;
+//fc »•l ‰¡4 c4 ‚‚³0
+//fparam 0
+//fmodelat 25
+file -i "c:/home/wb_data3d/field/out18/chip/beach0_04_04_00.mb";
+rotate 0 360 0;
+move -48 0 64;
+//fc »•l ‰¡8 c8 ‚‚³0
+//fparam 0
+//fmodelat 25
+file -i "c:/home/wb_data3d/field/out18/chip/beach0_08_08_00.mb";
+rotate 0 360 0;
+move -144 0 64;
+//fc »•l ‰¡8 c8 ‚‚³0
+//fparam 0
+//fmodelat 25
+duplicate -rr;
+rotate 0 360 0;
+move 192 0 32;
+//fc »•l ‰¡8 c8 ‚‚³0
+//fparam 0
+//fmodelat 25
+duplicate -rr;
+rotate 0 360 0;
+move 64 0 -64;
+//fc »•l ‰¡8 c8 ‚‚³0
+//fparam 0
+//fmodelat 25
+duplicate -rr;
+rotate 0 360 0;
+move -192 0 -192;
+//fc »•l ‰¡8 c8 ‚‚³0
+//fparam 0
+//fmodelat 25
+duplicate -rr;
+rotate 0 360 0;
+move -144 0 192;
+//fc »•l ‰¡8 c8 ‚‚³0
+//fparam 0
+//fmodelat 25
+duplicate -rr;
+rotate 0 360 0;
+move 64 0 -192;
+//fc »•l ‰¡8 c8 ‚‚³0
+//fparam 0
+//fmodelat 25
+duplicate -rr;
+rotate 0 360 0;
+move -64 0 -192;
+//fc »•l ‰¡8 c8 ‚‚³0
+//fparam 0
+//fmodelat 25
+duplicate -rr;
+rotate 0 360 0;
+move 192 0 -192;
+//fc »•l ‰¡8 c8 ‚‚³0
+//fparam 0
+//fmodelat 25
+duplicate -rr;
+rotate 0 360 0;
+move -192 0 -64;
+//fc »•l ‰¡8 c8 ‚‚³0
+//fparam 0
+//fmodelat 25
+duplicate -rr;
+rotate 0 360 0;
+move -64 0 -64;
+//layer 1 Layer2
+//fc ŠR&#xff0d;’[ ‰¡1 c1 ‚‚³0`1
+//fparam 0
+//fmodelat 1
+file -i "c:/home/wb_data3d/field/out00/chip/cedge0_01_01_01.mb";
+rotate 0 360 0;
+move 104 24 72;
+//fc ŠR&#xff0d;’[ ‰¡1 c1 ‚‚³0`1
+//fparam 0
+//fmodelat 1
+duplicate -rr;
+rotate 0 360 0;
+move -56 24 152;
+//fc ŠR&#xff0d;’[ ‰¡1 c1 ‚‚³0`1
+//fparam 0
+//fmodelat 1
+duplicate -rr;
+rotate 0 360 0;
+move -40 8 168;
+//fc ŠR&#xff0d;’[ ‰¡1 c1 ‚‚³0`1
+//fparam 0
+//fmodelat 1
+duplicate -rr;
+rotate 0 360 0;
+move 184 8 88;
+//fc ŠR&#xff0d;’[ ‰¡1 c1 ‚‚³0`1
+//fparam 0
+//fmodelat 1
+duplicate -rr;
+rotate 0 90 0;
+move 104 24 -232;
+//fc ŠR&#xff0d;’[ ‰¡1 c1 ‚‚³0`1
+//fparam 0
+//fmodelat 1
+duplicate -rr;
+rotate 0 270 0;
+move -232 24 152;
+//fc ŠR&#xff0d;’[ ‰¡1 c1 ‚‚³0`1
+//fparam 0
+//fmodelat 1
+duplicate -rr;
+rotate 0 180 0;
+move -232 24 -232;
+//fc ŠR&#xff0d;’[ ‰¡1 c1 ‚‚³0`1
+//fparam 0
+//fmodelat 1
+duplicate -rr;
+rotate 0 270 0;
+move -248 8 248;
+//fc ŠR&#xff0d;’[ ‰¡1 c1 ‚‚³0`1
+//fparam 0
+//fmodelat 1
+duplicate -rr;
+rotate 0 360 0;
+move -88 8 248;
+//fc ‚‚¢ŠR[’[ ‰¡1 c1 ‚‚³0`5
+//fparam 0
+//fmodelat 1
+file -i "c:/home/wb_data3d/field/out00/chip/cedge1_01_01_05.mb";
+rotate 0 270 0;
+move 152 24 -152;
+//fc ‚‚¢ŠR[’[ ‰¡1 c1 ‚‚³0`5
+//fparam 0
+//fmodelat 1
+duplicate -rr;
+rotate 0 270 0;
+move 120 24 -200;
+//fc ‚‚¢ŠR[’[ ‰¡1 c1 ‚‚³0`5
+//fparam 0
+//fmodelat 1
+duplicate -rr;
+rotate 0 180 0;
+move -232 24 168;
+//fc ‚‚¢ŠR[’[ ‰¡1 c1 ‚‚³0`5
+//fparam 0
+//fmodelat 1
+duplicate -rr;
+rotate 0 270 0;
+move -248 24 -248;
+//fc ‚‚¢ŠR[’[ ‰¡1 c1 ‚‚³0`5
+//fparam 0
+//fmodelat 1
+duplicate -rr;
+rotate 0 -89.99991 0;
+move -232 24 232;
+//fc ‚‚¢ŠR[’[ ‰¡1 c1 ‚‚³0`5
+//fparam 0
+//fmodelat 1
+duplicate -rr;
+rotate 0 0 0;
+move -184 24 232;
+//fc ‚‚¢ŠR[’[ ‰¡1 c1 ‚‚³0`5
+//fparam 0
+//fmodelat 1
+duplicate -rr;
+rotate 0 90 0;
+move -184 24 168;
+//fc ŠR ‰¡1 c1 ‚‚³0`1
+//fparam 0
+//fmodelat 1
+file -i "c:/home/wb_data3d/field/out00/chip/cliff0_01_01_01.mb";
+rotate 0 360 0;
+move 88 24 72;
+//fc ŠR ‰¡1 c1 ‚‚³0`1
+//fparam 0
+//fmodelat 1
+duplicate -rr;
+rotate 0 360 0;
+move -216 24 152;
+//fc ŠR ‰¡1 c1 ‚‚³0`1
+//fparam 0
+//fmodelat 1
+duplicate -rr;
+rotate 0 360 0;
+move -248 8 -232;
+//fc ŠR ‰¡1 c1 ‚‚³0`1
+//fparam 0
+//fmodelat 1
+duplicate -rr;
+rotate 0 360 0;
+move -104 8 248;
+//fc ŠR ‰¡1 c1 ‚‚³0`1
+//fparam 0
+//fmodelat 1
+duplicate -rr;
+rotate 0 360 0;
+move -232 8 248;
+//fc ŠR ‰¡2 c1 ‚‚³0`1
+//fparam 0
+//fmodelat 1
+file -i "c:/home/wb_data3d/field/out00/chip/cliff0_02_01_01.mb";
+rotate 0 90 0;
+move 104 24 48;
+//fc ŠR ‰¡3 c1 ‚‚³0`1
+//fparam 0
+//fmodelat 1
+file -i "c:/home/wb_data3d/field/out00/chip/cliff0_03_01_01.mb";
+rotate 0 270 0;
+move -232 24 -136;
+//fc ŠR ‰¡3 c1 ‚‚³0`1
+//fparam 0
+//fmodelat 1
+duplicate -rr;
+rotate 0 90 0;
+move 104 24 -200;
+//fc ŠR ‰¡3 c1 ‚‚³0`1
+//fparam 0
+//fmodelat 1
+duplicate -rr;
+rotate 0 360 0;
+move -24 8 88;
+//fc ŠR ‰¡3 c1 ‚‚³0`1
+//fparam 0
+//fmodelat 1
+duplicate -rr;
+rotate 0 360 0;
+move 24 8 88;
+//fc ŠR ‰¡3 c1 ‚‚³0`1
+//fparam 0
+//fmodelat 1
+duplicate -rr;
+rotate 0 360 0;
+move -72 8 168;
+//fc ŠR ‰¡3 c1 ‚‚³0`1
+//fparam 0
+//fmodelat 1
+duplicate -rr;
+rotate 0 270 0;
+move -248 8 -216;
+//fc ŠR ‰¡3 c1 ‚‚³0`1
+//fparam 0
+//fmodelat 1
+duplicate -rr;
+rotate 0 360 0;
+move 72 8 88;
+//fc ŠR ‰¡3 c1 ‚‚³0`1
+//fparam 0
+//fmodelat 1
+duplicate -rr;
+rotate 0 270 0;
+move -248 8 -168;
+//fc ŠR ‰¡4 c1 ‚‚³0`1
+//fparam 0
+//fmodelat 1
+file -i "c:/home/wb_data3d/field/out00/chip/cliff0_04_01_01.mb";
+rotate 0 360 0;
+move -96 24 152;
+//fc ŠR ‰¡4 c1 ‚‚³0`1
+//fparam 0
+//fmodelat 1
+duplicate -rr;
+rotate 0 270 0;
+move -232 24 -192;
+//fc ŠR ‰¡4 c1 ‚‚³0`1
+//fparam 0
+//fmodelat 1
+duplicate -rr;
+rotate 0 180 0;
+move 64 24 -232;
+//fc ŠR ‰¡4 c1 ‚‚³0`1
+//fparam 0
+//fmodelat 1
+duplicate -rr;
+rotate 0 360 0;
+move -192 8 248;
+//fc ŠR ‰¡4 c1 ‚‚³0`1
+//fparam 0
+//fmodelat 1
+duplicate -rr;
+rotate 0 360 0;
+move -32 24 72;
+//fc ŠR ‰¡5 c1 ‚‚³0`1
+//fparam 0
+//fmodelat 1
+file -i "c:/home/wb_data3d/field/out00/chip/cliff0_05_01_01.mb";
+rotate 0 90 0;
+move -56 24 104;
+//fc ŠR ‰¡5 c1 ‚‚³0`1
+//fparam 0
+//fmodelat 1
+duplicate -rr;
+rotate 0 360 0;
+move 216 8 8;
+//fc ŠR ‰¡5 c1 ‚‚³0`1
+//fparam 0
+//fmodelat 1
+duplicate -rr;
+rotate 0 90 0;
+move -40 8 120;
+//fc ŠR ‰¡5 c1 ‚‚³0`1
+//fparam 0
+//fmodelat 1
+duplicate -rr;
+rotate 0 360 0;
+move -168 24 152;
+//fc ŠR ‰¡5 c1 ‚‚³0`1
+//fparam 0
+//fmodelat 1
+duplicate -rr;
+rotate 0 90 0;
+move 184 8 40;
+//fc ŠR ‰¡5 c1 ‚‚³0`1
+//fparam 0
+//fmodelat 1
+duplicate -rr;
+rotate 0 360 0;
+move 136 8 88;
+//fc ŠR ‰¡5 c1 ‚‚³0`1
+//fparam 0
+//fmodelat 1
+duplicate -rr;
+rotate 0 90 0;
+move -88 8 200;
+//fc ŠR ‰¡5 c1 ‚‚³0`1
+//fparam 0
+//fmodelat 1
+duplicate -rr;
+rotate 0 360 0;
+move 40 24 72;
+//fc ŠR ‰¡8 c1 ‚‚³0`1
+//fparam 0
+//fmodelat 1
+file -i "c:/home/wb_data3d/field/out00/chip/cliff0_08_01_01.mb";
+rotate 0 180 0;
+move -32 24 -232;
+//fc ŠR ‰¡8 c1 ‚‚³0`1
+//fparam 0
+//fmodelat 1
+duplicate -rr;
+rotate 0 90 0;
+move 104 24 -112;
+//fc ŠR ‰¡8 c1 ‚‚³0`1
+//fparam 0
+//fmodelat 1
+duplicate -rr;
+rotate 0 270 0;
+move -248 8 -80;
+//fc ŠR ‰¡8 c1 ‚‚³0`1
+//fparam 0
+//fmodelat 1
+duplicate -rr;
+rotate 0 180 0;
+move -160 24 -232;
+//fc ŠR ‰¡16 c1 ‚‚³0`1
+//fparam 0
+//fmodelat 1
+file -i "c:/home/wb_data3d/field/out00/chip/cliff0_16_01_01.mb";
+rotate 0 270 0;
+move -232 24 16;
+//fc ŠR ‰¡16 c1 ‚‚³0`1
+//fparam 0
+//fmodelat 1
+duplicate -rr;
+rotate 0 270 0;
+move -248 8 112;
+//fc ‚‚¢ŠR ‰¡2 c1 ‚‚³0`5
+//fparam 0
+//fmodelat 1
+file -i "c:/home/wb_data3d/field/out00/chip/cliff1_02_01_05.mb";
+rotate 0 360 0;
+move -224 24 -248;
+//fc ‚‚¢ŠR ‰¡2 c1 ‚‚³0`5
+//fparam 0
+//fmodelat 1
+duplicate -rr;
+rotate 0 180 0;
+move -208 24 168;
+//fc ‚‚¢ŠR ‰¡2 c1 ‚‚³0`5
+//fparam 0
+//fmodelat 1
+duplicate -rr;
+rotate 0 0 0;
+move -208 24 232;
+//fc ‚‚¢ŠR ‰¡2 c1 ‚‚³0`5
+//fparam 0
+//fmodelat 1
+duplicate -rr;
+rotate 0 360 0;
+move 144 24 -200;
+//fc ‚‚¢ŠR ‰¡3 c1 ‚‚³0`5
+//fparam 0
+//fmodelat 1
+file -i "c:/home/wb_data3d/field/out00/chip/cliff1_03_01_05.mb";
+rotate 0 360 0;
+move 232 24 -152;
+//fc ‚‚¢ŠR ‰¡3 c1 ‚‚³0`5
+//fparam 0
+//fmodelat 1
+duplicate -rr;
+rotate 0 -449.9999 0;
+move 120 24 -232;
+//fc ‚‚¢ŠR ‰¡3 c1 ‚‚³0`5
+//fparam 0
+//fmodelat 1
+duplicate -rr;
+rotate 0 -449.9999 0;
+move 152 24 -184;
+//fc ‚‚¢ŠR ‰¡3 c1 ‚‚³0`5
+//fparam 0
+//fmodelat 1
+duplicate -rr;
+rotate 0 90 0;
+move -184 24 200;
+//fc ‚‚¢ŠR ‰¡3 c1 ‚‚³0`5
+//fparam 0
+//fmodelat 1
+duplicate -rr;
+rotate 0 270 0;
+move -232 24 200;
+//fc ‚‚¢ŠR ‰¡3 c1 ‚‚³0`5
+//fparam 0
+//fmodelat 1
+duplicate -rr;
+rotate 0 360 0;
+move 184 24 -152;
+//fc ‚‚¢ŠR ‰¡5 c1 ‚‚³0`5
+//fparam 0
+//fmodelat 1
+file -i "c:/home/wb_data3d/field/out00/chip/cliff1_05_01_05.mb";
+rotate 0 360 0;
+move -168 24 -248;
+//fc ‚‚¢ŠR ‰¡16 c1 ‚‚³0`5
+//fparam 0
+//fmodelat 1
+file -i "c:/home/wb_data3d/field/out00/chip/cliff1_16_01_05.mb";
+rotate 0 360 0;
+move 0 24 -248;
+//fc ŠK’i ‰¡3 c1 ‚‚³1
+//fparam 0
+//fmodelat 0
+file -i "c:/home/wb_data3d/field/out00/chip/stairs0_03_01_01.mb";
+rotate 0 360 0;
+move -136 0 248;
+//fc ŠK’i ‰¡5 c1 ‚‚³1
+//fparam 0
+//fmodelat 0
+file -i "c:/home/wb_data3d/field/out00/chip/stairs0_05_01_01.mb";
+rotate 0 90 0;
+move 104 16 -8;
+//fc »•l”g‘Å‚¿Û ‰¡1 c1 ‚‚³0`[1
+//fparam 0
+//fmodelat 23
+file -i "c:/home/wb_data3d/field/out18/chip/seaside0_01_01_01.mb";
+rotate 0 -269.9998 0;
+move -72 -8 248;
+//fc »•l”g‘Å‚¿Û ‰¡2 c1 ‚‚³0`[1
+//fparam 0
+//fmodelat 23
+file -i "c:/home/wb_data3d/field/out18/chip/seaside0_02_01_01.mb";
+rotate 0 360 0;
+move 32 -8 152;
+//fc »•l”g‘Å‚¿Û ‰¡5 c1 ‚‚³0`[1
+//fparam 0
+//fmodelat 23
+file -i "c:/home/wb_data3d/field/out18/chip/seaside0_05_01_01.mb";
+rotate 0 360 0;
+move 88 -8 152;
+//fc »•l”g‘Å‚¿Û ‰¡8 c1 ‚‚³0`[1
+//fparam 0
+//fmodelat 23
+file -i "c:/home/wb_data3d/field/out18/chip/seaside0_08_01_01.mb";
+rotate 0 360 0;
+move 192 -8 152;
+//fc ”g‘Å‚¿Û‚ÌŠp‚P ‰¡3 c3 ‚‚³0
+//fparam 0
+//fmodelat 23
+file -i "c:/home/wb_data3d/field/out18/chip/seaedge0_03_03_01.mb";
+rotate 0 360 0;
+move -24 -8 200;
+//fc ”g‘Å‚¿Û‚ÌŠp‚Q ‰¡3 c3 ‚‚³0
+//fparam 0
+//fmodelat 23
+file -i "c:/home/wb_data3d/field/out18/chip/seaedge1_03_03_01.mb";
+rotate 0 360 0;
+move -24 -8 152;
+//fc ”g‘Å‚¿Û‚ÌŠp‚Q ‰¡3 c3 ‚‚³0
+//fparam 0
+//fmodelat 23
+duplicate -rr;
+rotate 0 360 0;
+move -72 -8 200;
+//layer 2 Layer3
+//fc A–Ø ‰¡1 c1 ‚‚³1
+//fparam 0
+//fmodelat 1
+file -i "c:/home/wb_data3d/field/out00/chip/plant0_01_01_01.mb";
+rotate 0 360 0;
+move 88 40 -120;
+//fc A–Ø ‰¡1 c1 ‚‚³1
+//fparam 0
+//fmodelat 1
+duplicate -rr;
+rotate 0 360 0;
+move 88 40 -184;
+//fc A–Ø ‰¡1 c1 ‚‚³1
+//fparam 0
+//fmodelat 1
+duplicate -rr;
+rotate 0 360 0;
+move 72 40 -152;
+//fc A–Ø ‰¡2 c1 ‚‚³1
+//fparam 0
+//fmodelat 1
+file -i "c:/home/wb_data3d/field/out00/chip/plant0_02_01_01.mb";
+rotate 0 360 0;
+move -80 40 136;
+//fc A–Ø ‰¡2 c1 ‚‚³1
+//fparam 0
+//fmodelat 1
+duplicate -rr;
+rotate 0 360 0;
+move -208 40 136;
+//fc A–Ø ‰¡2 c1 ‚‚³1
+//fparam 0
+//fmodelat 1
+duplicate -rr;
+rotate 0 360 0;
+move -80 40 72;
+//fc A–Ø ‰¡2 c1 ‚‚³1
+//fparam 0
+//fmodelat 1
+duplicate -rr;
+rotate 0 360 0;
+move -208 40 72;
+//fc A–Ø ‰¡3 c1 ‚‚³1
+//fparam 0
+//fmodelat 1
+file -i "c:/home/wb_data3d/field/out00/chip/plant0_03_01_01.mb";
+rotate 0 360 0;
+move 72 40 -216;
+//fc A–Ø ‰¡8 c1 ‚‚³1
+//fparam 0
+//fmodelat 1
+file -i "c:/home/wb_data3d/field/out00/chip/plant0_08_01_01.mb";
+rotate 0 270 0;
+move 56 40 -144;
+//layer 3 Layer4
+//fc 
+//fparam 0
+//fmodelat 1
+file -i "c:/home/wb_data3d/build_model/outdoor/rock_01/rock_01.mb";
+rotate 0 360 0;
+move -160 16 208;
+//fc 
+//fparam 0
+//fmodelat 1
+duplicate -rr;
+rotate 0 360 0;
+move -112 16 208;
+//fc 
+//fparam 0
+//fmodelat 1
+file -i "c:/home/wb_data3d/build_model/outdoor/fountain_01/fountain_01.mb";
+rotate 0 360 0;
+move -144 32 104;
+//fc 
+//fparam 0
+//fmodelat 1
+file -i "c:/home/wb_data3d/build_model/outdoor/sign03/sign03.mb";
+rotate 0 360 0;
+move 88 32 -56;
+//fc 
+//fparam 0
+//fmodelat 1
+file -i "c:/home/wb_data3d/build_model/outdoor/st_house01/st_house01.mb";
+rotate 0 360 0;
+move 152 16 -104;
+//fc 
+//fparam 0
+//fmodelat 1
+file -i "c:/home/wb_data3d/build_model/outdoor/st_villa01/st_villa01.mb";
+rotate 0 360 0;
+move -96 32 -136;
+//gridstart
+//gridh 32 32 16 16
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -256 16 256
+//gridd -240 16 256
+//gridd -256 16 240
+//gridd -240 16 240
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -240 16 256
+//gridd -224 16 256
+//gridd -240 16 240
+//gridd -224 16 240
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -224 16 256
+//gridd -208 16 256
+//gridd -224 16 240
+//gridd -208 16 240
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -208 16 256
+//gridd -192 16 256
+//gridd -208 16 240
+//gridd -192 16 240
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -192 16 256
+//gridd -176 16 256
+//gridd -192 16 240
+//gridd -176 16 240
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -176 16 256
+//gridd -160 16 256
+//gridd -176 16 240
+//gridd -160 16 240
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -160 16 256
+//gridd -144 16 256
+//gridd -160 16 240
+//gridd -144 16 240
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -144 16 256
+//gridd -128 16 256
+//gridd -144 16 240
+//gridd -128 16 240
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -128 16 256
+//gridd -112 16 256
+//gridd -128 16 240
+//gridd -112 16 240
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -112 16 256
+//gridd -96 16 256
+//gridd -112 16 240
+//gridd -96 16 240
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -96 16 256
+//gridd -80 16 256
+//gridd -96 16 240
+//gridd -80 16 240
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -80 16 256
+//gridd -64 16 256
+//gridd -80 16 240
+//gridd -64 16 240
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -64 16 256
+//gridd -48 16 256
+//gridd -64 16 240
+//gridd -48 16 240
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -48 16 256
+//gridd -32 16 256
+//gridd -48 16 240
+//gridd -32 16 240
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -32 16 256
+//gridd -16 16 256
+//gridd -32 16 240
+//gridd -16 16 240
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -16 16 256
+//gridd 0 16 256
+//gridd -16 16 240
+//gridd 0 16 240
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 0 16 256
+//gridd 16 16 256
+//gridd 0 16 240
+//gridd 16 16 240
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 16 16 256
+//gridd 32 16 256
+//gridd 16 16 240
+//gridd 32 16 240
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 32 16 256
+//gridd 48 16 256
+//gridd 32 16 240
+//gridd 48 16 240
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 48 16 256
+//gridd 64 16 256
+//gridd 48 16 240
+//gridd 64 16 240
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 64 16 256
+//gridd 80 16 256
+//gridd 64 16 240
+//gridd 80 16 240
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 80 16 256
+//gridd 96 16 256
+//gridd 80 16 240
+//gridd 96 16 240
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 96 16 256
+//gridd 112 16 256
+//gridd 96 16 240
+//gridd 112 16 240
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 112 16 256
+//gridd 128 16 256
+//gridd 112 16 240
+//gridd 128 16 240
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 128 16 256
+//gridd 144 16 256
+//gridd 128 16 240
+//gridd 144 16 240
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 144 16 256
+//gridd 160 16 256
+//gridd 144 16 240
+//gridd 160 16 240
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 160 16 256
+//gridd 176 16 256
+//gridd 160 16 240
+//gridd 176 16 240
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 176 16 256
+//gridd 192 16 256
+//gridd 176 16 240
+//gridd 192 16 240
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 192 16 256
+//gridd 208 16 256
+//gridd 192 16 240
+//gridd 208 16 240
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 208 16 256
+//gridd 224 16 256
+//gridd 208 16 240
+//gridd 224 16 240
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 224 16 256
+//gridd 240 16 256
+//gridd 224 16 240
+//gridd 240 16 240
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 240 16 256
+//gridd 256 16 256
+//gridd 240 16 240
+//gridd 256 16 240
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -256 16 240
+//gridd -240 16 240
+//gridd -256 16 224
+//gridd -240 16 224
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -240 16 240
+//gridd -224 16 240
+//gridd -240 16 224
+//gridd -224 32 224
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -224 16 240
+//gridd -208 16 240
+//gridd -224 32 224
+//gridd -208 32 224
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -208 16 240
+//gridd -192 16 240
+//gridd -208 32 224
+//gridd -192 32 224
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -192 16 240
+//gridd -176 16 240
+//gridd -192 32 224
+//gridd -176 32 224
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -176 16 240
+//gridd -160 16 240
+//gridd -176 32 224
+//gridd -160 32 224
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -160 16 240
+//gridd -144 16 240
+//gridd -160 32 224
+//gridd -144 32 224
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -144 16 240
+//gridd -128 16 240
+//gridd -144 32 224
+//gridd -128 32 224
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -128 16 240
+//gridd -112 16 240
+//gridd -128 32 224
+//gridd -112 32 224
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -112 16 240
+//gridd -96 16 240
+//gridd -112 32 224
+//gridd -96 32 224
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -96 16 240
+//gridd -80 16 240
+//gridd -96 32 224
+//gridd -80 32 224
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -80 16 240
+//gridd -64 16 240
+//gridd -80 32 224
+//gridd -64 32 224
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -64 16 240
+//gridd -48 16 240
+//gridd -64 32 224
+//gridd -48 32 224
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -48 16 240
+//gridd -32 16 240
+//gridd -48 32 224
+//gridd -32 32 224
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -32 16 240
+//gridd -16 16 240
+//gridd -32 32 224
+//gridd -16 32 224
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -16 16 240
+//gridd 0 16 240
+//gridd -16 32 224
+//gridd 0 32 224
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 0 16 240
+//gridd 16 16 240
+//gridd 0 32 224
+//gridd 16 32 224
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 16 16 240
+//gridd 32 16 240
+//gridd 16 32 224
+//gridd 32 32 224
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 32 16 240
+//gridd 48 16 240
+//gridd 32 32 224
+//gridd 48 32 224
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 48 16 240
+//gridd 64 16 240
+//gridd 48 32 224
+//gridd 64 32 224
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 64 16 240
+//gridd 80 16 240
+//gridd 64 32 224
+//gridd 80 32 224
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 80 16 240
+//gridd 96 16 240
+//gridd 80 32 224
+//gridd 96 32 224
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 96 16 240
+//gridd 112 16 240
+//gridd 96 32 224
+//gridd 112 16 224
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 112 16 240
+//gridd 128 16 240
+//gridd 112 16 224
+//gridd 128 16 224
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 128 16 240
+//gridd 144 16 240
+//gridd 128 16 224
+//gridd 144 16 224
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 144 16 240
+//gridd 160 16 240
+//gridd 144 16 224
+//gridd 160 16 224
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 160 16 240
+//gridd 176 16 240
+//gridd 160 16 224
+//gridd 176 16 224
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 176 16 240
+//gridd 192 16 240
+//gridd 176 16 224
+//gridd 192 16 224
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 192 16 240
+//gridd 208 16 240
+//gridd 192 16 224
+//gridd 208 16 224
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 208 16 240
+//gridd 224 16 240
+//gridd 208 16 224
+//gridd 224 16 224
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 224 16 240
+//gridd 240 16 240
+//gridd 224 16 224
+//gridd 240 16 224
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 240 16 240
+//gridd 256 16 240
+//gridd 240 16 224
+//gridd 256 16 224
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -256 16 224
+//gridd -240 16 224
+//gridd -256 16 208
+//gridd -240 16 208
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -240 16 224
+//gridd -224 32 224
+//gridd -240 16 208
+//gridd -224 32 208
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -224 32 224
+//gridd -208 32 224
+//gridd -224 32 208
+//gridd -208 32 208
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -208 32 224
+//gridd -192 32 224
+//gridd -208 32 208
+//gridd -192 32 208
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -192 32 224
+//gridd -176 32 224
+//gridd -192 32 208
+//gridd -176 32 208
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -176 32 224
+//gridd -160 32 224
+//gridd -176 32 208
+//gridd -160 32 208
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -160 32 224
+//gridd -144 32 224
+//gridd -160 32 208
+//gridd -144 32 208
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -144 32 224
+//gridd -128 32 224
+//gridd -144 32 208
+//gridd -128 32 208
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -128 32 224
+//gridd -112 32 224
+//gridd -128 32 208
+//gridd -112 32 208
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -112 32 224
+//gridd -96 32 224
+//gridd -112 32 208
+//gridd -96 32 208
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -96 32 224
+//gridd -80 32 224
+//gridd -96 32 208
+//gridd -80 32 208
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -80 32 224
+//gridd -64 32 224
+//gridd -80 32 208
+//gridd -64 32 208
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -64 32 224
+//gridd -48 32 224
+//gridd -64 32 208
+//gridd -48 32 208
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -48 32 224
+//gridd -32 32 224
+//gridd -48 32 208
+//gridd -32 32 208
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -32 32 224
+//gridd -16 32 224
+//gridd -32 32 208
+//gridd -16 32 208
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -16 32 224
+//gridd 0 32 224
+//gridd -16 32 208
+//gridd 0 32 208
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 0 32 224
+//gridd 16 32 224
+//gridd 0 32 208
+//gridd 16 32 208
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 16 32 224
+//gridd 32 32 224
+//gridd 16 32 208
+//gridd 32 32 208
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 32 32 224
+//gridd 48 32 224
+//gridd 32 32 208
+//gridd 48 32 208
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 48 32 224
+//gridd 64 32 224
+//gridd 48 32 208
+//gridd 64 32 208
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 64 32 224
+//gridd 80 32 224
+//gridd 64 32 208
+//gridd 80 32 208
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 80 32 224
+//gridd 96 32 224
+//gridd 80 32 208
+//gridd 96 32 208
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 96 32 224
+//gridd 112 16 224
+//gridd 96 32 208
+//gridd 112 16 208
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 112 16 224
+//gridd 128 16 224
+//gridd 112 16 208
+//gridd 128 16 208
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 128 16 224
+//gridd 144 16 224
+//gridd 128 16 208
+//gridd 144 16 208
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 144 16 224
+//gridd 160 16 224
+//gridd 144 16 208
+//gridd 160 16 208
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 160 16 224
+//gridd 176 16 224
+//gridd 160 16 208
+//gridd 176 16 208
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 176 16 224
+//gridd 192 16 224
+//gridd 176 16 208
+//gridd 192 16 208
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 192 16 224
+//gridd 208 16 224
+//gridd 192 16 208
+//gridd 208 16 208
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 208 16 224
+//gridd 224 16 224
+//gridd 208 16 208
+//gridd 224 16 208
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 224 16 224
+//gridd 240 16 224
+//gridd 224 16 208
+//gridd 240 16 208
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 240 16 224
+//gridd 256 16 224
+//gridd 240 16 208
+//gridd 256 16 208
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -256 16 208
+//gridd -240 16 208
+//gridd -256 16 192
+//gridd -240 16 192
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -240 16 208
+//gridd -224 32 208
+//gridd -240 16 192
+//gridd -224 32 192
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -224 32 208
+//gridd -208 32 208
+//gridd -224 32 192
+//gridd -208 32 192
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -208 32 208
+//gridd -192 32 208
+//gridd -208 32 192
+//gridd -192 32 192
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -192 32 208
+//gridd -176 32 208
+//gridd -192 32 192
+//gridd -176 32 192
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -176 32 208
+//gridd -160 32 208
+//gridd -176 32 192
+//gridd -160 32 192
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -160 32 208
+//gridd -144 32 208
+//gridd -160 32 192
+//gridd -144 32 192
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -144 32 208
+//gridd -128 32 208
+//gridd -144 32 192
+//gridd -128 32 192
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -128 32 208
+//gridd -112 32 208
+//gridd -128 32 192
+//gridd -112 32 192
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -112 32 208
+//gridd -96 32 208
+//gridd -112 32 192
+//gridd -96 32 192
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -96 32 208
+//gridd -80 32 208
+//gridd -96 32 192
+//gridd -80 32 192
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -80 32 208
+//gridd -64 32 208
+//gridd -80 32 192
+//gridd -64 32 192
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -64 32 208
+//gridd -48 32 208
+//gridd -64 32 192
+//gridd -48 32 192
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -48 32 208
+//gridd -32 32 208
+//gridd -48 32 192
+//gridd -32 32 192
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -32 32 208
+//gridd -16 32 208
+//gridd -32 32 192
+//gridd -16 32 192
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -16 32 208
+//gridd 0 32 208
+//gridd -16 32 192
+//gridd 0 32 192
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 0 32 208
+//gridd 16 32 208
+//gridd 0 32 192
+//gridd 16 32 192
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 16 32 208
+//gridd 32 32 208
+//gridd 16 32 192
+//gridd 32 32 192
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 32 32 208
+//gridd 48 32 208
+//gridd 32 32 192
+//gridd 48 32 192
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 48 32 208
+//gridd 64 32 208
+//gridd 48 32 192
+//gridd 64 32 192
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 64 32 208
+//gridd 80 32 208
+//gridd 64 32 192
+//gridd 80 32 192
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 80 32 208
+//gridd 96 32 208
+//gridd 80 32 192
+//gridd 96 32 192
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 96 32 208
+//gridd 112 16 208
+//gridd 96 32 192
+//gridd 112 16 192
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 112 16 208
+//gridd 128 16 208
+//gridd 112 16 192
+//gridd 128 16 192
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 128 16 208
+//gridd 144 16 208
+//gridd 128 16 192
+//gridd 144 16 192
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 144 16 208
+//gridd 160 16 208
+//gridd 144 16 192
+//gridd 160 16 192
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 160 16 208
+//gridd 176 16 208
+//gridd 160 16 192
+//gridd 176 16 192
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 176 16 208
+//gridd 192 16 208
+//gridd 176 16 192
+//gridd 192 16 192
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 192 16 208
+//gridd 208 16 208
+//gridd 192 16 192
+//gridd 208 16 192
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 208 16 208
+//gridd 224 16 208
+//gridd 208 16 192
+//gridd 224 16 192
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 224 16 208
+//gridd 240 16 208
+//gridd 224 16 192
+//gridd 240 16 192
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 240 16 208
+//gridd 256 16 208
+//gridd 240 16 192
+//gridd 256 16 192
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -256 16 192
+//gridd -240 16 192
+//gridd -256 16 176
+//gridd -240 16 176
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -240 16 192
+//gridd -224 32 192
+//gridd -240 16 176
+//gridd -224 32 176
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -224 32 192
+//gridd -208 32 192
+//gridd -224 32 176
+//gridd -208 32 176
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -208 32 192
+//gridd -192 32 192
+//gridd -208 32 176
+//gridd -192 32 176
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -192 32 192
+//gridd -176 32 192
+//gridd -192 32 176
+//gridd -176 32 176
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -176 32 192
+//gridd -160 32 192
+//gridd -176 32 176
+//gridd -160 32 176
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -160 32 192
+//gridd -144 32 192
+//gridd -160 32 176
+//gridd -144 32 176
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -144 32 192
+//gridd -128 32 192
+//gridd -144 32 176
+//gridd -128 32 176
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -128 32 192
+//gridd -112 32 192
+//gridd -128 32 176
+//gridd -112 32 176
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -112 32 192
+//gridd -96 32 192
+//gridd -112 32 176
+//gridd -96 32 176
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -96 32 192
+//gridd -80 32 192
+//gridd -96 32 176
+//gridd -80 32 176
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -80 32 192
+//gridd -64 32 192
+//gridd -80 32 176
+//gridd -64 32 176
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -64 32 192
+//gridd -48 32 192
+//gridd -64 32 176
+//gridd -48 32 176
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -48 32 192
+//gridd -32 32 192
+//gridd -48 32 176
+//gridd -32 32 176
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -32 32 192
+//gridd -16 32 192
+//gridd -32 32 176
+//gridd -16 32 176
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -16 32 192
+//gridd 0 32 192
+//gridd -16 32 176
+//gridd 0 32 176
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 0 32 192
+//gridd 16 32 192
+//gridd 0 32 176
+//gridd 16 32 176
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 16 32 192
+//gridd 32 32 192
+//gridd 16 32 176
+//gridd 32 32 176
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 32 32 192
+//gridd 48 32 192
+//gridd 32 32 176
+//gridd 48 32 176
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 48 32 192
+//gridd 64 32 192
+//gridd 48 32 176
+//gridd 64 32 176
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 64 32 192
+//gridd 80 32 192
+//gridd 64 32 176
+//gridd 80 32 176
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 80 32 192
+//gridd 96 32 192
+//gridd 80 32 176
+//gridd 96 32 176
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 96 32 192
+//gridd 112 16 192
+//gridd 96 32 176
+//gridd 112 16 176
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 112 16 192
+//gridd 128 16 192
+//gridd 112 16 176
+//gridd 128 16 176
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 128 16 192
+//gridd 144 16 192
+//gridd 128 16 176
+//gridd 144 16 176
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 144 16 192
+//gridd 160 16 192
+//gridd 144 16 176
+//gridd 160 16 176
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 160 16 192
+//gridd 176 16 192
+//gridd 160 16 176
+//gridd 176 16 176
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 176 16 192
+//gridd 192 16 192
+//gridd 176 16 176
+//gridd 192 16 176
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 192 16 192
+//gridd 208 16 192
+//gridd 192 16 176
+//gridd 208 16 176
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 208 16 192
+//gridd 224 16 192
+//gridd 208 16 176
+//gridd 224 16 176
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 224 16 192
+//gridd 240 16 192
+//gridd 224 16 176
+//gridd 240 16 176
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 240 16 192
+//gridd 256 16 192
+//gridd 240 16 176
+//gridd 256 16 176
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -256 16 176
+//gridd -240 16 176
+//gridd -256 16 160
+//gridd -240 16 160
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -240 16 176
+//gridd -224 32 176
+//gridd -240 16 160
+//gridd -224 32 160
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -224 32 176
+//gridd -208 32 176
+//gridd -224 32 160
+//gridd -208 32 160
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -208 32 176
+//gridd -192 32 176
+//gridd -208 32 160
+//gridd -192 32 160
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -192 32 176
+//gridd -176 32 176
+//gridd -192 32 160
+//gridd -176 32 160
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -176 32 176
+//gridd -160 32 176
+//gridd -176 32 160
+//gridd -160 32 160
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -160 32 176
+//gridd -144 32 176
+//gridd -160 32 160
+//gridd -144 32 160
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -144 32 176
+//gridd -128 32 176
+//gridd -144 32 160
+//gridd -128 32 160
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -128 32 176
+//gridd -112 32 176
+//gridd -128 32 160
+//gridd -112 32 160
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -112 32 176
+//gridd -96 32 176
+//gridd -112 32 160
+//gridd -96 32 160
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -96 32 176
+//gridd -80 32 176
+//gridd -96 32 160
+//gridd -80 32 160
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -80 32 176
+//gridd -64 32 176
+//gridd -80 32 160
+//gridd -64 32 160
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -64 32 176
+//gridd -48 32 176
+//gridd -64 32 160
+//gridd -48 32 160
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -48 32 176
+//gridd -32 32 176
+//gridd -48 32 160
+//gridd -32 32 160
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -32 32 176
+//gridd -16 32 176
+//gridd -32 32 160
+//gridd -16 32 160
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -16 32 176
+//gridd 0 32 176
+//gridd -16 32 160
+//gridd 0 32 160
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 0 32 176
+//gridd 16 32 176
+//gridd 0 32 160
+//gridd 16 32 160
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 16 32 176
+//gridd 32 32 176
+//gridd 16 32 160
+//gridd 32 32 160
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 32 32 176
+//gridd 48 32 176
+//gridd 32 32 160
+//gridd 48 32 160
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 48 32 176
+//gridd 64 32 176
+//gridd 48 32 160
+//gridd 64 32 160
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 64 32 176
+//gridd 80 32 176
+//gridd 64 32 160
+//gridd 80 32 160
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 80 32 176
+//gridd 96 32 176
+//gridd 80 32 160
+//gridd 96 32 160
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 96 32 176
+//gridd 112 16 176
+//gridd 96 32 160
+//gridd 112 16 160
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 112 16 176
+//gridd 128 16 176
+//gridd 112 16 160
+//gridd 128 16 160
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 128 16 176
+//gridd 144 16 176
+//gridd 128 16 160
+//gridd 144 16 160
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 144 16 176
+//gridd 160 16 176
+//gridd 144 16 160
+//gridd 160 16 160
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 160 16 176
+//gridd 176 16 176
+//gridd 160 16 160
+//gridd 176 16 160
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 176 16 176
+//gridd 192 16 176
+//gridd 176 16 160
+//gridd 192 16 160
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 192 16 176
+//gridd 208 16 176
+//gridd 192 16 160
+//gridd 208 16 160
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 208 16 176
+//gridd 224 16 176
+//gridd 208 16 160
+//gridd 224 16 160
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 224 16 176
+//gridd 240 16 176
+//gridd 224 16 160
+//gridd 240 16 160
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 240 16 176
+//gridd 256 16 176
+//gridd 240 16 160
+//gridd 256 16 160
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -256 16 160
+//gridd -240 16 160
+//gridd -256 16 144
+//gridd -240 16 144
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -240 16 160
+//gridd -224 32 160
+//gridd -240 16 144
+//gridd -224 32 144
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -224 32 160
+//gridd -208 32 160
+//gridd -224 32 144
+//gridd -208 32 144
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -208 32 160
+//gridd -192 32 160
+//gridd -208 32 144
+//gridd -192 32 144
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -192 32 160
+//gridd -176 32 160
+//gridd -192 32 144
+//gridd -176 32 144
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -176 32 160
+//gridd -160 32 160
+//gridd -176 32 144
+//gridd -160 32 144
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -160 32 160
+//gridd -144 32 160
+//gridd -160 32 144
+//gridd -144 32 144
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -144 32 160
+//gridd -128 32 160
+//gridd -144 32 144
+//gridd -128 32 144
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -128 32 160
+//gridd -112 32 160
+//gridd -128 32 144
+//gridd -112 32 144
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -112 32 160
+//gridd -96 32 160
+//gridd -112 32 144
+//gridd -96 32 144
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -96 32 160
+//gridd -80 32 160
+//gridd -96 32 144
+//gridd -80 32 144
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -80 32 160
+//gridd -64 32 160
+//gridd -80 32 144
+//gridd -64 32 144
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -64 32 160
+//gridd -48 32 160
+//gridd -64 32 144
+//gridd -48 32 144
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -48 32 160
+//gridd -32 32 160
+//gridd -48 32 144
+//gridd -32 32 144
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -32 32 160
+//gridd -16 32 160
+//gridd -32 32 144
+//gridd -16 32 144
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -16 32 160
+//gridd 0 32 160
+//gridd -16 32 144
+//gridd 0 32 144
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 0 32 160
+//gridd 16 32 160
+//gridd 0 32 144
+//gridd 16 32 144
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 16 32 160
+//gridd 32 32 160
+//gridd 16 32 144
+//gridd 32 32 144
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 32 32 160
+//gridd 48 32 160
+//gridd 32 32 144
+//gridd 48 32 144
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 48 32 160
+//gridd 64 32 160
+//gridd 48 32 144
+//gridd 64 32 144
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 64 32 160
+//gridd 80 32 160
+//gridd 64 32 144
+//gridd 80 32 144
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 80 32 160
+//gridd 96 32 160
+//gridd 80 32 144
+//gridd 96 32 144
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 96 32 160
+//gridd 112 16 160
+//gridd 96 32 144
+//gridd 112 16 144
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 112 16 160
+//gridd 128 16 160
+//gridd 112 16 144
+//gridd 128 16 144
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 128 16 160
+//gridd 144 16 160
+//gridd 128 16 144
+//gridd 144 16 144
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 144 16 160
+//gridd 160 16 160
+//gridd 144 16 144
+//gridd 160 16 144
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 160 16 160
+//gridd 176 16 160
+//gridd 160 16 144
+//gridd 176 16 144
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 176 16 160
+//gridd 192 16 160
+//gridd 176 16 144
+//gridd 192 16 144
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 192 16 160
+//gridd 208 16 160
+//gridd 192 16 144
+//gridd 208 16 144
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 208 16 160
+//gridd 224 16 160
+//gridd 208 16 144
+//gridd 224 16 144
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 224 16 160
+//gridd 240 16 160
+//gridd 224 16 144
+//gridd 240 16 144
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 240 16 160
+//gridd 256 16 160
+//gridd 240 16 144
+//gridd 256 16 144
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -256 16 144
+//gridd -240 16 144
+//gridd -256 16 128
+//gridd -240 16 128
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -240 16 144
+//gridd -224 32 144
+//gridd -240 16 128
+//gridd -224 32 128
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -224 32 144
+//gridd -208 32 144
+//gridd -224 32 128
+//gridd -208 32 128
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -208 32 144
+//gridd -192 32 144
+//gridd -208 32 128
+//gridd -192 32 128
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -192 32 144
+//gridd -176 32 144
+//gridd -192 32 128
+//gridd -176 32 128
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -176 32 144
+//gridd -160 32 144
+//gridd -176 32 128
+//gridd -160 32 128
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -160 32 144
+//gridd -144 32 144
+//gridd -160 32 128
+//gridd -144 32 128
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -144 32 144
+//gridd -128 32 144
+//gridd -144 32 128
+//gridd -128 32 128
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -128 32 144
+//gridd -112 32 144
+//gridd -128 32 128
+//gridd -112 32 128
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -112 32 144
+//gridd -96 32 144
+//gridd -112 32 128
+//gridd -96 32 128
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -96 32 144
+//gridd -80 32 144
+//gridd -96 32 128
+//gridd -80 32 128
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -80 32 144
+//gridd -64 32 144
+//gridd -80 32 128
+//gridd -64 32 128
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -64 32 144
+//gridd -48 32 144
+//gridd -64 32 128
+//gridd -48 32 128
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -48 32 144
+//gridd -32 32 144
+//gridd -48 32 128
+//gridd -32 32 128
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -32 32 144
+//gridd -16 32 144
+//gridd -32 32 128
+//gridd -16 32 128
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -16 32 144
+//gridd 0 32 144
+//gridd -16 32 128
+//gridd 0 32 128
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 0 32 144
+//gridd 16 32 144
+//gridd 0 32 128
+//gridd 16 32 128
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 16 32 144
+//gridd 32 32 144
+//gridd 16 32 128
+//gridd 32 32 128
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 32 32 144
+//gridd 48 32 144
+//gridd 32 32 128
+//gridd 48 32 128
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 48 32 144
+//gridd 64 32 144
+//gridd 48 32 128
+//gridd 64 32 128
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 64 32 144
+//gridd 80 32 144
+//gridd 64 32 128
+//gridd 80 32 128
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 80 32 144
+//gridd 96 32 144
+//gridd 80 32 128
+//gridd 96 32 128
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 96 32 144
+//gridd 112 16 144
+//gridd 96 32 128
+//gridd 112 16 128
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 112 16 144
+//gridd 128 16 144
+//gridd 112 16 128
+//gridd 128 16 128
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 128 16 144
+//gridd 144 16 144
+//gridd 128 16 128
+//gridd 144 16 128
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 144 16 144
+//gridd 160 16 144
+//gridd 144 16 128
+//gridd 160 16 128
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 160 16 144
+//gridd 176 16 144
+//gridd 160 16 128
+//gridd 176 16 128
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 176 16 144
+//gridd 192 16 144
+//gridd 176 16 128
+//gridd 192 16 128
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 192 16 144
+//gridd 208 16 144
+//gridd 192 16 128
+//gridd 208 16 128
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 208 16 144
+//gridd 224 16 144
+//gridd 208 16 128
+//gridd 224 16 128
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 224 16 144
+//gridd 240 16 144
+//gridd 224 16 128
+//gridd 240 16 128
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 240 16 144
+//gridd 256 16 144
+//gridd 240 16 128
+//gridd 256 16 128
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -256 16 128
+//gridd -240 16 128
+//gridd -256 16 112
+//gridd -240 16 112
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -240 16 128
+//gridd -224 32 128
+//gridd -240 16 112
+//gridd -224 32 112
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -224 32 128
+//gridd -208 32 128
+//gridd -224 32 112
+//gridd -208 32 112
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -208 32 128
+//gridd -192 32 128
+//gridd -208 32 112
+//gridd -192 32 112
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -192 32 128
+//gridd -176 32 128
+//gridd -192 32 112
+//gridd -176 32 112
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -176 32 128
+//gridd -160 32 128
+//gridd -176 32 112
+//gridd -160 32 112
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -160 32 128
+//gridd -144 32 128
+//gridd -160 32 112
+//gridd -144 32 112
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -144 32 128
+//gridd -128 32 128
+//gridd -144 32 112
+//gridd -128 32 112
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -128 32 128
+//gridd -112 32 128
+//gridd -128 32 112
+//gridd -112 32 112
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -112 32 128
+//gridd -96 32 128
+//gridd -112 32 112
+//gridd -96 32 112
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -96 32 128
+//gridd -80 32 128
+//gridd -96 32 112
+//gridd -80 32 112
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -80 32 128
+//gridd -64 32 128
+//gridd -80 32 112
+//gridd -64 32 112
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -64 32 128
+//gridd -48 32 128
+//gridd -64 32 112
+//gridd -48 32 112
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -48 32 128
+//gridd -32 32 128
+//gridd -48 32 112
+//gridd -32 32 112
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -32 32 128
+//gridd -16 32 128
+//gridd -32 32 112
+//gridd -16 32 112
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -16 32 128
+//gridd 0 32 128
+//gridd -16 32 112
+//gridd 0 32 112
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 0 32 128
+//gridd 16 32 128
+//gridd 0 32 112
+//gridd 16 32 112
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 16 32 128
+//gridd 32 32 128
+//gridd 16 32 112
+//gridd 32 32 112
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 32 32 128
+//gridd 48 32 128
+//gridd 32 32 112
+//gridd 48 32 112
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 48 32 128
+//gridd 64 32 128
+//gridd 48 32 112
+//gridd 64 32 112
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 64 32 128
+//gridd 80 32 128
+//gridd 64 32 112
+//gridd 80 32 112
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 80 32 128
+//gridd 96 32 128
+//gridd 80 32 112
+//gridd 96 32 112
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 96 32 128
+//gridd 112 16 128
+//gridd 96 32 112
+//gridd 112 16 112
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 112 16 128
+//gridd 128 16 128
+//gridd 112 16 112
+//gridd 128 16 112
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 128 16 128
+//gridd 144 16 128
+//gridd 128 16 112
+//gridd 144 16 112
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 144 16 128
+//gridd 160 16 128
+//gridd 144 16 112
+//gridd 160 16 112
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 160 16 128
+//gridd 176 16 128
+//gridd 160 16 112
+//gridd 176 16 112
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 176 16 128
+//gridd 192 16 128
+//gridd 176 16 112
+//gridd 192 16 112
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 192 16 128
+//gridd 208 16 128
+//gridd 192 16 112
+//gridd 208 16 112
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 208 16 128
+//gridd 224 16 128
+//gridd 208 16 112
+//gridd 224 16 112
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 224 16 128
+//gridd 240 16 128
+//gridd 224 16 112
+//gridd 240 16 112
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 240 16 128
+//gridd 256 16 128
+//gridd 240 16 112
+//gridd 256 16 112
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -256 16 112
+//gridd -240 16 112
+//gridd -256 16 96
+//gridd -240 16 96
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -240 16 112
+//gridd -224 32 112
+//gridd -240 16 96
+//gridd -224 32 96
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -224 32 112
+//gridd -208 32 112
+//gridd -224 32 96
+//gridd -208 32 96
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -208 32 112
+//gridd -192 32 112
+//gridd -208 32 96
+//gridd -192 32 96
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -192 32 112
+//gridd -176 32 112
+//gridd -192 32 96
+//gridd -176 32 96
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -176 32 112
+//gridd -160 32 112
+//gridd -176 32 96
+//gridd -160 32 96
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -160 32 112
+//gridd -144 32 112
+//gridd -160 32 96
+//gridd -144 32 96
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -144 32 112
+//gridd -128 32 112
+//gridd -144 32 96
+//gridd -128 32 96
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -128 32 112
+//gridd -112 32 112
+//gridd -128 32 96
+//gridd -112 32 96
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -112 32 112
+//gridd -96 32 112
+//gridd -112 32 96
+//gridd -96 32 96
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -96 32 112
+//gridd -80 32 112
+//gridd -96 32 96
+//gridd -80 32 96
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -80 32 112
+//gridd -64 32 112
+//gridd -80 32 96
+//gridd -64 32 96
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -64 32 112
+//gridd -48 32 112
+//gridd -64 32 96
+//gridd -48 32 96
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -48 32 112
+//gridd -32 32 112
+//gridd -48 32 96
+//gridd -32 32 96
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -32 32 112
+//gridd -16 32 112
+//gridd -32 32 96
+//gridd -16 32 96
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -16 32 112
+//gridd 0 32 112
+//gridd -16 32 96
+//gridd 0 32 96
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 0 32 112
+//gridd 16 32 112
+//gridd 0 32 96
+//gridd 16 32 96
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 16 32 112
+//gridd 32 32 112
+//gridd 16 32 96
+//gridd 32 32 96
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 32 32 112
+//gridd 48 32 112
+//gridd 32 32 96
+//gridd 48 32 96
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 48 32 112
+//gridd 64 32 112
+//gridd 48 32 96
+//gridd 64 32 96
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 64 32 112
+//gridd 80 32 112
+//gridd 64 32 96
+//gridd 80 32 96
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 80 32 112
+//gridd 96 32 112
+//gridd 80 32 96
+//gridd 96 32 96
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 96 32 112
+//gridd 112 16 112
+//gridd 96 32 96
+//gridd 112 16 96
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 112 16 112
+//gridd 128 16 112
+//gridd 112 16 96
+//gridd 128 16 96
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 128 16 112
+//gridd 144 16 112
+//gridd 128 16 96
+//gridd 144 16 96
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 144 16 112
+//gridd 160 16 112
+//gridd 144 16 96
+//gridd 160 16 96
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 160 16 112
+//gridd 176 16 112
+//gridd 160 16 96
+//gridd 176 16 96
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 176 16 112
+//gridd 192 16 112
+//gridd 176 16 96
+//gridd 192 16 96
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 192 16 112
+//gridd 208 16 112
+//gridd 192 16 96
+//gridd 208 16 96
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 208 16 112
+//gridd 224 16 112
+//gridd 208 16 96
+//gridd 224 16 96
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 224 16 112
+//gridd 240 16 112
+//gridd 224 16 96
+//gridd 240 16 96
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 240 16 112
+//gridd 256 16 112
+//gridd 240 16 96
+//gridd 256 16 96
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -256 16 96
+//gridd -240 16 96
+//gridd -256 16 80
+//gridd -240 16 80
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -240 16 96
+//gridd -224 32 96
+//gridd -240 16 80
+//gridd -224 32 80
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -224 32 96
+//gridd -208 32 96
+//gridd -224 32 80
+//gridd -208 32 80
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -208 32 96
+//gridd -192 32 96
+//gridd -208 32 80
+//gridd -192 32 80
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -192 32 96
+//gridd -176 32 96
+//gridd -192 32 80
+//gridd -176 32 80
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -176 32 96
+//gridd -160 32 96
+//gridd -176 32 80
+//gridd -160 32 80
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -160 32 96
+//gridd -144 32 96
+//gridd -160 32 80
+//gridd -144 32 80
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -144 32 96
+//gridd -128 32 96
+//gridd -144 32 80
+//gridd -128 32 80
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -128 32 96
+//gridd -112 32 96
+//gridd -128 32 80
+//gridd -112 32 80
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -112 32 96
+//gridd -96 32 96
+//gridd -112 32 80
+//gridd -96 32 80
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -96 32 96
+//gridd -80 32 96
+//gridd -96 32 80
+//gridd -80 32 80
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -80 32 96
+//gridd -64 32 96
+//gridd -80 32 80
+//gridd -64 32 80
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -64 32 96
+//gridd -48 32 96
+//gridd -64 32 80
+//gridd -48 32 80
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -48 32 96
+//gridd -32 32 96
+//gridd -48 32 80
+//gridd -32 32 80
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -32 32 96
+//gridd -16 32 96
+//gridd -32 32 80
+//gridd -16 32 80
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -16 32 96
+//gridd 0 32 96
+//gridd -16 32 80
+//gridd 0 32 80
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 0 32 96
+//gridd 16 32 96
+//gridd 0 32 80
+//gridd 16 32 80
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 16 32 96
+//gridd 32 32 96
+//gridd 16 32 80
+//gridd 32 32 80
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 32 32 96
+//gridd 48 32 96
+//gridd 32 32 80
+//gridd 48 32 80
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 48 32 96
+//gridd 64 32 96
+//gridd 48 32 80
+//gridd 64 32 80
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 64 32 96
+//gridd 80 32 96
+//gridd 64 32 80
+//gridd 80 32 80
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 80 32 96
+//gridd 96 32 96
+//gridd 80 32 80
+//gridd 96 32 80
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 96 32 96
+//gridd 112 16 96
+//gridd 96 32 80
+//gridd 112 16 80
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 112 16 96
+//gridd 128 16 96
+//gridd 112 16 80
+//gridd 128 16 80
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 128 16 96
+//gridd 144 16 96
+//gridd 128 16 80
+//gridd 144 16 80
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 144 16 96
+//gridd 160 16 96
+//gridd 144 16 80
+//gridd 160 16 80
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 160 16 96
+//gridd 176 16 96
+//gridd 160 16 80
+//gridd 176 16 80
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 176 16 96
+//gridd 192 16 96
+//gridd 176 16 80
+//gridd 192 16 80
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 192 16 96
+//gridd 208 16 96
+//gridd 192 16 80
+//gridd 208 16 80
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 208 16 96
+//gridd 224 16 96
+//gridd 208 16 80
+//gridd 224 16 80
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 224 16 96
+//gridd 240 16 96
+//gridd 224 16 80
+//gridd 240 16 80
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 240 16 96
+//gridd 256 16 96
+//gridd 240 16 80
+//gridd 256 16 80
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -256 16 80
+//gridd -240 16 80
+//gridd -256 16 64
+//gridd -240 16 64
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -240 16 80
+//gridd -224 32 80
+//gridd -240 16 64
+//gridd -224 32 64
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -224 32 80
+//gridd -208 32 80
+//gridd -224 32 64
+//gridd -208 32 64
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -208 32 80
+//gridd -192 32 80
+//gridd -208 32 64
+//gridd -192 32 64
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -192 32 80
+//gridd -176 32 80
+//gridd -192 32 64
+//gridd -176 32 64
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -176 32 80
+//gridd -160 32 80
+//gridd -176 32 64
+//gridd -160 32 64
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -160 32 80
+//gridd -144 32 80
+//gridd -160 32 64
+//gridd -144 32 64
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -144 32 80
+//gridd -128 32 80
+//gridd -144 32 64
+//gridd -128 32 64
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -128 32 80
+//gridd -112 32 80
+//gridd -128 32 64
+//gridd -112 32 64
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -112 32 80
+//gridd -96 32 80
+//gridd -112 32 64
+//gridd -96 32 64
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -96 32 80
+//gridd -80 32 80
+//gridd -96 32 64
+//gridd -80 32 64
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -80 32 80
+//gridd -64 32 80
+//gridd -80 32 64
+//gridd -64 32 64
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -64 32 80
+//gridd -48 32 80
+//gridd -64 32 64
+//gridd -48 32 64
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -48 32 80
+//gridd -32 32 80
+//gridd -48 32 64
+//gridd -32 32 64
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -32 32 80
+//gridd -16 32 80
+//gridd -32 32 64
+//gridd -16 32 64
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -16 32 80
+//gridd 0 32 80
+//gridd -16 32 64
+//gridd 0 32 64
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 0 32 80
+//gridd 16 32 80
+//gridd 0 32 64
+//gridd 16 32 64
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 16 32 80
+//gridd 32 32 80
+//gridd 16 32 64
+//gridd 32 32 64
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 32 32 80
+//gridd 48 32 80
+//gridd 32 32 64
+//gridd 48 32 64
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 48 32 80
+//gridd 64 32 80
+//gridd 48 32 64
+//gridd 64 32 64
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 64 32 80
+//gridd 80 32 80
+//gridd 64 32 64
+//gridd 80 32 64
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 80 32 80
+//gridd 96 32 80
+//gridd 80 32 64
+//gridd 96 32 64
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 96 32 80
+//gridd 112 16 80
+//gridd 96 32 64
+//gridd 112 16 64
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 112 16 80
+//gridd 128 16 80
+//gridd 112 16 64
+//gridd 128 16 64
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 128 16 80
+//gridd 144 16 80
+//gridd 128 16 64
+//gridd 144 16 64
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 144 16 80
+//gridd 160 16 80
+//gridd 144 16 64
+//gridd 160 16 64
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 160 16 80
+//gridd 176 16 80
+//gridd 160 16 64
+//gridd 176 16 64
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 176 16 80
+//gridd 192 16 80
+//gridd 176 16 64
+//gridd 192 16 64
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 192 16 80
+//gridd 208 16 80
+//gridd 192 16 64
+//gridd 208 16 64
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 208 16 80
+//gridd 224 16 80
+//gridd 208 16 64
+//gridd 224 16 64
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 224 16 80
+//gridd 240 16 80
+//gridd 224 16 64
+//gridd 240 16 64
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 240 16 80
+//gridd 256 16 80
+//gridd 240 16 64
+//gridd 256 16 64
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -256 16 64
+//gridd -240 16 64
+//gridd -256 16 48
+//gridd -240 16 48
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -240 16 64
+//gridd -224 32 64
+//gridd -240 16 48
+//gridd -224 32 48
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -224 32 64
+//gridd -208 32 64
+//gridd -224 32 48
+//gridd -208 32 48
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -208 32 64
+//gridd -192 32 64
+//gridd -208 32 48
+//gridd -192 32 48
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -192 32 64
+//gridd -176 32 64
+//gridd -192 32 48
+//gridd -176 32 48
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -176 32 64
+//gridd -160 32 64
+//gridd -176 32 48
+//gridd -160 32 48
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -160 32 64
+//gridd -144 32 64
+//gridd -160 32 48
+//gridd -144 32 48
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -144 32 64
+//gridd -128 32 64
+//gridd -144 32 48
+//gridd -128 32 48
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -128 32 64
+//gridd -112 32 64
+//gridd -128 32 48
+//gridd -112 32 48
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -112 32 64
+//gridd -96 32 64
+//gridd -112 32 48
+//gridd -96 32 48
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -96 32 64
+//gridd -80 32 64
+//gridd -96 32 48
+//gridd -80 32 48
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -80 32 64
+//gridd -64 32 64
+//gridd -80 32 48
+//gridd -64 32 48
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -64 32 64
+//gridd -48 32 64
+//gridd -64 32 48
+//gridd -48 32 48
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -48 32 64
+//gridd -32 32 64
+//gridd -48 32 48
+//gridd -32 32 48
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -32 32 64
+//gridd -16 32 64
+//gridd -32 32 48
+//gridd -16 32 48
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -16 32 64
+//gridd 0 32 64
+//gridd -16 32 48
+//gridd 0 32 48
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 0 32 64
+//gridd 16 32 64
+//gridd 0 32 48
+//gridd 16 32 48
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 16 32 64
+//gridd 32 32 64
+//gridd 16 32 48
+//gridd 32 32 48
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 32 32 64
+//gridd 48 32 64
+//gridd 32 32 48
+//gridd 48 32 48
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 48 32 64
+//gridd 64 32 64
+//gridd 48 32 48
+//gridd 64 32 48
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 64 32 64
+//gridd 80 32 64
+//gridd 64 32 48
+//gridd 80 32 48
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 80 32 64
+//gridd 96 32 64
+//gridd 80 32 48
+//gridd 96 32 48
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 96 32 64
+//gridd 112 16 64
+//gridd 96 32 48
+//gridd 112 16 48
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 112 16 64
+//gridd 128 16 64
+//gridd 112 16 48
+//gridd 128 16 48
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 128 16 64
+//gridd 144 16 64
+//gridd 128 16 48
+//gridd 144 16 48
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 144 16 64
+//gridd 160 16 64
+//gridd 144 16 48
+//gridd 160 16 48
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 160 16 64
+//gridd 176 16 64
+//gridd 160 16 48
+//gridd 176 16 48
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 176 16 64
+//gridd 192 16 64
+//gridd 176 16 48
+//gridd 192 16 48
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 192 16 64
+//gridd 208 16 64
+//gridd 192 16 48
+//gridd 208 16 48
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 208 16 64
+//gridd 224 16 64
+//gridd 208 16 48
+//gridd 224 16 48
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 224 16 64
+//gridd 240 16 64
+//gridd 224 16 48
+//gridd 240 16 48
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 240 16 64
+//gridd 256 16 64
+//gridd 240 16 48
+//gridd 256 16 48
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -256 16 48
+//gridd -240 16 48
+//gridd -256 16 32
+//gridd -240 16 32
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -240 16 48
+//gridd -224 32 48
+//gridd -240 16 32
+//gridd -224 32 32
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -224 32 48
+//gridd -208 32 48
+//gridd -224 32 32
+//gridd -208 32 32
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -208 32 48
+//gridd -192 32 48
+//gridd -208 32 32
+//gridd -192 32 32
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -192 32 48
+//gridd -176 32 48
+//gridd -192 32 32
+//gridd -176 32 32
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -176 32 48
+//gridd -160 32 48
+//gridd -176 32 32
+//gridd -160 32 32
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -160 32 48
+//gridd -144 32 48
+//gridd -160 32 32
+//gridd -144 32 32
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -144 32 48
+//gridd -128 32 48
+//gridd -144 32 32
+//gridd -128 32 32
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -128 32 48
+//gridd -112 32 48
+//gridd -128 32 32
+//gridd -112 32 32
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -112 32 48
+//gridd -96 32 48
+//gridd -112 32 32
+//gridd -96 32 32
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -96 32 48
+//gridd -80 32 48
+//gridd -96 32 32
+//gridd -80 32 32
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -80 32 48
+//gridd -64 32 48
+//gridd -80 32 32
+//gridd -64 32 32
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -64 32 48
+//gridd -48 32 48
+//gridd -64 32 32
+//gridd -48 32 32
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -48 32 48
+//gridd -32 32 48
+//gridd -48 32 32
+//gridd -32 32 32
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -32 32 48
+//gridd -16 32 48
+//gridd -32 32 32
+//gridd -16 32 32
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -16 32 48
+//gridd 0 32 48
+//gridd -16 32 32
+//gridd 0 32 32
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 0 32 48
+//gridd 16 32 48
+//gridd 0 32 32
+//gridd 16 32 32
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 16 32 48
+//gridd 32 32 48
+//gridd 16 32 32
+//gridd 32 32 32
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 32 32 48
+//gridd 48 32 48
+//gridd 32 32 32
+//gridd 48 32 32
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 48 32 48
+//gridd 64 32 48
+//gridd 48 32 32
+//gridd 64 32 32
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 64 32 48
+//gridd 80 32 48
+//gridd 64 32 32
+//gridd 80 32 32
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 80 32 48
+//gridd 96 32 48
+//gridd 80 32 32
+//gridd 96 32 32
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 96 32 48
+//gridd 112 16 48
+//gridd 96 32 32
+//gridd 112 16 32
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 112 16 48
+//gridd 128 16 48
+//gridd 112 16 32
+//gridd 128 16 32
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 128 16 48
+//gridd 144 16 48
+//gridd 128 16 32
+//gridd 144 16 32
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 144 16 48
+//gridd 160 16 48
+//gridd 144 16 32
+//gridd 160 16 32
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 160 16 48
+//gridd 176 16 48
+//gridd 160 16 32
+//gridd 176 16 32
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 176 16 48
+//gridd 192 16 48
+//gridd 176 16 32
+//gridd 192 16 32
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 192 16 48
+//gridd 208 16 48
+//gridd 192 16 32
+//gridd 208 16 32
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 208 16 48
+//gridd 224 16 48
+//gridd 208 16 32
+//gridd 224 16 32
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 224 16 48
+//gridd 240 16 48
+//gridd 224 16 32
+//gridd 240 16 32
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 240 16 48
+//gridd 256 16 48
+//gridd 240 16 32
+//gridd 256 16 32
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -256 16 32
+//gridd -240 16 32
+//gridd -256 16 16
+//gridd -240 16 16
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -240 16 32
+//gridd -224 32 32
+//gridd -240 16 16
+//gridd -224 32 16
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -224 32 32
+//gridd -208 32 32
+//gridd -224 32 16
+//gridd -208 32 16
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -208 32 32
+//gridd -192 32 32
+//gridd -208 32 16
+//gridd -192 32 16
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -192 32 32
+//gridd -176 32 32
+//gridd -192 32 16
+//gridd -176 32 16
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -176 32 32
+//gridd -160 32 32
+//gridd -176 32 16
+//gridd -160 32 16
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -160 32 32
+//gridd -144 32 32
+//gridd -160 32 16
+//gridd -144 32 16
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -144 32 32
+//gridd -128 32 32
+//gridd -144 32 16
+//gridd -128 32 16
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -128 32 32
+//gridd -112 32 32
+//gridd -128 32 16
+//gridd -112 32 16
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -112 32 32
+//gridd -96 32 32
+//gridd -112 32 16
+//gridd -96 32 16
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -96 32 32
+//gridd -80 32 32
+//gridd -96 32 16
+//gridd -80 32 16
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -80 32 32
+//gridd -64 32 32
+//gridd -80 32 16
+//gridd -64 32 16
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -64 32 32
+//gridd -48 32 32
+//gridd -64 32 16
+//gridd -48 32 16
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -48 32 32
+//gridd -32 32 32
+//gridd -48 32 16
+//gridd -32 32 16
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -32 32 32
+//gridd -16 32 32
+//gridd -32 32 16
+//gridd -16 32 16
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -16 32 32
+//gridd 0 32 32
+//gridd -16 32 16
+//gridd 0 32 16
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 0 32 32
+//gridd 16 32 32
+//gridd 0 32 16
+//gridd 16 32 16
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 16 32 32
+//gridd 32 32 32
+//gridd 16 32 16
+//gridd 32 32 16
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 32 32 32
+//gridd 48 32 32
+//gridd 32 32 16
+//gridd 48 32 16
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 48 32 32
+//gridd 64 32 32
+//gridd 48 32 16
+//gridd 64 32 16
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 64 32 32
+//gridd 80 32 32
+//gridd 64 32 16
+//gridd 80 32 16
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 80 32 32
+//gridd 96 32 32
+//gridd 80 32 16
+//gridd 96 32 16
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 96 32 32
+//gridd 112 16 32
+//gridd 96 32 16
+//gridd 112 16 16
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 112 16 32
+//gridd 128 16 32
+//gridd 112 16 16
+//gridd 128 16 16
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 128 16 32
+//gridd 144 16 32
+//gridd 128 16 16
+//gridd 144 16 16
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 144 16 32
+//gridd 160 16 32
+//gridd 144 16 16
+//gridd 160 16 16
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 160 16 32
+//gridd 176 16 32
+//gridd 160 16 16
+//gridd 176 16 16
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 176 16 32
+//gridd 192 16 32
+//gridd 176 16 16
+//gridd 192 16 16
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 192 16 32
+//gridd 208 16 32
+//gridd 192 16 16
+//gridd 208 16 16
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 208 16 32
+//gridd 224 16 32
+//gridd 208 16 16
+//gridd 224 16 16
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 224 16 32
+//gridd 240 16 32
+//gridd 224 16 16
+//gridd 240 16 16
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 240 16 32
+//gridd 256 16 32
+//gridd 240 16 16
+//gridd 256 16 16
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -256 16 16
+//gridd -240 16 16
+//gridd -256 16 0
+//gridd -240 16 0
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -240 16 16
+//gridd -224 32 16
+//gridd -240 16 0
+//gridd -224 32 0
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -224 32 16
+//gridd -208 32 16
+//gridd -224 32 0
+//gridd -208 32 0
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -208 32 16
+//gridd -192 32 16
+//gridd -208 32 0
+//gridd -192 32 0
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -192 32 16
+//gridd -176 32 16
+//gridd -192 32 0
+//gridd -176 32 0
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -176 32 16
+//gridd -160 32 16
+//gridd -176 32 0
+//gridd -160 32 0
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -160 32 16
+//gridd -144 32 16
+//gridd -160 32 0
+//gridd -144 32 0
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -144 32 16
+//gridd -128 32 16
+//gridd -144 32 0
+//gridd -128 32 0
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -128 32 16
+//gridd -112 32 16
+//gridd -128 32 0
+//gridd -112 32 0
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -112 32 16
+//gridd -96 32 16
+//gridd -112 32 0
+//gridd -96 32 0
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -96 32 16
+//gridd -80 32 16
+//gridd -96 32 0
+//gridd -80 32 0
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -80 32 16
+//gridd -64 32 16
+//gridd -80 32 0
+//gridd -64 32 0
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -64 32 16
+//gridd -48 32 16
+//gridd -64 32 0
+//gridd -48 32 0
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -48 32 16
+//gridd -32 32 16
+//gridd -48 32 0
+//gridd -32 32 0
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -32 32 16
+//gridd -16 32 16
+//gridd -32 32 0
+//gridd -16 32 0
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -16 32 16
+//gridd 0 32 16
+//gridd -16 32 0
+//gridd 0 32 0
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 0 32 16
+//gridd 16 32 16
+//gridd 0 32 0
+//gridd 16 32 0
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 16 32 16
+//gridd 32 32 16
+//gridd 16 32 0
+//gridd 32 32 0
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 32 32 16
+//gridd 48 32 16
+//gridd 32 32 0
+//gridd 48 32 0
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 48 32 16
+//gridd 64 32 16
+//gridd 48 32 0
+//gridd 64 32 0
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 64 32 16
+//gridd 80 32 16
+//gridd 64 32 0
+//gridd 80 32 0
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 80 32 16
+//gridd 96 32 16
+//gridd 80 32 0
+//gridd 96 32 0
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 96 32 16
+//gridd 112 16 16
+//gridd 96 32 0
+//gridd 112 16 0
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 112 16 16
+//gridd 128 16 16
+//gridd 112 16 0
+//gridd 128 16 0
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 128 16 16
+//gridd 144 16 16
+//gridd 128 16 0
+//gridd 144 16 0
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 144 16 16
+//gridd 160 16 16
+//gridd 144 16 0
+//gridd 160 16 0
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 160 16 16
+//gridd 176 16 16
+//gridd 160 16 0
+//gridd 176 16 0
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 176 16 16
+//gridd 192 16 16
+//gridd 176 16 0
+//gridd 192 16 0
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 192 16 16
+//gridd 208 16 16
+//gridd 192 16 0
+//gridd 208 16 0
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 208 16 16
+//gridd 224 16 16
+//gridd 208 16 0
+//gridd 224 16 0
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 224 16 16
+//gridd 240 16 16
+//gridd 224 16 0
+//gridd 240 16 0
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 240 16 16
+//gridd 256 16 16
+//gridd 240 16 0
+//gridd 256 16 0
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -256 16 0
+//gridd -240 16 0
+//gridd -256 16 -16
+//gridd -240 16 -16
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -240 16 0
+//gridd -224 32 0
+//gridd -240 16 -16
+//gridd -224 32 -16
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -224 32 0
+//gridd -208 32 0
+//gridd -224 32 -16
+//gridd -208 32 -16
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -208 32 0
+//gridd -192 32 0
+//gridd -208 32 -16
+//gridd -192 32 -16
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -192 32 0
+//gridd -176 32 0
+//gridd -192 32 -16
+//gridd -176 32 -16
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -176 32 0
+//gridd -160 32 0
+//gridd -176 32 -16
+//gridd -160 32 -16
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -160 32 0
+//gridd -144 32 0
+//gridd -160 32 -16
+//gridd -144 32 -16
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -144 32 0
+//gridd -128 32 0
+//gridd -144 32 -16
+//gridd -128 32 -16
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -128 32 0
+//gridd -112 32 0
+//gridd -128 32 -16
+//gridd -112 32 -16
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -112 32 0
+//gridd -96 32 0
+//gridd -112 32 -16
+//gridd -96 32 -16
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -96 32 0
+//gridd -80 32 0
+//gridd -96 32 -16
+//gridd -80 32 -16
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -80 32 0
+//gridd -64 32 0
+//gridd -80 32 -16
+//gridd -64 32 -16
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -64 32 0
+//gridd -48 32 0
+//gridd -64 32 -16
+//gridd -48 32 -16
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -48 32 0
+//gridd -32 32 0
+//gridd -48 32 -16
+//gridd -32 32 -16
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -32 32 0
+//gridd -16 32 0
+//gridd -32 32 -16
+//gridd -16 32 -16
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -16 32 0
+//gridd 0 32 0
+//gridd -16 32 -16
+//gridd 0 32 -16
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 0 32 0
+//gridd 16 32 0
+//gridd 0 32 -16
+//gridd 16 32 -16
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 16 32 0
+//gridd 32 32 0
+//gridd 16 32 -16
+//gridd 32 32 -16
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 32 32 0
+//gridd 48 32 0
+//gridd 32 32 -16
+//gridd 48 32 -16
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 48 32 0
+//gridd 64 32 0
+//gridd 48 32 -16
+//gridd 64 32 -16
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 64 32 0
+//gridd 80 32 0
+//gridd 64 32 -16
+//gridd 80 32 -16
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 80 32 0
+//gridd 96 32 0
+//gridd 80 32 -16
+//gridd 96 32 -16
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 96 32 0
+//gridd 112 16 0
+//gridd 96 32 -16
+//gridd 112 16 -16
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 112 16 0
+//gridd 128 16 0
+//gridd 112 16 -16
+//gridd 128 16 -16
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 128 16 0
+//gridd 144 16 0
+//gridd 128 16 -16
+//gridd 144 16 -16
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 144 16 0
+//gridd 160 16 0
+//gridd 144 16 -16
+//gridd 160 16 -16
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 160 16 0
+//gridd 176 16 0
+//gridd 160 16 -16
+//gridd 176 16 -16
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 176 16 0
+//gridd 192 16 0
+//gridd 176 16 -16
+//gridd 192 0 -16
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 192 16 0
+//gridd 208 16 0
+//gridd 192 0 -16
+//gridd 208 0 -16
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 208 16 0
+//gridd 224 16 0
+//gridd 208 0 -16
+//gridd 224 0 -16
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 224 16 0
+//gridd 240 16 0
+//gridd 224 0 -16
+//gridd 240 0 -16
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 240 16 0
+//gridd 256 16 0
+//gridd 240 0 -16
+//gridd 256 0 -16
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -256 16 -16
+//gridd -240 16 -16
+//gridd -256 16 -32
+//gridd -240 16 -32
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -240 16 -16
+//gridd -224 32 -16
+//gridd -240 16 -32
+//gridd -224 32 -32
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -224 32 -16
+//gridd -208 32 -16
+//gridd -224 32 -32
+//gridd -208 32 -32
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -208 32 -16
+//gridd -192 32 -16
+//gridd -208 32 -32
+//gridd -192 32 -32
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -192 32 -16
+//gridd -176 32 -16
+//gridd -192 32 -32
+//gridd -176 32 -32
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -176 32 -16
+//gridd -160 32 -16
+//gridd -176 32 -32
+//gridd -160 32 -32
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -160 32 -16
+//gridd -144 32 -16
+//gridd -160 32 -32
+//gridd -144 32 -32
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -144 32 -16
+//gridd -128 32 -16
+//gridd -144 32 -32
+//gridd -128 32 -32
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -128 32 -16
+//gridd -112 32 -16
+//gridd -128 32 -32
+//gridd -112 32 -32
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -112 32 -16
+//gridd -96 32 -16
+//gridd -112 32 -32
+//gridd -96 32 -32
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -96 32 -16
+//gridd -80 32 -16
+//gridd -96 32 -32
+//gridd -80 32 -32
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -80 32 -16
+//gridd -64 32 -16
+//gridd -80 32 -32
+//gridd -64 32 -32
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -64 32 -16
+//gridd -48 32 -16
+//gridd -64 32 -32
+//gridd -48 32 -32
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -48 32 -16
+//gridd -32 32 -16
+//gridd -48 32 -32
+//gridd -32 32 -32
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -32 32 -16
+//gridd -16 32 -16
+//gridd -32 32 -32
+//gridd -16 32 -32
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -16 32 -16
+//gridd 0 32 -16
+//gridd -16 32 -32
+//gridd 0 32 -32
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 0 32 -16
+//gridd 16 32 -16
+//gridd 0 32 -32
+//gridd 16 32 -32
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 16 32 -16
+//gridd 32 32 -16
+//gridd 16 32 -32
+//gridd 32 32 -32
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 32 32 -16
+//gridd 48 32 -16
+//gridd 32 32 -32
+//gridd 48 32 -32
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 48 32 -16
+//gridd 64 32 -16
+//gridd 48 32 -32
+//gridd 64 32 -32
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 64 32 -16
+//gridd 80 32 -16
+//gridd 64 32 -32
+//gridd 80 32 -32
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 80 32 -16
+//gridd 96 32 -16
+//gridd 80 32 -32
+//gridd 96 32 -32
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 96 32 -16
+//gridd 112 16 -16
+//gridd 96 32 -32
+//gridd 112 16 -32
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 112 16 -16
+//gridd 128 16 -16
+//gridd 112 16 -32
+//gridd 128 16 -32
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 128 16 -16
+//gridd 144 16 -16
+//gridd 128 16 -32
+//gridd 144 16 -32
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 144 16 -16
+//gridd 160 16 -16
+//gridd 144 16 -32
+//gridd 160 16 -32
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 160 16 -16
+//gridd 176 16 -16
+//gridd 160 16 -32
+//gridd 176 16 -32
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 176 16 -16
+//gridd 192 0 -16
+//gridd 176 16 -32
+//gridd 192 0 -32
+//gareal 136 4278255360 25 »•l
+//gridd 192 0 -16
+//gridd 208 0 -16
+//gridd 192 0 -32
+//gridd 208 0 -32
+//gareal 136 4278255360 25 »•l
+//gridd 208 0 -16
+//gridd 224 0 -16
+//gridd 208 0 -32
+//gridd 224 0 -32
+//gareal 136 4278255360 25 »•l
+//gridd 224 0 -16
+//gridd 240 0 -16
+//gridd 224 0 -32
+//gridd 240 0 -32
+//gareal 136 4278255360 25 »•l
+//gridd 240 0 -16
+//gridd 256 0 -16
+//gridd 240 0 -32
+//gridd 256 0 -32
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -256 16 -32
+//gridd -240 16 -32
+//gridd -256 16 -48
+//gridd -240 16 -48
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -240 16 -32
+//gridd -224 32 -32
+//gridd -240 16 -48
+//gridd -224 32 -48
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -224 32 -32
+//gridd -208 32 -32
+//gridd -224 32 -48
+//gridd -208 32 -48
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -208 32 -32
+//gridd -192 32 -32
+//gridd -208 32 -48
+//gridd -192 32 -48
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -192 32 -32
+//gridd -176 32 -32
+//gridd -192 32 -48
+//gridd -176 32 -48
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -176 32 -32
+//gridd -160 32 -32
+//gridd -176 32 -48
+//gridd -160 32 -48
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -160 32 -32
+//gridd -144 32 -32
+//gridd -160 32 -48
+//gridd -144 32 -48
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -144 32 -32
+//gridd -128 32 -32
+//gridd -144 32 -48
+//gridd -128 32 -48
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -128 32 -32
+//gridd -112 32 -32
+//gridd -128 32 -48
+//gridd -112 32 -48
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -112 32 -32
+//gridd -96 32 -32
+//gridd -112 32 -48
+//gridd -96 32 -48
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -96 32 -32
+//gridd -80 32 -32
+//gridd -96 32 -48
+//gridd -80 32 -48
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -80 32 -32
+//gridd -64 32 -32
+//gridd -80 32 -48
+//gridd -64 32 -48
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -64 32 -32
+//gridd -48 32 -32
+//gridd -64 32 -48
+//gridd -48 32 -48
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -48 32 -32
+//gridd -32 32 -32
+//gridd -48 32 -48
+//gridd -32 32 -48
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -32 32 -32
+//gridd -16 32 -32
+//gridd -32 32 -48
+//gridd -16 32 -48
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -16 32 -32
+//gridd 0 32 -32
+//gridd -16 32 -48
+//gridd 0 32 -48
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 0 32 -32
+//gridd 16 32 -32
+//gridd 0 32 -48
+//gridd 16 32 -48
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 16 32 -32
+//gridd 32 32 -32
+//gridd 16 32 -48
+//gridd 32 32 -48
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 32 32 -32
+//gridd 48 32 -32
+//gridd 32 32 -48
+//gridd 48 32 -48
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 48 32 -32
+//gridd 64 32 -32
+//gridd 48 32 -48
+//gridd 64 32 -48
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 64 32 -32
+//gridd 80 32 -32
+//gridd 64 32 -48
+//gridd 80 32 -48
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 80 32 -32
+//gridd 96 32 -32
+//gridd 80 32 -48
+//gridd 96 32 -48
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 96 32 -32
+//gridd 112 16 -32
+//gridd 96 32 -48
+//gridd 112 16 -48
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 112 16 -32
+//gridd 128 16 -32
+//gridd 112 16 -48
+//gridd 128 16 -48
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 128 16 -32
+//gridd 144 16 -32
+//gridd 128 16 -48
+//gridd 144 16 -48
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 144 16 -32
+//gridd 160 16 -32
+//gridd 144 16 -48
+//gridd 160 16 -48
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 160 16 -32
+//gridd 176 16 -32
+//gridd 160 16 -48
+//gridd 176 16 -48
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 176 16 -32
+//gridd 192 0 -32
+//gridd 176 16 -48
+//gridd 192 0 -48
+//gareal 136 4278255360 25 »•l
+//gridd 192 0 -32
+//gridd 208 0 -32
+//gridd 192 0 -48
+//gridd 208 0 -48
+//gareal 136 4278255360 25 »•l
+//gridd 208 0 -32
+//gridd 224 0 -32
+//gridd 208 0 -48
+//gridd 224 0 -48
+//gareal 136 4278255360 25 »•l
+//gridd 224 0 -32
+//gridd 240 0 -32
+//gridd 224 0 -48
+//gridd 240 0 -48
+//gareal 136 4278255360 25 »•l
+//gridd 240 0 -32
+//gridd 256 0 -32
+//gridd 240 0 -48
+//gridd 256 0 -48
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -256 16 -48
+//gridd -240 16 -48
+//gridd -256 16 -64
+//gridd -240 16 -64
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -240 16 -48
+//gridd -224 32 -48
+//gridd -240 16 -64
+//gridd -224 32 -64
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -224 32 -48
+//gridd -208 32 -48
+//gridd -224 32 -64
+//gridd -208 32 -64
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -208 32 -48
+//gridd -192 32 -48
+//gridd -208 32 -64
+//gridd -192 32 -64
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -192 32 -48
+//gridd -176 32 -48
+//gridd -192 32 -64
+//gridd -176 32 -64
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -176 32 -48
+//gridd -160 32 -48
+//gridd -176 32 -64
+//gridd -160 32 -64
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -160 32 -48
+//gridd -144 32 -48
+//gridd -160 32 -64
+//gridd -144 32 -64
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -144 32 -48
+//gridd -128 32 -48
+//gridd -144 32 -64
+//gridd -128 32 -64
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -128 32 -48
+//gridd -112 32 -48
+//gridd -128 32 -64
+//gridd -112 32 -64
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -112 32 -48
+//gridd -96 32 -48
+//gridd -112 32 -64
+//gridd -96 32 -64
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -96 32 -48
+//gridd -80 32 -48
+//gridd -96 32 -64
+//gridd -80 32 -64
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -80 32 -48
+//gridd -64 32 -48
+//gridd -80 32 -64
+//gridd -64 32 -64
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -64 32 -48
+//gridd -48 32 -48
+//gridd -64 32 -64
+//gridd -48 32 -64
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -48 32 -48
+//gridd -32 32 -48
+//gridd -48 32 -64
+//gridd -32 32 -64
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -32 32 -48
+//gridd -16 32 -48
+//gridd -32 32 -64
+//gridd -16 32 -64
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -16 32 -48
+//gridd 0 32 -48
+//gridd -16 32 -64
+//gridd 0 32 -64
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 0 32 -48
+//gridd 16 32 -48
+//gridd 0 32 -64
+//gridd 16 32 -64
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 16 32 -48
+//gridd 32 32 -48
+//gridd 16 32 -64
+//gridd 32 32 -64
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 32 32 -48
+//gridd 48 32 -48
+//gridd 32 32 -64
+//gridd 48 32 -64
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 48 32 -48
+//gridd 64 32 -48
+//gridd 48 32 -64
+//gridd 64 32 -64
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 64 32 -48
+//gridd 80 32 -48
+//gridd 64 32 -64
+//gridd 80 32 -64
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 80 32 -48
+//gridd 96 32 -48
+//gridd 80 32 -64
+//gridd 96 32 -64
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 96 32 -48
+//gridd 112 16 -48
+//gridd 96 32 -64
+//gridd 112 16 -64
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 112 16 -48
+//gridd 128 16 -48
+//gridd 112 16 -64
+//gridd 128 16 -64
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 128 16 -48
+//gridd 144 16 -48
+//gridd 128 16 -64
+//gridd 144 16 -64
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 144 16 -48
+//gridd 160 16 -48
+//gridd 144 16 -64
+//gridd 160 16 -64
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 160 16 -48
+//gridd 176 16 -48
+//gridd 160 16 -64
+//gridd 176 16 -64
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 176 16 -48
+//gridd 192 0 -48
+//gridd 176 16 -64
+//gridd 192 0 -64
+//gareal 136 4278255360 25 »•l
+//gridd 192 0 -48
+//gridd 208 0 -48
+//gridd 192 0 -64
+//gridd 208 0 -64
+//gareal 136 4278255360 25 »•l
+//gridd 208 0 -48
+//gridd 224 0 -48
+//gridd 208 0 -64
+//gridd 224 0 -64
+//gareal 136 4278255360 25 »•l
+//gridd 224 0 -48
+//gridd 240 0 -48
+//gridd 224 0 -64
+//gridd 240 0 -64
+//gareal 136 4278255360 25 »•l
+//gridd 240 0 -48
+//gridd 256 0 -48
+//gridd 240 0 -64
+//gridd 256 0 -64
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -256 16 -64
+//gridd -240 16 -64
+//gridd -256 16 -80
+//gridd -240 16 -80
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -240 16 -64
+//gridd -224 32 -64
+//gridd -240 16 -80
+//gridd -224 32 -80
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -224 32 -64
+//gridd -208 32 -64
+//gridd -224 32 -80
+//gridd -208 32 -80
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -208 32 -64
+//gridd -192 32 -64
+//gridd -208 32 -80
+//gridd -192 32 -80
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -192 32 -64
+//gridd -176 32 -64
+//gridd -192 32 -80
+//gridd -176 32 -80
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -176 32 -64
+//gridd -160 32 -64
+//gridd -176 32 -80
+//gridd -160 32 -80
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -160 32 -64
+//gridd -144 32 -64
+//gridd -160 32 -80
+//gridd -144 32 -80
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -144 32 -64
+//gridd -128 32 -64
+//gridd -144 32 -80
+//gridd -128 32 -80
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -128 32 -64
+//gridd -112 32 -64
+//gridd -128 32 -80
+//gridd -112 32 -80
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -112 32 -64
+//gridd -96 32 -64
+//gridd -112 32 -80
+//gridd -96 32 -80
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -96 32 -64
+//gridd -80 32 -64
+//gridd -96 32 -80
+//gridd -80 32 -80
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -80 32 -64
+//gridd -64 32 -64
+//gridd -80 32 -80
+//gridd -64 32 -80
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -64 32 -64
+//gridd -48 32 -64
+//gridd -64 32 -80
+//gridd -48 16 -80
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -48 32 -64
+//gridd -32 32 -64
+//gridd -48 16 -80
+//gridd -32 16 -80
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -32 32 -64
+//gridd -16 32 -64
+//gridd -32 16 -80
+//gridd -16 16 -80
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -16 32 -64
+//gridd 0 32 -64
+//gridd -16 16 -80
+//gridd 0 16 -80
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 0 32 -64
+//gridd 16 32 -64
+//gridd 0 16 -80
+//gridd 16 16 -80
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 16 32 -64
+//gridd 32 32 -64
+//gridd 16 16 -80
+//gridd 32 16 -80
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 32 32 -64
+//gridd 48 32 -64
+//gridd 32 16 -80
+//gridd 48 16 -80
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 48 32 -64
+//gridd 64 32 -64
+//gridd 48 16 -80
+//gridd 64 16 -80
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 64 32 -64
+//gridd 80 32 -64
+//gridd 64 16 -80
+//gridd 80 16 -80
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 80 32 -64
+//gridd 96 32 -64
+//gridd 80 16 -80
+//gridd 96 16 -80
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 96 32 -64
+//gridd 112 16 -64
+//gridd 96 16 -80
+//gridd 112 16 -80
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 112 16 -64
+//gridd 128 16 -64
+//gridd 112 16 -80
+//gridd 128 16 -80
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 128 16 -64
+//gridd 144 16 -64
+//gridd 128 16 -80
+//gridd 144 16 -80
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 144 16 -64
+//gridd 160 16 -64
+//gridd 144 16 -80
+//gridd 160 16 -80
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd 160 16 -64
+//gridd 176 16 -64
+//gridd 160 16 -80
+//gridd 176 16 -80
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 176 16 -64
+//gridd 192 0 -64
+//gridd 176 16 -80
+//gridd 192 0 -80
+//gareal 136 4278255360 25 »•l
+//gridd 192 0 -64
+//gridd 208 0 -64
+//gridd 192 0 -80
+//gridd 208 0 -80
+//gareal 136 4278255360 25 »•l
+//gridd 208 0 -64
+//gridd 224 0 -64
+//gridd 208 0 -80
+//gridd 224 0 -80
+//gareal 136 4278255360 25 »•l
+//gridd 224 0 -64
+//gridd 240 0 -64
+//gridd 224 0 -80
+//gridd 240 0 -80
+//gareal 136 4278255360 25 »•l
+//gridd 240 0 -64
+//gridd 256 0 -64
+//gridd 240 0 -80
+//gridd 256 0 -80
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -256 16 -80
+//gridd -240 16 -80
+//gridd -256 16 -96
+//gridd -240 16 -96
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -240 16 -80
+//gridd -224 32 -80
+//gridd -240 16 -96
+//gridd -224 32 -96
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -224 32 -80
+//gridd -208 32 -80
+//gridd -224 32 -96
+//gridd -208 32 -96
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -208 32 -80
+//gridd -192 32 -80
+//gridd -208 32 -96
+//gridd -192 32 -96
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -192 32 -80
+//gridd -176 32 -80
+//gridd -192 32 -96
+//gridd -176 32 -96
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -176 32 -80
+//gridd -160 32 -80
+//gridd -176 32 -96
+//gridd -160 32 -96
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -160 32 -80
+//gridd -144 32 -80
+//gridd -160 32 -96
+//gridd -144 32 -96
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -144 32 -80
+//gridd -128 32 -80
+//gridd -144 32 -96
+//gridd -128 32 -96
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -128 32 -80
+//gridd -112 32 -80
+//gridd -128 32 -96
+//gridd -112 32 -96
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -112 32 -80
+//gridd -96 32 -80
+//gridd -112 32 -96
+//gridd -96 32 -96
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -96 32 -80
+//gridd -80 32 -80
+//gridd -96 32 -96
+//gridd -80 32 -96
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -80 32 -80
+//gridd -64 32 -80
+//gridd -80 32 -96
+//gridd -64 32 -96
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -64 32 -80
+//gridd -48 16 -80
+//gridd -64 32 -96
+//gridd -48 16 -96
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -48 16 -80
+//gridd -32 16 -80
+//gridd -48 16 -96
+//gridd -32 0 -96
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -32 16 -80
+//gridd -16 16 -80
+//gridd -32 0 -96
+//gridd -16 0 -96
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -16 16 -80
+//gridd 0 16 -80
+//gridd -16 0 -96
+//gridd 0 0 -96
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 0 16 -80
+//gridd 16 16 -80
+//gridd 0 0 -96
+//gridd 16 0 -96
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 16 16 -80
+//gridd 32 16 -80
+//gridd 16 0 -96
+//gridd 32 0 -96
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 32 16 -80
+//gridd 48 16 -80
+//gridd 32 0 -96
+//gridd 48 0 -96
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 48 16 -80
+//gridd 64 16 -80
+//gridd 48 0 -96
+//gridd 64 0 -96
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 64 16 -80
+//gridd 80 16 -80
+//gridd 64 0 -96
+//gridd 80 0 -96
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 80 16 -80
+//gridd 96 16 -80
+//gridd 80 0 -96
+//gridd 96 0 -96
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 96 16 -80
+//gridd 112 16 -80
+//gridd 96 0 -96
+//gridd 112 0 -96
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 112 16 -80
+//gridd 128 16 -80
+//gridd 112 0 -96
+//gridd 128 0 -96
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 128 16 -80
+//gridd 144 16 -80
+//gridd 128 0 -96
+//gridd 144 0 -96
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 144 16 -80
+//gridd 160 16 -80
+//gridd 144 0 -96
+//gridd 160 0 -96
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 160 16 -80
+//gridd 176 16 -80
+//gridd 160 0 -96
+//gridd 176 0 -96
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd 176 16 -80
+//gridd 192 0 -80
+//gridd 176 0 -96
+//gridd 192 0 -96
+//gareal 136 4278255360 25 »•l
+//gridd 192 0 -80
+//gridd 208 0 -80
+//gridd 192 0 -96
+//gridd 208 0 -96
+//gareal 136 4278255360 25 »•l
+//gridd 208 0 -80
+//gridd 224 0 -80
+//gridd 208 0 -96
+//gridd 224 0 -96
+//gareal 136 4278255360 25 »•l
+//gridd 224 0 -80
+//gridd 240 0 -80
+//gridd 224 0 -96
+//gridd 240 0 -96
+//gareal 136 4278255360 25 »•l
+//gridd 240 0 -80
+//gridd 256 0 -80
+//gridd 240 0 -96
+//gridd 256 0 -96
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -256 16 -96
+//gridd -240 16 -96
+//gridd -256 16 -112
+//gridd -240 16 -112
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -240 16 -96
+//gridd -224 32 -96
+//gridd -240 16 -112
+//gridd -224 32 -112
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -224 32 -96
+//gridd -208 32 -96
+//gridd -224 32 -112
+//gridd -208 32 -112
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -208 32 -96
+//gridd -192 32 -96
+//gridd -208 32 -112
+//gridd -192 32 -112
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -192 32 -96
+//gridd -176 32 -96
+//gridd -192 32 -112
+//gridd -176 32 -112
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -176 32 -96
+//gridd -160 32 -96
+//gridd -176 32 -112
+//gridd -160 32 -112
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -160 32 -96
+//gridd -144 32 -96
+//gridd -160 32 -112
+//gridd -144 32 -112
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -144 32 -96
+//gridd -128 32 -96
+//gridd -144 32 -112
+//gridd -128 32 -112
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -128 32 -96
+//gridd -112 32 -96
+//gridd -128 32 -112
+//gridd -112 32 -112
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -112 32 -96
+//gridd -96 32 -96
+//gridd -112 32 -112
+//gridd -96 32 -112
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -96 32 -96
+//gridd -80 32 -96
+//gridd -96 32 -112
+//gridd -80 32 -112
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -80 32 -96
+//gridd -64 32 -96
+//gridd -80 32 -112
+//gridd -64 32 -112
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -64 32 -96
+//gridd -48 16 -96
+//gridd -64 32 -112
+//gridd -48 16 -112
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -48 16 -96
+//gridd -32 0 -96
+//gridd -48 16 -112
+//gridd -32 0 -112
+//gareal 136 4278255360 25 »•l
+//gridd -32 0 -96
+//gridd -16 0 -96
+//gridd -32 0 -112
+//gridd -16 0 -112
+//gareal 136 4278255360 25 »•l
+//gridd -16 0 -96
+//gridd 0 0 -96
+//gridd -16 0 -112
+//gridd 0 0 -112
+//gareal 136 4278255360 25 »•l
+//gridd 0 0 -96
+//gridd 16 0 -96
+//gridd 0 0 -112
+//gridd 16 0 -112
+//gareal 136 4278255360 25 »•l
+//gridd 16 0 -96
+//gridd 32 0 -96
+//gridd 16 0 -112
+//gridd 32 0 -112
+//gareal 136 4278255360 25 »•l
+//gridd 32 0 -96
+//gridd 48 0 -96
+//gridd 32 0 -112
+//gridd 48 0 -112
+//gareal 136 4278255360 25 »•l
+//gridd 48 0 -96
+//gridd 64 0 -96
+//gridd 48 0 -112
+//gridd 64 0 -112
+//gareal 136 4278255360 25 »•l
+//gridd 64 0 -96
+//gridd 80 0 -96
+//gridd 64 0 -112
+//gridd 80 0 -112
+//gareal 136 4278255360 25 »•l
+//gridd 80 0 -96
+//gridd 96 0 -96
+//gridd 80 0 -112
+//gridd 96 0 -112
+//gareal 136 4278255360 25 »•l
+//gridd 96 0 -96
+//gridd 112 0 -96
+//gridd 96 0 -112
+//gridd 112 0 -112
+//gareal 136 4278255360 25 »•l
+//gridd 112 0 -96
+//gridd 128 0 -96
+//gridd 112 0 -112
+//gridd 128 0 -112
+//gareal 136 4278255360 25 »•l
+//gridd 128 0 -96
+//gridd 144 0 -96
+//gridd 128 0 -112
+//gridd 144 0 -112
+//gareal 136 4278255360 25 »•l
+//gridd 144 0 -96
+//gridd 160 0 -96
+//gridd 144 0 -112
+//gridd 160 0 -112
+//gareal 136 4278255360 25 »•l
+//gridd 160 0 -96
+//gridd 176 0 -96
+//gridd 160 0 -112
+//gridd 176 0 -112
+//gareal 136 4278255360 25 »•l
+//gridd 176 0 -96
+//gridd 192 0 -96
+//gridd 176 0 -112
+//gridd 192 0 -112
+//gareal 136 4278255360 25 »•l
+//gridd 192 0 -96
+//gridd 208 0 -96
+//gridd 192 0 -112
+//gridd 208 0 -112
+//gareal 136 4278255360 25 »•l
+//gridd 208 0 -96
+//gridd 224 0 -96
+//gridd 208 0 -112
+//gridd 224 0 -112
+//gareal 136 4278255360 25 »•l
+//gridd 224 0 -96
+//gridd 240 0 -96
+//gridd 224 0 -112
+//gridd 240 0 -112
+//gareal 136 4278255360 25 »•l
+//gridd 240 0 -96
+//gridd 256 0 -96
+//gridd 240 0 -112
+//gridd 256 0 -112
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -256 16 -112
+//gridd -240 16 -112
+//gridd -256 16 -128
+//gridd -240 16 -128
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -240 16 -112
+//gridd -224 32 -112
+//gridd -240 16 -128
+//gridd -224 32 -128
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -224 32 -112
+//gridd -208 32 -112
+//gridd -224 32 -128
+//gridd -208 32 -128
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -208 32 -112
+//gridd -192 32 -112
+//gridd -208 32 -128
+//gridd -192 32 -128
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -192 32 -112
+//gridd -176 32 -112
+//gridd -192 32 -128
+//gridd -176 32 -128
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -176 32 -112
+//gridd -160 32 -112
+//gridd -176 32 -128
+//gridd -160 32 -128
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -160 32 -112
+//gridd -144 32 -112
+//gridd -160 32 -128
+//gridd -144 32 -128
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -144 32 -112
+//gridd -128 32 -112
+//gridd -144 32 -128
+//gridd -128 32 -128
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -128 32 -112
+//gridd -112 32 -112
+//gridd -128 32 -128
+//gridd -112 32 -128
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -112 32 -112
+//gridd -96 32 -112
+//gridd -112 32 -128
+//gridd -96 32 -128
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -96 32 -112
+//gridd -80 32 -112
+//gridd -96 32 -128
+//gridd -80 32 -128
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -80 32 -112
+//gridd -64 32 -112
+//gridd -80 32 -128
+//gridd -64 32 -128
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -64 32 -112
+//gridd -48 16 -112
+//gridd -64 32 -128
+//gridd -48 16 -128
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -48 16 -112
+//gridd -32 0 -112
+//gridd -48 16 -128
+//gridd -32 0 -128
+//gareal 136 4278255360 25 »•l
+//gridd -32 0 -112
+//gridd -16 0 -112
+//gridd -32 0 -128
+//gridd -16 0 -128
+//gareal 136 4278255360 25 »•l
+//gridd -16 0 -112
+//gridd 0 0 -112
+//gridd -16 0 -128
+//gridd 0 0 -128
+//gareal 136 4278255360 25 »•l
+//gridd 0 0 -112
+//gridd 16 0 -112
+//gridd 0 0 -128
+//gridd 16 0 -128
+//gareal 136 4278255360 25 »•l
+//gridd 16 0 -112
+//gridd 32 0 -112
+//gridd 16 0 -128
+//gridd 32 0 -128
+//gareal 136 4278255360 25 »•l
+//gridd 32 0 -112
+//gridd 48 0 -112
+//gridd 32 0 -128
+//gridd 48 0 -128
+//gareal 136 4278255360 25 »•l
+//gridd 48 0 -112
+//gridd 64 0 -112
+//gridd 48 0 -128
+//gridd 64 0 -128
+//gareal 136 4278255360 25 »•l
+//gridd 64 0 -112
+//gridd 80 0 -112
+//gridd 64 0 -128
+//gridd 80 0 -128
+//gareal 136 4278255360 25 »•l
+//gridd 80 0 -112
+//gridd 96 0 -112
+//gridd 80 0 -128
+//gridd 96 0 -128
+//gareal 136 4278255360 25 »•l
+//gridd 96 0 -112
+//gridd 112 0 -112
+//gridd 96 0 -128
+//gridd 112 0 -128
+//gareal 136 4278255360 25 »•l
+//gridd 112 0 -112
+//gridd 128 0 -112
+//gridd 112 0 -128
+//gridd 128 0 -128
+//gareal 136 4278255360 25 »•l
+//gridd 128 0 -112
+//gridd 144 0 -112
+//gridd 128 0 -128
+//gridd 144 0 -128
+//gareal 136 4278255360 25 »•l
+//gridd 144 0 -112
+//gridd 160 0 -112
+//gridd 144 0 -128
+//gridd 160 0 -128
+//gareal 136 4278255360 25 »•l
+//gridd 160 0 -112
+//gridd 176 0 -112
+//gridd 160 0 -128
+//gridd 176 0 -128
+//gareal 136 4278255360 25 »•l
+//gridd 176 0 -112
+//gridd 192 0 -112
+//gridd 176 0 -128
+//gridd 192 0 -128
+//gareal 136 4278255360 25 »•l
+//gridd 192 0 -112
+//gridd 208 0 -112
+//gridd 192 0 -128
+//gridd 208 0 -128
+//gareal 136 4278255360 25 »•l
+//gridd 208 0 -112
+//gridd 224 0 -112
+//gridd 208 0 -128
+//gridd 224 0 -128
+//gareal 136 4278255360 25 »•l
+//gridd 224 0 -112
+//gridd 240 0 -112
+//gridd 224 0 -128
+//gridd 240 0 -128
+//gareal 136 4278255360 25 »•l
+//gridd 240 0 -112
+//gridd 256 0 -112
+//gridd 240 0 -128
+//gridd 256 0 -128
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -256 16 -128
+//gridd -240 16 -128
+//gridd -256 16 -144
+//gridd -240 16 -144
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -240 16 -128
+//gridd -224 32 -128
+//gridd -240 16 -144
+//gridd -224 32 -144
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -224 32 -128
+//gridd -208 32 -128
+//gridd -224 32 -144
+//gridd -208 32 -144
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -208 32 -128
+//gridd -192 32 -128
+//gridd -208 32 -144
+//gridd -192 32 -144
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -192 32 -128
+//gridd -176 32 -128
+//gridd -192 32 -144
+//gridd -176 32 -144
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -176 32 -128
+//gridd -160 32 -128
+//gridd -176 32 -144
+//gridd -160 32 -144
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -160 32 -128
+//gridd -144 32 -128
+//gridd -160 32 -144
+//gridd -144 32 -144
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -144 32 -128
+//gridd -128 32 -128
+//gridd -144 32 -144
+//gridd -128 32 -144
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -128 32 -128
+//gridd -112 32 -128
+//gridd -128 32 -144
+//gridd -112 32 -144
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -112 32 -128
+//gridd -96 32 -128
+//gridd -112 32 -144
+//gridd -96 32 -144
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -96 32 -128
+//gridd -80 32 -128
+//gridd -96 32 -144
+//gridd -80 32 -144
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -80 32 -128
+//gridd -64 32 -128
+//gridd -80 32 -144
+//gridd -64 32 -144
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -64 32 -128
+//gridd -48 16 -128
+//gridd -64 32 -144
+//gridd -48 16 -144
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -48 16 -128
+//gridd -32 0 -128
+//gridd -48 16 -144
+//gridd -32 0 -144
+//gareal 136 4278255360 25 »•l
+//gridd -32 0 -128
+//gridd -16 0 -128
+//gridd -32 0 -144
+//gridd -16 0 -144
+//gareal 136 4278255360 25 »•l
+//gridd -16 0 -128
+//gridd 0 0 -128
+//gridd -16 0 -144
+//gridd 0 0 -144
+//gareal 136 4278255360 25 »•l
+//gridd 0 0 -128
+//gridd 16 0 -128
+//gridd 0 0 -144
+//gridd 16 0 -144
+//gareal 136 4278255360 25 »•l
+//gridd 16 0 -128
+//gridd 32 0 -128
+//gridd 16 0 -144
+//gridd 32 0 -144
+//gareal 136 4278255360 25 »•l
+//gridd 32 0 -128
+//gridd 48 0 -128
+//gridd 32 0 -144
+//gridd 48 0 -144
+//gareal 136 4278255360 25 »•l
+//gridd 48 0 -128
+//gridd 64 0 -128
+//gridd 48 0 -144
+//gridd 64 0 -144
+//gareal 136 4278255360 25 »•l
+//gridd 64 0 -128
+//gridd 80 0 -128
+//gridd 64 0 -144
+//gridd 80 0 -144
+//gareal 136 4278255360 25 »•l
+//gridd 80 0 -128
+//gridd 96 0 -128
+//gridd 80 0 -144
+//gridd 96 0 -144
+//gareal 136 4278255360 25 »•l
+//gridd 96 0 -128
+//gridd 112 0 -128
+//gridd 96 0 -144
+//gridd 112 0 -144
+//gareal 136 4278255360 25 »•l
+//gridd 112 0 -128
+//gridd 128 0 -128
+//gridd 112 0 -144
+//gridd 128 0 -144
+//gareal 136 4278255360 25 »•l
+//gridd 128 0 -128
+//gridd 144 0 -128
+//gridd 128 0 -144
+//gridd 144 0 -144
+//gareal 136 4278255360 25 »•l
+//gridd 144 0 -128
+//gridd 160 0 -128
+//gridd 144 0 -144
+//gridd 160 0 -144
+//gareal 136 4278255360 25 »•l
+//gridd 160 0 -128
+//gridd 176 0 -128
+//gridd 160 0 -144
+//gridd 176 0 -144
+//gareal 136 4278255360 25 »•l
+//gridd 176 0 -128
+//gridd 192 0 -128
+//gridd 176 0 -144
+//gridd 192 0 -144
+//gareal 136 4278255360 25 »•l
+//gridd 192 0 -128
+//gridd 208 0 -128
+//gridd 192 0 -144
+//gridd 208 0 -144
+//gareal 136 4278255360 25 »•l
+//gridd 208 0 -128
+//gridd 224 0 -128
+//gridd 208 0 -144
+//gridd 224 0 -144
+//gareal 136 4278255360 25 »•l
+//gridd 224 0 -128
+//gridd 240 0 -128
+//gridd 224 0 -144
+//gridd 240 0 -144
+//gareal 136 4278255360 25 »•l
+//gridd 240 0 -128
+//gridd 256 0 -128
+//gridd 240 0 -144
+//gridd 256 0 -144
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -256 16 -144
+//gridd -240 16 -144
+//gridd -256 16 -160
+//gridd -240 16 -160
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -240 16 -144
+//gridd -224 32 -144
+//gridd -240 16 -160
+//gridd -224 16 -160
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -224 32 -144
+//gridd -208 32 -144
+//gridd -224 16 -160
+//gridd -208 16 -160
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -208 32 -144
+//gridd -192 32 -144
+//gridd -208 16 -160
+//gridd -192 16 -160
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -192 32 -144
+//gridd -176 32 -144
+//gridd -192 16 -160
+//gridd -176 16 -160
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -176 32 -144
+//gridd -160 32 -144
+//gridd -176 16 -160
+//gridd -160 16 -160
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -160 32 -144
+//gridd -144 32 -144
+//gridd -160 16 -160
+//gridd -144 16 -160
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -144 32 -144
+//gridd -128 32 -144
+//gridd -144 16 -160
+//gridd -128 16 -160
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -128 32 -144
+//gridd -112 32 -144
+//gridd -128 16 -160
+//gridd -112 16 -160
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -112 32 -144
+//gridd -96 32 -144
+//gridd -112 16 -160
+//gridd -96 16 -160
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -96 32 -144
+//gridd -80 32 -144
+//gridd -96 16 -160
+//gridd -80 16 -160
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -80 32 -144
+//gridd -64 32 -144
+//gridd -80 16 -160
+//gridd -64 16 -160
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -64 32 -144
+//gridd -48 16 -144
+//gridd -64 16 -160
+//gridd -48 16 -160
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -48 16 -144
+//gridd -32 0 -144
+//gridd -48 16 -160
+//gridd -32 0 -160
+//gareal 208 4278255360 23 ó£
+//gridd -32 0 -144
+//gridd -16 0 -144
+//gridd -32 0 -160
+//gridd -16 -8 -160
+//gareal 208 4278255360 23 ó£
+//gridd -16 0 -144
+//gridd 0 0 -144
+//gridd -16 -8 -160
+//gridd 0 -8 -160
+//gareal 208 4278255360 23 ó£
+//gridd 0 0 -144
+//gridd 16 0 -144
+//gridd 0 -8 -160
+//gridd 16 -8 -160
+//gareal 208 4278255360 23 ó£
+//gridd 16 0 -144
+//gridd 32 0 -144
+//gridd 16 -8 -160
+//gridd 32 -8 -160
+//gareal 208 4278255360 23 ó£
+//gridd 32 0 -144
+//gridd 48 0 -144
+//gridd 32 -8 -160
+//gridd 48 -8 -160
+//gareal 208 4278255360 23 ó£
+//gridd 48 0 -144
+//gridd 64 0 -144
+//gridd 48 -8 -160
+//gridd 64 -8 -160
+//gareal 208 4278255360 23 ó£
+//gridd 64 0 -144
+//gridd 80 0 -144
+//gridd 64 -8 -160
+//gridd 80 -8 -160
+//gareal 208 4278255360 23 ó£
+//gridd 80 0 -144
+//gridd 96 0 -144
+//gridd 80 -8 -160
+//gridd 96 -8 -160
+//gareal 208 4278255360 23 ó£
+//gridd 96 0 -144
+//gridd 112 0 -144
+//gridd 96 -8 -160
+//gridd 112 -8 -160
+//gareal 208 4278255360 23 ó£
+//gridd 112 0 -144
+//gridd 128 0 -144
+//gridd 112 -8 -160
+//gridd 128 -8 -160
+//gareal 208 4278255360 23 ó£
+//gridd 128 0 -144
+//gridd 144 0 -144
+//gridd 128 -8 -160
+//gridd 144 -8 -160
+//gareal 208 4278255360 23 ó£
+//gridd 144 0 -144
+//gridd 160 0 -144
+//gridd 144 -8 -160
+//gridd 160 -8 -160
+//gareal 208 4278255360 23 ó£
+//gridd 160 0 -144
+//gridd 176 0 -144
+//gridd 160 -8 -160
+//gridd 176 -8 -160
+//gareal 208 4278255360 23 ó£
+//gridd 176 0 -144
+//gridd 192 0 -144
+//gridd 176 -8 -160
+//gridd 192 -8 -160
+//gareal 208 4278255360 23 ó£
+//gridd 192 0 -144
+//gridd 208 0 -144
+//gridd 192 -8 -160
+//gridd 208 -8 -160
+//gareal 208 4278255360 23 ó£
+//gridd 208 0 -144
+//gridd 224 0 -144
+//gridd 208 -8 -160
+//gridd 224 -8 -160
+//gareal 208 4278255360 23 ó£
+//gridd 224 0 -144
+//gridd 240 0 -144
+//gridd 224 -8 -160
+//gridd 240 -8 -160
+//gareal 208 4278255360 23 ó£
+//gridd 240 0 -144
+//gridd 256 0 -144
+//gridd 240 -8 -160
+//gridd 256 -8 -160
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -256 16 -160
+//gridd -240 16 -160
+//gridd -256 16 -176
+//gridd -240 16 -176
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -240 16 -160
+//gridd -224 16 -160
+//gridd -240 16 -176
+//gridd -224 16 -176
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -224 16 -160
+//gridd -208 16 -160
+//gridd -224 16 -176
+//gridd -208 16 -176
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -208 16 -160
+//gridd -192 16 -160
+//gridd -208 16 -176
+//gridd -192 16 -176
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -192 16 -160
+//gridd -176 16 -160
+//gridd -192 16 -176
+//gridd -176 16 -176
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -176 16 -160
+//gridd -160 16 -160
+//gridd -176 16 -176
+//gridd -160 16 -176
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -160 16 -160
+//gridd -144 16 -160
+//gridd -160 16 -176
+//gridd -144 16 -176
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -144 16 -160
+//gridd -128 16 -160
+//gridd -144 16 -176
+//gridd -128 16 -176
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -128 16 -160
+//gridd -112 16 -160
+//gridd -128 16 -176
+//gridd -112 16 -176
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -112 16 -160
+//gridd -96 16 -160
+//gridd -112 16 -176
+//gridd -96 16 -176
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -96 16 -160
+//gridd -80 16 -160
+//gridd -96 16 -176
+//gridd -80 0 -176
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -80 16 -160
+//gridd -64 16 -160
+//gridd -80 0 -176
+//gridd -64 0 -176
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -64 16 -160
+//gridd -48 16 -160
+//gridd -64 0 -176
+//gridd -48 0 -176
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -48 16 -160
+//gridd -32 0 -160
+//gridd -48 0 -176
+//gridd -32 0 -176
+//gareal 208 4278255360 23 ó£
+//gridd -32 0 -160
+//gridd -16 -8 -160
+//gridd -32 0 -176
+//gridd -16 -8 -176
+//gareal 208 4278255360 23 ó£
+//gridd -16 -8 -160
+//gridd 0 -8 -160
+//gridd -16 -8 -176
+//gridd 0 -8 -176
+//gareal 208 4278255360 23 ó£
+//gridd 0 -8 -160
+//gridd 16 -8 -160
+//gridd 0 -8 -176
+//gridd 16 -8 -176
+//gareal 208 4278255360 23 ó£
+//gridd 16 -8 -160
+//gridd 32 -8 -160
+//gridd 16 -8 -176
+//gridd 32 -8 -176
+//gareal 208 4278255360 23 ó£
+//gridd 32 -8 -160
+//gridd 48 -8 -160
+//gridd 32 -8 -176
+//gridd 48 -8 -176
+//gareal 208 4278255360 23 ó£
+//gridd 48 -8 -160
+//gridd 64 -8 -160
+//gridd 48 -8 -176
+//gridd 64 -8 -176
+//gareal 208 4278255360 23 ó£
+//gridd 64 -8 -160
+//gridd 80 -8 -160
+//gridd 64 -8 -176
+//gridd 80 -8 -176
+//gareal 208 4278255360 23 ó£
+//gridd 80 -8 -160
+//gridd 96 -8 -160
+//gridd 80 -8 -176
+//gridd 96 -8 -176
+//gareal 208 4278255360 23 ó£
+//gridd 96 -8 -160
+//gridd 112 -8 -160
+//gridd 96 -8 -176
+//gridd 112 -8 -176
+//gareal 208 4278255360 23 ó£
+//gridd 112 -8 -160
+//gridd 128 -8 -160
+//gridd 112 -8 -176
+//gridd 128 -8 -176
+//gareal 208 4278255360 23 ó£
+//gridd 128 -8 -160
+//gridd 144 -8 -160
+//gridd 128 -8 -176
+//gridd 144 -8 -176
+//gareal 208 4278255360 23 ó£
+//gridd 144 -8 -160
+//gridd 160 -8 -160
+//gridd 144 -8 -176
+//gridd 160 -8 -176
+//gareal 208 4278255360 23 ó£
+//gridd 160 -8 -160
+//gridd 176 -8 -160
+//gridd 160 -8 -176
+//gridd 176 -8 -176
+//gareal 208 4278255360 23 ó£
+//gridd 176 -8 -160
+//gridd 192 -8 -160
+//gridd 176 -8 -176
+//gridd 192 -8 -176
+//gareal 208 4278255360 23 ó£
+//gridd 192 -8 -160
+//gridd 208 -8 -160
+//gridd 192 -8 -176
+//gridd 208 -8 -176
+//gareal 208 4278255360 23 ó£
+//gridd 208 -8 -160
+//gridd 224 -8 -160
+//gridd 208 -8 -176
+//gridd 224 -8 -176
+//gareal 208 4278255360 23 ó£
+//gridd 224 -8 -160
+//gridd 240 -8 -160
+//gridd 224 -8 -176
+//gridd 240 -8 -176
+//gareal 208 4278255360 23 ó£
+//gridd 240 -8 -160
+//gridd 256 -8 -160
+//gridd 240 -8 -176
+//gridd 256 -8 -176
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -256 16 -176
+//gridd -240 16 -176
+//gridd -256 16 -192
+//gridd -240 16 -192
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -240 16 -176
+//gridd -224 16 -176
+//gridd -240 16 -192
+//gridd -224 16 -192
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -224 16 -176
+//gridd -208 16 -176
+//gridd -224 16 -192
+//gridd -208 16 -192
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -208 16 -176
+//gridd -192 16 -176
+//gridd -208 16 -192
+//gridd -192 16 -192
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -192 16 -176
+//gridd -176 16 -176
+//gridd -192 16 -192
+//gridd -176 16 -192
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -176 16 -176
+//gridd -160 16 -176
+//gridd -176 16 -192
+//gridd -160 16 -192
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -160 16 -176
+//gridd -144 16 -176
+//gridd -160 16 -192
+//gridd -144 16 -192
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -144 16 -176
+//gridd -128 16 -176
+//gridd -144 16 -192
+//gridd -128 16 -192
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -128 16 -176
+//gridd -112 16 -176
+//gridd -128 16 -192
+//gridd -112 16 -192
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -112 16 -176
+//gridd -96 16 -176
+//gridd -112 16 -192
+//gridd -96 16 -192
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -96 16 -176
+//gridd -80 0 -176
+//gridd -96 16 -192
+//gridd -80 0 -192
+//gareal 136 4278255360 25 »•l
+//gridd -80 0 -176
+//gridd -64 0 -176
+//gridd -80 0 -192
+//gridd -64 0 -192
+//gareal 136 4278255360 25 »•l
+//gridd -64 0 -176
+//gridd -48 0 -176
+//gridd -64 0 -192
+//gridd -48 0 -192
+//gareal 136 4278255360 25 »•l
+//gridd -48 0 -176
+//gridd -32 0 -176
+//gridd -48 0 -192
+//gridd -32 0 -192
+//gareal 208 4278255360 23 ó£
+//gridd -32 0 -176
+//gridd -16 -8 -176
+//gridd -32 0 -192
+//gridd -16 -8 -192
+//gareal 208 4278255360 23 ó£
+//gridd -16 -8 -176
+//gridd 0 -8 -176
+//gridd -16 -8 -192
+//gridd 0 -8 -192
+//gareal 208 4278255360 23 ó£
+//gridd 0 -8 -176
+//gridd 16 -8 -176
+//gridd 0 -8 -192
+//gridd 16 -8 -192
+//gareal 208 4278255360 23 ó£
+//gridd 16 -8 -176
+//gridd 32 -8 -176
+//gridd 16 -8 -192
+//gridd 32 -8 -192
+//gareal 208 4278255360 23 ó£
+//gridd 32 -8 -176
+//gridd 48 -8 -176
+//gridd 32 -8 -192
+//gridd 48 -8 -192
+//gareal 208 4278255360 23 ó£
+//gridd 48 -8 -176
+//gridd 64 -8 -176
+//gridd 48 -8 -192
+//gridd 64 -8 -192
+//gareal 208 4278255360 23 ó£
+//gridd 64 -8 -176
+//gridd 80 -8 -176
+//gridd 64 -8 -192
+//gridd 80 -8 -192
+//gareal 208 4278255360 23 ó£
+//gridd 80 -8 -176
+//gridd 96 -8 -176
+//gridd 80 -8 -192
+//gridd 96 -8 -192
+//gareal 208 4278255360 23 ó£
+//gridd 96 -8 -176
+//gridd 112 -8 -176
+//gridd 96 -8 -192
+//gridd 112 -8 -192
+//gareal 208 4278255360 23 ó£
+//gridd 112 -8 -176
+//gridd 128 -8 -176
+//gridd 112 -8 -192
+//gridd 128 -8 -192
+//gareal 208 4278255360 23 ó£
+//gridd 128 -8 -176
+//gridd 144 -8 -176
+//gridd 128 -8 -192
+//gridd 144 -8 -192
+//gareal 208 4278255360 23 ó£
+//gridd 144 -8 -176
+//gridd 160 -8 -176
+//gridd 144 -8 -192
+//gridd 160 -8 -192
+//gareal 208 4278255360 23 ó£
+//gridd 160 -8 -176
+//gridd 176 -8 -176
+//gridd 160 -8 -192
+//gridd 176 -8 -192
+//gareal 208 4278255360 23 ó£
+//gridd 176 -8 -176
+//gridd 192 -8 -176
+//gridd 176 -8 -192
+//gridd 192 -8 -192
+//gareal 208 4278255360 23 ó£
+//gridd 192 -8 -176
+//gridd 208 -8 -176
+//gridd 192 -8 -192
+//gridd 208 -8 -192
+//gareal 208 4278255360 23 ó£
+//gridd 208 -8 -176
+//gridd 224 -8 -176
+//gridd 208 -8 -192
+//gridd 224 -8 -192
+//gareal 208 4278255360 23 ó£
+//gridd 224 -8 -176
+//gridd 240 -8 -176
+//gridd 224 -8 -192
+//gridd 240 -8 -192
+//gareal 208 4278255360 23 ó£
+//gridd 240 -8 -176
+//gridd 256 -8 -176
+//gridd 240 -8 -192
+//gridd 256 -8 -192
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -256 16 -192
+//gridd -240 16 -192
+//gridd -256 16 -208
+//gridd -240 16 -208
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -240 16 -192
+//gridd -224 16 -192
+//gridd -240 16 -208
+//gridd -224 16 -208
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -224 16 -192
+//gridd -208 16 -192
+//gridd -224 16 -208
+//gridd -208 16 -208
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -208 16 -192
+//gridd -192 16 -192
+//gridd -208 16 -208
+//gridd -192 16 -208
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -192 16 -192
+//gridd -176 16 -192
+//gridd -192 16 -208
+//gridd -176 16 -208
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -176 16 -192
+//gridd -160 16 -192
+//gridd -176 16 -208
+//gridd -160 16 -208
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -160 16 -192
+//gridd -144 16 -192
+//gridd -160 16 -208
+//gridd -144 16 -208
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -144 16 -192
+//gridd -128 16 -192
+//gridd -144 16 -208
+//gridd -128 16 -208
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -128 16 -192
+//gridd -112 16 -192
+//gridd -128 16 -208
+//gridd -112 16 -208
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -112 16 -192
+//gridd -96 16 -192
+//gridd -112 16 -208
+//gridd -96 16 -208
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -96 16 -192
+//gridd -80 0 -192
+//gridd -96 16 -208
+//gridd -80 0 -208
+//gareal 208 4278255360 23 ó£
+//gridd -80 0 -192
+//gridd -64 0 -192
+//gridd -80 0 -208
+//gridd -64 -8 -208
+//gareal 208 4278255360 23 ó£
+//gridd -64 0 -192
+//gridd -48 0 -192
+//gridd -64 -8 -208
+//gridd -48 -8 -208
+//gareal 208 4278255360 23 ó£
+//gridd -48 0 -192
+//gridd -32 0 -192
+//gridd -48 -8 -208
+//gridd -32 -8 -208
+//gareal 208 4278255360 23 ó£
+//gridd -32 0 -192
+//gridd -16 -8 -192
+//gridd -32 -8 -208
+//gridd -16 -8 -208
+//gareal 208 4278255360 23 ó£
+//gridd -16 -8 -192
+//gridd 0 -8 -192
+//gridd -16 -8 -208
+//gridd 0 -8 -208
+//gareal 208 4278255360 23 ó£
+//gridd 0 -8 -192
+//gridd 16 -8 -192
+//gridd 0 -8 -208
+//gridd 16 -8 -208
+//gareal 22 4278190335 63 ŠC
+//gridd 16 -8 -192
+//gridd 32 -8 -192
+//gridd 16 -8 -208
+//gridd 32 -8 -208
+//gareal 22 4278190335 63 ŠC
+//gridd 32 -8 -192
+//gridd 48 -8 -192
+//gridd 32 -8 -208
+//gridd 48 -8 -208
+//gareal 22 4278190335 63 ŠC
+//gridd 48 -8 -192
+//gridd 64 -8 -192
+//gridd 48 -8 -208
+//gridd 64 -8 -208
+//gareal 22 4278190335 63 ŠC
+//gridd 64 -8 -192
+//gridd 80 -8 -192
+//gridd 64 -8 -208
+//gridd 80 -8 -208
+//gareal 22 4278190335 63 ŠC
+//gridd 80 -8 -192
+//gridd 96 -8 -192
+//gridd 80 -8 -208
+//gridd 96 -8 -208
+//gareal 22 4278190335 63 ŠC
+//gridd 96 -8 -192
+//gridd 112 -8 -192
+//gridd 96 -8 -208
+//gridd 112 -8 -208
+//gareal 22 4278190335 63 ŠC
+//gridd 112 -8 -192
+//gridd 128 -8 -192
+//gridd 112 -8 -208
+//gridd 128 -8 -208
+//gareal 22 4278190335 63 ŠC
+//gridd 128 -8 -192
+//gridd 144 -8 -192
+//gridd 128 -8 -208
+//gridd 144 -8 -208
+//gareal 22 4278190335 63 ŠC
+//gridd 144 -8 -192
+//gridd 160 -8 -192
+//gridd 144 -8 -208
+//gridd 160 -8 -208
+//gareal 22 4278190335 63 ŠC
+//gridd 160 -8 -192
+//gridd 176 -8 -192
+//gridd 160 -8 -208
+//gridd 176 -8 -208
+//gareal 22 4278190335 63 ŠC
+//gridd 176 -8 -192
+//gridd 192 -8 -192
+//gridd 176 -8 -208
+//gridd 192 -8 -208
+//gareal 22 4278190335 63 ŠC
+//gridd 192 -8 -192
+//gridd 208 -8 -192
+//gridd 192 -8 -208
+//gridd 208 -8 -208
+//gareal 22 4278190335 63 ŠC
+//gridd 208 -8 -192
+//gridd 224 -8 -192
+//gridd 208 -8 -208
+//gridd 224 -8 -208
+//gareal 22 4278190335 63 ŠC
+//gridd 224 -8 -192
+//gridd 240 -8 -192
+//gridd 224 -8 -208
+//gridd 240 -8 -208
+//gareal 22 4278190335 63 ŠC
+//gridd 240 -8 -192
+//gridd 256 -8 -192
+//gridd 240 -8 -208
+//gridd 256 -8 -208
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -256 16 -208
+//gridd -240 16 -208
+//gridd -256 16 -224
+//gridd -240 16 -224
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -240 16 -208
+//gridd -224 16 -208
+//gridd -240 16 -224
+//gridd -224 16 -224
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -224 16 -208
+//gridd -208 16 -208
+//gridd -224 16 -224
+//gridd -208 16 -224
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -208 16 -208
+//gridd -192 16 -208
+//gridd -208 16 -224
+//gridd -192 16 -224
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -192 16 -208
+//gridd -176 16 -208
+//gridd -192 16 -224
+//gridd -176 16 -224
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -176 16 -208
+//gridd -160 16 -208
+//gridd -176 16 -224
+//gridd -160 16 -224
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -160 16 -208
+//gridd -144 16 -208
+//gridd -160 16 -224
+//gridd -144 16 -224
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -144 16 -208
+//gridd -128 16 -208
+//gridd -144 16 -224
+//gridd -128 16 -224
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -128 16 -208
+//gridd -112 16 -208
+//gridd -128 16 -224
+//gridd -112 16 -224
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -112 16 -208
+//gridd -96 16 -208
+//gridd -112 16 -224
+//gridd -96 16 -224
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -96 16 -208
+//gridd -80 0 -208
+//gridd -96 16 -224
+//gridd -80 0 -224
+//gareal 208 4278255360 23 ó£
+//gridd -80 0 -208
+//gridd -64 -8 -208
+//gridd -80 0 -224
+//gridd -64 -8 -224
+//gareal 208 4278255360 23 ó£
+//gridd -64 -8 -208
+//gridd -48 -8 -208
+//gridd -64 -8 -224
+//gridd -48 -8 -224
+//gareal 208 4278255360 23 ó£
+//gridd -48 -8 -208
+//gridd -32 -8 -208
+//gridd -48 -8 -224
+//gridd -32 -8 -224
+//gareal 208 4278255360 23 ó£
+//gridd -32 -8 -208
+//gridd -16 -8 -208
+//gridd -32 -8 -224
+//gridd -16 -8 -224
+//gareal 208 4278255360 23 ó£
+//gridd -16 -8 -208
+//gridd 0 -8 -208
+//gridd -16 -8 -224
+//gridd 0 -8 -224
+//gareal 208 4278255360 23 ó£
+//gridd 0 -8 -208
+//gridd 16 -8 -208
+//gridd 0 -8 -224
+//gridd 16 -8 -224
+//gareal 22 4278190335 63 ŠC
+//gridd 16 -8 -208
+//gridd 32 -8 -208
+//gridd 16 -8 -224
+//gridd 32 -8 -224
+//gareal 22 4278190335 63 ŠC
+//gridd 32 -8 -208
+//gridd 48 -8 -208
+//gridd 32 -8 -224
+//gridd 48 -8 -224
+//gareal 22 4278190335 63 ŠC
+//gridd 48 -8 -208
+//gridd 64 -8 -208
+//gridd 48 -8 -224
+//gridd 64 -8 -224
+//gareal 22 4278190335 63 ŠC
+//gridd 64 -8 -208
+//gridd 80 -8 -208
+//gridd 64 -8 -224
+//gridd 80 -8 -224
+//gareal 22 4278190335 63 ŠC
+//gridd 80 -8 -208
+//gridd 96 -8 -208
+//gridd 80 -8 -224
+//gridd 96 -8 -224
+//gareal 22 4278190335 63 ŠC
+//gridd 96 -8 -208
+//gridd 112 -8 -208
+//gridd 96 -8 -224
+//gridd 112 -8 -224
+//gareal 22 4278190335 63 ŠC
+//gridd 112 -8 -208
+//gridd 128 -8 -208
+//gridd 112 -8 -224
+//gridd 128 -8 -224
+//gareal 22 4278190335 63 ŠC
+//gridd 128 -8 -208
+//gridd 144 -8 -208
+//gridd 128 -8 -224
+//gridd 144 -8 -224
+//gareal 22 4278190335 63 ŠC
+//gridd 144 -8 -208
+//gridd 160 -8 -208
+//gridd 144 -8 -224
+//gridd 160 -8 -224
+//gareal 22 4278190335 63 ŠC
+//gridd 160 -8 -208
+//gridd 176 -8 -208
+//gridd 160 -8 -224
+//gridd 176 -8 -224
+//gareal 22 4278190335 63 ŠC
+//gridd 176 -8 -208
+//gridd 192 -8 -208
+//gridd 176 -8 -224
+//gridd 192 -8 -224
+//gareal 22 4278190335 63 ŠC
+//gridd 192 -8 -208
+//gridd 208 -8 -208
+//gridd 192 -8 -224
+//gridd 208 -8 -224
+//gareal 22 4278190335 63 ŠC
+//gridd 208 -8 -208
+//gridd 224 -8 -208
+//gridd 208 -8 -224
+//gridd 224 -8 -224
+//gareal 22 4278190335 63 ŠC
+//gridd 224 -8 -208
+//gridd 240 -8 -208
+//gridd 224 -8 -224
+//gridd 240 -8 -224
+//gareal 22 4278190335 63 ŠC
+//gridd 240 -8 -208
+//gridd 256 -8 -208
+//gridd 240 -8 -224
+//gridd 256 -8 -224
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -256 16 -224
+//gridd -240 16 -224
+//gridd -256 16 -240
+//gridd -240 16 -240
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -240 16 -224
+//gridd -224 16 -224
+//gridd -240 16 -240
+//gridd -224 16 -240
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -224 16 -224
+//gridd -208 16 -224
+//gridd -224 16 -240
+//gridd -208 16 -240
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -208 16 -224
+//gridd -192 16 -224
+//gridd -208 16 -240
+//gridd -192 16 -240
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -192 16 -224
+//gridd -176 16 -224
+//gridd -192 16 -240
+//gridd -176 16 -240
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -176 16 -224
+//gridd -160 16 -224
+//gridd -176 16 -240
+//gridd -160 16 -240
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -160 16 -224
+//gridd -144 16 -224
+//gridd -160 16 -240
+//gridd -144 16 -240
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -144 16 -224
+//gridd -128 16 -224
+//gridd -144 16 -240
+//gridd -128 16 -240
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -128 16 -224
+//gridd -112 16 -224
+//gridd -128 16 -240
+//gridd -112 16 -240
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -112 16 -224
+//gridd -96 16 -224
+//gridd -112 16 -240
+//gridd -96 16 -240
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -96 16 -224
+//gridd -80 0 -224
+//gridd -96 16 -240
+//gridd -80 0 -240
+//gareal 208 4278255360 23 ó£
+//gridd -80 0 -224
+//gridd -64 -8 -224
+//gridd -80 0 -240
+//gridd -64 -8 -240
+//gareal 208 4278255360 23 ó£
+//gridd -64 -8 -224
+//gridd -48 -8 -224
+//gridd -64 -8 -240
+//gridd -48 -8 -240
+//gareal 208 4278255360 23 ó£
+//gridd -48 -8 -224
+//gridd -32 -8 -224
+//gridd -48 -8 -240
+//gridd -32 -8 -240
+//gareal 208 4278255360 23 ó£
+//gridd -32 -8 -224
+//gridd -16 -8 -224
+//gridd -32 -8 -240
+//gridd -16 -8 -240
+//gareal 208 4278255360 23 ó£
+//gridd -16 -8 -224
+//gridd 0 -8 -224
+//gridd -16 -8 -240
+//gridd 0 -8 -240
+//gareal 208 4278255360 23 ó£
+//gridd 0 -8 -224
+//gridd 16 -8 -224
+//gridd 0 -8 -240
+//gridd 16 -8 -240
+//gareal 22 4278190335 63 ŠC
+//gridd 16 -8 -224
+//gridd 32 -8 -224
+//gridd 16 -8 -240
+//gridd 32 -8 -240
+//gareal 22 4278190335 63 ŠC
+//gridd 32 -8 -224
+//gridd 48 -8 -224
+//gridd 32 -8 -240
+//gridd 48 -8 -240
+//gareal 22 4278190335 63 ŠC
+//gridd 48 -8 -224
+//gridd 64 -8 -224
+//gridd 48 -8 -240
+//gridd 64 -8 -240
+//gareal 22 4278190335 63 ŠC
+//gridd 64 -8 -224
+//gridd 80 -8 -224
+//gridd 64 -8 -240
+//gridd 80 -8 -240
+//gareal 22 4278190335 63 ŠC
+//gridd 80 -8 -224
+//gridd 96 -8 -224
+//gridd 80 -8 -240
+//gridd 96 -8 -240
+//gareal 22 4278190335 63 ŠC
+//gridd 96 -8 -224
+//gridd 112 -8 -224
+//gridd 96 -8 -240
+//gridd 112 -8 -240
+//gareal 22 4278190335 63 ŠC
+//gridd 112 -8 -224
+//gridd 128 -8 -224
+//gridd 112 -8 -240
+//gridd 128 -8 -240
+//gareal 22 4278190335 63 ŠC
+//gridd 128 -8 -224
+//gridd 144 -8 -224
+//gridd 128 -8 -240
+//gridd 144 -8 -240
+//gareal 22 4278190335 63 ŠC
+//gridd 144 -8 -224
+//gridd 160 -8 -224
+//gridd 144 -8 -240
+//gridd 160 -8 -240
+//gareal 22 4278190335 63 ŠC
+//gridd 160 -8 -224
+//gridd 176 -8 -224
+//gridd 160 -8 -240
+//gridd 176 -8 -240
+//gareal 22 4278190335 63 ŠC
+//gridd 176 -8 -224
+//gridd 192 -8 -224
+//gridd 176 -8 -240
+//gridd 192 -8 -240
+//gareal 22 4278190335 63 ŠC
+//gridd 192 -8 -224
+//gridd 208 -8 -224
+//gridd 192 -8 -240
+//gridd 208 -8 -240
+//gareal 22 4278190335 63 ŠC
+//gridd 208 -8 -224
+//gridd 224 -8 -224
+//gridd 208 -8 -240
+//gridd 224 -8 -240
+//gareal 22 4278190335 63 ŠC
+//gridd 224 -8 -224
+//gridd 240 -8 -224
+//gridd 224 -8 -240
+//gridd 240 -8 -240
+//gareal 22 4278190335 63 ŠC
+//gridd 240 -8 -224
+//gridd 256 -8 -224
+//gridd 240 -8 -240
+//gridd 256 -8 -240
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -256 16 -240
+//gridd -240 16 -240
+//gridd -256 16 -256
+//gridd -240 0 -256
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -240 16 -240
+//gridd -224 16 -240
+//gridd -240 0 -256
+//gridd -224 0 -256
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -224 16 -240
+//gridd -208 16 -240
+//gridd -224 0 -256
+//gridd -208 0 -256
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -208 16 -240
+//gridd -192 16 -240
+//gridd -208 0 -256
+//gridd -192 0 -256
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -192 16 -240
+//gridd -176 16 -240
+//gridd -192 0 -256
+//gridd -176 0 -256
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -176 16 -240
+//gridd -160 16 -240
+//gridd -176 0 -256
+//gridd -160 0 -256
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -160 16 -240
+//gridd -144 16 -240
+//gridd -160 0 -256
+//gridd -144 0 -256
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -144 16 -240
+//gridd -128 16 -240
+//gridd -144 0 -256
+//gridd -128 0 -256
+//gareal 128 4278255360 0 ˆÚ“®‰Â”\
+//gridd -128 16 -240
+//gridd -112 16 -240
+//gridd -128 0 -256
+//gridd -112 0 -256
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -112 16 -240
+//gridd -96 16 -240
+//gridd -112 0 -256
+//gridd -96 0 -256
+//gareal 129 4278255360 1 ˆÚ“®•s‰Â
+//gridd -96 16 -240
+//gridd -80 0 -240
+//gridd -96 0 -256
+//gridd -80 0 -256
+//gareal 208 4278255360 23 ó£
+//gridd -80 0 -240
+//gridd -64 -8 -240
+//gridd -80 0 -256
+//gridd -64 -8 -256
+//gareal 208 4278255360 23 ó£
+//gridd -64 -8 -240
+//gridd -48 -8 -240
+//gridd -64 -8 -256
+//gridd -48 -8 -256
+//gareal 208 4278255360 23 ó£
+//gridd -48 -8 -240
+//gridd -32 -8 -240
+//gridd -48 -8 -256
+//gridd -32 -8 -256
+//gareal 22 4278190335 63 ŠC
+//gridd -32 -8 -240
+//gridd -16 -8 -240
+//gridd -32 -8 -256
+//gridd -16 -8 -256
+//gareal 22 4278190335 63 ŠC
+//gridd -16 -8 -240
+//gridd 0 -8 -240
+//gridd -16 -8 -256
+//gridd 0 -8 -256
+//gareal 22 4278190335 63 ŠC
+//gridd 0 -8 -240
+//gridd 16 -8 -240
+//gridd 0 -8 -256
+//gridd 16 -8 -256
+//gareal 22 4278190335 63 ŠC
+//gridd 16 -8 -240
+//gridd 32 -8 -240
+//gridd 16 -8 -256
+//gridd 32 -8 -256
+//gareal 22 4278190335 63 ŠC
+//gridd 32 -8 -240
+//gridd 48 -8 -240
+//gridd 32 -8 -256
+//gridd 48 -8 -256
+//gareal 22 4278190335 63 ŠC
+//gridd 48 -8 -240
+//gridd 64 -8 -240
+//gridd 48 -8 -256
+//gridd 64 -8 -256
+//gareal 22 4278190335 63 ŠC
+//gridd 64 -8 -240
+//gridd 80 -8 -240
+//gridd 64 -8 -256
+//gridd 80 -8 -256
+//gareal 22 4278190335 63 ŠC
+//gridd 80 -8 -240
+//gridd 96 -8 -240
+//gridd 80 -8 -256
+//gridd 96 -8 -256
+//gareal 22 4278190335 63 ŠC
+//gridd 96 -8 -240
+//gridd 112 -8 -240
+//gridd 96 -8 -256
+//gridd 112 -8 -256
+//gareal 22 4278190335 63 ŠC
+//gridd 112 -8 -240
+//gridd 128 -8 -240
+//gridd 112 -8 -256
+//gridd 128 -8 -256
+//gareal 22 4278190335 63 ŠC
+//gridd 128 -8 -240
+//gridd 144 -8 -240
+//gridd 128 -8 -256
+//gridd 144 -8 -256
+//gareal 22 4278190335 63 ŠC
+//gridd 144 -8 -240
+//gridd 160 -8 -240
+//gridd 144 -8 -256
+//gridd 160 -8 -256
+//gareal 22 4278190335 63 ŠC
+//gridd 160 -8 -240
+//gridd 176 -8 -240
+//gridd 160 -8 -256
+//gridd 176 -8 -256
+//gareal 22 4278190335 63 ŠC
+//gridd 176 -8 -240
+//gridd 192 -8 -240
+//gridd 176 -8 -256
+//gridd 192 -8 -256
+//gareal 22 4278190335 63 ŠC
+//gridd 192 -8 -240
+//gridd 208 -8 -240
+//gridd 192 -8 -256
+//gridd 208 -8 -256
+//gareal 22 4278190335 63 ŠC
+//gridd 208 -8 -240
+//gridd 224 -8 -240
+//gridd 208 -8 -256
+//gridd 224 -8 -256
+//gareal 22 4278190335 63 ŠC
+//gridd 224 -8 -240
+//gridd 240 -8 -240
+//gridd 224 -8 -256
+//gridd 240 -8 -256
+//gareal 22 4278190335 63 ŠC
+//gridd 240 -8 -240
+//gridd 256 -8 -240
+//gridd 240 -8 -256
+//gridd 256 -8 -256

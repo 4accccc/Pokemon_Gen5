@@ -39,7 +39,7 @@ LAND_TEMP_LIST = \
 	$(DIR_TEMP)/map22_23.nsbmd \
 	$(DIR_TEMP)/map21_22.nsbmd \
 	$(DIR_TEMP)/map21_23.nsbmd \
-	$(DIR_TEMP)/map19_22.nsbmd \
+	$(DIR_TEMP)/map21_23.nsbmd \
 	$(DIR_TEMP)/map20_22.nsbmd \
 	$(DIR_TEMP)/map19_23.nsbmd \
 	$(DIR_TEMP)/map20_23.nsbmd \
@@ -338,6 +338,11 @@ LAND_TEMP_LIST = \
 	$(DIR_TEMP)/palace10_00_00.nsbmd \
 	$(DIR_TEMP)/palace11_00_00.nsbmd \
 	$(DIR_TEMP)/palace12_00_00.nsbmd \
+	$(DIR_TEMP)/map02_11.nsbmd \
+	$(DIR_TEMP)/map05_11.nsbmd \
+	$(DIR_TEMP)/map21_09.nsbmd \
+	$(DIR_TEMP)/map24_09.nsbmd \
+	$(DIR_TEMP)/map19_22.nsbmd \
 	$(DIR_TEMP)/m_dun0101_00_00.nsbmd \
 	$(DIR_TEMP)/m_dun0101_01_00.nsbmd \
 	$(DIR_TEMP)/m_dun0101_00_01.nsbmd \
@@ -550,6 +555,12 @@ LAND_TEMP_LIST = \
 	$(DIR_TEMP)/m_dun1102_01_00.nsbmd \
 	$(DIR_TEMP)/m_dun1102_01_01.nsbmd \
 	$(DIR_TEMP)/m_dun1102_01_02.nsbmd \
+	$(DIR_TEMP)/m_dun1102_01_02.nsbmd \
+	$(DIR_TEMP)/m_dun1102_01_02.nsbmd \
+	$(DIR_TEMP)/m_dun2101_00_00.nsbmd \
+	$(DIR_TEMP)/m_dun2101_00_01.nsbmd \
+	$(DIR_TEMP)/m_dun2102_00_00.nsbmd \
+	$(DIR_TEMP)/m_dun2001_00_00.nsbmd \
 	$(DIR_TEMP)/m_ruin01_00_00.nsbmd \
 	$(DIR_TEMP)/m_gate01_00_00.nsbmd \
 	$(DIR_TEMP)/m_pc01_00_00.nsbmd \
@@ -712,6 +723,10 @@ LAND_TEMP_LIST = \
 	$(DIR_TEMP)/m_baseball01_01_01.nsbmd \
 	$(DIR_TEMP)/m_baseball01_00_01.nsbmd \
 	$(DIR_TEMP)/m_un02_00_00.nsbmd \
+	$(DIR_TEMP)/m_d12h01_00_00.nsbmd \
+	$(DIR_TEMP)/m_d12h02_00_00.nsbmd \
+	$(DIR_TEMP)/m_d12h03_00_00.nsbmd \
+	$(DIR_TEMP)/m_tryhouse01_00_00.nsbmd \
 	$(DIR_TEMP)/C3_00_00.nsbmd \
 	$(DIR_TEMP)/C3_00_01.nsbmd \
 	$(DIR_TEMP)/C3_01_00.nsbmd \
