@@ -380,6 +380,14 @@ GMEVENT * EVENT_ProcLink( EVENT_PROCLINK_PARAM *param, HEAPID heapID )
     PLAYER_WORK *playerWork = GAMEDATA_GetMyPlayerWork( pGameData );
     FIELD_PLAYER *fld_player = FIELDMAP_GetFieldPlayer(wk->param->field_wk);
 
+    // 仮登録としてすべての道具チェックをOKにしておく
+    {
+      int i;
+      for(i=0;i<ITEMCHECK_MAX;i++){
+        ITEMUSE_SetItemUseCheck( &wk->icwk, i, 1 );
+      }
+    }
+
     pPos = PLAYERWORK_getPosition( playerWork );
     wk->icwk.NowAttr = FIELD_PLAYER_GetMapAttr(fld_player);
     wk->icwk.FrontAttr =FIELD_PLAYER_GetDirMapAttr(fld_player, FIELD_PLAYER_GetDir(fld_player));
@@ -1214,7 +1222,7 @@ static void * FMenuCallProc_Bag(PROCLINK_WORK* wk, u32 param, EVENT_PROCLINK_CAL
   case EVENT_PROCLINK_CALL_BAG:
     //バッグを最初に呼び出したとき
     bag = BAG_CreateParam( gmData, &wk->icwk, BAG_MODE_FIELD, HEAPID_PROC );
-    ITEMUSE_SetItemUseCheck( &wk->icwk, ITEMCHECK_CYCLE_RIDE, 1 );
+//    ITEMUSE_SetItemUseCheck( &wk->icwk, ITEMCHECK_CYCLE_RIDE, 1 );
 
     if( param != EVENT_PROCLINK_DATA_NONE )
     { 

@@ -203,6 +203,7 @@ SRCS  +=    $(SOUNDSRC) \
         app/app_menu_common.c \
         app/app_taskmenu.c \
         app/app_keycursor.c \
+        app/bag/itemuse.c \
         field/field_sound.c \
         tr_tool/tr_tool.c \
         gamesystem/iss_city_sys.c \
@@ -703,8 +704,7 @@ SRCS_OVERLAY_CONFIG_PANEL = app/config_panel/config_panel2.c
 #===> SRCS_OVERLAY_UNION_ROOM
 #===> SRCS_OVERLAY_FIELD_INTRUDE
 SRCS_OVERLAY_BAG = app/bag/itemmenu.c \
-												app/bag/itemmenu_disp.c \
-												app/bag/itemuse.c
+                   app/bag/itemmenu_disp.c
 
 # ƒ‚ƒmƒŠƒX‰æ–Ê
 #===> SRCS_OVERLAY_DEV_WIFI

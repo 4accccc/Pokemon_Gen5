@@ -184,5 +184,4 @@ extern u32 ITEMUSE_GetUseFunc( u16 prm, u16 id );
  */
 //=============================================================================================
 extern void ITEMUSE_SetItemUseCheck( ITEMCHECK_WORK * icwk, ITEMCHECK_ENABLE type, BOOL check );
-
-
+extern BOOL ITEMUSE_GetItemUseCheck( ITEMCHECK_WORK * icwk, ITEMCHECK_ENABLE type );

@@ -119,6 +119,7 @@ static BOOL _itemMovePositionTouchItem(FIELD_ITEMMENU_WORK* pWork);
 static void _itemMovePosition(FIELD_ITEMMENU_WORK* pWork);
 static void _itemInnerUse( FIELD_ITEMMENU_WORK* pWork );
 static void _itemInnerUseWait( FIELD_ITEMMENU_WORK* pWork );
+static void _itemInnerUseError( FIELD_ITEMMENU_WORK* pWork );
 static void _itemSelectWait(FIELD_ITEMMENU_WORK* pWork);
 static void _itemSelectState(FIELD_ITEMMENU_WORK* pWork);
 static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* pWork);
@@ -368,13 +369,13 @@ int ITEMMENU_GetItemPocketNumber(FIELD_ITEMMENU_WORK* pWork)
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  アイテム名をレジスト
+ *  @brief  アイテム名をレジスト
  *
- *	@param	FIELD_ITEMMENU_WORK* pWork
- *	@param	bufID
- *	@param	itemID 
+ *  @param  FIELD_ITEMMENU_WORK* pWork
+ *  @param  bufID
+ *  @param  itemID 
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 void ITEMMENU_WordsetItemName( FIELD_ITEMMENU_WORK* pWork, u32 bufID, u32 itemID )
@@ -866,6 +867,278 @@ static void _itemInnerUseWait( FIELD_ITEMMENU_WORK* pWork )
   }
 }
 
+//----------------------------------------------------------------------------------
+/**
+ * @brief 道具が使えなかった際のメッセージ表示（既にExpandStrに準備されているとして）
+ *
+ * @param   pWork   
+ */
+//----------------------------------------------------------------------------------
+static void _itemInnerUseError( FIELD_ITEMMENU_WORK* pWork )
+{
+  
+  ITEMDISP_ItemInfoWindowDispEx( pWork, TRUE );
+  _CHANGE_STATE(pWork,_itemInnerUseWait);
+
+}
+
+static int _check_Cycle( FIELD_ITEMMENU_WORK *pWork );
+static int _check_MailView( FIELD_ITEMMENU_WORK *pWork );
+static int _check_BattleRecorder( FIELD_ITEMMENU_WORK *pWork );
+static int _check_Turizao( FIELD_ITEMMENU_WORK *pWork );
+static int _check_AmaiMitu( FIELD_ITEMMENU_WORK *pWork );
+static int _check_TomodatiTechou( FIELD_ITEMMENU_WORK *pWork );
+static int _check_TownMap( FIELD_ITEMMENU_WORK *pWork );
+static int _check_Cycle( FIELD_ITEMMENU_WORK *pWork );
+
+// アララギ博士のどうぐ使えないよメッセージ
+#define MSGID_ITEMUSE_ERROR_ARARAGI   ( msg_bag_059 )
+#define MSGID_ITEMUSE_CYCLE_NOSTOP    ( msg_bag_058 )
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief 【道具使用可能チェック・発動】自転車
+ *
+ * @param   pWork   
+ *
+ * @retval  int   
+ */
+//----------------------------------------------------------------------------------
+static int _check_Cycle( FIELD_ITEMMENU_WORK *pWork )
+{
+
+  if(BAG_MENU_TSUKAU==pWork->ret_code2){
+    if(ITEMUSE_GetItemUseCheck( pWork->icwk, ITEMCHECK_CYCLE_RIDE)){
+      pWork->ret_code = BAG_NEXTPROC_RIDECYCLE;  //のる
+      _CHANGE_STATE(pWork,NULL);
+      return TRUE;
+    }else{
+      // のれなかった
+      GFL_MSG_GetString( pWork->MsgManager, MSGID_ITEMUSE_ERROR_ARARAGI, pWork->pStrBuf );
+      WORDSET_RegisterPlayerName( pWork->WordSet, 0, pWork->mystatus );
+      WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
+      // 文字列のみpExpStrBufに用意しておき遷移先で表示させる
+      _CHANGE_STATE(pWork,_itemInnerUseError);
+      return FALSE;
+    }
+  }else if(BAG_MENU_ORIRU==pWork->ret_code2){
+    if(ITEMUSE_GetItemUseCheck( pWork->icwk, ITEMCHECK_CYCLE_STOP)){
+      pWork->ret_code = BAG_NEXTPROC_DROPCYCLE;  //おりる
+      _CHANGE_STATE(pWork,NULL);
+      return TRUE;
+    }else{
+      // おりれなかった
+      GFL_MSG_GetString( pWork->MsgManager, MSGID_ITEMUSE_CYCLE_NOSTOP, pWork->pStrBuf );
+      WORDSET_RegisterPlayerName( pWork->WordSet, 0, pWork->mystatus );
+      WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
+      // 文字列のみpExpStrBufに用意しておき遷移先で表示させる
+      _CHANGE_STATE(pWork,_itemInnerUseError);
+      return FALSE;
+    }
+  }
+  return FALSE;
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief 【道具使用可能チェック・発動】タウンマップ
+ */
+//----------------------------------------------------------------------------------
+static int _check_TownMap( FIELD_ITEMMENU_WORK *pWork )
+{
+  if(ITEMUSE_GetItemUseCheck( pWork->icwk, ITEMCHECK_TOWNMAP)){
+    pWork->ret_code = BAG_NEXTPROC_TOWNMAP;  //タウンマップ
+    _CHANGE_STATE(pWork,NULL);
+    return TRUE;
+  }else{
+    // 使えない
+    GFL_MSG_GetString( pWork->MsgManager, MSGID_ITEMUSE_ERROR_ARARAGI, pWork->pStrBuf );
+    WORDSET_RegisterPlayerName( pWork->WordSet, 0, pWork->mystatus );
+    WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
+    // 文字列のみpExpStrBufに用意しておき遷移先で表示させる
+    _CHANGE_STATE(pWork,_itemInnerUseError);
+    return FALSE;
+  }
+  return FALSE;
+}
+//----------------------------------------------------------------------------------
+/**
+ * @brief 【道具使用可能チェック・発動】ともだち手帳
+ */
+//----------------------------------------------------------------------------------
+static int _check_TomodatiTechou( FIELD_ITEMMENU_WORK *pWork )
+{
+  if(ITEMUSE_GetItemUseCheck( pWork->icwk, ITEMCHECK_WIFINOTE)){
+    pWork->ret_code = BAG_NEXTPROC_FRIENDNOTE;  //タウンマップ
+    _CHANGE_STATE(pWork,NULL);
+    return TRUE;
+  }else{
+    // 使えない
+    GFL_MSG_GetString( pWork->MsgManager, MSGID_ITEMUSE_ERROR_ARARAGI, pWork->pStrBuf );
+    WORDSET_RegisterPlayerName( pWork->WordSet, 0, pWork->mystatus );
+    WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
+    // 文字列のみpExpStrBufに用意しておき遷移先で表示させる
+    _CHANGE_STATE(pWork,_itemInnerUseError);
+    return FALSE;
+  }
+  return FALSE;
+  
+}
+//----------------------------------------------------------------------------------
+/**
+ * @brief 【道具使用可能チェック・発動】バトルレコーダー
+ */
+//----------------------------------------------------------------------------------
+static int _check_BattleRecorder( FIELD_ITEMMENU_WORK *pWork )
+{
+  
+  if(ITEMUSE_GetItemUseCheck( pWork->icwk, ITEMCHECK_BATTLE_RECORDER)){
+    pWork->ret_code = BAG_NEXTPROC_BATTLERECORDER;  //バトルレコーダー
+    _CHANGE_STATE(pWork,NULL);
+    return TRUE;
+  }else{
+    // 使えない
+    GFL_MSG_GetString( pWork->MsgManager, MSGID_ITEMUSE_ERROR_ARARAGI, pWork->pStrBuf );
+    WORDSET_RegisterPlayerName( pWork->WordSet, 0, pWork->mystatus );
+    WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
+    // 文字列のみpExpStrBufに用意しておき遷移先で表示させる
+    _CHANGE_STATE(pWork,_itemInnerUseError);
+    return FALSE;
+  
+  }
+  return FALSE;
+}
+//----------------------------------------------------------------------------------
+/**
+ * @brief 【道具使用可能チェック・発動】あまいミツ
+ */
+//----------------------------------------------------------------------------------
+static int _check_AmaiMitu( FIELD_ITEMMENU_WORK *pWork )
+{
+  if(ITEMUSE_GetItemUseCheck( pWork->icwk, ITEMCHECK_AMAIMITU)){
+      pWork->ret_code = BAG_NEXTPROC_AMAIMITU;  //あまいミツ
+    _CHANGE_STATE(pWork,NULL);
+    return TRUE;
+  }else{
+    // 使えない
+    GFL_MSG_GetString( pWork->MsgManager, MSGID_ITEMUSE_ERROR_ARARAGI, pWork->pStrBuf );
+    WORDSET_RegisterPlayerName( pWork->WordSet, 0, pWork->mystatus );
+    WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
+    // 文字列のみpExpStrBufに用意しておき遷移先で表示させる
+    _CHANGE_STATE(pWork,_itemInnerUseError);
+    return FALSE;
+  
+  }
+  return FALSE;
+  
+}
+//----------------------------------------------------------------------------------
+/**
+ * @brief 【道具使用可能チェック・発動】つりざお
+ */
+//----------------------------------------------------------------------------------
+static int _check_Turizao( FIELD_ITEMMENU_WORK *pWork )
+{
+  if(ITEMUSE_GetItemUseCheck( pWork->icwk, ITEMCHECK_TURIZAO)){
+      pWork->ret_code = BAG_NEXTPROC_TURIZAO;  //つりざお
+    _CHANGE_STATE(pWork,NULL);
+    return TRUE;
+  }else{
+    // のれなかった
+    GFL_MSG_GetString( pWork->MsgManager, MSGID_ITEMUSE_ERROR_ARARAGI, pWork->pStrBuf );
+    WORDSET_RegisterPlayerName( pWork->WordSet, 0, pWork->mystatus );
+    WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
+    // 文字列のみpExpStrBufに用意しておき遷移先で表示させる
+    _CHANGE_STATE(pWork,_itemInnerUseError);
+    return FALSE;
+  }
+  return FALSE;
+  
+}
+//----------------------------------------------------------------------------------
+/**
+ * @brief 【道具使用可能チェック・発動】メール
+ */
+//----------------------------------------------------------------------------------
+static int _check_MailView( FIELD_ITEMMENU_WORK *pWork )
+{
+  if(ITEMUSE_GetItemUseCheck( pWork->icwk, ITEMCHECK_MAIL)){
+      pWork->ret_code = BAG_NEXTPROC_MAILVIEW;  //メール閲覧
+    _CHANGE_STATE(pWork,NULL);
+    return TRUE;
+  }else{
+    // 使えない
+    GFL_MSG_GetString( pWork->MsgManager, MSGID_ITEMUSE_ERROR_ARARAGI, pWork->pStrBuf );
+    WORDSET_RegisterPlayerName( pWork->WordSet, 0, pWork->mystatus );
+    WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
+    // 文字列のみpExpStrBufに用意しておき遷移先で表示させる
+    _CHANGE_STATE(pWork,_itemInnerUseError);
+    return FALSE;
+  
+  }
+  return FALSE;
+  
+}
+
+typedef struct{
+  u16 item;
+  u16 num;
+  int (*check)(FIELD_ITEMMENU_WORK   *pWork);
+} ITEMUSE_FUNC_DATA ;
+
+static const ITEMUSE_FUNC_DATA ItemUseFuncTable[]={
+  { // 自転車乗る・降りるチェック
+    ITEM_ZITENSYA,  1,
+    _check_Cycle,
+  },
+  { // タウンマップ
+    ITEM_TAUNMAPPU,  1,
+    _check_TownMap,
+  },
+  { // ともだち手帳
+    ITEM_TOMODATITETYOU,  1,
+    _check_TomodatiTechou,
+  },
+  { // あまいミツ
+    ITEM_AMAIMITU,  1,
+    _check_AmaiMitu,
+  },
+  { // つりざお
+    ITEM_BORONOTURIZAO,  1,
+    _check_Turizao,
+  },
+  { // バトルレコーダー
+    ITEM_BATORUREKOODAA,  1,
+    _check_BattleRecorder,
+  },
+  { // メール閲覧
+    ITEM_GURASUMEERU,  11,
+    _check_MailView,
+  },
+
+};
+
+#define ITEMUSE_MAX (NELEMS(ItemUseFuncTable))
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief 
+ *
+ * @param   item    
+ *
+ * @retval  int   
+ */
+//----------------------------------------------------------------------------------
+static int _hit_item( u16 item )
+{
+  int i;
+  for(i=0;i<ITEMUSE_MAX;i++){
+    if(ItemUseFuncTable[i].item==item){
+      return i;
+    }
+  }
+  return -1;
+}
 //------------------------------------------------------------------------------
 /**
  * @brief   アイテムを選択してどういう動作を行うかきいているところ
@@ -892,14 +1165,6 @@ static void _itemSelectWait(FIELD_ITEMMENU_WORK* pWork)
       pWork->ret_code = BAG_NEXTPROC_EVOLUTION;  //進化
       _CHANGE_STATE(pWork,NULL);
     }
-    else if((ITEM_ZITENSYA == pWork->ret_item) && (BAG_MENU_TSUKAU==pWork->ret_code2)){
-      pWork->ret_code = BAG_NEXTPROC_RIDECYCLE;  //のる
-      _CHANGE_STATE(pWork,NULL);
-    }
-    else if((ITEM_ZITENSYA == pWork->ret_item) && (BAG_MENU_ORIRU==pWork->ret_code2)){
-      pWork->ret_code = BAG_NEXTPROC_DROPCYCLE;  //おりる
-      _CHANGE_STATE(pWork,NULL);
-    }
     else if(BAG_MENU_SUTERU==pWork->ret_code2){  //すてる
       _CHANGE_STATE(pWork,_itemTrash);
     }
@@ -920,37 +1185,12 @@ static void _itemSelectWait(FIELD_ITEMMENU_WORK* pWork)
       SHORTCUT_SetEventItem( pWork, pWork->curpos );
       _CHANGE_STATE(pWork, _itemKindSelectMenu);
     }
-    else if(pWork->ret_item == ITEM_TAUNMAPPU){
-      pWork->ret_code = BAG_NEXTPROC_TOWNMAP;  //タウンマップ
-      _CHANGE_STATE(pWork,NULL);
-    }
-    else if(pWork->ret_item == ITEM_TOMODATITETYOU){
-      pWork->ret_code = BAG_NEXTPROC_FRIENDNOTE;  //ともだち手帳
-      _CHANGE_STATE(pWork,NULL);
-    }
-    else if(pWork->ret_item == ITEM_ANANUKENOHIMO){
-      pWork->ret_code = BAG_NEXTPROC_ANANUKENOHIMO;  //あなぬけのヒモ
-      _CHANGE_STATE(pWork,NULL);
-    }
-    else if(pWork->ret_item == ITEM_AMAIMITU){
-      pWork->ret_code = BAG_NEXTPROC_AMAIMITU;  //あまいミツ
-      _CHANGE_STATE(pWork,NULL);
-    }
-    else if(pWork->ret_item == ITEM_BORONOTURIZAO){
-      pWork->ret_code = BAG_NEXTPROC_TURIZAO;  //つりざお
-      _CHANGE_STATE(pWork,NULL);
-    }
-    else if(pWork->ret_item == ITEM_BATORUREKOODAA){
-      pWork->ret_code = BAG_NEXTPROC_BATTLERECORDER;  //バトルレコーダー
-      _CHANGE_STATE(pWork,NULL);
-    }
     else if(pWork->ret_item == ITEM_PARESUHEGOO){
       pWork->ret_code = BAG_NEXTPROC_PALACEJUMP;  // パレスへゴー
       _CHANGE_STATE(pWork,NULL);
     }
-    else if(pWork->ret_item>=ITEM_GURASUMEERU && pWork->ret_item<=ITEM_BURIKKUMEERU){
-      pWork->ret_code = BAG_NEXTPROC_MAILVIEW;  //メール閲覧
-      _CHANGE_STATE(pWork,NULL);
+    else if(_hit_item(pWork->ret_item)>=0){    // どうぐ使用チェックを増やせる構造
+      ItemUseFuncTable[_hit_item(pWork->ret_item)].check( pWork );
     }
     else if(BAG_MENU_TSUKAU==pWork->ret_code2){ //つかう
       // バッグ内で使うアイテム判定
@@ -980,6 +1220,8 @@ static void _itemSelectWait(FIELD_ITEMMENU_WORK* pWork)
     bClear = TRUE;
     _CHANGE_STATE(pWork,_itemKindSelectMenu);
   }
+
+  // 選択終了だったらメニュー面の消去
   if(bClear){
     ITEMDISP_ListPlateClear( pWork );
     APP_TASKMENU_CloseMenu(pWork->pAppTask);
@@ -1676,8 +1918,8 @@ static void _itemSellExit( FIELD_ITEMMENU_WORK* pWork )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  捨てる処理  アイテムを削除
- *	@retval none
+ *  @brief  捨てる処理  アイテムを削除
+ *  @retval none
  */
 //-----------------------------------------------------------------------------
 static void ITEM_Sub( FIELD_ITEMMENU_WORK* pWork, u8 sub_num )
