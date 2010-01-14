@@ -96,7 +96,6 @@ void BTL_POKESELECT_RESULT_Init( BTL_POKESELECT_RESULT *result, const BTL_POKESE
 {
   result->cnt = 0;
   result->max = param->numSelect;
-  OS_TPrintf(" PokeSelResult : max=%d\n", result->max);
 }
 //=============================================================================================
 /**

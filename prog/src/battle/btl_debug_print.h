@@ -105,7 +105,7 @@ typedef enum {
   DBGSTR_SVFL_ChangePokeReqInfo,
   DBGSTR_SVFL_TurnStart_Result,
   DBGSTR_SVFL_ActOrderMainStart,
-
+  DBGSTR_SVFL_ActOrderMainDropOut,
 
   DBGSTR_SC_PutCmd,
   DBGSTR_SC_ReservedPos,
@@ -135,10 +135,12 @@ typedef enum {
   DBGSTR_VCORE_SelPokeEnd,
   DBGSTR_VCORE_SelPokeEnd_Sel,
   DBGSTR_VCORE_SelPokeEnd_Unsel,
+  DBGSTR_SCU_RelivePokeAct,
 
   DBGSTR_POSPOKE_Out,
   DBGSTR_POSPOKE_In,
-  DBGSTR_SCU_RelivePokeAct,
+  DBGSTR_DEADREC_Add,
+
 
   DBGSTR_val_comma,
   DBGSTR_done,

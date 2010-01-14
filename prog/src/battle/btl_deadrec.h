@@ -19,10 +19,13 @@ enum {
  *  ポケ死亡レコード
  */
 typedef struct {
+
   struct {
     u8 cnt;
-    u8 pokeID[ BTL_POKEID_MAX ];
+    u8 fDead[ BTL_POKEID_MAX ];          ///< 死亡フラグ（ポケモンID毎）
+    u8 fExpChecked[ BTL_POKEID_MAX ];    ///< 経験値チェック処理済みフラグ（ポケモンID毎）
   }record[BTL_DEADREC_TURN_MAX];
+
 }BTL_DEADREC;
 
 
@@ -32,3 +35,6 @@ extern void BTL_DEADREC_Add( BTL_DEADREC* wk, u8 pokeID );
 
 extern u8 BTL_DEADREC_GetCount( const BTL_DEADREC* wk, u8 turn );
 extern u8 BTL_DEADREC_GetPokeID( const BTL_DEADREC* wk, u8 turn, u8 idx );
+extern BOOL BTL_DEADREC_GetExpCheckedFlag( const BTL_DEADREC* wk, u8 turn, u8 idx );
+extern void BTL_DEADREC_SetExpCheckedFlag( BTL_DEADREC* wk, u8 turn, u8 idx );
+

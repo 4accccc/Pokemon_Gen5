@@ -456,6 +456,7 @@ static void scPut_WeatherDamage( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BtlWea
 static BOOL scproc_CheckDeadCmd( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* poke );
 static void scproc_ClearPokeDependEffect( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* poke );
 static void CurePokeDependSick_CallBack( void* wk_ptr, BTL_POKEPARAM* bpp, WazaSick sickID, u8 dependPokeID );
+static void scproc_CheckExpGet( BTL_SVFLOW_WORK* wk );
 static void scproc_GetExp( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* deadPoke );
 static void getexp_calc( BTL_SVFLOW_WORK* wk, const BTL_PARTY* party, const BTL_POKEPARAM* deadPoke, CALC_EXP_WORK* result );
 static u32 getexp_calc_adjust_level( u32 base_exp, u16 getpoke_lv, u16 deadpoke_lv );
@@ -871,6 +872,7 @@ static u32 ActOrderProc_Main( BTL_SVFLOW_WORK* wk, u32 startOrderIdx )
   for(i=startOrderIdx; i<wk->numActOrder; i++)
   {
     ActOrder_Proc( wk, &wk->actOrder[i] );
+    scproc_CheckExpGet( wk );
 
     // 大爆発など同時全滅のケースは、死亡レコードを見れば解決するんじゃんと思ってる。
     if( scproc_CheckShowdown(wk) ){
@@ -879,7 +881,7 @@ static u32 ActOrderProc_Main( BTL_SVFLOW_WORK* wk, u32 startOrderIdx )
     }
 
     if( wk->flowResult !=  SVFLOW_RESULT_DEFAULT ){
-      OS_TPrintf("Result=%dによる中途サーバ返信\n");
+      BTL_N_Printf( DBGSTR_SVFL_ActOrderMainDropOut );
       break;
     }
 
@@ -890,8 +892,6 @@ static u32 ActOrderProc_Main( BTL_SVFLOW_WORK* wk, u32 startOrderIdx )
   if( i == wk->numActOrder )
   {
     u8 numDeadPoke;
-
-    OS_TPrintf("ターンチェック開始\n");
 
     // ターンチェック処理
     scproc_TurnCheck( wk );
@@ -4454,8 +4454,8 @@ static void scproc_Fight_Damage_side_single( BTL_SVFLOW_WORK* wk,
 {
   svflowsub_damage_act_singular( wk, attacker, defender, wazaParam, affinity, targetDmgRatio );
 
-  scproc_CheckDeadCmd( wk, defender );
   scproc_CheckDeadCmd( wk, attacker );
+  scproc_CheckDeadCmd( wk, defender );
 }
 //------------------------------------------------------------------
 // サーバーフロー下請け：単体ダメージ処理（下位）
@@ -6182,7 +6182,6 @@ static BOOL scproc_PushOutCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BT
           BTL_POKEPARAM* nextPoke = BTL_POKECON_GetClientPokeData( wk->pokeCon, clientID, nextPokeIdx );
           u8 nextPokeID;
 
-          OS_TPrintf("ふきとばされた次のポケモンIdx=%d, Ptr=%p\n", nextPokeIdx, nextPoke);
           nextPokeID = BPP_GetID( nextPoke );
 
           scproc_MemberOutCore( wk, target );
@@ -6737,6 +6736,8 @@ static void scproc_turncheck_sub( BTL_SVFLOW_WORK* wk, BTL_POKESET* pokeSet, Btl
       scEvent_TurnCheck( wk, bpp, event_type );
       scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
       Hem_PopState( &wk->HEManager, hem_state );
+
+      scproc_CheckExpGet( wk );
     }
   }
 }
@@ -6765,6 +6766,8 @@ static void scproc_turncheck_sick( BTL_SVFLOW_WORK* wk, BTL_POKESET* pokeSet )
     SCQUE_PUT_OP_WazaSickTurnCheck( wk->que, BPP_GetID(bpp) );
     scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
     Hem_PopState( &wk->HEManager, hem_state );
+
+    scproc_CheckExpGet( wk );
   }
 }
 //--------------------------------------------------------------------------------
@@ -6912,6 +6915,7 @@ static void scproc_turncheck_weather( BTL_SVFLOW_WORK* wk, BTL_POKESET* pokeSet 
         }
         Hem_PopState( &wk->HEManager, hem_state );
         scproc_CheckDeadCmd( wk, bpp );
+        scproc_CheckExpGet( wk );
       }
     }
   }
@@ -7002,7 +7006,7 @@ static BOOL scproc_CheckDeadCmd( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* poke )
 
 
       // 経験値取得 -> 退場の順にしないと経験値計算でおかしくなります
-      scproc_GetExp( wk, poke );
+//      scproc_GetExp( wk, poke );
       BTL_POSPOKE_PokeOut( &wk->pospokeWork, pokeID );
       return TRUE;
     }
@@ -7046,26 +7050,53 @@ static void CurePokeDependSick_CallBack( void* wk_ptr, BTL_POKEPARAM* bpp, WazaS
   }
 }
 
+
+//----------------------------------------------------------------------------------
+/**
+ * 死亡ポケレコードを見て必要なら経験値取得の処理を行う
+ *
+ * @param   wk
+ */
+//----------------------------------------------------------------------------------
+static void scproc_CheckExpGet( BTL_SVFLOW_WORK* wk )
+{
+  if( BTL_MAIN_IsExpSeqEnable(wk->mainModule) )
+  {
+    u32 i, deadPokeCnt = BTL_DEADREC_GetCount( &wk->deadRec, 0 );
+
+    for(i=0; i<deadPokeCnt; ++i)
+    {
+      if( !BTL_DEADREC_GetExpCheckedFlag(&wk->deadRec, 0, i) )
+      {
+        u8 pokeID = BTL_DEADREC_GetPokeID( &wk->deadRec, 0, i );
+        const BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, pokeID );
+        scproc_GetExp( wk, bpp );
+
+        BTL_DEADREC_SetExpCheckedFlag( &wk->deadRec, 0, i );
+      }
+    }
+  }
+}
+
 //----------------------------------------------------------------------------------
 /**
  * 経験値取得処理コマンド生成
  *
  * @param   wk
- * @param   deadPoke    死んだポケモン
+ * @param   deadPoke
+ *
+ * @retval  BOOL    経験値取得処理を終了したら（取得条件を満たしていたら）TRUE
  */
 //----------------------------------------------------------------------------------
 static void scproc_GetExp( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* deadPoke )
 {
-  if( BTL_MAIN_IsExpSeqEnable(wk->mainModule) )
+  u8 deadPokeID = BPP_GetID( deadPoke );
+  if( BTL_MAINUTIL_PokeIDtoSide(deadPokeID) == BTL_SIDE_2ND )
   {
-    u8 deadPokeID = BPP_GetID( deadPoke );
-    if( BTL_MAINUTIL_PokeIDtoSide(deadPokeID) == BTL_SIDE_2ND )
-    {
-      BTL_PARTY* party = BTL_POKECON_GetPartyData( wk->pokeCon, BTL_MAIN_GetPlayerClientID(wk->mainModule) );
+    BTL_PARTY* party = BTL_POKECON_GetPartyData( wk->pokeCon, BTL_MAIN_GetPlayerClientID(wk->mainModule) );
 
-      getexp_calc( wk, party, deadPoke, wk->calcExpWork );
-      getexp_make_cmd( wk, party, wk->calcExpWork );
-    }
+    getexp_calc( wk, party, deadPoke, wk->calcExpWork );
+    getexp_make_cmd( wk, party, wk->calcExpWork );
   }
 }
 //----------------------------------------------------------------------------------
@@ -11677,7 +11708,6 @@ static u8 scproc_HandEx_delayWazaDamage( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_P
   u8 result;
 
   scEvent_GetWazaParam( wk, param->wazaID, attacker, &wazaParam );
-  OS_TPrintf("時間差ワザ：ID=%d, type=%d, attacker=%d\n", wazaParam.wazaID, wazaParam.wazaType, param->attackerPokeID );
 
   // ワザメッセージ，エフェクト，ワザ出し確定
   que_reserve_pos = SCQUE_RESERVE_Pos( wk->que, SC_ACT_WAZA_EFFECT );

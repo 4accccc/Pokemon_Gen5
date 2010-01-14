@@ -146,6 +146,7 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_SVFL_ChangePokeReqInfo:   return "クライアント[%d]   空いている位置の数=%d\n";
   case DBGSTR_SVFL_TurnStart_Result:    return "【ターン開始コマンド】処理アクション %d / %d\n";
   case DBGSTR_SVFL_ActOrderMainStart:   return "コマンド生成コア 処理アクション開始Index=%d\n";
+  case DBGSTR_SVFL_ActOrderMainDropOut: return "Result=%dによる中途サーバ返信\n";
 
 
   case DBGSTR_POSPOKE_Out:              return " poke[%d] out from pos[%d]\n";
@@ -176,6 +177,8 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_EV_LinkEmpty:             return " empty...\n";
   case DBGSTR_EVAR_Push:                return "PUSH [%5d] SP=%d\n";
   case DBGSTR_EVAR_Pop:                 return "Pop! [%5d] SP=%d\n";
+  case DBGSTR_DEADREC_Add:              return " 死亡記録 ターン%d件目 ... pokeID=%d\n";
+
   case DBGSTR_SCU_RelivePokeAct:        return "Pos[%d]=Vpos[%d] ポケ(%d)が生き返り\n";
 
 

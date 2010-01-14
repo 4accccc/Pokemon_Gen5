@@ -545,7 +545,6 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
           return FALSE;
         }
       case SVFLOW_RESULT_BTL_SHOWDOWN:
-        OS_TPrintf("åàíÖÅI\n");
         setMainProc( server, ServerMain_ExitBattle );
         return FALSE;
       default:
