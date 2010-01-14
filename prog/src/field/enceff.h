@@ -29,6 +29,9 @@ extern void ENCEFF_SetEncEff(ENCEFF_CNT_PTR ptr, GMEVENT * event, const ENCEFF_I
 extern void *ENCEFF_GetWork(ENCEFF_CNT_PTR ptr);
 extern void ENCEFF_Draw(ENCEFF_CNT_PTR ptr);
 
+extern void *ENCEFF_AllocUserWork(ENCEFF_CNT_PTR ptr, const int size, const HEAPID inHeapID);
+extern void *ENCEFF_GetUserWorkPtr(ENCEFF_CNT_PTR ptr);
+
 
 extern GMEVENT *ENCEFF_MDL_Create1(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork);
 extern void ENCEFF_MDL_Draw(ENCEFF_CNT_PTR ptr);

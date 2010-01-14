@@ -10,10 +10,15 @@
 
 #include "gamesystem/gamesystem.h"  //for GMEVENT
 
+//※1辺8ユニットで考えれば、32ｘ24が実現できるが、ヒープ容量の都合で最大を16ｘ12(1辺16ユニット)にしている
+
 #define POLY_W_NUM_MAX  (32)
 #define POLY_H_NUM_MAX  (24)
 
-#define WORK_SIZE   (400)
+#define PANEL_W_NUM_MAX  (16)
+#define PANEL_H_NUM_MAX  (12)
+
+#define WORK_SIZE   (100)
 
 struct PNL_EFF_WORK_tag;
 struct PANEL_WK_tag;
@@ -43,7 +48,7 @@ typedef struct MOVE_START_PRM_tag
 
 typedef struct PNL_EFF_WORK_tag
 {
-  PANEL_WK Panel[POLY_W_NUM_MAX*POLY_H_NUM_MAX];
+  PANEL_WK Panel[PANEL_W_NUM_MAX*PANEL_H_NUM_MAX];
   MOVE_START_PRM StartPrm;
   u16 PanelNumW;
   u16 PanelNumH;

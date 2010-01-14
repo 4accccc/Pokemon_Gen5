@@ -31,6 +31,7 @@ typedef struct ENCEFF_CNT_tag
   FIELDMAP_WORK *FieldMapWork;
   int OverlayStack[OVERLAY_STACK_MAX];
   int OverlayStackNum;
+  void *UserWorkPtr;
 }ENCEFF_CNT;
 
 typedef struct {
@@ -76,6 +77,8 @@ ENCEFF_CNT_PTR ENCEFF_CreateCntPtr(const HEAPID inHeapID, FIELDMAP_WORK * fieldm
 //--------------------------------------------------------------
 void ENCEFF_DeleteCntPtr(ENCEFF_CNT_PTR ptr)
 {
+  if (ptr->UserWorkPtr != NULL) GFL_HEAP_FreeMemory( ptr->UserWorkPtr );
+
   //オーバーレイスタックがある場合はここでアンロード
   ENCEFF_UnloadEffOverlay(ptr);
   
@@ -102,9 +105,9 @@ void ENCEFF_SetEncEff(ENCEFF_CNT_PTR ptr, GMEVENT * event, const ENCEFF_ID inID)
 #ifdef PM_DEBUG
 #ifdef DEBUG_ONLY_FOR_saitou
   no = ENCEFFID_MAX-1;
-  no = 0;
 #endif
 #endif
+  
   //オーバーレイロード
   if (EncEffTbl[no].OverlayID != OVERLAY_NONE)
   {
@@ -147,6 +150,39 @@ void ENCEFF_Draw(ENCEFF_CNT_PTR ptr)
   {
     ptr->DrawFunc(ptr);
   }
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   ユーザーワークポインタをセット
+ * @param ptr   コントローラポインタ
+ * @retval  void*     ワークポインタ
+ */
+//--------------------------------------------------------------
+void *ENCEFF_AllocUserWork(ENCEFF_CNT_PTR ptr, const int size, const HEAPID inHeapID)
+{
+  if (ptr->UserWorkPtr != NULL)
+  {
+    GF_ASSERT(0);
+    return NULL;
+  }
+
+  NOZOMU_Printf("user_work_size = %x\n",size); 
+  
+  ptr->UserWorkPtr = GFL_HEAP_AllocClearMemory(inHeapID, size);
+  return ptr->UserWorkPtr;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   ユーザーワークポインタを取得
+ * @param ptr   コントローラポインタ
+ * @retval  void*     ワークポインタ
+ */
+//--------------------------------------------------------------
+void *ENCEFF_GetUserWorkPtr(ENCEFF_CNT_PTR ptr)
+{
+  return ptr->UserWorkPtr;
 }
 
 //--------------------------------------------------------------------------------------------

@@ -14,6 +14,8 @@
 
 #include "enceff_pnl.h"
 
+#define ROT_NUM (1)
+
 static GMEVENT *CreateEffMainEvt(GAMESYS_WORK *gsys);
 
 static BOOL MoveFunc(PANEL_WK *panel);
@@ -49,8 +51,8 @@ static GMEVENT *CreateEffMainEvt(GAMESYS_WORK *gsys)
   GMEVENT * event;
   PNL_EFF_PARAM param;
 
-  param.CharX = 1;
-  param.CharY = 1;
+  param.CharX = 4;
+  param.CharY = 4;
   param.InitFunc = NULL;
   param.StartFunc = StartFunc;
   param.MoveFunc = MoveFunc;
@@ -64,23 +66,16 @@ static void StartFunc(PNL_EFF_WORK *work)
 {
   MOVE_START_PRM *prm = &work->StartPrm;
 
-  if ( prm->Count < work->PanelNumW/2 )
+  if ( prm->Count < work->PanelNumW*work->PanelNumH )
   {
-    ;if (prm->Wait == 0)
+    if (prm->Wait == 0)
     {
-      int i;
-      for(i=0;i<work->PanelNumH;i++)
-      {
-        PANEL_WK *panel;
-        int left = prm->Count;
-        int right = (work->PanelNumW-1)-prm->Count;
-        panel = &work->Panel[(i*work->PanelNumW)+left];
-        panel->MoveOnFlg = TRUE;
-        panel = &work->Panel[(i*work->PanelNumW)+right];
-        panel->MoveOnFlg = TRUE;
-      }
+      PANEL_WK *panel;
+      panel = &work->Panel[prm->Count];
+      panel->MoveOnFlg = TRUE;
+
       prm->Count++;
-      prm->Wait = 1;
+      prm->Wait = 0;
     }
     else
     {
@@ -91,11 +86,22 @@ static void StartFunc(PNL_EFF_WORK *work)
 
 static BOOL MoveFunc(PANEL_WK *panel)
 {
-  if ( panel->Count < 16 )
+  if ( panel->Count < ROT_NUM )
   {
-//    panel->Pos.x += (FX32_ONE*4);
-    panel->Pos.z += (FX32_ONE*16);
-    panel->Count++;
+    panel->Rot.y += 0x1000;
+    if ( panel->Rot.y >= 0x10000 )
+    {
+      panel->Rot.y -= 0x10000;
+      panel->Count++;
+    }
+  }
+  else if (panel->Count == ROT_NUM ){
+    panel->Rot.y += 0x1000;
+    if ( panel->Rot.y >= 0x8000 )
+    {
+      panel->Rot.y = 0x8000;
+      panel->Count++;
+    }
   }
   else panel->MoveEndFlg = TRUE;
 

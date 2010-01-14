@@ -79,8 +79,8 @@ static GMEVENT *CreateEffMainEvt(GAMESYS_WORK *gsys)
   PNL_EFF_PARAM param;
   BUFFER_WORK *buf_work;
 
-  param.CharX = 1;
-  param.CharY = 1;
+  param.CharX = 2;
+  param.CharY = 2;
   param.InitFunc = InitFunc;
   param.StartFunc = StartFunc;
   param.MoveFunc = MoveFunc;
@@ -109,21 +109,21 @@ static void InitFunc(PNL_EFF_WORK *work)
   {
     int x,y;
     int idx;
-    x = 5;
-    y = 5;
-    idx = 32*y+x;
+    x = 3;//5;
+    y = 3;//5;
+    idx = 16*y+x;
     buf_work->BuffIdxNext[0] = idx;
     buf_work->BuffCountNext++;
 
-    x = 10;
-    y = 18;
-    idx = 32*y+x;
+    x = 5;//10;
+    y = 9;//18;
+    idx = 16*y+x;
     buf_work->BuffIdxNext[1] = idx;
     buf_work->BuffCountNext++;
 
-    x = 22;
-    y = 10;
-    idx = 32*y+x;
+    x = 11;//22;
+    y = 5;//10;
+    idx = 16*y+x;
     buf_work->BuffIdxNext[2] = idx;
     buf_work->BuffCountNext++;
   }

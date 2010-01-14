@@ -189,14 +189,15 @@ static GMEVENT_RESULT MainEvt( GMEVENT* event, int* seq, void* work )
     //フィールド表示モード切替
     FIELDMAP_SetDraw3DMode(fieldmap, DRAW3DMODE_ENCEFF);
 
-    //オーバーレイロード
-    ;
     //生成関数コール
     {
       GMEVENT *call_event;
+      ENCEFF_CNT_PTR cnt_ptr;
       call_event = evt_work->CreateFunc(gsys);
       //ワークセット
-      evt_work->Work = GMEVENT_GetEventWork(call_event);
+//      evt_work->Work = GMEVENT_GetEventWork(call_event);
+      cnt_ptr = FIELDMAP_GetEncEffCntPtr(fieldmap);
+      evt_work->Work = ENCEFF_GetUserWorkPtr(cnt_ptr);
       //イベントコール
       GMEVENT_CallEvent( event, call_event );
     }

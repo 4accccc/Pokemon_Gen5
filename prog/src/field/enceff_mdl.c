@@ -12,7 +12,7 @@
 #include "fieldmap.h"
 #include "system/screentex.h"
 #include "arc/texViewTest.naix"
-
+#include "system/main.h"
 //--------------------------------------------------------------
 /// ENCEFF_MDL_WORK
 //--------------------------------------------------------------
@@ -74,12 +74,22 @@ GMEVENT *ENCEFF_MDL_Create1(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork)
 static GMEVENT *CreateEffCommon(  GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork,
                                   const int inMdl, const int inAnm  )
 {
+  ENCEFF_CNT_PTR cnt_ptr;
   GMEVENT *event;
   ENCEFF_MDL_WORK *work;
+  int size;
 
-  event = GMEVENT_Create( gsys, NULL, ev_encEffectFunc, sizeof(ENCEFF_MDL_WORK) );
-  work = GMEVENT_GetEventWork( event );
-	MI_CpuClear8( work, sizeof(ENCEFF_MDL_WORK) );
+  size = sizeof(ENCEFF_MDL_WORK);
+
+  //ƒ[ƒN‚ðŠm•Û
+  {
+    FIELDMAP_WORK * fieldmap;
+    fieldmap = GAMESYSTEM_GetFieldMapWork(gsys);
+    cnt_ptr = FIELDMAP_GetEncEffCntPtr(fieldmap);
+  }
+  work = ENCEFF_AllocUserWork(cnt_ptr, size, HEAPID_FLD3DCUTIN);
+
+  event = GMEVENT_Create( gsys, NULL, ev_encEffectFunc, 0 );
   work->fieldWork = fieldWork;
   work->MdlArcIdx = inMdl;
   work->AnmArcIdx = inAnm;
@@ -97,7 +107,7 @@ static GMEVENT *CreateEffCommon(  GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork,
 //--------------------------------------------------------------
 void ENCEFF_MDL_Draw(ENCEFF_CNT_PTR ptr)
 {
-  void *wk = ENCEFF_GetWork(ptr);
+  void *wk = ENCEFF_GetUserWorkPtr(ptr);
 
   ENCEFF_MDL_WORK *work = (ENCEFF_MDL_WORK*)wk;
 
@@ -115,7 +125,15 @@ void ENCEFF_MDL_Draw(ENCEFF_CNT_PTR ptr)
 //--------------------------------------------------------------
 static GMEVENT_RESULT ev_encEffectFunc( GMEVENT *event, int *seq, void *wk )
 {
-  ENCEFF_MDL_WORK *work = wk;
+  ENCEFF_MDL_WORK *work;
+  GAMESYS_WORK * gsys;
+  FIELDMAP_WORK * fieldmap;
+  ENCEFF_CNT_PTR cnt_ptr;
+
+  gsys = GMEVENT_GetGameSysWork(event);
+  fieldmap = GAMESYSTEM_GetFieldMapWork(gsys);
+  cnt_ptr = FIELDMAP_GetEncEffCntPtr(fieldmap);
+  work = ENCEFF_GetUserWorkPtr(cnt_ptr);
   
   switch( (*seq) )
   {

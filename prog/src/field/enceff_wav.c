@@ -77,15 +77,22 @@ static GMEVENT *CreateEffMainEvt(GAMESYS_WORK *gsys)
 {
   GMEVENT * event;
   ENCEFF_WAV_WORK *work;
+  ENCEFF_CNT_PTR cnt_ptr;
   int size;
   int i;
   size = sizeof(ENCEFF_WAV_WORK);
   //イベント作成
   {
-    event = GMEVENT_Create( gsys, NULL, EffMainEvt, size );
+    //ワークを確保
+    {
+      FIELDMAP_WORK * fieldmap;
+      fieldmap = GAMESYSTEM_GetFieldMapWork(gsys);
+      cnt_ptr = FIELDMAP_GetEncEffCntPtr(fieldmap);
+    }
 
-    work = GMEVENT_GetEventWork(event);
-    MI_CpuClear8( work, size );
+    work = ENCEFF_AllocUserWork(cnt_ptr, size, HEAPID_FLD3DCUTIN);
+
+    event = GMEVENT_Create( gsys, NULL, EffMainEvt, 0 );
 
     //波の回数セット
     work->WaveCount = WAVE_COUNT;
@@ -117,12 +124,15 @@ static GMEVENT *CreateEffMainEvt(GAMESYS_WORK *gsys)
 //--------------------------------------------------------------------------------------------
 static GMEVENT_RESULT EffMainEvt( GMEVENT* event, int* seq, void* work )
 {
-  ENCEFF_WAV_WORK *evt_work = work;
+  ENCEFF_WAV_WORK *evt_work;
   GAMESYS_WORK * gsys;
   FIELDMAP_WORK * fieldmap;
+  ENCEFF_CNT_PTR cnt_ptr;
   
   gsys = GMEVENT_GetGameSysWork(event);
   fieldmap = GAMESYSTEM_GetFieldMapWork(gsys);
+  cnt_ptr = FIELDMAP_GetEncEffCntPtr(fieldmap);
+  evt_work = ENCEFF_GetUserWorkPtr(cnt_ptr);
 
   switch(*seq){
   case 0:
@@ -290,6 +300,8 @@ void ENCEFF_WAV_Draw( ENCEFF_CNT_PTR ptr )
 {
   void *wk = ENCEFF_GetWork(ptr);
   ENCEFF_PRG_PTR prg_ptr = (ENCEFF_PRG_PTR)wk;
+
+  G3X_SetClearColor(GX_RGB(16,16,16),31,0x7fff,0,FALSE);
   ENCEFF_PRG_Draw(prg_ptr);
 
 //  DrawMesh(ptr);

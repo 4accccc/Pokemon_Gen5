@@ -48,6 +48,8 @@ GMEVENT *ENCEFF_PNL_CreateEffMainEvt(GAMESYS_WORK *gsys, PNL_EFF_PARAM *param)
 {
   GMEVENT * event;
   ENCEFF_PNL_WORK *work;
+  ENCEFF_CNT_PTR cnt_ptr;
+
   int size;
   int i;
   size = sizeof(ENCEFF_PNL_WORK);
@@ -57,16 +59,22 @@ GMEVENT *ENCEFF_PNL_CreateEffMainEvt(GAMESYS_WORK *gsys, PNL_EFF_PARAM *param)
     int poly_w_num, poly_h_num;
     int poly_w, poly_h;
     int disp_ofs_w, disp_ofs_h;
-    event = GMEVENT_Create( gsys, NULL, EffMainEvt, size );
 
-    work = GMEVENT_GetEventWork(event);
-    MI_CpuClear8( work, size );
+    //ワークを確保
+    {
+      FIELDMAP_WORK * fieldmap;
+      fieldmap = GAMESYSTEM_GetFieldMapWork(gsys);
+      cnt_ptr = FIELDMAP_GetEncEffCntPtr(fieldmap);
+    }
+    work = ENCEFF_AllocUserWork(cnt_ptr, size, HEAPID_FLD3DCUTIN);
+
+    event = GMEVENT_Create( gsys, NULL, EffMainEvt, 0 );
 
     char_x = param->CharX;
     char_y = param->CharY;
 
+    //※サイズ1はヒープ容量の都合で設定できないようにしてあります
     switch(char_x){
-    case 1:
     case 2:
     case 4:
     case 8:
@@ -77,7 +85,6 @@ GMEVENT *ENCEFF_PNL_CreateEffMainEvt(GAMESYS_WORK *gsys, PNL_EFF_PARAM *param)
     }
 
     switch(char_y){
-    case 1:
     case 2:
     case 4:
     case 8:
@@ -132,12 +139,15 @@ GMEVENT *ENCEFF_PNL_CreateEffMainEvt(GAMESYS_WORK *gsys, PNL_EFF_PARAM *param)
 //--------------------------------------------------------------------------------------------
 static GMEVENT_RESULT EffMainEvt( GMEVENT* event, int* seq, void* work )
 {
-  ENCEFF_PNL_WORK *evt_work = work;
+  ENCEFF_PNL_WORK *evt_work;
   GAMESYS_WORK * gsys;
   FIELDMAP_WORK * fieldmap;
+  ENCEFF_CNT_PTR cnt_ptr;
   
   gsys = GMEVENT_GetGameSysWork(event);
   fieldmap = GAMESYSTEM_GetFieldMapWork(gsys);
+  cnt_ptr = FIELDMAP_GetEncEffCntPtr(fieldmap);
+  evt_work = ENCEFF_GetUserWorkPtr(cnt_ptr);
 
   switch(*seq){
   case 0:
@@ -231,6 +241,8 @@ void ENCEFF_PNL_Draw( ENCEFF_CNT_PTR ptr )
 {
   void *wk = ENCEFF_GetWork(ptr);
   ENCEFF_PRG_PTR prg_ptr = (ENCEFF_PRG_PTR)wk;
+
+  G3X_SetClearColor(GX_RGB(31,31,31),31,0x7fff,0,FALSE);
   ENCEFF_PRG_Draw(prg_ptr);
 }
 
