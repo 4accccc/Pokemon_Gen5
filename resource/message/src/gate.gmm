@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-18T23:01:05"/>
+	<create user="murakami_naoto" host="W00210" date="2010-01-14T17:56:58"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -319,7 +319,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -420,50 +420,50 @@
 	<row id="msg_gate_common_cm_01" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>各ゲート共通メッセージ
 ・一言cM/月曜</comment>
-		<language name="JPN" width="256">◇ポケモンが　きずついたら　おちかくの　ポケモンセンターまで！　　　ポケモンセンター</language>
-		<language name="JPN_KANJI" width="256">◇ポケモンが　傷ついたら　お近くの　ポケモンセンターまで!　　　ポケモンセンター</language>
+		<language name="JPN" width="256">◇「ポケモンが　きずついたら　おちかくの　ポケモンセンターまで！」　　　ポケモンセンター</language>
+		<language name="JPN_KANJI" width="256">◇「ポケモンが　傷ついたら　お近くの　ポケモンセンターまで!」　　　ポケモンセンター</language>
 	</row>
 
 	<row id="msg_gate_common_cm_02" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>各ゲート共通メッセージ
 ・一言cM/火曜</comment>
-		<language name="JPN" width="256">◇「かってよかった　キズぐすり　なくてこまった　キズぐすり」　こうにゅうは　フレンドリィショップまで！　　　フレンドリィショップ</language>
-		<language name="JPN_KANJI" width="256">◇「買ってよかった　キズぐすり　無くて困った　キズぐすり」　購入は　フレンドリィショップまで！　　　フレンドリィショップ</language>
+		<language name="JPN" width="256">◇「かってよかった　キズぐすり　なくてこまった　キズぐすり」　フレンドリィショップ</language>
+		<language name="JPN_KANJI" width="256">◇「買ってよかった　キズぐすり　無くて困った　キズぐすり」　フレンドリィショップ</language>
 	</row>
 
 	<row id="msg_gate_common_cm_03" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>各ゲート共通メッセージ
 ・一言cM/水曜</comment>
-		<language name="JPN" width="256">◇あなたの　かわりに　そだてます　あずけるだけで　ポケモンは　つよくなる　　　３ばんどうろ　そだてや　</language>
-		<language name="JPN_KANJI" width="256">◇あなたの　代わりに　育てます　預けるだけで　ポケモンは　強くなる　　　３番道路　育て屋　</language>
+		<language name="JPN" width="256">◇「あなたの　かわりに　そだてます　あずけるだけで　ポケモンは　つよくなる」　　　３ばんどうろ　そだてや　</language>
+		<language name="JPN_KANJI" width="256">◇「あなたの　代わりに　育てます　預けるだけで　ポケモンは　強くなる」　　　３番道路　育て屋　</language>
 	</row>
 
 	<row id="msg_gate_common_cm_04" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>各ゲート共通メッセージ
 ・一言cM/木曜</comment>
-		<language name="JPN" width="256">◇スターへの　かいだんが　ここから　はじまる……　あなたの　さんかを　まっています　　　ライモンシティ　ミュージカル</language>
-		<language name="JPN_KANJI" width="256">◇スターへの　階段が　ここから　始まる……　あなたの　参加を　待っています　　　ライモンシティ　ミュージカル</language>
+		<language name="JPN" width="256">◇「スターへの　かいだんが　ここから　はじまる……　あなたの　さんかを　まっています」　　　ライモンシティ　ミュージカル</language>
+		<language name="JPN_KANJI" width="256">◇「スターへの　階段が　ここから　始まる……　あなたの　参加を　待っています」　　　ライモンシティ　ミュージカル</language>
 	</row>
 
 	<row id="msg_gate_common_cm_05" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>各ゲート共通メッセージ
 ・一言cM/金曜</comment>
-		<language name="JPN" width="256">◇「わぁ　こんなものまで　うっているなんて」　　あなたを　まんぞくが　ここに　あります　　　９ばんどうろ　ショッピングモール</language>
-		<language name="JPN_KANJI" width="256">◇「わぁ　こんなものまで　売っているなんて」　　あなたを　満足が　ここに　あります　　　９ばんどうろ　ショッピングモール</language>
+		<language name="JPN" width="256">◇「わぁ　こんなものまで　うっているなんて　　あなたを　まんぞくが　ここに　あります」　　　９ばんどうろ　ショッピングモール</language>
+		<language name="JPN_KANJI" width="256">◇「わぁ　こんなものまで　売っているなんて　　あなたの　満足が　ここに　あります」　　　９ばん道路　ショッピングモール</language>
 	</row>
 
 	<row id="msg_gate_common_cm_06" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>各ゲート共通メッセージ
 ・一言cM/土曜</comment>
-		<language name="JPN" width="256">◇なまえを　かえれば　すばらしい　みらい　　なまえが　みちびく　すばらしい　かんけい　　　ヒウンシティ　せいめいはんだんの　みせ</language>
-		<language name="JPN_KANJI" width="256">◇名前を　変えれば　素晴らしい　未来　名前が　導く　素晴らしい　関係　　　ヒウンシティ　姓名判断の店</language>
+		<language name="JPN" width="256">◇「なまえを　かえれば　すばらしい　みらい　　なまえが　みちびく　すばらしい　かんけい」　　　ヒウンシティ　せいめいはんだんの　みせ</language>
+		<language name="JPN_KANJI" width="256">◇「名前を　変えれば　素晴らしい　未来　名前が　導く　素晴らしい　関係」　　　ヒウンシティ　姓名判断の店</language>
 	</row>
 
 	<row id="msg_gate_common_cm_07" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>各ゲート共通メッセージ
 ・一言cM/日曜</comment>
-		<language name="JPN" width="256">◇にがさは　りょうやくの　あかし　　にがさは　あいの　あかし　　　ホドモエシティ　マーケット　かんぽうや</language>
-		<language name="JPN_KANJI" width="256">◇苦さは　良薬の　証　　苦さは　愛の　証　　　ホドモエシティ　マーケット　漢方屋</language>
+		<language name="JPN" width="256">◇「にがさは　りょうやくの　あかし　　にがさは　あいの　あかし」　　　ホドモエシティ　マーケット　かんぽうや</language>
+		<language name="JPN_KANJI" width="256">◇「苦さは　良薬の　証　　苦さは　愛の　証」　　　ホドモエシティ　マーケット　漢方屋</language>
 	</row>
 
 	<row id="msg_gate_c1_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffffff,,,#ffffff,,#ffff80,#ffffff,,,#ffffff,,">
@@ -522,56 +522,56 @@
 
 	<row id="msg_gate_c2_01" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>c2についての地域情報1</comment>
-		<language name="JPN" width="256">◇シッポウシティは……　じょうほう１</language>
-		<language name="JPN_KANJI" width="256">◇シッポウシティは……　情報１</language>
+		<language name="JPN" width="256">◇シッポウシティは　いしだたみと　おおくの　そうこが　とくちょう</language>
+		<language name="JPN_KANJI" width="256">◇シッポウシティは　石畳と　多くの　倉庫が　特徴</language>
 	</row>
 
 	<row id="msg_gate_c2_02" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>c2についての地域情報2</comment>
-		<language name="JPN" width="256">◇シッポウシティは……　じょうほう２</language>
-		<language name="JPN_KANJI" width="256">◇シッポウシティは……　情報２</language>
+		<language name="JPN" width="256">◇シッポウシティはくぶつかんでは　ホネ　かせきから　ポケモンを　けんきゅうしている</language>
+		<language name="JPN_KANJI" width="256">シッポウシティ博物館では　骨　化石から　ポケモンを　研究している</language>
 	</row>
 
 	<row id="msg_gate_c2_03" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>c2についての地域情報3</comment>
-		<language name="JPN" width="256">◇シッポウシティは……　じょうほう３</language>
-		<language name="JPN_KANJI" width="256">◇シッポウシティは……　情報３</language>
+		<language name="JPN" width="256">◇シッポウシティ　ジムリーダーは　はくぶつかん　かんちょうを　けんにんしている</language>
+		<language name="JPN_KANJI" width="256">◇シッポウシティ　ジムリーダーは　博物館館長を　兼任している</language>
 	</row>
 
 	<row id="msg_gate_c2_04" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>c2についての地域情報4</comment>
-		<language name="JPN" width="256">◇シッポウシティは……　じょうほう４</language>
-		<language name="JPN_KANJI" width="256">◇シッポウシティは……　情報４</language>
+		<language name="JPN" width="256">◇わかての　げいじゅつかが　おおく　すむまち　そうこを かいちくした　アトリエが　ならぶ</language>
+		<language name="JPN_KANJI" width="256">◇若手の　芸術家が　多く　住む街　倉庫を　改築した　アトリエが　並ぶ</language>
 	</row>
 
 	<row id="msg_gate_c2_05" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>c2についての地域情報5</comment>
-		<language name="JPN" width="256">◇シッポウシティは……　じょうほう５</language>
-		<language name="JPN_KANJI" width="256">◇シッポウシティは……　情報５</language>
+		<language name="JPN" width="256">◇シッポウシティは　アトリエと　はくぶつかんを　めあてに　かんこうきゃくも　おおい</language>
+		<language name="JPN_KANJI" width="256">◇シッポウシティは　アトリエと　博物館を　目当てに　観光客も　多い</language>
 	</row>
 
 	<row id="msg_gate_c2_06" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>c2についての地域情報6</comment>
-		<language name="JPN" width="256">◇シッポウシティは……　じょうほう６</language>
-		<language name="JPN_KANJI" width="256">◇シッポウシティは……　情報６</language>
+		<language name="JPN" width="256">◇オープンテラスな　カフェでは　あたたかい　ティーの　かおりが　たびの　つかれを　いやす</language>
+		<language name="JPN_KANJI" width="256">◇オープンテラスな　カフェでは　暖かい　ティーの　香りが　旅の　疲れを　癒す</language>
 	</row>
 
 	<row id="msg_gate_c2_07" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>c2についての地域情報7</comment>
-		<language name="JPN" width="256">◇シッポウシティは……　じょうほう７</language>
-		<language name="JPN_KANJI" width="256">◇シッポウシティは……　情報７</language>
+		<language name="JPN" width="256">◇やすいとちで　あったが　げいじゅつに　みせられた　ひとが　あつまり　ちかが　こうとうしている</language>
+		<language name="JPN_KANJI" width="256">◇安い土地で　あったが　芸術に　見せられた人が　集まり　地価が　高騰している</language>
 	</row>
 
 	<row id="msg_gate_c2_08" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>c2についての地域情報8</comment>
-		<language name="JPN" width="256">◇シッポウシティは……　じょうほう８</language>
-		<language name="JPN_KANJI" width="256">◇シッポウシティは……　情報８</language>
+		<language name="JPN" width="256">◇はくぶつかんでは　にんげんの　ぶんかと　しぜんの　たいひが　テーマと　なっている</language>
+		<language name="JPN_KANJI" width="256">◇博物館では　人間の文化と　自然の　対比が　テーマとなっている</language>
 	</row>
 
 	<row id="msg_gate_c2_09" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>c2についての地域情報9</comment>
-		<language name="JPN" width="256">◇シッポウシティは……　じょうほう９</language>
-		<language name="JPN_KANJI" width="256">◇シッポウシティは……　情報９</language>
+		<language name="JPN" width="256">◇シッポウシティ　しゅっしんの　ゆうめい　げいじゅつかも　おおい　がか　アーティも　そのひとりで　ある</language>
+		<language name="JPN_KANJI" width="256">◇シッポウシティ　出身の　有名芸術家も　多い　画家　アーティも　その一人で　ある</language>
 	</row>
 
 	<row id="msg_gate_c3_01" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">

@@ -503,7 +503,7 @@ static void NewsMove_Update( GOBJ_ELBOARD* elboard, NEWS* news, fx32 frame )
     // アニメーションを更新
     ELBOARD_TEX_Main( news->tex );
     GFL_G3D_OBJECT_IncAnimeFrame( news->g3dObj, news->animeIndex, frame );
-    news->nowFrame += FX32_ONE;
+    news->nowFrame += frame;
 
     // スイッチフレームに到達 ==> 次のニュースのスイッチをON
     if( (news->switchFrame < news->nowFrame) &&
