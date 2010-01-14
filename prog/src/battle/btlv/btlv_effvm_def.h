@@ -285,6 +285,10 @@
 #define BTLEFF_COND_IKA         ( 4 )   // <=
 #define BTLEFF_COND_IJOU        ( 5 )   // >=
 
+//みがわり
+#define BTLEFF_MIGAWARI_OFF     ( 0 )   // みがわりOFF
+#define BTLEFF_MIGAWARI_ON      ( 1 )   // みがわりON
+
 #endif //__BTLV_EFFVM_DEF_H_
 
 //====================================================================================
@@ -406,9 +410,10 @@ ex)
 #define	EC_IF						              ( 49 )
 #define	EC_MCSS_POS_CHECK						  ( 50 )
 #define	EC_SET_WORK						        ( 51 )
+#define	EC_MIGAWARI						        ( 52 )
 
 //終了コマンドは必ず一番下になるようにする
-#define	EC_SEQ_END									  ( 52 )
+#define	EC_SEQ_END									  ( 53 )
 
 #ifndef __C_NO_DEF_
 
@@ -643,12 +648,13 @@ ex)
 /**
  * @brief	パーティクル再生（正射影）
  *
- * #param_num	5
+ * #param_num	6
  * @param	num				再生パーティクルナンバー
  * @param	index			spa内インデックスナンバー
  * @param	start_pos	パーティクル再生開始立ち位置
  * @param	dir	      パーティクルの向き
  * @param	ofs			  パーティクル再生オフセット
+ * @param	param			奥側で再生するときの補正値
  *
  * #param	FILE_DIALOG_COMBOBOX .spa
  * #param	COMBOBOX_HEADER
@@ -657,9 +663,11 @@ ex)
  * #param	COMBOBOX_TEXT	方向無し	攻撃側	防御側	攻撃側－  防御側－  POS_AA	POS_BB	POS_A	POS_B	POS_C	POS_D POS_E POS_F
  * #param	COMBOBOX_VALUE	BTLEFF_PARTICLE_PLAY_SIDE_NONE	BTLEFF_PARTICLE_PLAY_SIDE_ATTACK	BTLEFF_PARTICLE_PLAY_SIDE_DEFENCE	BTLEFF_PARTICLE_PLAY_SIDE_ATTACK_MINUS  BTLEFF_PARTICLE_PLAY_SIDE_DEFENCE_MINUS BTLEFF_PARTICLE_PLAY_POS_AA	BTLEFF_PARTICLE_PLAY_POS_BB BTLEFF_PARTICLE_PLAY_POS_A	BTLEFF_PARTICLE_PLAY_POS_B	BTLEFF_PARTICLE_PLAY_POS_C	BTLEFF_PARTICLE_PLAY_POS_D BTLEFF_PARTICLE_PLAY_POS_E BTLEFF_PARTICLE_PLAY_POS_F
  * #param	VALUE_VECFX32 ofs_x ofs_y ofs_z
+ * #param	VALUE_VECFX32 エミッタ半径 エミッタ長さ エミッタスケール
+ * #param VALUE_INIT  2:2:2
  */
 //======================================================================
-	.macro	PARTICLE_PLAY_ORTHO	num, index, start_pos, dir, ofs_x, ofs_y, ofs_z
+	.macro	PARTICLE_PLAY_ORTHO	num, index, start_pos, dir, ofs_x, ofs_y, ofs_z, radius, length, scale
 	.short	EC_PARTICLE_PLAY_ORTHO
 	.long		\num
 	.long		\index
@@ -668,6 +676,9 @@ ex)
 	.long		\ofs_x
 	.long		\ofs_y
 	.long		\ofs_z
+	.long		\radius
+	.long		\length
+	.long		\scale
 	.endm
 
 //======================================================================
@@ -1788,6 +1799,26 @@ ex)
 	.macro	SET_WORK	value
   .short  EC_SET_WORK
 	.long		\value
+	.endm
+
+//======================================================================
+/**
+ * @brief	みがわり処理
+ *
+ * #param_num	2
+ * @param sw	ON/OFF
+ * @param pos 処理するポジション
+ *
+ * #param COMBOBOX_TEXT ON  OFF
+ * #param COMBOBOX_VALUE BTLEFF_MIGAWARI_ON BTLEFF_MIGAWARI_OFF
+ * #param	COMBOBOX_TEXT	攻撃側  防御側
+ * #param	COMBOBOX_VALUE	BTLEFF_POKEMON_SIDE_ATTACK  BTLEFF_POKEMON_SIDE_DEFENCE
+ */
+//======================================================================
+	.macro	MIGAWARI	sw, pos
+  .short  EC_MIGAWARI
+	.long		\sw
+	.long		\pos
 	.endm
 
 //======================================================================

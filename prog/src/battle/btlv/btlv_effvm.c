@@ -92,6 +92,9 @@ typedef struct{
   VecFx32   src_pos;
   VecFx32   dst_pos;
   int       ortho_mode;
+  fx32      radius;
+  fx32      length;
+  fx32      scale;
 }BTLV_EFFVM_EMIT_INIT_WORK;
 
 //エミッタ移動用パラメータ構造体
@@ -223,6 +226,7 @@ static VMCMD_RESULT VMEC_CONTROL_MODE( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_IF( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_MCSS_POS_CHECK( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_SET_WORK( VMHANDLE *vmh, void *context_work );
+static VMCMD_RESULT VMEC_MIGAWARI( VMHANDLE *vmh, void *context_work );
 
 static VMCMD_RESULT VMEC_SEQ_END( VMHANDLE *vmh, void *context_work );
 
@@ -353,6 +357,7 @@ static const VMCMD_FUNC btlv_effect_command_table[]={
   VMEC_IF,
   VMEC_MCSS_POS_CHECK,
   VMEC_SET_WORK,
+  VMEC_MIGAWARI,
 
   VMEC_SEQ_END,
 };
@@ -997,6 +1002,9 @@ static VMCMD_RESULT VMEC_PARTICLE_PLAY_ORTHO( VMHANDLE *vmh, void *context_work 
   beeiw->ofs.x = ( fx32 )VMGetU32( vmh );
   beeiw->ofs.y = ( fx32 )VMGetU32( vmh );
   beeiw->ofs.z = ( fx32 )VMGetU32( vmh );
+  beeiw->radius = ( fx32 )VMGetU32( vmh );
+  beeiw->length = ( fx32 )VMGetU32( vmh );
+  beeiw->scale = ( fx32 )VMGetU32( vmh );
   beeiw->ortho_mode = 1;
 
   if( beeiw->dst == BTLEFF_PARTICLE_PLAY_SIDE_NONE )
@@ -2495,6 +2503,39 @@ static VMCMD_RESULT VMEC_SET_WORK( VMHANDLE *vmh, void *context_work )
 
 //============================================================================================
 /**
+ * @brief	みがわり処理
+ *
+ * @param[in] vmh       仮想マシン制御構造体へのポインタ
+ * @param[in] context_work  コンテキストワークへのポインタ
+ */
+//============================================================================================
+static VMCMD_RESULT VMEC_MIGAWARI( VMHANDLE *vmh, void *context_work )
+{ 
+  BTLV_EFFVM_WORK *bevw = ( BTLV_EFFVM_WORK* )context_work;
+  int sw =  ( int )VMGetU32( vmh );
+  BtlvMcssPos pos[ BTLV_MCSS_POS_MAX ];
+  int pos_cnt =  EFFVM_GetPokePosition( vmh, ( int )VMGetU32( vmh ), pos );
+
+#ifdef DEBUG_OS_PRINT
+  OS_TPrintf("VMEC_MIGAWARI:\nvalue:%d\n",value);
+#endif DEBUG_OS_PRINT
+
+  //立ち位置情報がないときは、コマンド実行しない
+  if( pos_cnt )
+  { 
+    int i;
+
+    for( i = 0 ; i < pos_cnt ; i++ )
+    { 
+      BTLV_MCSS_SetMigawari( BTLV_EFFECT_GetMcssWork(), pos[ i ], sw );
+    }
+  }
+
+  return bevw->control_mode;
+}
+
+//============================================================================================
+/**
  * @brief エフェクトシーケンス終了
  *
  * @param[in] vmh       仮想マシン制御構造体へのポインタ
@@ -3333,9 +3374,19 @@ static  void  EFFVM_InitEmitterPos( GFL_EMIT_PTR emit )
     { 
       fx32  radius = GFL_PTC_GetEmitterRadius( emit );
       fx32  length = GFL_PTC_GetEmitterLength( emit );
-      GFL_PTC_SetEmitterRadius( emit, radius / 2 );
-      GFL_PTC_SetEmitterLength( emit, length / 2 );
-      GFL_PTC_SetEmitterBaseScale( emit, FX16_ONE / 3 );
+      fx32  scale = GFL_PTC_GetEmitterBaseScale( emit );
+      if( beeiw->radius )
+      { 
+        GFL_PTC_SetEmitterRadius( emit, FX_Div( radius, beeiw->radius ) );
+      }
+      if( beeiw->length )
+      { 
+        GFL_PTC_SetEmitterLength( emit, FX_Div( length, beeiw->length ) );
+      }
+      if( beeiw->scale )
+      { 
+        GFL_PTC_SetEmitterBaseScale( emit, (fx16)FX_Div( scale, beeiw->scale ) );
+      }
     }
   }
 
