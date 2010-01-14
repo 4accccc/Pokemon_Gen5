@@ -16,6 +16,7 @@
 typedef GMEVENT* (*CREATE_FUNC)(GAMESYS_WORK *, FIELDMAP_WORK *);
 typedef void (*DRAW_FUNC)(ENCEFF_CNT_PTR);
 
+FS_EXTERN_OVERLAY(enceff_ci);
 FS_EXTERN_OVERLAY(enceff_mdl);
 FS_EXTERN_OVERLAY(enceff_prg);
 FS_EXTERN_OVERLAY(enceff_wav);
@@ -46,6 +47,7 @@ static const ENCEFF_TBL EncEffTbl[] = {
   {ENCEFF_PNL1_Create, ENCEFF_PNL_Draw, FS_OVERLAY_ID(enceff_pnl1)},
   {ENCEFF_PNL2_Create, ENCEFF_PNL_Draw, FS_OVERLAY_ID(enceff_pnl2)},
   {ENCEFF_PNL3_Create, ENCEFF_PNL_Draw, FS_OVERLAY_ID(enceff_pnl3)},
+  {ENCEFF_CI_Create1, NULL, FS_OVERLAY_ID(enceff_ci)},
 };
 
 

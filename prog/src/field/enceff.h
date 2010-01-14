@@ -20,6 +20,7 @@ typedef enum {
   ENCEFFID_3,
   ENCEFFID_4,
   ENCEFFID_5,
+//  ENCEFFID_CI_1,
   ENCEFFID_MAX,
 }ENCEFF_ID;
 
@@ -32,6 +33,7 @@ extern void ENCEFF_Draw(ENCEFF_CNT_PTR ptr);
 extern void *ENCEFF_AllocUserWork(ENCEFF_CNT_PTR ptr, const int size, const HEAPID inHeapID);
 extern void *ENCEFF_GetUserWorkPtr(ENCEFF_CNT_PTR ptr);
 
+extern GMEVENT *ENCEFF_CI_Create1(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork);
 
 extern GMEVENT *ENCEFF_MDL_Create1(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork);
 extern void ENCEFF_MDL_Draw(ENCEFF_CNT_PTR ptr);
