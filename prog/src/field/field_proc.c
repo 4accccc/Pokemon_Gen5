@@ -16,6 +16,8 @@
 //======================================================================
 //	define
 //======================================================================
+///HEAPID_FIELD_SUBSCREEN‚ÌƒTƒCƒY
+#define HEAP_FIELD_SUBSCREEN_SIZE   (0xd000)
 
 //======================================================================
 //	struct
@@ -76,7 +78,9 @@ static GFL_PROC_RESULT FieldMapProcInit
         heap_size = 0x148000 - 0x18000;
       }
     }
+    heap_size -= HEAP_FIELD_SUBSCREEN_SIZE;
   	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_FIELDMAP, heap_size );
+  	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_FIELD_SUBSCREEN, HEAP_FIELD_SUBSCREEN_SIZE );
   	fpwk = GFL_PROC_AllocWork(proc, sizeof(FIELDPROC_WORK), HEAPID_FIELDMAP);
   	fpwk->fieldWork = FIELDMAP_Create(gsys, HEAPID_FIELDMAP );
   	GAMESYSTEM_SetFieldMapWork(gsys, fpwk->fieldWork);
@@ -160,6 +164,7 @@ static GFL_PROC_RESULT FieldMapProcEnd
 	FIELDMAP_Delete(fpwk->fieldWork);
 	GAMESYSTEM_SetFieldMapWork(gsys, NULL);
 	GFL_PROC_FreeWork(proc);
+	GFL_HEAP_DeleteHeap( HEAPID_FIELD_SUBSCREEN );
 	GFL_HEAP_DeleteHeap( HEAPID_FIELDMAP );
 
 	return GFL_PROC_RES_FINISH;

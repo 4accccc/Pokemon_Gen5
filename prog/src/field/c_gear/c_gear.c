@@ -743,20 +743,29 @@ static u32 _objcgx[]={NARC_c_gear_c_gear_obj_NCGR,NARC_c_gear_c_gear2_obj_NCGR,N
 
 static void _gearArcCreate(C_GEAR_WORK* pWork)
 {
-  ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_C_GEAR, pWork->heapID );
+  ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_C_GEAR, HEAPID_FIELDMAP );
   MYSTATUS* pMy = GAMEDATA_GetMyStatus( GAMESYSTEM_GetGameData(pWork->pGameSys) );
   u32 sex = MyStatus_GetMySex(pMy);
   u32 scrno=0;
 
+  /*
+  {
+    int i;
+    for(i=0;i<22;i++ ){
+      OS_TPrintf("xxxx NARC = %x\n",  GFL_ARC_GetDataSizeByHandle(p_handle, i));
+    }
+  }
+     */
+  
   GFL_ARCHDL_UTIL_TransVramPalette( p_handle, _bgpal[ sex ],
-                                    PALTYPE_SUB_BG, 0, 0,  pWork->heapID);
+                                    PALTYPE_SUB_BG, 0, 0,  HEAPID_FIELDMAP);
 
 
   {
     int x,y;
     u16* loadPtr = GFL_ARC_LoadDataAllocByHandle(  p_handle,
                                                    _bgpal[ sex ],
-                                                   GFL_HEAP_LOWID(pWork->heapID) );
+                                                   GFL_HEAP_LOWID(HEAPID_FIELDMAP) );
 
     for(y = 0 ; y < _CGEAR_NET_CHANGEPAL_MAX; y++){
       for(x = 0 ; x < _CGEAR_NET_CHANGEPAL_NUM; x++){
@@ -775,23 +784,23 @@ static void _gearArcCreate(C_GEAR_WORK* pWork)
 
   // ƒTƒu‰æ–ÊBGƒLƒƒƒ‰“]‘—
   pWork->subchar = GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( p_handle, _bgcgx[sex],
-                                                                GEAR_MAIN_FRAME, 0, 0, pWork->heapID);
+                                                                GEAR_MAIN_FRAME, 0, 0, HEAPID_FIELDMAP);
 
   GFL_ARCHDL_UTIL_TransVramScreenCharOfs(p_handle,
                                          NARC_c_gear_c_gear01_NSCR,
                                          GEAR_MAIN_FRAME, 0,
                                          GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar), 0, 0,
-                                         pWork->heapID);
+                                         HEAPID_FIELDMAP);
 
   pWork->objRes[_CLACT_PLT] = GFL_CLGRP_PLTT_Register( p_handle ,
                                                        _objpal[sex],
-                                                       CLSYS_DRAW_SUB , 0 , pWork->heapID );
+                                                       CLSYS_DRAW_SUB , 0 , HEAPID_FIELDMAP );
 
 
 
   pWork->objRes[_CLACT_CHR] = GFL_CLGRP_CGR_Register( p_handle ,
                                                       _objcgx[sex] ,
-                                                      FALSE , CLSYS_DRAW_SUB , pWork->heapID );
+                                                      FALSE , CLSYS_DRAW_SUB , HEAPID_FIELDMAP );
 
   pWork->objRes[_CLACT_ANM] = GFL_CLGRP_CELLANIM_Register( p_handle ,
                                                            NARC_c_gear_c_gear_obj_NCER ,
@@ -812,7 +821,7 @@ static void _gearArcCreate(C_GEAR_WORK* pWork)
 
 static void _gearDecalScreenArcCreate(C_GEAR_WORK* pWork,BOOL bDecal)
 {
-  ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_C_GEAR, pWork->heapID );
+  ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_C_GEAR, HEAPID_FIELDMAP );
   u32 scrno=0;
 
   if(bDecal){
@@ -826,7 +835,7 @@ static void _gearDecalScreenArcCreate(C_GEAR_WORK* pWork,BOOL bDecal)
                                          scrno,
                                          GEAR_BMPWIN_FRAME, 0,
                                          GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar), 0, 0,
-                                         pWork->heapID);
+                                         HEAPID_FIELDMAP);
 
   GFL_ARC_CloseDataHandle( p_handle );
 
@@ -1598,37 +1607,40 @@ static void _modeSelectMenuWait(C_GEAR_WORK* pWork)
 
 static BOOL _loadExData(C_GEAR_WORK* pWork,GAMESYS_WORK* pGameSys)
 {
-  int i;
-  u8* pCGearWork = GFL_HEAP_AllocMemory(HEAPID_FIELDMAP,SAVESIZE_EXTRA_CGEAR_PICTURE);
-  SAVE_CONTROL_WORK* pSave = GAMEDATA_GetSaveControlWork(GAMESYSTEM_GetGameData(pGameSys));
   BOOL ret=FALSE;
 
+  {
+    int i;
+    u8* pCGearWork = GFL_HEAP_AllocMemory(HEAPID_FIELDMAP,SAVESIZE_EXTRA_CGEAR_PICTURE);
+    SAVE_CONTROL_WORK* pSave = GAMEDATA_GetSaveControlWork(GAMESYSTEM_GetGameData(pGameSys));
 
-  if(LOAD_RESULT_OK== SaveControl_Extra_LoadWork(pSave, SAVE_EXTRA_ID_CGEAR_PICUTRE, HEAPID_FIELDMAP,
-                                                 pCGearWork,SAVESIZE_EXTRA_CGEAR_PICTURE)){
-    CGEAR_PICTURE_SAVEDATA* pPic = (CGEAR_PICTURE_SAVEDATA*)pCGearWork;
 
-    {
-      u16 crc = GFL_STD_CrcCalc( pPic, CGEAR_PICTURTE_CHAR_SIZE+CGEAR_PICTURTE_PAL_SIZE );
-      u16 crc2 = CGEAR_SV_GetCGearPictureCRC(CGEAR_SV_GetCGearSaveData(pSave));
-      if(crc == crc2){
-        if(CGEAR_PICTURE_SAVE_IsPalette(pPic)){
-          ret = TRUE;
-          for(i=0;i<CGEAR_DECAL_SIZEY;i++){
-            GFL_BG_LoadCharacter(GEAR_MAIN_FRAME,&pCGearWork[CGEAR_DECAL_SIZEX * 32 * i],CGEAR_DECAL_SIZEX * 32, (5 + i)*32);
+    if(LOAD_RESULT_OK== SaveControl_Extra_LoadWork(pSave, SAVE_EXTRA_ID_CGEAR_PICUTRE, HEAPID_FIELDMAP,
+                                                   pCGearWork,SAVESIZE_EXTRA_CGEAR_PICTURE)){
+      CGEAR_PICTURE_SAVEDATA* pPic = (CGEAR_PICTURE_SAVEDATA*)pCGearWork;
+
+      {
+        u16 crc = GFL_STD_CrcCalc( pPic, CGEAR_PICTURTE_CHAR_SIZE+CGEAR_PICTURTE_PAL_SIZE );
+        u16 crc2 = CGEAR_SV_GetCGearPictureCRC(CGEAR_SV_GetCGearSaveData(pSave));
+        if(crc == crc2){
+          if(CGEAR_PICTURE_SAVE_IsPalette(pPic)){
+            ret = TRUE;
+            for(i=0;i<CGEAR_DECAL_SIZEY;i++){
+              GFL_BG_LoadCharacter(GEAR_MAIN_FRAME,&pCGearWork[CGEAR_DECAL_SIZEX * 32 * i],CGEAR_DECAL_SIZEX * 32, (5 + i)*32);
+            }
+            GFL_BG_LoadPalette(GEAR_MAIN_FRAME,pPic->palette,CGEAR_PICTURTE_PAL_SIZE, 32*0x0a );
           }
-          GFL_BG_LoadPalette(GEAR_MAIN_FRAME,pPic->palette,CGEAR_PICTURTE_PAL_SIZE, 32*0x0a );
         }
-      }
 #if PM_DEBUG
-      else{
-        OS_TPrintf("CRCDIFF chk%x pict%x\n",crc,crc2);
-      }
+        else{
+          OS_TPrintf("CRCDIFF chk%x pict%x\n",crc,crc2);
+        }
 #endif
+      }
     }
+    SaveControl_Extra_UnloadWork(pSave, SAVE_EXTRA_ID_CGEAR_PICUTRE);
+    GFL_HEAP_FreeMemory(pCGearWork);
   }
-  SaveControl_Extra_UnloadWork(pSave, SAVE_EXTRA_ID_CGEAR_PICUTRE);
-  GFL_HEAP_FreeMemory(pCGearWork);
   return ret;
 }
 
@@ -1646,8 +1658,10 @@ C_GEAR_WORK* CGEAR_Init( CGEAR_SAVEDATA* pCGSV,FIELD_SUBSCREEN_WORK* pSub,GAMESY
 
   //GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_CGEAR, 0x8000 );
 
-  pWork = GFL_HEAP_AllocClearMemory( HEAPID_FIELDMAP, sizeof( C_GEAR_WORK ) );
-  pWork->heapID = HEAPID_FIELDMAP;
+ // OS_TPrintf("zzzz start field_heap = %x\n", GFL_HEAP_GetHeapFreeSize(HEAPID_FIELDMAP));  
+
+  pWork = GFL_HEAP_AllocClearMemory( HEAPID_FIELD_SUBSCREEN, sizeof( C_GEAR_WORK ) );
+  pWork->heapID = HEAPID_FIELD_SUBSCREEN;
   pWork->pCGSV = pCGSV;
   pWork->subscreen = pSub;
   pWork->pGameSys = pGameSys;
@@ -1664,6 +1678,8 @@ C_GEAR_WORK* CGEAR_Init( CGEAR_SAVEDATA* pCGSV,FIELD_SUBSCREEN_WORK* pSub,GAMESY
   }
   _gearDecalScreenArcCreate(pWork,ret);
 
+//  OS_TPrintf("zzzz start field_heap = %x\n", GFL_HEAP_GetHeapFreeSize(HEAPID_FIELDMAP));  
+  
   return pWork;
 }
 

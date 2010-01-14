@@ -352,7 +352,7 @@ INTRUDE_SUBDISP_PTR INTRUDE_SUBDISP_Init(GAMESYS_WORK *gsys)
   ARCHANDLE *handle;
   GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
   
-  intsub = GFL_HEAP_AllocClearMemory(HEAPID_FIELDMAP, sizeof(INTRUDE_SUBDISP));
+  intsub = GFL_HEAP_AllocClearMemory(HEAPID_FIELD_SUBSCREEN, sizeof(INTRUDE_SUBDISP));
   intsub->gsys = gsys;
   intsub->now_bg_pal = 0xff;  //初回に必ず更新がかかるように0xff
   
@@ -495,18 +495,18 @@ void INTRUDE_SUBDISP_Draw(INTRUDE_SUBDISP_PTR intsub)
 //--------------------------------------------------------------
 static void _IntSub_SystemSetup(INTRUDE_SUBDISP_PTR intsub)
 {
-  intsub->clunit = GFL_CLACT_UNIT_Create(INTSUB_ACTOR_MAX, 5, HEAPID_FIELDMAP);
+  intsub->clunit = GFL_CLACT_UNIT_Create(INTSUB_ACTOR_MAX, 5, HEAPID_FIELD_SUBSCREEN);
 
-	intsub->tcbl_sys = GFL_TCBL_Init(HEAPID_FIELDMAP, HEAPID_FIELDMAP, 4, 32);
+	intsub->tcbl_sys = GFL_TCBL_Init(HEAPID_FIELD_SUBSCREEN, HEAPID_FIELD_SUBSCREEN, 4, 32);
 	intsub->font_handle = GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr,
-		GFL_FONT_LOADTYPE_FILE, FALSE, HEAPID_FIELDMAP );
-	intsub->wordset = WORDSET_Create(HEAPID_FIELDMAP);
-  intsub->print_que = PRINTSYS_QUE_Create( HEAPID_FIELDMAP );
+		GFL_FONT_LOADTYPE_FILE, FALSE, HEAPID_FIELD_SUBSCREEN );
+	intsub->wordset = WORDSET_Create(HEAPID_FIELD_SUBSCREEN);
+  intsub->print_que = PRINTSYS_QUE_Create( HEAPID_FIELD_SUBSCREEN );
   intsub->msgdata = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, 
-    NARC_message_invasion_dat, HEAPID_FIELDMAP );
+    NARC_message_invasion_dat, HEAPID_FIELD_SUBSCREEN );
   
-  intsub->strbuf_temp = GFL_STR_CreateBuffer(64, HEAPID_FIELDMAP);
-  intsub->strbuf_info = GFL_STR_CreateBuffer(64, HEAPID_FIELDMAP);
+  intsub->strbuf_temp = GFL_STR_CreateBuffer(64, HEAPID_FIELD_SUBSCREEN);
+  intsub->strbuf_info = GFL_STR_CreateBuffer(64, HEAPID_FIELD_SUBSCREEN);
 }
 
 //--------------------------------------------------------------
@@ -650,7 +650,7 @@ static void _IntSub_ActorResouceLoad(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *hand
     handle, NARC_palace_palace_obj_lz_NCGR, TRUE, CLSYS_DRAW_SUB, HEAPID_FIELDMAP);
   intsub->index_cell = GFL_CLGRP_CELLANIM_Register(
     handle, NARC_palace_palace_obj_NCER, 
-    NARC_palace_palace_obj_NANR, HEAPID_FIELDMAP);
+    NARC_palace_palace_obj_NANR, HEAPID_FIELD_SUBSCREEN);
 }
 
 //--------------------------------------------------------------
@@ -730,7 +730,7 @@ static void _IntSub_ActorCreate_Town(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *hand
     head.pos_y = PalaceTownData[i - INTSUB_ACTOR_TOWN_0].subscreen_y;
     intsub->act[i] = GFL_CLACT_WK_Create(intsub->clunit, 
       intsub->index_cgr, intsub->index_pltt, intsub->index_cell, 
-      &head, CLSYS_DEFREND_SUB, HEAPID_FIELDMAP);
+      &head, CLSYS_DEFREND_SUB, HEAPID_FIELD_SUBSCREEN);
     GFL_CLACT_WK_SetDrawEnable(intsub->act[i], FALSE);  //表示OFF
   }
   
@@ -761,7 +761,7 @@ static void _IntSub_ActorCreate_TouchTown(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE 
     head.pos_y = PalaceTownData[i - INTSUB_ACTOR_TOUCH_TOWN_0].subscreen_y;
     intsub->act[i] = GFL_CLACT_WK_Create(intsub->clunit, 
       intsub->index_cgr, intsub->index_pltt, intsub->index_cell, 
-      &head, CLSYS_DEFREND_SUB, HEAPID_FIELDMAP);
+      &head, CLSYS_DEFREND_SUB, HEAPID_FIELD_SUBSCREEN);
     GFL_CLACT_WK_SetDrawEnable(intsub->act[i], FALSE);  //表示OFF
   }
   
@@ -771,7 +771,7 @@ static void _IntSub_ActorCreate_TouchTown(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE 
   head.pos_y = 0xa*8;
   intsub->act[INTSUB_ACTOR_TOUCH_PALACE] = GFL_CLACT_WK_Create(intsub->clunit, 
     intsub->index_cgr, intsub->index_pltt, intsub->index_cell, 
-    &head, CLSYS_DEFREND_SUB, HEAPID_FIELDMAP);
+    &head, CLSYS_DEFREND_SUB, HEAPID_FIELD_SUBSCREEN);
   GFL_CLACT_WK_SetDrawEnable(intsub->act[INTSUB_ACTOR_TOUCH_PALACE], FALSE);  //表示OFF
 }
 
@@ -799,7 +799,7 @@ static void _IntSub_ActorCreate_SenkyoEff(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE 
     head.pos_y = PalaceTownData[i].subscreen_y;
     intsub->act[i] = GFL_CLACT_WK_Create(intsub->clunit, 
       intsub->index_cgr, intsub->index_pltt, intsub->index_cell, 
-      &head, CLSYS_DEFREND_SUB, HEAPID_FIELDMAP);
+      &head, CLSYS_DEFREND_SUB, HEAPID_FIELD_SUBSCREEN);
     GFL_CLACT_WK_SetDrawEnable(intsub->act[i], FALSE);  //表示OFF
   }
 }
@@ -825,7 +825,7 @@ static void _IntSub_ActorCreate_Area(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *hand
   for(i = INTSUB_ACTOR_AREA_0; i <= INTSUB_ACTOR_AREA_MAX; i++){
     intsub->act[i] = GFL_CLACT_WK_Create(intsub->clunit, 
       intsub->index_cgr, intsub->index_pltt, intsub->index_cell, 
-      &head, CLSYS_DEFREND_SUB, HEAPID_FIELDMAP);
+      &head, CLSYS_DEFREND_SUB, HEAPID_FIELD_SUBSCREEN);
     GFL_CLACT_WK_SetPlttOffs(intsub->act[i], 
       INTSUB_ACTOR_PAL_BASE_START + i-INTSUB_ACTOR_AREA_0, CLWK_PLTTOFFS_MODE_PLTT_TOP);
     GFL_CLACT_WK_SetDrawEnable(intsub->act[i], FALSE);  //表示OFF
@@ -853,7 +853,7 @@ static void _IntSub_ActorCreate_CursorS(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *h
   for(i = INTSUB_ACTOR_CUR_S_0; i <= INTSUB_ACTOR_CUR_S_MAX; i++){
     intsub->act[i] = GFL_CLACT_WK_Create(intsub->clunit, 
       intsub->index_cgr, intsub->index_pltt, intsub->index_cell, 
-      &head, CLSYS_DEFREND_SUB, HEAPID_FIELDMAP);
+      &head, CLSYS_DEFREND_SUB, HEAPID_FIELD_SUBSCREEN);
     GFL_CLACT_WK_SetPlttOffs(intsub->act[i], 
       INTSUB_ACTOR_PAL_BASE_START + i-INTSUB_ACTOR_CUR_S_0, CLWK_PLTTOFFS_MODE_PLTT_TOP);
     GFL_CLACT_WK_SetDrawEnable(intsub->act[i], FALSE);  //表示OFF
@@ -880,7 +880,7 @@ static void _IntSub_ActorCreate_CursorL(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *h
   
   intsub->act[INTSUB_ACTOR_CUR_L] = GFL_CLACT_WK_Create(intsub->clunit, 
     intsub->index_cgr, intsub->index_pltt, intsub->index_cell, 
-    &head, CLSYS_DEFREND_SUB, HEAPID_FIELDMAP);
+    &head, CLSYS_DEFREND_SUB, HEAPID_FIELD_SUBSCREEN);
   GFL_CLACT_WK_SetPlttOffs(intsub->act[INTSUB_ACTOR_CUR_L], 
     INTSUB_ACTOR_PAL_BASE_START + intsub->my_net_id, CLWK_PLTTOFFS_MODE_PLTT_TOP);
   GFL_CLACT_WK_SetDrawEnable(intsub->act[INTSUB_ACTOR_CUR_L], FALSE);  //表示OFF
@@ -906,7 +906,7 @@ static void _IntSub_ActorCreate_Mark(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *hand
   
   intsub->act[INTSUB_ACTOR_MARK] = GFL_CLACT_WK_Create(intsub->clunit, 
     intsub->index_cgr, intsub->index_pltt, intsub->index_cell, 
-    &head, CLSYS_DEFREND_SUB, HEAPID_FIELDMAP);
+    &head, CLSYS_DEFREND_SUB, HEAPID_FIELD_SUBSCREEN);
   GFL_CLACT_WK_SetPlttOffs(intsub->act[INTSUB_ACTOR_MARK], 
     INTSUB_ACTOR_PAL_BASE_START + intsub->my_net_id, CLWK_PLTTOFFS_MODE_PLTT_TOP);
   GFL_CLACT_WK_SetDrawEnable(intsub->act[INTSUB_ACTOR_MARK], FALSE);  //表示OFF
@@ -932,7 +932,7 @@ static void _IntSub_ActorCreate_Power(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *han
   //POWER
   intsub->act[INTSUB_ACTOR_POWER] = GFL_CLACT_WK_Create(intsub->clunit, 
     intsub->index_cgr, intsub->index_pltt, intsub->index_cell, 
-    &head, CLSYS_DEFREND_SUB, HEAPID_FIELDMAP);
+    &head, CLSYS_DEFREND_SUB, HEAPID_FIELD_SUBSCREEN);
   GFL_CLACT_WK_SetDrawEnable(intsub->act[INTSUB_ACTOR_POWER], FALSE);  //表示OFF
   GFL_CLACT_WK_SetAutoAnmFlag(intsub->act[INTSUB_ACTOR_POWER], TRUE);  //オートアニメON
 
@@ -942,7 +942,7 @@ static void _IntSub_ActorCreate_Power(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *han
   head.anmseq = PALACE_ACT_ANMSEQ_MISSION;
   intsub->act[INTSUB_ACTOR_MISSION] = GFL_CLACT_WK_Create(intsub->clunit, 
     intsub->index_cgr, intsub->index_pltt, intsub->index_cell, 
-    &head, CLSYS_DEFREND_SUB, HEAPID_FIELDMAP);
+    &head, CLSYS_DEFREND_SUB, HEAPID_FIELD_SUBSCREEN);
   GFL_CLACT_WK_SetDrawEnable(intsub->act[INTSUB_ACTOR_MISSION], FALSE);  //表示OFF
   GFL_CLACT_WK_SetAutoAnmFlag(intsub->act[INTSUB_ACTOR_MISSION], TRUE);  //オートアニメON
 
@@ -952,7 +952,7 @@ static void _IntSub_ActorCreate_Power(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *han
   head.anmseq = PALACE_ACT_ANMSEQ_INCLUSION;
   intsub->act[INTSUB_ACTOR_INCLUSION] = GFL_CLACT_WK_Create(intsub->clunit, 
     intsub->index_cgr, intsub->index_pltt, intsub->index_cell, 
-    &head, CLSYS_DEFREND_SUB, HEAPID_FIELDMAP);
+    &head, CLSYS_DEFREND_SUB, HEAPID_FIELD_SUBSCREEN);
   GFL_CLACT_WK_SetDrawEnable(intsub->act[INTSUB_ACTOR_INCLUSION], FALSE);  //表示OFF
   GFL_CLACT_WK_SetAutoAnmFlag(intsub->act[INTSUB_ACTOR_INCLUSION], TRUE);  //オートアニメON
 }
@@ -989,7 +989,7 @@ static void _IntSub_ActorCreate_LvNum(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *han
     head.pos_y = LvNumPos[i - INTSUB_ACTOR_LV_NUM_KETA_0].y;
     intsub->act[i] = GFL_CLACT_WK_Create(intsub->clunit, 
       intsub->index_cgr, intsub->index_pltt, intsub->index_cell, 
-      &head, CLSYS_DEFREND_SUB, HEAPID_FIELDMAP);
+      &head, CLSYS_DEFREND_SUB, HEAPID_FIELD_SUBSCREEN);
     GFL_CLACT_WK_SetDrawEnable(intsub->act[i], TRUE);
   }
 }
@@ -1017,7 +1017,7 @@ static void _IntSub_ActorCreate_PointNum(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *
   for(i = INTSUB_ACTOR_POINT_NUM_KETA_0; i <= INTSUB_ACTOR_POINT_NUM_KETA_MAX; i++){
     intsub->act[i] = GFL_CLACT_WK_Create(intsub->clunit, 
       intsub->index_cgr, intsub->index_pltt, intsub->index_cell, 
-      &head, CLSYS_DEFREND_SUB, HEAPID_FIELDMAP);
+      &head, CLSYS_DEFREND_SUB, HEAPID_FIELD_SUBSCREEN);
     GFL_CLACT_WK_SetDrawEnable(intsub->act[i], TRUE);
     head.pos_x -= width;
   }
