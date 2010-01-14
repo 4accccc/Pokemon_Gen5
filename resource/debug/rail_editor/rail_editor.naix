@@ -11,11 +11,14 @@
 #define NARC_RAIL_EDITOR_NAIX_
 
 enum {
-	NARC_rail_editor_rail_editor_line_nsbmd = 0,
-	NARC_rail_editor_rail_editor_point_nsbmd = 1,
-	NARC_rail_editor_rail_editor_position_nsbca = 2,
-	NARC_rail_editor_rail_editor_position_nsbma = 3,
-	NARC_rail_editor_rail_editor_position_nsbmd = 4
+	NARC_rail_editor_fog_light_nsbmd = 0,
+	NARC_rail_editor_fog_light_shdow_nsbmd = 1,
+	NARC_rail_editor_fog_light_shdow_msk_nsbmd = 2,
+	NARC_rail_editor_rail_editor_line_nsbmd = 3,
+	NARC_rail_editor_rail_editor_point_nsbmd = 4,
+	NARC_rail_editor_rail_editor_position_nsbca = 5,
+	NARC_rail_editor_rail_editor_position_nsbma = 6,
+	NARC_rail_editor_rail_editor_position_nsbmd = 7
 };
 
 /* NARC_RAIL_EDITOR_NAIX_ */
