@@ -1020,7 +1020,7 @@ u32 FIELD_SOUND_GetFieldBGM( GAMEDATA* gameData, u32 zoneID )
   PLAYER_MOVE_FORM form;
 
   // 自機フォーム取得
-  player = GAMEDATA_GetPlayerWork( gameData, 0 );
+  player = GAMEDATA_GetMyPlayerWork( gameData );
   form   = PLAYERWORK_GetMoveForm( player );
 
   // なみのり
