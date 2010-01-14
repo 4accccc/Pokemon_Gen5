@@ -652,10 +652,10 @@
 #define FV_BC10R0401_C                     628 /* 0x0274 ブラックシティ：移住人口CのOBJ */
 #define FV_BC10R0401_D                     629 /* 0x0275 ブラックシティ：移住人口DのOBJ */
 #define FV_BC10R0401_E                     630 /* 0x0276 ブラックシティ：移住人口EのOBJ */
-		/* not used   631(0x0277) */
-		/* not used   632(0x0278) */
-		/* not used   633(0x0279) */
-		/* not used   634(0x027a) */
+#define FV_WF10_B                          631 /* 0x0277 ホワイトフォレスト：移住人口BのOBJ */
+#define FV_WF10_C                          632 /* 0x0278 ホワイトフォレスト：移住人口CのOBJ */
+#define FV_WF10_D                          633 /* 0x0279 ホワイトフォレスト：移住人口DのOBJ */
+#define FV_WF10_E                          634 /* 0x027a ホワイトフォレスト：移住人口EのOBJ */
 		/* not used   635(0x027b) */
 		/* not used   636(0x027c) */
 		/* not used   637(0x027d) */
@@ -2501,7 +2501,7 @@
 #define TMFLG_WC10_ITEM_08                2727 /* 0x0aa7 WC10のアイテム０８ */
 #define TMFLG_WC10_ITEM_09                2728 /* 0x0aa8 WC10のアイテム０９ */
 #define TMFLG_WC10_ITEM_10                2729 /* 0x0aa9 WC10のアイテム１０ */
-#define TMFLG_WC10_OLDMAN                 2730 /* 0x0aaa WC村長 */
+#define TMFLG_WC10R0101_OLDMAN            2730 /* 0x0aaa WC村長 */
 		/* not used  2731(0x0aab) */
 		/* not used  2732(0x0aac) */
 		/* not used  2733(0x0aad) */
