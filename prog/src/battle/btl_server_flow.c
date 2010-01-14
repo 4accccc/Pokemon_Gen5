@@ -459,7 +459,7 @@ static void CurePokeDependSick_CallBack( void* wk_ptr, BTL_POKEPARAM* bpp, WazaS
 static void scproc_CheckExpGet( BTL_SVFLOW_WORK* wk );
 static void scproc_GetExp( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* deadPoke );
 static void getexp_calc( BTL_SVFLOW_WORK* wk, const BTL_PARTY* party, const BTL_POKEPARAM* deadPoke, CALC_EXP_WORK* result );
-static u32 getexp_calc_adjust_level( u32 base_exp, u16 getpoke_lv, u16 deadpoke_lv );
+static u32 getexp_calc_adjust_level( const BTL_POKEPARAM* bpp, u32 base_exp, u16 getpoke_lv, u16 deadpoke_lv );
 static void getexp_make_cmd( BTL_SVFLOW_WORK* wk, BTL_PARTY* party, const CALC_EXP_WORK* calcExp );
 static inline int roundValue( int val, int min, int max );
 static inline int roundMin( int val, int min );
@@ -7152,7 +7152,7 @@ static void getexp_calc( BTL_SVFLOW_WORK* wk, const BTL_PARTY* party, const BTL_
     }
   }
 
-  BTL_Printf("基本となる経験値=%d\n", baseExp );
+  BTL_N_Printf( DBGSTR_SVFL_ExpCalc_Base, baseExp );
 
 
   // 対戦経験値取得
@@ -7169,7 +7169,7 @@ static void getexp_calc( BTL_SVFLOW_WORK* wk, const BTL_PARTY* party, const BTL_
         ++aliveCnt;
       }
     }
-    BTL_Printf("死亡ポケ[%d]が対面した相手ポケの数=%d, その内、生きてる数=%d\n", BPP_GetID(deadPoke), confrontCnt, aliveCnt);
+    BTL_N_Printf( DBGSTR_SVFL_ExpCalc_MetInfo, BPP_GetID(deadPoke), confrontCnt, aliveCnt);
 
     for(i=0; i<memberCount; ++i)
     {
@@ -7182,7 +7182,7 @@ static void getexp_calc( BTL_SVFLOW_WORK* wk, const BTL_PARTY* party, const BTL_
         {
           if( BPP_CONFRONT_REC_GetPokeID(deadPoke, j) == pokeID ){
             u32 addExp = (baseExp / aliveCnt );
-            BTL_Printf("メンバーIdx[%d]のポケに経験値%dを分配\n", i, (baseExp/aliveCnt));
+            BTL_N_Printf( DBGSTR_SVFL_ExpCalc_DivideInfo, i, (baseExp/aliveCnt));
             result[i].exp += (baseExp / aliveCnt);
           }
         }
@@ -7204,7 +7204,7 @@ static void getexp_calc( BTL_SVFLOW_WORK* wk, const BTL_PARTY* party, const BTL_
       // 倒したポケとのレベル差によって経験値が増減する（WBから追加された仕様）
       myLv = BPP_GetValue( bpp, BPP_LEVEL );
       enemyLv = BPP_GetValue( deadPoke, BPP_LEVEL );
-      result[i].exp = getexp_calc_adjust_level( result[i].exp, myLv, enemyLv );
+      result[i].exp = getexp_calc_adjust_level( bpp, result[i].exp, myLv, enemyLv );
 
 #ifndef SOGA_DEBUG
       //現状ポケモンに正しいIDと親の名前がはいっていないため、常に「おおめに」になってしまうため、
@@ -7227,7 +7227,7 @@ static void getexp_calc( BTL_SVFLOW_WORK* wk, const BTL_PARTY* party, const BTL_
         result[i].fBonus = TRUE;
       }
 
-      BTL_Printf("メンバーIdx[%d]のポケに対し、最終経験値=%d\n", i, result[i].exp);
+      BTL_N_Printf( DBGSTR_SVFL_ExpCalc_Result, i, result[i].exp);
     }
   }
 }
@@ -7242,10 +7242,10 @@ static void getexp_calc( BTL_SVFLOW_WORK* wk, const BTL_PARTY* party, const BTL_
  * @retval  u32   補正後経験値
  */
 //----------------------------------------------------------------------------------
-static u32 getexp_calc_adjust_level( u32 base_exp, u16 getpoke_lv, u16 deadpoke_lv )
+static u32 getexp_calc_adjust_level( const BTL_POKEPARAM* bpp, u32 base_exp, u16 getpoke_lv, u16 deadpoke_lv )
 {
   fx32 denom, numer, ratio;
-  u32  denom_int, numer_int, result;
+  u32  denom_int, numer_int, result, expMargin;
 
   numer_int = deadpoke_lv * 2 + 10;
   denom_int = deadpoke_lv + getpoke_lv + 10;
@@ -7255,8 +7255,12 @@ static u32 getexp_calc_adjust_level( u32 base_exp, u16 getpoke_lv, u16 deadpoke_
   ratio = FX_Div( numer, denom );
 
   result = BTL_CALC_MulRatio( base_exp, ratio ) + 1;
+  expMargin = BPP_GetExpMargin( bpp );
+  if( result > expMargin ){
+    result = expMargin;
+  }
 
-  BTL_Printf( "自分Lv=%d, 敵Lv=%d, 基本経験値=%d -> 補正後経験値=%d\n",
+  BTL_N_Printf( DBGSTR_SVFL_ExpAdjustCalc,
       getpoke_lv, deadpoke_lv, base_exp, result );
 
   return result;
@@ -7284,28 +7288,11 @@ static void getexp_make_cmd( BTL_SVFLOW_WORK* wk, BTL_PARTY* party, const CALC_E
       u32 exp   = calcExp[i].exp;
       u16 strID = (calcExp[i].fBonus)? BTL_STRID_STD_GetExp_Bonus : BTL_STRID_STD_GetExp;
       u8  pokeID = BPP_GetID( bpp );
-      BTL_LEVELUP_INFO  info;
 
       BTL_Printf("経験値はいったメッセージ :strID=%d, pokeID=%d, exp=%d\n", strID, pokeID, exp);
       SCQUE_PUT_MSG_STD( wk->que, strID, pokeID, exp );
 
-      while( exp )
-      {
-        if( BPP_AddExp(bpp, &exp, &info) )
-        {
-//          BTL_Printf("レベルアップする経験値: exp=%d\n", exp);
-          SCQUE_PUT_ACT_AddExpLevelup( wk->que, pokeID,
-            info.level, info.hp, info.atk, info.def, info.sp_atk, info.sp_def, info.agi );
-
-          BTL_SERVER_NotifyPokemonLevelUp( wk->server, bpp );
-        }
-        else
-        {
-//          BTL_Printf("レベルアップしない経験値増: exp=%d\n", exp);
-          SCQUE_PUT_ACT_AddExp( wk->que, pokeID, exp );
-          break;
-        }
-      }
+      SCQUE_PUT_ACT_AddExp( wk->que, pokeID, exp );
     }
   }
 }

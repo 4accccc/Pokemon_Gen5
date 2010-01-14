@@ -207,6 +207,7 @@ typedef struct {
 }BTL_LEVELUP_INFO;
 
 extern BOOL BPP_AddExp( BTL_POKEPARAM* bpp, u32* exp, BTL_LEVELUP_INFO* info );
+extern u32 BPP_GetExpMargin( const BTL_POKEPARAM* bpp );
 
 
 //--------------------------------------------------------------

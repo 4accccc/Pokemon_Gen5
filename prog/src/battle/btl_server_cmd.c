@@ -148,7 +148,6 @@ static const u8 ServerCmdToFmtTbl[] = {
   SC_ARGFMT_53bit,            // SC_ACT_KILL
   SC_ARGFMT_555bit,           // SC_ACT_MOVE
   SC_ARGFMT_14byte,           // SC_ACT_EXP
-  SC_ARGFMT_1x8byte,          // SC_ACT_EXP_LVUP
   SC_ARGFMT_3311bit_2byte,    // SC_ACT_BALL_THROW
   SC_ARGFMT_44bit,            // SC_ACT_ROTATION
   SC_ARGFMT_12byte,           // SC_ACT_CHANGE_TOKUSEI
@@ -808,7 +807,7 @@ void SCQUE_PUT_MsgImpl( BTL_SERVER_CMD_QUE* que, u8 scType, ... )
     do {
       arg = va_arg( list, int );
       BTL_N_PrintfSimple( DBGSTR_val_comma, arg );
-      scque_put2byte( que, arg );
+      scque_put4byte( que, arg );
     }while( arg != MSGARG_TERMINATOR );
     BTL_N_PrintfSimple( DBGSTR_LF );
 
@@ -830,7 +829,7 @@ static void read_core_msg( BTL_SERVER_CMD_QUE* que, u8 scType, int* args )
   {
     int i = idx_begin;
     for(i=idx_begin; i<BTL_SERVERCMD_ARG_MAX; ++i){
-      args[i] = scque_read2byte( que );
+      args[i] = scque_read4byte( que );
       if( args[i] == MSGARG_TERMINATOR ){
         break;
       }

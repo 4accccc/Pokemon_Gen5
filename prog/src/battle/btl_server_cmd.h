@@ -90,7 +90,6 @@ typedef enum {
   SC_ACT_KILL,              ///< 強制瀕死演出（みちづれ、一撃ワザなど）
   SC_ACT_MOVE,              ///< ムーブ
   SC_ACT_EXP,               ///< 経験値取得
-  SC_ACT_EXP_LVUP,          ///< 経験値取得＋レベルアップ
   SC_ACT_BALL_THROW,        ///< ボール投げ
   SC_ACT_ROTATION,          ///< ローテーション
   SC_ACT_CHANGE_TOKUSEI,    ///< とくせい変更
@@ -503,10 +502,6 @@ static inline void SCQUE_PUT_ACT_AddExp( BTL_SERVER_CMD_QUE* que, u8 pokeID, u32
 {
   SCQUE_PUT_Common( que, SC_ACT_EXP, pokeID, exp );
 }
-static inline void SCQUE_PUT_ACT_AddExpLevelup( BTL_SERVER_CMD_QUE* que, u8 pokeID, u8 level, u8 hp, u8 atk, u8 def, u8 sp_atk, u8 sp_def, u8 agi )
-{
-  SCQUE_PUT_Common( que, SC_ACT_EXP_LVUP, pokeID, level, hp, atk, def, sp_atk, sp_def, agi );
-}
 static inline void SCQUE_PUT_ACT_BallThrow( BTL_SERVER_CMD_QUE* que, BtlPokePos pos, u8 yureCnt, u8 fSuccess, u8 fZukanRegister, u16 ballItemID )
 {
   SCQUE_PUT_Common( que, SC_ACT_BALL_THROW, pos, yureCnt, fSuccess, fZukanRegister, ballItemID );
@@ -550,7 +545,7 @@ static inline void SCQUE_PUT_MSG_WAZA( BTL_SERVER_CMD_QUE* que, u8 pokeID, u16 w
 }
 
 //=====================================================
-typedef u16 ScMsgArg;
+typedef u32 ScMsgArg;
 enum {
   MSGARG_TERMINATOR = 0xffff,
 };

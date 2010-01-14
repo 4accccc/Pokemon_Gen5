@@ -129,9 +129,6 @@ struct _BTL_CLIENT {
   BtlPokePos  myChangePokePos[ BTL_POSIDX_MAX ];
 
   u8          fieldEffectFlag[ CLIENT_FLDEFF_BITFLAG_SIZE ];
-
-  int wazaoboe_index;   //技覚えテーブル参照用インデックスワーク
-  WazaID  wazaoboe_no;  //技覚えで覚える技ナンバー
 };
 
 
@@ -206,7 +203,7 @@ static BOOL scProc_ACT_Kinomi( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_Kill( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_Move( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_Exp( BTL_CLIENT* wk, int* seq, const int* args );
-static BOOL scProc_ACT_ExpLvup( BTL_CLIENT* wk, int* seq, const int* args );
+static BOOL wazaOboeSeq( BTL_CLIENT* wk, int* seq, BTL_POKEPARAM* bpp );
 static BOOL scProc_ACT_BallThrow( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_Rotation( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_ChangeTokusei( BTL_CLIENT* wk, int* seq, const int* args );
@@ -240,8 +237,6 @@ static BOOL scProc_OP_SetContFlag( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_ResetContFlag( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_SetTurnFlag( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_ResetTurnFlag( BTL_CLIENT* wk, int* seq, const int* args );
-static BOOL scProc_OP_SetActFlag( BTL_CLIENT* wk, int* seq, const int* args );
-static BOOL scProc_OP_ClearActFlag( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_ChangeTokusei( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_SetItem( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_UpdateWazaNumber( BTL_CLIENT* wk, int* seq, const int* args );
@@ -1902,7 +1897,6 @@ static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq )
     { SC_ACT_KILL,              scProc_ACT_Kill           },
     { SC_ACT_MOVE,              scProc_ACT_Move           },
     { SC_ACT_EXP,               scProc_ACT_Exp            },
-    { SC_ACT_EXP_LVUP,          scProc_ACT_ExpLvup        },
     { SC_ACT_BALL_THROW,        scProc_ACT_BallThrow      },
     { SC_ACT_ROTATION,          scProc_ACT_Rotation       },
     { SC_ACT_CHANGE_TOKUSEI,    scProc_ACT_ChangeTokusei  },
@@ -2674,90 +2668,113 @@ static BOOL scProc_ACT_Move( BTL_CLIENT* wk, int* seq, const int* args )
 //---------------------------------------------------------------------------------------
 static BOOL scProc_ACT_Exp( BTL_CLIENT* wk, int* seq, const int* args )
 {
+  enum {
+    SEQ_INIT = 0,
+    SEQ_ADD_ROOT,
+    SEQ_GAUGE_NORMAL_WAIT,
+    SEQ_LVUP_ROOT,
+    SEQ_LVUP_GAUGE_WAIT,
+    SEQ_LVUP_EFFECT_WAIT,
+    SEQ_LVUP_INFO_START,
+    SEQ_LVUP_INFO_MSG_WAIT,
+    SEQ_LVUP_WAZAOBOE_WAIT,
+    SEQ_END,
+  };
+
+  static BTL_LEVELUP_INFO  lvupInfo;
+  static u32  addExp;
+  static int  subSeq;
+
+  u8 pokeID = args[0];
+  BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, pokeID );
+  BtlvMcssPos vpos = BTL_MAIN_PokeIDtoViewPos( wk->mainModule, wk->pokeCon, pokeID );
+
 
   switch( *seq ){
-  case 0:
+  case SEQ_INIT:
+      addExp = args[1];
+      OS_TPrintf("加算経験値=%d\n", addExp);
+      subSeq = 0;
+      (*seq) = SEQ_ADD_ROOT;
+      /* fallthru */
+  case SEQ_ADD_ROOT:
+    if( addExp )
     {
-      BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
-      BPP_ReflectExpAdd( bpp );
+      u32 expRest = addExp;
 
-      if( BTL_MAIN_CheckFrontPoke(wk->mainModule, wk->pokeCon, args[0]) )
+      if( BPP_AddExp(bpp, &expRest, &lvupInfo) )
       {
-        u8 pos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, args[0] );
-        u8 vpos = BTL_MAIN_BtlPosToViewPos( wk->mainModule, pos );
-
-        BTLV_EFFECT_CalcGaugeEXP( vpos, args[1] );
-        (*seq)++;
+        (*seq) = SEQ_LVUP_ROOT;
       }
-      else{
-        return TRUE;
+      else
+      {
+        if( BTL_MAIN_CheckFrontPoke(wk->mainModule, wk->pokeCon, pokeID) )
+        {
+          BTLV_EFFECT_CalcGaugeEXP( vpos, addExp );
+          (*seq) = SEQ_GAUGE_NORMAL_WAIT;
+        }
+        else {
+          (*seq) = SEQ_END;
+        }
+        expRest = 0;
       }
+      OS_TPrintf("残Exp=%d\n", expRest);
+      addExp = expRest;
     }
-    break;
-  case 1:
-    if( !BTLV_EFFECT_CheckExecuteGauge() ){
-      return TRUE;
-    }
-    break;
-  }
-  return FALSE;
-}
-//---------------------------------------------------------------------------------------
-/**
- *  経験値加算処理（レベルアップをともなう）
- *  args .. [0]:対象ポケモンID  [1]:level, [2]:hp, [3]:atk, [4]:def, [5]:sp_atk, [6]:sp_def, [7]:agi
- */
-//---------------------------------------------------------------------------------------
-static BOOL scProc_ACT_ExpLvup( BTL_CLIENT* wk, int* seq, const int* args )
-{
-
-  switch( *seq ){
-  case 0:
+    else
     {
-      BtlvMcssPos vpos = BTL_MAIN_PokeIDtoViewPos( wk->mainModule, wk->pokeCon, args[0] );
-
-      BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
-      BPP_ReflectLevelup( bpp, args[1], args[2], args[2], args[4], args[5], args[6], args[7] );
-//      BPP_HpPlus( bpp, args[2] );
-      if( vpos != BTLV_MCSS_POS_ERROR ){
-        BTLV_EFFECT_CalcGaugeEXPLevelUp( vpos, bpp );
-        (*seq)++;
-      }
-      else{
-        (*seq)+=2;
-      }
+      (*seq) = SEQ_END;
     }
     break;
-  case 1:
+
+  // 通常の（レベルアップしない）ゲージ演出の終了待ち
+  case SEQ_GAUGE_NORMAL_WAIT:
+    if( !BTLV_EFFECT_CheckExecuteGauge() ){
+      (*seq) = SEQ_END;
+    }
+    break;
+
+  // レベルアップ処理ルート
+  case SEQ_LVUP_ROOT:
+    BPP_ReflectByPP( bpp );
+    BTL_MAIN_ClientPokemonReflectToServer( wk->mainModule, pokeID );
+    {
+       // 場に出ているならゲージ演出
+       if( vpos != BTLV_MCSS_POS_ERROR )
+       {
+         BTLV_EFFECT_CalcGaugeEXPLevelUp( vpos, bpp );
+         (*seq) = SEQ_LVUP_GAUGE_WAIT;
+       }
+       // 出ていないなら能力上昇表示までジャンプ
+       else{
+         (*seq) = SEQ_LVUP_INFO_START;
+       }
+    }
+    break;
+
+  case SEQ_LVUP_GAUGE_WAIT:
     if( !BTLV_EFFECT_CheckExecuteGauge() )
     {
-      BtlvMcssPos vpos = BTL_MAIN_PokeIDtoViewPos( wk->mainModule, wk->pokeCon, args[0] );
       BTLV_AddEffectByPos( wk->viewCore, vpos, BTLEFF_LVUP );
-      (*seq)++;
+      (*seq) = SEQ_LVUP_EFFECT_WAIT;
     }
     break;
-  case 2:
+  case SEQ_LVUP_EFFECT_WAIT:
+    if( BTLV_WaitEffectByPos(wk->viewCore, vpos) )
     {
-      BtlvMcssPos vpos = BTL_MAIN_PokeIDtoViewPos( wk->mainModule, wk->pokeCon, args[0] );
-      if( vpos != BTLV_MCSS_POS_ERROR ){
-        if( !BTLV_WaitEffectByPos(wk->viewCore, vpos) ){
-          return FALSE;
-        }
-      }
-
-      {
-        BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
-
-        BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_STD, BTL_STRID_STD_LevelUp );
-        BTLV_STRPARAM_AddArg( &wk->strParam, args[0] );
-        BTLV_STRPARAM_AddArg( &wk->strParam, args[1] );
-
-        BTLV_StartMsg( wk->viewCore, &wk->strParam );
-        (*seq)++;
-      }
+      (*seq) = SEQ_LVUP_INFO_START;
     }
     break;
-  case 3:
+
+  case SEQ_LVUP_INFO_START:
+    BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_STD, BTL_STRID_STD_LevelUp );
+    BTLV_STRPARAM_AddArg( &wk->strParam, pokeID );
+    BTLV_STRPARAM_AddArg( &wk->strParam, lvupInfo.level );
+    BTLV_StartMsg( wk->viewCore, &wk->strParam );
+    (*seq) = SEQ_LVUP_INFO_MSG_WAIT;
+    break;
+
+  case SEQ_LVUP_INFO_MSG_WAIT:
     if( BTLV_IsJustDoneMsg(wk->viewCore) ){
       PMSND_PauseBGM( TRUE );
       PMSND_PlaySE( SEQ_SE_LVUP );
@@ -2767,27 +2784,57 @@ static BOOL scProc_ACT_ExpLvup( BTL_CLIENT* wk, int* seq, const int* args )
       PMSND_PauseBGM( FALSE );
     }
     if( BTLV_WaitMsg(wk->viewCore) && !PMSND_CheckPlaySE() ){
-      wk->wazaoboe_index = 0;
-      (*seq)++;
+      subSeq = 0;
+      (*seq) = SEQ_LVUP_WAZAOBOE_WAIT;
     }
     break;
+
+  case SEQ_LVUP_WAZAOBOE_WAIT:
+    if( wazaOboeSeq(wk, &subSeq, bpp) ){
+      (*seq) = SEQ_ADD_ROOT;
+    }
+    break;
+
+  case SEQ_END:
+    return TRUE;
+
+  }
+  return FALSE;
+}
+/**
+ * ワザ覚え処理
+ *  （経験値加算処理 scProc_ACT_Exp のサブシーケンス）
+ */
+static BOOL wazaOboeSeq( BTL_CLIENT* wk, int* seq, BTL_POKEPARAM* bpp )
+{
+  static int wazaoboe_index;
+  static WazaID wazaoboe_no;
+
+  u8 pokeID = BPP_GetID( bpp );
+
+  switch( *seq ){
+  case 0:
+    wazaoboe_index = 0;
+    wazaoboe_no = 0;
+    (*seq) = 4;
+    /* fallthru */
+
   case 4:
     //技覚えチェック
     {
-      BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
       const POKEMON_PARAM* pp = BPP_GetSrcData( bpp );
-      wk->wazaoboe_no = PP_CheckWazaOboe( ( POKEMON_PARAM* )pp, &wk->wazaoboe_index, wk->heapID );
-      if( wk->wazaoboe_no == PTL_WAZAOBOE_NONE )
+      wazaoboe_no = PP_CheckWazaOboe( ( POKEMON_PARAM* )pp, &wazaoboe_index, wk->heapID );
+      if( wazaoboe_no == PTL_WAZAOBOE_NONE )
       {
         return TRUE;
       }
-      else if( wk->wazaoboe_no == PTL_WAZASET_SAME )
+      else if( wazaoboe_no == PTL_WAZASET_SAME )
       {
         break;
       }
-      else if( wk->wazaoboe_no & PTL_WAZAOBOE_FULL )
+      else if( wazaoboe_no & PTL_WAZAOBOE_FULL )
       {
-        wk->wazaoboe_no &= ( PTL_WAZAOBOE_FULL ^ 0xffff );
+        wazaoboe_no &= ( PTL_WAZAOBOE_FULL ^ 0xffff );
         (*seq) = 7;
       }
       else
@@ -2798,12 +2845,12 @@ static BOOL scProc_ACT_ExpLvup( BTL_CLIENT* wk, int* seq, const int* args )
     break;
   case 5:
     {
-      BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
+      BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, pokeID );
       const POKEMON_PARAM* pp = BPP_GetSrcData( bpp );
       BPP_ReflectByPP( bpp );
       BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_WAZAOBOE, msg_waza_oboe_04 );
-      BTLV_STRPARAM_AddArg( &wk->strParam, args[0] );
-      BTLV_STRPARAM_AddArg( &wk->strParam, wk->wazaoboe_no );
+      BTLV_STRPARAM_AddArg( &wk->strParam, pokeID );
+      BTLV_STRPARAM_AddArg( &wk->strParam, wazaoboe_no );
       BTLV_StartMsg( wk->viewCore, &wk->strParam );
       (*seq)++;
     }
@@ -2825,8 +2872,8 @@ static BOOL scProc_ACT_ExpLvup( BTL_CLIENT* wk, int* seq, const int* args )
   case 7:
     //技忘れ確認処理
     BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_WAZAOBOE, msg_waza_oboe_05 );
-    BTLV_STRPARAM_AddArg( &wk->strParam, args[0] );
-    BTLV_STRPARAM_AddArg( &wk->strParam, wk->wazaoboe_no );
+    BTLV_STRPARAM_AddArg( &wk->strParam, pokeID );
+    BTLV_STRPARAM_AddArg( &wk->strParam, wazaoboe_no );
     BTLV_StartMsg( wk->viewCore, &wk->strParam );
     (*seq)++;
     /* fallthru */
@@ -2851,15 +2898,15 @@ static BOOL scProc_ACT_ExpLvup( BTL_CLIENT* wk, int* seq, const int* args )
         if( result == BTL_YESNO_YES )
         {
           const BTL_PARTY* party = BTL_POKECON_GetPartyDataConst( wk->pokeCon, wk->myID );
-          int index = BTL_PARTY_FindMemberByPokeID( party, args[0] );
-          BTLV_WAZAWASURE_Start( wk->viewCore, index, wk->wazaoboe_no );
+          int index = BTL_PARTY_FindMemberByPokeID( party, pokeID );
+          BTLV_WAZAWASURE_Start( wk->viewCore, index, wazaoboe_no );
           (*seq) = 10;
         }
         else
         {
           BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_WAZAOBOE, msg_waza_oboe_08 );
-          BTLV_STRPARAM_AddArg( &wk->strParam, args[0] );
-          BTLV_STRPARAM_AddArg( &wk->strParam, wk->wazaoboe_no );
+          BTLV_STRPARAM_AddArg( &wk->strParam, pokeID );
+          BTLV_STRPARAM_AddArg( &wk->strParam, wazaoboe_no );
           BTLV_StartMsg( wk->viewCore, &wk->strParam );
           (*seq) = 100;
         }
@@ -2879,12 +2926,12 @@ static BOOL scProc_ACT_ExpLvup( BTL_CLIENT* wk, int* seq, const int* args )
         }
         else
         {
-          BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
+          BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, pokeID );
           const POKEMON_PARAM* pp = BPP_GetSrcData( bpp );
           WazaID forget_wazano = PP_Get( pp, ID_PARA_waza1 + result, NULL );
-          PP_SetWazaPos( ( POKEMON_PARAM* )pp, wk->wazaoboe_no, result );
+          PP_SetWazaPos( ( POKEMON_PARAM* )pp, wazaoboe_no, result );
           BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_WAZAOBOE, msg_waza_oboe_06 );
-          BTLV_STRPARAM_AddArg( &wk->strParam, args[0] );
+          BTLV_STRPARAM_AddArg( &wk->strParam, pokeID );
           BTLV_STRPARAM_AddArg( &wk->strParam, forget_wazano );
           BTLV_StartMsg( wk->viewCore, &wk->strParam );
           (*seq)++;
@@ -2904,9 +2951,9 @@ static BOOL scProc_ACT_ExpLvup( BTL_CLIENT* wk, int* seq, const int* args )
       BTLV_STRPARAM   yesParam;
       BTLV_STRPARAM   noParam;
       BTLV_STRPARAM_Setup( &yesParam, BTL_STRTYPE_YESNO, msgid_yesno_wazaakirameru );
-      BTLV_STRPARAM_AddArg( &yesParam, wk->wazaoboe_no );
+      BTLV_STRPARAM_AddArg( &yesParam, wazaoboe_no );
       BTLV_STRPARAM_Setup( &noParam, BTL_STRTYPE_YESNO, msgid_yesno_wazaakiramenai );
-      BTLV_STRPARAM_AddArg( &noParam, wk->wazaoboe_no );
+      BTLV_STRPARAM_AddArg( &noParam, wazaoboe_no );
       BTLV_YESNO_Start( wk->viewCore, &yesParam, &noParam );
     }
     if( BTLV_WaitMsg(wk->viewCore) ){
@@ -2922,8 +2969,8 @@ static BOOL scProc_ACT_ExpLvup( BTL_CLIENT* wk, int* seq, const int* args )
         if( result == BTL_YESNO_YES )
         {
           BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_WAZAOBOE, msg_waza_oboe_09 );
-          BTLV_STRPARAM_AddArg( &wk->strParam, args[0] );
-          BTLV_STRPARAM_AddArg( &wk->strParam, wk->wazaoboe_no );
+          BTLV_STRPARAM_AddArg( &wk->strParam, pokeID );
+          BTLV_STRPARAM_AddArg( &wk->strParam, wazaoboe_no );
           BTLV_StartMsg( wk->viewCore, &wk->strParam );
           (*seq) = 102;
         }
@@ -2942,7 +2989,6 @@ static BOOL scProc_ACT_ExpLvup( BTL_CLIENT* wk, int* seq, const int* args )
   }
   return FALSE;
 }
-
 //---------------------------------------------------------------------------------------
 /**
  *  モンスターボール投げつけ

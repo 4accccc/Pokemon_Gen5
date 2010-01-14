@@ -147,6 +147,12 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_SVFL_TurnStart_Result:    return "【ターン開始コマンド】処理アクション %d / %d\n";
   case DBGSTR_SVFL_ActOrderMainStart:   return "コマンド生成コア 処理アクション開始Index=%d\n";
   case DBGSTR_SVFL_ActOrderMainDropOut: return "Result=%dによる中途サーバ返信\n";
+  case DBGSTR_SVFL_ExpCalc_Base:        return "基本となる経験値=%d\n";
+  case DBGSTR_SVFL_ExpCalc_MetInfo:     return "死亡ポケ[%d]が対面した相手ポケの数=%d, その内、生きてる数=%d\n";
+  case DBGSTR_SVFL_ExpCalc_DivideInfo:  return "メンバーIdx[%d]のポケに経験値%dを分配\n";
+  case DBGSTR_SVFL_ExpCalc_Result:      return "メンバーIdx[%d]のポケに対し、最終経験値=%d\n";
+  case DBGSTR_SVFL_ExpAdjustCalc:       return "自分Lv=%d, 敵Lv=%d, 基本経験値=%d -> 補正後経験値=%d\n";
+
 
 
   case DBGSTR_POSPOKE_Out:              return " poke[%d] out from pos[%d]\n";

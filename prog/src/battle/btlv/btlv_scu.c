@@ -34,23 +34,17 @@
 /* Consts                                                                   */
 /*--------------------------------------------------------------------------*/
 enum {
-  TEST_STATWIN_BGCOL = 7,
-  TEST_STATWIN_BGCOL_FLASH = 4,
-  TEST_TOKWIN_BGCOL = 6,
-  TEST_TOKWIN_CHAR_WIDTH = 10,
-  TEST_TOKWIN_DOT_WIDTH  = TEST_TOKWIN_CHAR_WIDTH*8,
-
   MAIN_STRBUF_LEN = 512,
   SUB_STRBUF_LEN  = 32,
   SUBPROC_WORK_SIZE = 64,
 
   PALIDX_MSGWIN     = 0,
   PALIDX_TOKWIN1    = 1,
+  PALIDX_SYSWIN     = 2,
 
   COLIDX_MSGWIN_CLEAR  = 0x0c,
   COLIDX_MSGWIN_LETTER = 0x01,
   COLIDX_MSGWIN_SHADOW = 0x09,
-
 
   MSGWIN_EVA_MAX = 31,
   MSGWIN_EVA_MIN = 0,

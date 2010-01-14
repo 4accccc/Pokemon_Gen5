@@ -106,6 +106,11 @@ typedef enum {
   DBGSTR_SVFL_TurnStart_Result,
   DBGSTR_SVFL_ActOrderMainStart,
   DBGSTR_SVFL_ActOrderMainDropOut,
+  DBGSTR_SVFL_ExpCalc_Base,
+  DBGSTR_SVFL_ExpCalc_MetInfo,
+  DBGSTR_SVFL_ExpCalc_DivideInfo,
+  DBGSTR_SVFL_ExpCalc_Result,
+  DBGSTR_SVFL_ExpAdjustCalc,
 
   DBGSTR_SC_PutCmd,
   DBGSTR_SC_ReservedPos,
