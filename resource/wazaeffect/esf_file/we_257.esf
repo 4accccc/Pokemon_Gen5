@@ -5,13 +5,13 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\w_257.spa
 #001
 %00
 ポケモンアニメ	攻撃側	アニメストップ
-SE再生	SEQ_SE_W239_01	SE1	0	0	120	0	0
+SE再生	SEQ_SE_W239_01	SE1	0	0	70	0	0
 SE再生	SEQ_SE_DUMMY5	SE1	120	0	0	0	0
-SE動的変化	SE1	追従	ボリューム	120	0	70	50:0:0
-SE再生	SEQ_SE_W307_01	SE2	0	500	90	0	0
+SE動的変化	SE1	追従	ボリューム	70	0	70	50:0:0
+SE再生	SEQ_SE_W307_01	SE2	0	600	127	0	0
 SE再生	SEQ_SE_DUMMY5	SE2	120	0	0	0	0
 SE動的変化	SE1	追従	ピッチ	0	2000	0	120:0:0
-SE動的変化	SE2	追従	ボリューム	90	0	70	50:0:0
+SE動的変化	SE2	追従	ボリューム	127	0	70	50:0:0
 パーティクルデータロード	w_257
 パーティクル再生	w_257	W_257_257_HOT_WIND	POS_AA	方向無し	2	0
 BGのパレットフェード	すべて	0	12	1	22:8:8

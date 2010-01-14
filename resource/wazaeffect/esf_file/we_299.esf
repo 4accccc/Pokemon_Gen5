@@ -3900,7 +3900,8 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\w_299.spa
 SE再生	SEQ_SE_BC01	デフォルト	0	0	100	0	0
 エフェクト終了待ち	すべて
 制御モード変更	継続
-SE再生	SEQ_SE_W027_01	SE1	0	0	110	0	0
+SE再生	SEQ_SE_W027_01	SE1	0	-500	110	0	0
+SE動的変化	SE1	追従	ピッチ	-500	0	0	30:0:0
 SEパン	SE1	追従	攻撃側	防御側	0	30:0:0
 制御モード変更	逐次
 制御モード変更	継続

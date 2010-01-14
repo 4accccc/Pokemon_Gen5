@@ -3897,7 +3897,7 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\w_301.spa
 #001
 %00
 制御モード変更	継続
-SE再生	SEQ_SE_W077_01	SE1	0	0	115	0	0
+SE再生	SEQ_SE_W077_01	SE1	0	0	65	0	0
 SE再生	SEQ_SE_DECIDE3	SE2	0	0	90	0	0
 SEパン	SE1	追従	攻撃側	防御側	0	30:0:0
 SEパン	SE2	追従	攻撃側	防御側	0	30:0:0
@@ -3914,7 +3914,9 @@ SEパン	SE2	追従	攻撃側	防御側	0	30:0:0
 ポケモン移動	防御側	往復	0.5	0	1	1	6
 制御モード変更	継続
 SE再生	SEQ_SE_W295_02	SE1	0	0	120	0	0
-SE再生	SEQ_SE_W181_01	SE2	0	0	120	0	0
+SE再生	SEQ_SE_W008_02	SE2	2	500	110	0	0
+SE再生	SEQ_SE_W008_02	SE2	10	100	127	0	0
+SE再生	SEQ_SE_W008_02	SE2	14	800	80	0	0
 SEパン	SE1	追従	防御側	防御側	0	50:0:0
 SEパン	SE2	追従	防御側	防御側	0	50:0:0
 制御モード変更	逐次
