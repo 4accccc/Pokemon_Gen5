@@ -1454,6 +1454,18 @@ u32 FLDMENUFUNC_ProcMenu( FLDMENUFUNC *menuFunc )
 	return( ret );
 }
 
+//==================================================================
+/**
+ * FLDMENUFUNC メニュー再描画
+ *
+ * @param   menuFunc		FLDMENUFUNC*
+ */
+//==================================================================
+void FLDMENUFUNC_Rewrite( FLDMENUFUNC *menuFunc )
+{
+  BmpMenuList_Rewrite( menuFunc->pMenuListWork );
+}
+
 //--------------------------------------------------------------
 /**
  * FLDMENUFUNC_LISTDATAを作成
@@ -1542,6 +1554,18 @@ void FLDMENUFUNC_AddArcStringListData( FLDMENUFUNC_LISTDATA *listData,
 {	
 	BmpMenuWork_ListAddArchiveString(
 		(BMP_MENULIST_DATA*)listData, msgData, strID, param, heapID );
+}
+
+//==================================================================
+/**
+ * FLDMENUFUNC_LISTDATAからリストバッファのSTRBUFを破棄する
+ *
+ * @param   listData		
+ */
+//==================================================================
+void FLDMENUFUNC_ListSTRBUFDelete(FLDMENUFUNC_LISTDATA *listData)
+{
+  BmpMenuWork_ListSTRBUFDelete( (BMP_MENULIST_DATA*)listData );
 }
 
 //--------------------------------------------------------------

@@ -252,6 +252,7 @@ extern FLDMENUFUNC * FLDMENUFUNC_AddEventMenuList( FLDMSGBG *fmb,
   u16 list_pos, u16 cursor_pos, BOOL cancel );
 extern void FLDMENUFUNC_DeleteMenu( FLDMENUFUNC *menuFunc );
 extern u32 FLDMENUFUNC_ProcMenu( FLDMENUFUNC *menuFunc );
+extern void FLDMENUFUNC_Rewrite( FLDMENUFUNC *menuFunc );
 extern FLDMENUFUNC_LISTDATA * FLDMENUFUNC_CreateListData( int max, HEAPID heapID );
 extern void FLDMENUFUNC_DeleteListData( FLDMENUFUNC_LISTDATA *listData );
 extern FLDMENUFUNC_LISTDATA * FLDMENUFUNC_CreateMakeListData(
@@ -262,6 +263,7 @@ extern void FLDMENUFUNC_AddStringListData( FLDMENUFUNC_LISTDATA *listData,
 extern void FLDMENUFUNC_AddArcStringListData(
     FLDMENUFUNC_LISTDATA *listData,
     GFL_MSGDATA *msgData, u32 strID, u32 param, HEAPID heapID );
+extern void FLDMENUFUNC_ListSTRBUFDelete(FLDMENUFUNC_LISTDATA *listData);
 extern u32 FLDMENUFUNC_GetListLengthMax( const FLDMENUFUNC_LISTDATA *listData );
 extern u32 FLDMENUFUNC_GetListMax( const FLDMENUFUNC_LISTDATA *listData );
 extern u32 FLDMENUFUNC_GetListMenuWidth(
