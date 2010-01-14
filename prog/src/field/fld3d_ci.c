@@ -1606,6 +1606,166 @@ static BOOL IsFlySkyIn(const int inCutinNo)
   return FALSE;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * エンカウントカットインイベント
+ *
+ * @param   event       イベントポインタ
+ * @param   *seq        シーケンサ
+ * @param   work        ワークポインタ
+ *
+ * @return	GMEVENT_RESULT    イベント結果
+ */
+//--------------------------------------------------------------------------------------------
+static GMEVENT_RESULT EncCutInEvt( GMEVENT* event, int* seq, void* work )
+{
+  FLD3D_CI_PTR ptr;
+  FLD3D_CI_EVENT_WORK *evt_work = work;
+  GAMESYS_WORK * gsys;
+  FIELDMAP_WORK * fieldmap;
+  
+  ptr = evt_work->CiPtr;
+  gsys = GMEVENT_GetGameSysWork(event);
+  fieldmap = GAMESYSTEM_GetFieldMapWork(gsys);
 
+  switch(*seq){
+  case 0:
+    //プライオリティの保存
+    PushPriority(ptr);
+    //表示状態の保存
+    PushDisp(ptr);
+    //カットイン共通ホワイトアウト処理
 
+    (*seq)++;
+    break;
+  case 1:
+    {
+      //キャプチャリクエスト
+      ReqCapture(ptr);
+      (*seq)++;
+    }
+    break;
+  case 2:
+    //キャプチャ終了待ち
+    if (ptr->CapEndFlg){
+      //キャプチャ終わったら、プライオリティ変更と表示変更
+      GFL_BG_SetPriority( 0, 0 );
+      GFL_BG_SetPriority( 2, 3 );
+      //描画モード変更
+      {
+        const GFL_BG_SYS_HEADER bg_sys_header = 
+          {
+            GX_DISPMODE_GRAPHICS,GX_BGMODE_5,GX_BGMODE_0,GX_BG0_AS_3D
+          };
+        GFL_BG_SetBGMode( &bg_sys_header );
+      }
+      //ＢＧセットアップ
+      G2_SetBG2ControlDCBmp(
+          GX_BG_SCRSIZE_DCBMP_256x256,
+          GX_BG_AREAOVER_XLU,
+          GX_BG_BMPSCRBASE_0x00000
+      );
+      GX_SetBankForBG(GX_VRAM_BG_128_D);
+      //アルファブレンド
+      G2_SetBlendAlpha(GX_BLEND_PLANEMASK_NONE,
+				GX_BLEND_PLANEMASK_BG2, 0,0);
+      //ここではまだキャプチャ面のみ表示(パシリ防止)
+      GFL_BG_SetVisible( GFL_BG_FRAME2_M, VISIBLE_ON );
+      (*seq)++;
+    }
+    break;
+  case 3:
+    //リソースロード
+    SetupResource(ptr, &evt_work->SetupDat, ptr->CutInNo);
+    //セットアップ終了したので3Ｄ面もオン
+    GFL_BG_SetVisible( GFL_BG_FRAME2_M, VISIBLE_ON );
+    GFL_BG_SetVisible( GFL_BG_FRAME0_M, VISIBLE_ON );
+    {
+      int size = GFL_HEAP_GetHeapFreeSize(ptr->HeapID);
+      NOZOMU_Printf("START::FLD3DCUTIN_HEAP_REST %x\n",size);
+    }
+    //フィールド表示モード切替
+    FIELDMAP_SetDraw3DMode(fieldmap, DRAW3DMODE_CUTIN);
+    (*seq)++;
+    break;
+  case 4:
+    //1シンク待ったので、ポケモングラフィックを展開していた場合は解放する
+    if (ptr->pokeImgBitmap != NULL)
+    {
+      GFL_BMP_Delete(ptr->pokeImgBitmap);
+      ptr->pokeImgBitmap = NULL;
+      GFL_HEAP_FreeMemory( ptr->chr_buf );
+      GFL_HEAP_FreeMemory( ptr->pal_buf );
+    }
+
+    (*seq)++;
+    break;
+  case 5:
+    {
+      BOOL rc1,rc2,rc3;
+      //パーティクル再生
+      rc1 = PlayParticle(ptr);
+      //3Ｄモデル1アニメ再生
+      rc2 = PlayMdlAnm1(ptr);
+      //3Ｄモデル2アニメ再生
+      rc3 = PlayMdlAnm2(ptr);
+
+      //鳴き声再生    @todo
+      {
+        if (ptr->VoicePlayFlg && ptr->SePlayWait)
+        {
+          ptr->SePlayWait--;
+          if ( ptr->SePlayWait == 0 )
+          {
+            ptr->VoicePlayerIdx = PMV_PlayVoice( ptr->MonsNo, ptr->FormNo );
+          }
+        }
+      }
+
+      if (rc1&&rc2&&rc3)
+      {
+        //PMV_StopVoice();    //鳴き声なっているならストップ  @todo
+        if ( ptr->VoicePlayFlg )
+        {
+          GMEVENT * call_event;
+          call_event = GMEVENT_Create(gsys, event, VoiceFadeOutEvt, 0);
+          GMEVENT_CallEvent(event, call_event);
+        }
+        (*seq)++;
+      }
+    }
+    break;
+  case 6:
+    //フィールドモード戻し
+    FIELDMAP_SetDraw3DMode(fieldmap, DRAW3DMODE_NORMAL);
+    //リソース解放処理
+    DeleteResource(ptr, &evt_work->SetupDat);
+    break;
+  case 7:
+    //終了
+    return GMEVENT_RES_FINISH;
+  }
+
+  return GMEVENT_RES_CONTINUE;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * エンカウントカットインイベント作成
+ *
+ * @param   gsys        ゲームシステムポインタ
+ * @param   ptr         カットイン管理ポインタ
+ * @apram   inEncCutinNo
+ *
+ * @return	event       イベントポインタ
+ */
+//--------------------------------------------------------------------------------------------
+GMEVENT *FLD3D_CI_CreateEncCutInEvt( GAMESYS_WORK *gsys, FLD3D_CI_PTR ptr, const int inEndCutinNo )
+{
+  GMEVENT * event;
+  int no = 0;
+  event = FLD3D_CI_CreateCutInEvt(gsys, ptr, no);
+
+  return event;
+}
 
