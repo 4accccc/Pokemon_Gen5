@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="tomoya_takahashi" host="W00148" date="2009-12-14T13:35:21" source="bc_road_03_01.mb"/>
+	<create user="fuchino" host="W00152" date="2010-01-13T13:38:39" source="bc_road_03_01.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="tomoya_takahashi" host="W00148" date="2009-12-14T13:35:21" source="bc_road_03_01.mb"/>
+<original_create user="fuchino" host="W00152" date="2010-01-13T13:38:39" source="bc_road_03_01.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -27,33 +27,158 @@
 	use_primitive_strip="on"
 />
 
-<box_test pos_scale="6" xyz="-2.000000 0.000000 -1.000000" whd="4.000000 0.000000 2.000000"/>
+<box_test pos_scale="6" xyz="-2.000000 -0.062500 -1.000000" whd="4.000000 0.000000 2.000000"/>
 
 <tex_image_array size="1">
-	<tex_image index="0" name="michi02b"
-		width="16" height="16" original_width="16" original_height="16"
-		format="palette4"
+	<tex_image index="0" name="bc_jimen01"
+		width="64" height="64" original_width="64" original_height="64"
+		format="palette16"
 		color0_mode="color"
-		palette_name="michi02b_pl"
-		path="C:/home/wb_data3d/field/out00/chip/tex/michi02b.tga"
+		palette_name="bc_jimen01_pl"
+		path="C:/home/wb_data3d/build_model/outdoor/wfbc_block/bc_tex/bc_jimen01.tga"
 	>
-		<bitmap size="32">
-			0040 0000 0000 0004 0000 0000 0000 0000
-			0001 0000 0000 0000 0000 1000 0000 0000
-			0000 0000 0000 0004 0000 0000 0040 0000
-			0000 0000 0000 0040 0000 0000 1000 0000
+		<bitmap size="1024">
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			1110 1111 1111 1111 1111 1111 1111 1111
+			1111 1111 1111 1111 1111 1111 1111 0111
+			dd10 dddd dddd dddd dddd dddd dddd 1ddd
+			ddd1 dddd dddd dddd dddd dddd dddd 01dd
+			dd10 86ac 86dd dddd 667b 6666 dddd 1ddd
+			acd1 ddca 6bbd dd76 667d 6666 dddd 01dd
+			bd10 dd87 acdd bddc 666a a666 ddd7 1ddd
+			b6d1 dddb 666d 6666 666a 6666 dddd 018d
+			6d10 d999 6add 6666 6666 d666 dddd 1ddd
+			dbd1 cddd 666c 6666 6666 da66 dddd 01dd
+			dd10 cddd 6666 6666 6666 dbba dddd 1add
+			dcd1 dddd bbbd 866a 6666 dddb dddd 01dd
+			dd10 cddd 2666 6665 c666 dddd cddd 1776
+			ddd1 dddd bddd 66ab d9ca dddd dddd 01dd
+			dd10 6ddd 6666 6666 db76 dddd 6cdd 1666
+			ddd1 dddd b9dd bb77 dda8 dddd dddd 01dd
+			dd10 6ddd 6666 6c66 ddd7 dddd 66dd 1b66
+			ddd1 dddd 667d 8866 ddd8 dddd aadd 01ba
+			dd10 6cdd 6666 ddd8 dddd dddd 666d 1da6
+			cdd1 666c bbb6 767d ddd9 7ddd a767 01db
+			dd10 6acd 6666 dddd dddd dddd 6666 1dda
+			66d1 6666 ddd6 dddd dddd 6779 b666 01dd
+			dd10 dbaa c66c dddd dadd 6ddd 6666 1ddd
+			66d1 b666 dddd dddd 7bbd 6676 b666 01dd
+			ad10 dda8 a6ad dddd d66b 6ddd cc66 16ad
+			66d1 daaa dddd bbdd 6667 6666 ca66 016d
+			dd10 dddd a77d 6ddd d666 66dd 89d6 1666
+			66d1 ddaa dddd 668d 6666 6666 a666 0166
+			dd10 dddd 766d 6add da66 666b 6add 1666
+			66d1 ddc6 addd 6666 6666 6666 6666 0166
+			dd10 dddd a6ad 8dda d666 669d 66a6 1866
+			66d1 ddda 666a 7666 67a6 6666 6666 0166
+			dd10 dddd 666b addd d666 666b 66a6 1ac8
+			66d1 ddd6 6666 ddd8 b77b 6667 6666 0166
+			dd10 dddd d66d d9dd 666b 666b 6aa6 1dcc
+			66d1 6dd9 dc66 dddd 6bdd 6666 6666 0176
+			dd10 dddd 998d dddd 666d 6666 6666 1dda
+			66d1 6698 dd66 dddd 6ddd 6666 6666 01a6
+			dd10 dddd b966 79dd 666a 6666 6666 1dda
+			ccd1 668c dd96 dddd 6ddd 6666 6666 01a6
+			dd10 6ddd bb6b 678b 6666 6666 a666 1ddd
+			8dd1 6666 ddc8 dddd cddd 6666 6666 0166
+			dd10 6add bbb6 6666 6666 6666 cc66 1ddd
+			68d1 7666 dddd dddd 6ddd 6666 6666 0166
+			dd10 66bd 667a 6666 6666 6666 dc96 1bdd
+			67d1 d666 dddd dddd 67dd 6666 6666 0166
+			dd10 767b 6667 6666 6666 6666 dddd 17dd
+			6dd1 dd86 dddd dddd 666d 6666 6666 0166
+			bd10 6666 6666 6666 2226 d666 dddd 17ad
+			ddd1 dddd dddd 6ddd 6666 6666 6666 0166
+			dd10 677b 6666 4666 2111 d666 dddd 1777
+			ddd1 dddd dddd 669d 6666 6666 6666 0166
+			dd10 666b 4666 1224 6211 d666 6ddd 1666
+			ddd1 dddd dddd 6666 6666 6666 aa66 016a
+			dd10 addd 6666 1124 2111 db66 6bdd 1666
+			ddd1 dddd addd 6666 6666 7666 6666 01a8
+			dd10 cddd 666a 1346 1111 6661 69dd 1666
+			ddd1 dddd 9ddd 6666 a666 7776 a777 01aa
+			dd10 ddda 466d 1111 1111 8662 66dd 1666
+			ddd1 dddd 8ddd aa89 ddba b797 7777 01bb
+			1110 1111 1111 1111 1111 1111 1111 1111
+			1111 1111 1111 1111 1111 1111 1111 0111
+			1110 1111 1111 1111 1111 1111 1111 1111
+			1111 1111 1111 1111 1111 1111 1111 0111
+			dd10 dddd dddd dddd dddd dddd dddd 1ddd
+			ddd1 dddd dddd dddd dddd dddd dddd 01dd
+			dd10 66dd 6666 6666 6666 ddd7 6667 1dc6
+			66d1 6666 d866 dddd dddd dddd bddd 0176
+			dd10 66dd 6666 6666 7666 cddd 6666 1cd9
+			66d1 6666 dc66 dddd dddb dddd bddd 0167
+			dd10 668d dc66 67bb 77a6 6bdd 9666 17dd
+			66d1 6666 ddc6 a6dd ddcc dddd dddd 016d
+			dd10 669d dda6 766b dcb7 6a9d 9666 166b
+			66d1 6666 7d86 666a dd86 dddd dddd 016d
+			6d10 6bdd dda6 7666 7bbb 6677 dbb7 166d
+			66d1 6666 6666 6666 dda6 dddd dddd 017d
+			cd10 addd 6666 b666 bbbb 66aa ddb6 167b
+			66d1 6666 6666 6666 ddc6 dddd dddd 01dd
+			dd10 cddd 6666 d666 dddc 66ab ddd7 167d
+			66d1 6666 6666 6666 ddca dddb dddd 01dd
+			dd10 dddd 666b dba6 dddd 7a7d dddb 166d
+			66d1 6666 6666 6666 dddb dddb dddd 01dd
+			dd10 dddd 66ad db76 dddd 77bd dddb 16dd
+			66d1 6666 6666 6666 ddcd dddb dddd 01dd
+			dd10 dddd 667d dd76 dddd babd dddb 1ddd
+			6dd1 6b66 6666 a666 dddd dddd dddd 01dd
+			dd10 dddd 66ad dda6 dddd 6676 ddbb 1ddd
+			66d1 6666 6666 ba6a dddd dddd dddd 01dd
+			dd10 dddd 6add db66 bbdd 6667 dd96 1666
+			66d1 6666 6666 ddba dddd dddd dddd 01dd
+			dd10 dddd addd bc66 6666 6666 8db6 1666
+			66d1 6666 b666 dddb dddd dddd dddd 01dd
+			dd10 bddd dddd d868 666b 6666 ddc6 167b
+			66d1 6666 d666 dddd dddd dddd dddd 01dd
+			dd10 6ddd ddd7 7688 6667 88b7 bddc 1667
+			66d1 6666 7766 dddd dddd dddd dddd 01dd
+			dd10 bbdd dddd 6669 ccc6 dddd 9ddd 1666
+			ddd1 66bd da66 dddd dddd dddd dddd 01dd
+			bd10 dddd dddd 6668 ddc6 dddd 6cdd 1676
+			ddd1 67dd da66 dddd dddd dddd dddd 01dd
+			bd10 ddd7 dddd dddd dddd dddd 76bd 1d77
+			ddd1 8ddd d976 dddd ddbd dddd dddd 01dd
+			cd10 dddd ddbd dddd dddd dddd dddd 1ddd
+			ddd1 89dd ddc6 bbdc ddbd dddd dddd 01dd
+			dd10 dddd 86bd dddd dddd dddd dddd 1ddd
+			ddd1 dddd dbdb ccdd dca6 dddd dddd 01dd
+			dd10 cddd 6668 b666 bbbb dddb dddd 1ddd
+			ddd1 dddd bddd 6aac a866 dddd dddd 01bd
+			dd10 cddd 6666 6666 ba66 ddbb dddd 1ddd
+			ddd1 dddd dddd 6aab dd66 dddd dddd 0169
+			dd10 dddd 6666 6776 a666 dddd dddd 1ddd
+			ddd1 dddd bddd c66b dddc dddd dddd 0189
+			dd10 dddd a7bd 77dd d766 dddd dddd 1ddd
+			ddd1 dddd dddd aaad ddbd dddd dddd 01dd
+			dd10 dddd dddd dddd ddbb dddd dddd 1ddd
+			ddd1 dddd dddd dddd dddd dddd dddd 01dd
+			dd10 dddd dddd dddd dddd dddd dddd 1ddd
+			ddd1 dddd dddd dddd dddd dddd dddd 01dd
+			dd10 dddd dddd dddd dddd bddd bbdb 1766
+			bbd1 d9bd ddd9 bbdd ddad cddd dddb 01dd
+			dd10 dddd dddd dddd dddd dddd 68bb 1667
+			77d1 6669 6666 6666 d666 66dd ddd6 01dd
+			1110 1111 1111 1111 1111 1111 1111 1111
+			1111 1111 1111 1111 1111 1111 1111 0111
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
 </tex_image_array>
 
 <tex_palette_array size="1">
-	<tex_palette index="0" name="michi02b_pl" color_size="4">
-		4210 4631 7fff 7fff
+	<tex_palette index="0" name="bc_jimen01_pl" color_size="16">
+		356a 3dac 3dad 3dcc 3dcd 41ad 41cd 41ce
+		41ed 41ee 45cd 45ce 45ed 45ee 7fff 7fff
 	</tex_palette>
 </tex_palette_array>
 
 <material_array size="1">
-	<material index="0" name="michi02b"
+	<material index="0" name="bc_jimen01_1"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -85,36 +210,28 @@
 
 <polygon_array size="1">
 	<polygon index="0" name="polygon0"
-		vertex_size="8" polygon_size="2"
-		triangle_size="0" quad_size="2"
-		volume_min="-3.999756 0.000000 -1.999512"
-		volume_max="4.000244 0.000000 2.000488"
-		volume_r="4.472656"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="-4.000000 -0.125000 -2.000000"
+		volume_max="4.000000 -0.125000 2.000000"
+		volume_r="4.473877"
 		mtx_prim_size="1"
 		nrm_flag="on" clr_flag="off" tex_flag="on"
 	>
 		<mtx_prim index="0">
 			<mtx_list size="1">0</mtx_list>
 			<primitive_array size="1">
-				<primitive index="0" type="quads" vertex_size="8">
+				<primitive index="0" type="quads" vertex_size="4">
 					<mtx idx="0"/>
-					<tex st="-112.000000 128.000000"/>
+					<tex st="-128.000000 128.000000"/>
 					<nrm xyz="0.000000 0.998047 0.000000"/>
-					<pos_xyz xyz="0.000244 0.000000 2.000488"/>
-					<tex st="16.000000 128.000000"/>
-					<pos_xy xy="4.000244 0.000000"/>
-					<tex st="16.000000 0.000000"/>
-					<pos_xz xz="4.000244 -1.999512"/>
-					<tex st="-112.000000 0.000000"/>
-					<pos_xy xy="0.000244 0.000000"/>
-					<tex st="-112.000000 128.000000"/>
-					<pos_xz xz="-3.999756 2.000488"/>
-					<tex st="16.000000 128.000000"/>
-					<pos_xy xy="0.000244 0.000000"/>
-					<tex st="16.000000 0.000000"/>
-					<pos_xz xz="0.000244 -1.999512"/>
-					<tex st="-112.000000 0.000000"/>
-					<pos_xy xy="-3.999756 0.000000"/>
+					<pos_s xyz="-4.000000 -0.125000 2.000000"/>
+					<tex st="128.000000 128.000000"/>
+					<pos_xy xy="4.000000 -0.125000"/>
+					<tex st="128.000000 0.000000"/>
+					<pos_xz xz="4.000000 -2.000000"/>
+					<tex st="-128.000000 0.000000"/>
+					<pos_xy xy="-4.000000 -0.125000"/>
 				</primitive>
 			</primitive_array>
 		</mtx_prim>
@@ -122,7 +239,7 @@
 </polygon_array>
 
 <node_array size="1">
-	<node index="0" name="polySurface1" kind="mesh"
+	<node index="0" name="polySurface2" kind="mesh"
 		parent="-1"
 		child="-1"
 		brother_next="-1"
@@ -131,21 +248,21 @@
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="-0.010742 0.000000 -0.017334"
+		translate="0.000000 0.000000 0.000000"
 		visibility="on"
 		display_size="1"
-		vertex_size="8" polygon_size="2"
-		triangle_size="0" quad_size="2"
-		volume_min="-3.999756 0.000000 -1.999512"
-		volume_max="4.000244 0.000000 2.000488"
-		volume_r="4.472656"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="-4.000000 -0.125000 -2.000000"
+		volume_max="4.000000 -0.125000 2.000000"
+		volume_r="4.473877"
 	>
 		<display index="0" material="0" polygon="0" priority="0"/>
 	</node>
 </node_array>
 
-<output_info vertex_size="8" polygon_size="2"
-	triangle_size="0" quad_size="2"/>
+<output_info vertex_size="4" polygon_size="1"
+	triangle_size="0" quad_size="1"/>
 
 </body>
 

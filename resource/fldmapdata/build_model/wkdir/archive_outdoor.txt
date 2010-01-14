@@ -237,3 +237,4 @@
 "nsbmdfiles/door_t2_h.nsbmd"
 "nsbmdfiles/door_c1_school.nsbmd"
 "nsbmdfiles/h05_light.nsbmd"
+"nsbmdfiles/badgegate_07air.nsbmd"

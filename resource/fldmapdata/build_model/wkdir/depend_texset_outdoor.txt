@@ -1522,7 +1522,8 @@ DEP_TEXSET_IMD_OUTDOOR044 = \
 	$(SRCDIR)/badgegate_08.imd \
 	$(SRCDIR)/outwarp01.imd \
 	$(SRCDIR)/outwarp02.imd \
-	$(SRCDIR)/outwarp03.imd
+	$(SRCDIR)/outwarp03.imd \
+	$(SRCDIR)/badgegate_07air.imd
 
 texset/outdoor044.imd: $(DEP_TEXSET_IMD_OUTDOOR044) texset/tmp/outdoor044.list
 	$(TEXMAG) -q -n -o $@ -S texset/tmp/outdoor044.list
