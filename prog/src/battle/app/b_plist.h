@@ -32,6 +32,7 @@
 // リスト処理定義
 enum {
 	BPL_MODE_NORMAL = 0,	// 通常のポケモン選択
+	BPL_MODE_NO_CANCEL,		// キャンセル無効のポケモン選択
 	BPL_MODE_CHG_DEAD,		// 瀕死入れ替え選択
 	BPL_MODE_ITEMUSE,			// アイテム使用
 	BPL_MODE_WAZASET,			// 技忘れ
