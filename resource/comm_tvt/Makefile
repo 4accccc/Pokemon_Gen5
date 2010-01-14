@@ -31,6 +31,7 @@ lsources:=$(wildcard *.ncl)
 gsources:=$(wildcard *.ncg)
 ssources:=$(wildcard *.nsc)
 esources:=$(wildcard *.nce)
+bsources:=$(wildcard *.bmp)
 
 # リソースが吐き出すファイルを自動でつくる
 lobjects = $(subst .ncl,.NCLR,$(lsources))
@@ -39,11 +40,12 @@ sobjects = $(subst .nsc,.NSCR,$(ssources))
 eobjects = $(subst .nce,.NCER,$(esources))
 aobjects = $(subst .nce,.NANR,$(esources))
 gaobjects = $(subst .nce,.NCGR,$(esources))
+bobjects = $(subst .bmp,.ntft,$(bsources))
 
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 # サフィックスルールを定義することで 依存関係を自動で判断してくれる
-.SUFFIXES: .NCLR .ncl .NCGR .ncg  .NSCR .nsc .NCER .nce
+.SUFFIXES: .NCLR .ncl .NCGR .ncg  .NSCR .nsc .NCER .nce .ntft .bmp
 
 .ncl.NCLR:
 	g2dcvtr $<
@@ -56,6 +58,9 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 
 .nce.NCER:
 	g2dcvtr $< -pcm -ncn
+
+.bmp.ntft:
+	ntexconv.exe $< -b -f direct
 
 endif
 
@@ -76,7 +81,7 @@ $(TARGETDIR)/$(targetname).narc: $(targetname).narc
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 # コピー先のnarcが古い場合実行する
-$(targetname).narc: $(lobjects) $(gobjects) $(sobjects) $(eobjects) $(aobjects) $(gaobjects)
+$(targetname).narc: $(lobjects) $(gobjects) $(sobjects) $(eobjects) $(aobjects) $(gaobjects) $(bobjects)
 	nnsarc -r -l -n -i $(targetname) $^
 	$(NAIXCUT) $(targetname).naix
 endif
@@ -93,6 +98,8 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
 	rm -f *.NCLR
 	rm -f *.NCER
 	rm -f *.NANR
+	rm -f *.ntfp
+	rm -f *.ntft
 	rm -f *.narc
 	rm -f *.naix
 	rm -f $(targetname).narc

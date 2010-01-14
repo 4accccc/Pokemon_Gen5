@@ -182,7 +182,7 @@ static void CAMERA_SYS_CallDmaRacv( CAMERA_SYSTEM_WORK *work )
   const u16 height= CAMERA_SYS_CaptureSizeToHeight( work );
   CAMERA_DmaRecvAsync(NDMA_NO, 
                       work->readBufferArr[work->readBufferNo], 
-                      CAMERA_GetBytesAtOnce(width), 
+                      CAMERA_GetBytesAtOnce(width),
                       CAMERA_GET_FRAME_BYTES(width, height), 
                       CAMERA_SYS_DmaRecvCallBack, 
                       NULL);
@@ -498,6 +498,7 @@ void CAMERA_SYS_SetTrimming( CAMERA_SYSTEM_WORK* work , const u16 left , const u
         const u16 width = CAMERA_SYS_CaptureSizeToWidth( work );
         const u16 height= CAMERA_SYS_CaptureSizeToHeight( work );
         CAMERA_SetTransferLines(CAMERA_GetMaxLinesRound(width,height));
+        //CAMERA_SetTransferLines(1);
       }
       work->isTrimming = TRUE;
 
@@ -531,6 +532,7 @@ void CAMERA_SYS_ResetTrimming( CAMERA_SYSTEM_WORK* work )
         const u16 width = CAMERA_SYS_CaptureSizeToWidth( work );
         const u16 height= CAMERA_SYS_CaptureSizeToHeight( work );
         CAMERA_SetTransferLines(CAMERA_GetMaxLinesRound(width,height));
+        //CAMERA_SetTransferLines(1);
       }
       work->isTrimming = FALSE;
     }

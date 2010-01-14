@@ -63,8 +63,8 @@
 #define _DEBUG_ALONETEST (16)
 #elif DEBUG_ONLY_FOR_ohmori
 #define _DEBUG_ALONETEST (17)
-//#elif DEBUG_ONLY_FOR_ariizumi_nobuhiko
-//#define _DEBUG_ALONETEST (18)
+#elif DEBUG_ONLY_FOR_ariizumi_nobuhiko
+#define _DEBUG_ALONETEST (18)
 #else
 //誰でも繋がる、、、が、パレスの通信バージョンとして使用 昔の通信と接続で問題があるときにバージョンを上げていく
 #define _DEBUG_ALONETEST (102)

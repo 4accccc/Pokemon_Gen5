@@ -255,6 +255,7 @@ void CTVT_COMM_TermSystem( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
 {
   u8 i;
   
+  GFL_NET_LDATA_ExitSystem();
   GFL_HEAP_FreeMemory( commWork->decodeWaveBuf );
   GFL_HEAP_FreeMemory( commWork->postWaveBuf );
   GFL_NET_Align32Free( commWork->encBuffer );
@@ -303,11 +304,6 @@ void CTVT_COMM_Main( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
     }
     break;
   case CCS_INIT_COMM:
-    if( commWork->isLowerDataInit == FALSE )
-    {
-      commWork->isLowerDataInit = TRUE;
-      GFL_NET_LDATA_InitSystem(heapId);
-    }
     CTVT_COMM_InitComm( work , commWork );
     commWork->state = CCS_INIT_COMM_WAIT;
     break;
@@ -386,11 +382,6 @@ void CTVT_COMM_Main( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
   case CCS_DISCONNECT:
     if( commWork->connectNum <= 1 )
     {
-      if( commWork->isLowerDataInit == TRUE )
-      {
-        commWork->isLowerDataInit = FALSE;
-        GFL_NET_LDATA_ExitSystem();
-      }
       GFL_NET_Exit(NULL);
       commWork->state = CCS_DISCONNECT_WAIT;
     }
@@ -399,11 +390,6 @@ void CTVT_COMM_Main( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
       //if( GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),GFL_NET_CMD_EXIT_REQ,0,NULL) == TRUE )
       GFL_NET_Exit(NULL);
       {
-        if( commWork->isLowerDataInit == TRUE )
-        {
-          commWork->isLowerDataInit = FALSE;
-          GFL_NET_LDATA_ExitSystem();
-        }
         commWork->state = CCS_DISCONNECT_WAIT;
       }
     }
@@ -436,11 +422,6 @@ void CTVT_COMM_Main( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
       GFL_NETHANDLE *selfHandle = GFL_NET_HANDLE_GetCurrentHandle();
       if( GFL_NET_IsTimingSync( selfHandle , CTVT_COMM_RELEASE_COMMAND_SYNC ) == TRUE )
       {
-        if( commWork->isLowerDataInit == TRUE )
-        {
-          commWork->isLowerDataInit = FALSE;
-          GFL_NET_LDATA_ExitSystem();
-        }
         GFL_NET_DelCommandTable( GFL_NET_CMD_COMM_TVT );
         commWork->state = CCS_FINISH;
       }
@@ -514,11 +495,6 @@ void CTVT_COMM_ExitComm( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
 {
   if( commWork->connectNum <= 1 )
   {
-    if( commWork->isLowerDataInit == TRUE )
-    {
-      commWork->isLowerDataInit = FALSE;
-      GFL_NET_LDATA_ExitSystem();
-    }
     if( commWork->mode == CCIM_CONNECTED )
     {
       commWork->state = CCS_FINISH;
@@ -844,6 +820,10 @@ static void CTVT_COMM_RefureshCommState( COMM_TVT_WORK *work , CTVT_COMM_WORK *c
     {
       COMM_TVT_SetSelfIdx( work , selfIdx );
     }
+  }
+  {
+    CTVT_CAMERA_WORK *camWork = COMM_TVT_GetCameraWork(work);
+    CTVT_CAMERA_SetWaitAllRefreshFlg( work , camWork );
   }
 }
 

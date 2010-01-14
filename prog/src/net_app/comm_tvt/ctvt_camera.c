@@ -14,6 +14,7 @@
 #include "system/wipe.h"
 #include "system/camera_system.h"
 
+#include "comm_tvt.naix"
 #include "ctvt_camera.h"
 
 //======================================================================
@@ -36,8 +37,11 @@ struct _CTVT_CAMERA_WORK
   HEAPID camHeapId;
   
   void *scrBuf;
+  void *picBuf;
   
   u8   isUpdateBit;
+  BOOL isWaitAllRefresh;
+  u8   waitAllConut;  //2回待たないといけない
   
   //以下TWL時のみ作られるもの
   CAMERA_SYSTEM_WORK *camSys;       //  1サイズ*2 //0x30000
@@ -73,10 +77,16 @@ CTVT_CAMERA_WORK* CTVT_CAMERA_Init( COMM_TVT_WORK *work , const HEAPID heapId )
     camWork->cnvBuf  = GFL_HEAP_AllocClearMemory( GFL_HEAP_LOWID(camWork->camHeapId) , CTVT_BUFFER_SCR_SIZE/2 );
     camWork->sendBuf = GFL_HEAP_AllocClearMemory( GFL_HEAP_LOWID(camWork->camHeapId) , CTVT_BUFFER_SCR_SIZE/2 );
   }
+  else
+  {
+    ARCHANDLE *arcHandle = COMM_TVT_GetArcHandle( work );
+    camWork->picBuf = GFL_ARCHDL_UTIL_Load( arcHandle , NARC_comm_tvt_tv_t_ds_mode_ntft , FALSE , heapId );
+  }
   
-  camWork->scrBuf = GFL_HEAP_AllocClearMemory( GFL_HEAP_LOWID(heapId) , CTVT_BUFFER_SCR_SIZE );
   camWork->isUpdateBit = 0;
-  
+  camWork->waitAllConut = 0;
+  camWork->isWaitAllRefresh = FALSE;
+  camWork->scrBuf = GFL_HEAP_AllocClearMemory( GFL_HEAP_LOWID(heapId) , CTVT_BUFFER_SCR_SIZE );
   return camWork;
 }
 
@@ -93,6 +103,10 @@ void CTVT_CAMERA_Term( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork )
     CAMERA_SYS_ExitSystem( camWork->camSys );
     GFL_HEAP_DeleteHeap( HEAPID_CTVT_CAMERA );
   }
+  else
+  {
+    GFL_HEAP_FreeMemory( camWork->picBuf );
+  }
 
   GFL_HEAP_FreeMemory( camWork );
   
@@ -105,7 +119,11 @@ void CTVT_CAMERA_Main( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork )
 {
   if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_R )
   {
-    GFL_STD_MemClear32( G2_GetBG3ScrPtr() , CTVT_BUFFER_SCR_SIZE );
+    GFL_STD_MemFill32( G2_GetBG3ScrPtr() ,0x80008000 , CTVT_BUFFER_SCR_SIZE );
+    if( COMM_TVT_IsTwlMode() == FALSE )
+    {
+      CTVT_CAMERA_CapCallBack( camWork->picBuf , work );
+    }
   }
   
   if( COMM_TVT_IsTwlMode() == TRUE )
@@ -133,6 +151,33 @@ void CTVT_CAMERA_VBlank( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork )
   else
   {
     u8 i;
+    
+    if( camWork->isWaitAllRefresh == TRUE )
+    {
+      u8 num = 0;
+      for( i=0;i<CTVT_MEMBER_NUM;i++ )
+      {
+        if( camWork->isUpdateBit & (1<<i) )
+        {
+          num++;
+        }
+      }
+      if( num != COMM_TVT_GetConnectNum( work ) )
+      {
+        return;
+      }
+      if( camWork->waitAllConut == 0 )
+      {
+        camWork->waitAllConut++;
+        return;
+      }
+      else
+      {
+        GFL_STD_MemFill32( G2_GetBG3ScrPtr() ,0x80008000 , CTVT_BUFFER_SCR_SIZE );
+        camWork->isWaitAllRefresh = FALSE;
+      }
+    }
+    
     for( i=0;i<CTVT_MEMBER_NUM;i++ )
     {
       if( camWork->isUpdateBit & (1<<i) )
@@ -143,21 +188,26 @@ void CTVT_CAMERA_VBlank( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork )
         u16 scrSizeY;
         u32 bufferBase;
         int iy;
+        u8 idx = i;
+        if( mode == CTDM_DOUBLE && idx != 0 )
+        {
+          idx = 1;
+        }
         if( isDouble == FALSE )
         {
-          scrPosX = ( i == 0 || i == 2 ? 0 : 128 );
-          scrPosY = ( i == 0 || i == 1 ? 0 :  96 );
+          scrPosX = ( idx == 0 || idx == 2 ? 0 : 128 );
+          scrPosY = ( idx == 0 || idx == 1 ? 0 :  96 );
           scrSizeX = ( mode == CTDM_DOUBLE ?128 :128 );
           scrSizeY = ( mode == CTDM_DOUBLE ?192 : 96 );
         }
         else
         {
-          scrPosX = ( i == 0 || i == 2 ? 0 : 64 );
-          scrPosY = ( i == 0 || i == 1 ? 0 : 48 );
+          scrPosX = ( idx == 0 || idx == 2 ? 0 : 64 );
+          scrPosY = ( idx == 0 || idx == 1 ? 0 : 48 );
           scrSizeX = ( mode == CTDM_DOUBLE ?64 :64 );
           scrSizeY = ( mode == CTDM_DOUBLE ?96 :48 );
         }
-        bufferBase = (u32)camWork->scrBuf + scrSizeX*scrSizeY*2*i;
+        bufferBase = (u32)camWork->scrBuf + scrSizeX*scrSizeY*2*idx;
         DC_FlushRange( (void*)bufferBase , scrSizeX*scrSizeY*2 );
         
         for( iy=0;iy<scrSizeY;iy++ )
@@ -247,6 +297,21 @@ void CTVT_CAMERA_SetRefreshFlg( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork 
 }
 
 //--------------------------------------------------------------
+//	全員更新待ちフラグを立てる
+//--------------------------------------------------------------
+void CTVT_CAMERA_SetWaitAllRefreshFlg( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork )
+{
+  camWork->isWaitAllRefresh = TRUE;
+
+  camWork->isUpdateBit = 0;
+  camWork->waitAllConut = 0;
+  if( COMM_TVT_IsTwlMode() == FALSE )
+  {
+    CTVT_CAMERA_CapCallBack( camWork->picBuf , work );
+  }
+}
+
+//--------------------------------------------------------------
 //	サイズの取得
 //--------------------------------------------------------------
 const u16 CTVT_CAMERA_GetPhotoSizeX( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork )
@@ -288,6 +353,11 @@ void* CTVT_CAMERA_GetSelfBuffer( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork
 void* CTVT_CAMERA_GetBuffer( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork , const u8 idx )
 {
   const u32 size = CTVT_CAMERA_GetBufferSize( work , camWork );
+  if( COMM_TVT_GetDispMode( work ) == CTDM_DOUBLE &&
+      idx != 0 )
+  {
+    return (void*)((u32)camWork->scrBuf + size*1 );
+  }
   return (void*)((u32)camWork->scrBuf + size*idx );
 }
 const u32 CTVT_CAMERA_GetBufferSize( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork )
