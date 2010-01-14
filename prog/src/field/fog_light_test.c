@@ -52,6 +52,22 @@ static const u32 sc_MODEL_IDX[MODEL_MAX] =
   NARC_rail_editor_fog_light_shdow_msk_nsbmd,
 };
 
+
+static const u8 sc_FOG_TBL[32] =
+{
+  0x00, 0x02, 0x02, 0x01,
+  0x00, 0x01, 0x02, 0x00,
+  
+  0x00, 0x00, 0x00, 0x00,
+  0x01, 0x00, 0x03, 0x00,
+  
+  0x00, 0x00, 0x00, 0x00,
+  0x01, 0x00, 0x00, 0x01,
+
+  0x00, 0x00, 0x00, 0x00,
+  0x00, 0x00, 0x7B, 0x7B,
+};
+
 //-----------------------------------------------------------------------------
 /**
  *					構造体宣言
@@ -158,8 +174,9 @@ static void FOG_LIGHT_TEST_Create( FLDMAPFUNC_WORK * p_taskwk, FIELDMAP_WORK * p
   // フォグテーブルを設定
   p_wk->p_fog = p_fog;
   FIELD_FOG_SetFlag( p_fog, TRUE );
-  FIELD_FOG_SetSlope( p_fog, FIELD_FOG_SLOPE_0x8000 );
-  FIELD_FOG_SetOffset( p_fog, 0 );
+  FIELD_FOG_SetSlope( p_fog, FIELD_FOG_SLOPE_0x1000 );
+  FIELD_FOG_SetOffset( p_fog, 28752 );
+  FIELD_FOG_SetTblAll( p_fog, sc_FOG_TBL );
 
   // LIGHTカラー変更
   FIELD_LIGHT_Change( p_light, NARC_field_light_test_light00_00_dat );
