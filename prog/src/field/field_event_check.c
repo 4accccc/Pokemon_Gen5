@@ -1166,8 +1166,20 @@ static GMEVENT* checkPosEvent_core( EV_REQUEST * req, u16 dir )
 {
   u16 id;
   VecFx32 pos;
+  MAPATTR_VALUE attrval;
+  FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( req->gsys );
   EVENTWORK *evwork = GAMEDATA_GetEventWork( req->gamedata ); 
   FIELD_PLAYER_GetPos( req->field_player, &pos );
+
+  // アトリビュートをチェック
+  { 
+    FLDMAPPER* mapper = FIELDMAP_GetFieldG3Dmapper( fieldmap );
+    MAPATTR attr = MAPATTR_GetAttribute( mapper, &pos );
+    attrval = MAPATTR_GetAttrValue( attr );
+  }
+  // 流砂アトリビュートにいる場合はPOSイベントを無視する
+  if( MAPATTR_VALUE_CheckSandStream(attrval) == TRUE ){ return NULL; }
+
   id = EVENTDATA_CheckPosEvent( req->evdata, evwork, &pos, dir ); 
   if( id != EVENTDATA_ID_NONE ) 
   { //座標イベント起動
@@ -1347,12 +1359,12 @@ static GMEVENT* checkPosEvent_sandstream( EV_REQUEST* req )
   // 流砂の中心にいるかどうかチェック
   {
     const POS_EVENT_DATA_GPOS* pos_event_gpos;
-    int gx_center, gz_center;
+    int centerGX, centerGZ;
     pos_event_gpos = (const POS_EVENT_DATA_GPOS*)pos_event->pos_buf;
-    gx_center = pos_event_gpos->gx + pos_event_gpos->sx/2;
-    gz_center = pos_event_gpos->gz + pos_event_gpos->sz/2;
-    if( (gx_center == FX32_TO_GRID(pos.x)) &&
-        (gz_center == FX32_TO_GRID(pos.z)) )
+    centerGX = pos_event_gpos->gx + pos_event_gpos->sx/2;
+    centerGZ = pos_event_gpos->gz + pos_event_gpos->sz/2;
+    if( (centerGX == FX32_TO_GRID(pos.x)) &&
+        (centerGZ == FX32_TO_GRID(pos.z)) )
     { // 中心にいたらPOSイベント起動
       GMEVENT* event = SCRIPT_SetEventScript( req->gsys, pos_event->id, NULL, req->heapID );
         return event;
