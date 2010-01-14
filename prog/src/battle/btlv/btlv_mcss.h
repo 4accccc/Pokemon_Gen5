@@ -127,6 +127,7 @@ extern  BOOL            BTLV_MCSS_CheckExist( BTLV_MCSS_WORK *bmw, int position 
 extern  void            BTLV_MCSS_SetPaletteFade( BTLV_MCSS_WORK *bmw, int position,
                                                   u8 start_evy, u8 end_evy, u8 wait, u32 rgb );
 extern  u16             BTLV_MCSS_GetWeight( BTLV_MCSS_WORK *bmw, int position );
+extern  void            BTLV_MCSS_SetMigawari( BTLV_MCSS_WORK *bmw, int position, int sw );
 
 #ifdef PM_DEBUG
 extern  void            BTLV_MCSS_AddDebug( BTLV_MCSS_WORK *bmw, const MCSS_ADD_DEBUG_WORK *madw, int position );

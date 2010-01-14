@@ -56,6 +56,7 @@ struct _BTLV_MCSS_WORK
   GFL_TCBSYS*     tcb_sys;
   MCSS_SYS_WORK*  mcss_sys;
   MCSS_WORK*      mcss[ BTLV_MCSS_MAX ];
+  MCSS_ADD_WORK   maw[BTLV_MCSS_MAX ];
   GFL_TCB*        tcb[ BTLV_MCSS_MAX ];
 
   u32             mcss_pos_3vs3   :1;
@@ -68,9 +69,9 @@ struct _BTLV_MCSS_WORK
 
   u32             mcss_tcb_blink_execute;
   u32             mcss_tcb_alpha_execute;
-  u32             callback_work;
 
   u16             weight[ BTLV_MCSS_MAX ];
+  u32             personal_rnd[ BTLV_MCSS_MAX ];
 
   HEAPID          heapID;
 };
@@ -228,8 +229,6 @@ BTLV_MCSS_WORK  *BTLV_MCSS_Init( BtlRule rule, GFL_TCBSYS *tcb_sys, HEAPID heapI
   bmw->mcss_pos_3vs3 = ( rule == BTL_RULE_TRIPLE ) ? 1 : 0;
   bmw->mcss_pos_rotate = ( rule == BTL_RULE_ROTATION ) ? 1 : 0;
 
-  MCSS_SetCallBackFunc( bmw->mcss_sys, BTLV_MCSS_MakeBuchi, &bmw->callback_work );
-
   return bmw;
 }
 
@@ -296,18 +295,17 @@ void  BTLV_MCSS_Draw( BTLV_MCSS_WORK *bmw )
 //============================================================================================
 void  BTLV_MCSS_Add( BTLV_MCSS_WORK *bmw, const POKEMON_PARAM *pp, int position )
 {
-  MCSS_ADD_WORK maw;
   VecFx32 pos;
 
   GF_ASSERT( position < BTLV_MCSS_POS_TOTAL );
   GF_ASSERT_MSG( bmw->mcss[ position ] == NULL, "pos=%d", position );
 
-  //個性乱数をコールバックワークに代入しておく
-  bmw->callback_work = PP_Get( pp, ID_PARA_personal_rnd, NULL );
+  //個性乱数を取得しておく
+  bmw->personal_rnd[ position ] = PP_Get( pp, ID_PARA_personal_rnd, NULL );
 
-  BTLV_MCSS_MakeMAW( pp, &maw, position );
+  BTLV_MCSS_MakeMAW( pp, &bmw->maw[ position ], position );
   BTLV_MCSS_GetDefaultPos( bmw, &pos, position );
-  bmw->mcss[ position ] = MCSS_Add( bmw->mcss_sys, pos.x, pos.y, pos.z, &maw );
+  bmw->mcss[ position ] = MCSS_Add( bmw->mcss_sys, pos.x, pos.y, pos.z, &bmw->maw[ position ] );
 
   //ポケモンの体重データを取得しておく
   { 
@@ -320,6 +318,8 @@ void  BTLV_MCSS_Add( BTLV_MCSS_WORK *bmw, const POKEMON_PARAM *pp, int position 
 
   MCSS_SetAnimCtrlCallBack( bmw->mcss[ position ], position, BTLV_MCSS_CallBackFunctorFrame, 1 );
   //MCSS_SetTraverseMCNodesCallBack( bmw->mcss[ position ], position, BTLV_MCSS_CallBackNodes );
+
+  MCSS_SetCallBackFunc( bmw->mcss_sys, BTLV_MCSS_MakeBuchi, &bmw->personal_rnd[ position ] );
 }
 
 //============================================================================================
@@ -896,6 +896,39 @@ void  BTLV_MCSS_SetPaletteFade( BTLV_MCSS_WORK *bmw, int position, u8 start_evy,
 u16  BTLV_MCSS_GetWeight( BTLV_MCSS_WORK *bmw, int position )
 { 
   return bmw->weight[ position ];
+}
+
+//============================================================================================
+/**
+ * @brief 指定された立ち位置のMCSSにみがわりセット
+ *
+ * @param[in] bmw       BTLV_MCSS管理ワークへのポインタ
+ * @param[in] position  MCSSの立ち位置
+ * @param[in] sw        みがわりセットorリセット
+ *
+ */
+//============================================================================================
+void  BTLV_MCSS_SetMigawari( BTLV_MCSS_WORK* bmw, int position, int sw )
+{ 
+  if( sw == BTLEFF_MIGAWARI_OFF )
+  { 
+    //再度ぶちをつけなければいけないのでコールバックを設定しておく
+    MCSS_SetCallBackFunc( bmw->mcss_sys, BTLV_MCSS_MakeBuchi, &bmw->personal_rnd[ position ] );
+    MCSS_ReloadResource( bmw->mcss_sys, bmw->mcss[ position ], &bmw->maw[ position ] );
+  }
+  else
+  { 
+    MCSS_ADD_WORK maw;
+    maw.arcID = POKEGRA_GetArcID();
+    maw.ncbr = position & 1 ? NARC_pokegra_wb_pfwb_migawari_NCBR : NARC_pokegra_wb_pbwb_migawari_NCBR;
+    maw.nclr = NARC_pokegra_wb_pmwb_migawari_NCLR;
+    maw.ncer = position & 1 ? NARC_pokegra_wb_pfwb_migawari_NCER : NARC_pokegra_wb_pbwb_migawari_NCER;
+    maw.nanr = position & 1 ? NARC_pokegra_wb_pfwb_migawari_NANR : NARC_pokegra_wb_pbwb_migawari_NANR;
+    maw.nmcr = position & 1 ? NARC_pokegra_wb_pfwb_migawari_NMCR : NARC_pokegra_wb_pbwb_migawari_NMCR;
+    maw.nmar = position & 1 ? NARC_pokegra_wb_pfwb_migawari_NMAR : NARC_pokegra_wb_pbwb_migawari_NMAR;
+    maw.ncec = position & 1 ? NARC_pokegra_wb_pfwb_migawari_NCEC : NARC_pokegra_wb_pbwb_migawari_NCEC;
+    MCSS_ReloadResource( bmw->mcss_sys, bmw->mcss[ position ], &maw );
+  }
 }
 
 //============================================================================================
@@ -1520,7 +1553,7 @@ static  BOOL  BTLV_MCSS_MakeBuchi( const MCSS_ADD_WORK* maw, TCB_LOADRESOURCE_WO
 	  }
   }
 
-  return FALSE;
+  return TRUE;
 }
 
 #ifdef PM_DEBUG
