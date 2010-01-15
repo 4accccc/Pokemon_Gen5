@@ -2,7 +2,7 @@
 /**
  * @file  waza_tool.c
  * @bfief 技パラメータツール群（WB改訂版）
- * @author  HisashiSogabe
+ * @author  HisashiSogabe,  Masao Taya
  * @date  08.11.13
  */
 //============================================================================================
@@ -33,8 +33,8 @@ struct _WAZA_DATA {
   u8  hitPer;       ///< 命中率
   u8  basePP;       ///< 基本PPMax
   s8  priority;     ///< ワザ優先度
-  u8  hitCountMax : 4;  ///< 最大ヒット回数
   u8  hitCountMin : 4;  ///< 最小ヒット回数
+  u8  hitCountMax : 4;  ///< 最大ヒット回数
   u16 sickID;       ///< 状態異常コード（enum WazaSick）
   u8  sickPer;      ///< 状態異常の発生率
   u8  sickCont;     ///< 状態異常継続パターン（enum WazaSickCont）
