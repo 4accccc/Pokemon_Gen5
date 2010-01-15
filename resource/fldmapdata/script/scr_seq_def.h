@@ -1492,6 +1492,7 @@
  * @param z 表示するグリッドZ座標
  * @param dir 方向 DIR_UP等
  * @param id 識別用OBJ ID
+ * ※識別用IDは MMDL_ID_EVENTOBJ_00 を使います。原則、このコマンドで追加するOBJは同時に１人まで
  * @param code 表示コードBOY1等
  * @param move 動作コードMV_RND等
  */
