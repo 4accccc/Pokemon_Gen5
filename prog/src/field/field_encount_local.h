@@ -50,6 +50,14 @@ typedef struct _EWK_EFFECT_ENCOUNT
 {
   u32 walk_ct;
   EFFENC_PARAM  param;
+
+#ifdef PM_DEBUG
+  u8  deb_interval;
+  u8  deb_prob;
+  u8  deb_ofsx;
+  u8  deb_ofsz;
+#endif
+
 }EWK_EFFECT_ENCOUNT;
 
 ///エンカウント制御ワーク

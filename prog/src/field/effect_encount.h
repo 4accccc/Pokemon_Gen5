@@ -15,6 +15,9 @@
 //
 typedef struct _TAG_EFFECT_ENCOUNT EFFECT_ENCOUNT;
 
+#define EFFENC_DEFAULT_INTERVAL (50)  //エフェクト抽選デフォルトインターバル
+#define EFFENC_DEFAULT_PROB (20)  //エフェクト抽選確率デフォルト
+
 /**
  *  @brief  エンカウントエフェクトワーク生成
  */

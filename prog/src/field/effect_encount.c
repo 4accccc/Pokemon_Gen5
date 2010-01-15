@@ -34,9 +34,6 @@
 #define EFFENC_SEARCH_WZ  (EFFENC_SEARCH_OZ*2+1)
 #define EFFENC_SEARCH_AREA_MAX  (EFFENC_SEARCH_WX*EFFENC_SEARCH_WZ)
 
-#define EFFENC_DEFAULT_INTERVAL (50)
-#define EFFENC_DEFAULT_PROB (20)
-
 #define GRID_MAP_W  (32)
 
 typedef struct _EFFENC_ATTR_POS{
@@ -96,6 +93,11 @@ static u16 effitem_GetItemBridge(void);
 static u16 effitem_GetItemCave(void);
 static GMEVENT* effitem_ItemGetEventSet( FIELD_ENCOUNT* enc, u16 itemno );
 
+#ifdef PM_DEBUG
+static EFFENC_ATTR_POS* debug_EffectPosAdjust( FIELD_ENCOUNT*enc, EFFECT_ENCOUNT* eff_wk, EWK_EFFECT_ENCOUNT* wk, u16 org_idx );
+
+#endif  //PM_DEBUG
+
 ///////////////////////////////////////////////////////////////////////////////////////////
 //グローバル関数群
 ///////////////////////////////////////////////////////////////////////////////////////////
@@ -124,9 +126,14 @@ void EFFECT_ENC_DeleteWork( EFFECT_ENCOUNT* eff_wk )
 void EFFECT_ENC_Init( FIELD_ENCOUNT* enc, EFFECT_ENCOUNT* eff_wk )
 {
   eff_wk->fectrl = FIELDMAP_GetFldEffCtrl( enc->fwork );
-#ifdef DEBUG_ONLY_FOR_iwasawa
-  eff_wk->walk_ct_interval = 10;
-  eff_wk->prob = 100;
+
+#ifdef PM_DEBUG
+  {
+    ENCOUNT_WORK* ewk = GAMEDATA_GetEncountWork( enc->gdata );
+    EWK_EFFECT_ENCOUNT* wk = &ewk->effect_encount;
+    eff_wk->walk_ct_interval = wk->deb_interval;
+    eff_wk->prob = wk->deb_prob;
+  }
 #else
   eff_wk->walk_ct_interval = EFFENC_DEFAULT_INTERVAL;
   eff_wk->prob = EFFENC_DEFAULT_PROB;
@@ -561,6 +568,11 @@ static void effect_EffectSetUp( FIELD_ENCOUNT* enc, EFFECT_ENCOUNT* eff_wk )
   ENCOUNT_WORK* ewk = GAMEDATA_GetEncountWork(enc->gdata);
   EFFENC_PARAM* ep = &ewk->effect_encount.param; 
 
+#ifdef PM_DEBUG
+  //エフェクト出現位置デバッグ調整
+  attr = debug_EffectPosAdjust( enc, eff_wk, &ewk->effect_encount, idx);
+#endif
+
   //フィールドモデルの位置をチェック
   if( effect_CheckMMdlHit( enc, attr->gx, attr->gy, attr->gz )){
     IWASAWA_Printf("HitCancel FieldModelHit\n");
@@ -739,12 +751,17 @@ u32 EFFENC_DEB_NumInputParamGet( GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 p
   FIELD_ENCOUNT* encount = FIELDMAP_GetEncount( fieldmap ); 
   ENCOUNT_WORK* ewk = GAMEDATA_GetEncountWork( gamedata );
   EFFECT_ENCOUNT* eff_wk = encount->eff_enc;
+  EWK_EFFECT_ENCOUNT* wk = &ewk->effect_encount;
 
   switch( param ){
   case EFFENC_DNI_INTERVAL: 
-    return eff_wk->walk_ct_interval;
+    return wk->deb_interval;
   case EFFENC_DNI_PROB: 
-    return eff_wk->prob;
+    return wk->deb_prob;
+  case EFFENC_DNI_OFSX: 
+    return wk->deb_ofsx;
+  case EFFENC_DNI_OFSZ: 
+    return wk->deb_ofsz;
   }
   return 0;
 }
@@ -756,15 +773,67 @@ void EFFENC_DEB_NumInputParamSet( GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 
   FIELD_ENCOUNT* encount = FIELDMAP_GetEncount( fieldmap ); 
   ENCOUNT_WORK* ewk = GAMEDATA_GetEncountWork( gamedata );
   EFFECT_ENCOUNT* eff_wk = encount->eff_enc;
+  EWK_EFFECT_ENCOUNT* wk = &ewk->effect_encount;
 
   switch( param ){
   case EFFENC_DNI_INTERVAL: 
-    eff_wk->walk_ct_interval = value;
+    wk->deb_interval = value;
+    eff_wk->walk_ct_interval = wk->deb_interval;
     break;
   case EFFENC_DNI_PROB: 
-    eff_wk->prob = value;
+    wk->deb_prob = value;
+    eff_wk->prob = wk->deb_prob;
+    break;
+  case EFFENC_DNI_OFSX: 
+    wk->deb_ofsx = value;
+    break;
+  case EFFENC_DNI_OFSZ: 
+    wk->deb_ofsz = value;
     break;
   }
+}
+
+/**
+ *  @brief  デバッグ　エフェクト出現位置調整
+ */
+static EFFENC_ATTR_POS* debug_EffectPosAdjust( FIELD_ENCOUNT*enc, EFFECT_ENCOUNT* eff_wk, EWK_EFFECT_ENCOUNT* wk, u16 org_idx )
+{
+  int i;
+  s16 gx,gz,ox,oz;
+  EFFENC_ATTR_POS* pos;
+  FIELD_PLAYER *fplayer = FIELDMAP_GetFieldPlayer( enc->fwork );
+  MMDL* mmdl = FIELD_PLAYER_GetMMdl( fplayer );
+
+  ox = oz = 0;
+  if(wk->deb_ofsx){
+    if( wk->deb_ofsx > 5 ){
+      ox = (wk->deb_ofsx-5)*-1;
+    }else{
+      ox = wk->deb_ofsx;
+    }
+  }
+  if(wk->deb_ofsz){
+    if( wk->deb_ofsz > 5 ){
+      oz = (wk->deb_ofsz-5)*-1;
+    }else{
+      oz = wk->deb_ofsz;
+    }
+  }
+  gx = MMDL_GetGridPosX( mmdl ) + ox;
+  gz = MMDL_GetGridPosZ( mmdl ) + oz;
+  IWASAWA_Printf("指定　%d,%d\n",gx,gz);
+
+  if(wk->deb_ofsx == 0 && wk->deb_ofsz == 0){
+    return &eff_wk->attr_map.attr[org_idx];
+  }
+  for( i = 0;i < eff_wk->attr_map.count;i++){
+    pos = &eff_wk->attr_map.attr[i];
+    if( pos->gx != gx || pos->gz != gz) {
+      continue;
+    }
+    return &eff_wk->attr_map.attr[i];
+  }
+  return &eff_wk->attr_map.attr[org_idx];
 }
 
 #endif  //PM_DEBUG

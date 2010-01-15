@@ -27,6 +27,7 @@
 #include "enc_pokeset.h"
 #include "event_battle.h"
 #include "field_encount_local.h"
+#include "effect_encount.h"
 
 #include "sound/wb_sound_data.sadl"
 
@@ -41,7 +42,16 @@ ENCOUNT_WORK * ENCOUNT_WORK_Create( HEAPID heapID )
   ENCOUNT_WORK *wp;
   
   wp = GFL_HEAP_AllocClearMemory( heapID, sizeof(ENCOUNT_WORK) );
-  
+
+#ifdef PM_DEBUG
+   #ifdef DEBUG_ONLY_FOR_iwasawa
+    wp->effect_encount.deb_interval = 10;
+    wp->effect_encount.deb_prob = 100;
+  #else
+    wp->effect_encount.deb_interval = EFFENC_DEFAULT_INTERVAL;
+    wp->effect_encount.deb_prob = EFFENC_DEFAULT_PROB;
+  #endif
+#endif
   return( wp );
 }
 
