@@ -10,7 +10,8 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_wc10r0101.h"
-  //.include  "wc10r0101.h"
+  .include  "wc10r0101.h"
+  .include "../../../prog/src/field/scrcmd_wfbc_define.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,20 +20,145 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_wc10r0101
+_EVENT_DATA    ev_wc10r0101_oldman1
+_EVENT_DATA    ev_wc10r0101_boy2_01
+_EVENT_DATA    ev_wc10r0101_boy3_01
+_EVENT_DATA    ev_wc10r0101_middlewoman1_01
 _EVENT_DATA_END
 
 
 /**************************************************************/
-/*            ZONE_CHANGE_LABEL                               */
+/* ホワイトフォレスト：村長                                      */
 /**************************************************************/
-//ev_zone_wc10r0101:
-//  _END
+EVENT_START   ev_wc10r0101_oldman1
+
+	//今日既にイベントを終えたかチェック
+	IF FLAG_ON( TMFLG_WC10R0101_OLDMAN ) THEN
+	
+		_BALLOONWIN_OBJMSG( msg_wc10r0101_oldman1_06 , WC10R0101_OLDMAN1 )
+		_BALLOONWIN_CLOSE()
+		
+	//イベントを終えていない
+	ELSE
+
+		//初回話しかけかチェック
+		IF FLAG_OFF( FE_WC10R0101_OLDMAN ) THEN
+		
+			_BALLOONWIN_OBJMSG( msg_wc10r0101_oldman1_01 , WC10R0101_OLDMAN1 )
+			_BALLOONWIN_CLOSE()
+			
+			//==================================//
+			
+			//初回話しかけ完了
+			_FLAG_SET ( FE_WC10R0101_OLDMAN )
+			
+			//==================================//
+		ELSE
+		
+		ENDIF
+		
+		//現在のWFの人口を取得
+		DEFINE_LOCAL LWK_POPULATION
+		_WFBC_GET_DATA( WFBC_GET_PARAM_PEOPLE_NUM, LWK_POPULATION )
+		
+		//人口が一人以上かチェック
+		
+		//達している
+		IF $LWK_POPULATION >= 1 THEN
+			
+			//目標ポケモンを取得
+			DEFINE_LOCAL LWK_TARGETPOKE
+			_WFBC_GET_DATA( WFBC_GET_PARAM_WF_POKE, LWK_TARGETPOKE )
+			//指定IDに目標ポケモン名を格納
+			_MONS_NAME (  0 , LWK_TARGETPOKE  ) 
+			
+			//村長：最近このあたりで（目標ポケモン）を見かける
+			_BALLOONWIN_OBJMSG( msg_wc10r0101_oldman1_02 , WC10R0101_OLDMAN1 )
+			_BALLOONWIN_CLOSE()
+			
+			//手持ちに条件に一致するポケモンがいるかチェック
+			DEFINE_LOCAL LWK_NO_MATCH
+			DEFINE_LOCAL LWK_DAY_MATCH
+			DEFINE_LOCAL LWK_POSID
+			_WFBC_CHECK_WF_TARGETPOKE( LWK_NO_MATCH, LWK_DAY_MATCH, LWK_POSID ) 
+			
+			//1匹以上いる
+			IF $LWK_NO_MATCH == TRUE THEN
+				
+				//村長：おお！それは（目標ポケモン）！
+				_BALLOONWIN_OBJMSG( msg_wc10r0101_oldman1_03 , WC10R0101_OLDMAN1 )
+				_BALLOONWIN_CLOSE() 
+				
+				//日付チェック
+				IF $LWK_DAY_MATCH == TRUE THEN
+					
+					//村長：しかも今日捕まえたんだ！
+					_BALLOONWIN_OBJMSG( msg_wc10r0101_oldman1_04 , WC10R0101_OLDMAN1 )
+					_BALLOONWIN_CLOSE() 
+					
+					//【仮】アイテム入手処理
+					DEFINE_LOCAL LWK_ITEM_RET
+					_ADD_ITEM( ITEM_KIZUGUSURI , 1 ,  LWK_ITEM_RET )
+					
+					//村長：また来てね
+					_BALLOONWIN_OBJMSG( msg_wc10r0101_oldman1_05 , WC10R0101_OLDMAN1 )
+					_BALLOONWIN_CLOSE() 
+					
+					//==================================//
+			
+					//本日のイベント終了
+					_FLAG_SET ( TMFLG_WC10R0101_OLDMAN )
+					
+					//==================================//
+				
+				//捕まえた日が今日ではなかった
+				ELSE
+				
+					//村長：しかし今日捕まえたやつじゃないな
+					_BALLOONWIN_OBJMSG( msg_wc10r0101_oldman1_09 , WC10R0101_OLDMAN1 )
+					_BALLOONWIN_CLOSE() 
+				
+				ENDIF
+			
+			//目標ポケモンが０匹
+			ELSE
+			
+				//村長：見つけたら見せてね
+				_BALLOONWIN_OBJMSG( msg_wc10r0101_oldman1_08 , WC10R0101_OLDMAN1 )
+				_BALLOONWIN_CLOSE() 
+				
+			ENDIF
+		
+		//人口は０人
+		ELSE
+		
+			//村長：最近はポケモンがいない
+			_BALLOONWIN_OBJMSG( msg_wc10r0101_oldman1_07 , WC10R0101_OLDMAN1 )
+			_BALLOONWIN_CLOSE() 
+		
+		ENDIF
+	
+	ENDIF
+
+EVENT_END
 
 /**************************************************************/
-/*                                                            */
+/* 一言メッセージ：BOY2                                      */
 /**************************************************************/
-ev_wc10r0101:
-  //とりあえず最初のラベルだけ生成している
-  _END
+EVENT_START   ev_wc10r0101_boy2_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_wc10r0101_boy2_01 )
+EVENT_END
 
+/**************************************************************/
+/* 一言メッセージ：BOY3                                      */
+/**************************************************************/
+EVENT_START   ev_wc10r0101_boy3_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_wc10r0101_boy3_01 )
+EVENT_END
+
+/**************************************************************/
+/* 一言メッセージ：MIDDLEWOMAN1                                */
+/**************************************************************/
+EVENT_START   ev_wc10r0101_middlewoman1_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_wc10r0101_middlewoman2_01 )
+EVENT_END

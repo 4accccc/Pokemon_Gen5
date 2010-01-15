@@ -11,5 +11,13 @@
 #ifndef ZONE_WC10_EVC_H
 #define ZONE_WC10_EVC_H
 
+#define WC10_GIRL1_01                      0
+#define WC10_MIDDLEMAN1_01                 1
+#define WC10_GIRL4_01                      2
+#define WC10_MAN3_01                       3
+#define WC10_WOMAN1_01                     4
+#define WC10_GIRL3_01                      5
+#define WC10_MIDDLEMAN2_01                 6
+#define WC10_OLDMAN1_01                    7
 
 #endif //ZONE_WC10_EVC_H

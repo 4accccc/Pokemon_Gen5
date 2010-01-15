@@ -10,7 +10,8 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_bc10r0401.h"
-  //.include  "bc10r0401.h"
+  .include  "bc10r0401.h"
+  .include "../../../prog/src/field/scrcmd_wfbc_define.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,20 +20,259 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_bc10r0401
+_EVENT_DATA    ev_zone_bc10r0401
+_EVENT_DATA    ev_bc10r0401_boss
+_EVENT_DATA    ev_bc10r0401_boy4_01
+_EVENT_DATA    ev_bc10r0401_middleman2_01
+_EVENT_DATA    ev_bc10r0401_man3_01
+_EVENT_DATA    ev_bc10r0401_middlewoman1_01
+_EVENT_DATA    ev_bc10r0401_middleman1_01
+_EVENT_DATA    ev_bc10r0401_badman_01
+_EVENT_DATA    ev_bc10r0401_woman3_01
+_EVENT_DATA    ev_bc10r0401_oldman1_01
+_EVENT_DATA    ev_bc10r0401_shopm1_01
+_EVENT_DATA    ev_bc10r0401_shopm1_02
+_EVENT_DATA    ev_bc10r0401_shopm1_03
+_EVENT_DATA    ev_bc10r0401_shopm1_04
+_EVENT_DATA    ev_bc10r0401_shopm1_05
 _EVENT_DATA_END
 
 
 /**************************************************************/
-/*            ZONE_CHANGE_LABEL                               */
+/*            フィールド初期化スクリプト                      */
 /**************************************************************/
-//ev_zone_bc10r0401:
-//  _END
+INIT_EVENT_START ev_zone_bc10r0401
+	
+	//人口に応じてOBJを配置
+
+	//2人以上の表示OBJを全て非表示に
+	_FLAG_SET( FV_BC10R0401_B )
+	_FLAG_SET( FV_BC10R0401_C )
+	_FLAG_SET( FV_BC10R0401_D )
+	_FLAG_SET( FV_BC10R0401_E )
+	
+	//現在のBCの人口を取得
+	DEFINE_LOCAL LWK_POPULATION
+	_WFBC_GET_DATA( WFBC_GET_PARAM_PEOPLE_NUM, LWK_POPULATION )
+	
+	
+	//人口がE層以上の処理
+	IF $LWK_POPULATION >= 8 THEN
+		
+		_FLAG_RESET( FV_BC10R0401_B )
+		_FLAG_RESET( FV_BC10R0401_C )
+		_FLAG_RESET( FV_BC10R0401_D )
+		_FLAG_RESET( FV_BC10R0401_E )
+	
+	//人口がD層以上の処理
+	ELSIF $LWK_POPULATION >= 6 THEN
+		
+		_FLAG_RESET( FV_BC10R0401_B )
+		_FLAG_RESET( FV_BC10R0401_C )
+		_FLAG_RESET( FV_BC10R0401_D )
+	
+	//人口がC層以上の処理
+	ELSIF $LWK_POPULATION >= 4 THEN
+		
+		_FLAG_RESET( FV_BC10R0401_B )
+		_FLAG_RESET( FV_BC10R0401_C )
+	
+	//人口がB層以上の処理
+	ELSIF $LWK_POPULATION >= 2 THEN
+		
+		_FLAG_RESET( FV_BC10R0401_B )
+	
+	ELSE
+	
+	ENDIF
+		
+	
+INIT_EVENT_END
+
 
 /**************************************************************/
-/*                                                            */
+/* ブラックシティ：ボス                                        */
 /**************************************************************/
-ev_bc10r0401:
-  //とりあえず最初のラベルだけ生成している
-  _END
+EVENT_START   ev_bc10r0401_boss
 
+	_TALK_OBJ_START()
+	
+	//現在BCで倒した人数を取得
+	DEFINE_LOCAL LWK_BATTLECOUNT
+	_WFBC_GET_DATA( WFBC_GET_PARAM_BC_NPC_WIN_NUM, LWK_BATTLECOUNT )
+	
+	//1000人超えていたら
+	IF $LWK_BATTLECOUNT >= 1000 THEN
+	
+		_BALLOONWIN_OBJMSG( msg_bc10r0401_gentleman_07 , BC10R0401_BOSS )
+		_BALLOONWIN_CLOSE()
+		
+	ELSE
+	
+	ENDIF
+	
+	//初回話しかけかチェック
+	IF FLAG_OFF( FE_BC10R0401_BOSS ) THEN
+	
+		_BALLOONWIN_OBJMSG( msg_bc10r0401_gentleman_01 , BC10R0401_BOSS )
+		_BALLOONWIN_CLOSE()
+		
+		//==================================//
+		
+		//初回話しかけ完了
+		_FLAG_SET ( FE_BC10R0401_BOSS )
+		
+		//==================================//
+	ELSE
+	
+	ENDIF
+	
+	//勝利数取得
+	DEFINE_LOCAL LWK_BATTLEWIN
+	_WFBC_GET_DATA( WFBC_GET_PARAM_BC_NPC_WIN_NUM , LWK_BATTLEWIN )
+	//目標数取得
+	DEFINE_LOCAL LWK_BATTLETARGET
+	_WFBC_GET_DATA(  WFBC_GET_PARAM_BC_NPC_WIN_TARGET, LWK_BATTLETARGET )
+	//目標人数を格納
+	_NUMBER( 0 , LWK_BATTLETARGET , 5 )
+	
+	//街には活きがいいのがそろってる
+	_BALLOONWIN_OBJMSG( msg_bc10r0401_gentleman_02 , BC10R0401_BOSS )
+	_BALLOONWIN_CLOSE()
+	
+	//目標数に勝利数が達しているか？チェック
+	
+	//達している
+	IF $LWK_BATTLEWIN >= $LWK_BATTLETARGET THEN
+		
+		//セリフ内に勝利数を格納
+		_NUMBER( 0 , LWK_BATTLEWIN , 5 )
+		
+		//（勝利数）人倒したのか
+		_BALLOONWIN_OBJMSG( msg_bc10r0401_gentleman_04 , BC10R0401_BOSS )
+		_BALLOONWIN_CLOSE()
+		
+		//プレイヤーネームを格納
+		_PLAYER_NAME(2)
+		//金額を格納
+		DEFINE_LOCAL LWK_MONEY
+		$LWK_MONEY += 10000
+		_NUMBER( 3 , LWK_MONEY , 5 )
+		
+		//10000円受け取った！
+		_BALLOONWIN_OBJMSG( msg_bc10r0401_gentleman_05 , BC10R0401_BOSS )
+		_BALLOONWIN_CLOSE()
+		
+		//お金を増やす
+		_ADD_GOLD ( LWK_MONEY )
+		
+		//目標人数を加算
+		_WFBC_ADD_BC_NPC_WIN_TARGET() 
+		//追加された目標人数を取得
+		_WFBC_GET_DATA(  WFBC_GET_PARAM_BC_NPC_WIN_TARGET, LWK_BATTLETARGET )
+		//目標人数を格納
+		_NUMBER( 4 , LWK_BATTLETARGET , 5 )
+	
+	ELSE
+
+		//セリフ内に勝利数を格納
+		_NUMBER( 1 , LWK_BATTLEWIN , 5 )
+		
+		//今倒した人数は（勝利数）人か。がんばりな！
+		_BALLOONWIN_OBJMSG( msg_bc10r0401_gentleman_03 , BC10R0401_BOSS )
+		_BALLOONWIN_CLOSE()
+	
+	ENDIF
+	
+EVENT_END
+
+/**************************************************************/
+/* 人口A：boy4_01                                             */
+/**************************************************************/
+EVENT_START   ev_bc10r0401_boy4_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_bc10r0401_boy4_01 )
+EVENT_END
+
+/**************************************************************/
+/* 人口A：middleman2_01                                             */
+/**************************************************************/
+EVENT_START   ev_bc10r0401_middleman2_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_bc10r0401_middlewoman2_01 )
+EVENT_END
+
+/**************************************************************/
+/* 人口B：man3_01                                             */
+/**************************************************************/
+EVENT_START   ev_bc10r0401_man3_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_bc10r0401_man3_01 )
+EVENT_END
+
+/**************************************************************/
+/* 人口B：middlewoman1_01                                             */
+/**************************************************************/
+EVENT_START   ev_bc10r0401_middlewoman1_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_bc10r0401_middlewoman1_01 )
+EVENT_END
+
+/**************************************************************/
+/* 人口C：middleman1_01                                             */
+/**************************************************************/
+EVENT_START   ev_bc10r0401_middleman1_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_bc10r0401_middleman1_01 )
+EVENT_END
+
+/**************************************************************/
+/* 人口C：badman_01                                             */
+/**************************************************************/
+EVENT_START   ev_bc10r0401_badman_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_bc10r0401_badman_01 )
+EVENT_END
+
+/**************************************************************/
+/* 人口E：woman3_01                                             */
+/**************************************************************/
+EVENT_START   ev_bc10r0401_woman3_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_bc10r0401_woman3_01 )
+EVENT_END
+
+/**************************************************************/
+/* 人口D：oldman1_01                                             */
+/**************************************************************/
+EVENT_START   ev_bc10r0401_oldman1_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_bc10r0401_oldman1_01 )
+EVENT_END
+
+/**************************************************************/
+/* 人口A：ショップA                                           */
+/**************************************************************/
+EVENT_START   ev_bc10r0401_shopm1_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_bc10r0401_oldman1_01 )
+EVENT_END
+
+/**************************************************************/
+/* 人口B：ショップB                                           */
+/**************************************************************/
+EVENT_START   ev_bc10r0401_shopm1_02
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_bc10r0401_oldman1_01 )
+EVENT_END
+
+/**************************************************************/
+/* 人口C：ショップC                                           */
+/**************************************************************/
+EVENT_START   ev_bc10r0401_shopm1_03
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_bc10r0401_oldman1_01 )
+EVENT_END
+
+/**************************************************************/
+/* 人口D：ショップD                                          */
+/**************************************************************/
+EVENT_START   ev_bc10r0401_shopm1_04
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_bc10r0401_oldman1_01 )
+EVENT_END
+
+/**************************************************************/
+/* 人口E：ショップE                                           */
+/**************************************************************/
+EVENT_START   ev_bc10r0401_shopm1_05
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_bc10r0401_oldman1_01 )
+EVENT_END

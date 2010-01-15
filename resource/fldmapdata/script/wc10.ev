@@ -11,6 +11,7 @@
   .include  "scr_seq_def.h"
   .include  "msg_wc10.h"
   //.include  "wc10.h"
+  .include "../../../prog/src/field/scrcmd_wfbc_define.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,26 +20,22 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_wc10
+_EVENT_DATA    ev_zone_wc10
+_EVENT_DATA    ev_wc10_girl1_01
+_EVENT_DATA    ev_wc10_middleman1_01
+_EVENT_DATA    ev_wc10_girl4_01
+_EVENT_DATA    ev_wc10_man3_01
+_EVENT_DATA    ev_wc10_woman1_01
+_EVENT_DATA    ev_wc10_girl3_01
+_EVENT_DATA    ev_wc10_middleman2_01
+_EVENT_DATA    ev_wc10_oldman1_01
 _EVENT_DATA    ev_wf_npc
 _EVENT_DATA_END
 
 
-/**************************************************************/
-/*            ZONE_CHANGE_LABEL                               */
-/**************************************************************/
-//ev_zone_wc10:
-//  _END
 
 /**************************************************************/
-/*                                                            */
-/**************************************************************/
-ev_wc10:
-  //とりあえず最初のラベルだけ生成している
-  _END
-
-/**************************************************************/
-/*   WhiteForest                                              */
+/*   【仮】WhiteForest                                        */
 /**************************************************************/
 ev_wf_npc:
   // WFBC　会話前処理
@@ -52,4 +49,109 @@ ev_wf_npc:
   _END
 
 
+/**************************************************************/
+/*            フィールド初期化スクリプト                      */
+/**************************************************************/
+INIT_EVENT_START ev_zone_wc10
+	
+	//人口に応じてOBJを配置
 
+	//2人以上の表示OBJを全て非表示に
+	_FLAG_SET( FV_WF10_B )
+	_FLAG_SET( FV_WF10_C )
+	_FLAG_SET( FV_WF10_D )
+	_FLAG_SET( FV_WF10_E )
+	
+	//現在のBCの人口を取得
+	DEFINE_LOCAL LWK_POPULATION
+	_WFBC_GET_DATA( WFBC_GET_PARAM_PEOPLE_NUM, LWK_POPULATION )
+	
+	
+	//人口がE層以上の処理
+	IF $LWK_POPULATION >= 8 THEN
+		
+		_FLAG_RESET( FV_WF10_B )
+		_FLAG_RESET( FV_WF10_C )
+		_FLAG_RESET( FV_WF10_D )
+		_FLAG_RESET( FV_WF10_E )
+	
+	//人口がD層以上の処理
+	ELSIF $LWK_POPULATION >= 6 THEN
+		
+		_FLAG_RESET( FV_WF10_B )
+		_FLAG_RESET( FV_WF10_C )
+		_FLAG_RESET( FV_WF10_D )
+	
+	//人口がC層以上の処理
+	ELSIF $LWK_POPULATION >= 4 THEN
+		
+		_FLAG_RESET( FV_WF10_B )
+		_FLAG_RESET( FV_WF10_C )
+	
+	//人口がB層以上の処理
+	ELSIF $LWK_POPULATION >= 2 THEN
+		
+		_FLAG_RESET( FV_WF10_B )
+	
+	ELSE
+	
+	ENDIF
+		
+	
+INIT_EVENT_END
+
+/**************************************************************/
+/* 人口A：girl1_01                                             */
+/**************************************************************/
+EVENT_START   ev_wc10_girl1_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_wc10_girl1_01 )
+EVENT_END
+
+/**************************************************************/
+/* 人口A：middleman1_01                                             */
+/**************************************************************/
+EVENT_START   ev_wc10_middleman1_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_wc10_middleman1_01 )
+EVENT_END
+
+/**************************************************************/
+/* 人口B：girl4_01                                             */
+/**************************************************************/
+EVENT_START   ev_wc10_girl4_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_wc10_girl4_01 )
+EVENT_END
+
+/**************************************************************/
+/* 人口B：man3_01                                             */
+/**************************************************************/
+EVENT_START   ev_wc10_man3_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_wc10_man3_01 )
+EVENT_END
+
+/**************************************************************/
+/* 人口C：woman1_01                                            */
+/**************************************************************/
+EVENT_START   ev_wc10_woman1_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_wc10_man3_01 )
+EVENT_END
+
+/**************************************************************/
+/* 人口C：girl3_01                                            */
+/**************************************************************/
+EVENT_START   ev_wc10_girl3_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_wc10_man3_01 )
+EVENT_END
+
+/**************************************************************/
+/* 人口D：middleman2_01                                            */
+/**************************************************************/
+EVENT_START   ev_wc10_middleman2_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_wc10_middleman2_01 )
+EVENT_END
+
+/**************************************************************/
+/* 人口E：oldman1_01                                            */
+/**************************************************************/
+EVENT_START   ev_wc10_oldman1_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_wc10_oldwoman1_01 )
+EVENT_END
