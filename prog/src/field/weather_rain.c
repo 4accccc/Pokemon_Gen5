@@ -238,10 +238,10 @@ static const u8 sc_WEATHER_SPARK_FLASHOUT_SYNC[32] = {
 #define WEATHER_RAIKAMI_TIMING_MAX		(15)				// 雨を出すタイミング最大
 #define WEATHER_RAIKAMI_TIMING_ADD		(3)					// タイミングを減らす数
 #define WEATHER_RAIKAMI_ADD_START		(1)					// 最初の同時に雨を登録する数
-#define WEATHER_RAIKAMI_ADD_TIMING		(2)					// 雨のタイミングをこれ回変更したら１回増やす
+#define WEATHER_RAIKAMI_ADD_TIMING		(1)					// 雨のタイミングをこれ回変更したら１回増やす
 #define WEATHER_RAIKAMI_ADD			(1)						// 登録する数を増やす数
 #define WEATHER_RAIKAMI_ADD_END		(-1)					// 登録する数を増やす数
-#define	WEATHER_RAIKAMI_ADD_MAIN		(1)					// メインシーケンスでの登録する数
+#define	WEATHER_RAIKAMI_ADD_MAIN		(2)					// メインシーケンスでの登録する数
 
 /*== フェード無し開始の時 ==*/
 #define WEATHER_RAIKAMI_NOFADE_OBJ_START_NUM	( 20 )				// 開始時の散布するオブジェクトの数
@@ -252,8 +252,24 @@ static const u8 sc_WEATHER_SPARK_FLASHOUT_SYNC[32] = {
 #define	WEATHER_RAIKAMI_FOG_TIMING		(80)						// に１回フォグテーブルを操作
 #define	WEATHER_RAIKAMI_FOG_TIMING_END	(50)						// に１回フォグテーブルを操作
 #define WEATHER_RAIKAMI_FOG_START_END	(1)					// このカウント動いてからフォグテーブルを操作
-#define WEATHER_RAIKAMI_FOG_OFS			(0x400)
+#define WEATHER_RAIKAMI_FOG_OFS			(0x300)
 
+/*== 雨オブジェクト ==*/
+#define WEATHER_RAIKAMI_SPPED_RND (16)
+#define WEATHER_RAIKAMI_SPEED_X		(14)						// 横に進むスピード
+#define WEATHER_RAIKAMI_SPEED_Y		(14)							// たてに進むスピードベース
+#define	WEATHER_RAIKAMI_END_MIN		(10)							// 終了カウンタ最小
+#define WEATHER_RAIKAMI_END_MAX		(10)							// 終了カウンタ最大
+#define	WEATHER_RAIKAMI_START_X		(-128)							// ベースになるX開始座標
+#define	WEATHER_RAIKAMI_START_X_MAX	(384)						// X開始座標乱数値
+#define	WEATHER_RAIKAMI_START_Y		(-80)						// Y開始座標
+#define	WEATHER_RAIKAMI_START_Y_MAX	(40)						// Y開始座標乱数値
+
+#define WEATHER_RAIKAMI_OBJ_MUL_NUM	(5)							// オブジェのスピードを変化させる値
+#define WEATHER_RAIKAMI_OBJ_MUL_CHG	(60)						// 変更タイミング
+#define WEATHER_RAIKAMI_OBJ_MUL_ONE ( 10 )
+
+#define WEATHER_RAIKAMI_OBJ_END_Y ( 192 )
 
 //  フェードインの処理
 enum
@@ -334,11 +350,14 @@ typedef struct {
 
 
 //-------------------------------------
-///	雷雨
+///	ライカミ
 //=====================================
 typedef struct {
   s16 seq;
   s16 wait;
+
+  s32 scroll;
+  s32 obj_speed_change;
   
 
 	WEATHER_SPARK_WORK	spark;
@@ -392,6 +411,7 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_RAIKAMI_Exit( WEATHER_TASK* p_wk, WEATHE
 static void WEATHER_RAIKAMI_OBJ_Move( WEATHER_OBJ_WORK* p_wk ); 
 static void WEATHER_RAIKAMI_OBJ_Add( WEATHER_TASK* p_wk, int num, u32 heapID ); 
 
+static void WEATHER_RAIKAMI_SCROLL_Main( WEATHER_TASK* p_sys, WEATHER_RAIKAMI_WORK* p_wk );
 
 
 //-------------------------------------
@@ -488,18 +508,18 @@ WEATHER_TASK_DATA c_WEATHER_TASK_DATA_RAIKAMI = {
 	//	グラフィック情報
 	ARCID_FIELD_WEATHER,			// アークID
 	TRUE,		// OAMを使用するか？
-	FALSE,		// BGを使用するか？
-	NARC_field_weather_rain_st_NCGR,			// OAM CG
+	TRUE,		// BGを使用するか？
+	NARC_field_weather_rain_raikami_NCGR,			// OAM CG
 	NARC_field_weather_rain_NCLR,			// OAM PLTT
-	NARC_field_weather_rain_st_NCER,			// OAM CELL
-	NARC_field_weather_rain_st_NANR,			// OAM CELLANM
-	0,		// BGTEX
-	0,		// GXTexSizeS
-	0,		// GXTexSizeT
-	0,		// GXTexRepeat
-	0,		// GXTexFlip
-	0,		// GXTexFmt
-	0,		// GXTexPlttColor0
+	NARC_field_weather_rain_raikami_NCER,			// OAM CELL
+	NARC_field_weather_rain_raikami_NANR,			// OAM CELLANM
+	NARC_field_weather_rain_bg_nsbtx,		// BGTEX
+	GX_TEXSIZE_S32,		// GXTexSizeS
+	GX_TEXSIZE_T32,		// GXTexSizeT
+	GX_TEXREPEAT_ST,		// GXTexRepeat
+	GX_TEXFLIP_NONE,		// GXTexFlip
+	GX_TEXFMT_PLTT4,		// GXTexFmt
+	GX_TEXPLTTCOLOR0_TRNS,		// GXTexPlttColor0
 
 	// ワークサイズ
 	sizeof(WEATHER_RAIKAMI_WORK),
@@ -1406,6 +1426,9 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_RAIKAMI_FadeIn( WEATHER_TASK* p_wk, WEAT
         WEATHER_RAIKAMI_FOG_TIMING,
         fog_cont );
 
+      // BGON
+      WEATHER_TASK_3DBG_SetVisible( p_wk, TRUE );
+
       p_local_wk->seq++;
     }
     break;
@@ -1428,12 +1451,8 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_RAIKAMI_FadeIn( WEATHER_TASK* p_wk, WEAT
     break;
   }
 
-	// スクロール処理
-	{
-		int x, y;
-		WEATHER_TASK_GetScrollDist( p_wk, &x, &y );
-		WEATHER_TASK_ScrollObj( p_wk, x, y );
-	}
+  // スクロール処理
+  WEATHER_RAIKAMI_SCROLL_Main( p_wk, p_local_wk );
 
   return WEATHER_TASK_FUNC_RESULT_CONTINUE;
 }
@@ -1476,6 +1495,9 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_RAIKAMI_NoFade( WEATHER_TASK* p_wk, WEAT
   // ライト変更
   WEATHER_TASK_LIGHT_Set( p_wk, ARCID_FIELD_WEATHER_LIGHT, NARC_field_weather_light_light_raikami_dat );
 
+  // BGON
+  WEATHER_TASK_3DBG_SetVisible( p_wk, TRUE );
+
 	return WEATHER_TASK_FUNC_RESULT_FINISH;
 }
 
@@ -1490,6 +1512,8 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_RAIKAMI_Main( WEATHER_TASK* p_wk, WEATHE
 	// ローカルワーク取得
 	p_local_wk = WEATHER_TASK_GetWorkData( p_wk );
 
+	p_local_wk->obj_speed_change = (p_local_wk->obj_speed_change + 1) % (WEATHER_RAIKAMI_OBJ_MUL_CHG*WEATHER_RAIKAMI_OBJ_MUL_NUM);		// 雨登録料変更カウンタ
+
 	// カウンタが0いかになったら雨登録
 	WEATHER_TASK_ObjFade_NoFadeMain( p_wk, heapID );
 
@@ -1497,12 +1521,8 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_RAIKAMI_Main( WEATHER_TASK* p_wk, WEATHE
 	// スパークメイン
 	WEATHER_PARK_Main( &p_local_wk->spark, p_wk );
 
-	// スクロール処理
-	{
-		int x, y;
-		WEATHER_TASK_GetScrollDist( p_wk, &x, &y );
-		WEATHER_TASK_ScrollObj( p_wk, x, y );
-	}
+  // スクロール処理
+  WEATHER_RAIKAMI_SCROLL_Main( p_wk, p_local_wk );
 
 	return WEATHER_TASK_FUNC_RESULT_CONTINUE;
 }
@@ -1531,6 +1551,9 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_RAIKAMI_InitFadeOut( WEATHER_TASK* p_wk,
 
 	// 音
 	WEATHER_TASK_StopLoopSnd( p_wk );	
+
+  // BGOFF
+  WEATHER_TASK_3DBG_SetVisible( p_wk, FALSE );
 
 	return WEATHER_TASK_FUNC_RESULT_FINISH;
 }
@@ -1579,12 +1602,8 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_RAIKAMI_FadeOut( WEATHER_TASK* p_wk, WEA
 		}
 	}
 
-	// スクロール処理
-	{
-		int x, y;
-		WEATHER_TASK_GetScrollDist( p_wk, &x, &y );
-		WEATHER_TASK_ScrollObj( p_wk, x, y );
-	}
+  // スクロール処理
+  WEATHER_RAIKAMI_SCROLL_Main( p_wk, p_local_wk );
 
 	return WEATHER_TASK_FUNC_RESULT_CONTINUE;
 }
@@ -1623,6 +1642,36 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_RAIKAMI_Exit( WEATHER_TASK* p_wk, WEATHE
 //-----------------------------------------------------------------------------
 static void WEATHER_RAIKAMI_OBJ_Move( WEATHER_OBJ_WORK* p_wk )
 {
+	int i;
+	GFL_CLACTPOS mat;
+	GFL_CLWK* p_clwk;
+	s32* obj_w;
+
+	obj_w = WEATHER_OBJ_WORK_GetWork( p_wk );
+	p_clwk = WEATHER_OBJ_WORK_GetClWk( p_wk );
+
+	WEATHER_OBJ_WORK_GetPos( p_wk, &mat );
+	
+	// 動作フラグをチェック
+	switch(obj_w[3]){
+	case 0:		// 動作
+		// 動かす
+		mat.x += obj_w[4];
+		mat.y += obj_w[2];
+	
+		// 破棄するかチェック
+		if( (mat.y >= WEATHER_RAIKAMI_OBJ_END_Y) ){
+      // 破棄
+      obj_w[3] = 1;
+		}
+		// 座標設定
+		WEATHER_OBJ_WORK_SetPosNoTurn( p_wk, &mat );
+		break;
+	case 1:		// 破棄
+		WEATHER_TASK_DeleteObj( p_wk );
+		break;
+	}		
+
 }
 
 //----------------------------------------------------------------------------
@@ -1632,7 +1681,75 @@ static void WEATHER_RAIKAMI_OBJ_Move( WEATHER_OBJ_WORK* p_wk )
 //-----------------------------------------------------------------------------
 static void WEATHER_RAIKAMI_OBJ_Add( WEATHER_TASK* p_wk, int num, u32 heapID )
 {
+	int i;		// ループ用
+	WEATHER_OBJ_WORK* add_obj;		// 登録オブジェ
+	WEATHER_RAIKAMI_WORK*	p_local_wk;	// システムワーク
+	int	err;	// 補正値
+	s32* obj_w;	// オブジェクトワーク
+	int speed_m;	// スピードにかける値テーブルの要素数
+	int frame;		// フレーム数
+	static const int WEATHER_RAIKAMI_OBJ_MUL[ WEATHER_RAIKAMI_OBJ_MUL_NUM ] = {10, 10, 13, 10, 16};
+	u32 rand;
+	GFL_CLACTPOS mat;	// 設定座標
+	GFL_CLWK* p_clwk;
+
+	// ユーザワーク取得
+	p_local_wk = WEATHER_TASK_GetWorkData( p_wk );
+	
+	// num分オブジェクトを登録
+	for(i=0;i<num;i++){
+
+		add_obj = WEATHER_TASK_CreateObj( p_wk, heapID );		// 登録
+		if(add_obj == NULL){			// 失敗したら終了
+			break;
+		}
+		obj_w = WEATHER_OBJ_WORK_GetWork( add_obj );		// オブジェワーク作成
+		p_clwk	= WEATHER_OBJ_WORK_GetClWk( add_obj );
+
+		// 乱数取得
+		rand = GFUser_GetPublicRand(0);
+		
+		// 領域を初期化
+		frame = rand%3;	// 雨の種類
+		GFL_CLACT_WK_SetAnmIndex( p_clwk, frame );
+
+    GF_ASSERT( (p_local_wk->obj_speed_change /WEATHER_RAIKAMI_OBJ_MUL_CHG) < WEATHER_RAIKAMI_OBJ_MUL_NUM );
+
+		obj_w[4] = WEATHER_RAIKAMI_SPEED_X * (frame + 1) + ((rand % WEATHER_RAIKAMI_SPPED_RND));
+		obj_w[2] = WEATHER_RAIKAMI_SPEED_Y * (frame + 1) + ((rand % WEATHER_RAIKAMI_SPPED_RND));
+		obj_w[4] = (obj_w[4] * WEATHER_RAIKAMI_OBJ_MUL[p_local_wk->obj_speed_change /WEATHER_RAIKAMI_OBJ_MUL_CHG]) / WEATHER_RAIKAMI_OBJ_MUL_ONE;
+		obj_w[2] = (obj_w[2] * WEATHER_RAIKAMI_OBJ_MUL[p_local_wk->obj_speed_change /WEATHER_RAIKAMI_OBJ_MUL_CHG]) / WEATHER_RAIKAMI_OBJ_MUL_ONE;
+		
+		obj_w[3] = 0;			// 破棄アニメフラグ
+		
+		// 座標を設定
+		{
+			mat.x = WEATHER_RAIKAMI_START_X + (rand % WEATHER_RAIKAMI_START_X_MAX);
+			mat.y = WEATHER_RAIKAMI_START_Y + (rand % WEATHER_RAIKAMI_START_Y_MAX);
+
+			WEATHER_OBJ_WORK_SetPosNoTurn( add_obj, &mat );
+		}
+		
+	}
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  らいかみ　スクロール処理
+ */
+//-----------------------------------------------------------------------------
+static void WEATHER_RAIKAMI_SCROLL_Main( WEATHER_TASK* p_sys, WEATHER_RAIKAMI_WORK* p_wk )
+{
+	int x, y;
+	WEATHER_TASK_GetScrollDist( p_sys, &x, &y );
+	WEATHER_TASK_ScrollObj( p_sys, x, y );
+
+	// BG面を斜め上に動かす
+	p_wk->scroll = (p_wk->scroll + 24) % 256;
+	WEATHER_TASK_3DBG_SetScrollX( p_sys, (-p_wk->scroll) - x );
+	WEATHER_TASK_3DBG_SetScrollY( p_sys, (-p_wk->scroll) + y );
+}
+
 
 
 
@@ -1714,7 +1831,11 @@ static void WEATHER_PARK_Main( WEATHER_SPARK_WORK* p_wk, WEATHER_TASK* p_sys )
 			// それぞれのタイプごとに初期化
 			switch( i ){
 			case WEATHER_SPARK_TYPE_LIGHT:
-				WEATEHR_SPARK_SetUp_Light( p_wk );
+        if( p_wk->mode == WEATHER_SPARK_MODE_NORMAL ){
+				  WEATEHR_SPARK_SetUp_Light( p_wk );
+        }else{
+				  WEATEHR_SPARK_SetUp_Hard( p_wk );
+        }
 				break;
 			case WEATHER_SPARK_TYPE_HARD:
 				WEATEHR_SPARK_SetUp_Hard( p_wk );
@@ -1763,12 +1884,12 @@ static void WEATHER_PARK_Main( WEATHER_SPARK_WORK* p_wk, WEATHER_TASK* p_sys )
 
     // 次の雷までのwait
     // 最終雷が鳴り終わったら、ウエイト数を変更する
-    // (2/3)にする
+    // (1/2)にする
     if( p_wk->mode == WEATHER_SPARK_MODE_RAIKAMI )
     {
       if( (p_wk->spark_tbl_count+1) == p_wk->spark_tbl_num )
       {
-        p_wk->wait = (p_wk->wait * 2) / 3;
+        p_wk->wait = (p_wk->wait * 1) / 2;
       }
     }
     

@@ -298,6 +298,8 @@ void FIELD_3DBG_SetWriteData( FIELD_3DBG* p_sys, ARCHANDLE* p_handle, const FIEL
 
 	p_sys->scale_x		= FX32_ONE;
 	p_sys->scale_y		= FX32_ONE;
+
+  p_sys->rotate = 0;
 }
 
 
@@ -794,6 +796,7 @@ static void FIELD_3DBG_PLANE_SetData( FIELD_3DPLANE* p_wk, const FIELD_3DBG* cp_
 	p_wk->v0 = cp_sys->scroll_y<<FX32_SHIFT;
 	p_wk->u1 = p_wk->u0 + (cp_sys->size_x<<FX32_SHIFT);
 	p_wk->v1 = p_wk->v0 + (cp_sys->size_y<<FX32_SHIFT);
+
 
 	// texture‚Ì•ÏŠ·s—ñ‚ð‹‚ß‚é
 	MTX_Identity33( &p_wk->tex_mtx );

@@ -109,7 +109,7 @@ enum{
 ///	3DBG
 //=====================================
 static const FIELD_3DBG_SETUP	sc_FIELD_3DBG_SETUP = {
-	256, 256,
+	256, 192,
 	FLD_3DPRI_WEATHER_OFFS,
 	0,
 };
