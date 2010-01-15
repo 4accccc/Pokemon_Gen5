@@ -11,10 +11,12 @@
 #define ZONE_R03R0301_EVC_H
 
 #define R03R0301_RIVAL_01                  0
-#define R03R0301_HAKAIM_02                 1
-#define R03R0301_HAKAIM_01                 2
-#define TR_BATTLEG_07                      3
-#define TR_KARATE_08                       4
-#define TR_BATTLEG_08                      5
+#define TR_BATTLEG_07                      1
+#define TR_KARATE_08                       2
+#define TR_BATTLEG_08                      3
+#define R03R0301_HAKAIM_01                 4
+#define R03R0301_HAKAIM_02                 5
+#define R03R0301_HAKAIM_03                 6
+#define R03R0301_HAKAIW_01                 7
 
 #endif //ZONE_R03R0301_EVC_H
