@@ -26,6 +26,7 @@ SUBDIRS	=
 
 #コピーしてくるディレクトリ
 MONSNO_H_DIR		= ..\\personal\\
+MONSNUM_H_DIR		= ..\\personal\\
 ITEMSYM_H_DIR		= ..\\..\\prog\\include\\item\\
 TOKUSYU_H_DIR		= ..\\tokusei\\
 SEIKAKU_H_DIR		= ..\\..\\prog\\include\\poke_tool\\
@@ -83,6 +84,7 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするル
 #ファイルコピー
 file_cp:
 	$(COPY) -f -u $(MONSNO_H_DIR)monsno_def.h $(CPY_DIR)
+	$(COPY) -f -u $(MONSNUM_H_DIR)monsnum_def.h $(CPY_DIR)
 	$(COPY) -f -u $(ITEMSYM_H_DIR)itemsym.h $(CPY_DIR)
 	$(COPY) -f -u $(TOKUSYU_H_DIR)tokusyu_def.h $(CPY_DIR)
 	$(COPY) -f -u $(SEIKAKU_H_DIR)poke_tool.h $(CPY_DIR)

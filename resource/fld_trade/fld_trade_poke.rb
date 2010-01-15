@@ -187,8 +187,20 @@ end
 # @return 指定ラベル名の定義値
 #-----------------------------------------------------------
 def GetMonsnoVal( lavel )
+  #----------------------------------------
 	# 参照ファイル読み込み
 	file = File::open("monsno_def.h", "r");
+	file_line = file.readlines
+	file.close
+	# 検索
+	file_line.each do |line|
+		if line.index(/#define.*#{lavel}.*\(\s*(\d*)\s*\)/) != nil then 
+			return $1.to_i
+		end
+	end 
+  #----------------------------------------
+	# 参照ファイル読み込み
+	file = File::open("monsnum_def.h", "r");
 	file_line = file.readlines
 	file.close
 	# 検索
