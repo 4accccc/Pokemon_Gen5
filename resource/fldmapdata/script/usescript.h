@@ -94,6 +94,8 @@
 //マップ置き換えイベント指定ID
 #include "../../../prog/src/field/map_replace.h"
 
+//固定アイテムショップ指定用定義
+#include "../../shopdata/shop_data_index.h"       
 
 
 
@@ -152,7 +154,6 @@
 
 #include "../../../include/system/snd_def.h"    //サウンド定義の置き換え定義
 #include "../maptable/zone_id.h"          //ゾーンID定義
-#include "../../shopdata/shop_data_index.h"       //固定アイテムショップ定義
 #include "../shopdata/fs_goods_def.h"       //固定グッズショップ定義
 #include "../shopdata/fs_seal_def.h"        //固定シールショップ定義
 
