@@ -1394,8 +1394,6 @@ static void ThrowRequest_CHANGE( FIELD_SOUND* fieldSound, u32 soundIdx,
     GF_ASSERT(0);
     return;
   } 
-  // 再生中のBGMを指定
-  if( fieldSound->currentBGM == soundIdx ){ return; } 
 
   // リクエストを受理
   fieldSound->request = FSND_BGM_REQUEST_CHANGE;
@@ -1542,8 +1540,17 @@ static void RequestCheck_PLAY( FIELD_SOUND* fieldSound )
     ChangeState( fieldSound, FSND_STATE_POP_out );
     break;
   case FSND_BGM_REQUEST_CHANGE: 
-    FadeOutBGM( fieldSound );
-    ChangeState( fieldSound, FSND_STATE_CHANGE_out );
+    // 再生中の曲のリクエストは無視する
+    if( fieldSound->requestBGM == fieldSound->currentBGM )
+    {
+      fieldSound->requestBGM = FSND_BGM_NULL;
+      fieldSound->request = FSND_BGM_REQUEST_NONE; 
+    }
+    else
+    {
+      FadeOutBGM( fieldSound );
+      ChangeState( fieldSound, FSND_STATE_CHANGE_out );
+    }
     break;
   case FSND_BGM_REQUEST_STAND_BY: 
     FadeOutBGM( fieldSound );
@@ -1726,6 +1733,11 @@ static void RequestCheck_CHANGE_load( FIELD_SOUND* fieldSound )
     ChangeState( fieldSound, FSND_STATE_CHANGE_PUSH_load );
     break;
   case FSND_BGM_REQUEST_CHANGE:
+    // ロード中のBGMと同じ曲のリクエストは無視する
+    if( fieldSound->requestBGM == fieldSound->loadBGM )
+    {
+      fieldSound->requestBGM = FSND_BGM_NULL;
+    }
     break;
   default:
     GF_ASSERT(0);
@@ -1746,6 +1758,11 @@ static void RequestCheck_CHANGE_in( FIELD_SOUND* fieldSound )
   case FSND_BGM_REQUEST_NONE: 
     break;
   case FSND_BGM_REQUEST_CHANGE:
+    // フェードイン中のBGMと同じ曲のリクエストは無視する
+    if( fieldSound->requestBGM == fieldSound->currentBGM )
+    {
+      fieldSound->requestBGM = FSND_BGM_NULL;
+    }
     break;
   default:
     GF_ASSERT(0);
