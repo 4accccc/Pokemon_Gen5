@@ -38,6 +38,8 @@
 
 #include "script_def.h"   //SCR_BATTLE_～
 
+#include "enceffno.h"
+
 //======================================================================
 //  define
 //======================================================================
@@ -81,6 +83,9 @@ typedef struct {
   /** @brief  敗北処理がないバトルか？のフラグ */
   BOOL is_no_lose;
 
+  //エンカウントエフェクトナンバー
+  int EncEffNo;
+
 }BATTLE_EVENT_WORK;
 
 //======================================================================
@@ -111,7 +116,7 @@ static void BEW_Destructor(BATTLE_EVENT_WORK * bew);
  * @retval GMEVENT*
  */
 //--------------------------------------------------------------
-GMEVENT * EVENT_WildPokeBattle( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap, BATTLE_SETUP_PARAM* bp, BOOL sub_event_f )
+GMEVENT * EVENT_WildPokeBattle( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap, BATTLE_SETUP_PARAM* bp, BOOL sub_event_f, const int enc_eff_no )
 {
   GMEVENT * event;
   BATTLE_EVENT_WORK * bew;
@@ -122,6 +127,7 @@ GMEVENT * EVENT_WildPokeBattle( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap, BAT
   bew = GMEVENT_GetEventWork(event);
   BEW_Initialize( bew, gsys, bp );
   bew->is_sub_event = sub_event_f;
+  bew->EncEffNo = enc_eff_no;     //エンカウントエフェクトセット
 
   //エフェクトエンカウト　エフェクト復帰キャンセル
   EFFECT_ENC_EffectRecoverCancel( FIELDMAP_GetEncount(fieldmap));
@@ -181,6 +187,8 @@ GMEVENT * EVENT_TrainerBattle(
   {
     bew->is_no_lose = TRUE;
   }
+  //エンカウントエフェクトセット
+  bew->EncEffNo = ENCEFFNO_GetTrEncEffNo( tr_id0, fieldmap );
   //エフェクトエンカウト　エフェクト復帰キャンセル
   EFFECT_ENC_EffectRecoverCancel( FIELDMAP_GetEncount(fieldmap));
 
@@ -218,6 +226,8 @@ GMEVENT * EVENT_BSubwayTrainerBattle(
   BEW_Initialize( bew, gsys, bp );
   bew->is_sub_event = TRUE; //サブイベント呼び出し
   bew->is_no_lose = TRUE; //敗戦処理無し
+  //エンカウントエフェクトセット(サブウェイ固有)　@todo
+  bew->EncEffNo = 0;
 
   //エフェクトエンカウト　エフェクト復帰キャンセル
   EFFECT_ENC_EffectRecoverCancel( FIELDMAP_GetEncount(fieldmap));

@@ -270,7 +270,12 @@ static GMEVENT_RESULT FieldFishingEvent(GMEVENT * event, int * seq, void *work)
 
   //エンカウントイベントへ移行
   case SEQ_HIT_SUCCESS:
-    GMEVENT_ChangeEvent( event, EVENT_WildPokeBattle( wk->gsys, wk->fieldWork, wk->bsp, FALSE ) );
+    {
+      int enc_eff_no;
+      //エンカウントエフェクトセット（釣りエンカウントは水上エンカウントエフェクトを使用する）@todo
+      enc_eff_no = 0;
+      GMEVENT_ChangeEvent( event, EVENT_WildPokeBattle( wk->gsys, wk->fieldWork, wk->bsp, FALSE, enc_eff_no ) );
+    }
 	  return GMEVENT_RES_CONTINUE;
 	}
 	return GMEVENT_RES_CONTINUE;
