@@ -190,7 +190,7 @@ void GFLUser_Init(void)
   //MCSライブラリを拡張メモリにロード
 #ifdef PM_DEBUG
 #ifndef MULTI_BOOT_MAKE
-  if( OS_GetConsoleType() & OS_CONSOLE_ISDEBUGGER|OS_CONSOLE_TWLDEBUGGER ){
+  if( OS_GetConsoleType() & (OS_CONSOLE_ISDEBUGGER|OS_CONSOLE_TWLDEBUGGER) ){
     if( OS_IsRunOnTwl() ){
       OS_TPrintf( "!!!!!!!!!!!!!! GFL_MCS Not Init OS Run TwlMode !!!!!!!!!!!\n" );
     }else{
@@ -236,7 +236,7 @@ void GFLUser_Main(void)
 #ifdef PM_DEBUG
 #ifndef MULTI_BOOT_MAKE
   //MCS受信
-  if( OS_GetConsoleType() & OS_CONSOLE_ISDEBUGGER|OS_CONSOLE_TWLDEBUGGER ){
+  if( OS_GetConsoleType() & (OS_CONSOLE_ISDEBUGGER|OS_CONSOLE_TWLDEBUGGER) ){
 
     if( OS_IsRunOnTwl() == FALSE ){
       GFL_MCS_Main();
@@ -270,7 +270,7 @@ void GFLUser_Exit(void)
 {
 #ifdef PM_DEBUG
 #ifndef MULTI_BOOT_MAKE
-  if( OS_GetConsoleType() & OS_CONSOLE_ISDEBUGGER| OS_CONSOLE_TWLDEBUGGER ){
+  if( OS_GetConsoleType() & (OS_CONSOLE_ISDEBUGGER|OS_CONSOLE_TWLDEBUGGER) ){
     if( OS_IsRunOnTwl() == FALSE ){
 	    GFL_MCS_Exit();
     }
@@ -334,7 +334,7 @@ void GFLUser_VIntr(void)
 #ifdef PM_DEBUG
 #ifndef MULTI_BOOT_MAKE
   //MCS受信
-  if( OS_GetConsoleType() & OS_CONSOLE_ISDEBUGGER|OS_CONSOLE_TWLDEBUGGER ){
+  if( OS_GetConsoleType() & (OS_CONSOLE_ISDEBUGGER|OS_CONSOLE_TWLDEBUGGER) ){
     if( OS_IsRunOnTwl() == FALSE ){
 	    GFL_MCS_VIntrFunc();
     }
@@ -478,7 +478,7 @@ BOOL GFUser_SendHeapStatus(void);
 
 BOOL GFUser_SendHeapStatus(void)
 {
-  if( OS_GetConsoleType() & OS_CONSOLE_ISDEBUGGER|OS_CONSOLE_TWLDEBUGGER ){
+  if( OS_GetConsoleType() & (OS_CONSOLE_ISDEBUGGER|OS_CONSOLE_TWLDEBUGGER) ){
     if( OS_IsRunOnTwl() == FALSE ){
 		  GFL_MCS_Resident_SendHeapStatus();
   		return TRUE;
