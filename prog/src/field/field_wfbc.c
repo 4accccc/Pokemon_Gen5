@@ -1637,6 +1637,21 @@ static void DEBWIN_Update_WFPokeGet( void* userWork , DEBUGWIN_ITEM* item )
       PP_Put( pp , ID_PARA_oyaname_raw , (u32)&oyaName[0] );
       PP_Put( pp , ID_PARA_oyasex , PTL_SEX_MALE );
     }
+    else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y )
+    {
+      static u16 oyaName[6] = {L'‚Å',L'‚Î',L'‚®',L'‚Û',L'‚¯',0xFFFF};
+      RTCDate now_date;
+      GFL_RTC_GetDate( &now_date );
+      // ŽèŽ‚¿‚O”Ô–Ú‚É•ßŠlêŠWF‚Ì–Ú“Iƒ|ƒPƒ‚ƒ“‚ðÝ’è
+      PP_Setup( pp, p_wk->wf_poke_catch_monsno, 10, 100 );
+      PP_Put( pp, ID_PARA_get_place, MAPNAME_WC10 );
+      PP_Put( pp, ID_PARA_get_year, now_date.year+1 );
+      PP_Put( pp, ID_PARA_get_month, now_date.month );
+      PP_Put( pp, ID_PARA_get_day, now_date.day );
+
+      PP_Put( pp , ID_PARA_oyaname_raw , (u32)&oyaName[0] );
+      PP_Put( pp , ID_PARA_oyasex , PTL_SEX_MALE );
+    }
   }
 }
 
