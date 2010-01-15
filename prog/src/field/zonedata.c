@@ -478,7 +478,7 @@ BOOL ZONEDATA_BicycleEnable( u16 zone_id )
 {
   ZONEDATA zdbuf;
   getZoneData(&zdbuf, zone_id);
-  return zdbuf.dash_flag;
+  return zdbuf.bicycle_flag;
 }
 //------------------------------------------------------------------
 /// ダッシュできるマップかどうか
