@@ -1653,14 +1653,12 @@ static BOOL MMdl_HitCheckMoveAttr(
     {
       for( x0 = 0, pos1 = pos0; x0 < x1; x0++, pos1.x += GRID_FX32 )
       {
-        if( MMDL_GetMapPosAttr(mmdl,&pos1,&attr) == TRUE )
+        if( MMDL_GetMapPosAttr(mmdl,&pos1,&attr) == FALSE )
         {
-          if( MAPATTR_GetHitchFlag(attr) == TRUE )
-          {
-            return( TRUE );
-          }
+          return( TRUE );
         }
-        else
+        
+        if( MAPATTR_GetHitchFlag(attr) == TRUE )
         {
           return( TRUE );
         }

@@ -5150,7 +5150,7 @@ BOOL MMDLSYS_ROCKPOS_CheckRockFalled(
   gz = SIZE_GRID_FX32( pos->z );
   
   mmdl = MMDLSYS_SearchGridPosEx(
-      mmdlsys, gx, gz, pos->y, GRID_FX32, FALSE );
+      mmdlsys, gx, gz, pos->y, GRID_FX32*2, FALSE );
   
   if( mmdl != NULL ){
     if( mmdl_rockpos_CheckPos(mmdl) == TRUE ){

@@ -383,6 +383,13 @@ static GMEVENT_RESULT event_Kairki( GMEVENT *event, int *seq, void *wk )
       MMDL_GetMapPosHeight( work->mmdl, &pos, &work->bottom );
       work->bottom += KAIRIKI_FALLDOWN_HEIGHT;
       
+      {
+        u16 code = MMDL_GetOBJCode( work->mmdl ); 
+        if( code == BIGROCK || code == JUNK ){
+          work->bottom += NUM_FX32( -12 );
+        }
+      }
+      
       MMDL_SetStatusBitHeightGetOFF( work->mmdl, TRUE );
       MMDL_SetStatusBitFellowHit( work->mmdl, FALSE );
       
