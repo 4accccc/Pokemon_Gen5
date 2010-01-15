@@ -104,7 +104,7 @@ static const VecFx32 EV_DEMO_HERO_WALK_END_GRID[ FIELD_EVENT_FOURKINGS_MAX ] =
 static const u16 EV_DEMO_HERO_WALK_END_DIR[] = 
 {
   DIR_UP,
-  DIR_LEFT,
+  DIR_RIGHT,
   DIR_UP,
   DIR_UP,
 };
