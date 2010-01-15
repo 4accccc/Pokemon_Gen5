@@ -1304,7 +1304,7 @@ static  void  PutHPNumOBJ( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK *bgcl, s32 nowH
     hp_max = hp_max % 100;
     i++;
   }
-  if( hp_max >= 10 )
+  if( ( hp_max >= 10 ) || ( i != 0 ) )
   {
     max_hp[ i ] = GP_NUM_0 + ( hp_max / 10 ) * 0x20;
     hp_max = hp_max % 10;
