@@ -656,7 +656,7 @@
 #define FV_WF10_C                          632 /* 0x0278 ホワイトフォレスト：移住人口CのOBJ */
 #define FV_WF10_D                          633 /* 0x0279 ホワイトフォレスト：移住人口DのOBJ */
 #define FV_WF10_E                          634 /* 0x027a ホワイトフォレスト：移住人口EのOBJ */
-		/* not used   635(0x027b) */
+#define FV_R03_RIVAL_03                    635 /* 0x027b ３番道路：洞窟前のライバル */
 		/* not used   636(0x027c) */
 		/* not used   637(0x027d) */
 		/* not used   638(0x027e) */
