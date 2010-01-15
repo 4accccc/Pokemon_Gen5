@@ -67,7 +67,7 @@ $season_bitflag_year   = $season_bitflag_spring | $season_bitflag_summer | $seas
 %season_bitflag_tbl =
 (
   "春"=>$season_bitflag_spring,
-  "夏"=>$season_bitflag_spring,
+  "夏"=>$season_bitflag_summer,
   "秋"=>$season_bitflag_autumn,
   "冬"=>$season_bitflag_winter,
   ""  =>$season_bitflag_year,      # 空セルなら一年中
@@ -361,7 +361,7 @@ sub ReadEncountFile
       if( $zone_hash_for_season{ $values[$encount_csv_col_zonename] } & $season_bitflag_tbl{ $values[$encount_csv_col_season] } )
       {
         # 既出の季節
-        die "season overlap \"$values[$encount_csv_col_season]\" error, stopped";
+        die "season overlap \"$values[$encount_csv_col_zonename]\" \"$values[$encount_csv_col_season]\" error, stopped";
       }
     }
     $zoneseason_tbl[$zoneseason_num][$zoneseason_col_zoneid] = $zone_hash{ $values[$encount_csv_col_zonename] };
