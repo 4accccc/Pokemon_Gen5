@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2010-01-12T15:04:41"/>
+	<create user="taya" host="W00146" date="2010-01-15T20:44:14"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -421,8 +421,8 @@
 		<language name="JPN" width="256">ＰＰへらない</language>
 	</row>
 
-	<row id="DBGF_LABEL_SAME_RANDOM">
-		<language name="JPN" width="256">同じらんすう</language>
+	<row id="DBGF_LABEL_SKIP_IN">
+		<language name="JPN" width="256">入場スキップ</language>
 	</row>
 
 	<row id="DBGF_ITEM_SAVE">
