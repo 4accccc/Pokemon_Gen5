@@ -16,6 +16,9 @@
 
 #include  "print/gf_font.h"
 
+enum {
+  DEBUG_PRINT_FLAG = 1,
+};
 
 typedef u8 (*pWidthGetFunc)( const GFL_FONT*, u32 );
 typedef void (*pGetBitmapFunc)(const GFL_FONT*, u32, void*, GFL_FONT_SIZE* );
@@ -240,7 +243,9 @@ static void load_font_header( GFL_FONT* wk, u32 datID, BOOL fixedFontFlag, HEAPI
       GFL_ARC_LoadDataOfsByHandle( wk->fileHandle, datID, wk->fontHeader.ofsWidth,
             widthTblSize, (void*)(wk->widthTblTop) );
 
+      #if DEBUG_PRINT_FLAG
       OS_TPrintf("[GF_FONT] WidthTableSize=%08x bytes\n", widthTblSize);
+      #endif
     }
 
     // GlyphInfo
@@ -262,9 +267,11 @@ static void load_font_header( GFL_FONT* wk, u32 datID, BOOL fixedFontFlag, HEAPI
       GFL_ARC_LoadDataOfsByHandle( wk->fileHandle, datID, wk->fontHeader.ofsMap,
             mapTblSize, (void*)(wk->codeMapTop) );
 
+      #if DEBUG_PRINT_FLAG
       OS_TPrintf("[GF_FONT] MapIdxTableSize=%08x bytes\n", mapTblSize);
       OS_TPrintf("[GF_FONT] WidthTableOfs  = %08x\n", wk->fontHeader.ofsWidth);
       OS_TPrintf("[GF_FONT] MapIdxTableOfs = %08x\n", wk->fontHeader.ofsMap);
+      #endif
     }
   }
 }
@@ -341,14 +348,20 @@ static void setup_type_on_memory( GFL_FONT* wk, u8 cellW, u8 cellH, HEAPID heapI
 
   fileSize = GFL_ARC_GetDataSizeByHandle( wk->fileHandle, wk->arcDatID );
   bitDataSize = fileSize - wk->ofsGlyphTop;
+
+  #if DEBUG_PRINT_FLAG
   OS_TPrintf("[メモリ常駐型フォント] FileSize=0x%08x, Bitデータサイズ=0x%08xbyte\n", fileSize, bitDataSize);
+  #endif
 
   wk->fontBitData = GFL_HEAP_AllocMemory( heapID, bitDataSize );
 
   GFL_ARC_LoadDataOfsByHandle( wk->fileHandle, wk->arcDatID, wk->ofsGlyphTop,
             bitDataSize, wk->fontBitData );
 
+  #if DEBUG_PRINT_FLAG
   OS_TPrintf("[メモリ常駐型フォント] Bitデータ読み込み完了\n");
+  #endif
+
 
   wk->GetBitmapFunc = GetBitmapOnMemory;
   if( cellW==1 && cellH==1 )

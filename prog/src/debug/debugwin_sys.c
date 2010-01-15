@@ -103,13 +103,13 @@ typedef struct
   u16 *scrnTempArea;      ///<スクリーンVRAM退避先
   u16 *plttTempArea;      ///<パレットVRAM退避先
   GFL_BMP_DATA *bmp;
-  
+
   u8  fontColBkup[3];
   u8  priorytyBkup;
   u8  scrollXBkup;
   u8  scrollYBkup;
-  
-  
+
+
 }DEBUGWIN_SYSTEM_WORK;
 
 
@@ -140,17 +140,17 @@ static DEBUGWIN_SYSTEM_WORK *debWork = NULL;
 
 
 //--------------------------------------------------------------
-//  
+//
 //--------------------------------------------------------------
 void DEBUGWIN_InitSystem( u8* charArea , u16* scrnArea , u16* plttArea )
 {
-  
+
   if( debWork != NULL )
   {
-    OS_TPrintf("Debug system is initialized yet!!\n");
+//    OS_TPrintf("Debug system is initialized yet!!\n");
     return;
   }
-  
+
   GFL_HEAP_CreateHeap( GFL_HEAPID_SYSTEM, GFL_HEAP_LOWID(HEAPID_DEBUGWIN), DEBUGWIN_HEAPSIZE );
 
   debWork = GFL_HEAP_AllocMemory( HEAPID_DEBUGWIN , sizeof(DEBUGWIN_SYSTEM_WORK) );
@@ -159,12 +159,12 @@ void DEBUGWIN_InitSystem( u8* charArea , u16* scrnArea , u16* plttArea )
   debWork->scrnTempArea = scrnArea;
   debWork->plttTempArea = plttArea;
   DEBUGWIN_ExitProc();
-  
+
   debWork->topGroup = DEBUGWIN_CreateGroup( DEBUGWIN_GROUPID_TOPMENU , "TopMenu" , HEAPID_DEBUGWIN );
 
   DEBUGWIN_AddSystemGroup(HEAPID_DEBUGWIN);
-  
-  OS_TPrintf("Heap[%d]\n", GFL_HEAP_GetHeapFreeSize(HEAPID_DEBUGWIN) );
+
+//  OS_TPrintf("Heap[%d]\n", GFL_HEAP_GetHeapFreeSize(HEAPID_DEBUGWIN) );
 }
 
 void DEBUGWIN_ExitSystem(void)
@@ -174,12 +174,12 @@ void DEBUGWIN_ExitSystem(void)
     OS_TPrintf("Debug system isn't initialized!!\n");
     return;
   }
-  
+
   DEBUGWIN_RemoveGroupFunc( debWork->topGroup );
   GFL_HEAP_FreeMemory( debWork );
   debWork = NULL;
   GFL_HEAP_DeleteHeap( HEAPID_DEBUGWIN );
-  
+
 }
 
 void DEBUGWIN_UpdateSystem(void)
@@ -190,7 +190,7 @@ void DEBUGWIN_UpdateSystem(void)
         (GFL_UI_KEY_GetTrg() & DEBUGWIN_TRG_KEY ))
     {
       debWork->flg = debWork->flg ^ DWF_IS_ACTIVE;
-      
+
       if( DEBUGWIN_IsActive() == TRUE )
       {
         DEBUGWIN_OpenDebugWindow();
@@ -214,7 +214,7 @@ BOOL DEBUGWIN_IsActive(void)
   if( debWork->flg & DWF_IS_UPDATE )
   {
     debWork->flg = debWork->flg & (DWF_MASK-DWF_IS_UPDATE);
-    
+
     return FALSE;
   }
   return (debWork->flg & DWF_IS_ACTIVE);
@@ -249,12 +249,12 @@ static void DEBUGWIN_OpenDebugWindow( void )
   GFL_FONTSYS_GetColor( &debWork->fontColBkup[0] ,
                         &debWork->fontColBkup[1] ,
                         &debWork->fontColBkup[2] );
-  
+
   //もろもろ退避
   debWork->priorytyBkup = GFL_BG_GetPriority(debWork->frmnum);
   debWork->scrollXBkup = GFL_BG_GetScrollX(debWork->frmnum);
   debWork->scrollYBkup = GFL_BG_GetScrollY(debWork->frmnum);
-  
+
   //上で退避させたものの設定
   GFL_BG_SetPriority( debWork->frmnum , 0 );
   GFL_BG_SetScroll( debWork->frmnum , GFL_BG_SCROLL_X_SET , 0 );
@@ -277,10 +277,10 @@ static void DEBUGWIN_OpenDebugWindow( void )
     }
     DC_FlushRange(buf, sizeof( u16 )*32*DEBUGWIN_HEIGHT);
     GFL_STD_MemCopy16(buf, GFL_DISPUT_GetScrPtr(debWork->frmnum), sizeof( u16 )*32*DEBUGWIN_HEIGHT);
-    
+
     GFL_HEAP_FreeMemory( buf );
   }
-  
+
   //パレットの作成
   {
     u16 col[4]={ 0x0000 , 0x0000 , 0x7fff , 0x001f };
@@ -289,11 +289,11 @@ static void DEBUGWIN_OpenDebugWindow( void )
     GFL_BG_LoadPalette( debWork->frmnum , col , sizeof(u16)*4 , 0 );
 //    GFL_STD_MemCopy16(col, GFL_DISPUT_GetPltPtr(debWork->frmnum), sizeof(u16)*4);
   }
-  
+
   debWork->bmp = GFL_BMP_CreateInVRAM( GFL_DISPUT_GetCgxPtr(debWork->frmnum) , DEBUGWIN_WIDTH , DEBUGWIN_HEIGHT , GFL_BMP_16_COLOR , HEAPID_DEBUGWIN );
   GFL_STD_MemClear16( GFL_DISPUT_GetCgxPtr(debWork->frmnum) , DEBUGWIN_CHAR_TEMP_AREA );
   //GFL_BMP_Clear( debWork->bmp , 0 );
-  
+
   DEBUGWIN_DrawDebugWindow( TRUE , FALSE );
 }
 
@@ -376,7 +376,7 @@ static void DEBUGWIN_DrawDebugWindow( const BOOL forceDraw , const BOOL reset)
 {
   DEBUGWIN_ITEM *item = debWork->activeGroup->topLinkData;
   u8  line = 1;
-  
+
   if( reset == TRUE )
   {
     GFL_BMP_Clear( debWork->bmp , 0 );
@@ -387,13 +387,13 @@ static void DEBUGWIN_DrawDebugWindow( const BOOL forceDraw , const BOOL reset)
     GFL_FONTSYS_SetColor( DFP_NORMAL ,DFP_SHADOW ,DFP_BACK );
     PRINTSYS_Print( debWork->bmp , 0, 0, debWork->activeGroup->selfData->name, debWork->fontHandle );
   }
-  
+
   //カーソル位置不明だったらTopにする
   if( debWork->activeItem == NULL )
   {
     debWork->activeItem = item;
   }
-  
+
   while( item != NULL )
   {
     if( (item->flg & DIF_UPDATE) || forceDraw == TRUE )
@@ -432,7 +432,7 @@ void DEBUGWIN_AddGroupToGroup( const u8 id , const char *nameStr , const u8 pare
   DEBUGWIN_GROUP *grp = DEBUGWIN_SearchGroupFromId( parentGroupId );
   if( grp == NULL )
   {
-    OS_TPrintf("DEBUG WINDOW:Group[%d] is not found!!\n",parentGroupId);
+//    OS_TPrintf("DEBUG WINDOW:Group[%d] is not found!!\n",parentGroupId);
   }
   else
   {
@@ -444,19 +444,19 @@ static DEBUGWIN_GROUP* DEBUGWIN_AddGroupToGroupFunc( const u8 id , const char *n
 {
   if( DEBUGWIN_SearchGroupFromId( id ) != NULL )
   {
-    OS_TPrintf("DEBUG WINDOW:Group[%d] is registed yet!!\n",id);
+//    OS_TPrintf("DEBUG WINDOW:Group[%d] is registed yet!!\n",id);
     return NULL;
   }
   else
   {
     DEBUGWIN_GROUP *grp = DEBUGWIN_CreateGroup( id , nameStr , heapId );
     DEBUGWIN_ITEM *item = parentGroup->topLinkData;
-    
+
     DEBUGWIN_AddItemToGroupFunc( parentGroup , grp->selfData );
-    
+
     grp->parentGroup = parentGroup;
-    
-    OS_TPrintf("DEBUG WINDOW:Group[%d] is regist.\n",id);
+
+//    OS_TPrintf("DEBUG WINDOW:Group[%d] is regist.\n",id);
     return grp;
   }
 }
@@ -467,7 +467,7 @@ void DEBUGWIN_AddItemToGroup( const char *nameStr , DEBUGWIN_UPDATE_FUNC updateF
   DEBUGWIN_GROUP *grp = DEBUGWIN_SearchGroupFromId( parentGroupId );
   if( grp == NULL )
   {
-    OS_TPrintf("DEBUG WINDOW:Group[%d] is not found!!\n",parentGroupId);
+//    OS_TPrintf("DEBUG WINDOW:Group[%d] is not found!!\n",parentGroupId);
   }
   else
   {
@@ -481,7 +481,7 @@ void DEBUGWIN_AddItemToGroupEx( DEBUGWIN_UPDATE_FUNC updateFunc , DEBUGWIN_DRAW_
   DEBUGWIN_GROUP *grp = DEBUGWIN_SearchGroupFromId( parentGroupId );
   if( grp == NULL )
   {
-    OS_TPrintf("DEBUG WINDOW:Group[%d] is not found!!\n",parentGroupId);
+//    OS_TPrintf("DEBUG WINDOW:Group[%d] is not found!!\n",parentGroupId);
   }
   else
   {
@@ -522,7 +522,7 @@ static DEBUGWIN_GROUP* DEBUGWIN_CreateGroup( const u8 id , const char *nameStr ,
   grp->selfData = DEBUGWIN_CreateItem( nameStr , grp , NULL , NULL , heapId );
   DEBUGWIN_ITEM_SetNameV( grp->selfData , "[%s]" , nameStr );
   grp->selfData->flg |= DIF_GROUP;
-  
+
   return grp;
 }
 
@@ -549,7 +549,7 @@ static void DEBUGWIN_RemoveGroupFunc( DEBUGWIN_GROUP *group )
       {
         selfItem->prevItem->nextItem = selfItem->nextItem;
       }
-      
+
       //トップと末尾だったときの処理
       if( parent->topLinkData == selfItem )
       {
@@ -569,13 +569,13 @@ void DEBUGWIN_RemoveGroup( const u8 id )
   DEBUGWIN_GROUP *grp = DEBUGWIN_SearchGroupFromId( id );
   if( grp == NULL )
   {
-    OS_TPrintf("DEBUG WINDOW:Group[%d] is not found!!\n",id);
+//    OS_TPrintf("DEBUG WINDOW:Group[%d] is not found!!\n",id);
   }
   else
   {
     DEBUGWIN_RemoveGroupFunc( grp );
   }
-  
+
 }
 
 static void DEBUGWIN_RemoveGroupChild( DEBUGWIN_GROUP *group )
@@ -584,7 +584,7 @@ static void DEBUGWIN_RemoveGroupChild( DEBUGWIN_GROUP *group )
   while( item != NULL )
   {
     DEBUGWIN_ITEM *nextItem = item->nextItem;
-    
+
     if( item->flg & DIF_GROUP )
     {
       DEBUGWIN_RemoveGroupFunc( (DEBUGWIN_GROUP*)item->work );
@@ -593,10 +593,10 @@ static void DEBUGWIN_RemoveGroupChild( DEBUGWIN_GROUP *group )
     {
       DEBUGWIN_DeleteItem( item );
     }
-    
+
     item = nextItem;
   }
-  OS_TPrintf("DEBUG WINDOW:Group[%d] is removed.\n",group->id);
+//  OS_TPrintf("DEBUG WINDOW:Group[%d] is removed.\n",group->id);
   DEBUGWIN_DeleteItem( group->selfData );
   GFL_HEAP_FreeMemory( group );
 }
@@ -609,7 +609,7 @@ static DEBUGWIN_GROUP* DEBUGWIN_SearchGroupFromId( const u8 id )
 static DEBUGWIN_GROUP* DEBUGWIN_SearchGroupFromIdFunc( const u8 id , DEBUGWIN_GROUP *grp )
 {
   DEBUGWIN_ITEM *item = grp->topLinkData;
-  
+
   while( item != NULL )
   {
     if( item->flg & DIF_GROUP )
@@ -637,7 +637,7 @@ static DEBUGWIN_GROUP* DEBUGWIN_SearchGroupFromIdFunc( const u8 id , DEBUGWIN_GR
 static DEBUGWIN_ITEM* DEBUGWIN_CreateItem( const char *nameStr , void *work , DEBUGWIN_UPDATE_FUNC updateFunc , DEBUGWIN_DRAW_FUNC drawFunc , const HEAPID heapId )
 {
   DEBUGWIN_ITEM *item = GFL_HEAP_AllocMemory( heapId , sizeof(DEBUGWIN_ITEM) );
-  
+
   item->name = GFL_STR_CreateBuffer(DEBUGWIN_ITEM_NAME_LEN,heapId);
   item->work = work;
   item->updateFunc = updateFunc;
@@ -645,13 +645,13 @@ static DEBUGWIN_ITEM* DEBUGWIN_CreateItem( const char *nameStr , void *work , DE
   item->prevItem = NULL;
   item->nextItem = NULL;
   item->flg = 0;
-  
+
   //名前のセット
   if( item->drawFunc == NULL )
   {
     DEBUGWIN_ITEM_SetName( item , nameStr );
   }
-  
+
   return item;
 }
 
@@ -665,13 +665,13 @@ void DEBUGWIN_ITEM_SetName( DEBUGWIN_ITEM* item , const char *nameStr )
 {
   int bufLen = DEBUGWIN_ITEM_NAME_LEN-1;
   STRCODE strCode[DEBUGWIN_ITEM_NAME_LEN];
-  
+
   //STD_ConvertStringSjisToUnicode( strCode , &bufLen , nameStr , NULL , NULL );
   DEB_STR_CONV_SjisToStrcode( nameStr , strCode , bufLen );
 
   strCode[bufLen] = GFL_STR_GetEOMCode();
   GFL_STR_SetStringCode( item->name , strCode );
-  
+
   item->flg |= DIF_UPDATE;
 }
 
@@ -693,7 +693,7 @@ void DEBUGWIN_ITEM_SetNameU16( DEBUGWIN_ITEM* item , const STRCODE *strcode )
 
 #pragma mark [>Draw Func
 //--------------------------------------------------------------
-//	色の変更
+//  色の変更
 //--------------------------------------------------------------
 void DEBUGWIN_ChangeLetterColor( const u8 r , const u8 g , const u8 b )
 {
@@ -723,10 +723,10 @@ void DEBUGWIN_DrawStr( const u8 posX , const u8 posY , const HEAPID heapId , con
   STRBUF *strBuf;
   STRCODE *strCode;
   int len = STD_StrLen( str );
-  
+
   strBuf = GFL_STR_CreateBuffer( len+1 , heapId );
-  strCode = GFL_HEAP_AllocMemory( heapId , sizeof(STRCODE)*(len+1) ); 
-  
+  strCode = GFL_HEAP_AllocMemory( heapId , sizeof(STRCODE)*(len+1) );
+
   //STD_ConvertStringSjisToUnicode( strCode , &len , str , NULL , NULL );
   DEB_STR_CONV_SjisToStrcode( str , strCode , len );
   strCode[len] = GFL_STR_GetEOMCode();
@@ -734,7 +734,7 @@ void DEBUGWIN_DrawStr( const u8 posX , const u8 posY , const HEAPID heapId , con
 
   GFL_FONTSYS_SetColor( DFP_NORMAL ,DFP_SHADOW ,DFP_BACK );
   PRINTSYS_Print( debWork->bmp , posX, posY, strBuf, debWork->fontHandle );
-  
+
   GFL_HEAP_FreeMemory( strCode );
   GFL_STR_DeleteBuffer( strBuf );
 }
