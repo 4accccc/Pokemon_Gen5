@@ -98,6 +98,7 @@ struct _BTL_CLIENT {
   u8                procPokeIdx;    ///< 処理中ポケモンインデックス
   s8                prevPokeIdx;    ///< 前回の処理ポケモンインデックス
   u8                checkedPokeCnt; ///< アクション指示したポケモン数（スキップ状態を勘案）
+  u8                fStdMsgChanged; ///< 標準メッセージ内容を書き換えたフラグ
   BtlPokePos        basePos;        ///< 戦闘ポケモンの位置ID
 
   BTL_ACTION_PARAM     actionParam[ BTL_POSIDX_MAX ];
@@ -654,6 +655,14 @@ static BOOL selact_Start( BTL_CLIENT* wk, int* seq )
   SelActProc_Set( wk, selact_Root );
   return FALSE;
 }
+/**
+ *  アクション選択途中の標準メッセージウィンドウ文字出力
+ */
+static void selact_startMsg( BTL_CLIENT* wk, const BTLV_STRPARAM* strParam )
+{
+  BTLV_StartMsg( wk->viewCore, strParam );
+  wk->fStdMsgChanged = TRUE; // 「○○はどうする？」メッセージを書き換えたフラグON
+}
 //----------------------------------------------------------------------
 /**
  *  アクション選択ルート
@@ -677,12 +686,15 @@ static BOOL selact_Root( BTL_CLIENT* wk, int* seq )
 
   case 1:
     // 「○○はどうする？」表示
-    if( wk->prevPokeIdx != wk->procPokeIdx )
-    {
+    if( (wk->prevPokeIdx != wk->procPokeIdx)
+    ||  (wk->fStdMsgChanged)
+    ){
+      OS_TPrintf("○○はどうする？\n");
       BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_STD, BTL_STRID_STD_SelectAction );
       BTLV_STRPARAM_AddArg( &wk->strParam, BPP_GetID(wk->procPoke) );
       BTLV_STRPARAM_SetWait( &wk->strParam, 0 );
       BTLV_StartMsg( wk->viewCore, &wk->strParam );
+      wk->fStdMsgChanged = FALSE;
       wk->prevPokeIdx = wk->procPokeIdx;
       (*seq)++;
     }
@@ -799,7 +811,7 @@ static BOOL selact_Fight( BTL_CLIENT* wk, int* seq )
       {
         if( is_unselectable_waza(wk, wk->procPoke, wk->actionParam[wk->procPokeIdx].fight.waza, &wk->strParam) )
         {
-          BTLV_StartMsg( wk->viewCore, &wk->strParam );
+          selact_startMsg( wk, &wk->strParam );
           (*seq) = SEQ_WAIT_MSG;
         }
         else{
@@ -849,7 +861,7 @@ static BOOL selact_Fight( BTL_CLIENT* wk, int* seq )
 }
 //----------------------------------------------------------------------
 /**
- *  「ポケモン」選択後の入れ替えポケモン選択
+ *  「ポケモン」選択後のいれかえポケモン選択
  */
 //----------------------------------------------------------------------
 static BOOL selact_SelectChangePokemon( BTL_CLIENT* wk, int* seq )
@@ -968,10 +980,9 @@ static BOOL selact_Escape( BTL_CLIENT* wk, int* seq )
             BTLV_STRPARAM_AddArg( &wk->strParam, pokeID );
             BTLV_STRPARAM_AddArg( &wk->strParam, tokuseiID );
           }else{
-            BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_SET, BTL_STRID_SET_CantEscWaza );
-            BTLV_STRPARAM_AddArg( &wk->strParam, pokeID );
+            BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_STD, BTL_STRID_STD_EscapeProhibit );
           }
-          BTLV_StartMsg( wk->viewCore, &wk->strParam );
+          selact_startMsg( wk, &wk->strParam );
           (*seq) = 1;
         }
       }
@@ -979,7 +990,7 @@ static BOOL selact_Escape( BTL_CLIENT* wk, int* seq )
 
     case BTL_ESCAPE_MODE_NG:
       BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_STD, BTL_STRID_STD_EscapeCant );
-      BTLV_StartMsg( wk->viewCore, &wk->strParam );
+      selact_startMsg( wk, &wk->strParam );
       (*seq) = 1;
       break;
     }
@@ -1378,8 +1389,8 @@ static BtlCantEscapeCode is_prohibit_escape( BTL_CLIENT* wk, u8* pokeID, u16* to
     for(i=0; i<wk->numCoverPos; ++i)
     {
       bpp = BTL_POKECON_GetClientPokeDataConst( wk->pokeCon, wk->myID, i );
-      if( !BPP_IsDead(bpp)
-      &&  BPP_CheckSick(bpp, WAZASICK_TOOSENBOU)
+      if( BPP_CheckSick(bpp, WAZASICK_TOOSENBOU)
+      ||  BPP_CheckSick(bpp, WAZASICK_BIND)
       ){
         *pokeID = BPP_GetID( bpp );
         return BTL_CANTESC_TOOSENBOU;
@@ -2870,7 +2881,7 @@ static BOOL wazaOboeSeq( BTL_CLIENT* wk, int* seq, BTL_POKEPARAM* bpp )
     }
     break;
   case 7:
-    //技忘れ確認処理
+    //技忘れ確認処理「○○覚えるために他のワザを忘れさせますか？」
     BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_WAZAOBOE, msg_waza_oboe_05 );
     BTLV_STRPARAM_AddArg( &wk->strParam, pokeID );
     BTLV_STRPARAM_AddArg( &wk->strParam, wazaoboe_no );
@@ -2946,7 +2957,7 @@ static BOOL wazaOboeSeq( BTL_CLIENT* wk, int* seq, BTL_POKEPARAM* bpp )
     }
     break;
   case 100:
-    //技忘れあきらめ確認処理
+    //技忘れあきらめ確認処理「では○○を覚えるのをあきらめますか？」
     if( BTLV_IsJustDoneMsg(wk->viewCore) ){
       BTLV_STRPARAM   yesParam;
       BTLV_STRPARAM   noParam;
@@ -2966,6 +2977,7 @@ static BOOL wazaOboeSeq( BTL_CLIENT* wk, int* seq, BTL_POKEPARAM* bpp )
 
       if( BTLV_YESNO_Wait( wk->viewCore, &result ) )
       {
+        // あきらめる
         if( result == BTL_YESNO_YES )
         {
           BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_WAZAOBOE, msg_waza_oboe_09 );
@@ -2974,9 +2986,10 @@ static BOOL wazaOboeSeq( BTL_CLIENT* wk, int* seq, BTL_POKEPARAM* bpp )
           BTLV_StartMsg( wk->viewCore, &wk->strParam );
           (*seq) = 102;
         }
+        // あきらめない
         else
         {
-          (*seq) = 6;
+          (*seq) = 7;
         }
       }
     }

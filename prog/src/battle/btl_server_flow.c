@@ -270,7 +270,7 @@ static void scPut_MemberOutMessage( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
 static void scPut_MemberOut( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
 static void scproc_TrainerItem_Root( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, u8 actParam, u8 targetIdx );
 static void scproc_TrainerItem_BallRoot( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID );
-static u8 ItemEff_SleevRcv( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, u8 actParam );
+static u8 ItemEff_SleepRcv( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, u8 actParam );
 static u8 ItemEff_PoisonRcv( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, u8 actParam );
 static u8 ItemEff_YakedoRcv( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, u8 actParam );
 static u8 ItemEff_KooriRcv( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, u8 actParam );
@@ -795,7 +795,7 @@ SvflowResult BTL_SVFLOW_ContinueAfterPokeChange( BTL_SVFLOW_WORK* wk )
   BTL_EVENTVAR_CheckStackCleared();
   SCQUE_Init( wk->que );
 
-  wk->flowResult =  SVFLOW_RESULT_DEFAULT;
+  wk->flowResult = SVFLOW_RESULT_DEFAULT;
 
   if( ActOrderProc_PokeIn(wk) ){
     wk->flowResult = SVFLOW_RESULT_BTL_SHOWDOWN;
@@ -881,7 +881,7 @@ static u32 ActOrderProc_Main( BTL_SVFLOW_WORK* wk, u32 startOrderIdx )
     }
 
     if( wk->flowResult !=  SVFLOW_RESULT_DEFAULT ){
-      BTL_N_Printf( DBGSTR_SVFL_ActOrderMainDropOut );
+      BTL_N_Printf( DBGSTR_SVFL_ActOrderMainDropOut, wk->flowResult );
       break;
     }
 
@@ -2241,7 +2241,7 @@ static void scproc_TrainerItem_Root( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u1
     u16            effect;
     pItemEffFunc   func;
   }ItemParallelEffectTbl[] = {
-    { ITEM_PRM_SLEEP_RCV,     ItemEff_SleevRcv      },   // 眠り回復
+    { ITEM_PRM_SLEEP_RCV,     ItemEff_SleepRcv      },   // 眠り回復
     { ITEM_PRM_POISON_RCV,    ItemEff_PoisonRcv     },   // 毒回復
     { ITEM_PRM_BURN_RCV,      ItemEff_YakedoRcv     },   // 火傷回復
     { ITEM_PRM_ICE_RCV,       ItemEff_KooriRcv      },   // 氷回復
@@ -2432,7 +2432,7 @@ static void scproc_TrainerItem_BallRoot( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp
 }
 
 // アイテム効果：ねむり回復
-static u8 ItemEff_SleevRcv( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, u8 actParam )
+static u8 ItemEff_SleepRcv( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, u8 actParam )
 {
   return ItemEff_Common_Cure( wk, bpp, itemID, itemParam, WAZASICK_NEMURI );
 }

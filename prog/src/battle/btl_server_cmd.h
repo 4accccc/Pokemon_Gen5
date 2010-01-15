@@ -138,65 +138,14 @@ static inline void SCQUE_Setup( BTL_SERVER_CMD_QUE* que, const void* data, u16 d
 
 //----------------------------------------------------------------------------------------------
 //----------------------------------------------------------------------------------------------
-static inline void scque_put1byte( BTL_SERVER_CMD_QUE* que, u8 data )
-{
-  GF_ASSERT(que->writePtr < BTL_SERVER_CMD_QUE_SIZE);
-  que->buffer[ que->writePtr++ ] = data;
-}
-static inline u8 scque_read1byte( BTL_SERVER_CMD_QUE* que )
-{
-  GF_ASSERT(que->readPtr < que->writePtr);
-  return que->buffer[ que->readPtr++ ];
-}
-static inline void scque_put2byte( BTL_SERVER_CMD_QUE* que, u16 data )
-{
-  GF_ASSERT(que->writePtr < (BTL_SERVER_CMD_QUE_SIZE-1));
-  que->buffer[ que->writePtr++ ] = (data >> 8)&0xff;
-  que->buffer[ que->writePtr++ ] = (data & 0xff);
-}
-static inline u16 scque_read2byte( BTL_SERVER_CMD_QUE* que )
-{
-  GF_ASSERT_MSG(que->readPtr < (que->writePtr-1), "rp=%d, wp=%d", que->readPtr, que->writePtr);
-  {
-    u16 data = ( (que->buffer[que->readPtr] << 8) | que->buffer[que->readPtr+1] );
-    que->readPtr += 2;
-    return data;
-  }
-}
-static inline void scque_put3byte( BTL_SERVER_CMD_QUE* que, u32 data )
-{
-  GF_ASSERT(que->writePtr < (BTL_SERVER_CMD_QUE_SIZE-2));
-  que->buffer[ que->writePtr++ ] = (data >> 16)&0xff;
-  que->buffer[ que->writePtr++ ] = (data >> 8)&0xff;
-  que->buffer[ que->writePtr++ ] = (data & 0xff);
-}
-static inline u32 scque_read3byte( BTL_SERVER_CMD_QUE* que )
-{
-  GF_ASSERT(que->readPtr < (que->writePtr-2));
-  {
-    u32 data = ( (que->buffer[que->readPtr]<<16) | (que->buffer[que->readPtr+1]<<8) | (que->buffer[que->readPtr+2]) );
-    que->readPtr += 3;
-    return data;
-  }
-}
-static inline void scque_put4byte( BTL_SERVER_CMD_QUE* que, u32 data )
-{
-  GF_ASSERT(que->writePtr < (BTL_SERVER_CMD_QUE_SIZE-3));
-  que->buffer[ que->writePtr++ ] = (data >> 24)&0xff;
-  que->buffer[ que->writePtr++ ] = (data >> 16)&0xff;
-  que->buffer[ que->writePtr++ ] = (data >> 8)&0xff;
-  que->buffer[ que->writePtr++ ] = (data & 0xff);
-}
-static inline u32 scque_read4byte( BTL_SERVER_CMD_QUE* que )
-{
-  GF_ASSERT(que->readPtr < (que->writePtr-3));
-  {
-    u32 data = ( (que->buffer[que->readPtr]<<24) | (que->buffer[que->readPtr+1]<<16)
-               | (que->buffer[que->readPtr+2]<<8) | (que->buffer[que->readPtr+3]) );
-    que->readPtr += 4;
-    return data;
-  }
-}
+extern void scque_put1byte( BTL_SERVER_CMD_QUE* que, u8 data );
+extern u8 scque_read1byte( BTL_SERVER_CMD_QUE* que );
+extern void scque_put2byte( BTL_SERVER_CMD_QUE* que, u16 data );
+extern u16 scque_read2byte( BTL_SERVER_CMD_QUE* que );
+extern void scque_put3byte( BTL_SERVER_CMD_QUE* que, u32 data );
+extern u32 scque_read3byte( BTL_SERVER_CMD_QUE* que );
+extern void scque_put4byte( BTL_SERVER_CMD_QUE* que, u32 data );
+extern u32 scque_read4byte( BTL_SERVER_CMD_QUE* que );
 
 //----------------------------------------------------------------------------------------------
 //----------------------------------------------------------------------------------------------
@@ -547,7 +496,7 @@ static inline void SCQUE_PUT_MSG_WAZA( BTL_SERVER_CMD_QUE* que, u8 pokeID, u16 w
 //=====================================================
 typedef u32 ScMsgArg;
 enum {
-  MSGARG_TERMINATOR = 0xffff,
+  MSGARG_TERMINATOR = 0xffff0000,
 };
 
 #include <stdarg.h>

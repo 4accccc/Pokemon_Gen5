@@ -497,14 +497,14 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
   case 4:
     if( WaitAdapterCmd(server) )
     {
-      BTL_Printf("操作記録データの送信完了\n");
+      BTL_N_Printf( DBGSTR_SVFL_RecDataSendComped );
       ResetAdapterCmd( server );
       (*seq)++;
     }
     break;
 
   case 5:
-      BTL_Printf("サーバコマンド送信します ... result=%d\n", server->flowResult);
+      BTL_N_Printf( DBGSTR_SVFL_SendServerCmd, server->flowResult);
       SetAdapterCmdEx( server, BTL_ACMD_SERVER_CMD, server->que->buffer, server->que->writePtr );
       (*seq)++;
       break;
@@ -512,7 +512,7 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
   case 6:
     if( WaitAdapterCmd(server) )
     {
-      BTL_Printf("全クライアントのコマンド再生終了...result=%d\n", server->flowResult);
+      BTL_N_Printf( DBGSTR_SVFL_AllClientCmdPlayComplete, server->flowResult);
       BTL_MAIN_SyncServerCalcData( server->mainModule );
       ResetAdapterCmd( server );
 
@@ -551,7 +551,7 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
         GF_ASSERT(0);
         /* fallthru */
       case SVFLOW_RESULT_BTL_QUIT:
-        BTL_Printf("バトル終了へ\n");
+        BTL_N_Printf( DBGSTR_SVFL_GotoQuit );
         return TRUE;
       }
     }

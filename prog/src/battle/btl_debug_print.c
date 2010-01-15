@@ -152,6 +152,10 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_SVFL_ExpCalc_DivideInfo:  return "メンバーIdx[%d]のポケに経験値%dを分配\n";
   case DBGSTR_SVFL_ExpCalc_Result:      return "メンバーIdx[%d]のポケに対し、最終経験値=%d\n";
   case DBGSTR_SVFL_ExpAdjustCalc:       return "自分Lv=%d, 敵Lv=%d, 基本経験値=%d -> 補正後経験値=%d\n";
+  case DBGSTR_SVFL_RecDataSendComped:   return "操作記録データの送信完了\n";
+  case DBGSTR_SVFL_SendServerCmd:       return "サーバコマンド送信します ... result=%d\n";
+  case DBGSTR_SVFL_AllClientCmdPlayComplete:  return "全クライアントのコマンド再生終了...result=%d\n";
+  case DBGSTR_SVFL_GotoQuit:            return "バトル終了へ\n";
 
 
 
@@ -172,7 +176,8 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_SC_PutCmd:                return "[QUE]PutCmd=%d, Format=%02x, argCnt=%d, args=";
   case DBGSTR_SC_ReservedPos:           return "[QUE]reserved pos=%d, wp=%d\n";
   case DBGSTR_SC_WriteReservedPos:      return "[QUE]Write Reserved Pos ... pos=%d, cmd=%d";
-  case DBGSTR_SC_PutMsgParam:           return "[QUE] PUT MSG SC=%d, StrID=%d";
+  case DBGSTR_SC_PutMsgParam:           return "[QUE] PUT  MSG SC=%d, StrID=%d";
+  case DBGSTR_SC_ReadMsgParam:          return "[QUE] READ MSG SC=%d, StrID=%d";
   case DBGSTR_SC_PutMsg_SE:             return "  SE_ID=%d\n";
   case DBGSTR_SC_ArgsEqual:             return " args = ";
   case DBGSTR_EV_AddFactor:             return "[ADD] Factor=%p Depend=%d Type=%d, Pri=%06x [ADD]\n";

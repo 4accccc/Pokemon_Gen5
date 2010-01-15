@@ -78,6 +78,8 @@ typedef enum {
 }ScArgFormat;
 
 
+
+
 //--------------------------------------------------------------
 /**
  *    サーバコマンドから引数の型を取得するためのテーブル
@@ -156,7 +158,6 @@ static const u8 ServerCmdToFmtTbl[] = {
   SC_ARGFMT_112byte,          // SC_ACT_EFFECT_BYVECTOR
   SC_ARGFMT_1byte,            // SC_TOKWIN_IN
   SC_ARGFMT_1byte,            // SC_TOKWIN_OUT
-
   SC_ARGFMT_12byte, // SC_MSG_WAZA
   SC_ARGFMT_MSG,    // SC_MSG_STD
   SC_ARGFMT_MSG,    // SC_MSG_SET
@@ -287,6 +288,72 @@ static inline void unpack_4args( int bytes, u32 pack, int bits1, int bits2, int 
     args[ idx_start++ ] = (pack >> (bits2+bits3)) & mask2;
     args[ idx_start++ ] = (pack >> (bits3)) & mask3;
     args[ idx_start ] = pack & mask4;
+  }
+}
+
+//---------------------------------------------------------------------------------------
+/**
+ * Que Read/Write
+ */
+//---------------------------------------------------------------------------------------
+
+void scque_put1byte( BTL_SERVER_CMD_QUE* que, u8 data )
+{
+  GF_ASSERT(que->writePtr < BTL_SERVER_CMD_QUE_SIZE);
+  que->buffer[ que->writePtr++ ] = data;
+}
+u8 scque_read1byte( BTL_SERVER_CMD_QUE* que )
+{
+  GF_ASSERT(que->readPtr < que->writePtr);
+  return que->buffer[ que->readPtr++ ];
+}
+void scque_put2byte( BTL_SERVER_CMD_QUE* que, u16 data )
+{
+  GF_ASSERT(que->writePtr < (BTL_SERVER_CMD_QUE_SIZE-1));
+  que->buffer[ que->writePtr++ ] = (data >> 8)&0xff;
+  que->buffer[ que->writePtr++ ] = (data & 0xff);
+}
+u16 scque_read2byte( BTL_SERVER_CMD_QUE* que )
+{
+  GF_ASSERT_MSG(que->readPtr < (que->writePtr-1), "rp=%d, wp=%d", que->readPtr, que->writePtr);
+  {
+    u16 data = ( (que->buffer[que->readPtr] << 8) | que->buffer[que->readPtr+1] );
+    que->readPtr += 2;
+    return data;
+  }
+}
+void scque_put3byte( BTL_SERVER_CMD_QUE* que, u32 data )
+{
+  GF_ASSERT(que->writePtr < (BTL_SERVER_CMD_QUE_SIZE-2));
+  que->buffer[ que->writePtr++ ] = (data >> 16)&0xff;
+  que->buffer[ que->writePtr++ ] = (data >> 8)&0xff;
+  que->buffer[ que->writePtr++ ] = (data & 0xff);
+}
+u32 scque_read3byte( BTL_SERVER_CMD_QUE* que )
+{
+  GF_ASSERT(que->readPtr < (que->writePtr-2));
+  {
+    u32 data = ( (que->buffer[que->readPtr]<<16) | (que->buffer[que->readPtr+1]<<8) | (que->buffer[que->readPtr+2]) );
+    que->readPtr += 3;
+    return data;
+  }
+}
+void scque_put4byte( BTL_SERVER_CMD_QUE* que, u32 data )
+{
+  GF_ASSERT(que->writePtr < (BTL_SERVER_CMD_QUE_SIZE-3));
+  que->buffer[ que->writePtr++ ] = (data >> 24)&0xff;
+  que->buffer[ que->writePtr++ ] = (data >> 16)&0xff;
+  que->buffer[ que->writePtr++ ] = (data >> 8)&0xff;
+  que->buffer[ que->writePtr++ ] = (data & 0xff);
+}
+u32 scque_read4byte( BTL_SERVER_CMD_QUE* que )
+{
+  GF_ASSERT(que->readPtr < (que->writePtr-3));
+  {
+    u32 data = ( (que->buffer[que->readPtr]<<24) | (que->buffer[que->readPtr+1]<<16)
+               | (que->buffer[que->readPtr+2]<<8) | (que->buffer[que->readPtr+3]) );
+    que->readPtr += 4;
+    return data;
   }
 }
 
@@ -747,7 +814,7 @@ ServerCmd SCQUE_Read( BTL_SERVER_CMD_QUE* que, int* args )
     }
     else
     {
-      read_core_msg( que, fmt, args );
+      read_core_msg( que, cmd, args );
     }
   }
   return cmd;
@@ -797,7 +864,7 @@ void SCQUE_PUT_MsgImpl( BTL_SERVER_CMD_QUE* que, u8 scType, ... )
 
     BTL_N_Printf( DBGSTR_SC_PutMsgParam, scType, strID );
 
-    if( scType == SC_ARGFMT_MSG_SE ){
+    if( scType == SC_MSG_STD_SE ){
       u16 seID = va_arg( list, int );
       scque_put2byte( que, seID );
       BTL_N_PrintfSimple( DBGSTR_SC_PutMsg_SE, seID );
@@ -806,7 +873,9 @@ void SCQUE_PUT_MsgImpl( BTL_SERVER_CMD_QUE* que, u8 scType, ... )
 
     do {
       arg = va_arg( list, int );
-      BTL_N_PrintfSimple( DBGSTR_val_comma, arg );
+      if( arg != MSGARG_TERMINATOR ){
+        BTL_N_PrintfSimple( DBGSTR_val_comma, arg );
+      }
       scque_put4byte( que, arg );
     }while( arg != MSGARG_TERMINATOR );
     BTL_N_PrintfSimple( DBGSTR_LF );
@@ -821,10 +890,14 @@ static void read_core_msg( BTL_SERVER_CMD_QUE* que, u8 scType, int* args )
 
   args[0] = scque_read2byte( que );
 
-  if( scType == SC_ARGFMT_MSG_SE ){
+  BTL_N_Printf( DBGSTR_SC_ReadMsgParam, scType, args[0] );
+
+  if( scType == SC_MSG_STD_SE ){
     args[1] = scque_read2byte( que );
+    BTL_N_Printf( DBGSTR_SC_PutMsg_SE, args[1] );
     ++idx_begin;
   }
+  BTL_N_PrintfSimple( DBGSTR_SC_ArgsEqual );
 
   {
     int i = idx_begin;
@@ -833,7 +906,10 @@ static void read_core_msg( BTL_SERVER_CMD_QUE* que, u8 scType, int* args )
       if( args[i] == MSGARG_TERMINATOR ){
         break;
       }
+      BTL_N_PrintfSimple( DBGSTR_val_comma, args[i] );
     }
+    BTL_N_PrintfSimple( DBGSTR_LF );
+
     if( i == BTL_SERVERCMD_ARG_MAX ){
       GF_ASSERT(0); // 引数使いすぎ
     }
