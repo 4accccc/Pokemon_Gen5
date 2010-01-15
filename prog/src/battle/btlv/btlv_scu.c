@@ -485,6 +485,95 @@ BOOL BTLV_SCU_WaitBtlIn( BTLV_SCU* wk )
 {
   return BTL_UTIL_CallProc( &wk->proc );
 }
+
+
+//--------------------------------------------------
+/**
+ *  描画位置-> 位置, ポケモンパラメータ変換
+ */
+//--------------------------------------------------
+static inline void btlinTool_vpos_exchange( BTLV_SCU* wk, BtlvMcssPos vpos, BtlvMcssPos* vposDst, BtlPokePos* posDst, const BTL_POKEPARAM** bppDst )
+{
+  *vposDst = vpos;
+  *posDst = BTL_MAIN_ViewPosToBtlPos( wk->mainModule, vpos );
+  *bppDst = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, *posDst );
+}
+
+//------------------------------------------------------------------------
+/**
+ *  戦闘画面セットアップ（デバッグ用簡易版 コア処理）
+ */
+//------------------------------------------------------------------------
+static BOOL btlin_skip_core( BTLV_SCU* wk, int* seq, const u8* vposAry, u8 vposCount )
+{
+  switch( *seq ){
+  case 0:
+    {
+      BtlvMcssPos  vpos;
+      BtlPokePos   pos;
+      const BTL_POKEPARAM* bpp;
+      u32 i;
+
+      for(i=0; i<vposCount; ++i){
+        btlinTool_vpos_exchange( wk, vposAry[i], &vpos, &pos, &bpp );
+        BTLV_EFFECT_SetPokemon( BPP_GetViewSrcData(bpp), vpos );
+        statwin_disp_start( &wk->statusWin[ pos ] );
+      }
+      (*seq)++;
+    }
+    break;
+  case 1:
+    GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 0 );
+    (*seq)++;
+    break;
+  case 2:
+    if( !BTLV_EFFECT_CheckExecute() ){
+      return TRUE;
+    }
+    break;
+  }
+  return FALSE;
+}
+
+//------------------------------------------------------------------------
+/**
+ *  戦闘画面セットアップ（デバッグ用簡易版／シングル）
+ */
+//------------------------------------------------------------------------
+static BOOL btlin_skip_single( BTLV_SCU* wk, int* seq )
+{
+  static const u8 vposAry[] = {
+    BTLV_MCSS_POS_BB, BTLV_MCSS_POS_AA
+  };
+  return btlin_skip_core( wk, seq, vposAry, NELEMS(vposAry) );
+}
+
+//------------------------------------------------------------------------
+/**
+ *  戦闘画面セットアップ（デバッグ用簡易版／ダブル）
+ */
+//------------------------------------------------------------------------
+static BOOL btlin_skip_double( BTLV_SCU* wk, int* seq )
+{
+  static const u8 vposAry[] = {
+    BTLV_MCSS_POS_A, BTLV_MCSS_POS_B, BTLV_MCSS_POS_C, BTLV_MCSS_POS_D,
+  };
+  return btlin_skip_core( wk, seq, vposAry, NELEMS(vposAry) );
+}
+//------------------------------------------------------------------------
+/**
+ *  戦闘画面セットアップ（デバッグ用簡易版／トリプル）
+ */
+//------------------------------------------------------------------------
+static BOOL btlin_skip_triple( BTLV_SCU* wk, int* seq )
+{
+  static const u8 vposAry[] = {
+    BTLV_MCSS_POS_A, BTLV_MCSS_POS_B, BTLV_MCSS_POS_C, BTLV_MCSS_POS_D,
+    BTLV_MCSS_POS_E, BTLV_MCSS_POS_F,
+  };
+  return btlin_skip_core( wk, seq, vposAry, NELEMS(vposAry) );
+}
+
 //--------------------------------------------------------------------------
 /**
  * 戦闘画面セットアップ完了までの演出（野生／シングル）
@@ -502,6 +591,12 @@ static BOOL btlin_wild_single( int* seq, void* wk_adrs )
 
   BTLV_SCU* wk = wk_adrs;
   ProcWork* subwk = Scu_GetProcWork( wk, sizeof(ProcWork) );
+
+  #ifdef PM_DEBUG
+  if( BTL_MAIN_GetDebugFlag(wk->mainModule, BTL_DEBUGFLAG_SKIP_BTLIN) ){
+    return btlin_skip_single( wk, seq );
+  }
+  #endif
 
   switch( *seq ){
   case 0:
@@ -604,6 +699,12 @@ static BOOL btlin_trainer_single( int* seq, void* wk_adrs )
 
   BTLV_SCU* wk = wk_adrs;
   ProcWork* subwk = Scu_GetProcWork( wk, sizeof(ProcWork) );
+
+  #ifdef PM_DEBUG
+  if( BTL_MAIN_GetDebugFlag(wk->mainModule, BTL_DEBUGFLAG_SKIP_BTLIN) ){
+    return btlin_skip_single( wk, seq );
+  }
+  #endif
 
   switch( *seq ){
   case 0:
@@ -783,6 +884,12 @@ static BOOL btlin_wild_double( int* seq, void* wk_adrs )
   BTLV_SCU* wk = wk_adrs;
   ProcWork* subwk = Scu_GetProcWork( wk, sizeof(ProcWork) );
 
+  #ifdef PM_DEBUG
+  if( BTL_MAIN_GetDebugFlag(wk->mainModule, BTL_DEBUGFLAG_SKIP_BTLIN) ){
+    return btlin_skip_double( wk, seq );
+  }
+  #endif
+
   switch( *seq ){
   case 0:
     {
@@ -816,7 +923,7 @@ static BOOL btlin_wild_double( int* seq, void* wk_adrs )
       BTLV_EFFECT_SetPokemon( BPP_GetViewSrcData(subwk->pp[1]), viewPos );
       statwin_disp_start( &wk->statusWin[ subwk->pos[1] ] );
       (*seq)++;
-    }//subwk\f\[[0-1]\]\f\.\f[a-zA-Z]+
+    }
     break;
   case 3:
     if( !BTLV_EFFECT_CheckExecute() )
@@ -886,6 +993,12 @@ static BOOL btlin_trainer_double( int* seq, void* wk_adrs )
   };
 
   BTLV_SCU* wk = wk_adrs;
+
+  #ifdef PM_DEBUG
+  if( BTL_MAIN_GetDebugFlag(wk->mainModule, BTL_DEBUGFLAG_SKIP_BTLIN) ){
+    return btlin_skip_double( wk, seq );
+  }
+  #endif
 
   if( wk->btlinSeq < NELEMS(funcs) )
   {
@@ -1036,6 +1149,12 @@ static BOOL btlin_trainer_triple( int* seq, void* wk_adrs )
   };
 
   BTLV_SCU* wk = wk_adrs;
+
+  #ifdef PM_DEBUG
+  if( BTL_MAIN_GetDebugFlag(wk->mainModule, BTL_DEBUGFLAG_SKIP_BTLIN) ){
+    return btlin_skip_triple( wk, seq );
+  }
+  #endif
 
   if( wk->btlinSeq < NELEMS(funcs) )
   {
