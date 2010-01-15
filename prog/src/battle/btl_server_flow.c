@@ -460,6 +460,7 @@ static void scproc_CheckExpGet( BTL_SVFLOW_WORK* wk );
 static void scproc_GetExp( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* deadPoke );
 static void getexp_calc( BTL_SVFLOW_WORK* wk, const BTL_PARTY* party, const BTL_POKEPARAM* deadPoke, CALC_EXP_WORK* result );
 static u32 getexp_calc_adjust_level( const BTL_POKEPARAM* bpp, u32 base_exp, u16 getpoke_lv, u16 deadpoke_lv );
+static inline u32 _calc_adjust_level_sub( u32 val );
 static void getexp_make_cmd( BTL_SVFLOW_WORK* wk, BTL_PARTY* party, const CALC_EXP_WORK* calcExp );
 static inline int roundValue( int val, int min, int max );
 static inline int roundMin( int val, int min );
@@ -7231,6 +7232,8 @@ static void getexp_calc( BTL_SVFLOW_WORK* wk, const BTL_PARTY* party, const BTL_
     }
   }
 }
+
+
 //----------------------------------------------------------------------------------
 /**
  * 倒されたポケモンと経験値を取得するポケモンのレベル差に応じて経験値を補正する（ＷＢより）
@@ -7244,15 +7247,16 @@ static void getexp_calc( BTL_SVFLOW_WORK* wk, const BTL_PARTY* party, const BTL_
 //----------------------------------------------------------------------------------
 static u32 getexp_calc_adjust_level( const BTL_POKEPARAM* bpp, u32 base_exp, u16 getpoke_lv, u16 deadpoke_lv )
 {
-  fx32 denom, numer, ratio;
+  u32 denom, numer;
+  fx32 ratio;
   u32  denom_int, numer_int, result, expMargin;
 
   numer_int = deadpoke_lv * 2 + 10;
   denom_int = deadpoke_lv + getpoke_lv + 10;
 
-  numer  = ( (numer_int * numer_int) * FX_Sqrt(FX32_CONST(numer_int)) );
-  denom  = ( (denom_int * denom_int) * FX_Sqrt(FX32_CONST(denom_int)) );
-  ratio = FX_Div( numer, denom );
+  numer = _calc_adjust_level_sub( numer_int );
+  denom = _calc_adjust_level_sub( denom_int );
+  ratio = (numer / (denom >> FX32_SHIFT));
 
   result = BTL_CALC_MulRatio( base_exp, ratio ) + 1;
   expMargin = BPP_GetExpMargin( bpp );
@@ -7261,7 +7265,7 @@ static u32 getexp_calc_adjust_level( const BTL_POKEPARAM* bpp, u32 base_exp, u16
   }
 
   BTL_N_Printf( DBGSTR_SVFL_ExpAdjustCalc,
-      getpoke_lv, deadpoke_lv, base_exp, result );
+      getpoke_lv, deadpoke_lv, ratio, base_exp, result );
 
   return result;
 }
@@ -7295,6 +7299,21 @@ static void getexp_make_cmd( BTL_SVFLOW_WORK* wk, BTL_PARTY* party, const CALC_E
       SCQUE_PUT_ACT_AddExp( wk->que, pokeID, exp );
     }
   }
+}
+/**
+ *  経験値補正計算サブ
+ */
+static inline u32 _calc_adjust_level_sub( u32 val )
+{
+  fx32  fx_val, fx_sqrt;
+  u64 result;
+
+  fx_val = FX32_CONST( val );
+  fx_sqrt = FX_Sqrt( fx_val );
+  val *= val;
+  result = (val * fx_sqrt) >> FX32_SHIFT;
+
+  return result;
 }
 
 
