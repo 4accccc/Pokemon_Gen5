@@ -3987,7 +3987,7 @@ static void handler_Kaminari_hitRatio( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WO
 static const BtlEventHandlerTable*  ADD_Fubuki( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_CHECK_POKE_HIDE,   handler_Fubuki },      // ヒット確率計算スキップハンドラ
+    { BTL_EVENT_EXCUSE_CALC_HIT,   handler_Fubuki },      // ヒット確率計算スキップハンドラ
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
