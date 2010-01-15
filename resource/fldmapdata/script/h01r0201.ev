@@ -21,6 +21,8 @@
 //--------------------------------------------------------------
 _EVENT_DATA    ev_h01r0201
 _EVENT_DATA		ev_bg_h01r0201_board_01
+_EVENT_DATA		ev_h01r0201_informationw_01
+_EVENT_DATA		ev_h01r0201_woman2_01
 _EVENT_DATA_END
 
 
@@ -44,4 +46,18 @@ EVENT_START   ev_bg_h01r0201_board_01
 
 	_LOOK_ELBOARD(45)
 
+EVENT_END
+
+/**************************************************************/
+/*	H01R0201	INFORMATIONWの会話スクリプト				  */
+/**************************************************************/
+EVENT_START		ev_h01r0201_informationw_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_h01r0201_infomationw_01 )
+EVENT_END
+
+/**************************************************************/
+/*	H01R0201	WOMAN2の会話スクリプト						  */
+/**************************************************************/
+EVENT_START		ev_h01r0201_woman2_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_h01r0201_woman2_01 )
 EVENT_END

@@ -11,7 +11,7 @@
   .include  "scr_seq_def.h"
   .include  "msg_c03r0801.h"
   .include  "c03r0801.h"
-  .include	"c03p16_def.h"	//受付員のスクリプトのヘッダーをインクルード！
+  .include	"c03p16_def.h"//受付員のスクリプトのヘッダーをインクルード！
   
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -51,6 +51,7 @@ _EVENT_DATA		ev_c03r0801_babygirl1_01
 _EVENT_DATA		ev_c03r0801_babygirl1_02
 _EVENT_DATA		ev_zone_c03r0801
 _EVENT_DATA		ev_pos_c03r0801_move_01
+_EVENT_DATA		ev_reserve_c03r0801_cabinguide_01
 _EVENT_DATA_END
 
 //------------------------------注意--------------------------------//
@@ -148,7 +149,40 @@ EVENT_END
 /*		船員	リタイア受付								  */
 /**************************************************************/
 EVENT_START		ev_c03r0801_crew_01
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r0801_crew_01 )
+_TALK_OBJ_START()
+
+	_BALLOONWIN_TALKOBJ_MSG( msg_c03r0801_crew_01 )
+
+	_YES_NO_WIN( SCWK_ANSWER )
+	
+	IF $SCWK_ANSWER == SCR_YES THEN
+	
+		_BALLOONWIN_CLOSE()
+		
+		_BALLOONWIN_TALKOBJ_MSG( msg_c03r0801_retire_01 )
+		_BALLOONWIN_CLOSE()
+	
+		//望さんスクリプト終了
+		_PL_BOAT_END()
+
+		//ブラックアウト
+		_MAP_FADE_BLACK_OUT()
+
+		//予約スクリプト
+		_RESERVE_SCRIPT( SCRID_RESERVE_C03P16_CABINGUIDE_01 )
+	
+		//マップチェンジ
+		_MAP_CHANGE_NO_FADE( ZONE_ID_C03P16, 18, 0, 16, DIR_LEFT )
+	
+	ELSE
+		
+		_BALLOONWIN_CLOSE()
+	
+		_BALLOONWIN_TALKOBJ_MSG( msg_c03r0801_retire_02 )
+		_BALLOONWIN_CLOSE()
+	
+	ENDIF
+
 EVENT_END
 
 /**************************************************************/
@@ -688,3 +722,34 @@ _ANIME_LABEL	anm_player_out
 	_ANIME_DATA	AC_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0
 	
+
+/**************************************************************/
+/*			予約スクリプトイベント							  */
+/**************************************************************/
+EVENT_START		ev_reserve_c03r0801_cabinguide_01
+
+	_OBJ_ANIME( C03R0801_CREW_01, anm_crew_ship )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_ship )
+	_OBJ_ANIME_WAIT()
+
+EVENT_END
+
+//--------------------------------------------------------------
+//			乗船アニメ
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_crew_ship
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_U_8F,9
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_DIR_PAUSE_ON,1
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_WAIT_8F,1
+	_ANIME_DATA	AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_player_ship
+	_ANIME_DATA	AC_WAIT_8F,1
+	_ANIME_DATA	AC_WALK_U_8F,12
+	_ANIME_DATA	ACMD_END,0

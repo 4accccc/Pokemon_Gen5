@@ -1,5 +1,5 @@
 #event data
-#save date:2010/01/08 12:22:30
+#save date:2010/01/14 19:49:33
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c03r0801.wms
 #SECTION START:OBJ_EVENT
@@ -40,7 +40,7 @@ DIR_UP
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-216 0 -40
+216 48 -200
 #event number: 1
 #type
 1
@@ -49,7 +49,7 @@ C03R0801_CREW_02
 #OBJ CODE Number
 MAN1
 #MOVE CODE Number
-MV_DMY
+MV_DIR_RND
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
@@ -71,7 +71,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-152 0 24
+152 0 40
 #event number: 2
 #type
 1
@@ -894,7 +894,7 @@ LOCALWORK10
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-200 24 72
+200 40 88
 #size
 3 1
 #Map Event List Data End

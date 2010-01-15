@@ -8,9 +8,10 @@
 
   .text
 
-  .include  "scr_seq_def.h"
-  .include  "msg_c03p16.h"
-  .include  "c03p16.h"
+  .include	"scr_seq_def.h"
+  .include	"msg_c03p16.h"
+  .include	"c03p16.h"
+  .include	"c03r0801_def.h"//受付員のスクリプトのヘッダーをインクルード！
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -103,9 +104,12 @@ _TALK_OBJ_START()
 
 			//望さんスクリプト
 			_PL_BOAT_START()
+
+			//予約スクリプト
+			_RESERVE_SCRIPT( SCRID_RESERVE_C03R0801_CABINGUIDE_01 )
 	
 			//マップチェンジ
-			_MAP_CHANGE( ZONE_ID_C03R0801, 29, 17, DIR_UP )
+			_MAP_CHANGE( ZONE_ID_C03R0801, 29, 29, DIR_UP )
 
 		//分岐：いいえ処理
 		ELSE
