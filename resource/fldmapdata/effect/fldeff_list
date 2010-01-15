@@ -65,7 +65,11 @@ G3D_FE_ANMICA = shibuki01.ica \
   $(EFF_D06DENKI)d6_ishi_big01.ica \
   $(EFF_D06DENKI)d6_ishi_big02.ica \
   $(EFF_D06DENKI)d6_ishi_mini01.ica \
-  $(EFF_D06DENKI)d6_ishi_mini02.ica
+  $(EFF_D06DENKI)d6_ishi_mini02.ica \
+  b_train_a1.ica \
+  b_train_a2.ica \
+  b_train_a3.ica \
+  b_train_a4.ica
 
 #---------------------------------------------------------------
 #	フィールドエフェクト　imaアニメ定義
@@ -187,8 +191,15 @@ G3D_FE_MDL = kage.imd \
   lgrass_sp2.imd \
   lgrass_sm2.imd \
   lgrass_at2.imd \
-  lgrass_wt2.imd
-  
+  lgrass_wt2.imd \
+  b_train01.imd \
+  b_train02.imd \
+  b_train03.imd \
+  b_train04.imd \
+  b_train05.imd \
+  b_train06.imd \
+  b_train07.imd
+
 #---------------------------------------------------------------
 #	フィールドエフェクト　テクスチャ定義
 #---------------------------------------------------------------

@@ -1,7 +1,7 @@
 #---------------------------------------------------------------
 #	フィールドエフェクト アーカイブ用Makefile
 #---------------------------------------------------------------
-USERS = kagaya fuchino iwasawa obata_toshihiro ibe_mana yoshida lee_hyunjung
+USERS = kagaya fuchino iwasawa obata_toshihiro ibe_mana yoshida lee_hyunjung unno
 include $(PROJECT_RSCDIR)/macro_define
 
 TARGET_FE 	=	fldeff.narc
