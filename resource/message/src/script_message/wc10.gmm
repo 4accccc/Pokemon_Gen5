@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00185" date="2010-01-14T22:01:53"/>
+	<create user="ohmori" host="W00185" date="2010-01-15T11:04:00"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -299,7 +299,7 @@
 		<language name="JPN_KANJI" width="256">ホワイトフォレスト よいところ!</language>
 	</row>
 
-	<row id="msg_wc10r0101_girl1_01">
+	<row id="msg_wc10_girl1_01">
 		<attribute name="キャラ指定">GIRL1</attribute>
 		<language name="JPN" width="256">ここは　しずかで
 ほんとに　きもちいいなー！</language>
@@ -307,7 +307,7 @@
 ほんとに　気持ちいいなー！</language>
 	</row>
 
-	<row id="msg_wc10r0101_middleman1_01">
+	<row id="msg_wc10_middleman1_01">
 		<attribute name="キャラ指定">MIDDLEMAN1</attribute>
 		<language name="JPN" width="256">きに　かこまれていると
 からだも　こころも[BE:00:ページ切り替え（行送り）]
@@ -317,7 +317,7 @@
 自然になった　感じだね</language>
 	</row>
 
-	<row id="msg_wc10r0101_girl4_01">
+	<row id="msg_wc10_girl4_01">
 		<attribute name="キャラ指定">GIRL4</attribute>
 		<language name="JPN" width="256">とかいでの　くらしは
 なんだか　きゅうくつ　そうだね……</language>
@@ -325,7 +325,7 @@
 なんだか　きゅうくつ　そうだね……</language>
 	</row>
 
-	<row id="msg_wc10r0101_man3_01">
+	<row id="msg_wc10_man3_01">
 		<attribute name="キャラ指定">MAN3</attribute>
 		<language name="JPN" width="256">おいしい　くうき！
 きもちいい　かぜ！[BE:00:ページ切り替え（行送り）]
@@ -335,7 +335,7 @@
 うーん　充実してるなぁ～</language>
 	</row>
 
-	<row id="msg_wc10r0101_woman1_01">
+	<row id="msg_wc10_woman1_01">
 		<attribute name="キャラ指定">WOMAN1</attribute>
 		<language name="JPN" width="256">かわりのない　まいにち
 それが　いちばんの　しあわせね</language>
@@ -343,7 +343,7 @@
 それが　一番の　幸せね</language>
 	</row>
 
-	<row id="msg_wc10r0101_girl3_01">
+	<row id="msg_wc10_girl3_01">
 		<attribute name="キャラ指定">GIRL3</attribute>
 		<language name="JPN" width="256">ポケモンも　しぜんのなかで
 くらしているのが　すきなんだね</language>
@@ -351,7 +351,7 @@
 暮らしているのが　好きなんだね</language>
 	</row>
 
-	<row id="msg_wc10r0101_middleman2_01">
+	<row id="msg_wc10_middleman2_01">
 		<attribute name="キャラ指定">MIDDLEMAN2</attribute>
 		<language name="JPN" width="256">みんな　しんせつで
 だれにでも　やさしい！[BE:01:ページ切り替え（クリア）]
@@ -362,7 +362,7 @@
 みんなで　協力して　いい森に　したいな</language>
 	</row>
 
-	<row id="msg_wc10r0101_oldwoman1_01">
+	<row id="msg_wc10_oldwoman1_01">
 		<attribute name="キャラ指定">OLDWOMAN1</attribute>
 		<language name="JPN" width="256">しぜんの　ちからは
 とても　いだいな　ものですよ[BE:01:ページ切り替え（クリア）]
