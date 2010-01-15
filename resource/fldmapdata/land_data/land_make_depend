@@ -6550,6 +6550,42 @@ $(DIR_TEMP)/m_tryhouse01_00_00.nsbmd: $(DIR_RES)/m_tryhouse01_00_00.imd
 	@echo create_nsbmd m_tryhouse01_00_00
 	@$(G3DCVTR) $(DIR_RES)/m_tryhouse01_00_00.imd -o $(DIR_TEMP)/m_tryhouse01_00_00.nsbmd
 
+#m_bsubway02_01_00
+$(DIR_OUTPUT)/m_bsubway02_01_00.3dppack: $(DIR_TEMP)/m_bsubway02_01_00.nsbmd $(DIR_RES)/m_bsubway02_01_00.bin $(DIR_RES)/m_bsubway02_01_00.3dmd
+	@echo create 3dppack m_bsubway02_01_00
+	@$(BINLINKER) $(DIR_TEMP)/m_bsubway02_01_00.nsbmd $(DIR_RES)/m_bsubway02_01_00.bin $(DIR_RES)/m_bsubway02_01_00.3dmd $(DIR_OUTPUT)/m_bsubway02_01_00.3dppack WB
+
+$(DIR_TEMP)/m_bsubway02_01_00.nsbmd: $(DIR_RES)/m_bsubway02_01_00.imd
+	@echo create_nsbmd m_bsubway02_01_00
+	@$(G3DCVTR) $(DIR_RES)/m_bsubway02_01_00.imd -o $(DIR_TEMP)/m_bsubway02_01_00.nsbmd
+
+#m_bsubway02_02_00
+$(DIR_OUTPUT)/m_bsubway02_02_00.3dppack: $(DIR_TEMP)/m_bsubway02_02_00.nsbmd $(DIR_RES)/m_bsubway02_02_00.bin $(DIR_RES)/m_bsubway02_02_00.3dmd
+	@echo create 3dppack m_bsubway02_02_00
+	@$(BINLINKER) $(DIR_TEMP)/m_bsubway02_02_00.nsbmd $(DIR_RES)/m_bsubway02_02_00.bin $(DIR_RES)/m_bsubway02_02_00.3dmd $(DIR_OUTPUT)/m_bsubway02_02_00.3dppack WB
+
+$(DIR_TEMP)/m_bsubway02_02_00.nsbmd: $(DIR_RES)/m_bsubway02_02_00.imd
+	@echo create_nsbmd m_bsubway02_02_00
+	@$(G3DCVTR) $(DIR_RES)/m_bsubway02_02_00.imd -o $(DIR_TEMP)/m_bsubway02_02_00.nsbmd
+
+#m_bsubway02_03_00
+$(DIR_OUTPUT)/m_bsubway02_03_00.3dppack: $(DIR_TEMP)/m_bsubway02_03_00.nsbmd $(DIR_RES)/m_bsubway02_03_00.bin $(DIR_RES)/m_bsubway02_03_00.3dmd
+	@echo create 3dppack m_bsubway02_03_00
+	@$(BINLINKER) $(DIR_TEMP)/m_bsubway02_03_00.nsbmd $(DIR_RES)/m_bsubway02_03_00.bin $(DIR_RES)/m_bsubway02_03_00.3dmd $(DIR_OUTPUT)/m_bsubway02_03_00.3dppack WB
+
+$(DIR_TEMP)/m_bsubway02_03_00.nsbmd: $(DIR_RES)/m_bsubway02_03_00.imd
+	@echo create_nsbmd m_bsubway02_03_00
+	@$(G3DCVTR) $(DIR_RES)/m_bsubway02_03_00.imd -o $(DIR_TEMP)/m_bsubway02_03_00.nsbmd
+
+#m_labo03_00_01
+$(DIR_OUTPUT)/m_labo03_00_01.3dppack: $(DIR_TEMP)/m_labo03_00_01.nsbmd $(DIR_RES)/m_labo03_00_01.bin $(DIR_RES)/m_labo03_00_01.3dmd
+	@echo create 3dppack m_labo03_00_01
+	@$(BINLINKER) $(DIR_TEMP)/m_labo03_00_01.nsbmd $(DIR_RES)/m_labo03_00_01.bin $(DIR_RES)/m_labo03_00_01.3dmd $(DIR_OUTPUT)/m_labo03_00_01.3dppack WB
+
+$(DIR_TEMP)/m_labo03_00_01.nsbmd: $(DIR_RES)/m_labo03_00_01.imd
+	@echo create_nsbmd m_labo03_00_01
+	@$(G3DCVTR) $(DIR_RES)/m_labo03_00_01.imd -o $(DIR_TEMP)/m_labo03_00_01.nsbmd
+
 #C3_00_00
 $(DIR_OUTPUT)/C3_00_00.ngpack: $(DIR_TEMP)/C3_00_00.nsbmd $(DIR_RES)/C3_00_00.3dmd
 	@echo create ngpack C3_00_00

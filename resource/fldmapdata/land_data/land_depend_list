@@ -727,6 +727,10 @@ LAND_DEPEND_LIST = \
 	$(DIR_OUTPUT)/m_d12h02_00_00.3dppack \
 	$(DIR_OUTPUT)/m_d12h03_00_00.3dppack \
 	$(DIR_OUTPUT)/m_tryhouse01_00_00.3dppack \
+	$(DIR_OUTPUT)/m_bsubway02_01_00.3dppack \
+	$(DIR_OUTPUT)/m_bsubway02_02_00.3dppack \
+	$(DIR_OUTPUT)/m_bsubway02_03_00.3dppack \
+	$(DIR_OUTPUT)/m_labo03_00_01.3dppack \
 	$(DIR_OUTPUT)/C3_00_00.ngpack \
 	$(DIR_OUTPUT)/C3_00_01.ngpack \
 	$(DIR_OUTPUT)/C3_01_00.ngpack \
