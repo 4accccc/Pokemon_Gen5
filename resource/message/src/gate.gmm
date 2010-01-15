@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="murakami_naoto" host="W00210" date="2010-01-14T17:56:58"/>
+	<create user="murakami_naoto" host="W00210" date="2010-01-15T13:15:12"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -289,7 +289,7 @@
 		<comment position="1" width="214"/>
 		<erase position="-1" width="100"/>
 		<language japanese="JPN" english="JPN">
-			<message position="2" width="729"/>
+			<message position="2" width="494"/>
 			<font default=" 0:large" position="4" width="109">
 				<list entry="0" file="W:\font\large.nftr"/>
 				<list entry="1" file="W:\font\small.nftr"/>
@@ -300,7 +300,7 @@
 			<line position="-1" width="100"/>
 		</language>
 		<language japanese="JPN_KANJI" english="JPN_KANJI">
-			<message position="3" width="678"/>
+			<message position="3" width="479"/>
 			<font default=" 0:large" position="5" width="106">
 				<list entry="0" file="W:\font\large.nftr"/>
 				<list entry="1" file="W:\font\small.nftr"/>
@@ -312,7 +312,7 @@
 		</language>
 	</columns>
 
-	<dialog left="242" top="144" right="947" bottom="764" maximized="no" rayout="Vertical2">
+	<dialog left="392" top="67" right="1097" bottom="687" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -522,56 +522,56 @@
 
 	<row id="msg_gate_c2_01" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>c2についての地域情報1</comment>
-		<language name="JPN" width="256">◇シッポウシティは　いしだたみと　おおくの　そうこが　とくちょう</language>
-		<language name="JPN_KANJI" width="256">◇シッポウシティは　石畳と　多くの　倉庫が　特徴</language>
+		<language name="JPN" width="256">◇シッポウシティは　いしだたみと　おおくの　そうこが　とくちょう32</language>
+		<language name="JPN_KANJI" width="256">◇シッポウシティは　石畳と　多くの　倉庫が　特徴24</language>
 	</row>
 
 	<row id="msg_gate_c2_02" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>c2についての地域情報2</comment>
-		<language name="JPN" width="256">◇シッポウシティはくぶつかんでは　ホネ　かせきから　ポケモンを　けんきゅうしている</language>
-		<language name="JPN_KANJI" width="256">シッポウシティ博物館では　骨　化石から　ポケモンを　研究している</language>
+		<language name="JPN" width="256">◇はくぶつかんでは　ホネを　けんきゅうしている24</language>
+		<language name="JPN_KANJI" width="256">◇博物館では　骨と　化石から　ポケモンを　研究している27</language>
 	</row>
 
 	<row id="msg_gate_c2_03" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>c2についての地域情報3</comment>
-		<language name="JPN" width="256">◇シッポウシティ　ジムリーダーは　はくぶつかん　かんちょうを　けんにんしている</language>
-		<language name="JPN_KANJI" width="256">◇シッポウシティ　ジムリーダーは　博物館館長を　兼任している</language>
+		<language name="JPN" width="256">◇シッポウシティ　ジムリーダーは　はくぶつかん　かんちょうを　けんにんしている39</language>
+		<language name="JPN_KANJI" width="256">◇シッポウシティ　ジムリーダーは　博物館館長を　兼任している30</language>
 	</row>
 
 	<row id="msg_gate_c2_04" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>c2についての地域情報4</comment>
-		<language name="JPN" width="256">◇わかての　げいじゅつかが　おおく　すむまち　そうこを かいちくした　アトリエが　ならぶ</language>
-		<language name="JPN_KANJI" width="256">◇若手の　芸術家が　多く　住む街　倉庫を　改築した　アトリエが　並ぶ</language>
+		<language name="JPN" width="256">◇げいじゅつかが　おおく　すむまち　そうこを かいちくした　アトリエが　ならぶ39</language>
+		<language name="JPN_KANJI" width="256">◇芸術家が　多く　住む街　倉庫を　改築した　アトリエが　並ぶ30</language>
 	</row>
 
 	<row id="msg_gate_c2_05" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>c2についての地域情報5</comment>
-		<language name="JPN" width="256">◇シッポウシティは　アトリエと　はくぶつかんを　めあてに　かんこうきゃくも　おおい</language>
-		<language name="JPN_KANJI" width="256">◇シッポウシティは　アトリエと　博物館を　目当てに　観光客も　多い</language>
+		<language name="JPN" width="256">◇アトリエと　はくぶつかんを　めあてに　かんこうきゃくも　おおい32</language>
+		<language name="JPN_KANJI" width="256">◇シッポウシティは　アトリエと　博物館を　目当てに　観光客も　多い33</language>
 	</row>
 
 	<row id="msg_gate_c2_06" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>c2についての地域情報6</comment>
-		<language name="JPN" width="256">◇オープンテラスな　カフェでは　あたたかい　ティーの　かおりが　たびの　つかれを　いやす</language>
-		<language name="JPN_KANJI" width="256">◇オープンテラスな　カフェでは　暖かい　ティーの　香りが　旅の　疲れを　癒す</language>
+		<language name="JPN" width="256">◇カフェでは　ティーが　たびの　つかれを　いやす24</language>
+		<language name="JPN_KANJI" width="256">◇カフェでは　ティーが　旅の　疲れを　癒す21</language>
 	</row>
 
 	<row id="msg_gate_c2_07" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>c2についての地域情報7</comment>
-		<language name="JPN" width="256">◇やすいとちで　あったが　げいじゅつに　みせられた　ひとが　あつまり　ちかが　こうとうしている</language>
-		<language name="JPN_KANJI" width="256">◇安い土地で　あったが　芸術に　見せられた人が　集まり　地価が　高騰している</language>
+		<language name="JPN" width="256">◇げいじゅつで　ひとが　あつまり　ちかが　こうとう25</language>
+		<language name="JPN_KANJI" width="256">◇芸術に　魅せられた人が　集まり　地価が　高騰している27</language>
 	</row>
 
 	<row id="msg_gate_c2_08" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>c2についての地域情報8</comment>
-		<language name="JPN" width="256">◇はくぶつかんでは　にんげんの　ぶんかと　しぜんの　たいひが　テーマと　なっている</language>
-		<language name="JPN_KANJI" width="256">◇博物館では　人間の文化と　自然の　対比が　テーマとなっている</language>
+		<language name="JPN" width="256">◇はくぶつかんは　にんげんの　ぶんかと　しぜんの　たいひが　テーマ33</language>
+		<language name="JPN_KANJI" width="256">◇シッポウシティ博物館では　人間の文化と　自然の　対比が　テーマとなっている38</language>
 	</row>
 
 	<row id="msg_gate_c2_09" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>c2についての地域情報9</comment>
-		<language name="JPN" width="256">◇シッポウシティ　しゅっしんの　ゆうめい　げいじゅつかも　おおい　がか　アーティも　そのひとりで　ある</language>
-		<language name="JPN_KANJI" width="256">◇シッポウシティ　出身の　有名芸術家も　多い　画家　アーティも　その一人で　ある</language>
+		<language name="JPN" width="256">◇シッポウ　しゅっしんの　げいじゅつかも　おおい　アーティも　そのひとりで　ある41</language>
+		<language name="JPN_KANJI" width="256">◇シッポウシティ　出身の　有名芸術家も　多い　画家　アーティも　その一人で　ある30</language>
 	</row>
 
 	<row id="msg_gate_c3_01" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
