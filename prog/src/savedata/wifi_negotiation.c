@@ -2,6 +2,7 @@
 /**
  * @file	  wifi_negotiation.c
  * @brief	  WIFIネゴシエーション用ともだち履歴データ
+            国連と共通
  * @author	k.ohno
  * @date	  2009.10.16
  */
@@ -11,6 +12,7 @@
 
 #include "savedata/save_tbl.h"
 #include "savedata/wifi_negotiation.h"
+#include "buflen.h"
 
 //----------------------------------------------------------
 /**
@@ -20,6 +22,9 @@
 
 struct _WIFI_NEGOTIATION_SAVEDATA{
   s32 aFriendData[WIFI_NEGOTIATION_DATAMAX];
+  STRCODE name[WIFI_NEGOTIATION_DATAMAX][PERSON_NAME_SIZE + EOM_SIZE];		// 16
+  s32 dummyUnitedNations[WIFI_NEGOTIATION_DATAMAX];  //@todo国連用仮確保
+  s32 dummyUnitedNations2[WIFI_NEGOTIATION_DATAMAX];  //@todo国連用仮確保
   u32 count;
 };
 

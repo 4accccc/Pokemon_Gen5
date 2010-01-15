@@ -35,9 +35,6 @@
 // 何フレーム送信がないと、KEEP_ALIVEトークンを送るか。
 #define KEEPALIVE_TOKEN_TIME 240
 
-// ボイスチャットを利用する場合は定義する。
-#define MYDWC_USEVCHA
-
 #define MYDWC_DEBUGPRINT NET_PRINT
 
 
@@ -200,6 +197,7 @@ static void mydwc_releaseRecvBuffAll(void);
 static void mydwc_allocRecvBuff(int i);
 
 static void mydwc_updateFriendInfo( void );
+static void _DWC_StartVChat(int heapID);
 
 static void* mydwc_AllocFunc( DWCAllocType name, u32   size, int align );
 static void mydwc_FreeFunc( DWCAllocType name, void* ptr,  u32 size  );
@@ -796,17 +794,11 @@ int GFL_NET_DWC_stepmatch( int isCancel )
     // 完了。
     {
       GFLNetInitializeStruct* pNetInit = GFL_NET_GetNETInitStruct();
-#ifdef MYDWC_USEVCHA
-      if(_dWork->bVChat){
-//        GFL_NET_DWC_StartVChat(pNetInit->wifiHeapID);
-        GFL_NET_DWC_StartVChat(pNetInit->netHeapID);
-        _dWork->myvchaton = 1;
+     if(_dWork->bVChat){
+        _DWC_StartVChat(pNetInit->netHeapID);
       }
-      else{
-        _dWork->myvchaton = 0;
-      }
+      _dWork->myvchaton = 0;
 
-#endif
       _CHANGE_STATE(MDSTATE_PLAYING);
 //      _dWork->state = MDSTATE_PLAYING;
       _dWork->stepMatchResult = STEPMATCH_SUCCESS;
@@ -1343,9 +1335,9 @@ static void UserRecvCallback( u8 aid, u8* buffer, int size,void* param )
     _dWork->opseqno = buffer[MYDWC_PACKET_SEQNO_POS];
   }
   else {
-#ifdef MYDWC_USEVCHA
+
     if( myvct_checkData( aid, buffer,size ) ) return;
-#endif
+
     // 無意味な情報（コネクションを保持するためのものと思われる）
     _setOpVchat( topcode );
     return;
@@ -1726,7 +1718,7 @@ static int mydwc_step(void)
   mydwc_updateFriendInfo();
 
 
-#ifdef MYDWC_USEVCHA
+
   if( _dWork->isvchat )
   {
 
@@ -1747,7 +1739,7 @@ static int mydwc_step(void)
       }
     }
   }
-#endif
+
   if( _dWork->state == MDSTATE_TIMEOUT ){  // タイムアウトステートの時は同時にエラーも監視する
     ret = mydwc_HandleError();
     if(ret != 0){
@@ -1800,7 +1792,12 @@ static void vct_endcallback(){
  * @retval  none
  */
 //==============================================================================
-void GFL_NET_DWC_StartVChat(int heapID)
+void GFL_NET_DWC_StartVChat(void)
+{
+  _dWork->myvchaton = 1;
+}
+
+static void _DWC_StartVChat(int heapID)
 {
   int late;
   int num = 1;
@@ -1825,7 +1822,10 @@ void GFL_NET_DWC_StartVChat(int heapID)
     _dWork->myvchat_send = 1;
   }
 #endif
-
+  _dWork->myvchaton = 1;
+  _dWork->opvchaton = 1;
+  _dWork->myvchat_send = 1;
+  
   if( _dWork->isvchat==0 ){
     switch( _dWork->vchatcodec ){
     case VCHAT_G711_ULAW:
@@ -1903,6 +1903,7 @@ void GFL_NET_DWC_StopVChat(void)
   if(_dWork != NULL){
     _dWork->isvchat = 0;
     _dWork->backupBitmap = 0;
+    _dWork->myvchaton = 0;
   }
 }
 
@@ -2441,18 +2442,6 @@ static void NewClientCallback(int index, void* param)
   if( _dWork->connectCallback ){  //
     _dWork->connectCallback(index, _dWork->pConnectWork);
   }
-}
-
-//==============================================================================
-/**
- * 音声のノイズカットレベルを調整します（外部からアクセスしたいので、こちらに）
- * @param   d … 今より閾値を下げるか、上げるか（下げるほど拾いやすくなる）
- * @retval  none
- */
-//==============================================================================
-void mydwc_changeVADLevel(int d)
-{
-  //	myvct_changeVADLevel(d);
 }
 
 //==============================================================================

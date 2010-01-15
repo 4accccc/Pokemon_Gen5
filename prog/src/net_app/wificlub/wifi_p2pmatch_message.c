@@ -7,6 +7,12 @@
  */
 //============================================================================================
 
+static const BMPWIN_YESNO_DAT _yesNoBmpDat = {
+  GFL_BG_FRAME2_M, FLD_YESNO_WIN_PX, FLD_YESNO_WIN_PY,
+  FLD_YESNO_WIN_PAL, FLD_YESNO_WIN_CGX
+  };
+
+
 
 #define TALK_MESSAGE_BUF_NUM  ( 190*2 )
 #define TITLE_MESSAGE_BUF_NUM ( 90*2 )

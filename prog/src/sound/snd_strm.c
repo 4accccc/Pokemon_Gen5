@@ -85,6 +85,7 @@ static const u32 sc_SND_STRM_DATATYPE[ SND_STRM_TYPE_MAX ] = {
 //-----------------------------------------------------------------------------
 typedef struct
 {
+  void* pStreamBuff32;
 	NNSSndStrm			strm;
 	u8					FS_strmBuffer[STRM_BUF_SIZE];
 	int					FSReadPos;
@@ -112,10 +113,6 @@ typedef struct
 //ワーク
 static STRM_WORK*	sp_STRM_WORK = NULL;
 
-
-//32バイトアライメントでヒープからの取り方がわからないので、とりあえず静的に
-static	u8				strmBuffer[STRM_BUF_SIZE] ATTRIBUTE_ALIGN(32);
-
 //-----------------------------------------------------------------------------
 /**
  *					プロトタイプ宣言
@@ -138,6 +135,7 @@ void SND_STRM_Init( u32 heapID )
 
 	sp_STRM_WORK = GFL_HEAP_AllocMemory( heapID, sizeof(STRM_WORK) );
 	GFL_STD_MemClear( sp_STRM_WORK, sizeof(STRM_WORK) );
+  sp_STRM_WORK->pStreamBuff32 = GFL_NET_Align32Alloc(heapID,STRM_BUF_SIZE);
 
 	// ストリーミングチャンネル設定
 	NNS_SndInit();
@@ -159,6 +157,8 @@ void SND_STRM_Exit( void )
 	if(sp_STRM_WORK){
 		// ストリーミングチャンネル破棄
 		NNS_SndStrmFreeChannel( &sp_STRM_WORK->strm );
+
+    GFL_NET_Align32Free(sp_STRM_WORK->pStreamBuff32);
 
 		// メモリ破棄
 		GFL_HEAP_FreeMemory( sp_STRM_WORK );
@@ -299,7 +299,7 @@ void SND_STRM_Play( void )
 	// セットアップ
 	ret = NNS_SndStrmSetup( &sp_STRM_WORK->strm,
 													sc_SND_STRM_DATATYPE[sp_STRM_WORK->type],
-													&strmBuffer[0],
+													sp_STRM_WORK->pStreamBuff32,
 													STRM_BUF_SIZE,
 													sc_SND_STRM_HZ_TBL[sp_STRM_WORK->hz],
 													INTERVAL,
@@ -308,7 +308,7 @@ void SND_STRM_Play( void )
 	GF_ASSERT(ret);
 
 	// バッファ状態をクリア
-	MI_CpuClearFast( &strmBuffer[0], STRM_BUF_SIZE );
+	MI_CpuClearFast( sp_STRM_WORK->pStreamBuff32, STRM_BUF_SIZE );
 
 	// データ補充
 	SND_STRM_CopyBuffer( sp_STRM_WORK, STRM_BUF_SIZE );

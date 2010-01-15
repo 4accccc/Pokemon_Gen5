@@ -124,6 +124,21 @@ enum{
   WIFIP2PMATCH_FIRST_SAVING2,       //70
   WIFIP2PMATCH_MODE_CALLGAME_INIT,
   WIFIP2PMATCH_MODE_PLAYERDIRECT_INIT,
+  WIFIP2PMATCH_PLAYERDIRECT_INIT1,
+  WIFIP2PMATCH_PLAYERDIRECT_INIT2,
+  WIFIP2PMATCH_PLAYERDIRECT_INIT3,
+  WIFIP2PMATCH_PLAYERDIRECT_INIT5,
+  WIFIP2PMATCH_PLAYERDIRECT_INIT6,
+  WIFIP2PMATCH_PLAYERDIRECT_INIT7,
+  WIFIP2PMATCH_PLAYERDIRECT_WAIT,
+  WIFIP2PMATCH_PLAYERDIRECT_END,    //80
+  WIFIP2PMATCH_PLAYERDIRECT_VCT,
+  WIFIP2PMATCH_PLAYERDIRECT_TVT,
+  WIFIP2PMATCH_PLAYERDIRECT_TRADE,
+  WIFIP2PMATCH_PLAYERDIRECT_BATTLE1,
+  WIFIP2PMATCH_PLAYERDIRECT_SUB1,
+  WIFIP2PMATCH_PLAYERDIRECT_SUB2,
+  WIFIP2PMATCH_PLAYERDIRECT_SUBSTART,
 
 };
 
@@ -380,11 +395,13 @@ GAMEDATA* pGameData;
 
 	u16 brightness_reset;	// _retryでマスター輝度をVBlankでリセットするため
 	u16 friend_num;			// P2Pmatch画面初期化タイミングの友達数
+ 	u16 directmode;			// 直接会話中のゲームモード
 };
 
 
 extern void WifiP2PMatchRecvGameStatus(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 extern void WifiP2PMatchRecvMyStatus(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
+extern void WifiP2PMatchRecvDirectMode(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 
 
 

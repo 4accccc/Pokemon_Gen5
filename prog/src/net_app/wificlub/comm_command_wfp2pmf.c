@@ -61,6 +61,7 @@ static const NetRecvFuncTable _CommNutWFP2PMFPacketTbl[] = {
 	{ CommWFP2PMFGameVchat,  NULL },	///< VCHATデータ	親ー＞子
   { WifiP2PMatchRecvGameStatus,  NULL },
   { WifiP2PMatchRecvMyStatus,NULL},
+  { WifiP2PMatchRecvDirectMode,NULL},
 
 };
 

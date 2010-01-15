@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohno" host="W00141" date="2010-01-13T12:07:38"/>
+	<create user="ohno" host="W00141" date="2010-01-14T15:10:02"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,13 +305,13 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="248" top="174" right="952" bottom="796" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="0" style="0000" width="530"/>
+		<band id="0" index="0" style="0000" width="529"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="697"/>
-		<band id="3" index="3" style="0000" width="697"/>
+		<band id="2" index="2" style="0000" width="696"/>
+		<band id="3" index="3" style="0000" width="696"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -1001,6 +1001,41 @@ TVトランシーバーちゅう　です</language>
 はなしかけて　きました！</language>
 		<language name="JPN_KANJI" width="216">[1:00:トレーナー名:0]さんが
 はなしかけて　きました！</language>
+	</row>
+
+	<row id="msg_wifilobby_083" back-color=",,,,,,#808080,#808080,,#808080,#808080,,,,,,,">
+		<language name="JPN" width="216">[1:00:トレーナー名:0]さんと
+あそびますか？</language>
+		<language name="JPN_KANJI" width="216">[1:00:トレーナー名:0]さんと
+あそびますか？</language>
+	</row>
+
+	<row id="msg_wifilobby_084" back-color=",,,,,,#808080,#808080,,#808080,#808080,,,,,,,">
+		<language name="JPN" width="216">[1:00:トレーナー名:0]さんと
+なにをしますか？</language>
+		<language name="JPN_KANJI" width="216">[1:00:トレーナー名:0]さんと
+なにをしますか？</language>
+	</row>
+
+	<row id="msg_wifilobby_085" back-color=",,,,,,#808080,#808080,,#808080,#808080,,,,,,,">
+		<language name="JPN" width="216">[1:00:トレーナー名:0]さんと
+ボイスチャットをしますか？</language>
+		<language name="JPN_KANJI" width="216">[1:00:トレーナー名:0]さんと
+ボイスチャットをしますか？</language>
+	</row>
+
+	<row id="msg_wifilobby_086" back-color=",,,,,,#808080,#808080,,#808080,#808080,,,,,,,">
+		<language name="JPN" width="216">[1:00:トレーナー名:0]さんと
+TVトランシーバをしますか？</language>
+		<language name="JPN_KANJI" width="216">[1:00:トレーナー名:0]さんと
+TVトランシーバをしますか？</language>
+	</row>
+
+	<row id="msg_wifilobby_087" back-color=",,,,,,#808080,#808080,,#808080,#808080,,,,,,,">
+		<language name="JPN" width="216">[1:00:トレーナー名:0]さんと
+こうかんをしますか？</language>
+		<language name="JPN_KANJI" width="216">[1:00:トレーナー名:0]さんと
+こうかんをしますか？</language>
 	</row>
 
 	<flowchart-group-list>

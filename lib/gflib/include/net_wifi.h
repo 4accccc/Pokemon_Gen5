@@ -98,7 +98,7 @@ extern void GFL_NET_DWC_SetDisconnectCallback( MYDWCDisconnectFunc pFunc, void* 
  * @retval 0…正常, 負…エラー発生
  */
 //==============================================================================
-extern void GFL_NET_DWC_StartVChat(int heapID);
+extern void GFL_NET_DWC_StartVChat(void);
 //==============================================================================
 /**
  * @brief   ボイスチャットを停止します

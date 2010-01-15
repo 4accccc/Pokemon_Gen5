@@ -154,6 +154,9 @@ static void _changeStateDebug(SAVEADDR_WORK* pWork,StateFunc state, int line)
 #include "savedata/system_data_local.h"
 #include "savedata/dreamworld_data_local.h"
 #include	"poke_tool/pokeparty.h"
+#include "savedata/wifihistory.h"
+#include "savedata/wifihistory_local.h"
+
 
 
 static void _keyWait(SAVEADDR_WORK* pWork)
@@ -205,6 +208,17 @@ static void _keyWait(SAVEADDR_WORK* pWork)
       OS_TPrintf("\"%s\",\"0x%x\",\"%d\"\n", "PLAYER_SEX",(u32)pAddr-(u32)topAddr,sizeof(pMy->sex));
 
     }
+
+    { //ジオネット
+      WIFI_HISTORY* pHis = SaveData_GetWifiHistory(pWork->pSaveData);
+
+      pAddr = (u8*)&pHis->my_nation;
+      OS_TPrintf("\"%s\",\"0x%x\",\"%d\"\n","MY_COUNTRY", (u32)pAddr-(u32)topAddr, sizeof(pHis->my_nation));
+      pAddr = (u8*)&pHis->my_area;
+      OS_TPrintf("\"%s\",\"0x%x\",\"%d\"\n","MY_LOCAL", (u32)pAddr-(u32)topAddr, sizeof(pHis->my_area));
+    }
+
+    
 
     {//レコード
       long* rec = (long*)SaveData_GetRecord(pWork->pSaveData);

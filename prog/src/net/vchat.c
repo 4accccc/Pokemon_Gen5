@@ -17,9 +17,9 @@
 #define MYNNSFORMAT NNS_SND_STRM_FORMAT_PCM16
 
 //----------------- この部分はデフォルトで決まっています。送信量とは関係しません
-#define VCHAT_SAMPLING_RATE       8000   // Hz
-#define SAMPLING_BYTE        2      // byte = 16bit
-#define MAX_SAMPLING_TIME   68     // ms
+#define VCHAT_SAMPLING_RATE       (8000)   // Hz
+#define SAMPLING_BYTE        (2)      // byte = 16bit
+#define MAX_SAMPLING_TIME   (68)     // ms
 #define MAX_CHANNELS 1
 #define VCHAT_WAVE_SAMPLE ((int) (VCHAT_SAMPLING_RATE * MAX_SAMPLING_TIME * SAMPLING_BYTE) / 1000)  //1088
 //-----------------
@@ -31,7 +31,7 @@
 
 // デバッグ出力を大量に吐き出す場合定義
 #if defined(DEBUG_ONLY_FOR_ohno)
-#define DEBUGPRINT_ON (0)
+#define DEBUGPRINT_ON (1)
 #else
 #define DEBUGPRINT_ON (0)
 #endif
@@ -39,7 +39,7 @@
 
 #if DEBUGPRINT_ON
 #define VCT_PRINT(...) \
-	(void) ((VCT_PRINT(__VA_ARGS__)))
+	(void) ((OS_TPrintf(__VA_ARGS__)))
 #else   //DEBUGPRINT_ON
 #define VCT_PRINT(...)           ((void) 0)
 #endif  // DEBUGPRINT_ON
@@ -55,7 +55,7 @@
 // 電話をかけてもう一度リトライする時間
 #define VCT_START_TIMEOUT_NUM 60
 
-#define _MAX_PLAYER_NUM  (4)
+#define _MAX_PLAYER_NUM  (2)
 
 typedef struct{
 	u8 sRecBuffer[VCHAT_WAVE_SAMPLE * 2 * MAX_CHANNELS];
@@ -159,6 +159,8 @@ static void InitFirst(void)
 static void micCallback(MICResult result, void *arg)
 {
 #pragma unused(result, arg)
+  NET_PRINT("MIC %d\n",result);
+
 }
 
 static void SndCallback(NNSSndStrmCallbackStatus sts,
@@ -179,8 +181,6 @@ static void SndCallback(NNSSndStrmCallbackStatus sts,
 
 	micSrc = (u8*)arg;
 
-
-
 	if (sts == NNS_SND_STRM_CALLBACK_SETUP) {
 		for (ch = 0; ch < nChannels; ++ch) {
 			MI_CpuClear8(buffer[ch], length);
@@ -189,7 +189,7 @@ static void SndCallback(NNSSndStrmCallbackStatus sts,
 	}
 
 	if (_vWork->firstCallback) {
-		MIC_StartAutoSamplingAsync( &(_vWork->micParam), micCallback, NULL);
+		GF_ASSERT(MIC_RESULT_SUCCESS == MIC_StartAutoSamplingAsync( &(_vWork->micParam), micCallback, NULL));
 		_vWork->firstCallback = 0;
 	}
 
@@ -215,20 +215,19 @@ static void SndCallback(NNSSndStrmCallbackStatus sts,
 	// （例：8KHz, 8Bit で256バイト）。それ以外のサイズを渡すとassertionします。
 	//
 
-	if( _vWork->off_flag == 0 )
-	{
-
-		if(VCT_SendAudio(micSrc, length)){
-			VCT_PRINT("○ length 0x%x\n", length);
-		}
-	}else{
-		//   	    VCT_PRINT("×");
-	}
-	for (ch = 0; ch < nChannels; ++ch) {
+  for (ch = 0; ch < nChannels; ++ch) {
 		if( !VCT_ReceiveAudio(buffer[ch], length, NULL) )
 		{
 			VCT_PRINT("音声データを受け取れません\n");
 		}
+	}
+	if( _vWork->off_flag == 0 )
+	{
+    if(VCT_SendAudio(micSrc, length)){
+      VCT_PRINT("○ length 0x%x\n", length);
+		}
+  }else{
+    //   	    VCT_PRINT("×");
 	}
 	_vWork->bSendVoice = 2;
 	return;
@@ -451,7 +450,7 @@ void myvct_main(BOOL offflg)
 
 	if(_vWork->mode != VCT_MODE_CONFERENCE){  // カンファレンスの場合すでに会話中扱いにする
 
-		//    VCT_PRINT("st: %d %d\n",_vWork->state, mydwc_getaid());
+//    VCT_PRINT("vctst: %d \n",_vWork->state );
 
 		switch( _vWork->state )
 		{
@@ -534,7 +533,7 @@ void myvct_init( int heapID, int codec,int maxEntry )
 
 	// マイクの初期化
 
-	length = (u32)(VCHAT_SAMPLING_RATE * VCT_AUDIO_FRAME_LENGTH * SAMPLING_BYTE) / 1000;
+	length = (u32)VCHAT_WAVE_SAMPLE;
 
 	{
 		_vWork->micParam.type   = MIC_SAMPLING_TYPE_SIGNED_12BIT;
@@ -548,9 +547,10 @@ void myvct_init( int heapID, int codec,int maxEntry )
 	}
 
 	// サウンドストリーム再生の初期化。１対１会話限定
-	NNS_SndStrmAllocChannel(&_vWork->sSndStream, 1, cArray);
+	GF_ASSERT(NNS_SndStrmAllocChannel(&_vWork->sSndStream, 1, cArray));
 	NNS_SndStrmSetVolume(&_vWork->sSndStream, 0);
 
+  VCT_PRINT("NNS_SndStrmSetup\n");
 	ret = NNS_SndStrmSetup(&_vWork->sSndStream,
 												 NNS_SND_STRM_FORMAT_PCM16,
 												 _vWork->sPlayBuffer,
@@ -559,7 +559,7 @@ void myvct_init( int heapID, int codec,int maxEntry )
 												 2,
 												 SndCallback,
 												 _vWork->sRecBuffer);
-	SDK_ASSERT(ret);
+  GF_ASSERT(ret);
 
 	_vWork->state = VCTSTATE_INIT;
 	_vWork->session = NULL;
