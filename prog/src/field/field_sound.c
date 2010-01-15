@@ -1978,9 +1978,19 @@ static void Main_CHANGE_load( FIELD_SOUND* fieldSound )
   // 分割ロード完了(再生開始)
   if( loadFinished )
   { 
-    // フェードイン開始
-    FadeInBGM( fieldSound );
-    ChangeState( fieldSound, FSND_STATE_CHANGE_in );
+    if( (fieldSound->requestBGM != FSND_BGM_NULL) &&
+        (fieldSound->requestBGM != fieldSound->currentBGM) )
+    { 
+      // 再ロード開始
+      DivLoadBGM_start( fieldSound );
+      ChangeState( fieldSound, FSND_STATE_CHANGE_load );
+    }
+    else
+    { 
+      // フェードイン開始
+      FadeInBGM( fieldSound );
+      ChangeState( fieldSound, FSND_STATE_CHANGE_in );
+    }
   }
 }
 
