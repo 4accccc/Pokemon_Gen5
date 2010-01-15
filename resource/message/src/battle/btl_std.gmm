@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2010-01-06T16:03:18"/>
+	<create user="taya" host="W00146" date="2010-01-15T13:31:08"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -328,12 +328,12 @@
 
 	<dialog left="240" top="137" right="1079" bottom="748" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="618" right="1024" bottom="768" visible="no"/>
-		<tag-palette left="198" top="443" right="629" bottom="841" visible="yes"/>
+		<tag-palette left="198" top="443" right="629" bottom="841" visible="no"/>
 		<band id="0" index="0" style="0001" width="445"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="217"/>
 		<band id="3" index="3" style="0000" width="831"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -560,9 +560,9 @@
 	<row id="BTL_STRID_STD_GetExp" back-color=",#00ff00,,,#00ff00,,,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
 		<comment>経験値取得（通常）</comment>
 		<language name="JPN" width="216">[1:0C:ポケモンニックネーム（正体）:0]は
-[2:04:５桁:1] けいけんちを　もらった！</language>
+[2:06:７桁:1] けいけんちを　もらった！</language>
 		<language name="JPN_KANJI" width="216">[1:0C:ポケモンニックネーム（正体）:0]は
-[2:04:５桁:1] 経験値を　もらった！</language>
+[2:06:７桁:1] 経験値を　もらった！</language>
 	</row>
 
 	<row id="BTL_STRID_STD_GetExp_Bonus" back-color=",#00ff00,,,#00ff00,,,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
@@ -666,16 +666,25 @@
 	</row>
 
 	<row id="BTL_STRID_STD_EscapeSuccess">
+		<comment>逃げることができた</comment>
 		<language name="JPN" width="216">うまく　にげきれた！</language>
 		<language name="JPN_KANJI" width="216">うまく　逃げ切れた！</language>
 	</row>
 
 	<row id="BTL_STRID_STD_EscapeFail">
-		<language name="JPN" width="216">にげられない！</language>
-		<language name="JPN_KANJI" width="216">逃げられない！</language>
+		<comment>逃げようとしたが失敗した</comment>
+		<language name="JPN" width="216">にげられなかった！</language>
+		<language name="JPN_KANJI" width="216">逃げられなかった！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_EscapeProhibit">
+		<comment>逃げることが出来ない状態にされている</comment>
+		<language name="JPN" width="216">にげることが　できない！</language>
+		<language name="JPN_KANJI" width="216">逃げることが　できない！</language>
 	</row>
 
 	<row id="BTL_STRID_STD_EscapeCant">
+		<comment>トレーナー戦などルール上、逃げることができない</comment>
 		<language name="JPN" width="216">ダメだ！　しょうぶのさいちゅうに
 あいてに　せなかを　みせられない！</language>
 		<language name="JPN_KANJI" width="216">ダメだ！　勝負の最中に
