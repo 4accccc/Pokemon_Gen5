@@ -287,7 +287,7 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeWarp(GMEVENT * event, int *s
   switch ( *seq )
   {
   case 0:
-		GMEVENT_CallEvent( event, EVENT_DISAPPEAR_Teleport(NULL, gsys, fieldmap) );
+		GMEVENT_CallEvent( event, EVENT_DISAPPEAR_Warp(NULL, gsys, fieldmap) );
     ++ *seq;
     break;
   case 1:

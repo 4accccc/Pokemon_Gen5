@@ -37,10 +37,10 @@
 //=======================================================================================
 typedef struct
 {
-  GAMESYS_WORK*    gsys;
-  GAMEDATA*        gdata;
+  GAMESYS_WORK*      gsys;
+  GAMEDATA*         gdata;
   FIELDMAP_WORK* fieldmap;
-  LOCATION         location;  // ëJà⁄êÊéwíË
+  LOCATION       location;  // ëJà⁄êÊéwíË
 }
 EVENT_WORK;
 
@@ -309,7 +309,7 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceOut_ExitTypeWarp(GMEVENT * event, int *
   switch (*seq)
   {
   case 0:
-		GMEVENT_CallEvent(event, EVENT_APPEAR_Teleport(NULL, gsys, fieldmap) );
+		GMEVENT_CallEvent(event, EVENT_APPEAR_Warp(NULL, gsys, fieldmap) );
     ++ *seq;
     break;
   case 1:

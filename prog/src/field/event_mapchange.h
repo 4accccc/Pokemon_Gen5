@@ -152,6 +152,18 @@ extern GMEVENT* EVENT_ChangeMapByTeleport( GAMESYS_WORK * gsys );
 
 //------------------------------------------------------------------
 /**
+ * @brief マップ遷移イベント生成（ ワープ )
+ * @param gsys
+ * @param fieldmap
+ * @param zone_id
+ * @return GMEVENT 生成したマップ遷移イベント
+ */
+//------------------------------------------------------------------
+GMEVENT* EVENT_ChangeMapByWarp( GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldmap,
+                                u16 zone_id, const VecFx32 * pos, u16 dir );
+
+//------------------------------------------------------------------
+/**
  * @brief ユニオンへのマップ遷移イベント生成
  * @param  gsys      ゲームシステムへのポインタ
  * @param  fieldmap  フィールドシステムへのポインタ

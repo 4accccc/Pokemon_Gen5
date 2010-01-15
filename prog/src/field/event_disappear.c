@@ -61,6 +61,7 @@ static GMEVENT_RESULT EVENT_FUNC_DISAPPEAR_FallInSand( GMEVENT* event, int* seq,
 static GMEVENT_RESULT EVENT_FUNC_DISAPPEAR_Ananukenohimo( GMEVENT* event, int* seq, void* wk );
 static GMEVENT_RESULT EVENT_FUNC_DISAPPEAR_Anawohoru( GMEVENT* event, int* seq, void* wk );
 static GMEVENT_RESULT EVENT_FUNC_DISAPPEAR_Teleport( GMEVENT* event, int* seq, void* wk );
+static GMEVENT_RESULT EVENT_FUNC_DISAPPEAR_Warp( GMEVENT* event, int* seq, void* wk );
 
 
 //========================================================================================== 
@@ -176,6 +177,35 @@ GMEVENT* EVENT_DISAPPEAR_Teleport( GMEVENT* parent,
 
   // イベントを作成
   event = GMEVENT_Create( gsys, parent, EVENT_FUNC_DISAPPEAR_Teleport, sizeof(EVENT_WORK) );
+
+  // イベントワークを初期化
+  work            = (EVENT_WORK*)GMEVENT_GetEventWork( event );
+  work->fieldmap  = fieldmap;
+  work->frame     = 0;
+
+  // 作成したイベントを返す
+  return event;
+}
+
+//------------------------------------------------------------------------------------------
+/**
+ * @brief 退場イベントを作成する( ワープ )
+ *
+ * @param parent     親イベント
+ * @param gsys       ゲームシステム
+ * @param fieldmap   フィールドマップ
+ *
+ * @return 作成したイベント
+ */
+//------------------------------------------------------------------------------------------
+GMEVENT* EVENT_DISAPPEAR_Warp( GMEVENT* parent, 
+                               GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldmap )
+{
+  GMEVENT*   event;
+  EVENT_WORK* work;
+
+  // イベントを作成
+  event = GMEVENT_Create( gsys, parent, EVENT_FUNC_DISAPPEAR_Warp, sizeof(EVENT_WORK) );
 
   // イベントワークを初期化
   work            = (EVENT_WORK*)GMEVENT_GetEventWork( event );
@@ -559,6 +589,64 @@ static GMEVENT_RESULT EVENT_FUNC_DISAPPEAR_Teleport( GMEVENT* event, int* seq, v
     // カメラモードの復帰
     FIELD_CAMERA_ChangeMode( camera, work->cameraMode );
     ++( *seq );
+    break;
+  case 3:
+    return GMEVENT_RES_FINISH;
+  } 
+  return GMEVENT_RES_CONTINUE;
+}
+
+//------------------------------------------------------------------------------------------
+/**
+ * @brief 退場イベント処理関数( ワープ )
+ */
+//------------------------------------------------------------------------------------------
+static GMEVENT_RESULT EVENT_FUNC_DISAPPEAR_Warp( GMEVENT* event, int* seq, void* wk )
+{
+  EVENT_WORK*        work = (EVENT_WORK*)wk;
+  FIELDMAP_WORK* fieldmap = work->fieldmap;
+  FIELD_PLAYER*    player = FIELDMAP_GetFieldPlayer( fieldmap );
+  FIELD_CAMERA*    camera = FIELDMAP_GetFieldCamera( fieldmap );
+
+  switch( *seq )
+  {
+  case 0:
+    // カメラモードの設定
+    work->cameraMode = FIELD_CAMERA_GetMode( camera );
+    FIELD_CAMERA_ChangeMode( camera, FIELD_CAMERA_MODE_CALC_CAMERA_POS );
+    { // タスク登録
+      FIELD_TASK* rotTask;
+      FIELD_TASK* fadeOutTask;
+      FIELD_TASK* moveTask;
+      FIELD_TASK_MAN* taskMan;
+      VecFx32 moveVec;
+      VEC_Set( &moveVec, 0, 100<<FX32_SHIFT, 0 );
+      rotTask = FIELD_TASK_PlayerRotate( fieldmap, 16, 3 );
+      fadeOutTask = FIELD_TASK_Fade( fieldmap, GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, 1 );
+      moveTask = FIELD_TASK_TransDrawOffset( fieldmap, 16, &moveVec );
+      taskMan = FIELDMAP_GetTaskManager( fieldmap );
+      FIELD_TASK_MAN_AddTask( taskMan, rotTask, NULL );
+      FIELD_TASK_MAN_AddTask( taskMan, moveTask, NULL );
+      FIELD_TASK_MAN_AddTask( taskMan, fadeOutTask, moveTask );
+    }
+    // SE
+    PMSND_PlaySE( SEQ_SE_FLD_05 );
+    (*seq)++;
+    break;
+  case 1:
+    { // タスクの終了待ち
+      FIELD_TASK_MAN* man;
+      man = FIELDMAP_GetTaskManager( fieldmap );
+      if( FIELD_TASK_MAN_IsAllTaskEnd(man) )
+      {
+        (*seq)++;
+      }
+    }
+    break;
+  case 2:
+    // カメラモードの復帰
+    FIELD_CAMERA_ChangeMode( camera, work->cameraMode );
+    (*seq)++;
     break;
   case 3:
     return GMEVENT_RES_FINISH;

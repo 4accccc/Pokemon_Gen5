@@ -21,6 +21,7 @@
 #include "field_task_player_rot.h"
 #include "field_task_player_fall.h"
 #include "field_task_wait.h"
+#include "field_task_player_drawoffset.h"
 
 #include "fldeff_kemuri.h"  // for FLDEFF_KEMURI_SetMMdl
 #include "event_fieldmap_control.h"  // for EVENT_FieldFadeIn
@@ -54,6 +55,7 @@ static GMEVENT_RESULT EVENT_FUNC_APPEAR_Fall( GMEVENT* event, int* seq, void* wk
 static GMEVENT_RESULT EVENT_FUNC_APPEAR_Ananukenohimo( GMEVENT* event, int* seq, void* wk );
 static GMEVENT_RESULT EVENT_FUNC_APPEAR_Anawohoru( GMEVENT* event, int* seq, void* wk );
 static GMEVENT_RESULT EVENT_FUNC_APPEAR_Teleport( GMEVENT* event, int* seq, void* wk );
+static GMEVENT_RESULT EVENT_FUNC_APPEAR_Warp( GMEVENT* event, int* seq, void* wk );
 
 
 //========================================================================================== 
@@ -157,8 +159,7 @@ GMEVENT* EVENT_APPEAR_Anawohoru( GMEVENT* parent,
  * @return 作成したイベント
  */
 //------------------------------------------------------------------------------------------
-GMEVENT* EVENT_APPEAR_Teleport( GMEVENT* parent, 
-                                GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldmap )
+GMEVENT* EVENT_APPEAR_Teleport( GMEVENT* parent, GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldmap )
 {
   GMEVENT*   event;
   EVENT_WORK* work;
@@ -175,6 +176,33 @@ GMEVENT* EVENT_APPEAR_Teleport( GMEVENT* parent,
   return event;
 }
 
+//------------------------------------------------------------------------------------------
+/**
+ * @brief 登場イベントを作成する( ワープ )
+ *
+ * @param parent   親イベント
+ * @param gsys     ゲームシステム
+ * @param fieldmap フィールドマップ
+ *
+ * @return 作成したイベント
+ */
+//------------------------------------------------------------------------------------------
+GMEVENT* EVENT_APPEAR_Warp( GMEVENT* parent, GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldmap )
+{
+  GMEVENT*   event;
+  EVENT_WORK* work;
+
+  // イベントを作成
+  event = GMEVENT_Create( gsys, parent, EVENT_FUNC_APPEAR_Warp, sizeof( EVENT_WORK ) );
+
+  // イベントワークを初期化
+  work           = (EVENT_WORK*)GMEVENT_GetEventWork( event );
+  work->fieldmap = fieldmap;
+  work->gsys     = gsys;
+
+  // 作成したイベントを返す
+  return event;
+}
 
 //========================================================================================== 
 // ■非公開関数の定義
@@ -438,3 +466,77 @@ static GMEVENT_RESULT EVENT_FUNC_APPEAR_Teleport( GMEVENT* event, int* seq, void
   } 
   return GMEVENT_RES_CONTINUE;
 }
+
+//------------------------------------------------------------------------------------------
+/**
+ * @brief 登場イベント処理関数( ワープ )
+ */
+//------------------------------------------------------------------------------------------
+static GMEVENT_RESULT EVENT_FUNC_APPEAR_Warp( GMEVENT* event, int* seq, void* wk )
+{
+  EVENT_WORK*        work = (EVENT_WORK*)wk;
+  FIELDMAP_WORK* fieldmap = work->fieldmap;
+  FIELD_CAMERA*    camera = FIELDMAP_GetFieldCamera( fieldmap );
+
+  switch( *seq )
+  {
+  case 0:
+    // カメラモードの設定
+    work->cameraMode = FIELD_CAMERA_GetMode( camera );
+    FIELD_CAMERA_ChangeMode( camera, FIELD_CAMERA_MODE_CALC_CAMERA_POS );
+    { // 主人公の描画オフセットの初期設定(画面外にいるように設定)
+      VecFx32 moveOffset;
+      FIELD_PLAYER* player = FIELDMAP_GetFieldPlayer( fieldmap );
+      MMDL*           mmdl = FIELD_PLAYER_GetMMdl( player ); 
+      VEC_Set( &moveOffset, 0, 10<<FX32_SHIFT, 0);
+      MMDL_SetVectorDrawOffsetPos( mmdl, &moveOffset );
+    }
+    { // フェードイン
+      GMEVENT* fadeInEvent;
+      fadeInEvent = EVENT_FieldFadeIn_Black( work->gsys, fieldmap,  FIELD_FADE_NO_WAIT );
+      GMEVENT_CallEvent( event, fadeInEvent );
+    }
+    { // タスクの追加
+      FIELD_TASK* rotTask;
+      FIELD_TASK* moveTask;
+      FIELD_TASK_MAN* taskMan;
+      VecFx32 moveVec;
+      VEC_Set( &moveVec, 0, 100<<FX32_SHIFT, 0 );
+      rotTask = FIELD_TASK_PlayerRotate( fieldmap, 16, 2 );
+      moveTask = FIELD_TASK_TransDrawOffset( fieldmap, -16, &moveVec );
+      taskMan = FIELDMAP_GetTaskManager( fieldmap );
+      FIELD_TASK_MAN_AddTask( taskMan, rotTask, NULL );
+      FIELD_TASK_MAN_AddTask( taskMan, moveTask, NULL );
+    }
+    (*seq)++;
+    break;
+  case 1:
+    { // タスクの終了待ち
+      FIELD_TASK_MAN* taskMan;
+      taskMan = FIELDMAP_GetTaskManager( fieldmap ); 
+      if( FIELD_TASK_MAN_IsAllTaskEnd(taskMan) )
+      {
+        (*seq)++;
+      }
+    }
+    break;
+  case 2:
+    // 砂埃を出す
+    {
+      FIELD_PLAYER* player = FIELDMAP_GetFieldPlayer( fieldmap );
+      MMDL*           mmdl = FIELD_PLAYER_GetMMdl( player ); 
+      FLDEFF_CTRL*  fectrl = FIELDMAP_GetFldEffCtrl( work->fieldmap );
+      FLDEFF_KEMURI_SetMMdl( mmdl, fectrl );
+    }
+    (*seq)++;
+    break;
+  case 3:
+    // カメラモードの復帰
+    FIELD_CAMERA_ChangeMode( camera, work->cameraMode );
+    (*seq)++;
+    break;
+  case 4: 
+    return GMEVENT_RES_FINISH;
+  } 
+  return GMEVENT_RES_CONTINUE;
+} 
