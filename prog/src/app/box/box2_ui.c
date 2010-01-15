@@ -1187,11 +1187,13 @@ u32 BOX2UI_PartyOutMain( BOX2_SYS_WORK * syswk )
 		return ret;
 	}
 
+/*
 	if( BOX2BGWFRM_PokeMenuPutCheck(syswk->app->wfrm) == TRUE ){
 		if( ret == CURSORMOVE_CANCEL ){
 			return BOX2UI_PTOUT_MAIN_CLOSE;
 		}
 	}
+*/
 
 	return ret;
 }
@@ -1363,11 +1365,13 @@ u32 BOX2UI_PartyInMain( BOX2_SYS_WORK * syswk )
 		return ret;
 	}
 
+/*
 	if( BOX2BGWFRM_PokeMenuPutCheck(syswk->app->wfrm) == TRUE ){
 		if( ret == CURSORMOVE_CANCEL ){
 			return BOX2UI_PTIN_MAIN_CLOSE;
 		}
 	}
+*/
 
 	return ret;
 }
@@ -1495,9 +1499,11 @@ u32 BOX2UI_BoxArrangeMain( BOX2_SYS_WORK * syswk )
 			CursorObjMove( syswk, now );
 			return CURSORMOVE_NONE;
 		}
+/*
 		if( ret == CURSORMOVE_CANCEL ){
 			return BOX2UI_ARRANGE_MAIN_CLOSE;
 		}
+*/
 	}
 
 	return ret;
@@ -1635,7 +1641,10 @@ static void SetTouchBarIconPokeGet( BOX2_SYS_WORK * syswk, u32 pos )
 		if( syswk->dat->callMode == BOX_MODE_ITEM ){
 			status = BOX2OBJ_TB_ICON_OFF;
 		}else if( pos >= BOX2OBJ_POKEICON_TRAY_MAX ){
-			status = BOX2OBJ_TB_ICON_PASSIVE;
+			if( BOX2BGWFRM_CheckPartyPokeFrameRight(syswk->app->wfrm) == FALSE ||
+					BOX2MAIN_PokeParaGet(syswk,pos,syswk->tray,ID_PARA_poke_exist,NULL) == 0 ){
+				status = BOX2OBJ_TB_ICON_PASSIVE;
+			}
 		}else if( BOX2MAIN_PokeParaGet(syswk,pos,syswk->tray,ID_PARA_poke_exist,NULL) == 0 ){
 			status = BOX2OBJ_TB_ICON_PASSIVE;
 		}
@@ -1803,10 +1812,11 @@ u32 BOX2UI_BoxArrangePartyMoveMain( BOX2_SYS_WORK * syswk )
 			CursorObjMove( syswk, now );
 			return CURSORMOVE_NONE;
 		}
-
+/*
 		if( ret == CURSORMOVE_CANCEL ){
 			return BOX2UI_ARRANGE_PARTY_CLOSE;
 		}
+*/
 	}
 
 	return ret;
@@ -2056,9 +2066,11 @@ u32 BOX2UI_BoxItemArrangeMain( BOX2_SYS_WORK * syswk )
 			CursorObjMove( syswk, now );
 			return CURSORMOVE_NONE;
 		}
+/*
 		if( ret == CURSORMOVE_CANCEL ){
 			return BOX2UI_ITEM_MAIN_CLOSE;
 		}
+*/
 	}
 
 	return ret;
@@ -2215,9 +2227,11 @@ u32 BOX2UI_BoxItemArrangePartyMoveMain( BOX2_SYS_WORK * syswk )
 			CursorObjMove( syswk, now );
 			return CURSORMOVE_NONE;
 		}
+/*
 		if( ret == CURSORMOVE_CANCEL ){
 			return BOX2UI_ITEM_PARTY_CLOSE;
 		}
+*/
 	}
 
 	return ret;
@@ -2582,9 +2596,11 @@ u32 BOX2UI_BattleBoxMain( BOX2_SYS_WORK * syswk )
 			CursorObjMove( syswk, now );
 			return CURSORMOVE_NONE;
 		}
+/*
 		if( ret == CURSORMOVE_CANCEL ){
 			return BOX2UI_BATTLEBOX_MAIN_CLOSE;
 		}
+*/
 	}
 
 	return ret;
@@ -2737,10 +2753,11 @@ u32 BOX2UI_BattleBoxPartyMain( BOX2_SYS_WORK * syswk )
 			CursorObjMove( syswk, now );
 			return CURSORMOVE_NONE;
 		}
-
+/*
 		if( ret == CURSORMOVE_CANCEL ){
 			return BOX2UI_BATTLEBOX_PARTY_CLOSE;
 		}
+*/
 	}
 
 	return ret;

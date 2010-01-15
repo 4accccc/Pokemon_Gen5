@@ -1963,6 +1963,9 @@ void BOX2OBJ_MovePokeIconHand( BOX2_SYS_WORK * syswk )
 	if( syswk->dat->callMode == BOX_MODE_ITEM ){
 		BOX2OBJ_ItemIconCursorMove( syswk->app );
 	}else{
+		if( syswk->app->clwk[BOX2OBJ_ID_OUTLINE] == NULL ){
+			BOX2OBJ_PokeCursorAdd( syswk );
+		}
 		BOX2OBJ_PokeCursorMove( syswk->app, BOX2OBJ_POKEICON_GET_POS );
 	}
 }
@@ -2933,8 +2936,9 @@ void BOX2OBJ_PokeCursorMove( BOX2_APP_WORK * appwk, u32 pos )
 
 	BOX2OBJ_GetPos( appwk, appwk->pokeicon_id[pos], &x, &y, CLSYS_DEFREND_MAIN );
 
-	// アウトライン
 	for( i=0; i<BOX2OBJ_PI_OUTLINE_MAX; i++ ){
+
+
 		BOX2OBJ_SetPos(
 			appwk, BOX2OBJ_ID_OUTLINE+i,
 			x+PokeCursorXTbl[i], y+PokeCursorYTbl[i], CLSYS_DEFREND_MAIN );
