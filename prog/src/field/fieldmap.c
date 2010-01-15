@@ -1909,7 +1909,7 @@ void FIELDMAP_InitBG( FIELDMAP_WORK* fieldWork )
 	DEBUGWIN_InitProc( FLDBG_MFRM_MSG , FLDMSGBG_GetFontHandle(fieldWork->fldMsgBG) );
 	DEBUGWIN_ChangeLetterColor( 31,31,31 );
 	FIELD_FUNC_RANDOM_GENERATE_InitDebug
-		( fieldWork->heapID, GAMEDATA_GetMyWFBCCoreData( fieldWork->gamedata ) );
+		( fieldWork->heapID, fieldWork->gamedata );
 #endif  //USE_DEBUGWIN_SYSTEM
 
 #ifdef PM_DEBUG

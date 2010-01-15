@@ -426,64 +426,68 @@ void FIELD_WFBC_CORE_CalcOneDataStart( GAMEDATA * gamedata, s32 diff_day, HEAPID
   // 追加登録準備
   p_people_loader = FIELD_WFBC_PEOPLE_DATA_Create( 0, GFL_HEAP_LOWID( heapID ) );
 
-  // 新規アイテムを登録する。
-  for( i=0; i<FIELD_WFBC_PEOPLE_MAX; i++ )
-  {
-    if( FIELD_WFBC_CORE_PEOPLE_IsInData( &p_wk->people[i] ) )
-    {
-      // その人の情報を読み込み
-      FIELD_WFBC_PEOPLE_DATA_Load( p_people_loader, p_wk->people[i].npc_id );
-      cp_people_data = FIELD_WFBC_PEOPLE_DATA_GetData( p_people_loader );
-      
-      // 配置抽選
-      random = GFUser_GetPublicRand(100);
-      if( random < cp_people_data->goods_wf_percent )
-      {
-        // 配置場所を抽選
-        random = GFUser_GetPublicRand(FIELD_WFBC_PEOPLE_MAX);
 
-        // そこにアイテムを追加
-        FIELD_WFBC_CORE_ITEM_SetItemData( p_item, cp_people_data->goods_wf, random );
-      }
-    }
-  }
-
-
-  // WFならば、村長イベントを管理
+  // WFならば、
   if( p_wk->type == FIELD_WFBC_CORE_TYPE_WHITE_FOREST )
   {
-    u32 people_num;
-    u32 rand_index;
-    u32 index_count;
-
-    // ポケモンの選定
-    people_num = FIELD_WFBC_CORE_GetPeopleNum( p_wk, MAPMODE_NORMAL );
-    if( people_num>0 )
+    // アイテムを配置
+    // 新規アイテムを登録する。
+    for( i=0; i<FIELD_WFBC_PEOPLE_MAX; i++ )
     {
-      people_num *= FIELD_WFBC_PEOPLE_ENC_POKE_MAX;
-      rand_index = GFUser_GetPublicRand( people_num );
-
-      index_count = 0;
-
-      // そのポケモンを探す
-      for( i=0; i<FIELD_WFBC_PEOPLE_MAX; i++ )
+      if( FIELD_WFBC_CORE_PEOPLE_IsInData( &p_wk->people[i] ) )
       {
-        if( FIELD_WFBC_CORE_PEOPLE_IsInData( &p_wk->people[i] ) )
+        // その人の情報を読み込み
+        FIELD_WFBC_PEOPLE_DATA_Load( p_people_loader, p_wk->people[i].npc_id );
+        cp_people_data = FIELD_WFBC_PEOPLE_DATA_GetData( p_people_loader );
+        
+        // 配置抽選
+        random = GFUser_GetPublicRand(100);
+        if( random < cp_people_data->goods_wf_percent )
         {
-          // 
-          index_count += FIELD_WFBC_PEOPLE_ENC_POKE_MAX;
-          if( index_count > rand_index )  // 大きくなったらその中にある
-          {
-            // その人の情報を読み込み
-            FIELD_WFBC_PEOPLE_DATA_Load( p_people_loader, p_wk->people[i].npc_id );
-            cp_people_data = FIELD_WFBC_PEOPLE_DATA_GetData( p_people_loader );
+          // 配置場所を抽選
+          random = GFUser_GetPublicRand(FIELD_WFBC_PEOPLE_MAX);
 
-            FIELD_WFBC_EVENT_SetWFPokeCatchEventMonsNo( p_event, cp_people_data->enc_monsno[ index_count % FIELD_WFBC_PEOPLE_ENC_POKE_MAX ] );
-            FIELD_WFBC_EVENT_SetWFPokeCatchEventItem( p_event, cp_people_data->goods_wf );
-          }
+          // そこにアイテムを追加
+          FIELD_WFBC_CORE_ITEM_SetItemData( p_item, cp_people_data->goods_wf, random );
         }
       }
+    }
+    
+    // 村長イベントを管理
+    {
+      u32 people_num;
+      u32 rand_index;
+      u32 index_count;
 
+      // ポケモンの選定
+      people_num = FIELD_WFBC_CORE_GetPeopleNum( p_wk, MAPMODE_NORMAL );
+      if( people_num>0 )
+      {
+        people_num *= FIELD_WFBC_PEOPLE_ENC_POKE_MAX;
+        rand_index = GFUser_GetPublicRand( people_num );
+
+        index_count = 0;
+
+        // そのポケモンを探す
+        for( i=0; i<FIELD_WFBC_PEOPLE_MAX; i++ )
+        {
+          if( FIELD_WFBC_CORE_PEOPLE_IsInData( &p_wk->people[i] ) )
+          {
+            // 
+            index_count += FIELD_WFBC_PEOPLE_ENC_POKE_MAX;
+            if( index_count > rand_index )  // 大きくなったらその中にある
+            {
+              // その人の情報を読み込み
+              FIELD_WFBC_PEOPLE_DATA_Load( p_people_loader, p_wk->people[i].npc_id );
+              cp_people_data = FIELD_WFBC_PEOPLE_DATA_GetData( p_people_loader );
+
+              FIELD_WFBC_EVENT_SetWFPokeCatchEventMonsNo( p_event, cp_people_data->enc_monsno[ index_count % FIELD_WFBC_PEOPLE_ENC_POKE_MAX ] );
+              FIELD_WFBC_EVENT_SetWFPokeCatchEventItem( p_event, cp_people_data->goods_wf );
+            }
+          }
+        }
+
+      }
     }
   }
 

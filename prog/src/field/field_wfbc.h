@@ -158,7 +158,7 @@ extern void FLDMAPPER_SetWfbcData( FLDMAPPER* g3Dmapper, FIELD_WFBC_CORE* p_core
 
 
 #ifdef PM_DEBUG
-extern void FIELD_FUNC_RANDOM_GENERATE_InitDebug( HEAPID heapId, FIELD_WFBC_CORE* p_core );
+extern void FIELD_FUNC_RANDOM_GENERATE_InitDebug( HEAPID heapId, void* p_gdata );
 extern void FIELD_FUNC_RANDOM_GENERATE_TermDebug();
 #endif
 

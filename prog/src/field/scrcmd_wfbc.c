@@ -356,6 +356,12 @@ VMCMD_RESULT EvCmdWfbc_CheckWFTargetPokemon( VMHANDLE *core, void *wk )
     mons_getplace = PP_Get( pp, ID_PARA_get_place, NULL );
     tamago    = PP_Get( pp, ID_PARA_tamago_flag, NULL );
 
+    TOMOYA_Printf( "target monsno %d  == monsno %d\n", target_monsno, monsno );
+    TOMOYA_Printf( "tamago %d\n", tamago );
+    TOMOYA_Printf( "get_place %d == WF%d\n", mons_getplace, MAPNAME_WC10 );
+    TOMOYA_Printf( "year%d month%d day%d == now year%d month%d day%d \n", 
+        mons_year, mons_month, mons_day, now_date.year, now_date.month, now_date.day );
+    
     if( (monsno == target_monsno) && (tamago == FALSE) && (mons_getplace == MAPNAME_WC10) )
     {
       *ret_if_1 = TRUE;

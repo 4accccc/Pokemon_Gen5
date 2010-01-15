@@ -1449,18 +1449,34 @@ static void WFBC_DRAW_PARAM_MakeMapData( WFBC_DRAW_PARAM* p_wk, const FIELD_WFBC
 
 //デバッグ操作
 #ifdef PM_DEBUG
+
+#include "gamesystem/game_data.h"
+#include "poke_tool/pokeparty.h"
+#include "msg/msg_place_name.h"  // for MAPNAME_xxxx
+#include "system/main.h"  // 
+
 static void DEBWIN_Update_CityLevel( void* userWork , DEBUGWIN_ITEM* item );
 static void DEBWIN_Draw_CityLevel( void* userWork , DEBUGWIN_ITEM* item );
 static void DEBWIN_Update_CityType( void* userWork , DEBUGWIN_ITEM* item );
 static void DEBWIN_Draw_CityType( void* userWork , DEBUGWIN_ITEM* item );
+static void DEBWIN_Update_BCWinNumAdd10( void* userWork , DEBUGWIN_ITEM* item );
+static void DEBWIN_Draw_BCWinNumAdd10( void* userWork , DEBUGWIN_ITEM* item );
+static void DEBWIN_Update_WFPokeGet( void* userWork , DEBUGWIN_ITEM* item );
+static void DEBWIN_Draw_WFPokeGet( void* userWork , DEBUGWIN_ITEM* item );
 
-void FIELD_FUNC_RANDOM_GENERATE_InitDebug( HEAPID heapId, FIELD_WFBC_CORE* p_core )
+void FIELD_FUNC_RANDOM_GENERATE_InitDebug( HEAPID heapId, void* p_gdata )
 {
   DEBUGWIN_AddGroupToTop( 10 , "RandomMap" , heapId );
   DEBUGWIN_AddItemToGroupEx( DEBWIN_Update_CityLevel ,DEBWIN_Draw_CityLevel , 
-                             p_core , 10 , heapId );
+                             p_gdata , 10 , heapId );
   DEBUGWIN_AddItemToGroupEx( DEBWIN_Update_CityType ,DEBWIN_Draw_CityType , 
-                             p_core , 10 , heapId );
+                             p_gdata , 10 , heapId );
+
+  DEBUGWIN_AddItemToGroupEx( DEBWIN_Update_BCWinNumAdd10 ,DEBWIN_Draw_BCWinNumAdd10 , 
+                             p_gdata , 10 , heapId );
+
+  DEBUGWIN_AddItemToGroupEx( DEBWIN_Update_WFPokeGet ,DEBWIN_Draw_WFPokeGet , 
+                             p_gdata , 10 , heapId );
 }
 
 void FIELD_FUNC_RANDOM_GENERATE_TermDebug( void )
@@ -1470,7 +1486,8 @@ void FIELD_FUNC_RANDOM_GENERATE_TermDebug( void )
 
 static void DEBWIN_Update_CityLevel( void* userWork , DEBUGWIN_ITEM* item )
 {
-  FIELD_WFBC_CORE* p_wk = userWork;
+  GAMEDATA* p_gdata = userWork;
+  FIELD_WFBC_CORE* p_wk = GAMEDATA_GetMyWFBCCoreData( p_gdata );
   int  i;
 
   if( GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT )
@@ -1506,20 +1523,25 @@ static void DEBWIN_Update_CityLevel( void* userWork , DEBUGWIN_ITEM* item )
 
 static void DEBWIN_Draw_CityLevel( void* userWork , DEBUGWIN_ITEM* item )
 {
-  FIELD_WFBC_CORE* p_wk = userWork;
+  GAMEDATA* p_gdata = userWork;
+  FIELD_WFBC_CORE* p_wk = GAMEDATA_GetMyWFBCCoreData( p_gdata );
   u16 level = FIELD_WFBC_CORE_GetPeopleNum( p_wk, MAPMODE_NORMAL );
   DEBUGWIN_ITEM_SetNameV( item , "Level[%d]",level );
 }
 
 static void DEBWIN_Update_CityType( void* userWork , DEBUGWIN_ITEM* item )
 {
-  FIELD_WFBC_CORE* p_wk = userWork;
+  GAMEDATA* p_gdata = userWork;
+  FIELD_WFBC_CORE* p_wk = GAMEDATA_GetMyWFBCCoreData( p_gdata );
+  FIELD_WFBC_EVENT* p_event = GAMEDATA_GetWFBCEventData( p_gdata );
   u8 type = p_wk->type;
 
   if( GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT || 
       GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT  ||
       GFL_UI_KEY_GetRepeat() & PAD_BUTTON_A )
   {
+    FIELD_WFBC_EVENT_Clear( p_event );
+
     if( type == FIELD_WFBC_CORE_TYPE_BLACK_CITY )
     {
       type = FIELD_WFBC_CORE_TYPE_WHITE_FOREST;
@@ -1532,12 +1554,14 @@ static void DEBWIN_Update_CityType( void* userWork , DEBUGWIN_ITEM* item )
     DEBUGWIN_RefreshScreen();
 
     FIELD_WFBC_CORE_SetUpZoneData( p_wk );
+    FIELD_WFBC_CORE_CalcOneDataStart( p_gdata, 1, HEAPID_FIELDMAP );
   }
 }
 
 static void DEBWIN_Draw_CityType( void* userWork , DEBUGWIN_ITEM* item )
 {
-  FIELD_WFBC_CORE* p_wk = userWork;
+  GAMEDATA* p_gdata = userWork;
+  FIELD_WFBC_CORE* p_wk = GAMEDATA_GetMyWFBCCoreData( p_gdata );
   u8 type = p_wk->type;
 
   if( type == FIELD_WFBC_CORE_TYPE_BLACK_CITY )
@@ -1549,6 +1573,78 @@ static void DEBWIN_Draw_CityType( void* userWork , DEBUGWIN_ITEM* item )
     DEBUGWIN_ITEM_SetName( item , "Type[WHITE FOREST]" );
   }
 }
+
+static void DEBWIN_Update_BCWinNumAdd10( void* userWork , DEBUGWIN_ITEM* item )
+{
+  GAMEDATA* p_gdata = userWork;
+  FIELD_WFBC_EVENT* p_wk = GAMEDATA_GetWFBCEventData( p_gdata );
+  FIELD_WFBC_CORE* p_core = GAMEDATA_GetMyWFBCCoreData( p_gdata );
+  int i;
+
+  if( p_core->type == FIELD_WFBC_CORE_TYPE_BLACK_CITY )
+  {
+    if( GFL_UI_KEY_GetTrg() & (PAD_KEY_RIGHT) )
+    {
+      p_wk->bc_npc_win_count += 10;
+      DEBUGWIN_RefreshScreen();
+    }
+    if( GFL_UI_KEY_GetTrg() & (PAD_KEY_LEFT) )
+    {
+      p_wk->bc_npc_win_count -= 10;
+      DEBUGWIN_RefreshScreen();
+    }
+  }
+}
+
+static void DEBWIN_Draw_BCWinNumAdd10( void* userWork , DEBUGWIN_ITEM* item )
+{
+  GAMEDATA* p_gdata = userWork;
+  FIELD_WFBC_EVENT* p_wk = GAMEDATA_GetWFBCEventData( p_gdata );
+  FIELD_WFBC_CORE* p_core = GAMEDATA_GetMyWFBCCoreData( p_gdata );
+
+  if( p_core->type == FIELD_WFBC_CORE_TYPE_BLACK_CITY )
+  {
+    DEBUGWIN_ITEM_SetNameV( item , "BC Win[%d]", p_wk->bc_npc_win_count );
+  }
+  else
+  {
+    DEBUGWIN_ITEM_SetName( item , "BC Win??" );
+  }
+}
+
+static void DEBWIN_Update_WFPokeGet( void* userWork , DEBUGWIN_ITEM* item )
+{
+  GAMEDATA* p_gdata = userWork;
+  FIELD_WFBC_EVENT* p_wk = GAMEDATA_GetWFBCEventData( p_gdata );
+  FIELD_WFBC_CORE* p_core = GAMEDATA_GetMyWFBCCoreData( p_gdata );
+  POKEPARTY* p_party = GAMEDATA_GetMyPokemon( p_gdata );
+  POKEMON_PARAM * pp = PokeParty_GetMemberPointer( p_party, 0 );
+
+  if( p_core->type == FIELD_WFBC_CORE_TYPE_WHITE_FOREST )
+  {
+    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
+    {
+      static u16 oyaName[6] = {L'で',L'ば',L'ぐ',L'ぽ',L'け',0xFFFF};
+      RTCDate now_date;
+      GFL_RTC_GetDate( &now_date );
+      // 手持ち０番目に捕獲場所WFの目的ポケモンを設定
+      PP_Setup( pp, p_wk->wf_poke_catch_monsno, 10, 100 );
+      PP_Put( pp, ID_PARA_get_place, MAPNAME_WC10 );
+      PP_Put( pp, ID_PARA_get_year, now_date.year );
+      PP_Put( pp, ID_PARA_get_month, now_date.month );
+      PP_Put( pp, ID_PARA_get_day, now_date.day );
+
+      PP_Put( pp , ID_PARA_oyaname_raw , (u32)&oyaName[0] );
+      PP_Put( pp , ID_PARA_oyasex , PTL_SEX_MALE );
+    }
+  }
+}
+
+static void DEBWIN_Draw_WFPokeGet( void* userWork , DEBUGWIN_ITEM* item )
+{
+  DEBUGWIN_ITEM_SetName( item , "WF PokeGet" );
+}
+
 #endif
 
 
