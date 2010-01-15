@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fujiwara_maiko" host="W00194" date="2009-12-15T12:02:43" source="c09_01_obj.mb"/>
+	<create user="fujiwara_maiko" host="W00194" date="2010-01-14T13:04:07" source="m_siten01_00_00camera.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="fujiwara_maiko" host="W00194" date="2009-12-15T12:02:43" source="c09_01_obj.mb"/>
+<original_create user="fujiwara_maiko" host="W00194" date="2010-01-14T13:04:07" source="m_siten01_00_00camera.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -27,14 +27,14 @@
 	use_primitive_strip="on"
 />
 
-<box_test pos_scale="6" xyz="-4.691650 2.328613 2.535645" whd="0.625000 0.625000 0.000000"/>
+<box_test pos_scale="5" xyz="-6.784424 4.657471 5.071289" whd="1.250000 1.250000 0.000000"/>
 
 <tex_image_array size="2">
 	<tex_image index="0" name="c09_01_ob.1"
 		width="32" height="32" original_width="32" original_height="32"
 		format="a5i3"
 		palette_name="c09_01_ob.1_pl"
-		path="C:/home/wb_data3d/build_model/indoor/c09_01_obj/tex/c09_01_ob.1.tga"
+		path="C:/home/wb_data3d/field/in34/chip/tex/c09_01_ob.1.tga"
 	>
 		<bitmap size="512">
 			0101 0101 0101 0101 0101 0101 0101 0101
@@ -107,7 +107,7 @@
 		width="32" height="32" original_width="32" original_height="32"
 		format="a5i3"
 		palette_name="c09_01_ob.2_pl"
-		path="C:/home/wb_data3d/build_model/indoor/c09_01_obj/tex/c09_01_ob.2.tga"
+		path="C:/home/wb_data3d/field/in34/chip/tex/c09_01_ob.2.tga"
 	>
 		<bitmap size="512">
 			0101 0101 0101 0101 0101 0101 0101 0101
@@ -258,7 +258,7 @@
 		billboard="off"
 		scale="1.000000 1.000000 -1.000000"
 		rotate="0.000000 -180.000000 0.000000"
-		translate="-277.982422 167.143799 162.062744"
+		translate="-194.823242 167.143799 162.062744"
 		visibility="on"
 		display_size="1"
 		vertex_size="4" polygon_size="1"
