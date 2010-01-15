@@ -1506,12 +1506,12 @@ static GFL_PROC_RESULT WifiP2PMatchProc_Init( GFL_PROC * proc, int * seq, void *
     if(GFL_NET_IsInit()){       // Ú‘±’†
       if( pParentWork->seq != WIFI_GAME_NONE){ // 1‚Â‘O‚Ì—V‚Ñ‚Å’ÊMŠg’£ƒq[ƒv‚ð”jŠü‚µ‚Ä‚¢‚½‚çÄŠm•Û
         // ƒoƒgƒ‹‚©‚ç–ß‚Á‚Ä‚«‚½‚È‚çŠg’£ƒq[ƒvì¬
-        GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_WIFIP2PMATCHEX, WIFI_P2PMATCH_EXHEAP_SIZE );
+  //      GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_WIFIP2PMATCHEX, WIFI_P2PMATCH_EXHEAP_SIZE );
       }
     }
     else{
       // ’ÊM‘O‚È‚çâ‘Î‚ÉŠg’£ƒq[ƒv‚ðŠm•Û
-      GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_WIFIP2PMATCHEX, WIFI_P2PMATCH_EXHEAP_SIZE );
+    //  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_WIFIP2PMATCHEX, WIFI_P2PMATCH_EXHEAP_SIZE );
     }
 
 
@@ -1788,7 +1788,7 @@ static GFL_PROC_RESULT WifiP2PMatchProc_End( GFL_PROC * proc, int * seq, void * 
   // ’ÊM‚ÌI—¹‚ÆAƒoƒgƒ‹Žž‚ÍŠg’£ƒq[ƒv‚ð”jŠü‚·‚é
   // ‚»‚êˆÈŠO‚Í”jŠü‚µ‚È‚¢
   if( wk->endSeq != WIFI_GAME_NONE){
-    GFL_HEAP_DeleteHeap( HEAPID_WIFIP2PMATCHEX );
+//    GFL_HEAP_DeleteHeap( HEAPID_WIFIP2PMATCHEX );
   }
 
 

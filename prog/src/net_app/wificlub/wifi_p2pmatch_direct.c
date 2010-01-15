@@ -322,6 +322,24 @@ static int _playerDirectSub2( WIFIP2PMATCH_WORK *wk, int seq )
 
 static int _playerDirectSubStart( WIFIP2PMATCH_WORK *wk, int seq )
 {
+  u32 status,gamemode;
+
+
+  WIFI_STATUS_ResetVChatMac(wk->pMatch);
+  status = WIFI_STATUS_PLAYING;
+
+  switch(wk->directmode){
+  case WIFIP2PMATCH_PLAYERDIRECT_VCT:
+    gamemode = WIFI_GAME_VCT;
+    break;
+  case WIFIP2PMATCH_PLAYERDIRECT_TVT:
+    gamemode = WIFI_GAME_TVT;
+    break;
+  case WIFIP2PMATCH_PLAYERDIRECT_TRADE:
+    gamemode = WIFI_GAME_TRADE;
+    break;
+  }
+  _myStatusChange(wk, status,gamemode);  // 接続中になる
 
   switch(wk->directmode){
   case WIFIP2PMATCH_PLAYERDIRECT_VCT:
@@ -334,18 +352,11 @@ static int _playerDirectSubStart( WIFIP2PMATCH_WORK *wk, int seq )
   case WIFIP2PMATCH_PLAYERDIRECT_TVT:
   case WIFIP2PMATCH_PLAYERDIRECT_TRADE:
     {
-      u32 status,gamemode;
       WIFI_STATUS* p_status;
       EndMessageWindowOff(wk);
 
-      p_status = WifiFriendMatchStatusGet( GFL_NET_DWC_GetFriendIndex() );
-      gamemode = _WifiMyGameModeGet( wk, p_status );
-
-      status = WIFI_STATUS_PLAYING;
       wk->endSeq = gamemode;
-      NET_PRINT("endSeq %d \n",gamemode);
 
-      _myStatusChange(wk, status,gamemode);  // 接続中になる
       GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0,16,COMM_BRIGHTNESS_SYNC);
       return SEQ_OUT;            //終了シーケンスへ
     }
