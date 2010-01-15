@@ -38,57 +38,6 @@
 #include "field_task_target_offset.h"
 
 
-#if 0  // データの検索方法を変更したため削除
-//==========================================================================================
-// ■電光掲示板データ登録テーブル
-//==========================================================================================
-typedef struct
-{
-  u16 zone_id;
-  int gimmick_id;
-  u32 dat_id; 
-} ENTRY_DATA; 
-static const ENTRY_DATA entry_table[] = 
-{
-  { ZONE_ID_C04R0601, FLD_GIMMICK_C04R0601, NARC_gate_elboard_zone_data_c04r0601_bin },
-  { ZONE_ID_C08R0601, FLD_GIMMICK_C08R0601, NARC_gate_elboard_zone_data_c08r0601_bin },
-  { ZONE_ID_R13R0201, FLD_GIMMICK_R13R0201, NARC_gate_elboard_zone_data_r13r0201_bin },
-  { ZONE_ID_R02R0101, FLD_GIMMICK_R02R0101, NARC_gate_elboard_zone_data_r02r0101_bin },
-  { ZONE_ID_C04R0701, FLD_GIMMICK_C04R0701, NARC_gate_elboard_zone_data_c04r0701_bin },
-  { ZONE_ID_C04R0801, FLD_GIMMICK_C04R0801, NARC_gate_elboard_zone_data_c04r0801_bin },
-  { ZONE_ID_C02R0701, FLD_GIMMICK_C02R0701, NARC_gate_elboard_zone_data_c02r0701_bin },
-  { ZONE_ID_R14R0101, FLD_GIMMICK_R14R0101, NARC_gate_elboard_zone_data_r14r0101_bin },
-  { ZONE_ID_C08R0501, FLD_GIMMICK_C08R0501, NARC_gate_elboard_zone_data_c08r0501_bin },
-  { ZONE_ID_C08R0701, FLD_GIMMICK_C08R0701, NARC_gate_elboard_zone_data_c08r0701_bin },
-  { ZONE_ID_H01R0101, FLD_GIMMICK_H01R0101, NARC_gate_elboard_zone_data_h01r0101_bin },
-  { ZONE_ID_H01R0201, FLD_GIMMICK_H01R0201, NARC_gate_elboard_zone_data_h01r0201_bin },
-  { ZONE_ID_C03R0601, FLD_GIMMICK_C03R0601, NARC_gate_elboard_zone_data_c03r0601_bin },
-};
-
-//------------------------------------------------------------------------------------------
-/**
- * @brief 指定したギミックIDが登録されているかどうか判定する
- *
- * @param gmk_id 判定対象ギミックID
- *
- * @return 登録されている場合 TRUE
- */
-//------------------------------------------------------------------------------------------
-static BOOL IsGimmickIDEntried( int gmk_id )
-{
-  int i;
-  for( i=0; i<NELEMS(entry_table); i++ )
-  {
-    if( entry_table[i].gimmick_id == gmk_id )
-    {
-      return TRUE;  // 発見
-    }
-  }
-  return FALSE; // 未発見
-}
-#endif
-
-
 //==========================================================================================
 // ■定数
 //========================================================================================== 
@@ -112,8 +61,7 @@ static BOOL IsGimmickIDEntried( int gmk_id )
 // ■3Dリソース
 //==========================================================================================
 // リソースインデックス
-typedef enum
-{
+typedef enum {
   RES_ELBOARD_NSBMD,    // 掲示板のモデル
   RES_ELBOARD_NSBTX,    // 掲示板のテクスチャ
   RES_ELBOARD_NSBTA_1,  // ニュース・スクロール・アニメーション1
@@ -145,8 +93,7 @@ static const GFL_G3D_UTIL_RES res_table[RES_NUM] =
 };
 
 // アニメインデックス
-typedef enum
-{
+typedef enum {
   ANM_ELBOARD_DATE,         // 掲示板ニュース・スクロール・日付
   ANM_ELBOARD_WEATHER,      // 掲示板ニュース・スクロール・天気
   ANM_ELBOARD_PROPAGATION,  // 掲示板ニュース・スクロール・大量発生
@@ -175,8 +122,7 @@ static const GFL_G3D_UTIL_ANM anm_table[ANM_NUM] =
 };
 
 // オブジェクトインデックス
-typedef enum
-{
+typedef enum {
   OBJ_ELBOARD,  // 電光掲示板
   OBJ_NUM
 } OBJ_INDEX;
@@ -191,8 +137,7 @@ static const GFL_G3D_UTIL_OBJ obj_table[OBJ_NUM] =
 }; 
 
 // ユニットインデックス
-typedef enum
-{
+typedef enum {
   UNIT_ELBOARD, // 電光掲示板 + モニター
   UNIT_NUM
 } UNIT_INDEX;
@@ -315,7 +260,7 @@ static u16 monitor_anime[MONITOR_ANIME_NUM] =
 //==========================================================================================
 typedef struct
 {
-  u8                          newsNum;  // 登録したニュースの数
+  u8          newsNum;                  // 登録したニュースの数
   NEWS_TYPE  newsType[NEWS_INDEX_NUM];  // 登録したニュース
   u32      spNewsFlag[NEWS_INDEX_NUM];  // 登録した臨時ニュースに対応するフラグ
 
@@ -325,20 +270,20 @@ typedef struct
 /**
  * @brief 登録状況を更新する
  *
- * @param data 追加先のデータ
- * @param type 追加するニュースのタイプ
- * @param flag 臨時ニュースの場合, 対応するフラグを指定
+ * @param entryData  追加先のデータ
+ * @param newsType   追加するニュースのタイプ
+ * @param spNewsFlag 臨時ニュースの場合, 対応するフラグを指定
  */
 //------------------------------------------------------------------------------------------
-static void AddNewsEntryData( NEWS_ENTRY_DATA* data, NEWS_TYPE type, u32 flag )
+static void AddNewsEntryData( NEWS_ENTRY_DATA* entryData, NEWS_TYPE newsType, u32 spNewsFlag )
 {
   // すでに最大数が登録されている
-  if( NEWS_INDEX_NUM <= data->newsNum ){ return; }
+  if( NEWS_INDEX_NUM <= entryData->newsNum ){ return; }
 
   // 登録
-  data->newsType[ data->newsNum ]   = type;
-  data->spNewsFlag[ data->newsNum ] = flag;
-  data->newsNum++;
+  entryData->newsType[ entryData->newsNum ] = newsType;
+  entryData->spNewsFlag[ entryData->newsNum ] = spNewsFlag;
+  entryData->newsNum++;
 }
 
 
@@ -501,157 +446,132 @@ void GATE_GIMMICK_Move( FIELDMAP_WORK* fieldmap )
   int            gmk_id = GIMMICKWORK_GetAssignID( gmkwork );
   SAVEWORK*    save_buf = (SAVEWORK*)GIMMICKWORK_Get( gmkwork, gmk_id );
   GATEWORK*        work = (GATEWORK*)save_buf->gateWork;
+  static fx32 animeFrame = FX32_ONE;
+
+  // TEST:
+  {
+    int key = GFL_UI_KEY_GetCont();
+    int trg = GFL_UI_KEY_GetTrg();
+    if( key & PAD_BUTTON_DEBUG )
+    {
+      if( key & PAD_KEY_DOWN )
+      {
+        animeFrame = FX_F32_TO_FX32( 1.00f );
+      }
+      if( key & PAD_KEY_LEFT )
+      {
+        animeFrame = FX_F32_TO_FX32( 1.04f );
+      }
+      if( key & PAD_KEY_RIGHT )
+      {
+        animeFrame = FX_F32_TO_FX32( 1.17f );
+      }
+      if( key & PAD_KEY_UP )
+      {
+        animeFrame = FX_F32_TO_FX32( 1.30f );
+      }
+      if( key & PAD_BUTTON_START )
+      {
+        animeFrame = FX_F32_TO_FX32( 2.00f );
+      }
+    }
+  }
 
   // 電光掲示板メイン処理
-  GOBJ_ELBOARD_Main( work->elboard, FX32_ONE ); 
+  GOBJ_ELBOARD_Main( work->elboard, animeFrame );
 
   // モニターアニメーション再生
   {
     FLD_EXP_OBJ_CNT_PTR exobj_cnt = FIELDMAP_GetExpObjCntPtr( fieldmap );
     FLD_EXP_OBJ_PlayAnime( exobj_cnt );
   }
-}
 
 
-#if 0  // ニュースの管理方法を変更し, 不要になったために削除 2009.12.17
-//==========================================================================================
-// ■ 掲示板
-//==========================================================================================
-
-//------------------------------------------------------------------------------------------
-/**
- * @brief 掲示板に平常通りのニュースを設定する
- *
- * @param fieldmap フィールドマップ
- */
-//------------------------------------------------------------------------------------------
-void GATE_GIMMICK_Elboard_SetupNormalNews( FIELDMAP_WORK* fieldmap )
-{
-  GAMESYS_WORK*    gsys = FIELDMAP_GetGameSysWork( fieldmap );
-  GAMEDATA*       gdata = GAMESYSTEM_GetGameData( gsys );
-  GIMMICKWORK*  gmkwork = GAMEDATA_GetGimmickWork( gdata );
-  int            gmk_id = GIMMICKWORK_GetAssignID( gmkwork );
-  SAVEWORK*    save_buf = (SAVEWORK*)GIMMICKWORK_Get( gmkwork, gmk_id );
-  GATEWORK*        work = (GATEWORK*)save_buf->gateWork;
-
-  // 平常ニュースを構成
-  SetupElboardNews_Normal( work );
-}
-
-//------------------------------------------------------------------------------------------
-/**
- * @brief 掲示板に指定したニュースを追加する
- *
- * @param fieldmap フィールドマップ
- * @param str_id   追加するニュースのメッセージ番号
- * @param wordset  指定メッセージに展開するワードセット
- */
-//------------------------------------------------------------------------------------------
-void GATE_GIMMICK_Elboard_AddSpecialNews( FIELDMAP_WORK* fieldmap, 
-                                          u32 str_id, WORDSET* wordset )
-{
-  GAMESYS_WORK*    gsys = FIELDMAP_GetGameSysWork( fieldmap );
-  GAMEDATA*       gdata = GAMESYSTEM_GetGameData( gsys );
-  GIMMICKWORK*  gmkwork = GAMEDATA_GetGimmickWork( gdata );
-  int            gmk_id = GIMMICKWORK_GetAssignID( gmkwork );
-  SAVEWORK*    save_buf = (SAVEWORK*)GIMMICKWORK_Get( gmkwork, gmk_id );
-  GATEWORK*        work = (GATEWORK*)save_buf->gateWork;
-
-  // 電光掲示板が登録されていない場所で呼ばれたら何もしない
-  if( IsGimmickIDEntried( gmk_id ) != TRUE ){ return; }
-
-  // ニュースを追加
+  // TEST:
   {
-    int index;
-    NEWS_PARAM news;
-
-    index = GOBJ_ELBOARD_GetNewsNum( work->elboard );
-    if( MAX_NEWS_NUM <= index )
+    int key = GFL_UI_KEY_GetCont();
+    int trg = GFL_UI_KEY_GetTrg();
+    if( key & PAD_BUTTON_DEBUG )
     {
-      OBATA_Printf( "==========================================\n" );
-      OBATA_Printf( "すでに最大数のニュースが設定されています。\n" );
-      OBATA_Printf( "==========================================\n" );
-      return;
-    }
-    news.animeIndex = news_anm_index[index];
-    news.texName    = news_tex_name[index];
-    news.pltName    = news_plt_name[index];
-    news.msgArcID   = ARCID_MESSAGE;
-    news.msgDatID   = NARC_message_gate_dat;
-    news.msgStrID   = str_id;
-    news.wordset    = wordset;
-    GOBJ_ELBOARD_AddNews( work->elboard, &news );
-  }
-
-}
-
-//------------------------------------------------------------------------------------------
-/**
- * @brief 掲示板の状態を復帰させる(復帰ポイントは自動的に記憶)
- *
- * @param fieldmap フィールドマップ
- */
-//------------------------------------------------------------------------------------------
-void GATE_GIMMICK_Elboard_Recovery( FIELDMAP_WORK* fieldmap )
-{
-  int i;
-  GAMESYS_WORK*    gsys = FIELDMAP_GetGameSysWork( fieldmap );
-  GAMEDATA*       gdata = GAMESYSTEM_GetGameData( gsys );
-  GIMMICKWORK*  gmkwork = GAMEDATA_GetGimmickWork( gdata );
-  int            gmk_id = GIMMICKWORK_GetAssignID( gmkwork );
-  SAVEWORK*    save_buf = (SAVEWORK*)GIMMICKWORK_Get( gmkwork, gmk_id );
-  GATEWORK*        work = (GATEWORK*)save_buf->gateWork;
-  NEWS_ENTRY_DATA* data = &save_buf->newsEntryData;
-
-  // 電光掲示板が登録されていない場所で呼ばれたら何もしない
-  if( IsGimmickIDEntried( gmk_id ) != TRUE )
-  {
-    return;
-  } 
-
-  // フラグ復元
-  for( i=0; i<data->newsNum; i++)
-  {
-    EVENTWORK* evwork = GAMEDATA_GetEventWork( gdata );
-    if( data->newsType[i] == NEWS_TYPE_SPECIAL )
-    {
-      EVENTWORK_SetEventFlag( evwork, data->spNewsFlag[i] );
-    }
-  }
-  // 再セットアップ
-  SetupElboardNews( work );
+      if( trg & PAD_BUTTON_Y )
+      {
 #if 0
-  // ニュース復帰
-  for( i=0; i<data->newsNum; i++ )
-  {
-    switch( data->newsType[i] )
-    {
-    default:                    break;
-    case NEWS_TYPE_NULL:        break;
-    case NEWS_TYPE_DATE:        AddNews_DATE(work);         break;
-    case NEWS_TYPE_WEATHER:     AddNews_WEATHER(work);      break;
-    case NEWS_TYPE_PROPAGATION: AddNews_PROPAGATION(work);  break;
-    case NEWS_TYPE_INFO_A:      AddNews_INFO_A(work);       break;
-    case NEWS_TYPE_INFO_B:      AddNews_INFO_B(work);       break;
-    case NEWS_TYPE_INFO_C:      AddNews_INFO_C(work);       break;
-    case NEWS_TYPE_CM:          AddNews_CM(work);           break;
-    case NEWS_TYPE_SPECIAL:     // 臨時ニュース
-                                {
-                                  u32 flag;
-                                  const ELBOARD_SPNEWS_DATA* news;
-                                  flag = data->spNewsFlag[i];
-                                  news = SearchFlagNews( work, flag );
-                                  AddNews_SPECIAL( work, news );
-                                }
-                                break;
+        FLD_CAM_MV_PARAM moveParam;
+        FIELD_CAMERA* camera;
+        VecFx32 val_target;
+        u16  val_pitch = 0x0ee5;
+        u16  val_yaw   = 0x3fff;
+        fx32 val_len   = 0x0086 << FX32_SHIFT;
+        VEC_Set( &val_target, 0xfff94000, 0x001b<<FX32_SHIFT, 0 );
+        camera = FIELDMAP_GetFieldCamera( fieldmap );
+        moveParam.Chk.Shift = TRUE;
+        moveParam.Chk.Pitch = TRUE;
+        moveParam.Chk.Yaw = TRUE;
+        moveParam.Chk.Dist = TRUE;
+        moveParam.Chk.Fovy = FALSE;
+        moveParam.Chk.Pos = TRUE;
+        moveParam.Core.AnglePitch = val_pitch;
+        moveParam.Core.AngleYaw = val_yaw;
+        moveParam.Core.Distance = val_len;;
+        VEC_Set( &moveParam.Core.Shift, 0xfff94000, 0x001b<<FX32_SHIFT, 0 );
+        FIELD_CAMERA_SetLinerParam( camera, &moveParam, 30 );
+#endif
+#if 1
+        FIELD_CAMERA* camera;
+        VecFx32 val_target;
+        u16  val_pitch = 0x0ee5;
+        u16  val_yaw   = 0x3fff;
+        fx32 val_len   = 0x0086 << FX32_SHIFT;
+        //VEC_Set( &val_target, 0xfff94000, 0x001b<<FX32_SHIFT, 0 );
+        VEC_Set( &val_target, 0, 0x001b<<FX32_SHIFT, 0 );
+        camera = FIELDMAP_GetFieldCamera( fieldmap );
+        FIELD_CAMERA_SetTargetOffset( camera, &val_target );
+        FIELD_CAMERA_SetAnglePitch( camera, val_pitch );
+        FIELD_CAMERA_SetAngleYaw( camera, val_yaw );
+        FIELD_CAMERA_SetAngleLen( camera, val_len );
+#endif
+      }
+      if( trg & PAD_BUTTON_B )
+      {
+#if 0
+        FLD_CAM_MV_PARAM moveParam;
+        FIELD_CAMERA* camera;
+        VecFx32 val_target;
+        u16  val_pitch = 0x0ee5;
+        u16  val_yaw   = 0;
+        fx32 val_len   = 0x0086 << FX32_SHIFT;
+        VEC_Set( &val_target, 0, 0x001b<<FX32_SHIFT, 0xfff94000 );
+        camera = FIELDMAP_GetFieldCamera( fieldmap );
+        moveParam.Chk.Shift = TRUE;
+        moveParam.Chk.Pitch = TRUE;
+        moveParam.Chk.Yaw = TRUE;
+        moveParam.Chk.Dist = TRUE;
+        moveParam.Chk.Fovy = FALSE;
+        moveParam.Chk.Pos = TRUE;
+        moveParam.Core.AnglePitch = val_pitch;
+        moveParam.Core.AngleYaw = val_yaw;
+        moveParam.Core.Distance = val_len;;
+        VEC_Set( &val_target, 0, 0x001b<<FX32_SHIFT, 0xfff94000 );
+        FIELD_CAMERA_SetLinerParam( camera, &moveParam, 30 );
+#endif
+#if 1
+        FIELD_CAMERA* camera;
+        VecFx32 val_target;
+        u16  val_pitch = 0x0ee5;
+        u16  val_yaw   = 0;
+        fx32 val_len   = 0x0086 << FX32_SHIFT;
+        //VEC_Set( &val_target, 0, 0x001b<<FX32_SHIFT, 0xfff94000 );
+        VEC_Set( &val_target, 0, 0x001b<<FX32_SHIFT, 0 );
+        camera = FIELDMAP_GetFieldCamera( fieldmap );
+        FIELD_CAMERA_SetTargetOffset( camera, &val_target );
+        FIELD_CAMERA_SetAnglePitch( camera, val_pitch );
+        FIELD_CAMERA_SetAngleYaw( camera, val_yaw );
+        FIELD_CAMERA_SetAngleLen( camera, val_len );
+#endif
+      }
     }
-  } 
-#endif
-  // 掲示板復帰処理
-  GOBJ_ELBOARD_SetFrame( work->elboard, work->recoveryFrame << FX32_SHIFT );
+  }
 }
-
-#endif
 
 
 //==========================================================================================
@@ -681,9 +601,7 @@ void GATE_GIMMICK_Camera_LookElboard( FIELDMAP_WORK* fieldmap, u16 frame )
   // 電光掲示板データを取得
   if( !work->gateData )
   { // 取得失敗
-    OBATA_Printf( "==========================================\n" );
     OBATA_Printf( "GIMMICK-GATE: 電光掲示板データの取得に失敗\n" );
-    OBATA_Printf( "==========================================\n" );
     return;
   }
   // 電光掲示板の向きでカメラの回転を決定
@@ -696,17 +614,15 @@ void GATE_GIMMICK_Camera_LookElboard( FIELDMAP_WORK* fieldmap, u16 frame )
     VEC_Set( &val_target, 0, 0x001b<<FX32_SHIFT, 0xfff94000 );
     break;
   case DIR_RIGHT: 
-    val_pitch = 0x1ad3;
-    val_yaw   = 0x3f5d;
-    val_len   = 0x0058 << FX32_SHIFT;
-    VEC_Set( &val_target, 0xfff5d000, 0x001a<<FX32_SHIFT, 0xfffff000 );
+    val_pitch = 0x0ee5;
+    val_yaw   = 0x3fff;
+    val_len   = 0x0086 << FX32_SHIFT;
+    VEC_Set( &val_target, 0xfff94000, 0x001b<<FX32_SHIFT, 0 );
     break;
   case DIR_UP:
   case DIR_LEFT:
   default:
-    OBATA_Printf( "==================================\n" );
     OBATA_Printf( "GIMMICK-GATE: 掲示板の向きが未対応\n" );
-    OBATA_Printf( "==================================\n" );
     return;
   } 
   // タスク登録
@@ -861,28 +777,28 @@ static void GimmickSave( const GATEWORK* work )
 //------------------------------------------------------------------------------------------
 static void GimmickLoad( GATEWORK* work )
 {
-  SAVEWORK* save_buf;
+  SAVEWORK* saveBuf;
 
   GF_ASSERT( work );
   GF_ASSERT( work->fieldmap );
 
   // セーブデータ取得
-  save_buf            = GetGimmickSaveWork( work->fieldmap );
-  work->recoveryFrame = save_buf->recoveryFrame;  // 掲示板の復帰ポイント
+  saveBuf            = GetGimmickSaveWork( work->fieldmap );
+  work->recoveryFrame = saveBuf->recoveryFrame;  // 掲示板の復帰ポイント
 
   // ギミック管理ワークのアドレスを記憶
-  save_buf->gateWork = work; 
+  saveBuf->gateWork = work; 
 
   // DEBUG: セーブバッファ出力
   {
     int i;
     OBATA_Printf( "GIMMICK-GATE: gimmick load\n" );
-    OBATA_Printf( "-recoveryFrame = %d\n", save_buf->recoveryFrame );
-    OBATA_Printf( "-newsEntryData.newsNum = %d\n",  save_buf->newsEntryData.newsNum );
+    OBATA_Printf( "-recoveryFrame = %d\n", saveBuf->recoveryFrame );
+    OBATA_Printf( "-newsEntryData.newsNum = %d\n",  saveBuf->newsEntryData.newsNum );
     for( i=0; i<NEWS_INDEX_NUM; i++ )
     {
       OBATA_Printf( "-newsEntryData.newsType[%d] = ", i );
-      switch( save_buf->newsEntryData.newsType[i] )
+      switch( saveBuf->newsEntryData.newsType[i] )
       {
       case NEWS_TYPE_NULL:        OBATA_Printf( "NULL\n" );        break;
       case NEWS_TYPE_DATE:        OBATA_Printf( "DATE\n" );        break;
@@ -899,7 +815,7 @@ static void GimmickLoad( GATEWORK* work )
     for( i=0; i<NEWS_INDEX_NUM; i++ )
     {
       OBATA_Printf( "-newsEntryData.spNewsFlag[%d] = %d\n",
-                    i, save_buf->newsEntryData.spNewsFlag[i] );
+                    i, saveBuf->newsEntryData.spNewsFlag[i] );
     }
   }
 }
@@ -914,10 +830,10 @@ static void GimmickLoad( GATEWORK* work )
 static void RecoverSpNewsFlags( GATEWORK* work )
 {
   int i;
-  GAMESYS_WORK*          gsys;
-  GAMEDATA*             gdata;
-  EVENTWORK*           evwork;
-  SAVEWORK*          save_buf;
+  GAMESYS_WORK* gsys;
+  GAMEDATA* gdata;
+  EVENTWORK* evwork;
+  SAVEWORK* saveBuf;
   NEWS_ENTRY_DATA* entry_data;
 
   GF_ASSERT( work );
@@ -926,8 +842,8 @@ static void RecoverSpNewsFlags( GATEWORK* work )
   gsys       = FIELDMAP_GetGameSysWork( work->fieldmap );
   gdata      = GAMESYSTEM_GetGameData( gsys );
   evwork     = GAMEDATA_GetEventWork( gdata );
-  save_buf   = GetGimmickSaveWork( work->fieldmap );
-  entry_data = &save_buf->newsEntryData;
+  saveBuf    = GetGimmickSaveWork( work->fieldmap );
+  entry_data = &saveBuf->newsEntryData;
 
   // フラグ復元
   for( i=0; i<entry_data->newsNum; i++)
@@ -1054,9 +970,7 @@ static void LoadGateData( GATEWORK* work )
   } 
 
   // 現在のゾーンに対応する電光掲示板データが登録されていない場合
-  OS_Printf( "=============================================\n" );
   OS_Printf( "error: 電光掲示板データが登録されていません。\n" );
-  OS_Printf( "=============================================\n" );
   GF_ASSERT(0);
 }
 
@@ -1411,9 +1325,7 @@ static void SetupElboardNews_Normal( GATEWORK* work )
     int num = GOBJ_ELBOARD_GetNewsNum( work->elboard );
     if( num != 0 )
     {
-      OBATA_Printf( "======================================\n" );
       OBATA_Printf( "すでに他のニュースが設定されています。\n" );
-      OBATA_Printf( "======================================\n" );
       return;
     }
   } 
@@ -1447,9 +1359,7 @@ static void SetupElboardNews_Special( GATEWORK* work )
     int num = GOBJ_ELBOARD_GetNewsNum( work->elboard );
     if( num != 0 )
     {
-      OBATA_Printf( "======================================\n" );
       OBATA_Printf( "すでに他のニュースが設定されています。\n" );
-      OBATA_Printf( "======================================\n" );
       return;
     }
   } 
