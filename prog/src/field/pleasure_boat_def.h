@@ -24,7 +24,8 @@ typedef struct PL_BOAT_ROOM_PRM_tag
 typedef struct PL_BOAT_WORK_tag
 {
   BOOL WhistleReq;
-  int Time;
+  s16 Time;
+  u16 TotalTrNum;
   int WhistleCount;   //‹D“J‚È‚Á‚½‰ñ”
   PL_BOAT_ROOM_PRM RoomParam[ROOM_NUM];
   u8 TrNumLeft;

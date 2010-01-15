@@ -201,7 +201,7 @@ PL_BOAT_WORK_PTR PL_BOAT_Init(void)
   work->TrNumRight = 0;
   work->TrNumSingle = 0;
   work->TrNumDouble = 0;
-  
+
   //@todo イベント時間テーブルをロードするかも
   ;
   EntryTrainer(work);
@@ -326,6 +326,18 @@ int PL_BOAT_GetTrNum(PL_BOAT_WORK_PTR work, const int inSearchType)
   case PL_TR_SEARCH_TYPE_DOUBLE:
     num = work->TrNumDouble;
     break;
+  case PL_TR_SEARCH_TYPE_TOTAL: 
+    num = work->TotalTrNum;
+    break;
+  case PL_TR_SEARCH_TYPE_WIN:
+    {
+      int i;
+      num = 0;
+      for(i=0;i<ROOM_NUM;i++)
+      {
+        if ( work->RoomParam[i].BattleEnd ) num++;
+      }
+    }
   default:
     GF_ASSERT(0);
     num = 0;
@@ -478,6 +490,8 @@ static void EntryTrainer(PL_BOAT_WORK *work)
     GF_ASSERT(0);
     tr_num = 0;
   }
+
+  work->TotalTrNum = tr_num;
 
   OS_Printf("TrainerNum = %d\n",tr_num);
 

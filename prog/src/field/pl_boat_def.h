@@ -12,6 +12,8 @@
 #define PL_TR_SEARCH_TYPE_RIGHT  (1)    //船内右側
 #define PL_TR_SEARCH_TYPE_SINGLE  (2)   //シングルルーム
 #define PL_TR_SEARCH_TYPE_DOUBLE  (3)   //ダブルルーム
+#define PL_TR_SEARCH_TYPE_TOTAL  (4)   //総数
+#define PL_TR_SEARCH_TYPE_WIN  (5)   //勝ったトレーナー数
 
 #define PL_BOAT_ROOM_INFO_OBJ_CODE  (4)
 #define PL_BOAT_ROOM_INFO_NPC_TYPE  (5)
