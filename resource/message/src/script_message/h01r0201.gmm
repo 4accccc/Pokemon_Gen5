@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2010-01-14T16:02:15"/>
+	<create user="matsumiya" host="W00207" date="2010-01-15T20:36:24"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -296,12 +296,12 @@
 		<comment>♀</comment>
 		<attribute name="キャラ指定">INFORMATIONW
 受付嬢</attribute>
-		<language name="JPN" width="256">こんにちは！
-このさき　スカイアローブリッジ▽
-そして　シッポウシティ　です</language>
-		<language name="JPN_KANJI" width="256">こんにちは！
-この先　スカイアローブリッジ▽
-そして　シッポウシティ　です</language>
+		<language name="JPN" width="256">こんにちは！　こちらから
+スカイアローブリッジを　こえると▽
+ヤグルマのもり　シッポウシティ　です</language>
+		<language name="JPN_KANJI" width="256">こんにちは！　こちらから
+スカイアローブリッジを　越えると▽
+ヤグルマの森　シッポウシティ　です</language>
 	</row>
 
 	<row id="msg_h01r0201_woman2_01">
