@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2010-01-15T11:21:21"/>
+	<create user="matsumiya" host="W00207" date="2010-01-15T11:23:08"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -538,6 +538,11 @@
 	</row>
 
 	<row id="msg_r03r0301_hakaim_01" text-color="#ffffff,,,,,,,#ff0000,,,#ff0000,,,#ff0000,,,#ff0000,," back-color="#404040,,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">no　data</language>
+		<language name="JPN_KANJI" width="256">no　data</language>
+	</row>
+
+	<row id="msg_r03r0301_hakaim_02" text-color="#ffffff,,,,,,,#ff0000,,,#ff0000,,,#ff0000,,,#ff0000,," back-color="#404040,,,,,,,,,,,,,,,,,,">
 		<language name="JPN" width="256">no　data</language>
 		<language name="JPN_KANJI" width="256">no　data</language>
 	</row>
