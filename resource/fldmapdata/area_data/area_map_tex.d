@@ -1494,6 +1494,16 @@ nsbtx_files/tex_set_in57.nsbtx: src_imd_files/in00_texset.imd
 	@$(COPY) src_imd_files/in00_texset.imd marged_imd_files/tex_set_in57.imd
 	@$(G3DCVTR) marged_imd_files/tex_set_in57.imd -o nsbtx_files/tex_set_in57.nsbtx -etex
 
+nsbtx_files/tex_set_in57.nsbtx: src_imd_files/in00_texset.imd
+	@echo src_imd_files/in00_texset.imd Å® nsbtx_files/tex_set_in57.nsbtx
+	@$(COPY) src_imd_files/in00_texset.imd marged_imd_files/tex_set_in57.imd
+	@$(G3DCVTR) marged_imd_files/tex_set_in57.imd -o nsbtx_files/tex_set_in57.nsbtx -etex
+
+nsbtx_files/tex_set_in57.nsbtx: src_imd_files/in00_texset.imd
+	@echo src_imd_files/in00_texset.imd Å® nsbtx_files/tex_set_in57.nsbtx
+	@$(COPY) src_imd_files/in00_texset.imd marged_imd_files/tex_set_in57.imd
+	@$(G3DCVTR) marged_imd_files/tex_set_in57.imd -o nsbtx_files/tex_set_in57.nsbtx -etex
+
 nsbtx_files/tex_set_in_pc.nsbtx: src_imd_files/testpc00_00c.imd
 	@echo src_imd_files/testpc00_00c.imd Å® nsbtx_files/tex_set_in_pc.nsbtx
 	@$(COPY) src_imd_files/testpc00_00c.imd marged_imd_files/tex_set_in_pc.imd
