@@ -612,6 +612,20 @@ ev_trainer:
     //船内トレーナー戦ったフラグオン
     _PL_BOAT_SET_ROOM_INFO(LOCALWORK0,PL_BOAT_ROOM_INFO_BTL_FLG,0,PL_BOAT_TR_BTL_ALREADY)
 
+    //ローカル変数を定義
+		DEFINE_LOCAL	LWK_TOTAL
+		DEFINE_LOCAL	LWK_WIN
+    //トレーナー総数を取得
+    _PL_BOAT_GET_TR_NUM(PL_TR_SEARCH_TYPE_TOTAL,LWK_TOTAL)
+    //現在までの勝利数を取得
+    _PL_BOAT_GET_TR_NUM(PL_TR_SEARCH_TYPE_WIN,LWK_WIN)
+    //勝利数と総数が同じならば、システムメッセージを表示
+    IF $LWK_TOTAL >= LWK_WIN THEN
+      _SYSWIN_MSG_DOWN( msg_c03r0801_sys_01 )
+		  _LAST_KEYWAIT()
+		  _SYSWIN_CLOSE()
+    ENDIF
+    
   ELSE      //ここにはこない。きたら不正。もしきてしまった場合は戦闘後メッセージを出して終了
     IF $LOCALWORK1 == PL_BOAT_TALK_NOT_PAIR THEN
       $LWK_MSG_PRM = PL_BOAT_BTL_AFTER_NORMAL          //通常戦闘前メッセージ
