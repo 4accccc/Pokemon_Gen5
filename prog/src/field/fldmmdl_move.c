@@ -1642,10 +1642,32 @@ static BOOL MMdl_HitCheckMoveAttr(
 {
   if( MMDL_CheckStatusBitAttrGetOFF(mmdl) == FALSE ){
     MAPATTR attr;
+    VecFx32 pos0,pos1;
+    u8 x0,x1,z0,z1;
     
-    if( MMDL_GetMapPosAttr(mmdl,&pos,&attr) == TRUE ){
-      return MAPATTR_GetHitchFlag(attr);
+    x1 = MMDL_GetGridSizeX( mmdl );
+    z1 = MMDL_GetGridSizeZ( mmdl );
+    pos0 = pos;
+    
+    for( z0 = 0; z0 < z1; z0++, pos0.z -= GRID_FX32 )
+    {
+      for( x0 = 0, pos1 = pos0; x0 < x1; x0++, pos1.x += GRID_FX32 )
+      {
+        if( MMDL_GetMapPosAttr(mmdl,&pos1,&attr) == TRUE )
+        {
+          if( MAPATTR_GetHitchFlag(attr) == TRUE )
+          {
+            return( TRUE );
+          }
+        }
+        else
+        {
+          return( TRUE );
+        }
+      }
     }
+    
+    return( FALSE );
   }
   
   return( TRUE ); //移動不可アトリビュート

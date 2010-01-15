@@ -148,12 +148,13 @@ enum
 {
   ANA_NON = 0,
   ANA_NOT,
+  ANA_HIT,
   ANA_ALL,
 };
 
 static int kairiki_CheckAna( MMDL *mmdl, u16 dir, FLDMAPPER *mapper )
 {
-  int flag;
+  int non_hit,ana_hit;
   MAPATTR attr;
   MAPATTR_VALUE attr_val;
   u8 x0,x1,z0,z1;
@@ -165,8 +166,9 @@ static int kairiki_CheckAna( MMDL *mmdl, u16 dir, FLDMAPPER *mapper )
   x1 = MMDL_GetGridSizeX( mmdl );
   z1 = MMDL_GetGridSizeZ( mmdl );
   
-  flag = TRUE;
-
+  non_hit = FALSE;
+  ana_hit = FALSE;
+  
   for( z0 = 0; z0 < z1; z0++, pos.z -= GRID_FX32 )
   {
     for( x0 = 0, c_pos = pos; x0 < x1; x0++, c_pos.x += GRID_FX32 )
@@ -180,17 +182,26 @@ static int kairiki_CheckAna( MMDL *mmdl, u16 dir, FLDMAPPER *mapper )
         {
           return( ANA_NOT ); //怪力穴以外で障害
         }
+        else
+        {
+          ana_hit = TRUE;
+        }
       }
-      else //穴以外
+      else
       {
-        flag = FALSE;
+        non_hit = TRUE;
       }
     }
   }
   
-  if( flag == TRUE ) //全部穴
+  if( ana_hit == TRUE )
   {
-    return( ANA_ALL );
+    if( non_hit == FALSE )
+    {
+      return( ANA_ALL ); //全部穴
+    }
+    
+    return( ANA_HIT );
   }
   
   return( ANA_NON );
@@ -216,7 +227,7 @@ static GMEVENT * gjiki_CheckEventKairiki(
     {
       u16 code = MMDL_GetOBJCode( mmdl );
       
-      if( code == ROCK || code == BIGROCK || code == JUNK )
+      if( MMDL_CheckOBJCodeKairiki(code) == TRUE )
       {
         u32 ret;
         int ana;
@@ -236,7 +247,7 @@ static GMEVENT * gjiki_CheckEventKairiki(
         
         if( (ret & MMDL_MOVEHITBIT_ATTR) )
         {
-          if( ana == ANA_ALL ) //穴ヒットである
+          if( ana == ANA_HIT || ana == ANA_ALL ) //穴ヒットである
           {
             ret &= ~MMDL_MOVEHITBIT_ATTR;
           }

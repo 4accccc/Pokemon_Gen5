@@ -5052,7 +5052,7 @@ static int mmdl_rockpos_GetPosNumber( const MMDL *mmdl )
 {
   int no = MMDL_ROCKPOS_MAX;
   
-  if( MMDL_GetOBJCode(mmdl) == ROCK ){
+  if( MMDL_CheckOBJCodeKairiki(MMDL_GetOBJCode(mmdl)) == TRUE ){
     u16 zone_id = MMDL_GetZoneID( mmdl );
     u16 obj_id = MMDL_GetOBJID( mmdl );
     no = rockpos_GetPosNumber( zone_id, obj_id );
@@ -5161,8 +5161,25 @@ BOOL MMDLSYS_ROCKPOS_CheckRockFalled(
   return( FALSE );
 }
 
+//--------------------------------------------------------------
+/**
+ * OBJコードは怪力で押すタイプかチェック
+ * @param code OBJコード
+ * @retval BOOL TRUE=怪力で押せる
+ */
+//--------------------------------------------------------------
+BOOL MMDL_CheckOBJCodeKairiki( const u16 code )
+{
+  if( code == ROCK || code == BIGROCK || code == JUNK ){
+    return( TRUE );
+  }
+  return( FALSE );
+}
 
-//----------------------------------------------------------------------------
+//======================================================================
+//
+//======================================================================
+//--------------------------------------------------------------
 /**
  *	@brief  ヘッダーにグリッドマップポジションを設定
  *	@param	head    ヘッダー
@@ -5170,7 +5187,7 @@ BOOL MMDLSYS_ROCKPOS_CheckRockFalled(
  *	@param	gz      ｚグリッド座標
  *	@param	y       ｙ座標
  */
-//-----------------------------------------------------------------------------
+//--------------------------------------------------------------
 void MMDLHEADER_SetGridPos( MMDL_HEADER* head, u16 gx, u16 gz, int y )
 {
   MMDL_HEADER_GRIDPOS* pos;
@@ -5184,16 +5201,15 @@ void MMDLHEADER_SetGridPos( MMDL_HEADER* head, u16 gx, u16 gz, int y )
   pos->y  = y;
 }
 
-//----------------------------------------------------------------------------
+//--------------------------------------------------------------
 /**
  *	@brief  ヘッダーにレールマップポジションを設定
- *
  *	@param	head    ヘッダー
  *	@param	index   インデックス
  *	@param	front   フロントグリッド座標
  *	@param	side    サイドグリッド座標
  */
-//-----------------------------------------------------------------------------
+//--------------------------------------------------------------
 void MMDLHEADER_SetRailPos( MMDL_HEADER* head, u16 index, u16 front, u16 side )
 {
   MMDL_HEADER_RAILPOS* pos;
