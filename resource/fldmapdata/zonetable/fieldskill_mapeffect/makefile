@@ -46,12 +46,6 @@ LIST_FILE 	= list.txt
 ifeq	($(CONVERTUSER),true)	
 
 
-.SUFFIXES: .xls .bin
-
-.xls.bin:
-	$(PROJECT_ROOT)tools/exceltool/ExcelSeetConv.exe -o $*.csv -p 0 -s csv $<
-	perl conv.pl $*.csv $(ZONE_HADER) $@
-
 endif
 
 
@@ -85,6 +79,11 @@ $(targetname).narc: $(OUTPUT)
 	nnsarc -c -l -n -i $(targetname) -S $(LIST_FILE)
 	$(NAIXCUT) $(targetname).naix
 	-rm	*.txt
+
+
+$(OUTPUT):$(EXCEL_FILE) $(ZONE_HADER)
+	$(PROJECT_ROOT)tools/exceltool/ExcelSeetConv.exe -o dummy.csv -p 0 -s csv $(EXCEL_FILE)
+	perl conv.pl dummy.csv $(ZONE_HADER) $(OUTPUT)
 
 endif
 
