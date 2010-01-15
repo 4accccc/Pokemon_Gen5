@@ -158,7 +158,7 @@ sub getCameraFuncIDNameToNo
 
 	for( $i=0; $i<@RAIL_CAMERA_FUNC_ID; $i++ )
 	{
-		if( $RAIL_CAMERA_FUNC_ID[$i] =~ /$name/ )
+		if( "".$RAIL_CAMERA_FUNC_ID[$i] eq "".$name )
 		{
 			return $i;
 		}
@@ -175,7 +175,7 @@ sub getLinePosFuncIDNameToNo
 
 	for( $i=0; $i<@RAIL_LINEPOS_FUNC_ID; $i++ )
 	{
-		if( $RAIL_LINEPOS_FUNC_ID[$i] =~ /$name/ )
+		if( "".$RAIL_LINEPOS_FUNC_ID[$i] eq "".$name )
 		{
 			return $i;
 		}
@@ -192,7 +192,7 @@ sub getLineDistFuncIDNameToNo
 
 	for( $i=0; $i<@RAIL_LINEDIST_FUNC_ID; $i++ )
 	{
-		if( $RAIL_LINEDIST_FUNC_ID[$i] =~ /$name/ )
+		if( "".$RAIL_LINEDIST_FUNC_ID[$i] eq "".$name )
 		{
 			return $i;
 		}
@@ -287,7 +287,7 @@ sub getRAIL_KeyNameToNo
 
 	for( $i=0; $i<@RAIL_KEY; $i++ )
 	{
-		if( $RAIL_KEY[$i] =~ /$keyname/ )
+		if( "".$RAIL_KEY[$i] eq "".$keyname )
 		{
 			return $i;
 		}
@@ -304,7 +304,7 @@ sub get10Number
 {
 	my( $number ) = @_;
 
-	if( $number eq "0" )
+	if( "".$number eq "0" )
 	{
 		return 0;
 	}
@@ -652,7 +652,7 @@ sub getNameIndex
 	my( $i, $roopnum );
 
 	#NULLチェック
-	if( $name =~ /RAIL_TBL_NULL/ )
+	if( "".$name eq "RAIL_TBL_NULL" )
 	{
 		return &get10Number($RAIL_TBL_NULL);
 	}
@@ -660,7 +660,7 @@ sub getNameIndex
 	$roopnum = @$data;
 	for( $i=0; $i<$roopnum; $i++ )
 	{
-		if( $$data[$i] =~ /$name/ )
+		if( "".$$data[$i] eq "".$name )
 		{
 			return $i;
 		}
@@ -746,7 +746,7 @@ sub getPeaceParamForTag
 		$one =~ s/\n//g;
 
 		#タグを見つける
-		if( $one =~ /\+$tag/ )
+		if( $one =~ /\+$tag$/ )
 		{
 			#$tagから、$keyの情報を取得する
 			return &getPeaceParam( \@$data, $i+1, $key );
@@ -810,7 +810,7 @@ sub getPeaceParamByteWorkNumberForName
 			$last_peace_index = $i;
 		}
 
-		if( $one =~ /--NAME\:\:$name/ )
+		if( $one =~ /--NAME\:\:$name$/ )
 		{
 			#last_peace_indexから、$index番目のBYTEパラメータを取得する
 			return &getPeaceParamByteWorkNumberForIndex( \@$data, $last_peace_index+1, $index );
@@ -903,9 +903,9 @@ sub isLinkPoint
 	{
 		$line						= &getPeaceParamForName( \@$data, $point, "LINES0".$i );
 		$key						= &getPeaceParamForName( \@$data, $point, "KEYS0".$i );
-		if( $line =~ /RAIL_TBL_NULL/ )
+		if( "".$line eq "RAIL_TBL_NULL" )
 		{
-			if( !($key =~ /RAIL_KEY_NULL/) )
+			if( !("".$key eq "RAIL_KEY_NULL") )
 			{
 				print( "point[$point] line-key error $line to $key\n" );
 				exit(1);
@@ -917,13 +917,13 @@ sub isLinkPoint
 			$line_point_e		= &getPeaceParamForName( \@$data, $line, "POINT_E" );
 
 			#接続ラインに自分の情報があるかチェック
-			if( !($line_point_s eq $point) && !($line_point_e eq $point) )
+			if( !("".$line_point_s eq "".$point) && !("".$line_point_e eq "".$point) )
 			{
 				print( "point[$point] line link error $line に $point と接続している情報はありません。\n" );
 				exit(1);
 			}
 			#キーが割り振られているかチェック
-			if( $key =~ /RAIL_KEY_NULL/ )
+			if( "".$key eq "RAIL_KEY_NULL" )
 			{
 				print( "point[$point] line-key error $line to $key\n" );
 				exit(1);
@@ -951,13 +951,13 @@ sub isLinkLine
 	for( $i=0; $i<4; $i++ )
 	{
 		$point_line	= &getPeaceParamForName( \@$data, $point_s, "LINES0".$i );
-		if( $point_line eq $line )
+		if( "".$point_line eq "".$line )
 		{
 			$link_ok_s = 1;
 		}
 
 		$point_line	= &getPeaceParamForName( \@$data, $point_e, "LINES0".$i );
-		if( $point_line eq $line )
+		if( "".$point_line eq "".$line )
 		{
 			$link_ok_e = 1;
 		}
@@ -971,18 +971,18 @@ sub isLinkLine
 	#オフセットangleカメラ　両サイドポイントのカメラがFixAngleCameraである必要がある
 	$camera_set = &getPeaceParamForName( \@$data, $line, "CAMERA_SET" );
 	$camera_set = &getPeaceParamForName( \@$data, $camera_set, "FUNCINDEX" );
-	if( $camera_set =~ /FIELD_RAIL_LOADER_CAMERA_FUNC_OFSANGLE/ )
+	if( "".$camera_set eq "FIELD_RAIL_LOADER_CAMERA_FUNC_OFSANGLE" )
 	{
 		$camera_set = &getPeaceParamForName( \@$data, $point_s, "CAMERA_SET" );
 		$camera_set = &getPeaceParamForName( \@$data, $camera_set, "FUNCINDEX" );
-		if( !($camera_set =~ /FIELD_RAIL_LOADER_CAMERA_FUNC_FIXANGLE/) )
+		if( !("".$camera_set eq "FIELD_RAIL_LOADER_CAMERA_FUNC_FIXANGLE") )
 		{
 			print( "line[$line] camera_set err $point_s が FIELD_RAIL_LOADER_CAMERA_FUNC_FIXANGLE を使用していません。\n" );
 #			exit(1);
 		}
 		$camera_set = &getPeaceParamForName( \@$data, $point_e, "CAMERA_SET" );
 		$camera_set = &getPeaceParamForName( \@$data, $camera_set, "FUNCINDEX" );
-		if( !($camera_set =~ /FIELD_RAIL_LOADER_CAMERA_FUNC_FIXANGLE/) )
+		if( !("".$camera_set eq "FIELD_RAIL_LOADER_CAMERA_FUNC_FIXANGLE") )
 		{
 			print( "line[$line] camera_set err $point_s が FIELD_RAIL_LOADER_CAMERA_FUNC_FIXANGLE を使用していません。\n" );
 #			exit(1);

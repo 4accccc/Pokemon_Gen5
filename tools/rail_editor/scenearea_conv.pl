@@ -132,7 +132,7 @@ sub getCheckAreaFuncIDNameToNo
 
 	for( $i=0; $i<@SA_AREACHECK_FUNC_ID; $i++ )
 	{
-		if( $SA_AREACHECK_FUNC_ID[$i] =~ /$name/ )
+		if( "".$SA_AREACHECK_FUNC_ID[$i] eq "".$name )
 		{
 			return $i;
 		}
@@ -149,7 +149,7 @@ sub getUpdateFuncIDNameToNo
 
 	for( $i=0; $i<@SA_UPDATE_FUNC_ID; $i++ )
 	{
-		if( $SA_UPDATE_FUNC_ID[$i] =~ /$name/ )
+		if( "".$SA_UPDATE_FUNC_ID[$i] eq "".$name )
 		{
 			return $i;
 		}
@@ -210,7 +210,7 @@ sub get10Number
 {
 	my( $number ) = @_;
 
-	if( $number eq "0" )
+	if( "".$number eq "0" )
 	{
 		return 0;
 	}
@@ -353,7 +353,7 @@ sub getNameIndex
 	$roopnum = @$data;
 	for( $i=0; $i<$roopnum; $i++ )
 	{
-		if( $$data[$i] =~ /$name/ )
+		if( "".$$data[$i] eq "".$name )
 		{
 			return $i;
 		}
@@ -414,7 +414,7 @@ sub getPeaceParamForName
 			$last_peace_index = $i;
 		}
 		
-		if( $one =~ /--NAME\:\:$name/ )
+		if( $one =~ /--NAME\:\:$name$/ )
 		{
 			#last_peace_indexから、$keyの情報を取得する
 			return &getPeaceParam( \@$data, $last_peace_index+1, $key );
@@ -439,7 +439,7 @@ sub getPeaceParamForTag
 		$one =~ s/\n//g;
 
 		#タグを見つける
-		if( $one =~ /\+$tag/ )
+		if( $one =~ /\+$tag$/ )
 		{
 			#$tagから、$keyの情報を取得する
 			return &getPeaceParam( \@$data, $i+1, $key );
@@ -503,7 +503,7 @@ sub getPeaceParamByteWorkNumberForName
 			$last_peace_index = $i;
 		}
 
-		if( $one =~ /--NAME\:\:$name/ )
+		if( $one =~ /--NAME\:\:$name$/ )
 		{
 			#last_peace_indexから、$index番目のBYTEパラメータを取得する
 			return &getPeaceParamByteWorkNumberForIndex( \@$data, $last_peace_index+1, $index );
@@ -569,7 +569,7 @@ sub getPeaceParamByteWorkSizeForName
 			$last_peace_index = $i;
 		}
 
-		if( $one =~ /--NAME\:\:$name/ )
+		if( $one =~ /--NAME\:\:$name$/ )
 		{
 			#last_peace_indexから、$index番目のBYTEパラメータを取得する
 			return &getPeaceParamByteWorkSizeForIndex( \@$data, $last_peace_index+1, $index );
