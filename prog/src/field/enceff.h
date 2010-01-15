@@ -12,17 +12,9 @@
 #include "gamesystem/gamesystem.h"
 #include "field/fieldmap_proc.h"
 
-typedef struct ENCEFF_CNT_tag * ENCEFF_CNT_PTR;
+#include "enceffno_def.h"
 
-typedef enum {
-  ENCEFFID_1 = 0,
-  ENCEFFID_2,
-  ENCEFFID_3,
-  ENCEFFID_4,
-  ENCEFFID_5,
-//  ENCEFFID_CI_1,
-  ENCEFFID_MAX,
-}ENCEFF_ID;
+typedef struct ENCEFF_CNT_tag * ENCEFF_CNT_PTR;
 
 extern ENCEFF_CNT_PTR ENCEFF_CreateCntPtr(const HEAPID inHeapID, FIELDMAP_WORK * fieldmap);
 extern void ENCEFF_DeleteCntPtr(ENCEFF_CNT_PTR ptr);

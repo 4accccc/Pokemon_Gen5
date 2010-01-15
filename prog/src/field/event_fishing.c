@@ -29,6 +29,8 @@
 
 #include "../../../resource/fldmapdata/script/field_ev_scr_def.h" // for SCRID_FLE_EV_AMAIKAORI_ENC_FAILED
 
+#include "enceffno_def.h"
+
 typedef enum{
  SEQ_FISHING_START,
  SEQ_START_WAIT,
@@ -272,8 +274,8 @@ static GMEVENT_RESULT FieldFishingEvent(GMEVENT * event, int * seq, void *work)
   case SEQ_HIT_SUCCESS:
     {
       int enc_eff_no;
-      //エンカウントエフェクトセット（釣りエンカウントは水上エンカウントエフェクトを使用する）@todo
-      enc_eff_no = 0;
+      //エンカウントエフェクトセット（釣りエンカウントは水上エンカウントエフェクトを使用する）
+      enc_eff_no = ENCEFFID_WILD_WATER;
       GMEVENT_ChangeEvent( event, EVENT_WildPokeBattle( wk->gsys, wk->fieldWork, wk->bsp, FALSE, enc_eff_no ) );
     }
 	  return GMEVENT_RES_CONTINUE;

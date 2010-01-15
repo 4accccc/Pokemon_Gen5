@@ -38,6 +38,7 @@
 
 #include "script_def.h"   //SCR_BATTLE_～
 
+#include "enceffno_def.h"
 #include "enceffno.h"
 
 //======================================================================
@@ -226,8 +227,8 @@ GMEVENT * EVENT_BSubwayTrainerBattle(
   BEW_Initialize( bew, gsys, bp );
   bew->is_sub_event = TRUE; //サブイベント呼び出し
   bew->is_no_lose = TRUE; //敗戦処理無し
-  //エンカウントエフェクトセット(サブウェイ固有)　@todo
-  bew->EncEffNo = 0;
+  //エンカウントエフェクトセット(サブウェイ固有)
+  bew->EncEffNo = ENCEFFID_SUBWAY;
 
   //エフェクトエンカウト　エフェクト復帰キャンセル
   EFFECT_ENC_EffectRecoverCancel( FIELDMAP_GetEncount(fieldmap));
@@ -284,7 +285,7 @@ static GMEVENT_RESULT fieldBattleEvent(
     GMEVENT_CallEvent( event,
         EVENT_FieldEncountEffect(gsys,fieldmap) );
 */
-    ENCEFF_SetEncEff(FIELDMAP_GetEncEffCntPtr(fieldmap), event, 0);
+    ENCEFF_SetEncEff(FIELDMAP_GetEncEffCntPtr(fieldmap), event, bew->EncEffNo);
     (*seq)++;
     break;
   case 2:
