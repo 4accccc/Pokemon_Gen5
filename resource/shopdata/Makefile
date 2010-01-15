@@ -62,7 +62,7 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするル
 $(targetname).cdat: fs_item.xls
 	$(COPY) $(PROJECT_PROGDIR)include/item/itemsym.h ./itemsym.h
 	ruby $(CSVCVTR) -c fs_item.xls >fs_item.csv
-	ruby shopdata.rb fs_item.csv itemsym.h $(targetname).cdat 
+	ruby shopdata.rb fs_item.csv itemsym.h $(targetname).cdat $(targetname)_index.h
 endif
 
 #------------------------------------------------------------------------------
