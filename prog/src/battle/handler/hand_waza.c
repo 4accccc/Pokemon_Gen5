@@ -357,6 +357,7 @@ static const BtlEventHandlerTable*  ADD_Mineuti( u32* numElems );
 static void handler_Mineuti( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable*  ADD_Koraeru( u32* numElems );
 static void handler_Koraeru_ExeCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_Koraeru_Check( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Koraeru( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable*  ADD_Mamoru( u32* numElems );
 static void handler_Mamoru_ExeCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
@@ -4597,11 +4598,13 @@ static const BtlEventHandlerTable*  ADD_Koraeru( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_WAZA_EXECUTE_CHECK_2ND,  handler_Koraeru_ExeCheck }, // ワザ出し成否チェックハンドラ
-    { BTL_EVENT_KORAERU_CHECK,           handler_Koraeru },          // こらえるチェックハンドラ
+    { BTL_EVENT_KORAERU_CHECK,           handler_Koraeru_Check },    // こらえるチェックハンドラ
+    { BTL_EVENT_UNCATEGORIZE_WAZA,       handler_Koraeru },          // 未分類ワザハンドラ
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
 }
+// ワザ出し成否チェックハンドラ
 static void handler_Koraeru_ExeCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   // 成功率がだんだん下がるテーブル 1/2, 1/4, 1/8, ---
@@ -4628,11 +4631,27 @@ static void handler_Koraeru_ExeCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WOR
     }
   }
 }
-static void handler_Koraeru( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+// こらえるチェックハンドラ
+static void handler_Koraeru_Check( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) == pokeID )
   {
-    BTL_EVENTVAR_RewriteValue( BTL_EVAR_KORAERU_CAUSE, BPP_KORAE_WAZA_DEFENDER );
+    if( work[ WORKIDX_STICK] )
+    {
+      BTL_EVENTVAR_RewriteValue( BTL_EVAR_KORAERU_CAUSE, BPP_KORAE_WAZA_DEFENDER );
+      BTL_EVENT_FACTOR_Remove( myHandle );
+    }
+  }
+}
+// 未分類ワザハンドラ
+static void handler_Koraeru( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
+  {
+    BTL_HANDEX_PARAM_MESSAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
+    HANDEX_STR_Setup( &param->str, BTL_STRTYPE_SET, BTL_STRID_SET_Koraeru_Ready );
+    HANDEX_STR_AddArg( &param->str, pokeID );
+    work[ WORKIDX_STICK ] = 1;
   }
 }
 //----------------------------------------------------------------------------------
