@@ -671,6 +671,8 @@ extern  WazaID  PP_CheckWazaOboe( POKEMON_PARAM *pp, int* index, HEAPID  heapID 
 
 // パラメータ設定系（その他）
 extern  void  PP_SetSick( POKEMON_PARAM* pp, PokeSick sick );
+extern  void  PP_SetSeikaku( POKEMON_PARAM *pp, u8 chr );
+extern  void  PPP_SetSeikaku( POKEMON_PASO_PARAM *ppp, u8 chr );
 
 // 親の一致チェック
 extern BOOL PP_IsMatchOya( const POKEMON_PARAM* pp, const MYSTATUS* player );
