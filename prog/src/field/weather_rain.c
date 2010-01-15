@@ -293,6 +293,8 @@ enum
 #define WEATHER_RAIKAMI_LIGHT_SPARK_WAIT ( 90 )
 #define WEATHER_RAIKAMI_LIGHT_DARKSPARK_WAIT ( 16 )
 
+#define WEATHER_RAIKAMI_LIGHT_FULL_RAIN_WAIT ( 48 )
+
 
 //-----------------------------------------------------------------------------
 /**
@@ -1414,26 +1416,28 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_RAIKAMI_FadeIn( WEATHER_TASK* p_wk, WEAT
     break;
 
   case WEATHER_RAIKAMI_FADEIN_SEQ_SPARK_02:
-    //if( WEATHER_TASK_LIGHT_IsColorFade( p_wk ) == FALSE ) // Ç±Ç±ÇÕÇ‹ÇΩÇ»Ç¢ÅI
+    if( WEATHER_TASK_LIGHT_IsColorFade( p_wk ) == FALSE )
     {
-      // âπ
-      WEATHER_TASK_PlayLoopSnd( p_wk, WEATHER_SND_SE_HIGHRAIN );	
-
-
       WEATHER_TASK_FogFadeIn_Init( p_wk,
         WEATHER_FOG_SLOPE_DEFAULT, 
         WEATHER_FOG_DEPTH_DEFAULT + WEATHER_RAIKAMI_FOG_OFS, 
         WEATHER_RAIKAMI_FOG_TIMING,
         fog_cont );
 
-      // BGON
-      WEATHER_TASK_3DBG_SetVisible( p_wk, TRUE );
-
       p_local_wk->seq++;
+      p_local_wk->wait = WEATHER_RAIKAMI_LIGHT_FULL_RAIN_WAIT;
     }
     break;
 
   case WEATHER_RAIKAMI_FADEIN_SEQ_OBJADD:
+    p_local_wk->wait--;
+    if( p_local_wk->wait == 0 )
+    {
+      // âπ
+      WEATHER_TASK_PlayLoopSnd( p_wk, WEATHER_SND_SE_HIGHRAIN );	
+      // BGON
+      WEATHER_TASK_3DBG_SetVisible( p_wk, TRUE );
+    }
 
 	  result = WEATHER_TASK_ObjFade_Main( p_wk, heapID );	// é¿çs
 	  fog_result = WEATHER_TASK_FogFade_IsFade( p_wk );	// é¿çs
