@@ -334,6 +334,9 @@ ACTING_WORK*  STA_ACT_InitActing( STAGE_INIT_WORK *initWork , HEAPID heapId )
 //  ARI_TPrintf("FreeHeap:[%x]\n", GFL_HEAP_GetHeapFreeSize( work->heapId ) );
 
   STA_ACT_LoadBg( work , 0 );
+  
+  SND_STRM_Init( work->heapId );
+  
   return work;
 }
 
@@ -360,6 +363,7 @@ void  STA_ACT_TermActing( ACTING_WORK *work )
   {
     STA_ACT_StopBgm( work );
   }
+  SND_STRM_Exit();
 
   if( work->msgStr != NULL )
   {
@@ -549,6 +553,8 @@ ACTING_RETURN STA_ACT_LoopActing( ACTING_WORK *work )
   GFL_G3D_DRAW_End();
   //OBJÇÃçXêV
   GFL_CLACT_SYS_Main();
+
+  SND_STRM_Main();
 
 #if DEB_ARI|defined(DEBUG_ONLY_FOR_iwao_kazumasa)
   if( GFL_UI_KEY_GetCont() & PAD_BUTTON_SELECT &&

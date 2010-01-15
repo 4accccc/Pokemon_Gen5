@@ -247,8 +247,6 @@ static	void	GameInit(void)
 	PMSND_Init();
 	//鳴き声システムの設定
 	PMVOICE_Init(GFL_HEAPID_APP, PMV_GetVoiceWaveIdx, PMV_CustomVoiceWave);
-	//サウンドストリーミング再生システム
-	SND_STRM_Init(GFL_HEAPID_SYSTEM);
 
 	//キーコントロールモード設定
 	CONFIG_SYSTEM_KyeControlTblSetting();
@@ -276,7 +274,6 @@ static	void	GameMain(void)
 	}
 	PMSND_Main();
 	PMVOICE_Main();
-	SND_STRM_Main();
 	
 	GAMEBEACON_Update();
 }
@@ -295,7 +292,6 @@ static	void	GameExit(void)
 
   GAMEBEACON_Exit();
   WIH_DWC_DeleteCFG();
-	SND_STRM_Exit();
 	PMVOICE_Exit();
 	PMSND_Exit();
 }
