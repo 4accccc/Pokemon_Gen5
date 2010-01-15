@@ -92,15 +92,22 @@ enum
 #define EV_HERO_WALK_END_GRID_X (15)
 #define EV_HERO_WALK_END_GRID_Y (0)
 #define EV_HERO_WALK_END_GRID_Z (16)
-#define EV_HERO_WALK_END_DIR (DIR_LEFT)
 static const VecFx32 EV_DEMO_HERO_WALK_END_GRID[ FIELD_EVENT_FOURKINGS_MAX ] = 
 {
-  { EV_HERO_WALK_END_GRID_X, EV_HERO_WALK_END_GRID_Y, EV_HERO_WALK_END_GRID_Z },
-  { EV_HERO_WALK_END_GRID_X, EV_HERO_WALK_END_GRID_Y, EV_HERO_WALK_END_GRID_Z },
-  { EV_HERO_WALK_END_GRID_X, EV_HERO_WALK_END_GRID_Y, EV_HERO_WALK_END_GRID_Z },
+  { EV_HERO_WALK_END_GRID_X, EV_HERO_WALK_END_GRID_Y, 13 }, // ゴースト
+  { EV_HERO_WALK_END_GRID_X, EV_HERO_WALK_END_GRID_Y, EV_HERO_WALK_END_GRID_Z },  // あく
+  { EV_HERO_WALK_END_GRID_X, EV_HERO_WALK_END_GRID_Y, EV_HERO_WALK_END_GRID_Z },  // かくとう
   { EV_HERO_WALK_END_GRID_X-1, EV_HERO_WALK_END_GRID_Y, EV_HERO_WALK_END_GRID_Z }, // エスパーだけ１つずれる
 };
 
+// 出てくる方向
+static const u16 EV_DEMO_HERO_WALK_END_DIR[] = 
+{
+  DIR_UP,
+  DIR_LEFT,
+  DIR_UP,
+  DIR_UP,
+};
 
 // 演出の中心
 //static const VecFx32 EV_DEMO_CenterVec = { GRID_TO_FX32(16), 0, GRID_TO_FX32(10) };
@@ -253,6 +260,7 @@ typedef struct {
   FIELD_PLAYER* p_player;
   MMDL* p_player_core;
   VecFx32 end_gridpos;
+  u16 end_dir;
   
   int frame;
 } EV_CIRCLEWALK_HERO;
@@ -928,6 +936,7 @@ static void EV_HERO_Init0( EV_CIRCLEWALK_HERO* p_wk, FIELD_PLAYER * p_fld_player
 
   //  終了後出現位置
   p_wk->end_gridpos = EV_DEMO_HERO_WALK_END_GRID[ fourkings_no ];
+  p_wk->end_dir = EV_DEMO_HERO_WALK_END_DIR[ fourkings_no ];
   
   //　保存
   p_wk->cp_mystatus   = cp_mystatus;
@@ -1114,7 +1123,7 @@ static void EV_HERO_Switch( EV_CIRCLEWALK_HERO* p_wk, BOOL sw )
     MMDL_InitGridPosition(
       p_wk->p_player_core, 
       p_wk->end_gridpos.x, p_wk->end_gridpos.y, p_wk->end_gridpos.z, 
-      EV_HERO_WALK_END_DIR );
+      p_wk->end_dir );
     MMDL_UpdateCurrentHeight( p_wk->p_player_core );
 
     MMDL_GetVectorPos( p_wk->p_player_core, &vecpos );
