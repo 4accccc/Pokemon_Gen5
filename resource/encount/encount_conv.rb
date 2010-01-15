@@ -390,7 +390,9 @@ class CEncountData
   #ファイルロード
   def src_load f_path
     season_code = 0
+    zone_ary = Array.new
     old_zone = "zone"
+
     File.open(f_path){ |file|
      while line = file.gets
        line = line.chomp #行末改行を取り除く
@@ -406,9 +408,18 @@ class CEncountData
        if s_code == SEASON_NONE || (s_code+1)>SEASON_WINTER then
          season_code = SEASON_NONE  #コード0クリア
        else
-         season_code = s_code+1
+         season_code = s_code+1 #次の季節コードを入れておく
        end
        old_zone = cp.get_zone_name()
+
+       if zone_ary.index( old_zone ) != nil then
+         printf("ERROR: ゾーンレコードが重複しています！ -> %s\n",old_zone)
+         exit 1
+       end
+       #履歴取得
+       if s_code == SEASON_NONE || s_code == SEASON_WINTER then
+         zone_ary << old_zone
+       end
 
        #マップデータの出力
        cp.output()
