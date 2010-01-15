@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="suginaka_katsunori" host="W00161" date="2010-01-14T20:33:04"/>
+	<create user="suginaka_katsunori" host="W00161" date="2010-01-15T15:36:31"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,14 +263,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1608" top="188" right="2271" bottom="803" maximized="no" rayout="Vertical2">
+	<dialog left="516" top="234" right="1221" bottom="854" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="8" top="31" right="481" bottom="429" visible="no"/>
-		<band id="0" index="1" style="0000" width="488"/>
+		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="506"/>
+		<band id="2" index="3" style="0000" width="548"/>
 		<band id="3" index="4" style="0000" width="147"/>
-		<band id="4" index="0" style="0000" width="655"/>
+		<band id="4" index="0" style="0000" width="697"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -605,8 +605,10 @@ msg_c03r0801_hint_02</comment>
 	<row id="msg_c03r0801_boy2_04" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>トレーナー後</comment>
 		<attribute name="キャラ指定">BOY2</attribute>
-		<language name="JPN" width="256">しょうぶが　おわりました</language>
-		<language name="JPN_KANJI" width="256">勝負が　終わりました</language>
+		<language name="JPN" width="256">あっちゃー　まけちゃった
+じしん　あったのになー！</language>
+		<language name="JPN_KANJI" width="256">あっちゃー　まけちゃった
+じしん　あったのになー！</language>
 	</row>
 
 	<row id="msg_c03r0801_girl2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
@@ -657,8 +659,12 @@ msg_c03r0801_hint_02</comment>
 		<comment>お客さん
 ・短い話</comment>
 		<attribute name="キャラ指定">BOY4</attribute>
-		<language name="JPN" width="256">みじかい　はなし　です</language>
-		<language name="JPN_KANJI" width="256">短い話　です</language>
+		<language name="JPN" width="256">この　ごうかな　ゆうらんせんには
+ぼくみたいな　おかねもちが[BE:00:ページ切り替え（行送り）]
+おにあいだろ？</language>
+		<language name="JPN_KANJI" width="256">この　ごうかな　ゆうらんせんには
+ぼくみたいな　おかねもちが[BE:00:ページ切り替え（行送り）]
+おにあいだろ？</language>
 	</row>
 
 	<row id="msg_c03r0801_boy4_02" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
@@ -914,6 +920,16 @@ msg_c03r0801_hint_02</comment>
 ひきつづき　おたのしみ　くださいませ</language>
 		<language name="JPN_KANJI" width="256">かしこまりました
 ひきつづき　おたのしみ　くださいませ</language>
+	</row>
+
+	<row id="msg_c03r0801_sys_01">
+		<comment>全てのトレーナーを倒した際に
+表示されます</comment>
+		<attribute name="キャラ指定">システムメッセージ</attribute>
+		<language name="JPN" width="256">ふねの　なかの　トレーナーを
+すべて　たおした！</language>
+		<language name="JPN_KANJI" width="256">遊覧船内の　トレーナーを
+全て　倒した！</language>
 	</row>
 
 	<flowchart-group-list>
