@@ -176,6 +176,7 @@ typedef enum {
   SELITEM_PP_CONST,
   SELITEM_HIT_100PER,
   SELITEM_DMG_RAND_OFF,
+  SELITEM_SKIP_BTLIN,
 
   SELITEM_BACKGROUND,
   SELITEM_LAND,
@@ -256,6 +257,7 @@ enum {
   LAYOUT_LABEL_PP_CONST_X       = 4,
   LAYOUT_LABEL_HIT_100PER_X     = 4,
   LAYOUT_LABEL_DMG_RAND_OFF_X   = 4,
+  LAYOUT_LABEL_SKIP_BTLIN_X     = 4,
 
   LAYOUT_LABEL_MUST_TUIKA_Y     = 8,
   LAYOUT_LABEL_MUST_TOKU_Y      = LAYOUT_LABEL_MUST_TUIKA_Y+LAYOUT_PARTY_DATA_LINE_HEIGHT,
@@ -265,7 +267,7 @@ enum {
   LAYOUT_LABEL_PP_CONST_Y       = LAYOUT_LABEL_MUST_TUIKA_Y+LAYOUT_PARTY_DATA_LINE_HEIGHT*5,
   LAYOUT_LABEL_HIT_100PER_Y     = LAYOUT_LABEL_MUST_TUIKA_Y+LAYOUT_PARTY_DATA_LINE_HEIGHT*6,
   LAYOUT_LABEL_DMG_RAND_OFF_Y   = LAYOUT_LABEL_MUST_TUIKA_Y+LAYOUT_PARTY_DATA_LINE_HEIGHT*7,
-
+  LAYOUT_LABEL_SKIP_BTLIN_Y     = LAYOUT_LABEL_MUST_TUIKA_Y+LAYOUT_PARTY_DATA_LINE_HEIGHT*8,
 
   // --- PAGE 3
   LAYOUT_LABEL_PAGE3_X = 4,
@@ -328,6 +330,7 @@ static const LABEL_LAYOUT LabelLayout_Page2[] = {
   { DBGF_LABEL_PP_CONST,      LAYOUT_LABEL_PP_CONST_X,      LAYOUT_LABEL_PP_CONST_Y      },
   { DBGF_LABEL_HIT100PER,     LAYOUT_LABEL_HIT_100PER_X,    LAYOUT_LABEL_HIT_100PER_Y    },
   { DBGF_LABEL_DMGRAND_OFF,   LAYOUT_LABEL_DMG_RAND_OFF_X,  LAYOUT_LABEL_DMG_RAND_OFF_Y  },
+  { DBGF_LABEL_SKIP_IN,       LAYOUT_LABEL_SKIP_BTLIN_X,    LAYOUT_LABEL_SKIP_BTLIN_Y    },
 };
 //------------------------------------------------------
 /*
@@ -410,6 +413,7 @@ static const ITEM_LAYOUT ItemLayout_Page2[] = {
   { SELITEM_PP_CONST,       LAYOUT_LABEL_PP_CONST_X      +68, LAYOUT_LABEL_PP_CONST_Y       },
   { SELITEM_HIT_100PER,     LAYOUT_LABEL_HIT_100PER_X    +68, LAYOUT_LABEL_HIT_100PER_Y     },
   { SELITEM_DMG_RAND_OFF,   LAYOUT_LABEL_DMG_RAND_OFF_X  +98, LAYOUT_LABEL_DMG_RAND_OFF_Y   },
+  { SELITEM_SKIP_BTLIN,     LAYOUT_LABEL_SKIP_BTLIN_X    +68, LAYOUT_LABEL_SKIP_BTLIN_Y     },
 };
 
 /**
@@ -504,7 +508,7 @@ typedef struct {
   u32  fPPConst      : 1;
   u32  fHit100Per    : 1;
   u32  fDmgRandomOff : 1;
-
+  u32  fSkipBtlIn    : 1;
 
 }DEBUG_BTL_SAVEDATA;
 
@@ -1141,6 +1145,9 @@ static void selItem_Increment( DEBUG_BTL_WORK* wk, u16 itemID, int incValue )
   case SELITEM_DMG_RAND_OFF:
     save->fDmgRandomOff ^= 1;
     break;
+  case SELITEM_SKIP_BTLIN:
+    save->fSkipBtlIn ^= 1;
+    break;
   }
 }
 //----------------------------------------------------------------------------------
@@ -1268,6 +1275,7 @@ static void PrintItem( DEBUG_BTL_WORK* wk, u16 itemID, BOOL fSelect )
         case SELITEM_PP_CONST:      printItem_Flag( wk, wk->saveData.fPPConst, wk->strbuf ); break;
         case SELITEM_HIT_100PER:    printItem_Flag( wk, wk->saveData.fHit100Per, wk->strbuf ); break;
         case SELITEM_DMG_RAND_OFF:  printItem_Flag( wk, wk->saveData.fDmgRandomOff, wk->strbuf ); break;
+        case SELITEM_SKIP_BTLIN:    printItem_Flag( wk, wk->saveData.fSkipBtlIn, wk->strbuf ); break;
 
 
         default:
@@ -1479,14 +1487,15 @@ static BOOL mainProc_Root( DEBUG_BTL_WORK* wk, int* seq )
       { SELITEM_SAVE,          SELITEM_COMM_MODE,     SELITEM_POKE_SELF_1,   SELITEM_REC_MODE,      SELITEM_LOAD          },
       { SELITEM_LOAD,          SELITEM_COMM_MODE,     SELITEM_POKE_SELF_1,   SELITEM_SAVE,          SELITEM_REC_BUF       },
   /*    CurrentItem,           Up-Item,               Down-Item,             Right-Item,            Left-Item */
-      { SELITEM_MUST_TUIKA,    SELITEM_DMG_RAND_OFF,  SELITEM_MUST_TOKU,     SELITEM_NULL,          SELITEM_NULL          },
+      { SELITEM_MUST_TUIKA,    SELITEM_SKIP_BTLIN,    SELITEM_MUST_TOKU,     SELITEM_NULL,          SELITEM_NULL          },
       { SELITEM_MUST_TOKU,     SELITEM_MUST_TUIKA,    SELITEM_MUST_ITEM,     SELITEM_NULL,          SELITEM_NULL          },
       { SELITEM_MUST_ITEM,     SELITEM_MUST_TOKU,     SELITEM_MUST_CRITICAL, SELITEM_NULL,          SELITEM_NULL          },
       { SELITEM_MUST_CRITICAL, SELITEM_MUST_ITEM,     SELITEM_HP_CONST,      SELITEM_NULL,          SELITEM_NULL          },
       { SELITEM_HP_CONST,      SELITEM_MUST_CRITICAL, SELITEM_PP_CONST,      SELITEM_NULL,          SELITEM_NULL          },
       { SELITEM_PP_CONST,      SELITEM_HP_CONST,      SELITEM_HIT_100PER,    SELITEM_NULL,          SELITEM_NULL          },
       { SELITEM_HIT_100PER,    SELITEM_PP_CONST,      SELITEM_DMG_RAND_OFF,  SELITEM_NULL,          SELITEM_NULL          },
-      { SELITEM_DMG_RAND_OFF,  SELITEM_HIT_100PER,    SELITEM_MUST_TUIKA,    SELITEM_NULL,          SELITEM_NULL          },
+      { SELITEM_DMG_RAND_OFF,  SELITEM_HIT_100PER,    SELITEM_SKIP_BTLIN,    SELITEM_NULL,          SELITEM_NULL          },
+      { SELITEM_SKIP_BTLIN,    SELITEM_DMG_RAND_OFF,  SELITEM_MUST_TUIKA,    SELITEM_NULL,          SELITEM_NULL          },
   /*    CurrentItem,           Up-Item,               Down-Item,             Right-Item,            Left-Item */
       { SELITEM_BACKGROUND,    SELITEM_WEATHER,       SELITEM_LAND,          SELITEM_NULL,          SELITEM_NULL          },
       { SELITEM_LAND,          SELITEM_BACKGROUND,    SELITEM_TIMEZONE,      SELITEM_NULL,          SELITEM_NULL          },
@@ -2065,6 +2074,7 @@ static void setDebugParams( const DEBUG_BTL_SAVEDATA* save, BATTLE_SETUP_PARAM* 
   if( save->fPPConst )      { BTL_SETUP_SetDebugFlag( setup, BTL_DEBUGFLAG_PP_CONST );      }
   if( save->fHit100Per )    { BTL_SETUP_SetDebugFlag( setup, BTL_DEBUGFLAG_HIT100PER );     }
   if( save->fDmgRandomOff ) { BTL_SETUP_SetDebugFlag( setup, BTL_DEBUGFLAG_DMG_RAND_OFF );  }
+  if( save->fSkipBtlIn)     { BTL_SETUP_SetDebugFlag( setup, BTL_DEBUGFLAG_SKIP_BTLIN );  }
 }
 /**
  *  デバッグフラグの全オフ
@@ -2079,6 +2089,7 @@ static void clearDebugParams( DEBUG_BTL_SAVEDATA* save )
   save->fPPConst = 0;
   save->fHit100Per = 0;
   save->fDmgRandomOff = 0;
+  save->fSkipBtlIn = 0;
 }
 
 /**
