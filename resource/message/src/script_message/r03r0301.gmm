@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2010-01-15T11:23:08"/>
+	<create user="matsumiya" host="W00207" date="2010-01-15T11:54:45"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -294,9 +294,8 @@
 
 	<row id="msg_r03r0301_black_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
-・pos（GRIDX=000、GRIDZ=000）を踏むと
+・pos（GRIDX=27、GRIDZ=4~6）を踏むと
 　メッセージ表示
-※現状のposでOKです
 ・続けてhakaim1_01</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
 		<language name="JPN" width="256">ブラッカー『[1:00:トレーナー名:0]　きをつけて！▼
