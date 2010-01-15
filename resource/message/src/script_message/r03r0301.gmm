@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2010-01-14T22:36:17"/>
+	<create user="matsumiya" host="W00207" date="2010-01-15T11:21:21"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="ｍｓg_r03r0301_black_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_r03r0301_black_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・pos（GRIDX=000、GRIDZ=000）を踏むと
 　メッセージ表示
@@ -338,7 +338,7 @@
 正しき　我々が　負ける！？▼</language>
 	</row>
 
-	<row id="ｍｓg_r03r0301_black_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_r03r0301_black_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・主人公を向いてメッセージ表示
 ・続けてhakaim2_01
@@ -390,7 +390,7 @@
 我々が　正しいことを　教えましょう▼</language>
 	</row>
 
-	<row id="ｍｓg_r03r0301_black_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_r03r0301_black_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・プラズマ団を見たままメッセージ表示
 ・続けて、主人公を見てblack_04</comment>
@@ -403,7 +403,7 @@
 なにを　開き直って　いるんだか▼</language>
 	</row>
 
-	<row id="ｍｓg_r03r0301_black_04" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_r03r0301_black_04" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・メッセージ表示後に
 　ライバル、再度プラズマ団を見る
@@ -535,6 +535,16 @@
 		<language name="JPN_KANJI" width="256">プラズマ団『われわれは　違う！[BE:01:ページ切り替え（クリア）]
 まあいい　いつか
 自分たちの　愚かさに　気づけ……[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_r03r0301_hakaim_01" text-color="#ffffff,,,,,,,#ff0000,,,#ff0000,,,#ff0000,,,#ff0000,," back-color="#404040,,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">no　data</language>
+		<language name="JPN_KANJI" width="256">no　data</language>
+	</row>
+
+	<row id="msg_r03r0301_hakaim_03" text-color="#ffffff,,,,,,,#ff0000,,,#ff0000,,,#ff0000,,,#ff0000,," back-color="#404040,,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">no　data</language>
+		<language name="JPN_KANJI" width="256">no　data</language>
 	</row>
 
 	<flowchart-group-list>
