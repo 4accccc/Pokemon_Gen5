@@ -168,6 +168,7 @@ typedef enum {
   BTL_DEBUGFLAG_PP_CONST,       ///< PP減らない
   BTL_DEBUGFLAG_HIT100PER,      ///< 命中率が常に100％
   BTL_DEBUGFLAG_DMG_RAND_OFF,   ///< ダメージのランダム補正をオフ
+  BTL_DEBUGFLAG_SKIP_BTLIN,     ///< 入場エフェクトスキップ（非通信時のみ）
 
   BTL_DEBUGFLAG_MAX,
 
