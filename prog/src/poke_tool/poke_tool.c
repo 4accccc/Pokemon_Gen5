@@ -1465,6 +1465,7 @@ u8  PP_GetSeikaku( const POKEMON_PARAM *pp )
 {
   return  PPP_GetSeikaku( &pp->ppp );
 }
+
 //============================================================================================
 /**
  *  ポケモンの性格を取得（引数がPOKEMON_PASO_PARAM)
@@ -1477,6 +1478,34 @@ u8  PP_GetSeikaku( const POKEMON_PARAM *pp )
 u8  PPP_GetSeikaku( const POKEMON_PASO_PARAM *ppp )
 {
   return PPP_Get( ppp, ID_PARA_seikaku, 0 );
+}
+
+//============================================================================================
+/**
+ *  ポケモンの性格をセット（引数がPOKEMON_PARAM)
+ *
+ * @param[in] pp  セットしたいポケモンパラメータ構造体のポインタ
+ * @param[in] chr セットする性格  
+ */
+//============================================================================================
+void  PP_SetSeikaku( POKEMON_PARAM *pp, u8 chr )
+{
+  PPP_SetSeikaku( &pp->ppp, chr );
+  PP_Renew( pp );
+}
+
+//============================================================================================
+/**
+ *  ポケモンの性格をセット（引数がPOKEMON_PASO_PARAM)
+ *
+ * @param[in] ppp セットしたいポケモンパラメータ構造体のポインタ
+ * @param[in] chr セットする性格  
+ *
+ */
+//============================================================================================
+void  PPP_SetSeikaku( POKEMON_PASO_PARAM *ppp, u8 chr )
+{
+  PPP_Put( ppp, ID_PARA_seikaku, chr );
 }
 
 //=============================================================================================
@@ -2799,6 +2828,10 @@ static  void  ppp_putAct( POKEMON_PASO_PARAM *ppp, int paramID, u32 arg )
         ppp4->get_place = ID_TOOIBASYO;     //捕まえた場所
         ppp2->new_get_place = buf16[0];     //捕まえた場所
       }
+#else
+      //@todo とりあえず判定はせず代入だけ
+      ppp4->get_place = arg;       //捕まえた場所
+      ppp2->new_get_place = arg;   //捕まえた場所
 #endif
       break;
     case ID_PARA_birth_place:           //生まれた場所
