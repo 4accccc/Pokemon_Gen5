@@ -144,7 +144,7 @@ void GFLUser_Init(void)
   GFL_UI_Boot(GFL_HEAPID_SYSTEM);
 
   // アサート停止関数の設定
-  if( OS_GetConsoleType() & OS_CONSOLE_NITRO ){
+  if( OS_GetConsoleType() & (OS_CONSOLE_NITRO|OS_CONSOLE_TWL) ){
     // ROM実行用（可能なら情報をLCD表示）
     GFL_ASSERT_SetLCDMode();
   }else{

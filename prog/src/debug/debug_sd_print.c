@@ -85,7 +85,7 @@ void DEB_SD_PRINT_InitSystem( const HEAPID heapId )
     }
     
     //ASSERTを上書き
-    if( OS_GetConsoleType() & OS_CONSOLE_NITRO )
+    if( OS_GetConsoleType() & (OS_CONSOLE_NITRO|OS_CONSOLE_TWL) )
     {
       // ROM実行用（可能なら情報をLCD表示）
       GFL_ASSERT_SetDisplayFunc( ASSERT_DEFAULT_dispInit , DEB_SD_PRINT_AssertDispMain , ASSERT_DEFAULT_dispFinish );
