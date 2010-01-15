@@ -392,12 +392,10 @@ use constant MCSS_SHIFT		=>	8;			#ポリゴン1辺の重み（FX32_SHIFTと同値）
       for( $mc = 0 ; $mc < $multi_cells ; $mc++ ){
 	      read READ_NMC, $header, 24; 
  	      ($cell_index, $frame, $rot, $scale_x, $scale_y, $trans_x, $trans_y) = unpack "S S L L L L L", $header;
-        if( $label_index == 1 ){
-          for( $i = 0; $i < $cell_anm_max[$label_index] ; $i++ ){
-            $sc = $mcell_anms[$label_index][$i];
-            if( $stop_cell[$sc] == 1 ){
-              push( @node, $i );
-            }
+        for( $i = 0; $i < $cell_anm_max[$cell_index] ; $i++ ){
+          $sc = $mcell_anms[$cell_index][$i];
+          if( $stop_cell[$sc] == 1 ){
+            push( @node, $i );
           }
         }
       }
