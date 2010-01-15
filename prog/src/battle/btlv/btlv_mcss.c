@@ -1579,6 +1579,8 @@ void  BTLV_MCSS_AddDebug( BTLV_MCSS_WORK *bmw, const MCSS_ADD_DEBUG_WORK *madw, 
   bmw->mcss[ position ] = MCSS_AddDebug( bmw->mcss_sys, pos.x, pos.y, pos.z, madw );
 
   BTLV_MCSS_SetDefaultScale( bmw, position );
+
+  MCSS_SetAnimCtrlCallBack( bmw->mcss[ position ], position, BTLV_MCSS_CallBackFunctorFrame, 1 );
 }
 
 //============================================================================================
