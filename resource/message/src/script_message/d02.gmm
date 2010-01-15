@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2010-01-13T12:27:05"/>
+	<create user="matsumiya" host="W00207" date="2010-01-15T20:02:41"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -302,45 +302,6 @@
 		<language name="JPN_KANJI" width="256">森と　いっても
 次の街への　通り道だから[BE:00:ページ切り替え（行送り）]
 迷ったりしないわよ　きっと</language>
-	</row>
-
-	<row id="msg_d02_hakaim1_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・c02ジムバッジ取得で削除
-・GRIDX=597
-　GRIDZ=583</comment>
-		<attribute name="キャラ指定">ＨＡＫＡＩＭ
-プラズマ団♂</attribute>
-		<language name="JPN" width="256">まちがった　かちかんを
-ハカイするためなら……</language>
-		<language name="JPN_KANJI" width="256">間違った　価値観を
-ハカイするためなら……</language>
-	</row>
-
-	<row id="msg_d02_hakaim2_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・c02ジムバッジ取得で削除
-・GRIDX=597
-　GRIDZ=584</comment>
-		<attribute name="キャラ指定">ＨＡＫＡＩＭ
-プラズマ団♂</attribute>
-		<language name="JPN" width="256">なかまが　ごうりゅう　したなら
-さくせんを　じっこうする！</language>
-		<language name="JPN_KANJI" width="256">仲間が　合流し次第
-作戦を　実行する！</language>
-	</row>
-
-	<row id="msg_d02_hakaiw_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♀
-・c02ジムバッジ取得で削除
-・GRIDX=597
-　GRIDZ=585</comment>
-		<attribute name="キャラ指定">ＨＡＫＡＩＷ
-プラズマ団♀</attribute>
-		<language name="JPN" width="256">すべての　ポケモンを　かいほうする……
-なんて　すばらしいんでしょう</language>
-		<language name="JPN_KANJI" width="256">すべての　ポケモンを　解放する……
-なんて　すばらしいんでしょう</language>
 	</row>
 
 	<row id="msg_d02_leader3_01" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
