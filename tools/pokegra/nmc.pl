@@ -31,4 +31,6 @@ use File::Basename;
 	system $cmd;
 	$cmd = "rm " . $filename . "_r.NCLR";
 	system $cmd;
+	$cmd = "rm " . $filename . ".NCLR";
+	system $cmd;
 

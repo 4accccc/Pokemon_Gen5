@@ -24,6 +24,7 @@ use File::Basename;
 		#パレットファイル生成
 		$filename = basename( @ARGV[0], 'ncg' );
 		$filename =~ s/pfwb/pmwb/g;
+		$filename =~ s/pbwb/pmwb/g;
 		$filename =~ s/c_m\.//g;
 		$filename =~ s/c_f\.//g;
 		$filename =~ s/(c_)(\w*)(_m)\./_$2/g;
@@ -31,6 +32,8 @@ use File::Basename;
 		$cmd = "rm " . $filename . "_n.NCLR";
 		system $cmd;
 		$cmd = "rm " . $filename . "_r.NCLR";
+		system $cmd;
+		$cmd = "rm " . $filename . "NCLR";
 		system $cmd;
 
 		#_fファイルが存在しない場合に生成
