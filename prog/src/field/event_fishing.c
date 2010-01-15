@@ -97,7 +97,7 @@ static const VecFx32 DATA_FishingFormOfs[] = {
 /*
  *  @brief  釣りができるポジションかチェック
  */
-static BOOL FieldFishingCheckPos( GAMEDATA* gdata, FIELDMAP_WORK* fieldmap, VecFx32* outPos )
+BOOL FieldFishingCheckPos( GAMEDATA* gdata, FIELDMAP_WORK* fieldmap, VecFx32* outPos )
 {
   u8 dir;
   VecFx32 pos;
@@ -127,9 +127,11 @@ static BOOL FieldFishingCheckPos( GAMEDATA* gdata, FIELDMAP_WORK* fieldmap, VecF
         MAPATTR_GetAttrValue( gridData.attr ),GAMEDATA_GetSeasonID( gdata ))){
     return FALSE;
   }
-  outPos->x = pos.x;
-  outPos->y = gridData.height;
-  outPos->z = pos.z;
+  if( outPos != NULL ){
+    outPos->x = pos.x;
+    outPos->y = gridData.height;
+    outPos->z = pos.z;
+  }
 
   return TRUE;
 }

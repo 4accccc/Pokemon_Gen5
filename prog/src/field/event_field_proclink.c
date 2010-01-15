@@ -374,32 +374,8 @@ GMEVENT * EVENT_ProcLink( EVENT_PROCLINK_PARAM *param, HEAPID heapID )
   NAGI_Printf(  "init call %d\n", wk->param->call);
 
   //アイテム使用検査ワーク設定
-  { 
-    const VecFx32 *pPos;
-    GAMEDATA* pGameData = GAMESYSTEM_GetGameData(wk->param->gsys);
-    PLAYER_WORK *playerWork = GAMEDATA_GetMyPlayerWork( pGameData );
-    FIELD_PLAYER *fld_player = FIELDMAP_GetFieldPlayer(wk->param->field_wk);
-
-    // 仮登録としてすべての道具チェックをOKにしておく
-    {
-      int i;
-      for(i=0;i<ITEMCHECK_MAX;i++){
-        ITEMUSE_SetItemUseCheck( &wk->icwk, i, 1 );
-      }
-    }
-
-    pPos = PLAYERWORK_getPosition( playerWork );
-    wk->icwk.NowAttr = FIELD_PLAYER_GetMapAttr(fld_player);
-    wk->icwk.FrontAttr =FIELD_PLAYER_GetDirMapAttr(fld_player, FIELD_PLAYER_GetDir(fld_player));
-    wk->icwk.gsys = wk->param->gsys;
-    //ゾーンＩＤ
-    wk->icwk.zone_id = PLAYERWORK_getZoneID(GAMEDATA_GetMyPlayerWork(pGameData ));
-    //連れ歩き
-    wk->icwk.Companion = FALSE;
-
-    wk->icwk.PlayerForm=0;  //　自機の形状（自転車に乗っているかとか）
-    wk->icwk.SeedInfo=0;  //使用可能なアイテム情報（きのみ関連）  
-  }
+  ITEMUSE_InitCheckWork( &wk->icwk, wk->param->gsys, wk->param->field_wk );
+  //フィールドスキル検査ワーク設定
   FLDSKILL_InitCheckWork( wk->param->field_wk, &wk->scwk );
 
   return event;

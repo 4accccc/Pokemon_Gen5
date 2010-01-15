@@ -5,6 +5,14 @@
  *  @datge  09.12.04
  */
 
+
+/*
+ *  @brief  釣りができるポジションかチェック
+ *
+ *  @param  outPos  座標が要らなければNULLで良い
+ */
+extern BOOL FieldFishingCheckPos( GAMEDATA* gdata, FIELDMAP_WORK* fieldmap, VecFx32* outPos );
+
 //------------------------------------------------------------------
 /*
  *  @brief  釣りイベント起動

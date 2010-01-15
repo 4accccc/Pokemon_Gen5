@@ -46,9 +46,9 @@ enum BAG_NEXTPROC_ENUM
 // フィールドで使用・不使用チェックの収集に使用するID
 // ※新しく使用する道具が増えた場合はこのenum定義に新しい名前を追加する
 //   且つ、bag_param.hのBAG_SetItemUseCheck関数で道具使用・不使用の状態を格納する必要あり
+// ※登録できるIDは32個まで(ITEMCHECK_WORK)
 typedef enum {
-  ITEMCHECK_CYCLE_RIDE=0, // 自転車のる
-  ITEMCHECK_CYCLE_STOP,   // 自転車おりる
+  ITEMCHECK_CYCLE=0, // 自転車(乗っていない時はTRUEで乗れる、乗っている時はTRUEで降りれる)
   ITEMCHECK_TOWNMAP,      // タウンマップ
   ITEMCHECK_WIFINOTE,     // ともだち手帳
   ITEMCHECK_ANANUKENOHIMO,// あなぬけのヒモ

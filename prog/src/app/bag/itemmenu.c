@@ -908,7 +908,7 @@ static int _check_Cycle( FIELD_ITEMMENU_WORK *pWork )
 {
 
   if(BAG_MENU_TSUKAU==pWork->ret_code2){
-    if(ITEMUSE_GetItemUseCheck( pWork->icwk, ITEMCHECK_CYCLE_RIDE)){
+    if(ITEMUSE_GetItemUseCheck( pWork->icwk, ITEMCHECK_CYCLE)){
       pWork->ret_code = BAG_NEXTPROC_RIDECYCLE;  //‚Ì‚é
       _CHANGE_STATE(pWork,NULL);
       return TRUE;
@@ -922,7 +922,7 @@ static int _check_Cycle( FIELD_ITEMMENU_WORK *pWork )
       return FALSE;
     }
   }else if(BAG_MENU_ORIRU==pWork->ret_code2){
-    if(ITEMUSE_GetItemUseCheck( pWork->icwk, ITEMCHECK_CYCLE_STOP)){
+    if(ITEMUSE_GetItemUseCheck( pWork->icwk, ITEMCHECK_CYCLE)){
       pWork->ret_code = BAG_NEXTPROC_DROPCYCLE;  //‚¨‚è‚é
       _CHANGE_STATE(pWork,NULL);
       return TRUE;
