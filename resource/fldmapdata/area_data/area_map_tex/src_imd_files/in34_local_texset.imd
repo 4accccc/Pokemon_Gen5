@@ -3,7 +3,7 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fujiwara_maiko" host="W00194" date="2010-01-14T23:45:55"/>
+	<create user="fujiwara_maiko" host="W00194" date="2010-01-15T15:16:13"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="NNS_3DMaterialEditor" version="2.8.0.20050620"/>
 </head>
@@ -29,7 +29,7 @@
 
 <box_test pos_scale="0" xyz="-0.500000 -0.500000 -0.500000" whd="1.000000 1.000000 1.000000"/>
 
-<tex_image_array size="30">
+<tex_image_array size="31">
 	<tex_image index="0" name="c03_06"
 		width="16" height="8" original_width="16" original_height="8"
 		format="palette16"
@@ -120,14 +120,14 @@
 		path="C:/home/wb_data3d/field/in34/chip/tex/c09_01_gl.tga"
 	>
 		<bitmap size="64">
-			0000 0000 0000 3200 0000 0000 0000 3200
-			0000 0000 0000 3200 0000 0000 0000 3200
-			4444 3444 3333 4444 2224 2222 3222 4444
-			1124 1111 3211 4444 1124 1111 3211 4444
-			1124 1111 3211 4444 1123 1111 3211 4444
-			1123 1111 3211 4444 1123 1111 3211 4444
-			1123 1111 3211 4444 1123 1111 3211 4444
-			2223 2222 3222 4444 3333 3333 3333 4444
+			0000 0000 0000 5300 0000 0000 0000 5300
+			0000 0000 0000 5300 0000 0000 0000 5300
+			aa69 aaaa aaaa 6aaa ba63 bbbb bbbb 6abb
+			ba61 cccc cccc 6abc ba61 cccc cccc 6abc
+			ba61 cccc cccc 6abc ba61 bbbb bbbb 6abb
+			aa61 aaaa aaaa 6aaa 8861 8888 8888 6888
+			7751 7777 7777 5777 7751 7777 7777 5777
+			4423 4444 4444 2444 2225 2222 2222 2222
 		</bitmap>
 	</tex_image>
 	<tex_image index="5" name="c09_01_hari"
@@ -578,38 +578,38 @@
 		path="C:/home/wb_data3d/field/in34/chip/tex/c09_01_yuka.tga"
 	>
 		<bitmap size="256">
-			1111 1311 2231 1122 1111 1311 2131 1122
-			1111 0311 2230 1112 1111 0311 2130 1112
-			1111 0311 2130 1111 1111 0311 2130 1111
-			1111 0341 1430 1111 1111 0341 1430 1111
-			1111 0344 4430 1111 1111 0344 4430 1111
-			4411 0344 4430 1144 4411 0344 4430 1144
-			3333 0333 3330 3333 3333 0333 3330 3333
-			0001 0000 0000 1000 0001 0000 0000 1000
-			0001 0000 0000 1000 0001 0000 0000 1000
-			3333 0333 3310 3333 3333 0133 3330 3333
-			4111 0344 4130 4444 4444 0314 4430 1114
-			1222 0344 4430 4444 1444 0341 4430 2221
-			1122 0341 4430 4444 1144 0341 1430 2222
-			1112 0311 4130 4444 1114 0311 2130 2222
-			1111 0311 4430 4444 1111 0311 2230 2222
-			1111 1311 4431 1444 1111 1311 2231 1222
-			1111 1311 4431 1144 1111 1311 2231 1122
-			1111 0311 4430 1114 1111 0311 2230 1112
-			1111 0311 4130 1111 1111 0311 2130 1111
-			1111 0341 1430 1111 1111 0341 1430 1111
-			1111 0344 1430 1111 1111 0341 4430 1111
-			4111 0344 4130 1114 4111 0314 4430 1114
-			3333 0333 3310 3333 3333 0133 3330 3333
-			0001 0000 0000 1000 0001 0000 0000 1000
-			0001 0000 0000 1000 0001 0000 0000 1000
-			3333 0333 3330 3333 3333 0333 3330 3333
-			4111 0344 4430 1114 4111 0344 4430 1114
-			1222 0344 4430 2221 1222 0344 4430 2221
-			1122 0341 1430 2222 1122 0341 1430 2222
-			1112 0311 2130 2222 1112 0311 2130 2222
-			1111 0311 2230 2222 1111 0311 2230 2222
-			1111 1311 2231 1222 1111 1311 2231 1222
+			3444 1344 4431 4443 3444 1344 4431 4443
+			3444 1344 4431 4443 3444 1344 4431 4443
+			3444 0344 4431 4443 3444 0344 4431 4443
+			3333 0344 4431 3333 3333 0344 4431 3333
+			4444 0344 4430 4444 4444 0344 4430 4444
+			4444 0334 4330 4444 4444 0334 4330 4444
+			3333 0133 3310 3333 3333 0133 3310 3333
+			0111 0000 0000 1110 0111 0000 0000 1110
+			0111 0000 0000 1000 0001 0000 0000 1110
+			3333 0133 3330 3333 3333 0333 3310 3333
+			4444 0334 4430 1114 4111 0344 4330 4444
+			4444 0344 4430 2221 1222 0344 4430 4444
+			3333 0344 1430 2222 1122 1341 4431 3333
+			3444 0344 2130 2222 1112 1311 4431 4443
+			3444 0344 2230 2222 1111 1311 4431 4443
+			3444 1344 2231 1222 1111 1311 4431 4443
+			3444 1344 2231 1122 1111 1311 4431 4443
+			3444 1344 2231 1112 1111 1311 4431 4443
+			3444 0344 2130 1111 1111 1311 4431 4443
+			3333 0344 1430 1111 1111 1341 4431 3333
+			4444 0344 4430 1111 1111 0344 4430 4444
+			4444 0334 4430 1114 4111 0344 4330 4444
+			3333 0133 3330 3333 3333 0333 3310 3333
+			0111 0000 0000 1000 0001 0000 0000 1110
+			0111 0000 0000 1110 0111 0000 0000 1110
+			3333 0133 3310 3333 3333 0133 3310 3333
+			4444 0334 4330 4444 4444 0334 4330 4444
+			4444 0344 4430 4444 4444 0344 4430 4444
+			3333 0344 4431 3333 3333 0344 4431 3333
+			3444 0344 4431 4443 3444 0344 4431 4443
+			3444 0344 4431 4443 3444 0344 4431 4443
+			3444 1344 4431 4443 3444 1344 4431 4443
 		</bitmap>
 	</tex_image>
 	<tex_image index="15" name="c09_04_8"
@@ -896,7 +896,19 @@
 			0008 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="17" name="chip_mat"
+	<tex_image index="17" name="c09_04_mado"
+		width="8" height="8" original_width="8" original_height="8"
+		format="palette16"
+		color0_mode="color"
+		palette_name="c09_04_mado_pl"
+		path="C:/home/wb_data3d/field/in54/chip/tex/c09_04_mado.tga"
+	>
+		<bitmap size="16">
+			5320 1555 3320 1333 2220 1222 4444 2244
+			4444 3344 4444 5544 4444 3344 4444 2244
+		</bitmap>
+	</tex_image>
+	<tex_image index="18" name="chip_mat"
 		width="16" height="16" original_width="16" original_height="16"
 		format="palette4"
 		color0_mode="color"
@@ -910,7 +922,7 @@
 			aa94 16aa 5550 0555 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="18" name="hero.1"
+	<tex_image index="19" name="hero.1"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
 		color0_mode="transparency"
@@ -952,7 +964,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="19" name="hero.10"
+	<tex_image index="20" name="hero.10"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
 		color0_mode="transparency"
@@ -994,7 +1006,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="20" name="hero.2"
+	<tex_image index="21" name="hero.2"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
 		color0_mode="transparency"
@@ -1036,7 +1048,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="21" name="hero.3"
+	<tex_image index="22" name="hero.3"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
 		color0_mode="transparency"
@@ -1078,7 +1090,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="22" name="hero.4"
+	<tex_image index="23" name="hero.4"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
 		color0_mode="transparency"
@@ -1120,7 +1132,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="23" name="hero.5"
+	<tex_image index="24" name="hero.5"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
 		color0_mode="transparency"
@@ -1162,7 +1174,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="24" name="hero.6"
+	<tex_image index="25" name="hero.6"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
 		color0_mode="transparency"
@@ -1204,7 +1216,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="25" name="hero.7"
+	<tex_image index="26" name="hero.7"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
 		color0_mode="transparency"
@@ -1246,7 +1258,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="26" name="hero.8"
+	<tex_image index="27" name="hero.8"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
 		color0_mode="transparency"
@@ -1288,7 +1300,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="27" name="hero.9"
+	<tex_image index="28" name="hero.9"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
 		color0_mode="transparency"
@@ -1330,7 +1342,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="28" name="in20book_08"
+	<tex_image index="29" name="in20book_08"
 		width="64" height="32" original_width="64" original_height="32"
 		format="palette256"
 		color0_mode="color"
@@ -1468,7 +1480,7 @@
 			1212 1212 1212 1212 1212 1212 1212 1212
 		</bitmap>
 	</tex_image>
-	<tex_image index="29" name="in20tana_01"
+	<tex_image index="30" name="in20tana_01"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
 		color0_mode="color"
@@ -1512,7 +1524,7 @@
 	</tex_image>
 </tex_image_array>
 
-<tex_palette_array size="30">
+<tex_palette_array size="31">
 	<tex_palette index="0" name="c03_06_pl" color_size="16">
 		683f 36fc 125c 1239 1df6 15d5 1593 1152
 		0889 7fff 7fff 7fff 7fff 7fff 7fff 7fff
@@ -1526,8 +1538,9 @@
 	<tex_palette index="3" name="c09_01_ana_pl" color_size="8">
 		0000 0c40 1040 1460 1c80 24a0 7fff 7fff
 	</tex_palette>
-	<tex_palette index="4" name="c09_01_gl_pl" color_size="8">
-		0000 3cc0 5d80 7e20 7ee1 7fff 7fff 7fff
+	<tex_palette index="4" name="c09_01_gl_pl" color_size="16">
+		0000 2c42 4466 4483 5c87 5cc4 5d45 69aa
+		6a0b 6de4 728a 7f4d 7fd1 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="5" name="c09_01_hari_pl" color_size="4">
 		7c1f 1863 2ca1 3cc0
@@ -1562,7 +1575,7 @@
 		0084 04a6 04c7 196b 21ad 3651 7fff 7fff
 	</tex_palette>
 	<tex_palette index="14" name="c09_01_yuka_pl" color_size="8">
-		0463 0884 08a5 0cc6 0ce7 7fff 7fff 7fff
+		1082 10a2 10c3 14e5 1949 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="15" name="c09_04_8_pl" color_size="32">
 		0000 0421 0821 0841 0c42 1063 1463 1483
@@ -1578,56 +1591,59 @@
 		2d27 2d47 2d48 2d49 2d68 2d69 3148 3168
 		3169 3188 3189 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="17" name="chip_mat_pl" color_size="4">
+	<tex_palette index="17" name="c09_04_mado_pl" color_size="8">
+		3e10 4a73 56d6 6b5a 703e 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="18" name="chip_mat_pl" color_size="4">
 		28f8 2d18 3539 7fff
 	</tex_palette>
-	<tex_palette index="18" name="hero.10_pl" color_size="16">
+	<tex_palette index="19" name="hero.10_pl" color_size="16">
 		2e47 416b 28e7 1ca5 4d47 6af5 61e8 728e
 		7779 192d 3a7a 5f5f 35bd 7fff 0000 7fff
 	</tex_palette>
-	<tex_palette index="19" name="hero.1_pl" color_size="16">
+	<tex_palette index="20" name="hero.1_pl" color_size="16">
 		2e47 3554 416b 28e7 1ca5 4d47 6af5 61e8
 		728e 7779 192d 3a7a 5f5f 35bd 7fff 0000
 	</tex_palette>
-	<tex_palette index="20" name="hero.2_pl" color_size="16">
+	<tex_palette index="21" name="hero.2_pl" color_size="16">
 		2e47 3554 416b 28e7 1ca5 4d47 6af5 61e8
 		728e 7779 192d 3a7a 5f5f 35bd 7fff 0000
 	</tex_palette>
-	<tex_palette index="21" name="hero.3_pl" color_size="16">
+	<tex_palette index="22" name="hero.3_pl" color_size="16">
 		2e47 3554 416b 28e7 1ca5 4d47 6af5 61e8
 		728e 7779 192d 3a7a 5f5f 35bd 7fff 0000
 	</tex_palette>
-	<tex_palette index="22" name="hero.4_pl" color_size="16">
+	<tex_palette index="23" name="hero.4_pl" color_size="16">
 		2e47 3554 416b 28e7 1ca5 4d47 6af5 61e8
 		728e 7779 192d 3a7a 5f5f 35bd 7fff 0000
 	</tex_palette>
-	<tex_palette index="23" name="hero.5_pl" color_size="16">
+	<tex_palette index="24" name="hero.5_pl" color_size="16">
 		2e47 3554 416b 28e7 1ca5 4d47 6af5 61e8
 		728e 7779 192d 3a7a 5f5f 35bd 7fff 0000
 	</tex_palette>
-	<tex_palette index="24" name="hero.6_pl" color_size="16">
+	<tex_palette index="25" name="hero.6_pl" color_size="16">
 		2e47 3554 416b 28e7 1ca5 4d47 6af5 61e8
 		728e 7779 192d 3a7a 5f5f 35bd 7fff 0000
 	</tex_palette>
-	<tex_palette index="25" name="hero.7_pl" color_size="16">
+	<tex_palette index="26" name="hero.7_pl" color_size="16">
 		2e47 3554 416b 28e7 1ca5 4d47 6af5 61e8
 		728e 7779 192d 3a7a 5f5f 35bd 7fff 0000
 	</tex_palette>
-	<tex_palette index="26" name="hero.8_pl" color_size="16">
+	<tex_palette index="27" name="hero.8_pl" color_size="16">
 		2e47 3554 416b 28e7 1ca5 4d47 6af5 61e8
 		728e 7779 192d 3a7a 5f5f 35bd 7fff 0000
 	</tex_palette>
-	<tex_palette index="27" name="hero.9_pl" color_size="16">
+	<tex_palette index="28" name="hero.9_pl" color_size="16">
 		2e47 3554 416b 28e7 1ca5 4d47 6af5 61e8
 		728e 7779 192d 3a7a 5f5f 35bd 7fff 0000
 	</tex_palette>
-	<tex_palette index="28" name="in20book_08_pl" color_size="32">
+	<tex_palette index="29" name="in20book_08_pl" color_size="32">
 		1880 1881 1ca0 1ca1 1ca2 20c1 20c2 2480
 		24e1 24e3 2840 28c1 2942 2945 2d63 2d66
 		2d83 2d87 3d86 4580 48a0 49eb 5420 5560
 		5eb2 5ef6 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="29" name="in20tana_01_pl" color_size="8">
+	<tex_palette index="30" name="in20tana_01_pl" color_size="8">
 		1c80 1ca1 1ca2 3146 3567 3589 358a 3d46
 	</tex_palette>
 </tex_palette_array>
@@ -1737,7 +1753,7 @@
 
 <ex_nns_3dme>
 	<ex_model_info scene_name="V‹KƒV[ƒ“" disp_pos="0.000000 60.000000"/>
-	<ex_tex_image_array size="30">
+	<ex_tex_image_array size="31">
 		<ex_tex_image index="0" disp_pos="0.000000 0.000000"/>
 		<ex_tex_image index="1" disp_pos="0.000000 0.000000"/>
 		<ex_tex_image index="2" disp_pos="0.000000 0.000000"/>
@@ -1768,8 +1784,9 @@
 		<ex_tex_image index="27" disp_pos="0.000000 0.000000"/>
 		<ex_tex_image index="28" disp_pos="0.000000 0.000000"/>
 		<ex_tex_image index="29" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="30" disp_pos="0.000000 0.000000"/>
 	</ex_tex_image_array>
-	<ex_tex_palette_array size="30">
+	<ex_tex_palette_array size="31">
 		<ex_tex_palette index="0" disp_pos="0.000000 0.000000"/>
 		<ex_tex_palette index="1" disp_pos="0.000000 0.000000"/>
 		<ex_tex_palette index="2" disp_pos="0.000000 0.000000"/>
@@ -1800,6 +1817,7 @@
 		<ex_tex_palette index="27" disp_pos="0.000000 0.000000"/>
 		<ex_tex_palette index="28" disp_pos="0.000000 0.000000"/>
 		<ex_tex_palette index="29" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="30" disp_pos="0.000000 0.000000"/>
 	</ex_tex_palette_array>
 	<ex_material_array size="1">
 		<ex_material index="0" disp_pos="0.000000 240.000000"/>
