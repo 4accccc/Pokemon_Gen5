@@ -144,6 +144,7 @@ typedef struct
 struct _FIELD_MENU_WORK
 {
   HEAPID heapId;
+  HEAPID tempHeapId;  //一時確保用ヒープ
   FIELDMAP_WORK *fieldWork;
   FIELD_SUBSCREEN_WORK *subScrWork;
   FIELD_MENU_STATE state;
@@ -241,7 +242,7 @@ static const u32 FIELD_MENU_ITEM_ICON_RES_ARR[FMIT_MAX][3] =
 //--------------------------------------------------------------
 //  初期化
 //--------------------------------------------------------------
-FIELD_MENU_WORK* FIELD_MENU_InitMenu( const HEAPID heapId , FIELD_SUBSCREEN_WORK* subScreenWork , FIELDMAP_WORK *fieldWork , const BOOL isScrollIn )
+FIELD_MENU_WORK* FIELD_MENU_InitMenu( const HEAPID heapId , const HEAPID tempHeapId , FIELD_SUBSCREEN_WORK* subScreenWork , FIELDMAP_WORK *fieldWork , const BOOL isScrollIn )
 {
   int menuType;
   FIELD_MENU_WORK *work = GFL_HEAP_AllocMemory( heapId , sizeof( FIELD_MENU_WORK ) );
@@ -249,6 +250,7 @@ FIELD_MENU_WORK* FIELD_MENU_InitMenu( const HEAPID heapId , FIELD_SUBSCREEN_WORK
   GAMESYS_WORK *gameSys = FIELDMAP_GetGameSysWork( fieldWork );
   GAMEDATA *gameData = GAMESYSTEM_GetGameData( gameSys );
   work->heapId = heapId;
+  work->tempHeapId = tempHeapId;
   work->fieldWork = fieldWork;
   work->subScrWork = subScreenWork;
   work->state = FMS_WAIT_INIT;
@@ -267,7 +269,7 @@ FIELD_MENU_WORK* FIELD_MENU_InitMenu( const HEAPID heapId , FIELD_SUBSCREEN_WORK
   work->isUpdateScroll = FALSE;
   work->scrollOffset = 0;
   
-  arcHandle = GFL_ARC_OpenDataHandle( ARCID_FIELD_MENU , work->heapId );
+  arcHandle = GFL_ARC_OpenDataHandle( ARCID_FIELD_MENU , work->tempHeapId );
   //メニューの種類取得
   menuType = _get_menuType( work->ev, work->zoneId );
   work->menuType = menuType;
@@ -292,7 +294,7 @@ FIELD_MENU_WORK* FIELD_MENU_InitMenu( const HEAPID heapId , FIELD_SUBSCREEN_WORK
     FIELD_MENU_SetMenuItemNo( work , GAMEDATA_GetSubScreenType( gameData ) );
   }
   
-  GFL_NET_WirelessIconEasy_HoldLCD( FALSE , work->heapId );
+  GFL_NET_WirelessIconEasy_HoldLCD( FALSE , work->tempHeapId );
   GFL_NET_ReloadIcon();
 
   return work;
@@ -520,12 +522,12 @@ static void FIELD_MENU_InitGraphic(  FIELD_MENU_WORK* work , ARCHANDLE *arcHandl
   GFL_BG_SetScroll( FIELD_MENU_BG_NAME , GFL_BG_SCROLL_Y_SET , -4 );
   
   GFL_ARCHDL_UTIL_TransVramPalette( arcHandle , NARC_field_menu_menu_bg_NCLR , 
-                    PALTYPE_SUB_BG , 0 , 0 , work->heapId );
+                    PALTYPE_SUB_BG , 0 , 0 , work->tempHeapId );
   GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_field_menu_menu_bg_NCGR ,
-                    FIELD_MENU_BG_BACK , 0 , 0, FALSE , work->heapId );
+                    FIELD_MENU_BG_BACK , 0 , 0, FALSE , work->tempHeapId );
 
   GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , menu_screen_table[menuType] , 
-                      FIELD_MENU_BG_BACK ,  0 , 0, FALSE , work->heapId );
+                      FIELD_MENU_BG_BACK ,  0 , 0, FALSE , work->tempHeapId );
   work->objRes[FMO_COM_PLT] = GFL_CLGRP_PLTT_Register( arcHandle , 
                                   NARC_field_menu_menu_obj_common_NCLR ,
                                   CLSYS_DRAW_SUB , 0 , work->heapId );
@@ -542,7 +544,7 @@ static void FIELD_MENU_InitGraphic(  FIELD_MENU_WORK* work , ARCHANDLE *arcHandl
   GFL_BG_LoadScreenReq( FIELD_MENU_BG_BACK );
   
   //フォント用パレット
-  GFL_ARC_UTIL_TransVramPalette( ARCID_FONT , NARC_font_default_nclr , PALTYPE_SUB_BG , FIELD_MENU_PLT_FONT * 32, 16*2, work->heapId );
+  GFL_ARC_UTIL_TransVramPalette( ARCID_FONT , NARC_font_default_nclr , PALTYPE_SUB_BG , FIELD_MENU_PLT_FONT * 32, 16*2, work->tempHeapId );
   
   //セル系システムの作成
   work->cellUnit = GFL_CLACT_UNIT_Create( 7 , 0 , work->heapId );
@@ -678,7 +680,7 @@ static void FIELD_MENU_InitIcon(  FIELD_MENU_WORK* work , ARCHANDLE *arcHandle, 
   };
 
   GFL_MSGDATA *msgHandle = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL , ARCID_MESSAGE , 
-                                           NARC_message_fldmapmenu_dat , work->heapId );
+                                           NARC_message_fldmapmenu_dat , work->tempHeapId );
   //文字列の作成
   for( i=0;i<FIELD_MENU_ITEM_NUM;i++ )
   {
@@ -694,7 +696,7 @@ static void FIELD_MENU_InitIcon(  FIELD_MENU_WORK* work , ARCHANDLE *arcHandle, 
     {
       //トレーナーカード
       MYSTATUS  *mystatus = SaveData_GetMyStatus( SaveControl_GetPointer() );
-      initWork.str = GFL_STR_CreateBuffer( 16 , work->heapId );
+      initWork.str = GFL_STR_CreateBuffer( 16 , work->tempHeapId );
       if( MyStatus_CheckNameClear( mystatus ) == FALSE )
       {
         const STRCODE *myname = MyStatus_GetMyName( mystatus );

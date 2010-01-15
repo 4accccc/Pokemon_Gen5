@@ -11,6 +11,7 @@
 //=============================================================================
 
 #include <gflib.h>
+#include "system/main.h"
 #include "field_subscreen.h"
 
 #include "system/wipe.h"
@@ -744,7 +745,7 @@ static void init_topmenu_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSCREEN
 	
 	GFL_DISP_GXS_SetVisibleControl(GX_PLANEMASK_OBJ,VISIBLE_ON);
 	
-	pWork->fieldMenuWork = FIELD_MENU_InitMenu( pWork->heapID , pWork , pWork->fieldmap , isScrollIn );
+	pWork->fieldMenuWork = FIELD_MENU_InitMenu( HEAPID_FIELD_SUBSCREEN , pWork->heapID , pWork , pWork->fieldmap , isScrollIn );
 	INFOWIN_Init( FIELD_SUBSCREEN_BGPLANE , FIELD_SUBSCREEN_PALLET , commSys , pWork->heapID);
 }
 
