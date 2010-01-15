@@ -446,39 +446,44 @@ void GATE_GIMMICK_Move( FIELDMAP_WORK* fieldmap )
   int            gmk_id = GIMMICKWORK_GetAssignID( gmkwork );
   SAVEWORK*    save_buf = (SAVEWORK*)GIMMICKWORK_Get( gmkwork, gmk_id );
   GATEWORK*        work = (GATEWORK*)save_buf->gateWork;
-  static fx32 animeFrame = FX32_ONE;
+  static fx32 animeSpeed = FX32_ONE;
 
   // TEST:
   {
     int key = GFL_UI_KEY_GetCont();
     int trg = GFL_UI_KEY_GetTrg();
-    if( key & PAD_BUTTON_DEBUG )
+    //if( key & PAD_BUTTON_DEBUG )
     {
-      if( key & PAD_KEY_DOWN )
+      if( trg & PAD_BUTTON_R )
       {
-        animeFrame = FX_F32_TO_FX32( 1.00f );
+        animeSpeed += FX_F32_TO_FX32( 0.1f );
+        OS_Printf( "animeSpeed = %f\n", FX_FX32_TO_F32(animeSpeed) );
       }
-      if( key & PAD_KEY_LEFT )
+      if( trg & PAD_BUTTON_L )
       {
-        animeFrame = FX_F32_TO_FX32( 1.04f );
+        animeSpeed -= FX_F32_TO_FX32( 0.1f );
+        OS_Printf( "animeSpeed = %f\n", FX_FX32_TO_F32(animeSpeed) );
       }
-      if( key & PAD_KEY_RIGHT )
+      if( trg & PAD_BUTTON_Y )
       {
-        animeFrame = FX_F32_TO_FX32( 1.17f );
+        animeSpeed -= FX_F32_TO_FX32( 0.01f );
+        OS_Printf( "animeSpeed = %f\n", FX_FX32_TO_F32(animeSpeed) );
       }
-      if( key & PAD_KEY_UP )
+      if( trg & PAD_BUTTON_B )
       {
-        animeFrame = FX_F32_TO_FX32( 1.30f );
+        animeSpeed += FX_F32_TO_FX32( 0.01f );
+        OS_Printf( "animeSpeed = %f\n", FX_FX32_TO_F32(animeSpeed) );
       }
-      if( key & PAD_BUTTON_START )
+      if( trg & PAD_BUTTON_START )
       {
-        animeFrame = FX_F32_TO_FX32( 2.00f );
+        animeSpeed = FX_F32_TO_FX32( 1.0f );
+        OS_Printf( "animeSpeed = %f\n", FX_FX32_TO_F32(animeSpeed) );
       }
     }
   }
 
   // 電光掲示板メイン処理
-  GOBJ_ELBOARD_Main( work->elboard, animeFrame );
+  GOBJ_ELBOARD_Main( work->elboard, animeSpeed );
 
   // モニターアニメーション再生
   {
