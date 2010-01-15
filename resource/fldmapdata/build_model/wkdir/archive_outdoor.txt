@@ -238,3 +238,6 @@
 "nsbmdfiles/door_c1_school.nsbmd"
 "nsbmdfiles/h05_light.nsbmd"
 "nsbmdfiles/badgegate_07air.nsbmd"
+"nsbmdfiles/d12_tower_01.nsbmd"
+"nsbmdfiles/c11_untower_01.nsbmd"
+"nsbmdfiles/c11_flag_01.nsbmd"

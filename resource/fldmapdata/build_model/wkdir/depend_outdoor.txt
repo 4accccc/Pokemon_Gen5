@@ -239,4 +239,7 @@ DEP_OUTDOOR	=	\
 	$(RESDIR)/door_c1_school.nsbmd \
 	$(RESDIR)/h05_light.nsbmd \
 	$(RESDIR)/badgegate_07air.nsbmd \
+	$(RESDIR)/d12_tower_01.nsbmd \
+	$(RESDIR)/c11_untower_01.nsbmd \
+	$(RESDIR)/c11_flag_01.nsbmd \
 
