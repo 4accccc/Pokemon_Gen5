@@ -33,6 +33,7 @@ _EVENT_DATA		ev_d02r0101_hakaim_stop3_01
 _EVENT_DATA		ev_d02r0101_hakaim_stop4_01
 _EVENT_DATA		ev_d02r0101_hakaiw_stop1_01
 _EVENT_DATA		ev_d02r0101_hakaiw_stop2_01
+_EVENT_DATA		ev_bg_d02r0101_stone_01
 _EVENT_DATA_END
 
 
@@ -586,64 +587,62 @@ _ANIME_LABEL	anm_player_tobu
 /*	D02R0101	HAKAIM1の会話用イベントスクリプト			  */
 /**************************************************************/
 EVENT_START    ev_d02r0101_hakaim_stop1_01
-
 	_BALLOONWIN_OBJMSG( msg_d02r0101_hakaim_stop1_01 , D02R0101_HAKAIM_STOP1_01 )
 	_LAST_KEYWAIT()
 	_BALLOONWIN_CLOSE()
-
 EVENT_END
 
 /**************************************************************/
 /*	D02R0101	HAKAIM2の会話用イベントスクリプト			  */
 /**************************************************************/
 EVENT_START    ev_d02r0101_hakaim_stop2_01
-
 	_BALLOONWIN_OBJMSG( msg_d02r0101_hakaim_stop2_01 , D02R0101_HAKAIM_STOP2_01 )
 	_LAST_KEYWAIT()
 	_BALLOONWIN_CLOSE()
-
 EVENT_END
 
 /**************************************************************/
 /*	D02R0101	HAKAIM3の会話用イベントスクリプト			  */
 /**************************************************************/
 EVENT_START    ev_d02r0101_hakaim_stop3_01
-
 	_BALLOONWIN_OBJMSG( msg_d02r0101_hakaiw_stop3_01 , D02R0101_HAKAIM_STOP3_01 )
 	_LAST_KEYWAIT()
 	_BALLOONWIN_CLOSE()
-
 EVENT_END
 
 /**************************************************************/
 /*	D02R0101	HAKAIM4の会話用イベントスクリプト			  */
 /**************************************************************/
 EVENT_START    ev_d02r0101_hakaim_stop4_01
-
 	_BALLOONWIN_OBJMSG( msg_d02r0101_hakaiw_stop4_01 , D02R0101_HAKAIM_STOP4_01 )
 	_LAST_KEYWAIT()
 	_BALLOONWIN_CLOSE()
-
 EVENT_END
 
 /**************************************************************/
 /*	D02R0101	HAKAIW1の会話用イベントスクリプト			  */
 /**************************************************************/
 EVENT_START    ev_d02r0101_hakaiw_stop1_01
-
 	_BALLOONWIN_OBJMSG( msg_d02r0101_hakaiw_stop1_01 , D02R0101_HAKAIW_STOP1_01 )
 	_LAST_KEYWAIT()
 	_BALLOONWIN_CLOSE()
-
 EVENT_END
 
 /**************************************************************/
 /*	D02R0101	HAKAIW2の会話用イベントスクリプト			  */
 /**************************************************************/
 EVENT_START    ev_d02r0101_hakaiw_stop2_01
-
 	_BALLOONWIN_OBJMSG( msg_d02r0101_hakaiw_stop2_01 , D02R0101_HAKAIW_STOP2_01 )
 	_LAST_KEYWAIT()
 	_BALLOONWIN_CLOSE()
-
 EVENT_END
+
+/**************************************************************/
+/*	D02R0101	リーフィア進化用の石						  */
+/**************************************************************/
+EVENT_START		ev_bg_d02r0101_stone_01
+	_PLAINWIN_MSG_DOWN( msg_d02r0101_stone_01 )
+	_LAST_KEYWAIT()
+	_PLAINWIN_CLOSE()
+EVENT_END
+

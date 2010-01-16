@@ -2,6 +2,7 @@
 #ifndef ZONE_T03PC0101_EVD_H
 #define ZONE_T03PC0101_EVD_H
 
+#define DOOR_ID_T03PC0101_T03_EXIT01      0
 
 #endif //ZONE_T03PC0101_EVD_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/t03pc0101.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
