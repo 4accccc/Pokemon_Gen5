@@ -58,6 +58,9 @@ struct _DEMO3D_ENGINE_WORK {
   DEMO3D_ID               demo_id;
   u32                     start_frame;
   // [PRIVATE]
+  BOOL          is_double;
+  VecFx32       def_camera_pos;
+  GFL_TCB*      dbl3DdispVintr;
   fx32          anime_speed;  ///< アニメーションスピード
   ICA_ANIME*    ica_anime;
   GFL_G3D_UTIL* g3d_util;
@@ -112,7 +115,12 @@ DEMO3D_ENGINE_WORK* Demo3D_ENGINE_Init( DEMO3D_GRAPHIC_WORK* graphic, DEMO3D_ID 
   wk->graphic       = graphic;
   wk->demo_id       = demo_id;
   wk->start_frame   = start_frame;
-//  wk->anime_speed   = FX32_ONE; // アニメーションスピード(固定)
+
+  if( wk->is_double )
+  {
+    GFL_G3D_DOUBLE3D_Init( heapID );
+    wk->dbl3DdispVintr = GFUser_VIntr_CreateTCB( GFL_G3D_DOUBLE3D_VblankIntrTCB, NULL, 0 );
+  }
 
   // コンバータデータからの初期化
   {
@@ -127,10 +135,17 @@ DEMO3D_ENGINE_WORK* Demo3D_ENGINE_Init( DEMO3D_GRAPHIC_WORK* graphic, DEMO3D_ID 
 
     GFL_G3D_CAMERA_SetfovySin( p_camera, FX_SinIdx( (fovySin>>FX32_SHIFT) / 2 * PERSPWAY_COEFFICIENT ) );
     GFL_G3D_CAMERA_SetfovyCos( p_camera, FX_CosIdx( (fovyCos>>FX32_SHIFT) / 2 * PERSPWAY_COEFFICIENT ) );
+  
+    // 起動時のカメラPOSを保持
+    GFL_G3D_CAMERA_GetPos( p_camera, &wk->def_camera_pos );
   }
    
+  // アニメーションスピードを取得
   wk->anime_speed = Demo3D_DATA_GetAnimeSpeed( demo_id );
   HOSAKA_Printf("anime_speed=%d\n", wk->anime_speed );
+  
+  // 2画面連結フラグを取得
+  wk->is_double =  Demo3D_DATA_GetDoubleFlag( demo_id );
   
   wk->cmd = Demo3D_CMD_Init( demo_id, start_frame, heapID );
 
@@ -199,6 +214,12 @@ DEMO3D_ENGINE_WORK* Demo3D_ENGINE_Init( DEMO3D_GRAPHIC_WORK* graphic, DEMO3D_ID 
 //-----------------------------------------------------------------------------
 void Demo3D_ENGINE_Exit( DEMO3D_ENGINE_WORK* wk )
 { 
+  if( wk->is_double )
+  {
+		//終了
+		GFL_TCB_DeleteTask( wk->dbl3DdispVintr );
+    GFL_G3D_DOUBLE3D_Exit();
+  }
   
   Demo3D_CMD_Exit( wk->cmd );
 
@@ -235,19 +256,40 @@ BOOL Demo3D_ENGINE_Main( DEMO3D_ENGINE_WORK* wk )
 {
   GFL_G3D_CAMERA* p_camera;
   BOOL is_loop;
-  GFL_G3D_OBJSTATUS status;
 
   OS_Printf("frame=%f \n", FX_FX32_TO_F32(ICA_ANIME_GetNowFrame( wk->ica_anime )) );
 
   // コマンド実行
   Demo3D_CMD_Main( wk->cmd, ICA_ANIME_GetNowFrame( wk->ica_anime ) );
 
-  // ステータス初期化
-  VEC_Set( &status.trans, 0, 0, 0 );
-  VEC_Set( &status.scale, FX32_ONE, FX32_ONE, FX32_ONE );
-  MTX_Identity33( &status.rotate );
-
   p_camera = DEMO3D_GRAPHIC_GetCamera( wk->graphic );
+
+  //@TODO
+#if 0
+  // 片方の画面の表示位置をずらす
+  if( wk->is_double )
+  {
+    VecFx32 pos;
+
+    if( GFL_G3D_DOUBLE3D_GetFlip() )
+    {
+      pos.x = wk->def_camera_pos.x;
+      pos.y = wk->def_camera_pos.y + FX32_CONST(2.0);
+      pos.z = wk->def_camera_pos.z;
+    }
+    else
+    {
+      // 上画面
+      pos.x = wk->def_camera_pos.x;
+      pos.y = wk->def_camera_pos.y;
+      pos.z = wk->def_camera_pos.z;
+    }
+
+    HOSAKA_Printf("camera pos=%d %d %d \n", pos.x, pos.y, pos.z );
+      
+    GFL_G3D_CAMERA_SetPos( p_camera, &pos );
+  }
+#endif 
   
   // ICAカメラ更新
   is_loop = ICA_ANIME_IncAnimeFrame( wk->ica_anime, wk->anime_speed );
@@ -271,15 +313,29 @@ BOOL Demo3D_ENGINE_Main( DEMO3D_ENGINE_WORK* wk )
 
   // 描画
 	DEMO3D_GRAPHIC_3D_StartDraw( wk->graphic );
+  
   {
     int i;
+    GFL_G3D_OBJSTATUS status;
+
+    // ステータス初期化
+    VEC_Set( &status.trans, 0, 0, 0 );
+    VEC_Set( &status.scale, FX32_ONE, FX32_ONE, FX32_ONE );
+    MTX_Identity33( &status.rotate );
+
     for( i=0; i<Demo3D_DATA_GetUnitMax( wk->demo_id ); i++ )
     {
       GFL_G3D_OBJ* obj = GFL_G3D_UTIL_GetObjHandle( wk->g3d_util, wk->unit_idx[i] );
       GFL_G3D_DRAW_DrawObject( obj, &status );
     }
   }
+
 	DEMO3D_GRAPHIC_3D_EndDraw( wk->graphic );
+
+  if( wk->is_double )
+  {
+	  GFL_G3D_DOUBLE3D_SetSwapFlag();
+  }
 
   // ループ検出で終了
   return is_loop;

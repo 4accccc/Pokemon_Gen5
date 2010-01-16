@@ -32,6 +32,7 @@ typedef struct {
   fx32 anime_speed;
   fx32 fovy_sin;
   fx32 fovy_cos;
+  BOOL is_double;
 } DEMO3D_SETUP_DATA;
 
 // コンバートデータ
@@ -103,6 +104,20 @@ const GFL_G3D_UTIL_SETUP* Demo3D_DATA_GetG3DUtilSetup( DEMO3D_ID id, u8 setup_id
 const fx32 Demo3D_DATA_GetAnimeSpeed( DEMO3D_ID id )
 {
   return c_demo3d_setup_data[ id ].anime_speed;
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  コンバートデータから2画面連結表示フラグを取得
+ *
+ *	@param	DEMO3D_ID id  デモID
+ *
+ *	@retval BOOL 2画面フラグ
+ */
+//-----------------------------------------------------------------------------
+const BOOL Demo3D_DATA_GetDoubleFlag( DEMO3D_ID id )
+{
+  return c_demo3d_setup_data[ id ].is_double;
 }
 
 //-----------------------------------------------------------------------------
