@@ -343,7 +343,7 @@ EVENT_START   ev_t01r0102_poke_get0
 	IF $SCWK_ANSWER == 0 THEN
 		//炎タイプを選んだ
 		$WK_SYS_FIRST_POKETYPE = FIRST_POKETYPE_HONOO
-		$SCWK_TEMP0 = MONSNO_HOTTON		//追加ポケモンのナンバーを格納
+		$SCWK_TEMP0 = MONSNO_554		//追加ポケモンのナンバーを格納
 
 		_CALL ev_t01r0102_poke_get
 	ENDIF
@@ -359,7 +359,7 @@ EVENT_START   ev_t01r0102_poke_get1
 	IF $SCWK_ANSWER == 0 THEN
 		//草タイプを選んだ
 		$WK_SYS_FIRST_POKETYPE = FIRST_POKETYPE_KUSA
-		$SCWK_TEMP0 = MONSNO_KUSAHEBI	//追加ポケモンのナンバーを格納
+		$SCWK_TEMP0 = MONSNO_551	//追加ポケモンのナンバーを格納
 
 		_CALL ev_t01r0102_poke_get
 	ENDIF
@@ -368,14 +368,14 @@ EVENT_END
 //【仮】最初の３匹選択　水タイプ
 EVENT_START   ev_t01r0102_poke_get2
   
-	_SYSWIN_MSG_DOWN(msg_t01r0102_ball1_water_01)
+	_SYSWIN_MSG_DOWN(msg_t01r0102_ball1_water_01) 
 	_YES_NO_WIN( SCWK_ANSWER )
 	_SYSWIN_CLOSE()
 
 	IF $SCWK_ANSWER == 0 THEN
 		//水タイプを選んだ
 		$WK_SYS_FIRST_POKETYPE = FIRST_POKETYPE_MIZU
-		$SCWK_TEMP0 = MONSNO_SUIKKO		//追加ポケモンのナンバーを格納
+		$SCWK_TEMP0 = MONSNO_557		//追加ポケモンのナンバーを格納
 
 		_CALL ev_t01r0102_poke_get
 	ENDIF
