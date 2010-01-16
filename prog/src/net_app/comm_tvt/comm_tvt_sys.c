@@ -33,6 +33,12 @@
 //======================================================================
 #pragma mark [> define
 
+#define COMM_TVT_PAL_ANM_R (0)
+#define COMM_TVT_PAL_ANM_G (1)
+#define COMM_TVT_PAL_ANM_SB (3)
+#define COMM_TVT_PAL_ANM_EB (20)
+#define COMM_TVT_PAL_ANM_SPD (0x80)
+
 //======================================================================
 //	enum
 //======================================================================
@@ -57,6 +63,8 @@ struct _COMM_TVT_WORK
   u8 selfIdx;
   BOOL isDouble;
   BOOL isSusspend;
+  u16 palAnmBuf;
+  u16 palAnmCnt;
   
   ARCHANDLE *arcHandle;
   //セル系
@@ -154,6 +162,7 @@ static void COMM_TVT_Init( COMM_TVT_WORK *work )
   work->vBlankTcb = GFUser_VIntr_CreateTCB( COMM_TVT_VBlankFunc , work , 8 );
 
   work->mode = CTM_NONE;
+  work->palAnmCnt = 0;
 
   work->isUpperFade = TRUE;
   work->isSusspend = FALSE;
@@ -256,6 +265,24 @@ static const BOOL COMM_TVT_Main( COMM_TVT_WORK *work )
 
   PRINTSYS_QUE_Main( work->printQue );
 
+  //フェード
+  if( work->palAnmCnt + COMM_TVT_PAL_ANM_SPD < 0x10000 )
+  {
+    work->palAnmCnt += COMM_TVT_PAL_ANM_SPD;
+  }
+  else
+  {
+    work->palAnmCnt += COMM_TVT_PAL_ANM_SPD-0x10000;
+  }
+  {
+    const u8 sub = COMM_TVT_PAL_ANM_EB-COMM_TVT_PAL_ANM_SB;
+    const fx32 sin = (FX_SinIdx( work->palAnmCnt )+FX32_ONE)/2;
+    u8 b = COMM_TVT_PAL_ANM_SB + FX_FX32_TO_F32(sub*sin);
+    work->palAnmBuf = GX_RGB(COMM_TVT_PAL_ANM_R,COMM_TVT_PAL_ANM_G,b);
+    NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_2D_BG_PLTT_SUB ,
+                                        CTVT_PAL_BG_SUB_BG * 32 + 15*2,
+                                        &work->palAnmBuf , 2 );
+  }
   return FALSE;
 }
 //--------------------------------------------------------------

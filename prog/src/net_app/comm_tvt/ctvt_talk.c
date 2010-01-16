@@ -33,7 +33,9 @@
 #pragma mark [> define
 #define CTVT_TALK_SLIDER_X (8)
 #define CTVT_TALK_SLIDER_Y (116)
-#define CTVT_TALK_SLIDER_MOVE_Y (40)  //ã‚É‚à‰º‚É‚à40
+//#define CTVT_TALK_SLIDER_MOVE_Y (40)  //ã‚É‚à‰º‚É‚à40  //ŠO‚Éo‚µ‚½
+#define CTVT_TALK_SLIDER_WIDTH_H  (12)    //HALF
+#define CTVT_TALK_SLIDER_HEIGHT_H (4) //HALF
 
 #define CTVT_TALK_BAR_ICON_Y (192-12)
 #define CTVT_TALK_YOBIDASHI_X (152)
@@ -49,6 +51,9 @@
 #define CTVT_TALK_DRAW_BUTTON_TOP    (15)
 #define CTVT_TALK_DRAW_BUTTON_WIDTH  (23)
 #define CTVT_TALK_DRAW_BUTTON_HEIGHT (6)
+
+#define CTVT_TALK_WAVE_DRAW_WIDTH   (17)
+#define CTVT_TALK_WAVE_DRAW_HEIGHT  (7)
 
 //======================================================================
 //	enum
@@ -102,8 +107,11 @@ struct _CTVT_TALK_WORK
 {
   CTVT_TALK_STATE state;
   CTVT_TALK_SUB_STATE subState;
+  
+  //ƒXƒ‰ƒCƒ_[Œn
   s16         sliderPos;
-
+  BOOL        isHoldSlider;
+  
   //˜^‰¹ŠÖŒW  
   CTVT_MIC_WORK *micWork;
   BOOL  reqSendWave;
@@ -117,7 +125,9 @@ struct _CTVT_TALK_WORK
   BOOL isUpdateMsgDraw;
   GFL_BMPWIN *recWin;
   GFL_BMPWIN *drawWin;
-  
+  GFL_BMPWIN *waveWin;  //”gŒ`‚ð•`‚­
+  u8  wavePosX;
+  u8  wavePosY;
   
   //ƒZƒ‹ŠÖŒW
   GFL_CLWK    *clwkSlider;
@@ -136,6 +146,9 @@ struct _CTVT_TALK_WORK
 static void CTVT_TALK_UpdateWait( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork );
 static void CTVT_TALK_UpdateTalk( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork );
 static void CTVT_TALK_UpdateButton( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork );
+static void CTVT_TALK_UpdateVoiceBar( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork );
+static void CTVT_TALK_DrawLine( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork , u8 *charBuf , u8 x1 , u8 y1 , u8 x2 , u8 y2 );
+static void CTVT_TALK_DrawDot( u8 *charBuf , u8 x , u8 y );
 
 static const GFL_UI_TP_HITTBL CTVT_TALK_HitRecButton[2] = 
 {
@@ -259,6 +272,7 @@ void CTVT_TALK_InitMode( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork )
   talkWork->state = CTS_FADEIN;
   talkWork->recButtonState = CRBT_NONE;
   talkWork->befRecButtonState = CRBT_MAX;
+  talkWork->isHoldSlider = FALSE;
 
   talkWork->recWin = GFL_BMPWIN_Create( CTVT_FRAME_SUB_MSG , 
                                         7 , 10 , 17 , 2 ,
@@ -268,11 +282,21 @@ void CTVT_TALK_InitMode( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork )
                                         7 , 17 , 17 , 2 ,
                                         CTVT_PAL_BG_SUB_FONT ,
                                         GFL_BMP_CHRAREA_GET_B );
+  talkWork->waveWin = GFL_BMPWIN_Create( CTVT_FRAME_SUB_MSG , 
+                                        7 , 2 , 
+                                        CTVT_TALK_WAVE_DRAW_WIDTH , 
+                                        CTVT_TALK_WAVE_DRAW_HEIGHT ,
+                                        CTVT_PAL_BG_SUB_FONT ,
+                                        GFL_BMP_CHRAREA_GET_B );
   
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp( talkWork->recWin ) , 0x0 );
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp( talkWork->drawWin) , 0x0 );
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp( talkWork->waveWin) , 0xF );
   GFL_BMPWIN_MakeScreen( talkWork->recWin );
   GFL_BMPWIN_MakeScreen( talkWork->drawWin );
+  GFL_BMPWIN_MakeScreen( talkWork->waveWin );
+  GFL_BMPWIN_TransVramCharacter( talkWork->waveWin );
+
   {
     GFL_FONT *fontHandle = COMM_TVT_GetFontHandle( work );
     GFL_MSGDATA *msgHandle = COMM_TVT_GetMegHandle( work );
@@ -306,8 +330,10 @@ void CTVT_TALK_TermMode( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork )
 
   GFL_BMPWIN_ClearTransWindow( talkWork->recWin );
   GFL_BMPWIN_ClearTransWindow( talkWork->drawWin );
+  GFL_BMPWIN_ClearTransWindow( talkWork->waveWin );
   GFL_BMPWIN_Delete( talkWork->recWin );
   GFL_BMPWIN_Delete( talkWork->drawWin );
+  GFL_BMPWIN_Delete( talkWork->waveWin );
   
   GFL_CLACT_WK_Remove( talkWork->clwkReturn );
   GFL_CLACT_WK_Remove( talkWork->clwkPause );
@@ -539,6 +565,8 @@ static void CTVT_TALK_UpdateWait( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork
     talkWork->state = CTS_FADEOUT_BOTH;
     COMM_TVT_SetSusspend( work , TRUE );
   }
+  
+  CTVT_TALK_UpdateVoiceBar( work , talkWork );
 }
 
 //--------------------------------------------------------------
@@ -559,6 +587,10 @@ static void CTVT_TALK_UpdateTalk( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork
         talkWork->sendCnt = 0;
         talkWork->reqSendWave = FALSE;
         ENC_ADPCM_ResetParam();
+
+        talkWork->wavePosX = 0;
+        talkWork->wavePosY = CTVT_TALK_WAVE_DRAW_HEIGHT*8/2;
+        GFL_BMP_Clear( GFL_BMPWIN_GetBmp( talkWork->waveWin) , 0xF );
       }
     }
     break;
@@ -572,6 +604,35 @@ static void CTVT_TALK_UpdateTalk( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork
     {
       talkWork->subState = CTSS_REC_TRANS;
       talkWork->recButtonState = CRBT_DISALE;
+    }
+    //”gŒ`‚ð•`‚­ˆ—
+    {
+      const u32 recSize = CTVT_MIC_GetRecSize( talkWork->micWork );
+      void* recBuffer = CTVT_MIC_GetRecBuffer( talkWork->micWork );
+      const u32 waveLen = recSize * (CTVT_TALK_WAVE_DRAW_WIDTH*8) / CTVT_SEND_WAVE_SIZE;
+      GFL_BMP_DATA*	bmpData = GFL_BMPWIN_GetBmp( talkWork->waveWin );
+      u8 *charaBuf = GFL_BMP_GetCharacterAdrs( bmpData );
+      BOOL isUpdate = FALSE;
+      while( talkWork->wavePosX < waveLen )
+      {
+        const u32 bufOfs = (talkWork->wavePosX+1) * CTVT_SEND_WAVE_SIZE / (CTVT_TALK_WAVE_DRAW_WIDTH*8) /2; //u16‚Ì”z—ñ‚ÅŽæ‚é‚©‚ç/2
+        const s16 *buf = recBuffer;
+        const s16 vol = buf[bufOfs];
+        const u32 posY = (vol+0x8000)*((CTVT_TALK_WAVE_DRAW_HEIGHT-1)*8)/0x10000 +4;//ã‰º‚ÉŽáŠ±Œ„ŠÔ‚ðo‚·‚½‚ßƒTƒCƒY‚ð-1‚µ‚Ä4ƒsƒNƒZƒ‹•â“U
+        CTVT_TALK_DrawLine( work , talkWork , charaBuf , 
+                            talkWork->wavePosX , talkWork->wavePosY ,
+                            talkWork->wavePosX +1 , posY );
+        talkWork->wavePosX++;
+        talkWork->wavePosY = posY;
+        
+        isUpdate = TRUE;
+        //OS_TFPrintf(3,"size[%5d][%3d][%3d]\n",recSize,waveLen,posY);
+      }
+      if( isUpdate == TRUE )
+      {
+        GFL_BMPWIN_TransVramCharacter( talkWork->waveWin );
+      }
+
     }
     //“]‘—‚Í˜^‰¹’†‚à‚â‚é‚Ì‚ÅƒXƒLƒbƒv
     //break through;
@@ -593,6 +654,7 @@ static void CTVT_TALK_UpdateTalk( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork
           talkWork->sendWaveData->dataNo = talkWork->sendCnt;
           talkWork->sendWaveData->encSize = endSize;
           talkWork->sendWaveData->recSize = recSize;
+          talkWork->sendWaveData->pitch = talkWork->sliderPos;
           if( talkWork->subState == CTSS_REC_TRANS && 
             recSize <= CTVT_SEND_WAVE_SIZE_ONE*(talkWork->sendCnt+1) )
           {
@@ -673,6 +735,118 @@ static void CTVT_TALK_UpdateButton( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWo
     talkWork->befRecButtonState = talkWork->recButtonState;
   }
   
+}
+
+static void CTVT_TALK_UpdateVoiceBar( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork )
+{
+  if( talkWork->isHoldSlider == FALSE )
+  {
+    GFL_UI_TP_HITTBL hitTbl[2] = 
+    {
+      {
+        0,  //ŒvŽZ‚Åo‚·‚Ì‚ÅŠO‚Å
+        0,
+        CTVT_TALK_SLIDER_X-CTVT_TALK_SLIDER_WIDTH_H,
+        CTVT_TALK_SLIDER_X+CTVT_TALK_SLIDER_WIDTH_H,
+      },
+      {GFL_UI_TP_HIT_END,0,0,0}
+    };
+    
+    hitTbl[0].rect.top    = CTVT_TALK_SLIDER_Y + talkWork->sliderPos - CTVT_TALK_SLIDER_HEIGHT_H;
+    hitTbl[0].rect.bottom = CTVT_TALK_SLIDER_Y + talkWork->sliderPos + CTVT_TALK_SLIDER_HEIGHT_H;
+    if( GFL_UI_TP_HitTrg( hitTbl ) == 0 )
+    {
+      talkWork->isHoldSlider = TRUE;
+    }
+  }
+  else
+  {
+    GFL_UI_TP_HITTBL hitTbl[2] = 
+    {
+      {
+        CTVT_TALK_SLIDER_Y - CTVT_TALK_SLIDER_MOVE_Y - CTVT_TALK_SLIDER_HEIGHT_H,
+        CTVT_TALK_SLIDER_Y + CTVT_TALK_SLIDER_MOVE_Y + CTVT_TALK_SLIDER_HEIGHT_H,
+        CTVT_TALK_SLIDER_X-CTVT_TALK_SLIDER_WIDTH_H,
+        CTVT_TALK_SLIDER_X+CTVT_TALK_SLIDER_WIDTH_H,
+      },
+      {GFL_UI_TP_HIT_END,0,0,0}
+    };
+    if( GFL_UI_TP_HitCont( hitTbl ) == 0 )
+    {
+      u32 tpx,tpy;
+      GFL_CLACTPOS cellPos;
+      GFL_UI_TP_GetPointCont(&tpx,&tpy);
+      
+      talkWork->sliderPos = tpy-CTVT_TALK_SLIDER_Y;
+      if( talkWork->sliderPos > CTVT_TALK_SLIDER_MOVE_Y )
+      {
+        talkWork->sliderPos = CTVT_TALK_SLIDER_MOVE_Y;
+      }
+      if( talkWork->sliderPos < -CTVT_TALK_SLIDER_MOVE_Y )
+      {
+        talkWork->sliderPos = -CTVT_TALK_SLIDER_MOVE_Y;
+      }
+      cellPos.x = CTVT_TALK_SLIDER_X;
+      cellPos.y = CTVT_TALK_SLIDER_Y+talkWork->sliderPos;
+      GFL_CLACT_WK_SetPos( talkWork->clwkSlider , &cellPos , CLSYS_DRAW_SUB );
+    }
+    else
+    {
+      talkWork->isHoldSlider = FALSE;
+    }
+  }
+
+}
+
+static void CTVT_TALK_DrawLine( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork , u8 *charBuf , u8 x1 , u8 y1 , u8 x2 , u8 y2 )
+{
+  //¸“xŠm•Û‚Åfx32
+  const int xLen = MATH_ABS( x1-x2 );
+  const int yLen = MATH_ABS( y1-y2 );
+  const int loopNum = ( xLen > yLen ? xLen : yLen )+1;
+  fx32 addX = FX32_CONST(x2-x1) / loopNum;
+  fx32 addY = FX32_CONST(y2-y1) / loopNum;
+  fx32 subX = 0;
+  fx32 subY = 0;
+  u8 i;
+  OS_TFPrintf(3,"[%d:%d][%d:%d]\n",x1,y1,x2,y2 );
+  for( i=0;i<loopNum;i++ )
+  {
+    const int posX = x1 + (subX>>FX32_SHIFT);
+    const int posY = y1 + (subY>>FX32_SHIFT);
+    
+    CTVT_TALK_DrawDot( charBuf , posX , posY );
+    
+    subX += addX;
+    subY += addY;
+  }
+  
+}
+static void CTVT_TALK_DrawDot( u8 *charBuf , u8 x , u8 y )
+{
+  const u8 drawCol = 0xA;
+
+  const int charX = x/8;
+  const int charY = y/8;
+  const u16 charNo = charX+charY*CTVT_TALK_WAVE_DRAW_WIDTH;
+  const u8 ofsX = x%8;
+  const u8 ofsY = y%8;
+  const u8 ofsXmod = ofsX%4;
+  const u32 ofsAdr = (ofsX/4) + ofsY*2;
+  u16 *trgAdr = (u16*)((u32)charBuf + charNo*0x20 + ofsAdr*2);
+  static const u16 shiftArr[4]={0x0001*drawCol,
+                                0x0010*drawCol,
+                                0x0100*drawCol,
+                                0x1000*drawCol};
+  static const u16 maskArr[4]= {0xFFF0,
+                                0xFF0F,
+                                0xF0FF,
+                                0x0FFF};
+  if( (u32)trgAdr <  (u32)charBuf+(0x20*CTVT_TALK_WAVE_DRAW_WIDTH*CTVT_TALK_WAVE_DRAW_HEIGHT) &&
+      (u32)trgAdr >= (u32)charBuf )
+  {
+    *trgAdr = (*trgAdr & maskArr[ofsXmod]) + shiftArr[ofsXmod];
+  }
 }
 
 

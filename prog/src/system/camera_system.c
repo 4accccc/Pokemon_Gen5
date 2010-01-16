@@ -196,7 +196,6 @@ static void CAMERA_SYS_CallDmaRacv( CAMERA_SYSTEM_WORK *work )
 #define PRINT_RATE  32
 static void CAMERA_SYS_ErrorCallBack(CAMERAResult result)
 {
-#pragma unused(result)
   CAMERA_SYSTEM_WORK *work = cameraWork;
 
   if( result != 0 )

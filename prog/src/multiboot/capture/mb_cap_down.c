@@ -42,7 +42,7 @@
 #define MB_CAP_DOWN_BOWBEND_SCALE_MAX (FX32_HALF)
 
 //タッチ判定半径
-#define MB_CAP_DOWN_BALL_TOUCH_LEN (16)
+#define MB_CAP_DOWN_BALL_TOUCH_LEN (32)
 
 //ボール速度
 #define MB_CAP_DOWN_BALL_SHOT_SPD (16)

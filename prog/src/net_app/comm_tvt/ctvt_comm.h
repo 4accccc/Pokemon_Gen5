@@ -64,8 +64,15 @@ typedef struct
   u16 recSize;
   u8  isLast;
   u8  dataNo;
-  u8  pad[2];
+  s8  pitch;
+  u8  pad;
 }CTVT_COMM_WAVE_HEADER;
+
+typedef struct
+{
+  STRCODE name[PERSON_NAME_SIZE];
+  u8  voiceOnly;
+}CTVT_COMM_MEMBER_DATA;
 
 //======================================================================
 //	proto
@@ -90,6 +97,9 @@ extern const u8 CTVT_COMM_GetTalkMember( COMM_TVT_WORK *work , CTVT_COMM_WORK *c
 extern const BOOL CTVT_COMM_GetCommWaveData( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork );
 extern const BOOL CTVT_COMM_ReqPlayWaveData( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork );
 extern void CTVT_COMM_ResetReqPlayWaveData( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork );
+
+extern CTVT_COMM_MEMBER_DATA* CTVT_COMM_GetMemberData( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork , const u8 idx );
+extern CTVT_COMM_MEMBER_DATA* CTVT_COMM_GetSelfMemberData( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork );
 
 extern CTVT_COMM_BEACON* CTVT_COMM_GetCtvtBeaconData( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork );
 //‚¨ŠG•`‚«ƒoƒbƒtƒ@Žæ“¾

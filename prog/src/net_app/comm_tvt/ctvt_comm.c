@@ -103,6 +103,7 @@ typedef struct
   u8   bufferNo;
   
   CTVT_COMM_STATE_USER state;
+  CTVT_COMM_MEMBER_DATA data;
 }CTVT_MEMBER_STATE;
 
 //ワーク
@@ -113,6 +114,7 @@ struct _CTVT_COMM_WORK
   CTVT_COMM_STATE state;
   
   CTVT_COMM_BEACON beacon;
+  CTVT_COMM_MEMBER_DATA selfData;
   
   //メンバーの管理用
   CTVT_MEMBER_STATE member[CTVT_MEMBER_NUM];
@@ -133,6 +135,7 @@ struct _CTVT_COMM_WORK
   BOOL isCommWave;   //Wave送受信中
   BOOL isFinishPostWave;   //Wave送受信中
   u16  waveSize;
+  int  waveSpeed;
   void *postWaveBuf;  //Wave受信バッファ
   void *decodeWaveBuf;      //デコード後データ
   
@@ -968,7 +971,7 @@ static void CTVT_COMM_PostFlg( const int netID, const int size , const void* pDa
     if( netID != selfId )
     {
       CTVT_MIC_WORK *micWork = COMM_TVT_GetMicWork(commWork->parentWork);
-      CTVT_MIC_PlayWave( micWork , commWork->postWaveBuf , commWork->waveSize , 127 , 0x8000 );
+      CTVT_MIC_PlayWave( micWork , commWork->postWaveBuf , commWork->waveSize , 127 , commWork->waveSpeed );
     }
     if( selfId == 0 )
     {
@@ -1052,6 +1055,7 @@ static void CTVT_COMM_Post_WaveData( const int netID, const int size , const voi
 
     if( header->isLast == TRUE )
     {
+      commWork->waveSpeed = 0x8000 - (header->pitch*0x4000/CTVT_TALK_SLIDER_MOVE_Y);
       commWork->isFinishPostWave = TRUE;
       commWork->waveSize = header->recSize;
     }
@@ -1128,6 +1132,17 @@ CTVT_COMM_BEACON* CTVT_COMM_GetCtvtBeaconData( COMM_TVT_WORK *work , CTVT_COMM_W
 {
   return &commWork->beacon;
 }
+
+CTVT_COMM_MEMBER_DATA* CTVT_COMM_GetMemberData( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork , const u8 idx )
+{
+  return &commWork->member[idx].data;
+}
+
+CTVT_COMM_MEMBER_DATA* CTVT_COMM_GetSelfMemberData( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
+{
+  return &commWork->selfData;
+}
+
 
 //お絵描きバッファ取得
 DRAW_SYS_PEN_INFO* CTVT_COMM_GetDrawBuf( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork , BOOL *isFull )
