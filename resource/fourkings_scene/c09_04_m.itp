@@ -3,7 +3,7 @@
 <itp version="1.6.0">
 
 <head>
-	<create user="fujiwara_maiko" host="W00194" date="2010-01-10T20:38:46" source="m_siten04_00_00.ma"/>
+	<create user="fujiwara_maiko" host="W00194" date="2010-01-14T15:39:28" source="m_siten04_00_00.ma"/>
 	<title>Texture Pattern Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
@@ -17,19 +17,25 @@
 	compress_material="on" material_size="4 4"
 />
 
-<tex_pattern_list_data image_size="4" palette_size="4">
-	<image_name index="0" name="hero04.7"/>
-	<image_name index="1" name="hero04.8"/>
-	<image_name index="2" name="hero04.9"/>
+<tex_pattern_list_data image_size="7" palette_size="7">
+	<image_name index="0" name="hero04.1"/>
+	<image_name index="1" name="hero04.2"/>
+	<image_name index="2" name="hero04.3"/>
 	<image_name index="3" name="hero_hi.1"/>
-	<palette_name index="0" name="hero04.7_pl"/>
-	<palette_name index="1" name="hero04.8_pl"/>
-	<palette_name index="2" name="hero04.9_pl"/>
-	<palette_name index="3" name="hero_hi.1_pl"/>
+	<image_name index="4" name="hero_hi.10"/>
+	<image_name index="5" name="hero_hi.4"/>
+	<image_name index="6" name="hero_hi.7"/>
+	<palette_name index="0" name="hero04.1_pl"/>
+	<palette_name index="1" name="hero04.2_pl"/>
+	<palette_name index="2" name="hero04.3_pl"/>
+	<palette_name index="3" name="hero_hi.10_pl"/>
+	<palette_name index="4" name="hero_hi.1_pl"/>
+	<palette_name index="5" name="hero_hi.4_pl"/>
+	<palette_name index="6" name="hero_hi.7_pl"/>
 </tex_pattern_list_data>
 
 <tex_pattern_data>
-	<frame_idx size="159">
+	<frame_idx size="225">
 		0 2 4 6 8 10 12 14 16 18
 		20 22 24 26 28 30 32 34 36 38
 		39 40 42 44 46 48 50 52 54 56
@@ -45,9 +51,16 @@
 		229 230 232 234 236 238 240 242 244 246
 		248 250 252 254 256 258 260 262 264 266
 		267 268 270 272 274 276 278 280 282 284
-		286 288 290 292 294 296 298 300 0
+		286 288 290 292 294 296 298 300 0 34
+		38 42 46 50 54 58 62 66 70 74
+		78 82 86 90 94 98 102 106 110 114
+		118 122 126 130 134 138 142 146 150 154
+		158 162 166 170 174 178 182 186 190 194
+		198 202 206 210 214 218 222 226 230 234
+		238 242 246 250 254 258 262 266 270 274
+		278 282 286 290 294
 	</frame_idx>
-	<image_idx size="159">
+	<image_idx size="225">
 		0 1 0 2 0 1 0 2 0 1
 		0 2 0 1 0 2 0 1 0 2
 		0 1 0 2 0 1 0 2 0 1
@@ -63,9 +76,16 @@
 		0 1 0 2 0 1 0 2 0 1
 		0 2 0 1 0 2 0 1 0 2
 		0 1 0 2 0 1 0 2 0 1
-		0 2 0 1 0 2 0 1 3
+		0 2 0 1 0 2 0 1 3 4
+		5 6 3 4 5 6 3 4 5 6
+		3 4 5 6 3 4 5 6 3 4
+		5 6 3 4 5 6 3 4 5 6
+		3 4 5 6 3 4 5 6 3 4
+		5 6 3 4 5 6 3 4 5 6
+		3 4 5 6 3 4 5 6 3 4
+		5 6 3 4 3
 	</image_idx>
-	<palette_idx size="159">
+	<palette_idx size="225">
 		0 1 0 2 0 1 0 2 0 1
 		0 2 0 1 0 2 0 1 0 2
 		0 1 0 2 0 1 0 2 0 1
@@ -81,13 +101,20 @@
 		0 1 0 2 0 1 0 2 0 1
 		0 2 0 1 0 2 0 1 0 2
 		0 1 0 2 0 1 0 2 0 1
-		0 2 0 1 0 2 0 1 3
+		0 2 0 1 0 2 0 1 4 3
+		5 6 4 3 5 6 4 3 5 6
+		4 3 5 6 4 3 5 6 4 3
+		5 6 4 3 5 6 4 3 5 6
+		4 3 5 6 4 3 5 6 4 3
+		5 6 4 3 5 6 4 3 5 6
+		4 3 5 6 4 3 5 6 4 3
+		5 6 4 3 4
 	</palette_idx>
 </tex_pattern_data>
 
 <tex_pattern_anm_array size="2">
 	<tex_pattern_anm index="0" material_name="hero04_2" data_size="158" data_head="0"/>
-	<tex_pattern_anm index="1" material_name="hero04_1" data_size="1" data_head="158"/>
+	<tex_pattern_anm index="1" material_name="hero04_1" data_size="67" data_head="158"/>
 </tex_pattern_anm_array>
 
 </body>
