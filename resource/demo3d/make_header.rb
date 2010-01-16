@@ -171,8 +171,13 @@ def print_access_table(file,dir)
     cnt = 0;
     init.each{ |line|
       param[cnt] = line.to_f # 一回数値にすることでコメントやスペースをそぎ落とす
-      param[cnt] = param[cnt] * 0x1000
-      param[cnt] = param[cnt].prec_i
+
+      # 0=アニメーションスピード, 1=fovy_sin, 2=fovy_cos
+      if cnt < 3
+        param[cnt] = param[cnt] * 0x1000
+      end
+      
+      param[cnt] = param[cnt].prec_i  #整数に変換
       cnt += 1
     }
   }

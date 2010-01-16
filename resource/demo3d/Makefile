@@ -37,6 +37,8 @@ obj_itp:=$(wildcard ./*/*.itp)
 obj_iva:=$(wildcard ./*/*.iva)
 obj_bin:=$(wildcard ./*/*.bin)
 
+obj_init:=$(wildcard ./*/init.txt)
+
 .PHONY:	do-build clean subdir
 
 #------------------------------------------------------------------------------
@@ -57,12 +59,12 @@ $(TARGETDIR)/$(targetname).narc: $(targetname).narc
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 # コピー先のnarcが古い場合実行する
-$(targetname).narc: $(obj_imd) $(obj_ica) $(obj_ita) $(obj_ima) $(obj_itp) $(obj_iva) $(obj_bin)
+$(targetname).narc: $(obj_imd) $(obj_ica) $(obj_ita) $(obj_ima) $(obj_itp) $(obj_iva) $(obj_bin) $(obj_init)
 	-ls */*.nsb* */*.bin > arclist.txt
 	perl $(PROJECT_ROOT)tools/arc_list_make.pl arclist.txt
 	nnsarc -r -l -n -i $(targetname) -S arclist.txt
 
-	$(NAIXCUT) $(targetname).naix
+	$(NAIXCUT) $(targetname).naix 
 	ruby make_demoid.rb
 	ruby make_header.rb
 	$(COPY) demo3d_demoid.h $(PROJECT_PROGDIR)include/demo
