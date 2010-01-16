@@ -11,6 +11,7 @@
 #include <gflib.h>
 #include "system/gfl_use.h"
 #include "system/main.h"
+#include "system/brightness.h"
 
 // 文字列関連
 #include "font/font.naix"
@@ -68,6 +69,7 @@ static void cmd_exec( const DEMO3D_CMD_DATA* data );
 
 static void CMD_SE(int* param);
 static void CMD_SE_STOP(int* param);
+static void CMD_BRIGHTNESS_REQ(int* param);
 
 // DEMO3D_CMD_TYPE と対応
 //--------------------------------------------------------------
@@ -78,6 +80,7 @@ static void (*c_cmdtbl[ DEMO3D_CMD_TYPE_MAX ])() =
   NULL, // null
   CMD_SE,
   CMD_SE_STOP,
+  CMD_BRIGHTNESS_REQ,
   NULL, // end
 };
 
@@ -130,6 +133,22 @@ static void CMD_SE_STOP(int* param)
   player_no = GFL_SOUND_GetPlayerNo( param[0] );
 
   GFL_SOUND_StopPlayerNo( player_no );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  フラッシュ
+ *
+ *  @param  param[0]  sync
+ *  @param  param[1]  フェード終了時の輝度
+ *  @param  param[2]  フェード開始時の輝度
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void CMD_BRIGHTNESS_REQ(int* param)
+{
+  ChangeBrightnessRequest( param[0], param[1], param[2], (PLANEMASK_BG0|PLANEMASK_BG1|PLANEMASK_BG2|PLANEMASK_BG3|PLANEMASK_OBJ), MASK_MAIN_DISPLAY );
 }
 
 //=============================================================================

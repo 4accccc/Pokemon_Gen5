@@ -26,6 +26,11 @@ typedef enum
   //  PARAM: 0=SE_Label
   //======================================================
   DEMO3D_CMD_TYPE_SE_STOP,
+  //======================================================
+  //・輝度操作
+  //  PARAM: 0=SYNC 1=終了時の輝度, 2=開始時の輝度SYNC
+  //======================================================
+  DEMO3D_CMD_TYPE_BRIGHTNESS_REQ,
   DEMO3D_CMD_TYPE_END, ///< コマンド終了
   DEMO3D_CMD_TYPE_MAX,
 } DEMO3D_CMD_TYPE;
@@ -42,5 +47,4 @@ typedef struct {
   int               frame;    ///< 再生フレーム
   int               param[ DEMO3D_CMD_PARAM_MAX ]; ///< 初期化パラメータ
 } DEMO3D_CMD_DATA;
-
 
