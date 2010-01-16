@@ -12,6 +12,7 @@
 #include "system/main.h"
 #include "system/gfl_use.h"
 #include "system/wipe.h"
+#include "system/bmp_winframe.h"
 #include "system/net_err.h"
 #include "app/app_menu_common.h"
 
@@ -19,6 +20,7 @@
 #include "comm_tvt.naix"
 #include "message.naix"
 #include "font/font.naix"
+#include "msg/msg_comm_tvt.h"
 
 #include "net_app/comm_tvt_sys.h"
 #include "ctvt_camera.h"
@@ -63,6 +65,7 @@ struct _COMM_TVT_WORK
   u8 selfIdx;
   BOOL isDouble;
   BOOL isSusspend;
+  BOOL isReqFinish; //親からの終了通知
   u16 palAnmBuf;
   u16 palAnmCnt;
   
@@ -75,6 +78,8 @@ struct _COMM_TVT_WORK
   GFL_FONT        *fontHandle;
   GFL_MSGDATA     *msgHandle;
   PRINT_QUE *printQue;
+
+  APP_TASKMENU_RES *taskMenuRes;
 
   //各ワーク
   CTVT_CAMERA_WORK *camWork;
@@ -137,6 +142,12 @@ static void COMM_TVT_Init( COMM_TVT_WORK *work )
   COMM_TVT_InitGraphic( work );
   COMM_TVT_LoadResource( work );
   COMM_TVT_InitMessage( work );
+  
+  work->taskMenuRes = APP_TASKMENU_RES_Create( CTVT_FRAME_SUB_MSG , 
+                                               CTVT_PAL_BG_SUB_TASKMENU ,
+                                               work->fontHandle ,
+                                               work->printQue , 
+                                               work->heapId );
     
   work->camWork = CTVT_CAMERA_Init( work , work->heapId );
   work->commWork = CTVT_COMM_InitSystem( work , work->heapId );
@@ -166,6 +177,7 @@ static void COMM_TVT_Init( COMM_TVT_WORK *work )
 
   work->isUpperFade = TRUE;
   work->isSusspend = FALSE;
+  work->isReqFinish = FALSE;
 
   GFL_NET_WirelessIconEasy_HoldLCD( FALSE , work->heapId );
   GFL_NET_ReloadIcon();
@@ -208,6 +220,8 @@ static void COMM_TVT_Term( COMM_TVT_WORK *work )
 
   CTVT_COMM_TermSystem( work , work->commWork );
   CTVT_CAMERA_Term( work , work->camWork );
+
+  APP_TASKMENU_RES_Delete( work->taskMenuRes );
 
   COMM_TVT_TermMessage( work );
   COMM_TVT_ReleaseResource( work );
@@ -554,6 +568,10 @@ static void COMM_TVT_InitMessage( COMM_TVT_WORK *work )
   GFL_ARC_UTIL_TransVramPalette( ARCID_FONT , NARC_font_default_nclr , PALTYPE_MAIN_BG , CTVT_PAL_BG_MAIN_FONT*0x20, 16*2, work->heapId );
   GFL_ARC_UTIL_TransVramPalette( ARCID_FONT , NARC_font_default_nclr , PALTYPE_SUB_BG  , CTVT_PAL_BG_SUB_FONT *0x20, 16*2, work->heapId );
   GFL_FONTSYS_SetDefaultColor();
+
+  BmpWinFrame_GraphicSet( CTVT_FRAME_SUB_MSG , CTVT_BMPWIN_CGX , CTVT_PAL_BG_SUB_WINFRAME ,
+                          0 , work->heapId );
+
 }
 
 //--------------------------------------------------------------------------
@@ -732,6 +750,18 @@ void COMM_TVT_SetSusspend( COMM_TVT_WORK *work , const BOOL flg )
 {
   work->isSusspend = flg;
 }
+//--------------------------------------------------------------
+//	終了リクエスト
+//--------------------------------------------------------------
+const BOOL COMM_TVT_GetFinishReq( COMM_TVT_WORK *work )
+{
+  return work->isReqFinish;
+}
+
+void COMM_TVT_SetFinishReq( COMM_TVT_WORK *work , const BOOL flg )
+{
+  work->isReqFinish = flg;
+}
 
 #pragma mark [>util func
 //--------------------------------------------------------------------------
@@ -740,6 +770,39 @@ void COMM_TVT_SetSusspend( COMM_TVT_WORK *work , const BOOL flg )
 const BOOL COMM_TVT_IsTwlMode( void )
 {
   return OS_IsRunOnTwl();
+}
+
+//--------------------------------------------------------------------------
+//  YesNoを出す
+//--------------------------------------------------------------------------
+APP_TASKMENU_WORK* COMM_TVT_OpenYesNoMenu( COMM_TVT_WORK *work )
+{
+  APP_TASKMENU_WORK *menuWork;
+  APP_TASKMENU_INITWORK initWork = {0};
+  APP_TASKMENU_ITEMWORK itemWork[2] = {0};
+  
+  itemWork[0].str = GFL_MSG_CreateString( work->msgHandle , COMM_TVT_SYS_03 );
+  itemWork[1].str = GFL_MSG_CreateString( work->msgHandle , COMM_TVT_SYS_04 );
+  itemWork[0].msgColor = APP_TASKMENU_ITEM_MSGCOLOR;
+  itemWork[1].msgColor = APP_TASKMENU_ITEM_MSGCOLOR;
+  itemWork[0].type = APP_TASKMENU_WIN_TYPE_NORMAL;
+  itemWork[1].type = APP_TASKMENU_WIN_TYPE_NORMAL;
+  
+  initWork.heapId = work->heapId;
+  initWork.itemNum = 2;
+  initWork.itemWork = itemWork;
+  initWork.posType = ATPT_LEFT_UP;
+  initWork.charPosX = 32-APP_TASKMENU_PLATE_WIDTH_YN_WIN;
+  initWork.charPosY = 6;
+  initWork.w = APP_TASKMENU_PLATE_WIDTH_YN_WIN;
+  initWork.h = APP_TASKMENU_PLATE_HEIGHT_YN_WIN;
+
+  menuWork = APP_TASKMENU_OpenMenu( &initWork , work->taskMenuRes );
+  
+  GFL_STR_DeleteBuffer( itemWork[0].str );
+  GFL_STR_DeleteBuffer( itemWork[1].str );
+  
+  return menuWork;
 }
 
 #pragma mark [>proc func

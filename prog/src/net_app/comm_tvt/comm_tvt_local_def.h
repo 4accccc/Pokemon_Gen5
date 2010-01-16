@@ -13,6 +13,7 @@
 
 #include "draw_system.h"
 #include "net_app/comm_tvt_sys.h"
+#include "app/app_taskmenu.h"
 
 //======================================================================
 //	define
@@ -49,6 +50,8 @@
 #define CTVT_PAL_BG_BUTTON_DISABLE (4)
 
 #define CTVT_PAL_BG_SUB_BAR   (5) //1本
+#define CTVT_PAL_BG_SUB_TASKMENU   (6) //2本
+#define CTVT_PAL_BG_SUB_WINFRAME   (8) //1本
 #define CTVT_PAL_BG_SUB_FONT   (10) //1本
 
 #define CTVT_PAL_OBJ_MAIN_COMMON (0) //5本
@@ -68,6 +71,8 @@
 #define CTVT_FONT_COLOR_WHITE (PRINTSYS_MACRO_LSB(0xf,2,0))
 #define CTVT_FONT_COLOR_BLACK (PRINTSYS_MACRO_LSB(1,2,0))
 #define CTVT_FONT_COLOR_NAME   (PRINTSYS_MACRO_LSB(1,0xf,0))
+
+#define CTVT_BMPWIN_CGX (1)
 
 //スクリーンのバッファサイズ
 #define CTVT_BUFFER_SCR_SIZE (256*192*2)  //0x18000
@@ -213,8 +218,11 @@ extern const u8   COMM_TVT_GetSelfIdx( const COMM_TVT_WORK *work );
 extern void COMM_TVT_SetSelfIdx( COMM_TVT_WORK *work , const u8 idx );
 extern const BOOL COMM_TVT_GetSusspend( COMM_TVT_WORK *work );
 extern void COMM_TVT_SetSusspend( COMM_TVT_WORK *work , const BOOL flg );
+extern const BOOL COMM_TVT_GetFinishReq( COMM_TVT_WORK *work );
+extern void COMM_TVT_SetFinishReq( COMM_TVT_WORK *work , const BOOL flg );
 
 
 //UTIL
 extern const BOOL COMM_TVT_IsTwlMode( void );
+extern APP_TASKMENU_WORK* COMM_TVT_OpenYesNoMenu( COMM_TVT_WORK *work );
 

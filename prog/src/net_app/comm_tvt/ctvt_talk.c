@@ -13,6 +13,7 @@
 #include "system/main.h"
 #include "system/gfl_use.h"
 #include "system/wipe.h"
+#include "system/bmp_winframe.h"
 #include "system/camera_system.h"
 #include "net/network_define.h"
 #include "app/app_menu_common.h"
@@ -74,6 +75,18 @@ typedef enum
   CTS_REQ_TALK,
   CTS_REQ_TALK_WAIT,
   CTS_TALKING,
+  
+  CTS_END_CONFIRM_INIT,
+  CTS_END_CONFIRM,
+
+  //親機による子機の終了待ち
+  CTS_WAIT_FINISH_CHILD_INIT,
+  CTS_WAIT_FINISH_CHILD,
+
+  //親のリクエストによる終了
+  CTS_END_PARENT_REQ_INIT,
+  CTS_END_PARENT_REQ,
+
 }CTVT_TALK_STATE;
 
 typedef enum
@@ -123,11 +136,15 @@ struct _CTVT_TALK_WORK
   
   BOOL isUpdateMsgRec;
   BOOL isUpdateMsgDraw;
+  BOOL isUpdateMsgWin;
   GFL_BMPWIN *recWin;
   GFL_BMPWIN *drawWin;
   GFL_BMPWIN *waveWin;  //波形を描く
   u8  wavePosX;
   u8  wavePosY;
+
+  GFL_BMPWIN *msgWin;
+  APP_TASKMENU_WORK *yesNoWork;
   
   //セル関係
   GFL_CLWK    *clwkSlider;
@@ -149,6 +166,11 @@ static void CTVT_TALK_UpdateButton( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWo
 static void CTVT_TALK_UpdateVoiceBar( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork );
 static void CTVT_TALK_DrawLine( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork , u8 *charBuf , u8 x1 , u8 y1 , u8 x2 , u8 y2 );
 static void CTVT_TALK_DrawDot( u8 *charBuf , u8 x , u8 y );
+
+static void CTVT_TALK_DispMessage( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork , const u16 msgId );
+
+static void CTVT_TALK_InitEndConfirm( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork );
+static void CTVT_TALK_UpdateEndConfirm( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork );
 
 static const GFL_UI_TP_HITTBL CTVT_TALK_HitRecButton[2] = 
 {
@@ -213,7 +235,7 @@ void CTVT_TALK_InitMode( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork )
     //スライダー
     GFL_CLWK_DATA cellInitData;
     cellInitData.pos_x = CTVT_TALK_SLIDER_X;
-    cellInitData.pos_y = CTVT_TALK_SLIDER_Y - talkWork->sliderPos;
+    cellInitData.pos_y = CTVT_TALK_SLIDER_Y + talkWork->sliderPos;
     cellInitData.anmseq = CTOAS_SLIDER;
     cellInitData.softpri = 0;
     cellInitData.bgpri = 0;
@@ -288,7 +310,11 @@ void CTVT_TALK_InitMode( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork )
                                         CTVT_TALK_WAVE_DRAW_HEIGHT ,
                                         CTVT_PAL_BG_SUB_FONT ,
                                         GFL_BMP_CHRAREA_GET_B );
-  
+  //MakeScreenは文字表示の時
+  talkWork->msgWin = GFL_BMPWIN_Create( CTVT_FRAME_SUB_MSG , 
+                                        1 , 1 , 30 , 4 ,
+                                        CTVT_PAL_BG_SUB_FONT ,
+                                        GFL_BMP_CHRAREA_GET_B );
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp( talkWork->recWin ) , 0x0 );
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp( talkWork->drawWin) , 0x0 );
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp( talkWork->waveWin) , 0xF );
@@ -316,8 +342,10 @@ void CTVT_TALK_InitMode( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork )
     GFL_STR_DeleteBuffer( str );
     
   }
+  talkWork->yesNoWork = NULL;
   talkWork->isUpdateMsgRec = TRUE;
   talkWork->isUpdateMsgDraw = TRUE;
+  talkWork->isUpdateMsgWin = FALSE;
   GFL_BG_LoadScreenReq(CTVT_FRAME_SUB_MSG);
 
 }
@@ -328,12 +356,19 @@ void CTVT_TALK_InitMode( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork )
 void CTVT_TALK_TermMode( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork )
 {
 
+  if( talkWork->yesNoWork != NULL )
+  {
+    APP_TASKMENU_CloseMenu( talkWork->yesNoWork );
+  }
+
   GFL_BMPWIN_ClearTransWindow( talkWork->recWin );
   GFL_BMPWIN_ClearTransWindow( talkWork->drawWin );
   GFL_BMPWIN_ClearTransWindow( talkWork->waveWin );
+  GFL_BMPWIN_ClearTransWindow( talkWork->msgWin );
   GFL_BMPWIN_Delete( talkWork->recWin );
   GFL_BMPWIN_Delete( talkWork->drawWin );
   GFL_BMPWIN_Delete( talkWork->waveWin );
+  GFL_BMPWIN_Delete( talkWork->msgWin );
   
   GFL_CLACT_WK_Remove( talkWork->clwkReturn );
   GFL_CLACT_WK_Remove( talkWork->clwkPause );
@@ -403,6 +438,12 @@ const COMM_TVT_MODE CTVT_TALK_Main( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWo
     break;
     
   case CTS_REQ_TALK:
+    if( COMM_TVT_GetFinishReq( work ) == TRUE )
+    {
+      //親のリクエストによる終了
+      talkWork->state = CTS_END_PARENT_REQ_INIT;
+    }
+    else
     {
       const int isContTbl = GFL_UI_TP_HitCont( CTVT_TALK_HitRecButton );
       if( isContTbl == 0 || (GFL_UI_KEY_GetCont() & CTVT_BUTTON_TALK) )
@@ -422,6 +463,12 @@ const COMM_TVT_MODE CTVT_TALK_Main( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWo
     break;
   
   case CTS_REQ_TALK_WAIT:
+    if( COMM_TVT_GetFinishReq( work ) == TRUE )
+    {
+      //親のリクエストによる終了
+      talkWork->state = CTS_END_PARENT_REQ_INIT;
+    }
+    else
     {
       CTVT_COMM_WORK *commWork = COMM_TVT_GetCommWork( work );
       const u8 talkMember = CTVT_COMM_GetTalkMember( work , commWork );
@@ -454,6 +501,55 @@ const COMM_TVT_MODE CTVT_TALK_Main( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWo
   case CTS_TALKING:
     CTVT_TALK_UpdateTalk( work , talkWork );
     break;
+    
+  case CTS_END_CONFIRM_INIT:
+    CTVT_TALK_InitEndConfirm( work , talkWork );
+    break;
+
+  case CTS_END_CONFIRM:
+    CTVT_TALK_UpdateEndConfirm( work , talkWork );
+    break;
+
+  //親機による子機の終了待ち
+  case CTS_WAIT_FINISH_CHILD_INIT:
+    {
+      CTVT_COMM_WORK *commWork = COMM_TVT_GetCommWork( work );
+      const BOOL ret = CTVT_COMM_SendFlg( work , commWork , CCFT_FINISH_PARENT , 0 );
+      if( ret == TRUE )
+      {
+        talkWork->state = CTS_WAIT_FINISH_CHILD;
+      }
+    }
+    //送信リクエスト中に子が落ちてるかもしれないのでスルー
+    //break;
+
+  case CTS_WAIT_FINISH_CHILD:
+    if( COMM_TVT_GetConnectNum( work ) <= 1 )
+    {
+      talkWork->subState = CTSS_GO_END;
+      talkWork->state = CTS_FADEOUT_BOTH;
+      COMM_TVT_SetSusspend( work , TRUE );
+    }
+    break;
+
+  //親のリクエストによる終了
+  case CTS_END_PARENT_REQ_INIT:
+    {
+      CTVT_COMM_WORK *commWork = COMM_TVT_GetCommWork( work );
+      CTVT_COMM_ExitComm( work , commWork );
+      
+      CTVT_TALK_DispMessage( work , talkWork , COMM_TVT_SYS_05 );
+      talkWork->state = CTS_END_PARENT_REQ;
+    }
+    break;
+  case CTS_END_PARENT_REQ:
+    if( GFL_UI_TP_GetTrg() == TRUE )
+    {
+      talkWork->subState = CTSS_GO_END;
+      talkWork->state = CTS_FADEOUT_BOTH;
+      COMM_TVT_SetSusspend( work , TRUE );
+    }
+    break;
   }
 
   CTVT_TALK_UpdateButton( work , talkWork );
@@ -477,7 +573,18 @@ const COMM_TVT_MODE CTVT_TALK_Main( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWo
       talkWork->isUpdateMsgDraw = FALSE;
     }
   }
-
+  if( talkWork->isUpdateMsgWin == TRUE )
+  {
+    PRINT_QUE *printQue = COMM_TVT_GetPrintQue( work );
+    if( PRINTSYS_QUE_IsExistTarget( printQue , GFL_BMPWIN_GetBmp( talkWork->msgWin )) == FALSE )
+    {
+      GFL_BMPWIN_TransVramCharacter( talkWork->msgWin );
+      GFL_BMPWIN_MakeScreen( talkWork->msgWin );
+      GFL_BG_LoadScreenReq(CTVT_FRAME_SUB_MSG);
+      talkWork->isUpdateMsgWin = FALSE;
+    }
+  }
+  
   return CTM_TALK;
 }
 
@@ -494,6 +601,12 @@ static void CTVT_TALK_UpdateWait( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork
   //const BOOL isTrg = GFL_UI_TP_GetPointTrg( &trgX,&trgY );
   //const BOOL isCont = GFL_UI_TP_GetPointTrg( &contX,&contY );
 
+  if( COMM_TVT_GetFinishReq( work ) == TRUE )
+  {
+    //親のリクエストによる終了
+    talkWork->state = CTS_END_PARENT_REQ_INIT;
+    return;
+  }
 
   //会話ボタン
   if( connectNum == 1 )
@@ -553,9 +666,12 @@ static void CTVT_TALK_UpdateWait( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork
     const int ret = GFL_UI_TP_HitTrg( hitTbl );
     if( ret == 0 )
     {
+      talkWork->state = CTS_END_CONFIRM_INIT;
+      /*
       talkWork->subState = CTSS_GO_END;
       talkWork->state = CTS_FADEOUT_BOTH;
       COMM_TVT_SetSusspend( work , TRUE );
+      */
     }
   }
 
@@ -575,6 +691,12 @@ static void CTVT_TALK_UpdateWait( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork
 static void CTVT_TALK_UpdateTalk( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork )
 {
   const int isContTbl = GFL_UI_TP_HitCont( CTVT_TALK_HitRecButton );
+  if( COMM_TVT_GetFinishReq( work ) == TRUE )
+  {
+    //親のリクエストによる終了
+    talkWork->state = CTS_END_PARENT_REQ_INIT;
+    return;
+  }
   switch( talkWork->subState )
   {
   case CTSS_INIT_REC:
@@ -846,6 +968,90 @@ static void CTVT_TALK_DrawDot( u8 *charBuf , u8 x , u8 y )
       (u32)trgAdr >= (u32)charBuf )
   {
     *trgAdr = (*trgAdr & maskArr[ofsXmod]) + shiftArr[ofsXmod];
+  }
+}
+
+static void CTVT_TALK_DispMessage( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork , const u16 msgId )
+{
+  GFL_FONT *fontHandle = COMM_TVT_GetFontHandle( work );
+  GFL_MSGDATA *msgHandle = COMM_TVT_GetMegHandle( work );
+  PRINT_QUE *printQue = COMM_TVT_GetPrintQue( work );
+  STRBUF *str;
+  
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp( talkWork->msgWin) , 0xF );
+  str = GFL_MSG_CreateString( msgHandle , msgId );
+  PRINTSYS_PrintQueColor( printQue , GFL_BMPWIN_GetBmp( talkWork->msgWin ) , 
+          0 , 0 , str , fontHandle ,CTVT_FONT_COLOR_BLACK );
+  GFL_STR_DeleteBuffer( str );
+
+  BmpWinFrame_Write( talkWork->msgWin , WINDOW_TRANS_OFF , 
+                      CTVT_BMPWIN_CGX , CTVT_PAL_BG_SUB_WINFRAME );
+  talkWork->isUpdateMsgWin = TRUE;
+
+}
+
+static void CTVT_TALK_InitEndConfirm( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork )
+{
+
+  if( COMM_TVT_GetSelfIdx( work ) == 0 &&
+      COMM_TVT_GetConnectNum( work ) > 1 )
+  {
+    //親機終了確認
+    CTVT_TALK_DispMessage( work , talkWork , COMM_TVT_SYS_02 );
+  }
+  else
+  {
+    //子機終了確認
+    CTVT_TALK_DispMessage( work , talkWork , COMM_TVT_SYS_01 );
+  }
+  
+  talkWork->yesNoWork = COMM_TVT_OpenYesNoMenu( work );
+  
+  talkWork->state = CTS_END_CONFIRM;
+  
+}
+
+static void CTVT_TALK_UpdateEndConfirm( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork )
+{
+  if( COMM_TVT_GetFinishReq( work ) == TRUE )
+  {
+    //親のリクエストによる終了
+    talkWork->state = CTS_END_PARENT_REQ_INIT;
+    APP_TASKMENU_CloseMenu( talkWork->yesNoWork );
+    return;
+  }
+  APP_TASKMENU_UpdateMenu( talkWork->yesNoWork );
+  if( APP_TASKMENU_IsFinish( talkWork->yesNoWork ) == TRUE )
+  {
+    const u8 retVal = APP_TASKMENU_GetCursorPos( talkWork->yesNoWork );
+    if( retVal == 0 )
+    {
+      if( COMM_TVT_GetSelfIdx( work ) == 0 &&
+          COMM_TVT_GetConnectNum( work ) > 1 )
+      {
+        talkWork->state = CTS_WAIT_FINISH_CHILD_INIT;
+      }
+      else
+      {
+        talkWork->subState = CTSS_GO_END;
+        talkWork->state = CTS_FADEOUT_BOTH;
+        COMM_TVT_SetSusspend( work , TRUE );
+      }
+    }
+    else
+    {
+      talkWork->state = CTS_WAIT;
+      BmpWinFrame_Clear( talkWork->msgWin , WINDOW_TRANS_ON_V );
+
+      GFL_BMPWIN_ClearScreen( talkWork->msgWin );
+      GFL_BMPWIN_MakeScreen( talkWork->recWin );
+      GFL_BMPWIN_MakeScreen( talkWork->drawWin );
+      GFL_BMPWIN_MakeScreen( talkWork->waveWin );
+      GFL_BG_LoadScreenReq(CTVT_FRAME_SUB_MSG);
+
+    }
+    APP_TASKMENU_CloseMenu( talkWork->yesNoWork );
+    talkWork->yesNoWork = NULL;
   }
 }
 

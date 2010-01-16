@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ariizumi_nobuhiko" host="W00147" date="2009-12-21T22:05:08"/>
+	<create user="ariizumi_nobuhiko" host="W00147" date="2010-01-16T19:15:59"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -317,7 +317,7 @@
 		</language>
 	</columns>
 
-	<dialog left="131" top="162" right="836" bottom="782" maximized="no" rayout="Vertical2">
+	<dialog left="81" top="149" right="786" bottom="769" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -421,6 +421,37 @@
 	<row id="COMM_TVT_CALL_03">
 		<language name="JPN">[2:00:１桁:0]/4</language>
 		<language name="JPN_KANJI">[2:00:１桁:0]/4</language>
+	</row>
+
+	<row id="COMM_TVT_SYS_01">
+		<comment>システムメッセージ</comment>
+		<language name="JPN">TVトランシーバーを　しゅうりょうします。　
+よろしいですか？</language>
+		<language name="JPN_KANJI">TVトランシーバーを　終了します。
+よろしいですか？</language>
+	</row>
+
+	<row id="COMM_TVT_SYS_02">
+		<language name="JPN">おやが　やめると　かいさんになります。
+よろしいですか？</language>
+		<language name="JPN_KANJI">親が　やめると　解散になります。
+よろしいですか？</language>
+	</row>
+
+	<row id="COMM_TVT_SYS_03">
+		<language name="JPN">はい</language>
+		<language name="JPN_KANJI">はい</language>
+	</row>
+
+	<row id="COMM_TVT_SYS_04">
+		<language name="JPN">いいえ</language>
+		<language name="JPN_KANJI">いいえ</language>
+	</row>
+
+	<row id="COMM_TVT_SYS_05">
+		<language name="JPN">おやが　しゅうりょうしたので　
+かいさんします。</language>
+		<language name="JPN_KANJI">親が　終了したので　解散します。</language>
 	</row>
 
 	<flowchart-group-list>

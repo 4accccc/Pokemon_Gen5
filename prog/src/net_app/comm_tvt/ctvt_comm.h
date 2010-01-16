@@ -40,6 +40,8 @@ typedef enum
   CCFT_REQ_TALK,  //会話要求通知
   CCFT_FINISH_TALK,  //会話終了通知
   CCFT_CANCEL_TALK,  //会話取り消し通知 //何かしらうまくいかなかったとき
+
+  CCFT_FINISH_PARENT,  //親が終了を要求する
   
   CCFT_MAX,
 }CTVT_COMM_FLAG_TYPE;

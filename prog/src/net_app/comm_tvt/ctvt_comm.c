@@ -987,6 +987,9 @@ static void CTVT_COMM_PostFlg( const int netID, const int size , const void* pDa
     }
     break;
     
+  case CCFT_FINISH_PARENT:
+    COMM_TVT_SetFinishReq( commWork->parentWork , TRUE );
+    break;
   }
 }
 
