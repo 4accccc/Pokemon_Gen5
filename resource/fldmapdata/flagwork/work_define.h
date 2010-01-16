@@ -163,6 +163,7 @@
 #define WK_SCENE_D08_LEGEND              16551 /* 0x40a7 D08リュウラセンの塔：パッケージポケモンイベント用のワーク */
 #define WK_SCENE_C08                     16552 /* 0x40a8 C08ソウリュウシティ：イベント用ワーク */
 #define WK_SCENE_C08GYM0101              16553 /* 0x40a9 ドラゴンジム：トレーナー戦POSワーク */
+#define WK_SCENE_D02R0101_HAKAI          16554 /* 0x40aa ヤグルマの森：盗難イベント中の プラズマ団との戦闘イベント用ワーク */
 
 #define WK_SCENE_AREA_END                16687 /* 0x412f  */
 
