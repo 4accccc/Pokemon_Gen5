@@ -2,7 +2,7 @@
 /**
  *
  *	@file		intro_particle.h
- *	@brief
+ *	@brief  イントロ パーティクル処理
  *	@author		hosaka genya
  *	@data		2009.12.21
  *

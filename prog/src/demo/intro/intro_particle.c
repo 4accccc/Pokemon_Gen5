@@ -2,7 +2,7 @@
 /**
  *
  *	@file		intro_particle.c
- *	@brief
+ *	@brief  イントロ パーティクル処理
  *	@author	hosaka genya
  *	@data		2009.12.21
  *
@@ -103,7 +103,7 @@ INTRO_PARTICLE_WORK* INTRO_PARTICLE_Create( INTRO_GRAPHIC_WORK* graphic, HEAPID 
 		GFL_PTC_PersonalCameraCreate( wk->ptc, &projection, DEFAULT_PERSP_WAY, &sc_camera_eye, &sc_camera_up, &sc_camera_at, wk->heap_id );
 	}
 
-  // キメウチでボールリソースをロード
+  //@TODO キメウチでボールリソースをロード
   {
     void *res;
     res = GFL_PTC_LoadArcResource( ARCID_PTC, NARC_spa_be_ball_normal_1_spa, wk->heap_id );
