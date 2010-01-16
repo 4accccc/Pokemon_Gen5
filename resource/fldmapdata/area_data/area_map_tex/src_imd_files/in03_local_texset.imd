@@ -3,9 +3,9 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="tanoue_reiko" host="W00192" date="2009-07-22T11:44:57" source="untitled"/>
+	<create user="lee_hyunjung" host="W00154A" date="2010-01-15T22:58:37"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
-	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+	<generator name="NNS_3DMaterialEditor" version="2.8.0.20050620"/>
 </head>
 
 <body>
@@ -22,15 +22,419 @@
 	tex_matrix_mode="maya"
 	compress_node="none" node_size="13 13"
 	compress_material="off" material_size="12 12"
-	output_texture="used"
+	output_texture="all"
 	force_full_weight="off"
 	use_primitive_strip="on"
 />
 
 <box_test pos_scale="5" xyz="-0.250000 0.000000 -0.250000" whd="4.000000 0.000000 1.000000"/>
 
-<tex_image_array size="12">
-	<tex_image index="0" name="gsihiki"
+<tex_image_array size="44">
+	<tex_image index="0" name="carpet01_1"
+		width="8" height="8" original_width="8" original_height="8"
+		format="palette16"
+		color0_mode="color"
+		palette_name="carpet01_1_pl"
+		path="C:/home/wb_data3d/field/in03/chip/tex/carpet01_1.tga"
+	>
+		<bitmap size="16">
+			3333 3333 1133 3311 0113 3110 2013 3102
+			2013 3102 0113 3110 1133 3311 3333 3333
+		</bitmap>
+	</tex_image>
+	<tex_image index="1" name="carpet01_2"
+		width="8" height="8" original_width="8" original_height="8"
+		format="palette4"
+		color0_mode="color"
+		palette_name="carpet01_2_pl"
+		path="C:/home/wb_data3d/field/in03/chip/tex/carpet01_2.tga"
+	>
+		<bitmap size="8">
+			5ff5 5ff5 0000 aaaa aaaa 0000 5555 5555
+		</bitmap>
+	</tex_image>
+	<tex_image index="2" name="fh_bbed01"
+		width="16" height="16" original_width="16" original_height="16"
+		format="palette16"
+		color0_mode="color"
+		palette_name="fh_bbed01_pl"
+		path="C:/home/wb_data3d/field/in03/chip/tex/fh_bbed01.tga"
+	>
+		<bitmap size="64">
+			3332 3333 3333 0023 6652 6666 5666 0023
+			6652 6666 5666 0023 6652 6666 5666 0023
+			6652 6666 5666 0023 6652 6666 5666 0023
+			6652 6666 5666 0023 5452 5555 5455 0023
+			3332 3333 3333 0023 2222 2222 2222 1122
+			2222 2222 2222 1122 2222 2222 2222 1122
+			2222 2222 2222 6622 2222 2222 2222 6622
+			2222 2222 2222 6622 2222 2222 2222 6622
+		</bitmap>
+	</tex_image>
+	<tex_image index="3" name="fh_bshiki"
+		width="32" height="32" original_width="32" original_height="32"
+		format="palette16"
+		color0_mode="color"
+		palette_name="fh_bshiki_pl"
+		path="C:/home/wb_data3d/field/in03/chip/tex/fh_bshiki.tga"
+	>
+		<bitmap size="256">
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			1100 1111 1111 1111 1111 1111 1111 0011
+			2100 2222 2222 2222 2222 2222 2222 0012
+			2100 2222 2222 2222 2222 2222 2222 0012
+			2100 3332 3333 3333 3333 3333 2333 0012
+			2100 1132 1111 1111 1111 1111 2311 0012
+			2100 1132 1111 1111 1111 1111 2311 0012
+			2100 1132 0000 0000 0000 0000 2311 0012
+			2100 1132 2220 2222 2222 0222 2311 0012
+			2100 1132 2220 2222 2222 0222 2311 0012
+			2100 1132 2220 2222 2222 0222 2311 0012
+			2100 1132 2220 2222 2222 0222 2311 0012
+			2100 1132 2220 2222 2222 0222 2311 0012
+			2100 1132 2220 2222 2222 0222 2311 0012
+			2100 1132 2220 2222 2222 0222 2311 0012
+			2100 1132 2220 2222 2222 0222 2311 0012
+			2100 1132 2220 2222 2222 0222 2311 0012
+			2100 1132 2220 2222 2222 0222 2311 0012
+			2100 1132 2220 2222 2222 0222 2311 0012
+			2100 1132 2220 2222 2222 0222 2311 0012
+			2100 1132 2220 2222 2222 0222 2311 0012
+			2100 1132 2220 2222 2222 0222 2311 0012
+			2100 1132 0000 0000 0000 0000 2311 0012
+			2100 1132 1111 1111 1111 1111 2311 0012
+			2100 1132 1111 1111 1111 1111 2311 0012
+			2100 3332 3333 3333 3333 3333 2333 0012
+			2100 2222 2222 2222 2222 2222 2222 0012
+			2100 2222 2222 2222 2222 2222 2222 0012
+			1100 1111 1111 1111 1111 1111 1111 0011
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+		</bitmap>
+	</tex_image>
+	<tex_image index="4" name="fh_byuka"
+		width="16" height="16" original_width="16" original_height="16"
+		format="palette4"
+		color0_mode="color"
+		palette_name="fh_byuka_pl"
+		path="C:/home/wb_data3d/field/in03/chip/tex/fh_byuka.tga"
+	>
+		<bitmap size="32">
+			556a 56a9 146a 46a9 5565 55a9 aaa4 91aa
+			aa95 955a aa91 951a 6555 5155 646a 15a4
+			556a 5aa5 9156 aaaa 9546 956a aa55 906a
+			6a91 9555 5695 9544 455a 9155 551a 95aa
+		</bitmap>
+	</tex_image>
+	<tex_image index="5" name="fh_wbed01"
+		width="16" height="16" original_width="16" original_height="16"
+		format="palette16"
+		color0_mode="color"
+		palette_name="fh_wbed01_pl"
+		path="C:/home/wb_data3d/field/in03/chip/tex/fh_wbed01.tga"
+	>
+		<bitmap size="64">
+			5455 5555 4555 1104 5555 6666 5566 1104
+			6544 6666 5666 1104 6544 6666 5666 1104
+			6544 6666 5666 1104 5544 6666 5566 1104
+			5544 5555 4555 1104 4444 4444 4444 1104
+			2244 2333 3332 2202 2244 2222 2222 3302
+			2244 2323 3232 3302 2344 2232 2322 3302
+			3244 3222 2223 6603 2144 2333 3332 6602
+			1144 1222 2221 6601 1144 1111 1111 6601
+		</bitmap>
+	</tex_image>
+	<tex_image index="6" name="fh_wcurtain"
+		width="16" height="16" original_width="16" original_height="16"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="fh_wcurtain_pl"
+		path="C:/home/wb_data3d/field/in03/chip/tex/fh_wcurtain.tga"
+	>
+		<bitmap size="64">
+			3333 3333 3333 3333 4573 7557 5574 2657
+			2573 7557 4574 2657 2232 2332 2322 2222
+			0000 0000 5442 2444 0000 0000 7552 3665
+			0000 0000 6531 3676 0000 0000 5520 3677
+			0000 0000 5310 3667 0000 0000 5200 2356
+			0000 0000 3100 2355 0000 0000 2000 1112
+			0000 0000 3000 4345 0000 0000 4000 5446
+			0000 0000 4000 5727 0000 0000 3000 3323
+		</bitmap>
+	</tex_image>
+	<tex_image index="7" name="fh_wcushion"
+		width="32" height="16" original_width="32" original_height="16"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="fh_wcushion_pl"
+		path="C:/home/wb_data3d/field/in03/chip/tex/fh_wcushion.tga"
+	>
+		<bitmap size="128">
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 3300 0003 0000 0000 0000 0000 0000
+			0000 6533 0036 0000 0000 b000 0bbb 0000
+			3300 6665 0366 0000 0000 cbbb bccc 0000
+			6530 1166 3111 0000 b000 cccc cccc 000b
+			6653 2216 1122 0011 ca00 ccec cccc 00bc
+			6653 2216 2222 0812 cca0 cccc cccc 00bc
+			6533 2221 2221 8122 cca0 cccc cecc 0bcc
+			1334 1222 2228 8112 cd90 cccc cccc 0bec
+			1344 2222 2222 4812 aa90 cccc cccc 09ac
+			1440 2221 2222 4481 a900 ccec cccc 09ac
+			4440 1118 1222 4481 a900 ccca cecc 009a
+			4400 8884 1111 0448 9000 ccaa 9aac 0079
+			4000 4444 8888 0444 0000 aaa9 799a 0007
+			0000 4440 4444 0044 0000 9990 0779 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+		</bitmap>
+	</tex_image>
+	<tex_image index="8" name="fh_wflower"
+		width="16" height="16" original_width="16" original_height="16"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="fh_wflower_pl"
+		path="C:/home/wb_data3d/field/in03/chip/tex/fh_wflower.tga"
+	>
+		<bitmap size="64">
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 2220 0220 0000 0000 3332 2332 0000
+			2000 3433 3351 0002 2000 3333 4565 0002
+			3200 3153 3252 0025 3200 3565 2333 0023
+			3200 3253 3334 0022 2000 3325 3253 0002
+			2000 3432 2223 0002 0000 8222 0222 0000
+			0000 7890 a988 0000 0000 78a0 aa98 000a
+			0000 aa00 aaaa 000a 0000 0000 aaaa 0000
+		</bitmap>
+	</tex_image>
+	<tex_image index="9" name="fh_win01"
+		width="16" height="16" original_width="16" original_height="16"
+		format="palette16"
+		color0_mode="color"
+		palette_name="fh_win01_pl"
+		path="C:/home/wb_data3d/field/in03/chip/tex/fh_win01.tga"
+	>
+		<bitmap size="64">
+			2222 2222 2222 2222 1111 1111 1111 1111
+			0000 0000 0000 0000 0000 0000 0000 0000
+			5500 5545 4444 0444 5500 4554 4444 0444
+			4500 4455 4444 0444 5400 4445 4444 0444
+			5500 4444 4444 0444 4500 4444 4444 0444
+			4400 4444 4444 0444 4400 4444 4444 0444
+			3300 3333 3333 0333 2200 2222 2222 0222
+			0000 0000 0000 0000 0000 0000 0000 0000
+		</bitmap>
+	</tex_image>
+	<tex_image index="10" name="fh_win02"
+		width="16" height="16" original_width="16" original_height="16"
+		format="palette4"
+		color0_mode="transparency"
+		palette_name="fh_win02_pl"
+		path="C:/home/wb_data3d/field/in03/chip/tex/fh_win02.tga"
+	>
+		<bitmap size="32">
+			5555 5555 5555 5555 0005 5000 0005 5000
+			0005 5000 0005 5000 0005 5000 0005 5000
+			0005 5000 0005 5000 0005 5000 0005 5000
+			aaa5 5aaa aaa5 5aaa 5555 5555 5555 5555
+		</bitmap>
+	</tex_image>
+	<tex_image index="11" name="fh_win03"
+		width="16" height="16" original_width="16" original_height="16"
+		format="palette4"
+		color0_mode="color"
+		palette_name="fh_win03_pl"
+		path="C:/home/wb_data3d/field/in03/chip/tex/fh_win03.tga"
+	>
+		<bitmap size="32">
+			4000 5554 1000 5555 4400 5555 5100 5555
+			5440 1555 5510 4555 5544 5155 5551 1455
+			5554 0515 5555 4145 5555 5051 5555 5414
+			1555 1505 4555 0541 5155 0150 1455 0054
+		</bitmap>
+	</tex_image>
+	<tex_image index="12" name="fh_wkabe"
+		width="16" height="32" original_width="16" original_height="32"
+		format="palette16"
+		color0_mode="color"
+		palette_name="fh_wkabe_pl"
+		path="C:/home/wb_data3d/field/in03/chip/tex/fh_wkabe.tga"
+	>
+		<bitmap size="128">
+			2222 2222 2222 2222 1111 1111 1111 1111
+			0000 0000 0000 0000 0000 0000 0000 0000
+			3333 5433 3345 3333 3333 5433 3345 3333
+			3333 5433 3345 3333 3333 5433 3345 3333
+			4444 6544 4456 4444 5555 7655 5567 5555
+			5555 7655 5567 5555 5555 7655 5567 5555
+			5555 7655 5567 5555 5555 7655 5567 5555
+			5555 7655 5567 5555 5555 7655 5567 5555
+			5555 7655 5567 5555 5555 7655 5567 5555
+			5555 7655 5567 5555 5555 7655 5567 5555
+			5555 7665 5667 5555 5555 7776 6777 5555
+			6556 6677 7766 6556 7567 5767 7675 7657
+			7676 7656 6567 6767 7776 6556 6556 6777
+			1111 1111 1111 1111 1111 1111 1111 1111
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+		</bitmap>
+	</tex_image>
+	<tex_image index="13" name="fh_wshiki2"
+		width="16" height="16" original_width="16" original_height="16"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="fh_wshiki2_pl"
+		path="C:/home/wb_data3d/field/in03/chip/tex/fh_wshiki2.tga"
+	>
+		<bitmap size="64">
+			5444 4555 2234 0012 4445 5555 2444 0122
+			4455 5554 4445 0123 4455 5554 4345 1222
+			4555 5544 6455 1224 4555 5544 6655 1236
+			4555 5544 6455 1224 4455 5554 4345 1222
+			4455 5554 4445 0123 4445 5555 2444 0122
+			5444 4555 2234 0012 5544 4555 2244 0012
+			5544 5555 2344 0122 5445 5555 6645 0123
+			5445 5555 6635 0122 5544 5555 3444 0122
+		</bitmap>
+	</tex_image>
+	<tex_image index="14" name="fh_wshiki3"
+		width="16" height="16" original_width="16" original_height="16"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="fh_wshiki3_pl"
+		path="C:/home/wb_data3d/field/in03/chip/tex/fh_wshiki3.tga"
+	>
+		<bitmap size="64">
+			4445 2233 1111 0000 4445 2233 1111 0001
+			4455 2334 1112 0001 4455 2334 1112 0011
+			4555 3344 1122 0011 4555 3344 1122 0011
+			4555 3344 1122 0011 4555 3344 1122 0011
+			4555 3344 1122 0011 4555 3344 1122 0011
+			4555 3344 1122 0011 4555 3344 1122 0011
+			4455 2334 1112 0011 4455 2334 1112 0001
+			4445 2233 1111 0001 4445 2233 1111 0000
+		</bitmap>
+	</tex_image>
+	<tex_image index="15" name="fh_wtable"
+		width="16" height="16" original_width="16" original_height="16"
+		format="palette16"
+		color0_mode="color"
+		palette_name="fh_wtable_pl"
+		path="C:/home/wb_data3d/field/in03/chip/tex/fh_wtable.tga"
+	>
+		<bitmap size="64">
+			3333 3333 3333 3333 3333 3333 3333 3333
+			4444 4444 4444 4444 4444 4444 4444 4444
+			5555 5555 5555 5555 5555 5555 5555 5555
+			6666 6666 6666 6666 6666 6666 6666 6666
+			2222 2222 2222 2222 2222 2211 2222 2211
+			1222 2111 1222 2111 1111 1111 1111 1111
+			1111 1100 1111 1100 0111 1000 0111 1000
+			0000 0000 0000 0000 0000 0000 0000 0000
+		</bitmap>
+	</tex_image>
+	<tex_image index="16" name="fh_wyuka"
+		width="16" height="16" original_width="16" original_height="16"
+		format="palette4"
+		color0_mode="color"
+		palette_name="fh_wyuka_pl"
+		path="C:/home/wb_data3d/field/in03/chip/tex/fh_wyuka.tga"
+	>
+		<bitmap size="32">
+			aa7a a96a 96fe a82a 96b5 a41a aaa5 4241
+			aaaa 4281 6a92 a41a a696 a82a a2aa 096a
+			80aa 5aaa a25a aaaa a95a afea a95a afea
+			aabe 9fea 56be 96aa 56aa aaaa 56aa aaaa
+		</bitmap>
+	</tex_image>
+	<tex_image index="17" name="fhgenkan"
+		width="32" height="8" original_width="32" original_height="8"
+		format="palette4"
+		color0_mode="color"
+		palette_name="fhgenkan_pl"
+		path="C:/home/wb_data3d/field/in03/chip/tex/fhgenkan.tga"
+	>
+		<bitmap size="32">
+			0000 0000 0000 0000 5554 5555 5555 1555
+			ea94 6abf fea9 16ab ea94 56bf fe95 16ab
+			ea94 957f fd56 16ab ea94 a957 d56a 16ab
+			6a94 5a95 56a5 16a9 5694 56bd 7e95 1655
+		</bitmap>
+	</tex_image>
+	<tex_image index="18" name="fhkabe"
+		width="16" height="16" original_width="16" original_height="16"
+		format="palette4"
+		color0_mode="color"
+		palette_name="fhkabe_pl"
+		path="C:/home/wb_data3d/field/in03/chip/tex/fhkabe.tga"
+	>
+		<bitmap size="32">
+			505a a509 105a a509 505a a509 a05a a50a
+			605a a50a a05a a50a 605a a505 605a a504
+			605a a505 a05a a50a a05a a509 a05a a50a
+			505a a509 105a a509 505a a509 a05a a50a
+		</bitmap>
+	</tex_image>
+	<tex_image index="19" name="fhkabe2"
+		width="16" height="16" original_width="16" original_height="16"
+		format="palette16"
+		color0_mode="color"
+		palette_name="fhkabe2_pl"
+		path="C:/home/wb_data3d/field/in03/chip/tex/fhkabe2.tga"
+	>
+		<bitmap size="64">
+			4444 4444 4444 4444 3333 3333 3333 3333
+			2222 2222 2222 2222 2222 2222 2222 2222
+			2222 2222 2222 2222 0000 0000 0000 0000
+			1111 1111 1111 1111 2222 2222 2222 2222
+			2222 2222 2222 2222 2222 2222 2222 2222
+			2222 2222 2222 2222 3333 3333 3333 3333
+			3333 3333 3333 3333 2222 2222 2222 2222
+			2222 2222 2222 2222 0000 0000 0000 0000
+		</bitmap>
+	</tex_image>
+	<tex_image index="20" name="fhkabe3"
+		width="8" height="16" original_width="8" original_height="16"
+		format="palette4"
+		color0_mode="color"
+		palette_name="fhkabe3_pl"
+		path="C:/home/wb_data3d/field/in03/chip/tex/fhkabe3.tga"
+	>
+		<bitmap size="16">
+			1aa4 0000 1554 1aa4 1aa4 1aa4 1aa4 1aa4
+			1aa4 1aa4 1aa4 1aa4 1aa4 1aa4 6ff9 1aa4
+		</bitmap>
+	</tex_image>
+	<tex_image index="21" name="fhkabe4"
+		width="8" height="8" original_width="8" original_height="8"
+		format="palette4"
+		color0_mode="color"
+		palette_name="fhkabe4_pl"
+		path="C:/home/wb_data3d/field/in03/chip/tex/fhkabe4.tga"
+	>
+		<bitmap size="8">
+			aaaa aaaa aaaa aaaa aaaa aaaa 5555 0000
+		</bitmap>
+	</tex_image>
+	<tex_image index="22" name="fhyuka"
+		width="16" height="16" original_width="16" original_height="16"
+		format="palette16"
+		color0_mode="color"
+		palette_name="fhyuka_pl"
+		path="C:/home/wb_data3d/field/in03/chip/tex/fhyuka.tga"
+	>
+		<bitmap size="64">
+			1111 1111 1111 0111 2221 2222 1222 0111
+			1111 2222 1222 0111 2221 2222 2222 0122
+			2221 2222 2222 0122 2221 1222 1111 0111
+			1111 1111 1111 0111 0000 0000 0000 0000
+			1111 0111 1111 1111 1222 0111 1111 2221
+			2111 0122 2221 2222 2222 0122 2221 2222
+			2222 0122 2221 1112 2222 0122 2221 2222
+			1111 0111 1111 1111 0000 0000 0000 0000
+		</bitmap>
+	</tex_image>
+	<tex_image index="23" name="gsihiki"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
 		color0_mode="color"
@@ -72,7 +476,21 @@
 			4444 6634 1166 1111 4111 4444 4444 0234
 		</bitmap>
 	</tex_image>
-	<tex_image index="1" name="hgenkan"
+	<tex_image index="24" name="h_mado"
+		width="16" height="16" original_width="16" original_height="16"
+		format="palette4"
+		color0_mode="color"
+		palette_name="h_mado_pl"
+		path="C:/home/wb_data3d/build_model/outdoor/common_tex/h_mado.tga"
+	>
+		<bitmap size="32">
+			0000 aaa4 0000 6aa9 4000 1aaa 9000 06aa
+			a400 41aa a900 906a aa40 641a aa90 1906
+			aaa4 0641 6aa9 0190 1aaa 0064 06aa 0019
+			41aa 0006 906a 0001 641a 0000 1906 0000
+		</bitmap>
+	</tex_image>
+	<tex_image index="25" name="hgenkan"
 		width="32" height="8" original_width="32" original_height="8"
 		format="palette4"
 		color0_mode="color"
@@ -86,7 +504,7 @@
 			6a94 5a95 56a5 16a9 5694 56bd 7e95 1655
 		</bitmap>
 	</tex_image>
-	<tex_image index="2" name="hkabe"
+	<tex_image index="26" name="hkabe"
 		width="16" height="32" original_width="16" original_height="32"
 		format="palette16"
 		color0_mode="color"
@@ -112,7 +530,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="3" name="hkabe2f"
+	<tex_image index="27" name="hkabe2f"
 		width="16" height="32" original_width="16" original_height="32"
 		format="palette16"
 		color0_mode="color"
@@ -138,7 +556,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="4" name="hkabeue"
+	<tex_image index="28" name="hkabeue"
 		width="8" height="8" original_width="8" original_height="8"
 		format="palette16"
 		color0_mode="color"
@@ -150,7 +568,7 @@
 			0306 e070 0105 d020 0004 d000 0004 b000
 		</bitmap>
 	</tex_image>
-	<tex_image index="5" name="hshiki"
+	<tex_image index="29" name="hshiki"
 		width="16" height="16" original_width="16" original_height="16"
 		format="palette4"
 		color0_mode="color"
@@ -164,7 +582,7 @@
 			aa92 86aa 5552 8555 0002 8000 aaaa aaaa
 		</bitmap>
 	</tex_image>
-	<tex_image index="6" name="hshiki2f"
+	<tex_image index="30" name="hshiki2f"
 		width="16" height="16" original_width="16" original_height="16"
 		format="palette4"
 		color0_mode="color"
@@ -178,7 +596,7 @@
 			5551 4555 5551 4555 0001 4000 5555 5555
 		</bitmap>
 	</tex_image>
-	<tex_image index="7" name="hyuka"
+	<tex_image index="31" name="hyuka"
 		width="16" height="16" original_width="16" original_height="16"
 		format="palette4"
 		color0_mode="color"
@@ -192,7 +610,7 @@
 			1aaa 56a9 1aaa aaa9 1555 5555 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="8" name="hyukab"
+	<tex_image index="32" name="hyukab"
 		width="16" height="16" original_width="16" original_height="16"
 		format="palette4"
 		color0_mode="color"
@@ -206,7 +624,158 @@
 			1aaa aaa9 1a95 55a9 1555 5555 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="9" name="mkabe"
+	<tex_image index="33" name="idr_win01"
+		width="16" height="16" original_width="16" original_height="16"
+		format="palette4"
+		color0_mode="color"
+		palette_name="idr_win01_pl"
+		path="C:/home/wb_data3d/build_model/indoor/win01/tex/idr_win01.tga"
+	>
+		<bitmap size="32">
+			aaaa aaaa 5555 5555 0000 0000 0000 0000
+			0000 0000 5550 4155 5550 4155 5550 4155
+			5550 4155 5550 4155 5550 4155 5550 4155
+			5550 4155 5550 4155 0000 0000 0000 0000
+		</bitmap>
+	</tex_image>
+	<tex_image index="34" name="m_h01_01"
+		width="32" height="16" original_width="32" original_height="16"
+		format="palette4"
+		color0_mode="color"
+		palette_name="m_h01_01_pl"
+		path="C:/home/wb_data3d/field/in01/chip/tex/m_h01_01.tga"
+	>
+		<bitmap size="64">
+			aaa8 aaaa aaaa 2aaa fffe ffff ffff 6fff
+			fffe ffff ffff 6fff fffe ffff ffff 6aff
+			ffaa ffff ffff 6fff fffa ffff ffff 6fff
+			aaaa aaaa aaaa 6aaa 5554 5555 5555 1555
+			aaaa 2aaa aaa8 aaaa ffff 6fff fffe ffff
+			ffff 6bff fffe ffff ffff 6abf fffe ffff
+			ffff 6fff febe ffff feab 6fff ffea ffff
+			aaaa 6aaa aaaa aaaa 5555 1555 5554 5555
+		</bitmap>
+	</tex_image>
+	<tex_image index="35" name="m_h01_02"
+		width="16" height="16" original_width="16" original_height="16"
+		format="palette16"
+		color0_mode="color"
+		palette_name="m_h01_02_pl"
+		path="C:/home/wb_data3d/field/in01/chip/tex/m_h01_02.tga"
+	>
+		<bitmap size="64">
+			3310 5333 3335 0133 3101 5533 3355 1013
+			1013 5553 3555 3101 2466 6777 7776 6642
+			a999 99aa aa99 999a aa99 987a a789 99aa
+			aaa9 8789 9878 9aaa 9aaa 7899 9987 aaa9
+			9aaa 8789 9878 aaa9 aaa9 9877 7789 9aaa
+			aa99 998a a899 99aa a789 99aa aa99 987a
+			8778 9aaa aaa9 8778 9877 aaa9 9aaa 7789
+			9987 aa99 99aa 7899 9998 a999 999a 8999
+		</bitmap>
+	</tex_image>
+	<tex_image index="36" name="m_h01_03"
+		width="32" height="32" original_width="32" original_height="32"
+		format="palette16"
+		color0_mode="color"
+		palette_name="m_h01_03_pl"
+		path="C:/home/wb_data3d/field/in01/chip/tex/m_h01_03.tga"
+	>
+		<bitmap size="256">
+			1111 1111 1111 1111 1111 1111 1111 1111
+			2222 2222 2222 2222 2222 2222 1221 1122
+			2222 2222 2222 2222 2222 2222 1221 1122
+			2222 2222 2222 2222 2222 2222 1111 1111
+			3333 3333 3333 3333 3333 3333 1333 1122
+			3333 3333 3333 3333 3333 3333 1333 1122
+			2222 2222 2222 2222 2322 2223 1333 1111
+			2222 2222 2222 2222 3322 2333 2333 1122
+			2222 2222 2222 2222 2222 2323 2333 1122
+			2222 2222 2222 2222 2222 3333 2333 1122
+			2222 2222 2222 2222 2222 2322 2333 1122
+			2222 2222 2222 2222 2222 3322 2333 1122
+			2222 2222 2222 2222 2222 2222 2333 1122
+			2222 2222 2222 2222 2222 2222 2333 1122
+			2222 2222 2222 2222 2222 2222 2333 1122
+			2222 2222 2222 2222 2222 2222 2333 1122
+			2222 2222 2222 2222 2222 2222 2333 1122
+			2222 2222 2222 2222 2222 2222 2333 1122
+			2222 2222 2222 2222 2222 2222 2333 1122
+			2222 2222 2222 2222 2222 3322 2333 1122
+			2222 2222 2222 2222 2222 2322 2333 1122
+			2222 2222 2222 2222 2222 3333 2333 1122
+			2222 2222 2222 2222 2222 2323 2333 1122
+			2222 2222 2222 2222 3322 2333 2333 1122
+			2222 2222 2222 2222 2322 2223 1333 1111
+			3333 3333 3333 3333 3333 3333 1333 1122
+			3333 3333 3333 3333 3333 3333 1333 1122
+			2222 2222 2222 2222 2222 2222 1111 1111
+			2222 2222 2222 2222 2222 2222 1221 1122
+			2222 2222 2222 2222 2222 2222 1221 1122
+			1111 1111 1111 1111 1111 1111 1111 1111
+			0000 0000 0000 0000 0000 0000 0000 0000
+		</bitmap>
+	</tex_image>
+	<tex_image index="37" name="m_h01_04"
+		width="16" height="16" original_width="16" original_height="16"
+		format="palette16"
+		color0_mode="color"
+		palette_name="m_h01_04_pl"
+		path="C:/home/wb_data3d/field/in01/chip/tex/m_h01_04.tga"
+	>
+		<bitmap size="64">
+			4444 4444 4444 4444 3333 3333 3333 3333
+			1111 1111 1111 1111 0000 0000 0000 0000
+			1111 1111 1111 1111 4444 4444 4444 4444
+			3333 3333 3333 3333 3333 1113 3111 3333
+			1133 2221 1222 3311 2211 2222 2222 1122
+			4433 2224 4222 3344 3333 4443 3444 3333
+			3333 3333 3333 3333 1111 1111 1111 1111
+			1111 1111 1111 1111 0000 0000 0000 0000
+		</bitmap>
+	</tex_image>
+	<tex_image index="38" name="m_h01_05"
+		width="8" height="16" original_width="8" original_height="16"
+		format="palette4"
+		color0_mode="color"
+		palette_name="m_h01_05_pl"
+		path="C:/home/wb_data3d/field/in01/chip/tex/m_h01_05.tga"
+	>
+		<bitmap size="16">
+			1aa4 0550 1aa4 1aa4 1aa4 1aa4 1aa4 1aa4
+			1aa4 1aa4 1aa4 1aa4 1aa4 1aa4 6ff9 1aa4
+		</bitmap>
+	</tex_image>
+	<tex_image index="39" name="m_h01_06"
+		width="8" height="8" original_width="8" original_height="8"
+		format="palette4"
+		color0_mode="color"
+		palette_name="m_h01_06_pl"
+		path="C:/home/wb_data3d/field/in01/chip/tex/m_h01_06.tga"
+	>
+		<bitmap size="8">
+			aaaa aaaa aaaa aaaa aaaa aaaa 5555 0000
+		</bitmap>
+	</tex_image>
+	<tex_image index="40" name="m_h01_07"
+		width="16" height="16" original_width="16" original_height="16"
+		format="palette16"
+		color0_mode="color"
+		palette_name="m_h01_07_pl"
+		path="C:/home/wb_data3d/field/in01/chip/tex/m_h01_07.tga"
+	>
+		<bitmap size="64">
+			0101 2101 0101 2101 3333 3333 3333 3333
+			6544 6788 8876 4456 8445 6678 8766 5448
+			8856 6667 7666 6588 7886 6655 5566 6887
+			6788 6544 4456 8876 6678 5456 6545 8766
+			6678 4566 6654 8766 6788 4566 6654 8876
+			7888 5456 6545 8887 8886 6545 5456 7888
+			5866 6654 4566 6685 5565 6785 5876 5654
+			5554 7888 8887 4545 6544 6886 6886 4456
+		</bitmap>
+	</tex_image>
+	<tex_image index="41" name="mkabe"
 		width="16" height="32" original_width="16" original_height="32"
 		format="palette16"
 		color0_mode="color"
@@ -232,7 +801,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="10" name="mkabeb"
+	<tex_image index="42" name="mkabeb"
 		width="16" height="32" original_width="16" original_height="32"
 		format="palette16"
 		color0_mode="color"
@@ -240,25 +809,25 @@
 		path="C:/home/wb_data3d/field/in03/chip/tex/mkabeb.tga"
 	>
 		<bitmap size="128">
-			6666 6666 6666 6666 3333 3333 3333 3333
-			0000 0000 0000 0000 0000 0000 0000 0000
-			1111 1111 1111 1111 1111 1111 1111 1111
-			1111 1111 1111 1111 1111 1111 1111 1111
-			2222 2222 2222 2222 4444 4444 4444 4444
-			4444 4444 4444 4444 4444 4444 5544 4455
-			4444 4444 4444 4444 4444 4444 5544 4455
-			4444 4444 5544 4455 4444 4444 4444 4444
-			4444 4444 4444 4444 4444 4444 5544 4455
-			5554 4455 7544 4457 5554 4455 5544 4455
-			4444 4444 4444 4444 4444 4444 4444 4444
-			5554 4455 5544 4455 7754 4457 7544 4457
-			7754 4457 7544 4457 7754 4457 7544 4457
-			3333 3333 3333 3333 3333 3333 3333 3333
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
+			7777 7777 7777 7777 5555 5555 5555 5555
+			2222 2222 2222 2222 0000 0000 0000 0000
+			6666 3466 6643 6666 6666 3466 6643 6666
+			6666 3466 6643 6666 aaaa 89aa aa98 aaaa
+			aaaa 89aa aa98 aaaa aaaa 89aa aa98 aaaa
+			aaaa 89aa aa98 aaaa aaaa 89aa aa98 aaaa
+			aaaa 89aa aa98 aaaa aaaa 89aa aa98 aaaa
+			aaaa 89aa aa98 aaaa aaaa 89aa aa98 aaaa
+			aaaa 89aa aa98 aaaa aaaa 89aa aa98 aaaa
+			aaaa 89aa aa98 aaaa aaaa 89aa aa98 aaaa
+			aaaa 89aa aa98 aaaa 7777 7777 7777 7777
+			5555 5555 5555 5555 2222 2222 2222 2222
+			2222 2222 2222 2222 0000 0000 0000 0000
+			1111 1111 1111 1111 2222 2222 2222 2222
+			2222 2222 2222 2222 2222 2222 2222 2222
+			1111 1111 1111 1111 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="11" name="mshiki"
+	<tex_image index="43" name="mshiki"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette4"
 		color0_mode="color"
@@ -286,43 +855,147 @@
 	</tex_image>
 </tex_image_array>
 
-<tex_palette_array size="12">
-	<tex_palette index="0" name="gsihiki_pl" color_size="16">
+<tex_palette_array size="45">
+	<tex_palette index="0" name="carpet01_1_pl" color_size="8">
+		265c 29fc 2ebd 31b9 7fff 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="1" name="carpet01_2" color_size="4">
+		2517 2e19 1d7a 211a
+	</tex_palette>
+	<tex_palette index="2" name="carpet01_2_pl" color_size="4">
+		265c 29fc 2ebd 31b9
+	</tex_palette>
+	<tex_palette index="3" name="fh_bbed01_pl" color_size="8">
+		1d0a 2d6d 3676 5319 575b 5b5b 6bbe 7fff
+	</tex_palette>
+	<tex_palette index="4" name="fh_bshiki_pl" color_size="8">
+		212c 212e 214f 2992 7fff 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="5" name="fh_byuka_pl" color_size="4">
+		4233 4653 4a74 7fff
+	</tex_palette>
+	<tex_palette index="6" name="fh_wbed01_pl" color_size="8">
+		4195 4999 51db 5a1c 631c 6b5d 77bf 7fff
+	</tex_palette>
+	<tex_palette index="7" name="fh_wcurtain_pl" color_size="8">
+		0000 52bb 5abb 5efc 62fc 673d 6b3e 6f5e
+	</tex_palette>
+	<tex_palette index="8" name="fh_wcushion_pl" color_size="16">
+		0000 1bb3 1ff4 2b7d 2e4b 2fbf 37fe 39d5
+		3b0f 48da 4cdc 50fe 593f 61fd 663f 7fff
+	</tex_palette>
+	<tex_palette index="9" name="fh_wflower_pl" color_size="16">
+		7fff 3b2a 2b31 3372 3796 43ff 7fff 6739
+		5ad6 5294 4210 7fff 7fff 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="10" name="fh_win01_pl" color_size="8">
+		1909 258f 2df3 5ab2 7fb8 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="11" name="fh_win02_pl" color_size="4">
+		0000 256f 3215 7fff
+	</tex_palette>
+	<tex_palette index="12" name="fh_win03_pl" color_size="4">
+		735b 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="13" name="fh_wkabe_pl" color_size="8">
+		192e 2571 3215 4f55 5797 57b9 5fdc 6bfe
+	</tex_palette>
+	<tex_palette index="14" name="fh_wshiki2_pl" color_size="8">
+		0000 4776 4b31 4b75 4f33 4f55 53b9 7fff
+	</tex_palette>
+	<tex_palette index="15" name="fh_wshiki3_pl" color_size="8">
+		0000 6319 6b5c 739e 77be 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="16" name="fh_wtable_pl" color_size="8">
+		41bd 4a1f 527f 5296 6739 6f7b 739c 7fff
+	</tex_palette>
+	<tex_palette index="17" name="fh_wyuka_pl" color_size="4">
+		537e 579f 57bf 5fdf
+	</tex_palette>
+	<tex_palette index="18" name="fhgenkan_pl" color_size="4">
+		5188 660a 6e2b 726d
+	</tex_palette>
+	<tex_palette index="19" name="fhkabe2_pl" color_size="8">
+		39c5 3de6 4627 4eaa 570c 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="20" name="fhkabe3_pl" color_size="4">
+		39c5 3de6 4627 4eaa
+	</tex_palette>
+	<tex_palette index="21" name="fhkabe4_pl" color_size="4">
+		10a8 18eb 212e 7fff
+	</tex_palette>
+	<tex_palette index="22" name="fhkabe_pl" color_size="4">
+		575a 5f7b 679c 7fff
+	</tex_palette>
+	<tex_palette index="23" name="fhyuka_pl" color_size="8">
+		3efb 431c 473d 7fff 7fff 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="24" name="gsihiki_pl" color_size="16">
 		4a7a 4eda 52bc 56fc 635e 637e 677e 679e
 		6b9f 6fdf 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="1" name="hgenkan_pl" color_size="4">
+	<tex_palette index="25" name="h_mado_pl" color_size="4">
+		7339 7b9c 7fff 7fff
+	</tex_palette>
+	<tex_palette index="26" name="hgenkan_pl" color_size="4">
 		5188 660a 6e2b 726d
 	</tex_palette>
-	<tex_palette index="2" name="hkabe2f_pl" color_size="8">
+	<tex_palette index="27" name="hkabe2f_pl" color_size="8">
 		196e 25b1 3235 7798 7bb9 7bbb 7fdc 7ffe
 	</tex_palette>
-	<tex_palette index="3" name="hkabe_pl" color_size="8">
+	<tex_palette index="28" name="hkabe_pl" color_size="8">
 		196e 3235 7399 779a 7bbc 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="4" name="hkabeue_pl" color_size="16">
+	<tex_palette index="29" name="hkabeue_pl" color_size="16">
 		0000 2128 2949 39ee 42cf 4b31 4f55 5ab4
 		5af6 6717 6b7a 6eae 6f58 76cf 7f33 7fff
 	</tex_palette>
-	<tex_palette index="5" name="hshiki2f_pl" color_size="4">
+	<tex_palette index="30" name="hshiki2f_pl" color_size="4">
 		76cf 7f33 7f55 7f76
 	</tex_palette>
-	<tex_palette index="6" name="hshiki_pl" color_size="4">
+	<tex_palette index="31" name="hshiki_pl" color_size="4">
 		4b31 4f33 4f55 7fff
 	</tex_palette>
-	<tex_palette index="7" name="hyuka_pl" color_size="4">
+	<tex_palette index="32" name="hyuka_pl" color_size="4">
 		2e36 2e57 3278 7fff
 	</tex_palette>
-	<tex_palette index="8" name="hyukab_pl" color_size="4">
+	<tex_palette index="33" name="hyukab_pl" color_size="4">
 		25f2 25f4 2a14 7fff
 	</tex_palette>
-	<tex_palette index="9" name="mkabe_pl" color_size="8">
+	<tex_palette index="34" name="idr_win01_pl" color_size="4">
+		1d2b 258f 2df3 7fff
+	</tex_palette>
+	<tex_palette index="35" name="m_h01_01_pl" color_size="4">
+		3a99 42ba 46fc 4b1d
+	</tex_palette>
+	<tex_palette index="36" name="m_h01_02_pl" color_size="16">
+		3255 3655 3676 3a76 3a97 3e97 3eb8 42d9
+		46d9 4b1a 4f3c 7fff 7fff 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="37" name="m_h01_03_pl" color_size="8">
+		0072 08d7 193c 1d7e 7fff 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="38" name="m_h01_04_pl" color_size="8">
+		10a7 18eb 1d0d 2150 2572 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="39" name="m_h01_05_pl" color_size="4">
+		18eb 1d0d 2150 2572
+	</tex_palette>
+	<tex_palette index="40" name="m_h01_06_pl" color_size="4">
+		212e 2d91 35d3 7fff
+	</tex_palette>
+	<tex_palette index="41" name="m_h01_07_pl" color_size="16">
+		1a6e 1a90 1eb1 26d3 2b35 3377 3b78 3f99
+		439b 7fff 7fff 7fff 7fff 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="42" name="mkabe_pl" color_size="8">
 		196e 25b1 3235 56f8 5b3a 677c 6b9d 6fbe
 	</tex_palette>
-	<tex_palette index="10" name="mkabeb_pl" color_size="8">
-		196e 1ce7 2129 25b1 2d6b 31ad 3235 35ce
+	<tex_palette index="43" name="mkabeb_pl" color_size="16">
+		21b0 25f3 3676 3ab5 42d6 42d8 46f7 531a
+		575a 5f7b 679c 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="11" name="mshiki_pl" color_size="4">
+	<tex_palette index="44" name="mshiki_pl" color_size="4">
 		76cf 7b11 7f33 7fff
 	</tex_palette>
 </tex_palette_array>
@@ -345,7 +1018,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="8" tex_palette_idx="8"
+		tex_image_idx="32" tex_palette_idx="33"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -369,7 +1042,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="9" tex_palette_idx="9"
+		tex_image_idx="41" tex_palette_idx="42"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -393,7 +1066,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="10" tex_palette_idx="10"
+		tex_image_idx="42" tex_palette_idx="43"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -417,7 +1090,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="11" tex_palette_idx="11"
+		tex_image_idx="43" tex_palette_idx="44"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -425,13 +1098,13 @@
 		tex_gen_mode="none"
 	/>
 	<material index="4" name="lambert2"
-		light0="on" light1="off" light2="off" light3="off"
+		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
 		wire_mode="off"
 		polygon_mode="modulate"
 		polygon_id="0"
-		fog_flag="off"
+		fog_flag="on"
 		depth_test_decal="off"
 		translucent_update_depth="off"
 		render_1_pixel="off"
@@ -441,7 +1114,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="0" tex_palette_idx="0"
+		tex_image_idx="5" tex_palette_idx="6"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -465,7 +1138,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="1" tex_palette_idx="1"
+		tex_image_idx="25" tex_palette_idx="26"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -489,7 +1162,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="2" tex_palette_idx="3"
+		tex_image_idx="26" tex_palette_idx="28"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -513,7 +1186,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="3" tex_palette_idx="2"
+		tex_image_idx="27" tex_palette_idx="27"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -537,7 +1210,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="4" tex_palette_idx="4"
+		tex_image_idx="28" tex_palette_idx="29"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -561,7 +1234,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="5" tex_palette_idx="6"
+		tex_image_idx="29" tex_palette_idx="31"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -569,13 +1242,13 @@
 		tex_gen_mode="none"
 	/>
 	<material index="10" name="lambert8"
-		light0="on" light1="off" light2="off" light3="off"
+		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
 		wire_mode="off"
 		polygon_mode="modulate"
 		polygon_id="0"
-		fog_flag="off"
+		fog_flag="on"
 		depth_test_decal="off"
 		translucent_update_depth="off"
 		render_1_pixel="off"
@@ -585,7 +1258,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="6" tex_palette_idx="5"
+		tex_image_idx="4" tex_palette_idx="5"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -609,7 +1282,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="7" tex_palette_idx="7"
+		tex_image_idx="31" tex_palette_idx="32"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -1219,6 +1892,146 @@
 
 <output_info vertex_size="48" polygon_size="12"
 	triangle_size="0" quad_size="12"/>
+
+<ex_nns_3dme>
+	<ex_model_info scene_name="V‹KƒV[" disp_pos="0.000000 60.000000"/>
+	<ex_tex_image_array size="44">
+		<ex_tex_image index="0" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="1" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="2" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="3" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="4" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="5" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="6" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="7" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="8" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="9" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="10" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="11" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="12" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="13" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="14" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="15" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="16" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="17" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="18" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="19" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="20" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="21" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="22" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="23" disp_pos="-660.000000 360.000000"/>
+		<ex_tex_image index="24" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="25" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="26" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="27" disp_pos="60.000000 360.000000"/>
+		<ex_tex_image index="28" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="29" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="30" disp_pos="420.000000 360.000000"/>
+		<ex_tex_image index="31" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="32" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="33" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="34" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="35" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="36" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="37" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="38" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="39" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="40" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="41" disp_pos="-540.000000 360.000000"/>
+		<ex_tex_image index="42" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="43" disp_pos="-300.000000 360.000000"/>
+	</ex_tex_image_array>
+	<ex_tex_palette_array size="45">
+		<ex_tex_palette index="0" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="1" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="2" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="3" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="4" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="5" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="6" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="7" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="8" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="9" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="10" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="11" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="12" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="13" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="14" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="15" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="16" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="17" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="18" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="19" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="20" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="21" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="22" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="23" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="24" disp_pos="-660.000000 420.000000"/>
+		<ex_tex_palette index="25" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="26" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="27" disp_pos="60.000000 420.000000"/>
+		<ex_tex_palette index="28" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="29" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="30" disp_pos="420.000000 420.000000"/>
+		<ex_tex_palette index="31" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="32" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="33" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="34" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="35" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="36" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="37" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="38" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="39" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="40" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="41" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="42" disp_pos="-540.000000 420.000000"/>
+		<ex_tex_palette index="43" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="44" disp_pos="-300.000000 420.000000"/>
+	</ex_tex_palette_array>
+	<ex_material_array size="12">
+		<ex_material index="0" disp_pos="660.000000 300.000000"/>
+		<ex_material index="1" disp_pos="-540.000000 300.000000"/>
+		<ex_material index="2" disp_pos="-420.000000 300.000000"/>
+		<ex_material index="3" disp_pos="-300.000000 300.000000"/>
+		<ex_material index="4" disp_pos="-660.000000 300.000000"/>
+		<ex_material index="5" disp_pos="-180.000000 300.000000"/>
+		<ex_material index="6" disp_pos="-60.000000 300.000000"/>
+		<ex_material index="7" disp_pos="60.000000 300.000000"/>
+		<ex_material index="8" disp_pos="180.000000 300.000000"/>
+		<ex_material index="9" disp_pos="300.000000 300.000000"/>
+		<ex_material index="10" disp_pos="420.000000 300.000000"/>
+		<ex_material index="11" disp_pos="540.000000 300.000000"/>
+	</ex_material_array>
+	<ex_polygon_array size="12">
+		<ex_polygon index="0" disp_pos="-660.000000 240.000000"/>
+		<ex_polygon index="1" disp_pos="-540.000000 240.000000"/>
+		<ex_polygon index="2" disp_pos="-420.000000 240.000000"/>
+		<ex_polygon index="3" disp_pos="-300.000000 240.000000"/>
+		<ex_polygon index="4" disp_pos="-180.000000 240.000000"/>
+		<ex_polygon index="5" disp_pos="-60.000000 240.000000"/>
+		<ex_polygon index="6" disp_pos="60.000000 240.000000"/>
+		<ex_polygon index="7" disp_pos="180.000000 240.000000"/>
+		<ex_polygon index="8" disp_pos="300.000000 240.000000"/>
+		<ex_polygon index="9" disp_pos="420.000000 240.000000"/>
+		<ex_polygon index="10" disp_pos="540.000000 240.000000"/>
+		<ex_polygon index="11" disp_pos="660.000000 240.000000"/>
+	</ex_polygon_array>
+	<ex_node_array size="13">
+		<ex_node index="0" disp_pos="0.000000 120.000000"/>
+		<ex_node index="1" disp_pos="-660.000000 180.000000"/>
+		<ex_node index="2" disp_pos="-540.000000 180.000000"/>
+		<ex_node index="3" disp_pos="-420.000000 180.000000"/>
+		<ex_node index="4" disp_pos="-300.000000 180.000000"/>
+		<ex_node index="5" disp_pos="-180.000000 180.000000"/>
+		<ex_node index="6" disp_pos="-60.000000 180.000000"/>
+		<ex_node index="7" disp_pos="60.000000 180.000000"/>
+		<ex_node index="8" disp_pos="180.000000 180.000000"/>
+		<ex_node index="9" disp_pos="300.000000 180.000000"/>
+		<ex_node index="10" disp_pos="420.000000 180.000000"/>
+		<ex_node index="11" disp_pos="540.000000 180.000000"/>
+		<ex_node index="12" disp_pos="660.000000 180.000000"/>
+	</ex_node_array>
+</ex_nns_3dme>
 
 </body>
 
