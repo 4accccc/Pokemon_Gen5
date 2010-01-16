@@ -647,36 +647,15 @@ void ITEMDISP_graphicDelete(FIELD_ITEMMENU_WORK* pWork)
 //-----------------------------------------------------------------------------
 void ITEMDISP_upMessageSetDispVBlank( FIELD_ITEMMENU_WORK* pWork, BOOL on_off )
 {
-#if 0
-  // @TODO VBLANK中の動作にしては強引すぎないか？
-  ITEM_ST * item;
-  int wazano;
-  
-  item = ITEMMENU_GetItem( pWork,ITEMMENU_GetItemIndex(pWork) );
-  wazano = ITEM_GetWazaNo( item->id );
-  
-  // わざマシン用OAMアイコン
-  if( wazano > 0 )
-  {
-    GFL_CLACT_WK_SetDrawEnable( pWork->clwkWazaKind, on_off );
-    GFL_CLACT_WK_SetDrawEnable( pWork->clwkWazaType, on_off );
-  }
-  else
-  {
-    GFL_CLACT_WK_SetDrawEnable( pWork->clwkWazaKind, FALSE );
-    GFL_CLACT_WK_SetDrawEnable( pWork->clwkWazaType, FALSE );
-  }
-#endif
+  // BG アイテム枠／テキスト
+  GFL_BG_SetVisible( ITEMWIN_FRAME, on_off );
+  GFL_BG_SetVisible( ITEMREPORT_FRAME, on_off );
 
   if( pWork->cellicon != NULL )
   {
     // アイテムOAMアイコン
     GFL_CLACT_WK_SetDrawEnable( pWork->cellicon, on_off );
   }
-  
-  // BG アイテム枠／テキスト
-  GFL_BG_SetVisible( ITEMWIN_FRAME, on_off );
-  GFL_BG_SetVisible( ITEMREPORT_FRAME, on_off );
 }
 
 //------------------------------------------------------------------------------
@@ -749,10 +728,6 @@ void ITEMDISP_upMessageRewrite(FIELD_ITEMMENU_WORK* pWork)
                            3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
     WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
     PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->winItemNum), 0, _UP_ITEMNUM_DOTOFS_Y, pWork->pExpStrBuf, pWork->fontHandle);
-
-    // アイテムの個数
-    GFL_MSG_GetString(  pWork->MsgManagerItemInfo, item->id, pWork->pStrBuf );
-    PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->winItemReport), 0, 0, pWork->pStrBuf, pWork->fontHandle);
   }
   else
   {
@@ -764,6 +739,10 @@ void ITEMDISP_upMessageRewrite(FIELD_ITEMMENU_WORK* pWork)
     WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
     PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->winItemName), 0, _UP_ITEMNAME_DOTOFS_Y, pWork->pExpStrBuf, pWork->fontHandle);
   }
+
+  // アイテムの説明文
+  GFL_MSG_GetString(  pWork->MsgManagerItemInfo, item->id, pWork->pStrBuf );
+  PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->winItemReport), 0, 0, pWork->pStrBuf, pWork->fontHandle);
 
   // キャラ転送
   GFL_BMPWIN_TransVramCharacter(pWork->winItemName);
@@ -778,11 +757,8 @@ void ITEMDISP_upMessageRewrite(FIELD_ITEMMENU_WORK* pWork)
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief
- *
- *	@param	pWork
- *
- *	@retval
+ *	@brief  上画面：非表示
+ *	@retval none
  */
 //-----------------------------------------------------------------------------
 void ITEMDISP_upMessageClean(FIELD_ITEMMENU_WORK* pWork)
@@ -791,7 +767,6 @@ void ITEMDISP_upMessageClean(FIELD_ITEMMENU_WORK* pWork)
   pWork->bDispUpReq = VISIBLE_OFF;
     
   // わざマシン用の説明文を非表示
-  // @TODO 復帰が上手くいくか要チェック
   GFL_BMPWIN_ClearScreen(pWork->winWaza);
 
   // ワザマシン用アイコンも非表示

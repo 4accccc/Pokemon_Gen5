@@ -725,9 +725,9 @@ static void _itemMovePosition(FIELD_ITEMMENU_WORK* pWork)
     MYITEM_ITEM_STCopy(pWork->pMyItem, pWork->ScrollItem, pWork->pocketno, FALSE);
   }
   if((trg == PAD_BUTTON_B) || (trg == PAD_BUTTON_A) || (trg == PAD_BUTTON_SELECT) ){  //戻る
+    GFL_CLACT_WK_SetAnmSeq( pWork->clwkCur , 1 );
     pWork->moveMode = FALSE;
     _CHANGE_STATE(pWork,_itemKindSelectMenu);
-    GFL_CLACT_WK_SetAnmSeq( pWork->clwkCur , 1 );
     return;
   }
 
@@ -1209,6 +1209,12 @@ static void _itemSelectWait(FIELD_ITEMMENU_WORK* pWork)
       pWork->ret_code = BAG_NEXTPROC_RETURN;
       _CHANGE_STATE(pWork,NULL);
     }
+    else if(BAG_MENU_MOTASERU==pWork->ret_code2){ // もたせる
+      //@TODO check!!!!
+      // ポケモンリスト アイテムを持たせる処理
+      pWork->ret_code = BAG_NEXTPROC_ITEMEQUIP;
+      _CHANGE_STATE(pWork,NULL);
+    }
     else{
       //@TODO アサーションかけるべき
       pWork->ret_code = BAG_NEXTPROC_HAVE;
@@ -1254,12 +1260,17 @@ static void _itemSelectState(FIELD_ITEMMENU_WORK* pWork)
   // 決定音
   GFL_SOUND_PlaySE( SE_BAG_DECIDE );
 
+  //@TODO 上手く言ったら消す
+#if 0
   if(pWork->mode == BAG_MODE_POKELIST)
   {
+    // ポケモンリスト アイテムを持たせる処理
     pWork->ret_code = BAG_NEXTPROC_ITEMEQUIP;
     _CHANGE_STATE(pWork,NULL);
   }
-  else if( pWork->mode == BAG_MODE_SELL )
+  else 
+#endif
+  if( pWork->mode == BAG_MODE_SELL )
   {
     _CHANGE_STATE(pWork,_itemSellInit);
   }
@@ -1303,6 +1314,7 @@ static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* pWork)
     if( GFL_UI_KEY_GetTrg() )
     {
       GFL_SOUND_PlaySE( SE_BAG_CURSOR_MOVE );
+      ITEMDISP_upMessageRewrite(pWork); // 上画面表示
       KTST_SetDraw( pWork, TRUE );
       return;
     }
@@ -1350,8 +1362,8 @@ static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* pWork)
   {
     GFL_STD_MemClear( pWork->ScrollItem, sizeof( pWork->ScrollItem ) );
     MYITEM_ITEM_STCopy( pWork->pMyItem, pWork->ScrollItem, pWork->pocketno, TRUE );  //取得
-    pWork->moveMode = TRUE;
     GFL_CLACT_WK_SetAnmSeq( pWork->clwkCur , 2 );
+    pWork->moveMode = TRUE;
 
     _CHANGE_STATE(pWork,_itemMovePosition);
     return;
@@ -2789,6 +2801,17 @@ int (*MenuFuncTbl[])( FIELD_ITEMMENU_WORK *pWork)={
 
 #if 1
 
+//@TODO 不要？
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  きのみプランター判定
+ *
+ *	@param	u16 pocket
+ *	@param	item 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
 static BOOL BAGMAIN_NPlanterUseCheck( u16 pocket, u16 item )
 {
   if( pocket == BAG_POKE_NUTS ||
@@ -2798,6 +2821,16 @@ static BOOL BAGMAIN_NPlanterUseCheck( u16 pocket, u16 item )
   return FALSE;
 }
 
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  アイテム選択時のメニューリストを生成
+ *
+ *	@param	FIELD_ITEMMENU_WORK * pWork
+ *	@param	tbl 
+ *
+ *	@retval none
+ */
+//-----------------------------------------------------------------------------
 static void ItemMenuMake( FIELD_ITEMMENU_WORK * pWork, u8* tbl )
 {
   int  i;
@@ -2817,15 +2850,27 @@ static void ItemMenuMake( FIELD_ITEMMENU_WORK * pWork, u8* tbl )
     pWork->menu_func[i] = NULL;
   }
 #endif
-
-  // フィールド
-  if( pWork->mode == BAG_MODE_FIELD ){
-    // コロシアム・ユニオンルームでは「みる」のみ
-    if( pWork->mode == BAG_MODE_COLOSSEUM || pWork->mode == BAG_MODE_UNION )
-    {
-      tbl[BAG_MENU_USE] = BAG_MENU_MIRU;
+  
+  // コロシアム・ユニオンルームでは「みる」のみ
+  if( pWork->mode == BAG_MODE_COLOSSEUM || pWork->mode == BAG_MODE_UNION )
+  {
+    tbl[BAG_MENU_USE] = BAG_MENU_MIRU;
+  }
+  // ポケモンリストでは「もたせる」のみ
+  else if( pWork->mode == BAG_MODE_POKELIST )
+  {
+    // もたせる
+    if( ITEM_GetBufParam( itemdata, ITEM_PRM_EVENT ) == 0 ){
+      // ↑だいじなものは弾く
+      if( ITEM_CheckPokeAdd( item->id ) == TRUE ){
+        // ↑もたせられるアイテムか判定
+        tbl[BAG_MENU_GIVE] = BAG_MENU_MOTASERU; 
+      }
     }
-    else
+  }
+  // フィールド
+  else if( pWork->mode == BAG_MODE_FIELD )
+  {
     {
       // つかう
       // おりる
@@ -2843,7 +2888,7 @@ static void ItemMenuMake( FIELD_ITEMMENU_WORK * pWork, u8* tbl )
         {
           tbl[BAG_MENU_USE] = BAG_MENU_HIRAKU;
         }
-        //      else if( pWork->ret_item == ITEM_gbPUREIYAA && Snd_GameBoyFlagCheck() == 1 )
+        //    else if( pWork->ret_item == ITEM_gbPUREIYAA && Snd_GameBoyFlagCheck() == 1 )
         //    {
         //    tbl[BAG_MENU_USE] = BAG_MENU_TOMERU;
         //}
@@ -2853,9 +2898,11 @@ static void ItemMenuMake( FIELD_ITEMMENU_WORK * pWork, u8* tbl )
         }
       }
     }
+
     // もたせる
     // すてる
     if( ITEM_GetBufParam( itemdata, ITEM_PRM_EVENT ) == 0 ){
+      // ↑だいじなものは弾く
       if( ITEM_CheckPokeAdd( item->id ) == TRUE ){
         tbl[BAG_MENU_GIVE] = BAG_MENU_MOTASERU;
       }
@@ -2864,6 +2911,7 @@ static void ItemMenuMake( FIELD_ITEMMENU_WORK * pWork, u8* tbl )
         tbl[BAG_MENU_SUB] = BAG_MENU_SUTERU;
       }
     }
+
     // とうろく
     // かいじょ
     if( ITEM_GetBufParam( itemdata, ITEM_PRM_CNV ) != 0 ){
@@ -2875,7 +2923,8 @@ static void ItemMenuMake( FIELD_ITEMMENU_WORK * pWork, u8* tbl )
     }
   }
   // 木の実プランター
-  else if( pWork->mode == BAG_MODE_N_PLANTER ){
+  else if( pWork->mode == BAG_MODE_N_PLANTER )
+  {
     if( BAGMAIN_NPlanterUseCheck( pocket, item->id ) == TRUE ){
       tbl[BAG_MENU_USE] = BAG_MENU_TSUKAU_NP;
     }
@@ -2905,14 +2954,21 @@ static void ItemMenuMake( FIELD_ITEMMENU_WORK * pWork, u8* tbl )
 #endif
 
 
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  アイテム使用ウィンドウ描画
+ *
+ *	@param	pWork
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
 static void _itemUseWindowRewrite(FIELD_ITEMMENU_WORK* pWork)
 {
   BMPMENULIST_HEADER list_h = _itemMenuListHeader;
   int length,i,j;
 
-
   length = BAG_MENUTBL_MAX;
-
 
   {
     u8  tbl[BAG_MENUTBL_MAX]={255, 255, 255, 255, 255};
@@ -2932,8 +2988,6 @@ static void _itemUseWindowRewrite(FIELD_ITEMMENU_WORK* pWork)
       j++;
     }
     ITEMDISP_MenuWinDisp(pWork,stringbuff,j);
-
-
   }
 }
 
@@ -3180,6 +3234,8 @@ static GFL_PROC_RESULT FieldItemMenuProc_Init( GFL_PROC * proc, int * seq, void 
 
   // アイテム破損データを修復
   MYITEM_CheckSafety( pWork->pMyItem );
+
+  HOSAKA_Printf("bag mode =%d \n", pWork->mode );
 
 // @TODO 保坂のみデバッグ押しながら起動でショップから起動したことにする
 #ifdef DEBUG_ONLY_FOR_genya_hosaka
