@@ -245,7 +245,7 @@ static void _changeState(CG_WIRELESS_MENU* pWork,StateFunc state)
 #ifdef GFL_NET_DEBUG
 static void _changeStateDebug(CG_WIRELESS_MENU* pWork,StateFunc state, int line)
 {
-  NET_PRINT("ircbtl: %d\n",line);
+  NET_PRINT("cgw: %d\n",line);
   _changeState(pWork, state);
 }
 #endif

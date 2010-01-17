@@ -63,6 +63,7 @@ static const NetRecvFuncTable _CommNutWFP2PMFPacketTbl[] = {
   { WifiP2PMatchRecvMyStatus,NULL},
   { WifiP2PMatchRecvDirectMode,NULL},
   { WifiP2PMatchRecvBattleRegulation,NULL},
+  { WifiP2PMatchRecvPokeParty, WifiP2PMatchGetPokePartyWork}
 
 };
 

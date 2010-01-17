@@ -124,7 +124,7 @@ static void FONTOAM_OAMDATA_Delete( void* x){}
 
 
 #define COMM_BRIGHTNESS_SYNC  ( 1 ) // 基本の輝度変更Sync数
-#define _BMPMENULIST_FONTSIZE   (12)
+#define _BMPMENULIST_FONTSIZE   (16)
 
 // WIFI2DMAPシステムオーバーレイ
 //FS_EXTERN_OVERLAY(wifi2dmap);
@@ -338,6 +338,7 @@ typedef struct{  // スクリーン用RECT構造体
 #define _TIMING_GAME_START  (15)// タイミングをそろえる
 #define _TIMING_GAME_START2  (18)// タイミングをそろえる
 #define _TIMING_BATTLE_END  (16)// タイミングをそろえる
+#define _TIMING_POKEPARTY_END  (17)// タイミングをそろえる
 
 #define _RECONECTING_WAIT_TIME (20)  //再接続時間
 
@@ -677,6 +678,7 @@ enum{
 #define MCV_USERD_NOFR_SCRN_SIZX  ( 0x1 )
 #define MCV_USERD_NOFR_SCRN_SIZY  ( 0x1 )
 
+/*
 //  フロンティアタイプ
 enum{
   MCV_FRONTIOR_TOWOR,
@@ -687,7 +689,7 @@ enum{
   MCV_FRONTIOR_ROULETTE,
   MCV_FRONTIOR_NUM,
 } ;
-
+*/
 #define VRANTRANSFERMAN_NUM (32)  // VramTransferManagerタスク数
 
 
@@ -1151,6 +1153,11 @@ static int (*FuncTable[])(WIFIP2PMATCH_WORK *wk, int seq)={
   _playerDirectBattleGO4,  //  WIFIP2PMATCH_PLAYERDIRECT_BATTLE_GO4
   _playerDirectNoregParent, //WIFIP2PMATCH_PLAYERDIRECT_NOREG_PARENT
   _playerDirectBattleStart, //  WIFIP2PMATCH_PLAYERDIRECT_BATTLE_START
+  _playerDirectBattleStart2, //  WIFIP2PMATCH_PLAYERDIRECT_BATTLE_START2
+  _playerDirectBattleStart3, //  WIFIP2PMATCH_PLAYERDIRECT_BATTLE_START3
+  _playerDirectBattleStart4, //  WIFIP2PMATCH_PLAYERDIRECT_BATTLE_START4
+  _playerDirectBattleStart5, //  WIFIP2PMATCH_PLAYERDIRECT_BATTLE_START5
+  _playerDirectBattleStart6, //  WIFIP2PMATCH_PLAYERDIRECT_BATTLE_START6
   _playerDirectNoregParent, //WIFIP2PMATCH_PLAYERDIRECT_BATTLE_FAILED
 };
 
@@ -1505,103 +1512,6 @@ static void _graphicInit(WIFIP2PMATCH_WORK * wk)
 }
 
 
-//--------------------------------------------------------------------------------------------
-/**
- * プロセス関数：初期化
- *
- * @param proc  プロセスデータ
- * @param seq   シーケンス
- *
- * @return  処理状況
- */
-//--------------------------------------------------------------------------------------------
-static GFL_PROC_RESULT WifiP2PMatchProc_Init( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
-{
-  WIFIP2PMATCH_WORK * wk = mywk;
-  WIFIP2PMATCH_PROC_PARAM* pParentWork = pwk;
-  u32 result;
-
-
-  GFL_HEAP_CreateHeapLo( GFL_HEAPID_APP, HEAPID_WIFIP2PMATCH, 0xa0000 );
-
-  wk = GFL_PROC_AllocWork( proc, sizeof(WIFIP2PMATCH_WORK), HEAPID_WIFIP2PMATCH );
-  MI_CpuFill8( wk, 0, sizeof(WIFIP2PMATCH_WORK) );
-  GFL_NET_ChangeWork(wk);
-
-    // Vram転送マネージャ作成
-#if WB_FIX
-    initVramTransferManagerHeap( VRANTRANSFERMAN_NUM, HEAPID_WIFIP2PMATCH );
-#endif
-
-    //        wk->MsgIndex = _PRINTTASK_MAX;
-    wk->pMatch = pParentWork->pMatch;
-
-    wk->pSaveData = pParentWork->pSaveData;
-    wk->pGameData = pParentWork->pGameData;
-
-    wk->pMyPoke = GAMEDATA_GetMyPokemon(wk->pGameData);
-    wk->pList = GAMEDATA_GetWiFiList(wk->pGameData);
-    wk->pConfig = SaveData_GetConfig(pParentWork->pSaveData);
-    wk->initSeq = pParentWork->seq;    // P2PかDPWか
-    wk->endSeq = WIFI_GAME_NONE;
-    wk->preConnect = -1;
-    wk->pParentWork = pParentWork;
-
-    GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG0|GX_PLANEMASK_BG1|GX_PLANEMASK_BG2|GX_PLANEMASK_BG3, VISIBLE_OFF );
-    GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG0|GX_PLANEMASK_BG1|GX_PLANEMASK_BG2|GX_PLANEMASK_BG3, VISIBLE_OFF );
-
-    // ワーク初期化
-    InitMessageWork( wk );
-    _CHANGESTATE(wk,WIFIP2PMATCH_MODE_INIT);
-
-   // グラフィック初期化
-    _graphicInit(wk);
-
-    if(GFL_NET_IsInit()){
-      GFL_NET_ReloadIcon();  // 接続中なのでアイコン表示
-    }
-
-    return GFL_PROC_RES_FINISH;
-}
-
-
-
-
-//--------------------------------------------------------------------------------------------
-/**
- * プロセス関数：メイン
- *
- * @param proc  プロセスデータ
- * @param seq   シーケンス
- *
- * @return  処理状況
- */
-//--------------------------------------------------------------------------------------------
-
-static GFL_PROC_RESULT WifiP2PMatchProc_Main( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
-{
-  WIFIP2PMATCH_WORK * wk  = mywk;
-
-  if(FuncTable[wk->seq]!=NULL){
-    *seq = (*FuncTable[wk->seq])( wk, *seq );
-    if(*seq == SEQ_OUT){
-      WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
-                      WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , HEAPID_WIFIP2PMATCH );
-      return GFL_PROC_RES_FINISH;
-    }
-  }
-  if(wk->clactSet){
-    GFL_CLACT_SYS_Main();
-  }
-  if( WIFI_MCR_GetInitFlag( &wk->matchroom ) == TRUE ){
-    WIFI_MCR_Draw( &wk->matchroom );
-  }
-  ConnectBGPalAnm_Main(&wk->cbp);
-  if(wk->SysMsgQue){
-    PRINTSYS_QUE_Main(wk->SysMsgQue);
-  }
-  return GFL_PROC_RES_CONTINUE;
-}
 
 #define DEFAULT_NAME_MAX    18
 
@@ -1623,11 +1533,6 @@ static void _graphicEnd(WIFIP2PMATCH_WORK* wk)
     GFL_TCB_DeleteTask( wk->vblankFunc );
   }
   ConnectBGPalAnm_End(&wk->cbp);
-
-  if(wk->pRegulation){
-    GFL_HEAP_FreeMemory(wk->pRegulation);
-    wk->pRegulation=NULL;
-  }
 
 
   // マッチングルーム破棄
@@ -1694,55 +1599,6 @@ static void _graphicEnd(WIFIP2PMATCH_WORK* wk)
   //  GFL_OVERLAY_Unload( FS_OVERLAY_ID(wifi_2dmapsys) );
 }
 
-
-//--------------------------------------------------------------------------------------------
-/**
- * プロセス関数：終了
- *
- * @param proc  プロセスデータ
- * @param seq   シーケンス
- *
- * @return  処理状況
- */
-//--------------------------------------------------------------------------------------------
-static GFL_PROC_RESULT WifiP2PMatchProc_End( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
-{
-  WIFIP2PMATCH_WORK  *wk    = mywk;
-  WIFIP2PMATCH_PROC_PARAM* pParentWork = pwk;
-
-
-  if( !WIPE_SYS_EndCheck() ){
-    return GFL_PROC_RES_CONTINUE;
-  }
-
-  _graphicEnd(wk);
-
-  pParentWork->seq = wk->endSeq;
-
-  if(GFL_NET_IsInit()){
-    pParentWork->targetID = GFL_NET_DWC_GetFriendIndex();
-  }
-
-  // ワーク解放
-  FreeMessageWork( wk );
-
-  GFL_PROC_FreeWork( proc );        // GFL_PROCワーク開放
-
-
-#if WB_TEMP_FIX
-  // VramTransferマネージャ破棄
-  DellVramTransferManager();
-#endif
-
-  GFL_HEAP_DeleteHeap( HEAPID_WIFIP2PMATCH );
-
-  // BGMがポケセンのままならBGM音量を変更する
-  if( WifiP2P_CheckLobbyBgm() == TRUE ){
-    Snd_PlayerSetInitialVolume( SND_HANDLE_FIELD, BGM_POKECEN_VOL );
-  }
-
-  return GFL_PROC_RES_FINISH;
-}
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -5666,12 +5522,43 @@ void WifiP2PMatchRecvMyStatus(const int netID, const int size, const void* pData
   if(pNetHandle != GFL_NET_HANDLE_GetCurrentHandle()){
     return; //自分のハンドルと一致しない場合、親としてのデータ受信なので無視する
   }
-  pTargetSt = GAMEDATA_GetMyStatusPlayer(wk->pGameData,netID);  //相手側＝１として代入している
+  //０，１，２，３が通信用に入れても良い
+  pTargetSt = GAMEDATA_GetMyStatusPlayer(wk->pGameData,netID);  //netIDで代入
   MyStatus_Copy(pData,pTargetSt);
 
   //  wk->matchGameMode[netID] = pRecvData[0];
 }
 
+
+
+//------------------------------------------------------------------
+/**
+ * $brief   PokePartyを受信 CNM_WFP2PMF_POPEPARTY
+ * @param   wk
+ * @retval  none
+ */
+//------------------------------------------------------------------
+
+void WifiP2PMatchRecvPokeParty(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
+{
+
+  //すでに受信は完了
+  
+}
+
+//------------------------------------------------------------------
+/**
+ * $brief   PokePartyの受信ワークを返す CNM_WFP2PMF_POPEPARTY
+ * @param   wk
+ * @retval  none
+ */
+//------------------------------------------------------------------
+
+u8* WifiP2PMatchGetPokePartyWork(int netID, void* pWk, int size)
+{
+  WIFIP2PMATCH_WORK *wk = pWk;
+  return (void*)wk->pParentWork->pPokeParty[netID];
+}
 
 //------------------------------------------------------------------
 /**
@@ -8173,6 +8060,159 @@ static void FriendRequestWaitOff( WIFIP2PMATCH_WORK* wk )
 static BOOL FriendRequestWaitFlagGet( const WIFIP2PMATCH_WORK* cp_wk )
 {
   return cp_wk->friend_request_wait;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * プロセス関数：初期化
+ *
+ * @param proc  プロセスデータ
+ * @param seq   シーケンス
+ *
+ * @return  処理状況
+ */
+//--------------------------------------------------------------------------------------------
+static GFL_PROC_RESULT WifiP2PMatchProc_Init( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
+{
+  WIFIP2PMATCH_WORK * wk = mywk;
+  WIFIP2PMATCH_PROC_PARAM* pParentWork = pwk;
+  u32 result;
+
+
+  GFL_HEAP_CreateHeapLo( GFL_HEAPID_APP, HEAPID_WIFIP2PMATCH, 0xa0000 );
+
+  wk = GFL_PROC_AllocWork( proc, sizeof(WIFIP2PMATCH_WORK), HEAPID_WIFIP2PMATCH );
+  MI_CpuFill8( wk, 0, sizeof(WIFIP2PMATCH_WORK) );
+  GFL_NET_ChangeWork(wk);
+
+    // Vram転送マネージャ作成
+#if WB_FIX
+    initVramTransferManagerHeap( VRANTRANSFERMAN_NUM, HEAPID_WIFIP2PMATCH );
+#endif
+
+    //        wk->MsgIndex = _PRINTTASK_MAX;
+    wk->pMatch = pParentWork->pMatch;
+
+    wk->pSaveData = pParentWork->pSaveData;
+    wk->pGameData = pParentWork->pGameData;
+
+    wk->pMyPoke = GAMEDATA_GetMyPokemon(wk->pGameData);
+    wk->pList = GAMEDATA_GetWiFiList(wk->pGameData);
+    wk->pConfig = SaveData_GetConfig(pParentWork->pSaveData);
+    wk->initSeq = pParentWork->seq;    // P2PかDPWか
+    wk->endSeq = WIFI_GAME_NONE;
+    wk->preConnect = -1;
+    wk->pParentWork = pParentWork;
+
+    GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG0|GX_PLANEMASK_BG1|GX_PLANEMASK_BG2|GX_PLANEMASK_BG3, VISIBLE_OFF );
+    GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG0|GX_PLANEMASK_BG1|GX_PLANEMASK_BG2|GX_PLANEMASK_BG3, VISIBLE_OFF );
+
+    // ワーク初期化
+    InitMessageWork( wk );
+    _CHANGESTATE(wk,WIFIP2PMATCH_MODE_INIT);
+
+   // グラフィック初期化
+    _graphicInit(wk);
+
+    if(GFL_NET_IsInit()){
+      GFL_NET_ReloadIcon();  // 接続中なのでアイコン表示
+    }
+
+    return GFL_PROC_RES_FINISH;
+}
+
+
+
+
+//--------------------------------------------------------------------------------------------
+/**
+ * プロセス関数：メイン
+ *
+ * @param proc  プロセスデータ
+ * @param seq   シーケンス
+ *
+ * @return  処理状況
+ */
+//--------------------------------------------------------------------------------------------
+
+static GFL_PROC_RESULT WifiP2PMatchProc_Main( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
+{
+  WIFIP2PMATCH_WORK * wk  = mywk;
+
+  if(FuncTable[wk->seq]!=NULL){
+    *seq = (*FuncTable[wk->seq])( wk, *seq );
+    if(*seq == SEQ_OUT){
+      WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
+                      WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , HEAPID_WIFIP2PMATCH );
+      return GFL_PROC_RES_FINISH;
+    }
+  }
+  if(wk->clactSet){
+    GFL_CLACT_SYS_Main();
+  }
+  if( WIFI_MCR_GetInitFlag( &wk->matchroom ) == TRUE ){
+    WIFI_MCR_Draw( &wk->matchroom );
+  }
+  ConnectBGPalAnm_Main(&wk->cbp);
+  if(wk->SysMsgQue){
+    PRINTSYS_QUE_Main(wk->SysMsgQue);
+  }
+  return GFL_PROC_RES_CONTINUE;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * プロセス関数：終了
+ *
+ * @param proc  プロセスデータ
+ * @param seq   シーケンス
+ *
+ * @return  処理状況
+ */
+//--------------------------------------------------------------------------------------------
+static GFL_PROC_RESULT WifiP2PMatchProc_End( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
+{
+  WIFIP2PMATCH_WORK  *wk    = mywk;
+  WIFIP2PMATCH_PROC_PARAM* pParentWork = pwk;
+
+
+  if( !WIPE_SYS_EndCheck() ){
+    return GFL_PROC_RES_CONTINUE;
+  }
+
+  if(wk->pRegulation){
+    Regulation_Copy(wk->pRegulation, pParentWork->pRegulation);
+    GFL_HEAP_FreeMemory(wk->pRegulation);
+    wk->pRegulation=NULL;
+  }
+  
+  _graphicEnd(wk);
+
+  pParentWork->seq = wk->endSeq;
+
+  if(GFL_NET_IsInit()){
+    pParentWork->targetID = GFL_NET_DWC_GetFriendIndex();
+  }
+
+  // ワーク解放
+  FreeMessageWork( wk );
+
+  GFL_PROC_FreeWork( proc );        // GFL_PROCワーク開放
+
+
+#if WB_TEMP_FIX
+  // VramTransferマネージャ破棄
+  DellVramTransferManager();
+#endif
+
+  GFL_HEAP_DeleteHeap( HEAPID_WIFIP2PMATCH );
+
+  // BGMがポケセンのままならBGM音量を変更する
+  if( WifiP2P_CheckLobbyBgm() == TRUE ){
+    Snd_PlayerSetInitialVolume( SND_HANDLE_FIELD, BGM_POKECEN_VOL );
+  }
+
+  return GFL_PROC_RES_FINISH;
 }
 
 

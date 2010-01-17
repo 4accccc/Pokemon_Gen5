@@ -418,6 +418,15 @@ _infoMenu _parentShooterInfoMenuList[] = {
   { msg_wifilobby_032, (u32)BMPMENULIST_CANCEL },
 };
 
+#define _TEMOTI (0)
+#define _BATTLEBOX (1)
+
+
+_infoMenu _parentPokePartyMenuList[] = {
+  { msg_wifilobby_098, (u32)_TEMOTI },  //てもち
+  { msg_wifilobby_099, (u32)_BATTLEBOX },  //バトルボックス
+};
+
 static void	_print_callback(BMPMENULIST_WORK * wk,u32 param,u8 y);
 
 
@@ -558,7 +567,7 @@ static void _modeSelectMenuBase( WIFIP2PMATCH_WORK *wk,BMPMENULIST_HEADER* plist
   wk->SubListWin = _BmpWinDel(wk->SubListWin);
   //BMPウィンドウ生成
   wk->SubListWin = GFL_BMPWIN_Create(
-    GFL_BG_FRAME2_M, 32-width-1, PARENTMENU_Y, width, length * 2-2, FLD_SYSFONT_PAL, GFL_BMP_CHRAREA_GET_B);
+    GFL_BG_FRAME2_M, 32-width-1, PARENTMENU_Y, width, length * 2, FLD_SYSFONT_PAL, GFL_BMP_CHRAREA_GET_B);
   //    GFL_BMPWIN_MakeFrameScreen(wk->SubListWin,  COMM_TALK_WIN_CGX_NUM, MENU_WIN_PAL );
   BmpWinFrame_Write( wk->SubListWin, WINDOW_TRANS_OFF, GFL_ARCUTIL_TRANSINFO_GetPos(wk->talkwin_m2), COMM_MESFRAME_PAL );
   GFL_BMPWIN_MakeTransWindow(wk->SubListWin);
@@ -1286,6 +1295,26 @@ static void _battleShooterSelectMenu( WIFIP2PMATCH_WORK *wk )
 }
 
 
+
+
+//----------------------------------------------------------------------------
+/**
+ *  @brief  ポケパーティー選択
+ *  @param  status  状態
+ *  @return メッセージデータ
+ */
+//-----------------------------------------------------------------------------
+
+static void _battlePokePartySelectMenu( WIFIP2PMATCH_WORK *wk )
+{
+  _parentInfoBattleMenuListHeader.count = elementof(_parentPokePartyMenuList);
+  _parentInfoBattleMenuListHeader.line = elementof(_parentPokePartyMenuList);
+
+  NET_PRINT("elementof(_parentPokePartyMenuList) %d\n",elementof(_parentPokePartyMenuList));
+  
+  _modeSelectMenuBase(wk, &_parentInfoBattleMenuListHeader, _parentPokePartyMenuList,
+                      elementof(_parentPokePartyMenuList), _MENUTYPE_POKEPARTY,18);
+}
 
 //==================================================================
 /**

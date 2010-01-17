@@ -896,6 +896,145 @@ static int _playerDirectBattleGO4( WIFIP2PMATCH_WORK *wk, int seq )
 
 static int _playerDirectBattleStart( WIFIP2PMATCH_WORK *wk, int seq )
 {
+  u32 fail_bit;
+  int id=0;
+  
+  if(!GFL_NET_IsParentMachine()){
+    id = 1;
+  }
+  
+  if(POKE_REG_OK!=_CheckRegulation_Temoti(wk->pRegulation, wk->pGameData, &fail_bit )){
+    ///バトルボックスのみ なのですすむ
+    POKEPARTY *bb_party = _BBox_PokePartyAlloc(wk->pGameData);
+    PokeParty_Copy(bb_party, wk->pParentWork->pPokeParty[id]);
+    GFL_HEAP_FreeMemory(bb_party);
+    _CHANGESTATE(wk, WIFIP2PMATCH_PLAYERDIRECT_BATTLE_START4);
+  }
+  else if(POKE_REG_OK!=_CheckRegulation_BBox(wk->pRegulation, wk->pGameData, &fail_bit )){
+    //てもちのみなのですすむ
+    PokeParty_Copy(GAMEDATA_GetMyPokemon(wk->pGameData), wk->pParentWork->pPokeParty[id]);
+    _CHANGESTATE(wk, WIFIP2PMATCH_PLAYERDIRECT_BATTLE_START4);
+  }
+  else{
+    WifiP2PMatchMessagePrint(wk, msg_wifilobby_1009, FALSE);
+    _CHANGESTATE(wk, WIFIP2PMATCH_PLAYERDIRECT_BATTLE_START2);
+  }
+  return seq;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief   試合開始 WIFIP2PMATCH_PLAYERDIRECT_BATTLE_START2
+ * @param   wk
+ * @retval  none
+ */
+//------------------------------------------------------------------
+
+static int _playerDirectBattleStart2( WIFIP2PMATCH_WORK *wk, int seq )
+{
+  if( !PRINTSYS_QUE_IsFinished(wk->SysMsgQue) ){
+    return seq;
+  }
+  _battlePokePartySelectMenu( wk );
+  
+    _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_BATTLE_START3);
+  return seq;
+}
+//------------------------------------------------------------------
+/**
+ * @brief   試合開始 WIFIP2PMATCH_PLAYERDIRECT_BATTLE_START3
+ * @param   wk
+ * @retval  none
+ */
+//------------------------------------------------------------------
+
+static int _playerDirectBattleStart3( WIFIP2PMATCH_WORK *wk, int seq )
+{
+  int ret = BMPMENULIST_NULL;
+  int command,id=0;
+  u32 fail_bit;
+  
+  PRINT_UTIL_Trans( &wk->SysMsgPrintUtil, wk->SysMsgQue );
+  ret = BmpMenuList_Main(wk->sublw);
+
+  if(!GFL_NET_IsParentMachine()){
+    id = 1;
+  }
+
+  switch(ret){
+  case BMPMENULIST_NULL:
+    return seq;
+  case BMPMENULIST_CANCEL:
+    GF_ASSERT(0);
+    break;
+  case _TEMOTI:
+    PokeParty_Copy(GAMEDATA_GetMyPokemon(wk->pGameData), wk->pParentWork->pPokeParty[id]);
+    _CHANGESTATE(wk, WIFIP2PMATCH_PLAYERDIRECT_BATTLE_START4);
+    break;
+  case _BATTLEBOX:
+    {
+      POKEPARTY *bb_party = _BBox_PokePartyAlloc(wk->pGameData);
+      PokeParty_Copy(bb_party, wk->pParentWork->pPokeParty[id]);
+      GFL_HEAP_FreeMemory(bb_party);
+      _CHANGESTATE(wk, WIFIP2PMATCH_PLAYERDIRECT_BATTLE_START4);
+    }
+    break;
+  }
+  EndMessageWindowOff(wk);
+  wk->SubListWin = _BmpWinDel(wk->SubListWin);
+  BmpMenuList_Exit(wk->sublw, NULL, &wk->singleCur[_MENUTYPE_POKEPARTY]);
+  BmpMenuWork_ListDelete( wk->submenulist );
+  return seq;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief   ポケパーティー転送 WIFIP2PMATCH_PLAYERDIRECT_BATTLE_START4
+ * @param   wk
+ * @retval  none
+ */
+//------------------------------------------------------------------
+
+static int _playerDirectBattleStart4( WIFIP2PMATCH_WORK *wk, int seq )
+{
+  int id=0;
+  if(!GFL_NET_IsParentMachine()){
+    id = 1;
+  }
+
+  if(GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(),GFL_NET_SENDID_ALLUSER,
+                        CNM_WFP2PMF_POPEPARTY, PokeParty_GetWorkSize(),
+                        wk->pParentWork->pPokeParty[id], FALSE, FALSE, TRUE)){
+    GFL_NET_HANDLE_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_POKEPARTY_END);
+      _CHANGESTATE(wk, WIFIP2PMATCH_PLAYERDIRECT_BATTLE_START5);
+  }
+}
+//------------------------------------------------------------------
+/**
+ * @brief   ポケパーティー転送  WIFIP2PMATCH_PLAYERDIRECT_BATTLE_START5
+ * @param   wk
+ * @retval  none
+ */
+//------------------------------------------------------------------
+
+
+static int _playerDirectBattleStart5( WIFIP2PMATCH_WORK *wk, int seq )
+{
+  if(GFL_NET_HANDLE_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(), _TIMING_POKEPARTY_END)){
+    _CHANGESTATE(wk, WIFIP2PMATCH_PLAYERDIRECT_BATTLE_START6);
+  }
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief   ポケパーティー転送  WIFIP2PMATCH_PLAYERDIRECT_BATTLE_START6
+ * @param   wk
+ * @retval  none
+ */
+//------------------------------------------------------------------
+
+static int _playerDirectBattleStart6( WIFIP2PMATCH_WORK *wk, int seq )
+{
   u32 status,gamemode;
   
   WIFI_STATUS_ResetVChatMac(wk->pMatch);

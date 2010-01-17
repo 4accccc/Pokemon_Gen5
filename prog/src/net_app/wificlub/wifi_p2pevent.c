@@ -32,6 +32,7 @@
 #include "wifi_status.h"
 #include "net_app/wifi_login.h"
 
+#include "app/pokelist.h"
 
 //#include "net_app/balloon.h"
 
@@ -55,6 +56,7 @@ const GFL_PROC_DATA WifiClubProcData = {
 FS_EXTERN_OVERLAY(wifi2dmap);
 FS_EXTERN_OVERLAY(battle);
 FS_EXTERN_OVERLAY(wificlub);
+FS_EXTERN_OVERLAY(pokelist);
 FS_EXTERN_OVERLAY(pokemon_trade);
 #define _LOCALMATCHNO (100)
 //----------------------------------------------------------------
@@ -64,6 +66,7 @@ extern const NetRecvFuncTable BtlRecvFuncTable[];
 
 
 typedef struct{
+  PLIST_DATA PokeList;
   COMM_TVT_INIT_WORK aTVT;
   WIFIP2PMATCH_PROC_PARAM* pMatchParam;
   POKEMONTRADE_PARAM aPokeTr;
@@ -74,8 +77,6 @@ typedef struct{
   BATTLE_SETUP_PARAM para;
   int seq;
   u16* ret;
-  //u8 lvLimit;
-//  void* work;   // wifiPofin用ワーク
   u8 bSingle;
   u8 dummy;
 }EV_P2PEVENT_WORK;
@@ -86,6 +87,7 @@ enum{
   P2P_MATCH_BOARD,
   P2P_SELECT,
   P2P_BATTLE,
+  P2P_BATTLE2,
   P2P_TIMING_SYNC_CALL_BATTLE,
   P2P_BATTLE_START,
   P2P_BATTLE_END,
@@ -101,11 +103,6 @@ enum{
 };
 
 
-// WiFiP2PMatrch ４人接続画面人数制限定義
-//static const u8 sc_P2P_FOUR_MATCH_MAX[ WFP2PMF_TYPE_NUM ] = {
-//  3, 4, 4, 4
-//};
-
 
 #define _BLOCK (0)
 
@@ -119,9 +116,9 @@ static void P2P_FourWaitInit( EV_P2PEVENT_WORK* p_wk, GMEVENT* fsys, u32 heapID,
 static u32 P2P_FourWaitEnd( EV_P2PEVENT_WORK* p_wk ){ return P2P_MATCH_BOARD; }
 #endif
 
+static void _pokmeonListWorkFree(EV_P2PEVENT_WORK* ep2p);
 
 typedef struct {
-//  u8 lvLimit;
   u8 bSingle;
   u16 kind;
 } NextMatchKindTbl;
@@ -171,6 +168,46 @@ static void _battleSetting(EVENT_WIFICLUB_WORK* pClub,int gamemode)
 }
 
 
+static void _pokeListWorkMake(EV_P2PEVENT_WORK * ep2p,GAMEDATA* pGameData,u32 gamemode)
+{
+  int my_net_id = GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
+  PLIST_DATA* plist = &ep2p->PokeList;
+  MYSTATUS* pTarget = GAMEDATA_GetMyStatusPlayer(pGameData,1-my_net_id);
+  
+  plist->reg = ep2p->pMatchParam->pRegulation;
+  plist->pp = ep2p->pMatchParam->pPokeParty[my_net_id];
+  plist->mode = PL_MODE_BATTLE;
+  plist->myitem = GAMEDATA_GetMyItem(pGameData);
+  plist->cfg = SaveData_GetConfig(GAMEDATA_GetSaveControlWork(pGameData));
+  plist->is_disp_party = TRUE;
+  plist->use_tile_limit = FALSE;
+  plist->comm_battle[PL_COMM_PLAYER_TYPE_ENEMY_A].pp = ep2p->pMatchParam->pPokeParty[1-my_net_id];
+  plist->comm_battle[PL_COMM_PLAYER_TYPE_ENEMY_A].name = MyStatus_GetMyName(pTarget);
+  plist->comm_battle[PL_COMM_PLAYER_TYPE_ENEMY_A].sex = MyStatus_GetMySex(pTarget);
+  plist->comm_type = PL_COMM_SINGLE;
+
+  switch(gamemode){
+  case WIFI_GAME_BATTLE_SINGLE_ALL:
+  case WIFI_GAME_BATTLE_SINGLE_FLAT:
+    plist->type = PL_TYPE_SINGLE;
+    break;
+  case WIFI_GAME_BATTLE_DOUBLE_ALL:
+  case WIFI_GAME_BATTLE_DOUBLE_FLAT:
+    plist->type = PL_TYPE_DOUBLE;
+    break;
+  case WIFI_GAME_BATTLE_TRIPLE_ALL:
+  case WIFI_GAME_BATTLE_TRIPLE_FLAT:
+    plist->type = PL_TYPE_TRIPLE;
+    break;
+  case WIFI_GAME_BATTLE_ROTATION_ALL:
+  case WIFI_GAME_BATTLE_ROTATION_FLAT:
+    plist->type = PL_TYPE_ROTATION;
+    break;
+  }
+}
+
+
+
 //==============================================================================
 //  WIFI通信入り口
 //==============================================================================
@@ -201,32 +238,33 @@ static GFL_PROC_RESULT WifiClubProcMain( GFL_PROC * proc, int * seq, void * pwk,
   case P2P_MATCH_BOARD:
     GFL_OVERLAY_Load(FS_OVERLAY_ID(wificlub));
     WIFI_STATUS_SetMyMac(ep2p->pMatchParam->pMatch);
+
+    ep2p->pMatchParam->pPokeParty[0] = PokeParty_AllocPartyWork(GFL_HEAPID_APP);   //お互いのPartyを受信
+    ep2p->pMatchParam->pPokeParty[1] = PokeParty_AllocPartyWork(GFL_HEAPID_APP);   //お互いのPartyを受信
+    ep2p->pMatchParam->pRegulation = Regulation_AllocWork(GFL_HEAPID_APP);
+
     GFL_PROC_SysCallProc(FS_OVERLAY_ID(wifi2dmap), &WifiP2PMatchProcData, ep2p->pMatchParam);
     ep2p->seq ++;
     break;
   case P2P_SELECT:
-    if(GFL_NET_IsInit()){
-      if( mydwc_checkMyGSID() ){  // コード取得に成功
-        // きっと置きなおす
-        //            SysFlag_WifiUseSet(SaveData_GetEventWork(fsys->savedata));
-      }
-    }
     ep2p->seq = aNextMatchKindTbl[ep2p->pMatchParam->seq].kind;
     NET_PRINT("P2P_SELECT %d %d\n",ep2p->seq,ep2p->pMatchParam->seq);
-    //ep2p->lvLimit = aNextMatchKindTbl[ep2p->pMatchParam->seq].lvLimit;
+    if(P2P_BATTLE != ep2p->seq){  // バトル以外はいらない
+      _pokmeonListWorkFree(ep2p);      // ポケモンリストが終わったら要らない
+    }
     ep2p->bSingle = aNextMatchKindTbl[ep2p->pMatchParam->seq].bSingle;
     GFL_OVERLAY_Unload(FS_OVERLAY_ID(wificlub));
-/*
-    switch(ep2p->pMatchParam->seq){
-    case WIFI_P2PMATCH_DPW_END:  //DPWへいく場合
-      *(ep2p->ret) = 1;
-      ep2p->seq = P2P_SETEND;
-      break;
-    }
-   */
     break;
   case P2P_BATTLE:
     {
+      _pokeListWorkMake(ep2p,GAMESYSTEM_GetGameData(pClub->gsys),ep2p->seq );
+      GFL_PROC_SysCallProc(FS_OVERLAY_ID(pokelist), &PokeList_ProcData, &ep2p->PokeList);
+      ep2p->seq++;
+    }
+    break;
+  case P2P_BATTLE2:
+    {
+      _pokmeonListWorkFree(ep2p);      // ポケモンリストが終わったら要らない
       GFL_OVERLAY_Load( FS_OVERLAY_ID( battle ) );
       GFL_NET_AddCommandTable(GFL_NET_CMD_BATTLE, BtlRecvFuncTable, BTL_NETFUNCTBL_ELEMS, NULL);
       GFL_NET_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),_LOCALMATCHNO);
@@ -295,6 +333,15 @@ COMM_TVT_INIT_WORK の mode に CTM_WIFI を渡して起動してください。
   }
   return FALSE;
 }
+
+
+static void _pokmeonListWorkFree(EV_P2PEVENT_WORK* ep2p)
+{
+  GFL_HEAP_FreeMemory(ep2p->pMatchParam->pPokeParty[0]);
+  GFL_HEAP_FreeMemory(ep2p->pMatchParam->pPokeParty[1]);
+  GFL_HEAP_FreeMemory(ep2p->pMatchParam->pRegulation);
+}
+
 
 static GFL_PROC_RESULT WifiClubProcInit( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {

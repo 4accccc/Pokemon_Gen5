@@ -156,6 +156,11 @@ enum{
   WIFIP2PMATCH_PLAYERDIRECT_BATTLE_GO4,
   WIFIP2PMATCH_PLAYERDIRECT_NOREG_PARENT,
   WIFIP2PMATCH_PLAYERDIRECT_BATTLE_START,
+  WIFIP2PMATCH_PLAYERDIRECT_BATTLE_START2,
+  WIFIP2PMATCH_PLAYERDIRECT_BATTLE_START3,
+  WIFIP2PMATCH_PLAYERDIRECT_BATTLE_START4,
+  WIFIP2PMATCH_PLAYERDIRECT_BATTLE_START5,
+  WIFIP2PMATCH_PLAYERDIRECT_BATTLE_START6,
   WIFIP2PMATCH_PLAYERDIRECT_BATTLE_FAILED,
   
 };
@@ -199,6 +204,7 @@ typedef enum{
   _MENUTYPE_BATTLE_RULE,
   _MENUTYPE_BATTLE_SHOOTER,
   _MENUTYPE_GAME,
+  _MENUTYPE_POKEPARTY,
   _MENUTYPE_MAX
 } _MENUTYPE_;
 
@@ -395,11 +401,13 @@ GAMEDATA* pGameData;
   REGULATION* pRegulation;
 };
 
-
+//í êMä÷òAÇÃä÷êî
 extern void WifiP2PMatchRecvGameStatus(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 extern void WifiP2PMatchRecvMyStatus(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 extern void WifiP2PMatchRecvDirectMode(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 extern void WifiP2PMatchRecvBattleRegulation(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
+extern void WifiP2PMatchRecvPokeParty(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
+extern u8* WifiP2PMatchGetPokePartyWork(int netID, void* pWk, int size);
 
 
 
