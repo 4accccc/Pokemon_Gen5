@@ -617,6 +617,7 @@ SRCS_OVERLAY_UNION_ROOM = net_app/union/union_chara.c \
                           net_app/union/union_oneself.c \
                           net_app/union/union_msg.c \
                           net_app/union/union_tool.c \
+                          net_app/union/union_eff.c \
                           net_app/union/colosseum_tool.c
 
 # ユニオンルームでのミニゲーム制御	OVERLAY_FIELDMAPと並列の位置に配置

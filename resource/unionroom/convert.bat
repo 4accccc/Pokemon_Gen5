@@ -10,5 +10,8 @@ g2dcvtr wb_union_icon.nce -ncn -br
 g2dcvtr wb_unionbg.nsc
 g2dcvtr wb_unionbg_plate.nsc
 
+g3dcvtr sentaku.imd
+g3dcvtr sentaku.ita
+
 nnsarc -c -i -n unionroom.narc -S unionroom.script
 

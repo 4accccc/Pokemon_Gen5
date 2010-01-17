@@ -94,7 +94,7 @@ enum{
 };
 
 ///タッチ後、プレートの色が変わっている時間
-#define UNION_PLATE_TOUCH_LIFE      (60)
+#define UNION_PLATE_TOUCH_LIFE      (90)
 
 typedef enum{
   PLATE_COLOR_NORMAL,    ///<ノーマル色(タッチしていない状態)
@@ -221,9 +221,10 @@ static void _UniSub_ScrollBar_ViewPosUpdate(UNION_SUBDISP_PTR unisub, UNION_CHAT
 static u32 _UniSub_ScrollBar_GetPageMax(UNION_CHAT_LOG *log);
 static u32 _UniSub_ScrollBar_GetPageY(UNION_CHAT_LOG *log, u32 page_max);
 static BOOL _UniSub_ScrollArea_TouchCheck(UNION_SUBDISP_PTR unisub);
-static BOOL _UniSub_ChatPlate_TouchCheck(UNION_SUBDISP_PTR unisub, UNION_CHAT_LOG *log);
+static BOOL _UniSub_ChatPlate_TouchCheck(UNION_SYSTEM_PTR unisys, UNION_SUBDISP_PTR unisub, UNION_CHAT_LOG *log);
 static PLATE_TOUCH_WORK * _UniSub_GetPlateTouchPtr(UNION_SUBDISP_PTR unisub, UNION_CHAT_LOG *log, int view_no);
-static void _UniSub_EntryPlateTouchWork(UNION_SUBDISP_PTR unisub, UNION_CHAT_LOG *log, int view_no);
+static BOOL _UniSub_EntryPlateTouchWork(UNION_SUBDISP_PTR unisub, UNION_CHAT_LOG *log, int view_no);
+
 static void _UniSub_ChatPlate_Update(UNION_SUBDISP_PTR unisub, UNION_CHAT_LOG *log);
 static BOOL _UniSub_ChatPlate_ChangeColor(UNION_SUBDISP_PTR unisub, int plate_no, PLATE_COLOR color);
 
@@ -354,7 +355,7 @@ void UNION_SUBDISP_Update(UNION_SUBDISP_PTR unisub)
   }
   if(unisys != NULL){
     _UniSub_ScrollBar_Update(unisys, unisub);
-    _UniSub_ChatPlate_TouchCheck(unisub, &unisys->chat_log);
+    _UniSub_ChatPlate_TouchCheck(unisys, unisub, &unisys->chat_log);
     _UniSub_ChatPlate_Update(unisub, &unisys->chat_log);
   }
   
@@ -1196,7 +1197,7 @@ static BOOL _UniSub_ScrollArea_TouchCheck(UNION_SUBDISP_PTR unisub)
  * @retval  BOOL		TRUE:タッチ発生
  */
 //--------------------------------------------------------------
-static BOOL _UniSub_ChatPlate_TouchCheck(UNION_SUBDISP_PTR unisub, UNION_CHAT_LOG *log)
+static BOOL _UniSub_ChatPlate_TouchCheck(UNION_SYSTEM_PTR unisys, UNION_SUBDISP_PTR unisub, UNION_CHAT_LOG *log)
 {
   u32 tp_x, tp_y;
   int y;
@@ -1218,7 +1219,21 @@ static BOOL _UniSub_ChatPlate_TouchCheck(UNION_SUBDISP_PTR unisub, UNION_CHAT_LO
   }
   
   if(_UniSub_ChatPlate_ChangeColor(unisub, y, PLATE_COLOR_TOUCH) == TRUE){
-    _UniSub_EntryPlateTouchWork(unisub, log, log->chat_view_no - (UNION_CHAT_VIEW_LOG_NUM-1) + y);
+    //int view_no = log->chat_view_no - (UNION_CHAT_VIEW_LOG_NUM-1) + y;
+    int view_no;
+    if(log->chat_view_no < UNION_CHAT_VIEW_LOG_NUM){
+      view_no = y;
+    }
+    else{
+      view_no = log->chat_view_no - (UNION_CHAT_VIEW_LOG_NUM-1) + y;
+    }
+    _UniSub_EntryPlateTouchWork(unisub, log, view_no);
+    {//タッチした相手をフォーカス対象にセットする
+      UNION_CHAT_DATA *chat = UnionChat_GetReadBuffer(log, view_no);
+      if(chat != NULL){
+        GFL_STD_MemCopy(chat->mac_address, unisys->my_situation.focus_mac_address, 6);
+      }
+    }
     return TRUE;
   }
   return FALSE;
@@ -1270,18 +1285,21 @@ static PLATE_TOUCH_WORK * _UniSub_GetPlateTouchPtr(UNION_SUBDISP_PTR unisub, UNI
  *
  * @param   unisub		
  * @param   view_no		
+ * 
+ * @retval  TRUE:エントリー成功　FALSE:エントリー失敗
  */
 //--------------------------------------------------------------
-static void _UniSub_EntryPlateTouchWork(UNION_SUBDISP_PTR unisub, UNION_CHAT_LOG *log, int view_no)
+static BOOL _UniSub_EntryPlateTouchWork(UNION_SUBDISP_PTR unisub, UNION_CHAT_LOG *log, int view_no)
 {
   PLATE_TOUCH_WORK *pt;
   
   pt = _UniSub_GetPlateTouchPtr(unisub, log, view_no);
   if(pt == NULL){
-    return;
+    return FALSE; //通常ありえない　内部でASSERTを仕込んでいる
   }
   pt->life = UNION_PLATE_TOUCH_LIFE;
   pt->view_no = view_no;
+  return TRUE;
 }
 
 //--------------------------------------------------------------
@@ -1299,7 +1317,13 @@ static void _UniSub_ChatPlate_Update(UNION_SUBDISP_PTR unisub, UNION_CHAT_LOG *l
     if(unisub->plate_touch[y].life > 0){
       unisub->plate_touch[y].life--;
       if(unisub->plate_touch[y].life == 0){
-        write_pos = (UNION_CHAT_VIEW_LOG_NUM-1) + unisub->plate_touch[y].view_no - log->chat_view_no;
+        if(log->chat_view_no < UNION_CHAT_VIEW_LOG_NUM){
+          write_pos = unisub->plate_touch[y].view_no;
+        }
+        else{
+          write_pos = (UNION_CHAT_VIEW_LOG_NUM-1) 
+            + unisub->plate_touch[y].view_no - log->chat_view_no;
+        }
         if(write_pos >= 0 && write_pos < UNION_CHAT_VIEW_LOG_NUM){
           _UniSub_ChatPlate_ChangeColor(unisub, write_pos, PLATE_COLOR_NORMAL);
         }

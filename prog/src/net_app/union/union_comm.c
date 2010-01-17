@@ -46,7 +46,7 @@ enum{
 //--------------------------------------------------------------
 //  オーバーレイID
 //--------------------------------------------------------------
-FS_EXTERN_OVERLAY(union_room);
+//FS_EXTERN_OVERLAY(union_room);
 
 
 //==============================================================================
@@ -139,7 +139,7 @@ static UNION_SYSTEM_PTR Union_InitSystem(UNION_PARENT_WORK *uniparent)
   UnionChat_InitLog(&unisys->chat_log);
   unisys->alloc.regulation = Regulation_AllocWork(HEAPID_UNION);
   
-  GFL_OVERLAY_Load( FS_OVERLAY_ID( union_room ) );
+//  GFL_OVERLAY_Load( FS_OVERLAY_ID( union_room ) );
   unisys->overlay_load = TRUE;
   
   return unisys;
@@ -160,7 +160,7 @@ static void Union_ExitSystem(UNION_SYSTEM_PTR unisys)
   GFL_HEAP_FreeMemory(unisys);
   GFL_HEAP_DeleteHeap(HEAPID_UNION);
   
-  GFL_OVERLAY_Unload( FS_OVERLAY_ID( union_room ) );
+//  GFL_OVERLAY_Unload( FS_OVERLAY_ID( union_room ) );
 }
 
 

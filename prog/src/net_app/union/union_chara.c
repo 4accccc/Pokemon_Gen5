@@ -17,6 +17,8 @@
 #include "union_local.h"
 #include "union_msg.h"
 #include "union_tool.h"
+#include "net_app/union_eff.h"
+#include "field/fieldmap.h"
 
 
 //==============================================================================
@@ -343,6 +345,61 @@ static void UNION_CHARA_CheckOBJ_Entry(UNION_SYSTEM_PTR unisys, UNION_BEACON_PC 
 
 //==================================================================
 /**
+ * フォーカス対象のキャラクターがいればフォーカスエフェクトをリクエスト
+ *
+ * @param   unisys		
+ * @param   pc		
+ */
+//==================================================================
+static void UNION_CHARA_CheckFocusOBJ(UNION_SYSTEM_PTR unisys, UNION_BEACON_PC *pc)
+{
+  int i;
+  UNION_CHARACTER *unichara;
+  UNION_BEACON *beacon;
+  const u8 null_mac[6] = {0,0,0,0,0,0};
+  
+  if(GFL_STD_MemComp(null_mac, &unisys->my_situation.focus_mac_address, 6) == 0){
+    return;
+  }
+  
+  beacon = &pc->beacon;
+  for(i = 0; i < UNION_CONNECT_PLAYER_NUM; i++){
+    unichara = pc->chara_group.character[i];
+    if(unichara == NULL){
+      continue;
+    }
+    
+    if(beacon->party.member[i].occ == TRUE
+        && GFL_STD_MemComp(beacon->party.member[i].mac_address, 
+        unisys->my_situation.focus_mac_address, 6) == 0){
+      if(GAMESYSTEM_CheckFieldMapWork(unisys->uniparent->gsys) == TRUE){
+        FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(unisys->uniparent->gsys);
+        UNION_EFF_SYSTEM *unieff = FIELDMAP_GetUnionEffSystem(fieldWork);
+        
+        if(unieff != NULL){
+          u16 char_index = UNION_CHARA_GetCharaIndex(pc, unichara);
+          MMDLSYS *mdlsys = GAMEDATA_GetMMdlSys( unisys->uniparent->game_data );
+          MMDL *focus_mmdl = MMDLSYS_SearchOBJID( mdlsys, char_index );
+        
+          if(focus_mmdl != NULL){
+            UnionEff_App_ReqFocus(unieff, focus_mmdl);
+          }
+        }
+      }
+      GFL_STD_MemClear(unisys->my_situation.focus_mac_address, 6);
+      return;
+    }
+  }
+  GFL_STD_MemClear(unisys->my_situation.focus_mac_address, 6);
+}
+
+static void _ReqFocusOBJ(UNION_SYSTEM_PTR unisys, u16 char_index)
+{
+}
+
+
+//==================================================================
+/**
  * ユニオンキャラクター：更新処理
  *
  * @param   unisys		
@@ -369,6 +426,9 @@ void UNION_CHAR_Update(UNION_SYSTEM_PTR unisys, GAMEDATA *gdata)
       
       //新規キャラ登録チェック
       UNION_CHARA_CheckOBJ_Entry(unisys, bpc);
+
+      //フォーカスキャラチェック
+      UNION_CHARA_CheckFocusOBJ(unisys, bpc);
       
       del_count = 0;
       for(child_no = 0; child_no < UNION_CONNECT_PLAYER_NUM; child_no++){

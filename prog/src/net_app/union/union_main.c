@@ -26,7 +26,7 @@
 //--------------------------------------------------------------
 //  オーバーレイ定義
 //--------------------------------------------------------------
-FS_EXTERN_OVERLAY(union_room);
+//FS_EXTERN_OVERLAY(union_room);
 
 
 
@@ -145,11 +145,15 @@ void UnionMain_Callback_FieldCreate(void *pwk, void *app_work, FIELDMAP_WORK *fi
   UNION_SYSTEM_PTR unisys = app_work;
   COLOSSEUM_SYSTEM_PTR clsys = unisys->colosseum_sys;
   
+#if 0
   if(unisys->overlay_load == FALSE){
     GFL_OVERLAY_Load( FS_OVERLAY_ID( union_room ) );
     unisys->overlay_load = TRUE;
     OS_TPrintf("オーバーレイLoad : union_room\n");
   }
+#else
+  unisys->overlay_load = TRUE;
+#endif
   
   if(unisys->player_pause == TRUE){
     FIELDMAP_CTRL_GRID_SetPlayerPause( fieldWork, TRUE );
@@ -185,11 +189,15 @@ void UnionMain_Callback_FieldDelete(void *pwk, void *app_work, FIELDMAP_WORK *fi
     }
   }
 
+#if 0
   if(unisys->overlay_load == TRUE){
     GFL_OVERLAY_Unload( FS_OVERLAY_ID( union_room ) );
     unisys->overlay_load = FALSE;
     OS_TPrintf("オーバーレイUnload : union_room\n");
   }
+#else
+  unisys->overlay_load = FALSE;
+#endif
 }
 
 //==================================================================

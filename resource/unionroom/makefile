@@ -78,6 +78,7 @@ $(targetname).narc: $(lsources) $(gsources) $(ssources) $(imdsources) $(bmpsourc
 	rm -f *.nanr
 	rm -f *.nscr
 	rm -f *.nsbmd
+	rm -f *.nsbta
 endif
 
 #------------------------------------------------------------------------------
@@ -100,6 +101,7 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
 	rm -f *.narc
 	rm -f *.naix
 	rm -f *.nsbmd
+	rm -f *.nsbta
 	rm -f $(targetname).narc
 	rm -f $(targetname).naix
 endif

@@ -113,6 +113,8 @@
 
 #include "field_bbd_color.h"  //
 
+#include "net_app/union_eff.h"
+
 #ifdef PM_DEBUG
 #include "pleasure_boat.h"    //for PL_BOAT_
 #endif
@@ -284,6 +286,7 @@ struct _FIELDMAP_WORK
 	FIELD_PLAYER *field_player;
 	FIELD_ENCOUNT *encount;
 	FLDEFF_CTRL *fldeff_ctrl;
+	UNION_EFF_SYSTEM *union_eff;    //ユニオンエフェクト制御システム
 
 	FIELDSKILL_MAPEFF * fieldskill_mapeff;
   
@@ -429,6 +432,7 @@ typedef void (*DRAW3DMODE_FUNC)(FIELDMAP_WORK * fieldWork);
 //--------------------------------------------------------------
 //  オーバーレイID
 //--------------------------------------------------------------
+FS_EXTERN_OVERLAY(union_room);
 FS_EXTERN_OVERLAY(field_intrude);
 
 
@@ -558,7 +562,7 @@ static MAINSEQ_RESULT mainSeqFunc_setup_system(GAMESYS_WORK *gsys, FIELDMAP_WORK
   //ユニオンと侵入で読み込むオーバーレイを分ける
   if( ZONEDATA_IsUnionRoom( fieldWork->map_id ) == TRUE
       || ZONEDATA_IsColosseum( fieldWork->map_id ) == TRUE){
-//    GFL_OVERLAY_Load( FS_OVERLAY_ID( union_room ) );
+    GFL_OVERLAY_Load( FS_OVERLAY_ID( union_room ) );
   }
   else{
     GFL_OVERLAY_Load( FS_OVERLAY_ID( field_intrude ) );
@@ -666,6 +670,12 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
   //フィールドエフェクト　登録
   FLDEFF_CTRL_RegistEffect( fieldWork->fldeff_ctrl,
     DATA_FLDEFF_RegistEffectGroundTbl, DATA_FLDEFF_RegistEffectGroundTblNum );
+
+  //ユニオンルームならユニオンエフェクト制御システムを作成
+  if( ZONEDATA_IsUnionRoom( fieldWork->map_id ) == TRUE
+      || ZONEDATA_IsColosseum( fieldWork->map_id ) == TRUE ){
+    fieldWork->union_eff = UNION_EFF_SystemSetup(fieldWork->heapID);
+  }
   
   {
     PLAYER_WORK *pw = GAMESYSTEM_GetMyPlayerWork(gsys);
@@ -895,6 +905,10 @@ static MAINSEQ_RESULT mainSeqFunc_update_top(GAMESYS_WORK *gsys, FIELDMAP_WORK *
   
   FLDEFF_CTRL_Update( fieldWork->fldeff_ctrl );
 
+  if(fieldWork->union_eff != NULL){
+    UNION_EFF_SystemUpdate(fieldWork->union_eff);
+  }
+
 	// フィールドマップ用制御タスクシステム
 	FLDMAPFUNC_Sys_Main( fieldWork->fldmapFuncSys );
 
@@ -1045,6 +1059,11 @@ static MAINSEQ_RESULT mainSeqFunc_free(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldW
   
   // フィールドエフェクト破棄
   FLDEFF_CTRL_Delete( fieldWork->fldeff_ctrl );
+
+  if(fieldWork->union_eff != NULL){
+    UNION_EFF_SystemExit(fieldWork->union_eff);
+    fieldWork->union_eff = NULL;
+  }
   
   // 天気システム破棄
   FIELD_WEATHER_Exit( fieldWork->weather_sys );
@@ -1134,7 +1153,7 @@ static MAINSEQ_RESULT mainSeqFunc_end(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWo
   //ユニオンと侵入で読み込むオーバーレイを分ける
   if( ZONEDATA_IsUnionRoom( fieldWork->map_id ) == TRUE
       || ZONEDATA_IsColosseum( fieldWork->map_id ) == TRUE){
-//    GFL_OVERLAY_Unload( FS_OVERLAY_ID( union_room ) );
+    GFL_OVERLAY_Unload( FS_OVERLAY_ID( union_room ) );
   }
   else{
     GFL_OVERLAY_Unload( FS_OVERLAY_ID( field_intrude ) );
@@ -1606,6 +1625,19 @@ void FIELDMAP_SetFieldSubscreenWork(
 FLDEFF_CTRL * FIELDMAP_GetFldEffCtrl( FIELDMAP_WORK *fieldWork )
 {
   return fieldWork->fldeff_ctrl;
+}
+
+//--------------------------------------------------------------
+/**
+ * FIELDMAP_WORK UNION_EFF_SYSTEM取得
+ * @param fieldWork FIELDMAP_WORK
+ * @retval UNION_EFF_SYSTEM*
+ */
+//--------------------------------------------------------------
+UNION_EFF_SYSTEM * FIELDMAP_GetUnionEffSystem( FIELDMAP_WORK *fieldWork )
+{
+  GF_ASSERT(fieldWork->union_eff != NULL);
+  return fieldWork->union_eff;
 }
 
 //--------------------------------------------------------------
@@ -3030,6 +3062,10 @@ static void Draw3DNormalMode( FIELDMAP_WORK * fieldWork )
     NNS_G3dGeFlushBuffer(); // 転送まち
 
     FLDEFF_CTRL_Draw( fieldWork->fldeff_ctrl );
+    
+    if(fieldWork->union_eff != NULL){
+      UNION_EFF_SystemDraw( fieldWork->union_eff);
+    }
     
     FLD_G3DOBJ_CTRL_Draw( fieldWork->fieldG3dObjCtrl );
     
