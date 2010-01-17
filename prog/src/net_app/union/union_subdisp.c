@@ -58,9 +58,6 @@ enum{
   UNION_FRAME_S_BACKGROUND = GFL_BG_FRAME3_S,     ///<背景面
 };
 
-///インフォバーの分のスクリーンオフセット(2byte * 32char * 2列)
-#define INFOBAR_SCRN_OFFSET     (2*32*2)
-
 ///メニューバーへのスクリーンオフセット(2byte * 32char * )
 #define MENUBAR_SCRN_START      (2*32*(192/8-3))
 ///メニューバーへのスクリーンサイズ
@@ -69,17 +66,17 @@ enum{
 ///チャットログ用のBMPWINサイズ
 enum{
   UNION_BMPWIN_START_X = 8,     //BMPWIN X位置(dot単位)
-  UNION_BMPWIN_START_Y = 8*2,   //BMPWIN Y位置(dot単位)
+  UNION_BMPWIN_START_Y = 0*8,   //BMPWIN Y位置(dot単位)
   UNION_BMPWIN_SIZE_X = 29*8,   //BMPWIN Xサイズ(dot単位)
-  UNION_BMPWIN_SIZE_Y = 6*8,    //BMPWIN Yサイズ(dot単位)
+  UNION_BMPWIN_SIZE_Y = 7*8,    //BMPWIN Yサイズ(dot単位)
 };
 
 ///プレートのサイズ
 enum{
   UNION_PLATE_START_X = 0,      ///<プレートのスクリーン開始位置X(キャラ単位)
-  UNION_PLATE_START_Y = 2,      ///<プレートのスクリーン開始位置Y(キャラ単位)
+  UNION_PLATE_START_Y = 0,      ///<プレートのスクリーン開始位置Y(キャラ単位)
   UNION_PLATE_SIZE_X = 32,      ///<プレートのスクリーンサイズX(キャラ単位)
-  UNION_PLATE_SIZE_Y = 6,       ///<プレートのスクリーンサイズY(キャラ単位)
+  UNION_PLATE_SIZE_Y = 7,       ///<プレートのスクリーンサイズY(キャラ単位)
   UNION_PLATE_SCREEN_SIZE = UNION_PLATE_SIZE_X * UNION_PLATE_SIZE_Y * 2,  ///プレート一人分のスクリーンサイズ
 };
 
@@ -87,8 +84,8 @@ enum{
 enum{
   PLATE_LEFT = 0,
   PLATE_RIGHT = 0x1d*8,
-  PLATE_TOP = 2*8,
-  PLATE_BOTTOM = PLATE_TOP + 6*8,
+  PLATE_TOP = 0*8,
+  PLATE_BOTTOM = PLATE_TOP + UNION_PLATE_SIZE_Y*8,
   
   PLATE_HEIGHT = PLATE_BOTTOM - PLATE_TOP,
 };
@@ -110,7 +107,7 @@ enum{
   UNION_SUBBG_PAL_BACKGROUND,       ///<背景
   
   UNION_SUBBG_PAL_MENU_BAR = 0xd,
-  UNION_SUBBG_PAL_INFOWIN = 0xe,
+//  UNION_SUBBG_PAL_INFOWIN = 0xe,
   UNION_SUBBG_PAL_FONT = 0xf,       ///<フォント
 };
 
@@ -272,7 +269,6 @@ UNION_SUBDISP_PTR UNION_SUBDISP_Init(GAMESYS_WORK *gsys)
   _UniSub_BmpWinCreate(unisub);
   _UniSub_ActorResouceLoad(unisub, handle);
   _UniSub_ActorCreate(unisub, handle);
-  INFOWIN_Init(UNION_FRAME_S_MESSAGE, UNION_SUBBG_PAL_INFOWIN, game_comm, HEAPID_FIELDMAP);
   _UniSub_MenuBarLoad(unisub);
   GFL_ARC_CloseDataHandle(handle);
 
@@ -301,7 +297,6 @@ void UNION_SUBDISP_Exit(UNION_SUBDISP_PTR unisub)
 {
   PMS_DRAW_Exit(unisub->pmsdraw);
   _UniSub_MenuBarFree(unisub);
-  INFOWIN_Exit();
   _UniSub_ActorDelete(unisub);
   _UniSub_ActorResourceUnload(unisub);
   _UniSub_BmpWinDelete(unisub);
@@ -326,7 +321,6 @@ void UNION_SUBDISP_Update(UNION_SUBDISP_PTR unisub)
   
 	G2S_BlendNone();  //※check　どこかで勝手にBLENDがかかるので暫定対処 2009.12.18(金)
 
-  INFOWIN_Update();
 	PRINTSYS_QUE_Main(unisub->printQue);
   PMS_DRAW_Main(unisub->pmsdraw);
   
@@ -466,7 +460,7 @@ static void _UniSub_BGLoad(UNION_SUBDISP_PTR unisub, ARCHANDLE *handle)
     scrn_buf = GFL_BG_GetScreenBufferAdrs(UNION_FRAME_S_PLATE);
     load_buf = GFL_ARCHDL_UTIL_LoadScreen(
       handle, NARC_unionroom_wb_unionbg_plate_NSCR, FALSE, &scrnData, HEAPID_FIELDMAP);
-    GFL_STD_MemCopy(scrnData->rawData, &scrn_buf[INFOBAR_SCRN_OFFSET/2], 
+    GFL_STD_MemCopy(scrnData->rawData, scrn_buf, 
       UNION_PLATE_SIZE_X * UNION_PLATE_SIZE_Y * 2);
     GFL_HEAP_FreeMemory(load_buf);
   }
@@ -822,7 +816,6 @@ void _UniSub_Chat_DispWrite(UNION_SUBDISP_PTR unisub, UNION_CHAT_DATA *chat, u8 
   int palno;
   
   src_plate_screen = GFL_BG_GetScreenBufferAdrs(UNION_FRAME_S_PLATE);
-  src_plate_screen += INFOBAR_SCRN_OFFSET/2; //インフォバーの分アドレスを進める
   dest_plate_screen = src_plate_screen;
   dest_plate_screen += UNION_PLATE_SCREEN_SIZE/2 * write_pos;
   
@@ -838,7 +831,7 @@ void _UniSub_Chat_DispWrite(UNION_SUBDISP_PTR unisub, UNION_CHAT_DATA *chat, u8 
   //文字面描画
   {
     STRBUF *buf_name;
-    GFL_POINT point = {0, 16};
+    GFL_POINT point = {0, 16+4};
     
     if(PMS_DRAW_IsPrinting(unisub->pmsdraw, write_pos) == TRUE){
       PMS_DRAW_Clear(unisub->pmsdraw, write_pos, TRUE);
@@ -903,7 +896,6 @@ void _UniSub_Chat_DispCopy(UNION_SUBDISP_PTR unisub, u8 src_pos, u8 dest_pos)
 
   //プレートのコピー
   src_plate_screen = GFL_BG_GetScreenBufferAdrs(UNION_FRAME_S_PLATE);
-  src_plate_screen += INFOBAR_SCRN_OFFSET/2; //インフォバーの分アドレスを進める
   dest_plate_screen = src_plate_screen;
   dest_plate_screen += UNION_PLATE_SCREEN_SIZE/2 * dest_pos;
   src_plate_screen += UNION_PLATE_SCREEN_SIZE/2 * src_pos;
@@ -1349,8 +1341,8 @@ static BOOL _UniSub_ChatPlate_ChangeColor(UNION_SUBDISP_PTR unisub, int plate_no
   u16 change_palno, now_palno;
   
   scrn_buf = GFL_BG_GetScreenBufferAdrs(UNION_FRAME_S_PLATE);
-  scrn_buf += (UNION_PLATE_START_X + UNION_PLATE_SIZE_X * UNION_PLATE_SIZE_Y) 
-    + (UNION_PLATE_SIZE_X * UNION_PLATE_SIZE_Y) * plate_no;
+  scrn_buf += ((UNION_PLATE_START_X + UNION_PLATE_SIZE_X * UNION_PLATE_SIZE_Y) 
+    + (UNION_PLATE_SIZE_X * UNION_PLATE_SIZE_Y) * plate_no) / 2;
   now_palno = (*scrn_buf) >> 12;
   switch(now_palno){
   case UNION_SUBBG_PAL_MALE:
