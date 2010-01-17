@@ -457,7 +457,7 @@ static BOOL BeaconPC_UpdateLife(UNION_SYSTEM_PTR unisys, UNION_BEACON_PC *bpc)
 {
   UNION_MY_SITUATION *situ = &unisys->my_situation;
   
-  if(situ->mycomm.calling_pc == bpc || situ->mycomm.answer_pc == bpc || situ->mycomm.connect_pc == bpc){
+  if(situ->mycomm.talk_pc == bpc || situ->mycomm.calling_pc == bpc || situ->mycomm.answer_pc == bpc || situ->mycomm.connect_pc == bpc){
     if(bpc->life == 0){
       bpc->life = 1;
     }

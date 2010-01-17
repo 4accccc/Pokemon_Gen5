@@ -23,6 +23,7 @@
 #include "union_subproc.h"
 #include "union_chat.h"
 #include "net/net_whpipe.h"
+#include "savedata/wifihistory.h"
 
 
 //==============================================================================
@@ -545,6 +546,7 @@ static void UnionComm_BeaconSearch(UNION_SYSTEM_PTR unisys)
       if(mac_address_ptr != NULL){
         UnionBeacon_SetReceiveData(unisys, bcon_buff, mac_address_ptr);
       }
+      GFL_NET_WLResetGFBss(i);  //ビーコンバッファクリア
   	}
   }
 }
@@ -627,6 +629,7 @@ static void* UnionComm_GetBeaconData(void* pWork)
 static void UnionComm_SetBeaconParam(UNION_SYSTEM_PTR unisys, UNION_BEACON *beacon)
 {
   UNION_MY_SITUATION *situ = &unisys->my_situation;
+  WIFI_HISTORY *wifihistory;
   
   GFL_STD_MemClear(beacon, sizeof(UNION_BEACON));
   
@@ -656,6 +659,10 @@ static void UnionComm_SetBeaconParam(UNION_SYSTEM_PTR unisys, UNION_BEACON *beac
 
   beacon->pmsdata = situ->chat_pmsdata;
   beacon->pms_rand = situ->chat_pms_rand;
+  
+  wifihistory = SaveData_GetWifiHistory(GAMEDATA_GetSaveControlWork(unisys->uniparent->game_data));
+  beacon->my_nation = WIFIHISTORY_GetMyNation(wifihistory);
+  beacon->my_area = WIFIHISTORY_GetMyArea(wifihistory);
   
   beacon->party = situ->mycomm.party;
   
@@ -751,6 +758,12 @@ void UnionMySituation_SetParam(UNION_SYSTEM_PTR unisys, UNION_MYSITU_PARAM_IDX i
   UNION_MY_SITUATION *situ = &unisys->my_situation;
 
   switch(index){
+  case UNION_MYSITU_PARAM_IDX_TALK_PC:
+    {
+      UNION_BEACON_PC *talk_pc = work;
+      situ->mycomm.talk_pc = talk_pc;
+    }
+    break;
   case UNION_MYSITU_PARAM_IDX_CALLING_PC:
     {
       UNION_BEACON_PC *calling_pc = work;

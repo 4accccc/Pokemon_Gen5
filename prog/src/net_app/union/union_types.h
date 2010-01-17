@@ -307,13 +307,14 @@ typedef struct{
   u8 trainer_view;            ///<トレーナータイプ(ユニオンルーム内での見た目)
   u8 sex;                     ///<性別
   
-  PMS_DATA pmsdata;          ///<チャット
+  PMS_DATA pmsdata;           ///<チャット
   u16 pms_rand;               ///<チャット用識別コード
-  u8 padding2[2];
+	u8 my_nation;               ///<自分の国
+	u8 my_area;                 ///<自分の地域
   
   UNION_PARTY party;          ///<接続相手の情報
   
-  u8 reserve[8];             ///<将来の為の予約
+  u8 reserve[8];              ///<将来の為の予約
 }UNION_BEACON;
 
 ///受信したビーコンデータから作成されたPCパラメータ
@@ -347,6 +348,7 @@ typedef struct{
 
 ///送受信で変更するパラメータ類(自機がフリー動作の状態になるたびに初期化される)
 typedef struct{
+  UNION_BEACON_PC *talk_pc;    ///<話しかけている(話しかけられている)人のreceive_beaconへのポインタ
   UNION_BEACON_PC *calling_pc; ///<接続して欲しい人のreceive_beaconへのポインタ
   UNION_BEACON_PC *answer_pc;  ///<接続したい人のreceive_beaconへのポインタ
   UNION_BEACON_PC *connect_pc; ///<接続中の人のreceive_beaconへのポインタ
@@ -359,6 +361,8 @@ typedef struct{
   u16 talk_obj_id;             ///<話しかけた相手のCharacterIndex
   u8 intrude;                 ///<TRUE:乱入参加
   u8 mystatus_recv_bit;       ///<MYSTATUS受信結果(bit管理)
+  u8 first_talk;              ///<0:初回会話 1以上：継続会話
+  u8 padding[3];
 }UNION_MY_COMM;
 
 ///メニューでの選択レギュレーション項目

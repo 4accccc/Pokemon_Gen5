@@ -21,6 +21,7 @@
 //==============================================================================
 ///自分シチュエーションIndex
 typedef enum{
+  UNION_MYSITU_PARAM_IDX_TALK_PC,         ///<話しかけている(話しかけられている)PCへのデータ
   UNION_MYSITU_PARAM_IDX_CALLING_PC,      ///<接続を呼びかけているPCへのデータ
   UNION_MYSITU_PARAM_IDX_ANSWER_PC,       ///<接続しようとしている(接続先)PCへのデータ
   UNION_MYSITU_PARAM_IDX_CONNECT_PC,      ///<接続中のPCへのデータ

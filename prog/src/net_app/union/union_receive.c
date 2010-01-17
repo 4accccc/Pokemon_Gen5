@@ -81,6 +81,7 @@ static void UnionReceive_BeaconCheck(UNION_SYSTEM_PTR unisys, UNION_BEACON_PC *b
       {
         OS_TPrintf("ê⁄ë±óvãÅÅFMacàÍív\n");
         UnionMySituation_SetParam(unisys, UNION_MYSITU_PARAM_IDX_ANSWER_PC, bpc);
+        UnionMySituation_SetParam(unisys, UNION_MYSITU_PARAM_IDX_TALK_PC, bpc);
         UnionOneself_ReqStatus(unisys, UNION_STATUS_CONNECT_ANSWER);
       }
       else

@@ -63,3 +63,47 @@ extern void UnionMsg_Menu_RegulationSetup(UNION_SYSTEM_PTR unisys,
   FIELDMAP_WORK *fieldWork, u32 fail_bit, BOOL shooter_type, REGWIN_TYPE regwin_type);
 extern BOOL UnionMsg_Menu_RegulationWait(UNION_SYSTEM_PTR unisys, FIELDMAP_WORK *fieldWork);
 extern void UnionMsg_Menu_RegulationDel(UNION_SYSTEM_PTR unisys);
+
+
+//--------------------------------------------------------------
+//  GetMsgID
+//--------------------------------------------------------------
+extern u16 UnionMsg_GetMsgID_TalkTimeout(UNION_SYSTEM_PTR unisys);
+extern u16 UnionMsg_GetMsgID_ParentConnectStart(int target_sex);
+extern u16 UnionMsg_GetMsgID_TalkCancel(int target_sex);
+extern u16 UnionMsg_GetMsgID_TalkCancelPartner(int target_sex);
+extern u16 UnionMsg_GetMsgID_ParentMainMenuSelectAnswerWait(u32 mainmenu_select, int target_sex);
+extern u16 UnionMsg_GetMsgID_ParentMainMenuSelectAnswerNG(u32 mainmenu_select, int target_sex);
+extern u16 UnionMsg_GetMsgID_ChildMainMenuSelectView(u32 mainmenu_select);
+extern u16 UnionMsg_GetMsgID_ChildMainMenuSelectRefuse(u32 mainmenu_select);
+extern u16 UnionMsg_GetMsgID_TalkContinue(int target_sex);
+extern u16 UnionMsg_GetMsgID_MultiStart(int target_sex);
+extern u16 UnionMsg_GetMsgID_TradeMinePokeNG(int target_sex);
+extern u16 UnionMsg_GetMsgID_GuruguruMineEggNG(int target_sex);
+extern u16 UnionMsg_GetMsgID_GuruguruMineDametamago(UNION_SYSTEM_PTR unisys);
+extern u16 UnionMsg_GetMsgID_GuruguruDameTamagoNG(UNION_SYSTEM_PTR unisys);
+extern u16 UnionMsg_GetMsgID_PlayGameBattle(int target_sex);
+extern u16 UnionMsg_GetMsgID_PlayGameMainMenuSelect(int target_sex);
+extern u16 UnionMsg_GetMsgID_PlayGameTrainerCard(int target_sex);
+extern u16 UnionMsg_GetMsgID_PlayGamePicture(int target_sex);
+extern u16 UnionMsg_GetMsgID_PlayGameTrade(int target_sex);
+extern u16 UnionMsg_GetMsgID_PlayGameGuruguru(int target_sex);
+extern u16 UnionMsg_GetMsgID_MultiIntrude(int target_sex);
+extern u16 UnionMsg_GetMsgID_GurugurIntrude(int target_sex);
+extern u16 UnionMsg_GetMsgID_PictureIntrude(int target_sex);
+extern u16 UnionMsg_GetMsgID_MultiIntrudeRefuses(int target_sex);
+extern u16 UnionMsg_GetMsgID_GuruguruIntrudeRefuses(int target_sex);
+extern u16 UnionMsg_GetMsgID_PictureIntrudeRefuses(int target_sex);
+extern u16 UnionMsg_GetMsgID_GuruguruIntrudeNoEgg(int target_sex);
+extern u16 UnionMsg_GetMsgID_GuruguruIntrudeDametamago(int target_sex);
+extern u16 UnionMsg_GetMsgID_GuruguruIntrudeWait(int target_sex);
+extern u16 UnionMsg_GetMsgID_GuruguruIntrudeSuccess(int target_sex);
+extern u16 UnionMsg_GetMsgID_GuruguruIntrudeParentNG(int target_sex);
+extern u16 UnionMsg_GetMsgID_PictureIntrudeWait(int target_sex);
+extern u16 UnionMsg_GetMsgID_PictureIntrudeSuccess(int target_sex);
+extern u16 UnionMsg_GetMsgID_PictureIntrudeParentNG(int target_sex);
+extern u16 UnionMsg_GetMsgID_MultiIntrudeWait(int target_sex);
+extern u16 UnionMsg_GetMsgID_MultiIntrudeSuccess(int target_sex);
+extern u16 UnionMsg_GetMsgID_MultiIntrudeParentNG(int target_sex);
+extern u16 UnionMsg_GetMsgID_TrainerCardStart(UNION_SYSTEM_PTR unisys, int target_nation, int target_area);
+

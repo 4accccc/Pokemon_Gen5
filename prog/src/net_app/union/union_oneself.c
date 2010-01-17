@@ -617,6 +617,7 @@ static POKE_REG_RETURN_ENUM _CheckRegulation_BBox(UNION_SYSTEM_PTR unisys, u32 *
   }
   else{ //バトルボックスのセーブデータが存在しない
     *fail_bit = 0xffffffff;
+    reg_ret = POKE_REG_ILLEGAL_POKE;  //何でもいいからエラーを返す
   }
   return reg_ret;
 }
@@ -731,11 +732,12 @@ static BOOL OneselfSeq_NormalUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION 
     //         本来であればNormalで接続は出来ないようにする
     UnionOneself_ReqStatus(unisys, UNION_STATUS_TALK_PARENT);
     UnionMySituation_SetParam(unisys, UNION_MYSITU_PARAM_IDX_CONNECT_PC, situ->last_calling_pc);
+    UnionMySituation_SetParam(unisys, UNION_MYSITU_PARAM_IDX_TALK_PC, situ->last_calling_pc);
     _PlayerMinePause(unisys, fieldWork, TRUE);
     return TRUE;
   }
   
-  if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_A){
+  if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE){
     FIELD_PLAYER_GetFrontGridPos(player, &check_gx, &check_gy, &check_gz);
     target_pc = MMDLSYS_SearchGridPos(fldMdlSys, check_gx, check_gz, FALSE);
     if(target_pc == NULL){
@@ -746,6 +748,8 @@ static BOOL OneselfSeq_NormalUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION 
     situ->mycomm.talk_obj_id = obj_id;
     buf_no = UNION_CHARA_GetCharaIndex_to_ParentNo(obj_id);
     OS_TPrintf("ターゲット発見! buf_no = %d, gx=%d, gz=%d\n", buf_no, check_gx, check_gz);
+    UnionMySituation_SetParam(unisys, 
+      UNION_MYSITU_PARAM_IDX_TALK_PC, &unisys->receive_beacon[buf_no]);
     if(UNION_CHARA_CheckCharaIndex(obj_id) == UNION_CHARA_INDEX_PARENT){
       if(unisys->receive_beacon[buf_no].beacon.play_category == UNION_PLAY_CATEGORY_UNION){
         UnionMySituation_SetParam(unisys, 
@@ -877,7 +881,7 @@ static BOOL OneselfSeq_ChatCallUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATIO
 //--------------------------------------------------------------
 static BOOL OneselfSeq_ConnectReqInit(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq)
 {
-  UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_000);
+  UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_connect_union_08);
   return TRUE;
 }
 
@@ -921,11 +925,16 @@ static BOOL OneselfSeq_ConnectReqUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUAT
     }
     else{
       situ->wait++;
-      if(situ->wait > ONESELF_SERVER_TIMEOUT || (GFL_UI_KEY_GetTrg() & PAD_BUTTON_B)){
+      if(situ->wait > ONESELF_SERVER_TIMEOUT || (GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL)){
         GFL_NET_ChangeoverModeSet(GFL_NET_CHANGEOVER_MODE_NORMAL, FALSE, NULL);
         UnionOneself_ReqStatus(unisys, UNION_STATUS_NORMAL);
         UnionMySituation_SetParam(unisys, UNION_MYSITU_PARAM_IDX_CALLING_PC, NULL);
-        UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_007);
+        if(situ->wait > ONESELF_SERVER_TIMEOUT){
+          UnionMsg_TalkStream_PrintPack(unisys, fieldWork, UnionMsg_GetMsgID_TalkTimeout(unisys));
+        }
+        else{
+          UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_connect_00_05);
+        }
         OS_TPrintf("子が来なかった為キャンセルしました\n");
         (*seq)++;
       }
@@ -973,7 +982,7 @@ static BOOL OneselfSeq_ConnectReqExit(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATIO
 //--------------------------------------------------------------
 static BOOL OneselfSeq_ConnectAnswerInit(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq)
 {
-  UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_001);
+  UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_connect_00_02);
   _PlayerMinePause(unisys, fieldWork, TRUE);
   return TRUE;
 }
@@ -1016,11 +1025,16 @@ static BOOL OneselfSeq_ConnectAnswerUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SIT
     }
     else{
       situ->wait++;
-      if(situ->wait > ONESELF_SERVER_TIMEOUT || (GFL_UI_KEY_GetTrg() & PAD_BUTTON_B)){
+      if(situ->wait > ONESELF_SERVER_TIMEOUT || (GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL)){
         GFL_NET_ChangeoverModeSet(GFL_NET_CHANGEOVER_MODE_NORMAL, FALSE, NULL);
         UnionOneself_ReqStatus(unisys, UNION_STATUS_NORMAL);
         UnionMySituation_SetParam(unisys, UNION_MYSITU_PARAM_IDX_ANSWER_PC, NULL);
-        UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_007);
+        if(situ->wait > ONESELF_SERVER_TIMEOUT){
+          UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_connect_00_03);
+        }
+        else{
+          UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_connect_00_05);
+        }
         OS_TPrintf("親と接続出来なかった為キャンセルしました\n");
         (*seq)++;
       }
@@ -1089,51 +1103,94 @@ static BOOL OneselfSeq_TalkInit_Parent(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATI
 //--------------------------------------------------------------
 static BOOL OneselfSeq_TalkUpdate_Parent(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq)
 {
+  enum{
+    _LOCALSEQ_INIT,
+    _LOCALSEQ_TALK_WAIT,
+    _LOCALSEQ_MAINMENU_SETUP,
+    _LOCALSEQ_MAINMENU_MAIN,
+    _LOCALSEQ_MAINMENU_FAIL,
+  };
+
   switch(*seq){
-  case 0:
-    if(situ->mycomm.connect_pc->beacon.sex == PM_MALE){
-      UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_002);
+  case _LOCALSEQ_INIT:
+    if(situ->mycomm.first_talk == 0){
+      UnionMsg_TalkStream_PrintPack(unisys, fieldWork, 
+        UnionMsg_GetMsgID_ParentConnectStart(situ->mycomm.talk_pc->beacon.sex));
+      situ->mycomm.first_talk++;
     }
     else{
-      UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_002);
+      UnionMsg_TalkStream_PrintPack(unisys, fieldWork, 
+        UnionMsg_GetMsgID_TalkContinue(situ->mycomm.talk_pc->beacon.sex));
     }
     (*seq)++;
     break;
-  case 1:
+  case _LOCALSEQ_TALK_WAIT:
     if(UnionMsg_TalkStream_Check(unisys) == TRUE){
       (*seq)++;
     }
     break;
-  case 2:   //メインメニュー描画
+  case _LOCALSEQ_MAINMENU_SETUP:   //メインメニュー描画
     UnionMsg_Menu_MainMenuSetup(unisys, fieldWork);
     (*seq)++;
     break;
-  case 3:
+  case _LOCALSEQ_MAINMENU_MAIN:
     {
       u32 select_list;
+      const POKEPARTY *party = GAMEDATA_GetMyPokemon(unisys->uniparent->game_data);
       
       select_list = UnionMsg_Menu_MainMenuSelectLoop(unisys);
-      switch(select_list){
-      case FLDMENUFUNC_NULL:
+      if(select_list == FLDMENUFUNC_NULL){
         break;
-      case FLDMENUFUNC_CANCEL:
-      case UNION_MENU_SELECT_CANCEL:
+      }
+      UnionMsg_Menu_MainMenuDel(unisys);
+
+      if(select_list == FLDMENUFUNC_CANCEL || select_list == UNION_MENU_SELECT_CANCEL){
         OS_TPrintf("メニューをキャンセルしました\n");
+        UnionMsg_TalkStream_PrintPack(unisys, fieldWork, 
+          UnionMsg_GetMsgID_TalkCancel(situ->mycomm.talk_pc->beacon.sex));
         situ->mycomm.mainmenu_select = UNION_MENU_SELECT_CANCEL;
         UnionOneself_ReqStatus(unisys, UNION_STATUS_TALK_LIST_SEND_PARENT);
-        UnionMsg_Menu_MainMenuDel(unisys);
         return TRUE;
+      }
+      else if(select_list == UNION_PLAY_CATEGORY_TRADE){
+        if(PokeParty_GetPokeCount(party) <= 1){ //ポケモンが1匹しかいない為、交換できない
+          UnionMsg_TalkStream_PrintPack(unisys, fieldWork, 
+            UnionMsg_GetMsgID_TradeMinePokeNG(situ->mycomm.talk_pc->beacon.sex));
+          *seq = _LOCALSEQ_MAINMENU_FAIL;
+          break;
+        }
+      }
+      else if(select_list == UNION_PLAY_CATEGORY_GURUGURU){
+        if(PokeParty_GetPokeCountOnlyDameEgg(party) > 0){
+          UnionMsg_TalkStream_PrintPack(unisys, fieldWork, 
+            UnionMsg_GetMsgID_GuruguruMineDametamago(unisys));
+          *seq = _LOCALSEQ_MAINMENU_FAIL;
+          break;
+        }
+        else if(PokeParty_GetPokeCountOnlyEgg(party) == 0){
+          UnionMsg_TalkStream_PrintPack(unisys, fieldWork, 
+            UnionMsg_GetMsgID_GuruguruMineEggNG(situ->mycomm.talk_pc->beacon.sex));
+          *seq = _LOCALSEQ_MAINMENU_FAIL;
+          break;
+        }
+      }
+      
+      //真上の処理でbreak,returnしなかったのはここで吸収
+      switch(select_list){
       case UNION_MENU_NO_SEND_BATTLE:
         OS_TPrintf("対戦メニューを選択\n");
         UnionOneself_ReqStatus(unisys, UNION_STATUS_TALK_BATTLE_PARENT);
-        UnionMsg_Menu_MainMenuDel(unisys);
         return TRUE;
       default:
         situ->mycomm.mainmenu_select = select_list;
         UnionOneself_ReqStatus(unisys, UNION_STATUS_TALK_LIST_SEND_PARENT);
-        UnionMsg_Menu_MainMenuDel(unisys);
         return TRUE;
       }
+    }
+    break;
+  case _LOCALSEQ_MAINMENU_FAIL:
+    if(UnionMsg_TalkStream_Check(unisys) == TRUE){
+      *seq = _LOCALSEQ_INIT;
     }
     break;
   }
@@ -1181,7 +1238,9 @@ static BOOL OneselfSeq_TalkListSendUpdate_Parent(UNION_SYSTEM_PTR unisys, UNION_
         UnionOneself_ReqStatus(unisys, UNION_STATUS_SHUTDOWN);
         return TRUE;
       }
-      UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_004);
+      UnionMsg_TalkStream_PrintPack(unisys, fieldWork, 
+        UnionMsg_GetMsgID_ParentMainMenuSelectAnswerWait(
+        situ->mycomm.mainmenu_select, situ->mycomm.talk_pc->beacon.sex));
       (*seq)++;
     }
     break;
@@ -1198,7 +1257,9 @@ static BOOL OneselfSeq_TalkListSendUpdate_Parent(UNION_SYSTEM_PTR unisys, UNION_
     else if(situ->mycomm.mainmenu_yesno_result == FALSE){
       OS_TPrintf("「いいえ」受信\n");
       UnionOneself_ReqStatus(unisys, UNION_STATUS_SHUTDOWN);
-      UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_006);
+      UnionMsg_TalkStream_PrintPack(unisys, fieldWork, 
+        UnionMsg_GetMsgID_ParentMainMenuSelectAnswerNG(situ->mycomm.mainmenu_select,
+        situ->mycomm.talk_pc->beacon.sex));
       (*seq)++;
     }
     break;
@@ -1258,16 +1319,22 @@ static BOOL OneselfSeq_TalkUpdate_Child(UNION_SYSTEM_PTR unisys, UNION_MY_SITUAT
     _REG_PRINT_TEMOTI_WAIT,
     _REG_PRINT_BBOX,
     _REG_PRINT_BBOX_WAIT,
+    _ANSWER_MSG,
     _FINISH,
   };
-
+  enum{
+    _RESULT_NO_TEMOTI_SHORT = 1,    //交換するには手持ちが足りていない
+    _RESULT_NO_EGG_SHORT,           //ぐるぐる交換するにはタマゴが足りていない
+    _RESULT_NO_DAMETAMAGO,          //ダメタマゴがいるからぐるぐる交換は出来ない
+  };
+  
   if(UnionMsg_TalkStream_Check(unisys) == FALSE){
     return FALSE;
   }
 
   switch(*seq){
   case _INIT:
-    UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_008);
+    UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_connect_00_04);
     (*seq)++;
     break;
   case _SELECT_WAIT:
@@ -1276,7 +1343,8 @@ static BOOL OneselfSeq_TalkUpdate_Child(UNION_SYSTEM_PTR unisys, UNION_MY_SITUAT
     }
     else if(situ->mycomm.mainmenu_select == UNION_MENU_SELECT_CANCEL){
       OS_TPrintf("選択メニュー受信：キャンセル\n");
-      UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_003_06);
+      UnionMsg_TalkStream_PrintPack(unisys, fieldWork, 
+        UnionMsg_GetMsgID_TalkCancelPartner(situ->mycomm.talk_pc->beacon.sex));
       UnionOneself_ReqStatus(unisys, UNION_STATUS_SHUTDOWN);
       return TRUE;
     }
@@ -1284,7 +1352,7 @@ static BOOL OneselfSeq_TalkUpdate_Child(UNION_SYSTEM_PTR unisys, UNION_MY_SITUAT
       OS_TPrintf("選択メニュー受信：%d\n", situ->mycomm.mainmenu_select);
       UnionMsg_TalkStream_PrintPack(
         unisys, fieldWork, 
-        msg_union_test_003 + situ->mycomm.mainmenu_select - UNION_PLAY_CATEGORY_TRAINERCARD);
+        UnionMsg_GetMsgID_ChildMainMenuSelectView(situ->mycomm.mainmenu_select));
 
       //戦闘の時はレギュレーション表示
       if(Union_CheckPlayCategoryBattle(situ->mycomm.mainmenu_select) == TRUE){
@@ -1320,7 +1388,11 @@ static BOOL OneselfSeq_TalkUpdate_Child(UNION_SYSTEM_PTR unisys, UNION_MY_SITUAT
   case _YESNO_WAIT:
     {
       BOOL result;
+      
+      situ->work = 0;
       if(UnionMsg_YesNo_SelectLoop(unisys, &result) == TRUE){
+        const POKEPARTY *party = GAMEDATA_GetMyPokemon(unisys->uniparent->game_data);
+        
         UnionMsg_YesNo_Del(unisys);
         UnionMsg_Menu_RegulationDel(unisys);
         //戦闘の時はレギュレーションを見て参加可能かチェック
@@ -1328,6 +1400,23 @@ static BOOL OneselfSeq_TalkUpdate_Child(UNION_SYSTEM_PTR unisys, UNION_MY_SITUAT
             &situ->reg_temoti_fail_bit, &situ->reg_bbox_fail_bit) == FALSE){
           UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_010);
           result = FALSE; //強制で「いいえ」を返す
+        }
+        else if(situ->mycomm.mainmenu_select == UNION_PLAY_CATEGORY_TRADE && result == TRUE){
+          if(PokeParty_GetPokeCount(party) <= 1){
+            //ポケモンが1匹しかいない為、交換できない
+            result = FALSE; //強制で「いいえ」を返す
+            situ->work = _RESULT_NO_TEMOTI_SHORT;
+          }
+        }
+        else if(situ->mycomm.mainmenu_select == UNION_PLAY_CATEGORY_GURUGURU && result == TRUE){
+          if(PokeParty_GetPokeCountOnlyDameEgg(party) > 0){
+            result = FALSE;
+            situ->work = _RESULT_NO_DAMETAMAGO;
+          }
+          else if(PokeParty_GetPokeCountOnlyEgg(party) == 0){
+            result = FALSE;
+            situ->work = _RESULT_NO_EGG_SHORT;
+          }
         }
         situ->mycomm.mainmenu_yesno_result = result;
         (*seq)++;
@@ -1340,7 +1429,7 @@ static BOOL OneselfSeq_TalkUpdate_Child(UNION_SYSTEM_PTR unisys, UNION_MY_SITUAT
         *seq = _REG_PRINT_TEMOTI;
       }
       else{
-        *seq = _FINISH;
+        *seq = _ANSWER_MSG;
       }
       break;
     }
@@ -1356,7 +1445,7 @@ static BOOL OneselfSeq_TalkUpdate_Child(UNION_SYSTEM_PTR unisys, UNION_MY_SITUAT
         && (GFL_UI_KEY_GetTrg() & (PAD_BUTTON_DECIDE | PAD_BUTTON_CANCEL))){
       UnionMsg_Menu_RegulationDel(unisys);
       if(situ->reg_bbox_fail_bit == 0xffffffff){  //バトルボックスを作っていないので表示スキップ
-        *seq = _FINISH;
+        *seq = _ANSWER_MSG;
       }
       else{
         (*seq)++;
@@ -1372,19 +1461,35 @@ static BOOL OneselfSeq_TalkUpdate_Child(UNION_SYSTEM_PTR unisys, UNION_MY_SITUAT
     if(UnionMsg_Menu_RegulationWait(unisys, fieldWork) == TRUE
         && (GFL_UI_KEY_GetTrg() & (PAD_BUTTON_DECIDE | PAD_BUTTON_CANCEL))){
       UnionMsg_Menu_RegulationDel(unisys);
-      (*seq) = _FINISH;
+      (*seq) = _ANSWER_MSG;
     }
     break;
     
-  case _FINISH: //「はい・いいえ」選択結果送信
+  case _ANSWER_MSG: //「はい・いいえ」選択結果送信
     if(situ->mycomm.mainmenu_yesno_result == FALSE){
-      UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_006_01);
+      if(situ->work == _RESULT_NO_DAMETAMAGO){  //手持ちが1匹だった為、交換を断った
+        UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_connect_04_04);
+      }
+      else if(situ->work == _RESULT_NO_EGG_SHORT){
+        UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_connect_06_04);
+      }
+      else if(situ->work == _RESULT_NO_DAMETAMAGO){
+        UnionMsg_TalkStream_PrintPack(
+          unisys, fieldWork, UnionMsg_GetMsgID_GuruguruDameTamagoNG(unisys));
+      }
+      else{
+        UnionMsg_TalkStream_PrintPack(unisys, fieldWork, 
+          UnionMsg_GetMsgID_ChildMainMenuSelectRefuse(situ->mycomm.mainmenu_select));
+      }
       UnionOneself_ReqStatus(unisys, UNION_STATUS_SHUTDOWN);
     }
     else{
       UnionOneself_ReqStatus(unisys, 
         UNION_STATUS_TRAINERCARD + situ->mycomm.mainmenu_select-UNION_PLAY_CATEGORY_TRAINERCARD);
     }
+    (*seq) = _FINISH;
+    break;
+  case _FINISH:
     return TRUE;
   }
   
@@ -1578,12 +1683,14 @@ static BOOL OneselfSeq_TalkPlayGameUpdate_Parent(UNION_SYSTEM_PTR unisys, UNION_
     play_category = unisys->receive_beacon[buf_no].beacon.play_category;
     switch(play_category){
     case UNION_PLAY_CATEGORY_TALK:           //会話中
-      UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_013);
+      UnionMsg_TalkStream_PrintPack(unisys, fieldWork, 
+        UnionMsg_GetMsgID_PlayGameMainMenuSelect(situ->mycomm.talk_pc->beacon.sex));
       UnionOneself_ReqStatus(unisys, UNION_STATUS_NORMAL);
       (*seq) = LOCALSEQ_END;
       break;
     case UNION_PLAY_CATEGORY_TRAINERCARD:    //トレーナーカード
-      UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_014);
+      UnionMsg_TalkStream_PrintPack(unisys, fieldWork, 
+        UnionMsg_GetMsgID_PlayGameTrainerCard(situ->mycomm.talk_pc->beacon.sex));
       UnionOneself_ReqStatus(unisys, UNION_STATUS_NORMAL);
       (*seq) = LOCALSEQ_END;
       break;
@@ -1603,13 +1710,15 @@ static BOOL OneselfSeq_TalkPlayGameUpdate_Parent(UNION_SYSTEM_PTR unisys, UNION_
     case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_ROTATION_FREE:
     case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_ROTATION_FLAT_SHOOTER:
     case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_ROTATION_FLAT:
-      UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_015);
+      UnionMsg_TalkStream_PrintPack(unisys, fieldWork, 
+        UnionMsg_GetMsgID_PlayGameBattle(situ->mycomm.talk_pc->beacon.sex));
       UnionOneself_ReqStatus(unisys, UNION_STATUS_NORMAL);
       (*seq) = LOCALSEQ_END;
       break;
     case UNION_PLAY_CATEGORY_COLOSSEUM_MULTI:      //マルチ
       if(unisys->receive_beacon[buf_no].beacon.connect_num < UnionMsg_GetMemberMax(play_category)){
-        UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_016);
+        UnionMsg_TalkStream_PrintPack(unisys, fieldWork, 
+          UnionMsg_GetMsgID_MultiIntrude(situ->mycomm.talk_pc->beacon.sex));
 
         //乱入可の時はレギュレーション表示
         _Load_PlayCategory_to_Regulation(unisys, play_category);
@@ -1619,35 +1728,47 @@ static BOOL OneselfSeq_TalkPlayGameUpdate_Parent(UNION_SYSTEM_PTR unisys, UNION_
         (*seq) = LOCALSEQ_REGWIN_PRINT_WAIT;
       }
       else{ //人数がいっぱい
-        UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_016_01);
+        UnionMsg_TalkStream_PrintPack(unisys, fieldWork, 
+          UnionMsg_GetMsgID_PlayGameBattle(situ->mycomm.talk_pc->beacon.sex));
         UnionOneself_ReqStatus(unisys, UNION_STATUS_NORMAL);
         (*seq) = LOCALSEQ_END;
       }
       break;
     case UNION_PLAY_CATEGORY_GURUGURU:  //ぐるぐる交換
       if(unisys->receive_beacon[buf_no].beacon.connect_num < UnionMsg_GetMemberMax(play_category)){
-        UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_016_02);
+        UnionMsg_TalkStream_PrintPack(unisys, fieldWork, 
+          UnionMsg_GetMsgID_GurugurIntrude(situ->mycomm.talk_pc->beacon.sex));
         (*seq) = LOCALSEQ_MINIGAME_YESNO_SETUP;
       }
       else{ //人数がいっぱい
-        UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_016_03);
+        UnionMsg_TalkStream_PrintPack(unisys, fieldWork, 
+          UnionMsg_GetMsgID_PlayGameGuruguru(situ->mycomm.talk_pc->beacon.sex));
         UnionOneself_ReqStatus(unisys, UNION_STATUS_NORMAL);
         (*seq) = LOCALSEQ_END;
       }
       break;
     case UNION_PLAY_CATEGORY_PICTURE:   //お絵かき
       if(unisys->receive_beacon[buf_no].beacon.connect_num < UnionMsg_GetMemberMax(play_category)){
-        UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_016_03);
+        UnionMsg_TalkStream_PrintPack(unisys, fieldWork, 
+          UnionMsg_GetMsgID_PictureIntrude(situ->mycomm.talk_pc->beacon.sex));
         (*seq) = LOCALSEQ_MINIGAME_YESNO_SETUP;
       }
       else{ //人数がいっぱい
-        UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_016_04);
+        UnionMsg_TalkStream_PrintPack(unisys, fieldWork, 
+          UnionMsg_GetMsgID_PlayGamePicture(situ->mycomm.talk_pc->beacon.sex));
         UnionOneself_ReqStatus(unisys, UNION_STATUS_NORMAL);
         (*seq) = LOCALSEQ_END;
       }
       break;
+    case UNION_PLAY_CATEGORY_TRADE:
+      UnionMsg_TalkStream_PrintPack(unisys, fieldWork, 
+        UnionMsg_GetMsgID_PlayGameTrade(situ->mycomm.talk_pc->beacon.sex));
+      UnionOneself_ReqStatus(unisys, UNION_STATUS_NORMAL);
+      (*seq) = LOCALSEQ_END;
+      break;
     default:
       OS_TPrintf("未知の遊び play_category = %d\n", situ->play_category);
+      UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_unknown_game);
       UnionOneself_ReqStatus(unisys, UNION_STATUS_NORMAL);
       (*seq) = LOCALSEQ_END;
       break;
@@ -1677,12 +1798,14 @@ static BOOL OneselfSeq_TalkPlayGameUpdate_Parent(UNION_SYSTEM_PTR unisys, UNION_
       if(UnionMsg_YesNo_SelectLoop(unisys, &result) == TRUE){
         UnionMsg_YesNo_Del(unisys);
         UnionMsg_Menu_RegulationDel(unisys);
-        if(result == FALSE){
-          UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_018);
+        if(result == FALSE){  //途中参加断る
+          UnionMsg_TalkStream_PrintPack(unisys, fieldWork, 
+            UnionMsg_GetMsgID_MultiIntrudeRefuses(situ->mycomm.talk_pc->beacon.sex));
           UnionOneself_ReqStatus(unisys, UNION_STATUS_NORMAL);
           (*seq) = LOCALSEQ_END;
         }
-        else{
+        else{ //途中参加する
+          //乱入可のシーケンスをとりあえずセット　不可の場合は以下の処理で上書きしていく
           //レギュレーションを見て参加可能かチェック
           if(Union_CheckEntryBattleRegulation(unisys, situ->mycomm.mainmenu_select,
               &situ->reg_temoti_fail_bit, &situ->reg_bbox_fail_bit) == FALSE){
@@ -1690,9 +1813,11 @@ static BOOL OneselfSeq_TalkPlayGameUpdate_Parent(UNION_SYSTEM_PTR unisys, UNION_
             UnionOneself_ReqStatus(unisys, UNION_STATUS_NORMAL);
             (*seq) = _REG_PRINT_TEMOTI;
           }
-          else{
+          else{ //乱入OK
             situ->mycomm.mainmenu_yesno_result = result;
             UnionOneself_ReqStatus(unisys, UNION_STATUS_INTRUDE);
+            UnionMsg_TalkStream_PrintPack(unisys, fieldWork,
+              UnionMsg_GetMsgID_MultiIntrudeWait(situ->mycomm.talk_pc->beacon.sex));
             (*seq) = LOCALSEQ_END;
           }
         }
@@ -1744,14 +1869,50 @@ static BOOL OneselfSeq_TalkPlayGameUpdate_Parent(UNION_SYSTEM_PTR unisys, UNION_
       BOOL result;
       if(UnionMsg_YesNo_SelectLoop(unisys, &result) == TRUE){
         UnionMsg_YesNo_Del(unisys);
-        if(result == FALSE){
-          UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_018);
+        if(result == FALSE){  //途中参加断る
+          switch(situ->mycomm.mainmenu_select){
+          case UNION_PLAY_CATEGORY_PICTURE:
+            UnionMsg_TalkStream_PrintPack(unisys, fieldWork, 
+              UnionMsg_GetMsgID_PictureIntrudeRefuses(situ->mycomm.talk_pc->beacon.sex));
+            break;
+          case UNION_PLAY_CATEGORY_GURUGURU:
+            UnionMsg_TalkStream_PrintPack(unisys, fieldWork, 
+              UnionMsg_GetMsgID_GuruguruIntrudeRefuses(situ->mycomm.talk_pc->beacon.sex));
+            break;
+          }
           UnionOneself_ReqStatus(unisys, UNION_STATUS_NORMAL);
           (*seq) = LOCALSEQ_END;
         }
-        else{
+        else{ //途中参加する
+          //乱入可のシーケンスをとりあえずセット　不可の場合は以下の処理で上書きしていく
           situ->mycomm.mainmenu_yesno_result = result;
           UnionOneself_ReqStatus(unisys, UNION_STATUS_INTRUDE);
+          switch(situ->mycomm.mainmenu_select){
+          case UNION_PLAY_CATEGORY_PICTURE:
+            UnionMsg_TalkStream_PrintPack(unisys, fieldWork, 
+              UnionMsg_GetMsgID_PictureIntrudeWait(situ->mycomm.talk_pc->beacon.sex));
+            break;  //乱入不可にする判定は無い
+          case UNION_PLAY_CATEGORY_GURUGURU:
+            {
+              const POKEPARTY *party = GAMEDATA_GetMyPokemon(unisys->uniparent->game_data);
+              if(PokeParty_GetPokeCountOnlyDameEgg(party) > 0){ //手持ちにダメタマゴがある
+                UnionMsg_TalkStream_PrintPack(unisys, fieldWork, 
+                  UnionMsg_GetMsgID_GuruguruIntrudeDametamago(
+                  situ->mycomm.talk_pc->beacon.sex));
+                UnionOneself_ReqStatus(unisys, UNION_STATUS_NORMAL);
+              }
+              else if(PokeParty_GetPokeCountOnlyEgg(party) == 0){ //タマゴが無い
+                UnionMsg_TalkStream_PrintPack(unisys, fieldWork, 
+                  UnionMsg_GetMsgID_GuruguruIntrudeNoEgg(situ->mycomm.talk_pc->beacon.sex));
+                UnionOneself_ReqStatus(unisys, UNION_STATUS_NORMAL);
+              }
+              else{ //乱入OK
+                UnionMsg_TalkStream_PrintPack(unisys, fieldWork, 
+                  UnionMsg_GetMsgID_GuruguruIntrudeWait(situ->mycomm.talk_pc->beacon.sex));
+              }
+            }
+            break;
+          }
           (*seq) = LOCALSEQ_END;
         }
       }
@@ -1784,12 +1945,12 @@ static BOOL OneselfSeq_TalkPlayGameUpdate_Child(UNION_SYSTEM_PTR unisys, UNION_M
     play_category = unisys->receive_beacon[buf_no].beacon.play_category;
     switch(play_category){
     case UNION_PLAY_CATEGORY_TALK:           //会話中
-      UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_013);
-      UnionOneself_ReqStatus(unisys, UNION_STATUS_NORMAL);
+      UnionMsg_TalkStream_PrintPack(unisys, fieldWork, 
+        UnionMsg_GetMsgID_PlayGameMainMenuSelect(situ->mycomm.talk_pc->beacon.sex));
       break;
     case UNION_PLAY_CATEGORY_TRAINERCARD:    //トレーナーカード
-      UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_014);
-      UnionOneself_ReqStatus(unisys, UNION_STATUS_NORMAL);
+      UnionMsg_TalkStream_PrintPack(unisys, fieldWork, 
+        UnionMsg_GetMsgID_PlayGameTrainerCard(situ->mycomm.talk_pc->beacon.sex));
       break;
     case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_FREE_SHOOTER:      //コロシアム
     case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_FREE:      //コロシアム
@@ -1807,18 +1968,28 @@ static BOOL OneselfSeq_TalkPlayGameUpdate_Child(UNION_SYSTEM_PTR unisys, UNION_M
     case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_ROTATION_FREE:
     case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_ROTATION_FLAT_SHOOTER:
     case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_ROTATION_FLAT:
-      UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_015);
-      UnionOneself_ReqStatus(unisys, UNION_STATUS_NORMAL);
-      break;
     case UNION_PLAY_CATEGORY_COLOSSEUM_MULTI:      //コロシアム
-      UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_016_01);
-      UnionOneself_ReqStatus(unisys, UNION_STATUS_NORMAL);
+      UnionMsg_TalkStream_PrintPack(unisys, fieldWork, 
+        UnionMsg_GetMsgID_PlayGameBattle(situ->mycomm.talk_pc->beacon.sex));
+      break;
+    case UNION_PLAY_CATEGORY_GURUGURU:
+      UnionMsg_TalkStream_PrintPack(unisys, fieldWork, 
+        UnionMsg_GetMsgID_PlayGameGuruguru(situ->mycomm.talk_pc->beacon.sex));
+      break;
+    case UNION_PLAY_CATEGORY_PICTURE:
+      UnionMsg_TalkStream_PrintPack(unisys, fieldWork, 
+        UnionMsg_GetMsgID_PlayGamePicture(situ->mycomm.talk_pc->beacon.sex));
+      break;
+    case UNION_PLAY_CATEGORY_TRADE:
+      UnionMsg_TalkStream_PrintPack(unisys, fieldWork, 
+        UnionMsg_GetMsgID_PlayGameTrade(situ->mycomm.talk_pc->beacon.sex));
       break;
     default:
       OS_TPrintf("未知の遊び play_category = %d\n", situ->play_category);
-      UnionOneself_ReqStatus(unisys, UNION_STATUS_NORMAL);
+      UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_unknown_game);
       break;
     }
+    UnionOneself_ReqStatus(unisys, UNION_STATUS_NORMAL);
     (*seq)++;
     break;
   case 1:
@@ -1862,7 +2033,9 @@ static BOOL OneselfSeq_TrainerCardUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUA
     OS_TPrintf("トレーナーカード前の同期取り開始\n");
 
     //「はい、どうぞ！」
-    UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_005);
+    UnionMsg_TalkStream_PrintPack(unisys, fieldWork, 
+      UnionMsg_GetMsgID_TrainerCardStart(unisys, situ->mycomm.talk_pc->beacon.my_nation, 
+      situ->mycomm.talk_pc->beacon.my_area));
 
     (*seq)++;
     break;
@@ -1912,7 +2085,7 @@ static BOOL OneselfSeq_TrainerCardUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUA
     }
     break;
   case 8:   //トレーナーカード画面終了後の同期取り
-    UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_008);
+    UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_connect_01_02_4);
     GFL_NET_HANDLE_TimingSyncStart(
       GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_TRAINERCARD_PROC_AFTER);
     OS_TPrintf("トレーナーカード終了後の同期取り開始\n");
@@ -1951,7 +2124,7 @@ static BOOL OneselfSeq_TrainerCardUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUA
 
 //--------------------------------------------------------------
 /**
- * トレーナーカード呼び出し：更新
+ * ポケモン交換：更新
  *
  * @param   unisys		
  * @param   situ		
@@ -1964,9 +2137,9 @@ static BOOL OneselfSeq_TrainerCardUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUA
 static BOOL OneselfSeq_TradeUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq)
 {
   switch(*seq){
-  case 0:   //トレーナーカードの情報を送りあう
-    //「はい、どうぞ！」
-    UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_005);
+  case 0:
+    //「交換を開始します！」
+    UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_connect_04_02);
 
     (*seq)++;
     break;
@@ -2018,7 +2191,7 @@ static BOOL OneselfSeq_TradeUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *
     }
     break;
   case 7:
-    UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_008);
+    UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_connect_01_02_4);
     GFL_NET_HANDLE_TimingSyncStart(
       GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_TRADE_PROC_AFTER);
     OS_TPrintf("ポケモン交換画面終了後の同期取り開始\n");
@@ -2070,7 +2243,6 @@ static BOOL OneselfSeq_IntrudeUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION
       GFL_NET_ChangeoverModeSet(
         GFL_NET_CHANGEOVER_MODE_FIX_CHILD, TRUE, unisys->receive_beacon[buf_no].mac_address);
     }
-    UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_012);
     situ->wait = 0;
     (*seq)++;
     break;
@@ -2104,12 +2276,29 @@ static BOOL OneselfSeq_IntrudeUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION
     }
     else{
       situ->wait++;
-      if(situ->wait > ONESELF_SERVER_TIMEOUT || (GFL_UI_KEY_GetTrg() & PAD_BUTTON_B)){
+      if(situ->wait > ONESELF_SERVER_TIMEOUT || (GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL)){
         GFL_NET_ChangeoverModeSet(GFL_NET_CHANGEOVER_MODE_NORMAL, FALSE, NULL);
         UnionOneself_ReqStatus(unisys, UNION_STATUS_NORMAL);
-        UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_007);
         OS_TPrintf("親と接続出来なかった為キャンセルしました\n");
         (*seq)++;
+        switch(situ->mycomm.mainmenu_select){
+        case UNION_PLAY_CATEGORY_COLOSSEUM_MULTI:
+          UnionMsg_TalkStream_PrintPack(unisys, fieldWork, 
+            UnionMsg_GetMsgID_MultiIntrudeParentNG(situ->mycomm.talk_pc->beacon.sex));
+          break;
+        case UNION_PLAY_CATEGORY_PICTURE:
+          UnionMsg_TalkStream_PrintPack(unisys, fieldWork, 
+            UnionMsg_GetMsgID_PictureIntrudeParentNG(situ->mycomm.talk_pc->beacon.sex));
+          break;
+        case UNION_PLAY_CATEGORY_GURUGURU:
+          UnionMsg_TalkStream_PrintPack(unisys, fieldWork, 
+            UnionMsg_GetMsgID_GuruguruIntrudeParentNG(situ->mycomm.talk_pc->beacon.sex));
+          break;
+        default:
+          OS_TPrintf("設定されていないcategory = %d\n", situ->mycomm.mainmenu_select);
+          GF_ASSERT(0);
+          break;
+        }
       }
     }
     break;
@@ -2187,7 +2376,6 @@ static BOOL OneselfSeq_MinigameUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATIO
 {
   enum{
     _SEQ_INIT,
-    _SEQ_TALK_WAIT,
     _SEQ_TIMING_SEND,
     _SEQ_TIMING_WAIT,
     _SEQ_SUBPROC_SET,
@@ -2200,17 +2388,11 @@ static BOOL OneselfSeq_MinigameUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATIO
   
   switch(*seq){
   case _SEQ_INIT:
-    UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_talkboy_07_07);
-    (*seq)++;
-    break;
-  case _SEQ_TALK_WAIT:
-    if(UnionMsg_TalkStream_Check(unisys) == TRUE){
-      if(situ->mycomm.intrude == TRUE){
-        *seq = _SEQ_INTRUDE_INIT;
-      }
-      else{
-        (*seq)++;
-      }
+    if(situ->mycomm.intrude == TRUE){
+      *seq = _SEQ_INTRUDE_INIT;
+    }
+    else{
+      (*seq)++;
     }
     break;
   case _SEQ_TIMING_SEND:
@@ -2227,13 +2409,15 @@ static BOOL OneselfSeq_MinigameUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATIO
     }
     break;
   case _SEQ_SUBPROC_SET:
-    if(situ->union_status == UNION_STATUS_PICTURE){
-      UnionSubProc_EventSet(unisys, UNION_SUBPROC_ID_PICTURE, NULL);
+    if(UnionMsg_TalkStream_Check(unisys) == TRUE){
+      if(situ->union_status == UNION_STATUS_PICTURE){
+        UnionSubProc_EventSet(unisys, UNION_SUBPROC_ID_PICTURE, NULL);
+      }
+      else{ //UNION_STATUS_GURUGURU
+        UnionSubProc_EventSet(unisys, UNION_SUBPROC_ID_GURUGURU, NULL);
+      }
+      (*seq)++;
     }
-    else{ //UNION_STATUS_GURUGURU
-      UnionSubProc_EventSet(unisys, UNION_SUBPROC_ID_GURUGURU, NULL);
-    }
-    (*seq)++;
     break;
   case _SEQ_SUBPROC_WAIT:
     if(UnionSubProc_IsExits(unisys) == FALSE){
@@ -2258,10 +2442,25 @@ static BOOL OneselfSeq_MinigameUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATIO
   case _SEQ_INTRUDE_ANSWER_WAIT:
     switch(unisys->minigame_entry_answer){
     case UNION_MINIGAME_ENTRY_ANSWER_OK:
+      if(situ->union_status == UNION_STATUS_PICTURE){
+        UnionMsg_TalkStream_PrintPack(unisys, fieldWork, 
+          UnionMsg_GetMsgID_PictureIntrudeSuccess(situ->mycomm.talk_pc->beacon.sex));
+      }
+      else{ //UNION_STATUS_GURUGURU
+        UnionMsg_TalkStream_PrintPack(unisys, fieldWork, 
+          UnionMsg_GetMsgID_GuruguruIntrudeSuccess(situ->mycomm.talk_pc->beacon.sex));
+      }
       *seq = _SEQ_SUBPROC_SET;
       break;
     case UNION_MINIGAME_ENTRY_ANSWER_NG:  //親から乱入を拒否された
-      UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_006);
+      if(situ->union_status == UNION_STATUS_PICTURE){
+        UnionMsg_TalkStream_PrintPack(unisys, fieldWork, 
+          UnionMsg_GetMsgID_PictureIntrudeParentNG(situ->mycomm.talk_pc->beacon.sex));
+      }
+      else{ //UNION_STATUS_GURUGURU
+        UnionMsg_TalkStream_PrintPack(unisys, fieldWork, 
+          UnionMsg_GetMsgID_GuruguruIntrudeParentNG(situ->mycomm.talk_pc->beacon.sex));
+      }
       UnionComm_Req_ShutdownRestarts(unisys);
       *seq = _SEQ_INTRUDE_NG;
       break;
@@ -2295,7 +2494,8 @@ static BOOL OneselfSeq_ColosseumUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATI
 {
   switch(*seq){
   case 0:
-    UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_talkboy_03_02);
+    UnionMsg_TalkStream_PrintPack(unisys, fieldWork, 
+      UnionMsg_GetMsgID_MultiStart(situ->mycomm.talk_pc->beacon.sex));
     (*seq)++;
     break;
   case 1:
@@ -2361,7 +2561,14 @@ static BOOL OneselfSeq_MultiColosseumUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SI
   switch(*seq){
   case 0:
     OS_TPrintf("マルチ対戦\n");
-    UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_talkboy_03_02);
+    if(situ->mycomm.intrude == FALSE){
+      UnionMsg_TalkStream_PrintPack(unisys, fieldWork, 
+        UnionMsg_GetMsgID_MultiStart(situ->mycomm.talk_pc->beacon.sex));
+    }
+    else{
+      UnionMsg_TalkStream_PrintPack(unisys, fieldWork, 
+        UnionMsg_GetMsgID_MultiIntrudeSuccess(situ->mycomm.talk_pc->beacon.sex));
+    }
     (*seq)++;
     break;
   case 1:
@@ -2762,7 +2969,7 @@ static BOOL OneselfSeq_ColosseumNormal(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATI
       }
       
       //話しかけチェック
-      if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_A){
+      if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE){
         FIELD_PLAYER_GetFrontGridPos(player, &check_gx, &check_gy, &check_gz);
         if(CommPlayer_SearchGridPos(clsys->cps, check_gx, check_gz, &out_index) == TRUE){
           clsys->talk_obj_id = out_index;
@@ -3114,7 +3321,7 @@ static BOOL OneselfSeq_ColosseumPokelistReady(UNION_SYSTEM_PTR unisys, UNION_MY_
     break;
   case 2:
     if(UnionMsg_TalkStream_Check(unisys) == TRUE){
-      if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_B){
+      if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL){
         *seq = 100;
         break;
       }

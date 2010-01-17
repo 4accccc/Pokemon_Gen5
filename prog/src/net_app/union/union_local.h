@@ -50,6 +50,8 @@ typedef struct _UNION_SYSTEM{
 
   FLDMSGWIN *fldmsgwin;
   FLDMSGPRINT *fldmsgprint;
+  STRBUF *strbuf_temp;
+  STRBUF *strbuf_talk_expand;
   u8 fld_msgwin_stream_print_on;      ///<TRUE:stream出力中
   u8 send_beacon_update;              ///<TRUE:送信ビーコン更新リクエストがある
   u8 overlay_load;                    ///<TRUE:ユニオンルームOVERLAYがロードされている
