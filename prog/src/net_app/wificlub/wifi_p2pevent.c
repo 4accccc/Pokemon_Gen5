@@ -75,9 +75,9 @@ typedef struct{
   int seq;
   u16* ret;
   //u8 lvLimit;
+//  void* work;   // wifiPofin用ワーク
   u8 bSingle;
-  void* work;   // wifiPofin用ワーク
-  u32 vchat;
+  u8 dummy;
 }EV_P2PEVENT_WORK;
 
 enum{
@@ -306,10 +306,11 @@ static GFL_PROC_RESULT WifiClubProcInit( GFL_PROC * proc, int * seq, void * pwk,
   ep2p->pMatchParam->pMatch = GFL_HEAP_AllocClearMemory(GetHeapLowID(HEAPID_PROC), sizeof( WIFI_STATUS ));
   ep2p->pMatchParam->pSaveData = pClub->ctrl;
   ep2p->pMatchParam->pGameData = GAMESYSTEM_GetGameData(pClub->gsys);
+  ep2p->pMatchParam->vchatMain = TRUE;
 
   ep2p->pGameData =  GAMESYSTEM_GetGameData(pClub->gsys);
   ep2p->pWifiList = GAMEDATA_GetWiFiList(ep2p->pGameData);
-  ep2p->pMatchParam->seq = P2P_INIT;
+  ep2p->pMatchParam->seq = WIFI_GAME_NONE;
   ep2p->gsys = pClub->gsys;
 
   pClub->pWork = ep2p;

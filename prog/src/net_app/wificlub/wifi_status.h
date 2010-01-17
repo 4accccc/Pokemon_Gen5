@@ -54,7 +54,6 @@ typedef enum{
 // WIFIフレンド情報サイズ DWCに189バイト可能とあるが、定義が無いので控えめサイズで決めうち
 // 増やしすぎると全体に重くなる
 
-//#define _POKEMON_NUM   (6)
 
 struct _WIFI_STATUS{
   u32 profileID;                                 //プロファイルID      4

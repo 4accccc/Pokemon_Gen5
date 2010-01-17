@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohno" host="W00141" date="2010-01-14T15:10:02"/>
+	<create user="ohno" host="W00141" date="2010-01-17T14:43:55"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,7 +305,7 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="174" right="952" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="250" top="241" right="954" bottom="863" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="529"/>
@@ -1036,6 +1036,96 @@ TVトランシーバをしますか？</language>
 こうかんをしますか？</language>
 		<language name="JPN_KANJI" width="216">[1:00:トレーナー名:0]さんと
 こうかんをしますか？</language>
+	</row>
+
+	<row id="msg_wifilobby_096" back-color=",,,,,,#808080,#808080,,#808080,#808080,,,,,,,">
+		<language name="JPN" width="216">けってい</language>
+		<language name="JPN_KANJI" width="216">けってい</language>
+	</row>
+
+	<row id="msg_wifilobby_097" back-color=",,,,,,#808080,#808080,,#808080,#808080,,,,,,,">
+		<language name="JPN" width="216">ルールをみる</language>
+		<language name="JPN_KANJI" width="216">ルールをみる</language>
+	</row>
+
+	<row id="msg_wifilobby_098" back-color=",,,,,,#808080,#808080,,#808080,#808080,,,,,,,">
+		<language name="JPN" width="216">てもち</language>
+		<language name="JPN_KANJI" width="216">てもち</language>
+	</row>
+
+	<row id="msg_wifilobby_099" back-color=",,,,,,#808080,#808080,,#808080,#808080,,,,,,,">
+		<language name="JPN" width="216">バトルボックス</language>
+		<language name="JPN_KANJI" width="216">バトルボックス</language>
+	</row>
+
+	<row id="msg_wifilobby_100" back-color=",,,,,,#808080,#808080,,#808080,#808080,,,,,,,">
+		<language name="JPN" width="216">じょうけんを　みたして　いないので
+たいせん　できません▼</language>
+		<language name="JPN_KANJI" width="216">じょうけんを　みたして　いないので
+たいせん　できません▼</language>
+	</row>
+
+	<row id="msg_wifilobby_1000" back-color=",,,,,,#808080,#808080,,#808080,#808080,,,,,,,">
+		<language name="JPN" width="216">[1:00:トレーナー名:0]さんが
+たいせんを　もうしこんできました</language>
+		<language name="JPN_KANJI" width="216">[1:00:トレーナー名:0]さんが
+たいせんを　もうしこんできました</language>
+	</row>
+
+	<row id="msg_wifilobby_1001" back-color=",,,,,,#808080,#808080,,#808080,#808080,,,,,,,">
+		<language name="JPN" width="216">シングルバトルの
+せいげんなしを　しますか？</language>
+		<language name="JPN_KANJI" width="216">シングルバトルの
+せいげんなしを　しますか？</language>
+	</row>
+
+	<row id="msg_wifilobby_1002" back-color=",,,,,,#808080,#808080,,#808080,#808080,,,,,,,">
+		<language name="JPN" width="216">ダブルバトルの
+せいげんなしを　しますか</language>
+		<language name="JPN_KANJI" width="216">ダブルバトルの
+せいげんなしを　しますか</language>
+	</row>
+
+	<row id="msg_wifilobby_1003" back-color=",,,,,,#808080,#808080,,#808080,#808080,,,,,,,">
+		<language name="JPN" width="216">トリプルバトルの
+せいげんなしをしますか？</language>
+		<language name="JPN_KANJI" width="216">トリプルバトルの
+せいげんなしをしますか？</language>
+	</row>
+
+	<row id="msg_wifilobby_1004" back-color=",,,,,,#808080,#808080,,#808080,#808080,,,,,,,">
+		<language name="JPN" width="216">ローテーションバトルの
+せいげんなしをしますか？</language>
+		<language name="JPN_KANJI" width="216">ローテーションバトルの
+せいげんなしをしますか？</language>
+	</row>
+
+	<row id="msg_wifilobby_1005" back-color=",,,,,,#808080,#808080,,#808080,#808080,,,,,,,">
+		<language name="JPN" width="216">シングルバトルの
+フラットルールをしますか？</language>
+		<language name="JPN_KANJI" width="216">シングルバトルの
+フラットルールをしますか？</language>
+	</row>
+
+	<row id="msg_wifilobby_1006" back-color=",,,,,,#808080,#808080,,#808080,#808080,,,,,,,">
+		<language name="JPN" width="216">ダブルバトルの
+フラットルールをしますか？</language>
+		<language name="JPN_KANJI" width="216">ダブルバトルの
+フラットルールをしますか？</language>
+	</row>
+
+	<row id="msg_wifilobby_1007" back-color=",,,,,,#808080,#808080,,#808080,#808080,,,,,,,">
+		<language name="JPN" width="216">トリプルバトルの
+フラットルールをしますか？</language>
+		<language name="JPN_KANJI" width="216">トリプルバトルの
+フラットルールをしますか？</language>
+	</row>
+
+	<row id="msg_wifilobby_1008" back-color=",,,,,,#808080,#808080,,#808080,#808080,,,,,,,">
+		<language name="JPN" width="216">ローテーションバトルの
+フラットルールをしますか？</language>
+		<language name="JPN_KANJI" width="216">ローテーションバトルの
+フラットルールをしますか？</language>
 	</row>
 
 	<flowchart-group-list>

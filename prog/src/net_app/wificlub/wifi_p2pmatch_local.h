@@ -12,16 +12,24 @@
 
 
 #include <gflib.h>
+#include "net_app/wificlub/wifi_p2pmatch.h"
+
 #include "wifi_status.h"
 #include "savedata/wifilist.h"
 #include "savedata/config.h"
+
 #include "print/wordset.h"
-#include "wifi_p2pmatchroom.h"
+
 #include "system/bmp_oam.h"
 #include "system/bmp_menu.h"
 #include "system/bmp_menulist.h"
+
 #include "net_app/connect_anm.h"
+
 #include "poke_tool/pokeparty.h"
+#include "poke_tool/poke_regulation.h"
+
+#include "wifi_p2pmatchroom.h"
 
 
 #define WIFIP2PMATCH_MEMBER_MAX  (WIFILIST_FRIEND_MAX)
@@ -51,16 +59,7 @@
 // 文字パネルの遷移用
 enum{
   WIFIP2PMATCH_MODE_INIT  = 0,
-  WIFIP2PMATCH_NORMALCONNECT_YESNO,
-  WIFIP2PMATCH_NORMALCONNECT_WAIT,
-  WIFIP2PMATCH_DIFFER_MACHINE_INIT,
-  WIFIP2PMATCH_DIFFER_MACHINE_NEXT,
-  WIFIP2PMATCH_DIFFER_MACHINE_ONEMORE,
-  WIFIP2PMATCH_FIRST_YESNO,
-  WIFIP2PMATCH_POWEROFF_INIT,
-  WIFIP2PMATCH_POWEROFF_YESNO,
-  WIFIP2PMATCH_POWEROFF_WAIT,
-  WIFIP2PMATCH_RETRY_INIT,        //10
+  WIFIP2PMATCH_RETRY_INIT,
   WIFIP2PMATCH_RETRY_YESNO,
   WIFIP2PMATCH_RETRY_WAIT,
   WIFIP2PMATCH_RETRY,
@@ -69,8 +68,9 @@ enum{
   WIFIP2PMATCH_FIRST_ENDMSG,
   WIFIP2PMATCH_FIRST_ENDMSG_WAIT,
   WIFIP2PMATCH_FRIENDLIST_INIT,
+  WIFIP2PMATCH_FRIENDLIST_INIT2,
   WIFIP2PMATCH_MODE_FRIENDLIST,
-  WIFIP2PMATCH_VCHATWIN_WAIT,           //20
+  WIFIP2PMATCH_VCHATWIN_WAIT,           
   WIFIP2PMATCH_MODE_VCT_CONNECT_INIT2,
   WIFIP2PMATCH_MODE_VCT_CONNECT_INIT,
   WIFIP2PMATCH_MODE_VCT_CONNECT_WAIT,
@@ -80,7 +80,7 @@ enum{
   WIFIP2PMATCH_MODE_VCT_DISCONNECT,
   WIFIP2PMATCH_MODE_BATTLE_DISCONNECT,
   WIFIP2PMATCH_MODE_DISCONNECT,
-  WIFIP2PMATCH_MODE_BATTLE_CONNECT_INIT,  //30
+  WIFIP2PMATCH_MODE_BATTLE_CONNECT_INIT, 
   WIFIP2PMATCH_MODE_BATTLE_CONNECT_WAIT,
   WIFIP2PMATCH_MODE_BATTLE_CONNECT,
   WIFIP2PMATCH_MODE_MAIN_MENU,
@@ -90,7 +90,7 @@ enum{
   WIFIP2PMATCH_MODE_SELECT_WAIT,
   WIFIP2PMATCH_MODE_SUBBATTLE_WAIT,
   WIFIP2PMATCH_MODE_SELECT_REL_INIT,
-  WIFIP2PMATCH_MODE_SELECT_REL_YESNO,       //40
+  WIFIP2PMATCH_MODE_SELECT_REL_YESNO,   
   WIFIP2PMATCH_MODE_SELECT_REL_WAIT,
   WIFIP2PMATCH_MODE_MATCH_INIT,
   WIFIP2PMATCH_MODE_MATCH_INIT2,
@@ -101,7 +101,7 @@ enum{
   WIFIP2PMATCH_MODE_CALL_INIT,
   WIFIP2PMATCH_MODE_CALL_YESNO,
   WIFIP2PMATCH_MODE_CALL_SEND,
-  WIFIP2PMATCH_MODE_CALL_CHECK,             //50
+  WIFIP2PMATCH_MODE_CALL_CHECK,     
   WIFIP2PMATCH_MODE_MYSTATUS_WAIT,
   WIFIP2PMATCH_MODE_CALL_WAIT,
   WIFIP2PMATCH_MODE_PERSONAL_INIT,
@@ -111,7 +111,7 @@ enum{
   WIFIP2PMATCH_MODE_EXIT_WAIT,
   WIFIP2PMATCH_MODE_EXITING,
   WIFIP2PMATCH_MODE_EXIT_END,
-  WIFIP2PMATCH_NEXTBATTLE_YESNO,         //60
+  WIFIP2PMATCH_NEXTBATTLE_YESNO,     
   WIFIP2PMATCH_NEXTBATTLE_WAIT,
   WIFIP2PMATCH_MODE_VCHAT_NEGO,
   WIFIP2PMATCH_MODE_VCHAT_NEGO_WAIT,
@@ -121,7 +121,7 @@ enum{
   WIFIP2PMATCH_PARENT_RESTART,
   WIFIP2PMATCH_FIRST_SAVING,
   WIFIP2PMATCH_MODE_CANCEL_ENABLE_WAIT,
-  WIFIP2PMATCH_FIRST_SAVING2,       //70
+  WIFIP2PMATCH_FIRST_SAVING2,   
   WIFIP2PMATCH_MODE_CALLGAME_INIT,
   WIFIP2PMATCH_MODE_PLAYERDIRECT_INIT,
   WIFIP2PMATCH_PLAYERDIRECT_INIT1,
@@ -131,7 +131,7 @@ enum{
   WIFIP2PMATCH_PLAYERDIRECT_INIT6,
   WIFIP2PMATCH_PLAYERDIRECT_INIT7,
   WIFIP2PMATCH_PLAYERDIRECT_WAIT,
-  WIFIP2PMATCH_PLAYERDIRECT_END,    //80
+  WIFIP2PMATCH_PLAYERDIRECT_END,  
   WIFIP2PMATCH_PLAYERDIRECT_VCT,
   WIFIP2PMATCH_PLAYERDIRECT_TVT,
   WIFIP2PMATCH_PLAYERDIRECT_TRADE,
@@ -139,7 +139,25 @@ enum{
   WIFIP2PMATCH_PLAYERDIRECT_SUB1,
   WIFIP2PMATCH_PLAYERDIRECT_SUB2,
   WIFIP2PMATCH_PLAYERDIRECT_SUBSTART,
-
+  WIFIP2PMATCH_PLAYERDIRECT_BATTLE2,
+  WIFIP2PMATCH_PLAYERDIRECT_BATTLE_MODE,
+  WIFIP2PMATCH_PLAYERDIRECT_BATTLE_MODE2,
+  WIFIP2PMATCH_PLAYERDIRECT_BATTLE_RULE,   //ルール
+  WIFIP2PMATCH_PLAYERDIRECT_BATTLE_RULE2,   //ルール
+  WIFIP2PMATCH_PLAYERDIRECT_BATTLE_SHOOTER,  //シューター
+  WIFIP2PMATCH_PLAYERDIRECT_BATTLE_SHOOTER2,  //シューター
+  WIFIP2PMATCH_PLAYERDIRECT_BATTLE_DECIDE,  //決定
+  WIFIP2PMATCH_PLAYERDIRECT_BATTLE_WATCH,  //ルールを見る 
+  WIFIP2PMATCH_PLAYERDIRECT_BATTLE_WATCH2,  //ルールを見る 
+  WIFIP2PMATCH_PLAYERDIRECT_BATTLE_GO,
+  WIFIP2PMATCH_PLAYERDIRECT_BATTLE_GO1,
+  WIFIP2PMATCH_PLAYERDIRECT_BATTLE_GO2,
+  WIFIP2PMATCH_PLAYERDIRECT_BATTLE_GO3,
+  WIFIP2PMATCH_PLAYERDIRECT_BATTLE_GO4,
+  WIFIP2PMATCH_PLAYERDIRECT_NOREG_PARENT,
+  WIFIP2PMATCH_PLAYERDIRECT_BATTLE_START,
+  WIFIP2PMATCH_PLAYERDIRECT_BATTLE_FAILED,
+  
 };
 
 
@@ -152,6 +170,7 @@ enum{
 #define MAIN_LCD	( GF_BGL_MAIN_DISP )	// 要は０と
 #define SUB_LCD		( GF_BGL_SUB_DISP )		// １なんですが。
 
+
 // BMPWIN指定
 enum{
 	BMP_NAME1_S_BG0,
@@ -162,14 +181,27 @@ enum{
 	BMP_WIFIP2PMATCH_MAX,
 };
 
+///レギュレーション：ノーマル色
+#define REG_NORMAL_COLOR      PRINTSYS_MACRO_LSB(1, 2, 0)
+///レギュレーション：NG色
+#define REG_FAIL_COLOR        PRINTSYS_MACRO_LSB(4, 2, 0)
 
 typedef enum{
-  _REGULATION_BATTLE_TOWER     // バトルタワー対戦方式
-} REGULATION_BATTLE_e;
+  REGWIN_TYPE_RULE,        ///<ルールを見る
+  REGWIN_TYPE_NG_TEMOTI,   ///<手持ちNGチェック
+  REGWIN_TYPE_NG_BBOX,     ///<バトルボックスNGチェック
+} REGWIN_TYPE;
 
+//u16 singleCur[_MENUTYPE_MAX];			// バトルタイプ選択メニューカーソルの種類
+typedef enum{
+  _MENUTYPE_BATTLE_CUSTOM,
+  _MENUTYPE_BATTLE_MODE,
+  _MENUTYPE_BATTLE_RULE,
+  _MENUTYPE_BATTLE_SHOOTER,
+  _MENUTYPE_GAME,
+  _MENUTYPE_MAX
+} _MENUTYPE_;
 
-//トータル189バイト送信できるがとりあえず下位プログラムは範囲分だけ送る
-#define _POKEMON_NUM   (6)
 
 #define _CANCELENABLE_TIMER (60*30)   // キャンセルになる為のタイマー60min
 
@@ -179,18 +211,7 @@ typedef enum{
 	WF_VIEW_VCHAT,
 	WF_VIEW_STATUS_NUM,
 } WF_VIEW_STATUS_e;
-/*
-typedef enum{
-	WF_USERDISPTYPE_NRML,	// 通常
-	WF_USERDISPTYPE_MINI,	// ミニゲーム
-	WF_USERDISPTYPE_BLTW,	// バトルタワー
-	WF_USERDISPTYPE_BLFT,	// バトルフロンティア
-	WF_USERDISPTYPE_BLKS,	// バトルキャッスル
-	WF_USERDISPTYPE_BTST,	// バトルステージ
-	WF_USERDISPTYPE_BTRT,	// バトルルーレット
-	WF_USERDISPTYPE_NUM,
-} WF_USERDISPTYPE__e;
-*/
+
 // ユーザ表示ボタン数
 typedef enum{
 	MCV_USERD_BTTN_LEFT = 0,
@@ -199,31 +220,6 @@ typedef enum{
 	MCV_USERD_BTTN_NUM,
 } MCV_USERD_BTTN_e;
 
-typedef struct _WIFI_MACH_STATUS_tag{
-  u16 pokemonType[_POKEMON_NUM];
-  u16 hasItemType[_POKEMON_NUM];
-  u8 version;
-  u8 regionCode;
-  u8 pokemonZukan;
-  u8 status;
-  u8 regulation;
-  u8 trainer_view;
-  u8 sex;
-  u8 nation;
-  u8 area;
-  u8 vchat;
-  u8 vchat_org;
-} _WIFI_MACH_STATUS;
-
-
-//============================================================================================
-//	構造体定義
-//============================================================================================
-
-typedef struct {
-  _WIFI_MACH_STATUS myMatchStatus;   // 自分のマッチング状態データ
-  //_WIFI_MACH_STATUS friendMatchStatus[WIFIP2PMATCH_MEMBER_MAX]; // 相手のマッチング状態データ
-} TEST_MATCH_WORK;
 
 //-------------------------------------
 ///	Iconグラフィック
@@ -234,6 +230,9 @@ typedef struct {
 
 	void* p_charbuff;
 	NNSG2dCharacterData* p_char;
+  u32 wf_match_all_iconcgx1m;
+  u32 wf_match_all_iconcgx2s;
+
 } WIFIP2PMATCH_ICON;
 
 
@@ -334,19 +333,9 @@ GAMEDATA* pGameData;
   int				MsgIndex;								// 終了検出用ワーク
   BMPMENU_WORK* pYesNoWork;
   void* timeWaitWork;			// タイムウエイトアイコンワーク
-//  CLACT_SET_PTR 			clactSet;								// セルアクターセット
+
   GFL_CLUNIT* clactSet;								// セルアクターセット
   GFL_CLSYS_REND*          renddata;						// 簡易レンダーデータ
-  //CLACT_U_EASYRENDER_DATA	renddata;								// 簡易レンダーデータ
-  //CLACT_U_RES_MANAGER_PTR	resMan[CLACT_RESOURCE_NUM];				// リソースマネージャ
-//  FONTOAM_SYS_PTR			fontoam;								// フォントOAMシステム  @@OO
-/*
-  CLACT_U_RES_OBJ_PTR 	resObjTbl[BOTH_LCD][CLACT_RESOURCE_NUM];// リソースオブジェテーブル
-  CLACT_HEADER			clActHeader_m;							// セルアクターヘッダー
-  CLACT_HEADER			clActHeader_s;							// セルアクターヘッダー
-  CLACT_WORK_PTR			MainActWork[_OAM_NUM];				// セルアクターワークポインタ配列
-	//CLACT_WORK_PTR			SubActWork[_OAM_NUM];				// セルアクターワークポインタ配列
-//*/
 
   GFL_BMPWIN*			MsgWin;									// 会話ウインドウ
   GFL_BMPWIN*			MyInfoWin;								// 自分の状態表示
@@ -373,14 +362,12 @@ GAMEDATA* pGameData;
   GFL_PROC*		subProc;
    u16 matchGameMode[WIFIP2PMATCH_MEMBER_MAX];   ///<CNM_WFP2PMF_STATUS
   int preConnect;			// 新しく来た友達(-1=なし)
-  u16 battleCur;			// バトルタイプ選択メニューカーソル
-  u16 singleCur[3];			// バトルの詳細部分のメニューカーソル
+  u16 singleCur[_MENUTYPE_MAX];			// バトルタイプ選択メニューカーソル
+//  u16 singleCur[3];			// バトルの詳細部分のメニューカーソル
   u16 bSingle;				// SINGLEバトル　ダブルバトルスイッチ
-
+  WIFIP2PMATCH_PROC_PARAM* pParentWork;
  WIFI_STATUS targetStatus;  //接続しようとしている人のステータス
 
-//  u16 keepStatus;			// 接続しようとしたら相手のステータスが変わったときのﾁｪｯｸ用
-//  u16 keepVChat;			// 接続しようとしたらボイスチャット状態が変わったときのﾁｪｯｸ用
   u16 friendNo;			// 今つながっている友達ナンバー
   BOOL bRetryBattle;
    int vctEnc;
@@ -396,12 +383,23 @@ GAMEDATA* pGameData;
 	u16 brightness_reset;	// _retryでマスター輝度をVBlankでリセットするため
 	u16 friend_num;			// P2Pmatch画面初期化タイミングの友達数
  	u16 directmode;			// 直接会話中のゲームモード
+
+  u32 talkwin_m2;
+  u32 menuwin_m2;
+  u32 menuwin_m1;
+  u32 matchRegulation;  //通信で貰う相手側の選択したレギュレーション
+  u16 battleMode;  //バトルのモード
+  u16 battleRule;  //バトルのルール
+  u16 battleShooter;  //バトルのシューター
+  REGULATION_PRINT_MSG* rpm;  // レギュレーションプリントメッセージ
+  REGULATION* pRegulation;
 };
 
 
 extern void WifiP2PMatchRecvGameStatus(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 extern void WifiP2PMatchRecvMyStatus(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 extern void WifiP2PMatchRecvDirectMode(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
+extern void WifiP2PMatchRecvBattleRegulation(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 
 
 

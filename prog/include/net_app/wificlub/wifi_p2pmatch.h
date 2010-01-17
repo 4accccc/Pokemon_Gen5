@@ -26,8 +26,10 @@ typedef struct {
   void* pMatch;
   GAMEDATA* pGameData;
   SAVE_CONTROL_WORK*  pSaveData;
-  int seq;                // どこに分岐してほしいかが入っている
-  int targetID;   //対戦 交換する人が誰なのかが入っている
+  int seq;        // どこに分岐してほしいかが入っている
+  int targetID;   // 対戦 交換する人が誰なのかが入っている
+  u8 vchatMain;  // VCHATをONOFFするメインフラグ 内部は相手によって変化する為
+  u8 btalk;    // 話しかけたのか、掲示板なのかで戻った際の分岐がある
 }WIFIP2PMATCH_PROC_PARAM;
 
 extern const GFL_PROC_DATA WifiP2PMatchProcData;

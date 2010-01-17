@@ -22,18 +22,26 @@
 #include "wifi_p2pmatchroom.h"
 
 
+#include "poke_tool/regulation_def.h"
+
 #include "savedata/wifihistory.h"
 #include "savedata/config.h"
+#include "savedata/battle_box_save.h"
+
 #include "system/bmp_menuwork.h"
 #include "system/bmp_winframe.h"
 #include "system/bmp_menulist.h"
 #include "system/bmp_menu.h"
 #include "system/main.h"
+#include "system/wipe.h"
 #include "system/rtc_tool.h"
+
 #include "gamesystem/msgspeed.h"
 #include "poke_tool/monsno_def.h"
 #include "poke_tool/pokeparty.h"
 #include "item/itemsym.h"
+
+
 
 #include "font/font.naix"
 #include "print/str_tool.h"
@@ -224,7 +232,7 @@ extern WIFI_DEBUG_BATTLE_WK WIFI_DEBUG_BATTLE_Work;
 #define FLD_MENU_WIN_CGX  ( FLD_MSG_WIN_CGX - ( FLD_MENU_WIN_SX * FLD_MENU_WIN_SY ) )
 
 // はい/いいえウィンドウ（メイン）（メニューと同じ位置（メニューより小さい））
-#define FLD_YESNO_WIN_PX  ( 25 )
+#define FLD_YESNO_WIN_PX  ( 24 )
 #define FLD_YESNO_WIN_PY  ( 13 )
 #define FLD_YESNO_WIN_SX  ( 6 )
 #define FLD_YESNO_WIN_SY  ( 4 )
@@ -395,7 +403,7 @@ enum{
 #define COMM_MSG_WIN_SX   ( 27 )
 #define COMM_MSG_WIN_SY   ( 4 )
 #define COMM_MSG_WIN_PAL    ( COMM_MESFONT_PAL )
-#define COMM_MSG_WIN_CGX    ( (COMM_TALK_WIN_CGX_NUM - 73) - ( COMM_MSG_WIN_SX * COMM_MSG_WIN_SY ) )
+//#define COMM_MSG_WIN_CGX    ( (COMM_TALK_WIN_CGX_NUM - 73) - ( COMM_MSG_WIN_SX * COMM_MSG_WIN_SY ) )
 
 #define COMM_SYS_WIN_PX   ( 4 )
 #define COMM_SYS_WIN_PY   ( 4 )
@@ -403,6 +411,12 @@ enum{
 #define COMM_SYS_WIN_SY   ( 16 )
 #define COMM_SYS_WIN_PAL    ( COMM_MESFONT_PAL )
 #define COMM_SYS_WIN_CGX    ( MENU_WIN_CGX_NUM - ( COMM_SYS_WIN_SX * COMM_SYS_WIN_SY ) )  // 通信システムウィンドウ転送先
+
+
+#define REGWINDOW_WIN_PX   ( 3 )
+#define REGWINDOW_WIN_PY   ( 5 )
+#define REGWINDOW_WIN_SX   ( 25 )
+#define REGWINDOW_WIN_SY   ( 16 )
 
 
 // YesNoWin
@@ -818,7 +832,7 @@ static void VramBankSet(void);
 static void BgInit( HEAPID heapID );
 static void InitMessageWork( WIFIP2PMATCH_WORK *wk );
 static void FreeMessageWork( WIFIP2PMATCH_WORK *wk );
-static void BgExit( void );
+static void BgExit( WIFIP2PMATCH_WORK *wk );
 static void BgGraphicSet( WIFIP2PMATCH_WORK * wk, ARCHANDLE* p_handle );
 static void char_pltt_manager_init(void);
 static void InitCellActor(WIFIP2PMATCH_WORK *wk, ARCHANDLE* p_handle);
@@ -844,7 +858,7 @@ static void WifiP2PMatchFriendListBmpIconWrite(  GFL_BMPWIN* p_bmp, WIFIP2PMATCH
 static void WifiP2PMatchFriendListBmpStIconWrite( GFL_BMPWIN* p_bmp, WIFIP2PMATCH_ICON* p_data, u16 x, u16 y, u32 status,u32 gamemode,int pal );
 static int WifiP2PMatchBglFrmIconPalGet( u32 frm );
 
-static int WifiP2PMatchFriendListStart( void );
+static int WifiP2PMatchFriendListStart( WIFIP2PMATCH_WORK* wk );
 
 // 友達データの強制表示処理
 static void WifiP2PMatch_UserDispOn( WIFIP2PMATCH_WORK *wk, u32 friendNo, u32 heapID );
@@ -937,9 +951,6 @@ static int _differMachineInit( WIFIP2PMATCH_WORK *wk, int seq );
 static int _differMachineNext( WIFIP2PMATCH_WORK *wk, int seq );
 static int _differMachineOneMore( WIFIP2PMATCH_WORK *wk, int seq );
 static int _firstYesNo( WIFIP2PMATCH_WORK *wk, int seq );
-static int _poweroffInit( WIFIP2PMATCH_WORK *wk, int seq );
-static int _poweroffYesNo( WIFIP2PMATCH_WORK *wk, int seq );
-static int _poweroffWait( WIFIP2PMATCH_WORK *wk, int seq );
 static int _retryInit( WIFIP2PMATCH_WORK *wk, int seq );
 static int _retryYesNo( WIFIP2PMATCH_WORK *wk, int seq );
 static int _retryWait( WIFIP2PMATCH_WORK *wk, int seq );
@@ -951,6 +962,7 @@ static int WifiP2PMatch_FirstSaving( WIFIP2PMATCH_WORK *wk, int seq );
 static int _firstConnectEndMsg( WIFIP2PMATCH_WORK *wk, int seq );
 static int _firstConnectEndMsgWait( WIFIP2PMATCH_WORK *wk, int seq );
 static int WifiP2PMatch_FriendListInit( WIFIP2PMATCH_WORK *wk, int seq );
+static int WifiP2PMatch_FriendListInit2( WIFIP2PMATCH_WORK *wk, int seq );
 static int WifiP2PMatch_FriendList( WIFIP2PMATCH_WORK *wk, int seq );
 static int WifiP2PMatch_VCTConnectInit2( WIFIP2PMATCH_WORK *wk, int seq );
 static int WifiP2PMatch_VCTConnectInit( WIFIP2PMATCH_WORK *wk, int seq );
@@ -1042,15 +1054,6 @@ static void _deleteFriendList(int deletedIndex,int srcIndex, void* pWork)
 // レコードコーナーメインシーケンス用関数配列定義
 static int (*FuncTable[])(WIFIP2PMATCH_WORK *wk, int seq)={
   WifiP2PMatch_MainInit,  // WIFIP2PMATCH_MODE_INIT  = 0,
-  _normalConnectYesNo,    // WIFIP2PMATCH_NORMALCONNECT_YESNO
-  _normalConnectWait,     // WIFIP2PMATCH_NORMALCONNECT_WAIT
-  _differMachineInit,     // WIFIP2PMATCH_DIFFER_MACHINE_INIT
-  _differMachineNext,     // WIFIP2PMATCH_DIFFER_MACHINE_NEXT
-  _differMachineOneMore,  // WIFIP2PMATCH_DIFFER_MACHINE_ONEMORE
-  _firstYesNo,            //WIFIP2PMATCH_FIRST_YESNO
-  _poweroffInit,      // WIFIP2PMATCH_POWEROFF_INIT
-  _poweroffYesNo,     // WIFIP2PMATCH_POWEROFF_YESNO
-  _poweroffWait,      // WIFIP2PMATCH_POWEROFF_WAIT
   _retryInit,        //WIFIP2PMATCH_RETRY_INIT
   _retryYesNo,        //WIFIP2PMATCH_RETRY_YESNO
   _retryWait,         //WIFIP2PMATCH_RETRY_WAIT
@@ -1060,6 +1063,7 @@ static int (*FuncTable[])(WIFIP2PMATCH_WORK *wk, int seq)={
   _firstConnectEndMsg,                 //WIFIP2PMATCH_FIRST_ENDMSG
   _firstConnectEndMsgWait,    //WIFIP2PMATCH_FIRST_ENDMSG_WAIT
   WifiP2PMatch_FriendListInit,        // WIFIP2PMATCH_FRIENDLIST_INIT,
+  WifiP2PMatch_FriendListInit2, //WIFIP2PMATCH_FRIENDLIST_INIT2
   WifiP2PMatch_FriendList,            // WIFIP2PMATCH_MODE_FRIENDLIST
   _vchatToggleWait,                   // WIFIP2PMATCH_VCHATWIN_WAIT
   WifiP2PMatch_VCTConnectInit2,        // WIFIP2PMATCH_MODE_VCT_CONNECT_INIT2
@@ -1126,11 +1130,28 @@ static int (*FuncTable[])(WIFIP2PMATCH_WORK *wk, int seq)={
   _playerDirectVCT, //  WIFIP2PMATCH_PLAYERDIRECT_VCT,
   _playerDirectTVT, //  WIFIP2PMATCH_PLAYERDIRECT_TVT,
   _playerDirectTrade, //  WIFIP2PMATCH_PLAYERDIRECT_TRADE,
-  _playerDirectWait, //  WIFIP2PMATCH_PLAYERDIRECT_BATTLE1,
+  _playerDirectBattle1, //  WIFIP2PMATCH_PLAYERDIRECT_BATTLE1,
   _playerDirectSub1, // WIFIP2PMATCH_PLAYERDIRECT_SUB1
   _playerDirectSub2, // WIFIP2PMATCH_PLAYERDIRECT_SUB2
   _playerDirectSubStart, //WIFIP2PMATCH_PLAYERDIRECT_SUBSTART
-  
+  _playerDirectBattle2,//WIFIP2PMATCH_PLAYERDIRECT_BATTLE2
+  _playerDirectBattleMode,  //WIFIP2PMATCH_PLAYERDIRECT_BATTLE_MODE,
+  _playerDirectBattleMode2,  //WIFIP2PMATCH_PLAYERDIRECT_BATTLE_MODE2,
+  _playerDirectBattleRule,  // WIFIP2PMATCH_PLAYERDIRECT_BATTLE_RULE,   //ルール
+  _playerDirectBattleRule2,  // WIFIP2PMATCH_PLAYERDIRECT_BATTLE_RULE2,   //ルール
+  _playerDirectBattleShooter,  //  WIFIP2PMATCH_PLAYERDIRECT_BATTLE_SHOOTER,  //シューター
+  _playerDirectBattleShooter2,  //  WIFIP2PMATCH_PLAYERDIRECT_BATTLE_SHOOTER2,  //シューター
+  _playerDirectBattleDecide,  //  WIFIP2PMATCH_PLAYERDIRECT_BATTLE_DECIDE,  //決定
+  _playerDirectBattleWatch,  // WIFIP2PMATCH_PLAYERDIRECT_BATTLE_WATCH,  //ルールを見る 
+  _playerDirectBattleWatch2,  // WIFIP2PMATCH_PLAYERDIRECT_BATTLE_WATCH2,  //ルールを見る 
+  _playerDirectBattleGO,  //  WIFIP2PMATCH_PLAYERDIRECT_BATTLE_GO
+  _playerDirectBattleGO1,  //  WIFIP2PMATCH_PLAYERDIRECT_BATTLE_GO1
+  _playerDirectBattleGO2,  //  WIFIP2PMATCH_PLAYERDIRECT_BATTLE_GO2
+  _playerDirectBattleGO3,  //  WIFIP2PMATCH_PLAYERDIRECT_BATTLE_GO3
+  _playerDirectBattleGO4,  //  WIFIP2PMATCH_PLAYERDIRECT_BATTLE_GO4
+  _playerDirectNoregParent, //WIFIP2PMATCH_PLAYERDIRECT_NOREG_PARENT
+  _playerDirectBattleStart, //  WIFIP2PMATCH_PLAYERDIRECT_BATTLE_START
+  _playerDirectNoregParent, //WIFIP2PMATCH_PLAYERDIRECT_BATTLE_FAILED
 };
 
 #define _MAXNUM   (2)         // 最大接続人数
@@ -1456,6 +1477,8 @@ static void _graphicInit(WIFIP2PMATCH_WORK * wk)
   BgInit(HEAPID_WIFIP2PMATCH );
   GFL_BMPWIN_Init( HEAPID_WIFIP2PMATCH );
 
+
+  
   //BGグラフィックセット
   BgGraphicSet( wk, p_handle );
 
@@ -1498,28 +1521,12 @@ static GFL_PROC_RESULT WifiP2PMatchProc_Init( GFL_PROC * proc, int * seq, void *
   WIFIP2PMATCH_PROC_PARAM* pParentWork = pwk;
   u32 result;
 
-  switch(*seq){
-  case 0:
-    
-    // 通信拡張ヒープのメモリ確保
-    // 080611 tomoya 追加
-    if(GFL_NET_IsInit()){       // 接続中
-      if( pParentWork->seq != WIFI_GAME_NONE){ // 1つ前の遊びで通信拡張ヒープを破棄していたら再確保
-        // バトルから戻ってきたなら拡張ヒープ作成
-  //      GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_WIFIP2PMATCHEX, WIFI_P2PMATCH_EXHEAP_SIZE );
-      }
-    }
-    else{
-      // 通信前なら絶対に拡張ヒープを確保
-    //  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_WIFIP2PMATCHEX, WIFI_P2PMATCH_EXHEAP_SIZE );
-    }
 
+  GFL_HEAP_CreateHeapLo( GFL_HEAPID_APP, HEAPID_WIFIP2PMATCH, 0xa0000 );
 
-    GFL_HEAP_CreateHeapLo( GFL_HEAPID_APP, HEAPID_WIFIP2PMATCH, 0xa0000 );
-
-    wk = GFL_PROC_AllocWork( proc, sizeof(WIFIP2PMATCH_WORK), HEAPID_WIFIP2PMATCH );
-    MI_CpuFill8( wk, 0, sizeof(WIFIP2PMATCH_WORK) );
-    GFL_NET_ChangeWork(wk);
+  wk = GFL_PROC_AllocWork( proc, sizeof(WIFIP2PMATCH_WORK), HEAPID_WIFIP2PMATCH );
+  MI_CpuFill8( wk, 0, sizeof(WIFIP2PMATCH_WORK) );
+  GFL_NET_ChangeWork(wk);
 
     // Vram転送マネージャ作成
 #if WB_FIX
@@ -1528,7 +1535,7 @@ static GFL_PROC_RESULT WifiP2PMatchProc_Init( GFL_PROC * proc, int * seq, void *
 
     //        wk->MsgIndex = _PRINTTASK_MAX;
     wk->pMatch = pParentWork->pMatch;
-    
+
     wk->pSaveData = pParentWork->pSaveData;
     wk->pGameData = pParentWork->pGameData;
 
@@ -1538,6 +1545,7 @@ static GFL_PROC_RESULT WifiP2PMatchProc_Init( GFL_PROC * proc, int * seq, void *
     wk->initSeq = pParentWork->seq;    // P2PかDPWか
     wk->endSeq = WIFI_GAME_NONE;
     wk->preConnect = -1;
+    wk->pParentWork = pParentWork;
 
     GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG0|GX_PLANEMASK_BG1|GX_PLANEMASK_BG2|GX_PLANEMASK_BG3, VISIBLE_OFF );
     GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG0|GX_PLANEMASK_BG1|GX_PLANEMASK_BG2|GX_PLANEMASK_BG3, VISIBLE_OFF );
@@ -1546,30 +1554,14 @@ static GFL_PROC_RESULT WifiP2PMatchProc_Init( GFL_PROC * proc, int * seq, void *
     InitMessageWork( wk );
     _CHANGESTATE(wk,WIFIP2PMATCH_MODE_INIT);
 
-    GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16,16,0);
-
-    // グラフィック初期化
+   // グラフィック初期化
     _graphicInit(wk);
-    // ワイプフェード開始
-    GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT,
-                                16,0,COMM_BRIGHTNESS_SYNC);
 
     if(GFL_NET_IsInit()){
       GFL_NET_ReloadIcon();  // 接続中なのでアイコン表示
     }
-    // タッチパネル開始
-    //    result = InitTPNoBuff( 4 );
-    //    GF_ASSERT( result == TP_OK );
 
-    (*seq)++;
-    break;
-  case 1:
-    //wk = GFL_PROC_GetWork( proc );
-    (*seq) = SEQ_IN;
     return GFL_PROC_RES_FINISH;
-    break;
-  }
-  return GFL_PROC_RES_CONTINUE;
 }
 
 
@@ -1590,64 +1582,24 @@ static GFL_PROC_RESULT WifiP2PMatchProc_Main( GFL_PROC * proc, int * seq, void *
 {
   WIFIP2PMATCH_WORK * wk  = mywk;
 
-  
-  switch( *seq ){
-  case SEQ_IN:
-    if( !GFL_FADE_CheckFade() ){
-      // ワイプ処理待ち
-      *seq = SEQ_MAIN;
-
-
-    }
-    break;
-
-  case SEQ_MAIN:
-
-#ifdef _WIFI_DEBUG_TUUSHIN
-    if( WIFI_DEBUG_BATTLE_Work.DEBUG_WIFI_MODE != _WIFI_DEBUG_NONE ){
-      GFL_UI_KEY_GetTrg() |= PAD_KEY_DOWN;  //  したおしっぱ
-      sys.cont |= PAD_KEY_DOWN;
-      GFL_UI_KEY_GetTrg() |= PAD_BUTTON_A;
-      sys.cont |= PAD_BUTTON_A;
-    }
-#endif
-
-
-    // カーソル移動
-
-    // シーケンス毎の動作
-    if(FuncTable[wk->seq]!=NULL){
-      //   static int seqBk=0;
-
-      //          if(seqBk != wk->seq){
-      //                OHNO_PRINT("wp2p %d \n",wk->seq);
-      //                NET_PRINT("wp2p %d \n",wk->seq);
-      //            }
-      //          seqBk = wk->seq;
-
-      *seq = (*FuncTable[wk->seq])( wk, *seq );
-    }
-
-    break;
-
-  case SEQ_OUT:
-    if( !GFL_FADE_CheckFade() ){
+  if(FuncTable[wk->seq]!=NULL){
+    *seq = (*FuncTable[wk->seq])( wk, *seq );
+    if(*seq == SEQ_OUT){
+      WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
+                      WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , HEAPID_WIFIP2PMATCH );
       return GFL_PROC_RES_FINISH;
     }
-    break;
   }
-#if 1
   if(wk->clactSet){
-    GFL_CLACT_SYS_Main();     // セルアクター常駐関数
-    //      CLACT_Draw( wk->clactSet );                 // セルアクター常駐関数
+    GFL_CLACT_SYS_Main();
   }
-#endif
   if( WIFI_MCR_GetInitFlag( &wk->matchroom ) == TRUE ){
     WIFI_MCR_Draw( &wk->matchroom );
   }
-
   ConnectBGPalAnm_Main(&wk->cbp);
-
+  if(wk->SysMsgQue){
+    PRINTSYS_QUE_Main(wk->SysMsgQue);
+  }
   return GFL_PROC_RES_CONTINUE;
 }
 
@@ -1664,12 +1616,19 @@ static void _graphicEnd(WIFIP2PMATCH_WORK* wk)
 {
   int i;
 
+
   //    sys_VBlankFuncChange( NULL, NULL ); // VBlankReset
   // Vblank期間中のBG転送終了
   if(wk->vblankFunc){
     GFL_TCB_DeleteTask( wk->vblankFunc );
   }
   ConnectBGPalAnm_End(&wk->cbp);
+
+  if(wk->pRegulation){
+    GFL_HEAP_FreeMemory(wk->pRegulation);
+    wk->pRegulation=NULL;
+  }
+
 
   // マッチングルーム破棄
   if( WIFI_MCR_GetInitFlag( &wk->matchroom ) == TRUE ){
@@ -1711,6 +1670,7 @@ static void _graphicEnd(WIFIP2PMATCH_WORK* wk)
 
   // BMPウィンドウ開放
   BmpWinDelete( wk );
+  BgExit(wk);
 
   GFL_BMPWIN_Exit();
   // BGL削除
@@ -1751,16 +1711,13 @@ static GFL_PROC_RESULT WifiP2PMatchProc_End( GFL_PROC * proc, int * seq, void * 
   WIFIP2PMATCH_PROC_PARAM* pParentWork = pwk;
 
 
+  if( !WIPE_SYS_EndCheck() ){
+    return GFL_PROC_RES_CONTINUE;
+  }
+
   _graphicEnd(wk);
 
   pParentWork->seq = wk->endSeq;
-  //    if( (wk->endSeq == WIFI_P2PMATCH_END) || (wk->endSeq == WIFI_P2PMATCH_DPW_END) ){  // オーバーレイ解除
-  //      DwcOverlayEnd();
-  //    }
-  //  else{
-
-  //    pParentWork->targetID = GFL_NET_DWC_GetFriendIndex();
-  //    }
 
   if(GFL_NET_IsInit()){
     pParentWork->targetID = GFL_NET_DWC_GetFriendIndex();
@@ -1771,8 +1728,6 @@ static GFL_PROC_RESULT WifiP2PMatchProc_End( GFL_PROC * proc, int * seq, void * 
 
   GFL_PROC_FreeWork( proc );        // GFL_PROCワーク開放
 
-  // タッチパネル停止
-  //  StopTP();
 
 #if WB_TEMP_FIX
   // VramTransferマネージャ破棄
@@ -1780,17 +1735,6 @@ static GFL_PROC_RESULT WifiP2PMatchProc_End( GFL_PROC * proc, int * seq, void * 
 #endif
 
   GFL_HEAP_DeleteHeap( HEAPID_WIFIP2PMATCH );
-  //    WIPE_ResetBrightness( WIPE_DISP_MAIN );
-  //  WIPE_ResetBrightness( WIPE_DISP_SUB );
-
-
-  // 拡張ヒープの破棄
-  // 通信の終了と、バトル時は拡張ヒープを破棄する
-  // それ以外は破棄しない
-  if( wk->endSeq != WIFI_GAME_NONE){
-//    GFL_HEAP_DeleteHeap( HEAPID_WIFIP2PMATCHEX );
-  }
-
 
   // BGMがポケセンのままならBGM音量を変更する
   if( WifiP2P_CheckLobbyBgm() == TRUE ){
@@ -1900,6 +1844,7 @@ static void BgInit(HEAPID heapID )
       1, 0, 0, FALSE
       };
     GFL_BG_SetBGControl( GFL_BG_FRAME1_M, &TextBgCntDat, GFL_BG_MODE_TEXT );
+//    GFL_BG_FillCharacter( GFL_BG_FRAME1_M, 0x00, 1, 0 );
     GFL_BG_ClearFrame( GFL_BG_FRAME1_M);
     GFL_BG_LoadScreenReq( GFL_BG_FRAME1_M );
   }
@@ -1914,6 +1859,7 @@ static void BgInit(HEAPID heapID )
       2, 0, 0, FALSE
       };
     GFL_BG_SetBGControl( GFL_BG_FRAME2_M, &TextBgCntDat, GFL_BG_MODE_TEXT );
+   GFL_BG_FillCharacter( GFL_BG_FRAME2_M, 0x00, 1, 0 );
     GFL_BG_ClearFrame( GFL_BG_FRAME2_M);
     GFL_BG_LoadScreenReq( GFL_BG_FRAME2_M );
   }
@@ -2098,13 +2044,37 @@ static void WifiP2PMatchFriendListIconLoad( WIFIP2PMATCH_ICON* p_data, ARCHANDLE
                                     PALTYPE_SUB_BG, PLAYER_DISP_ICON_PLTTOFS_SUB*32,
                                     PLAYER_DISP_ICON_PLTTNUM*32, heapID );
 
-  // キャラクタデータ転送
-  GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_wifip2pmatch_wf_match_all_icon_NCGR,
-                                        GFL_BG_FRAME1_M, PLAYER_DISP_ICON_CGX, 0, FALSE, heapID );
+  // キャラクタデータ転送 先頭からとらないといけない
 
-  GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_wifip2pmatch_wf_match_all_icon_NCGR,
-                                        GFL_BG_FRAME2_S, PLAYER_DISP_ICON_CGX, 0, FALSE, heapID );
+  p_data->wf_match_all_iconcgx1m =
+    GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( p_handle,
+                                                 NARC_wifip2pmatch_wf_match_all_icon_NCGR,
+                                                 GFL_BG_FRAME1_M, 0, 0, heapID);
 
+  p_data->wf_match_all_iconcgx2s =
+    GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( p_handle,
+                                                 NARC_wifip2pmatch_wf_match_all_icon_NCGR,
+                                                 GFL_BG_FRAME2_S, 0, 0, heapID);
+
+/*
+  if(p_data->wf_match_all_iconcgx1m){
+    GFL_BG_FreeCharacterArea(GFL_BG_FRAME1_M, PLAYER_DISP_ICON_CGX, p_data->wf_match_all_iconcgx1m);
+  }
+  if(p_data->wf_match_all_iconcgx2s){
+    GFL_BG_FreeCharacterArea(GFL_BG_FRAME2_S, PLAYER_DISP_ICON_CGX,  p_data->wf_match_all_iconcgx2s);
+  }
+   */
+/*  {
+    u16 oneCharSize = GFL_BG_GetBaseCharacterSize(GFL_BG_FRAME1_M);
+    p_data->wf_match_all_iconcgx1m = GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_wifip2pmatch_wf_match_all_icon_NCGR,
+                                                     GFL_BG_FRAME1_M, PLAYER_DISP_ICON_CGX, 0, FALSE, heapID );
+    GFL_BG_ReserveCharacterArea(GFL_BG_FRAME1_M, PLAYER_DISP_ICON_CGX, p_data->wf_match_all_iconcgx1m/oneCharSize*2);
+
+    p_data->wf_match_all_iconcgx2s = GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_wifip2pmatch_wf_match_all_icon_NCGR,
+                                                     GFL_BG_FRAME2_S, PLAYER_DISP_ICON_CGX, 0, FALSE, heapID );
+    GFL_BG_ReserveCharacterArea(GFL_BG_FRAME2_S, PLAYER_DISP_ICON_CGX,  p_data->wf_match_all_iconcgx2s/oneCharSize);
+  }
+*/
   // さらにキャラクタデータを保存しておく
   if( p_data->p_charbuff == NULL ){
     p_data->p_charbuff = GFL_ARCHDL_UTIL_LoadOBJCharacter( p_handle, NARC_wifip2pmatch_wf_match_all_icon_NCGR,
@@ -2117,6 +2087,7 @@ static void WifiP2PMatchFriendListIconLoad( WIFIP2PMATCH_ICON* p_data, ARCHANDLE
     p_data->p_buff = GFL_ARCHDL_UTIL_LoadScreen( p_handle, NARC_wifip2pmatch_wf_match_all_icon_NSCR,
                                                  FALSE, &p_data->p_scrn, heapID);
   }
+
 }
 
 //----------------------------------------------------------------------------
@@ -2128,6 +2099,7 @@ static void WifiP2PMatchFriendListIconLoad( WIFIP2PMATCH_ICON* p_data, ARCHANDLE
 //-----------------------------------------------------------------------------
 static void WifiP2PMatchFriendListIconRelease( WIFIP2PMATCH_ICON* p_data )
 {
+
   if( p_data->p_buff != NULL ){
     GFL_HEAP_FreeMemory( p_data->p_buff );
     p_data->p_buff = NULL;
@@ -2136,6 +2108,19 @@ static void WifiP2PMatchFriendListIconRelease( WIFIP2PMATCH_ICON* p_data )
     GFL_HEAP_FreeMemory( p_data->p_charbuff );
     p_data->p_charbuff = NULL;
   }
+
+  //GFL_BG_FreeCharacterArea(GFL_BG_FRAME1_M, PLAYER_DISP_ICON_CGX, p_data->wf_match_all_iconcgx1m);
+  //GFL_BG_FreeCharacterArea(GFL_BG_FRAME2_S, PLAYER_DISP_ICON_CGX,  p_data->wf_match_all_iconcgx2s);
+
+  GFL_BG_FreeCharacterArea(GFL_BG_FRAME1_M,
+                           GFL_ARCUTIL_TRANSINFO_GetPos(p_data->wf_match_all_iconcgx1m),
+                           GFL_ARCUTIL_TRANSINFO_GetSize(p_data->wf_match_all_iconcgx1m));
+  GFL_BG_FreeCharacterArea(GFL_BG_FRAME2_S,
+                           GFL_ARCUTIL_TRANSINFO_GetPos(p_data->wf_match_all_iconcgx2s),
+                           GFL_ARCUTIL_TRANSINFO_GetSize(p_data->wf_match_all_iconcgx2s));
+
+  
+
 }
 
 //----------------------------------------------------------------------------
@@ -2274,14 +2259,17 @@ static int WifiP2PMatchBglFrmIconPalGet( u32 frm )
  *  @brief  フレンドリスト開始宣言
  */
 //-----------------------------------------------------------------------------
-static int WifiP2PMatchFriendListStart( void )
+static int WifiP2PMatchFriendListStart( WIFIP2PMATCH_WORK *wk )
 {
+  WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEIN , WIPE_TYPE_FADEIN , 
+                  WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , HEAPID_WIFIP2PMATCH );
   //  WIPE_SYS_Start( WIPE_PATTERN_WMS, WIPE_TYPE_FADEOUT, WIPE_TYPE_FADEOUT, WIPE_FADE_BLACK,
   //          COMM_BRIGHTNESS_SYNC, 1, HEAPID_WIFIP2PMATCH);
-  GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT,
-                              0,16,COMM_BRIGHTNESS_SYNC);
+//  GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT,
+  //                            0,16,COMM_BRIGHTNESS_SYNC);
 
   // 部屋のBGM設定
+  WIFI_STATUS_SetVChatStatus(wk->pMatch, wk->pParentWork->vchatMain);
   WifiP2P_SetLobbyBgm();
 
   return WIFIP2PMATCH_FRIENDLIST_INIT;
@@ -2296,13 +2284,26 @@ static int WifiP2PMatchFriendListStart( void )
  * @return  none
  */
 //--------------------------------------------------------------------------------------------
-static void BgExit( void )
+static void BgExit( WIFIP2PMATCH_WORK *wk )
 {
   int i;
 
-  for(i=0;i<GFL_BG_FRAME3_S;i++){
-    GFL_BG_FreeBGControl( i );
+  // for(i=0;i<GFL_BG_FRAME3_S;i++){
+  //   GFL_BG_FreeBGControl( i );
+  // }
+  return;
+  if(wk->talkwin_m2){
+    GFL_BG_FreeCharacterArea(GFL_BG_FRAME1_S,GFL_ARCUTIL_TRANSINFO_GetPos(wk->talkwin_m2),
+                             GFL_ARCUTIL_TRANSINFO_GetSize(wk->talkwin_m2));
+    GFL_BG_FreeCharacterArea(GFL_BG_FRAME2_S,GFL_ARCUTIL_TRANSINFO_GetPos(wk->menuwin_m2),
+                             GFL_ARCUTIL_TRANSINFO_GetSize(wk->menuwin_m2));
+    GFL_BG_FreeCharacterArea(GFL_BG_FRAME2_S,GFL_ARCUTIL_TRANSINFO_GetPos(wk->menuwin_m1),
+                             GFL_ARCUTIL_TRANSINFO_GetSize(wk->menuwin_m1));
+    wk->talkwin_m2=0;
+    wk->menuwin_m2=0;
+    wk->menuwin_m1=0;
   }
+
 }
 
 
@@ -2323,39 +2324,50 @@ static void BgGraphicSet( WIFIP2PMATCH_WORK * wk, ARCHANDLE* p_handle )
                                  GX_PLANEMASK_BG3, VISIBLE_ON );
   GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG0|GX_PLANEMASK_BG2, VISIBLE_ON );
 
+  // アイコンデータ読込み
+  WifiP2PMatchFriendListIconLoad(  &wk->icon, p_handle, HEAPID_WIFIP2PMATCH );
+
+  
   // 上下画面ＢＧパレット転送
-  GFL_ARCHDL_UTIL_TransVramPalette(    p_handle, NARC_wifip2pmatch_conect_NCLR, PALTYPE_MAIN_BG, 0, 0,  HEAPID_WIFIP2PMATCH);
-  GFL_ARCHDL_UTIL_TransVramPalette(    p_handle, NARC_wifip2pmatch_conect_NCLR, PALTYPE_SUB_BG,  0, 0,  HEAPID_WIFIP2PMATCH);
+ // GFL_ARCHDL_UTIL_TransVramPalette(    p_handle, NARC_wifip2pmatch_conect_NCLR, PALTYPE_MAIN_BG, 0, 0,  HEAPID_WIFIP2PMATCH);
+ // GFL_ARCHDL_UTIL_TransVramPalette(    p_handle, NARC_wifip2pmatch_conect_NCLR, PALTYPE_SUB_BG,  0, 0,  HEAPID_WIFIP2PMATCH);
 
   // 会話フォントパレット転送
   //    TalkFontPaletteLoad( PALTYPE_MAIN_BG, _NUKI_FONT_PALNO*0x20, HEAPID_WIFIP2PMATCH );
   //    TalkFontPaletteLoad( PALTYPE_MAIN_BG, COMM_MESFONT_PAL*0x20, HEAPID_WIFIP2PMATCH );
   GFL_ARC_UTIL_TransVramPalette( ARCID_FONT , NARC_font_default_nclr , PALTYPE_MAIN_BG , 13*0x20, 16*2, HEAPID_WIFIP2PMATCH );
 
-
+/*
   // メイン画面BG2キャラ転送
-  GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_wifip2pmatch_conect_NCGR,
-                                        GFL_BG_FRAME0_M, 0, 0, 0, HEAPID_WIFIP2PMATCH);
+  {
+    u32 scr = GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( p_handle, NARC_wifip2pmatch_conect_NCGR,
+                                                           GFL_BG_FRAME0_M, 0, 0, HEAPID_WIFIP2PMATCH);
 
-  // メイン画面BG2スクリーン転送
-  GFL_ARCHDL_UTIL_TransVramScreen(   p_handle, NARC_wifip2pmatch_conect_01_NSCR,
-                                     GFL_BG_FRAME0_M, 0, 0, 0, HEAPID_WIFIP2PMATCH);
-
+    // メイン画面BG2スクリーン転送
+    GFL_ARCHDL_UTIL_TransVramScreenCharOfs(   p_handle, NARC_wifip2pmatch_conect_01_NSCR,
+                                              GFL_BG_FRAME0_M, 0,
+                                              GFL_ARCUTIL_TRANSINFO_GetPos(scr), 0, 0, HEAPID_WIFIP2PMATCH);
+  }
 
   // サブ画面BG0キャラ転送
-  GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_wifip2pmatch_conect_sub_NCGR,  GFL_BG_FRAME0_S, 0, 0, 0, HEAPID_WIFIP2PMATCH);
-
-  // サブ画面BG0スクリーン転送
-  GFL_ARCHDL_UTIL_TransVramScreen(   p_handle, NARC_wifip2pmatch_conect_sub_NSCR, GFL_BG_FRAME0_S, 0, 0, 0, HEAPID_WIFIP2PMATCH);
-
   {
-    int type = CONFIG_GetWindowType(wk->pConfig);
-    BmpWinFrame_GraphicSet(
-      GFL_BG_FRAME2_M, COMM_TALK_WIN_CGX_NUM, COMM_MESFRAME_PAL,  type, HEAPID_WIFIP2PMATCH );
-    BmpWinFrame_GraphicSet(
-      GFL_BG_FRAME2_M, MENU_WIN_CGX_NUM, MENU_WIN_PAL, 0, HEAPID_WIFIP2PMATCH );
-    BmpWinFrame_GraphicSet(
-      GFL_BG_FRAME1_M, MENU_WIN_CGX_NUM, MENU_WIN_PAL, 0, HEAPID_WIFIP2PMATCH );
+    u32 scr = GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( p_handle,
+                                                           NARC_wifip2pmatch_conect_sub_NCGR,
+                                                           GFL_BG_FRAME0_S, 0, 0, HEAPID_WIFIP2PMATCH);
+
+    // サブ画面BG0スクリーン転送
+    GFL_ARCHDL_UTIL_TransVramScreenCharOfs(   p_handle, NARC_wifip2pmatch_conect_sub_NSCR,
+                                              GFL_BG_FRAME0_S, 0,
+                                              GFL_ARCUTIL_TRANSINFO_GetPos(scr),0, 0, HEAPID_WIFIP2PMATCH);
+  }
+   */
+  {
+    wk->talkwin_m2 = BmpWinFrame_GraphicSetAreaMan(
+      GFL_BG_FRAME2_M,  COMM_MESFRAME_PAL,  MENU_TYPE_SYSTEM, HEAPID_WIFIP2PMATCH );
+    wk->menuwin_m2 = BmpWinFrame_GraphicSetAreaMan(
+      GFL_BG_FRAME2_M,  MENU_WIN_PAL, MENU_TYPE_SYSTEM, HEAPID_WIFIP2PMATCH );
+    wk->menuwin_m1 = BmpWinFrame_GraphicSetAreaMan(
+      GFL_BG_FRAME1_M,  MENU_WIN_PAL, MENU_TYPE_SYSTEM, HEAPID_WIFIP2PMATCH );
   }
 
 }
@@ -2606,312 +2618,29 @@ static int WifiP2PMatch_MainInit( WIFIP2PMATCH_WORK *wk, int seq )
 {
   u32 status,gamemode;
 
-  if(GFL_NET_IsInit()){       // 接続中
+  if(wk->pParentWork->seq != WIFI_GAME_NONE){
 
-    _friendNameExpand(wk, GFL_NET_DWC_GetFriendIndex());
-    //    WIFI_STATUS_SetVChatStatus(pMatch, wk->pMatch->myMatchStatus.vchat_org);  @@OO
-
-
-
-    // status取得
-    status = _WifiMyStatusGet( wk, wk->pMatch );
-    gamemode = _WifiMyGameModeGet( wk, wk->pMatch );
-
-    //@todo 状態だけで接続を切るかどうか現在未確定
-
-    if(gamemode == WIFI_GAME_NONE){
-      _myStatusChange(wk, WIFI_STATUS_WAIT, WIFI_GAME_LOGIN_WAIT);
-      _CHANGESTATE(wk,WIFIP2PMATCH_CONNECTING_INIT);
+    if(wk->pParentWork->btalk){  //話しかけ接続時
+      _myStatusChange(wk, WIFI_STATUS_PLAYING, WIFI_GAME_UNIONMATCH);
+       WifiP2PMatch_FriendListInit2( wk, seq );
+      _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_INIT1);
     }
-    else
-//    if( (gamemode == WIFI_GAME_TRADE) ||    (gamemode == WIFI_GAME_TVT)    )
-    { // 交換中orポフィンなら
-
-      // 080605 tomoya BTS:249の対処のため
-      // 親の通信リセット処理後直ぐに接続してしまうのを回避
-      // ステータスをLOGIN_WAITに変更
-      _myStatusChange(wk, WIFI_STATUS_WAIT, WIFI_GAME_LOGIN_WAIT);
-
-      //            CommInfoFinalize();    @@OO
+    else{  //相手と切断
       GFL_NET_StateWifiMatchEnd(TRUE);  // マッチングを切る
-      //            wk->pMatch = GFL_NET_StateGetMatchWork();   // もっと上の場所に移動する@@OO
-      //            wk->pMatch =
-      //            wk->pMatch->myMatchStatus.vchat = wk->pMatch->myMatchStatus.vchat_org;
+      _myStatusChange(wk, WIFI_STATUS_WAIT, WIFI_GAME_LOGIN_WAIT);
       wk->timer = _RECONECTING_WAIT_TIME;
-      _CHANGESTATE(wk,WIFIP2PMATCH_RECONECTING_WAIT);
-      
-//      _CHANGESTATE(wk,WIFIP2PMATCH_CONNECTING_INIT);
-      
+      _CHANGESTATE(wk, WIFIP2PMATCH_RECONECTING_WAIT);
+      //      _CHANGESTATE(wk,WIFIP2PMATCH_CONNECTING_INIT);
     }
-    /*
-    else
-    {
-      MainMenuMsgInit(wk);// BMPWIN登録・描画
-
-      // バトルから戻ってきたとき
-      WifiP2PMatchMessagePrint(wk, msg_wifilobby_044, FALSE);
-
-      GFL_NET_SetAutoErrorCheck(TRUE);
-      GFL_NET_SetNoChildErrorCheck(TRUE);
-      GFL_NET_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle() ,_TIMING_BATTLE_END);
-      _CHANGESTATE(wk,WIFIP2PMATCH_NEXTBATTLE_YESNO);
-    }
-       */
   }
   else
   {        // 接続がまだ
-
-    Snd_DataSetByScene( SND_SCENE_P2P, SEQ_WIFILOBBY, 1 );
+    _CHANGESTATE(wk, WIFIP2PMATCH_FRIENDLIST_INIT);
     PMSND_PlayNextBGM(SEQ_BGM_WIFI_ACCESS, 60, 0);
-    MainMenuMsgInit(wk);// BMPWIN登録・描画
-    if( !DWC_CheckHasProfile( WifiList_GetMyUserInfo(wk->pList) ) )
-    {
-      GFL_BG_SetPriority(GFL_BG_FRAME0_M , 3);  //はいけい
-      GFL_BG_SetPriority(GFL_BG_FRAME1_M , 0);   // yesno win
-      GFL_BG_SetPriority(GFL_BG_FRAME3_M , 1);  // メッセージ
-      GFL_BG_SetPriority(GFL_BG_FRAME2_M , 1);   // menulist
-      _systemMessagePrint(wk, dwc_message_0003);
-      wk->pYesNoWork =
-        BmpMenu_YesNoSelectInit(
-          &_yesNoBmpDatSys2,
-          MENU_WIN_CGX_NUM, MENU_WIN_PAL,0,
-          HEAPID_WIFIP2PMATCH );
-      _CHANGESTATE(wk,WIFIP2PMATCH_FIRST_YESNO);
-    }
-    else if( !DWC_CheckValidConsole(WifiList_GetMyUserInfo(wk->pList)) )
-    {
-      _systemMessagePrint(wk, dwc_message_0005);
-      _CHANGESTATE(wk,WIFIP2PMATCH_DIFFER_MACHINE_INIT);
-    }
-    else
-    {
-      WifiP2PMatchMessagePrint(wk, dwc_message_0002, TRUE);
-      _CHANGESTATE(wk,WIFIP2PMATCH_NORMALCONNECT_YESNO);
-    }
   }
   return seq;
 }
 
-//------------------------------------------------------------------
-/**
- * $brief   通常の接続  WIFIP2PMATCH_NORMALCONNECT_YESNO
- * @param   wk
- * @param   seq
- * @retval  int
- */
-//------------------------------------------------------------------
-static int _normalConnectYesNo( WIFIP2PMATCH_WORK *wk, int seq )
-{
-  if( PRINTSYS_QUE_IsFinished(wk->SysMsgQue) )
-  {
-    wk->pYesNoWork =
-      BmpMenu_YesNoSelectInit(
-        &_yesNoBmpDatSys,
-        MENU_WIN_CGX_NUM, MENU_WIN_PAL,0,
-        HEAPID_WIFIP2PMATCH );
-    _CHANGESTATE(wk,WIFIP2PMATCH_NORMALCONNECT_WAIT);
-  }
-  return seq;
-}
-
-
-//------------------------------------------------------------------
-/**
- * $brief   通常の接続  WIFIP2PMATCH_NORMALCONNECT_WAIT
- * @param   wk
- * @param   seq
- * @retval  int
- */
-//------------------------------------------------------------------
-static int _normalConnectWait( WIFIP2PMATCH_WORK *wk, int seq )
-{
-  int i;
-  int ret = BmpMenu_YesNoSelectMain(wk->pYesNoWork);
-  if(ret == BMPMENU_NULL)
-  {  // まだ選択中
-    return seq;
-  }
-  else
-  {
-    if(ret == 0)
-    { // はいを選択した場合
-      //接続開始
-      _GFL_NET_InitAndStruct(wk,TRUE);
-      //      GFL_NET_Init(&aGFLNetInit, NULL, wk);
-      GFL_NET_StateWifiEnterLogin();
-
-      WifiP2PMatchMessagePrint(wk, dwc_message_0008, TRUE);
-      GF_ASSERT( wk->timeWaitWork == NULL );
-      wk->timeWaitWork = TimeWaitIconAdd( wk->MsgWin, COMM_TALK_WIN_CGX_NUM );
-      _CHANGESTATE(wk,WIFIP2PMATCH_CONNECTING_INIT);
-    }
-    else
-    {  // いいえを選択した場合
-      _CHANGESTATE(wk,WIFIP2PMATCH_MODE_END_WAIT);
-    }
-  }
-  return seq;
-}
-
-//------------------------------------------------------------------
-/**
- * $brief   別のDSだった場合  WIFIP2PMATCH_DIFFER_MACHINE_INIT
- * @param   wk
- * @param   seq
- * @retval  int
- */
-//------------------------------------------------------------------
-
-static int _differMachineInit( WIFIP2PMATCH_WORK *wk, int seq )
-{
-  if(GFL_UI_KEY_GetTrg() & (PAD_BUTTON_CANCEL|PAD_BUTTON_DECIDE))
-  {
-    _systemMessagePrint(wk,dwc_message_0006);
-    GFL_BG_SetPriority(GFL_BG_FRAME3_M , 1);  // メッセージ
-    GFL_BG_SetPriority(GFL_BG_FRAME2_M , 1);   //
-    GFL_BG_SetPriority(GFL_BG_FRAME1_M , 0);   // yesno win
-    GFL_BG_SetPriority(GFL_BG_FRAME0_M , 3);  //はいけい
-    wk->pYesNoWork =
-      BmpMenu_YesNoSelectInit(
-        &_yesNoBmpDatSys2,
-        MENU_WIN_CGX_NUM, MENU_WIN_PAL,
-        1, HEAPID_WIFIP2PMATCH ); // いいえ　から始まる
-    _CHANGESTATE(wk,WIFIP2PMATCH_DIFFER_MACHINE_NEXT);
-  }
-
-  return seq;
-}
-
-//------------------------------------------------------------------
-/**
- * $brief   別のDSだった場合  WIFIP2PMATCH_DIFFER_MACHINE_NEXT
- * @param   wk
- * @param   seq
- * @retval  int
- */
-//------------------------------------------------------------------
-
-static int _differMachineNext( WIFIP2PMATCH_WORK *wk, int seq )
-{
-  int i;
-  int ret = BmpMenu_YesNoSelectMain(wk->pYesNoWork);
-  if(ret == BMPMENU_NULL)
-  {  // まだ選択中
-    return seq;
-  }
-  else{
-    wk->SysMsgWin = _BmpWinDel( wk->SysMsgWin );
-    if(ret == 0){ // はいを選択した場合
-      _systemMessagePrint(wk,dwc_message_0007);
-      wk->pYesNoWork =
-        BmpMenu_YesNoSelectInit(
-          &_yesNoBmpDatSys2,
-          MENU_WIN_CGX_NUM, MENU_WIN_PAL,
-          1, HEAPID_WIFIP2PMATCH ); // いいえ　から始める
-      _CHANGESTATE(wk,WIFIP2PMATCH_DIFFER_MACHINE_ONEMORE);
-    }
-    else{  // いいえを選択した場合
-      _CHANGESTATE(wk,WIFIP2PMATCH_MODE_END_WAIT);
-    }
-  }
-  return seq;
-}
-
-//------------------------------------------------------------------
-/**
- * $brief   別のDSだった場合  WIFIP2PMATCH_DIFFER_MACHINE_ONEMORE
- * @param   wk
- * @param   seq
- * @retval  int
- */
-//------------------------------------------------------------------
-
-static int _differMachineOneMore( WIFIP2PMATCH_WORK *wk, int seq )
-{
-  int i;
-  int ret = BmpMenu_YesNoSelectMain(wk->pYesNoWork);
-  if(ret == BMPMENU_NULL){  // まだ選択中
-    return seq;
-  }
-  else{
-
-    // 優先順位を戻す
-    GFL_BG_SetPriority(GFL_BG_FRAME3_M , 1);  // メッセージ
-    GFL_BG_SetPriority(GFL_BG_FRAME2_M , 0);   //
-    GFL_BG_SetPriority(GFL_BG_FRAME1_M , 1);   // yesno win
-    GFL_BG_SetPriority(GFL_BG_FRAME0_M , 3);  //はいけい
-
-    wk->SysMsgWin = _BmpWinDel(wk->SysMsgWin);
-    if(ret == 0){ // はいを選択した場合
-
-      _GFL_NET_InitAndStruct(wk,TRUE);
-      //      GFL_NET_Init(&aGFLNetInit, NULL, wk);
-      //接続開始
-      WifiList_Init(wk->pList);
-      EMAILSAVE_Init(SaveData_Get(wk->pSaveData, GMDATA_ID_EMAIL));
-      //  FrontierRecord_DataCrear(SaveData_GetFrontier(wk->pSaveData));
-
-      _CHANGESTATE(wk,WIFIP2PMATCH_CONNECTING_INIT);
-      GFL_NET_StateWifiEnterLogin();
-      WifiP2PMatchMessagePrint(wk, dwc_message_0008, TRUE);
-      GF_ASSERT( wk->timeWaitWork == NULL );
-      wk->timeWaitWork = TimeWaitIconAdd( wk->MsgWin, COMM_TALK_WIN_CGX_NUM );
-      wk->bInitMessage = TRUE;
-    }
-    else{  // いいえを選択した場合
-      _CHANGESTATE(wk,WIFIP2PMATCH_MODE_END_WAIT);
-    }
-  }
-  return seq;
-}
-
-//WIFIP2PMATCH_FIRST_YESNO
-//------------------------------------------------------------------
-/**
- * $brief   初回接続時の確認  WIFIP2PMATCH_FIRST_YESNO
- * @param   wk
- * @param   seq
- * @retval  int
- */
-//------------------------------------------------------------------
-
-static int _firstYesNo( WIFIP2PMATCH_WORK *wk, int seq )
-{
-  int i;
-  int ret = BMPMENU_NULL;
-
-  ret = BmpMenu_YesNoSelectMain(wk->pYesNoWork);
-  if(ret == BMPMENU_NULL){  // まだ選択中
-    return seq;
-  }
-  else{
-
-    // 表示優先順位を戻す
-    GFL_BG_SetPriority(GFL_BG_FRAME0_M , 3);  //はいけい
-    GFL_BG_SetPriority(GFL_BG_FRAME1_M , 1);   // yesno win
-    GFL_BG_SetPriority(GFL_BG_FRAME3_M , 1);  // メッセージ
-    GFL_BG_SetPriority(GFL_BG_FRAME2_M , 0);   // menulist
-
-    wk->SysMsgWin = _BmpWinDel(wk->SysMsgWin);
-    if(ret == 0){ // はいを選択した場合
-      //      GFL_NET_Init(&aGFLNetInit, NULL, wk);
-      _GFL_NET_InitAndStruct(wk,TRUE);
-
-      //接続開始
-      _CHANGESTATE(wk,WIFIP2PMATCH_CONNECTING_INIT);
-      GFL_NET_StateWifiEnterLogin();
-      WifiP2PMatchMessagePrint(wk, dwc_message_0008, TRUE);
-      GF_ASSERT( wk->timeWaitWork == NULL );
-      wk->timeWaitWork = TimeWaitIconAdd( wk->MsgWin, COMM_TALK_WIN_CGX_NUM );
-      wk->bInitMessage = TRUE;
-    }
-    else{  // いいえを選択した場合
-      _CHANGESTATE(wk,WIFIP2PMATCH_MODE_END_WAIT);
-    }
-  }
-
-  return seq;
-}
 
 //------------------------------------------------------------------
 /**
@@ -2953,7 +2682,7 @@ static void _sendMatchStatus(WIFIP2PMATCH_WORK *wk)
 //------------------------------------------------------------------
 static void _makeMyMatchStatus(WIFIP2PMATCH_WORK* wk, u32 status, u32 gamemode)
 {
-//  MYSTATUS* pMyStatus = SaveData_GetMyStatus(wk->pSaveData);
+  //  MYSTATUS* pMyStatus = SaveData_GetMyStatus(wk->pSaveData);
   MYSTATUS* pMyStatus = GAMEDATA_GetMyStatus(wk->pGameData);
   ZUKAN_WORK* pZukan = SaveData_GetZukanWork(wk->pSaveData);
   POKEPARTY* pPokeParty = SaveData_GetTemotiPokemon(wk->pSaveData);
@@ -2972,10 +2701,10 @@ static void _makeMyMatchStatus(WIFIP2PMATCH_WORK* wk, u32 status, u32 gamemode)
   WIFI_STATUS_SetPMLang(wk->pMatch, PM_LANG);
   WIFI_STATUS_SetSex(wk->pMatch, MyStatus_GetMySex(pMyStatus));
   WIFI_STATUS_SetTrainerView(wk->pMatch,MyStatus_GetTrainerView(pMyStatus));
-  
+
 #if PM_DEBUG
   // 自分の絵をデバッグ用に無理やり定義
-/*
+  /*
   if(MyStatus_GetMySex(pMyStatus) == PM_MALE){
     MyStatus_SetTrainerView(WIFI_STATUS_GetMyStatus(wk->pMatch), PLBOY1);
   }
@@ -2989,7 +2718,7 @@ static void _makeMyMatchStatus(WIFIP2PMATCH_WORK* wk, u32 status, u32 gamemode)
     WIFI_STATUS_SetTrainerView(wk->pMatch,PLGIRL1);
   }
 
-  
+
 #endif
 
   // wk->pMatch->myMatchStatus.version = MyStatus_GetRomCode(pMyStatus);
@@ -3178,7 +2907,7 @@ static void _errorDisp(WIFIP2PMATCH_WORK* wk)
   case 7:
   case 8:
   case 9:
-    _CHANGESTATE(wk,WIFIP2PMATCH_RETRY_INIT);//WIFIP2PMATCH_POWEROFF_INIT);
+    _CHANGESTATE(wk,WIFIP2PMATCH_RETRY_INIT);
     break;
   case 10:
     _CHANGESTATE(wk,WIFIP2PMATCH_RETRY_INIT);
@@ -3190,69 +2919,6 @@ static void _errorDisp(WIFIP2PMATCH_WORK* wk)
     _CHANGESTATE(wk,WIFIP2PMATCH_MODE_CHECK_AND_END);
     break;
   }
-}
-
-//------------------------------------------------------------------
-/**
- * $brief   電源を切ってWIFI設定へ  WIFIP2PMATCH_POWEROFF_INIT
- * @param   wk
- * @retval  none
- */
-//------------------------------------------------------------------
-
-static int _poweroffInit( WIFIP2PMATCH_WORK *wk, int seq )
-{
-  // WIFI設定に行かないように
-
-  if(GFL_UI_KEY_GetTrg() & (PAD_BUTTON_CANCEL|PAD_BUTTON_DECIDE)){
-    wk->SysMsgWin = _BmpWinDel(wk->SysMsgWin);
-    _CHANGESTATE(wk,WIFIP2PMATCH_POWEROFF_YESNO);
-  }
-  return seq;
-}
-
-//------------------------------------------------------------------
-/**
- * $brief   電源を切ってWIFI設定へ  WIFIP2PMATCH_POWEROFF_YESNO
- * @param   wk
- * @retval  none
- */
-//------------------------------------------------------------------
-static int _poweroffYesNo( WIFIP2PMATCH_WORK *wk, int seq )
-{
-  _CHANGESTATE(wk,WIFIP2PMATCH_POWEROFF_WAIT);
-  return seq;
-}
-
-
-//------------------------------------------------------------------
-/**
- * $brief   電源を切ってWIFI設定へ  WIFIP2PMATCH_POWEROFF_WAIT
- * @param   wk
- * @retval  none
- */
-//------------------------------------------------------------------
-static int _poweroffWait( WIFIP2PMATCH_WORK *wk, int seq )
-{
-  // WIFI設定に行かないように
-  /*
-    int i;
-    int ret = BmpMenu_YesNoSelectMain(wk->pYesNoWork);
-    if(ret == BMPMENU_NULL){  // まだ選択中
-        return seq;
-    }else if(ret == 0){ // はいを選択した場合
-        GFL_NET_StateWifiLogout();
-        wk->endSeq = WIFI_P2PMATCH_UTIL;   //ソフトウエアリセット
-        _CHANGESTATE(wk,WIFIP2PMATCH_MODE_END_WAIT);
-        EndMessageWindowOff(wk);
-    }
-    else{  // いいえを選択した場合
-        WifiP2PMatchMessagePrint(wk, msg_wifilobby_052, FALSE);
-        _CHANGESTATE(wk,WIFIP2PMATCH_RETRY_YESNO);
-    }
-   */
-  _CHANGESTATE(wk,WIFIP2PMATCH_RETRY_YESNO);
-  return seq;
 }
 
 //------------------------------------------------------------------
@@ -3288,12 +2954,9 @@ static int _retryInit( WIFIP2PMATCH_WORK *wk, int seq )
 static int _retryYesNo( WIFIP2PMATCH_WORK *wk, int seq )
 {
   if( PRINTSYS_QUE_IsFinished(wk->SysMsgQue) ){
-    // はいいいえウインドウを出す
-    wk->pYesNoWork =
-      BmpMenu_YesNoSelectInit(
-        &_yesNoBmpDat,
-        MENU_WIN_CGX_NUM, MENU_WIN_PAL,0,
-        HEAPID_WIFIP2PMATCH );
+
+    _yenowinCreateM2( wk );
+
     _CHANGESTATE(wk,WIFIP2PMATCH_RETRY_WAIT);
   }
   return seq;
@@ -3356,8 +3019,11 @@ static int _retry( WIFIP2PMATCH_WORK *wk, int seq )
       // ブラックアウト
       //      WIPE_SetBrightness( WIPE_DISP_MAIN, WIPE_FADE_BLACK );
       //      WIPE_SetBrightness( WIPE_DISP_SUB, WIPE_FADE_BLACK );
-      GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT,16,16,0);
+//      GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT,16,16,0);
 
+    WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
+                    WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , HEAPID_WIFIP2PMATCH );
+      
       WIFI_MCR_Dest( &wk->matchroom );
       for( i=0; i<MATCHROOM_IN_OBJNUM; i++ )
       {
@@ -3458,7 +3124,7 @@ static int WifiP2PMatch_Connecting( WIFIP2PMATCH_WORK *wk, int seq )
     else{
       _makeMyMatchStatus(wk, WIFI_STATUS_WAIT, WIFI_GAME_LOGIN_WAIT);
       _readFriendMatchStatus( wk );
-      _CHANGESTATE(wk,WifiP2PMatchFriendListStart());
+      _CHANGESTATE(wk,WifiP2PMatchFriendListStart(wk));
     }
   }
   else if(GFL_NET_StateIsWifiError() || (GFL_NET_StateGetWifiStatus() == GFL_NET_STATE_TIMEOUT)){
@@ -3494,7 +3160,7 @@ static int WifiP2PMatch_FirstSaving( WIFIP2PMATCH_WORK *wk, int seq )
     else{
       _makeMyMatchStatus(wk, WIFI_STATUS_WAIT,WIFI_GAME_LOGIN_WAIT);
       _readFriendMatchStatus( wk );
-      _CHANGESTATE(wk,WifiP2PMatchFriendListStart());
+      _CHANGESTATE(wk,WifiP2PMatchFriendListStart(wk));
     }
   }
   else if(GFL_NET_StateIsWifiError() || (GFL_NET_StateGetWifiStatus() == GFL_NET_STATE_TIMEOUT)){
@@ -3532,7 +3198,7 @@ static int WifiP2PMatch_FirstSaving2( WIFIP2PMATCH_WORK *wk, int seq )
     else{
       _makeMyMatchStatus(wk, WIFI_STATUS_WAIT,WIFI_GAME_LOGIN_WAIT);
       _readFriendMatchStatus( wk );
-      _CHANGESTATE(wk,WifiP2PMatchFriendListStart());
+      _CHANGESTATE(wk,WifiP2PMatchFriendListStart(wk));
     }
   }
   else if(GFL_NET_StateIsWifiError() || (GFL_NET_StateGetWifiStatus() == GFL_NET_STATE_TIMEOUT)){
@@ -3570,7 +3236,7 @@ static int WifiP2PMatch_ReConnectingWait( WIFIP2PMATCH_WORK *wk, int seq )
     if( WIFI_MCR_GetInitFlag( &wk->matchroom ) == TRUE ){
       WIFI_MCR_Dest( &wk->matchroom );
     }
-    _CHANGESTATE(wk,WifiP2PMatchFriendListStart());
+    _CHANGESTATE(wk,WifiP2PMatchFriendListStart(wk));
   }
   else if(GFL_NET_StateIsWifiError() || (GFL_NET_StateGetWifiStatus() == GFL_NET_STATE_TIMEOUT)){
     _errorDisp(wk);
@@ -3580,7 +3246,7 @@ static int WifiP2PMatch_ReConnectingWait( WIFIP2PMATCH_WORK *wk, int seq )
     if( WIFI_MCR_GetInitFlag( &wk->matchroom ) == TRUE ){
       WIFI_MCR_Dest( &wk->matchroom );
     }
-    _CHANGESTATE(wk,WifiP2PMatchFriendListStart());
+    _CHANGESTATE(wk,WifiP2PMatchFriendListStart(wk));
   }
   return seq;
 }
@@ -3622,8 +3288,7 @@ static int _firstConnectEndMsgWait( WIFIP2PMATCH_WORK *wk, int seq )
       _makeMyMatchStatus(wk, WIFI_STATUS_WAIT,WIFI_GAME_LOGIN_WAIT);
       _readFriendMatchStatus( wk );
       {
-        int i = WifiP2PMatchFriendListStart();
-        _CHANGESTATE(wk,i);
+        _CHANGESTATE(wk,WifiP2PMatchFriendListStart(wk));
       }
       wk->SysMsgWin = _BmpWinDel(wk->SysMsgWin);
     }
@@ -3661,7 +3326,7 @@ static void _userDataDisp(WIFIP2PMATCH_WORK* wk)
 
 
   wk->MyInfoWinBack=GFL_BMPWIN_Create(
-    GFL_BG_FRAME1_M,
+    GFL_BG_FRAME2_M,
     WIFIP2PMATCH_PLAYER_DISP_X, WIFIP2PMATCH_PLAYER_DISP_Y,
     WIFIP2PMATCH_PLAYER_DISP_SIZX, WIFIP2PMATCH_PLAYER_DISP_SIZY,
     COMM_MESFONT_PAL, GFL_BMP_CHRAREA_GET_B );
@@ -3676,8 +3341,8 @@ static void _userDataDisp(WIFIP2PMATCH_WORK* wk)
   // システムウィンドウ設定
   //  BmpMenuWinWrite( wk->MyInfoWinBack, WINDOW_TRANS_ON, MENU_WIN_CGX_NUM, MENU_WIN_PAL );
   //    GFL_BMPWIN_MakeFrameScreen(wk->MyInfoWinBack, MENU_WIN_CGX_NUM, MENU_WIN_PAL);
-  BmpWinFrame_CgxSet(GFL_BG_FRAME1_M,COMM_TALK_WIN_CGX_NUM, MENU_TYPE_SYSTEM, HEAPID_WIFIP2PMATCH);
-  BmpWinFrame_Write( wk->MyInfoWinBack, WINDOW_TRANS_ON, COMM_TALK_WIN_CGX_NUM, COMM_MESFRAME_PAL );
+  //BmpWinFrame_CgxSet(GFL_BG_FRAME1_M,COMM_TALK_WIN_CGX_NUM, MENU_TYPE_SYSTEM, HEAPID_WIFIP2PMATCH);
+  BmpWinFrame_Write( wk->MyInfoWinBack, WINDOW_TRANS_ON_V, GFL_ARCUTIL_TRANSINFO_GetPos(wk->menuwin_m2), COMM_MESFRAME_PAL );
 }
 
 // ダミーオブジェクトを登録しまくる
@@ -3774,16 +3439,6 @@ static BOOL WIFIP2PModeCheck( int friendIndex ,void* pWork)
 //------------------------------------------------------------------
 static int WifiP2PMatch_FriendListInit( WIFIP2PMATCH_WORK *wk, int seq )
 {
-  int i,x;
-  int num = 0;
-  ARCHANDLE* p_handle;
-  MCR_MOVEOBJ* p_moveobj;
-  int obj_code;
-
-  // ワイプ終了待ち
-  if( GFL_FADE_CheckFade() ){
-    return seq;
-  }
 
   // エラーチェック
   if( GFL_NET_StateIsWifiError() == FALSE ){
@@ -3793,6 +3448,27 @@ static int WifiP2PMatch_FriendListInit( WIFIP2PMATCH_WORK *wk, int seq )
       return seq;
     }
   }
+  _CHANGESTATE(wk,WIFIP2PMATCH_FRIENDLIST_INIT2);
+  return seq;
+}
+
+
+//------------------------------------------------------------------
+/**
+ * $brief   フレンドリスト表示初期化   WIFIP2PMATCH_FRIENDLIST_INIT2
+ *
+ * @param   wk
+ *
+ * @retval  none
+ */
+//------------------------------------------------------------------
+static int WifiP2PMatch_FriendListInit2( WIFIP2PMATCH_WORK *wk, int seq )
+{
+  int i,x;
+  int num = 0;
+  ARCHANDLE* p_handle;
+  MCR_MOVEOBJ* p_moveobj;
+  int obj_code;
 
   // コールバックを設定
   GFL_NET_DWC_SetConnectModeCheckCallback( WIFIP2PModeCheck );
@@ -3804,8 +3480,6 @@ static int WifiP2PMatch_FriendListInit( WIFIP2PMATCH_WORK *wk, int seq )
   p_handle = GFL_ARC_OpenDataHandle( ARCID_WIFIP2PMATCH, HEAPID_WIFIP2PMATCH );
 
 
-  // アイコンデータ読込み
-  WifiP2PMatchFriendListIconLoad(  &wk->icon, p_handle, HEAPID_WIFIP2PMATCH );
 
   _myVChatStatusOrgSet(wk);
 
@@ -3883,8 +3557,10 @@ static int WifiP2PMatch_FriendListInit( WIFIP2PMATCH_WORK *wk, int seq )
   // ワイプイン
   //  WIPE_SYS_Start( WIPE_PATTERN_WMS, WIPE_TYPE_FADEIN, WIPE_TYPE_FADEIN, WIPE_FADE_BLACK,
   //          COMM_BRIGHTNESS_SYNC, 1, HEAPID_WIFIP2PMATCH);
-  GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT,
-                              16,0,COMM_BRIGHTNESS_SYNC);
+    WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEIN , WIPE_TYPE_FADEIN , 
+                    WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , HEAPID_WIFIP2PMATCH );
+//  GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT,
+  //                            16,0,COMM_BRIGHTNESS_SYNC);
 
   _CHANGESTATE(wk,WIFIP2PMATCH_MODE_FRIENDLIST);
   GFL_NET_SetAutoErrorCheck(FALSE);
@@ -3902,7 +3578,7 @@ static int WifiP2PMatch_FriendListInit( WIFIP2PMATCH_WORK *wk, int seq )
 
 static int _checkParentConnect(WIFIP2PMATCH_WORK *wk)
 {
-  if( GFL_NET_StateGetWifiStatus()==GFL_NET_STATE_MATCHED ){
+ if( GFL_NET_StateGetWifiStatus()==GFL_NET_STATE_MATCHED ){
     return TRUE;
   }
   return FALSE;
@@ -4088,7 +3764,7 @@ static int WifiP2PMatch_FriendList( WIFIP2PMATCH_WORK *wk, int seq )
 
 
   // ワイプ終了待ち
-  if( GFL_FADE_CheckFade() ){
+  if( !WIPE_SYS_EndCheck() ){
     return seq;
   }
 
@@ -4307,7 +3983,7 @@ static int _callGameInit( WIFIP2PMATCH_WORK *wk, int seq )
   if(n>=0 && n < WIFIP2PMATCH_MEMBER_MAX){
     if( WifiP2PMatch_CommWifiBattleStart( wk, n ) ){
       wk->cancelEnableTimer = _CANCELENABLE_TIMER;
-     
+
       _commStateChange(wk, WIFI_STATUS_PLAYING, WIFI_GAME_UNIONMATCH);
       _myStatusChange(wk, WIFI_STATUS_PLAYING, WIFI_GAME_UNIONMATCH);  // 接続中になる
 
@@ -4319,16 +3995,16 @@ static int _callGameInit( WIFIP2PMATCH_WORK *wk, int seq )
       return seq;
     }
   }
-  
+
   _CHANGESTATE(wk,WIFIP2PMATCH_MODE_FRIENDLIST); //もとに戻る
-  
+
   return seq;
 
 }
 
 //------------------------------------------------------------------
 /**
- * $brief   VCTONOFFウインドウを閉じる
+ * $brief   VCTONOFFウインドウを閉じる  WIFIP2PMATCH_VCHATWIN_WAIT
  * @param   wk
  * @retval  none
  */
@@ -4336,12 +4012,7 @@ static int _callGameInit( WIFIP2PMATCH_WORK *wk, int seq )
 
 static int _vchatToggleWait( WIFIP2PMATCH_WORK *wk, int seq )
 {
-  if( 0 !=  _checkParentNewPlayer(wk)){ // 接続してきた
-    _CHANGESTATE(wk,WIFIP2PMATCH_MODE_FRIENDLIST);
-    // 主人公の動作を許可
-    FriendRequestWaitOff( wk );
-  }
-  else if( PRINTSYS_QUE_IsFinished(wk->SysMsgQue) ){
+  if(GFL_UI_KEY_GetTrg()){
     _CHANGESTATE(wk,WIFIP2PMATCH_MODE_FRIENDLIST);
     // 主人公の動作を許可
     FriendRequestWaitOff( wk );
@@ -4543,11 +4214,11 @@ static int WifiP2PMatch_VCTConnect( WIFIP2PMATCH_WORK *wk, int seq )
     _errorDisp(wk);
   }
   // 相手の状態がVCT状態でない場合切断
-//  else if( gamemode != WIFI_GAME_VCT ){
-//    _friendNameExpand(wk, GFL_NET_DWC_GetFriendIndex());
-//    WifiP2PMatchMessagePrint(wk, msg_wifilobby_013, FALSE);
-//    _CHANGESTATE(wk,WIFIP2PMATCH_MODE_VCT_DISCONNECT);
-//  }
+  //  else if( gamemode != WIFI_GAME_VCT ){
+  //    _friendNameExpand(wk, GFL_NET_DWC_GetFriendIndex());
+  //    WifiP2PMatchMessagePrint(wk, msg_wifilobby_013, FALSE);
+  //    _CHANGESTATE(wk,WIFIP2PMATCH_MODE_VCT_DISCONNECT);
+  //  }
   else if(GFL_UI_KEY_GetTrg() & (PAD_BUTTON_CANCEL|PAD_BUTTON_DECIDE)){
     WifiP2PMatchMessagePrint(wk, msg_wifilobby_017, FALSE);
     _CHANGESTATE(wk,WIFIP2PMATCH_MODE_VCT_CONNECTEND_YESNO);
@@ -4586,11 +4257,9 @@ static int WifiP2PMatch_VCTConnectEndYesNo( WIFIP2PMATCH_WORK *wk, int seq )
     // 最後に遊んだ日付は、VCTがつながったときに設定する
     WifiList_SetLastPlayDate( wk->pList, GFL_NET_DWC_GetFriendIndex());
     // はいいいえウインドウを出す
-    wk->pYesNoWork =
-      BmpMenu_YesNoSelectInit(
-        &_yesNoBmpDat,
-        MENU_WIN_CGX_NUM, MENU_WIN_PAL,0,
-        HEAPID_WIFIP2PMATCH );
+
+    _yenowinCreateM2(wk);
+
     _CHANGESTATE(wk,WIFIP2PMATCH_MODE_VCT_CONNECTEND_WAIT);
   }
   return seq;
@@ -4754,7 +4423,7 @@ static int WifiP2PMatch_Disconnect(WIFIP2PMATCH_WORK *wk, int seq)
 
     //        if(wk->menulist==NULL){
     if( WIFI_MCR_GetInitFlag( &wk->matchroom ) == FALSE ){
-      _CHANGESTATE(wk,WifiP2PMatchFriendListStart());
+      _CHANGESTATE(wk,WifiP2PMatchFriendListStart(wk));
     }
     else{
 
@@ -4871,11 +4540,8 @@ static int _parentModeSelectRelYesNo( WIFIP2PMATCH_WORK* wk, int seq )
   WIFI_MCR_PCAnmMain( &wk->matchroom ); // パソコンアニメメイン
   if( PRINTSYS_QUE_IsFinished(wk->SysMsgQue) ){
     // はいいいえウインドウを出す
-    wk->pYesNoWork =
-      BmpMenu_YesNoSelectInit(
-        &_yesNoBmpDat,
-        MENU_WIN_CGX_NUM, MENU_WIN_PAL,0,
-        HEAPID_WIFIP2PMATCH );
+    _yenowinCreateM2(wk);
+
     _CHANGESTATE(wk,WIFIP2PMATCH_MODE_SELECT_REL_WAIT);
   }
   return seq;
@@ -4984,20 +4650,10 @@ static int _parentModeSelectMenuWait( WIFIP2PMATCH_WORK *wk, int seq )
     break;
   default:
     Snd_SePlay(_SE_DESIDE);
-    // 交換チェック
-    /*    if((ret == WIFI_STATUS_TRADE_WAIT) && (2 > num )){
-      WifiP2PMatchMessagePrint(wk, msg_wifilobby_053, FALSE);
-      _CHANGESTATE(wk, WIFIP2PMATCH_MODE_DISCONNECT);
-    }*/
-    // ダブルバトルチェック
-    /*    else if((ret == WIFI_STSET_DOUBLEBATTLE) && (2 > num)){
-      WifiP2PMatchMessagePrint(wk, msg_wifilobby_067, FALSE);
-      _CHANGESTATE(wk,WIFIP2PMATCH_MODE_DISCONNECT);
-    }*/
     // サブリスト処理へ
     if(ret == WIFI_GAME_BATTLE_SINGLE_ALL){
       wk->SubListWin = _BmpWinDel(wk->SubListWin);
-      BmpMenuList_Exit(wk->sublw, NULL,  &wk->battleCur);
+      BmpMenuList_Exit(wk->sublw, NULL,  &wk->singleCur[_MENUTYPE_GAME]);
       BmpMenuWork_ListDelete( wk->submenulist );
       _battleSubMenuInit(wk, ret);
       _CHANGESTATE(wk,WIFIP2PMATCH_MODE_SUBBATTLE_WAIT);
@@ -5009,23 +4665,16 @@ static int _parentModeSelectMenuWait( WIFIP2PMATCH_WORK *wk, int seq )
       EndMessageWindowOff(wk);
     }
     {
-      BOOL  msg_on = TRUE;
-
-      //     if(話しかけの時は親になる){   //@todo
-      WifiP2PMatch_CommWifiBattleStart( wk, -1 );  // 交換でも通信方法を変更するためにここに移動
-      //   }
+      WifiP2PMatch_CommWifiBattleStart( wk, -1 );
       _commStateChange(wk, WIFI_STATUS_RECRUIT, ret );
-
-
       if( wk->seq == WIFIP2PMATCH_MODE_FRIENDLIST ){
-        // 動作停止させる
-        FriendRequestWaitOn( wk, msg_on );
+        FriendRequestWaitOn( wk, TRUE );       // 動作停止させる
       }
     }
     break;
   }
   wk->SubListWin = _BmpWinDel(wk->SubListWin);
-  BmpMenuList_Exit(wk->sublw, NULL, &wk->battleCur);
+  BmpMenuList_Exit(wk->sublw, NULL, &wk->singleCur[_MENUTYPE_GAME]);
   BmpMenuWork_ListDelete( wk->submenulist );
 
   return seq;
@@ -5061,8 +4710,10 @@ static int _parentRestart( WIFIP2PMATCH_WORK *wk, int seq )
     GFL_NET_SetWifiBothNet(FALSE);
     //        WIPE_SYS_Start( WIPE_PATTERN_WMS, WIPE_TYPE_FADEOUT, WIPE_TYPE_FADEOUT, WIPE_FADE_BLACK,
     //                      COMM_BRIGHTNESS_SYNC, 1, HEAPID_WIFIP2PMATCH);
-    GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT,
-                                0,16,COMM_BRIGHTNESS_SYNC);
+    WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
+                    WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , HEAPID_WIFIP2PMATCH );
+//    GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT,
+  //                              0,16,COMM_BRIGHTNESS_SYNC);
 
     wk->bRetryBattle = FALSE;
 
@@ -5165,7 +4816,7 @@ static int _childModeMatchMenuInit( WIFIP2PMATCH_WORK *wk, int seq )
   u32 way;
 
   GFL_NET_SetClientConnect(GFL_NET_HANDLE_GetCurrentHandle(),FALSE);  //接続禁止
-  
+
   friendNo = WIFI_MCR_PlayerSelect( &wk->matchroom );
   NET_PRINT("_childModeMatchMenuInit %d\n",friendNo);
 
@@ -5326,7 +4977,7 @@ static int _childModeMatchMenuInit2( WIFIP2PMATCH_WORK *wk, int seq )
       _CHANGESTATE(wk, WIFIP2PMATCH_MODE_PLAYERDIRECT_INIT);
     }
 #endif
-    
+
   }
 
   return seq;
@@ -5656,7 +5307,7 @@ static int _childModeMatchMenuWait( WIFIP2PMATCH_WORK *wk, int seq )
           NET_PRINT( "wifi接続先 %d %d\n", friendNo - 1,status );
           if( WifiP2PMatch_CommWifiBattleStart( wk, friendNo - 1 ) ){
             //ともだちに繋ぎに行く時はMACセットしない
-       //     WIFI_STATUS_SetVChatMac(wk->pMatch, WifiFriendMatchStatusGet( friendNo - 1 ));
+            //     WIFI_STATUS_SetVChatMac(wk->pMatch, WifiFriendMatchStatusGet( friendNo - 1 ));
 
             wk->cancelEnableTimer = _CANCELENABLE_TIMER;
             _commStateChange(wk,WIFI_STATUS_RECRUIT, gamemode);
@@ -6017,8 +5668,8 @@ void WifiP2PMatchRecvMyStatus(const int netID, const int size, const void* pData
   }
   pTargetSt = GAMEDATA_GetMyStatusPlayer(wk->pGameData,netID);  //相手側＝１として代入している
   MyStatus_Copy(pData,pTargetSt);
-  
-//  wk->matchGameMode[netID] = pRecvData[0];
+
+  //  wk->matchGameMode[netID] = pRecvData[0];
 }
 
 
@@ -6048,9 +5699,32 @@ void WifiP2PMatchRecvDirectMode(const int netID, const int size, const void* pDa
     GF_ASSERT(0);  // 不正コマンド受信は切断
     _CHANGESTATE(wk, WIFIP2PMATCH_MODE_DISCONNECT);
   }
-//  wk->matchGameMode[netID] = pRecvData[0];
+  //  wk->matchGameMode[netID] = pRecvData[0];
 }
 
+//------------------------------------------------------------------
+/**
+ * $brief   レギュレーションを受信 CNM_WFP2PMF_DIRECT_COMMAND
+ * @param   wk
+ * @retval  none
+ */
+//------------------------------------------------------------------
+
+void WifiP2PMatchRecvBattleRegulation(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
+{
+  WIFIP2PMATCH_WORK *wk = pWork;
+  MYSTATUS* pTargetSt;
+  const u32 *pRegNo = pData;
+
+
+  if(pNetHandle != GFL_NET_HANDLE_GetCurrentHandle()){
+    return; //自分のハンドルと一致しない場合、親としてのデータ受信なので無視する
+  }
+//  wk->matchRegulation = pRegNo[0];
+  _convertRegulation(wk,pRegNo[0]);
+
+
+}
 
 
 //------------------------------------------------------------------
@@ -6118,12 +5792,12 @@ static int _parentModeCallMenuCheck( WIFIP2PMATCH_WORK *wk, int seq )
   if(_connectingErrFunc(wk)){
   }
   else if(WIFI_GAME_NONE != wk->matchGameMode[id]){  // 送られてきた
-//    u16 org_status = _WifiMyStatusGet( wk, wk->pMatch );
-//    u16 status = _convertState(org_status);
+    //    u16 org_status = _WifiMyStatusGet( wk, wk->pMatch );
+    //    u16 status = _convertState(org_status);
     u16 gamemode = _WifiMyGameModeGet( wk, wk->pMatch );
 
     NET_PRINT("_parentModeCallMenuCheck %d %d\n",wk->matchGameMode[id], gamemode);
-    
+
     if(wk->matchGameMode[id] == gamemode){
       GFL_NET_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle() ,_TIMING_GAME_START);
       _CHANGESTATE(wk,WIFIP2PMATCH_MODE_MYSTATUS_WAIT);
@@ -6211,12 +5885,14 @@ static int _parentModeCallMenuWait( WIFIP2PMATCH_WORK *wk, int seq )
       status = WIFI_STATUS_PLAYING;
       wk->endSeq = gamemode;
       NET_PRINT("endSeq %d \n",gamemode);
-      
+
     }
 
     _myStatusChange(wk, status,gamemode);  // 接続中になる
-    GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT,
-                                0,16,COMM_BRIGHTNESS_SYNC);
+   // WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
+     //               WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , HEAPID_WIFIP2PMATCH );
+//    GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT,
+  //                              0,16,COMM_BRIGHTNESS_SYNC);
 
 
     seq = SEQ_OUT;            //終了シーケンスへ
@@ -6239,7 +5915,7 @@ static int WifiP2PMatch_MainReturn( WIFIP2PMATCH_WORK *wk, int seq )
 {
   GFL_BG_ClearFrame(  GFL_BG_FRAME3_M);
   wk->mainCur = 0;
-  _CHANGESTATE(wk,WifiP2PMatchFriendListStart());
+  _CHANGESTATE(wk,WifiP2PMatchFriendListStart(wk));
   return seq;
 }
 
@@ -6312,14 +5988,12 @@ static int _exitYesNo( WIFIP2PMATCH_WORK *wk, int seq )
   if( PRINTSYS_QUE_IsFinished(wk->SysMsgQue) ){
     // はいいいえウインドウを出す
 
-    BmpWinFrame_GraphicSet(
-      GFL_BG_FRAME2_M, MENU_WIN_CGX_NUM, MENU_WIN_PAL, 0, HEAPID_WIFIP2PMATCH );
+    //@todo 読み込みが必要かどうか10.01.16
+    //    BmpWinFrame_GraphicSet(
+    //      GFL_BG_FRAME2_M, MENU_WIN_CGX_NUM, MENU_WIN_PAL, 0, HEAPID_WIFIP2PMATCH );
 
-    wk->pYesNoWork =
-      BmpMenu_YesNoSelectInit(
-        &_yesNoBmpDat,
-        MENU_WIN_CGX_NUM, MENU_WIN_PAL,0,
-        HEAPID_WIFIP2PMATCH );
+    _yenowinCreateM2(wk);
+
     _CHANGESTATE(wk,WIFIP2PMATCH_MODE_EXIT_WAIT);
   }
 
@@ -6453,21 +6127,9 @@ static int _nextBattleYesNo( WIFIP2PMATCH_WORK *wk, int seq )
   GFL_NET_SetNoChildErrorCheck(TRUE);
 
   if( PRINTSYS_QUE_IsFinished(wk->SysMsgQue) ){
-    // はいいいえウインドウを出す
-    wk->pYesNoWork =
-      BmpMenu_YesNoSelectInit(
-        &_yesNoBmpDat,
-        MENU_WIN_CGX_NUM, MENU_WIN_PAL,0,
-        HEAPID_WIFIP2PMATCH );
+    _yenowinCreateM2(wk);
     _CHANGESTATE(wk,WIFIP2PMATCH_NEXTBATTLE_WAIT);
   }
-
-  // WIFI　対戦AUTOﾓｰﾄﾞデバック
-#ifdef _WIFI_DEBUG_TUUSHIN
-  WIFI_DEBUG_BATTLE_Work.DEBUG_WIFI_A_REQ = FALSE;
-  WIFI_DEBUG_BATTLE_Work.DEBUG_WIFI_TOUCH_REQ = FALSE;
-  WIFI_DEBUG_BATTLE_Work.DEBUG_WIFI_B_REQ = TRUE;
-#endif  //_WIFI_DEBUG_TUUSHIN
 
   return seq;
 }
@@ -6572,12 +6234,8 @@ static int _vchatNegoCheck( WIFIP2PMATCH_WORK *wk, int seq )
   }
 
   if( PRINTSYS_QUE_IsFinished(wk->SysMsgQue) ){
-    // はいいいえウインドウを出す
-    wk->pYesNoWork =
-      BmpMenu_YesNoSelectInit(
-        &_yesNoBmpDat,
-        MENU_WIN_CGX_NUM, MENU_WIN_PAL,0,
-        HEAPID_WIFIP2PMATCH );
+
+    _yenowinCreateM2(wk);
     _CHANGESTATE(wk,WIFIP2PMATCH_MODE_VCHAT_NEGO_WAIT);
   }
 #endif
@@ -6722,8 +6380,10 @@ static int  WifiP2PMatch_EndWait( WIFIP2PMATCH_WORK *wk, int seq )
   if(!GFL_NET_IsInit()){
     //        WIPE_SYS_Start( WIPE_PATTERN_WMS, WIPE_TYPE_FADEOUT, WIPE_TYPE_FADEOUT, WIPE_FADE_BLACK,
     //                      COMM_BRIGHTNESS_SYNC, 1, HEAPID_WIFIP2PMATCH);
-    GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT,
-                                0,16,COMM_BRIGHTNESS_SYNC);
+  //  WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
+    //                WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , HEAPID_WIFIP2PMATCH );
+//    GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT,
+  //                              0,16,COMM_BRIGHTNESS_SYNC);
     seq = SEQ_OUT;            //終了シーケンスへ
   }
   return seq;
@@ -6806,11 +6466,11 @@ static BOOL _myVChatStatusToggle(WIFIP2PMATCH_WORK *wk)
 
 static BOOL _myVChatStatusToggleOrg(WIFIP2PMATCH_WORK *wk)
 {
-  //@@oo
-  //  wk->pMatch->myMatchStatus.vchat_org = 1 - wk->pMatch->myMatchStatus.vchat_org;
-  //wk->pMatch->myMatchStatus.vchat = wk->pMatch->myMatchStatus.vchat_org;
+  //本物をひっくり返す
+  wk->pParentWork->vchatMain = 1 - wk->pParentWork->vchatMain;
+  WIFI_STATUS_SetVChatStatus(wk->pMatch, wk->pParentWork->vchatMain);
   _sendMatchStatus(wk);
-  return WIFI_STATUS_GetVChatStatus( wk->pMatch );//wk->pMatch->myMatchStatus.vchat_org;
+  return WIFI_STATUS_GetVChatStatus( wk->pMatch );
 }
 
 //------------------------------------------------------------------

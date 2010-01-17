@@ -26,6 +26,51 @@ static const BMPWIN_YESNO_DAT _yesNoBmpDatSys2 = {
   FLD_YESNO_WIN_PAL, FRAME1_YESNO_WIN_CGX
   };
 
+//------------------------------------------------------------------
+/**
+ * $brief   yesnoウインドウを出す
+ * @param   msg_index
+ * @retval  int       int friend = GFL_NET_DWC_GetFriendIndex();
+
+ */
+//------------------------------------------------------------------
+
+static void _yenowinCreateM2(WIFIP2PMATCH_WORK *wk)
+{
+  wk->pYesNoWork =
+    BmpMenu_YesNoSelectInit( &_yesNoBmpDat, GFL_ARCUTIL_TRANSINFO_GetPos(wk->menuwin_m2), MENU_WIN_PAL, 0, HEAPID_WIFIP2PMATCH );
+}
+
+//------------------------------------------------------------------
+/**
+ * $brief   yesnoウインドウを出す
+ * @param   msg_index
+ * @retval  int       int friend = GFL_NET_DWC_GetFriendIndex();
+
+ */
+//------------------------------------------------------------------
+
+static void _yenowinCreateM1(WIFIP2PMATCH_WORK *wk)
+{
+  wk->pYesNoWork =
+    BmpMenu_YesNoSelectInit( &_yesNoBmpDatSys2, GFL_ARCUTIL_TRANSINFO_GetPos(wk->menuwin_m1), MENU_WIN_PAL, 0, HEAPID_WIFIP2PMATCH );
+}
+
+
+//------------------------------------------------------------------
+/**
+ * $brief   yesnoウインドウを出す
+ * @param   msg_index
+ * @retval  int       int friend = GFL_NET_DWC_GetFriendIndex();
+
+ */
+//------------------------------------------------------------------
+
+static void _yenowinCreateSys(WIFIP2PMATCH_WORK *wk)
+{
+  wk->pYesNoWork =
+    BmpMenu_YesNoSelectInit( &_yesNoBmpDatSys, GFL_ARCUTIL_TRANSINFO_GetPos(wk->menuwin_m2), MENU_WIN_PAL, 0, HEAPID_WIFIP2PMATCH );
+}
 
 
 //------------------------------------------------------------------
@@ -145,7 +190,7 @@ static void WifiP2PMatchMessagePrint( WIFIP2PMATCH_WORK *wk, int msgno, BOOL bSy
 
   //------
 
-  BmpWinFrame_CgxSet(GFL_BG_FRAME2_M,COMM_TALK_WIN_CGX_NUM, MENU_TYPE_SYSTEM, HEAPID_WIFIP2PMATCH);
+  //BmpWinFrame_CgxSet(GFL_BG_FRAME2_M,COMM_TALK_WIN_CGX_NUM, MENU_TYPE_SYSTEM, HEAPID_WIFIP2PMATCH);
 
   GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_MAIN_BG,
                                 0x20*COMM_MESFONT_PAL, 0x20, HEAPID_WIFIP2PMATCH);
@@ -155,7 +200,7 @@ static void WifiP2PMatchMessagePrint( WIFIP2PMATCH_WORK *wk, int msgno, BOOL bSy
   GFL_BMPWIN_MakeScreen(wk->MsgWin);
   GFL_BMPWIN_TransVramCharacter(wk->MsgWin);
 
-  BmpWinFrame_Write( wk->MsgWin, WINDOW_TRANS_ON, COMM_TALK_WIN_CGX_NUM, COMM_MESFRAME_PAL );
+  BmpWinFrame_Write( wk->MsgWin, WINDOW_TRANS_ON_V, GFL_ARCUTIL_TRANSINFO_GetPos(wk->menuwin_m2), COMM_MESFRAME_PAL );
 
   //------
 
@@ -169,12 +214,12 @@ static void WifiP2PMatchMessagePrint( WIFIP2PMATCH_WORK *wk, int msgno, BOOL bSy
   GFL_FONTSYS_SetDefaultColor();
   PRINTSYS_Print( GFL_BMPWIN_GetBmp(wk->MsgWin), 2, 2, wk->TalkString, wk->fontHandle);
   GFL_BMPWIN_TransVramCharacter(wk->MsgWin);
+#else
+  GFL_FONTSYS_SetDefaultColor();
+  PRINT_UTIL_Setup(&wk->SysMsgPrintUtil ,wk->MsgWin );
+  PRINT_UTIL_Print(&wk->SysMsgPrintUtil,wk->SysMsgQue, 0, 0,wk->TalkString, wk->fontHandle);
+  GFL_BMPWIN_TransVramCharacter(wk->MsgWin);
 #endif
-
-
-  //    PRINT_UTIL_Print(&wk->SysMsgPrintUtil, wk->SysMsgQue,
-  //                   0, 0,wk->TalkString,wk->fontHandle);
-
   //GFL_BMPWIN_TransVramCharacter(wk->MsgWin);
 }
 
@@ -278,7 +323,7 @@ static void _systemMessagePrint( WIFIP2PMATCH_WORK *wk, int msgno )
     COMM_SYS_WIN_SX, COMM_SYS_WIN_SY,
     COMM_MESFONT_PAL, GFL_BMP_CHRAREA_GET_B);
 
-  BmpWinFrame_CgxSet(GFL_BG_FRAME2_M,COMM_SYS_WIN_CGX, MENU_TYPE_SYSTEM, HEAPID_WIFIP2PMATCH);
+//  BmpWinFrame_CgxSet(GFL_BG_FRAME2_M,COMM_SYS_WIN_CGX, MENU_TYPE_SYSTEM, HEAPID_WIFIP2PMATCH);
 
   GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_MAIN_BG,
                                 0x20*COMM_MESFONT_PAL, 0x20, HEAPID_WIFIP2PMATCH);
@@ -287,7 +332,8 @@ static void _systemMessagePrint( WIFIP2PMATCH_WORK *wk, int msgno )
   GFL_BMP_Clear(GFL_BMPWIN_GetBmp(wk->SysMsgWin), WINCLR_COL(FBMP_COL_WHITE) );
   GFL_BMPWIN_ClearScreen(wk->SysMsgWin);
   GFL_BMPWIN_MakeScreen(wk->SysMsgWin);
-  BmpWinFrame_Write( wk->SysMsgWin, WINDOW_TRANS_ON, COMM_SYS_WIN_CGX, COMM_MESFONT_PAL );
+  BmpWinFrame_Write( wk->SysMsgWin, WINDOW_TRANS_ON_V,
+                     GFL_ARCUTIL_TRANSINFO_GetPos(wk->menuwin_m2), COMM_MESFONT_PAL );
 
   //    GFL_BMPWIN_ClearScreen(wk->SysMsgWin);
   //   GFL_BMPWIN_MakeScreen(wk->SysMsgWin);
@@ -309,20 +355,6 @@ static void _systemMessagePrint( WIFIP2PMATCH_WORK *wk, int msgno )
 
 //------------------------------------------------------------------
 /**
- * $brief   カーソルコールバック
- * @param   wk
- * @retval  none
- */
-//------------------------------------------------------------------
-static void _curCallBack(BMPMENULIST_WORK * wk,u32 param,u8 mode)
-{
-  if(mode == 0){
-    Snd_SePlay(_SE_CURSOR);
-  }
-}
-
-//------------------------------------------------------------------
-/**
  * $brief   待機状態になる為の選択メニュー WIFIP2PMATCH_MODE_SELECT_INIT
  * @param   wk
  * @retval  none
@@ -336,7 +368,7 @@ typedef struct {
 
 //  メニューリスト
 //#define WIFI_PARENTINFO_MENULIST_MAX    ( 10 )
-#define WIFI_PARENTINFO_MENULIST_COMMON   ( 5 ) // 変動しない部分の数
+#define WIFI_PARENTINFO_MENULIST_COMMON   ( 4 ) // 変動しない部分の数
 
 _infoMenu _parentInfoMenuList[  ] = {
   { msg_wifilobby_027, (u32)WIFI_GAME_VCT }, //VCT
@@ -348,17 +380,29 @@ _infoMenu _parentInfoMenuList[  ] = {
 
 
 _infoMenu _parentSingleInfoMenuList[] = {
-  { msg_wifilobby_0571, (u32)WIFI_GAME_BATTLE_SINGLE_ALL }, //シングル
-  { msg_wifilobby_0572, (u32)WIFI_GAME_BATTLE_DOUBLE_ALL },   //ダブル
-  { msg_wifilobby_0573, (u32)WIFI_GAME_BATTLE_TRIPLE_ALL },  //トリプル
-  { msg_wifilobby_0574, (u32)WIFI_GAME_BATTLE_ROTATION_ALL },  //ローテーション
+  { msg_wifilobby_0571, (u32)0 }, //シングル
+  { msg_wifilobby_0572, (u32)1 },   //ダブル
+  { msg_wifilobby_0573, (u32)2 },  //トリプル
+  { msg_wifilobby_0574, (u32)3 },  //ローテーション
   { msg_wifilobby_032, (u32)BMPMENULIST_CANCEL },
 };
+
+
+
+_infoMenu _parentCustomInfoMenuList[] = {
+  { msg_wifilobby_0571, (u32)WIFIP2PMATCH_PLAYERDIRECT_BATTLE_MODE }, //バトル
+  { msg_wifilobby_060,  (u32)WIFIP2PMATCH_PLAYERDIRECT_BATTLE_RULE },   //ルール
+  { msg_wifilobby_062,  (u32)WIFIP2PMATCH_PLAYERDIRECT_BATTLE_SHOOTER },  //シューター
+  { msg_wifilobby_096,  (u32)WIFIP2PMATCH_PLAYERDIRECT_BATTLE_DECIDE },  //決定
+  { msg_wifilobby_097,  (u32)WIFIP2PMATCH_PLAYERDIRECT_BATTLE_WATCH },  //ルールを見る 
+  { msg_wifilobby_032,  (u32)BMPMENULIST_CANCEL },
+};
+
 
 #define _NORIMIT (0)
 #define _FLAT (1)
 
-_infoMenu _parentDoubleInfoMenuList[] = {
+_infoMenu _parentRuleInfoMenuList[] = {
   { msg_wifilobby_060, (u32)_NORIMIT },  //せいげんなし
   { msg_wifilobby_061, (u32)_FLAT },  //フラットルール
   { msg_wifilobby_032, (u32)BMPMENULIST_CANCEL },
@@ -374,15 +418,17 @@ _infoMenu _parentShooterInfoMenuList[] = {
   { msg_wifilobby_032, (u32)BMPMENULIST_CANCEL },
 };
 
+static void	_print_callback(BMPMENULIST_WORK * wk,u32 param,u8 y);
+
 
 ///選択メニューのリスト
 static BMPMENULIST_HEADER _parentInfoMenuListHeader = {
   NULL,     // 表示文字データポインタ
-  _curCallBack,         // カーソル移動ごとのコールバック関数
-  NULL,         // 一列表示ごとのコールバック関数
+  NULL,         // カーソル移動ごとのコールバック関数
+  _print_callback,         // 一列表示ごとのコールバック関数
   NULL,                   //
-  WIFI_PARENTINFO_MENULIST_COMMON,// リスト項目数
-  WIFI_PARENTINFO_MENULIST_COMMON,// 表示最大項目数
+  elementof(_parentInfoMenuList),// リスト項目数
+  elementof(_parentInfoMenuList),// 表示最大項目数
   0,            // ラベル表示Ｘ座標
   16,            // 項目表示Ｘ座標
   0,            // カーソル表示Ｘ座標
@@ -405,9 +451,9 @@ static BMPMENULIST_HEADER _parentInfoMenuListHeader = {
 };
 
 ///選択メニューのリスト
-static const BMPMENULIST_HEADER _parentInfoBattleMenuListHeader = {
+static BMPMENULIST_HEADER _parentInfoBattleMenuListHeader = {
   NULL,     // 表示文字データポインタ
-  _curCallBack,         // カーソル移動ごとのコールバック関数
+  NULL,         // カーソル移動ごとのコールバック関数
   NULL,         // 一列表示ごとのコールバック関数
   NULL,                   //
   NELEMS(_parentSingleInfoMenuList),  // リスト項目数
@@ -434,18 +480,74 @@ static const BMPMENULIST_HEADER _parentInfoBattleMenuListHeader = {
 };
 
 
-#define PARENTMENU_Y  ( 3 )
-static void _ParentModeSelectMenu( WIFIP2PMATCH_WORK *wk )
+///選択メニューのリスト
+static BMPMENULIST_HEADER _parentCustomMenuListHeader = {
+  NULL,     // 表示文字データポインタ
+  NULL,         // カーソル移動ごとのコールバック関数
+  NULL,         // 一列表示ごとのコールバック関数
+  NULL,                   //
+  NELEMS(_parentCustomInfoMenuList),  // リスト項目数
+  NELEMS(_parentCustomInfoMenuList),  // 表示最大項目数
+  0,            // ラベル表示Ｘ座標
+  16,            // 項目表示Ｘ座標
+  0,            // カーソル表示Ｘ座標
+  0,            // 表示Ｙ座標
+  FBMP_COL_BLACK,     // 文字色
+  FBMP_COL_WHITE,     // 背景色
+  FBMP_COL_BLK_SDW,   // 文字影色
+  0,            // 文字間隔Ｘ
+  16,           // 文字間隔Ｙ
+  BMPMENULIST_NO_SKIP,    // ページスキップタイプ
+  0,//FONT_SYSTEM,        // 文字指定
+  0,            // ＢＧカーソル(allow)表示フラグ(0:ON,1:OFF)
+  NULL,                    // work
+  _BMPMENULIST_FONTSIZE,      //文字サイズX(ドット
+  _BMPMENULIST_FONTSIZE,      //文字サイズY(ドット
+  NULL,   //表示に使用するメッセージバッフ
+  NULL,   //表示に使用するプリントユーティ
+  NULL,   //表示に使用するプリントキュー
+  NULL,   //表示に使用するフォントハンドル
+};
+
+
+#define PARENTMENU_Y  ( 5 )
+
+//------------------------------------------------------------------
+/**
+ * $brief   一行コールバック
+ * @param   wk
+ * @retval  none
+ */
+//------------------------------------------------------------------
+static void	_print_callback(BMPMENULIST_WORK * wk,u32 param,u8 y)
 {
-  int i,length;
-  BMPMENULIST_HEADER list_h;
-  _infoMenu* p_menu;
+  WIFIP2PMATCH_WORK *pWork = BmpMenuList_GetWorkPtr(wk);
 
-  // リスト基本情報設定
-  length = WIFI_PARENTINFO_MENULIST_COMMON;
-  list_h = _parentInfoMenuListHeader;
-  p_menu = _parentInfoMenuList;
 
+  if(WIFI_STATUS_GetVChatStatus( pWork->pMatch )==FALSE){
+    switch(param){
+    case WIFI_GAME_VCT:
+    case WIFI_GAME_TVT:
+      BmpMenuList_ColorControl(wk,FBMP_COL_BLK_SDW,FBMP_COL_WHITE,FBMP_COL_BLK_SDW);
+      break;
+    default:
+      BmpMenuList_ColorControl(wk,FBMP_COL_BLACK,FBMP_COL_WHITE,FBMP_COL_BLK_SDW);
+      break;
+    }
+  }
+}
+
+
+
+
+static void _modeSelectMenuBase( WIFIP2PMATCH_WORK *wk,BMPMENULIST_HEADER* plisth, _infoMenu* p_menu,int length, int menutype, int width )
+{
+  int i;
+  //BMPMENULIST_HEADER list_h;
+
+ // GFL_STD_MemCopy(plisth,&list_h,sizeof(BMPMENULIST_HEADER));
+
+  PRINTSYS_QUE_Clear(wk->SysMsgQue);
 
 
   wk->submenulist = BmpMenuWork_ListCreate( length , HEAPID_WIFIP2PMATCH );
@@ -456,25 +558,38 @@ static void _ParentModeSelectMenu( WIFIP2PMATCH_WORK *wk )
   wk->SubListWin = _BmpWinDel(wk->SubListWin);
   //BMPウィンドウ生成
   wk->SubListWin = GFL_BMPWIN_Create(
-    GFL_BG_FRAME2_M, 16, PARENTMENU_Y, 15, length * 2, FLD_SYSFONT_PAL, GFL_BMP_CHRAREA_GET_B);
+    GFL_BG_FRAME2_M, 32-width-1, PARENTMENU_Y, width, length * 2-2, FLD_SYSFONT_PAL, GFL_BMP_CHRAREA_GET_B);
   //    GFL_BMPWIN_MakeFrameScreen(wk->SubListWin,  COMM_TALK_WIN_CGX_NUM, MENU_WIN_PAL );
-  BmpWinFrame_Write( wk->SubListWin, WINDOW_TRANS_ON, COMM_TALK_WIN_CGX_NUM, COMM_MESFRAME_PAL );
-  list_h.list = wk->submenulist;
-  list_h.win = wk->SubListWin;
+  BmpWinFrame_Write( wk->SubListWin, WINDOW_TRANS_OFF, GFL_ARCUTIL_TRANSINFO_GetPos(wk->talkwin_m2), COMM_MESFRAME_PAL );
+  GFL_BMPWIN_MakeTransWindow(wk->SubListWin);
 
-  list_h.print_que = wk->SysMsgQue;
+
+  plisth->list = wk->submenulist;
+  plisth->win = wk->SubListWin;
+
+  plisth->print_que = wk->SysMsgQue;
   PRINT_UTIL_Setup( &wk->SysMsgPrintUtil , wk->SubListWin );
-  list_h.print_util = &wk->SysMsgPrintUtil;
-  list_h.font_handle = wk->fontHandle;
+  plisth->print_util = &wk->SysMsgPrintUtil;
+  plisth->font_handle = wk->fontHandle;
+  plisth->work = wk;
 
-  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->SubListWin), WINCLR_COL(FBMP_COL_WHITE) );
+  //GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->SubListWin), WINCLR_COL(FBMP_COL_WHITE) );
 
-  wk->sublw = BmpMenuList_Set(&list_h, 0, wk->battleCur, HEAPID_WIFIP2PMATCH);
+  wk->sublw = BmpMenuList_Set(plisth, 0, wk->singleCur[menutype], HEAPID_WIFIP2PMATCH);
 	BmpMenuList_SetCursorBmp( wk->sublw, HEAPID_WIFIP2PMATCH );
 
-  GFL_BMPWIN_TransVramCharacter(wk->SubListWin);
-  GFL_BMPWIN_MakeScreen(wk->SubListWin);
-  GFL_BG_LoadScreenReq(GFL_BG_FRAME2_M);
+//  GFL_BMPWIN_TransVramCharacter(wk->SubListWin);
+//  GFL_BMPWIN_MakeScreen(wk->SubListWin);
+  //GFL_BG_LoadScreenReq(GFL_BG_FRAME2_M);
+}
+
+
+
+
+static void _ParentModeSelectMenu( WIFIP2PMATCH_WORK *wk )
+{
+  _modeSelectMenuBase(wk, &_parentInfoMenuListHeader,
+                      _parentInfoMenuList, elementof(_parentInfoMenuList), _MENUTYPE_GAME, 17);
 }
 
 //------------------------------------------------------------------
@@ -499,7 +614,7 @@ static const _infoMenu _childMatchMenuList[] = {
 ///選択メニューのリスト
 static const BMPMENULIST_HEADER _childMatchMenuListHeader = {
   NULL,     // 表示文字データポインタ
-  _curCallBack,         // カーソル移動ごとのコールバック関数
+  NULL,         // カーソル移動ごとのコールバック関数
   NULL,         // 一列表示ごとのコールバック関数
   NULL,                   //
   NELEMS(_childMatchMenuList),  // リスト項目数
@@ -570,7 +685,7 @@ static void _ChildModeMatchMenuDisp( WIFIP2PMATCH_WORK *wk )
       GFL_BG_FRAME2_M, 16, 11+ ((3-length)*2), 15  , length * 2,
       FLD_SYSFONT_PAL, GFL_BMP_CHRAREA_GET_B);
     //    GFL_BMPWIN_MakeFrameScreen(wk->SubListWin,  MENU_WIN_CGX_NUM, MENU_WIN_PAL );
-    BmpWinFrame_Write( wk->SubListWin, WINDOW_TRANS_ON, COMM_TALK_WIN_CGX_NUM, COMM_MESFRAME_PAL );
+    BmpWinFrame_Write( wk->SubListWin, WINDOW_TRANS_ON_V, GFL_ARCUTIL_TRANSINFO_GetPos(wk->menuwin_m2), COMM_MESFRAME_PAL );
     list_h.list = wk->submenulist;
     list_h.win = wk->SubListWin;
 
@@ -627,7 +742,8 @@ static void _battleSubMenuInit( WIFIP2PMATCH_WORK *wk, int ret )
   //BMPウィンドウ生成
   wk->SubListWin = GFL_BMPWIN_Create(
     GFL_BG_FRAME2_M, 16, 9, 15, length * 2, FLD_SYSFONT_PAL, GFL_BMP_CHRAREA_GET_B);
-  BmpWinFrame_Write( wk->SubListWin, WINDOW_TRANS_ON, COMM_TALK_WIN_CGX_NUM, COMM_MESFRAME_PAL );
+
+  BmpWinFrame_Write( wk->SubListWin, WINDOW_TRANS_ON_V, GFL_ARCUTIL_TRANSINFO_GetPos(wk->talkwin_m2), COMM_MESFRAME_PAL );
   list_h.list = wk->submenulist;
   list_h.win = wk->SubListWin;
 
@@ -846,7 +962,7 @@ static void FreeMessageWork( WIFIP2PMATCH_WORK *wk )
   GFL_STR_DeleteBuffer(wk->pExpStrBuf);
   PRINTSYS_QUE_Clear(wk->SysMsgQue);
   PRINTSYS_QUE_Delete(wk->SysMsgQue);
-
+  wk->SysMsgQue=NULL;
 }
 
 
@@ -1092,5 +1208,160 @@ static u32 MCVSys_StatusMsgIdGet( u32 status, u32 gamemode, int* col )
   }
 
   return msg_id;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *  @brief  バトルのモード設定
+ *  @param  status  状態
+ *  @return メッセージデータ
+ */
+//-----------------------------------------------------------------------------
+
+static void _battleCustomSelectMenu( WIFIP2PMATCH_WORK *wk )
+{
+
+  _parentCustomInfoMenuList[0].str_id = msg_wifilobby_0571 + wk->battleMode;
+  _parentCustomInfoMenuList[1].str_id =  msg_wifilobby_060 + wk->battleRule;
+  _parentCustomInfoMenuList[2].str_id =  msg_wifilobby_062 + (1-wk->battleShooter);
+
+  _modeSelectMenuBase(wk, &_parentCustomMenuListHeader, _parentCustomInfoMenuList,
+                      elementof(_parentCustomInfoMenuList), _MENUTYPE_BATTLE_CUSTOM,18);
+}
+
+//----------------------------------------------------------------------------
+/**
+ *  @brief  バトルのモード設定
+ *  @param  status  状態
+ *  @return メッセージデータ
+ */
+//-----------------------------------------------------------------------------
+
+static void _battleModeSelectMenu( WIFIP2PMATCH_WORK *wk )
+{
+
+  _parentInfoBattleMenuListHeader.count = elementof(_parentSingleInfoMenuList);
+  _parentInfoBattleMenuListHeader.line = elementof(_parentSingleInfoMenuList);
+
+  _modeSelectMenuBase(wk, &_parentInfoBattleMenuListHeader, _parentSingleInfoMenuList,
+                      elementof(_parentSingleInfoMenuList), _MENUTYPE_BATTLE_MODE,17);
+}
+
+//----------------------------------------------------------------------------
+/**
+ *  @brief  バトルのルール設定
+ *  @param  status  状態
+ *  @return メッセージデータ
+ */
+//-----------------------------------------------------------------------------
+
+static void _battleRuleSelectMenu( WIFIP2PMATCH_WORK *wk )
+{
+
+  _parentInfoBattleMenuListHeader.count = elementof(_parentRuleInfoMenuList);
+  _parentInfoBattleMenuListHeader.line = elementof(_parentRuleInfoMenuList);
+
+  
+  _modeSelectMenuBase(wk, &_parentInfoBattleMenuListHeader, _parentRuleInfoMenuList,
+                      elementof(_parentRuleInfoMenuList), _MENUTYPE_BATTLE_RULE,17);
+}
+
+//----------------------------------------------------------------------------
+/**
+ *  @brief  バトルのシューター設定
+ *  @param  status  状態
+ *  @return メッセージデータ
+ */
+//-----------------------------------------------------------------------------
+
+static void _battleShooterSelectMenu( WIFIP2PMATCH_WORK *wk )
+{
+
+  _parentInfoBattleMenuListHeader.count = elementof(_parentShooterInfoMenuList);
+  _parentInfoBattleMenuListHeader.line = elementof(_parentShooterInfoMenuList);
+
+  
+  _modeSelectMenuBase(wk, &_parentInfoBattleMenuListHeader, _parentShooterInfoMenuList,
+                      elementof(_parentShooterInfoMenuList), _MENUTYPE_BATTLE_SHOOTER,18);
+}
+
+
+
+//==================================================================
+/**
+ * レギュレーション：表示
+ *
+ * @param   unisys		
+ * @param   fieldWork		
+ * @param   fail_bit    レギュレーションNGbit
+ * @param   shooter_type  TRUE:シューター有　FALSE:シューター無し
+ * @param   regwin_type    NGREG_TYPE_???
+ */
+//==================================================================
+
+
+static void _Menu_RegulationSetup(WIFIP2PMATCH_WORK* wk, u32 fail_bit, BOOL shooter_type, REGWIN_TYPE regwin_type)
+{
+  int category;
+  PRINTSYS_LSB color;
+  u16 title_msgid;
+  
+  if(shooter_type == TRUE){
+    shooter_type = REGULATION_SHOOTER_VALID;
+  }
+  else{
+    shooter_type = REGULATION_SHOOTER_INVALID;
+  }
+
+
+  wk->SysMsgWin = _BmpWinDel(wk->SysMsgWin);
+
+  wk->SysMsgWin= GFL_BMPWIN_Create(  GFL_BG_FRAME2_M,
+    REGWINDOW_WIN_PX, REGWINDOW_WIN_PY,
+    REGWINDOW_WIN_SX, REGWINDOW_WIN_SY,
+    COMM_MESFONT_PAL, GFL_BMP_CHRAREA_GET_B);
+
+  GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_MAIN_BG,
+                                0x20*COMM_MESFONT_PAL, 0x20, HEAPID_WIFIP2PMATCH);
+
+  // システムウインドウ枠描画
+  GFL_BMP_Clear(GFL_BMPWIN_GetBmp(wk->SysMsgWin), WINCLR_COL(FBMP_COL_WHITE) );
+  GFL_BMPWIN_ClearScreen(wk->SysMsgWin);
+  GFL_BMPWIN_MakeScreen(wk->SysMsgWin);
+  BmpWinFrame_Write( wk->SysMsgWin, WINDOW_TRANS_ON_V,
+                     GFL_ARCUTIL_TRANSINFO_GetPos(wk->menuwin_m2), COMM_MESFONT_PAL );
+
+
+  wk->rpm = PokeRegulation_CreatePrintMsg( wk->pRegulation, wk->WordSet, HEAPID_WIFIP2PMATCH, shooter_type);
+
+  if(regwin_type == REGWIN_TYPE_RULE){
+    STRBUF* cupname = Regulation_CreateCupName(wk->pRegulation, HEAPID_WIFIP2PMATCH);
+    PRINTSYS_Print( GFL_BMPWIN_GetBmp(wk->SysMsgWin), 0, 0, cupname, wk->fontHandle );
+    GFL_STR_DeleteBuffer(cupname);
+  }
+  else{
+    if(regwin_type == REGWIN_TYPE_NG_TEMOTI){
+      title_msgid = msg_wifilobby_098;
+    }
+    else{
+      title_msgid = msg_wifilobby_099;
+    }
+    GFL_MSG_GetString(  wk->MsgManager, title_msgid, wk->pExpStrBuf );
+    PRINTSYS_Print( GFL_BMPWIN_GetBmp(wk->SysMsgWin), 0, 0, wk->pExpStrBuf , wk->fontHandle);
+  }
+  
+  for(category = 0; category < REGULATION_CATEGORY_MAX; category++){
+    if(fail_bit & (1 << category)){
+      color = REG_FAIL_COLOR;
+    }
+    else{
+      color = REG_NORMAL_COLOR;
+    }
+    PRINTSYS_PrintColor(GFL_BMPWIN_GetBmp(wk->SysMsgWin),0, (4 + 2*category)*8,
+                        wk->rpm->category[category], wk->fontHandle, color);
+    PRINTSYS_PrintColor(GFL_BMPWIN_GetBmp(wk->SysMsgWin), 14*8, (4 + 2*category)*8,
+                        wk->rpm->prerequisite[category], wk->fontHandle, color);
+  }
+  GFL_BMPWIN_TransVramCharacter(wk->SysMsgWin);
 }
 

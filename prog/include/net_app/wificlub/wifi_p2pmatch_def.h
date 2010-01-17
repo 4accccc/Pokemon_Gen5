@@ -25,33 +25,6 @@
 #define WIFI_P2PMATCH_DPW     (1)   // この後DPWへ移行する
 #define WIFI_P2PMATCH_P2P     (2)   // このままP2P処理に移行
 
-#if 0
-
-// P2PMATCH からの戻り値
-typedef enum {
-  WIFI_P2PMATCH_NONE,
-  WIFI_P2PMATCH_SBATTLE50,   // 通信対戦呼び出し
-  WIFI_P2PMATCH_SBATTLE100,   // 通信対戦呼び出し
-  WIFI_P2PMATCH_SBATTLE_FREE,      // 通信対戦呼び出し
-  WIFI_P2PMATCH_DBATTLE50,        // 通信対戦呼び出し
-  WIFI_P2PMATCH_DBATTLE100,        // 通信対戦呼び出し
-  WIFI_P2PMATCH_DBATTLE_FREE,      // 通信対戦呼び出し
-  WIFI_P2PMATCH_TRADE,         // ポケモントレード呼び出し
-  WIFI_P2PMATCH_TVT,      // トランシーバ
-  WIFI_P2PMATCH_END,           // 通信切断してます。終了します。
-  WIFI_P2PMATCH_UTIL,          // 接続設定を呼び出します。戻れません
-  WIFI_P2PMATCH_DPW_END,       // 世界対戦用設定終了
-} WIFI_P2PMATCH_KINDENUM;
-
-  
-typedef enum{
-	WIFI_BATTLEFLAG_SINGLE,	// シングルバトル
-	WIFI_BATTLEFLAG_DOUBLE,	// ダブルバトル
-	WIFI_BATTLEFLAG_MULTI,	// マルチバトル
-} WIFI_BATTLEFLAG;
-
-
-#endif
 
 #endif //__WIFI_P2PMATCH_DEF_H__
 

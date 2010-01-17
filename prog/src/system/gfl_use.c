@@ -389,7 +389,7 @@ static void GFUser_PublicRandInit(void)
 //------------------------------------------------------------------
 /**
  * @brief  汎用乱数を得る
- * @param  range   取得数値の範囲を指定 0 ～ range の範囲の値が取得できます。
+ * @param  range   取得数値の範囲を指定 0 ～ range-1 の範囲の値が取得できます。
  *                 GFL_STD_RAND_MAX = 0 を指定した場合にはすべての範囲の32bit値となります。
  *                 % や / を使用せずにここのrange値を変更してください
  * @return 32bitのランダム値
