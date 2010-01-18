@@ -86,13 +86,14 @@
 
 #define FCOL_P13TALK  ( PRINTSYS_LSB_Make(1,2,0) )
 
+/*
 #define HP_GAGE_COL_G1  ( 1 ) // HPゲージカラー緑１
 #define HP_GAGE_COL_G2  ( 2 ) // HPゲージカラー緑２
 #define HP_GAGE_COL_Y1  ( 3 ) // HPゲージカラー黄１
 #define HP_GAGE_COL_Y2  ( 4 ) // HPゲージカラー黄２
 #define HP_GAGE_COL_R1  ( 5 ) // HPゲージカラー赤１
 #define HP_GAGE_COL_R2  ( 6 ) // HPゲージカラー赤２
-
+*/
 
 //============================================================================================
 //  プロトタイプ宣言
@@ -134,28 +135,28 @@ static const u8 CommBmpData[][6] =
 static const u8 Page1_BmpData[][6] =
 {
   { // ポケモン１
-    GFL_BG_FRAME1_S, WIN_P1_POKE1_PX, WIN_P1_POKE1_PY,
-    WIN_P1_POKE1_SX, WIN_P1_POKE1_SY, WIN_P1_POKE1_PAL
+    GFL_BG_FRAME1_S, BPL_COMM_WIN_P1_POKE1_PX, BPL_COMM_WIN_P1_POKE1_PY,
+    BPL_COMM_WIN_P1_POKE1_SX, BPL_COMM_WIN_P1_POKE1_SY, BPL_COMM_WIN_P1_POKE1_PAL
   },
   { // ポケモン２
-    GFL_BG_FRAME1_S, WIN_P1_POKE2_PX, WIN_P1_POKE2_PY,
-    WIN_P1_POKE2_SX, WIN_P1_POKE2_SY, WIN_P1_POKE2_PAL
+    GFL_BG_FRAME1_S, BPL_COMM_WIN_P1_POKE2_PX, BPL_COMM_WIN_P1_POKE2_PY,
+    BPL_COMM_WIN_P1_POKE2_SX, BPL_COMM_WIN_P1_POKE2_SY, BPL_COMM_WIN_P1_POKE2_PAL
   },
   { // ポケモン３
-    GFL_BG_FRAME1_S, WIN_P1_POKE3_PX, WIN_P1_POKE3_PY,
-    WIN_P1_POKE3_SX, WIN_P1_POKE3_SY, WIN_P1_POKE3_PAL
+    GFL_BG_FRAME1_S, BPL_COMM_WIN_P1_POKE3_PX, BPL_COMM_WIN_P1_POKE3_PY,
+    BPL_COMM_WIN_P1_POKE3_SX, BPL_COMM_WIN_P1_POKE3_SY, BPL_COMM_WIN_P1_POKE3_PAL
   },
   { // ポケモン４
-    GFL_BG_FRAME1_S, WIN_P1_POKE4_PX, WIN_P1_POKE4_PY,
-    WIN_P1_POKE4_SX, WIN_P1_POKE4_SY, WIN_P1_POKE4_PAL
+    GFL_BG_FRAME1_S, BPL_COMM_WIN_P1_POKE4_PX, BPL_COMM_WIN_P1_POKE4_PY,
+    BPL_COMM_WIN_P1_POKE4_SX, BPL_COMM_WIN_P1_POKE4_SY, BPL_COMM_WIN_P1_POKE4_PAL
   },
   { // ポケモン５
-    GFL_BG_FRAME1_S, WIN_P1_POKE5_PX, WIN_P1_POKE5_PY,
-    WIN_P1_POKE5_SX, WIN_P1_POKE5_SY, WIN_P1_POKE5_PAL
+    GFL_BG_FRAME1_S, BPL_COMM_WIN_P1_POKE5_PX, BPL_COMM_WIN_P1_POKE5_PY,
+    BPL_COMM_WIN_P1_POKE5_SX, BPL_COMM_WIN_P1_POKE5_SY, BPL_COMM_WIN_P1_POKE5_PAL
   },
   { // ポケモン６
-    GFL_BG_FRAME1_S, WIN_P1_POKE6_PX, WIN_P1_POKE6_PY,
-    WIN_P1_POKE6_SX, WIN_P1_POKE6_SY, WIN_P1_POKE6_PAL
+    GFL_BG_FRAME1_S, BPL_COMM_WIN_P1_POKE6_PX, BPL_COMM_WIN_P1_POKE6_PY,
+    BPL_COMM_WIN_P1_POKE6_SX, BPL_COMM_WIN_P1_POKE6_SY, BPL_COMM_WIN_P1_POKE6_PAL
   },
 };
 
@@ -1047,7 +1048,7 @@ static void BPL_NamePut( BPLIST_WORK * wk, u32 idx, u16 pos, u8 px, u8 py )
   WORDSET_RegisterPokeNickName( wk->wset, 0, pd->pp );
   WORDSET_ExpandStr( wk->wset, exp, str );
 
-  if( pal == BPL_PAL_HPGAGE ){
+  if( pal == BPL_COMM_PAL_HPGAGE ){
 //    PRINTSYS_PrintQueColor( wk->que, GFL_BMPWIN_GetBmp(win), px, py, exp, wk->dat->font, FCOL_P09WN );
     PRINT_UTIL_PrintColor( &wk->add_win[idx], wk->que, px, py, exp, wk->dat->font, FCOL_P09WN );
   }else{
@@ -1063,7 +1064,7 @@ static void BPL_NamePut( BPLIST_WORK * wk, u32 idx, u16 pos, u8 px, u8 py )
     if( pd->sex == PTL_SEX_MALE ){
       str = GFL_MSG_CreateString( wk->mman, mes_b_plist_02_502 );
       sex_px = GFL_BMPWIN_GetSizeX(win)*8-PRINTSYS_GetStrWidth(str,wk->dat->font,0);
-      if( pal == BPL_PAL_HPGAGE ){
+      if( pal == BPL_COMM_PAL_HPGAGE ){
 //        PRINTSYS_PrintQueColor( wk->que, GFL_BMPWIN_GetBmp(win), sex_px, py, str, wk->dat->font, FCOL_P09BLN );
         PRINT_UTIL_PrintColor( &wk->add_win[idx], wk->que, sex_px, py, str, wk->dat->font, FCOL_P09BLN );
       }else{
@@ -1074,7 +1075,7 @@ static void BPL_NamePut( BPLIST_WORK * wk, u32 idx, u16 pos, u8 px, u8 py )
     }else if( pd->sex == PTL_SEX_FEMALE ){
       str = GFL_MSG_CreateString( wk->mman, mes_b_plist_02_503 );
       sex_px = GFL_BMPWIN_GetSizeX(win)*8-PRINTSYS_GetStrWidth(str,wk->dat->font,0);
-      if( pal == BPL_PAL_HPGAGE ){
+      if( pal == BPL_COMM_PAL_HPGAGE ){
 //        PRINTSYS_PrintQueColor( wk->que, GFL_BMPWIN_GetBmp(win), sex_px, py, str, wk->dat->font, FCOL_P09RN );
         PRINT_UTIL_PrintColor( &wk->add_win[idx], wk->que, sex_px, py, str, wk->dat->font, FCOL_P09RN );
       }else{
@@ -1114,8 +1115,8 @@ static void BPL_LvPut( BPLIST_WORK * wk, u32 idx, u16 pos, u8 px, u8 py )
     wk->wset, 0, pd->lv, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
   WORDSET_ExpandStr( wk->wset, wk->msg_buf, str );
 //  PRINTSYS_PrintQueColor(
-//    wk->que, GFL_BMPWIN_GetBmp(wk->add_win[idx].win), px+8, py, wk->msg_buf, wk->nfnt, FCOL_P09WN );
-  PRINT_UTIL_PrintColor( &wk->add_win[idx], wk->que, px+8, py, wk->msg_buf, wk->nfnt, FCOL_P09WN );
+//    wk->que, GFL_BMPWIN_GetBmp(wk->add_win[idx].win), px, py, wk->msg_buf, wk->nfnt, FCOL_P09WN );
+  PRINT_UTIL_PrintColor( &wk->add_win[idx], wk->que, px, py, wk->msg_buf, wk->nfnt, FCOL_P09WN );
   GFL_STR_DeleteBuffer( str );
 
 //  BAPPTOOL_PrintScreenTrans( &wk->add_win[idx] );
@@ -1201,20 +1202,20 @@ static void BPL_HPGagePut( BPLIST_WORK * wk, u32 idx, u16 pos, u8 px, u8 py )
 
   pd  = &wk->poke[ BPLISTMAIN_GetListRow(wk,pos) ];
   col = 1;
-  dot = GAUGETOOL_GetNumDotto( pd->hp, pd->mhp, BPL_HP_DOTTO_MAX );
+  dot = GAUGETOOL_GetNumDotto( pd->hp, pd->mhp, BPL_COMM_HP_DOTTO_MAX );
 
   switch( GAUGETOOL_GetGaugeDottoColor( pd->hp, pd->mhp ) ){
   case GAUGETOOL_HP_DOTTO_NULL:
 //    GFL_BMPWIN_MakeTransWindow_VBlank( wk->add_win[idx].win );
     return;
   case GAUGETOOL_HP_DOTTO_GREEN:    // 緑
-    col = HP_GAGE_COL_G1;
+    col = BPL_COMM_HP_GAGE_COL_G1;
     break;
   case GAUGETOOL_HP_DOTTO_YELLOW:   // 黄
-    col = HP_GAGE_COL_Y1;
+    col = BPL_COMM_HP_GAGE_COL_Y1;
     break;
   case GAUGETOOL_HP_DOTTO_RED:      // 赤
-    col = HP_GAGE_COL_R1;
+    col = BPL_COMM_HP_GAGE_COL_R1;
     break;
   }
 
@@ -2476,6 +2477,7 @@ static void BPL_WazaButtonPPRcv( BPLIST_WORK * wk, BPL_POKEWAZA * waza, u32 idx 
 }
 
 // パラメータ表示座標
+/*
 #define P1_NAME_PX    ( 32 )
 #define P1_NAME_PY    ( 8-1 )
 #define P1_HP_PX    ( 92 )//( 56 )
@@ -2488,6 +2490,7 @@ static void BPL_WazaButtonPPRcv( BPLIST_WORK * wk, BPL_POKEWAZA * waza, u32 idx 
 #define P1_HPGAGE_SY  ( 8 )
 #define P1_LV_PX    ( 0 )
 #define P1_LV_PY    ( 32 )
+*/
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -2516,7 +2519,7 @@ static void BPL_Page1BmpWrite( BPLIST_WORK * wk )
       continue;
     }
 
-    BPL_NamePut( wk, WIN_P1_POKE1+i, i, P1_NAME_PX, P1_NAME_PY );
+    BPL_NamePut( wk, WIN_P1_POKE1+i, i, BPL_COMM_P1_NAME_PX, BPL_COMM_P1_NAME_PY );
 
     if( wk->poke[pos].egg == 0 ){
       BattlePokeList_P1_HPPut( wk, i );
@@ -2549,12 +2552,12 @@ static void BPL_Page1BmpWrite( BPLIST_WORK * wk )
 void BattlePokeList_P1_HPPut( BPLIST_WORK * wk, u8 pos )
 {
   GFL_BMP_Fill(
-    GFL_BMPWIN_GetBmp(wk->add_win[WIN_P1_POKE1+pos].win), P1_HP_PX, P1_HP_PY, P1_HP_SX, P1_HP_SY, 0 );
+    GFL_BMPWIN_GetBmp(wk->add_win[WIN_P1_POKE1+pos].win), BPL_COMM_P1_HP_PX, BPL_COMM_P1_HP_PY, BPL_COMM_P1_HP_SX, BPL_COMM_P1_HP_SY, 0 );
   GFL_BMP_Fill(
     GFL_BMPWIN_GetBmp(wk->add_win[WIN_P1_POKE1+pos].win),
-    P1_HPGAGE_PX, P1_HPGAGE_PY, P1_HPGAGE_SX, P1_HPGAGE_SY, 0 );
-  BPL_HPPut( wk, WIN_P1_POKE1+pos, pos, P1_HP_PX, P1_HP_PY );
-  BPL_HPGagePut( wk, WIN_P1_POKE1+pos, pos, P1_HPGAGE_PX, P1_HPGAGE_PY );
+    BPL_COMM_P1_HPGAGE_PX, BPL_COMM_P1_HPGAGE_PY, BPL_COMM_P1_HPGAGE_SX, BPL_COMM_P1_HPGAGE_SY, 0 );
+  BPL_HPPut( wk, WIN_P1_POKE1+pos, pos, BPL_COMM_P1_HP_PX, BPL_COMM_P1_HP_PY );
+  BPL_HPGagePut( wk, WIN_P1_POKE1+pos, pos, BPL_COMM_P1_HPGAGE_PX, BPL_COMM_P1_HPGAGE_PY );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -2570,7 +2573,7 @@ void BattlePokeList_P1_HPPut( BPLIST_WORK * wk, u8 pos )
 void BattlePokeList_P1_LvPut( BPLIST_WORK * wk, u8 pos )
 {
   if( wk->poke[ BPLISTMAIN_GetListRow(wk,pos) ].egg == 0 ){
-    BPL_LvPut( wk, WIN_P1_POKE1+pos, pos, P1_LV_PX, P1_LV_PY );
+    BPL_LvPut( wk, WIN_P1_POKE1+pos, pos, BPL_COMM_P1_LV_PX, BPL_COMM_P1_LV_PY );
   }
 }
 

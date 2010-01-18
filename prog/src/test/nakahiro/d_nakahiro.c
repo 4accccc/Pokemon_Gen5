@@ -14,11 +14,13 @@
 #include "gamesystem/game_data.h"
 #include "poke_tool/poke_tool.h"
 #include "poke_tool/monsno_def.h"
+#include "item/item.h"
 #include "font/font.naix"
 
 #include "app/box2.h"
 #include "app/zukan.h"
 #include "demo/command_demo.h"
+#include "../../battle/app/vs_multi_list.h"
 
 #include "arc_def.h"  //ARCID_MESSAGE
 #include "message.naix"
@@ -28,7 +30,7 @@
 //============================================================================================
 //	定数定義
 //============================================================================================
-#define	TOP_MENU_SIZ	( 9 )
+#define	TOP_MENU_SIZ	( 11 )
 
 typedef struct {
 	u32	main_seq;
@@ -53,6 +55,8 @@ typedef struct {
 
 	ZUKAN_PARAM	zkn_data;
 
+	VS_MULTI_LIST_PARAM	vsl_data;
+
 }NAKAHIRO_MAIN_WORK;
 
 enum {
@@ -72,10 +76,11 @@ enum {
 	MAIN_SEQ_ZUKAN_CALL,
 	MAIN_SEQ_ZKNLIST_CALL,
 
+	MAIN_SEQ_VSMLIST_L,
+	MAIN_SEQ_VSMLIST_R,
+
 	MAIN_SEQ_END,
 };
-
-
 
 
 //============================================================================================
@@ -90,6 +95,8 @@ static void FadeOutSet( NAKAHIRO_MAIN_WORK * wk, u32 next );
 
 static void SetBoxPoke( NAKAHIRO_MAIN_WORK * wk );
 static void SetPartyPoke( NAKAHIRO_MAIN_WORK * wk );
+
+static void SetPokeParty( NAKAHIRO_MAIN_WORK * wk, POKEPARTY * party, const u16 * mons, const u16 * item );
 
 static void BgInit( NAKAHIRO_MAIN_WORK * wk );
 static void BgExit(void);
@@ -134,6 +141,28 @@ static const BMPMENULIST_HEADER TopMenuListH = {
 	NULL,		// 表示に使用するフォントハンドル
 };
 
+static const u16 VSMListMonsL[] = {
+	MONSNO_HUSIGIDANE,
+	MONSNO_HITOKAGE,
+	MONSNO_ZENIGAME,
+	0,
+};
+static const u16 VSMListMonsR[] = {
+	MONSNO_KIMORI,
+	MONSNO_ATYAMO,
+	MONSNO_MIZUGOROU,
+	0,
+};
+static const u16 VSMListItemL[] = {
+	ITEM_KIZUGUSURI,
+	ITEM_KIZUGUSURI,
+	ITEM_KIZUGUSURI,
+};
+static const u16 VSMListItemR[] = {
+	ITEM_GURASUMEERU,
+	ITEM_GURASUMEERU,
+	ITEM_GURASUMEERU,
+};
 
 
 
@@ -149,6 +178,9 @@ static GFL_PROC_RESULT MainProcInit( GFL_PROC * proc, int * seq, void * pwk, voi
 	wk->heapID    = HEAPID_NAKAHIRO_DEBUG;
 	wk->gamedata	= GAMEDATA_Create( wk->heapID );
 	wk->bb_party  = NULL;
+
+	wk->vsl_data.myPP = NULL;
+	wk->vsl_data.ptPP = NULL;
 
   return GFL_PROC_RES_FINISH;
 }
@@ -200,6 +232,12 @@ static GFL_PROC_RESULT MainProcMain( GFL_PROC * proc, int * seq, void * pwk, voi
 			sv = BATTLE_BOX_SAVE_GetBattleBoxSave( GAMEDATA_GetSaveControlWork(wk->gamedata) );
 			BATTLE_BOX_SAVE_SetPokeParty( sv, wk->bb_party );
 			GFL_HEAP_FreeMemory( wk->bb_party );
+		}
+		if( wk->vsl_data.myPP != NULL ){
+			GFL_HEAP_FreeMemory( wk->vsl_data.myPP );
+		}
+		if( wk->vsl_data.ptPP != NULL ){
+			GFL_HEAP_FreeMemory( wk->vsl_data.ptPP );
 		}
 		OS_Printf( "nakahiroデバッグ処理終了しました\n" );
 	  return GFL_PROC_RES_FINISH;
@@ -305,6 +343,27 @@ static GFL_PROC_RESULT MainProcMain( GFL_PROC * proc, int * seq, void * pwk, voi
 	case MAIN_SEQ_ZKNLIST_CALL:
 		wk->zkn_data.callMode = ZUKAN_MODE_LIST;
 		GFL_PROC_SysCallProc( FS_OVERLAY_ID(zukan), &ZUKAN_ProcData, &wk->zkn_data );
+		wk->main_seq = MAIN_SEQ_END;
+		break;
+
+
+	case MAIN_SEQ_VSMLIST_L:
+		wk->vsl_data.pos = VS_MULTI_LIST_POS_LEFT;
+		wk->vsl_data.myPP = PokeParty_AllocPartyWork( wk->heapID );
+		wk->vsl_data.ptPP = PokeParty_AllocPartyWork( wk->heapID );
+		SetPokeParty( wk, wk->vsl_data.myPP, VSMListMonsL, VSMListItemL );
+		SetPokeParty( wk, wk->vsl_data.ptPP, VSMListMonsR, VSMListItemR );
+		GFL_PROC_SysCallProc( FS_OVERLAY_ID(vs_multi_list), &VS_MULTI_LIST_ProcData, &wk->vsl_data );
+		wk->main_seq = MAIN_SEQ_END;
+		break;
+
+	case MAIN_SEQ_VSMLIST_R:
+		wk->vsl_data.pos = VS_MULTI_LIST_POS_RIGHT;
+		wk->vsl_data.myPP = PokeParty_AllocPartyWork( wk->heapID );
+		wk->vsl_data.ptPP = PokeParty_AllocPartyWork( wk->heapID );
+		SetPokeParty( wk, wk->vsl_data.myPP, VSMListMonsL, VSMListItemL );
+		SetPokeParty( wk, wk->vsl_data.ptPP, VSMListMonsR, VSMListItemR );
+		GFL_PROC_SysCallProc( FS_OVERLAY_ID(vs_multi_list), &VS_MULTI_LIST_ProcData, &wk->vsl_data );
 		wk->main_seq = MAIN_SEQ_END;
 		break;
 	}
@@ -508,6 +567,38 @@ static void SetPartyPoke( NAKAHIRO_MAIN_WORK * wk )
 		}
 		PokeParty_Add( wk->box_data.pokeparty, pp );
 		GFL_HEAP_FreeMemory( pp );
+	}
+
+  GFL_STR_DeleteBuffer( str );
+	GFL_MSG_Delete( man );
+}
+
+static void SetPokeParty( NAKAHIRO_MAIN_WORK * wk, POKEPARTY * party, const u16 * mons, const u16 * item )
+{
+	POKEMON_PARAM * pp;
+	GFL_MSGDATA * man;
+	STRBUF * str;
+	u32	i;
+
+	man = GFL_MSG_Create(
+						GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_d_nakahiro_dat, wk->heapID );
+	str = GFL_MSG_CreateString( man, pokename );
+
+	PokeParty_InitWork( party );
+
+	i = 0;
+
+	while( 1 ){
+		if( mons[i] == 0 ){ break; }
+
+		pp = PP_Create( mons[i], 50, 0, wk->heapID );
+    PP_Put( pp, ID_PARA_oyaname, (u32)str );
+    PP_Put( pp, ID_PARA_oyasex, PTL_SEX_MALE );
+		PP_Put( pp, ID_PARA_item, item[i] );
+		PokeParty_Add( party, pp );
+		GFL_HEAP_FreeMemory( pp );
+
+		i++;
 	}
 
   GFL_STR_DeleteBuffer( str );
