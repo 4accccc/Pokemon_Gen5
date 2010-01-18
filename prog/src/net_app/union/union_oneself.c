@@ -1573,6 +1573,12 @@ static BOOL OneselfSeq_Talk_Battle_Parent(UNION_SYSTEM_PTR unisys, UNION_MY_SITU
     break;
   case LOCALSEQ_MENU_SETUP:
     OS_TPrintf("対戦メニューセットアップ：%d\n", situ->work);
+    if(situ->work == BATTLE_MENU_INDEX_CUSTOM_MULTI){
+      UnionMsg_Menu_BattleMenuMultiTitleSetup(unisys, fieldWork);
+    }
+    else if(situ->work == BATTLE_MENU_INDEX_NUMBER){
+      UnionMsg_Menu_BattleMenuMultiTitleDel(unisys);
+    }
     UnionMsg_Menu_BattleMenuSetup(unisys, fieldWork, situ->work, &situ->menu_reg);  //1vs1, 2vs2
     (*seq)++;
     break;
@@ -1584,19 +1590,21 @@ static BOOL OneselfSeq_Talk_Battle_Parent(UNION_SYSTEM_PTR unisys, UNION_MY_SITU
       (*seq)--;
     }
     else if(select_ret == FLDMENUFUNC_CANCEL || select_ret == UNION_MENU_SELECT_CANCEL){
-      UnionMsg_Menu_MainMenuDel(unisys);
+      UnionMsg_Menu_BattleMenuDel(unisys);
       if(situ->work > 0){
         situ->work = 0;
         (*seq)--;
       }
       else{
         OS_TPrintf("メニューをキャンセルしました\n");
+        UnionMsg_Menu_BattleMenuMultiTitleDel(unisys);
         situ->mycomm.mainmenu_select = UNION_MENU_SELECT_CANCEL;
         UnionOneself_ReqStatus(unisys, UNION_STATUS_TALK_LIST_SEND_PARENT);
         return TRUE;
       }
     }
     else if(look == TRUE){  //ルールを見る
+      UnionMsg_Menu_BattleMenuMultiTitleDel(unisys);
       UnionMsg_Menu_BattleMenuDel(unisys);
       //レギュレーションデータのロード
       _Load_PlayCategory_to_Regulation(unisys, select_ret);
@@ -1604,6 +1612,7 @@ static BOOL OneselfSeq_Talk_Battle_Parent(UNION_SYSTEM_PTR unisys, UNION_MY_SITU
       *seq = _RULE_LOOK;
     }
     else if(select_ret != FLDMENUFUNC_NULL){
+      UnionMsg_Menu_BattleMenuMultiTitleDel(unisys);
       UnionMsg_Menu_BattleMenuDel(unisys);
       if(Union_CheckEntryBattleRegulation(unisys, select_ret, 
           &situ->reg_temoti_fail_bit, &situ->reg_bbox_fail_bit) == FALSE){

@@ -158,7 +158,7 @@ static const FLDMENUFUNC_HEADER MenuHeader_MainMenu =
 	FLDMENUFUNC_SKIP_NON,	//ページスキップタイプ
 	12,		//文字サイズX(ドット
 	16,		//文字サイズY(ドット
-	32-14,		//表示座標X キャラ単位
+	1,//32-14,		//表示座標X キャラ単位
 	1,		//表示座標Y キャラ単位
 	13,		//表示サイズX キャラ単位
 	14,		//表示サイズY キャラ単位
@@ -279,17 +279,6 @@ static const struct{
     3,
   },
 };
-enum{ //※BattleMenuDataTblと並びを同じにしておくこと！
-  BATTLE_MENU_INDEX_NUMBER,
-  BATTLE_MENU_INDEX_CUSTOM,
-  BATTLE_MENU_INDEX_MODE,
-  BATTLE_MENU_INDEX_RULE,
-  BATTLE_MENU_INDEX_SHOOTER,
-  //マルチ用メニュー
-  BATTLE_MENU_INDEX_CUSTOM_MULTI,
-  BATTLE_MENU_INDEX_RULE_MULTI,
-  BATTLE_MENU_INDEX_SHOOTER_MULTI,
-};
 
 ///メニューヘッダー(対戦メニュー用)
 static const FLDMENUFUNC_HEADER MenuHeader_Battle =
@@ -308,7 +297,7 @@ static const FLDMENUFUNC_HEADER MenuHeader_Battle =
 	FLDMENUFUNC_SKIP_NON,	//ページスキップタイプ
 	12,		//文字サイズX(ドット
 	16,		//文字サイズY(ドット
-	32-20,		//表示座標X キャラ単位
+	1,//32-20,		//表示座標X キャラ単位
 	1,		//表示座標Y キャラ単位
 	19,		//表示サイズX キャラ単位
 	14,		//表示サイズY キャラ単位
@@ -1613,6 +1602,10 @@ void UnionMsg_Menu_BattleMenuSetup(UNION_SYSTEM_PTR unisys, FIELDMAP_WORK *field
   head.line = BattleMenuDataTbl[menu_index].list_max;
   head.bmpsize_y = head.count * 2;
   
+  if(menu_index >= BATTLE_MENU_INDEX_CUSTOM_MULTI){
+    head.bmppos_y = 5;
+  }
+
   if(menu_index == BATTLE_MENU_INDEX_CUSTOM){
     FLDMENUFUNC_LIST *list;
     
@@ -1752,6 +1745,37 @@ u32 UnionMsg_Menu_BattleMenuSelectLoop(UNION_SYSTEM_PTR unisys, BOOL *next_sub_m
   
   GF_ASSERT_MSG(0, "menu_ret=%d\n", menu_ret);
   return 0;
+}
+
+//==================================================================
+/**
+ * 対戦メニューでマルチバトルを選んだときに出しておく表題をセットアップ
+ *
+ * @param   unisys		
+ */
+//==================================================================
+void UnionMsg_Menu_BattleMenuMultiTitleSetup(UNION_SYSTEM_PTR unisys, FIELDMAP_WORK *fieldWork)
+{
+  if(unisys->fldmsgwin == NULL){
+    FLDMSGBG *fldmsg_bg = FIELDMAP_GetFldMsgBG(fieldWork);
+    unisys->fldmsgwin = FLDMSGWIN_Add(fldmsg_bg, unisys->msgdata, 1, 1, 30, 2);
+    FLDMSGWIN_Print( unisys->fldmsgwin, 0, 0, msg_union_battle_01_00 );
+  }
+}
+
+//==================================================================
+/**
+ * 対戦メニューでマルチバトルを選んだときに出しておく表題を削除
+ *
+ * @param   unisys		
+ */
+//==================================================================
+void UnionMsg_Menu_BattleMenuMultiTitleDel(UNION_SYSTEM_PTR unisys)
+{
+  if(unisys->fldmsgwin != NULL){
+    FLDMSGWIN_Delete(unisys->fldmsgwin);
+    unisys->fldmsgwin = NULL;
+  }
 }
 
 //==================================================================

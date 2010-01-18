@@ -23,6 +23,18 @@ enum{
   UNION_MENU_SELECT_NULL = 0xff,  ///<何も選択されていない(初期値として使用)
 };
 
+enum{ //※BattleMenuDataTblと並びを同じにしておくこと！
+  BATTLE_MENU_INDEX_NUMBER,
+  BATTLE_MENU_INDEX_CUSTOM,
+  BATTLE_MENU_INDEX_MODE,
+  BATTLE_MENU_INDEX_RULE,
+  BATTLE_MENU_INDEX_SHOOTER,
+  //マルチ用メニュー
+  BATTLE_MENU_INDEX_CUSTOM_MULTI,
+  BATTLE_MENU_INDEX_RULE_MULTI,
+  BATTLE_MENU_INDEX_SHOOTER_MULTI,
+};
+
 typedef enum{
   REGWIN_TYPE_RULE,        ///<ルールを見る
   REGWIN_TYPE_NG_TEMOTI,   ///<手持ちNGチェック
@@ -54,6 +66,9 @@ extern void UnionMsg_Menu_BattleMenuSetup(UNION_SYSTEM_PTR unisys, FIELDMAP_WORK
 extern void UnionMsg_Menu_BattleMenuDel(UNION_SYSTEM_PTR unisys);
 extern u32 UnionMsg_Menu_BattleMenuSelectLoop(UNION_SYSTEM_PTR unisys, BOOL *next_sub_menu, 
   UNION_MENU_REGULATION *menu_reg, BOOL *reg_look);
+
+extern void UnionMsg_Menu_BattleMenuMultiTitleSetup(UNION_SYSTEM_PTR unisys, FIELDMAP_WORK *fieldWork);
+extern void UnionMsg_Menu_BattleMenuMultiTitleDel(UNION_SYSTEM_PTR unisys);
 
 extern void UnionMsg_Menu_PokePartySelectMenuSetup(UNION_SYSTEM_PTR unisys, FIELDMAP_WORK *fieldWork);
 extern void UnionMsg_Menu_PokePartySelectMenuDel(UNION_SYSTEM_PTR unisys);
