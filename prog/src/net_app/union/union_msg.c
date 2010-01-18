@@ -33,6 +33,7 @@ enum{
   UNION_BATTLE_REGULATION_MODE_DOUBLE,      ///<ダブル
   UNION_BATTLE_REGULATION_MODE_TRIPLE,      ///<トリプル
   UNION_BATTLE_REGULATION_MODE_ROTATION,    ///<ローテーション
+  UNION_BATTLE_REGULATION_MODE_MULTI,       ///<マルチ
   
   UNION_BATTLE_REGULATION_MODE_MAX,
 };
@@ -81,6 +82,9 @@ static const FLDMENUFUNC_LIST BattleMenuList_Custom[6];
 static const FLDMENUFUNC_LIST BattleMenuList_Mode[5];
 static const FLDMENUFUNC_LIST BattleMenuList_Rule[3];
 static const FLDMENUFUNC_LIST BattleMenuList_Shooter[3];
+static const FLDMENUFUNC_LIST BattleMenuList_CustomMulti[5];
+static const FLDMENUFUNC_LIST BattleMenuList_RuleMulti[3];
+static const FLDMENUFUNC_LIST BattleMenuList_ShooterMulti[3];
 
 
 //==============================================================================
@@ -113,7 +117,10 @@ static const struct{
   {2},      //UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_ROTATION_FREE,       ///<コロシアム
   {2},      //UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_ROTATION_FLAT_SHOOTER,   ///<コロシアム
   {2},      //UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_ROTATION_FLAT,   ///<コロシアム
-  {4},      //UNION_PLAY_CATEGORY_COLOSSEUM_MULTI,      ///<コロシアム
+  {4},      //UNION_PLAY_CATEGORY_COLOSSEUM_MULTI_FREE_SHOOTER,
+  {4},      //UNION_PLAY_CATEGORY_COLOSSEUM_MULTI_FREE,
+  {4},      //UNION_PLAY_CATEGORY_COLOSSEUM_MULTI_FLAT_SHOOTER,
+  {4},      //UNION_PLAY_CATEGORY_COLOSSEUM_MULTI_FLAT,
   {2},      //UNION_PLAY_CATEGORY_TRADE,          ///<ポケモン交換
   {4},      //UNION_PLAY_CATEGORY_GURUGURU,       ///<ぐるぐる交換
   {5},      //UNION_PLAY_CATEGORY_RECORD,         ///<レコードコーナー
@@ -165,7 +172,7 @@ static const FLDMENUFUNC_HEADER MenuHeader_MainMenu =
 static const FLDMENUFUNC_LIST BattleMenuList_Number[] =
 {
   {msg_union_battle_01_01, (void*)BattleMenuList_Custom},   //二人対戦
-  {msg_union_battle_01_02, (void*)UNION_PLAY_CATEGORY_COLOSSEUM_MULTI},    //四人対戦
+  {msg_union_battle_01_02, (void*)BattleMenuList_CustomMulti},    //四人対戦
   {msg_union_battle_01_03, (void*)FLDMENUFUNC_CANCEL},    //やめる
 };
 
@@ -201,8 +208,35 @@ static const FLDMENUFUNC_LIST BattleMenuList_Rule[] =
 ///二人対戦：シューターあり、シューター無し
 static const FLDMENUFUNC_LIST BattleMenuList_Shooter[] =
 {
-  {msg_union_battle_01_11_02, (void*)UNION_BATTLE_REGULATION_RULE_FREE},     //制限なし
+  {msg_union_battle_01_11_01, (void*)UNION_BATTLE_REGULATION_SHOOTER_TRUE}, //有
+  {msg_union_battle_01_11_02, (void*)UNION_BATTLE_REGULATION_SHOOTER_FALSE}, //無
   {msg_union_battle_01_12,    (void*)BattleMenuList_Custom},   //もどる
+};
+
+///マルチ：カスタムメニュー
+static const FLDMENUFUNC_LIST BattleMenuList_CustomMulti[] =
+{
+  {msg_union_battle_01_05, (void*)BattleMenuList_RuleMulti},       //ルール(レベル50、制限無し…)
+  {msg_union_battle_01_06, (void*)BattleMenuList_ShooterMulti},   //シューター有無
+  {msg_union_battle_01_07_01, (void*)UNION_BATTLE_REGULATION_DECIDE},    //決定
+  {msg_union_battle_01_07_02, (void*)UNION_BATTLE_REGULATION_RULE},    //ルールをみる
+  {msg_union_battle_01_08, (void*)BattleMenuList_Number},    //もどる
+};
+
+///マルチ：制限なし、フラット、もどる
+static const FLDMENUFUNC_LIST BattleMenuList_RuleMulti[] =
+{
+  {msg_union_battle_01_10, (void*)UNION_BATTLE_REGULATION_RULE_FREE},     //制限なし
+  {msg_union_battle_01_11, (void*)UNION_BATTLE_REGULATION_RULE_FLAT}, //フラット
+  {msg_union_battle_01_12, (void*)BattleMenuList_CustomMulti},   //もどる
+};
+
+///マルチ：シューターあり、シューター無し
+static const FLDMENUFUNC_LIST BattleMenuList_ShooterMulti[] =
+{
+  {msg_union_battle_01_11_01, (void*)UNION_BATTLE_REGULATION_SHOOTER_TRUE}, //有
+  {msg_union_battle_01_11_02, (void*)UNION_BATTLE_REGULATION_SHOOTER_FALSE}, //無
+  {msg_union_battle_01_12,    (void*)BattleMenuList_CustomMulti},   //もどる
 };
 
 ///対戦メニューのデータテーブル ※BATTLE_MENU_INDEX_???と並びを同じにしておくこと！
@@ -230,6 +264,20 @@ static const struct{
     BattleMenuList_Shooter,
     3,
   },
+  
+  //マルチ用メニュー
+  {
+    BattleMenuList_CustomMulti,
+    5,
+  },
+  {
+    BattleMenuList_RuleMulti,
+    3,
+  },
+  {
+    BattleMenuList_ShooterMulti,
+    3,
+  },
 };
 enum{ //※BattleMenuDataTblと並びを同じにしておくこと！
   BATTLE_MENU_INDEX_NUMBER,
@@ -237,6 +285,10 @@ enum{ //※BattleMenuDataTblと並びを同じにしておくこと！
   BATTLE_MENU_INDEX_MODE,
   BATTLE_MENU_INDEX_RULE,
   BATTLE_MENU_INDEX_SHOOTER,
+  //マルチ用メニュー
+  BATTLE_MENU_INDEX_CUSTOM_MULTI,
+  BATTLE_MENU_INDEX_RULE_MULTI,
+  BATTLE_MENU_INDEX_SHOOTER_MULTI,
 };
 
 ///メニューヘッダー(対戦メニュー用)
@@ -252,7 +304,7 @@ static const FLDMENUFUNC_HEADER MenuHeader_Battle =
 	15,		//表示背景色
 	2,		//表示文字影色
 	0,		//文字間隔Ｘ
-	1,		//文字間隔Ｙ
+	0,		//文字間隔Ｙ
 	FLDMENUFUNC_SKIP_NON,	//ページスキップタイプ
 	12,		//文字サイズX(ドット
 	16,		//文字サイズY(ドット
@@ -339,6 +391,16 @@ ALIGN4 static const u8 MenuReg_to_PlayCategory[UNION_BATTLE_REGULATION_MODE_MAX]
     {//UNION_BATTLE_REGULATION_RULE_FLAT
       UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_ROTATION_FLAT_SHOOTER,
       UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_ROTATION_FLAT,
+    },
+  },
+  {//UNION_BATTLE_REGULATION_MODE_MULTI
+    {//UNION_BATTLE_REGULATION_RULE_FREE
+      UNION_PLAY_CATEGORY_COLOSSEUM_MULTI_FREE_SHOOTER,
+      UNION_PLAY_CATEGORY_COLOSSEUM_MULTI_FREE,
+    },
+    {//UNION_BATTLE_REGULATION_RULE_FLAT
+      UNION_PLAY_CATEGORY_COLOSSEUM_MULTI_FLAT_SHOOTER,
+      UNION_PLAY_CATEGORY_COLOSSEUM_MULTI_FLAT,
     },
   },
 };
@@ -446,7 +508,10 @@ ALIGN4 static const u16 talk_child_mainmenu_view[] = {
   msg_union_connect_03_01_11, //UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_ROTATION_FREE
   msg_union_connect_03_01_12, //UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_ROTATION_FLAT_SHOOTER
   msg_union_connect_03_01_12, //UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_ROTATION_FLAT
-  msg_union_connect_03_01_13, //UNION_PLAY_CATEGORY_COLOSSEUM_MULTI
+  msg_union_connect_03_01_13, //UNION_PLAY_CATEGORY_COLOSSEUM_MULTI_FREE_SHOOTER
+  msg_union_connect_03_01_13, //UNION_PLAY_CATEGORY_COLOSSEUM_MULTI_FREE
+  msg_union_connect_03_01_14, //UNION_PLAY_CATEGORY_COLOSSEUM_MULTI_FLAT_SHOOTER
+  msg_union_connect_03_01_14, //UNION_PLAY_CATEGORY_COLOSSEUM_MULTI_FLAT
   msg_union_connect_04_01,    //UNION_PLAY_CATEGORY_TRADE
   msg_union_connect_06_01,    //UNION_PLAY_CATEGORY_GURUGURU
   msg_union_connect_05_01,    //UNION_PLAY_CATEGORY_RECORD
@@ -490,7 +555,10 @@ ALIGN4 static const u16 talk_failed_table[][2]={
   {msg_union_talkboy_03_03,msg_union_talkgirl_03_03}, //UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_ROTATION_FREE
   {msg_union_talkboy_03_03,msg_union_talkgirl_03_03}, //UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_ROTATION_FLAT_SHOOTER
   {msg_union_talkboy_03_03,msg_union_talkgirl_03_03}, //UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_ROTATION_FLAT
-  {msg_union_talkboy_03_03,msg_union_talkgirl_03_03}, //UNION_PLAY_CATEGORY_COLOSSEUM_MULTI
+  {msg_union_talkboy_03_03,msg_union_talkgirl_03_03}, //UNION_PLAY_CATEGORY_COLOSSEUM_MULTI_FREE_SHOOTER
+  {msg_union_talkboy_03_03,msg_union_talkgirl_03_03}, //UNION_PLAY_CATEGORY_COLOSSEUM_MULTI_FREE
+  {msg_union_talkboy_03_03,msg_union_talkgirl_03_03}, //UNION_PLAY_CATEGORY_COLOSSEUM_MULTI_FLAT_SHOOTER
+  {msg_union_talkboy_03_03,msg_union_talkgirl_03_03}, //UNION_PLAY_CATEGORY_COLOSSEUM_MULTI_FLAT
   {msg_union_talkboy_04_03,msg_union_talkgirl_04_03}, //UNION_PLAY_CATEGORY_TRADE
   {msg_union_talkboy_07_03,msg_union_talkgirl_07_03,}, //UNION_PLAY_CATEGORY_GURUGURU
   {msg_union_talkboy_06_03,msg_union_talkgirl_06_03,}, //UNION_PLAY_CATEGORY_RECORD
@@ -516,7 +584,10 @@ ALIGN4 static const u16 talk_child_no_table[]={
   msg_union_connect_03_03, //UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_ROTATION_FREE
   msg_union_connect_03_03, //UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_ROTATION_FLAT_SHOOTER
   msg_union_connect_03_03, //UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_ROTATION_FLAT
-  msg_union_connect_03_03, //UNION_PLAY_CATEGORY_COLOSSEUM_MULTI
+  msg_union_connect_03_03, //UNION_PLAY_CATEGORY_COLOSSEUM_MULTI_FREE_SHOOTER
+  msg_union_connect_03_03, //UNION_PLAY_CATEGORY_COLOSSEUM_MULTI_FREE
+  msg_union_connect_03_03, //UNION_PLAY_CATEGORY_COLOSSEUM_MULTI_FLAT_SHOOTER
+  msg_union_connect_03_03, //UNION_PLAY_CATEGORY_COLOSSEUM_MULTI_FLAT
   msg_union_connect_04_03, //UNION_PLAY_CATEGORY_TRADE
   msg_union_connect_06_03, //UNION_PLAY_CATEGORY_GURUGURU
   msg_union_connect_06_03, //UNION_PLAY_CATEGORY_RECORD
@@ -561,7 +632,10 @@ ALIGN4 static const u16 talk_answer_wait_table[][2]={
   { msg_union_talkboy_03_01,msg_union_talkgirl_03_01,}, //UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_ROTATION_FREE
   { msg_union_talkboy_03_01,msg_union_talkgirl_03_01,}, //UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_ROTATION_FLAT_SHOOTER
   { msg_union_talkboy_03_01,msg_union_talkgirl_03_01,}, //UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_ROTATION_FLAT
-  { msg_union_talkboy_03_01,msg_union_talkgirl_03_01,}, //UNION_PLAY_CATEGORY_COLOSSEUM_MULTI
+  { msg_union_talkboy_03_01,msg_union_talkgirl_03_01,}, //UNION_PLAY_CATEGORY_COLOSSEUM_MULTI_FREE_SHOOTER
+  { msg_union_talkboy_03_01,msg_union_talkgirl_03_01,}, //UNION_PLAY_CATEGORY_COLOSSEUM_MULTI_FREE
+  { msg_union_talkboy_03_01,msg_union_talkgirl_03_01,}, //UNION_PLAY_CATEGORY_COLOSSEUM_MULTI_FLAT_SHOOTER
+  { msg_union_talkboy_03_01,msg_union_talkgirl_03_01,}, //UNION_PLAY_CATEGORY_COLOSSEUM_MULTI_FLAT
   { msg_union_talkboy_04_01,msg_union_talkgirl_04_01,}, //UNION_PLAY_CATEGORY_TRADE
   { msg_union_talkboy_07_01,msg_union_talkgirl_07_01,}, //UNION_PLAY_CATEGORY_GURUGURU
   { msg_union_talkboy_07_01,msg_union_talkgirl_07_01,}, //UNION_PLAY_CATEGORY_RECORD
@@ -1555,6 +1629,21 @@ void UnionMsg_Menu_BattleMenuSetup(UNION_SYSTEM_PTR unisys, FIELDMAP_WORK *field
       list, BattleMenuDataTbl[menu_index].list_max, &head);
     GFL_HEAP_FreeMemory(list);
   }
+  else if(menu_index == BATTLE_MENU_INDEX_CUSTOM_MULTI){
+    FLDMENUFUNC_LIST *list;
+    
+    list = GFL_HEAP_AllocClearMemory(
+      HEAPID_UNION, sizeof(FLDMENUFUNC_LIST) * NELEMS(BattleMenuList_CustomMulti));
+    GFL_STD_MemCopy(BattleMenuList_CustomMulti, list, 
+      sizeof(FLDMENUFUNC_LIST) * NELEMS(BattleMenuList_CustomMulti));
+    
+    list[0].str_id = msg_union_battle_01_10 + menu_reg->rule;     //ルール(レベル50、制限無し…)
+    list[1].str_id = msg_union_battle_01_11_01 + menu_reg->shooter;  //シューター有無
+    
+    UnionMsg_Menu_WindowSetup(unisys, fieldWork, 
+      list, BattleMenuDataTbl[menu_index].list_max, &head);
+    GFL_HEAP_FreeMemory(list);
+  }
   else{
     UnionMsg_Menu_WindowSetup(unisys, fieldWork, 
       BattleMenuDataTbl[menu_index].list, BattleMenuDataTbl[menu_index].list_max, &head);
@@ -1595,17 +1684,29 @@ u32 UnionMsg_Menu_BattleMenuSelectLoop(UNION_SYSTEM_PTR unisys, BOOL *next_sub_m
   menu_ret = UnionMsg_Menu_SelectLoop(unisys);
   switch(menu_ret){
   case FLDMENUFUNC_NULL:
-  case FLDMENUFUNC_CANCEL:
     return menu_ret;
-  
+  case FLDMENUFUNC_CANCEL:
+    if(menu_reg->menu_index == BATTLE_MENU_INDEX_NUMBER){
+      return menu_ret;
+    }
+    //一番下のメニューがキャンセル動作のはずなので、それを返す
+    menu_ret = (u32)(BattleMenuDataTbl[menu_reg->menu_index].list[BattleMenuDataTbl[menu_reg->menu_index].list_max-1].selectParam);
+    break;
   case UNION_BATTLE_REGULATION_DECIDE:
     return MenuReg_to_PlayCategory[menu_reg->mode][menu_reg->rule][menu_reg->shooter];
   case UNION_BATTLE_REGULATION_RULE:
     *reg_look = TRUE; //レギュレーションを見る
     return MenuReg_to_PlayCategory[menu_reg->mode][menu_reg->rule][menu_reg->shooter];
   }
-  if(menu_reg->menu_index == BATTLE_MENU_INDEX_NUMBER && menu_ret < UNION_PLAY_CATEGORY_MAX){
-    return menu_ret;  //マルチ選択
+  if(menu_reg->menu_index == BATTLE_MENU_INDEX_NUMBER){
+    if(menu_ret == (u32)(&BattleMenuList_Custom)){  //二人対戦
+      if(menu_reg->mode == UNION_BATTLE_REGULATION_MODE_MULTI){
+        menu_reg->mode = UNION_BATTLE_REGULATION_MODE_SINGLE;
+      }
+    }
+    else if(menu_ret == (u32)(&BattleMenuList_CustomMulti)){  //マルチ
+      menu_reg->mode = UNION_BATTLE_REGULATION_MODE_MULTI;
+    }
   }
 
   for(i = 0; i < NELEMS(BattleMenuDataTbl); i++){
@@ -1623,19 +1724,28 @@ u32 UnionMsg_Menu_BattleMenuSelectLoop(UNION_SYSTEM_PTR unisys, BOOL *next_sub_m
         }
         break;
       case BATTLE_MENU_INDEX_RULE:
+      case BATTLE_MENU_INDEX_RULE_MULTI:
         if(menu_ret < UNION_BATTLE_REGULATION_RULE_MAX){
           menu_reg->rule = menu_ret;
           *next_sub_menu = TRUE;
+          if(menu_reg->menu_index == BATTLE_MENU_INDEX_RULE_MULTI){
+            return BATTLE_MENU_INDEX_CUSTOM_MULTI;
+          }
           return BATTLE_MENU_INDEX_CUSTOM;
         }
         break;
       case BATTLE_MENU_INDEX_SHOOTER:
+      case BATTLE_MENU_INDEX_SHOOTER_MULTI:
         if(menu_ret < UNION_BATTLE_REGULATION_SHOOTER_MAX){
           menu_reg->shooter = menu_ret;
           *next_sub_menu = TRUE;
+          if(menu_reg->menu_index == BATTLE_MENU_INDEX_SHOOTER_MULTI){
+            return BATTLE_MENU_INDEX_CUSTOM_MULTI;
+          }
           return BATTLE_MENU_INDEX_CUSTOM;
         }
         break;
+      
       }
     }
   }

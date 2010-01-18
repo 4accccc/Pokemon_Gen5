@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsuda" host="W00142" date="2010-01-16T19:16:18"/>
+	<create user="matsuda" host="W00142" date="2010-01-18T16:54:26"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -801,6 +801,28 @@
 	</row>
 
 	<row id="msg_union_connect_03_01_13" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,#80ffff,#80ffff,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>▲誰かに「マルチバトル（制限無し）」をもちかけられたとき：
+　msg_union_connect_00_02：00_02_01から
+
+トレーナー名：０　話しかけてきた相手の名前
+
+・msg_union_connect_03_02　「はい」
+・msg_union_connect_03_03　「いいえ」
+・msg_union_connect_03_04　「手持ちの条件が合わない」
+</comment>
+		<language name="JPN" width="216" line="2">[1:00:トレーナー名:0]が　たいせんを
+もうしこんで　きました[BE:01:ページ切り替え（クリア）]
+マルチバトルの
+せいげんなしで[BE:00:ページ切り替え（行送り）]
+たいせん　しますか？</language>
+		<language name="JPN_KANJI" width="216" line="2">[1:00:トレーナー名:0]が　たいせんを
+もうしこんで　きました[BE:01:ページ切り替え（クリア）]
+マルチバトルの
+せいげんなしで[BE:00:ページ切り替え（行送り）]
+たいせん　しますか？</language>
+	</row>
+
+	<row id="msg_union_connect_03_01_14" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,,,,#80ffff,#80ffff,,#80ffff,#80ffff,,#80ffff,,,#80ffff,,">
 		<comment>▲誰かに「マルチバトル（フラット）」をもちかけられたとき：
 　msg_union_connect_00_02：00_02_01から
 
@@ -810,11 +832,15 @@
 ・msg_union_connect_03_03　「いいえ」
 ・msg_union_connect_03_04　「手持ちの条件が合わない」
 </comment>
-		<language name="JPN" width="216" line="2">[1:00:トレーナー名:0]が　マルチバトルを
+		<language name="JPN" width="216" line="2">[1:00:トレーナー名:0]が　たいせんを
 もうしこんで　きました[BE:01:ページ切り替え（クリア）]
+マルチバトルの
+フラットルールで[BE:00:ページ切り替え（行送り）]
 たいせん　しますか？</language>
-		<language name="JPN_KANJI" width="216" line="2">[1:00:トレーナー名:0]が　マルチバトルを
+		<language name="JPN_KANJI" width="216" line="2">[1:00:トレーナー名:0]が　たいせんを
 もうしこんで　きました[BE:01:ページ切り替え（クリア）]
+マルチバトルの
+フラットルールで[BE:00:ページ切り替え（行送り）]
 たいせん　しますか？</language>
 	</row>
 

@@ -271,7 +271,22 @@ static const ONESELF_FUNC_DATA OneselfFuncTbl[] = {
     OneselfSeq_ColosseumUpdate,
     NULL,
   },
-  {//UNION_STATUS_BATTLE_MULTI
+  {//UNION_STATUS_BATTLE_MULTI_FREE_SHOOTER
+    NULL,
+    OneselfSeq_MultiColosseumUpdate,
+    NULL,
+  },
+  {//UNION_STATUS_BATTLE_MULTI_FREE
+    NULL,
+    OneselfSeq_MultiColosseumUpdate,
+    NULL,
+  },
+  {//UNION_STATUS_BATTLE_MULTI_FLAT_SHOOTER
+    NULL,
+    OneselfSeq_MultiColosseumUpdate,
+    NULL,
+  },
+  {//UNION_STATUS_BATTLE_MULTI_FLAT
     NULL,
     OneselfSeq_MultiColosseumUpdate,
     NULL,
@@ -469,8 +484,12 @@ static int Union_GetPlayCategory_to_RegulationNo(u32 play_category)
   case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_ROTATION_FLAT_SHOOTER:
   case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_ROTATION_FLAT:
     return REG_FLAT_ROTATION;
-  case UNION_PLAY_CATEGORY_COLOSSEUM_MULTI:                 //対戦:マルチ
+  case UNION_PLAY_CATEGORY_COLOSSEUM_MULTI_FREE_SHOOTER:
+  case UNION_PLAY_CATEGORY_COLOSSEUM_MULTI_FREE:
     return REG_FREE_MALTI;
+  case UNION_PLAY_CATEGORY_COLOSSEUM_MULTI_FLAT_SHOOTER:
+  case UNION_PLAY_CATEGORY_COLOSSEUM_MULTI_FLAT:
+    return REG_FLAT_MALTI;
   default:
     GF_ASSERT(0);
     return REG_FREE_SINGLE;
@@ -496,6 +515,8 @@ static BOOL Union_GetPlayCategory_to_Shooter(u32 play_category)
   case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_TRIPLE_FLAT_SHOOTER:
   case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_ROTATION_FREE_SHOOTER:
   case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_ROTATION_FLAT_SHOOTER:
+  case UNION_PLAY_CATEGORY_COLOSSEUM_MULTI_FREE_SHOOTER:
+  case UNION_PLAY_CATEGORY_COLOSSEUM_MULTI_FLAT_SHOOTER:
     return TRUE;
   }
   return FALSE;
@@ -1565,7 +1586,7 @@ static BOOL OneselfSeq_Talk_Battle_Parent(UNION_SYSTEM_PTR unisys, UNION_MY_SITU
     else if(select_ret == FLDMENUFUNC_CANCEL || select_ret == UNION_MENU_SELECT_CANCEL){
       UnionMsg_Menu_MainMenuDel(unisys);
       if(situ->work > 0){
-        situ->work--;
+        situ->work = 0;
         (*seq)--;
       }
       else{
@@ -1715,7 +1736,10 @@ static BOOL OneselfSeq_TalkPlayGameUpdate_Parent(UNION_SYSTEM_PTR unisys, UNION_
       UnionOneself_ReqStatus(unisys, UNION_STATUS_NORMAL);
       (*seq) = LOCALSEQ_END;
       break;
-    case UNION_PLAY_CATEGORY_COLOSSEUM_MULTI:      //マルチ
+    case UNION_PLAY_CATEGORY_COLOSSEUM_MULTI_FREE_SHOOTER:
+    case UNION_PLAY_CATEGORY_COLOSSEUM_MULTI_FREE:
+    case UNION_PLAY_CATEGORY_COLOSSEUM_MULTI_FLAT_SHOOTER:
+    case UNION_PLAY_CATEGORY_COLOSSEUM_MULTI_FLAT:
       if(unisys->receive_beacon[buf_no].beacon.connect_num < UnionMsg_GetMemberMax(play_category)){
         UnionMsg_TalkStream_PrintPack(unisys, fieldWork, 
           UnionMsg_GetMsgID_MultiIntrude(situ->mycomm.talk_pc->beacon.sex));
@@ -1968,7 +1992,10 @@ static BOOL OneselfSeq_TalkPlayGameUpdate_Child(UNION_SYSTEM_PTR unisys, UNION_M
     case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_ROTATION_FREE:
     case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_ROTATION_FLAT_SHOOTER:
     case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_ROTATION_FLAT:
-    case UNION_PLAY_CATEGORY_COLOSSEUM_MULTI:      //コロシアム
+    case UNION_PLAY_CATEGORY_COLOSSEUM_MULTI_FREE_SHOOTER:
+    case UNION_PLAY_CATEGORY_COLOSSEUM_MULTI_FREE:
+    case UNION_PLAY_CATEGORY_COLOSSEUM_MULTI_FLAT_SHOOTER:
+    case UNION_PLAY_CATEGORY_COLOSSEUM_MULTI_FLAT:
       UnionMsg_TalkStream_PrintPack(unisys, fieldWork, 
         UnionMsg_GetMsgID_PlayGameBattle(situ->mycomm.talk_pc->beacon.sex));
       break;
@@ -2258,8 +2285,17 @@ static BOOL OneselfSeq_IntrudeUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION
       situ->mycomm.intrude = TRUE;
       situ->mycomm.mainmenu_select = unisys->receive_beacon[buf_no].beacon.play_category;
       switch(situ->mycomm.mainmenu_select){
-      case UNION_PLAY_CATEGORY_COLOSSEUM_MULTI:
-        UnionOneself_ReqStatus(unisys, UNION_STATUS_BATTLE_MULTI);
+      case UNION_PLAY_CATEGORY_COLOSSEUM_MULTI_FREE_SHOOTER:
+        UnionOneself_ReqStatus(unisys, UNION_STATUS_BATTLE_MULTI_FREE_SHOOTER);
+        break;
+      case UNION_PLAY_CATEGORY_COLOSSEUM_MULTI_FREE:
+        UnionOneself_ReqStatus(unisys, UNION_STATUS_BATTLE_MULTI_FREE);
+        break;
+      case UNION_PLAY_CATEGORY_COLOSSEUM_MULTI_FLAT_SHOOTER:
+        UnionOneself_ReqStatus(unisys, UNION_STATUS_BATTLE_MULTI_FLAT_SHOOTER);
+        break;
+      case UNION_PLAY_CATEGORY_COLOSSEUM_MULTI_FLAT:
+        UnionOneself_ReqStatus(unisys, UNION_STATUS_BATTLE_MULTI_FLAT);
         break;
       case UNION_PLAY_CATEGORY_PICTURE:
         UnionOneself_ReqStatus(unisys, UNION_STATUS_PICTURE);
@@ -2282,7 +2318,10 @@ static BOOL OneselfSeq_IntrudeUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION
         OS_TPrintf("親と接続出来なかった為キャンセルしました\n");
         (*seq)++;
         switch(situ->mycomm.mainmenu_select){
-        case UNION_PLAY_CATEGORY_COLOSSEUM_MULTI:
+        case UNION_PLAY_CATEGORY_COLOSSEUM_MULTI_FREE_SHOOTER:
+        case UNION_PLAY_CATEGORY_COLOSSEUM_MULTI_FREE:
+        case UNION_PLAY_CATEGORY_COLOSSEUM_MULTI_FLAT_SHOOTER:
+        case UNION_PLAY_CATEGORY_COLOSSEUM_MULTI_FLAT:
           UnionMsg_TalkStream_PrintPack(unisys, fieldWork, 
             UnionMsg_GetMsgID_MultiIntrudeParentNG(situ->mycomm.talk_pc->beacon.sex));
           break;
@@ -3540,7 +3579,10 @@ static BOOL OneselfSeq_ColosseumPokelist(UNION_SYSTEM_PTR unisys, UNION_MY_SITUA
       case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_ROTATION_FLAT:
         msg_id = msg_union_battle_01_31;
         break;
-      case UNION_PLAY_CATEGORY_COLOSSEUM_MULTI:
+      case UNION_PLAY_CATEGORY_COLOSSEUM_MULTI_FREE_SHOOTER:
+      case UNION_PLAY_CATEGORY_COLOSSEUM_MULTI_FREE:
+      case UNION_PLAY_CATEGORY_COLOSSEUM_MULTI_FLAT_SHOOTER:
+      case UNION_PLAY_CATEGORY_COLOSSEUM_MULTI_FLAT:
         msg_id = msg_union_battle_01_29;
         break;
       }
@@ -3585,13 +3627,16 @@ static BOOL OneselfSeq_ColosseumPokelist(UNION_SYSTEM_PTR unisys, UNION_MY_SITUA
         }
       }
     }
-    if( situ->mycomm.mainmenu_select == UNION_PLAY_CATEGORY_COLOSSEUM_MULTI )
-    {
+    switch(situ->mycomm.mainmenu_select){
+    case UNION_PLAY_CATEGORY_COLOSSEUM_MULTI_FREE_SHOOTER:
+    case UNION_PLAY_CATEGORY_COLOSSEUM_MULTI_FREE:
+    case UNION_PLAY_CATEGORY_COLOSSEUM_MULTI_FLAT_SHOOTER:
+    case UNION_PLAY_CATEGORY_COLOSSEUM_MULTI_FLAT:
       plist->comm_type = PL_COMM_MULTI;
-    }
-    else
-    {
+      break;
+    default:
       plist->comm_type = PL_COMM_SINGLE;
+      break;
     }
     plist->is_disp_party = TRUE;
     plist->use_tile_limit = FALSE;
