@@ -16,7 +16,7 @@
 #define D02R0101_ASSISTANTW_01             2
 #define D02R0101_LEADER3_01                3
 #define D02R0101_LEADER2_01                4
-#define D02R0101_HAKAIM_01                 5
+#define D02R0101_HAKAIM2_01                5
 #define TR_FUTAGO_02_2                     6
 #define TR_FUTAGO_02                       7
 #define TR_MINI_03                         8
@@ -35,5 +35,9 @@
 #define D02R0101_HAKAIW_STOP2_01          21
 #define D02R0101_HAKAIW_STOP3_01          22
 #define D02R0101_HAKAIM_STOP5_01          23
+#define D02R0101_HAKAIM1_01               24
+#define D02R0101_HAKAIW1_01               25
+#define D02R0101_HAKAIM3_01               26
+#define D02R0101_SAGE5_01                 27
 
 #endif //ZONE_D02R0101_EVC_H

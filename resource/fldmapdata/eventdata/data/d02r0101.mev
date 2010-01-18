@@ -1,5 +1,5 @@
 #event data
-#save date:2010/01/15 21:15:39
+#save date:2010/01/16 18:52:06
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d02r0101.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d02r0101.wms
 #hold event type:
 1
 #hold event number:
-24
+28
 #event number: 0
 #type
 1
@@ -71,7 +71,7 @@ DIR_LEFT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-904 0 -840
+888 0 -776
 #event number: 2
 #type
 1
@@ -111,7 +111,7 @@ D02R0101_LEADER3_01
 #OBJ CODE Number
 LEADER3
 #MOVE CODE Number
-MV_DMY
+MV_RND_UL
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
@@ -119,7 +119,7 @@ FV_D02R0101_LEADER3
 #Event Script Name
 SCRID_D02R0101_LEADER3_01
 #Direction Type Number
-DIR_LEFT
+DIR_UP
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -133,7 +133,7 @@ DIR_LEFT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-1048 0 -952
+920 0 -856
 #event number: 4
 #type
 1
@@ -164,12 +164,12 @@ DIR_UP
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-344 0 -1192
+440 0 -328
 #event number: 5
 #type
 1
 #ID name
-D02R0101_HAKAIM_01
+D02R0101_HAKAIM2_01
 #OBJ CODE Number
 HAKAIM
 #MOVE CODE Number
@@ -179,7 +179,7 @@ EV_TYPE_NORMAL
 #Flag Name
 FV_D02_HAKAI
 #Event Script Name
-SCRID_DUMMY
+SCRID_D02R0101_HAKAIM2_01
 #Direction Type Number
 DIR_LEFT
 #Parameter 0 Number
@@ -195,7 +195,7 @@ DIR_LEFT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-264 0 -872
+120 48 -600
 #event number: 6
 #type
 1
@@ -754,6 +754,130 @@ DIR_RIGHT
 EVENTDATA_POSTYPE_GRID
 #position
 984 0 -952
+#event number: 24
+#type
+1
+#ID name
+D02R0101_HAKAIM1_01
+#OBJ CODE Number
+HAKAIM
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_D02_HAKAI
+#Event Script Name
+SCRID_D02R0101_HAKAIM1_01
+#Direction Type Number
+DIR_UP
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+712 0 -936
+#event number: 25
+#type
+1
+#ID name
+D02R0101_HAKAIW1_01
+#OBJ CODE Number
+HAKAIW
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_D02_HAKAI
+#Event Script Name
+SCRID_D02R0101_HAKAIW1_01
+#Direction Type Number
+DIR_RIGHT
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+472 0 -936
+#event number: 26
+#type
+1
+#ID name
+D02R0101_HAKAIM3_01
+#OBJ CODE Number
+HAKAIM
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_D02_HAKAI
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+440 0 -216
+#event number: 27
+#type
+1
+#ID name
+D02R0101_SAGE5_01
+#OBJ CODE Number
+SAGE5
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_D02R0101_LEADER2
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_UP
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+2
+#Move Limit Z Number
+2
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+440 0 -328
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
@@ -786,7 +910,7 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-3
+7
 #event number: 0
 #Pos Event Label
 POSID_D02R0101_LEADER_STOP
@@ -818,14 +942,31 @@ WK_SCENE_D02R0101
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-1080 0 -920
+888 0 -888
 #size
-1 6
+6 1
 #event number: 2
 #Pos Event Label
 POS_D02R0101_EVENT_02
 #Pos Script Name
 SCRID_POS_D02R0101_EVENT_02
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+WK_SCENE_D02R0101_HAKAI
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+696 0 -920
+#size
+4 1
+#event number: 3
+#Pos Event Label
+POSID_D02R0101_LEADER_STOP
+#Pos Script Name
+SCRID_POS_D02R0101_STOP
 #Pos Check Type
 POS_CHECK_TYPE_NORMAL
 #Event Trigger Work Name
@@ -835,9 +976,60 @@ WK_SCENE_D02R0101
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-280 0 -872
+872 0 -200
 #size
-1 2
+6 1
+#event number: 4
+#Pos Event Label
+POS_D02R0101_EVENT_03
+#Pos Script Name
+SCRID_POS_D02R0101_EVENT_03
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+WK_SCENE_D02R0101_HAKAI
+#Event Trigger Work Value
+1
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+488 0 -856
+#size
+1 11
+#event number: 5
+#Pos Event Label
+POS_D02R0101_EVENT_04
+#Pos Script Name
+SCRID_POS_D02R0101_EVENT_04
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+WK_SCENE_D02R0101_HAKAI
+#Event Trigger Work Value
+2
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+104 48 -600
+#size
+1 1
+#event number: 6
+#Pos Event Label
+POS_D02R0101_EVENT_05
+#Pos Script Name
+SCRID_POS_D02R0101_EVENT_05
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+WK_SCENE_D02R0101_HAKAI
+#Event Trigger Work Value
+3
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+440 0 -280
+#size
+1 1
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT

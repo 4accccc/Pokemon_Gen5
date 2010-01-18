@@ -22,18 +22,24 @@
 _EVENT_DATA		ev_d02r0101_sportsm_01
 _EVENT_DATA		ev_d02r0101_mountman_01
 _EVENT_DATA		ev_d02r0101_assistantw_01
-_EVENT_DATA		ev_pos_d02r0101_event_01
-_EVENT_DATA		ev_d02r0101_leader3_01
-_EVENT_DATA		ev_pos_d02r0101_stop
-_EVENT_DATA		ev_pos_d02r0101_event_02
-_EVENT_DATA		ev_init_d02r0101
 _EVENT_DATA		ev_d02r0101_hakaim_stop1_01
 _EVENT_DATA		ev_d02r0101_hakaim_stop2_01
 _EVENT_DATA		ev_d02r0101_hakaim_stop3_01
 _EVENT_DATA		ev_d02r0101_hakaim_stop4_01
 _EVENT_DATA		ev_d02r0101_hakaiw_stop1_01
 _EVENT_DATA		ev_d02r0101_hakaiw_stop2_01
+_EVENT_DATA		ev_pos_d02r0101_event_01
+_EVENT_DATA		ev_d02r0101_leader3_01
+_EVENT_DATA		ev_pos_d02r0101_stop
+_EVENT_DATA		ev_pos_d02r0101_event_02
+_EVENT_DATA		ev_init_d02r0101
 _EVENT_DATA		ev_bg_d02r0101_stone_01
+_EVENT_DATA		ev_d02r0101_hakaim1_01
+_EVENT_DATA		ev_pos_d02r0101_event_03
+_EVENT_DATA		ev_d02r0101_hakaiw1_01
+_EVENT_DATA		ev_pos_d02r0101_event_04
+_EVENT_DATA		ev_d02r0101_hakaim2_01
+_EVENT_DATA		ev_pos_d02r0101_event_05
 _EVENT_DATA_END
 
 
@@ -71,23 +77,129 @@ EVENT_START		ev_d02r0101_mountman_01
 EVENT_END
 
 /**************************************************************/
-/*  D02R0101 GIRL1の会話用イベントスクリプト                  */
+/*  D02R0101 ASSISTANTW1の会話用イベントスクリプト            */
 /**************************************************************/
 EVENT_START		ev_d02r0101_assistantw_01
 	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d02r0101_assistantw_01 )
 EVENT_END
 
 /**************************************************************/
-/*  D02R0101 POS											  */
+/*	D02R0101	HAKAIM1	盗難イベント前スクリプト			  */
+/**************************************************************/
+EVENT_START    ev_d02r0101_hakaim_stop1_01
+	_BALLOONWIN_OBJMSG( msg_d02r0101_hakaim_stop1_01 , D02R0101_HAKAIM_STOP1_01 )
+	_LAST_KEYWAIT()
+	_BALLOONWIN_CLOSE()
+EVENT_END
+
+/**************************************************************/
+/*	D02R0101	HAKAIM2	盗難イベント前スクリプト			  */
+/**************************************************************/
+EVENT_START    ev_d02r0101_hakaim_stop2_01
+	_BALLOONWIN_OBJMSG( msg_d02r0101_hakaim_stop2_01 , D02R0101_HAKAIM_STOP2_01 )
+	_LAST_KEYWAIT()
+	_BALLOONWIN_CLOSE()
+EVENT_END
+
+/**************************************************************/
+/*	D02R0101	HAKAIM3	盗難イベント前スクリプト			  */
+/**************************************************************/
+EVENT_START    ev_d02r0101_hakaim_stop3_01
+	_BALLOONWIN_OBJMSG( msg_d02r0101_hakaiw_stop3_01 , D02R0101_HAKAIM_STOP3_01 )
+	_LAST_KEYWAIT()
+	_BALLOONWIN_CLOSE()
+EVENT_END
+
+/**************************************************************/
+/*	D02R0101	HAKAIM4	盗難イベント前スクリプト			  */
+/**************************************************************/
+EVENT_START    ev_d02r0101_hakaim_stop4_01
+	_BALLOONWIN_OBJMSG( msg_d02r0101_hakaiw_stop4_01 , D02R0101_HAKAIM_STOP4_01 )
+	_LAST_KEYWAIT()
+	_BALLOONWIN_CLOSE()
+EVENT_END
+
+/**************************************************************/
+/*	D02R0101	HAKAIW1	盗難イベント前スクリプト			  */
+/**************************************************************/
+EVENT_START    ev_d02r0101_hakaiw_stop1_01
+	_BALLOONWIN_OBJMSG( msg_d02r0101_hakaiw_stop1_01 , D02R0101_HAKAIW_STOP1_01 )
+	_LAST_KEYWAIT()
+	_BALLOONWIN_CLOSE()
+EVENT_END
+
+/**************************************************************/
+/*	D02R0101	HAKAIW2	盗難イベント前スクリプト			  */
+/**************************************************************/
+EVENT_START    ev_d02r0101_hakaiw_stop2_01
+	_BALLOONWIN_OBJMSG( msg_d02r0101_hakaiw_stop2_01 , D02R0101_HAKAIW_STOP2_01 )
+	_LAST_KEYWAIT()
+	_BALLOONWIN_CLOSE()
+EVENT_END
+
+/**************************************************************/
+/*	D02R0101	リーフィア進化用の石						  */
+/**************************************************************/
+EVENT_START		ev_bg_d02r0101_stone_01
+	_PLAINWIN_MSG_DOWN( msg_d02r0101_stone_01 )
+	_LAST_KEYWAIT()
+	_PLAINWIN_CLOSE()
+EVENT_END
+
+/**************************************************************/
+/*  D02R0101 LEADER3	ヤグルマの森の説明posイベント		  */
 /**************************************************************/
 EVENT_START		ev_pos_d02r0101_event_01
+
+	{
+	DEFINE_LOCAL	LWK_POSX
+	DEFINE_LOCAL	LWK_POSZ
+ 
+	_PLAYER_POS_GET( LWK_POSX , LWK_POSZ )
+	
+	//座標による分岐
+
+    SWITCH $LWK_POSX
+    CASE 71 THEN
+        _OBJ_ANIME( D02R0101_LEADER3_01, anm_leader_pos1 )
+        _OBJ_ANIME_WAIT()
+    CASE 72 THEN
+        _OBJ_ANIME( D02R0101_LEADER3_01, anm_leader_pos2 )
+        _OBJ_ANIME_WAIT()
+    CASE 74 THEN
+        _OBJ_ANIME( D02R0101_LEADER3_01, anm_leader_pos3 )
+        _OBJ_ANIME_WAIT()
+    CASE 75 THEN
+        _OBJ_ANIME( D02R0101_LEADER3_01, anm_leader_pos4 )
+        _OBJ_ANIME_WAIT()
+    CASE 76 THEN
+        _OBJ_ANIME( D02R0101_LEADER3_01, anm_leader_pos5 )
+        _OBJ_ANIME_WAIT()
+    ENDSWITCH
+	}
 	
 	//アーティ：自機を見る
-	_OBJ_ANIME( D02R0101_LEADER3_01, anm_leader_staywalk )
+	_OBJ_ANIME( D02R0101_LEADER3_01, anm_down_staywalk1 )
 	_OBJ_ANIME_WAIT()
 	
-	//ああ　もりの　におい……
+	//あのね　ヤグルマのもりを　ぬけるには
 	_BALLOONWIN_OBJMSG( msg_d02r0101_leader3_01 , D02R0101_LEADER3_01 )
+	_BALLOONWIN_CLOSE()
+
+	//アーティ：左の森を見る
+	_OBJ_ANIME( D02R0101_LEADER3_01, anm_left_staywalk1 )
+	_OBJ_ANIME_WAIT()
+
+	//きみは　こっちの　ルートに
+	_BALLOONWIN_OBJMSG( msg_d02r0101_leader3_02 , D02R0101_LEADER3_01 )
+	_BALLOONWIN_CLOSE()
+
+	//アーティ：自機を見る
+	_OBJ_ANIME( D02R0101_LEADER3_01, anm_down_staywalk )
+	_OBJ_ANIME_WAIT()
+	
+	//じゃあ　アロエねえさんの　ため　やりますか！
+	_BALLOONWIN_OBJMSG( msg_d02r0101_leader3_03 , D02R0101_LEADER3_01 )
 	_BALLOONWIN_CLOSE()
 	
 	//アーティ：H01側出入り口へ
@@ -109,20 +221,46 @@ EVENT_END
 //--------------------------------------------------------------
 //	アーティ　その場歩き、H01側出入り口へ
 //--------------------------------------------------------------
-_ANIME_LABEL anm_leader_staywalk
-	_ANIME_DATA		AC_STAY_WALK_R_16F,1
+_ANIME_LABEL anm_down_staywalk1
+	_ANIME_DATA		AC_STAY_WALK_D_16F,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL anm_left_staywalk1
+	_ANIME_DATA		AC_STAY_WALK_L_16F,1
 	_ANIME_DATA		ACMD_END,0
 
 _ANIME_LABEL anm_leader_saru
-	_ANIME_DATA		AC_WALK_L_8F,6
-	_ANIME_DATA		AC_WALK_L_8F,5
+	_ANIME_DATA		AC_WALK_U_8F,8
 	_ANIME_DATA		ACMD_END,0
+
+//--------------------------------------------------------------
+//	アーティ　自機に近づく
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_leader_pos1
+	_ANIME_DATA	AC_WALK_L_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_leader_pos2
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_leader_pos3
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_leader_pos4
+	_ANIME_DATA	AC_WALK_R_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_leader_pos5
+	_ANIME_DATA	AC_WALK_R_8F,3
+	_ANIME_DATA	ACMD_END,0
 
 /**************************************************************/
 /*  D02R0101 ジムリーダーアーティ会話						  */
 /**************************************************************/
 EVENT_START		ev_d02r0101_leader3_01
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d02r0101_leader3_02 )
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d02r0101_leader3_04 )
 EVENT_END
 
 /**************************************************************/
@@ -130,15 +268,14 @@ EVENT_END
 /**************************************************************/
 EVENT_START		ev_pos_d02r0101_stop
 
-	//ローカル変数定義
-    DEFINE_LOCAL  LWK_POS_X
-    DEFINE_LOCAL  LWK_POS_Z
-
-	//自機座標取得
-    _PLAYER_POS_GET( LWK_POS_X,LWK_POS_Z )
+	{
+	DEFINE_LOCAL	LWK_POSX
+	DEFINE_LOCAL	LWK_POSZ
+ 
+	_PLAYER_POS_GET( LWK_POSX , LWK_POSZ )
 
 	//座標による分岐
-    SWITCH $LWK_POS_X
+    SWITCH $LWK_POSX
     CASE 71 THEN
         _OBJ_ANIME( D02R0101_LEADER3_01, anm_leader_tikaduku1 )
         _OBJ_ANIME_WAIT()
@@ -155,9 +292,10 @@ EVENT_START		ev_pos_d02r0101_stop
         _OBJ_ANIME( D02R0101_LEADER3_01, anm_leader_tikaduku5 )
         _OBJ_ANIME_WAIT()
     ENDSWITCH
+	
 
 	//……んうん？　こっちには……
-	_BALLOONWIN_OBJMSG( msg_d02r0101_leader3_03 , D02R0101_LEADER3_01 )
+	_BALLOONWIN_OBJMSG( msg_d02r0101_leader3_05 , D02R0101_LEADER3_01 )
 	_BALLOONWIN_CLOSE()
 
 	//自機：押し戻される
@@ -165,7 +303,7 @@ EVENT_START		ev_pos_d02r0101_stop
 	_OBJ_ANIME_WAIT()
 
 	//座標による分岐
-    SWITCH $LWK_POS_X
+    SWITCH $LWK_POSX
     CASE 71 THEN
         _OBJ_ANIME( D02R0101_LEADER3_01, anm_leader_modoru1 )
         _OBJ_ANIME_WAIT()
@@ -182,6 +320,7 @@ EVENT_START		ev_pos_d02r0101_stop
         _OBJ_ANIME( D02R0101_LEADER3_01, anm_leader_modoru5 )
         _OBJ_ANIME_WAIT()
     ENDSWITCH
+	}
 
 EVENT_END
 
@@ -262,185 +401,471 @@ _ANIME_LABEL	anm_leader_modoru5
 	_ANIME_DATA	ACMD_END,0
 
 /**************************************************************/
-/*  D02R0101 プラズマ団員♂会話								  */
+/*  D02R0101	プラズマ団員１	盗難イベントposスクリプト	  */
 /**************************************************************/
 EVENT_START		ev_pos_d02r0101_event_02
 
-	//ローカル変数定義
-    DEFINE_LOCAL  LWK_POS1_X
-    DEFINE_LOCAL  LWK_POS1_Z
+	{
+	DEFINE_LOCAL	LWK_POSX
+	DEFINE_LOCAL	LWK_POSZ
+ 
+	_PLAYER_POS_GET( LWK_POSX , LWK_POSZ )
 
-	//自機座標取得
-    _PLAYER_POS_GET( LWK_POS1_X,LWK_POS1_Z )
+	_OBJ_ANIME( D02R0101_HAKAIM1_01, anm_gyoeup_dir )
+	_OBJ_ANIME_WAIT()
+
+	//座標による分岐
+    SWITCH $LWK_POSX
+    CASE 59 THEN
+        _OBJ_ANIME( D02R0101_HAKAIM1_01, anm_hakai1_pos1 )
+        _OBJ_ANIME_WAIT()
+    CASE 61 THEN
+        _OBJ_ANIME( D02R0101_HAKAIM1_01, anm_hakai1_pos2 )
+        _OBJ_ANIME_WAIT()
+    CASE 62 THEN
+        _OBJ_ANIME( D02R0101_HAKAIM1_01, anm_hakai1_pos3 )
+        _OBJ_ANIME_WAIT()
+    ENDSWITCH
+    }
     
-    //自機のZ軸が70の場合
-    IF $LWK_POS1_Z == 70 THEN
+    //プラズマ団員：その場歩き
+    _OBJ_ANIME( D02R0101_HAKAIM1_01, anm_up_staywalk )
+    _OBJ_ANIME_WAIT()
+    
+    //しつこい　こどもめ！
+    _BALLOONWIN_OBJMSG( msg_d02r0101_hakaim1_01 , D02R0101_HAKAIM1_01 )
+    _BALLOONWIN_CLOSE()
 
-	//自機のZ軸が71の場合
-	ELSE
-	
-		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_tei )
-		_OBJ_ANIME_WAIT()
-	
-	ENDIF
-
-	//団員：気付く
-	_OBJ_ANIME( D02R0101_HAKAIM_01, anm_hakai_kiduku )
-	_OBJ_ANIME_WAIT()
-	
-	//ちっ！　にげみちは　ないか！？
-	_BALLOONWIN_OBJMSG( msg_d02r0101_hakaim1_01 , D02R0101_HAKAIM_01 )
-	_BALLOONWIN_CLOSE()
-	
-	//【仮】　下っ端を探す遊びを入れる予定　未作成
-	
+	/*
 	//戦闘処理
-	_TRAINER_BTL_SET( TRID_HAKAIM1_03, 0 )
-	//敗戦チェック
+	_TRAINER_BTL_SET( TRID_HAKAIM1_03_01, 0 )
+	//結果チェック
 	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
-	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_LOSE THEN
-		_TRAINER_LOSE()		//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+		_TRAINER_WIN()
+	ELSE
+		_TRAINER_LOSE()
 	ENDIF
+	*/
+
+    //ざんねん！　おれは　なにも　もっていない
+    _BALLOONWIN_OBJMSG( msg_d02r0101_hakaim1_02 , D02R0101_HAKAIM1_01 )
+    _BALLOONWIN_CLOSE()
+
+	//盗難イベントを次に進める
+	$WK_SCENE_D02R0101_HAKAI = 1
+
+EVENT_END
+
+//--------------------------------------------------------------
+//	プラズマ団員１　自機に近づく
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_hakai1_pos1
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_hakai1_pos2
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_hakai1_pos3
+	_ANIME_DATA	AC_WALK_R_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+/**************************************************************/
+/*  D02R0101	プラズマ団員１	盗難イベント会話スクリプト	  */
+/**************************************************************/
+EVENT_START		ev_d02r0101_hakaim1_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d02r0101_hakaim1_02 )
+EVENT_END
+
+/**************************************************************/
+/*  D02R0101	プラズマ団員２	盗難イベントposスクリプト	  */
+/**************************************************************/
+EVENT_START		ev_pos_d02r0101_event_03
+
+	{
+	DEFINE_LOCAL	LWK_POSX
+	DEFINE_LOCAL	LWK_POSZ
+ 
+	_PLAYER_POS_GET( LWK_POSX , LWK_POSZ )
+
+	//座標による分岐
+    SWITCH $LWK_POSZ
+    CASE 69 THEN
+		_OBJ_ANIME( D02R0101_HAKAIW1_01, anm_gyoeup_dir )
+		_OBJ_ANIME_WAIT()
+        _OBJ_ANIME( D02R0101_HAKAIW1_01, anm_hakai2_pos1 )
+        _OBJ_ANIME_WAIT()
+    CASE 70 THEN
+		_OBJ_ANIME( D02R0101_HAKAIW1_01, anm_gyoeup_dir )
+		_OBJ_ANIME_WAIT()
+        _OBJ_ANIME( D02R0101_HAKAIW1_01, anm_hakai2_pos2 )
+        _OBJ_ANIME_WAIT()
+    CASE 71 THEN
+		_OBJ_ANIME( D02R0101_HAKAIW1_01, anm_gyoeup_dir )
+		_OBJ_ANIME_WAIT()
+        _OBJ_ANIME( D02R0101_HAKAIW1_01, anm_hakai2_pos3 )
+        _OBJ_ANIME_WAIT()
+    CASE 72 THEN
+		_OBJ_ANIME( D02R0101_HAKAIW1_01, anm_gyoeup_dir )
+		_OBJ_ANIME_WAIT()
+        _OBJ_ANIME( D02R0101_HAKAIW1_01, anm_hakai2_pos4 )
+        _OBJ_ANIME_WAIT()
+    CASE 73 THEN
+		_OBJ_ANIME( D02R0101_HAKAIW1_01, anm_gyoeup_dir )
+		_OBJ_ANIME_WAIT()
+        _OBJ_ANIME( D02R0101_HAKAIW1_01, anm_hakai2_pos5 )
+        _OBJ_ANIME_WAIT()
+    CASE 75 THEN
+		_OBJ_ANIME( D02R0101_HAKAIW1_01, anm_gyoedown_dir )
+		_OBJ_ANIME_WAIT()
+        _OBJ_ANIME( D02R0101_HAKAIW1_01, anm_hakai2_pos6 )
+        _OBJ_ANIME_WAIT()
+    CASE 76 THEN
+		_OBJ_ANIME( D02R0101_HAKAIW1_01, anm_gyoedown_dir )
+		_OBJ_ANIME_WAIT()
+        _OBJ_ANIME( D02R0101_HAKAIW1_01, anm_hakai2_pos7 )
+        _OBJ_ANIME_WAIT()
+    CASE 77 THEN
+		_OBJ_ANIME( D02R0101_HAKAIW1_01, anm_gyoedown_dir )
+		_OBJ_ANIME_WAIT()
+        _OBJ_ANIME( D02R0101_HAKAIW1_01, anm_hakai2_pos8 )
+        _OBJ_ANIME_WAIT()
+    CASE 78 THEN
+		_OBJ_ANIME( D02R0101_HAKAIW1_01, anm_gyoedown_dir )
+		_OBJ_ANIME_WAIT()
+        _OBJ_ANIME( D02R0101_HAKAIW1_01, anm_hakai2_pos9 )
+        _OBJ_ANIME_WAIT()
+    CASE 79 THEN
+		_OBJ_ANIME( D02R0101_HAKAIW1_01, anm_gyoedown_dir )
+		_OBJ_ANIME_WAIT()
+        _OBJ_ANIME( D02R0101_HAKAIW1_01, anm_hakai2_pos10 )
+        _OBJ_ANIME_WAIT()
+    ENDSWITCH
+    }
+    
+    //プラズマ団員：その場歩き
+    _OBJ_ANIME( D02R0101_HAKAIW1_01, anm_right_staywalk )
+    _OBJ_ANIME_WAIT()
+    
+    //あら　なにか　おさがし　かしら？
+    _BALLOONWIN_OBJMSG( msg_d02r0101_hakaiw1_01 , D02R0101_HAKAIW1_01 )
+    _BALLOONWIN_CLOSE()
+
+	/*
+	//【仮】戦闘処理
+	_TRAINER_BTL_SET( TRID_HAKAIM1_03_01, 0 )
+	//結果チェック
+	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+		_TRAINER_WIN()
+	ELSE
+		_TRAINER_LOSE()
+	ENDIF
+	*/
+
+    //ごめんね　アタシ　てぶら
+    _BALLOONWIN_OBJMSG( msg_d02r0101_hakaiw1_02 , D02R0101_HAKAIW1_01 )
+    _BALLOONWIN_CLOSE()
+
+	//盗難イベントを次に進める
+	$WK_SCENE_D02R0101_HAKAI = 2
+
+EVENT_END
+
+//--------------------------------------------------------------
+//	プラズマ団員２　自機に近づく
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_hakai2_pos1
+	_ANIME_DATA	AC_WALK_U_8F,5
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_hakai2_pos2
+	_ANIME_DATA	AC_WALK_U_8F,4
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_hakai2_pos3
+	_ANIME_DATA	AC_WALK_U_8F,3
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_hakai2_pos4
+	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_hakai2_pos5
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_hakai2_pos6
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_hakai2_pos7
+	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_hakai2_pos8
+	_ANIME_DATA	AC_WALK_D_8F,3
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_hakai2_pos9
+	_ANIME_DATA	AC_WALK_D_8F,4
+	_ANIME_DATA	ACMD_END,0
 	
-	//自機：団員の方を向く
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_all_left )
+_ANIME_LABEL	anm_hakai2_pos10
+	_ANIME_DATA	AC_WALK_D_8F,5
+	_ANIME_DATA	ACMD_END,0
+
+/**************************************************************/
+/*  D02R0101	プラズマ団員２	盗難イベント会話スクリプト	  */
+/**************************************************************/
+EVENT_START		ev_d02r0101_hakaiw1_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d02r0101_hakaiw1_02 )
+EVENT_END
+
+/**************************************************************/
+/*  D02R0101	プラズマ団員３	盗難イベントposスクリプト	  */
+/**************************************************************/
+EVENT_START		ev_pos_d02r0101_event_04
+    
+    //プラズマ団員：その場歩き
+    _OBJ_ANIME( D02R0101_HAKAIM2_01, anm_gyoeleft_staywalk )
+    _OBJ_ANIME_WAIT()
+    
+    //ここまで　きたか
+    _BALLOONWIN_OBJMSG( msg_d02r0101_hakaim2_01 , D02R0101_HAKAIM2_01 )
+    _BALLOONWIN_CLOSE()
+
+	/*
+	//【仮】戦闘処理
+	_TRAINER_BTL_SET( TRID_HAKAIM1_03_01, 0 )
+	//結果チェック
+	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+		_TRAINER_WIN()
+	ELSE
+		_TRAINER_LOSE()
+	ENDIF
+	*/
+
+    //そう！　おれは　じかんかせぎの
+    _BALLOONWIN_OBJMSG( msg_d02r0101_hakaim2_02 , D02R0101_HAKAIM2_01 )
+    _BALLOONWIN_CLOSE()
+
+	//盗難イベントを次に進める
+	$WK_SCENE_D02R0101_HAKAI = 3
+
+EVENT_END
+	
+/**************************************************************/
+/*  D02R0101	プラズマ団員３	盗難イベント会話スクリプト	  */
+/**************************************************************/
+EVENT_START		ev_d02r0101_hakaim2_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d02r0101_hakaim2_02 )
+EVENT_END
+
+/**************************************************************/
+/*  D02R0101	プラズマ団員４	盗難イベントposスクリプト	  */
+/**************************************************************/
+EVENT_START		ev_pos_d02r0101_event_05
+    
+    //自機：プラズマ団員に近づく
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_go )
+    _OBJ_ANIME_WAIT()
+    
+    //プラズマ団員：その場歩き
+    _OBJ_ANIME( D02R0101_HAKAIM3_01, anm_gyoedown_staywalk )
+    _OBJ_ANIME_WAIT()
+    
+    //おって　だと？
+    _BALLOONWIN_OBJMSG( msg_d02r0101_hakaim3_01 , D02R0101_HAKAIM3_01 )
+    _BALLOONWIN_CLOSE()
+
+	//プラズマ団員：一歩前へ
+    _OBJ_ANIME( D02R0101_HAKAIM3_01, anm_down_walk )
+    _OBJ_ANIME_WAIT()
+
+	/*
+	//【仮】戦闘処理
+	_TRAINER_BTL_SET( TRID_HAKAIM1_03_01, 0 )
+	//結果チェック
+	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+		_TRAINER_WIN()
+	ELSE
+		_TRAINER_LOSE()
+	ENDIF
+	*/
+
+	//賢者とリーダーを画面下部に表示
+	_FLAG_RESET( FV_D02R0101_LEADER2 )
+	
+	//アーティも同じ位置に
+	_OBJ_POS_CHANGE( D02R0101_LEADER3_01, 43, 0, 36, DIR_UP )
+
+    //……わかった　ぬすんだ　ホネは
+    _BALLOONWIN_OBJMSG( msg_d02r0101_hakaim3_02 , D02R0101_HAKAIM3_01 )
+    _BALLOONWIN_CLOSE()
+
+	//【仮】ホネ入手	アイテム未定のため、とりあえずキズグスリ
+	_ITEM_EVENT_KEYWAIT( ITEM_KIZUGUSURI, 1 )
+
+	//ゆっくり後ろに下がる
+    _OBJ_ANIME( D02R0101_HAKAIM3_01, anm_hakai_back )
+    _OBJ_ANIME_WAIT()
+
+	//これで　われらの……
+    _BALLOONWIN_OBJMSG( msg_d02r0101_hakaim3_03 , D02R0101_HAKAIM3_01 )
+    _BALLOONWIN_CLOSE()
+   
+	//賢者５：出現、団員の真横へ
+	_OBJ_ANIME( D02R0101_SAGE5_01, anm_sage5_come )
+	_OBJ_ANIME_WAIT()
+
+	//だいじょうぶ　ですか
+    _BALLOONWIN_OBJMSG( msg_d02r0101_sage5_01 , D02R0101_SAGE5_01 )
+    _BALLOONWIN_CLOSE()
+   
+	//団員：賢者の方を向いてその場歩き
+	_OBJ_ANIME( D02R0101_HAKAIM3_01, anm_left_staywalk )
+	_OBJ_ANIME_WAIT()
+
+	//これで　われらの……
+    _BALLOONWIN_OBJMSG( msg_d02r0101_hakaim3_04 , D02R0101_HAKAIM3_01 )
+    _BALLOONWIN_CLOSE()
+
+	//賢者５：団員へその場歩き
+	_OBJ_ANIME( D02R0101_SAGE5_01, anm_right_staywalk )
+	_OBJ_ANIME_WAIT()
+
+	//いいのです　こっかくひょうほん
+    _BALLOONWIN_OBJMSG( msg_d02r0101_sage5_02 , D02R0101_SAGE5_01 )
+    _BALLOONWIN_CLOSE()
+
+	//賢者５・団員：主人公の方へ向く
+	_OBJ_ANIME( D02R0101_SAGE5_01, anm_down_dir )
+	_OBJ_ANIME( D02R0101_HAKAIM3_01, anm_down_dir )
+	_OBJ_ANIME_WAIT()
+
+	//ですが　われわれ　への　ぼうがい
+    _BALLOONWIN_OBJMSG( msg_d02r0101_sage5_03 , D02R0101_SAGE5_01 )
+    _BALLOONWIN_CLOSE()
+
+	//アーティ：自機の真横へ
+	_OBJ_ANIME( D02R0101_LEADER3_01, anm_leader3_come )
 	_OBJ_ANIME_WAIT()
 	
-	//団員：一歩下がる
-	_OBJ_ANIME( D02R0101_HAKAIM_01, anm_hakai_back )
+	//ああ　よかった！
+    _BALLOONWIN_OBJMSG( msg_d02r0101_leader3_06 , D02R0101_LEADER3_01 )
+    _BALLOONWIN_CLOSE()
+    
+	//アロエ：自機の真横へ
+	_OBJ_ANIME( D02R0101_LEADER2_01, anm_leader2_come )
 	_OBJ_ANIME_WAIT()
 	
-	//まけた　わかった！　これはかえす！
-	_BALLOONWIN_OBJMSG( msg_d02r0101_hakaim1_02 , D02R0101_HAKAIM_01 )
-	_BALLOONWIN_CLOSE()
-	
-	//【仮】アーティ：画面左から現れる　演出仮
-	_OBJ_POS_CHANGE( D02R0101_LEADER3_01, 24, 0, 70, DIR_RIGHT )
-	_OBJ_ANIME( D02R0101_LEADER3_01, anm_leader3_deru )
-	_OBJ_ANIME_WAIT()
-	
-	//ああ　よかった！　なんだか　むしポケモンが　さわぐから
-	_BALLOONWIN_OBJMSG( msg_d02r0101_leader3_04 , D02R0101_LEADER3_01 )
-	_BALLOONWIN_CLOSE()
-	_OBJ_ANIME( D02R0101_LEADER3_01, anm_all_right )
-	_OBJ_ANIME_WAIT()
-	
-	//団員アーティのほうを見る
-	_OBJ_ANIME( D02R0101_HAKAIM_01, anm_all_left )
-	_OBJ_ANIME_WAIT()
-	
-	//自機名！アーティ！　おつかれさん！！
-	_OBJ_POS_CHANGE( D02R0101_LEADER2_01, 42, 0, 71, DIR_LEFT )
+	//ほかの　こっかくひょうほんは　かいしゅう
 	_PLAYER_NAME( 0 )
-	_BALLOONWIN_OBJMSG( msg_d02r0101_leader2_01 , D02R0101_LEADER2_01 )
-	_BALLOONWIN_CLOSE()
+    _BALLOONWIN_OBJMSG( msg_d02r0101_leader2_01 , D02R0101_LEADER2_01 )
+    _BALLOONWIN_CLOSE()
+    
+   	//賢者５：その場歩き
+	_OBJ_ANIME( D02R0101_SAGE5_01, anm_down_staywalk )
+	_OBJ_ANIME_WAIT()
+	
+	//わたしは　プラズマだんの　おうの　もとに
+	_BALLOONWIN_OBJMSG( msg_d02r0101_sage5_04 , D02R0101_SAGE5_01 )
+    _BALLOONWIN_CLOSE()
+	
+	//ですが　われわれは
+	_BALLOONWIN_OBJMSG( msg_d02r0101_sage5_05 , D02R0101_SAGE5_01 )
+    _BALLOONWIN_CLOSE()
 
-	//アロエ：画面右から現れる
-	_OBJ_ANIME( D02R0101_LEADER2_01, anm_leader2_deru )
+	//画面暗転・プラズマ団のOBJ削除
+	_BLACK_OUT()
+	_DISP_FADE_END_CHECK()
+	_TIME_WAIT( 10 )
+
+	_OBJ_DEL(D02R0101_SAGE5_01)
+	_OBJ_DEL(D02R0101_HAKAIM1_01)
+	_OBJ_DEL(D02R0101_HAKAIW1_01)
+	_OBJ_DEL(D02R0101_HAKAIM2_01)
+	_OBJ_DEL(D02R0101_HAKAIM3_01)
+
+	_BLACK_IN()
+	_DISP_FADE_END_CHECK()
+
+	//アロエ・右を見ながら
+	_OBJ_ANIME( D02R0101_LEADER2_01, anm_right_staywalk )
 	_OBJ_ANIME_WAIT()
 
-	//団員アロエのほうを見る
-	_OBJ_ANIME( D02R0101_HAKAIM_01, anm_all_right )
-	_OBJ_ANIME_WAIT()
-
-	//こいつが　さいごの　ひとり　ものを　とりかえせば　おわりだよ
+	//すばやい　れんちゅう　だね
 	_BALLOONWIN_OBJMSG( msg_d02r0101_leader2_02 , D02R0101_LEADER2_01 )
-	_BALLOONWIN_CLOSE()	
-	
-	//団員：その場歩き
-	_OBJ_ANIME( D02R0101_HAKAIM_01, anm_hakaim_stay )
-	_OBJ_ANIME_WAIT()	
-	
-	//おまえら　シッポウジムに　ヒウンジムの　リーダーだな！？
-	_BALLOONWIN_OBJMSG( msg_d02r0101_hakaim1_03 , D02R0101_HAKAIM_01 )
-	_BALLOONWIN_CLOSE()
-	
-	//アーティ：その場歩き
-	_OBJ_ANIME( D02R0101_LEADER3_01, anm_all_staywalk )
-	_OBJ_ANIME_WAIT()
-	
-	//団員アーティのほうを見る
-	_OBJ_ANIME( D02R0101_HAKAIM_01, anm_all_left )
-	_OBJ_ANIME_WAIT()
-	
-	//ジャマも　なにも……　ひとの　ものを
-	_BALLOONWIN_OBJMSG( msg_d02r0101_leader3_05 , D02R0101_LEADER3_01 )
-	_BALLOONWIN_CLOSE()
-	
-	//団員：その場歩き
-	_OBJ_ANIME( D02R0101_HAKAIM_01, anm_hakaim_stay )
-	_OBJ_ANIME_WAIT()	
-
-	//……おまえらは　ポケモンを　くるしめているくせに！！
-	_BALLOONWIN_OBJMSG( msg_d02r0101_hakaim1_04 , D02R0101_HAKAIM_01 )
 	_BALLOONWIN_CLOSE()
 
-	//【仮】団員：画面下に逃げさる　演出仮、適当に下に移動するだけです
-	_OBJ_ANIME( D02R0101_HAKAIM_01, anm_hakai_nigeru )
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_tobu )
-	_OBJ_ANIME( D02R0101_LEADER2_01, anm_leader2_tobu )
-	_OBJ_ANIME_WAIT()
-	
-	//あっ！！
-	_BALLOONWIN_OBJMSG( msg_d02r0101_leader2_03 , D02R0101_LEADER2_01 )
-	_BALLOONWIN_CLOSE()
-	
-	//アーティ：その場歩き、アロエの方を見て
-	_OBJ_ANIME( D02R0101_LEADER3_01, anm_leader3_ou )
-	_OBJ_ANIME_WAIT()
-	
-	//アロエ：アーティのほうを見る
-	_OBJ_ANIME( D02R0101_LEADER2_01, anm_all_left )
-	_OBJ_ANIME_WAIT()
-	
-	//自機：アーティのほうを見る
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_all_down )
-	_OBJ_ANIME_WAIT()
-	
-	//おいかけなくても　いいでしょ　ぬすまれた　ものは　とりかえしたし
-	_BALLOONWIN_OBJMSG( msg_d02r0101_leader3_06 , D02R0101_LEADER3_01 )
-	_BALLOONWIN_CLOSE()
-
-	//アーティ：自機を見る
-	_OBJ_ANIME( D02R0101_LEADER3_01, anm_leader3_tikadu )
+	//アーティ・左を見ながら
+	_OBJ_ANIME( D02R0101_LEADER3_01, anm_left_staywalk )
 	_OBJ_ANIME_WAIT()
 
-	//自機名だっけ　ポケモンジムで　キミの　ちょうせんを
-	_PLAYER_NAME( 0 )
+	//いやあ……
 	_BALLOONWIN_OBJMSG( msg_d02r0101_leader3_07 , D02R0101_LEADER3_01 )
 	_BALLOONWIN_CLOSE()
 
-	//【仮】アーティ：画面外へ　演出仮、適当に右に移動するだけです
-	_OBJ_ANIME( D02R0101_LEADER3_01, anm_all_saru )
+	//アーティ・自機の前へ
+	_OBJ_ANIME( D02R0101_LEADER3_01, anm_leader3_leave1 )
+	_OBJ_ANIME_WAIT()
+
+	//んじゃ　ヒウンシティの　ポケモンジムで
+	_PLAYER_NAME(0)
+	_BALLOONWIN_OBJMSG( msg_d02r0101_leader3_08 , D02R0101_LEADER3_01 )
+	_BALLOONWIN_CLOSE()
+
+	//アーティ・画面外へ去る
+	_OBJ_ANIME( D02R0101_LEADER3_01, anm_leader3_leave2 )
+	_OBJ_ANIME_WAIT()
+
+	//アロエ・自機の前へ
+	_OBJ_ANIME( D02R0101_LEADER2_01, anm_leader2_leave1 )
+	_OBJ_ANIME_WAIT()
+
+	//あんたの　もっている　それが
+	_PLAYER_NAME(0)
+	_BALLOONWIN_OBJMSG( msg_d02r0101_leader2_03 , D02R0101_LEADER2_01 )
+	_BALLOONWIN_CLOSE()
+	
+	//自機：アロエのほうへその場歩き
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_up_staywalk )
 	_OBJ_ANIME_WAIT()
 	
-	//アーティ：自機を見る
-	_OBJ_ANIME( D02R0101_LEADER2_01, anm_leader2_tikadu )
-	_OBJ_ANIME_WAIT()
-	
-	//自機名　ありがとうよ　あんたのように　やさしい　トレーナーなら
-	_PLAYER_NAME( 0 )
+	//【仮】アロエにホネを渡す	キズグスリで代用
+	_PLAYER_NAME(0)
+	_ITEM_NAME( 1, ITEM_KIZUGUSURI )
+	_SYSWIN_MSG_DOWN( msg_d02r0101_system_01 )
+	_LAST_KEYWAIT()
+	_SYSWIN_CLOSE()
+
+	//ほんとうに　ありがとうよ
+	_PLAYER_NAME(0)
 	_BALLOONWIN_OBJMSG( msg_d02r0101_leader2_04 , D02R0101_LEADER2_01 )
 	_BALLOONWIN_CLOSE()
 
-	//【仮】アロエ：画面外へ　演出仮、適当に右に移動するだけです
-	_OBJ_ANIME( D02R0101_LEADER2_01, anm_all_saru )
+	//アロエ・画面外へ去る
+	_OBJ_ANIME( D02R0101_LEADER2_01, anm_leader3_leave2 )
 	_OBJ_ANIME_WAIT()
-
-	//アロエ・アーティのオブジェを消す
-	_OBJ_DEL( D02R0101_LEADER3_01 )
-	_OBJ_DEL( D02R0101_LEADER2_01 )
-	_OBJ_DEL( D02R0101_HAKAIM_01 )
 
 	//============フラグワーク操作=============//
 	
-	//トレーナーズスクールのライバル削除
+	//リーダー・ハカイ団のバニシュをセット
 	_FLAG_SET( FV_D02R0101_LEADER3 )
 	_FLAG_SET( FV_D02R0101_LEADER2 )
 	_FLAG_SET( FV_D02R0101_HAKAI )
-	
+
+	_OBJ_DEL(D02R0101_LEADER2_01)
+	_OBJ_DEL(D02R0101_LEADER3_01)
+
 	//盗難イベント終了
 	$WK_SCENE_D02R0101 = 3
+	$WK_SCENE_D02R0101_HAKAI = 4
 
 	_FLAG_RESET( FE_MUSEUM_TOUNAN )	//盗難イベントの終了
 	_FLAG_RESET( FV_C02GYM0202_LEADER2 ) //ジム2室目にジムリーダー（アロエ）が戻る
@@ -461,188 +886,129 @@ EVENT_START		ev_pos_d02r0101_event_02
 EVENT_END
 
 //--------------------------------------------------------------
-//	自機移動
+//	自機：近づく
 //--------------------------------------------------------------
-_ANIME_LABEL	anm_player_tei
-	_ANIME_DATA	AC_WALK_U_8F,1
-	_ANIME_DATA	AC_DIR_L,1
+_ANIME_LABEL	anm_player_go
+	_ANIME_DATA	AC_WALK_U_8F,2
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
-//	団員　気付く、逃げる
+//	アーティ・アロエ
 //--------------------------------------------------------------
-_ANIME_LABEL	anm_hakai_kiduku
+_ANIME_LABEL	anm_leader3_come
+	_ANIME_DATA	AC_WALK_U_8F,4
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_leader3_leave1
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_leader3_leave2
+	_ANIME_DATA	AC_WALK_R_8F,8
+	_ANIME_DATA	AC_WALK_D_8F,4
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_leader2_leave1
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_leader2_leave2
+	_ANIME_DATA	AC_WALK_R_8F,8
+	_ANIME_DATA	AC_WALK_D_8F,4
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_leader2_come
+	_ANIME_DATA	AC_WALK_U_4F,4
+	_ANIME_DATA	AC_WALK_L_4F,1
+	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_up_walk
+	_ANIME_DATA	AC_WALK_U_4F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	団員と七賢人の５
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_gyoedown_staywalk
 	_ANIME_DATA	AC_MARK_GYOE,1
-	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0
 
-_ANIME_LABEL	anm_hakai_nigeru
-	_ANIME_DATA	AC_WALK_R_4F,3
-	_ANIME_DATA	AC_WALK_D_4F,1
-	_ANIME_DATA	AC_WALK_R_4F,12
+_ANIME_LABEL	anm_gyoeup_staywalk
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
 	_ANIME_DATA	ACMD_END,0
 
-_ANIME_LABEL	anm_hakai_back
-	_ANIME_DATA	AC_DIR_R,1
-	_ANIME_DATA	AC_DIR_PAUSE_ON,1
-	_ANIME_DATA	AC_WALK_L_16F,1
-	_ANIME_DATA	AC_DIR_PAUSE_OFF,1
-	_ANIME_DATA	ACMD_END,0
-
-_ANIME_LABEL	anm_hakaim_stay
-	_ANIME_DATA	AC_DIR_L,1
-	_ANIME_DATA	AC_WAIT_4F,1
-	_ANIME_DATA	AC_DIR_R,1
-	_ANIME_DATA	AC_STAY_WALK_R_16F,1
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------
-//	アーティ・アロエ　画面外からやってくる
-//--------------------------------------------------------------
-_ANIME_LABEL	anm_leader3_deru
-	_ANIME_DATA	AC_WALK_R_8F,5
-	_ANIME_DATA	ACMD_END,0
-	
-_ANIME_LABEL	anm_leader2_deru
-	_ANIME_DATA	AC_WALK_L_8F,8
+_ANIME_LABEL	anm_gyoeleft_staywalk
+	_ANIME_DATA	AC_MARK_GYOE,1
 	_ANIME_DATA	AC_STAY_WALK_L_8F,1
 	_ANIME_DATA	ACMD_END,0
 
-_ANIME_LABEL	anm_leader3_ou
-	_ANIME_DATA	AC_WALK_R_8F,5
-	_ANIME_DATA	AC_WALK_D_8F,1
-	_ANIME_DATA	AC_DIR_R,1
+_ANIME_LABEL	anm_gyoeright_staywalk
+	_ANIME_DATA	AC_MARK_GYOE,1
 	_ANIME_DATA	AC_STAY_WALK_R_8F,1
 	_ANIME_DATA	ACMD_END,0
 
-_ANIME_LABEL	anm_all_saru
-	_ANIME_DATA	AC_WALK_R_8F,8
-	_ANIME_DATA	ACMD_END,0
-
-_ANIME_LABEL	anm_leader2_tobu
-	_ANIME_DATA	AC_WAIT_4F,1
+_ANIME_LABEL	anm_gyoeup_dir
 	_ANIME_DATA	AC_DIR_U,1
-	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_gyoedown_dir
 	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_gyoeright_dir
 	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_gyoeleft_dir
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_down_walk
+	_ANIME_DATA	AC_WALK_D_4F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_down_staywalk
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_left_staywalk
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_right_staywalk
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_up_staywalk
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_down_dir
+	_ANIME_DATA AC_WALK_R_8F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_hakai_back
+	_ANIME_DATA	AC_DIR_D,1
 	_ANIME_DATA	AC_DIR_PAUSE_ON,1
-	_ANIME_DATA	AC_JUMP_D_1G_8F,1
+	_ANIME_DATA	AC_WALK_U_16F,2
 	_ANIME_DATA	AC_DIR_PAUSE_OFF,1
-	_ANIME_DATA	AC_DIR_R,1
-	_ANIME_DATA	AC_WALK_R_8F,2
 	_ANIME_DATA	ACMD_END,0
 
-_ANIME_LABEL	anm_leader3_tikadu
-	_ANIME_DATA	AC_WALK_R_8F,1
-	_ANIME_DATA	AC_STAY_WALK_U_16F,1
-	_ANIME_DATA	ACMD_END,0
-
-_ANIME_LABEL	anm_leader2_tikadu
-	_ANIME_DATA	AC_WALK_U_8F,1
+_ANIME_LABEL	anm_sage5_come
+	_ANIME_DATA	AC_WALK_U_8F,4
 	_ANIME_DATA	AC_WALK_L_8F,1
-	_ANIME_DATA	AC_STAY_WALK_U_16F,1
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------
-//	全員　その場歩き
-//--------------------------------------------------------------
-_ANIME_LABEL	anm_all_staywalk
-	_ANIME_DATA	AC_DIR_PAUSE_ON,1
+	_ANIME_DATA	AC_WALK_U_8F,4
 	_ANIME_DATA	AC_STAY_WALK_R_8F,1
-	_ANIME_DATA	AC_DIR_PAUSE_OFF,1
 	_ANIME_DATA	ACMD_END,0
-
-_ANIME_LABEL	anm_all_up
-	_ANIME_DATA	AC_DIR_U,1
-	_ANIME_DATA	ACMD_END,0
-
-_ANIME_LABEL	anm_all_down
-	_ANIME_DATA	AC_DIR_D,1
-	_ANIME_DATA	ACMD_END,0
-
-_ANIME_LABEL	anm_all_right
-	_ANIME_DATA	AC_DIR_R,1
-	_ANIME_DATA	ACMD_END,0
-
-_ANIME_LABEL	anm_all_left
-	_ANIME_DATA	AC_DIR_L,1
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------
-//	自機　見る
-//--------------------------------------------------------------
-_ANIME_LABEL	anm_player_tobu
-	_ANIME_DATA	AC_WAIT_4F,1
-	_ANIME_DATA	AC_DIR_U,1
-	_ANIME_DATA	AC_DIR_L,1
-	_ANIME_DATA	AC_DIR_D,1
-	_ANIME_DATA	AC_DIR_R,1
-	_ANIME_DATA	AC_DIR_PAUSE_ON,1
-	_ANIME_DATA	AC_JUMP_R_2G_16F,1
-	_ANIME_DATA	AC_DIR_PAUSE_OFF,1
-	_ANIME_DATA	AC_DIR_R,1
-	_ANIME_DATA	ACMD_END,0
-
-/**************************************************************/
-/*	D02R0101	HAKAIM1の会話用イベントスクリプト			  */
-/**************************************************************/
-EVENT_START    ev_d02r0101_hakaim_stop1_01
-	_BALLOONWIN_OBJMSG( msg_d02r0101_hakaim_stop1_01 , D02R0101_HAKAIM_STOP1_01 )
-	_LAST_KEYWAIT()
-	_BALLOONWIN_CLOSE()
-EVENT_END
-
-/**************************************************************/
-/*	D02R0101	HAKAIM2の会話用イベントスクリプト			  */
-/**************************************************************/
-EVENT_START    ev_d02r0101_hakaim_stop2_01
-	_BALLOONWIN_OBJMSG( msg_d02r0101_hakaim_stop2_01 , D02R0101_HAKAIM_STOP2_01 )
-	_LAST_KEYWAIT()
-	_BALLOONWIN_CLOSE()
-EVENT_END
-
-/**************************************************************/
-/*	D02R0101	HAKAIM3の会話用イベントスクリプト			  */
-/**************************************************************/
-EVENT_START    ev_d02r0101_hakaim_stop3_01
-	_BALLOONWIN_OBJMSG( msg_d02r0101_hakaiw_stop3_01 , D02R0101_HAKAIM_STOP3_01 )
-	_LAST_KEYWAIT()
-	_BALLOONWIN_CLOSE()
-EVENT_END
-
-/**************************************************************/
-/*	D02R0101	HAKAIM4の会話用イベントスクリプト			  */
-/**************************************************************/
-EVENT_START    ev_d02r0101_hakaim_stop4_01
-	_BALLOONWIN_OBJMSG( msg_d02r0101_hakaiw_stop4_01 , D02R0101_HAKAIM_STOP4_01 )
-	_LAST_KEYWAIT()
-	_BALLOONWIN_CLOSE()
-EVENT_END
-
-/**************************************************************/
-/*	D02R0101	HAKAIW1の会話用イベントスクリプト			  */
-/**************************************************************/
-EVENT_START    ev_d02r0101_hakaiw_stop1_01
-	_BALLOONWIN_OBJMSG( msg_d02r0101_hakaiw_stop1_01 , D02R0101_HAKAIW_STOP1_01 )
-	_LAST_KEYWAIT()
-	_BALLOONWIN_CLOSE()
-EVENT_END
-
-/**************************************************************/
-/*	D02R0101	HAKAIW2の会話用イベントスクリプト			  */
-/**************************************************************/
-EVENT_START    ev_d02r0101_hakaiw_stop2_01
-	_BALLOONWIN_OBJMSG( msg_d02r0101_hakaiw_stop2_01 , D02R0101_HAKAIW_STOP2_01 )
-	_LAST_KEYWAIT()
-	_BALLOONWIN_CLOSE()
-EVENT_END
-
-/**************************************************************/
-/*	D02R0101	リーフィア進化用の石						  */
-/**************************************************************/
-EVENT_START		ev_bg_d02r0101_stone_01
-	_PLAINWIN_MSG_DOWN( msg_d02r0101_stone_01 )
-	_LAST_KEYWAIT()
-	_PLAINWIN_CLOSE()
-EVENT_END
-
