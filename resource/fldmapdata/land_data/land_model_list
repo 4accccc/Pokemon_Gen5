@@ -732,6 +732,7 @@ LAND_TEMP_LIST = \
 	$(DIR_TEMP)/m_bsubway02_02_00.nsbmd \
 	$(DIR_TEMP)/m_bsubway02_03_00.nsbmd \
 	$(DIR_TEMP)/m_labo03_00_01.nsbmd \
+	$(DIR_TEMP)/m_hh03_00_00.nsbmd \
 	$(DIR_TEMP)/C3_00_00.nsbmd \
 	$(DIR_TEMP)/C3_00_01.nsbmd \
 	$(DIR_TEMP)/C3_01_00.nsbmd \

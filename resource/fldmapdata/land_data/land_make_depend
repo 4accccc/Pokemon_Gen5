@@ -6595,6 +6595,15 @@ $(DIR_TEMP)/m_labo03_00_01.nsbmd: $(DIR_RES)/m_labo03_00_01.imd
 	@echo create_nsbmd m_labo03_00_01
 	@$(G3DCVTR) $(DIR_RES)/m_labo03_00_01.imd -o $(DIR_TEMP)/m_labo03_00_01.nsbmd
 
+#m_hh03_00_00
+$(DIR_OUTPUT)/m_hh03_00_00.3dppack: $(DIR_TEMP)/m_hh03_00_00.nsbmd $(DIR_RES)/m_hh03_00_00.bin $(DIR_RES)/m_hh03_00_00.3dmd
+	@echo create 3dppack m_hh03_00_00
+	@$(BINLINKER) $(DIR_TEMP)/m_hh03_00_00.nsbmd $(DIR_RES)/m_hh03_00_00.bin $(DIR_RES)/m_hh03_00_00.3dmd $(DIR_OUTPUT)/m_hh03_00_00.3dppack WB
+
+$(DIR_TEMP)/m_hh03_00_00.nsbmd: $(DIR_RES)/m_hh03_00_00.imd
+	@echo create_nsbmd m_hh03_00_00
+	@$(G3DCVTR) $(DIR_RES)/m_hh03_00_00.imd -o $(DIR_TEMP)/m_hh03_00_00.nsbmd
+
 #C3_00_00
 $(DIR_OUTPUT)/C3_00_00.ngpack: $(DIR_TEMP)/C3_00_00.nsbmd $(DIR_RES)/C3_00_00.3dmd
 	@echo create ngpack C3_00_00
