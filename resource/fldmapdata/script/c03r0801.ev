@@ -57,8 +57,6 @@ _EVENT_DATA_END
 //------------------------------注意--------------------------------//
 //	LOCALWORK0⇒部屋番号
 //　　　話しかけが終了するまで、値を保証する必要があります
-//  LOCALWORK1⇒ダブルバトルの相方識別　1のときダブルバトル相方
-//      話しかけが終了するまで、値を保証する必要があります
 //	LOCALWORK10⇒甲板部への移動ＰＯＳに使用しています
 //
 //	LOCALWORK11⇒船員のおじさんヒントで使用
@@ -87,7 +85,7 @@ ev_zone_c03r0801:
   _PL_BOAT_GET_ROOM_INFO(12,PL_BOAT_ROOM_INFO_OBJ_CODE,0,OBJCHRWORK12)
   _PL_BOAT_GET_ROOM_INFO(13,PL_BOAT_ROOM_INFO_OBJ_CODE,0,OBJCHRWORK13)
   _PL_BOAT_GET_ROOM_INFO(14,PL_BOAT_ROOM_INFO_OBJ_CODE,0,OBJCHRWORK14)
-
+/**
   //判定前にバニッシュフラグをリセット
   _FLAG_RESET( FV_C03R0801_FUTAGO_01 )
   _FLAG_RESET( FV_C03R0801_FUTAGO_02 )
@@ -102,7 +100,7 @@ ev_zone_c03r0801:
   IF $LWK_BTL_TYPE == PL_BOAT_BTL_TYPE_SINGLE THEN
     _FLAG_SET( FV_C03R0801_FUTAGO_02 )
   ENDIF
-
+*/
   _END
 
 /**************************************************************/
@@ -486,7 +484,7 @@ EVENT_END
 /*		3号室のふたごちゃん片割れ１								  */
 /**************************************************************/
 EVENT_START		ev_c03r0801_babygirl1_01
-
+/**
 //※トレーナーでない場合はバニッシュしてしまうので、
 //この部屋のバトルタイプを調べることは、厳密にはいらない処理だが念のため
 
@@ -501,13 +499,14 @@ EVENT_START		ev_c03r0801_babygirl1_01
     $LOCALWORK1 = PL_BOAT_TALK_PAIR
     _CALL ev_trainer
   ENDIF
+*/  
 EVENT_END
 
 /**************************************************************/
 /*		8号室のふたごちゃん片割れ２								  */
 /**************************************************************/
 EVENT_START		ev_c03r0801_babygirl1_02
-
+/**
 //※トレーナーでない場合はバニッシュしてしまうので、
 //この部屋のバトルタイプを調べることは、厳密にはいらない処理だが念のため
 
@@ -522,8 +521,8 @@ EVENT_START		ev_c03r0801_babygirl1_02
     $LOCALWORK1 = PL_BOAT_TALK_PAIR
     _CALL ev_trainer
   ENDIF
+*/  
 EVENT_END
-
 
 //--------------------------------------------------------------
 /*  可変オブジェ共通                        */
@@ -539,8 +538,10 @@ ev_wkobjcommon:
 
   //ＮＰＣの種類で分岐
   IF $LWK_NPC_TYPE == NPC_TYPE_TRAINER THEN             //トレーナー
+/**  
     //ローカルワーク1に0を格納する（話しかけたのはダブルバトル相方ではない）
     $LOCALWORK1 = PL_BOAT_TALK_NOT_PAIR
+*/    
     _CALL ev_trainer
 
   ELSIF $LWK_NPC_TYPE == NPC_TYPE_SHORT_TALKER THEN     //通常のＮＰＣ
@@ -566,11 +567,14 @@ ev_trainer:
   //戦ったことがあるかフラグを取得
   _PL_BOAT_GET_ROOM_INFO(LOCALWORK0,PL_BOAT_ROOM_INFO_BTL_FLG,0,SCWK_ANSWER)
   IF $SCWK_ANSWER == PL_BOAT_TR_BTL_ALREADY THEN
+/**  
     IF $LOCALWORK1 == PL_BOAT_TALK_NOT_PAIR THEN
       $LWK_MSG_PRM = PL_BOAT_BTL_AFTER_NORMAL          //通常戦闘後メッセージ
     ELSE
       $LWK_MSG_PRM = PL_BOAT_BTL_AFTER_PAIR          //戦闘後ダブルバトル相方のメッセージ
     ENDIF
+*/    
+    $LWK_MSG_PRM = PL_BOAT_BTL_AFTER_NORMAL          //通常戦闘後メッセージ
     //戦闘後メッセージＩＤを取得
     _PL_BOAT_GET_ROOM_INFO(LOCALWORK0,PL_BOAT_ROOM_INFO_MSG,LWK_MSG_PRM,LWK_NPC_MSG_TR)
     //会話開始
@@ -580,11 +584,14 @@ ev_trainer:
 	  _BALLOONWIN_CLOSE()
     
   ELSIF $SCWK_ANSWER == PL_BOAT_TR_BTL_YET THEN
+/**  
     IF $LOCALWORK1 == PL_BOAT_TALK_NOT_PAIR THEN
       $LWK_MSG_PRM = PL_BOAT_BTL_BEFORE_NORMAL          //通常戦闘前メッセージ
     ELSE
       $LWK_MSG_PRM = PL_BOAT_BTL_BEFORE_PAIR          //戦闘前ダブルバトル相方のメッセージ
     ENDIF
+*/
+    $LWK_MSG_PRM = PL_BOAT_BTL_BEFORE_NORMAL          //通常戦闘前メッセージ
     //戦闘前メッセージＩＤを取得
     _PL_BOAT_GET_ROOM_INFO(LOCALWORK0,PL_BOAT_ROOM_INFO_MSG,LWK_MSG_PRM,LWK_NPC_MSG_TR)
     //トレーナーＩＤ取得
@@ -627,11 +634,14 @@ ev_trainer:
     ENDIF
     
   ELSE      //ここにはこない。きたら不正。もしきてしまった場合は戦闘後メッセージを出して終了
+/**  
     IF $LOCALWORK1 == PL_BOAT_TALK_NOT_PAIR THEN
       $LWK_MSG_PRM = PL_BOAT_BTL_AFTER_NORMAL          //通常戦闘前メッセージ
     ELSE
       $LWK_MSG_PRM = PL_BOAT_BTL_AFTER_PAIR          //戦闘前ダブルバトル相方のメッセージ
     ENDIF
+*/
+    $LWK_MSG_PRM = PL_BOAT_BTL_AFTER_NORMAL          //通常戦闘前メッセージ
     //戦闘後メッセージＩＤを取得
     _PL_BOAT_GET_ROOM_INFO(LOCALWORK0,PL_BOAT_ROOM_INFO_MSG,LWK_MSG_PRM,LWK_NPC_MSG_TR)
     //会話開始

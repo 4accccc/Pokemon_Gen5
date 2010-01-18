@@ -24,7 +24,7 @@ extern int PL_BOAT_GetNpcType(PL_BOAT_WORK_PTR work, const int inRoomIdx);
 extern int PL_BOAT_GetTrID(PL_BOAT_WORK_PTR work, const int inRoomIdx);
 extern int PL_BOAT_GetMsg(PL_BOAT_WORK_PTR work, const int inRoomIdx, const inMsgKind);
 extern BOOL PL_BOAT_CheckBtlFlg(PL_BOAT_WORK_PTR work, const int inRoomIdx);
-extern BOOL PL_BOAT_CheckDblBtl(PL_BOAT_WORK_PTR work, const int inRoomIdx);
+//extern BOOL PL_BOAT_CheckDblBtl(PL_BOAT_WORK_PTR work, const int inRoomIdx);
 
 //ïîâÆèÓïÒÉZÉbÉg
 extern void PL_BOAT_SetBtlFlg(PL_BOAT_WORK_PTR work, const int inRoomIdx, const BOOL inFlg);

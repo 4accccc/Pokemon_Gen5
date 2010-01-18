@@ -42,6 +42,7 @@ int PL_BOAT_GetObjCode(PL_BOAT_WORK_PTR work, const int inRoomIdx)
   return work->RoomParam[inRoomIdx].ObjCode;
 }
 
+#if 0
 //--------------------------------------------------------------
 /**
  * @brief　部屋の人物がダブルバトルするかをチェック
@@ -61,6 +62,7 @@ BOOL PL_BOAT_CheckDblBtl(PL_BOAT_WORK_PTR work, const int inRoomIdx)
     
   return rc;
 }
+#endif
 
 //--------------------------------------------------------------
 /**

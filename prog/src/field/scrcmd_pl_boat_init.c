@@ -75,10 +75,12 @@ VMCMD_RESULT EvCmdPlBoat_GetRoomInfo( VMHANDLE *core, void *wk )
     if ( PL_BOAT_CheckBtlFlg(*ptr, room_idx) ) *ret = PL_BOAT_TR_BTL_ALREADY;  //戦った
     else *ret = PL_BOAT_TR_BTL_YET;  //戦ってない
     break;
+/**    
   case PL_BOAT_ROOM_INFO_BTL_TYPE:
     if ( PL_BOAT_CheckDblBtl(*ptr, room_idx) ) *ret = PL_BOAT_BTL_TYPE_DOUBLE;  //ダブルバトルの部屋
     else *ret = PL_BOAT_BTL_TYPE_SINGLE;  //シングルバトルの部屋
     break;
+*/    
   default:
     GF_ASSERT(0);
     *ret = 0;

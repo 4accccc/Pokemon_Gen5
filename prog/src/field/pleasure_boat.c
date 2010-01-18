@@ -48,7 +48,7 @@ typedef struct ENTRY_WORK_tag
   u8 Trainer[ENTRY_TR_MAX];
   u8 LongTalker[ENTRY_LONG_TALKER_MAX];
   u8 ShortTalker[ENTRY_SHORT_TALKER_MAX];
-  BOOL DblBtl[DBL_BTL_ROOM_NUM];
+//  BOOL DblBtl[DBL_BTL_ROOM_NUM];
 }ENTRY_WORK;
 
 typedef struct TR_DATA_tag
@@ -376,12 +376,13 @@ int PL_BOAT_GetTrID(PL_BOAT_WORK_PTR work, const int inRoomIdx)
  * @brief　部屋の人物情報を取得　メッセージＩＤ
  * @param   work      PL_BOAT_WORK_PTR
  * @apram   inRoomIdx 部屋番号
- * @param   inMsgKind   メッセージ種類　0:通常　1：対戦後（トレーナーでないＮＰＣのときは通常）3:戦闘前ダブル相方　4：戦闘後ダブル相方
+ * @param   inMsgKind   メッセージ種類　0:通常　1：対戦後（トレーナーでないＮＰＣのときは通常）
  * @retval  int       メッセージＩＤ
 */
 //--------------------------------------------------------------
 int PL_BOAT_GetMsg(PL_BOAT_WORK_PTR work, const int inRoomIdx, const inMsgKind)
 {
+/**  
   if ( PL_BOAT_CheckDblBtl(work, inRoomIdx) )
   {
     int msg;
@@ -394,6 +395,8 @@ int PL_BOAT_GetMsg(PL_BOAT_WORK_PTR work, const int inRoomIdx, const inMsgKind)
   {
     return work->RoomParam[inRoomIdx].NpcMsg[inMsgKind];
   }
+*/
+  return work->RoomParam[inRoomIdx].NpcMsg[inMsgKind];
 }
 
 //--------------------------------------------------------------
@@ -505,14 +508,16 @@ static void EntryTrainer(PL_BOAT_WORK *work)
     if (!rc)  InitEntryWork(&entry_work);   //初期化状態で続行
   }
 
-  //テーブルからトレーナをエントリ(ダブルバトルトレーナーを除く)
+  //テーブルからトレーナをエントリ
   CreateTrTbl(
-      TRAINER_MAX-1, tr_num, tr_tbl, entry_work.Trainer
+      TRAINER_MAX, tr_num, tr_tbl, entry_work.Trainer
       );
+/**  
   //ダブルバトルを抽選する場合、トレーナーテーブルの先頭のものを上書き
   if(1){//@todo
     entry_work.Trainer[0] = TRAINER_MAX-1;
   }
+*/  
    //テーブルから非トレーナー（長話）をエントリ
   CreateTrTbl(
       LONG_TALKER_MAX, ENTRY_LONG_TALKER_MAX, long_tbl, entry_work.LongTalker
@@ -534,11 +539,13 @@ static void EntryTrainer(PL_BOAT_WORK *work)
 
   {
     int count = 0;
+/**    
     //ダブルバトル部屋セット
     for (i=0;i<DBL_BTL_ROOM_NUM;i++)
     {
       work->DblBtl[i] = entry_work.DblBtl[i];
     }
+*/    
     //部屋にトレーナーを格納
     for (i=0;i<tr_num;i++)
     {
@@ -622,13 +629,13 @@ static void InitEntryWork(ENTRY_WORK *work)
   int i;
   work->LastIdx = ROOM_NUM-1;
   work->EntryCount = 0;
-
+/**  
   //ダブルバトル部屋クリア
   for (i=0;i<DBL_BTL_ROOM_NUM;i++)
   {
     work->DblBtl[i] = FALSE;
   }
-
+*/
   //部屋インデックス初期化
   for (i=0;i<ROOM_NUM;i++)
   {
@@ -712,7 +719,7 @@ static BOOL EntryRoom(ENTRY_WORK *work)
   right = FALSE;
 
   entry_room_num = ROOM_NUM;
-
+/**
   //ダブルバトルできる部屋を選択
   if(1)    //ダブルバトル抽選する @todo
   {
@@ -735,7 +742,7 @@ static BOOL EntryRoom(ENTRY_WORK *work)
 
     entry_room_num--;   //抽選総数デクリメント
   }
-
+*/
   //ダブル型の部屋を1つ選択
   idx = GFUser_GetPublicRand(DOUBLE_ROOM_NUM);
   room_idx = DoubleRoom[idx];

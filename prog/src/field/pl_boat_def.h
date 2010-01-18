@@ -20,7 +20,7 @@
 #define PL_BOAT_ROOM_INFO_TR_ID     (6)
 #define PL_BOAT_ROOM_INFO_MSG       (7)
 #define PL_BOAT_ROOM_INFO_BTL_FLG   (8)
-#define PL_BOAT_ROOM_INFO_BTL_TYPE  (9)
+//#define PL_BOAT_ROOM_INFO_BTL_TYPE  (9)
 
 //ＮＰＣ種類
 #define NPC_TYPE_TRAINER (0)
@@ -32,17 +32,17 @@
 #define PL_BOAT_TR_BTL_ALREADY (1)  //既に戦った
 
 //ダブルバトル・シングルバトル部屋
-#define PL_BOAT_BTL_TYPE_DOUBLE (0)   //ダブルバトル
-#define PL_BOAT_BTL_TYPE_SINGLE (1)   //シングルバトル
+//#define PL_BOAT_BTL_TYPE_DOUBLE (0)   //ダブルバトル
+//#define PL_BOAT_BTL_TYPE_SINGLE (1)   //シングルバトル
 
-#define PL_BOAT_TALK_NOT_PAIR   (0)   //通常トレーナーＯＲダブルバトル可変型の方
-#define PL_BOAT_TALK_PAIR   (1)       //ダブルバトル可変型のじゃない方
+//#define PL_BOAT_TALK_NOT_PAIR   (0)   //通常トレーナーＯＲダブルバトル可変型の方
+//#define PL_BOAT_TALK_PAIR   (1)       //ダブルバトル可変型のじゃない方
 
 //メッセージの種類
-#define PL_BOAT_BTL_BEFORE_NORMAL  (0)    //通常トレーナーＯＲダブルバトル可変型の方
-#define PL_BOAT_BTL_AFTER_NORMAL  (1)     //通常トレーナーＯＲダブルバトル可変型の方
-#define PL_BOAT_BTL_BEFORE_PAIR  (2)      //ダブルバトル可変型のじゃない方
-#define PL_BOAT_BTL_AFTER_PAIR  (3)       //ダブルバトル可変型のじゃない方
+#define PL_BOAT_BTL_BEFORE_NORMAL  (0)    //通常トレーナー
+#define PL_BOAT_BTL_AFTER_NORMAL  (1)     //通常トレーナー
+//#define PL_BOAT_BTL_BEFORE_PAIR  (2)      //ダブルバトル可変型のじゃない方
+//#define PL_BOAT_BTL_AFTER_PAIR  (3)       //ダブルバトル可変型のじゃない方
 
 //デモの終わり方
 #define PL_BOAT_DEMO_USER_END (0)         //プレーヤーがデモを終了させた
