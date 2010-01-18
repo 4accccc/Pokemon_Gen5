@@ -1614,9 +1614,9 @@ void UnionMsg_Menu_BattleMenuSetup(UNION_SYSTEM_PTR unisys, FIELDMAP_WORK *field
     GFL_STD_MemCopy(BattleMenuList_Custom, list, 
       sizeof(FLDMENUFUNC_LIST) * NELEMS(BattleMenuList_Custom));
     
-    list[0].str_id = msg_union_battle_01_04 + menu_reg->mode;     //対戦形式(シングル、ダブル…)
-    list[1].str_id = msg_union_battle_01_10 + menu_reg->rule;     //ルール(レベル50、制限無し…)
-    list[2].str_id = msg_union_battle_01_11_01 + menu_reg->shooter;  //シューター有無
+    list[0].str_id = msg_union_battle_01_12_01 + menu_reg->mode;     //対戦形式(シングル、ダブル…)
+    list[1].str_id = msg_union_battle_01_12_06 + menu_reg->rule;     //ルール(レベル50、制限無し…)
+    list[2].str_id = msg_union_battle_01_12_08 + menu_reg->shooter;  //シューター有無
     
     UnionMsg_Menu_WindowSetup(unisys, fieldWork, 
       list, BattleMenuDataTbl[menu_index].list_max, &head);
@@ -1630,8 +1630,8 @@ void UnionMsg_Menu_BattleMenuSetup(UNION_SYSTEM_PTR unisys, FIELDMAP_WORK *field
     GFL_STD_MemCopy(BattleMenuList_CustomMulti, list, 
       sizeof(FLDMENUFUNC_LIST) * NELEMS(BattleMenuList_CustomMulti));
     
-    list[0].str_id = msg_union_battle_01_10 + menu_reg->rule;     //ルール(レベル50、制限無し…)
-    list[1].str_id = msg_union_battle_01_11_01 + menu_reg->shooter;  //シューター有無
+    list[0].str_id = msg_union_battle_01_12_06 + menu_reg->rule;     //ルール(レベル50、制限無し…)
+    list[1].str_id = msg_union_battle_01_12_08 + menu_reg->shooter;  //シューター有無
     
     UnionMsg_Menu_WindowSetup(unisys, fieldWork, 
       list, BattleMenuDataTbl[menu_index].list_max, &head);
@@ -1759,7 +1759,7 @@ void UnionMsg_Menu_BattleMenuMultiTitleSetup(UNION_SYSTEM_PTR unisys, FIELDMAP_W
   if(unisys->fldmsgwin == NULL){
     FLDMSGBG *fldmsg_bg = FIELDMAP_GetFldMsgBG(fieldWork);
     unisys->fldmsgwin = FLDMSGWIN_Add(fldmsg_bg, unisys->msgdata, 1, 1, 30, 2);
-    FLDMSGWIN_Print( unisys->fldmsgwin, 0, 0, msg_union_battle_01_00 );
+    FLDMSGWIN_Print( unisys->fldmsgwin, 0, 0, msg_union_battle_01_12_05 );
   }
 }
 
