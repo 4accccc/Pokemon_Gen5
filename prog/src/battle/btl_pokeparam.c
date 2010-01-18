@@ -1285,7 +1285,7 @@ void BPP_WAZA_UpdateID( BTL_POKEPARAM* pp, u8 wazaIdx, WazaID waza, u8 ppMax, BO
     pWaza->ppMax = ppMax;
   }
   pWaza->pp = pWaza->ppMax;
-  OS_TPrintf("ワザ上書き: ppMax指定=%d, 実地:%d\n", ppMax, pWaza->ppMax);
+  OS_TPrintf("ワザ上書き: ppMax指定=%d, 実値:%d\n", ppMax, pWaza->ppMax);
 }
 //=============================================================================================
 /**
@@ -1730,10 +1730,6 @@ static void clearWazaSickWork( BTL_POKEPARAM* bpp, BOOL fPokeSickInclude )
   }
   GFL_STD_MemClear( bpp->wazaSickCounter, sizeof(bpp->wazaSickCounter) );
 }
-
-
-
-
 
 //=============================================================================================
 /**

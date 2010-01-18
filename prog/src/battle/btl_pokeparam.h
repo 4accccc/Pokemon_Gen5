@@ -130,6 +130,7 @@ typedef enum {
   BPP_COUNTER_TAKUWAERU,          ///< たくわえる段階数
   BPP_COUNTER_TAKUWAERU_DEF,      ///< たくわえるによって上がった防御ランク
   BPP_COUNTER_TAKUWAERU_SPDEF,    ///< たくわえるによって上がった特防ランク
+  BPP_COUNTER_MAMORU,             ///< まもる・みきりカウンタ
 
   BPP_COUNTER_MAX,
 }BppCounter;

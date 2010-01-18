@@ -4082,6 +4082,7 @@ static BOOL scproc_Fight_CheckWazaExecuteFail_2nd( BTL_SVFLOW_WORK* wk, BTL_POKE
 
     // その他の失敗チェック
     cause = scEvent_CheckWazaExecute2ND( wk, attacker, waza );
+
   }while( 0 );
 
   if( cause != SV_WAZAFAIL_NULL ){
@@ -8425,7 +8426,7 @@ static void scEvent_GetWazaParam( BTL_SVFLOW_WORK* wk, WazaID waza, const BTL_PO
 }
 //----------------------------------------------------------------------------------
 /**
- * [Event] ワザだし失敗チェック
+ * [Event] ワザだし失敗確定
  *
  * @param   wk
  * @param   bpp
@@ -11185,7 +11186,6 @@ static u8 scproc_HandEx_setStatus( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_H
   handexSub_putString( wk, &param->exStr );
 
   return 1;
-
 }
 /**
  * ポケモンを強制的にひん死にさせる

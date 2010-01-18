@@ -361,6 +361,7 @@ static void handler_Koraeru_Check( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
 static void handler_Koraeru( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable*  ADD_Mamoru( u32* numElems );
 static void handler_Mamoru_ExeCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_Mamoru_ExeFail( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Mamoru( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable*  ADD_Gaman( u32* numElems );
 static void handler_Gaman( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
@@ -4663,22 +4664,24 @@ static const BtlEventHandlerTable*  ADD_Mamoru( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_WAZA_EXECUTE_CHECK_2ND,  handler_Mamoru_ExeCheck }, // ワザ出し成否チェックハンドラ
-    { BTL_EVENT_UNCATEGORIZE_WAZA,   handler_Mamoru },          // 未分類ワザハンドラ
+    { BTL_EVENT_WAZA_EXECUTE_FAIL,       handler_Mamoru_ExeFail  }, // ワザだし失敗確定
+    { BTL_EVENT_UNCATEGORIZE_WAZA,       handler_Mamoru },          // 未分類ワザハンドラ
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
 }
+// ワザ出し成否チェックハンドラ
 static void handler_Mamoru_ExeCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  // 成功率がだんだん下がるテーブル 1/2, 1/4, 1/8, ---
+  // 成功率がだんだん下がるテーブル 1/1, 1/2, 1/4, 1/8, ---
   static const u8 randRange[] = {
-    2, 4, 8,
+    1, 2, 4, 8, 16, 32, 64, 128, 256, 512,
   };
 
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
-    u8 counter = BPP_GetWazaContCounter( bpp );
+    u8 counter = BPP_COUNTER_Get( bpp, BPP_COUNTER_MAMORU );
 
     if( counter )
     {
@@ -4687,22 +4690,45 @@ static void handler_Mamoru_ExeCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK
       }
       if( BTL_SVFTOOL_GetRand( flowWk, randRange[counter] ) != 0 )
       {
-        // 連続利用による失敗。失敗したらハンドラごと消滅することで、その後のイベントに反応しない。
+        // 連続利用による失敗。
         BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_CAUSE, SV_WAZAFAIL_OTHER );
-        BTL_EVENT_FACTOR_Remove( myHandle );
       }
     }
   }
 }
+// ワザ出し失敗確定
+static void handler_Mamoru_ExeFail( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
+  {
+    // 失敗したらカウンタをリセット＆ハンドラごと消滅することで、その後のイベントに反応しない。
+    BTL_HANDEX_PARAM_COUNTER*  counterParam = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_COUNTER, pokeID );
+
+    counterParam->pokeID = pokeID;
+    counterParam->counterID = BPP_COUNTER_MAMORU;
+    counterParam->value = 0;
+
+    BTL_EVENT_FACTOR_Remove( myHandle );
+  }
+}
+// 未分類ワザハンドラ
 static void handler_Mamoru( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
+    const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
     BTL_HANDEX_PARAM_TURNFLAG* flagParam;
+    BTL_HANDEX_PARAM_COUNTER*  counterParam;
 
     flagParam = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_SET_TURNFLAG, pokeID );
     flagParam->pokeID = pokeID;
     flagParam->flag = BPP_TURNFLG_MAMORU;
+
+    // 守る効果発動したらカウンタをインクリメント
+    counterParam = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_COUNTER, pokeID );
+    counterParam->pokeID = pokeID;
+    counterParam->counterID = BPP_COUNTER_MAMORU;
+    counterParam->value = BPP_COUNTER_Get( bpp, BPP_COUNTER_MAMORU ) + 1;
   }
 }
 //----------------------------------------------------------------------------------
