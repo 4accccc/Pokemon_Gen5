@@ -95,6 +95,7 @@ typedef struct{
   fx32      radius;
   fx32      life;
   fx32      scale;
+  fx32      speed;
 }BTLV_EFFVM_EMIT_INIT_WORK;
 
 //エミッタ移動用パラメータ構造体
@@ -1008,6 +1009,7 @@ static VMCMD_RESULT VMEC_PARTICLE_PLAY_ORTHO( VMHANDLE *vmh, void *context_work 
   beeiw->radius = ( fx32 )VMGetU32( vmh );
   beeiw->life = ( fx32 )VMGetU32( vmh );
   beeiw->scale = ( fx32 )VMGetU32( vmh );
+  beeiw->speed = ( fx32 )VMGetU32( vmh );
   beeiw->ortho_mode = 1;
 
   if( beeiw->dst == BTLEFF_PARTICLE_PLAY_SIDE_NONE )
@@ -3395,6 +3397,15 @@ static  void  EFFVM_InitEmitterPos( GFL_EMIT_PTR emit )
       if( beeiw->scale )
       { 
         GFL_PTC_SetEmitterBaseScale( emit, (fx16)FX_Div( scale, beeiw->scale ) );
+      }
+      if( beeiw->speed )
+      { 
+        fx16  vel;
+
+        vel = GFL_PTC_GetEmitterInitVelocityPos( emit );
+        GFL_PTC_SetEmitterInitVelocityPos( emit, FX_Div( vel, beeiw->speed ) );
+        vel = GFL_PTC_GetEmitterInitVelocityAxis( emit );
+        GFL_PTC_SetEmitterInitVelocityAxis( emit, FX_Div( vel, beeiw->speed ) );
       }
     }
   }

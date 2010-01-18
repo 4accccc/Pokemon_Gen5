@@ -648,13 +648,14 @@ ex)
 /**
  * @brief	パーティクル再生（正射影）
  *
- * #param_num	6
+ * #param_num	7
  * @param	num				再生パーティクルナンバー
  * @param	index			spa内インデックスナンバー
  * @param	start_pos	パーティクル再生開始立ち位置
  * @param	dir	      パーティクルの向き
  * @param	ofs			  パーティクル再生オフセット
  * @param	param			奥側で再生するときの補正値
+ * @param	speed			奥側で再生するときの移動速度補正値
  *
  * #param	FILE_DIALOG_COMBOBOX .spa
  * #param	COMBOBOX_HEADER
@@ -665,9 +666,11 @@ ex)
  * #param	VALUE_VECFX32 ofs_x ofs_y ofs_z
  * #param	VALUE_VECFX32 エミッタ半径 エミッタ寿命 エミッタスケール
  * #param VALUE_INIT  2:1:2
+ * #param	VALUE_FX32 エミッタ速度
+ * #param VALUE_INIT  1
  */
 //======================================================================
-	.macro	PARTICLE_PLAY_ORTHO	num, index, start_pos, dir, ofs_x, ofs_y, ofs_z, radius, length, scale
+	.macro	PARTICLE_PLAY_ORTHO	num, index, start_pos, dir, ofs_x, ofs_y, ofs_z, radius, length, scale, speed
 	.short	EC_PARTICLE_PLAY_ORTHO
 	.long		\num
 	.long		\index
@@ -679,6 +682,7 @@ ex)
 	.long		\radius
 	.long		\length
 	.long		\scale
+	.long		\speed
 	.endm
 
 //======================================================================
