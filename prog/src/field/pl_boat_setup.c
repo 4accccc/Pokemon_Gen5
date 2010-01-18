@@ -112,46 +112,7 @@ static const u8 RightRoom[RIGHT_ROOM_NUM] = {
   4,5,6,7,8,13,14
 };
 
-//#include "pl_boat_data.cdat"
-static const TR_DATA DbgTrData[TRAINER_MAX] = {
-  {BABYGIRL1,TRID_BUSINESS1_05,{msg_c03r0801_businessman_04,msg_c03r0801_businessman_05}},
-  {BOY2,TRID_ELITEM_05,{msg_c03r0801_trainerm_03,msg_c03r0801_trainerm_04}},
-  {BOY3,TRID_ELITEW_05,{msg_c03r0801_trainerw_03,msg_c03r0801_trainerw_04}},
-  {GIRL2,TRID_TANPAN_11,{msg_c03r0801_boy2_03,msg_c03r0801_boy2_04}},
-  {GIRL3,TRID_MINI_05,{msg_c03r0801_girl2_04,msg_c03r0801_girl2_05}},
-  {GIRL4,TRID_PRINCE_04,{msg_c03r0801_boy4_03,msg_c03r0801_boy4_04}},
-  {MIDDLEMAN2,TRID_PRINCESS_04,{msg_c03r0801_girl4_03,msg_c03r0801_girl4_04}},
-  {MAN2,TRID_GENTLE_01,{msg_c03r0801_gentleman_04,msg_c03r0801_gentleman_05}},
-  {WOMAN1,TRID_MADAM_01,{msg_c03r0801_lady_04,msg_c03r0801_lady_05}},
-  {WOMAN3,TRID_FUTAGO_03,{msg_c03r0801_babygirl1_01,msg_c03r0801_babygirl1_02}},    //ダブルバトルトレーナー
-};
-
-static const NONE_TR_DATA DbgLongTalkerData[LONG_TALKER_MAX] = {
-  {BREEDERM,{msg_c03r0801_businessman_02,msg_c03r0801_businessman_03}},
-  {BREEDERW,{msg_c03r0801_girl2_02,msg_c03r0801_girl2_03}},
-  {RANGERM,{msg_c03r0801_gentleman_02,msg_c03r0801_gentleman_03}},
-  {RANGERW,{msg_c03r0801_lady_02,msg_c03r0801_lady_03}},
-  {WAITER,{msg_c03r0801_man3_02,msg_c03r0801_man3_03}},
-};
-
-static const NONE_TR_DATA DbgShortTalkerData[SHORT_TALKER_MAX] = {
-  {BREEDERM,{msg_c03r0801_businessman_01,msg_c03r0801_businessman_01}},
-  {BREEDERW,{msg_c03r0801_trainerm_01,msg_c03r0801_trainerm_01}},
-  {RANGERM,{msg_c03r0801_trainerm_02,msg_c03r0801_trainerm_02}},
-  {RANGERW,{msg_c03r0801_trainerw_01,msg_c03r0801_trainerw_01}},
-  {WAITER,{msg_c03r0801_trainerw_02,msg_c03r0801_trainerw_02}},
-  {WAITRESS,{msg_c03r0801_boy2_01,msg_c03r0801_boy2_01}},
-  {BACKPACKERM,{msg_c03r0801_boy2_02,msg_c03r0801_boy2_02}},
-  {BACKPACKERW,{msg_c03r0801_girl2_01,msg_c03r0801_girl2_01}},
-  {DOCTOR,{msg_c03r0801_boy4_01,msg_c03r0801_boy4_01}},
-  {NURSE,{msg_c03r0801_boy4_02,msg_c03r0801_boy4_02}},
-
-  {NURSE,{msg_c03r0801_girl4_01,msg_c03r0801_girl4_01}},
-  {NURSE,{msg_c03r0801_girl4_02,msg_c03r0801_girl4_02}},
-  {NURSE,{msg_c03r0801_gentleman_01,msg_c03r0801_gentleman_01}},
-  {NURSE,{msg_c03r0801_lady_01,msg_c03r0801_lady_01}},
-  {NURSE,{msg_c03r0801_man3_01,msg_c03r0801_man3_01}},
-};
+#include "../../../resource/pl_boat/pl_boat_data.cdat"
 
 static void InitEntryWork(ENTRY_WORK *work);
 static int SearchRoomIdx(ENTRY_WORK *work, int inRoomIdx);
@@ -266,11 +227,11 @@ void PL_BOAT_SETUP_EntryTrainer(PL_BOAT_WORK *work)
       u8 room_idx = entry_work.RoomEntry[count++];
       u8 entry_id = entry_work.Trainer[i];
       work->RoomParam[room_idx].EntryID = entry_id;
-      work->RoomParam[room_idx].TrID = DbgTrData[entry_id].TrID;
-      work->RoomParam[room_idx].ObjCode = DbgTrData[entry_id].ObjCode;
+      work->RoomParam[room_idx].TrID = TrData[entry_id].TrID;
+      work->RoomParam[room_idx].ObjCode = TrData[entry_id].ObjCode;
       work->RoomParam[room_idx].NpcType = NPC_TYPE_TRAINER;
-      work->RoomParam[room_idx].NpcMsg[0] = DbgTrData[entry_id].Msg[0];
-      work->RoomParam[room_idx].NpcMsg[1] = DbgTrData[entry_id].Msg[1];
+      work->RoomParam[room_idx].NpcMsg[0] = TrData[entry_id].Msg[0];
+      work->RoomParam[room_idx].NpcMsg[1] = TrData[entry_id].Msg[1];
     }
     //部屋に非トレーナー（長話）を格納
     for(i=0;i<ENTRY_LONG_TALKER_MAX;i++)
@@ -279,10 +240,10 @@ void PL_BOAT_SETUP_EntryTrainer(PL_BOAT_WORK *work)
       u8 entry_id = entry_work.LongTalker[i];
       work->RoomParam[room_idx].EntryID = i;
       work->RoomParam[room_idx].TrID = 0;
-      work->RoomParam[room_idx].ObjCode = DbgLongTalkerData[entry_id].ObjCode;
+      work->RoomParam[room_idx].ObjCode = LongTalkerData[entry_id].ObjCode;
       work->RoomParam[room_idx].NpcType = NPC_TYPE_LONG_TALKER;
-      work->RoomParam[room_idx].NpcMsg[0] = DbgLongTalkerData[entry_id].Msg[0];
-      work->RoomParam[room_idx].NpcMsg[1] = DbgLongTalkerData[entry_id].Msg[1];
+      work->RoomParam[room_idx].NpcMsg[0] = LongTalkerData[entry_id].Msg[0];
+      work->RoomParam[room_idx].NpcMsg[1] = LongTalkerData[entry_id].Msg[1];
     }
     //部屋に非トレーナー（通常）を格納
     for(i=0;i<ROOM_NUM-(tr_num+ENTRY_LONG_TALKER_MAX);i++)
@@ -291,10 +252,10 @@ void PL_BOAT_SETUP_EntryTrainer(PL_BOAT_WORK *work)
       u8 entry_id = entry_work.ShortTalker[i];
       work->RoomParam[room_idx].EntryID = i;
       work->RoomParam[room_idx].TrID = 0;
-      work->RoomParam[room_idx].ObjCode = DbgShortTalkerData[entry_id].ObjCode;
+      work->RoomParam[room_idx].ObjCode = ShortTalkerData[entry_id].ObjCode;
       work->RoomParam[room_idx].NpcType = NPC_TYPE_SHORT_TALKER;
-      work->RoomParam[room_idx].NpcMsg[0] = DbgShortTalkerData[entry_id].Msg[0];
-      work->RoomParam[room_idx].NpcMsg[1] = DbgShortTalkerData[entry_id].Msg[1];
+      work->RoomParam[room_idx].NpcMsg[0] = ShortTalkerData[entry_id].Msg[0];
+      work->RoomParam[room_idx].NpcMsg[1] = ShortTalkerData[entry_id].Msg[1];
     }
   }
 
