@@ -7615,21 +7615,21 @@
 		<language name="JPN" width="256">BE-SE-041</language>
 		<language name="JPN_KANJI" width="256">BE-SE-041</language>
 	</row>
-	<row id="msg_seq_se_dmy_149">
-		<language name="JPN" width="256">DMY-149</language>
-		<language name="JPN_KANJI" width="256">DMY-149</language>
+	<row id="msg_seq_se_w221_noise">
+		<language name="JPN" width="256">W221-NOISE</language>
+		<language name="JPN_KANJI" width="256">W221-NOISE</language>
 	</row>
-	<row id="msg_seq_se_dmy_150">
-		<language name="JPN" width="256">DMY-150</language>
-		<language name="JPN_KANJI" width="256">DMY-150</language>
+	<row id="msg_seq_se_w229_kiin">
+		<language name="JPN" width="256">W229-KIIN</language>
+		<language name="JPN_KANJI" width="256">W229-KIIN</language>
 	</row>
-	<row id="msg_seq_se_dmy_151">
-		<language name="JPN" width="256">DMY-151</language>
-		<language name="JPN_KANJI" width="256">DMY-151</language>
+	<row id="msg_seq_se_w245_jump">
+		<language name="JPN" width="256">W245-JUMP</language>
+		<language name="JPN_KANJI" width="256">W245-JUMP</language>
 	</row>
-	<row id="msg_seq_se_dmy_152">
-		<language name="JPN" width="256">DMY-152</language>
-		<language name="JPN_KANJI" width="256">DMY-152</language>
+	<row id="msg_seq_se_w245_buckl">
+		<language name="JPN" width="256">W245-BUCKL</language>
+		<language name="JPN_KANJI" width="256">W245-BUCKL</language>
 	</row>
 	<row id="msg_seq_se_dmy_153">
 		<language name="JPN" width="256">DMY-153</language>
