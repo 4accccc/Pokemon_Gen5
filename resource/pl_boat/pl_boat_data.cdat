@@ -1,0 +1,47 @@
+//======================================================================
+/**
+ * @file	pl_boat_data.cdat
+ * @brief	船内部屋ＯＢＪ定義ファイル
+ * @note	このファイルはコンバーターから出力されます
+ *
+ */
+//======================================================================
+
+static const TR_DATA TrData[TRAINER_MAX] = {
+	{BABYGIRL1, TRID_BUSINESS1_05, {msg_c03r0801_businessman_04, msg_c03r0801_businessman_05}},
+	{BOY2, TRID_ELITEM_05, {msg_c03r0801_trainerm_03, msg_c03r0801_trainerm_04}},
+	{BOY3, TRID_ELITEW_05, {msg_c03r0801_trainerw_03, msg_c03r0801_trainerw_04}},
+	{GIRL2, TRID_TANPAN_11, {msg_c03r0801_boy2_03, msg_c03r0801_boy2_04}},
+	{GIRL3, TRID_MINI_05, {msg_c03r0801_girl2_04, msg_c03r0801_girl2_05}},
+	{GIRL4, TRID_PRINCE_04, {msg_c03r0801_boy4_03, msg_c03r0801_boy4_04}},
+	{MIDDLEMAN2, TRID_PRINCESS_04, {msg_c03r0801_girl4_03, msg_c03r0801_girl4_04}},
+	{MAN2, TRID_GENTLE_01, {msg_c03r0801_gentleman_04, msg_c03r0801_gentleman_05}},
+	{WOMAN1, TRID_MADAM_01, {msg_c03r0801_lady_04, msg_c03r0801_lady_05}},
+	{WOMAN3, TRID_FUTAGO_03, {msg_c03r0801_babygirl1_01, msg_c03r0801_babygirl1_02}},
+};
+
+static const NONE_TR_DATA LongTalkerData[LONG_TALKER_MAX] = {
+	{BREEDERM, {msg_c03r0801_businessman_02, msg_c03r0801_businessman_03}},
+	{BREEDERW, {msg_c03r0801_girl2_02, msg_c03r0801_girl2_03}},
+	{RANGERM, {msg_c03r0801_gentleman_02, msg_c03r0801_gentleman_03}},
+	{RANGERW, {msg_c03r0801_lady_02, msg_c03r0801_lady_03}},
+	{WAITER, {msg_c03r0801_man3_02, msg_c03r0801_man3_03}},
+};
+
+static const NONE_TR_DATA ShortTalkerData[SHORT_TALKER_MAX] = {
+	{BREEDERM, {msg_c03r0801_businessman_01, msg_c03r0801_businessman_01}},
+	{BREEDERW, {msg_c03r0801_trainerm_01, msg_c03r0801_trainerm_01}},
+	{RANGERM, {msg_c03r0801_trainerm_02, msg_c03r0801_trainerm_02}},
+	{RANGERW, {msg_c03r0801_trainerw_01, msg_c03r0801_trainerw_01}},
+	{WAITER, {msg_c03r0801_trainerw_02, msg_c03r0801_trainerw_02}},
+	{WAITRESS, {msg_c03r0801_boy2_01, msg_c03r0801_boy2_01}},
+	{BACKPACKERM, {msg_c03r0801_boy2_02, msg_c03r0801_boy2_02}},
+	{BACKPACKERW, {msg_c03r0801_girl2_01, msg_c03r0801_girl2_01}},
+	{DOCTOR, {msg_c03r0801_boy4_01, msg_c03r0801_boy4_01}},
+	{NURSE, {msg_c03r0801_boy4_02, msg_c03r0801_boy4_02}},
+	{NURSE, {msg_c03r0801_girl4_01, msg_c03r0801_girl4_01}},
+	{NURSE, {msg_c03r0801_girl4_02, msg_c03r0801_girl4_02}},
+	{NURSE, {msg_c03r0801_gentleman_01, msg_c03r0801_gentleman_01}},
+	{NURSE, {msg_c03r0801_lady_01, msg_c03r0801_lady_01}},
+	{NURSE, {msg_c03r0801_man3_01, msg_c03r0801_man3_01}},
+};
