@@ -40,7 +40,7 @@
 #define JUMP_COUNT  (8)
 #define JUMP_MOVE_X  (FX32_ONE*2)
 
-#define CHECK_RAIL_NUM  (3)
+#define CHECK_RAIL_NUM  (6)
 
 #define GRID_HALF_SIZE ((FIELD_CONST_GRID_SIZE/2)*FX32_ONE)
 
@@ -403,24 +403,24 @@ static const int JumpY[JUMP_COUNT] = { 8,16,8,0,-8,-16,-24,-32 };
 
 //レール進入不可テーブル
 static const int RailSt[DRAGON_NUM_MAX][HEAD_DIR_MAX][CHECK_RAIL_NUM] = {
-  //ON, OFF, OFF
+  //ON, ON, OFF, OFF, OFF, OFF
   {
-    { RE_LINE_38, RE_LINE_33, RE_LINE_34 },      //首の向き上
-    { RE_LINE_38, RE_LINE_33, RE_LINE_34 },      //首の向き下
-    { RE_LINE_34, RE_LINE_33, RE_LINE_38 },      //首の向き左
-    { RE_LINE_33, RE_LINE_34, RE_LINE_38 },      //首の向き右
+    { RE_LINE_38, RE_LINE_32, RE_LINE_33, RE_LINE_33_new, RE_LINE_34, RE_LINE_34_new }, //首の向き上
+    { RE_LINE_38, RE_LINE_32, RE_LINE_33, RE_LINE_33_new, RE_LINE_34, RE_LINE_34_new }, //首の向き下   実際はどの方向にもいけない
+    { RE_LINE_34, RE_LINE_34_new, RE_LINE_33, RE_LINE_33_new, RE_LINE_38, RE_LINE_32 }, //首の向き左
+    { RE_LINE_33, RE_LINE_33_new, RE_LINE_34, RE_LINE_34_new, RE_LINE_38, RE_LINE_32 }, //首の向き右
   },
   {
-    { RE_LINE_11, RE_LINE_12, RE_LINE_13 },      //首の向き上
-    { RE_LINE_11, RE_LINE_12, RE_LINE_13 },      //首の向き下
-    { RE_LINE_13, RE_LINE_11, RE_LINE_12 },      //首の向き左
-    { RE_LINE_12, RE_LINE_11, RE_LINE_13 },      //首の向き右
+    { RE_LINE_11, RE_LINE_14, RE_LINE_12, RE_LINE_12_new, RE_LINE_13, RE_LINE_13_new }, //首の向き上
+    { RE_LINE_11, RE_LINE_14, RE_LINE_12, RE_LINE_12_new, RE_LINE_13, RE_LINE_13_new }, //首の向き下  実際はどの方向にもいけない
+    { RE_LINE_13, RE_LINE_13_new, RE_LINE_11, RE_LINE_14, RE_LINE_12, RE_LINE_12_new }, //首の向き左
+    { RE_LINE_12, RE_LINE_12_new, RE_LINE_11, RE_LINE_14, RE_LINE_13, RE_LINE_13_new }, //首の向き右
   },
   {
-    { RE_LINE_53, RE_LINE_55, RE_LINE_56 },      //首の向き上
-    { RE_LINE_53, RE_LINE_55, RE_LINE_56 },      //首の向き下
-    { RE_LINE_56, RE_LINE_53, RE_LINE_55 },      //首の向き左
-    { RE_LINE_55, RE_LINE_53, RE_LINE_56 },      //首の向き右
+    { RE_LINE_53, RE_LINE_54, RE_LINE_55, RE_LINE_55_new, RE_LINE_56, RE_LINE_56_new }, //首の向き上
+    { RE_LINE_53, RE_LINE_54, RE_LINE_55, RE_LINE_55_new, RE_LINE_56, RE_LINE_56_new }, //首の向き下  実際はどの方向にもいけない
+    { RE_LINE_56, RE_LINE_56_new, RE_LINE_53, RE_LINE_54, RE_LINE_55, RE_LINE_55_new }, //首の向き左
+    { RE_LINE_55, RE_LINE_55_new, RE_LINE_53, RE_LINE_54, RE_LINE_56, RE_LINE_56_new }, //首の向き右
   },
 };
 
@@ -1334,19 +1334,13 @@ static void SetRailSt(FIELDMAP_WORK *fieldWork, const int inHeadIdx, const HEAD_
   for (i=0;i<CHECK_RAIL_NUM;i++)
   {
     line_idx[i] = RailSt[inHeadIdx][inDir][i];
+    valid[i] = FALSE;
   }
 
-  if (inDir == HEAD_DIR_DOWN)
-  {
-    valid[0] = FALSE;
-    valid[1] = FALSE;
-    valid[2] = FALSE;
-  }
-  else
+  if (inDir != HEAD_DIR_DOWN)
   {
     valid[0] = TRUE;
-    valid[1] = FALSE;
-    valid[2] = FALSE;
+    valid[1] = TRUE;
   }
 
   for (i=0;i<CHECK_RAIL_NUM;i++)
