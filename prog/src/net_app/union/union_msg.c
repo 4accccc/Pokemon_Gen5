@@ -1602,6 +1602,9 @@ void UnionMsg_Menu_BattleMenuSetup(UNION_SYSTEM_PTR unisys, FIELDMAP_WORK *field
   head.line = BattleMenuDataTbl[menu_index].list_max;
   head.bmpsize_y = head.count * 2;
   
+  if(menu_index == BATTLE_MENU_INDEX_CUSTOM || menu_index == BATTLE_MENU_INDEX_CUSTOM_MULTI){
+    head.bmpsize_x = 30;
+  }
   if(menu_index >= BATTLE_MENU_INDEX_CUSTOM_MULTI){
     head.bmppos_y = 5;
   }

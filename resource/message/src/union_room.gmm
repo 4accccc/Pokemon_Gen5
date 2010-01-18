@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsuda" host="W00142" date="2010-01-18T21:39:12"/>
+	<create user="matsuda" host="W00142" date="2010-01-18T21:54:05"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -3229,56 +3229,56 @@ msg_connect_union_08からの分岐メッセージ
 
 	<row id="msg_union_battle_01_12_01" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,,,,#80ffff,#80ffff,,#80ffff,#80ffff,,#80ffff,,,#80ffff,,">
 		<comment>シングルを選んだときの表題</comment>
-		<language name="JPN" width="216" line="2">たいせんけいしき：[FF:00:色:1]シングルバトル</language>
-		<language name="JPN_KANJI" width="216" line="2">たいせんけいしき：[FF:00:色:1]シングルバトル</language>
+		<language name="JPN" width="240" line="2">たいせんけいしき：[FF:00:色:2]シングルバトル</language>
+		<language name="JPN_KANJI" width="216" line="2">たいせんけいしき：[FF:00:色:2]シングルバトル</language>
 	</row>
 
 	<row id="msg_union_battle_01_12_02" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,,,,#80ffff,#80ffff,,#80ffff,#80ffff,,#80ffff,,,#80ffff,,">
 		<comment>ダブルを選んだときの表題</comment>
-		<language name="JPN" width="216" line="2">たいせんけいしき：[FF:00:色:2]ダブルバトル</language>
+		<language name="JPN" width="240" line="2">たいせんけいしき：[FF:00:色:2]ダブルバトル</language>
 		<language name="JPN_KANJI" width="216" line="2">たいせんけいしき：[FF:00:色:2]ダブルバトル</language>
 	</row>
 
 	<row id="msg_union_battle_01_12_03" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,,,,#80ffff,#80ffff,,#80ffff,#80ffff,,#80ffff,,,#80ffff,,">
 		<comment>トリプルを選んだときの表題</comment>
-		<language name="JPN" width="216" line="2">たいせんけいしき：[FF:00:色:3]トリプルバトル</language>
-		<language name="JPN_KANJI" width="216" line="2">たいせんけいしき：[FF:00:色:3]トリプルバトル</language>
+		<language name="JPN" width="240" line="2">たいせんけいしき：[FF:00:色:2]トリプルバトル</language>
+		<language name="JPN_KANJI" width="216" line="2">たいせんけいしき：[FF:00:色:2]トリプルバトル</language>
 	</row>
 
 	<row id="msg_union_battle_01_12_04" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,,,,#80ffff,#80ffff,,#80ffff,#80ffff,,#80ffff,,,#80ffff,,">
 		<comment>ローテーションを選んだときの表題</comment>
-		<language name="JPN" width="216" line="2">たいせんけいしき：ローテーションバトル</language>
-		<language name="JPN_KANJI" width="216" line="2">たいせんけいしき：ローテーションバトル</language>
+		<language name="JPN" width="240" line="2">たいせんけいしき：[FF:00:色:2]ローテーションバトル</language>
+		<language name="JPN_KANJI" width="216" line="2">たいせんけいしき：[FF:00:色:2]ローテーションバトル</language>
 	</row>
 
 	<row id="msg_union_battle_01_12_05" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,,,,#80ffff,#80ffff,,#80ffff,#80ffff,,#80ffff,,,#80ffff,,">
 		<comment>マルチバトルを選んだときの表題</comment>
-		<language name="JPN" width="216" line="2">たいせんけいしき：マルチバトル</language>
+		<language name="JPN" width="240" line="2">たいせんけいしき：マルチバトル</language>
 		<language name="JPN_KANJI" width="216" line="2">たいせんけいしき：マルチバトル</language>
 	</row>
 
 	<row id="msg_union_battle_01_12_06" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,,,,#80ffff,#80ffff,,#80ffff,#80ffff,,#80ffff,,,#80ffff,,">
 		<comment>「制限無し」を選んだときの表題</comment>
-		<language name="JPN" width="216" line="2">たいせんルール：せいげんなし</language>
-		<language name="JPN_KANJI" width="216" line="2">たいせんルール：せいげんなし</language>
+		<language name="JPN" width="240" line="2">たいせんルール：[FF:00:色:2]せいげんなし</language>
+		<language name="JPN_KANJI" width="216" line="2">たいせんルール：[FF:00:色:2]せいげんなし</language>
 	</row>
 
 	<row id="msg_union_battle_01_12_07" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,,,,#80ffff,#80ffff,,#80ffff,#80ffff,,#80ffff,,,#80ffff,,">
 		<comment>「フラット」を選んだときの表題</comment>
-		<language name="JPN" width="216" line="2">たいせんルール：フラットルール</language>
-		<language name="JPN_KANJI" width="216" line="2">たいせんルール：フラットルール</language>
+		<language name="JPN" width="240" line="2">たいせんルール：[FF:00:色:2]フラットルール</language>
+		<language name="JPN_KANJI" width="216" line="2">たいせんルール：[FF:00:色:2]フラットルール</language>
 	</row>
 
 	<row id="msg_union_battle_01_12_08" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,,,,#80ffff,#80ffff,,#80ffff,#80ffff,,#80ffff,,,#80ffff,,">
 		<comment>「サポートシューター有」を選んだときの表題</comment>
-		<language name="JPN" width="216" line="2">サポートシューター：あり</language>
-		<language name="JPN_KANJI" width="216" line="2">サポートシューター：あり</language>
+		<language name="JPN" width="240" line="2">サポートシューター：[FF:00:色:2]あり</language>
+		<language name="JPN_KANJI" width="216" line="2">サポートシューター：[FF:00:色:2]あり</language>
 	</row>
 
 	<row id="msg_union_battle_01_12_09" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,,,,#80ffff,#80ffff,,#80ffff,#80ffff,,#80ffff,,,#80ffff,,">
 		<comment>「サポートシューター無」を選んだときの表題</comment>
-		<language name="JPN" width="216" line="2">サポートシューター：なし</language>
-		<language name="JPN_KANJI" width="216" line="2">サポートシューター：なし</language>
+		<language name="JPN" width="240" line="2">サポートシューター：[FF:00:色:2]なし</language>
+		<language name="JPN_KANJI" width="216" line="2">サポートシューター：[FF:00:色:2]なし</language>
 	</row>
 
 	<row id="msg_union_battle_01_13" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#80ffff,,#c0c0c0,#80ffff,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
