@@ -761,6 +761,33 @@ const BOOL APP_TASKMENU_WIN_IsFinish( APP_TASKMENU_WIN_WORK *work )
     return TRUE;
   }
 }
+//----------------------------------------------------------------------------
+/**
+ *	@brief  タッチチェック
+ *
+ *	@param	APP_TASKMENU_WIN_WORK *wk ワーク
+ *
+ *	@return
+ */
+//-----------------------------------------------------------------------------
+const BOOL APP_TASKMENU_WIN_IsTrg( const APP_TASKMENU_WIN_WORK *wk )
+{ 
+  u32 x, y;
+  GFL_RECT  rect;
+
+  GFL_UI_TP_GetPointTrg( &x, &y );
+  rect.left   = GFL_BMPWIN_GetPosX( wk->bmpwin ) * 8;
+  rect.top    = GFL_BMPWIN_GetPosY( wk->bmpwin ) * 8;
+  rect.right  = (rect.left + GFL_BMPWIN_GetSizeX( wk->bmpwin ) ) * 8;
+  rect.bottom = (rect.top + GFL_BMPWIN_GetSizeX( wk->bmpwin ) ) * 8;
+
+	if( ((u32)( x - rect.left) <= (u32)(rect.right - rect.left))
+			&	((u32)( y - rect.top) <= (u32)(rect.bottom - rect.top)))
+	{
+		return TRUE;
+	}
+	return FALSE;
+}
 
 //----------------------------------------------------------------------------
 /**
