@@ -246,6 +246,7 @@ SRCS  +=    $(SOUNDSRC) \
         gamesystem/pm_season.c \
         field/scrcmd_sodateya.c \
 		net/ctvt_beacon.c \
+        system/blink_palanm.c \
 		debug/debug_sd_print.c
 
 
