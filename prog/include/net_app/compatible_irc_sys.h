@@ -28,6 +28,7 @@
 
 #include "net\network_define.h"
 #include "gamesystem/gamesystem.h"
+#include "savedata/irc_compatible_savedata.h"
 
 //=============================================================================
 /**
@@ -40,8 +41,8 @@
 
 #define COMPATIBLE_IRC_SENDATA_CNT		(60)
 
-#define TITLE_STR_SCALE_X	(FX32_CONST(1.0f))
-#define TITLE_STR_SCALE_Y	(FX32_CONST(1.0f))
+#define TITLE_STR_SCALE_X	(FX32_ONE)
+#define TITLE_STR_SCALE_Y	(FX32_ONE)
 
 //-------------------------------------
 ///		タイミング
@@ -70,6 +71,20 @@ typedef enum {
 	COMPATIBLE_SCENE_AURA,
 	COMPATIBLE_SCENE_RESULT,
 } COMPATIBLE_SCENE;
+
+
+//-------------------------------------
+///	相性診断で相互に送るステータス
+//=====================================
+typedef struct 
+{
+  STRCODE name[IRC_COMPATIBLE_SV_DATA_NAME_LEN];
+  u8 barth_month;
+  u8 barth_day;
+  u8 sex;
+  u8 dummy;
+  u32 trainerID;
+} COMPATIBLE_STATUS;
 
 
 //=============================================================================
@@ -120,4 +135,6 @@ extern void COMPATIBLE_MENU_GetMenuData( const COMPATIBLE_IRC_SYS *cp_sys, u32 *
 extern BOOL COMPATIBLE_MENU_SendReturnMenu( COMPATIBLE_IRC_SYS *p_sys );
 extern BOOL COMPATIBLE_MENU_RecvReturnMenu( COMPATIBLE_IRC_SYS *p_sys );
 extern BOOL COMPATIBLE_MENU_SendStatusData( COMPATIBLE_IRC_SYS *p_sys, GAMESYS_WORK *p_gamesys );
-extern void COMPATIBLE_MENU_GetStatusData( const COMPATIBLE_IRC_SYS *cp_sys, MYSTATUS *p_status );
+extern void COMPATIBLE_MENU_GetStatusData( const COMPATIBLE_IRC_SYS *cp_sys, COMPATIBLE_STATUS *p_status );
+
+extern void COMPATIBLE_IRC_GetStatus( const GAMESYS_WORK *cp_gamesys, COMPATIBLE_STATUS *p_status );

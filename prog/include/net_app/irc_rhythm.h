@@ -40,9 +40,10 @@ typedef enum {
 typedef struct {
 	GAMESYS_WORK				*p_gamesys;//[in]ゲームシステム
 	COMPATIBLE_IRC_SYS	*p_irc;	//[in]赤外線システム
-	MYSTATUS						*p_you_status;//[in]通信相手のステータス（バッファを渡してください）
+  COMPATIBLE_STATUS		*p_you_status;//[out]通信相手のステータス（バッファを作って渡してください）
 	IRCRHYTHM_RESULT		result;	//[out]PROCが戻ってきたときの内部進行状況
 	u8									score;	//[out]リズムチェックで得た点数
+  u8                  minus;  //[out]減点
 
 #ifdef DEBUG_IRC_COMPATIBLE_ONLYPLAY
 	BOOL								is_only_play;	//[in]デバッグ時専用、一人プレイモード

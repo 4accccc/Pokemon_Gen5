@@ -2864,7 +2864,6 @@ static void BUTTERFLY_Main( BUTTERFLY_WORK *p_wk )
     Butterfly_SetTarget( p_wk );
   }
 
-
   //‰ñ“]
   { 
     VecFx32 vec_move;
