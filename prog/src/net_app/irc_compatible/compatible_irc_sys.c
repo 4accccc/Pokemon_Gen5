@@ -67,9 +67,9 @@ typedef struct
 	BOOL	is_return;
 	BOOL	is_start_proc;
 	BOOL	is_status_recv;
-	MYSTATUS	*p_send_status;
-	MYSTATUS	*p_my_status;
-	MYSTATUS	*p_you_status;
+	COMPATIBLE_STATUS	*p_send_status;
+	COMPATIBLE_STATUS	*p_my_status;
+	COMPATIBLE_STATUS	*p_you_status;
 } MENUNET_WORK;
 
 //-------------------------------------
@@ -133,7 +133,7 @@ static void MENUNET_GetMenuData( const MENUNET_WORK *cp_wk, u32 *p_ms, u32 *p_se
 static BOOL MENUNET_SendReturnMenu( MENUNET_WORK *p_sys );
 static BOOL MENUNET_RecvReturnMenu( MENUNET_WORK *p_sys );
 static BOOL MENUNET_SendStatusData( MENUNET_WORK *p_wk, GAMESYS_WORK *p_gamesys );
-static void MENUNET_GetStatusData( const MENUNET_WORK *cp_wk, MYSTATUS *p_status );
+static void MENUNET_GetStatusData( const MENUNET_WORK *cp_wk, COMPATIBLE_STATUS *p_status );
 //netrecv
 static void NETRECV_DecideMenu( const int netID, const int size, const void* cp_data, void* p_work, GFL_NETHANDLE* p_net_handle );
 static void NETRECV_RecvMenu( const int netID, const int size, const void* cp_data, void* p_work, GFL_NETHANDLE* p_net_handle );
@@ -1089,7 +1089,7 @@ BOOL COMPATIBLE_MENU_SendStatusData( COMPATIBLE_IRC_SYS *p_sys, GAMESYS_WORK *p_
  *
  */
 //-----------------------------------------------------------------------------
-void COMPATIBLE_MENU_GetStatusData( const COMPATIBLE_IRC_SYS *cp_sys, MYSTATUS *p_status )
+void COMPATIBLE_MENU_GetStatusData( const COMPATIBLE_IRC_SYS *cp_sys, COMPATIBLE_STATUS *p_status )
 {	
 	if( cp_sys->is_only_play )
 	{	
@@ -1098,6 +1098,30 @@ void COMPATIBLE_MENU_GetStatusData( const COMPATIBLE_IRC_SYS *cp_sys, MYSTATUS *
 
 	MENUNET_GetStatusData( &cp_sys->menu, p_status );
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  相性チェック用ステータス作成
+ *
+ *	@param	const GAMESYS_WORK *cp_gamesys  ゲームシステム
+ *	@param	*p_status                       ステータス
+ */
+//-----------------------------------------------------------------------------
+void COMPATIBLE_IRC_GetStatus( const GAMESYS_WORK *cp_gamesys, COMPATIBLE_STATUS *p_status )
+{ 
+  const PLAYER_WORK *cp_player;
+  OSOwnerInfoEx info;
+
+  OS_GetOwnerInfoEx( &info );
+
+  cp_player	= GAMESYSTEM_GetMyPlayerWork( (GAMESYS_WORK *)cp_gamesys );
+  MyStatus_CopyNameStrCode( &cp_player->mystatus, p_status->name, IRC_COMPATIBLE_SV_DATA_NAME_LEN );
+  p_status->sex          = MyStatus_GetMySex(&cp_player->mystatus) == PTL_SEX_MALE;
+  p_status->barth_month  = info.birthday.month;
+  p_status->barth_day    = info.birthday.day;
+  p_status->trainerID    = MyStatus_GetID( &cp_player->mystatus );
+}
+
 //=============================================================================
 /**
  *		network_setup_callback
@@ -1310,12 +1334,12 @@ static void MENUNET_Init( MENUNET_WORK *p_wk, COMPATIBLE_IRC_SYS *p_irc, HEAPID 
 {	
 	GFL_STD_MemClear( p_wk, sizeof(MENUNET_WORK) );
 	p_wk->p_irc	= p_irc;
-	p_wk->p_send_status	= GFL_HEAP_AllocMemory( heapID, MyStatus_GetWorkSize() );
-	GFL_STD_MemClear( p_wk->p_send_status, MyStatus_GetWorkSize() );
-	p_wk->p_my_status	= GFL_HEAP_AllocMemory( heapID, MyStatus_GetWorkSize() );
-	GFL_STD_MemClear( p_wk->p_my_status, MyStatus_GetWorkSize() );
-	p_wk->p_you_status	= GFL_HEAP_AllocMemory( heapID, MyStatus_GetWorkSize() );
-	GFL_STD_MemClear( p_wk->p_you_status, MyStatus_GetWorkSize() );
+	p_wk->p_send_status	= GFL_HEAP_AllocMemory( heapID, sizeof( COMPATIBLE_STATUS ) );
+	GFL_STD_MemClear( p_wk->p_send_status, sizeof( COMPATIBLE_STATUS ) );
+	p_wk->p_my_status	= GFL_HEAP_AllocMemory( heapID, sizeof( COMPATIBLE_STATUS ) );
+	GFL_STD_MemClear( p_wk->p_my_status, sizeof( COMPATIBLE_STATUS ) );
+	p_wk->p_you_status	= GFL_HEAP_AllocMemory( heapID, sizeof( COMPATIBLE_STATUS ) );
+	GFL_STD_MemClear( p_wk->p_you_status, sizeof( COMPATIBLE_STATUS ) );
 
 	COMPATIBLE_IRC_AddCommandTable( p_irc, GFL_NET_CMD_IRCMENU, sc_recv_tbl, NELEMS(sc_recv_tbl), p_wk );
 }
@@ -1514,8 +1538,6 @@ static BOOL MENUNET_SendStatusData( MENUNET_WORK *p_wk, GAMESYS_WORK *p_gamesys 
 	};
 
 	u32 dummy;
-	MYSTATUS *p_status;
-	PLAYER_WORK *p_player;
 
 	switch( p_wk->seq )
 	{	
@@ -1524,8 +1546,7 @@ static BOOL MENUNET_SendStatusData( MENUNET_WORK *p_wk, GAMESYS_WORK *p_gamesys 
 		//データ取得
 		if( p_gamesys )
 		{	
-			p_player	= GAMESYSTEM_GetMyPlayerWork( p_gamesys );
-			p_status	= &p_player->mystatus;
+      COMPATIBLE_IRC_GetStatus( p_gamesys, p_wk->p_send_status );
 		}
 		else
 		{	
@@ -1534,7 +1555,7 @@ static BOOL MENUNET_SendStatusData( MENUNET_WORK *p_wk, GAMESYS_WORK *p_gamesys 
 
 		//送信
 		if(COMPATIBLE_IRC_SendDataEx( p_wk->p_irc, 
-					NETRECV_SEND_STATUS, MyStatus_GetWorkSize(), p_status, 
+					NETRECV_SEND_STATUS, sizeof( COMPATIBLE_STATUS ), p_wk->p_send_status, 
 					GFL_NET_SENDID_ALLUSER, FALSE, FALSE, TRUE ))
 		{
 			OS_TPrintf("メニュー送信開始\n");
@@ -1566,9 +1587,9 @@ static BOOL MENUNET_SendStatusData( MENUNET_WORK *p_wk, GAMESYS_WORK *p_gamesys 
  *
  */
 //-----------------------------------------------------------------------------
-static void MENUNET_GetStatusData( const MENUNET_WORK *cp_wk, MYSTATUS *p_status )
+static void MENUNET_GetStatusData( const MENUNET_WORK *cp_wk, COMPATIBLE_STATUS *p_status )
 {	
-	MyStatus_Copy(cp_wk->p_you_status, p_status);
+  *p_status = *cp_wk->p_you_status;
 }
 
 //=============================================================================

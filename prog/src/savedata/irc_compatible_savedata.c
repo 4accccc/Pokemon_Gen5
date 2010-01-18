@@ -36,7 +36,10 @@ typedef struct
 	STRCODE name[IRC_COMPATIBLE_SV_DATA_NAME_LEN];		// 16
 	u32			score			:7;													//	4	
 	u32			play_cnt	:10;
-	u32			dummy			:15;
+  u32     sex       : 1;
+  u32     birth_month:  4;
+  u32     birth_day :  4;
+	u32			dummy			:6;
 	u32			trainerID;														// 4
 }IRC_COMPATIBLE_RANKING_DATA;
 
@@ -56,7 +59,7 @@ struct _IRC_COMPATIBLE_SAVEDATA
 //=============================================================================
 static u8 Irc_Compatible_SV_InsertRanking( IRC_COMPATIBLE_RANKING_DATA *p_rank, u16 len, const IRC_COMPATIBLE_RANKING_DATA *cp_new );
 static BOOL Irc_Compatible_SV_IsExits( const IRC_COMPATIBLE_RANKING_DATA *cp_rank, u16 len, const IRC_COMPATIBLE_RANKING_DATA *cp_new );
-static void Irc_Compatible_SV_SetData( IRC_COMPATIBLE_RANKING_DATA *p_data, const STRCODE *cp_name, u8 score, u16 play_cnt, u32 trainerID );
+static void Irc_Compatible_SV_SetData( IRC_COMPATIBLE_RANKING_DATA *p_data, const STRCODE *cp_name, u8 score, u16 play_cnt, u8 sex, u8 birth_month, u8 birth_day, u32 trainerID );
 static u16 Irc_Compatible_SV_GetPlayCount( const IRC_COMPATIBLE_RANKING_DATA *cp_rank, u16 len, u32 trainerID );
 static void Irc_Compatible_SV_AddPlayCount( IRC_COMPATIBLE_RANKING_DATA *p_rank, u16 len, const IRC_COMPATIBLE_RANKING_DATA *cp_new );
 //=============================================================================
@@ -153,6 +156,20 @@ u16 IRC_COMPATIBLE_SV_GetPlayCount( const IRC_COMPATIBLE_SAVEDATA *cp_sv, u32 ra
 }
 //----------------------------------------------------------------------------
 /**
+ *	@brief  ランキングに入っている男性の人数を取得
+ *
+ *	@param	const IRC_COMPATIBLE_SAVEDATA *cp_sv  セーブ
+ *
+ *	@return 男性の人数
+ */
+//-----------------------------------------------------------------------------
+u32 IRC_COMPATIBLE_SV_GetSex( const IRC_COMPATIBLE_SAVEDATA *cp_sv, u32 rank )
+{ 
+	GF_ASSERT( rank < IRC_COMPATIBLE_SV_RANKING_MAX );
+	return cp_sv->rank[ rank ].sex;
+}
+//----------------------------------------------------------------------------
+/**
  *	@brief	新規を取得
  *
  *	@param	const IRC_COMPATIBLE_SAVEDATA *cp_sv	セーブ
@@ -164,6 +181,7 @@ u8	IRC_COMPATIBLE_SV_GetNewRank( const IRC_COMPATIBLE_SAVEDATA *cp_sv )
 {	
 	return cp_sv->new_rank;
 }
+
 
 //=============================================================================
 /**
@@ -182,7 +200,7 @@ u8	IRC_COMPATIBLE_SV_GetNewRank( const IRC_COMPATIBLE_SAVEDATA *cp_sv )
  *	@return	順位	or ランキングに入らなかった場合IRC_COMPATIBLE_SV_ADD_NONE
  */
 //-----------------------------------------------------------------------------
-u8 IRC_COMPATIBLE_SV_AddRanking( IRC_COMPATIBLE_SAVEDATA *p_sv, const STRCODE *cp_name, u8 score, u32 trainerID )
+u8 IRC_COMPATIBLE_SV_AddRanking( IRC_COMPATIBLE_SAVEDATA *p_sv, const STRCODE *cp_name, u8 score, u8 sex, u8 birth_month, u8 birth_day, u32 trainerID )
 {	
 	IRC_COMPATIBLE_RANKING_DATA	new_data;
 	u16 play_cnt;
@@ -191,7 +209,7 @@ u8 IRC_COMPATIBLE_SV_AddRanking( IRC_COMPATIBLE_SAVEDATA *p_sv, const STRCODE *c
 	play_cnt	= Irc_Compatible_SV_GetPlayCount( p_sv->rank, IRC_COMPATIBLE_SV_RANKING_MAX, trainerID );
 
 	//データ作成
-	Irc_Compatible_SV_SetData( &new_data, cp_name, score, play_cnt, trainerID );
+	Irc_Compatible_SV_SetData( &new_data, cp_name, score, play_cnt, sex, birth_month, birth_day, trainerID );
 
 	//データ挿入
 	p_sv->new_rank	= Irc_Compatible_SV_InsertRanking( p_sv->rank, IRC_COMPATIBLE_SV_RANKING_MAX, &new_data );
@@ -323,11 +341,12 @@ static BOOL Irc_Compatible_SV_IsExits( const IRC_COMPATIBLE_RANKING_DATA *cp_ran
  *	@param	IRC_COMPATIBLE_SAVEDATA *p_data	ワーク
  *	@param	STRCODE *cp_name								名前
  *	@param	score														得点
+ *	@param  sex                             性別  1が男 0が女
  *	@param	trainerID												ID
  *
  */
 //-----------------------------------------------------------------------------
-static void Irc_Compatible_SV_SetData( IRC_COMPATIBLE_RANKING_DATA *p_data, const STRCODE *cp_name, u8 score, u16 play_cnt, u32 trainerID )
+static void Irc_Compatible_SV_SetData( IRC_COMPATIBLE_RANKING_DATA *p_data, const STRCODE *cp_name, u8 score, u16 play_cnt, u8 sex, u8 birth_month, u8 birth_day, u32 trainerID )
 {	
 	GF_ASSERT( score <= IRC_COMPATIBLE_SV_DATA_SCORE_MAX );
 
@@ -335,9 +354,12 @@ static void Irc_Compatible_SV_SetData( IRC_COMPATIBLE_RANKING_DATA *p_data, cons
 	GFL_STD_MemClear( p_data, sizeof(IRC_COMPATIBLE_RANKING_DATA) );
 	//初期化
   STRTOOL_Copy( cp_name, p_data->name, IRC_COMPATIBLE_SV_DATA_NAME_LEN );
-	p_data->score			= score;
-	p_data->trainerID	= trainerID;
-	p_data->play_cnt	= play_cnt;
+	p_data->score			  = score;
+	p_data->trainerID	  = trainerID;
+  p_data->sex         = sex;
+  p_data->birth_month = birth_month;
+  p_data->birth_day   = birth_day;
+	p_data->play_cnt	  = play_cnt;
 }
 
 //----------------------------------------------------------------------------

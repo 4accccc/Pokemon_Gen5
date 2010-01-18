@@ -88,11 +88,12 @@ struct _IRC_COMPATIBLE_MAIN_WORK
 	IRCAURA_RESULT			aura_result;
 	IRCRHYTHM_RESULT		rhythm_result;
 	u8									rhythm_score;
+	u8									rhythm_minus;
 	u8									aura_score;
-	u8									dummy2[3];
+  u8                  aura_minus;
 	BOOL								is_init;
 	BOOL								is_ranking_ret;
-	MYSTATUS						*p_you_status;
+	COMPATIBLE_STATUS	  *p_you_status;
 
 };
 
@@ -134,9 +135,10 @@ static void SUBPROC_FREE_Result( void *p_param_adrs, void *p_wk_adrs );
 static void *SUBPROC_ALLOC_Ranking( HEAPID heapID, void *p_wk_adrs );
 static void SUBPROC_FREE_Ranking( void *p_param_adrs, void *p_wk_adrs );
 //RULE
-static u32 RULE_CalcScore( u32 rhythm_score, u32 aura_score, const MYSTATUS *cp_my_status, const MYSTATUS *cp_you_status, HEAPID heapID );
-static u32 RULE_CalcNameScore( const STRBUF	*cp_player1_name, const STRBUF	*cp_player2_name );
+static u32 RULE_CalcScore( u32 rhythm_score, u32 aura_score, u32 rhythm_minus, u32 aura_minus, const COMPATIBLE_STATUS *cp_my_status, const COMPATIBLE_STATUS *cp_you_status, HEAPID heapID );
+static u32 RULE_CalcNameScore( const STRCODE	*cp_player1_name, const STRCODE	*cp_player2_name );
 static u32 MATH_GetMostOnebit( u32 x, u8 bit );
+static u32 RULE_CalcBioRhythm( const COMPATIBLE_STATUS *cp_status );
 //=============================================================================
 /**
  *					データ
@@ -248,8 +250,8 @@ static GFL_PROC_RESULT IRC_COMPATIBLE_PROC_Init( GFL_PROC *p_proc, int *p_seq, v
 	p_wk->p_param	= p_param;
 
 	//通信相手データ用バッファ作成
-	p_wk->p_you_status	= GFL_HEAP_AllocMemory( HEAPID_IRCCOMPATIBLE_SYSTEM, MyStatus_GetWorkSize() );
-	GFL_STD_MemClear( p_wk->p_you_status, MyStatus_GetWorkSize() );
+	p_wk->p_you_status	= GFL_HEAP_AllocMemory( HEAPID_IRCCOMPATIBLE_SYSTEM, sizeof(COMPATIBLE_STATUS) );
+	GFL_STD_MemClear( p_wk->p_you_status, sizeof(COMPATIBLE_STATUS) );
 
 	//モジュール作成
 	SUBPROC_Init( &p_wk->subproc, HEAPID_IRCCOMPATIBLE_SYSTEM );
@@ -903,6 +905,7 @@ static void SUBPROC_FREE_Aura( void *p_param_adrs, void *p_wk_adrs )
 
 	p_wk->aura_result	= p_param->result;
 	p_wk->aura_score	= p_param->score;
+  p_wk->aura_minus  = p_param->minus;
 
 	GFL_HEAP_FreeMemory( p_param );
 }
@@ -954,6 +957,7 @@ static void SUBPROC_FREE_Rhythm( void *p_param_adrs, void *p_wk_adrs )
 
 	p_wk->rhythm_result	= p_param->result;
 	p_wk->rhythm_score	= p_param->score;
+  p_wk->rhythm_minus  = p_param->minus;
 
 	GFL_HEAP_FreeMemory( p_param );
 }
@@ -1004,14 +1008,13 @@ static void *SUBPROC_ALLOC_Result( HEAPID heapID, void *p_wk_adrs )
 
 	//得点計算
 	{	
-		PLAYER_WORK *p_player;
-		MYSTATUS *p_my_status;
-		p_player	= GAMESYSTEM_GetMyPlayerWork( p_wk->p_param->p_gamesys );
-		p_my_status	= &p_player->mystatus;
-
 		if( p_wk->rhythm_score != 0 && p_wk->aura_score != 0 )
 		{	
-			p_param->score			= RULE_CalcScore( p_wk->rhythm_score, p_wk->aura_score, p_my_status, p_wk->p_you_status, HEAPID_IRCCOMPATIBLE_SYSTEM );
+      COMPATIBLE_STATUS my_status;
+      COMPATIBLE_IRC_GetStatus( p_wk->p_param->p_gamesys, &my_status );
+			p_param->score			= RULE_CalcScore( p_wk->rhythm_score, p_wk->aura_score,
+          p_wk->rhythm_minus, p_wk->aura_minus, &my_status, p_wk->p_you_status,
+          HEAPID_IRCCOMPATIBLE_SYSTEM );
 		}
 	}
 
@@ -1091,6 +1094,8 @@ static void SUBPROC_FREE_Ranking( void *p_param_adrs, void *p_wk_adrs )
  *
  *	@param	u32 rhythm_score				リズムチェックのスコア
  *	@param	aura_score							オーラチェックのスコア
+ *	@param	u32 rhythm_minus				リズムチェックの減点
+ *	@param	aura_minus							オーラチェックの減点
  *	@param	MYSTATUS *cp_my_status	運命値のために必要な情報
  *	@param	MYSTATUS *cp_you_status	運命値のために必要な情報
  *	@param	heapID 
@@ -1098,42 +1103,41 @@ static void SUBPROC_FREE_Ranking( void *p_param_adrs, void *p_wk_adrs )
  *	@return	スコア
  */
 //-----------------------------------------------------------------------------
-static u32 RULE_CalcScore( u32 rhythm_score, u32 aura_score, const MYSTATUS *cp_my_status, const MYSTATUS *cp_you_status, HEAPID heapID )
+static u32 RULE_CalcScore( u32 rhythm_score, u32 aura_score, u32 rhythm_minus, u32 aura_minus, const COMPATIBLE_STATUS *cp_my_status, const COMPATIBLE_STATUS *cp_you_status, HEAPID heapID )
 {	
-	u32	name_score;
-	u32 score;
+  u32 bio;
+	s32 score;
+  u32	add;
 
 	//プレイヤーの名前から運命値を算出
+
+  //バイオリズム
+  bio = (RULE_CalcBioRhythm( cp_my_status ) + RULE_CalcBioRhythm( cp_you_status )) / 2;
+
+  //総合点
+	score	= (rhythm_score * 50/100) + (aura_score * 40/100) + (bio*10/100);
+
+	//運命値計算（ゲタの部分）
 	{	
-		STRBUF	*p_myname;
-		STRBUF	*p_youname;
-		p_myname	= MyStatus_CreateNameString( cp_my_status, heapID );
-		p_youname	= MyStatus_CreateNameString( cp_you_status, heapID );
-
-		name_score	= RULE_CalcNameScore( p_myname, p_youname );
-
-		GFL_STR_DeleteBuffer( p_youname );
-		GFL_STR_DeleteBuffer( p_myname );
-	}
-
-#if 0
-	score	= rhythm_score*40 + aura_score*40 + name_score*20;
-	score	= score/100;
-	score	= MATH_CLAMP( score, 0, 100 );
-#else
-	score	= (rhythm_score + aura_score)/2;
-	//運命値計算
-	{	
-		u32		add;
 		fx32	rate;
 
+    u32	name_score;
+    name_score	= RULE_CalcNameScore( cp_my_status->name, cp_you_status->name );
 		rate	= FX32_CONST(name_score) / 150;
 		rate	= MATH_CLAMP( rate , FX32_CONST(0.2F), FX32_CONST(0.8F) );
 
 		add	= ((100-score) * rate) >> FX32_SHIFT;
-		score	+= add;
 	}
-#endif
+  score	+= add;
+
+  //最後に減点
+  score -= ( aura_minus + rhythm_minus );
+  score = MATH_CLAMP( score, 0, 100 );
+
+  OS_TPrintf( "▲相性最終計算▲ %d\n", score );
+  OS_TPrintf( "リズム点 %d 減点 -%d\n", rhythm_score, rhythm_minus );
+  OS_TPrintf( "オーラ点 %d 減点 -%d\n", aura_score, aura_minus );
+  OS_TPrintf( "バイオ %d ゲタ %d\n", bio, add );
 
 	return score;
 }
@@ -1147,7 +1151,7 @@ static u32 RULE_CalcScore( u32 rhythm_score, u32 aura_score, const MYSTATUS *cp_
  *	@return	スコア
  */
 //-----------------------------------------------------------------------------
-static u32 RULE_CalcNameScore( const STRBUF	*cp_player1_name, const STRBUF	*cp_player2_name )
+static u32 RULE_CalcNameScore( const STRCODE	*cp_player1_name, const STRCODE	*cp_player2_name )
 {	
 	enum
 	{	
@@ -1167,26 +1171,42 @@ static u32 RULE_CalcNameScore( const STRBUF	*cp_player1_name, const STRBUF	*cp_p
 	u32 ans_max;
 	u32 score;
 
-	cp_p1	= GFL_STR_GetStringCodePointer( cp_player1_name );
-	cp_p2	= GFL_STR_GetStringCodePointer( cp_player2_name );
+	cp_p1	= cp_player1_name;
+	cp_p2	= cp_player2_name;
 	num1	= *cp_p1;
 	num2	= *cp_p2;
-	bit1	= MATH_GetMostOnebit( *cp_p1, BIT_NUM );
-	bit2	= MATH_GetMostOnebit( *cp_p2, BIT_NUM );
+  if( 0x30A1 <= num1 && num1 <= 0x30F4 )
+  { 
+    num1  -= 0x60;
+  }
+  if( 0x30A1 <= num2 && num2 <= 0x30F4 )
+  { 
+    num2  -= 0x60;
+  }
+	bit1	= MATH_GetMostOnebit( num1, BIT_NUM );
+	bit2	= MATH_GetMostOnebit( num2, BIT_NUM );
 
 	ans_max	= 0;
 	ans_cnt	= 0;
 	while( 1 )
 	{
-	 OS_Printf( "num1%d bit1%d num2%d bit2%d\n", *cp_p1, bit1, *cp_p2, bit2 );
+	 OS_Printf( "num1 0x%x bit1%d num2 0x%x bit2%d\n", num1, bit1, num2, bit2 );
 	 if( bit1 == 0 )
 	 {	
 		cp_p1++;
 		num1	= *cp_p1;
+
 		if( num1 == GFL_STR_GetEOMCode() )
 		{	
 			break;
 		}
+    //カタ→かな変換
+    if( 0x30A1 <= num1 && num1 <= 0x30F4 )
+    { 
+      num1  -= 0x60;
+    }
+
+
 		bit1	= MATH_GetMostOnebit( num1, BIT_NUM );
 	 }
 	 if( bit2 == 0 )
@@ -1197,28 +1217,39 @@ static u32 RULE_CalcNameScore( const STRBUF	*cp_player1_name, const STRBUF	*cp_p
 		{	
 			break;
 		}
+    //カタ→かな変換
+    if( 0x30A1 <= num2 && num2 <= 0x30F4 )
+    { 
+      num2  -= 0x60;
+    }
+
  		bit2	= MATH_GetMostOnebit( num2, BIT_NUM );
 	 }
 
-	 b1	= ((num1) >> bit1) & 0x1;
-	 b2	= ((num2) >> bit2) & 0x1;
+   if( bit1 != 0 && bit2 != 0 )
+   { 
 
-	 //bitの一致率をチェック
-	 if( b1 == b2 )
-	 {	
-			ans_cnt++;
-	 }
-	 ans_max++;
+     b1	= ((num1) >> bit1) & 0x1;
+     b2	= ((num2) >> bit2) & 0x1;
 
-	 //ビットを減らす
-	 bit1--;
-	 bit2--;
+     //bitの一致率をチェック
+     if( b1 == b2 )
+     {	
+       ans_cnt++;
+     }
+     ans_max++;
+
+     //ビットを減らす
+     bit1--;
+     bit2--;
+   }
 	}
 	
 	score	= 100*ans_cnt/ans_max;
-	OS_Printf( "全体のビット%d 一致%d 点数\n", ans_max, ans_cnt, score );
+	OS_Printf( "全体のビット%d 一致%d 点数%d \n", ans_max, ans_cnt, score );
 
 	return score;
+
 }
 
 //----------------------------------------------------------------------------
@@ -1243,4 +1274,57 @@ static u32 MATH_GetMostOnebit( u32 x, u8 bit )
 	}
 
 	return i;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  バイオリズムを計算
+ *
+ *	@param	const COMPATIBLE_STATUS *cp_status  ステータス
+ *
+ *	@return
+ */
+//-----------------------------------------------------------------------------
+#include "system/rtc_tool.h"
+static u32 RULE_CalcBioRhythm( const COMPATIBLE_STATUS *cp_status )
+{ 
+  enum
+  { 
+    BIORHYTHM_CYCLE = 30,  //周期
+  };
+
+
+  u32 days;
+  u32 now_days; //今日の日付を日数に
+  u32 days_diff;
+  fx32 sin;
+  u32 bio;
+
+  //今日までの総日数を計算（年が取れないので、一年だけとする）
+  { 
+    RTCDate date;
+    GFL_RTC_GetDate( &date );
+    now_days  = GFL_RTC_GetDaysOffset(&date);
+
+    date.month  = cp_status->barth_month;
+    date.day    = cp_status->barth_day;
+    days        = GFL_RTC_GetDaysOffset(&date);
+  }
+
+  //誕生日から今日まで何日かかっているか
+  if( now_days >= days  )
+  { 
+    days  += 365;
+  }
+  days_diff = days  - now_days;
+
+  days_diff %= BIORHYTHM_CYCLE;
+
+  sin = FX_SinIdx( 0xFFFF * days_diff / BIORHYTHM_CYCLE );
+
+  bio = ((sin + FX32_ONE) * 50 ) >> FX32_SHIFT;
+
+
+  OS_TFPrintf( 3, "バイオリズム %d 誕生経過%d 現在%d,差%d\n", bio, days, now_days, days_diff );
+
+  return bio;
 }

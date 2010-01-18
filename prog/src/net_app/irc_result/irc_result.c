@@ -160,10 +160,10 @@ enum
 #define	MSGWND_SUB_W	(30)
 #define	MSGWND_SUB_H	(5)
 
-#define	MSGWND_TITLE_X	(9)
-#define	MSGWND_TITLE_Y	(4)
-#define	MSGWND_TITLE_W	(14)
-#define	MSGWND_TITLE_H	(2)
+#define	MSGWND_TITLE_X	(6)
+#define	MSGWND_TITLE_Y	(3)
+#define	MSGWND_TITLE_W	(20)
+#define	MSGWND_TITLE_H	(5)
 //-------------------------------------
 ///	数
 //=====================================
@@ -505,7 +505,7 @@ static void MSGWND_Print( MSGWND_WORK* p_wk,
 static void MSGWND_PrintCenter( MSGWND_WORK* p_wk, const MSG_WORK *cp_msg, u32 strID );
 static void MSGWND_PrintNumber( MSGWND_WORK* p_wk, const MSG_WORK *cp_msg, 
 		u32 strID, u16 number, u16 buff_id );
-static void MSGWND_PrintBothNameCenter( MSGWND_WORK* p_wk, const MSG_WORK *cp_msg, u32 strID, const MYSTATUS *cp_my, const MYSTATUS *cp_you );
+static void MSGWND_PrintBothNameCenter( MSGWND_WORK* p_wk, const MSG_WORK *cp_msg, u32 strID, const COMPATIBLE_STATUS *cp_my, const COMPATIBLE_STATUS *cp_you, HEAPID heapID );
 static void MSGWND_Clear( MSGWND_WORK* p_wk );
 //SEQ
 static void SEQ_Change( RESULT_MAIN_WORK *p_wk, SEQ_FUNCTION	seq_function );
@@ -543,8 +543,14 @@ typedef enum
 { 
   SCORE_RANK_BEST,
   SCORE_RANK_HIGHT,
-  SCORE_RANK_LOW,
-  SCORE_RANK_BAD,
+  SCORE_RANK_LOW_00,
+  SCORE_RANK_LOW_01,
+  SCORE_RANK_LOW_02,
+  SCORE_RANK_LOW_03,
+  SCORE_RANK_LOW_04,
+  SCORE_RANK_WORST,
+
+  SCORE_RANK_MAX
 }SCORE_RANK;
 static SCORE_RANK UTIL_GetScoreRank( u8 score );
 
@@ -619,21 +625,21 @@ static const GFL_BG_BGCNT_HEADER sc_bgcnt_data[ GRAPHIC_BG_FRAME_MAX ] =
 	{
 		0, 0, 0x800, 0,
 		GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-		GX_BG_SCRBASE_0x0800, GX_BG_CHARBASE_0x08000, GFL_BG_CHRSIZ_256x256,
+		GX_BG_SCRBASE_0x0800, GX_BG_CHARBASE_0x0c000, GFL_BG_CHRSIZ_256x256,
 		GX_BG_EXTPLTT_01, 2, 0, 0, FALSE
 	},
 	// GRAPHIC_BG_FRAME_M_BACK
 	{
 		0, 0, 0x800, 0,
 		GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-		GX_BG_SCRBASE_0x1000, GX_BG_CHARBASE_0x0c000, GFL_BG_CHRSIZ_256x256,
+		GX_BG_SCRBASE_0x1000, GX_BG_CHARBASE_0x10000, GFL_BG_CHRSIZ_256x256,
 		GX_BG_EXTPLTT_01, 3, 0, 0, FALSE
 	},
 	// GRAPHIC_BG_FRAME_M_HEART
 	{
 		0, 0, 0x0800, 0,
 		GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_256,
-		GX_BG_SCRBASE_0x1800, GX_BG_CHARBASE_0x10000, GFL_BG_CHRSIZ_256x256,
+		GX_BG_SCRBASE_0x1800, GX_BG_CHARBASE_0x14000, GFL_BG_CHRSIZ_256x256,
 		GX_BG_EXTPLTT_01, 1, 0, 0, FALSE
 	},
 	// GRAPHIC_BG_FRAME_S_ROGO
@@ -718,7 +724,7 @@ static GFL_PROC_RESULT IRC_RESULT_PROC_Init( GFL_PROC *p_proc, int *p_seq, void 
 
 	//タイトル文字列作成
 	MSGWND_InitEx( &p_wk->msgtitle, sc_bgcnt_frame[GRAPHIC_BG_FRAME_S_TITLE],
-			MSGWND_TITLE_X, MSGWND_TITLE_Y, MSGWND_TITLE_W, MSGWND_TITLE_H, RESULT_BG_PAL_S_08, RESULT_BG_PAL_S_08*0x10+0xf, GFL_BMP_CHRAREA_GET_B, HEAPID_IRCRESULT );
+			MSGWND_TITLE_X, MSGWND_TITLE_Y, MSGWND_TITLE_W, MSGWND_TITLE_H, RESULT_BG_PAL_S_08, 1, GFL_BMP_CHRAREA_GET_B, HEAPID_IRCRESULT );
 	MSGWND_PrintCenter( &p_wk->msgtitle, &p_wk->msg, RESULT_TITLE_000 );
 	GFL_BG_SetScaleReq( sc_bgcnt_frame[GRAPHIC_BG_FRAME_S_TITLE], GFL_BG_SCALE_X_SET, TITLE_STR_SCALE_X );
 	GFL_BG_SetScaleReq( sc_bgcnt_frame[GRAPHIC_BG_FRAME_S_TITLE], GFL_BG_SCALE_Y_SET, TITLE_STR_SCALE_Y );
@@ -734,18 +740,17 @@ static GFL_PROC_RESULT IRC_RESULT_PROC_Init( GFL_PROC *p_proc, int *p_seq, void 
 	//初期メッセージ
 	if( p_wk->p_param->p_gamesys )
 	{	
-		PLAYER_WORK *p_player;
-		MYSTATUS *p_status;
-		p_player	= GAMESYSTEM_GetMyPlayerWork( p_wk->p_param->p_gamesys );
-		p_status	= &p_player->mystatus;
+    COMPATIBLE_STATUS my_status;
+    COMPATIBLE_IRC_GetStatus( p_wk->p_param->p_gamesys, &my_status );
+
 		MSGWND_PrintBothNameCenter( &p_wk->msgwnd[MSGWNDID_SUB], &p_wk->msg, 
-				RESULT_STR_000, p_status, p_wk->p_param->p_you_status );
+				RESULT_STR_000, &my_status, p_wk->p_param->p_you_status, HEAPID_IRCRESULT );
 	}
 
 	//APPBAR
 	{	
 		GFL_CLUNIT	*p_unit	= GRAPHIC_GetClunit( &p_wk->grp );
-		p_wk->p_appbar	= APPBAR_Init( APPBAR_OPTION_MASK_RETURN, p_unit, sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_INFOWIN], RESULT_BG_PAL_M_13, RESULT_OBJ_PAL_M_13, APP_COMMON_MAPPING_128K, HEAPID_IRCRESULT );
+		p_wk->p_appbar	= APPBAR_Init( APPBAR_OPTION_MASK_RETURN, p_unit, sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_INFOWIN], RESULT_BG_PAL_M_13, RESULT_OBJ_PAL_M_13, APP_COMMON_MAPPING_128K, MSG_GetFont(&p_wk->msg ), MSG_GetPrintQue(&p_wk->msg ), HEAPID_IRCRESULT );
 	}
 
 	//SCALEBG
@@ -1757,7 +1762,7 @@ static void MSGWND_PrintNumber( MSGWND_WORK* p_wk, const MSG_WORK *cp_msg, u32 s
  *	@param	cp_status					プレイヤーの状態
  */
 //-----------------------------------------------------------------------------
-static void MSGWND_PrintBothNameCenter( MSGWND_WORK* p_wk, const MSG_WORK *cp_msg, u32 strID, const MYSTATUS *cp_my, const MYSTATUS *cp_you )
+static void MSGWND_PrintBothNameCenter( MSGWND_WORK* p_wk, const MSG_WORK *cp_msg, u32 strID, const COMPATIBLE_STATUS *cp_my, const COMPATIBLE_STATUS *cp_you, HEAPID heapID )
 {	
 	const GFL_MSGDATA* cp_msgdata;
 	WORDSET *p_wordset;
@@ -1770,9 +1775,22 @@ static void MSGWND_PrintBothNameCenter( MSGWND_WORK* p_wk, const MSG_WORK *cp_ms
 	p_wordset		= MSG_GetWordSet( cp_msg );
 	cp_msgdata	= MSG_GetMsgDataConst( cp_msg );
 
-	//数値をワードセットに登録
-	WORDSET_RegisterPlayerName( p_wordset, 0, cp_you );
-	WORDSET_RegisterPlayerName( p_wordset, 1, cp_my );
+  //ワードセットに登録
+  { 
+    STRBUF  *p_name = GFL_STR_CreateBuffer( IRC_COMPATIBLE_SV_DATA_NAME_LEN, heapID );
+    GFL_STR_SetStringCodeOrderLength( p_name, cp_you->name, IRC_COMPATIBLE_SV_DATA_NAME_LEN );
+
+    WORDSET_RegisterWord( p_wordset, 0, p_name, cp_you->sex == 1 ? PTL_SEX_MALE : PTL_SEX_FEMALE, TRUE, PM_LANG );
+    GFL_STR_DeleteBuffer( p_name );
+  }
+  //ワードセットに登録
+  { 
+    STRBUF  *p_name = GFL_STR_CreateBuffer( IRC_COMPATIBLE_SV_DATA_NAME_LEN, heapID );
+    GFL_STR_SetStringCodeOrderLength( p_name, cp_my->name, IRC_COMPATIBLE_SV_DATA_NAME_LEN );
+
+    WORDSET_RegisterWord( p_wordset, 0, p_name, cp_my->sex == 1 ? PTL_SEX_MALE : PTL_SEX_FEMALE, TRUE, PM_LANG );
+    GFL_STR_DeleteBuffer( p_name );
+  }
 
 	//元の文字列に数値を適用
 	{	
@@ -1868,7 +1886,6 @@ static void SEQFUNC_StartGame( RESULT_MAIN_WORK *p_wk, u16 *p_seq )
 {	
 	IRC_COMPATIBLE_SAVEDATA *p_sv;
 	u8 score				= p_wk->p_param->score;
-	MYSTATUS *p_you;
 	
 	if( p_wk->p_param->is_only_play )
 	{	
@@ -1880,12 +1897,14 @@ static void SEQFUNC_StartGame( RESULT_MAIN_WORK *p_wk, u16 *p_seq )
 
 	if( p_wk->p_param->p_you_status )
 	{	
+    COMPATIBLE_STATUS *p_you;
 
 		p_sv	= IRC_COMPATIBLE_SV_GetSavedata( SaveControl_GetPointer() );
 		p_you	= p_wk->p_param->p_you_status;
 
 		//セーブする
-		IRC_COMPATIBLE_SV_AddRanking( p_sv, MyStatus_GetMyName(p_you), score, MyStatus_GetID(p_you) );
+		IRC_COMPATIBLE_SV_AddRanking( p_sv, p_you->name,
+        score, p_you->sex, p_you->barth_month, p_you->barth_day, p_you->trainerID );
 	}
 
 	BACKOBJ_StartGather( &p_wk->backobj[BACKOBJ_SYS_MAIN], FALSE );
@@ -2020,10 +2039,15 @@ static void SEQFUNC_DecideScore( RESULT_MAIN_WORK *p_wk, u16 *p_seq )
       case SCORE_RANK_HIGHT:
         PMSND_PlayBGM( SEQ_ME_AISHOU_M );
         break;
-      case SCORE_RANK_LOW:
+      case SCORE_RANK_LOW_00:
+      case SCORE_RANK_LOW_01:
+      case SCORE_RANK_LOW_02:
+      case SCORE_RANK_LOW_03:
+      case SCORE_RANK_LOW_04:
         PMSND_PlayBGM( SEQ_ME_AISHOU_L );
         break;
-      case SCORE_RANK_BAD:
+      case SCORE_RANK_WORST:
+        PMSND_PlayBGM( SEQ_ME_AISHOU_L );
         break;
       }
       *p_seq		= SEQ_END_WAIT;
@@ -2305,6 +2329,29 @@ static void ObjNumber_SetNumber( OBJNUMBER_WORK *p_wk, int number )
 //-----------------------------------------------------------------------------
 static void SCALEBG_Init( SCALEBG_WORK *p_wk, u16 frm, fx32 min, fx32 max, u8 score, HEAPID heapID )
 {	
+  static const u16 sc_bg_cgr_tbl[SCORE_RANK_MAX] =
+  { 
+    NARC_irccompatible_gra_result_bg_03_NCGR,
+    NARC_irccompatible_gra_result_bg_04_NCGR,
+    NARC_irccompatible_gra_result_bg_05_NCGR,
+    NARC_irccompatible_gra_result_bg_07_NCGR,
+    NARC_irccompatible_gra_result_bg_08_NCGR,
+    NARC_irccompatible_gra_result_bg_09_NCGR,
+    NARC_irccompatible_gra_result_bg_10_NCGR,
+    NARC_irccompatible_gra_result_bg_06_NCGR,
+  };
+  static const u16 sc_bg_scr_tbl[SCORE_RANK_MAX] =
+  { 
+    NARC_irccompatible_gra_result_bg_03_NSCR,
+    NARC_irccompatible_gra_result_bg_04_NSCR,
+    NARC_irccompatible_gra_result_bg_05_NSCR,
+    NARC_irccompatible_gra_result_bg_07_NSCR,
+    NARC_irccompatible_gra_result_bg_08_NSCR,
+    NARC_irccompatible_gra_result_bg_09_NSCR,
+    NARC_irccompatible_gra_result_bg_10_NSCR,
+    NARC_irccompatible_gra_result_bg_06_NSCR,
+  };
+
 	GFL_STD_MemClear( p_wk, sizeof(SCALEBG_WORK) );
 	p_wk->frm	= frm;
 	p_wk->min	= min;
@@ -2312,41 +2359,15 @@ static void SCALEBG_Init( SCALEBG_WORK *p_wk, u16 frm, fx32 min, fx32 max, u8 sc
 
 
 	{	
+    u32 idx;
 		ARCHANDLE	*p_handle	= GFL_ARC_OpenDataHandle( ARCID_IRCCOMPATIBLE, heapID );
 	
-		switch( UTIL_GetScoreRank(score) )
-		{	
-    case SCORE_RANK_BEST:
-			//読み込み
-			GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_irccompatible_gra_result_bg_03_NCGR,
-					sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_HEART], 0, 0, FALSE, heapID );
-			GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_irccompatible_gra_result_bg_03_NSCR,
-					sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_HEART], 0, 0, FALSE, heapID );	
-      break;
-
-    case SCORE_RANK_HIGHT:
-			//読み込み
-			GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_irccompatible_gra_result_bg_04_NCGR,
-					sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_HEART], 0, 0, FALSE, heapID );
-			GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_irccompatible_gra_result_bg_04_NSCR,
-					sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_HEART], 0, 0, FALSE, heapID );	
-
-    case SCORE_RANK_LOW:
-			//読み込み
-			GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_irccompatible_gra_result_bg_05_NCGR,
-					sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_HEART], 0, 0, FALSE, heapID );
-			GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_irccompatible_gra_result_bg_05_NSCR,
-					sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_HEART], 0, 0, FALSE, heapID );	
-      break;
-
-    case SCORE_RANK_BAD:
-			//読み込み
-			GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_irccompatible_gra_result_bg_06_NCGR,
-					sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_HEART], 0, 0, FALSE, heapID );
-			GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_irccompatible_gra_result_bg_06_NSCR,
-					sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_HEART], 0, 0, FALSE, heapID );	
-		}
-
+		idx = UTIL_GetScoreRank(score);
+    //読み込み
+    GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, sc_bg_cgr_tbl[ idx ],
+        sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_HEART], 0, 0, FALSE, heapID );
+    GFL_ARCHDL_UTIL_TransVramScreen( p_handle, sc_bg_scr_tbl[ idx ],
+        sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_HEART], 0, 0, FALSE, heapID );	
 	
 		GFL_ARC_CloseDataHandle( p_handle );
 	}
@@ -2630,17 +2651,37 @@ static SCORE_RANK UTIL_GetScoreRank( u8 score )
   { 
     return SCORE_RANK_BEST;
   }
-  else if( 90 <= score && score < 100 )
+  else if( 90 <= score )
   { 
     return SCORE_RANK_HIGHT;
   }
+  else if( 80 <= score )
+  { 
+    return SCORE_RANK_LOW_00;
+  }
+  else if( 65 <= score )
+  { 
+    return SCORE_RANK_LOW_01;
+  }
+  else if( 40 <= score )
+  { 
+    return SCORE_RANK_LOW_02;
+  }
+  else if( 30 <= score )
+  { 
+    return SCORE_RANK_LOW_03;
+  }
+  else if( 0 < score )
+  { 
+    return SCORE_RANK_LOW_04;
+  }
   else if( 0 == score )
   { 
-    return SCORE_RANK_BAD;
+    return SCORE_RANK_WORST;
   }
   else 
   { 
-    return SCORE_RANK_LOW;
+    return SCORE_RANK_LOW_02;
   }
 }
 

@@ -389,6 +389,9 @@ static const LIST_SETUP_TBL sc_list_data_home[]	=
 		L"運命値チェック", LISTDATA_SEQ_PROC_NAME_DEBUG,
 	},
 	{	
+		L"ランクデータフル",	LISTDATA_SEQ_RANKDATA_FULL,
+	},
+	{	
 		L"ポケモン２Dチェック", LISTDATA_SEQ_PROC_POKE2DCHECK,
 	},
 	{	
@@ -984,6 +987,51 @@ static void LISTDATA_CallProcNamin( DEBUG_NAGI_MAIN_WORK *p_wk )
 {	
 	DEBUG_NAGI_COMMAND_CallProc( p_wk, FS_OVERLAY_ID(namein), &NameInputProcData, p_wk->p_namein_param );
 }
+
+#include "system/rtc_tool.h"
+static u32 RULE_CalcBioRhythm( const COMPATIBLE_STATUS *cp_status )
+{ 
+  enum
+  { 
+    BIORHYTHM_CYCLE = 30,  //周期
+  };
+
+
+  u32 days;
+  u32 now_days; //今日の日付を日数に
+  u32 days_diff;
+  fx32 sin;
+  u32 bio;
+
+  //今日までの総日数を計算（年が取れないので、一年だけとする）
+  { 
+    RTCDate date;
+    GFL_RTC_GetDate( &date );
+    now_days  = GFL_RTC_GetDaysOffset(&date);
+
+    date.month  = cp_status->barth_month;
+    date.day    = cp_status->barth_day;
+    days        = GFL_RTC_GetDaysOffset(&date);
+  }
+
+  //誕生日から今日まで何日かかっているか
+  if( now_days >= days  )
+  { 
+    days  += 365;
+  }
+  days_diff = days  - now_days;
+
+  days_diff %= BIORHYTHM_CYCLE;
+
+  sin = FX_SinIdx( 0xFFFF * days_diff / BIORHYTHM_CYCLE );
+
+  bio = ((sin + FX32_ONE) * 50 ) >> FX32_SHIFT;
+
+  OS_TFPrintf( 3, "バイオリズム %d 誕生経過%d 現在%d,差%d\n", bio, days, now_days, days_diff );
+
+  return bio;
+}
+
 //----------------------------------------------------------------------------
 /**
  *	@brief	ランキングデータ１つ挿入
@@ -992,6 +1040,7 @@ static void LISTDATA_CallProcNamin( DEBUG_NAGI_MAIN_WORK *p_wk )
  *
  */
 //-----------------------------------------------------------------------------
+#include "debug/debug_str_conv.h"
 static void LISTDATA_AddRankData( DEBUG_NAGI_MAIN_WORK *p_wk )
 {	
 	IRC_COMPATIBLE_SAVEDATA *p_sv	= IRC_COMPATIBLE_SV_GetSavedata( SaveControl_GetPointer() );
@@ -1002,55 +1051,94 @@ static void LISTDATA_AddRankData( DEBUG_NAGI_MAIN_WORK *p_wk )
 		static const struct
 		{	
 			u16 * p_str;
+      u8  sex;
+      u8  month;
+      u8  day;
 			u32 ID;
 		} scp_debug_rank_data[]	=
 		{	
 			{	
 				L"かつのり",
+        1,
+        10,
+        22,
 				0x573,
 			},
 			{	
 				L"アリイズミ",
+        1,
+        1,
+        27,
 				0x785,
 			},
 			{	
 				L"キタさん",
+        1,
+        4,
+        8,
 				0x123,
 			},
 			{	
 				L"いわおっち",
+        1,
+        7,
+        14,
 				0x987,
 			},
 			{	
 				L"レイコ",
+        0,
+        2,
+        15,
 				0x782
 			},
 			{	
 				L"イケイケ",
+        0,
+        8,
+        2,
 				0x191,
 			},
 			{	
 				L"ぺぐ",
+        0,
+        1,
+        7,
 				0x232
 			},
 			{	
 				L"マナ",
+        0,
+        11,
+        27,
 				0x595,
 			},
 			{	
 				L"あさみん",
+        0,
+        10,
+        18,
 				0x999,
 			},
 			{	
 				L"プラット",
+        1,
+        1,
+        1,
 				0x1234,
 			},
 			{	
 				L"プラット",
+        0,
+        3,
+        3,
 				0x2345,
 			},
 			{	
 				L"プラット",
+        1,
+        10,
+        10,
 				0x3456,
 			},
 		};
@@ -1064,7 +1152,21 @@ static void LISTDATA_AddRankData( DEBUG_NAGI_MAIN_WORK *p_wk )
 		GFL_STD_MemCopy(p_str, str, strlen*2);
 		str[strlen]	= GFL_STR_GetEOMCode();
 
-		IRC_COMPATIBLE_SV_AddRanking( p_sv, str, GFUser_GetPublicRand( 101 ), scp_debug_rank_data[idx].ID );
+		//セーブする
+		IRC_COMPATIBLE_SV_AddRanking( p_sv, str,
+        GFUser_GetPublicRand( 101 ), scp_debug_rank_data[idx].sex, scp_debug_rank_data[idx].month, scp_debug_rank_data[idx].day, scp_debug_rank_data[idx].ID );
+
+    { 
+      char  test[128];
+      DEB_STR_CONV_StrcodeToSjis( str , test, 5 );
+      OS_TFPrintf( 3, "%s", test );
+    }
+    { 
+      COMPATIBLE_STATUS status;
+      status.barth_month  = scp_debug_rank_data[idx].month;
+      status.barth_day    = scp_debug_rank_data[idx].day;
+      RULE_CalcBioRhythm( &status );
+    }
 	}
 }
 //----------------------------------------------------------------------------

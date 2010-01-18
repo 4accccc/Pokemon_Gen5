@@ -127,7 +127,7 @@ enum{
 	RHYTHM_BG_PAL_M_02,		// 
 	RHYTHM_BG_PAL_M_03,		// 
 	RHYTHM_BG_PAL_M_04,		// 
-	RHYTHM_BG_PAL_M_05,		// 
+	RHYTHM_BG_PAL_M_05,		// INFOWIN
 	RHYTHM_BG_PAL_M_06,		// 背景用ここまで
 	RHYTHM_BG_PAL_M_07,		// 使用してない
 	RHYTHM_BG_PAL_M_08,		// 使用してない
@@ -137,7 +137,7 @@ enum{
 	RHYTHM_BG_PAL_M_12,		// 使用してない
 	RHYTHM_BG_PAL_M_13,		// 使用してない
 	RHYTHM_BG_PAL_M_14,		// APPBAR
-	RHYTHM_BG_PAL_M_15,		// INFOWIN
+	RHYTHM_BG_PAL_M_15,		// APPBAR
 
 
 	// サブ画面BG
@@ -165,8 +165,8 @@ enum{
 	RHYTHM_OBJ_PAL_M_03,		// 
 	RHYTHM_OBJ_PAL_M_04,		// 
 	RHYTHM_OBJ_PAL_M_05,		// 
-	RHYTHM_OBJ_PAL_M_06,		// 
-	RHYTHM_OBJ_PAL_M_07,		// 
+	RHYTHM_OBJ_PAL_M_06,		// ここまでタッチOBJ
+	RHYTHM_OBJ_PAL_M_07,		// 数字用
 	RHYTHM_OBJ_PAL_M_08,		// 
 	RHYTHM_OBJ_PAL_M_09,		// 
 	RHYTHM_OBJ_PAL_M_10,		// OBJ用
@@ -199,7 +199,7 @@ enum{
 //-------------------------------------
 ///	情報バー
 //=====================================
-#define INFOWIN_PLT_NO		(RHYTHM_BG_PAL_M_15)
+#define INFOWIN_PLT_NO		(RHYTHM_BG_PAL_M_05)
 #define INFOWIN_BG_FRAME	(GFL_BG_FRAME0_M)
 
 //-------------------------------------
@@ -216,10 +216,10 @@ enum{
 #define	MSGWND_TEXT_W	(30)
 #define	MSGWND_TEXT_H	(5)
 
-#define	MSGWND_TITLE_X	(9)
-#define	MSGWND_TITLE_Y	(4)
-#define	MSGWND_TITLE_W	(14)
-#define	MSGWND_TITLE_H	(2)
+#define	MSGWND_TITLE_X	(6)
+#define	MSGWND_TITLE_Y	(3)
+#define	MSGWND_TITLE_W	(20)
+#define	MSGWND_TITLE_H	(5)
 
 //-------------------------------------
 ///	カウント
@@ -252,6 +252,10 @@ enum {
 	OBJREGID_TOUCH_PLT_S,
 	OBJREGID_TOUCH_CHR_S,
 	OBJREGID_TOUCH_CEL_S,
+
+  OBJREGID_NUM_PLT_M,
+  OBJREGID_NUM_CHR_M,
+  OBJREGID_NUM_CEL_M,
 
 	OBJREGID_MAX
 };
@@ -300,6 +304,11 @@ enum
 	BACKOBJ_SYS_NUM,
 } ;
 
+//-------------------------------------
+///	カうんどダウンの定数
+//=====================================
+#define COUNTDOWN_NUM_OBJ_MAX   (3)
+#define COUNTDOWN_ONE_COUNT_MAX (60)
 
 //-------------------------------------
 ///	CLWK取得
@@ -309,6 +318,9 @@ typedef enum
 	
 	CLWKID_BACKOBJ_TOP_M,
 	CLWKID_BACKOBJ_END_M = CLWKID_BACKOBJ_TOP_M + BACKOBJ_CLWK_MAX,
+
+  CLWKID_NUM_TOP_M,
+  CLWKID_NUM_END_M  = CLWKID_NUM_TOP_M + COUNTDOWN_NUM_OBJ_MAX,
 
 	CLWKID_MAX
 }CLWKID;
@@ -452,6 +464,7 @@ typedef struct
 	u32								sync_now;	//１つのワークを開始するまでのシンク
 	u32								sync_max;
 } BACKOBJ_WORK;
+#if 0
 //-------------------------------------
 ///	個人成績画面
 //=====================================
@@ -462,6 +475,18 @@ typedef struct
 	const RHYTHMSEARCH_WORK *cp_search;
 	MSGWND_WORK			msgwnd[ROR_MSGWNDID_MAX];
 } RHYTHM_ONLYRESULT_WORK;
+#endif
+//-------------------------------------
+///	カウント
+//=====================================
+typedef struct 
+{
+	GFL_CLWK					*p_clwk[COUNTDOWN_NUM_OBJ_MAX];
+  u32               cnt;
+  u32               cnt_idx;  //何回カウントしたか
+  BOOL              is_start;
+  BOOL              is_end;
+} COUNTDOWN_WORK;
 
 #ifdef DEBUG_RHYTHM_MSG
 //-------------------------------------
@@ -520,6 +545,8 @@ struct _RHYTHM_MAIN_WORK
 	//下画面バー
 	APPBAR_WORK			*p_appbar;
 
+  //カウントダウン
+  COUNTDOWN_WORK  cntdown;
 
 	MSGWND_WORK			msgtitle;	//タイトルメッセージ
 
@@ -584,7 +611,7 @@ static BOOL MSGWND_Main( MSGWND_WORK *p_wk, const MSG_WORK *cp_msg );
 static void MSGWND_Print( MSGWND_WORK* p_wk, const MSG_WORK *cp_msg, u32 strID, u16 x, u16 y );
 static void MSGWND_PrintCenter( MSGWND_WORK* p_wk, const MSG_WORK *cp_msg, u32 strID );
 static void MSGWND_PrintNumber( MSGWND_WORK* p_wk, const MSG_WORK *cp_msg, u32 strID, u16 number, u16 buff_id, u16 x, u16 y );
-static void MSGWND_PrintPlayerName( MSGWND_WORK* p_wk, const MSG_WORK *cp_msg, u32 strID, const MYSTATUS *cp_status, u16 x, u16 y );
+static void MSGWND_PrintPlayerName( MSGWND_WORK* p_wk, const MSG_WORK *cp_msg, u32 strID, const COMPATIBLE_STATUS *cp_status, u16 x, u16 y, HEAPID heapID );
 static void MSGWND_Clear( MSGWND_WORK* p_wk );
 //ONLYRESULT
 #if 0
@@ -592,11 +619,17 @@ static void RHYTHM_ONLYRESULT_Init( RHYTHM_ONLYRESULT_WORK* p_wk, u8 frm, const 
 static void RHYTHM_ONLYRESULT_Exit( RHYTHM_ONLYRESULT_WORK* p_wk );
 static BOOL RHYTHM_ONLYRESULT_Main( RHYTHM_ONLYRESULT_WORK* p_wk );
 #endif
+static void COUNTDOWN_Init( COUNTDOWN_WORK *p_wk, const GRAPHIC_WORK *cp_grp, HEAPID heapID );
+static void COUNTDOWN_Exit( COUNTDOWN_WORK *p_wk );
+static void COUNTDOWN_Main( COUNTDOWN_WORK *p_wk );
+static void COUNTDOWN_Start( COUNTDOWN_WORK *p_wk );
+static BOOL COUNTDOWN_IsEnd( const COUNTDOWN_WORK *cp_wk );
 //SEQ
 static void SEQ_Change( RHYTHM_MAIN_WORK *p_wk, SEQ_FUNCTION	seq_function );
 static void SEQ_End( RHYTHM_MAIN_WORK *p_wk );
 //SEQ_FUNC
 static void SEQFUNC_StartGame( RHYTHM_MAIN_WORK *p_wk, u16 *p_seq );
+static void SEQFUNC_CountDown( RHYTHM_MAIN_WORK *p_wk, u16 *p_seq );
 static void SEQFUNC_MainGame( RHYTHM_MAIN_WORK *p_wk, u16 *p_seq );
 static void SEQFUNC_Result( RHYTHM_MAIN_WORK *p_wk, u16 *p_seq );
 static void SEQFUNC_SceneError( RHYTHM_MAIN_WORK *p_wk, u16 *p_seq );
@@ -606,7 +639,7 @@ static void RHYTHMSEARCH_Exit( RHYTHMSEARCH_WORK *p_wk );
 static void RHYTHMSEARCH_Start( RHYTHMSEARCH_WORK *p_wk );
 static BOOL RHYTHMSEARCH_IsEnd( const RHYTHMSEARCH_WORK *cp_wk );
 static void RHYTHMSEARCH_SetData( RHYTHMSEARCH_WORK *p_wk, const GFL_POINT *cp_pos );
-static void RHYTHMSEARCH_PlaySEByRhythmSpeed( const RHYTHMSEARCH_WORK *cp_wk );
+static BACKOBJ_COLOR RHYTHMSEARCH_PlaySEByRhythmSpeed( const RHYTHMSEARCH_WORK *cp_wk );
 //net
 static void RHYTHMNET_Init( RHYTHMNET_WORK *p_wk, COMPATIBLE_IRC_SYS *p_irc );
 static void RHYTHMNET_Exit( RHYTHMNET_WORK *p_wk );
@@ -618,11 +651,12 @@ static u8* NETRECV_GetBufferAddr(int netID, void* pWork, int size);
 //汎用
 static BOOL TP_GetDiamondTrg( const GFL_POINT *cp_diamond, GFL_POINT *p_trg );
 static u8		CalcScore( const RHYTHM_MAIN_WORK *cp_wk );
+static u8		CalcMinus( const RHYTHM_MAIN_WORK *cp_wk );
 //BACKOBJ
 static void BACKOBJ_Init( BACKOBJ_WORK *p_wk, const GRAPHIC_WORK *cp_grp, BACKOBJ_MOVE_TYPE type, u32 clwk_ofs, int sf_type );
 static void BACKOBJ_Exit( BACKOBJ_WORK *p_wk );
 static void BACKOBJ_Main( BACKOBJ_WORK *p_wk );
-static void BACKOBJ_StartEmit( BACKOBJ_WORK *p_wk, const GFL_POINT *cp_pos );
+static void BACKOBJ_StartEmit( BACKOBJ_WORK *p_wk, const GFL_POINT *cp_pos, BACKOBJ_COLOR color );
 //BACKOBJ_ONE
 static void BACKOBJ_ONE_Init( BACKOBJ_ONE *p_wk, GFL_CLWK *p_clwk, int sf_type );
 static void BACKOBJ_ONE_Main( BACKOBJ_ONE *p_wk );
@@ -876,9 +910,11 @@ static GFL_PROC_RESULT IRC_RHYTHM_PROC_Init( GFL_PROC *p_proc, int *p_seq, void 
 	BmpWinFrame_Write( p_wk->msgwnd[MSGWNDID_TEXT].p_bmpwin, WINDOW_TRANS_ON, 
 					GFL_ARCUTIL_TRANSINFO_GetPos(p_wk->grp.bg.frame_char), RHYTHM_BG_PAL_S_06 );
 
+  COUNTDOWN_Init( &p_wk->cntdown, &p_wk->grp, HEAPID_IRCRHYTHM );
+
 	//タイトル文字列作成
 	MSGWND_InitEx( &p_wk->msgtitle, sc_bgcnt_frame[GRAPHIC_BG_FRAME_S_TITLE],
-			MSGWND_TITLE_X, MSGWND_TITLE_Y, MSGWND_TITLE_W, MSGWND_TITLE_H, RHYTHM_BG_PAL_S_08, RHYTHM_BG_PAL_S_08*0x10+0xf, GFL_BMP_CHRAREA_GET_B, HEAPID_IRCRHYTHM );
+			MSGWND_TITLE_X, MSGWND_TITLE_Y, MSGWND_TITLE_W, MSGWND_TITLE_H, RHYTHM_BG_PAL_S_08, 1, GFL_BMP_CHRAREA_GET_B, HEAPID_IRCRHYTHM );
 	MSGWND_PrintCenter( &p_wk->msgtitle, &p_wk->msg, RHYTHM_TITLE_000 );
 	GFL_BG_SetScaleReq( sc_bgcnt_frame[GRAPHIC_BG_FRAME_S_TITLE], GFL_BG_SCALE_X_SET, TITLE_STR_SCALE_X );
 	GFL_BG_SetScaleReq( sc_bgcnt_frame[GRAPHIC_BG_FRAME_S_TITLE], GFL_BG_SCALE_Y_SET, TITLE_STR_SCALE_Y );
@@ -895,7 +931,7 @@ static GFL_PROC_RESULT IRC_RHYTHM_PROC_Init( GFL_PROC *p_proc, int *p_seq, void 
 
 	{	
 		GFL_CLUNIT	*p_unit	= GRAPHIC_GetClunit( &p_wk->grp );
-		p_wk->p_appbar	= APPBAR_Init( APPBAR_OPTION_MASK_RETURN, p_unit, sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_INFOWIN], RHYTHM_BG_PAL_M_14, RHYTHM_OBJ_PAL_M_13, APP_COMMON_MAPPING_128K, HEAPID_IRCRHYTHM );
+		p_wk->p_appbar	= APPBAR_Init( APPBAR_OPTION_MASK_RETURN, p_unit, sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_INFOWIN], RHYTHM_BG_PAL_M_14, RHYTHM_OBJ_PAL_M_13, APP_COMMON_MAPPING_128K, MSG_GetFont(&p_wk->msg ), MSG_GetPrintQue(&p_wk->msg ), HEAPID_IRCRHYTHM );
 	}
 
 
@@ -951,6 +987,8 @@ static GFL_PROC_RESULT IRC_RHYTHM_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void 
 	APPBAR_Exit( p_wk->p_appbar );	
 
 	RHYTHMNET_Exit( &p_wk->net );
+
+  COUNTDOWN_Exit( &p_wk->cntdown );
 
 	MSGWND_Exit( &p_wk->msgtitle );
 	//モジュール破棄
@@ -1377,6 +1415,13 @@ static void GRAPHIC_OBJ_Init( GRAPHIC_OBJ_WORK *p_wk, const GFL_DISP_VRAM* cp_vr
 		p_wk->reg_id[OBJREGID_TOUCH_CEL_M]	= GFL_CLGRP_CELLANIM_Register( p_handle,
 				NARC_irccompatible_gra_rhythm_aura_NCER, NARC_irccompatible_gra_rhythm_aura_NANR, heapID );
 
+    p_wk->reg_id[OBJREGID_NUM_PLT_M]  = GFL_CLGRP_PLTT_RegisterEx( p_handle, 
+				NARC_irccompatible_gra_aura_obj_NCLR, CLSYS_DRAW_MAIN, RHYTHM_OBJ_PAL_M_07*0x20, 0xC,1, heapID );
+    p_wk->reg_id[OBJREGID_NUM_CHR_M]  = GFL_CLGRP_CGR_Register( p_handle,
+				NARC_irccompatible_gra_aura_obj_NCGR, FALSE, CLSYS_DRAW_MAIN, heapID );
+    p_wk->reg_id[OBJREGID_NUM_CEL_M]  = GFL_CLGRP_CELLANIM_Register( p_handle,
+        NARC_irccompatible_gra_aura_obj_NCER, NARC_irccompatible_gra_aura_obj_NANR, heapID );
+
 		p_wk->reg_id[OBJREGID_TOUCH_PLT_S]	= GFL_CLGRP_PLTT_Register( p_handle, 
 				NARC_irccompatible_gra_rhythm_aura_NCLR, CLSYS_DRAW_SUB, RHYTHM_OBJ_PAL_S_00*0x20, heapID );
 
@@ -1410,6 +1455,22 @@ static void GRAPHIC_OBJ_Init( GRAPHIC_OBJ_WORK *p_wk, const GFL_DISP_VRAM* cp_vr
 			GFL_CLACT_WK_SetAnmSeq( p_wk->p_clwk[i], 0 );
 		}
 
+    cldata.pos_x  = 128;
+    cldata.pos_y  = 96;
+    for( i = CLWKID_NUM_TOP_M; i < CLWKID_NUM_END_M; i++  )
+		{	
+      cldata.anmseq = 1+(i-CLWKID_NUM_TOP_M);
+			p_wk->p_clwk[i]	= GFL_CLACT_WK_Create( p_wk->p_clunit, 
+					p_wk->reg_id[OBJREGID_NUM_CHR_M],
+					p_wk->reg_id[OBJREGID_NUM_PLT_M],
+					p_wk->reg_id[OBJREGID_NUM_CEL_M],
+					&cldata,
+					CLSYS_DEFREND_MAIN,
+					heapID
+					);
+			GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[i], FALSE );
+      GFL_CLACT_WK_SetPlttOffs( p_wk->p_clwk[i], 0, CLWK_PLTTOFFS_MODE_PLTT_TOP );
+		}
 	}
 }
 //----------------------------------------------------------------------------
@@ -1442,6 +1503,10 @@ static void GRAPHIC_OBJ_Exit( GRAPHIC_OBJ_WORK *p_wk )
 		GFL_CLGRP_PLTT_Release( p_wk->reg_id[OBJREGID_TOUCH_PLT_S] );
 		GFL_CLGRP_CGR_Release( p_wk->reg_id[OBJREGID_TOUCH_CHR_S] );
 		GFL_CLGRP_CELLANIM_Release( p_wk->reg_id[OBJREGID_TOUCH_CEL_S] );
+
+    GFL_CLGRP_PLTT_Release( p_wk->reg_id[OBJREGID_NUM_PLT_M] );
+		GFL_CLGRP_CGR_Release( p_wk->reg_id[OBJREGID_NUM_CHR_M] );
+		GFL_CLGRP_CELLANIM_Release( p_wk->reg_id[OBJREGID_NUM_CEL_M] );
 	}
 
 	//システム破棄
@@ -1853,20 +1918,26 @@ static void MSGWND_PrintNumber( MSGWND_WORK* p_wk, const MSG_WORK *cp_msg, u32 s
  *	@param	y									開始位置Y
  */
 //-----------------------------------------------------------------------------
-static void MSGWND_PrintPlayerName( MSGWND_WORK* p_wk, const MSG_WORK *cp_msg, u32 strID, const MYSTATUS *cp_status, u16 x, u16 y )
-{	
-	const GFL_MSGDATA* cp_msgdata;
-	WORDSET *p_wordset;
-	
-	//一端消去
-	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin), p_wk->clear_chr );	
+static void MSGWND_PrintPlayerName( MSGWND_WORK* p_wk, const MSG_WORK *cp_msg, u32 strID, const COMPATIBLE_STATUS *cp_status, u16 x, u16 y, HEAPID heapID )
+{
+  const GFL_MSGDATA* cp_msgdata;
+  WORDSET *p_wordset;
 
-	//モジュール取得
-	p_wordset		= MSG_GetWordSet( cp_msg );
-	cp_msgdata	= MSG_GetMsgDataConst( cp_msg );
+  //一端消去
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin),p_wk->clear_chr );
 
-	//数値をワードセットに登録
-	WORDSET_RegisterPlayerName( p_wordset, 0, cp_status );
+  //モジュール取得
+  p_wordset   = MSG_GetWordSet( cp_msg );
+  cp_msgdata  = MSG_GetMsgDataConst( cp_msg );
+
+  //ワードセットに登録
+  { 
+    STRBUF  *p_name = GFL_STR_CreateBuffer( IRC_COMPATIBLE_SV_DATA_NAME_LEN, heapID );
+    GFL_STR_SetStringCodeOrderLength( p_name, cp_status->name, IRC_COMPATIBLE_SV_DATA_NAME_LEN );
+
+    WORDSET_RegisterWord( p_wordset, 0, p_name, cp_status->sex == 1 ? PTL_SEX_MALE : PTL_SEX_FEMALE, TRUE, PM_LANG );
+    GFL_STR_DeleteBuffer( p_name );
+  }
 
 	//元の文字列に数値を適用
 	{	
@@ -2056,6 +2127,101 @@ static BOOL RHYTHM_ONLYRESULT_Main( RHYTHM_ONLYRESULT_WORK* p_wk )
 #endif
 //=============================================================================
 /**
+ *    COUNTDOWN_WORK
+ */
+//=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カウントダウン  初期化
+ *
+ *	@param	COUNTDOWN_WORK *p_wk   ワーク
+ *	@param	GRAPHIC_WORK *cp_grp  グラフィック
+ *	@param  HEAPID heapID         ヒープID
+ */
+//-----------------------------------------------------------------------------
+static void COUNTDOWN_Init( COUNTDOWN_WORK *p_wk, const GRAPHIC_WORK *cp_grp, HEAPID heapID )
+{ 
+  GFL_STD_MemClear( p_wk, sizeof(COUNTDOWN_WORK) );
+
+  { 
+    int i;
+    for( i = 0; i < COUNTDOWN_NUM_OBJ_MAX; i++ )
+    { 
+      p_wk->p_clwk[0]  = GRAPHIC_GetClwk( cp_grp, CLWKID_NUM_TOP_M + i );
+    }
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カウントダウン  破棄
+ *
+ *	@param	COUNTDOWN_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void COUNTDOWN_Exit( COUNTDOWN_WORK *p_wk )
+{ 
+  GFL_STD_MemClear( p_wk, sizeof(COUNTDOWN_WORK) );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カウントダウン  メイン処理
+ *
+ *	@param	COUNTDOWN_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void COUNTDOWN_Main( COUNTDOWN_WORK *p_wk )
+{ 
+  if( p_wk->is_start )
+  { 
+    if( p_wk->cnt == 0 )
+    { 
+      GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[0], TRUE );
+      GFL_CLACT_WK_SetAnmSeq( p_wk->p_clwk[0], (4-p_wk->cnt_idx) );
+    }
+
+    if( p_wk->cnt++ >= COUNTDOWN_ONE_COUNT_MAX )
+    { 
+      p_wk->cnt = 0;
+      p_wk->cnt_idx++;
+    }
+
+    if( p_wk->cnt_idx == 3 )
+    { 
+      p_wk->is_start = FALSE;
+      p_wk->is_end    = TRUE;
+      GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[0], FALSE );
+    }
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カウントダウン  開始処理
+ *
+ *	@param	COUNTDOWN_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void COUNTDOWN_Start( COUNTDOWN_WORK *p_wk )
+{ 
+  p_wk->cnt       = 0;
+  p_wk->cnt_idx   = 0;
+  p_wk->is_start  = TRUE;
+}
+//----------------------------------------------------------------------------
+/** 
+ *	@brief  カウントダウン  終了検知
+ *
+ *	@param	const COUNTDOWN_WORK *cp_wk  ワーク
+ *
+ *	@return TRUEで終了  FALSEで処理中
+ */
+//-----------------------------------------------------------------------------
+static BOOL COUNTDOWN_IsEnd( const COUNTDOWN_WORK *cp_wk )
+{ 
+  return cp_wk->is_end;
+
+}
+//=============================================================================
+/**
  *				SEQ
  */
 //=============================================================================
@@ -2103,23 +2269,18 @@ static void SEQ_End( RHYTHM_MAIN_WORK *p_wk )
 //-----------------------------------------------------------------------------
 static void SEQFUNC_StartGame( RHYTHM_MAIN_WORK *p_wk, u16 *p_seq )
 {	
-	RHYTHMSEARCH_WORK	*p_search;
-	p_search	= &p_wk->search;
-
-		if( p_wk->p_param->p_gamesys )
-		{	
-			MSGWND_PrintPlayerName( &p_wk->msgwnd[MSGWNDID_TEXT], &p_wk->msg, 
-					RHYTHM_STR_000, p_wk->p_param->p_you_status,  0, 0 );
-		}
-		else
-		{	
-			MSGWND_Print( &p_wk->msgwnd[MSGWNDID_TEXT], &p_wk->msg, RHYTHM_STR_000, 0, 0 );
-		}
+  if( p_wk->p_param->p_gamesys )
+  {	
+    MSGWND_PrintPlayerName( &p_wk->msgwnd[MSGWNDID_TEXT], &p_wk->msg, 
+        RHYTHM_STR_000, p_wk->p_param->p_you_status,  0, 0, HEAPID_IRCRHYTHM );
+  }
+  else
+  {	
+    MSGWND_Print( &p_wk->msgwnd[MSGWNDID_TEXT], &p_wk->msg, RHYTHM_STR_000, 0, 0 );
+  }
 	
-
-	RHYTHMSEARCH_Start( p_search );
-	SEQ_Change( p_wk, SEQFUNC_MainGame );	
-	
+  COUNTDOWN_Start( &p_wk->cntdown );
+	SEQ_Change( p_wk, SEQFUNC_CountDown );	
 	
 	//シーンが異なるチェック
 	if( COMPATIBLE_IRC_CompScene( p_wk->p_param->p_irc ) != 0 )
@@ -2127,6 +2288,37 @@ static void SEQFUNC_StartGame( RHYTHM_MAIN_WORK *p_wk, u16 *p_seq )
 		SEQ_Change( p_wk, SEQFUNC_SceneError );
 	}
 
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	開始前カウントダウン処理
+ *
+ *	@param	RHYTHM_MAIN_WORK *p_wk	メインワーク
+ *	@param	*p_seq								シーケンス
+ *
+ */
+//-----------------------------------------------------------------------------
+static void SEQFUNC_CountDown( RHYTHM_MAIN_WORK *p_wk, u16 *p_seq )
+{ 
+  COUNTDOWN_Main( &p_wk->cntdown );
+  if( COUNTDOWN_IsEnd( &p_wk->cntdown ) )
+  { 
+    RHYTHMSEARCH_Start( &p_wk->search );
+    SEQ_Change( p_wk, SEQFUNC_MainGame );	
+  }
+
+  if( APPBAR_GetTrg(p_wk->p_appbar) == APPBAR_ICON_RETURN )
+	{
+		PMSND_PlaySystemSE( SEQ_SE_CANCEL1 );
+		p_wk->p_param->result	= IRCRHYTHM_RESULT_RETURN;
+		SEQ_End( p_wk );
+	}
+
+  //シーンが異なるチェック
+	if( COMPATIBLE_IRC_CompScene( p_wk->p_param->p_irc ) != 0 )
+	{	
+		SEQ_Change( p_wk, SEQFUNC_SceneError );
+	}
 }
 //----------------------------------------------------------------------------
 /**
@@ -2149,9 +2341,10 @@ static void SEQFUNC_MainGame( RHYTHM_MAIN_WORK *p_wk, u16 *p_seq )
 	{
 		if( TP_GetDiamondTrg( &sc_diamond_pos[i], &trg_pos ) )
 		{	
-			BACKOBJ_StartEmit( &p_wk->backobj[BACKOBJ_SYS_MAIN], &trg_pos );
+      BACKOBJ_COLOR color;
+			color = RHYTHMSEARCH_PlaySEByRhythmSpeed( p_search );
+			BACKOBJ_StartEmit( &p_wk->backobj[BACKOBJ_SYS_MAIN], &trg_pos, color );
 			RHYTHMSEARCH_SetData( p_search, &sc_diamond_pos[i] );
-			RHYTHMSEARCH_PlaySEByRhythmSpeed( p_search );
 		}
 	}
 
@@ -2268,6 +2461,7 @@ static void SEQFUNC_Result( RHYTHM_MAIN_WORK *p_wk, u16 *p_seq )
 
 	case SEQ_CALC:
 		p_wk->p_param->score	= CalcScore( p_wk );
+    p_wk->p_param->minus  = CalcMinus( p_wk );
 		p_wk->p_param->result	= IRCRHYTHM_RESULT_CLEAR;
 	//	*p_seq	= SEQ_FADEIN_START;
 		*p_seq	= SEQ_END;
@@ -2470,35 +2664,11 @@ static void RHYTHMSEARCH_Start( RHYTHMSEARCH_WORK *p_wk )
 //-----------------------------------------------------------------------------
 static BOOL RHYTHMSEARCH_IsEnd( const RHYTHMSEARCH_WORK *cp_wk )
 {	
-	//終了条件が変わりました
-#if 1
-	//タッチ回数が10回以上で、5秒以上経過したとき
-	if( cp_wk->data_idx >= 10 )
-	{	
-		if( OS_TicksToMilliSeconds(OS_GetTick()) - cp_wk->start_time >= 5000 ) 
-		{	
-			return TRUE;
-		}
-	}
-#else
-	//終了条件１
-	//タッチ回数が10回以上で、無タッチ状態が１秒以上
-	if( cp_wk->data_idx >= 10 )
-	{	
-		if( OS_TicksToMilliSeconds(OS_GetTick()) - cp_wk->start_time 
-			  - cp_wk->data[cp_wk->data_idx-1].prog_ms >= 1000 ) 
-		{	
-			return TRUE;
-		}
-	}
-
-	//終了条件２
-	//タッチ回数が15回
-	if( cp_wk->data_idx == RHYTHMSEARCH_DATA_MAX )
-	{	
-		return TRUE;
-	}
-#endif
+  //5秒以上経過したとき
+  if( OS_TicksToMilliSeconds(OS_GetTick()) - cp_wk->start_time >= 5000 ) 
+  {	
+    return TRUE;
+  }
 	return FALSE;
 }
 //----------------------------------------------------------------------------
@@ -2541,12 +2711,15 @@ static void RHYTHMSEARCH_SetData( RHYTHMSEARCH_WORK *p_wk, const GFL_POINT *cp_p
  *
  */
 //-----------------------------------------------------------------------------
-static void RHYTHMSEARCH_PlaySEByRhythmSpeed( const RHYTHMSEARCH_WORK *cp_wk )
+static BACKOBJ_COLOR RHYTHMSEARCH_PlaySEByRhythmSpeed( const RHYTHMSEARCH_WORK *cp_wk )
 {	
 	u32 se;
+  BACKOBJ_COLOR color = BACKOBJ_COLOR_YEGREEN;
+
 	if( cp_wk->data_idx < 2 )
 	{	
 		se	= IRCRHYTHM_SE_TAP_N;
+    color = BACKOBJ_COLOR_YEGREEN;
 	}
 	else
 	{	
@@ -2557,18 +2730,21 @@ static void RHYTHMSEARCH_PlaySEByRhythmSpeed( const RHYTHMSEARCH_WORK *cp_wk )
 		{	
 			//大体同じ
 			se = IRCRHYTHM_SE_TAP_N;
+      color = BACKOBJ_COLOR_YEGREEN;
 			NAGI_Printf( "初回SE %d\n", se );
 		}
-		else if( diff < 0  )
+		else if( diff < 0 )
 		{	
 			//早い
 			if( MATH_IAbs(diff) < RANGE_RHYTHMSCORE_DIFF_03 )
 			{	
 				se = IRCRHYTHM_SE_TAP_F1;
+        color = BACKOBJ_COLOR_ORANGE;
 			}
 			else
 			{	
 				se	=IRCRHYTHM_SE_TAP_F2;
+        color = BACKOBJ_COLOR_RED;
 			}
 		}
 		else
@@ -2577,15 +2753,18 @@ static void RHYTHMSEARCH_PlaySEByRhythmSpeed( const RHYTHMSEARCH_WORK *cp_wk )
 			if( MATH_IAbs(diff) < RANGE_RHYTHMSCORE_DIFF_03 )
 			{	
 				se	= IRCRHYTHM_SE_TAP_S1;
+        color = BACKOBJ_COLOR_WATER;
 			}
 			else
 			{	
 				se	= IRCRHYTHM_SE_TAP_S2;
+        color = BACKOBJ_COLOR_BLUE;
 			}
 		}
 		NAGI_Printf( "SE %d  diff %d\n", se, diff );
 	}
 	PMSND_PlaySE( se );
+  return color;
 }
 
 //=============================================================================
@@ -2977,6 +3156,40 @@ static u8	CalcScore( const RHYTHM_MAIN_WORK *cp_wk )
 	}
 	return (prog_score + (diff_score/9) )/2;
 }
+//----------------------------------------------------------------------------
+/**
+ *	@brief  減点を計算
+ *
+ *	@param	const RHYTHM_MAIN_WORK *cp_wk ワーク
+ *
+ *	@return 減点（＋の値）
+ */
+//-----------------------------------------------------------------------------
+static u8	CalcMinus( const RHYTHM_MAIN_WORK *cp_wk )
+{ 
+  static const sc_minus_tbl[] =
+  { 
+    0,
+    2,
+    4,
+    6,
+    8,
+    10,
+  };
+
+  RHYTHMSEARCH_WORK	my;
+	RHYTHMSEARCH_WORK	you;
+
+  u32 dif;
+
+	my	= cp_wk->search;
+	RHYTHMNET_GetResultData( &cp_wk->net, &you );
+
+  dif = MATH_IAbs( my.data_idx - you.data_idx );
+  dif = MATH_IMin( dif, NELEMS(sc_minus_tbl) );
+
+  return sc_minus_tbl[ dif ];
+}
 //=============================================================================
 /**
  *			BACKOBJ
@@ -3135,7 +3348,7 @@ static void BACKOBJ_Main( BACKOBJ_WORK *p_wk )
  *	@param	GFL_POINT *cp_pos		放出開始座標
  */
 //-----------------------------------------------------------------------------
-static void BACKOBJ_StartEmit( BACKOBJ_WORK *p_wk, const GFL_POINT *cp_pos )
+static void BACKOBJ_StartEmit( BACKOBJ_WORK *p_wk, const GFL_POINT *cp_pos, BACKOBJ_COLOR color )
 {	
 	int i, j;
 	u32 sync;
@@ -3146,7 +3359,6 @@ static void BACKOBJ_StartEmit( BACKOBJ_WORK *p_wk, const GFL_POINT *cp_pos )
 	VecFx32	end_v;
 	VecFx32	v;
 
-	BACKOBJ_COLOR	color;
 
 	start_v.x	= cp_pos->x << FX32_SHIFT;
 	start_v.y	= cp_pos->y << FX32_SHIFT;
@@ -3175,16 +3387,6 @@ static void BACKOBJ_StartEmit( BACKOBJ_WORK *p_wk, const GFL_POINT *cp_pos )
 				end.x += cp_pos->x;
 				end.y	+= cp_pos->y;
 
-				//色は青か黄色
-		//		if( GFUser_GetPublicRand(2) )
-				{	
-					color	= BACKOBJ_COLOR_WATER;
-				}
-			/*	else
-				{	
-					color	= BACKOBJ_COLOR_YELLOW;
-				}
-			*/
 				sync	= BACKOBJ_ONE_EMIT_SYNC_MIN + GFUser_GetPublicRand(BACKOBJ_ONE_EMIT_SYNC_DIF);
 				BACKOBJ_ONE_Start( &p_wk->wk[i], cp_pos, &end, color, sync );
 				break;

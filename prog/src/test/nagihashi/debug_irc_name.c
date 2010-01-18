@@ -31,6 +31,8 @@
 //	etc
 #include <wchar.h>					//wcslen
 
+#include "debug/debug_str_conv.h"
+
 //=============================================================================
 /**
  *					定数宣言
@@ -931,7 +933,7 @@ static STRBUF * DEBUGPRINT_CreateWideCharNumber( const u16 *cp_str, int number, 
  *	@return	スコア
  */
 //-----------------------------------------------------------------------------
-static u32 RULE_CalcNameScore( const STRBUF	*cp_player1_name, const STRBUF	*cp_player2_name )
+static u32 RULE_CalcNameScore( const STRBUF	*cp_player1_name, const STRBUF *cp_player2_name )
 {	
 	enum
 	{	
@@ -941,8 +943,8 @@ static u32 RULE_CalcNameScore( const STRBUF	*cp_player1_name, const STRBUF	*cp_p
 	const STRCODE	*cp_p1;
 	const STRCODE	*cp_p2;
 	
-	u32 num1;
-	u32 num2;
+	u16 num1;
+	u16 num2;
 	u32 b1;
 	u32 b2;
 	u32 bit1;
@@ -955,22 +957,38 @@ static u32 RULE_CalcNameScore( const STRBUF	*cp_player1_name, const STRBUF	*cp_p
 	cp_p2	= GFL_STR_GetStringCodePointer( cp_player2_name );
 	num1	= *cp_p1;
 	num2	= *cp_p2;
-	bit1	= MATH_GetMostOnebit( *cp_p1, BIT_NUM );
-	bit2	= MATH_GetMostOnebit( *cp_p2, BIT_NUM );
+  if( 0x30A1 <= num1 && num1 <= 0x30F4 )
+  { 
+    num1  -= 0x60;
+  }
+  if( 0x30A1 <= num2 && num2 <= 0x30F4 )
+  { 
+    num2  -= 0x60;
+  }
+	bit1	= MATH_GetMostOnebit( num1, BIT_NUM );
+	bit2	= MATH_GetMostOnebit( num2, BIT_NUM );
 
 	ans_max	= 0;
 	ans_cnt	= 0;
 	while( 1 )
 	{
-	 OS_Printf( "num1%d bit1%d num2%d bit2%d\n", *cp_p1, bit1, *cp_p2, bit2 );
+	 OS_Printf( "num1 0x%x bit1%d num2 0x%x bit2%d\n", num1, bit1, num2, bit2 );
 	 if( bit1 == 0 )
 	 {	
 		cp_p1++;
 		num1	= *cp_p1;
+
 		if( num1 == GFL_STR_GetEOMCode() )
 		{	
 			break;
 		}
+    //カタ→かな変換
+    if( 0x30A1 <= num1 && num1 <= 0x30F4 )
+    { 
+      num1  -= 0x60;
+    }
+
+
 		bit1	= MATH_GetMostOnebit( num1, BIT_NUM );
 	 }
 	 if( bit2 == 0 )
@@ -981,26 +999,36 @@ static u32 RULE_CalcNameScore( const STRBUF	*cp_player1_name, const STRBUF	*cp_p
 		{	
 			break;
 		}
+    //カタ→かな変換
+    if( 0x30A1 <= num2 && num2 <= 0x30F4 )
+    { 
+      num2  -= 0x60;
+    }
+
  		bit2	= MATH_GetMostOnebit( num2, BIT_NUM );
 	 }
 
-	 b1	= ((num1) >> bit1) & 0x1;
-	 b2	= ((num2) >> bit2) & 0x1;
+   if( bit1 != 0 && bit2 != 0 )
+   { 
 
-	 //bitの一致率をチェック
-	 if( b1 == b2 )
-	 {	
-			ans_cnt++;
-	 }
-	 ans_max++;
+     b1	= ((num1) >> bit1) & 0x1;
+     b2	= ((num2) >> bit2) & 0x1;
 
-	 //ビットを減らす
-	 bit1--;
-	 bit2--;
+     //bitの一致率をチェック
+     if( b1 == b2 )
+     {	
+       ans_cnt++;
+     }
+     ans_max++;
+
+     //ビットを減らす
+     bit1--;
+     bit2--;
+   }
 	}
 	
 	score	= 100*ans_cnt/ans_max;
-	OS_Printf( "全体のビット%d 一致%d 点数\n", ans_max, ans_cnt, score );
+	OS_Printf( "全体のビット%d 一致%d 点数%d \n", ans_max, ans_cnt, score );
 
 	return score;
 }

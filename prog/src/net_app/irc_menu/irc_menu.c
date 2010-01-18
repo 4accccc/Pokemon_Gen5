@@ -46,7 +46,11 @@
 //=============================================================================
 #ifdef PM_DEBUG
 static int sc_debug_num = FX32_ONE;
+
+#define NO_GAMESYS_FLAG 
 #endif
+
+#define DEG_TO_IDX(x) ( 0xFFFF * x / 360 )
 
 
 //-------------------------------------
@@ -66,7 +70,7 @@ enum{
 	IRC_MENU_BG_PAL_M_02,		//
 	IRC_MENU_BG_PAL_M_03,		// 
 	IRC_MENU_BG_PAL_M_04,		//	バーの色下普通
-	IRC_MENU_BG_PAL_M_05,		//　
+	IRC_MENU_BG_PAL_M_05,		//　INFOWIN
 	IRC_MENU_BG_PAL_M_06,		// 背景ここまで	
 	IRC_MENU_BG_PAL_M_07,		// 背景
 	IRC_MENU_BG_PAL_M_08,		// フォント
@@ -76,7 +80,7 @@ enum{
 	IRC_MENU_BG_PAL_M_12,		// バーの色上明るい
 	IRC_MENU_BG_PAL_M_13,		// バーの色上暗い
 	IRC_MENU_BG_PAL_M_14,		//APPBAR
-	IRC_MENU_BG_PAL_M_15,		// INFOWIN
+	IRC_MENU_BG_PAL_M_15,		// APPBAR
 
 	// サブ画面BG
 	IRC_MENU_BG_PAL_S_00 = 0,	//背景
@@ -147,20 +151,20 @@ enum{
 #define	MSGWND_MSG_W	(30)
 #define	MSGWND_MSG_H	(5)
 
-#define	MSGWND_GAME_X	(7)
-#define	MSGWND_GAME_Y	(5)
-#define	MSGWND_GAME_W	(18)
-#define	MSGWND_GAME_H	(3)
+#define	MSGWND_GAME_X	(3)
+#define	MSGWND_GAME_Y	(4)
+#define	MSGWND_GAME_W	(26)
+#define	MSGWND_GAME_H	(5)
 
-#define	MSGWND_RANKING_X	(7)
-#define	MSGWND_RANKING_Y	(15)
-#define	MSGWND_RANKING_W	(18)
-#define	MSGWND_RANKING_H	(3)
+#define	MSGWND_RANKING_X	(3)
+#define	MSGWND_RANKING_Y	(14)
+#define	MSGWND_RANKING_W	(26)
+#define	MSGWND_RANKING_H	(5)
 
-#define	MSGWND_TITLE_X	(9)
-#define	MSGWND_TITLE_Y	(4)
-#define	MSGWND_TITLE_W	(14)
-#define	MSGWND_TITLE_H	(2)
+#define	MSGWND_TITLE_X	(6)
+#define	MSGWND_TITLE_Y	(3)
+#define	MSGWND_TITLE_W	(20)
+#define	MSGWND_TITLE_H	(5)
 
 
 //-------------------------------------
@@ -211,19 +215,24 @@ typedef enum
 #define BACKOBJ_ONE_MOVE_SYNC_MAX	(160)
 #define BACKOBJ_ONE_MOVE_SYNC_DIF	(BACKOBJ_ONE_MOVE_SYNC_MAX-BACKOBJ_ONE_MOVE_SYNC_MIN)
 
+//-------------------------------------
+///	背景動作
+//=====================================
+#define BGMOVE_MOVE_SYNC        (200)
+#define BGMOVE_MOVE_START_Y     (0)
+#define BGMOVE_MOVE_END_Y       (11*8)
+#define BGMOVE_MOVE_VELOCITY_Y  (FX32_CONST(2.0f))
 
 //-------------------------------------
 ///	CLWK取得
 //=====================================
 typedef enum
 {	
-	CLWKID_BACKOBJ_TOP,
-	CLWKID_BACKOBJ_END = CLWKID_BACKOBJ_TOP + BACKOBJ_CLWK_MAX,
-	
+  CLWKID_BUTTERFLY_TOP,
+  CLWKID_BUTTERFLY_END  = CLWKID_BUTTERFLY_TOP + IRC_COMPATIBLE_SV_RANKING_MAX,
+  CLWKID_BUTTERFLY_SP,
 	CLWKID_MAX
 }CLWKID;
-
-
 
 //=============================================================================
 /**
@@ -276,6 +285,7 @@ typedef struct
 	u16								clear_chr;
 	u16								dummy;
 } MSGWND_WORK;
+#if 0
 //-------------------------------------
 ///	BACKOBJ	背面ぴかぴか
 //=====================================
@@ -297,6 +307,7 @@ typedef struct
 	u32								sync_now;	//１つのワークを開始するまでのシンク
 	u32								sync_max;
 } BACKOBJ_WORK;
+#endif
 //-------------------------------------
 ///	ボタン
 //=====================================
@@ -321,6 +332,65 @@ typedef struct
 	u16			select_btn_id;
 	u16			is_touch;
 } BUTTON_WORK;
+//-------------------------------------
+///	加速度
+//=====================================
+typedef struct {
+	fx32 now_val;		//現在の値
+	fx32 start_val;		//開始の値
+	fx32 end_val;		//終了の値
+	fx32 velocity;		//初速度
+	fx32 aclr;			//加速度
+	int sync_now;		//現在のシンク
+	int sync_max;		//シンク最大数
+} PROGVAL_ACLR_WORK_FX;
+//-------------------------------------
+///	３次曲線
+//=====================================
+typedef struct {
+	VecFx32 now_val;	//現在の座標
+	VecFx32	start_pos;	//開始座標
+	VecFx32 ctrl_pos0;	//制御点０
+	VecFx32 ctrl_pos1;	//制御点１
+	VecFx32 end_pos;	//終了座標
+	int sync_now;		//現在のシンク
+	int sync_max;		//シンク最大数
+} PROGVAL_CATMULLROM_WORK;
+//-------------------------------------
+///	背面動作
+//=====================================
+typedef struct 
+{
+  PROGVAL_ACLR_WORK_FX  aclr;
+  BOOL is_start;
+} BGMOVE_WORK;
+
+//-------------------------------------
+///	蝶操作
+//=====================================
+typedef struct 
+{
+  GFL_CLWK  *p_clwk;  //描画
+  VecFx32 pre_pos;        //3D座標
+  u16     angle_now;  //現在の角度
+  u16     angle_std;  //目的値までの角度
+  u16     angle_max;  //角度最大
+  fx32    speed;      //進む速さ
+  u16     angle_speed;//角速度
+  u8      dummy;
+
+  u16     target_x;   //目的座標X
+  u16     target_y;   //目的座標Y
+
+  PROGVAL_CATMULLROM_WORK cutmullrom;
+} BUTTERFLY_WORK;
+typedef struct
+{ 
+  BUTTERFLY_WORK  wk[IRC_COMPATIBLE_SV_RANKING_MAX];
+  u32 cnt;
+  u16 idx;
+  u16 idx_max;
+} BUTTERFLY_SYS;
 
 //-------------------------------------
 ///	相性診断メニューメインワーク
@@ -335,11 +405,12 @@ struct _IRC_MENU_MAIN_WORK
 	MSG_WORK				msg;
 	MSGWND_WORK			msgwnd;
 	BUTTON_WORK			btn;
-	BACKOBJ_WORK		backobj;
+	//BACKOBJ_WORK		backobj;
+  BGMOVE_WORK     bgmove;
+  BUTTERFLY_SYS   butterfly;
 	
 	//下画面
 	APPBAR_WORK			*p_appbar;
-
 
 	MSGWND_WORK			msgtitle;	//タイトルメッセージ
 	
@@ -424,6 +495,7 @@ static void BUTTON_Main( BUTTON_WORK *p_wk );
 static BOOL BUTTON_IsTouch( const BUTTON_WORK *cp_wk, u32 *p_btnID );
 static void Button_TouchCallBack( u32 btnID, u32 event, void *p_param );
 //BACKOBJ
+#if 0
 static void BACKOBJ_Init( BACKOBJ_WORK *p_wk, const GRAPHIC_WORK *cp_grp, BACKOBJ_MOVE_TYPE type, BACKOBJ_COLOR color, u32 clwk_ofs, int sf_type );
 static void BACKOBJ_Exit( BACKOBJ_WORK *p_wk );
 static void BACKOBJ_Main( BACKOBJ_WORK *p_wk );
@@ -433,9 +505,32 @@ static void BACKOBJ_ONE_Init( BACKOBJ_ONE *p_wk, GFL_CLWK *p_clwk, BACKOBJ_COLOR
 static void BACKOBJ_ONE_Main( BACKOBJ_ONE *p_wk );
 static void BACKOBJ_ONE_Start( BACKOBJ_ONE *p_wk, const GFL_POINT *cp_start, const GFL_POINT *cp_end, u32 sync );
 static BOOL BACKOBJ_ONE_IsMove( const BACKOBJ_ONE *cp_wk );
+#endif
+//帳動作
+static void BUTTERFLY_Init( BUTTERFLY_WORK *p_wk, GFL_CLWK *p_clwk, fx32 speed, u16 angle_speed, u16 angle_max, BOOL is_blue, HEAPID heapID );
+static void BUTTERFLY_Exit( BUTTERFLY_WORK *p_wk );
+static void BUTTERFLY_Main( BUTTERFLY_WORK *p_wk );
+static void Butterfly_SetTarget( BUTTERFLY_WORK *p_wk );
+static BOOL Butterfly_IsArriveTarget( const BUTTERFLY_WORK *cp_wk );
+
+static void BUTTERFLY_SYS_Init( BUTTERFLY_SYS *p_wk, const GRAPHIC_WORK *cp_grp, const IRC_COMPATIBLE_SAVEDATA *cp_sv, HEAPID heapID );
+static void BUTTERFLY_SYS_Exit( BUTTERFLY_SYS *p_wk );
+static void BUTTERFLY_SYS_Main( BUTTERFLY_SYS *p_wk );
+//BGMOVE
+static void BGMOVE_Init( BGMOVE_WORK *p_wk, HEAPID heapID );
+static void BGMOVE_Exit( BGMOVE_WORK *p_wk );
+static void BGMOVE_Main( BGMOVE_WORK *p_wk );
+static void BGMOVE_Start( BGMOVE_WORK *p_wk );
 //汎用
 static void MainModules( IRC_MENU_MAIN_WORK *p_wk );
 static BOOL TP_GetRectTrg( const BUTTON_SETUP *cp_btn );
+
+//加速度
+static void PROGVAL_ACLR_InitFx( PROGVAL_ACLR_WORK_FX* p_wk, fx32 start, fx32 end, fx32 velocity, int sync );
+static BOOL	PROGVAL_ACLR_MainFx( PROGVAL_ACLR_WORK_FX* p_wk );
+//３次曲線
+static void PROGVAL_CATMULLROM_Init( PROGVAL_CATMULLROM_WORK* p_wk, const VecFx32 *cp_start_pos, const VecFx32 *cp_ctrl_pos0, const VecFx32 *cp_ctrl_pos1, const VecFx32 *cp_end_pos, int sync );
+static BOOL PROGVAL_CATMULLROM_Main( PROGVAL_CATMULLROM_WORK* p_wk );
 
 //=============================================================================
 /**
@@ -507,8 +602,8 @@ static const GFL_BG_BGCNT_HEADER sc_bgcnt_data[ GRAPHIC_BG_FRAME_MAX ] =
 	},
 	// GRAPHIC_BG_FRAME_S_ROGO
 	{
-		0, 0, 0x800, 0,
-		GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+		0, 0, 0x1000, 0,
+		GFL_BG_SCRSIZ_256x512, GX_BG_COLORMODE_16,
 		GX_BG_SCRBASE_0x0000, GX_BG_CHARBASE_0x04000, GFL_BG_CHRSIZ_256x256,
 		GX_BG_EXTPLTT_01, 2, 0, 0, FALSE
 	},
@@ -516,21 +611,21 @@ static const GFL_BG_BGCNT_HEADER sc_bgcnt_data[ GRAPHIC_BG_FRAME_MAX ] =
 	{
 		0, 0, 0x800, 0,
 		GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-		GX_BG_SCRBASE_0x0800, GX_BG_CHARBASE_0x08000, GFL_BG_CHRSIZ_256x256,
+		GX_BG_SCRBASE_0x1000, GX_BG_CHARBASE_0x08000, GFL_BG_CHRSIZ_256x256,
 		GX_BG_EXTPLTT_01, 1, 0, 0, FALSE
 	},
 	// GRAPHIC_BG_FRAME_S_BACK
 	{
 		0, 0, 0x800, 0,
 		GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-		GX_BG_SCRBASE_0x1000, GX_BG_CHARBASE_0x0c000, GFL_BG_CHRSIZ_256x256,
+		GX_BG_SCRBASE_0x2000, GX_BG_CHARBASE_0x0c000, GFL_BG_CHRSIZ_256x256,
 		GX_BG_EXTPLTT_01, 3, 0, 0, FALSE
 	},
 	// GRAPHIC_BG_FRAME_S_TITLE
 	{
-		0, 0, 0x800, 0,
+		0, 0, 0x1000, 0,
 		GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_256,
-		GX_BG_SCRBASE_0x1800, GX_BG_CHARBASE_0x14000, GFL_BG_CHRSIZ256_128x128,
+		GX_BG_SCRBASE_0x3000, GX_BG_CHARBASE_0x14000, GFL_BG_CHRSIZ256_128x128,
 		GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
 	},
 
@@ -606,7 +701,7 @@ static GFL_PROC_RESULT IRC_MENU_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p
 		{	
 			comm	= GAMESYSTEM_GetGameCommSysPtr(p_wk->p_param->p_gamesys);
 		}
-		INFOWIN_Init( sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_INFOWIN], IRC_MENU_BG_PAL_M_15, comm, HEAPID_IRCCOMPATIBLE );
+		INFOWIN_Init( sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_INFOWIN], IRC_MENU_BG_PAL_M_05, comm, HEAPID_IRCCOMPATIBLE );
 	}
 	
 	BUTTON_Init( &p_wk->btn, sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_BTN],
@@ -618,7 +713,7 @@ static GFL_PROC_RESULT IRC_MENU_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p
 					GFL_ARCUTIL_TRANSINFO_GetPos(p_wk->bg.frame_char2), IRC_MENU_BG_PAL_S_06 );
 
 	MSGWND_InitEx( &p_wk->msgtitle, sc_bgcnt_frame[GRAPHIC_BG_FRAME_S_TITLE],
-			MSGWND_TITLE_X, MSGWND_TITLE_Y, MSGWND_TITLE_W, MSGWND_TITLE_H, IRC_MENU_BG_PAL_S_08, IRC_MENU_BG_PAL_S_08*0x10+0xf, GFL_BMP_CHRAREA_GET_B, HEAPID_IRCCOMPATIBLE );
+			MSGWND_TITLE_X, MSGWND_TITLE_Y, MSGWND_TITLE_W, MSGWND_TITLE_H, IRC_MENU_BG_PAL_S_08, 1, GFL_BMP_CHRAREA_GET_B, HEAPID_IRCCOMPATIBLE );
 	MSGWND_PrintCenter( &p_wk->msgtitle, &p_wk->msg, COMPATI_TITLE_000 );
 	
 //	NAGI_Printf( "text chr num = %d\n", GFL_BMPWIN_GetChrNum( p_wk->msgwnd.p_bmpwin ) );
@@ -628,13 +723,25 @@ static GFL_PROC_RESULT IRC_MENU_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p
 	GFL_BG_SetRotateCenterReq( sc_bgcnt_frame[GRAPHIC_BG_FRAME_S_TITLE], GFL_BG_CENTER_X_SET, (MSGWND_TITLE_X + MSGWND_TITLE_W/2)*8 );
 	GFL_BG_SetRotateCenterReq( sc_bgcnt_frame[GRAPHIC_BG_FRAME_S_TITLE], GFL_BG_CENTER_Y_SET, (MSGWND_TITLE_Y + MSGWND_TITLE_H/2)*8 );
 
-	GFL_BG_SetVisible( sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_TEXT], FALSE );
 
-	BACKOBJ_Init( &p_wk->backobj, &p_wk->grp, BACKOBJ_MOVE_TYPE_RAIN, BACKOBJ_COLOR_RED, CLWKID_BACKOBJ_TOP, CLSYS_DEFREND_SUB );
+	//BACKOBJ_Init( &p_wk->backobj, &p_wk->grp, BACKOBJ_MOVE_TYPE_RAIN, BACKOBJ_COLOR_RED, CLWKID_BACKOBJ_TOP, CLSYS_DEFREND_SUB );
+  //
+  BGMOVE_Init( &p_wk->bgmove, HEAPID_IRCCOMPATIBLE );
+  { 
+    GAMEDATA *p_data  = NULL;
+    SAVE_CONTROL_WORK *p_sv_ctrl  = NULL;
+    IRC_COMPATIBLE_SAVEDATA *p_sv = NULL;
+#ifndef NO_GAMESYS_FLAG
+    p_data  = GAMESYSTEM_GetGameData( p_wk->p_param->p_gamesys );
+    p_sv_ctrl  = GAMEDATA_GetSaveControlWork( p_data );
+    p_sv = IRC_COMPATIBLE_SV_GetSavedata( p_sv_ctrl );
+#endif
+    BUTTERFLY_SYS_Init( &p_wk->butterfly, &p_wk->grp, p_sv, HEAPID_IRCCOMPATIBLE );
+  }
 
 	{	
 		GFL_CLUNIT	*p_unit	= GRAPHIC_GetClunit( &p_wk->grp );
-		p_wk->p_appbar	= APPBAR_Init( APPBAR_OPTION_MASK_RETURN, p_unit, sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_INFOWIN], IRC_MENU_BG_PAL_M_14, IRC_MENU_OBJ_PAL_M_00, APP_COMMON_MAPPING_128K, HEAPID_IRCCOMPATIBLE );
+		p_wk->p_appbar	= APPBAR_Init( APPBAR_OPTION_MASK_RETURN, p_unit, sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_INFOWIN], IRC_MENU_BG_PAL_M_14, IRC_MENU_OBJ_PAL_M_00, APP_COMMON_MAPPING_128K, MSG_GetFont(&p_wk->msg ), MSG_GetPrintQue(&p_wk->msg ), HEAPID_IRCCOMPATIBLE );
 	}
 
 	switch( p_wk->p_param->mode )
@@ -644,7 +751,6 @@ static GFL_PROC_RESULT IRC_MENU_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p
 		break;
 
 	case IRCMENU_MODE_RETURN:
-		GFL_BG_SetVisible( sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_TEXT], FALSE );
 		SEQ_Change( p_wk, SEQFUNC_DisConnect );
 		break;
 
@@ -683,7 +789,9 @@ static GFL_PROC_RESULT IRC_MENU_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void *p
 	APPBAR_Exit( p_wk->p_appbar );	
 
 	//モジュール破棄
-	BACKOBJ_Exit( &p_wk->backobj );
+  BUTTERFLY_SYS_Exit( &p_wk->butterfly );
+  BGMOVE_Exit( &p_wk->bgmove );
+	//BACKOBJ_Exit( &p_wk->backobj );
 	BUTTON_Exit( &p_wk->btn );
 
 	MSGWND_Exit( &p_wk->msgtitle );
@@ -742,39 +850,17 @@ static GFL_PROC_RESULT IRC_MENU_PROC_Main( GFL_PROC *p_proc, int *p_seq, void *p
 	case SEQ_FADEOUT_WAIT:
 		if( !GFL_FADE_CheckFade() )
 		{	
+      GFL_CLWK *p_clwk  = GRAPHIC_GetClwk( &p_wk->grp, CLWKID_BUTTERFLY_SP );
+      GFL_CLACT_WK_SetAutoAnmFlag( p_clwk, TRUE );
+      BGMOVE_Start( &p_wk->bgmove );
 			*p_seq	= SEQ_MAIN;
 		}
 		break;
 
 	case SEQ_MAIN:
     
-#ifdef PM_DEBUG
-    {
-      BOOL is_update  = FALSE;
-      if( GFL_UI_KEY_GetTrg() & PAD_KEY_UP )
-      { 
-        is_update = TRUE;
-        sc_debug_num  += FX32_CONST(0.1F);
-        OS_TFPrintf( 3, "0x%x \n", sc_debug_num );
-      }
-      if( GFL_UI_KEY_GetTrg() & PAD_KEY_DOWN )
-      { 
-        is_update = TRUE;
-        sc_debug_num  -= FX32_CONST(0.1F);
-        OS_TFPrintf( 3, "0x%x \n", sc_debug_num );
-      }
-
-      if( is_update )
-      { 
-
-        GFL_BG_SetScaleReq( sc_bgcnt_frame[GRAPHIC_BG_FRAME_S_TITLE], GFL_BG_SCALE_X_SET, sc_debug_num );
-        GFL_BG_SetScaleReq( sc_bgcnt_frame[GRAPHIC_BG_FRAME_S_TITLE], GFL_BG_SCALE_Y_SET, sc_debug_num );
-        GFL_BG_LoadScreenReq(sc_bgcnt_frame[GRAPHIC_BG_FRAME_S_TITLE]);
-      }
-    }
-#endif
-
-
+    BUTTERFLY_SYS_Main( &p_wk->butterfly );
+    BGMOVE_Main( &p_wk->bgmove );
 		p_wk->seq_function( p_wk, &p_wk->seq );
 		if( p_wk->is_end )
 		{	
@@ -1116,8 +1202,7 @@ static void GRAPHIC_OBJ_Init( GRAPHIC_OBJ_WORK *p_wk, const GFL_DISP_VRAM* cp_vr
 		int i;
 		GFL_CLWK_DATA	cldata;
 		GFL_STD_MemClear( &cldata, sizeof(GFL_CLWK_DATA) );
-
-		for( i = CLWKID_BACKOBJ_TOP; i < CLWKID_BACKOBJ_END; i++ )
+		for( i = CLWKID_BUTTERFLY_TOP; i < CLWKID_BUTTERFLY_END; i++ )
 		{	
 			p_wk->p_clwk[i]	= GFL_CLACT_WK_Create( p_wk->p_clunit, 
 					p_wk->reg_id[OBJREGID_TOUCH_CHR],
@@ -1129,9 +1214,25 @@ static void GRAPHIC_OBJ_Init( GRAPHIC_OBJ_WORK *p_wk, const GFL_DISP_VRAM* cp_vr
 					);
 			GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[i], FALSE );
 			GFL_CLACT_WK_SetBgPri( p_wk->p_clwk[i], 3 );
+			GFL_CLACT_WK_SetBgPri( p_wk->p_clwk[i], 0 );
 			GFL_CLACT_WK_SetAutoAnmFlag( p_wk->p_clwk[i], TRUE );
-			GFL_CLACT_WK_SetAnmSeq( p_wk->p_clwk[i], 0 );
+      GFL_CLACT_WK_SetAffineParam( p_wk->p_clwk[i], CLSYS_AFFINETYPE_DOUBLE );
 		}
+
+    cldata.pos_x  = 129;
+    cldata.pos_y  = 104;
+    cldata.anmseq = 15;
+    p_wk->p_clwk[CLWKID_BUTTERFLY_SP]	= GFL_CLACT_WK_Create( p_wk->p_clunit, 
+        p_wk->reg_id[OBJREGID_TOUCH_CHR],
+        p_wk->reg_id[OBJREGID_TOUCH_PLT],
+        p_wk->reg_id[OBJREGID_TOUCH_CEL],
+        &cldata,
+        CLSYS_DEFREND_SUB,
+					heapID
+        );
+    GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[CLWKID_BUTTERFLY_SP], TRUE );
+    GFL_CLACT_WK_SetBgPri( p_wk->p_clwk[CLWKID_BUTTERFLY_SP], 2 );
+    GFL_CLACT_WK_SetAutoAnmFlag( p_wk->p_clwk[CLWKID_BUTTERFLY_SP], FALSE );
 	}
 }
 //----------------------------------------------------------------------------
@@ -1509,7 +1610,7 @@ static void MSGWND_PrintCenter( MSGWND_WORK* p_wk, const MSG_WORK *cp_msg, u32 s
 	PRINTSYS_QUE_Clear( p_que );
 
 	//表示
-	PRINT_UTIL_PrintColor( &p_wk->print_util, p_que, x, y, p_wk->p_strbuf, p_font,PRINTSYS_LSB_Make(0xf,0xe,4) );
+	PRINT_UTIL_PrintColor( &p_wk->print_util, p_que, x, y, p_wk->p_strbuf, p_font,PRINTSYS_LSB_Make(0xf,0xe,1) );
 }
 
 //----------------------------------------------------------------------------
@@ -1876,7 +1977,6 @@ static void SEQFUNC_Select( IRC_MENU_MAIN_WORK *p_wk, u16 *p_seq )
 	case SEQ_INIT:
 		p_wk->select	= BTNID_NULL;
 		p_wk->is_send	= FALSE;
-		GFL_BG_SetVisible( sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_TEXT], FALSE );
 		p_wk->start_ms	= OS_TicksToMilliSeconds32( OS_GetTick() );
 		*p_seq	= SEQ_SELECT;
 		break;
@@ -1903,7 +2003,6 @@ static void SEQFUNC_Select( IRC_MENU_MAIN_WORK *p_wk, u16 *p_seq )
 
 	case SEQ_MSG:
 		MSGWND_Print( &p_wk->msgwnd, &p_wk->msg, COMPATI_STR_003, 0, 0  );
-		GFL_BG_SetVisible( sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_TEXT], TRUE );
 		SEQ_Change( p_wk, SEQFUNC_Connect );
 		break;
 #if 0
@@ -2188,8 +2287,8 @@ static void BUTTON_Init( BUTTON_WORK *p_wk, u8 frm, const	 BUTTON_SETUP *cp_btn_
 		{	
 			//BMPWIN作成
 			cp_setup	= &cp_btn_setup_tbl[i];
-			p_wk->p_bmpwin[i]	= GFL_BMPWIN_Create( frm, cp_setup->x,
-					cp_setup->y, cp_setup->w, cp_setup->h, cp_setup->plt, GFL_BMP_CHRAREA_GET_B );
+			p_wk->p_bmpwin[i]	= GFL_BMPWIN_Create( frm, cp_setup->x+4,
+					cp_setup->y+1, cp_setup->w-8, cp_setup->h-2, cp_setup->plt, GFL_BMP_CHRAREA_GET_B );
 
 			//BMPWIN転送
 			GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin[i]), 0x4 );
@@ -2206,7 +2305,7 @@ static void BUTTON_Init( BUTTON_WORK *p_wk, u8 frm, const	 BUTTON_SETUP *cp_btn_
 				w	= PRINTSYS_GetStrWidth( p_strbuf, MSG_GetFont(cp_msg), 0 );
 				h	= PRINTSYS_GetStrHeight( p_strbuf, MSG_GetFont(cp_msg) );
 				PRINTSYS_Print( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin[i]), 
-					cp_setup->w*4-w/2, cp_setup->h*4-h/2, p_strbuf, MSG_GetFont(cp_msg) );
+					(cp_setup->w-8)*4-w/2, (cp_setup->h-2)*4-h/2, p_strbuf, MSG_GetFont(cp_msg) );
 			}
 			GFL_STR_DeleteBuffer( p_strbuf );
 
@@ -2277,37 +2376,33 @@ static BOOL BUTTON_IsTouch( const BUTTON_WORK *cp_wk, u32 *p_btnID )
 		for( i = 0; i < cp_wk->btn_num; i++ )
 		{	
 			u8 active_plt;
-			u8 no_active_plt;
 			u8 frm;
 			u8 x, y, w, h;
 			GFL_BMPWIN	*p_bmpwin	= cp_wk->p_bmpwin[i];
 			frm	= GFL_BMPWIN_GetFrame(p_bmpwin);
-			x		= GFL_BMPWIN_GetPosX(p_bmpwin);
-			y		= GFL_BMPWIN_GetPosY(p_bmpwin);
-			w		= GFL_BMPWIN_GetSizeX(p_bmpwin);
-			h		= GFL_BMPWIN_GetSizeY(p_bmpwin);
+			x		= cp_wk->cp_btn_setup_tbl[i].x;
+			y		= cp_wk->cp_btn_setup_tbl[i].y;
+			w		= cp_wk->cp_btn_setup_tbl[i].w;
+			h		= cp_wk->cp_btn_setup_tbl[i].h;
 			switch( i )
 			{
 			case BTNID_COMATIBLE:
 				active_plt		= IRC_MENU_BG_PAL_M_12;
-				no_active_plt	= IRC_MENU_BG_PAL_M_13;
 				break;
 			case BTNID_RANKING:
 				active_plt		= IRC_MENU_BG_PAL_M_09;
-				no_active_plt	= IRC_MENU_BG_PAL_M_10;
 				break;
 			}
 
 			if( i == cp_wk->select_btn_id )
 			{	
 				//選ばれたボタン
-				GFL_BG_ChangeScreenPalette( frm, x-1, y-1, w+2, h+2, active_plt );
+				GFL_BG_ChangeScreenPalette( frm, x, y, w, h, active_plt );
 				GFL_BG_LoadScreenReq( frm );
 			}
 			else
 			{
 				//選ばれなかったボタン
-				GFL_BG_ChangeScreenPalette( frm, x-1, y-1, w+2, h+2, no_active_plt );
 				GFL_BG_LoadScreenReq( frm );
 			}
 		}
@@ -2339,6 +2434,7 @@ static void Button_TouchCallBack( u32 btnID, u32 event, void *p_param )
 		p_wk->select_btn_id	= btnID;
 	}
 }
+#if 0
 //=============================================================================
 /**
  *			BACKOBJ
@@ -2583,6 +2679,417 @@ static BOOL BACKOBJ_ONE_IsMove( const BACKOBJ_ONE *cp_wk )
 {	
 	return cp_wk->is_req;
 }
+#endif
+//=============================================================================
+/**
+ *    BGMOVE
+ */
+//=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief  BGワーク  初期化
+ *
+ *	@param	BGMOVE_WORK *p_wk   ワーク
+ *	@param	heapID              ヒープID
+ */
+//-----------------------------------------------------------------------------
+static void BGMOVE_Init( BGMOVE_WORK *p_wk, HEAPID heapID )
+{ 
+  GFL_STD_MemClear( p_wk, sizeof(BGMOVE_WORK) );
+
+  GFL_BG_SetScrollReq( sc_bgcnt_frame[ GRAPHIC_BG_FRAME_S_ROGO ], GFL_BG_SCROLL_Y_SET, BGMOVE_MOVE_END_Y );
+  GFL_BG_SetScrollReq( sc_bgcnt_frame[ GRAPHIC_BG_FRAME_S_TITLE ], GFL_BG_SCROLL_Y_SET,BGMOVE_MOVE_END_Y );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  BGワーク  破棄
+ *
+ *	@param	BGMOVE_WORK *p_wk   ワーク
+ */
+//-----------------------------------------------------------------------------
+static void BGMOVE_Exit( BGMOVE_WORK *p_wk )
+{ 
+  GFL_STD_MemClear( p_wk, sizeof(BGMOVE_WORK) );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  BGワーク  メイン
+ *
+ *	@param	BGMOVE_WORK *p_wk   ワーク
+ */
+//-----------------------------------------------------------------------------
+static void BGMOVE_Main( BGMOVE_WORK *p_wk )
+{ 
+  if( p_wk->is_start )
+  {
+  
+    if( PROGVAL_ACLR_MainFx(&p_wk->aclr)  )
+    { 
+      p_wk->is_start = FALSE;
+    }
+
+    GFL_BG_SetScrollReq( sc_bgcnt_frame[ GRAPHIC_BG_FRAME_S_ROGO ], GFL_BG_SCROLL_Y_SET, BGMOVE_MOVE_END_Y - (p_wk->aclr.now_val >> FX32_SHIFT) );
+    GFL_BG_SetScrollReq( sc_bgcnt_frame[ GRAPHIC_BG_FRAME_S_TITLE ], GFL_BG_SCROLL_Y_SET, BGMOVE_MOVE_END_Y - (p_wk->aclr.now_val >> FX32_SHIFT) );
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  BGワーク  開始
+ *
+ *	@param	BGMOVE_WORK *p_wk   ワーク
+ */
+//-----------------------------------------------------------------------------
+static void BGMOVE_Start( BGMOVE_WORK *p_wk )
+{ 
+  p_wk->is_start  = TRUE;
+  PROGVAL_ACLR_InitFx( &p_wk->aclr, FX32_CONST(BGMOVE_MOVE_START_Y), FX32_CONST(BGMOVE_MOVE_END_Y), BGMOVE_MOVE_VELOCITY_Y, BGMOVE_MOVE_SYNC );
+}
+//=============================================================================
+/**
+ *      蝶動作
+ */
+//=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief  蝶1匹の動き 初期化
+ *
+ *	@param	BUTTERFLY_WORK *p_wk  ワーク
+ *	@param	*p_clwk               CLWK
+ *	@param	speed                 進行速度
+ *	@param	angle_speed           角速度
+ *	@param	angle_max             角度最大
+ *	@param	heapID                ヒープID
+ */
+//-----------------------------------------------------------------------------
+static void BUTTERFLY_Init( BUTTERFLY_WORK *p_wk, GFL_CLWK *p_clwk, fx32 speed, u16 angle_speed, u16 angle_max, BOOL is_blue, HEAPID heapID )
+{ 
+  GFL_STD_MemClear( p_wk, sizeof(BUTTERFLY_WORK) );
+  p_wk->p_clwk      = p_clwk;
+  p_wk->angle_max   = angle_max;
+  p_wk->speed       = speed;
+  p_wk->angle_speed = angle_speed;
+  p_wk->angle_now   = 0;
+
+  //色の設定
+  {
+    u16 anmseq;
+    if( is_blue )
+    { 
+      anmseq  = 13;
+    }
+    else
+    { 
+      anmseq  = 12;
+    }
+    GFL_CLACT_WK_SetAnmSeq( p_wk->p_clwk, anmseq );
+  }
+
+  //初期は画面外にいる
+  { 
+    GFL_CLACTPOS  pos;
+#if 0
+    switch( GFUser_GetPublicRand0(4) )
+    { 
+    case 0: //左
+      pos.x = -16;
+      pos.y = GFUser_GetPublicRand0( 192 );
+      break;
+    case 1: //右
+      pos.x = 256+16;
+      pos.y = GFUser_GetPublicRand0( 192 );
+      break;
+    case 2: //上
+      pos.x = GFUser_GetPublicRand0( 256 );
+      pos.y = -16;
+      break;
+    case 3: //下
+      pos.x = GFUser_GetPublicRand0( 256 );
+      pos.y = 192 + 16;
+      break;
+    }
+#else
+    pos.x = 128;
+    pos.y = 96;
+#endif
+    GFL_CLACT_WK_SetPos( p_wk->p_clwk, &pos, CLSYS_DEFREND_SUB );
+  }
+
+  //初期の目的地設定（上記初期値設定後に行うこと）
+  Butterfly_SetTarget( p_wk );
+
+  { 
+    GFL_CLACTPOS  pos;
+    GFL_CLACT_WK_GetPos( p_wk->p_clwk, &pos, CLSYS_DEFREND_SUB );
+    NAGI_Printf( "●蝶\n" );
+    NAGI_Printf( "　初期座標 X=%d Y=%d\n", pos.x, pos.y );
+    NAGI_Printf( "　目標座標 X=%d Y=%d\n", p_wk->target_x, p_wk->target_y );
+    NAGI_Printf( "　目標角度 0x%x\n", p_wk->angle_std );
+    NAGI_Printf( "　速度     0x%x\n", p_wk->speed );
+    NAGI_Printf( "　角速度 0x%x\n", p_wk->angle_speed );
+    NAGI_Printf( "　最大角 0x%x\n", p_wk->angle_max );
+  }
+
+  GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk, TRUE );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  蝶１匹の動き  破棄
+ *
+ *	@param	BUTTERFLY_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void BUTTERFLY_Exit( BUTTERFLY_WORK *p_wk )
+{ 
+  GFL_STD_MemClear( p_wk, sizeof(BUTTERFLY_WORK) );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  蝶１匹の動き  メイン
+ *
+ *	@param	BUTTERFLY_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void BUTTERFLY_Main( BUTTERFLY_WORK *p_wk )
+{
+  //揺れる処理
+  { 
+    p_wk->angle_now   += p_wk->angle_speed;
+  }
+
+  //移動
+  p_wk->pre_pos = p_wk->cutmullrom.now_val;
+  //目的地まで来たら、再度目的地を設定
+  if( PROGVAL_CATMULLROM_Main( &p_wk->cutmullrom ) )
+  { 
+    Butterfly_SetTarget( p_wk );
+  }
+
+
+  //回転
+  { 
+    VecFx32 vec_move;
+
+    VEC_Subtract( &p_wk->cutmullrom.now_val, &p_wk->pre_pos, &vec_move );
+    vec_move.z  = 0;
+    VEC_Normalize( &vec_move, &vec_move );
+
+    //OBJの回転のために、移動する方向から角度を取り出す
+    { 
+
+      VecFx32 vec0;
+      VecFx32 vec_dir;
+      u16 obj_angle;
+
+      VEC_Set( &vec0, 0, -FX32_ONE, 0 );
+      vec_dir = vec_move;
+
+      obj_angle = FX_AcosIdx( GFL_CALC3D_VEC_GetCos( &vec_dir, &vec0 ) );
+
+      { 
+        VecFx32 vec_norm;
+        VEC_Set( &vec_norm, 0, 0, FX32_ONE );
+        //cosでは0～180までしか求められないので左右判別する
+        if( GFL_CALC3D_VEC_CalcRotVectorLR( &vec_norm, &vec0, &vec_dir ) < 0 )
+        { 
+          obj_angle = DEG_TO_IDX(360) - obj_angle;
+        }
+      }
+
+      GFL_CLACT_WK_SetRotation( p_wk->p_clwk, obj_angle );
+    }
+  }
+
+  //設定
+  { 
+    GFL_CLACTPOS  pos;
+
+    pos.x = p_wk->cutmullrom.now_val.x >> FX32_SHIFT;
+    pos.y = p_wk->cutmullrom.now_val.y >> FX32_SHIFT;
+
+    GFL_CLACT_WK_SetPos( p_wk->p_clwk, &pos, CLSYS_DEFREND_SUB );
+  }
+
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  蝶１匹の動き  ターゲット設定
+ *
+ *	@param	BUTTERFLY_WORK *p_wk  ワーク
+ *	@param	x   X座標設定
+ *	@param	y   Y座標設定
+ */
+//-----------------------------------------------------------------------------
+static void Butterfly_SetTarget( BUTTERFLY_WORK *p_wk )
+{ 
+  //p_wk->target_x  = x;
+  //p_wk->target_y  = y;
+  //NAGI_Printf( "Set Target X=%d Y=%d\n", x, y );
+
+  { 
+    GFL_CLACTPOS  pos;
+    VecFx32 start_pos;
+    VecFx32 end_pos;
+    VecFx32 ctrl_pos0;
+    VecFx32 ctrl_pos1;
+
+    GFL_CLACT_WK_GetPos( p_wk->p_clwk, &pos, CLSYS_DEFREND_SUB );
+    VEC_Set( &start_pos, pos.x << FX32_SHIFT, pos.y << FX32_SHIFT, 0 );
+    VEC_Set( &end_pos, GFUser_GetPublicRand0( 256 ) << FX32_SHIFT, GFUser_GetPublicRand0( 192 ) << FX32_SHIFT, 0 );
+    VEC_Set( &ctrl_pos0, GFUser_GetPublicRand0( 256 ) << FX32_SHIFT, GFUser_GetPublicRand0( 192 ) << FX32_SHIFT, 0 );
+    VEC_Set( &ctrl_pos1, GFUser_GetPublicRand0( 256 ) << FX32_SHIFT, GFUser_GetPublicRand0( 192 ) << FX32_SHIFT, 0 );
+
+    PROGVAL_CATMULLROM_Init( &p_wk->cutmullrom, &start_pos, &ctrl_pos0, &ctrl_pos1, &end_pos, 1000 );
+  }
+
+#if 0
+  //目的地までの角度を計算
+  { 
+    VecFx32 dir;
+
+    GFL_CLACTPOS  pos;
+    GFL_CLACT_WK_GetPos( p_wk->p_clwk, &pos, CLSYS_DEFREND_SUB );
+
+    VEC_Set( &dir, FX32_CONST(p_wk->target_x - pos.x), FX32_CONST(p_wk->target_y - pos.y), 0 );
+    VEC_Normalize( &dir, &dir );
+    OS_Printf( "dir X=%f Y=%f\n", FX_FX32_TO_F32(dir.x), FX_FX32_TO_F32(dir.y) );
+
+    { 
+      VecFx32 vec0;       //0度のベクトル
+      VEC_Set( &vec0, FX32_ONE, 0, 0 );
+      p_wk->angle_std = FX_AcosIdx( GFL_CALC3D_VEC_GetCos( &dir, &vec0 ) );
+      { 
+        VecFx32 vec_norm;
+        VEC_Set( &vec_norm, 0, 0, FX32_ONE );
+        //cosでは0～180までしか求められないので左右判別する
+        if( GFL_CALC3D_VEC_CalcRotVectorLR( &vec_norm, &vec0, &dir ) < 0 )
+        { 
+          p_wk->angle_std = DEG_TO_IDX(360) - p_wk->angle_std;
+        }
+      }
+      NAGI_Printf( "目標角度 %d\n", 360 * p_wk->angle_std / 0xFFFF  );
+    }
+  }
+#endif
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  蝶1匹の動き 到着チェック
+ *
+ *	@param	const BUTTERFLY_WORK *cp_wk ワーク
+ *
+ *	@return TRUEで到着  FALSEでまだ
+ */
+//-----------------------------------------------------------------------------
+static BOOL Butterfly_IsArriveTarget( const BUTTERFLY_WORK *cp_wk )
+{
+	s32 vx, vy, r;
+  GFL_CLACTPOS  pos;
+
+  GFL_CLACT_WK_GetPos( cp_wk->p_clwk, &pos, CLSYS_DEFREND_SUB );
+
+	vx	= cp_wk->target_x - pos.x;
+	vy	= cp_wk->target_y - pos.y;
+	r	= 20;
+	
+	return vx * vx + vy * vy <= r * r;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  蝶動きシステム  初期化
+ *
+ *	@param	BUTTERFLY_SYS *p_wk   ワーク
+ *	@param	GRAPHIC_WORK *cp_grp  グラフィックシステム
+ *	@param	heapID  ヒープID
+ */
+//-----------------------------------------------------------------------------
+static void BUTTERFLY_SYS_Init( BUTTERFLY_SYS *p_wk, const GRAPHIC_WORK *cp_grp, const IRC_COMPATIBLE_SAVEDATA *cp_sv, HEAPID heapID )
+{ 
+  GFL_STD_MemClear( p_wk, sizeof(BUTTERFLY_SYS) );
+  if( cp_sv == NULL )
+  { 
+    p_wk->idx_max = 30;
+  }
+  else
+  { 
+    p_wk->idx_max = IRC_COMPATIBLE_SV_GetRankNum( cp_sv );
+  }
+
+  //蝶の設定
+  { 
+    GFL_CLWK *p_clwk;
+    fx32 speed;
+    u16 angle_speed;
+    u16 angle_max;
+    BOOL is_blue;
+
+    int i;
+    for( i = 0; i < p_wk->idx_max; i++ )
+    { 
+      p_clwk      = GRAPHIC_GetClwk( cp_grp, CLWKID_BUTTERFLY_TOP + i );
+      speed       = FX32_CONST(0.5f); + GFUser_GetPublicRand0( FX32_CONST(0.3f) );
+      angle_speed = DEG_TO_IDX(1); + GFUser_GetPublicRand0( DEG_TO_IDX(1) );
+      angle_max   = DEG_TO_IDX(50); + GFUser_GetPublicRand0( DEG_TO_IDX(30) );
+      if( cp_sv == NULL )
+      {
+        is_blue = GFUser_GetPublicRand0( 2 );
+      }
+      else
+      { 
+        is_blue     = IRC_COMPATIBLE_SV_GetSex( cp_sv, i ) == IRC_COMPATIBLE_SEX_MALE;
+      }
+      BUTTERFLY_Init( &p_wk->wk[i], p_clwk, speed, angle_speed, angle_max, is_blue, heapID );
+    }
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  蝶動きシステム  破棄
+ *
+ *	@param	BUTTERFLY_SYS *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void BUTTERFLY_SYS_Exit( BUTTERFLY_SYS *p_wk )
+{ 
+  { 
+    int i;
+    for( i = 0; i < p_wk->idx_max; i++ )
+    { 
+      BUTTERFLY_Exit( &p_wk->wk[i] );
+    }
+  }
+
+  GFL_STD_MemClear( p_wk, sizeof(BUTTERFLY_SYS) );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  蝶動きシステム  メイン処理
+ *
+ *	@param	BUTTERFLY_SYS *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void BUTTERFLY_SYS_Main( BUTTERFLY_SYS *p_wk )
+{ 
+  { 
+    int i;
+    for( i = 0; i < p_wk->idx; i++ )
+    { 
+      BUTTERFLY_Main( &p_wk->wk[i] );
+    }
+  }
+
+  //徐々に蝶が増えていく処理
+  if( p_wk->cnt++> 0 )
+  { 
+    p_wk->cnt = 0;
+    if( p_wk->idx < p_wk->idx_max )
+    { 
+      p_wk->idx++;
+    }
+  }
+}
+
 //=============================================================================
 /**
  *				汎用
@@ -2616,3 +3123,199 @@ static BOOL TP_GetRectTrg( const BUTTON_SETUP *cp_btn )
 
 	return FALSE;
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	等加速度直線運動シンク同期版　初期化
+ *
+ *	@param	PROGVAL_ACLR_WORK_FX* p_wk	ワーク
+ *	@param	start						初期値
+ *	@param	end							終了値
+ *	@param	velocity					初速
+ *	@param	sync						かかるシンク
+ *
+ *	@return	none
+ */
+//-----------------------------------------------------------------------------
+static void PROGVAL_ACLR_InitFx( PROGVAL_ACLR_WORK_FX* p_wk, fx32 start, fx32 end, fx32 velocity, int sync )
+{
+	fx32 t_x_t;	// タイムの２乗
+	fx32 vot;	// 初速度＊タイム
+	fx32 dis;
+	fx32 a;
+
+	dis = end - start;
+	
+	// 加速値を求める
+	// a = 2(x - vot)/(t*t)
+	t_x_t	= (sync * sync) << FX32_SHIFT;
+	vot		= velocity * sync;
+	vot		= (dis - vot) * 2;
+	a		= FX_Div( vot, t_x_t );
+
+	p_wk->now_val	= start;
+	p_wk->start_val	= start;
+	p_wk->end_val	= end;
+	p_wk->velocity	= velocity;
+	p_wk->aclr		= a;
+	p_wk->sync_now	= 0;
+	p_wk->sync_max	= sync;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	等加速度直線運動シンク同期版　メイン処理
+ *
+ *	@param	PROGVAL_ACLR_WORK_FX* p_wk		ワーク
+ *
+ *	@return	TRUEなら処理終了、FALSEなら処理中
+ */
+//-----------------------------------------------------------------------------
+static BOOL PROGVAL_ACLR_MainFx( PROGVAL_ACLR_WORK_FX* p_wk )
+{
+	fx32 dis;
+	fx32 t_x_t;
+	fx32 calc_work;
+	fx32 vot;
+
+	if( p_wk->sync_now < (p_wk->sync_max-1) ) {
+		p_wk->sync_now++;
+
+		// 等加速度運動
+		// dis = vot + 1/2( a*(t*t) )
+		vot = FX_Mul( p_wk->velocity, p_wk->sync_now << FX32_SHIFT );
+		t_x_t = (p_wk->sync_now * p_wk->sync_now) << FX32_SHIFT;
+		calc_work = FX_Mul( p_wk->aclr, t_x_t );
+		calc_work = calc_work / 2;	// 1/2(a*(t*t))
+		dis = vot + calc_work;		///<移動距離
+
+		p_wk->now_val = p_wk->start_val + dis;
+
+
+		if( 0 < p_wk->aclr ) {
+			p_wk->now_val = MATH_MIN( p_wk->now_val, p_wk->end_val );
+		}else{
+			p_wk->now_val = MATH_MIN( p_wk->now_val, p_wk->end_val );
+		}
+
+		return FALSE;
+	}else {
+		p_wk->now_val = p_wk->end_val;
+		return TRUE;
+	}
+}
+
+//=============================================================================
+/**
+ *			３次曲線　CatmullRom曲線版
+ */
+//=============================================================================
+//----------------------------------------------------------------------------
+/*
+ *	@brief	３次曲線CatmullRom曲線版	初期化
+ *
+ *	@param	p_wk						ワーク
+ *	@param	start_pos					開始座標
+ *	@param	ctrl_pos0					制御点１
+ *	@param	ctrl_pos1					制御点２
+ *	@param	end_pos						終了座標
+ *	@param	sync						かかるシンク
+ *
+ *	@return	none
+ */
+//-----------------------------------------------------------------------------
+static void PROGVAL_CATMULLROM_Init( PROGVAL_CATMULLROM_WORK* p_wk, const VecFx32 *cp_start_pos, const VecFx32 *cp_ctrl_pos0, const VecFx32 *cp_ctrl_pos1, const VecFx32 *cp_end_pos, int sync )
+{
+/*	GF_ASSERT( cp_start_pos != NULL
+			&& cp_ctrl_pos0 != NULL
+			&& cp_ctrl_pos1 != NULL 
+			&& cp_end_pos != NULL );
+*/
+	p_wk->now_val	= *cp_start_pos;
+	p_wk->start_pos	= *cp_start_pos;
+	p_wk->ctrl_pos0	= *cp_ctrl_pos0;
+	p_wk->ctrl_pos1	= *cp_ctrl_pos1;
+	p_wk->end_pos	= *cp_end_pos;
+	p_wk->sync_now	= 0;
+	p_wk->sync_max	= sync;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	３次曲線CatmullRom曲線版	メイン処理化
+ *
+ *	@param	p_wk	ワーク
+ *
+ *	@returnTRUEなら処理終了、FALSEなら処理中
+ */
+//-----------------------------------------------------------------------------
+static BOOL PROGVAL_CATMULLROM_Main( PROGVAL_CATMULLROM_WORK* p_wk )
+{
+	if( p_wk->sync_now < (p_wk->sync_max-1) ) {	//	なぜ-1かというと、elseの中をふくめてのsyncだから
+		int	sync1div3	= (p_wk->sync_max-1) * 1 / 3;
+		int sync2div3	= (p_wk->sync_max-1) * 2 / 3;
+		fx32 t1, t2, t3;
+		fx32 mp0, mp1, mp2, mp3;
+
+		//	始点からP0までの曲線
+		if( p_wk->sync_now < sync1div3 ) {
+			t1	= FX_Div( FX32_CONST(p_wk->sync_now), FX32_CONST(sync1div3));
+			t2	= FX_Mul( t1, t1 );	//	t*t
+			t3	= FX_Mul( t2, t1 );	//	t*t*t
+
+			mp0	= 0;
+			mp1	=(   t2 - 3*t1 + 2*FX32_ONE) / 2;
+			mp2	=(-2*t2 + 4*t1) / 2;
+			mp3	=(   t2 -   t1) / 2;
+
+			p_wk->now_val.x	= FX_Mul(p_wk->start_pos.x, mp1) + FX_Mul(p_wk->ctrl_pos0.x, mp2)
+				+ FX_Mul(p_wk->ctrl_pos1.x, mp3);
+			p_wk->now_val.y	= FX_Mul(p_wk->start_pos.y, mp1) + FX_Mul(p_wk->ctrl_pos0.y, mp2)
+				+ FX_Mul(p_wk->ctrl_pos1.y, mp3);
+
+		//	P0からP1までの曲線
+		}else if( p_wk->sync_now < sync2div3 ) {
+			t1	= FX_Div( FX32_CONST(p_wk->sync_now-sync1div3), FX32_CONST(sync2div3-sync1div3));
+			t2	= FX_Mul( t1, t1 );	//	t*t
+			t3	= FX_Mul( t2, t1 );	//	t*t*t
+
+			mp0	=(  -t3 + 2*t2 - t1) / 2;
+			mp1	=( 3*t3 - 5*t2 + 2*FX32_ONE) / 2;
+			mp2	=(-3*t3 + 4*t2 + t1) / 2;
+			mp3	=(   t3 -   t2 ) / 2;
+
+			p_wk->now_val.x	= FX_Mul(p_wk->start_pos.x, mp0) + FX_Mul(p_wk->ctrl_pos0.x, mp1)
+				+ FX_Mul(p_wk->ctrl_pos1.x, mp2) + FX_Mul(p_wk->end_pos.x,   mp3);
+			p_wk->now_val.y	= FX_Mul(p_wk->start_pos.y, mp0) + FX_Mul(p_wk->ctrl_pos0.y, mp1)
+				+ FX_Mul(p_wk->ctrl_pos1.y, mp2) + FX_Mul(p_wk->end_pos.y,   mp3);
+
+		//	P1から終点までの曲線
+		}else if( sync2div3 <= p_wk->sync_now ) {
+			t1	= FX_Div( FX32_CONST(p_wk->sync_now-sync2div3), FX32_CONST(p_wk->sync_max-sync2div3));
+			t2	= FX_Mul( t1, t1 );	//	t*t
+			t3	= FX_Mul( t2, t1 );	//	t*t*t
+
+			mp0	=(   t2 - t1) /2;
+			mp1	=(-2*t2		   + 2*FX32_ONE) / 2;
+			mp2	=(   t2 + t1) / 2;
+			mp3	=0;	
+
+			p_wk->now_val.x	= FX_Mul(p_wk->ctrl_pos0.x, mp0)
+				+ FX_Mul(p_wk->ctrl_pos1.x, mp1) + FX_Mul(p_wk->end_pos.x, mp2);
+			p_wk->now_val.y	= FX_Mul(p_wk->ctrl_pos0.y, mp0)
+				+ FX_Mul(p_wk->ctrl_pos1.y, mp1) + FX_Mul(p_wk->end_pos.y, mp2);
+			p_wk->now_val.z	= FX_Mul(p_wk->ctrl_pos0.z, mp0)
+				+ FX_Mul(p_wk->ctrl_pos1.z, mp1) + FX_Mul(p_wk->end_pos.z, mp2);
+		}
+
+		p_wk->sync_now++;
+
+		return FALSE;
+	}else{
+		p_wk->now_val	= p_wk->end_pos;
+		return TRUE;
+	}
+
+	return TRUE;
+}
+

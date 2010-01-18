@@ -209,10 +209,10 @@ enum{
 #define DEBUGMSG2_TAB     (170)
 #define DEBUGMSG3_TAB     (85)
 
-#define MSGWND_TITLE_X  (9)
-#define MSGWND_TITLE_Y  (4)
-#define MSGWND_TITLE_W  (14)
-#define MSGWND_TITLE_H  (2)
+#define	MSGWND_TITLE_X	(6)
+#define	MSGWND_TITLE_Y	(3)
+#define	MSGWND_TITLE_W	(20)
+#define	MSGWND_TITLE_H	(5)
 
 //-------------------------------------
 /// カウント
@@ -362,6 +362,9 @@ typedef enum
 
   CLWKID_MAX
 }CLWKID;
+
+
+#define IRC_AURA_SCORE_MINUS  (1) //減点
 
 //=============================================================================
 /**
@@ -682,7 +685,7 @@ static BOOL MSGWND_Main( MSGWND_WORK *p_wk, const MSG_WORK *cp_msg );
 static void MSGWND_Print( MSGWND_WORK* p_wk, const MSG_WORK *cp_msg, u32 strID, u16 x, u16 y );
 static void MSGWND_PrintCenter( MSGWND_WORK* p_wk, const MSG_WORK *cp_msg, u32 strID );
 static void MSGWND_PrintNumber( MSGWND_WORK* p_wk, const MSG_WORK *cp_msg, u32 strID, u16 number, u16 buff_id, u16 x, u16 y );
-static void MSGWND_PrintPlayerName( MSGWND_WORK* p_wk, const MSG_WORK *cp_msg, u32 strID, const MYSTATUS *cp_status, u16 x, u16 y );
+static void MSGWND_PrintPlayerName( MSGWND_WORK* p_wk, const MSG_WORK *cp_msg, u32 strID, const COMPATIBLE_STATUS *cp_status, u16 x, u16 y, HEAPID heapID );
 static void MSGWND_Clear( MSGWND_WORK* p_wk );
 static GFL_BMPWIN *MSGWND_GetBmpWin( const MSGWND_WORK* cp_wk );
 //ONLYRESULT
@@ -932,11 +935,12 @@ static GFL_PROC_RESULT IRC_AURA_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p
   AURA_MAIN_WORK  *p_wk;
 
   //ヒープ作成
-  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_IRCAURA, 0x20000 );
+  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_IRCAURA, 0x25000 );
   //プロセスワーク作成
   p_wk  = GFL_PROC_AllocWork( p_proc, sizeof(AURA_MAIN_WORK), HEAPID_IRCAURA );
   GFL_STD_MemClear( p_wk, sizeof(AURA_MAIN_WORK) );
   p_wk->p_param = p_param;
+  p_wk->p_param->minus  = 0;
 
 #ifdef DEBUG_IRC_COMPATIBLE_ONLYPLAY
     s_is_debug_only_play  = p_wk->p_param->is_only_play;
@@ -961,7 +965,7 @@ static GFL_PROC_RESULT IRC_AURA_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p
 
   //タイトル文字列作成
   MSGWND_InitEx( &p_wk->msgtitle, sc_bgcnt_frame[GRAPHIC_BG_FRAME_S_TITLE],
-      MSGWND_TITLE_X, MSGWND_TITLE_Y, MSGWND_TITLE_W, MSGWND_TITLE_H, AURA_BG_PAL_S_08, AURA_BG_PAL_S_08*0x10+0xf, GFL_BMP_CHRAREA_GET_B, HEAPID_IRCAURA );
+      MSGWND_TITLE_X, MSGWND_TITLE_Y, MSGWND_TITLE_W, MSGWND_TITLE_H, AURA_BG_PAL_S_08, 1, GFL_BMP_CHRAREA_GET_B, HEAPID_IRCAURA );
   MSGWND_PrintCenter( &p_wk->msgtitle, &p_wk->msg, AURA_TITLE_000 );
   GFL_BG_SetScaleReq( sc_bgcnt_frame[GRAPHIC_BG_FRAME_S_TITLE], GFL_BG_SCALE_X_SET, TITLE_STR_SCALE_X );
   GFL_BG_SetScaleReq( sc_bgcnt_frame[GRAPHIC_BG_FRAME_S_TITLE], GFL_BG_SCALE_Y_SET, TITLE_STR_SCALE_Y );
@@ -983,7 +987,7 @@ static GFL_PROC_RESULT IRC_AURA_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p
   //APPBAR
   {
     GFL_CLUNIT  *p_unit = GRAPHIC_GetClunit( &p_wk->grp );
-    p_wk->p_appbar  = APPBAR_Init( APPBAR_OPTION_MASK_RETURN, p_unit, sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_INFOWIN], AURA_BG_PAL_M_13, AURA_OBJ_PAL_M_13, APP_COMMON_MAPPING_128K, HEAPID_IRCAURA );
+    p_wk->p_appbar  = APPBAR_Init( APPBAR_OPTION_MASK_RETURN, p_unit, sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_INFOWIN], AURA_BG_PAL_M_13, AURA_OBJ_PAL_M_13, APP_COMMON_MAPPING_128K, MSG_GetFont(&p_wk->msg ), MSG_GetPrintQue(&p_wk->msg ), HEAPID_IRCAURA );
   }
 
   //オーラシーンセット
@@ -2394,7 +2398,7 @@ static void MSGWND_PrintNumber( MSGWND_WORK* p_wk, const MSG_WORK *cp_msg, u32 s
  *  @param  y                 開始位置Y
  */
 //-----------------------------------------------------------------------------
-static void MSGWND_PrintPlayerName( MSGWND_WORK* p_wk, const MSG_WORK *cp_msg, u32 strID, const MYSTATUS *cp_status, u16 x, u16 y )
+static void MSGWND_PrintPlayerName( MSGWND_WORK* p_wk, const MSG_WORK *cp_msg, u32 strID, const COMPATIBLE_STATUS *cp_status, u16 x, u16 y, HEAPID heapID )
 {
   const GFL_MSGDATA* cp_msgdata;
   WORDSET *p_wordset;
@@ -2406,8 +2410,14 @@ static void MSGWND_PrintPlayerName( MSGWND_WORK* p_wk, const MSG_WORK *cp_msg, u
   p_wordset   = MSG_GetWordSet( cp_msg );
   cp_msgdata  = MSG_GetMsgDataConst( cp_msg );
 
-  //数値をワードセットに登録
-  WORDSET_RegisterPlayerName( p_wordset, 0, cp_status );
+  //ワードセットに登録
+  { 
+    STRBUF  *p_name = GFL_STR_CreateBuffer( IRC_COMPATIBLE_SV_DATA_NAME_LEN, heapID );
+    GFL_STR_SetStringCodeOrderLength( p_name, cp_status->name, IRC_COMPATIBLE_SV_DATA_NAME_LEN );
+
+    WORDSET_RegisterWord( p_wordset, 0, p_name, cp_status->sex == 1 ? PTL_SEX_MALE : PTL_SEX_FEMALE, TRUE, PM_LANG );
+    GFL_STR_DeleteBuffer( p_name );
+  }
 
   //元の文字列に数値を適用
   {
@@ -2524,7 +2534,7 @@ static void SEQFUNC_StartGame( AURA_MAIN_WORK *p_wk, u16 *p_seq )
     if( p_wk->p_param->p_gamesys )
     {
       MSGWND_PrintPlayerName( &p_wk->msgwnd[MSGWNDID_TEXT], &p_wk->msg,
-          AURA_STR_000, p_wk->p_param->p_you_status,  0, 0 );
+          AURA_STR_000, p_wk->p_param->p_you_status,  0, 0, HEAPID_IRCAURA );
     }
     else
     {
@@ -2675,6 +2685,7 @@ static void SEQFUNC_TouchLeft( AURA_MAIN_WORK *p_wk, u16 *p_seq )
     break;
 
   case SEQ_RET:
+    p_wk->p_param->minus  += IRC_AURA_SCORE_MINUS;
     SEQ_Change( p_wk, SEQFUNC_StartGame );
     break;
   }
@@ -2751,6 +2762,7 @@ static void SEQFUNC_TouchRight( AURA_MAIN_WORK *p_wk, u16 *p_seq )
     break;
 
   case SEQ_RET:
+    p_wk->p_param->minus  += IRC_AURA_SCORE_MINUS;
     SEQ_Change( p_wk, SEQFUNC_StartGame );
     break;
   }

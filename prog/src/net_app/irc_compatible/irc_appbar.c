@@ -10,6 +10,13 @@
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 #include <gflib.h>
 
+//archive
+#include "arc_def.h"
+#include "message.naix"
+#include "msg/msg_irc_compatible.h"
+#include "app/app_taskmenu.h"
+#include "irccompatible_gra.naix"
+
 //mine
 #include "net_app/irc_appbar.h"
 //=============================================================================
@@ -27,6 +34,10 @@ enum
 	APPBAR_RES_COMMON_CHR,
 	APPBAR_RES_COMMON_CEL,
 
+	APPBAR_RES_BAR_PLT,
+	APPBAR_RES_BAR_CHR,
+	APPBAR_RES_BAR_CEL,
+
 	APPBAR_RES_MAX
 };
 
@@ -40,6 +51,8 @@ enum
 //=====================================
 struct _APPBAR_WORK
 {
+  APP_TASKMENU_WIN_WORK   *p_win;
+  APP_TASKMENU_RES        *p_menu_res;
 	GFL_CLWK	*p_clwk[APPBAR_ICON_MAX];
 	u32				res[APPBAR_RES_MAX];
 	u32				bg_frm;
@@ -47,7 +60,6 @@ struct _APPBAR_WORK
 	s32				trg;
 	s32				cont;
 	u32				tbl_len;
-	APPBAR_SETUP	setup_tbl[0];
 };
 
 
@@ -60,7 +72,7 @@ struct _APPBAR_WORK
 static void AppBar_LoadResource( APPBAR_WORK *p_wk, CLSYS_DRAW_TYPE	clsys_draw_type, PALTYPE bgplttype, APP_COMMON_MAPPING mapping, u8 bg_plt, u8 obj_plt, HEAPID heapID );
 static void AppBar_UnLoadResource( APPBAR_WORK *p_wk );
 //obj
-static void AppBar_CreateObj( APPBAR_WORK *p_wk, GFL_CLUNIT* p_unit, const APPBAR_SETUP *cp_setup_tbl, u16 tbl_len, CLSYS_DEFREND_TYPE	clsys_def_type, HEAPID heapID );
+static void AppBar_CreateObj( APPBAR_WORK *p_wk, GFL_CLUNIT* p_unit, APPBAR_OPTION_MASK mask, CLSYS_DEFREND_TYPE	clsys_def_type, HEAPID heapID );
 static void AppBar_DeleteObj( APPBAR_WORK *p_wk );
 //etc
 static void ARCHDL_UTIL_TransVramScreenEx( ARCHANDLE *handle, ARCDATID datID, u32 frm, u32 chr_ofs, u8 src_x, u8 src_y, u8 src_w, u8 src_h, u8 dst_x, u8 dst_y, u8 dst_w, u8 dst_h,  u8 plt, BOOL compressedFlag, HEAPID heapID );
@@ -70,128 +82,13 @@ static void ARCHDL_UTIL_TransVramScreenEx( ARCHANDLE *handle, ARCDATID datID, u3
  *					データ
  */
 //=============================================================================
-//-------------------------------------
-///	アニメシーケンステーブル
-//	APPBAR_ICONと対応したテーブル
-//=====================================
-static const u16 sc_anmseq_tbl[]	=
-{	
-	APP_COMMON_BARICON_EXIT,
-	APP_COMMON_BARICON_RETURN,
-	APP_COMMON_BARICON_CURSOR_DOWN,
-	APP_COMMON_BARICON_CURSOR_UP,
-	APP_COMMON_BARICON_CURSOR_LEFT,
-	APP_COMMON_BARICON_CURSOR_RIGHT,
-	APP_COMMON_BARICON_CHECK_OFF,
-};
 
-//-------------------------------------
-///	デフォルト座標
-//=====================================
-static const APPBAR_SETUP sc_appbar_default_setup[]		=
-{
-	{	
-		APPBAR_ICON_CLOSE,
-		APPBAR_ICON_CLOSE_X,
-		APPBAR_ICON_Y
-	},
-	{	
-		APPBAR_ICON_RETURN,
-		APPBAR_ICON_RETURN_X,
-		APPBAR_ICON_Y
-	},
-	{	
-		APPBAR_ICON_CUR_D,
-		APPBAR_ICON_CUR_D_X,
-		APPBAR_ICON_Y
-	},
-	{	
-		APPBAR_ICON_CUR_U,
-		APPBAR_ICON_CUR_U_X,
-		APPBAR_ICON_Y
-	},
-	{	
-		APPBAR_ICON_CUR_L,
-		APPBAR_ICON_CUR_L_X,
-		APPBAR_ICON_Y
-	},
-	{	
-		APPBAR_ICON_CUR_R,
-		APPBAR_ICON_CUR_R_X,
-		APPBAR_ICON_Y
-	},
-	{	
-		APPBAR_ICON_CHECK,
-		APPBAR_ICON_CHECK_X,
-		APPBAR_ICON_Y
-	}
-};
 
 //=============================================================================
 /**
  *					GLOBAL
  */
 //=============================================================================
-//----------------------------------------------------------------------------
-/**
- *	@brief	APPBAR	初期化
- *
- *	@param	APPBAR_WORK *p_wk	ワーク
- *	@param	mask							モードマスク
- *	@param	p_unit						APPBARのOBJ生成用p_unit
- *	@param	bar_frm						使用するBG面（同時にメインかサブかを判定するのにも使用）
- *	@param	bg_plt						使用するBGパレット番号
- *	@param	obj_plt						使用するOBJパレット番号
- *	@param	heapID						ヒープID
- *
- */
-//-----------------------------------------------------------------------------
-APPBAR_WORK * APPBAR_Init( APPBAR_OPTION_MASK mask, GFL_CLUNIT* p_unit, u8 bar_frm, u8 bg_plt, u8 obj_plt, APP_COMMON_MAPPING mapping, HEAPID heapID )
-{	
-	APPBAR_SETUP	*p_setup_tbl;
-	APPBAR_WORK		*p_wk;
-	u16 tbl_len;
-
-	//マスクを数える
-	{	
-		int i;
-		tbl_len	= 0;
-		for( i = 0; i < APPBAR_ICON_MAX; i++ )
-		{	
-			if( mask & (1<<i) )
-			{	
-				tbl_len++;
-			}
-		}
-	}
-	
-	//一時設定テーブルさくせい　
-	p_setup_tbl	= GFL_HEAP_AllocMemoryLo( heapID, sizeof(APPBAR_SETUP)*tbl_len );
-	GFL_STD_MemClear( p_setup_tbl, sizeof(APPBAR_SETUP)*tbl_len );
-
-	//設定テーブル初期化
-	{	
-		int i;
-		int cnt;
-		cnt	= 0;
-		for( i = 0; i < APPBAR_ICON_MAX; i++ )
-		{	
-			if( mask & (1<<i) )
-			{
-				p_setup_tbl[cnt]	= sc_appbar_default_setup[i];
-				cnt++;
-			}
-		}
-	}
-
-	//ワーク作成
-	p_wk	= APPBAR_InitEx( p_setup_tbl, tbl_len, p_unit, bar_frm, bg_plt, obj_plt, mapping, heapID );
-
-	//設定テーブル破棄
-	GFL_HEAP_FreeMemory( p_setup_tbl );
-
-	return p_wk;
-}
 
 //----------------------------------------------------------------------------
 /**
@@ -209,7 +106,7 @@ APPBAR_WORK * APPBAR_Init( APPBAR_OPTION_MASK mask, GFL_CLUNIT* p_unit, u8 bar_f
  *	@return	ワーク
  */
 //-----------------------------------------------------------------------------
-APPBAR_WORK * APPBAR_InitEx( const APPBAR_SETUP *cp_setup_tbl, u16 tbl_len, GFL_CLUNIT* p_unit, u8 bar_frm, u8 bg_plt, u8 obj_plt, APP_COMMON_MAPPING mapping, HEAPID heapID )
+APPBAR_WORK * APPBAR_Init( APPBAR_OPTION_MASK mask, GFL_CLUNIT* p_unit, u8 bar_frm, u8 bg_plt, u8 obj_plt, APP_COMMON_MAPPING mapping, GFL_FONT* p_font, PRINT_QUE* p_que, HEAPID heapID )
 {	
 	APPBAR_WORK	*p_wk;
 
@@ -219,15 +116,12 @@ APPBAR_WORK * APPBAR_InitEx( const APPBAR_SETUP *cp_setup_tbl, u16 tbl_len, GFL_
 	{	
 		u32 size;
 
-		size	= sizeof(APPBAR_WORK) + sizeof(APPBAR_SETUP) * tbl_len;
+		size	= sizeof(APPBAR_WORK);
 		p_wk	= GFL_HEAP_AllocMemory( heapID, size );
 		GFL_STD_MemClear( p_wk, size );
 		p_wk->bg_frm	= bar_frm;
 		p_wk->trg			= APPBAR_SELECT_NONE;
 		p_wk->cont		= APPBAR_SELECT_NONE;
-		p_wk->tbl_len	= tbl_len;
-
-		GFL_STD_MemCopy( cp_setup_tbl, p_wk->setup_tbl, sizeof(APPBAR_SETUP)*tbl_len );
 	}
 
 	{	
@@ -252,8 +146,29 @@ APPBAR_WORK * APPBAR_InitEx( const APPBAR_SETUP *cp_setup_tbl, u16 tbl_len, GFL_
 		//リソース読み込み
 		AppBar_LoadResource( p_wk, clsys_draw_type, bgplttype, mapping, bg_plt, obj_plt, heapID );
 
+    //taskmenu用リソース読み込み
+    p_wk->p_menu_res  = APP_TASKMENU_RES_Create( bar_frm, bg_plt, p_font, p_que, heapID );
+
 		//CLWK読み込み
-		AppBar_CreateObj( p_wk, p_unit, cp_setup_tbl, tbl_len, clsys_def_type, heapID );
+		AppBar_CreateObj( p_wk, p_unit, mask, clsys_def_type, heapID );
+
+    //ウィンドウ読み込み
+    {
+      GFL_MSGDATA *p_msg;
+      APP_TASKMENU_ITEMWORK item;
+
+      p_msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_irc_compatible_dat, heapID );
+
+      GFL_STD_MemClear( &item, sizeof(APP_TASKMENU_ITEMWORK) );
+      item.msgColor = APP_TASKMENU_ITEM_MSGCOLOR;
+      item.str      = GFL_MSG_CreateString( p_msg, COMPATI_BTN_000 );
+      item.type     = APP_TASKMENU_WIN_TYPE_RETURN;
+
+      p_wk->p_win       = APP_TASKMENU_WIN_Create( p_wk->p_menu_res, &item, 32-APP_TASKMENU_PLATE_WIDTH, 21, APP_TASKMENU_PLATE_WIDTH, heapID );
+
+      GFL_STR_DeleteBuffer( item.str );
+      GFL_MSG_Delete( p_msg );
+    }
 	}
 
 	return p_wk;
@@ -268,8 +183,14 @@ APPBAR_WORK * APPBAR_InitEx( const APPBAR_SETUP *cp_setup_tbl, u16 tbl_len, GFL_
 //-----------------------------------------------------------------------------
 void APPBAR_Exit( APPBAR_WORK *p_wk )
 {	
+  //ウィンドウ破棄
+  APP_TASKMENU_WIN_Delete( p_wk->p_win );
+
 	//CLWK
 	AppBar_DeleteObj( p_wk );
+
+  //taskmenu用リソース読み込み
+  APP_TASKMENU_RES_Delete( p_wk->p_menu_res );
 
 	//リソース破棄
 	AppBar_UnLoadResource( p_wk );
@@ -288,36 +209,18 @@ void APPBAR_Exit( APPBAR_WORK *p_wk )
  */
 //-----------------------------------------------------------------------------
 void APPBAR_Main( APPBAR_WORK *p_wk )
-{	
+{
+  if( APP_TASKMENU_WIN_IsTrg( p_wk->p_win ) )
+  { 
+    APP_TASKMENU_WIN_SetDecide( p_wk->p_win, TRUE );
+    p_wk->trg = APPBAR_ICON_RETURN;
+  }
+  else
+  { 
+    p_wk->trg = APPBAR_SELECT_NONE;
+  }
 
-	
-	//タッチの動き
-	int i;
-	u32 x, y;
-
-	p_wk->trg		= APPBAR_SELECT_NONE;
-	p_wk->cont	= APPBAR_SELECT_NONE;
-	for( i = 0; i < p_wk->tbl_len; i++ )
-	{	
-		const APPBAR_SETUP	*cp_setup	= &p_wk->setup_tbl[i];
-
-		if( GFL_UI_TP_GetPointTrg( &x, &y ) )
-		{	
-			if( ((u32)( x - cp_setup->pos.x) <= (u32)(APPBAR_ICON_WIDTH))
-					&	((u32)( y - cp_setup->pos.y) <= (u32)(APPBAR_ICON_HEIGHT)))
-			{
-				p_wk->trg	= cp_setup->icon;
-			}
-		}
-		else if( GFL_UI_TP_GetPointCont( &x, &y ) )
-		{	
-			if( ((u32)( x - cp_setup->pos.x) <= (u32)(APPBAR_ICON_WIDTH))
-					&	((u32)( y - cp_setup->pos.y) <= (u32)(APPBAR_ICON_HEIGHT)))
-			{
-				p_wk->cont	= cp_setup->icon;
-			}
-		}
-	}
+  APP_TASKMENU_WIN_Update( p_wk->p_win );
 }
 //----------------------------------------------------------------------------
 /**
@@ -331,19 +234,6 @@ void APPBAR_Main( APPBAR_WORK *p_wk )
 APPBAR_ICON APPBAR_GetTrg( const APPBAR_WORK *cp_wk )
 {	
 	return cp_wk->trg;
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief	APPBAR	選択されたものを取得
- *
- *	@param	const APPBAR_WORK *cp_wk ワーク
- *
- *	@return	APPBAR_SELECT列挙
- */
-//-----------------------------------------------------------------------------
-APPBAR_ICON APPBAR_GetCont( const APPBAR_WORK *cp_wk )
-{	
-	return cp_wk->cont;
 }
 //=============================================================================
 /**
@@ -363,6 +253,7 @@ APPBAR_ICON APPBAR_GetCont( const APPBAR_WORK *cp_wk )
 //-----------------------------------------------------------------------------
 static void AppBar_LoadResource( APPBAR_WORK *p_wk, CLSYS_DRAW_TYPE	clsys_draw_type, PALTYPE bgplttype, APP_COMMON_MAPPING mapping, u8 bg_plt, u8 obj_plt, HEAPID heapID )
 {	
+#if 0
 	ARCHANDLE	*	p_handle	= GFL_ARC_OpenDataHandle( APP_COMMON_GetArcId(), heapID );
 
 	//BG
@@ -391,6 +282,21 @@ static void AppBar_LoadResource( APPBAR_WORK *p_wk, CLSYS_DRAW_TYPE	clsys_draw_t
 			APP_COMMON_GetBarIconAnimeArcIdx(mapping), heapID );
 
 	GFL_ARC_CloseDataHandle( p_handle );
+#endif
+
+	ARCHANDLE	*	p_handle	= GFL_ARC_OpenDataHandle( ARCID_IRCCOMPATIBLE, heapID );
+
+  p_wk->res[APPBAR_RES_BAR_PLT]	= GFL_CLGRP_PLTT_RegisterEx( p_handle,
+			NARC_irccompatible_gra_shita_bar_NCLR, clsys_draw_type, obj_plt*0x20, 0, 1, heapID );	
+	p_wk->res[APPBAR_RES_BAR_CHR]	= GFL_CLGRP_CGR_Register( p_handle,
+			NARC_irccompatible_gra_shita_bar_NCGR, FALSE, clsys_draw_type, heapID );
+
+	p_wk->res[APPBAR_RES_BAR_CEL]	= GFL_CLGRP_CELLANIM_Register( p_handle,
+			NARC_irccompatible_gra_shita_bar_NCER,
+			NARC_irccompatible_gra_shita_bar_NANR, heapID );
+
+	GFL_ARC_CloseDataHandle( p_handle );
+
 }
 
 //----------------------------------------------------------------------------
@@ -402,6 +308,7 @@ static void AppBar_LoadResource( APPBAR_WORK *p_wk, CLSYS_DRAW_TYPE	clsys_draw_t
 //-----------------------------------------------------------------------------
 static void AppBar_UnLoadResource( APPBAR_WORK *p_wk )
 {	
+#if 0
 	//OBJ
 	GFL_CLGRP_CELLANIM_Release( p_wk->res[APPBAR_RES_COMMON_CEL] );
 	GFL_CLGRP_CGR_Release( p_wk->res[APPBAR_RES_COMMON_CHR] );
@@ -411,6 +318,10 @@ static void AppBar_UnLoadResource( APPBAR_WORK *p_wk )
 	GFL_BG_FreeCharacterArea(p_wk->bg_frm,
 			GFL_ARCUTIL_TRANSINFO_GetPos(p_wk->chr_pos),
 			GFL_ARCUTIL_TRANSINFO_GetSize(p_wk->chr_pos));
+#endif
+	GFL_CLGRP_CELLANIM_Release( p_wk->res[APPBAR_RES_BAR_CEL] );
+	GFL_CLGRP_CGR_Release( p_wk->res[APPBAR_RES_BAR_CHR] );
+	GFL_CLGRP_PLTT_Release( p_wk->res[APPBAR_RES_BAR_PLT] );
 }
 
 //----------------------------------------------------------------------------
@@ -420,34 +331,26 @@ static void AppBar_UnLoadResource( APPBAR_WORK *p_wk )
  *	@param	APPBAR_WORK *p_wk ワーク
  */
 //-----------------------------------------------------------------------------
-static void AppBar_CreateObj( APPBAR_WORK *p_wk, GFL_CLUNIT* p_unit, const APPBAR_SETUP *cp_setup_tbl, u16 tbl_len, CLSYS_DEFREND_TYPE	clsys_def_type, HEAPID heapID )
+static void AppBar_CreateObj( APPBAR_WORK *p_wk, GFL_CLUNIT* p_unit, APPBAR_OPTION_MASK mask, CLSYS_DEFREND_TYPE	clsys_def_type, HEAPID heapID )
 {	
 	//CLWKの作成
 	int i;
 	GFL_CLWK_DATA				cldata;
-	const APPBAR_SETUP	*cp_setup;
 
 	GFL_STD_MemClear( &cldata, sizeof(GFL_CLWK_DATA) );
 
-	for( i = 0; i < tbl_len; i++ )
-	{	
-		cp_setup	= &cp_setup_tbl[i];
-		GF_ASSERT( cp_setup->icon < APPBAR_ICON_MAX );
-
-		cldata.pos_x	= cp_setup->pos.x;
-		cldata.pos_y	= cp_setup->pos.y;
-		cldata.anmseq	= sc_anmseq_tbl[ cp_setup->icon ];
-		//clwkはAPPBAR_ICON順にしておく
-		GF_ASSERT_MSG( p_wk->p_clwk[cp_setup->icon] == NULL, "APPBAR:SETUP構造体に同じアイコンを定義しています\n" );
-		p_wk->p_clwk[cp_setup->icon]	= GFL_CLACT_WK_Create( p_unit, 
-				p_wk->res[APPBAR_RES_COMMON_CHR],
-				p_wk->res[APPBAR_RES_COMMON_PLT],
-				p_wk->res[APPBAR_RES_COMMON_CEL],
-				&cldata,
-				clsys_def_type,
-				heapID
-				);
-	}
+  cldata.pos_x	= 128;
+  cldata.pos_y	= 96;
+  cldata.anmseq	= 0;
+  cldata.bgpri  = 1;
+  p_wk->p_clwk[0]	= GFL_CLACT_WK_Create( p_unit, 
+      p_wk->res[APPBAR_RES_BAR_CHR],
+      p_wk->res[APPBAR_RES_BAR_PLT],
+      p_wk->res[APPBAR_RES_BAR_CEL],
+      &cldata,
+      clsys_def_type,
+      heapID
+      );
 }
 //----------------------------------------------------------------------------
 /**

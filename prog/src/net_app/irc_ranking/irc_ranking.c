@@ -29,6 +29,7 @@
 //	module
 #include "infowin/infowin.h"
 #include "sound/pm_sndsys.h"
+#include "net_app/irc_appbar.h"
 
 //	common
 #include "app/app_menu_common.h"
@@ -269,28 +270,6 @@ typedef enum{
 	CLWKID_MAX
 }CLWKID;
 
-//-------------------------------------
-///	APPBAR
-//=====================================
-//選択したもの取得
-typedef enum
-{
-	APPBAR_SELECT_NONE	= GFL_UI_TP_HIT_NONE,
-	APPBAR_SELECT_CLOSE	= 0,
-} APPBAR_SELECT;
-//位置
-//バー
-#define APPBAR_MENUBAR_X	(0)
-#define APPBAR_MENUBAR_Y	(21)
-#define APPBAR_MENUBAR_W	(32)
-#define APPBAR_MENUBAR_H	(3)
-//CLOSE
-#define APPBAR_ICON_Y	(168)
-#define APPBAR_ICON_CLOSE_X	(232)
-
-#define APPBAR_ICON_W	(24)
-#define APPBAR_ICON_H	(24)
-
 
 
 
@@ -415,20 +394,6 @@ struct _SEQ_WORK
 	int seq;
 	void *p_param;
 }; 
-//-------------------------------------
-///	下画面バー(アプリケーションバーと勝手に命名)
-//=====================================
-typedef struct 
-{
-	GFL_CLWK	*p_clwk;
-	u32				reg_chr;
-	u32				reg_cel;
-	u32				reg_plt;
-	u32				bg_frm;
-	GFL_ARCUTIL_TRANSINFO				chr_pos;
-	s32				select;
-} APPBAR_WORK;
-#define APPBAR_BG_CHARAAREA_SIZE	(8*8*GFL_BG_1CHRDATASIZ)
 
 //-------------------------------------
 ///	メインワーク
@@ -441,7 +406,9 @@ typedef struct _IRC_RANKING_WORK
 	SCROLL_WORK		scroll;
 	UI_WORK				ui;
 	ACLR_WORK			aclr;
-	APPBAR_WORK		appbar;
+  APPBAR_WORK		*p_appbar;
+  GFL_FONT      *p_font;
+  PRINT_QUE     *p_que;
 
 	//データ
 	RANKING_DATA	*p_rank_data;
@@ -555,13 +522,6 @@ static void ACLR_SetAclr( ACLR_WORK *p_wk, fx32 distance, u32 sync );
 static void ACLR_Stop( ACLR_WORK *p_wk );
 static s16 ACLR_GetScrollAdd( ACLR_WORK *p_wk );
 static BOOL ACLR_IsExist( const ACLR_WORK *cp_wk );
-//-------------------------------------
-///	APPBAR
-//=====================================
-static void APPBAR_Init( APPBAR_WORK *p_wk, GFL_CLUNIT* p_unit, u8 bar_frm, u8 bg_plt, u8 obj_plt, HEAPID heapID );
-static void APPBAR_Exit( APPBAR_WORK *p_wk );
-static void APPBAR_Main( APPBAR_WORK *p_wk );
-static APPBAR_SELECT APPBAR_GetTrg( const APPBAR_WORK *cp_wk );
 //-------------------------------------
 ///	ETC
 //=====================================
@@ -742,6 +702,10 @@ static GFL_PROC_RESULT IRC_RANKING_PROC_Init( GFL_PROC *p_proc, int *p_seq, void
 		p_wk->p_gamecomm	= NULL;
 	}
 
+  p_wk->p_que   = PRINTSYS_QUE_Create( HEAPID_IRCRANKING );
+  p_wk->p_font  = GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr, 
+				GFL_FONT_LOADTYPE_FILE, FALSE, HEAPID_IRCRANKING ); 
+
 	//データ作成
 	data_len					= RANKING_DATA_GetExistLength();
 	p_wk->p_rank_data	= RANKING_DATA_Create( data_len, HEAPID_IRCRANKING );
@@ -762,9 +726,8 @@ static GFL_PROC_RESULT IRC_RANKING_PROC_Init( GFL_PROC *p_proc, int *p_seq, void
 			data_len,
 			HEAPID_IRCRANKING
 			);
-	APPBAR_Init( &p_wk->appbar, GRAPHIC_GetUnit( &p_wk->grp ),
-			GRAPHIC_BG_GetFrame(GRAPHIC_BG_FRAME_INFO_S),
-			RANKING_BG_PAL_S_13, 0, HEAPID_IRCRANKING );
+
+  p_wk->p_appbar	= APPBAR_Init( APPBAR_OPTION_MASK_RETURN, GRAPHIC_GetUnit( &p_wk->grp ), GRAPHIC_BG_GetFrame(GRAPHIC_BG_FRAME_INFO_S), RANKING_BG_PAL_S_13, 0, APP_COMMON_MAPPING_128K, p_wk->p_font, p_wk->p_que, HEAPID_IRCRANKING );
 
 	return GFL_PROC_RES_FINISH;
 }
@@ -785,7 +748,7 @@ static GFL_PROC_RESULT IRC_RANKING_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void
 	IRC_RANKING_WORK	*p_wk	= p_work;
 
 	//モジュール破棄
-	APPBAR_Exit( &p_wk->appbar );
+	APPBAR_Exit( p_wk->p_appbar );
 	INFOWIN_Exit();
 	SCROLL_Exit( &p_wk->scroll );
 	ACLR_Exit( &p_wk->aclr );
@@ -795,6 +758,9 @@ static GFL_PROC_RESULT IRC_RANKING_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void
 
 	//データ破棄
 	RANKING_DATA_Delete( p_wk->p_rank_data );
+
+  GFL_FONT_Delete( p_wk->p_font );
+  PRINTSYS_QUE_Delete( p_wk->p_que );
 
 	//ワーク破棄
 	GFL_PROC_FreeWork( p_proc );
@@ -1135,7 +1101,7 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
 
 
 	//戻る
-	if( APPBAR_GetTrg( &p_wk->appbar ) == APPBAR_SELECT_CLOSE
+	if( APPBAR_GetTrg( p_wk->p_appbar ) == APPBAR_ICON_RETURN
 			|| GFL_UI_KEY_GetCont() & PAD_BUTTON_B )
 	{	
 		PMSND_PlaySystemSE( SEQ_SE_CANCEL1 );	
@@ -1146,7 +1112,7 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
 	SCROLL_Main( &p_wk->scroll );
 	UI_Main( &p_wk->ui );
 	ACLR_Main( &p_wk->aclr );
-	APPBAR_Main( &p_wk->appbar );
+	APPBAR_Main( p_wk->p_appbar );
 }
 //----------------------------------------------------------------------------
 /**
@@ -1201,7 +1167,7 @@ static void SEQFUNC_MoveNew( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
 
 
 	//戻る
-	if( APPBAR_GetTrg( &p_wk->appbar ) == APPBAR_SELECT_CLOSE
+	if( APPBAR_GetTrg( p_wk->p_appbar ) == APPBAR_ICON_RETURN
 			|| GFL_UI_KEY_GetCont() & PAD_BUTTON_B )
 	{	
 		SEQ_SetNext( p_seqwk, SEQFUNC_FadeIn );
@@ -1209,7 +1175,7 @@ static void SEQFUNC_MoveNew( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
 	//モジュールメイン
 	SCROLL_Main( &p_wk->scroll );
 	ACLR_Main( &p_wk->aclr );
-	APPBAR_Main( &p_wk->appbar );
+	APPBAR_Main( p_wk->p_appbar );
 }
 //=============================================================================
 /**
@@ -2835,171 +2801,6 @@ static s16 ACLR_GetScrollAdd( ACLR_WORK *p_wk )
 static BOOL ACLR_IsExist( const ACLR_WORK *cp_wk )
 {	
 	return cp_wk->aclr != 0;
-}
-//=============================================================================
-/**
- *	APPBAR
- */
-//=============================================================================
-//----------------------------------------------------------------------------
-/**
- *	@brief	APPBAR	初期化
- *
- *	@param	APPBAR_WORK *p_wk	ワーク
- *	@param	p_unit						APPBARのOBJ生成用p_unit
- *	@param	bar_frm						使用するBG面（同時にメインかサブかを判定するのにも使用）
- *	@param	bg_plt						使用するBGパレット番号
- *	@param	obj_plt						使用するOBJパレット番号
- *	@param	heapID						ヒープID
- *
- */
-//-----------------------------------------------------------------------------
-static void APPBAR_Init( APPBAR_WORK *p_wk, GFL_CLUNIT* p_unit, u8 bar_frm, u8 bg_plt, u8 obj_plt, HEAPID heapID )
-{	
-	CLSYS_DRAW_TYPE	clsys_draw_type;
-	CLSYS_DEFREND_TYPE	clsys_def_type;
-	PALTYPE							bgplttype;
-
-	//クリア
-	GFL_STD_MemClear( p_wk, sizeof(APPBAR_WORK) );
-	p_wk->bg_frm	= bar_frm;
-	p_wk->select	= APPBAR_SELECT_NONE;
-
-	//OBJ読み込む場所をチェック
-	{	
-		if( bar_frm >= GFL_BG_FRAME0_S )
-		{	
-			clsys_draw_type	= CLSYS_DRAW_SUB;
-			clsys_def_type	= CLSYS_DEFREND_SUB;
-			bgplttype				= PALTYPE_SUB_BG;
-		}
-		else
-		{	
-			clsys_draw_type	= CLSYS_DRAW_MAIN;
-			clsys_def_type	= CLSYS_DEFREND_MAIN;
-			bgplttype				= PALTYPE_MAIN_BG;
-		}
-	}
-	
-	//共通リソース
-	{	
-		ARCHANDLE	*	p_handle	= GFL_ARC_OpenDataHandle( APP_COMMON_GetArcId(), heapID );
-
-		//BG
-
-		//領域の確保
-		GFL_ARCHDL_UTIL_TransVramPalette( p_handle, APP_COMMON_GetBarPltArcIdx(),
-				bgplttype, bg_plt*0x20, APP_COMMON_BAR_PLT_NUM*0x20, heapID );
-
-		p_wk->chr_pos	= GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( p_handle, APP_COMMON_GetBarCharArcIdx(), p_wk->bg_frm, APPBAR_BG_CHARAAREA_SIZE, FALSE, heapID );
-		GF_ASSERT( p_wk->chr_pos != GFL_ARCUTIL_TRANSINFO_FAIL );
-		//スクリーンはメモリ上に置いて、下部32*3だけ書き込み
-		ARCHDL_UTIL_TransVramScreenEx( p_handle, APP_COMMON_GetBarScrnArcIdx(), p_wk->bg_frm,
-				GFL_ARCUTIL_TRANSINFO_GetPos(p_wk->chr_pos), 0, 21, 32, 24, 
-				APPBAR_MENUBAR_X, APPBAR_MENUBAR_Y, APPBAR_MENUBAR_W, APPBAR_MENUBAR_H,
-				bg_plt, FALSE, heapID );
-
-		NAGI_Printf( "pos %d size %d\n", GFL_ARCUTIL_TRANSINFO_GetPos(p_wk->chr_pos), GFL_ARCUTIL_TRANSINFO_GetSize(p_wk->chr_pos) );
-
-	 //OBJ
-		p_wk->reg_plt	= GFL_CLGRP_PLTT_RegisterEx( p_handle,
-				APP_COMMON_GetBarIconPltArcIdx(), clsys_draw_type, obj_plt*0x20, 0, APP_COMMON_BARICON_PLT_NUM, heapID );
-
-		p_wk->reg_chr	= GFL_CLGRP_CGR_Register( p_handle,
-				APP_COMMON_GetBarIconCharArcIdx(), FALSE, clsys_draw_type, heapID );
-
-		p_wk->reg_cel	= GFL_CLGRP_CELLANIM_Register( p_handle,
-				APP_COMMON_GetBarIconCellArcIdx(APP_COMMON_MAPPING_128K),
-				APP_COMMON_GetBarIconAnimeArcIdx(APP_COMMON_MAPPING_128K), heapID );
-
-		GFL_ARC_CloseDataHandle( p_handle );
-	}
-
-	//CLWKの作成
-	{
-		GFL_CLWK_DATA	cldata;
-		GFL_STD_MemClear( &cldata, sizeof(GFL_CLWK_DATA) );
-		cldata.anmseq	= APP_COMMON_BARICON_RETURN;
-		cldata.pos_x	= APPBAR_ICON_CLOSE_X;
-		cldata.pos_y	= APPBAR_ICON_Y;
-		p_wk->p_clwk	= GFL_CLACT_WK_Create( p_unit, 
-				p_wk->reg_chr,
-				p_wk->reg_plt,
-				p_wk->reg_cel,
-				&cldata,
-				clsys_def_type,
-				heapID
-				);
-	}
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief	APPBAR	破棄
- *
- *	@param	APPBAR_WORK *p_wk		ワーク
- *
- */
-//-----------------------------------------------------------------------------
-static void APPBAR_Exit( APPBAR_WORK *p_wk )
-{	
-	//CLWK
-	{	
-		GFL_CLACT_WK_Remove( p_wk->p_clwk );
-	}
-
-	//OBJ
-	{	
-		GFL_CLGRP_CELLANIM_Release( p_wk->reg_cel );
-		GFL_CLGRP_CGR_Release( p_wk->reg_chr );
-		GFL_CLGRP_PLTT_Release( p_wk->reg_plt );
-	}
-
-	//BG
-	{	
-		GFL_BG_FreeCharacterArea(p_wk->bg_frm,
-				GFL_ARCUTIL_TRANSINFO_GetPos(p_wk->chr_pos),
-				GFL_ARCUTIL_TRANSINFO_GetSize(p_wk->chr_pos));
-	}
-
-	//クリア
-	GFL_STD_MemClear( p_wk, sizeof(APPBAR_WORK) );
-
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief	APPBAR	メイン処理
- *
- *	@param	APPBAR_WORK *p_wk		ワーク
- *
- */
-//-----------------------------------------------------------------------------
-static void APPBAR_Main( APPBAR_WORK *p_wk )
-{	
-	static const GFL_UI_TP_HITTBL	sc_hit_tbl[]	=
-	{	
-		{	
-			APPBAR_ICON_Y, APPBAR_ICON_Y + APPBAR_ICON_W, 
-			APPBAR_ICON_CLOSE_X, APPBAR_ICON_CLOSE_X + APPBAR_ICON_W
-		},
-		{	
-			GFL_UI_TP_HIT_END, 0, 0, 0
-		}
-	};
-
-	p_wk->select	= GFL_UI_TP_HitTrg( sc_hit_tbl );	
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief	APPBAR	選択されたものを取得
- *
- *	@param	const APPBAR_WORK *cp_wk ワーク
- *
- *	@return	APPBAR_SELECT列挙
- */
-//-----------------------------------------------------------------------------
-static APPBAR_SELECT APPBAR_GetTrg( const APPBAR_WORK *cp_wk )
-{	
-	return cp_wk->select;
 }
 //=============================================================================
 /**
