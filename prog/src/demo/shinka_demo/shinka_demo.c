@@ -1,11 +1,15 @@
-//============================================================================================
+//============================================================================
 /**
- * @file    shinka_demo.c
- * @brief   12末ロム用に間に合わせで作った進化デモ（デモと呼べる代物じゃないので、作りなおしてください）
- * @author  soga
- * @date    2009.12.09
+ *  @file   shinka_demo.c
+ *  @brief  進化デモ
+ *  @author Koji Kawada
+ *  @data   2010.01.13
+ *  @note   
+ *
+ *  モジュール名：SHINKADEMO
  */
-//============================================================================================
+//============================================================================
+// インクルード
 #include <gflib.h>
 #include <procsys.h>
 #include <tcbl.h>
@@ -25,9 +29,150 @@
 #include "battle/app/b_plist.h"
 #include "message.naix"
 
+// オーバーレイ
 FS_EXTERN_OVERLAY(battle_b_app);
 FS_EXTERN_OVERLAY(battle_plist);
 
+
+#include "gamesystem/msgspeed.h"
+#include "system/bmp_winframe.h"
+
+#include "ui/yesno_menu.h"
+
+#include "shinka_demo_graphic.h"
+
+// オーバーレイ
+FS_EXTERN_OVERLAY(ui_common);
+
+//=============================================================================
+/**
+*  定数定義
+*/
+//=============================================================================
+#define HEAP_SIZE              (0x80000)               ///< ヒープサイズ
+
+// BGフレーム
+#define BG_FRAME_M_POKEMON           (GFL_BG_FRAME0_M)        // プライオリティ1
+#define BG_FRAME_M_STM_TEXT          (GFL_BG_FRAME1_M)        // プライオリティ0
+
+#define BG_FRAME_S_BACK              (GFL_BG_FRAME0_S)        // プライオリティ2
+#define BG_FRAME_S_BUTTON            (GFL_BG_FRAME1_S)        // プライオリティ1
+#define BG_FRAME_S_BTN_TEXT          (GFL_BG_FRAME2_S)        // プライオリティ0
+
+// BGパレット
+// 本数
+enum
+{
+  BG_PAL_NUM_M_STM_TEXT_FONT     = 1,
+  BG_PAL_NUM_M_STM_TEXT_FRAME    = 1,
+};
+// 位置
+enum
+{
+  BG_PAL_POS_M_STM_TEXT_FONT     = 0,
+  BG_PAL_POS_M_STM_TEXT_FRAME    = BG_PAL_POS_M_STM_TEXT_FONT   + BG_PAL_NUM_M_STM_TEXT_FONT       , // 1
+  BG_PAL_POS_M_MAX               = BG_PAL_POS_M_STM_TEXT_FRAME  + BG_PAL_NUM_M_STM_TEXT_FRAME      , // 2  // ここから空き
+};
+// 本数
+enum
+{
+  BG_PAL_NUM_S_BUTTON            = 2,
+  BG_PAL_NUM_S_BTN_TEXT          = 1,
+};
+// 位置
+enum
+{
+  BG_PAL_POS_S_BUTTON            = 0,
+  BG_PAL_POS_S_BTN_TEXT          = BG_PAL_POS_S_BUTTON          + BG_PAL_NUM_S_BUTTON             ,  // 2 
+  BG_PAL_POS_S_MAX               = BG_PAL_POS_S_BTN_TEXT        + BG_PAL_NUM_S_BTN_TEXT           ,  // 3  // ここから空き
+};
+
+// OBJパレット
+// 本数
+// 位置
+enum
+{
+  OBJ_PAL_POS_M_MAX              = 0                                                            ,         // ここから空き
+};
+// 本数
+enum
+{
+  OBJ_PAL_NUM_S_CURSOR           = 2,
+};
+// 位置
+enum
+{
+  OBJ_PAL_POS_S_CURSOR           = 0,
+  OBJ_PAL_POS_S_MAX              = OBJ_PAL_POS_S_CURSOR        + OBJ_PAL_NUM_S_CURSOR            ,  // 2  // ここから空き
+};
+
+// BTN_TEXT
+#define BTM_TEXT_WININ_BACK_COLOR        (15)
+
+// フェード
+#define FADE_IN_WAIT           (2)         ///< フェードインのスピード
+#define FADE_OUT_WAIT          (2)         ///< フェードアウトのスピード
+
+#define STATUS_FADE_OUT_WAIT   (0)         ///< 技選択へ移行するためのフェードアウトのスピード
+#define STATUS_FADE_IN_WAIT    (0)         ///< 技選択から戻ってくるためのフェードインのスピード
+
+// 
+#define TCBSYS_TASK_MAX        (8)
+
+// ステップ
+typedef enum
+{
+  STEP_FADE_IN,                     // フェードイン
+  STEP_EVO_BEFORE,                  // おや！？　ようすが……！
+  STEP_EVO_DEMO,                    // デモ
+  STEP_EVO_CANCEL,                  // あれ……？　へんかが　とまった！
+  STEP_EVO_AFTER,                   // おめでとう！　しんかした！
+  STEP_WAZA_OBOE,                   // 技覚えチェック
+  STEP_WAZA_VACANT_MASTER,          // あたらしく　おぼえた！(技が３つ以下だった場合)
+  STEP_WAZA_FULL_PREPARE,           // 次のQの準備
+  STEP_WAZA_FULL_Q,                 // ほかの　わざを　わすれさせますか？
+  STEP_WAZA_FULL_YN,                // 選択
+  STEP_WAZA_STATUS_FADE_OUT,        // 技選択に移行するためのフェードアウト
+  STEP_WAZA_STATUS,                 // 技選択のフェードイン→技選択
+  STEP_WAZA_STATUS_OUT,             // 技選択のフェードアウト
+  STEP_WAZA_STATUS_FADE_IN,         // 技選択から戻ってくるためのフェードイン
+  STEP_WAZA_CONFIRM_PREPARE,        // 次のQの準備
+  STEP_WAZA_CONFIRM_Q,              // わすれさせて　よろしいですね？
+  STEP_WAZA_CONFIRM_YN,             // 選択
+  STEP_WAZA_FORGET,                 // つかいかたを　きれいにわすれた！
+  STEP_WAZA_FORGET_MASTER,          // あたらしく　おぼえた！
+  STEP_WAZA_ABANDON_PREPARE,        // 次のQの準備
+  STEP_WAZA_ABANDON_Q,              // おぼえるのを　あきらめますか？
+  STEP_WAZA_ABANDON_YN,             // 選択
+  STEP_WAZA_NOT_MASTER,             // おぼえずに　おわった！
+  STEP_FADE_OUT_BEFORE,             // フェードアウト前に少し待つ際の間
+  STEP_FADE_OUT,                    // フェードアウト
+  STEP_END,
+}
+STEP;
+
+// 文字列中のタグに登録するもの
+typedef enum
+{
+  TAG_REGIST_TYPE_WORD,               // 文字列(STRBUFを渡す)
+  TAG_REGIST_TYPE_POKE_MONS_NAME,     // ポケモンの種族名(POKEMON_PARAMを渡す)
+  TAG_REGIST_TYPE_POKE_NICK_NAME,     // ポケモンのニックネーム(POKEMON_PARAMを渡す)
+  TAG_REGIST_TYPE_WAZA,               // ワザ名(ワザIDを渡す)
+  TAG_REGIST_TYPE_NONE,               // なし(NULLを渡す)
+}
+TAG_REGIST_TYPE;
+
+#define STRBUF_LENGTH       (256)  // この文字数で足りるかbuflen.hで要確認
+
+////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
+// これから変更していく↓
+////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
 enum{
   BACK_COL = 0,
   LETTER_COL,
@@ -50,33 +195,105 @@ enum{
 #define G2D_BACKGROUND_COL  (0x0000)
 #define G2D_FONT_COL        (0x7fff)
 #define G2D_SHADOW_COL      (0x3def)
+////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
+// これから変更していく↑
+////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
 
+
+//=============================================================================
+/**
+*  構造体宣言
+*/
+//=============================================================================
+//-------------------------------------
+/// PROC ワーク
+//=====================================
 typedef struct
 {
   GFL_TCBSYS          *tcb_sys;
   void                *tcb_work;
   GFL_TCB             *v_tcb;
-	PALETTE_FADE_PTR    pfd;	// パレットフェードデータ
+//  PALETTE_FADE_PTR    pfd;  // パレットフェードデータ
   HEAPID              heapID;
   GFL_TCBLSYS*        tcbl_sys;
   GFL_BMPWIN*         bmpwin[ BMPWIN_MAX ];
   GFL_MSGDATA*        shinka_msg;
   GFL_MSGDATA*        wazaoboe_msg;
   GFL_MSGDATA*        yesno_msg;
-  GFL_FONT*           font;
+//  GFL_FONT*           font;
   WORDSET*            wordset;
   STRBUF*             expbuf;
   PRINT_STREAM*       ps;
-  POKEMON_PARAM*      pp;
+//  POKEMON_PARAM*      pp;
   SHINKA_DEMO_PARAM*  param;
   BPLIST_DATA         plistData;
   int                 wait;
   int                 work;
-  WazaID              wazaoboe_no;
-  int                 wazaoboe_index;
-  u8                  cursor_flag;
+//  WazaID              wazaoboe_no;
+//  int                 wazaoboe_index;
+//  u8                  cursor_flag;
+
+
+  // 
+  HEAPID                      heap_id;
+  SHINKADEMO_GRAPHIC_WORK*    graphic;
+  GFL_FONT*                   font;
+  PRINT_QUE*                  print_que;
+
+  // 
+  POKEMON_PARAM*              pp;
+  BOOL                        evo_cancel;
+
+  // ステップ
+  STEP                        step;
+
+  // STM_TEXT
+  PRINT_STREAM*               stm_text_stream;
+  GFL_TCBLSYS*                stm_text_tcblsys;
+  GFL_BMPWIN*                 stm_text_winin_bmpwin;
+  GFL_BMPWIN*                 stm_text_dummy_bmpwin;      ///< 0番のキャラクターを1x1でつくっておく
+  GFL_ARCUTIL_TRANSINFO       stm_text_winfrm_tinfo;
+  GFL_MSGDATA*                stm_text_msgdata_shinka;
+  GFL_MSGDATA*                stm_text_msgdata_wazaoboe;
+  STRBUF*                     stm_text_strbuf;
+
+  // (古い)ニックネーム、忘れる技
+  STRBUF*                     poke_nick_name_strbuf;  // ポケモンの種族名がニックネームの場合、進化後にニックネームも変更されるので。
+  WazaID                      wazawasure_no;
+  u8                          wazawasure_pos;  // 忘れる技の位置
+
+  // wazaoboe
+  WazaID                      wazaoboe_no;
+  int                         wazaoboe_index;
+
+  // YESNO_MENU
+  GFL_MSGDATA*                yesno_menu_msgdata;
+  STRBUF*                     yesno_menu_strbuf_yes;
+  STRBUF*                     yesno_menu_strbuf_no;
+  YESNO_MENU_WORK*            yesno_menu_work;
+
+  // ステータス
+  GFL_TCBSYS*                 tcbsys;
+  void*                       tcbsys_work;
+  PALETTE_FADE_PTR            pfd;  // パレットフェード
+  u8                          cursor_flag;
+  BPLIST_DATA                 bplist_data;
+  GFL_TCB*                    vblank_tcb;
+
+  // 制作中だけ
+  u32 TMP_count;
+
 }SHINKA_DEMO_WORK;
 
+//-------------------------------------
+/// PROC パラメータ
+//=====================================
 struct _SHINKA_DEMO_PARAM
 {
   const POKEPARTY*  ppt;
@@ -86,29 +303,62 @@ struct _SHINKA_DEMO_PARAM
 };
 
 
-static  void  SHINKADEMO_InitBG( SHINKA_DEMO_WORK* wk );
-static  void  SHINKADEMO_InitBGMain( SHINKA_DEMO_WORK* wk );
-static  void  SHINKADEMO_InitBGSub( SHINKA_DEMO_WORK* wk );
-static  void  SHINKADEMO_ExitBG( SHINKA_DEMO_WORK* wk );
-static  void  SHINKADEMO_ExitBGMain( SHINKA_DEMO_WORK* wk );
-static  void  SHINKADEMO_ExitBGSub( SHINKA_DEMO_WORK* wk );
-static  void  TextPrint( SHINKA_DEMO_WORK *wk, int bmp_win, int x, int y, GFL_MSGDATA* msg, u32 msgID );
-static  BOOL  TextWait( SHINKA_DEMO_WORK* wk );
-static  void  TextClear( SHINKA_DEMO_WORK* wk, int bmp_win );
-static  void  FontLenGet( const STRBUF *str, GFL_FONT *font, int *ret_dot_len, int *ret_char_len );
-static  void  SHINKADEMO_VBlank( GFL_TCB *tcb, void *work );
+//=============================================================================
+/**
+*  ローカル関数のプロトタイプ宣言
+*/
+//=============================================================================
+static void ShinkaDemo_MakeStmTextStream( SHINKA_DEMO_WORK* work,
+                                          GFL_MSGDATA* msgdata, u32 str_id,
+                                          TAG_REGIST_TYPE type0, const void* data0,
+                                          TAG_REGIST_TYPE type1, const void* data1 );
+static BOOL ShinkaDemo_WaitStmTextStream( SHINKA_DEMO_WORK* work );
+static void ShinkaDemo_MakeYesNoMenuStrbuf( SHINKA_DEMO_WORK* work,
+                                            GFL_MSGDATA* yes_msgdata, u32 yes_str_id,
+                                            TAG_REGIST_TYPE yes_type0, const void* yes_data0,
+                                            TAG_REGIST_TYPE yes_type1, const void* yes_data1,
+                                            GFL_MSGDATA* no_msgdata, u32 no_str_id,
+                                            TAG_REGIST_TYPE no_type0, const void* no_data0,
+                                            TAG_REGIST_TYPE no_type1, const void* no_data1 );
 
+static STRBUF* MakeStr( HEAPID heap_id,
+                        GFL_MSGDATA* msgdata, u32 str_id,
+                        TAG_REGIST_TYPE type0, const void* data0,
+                        TAG_REGIST_TYPE type1, const void* data1 );
+
+//=============================================================================
+/**
+*  PROC
+*/
+//=============================================================================
+static void ShinkaDemo_VBlankFunc( GFL_TCB* tcb, void* wk );
+static GFL_PROC_RESULT ShinkaDemoProcInit( GFL_PROC * proc, int * seq, void * pwk, void * mywk );
+static GFL_PROC_RESULT ShinkaDemoProcExit( GFL_PROC * proc, int * seq, void * pwk, void * mywk );
+static GFL_PROC_RESULT ShinkaDemoProcMain( GFL_PROC * proc, int * seq, void * pwk, void * mywk );
+
+const GFL_PROC_DATA   ShinkaDemoProcData = {
+  ShinkaDemoProcInit,
+  ShinkaDemoProcMain,
+  ShinkaDemoProcExit,
+};
+
+
+//=============================================================================
+/**
+*  外部公開関数定義
+*/
+//=============================================================================
 //------------------------------------------------------------------
 /**
- * 進化デモ用パラメータ構造体生成
+ *  @brief       進化デモ用パラメータ構造体生成
  *
- * @param   heapID        ヒープID
- * @param   ppt           POKEPARTY構造体
- * @param   after_mons_no 進化後のポケモンナンバー
- * @param   pos           進化するポケモンのPOKEPARTY内のインデックス
- * @param   cond          進化条件
+ *  @param[in]   heapID        ヒープID
+ *  @param[in]   ppt           POKEPARTY構造体
+ *  @param[in]   after_mons_no 進化後のポケモンナンバー
+ *  @param[in]   pos           進化するポケモンのPOKEPARTY内のインデックス
+ *  @param[in]   cond          進化条件
  *
- * @retval  SHINKA_DEMO_PARAM
+ *  @retval      SHINKA_DEMO_PARAM
  */
 //------------------------------------------------------------------
 SHINKA_DEMO_PARAM*  SHINKADEMO_AllocParam( HEAPID heapID, const POKEPARTY* ppt, u16 after_mons_no, u8 pos, u8 cond )
@@ -125,11 +375,11 @@ SHINKA_DEMO_PARAM*  SHINKADEMO_AllocParam( HEAPID heapID, const POKEPARTY* ppt, 
 
 //------------------------------------------------------------------
 /**
- * 進化デモ用パラメータワーク解放
+ *  @brief           進化デモ用パラメータワーク解放
  *
- * @param   sdp           パラメータワーク構造体
+ *  @param[in,out]   sdp           パラメータワーク構造体
  *
- * @retval  SHINKA_DEMO_PARAM
+ *  @retval          SHINKA_DEMO_PARAM
  */
 //------------------------------------------------------------------
 void  SHINKADEMO_FreeParam( SHINKA_DEMO_PARAM* sdp )
@@ -137,654 +387,954 @@ void  SHINKADEMO_FreeParam( SHINKA_DEMO_PARAM* sdp )
   GFL_HEAP_FreeMemory( sdp );
 }
 
-//--------------------------------------------------------------------------
+
+//=============================================================================
 /**
- * PROC Init
- */
-//--------------------------------------------------------------------------
+*  ローカル関数定義
+*/
+//=============================================================================
+//-------------------------------------
+/// PROC 初期化処理
+//=====================================
 static GFL_PROC_RESULT ShinkaDemoProcInit( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
-  SHINKA_DEMO_WORK* wk;
+  SHINKA_DEMO_PARAM*    param    = (SHINKA_DEMO_PARAM*)pwk;
+  SHINKA_DEMO_WORK*     work;
 
-  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_SHINKA_DEMO, 0x80000 );
-  wk = GFL_PROC_AllocWork( proc, sizeof( SHINKA_DEMO_WORK ), HEAPID_SHINKA_DEMO );
-  MI_CpuClearFast( wk, sizeof( SHINKA_DEMO_WORK ) );
-  wk->heapID = HEAPID_SHINKA_DEMO;
+  // オーバーレイ
+  GFL_OVERLAY_Load( FS_OVERLAY_ID( ui_common ) );
 
+  // ヒープ
   {
-    static const GFL_DISP_VRAM dispvramBank = {
-      GX_VRAM_BG_128_D,       // メイン2DエンジンのBG
-      GX_VRAM_BGEXTPLTT_NONE,     // メイン2DエンジンのBG拡張パレット
-      GX_VRAM_SUB_BG_128_C,      // サブ2DエンジンのBG
-      GX_VRAM_SUB_BGEXTPLTT_NONE,   // サブ2DエンジンのBG拡張パレット
-      GX_VRAM_OBJ_64_E,       // メイン2DエンジンのOBJ
-      GX_VRAM_OBJEXTPLTT_NONE,    // メイン2DエンジンのOBJ拡張パレット
-      GX_VRAM_SUB_OBJ_16_I,     // サブ2DエンジンのOBJ
-      GX_VRAM_SUB_OBJEXTPLTT_NONE,  // サブ2DエンジンのOBJ拡張パレット
-      GX_VRAM_TEX_01_AB,        // テクスチャイメージスロット
-      GX_VRAM_TEXPLTT_01_FG,      // テクスチャパレットスロット
-      GX_OBJVRAMMODE_CHAR_1D_64K,   // メインOBJマッピングモード
-      GX_OBJVRAMMODE_CHAR_1D_32K,   // サブOBJマッピングモード
-    };
-    GFL_DISP_SetBank( &dispvramBank );
-
-    { 
-      //セルアクター初期化
-      static  const GFL_CLSYS_INIT clsysinit = {
-        0, 0,
-        0, 512,
-        4, 124,
-        4, 124,
-        0,
-        48,48,48,48,
-        16, 16,
-      };
-      GFL_CLACT_SYS_Create( &clsysinit, &dispvramBank, wk->heapID );
-    }
-    //VRAMクリア
-    MI_CpuClear32((void*)HW_BG_VRAM, HW_BG_VRAM_SIZE);
-    MI_CpuClear32((void*)HW_DB_BG_VRAM, HW_DB_BG_VRAM_SIZE);
-    MI_CpuClear32((void*)HW_OBJ_VRAM, HW_OBJ_VRAM_SIZE);
-    MI_CpuClear32((void*)HW_DB_OBJ_VRAM, HW_DB_OBJ_VRAM_SIZE);
-    MI_CpuFill16((void*)HW_BG_PLTT, 0x0000, HW_BG_PLTT_SIZE);
-
+    GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_SHINKA_DEMO, HEAP_SIZE );
+    work = GFL_PROC_AllocWork( proc, sizeof(SHINKA_DEMO_WORK), HEAPID_SHINKA_DEMO );
+    GFL_STD_MemClear( work, sizeof(SHINKA_DEMO_WORK) );
   }
 
-  GFL_BG_Init( wk->heapID );
-  GFL_BMPWIN_Init( wk->heapID );
+  // 何よりも先に行う初期化
+  {
+    // 非表示
+    u8 i;
+    for(i=GFL_BG_FRAME0_M; i<=GFL_BG_FRAME3_S; i++)
+    {
+      GFL_BG_SetVisible( i, VISIBLE_OFF );
+    }
+  } 
 
-  //パレットフェード初期化
-  wk->pfd = PaletteFadeInit( wk->heapID );
-  PaletteTrans_AutoSet( wk->pfd, TRUE );
-  PaletteFadeWorkAllocSet( wk->pfd, FADE_MAIN_BG, 0x200, wk->heapID );
-  PaletteFadeWorkAllocSet( wk->pfd, FADE_SUB_BG, 0x1e0, wk->heapID );
-  PaletteFadeWorkAllocSet( wk->pfd, FADE_MAIN_OBJ, 0x200, wk->heapID );
-  PaletteFadeWorkAllocSet( wk->pfd, FADE_SUB_OBJ, 0x1e0, wk->heapID );
+  // SHINKA_DEMO_WORK準備
+  {
+    // 
+    work->heap_id       = HEAPID_SHINKA_DEMO;
+    work->graphic       = SHINKADEMO_GRAPHIC_Init( GX_DISP_SELECT_MAIN_SUB, work->heap_id );
+    SHINKADEMO_GRAPHIC_InitBGSub( work->graphic );
+    work->font          = GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, work->heap_id );
+    work->print_que     = PRINTSYS_QUE_Create( work->heap_id );
 
-  SHINKADEMO_InitBG( wk );
+    //
+    work->pp            = PokeParty_GetMemberPointer( param->ppt, param->shinka_pos );
 
-  //TCBL生成
-  wk->tcbl_sys = GFL_TCBL_Init( wk->heapID, wk->heapID, 64, 128 );
+    // ステップ
+    work->step      = STEP_FADE_IN;
+  }
 
-  //パラメータ初期化
-  GF_ASSERT( pwk != NULL );
-  wk->param = pwk;
-  wk->pp = PokeParty_GetMemberPointer( wk->param->ppt, wk->param->shinka_pos );
+  // STM_TEXT
+  {
+    // パレット
+    GFL_ARC_UTIL_TransVramPalette( ARCID_FONT, NARC_font_default_nclr, PALTYPE_MAIN_BG,
+      BG_PAL_POS_M_STM_TEXT_FONT * 0x20, BG_PAL_NUM_M_STM_TEXT_FONT * 0x20, work->heap_id );
 
-  //メッセージ系初期化
-  GFL_FONTSYS_Init();
-  wk->shinka_msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_shinka_demo_dat, wk->heapID );
-  wk->wazaoboe_msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_waza_oboe_dat, wk->heapID );
-  wk->yesno_msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_yesnomenu_dat, wk->heapID );
-  wk->font = GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr, GFL_FONT_LOADTYPE_FILE, TRUE, wk->heapID );
-  wk->wordset = WORDSET_Create( wk->heapID );
+    // BGフレームのスクリーンの空いている箇所に何も表示がされないようにしておく
+    work->stm_text_dummy_bmpwin = GFL_BMPWIN_Create( BG_FRAME_M_STM_TEXT, 0, 0, 1, 1,
+                                    BG_PAL_POS_M_STM_TEXT_FONT, GFL_BMP_CHRAREA_GET_F );
+    GFL_BMP_Clear( GFL_BMPWIN_GetBmp(work->stm_text_dummy_bmpwin), 0 );
+    GFL_BMPWIN_TransVramCharacter(work->stm_text_dummy_bmpwin);
 
-  //タスク初期化
-  wk->tcb_work = GFL_HEAP_AllocClearMemory( wk->heapID, GFL_TCB_CalcSystemWorkSize( SHINKADEMO_TCB_MAX ) );
-  wk->tcb_sys = GFL_TCB_Init( SHINKADEMO_TCB_MAX, wk->tcb_work );
+    // ウィンドウ内
+    work->stm_text_winin_bmpwin = GFL_BMPWIN_Create( BG_FRAME_M_STM_TEXT, 1, 19, 30, 4,
+                                     BG_PAL_POS_M_STM_TEXT_FONT, GFL_BMP_CHRAREA_GET_B );
+    GFL_BMP_Clear( GFL_BMPWIN_GetBmp(work->stm_text_winin_bmpwin), BTM_TEXT_WININ_BACK_COLOR );
+    GFL_BMPWIN_TransVramCharacter(work->stm_text_winin_bmpwin);
+    
+    // ウィンドウ枠
+    work->stm_text_winfrm_tinfo = BmpWinFrame_GraphicSetAreaMan( BG_FRAME_M_STM_TEXT,
+                                    BG_PAL_POS_M_STM_TEXT_FRAME,
+                                    MENU_TYPE_SYSTEM, work->heap_id );
+    BmpWinFrame_Write( work->stm_text_winin_bmpwin, WINDOW_TRANS_ON_V,
+                       GFL_ARCUTIL_TRANSINFO_GetPos(work->stm_text_winfrm_tinfo),
+                       BG_PAL_POS_M_STM_TEXT_FRAME );
+    GFL_BMPWIN_MakeTransWindow_VBlank( work->stm_text_winin_bmpwin );
 
-  //フェードイン
-  GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN, 16, 0, 2 );
-  (*seq) = 0;
+    // メッセージ
+    work->stm_text_msgdata_shinka     = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_shinka_demo_dat, work->heap_id );
+    work->stm_text_msgdata_wazaoboe   = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_waza_oboe_dat, work->heap_id );
 
-  //VBlank関数
-  wk->v_tcb = GFUser_VIntr_CreateTCB( SHINKADEMO_VBlank, wk, 1 );
+    // TCBL、フォントカラー、転送など
+    work->stm_text_tcblsys = GFL_TCBL_Init( work->heap_id, work->heap_id, 1, 0 );
+    GFL_FONTSYS_SetColor( 1, 2, BTM_TEXT_WININ_BACK_COLOR );
+    GFL_BG_LoadScreenV_Req( BG_FRAME_M_STM_TEXT );
+
+    // NULL初期化
+    work->stm_text_strbuf       = NULL;
+    work->stm_text_stream       = NULL;
+  }
+
+  // (古い)ニックネーム
+  {
+    work->poke_nick_name_strbuf = GFL_STR_CreateBuffer( STRBUF_LENGTH, work->heapID );
+  }
+
+  // YESNO_MENU
+  {
+    // メッセージ
+    work->yesno_menu_msgdata     = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_yesnomenu_dat, work->heap_id );
+
+    // ワーク
+    work->yesno_menu_work        = YESNO_MENU_CreateRes( work->heap_id,
+                                      BG_FRAME_S_BUTTON, 0, BG_PAL_POS_S_BUTTON,
+                                      OBJ_PAL_POS_S_CURSOR,
+                                      SHINKADEMO_GRAPHIC_GetClunit(work->graphic),
+                                      work->font,
+                                      work->print_que,
+                                      FALSE );
+
+    // NULL初期化
+    work->yesno_menu_strbuf_yes = NULL;
+    work->yesno_menu_strbuf_no  = NULL;
+  }
+
+  // プライオリティ、表示、背景色など
+  {
+    GFL_BG_SetPriority( BG_FRAME_M_POKEMON               , 1 );
+    GFL_BG_SetPriority( BG_FRAME_M_STM_TEXT              , 0 );  // 最前面
+
+    GFL_BG_SetPriority( BG_FRAME_S_BACK                  , 2 );
+    //GFL_BG_SetPriority( BG_FRAME_S_BUTTON                , 1 );
+    //GFL_BG_SetPriority( BG_FRAME_S_BTN_TEXT              , 0 );  // 最前面
+
+    GFL_BG_SetVisible( BG_FRAME_M_POKEMON               , VISIBLE_ON );
+    GFL_BG_SetVisible( BG_FRAME_M_STM_TEXT              , VISIBLE_ON );
+  
+    GFL_BG_SetVisible( BG_FRAME_S_BACK                  , VISIBLE_ON );
+    //GFL_BG_SetVisible( BG_FRAME_S_BUTTON                , VISIBLE_ON );
+    //GFL_BG_SetVisible( BG_FRAME_S_BTN_TEXT              , VISIBLE_ON );
+  
+    GFL_BG_SetBackGroundColor( GFL_BG_FRAME0_M, 0x0000 );
+    GFL_BG_SetBackGroundColor( GFL_BG_FRAME0_S, 0x0000 );
+  }
+
+  // ステータス
+  {
+    // 初期化
+    work->tcbsys           = NULL;
+    work->tcbsys_work      = NULL;
+    work->pfd              = NULL;
+    work->vblank_tcb       = NULL;
+
+    work->cursor_flag      = 0;
+
+    // ステータス用タスク
+    //work->tcbsys_work = GFL_HEAP_AllocMemory( work->heap_id, GFL_TCB_CalcSystemWorkSize(TCBSYS_TASK_MAX) );
+    //GFL_STD_MemClear( work->tcbsys_work, GFL_TCB_CalcSystemWorkSize(TCBSYS_TASK_MAX) );
+    //work->tcbsys = GFL_TCB_Init( TCBSYS_TASK_MAX, work->tcbsys_work );
+
+    // パレットフェード
+    //work->pfd = PaletteFadeInit( work->heap_id );
+    //PaletteTrans_AutoSet( work->pfd, TRUE );
+    //PaletteFadeWorkAllocSet( work->pfd, FADE_MAIN_BG, 0x200, work->heapID );
+    //PaletteFadeWorkAllocSet( work->pfd, FADE_SUB_BG, 0x1e0, work->heapID );
+    //PaletteFadeWorkAllocSet( work->pfd, FADE_MAIN_OBJ, 0x200, work->heapID );
+    //PaletteFadeWorkAllocSet( work->pfd, FADE_SUB_OBJ, 0x1e0, work->heapID );
+
+    //work->vblank_tcb = GFUser_VIntr_CreateTCB( ShinkaDemo_VBlankFunc, work, 1 );
+  }
+
+  // フェードイン(黒→見える)
+  GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, FADE_IN_WAIT );
 
   return GFL_PROC_RES_FINISH;
 }
 
-//--------------------------------------------------------------------------
-/**
- * PROC Main
- */
-//--------------------------------------------------------------------------
+//-------------------------------------
+/// PROC 終了処理
+//=====================================
+static GFL_PROC_RESULT ShinkaDemoProcExit( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
+{
+  SHINKA_DEMO_PARAM*    param    = (SHINKA_DEMO_PARAM*)pwk;
+  SHINKA_DEMO_WORK*     work     = (SHINKA_DEMO_WORK*)mywk;
+
+  // ステータス
+  {
+    //GFL_TCB_DeleteTask( work->vblank_tcb );
+
+    // パレットフェード
+    //PaletteFadeWorkAllocFree( work->pfd, FADE_MAIN_BG );
+    //PaletteFadeWorkAllocFree( work->pfd, FADE_SUB_BG );
+    //PaletteFadeWorkAllocFree( work->pfd, FADE_MAIN_OBJ );
+    //PaletteFadeWorkAllocFree( work->pfd, FADE_SUB_OBJ );
+    //PaletteFadeFree( work->pfd );
+
+    // ステータス用タスク
+    //GFL_HEAP_FreeMemory( work->tcbsys_work );
+    //GFL_TCB_Exit( work->tcb_sys );
+  }
+
+  // YESNO_MENU
+  {
+    YESNO_MENU_DeleteRes( work->yesno_menu_work );
+    if( work->yesno_menu_strbuf_yes ) GFL_STR_DeleteBuffer( work->yesno_menu_strbuf_yes );
+    if( work->yesno_menu_strbuf_no ) GFL_STR_DeleteBuffer( work->yesno_menu_strbuf_no );
+    GFL_MSG_Delete( work->yesno_menu_msgdata );
+  }
+
+  // (古い)ニックネーム
+  {
+    GFL_STR_DeleteBuffer( work->poke_nick_name_strbuf );
+  }
+
+  // STM_TEXT
+  {
+    if( work->stm_text_stream ) PRINTSYS_PrintStreamDelete( work->stm_text_stream );
+    GFL_TCBL_Exit( work->stm_text_tcblsys );
+    if( work->stm_text_strbuf ) GFL_STR_DeleteBuffer( work->stm_text_strbuf );
+    GFL_MSG_Delete( work->stm_text_msgdata_shinka );
+    GFL_MSG_Delete( work->stm_text_msgdata_wazaoboe );
+    GFL_BG_FreeCharacterArea( BG_FRAME_M_STM_TEXT,
+      GFL_ARCUTIL_TRANSINFO_GetPos(work->stm_text_winfrm_tinfo),
+      GFL_ARCUTIL_TRANSINFO_GetSize(work->stm_text_winfrm_tinfo) );
+    GFL_BMPWIN_Delete( work->stm_text_winin_bmpwin );
+    GFL_BMPWIN_Delete( work->stm_text_dummy_bmpwin );
+  }
+
+  // SHINKA_DEMO_WORK後片付け
+  {
+    PRINTSYS_QUE_Delete( work->print_que );
+    GFL_FONT_Delete( work->font );
+    SHINKADEMO_GRAPHIC_ExitBGSub( work->graphic );
+    SHINKADEMO_GRAPHIC_Exit( work->graphic );
+  }
+  
+  // ヒープ
+  {
+    GFL_PROC_FreeWork( proc );
+    GFL_HEAP_DeleteHeap( HEAPID_SHINKA_DEMO );
+  }
+
+  // オーバーレイ
+  GFL_OVERLAY_Unload( FS_OVERLAY_ID( ui_common ) );
+ 
+  return GFL_PROC_RES_FINISH;
+}
+
+//-------------------------------------
+/// PROC 主処理
+//=====================================
 static GFL_PROC_RESULT ShinkaDemoProcMain( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
-  u32 x, y;
-  int trg = GFL_UI_KEY_GetTrg();
-  int tp  = GFL_UI_TP_GetPointCont( &x, &y );
-  SHINKA_DEMO_WORK* wk = mywk;
+  SHINKA_DEMO_PARAM*    param    = (SHINKA_DEMO_PARAM*)pwk;
+  SHINKA_DEMO_WORK*     work     = (SHINKA_DEMO_WORK*)mywk;
 
-  GFL_TCB_Main( wk->tcb_sys );
-  GFL_TCBL_Main( wk->tcbl_sys );
+  int key_trg = GFL_UI_KEY_GetTrg();
 
-  switch( (*seq) ){ 
-  case 0:
-    if( GFL_FADE_CheckFade() == FALSE )
+  switch( work->step )
+  {
+  case STEP_FADE_IN:
     {
-      WORDSET_RegisterPokeNickName( wk->wordset, 0, wk->pp );
-      TextPrint( wk, BMPWIN_MAIN, 8, 8, wk->shinka_msg, SHINKADEMO_ShinkaBeforeMsg );
-      (*seq)++;
-    }
-    break;
-  case 1:
-    if( TextWait( wk ) )
-    { 
-      WORDSET_RegisterPokeNickName( wk->wordset, 0, wk->pp );
-      TextPrint( wk, BMPWIN_MAIN, 8, 8, wk->shinka_msg, SHINKADEMO_ShinkaSelectMsg );
-      (*seq)++;
-    }
-    break;
-  case 2:
-    if( TextWait( wk ) )
-    { 
-      if( trg & PAD_BUTTON_A )
-      { 
-        WORDSET_RegisterPokeNickName( wk->wordset, 0, wk->pp );
-        PP_ChangeMonsNo( wk->pp, wk->param->after_mons_no );
-        WORDSET_RegisterPokeMonsName( wk->wordset, 1, wk->pp );
-        TextPrint( wk, BMPWIN_MAIN, 8, 8, wk->shinka_msg, SHINKADEMO_ShinkaMsg );
-        (*seq)++;
-      }
-      if( trg & PAD_BUTTON_B )
-      { 
-        WORDSET_RegisterPokeNickName( wk->wordset, 0, wk->pp );
-        TextPrint( wk, BMPWIN_MAIN, 8, 8, wk->shinka_msg, SHINKADEMO_ShinkaCancelMsg );
-        wk->work = 1000;
-        (*seq) = 100;
-      }
-    }
-    break;
-  case 3:
-    if( TextWait( wk ) )
-    { 
-      { 
-        //すれ違い用データをセット
-        STRBUF* buf = GFL_STR_CreateBuffer( BUFLEN_SHINKA_DEMO_MSG, wk->heapID );
-        PP_Get( wk->pp, ID_PARA_nickname, buf );
-        GAMEBEACON_Set_PokemonEvolution( buf );
-        GFL_STR_DeleteBuffer( buf );
-      }
-      
-      //技覚えチェック
-      wk->wazaoboe_no = PP_CheckWazaOboe( wk->pp, &wk->wazaoboe_index, wk->heapID );
-      if( wk->wazaoboe_no == PTL_WAZAOBOE_NONE )
+      if( !GFL_FADE_CheckFade() )
       {
-        (*seq) = 1000;
+        // 次へ
+        work->step = STEP_EVO_BEFORE;
+        
+        ShinkaDemo_MakeStmTextStream(
+          work,
+          work->stm_text_msgdata_shinka, SHINKADEMO_ShinkaBeforeMsg,
+          TAG_REGIST_TYPE_POKE_NICK_NAME, work->pp,
+          TAG_REGIST_TYPE_NONE, NULL );
       }
-      else if( wk->wazaoboe_no == PTL_WAZASET_SAME )
-      { 
-        break;
-      }
-      else if( wk->wazaoboe_no & PTL_WAZAOBOE_FULL )
+    }
+    break;
+  case STEP_EVO_BEFORE:
+    {
+      if( ShinkaDemo_WaitStmTextStream( work ) )
       {
-        wk->wazaoboe_no &= ( PTL_WAZAOBOE_FULL ^ 0xffff );
-        (*seq) = 6;
+        // 次へ
+        work->step = STEP_EVO_DEMO;
+        
+        work->evo_cancel = FALSE;
+        work->TMP_count = 0;
       }
-      else
+    }
+    break;
+  case STEP_EVO_DEMO:
+    {
+      work->TMP_count++;
+
+      if( work->TMP_count < 180 )
       {
-        (*seq) = 4;
+        if( key_trg & PAD_BUTTON_B )
+        {
+          work->evo_cancel = TRUE;
+        }
+      }
+
+      //if( work->TMP_count >= 180 )
+      if( work->TMP_count >= 180 || work->evo_cancel )
+      {
+        if( work->evo_cancel )
+        {
+          // 次へ
+          work->step = STEP_EVO_CANCEL;
+
+          ShinkaDemo_MakeStmTextStream(
+            work,
+            work->stm_text_msgdata_shinka, SHINKADEMO_ShinkaCancelMsg,
+            TAG_REGIST_TYPE_POKE_NICK_NAME, work->pp,
+            TAG_REGIST_TYPE_NONE, NULL );
+        }
+        else
+        {
+          // (古い)ニックネーム
+          PP_Get( work->pp, ID_PARA_nickname, work->poke_nick_name_strbuf );
+
+          // 進化
+          PP_ChangeMonsNo( work->pp, param->after_mons_no );
+
+          // 次へ
+          work->step = STEP_EVO_AFTER;
+
+          ShinkaDemo_MakeStmTextStream(
+            work,
+            work->stm_text_msgdata_shinka, SHINKADEMO_ShinkaMsg,
+            TAG_REGIST_TYPE_WORD, work->poke_nick_name_strbuf,
+            TAG_REGIST_TYPE_POKE_MONS_NAME, work->pp );
+        }
       }
     }
     break;
-  case 4:
-    WORDSET_RegisterPokeNickName( wk->wordset, 0, wk->pp );
-    WORDSET_RegisterWazaName( wk->wordset, 1, wk->wazaoboe_no );
-    TextPrint( wk, BMPWIN_MAIN, 8, 8, wk->wazaoboe_msg, msg_waza_oboe_04 );
-    (*seq)++;
-    break;
-  case 5:
-    //技覚えた
-    if( TextWait( wk ) )
-    { 
-      wk->wait = MSG_WAIT;
-      wk->work = 3; 
-      (*seq) = 200;
+  case STEP_EVO_CANCEL:
+    {
+      if( ShinkaDemo_WaitStmTextStream( work ) )
+      {
+        // 次へ
+        work->step = STEP_FADE_OUT_BEFORE;
+      }
     }
     break;
-  case 6:
-    //技の手持ちがいっぱい
-    WORDSET_RegisterPokeNickName( wk->wordset, 0, wk->pp );
-    WORDSET_RegisterWazaName( wk->wordset, 1, wk->wazaoboe_no );
-    TextPrint( wk, BMPWIN_MAIN, 8, 8, wk->wazaoboe_msg, msg_waza_oboe_05 );
-    (*seq)++;
-    break;
-  case 7:
-    if( TextWait( wk ) )
-    { 
-      TextPrint( wk, BMPWIN_SUB, 128 | STR_X_CENTERING, 40, wk->yesno_msg, msgid_yesno_wazawasureru );
-      TextPrint( wk, BMPWIN_SUB | BMPWIN_NO_CLEAR, 128 | STR_X_CENTERING, 136, wk->yesno_msg, msgid_yesno_wazawasurenai );
-      (*seq)++;
+  case STEP_EVO_AFTER:
+    {
+      if( ShinkaDemo_WaitStmTextStream( work ) )
+      {
+        // すれ違い用データをセット
+        { 
+          STRBUF* strbuf = GFL_STR_CreateBuffer( STRBUF_LENGTH, work->heapID );
+          PP_Get( work->pp, ID_PARA_nickname, strbuf );  // ここは新しいニックネームでいいのだろうか？
+          GAMEBEACON_Set_PokemonEvolution( strbuf );
+          GFL_STR_DeleteBuffer( strbuf );
+        }
+
+        // 次へ
+        work->step = STEP_WAZA_OBOE;
+
+        work->wazaoboe_index = 0;
+      }
     }
     break;
-  case 8:
-    //技忘れ確認処理
-    if( tp )
-    { 
-      TextClear( wk, BMPWIN_SUB );
-      if( y < 96 )
-      { 
-        SHINKADEMO_ExitBGSub( wk );
-        wk->plistData.pp = (POKEPARTY*)wk->param->ppt;
-        wk->plistData.font = wk->font;
-        wk->plistData.heap = wk->heapID;
-        wk->plistData.mode = BPL_MODE_WAZASET;
-        wk->plistData.end_flg = FALSE;
-        wk->plistData.sel_poke = wk->param->shinka_pos;
-        wk->plistData.chg_waza = wk->wazaoboe_no;
-        wk->plistData.rule = 0;
-        wk->plistData.cursor_flg = &wk->cursor_flag;
-        wk->plistData.tcb_sys = wk->tcb_sys;
-        wk->plistData.pfd = wk->pfd;
+  case STEP_WAZA_OBOE:
+    {
+      if( ShinkaDemo_WaitStmTextStream( work ) )
+      {
+        // 技覚えチェック
+        work->wazaoboe_no = PP_CheckWazaOboe( work->pp, &work->wazaoboe_index, work->heap_id );
+        if( work->wazaoboe_no == PTL_WAZAOBOE_NONE )
+        {
+          // 次へ
+          work->step = STEP_FADE_OUT_BEFORE;
+        }
+        else if( work->wazaoboe_no == PTL_WAZASET_SAME )
+        {
+          // 次のインデックスで技覚えチェック
+          break;
+        }
+        else if( work->wazaoboe_no & PTL_WAZAOBOE_FULL )
+        {
+          work->wazaoboe_no &= ( PTL_WAZAOBOE_FULL ^ 0xffff );
+
+          // 次へ
+          work->step = STEP_WAZA_FULL_PREPARE;
+        }
+        else
+        {
+          // 次へ
+          work->step = STEP_WAZA_VACANT_MASTER;
+          
+          // 技覚えた
+          ShinkaDemo_MakeStmTextStream(
+            work,
+            work->stm_text_msgdata_wazaoboe, msg_waza_oboe_04,
+            TAG_REGIST_TYPE_POKE_NICK_NAME, work->pp,
+            TAG_REGIST_TYPE_WAZA, &work->wazaoboe_no );
+        }
+      }
+    }
+    break;
+  case STEP_WAZA_VACANT_MASTER:
+    {
+      if( ShinkaDemo_WaitStmTextStream( work ) )
+      {
+        if( key_trg & PAD_BUTTON_A )
+        {
+          // 次へ
+          work->step = STEP_WAZA_OBOE;
+        }
+      }
+    }
+    break;
+  case STEP_WAZA_FULL_PREPARE:
+    {
+      // 次へ
+      work->step = STEP_WAZA_FULL_Q;
+          
+      // 技の手持ちがいっぱい
+      ShinkaDemo_MakeStmTextStream(
+        work,
+        work->stm_text_msgdata_wazaoboe, msg_waza_oboe_05,
+        TAG_REGIST_TYPE_POKE_NICK_NAME, work->pp,
+        TAG_REGIST_TYPE_WAZA, &work->wazaoboe_no );
+    }
+    break;
+  case STEP_WAZA_FULL_Q:
+    {
+      if( ShinkaDemo_WaitStmTextStream( work ) )
+      {
+        // 次へ
+        work->step = STEP_WAZA_FULL_YN;
+
+        // 技忘れ確認処理
+        ShinkaDemo_MakeYesNoMenuStrbuf( work,
+                                        work->yesno_menu_msgdata, msgid_yesno_wazawasureru,
+                                        TAG_REGIST_TYPE_NONE, NULL,
+                                        TAG_REGIST_TYPE_NONE, NULL,
+                                        work->yesno_menu_msgdata, msgid_yesno_wazawasurenai,
+                                        TAG_REGIST_TYPE_NONE, NULL,
+                                        TAG_REGIST_TYPE_NONE, NULL );
+        YESNO_MENU_OpenMenu( work->yesno_menu_work, work->yesno_menu_strbuf_yes, work->yesno_menu_strbuf_no );
+      }
+    }
+    break;
+  case STEP_WAZA_FULL_YN:
+    {
+      YESNO_MENU_SEL sel = YESNO_MENU_GetSelect( work->yesno_menu_work );
+      if( sel != YESNO_MENU_SEL_SEL )
+      {
+        if( sel == YESNO_MENU_SEL_YES )
+        {
+          // 次へ
+          work->step = STEP_WAZA_STATUS_FADE_OUT;
+
+          // フェードアウト(見える→黒)
+          GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB, 0, 16, STATUS_FADE_OUT_WAIT );
+        }
+        else if( sel == YESNO_MENU_SEL_NO )
+        {
+          // 次へ
+          work->step = STEP_WAZA_ABANDON_PREPARE;
+        }
+        YESNO_MENU_CloseMenu( work->yesno_menu_work );
+      }
+    }
+    break;
+  case STEP_WAZA_STATUS_FADE_OUT:
+    {
+      if( !GFL_FADE_CheckFade() )
+      {
+        // 次へ
+        work->step = STEP_WAZA_STATUS;
+
+        // 下画面の破棄
+        YESNO_MENU_DeleteRes( work->yesno_menu_work );
+        SHINKADEMO_GRAPHIC_ExitBGSub( work->graphic );
+
+        // ステータス用タスク
+        work->tcbsys_work = GFL_HEAP_AllocMemory( work->heap_id, GFL_TCB_CalcSystemWorkSize(TCBSYS_TASK_MAX) );
+        GFL_STD_MemClear( work->tcbsys_work, GFL_TCB_CalcSystemWorkSize(TCBSYS_TASK_MAX) );
+        work->tcbsys = GFL_TCB_Init( TCBSYS_TASK_MAX, work->tcbsys_work );
+
+        work->vblank_tcb = GFUser_VIntr_CreateTCB( ShinkaDemo_VBlankFunc, work, 1 );
+ 
+        // パレットフェード
+        work->pfd = PaletteFadeInit( work->heap_id );
+        PaletteTrans_AutoSet( work->pfd, TRUE );
+        PaletteFadeWorkAllocSet( work->pfd, FADE_SUB_BG, 0x1e0, work->heapID );
+        PaletteFadeWorkAllocSet( work->pfd, FADE_SUB_OBJ, 0x1e0, work->heapID );
+
+        // ステータス
+        work->bplist_data.pp          = (POKEPARTY*)param->ppt;
+        work->bplist_data.font        = work->font;
+        work->bplist_data.heap        = work->heap_id;
+        work->bplist_data.mode        = BPL_MODE_WAZASET;
+        work->bplist_data.end_flg     = FALSE;
+        work->bplist_data.sel_poke    = param->shinka_pos;
+        work->bplist_data.chg_waza    = work->wazaoboe_no;
+        work->bplist_data.rule        = 0;
+        work->bplist_data.cursor_flg  = &work->cursor_flag;
+        work->bplist_data.tcb_sys     = work->tcbsys;
+        work->bplist_data.pfd         = work->pfd;
+
         GFL_OVERLAY_Load( FS_OVERLAY_ID( battle_b_app ) );
         GFL_OVERLAY_Load( FS_OVERLAY_ID( battle_plist ) );
-        BattlePokeList_TaskAdd( &wk->plistData );
-        (*seq)++;
-      }
-      else
-      { 
-        WORDSET_RegisterPokeNickName( wk->wordset, 0, wk->pp );
-        WORDSET_RegisterWazaName( wk->wordset, 1, wk->wazaoboe_no );
-        TextPrint( wk, BMPWIN_MAIN, 8, 8, wk->wazaoboe_msg, msg_waza_oboe_08 );
-        (*seq) = 50;
+        
+        BattlePokeList_TaskAdd( &work->bplist_data );
+
+        // フェードイン(黒→見える)
+        GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB, 16, 0, STATUS_FADE_IN_WAIT );
       }
     }
     break;
-  case 9:
-    if( wk->plistData.end_flg )
+  case STEP_WAZA_STATUS:
     {
-      GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle_b_app ) );
-      GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle_plist ) );
-      SHINKADEMO_InitBGSub( wk );
-      GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB, 16, 0, 0 );
-      (*seq)++;
-    }
-    break;
-  case 10:
-    if( GFL_FADE_CheckFade() == FALSE )
-    { 
-      int result = wk->plistData.sel_wp;
-      if( result == BPL_SEL_WP_CANCEL )
-      { 
-        (*seq) = 6;
-      }
-      else
-      { 
-        WazaID forget_wazano = PP_Get( wk->pp, ID_PARA_waza1 + result, NULL );
-        PP_SetWazaPos( wk->pp, wk->wazaoboe_no, result );
-        WORDSET_RegisterPokeNickName( wk->wordset, 0, wk->pp );
-        WORDSET_RegisterWazaName( wk->wordset, 1, forget_wazano );
-        TextPrint( wk, BMPWIN_MAIN, 8, 8, wk->wazaoboe_msg, msg_waza_oboe_06 );
-        wk->work = 4;
-        (*seq) = 100;
+      // ステータス
+      GFL_TCB_Main( work->tcbsys );
+
+      if( work->bplist_data.end_flg )
+      {
+        // 次へ
+        work->step = STEP_WAZA_STATUS_OUT;
+
+        // フェードアウト(見える→黒)
+        GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB, 0, 16, STATUS_FADE_OUT_WAIT );
       }
     }
     break;
-  case 50:
-    if( TextWait( wk ) )
-    { 
-      WORDSET_RegisterWazaName( wk->wordset, 0, wk->wazaoboe_no );
-      TextPrint( wk, BMPWIN_SUB, 128 | STR_X_CENTERING, 40, wk->yesno_msg, msgid_yesno_wazaakirameru );
-      TextPrint( wk, BMPWIN_SUB | BMPWIN_NO_CLEAR, 128 | STR_X_CENTERING, 136, wk->yesno_msg, msgid_yesno_wazaakiramenai );
-      (*seq)++;
-    }
-    break;
-  case 51:
-    //技あきらめ確認処理
-    if( tp )
-    { 
-      TextClear( wk, BMPWIN_SUB );
-      if( y < 96 )
-      { 
-        WORDSET_RegisterPokeNickName( wk->wordset, 0, wk->pp );
-        WORDSET_RegisterWazaName( wk->wordset, 1, wk->wazaoboe_no );
-        TextPrint( wk, BMPWIN_MAIN, 8, 8, wk->wazaoboe_msg, msg_waza_oboe_09 );
-        wk->work = 5;
-        (*seq) = 100;
+  case STEP_WAZA_STATUS_OUT:
+    {
+      if( !GFL_FADE_CheckFade() )
+      {
+        // 次へ
+        work->step = STEP_WAZA_STATUS_FADE_IN;
+
+        // ステータス
+        GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle_b_app ) );
+        GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle_plist ) );
+
+        // パレットフェード
+        PaletteFadeWorkAllocFree( work->pfd, FADE_SUB_BG );
+        PaletteFadeWorkAllocFree( work->pfd, FADE_SUB_OBJ );
+        PaletteFadeFree( work->pfd );
+
+        // ステータス用タスク
+        GFL_TCB_DeleteTask( work->vblank_tcb );
+
+        GFL_HEAP_FreeMemory( work->tcbsys_work );
+        GFL_TCB_Exit( work->tcb_sys );
+
+        // 初期化
+        work->tcbsys           = NULL;
+        work->tcbsys_work      = NULL;
+        work->pfd              = NULL;
+        work->vblank_tcb       = NULL;
+
+        // 下画面の生成
+        SHINKADEMO_GRAPHIC_InitBGSub( work->graphic );
+        work->yesno_menu_work = YESNO_MENU_CreateRes( work->heap_id,
+                                  BG_FRAME_S_BUTTON, 0, BG_PAL_POS_S_BUTTON,
+                                  OBJ_PAL_POS_S_CURSOR,
+                                  SHINKADEMO_GRAPHIC_GetClunit(work->graphic),
+                                  work->font,
+                                  work->print_que,
+                                  FALSE );
+
+        // フェードイン(黒→見える)
+        GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB, 16, 0, STATUS_FADE_IN_WAIT );
       }
-      else
-      { 
-        (*seq) = 5;
+    }
+    break;
+  case STEP_WAZA_STATUS_FADE_IN:
+    {
+      if( !GFL_FADE_CheckFade() )
+      {
+        // ステータス
+        work->wazawasure_pos = work->bplist_data.sel_wp;
+        if( work->wazawasure_pos == BPL_SEL_WP_CANCEL )
+        {
+          // 次へ
+          work->step = STEP_WAZA_ABANDON_PREPARE;
+        }
+        else
+        {
+          // 忘れる技
+          work->wazawasure_no = PP_Get( work->pp, ID_PARA_waza1 + work->wazawasure_pos, NULL );
+
+          // 次へ
+          work->step = STEP_WAZA_CONFIRM_PREPARE;
+        }
       }
     }
     break;
-  case 100:
-    if( TextWait( wk ) )
-    { 
-      (*seq) = wk->work;
+  case STEP_WAZA_CONFIRM_PREPARE:
+    {
+      // 次へ
+      work->step = STEP_WAZA_CONFIRM_Q;
+
+      ShinkaDemo_MakeStmTextStream(
+        work,
+        work->stm_text_msgdata_wazaoboe, msg_waza_oboe_11,
+        TAG_REGIST_TYPE_WAZA, &work->wazawasure_no,
+        TAG_REGIST_TYPE_NONE, NULL );
     }
     break;
-  case 200:
-    if( --wk->wait == 0 )
-    { 
-      (*seq) = wk->work;
+  case STEP_WAZA_CONFIRM_Q:
+    {
+      if( ShinkaDemo_WaitStmTextStream( work ) )
+      {
+        // 次へ
+        work->step = STEP_WAZA_CONFIRM_YN;
+
+        ShinkaDemo_MakeYesNoMenuStrbuf( work,
+                                        work->yesno_menu_msgdata, msgid_yesno_wazawasureru,
+                                        TAG_REGIST_TYPE_NONE, NULL,
+                                        TAG_REGIST_TYPE_NONE, NULL,
+                                        work->yesno_menu_msgdata, msgid_yesno_wazawasurenai,
+                                        TAG_REGIST_TYPE_NONE, NULL,
+                                        TAG_REGIST_TYPE_NONE, NULL );
+        YESNO_MENU_OpenMenu( work->yesno_menu_work, work->yesno_menu_strbuf_yes, work->yesno_menu_strbuf_no );
+      }
     }
     break;
-  case 1000:
+  case STEP_WAZA_CONFIRM_YN:
+    {
+      YESNO_MENU_SEL sel = YESNO_MENU_GetSelect( work->yesno_menu_work );
+      if( sel != YESNO_MENU_SEL_SEL )
+      {
+        if( sel == YESNO_MENU_SEL_YES )
+        {
+          // 次へ
+          work->step = STEP_WAZA_FORGET;
+
+          ShinkaDemo_MakeStmTextStream(
+            work,
+            work->stm_text_msgdata_wazaoboe, msg_waza_oboe_06,
+            TAG_REGIST_TYPE_POKE_NICK_NAME, work->pp,
+            TAG_REGIST_TYPE_WAZA, &work->wazawasure_no );
+        }
+        else if( sel == YESNO_MENU_SEL_NO )
+        {
+          // 次へ
+          work->step = STEP_WAZA_FULL_PREPARE;
+        }
+        YESNO_MENU_CloseMenu( work->yesno_menu_work );
+      }
+    }
+    break;
+  case STEP_WAZA_FORGET:
+    {
+      if( ShinkaDemo_WaitStmTextStream( work ) )
+      {
+        // 技覚えた
+        PP_SetWazaPos( work->pp, work->wazaoboe_no, work->wazawasure_pos );
+        
+        // 次へ
+        work->step = STEP_WAZA_FORGET_MASTER;
+
+        ShinkaDemo_MakeStmTextStream(
+          work,
+          work->stm_text_msgdata_wazaoboe, msg_waza_oboe_07,
+          TAG_REGIST_TYPE_POKE_NICK_NAME, work->pp,
+          TAG_REGIST_TYPE_WAZA, &work->wazaoboe_no );
+      }
+    }
+    break;
+  case STEP_WAZA_FORGET_MASTER:
+    {
+      if( ShinkaDemo_WaitStmTextStream( work ) )
+      {
+         // 次へ
+        work->step = STEP_WAZA_OBOE;
+      }
+    }
+    break;
+  case STEP_WAZA_ABANDON_PREPARE:
+    {
+      // 次へ
+      work->step = STEP_WAZA_ABANDON_Q;
+
+      ShinkaDemo_MakeStmTextStream(
+        work,
+        work->stm_text_msgdata_wazaoboe, msg_waza_oboe_08,
+        TAG_REGIST_TYPE_NONE, NULL,
+        TAG_REGIST_TYPE_WAZA, &work->wazaoboe_no );
+    }
+    break;
+  case STEP_WAZA_ABANDON_Q:
+    {
+      if( ShinkaDemo_WaitStmTextStream( work ) )
+      {
+        // 次へ
+        work->step = STEP_WAZA_ABANDON_YN;
+
+        // 技あきらめ確認処理
+        ShinkaDemo_MakeYesNoMenuStrbuf( work,
+                                        work->yesno_menu_msgdata, msgid_yesno_wazaakirameru,
+                                        TAG_REGIST_TYPE_WAZA, &work->wazaoboe_no,
+                                        TAG_REGIST_TYPE_NONE, NULL,
+                                        work->yesno_menu_msgdata, msgid_yesno_wazaakiramenai,
+                                        TAG_REGIST_TYPE_WAZA, &work->wazaoboe_no,
+                                        TAG_REGIST_TYPE_NONE, NULL );
+        YESNO_MENU_OpenMenu( work->yesno_menu_work, work->yesno_menu_strbuf_yes, work->yesno_menu_strbuf_no );
+      }
+    }
+    break;
+  case STEP_WAZA_ABANDON_YN:
+    {
+      YESNO_MENU_SEL sel = YESNO_MENU_GetSelect( work->yesno_menu_work );
+      if( sel != YESNO_MENU_SEL_SEL )
+      {
+        if( sel == YESNO_MENU_SEL_YES )
+        {
+          // 次へ
+          work->step = STEP_WAZA_NOT_MASTER;
+
+          ShinkaDemo_MakeStmTextStream(
+            work,
+            work->stm_text_msgdata_wazaoboe, msg_waza_oboe_09,
+            TAG_REGIST_TYPE_POKE_NICK_NAME, work->pp,
+            TAG_REGIST_TYPE_WAZA, &work->wazaoboe_no );
+        }
+        else if( sel == YESNO_MENU_SEL_NO )
+        {
+          // 次へ
+          work->step = STEP_WAZA_FULL_PREPARE;
+        }
+        YESNO_MENU_CloseMenu( work->yesno_menu_work );
+      }
+    }
+    break;
+  case STEP_WAZA_NOT_MASTER:
+    {
+      if( ShinkaDemo_WaitStmTextStream( work ) )
+      {
+        // 次へ
+        work->step = STEP_WAZA_OBOE;
+      }
+    }
+    break;
+  case STEP_FADE_OUT_BEFORE:
+    {
+      if(1)
+      {
+        // 次へ
+        work->step = STEP_FADE_OUT;
+
+        // フェードアウト(見える→黒)
+        GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, FADE_OUT_WAIT );
+      }
+    }
+    break;
+  case STEP_FADE_OUT:
+    {
+      if( !GFL_FADE_CheckFade() )
+      {
+        // 次へ
+        work->step = STEP_END;
+
+        return GFL_PROC_RES_FINISH;
+      }
+    }
+    break;
   default:
-    GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN, 0, 16, 2 );
-    return GFL_PROC_RES_FINISH;
+    break;
   }
+
+  //GFL_TCB_Main( work->tcbsys );
+
+  YESNO_MENU_Main( work->yesno_menu_work );
+
+  GFL_TCBL_Main( work->stm_text_tcblsys );
+
+  PRINTSYS_QUE_Main( work->print_que );
+
+  // 2D描画
+  SHINKADEMO_GRAPHIC_2D_Draw( work->graphic );
+  // 3D描画
+  SHINKADEMO_GRAPHIC_3D_StartDraw( work->graphic );
+  SHINKADEMO_GRAPHIC_3D_EndDraw( work->graphic );
 
   return GFL_PROC_RES_CONTINUE;
 }
 
-//--------------------------------------------------------------------------
+
+//=============================================================================
 /**
- * PROC Exit
- */
-//--------------------------------------------------------------------------
-static GFL_PROC_RESULT ShinkaDemoProcExit( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
+*  ローカル関数定義
+*/
+//=============================================================================
+//-------------------------------------
+/// VBlank関数
+//=====================================
+static void ShinkaDemo_VBlankFunc( GFL_TCB* tcb, void* wk )
 {
-  SHINKA_DEMO_WORK* wk = mywk;
+  SHINKA_DEMO_WORK* work = (SHINKA_DEMO_WORK*)wk;
 
-  if( GFL_FADE_CheckFade() == TRUE ){
-    return GFL_PROC_RES_CONTINUE;
+  // ステータス
+  {
+    // パレットフェード
+    if( work->pfd ) PaletteFadeTrans( work->pfd );
   }
-
-  GFL_TCB_DeleteTask( wk->v_tcb );
-
-  SHINKADEMO_ExitBG( wk );
-
-  GFL_MSG_Delete( wk->shinka_msg );
-  GFL_MSG_Delete( wk->wazaoboe_msg );
-  GFL_MSG_Delete( wk->yesno_msg );
-  WORDSET_Delete( wk->wordset );
-  GFL_FONT_Delete( wk->font );
-
-  GFL_HEAP_FreeMemory( wk->tcb_work );
-  GFL_TCBL_Exit( wk->tcbl_sys );
-  GFL_TCB_Exit( wk->tcb_sys );
-
-  PaletteFadeWorkAllocFree( wk->pfd, FADE_MAIN_BG );
-  PaletteFadeWorkAllocFree( wk->pfd, FADE_SUB_BG );
-  PaletteFadeWorkAllocFree( wk->pfd, FADE_MAIN_OBJ );
-  PaletteFadeWorkAllocFree( wk->pfd, FADE_SUB_OBJ );
-  PaletteFadeFree( wk->pfd );
-
-  //セルアクター削除
-  GFL_CLACT_SYS_Delete();
-
-  GFL_BG_Exit();
-  GFL_BMPWIN_Exit();
-
-  GFL_PROC_FreeWork( proc );
-
-  GFL_HEAP_DeleteHeap( HEAPID_SHINKA_DEMO );
-
-  return GFL_PROC_RES_FINISH;
 }
 
-//----------------------------------------------------------
-/**
- *
- */
-//----------------------------------------------------------
-const GFL_PROC_DATA   ShinkaDemoProcData = {
-  ShinkaDemoProcInit,
-  ShinkaDemoProcMain,
-  ShinkaDemoProcExit,
-};
-
-//----------------------------------------------------------
-/**
- *
- */
-//----------------------------------------------------------
-static  void  SHINKADEMO_InitBG( SHINKA_DEMO_WORK* wk )
-{ 
-  SHINKADEMO_InitBGMain( wk );
-  SHINKADEMO_InitBGSub( wk );
-}
-
-static  void  SHINKADEMO_InitBGMain( SHINKA_DEMO_WORK* wk )
-{ 
-  G2_BlendNone();
-
-  {
-    static const GFL_BG_SYS_HEADER sysHeader = {
-      GX_DISPMODE_GRAPHICS, GX_BGMODE_0, GX_BGMODE_3, GX_BG0_AS_3D,
-    };
-    GFL_BG_SetBGMode( &sysHeader );
-  }
-
-  {
-    ///< main
-    GFL_BG_SetVisible( GFL_BG_FRAME0_M,   VISIBLE_OFF );
-    GFL_BG_SetVisible( GFL_BG_FRAME1_M,   VISIBLE_OFF );
-    GFL_BG_SetVisible( GFL_BG_FRAME2_M,   VISIBLE_ON );
-    GFL_BG_SetVisible( GFL_BG_FRAME3_M,   VISIBLE_OFF );
-  }
-  GX_SetDispSelect( GX_DISP_SELECT_MAIN_SUB );
-
-  //2D画面初期化
-  {
-    GFL_BG_BGCNT_HEADER TextBgCntDat[] = {
-      ///<FRAME1_M
-      {
-        0, 0, 0x0800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-        GX_BG_SCRBASE_0x0000, GX_BG_CHARBASE_0x04000, GFL_BG_CHRSIZ_256x256,
-        GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
-      },
-      ///<FRAME2_M
-      {
-        0, 0, 0x0800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-        GX_BG_SCRBASE_0x0800, GX_BG_CHARBASE_0x08000, GFL_BG_CHRSIZ_256x256,
-        GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
-      },
-      ///<FRAME3_M
-      {
-        0, 0, 0x0800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-        GX_BG_SCRBASE_0x1000, GX_BG_CHARBASE_0x0c000, GFL_BG_CHRSIZ_256x256,
-        GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
-      },
-    };
-    GFL_BG_SetBGControl(GFL_BG_FRAME1_M, &TextBgCntDat[0], GFL_BG_MODE_TEXT );
-    GFL_BG_ClearScreen(GFL_BG_FRAME1_M );
-    GFL_BG_SetBGControl(GFL_BG_FRAME2_M, &TextBgCntDat[1], GFL_BG_MODE_TEXT );
-    GFL_BG_ClearScreen(GFL_BG_FRAME2_M );
-    GFL_BG_SetBGControl(GFL_BG_FRAME3_M, &TextBgCntDat[2], GFL_BG_MODE_TEXT );
-    GFL_BG_ClearScreen(GFL_BG_FRAME3_M );
-  }
-
-  {
-    //フォントパレット作成＆転送
-    static  u16 plt[16] = { G2D_BACKGROUND_COL, G2D_FONT_COL, G2D_SHADOW_COL,
-                            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-    GFL_BG_LoadPalette( GFL_BG_FRAME2_M, &plt, 16*2, 0 );
-    PaletteWorkSet_VramCopy( wk->pfd, FADE_MAIN_BG, 0, 0x20 );
-  }
-  GFL_FONTSYS_SetColor( LETTER_COL, SHADOW_COL, BACK_COL );
-
-  wk->bmpwin[ BMPWIN_MAIN ] = GFL_BMPWIN_Create( GFL_BG_FRAME2_M, 0, 18, 32, 6, 0, GFL_BG_CHRAREA_GET_F );
-
-  GFL_BG_SetBackGroundColor( GFL_BG_FRAME0_M, 0x0000 );
-}
-
-static  void  SHINKADEMO_InitBGSub( SHINKA_DEMO_WORK* wk )
-{ 
-  {
-    static const GFL_BG_SYS_HEADER sysHeader = {
-      GX_DISPMODE_GRAPHICS, GX_BGMODE_0, GX_BGMODE_3, GX_BG0_AS_3D,
-    };
-    GFL_BG_SetBGMode( &sysHeader );
-  }
-
-  {
-    ///< sub
-    GFL_BG_SetVisible( GFL_BG_FRAME0_S,   VISIBLE_ON );
-    GFL_BG_SetVisible( GFL_BG_FRAME1_S,   VISIBLE_OFF );
-    GFL_BG_SetVisible( GFL_BG_FRAME2_S,   VISIBLE_OFF );
-    GFL_BG_SetVisible( GFL_BG_FRAME3_S,   VISIBLE_OFF );
-
-  }
-  GX_SetDispSelect( GX_DISP_SELECT_MAIN_SUB );
-
-  //2D画面初期化
-  {
-    GFL_BG_BGCNT_HEADER TextBgCntDat[] = {
-      ///<FRAME0_S
-      {
-        0, 0, 0x0800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-        GX_BG_SCRBASE_0x0000, GX_BG_CHARBASE_0x04000, GFL_BG_CHRSIZ_256x256,
-        GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
-      },
-    };
-    GFL_BG_SetBGControl(GFL_BG_FRAME0_S, &TextBgCntDat[0], GFL_BG_MODE_TEXT );
-    GFL_BG_ClearScreen(GFL_BG_FRAME0_S );
-  }
-
-  {
-    //フォントパレット作成＆転送
-    static  u16 plt[16] = { G2D_BACKGROUND_COL, G2D_FONT_COL, G2D_SHADOW_COL,
-                            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-    GFL_BG_LoadPalette( GFL_BG_FRAME0_S, &plt, 16*2, 0 );
-    PaletteWorkSet_VramCopy( wk->pfd, FADE_SUB_BG, 0, 0x20 );
-  }
-  GFL_FONTSYS_SetColor( LETTER_COL, SHADOW_COL, BACK_COL );
-
-  wk->bmpwin[ BMPWIN_SUB ] = GFL_BMPWIN_Create( GFL_BG_FRAME0_S, 0, 0, 32, 24, 0, GFL_BG_CHRAREA_GET_F );
-
-  GFL_BG_SetBackGroundColor( GFL_BG_FRAME0_S, 0x0000 );
-}
-
-//----------------------------------------------------------
-/**
- *
- */
-//----------------------------------------------------------
-static  void  SHINKADEMO_ExitBG( SHINKA_DEMO_WORK* wk )
-{ 
-  SHINKADEMO_ExitBGMain( wk );
-  SHINKADEMO_ExitBGSub( wk );
-}
-
-static  void  SHINKADEMO_ExitBGMain( SHINKA_DEMO_WORK* wk )
-{ 
-  GFL_BMPWIN_Delete( wk->bmpwin[ BMPWIN_MAIN ] );
-  GFL_BG_FreeBGControl( GFL_BG_FRAME2_M );
-}
-
-static  void  SHINKADEMO_ExitBGSub( SHINKA_DEMO_WORK* wk )
-{ 
-  GFL_BMPWIN_Delete( wk->bmpwin[ BMPWIN_SUB ] );
-  GFL_BG_FreeBGControl( GFL_BG_FRAME0_S );
-}
-
-//======================================================================
-//  テキスト表示
-//======================================================================
-static  void  TextPrint( SHINKA_DEMO_WORK *wk, int bmp_win, int x, int y, GFL_MSGDATA* msg, u32 msgID )
+//-------------------------------------
+/// STM_TEXTのストリーム作成
+//=====================================
+static void ShinkaDemo_MakeStmTextStream( SHINKA_DEMO_WORK* work,
+                                          GFL_MSGDATA* msgdata, u32 str_id,
+                                          TAG_REGIST_TYPE type0, const void* data0,
+                                          TAG_REGIST_TYPE type1, const void* data1 )
 {
-  int i;
-  STRBUF  *strbuf;
+  // 一旦消去
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(work->stm_text_winin_bmpwin), BTM_TEXT_WININ_BACK_COLOR );
+  
+  // 前のを消す
+  if( work->stm_text_stream ) PRINTSYS_PrintStreamDelete( work->stm_text_stream );  // この関数でタスクも削除してくれるので、同時に動くタスクは1つで済む
+  if( work->stm_text_strbuf ) GFL_STR_DeleteBuffer( work->stm_text_strbuf );
 
-  if( ( bmp_win & BMPWIN_NO_CLEAR ) == 0 )
-  { 
-    GFL_BMP_Clear( GFL_BMPWIN_GetBmp( wk->bmpwin[ bmp_win ] ), 0 );
-  }
+  // 文字列作成
+  work->stm_text_strbuf = MakeStr( work->heap_id,
+                                   msgdata, str_id,
+                                   type0, data0,
+                                   type1, data1 );
 
-  bmp_win &= ( BMPWIN_NO_CLEAR ^ 0xffffffff );
-
-  strbuf = GFL_MSG_CreateString( msg, msgID );
-  if( bmp_win == BMPWIN_MAIN )
-  { 
-    wk->expbuf = GFL_STR_CreateBuffer( BUFLEN_SHINKA_DEMO_MSG, wk->heapID );
-    WORDSET_ExpandStr( wk->wordset, wk->expbuf, strbuf );
-    wk->ps = PRINTSYS_PrintStream( wk->bmpwin[ bmp_win ], x, y, wk->expbuf, wk->font, 1, wk->tcbl_sys, 0, wk->heapID, 0 );
-  }
-  else
-  { 
-    STRBUF* expbuf = GFL_STR_CreateBuffer( BUFLEN_SHINKA_DEMO_MSG, wk->heapID );
-    WORDSET_ExpandStr( wk->wordset, expbuf, strbuf );
-    if( x & STR_X_CENTERING )
-    { 
-      int dot_len, char_len;
-      FontLenGet( expbuf, wk->font, &dot_len, &char_len );
-      x = ( x & ( STR_X_CENTERING ^ 0xffffffff ) ) - ( dot_len / 2 );
-    }
-    PRINTSYS_Print( GFL_BMPWIN_GetBmp( wk->bmpwin[ bmp_win ] ), x, y, expbuf, wk->font );
-    GFL_STR_DeleteBuffer( expbuf );
-  }
-  GFL_HEAP_FreeMemory( strbuf );
-
-  GFL_BMPWIN_TransVramCharacter( wk->bmpwin[ bmp_win ] );
-  GFL_BMPWIN_MakeScreen( wk->bmpwin[ bmp_win ] );
-  if( bmp_win == BMPWIN_MAIN )
-  { 
-    GFL_BG_LoadScreenReq( GFL_BG_FRAME2_M );
-  }
-  else
-  { 
-    GFL_BG_LoadScreenReq( GFL_BG_FRAME0_S );
-  }
+  // ストリーム開始
+  work->stm_text_stream = PRINTSYS_PrintStream( work->stm_text_winin_bmpwin,
+                                                0, 0,
+                                                work->stm_text_strbuf,
+                                                work->font, MSGSPEED_GetWait(),
+                                                work->stm_text_tcblsys, 2,
+                                                work->heap_id,
+                                                BTM_TEXT_WININ_BACK_COLOR );
 }
 
-static  BOOL  TextWait( SHINKA_DEMO_WORK* wk )
-{ 
+//-------------------------------------
+/// STM_TEXTのストリーム待ち
+//=====================================
+static BOOL ShinkaDemo_WaitStmTextStream( SHINKA_DEMO_WORK* work )
+{
   BOOL ret = FALSE;
 
-  switch( PRINTSYS_PrintStreamGetState( wk->ps ) ){ 
+  switch( PRINTSYS_PrintStreamGetState( work->stm_text_stream ) )
+  { 
   case PRINTSTREAM_STATE_PAUSE:
-    if( GFL_UI_KEY_GetTrg() || GFL_UI_TP_GetTrg() )
+    if( ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A ) || GFL_UI_TP_GetTrg() )
     { 
-      PRINTSYS_PrintStreamReleasePause( wk->ps );
+      PRINTSYS_PrintStreamReleasePause( work->stm_text_stream );
     }
     break;
   case PRINTSTREAM_STATE_DONE:
-    if( wk->expbuf )
-    { 
-      GFL_STR_DeleteBuffer( wk->expbuf );
-      wk->expbuf = NULL;
+    {
+      ret = TRUE;
     }
-    PRINTSYS_PrintStreamDelete( wk->ps );
-    ret = TRUE;
     break;
   }
   
   return ret;
 }
 
-static  void  TextClear( SHINKA_DEMO_WORK* wk, int bmp_win )
-{ 
-  GFL_BMP_Clear( GFL_BMPWIN_GetBmp( wk->bmpwin[ bmp_win ] ), 0 );
-  GFL_BMPWIN_TransVramCharacter( wk->bmpwin[ bmp_win ] );
-  GFL_BMPWIN_MakeScreen( wk->bmpwin[ bmp_win ] );
-  if( bmp_win == BMPWIN_MAIN )
-  { 
-    GFL_BG_LoadScreenReq( GFL_BG_FRAME2_M );
+//-------------------------------------
+/// YESNO_MENUの文字列作成
+//=====================================
+static void ShinkaDemo_MakeYesNoMenuStrbuf( SHINKA_DEMO_WORK* work,
+                                            GFL_MSGDATA* yes_msgdata, u32 yes_str_id,
+                                            TAG_REGIST_TYPE yes_type0, const void* yes_data0,
+                                            TAG_REGIST_TYPE yes_type1, const void* yes_data1,
+                                            GFL_MSGDATA* no_msgdata, u32 no_str_id,
+                                            TAG_REGIST_TYPE no_type0, const void* no_data0,
+                                            TAG_REGIST_TYPE no_type1, const void* no_data1 )
+{
+  // 前のを消す
+  if( work->yesno_menu_strbuf_yes ) GFL_STR_DeleteBuffer( work->yesno_menu_strbuf_yes );
+  if( work->yesno_menu_strbuf_no  ) GFL_STR_DeleteBuffer( work->yesno_menu_strbuf_no  );
+
+  // 文字列作成
+  work->yesno_menu_strbuf_yes = MakeStr(
+                                  work->heap_id,
+                                  yes_msgdata, yes_str_id,
+                                  yes_type0, yes_data0,
+                                  yes_type1, yes_data1 );
+  work->yesno_menu_strbuf_no  = MakeStr(
+                                  work->heap_id,
+                                  no_msgdata, no_str_id,
+                                  no_type0, no_data0,
+                                  no_type1, no_data1 );
+}
+
+//-------------------------------------
+/// 文字列作成
+//=====================================
+static STRBUF* MakeStr( HEAPID heap_id,
+                        GFL_MSGDATA* msgdata, u32 str_id,
+                        TAG_REGIST_TYPE type0, const void* data0,
+                        TAG_REGIST_TYPE type1, const void* data1 )
+{
+  STRBUF* strbuf;
+
+  if(    type0 == TAG_REGIST_TYPE_NONE
+      && type1 == TAG_REGIST_TYPE_NONE )
+  {
+    strbuf = GFL_MSG_CreateString( msgdata, str_id );
   }
   else
-  { 
-    GFL_BG_LoadScreenReq( GFL_BG_FRAME0_S );
+  {
+    typedef struct
+    {
+      TAG_REGIST_TYPE type;
+      const void*     data;
+    }
+    TYPE_DATA_SET;
+    TYPE_DATA_SET type_data_set[2];
+
+    STRBUF* src_strbuf = GFL_MSG_CreateString( msgdata, str_id );
+    WORDSET* wordset = WORDSET_Create( heap_id );
+
+    u32 i;
+
+    type_data_set[0].type = type0;
+    type_data_set[0].data = data0;
+    type_data_set[1].type = type1;
+    type_data_set[1].data = data1;
+
+    for(i=0; i<2; i++)
+    {
+      switch( type_data_set[i].type )
+      {
+      case TAG_REGIST_TYPE_WORD:
+        {
+          WORDSET_RegisterWord( wordset, i, type_data_set[i].data, 0, TRUE, 0 );  // ポケモンのニックネームしか渡す予定がないので、パラメータは固定値にしています
+        }
+        break;
+      case TAG_REGIST_TYPE_POKE_MONS_NAME:
+        {
+          WORDSET_RegisterPokeMonsName( wordset, i, type_data_set[i].data );
+        }
+        break;
+      case TAG_REGIST_TYPE_POKE_NICK_NAME:
+        {
+          WORDSET_RegisterPokeNickName( wordset, i, type_data_set[i].data );
+        }
+        break;
+      case TAG_REGIST_TYPE_WAZA:
+        {
+          WORDSET_RegisterWazaName( wordset, i, *((WazaID*)(type_data_set[i].data)) );
+        }
+        break;
+      default:
+        break;
+      }
+    }
+    
+    strbuf = GFL_STR_CreateBuffer( STRBUF_LENGTH, heap_id );
+    WORDSET_ExpandStr( wordset, strbuf, src_strbuf );
+    
+    GFL_STR_DeleteBuffer( src_strbuf );
+    WORDSET_Delete( wordset );
   }
-}
 
-//--------------------------------------------------------------
-/**
- * @brief 文字列の長さを取得する
- *
- * @param[in] str           文字列へのポインタ
- * @param[in] font          フォントタイプ
- * @param[in] ret_dot_len   ドット幅代入先
- * @param[in] ret_char_len  キャラ幅代入先
- */
-//--------------------------------------------------------------
-static void FontLenGet( const STRBUF *str, GFL_FONT *font, int *ret_dot_len, int *ret_char_len )
-{
-  int dot_len, char_len;
-
-  //文字列のドット幅から、使用するキャラ数を算出する
-  dot_len = PRINTSYS_GetStrWidth( str, font, 0 );
-  char_len = dot_len / 8;
-  if( FX_ModS32( dot_len, 8 ) != 0 ){
-    char_len++;
-  }
-
-  *ret_dot_len = dot_len;
-  *ret_char_len = char_len;
-}
-
-//============================================================================================
-/**
- *  @brief  VBlank関数
- */
-//============================================================================================
-static  void  SHINKADEMO_VBlank( GFL_TCB *tcb, void *work )
-{
-  SHINKA_DEMO_WORK* wk = (SHINKA_DEMO_WORK*)work;
-
-  GFL_CLACT_SYS_VBlankFunc();
-  PaletteFadeTrans( wk->pfd );
+  return strbuf;
 }
 

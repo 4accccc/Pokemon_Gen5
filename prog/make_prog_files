@@ -693,7 +693,8 @@ SRCS_OVERLAY_UI_COMMON = ui/ui_scene.c \
                          ui/ui_easy_clwk.c \
                          ui/touchbar.c \
                          ui/print_tool.c \
-												 ui/msgsearch.c
+												 ui/msgsearch.c \
+												 ui/yesno_menu.c
 
 # コンフィグ画面
 #===> SRCS_OVERLAY_UI_COMMON
@@ -1456,7 +1457,9 @@ SRCS_OVERLAY_NAMEIN	= app/name_input/namein.c \
 #===> SRCS_OVERLAY_TITLE
 #===> SRCS_OVERLAY_BATTLE_RETURN
 #===> SRCS_OVERLAY_BOX
-SRCS_OVERLAY_SHINKA_DEMO	= demo/shinka_demo/shinka_demo.c
+#===> SRCS_OVERLAY_UI_COMMON
+SRCS_OVERLAY_SHINKA_DEMO	= demo/shinka_demo/shinka_demo.c \
+													  demo/shinka_demo/shinka_demo_graphic.c
 
 #中村デバッグ
 #===> SRCS_OVERLAY_NAMEIN
