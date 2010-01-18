@@ -14,6 +14,8 @@
 
 #include "net/ctvt_beacon.h"
 
+#include "ctvt_beacon_local.h"
+
 //======================================================================
 //	define
 //======================================================================
@@ -56,3 +58,14 @@ const BOOL CTVT_BCON_CheckCallSelf( CTVT_COMM_BEACON *beacon , u8* selfMacAdr )
   }
   return FALSE;
 }
+
+//ビーコンからデータ取得関数
+const STRCODE* CTVT_BCON_GetName( CTVT_COMM_BEACON *beacon )
+{
+  return MyStatus_GetMyName( &beacon->myStatus );
+}
+const u16 CTVT_BCON_GetIDLow( CTVT_COMM_BEACON *beacon )
+{
+  return MyStatus_GetID_Low( &beacon->myStatus );
+}
+

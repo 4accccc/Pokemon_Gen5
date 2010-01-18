@@ -1018,6 +1018,7 @@ static void CTVT_TALK_UpdateEndConfirm( COMM_TVT_WORK *work , CTVT_TALK_WORK *ta
     //親のリクエストによる終了
     talkWork->state = CTS_END_PARENT_REQ_INIT;
     APP_TASKMENU_CloseMenu( talkWork->yesNoWork );
+    talkWork->yesNoWork = NULL;
     return;
   }
   APP_TASKMENU_UpdateMenu( talkWork->yesNoWork );

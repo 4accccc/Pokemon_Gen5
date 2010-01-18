@@ -19,6 +19,7 @@
 #include "system/camera_system.h"
 #include "net/network_define.h"
 #include "net/wih_dwc.h"
+#include "net/ctvt_beacon_local.h"
 
 #include "ctvt_comm.h"
 #include "ctvt_camera.h"
@@ -233,8 +234,8 @@ CTVT_COMM_WORK* CTVT_COMM_InitSystem( COMM_TVT_WORK *work , const HEAPID heapId 
     const COMM_TVT_INIT_WORK *initWork = COMM_TVT_GetInitWork( work );
     MYSTATUS *myStatus = GAMEDATA_GetMyStatus( initWork->gameData );
     
-    MyStatus_CopyNameStrCode( myStatus , commWork->beacon.name , CTVT_COMM_NAME_LEN );
-    commWork->beacon.id = MyStatus_GetID_Low( myStatus );
+    MyStatus_Copy( myStatus , &commWork->beacon.myStatus );
+    
     commWork->beacon.connectNum = 1;
     for( i=0;i<3;i++ )
     {

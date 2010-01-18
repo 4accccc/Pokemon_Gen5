@@ -27,15 +27,7 @@
 //======================================================================
 #pragma mark [> struct
 //ビーコンデータ
-typedef struct
-{
-  STRCODE name[CTVT_COMM_NAME_LEN];
-  u16     id;
-  u8      connectNum;
-  u8      pad;
-  //呼び出しターゲット
-  u8      callTarget[3][6];
-}CTVT_COMM_BEACON;
+typedef struct _CTVT_COMM_BEACON CTVT_COMM_BEACON;
 
 //======================================================================
 //	proto
@@ -44,3 +36,7 @@ typedef struct
 
 //自身が呼ばれているかチェック
 const BOOL CTVT_BCON_CheckCallSelf( CTVT_COMM_BEACON *beacon , u8* selfMacAdr );
+
+//ビーコンから情報取得(MyStatusのラッパー
+const STRCODE* CTVT_BCON_GetName( CTVT_COMM_BEACON *beacon );
+const u16 CTVT_BCON_GetIDLow( CTVT_COMM_BEACON *beacon );

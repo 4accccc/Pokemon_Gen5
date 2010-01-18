@@ -16,6 +16,7 @@
 #include "system/camera_system.h"
 #include "net/network_define.h"
 #include "net/net_whpipe.h"
+#include "net/ctvt_beacon_local.h"
 #include "app/app_menu_common.h"
 #include "print/wordset.h"
 #include "field/game_beacon_search.h"
@@ -506,7 +507,7 @@ static void CTVT_CALL_UpdateBeacon( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
     void *beaconData = GFL_NET_GetBeaconData(i);
     if( beaconData != NULL )
     {
-      u8 emptyNo = 0xFF;
+      u8 registNo = 0xFF;
       u8 mem;
       u8 *macAddress = GFL_NET_GetBeaconMacAddress( i );
       const GameServiceID serviceType = GFL_NET_WLGetUserGameServiceId( i );
@@ -541,15 +542,27 @@ static void CTVT_CALL_UpdateBeacon( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
             //“o˜^Ï‚¾‚Á‚½
             callWork->memberData[mem].isLost = FALSE;
             isEntry = TRUE;
+            //î•ñ‚ª•Ï‚í‚Á‚Ä‚¢‚È‚¢‚©H
+            if( serviceType != callWork->memberData[mem].serviceType )
+            {
+              isEntry = FALSE;
+              registNo = mem;
+            }
+            if( serviceType == WB_NET_COMM_TVT )
+            {
+              CTVT_COMM_BEACON *becData = callWork->memberData[mem].beacon;
+              
+              
+            }
             break;
           }
         }
         else
         {
           //‹ó‚«”Ô†‚ðŠm•Û‚µ‚Ä‚¨‚­
-          if( emptyNo == 0xFF )
+          if( registNo == 0xFF )
           {
-            emptyNo = mem;
+            registNo = mem;
           }
         }
       }
@@ -557,34 +570,35 @@ static void CTVT_CALL_UpdateBeacon( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
       if( isEntry == FALSE )
       {
         //–¢“o˜^‚¾‚Á‚½
-        if( emptyNo != 0xFF )
+        if( registNo != 0xFF )
         {
           //‹ó‚«‚ª‚ ‚Á‚½‚Ì‚Å“o˜^
+          //‚à‚µ‚­‚Íî•ñXV
           u8 k;
 
-          callWork->memberData[emptyNo].isEnable = TRUE;
-          callWork->memberData[emptyNo].isLost = FALSE;
+          callWork->memberData[registNo].isEnable = TRUE;
+          callWork->memberData[registNo].isLost = FALSE;
           for( k=0;k<6;k++ )
           {
-            callWork->memberData[emptyNo].macAddress[k] = macAddress[k];
+            callWork->memberData[registNo].macAddress[k] = macAddress[k];
           }
           if( serviceType == WB_NET_COMM_TVT )
           {
-            callWork->memberData[emptyNo].serviceType = WB_NET_COMM_TVT;
-            GFL_STD_MemCopy( beaconData , callWork->memberData[emptyNo].beacon , sizeof(CTVT_COMM_BEACON) );
+            callWork->memberData[registNo].serviceType = WB_NET_COMM_TVT;
+            GFL_STD_MemCopy( beaconData , callWork->memberData[registNo].beacon , sizeof(CTVT_COMM_BEACON) );
           }
           else
           {
-            callWork->memberData[emptyNo].serviceType = WB_NET_FIELDMOVE_SERVICEID;
-            GFL_STD_MemCopy( beaconData , callWork->memberData[emptyNo].beacon , sizeof(GBS_BEACON) );
+            callWork->memberData[registNo].serviceType = WB_NET_FIELDMOVE_SERVICEID;
+            GFL_STD_MemCopy( beaconData , callWork->memberData[registNo].beacon , sizeof(GBS_BEACON) );
           }
           
           for( k=0;k<CTVT_CALL_BAR_NUM;k++ )
           {
             if( callWork->barWork[k].memberWorkNo == CTVT_CALL_INVALID_NO )
             {
-              callWork->barWork[k].memberWorkNo = emptyNo;
-              callWork->memberData[emptyNo].barWorkNo = k;
+              callWork->barWork[k].memberWorkNo = registNo;
+              callWork->memberData[registNo].barWorkNo = k;
               callWork->barWork[k].isUpdate = TRUE;
               break;
             }
@@ -696,7 +710,7 @@ static void CTVT_CALL_UpdateBarFunc( COMM_TVT_WORK *work , CTVT_CALL_WORK *callW
       if( memberWork->serviceType == WB_NET_COMM_TVT )
       {
         CTVT_COMM_BEACON *becData = memberWork->beacon;
-        GFL_STR_SetStringCodeOrderLength( str , becData->name , CTVT_COMM_NAME_LEN );
+        GFL_STR_SetStringCodeOrderLength( str , CTVT_BCON_GetName(becData) , CTVT_COMM_NAME_LEN );
       }
       else
       {
@@ -714,7 +728,7 @@ static void CTVT_CALL_UpdateBarFunc( COMM_TVT_WORK *work , CTVT_CALL_WORK *callW
         if( memberWork->serviceType == WB_NET_COMM_TVT )
         {
           CTVT_COMM_BEACON *becData = memberWork->beacon;
-          WORDSET_RegisterNumber( wordSet , 0 , becData->id , 5 , STR_NUM_DISP_SPACE , STR_NUM_CODE_DEFAULT );
+          WORDSET_RegisterNumber( wordSet , 0 , CTVT_BCON_GetIDLow(becData) , 5 , STR_NUM_DISP_SPACE , STR_NUM_CODE_DEFAULT );
         }
         else
         {

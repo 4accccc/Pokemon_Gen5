@@ -180,7 +180,7 @@ void DRAW_SYS_SetPenInfo( DRAW_SYS_WORK* work , const DRAW_SYS_PEN_INFO *info )
   GFL_STD_MemCopy( info , setPos , sizeof(DRAW_SYS_PEN_INFO) );
   
   //OS_TPrintf("[%d][%d][%d][%d][%x]\n",setPos->startX,setPos->startY,setPos->endX,setPos->endX,setPos->col);
-  OS_TPrintf("[%d][%d][%d][%d][%x]\n",info->startX,info->startY,info->endX,info->endX,info->col);
+  //OS_TPrintf("[%d][%d][%d][%d][%x]\n",info->startX,info->startY,info->endX,info->endX,info->col);
   DRAW_SYS_IncBufCnt( work , &work->topBuffer );
 
 }

@@ -1161,12 +1161,12 @@ static void _setTVTParentName(CG_WIRELESS_MENU* pWork)
     STRBUF* pName = GFL_STR_CreateBuffer( _MESSAGE_BUF_NUM, pWork->heapID );
 
     GFL_STR_SetStringCodeOrderLength(pName,
-                                     beacon->name, CTVT_COMM_NAME_LEN);
+                                     CTVT_BCON_GetName(beacon), CTVT_COMM_NAME_LEN);
 
     if(FALSE==GFL_STR_CompareBuffer(pName, pWork->pStrBufTVTName)){
 
       GFL_STR_SetStringCodeOrderLength(pWork->pStrBufTVTName,
-                                       beacon->name, CTVT_COMM_NAME_LEN);
+                                       CTVT_BCON_GetName(beacon), CTVT_COMM_NAME_LEN);
 
       GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->nameWin), 0 );
 
