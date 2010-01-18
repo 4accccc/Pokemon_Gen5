@@ -36,6 +36,8 @@ struct _BATTLE_BOX_SAVE
 {
   POKEMON_PASO_PARAM ppp[BATTLE_BOX_PARTY_NUM][BATTLE_BOX_PARTY_MEMBER];
   STRCODE name[BATTLE_BOX_PARTY_NUM][BATTLE_BOX_NAME_BUFSIZE];
+  u16 lockFlg:1;  //バトルボックスがロックされているかどうか
+  u16 dummy:15;
 };
 
 //======================================================================
@@ -171,6 +173,14 @@ BOOL BATTLE_BOX_SAVE_IsIn( BATTLE_BOX_SAVE * sv )
 }
 
 
+//----------------------------------------------------------
+//  バトルボックスをロックする
+//----------------------------------------------------------
+void BATTLE_BOX_SAVE_SetLockFlg( BATTLE_BOX_SAVE *btlBoxSave,int flg )
+{
+  btlBoxSave->lockFlg = flg;
+}
+   
 //======================================================================
 //	取得系
 //======================================================================
@@ -190,3 +200,12 @@ STRCODE* BATTLE_BOX_SAVE_GetBoxName( BATTLE_BOX_SAVE *btlBoxSave , const u32 box
 {
   return btlBoxSave->name[boxIdx];
 }
+
+//----------------------------------------------------------
+//  ロックされているかどうか
+//----------------------------------------------------------
+BOOL BATTLE_BOX_SAVE_GetLockFlg( BATTLE_BOX_SAVE *btlBoxSave )
+{
+  return btlBoxSave->lockFlg;
+}
+
