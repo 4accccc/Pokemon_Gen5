@@ -77,3 +77,10 @@ extern const RAIL_LINEPOS_SET* FIELD_RAIL_GetLinePosSet( const FIELD_RAIL_WORK* 
 extern const RAIL_CAMERA_SET* FIELD_RAIL_POINT_GetCameraSet( const FIELD_RAIL_WORK* rail, const RAIL_POINT* point );
 
 
+
+//------------------------------------------------------------------
+//  FIELD_RAIL ÉcÅ[Éãä÷êî
+//------------------------------------------------------------------
+extern s32 FIELD_RAIL_TOOL_GetOfsToGrid_Round( s32 ofs );
+
+

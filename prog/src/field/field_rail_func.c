@@ -524,15 +524,18 @@ BOOL FIELD_RAIL_LINE_HIT_LOCATION_FUNC_StraitLine( u32 rail_index, const FIELD_R
     p_location->rail_index = rail_index;
     p_location->type = FIELD_RAIL_TYPE_LINE;
     p_location->key  = RAIL_KEY_DOWN;
+    // front_ofsとwidth_distがどのグリッドよりかも考えて計算する
     if( gaiseki.y>=0 )
     {
-      p_location->width_grid = RAIL_OFS_TO_GRID(width_dist);
+      p_location->width_grid = FIELD_RAIL_TOOL_GetOfsToGrid_Round(width_dist);
     }
     else
     {
-      p_location->width_grid = -RAIL_OFS_TO_GRID(width_dist);
+      p_location->width_grid = -FIELD_RAIL_TOOL_GetOfsToGrid_Round(width_dist);
     }
-    p_location->line_grid = RAIL_OFS_TO_GRID(front_ofs);
+    p_location->line_grid = FIELD_RAIL_TOOL_GetOfsToGrid_Round(front_ofs);
+
+
 
     // レール範囲内のロケーションにする
     FIELD_RAIL_MAN_CalcSafeLocation( cp_man, p_location, p_location );
@@ -690,11 +693,11 @@ BOOL FIELD_RAIL_LINE_HIT_LOCATION_FUNC_CircleLine( u32 rail_index, const FIELD_R
         // 合格！
         if( gaiseki.y >= 0 )
         {
-          p_location->width_grid = RAIL_OFS_TO_GRID(cross_dist);
+          p_location->width_grid = FIELD_RAIL_TOOL_GetOfsToGrid_Round(cross_dist);
         }
         else
         {
-          p_location->width_grid = -RAIL_OFS_TO_GRID(cross_dist);
+          p_location->width_grid = -FIELD_RAIL_TOOL_GetOfsToGrid_Round(cross_dist);
         }
 
         // レール範囲内のロケーションにする

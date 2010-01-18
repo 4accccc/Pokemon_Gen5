@@ -1863,6 +1863,29 @@ const RAIL_CAMERA_SET* FIELD_RAIL_POINT_GetCameraSet( const FIELD_RAIL_WORK* wor
 	return getRailDatCamera( work->rail_dat, point->camera_set);
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  四捨五入（１６OFSごとの）をしたグリッドざひょうを返す
+ */
+//-----------------------------------------------------------------------------
+s32 FIELD_RAIL_TOOL_GetOfsToGrid_Round( s32 ofs )
+{
+  u32 abs_ofs = MATH_ABS(ofs);
+  if( (abs_ofs % RAIL_WALK_OFS) >= (RAIL_WALK_OFS/2) )
+  {
+    if( ofs >= 0 )
+    {
+      return RAIL_OFS_TO_GRID( ofs ) + 1;
+    }
+    else
+    {
+      return RAIL_OFS_TO_GRID( ofs )  - 1;
+    }
+  }
+  return RAIL_OFS_TO_GRID( ofs );
+}
+
+
 //------------------------------------------------------------------
 // 判定系ツール
 //------------------------------------------------------------------
