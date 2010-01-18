@@ -1292,7 +1292,8 @@ SRCS_OVERLAY_OBATA_DEBUG = test/obata/debug_obata_menu.c \
 #===> EX_MEM_START
 #LIB=>          libnnsmcs.$HYB.a
 SRCS_OVERLAY_MCS_LIB = debug/gf_mcs.c \
-											 debug/mcs_resident.c
+											 debug/mcs_resident.c \
+                       debug/mcs_readfile.c
 
 #D_NUMINPUTƒ‰ƒCƒuƒ‰ƒŠ
 #===> SRCS_OVERLAY_DEV_WIFI

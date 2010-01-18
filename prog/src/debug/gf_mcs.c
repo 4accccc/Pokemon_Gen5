@@ -514,6 +514,7 @@ static	u32							readResult;	// “Ç‚ÝŽæ‚èŠÖ”ˆø”—p
 
 static int count;
 
+#include "debug/mcs_readfile.h"
 //============================================================================================
 /**
  *
@@ -532,6 +533,7 @@ void	GFL_MCS_Init( void )
 	// mcs‚Ì‰Šú‰»
 	NNS_McsInit( gflMCS->mcsWork );
 
+  GF_MCS_FILE_Init();
 	// VBlankŠ„‚èž‚Ý
 	//gflMCS->vBlankTask = GFUser_VIntr_CreateTCB( MCS_VBlankIntr, NULL, 0 );
 
