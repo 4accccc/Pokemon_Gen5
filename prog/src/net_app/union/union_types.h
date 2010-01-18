@@ -168,6 +168,8 @@ enum{
 enum{
   UNION_TIMING_SHUTDOWN = 1,            ///<切断前の同期取り
   
+  UNION_TIMING_TALK_START,              ///<会話開始時の同期取り
+  
   UNION_TIMING_TRAINERCARD_PARAM,       ///<トレーナーカードの情報交換前
   UNION_TIMING_TRAINERCARD_PROC_BEFORE, ///<トレーナーカード画面呼び出し前
   UNION_TIMING_TRAINERCARD_PROC_AFTER,  ///<トレーナーカード画面終了後

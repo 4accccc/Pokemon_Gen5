@@ -1103,11 +1103,27 @@ static BOOL OneselfSeq_ConnectAnswerExit(UNION_SYSTEM_PTR unisys, UNION_MY_SITUA
 //--------------------------------------------------------------
 static BOOL OneselfSeq_TalkInit_Parent(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq)
 {
-  UnionMyComm_InitMenuParam(&situ->mycomm);
-  UnionMySituation_SetParam(
-    unisys, UNION_MYSITU_PARAM_IDX_PLAY_CATEGORY, (void*)UNION_PLAY_CATEGORY_TALK);
-  UnionMyComm_PartyAdd(&situ->mycomm, situ->mycomm.connect_pc);
-  return TRUE;
+  switch(*seq){
+  case 0:
+    UnionMyComm_InitMenuParam(&situ->mycomm);
+    UnionMySituation_SetParam(
+      unisys, UNION_MYSITU_PARAM_IDX_PLAY_CATEGORY, (void*)UNION_PLAY_CATEGORY_TALK);
+    UnionMyComm_PartyAdd(&situ->mycomm, situ->mycomm.connect_pc);
+
+    //会話関連のワークの初期化をお互いしてから会話が始まるように同期取り
+    GFL_NET_HANDLE_TimingSyncStart(
+      GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_TALK_START);
+    (*seq)++;
+    break;
+  case 1:
+    OS_TPrintf("会話開始前の同期待ち・・・親\n");
+		if(GFL_NET_HANDLE_IsTimingSync(
+		    GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_TALK_START) == TRUE){
+      return TRUE;
+    }
+    break;
+  }
+  return FALSE;
 }
 
 //--------------------------------------------------------------
@@ -1308,11 +1324,26 @@ static BOOL OneselfSeq_TalkListSendUpdate_Parent(UNION_SYSTEM_PTR unisys, UNION_
 //--------------------------------------------------------------
 static BOOL OneselfSeq_TalkInit_Child(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq)
 {
-  UnionMyComm_InitMenuParam(&situ->mycomm);
-  UnionMySituation_SetParam(
-    unisys, UNION_MYSITU_PARAM_IDX_PLAY_CATEGORY, (void*)UNION_PLAY_CATEGORY_TALK);
-  UnionMyComm_PartyAdd(&situ->mycomm, situ->mycomm.connect_pc);
-  return TRUE;
+  switch(*seq){
+  case 0:
+    UnionMyComm_InitMenuParam(&situ->mycomm);
+    UnionMySituation_SetParam(
+      unisys, UNION_MYSITU_PARAM_IDX_PLAY_CATEGORY, (void*)UNION_PLAY_CATEGORY_TALK);
+    UnionMyComm_PartyAdd(&situ->mycomm, situ->mycomm.connect_pc);
+
+    //会話関連のワークの初期化をお互いしてから会話が始まるように同期取り
+    GFL_NET_HANDLE_TimingSyncStart(
+      GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_TALK_START);
+    (*seq)++;
+    break;
+  case 1:
+    OS_TPrintf("会話開始前の同期待ち・・・子\n");
+		if(GFL_NET_HANDLE_IsTimingSync(
+		    GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_TALK_START) == TRUE){
+      return TRUE;
+    }
+  }
+  return FALSE;
 }
 
 //--------------------------------------------------------------
