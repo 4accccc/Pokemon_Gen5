@@ -295,7 +295,10 @@ static BOOL _DevBeaconSearchFunc(NetDevEndCallback callback)
 //------------------------------------------------------------------------------
 static void* _DevBeaconGetFunc(int index)
 {
-	if(index >= GFL_NET_MACHINE_MAX){
+	GFLNetInitializeStruct* initStruct;
+
+
+  if(index >= SCAN_PARENT_COUNT_MAX){
 		return NULL;
 	}
 	return GFL_NET_WLGetUserBss(index);
@@ -309,7 +312,7 @@ static void* _DevBeaconGetFunc(int index)
 //------------------------------------------------------------------------------
 static u8* _DevBeaconGetMacFunc(int index)
 {
-	if(index >= GFL_NET_MACHINE_MAX){
+	if(index >= SCAN_PARENT_COUNT_MAX){
 		return NULL;
 	}
 	return GFL_NET_WLGetUserMacAddress(index);
