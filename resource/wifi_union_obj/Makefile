@@ -7,7 +7,7 @@
 #------------------------------------------------------------------------------
 #※コンバートを行う人のユーザーIDをここに書く
 #------------------------------------------------------------------------------
-USERS	= ohno
+USERS	= ohno iwasawa
 
 #------------------------------------------------------------------------------
 #※ここに作成するnarc名を書く
@@ -39,6 +39,45 @@ gobjects = $(subst .ncg,.NCGR,$(gsources))
 cobjects = $(subst .nsc,.NSCR,$(csources))
 eobjects = $(subst .nce,.NCER,$(esources))
 
+PAL_LST = wf_match_top_trainer.ncl
+
+CHR_LST = wf_match_top_trainer_boy1.ncg \
+					wf_match_top_trainer_boy3.ncg \
+					wf_match_top_trainer_man3.ncg \
+					wf_match_top_trainer_badman.ncg \
+					wf_match_top_trainer_explore.ncg \
+					wf_match_top_trainer_fighter.ncg \
+					wf_match_top_trainer_gorggeousm.ncg \
+					wf_match_top_trainer_mystery.ncg \
+					wf_match_top_trainer_girl1.ncg \
+					wf_match_top_trainer_girl2.ncg \
+					wf_match_top_trainer_woman2.ncg \
+					wf_match_top_trainer_woman3.ncg \
+					wf_match_top_trainer_idol.ncg \
+					wf_match_top_trainer_lady.ncg \
+					wf_match_top_trainer_cowgirl.ncg \
+					wf_match_top_trainer_gorggeousw.ncg
+
+NORMAL_LST = normal00.nce \
+						 normal01.nce \
+						 normal02.nce \
+						 normal03.nce \
+						 normal04.nce \
+						 normal05.nce \
+						 normal06.nce \
+						 normal07.nce \
+						 normal08.nce \
+						 normal09.nce \
+						 normal10.nce \
+						 normal11.nce \
+						 normal12.nce \
+						 normal13.nce \
+						 normal14.nce \
+						 normal15.nce
+
+FRONT_LST = $(subst normal,front,$(NORMAL_LST))
+
+DEP_LIST = $(PAL_LST) $(CHR_LST) $(NORMA_LST) $(FRONT_LST) 
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 # サフィックスルールを定義することで 依存関係を自動で判断してくれる
@@ -76,9 +115,15 @@ $(TARGETDIR)/$(targetname).narc: $(targetname).narc
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 # コピー先のnarcが古い場合実行する
-$(targetname).narc: $(lobjects) $(gobjects) $(eobjects) $(cobjects)
+$(targetname).narc: $(DEP_LIST)
+	$(MAKE) make_bin	
 	nnsarc -r -l -n -i $(targetname) -S conv_list.txt
 	$(NAIXCUT) $(targetname).naix
+
+#エクセルコンバート
+make_bin:
+	convert.bat
+
 endif
 
 #------------------------------------------------------------------------------
