@@ -3,14 +3,6 @@ $0003
 c:\home\pokemon_wb\resource\particle\wazaeffect\w_048.spa
 C:\home\pokemon_wb\resource\particle\wazaeffect\w_430.spa
 C:\home\pokemon_wb\resource\particle\wazaeffect\w_485.spa
-!0006
-カメラ移動	追従	攻撃側	10	0	8
-エフェクト終了待ち	すべて
-エフェクト終了待ち	すべて
-カメラ移動	追従	初期位置	10	0	8
-エフェクト終了待ち	すべて
-エフェクト終了
-&
 #001
 %00
 カメラ移動	追従	攻撃側	12	0	8

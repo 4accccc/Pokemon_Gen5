@@ -2,15 +2,6 @@ EFFSEQ
 $0002
 C:\home\pokemon_wb\resource\particle\wazaeffect\w_001.spa
 C:\home\pokemon_wb\resource\particle\wazaeffect\w_182.spa
-!0007
-カメラ移動	追従	攻撃側	16	0	8
-エフェクト終了待ち	すべて
-パーティクルデータロード	　
-エフェクト終了待ち	すべて
-カメラ移動	追従	初期位置	16	0	8
-エフェクト終了待ち	すべて
-エフェクト終了
-&
 #001
 %00
 カメラ移動	追従	攻撃側	16	0	8

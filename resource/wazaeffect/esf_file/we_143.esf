@@ -4,13 +4,6 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\w_143_1.spa
 C:\home\pokemon_wb\resource\particle\wazaeffect\w_143_2.spa
 C:\home\pokemon_wb\resource\wazaeffect\graphic\bg_063_depthspd.NSCR
 C:\home\pokemon_wb\resource\wazaeffect\graphic\bg_413_depthspd.NSCR
-!0005
-パーティクルデータロード	w_001
-パーティクル再生	w_001	W_001_001_BALL_BURN	攻撃側	方向無し	0	0
-パーティクル再生	w_001	W_001_001_HIT_MARK	攻撃側	方向無し	0	0
-エフェクト終了待ち	すべて
-エフェクト終了
-&
 #001
 %00
 BGのパレットフェード	すべて	0	13	0	0:0:0
