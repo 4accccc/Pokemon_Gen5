@@ -227,6 +227,8 @@ void CTVT_TALK_InitMode( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork )
   const HEAPID heapId = COMM_TVT_GetHeapId( work );
   ARCHANDLE* arcHandle = COMM_TVT_GetArcHandle( work );
 
+  GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_comm_tvt_tv_t_tuuwa_bg_NCGR ,
+                    CTVT_FRAME_SUB_MISC , 0 , 0, FALSE , heapId );
   GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_comm_tvt_tv_t_tuuwa_bg_NSCR , 
                     CTVT_FRAME_SUB_MISC ,  0 , 0, FALSE , heapId );
   GFL_BG_LoadScreenReq( CTVT_FRAME_SUB_MISC );

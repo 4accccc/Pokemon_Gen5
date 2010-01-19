@@ -568,7 +568,7 @@ static GFL_PROC_RESULT GameStart_DebugProcEnd( GFL_PROC * proc, int * seq, void 
     myStatus = SaveData_GetMyStatus( SaveControl_GetPointer() );
     MyStatus_SetMyNameFromString( myStatus , namebuf );
     MyStatus_SetMySex(myStatus, sex);
-    MyStatus_SetID(myStatus, GFL_STD_MtRand(GFL_STD_RAND_MAX));
+    MyStatus_SetID(myStatus, GFUser_GetPublicRand0(0xFFFFFFFF));
     MyStatus_SetTrainerView(myStatus, 
       UnionView_GetTrainerTypeIndex(MyStatus_GetID(myStatus), MyStatus_GetMySex(myStatus), 0));
     

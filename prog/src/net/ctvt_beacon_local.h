@@ -33,8 +33,6 @@ struct _CTVT_COMM_BEACON
 {
   MYSTATUS myStatus;
   
-//  STRCODE name[CTVT_COMM_NAME_LEN];
-//  u16     id;
   u8      connectNum;
   u8      pad;
   //呼び出しターゲット

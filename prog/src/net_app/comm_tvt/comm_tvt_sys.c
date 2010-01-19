@@ -346,20 +346,20 @@ static void COMM_TVT_InitGraphic( COMM_TVT_WORK *work )
       0, 0, 0x0800, 0,  // scrX, scrY, scrbufSize, scrbufofs,
       GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
       GX_BG_SCRBASE_0x5000, GX_BG_CHARBASE_0x18000,0x08000,
-      GX_BG_EXTPLTT_23, 2, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
+      GX_BG_EXTPLTT_23, 0, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
     };
     // BG1 BAR (バー
     static const GFL_BG_BGCNT_HEADER header_sub1 = {
       0, 0, 0x0800, 0,  // scrX, scrY, scrbufSize, scrbufofs,
       GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0x5800, GX_BG_CHARBASE_0x00000,0x05000,
-      GX_BG_EXTPLTT_23, 2, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
+      GX_BG_SCRBASE_0x6000, GX_BG_CHARBASE_0x00000,0x05000,
+      GX_BG_EXTPLTT_23, 1, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
     };
     // BG2 SUB (その他(画面別BG
     static const GFL_BG_BGCNT_HEADER header_sub2 = {
       0, 0, 0x1000, 0,  // scrX, scrY, scrbufSize, scrbufofs,
       GFL_BG_SCRSIZ_256x512, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0x6000, GX_BG_CHARBASE_0x10000,0x08000,
+      GX_BG_SCRBASE_0x6800, GX_BG_CHARBASE_0x10000,0x08000,
       GX_BG_EXTPLTT_23, 2, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
     };
     // BG3 SUB (背景
@@ -467,8 +467,11 @@ static void COMM_TVT_LoadResource( COMM_TVT_WORK *work )
                     CTVT_FRAME_SUB_BG ,  0 , 0, FALSE , work->heapId );
 
   //下画面 BGMisc(キャラは共通なの先読み
-  GFL_ARCHDL_UTIL_TransVramBgCharacter( work->arcHandle , NARC_comm_tvt_tv_t_tuuwa_bg_NCGR ,
-                    CTVT_FRAME_SUB_MISC , 0 , 0, FALSE , work->heapId );
+  //各々で読むように変更
+//  GFL_ARCHDL_UTIL_TransVramBgCharacter( work->arcHandle , NARC_comm_tvt_tv_t_tuuwa_bg_NCGR ,
+//                    CTVT_FRAME_SUB_MISC , 0 , 0, FALSE , work->heapId );
+//  GFL_ARCHDL_UTIL_TransVramBgCharacter( work->arcHandle , NARC_comm_tvt_tv_t_tuuwa_bg_NCGR ,
+//                    CTVT_FRAME_SUB_MSG , 0 , 0, FALSE , work->heapId );
 
   //OBJ
   work->cellResIdx[CTOR_COMMON_M_PLT] = GFL_CLGRP_PLTT_RegisterComp( work->arcHandle , 
@@ -563,7 +566,7 @@ static void COMM_TVT_InitMessage( COMM_TVT_WORK *work )
   work->fontHandle = GFL_FONT_Create( ARCID_FONT , NARC_font_large_gftr , GFL_FONT_LOADTYPE_FILE , FALSE , work->heapId );
   //メッセージ
   work->msgHandle = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL , ARCID_MESSAGE , NARC_message_comm_tvt_dat , work->heapId );
-  work->printQue = PRINTSYS_QUE_Create( work->heapId );
+  work->printQue = PRINTSYS_QUE_CreateEx( 1024*2 , work->heapId );
 
   GFL_ARC_UTIL_TransVramPalette( ARCID_FONT , NARC_font_default_nclr , PALTYPE_MAIN_BG , CTVT_PAL_BG_MAIN_FONT*0x20, 16*2, work->heapId );
   GFL_ARC_UTIL_TransVramPalette( ARCID_FONT , NARC_font_default_nclr , PALTYPE_SUB_BG  , CTVT_PAL_BG_SUB_FONT *0x20, 16*2, work->heapId );

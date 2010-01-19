@@ -20,6 +20,8 @@
 #include "app/app_menu_common.h"
 #include "print/wordset.h"
 #include "field/game_beacon_search.h"
+#include "savedata/wifilist.h"
+#include "gamesystem/game_data.h"
 
 #include "msg/msg_comm_tvt.h"
 
@@ -34,9 +36,9 @@
 #pragma mark [> define
 
 //表示バーの個数
-#define CTVT_CALL_BAR_NUM (16) //とりあえず画面分
+#define CTVT_CALL_BAR_NUM (15) //とりあえず画面分
 //データ個数
-#define CTVT_CALL_SEARCH_NUM (16) //とりあえず画面分
+#define CTVT_CALL_SEARCH_NUM (15) //とりあえず画面分
 #define CTVT_CALL_INVALID_NO (0xFF)
 
 
@@ -58,6 +60,9 @@
 
 #define CTVT_CALL_RETURN_X (224)
 
+#define CTVT_CALL_SCROLL_X (242)
+#define CTVT_CALL_SCROLL_Y (23)
+#define CTVT_CALL_SCROLLBAR_LEN (122)
 
 //======================================================================
 //	enum
@@ -116,13 +121,17 @@ struct _CTVT_CALL_WORK
 {
   u8 checkIdx[3];
   u16 scrollOfs;
+  u16 scrollBarPos;
   CTVT_CALL_STATE state;
   BOOL isUpdateBarPos;
+  BOOL isHoldScroll;
+  u8   barNum;
 
   CTVT_CALL_BAR_WORK barWork[CTVT_CALL_BAR_NUM];
   CTVT_CALL_MEMBER_WORK memberData[CTVT_CALL_SEARCH_NUM];
 
   GFL_CLWK *clwkReturn;
+  GFL_CLWK *clwkScrollBar;
 };
 
 //======================================================================
@@ -135,6 +144,8 @@ static void CTVT_CALL_UpdateBeacon( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
 static void CTVT_CALL_UpdateBar( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork );
 static void CTVT_CALL_UpdateBarFunc( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork , CTVT_CALL_BAR_WORK *barWork , const u8 idx );
 static void CTVT_CALL_UpdateBarPosFunc( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork , CTVT_CALL_BAR_WORK *barWork , const u8 idx );
+
+static const BOOL CTVT_CALL_CheckRegistFriendData( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork , const STRCODE *name , const u32 id , const u32 sex );
 
 
 //--------------------------------------------------------------
@@ -163,7 +174,13 @@ void CTVT_CALL_InitMode( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork )
 {
   const HEAPID heapId = COMM_TVT_GetHeapId( work );
   ARCHANDLE* arcHandle = COMM_TVT_GetArcHandle( work );
-  
+
+  //MISCをスクロールするのでキャラ表示に使うのでMSGに展開  
+  GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_comm_tvt_tv_t_tuuwa_bg_NCGR ,
+                    CTVT_FRAME_SUB_MSG , 0 , CTVT_BMPWIN_CGX*0x20, FALSE , heapId );
+  GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_comm_tvt_tv_t_yobidashi_bg_NSCR , 
+                    CTVT_FRAME_SUB_MSG ,  0 , 0, FALSE , heapId );
+  GFL_BG_LoadScreenReq( CTVT_FRAME_SUB_MSG );
   {
     u8 i;
     GFL_CLWK_DATA cellInitData;
@@ -207,6 +224,16 @@ void CTVT_CALL_InitMode( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork )
               COMM_TVT_GetObjResIdx( work, CTOR_BAR_BUTTON_ANM ),
               &cellInitData ,CLSYS_DRAW_SUB , heapId );
     GFL_CLACT_WK_SetDrawEnable( callWork->clwkReturn , TRUE );
+    
+    cellInitData.pos_x = CTVT_CALL_SCROLL_X;
+    cellInitData.pos_y = CTVT_CALL_SCROLL_Y;
+    cellInitData.anmseq = CTOAS_SCROLL_BAR;
+    callWork->clwkScrollBar = GFL_CLACT_WK_Create( COMM_TVT_GetCellUnit(work) ,
+              COMM_TVT_GetObjResIdx( work, CTOR_COMMON_S_NCG ),
+              COMM_TVT_GetObjResIdx( work, CTOR_COMMON_S_PLT ),
+              COMM_TVT_GetObjResIdx( work, CTOR_COMMON_S_ANM ),
+              &cellInitData ,CLSYS_DRAW_SUB , heapId );
+    GFL_CLACT_WK_SetDrawEnable( callWork->clwkScrollBar , FALSE );
   }
   {
     u8 i;
@@ -237,7 +264,10 @@ void CTVT_CALL_InitMode( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork )
     }
   }
   callWork->scrollOfs = 0;
+  callWork->scrollBarPos = 0;
+  callWork->barNum = 0;
   callWork->isUpdateBarPos = FALSE;
+  callWork->isHoldScroll = FALSE;
 
   GFL_BG_SetScrollReq( CTVT_FRAME_SUB_MISC , GFL_BG_SCROLL_Y_SET , 0 );
 
@@ -250,6 +280,7 @@ void CTVT_CALL_TermMode( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork )
 {
   u8 i;
   
+  GFL_CLACT_WK_Remove( callWork->clwkScrollBar );
   GFL_CLACT_WK_Remove( callWork->clwkReturn );
   for( i=0;i<CTVT_CALL_BAR_NUM;i++ )
   {
@@ -264,8 +295,11 @@ void CTVT_CALL_TermMode( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork )
 
   GFL_BG_ClearScreen( CTVT_FRAME_SUB_MISC );
   GFL_BG_LoadScreenReq( CTVT_FRAME_SUB_MISC );
-
   GFL_BG_SetScrollReq( CTVT_FRAME_SUB_MISC , GFL_BG_SCROLL_Y_SET , 0 );
+
+  GFL_BG_ClearScreen( CTVT_FRAME_SUB_MSG );
+  GFL_BG_LoadScreenReq( CTVT_FRAME_SUB_MSG );
+  GFL_BG_SetScrollReq( CTVT_FRAME_SUB_MSG , GFL_BG_SCROLL_Y_SET , 0 );
 }
 
 //--------------------------------------------------------------
@@ -274,6 +308,16 @@ void CTVT_CALL_TermMode( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork )
 const COMM_TVT_MODE CTVT_CALL_Main( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork )
 {
   const HEAPID heapId = COMM_TVT_GetHeapId( work );
+  /*
+  if( MI_GetMainMemoryPriority() == MI_PROCESSOR_ARM9 )
+  {
+    OS_TPrintf("ARM9!\n");
+  }
+  else
+  {
+    OS_TPrintf("ARM7!\n");
+  }
+  */
   
   switch( callWork->state )
   {
@@ -355,11 +399,10 @@ const COMM_TVT_MODE CTVT_CALL_Main( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
     }
     if( GFL_UI_KEY_GetCont() & PAD_KEY_UP )
     {
-      if( callWork->scrollOfs < CTVT_CALL_SCROLL_LEN )
+      if( (callWork->barNum-5) * CTVT_CALL_BAR_HEIGHT > callWork->scrollOfs )
       {
         callWork->isUpdateBarPos = TRUE;
         callWork->scrollOfs += 2;
-        GFL_BG_SetScrollReq( CTVT_FRAME_SUB_MISC , GFL_BG_SCROLL_Y_SET , callWork->scrollOfs );
       }
     }
     if( GFL_UI_KEY_GetCont() & PAD_KEY_DOWN )
@@ -368,7 +411,6 @@ const COMM_TVT_MODE CTVT_CALL_Main( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
       {
         callWork->isUpdateBarPos = TRUE;
         callWork->scrollOfs -= 2;
-        GFL_BG_SetScrollReq( CTVT_FRAME_SUB_MISC , GFL_BG_SCROLL_Y_SET , callWork->scrollOfs );
       }
     }
     break;
@@ -407,6 +449,7 @@ const COMM_TVT_MODE CTVT_CALL_Main( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
     {
       CTVT_CALL_UpdateBarPosFunc( work , callWork , &callWork->barWork[i] , i );
     }
+    GFL_BG_SetScrollReq( CTVT_FRAME_SUB_MISC , GFL_BG_SCROLL_Y_SET , callWork->scrollOfs );
   }
 
   return CTM_CALL;
@@ -418,7 +461,9 @@ const COMM_TVT_MODE CTVT_CALL_Main( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
 static void CTVT_CALL_UpdateTP( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork )
 {
   u32 tpx,tpy;
+  u32 holdTpx,holdTpy;
   const BOOL isTrg = GFL_UI_TP_GetPointTrg( &tpx,&tpy );
+  const BOOL isHold = GFL_UI_TP_GetPointCont( &holdTpx,&holdTpy );
   CTVT_COMM_WORK *commWork = COMM_TVT_GetCommWork( work );
   
   if( isTrg == TRUE )
@@ -476,8 +521,49 @@ static void CTVT_CALL_UpdateTP( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork )
         }
       }
     }
+    else
+    if( tpx >= CTVT_CALL_SCROLL_X - 5 &&
+        tpx <= CTVT_CALL_SCROLL_X + 5 &&
+        tpy >= CTVT_CALL_SCROLL_Y - 7 + callWork->scrollBarPos &&
+        tpy <= CTVT_CALL_SCROLL_Y + 7 + callWork->scrollBarPos )
+    {
+      callWork->isHoldScroll = TRUE;
+    }
   }
-  
+  if( isHold == TRUE &&
+      callWork->isHoldScroll == TRUE )
+  {
+    if( holdTpx >= CTVT_CALL_SCROLL_X - 5 &&
+        holdTpx <= CTVT_CALL_SCROLL_X + 5 &&
+        holdTpy >= CTVT_CALL_SCROLL_Y - 7 &&
+        holdTpy <= CTVT_CALL_SCROLL_Y + CTVT_CALL_SCROLLBAR_LEN + 7 )
+    {
+      const u32 maxLen = (callWork->barNum-5) * CTVT_CALL_BAR_HEIGHT;
+      s32 scrollOfs = holdTpy - CTVT_CALL_SCROLL_Y;
+      GFL_CLACTPOS cellPos;
+      if( scrollOfs < 0 )
+      {
+        scrollOfs = 0;
+      }
+      else
+      if( scrollOfs > CTVT_CALL_SCROLLBAR_LEN )
+      {
+        scrollOfs = CTVT_CALL_SCROLLBAR_LEN;
+      }
+      
+      callWork->scrollBarPos = scrollOfs;
+      cellPos.x = CTVT_CALL_SCROLL_X;
+      cellPos.y = CTVT_CALL_SCROLL_Y + callWork->scrollBarPos;
+      GFL_CLACT_WK_SetPos( callWork->clwkScrollBar , &cellPos , CLSYS_DRAW_SUB );
+      
+      callWork->scrollOfs = callWork->scrollBarPos * maxLen / CTVT_CALL_SCROLLBAR_LEN;
+      callWork->isUpdateBarPos = TRUE;
+    }
+  }
+  else
+  {
+    callWork->isHoldScroll = FALSE;
+  }
 }
 
 //--------------------------------------------------------------
@@ -485,7 +571,7 @@ static void CTVT_CALL_UpdateTP( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork )
 //--------------------------------------------------------------
 static void CTVT_CALL_UpdateBeacon( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork )
 {
-  u8 i;
+  int i;  //負になるかも
   BOOL isUpdate = FALSE;
   CTVT_COMM_WORK *commWork = COMM_TVT_GetCommWork( work );
   if( CTVT_COMM_IsInitNet( work , commWork ) == FALSE )
@@ -500,10 +586,10 @@ static void CTVT_CALL_UpdateBeacon( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
       callWork->memberData[i].isLost = TRUE;
     }
   }
-
   for( i=0;i<CTVT_COMM_BEACON_NUM;i++ )
   {
     BOOL isEntry = FALSE;
+    BOOL isRefresh = FALSE;
     void *beaconData = GFL_NET_GetBeaconData(i);
     if( beaconData != NULL )
     {
@@ -517,6 +603,30 @@ static void CTVT_CALL_UpdateBeacon( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
         GBS_BEACON *becData = beaconData;
         if( becData->beacon_type != GBS_BEACONN_TYPE_PALACE &&
             becData->beacon_type != GBS_BEACONN_TYPE_INFO )
+        {
+          continue;
+        }
+      }
+      {
+        BOOL isFriend;
+        //友達かチェック
+        if( serviceType == WB_NET_COMM_TVT )
+        {
+          CTVT_COMM_BEACON *becData = beaconData;
+          const STRCODE *name = MyStatus_GetMyName( &becData->myStatus );
+          const u32 sex = MyStatus_GetMySex( &becData->myStatus );
+          const u32 id  = MyStatus_GetID( &becData->myStatus );
+          isFriend = CTVT_CALL_CheckRegistFriendData( work , callWork , name , id , sex );
+        }
+        else
+        {
+          GBS_BEACON *becData = beaconData;
+          const STRCODE *name = becData->info.name;
+          const u32 sex = 0;
+          const u32 id  = becData->info.trainer_id;
+          isFriend = CTVT_CALL_CheckRegistFriendData( work , callWork , name , id , sex );
+        }
+        if( isFriend == FALSE )
         {
           continue;
         }
@@ -546,13 +656,19 @@ static void CTVT_CALL_UpdateBeacon( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
             if( serviceType != callWork->memberData[mem].serviceType )
             {
               isEntry = FALSE;
+              isRefresh = TRUE;
               registNo = mem;
             }
             if( serviceType == WB_NET_COMM_TVT )
             {
+              CTVT_COMM_BEACON *newBecData = beaconData;
               CTVT_COMM_BEACON *becData = callWork->memberData[mem].beacon;
-              
-              
+              if( becData->connectNum != newBecData->connectNum )
+              {
+                isEntry = FALSE;
+                isRefresh = TRUE;
+                registNo = mem;
+              }
             }
             break;
           }
@@ -593,15 +709,23 @@ static void CTVT_CALL_UpdateBeacon( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
             GFL_STD_MemCopy( beaconData , callWork->memberData[registNo].beacon , sizeof(GBS_BEACON) );
           }
           
-          for( k=0;k<CTVT_CALL_BAR_NUM;k++ )
+          if( isRefresh == FALSE )
           {
-            if( callWork->barWork[k].memberWorkNo == CTVT_CALL_INVALID_NO )
+            for( k=0;k<CTVT_CALL_BAR_NUM;k++ )
             {
-              callWork->barWork[k].memberWorkNo = registNo;
-              callWork->memberData[registNo].barWorkNo = k;
-              callWork->barWork[k].isUpdate = TRUE;
-              break;
+              if( callWork->barWork[k].memberWorkNo == CTVT_CALL_INVALID_NO )
+              {
+                callWork->barWork[k].memberWorkNo = registNo;
+                callWork->memberData[registNo].barWorkNo = k;
+                callWork->barWork[k].isUpdate = TRUE;
+                break;
+              }
             }
+          }
+          else
+          {
+            const u8 workNo = callWork->memberData[registNo].barWorkNo;
+            callWork->barWork[ workNo ].isUpdate = TRUE;
           }
           isUpdate = TRUE;
         }
@@ -626,11 +750,12 @@ static void CTVT_CALL_UpdateBeacon( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
         }
         else
         {
-          callWork->barWork[j].memberWorkNo = CTVT_CALL_INVALID_NO;
-          callWork->barWork[j].isUpdate = TRUE;
+          //最後までデータが入ったときのために外でjのインデックスで処理する
           break;
         }
       }
+      callWork->barWork[j].memberWorkNo = CTVT_CALL_INVALID_NO;
+      callWork->barWork[j].isUpdate = TRUE;
       callWork->memberData[i].barWorkNo = CTVT_CALL_INVALID_NO;
       callWork->memberData[i].isEnable = FALSE;
       for( j=0;j<3;j++ )
@@ -640,6 +765,8 @@ static void CTVT_CALL_UpdateBeacon( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
           callWork->checkIdx[j] = CTVT_CALL_INVALID_NO;
         }
       }
+
+      i--;
       isUpdate = TRUE;
     }
   }
@@ -683,9 +810,43 @@ static void CTVT_CALL_UpdateBeacon( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
 static void CTVT_CALL_UpdateBar( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork )
 {
   u8 i;
+  u8 num = 0;
   for( i=0;i<CTVT_CALL_BAR_NUM;i++ )
   {
     CTVT_CALL_UpdateBarFunc( work , callWork , &callWork->barWork[i] , i );
+  }
+  
+  for( i=0;i<CTVT_CALL_BAR_NUM;i++ )
+  {
+    if( callWork->barWork[i].memberWorkNo != CTVT_CALL_INVALID_NO )
+    {
+      num++;
+    }
+  }
+  if( callWork->barNum != num )
+  {
+    if( num > 5 )
+    {
+      GFL_CLACTPOS cellPos;
+      const u32 maxLen = (num-5) * CTVT_CALL_BAR_HEIGHT;
+      GFL_CLACT_WK_SetDrawEnable( callWork->clwkScrollBar , TRUE );
+      if( callWork->scrollOfs > maxLen )
+      {
+        callWork->scrollOfs = maxLen;
+      }
+      callWork->scrollBarPos = callWork->scrollOfs * CTVT_CALL_SCROLLBAR_LEN / maxLen;
+      cellPos.x = CTVT_CALL_SCROLL_X;
+      cellPos.y = CTVT_CALL_SCROLL_Y + callWork->scrollBarPos;
+      GFL_CLACT_WK_SetPos( callWork->clwkScrollBar , &cellPos , CLSYS_DRAW_SUB );
+      
+    }
+    else
+    {
+      GFL_CLACT_WK_SetDrawEnable( callWork->clwkScrollBar , FALSE );
+      callWork->scrollOfs = 0;
+      callWork->isUpdateBarPos = TRUE;
+    }
+    callWork->barNum = num;
   }
 }
 
@@ -817,4 +978,43 @@ static void CTVT_CALL_UpdateBarPosFunc( COMM_TVT_WORK *work , CTVT_CALL_WORK *ca
     }
     
   }
+}
+
+static const BOOL CTVT_CALL_CheckRegistFriendData( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork , const STRCODE *name , const u32 id , const u32 sex )
+{
+  u8 i;
+  const COMM_TVT_INIT_WORK *initWork = COMM_TVT_GetInitWork( work );
+  WIFI_LIST *wifiList = GAMEDATA_GetWiFiList( initWork->gameData );
+  
+#if DEBUG_ONLY_FOR_ariizumi_nobuhiko
+  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R )
+  {
+    return TRUE;
+  }
+#endif
+  
+  for( i=0;i<WIFILIST_FRIEND_MAX;i++ )
+  {
+    if( id == WifiList_GetFriendInfo( wifiList , i , WIFILIST_FRIEND_ID ) )
+    {
+      //if( sex != WifiList_GetFriendInfo( wifiList , i , WIFILIST_FRIEND_SEX ) )
+      {
+        const HEAPID heapId = COMM_TVT_GetHeapId( work );
+        STRBUF *str1 = GFL_STR_CreateBuffer( CTVT_COMM_NAME_LEN , heapId );
+        STRBUF *str2 = GFL_STR_CreateBuffer( CTVT_COMM_NAME_LEN , heapId );
+        GFL_STR_SetStringCode( str1 , name );
+        GFL_STR_SetStringCode( str2 , WifiList_GetFriendNamePtr(wifiList,i) );
+        if( GFL_STR_CompareBuffer(str1,str2) == TRUE )
+        {
+          GFL_STR_DeleteBuffer( str1 );
+          GFL_STR_DeleteBuffer( str2 );
+          return TRUE;
+        }
+        GFL_STR_DeleteBuffer( str1 );
+        GFL_STR_DeleteBuffer( str2 );
+      }
+    }
+  }
+  
+  return FALSE;
 }

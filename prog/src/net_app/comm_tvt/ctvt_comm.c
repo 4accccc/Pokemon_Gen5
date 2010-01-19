@@ -474,7 +474,7 @@ static void CTVT_COMM_InitComm( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
     GFL_WICON_POSX,GFL_WICON_POSY,  // 通信アイコンXY位置
     4,                      //_MAXNUM,  //最大接続人数
     110,                    //_MAXSIZE, //最大送信バイト数
-    16,                     //_BCON_GET_NUM,  // 最大ビーコン収集数
+    CTVT_COMM_BEACON_NUM,   //_BCON_GET_NUM,  // 最大ビーコン収集数
     TRUE,                   // CRC計算
     FALSE,                  // MP通信＝親子型通信モードかどうか
     GFL_NET_TYPE_WIRELESS,  //通信タイプの指定
