@@ -32,6 +32,9 @@ typedef enum {
   DBGSTR_CLIENT_SelectActionSkip,
   DBGSTR_CLIENT_SelectActionStart,
   DBGSTR_CLIENT_SelectActionDone,
+  DBGSTR_CLIENT_SelectAction_Pokemon,
+  DBGSTR_CLIENT_SelectChangePoke,
+  DBGSTR_CLIENT_SelectChangePokeCancel,
   DBGSTR_CLIENT_ReturnSeqDone,
   DBGSTR_CLIENT_WazaLockInfo,
   DBGSTR_CLIENT_NoMorePuttablePoke,
@@ -47,6 +50,7 @@ typedef enum {
   DBGSTR_CLIENT_ForbidEscape_Arijigoku_Enable,
   DBGSTR_CLIENT_ForbidEscape_Jiryoku_Chk,
   DBGSTR_CLIENT_ForbidEscape_Jiryoku_Enable,
+
 
   DBGSTR_MAIN_SwapPartyMember,
   DBGSTR_NET_DecideClientID,

@@ -638,6 +638,7 @@ void BTLV_StartPokeSelect( BTLV_CORE* wk, const BTL_POKESELECT_PARAM* param, BOO
     {
       if( i >= NELEMS(wk->plistData.change_sel) ){ break; }
       wk->plistData.change_sel[i] = BTL_POKESELECT_RESULT_Get( result, i );
+      OS_TPrintf("  Šù‚É‘I‘ð‚³‚ê‚½ƒ|ƒP%d‘Ì–Ú ... Index=%d\n", i, wk->plistData.change_sel[i]);
     }
     for( ; i<NELEMS(wk->plistData.change_sel); ++i){
       wk->plistData.change_sel[i] = BPL_CHANGE_SEL_NONE;
@@ -668,6 +669,7 @@ BOOL BTLV_WaitPokeSelect( BTLV_CORE* wk )
     if( wk->plistData.end_flg )
     {
       u32 i;
+      BOOL fSelected = FALSE;
 
       BTL_N_Printf( DBGSTR_VCORE_SelPokeEnd );
 
@@ -678,6 +680,7 @@ BOOL BTLV_WaitPokeSelect( BTLV_CORE* wk )
           {
             u8 storeCnt = BTL_POKESELECT_RESULT_GetCount( wk->pokeselResult );
             BTL_N_Printf( DBGSTR_VCORE_SelPokeEnd_Sel, i, storeCnt);
+            fSelected = TRUE;
           }
         }
         else{

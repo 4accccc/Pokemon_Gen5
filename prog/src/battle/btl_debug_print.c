@@ -57,17 +57,21 @@ void BTL_DEBUGPRINT_PrintDump( const char* caption, const void* data, u32 size )
 const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
 {
   switch( strID ){
-  case DBGSTR_SETUP_DONE:                 return "セットアップ完了\n";
-  case DBGSTR_DEBUGFLAG_BIT:              return "デバッグフラグbit=%04x\n";
-  case DBGSTR_ADAPTER_SEND_START:         return " Adapter-%d, コマンド %d を送信開始します\n";
-  case DBGSTR_ADAPTER_RECV_DONE:          return " [Adapter] Received from All Clients\n";
-  case DBGSTR_ADAPTER_RECVED_A_CLIENT:    return " [Adapter] Received from AdapterID=%d\n";
-  case DBGSTR_CLIENT_RETURN_CMD_START:    return "ID[%d], 返信開始へ\n";
-  case DBGSTR_CLIENT_RETURN_CMD_DONE:     return "ID[%d], 返信しました\n";
-  case DBGSTR_CLIENT_SelectActionSkip:    return "Act選択(%d体目）スキップ\n";
-  case DBGSTR_CLIENT_SelActPokeDead:      return "死んでてスキップなのでCheckedCntそのまま\n";
-  case DBGSTR_CLIENT_SelectActionStart:   return "Act選択(%d体目=ID:%d）開始します  checked %d poke\n";
-  case DBGSTR_CLIENT_SelectActionDone:    return "カバー位置数(%d)終了、アクション送信へ\n";
+  case DBGSTR_SETUP_DONE:                    return "セットアップ完了\n";
+  case DBGSTR_DEBUGFLAG_BIT:                 return "デバッグフラグbit=%04x\n";
+  case DBGSTR_ADAPTER_SEND_START:            return " Adapter-%d, コマンド %d を送信開始します\n";
+  case DBGSTR_ADAPTER_RECV_DONE:             return " [Adapter] Received from All Clients\n";
+  case DBGSTR_ADAPTER_RECVED_A_CLIENT:       return " [Adapter] Received from AdapterID=%d\n";
+  case DBGSTR_CLIENT_RETURN_CMD_START:       return "ID[%d], 返信開始へ\n";
+  case DBGSTR_CLIENT_RETURN_CMD_DONE:        return "ID[%d], 返信しました\n";
+  case DBGSTR_CLIENT_SelectActionSkip:       return "Act選択(%d体目）スキップ\n";
+  case DBGSTR_CLIENT_SelActPokeDead:         return "死んでてスキップなのでCheckedCntそのまま\n";
+  case DBGSTR_CLIENT_SelectActionStart:      return "Act選択(%d体目=ID:%d）開始します  checked %d poke\n";
+  case DBGSTR_CLIENT_SelectActionDone:       return "カバー位置数(%d)終了、アクション送信へ\n";
+  case DBGSTR_CLIENT_SelectAction_Pokemon:   return "「ポケモン」を選んだ->選択画面へ\n";
+  case DBGSTR_CLIENT_SelectChangePoke:       return " ポケモン選んだ ... idx=%d\n";
+  case DBGSTR_CLIENT_SelectChangePokeCancel: return " ポケモン選ばなかった\n";
+
   case DBGSTR_CLIENT_ReturnSeqDone:       return "返信シーケンス終了\n";
   case DBGSTR_CLIENT_WazaLockInfo:        return "ワザロック：Client[%d] 前回使ったワザは %d, idx=%d, targetPos=%d\n";
   case DBGSTR_CLIENT_NoMorePuttablePoke:  return "myID=%d もう戦えるポケモンいない\n";

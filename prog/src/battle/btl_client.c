@@ -171,7 +171,7 @@ static BOOL checkForbitEscapeEffective_Arijigoku( BTL_CLIENT* wk, const BTL_POKE
 static BOOL checkForbitEscapeEffective_Jiryoku( BTL_CLIENT* wk, const BTL_POKEPARAM* procPoke );
 static BOOL SubProc_AI_SelectAction( BTL_CLIENT* wk, int* seq );
 static u8 calcPuttablePokemons( BTL_CLIENT* wk, u8* list );
-static void setup_pokesel_param_change( BTL_CLIENT* wk, u8 mode, u8 numSelect, BTL_POKESELECT_PARAM* param, BTL_POKESELECT_RESULT* result );
+static void setupPokeSelParam( BTL_CLIENT* wk, u8 mode, u8 numSelect, BTL_POKESELECT_PARAM* param, BTL_POKESELECT_RESULT* result );
 static void store_pokesel_to_action( BTL_CLIENT* wk, const BTL_POKESELECT_RESULT* res );
 static u8 storeMyChangePokePos( BTL_CLIENT* wk, BtlPokePos* myCoverPos );
 static BOOL SubProc_UI_SelectChangeOrEscape( BTL_CLIENT* wk, int* seq );
@@ -654,8 +654,17 @@ static BOOL selact_Start( BTL_CLIENT* wk, int* seq )
   wk->prevPokeIdx = -1;
   wk->checkedPokeCnt = 0;
 
-  setup_pokesel_param_change( wk, BPL_MODE_NORMAL, 1, &wk->pokeSelParam, &wk->pokeSelResult  );
+  // ダブル以上の時、「既に選ばれているポケモン」を記録するために初期化をここで行う
+  setupPokeSelParam( wk, BPL_MODE_NORMAL, wk->numCoverPos, &wk->pokeSelParam, &wk->pokeSelResult  );
+
   shooterCost_Init( wk );
+
+  {
+    u32 i;
+    for(i=0; i<NELEMS(wk->actionParam); ++i){
+      BTL_ACTION_SetNULL( &wk->actionParam[i] );
+    }
+  }
 
   SelActProc_Set( wk, selact_Root );
   return FALSE;
@@ -679,8 +688,9 @@ static BOOL selact_Root( BTL_CLIENT* wk, int* seq )
   case 0:
     wk->procPoke = BTL_POKECON_GetClientPokeData( wk->pokeCon, wk->myID, wk->procPokeIdx );
     wk->procAction = &wk->actionParam[ wk->procPokeIdx ];
-    if( is_action_unselectable(wk, wk->procPoke,  wk->procAction) )
-    {
+    BTL_ACTION_SetNULL( wk->procAction );
+
+    if( is_action_unselectable(wk, wk->procPoke,  wk->procAction) ){
       BTL_N_PrintfEx( PRINT_FLG, DBGSTR_CLIENT_SelectActionSkip, wk->procPokeIdx );
       SelActProc_Set( wk, selact_CheckFinish );
     }
@@ -694,7 +704,6 @@ static BOOL selact_Root( BTL_CLIENT* wk, int* seq )
     if( (wk->prevPokeIdx != wk->procPokeIdx)
     ||  (wk->fStdMsgChanged)
     ){
-      OS_TPrintf("○○はどうする？\n");
       BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_STD, BTL_STRID_STD_SelectAction );
       BTLV_STRPARAM_AddArg( &wk->strParam, BPP_GetID(wk->procPoke) );
       BTLV_STRPARAM_SetWait( &wk->strParam, 0 );
@@ -726,6 +735,7 @@ static BOOL selact_Root( BTL_CLIENT* wk, int* seq )
 
     // 入れ替えポケモン選択の場合はまだアクションパラメータが不十分->ポケモン選択へ
     case BTL_ACTION_CHANGE:
+      BTL_N_Printf( DBGSTR_CLIENT_SelectAction_Pokemon );
       shooterCost_Save( wk, wk->procPokeIdx, 0 );
       SelActProc_Set( wk, selact_SelectChangePokemon );
       break;
@@ -759,6 +769,10 @@ static BOOL selact_Root( BTL_CLIENT* wk, int* seq )
           {
             wk->checkedPokeCnt--;
             wk->shooterEnergy += shooterCost_Get( wk, wk->procPokeIdx );
+            // 「もどる」先のポケモンが、既に「ポケモン」で交換対象を選んでいた場合はその情報をPopする
+            if( BTL_ACTION_GetAction( &wk->actionParam[wk->procPokeIdx] ) == BTL_ACTION_CHANGE ){
+              BTL_POKESELECT_RESULT_Pop( &wk->pokeSelResult );
+            }
             SelActProc_Set( wk, selact_Root );
             return FALSE;
           }
@@ -882,6 +896,7 @@ static BOOL selact_SelectChangePokemon( BTL_CLIENT* wk, int* seq )
       ){
         fCantEsc = TRUE;
       }
+//      setupPokeSelParam( wk, BPL_MODE_NORMAL, wk->numCoverPos, &wk->pokeSelParam, &wk->pokeSelResult  );
       BTLV_StartPokeSelect( wk->viewCore, &wk->pokeSelParam, fCantEsc, &wk->pokeSelResult );
       (*seq)++;
     }
@@ -890,17 +905,15 @@ static BOOL selact_SelectChangePokemon( BTL_CLIENT* wk, int* seq )
   case 1:
     if( BTLV_WaitPokeSelect(wk->viewCore) )
     {
-      if( BTL_POKESELECT_IsDone( &wk->pokeSelResult ) )
-      {
-        u8 idx = BTL_POKESELECT_RESULT_GetLast( &wk->pokeSelResult );
-        BTL_Printf("選んだポケidx=%d\n", idx);
-        if( idx < BTL_PARTY_MEMBER_MAX ){
-          BTL_ACTION_SetChangeParam( &wk->actionParam[wk->procPokeIdx], wk->procPokeIdx, idx );
-          SelActProc_Set( wk, selact_CheckFinish );
-          break;
-        }
+      u8 idx = BTL_POKESELECT_RESULT_GetLast( &wk->pokeSelResult );
+      if( idx < BTL_PARTY_MEMBER_MAX ){
+        BTL_N_Printf( DBGSTR_CLIENT_SelectChangePoke, idx);
+        BTL_ACTION_SetChangeParam( &wk->actionParam[wk->procPokeIdx], wk->procPokeIdx, idx );
+        SelActProc_Set( wk, selact_CheckFinish );
+        break;
       }
 
+      BTL_N_Printf( DBGSTR_CLIENT_SelectChangePokeCancel );
       SelActProc_Set( wk, selact_Root );
     }
     break;
@@ -1611,7 +1624,7 @@ static u8 calcPuttablePokemons( BTL_CLIENT* wk, u8* list )
  *
  */
 //--------------------------------------------------------------------------
-static void setup_pokesel_param_change( BTL_CLIENT* wk, u8 mode, u8 numSelect, BTL_POKESELECT_PARAM* param, BTL_POKESELECT_RESULT* result )
+static void setupPokeSelParam( BTL_CLIENT* wk, u8 mode, u8 numSelect, BTL_POKESELECT_PARAM* param, BTL_POKESELECT_RESULT* result )
 {
   BTL_POKESELECT_PARAM_Init( param, wk->myParty, numSelect, mode );
   BTL_POKESELECT_PARAM_SetProhibitFighting( param, wk->numCoverPos );
@@ -1761,7 +1774,7 @@ static BOOL SelectPokemonUI_Core( BTL_CLIENT* wk, int* seq, u8 mode )
         }
 
         BTL_N_Printf( DBGSTR_CLIENT_ChangePokeCmdInfo, wk->myID, numSelect, mode );
-        setup_pokesel_param_change( wk, mode, numSelect, &wk->pokeSelParam, &wk->pokeSelResult );
+        setupPokeSelParam( wk, mode, numSelect, &wk->pokeSelParam, &wk->pokeSelResult );
 
         BTLV_StartPokeSelect( wk->viewCore, &wk->pokeSelParam, FALSE, &wk->pokeSelResult );
         (*seq)++;
