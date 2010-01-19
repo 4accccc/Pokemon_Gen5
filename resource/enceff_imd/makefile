@@ -76,8 +76,11 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ動作させる
 #	@echo $<をコンバート
 	@g3dcvtr $<
 
+endif
 
 mk_list_txt:
+#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
+ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ動作させる
 	-ls data/*.i* > list.txt
 	ruby make_list.rb list.txt data_list
 	$(MAKE) dataconv
@@ -91,7 +94,4 @@ $(targetname).narc: $(TARGET_DATA)
 	@nnsarc -i -cl -l -n $(targetname).narc *.nsb* > arc_result.txt
 #	@-rm -f *.nsb*
 #	@-rm -f *.bin
-else
-mk_list_txt:
-
 endif
