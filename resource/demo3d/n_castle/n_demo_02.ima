@@ -3,7 +3,7 @@
 <ima version="1.6.0">
 
 <head>
-	<create user="james_turner" host="W00212" date="2009-12-21T15:42:09" source="ncastle_f_01.mb"/>
+	<create user="james_turner" host="W00212" date="2010-01-19T11:43:20" source="ncastle_g_03.mb"/>
 	<title>Material Color Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
@@ -11,37 +11,198 @@
 <body>
 
 <mat_color_info
-	frame_size="3301"
-	tool_start_frame="0"
-	tool_end_frame="3300"
+	frame_size="3230"
+	tool_start_frame="1"
+	tool_end_frame="3230"
 	interpolation="frame"
 	compress_material="on" material_size="20 18"
 	frame_step_mode="2"
 	tolerance_color="2"
 />
 
-<mat_color_data size="1654">
-	25 31 0 0 0 0 0 0 0 0
+<mat_color_data size="3235">
+	25 0 0 0 0 0 0 0 0 0
 	0 0 0 0 0 0 0 0 0 0
 	0 0 0 0 0 0 0 0 0 0
 	0 0 0 0 0 0 0 0 0 0
 	0 0 0 0 0 0 0 0 0 0
-	0 1 1 1 1 1 2 2 2 2
-	2 3 3 3 3 3 4 4 4 4
-	4 5 5 5 5 5 6 6 6 6
-	6 7 7 7 7 7 8 8 8 8
-	8 9 9 9 9 9 10 10 10 10
-	10 11 11 11 11 11 12 12 12 12
-	12 13 13 13 13 13 14 14 14 14
-	14 15 15 15 15 15 16 16 16 16
-	16 17 17 17 17 17 18 18 18 18
-	18 19 19 19 19 19 20 20 20 20
-	20 21 21 21 21 21 22 22 22 22
-	22 23 23 23 23 23 24 24 24 24
-	24 25 25 25 25 25 26 26 26 26
-	26 27 27 27 27 27 28 28 28 28
-	28 29 29 29 29 29 30 30 30 30
-	30 31 31 31 31 31 31 31 31 31
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 9 14 14
+	14 14 14 14 14 14 14 14 13 12
+	11 11 10 9 9 8 7 6 6 5
+	4 4 3 2 1 1 0 9 13 10
+	8 5 3 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 5
+	14 10 7 3 0 9 12 9 5 2
+	5 14 11 9 6 4 1 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 9
+	13 12 10 9 7 5 4 2 1 0
+	0 0 14 12 11 9 8 6 5 3
+	2 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	9 13 10 8 5 3 0 0 5 14
+	14 14 14 12 9 7 5 2 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 5 14 11 9 6 4
+	1 5 14 11 9 6 4 1 0 0
+	0 0 5 14 11 9 6 4 1 0
+	0 0 0 0 0 0 0 0 0 0
+	5 14 11 9 6 4 1 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 9 13 10 8
+	5 3 0 9 13 10 8 5 3 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 9 13 10 8 5 3 0 9 13
+	10 8 5 3 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 5 14 11
+	9 6 4 1 5 14 11 9 6 4
+	1 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 5 14 11 9 6 4 1 5 14
+	11 9 6 4 1 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 9 13 10 8
+	5 3 0 9 13 10 8 5 3 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 9 13
+	10 8 5 3 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 5 14 11 9 6 4 1
+	0 0 0 0 0 0 0 9 13 10
+	8 5 3 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 12 16 13 9 6
+	3 0 0 0 0 0 0 0 0 13
+	19 15 11 7 3 0 0 0 0 0
+	0 0 0 0 0 0 0 13 19 15
+	11 7 4 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 5 14 12 10 8 5 3 1 5
+	14 11 9 6 4 1 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 31 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 1 1 1
+	1 2 2 2 2 2 2 3 3 3
+	3 4 4 4 4 4 4 5 5 5
+	5 6 6 6 6 6 6 7 7 7
+	7 8 8 8 8 8 8 9 9 9
+	9 10 10 10 10 10 10 11 11 11
+	11 12 12 12 12 12 12 13 13 13
+	13 14 14 14 14 14 14 15 15 15
+	15 16 16 16 16 16 17 17 17 17
+	17 18 18 18 18 18 19 19 19 19
+	19 20 20 20 20 20 21 21 21 21
+	21 22 22 22 22 22 23 23 23 23
+	23 24 24 24 24 24 25 25 25 25
+	25 26 26 26 26 26 27 27 27 27
+	27 28 28 28 28 28 29 29 29 29
+	29 30 30 30 30 30 31 31 31 31
 	31 31 31 31 31 31 31 31 31 31
 	31 31 31 31 31 31 31 31 31 31
 	31 31 31 31 31 31 31 31 31 31
@@ -183,27 +344,39 @@
 	31 31 31 31 31 31 31 31 31 31
 	31 31 31 31 31 31 31 31 31 31
 	31 31 31 31 31 31 31 31 31 31
-	31 31 31 31 31 31 31 31 31 31
-	31 31 31 31 31 31 31 31 31 31
-	31 31 31 31 31 31 31 31 31 31
-	31 31 31 31
+	31 31 31 31 31
 </mat_color_data>
 
-<mat_color_anm_array size="1">
-	<mat_color_anm index="0" material_name="stormsky">
+<mat_color_anm_array size="2">
+	<mat_color_anm index="0" material_name="fx_lghtng">
 		<diffuse_r frame_step="1" data_size="1" data_head="0"/>
 		<diffuse_g frame_step="1" data_size="1" data_head="0"/>
 		<diffuse_b frame_step="1" data_size="1" data_head="0"/>
 		<ambient_r frame_step="1" data_size="1" data_head="1"/>
 		<ambient_g frame_step="1" data_size="1" data_head="1"/>
 		<ambient_b frame_step="1" data_size="1" data_head="1"/>
-		<specular_r frame_step="1" data_size="1" data_head="2"/>
-		<specular_g frame_step="1" data_size="1" data_head="2"/>
-		<specular_b frame_step="1" data_size="1" data_head="2"/>
-		<emission_r frame_step="1" data_size="1" data_head="2"/>
-		<emission_g frame_step="1" data_size="1" data_head="2"/>
-		<emission_b frame_step="1" data_size="1" data_head="2"/>
-		<polygon_alpha frame_step="2" data_size="1651" data_head="3"/>
+		<specular_r frame_step="1" data_size="1" data_head="1"/>
+		<specular_g frame_step="1" data_size="1" data_head="1"/>
+		<specular_b frame_step="1" data_size="1" data_head="1"/>
+		<emission_r frame_step="1" data_size="1" data_head="1"/>
+		<emission_g frame_step="1" data_size="1" data_head="1"/>
+		<emission_b frame_step="1" data_size="1" data_head="1"/>
+		<polygon_alpha frame_step="2" data_size="1616" data_head="2"/>
+	</mat_color_anm>
+	<mat_color_anm index="1" material_name="stormsky">
+		<diffuse_r frame_step="1" data_size="1" data_head="0"/>
+		<diffuse_g frame_step="1" data_size="1" data_head="0"/>
+		<diffuse_b frame_step="1" data_size="1" data_head="0"/>
+		<ambient_r frame_step="1" data_size="1" data_head="1618"/>
+		<ambient_g frame_step="1" data_size="1" data_head="1618"/>
+		<ambient_b frame_step="1" data_size="1" data_head="1618"/>
+		<specular_r frame_step="1" data_size="1" data_head="1"/>
+		<specular_g frame_step="1" data_size="1" data_head="1"/>
+		<specular_b frame_step="1" data_size="1" data_head="1"/>
+		<emission_r frame_step="1" data_size="1" data_head="1"/>
+		<emission_g frame_step="1" data_size="1" data_head="1"/>
+		<emission_b frame_step="1" data_size="1" data_head="1"/>
+		<polygon_alpha frame_step="2" data_size="1616" data_head="1619"/>
 	</mat_color_anm>
 </mat_color_anm_array>
 
