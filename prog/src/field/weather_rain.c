@@ -2424,6 +2424,11 @@ static void WEATHER_KAZAKAMI_OBJ_Add( WEATHER_TASK* p_wk, int num, u32 heapID )
 	// ユーザワーク取得
 	p_local_wk = WEATHER_TASK_GetWorkData( p_wk );
 
+  if( (p_local_wk->wind_scene_type == KAZAKAMI_WIND_SCENE_NONE) )
+  {
+    return ;
+  }
+
   // 登録率を調整
   if( (p_local_wk->wind_scene_type == KAZAKAMI_WIND_SCENE_WINDRAIN) )
   {
@@ -3042,12 +3047,12 @@ static void WEATHER_PARK_Main( WEATHER_SPARK_WORK* p_wk, WEATHER_TASK* p_sys )
 
     // 次の雷までのwait
     // 最終雷が鳴り終わったら、ウエイト数を変更する
-    // (1/5)にする
+    // (1/2)にする
     if( p_wk->mode == WEATHER_SPARK_MODE_RAIKAMI )
     {
       if( (p_wk->spark_tbl_count+1) == p_wk->spark_tbl_num )
       {
-        p_wk->wait = (p_wk->wait * 1) / 5;
+        p_wk->spark_data[ p_wk->spark_tbl_count ].wait = (p_wk->spark_data[ p_wk->spark_tbl_count ].wait * 1) / 3;
       }
     }
     
