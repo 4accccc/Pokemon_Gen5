@@ -85,7 +85,6 @@ static void MAPCHG_SetUpWfbc( GAMEDATA * gamedata, const LOCATION *loc );
 
 static void MAPCHG_setupFieldSkillMapEff( GAMEDATA * gamedata, const LOCATION *loc_req );
 
-static void setFirstBGM(GAMEDATA * gamedata, u16 zone_id);
 static void AssignGimmickID(GAMEDATA * gamedata, int inZoneID);
 
 static GMEVENT_RESULT EVENT_MapChangeNoFade(GMEVENT * event, int *seq, void*work);
@@ -170,16 +169,25 @@ static GMEVENT_RESULT EVENT_FirstMapIn(GMEVENT * event, int *seq, void *work)
     default:
       GF_ASSERT(0);
     }
-    
-    setFirstBGM(fmw->gamedata, fmw->loc_req.zone_id);
-    
+
     (*seq)++;
     break;
+    
   case 1:
+    {
+      FIELD_SOUND* fsnd = GAMEDATA_GetFieldSound( gamedata );
+      u32 no = FSND_GetFieldBGM( gamedata, fmw->loc_req.zone_id );
+      GMEVENT_CallEvent( event, 
+          EVENT_FSND_ChangeBGM( gsys, no, FSND_FADE_NONE, FSND_FADE_NORMAL ) );
+    }
+    (*seq)++;
+    break;
+
+  case 2:
     GMEVENT_CallEvent(event, EVENT_FieldOpen_FieldProcOnly(gsys));
     (*seq)++;
     break;
-  case 2:
+  case 3:
     fieldmap = GAMESYSTEM_GetFieldMapWork(gsys);
     { // 季節表示の初期設定
       BOOL disp = FALSE;
@@ -223,7 +231,7 @@ static GMEVENT_RESULT EVENT_FirstMapIn(GMEVENT * event, int *seq, void *work)
     }
     (*seq) ++;
     break;
-  case 3:
+  case 4:
     {
       GMEVENT* fade_event;
       FIELD_STATUS* fstatus;
@@ -241,7 +249,7 @@ static GMEVENT_RESULT EVENT_FirstMapIn(GMEVENT * event, int *seq, void *work)
     }
     (*seq) ++;
     break;
-  case 4:
+  case 5:
     fieldmap = GAMESYSTEM_GetFieldMapWork(gsys);
     if(FIELDMAP_GetPlaceNameSys(fieldmap)){
       FIELD_PLACE_NAME_DisplayForce(FIELDMAP_GetPlaceNameSys(fieldmap), fmw->loc_req.zone_id);
@@ -461,9 +469,7 @@ static void UpdateSeason( MAPCHANGE_WORK* work )
   // 遷移先の季節が求められていない
   if( work->next_season == INVALID_SEASON_ID )
   {
-    OBATA_Printf( "==================================\n" );
     OBATA_Printf( "遷移先の季節が求められていません！\n" );
-    OBATA_Printf( "==================================\n" );
     return;
   }
   // ゲームデータ更新
@@ -526,14 +532,9 @@ static GMEVENT_RESULT EVENT_FUNC_MapChangeCore( GMEVENT* event, int* seq, void* 
     (*seq) ++;
     break;
   case 3:
-    // BGMフェードアウト終了待ち
-    {
-      FIELD_SOUND* fsnd = GAMEDATA_GetFieldSound( gamedata );
-      if( FIELD_SOUND_IsBGMFade(fsnd) != TRUE )
-      { 
-        (*seq)++;
-      }
-    }
+    // BGM フェード完了待ち
+    GMEVENT_CallEvent(event, EVENT_FSND_WaitBGMFade(gsys));
+    (*seq) ++;
     break;
   case 4:
     return GMEVENT_RES_FINISH; 
@@ -601,6 +602,8 @@ static GMEVENT_RESULT DEBUG_EVENT_QuickMapChange(GMEVENT * event, int *seq, void
   GAMESYS_WORK  * gsys = mcw->gsys;
   FIELDMAP_WORK * fieldmap = mcw->fieldmap;
   GAMEDATA * gamedata = mcw->gamedata;
+  FIELD_SOUND* fsnd = GAMEDATA_GetFieldSound( gamedata );
+
   switch (*seq) {
   case 0:
     GMEVENT_CallEvent( event, DEBUG_EVENT_QuickFadeOut( gsys, fieldmap ) );
@@ -612,7 +615,8 @@ static GMEVENT_RESULT DEBUG_EVENT_QuickMapChange(GMEVENT * event, int *seq, void
     (*seq)++;
     break;
   case 2:
-    GMEVENT_CallEvent( event, EVENT_FieldSound_ChangeFieldBGM( gsys, mcw->loc_req.zone_id ) );
+    FSND_StandByNextMapBGM( fsnd, gamedata, mcw->before_zone_id, mcw->loc_req.zone_id );
+    FSND_PlayStartBGM( fsnd );
     (*seq)++;
     break;
   case 3:
@@ -643,7 +647,8 @@ static GMEVENT_RESULT EVENT_MapChangeNoFade(GMEVENT * event, int *seq, void*work
   case 1:
     { // BGM更新リクエスト
       FIELD_SOUND* fsnd = GAMEDATA_GetFieldSound( gamedata );
-      FIELD_SOUND_FieldBGMChangeRequest( fsnd, gamedata, mcw->loc_req.zone_id );
+      FSND_StandByNextMapBGM( fsnd, gamedata, mcw->before_zone_id, mcw->loc_req.zone_id );
+      FSND_PlayStartBGM( fsnd );
     }
     (*seq)++;
     break;
@@ -1635,19 +1640,6 @@ static void MAPCHG_releaseMapTools( GAMESYS_WORK * gsys )
 
 }
 
-//--------------------------------------------------------------
-//--------------------------------------------------------------
-static void setFirstBGM(GAMEDATA * gamedata, u16 zone_id)
-{
-  FIELD_SOUND* fsnd = GAMEDATA_GetFieldSound( gamedata );
-  PLAYER_WORK *player = GAMEDATA_GetPlayerWork( gamedata, 0 );
-  PLAYER_MOVE_FORM form = PLAYERWORK_GetMoveForm( player );
-  u32 no = FIELD_SOUND_GetFieldBGM( gamedata, zone_id );
-  OS_Printf("NEXT BGM NO=%d\n",no);
-
-  // ゲーム開始時は BGM フェードイン
-  FIELD_SOUND_BGMChangeRequest( fsnd, no, 0, 60 );
-}
 //============================================================================================
 //============================================================================================
 //--------------------------------------------------------------

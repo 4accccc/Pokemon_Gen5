@@ -69,9 +69,6 @@ typedef struct {
   ///戦闘後処理（ずかん追加画面、進化画面など）呼び出し用のパラメータ
   BTLRET_PARAM        btlret_param;
 
-  ///タイミング用ワーク（主にBGMフェード制御）
-  u16 timeWait;
-
   ///BGMがすでに退避済みか？フラグ
   BOOL bgm_pushed_flag;
 
@@ -260,32 +257,18 @@ static GMEVENT_RESULT fieldBattleEvent(
 
   switch (*seq) {
   case 0:
-    // BGM 退避
-    switch ( FIELD_SOUND_GetBGMPushCount( fsnd ) )
-    {
-    case FSND_PUSHCOUNT_NONE:
-      //通常フィールドBGM階層をPush
-      GMEVENT_CallEvent(event, EVENT_FieldSound_PushBGM( gsys, FSND_FADEOUT_NONE ));
-      break;
-    case FSND_PUSHCOUNT_BASE:
-      //イベントBGM階層なので何もしない（ここにくるまでにPushされている）
-      break;
-    case FSND_PUSHCOUNT_EVENT:
-    case FSND_PUSHCOUNT_OVER:
-      GF_ASSERT_MSG(0, "EventBattle:BGM階層を重ねすぎています！！\n");
-    }
+    // 戦闘用ＢＧＭセット
+    GMEVENT_CallEvent(event, EVENT_FSND_PushPlayBattleBGM(gsys, bew->battle_param->musicDefault));
     bew->bgm_pushed_flag = TRUE;
     (*seq)++;
     break;
   case 1:
-    // 戦闘用ＢＧＭセット
-    PMSND_PlayBGM( bew->battle_param->musicDefault );
     //エンカウントエフェクト
+    ENCEFF_SetEncEff(FIELDMAP_GetEncEffCntPtr(fieldmap), event, bew->EncEffNo);
 /**
     GMEVENT_CallEvent( event,
         EVENT_FieldEncountEffect(gsys,fieldmap) );
 */
-    ENCEFF_SetEncEff(FIELDMAP_GetEncEffCntPtr(fieldmap), event, bew->EncEffNo);
     (*seq)++;
     break;
   case 2:
@@ -316,25 +299,16 @@ static GMEVENT_RESULT fieldBattleEvent(
       FIELD_STATUS_SetProcAction( fldstatus, PROC_ACTION_FIELD );
       COMM_PLAYER_SUPPORT_Init(GAMEDATA_GetCommPlayerSupportPtr(gamedata));
     }
-    bew->timeWait = BATTLE_BGM_FADEOUT_WAIT; // 戦闘ＢＧＭフェードアウト
-    PMSND_FadeOutBGM( BATTLE_BGM_FADEOUT_WAIT );
     (*seq) ++;
     break;
-  case 6:
-    if(bew->timeWait){
-      bew->timeWait--;
-    } else {
-      (*seq) ++;
-    }
-    break;
-  case 7: 
+  case 6: 
     if (bew->bgm_pushed_flag == TRUE) {
-      GMEVENT_CallEvent(event, EVENT_FieldSound_PopBGM(gsys, FSND_FADEOUT_FAST, FSND_FADEIN_NONE));
+      GMEVENT_CallEvent(event, EVENT_FSND_PopBGM(gsys, FSND_FADE_NORMAL, FSND_FADE_NORMAL));
       bew->bgm_pushed_flag = FALSE;
     }
     (*seq) ++;
     break;
-  case 8: 
+  case 7: 
     //戦闘結果反映処理
     BEW_reflectBattleResult( bew, gamedata );
 
@@ -356,12 +330,12 @@ static GMEVENT_RESULT fieldBattleEvent(
     }
     else
     {
-      PMSND_FadeInBGM(BATTLE_BGM_FADEIN_WAIT);
+      //PMSND_FadeInBGM(BATTLE_BGM_FADEIN_WAIT);
       GMEVENT_CallEvent(event, EVENT_FieldOpen(gsys));
     }
     (*seq) ++;
     break;
-  case 9:
+  case 8:
     {
       GMEVENT* fade_event;
       fade_event = EVENT_FieldFadeIn_Black(gsys, fieldmap, FIELD_FADE_WAIT);
@@ -369,7 +343,7 @@ static GMEVENT_RESULT fieldBattleEvent(
     }
     (*seq) ++;
     break;
-  case 10:
+  case 9:
     BEW_Destructor( bew );
     return GMEVENT_RES_FINISH;
   }
@@ -535,7 +509,6 @@ static void BEW_Initialize(BATTLE_EVENT_WORK * bew, GAMESYS_WORK * gsys, BATTLE_
   bew->bgm_pushed_flag = FALSE;
   bew->is_sub_event = FALSE;
   bew->is_no_lose = FALSE;
-  bew->timeWait = 0;
 }
 
 //--------------------------------------------------------------

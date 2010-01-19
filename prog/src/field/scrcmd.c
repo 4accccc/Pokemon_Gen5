@@ -1150,7 +1150,7 @@ static VMCMD_RESULT EvCmdCommonProcFieldEventEnd( VMHANDLE * core, void *wk )
   //サウンド開放忘れ回避
   {
     GMEVENT* event;
-    event = EVENT_FieldSound_AllPopBGM( gsys, FSND_FADEIN_NONE );
+    event = EVENT_FSND_AllPopBGM( gsys, FSND_FADE_NONE );
     SCRIPT_CallEvent( sc, event );
   }
   return VMCMD_RESULT_SUSPEND;

@@ -200,7 +200,7 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
     }
     break;
   case _PLAY_EVENT_BGM: 
-    GMEVENT_CallEvent(event, EVENT_FieldSound_PushPlayEventBGM( gsys, dbw->para->musicDefault ) );
+    GMEVENT_CallEvent(event, EVENT_FSND_PushPlayNextBGM( gsys, dbw->para->musicDefault, FSND_FADE_SHORT, FSND_FADE_NONE ) );
     dbw->push=TRUE;
     (*seq) ++;
     break;
@@ -294,7 +294,7 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
     break;
   case _FIELD_POP_BGM:
     if(dbw->push){
-      GMEVENT_CallEvent(event, EVENT_FieldSound_PopBGM(gsys, FSND_FADEOUT_FAST, FSND_FADEIN_NONE));
+      GMEVENT_CallEvent(event, EVENT_FSND_PopBGM(gsys, FSND_FADE_SHORT, FSND_FADE_NONE));
       dbw->push=FALSE;
     }
     (*seq) ++;

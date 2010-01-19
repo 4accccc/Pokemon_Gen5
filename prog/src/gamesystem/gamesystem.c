@@ -21,7 +21,7 @@
 #include "gamesystem/game_init.h"
 
 #include "src/field/event_gamestart.h"
-#include "src/field/field_sound.h"
+#include "src/field/field_sound_system.h"
 #include "system/net_err.h"
 
 #include "field/zonedata.h"

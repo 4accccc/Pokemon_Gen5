@@ -147,7 +147,7 @@ static GMEVENT_RESULT EVENT_GSyncMain(GMEVENT * event, int *  seq, void * work)
    	PMSND_Init();
     { 
       GMEVENT* sound_event;
-      sound_event = EVENT_FieldSound_ForcePlayBGM( gsys, dbw->PlayBGM );
+      sound_event = EVENT_FSND_ForcePlayBGM( gsys, dbw->PlayBGM );
       GMEVENT_CallEvent( event, sound_event ); 
     }
     (*seq) = _FADEIN_WIFIUTIL;
@@ -170,7 +170,7 @@ static GMEVENT_RESULT EVENT_GSyncMain(GMEVENT * event, int *  seq, void * work)
     break;
   case _FIELD_POP_BGM:
     if(dbw->push){
-      GMEVENT_CallEvent(event, EVENT_FieldSound_PopBGM(gsys, FSND_FADEOUT_FAST, FSND_FADEIN_NONE));
+      GMEVENT_CallEvent(event, EVENT_FSND_PopBGM(gsys, FSND_FADE_SHORT, FSND_FADE_NONE));
       dbw->push=FALSE;
     } 
     (*seq) ++;
@@ -179,7 +179,7 @@ static GMEVENT_RESULT EVENT_GSyncMain(GMEVENT * event, int *  seq, void * work)
     return GMEVENT_RES_FINISH;
     break;
   case _CALL_GAMESYNC:
-    GMEVENT_CallEvent(event, EVENT_FieldSound_PushPlayEventBGM(gsys, SEQ_BGM_GAME_SYNC));
+    GMEVENT_CallEvent(event, EVENT_FSND_PushPlayNextBGM(gsys, SEQ_BGM_GAME_SYNC, FSND_FADE_SHORT, FSND_FADE_NONE));
     dbw->push=TRUE;
     GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(wifi_login), &WiFiLogin_ProcData, &dbw->aLoginWork);
     (*seq)++;
@@ -212,7 +212,7 @@ static GMEVENT_RESULT EVENT_GSyncMain(GMEVENT * event, int *  seq, void * work)
         GX_SetDispSelect(GX_DISP_SELECT_MAIN_SUB);
         (*seq)=_CALL_GAMESYNC_MENU;
         if(dbw->push){
-          GMEVENT_CallEvent(event, EVENT_FieldSound_PopBGM(gsys, FSND_FADEOUT_FAST, FSND_FADEIN_NONE));
+          GMEVENT_CallEvent(event, EVENT_FSND_PopBGM(gsys, FSND_FADE_SHORT, FSND_FADE_NONE));
           dbw->push=FALSE;
         }
       }

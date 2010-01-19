@@ -101,7 +101,7 @@ static GMEVENT_RESULT EVENT_ColosseumBattleMain(GMEVENT * event, int *  seq, voi
     }
     break;
   case 5:
-    GMEVENT_CallEvent(event, EVENT_FieldSound_PushPlayEventBGM(gsys, cbw->para.musicDefault)); 
+    GMEVENT_CallEvent(event, EVENT_FSND_PushPlayNextBGM(gsys, cbw->para.musicDefault, FSND_FADE_SHORT, FSND_FADE_NONE)); 
     GAMESYSTEM_CallProc(gsys, NO_OVERLAY_ID, &BtlProcData, &cbw->para);
 //    GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 1);
     (*seq)++;
@@ -131,7 +131,7 @@ static GMEVENT_RESULT EVENT_ColosseumBattleMain(GMEVENT * event, int *  seq, voi
     (*seq) ++;
     break;
   case 9:
-    GMEVENT_CallEvent(event, EVENT_FieldSound_PopBGM(gsys, FSND_FADEOUT_NONE, FSND_FADEIN_SLOW));
+    GMEVENT_CallEvent(event, EVENT_FSND_PopBGM(gsys, FSND_FADE_SHORT, FSND_FADE_NORMAL));
     (*seq) ++;
     break;
   case 10:

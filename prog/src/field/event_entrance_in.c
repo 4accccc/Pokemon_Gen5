@@ -150,9 +150,9 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeNone(GMEVENT * event, int *s
   {
   case 0:
     { // BGM再生準備
-      GMEVENT* bgmEvent;
-      bgmEvent = EVENT_FieldSound_StandByFieldBGM( gsys, event_work->location.zone_id );
-      GMEVENT_CallEvent( event, bgmEvent );
+      FIELD_SOUND* fsnd = GAMEDATA_GetFieldSound( gamedata );
+      u16 nowZoneID = FIELDMAP_GetZoneID( fieldmap );
+      FSND_StandByNextMapBGM( fsnd, gamedata, nowZoneID, event_work->location.zone_id );
     }
     (*seq)++;
     break;
@@ -226,22 +226,23 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeStep(GMEVENT * event, int *s
       BGM_INFO_SYS* bgm_info = GAMEDATA_GetBGMInfoSys( gamedata );
       PLAYER_WORK* player = GAMEDATA_GetPlayerWork( gamedata, 0 );
       PLAYER_MOVE_FORM form = PLAYERWORK_GetMoveForm( player );
-      u32 bgm_next = FIELD_SOUND_GetFieldBGM( gamedata, event_work->location.zone_id );
+      u32 bgm_next = FSND_GetFieldBGM( gamedata, event_work->location.zone_id );
       u32 bgm_now = PMSND_GetBGMsoundNo();
       u8 iss_type_next = BGM_INFO_GetIssType( bgm_info, bgm_next ); 
       u8 iss_type_now = BGM_INFO_GetIssType( bgm_info, bgm_now ); 
       if( ( iss_type_next == ISS_TYPE_DUNGEON ) &&
           ( iss_type_now == ISS_TYPE_DUNGEON ) )
-      {
-        GMEVENT* sound_event;
-        sound_event = EVENT_FieldSound_FadeOutBGM( gsys, FSND_FADEOUT_FAST );
-        GMEVENT_CallEvent( event, sound_event );
+      { // BGMフェードアウト
+        GMEVENT* fadeOutEvent;
+        FIELD_SOUND* fsnd = GAMEDATA_GetFieldSound( gamedata );
+        fadeOutEvent = EVENT_FSND_FadeOutBGM( gsys, FSND_FADE_SHORT );
+        GMEVENT_CallEvent( event, fadeOutEvent );
       }
       else
-      {
-        GMEVENT* sound_event;
-        sound_event = EVENT_FieldSound_StandByFieldBGM( gsys, event_work->location.zone_id );
-        GMEVENT_CallEvent( event, sound_event );
+      { // BGM再生準備
+        FIELD_SOUND* fsnd = GAMEDATA_GetFieldSound( gamedata );
+        u16 nowZoneID = FIELDMAP_GetZoneID( fieldmap );
+        FSND_StandByNextMapBGM( fsnd, gamedata, nowZoneID, event_work->location.zone_id );
       }
     }
     ++ *seq;

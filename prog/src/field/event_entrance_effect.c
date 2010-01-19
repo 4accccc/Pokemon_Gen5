@@ -122,9 +122,8 @@ static GMEVENT_RESULT ExitEvent_DoorOut(GMEVENT * event, int *seq, void * work)
 
   case SEQ_DOOROUT_BGM_PLAY_START:
     { // BGMÄ¶ŠJŽn
-      GMEVENT* bgmEvent;
-      bgmEvent = EVENT_FieldSound_PlayStartFieldBGM( gsys );
-      GMEVENT_CallEvent( event, bgmEvent );
+      FIELD_SOUND* fieldSound = GAMEDATA_GetFieldSound( gamedata );
+      FSND_PlayStartBGM( fieldSound );
     }
     *seq = SEQ_DOOROUT_FADEIN;
     break;
@@ -293,9 +292,9 @@ static GMEVENT_RESULT ExitEvent_DoorIn(GMEVENT * event, int *seq, void * work)
 
   case SEQ_DOORIN_BGM_STAND_BY:
     { // BGMÄ¶€”õ
-      GMEVENT* bgmEvent;
-      bgmEvent = EVENT_FieldSound_StandByFieldBGM( gsys, fdaw->loc_req.zone_id );
-      GMEVENT_CallEvent( event, bgmEvent );
+      u16 nowZoneID = FIELDMAP_GetZoneID( fieldmap );
+      FIELD_SOUND* fieldSound = GAMEDATA_GetFieldSound( gamedata );
+      FSND_StandByNextMapBGM( fieldSound, gamedata, nowZoneID, fdaw->loc_req.zone_id );
     }
     *seq = SEQ_DOORIN_FADEOUT;
     break;

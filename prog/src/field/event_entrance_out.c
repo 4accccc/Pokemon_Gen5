@@ -157,9 +157,8 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceOut_ExitTypeNone(GMEVENT * event, int *
   {
   case 0:
     { // BGMçƒê∂äJén
-      GMEVENT* bgmEvent;
-      bgmEvent = EVENT_FieldSound_PlayStartFieldBGM( gsys );
-      GMEVENT_CallEvent( event, bgmEvent );
+        FIELD_SOUND* fsnd = GAMEDATA_GetFieldSound( gamedata );
+        FSND_PlayStartBGM( fsnd );
     }
     ++ *seq;
     break;
@@ -264,15 +263,14 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceOut_ExitTypeStep(GMEVENT * event, int *
       u8 iss_type_now = BGM_INFO_GetIssType( bgm_info, bgm_now ); 
       if( iss_type_now == ISS_TYPE_DUNGEON )
       {
-        GMEVENT* sound_event;
-        sound_event = EVENT_FieldSound_FadeInBGM( gsys, FSND_FADEIN_FAST );
-        GMEVENT_CallEvent( event, sound_event );
+        FIELD_SOUND* fsnd = GAMEDATA_GetFieldSound( gamedata );
+        GMEVENT* fadeInEvent = EVENT_FSND_FadeInBGM( gsys, FSND_FADE_SHORT );
+        GMEVENT_CallEvent( event, fadeInEvent );
       }
       else
       {
-        GMEVENT* sound_event;
-        sound_event = EVENT_FieldSound_PlayStartFieldBGM( gsys );
-        GMEVENT_CallEvent( event, sound_event );
+        FIELD_SOUND* fsnd = GAMEDATA_GetFieldSound( gamedata );
+        FSND_PlayStartBGM( fsnd );
       }
     }
     ++ *seq;

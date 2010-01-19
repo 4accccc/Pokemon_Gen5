@@ -1016,7 +1016,7 @@ static GMEVENT_RESULT debugMenuMusicalSelectEvent(
         typedef void (* CHANGE_FUNC)(DEB_MENU_MUS_WORK*);
         CHANGE_FUNC func = (CHANGE_FUNC)ret;
         func(work);
-        GMEVENT_CallEvent(work->gmEvent, EVENT_FieldSound_PushBGM(work->gmSys, FSND_FADEOUT_NONE));
+        GMEVENT_CallEvent(work->gmEvent, EVENT_FSND_PushBGM(work->gmSys, FSND_FADE_NONE));
         (*seq)++;
         return( GMEVENT_RES_CONTINUE );
       }
@@ -1051,7 +1051,7 @@ static GMEVENT_RESULT debugMenuMusicalSelectEvent(
     (*seq)++;
     break;
   case 4:
-    GMEVENT_CallEvent(event, EVENT_FieldSound_PopBGM(work->gmSys, FSND_FADEOUT_NONE, FSND_FADEIN_SLOW));
+    GMEVENT_CallEvent(event, EVENT_FSND_PopBGM(work->gmSys, FSND_FADE_NONE, FSND_FADE_NORMAL));
     (*seq)++;
     break;
   case 5:

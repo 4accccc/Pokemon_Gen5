@@ -71,7 +71,7 @@ VMCMD_RESULT EvCmdBgmPlay( VMHANDLE *core, void *wk )
 
   {
     GMEVENT* event;
-    event = EVENT_FieldSound_PlayEventBGM( gsys, soundIdx );
+    event = EVENT_FSND_ChangeBGM( gsys, soundIdx, FSND_FADE_SHORT, FSND_FADE_NONE );
     SCRIPT_CallEvent( sc, event );
   }
   return VMCMD_RESULT_SUSPEND;
@@ -194,14 +194,17 @@ VMCMD_RESULT EvCmdBgmNowMapPlay( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK*       work = wk;
   GAMESYS_WORK*      gsys = SCRCMD_WORK_GetGameSysWork( work );
+  GAMEDATA*         gdata = GAMESYSTEM_GetGameData( gsys );
   FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
   SCRIPT_WORK*         sc = SCRCMD_WORK_GetScriptWork( work );
 
   {
     GMEVENT* event;
     u16 zoneID;
+    u32 soundIdx;
     zoneID = FIELDMAP_GetZoneID( fieldmap );
-    event = EVENT_FieldSound_PlayFieldBGM( gsys, zoneID );
+    soundIdx = FSND_GetFieldBGM( gdata, zoneID );
+    event = EVENT_FSND_ChangeBGM( gsys, soundIdx, FSND_FADE_SHORT, FSND_FADE_NORMAL );
     SCRIPT_CallEvent( sc, event );
   }
   return VMCMD_RESULT_SUSPEND;
@@ -500,7 +503,7 @@ VMCMD_RESULT EvCmdMePlay(VMHANDLE *core, void *wk )
 
   {
     GMEVENT* event;
-    event = EVENT_FieldSound_PushPlayJingleBGM( gsys, sound_idx );
+    event = EVENT_FSND_PushPlayJingleBGM( gsys, sound_idx );
     SCRIPT_CallEvent( sc, event );
   }
   return VMCMD_RESULT_SUSPEND;
@@ -522,7 +525,7 @@ static BOOL EvWaitMe( VMHANDLE *core, void *wk )
   if( PMSND_CheckPlayBGM() == FALSE )
   {
     GMEVENT* event;
-    event = EVENT_FieldSound_PopBGM( gsys, FSND_FADEOUT_NONE, FSND_FADEIN_FAST );
+    event = EVENT_FSND_PopBGM( gsys, FSND_FADE_NONE, FSND_FADE_SHORT );
     SCRIPT_CallEvent( sc, event );
     return TRUE;
   }

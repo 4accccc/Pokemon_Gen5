@@ -2589,7 +2589,7 @@ static void gjiki_PlayBGM( FIELD_PLAYER_GRID *gjiki )
   GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
   FIELD_SOUND* fsnd = GAMEDATA_GetFieldSound( gdata );
   u32 zone_id = FIELDMAP_GetZoneID( gjiki->fieldWork );
-  FIELD_SOUND_FieldBGMChangeRequest( fsnd, gdata, zone_id );
+  FSND_ChangeBGM_byPlayerFormChange( fsnd, gdata, zone_id );
 }
 
 //--------------------------------------------------------------

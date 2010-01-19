@@ -81,7 +81,7 @@ static GMEVENT_RESULT EVENT_CG_WirelessMain(GMEVENT * event, int *  seq, void * 
     (*seq) = _CALL_CG_WIRELESS_MENU;
     break;
   case _CALL_CG_WIRELESS_MENU:
-    GMEVENT_CallEvent(event, EVENT_FieldSound_PushPlayEventBGM(gsys, SEQ_BGM_GAME_SYNC));
+    GMEVENT_CallEvent(event, EVENT_FSND_PushPlayNextBGM(gsys, SEQ_BGM_GAME_SYNC, FSND_FADE_SHORT, FSND_FADE_NONE));
     dbw->push=TRUE;
     (*seq)++;
     //break throw
@@ -145,7 +145,7 @@ static GMEVENT_RESULT EVENT_CG_WirelessMain(GMEVENT * event, int *  seq, void * 
     break;
   case _POP_BGM:
     if(dbw->push){
-      GMEVENT_CallEvent(event, EVENT_FieldSound_PopBGM(gsys, FSND_FADEOUT_NONE, FSND_FADEIN_SLOW));
+      GMEVENT_CallEvent(event, EVENT_FSND_PopBGM(gsys, FSND_FADE_SHORT, FSND_FADE_NORMAL));
       dbw->push=FALSE;
     }
     (*seq) ++;

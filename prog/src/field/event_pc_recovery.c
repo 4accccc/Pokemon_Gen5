@@ -160,7 +160,7 @@ static GMEVENT_RESULT EVENT_FUNC_PcRecoveryAnime( GMEVENT* event, int* seq, void
         { // MEÄ¶
           GAMESYS_WORK* gsys;
           gsys = FIELDMAP_GetGameSysWork( rw->fieldmap );
-          GMEVENT_CallEvent(event, EVENT_FieldSound_PushPlayJingleBGM(gsys, SEQ_ME_ASA ));
+          GMEVENT_CallEvent(event, EVENT_FSND_PushPlayJingleBGM(gsys, SEQ_ME_ASA ));
         }
         ChangeSequence( rw, seq, SEQ_RECOV_ANIME );
     }
@@ -176,7 +176,7 @@ static GMEVENT_RESULT EVENT_FUNC_PcRecoveryAnime( GMEVENT* event, int* seq, void
     {
       GAMESYS_WORK* gsys;
       gsys = FIELDMAP_GetGameSysWork( rw->fieldmap );
-      GMEVENT_CallEvent(event, EVENT_FieldSound_PopBGM(gsys, FSND_FADEOUT_NONE, FSND_FADEIN_FAST));
+      GMEVENT_CallEvent(event, EVENT_FSND_PopBGM(gsys, FSND_FADE_NONE, FSND_FADE_SHORT));
     }
     ChangeSequence( rw, seq, SEQ_EXIT );
     break;
