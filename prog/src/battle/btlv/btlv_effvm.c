@@ -235,7 +235,7 @@ static  int           EFFVM_GetPokePosition( VMHANDLE *vmh, int pos_flag, BtlvMc
 static  int           EFFVM_GetPosition( VMHANDLE *vmh, int pos_flag );
 static  int           EFFVM_ConvPokePosition( VMHANDLE *vmh, BtlvMcssPos position );
 static  int           EFFVM_ConvPosition( VMHANDLE *vmh, BtlvMcssPos position );
-static  int           EFFVM_RegistPtcNo( BTLV_EFFVM_WORK *bevw, ARCDATID datID );
+static  BOOL          EFFVM_RegistPtcNo( BTLV_EFFVM_WORK *bevw, ARCDATID datID, int* ptc_no );
 static  int           EFFVM_GetPtcNo( BTLV_EFFVM_WORK *bevw, ARCDATID datID );
 static  void          EFFVM_InitEmitterPos( GFL_EMIT_PTR emit );
 static  void          EFFVM_MoveEmitter( GFL_EMIT_PTR emit, unsigned int flag );
@@ -844,32 +844,35 @@ static VMCMD_RESULT VMEC_PARTICLE_LOAD( VMHANDLE *vmh, void *context_work )
   void      *heap;
   void      *resource;
   ARCDATID  datID = ( ARCDATID )VMGetU32( vmh );
-  int       ptc_no = EFFVM_RegistPtcNo( bevw, datID );
+  int       ptc_no;
 
 #ifdef DEBUG_OS_PRINT
   OS_TPrintf("VMEC_PARTICLE_LOAD\n");
 #endif DEBUG_OS_PRINT
 
+  if( EFFVM_RegistPtcNo( bevw, datID, &ptc_no ) == TRUE )
+  { 
 #ifdef PM_DEBUG
-  //デバッグ読み込みの場合は専用のバッファからロードする
-  if( bevw->debug_flag == TRUE )
-  {
-    u32   ofs;
-    u32*  ofs_p;
-
+    //デバッグ読み込みの場合は専用のバッファからロードする
+    if( bevw->debug_flag == TRUE )
+    {
+      u32   ofs;
+      u32*  ofs_p;
+  
+      heap = GFL_HEAP_AllocMemory( bevw->heapID, PARTICLE_LIB_HEAP_SIZE );
+      bevw->ptc[ ptc_no ] = GFL_PTC_Create( heap, PARTICLE_LIB_HEAP_SIZE, FALSE, bevw->heapID );
+      ofs_p = (u32*)&bevw->dpd->adrs[ 0 ];
+      ofs = ofs_p[ BTLV_EFFVM_GetDPDNo( bevw, datID, DPD_TYPE_PARTICLE ) ];
+      resource = (void *)&bevw->dpd->adrs[ ofs ];
+      GFL_PTC_SetResourceEx( bevw->ptc[ ptc_no ], resource, FALSE, GFUser_VIntr_GetTCBSYS() );
+      return bevw->control_mode;
+    }
+#endif
     heap = GFL_HEAP_AllocMemory( bevw->heapID, PARTICLE_LIB_HEAP_SIZE );
     bevw->ptc[ ptc_no ] = GFL_PTC_Create( heap, PARTICLE_LIB_HEAP_SIZE, FALSE, bevw->heapID );
-    ofs_p = (u32*)&bevw->dpd->adrs[ 0 ];
-    ofs = ofs_p[ BTLV_EFFVM_GetDPDNo( bevw, datID, DPD_TYPE_PARTICLE ) ];
-    resource = (void *)&bevw->dpd->adrs[ ofs ];
-    GFL_PTC_SetResourceEx( bevw->ptc[ ptc_no ], resource, FALSE, GFUser_VIntr_GetTCBSYS() );
-    return bevw->control_mode;
+    resource = GFL_PTC_LoadArcResource( ARCID_PTC, datID, bevw->heapID );
+    GFL_PTC_SetResource( bevw->ptc[ ptc_no ], resource, FALSE, GFUser_VIntr_GetTCBSYS() );
   }
-#endif
-  heap = GFL_HEAP_AllocMemory( bevw->heapID, PARTICLE_LIB_HEAP_SIZE );
-  bevw->ptc[ ptc_no ] = GFL_PTC_Create( heap, PARTICLE_LIB_HEAP_SIZE, FALSE, bevw->heapID );
-  resource = GFL_PTC_LoadArcResource( ARCID_PTC, datID, bevw->heapID );
-  GFL_PTC_SetResource( bevw->ptc[ ptc_no ], resource, FALSE, GFUser_VIntr_GetTCBSYS() );
 
   return bevw->control_mode;
 }
@@ -3078,20 +3081,23 @@ static  int   EFFVM_ConvPosition( VMHANDLE *vmh, BtlvMcssPos position )
 /**
  * @brief パーティクルのdatIDを登録
  *
- * @param[in] bevw  エフェクト仮想マシンのワーク構造体へのポインタ
- * @param[in] datID アーカイブdatID
+ * @param[in]   bevw    エフェクト仮想マシンのワーク構造体へのポインタ
+ * @param[in]   datID   アーカイブdatID
+ * @param[out]  ptc_no  datIDを登録したptc_no
  *
- * @retval  登録したptc配列の添え字No
+ * @retval  TRUE：登録した  FALSE:すでに登録していた
  */
 //============================================================================================
-static  int EFFVM_RegistPtcNo( BTLV_EFFVM_WORK *bevw, ARCDATID datID )
+static  BOOL  EFFVM_RegistPtcNo( BTLV_EFFVM_WORK *bevw, ARCDATID datID, int *ptc_no )
 {
   int i;
+  BOOL  ret = TRUE;
 
   for( i = 0 ; i < PARTICLE_GLOBAL_MAX ; i++ )
   {
     if( bevw->ptc_no[ i ] == datID )
     {
+      ret = FALSE;
       break;
     }
   }
@@ -3110,7 +3116,9 @@ static  int EFFVM_RegistPtcNo( BTLV_EFFVM_WORK *bevw, ARCDATID datID )
 
   GF_ASSERT( i != PARTICLE_GLOBAL_MAX );
 
-  return i;
+  *ptc_no = i;
+
+  return ret;
 }
 
 //============================================================================================
