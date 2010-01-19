@@ -86,6 +86,25 @@ typedef enum {
 } WEATHER_TASK_FOG_MODE;
 
 
+//-------------------------------------
+///	3DBGの数
+//=====================================
+typedef enum {
+  WEATHER_TASK_3DBG_FRONT,
+  WEATHER_TASK_3DBG_BACK,
+
+  WEATHER_TASK_3DBG_NUM,
+} WEATHER_TASK_3DBG_TYPE;
+
+//-------------------------------------
+///	3DBGを使うか？
+//=====================================
+typedef enum
+{
+  WEATHER_TASK_3DBG_USE_NONE = 0,
+  WEATHER_TASK_3DBG_USE_FRONT,
+  WEATHER_TASK_3DBG_USE_ALL,
+}WEATHER_TASK_3DBG_USE_TYPE;
 
 //-------------------------------------
 ///	リソース情報
@@ -145,7 +164,7 @@ typedef struct {
 	// BGとOAM共用
 	u16	arc_id;				
 	u16	use_oam;			// OAMを使用するか？ TRUE or FALSE
-	u16	use_bg;			// BGを使用するか？ TRUE or FALSE
+	u16	use_bg;       // BGを使用するか？ WEATHER_TASK_3DBG_USE_TYPE
 	
 	// OAM情報
 	u16 oam_cg;				
@@ -155,13 +174,7 @@ typedef struct {
 	
 	// BG情報
 	// （２つの天気を同時に管理する場合、BGの反映は後勝ち）
-	u16 bg_tex;		// BGTEX
-	u8 texwidth;	// GXTexSizeS
-	u8 texheight;	// GXTexSizeT
-	u8 repeat;		// GXTexRepeat
-	u8 flip;		// GXTexFlip
-	u8 texfmt;		// GXTexFmt
-	u8 texpltt;		// GXTexPlttColor0
+  FIELD_3DBG_WRITE_DATA bg_data[WEATHER_TASK_3DBG_NUM];
 	
 	// ワーク領域サイズ
 	u32 work_byte;
@@ -207,7 +220,7 @@ typedef struct {
 //-------------------------------------
 ///	システム生成・破棄・メイン
 //=====================================
-extern WEATHER_TASK* WEATHER_TASK_Init( GFL_CLUNIT* p_clunit, const FIELD_CAMERA* cp_camera, FIELD_LIGHT* p_light, FIELD_FOG_WORK* p_fog, const FIELD_ZONEFOGLIGHT* cp_zonefog, FIELD_3DBG* p_3dbg, const FIELD_SOUND* cp_sound, u32 heapID );
+extern WEATHER_TASK* WEATHER_TASK_Init( GFL_CLUNIT* p_clunit, const FIELD_CAMERA* cp_camera, FIELD_LIGHT* p_light, FIELD_FOG_WORK* p_fog, const FIELD_ZONEFOGLIGHT* cp_zonefog, FIELD_3DBG** pp_3dbg, const FIELD_SOUND* cp_sound, u32 heapID ); // pp_3dbg　配列数はWEATHER_TASK_3DBG_NUM
 extern void WEATHER_TASK_Exit( WEATHER_TASK* p_wk );
 extern void WEATHER_TASK_Main( WEATHER_TASK* p_wk, u32 heapID );
 
@@ -235,16 +248,19 @@ extern BOOL WEATHER_TASK_LIGHT_IsColorFade( const WEATHER_TASK* cp_wk );
 //-------------------------------------
 ///	3DBG操作
 //=====================================
-extern void WEATHER_TASK_3DBG_SetVisible( WEATHER_TASK* p_wk, BOOL visible );
-extern BOOL WEATHER_TASK_3DBG_GetVisible( const WEATHER_TASK* cp_wk );
-extern void WEATHER_TASK_3DBG_SetAlpha( WEATHER_TASK* p_wk, u8 alpha );
-extern u8 WEATHER_TASK_3DBG_GetAlpha( const WEATHER_TASK* cp_wk );
+extern void WEATHER_TASK_3DBG_SetVisible( WEATHER_TASK* p_wk, BOOL visible, WEATHER_TASK_3DBG_TYPE type );
+extern BOOL WEATHER_TASK_3DBG_GetVisible( const WEATHER_TASK* cp_wk, WEATHER_TASK_3DBG_TYPE type );
+extern void WEATHER_TASK_3DBG_SetAlpha( WEATHER_TASK* p_wk, u8 alpha, WEATHER_TASK_3DBG_TYPE type );
+extern u8 WEATHER_TASK_3DBG_GetAlpha( const WEATHER_TASK* cp_wk, WEATHER_TASK_3DBG_TYPE type );
+extern void WEATHER_TASK_3DBG_SetScaleX( WEATHER_TASK* p_wk, fx32 scale, WEATHER_TASK_3DBG_TYPE type );
+extern void WEATHER_TASK_3DBG_SetScaleY( WEATHER_TASK* p_wk, fx32 scale, WEATHER_TASK_3DBG_TYPE type );
+extern fx32 WEATHER_TASK_3DBG_GetScaleX( const WEATHER_TASK* cp_wk, WEATHER_TASK_3DBG_TYPE type );
+extern fx32 WEATHER_TASK_3DBG_GetScaleY( const WEATHER_TASK* cp_wk, WEATHER_TASK_3DBG_TYPE type );
 
-extern void WEATHER_TASK_3DBG_SetScrollX( WEATHER_TASK* p_wk, s32 x );
-extern void WEATHER_TASK_3DBG_SetScrollY( WEATHER_TASK* p_wk, s32 y );
-extern s32 WEATHER_TASK_3DBG_GetScrollX( const WEATHER_TASK* cp_wk );
-extern s32 WEATHER_TASK_3DBG_GetScrollY( const WEATHER_TASK* cp_wk );
-
+extern void WEATHER_TASK_3DBG_SetScrollX( WEATHER_TASK* p_wk, s32 x, WEATHER_TASK_3DBG_TYPE type );
+extern void WEATHER_TASK_3DBG_SetScrollY( WEATHER_TASK* p_wk, s32 y, WEATHER_TASK_3DBG_TYPE type );
+extern s32 WEATHER_TASK_3DBG_GetScrollX( const WEATHER_TASK* cp_wk, WEATHER_TASK_3DBG_TYPE type );
+extern s32 WEATHER_TASK_3DBG_GetScrollY( const WEATHER_TASK* cp_wk, WEATHER_TASK_3DBG_TYPE type );
 
 //-------------------------------------
 ///	情報の取得
