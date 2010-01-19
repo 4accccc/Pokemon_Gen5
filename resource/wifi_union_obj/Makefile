@@ -81,7 +81,7 @@ DEP_LIST = $(PAL_LST) $(CHR_LST) $(NORMA_LST) $(FRONT_LST)
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 # サフィックスルールを定義することで 依存関係を自動で判断してくれる
-.SUFFIXES: .NCLR .ncl .NCGR .ncg .NSCR .nsc .NCER .nce
+.SUFFIXES: .NCLR .ncl .NCGR .ncg .NSCR .nsc .NCER .nce .xls .cdat
 
 .ncl.NCLR:
 	g2dcvtr $< -pcm
@@ -95,6 +95,9 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 .nce.NCER:
 	g2dcvtr $< -br
 
+.xls.cdat:
+	perl wifi_unionobj_xls_conv.pl $<
+
 endif
 
 .PHONY:	do-build clean subdir
@@ -102,7 +105,7 @@ endif
 #------------------------------------------------------------------------------
 #	make do-build ルール
 #------------------------------------------------------------------------------
-do-build:	subdir $(TARGETDIR)/$(targetname).narc
+do-build:	subdir $(TARGETDIR)/$(targetname).narc $(TARGETDIR)/wifi_unionobj_plt.cdat
 
 subdir:
 	@$(MAKE_SUBDIR)
@@ -111,6 +114,10 @@ subdir:
 $(TARGETDIR)/$(targetname).narc: $(targetname).narc
 	$(COPY) $(targetname).narc $(TARGETDIR)
 	$(COPY) $(targetname).naix $(TARGETDIR) 
+
+# dat　のコピーを実行する
+$(TARGETDIR)/wifi_unionobj_plt.cdat: wifi_unionobj_plt.cdat
+	$(COPY) wifi_unionobj_plt.cdat $(TARGETDIR) 
 
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
@@ -140,10 +147,12 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
 	rm -f *.NCLR
 	rm -f *.narc
 	rm -f *.naix
+	rm -f *.cdat
 	rm -f $(targetname).narc
 	rm -f $(targetname).naix
 endif
 	rm -f $(TARGETDIR)/$(targetname).narc
 	rm -f $(TARGETDIR)/$(targetname).naix
+	rm -f $(TARGETDIR)/wifi_unionobj_plt.cdat
 
 

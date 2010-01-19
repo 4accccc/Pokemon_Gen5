@@ -18,7 +18,7 @@ $EXCEL_CONV_EXE			=	$ENV{"PROJECT_ROOT"}."/tools/exceltool/ExcelSeetConv.exe";
 @XLS_DATA		= ();		#エクセルデータのデータ本体
 
 #生成するデータ名
-$OUTPUTNAME_DATA		= "wifi_unionobj_plt_tbl.cdat";
+$OUTPUTNAME_DATA		= "wifi_unionobj_plt.cdat";
 
 #取得したデータ
 @DATA_PLT   				=	();		#パレットID
@@ -114,7 +114,7 @@ print( FILEOUT "//UNIONOBJは１６キャラクター分を８パレットでまかなっているので\n
 print( FILEOUT "//どのキャラクターがどのパレットを参照しているかを調べるためのテーブルです\n" );
 print( FILEOUT "//テーブルは見た目番号順に並んでいます(my_statusのtrainer_view)\n" );
 $cnt	= 0;
-print( FILEOUT "static const u8 sc_wifi_unionobj_plt_tbl[] =\n" );
+print( FILEOUT "static const u8 sc_wifi_unionobj_plt[] =\n" );
 print( FILEOUT "{\n" );
 
 foreach $plt ( @DATA_PLT )
