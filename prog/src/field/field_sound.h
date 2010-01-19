@@ -18,10 +18,10 @@
 // ■定数
 //================================================================================= 
 // フェード フレーム数
-#define FSND_FADE_NONE   (0)   // 無
-#define FSND_FADE_SHORT  (9)   // 短 
-#define FSND_FADE_NORMAL (30)  // 中
-#define FSND_FADE_LONG   (45)  // 長
+#define FSND_FADE_NONE    (0)  // 無
+#define FSND_FADE_SHORT  (18)  // 短 
+#define FSND_FADE_NORMAL (60)  // 中
+#define FSND_FADE_LONG   (90)  // 長
 
 
 //=================================================================================
