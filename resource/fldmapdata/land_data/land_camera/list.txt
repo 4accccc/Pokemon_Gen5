@@ -274,3 +274,4 @@
 "D12H02.bin"
 "D12H03.bin"
 "tryhouse01.bin"
+"hh03.bin"
