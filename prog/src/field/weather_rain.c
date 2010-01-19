@@ -343,9 +343,8 @@ enum
 
   KAZAKAMI_WIND_SCENE_MAX,
 };
-#define KAZAKAMI_WIND_WINDRAIN_PARCENT  ( 80 )
+#define KAZAKAMI_WIND_WINDRAIN_PARCENT  ( 70 )
 #define KAZAKAMI_RAIN_RAIN_TO_WINDRAIN_PARCENT  ( 80 )
-#define KAZAKAMI_WIND_RAIN_RAIN_TO_WINDRAIN_PARCENT  ( 96 )
 
 #define KAZAKAMI_FIRST_RAIN_TIME  ( 120 )
 
@@ -2469,13 +2468,9 @@ static void WEATHER_KAZAKAMI_OBJ_Add( WEATHER_TASK* p_wk, int num, u32 heapID )
       {
         p_obj_wk->type = KAZAKAMI_OBJ_RAIN;
       }
-      else if( (rand % 100) <= KAZAKAMI_WIND_RAIN_RAIN_TO_WINDRAIN_PARCENT )
-      {
-        p_obj_wk->type = KAZAKAMI_OBJ_WIND_RAIN;
-      }
       else
       {
-        p_obj_wk->type = KAZAKAMI_OBJ_WIND;
+        p_obj_wk->type = KAZAKAMI_OBJ_WIND_RAIN;
       }
       break;
 
