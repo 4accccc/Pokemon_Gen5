@@ -300,6 +300,8 @@ static BOOL scproc_MemberOutForChange( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* outPo
 static BOOL scproc_MemberOutCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* outPoke );
 static void scEvent_MemberOutFixed( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* outPoke );
 static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, REQWAZA_WORK* reqWaza, BTL_ACTION_PARAM* action );
+static BOOL scproc_Fight_CheckDelayWazaSet( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza, BtlPokePos targetPos );
+static BOOL scEvent_CheckDelayWazaSet( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, BtlPokePos targetPos );
 static void scEvent_StartWazaSeq( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, WazaID waza );
 static void scEvent_EndWazaSeq( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, WazaID waza );
 static void scEvent_WazaRob( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* robPoke, const BTL_POKEPARAM* orgAtkPoke, WazaID waza );
@@ -328,6 +330,7 @@ static BOOL scEvent_CheckHit( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker
   const SVFL_WAZAPARAM* wazaParam );
 static void scPut_WazaEffect( BTL_SVFLOW_WORK* wk, WazaID waza, const WAZAEFF_CTRL* effCtrl, u32 que_reserve_pos );
 static BOOL scproc_Fight_TameWazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, const BTL_POKESET* targetRec, WazaID waza );
+static BOOL scproc_Fight_DelayWazaCheck( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, const BTL_POKESET* targetRec, WazaID waza );
 static BOOL scproc_Fight_CheckWazaExecuteFail_1st( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza );
 static BOOL scproc_Fight_CheckWazaExecuteFail_2nd( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza );
 static BOOL scproc_Fight_CheckConf( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker );
@@ -2906,6 +2909,9 @@ static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, REQWAZA_
     // ワザ出し失敗判定２
     if( scproc_Fight_CheckWazaExecuteFail_2nd(wk, attacker, actWaza) ){ break; }
 
+    // 遅延発動ワザの準備処理
+    if( scproc_Fight_CheckDelayWazaSet(wk, attacker, actWaza, actTargetPos) ){ break; }
+
     // ワザ対象をワークに取得
     BTL_POKESET_Clear( &wk->pokesetTarget );
     registerWazaTargets( wk, attacker, actTargetPos, &wk->wazaParam, &wk->pokesetTarget );
@@ -3013,6 +3019,59 @@ static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, REQWAZA_
     scPut_ResetSameWazaCounter( wk, attacker );
   }
 }
+//----------------------------------------------------------------------------------
+/**
+ * 必要なら、遅延発動ワザの準備処理を行う。
+ *
+ * @param   wk
+ * @param   attacker
+ * @param   waza
+ * @param   targetPos
+ *
+ * @retval  BOOL      遅延発動ワザ準備処理を行った場合TRUE
+ */
+//----------------------------------------------------------------------------------
+static BOOL scproc_Fight_CheckDelayWazaSet( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza, BtlPokePos targetPos )
+{
+  u32 hem_state = Hem_PushState( &wk->HEManager );
+  BOOL result = scEvent_CheckDelayWazaSet( wk, attacker, targetPos );
+
+  if( result ){
+    BtlPokePos  atPos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, BPP_GetID(attacker) );
+    SCQUE_PUT_ACT_WazaEffect( wk->que, atPos, targetPos, waza );
+  }
+
+  scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
+  Hem_PopState( &wk->HEManager, hem_state );
+
+  return result;
+}
+//----------------------------------------------------------------------------------
+/**
+ * [Event] 遅延ワザ準備チェック
+ *
+ * @param   wk
+ * @param   attacker
+ * @param   targetPos
+ *
+ * @retval  BOOL
+ */
+//----------------------------------------------------------------------------------
+static BOOL scEvent_CheckDelayWazaSet( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, BtlPokePos targetPos )
+{
+  BOOL result;
+
+  BTL_EVENTVAR_Push();
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEPOS, targetPos );
+    BTL_EVENTVAR_SetRewriteOnceValue( BTL_EVAR_GEN_FLAG, FALSE );
+    BTL_EVENT_CallHandlers( wk, BTL_EVENT_CHECK_DELAY_WAZA );
+    result = BTL_EVENTVAR_GetValue( BTL_EVAR_GEN_FLAG );
+  BTL_EVENTVAR_Pop();
+
+  return result;
+}
+
 //----------------------------------------------------------------------------------
 /**
  * [Event] ワザシーケンス開始
@@ -3981,7 +4040,6 @@ static BOOL scproc_Fight_TameWazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attack
         scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
         Hem_PopState( &wk->HEManager, hem_state );
       }
-
     }
     // @TODO 溜めリリースはもっと前のタイミングじゃないとマズいかも？
     // @TODO フリーフォールの解放が行われないと。
@@ -11730,12 +11788,20 @@ static u8 scproc_HandEx_delayWazaDamage( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_P
   BTL_POKESET_Clear( &wk->pokesetTarget );
   BTL_POKESET_Add( &wk->pokesetTarget, target );
 
-  // @@@単純に死んでるポケモンを除外してるが…ホントはダブルとかだと隣のポケモンに当たったりするハズ
+  // 場にいないポケモンには当たらない（補正なし）
   BTL_POKESET_RemoveDeadPoke( &wk->pokesetTarget );
+  if( BTL_POKESET_IsRemovedAll(&wk->pokesetTarget) ){
+    scPut_WazaFail( wk, attacker, wazaParam.wazaID );
+    return 0;
+  }
 
   // 対象ごとの無効チェック＆回避チェック
   flowsub_checkNotEffect( wk, &wazaParam, attacker, &wk->pokesetTarget );
-//  flowsub_checkWazaAvoid( wk, &wazaParam, attacker, &wk->pokesetTarget );
+  flowsub_checkWazaAvoid( wk, &wazaParam, attacker, &wk->pokesetTarget );
+  // 最初は居たターゲットが残っていない -> 何もせず終了
+  if( BTL_POKESET_IsRemovedAll(&wk->pokesetTarget) ){
+    return 0;
+  }
 
   // ワザエフェクト管理のバックアップを取り、システム初期化
   ctrlBackup = wk->wazaEffCtrl;

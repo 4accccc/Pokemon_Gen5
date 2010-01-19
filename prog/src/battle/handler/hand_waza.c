@@ -6327,7 +6327,7 @@ static void handler_Negaigoto( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
 static const BtlEventHandlerTable*  ADD_Miraiyoti( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_UNCATEGORIZE_WAZA,  handler_Miraiyoti   },  // 未分類ワザ
+    { BTL_EVENT_CHECK_DELAY_WAZA,  handler_Miraiyoti   },  // 未分類ワザ
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -6336,26 +6336,39 @@ static void handler_Miraiyoti( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
-    u8 targetPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_TARGET1 );
-    common_delayAttack( myHandle, flowWk, pokeID, targetPokeID, BTL_STRID_SET_Miraiyoti );
+    BtlPokePos  targetPos = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEPOS );
+    common_delayAttack( myHandle, flowWk, pokeID, targetPos, BTL_STRID_SET_Miraiyoti );
   }
 }
-static void common_delayAttack( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, u8 targetPokeID, u16 strID )
+static void common_delayAttack( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, u8 targetPos, u16 strID )
 {
-  BTL_HANDEX_PARAM_MESSAGE* msg_param;
-  BTL_HANDEX_PARAM_POSEFF_ADD* eff_param;
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
+  {
+    if( BTL_EVENTVAR_RewriteValue(BTL_EVAR_GEN_FLAG, TRUE) )
+    {
+      BTL_HANDEX_PARAM_MESSAGE* msg_param;
+      BTL_HANDEX_PARAM_POSEFF_ADD* eff_param;
 
-  eff_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_POSEFF_ADD, pokeID );
-  eff_param->effect = BTL_POSEFF_DELAY_ATTACK;
-  eff_param->pos = BTL_SVFTOOL_PokeIDtoPokePos( flowWk, targetPokeID );
-  eff_param->param[0] = 1;
-  eff_param->param[1] = BTL_EVENT_FACTOR_GetSubID( myHandle );
-  eff_param->param_cnt = 2;
+      if( targetPos == BTL_POS_NULL )
+      {
+        BtlPokePos myPos = BTL_SVFTOOL_PokeIDtoPokePos( flowWk, pokeID );
+        BtlRule  rule = BTL_SVFTOOL_GetRule( flowWk );
+        targetPos = BTL_MAINUTIL_GetOpponentPokePos( rule, myPos, 0 );
+      }
 
-  msg_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
-  msg_param->header.failSkipFlag = TRUE;
-  HANDEX_STR_Setup( &msg_param->str, BTL_STRTYPE_SET, strID );
-  HANDEX_STR_AddArg( &msg_param->str, pokeID );
+      eff_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_POSEFF_ADD, pokeID );
+      eff_param->effect = BTL_POSEFF_DELAY_ATTACK;
+      eff_param->pos = targetPos;
+      eff_param->param[0] = 1;
+      eff_param->param[1] = BTL_EVENT_FACTOR_GetSubID( myHandle );
+      eff_param->param_cnt = 2;
+
+      msg_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
+      msg_param->header.failSkipFlag = TRUE;
+      HANDEX_STR_Setup( &msg_param->str, BTL_STRTYPE_SET, strID );
+      HANDEX_STR_AddArg( &msg_param->str, pokeID );
+    }
+  }
 }
 //----------------------------------------------------------------------------------
 /**
@@ -6365,7 +6378,7 @@ static void common_delayAttack( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
 static const BtlEventHandlerTable*  ADD_HametuNoNegai( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_UNCATEGORIZE_WAZA,  handler_HametuNoNegai   },  // 未分類ワザ
+    { BTL_EVENT_CHECK_DELAY_WAZA,  handler_HametuNoNegai   },  // 未分類ワザ
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -6374,8 +6387,8 @@ static void handler_HametuNoNegai( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
-    u8 targetPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_TARGET1 );
-    common_delayAttack( myHandle, flowWk, pokeID, targetPokeID, BTL_STRID_SET_HametuNoNegai );
+    BtlPokePos  targetPos = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEPOS );
+    common_delayAttack( myHandle, flowWk, pokeID, targetPos, BTL_STRID_SET_HametuNoNegai );
   }
 }
 //----------------------------------------------------------------------------------

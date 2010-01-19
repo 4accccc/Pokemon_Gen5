@@ -30,6 +30,7 @@ typedef enum {
 
   BTL_EVENT_WAZASEQ_START,          ///< ワザ処理開始
   BTL_EVENT_WAZASEQ_END,            ///< ワザ処理終了
+  BTL_EVENT_CHECK_DELAY_WAZA,       ///< 遅延発動ワザ準備チェック
   BTL_EVENT_WAZASEQ_ROB,            ///< ワザ乗っ取り確定
   BTL_EVENT_WAZASEQ_REFRECT,        ///< ワザ跳ね返し確定
   BTL_EVENT_CHECK_CHANGE,           ///< いれかえチェック
