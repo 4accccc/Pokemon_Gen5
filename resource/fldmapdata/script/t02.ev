@@ -358,7 +358,10 @@ _ANIME_LABEL anm_player_right
 /*			アララギ博士　ポケセン前						*/
 /************************************************************/
 EVENT_START   ev_t02_hakase_guide
-_TALK_OBJ_START()	
+	_TALK_OBJ_START()	
+	
+	//博士BGM開始--[100119斉藤]BGMの再生タイミングをPCに入ってからだったのを話しかけ時に変更
+	_START_EVENT_BGM( SEQ_BGM_E_TSURETEKE2 )
 	
 	//ローカル定義
 	DEFINE_LOCAL	DOOR_ANIME_ID
@@ -394,8 +397,8 @@ _TALK_OBJ_START()
 	_BMODEL_ANIME_WAIT( DOOR_ANIME_ID )
 	_BMODEL_ANIME_DELETE( DOOR_ANIME_ID )
 	
-	//ゾーンチェンジ
-	_MAP_CHANGE( ZONE_ID_T02PC0101, 7, 19, DIR_UP )
+	//[100119斉藤]BGMを保持したままゾーンチェンジ
+	_MAP_CHANGE_BGM_KEEP( ZONE_ID_T02PC0101, 7, 19, DIR_UP )
 
 	//============フラグワーク操作=============//
 

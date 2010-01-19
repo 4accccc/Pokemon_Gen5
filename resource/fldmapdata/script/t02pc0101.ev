@@ -53,9 +53,6 @@ INIT_EVENT_END
 EVENT_START   ev_scene_t02pc0101_hakaseguide_01
 	//ポケセン案内イベント
 	
-	//博士BGM開始
-	_START_EVENT_BGM( SEQ_BGM_E_TSURETEKE2 )
-	
 	//博士：気付く、近づく
 	_OBJ_ANIME( T02PC0101_HAKASE2_01, anm_hakase_tikaduku )
 	_OBJ_ANIME_WAIT()
