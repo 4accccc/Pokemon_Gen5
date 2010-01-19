@@ -93,7 +93,7 @@ foreach $line ( @XLS_DATA )
 #-------------------------------------
 #	デバッグプリント
 #=====================================
-if(1)
+if(0)
 {
 	print( "DEBUG_PRINT_START\n" );
 	for( my $i = 0; $i < $DATA_LENGTH; $i++ )
