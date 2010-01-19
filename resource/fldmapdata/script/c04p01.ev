@@ -137,6 +137,9 @@ EVENT_START	ev_pos_c04p01_boss_01
 	//ÇmÅFçÌèú
 	_OBJ_DEL( C04P01_BOSS_01 )
 	
+	//BGMñﬂÇ∑
+	_END_EVENT_BGM()
+	
 	//========================================//
 	
 	//ÇmîÒï\é¶
