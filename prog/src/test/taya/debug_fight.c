@@ -664,6 +664,13 @@ static GFL_PROC_RESULT DebugFightProcInit( GFL_PROC * proc, int * seq, void * pw
 
   setMainProc( wk, mainProc_Setup );
 
+	// 仮想フィールドBGMスタック設定
+	{
+		PMSND_PlayBGM(SEQ_BGM_R_A_SP);
+		PMSND_PauseBGM(TRUE);
+		PMSND_PushBGM();
+	}
+
   return GFL_PROC_RES_FINISH;
 }
 //--------------------------------------------------------------------------
@@ -675,6 +682,12 @@ static GFL_PROC_RESULT DebugFightProcQuit( GFL_PROC * proc, int * seq, void * pw
 {
   DEBUG_BTL_WORK* wk = mywk;
 
+	// 仮想フィールドBGMスタック復帰
+	{
+		PMSND_StopBGM();
+		PMSND_PopBGM();
+		//PMSND_PauseBGM(FALSE);
+	}
   GFL_HEAP_FreeMemory( wk->ppTmpWork );
   deleteTemporaryModules( wk );
   quitGraphicSystems();
