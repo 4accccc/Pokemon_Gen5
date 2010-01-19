@@ -258,6 +258,10 @@ static int MainSeq_Init( CDEMO_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static int MainSeq_Release( CDEMO_WORK * wk )
 {
+	if( WIPE_SYS_EndCheck() == FALSE ){
+		return CDEMOSEQ_MAIN_RELEASE;
+	}
+
 	CDEMOMAIN_ExitVBlank( wk );
 	GFL_ARC_CloseDataHandle( wk->gra_ah );	
 	CDEMOMAIN_CommDataDelete( wk );
