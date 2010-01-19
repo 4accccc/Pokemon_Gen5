@@ -241,3 +241,5 @@
 "nsbmdfiles/d12_tower_01.nsbmd"
 "nsbmdfiles/c11_untower_01.nsbmd"
 "nsbmdfiles/c11_flag_01.nsbmd"
+"nsbmdfiles/h04_house_01.nsbmd"
+"nsbmdfiles/h04_house_02.nsbmd"

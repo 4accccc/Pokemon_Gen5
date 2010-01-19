@@ -242,4 +242,6 @@ DEP_OUTDOOR	=	\
 	$(RESDIR)/d12_tower_01.nsbmd \
 	$(RESDIR)/c11_untower_01.nsbmd \
 	$(RESDIR)/c11_flag_01.nsbmd \
+	$(RESDIR)/h04_house_01.nsbmd \
+	$(RESDIR)/h04_house_02.nsbmd \
 

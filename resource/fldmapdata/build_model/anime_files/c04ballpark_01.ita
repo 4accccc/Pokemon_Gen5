@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+
+<ita version="1.6.0">
+
+<head>
+	<create user="ibe_mana" host="W00191" date="2010-01-18T15:58:47" source="c04ballpark_01.mb"/>
+	<title>Texture SRT Animation Data for NINTENDO NITRO-System</title>
+	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+</head>
+
+<body>
+
+<tex_srt_info
+	frame_size="90"
+	tool_start_frame="1"
+	tool_end_frame="90"
+	interpolation="frame"
+	tex_matrix_mode="maya"
+	compress_material="on" material_size="7 7"
+	frame_step_mode="1"
+	tolerance_tex_scale="0.100000"
+	tolerance_tex_rotate="0.100000"
+	tolerance_tex_translate="0.010000"
+/>
+
+<tex_scale_data size="1">
+	1.000000
+</tex_scale_data>
+
+<tex_rotate_data size="1">
+	0.000000
+</tex_rotate_data>
+
+<tex_translate_data size="90">
+	0.000000 0.022461 0.044922 0.067383 0.089844 0.112305 0.134766 0.157227 0.179688 0.202148
+	0.224609 0.247070 0.269775 0.292236 0.314697 0.337158 0.359619 0.382080 0.404541 0.427002
+	0.449463 0.471924 0.494385 0.516846 0.539307 0.561768 0.584229 0.606689 0.629150 0.651611
+	0.674072 0.696533 0.718994 0.741455 0.764160 0.786621 0.809082 0.831543 0.854004 0.876465
+	0.898926 0.921387 0.943848 0.966309 0.988770 1.011230 1.033691 1.056152 1.078613 1.101074
+	1.123535 1.145996 1.168457 1.190918 1.213379 1.235840 1.258545 1.281006 1.303467 1.325928
+	1.348389 1.370850 1.393311 1.415771 1.438232 1.460693 1.483154 1.505615 1.528076 1.550537
+	1.572998 1.595459 1.617920 1.640381 1.662842 1.685303 1.707764 1.730225 1.752930 1.775391
+	1.797852 1.820313 1.842773 1.865234 1.887695 1.910156 1.932617 1.955078 1.977539 2.000000
+</tex_translate_data>
+
+<tex_srt_anm_array size="1">
+	<tex_srt_anm index="0" material_name="lambert10">
+		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
+		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
+		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
+		<tex_translate_s frame_step="1" data_size="90" data_head="0"/>
+		<tex_translate_t frame_step="1" data_size="1" data_head="0"/>
+	</tex_srt_anm>
+</tex_srt_anm_array>
+
+</body>
+
+</ita>
