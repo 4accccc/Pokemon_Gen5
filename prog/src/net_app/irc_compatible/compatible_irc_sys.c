@@ -1110,9 +1110,9 @@ void COMPATIBLE_MENU_GetStatusData( const COMPATIBLE_IRC_SYS *cp_sys, COMPATIBLE
 void COMPATIBLE_IRC_GetStatus( const GAMESYS_WORK *cp_gamesys, COMPATIBLE_STATUS *p_status )
 { 
   const PLAYER_WORK *cp_player;
-  OSOwnerInfoEx info;
+  OSOwnerInfo info;
 
-  OS_GetOwnerInfoEx( &info );
+  OS_GetOwnerInfo( &info );
 
   cp_player	= GAMESYSTEM_GetMyPlayerWork( (GAMESYS_WORK *)cp_gamesys );
   MyStatus_CopyNameStrCode( &cp_player->mystatus, p_status->name, IRC_COMPATIBLE_SV_DATA_NAME_LEN );
