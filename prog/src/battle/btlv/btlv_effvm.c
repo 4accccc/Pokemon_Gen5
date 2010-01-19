@@ -233,6 +233,7 @@ static  BOOL  VWF_WAIT_CHECK( VMHANDLE *vmh, void *context_work );
 //非公開関数群
 static  int           EFFVM_GetPokePosition( VMHANDLE *vmh, int pos_flag, BtlvMcssPos* pos );
 static  int           EFFVM_GetPosition( VMHANDLE *vmh, int pos_flag );
+static  int           EFFVM_ConvPokePosition( VMHANDLE *vmh, BtlvMcssPos position );
 static  int           EFFVM_ConvPosition( VMHANDLE *vmh, BtlvMcssPos position );
 static  int           EFFVM_RegistPtcNo( BTLV_EFFVM_WORK *bevw, ARCDATID datID );
 static  int           EFFVM_GetPtcNo( BTLV_EFFVM_WORK *bevw, ARCDATID datID );
@@ -2878,7 +2879,7 @@ static  int   EFFVM_GetPokePosition( VMHANDLE *vmh, int pos_flag, BtlvMcssPos* p
   {
     if( BTLV_EFFECT_CheckExist( pos[ 0 ] ) == TRUE )
     {
-      pos[ 0 ] = EFFVM_ConvPosition( vmh, pos[ 0 ] );
+      pos[ 0 ] = EFFVM_ConvPokePosition( vmh, pos[ 0 ] );
     }
     else
     {
@@ -3025,14 +3026,14 @@ static  int   EFFVM_GetPosition( VMHANDLE *vmh, int pos_flag )
 
 //============================================================================================
 /**
- * @brief 立ち位置情報の変換（反転フラグを見て適切な立ち位置を返す）
+ * @brief 立ち位置情報の変換（反転フラグを見て適切な立ち位置を返す：ポケモン専用）
  *
  * @param[in] vmh       仮想マシン制御構造体へのポインタ
  *
  * @retval  適切な立ち位置
  */
 //============================================================================================
-static  int   EFFVM_ConvPosition( VMHANDLE *vmh, BtlvMcssPos position )
+static  int   EFFVM_ConvPokePosition( VMHANDLE *vmh, BtlvMcssPos position )
 {
   BTLV_EFFVM_WORK *bevw = (BTLV_EFFVM_WORK *)VM_GetContext( vmh );
 
@@ -3050,6 +3051,28 @@ static  int   EFFVM_ConvPosition( VMHANDLE *vmh, BtlvMcssPos position )
 
   return position;
 }
+
+//============================================================================================
+/**
+ * @brief 立ち位置情報の変換（反転フラグを見て適切な立ち位置を返す）
+ *
+ * @param[in] vmh       仮想マシン制御構造体へのポインタ
+ *
+ * @retval  適切な立ち位置
+ */
+//============================================================================================
+static  int   EFFVM_ConvPosition( VMHANDLE *vmh, BtlvMcssPos position )
+{
+  BTLV_EFFVM_WORK *bevw = (BTLV_EFFVM_WORK *)VM_GetContext( vmh );
+
+  if( bevw->position_reverse_flag )
+  {
+    position ^= 1;
+  }
+
+  return position;
+}
+
 
 //============================================================================================
 /**
