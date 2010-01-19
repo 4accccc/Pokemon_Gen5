@@ -3349,6 +3349,9 @@ static BOOL ChangePokeCheck( BPLIST_WORK * wk, u32 pos )
   case BTL_RULE_DOUBLE:   // ダブル
   case BTL_RULE_TRIPLE:   // トリプル
   case BTL_RULE_ROTATION: // ローテーション
+		if( pos == wk->dat->change_sel[0] || pos == wk->dat->change_sel[1] ){
+			return TRUE;
+		}
 		return CheckListRow( wk, pos );
   }
   return FALSE;
