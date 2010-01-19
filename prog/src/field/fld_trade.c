@@ -58,6 +58,8 @@
 #include "system/main.h"  // for HEAPID_PROC
 #include "savedata/zukan_savedata.h"  // for ZUKANSAVE_xxxx
 #include "../../../resource/fld_trade/fld_trade_list.h"  // for FLD_TRADE_POKE_xxxx
+#include "poke_tool/shinka_check.h"
+#include "demo/shinka_demo.h"
 
 FS_EXTERN_OVERLAY(pokemon_trade);
 
@@ -670,14 +672,24 @@ static void FTP_Dump( const FLD_TRADE_POKEDATA* ftp )
 //========================================================================================
 typedef struct 
 {
-  GAMESYS_WORK*                gsys;
+  GAMESYS_WORK*          gameSystem;
+  GAMEDATA*                gameData;
+  POKEPARTY*              pokeParty;  // 手持ちポケパーティ
   u8                        tradeNo;  // 交換データNo.
   u8                       partyPos;  // 交換に出すポケモンの手持ちインデックス
   FLD_TRADE_WORK*         tradeWork;  // 交換ワーク
-  POKEMONTRADE_DEMO_PARAM demoParam;  // デモ パラメータ
+  POKEMONTRADE_DEMO_PARAM tradeDemoParam;  // 交換デモ パラメータ
+  SHINKA_DEMO_PARAM*      shinkaDemoParam;  // 進化デモ パラメータ
 
-  u16 test;  // TEST:
 } FLD_TRADE_EVWORK;
+
+enum{
+  SEQ_INIT,         // イベント初期化
+  SEQ_TRADE,        // 交換デモ
+  SEQ_DATA_UPDATE,  // データ更新
+  SEQ_EVOLUTION,    // 進化デモ
+  SEQ_EXIT,         // イベント終了
+};
 
 //----------------------------------------------------------------------------------------
 /**
@@ -687,72 +699,85 @@ typedef struct
 static GMEVENT_RESULT FieldPokeTradeEvent( GMEVENT* event, int* seq, void* wk )
 {
   FLD_TRADE_EVWORK* work = (FLD_TRADE_EVWORK*)wk;
+  GAMESYS_WORK* gameSystem = work->gameSystem;
+  GAMEDATA* gameData = work->gameData;
+  POKEPARTY* pokeParty = work->pokeParty;
+  FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( gameSystem );
 
   switch( *seq )
   {
-  // 交換ワーク生成
-  case 0:
-#if 1
+  // イベント初期化
+  case SEQ_INIT:
+    // 交換ワーク生成
     {
-      GAMEDATA*         gdata = GAMESYSTEM_GetGameData( work->gsys );
-      FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( work->gsys );
-      u16             zone_id = FIELDMAP_GetZoneID( fieldmap );
+      u16 zoneID = FIELDMAP_GetZoneID( fieldmap );
        
       work->tradeWork = FLD_TRADE_WORK_Create( HEAPID_PROC, work->tradeNo );
       SetPokemonParam( work->tradeWork->p_pp, work->tradeWork->p_pokedata, 
-                       work->tradeNo, zone_id, HEAPID_PROC );
+                       work->tradeNo, zoneID, HEAPID_PROC );
     }
     // DEBUG:
     PP_Dump( work->tradeWork->p_pp );
     FTP_Dump( work->tradeWork->p_pokedata );
-#endif
-    ++(*seq);
+    *seq = SEQ_TRADE;
     break;
   // 交換デモ呼び出し
-  case 1:
-#if 1
+  case SEQ_TRADE:
     {
       GMEVENT* demo;
-      GAMEDATA*         gdata = GAMESYSTEM_GetGameData( work->gsys );
-      POKEPARTY*     my_party = GAMEDATA_GetMyPokemon( gdata );
-      FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( work->gsys );
-      work->demoParam.gamedata     = gdata; 
-      work->demoParam.pMy      = GAMEDATA_GetMyStatus( gdata );
-      work->demoParam.pMyPoke  = PokeParty_GetMemberPointer( my_party, work->partyPos );
-      work->demoParam.pNPC     = work->tradeWork->p_myste;
-      work->demoParam.pNPCPoke = work->tradeWork->p_pp;
-      demo = EVENT_FieldSubProc( work->gsys, fieldmap, 
+      FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( gameSystem );
+      work->tradeDemoParam.gamedata = gameData; 
+      work->tradeDemoParam.pMy      = GAMEDATA_GetMyStatus( gameData );
+      work->tradeDemoParam.pMyPoke  = PokeParty_GetMemberPointer( pokeParty, work->partyPos );
+      work->tradeDemoParam.pNPC     = work->tradeWork->p_myste;
+      work->tradeDemoParam.pNPCPoke = work->tradeWork->p_pp;
+      demo = EVENT_FieldSubProc( gameSystem, fieldmap, 
                                   FS_OVERLAY_ID(pokemon_trade), 
-                                  &PokemonTradeDemoProcData, &work->demoParam );
+                                  &PokemonTradeDemoProcData, &work->tradeDemoParam );
       GMEVENT_CallEvent( event, demo );
     }
-#endif
-    ++(*seq);
+    *seq = SEQ_EVOLUTION;
     break;
   // データ更新
-  case 2:
-#if 1
+  case SEQ_DATA_UPDATE:
     // 手持ちポケ上書き
-    {
-      GAMEDATA*  gdata = GAMESYSTEM_GetGameData( work->gsys );
-      POKEPARTY* party = GAMEDATA_GetMyPokemon( gdata );
-      PokeParty_SetMemberData( party, work->partyPos, work->tradeWork->p_pp );
-    }
+    PokeParty_SetMemberData( pokeParty, work->partyPos, work->tradeWork->p_pp );
     // 図鑑登録
     {
-      GAMEDATA*       gdata = GAMESYSTEM_GetGameData( work->gsys );
-      ZUKAN_SAVEDATA* zukan = GAMEDATA_GetZukanSave( gdata );
+      ZUKAN_SAVEDATA* zukan = GAMEDATA_GetZukanSave( gameData );
       ZUKANSAVE_SetPokeSee( zukan, work->tradeWork->p_pp );  // 見た
       ZUKANSAVE_SetPokeGet( zukan, work->tradeWork->p_pp );  // 捕まえた
     }
-#endif
-    ++(*seq);
+    *seq = SEQ_EXIT;
     break;
-  // 交換ワーク破棄
-  case 3:
-#if 1
+  // 進化デモ呼び出し
+  case SEQ_EVOLUTION:
+    {
+      SHINKA_COND cond;
+      HEAPID heapID = FIELDMAP_GetHeapID( fieldmap );
+      POKEMON_PARAM* pokeParam = PokeParty_GetMemberPointer( pokeParty, work->partyPos );
+      u16 afterMonsNo = SHINKA_Check( pokeParty, pokeParam, SHINKA_TYPE_TUUSHIN, 0, &cond, heapID );
+
+      if( afterMonsNo )
+      {
+        GFL_OVERLAY_Load( FS_OVERLAY_ID(shinka_demo) );
+        work->shinkaDemoParam = SHINKADEMO_AllocParam( 
+            heapID, gameData, pokeParty, afterMonsNo, work->partyPos, cond, TRUE );
+        GFL_PROC_SysCallProc( NO_OVERLAY_ID, &ShinkaDemoProcData, work->shinkaDemoParam );
+      }
+    }
+    *seq = SEQ_EXIT;
+    break;
+  // イベント終了処理
+  case SEQ_EXIT:
+    // 進化デモの後始末
+    if( work->shinkaDemoParam )
+    {
+      SHINKADEMO_FreeParam( work->shinkaDemoParam );
+      GFL_OVERLAY_Unload( FS_OVERLAY_ID(shinka_demo) );
+    }
+    // 交換ワーク破棄
     FLD_TRADE_WORK_Delete( work->tradeWork );
-#endif
     return GMEVENT_RES_FINISH;
   }
   return GMEVENT_RES_CONTINUE;
@@ -773,14 +798,22 @@ GMEVENT* EVENT_FieldPokeTrade( GAMESYS_WORK* gsys, u8 trade_no, u8 party_pos )
 {
   GMEVENT* event;
   FLD_TRADE_EVWORK* work;
+  GAMEDATA* gameData;
+  POKEPARTY* pokeParty;
+
+  gameData = GAMESYSTEM_GetGameData( gsys );
+  pokeParty = GAMEDATA_GetMyPokemon( gameData );
 
   // 生成
   event = GMEVENT_Create( gsys, NULL, FieldPokeTradeEvent, sizeof(FLD_TRADE_EVWORK) );
 
   // 初期化
   work = GMEVENT_GetEventWork( event );
-  work->gsys     = gsys;
-  work->tradeNo  = trade_no;
+  work->gameSystem = gsys;
+  work->gameData = gameData;
+  work->pokeParty = pokeParty;
+  work->tradeNo = trade_no;
   work->partyPos = party_pos; 
+  work->shinkaDemoParam = NULL;
   return event;
 }
