@@ -1131,7 +1131,7 @@ int BTLV_INPUT_CheckInput( BTLV_INPUT_WORK* biw, const GFL_UI_TP_HITTBL* tp_tbl,
   int hit;
 
   //‰º‰æ–Ê•ÏŒ`’†‚Í“ü—Í‚ð–³Ž‹
-  if( biw->tcb_execute_flag )
+  if( ( biw->tcb_execute_flag ) || ( PaletteFadeCheck( BTLV_EFFECT_GetPfd() ) ) )
   {
     return  GFL_UI_TP_HIT_NONE;
   }
@@ -2020,6 +2020,8 @@ static  void  SetupBallGaugeMove( BTLV_INPUT_WORK* biw, BALL_GAUGE_MOVE_DIR dir 
   tbgm->move_dir      = dir;
 
   GFL_TCB_AddTask( biw->tcbsys, TCB_BallGaugeMove, tbgm, 0 );
+
+  biw->tcb_execute_count++;
 }
 
 //============================================================================================
@@ -2077,6 +2079,7 @@ static  void  TCB_BallGaugeMove( GFL_TCB* tcb, void* work )
   }
   if( flag == FALSE )
   {
+    tbgm->biw->tcb_execute_count--;
     GFL_HEAP_FreeMemory( tbgm );
     GFL_TCB_DeleteTask( tcb );
   }
@@ -2091,7 +2094,7 @@ static  void  TCB_Fade( GFL_TCB* tcb, void* work )
 {
   TCB_FADE_ACT* tfa = ( TCB_FADE_ACT* )work;
 
-  if( ( PaletteFadeCheck( BTLV_EFFECT_GetPfd() ) == FALSE ) && ( GFL_FADE_CheckFade() == FALSE ) )
+  if( ( !PaletteFadeCheck( BTLV_EFFECT_GetPfd() ) ) && ( GFL_FADE_CheckFade() == FALSE ) )
   {
     if( tfa->biw->fade_flag == BTLV_INPUT_FADE_OUT )
     {
@@ -2122,6 +2125,7 @@ static  void  TCB_WeatherIconMove( GFL_TCB* tcb, void* work )
 
   if( pos.x == BTLV_INPUT_WEATHER_X2 )
   {
+    twim->biw->tcb_execute_count--;
     GFL_HEAP_FreeMemory( twim );
     GFL_TCB_DeleteTask( tcb );
   }
@@ -2977,6 +2981,8 @@ static  void  BTLV_INPUT_CreateWeatherIcon( BTLV_INPUT_WORK* biw )
     twim->biw = biw;
 
     GFL_TCB_AddTask( biw->tcbsys, TCB_WeatherIconMove, twim, 0 );
+
+    biw->tcb_execute_count++;
   }
 }
 
