@@ -574,7 +574,7 @@
 #define		MONSNO_DENTYURA			( 563 )
 #define		MONSNO_IIGURA				( 564 )
 #define		MONSNO_IIGURAN			( 565 )
-#define		MONSNO_BAHURROO			( 566 )
+#define		MONSNO_BAHHUROO			( 566 )
 #define		MONSNO_TANIKINGU		( 567 )
 #define		MONSNO_KINOTAMA			( 568 )
 #define		MONSNO_KINOBOORU		( 569 )
