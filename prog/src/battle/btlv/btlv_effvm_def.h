@@ -261,21 +261,22 @@
 #define	BTLEFF_OBJ_SCALE_ROUNDTRIP_LONG		    ( EFFTOOL_CALCTYPE_ROUNDTRIP_LONG )
 
 //指定ワーク定義
-#define BTLEFF_WORK_POS_AA_WEIGHT   ( 0 )   ///<POS_AAの体重
-#define BTLEFF_WORK_POS_BB_WEIGHT   ( 1 )   ///<POS_BBの体重
-#define BTLEFF_WORK_POS_A_WEIGHT    ( 2 )   ///<POS_Aの体重
-#define BTLEFF_WORK_POS_B_WEIGHT    ( 3 )   ///<POS_Bの体重
-#define BTLEFF_WORK_POS_C_WEIGHT    ( 4 )  ///<POS_Cの体重
-#define BTLEFF_WORK_POS_D_WEIGHT    ( 5 )  ///<POS_Dの体重
-#define BTLEFF_WORK_POS_E_WEIGHT    ( 6 )  ///<POS_Eの体重
-#define BTLEFF_WORK_POS_F_WEIGHT    ( 7 )  ///<POS_Fの体重
-#define BTLEFF_WORK_WAZA_RANGE      ( 8 )   ///<技の効果範囲
-#define BTLEFF_WORK_TURN_COUNT      ( 9 )   ///< ターンによって異なるエフェクトを出す場合のターン指定。（ex.そらをとぶ）
-#define BTLEFF_WORK_CONTINUE_COUNT  ( 10 )   ///< 連続して出すとエフェクトが異なる場合の連続カウンタ（ex. ころがる）
-#define BTLEFF_WORK_YURE_CNT        ( 11 )   ///<ボールゆれるカウント
-#define BTLEFF_WORK_GET_SUCCESS     ( 12 )   ///<捕獲成功かどうか
-#define BTLEFF_WORK_ITEM_NO         ( 13 )   ///<ボールのアイテムナンバー
-#define BTLEFF_WORK_SEQUENCE_WORK   ( 14 )  ///<汎用ワーク
+#define BTLEFF_WORK_POS_AA_WEIGHT         ( 0 )   ///<POS_AAの体重
+#define BTLEFF_WORK_POS_BB_WEIGHT         ( 1 )   ///<POS_BBの体重
+#define BTLEFF_WORK_POS_A_WEIGHT          ( 2 )   ///<POS_Aの体重
+#define BTLEFF_WORK_POS_B_WEIGHT          ( 3 )   ///<POS_Bの体重
+#define BTLEFF_WORK_POS_C_WEIGHT          ( 4 )   ///<POS_Cの体重
+#define BTLEFF_WORK_POS_D_WEIGHT          ( 5 )   ///<POS_Dの体重
+#define BTLEFF_WORK_POS_E_WEIGHT          ( 6 )   ///<POS_Eの体重
+#define BTLEFF_WORK_POS_F_WEIGHT          ( 7 )   ///<POS_Fの体重
+#define BTLEFF_WORK_WAZA_RANGE            ( 8 )   ///<技の効果範囲
+#define BTLEFF_WORK_TURN_COUNT            ( 9 )   ///< ターンによって異なるエフェクトを出す場合のターン指定。（ex.そらをとぶ）
+#define BTLEFF_WORK_CONTINUE_COUNT        ( 10 )  ///< 連続して出すとエフェクトが異なる場合の連続カウンタ（ex. ころがる）
+#define BTLEFF_WORK_YURE_CNT              ( 11 )  ///<ボールゆれるカウント
+#define BTLEFF_WORK_GET_SUCCESS           ( 12 )  ///<捕獲成功かどうか
+#define BTLEFF_WORK_ITEM_NO               ( 13 )  ///<ボールのアイテムナンバー
+#define BTLEFF_WORK_SEQUENCE_WORK         ( 14 )  ///<汎用ワーク
+#define BTLEFF_WORK_ATTACK_POKEMON_VANISH ( 15 )  ///<攻撃側のポケモンがきえているか
 
 //条件式
 #define BTLEFF_COND_EQUAL       ( 0 )   // ==
@@ -1751,8 +1752,8 @@ ex)
  * @param		value 比較する値
  * @param		adrs  飛び先
  *
- * #param COMBOBOX_TEXT WAZA_RANGE TURN_COUNT CONTINUE_COUNT YURE_CNT GET_SUCCESS ITEM_NO POS_AA_WEIGHT POS_BB_WEIGHT POS_A_WEIGHT POS_B_WEIGHT POS_C_WEIGHT POS_D_WEIGHT POS_E_WEIGHT POS_F_WEIGHT SEQUENCE_WORK
- * #param COMBOBOX_VALUE BTLEFF_WORK_WAZA_RANGE BTLEFF_WORK_TURN_COUNT BTLEFF_WORK_CONTINUE_COUNT BTLEFF_WORK_YURE_CNT BTLEFF_WORK_GET_SUCCESS BTLEFF_WORK_ITEM_NO BTLEFF_WORK_POS_AA_WEIGHT  BTLEFF_WORK_POS_BB_WEIGHT BTLEFF_WORK_POS_A_WEIGHT BTLEFF_WORK_POS_B_WEIGHT BTLEFF_WORK_POS_C_WEIGHT BTLEFF_WORK_POS_D_WEIGHT BTLEFF_WORK_POS_E_WEIGHT BTLEFF_WORK_POS_F_WEIGHT BTLEFF_WORK_SEQUENCE_WORK
+ * #param COMBOBOX_TEXT WAZA_RANGE TURN_COUNT CONTINUE_COUNT YURE_CNT GET_SUCCESS ITEM_NO POS_AA_WEIGHT POS_BB_WEIGHT POS_A_WEIGHT POS_B_WEIGHT POS_C_WEIGHT POS_D_WEIGHT POS_E_WEIGHT POS_F_WEIGHT SEQUENCE_WORK ATTACK_POKEMON_VANISH
+ * #param COMBOBOX_VALUE BTLEFF_WORK_WAZA_RANGE BTLEFF_WORK_TURN_COUNT BTLEFF_WORK_CONTINUE_COUNT BTLEFF_WORK_YURE_CNT BTLEFF_WORK_GET_SUCCESS BTLEFF_WORK_ITEM_NO BTLEFF_WORK_POS_AA_WEIGHT  BTLEFF_WORK_POS_BB_WEIGHT BTLEFF_WORK_POS_A_WEIGHT BTLEFF_WORK_POS_B_WEIGHT BTLEFF_WORK_POS_C_WEIGHT BTLEFF_WORK_POS_D_WEIGHT BTLEFF_WORK_POS_E_WEIGHT BTLEFF_WORK_POS_F_WEIGHT BTLEFF_WORK_SEQUENCE_WORK BTLEFF_WORK_ATTACK_POKEMON_VANISH
  * #param COMBOBOX_TEXT ==  !=  <  >  <=  >=
  * #param COMBOBOX_VALUE  BTLEFF_COND_EQUAL BTLEFF_COND_NOT_EQUAL BTLEFF_COND_MIMAN BTLEFF_COND_KOERU  BTLEFF_COND_IKA BTLEFF_COND_IJOU
  * #param VALUE_INT 比較する値
@@ -1809,20 +1810,24 @@ ex)
 /**
  * @brief	みがわり処理
  *
- * #param_num	2
- * @param sw	ON/OFF
- * @param pos 処理するポジション
+ * #param_num	3
+ * @param sw	  ON/OFF
+ * @param pos   処理するポジション
+ * @param flag  内部で保持するフラグの立ち下げを制御
  *
  * #param COMBOBOX_TEXT ON  OFF
  * #param COMBOBOX_VALUE BTLEFF_MIGAWARI_ON BTLEFF_MIGAWARI_OFF
  * #param	COMBOBOX_TEXT	攻撃側  防御側
  * #param	COMBOBOX_VALUE	BTLEFF_POKEMON_SIDE_ATTACK  BTLEFF_POKEMON_SIDE_DEFENCE
+ * #param	VALUE_INT 0
+ *
  */
 //======================================================================
-	.macro	MIGAWARI	sw, pos
+	.macro	MIGAWARI	sw, pos, flag
   .short  EC_MIGAWARI
 	.long		\sw
 	.long		\pos
+	.long		\flag
 	.endm
 
 //======================================================================

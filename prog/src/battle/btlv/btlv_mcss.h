@@ -43,7 +43,7 @@ typedef enum{
 
   BTLV_MCSS_POS_MAX,
 
-  BTLV_MCSS_POS_TR_AA = BTLV_MCSS_POS_F + 1,
+  BTLV_MCSS_POS_TR_AA = BTLV_MCSS_POS_MAX,
   BTLV_MCSS_POS_TR_BB,
   BTLV_MCSS_POS_TR_A,
   BTLV_MCSS_POS_TR_B,
@@ -71,6 +71,11 @@ typedef enum{
 #define BTLV_MCSS_VANISH_OFF  ( MCSS_VANISH_OFF )
 #define BTLV_MCSS_VANISH_FLIP ( MCSS_VANISH_FLIP )
 
+typedef enum{ 
+  BTLV_MCSS_STATUS_FLAG_MIGAWARI = 0x00000001,    //‚Ý‚ª‚í‚èƒtƒ‰ƒO
+}BTLV_MCSS_STATUS_FLAG;
+
+typedef struct _BTLV_MCSS BTLV_MCSS;
 typedef struct _BTLV_MCSS_WORK BTLV_MCSS_WORK;
 
 typedef struct
@@ -127,7 +132,8 @@ extern  BOOL            BTLV_MCSS_CheckExist( BTLV_MCSS_WORK *bmw, int position 
 extern  void            BTLV_MCSS_SetPaletteFade( BTLV_MCSS_WORK *bmw, int position,
                                                   u8 start_evy, u8 end_evy, u8 wait, u32 rgb );
 extern  u16             BTLV_MCSS_GetWeight( BTLV_MCSS_WORK *bmw, int position );
-extern  void            BTLV_MCSS_SetMigawari( BTLV_MCSS_WORK *bmw, int position, int sw );
+extern  u32             BTLV_MCSS_GetStatusFlag( BTLV_MCSS_WORK *bmw, int position );
+extern  void            BTLV_MCSS_SetMigawari( BTLV_MCSS_WORK *bmw, int position, int sw, BOOL flag );
 
 #ifdef PM_DEBUG
 extern  void            BTLV_MCSS_AddDebug( BTLV_MCSS_WORK *bmw, const MCSS_ADD_DEBUG_WORK *madw, int position );

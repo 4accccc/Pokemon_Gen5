@@ -55,6 +55,7 @@ typedef struct{
   u32               execute_effect_type   :1;     //起動しているエフェクトタイプ（0:技エフェクト　1:戦闘エフェクト）
   u32                                     :25;
   u32               sequence_work;                //シーケンスで使用する汎用ワーク
+
   GFL_TCBSYS*       tcbsys;
   GFL_PTC_PTR       ptc[ PARTICLE_GLOBAL_MAX ];
   int               ptc_no[ PARTICLE_GLOBAL_MAX ];
@@ -63,6 +64,8 @@ typedef struct{
   BtlvMcssPos       defence_pos;
   int               wait;
   VM_CODE*          sequence;
+  VM_CODE*          push_sequence;
+  int               push_table_ofs;
   void*             temp_work[ TEMP_WORK_SIZE ];
   int               temp_work_count;
   HEAPID            heapID;
@@ -518,6 +521,18 @@ void  BTLV_EFFVM_Start( VMHANDLE *vmh, BtlvMcssPos from, BtlvMcssPos to, WazaID 
   }
   else
   {
+    table_ofs = TBL_AA2BB;
+  }
+
+  //みがわりが出ているときに技エフェクトを起動するなら、みがわりを引っ込めるエフェクトを差し込む
+  if( ( bevw->execute_effect_type == EXECUTE_EFF_TYPE_WAZA ) &&
+      ( BTLV_MCSS_GetStatusFlag( BTLV_EFFECT_GetMcssWork(), bevw->attack_pos ) & BTLV_MCSS_STATUS_FLAG_MIGAWARI ) )
+  { 
+    bevw->push_sequence = bevw->sequence;
+    bevw->push_table_ofs = table_ofs;
+    bevw->sequence = GFL_ARC_LoadDataAlloc( ARCID_BATTLEEFF_SEQ, BTLEFF_MIGAWARI_WAZA_BEFORE - BTLEFF_SINGLE_ENCOUNT_1,
+                                            GFL_HEAP_LOWID( bevw->heapID ) );
+    bevw->execute_effect_type = EXECUTE_EFF_TYPE_BATTLE;
     table_ofs = TBL_AA2BB;
   }
 
@@ -2521,9 +2536,10 @@ static VMCMD_RESULT VMEC_MIGAWARI( VMHANDLE *vmh, void *context_work )
   int sw =  ( int )VMGetU32( vmh );
   BtlvMcssPos pos[ BTLV_MCSS_POS_MAX ];
   int pos_cnt =  EFFVM_GetPokePosition( vmh, ( int )VMGetU32( vmh ), pos );
+  int flag =  ( int )VMGetU32( vmh );
 
 #ifdef DEBUG_OS_PRINT
-  OS_TPrintf("VMEC_MIGAWARI:\nvalue:%d\n",value);
+  OS_TPrintf("VMEC_MIGAWARI:\nsw:%d\n",sw);
 #endif DEBUG_OS_PRINT
 
   //立ち位置情報がないときは、コマンド実行しない
@@ -2533,7 +2549,7 @@ static VMCMD_RESULT VMEC_MIGAWARI( VMHANDLE *vmh, void *context_work )
 
     for( i = 0 ; i < pos_cnt ; i++ )
     { 
-      BTLV_MCSS_SetMigawari( BTLV_EFFECT_GetMcssWork(), pos[ i ], sw );
+      BTLV_MCSS_SetMigawari( BTLV_EFFECT_GetMcssWork(), pos[ i ], sw, flag );
     }
   }
 
@@ -2610,6 +2626,42 @@ static VMCMD_RESULT VMEC_SEQ_END( VMHANDLE *vmh, void *context_work )
 
   //SUSPENDモードに切り替えておく
   bevw->control_mode = VMCMD_RESULT_SUSPEND;
+
+  //みがわり引っ込むエフェクト起動していたなら、退避していた技エフェクトを起動
+  if( bevw->push_sequence )
+  { 
+    int* start_ofs;
+
+    GFL_HEAP_FreeMemory( bevw->sequence );
+    bevw->sequence = bevw->push_sequence;
+    bevw->push_sequence = NULL;
+    bevw->execute_effect_type = EXECUTE_EFF_TYPE_WAZA;
+
+    start_ofs = (int *)&bevw->sequence[ bevw->push_table_ofs ];
+
+    //汎用ワークを初期化
+    bevw->sequence_work = 0;
+
+    VM_Start( vmh, &bevw->sequence[ (*start_ofs) ] );
+  }
+  //みがわりが出ているときに技エフェクトを起動していたなら、みがわりを戻すエフェクトを差し込む
+  else if( ( bevw->execute_effect_type == EXECUTE_EFF_TYPE_WAZA ) &&
+           ( BTLV_MCSS_GetStatusFlag( BTLV_EFFECT_GetMcssWork(), bevw->attack_pos ) & BTLV_MCSS_STATUS_FLAG_MIGAWARI ) )
+  { 
+    int* start_ofs;
+
+    GFL_HEAP_FreeMemory( bevw->sequence );
+    bevw->sequence = GFL_ARC_LoadDataAlloc( ARCID_BATTLEEFF_SEQ, BTLEFF_MIGAWARI_WAZA_AFTER - BTLEFF_SINGLE_ENCOUNT_1,
+                                            GFL_HEAP_LOWID( bevw->heapID ) );
+    bevw->execute_effect_type = EXECUTE_EFF_TYPE_BATTLE;
+
+    start_ofs = (int *)&bevw->sequence[ TBL_AA2BB ];
+
+    //汎用ワークを初期化
+    bevw->sequence_work = 0;
+
+    VM_Start( vmh, &bevw->sequence[ (*start_ofs) ] );
+  }
 
   return VMCMD_RESULT_SUSPEND;
 }
@@ -3698,6 +3750,9 @@ static  int  EFFVM_GetWork( BTLV_EFFVM_WORK* bevw, int param )
     break;
   case BTLEFF_WORK_SEQUENCE_WORK:   ///<汎用ワーク
     ret = bevw->sequence_work;
+    break;
+  case BTLEFF_WORK_ATTACK_POKEMON_VANISH:
+    ret = BTLV_MCSS_GetVanishFlag( BTLV_EFFECT_GetMcssWork(), bevw->attack_pos );
     break;
   default:
     //未知のパラメータです
