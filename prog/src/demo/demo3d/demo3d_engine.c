@@ -50,7 +50,7 @@
 #define ICA_BUFF_SIZE (10) ///< ICAカメラの再生で使用するバッファサイズ
 
 //--------------------------------------------------------------
-///	
+///	メインワーク
 //==============================================================
 struct _DEMO3D_ENGINE_WORK {
   // [IN]
@@ -60,14 +60,14 @@ struct _DEMO3D_ENGINE_WORK {
   // [PRIVATE]
   BOOL          is_double;
   VecFx32       def_camera_pos;
-  GFL_TCB*      dbl3DdispVintr;
   fx32          anime_speed;  ///< アニメーションスピード
   ICA_ANIME*    ica_anime;
   GFL_G3D_UTIL* g3d_util;
+  GFL_TCB*      dbl3DdispVintr;
   DEMO3D_CMD_WORK*  cmd;
+
   u16* unit_idx; // unit_idx保持（ALLOC)
 };
-
 
 //=============================================================================
 /**
@@ -116,12 +116,6 @@ DEMO3D_ENGINE_WORK* Demo3D_ENGINE_Init( DEMO3D_GRAPHIC_WORK* graphic, DEMO3D_ID 
   wk->demo_id       = demo_id;
   wk->start_frame   = start_frame;
 
-  if( wk->is_double )
-  {
-    GFL_G3D_DOUBLE3D_Init( heapID );
-    wk->dbl3DdispVintr = GFUser_VIntr_CreateTCB( GFL_G3D_DOUBLE3D_VblankIntrTCB, NULL, 0 );
-  }
-
   // コンバータデータからの初期化
   {
     GFL_G3D_CAMERA* p_camera;
@@ -146,6 +140,13 @@ DEMO3D_ENGINE_WORK* Demo3D_ENGINE_Init( DEMO3D_GRAPHIC_WORK* graphic, DEMO3D_ID 
   
   // 2画面連結フラグを取得
   wk->is_double =  Demo3D_DATA_GetDoubleFlag( demo_id );
+  
+  // 2画面連結設定初期化
+  if( wk->is_double )
+  {
+    GFL_G3D_DOUBLE3D_Init( heapID );
+    wk->dbl3DdispVintr = GFUser_VIntr_CreateTCB( GFL_G3D_DOUBLE3D_VblankIntrTCB, NULL, 0 );
+  }
   
   wk->cmd = Demo3D_CMD_Init( demo_id, start_frame, heapID );
 
@@ -357,5 +358,6 @@ fx32 DEMO3D_ENGINE_GetNowFrame( DEMO3D_ENGINE_WORK* wk )
 
   return ICA_ANIME_GetNowFrame( wk->ica_anime );
 }
+
 
 

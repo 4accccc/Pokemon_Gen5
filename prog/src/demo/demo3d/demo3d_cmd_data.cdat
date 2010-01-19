@@ -34,6 +34,7 @@ static const DEMO3D_CMD_DATA demo3d_cmd01_end_data[] =
 static const DEMO3D_CMD_DATA demo3d_cmd02_data[] = 
 { 
 #if 0
+
   { DEMO3D_CMD_TYPE_BRIGHTNESS_REQ, 10, { 4, 16, 0 }, },
   { DEMO3D_CMD_TYPE_BRIGHTNESS_REQ, 15, { 4, 0, 16 }, },
   
@@ -42,6 +43,9 @@ static const DEMO3D_CMD_DATA demo3d_cmd02_data[] =
   
   { DEMO3D_CMD_TYPE_BRIGHTNESS_REQ, 120, { 4, 16, 0 }, },
   { DEMO3D_CMD_TYPE_BRIGHTNESS_REQ, 125, { 4, 0, 16 }, },
+  
+  { DEMO3D_CMD_TYPE_MOTIONBL_START, 150, {5,13} },
+  { DEMO3D_CMD_TYPE_MOTIONBL_END, 400, },
 #endif
   {  DEMO3D_CMD_TYPE_END, 0, { 0 } },
 };

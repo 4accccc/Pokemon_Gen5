@@ -113,11 +113,13 @@ static const GFL_G3D_UTIL_RES res_n_castle_unit03[] = {
 	{ ARCID_DEMO3D_GRA, NARC_demo3d_n_demo_03_nsbmd, GFL_G3D_UTIL_RESARC },
 	{ ARCID_DEMO3D_GRA, NARC_demo3d_n_demo_03_nsbca, GFL_G3D_UTIL_RESARC },
 	{ ARCID_DEMO3D_GRA, NARC_demo3d_n_demo_03_nsbma, GFL_G3D_UTIL_RESARC },
+	{ ARCID_DEMO3D_GRA, NARC_demo3d_n_demo_03_nsbta, GFL_G3D_UTIL_RESARC },
 };
 //ANM
 static const GFL_G3D_UTIL_ANM anm_n_castle_unit03[] = {
 	{ 1, 0 },
 	{ 2, 0 },
+	{ 3, 0 },
 };
 //OBJ
 static const GFL_G3D_UTIL_OBJ obj_n_castle_unit03[] = {

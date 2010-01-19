@@ -23,6 +23,7 @@
 #include "arc_def.h"
 
 #include "demo3d_graphic.h"
+#include "demo3d_mb.h" 
 
 //データ
 #include "demo3d_data.h"
@@ -46,6 +47,17 @@ enum
  *								構造体定義
  */
 //=============================================================================
+
+//--------------------------------------------------------------
+///	コマンドに渡すパラメータ
+//==============================================================
+typedef struct {
+  // [IN]
+  DEMO3D_CMD_WORK* mwk;
+  // [PRIVATE]
+  // いまのところなし
+} CMD_UNIT;
+
 //--------------------------------------------------------------
 ///	コマンドワーク
 //==============================================================
@@ -57,6 +69,9 @@ struct _DEMO3D_CMD_WORK {
   BOOL  is_cmd_end;
   int pre_frame; ///< 1sync=1
   int cmd_idx;
+  DEMO3D_MBL_WORK* mb;
+  GFL_TCBSYS*   tcbsys;
+  void*         tcbsys_work;
 };
 
 //=============================================================================
@@ -64,12 +79,14 @@ struct _DEMO3D_CMD_WORK {
  *							プロトタイプ宣言
  */
 //=============================================================================
-static BOOL cmd_setup( DEMO3D_ID id, u32 now_frame, int* out_idx );
-static void cmd_exec( const DEMO3D_CMD_DATA* data );
+static BOOL cmd_setup( DEMO3D_CMD_WORK* mwk, DEMO3D_ID id, u32 now_frame, int* out_idx );
+static void cmd_exec( DEMO3D_CMD_WORK* mwk, const DEMO3D_CMD_DATA* data );
 
-static void CMD_SE(int* param);
-static void CMD_SE_STOP(int* param);
-static void CMD_BRIGHTNESS_REQ(int* param);
+static void CMD_SE(CMD_UNIT* unit, int* param);
+static void CMD_SE_STOP(CMD_UNIT* unit, int* param);
+static void CMD_BRIGHTNESS_REQ(CMD_UNIT* unit, int* param);
+static void CMD_MOTIONBL_START(CMD_UNIT* unit, int* param);
+static void CMD_MOTIONBL_END(CMD_UNIT* unit, int* param);
 
 // DEMO3D_CMD_TYPE と対応
 //--------------------------------------------------------------
@@ -81,6 +98,8 @@ static void (*c_cmdtbl[ DEMO3D_CMD_TYPE_MAX ])() =
   CMD_SE,
   CMD_SE_STOP,
   CMD_BRIGHTNESS_REQ,
+  CMD_MOTIONBL_START,
+  CMD_MOTIONBL_END,
   NULL, // end
 };
 
@@ -95,7 +114,7 @@ static void (*c_cmdtbl[ DEMO3D_CMD_TYPE_MAX ])() =
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static void CMD_SE(int* param)
+static void CMD_SE(CMD_UNIT* unit, int* param)
 {
   int player_no;
 
@@ -126,7 +145,7 @@ static void CMD_SE(int* param)
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static void CMD_SE_STOP(int* param)
+static void CMD_SE_STOP(CMD_UNIT* unit, int* param)
 {
   int player_no;
 
@@ -146,9 +165,42 @@ static void CMD_SE_STOP(int* param)
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static void CMD_BRIGHTNESS_REQ(int* param)
+static void CMD_BRIGHTNESS_REQ(CMD_UNIT* unit, int* param)
 {
   ChangeBrightnessRequest( param[0], param[1], param[2], (PLANEMASK_BG0|PLANEMASK_BG1|PLANEMASK_BG2|PLANEMASK_BG3|PLANEMASK_OBJ), MASK_MAIN_DISPLAY );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  モーションブラー 開始
+ *
+ *	@param	unit
+ *	@param	param[0] モーションブラー係数 新しくブレンドする絵
+ *	@param	param[1] モーションブラー係数 既にバッファされている絵
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void CMD_MOTIONBL_START(CMD_UNIT* unit, int* param)
+{
+  GF_ASSERT( unit->mwk->mb == NULL );
+
+	unit->mwk->mb = DEMO3D_MotionBlInit( unit->mwk->tcbsys, param[0], param[1] );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  モーションブラー 停止
+ *
+ *	@param	unit
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void CMD_MOTIONBL_END(CMD_UNIT* unit, int* param)
+{
+  DEMO3D_MotionBlExit( unit->mwk->mb );
+  unit->mwk->mb = NULL;
 }
 
 //=============================================================================
@@ -173,12 +225,16 @@ DEMO3D_CMD_WORK* Demo3D_CMD_Init( DEMO3D_ID demo_id, u32 start_frame, HEAPID hea
   DEMO3D_CMD_WORK* wk;
 
   // メインワーク アロケーション
-  wk = GFL_HEAP_AllocClearMemory(  heap_id, sizeof( DEMO3D_CMD_WORK ) );
+  wk = GFL_HEAP_AllocClearMemory( heap_id, sizeof( DEMO3D_CMD_WORK ) );
+
+  // TCB初期化
+  wk->tcbsys_work = GFL_HEAP_AllocClearMemory( heap_id, GFL_TCB_CalcSystemWorkSize(5) );
+  wk->tcbsys = GFL_TCB_Init( 5, wk->tcbsys_work );
 
   // メンバ初期化
   wk->heap_id = heap_id;
   wk->demo_id = demo_id;
-  wk->is_cmd_end = cmd_setup( demo_id, start_frame, &wk->cmd_idx );
+  wk->is_cmd_end = cmd_setup( wk, demo_id, start_frame, &wk->cmd_idx );
   wk->pre_frame = -1;
 
   return wk;
@@ -198,6 +254,10 @@ void Demo3D_CMD_Exit( DEMO3D_CMD_WORK* wk )
   const DEMO3D_CMD_DATA* data;
   int i;
   
+  // TCB削除
+  GFL_TCB_Exit( wk->tcbsys );
+  GFL_HEAP_FreeMemory( wk->tcbsys_work );
+  
   data  = Demo3D_DATA_GetEndCmdData( wk->demo_id );
 
   // 終了コマンドを実行
@@ -209,7 +269,7 @@ void Demo3D_CMD_Exit( DEMO3D_CMD_WORK* wk )
     }
     else
     {
-      cmd_exec( data );
+      cmd_exec( wk, data );
       data++;
     }
   }
@@ -237,6 +297,9 @@ void Demo3D_CMD_Main( DEMO3D_CMD_WORK* wk, fx32 now_frame )
   {
     return;
   }
+
+  // TCB主処理
+  GFL_TCB_Main( wk->tcbsys );
   
   data  = Demo3D_DATA_GetCmdData( wk->demo_id );
 
@@ -254,10 +317,12 @@ void Demo3D_CMD_Main( DEMO3D_CMD_WORK* wk, fx32 now_frame )
     for( i=0; i<CMD_ELEM_MAX; i++ )
     {
       // 実行
-      cmd_exec( data );
+      cmd_exec( wk, data );
       // 次のコマンドがENDならフラグを立てる
       data++;
       wk->is_cmd_end = ( data->type == DEMO3D_CMD_TYPE_END );
+
+      //@TODO TCBが残っていたらアサート
      
       wk->cmd_idx++;
 
@@ -289,7 +354,7 @@ void Demo3D_CMD_Main( DEMO3D_CMD_WORK* wk, fx32 now_frame )
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static BOOL cmd_setup( DEMO3D_ID id, u32 now_frame, int* out_idx )
+static BOOL cmd_setup( DEMO3D_CMD_WORK* mwk, DEMO3D_ID id, u32 now_frame, int* out_idx )
 {
   int i;
   const DEMO3D_CMD_DATA* data;
@@ -308,7 +373,7 @@ static BOOL cmd_setup( DEMO3D_ID id, u32 now_frame, int* out_idx )
     //  初期化パラメータを実行
     else if( data[i].frame == DEMO3D_CMD_SYNC_INIT )
     {
-      cmd_exec( &data[i] );
+      cmd_exec( mwk, &data[i] );
     }
     else if( data[i].frame >= now_frame )
     {
@@ -331,8 +396,10 @@ static BOOL cmd_setup( DEMO3D_ID id, u32 now_frame, int* out_idx )
  *	@retval 
  */
 //-----------------------------------------------------------------------------
-static void cmd_exec( const DEMO3D_CMD_DATA* data )
+static void cmd_exec( DEMO3D_CMD_WORK* mwk, const DEMO3D_CMD_DATA* data )
 {
+  CMD_UNIT unit = {0};
+
   GF_ASSERT( data->type != DEMO3D_CMD_TYPE_NULL );
   GF_ASSERT( data->type < DEMO3D_CMD_TYPE_END );
       
@@ -342,6 +409,10 @@ static void cmd_exec( const DEMO3D_CMD_DATA* data )
       data->param[2],
       data->param[3]
       );
-  
-  c_cmdtbl[ data->type ]( data->param );
+
+  unit.mwk = mwk;
+
+  c_cmdtbl[ data->type ]( &unit, data->param );
 }
+
+
