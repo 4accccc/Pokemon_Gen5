@@ -3822,7 +3822,8 @@ static  void  TCB_EFFVM_SEPLAY( GFL_TCB* tcb, void* work )
 { 
   BTLV_EFFVM_SEPLAY*  bes = ( BTLV_EFFVM_SEPLAY* )work;
 
-  if( --bes->wait == 0 )
+  //シーケンス終了しているなら、強制的に終了
+  if( ( --bes->wait == 0 ) || ( bes->bevw->sequence == NULL ) )
   { 
     bes->bevw->se_play_wait_flag = 0;
     EFFVM_SePlay( bes->se_no, bes->player, bes->pitch, bes->vol, bes->mod_depth, bes->mod_speed );
@@ -3840,6 +3841,15 @@ static  void  TCB_EFFVM_SEEFFECT( GFL_TCB* tcb, void* work )
 { 
   BTLV_EFFVM_SEEFFECT*  bes = ( BTLV_EFFVM_SEEFFECT* )work;
   BOOL  flag = FALSE;
+
+  //シーケンス終了しているなら、強制的に終了
+  if( bes->bevw->sequence == NULL )
+  { 
+    bes->bevw->se_effect_enable_flag = 0;
+    GFL_HEAP_FreeMemory( bes );
+    GFL_TCB_DeleteTask( tcb );
+    return;
+  }
 
   if( bes->start_wait )
   { 
