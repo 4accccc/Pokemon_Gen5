@@ -850,7 +850,7 @@ static int _playerDirectBattleGO3( WIFIP2PMATCH_WORK *wk, int seq )
     command = WIFIP2PMATCH_PLAYERDIRECT_BATTLE_FAILED;
     GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), CNM_WFP2PMF_DIRECT_COMMAND,
                      1, &command);
-    WifiP2PMatchMessagePrint(wk, msg_wifilobby_100, FALSE);
+    WifiP2PMatchMessagePrint(wk, msg_wifilobby_1010, FALSE);
     _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_WAIT);
   }
   EndMessageWindowOff(wk);
@@ -1008,6 +1008,7 @@ static int _playerDirectBattleStart4( WIFIP2PMATCH_WORK *wk, int seq )
     GFL_NET_HANDLE_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_POKEPARTY_END);
       _CHANGESTATE(wk, WIFIP2PMATCH_PLAYERDIRECT_BATTLE_START5);
   }
+  return seq;
 }
 //------------------------------------------------------------------
 /**
@@ -1023,6 +1024,7 @@ static int _playerDirectBattleStart5( WIFIP2PMATCH_WORK *wk, int seq )
   if(GFL_NET_HANDLE_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(), _TIMING_POKEPARTY_END)){
     _CHANGESTATE(wk, WIFIP2PMATCH_PLAYERDIRECT_BATTLE_START6);
   }
+  return seq;
 }
 
 //------------------------------------------------------------------
@@ -1066,6 +1068,95 @@ static int _playerDirectBattleStart6( WIFIP2PMATCH_WORK *wk, int seq )
 
 
 
+
+
+
+
+
+//------------------------------------------------------------------
+/**
+ * @brief   子機が遊ぶのかどうか意思選択  WIFIP2PMATCH_PLAYERDIRECT_BATTLE_FAILED
+ * @param   wk
+ * @retval  none
+ */
+//------------------------------------------------------------------
+
+static int _playerDirectFailed( WIFIP2PMATCH_WORK *wk, int seq )
+{
+  int gmmno,gmmidx;
+  u16 friendNo,status,gamemode;
+  WIFI_STATUS* p_status;
+  MCR_MOVEOBJ* p_player;
+  MCR_MOVEOBJ* p_npc;
+  u32 way;
+
+  if( !PRINTSYS_QUE_IsFinished(wk->SysMsgQue) ){
+    return seq;
+  }
+
+  if(!GFL_NET_IsParentMachine()){
+    _friendNameExpand(wk,  wk->friendNo - 1);
+    WifiP2PMatchMessagePrint(wk, msg_wifilobby_1011, FALSE);
+    _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_BATTLE_FAILED2);
+  }
+  else{
+    _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_WAIT);
+  }
+  return seq;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief   子機が遊ぶのかどうか意思選択 WIFIP2PMATCH_PLAYERDIRECT_BATTLE_FAILED2
+ * @param   wk
+ * @retval  none
+ */
+//------------------------------------------------------------------
+
+static int _playerDirectFailed2( WIFIP2PMATCH_WORK *wk, int seq )
+{
+  if( !PRINTSYS_QUE_IsFinished(wk->SysMsgQue) ){
+    return seq;
+  }
+
+  _yenowinCreateM2(wk);
+
+  _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_BATTLE_FAILED3);
+  return seq;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief   子機が遊ぶのかどうか意思選択 WIFIP2PMATCH_PLAYERDIRECT_BATTLE_FAILED3
+ * @param   wk
+ * @retval  none
+ */
+//------------------------------------------------------------------
+
+static int _playerDirectFailed3( WIFIP2PMATCH_WORK *wk, int seq )
+{
+  int ret = BmpMenu_YesNoSelectMain(wk->pYesNoWork);
+  u8 command;
+
+  if(ret == BMPMENU_NULL){  // まだ選択中
+    return seq;
+  }
+  else if(ret == 0){ // はいを選択した場合
+    command = WIFIP2PMATCH_PLAYERDIRECT_INIT5;
+    GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), CNM_WFP2PMF_DIRECT_COMMAND,
+                     1, &command);
+  }
+  else{  // いいえを選択した場合
+    command = WIFIP2PMATCH_PLAYERDIRECT_END;
+    GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), CNM_WFP2PMF_DIRECT_COMMAND,
+                     1, &command);
+  }
+  EndMessageWindowOff(wk);
+  _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_WAIT);
+  return seq;
+}
+
+
 //------------------------------------------------------------------
 /**
  * @brief   指定モード終了 WIFIP2PMATCH_PLAYERDIRECT_WAIT
@@ -1096,4 +1187,6 @@ static int _playerDirectEnd( WIFIP2PMATCH_WORK *wk, int seq )
   _CHANGESTATE(wk,WIFIP2PMATCH_MODE_DISCONNECT);
   return seq;
 }
+
+
 

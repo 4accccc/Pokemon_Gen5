@@ -8,6 +8,7 @@
 //============================================================================================
 
 #include <gflib.h>
+#include "pm_define.h"
 #include "net/network_define.h"
 
 #include "gamesystem/game_event.h"
@@ -75,6 +76,7 @@ typedef struct{
   GAMESYS_WORK * gsys;
   WIFILOGIN_PARAM     login;
   BATTLE_SETUP_PARAM para;
+  POKEPARTY* pPokeParty;   //バトルに渡すPokeParty
   int seq;
   u16* ret;
   u8 bSingle;
@@ -142,7 +144,7 @@ NextMatchKindTbl aNextMatchKindTbl[] = {
 };
 
 
-static void _battleSetting(EVENT_WIFICLUB_WORK* pClub,int gamemode)
+static void _battleSetting(EVENT_WIFICLUB_WORK* pClub,EV_P2PEVENT_WORK * ep2p,int gamemode)
 {
   GAMEDATA* gamedata = GAMESYSTEM_GetGameData(pClub->gsys);
   
@@ -165,8 +167,13 @@ static void _battleSetting(EVENT_WIFICLUB_WORK* pClub,int gamemode)
     BTL_SETUP_Rotation_Comm( &pClub->para , gamedata , GFL_NET_HANDLE_GetCurrentHandle() , BTL_COMM_DS, HEAPID_PROC );
     break;
   }
+  BATTLE_PARAM_SetPokeParty( &pClub->para, ep2p->pPokeParty, BTL_CLIENT_PLAYER );
+
 }
 
+//==============================================================================
+//  WIFIクラブからポケモンリスト用ワーク作成
+//==============================================================================
 
 static void _pokeListWorkMake(EV_P2PEVENT_WORK * ep2p,GAMEDATA* pGameData,u32 gamemode)
 {
@@ -203,6 +210,27 @@ static void _pokeListWorkMake(EV_P2PEVENT_WORK * ep2p,GAMEDATA* pGameData,u32 ga
   case WIFI_GAME_BATTLE_ROTATION_FLAT:
     plist->type = PL_TYPE_ROTATION;
     break;
+  }
+}
+
+//==============================================================================
+//  ポケモンリストからバトル用ポケパーティー作成
+//==============================================================================
+static void _pokeListWorkOut(EV_P2PEVENT_WORK * ep2p,GAMEDATA* pGameData,u32 gamemode)
+{
+  int entry_no;
+  int my_net_id = GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
+  PLIST_DATA* plist = &ep2p->PokeList;
+  MYSTATUS* pTarget = GAMEDATA_GetMyStatusPlayer(pGameData,1-my_net_id);
+
+  PokeParty_InitWork(ep2p->pPokeParty);
+
+  for(entry_no = 0; entry_no < TEMOTI_POKEMAX; entry_no++){
+    if(plist->in_num[entry_no] == 0){
+      break;
+    }
+    PokeParty_Add(ep2p->pPokeParty, 
+                  PokeParty_GetMemberPointer(plist->pp, plist->in_num[entry_no] - 1));
   }
 }
 
@@ -264,6 +292,8 @@ static GFL_PROC_RESULT WifiClubProcMain( GFL_PROC * proc, int * seq, void * pwk,
     break;
   case P2P_BATTLE2:
     {
+      _pokeListWorkOut(ep2p,GAMESYSTEM_GetGameData(pClub->gsys),ep2p->seq );
+      
       _pokmeonListWorkFree(ep2p);      // ポケモンリストが終わったら要らない
       GFL_OVERLAY_Load( FS_OVERLAY_ID( battle ) );
       GFL_NET_AddCommandTable(GFL_NET_CMD_BATTLE, BtlRecvFuncTable, BTL_NETFUNCTBL_ELEMS, NULL);
@@ -278,10 +308,7 @@ static GFL_PROC_RESULT WifiClubProcMain( GFL_PROC * proc, int * seq, void * pwk,
     break;
   case P2P_BATTLE_START:
 
-    _battleSetting(pClub, ep2p->pMatchParam->seq);
-//    pClub->para.rule = BTL_RULE_SINGLE;
-//    pClub->para.netHandle = GFL_NET_HANDLE_GetCurrentHandle();
-//    pClub->para.commPos = GFL_NET_GetNetID( GFL_NET_HANDLE_GetCurrentHandle() );
+    _battleSetting(pClub, ep2p ,ep2p->pMatchParam->seq);
     PMSND_PlayBGM(pClub->para.musicDefault);
 
     GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 1);
@@ -302,18 +329,6 @@ static GFL_PROC_RESULT WifiClubProcMain( GFL_PROC * proc, int * seq, void * pwk,
   case P2P_TRADE_END:
     ep2p->seq = P2P_MATCH_BOARD;
     break;
-/*
-お疲れ様です、有泉です。
-
-通信TVTの呼び出しです。
-ヘッダファイル include/net_app/comm_tvt_sys.h
-extern GFL_PROC_DATA COMM_TVT_ProcData;
-
-COMM_TVT_INIT_WORK の mode に CTM_WIFI を渡して起動してください。
-よろしくお願いいたします。
-*/
-
-
   case P2P_TVT:
     ep2p->aTVT.gameData = GAMESYSTEM_GetGameData(ep2p->gsys);
     ep2p->aTVT.mode = CTM_WIFI;
@@ -359,6 +374,7 @@ static GFL_PROC_RESULT WifiClubProcInit( GFL_PROC * proc, int * seq, void * pwk,
   ep2p->pWifiList = GAMEDATA_GetWiFiList(ep2p->pGameData);
   ep2p->pMatchParam->seq = WIFI_GAME_NONE;
   ep2p->gsys = pClub->gsys;
+  ep2p->pPokeParty = PokeParty_AllocPartyWork(GetHeapLowID(HEAPID_PROC));
 
   pClub->pWork = ep2p;
 
@@ -376,6 +392,7 @@ static GFL_PROC_RESULT WifiClubProcEnd( GFL_PROC * proc, int * seq, void * pwk, 
   EVENT_WIFICLUB_WORK* pClub = pwk;
   EV_P2PEVENT_WORK* ep2p = pClub->pWork;
 
+  GFL_HEAP_FreeMemory(ep2p->pPokeParty);
   GFL_HEAP_FreeMemory(ep2p->pMatchParam->pMatch);
   GFL_HEAP_FreeMemory(ep2p->pMatchParam);
   GFL_PROC_FreeWork(proc);

@@ -722,6 +722,7 @@ static void _ChildModeMatchMenuDisp( WIFIP2PMATCH_WORK *wk )
 
 static void _battleSubMenuInit( WIFIP2PMATCH_WORK *wk, int ret )
 {
+#if 0
   int i,length;
   BMPMENULIST_HEADER list_h;
   _infoMenu* pMenu;
@@ -767,6 +768,13 @@ static void _battleSubMenuInit( WIFIP2PMATCH_WORK *wk, int ret )
 
   GFL_BMPWIN_MakeScreen(wk->SubListWin);
   GFL_BG_LoadScreenReq(GFL_BG_FRAME2_M);
+#endif
+
+  _parentInfoBattleMenuListHeader.count = elementof(_parentSingleInfoMenuList);
+  _parentInfoBattleMenuListHeader.line = elementof(_parentSingleInfoMenuList);
+
+  _modeSelectMenuBase(wk, &_parentInfoBattleMenuListHeader, _parentSingleInfoMenuList,
+                      elementof(_parentSingleInfoMenuList), _MENUTYPE_BATTLE_MODE,17);
 
 }
 
@@ -998,7 +1006,7 @@ static void MCVSys_UserDispDraw( WIFIP2PMATCH_WORK *wk, u32 heapID )
   }else{
     pal = MCV_PAL_BTTN+MCV_PAL_BTTNST_MAN;
   }
-  GFL_BG_LoadScreen( GFL_BG_FRAME2_S, wk->view.p_userscrn[0]->rawData,
+  GFL_BG_LoadScreenBufferOfs( GFL_BG_FRAME2_S, wk->view.p_userscrn[0]->rawData,
                      wk->view.p_userscrn[0]->szByte,0 );
   //  GFL_BG_ScreenBufSet( GFL_BG_FRAME2_S, wk->view.p_userscrn[wk->view.user_dispno]->rawData,
   //      wk->view.p_userscrn[wk->view.user_dispno]->szByte );
@@ -1018,13 +1026,39 @@ static void MCVSys_UserDispDraw( WIFIP2PMATCH_WORK *wk, u32 heapID )
   // 描画
   MCVSys_UserDispDrawType00( wk, heapID );
 
-  GFL_BG_LoadScreenV_Req( GFL_BG_FRAME2_S );
+//  GFL_BG_LoadScreenV_Req( GFL_BG_FRAME2_S );
+  GFL_BG_LoadScreenV_Req( GFL_BG_FRAME3_S );
+
   GFL_BMPWIN_TransVramCharacter(wk->view.userWin);
 
   // メッセージ面の表示設定
   GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG1, VISIBLE_OFF );
   GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG3, VISIBLE_ON );
 }
+
+
+// PAGE 1
+#define MCV_USERD_NAME_X  ( 32-8 )
+#define MCV_USERD_NAME_Y  ( 8 )
+#define MCV_USERD_ST_X  ( 104-8 )
+#define MCV_USERD_ST_Y  ( 8 )
+#define MCV_USERD_GR_X  ( 8-8 )
+#define MCV_USERD_GR_Y  ( 32 )
+#define MCV_USERD_VS_X  ( 8-8 )
+#define MCV_USERD_VS_Y  ( 56 )
+#define MCV_USERD_VS_WIN_X  ( 120-8 )
+#define MCV_USERD_VS_WIN_Y  ( 56 )
+#define MCV_USERD_VS_LOS_X  ( 184-8 )
+#define MCV_USERD_TR_X    ( 8-8 )
+#define MCV_USERD_TR_Y    ( 80 )
+#define MCV_USERD_TRNUM_X ( 152 )
+#define MCV_USERD_DAY_X   ( 8-8 )
+#define MCV_USERD_DAY_Y   ( 128 )
+#define MCV_USERD_DAYNUM_X  ( 152 )
+#define MCV_USERD_ICON_X  ( 2 )
+#define MCV_USERD_VCTICON_X ( 28 )
+#define MCV_USERD_ICON_Y  ( 2 )
+
 
 // 通常
 static void MCVSys_UserDispDrawType00( WIFIP2PMATCH_WORK *wk, u32 heapID )
@@ -1037,6 +1071,8 @@ static void MCVSys_UserDispDrawType00( WIFIP2PMATCH_WORK *wk, u32 heapID )
   int vct_icon;
   WIFI_STATUS* p_status;
   u32 status,gamemode;
+
+  GFL_FONTSYS_SetDefaultColor();
 
   friendNo = wk->view.touch_friendNo - 1;
 
@@ -1065,17 +1101,6 @@ static void MCVSys_UserDispDrawType00( WIFIP2PMATCH_WORK *wk, u32 heapID )
   PRINTSYS_Print( GFL_BMPWIN_GetBmp(wk->view.userWin), MCV_USERD_ST_X, MCV_USERD_ST_Y,
                   wk->pExpStrBuf, wk->fontHandle);
 
-  // グループ
-  {
-    int sex = WifiList_GetFriendInfo(wk->pList, friendNo, WIFILIST_FRIEND_SEX);
-    WifiList_GetFriendName(wk->pList, friendNo, wk->pExpStrBuf);
-    WORDSET_RegisterWord( wk->WordSet, 0, wk->pExpStrBuf, sex, TRUE, PM_LANG);
-    //        GFL_HEAP_FreeMemory(pTarget);
-    GFL_MSG_GetString(  wk->MsgManager, msg_wifilobby_034, wk->pExpStrBuf );
-    WORDSET_ExpandStr( wk->view.p_wordset, wk->TitleString, wk->pExpStrBuf );
-    PRINTSYS_Print( GFL_BMPWIN_GetBmp(wk->view.userWin), MCV_USERD_GR_X, MCV_USERD_GR_Y,
-                    wk->TitleString, wk->fontHandle);
-  }
 
   // 対戦成績
   {
@@ -1132,6 +1157,9 @@ static void MCVSys_UserDispDrawType00( WIFIP2PMATCH_WORK *wk, u32 heapID )
                       wk->TitleString, wk->fontHandle);
     }
   }
+  GFL_BMPWIN_MakeScreen(wk->view.userWin);
+  GFL_BMPWIN_TransVramCharacter(wk->view.userWin);
+  GFL_BG_LoadScreenReq(GFL_BG_FRAME3_S);
 
   // アイコン
   WifiP2PMatchFriendListStIconWrite(  &wk->icon, GFL_BG_FRAME2_S,
@@ -1148,6 +1176,11 @@ static void MCVSys_UserDispDrawType00( WIFIP2PMATCH_WORK *wk, u32 heapID )
 
 }
 
+// フロンティア非表示スクリーン描画
+#define MCV_USERD_NOFR_SCRN_X   ( 0x1a )
+#define MCV_USERD_NOFR_SCRN_Y   ( 0 )
+#define MCV_USERD_NOFR_SCRN_SIZX  ( 0x1 )
+#define MCV_USERD_NOFR_SCRN_SIZY  ( 0x1 )
 
 //----------------------------------------------------------------------------
 /**

@@ -92,7 +92,8 @@
 #define BGM_WIFILOBBY_VOL (0)
 #define BGM_FADEIN_START_VOL_NOW (0)
 #define _BATTLE_TOWER_REC (0)   // バトルタワーの記録表示を封印
-#define _OAMBUTTON (1)
+
+#define _OAMBUTTON (0)  //下画面のボタンは要らない
 #define MYSTATUS_GETTRAINERVIEW_COMPLETION (0)   //ユニオンの姿が数字で入らないとうまく出ない
 
 typedef struct{
@@ -541,28 +542,7 @@ enum{
   MCV_USERDISP_ONEX,  // ユーザー表示強制ON
 };
 
-// PAGE 1
-#define MCV_USERD_NAME_X  ( 32 )
-#define MCV_USERD_NAME_Y  ( 8 )
-#define MCV_USERD_ST_X  ( 104 )
-#define MCV_USERD_ST_Y  ( 8 )
-#define MCV_USERD_GR_X  ( 8 )
-#define MCV_USERD_GR_Y  ( 32 )
-#define MCV_USERD_VS_X  ( 8 )
-#define MCV_USERD_VS_Y  ( 56 )
-#define MCV_USERD_VS_WIN_X  ( 120 )
-#define MCV_USERD_VS_WIN_Y  ( 56 )
-#define MCV_USERD_VS_LOS_X  ( 184 )
-#define MCV_USERD_TR_X    ( 8 )
-#define MCV_USERD_TR_Y    ( 80 )
-#define MCV_USERD_TRNUM_X ( 152 )
-#define MCV_USERD_DAY_X   ( 8 )
-#define MCV_USERD_DAY_Y   ( 128 )
-#define MCV_USERD_DAYNUM_X  ( 152 )
-#define MCV_USERD_ICON_X  ( 2 )
-#define MCV_USERD_VCTICON_X ( 28 )
-#define MCV_USERD_ICON_Y  ( 2 )
-
+#if 0
 // PAGE2
 #define MCV_USERD_BTTW_TITLE_X    (8)
 #define MCV_USERD_BTTW_TITLE_Y    (0)
@@ -677,7 +657,7 @@ enum{
 #define MCV_USERD_NOFR_SCRN_Y   ( 0 )
 #define MCV_USERD_NOFR_SCRN_SIZX  ( 0x1 )
 #define MCV_USERD_NOFR_SCRN_SIZY  ( 0x1 )
-
+#endif
 /*
 //  フロンティアタイプ
 enum{
@@ -876,7 +856,7 @@ static void MCVSys_Init( WIFIP2PMATCH_WORK *wk, ARCHANDLE* p_handle, u32 heapID 
 static void MCVSys_Exit( WIFIP2PMATCH_WORK *wk );
 static u32 MCVSys_Updata( WIFIP2PMATCH_WORK *wk, u32 heapID );
 static void MCVSys_UpdataBttn( WIFIP2PMATCH_WORK *wk );
-static BOOL MCVSys_UserDispEndCheck( WIFIP2PMATCH_WORK *wk, u32 oambttn_ret );
+static BOOL MCVSys_UserDispEndCheck( WIFIP2PMATCH_WORK *wk );
 static u32  MCVSys_UserDispGetFriend( const WIFIP2PMATCH_WORK* cp_wk );
 static void MCVSys_UserDispOn( WIFIP2PMATCH_WORK *wk, u32 friendNo, u32 heapID );
 static void MCVSys_UserDispOff( WIFIP2PMATCH_WORK *wk );
@@ -904,13 +884,9 @@ static void MCVSys_BttnWrite( WIFIP2PMATCH_WORK *wk, u8 cx, u8 cy, u8 type, u8 f
 static u32 MCVSys_StatusMsgIdGet( u32 status,u32 gamemode, int* col );
 static void MCVSys_BttnWinDraw( WIFIP2PMATCH_WORK *wk, GFL_BMPWIN* p_bmp, u32 friendNo, u32 frame, u32 area_id );
 static void MCVSys_BttnStatusWinDraw( WIFIP2PMATCH_WORK *wk, GFL_BMPWIN** p_stbmp, u32 friendNo, u32 frame, u32 area_id );
-static void MCVSys_OamBttnInit( WIFIP2PMATCH_WORK *wk, ARCHANDLE* p_handle, u32 heapID );
-static void MCVSys_OamBttnDelete( WIFIP2PMATCH_WORK *wk );
 static void MCVSys_OamBttnOn( WIFIP2PMATCH_WORK *wk );
 static void MCVSys_OamBttnOnNoBack( WIFIP2PMATCH_WORK *wk );
 static void MCVSys_OamBttnOff( WIFIP2PMATCH_WORK *wk );
-static u32 MCVSys_OamBttnMain( WIFIP2PMATCH_WORK *wk );
-static void MCVSys_OamBttnCallBack( u32 bttn_no, u32 event, void* p_work );
 static void MCVSys_OamBttnObjAnmStart( WIFIP2PMATCH_VIEW*  p_view, u32 bttn_no );
 static BOOL MCVSys_OamBttnObjAnmMain( WIFIP2PMATCH_VIEW*  p_view, u32 bttn_no, u32 push_bttn, u32 event );
 static void MCVSys_FriendNameSet( WIFIP2PMATCH_WORK* p_wk, int friendno );
@@ -1158,7 +1134,9 @@ static int (*FuncTable[])(WIFIP2PMATCH_WORK *wk, int seq)={
   _playerDirectBattleStart4, //  WIFIP2PMATCH_PLAYERDIRECT_BATTLE_START4
   _playerDirectBattleStart5, //  WIFIP2PMATCH_PLAYERDIRECT_BATTLE_START5
   _playerDirectBattleStart6, //  WIFIP2PMATCH_PLAYERDIRECT_BATTLE_START6
-  _playerDirectNoregParent, //WIFIP2PMATCH_PLAYERDIRECT_BATTLE_FAILED
+  _playerDirectFailed, //WIFIP2PMATCH_PLAYERDIRECT_BATTLE_FAILED
+  _playerDirectFailed2, //WIFIP2PMATCH_PLAYERDIRECT_BATTLE_FAILED2
+  _playerDirectFailed3, //WIFIP2PMATCH_PLAYERDIRECT_BATTLE_FAILED3
 };
 
 #define _MAXNUM   (2)         // 最大接続人数
@@ -1743,7 +1721,7 @@ static void BgInit(HEAPID heapID )
       GX_BG_SCRBASE_0xe000, GX_BG_CHARBASE_0x00000,
       0x8000,
       GX_BG_EXTPLTT_01,
-      3, 0, 0, FALSE
+      0, 0, 0, FALSE
       };
     GFL_BG_SetBGControl( GFL_BG_FRAME0_S, &TextBgCntDat, GFL_BG_MODE_TEXT );
     GFL_BG_ClearFrame( GFL_BG_FRAME0_S );
@@ -2538,20 +2516,8 @@ static void _sendMatchStatus(WIFIP2PMATCH_WORK *wk)
 //------------------------------------------------------------------
 static void _makeMyMatchStatus(WIFIP2PMATCH_WORK* wk, u32 status, u32 gamemode)
 {
-  //  MYSTATUS* pMyStatus = SaveData_GetMyStatus(wk->pSaveData);
   MYSTATUS* pMyStatus = GAMEDATA_GetMyStatus(wk->pGameData);
-  ZUKAN_WORK* pZukan = SaveData_GetZukanWork(wk->pSaveData);
-  POKEPARTY* pPokeParty = SaveData_GetTemotiPokemon(wk->pSaveData);
   WIFI_HISTORY* pHistry = SaveData_GetWifiHistory(wk->pSaveData);
-  int max,i;
-
-  max = PokeParty_GetPokeCount(pPokeParty);
-  //  for(i = 0;i < max;i++){
-  //    POKEMON_PARAM* poke = PokeParty_GetMemberPointer( pPokeParty, i);
-  //    WIFI_STATUS_SetMonsNo(wk->pMatch, i , PokeParaGet( poke, ID_PARA_monsno, NULL ));
-  //    WIFI_STATUS_SetItemNo(wk->pMatch, i , PokeParaGet( poke, ID_PARA_item, NULL ));
-  //  }
-  //WIFI_STATUS_SetMyStatus(wk->pMatch , pMyStatus);
 
   WIFI_STATUS_SetPMVersion(wk->pMatch, PM_VERSION);
   WIFI_STATUS_SetPMLang(wk->pMatch, PM_LANG);
@@ -2559,42 +2525,17 @@ static void _makeMyMatchStatus(WIFIP2PMATCH_WORK* wk, u32 status, u32 gamemode)
   WIFI_STATUS_SetTrainerView(wk->pMatch,MyStatus_GetTrainerView(pMyStatus));
 
 #if PM_DEBUG
-  // 自分の絵をデバッグ用に無理やり定義
-  /*
-  if(MyStatus_GetMySex(pMyStatus) == PM_MALE){
-    MyStatus_SetTrainerView(WIFI_STATUS_GetMyStatus(wk->pMatch), PLBOY1);
-  }
-  else{
-    MyStatus_SetTrainerView(WIFI_STATUS_GetMyStatus(wk->pMatch), PLGIRL1);
-  }*/
   if(MyStatus_GetMySex(pMyStatus) == PM_MALE){
     WIFI_STATUS_SetTrainerView(wk->pMatch,PLBOY1);
   }
   else{
     WIFI_STATUS_SetTrainerView(wk->pMatch,PLGIRL1);
   }
-
-
 #endif
 
-  // wk->pMatch->myMatchStatus.version = MyStatus_GetRomCode(pMyStatus);
-  // wk->pMatch->myMatchStatus.regionCode = MyStatus_GetRegionCode(pMyStatus);
-
-  //  wk->pMatch->myMatchStatus.pokemonZukan = ZukanWork_GetZenkokuZukanFlag(pZukan);
-  //    wk->pMatch->myMatchStatus.status = status;
-  //    wk->pMatch->myMatchStatus.status = WIFI_STATUS_UNKNOWN;
   _myStatusChange_not_send(wk, status, gamemode); // BGM状態などを調整
-  //  wk->pMatch->myMatchStatus.regulation = _REGULATION_BATTLE_TOWER;
-  //#if MYSTATUS_GETTRAINERVIEW_COMPLETION
-  //  wk->pMatch->myMatchStatus.trainer_view = MyStatus_GetTrainerView(pMyStatus);
-  //#else
-  //  wk->pMatch->myMatchStatus.trainer_view = PLBOY1;
-  //#endif
-  //  wk->pMatch->myMatchStatus.sex = MyStatus_GetMySex(pMyStatus);
   WIFI_STATUS_SetMyNation(wk->pMatch, WIFIHISTORY_GetMyNation(pHistry));
   WIFI_STATUS_SetMyArea(wk->pMatch, WIFIHISTORY_GetMyArea(pHistry));
-  //  wk->pMatch->myMatchStatus.vchat = TRUE;
-  //  wk->pMatch->myMatchStatus.vchat_org = TRUE;
   WIFI_STATUS_SetVChatStatus(wk->pMatch, TRUE);
 
   _sendMatchStatus(wk);
@@ -3692,9 +3633,7 @@ static int WifiP2PMatch_FriendList( WIFIP2PMATCH_WORK *wk, int seq )
     for(j = 0; j < WIFIP2PMATCH_MEMBER_MAX ; j++){
       int n = GFUser_GetPublicRand0(WIFIP2PMATCH_MEMBER_MAX);  //いつも若い順になら無いように乱数検査
       if(WIFI_STATUS_IsVChatMac(wk->pMatch, WifiFriendMatchStatusGet( n ))){
-        //自分が呼び出されているので、接続開始
-        //接続してから色々決めたほうが絶対良い
-        // 状態を取得
+        //自分が呼び出されているので、接続開始 状態を取得
         status = _WifiMyStatusGet( wk, WifiFriendMatchStatusGet( n ) );
         gamemode = _WifiMyGameModeGet( wk, WifiFriendMatchStatusGet( n ) );
         wk->friendNo = n + 1;
@@ -4603,16 +4542,6 @@ static int _parentModeSubSelectMenuWait( WIFIP2PMATCH_WORK *wk, int seq )
   u32 ret;
 
   WIFI_MCR_PCAnmMain( &wk->matchroom ); // パソコンアニメメイン
-
-  // ここで接続してくる可能性もある 080617  tomoya
-  if( 0 !=  _checkParentNewPlayer(wk)){ // 接続してきた
-    _CHANGESTATE(wk,WIFIP2PMATCH_MODE_FRIENDLIST);
-    wk->SubListWin = _BmpWinDel(wk->SubListWin);
-    BmpMenuList_Exit(wk->sublw, NULL, &wk->singleCur[wk->bSingle]);
-    BmpMenuWork_ListDelete( wk->submenulist );
-    EndMessageWindowOff(wk);
-    return seq;
-  }
 
   if( !PRINTSYS_QUE_IsFinished(wk->SysMsgQue) ){
     return seq;
@@ -5884,11 +5813,6 @@ static int _exitYesNo( WIFIP2PMATCH_WORK *wk, int seq )
     _CHANGESTATE(wk,WIFIP2PMATCH_MODE_EXIT_WAIT);
   }
 
-  // WIFI　対戦AUTOﾓｰﾄﾞデバック
-#ifdef _WIFI_DEBUG_TUUSHIN
-  WIFI_DEBUG_BATTLE_Work.DEBUG_WIFI_A_REQ = TRUE;
-  WIFI_DEBUG_BATTLE_Work.DEBUG_WIFI_B_REQ = FALSE;
-#endif  //_WIFI_DEBUG_TUUSHIN
 
   return seq;
 }
@@ -6595,7 +6519,6 @@ static u32 MCVSys_Updata( WIFIP2PMATCH_WORK *wk, u32 heapID )
     wk->view.user_disp = MCV_USERDISP_ON;
     //    wk->view.user_dispno = WF_USERDISPTYPE_NRML;
     MCVSys_UserDispDraw( wk, heapID );
-    MCVSys_OamBttnOn( wk ); // OAMボタン表示
   }
 
 
@@ -6603,9 +6526,6 @@ static u32 MCVSys_Updata( WIFIP2PMATCH_WORK *wk, u32 heapID )
 
     // ボタンメイン
     GFL_BMN_Main( wk->view.p_bttnman );
-
-    // ボタンアニメ処理
-    MCVSys_BttnAnmMan( wk );
 
     // 表示メイン
     if( wk->view.button_on == TRUE ){
@@ -6619,10 +6539,10 @@ static u32 MCVSys_Updata( WIFIP2PMATCH_WORK *wk, u32 heapID )
       (wk->view.user_disp == MCV_USERDISP_ONEX) ){
 
     // した画面OAMボタンメイン
-    oambttn_ret = MCVSys_OamBttnMain( wk );
+    //oambttn_ret = MCVSys_OamBttnMain( wk );
 
     //  USERD終了チェック
-    userd_end = MCVSys_UserDispEndCheck( wk, oambttn_ret );
+    userd_end = MCVSys_UserDispEndCheck( wk );
 
     // なにかキーを押すか、「もどる」を押したら終了する
     if( userd_end == TRUE ){
@@ -6632,15 +6552,8 @@ static u32 MCVSys_Updata( WIFIP2PMATCH_WORK *wk, u32 heapID )
       wk->view.button_on = TRUE;
       wk->view.bttn_allchg = TRUE;
       wk->view.user_disp = MCV_USERDISP_OFF;
-      MCVSys_OamBttnOff( wk );  // ボタンOFF
+     // MCVSys_OamBttnOff( wk );  // ボタンOFF
       Snd_SePlay( _SE_DESIDE ); // キャンセル音
-    }else{
-      // 左右のボタンが押されていたらページ切り替え１
-      if( oambttn_ret != MCV_USERD_BTTN_RET_NONE ){
-        Snd_SePlay( _SE_DESIDE );           // ページ変更音
-        //MCVSys_UserDispPageChange( wk, oambttn_ret ); // 変更処理
-        MCVSys_UserDispDraw( wk, heapID );
-      }
     }
   }
 
@@ -6677,7 +6590,7 @@ static void MCVSys_UpdataBttn( WIFIP2PMATCH_WORK *wk )
  *  @retval FALSE しない
  */
 //-----------------------------------------------------------------------------
-static BOOL MCVSys_UserDispEndCheck( WIFIP2PMATCH_WORK *wk, u32 oambttn_ret )
+static BOOL MCVSys_UserDispEndCheck( WIFIP2PMATCH_WORK *wk  )
 {
   // 強制表示しているので終了しない
   if( (wk->view.user_disp == MCV_USERDISP_ONEX) ){
@@ -6686,8 +6599,8 @@ static BOOL MCVSys_UserDispEndCheck( WIFIP2PMATCH_WORK *wk, u32 oambttn_ret )
 
   //  移動はcontボタンはトリガー
   if( (GFL_UI_KEY_GetCont() & (PAD_KEY_LEFT|PAD_KEY_RIGHT|PAD_KEY_UP|PAD_KEY_DOWN)) ||
-      (GFL_UI_KEY_GetTrg() & (PAD_BUTTON_A|PAD_BUTTON_B|PAD_BUTTON_X)) ||
-      (oambttn_ret == MCV_USERD_BTTN_RET_BACK) ){
+      (GFL_UI_KEY_GetTrg() & (PAD_BUTTON_A|PAD_BUTTON_B|PAD_BUTTON_X)) 
+      ){
     return TRUE;
   }
 
@@ -6724,7 +6637,6 @@ static void MCVSys_UserDispOn( WIFIP2PMATCH_WORK *wk, u32 friendNo, u32 heapID )
     wk->view.user_disp    = MCV_USERDISP_ONEX;
     //    wk->view.user_dispno = WF_USERDISPTYPE_NRML;
     MCVSys_UserDispDraw( wk, heapID );
-    MCVSys_OamBttnOnNoBack( wk ); //  強制表示用ボタン表示
   }
 }
 
@@ -6743,7 +6655,7 @@ static void MCVSys_UserDispOff( WIFIP2PMATCH_WORK *wk )
     wk->view.user_disp    = MCV_USERDISP_OFF;
     wk->view.button_on    = TRUE;
     wk->view.bttn_allchg = TRUE;
-    MCVSys_OamBttnOff( wk );  // ボタンOFF
+//    MCVSys_OamBttnOff( wk );  // ボタンOFF
   }
 }
 
@@ -6801,14 +6713,10 @@ static void MCVSys_BttnCallBack( u32 bttnid, u32 event, void* p_work )
     return ;
   }
 
-  // すでにボタン動作中なので反応しない
-  if( wk->view.touch_friendNo != 0 ){
-    return ;
-  }
-
   switch( event ){
   case GFL_BMN_EVENT_TOUCH:   ///< 触れた瞬間
     wk->view.touch_friendNo = friendNo;
+    wk->view.user_disp = MCV_USERDISP_INIT;
     Snd_SePlay( _SE_DESIDE );
     break;
 
@@ -6835,31 +6743,31 @@ static void MCVSys_GraphicSet( WIFIP2PMATCH_WORK *wk, ARCHANDLE* p_handle, u32 h
   // FRAME0_Sスクリーンデータクリーン
   GFL_BG_ClearFrame(   GFL_BG_FRAME0_S );
   // パレット転送
-  GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_wifip2pmatch_wf_match_btm_NCLR,  // 背景用
-                                    PALTYPE_SUB_BG, MCV_PAL_BACK*32, MCV_PAL_BACK_NUM*32, heapID );
+//  GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_wifip2pmatch_wf_match_btm_NCLR,  // 背景用
+  //                                  PALTYPE_SUB_BG, MCV_PAL_BACK*32, MCV_PAL_BACK_NUM*32, heapID );
   GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_wifip2pmatch_wf_match_btm_button_NCLR, // ボタン用
                                     PALTYPE_SUB_BG, MCV_PAL_BTTN*32, MCV_PAL_BTTN_NUM*32, heapID );
 
   // キャラクタ転送
-  GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_wifip2pmatch_wf_match_btm_NCGR,
-                                        GFL_BG_FRAME0_S, MCV_CGX_BACK, 0, FALSE, heapID );
+//  GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_wifip2pmatch_wf_match_btm_NCGR,
+  //                                      GFL_BG_FRAME0_S, MCV_CGX_BACK, 0, FALSE, heapID );
   GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_wifip2pmatch_wf_match_btm_button_NCGR,
                                         GFL_BG_FRAME2_S, MCV_CGX_BTTN2, 0, FALSE, heapID );
 
   // スクリーン読込みor転送
   // 背景はキャラクタ位置がずれているのでスクリーンデータを書き換える
-  GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_wifip2pmatch_wf_match_btm_NSCR,   GFL_BG_FRAME0_S, 0, 0, FALSE, heapID );
+//  GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_wifip2pmatch_wf_match_btm_NSCR,   GFL_BG_FRAME0_S, 0, 0, FALSE, heapID );
 
   // ボタンスクリーン読込み
   wk->view.p_bttnbuff = GFL_ARCHDL_UTIL_LoadScreen( p_handle, NARC_wifip2pmatch_wf_match_btm_button_NSCR, FALSE, &wk->view.p_bttnscrn, heapID );
   MCVSys_GraphicScrnCGOfsChange( wk->view.p_bttnscrn, MCV_CGX_BTTN2 );
 
   // ユーザースクリーン読込み
-  /*  for( i=0; i<WF_USERDISPTYPE_NUM; i++ ){
+    for( i=0; i < 1; i++ ){
     wk->view.p_userbuff[i] = GFL_ARCHDL_UTIL_LoadScreen( p_handle, NARC_wifip2pmatch_wf_match_btm_result00_NSCR+i, FALSE, &wk->view.p_userscrn[i], heapID );
     MCVSys_GraphicScrnCGOfsChange( wk->view.p_userscrn[i], MCV_CGX_BTTN2 );
   }
-   */
+  
   // ダミースクリーン読み込み
   wk->view.p_useretcbuff = GFL_ARCHDL_UTIL_LoadScreen( p_handle, NARC_wifip2pmatch_wf_match_btm_etc_NSCR, FALSE, &wk->view.p_useretcscrn, heapID );
   MCVSys_GraphicScrnCGOfsChange( wk->view.p_useretcscrn, MCV_CGX_BTTN2 );
@@ -6867,7 +6775,9 @@ static void MCVSys_GraphicSet( WIFIP2PMATCH_WORK *wk, ARCHANDLE* p_handle, u32 h
 
 
   // フォントパレット読込み
-  //  TalkFontPaletteLoad( PALTYPE_SUB_BG, MCV_SYSFONT_PAL*32, heapID );
+	GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG, 
+		MCV_SYSFONT_PAL*32, 0x20, heapID);
+//  TalkFontPaletteLoad( PALTYPE_SUB_BG, MCV_SYSFONT_PAL*32, heapID );
   GFL_ARC_UTIL_TransVramPalette( ARCID_FONT , NARC_font_default_nclr , PALTYPE_SUB_BG , 13*0x20, 16*2, heapID );
 
   // ビットマップ作成
@@ -6876,7 +6786,7 @@ static void MCVSys_GraphicSet( WIFIP2PMATCH_WORK *wk, ARCHANDLE* p_handle, u32 h
     y = i%4;
     //    GFL_BG_BmpWinInit( wk->view.nameWin[i] );
     wk->view.nameWin[i] = GFL_BMPWIN_Create(
-      GFL_BG_FRAME1_S,
+      GFL_BG_FRAME0_S,
       MCV_NAMEWIN_DEFX+(MCV_NAMEWIN_OFSX*x),
       MCV_NAMEWIN_DEFY+(MCV_NAMEWIN_OFSY*y),
       MCV_NAMEWIN_SIZX, MCV_NAMEWIN_SIZY,
@@ -6907,11 +6817,11 @@ static void MCVSys_GraphicSet( WIFIP2PMATCH_WORK *wk, ARCHANDLE* p_handle, u32 h
     MCV_SYSFONT_PAL, GFL_BMP_CHRAREA_GET_B );
   // 透明にして展開
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->view.userWin), 0 );
+  GFL_BMPWIN_MakeScreen(wk->view.userWin);
   GFL_BMPWIN_TransVramCharacter( wk->view.userWin );
+  
+  GFL_BG_LoadScreenReq(GFL_BG_FRAME3_S);
 
-
-  // サブ画面OAM初期化
-  MCVSys_OamBttnInit( wk, p_handle, heapID );
 }
 
 //----------------------------------------------------------------------------
@@ -6925,8 +6835,6 @@ static void MCVSys_GraphicDel( WIFIP2PMATCH_WORK *wk )
 {
   int i, j;
 
-  // サブ画面OAM破棄
-  MCVSys_OamBttnDelete( wk );
 
   // ビットマップ破棄
   for( i=0; i<WCR_MAPDATA_1BLOCKOBJNUM; i++ ){
@@ -6941,10 +6849,10 @@ static void MCVSys_GraphicDel( WIFIP2PMATCH_WORK *wk )
   GFL_HEAP_FreeMemory( wk->view.p_bttnbuff );
 
   // ユーザーウインドウ
-  /*  for( i=0; i<WF_USERDISPTYPE_NUM; i++ ){
+    for( i=0; i<1; i++ ){
     GFL_HEAP_FreeMemory( wk->view.p_userbuff[i] );
   }
-   */
+  
   // ダミースクリーン破棄
   GFL_HEAP_FreeMemory( wk->view.p_useretcbuff );
 }
@@ -7072,10 +6980,10 @@ static void MCVSys_BttnAllWriteReq( WIFIP2PMATCH_WORK *wk )
 static void MCVSys_BackDraw( WIFIP2PMATCH_WORK *wk )
 {
   // 背景のカラーを変える
-  GFL_BG_ChangeScreenPalette(   GFL_BG_FRAME0_S, 0, 0,
-                                32, 24, wk->view.frame_no+MCV_PAL_FRMNO );
+//  GFL_BG_ChangeScreenPalette(   GFL_BG_FRAME0_S, 0, 0,
+  //                              32, 24, wk->view.frame_no+MCV_PAL_FRMNO );
 
-  GFL_BG_LoadScreenV_Req(   GFL_BG_FRAME0_S );
+//  GFL_BG_LoadScreenV_Req(   GFL_BG_FRAME0_S );
 }
 
 //----------------------------------------------------------------------------
@@ -7159,7 +7067,10 @@ static void MCVSys_BttnDraw( WIFIP2PMATCH_WORK *wk )
         // 名前の表示
         NET_PRINT("friendno %d\n",friend_no);
         MCVSys_BttnWinDraw( wk, wk->view.nameWin[i], friend_no, frame, i );
-        //@@OO        MCVSys_BttnStatusWinDraw( wk, wk->view.statusWin[i], friend_no, frame, i );
+        GFL_BMPWIN_MakeScreen(wk->view.nameWin[i]);
+        GFL_BG_LoadScreenV_Req(GFL_BG_FRAME0_S);
+
+        //MCVSys_BttnStatusWinDraw( wk, wk->view.statusWin[i], friend_no, frame, i );
       }else{
 
         // 透明にする
@@ -7382,558 +7293,6 @@ static void MCVSys_BttnStatusWinDraw( WIFIP2PMATCH_WORK *wk, GFL_BMPWIN** p_stbm
 
 }
 
-//----------------------------------------------------------------------------
-/**
- *  @brief  ボタンアニメメイン
- *
- *  @param  wk    システムワーク
- */
-//-----------------------------------------------------------------------------
-static void MCVSys_BttnAnmMan( WIFIP2PMATCH_WORK *wk )
-{
-  static const u8 BttnAnmFrame[ MCV_BUTTON_FRAME_NUM ] = {
-    0, 1, 2, 1
-    };
-
-  // 動作しているかチェック
-  if( wk->view.touch_friendNo == 0 ){
-    return ;
-  }
-
-  // 動作
-  wk->view.button_count ++;
-  if( wk->view.button_count >= BttnAnmFrame[ wk->view.touch_frame ] ){
-    wk->view.button_count = 0;
-    wk->view.touch_frame ++;
-
-    wk->view.button_on = TRUE;
-
-    // 終了チェック
-    if( wk->view.touch_frame >= MCV_BUTTON_FRAME_NUM ){
-      wk->view.button_count = 0;
-      wk->view.touch_frame = 0;
-      wk->view.user_disp = MCV_USERDISP_INIT;
-    }
-  }
-
-}
-
-//----------------------------------------------------------------------------
-/**
- *  @brief  サブ画面　OAMボタン　初期化
- *
- *  @param  wk      ワーク
- *  @param  p_handle  ハンドル
- *  @param  heapID    ヒープID
- */
-//-----------------------------------------------------------------------------
-static void MCVSys_OamBttnInit( WIFIP2PMATCH_WORK *wk, ARCHANDLE* p_handle, u32 heapID )
-{
-#if _OAMBUTTON //@@OO
-  BOOL result;
-  int i;
-  /*  CLACT_HEADER head; */
-  //  GFL_BMPWIN* bttn_font;
-  GFL_BMP_DATA *bmp;
-  STRBUF* p_str;
-  //  FONTOAM_OAM_DATA_PTR p_fontoam_data;
-  int fontoam_cgsize;
-  //  FONTOAM_INIT fontoam_add;
-
-
-  GFL_CLWK_DATA add[ MCV_USERD_BTTN_NUM ] = {
-    { // LEFT
-      MCV_USERD_BTTN_LEFT_X, MCV_USERD_BTTN_Y+NAMEIN_SUB_ACTOR_DISTANCE, 0,
-      MCV_USERD_BTTN_PRI, 0
-      },
-    { // BACK
-      MCV_USERD_BTTN_BACK_X, MCV_USERD_BTTN_Y+NAMEIN_SUB_ACTOR_DISTANCE, 0 ,
-      MCV_USERD_BTTN_PRI, 0
-      },
-    { // RIGHT
-      MCV_USERD_BTTN_RIGHT_X, MCV_USERD_BTTN_Y+NAMEIN_SUB_ACTOR_DISTANCE, 0,
-      MCV_USERD_BTTN_PRI, 0
-      },
-  };
-
-
-  // 一応表示をOFF
-  GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_OFF );
-  //  GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
-
-  // リソース読込み
-  //  wk->view.button_res[0] = CLACT_U_ResManagerResAddArcChar_ArcHandle(
-  //      wk->resMan[0], p_handle, NARC_wifip2pmatch_wf_match_btm_oam_NCGR,
-  //      FALSE, MCV_USERD_BTTN_RESCONTID,
-  //      NNS_G2D_VRAM_TYPE_2DSUB, heapID );
-  wk->view.button_res[0] = GFL_CLGRP_CGR_Register(p_handle,
-                                                  NARC_wifip2pmatch_wf_match_btm_oam_NCGR,
-                                                  FALSE , CLSYS_DRAW_SUB, heapID);
-
-
-  //  wk->view.button_res[1] = CLACT_U_ResManagerResAddArcPltt_ArcHandle(
-  //      wk->resMan[1], p_handle, NARC_wifip2pmatch_wf_match_btm_oam_NCLR,
-  //      FALSE, MCV_USERD_BTTN_RESCONTID,
-  //      NNS_G2D_VRAM_TYPE_2DSUB, 8, heapID );
-
-  wk->view.button_res[1] = GFL_CLGRP_PLTT_Register(p_handle,
-                                                   NARC_wifip2pmatch_wf_match_btm_oam_NCLR,
-                                                   CLSYS_DRAW_SUB, 8, heapID);
-
-
-  /*     wk->view.button_res[2] = CLACT_U_ResManagerResAddArcKindCell_ArcHandle(
-   *      wk->resMan[2], p_handle, NARC_wifip2pmatch_wf_match_btm_oam_NCER,
-   *      FALSE, MCV_USERD_BTTN_RESCONTID, CLACT_U_CELL_RES,
-   *      heapID );
-   *  wk->view.button_res[3] = CLACT_U_ResManagerResAddArcKindCell_ArcHandle(
-   *      wk->resMan[3], p_handle, NARC_wifip2pmatch_wf_match_btm_oam_NANR,
-   *      FALSE, MCV_USERD_BTTN_RESCONTID, CLACT_U_CELLANM_RES,
-   *      heapID );
-   */
-  wk->view.button_res[2] = GFL_CLGRP_CELLANIM_Register(p_handle,
-                                                       NARC_wifip2pmatch_wf_match_btm_oam_NCER,
-                                                       NARC_wifip2pmatch_wf_match_btm_oam_NANR,
-                                                       heapID);
-
-
-  // VRAM展開
-  /*  result = CLACT_U_CharManagerSetCharModeAdjustAreaCont( wk->view.button_res[0] );
-   *  GF_ASSERT( result );
-   *  result = CLACT_U_PlttManagerSetCleanArea( wk->view.button_res[1] );
-   *  GF_ASSERT( result );
-   *  CLACT_U_ResManagerResOnlyDelete( wk->view.button_res[0] );
-   *  CLACT_U_ResManagerResOnlyDelete( wk->view.button_res[1] );
-   */
-
-  // ヘッダー作成
-  /*
-    CLACT_U_MakeHeader( &head,
-      MCV_USERD_BTTN_RESCONTID, MCV_USERD_BTTN_RESCONTID,
-      MCV_USERD_BTTN_RESCONTID, MCV_USERD_BTTN_RESCONTID,
-      CLACT_U_HEADER_DATA_NONE, CLACT_U_HEADER_DATA_NONE,
-      0, MCV_USERD_BTTN_BGPRI,
-      wk->resMan[0], wk->resMan[1], wk->resMan[2], wk->resMan[3],
-      NULL, NULL );
-   */
-
-  // アクター作成
-  for( i=0; i<MCV_USERD_BTTN_NUM; i++ ){
-    /*    add[i].ClActSet = wk->clactSet;
-     *    add[i].ClActHeader = &head;
-     *    add[i].heap = heapID;
-     */
-    /*    wk->view.button_act[i] = CLACT_Add( &add[i] );
-     *    CLACT_AnmChg( wk->view.button_act[i], c_MCV_USER_BTTN_ANM_RELEASE[i] );
-     */
-    wk->view.button_act[i] = GFL_CLACT_WK_Create(wk->clactSet,
-                                                 wk->view.button_res[0],
-                                                 wk->view.button_res[1],
-                                                 wk->view.button_res[2],
-                                                 &add[i], CLSYS_DEFREND_SUB, heapID );
-
-
-  }
-
-  // ボタンフォント読込み
-  //FontProc_LoadFont( FONT_BUTTON, heapID );
-
-  // もどる　描画用領域作成
-  /*  GFL_BG_BmpWinInit( &bttn_font );
-   *     GFL_BG_BmpWinObjAdd(  &bttn_font,
-   *      MCV_USERD_BTTN_FONT_SIZX, MCV_USERD_BTTN_FONT_SIZY,
-   *      MCV_USERD_BTTN_FONT_CGXOFS, MCV_USERD_BTTN_FONT_COL );
-   */
-  // 文字列取得
-  p_str = GFL_STR_CreateBuffer( 64, heapID );
-  GFL_MSG_GetString( wk->MsgManager, msg_wifilobby_143, p_str );
-
-  {
-    int char_len , font_len;
-    //文字列のドット幅から、使用するキャラ数を算出する
-    font_len = PRINTSYS_GetStrWidth(p_str, wk->fontHandle, 0);
-    char_len = font_len / 8;
-    char_len++;
-
-    //BMP作成
-    bmp = GFL_BMP_Create(char_len, MCV_USERD_BTTN_FONT_SIZY, GFL_BMP_16_COLOR, heapID);
-    PRINTSYS_Print(bmp, 0, 0, p_str, wk->fontHandle);
-  }
-
-  /*  bmp = GFL_BMP_Create(char_len, y_char_len, GFL_BMP_16_COLOR, HEAPID_BALLOON);
-   *     bttn_font = GFL_BMPWIN_Create(
-   *         GFL_BG_FRAME1_S,
-   *         0,
-   *         0,
-   *         MCV_USERD_BTTN_FONT_SIZX, MCV_USERD_BTTN_FONT_SIZY,
-   *         MCV_USERD_BTTN_FONT_COL, GFL_BMP_CHRAREA_GET_B );
-   */
-
-
-  // 文字列を書き込む
-  //  PRINT_UTIL_Print( &bttn_font, FONT_BUTTON, p_str, 0, 0, MSG_NO_PUT, GF_PRINTCOLOR_MAKE(1,2,0), NULL );
-  /*     PRINTSYS_Print( GFL_BMPWIN_GetBmp(bttn_font),
-   *                     0,  0,
-   *                     p_str, wk->fontHandle);
-   */
-
-
-
-  GFL_STR_DeleteBuffer( p_str );
-
-  // 文字列OAMデータ作成
-  //  p_fontoam_data = FONTOAM_OAMDATA_Make( &bttn_font, heapID );
-
-  //フォントOAMシステム作成
-  wk->view.back_fontoam = BmpOam_Init(heapID, wk->clactSet);
-
-
-  // サイズ取得
-  //  fontoam_cgsize = FONTOAM_OAMDATA_NeedCharSize( p_fontoam_data, NNS_G2D_VRAM_TYPE_2DSUB );
-
-  // CharAreaAlloc
-  //  result = CharVramAreaAlloc( fontoam_cgsize, CHARM_CONT_AREACONT,
-  //      NNS_G2D_VRAM_TYPE_2DSUB, &wk->view.back_fontoam_cg );
-  //  GF_ASSERT(result);
-
-  /*  // fontoam作成
-   *  fontoam_add.fontoam_sys = wk->fontoam;
-   *  fontoam_add.bmp = &bttn_font;
-   *  fontoam_add.clact_set = wk->clactSet;
-   *  fontoam_add.pltt = CLACT_U_PlttManagerGetProxy( wk->view.button_res[1], NULL );
-   *  fontoam_add.parent = wk->view.button_act[MCV_USERD_BTTN_BACK];
-   *  fontoam_add.char_ofs = wk->view.back_fontoam_cg.alloc_ofs;
-   *  fontoam_add.x = MCV_USERD_BTTN_FONT_X;
-   *  fontoam_add.y = MCV_USERD_BTTN_FONT_Y;
-   *  fontoam_add.bg_pri = MCV_USERD_BTTN_BGPRI;
-   *  fontoam_add.soft_pri = MCV_USERD_BTTN_FONT_OAMPRI;
-   *  fontoam_add.draw_area = NNS_G2D_VRAM_TYPE_2DSUB;
-   *  fontoam_add.heap = heapID;
-   *  wk->view.back_fontoam = FONTOAM_OAMDATA_Init( &fontoam_add, p_fontoam_data );
-   */
-  {
-    BMPOAM_ACT_DATA head;
-
-    //フォントアクター作成
-    head.bmp = bmp;
-    head.x = MCV_USERD_BTTN_FONT_X;
-    head.y = MCV_USERD_BTTN_FONT_Y;
-    head.pltt_index = wk->view.button_res[1];
-    head.pal_offset = 0;
-    head.soft_pri = MCV_USERD_BTTN_FONT_OAMPRI;
-    head.bg_pri = MCV_USERD_BTTN_BGPRI;
-    head.setSerface = CLWK_SETSF_NONE;
-    head.draw_type = CLSYS_DRAW_SUB;
-    wk->view.BmpOamAct = BmpOam_ActorAdd(wk->view.back_fontoam, &head);
-    wk->view.BmpOamBmp = bmp;
-
-    // OAM構成データ破棄
-    //        FONTOAM_OAMDATA_Free( p_fontoam_data );
-  }
-  // BMP破棄
-  //  GFL_BMPWIN_Delete( bttn_font );
-
-  // 文字列フォント破棄
-  //  FontProc_UnloadFont( FONT_BUTTON );
-
-  // ボタンあたり判定データ作成
-  wk->view.p_oambttnman = GFL_BMN_Create( c_MCV_USER_BTTN_OAM_Hit,
-                                          MCVSys_OamBttnCallBack, wk, heapID );
-#endif
-}
-
-//----------------------------------------------------------------------------
-/**
- *  @brief  ボタンデータの破棄
- *
- *  @param  wk  ワーク
- */
-//-----------------------------------------------------------------------------
-static void MCVSys_OamBttnDelete( WIFIP2PMATCH_WORK *wk )
-{
-#if _OAMBUTTON //@@OO
-  int i;
-
-  // ボタンマネージャ破棄
-  GFL_BMN_Delete( wk->view.p_oambttnman );
-
-  // フォントOAM破棄
-  FONTOAM_OAMDATA_Delete( wk->view.back_fontoam );
-
-  // キャラ領域破棄
-  //  CharVramAreaFree( &wk->view.back_fontoam_cg );
-
-  // ワークの破棄
-  for( i=0; i<MCV_USERD_BTTN_NUM; i++ ){
-    GFL_CLACT_WK_Remove( wk->view.button_act[i] );
-  }
-
-  // リソース破棄
-  GFL_CLGRP_CGR_Release( wk->view.button_res[0] );
-  GFL_CLGRP_PLTT_Release( wk->view.button_res[1] );
-  GFL_CLGRP_CELLANIM_Release( wk->view.button_res[2] );
-
-  BmpOam_ActorDel(wk->view.BmpOamAct);
-  GFL_BMP_Delete( wk->view.BmpOamBmp );
-  BmpOam_Exit(wk->view.back_fontoam);
-
-#endif //_OAMBUTTON //@@OO
-}
-
-//----------------------------------------------------------------------------
-/**
- *  @brief  OAMボタンON
- *
- *  @param  wk  ワーク
- */
-//-----------------------------------------------------------------------------
-static void MCVSys_OamBttnOn( WIFIP2PMATCH_WORK *wk )
-{
-#if _OAMBUTTON //@@OO
-  int i;
-
-  // 表示状態にする
-  wk->view.buttonact_on = MCV_USERD_BTTN_MODE_NML;
-
-  // 表示ON
-  GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
-
-  // パラメータ初期化
-  wk->view.touch_button = 0;
-
-  // アニメ初期化
-  for( i=0; i<MCV_USERD_BTTN_NUM; i++ ){
-    MCVSys_OamBttnObjAnmStart( &wk->view, i );
-  }
-#endif //_OAMBUTTON //@@OO
-}
-
-//----------------------------------------------------------------------------
-/**
- *  @brief  ボタン表示　BACK非表示モード
- *
- *  @param  wk  ワーク
- */
-//-----------------------------------------------------------------------------
-static void MCVSys_OamBttnOnNoBack( WIFIP2PMATCH_WORK *wk )
-{
-#if _OAMBUTTON //@@OO
-  MCVSys_OamBttnOn( wk );
-
-  // もどるだけ非表示
-  GFL_CLACT_WK_SetDrawEnable( wk->view.button_act[MCV_USERD_BTTN_BACK], FALSE );
-
-  //@@OO
-  //  FONTOAM_SetDrawFlag( wk->view.back_fontoam, FALSE );
-  BmpOam_ActorSetDrawEnable(wk->view.BmpOamAct, FALSE);
-
-  // 表示状態にする
-  wk->view.buttonact_on = MCV_USERD_BTTN_MODE_NOBACK;
-#endif //_OAMBUTTON //@@OO
-}
-
-//----------------------------------------------------------------------------
-/**
- *  @brief  ボタンOFF
- *
- *  @param  wk
- */
-//-----------------------------------------------------------------------------
-static void MCVSys_OamBttnOff( WIFIP2PMATCH_WORK *wk )
-{
-#if _OAMBUTTON //@@OO
-  // 戻るが表示OFFになってるかもしれないのでONにしておく
-  if( wk->view.buttonact_on == MCV_USERD_BTTN_MODE_NOBACK ){
-    GFL_CLACT_WK_SetDrawEnable( wk->view.button_act[MCV_USERD_BTTN_BACK], TRUE );
-    //@@OO
-    //  FONTOAM_SetDrawFlag( wk->view.back_fontoam, TRUE );
-    BmpOam_ActorSetDrawEnable(wk->view.BmpOamAct, TRUE);
-  }
-
-  // 非表示状態にする
-  wk->view.buttonact_on = MCV_USERD_BTTN_MODE_WAIT;
-
-  // 表示をOFF
-  GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_OFF );
-#endif //_OAMBUTTON //@@OO
-
-}
-
-//----------------------------------------------------------------------------
-/**
- *  @brief  ボタン非表示処理
- *
- *  @param  wk
- *
- *  @retval MCV_USERD_BTTN_RET_NONE,  // 何の反応もなし
- *  @retval MCV_USERD_BTTN_RET_LEFT,  // 左がおされた
- *  @retval MCV_USERD_BTTN_RET_BACK,  // もどるがおされた
- *  @retval MCV_USERD_BTTN_RET_RIGHT, // 右がおされた
- */
-//-----------------------------------------------------------------------------
-static u32 MCVSys_OamBttnMain( WIFIP2PMATCH_WORK *wk )
-{
-#if _OAMBUTTON //@@OO
-  int i;
-  BOOL result;
-
-  // 表示ONじょうたいかチェック
-  if( wk->view.buttonact_on == MCV_USERD_BTTN_MODE_WAIT ){
-    return MCV_USERD_BTTN_RET_NONE;
-  }
-
-
-  // ボタンイベントデータ消去
-  wk->view.touch_button = MCV_USERD_BTTN_NUM; // 何にも反応しないようにありえないボタン番号
-  wk->view.touch_button_event = 0xff; // 何にも反応しないようにありえない数字をいれておく
-
-  // ボタンマネージャ実行
-  GFL_BMN_Main( wk->view.p_oambttnman );
-
-  // ボタンアニメコントロール
-  for( i=0; i<MCV_USERD_BTTN_NUM; i++ ){
-
-    // バック非表示モードならバックの処理を行わない
-    if( (wk->view.buttonact_on == MCV_USERD_BTTN_MODE_NOBACK) &&
-        (i == MCV_USERD_BTTN_BACK) ){
-      continue;
-    }
-
-    result = MCVSys_OamBttnObjAnmMain( &wk->view, i, wk->view.touch_button, wk->view.touch_button_event );
-    if( result == TRUE ){
-      // ボタンを押した
-      return MCV_USERD_BTTN_RET_LEFT + i;
-    }
-  }
-#endif //_OAMBUTTON //@@OO
-
-  return MCV_USERD_BTTN_RET_NONE;
-}
-
-//----------------------------------------------------------------------------
-/**
- *  @brief  ボタンコールバック
- *
- *  @param  bttn_no   ボタンNo
- *  @param  event   イベントNo
- *  @param  p_work    ワーク
- */
-//-----------------------------------------------------------------------------
-static void MCVSys_OamBttnCallBack( u32 bttn_no, u32 event, void* p_work )
-{
-  WIFIP2PMATCH_WORK* p_wk = p_work;
-  p_wk->view.touch_button = bttn_no;
-  p_wk->view.touch_button_event = event;
-}
-
-//----------------------------------------------------------------------------
-/**
- *  @brief  ボタンアニメ開始
- *
- *  @param  p_view    ワーク
- *  @param  bttn_no   ボタンナンバー
- */
-//-----------------------------------------------------------------------------
-static void MCVSys_OamBttnObjAnmStart( WIFIP2PMATCH_VIEW*  p_view, u32 bttn_no )
-{
-#if _OAMBUTTON //@@OO
-  // アニメ初期化 RELEASEアニメ最終フレームに設定
-  GFL_CLACT_WK_SetAnmSeq( p_view->button_act[ bttn_no ], c_MCV_USER_BTTN_ANM_RELEASE[bttn_no] );
-  GFL_CLACT_WK_SetAnmIndex( p_view->button_act[ bttn_no ], MCV_USERD_BTTN_ANMMAX_0ORG );
-
-  // 文字列の座標初期化 @@OO
-  //  if( bttn_no == MCV_USERD_BTTN_BACK ){
-  //    FONTOAM_SetMat( p_view->back_fontoam, MCV_USERD_BTTN_FONT_X, c_MCV_USER_BTTN_FONT_YANM[0] );
-  //  }
-#endif //_OAMBUTTON //@@OO
-
-}
-
-//----------------------------------------------------------------------------
-/**
- *  @brief  アニメメイン
- *
- *  @param  p_view    ワーク
- *  @param  bttn_no   ボタンナンバー
- *  @param  push_bttn 押されているボタン
- *  @param  event   イベント
- *
- *  @retval TRUE  押し終わった
- *  @retval FALSE 押されていない又は押し終わってない
- */
-//-----------------------------------------------------------------------------
-static BOOL MCVSys_OamBttnObjAnmMain( WIFIP2PMATCH_VIEW*  p_view, u32 bttn_no, u32 push_bttn, u32 event )
-{
-  BOOL ret = FALSE;
-#if _OAMBUTTON //@@OO
-  u32 anm_frame;
-  u32 anm_seq;
-
-  // 長い時間押しているとき＝MCV_USERD_BTTN_ANMPUSHOKまでいったらTRUEを返す
-  // 短い時間押しているとき＝離されたときにTRUEを返す
-
-
-  // 自分がおされているかチェック
-  if( (push_bttn == bttn_no)  ){
-
-    anm_frame = GFL_CLACT_WK_GetAnmIndex( p_view->button_act[bttn_no] );
-
-    // 押されているとき
-    if( (event == GFL_BMN_EVENT_TOUCH)  || (event == GFL_BMN_EVENT_HOLD) ){
-
-      // イベントが最初のタッチだったらアニメ設定
-      if( event == GFL_BMN_EVENT_TOUCH ){
-        GFL_CLACT_WK_SetAnmSeq( p_view->button_act[ bttn_no ], c_MCV_USER_BTTN_ANM_PUSH[bttn_no] );
-      }
-
-      // アニメがPUSHOK以下の時のみ動かす
-      if( anm_frame < MCV_USERD_BTTN_ANMPUSHOK ){
-
-        GFL_CLACT_WK_AddAnmFrame( p_view->button_act[bttn_no], FX32_CONST(2) );
-        anm_frame = GFL_CLACT_WK_GetAnmIndex( p_view->button_act[bttn_no] );
-
-        // 「もどる」ならフォントも動かす
-        if( bttn_no == MCV_USERD_BTTN_BACK ){
-          //@@OO
-          //          FONTOAM_SetMat( p_view->back_fontoam, MCV_USERD_BTTN_FONT_X,
-          //              c_MCV_USER_BTTN_FONT_YANM[anm_frame] );
-        }
-
-        // ボタンが下までアニメしたら押したことにする
-        // この次のフレームからは上のanm_frameチェックで
-        // ひっかかるのでここは初めてOKにきたときにのみ
-        // 実行される
-        if( anm_frame >= MCV_USERD_BTTN_ANMPUSHOK ){
-          ret = TRUE;
-        }
-      }
-
-    }
-    // 離したとき
-    else if( event == GFL_BMN_EVENT_RELEASE ){
-      if( anm_frame < MCV_USERD_BTTN_ANMPUSHOK ){
-        // ボタンを押したことになるフレームまでいっていなければ
-        // ボタンを押したことにする
-        ret = TRUE;
-      }
-    }
-  }else{
-
-    anm_seq = GFL_CLACT_WK_GetAnmSeq( p_view->button_act[bttn_no] );//GFL_CLACT_WK_GetAnmSeq
-    anm_frame = GFL_CLACT_WK_GetAnmIndex( p_view->button_act[bttn_no] );
-
-    // アニメがPUSHアニメだったらRELEASEアニメに切り替える
-    if( anm_seq == c_MCV_USER_BTTN_ANM_PUSH[bttn_no] ){
-      GFL_CLACT_WK_SetAnmSeq( p_view->button_act[bttn_no], c_MCV_USER_BTTN_ANM_RELEASE[bttn_no] );
-      GFL_CLACT_WK_SetAnmIndex( p_view->button_act[bttn_no], MCV_USERD_BTTN_ANMMAX_0ORG - anm_frame );
-    }
-
-    // アニメが終わるまでアニメさせる
-    GFL_CLACT_WK_AddAnmFrame( p_view->button_act[bttn_no], FX32_CONST(2) );
-  }
-
-#endif //_OAMBUTTON //@@OO
-  return ret;
-}
 
 //----------------------------------------------------------------------------
 /**
