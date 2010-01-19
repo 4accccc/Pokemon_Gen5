@@ -1777,19 +1777,11 @@ static void MSGWND_PrintBothNameCenter( MSGWND_WORK* p_wk, const MSG_WORK *cp_ms
 
   //ワードセットに登録
   { 
-    STRBUF  *p_name = GFL_STR_CreateBuffer( IRC_COMPATIBLE_SV_DATA_NAME_LEN, heapID );
-    GFL_STR_SetStringCodeOrderLength( p_name, cp_you->name, IRC_COMPATIBLE_SV_DATA_NAME_LEN );
-
-    WORDSET_RegisterWord( p_wordset, 0, p_name, cp_you->sex == 1 ? PTL_SEX_MALE : PTL_SEX_FEMALE, TRUE, PM_LANG );
-    GFL_STR_DeleteBuffer( p_name );
+    WORDSET_RegisterPlayerName( p_wordset, 0, (const MYSTATUS*)cp_you->my_status );
   }
   //ワードセットに登録
   { 
-    STRBUF  *p_name = GFL_STR_CreateBuffer( IRC_COMPATIBLE_SV_DATA_NAME_LEN, heapID );
-    GFL_STR_SetStringCodeOrderLength( p_name, cp_my->name, IRC_COMPATIBLE_SV_DATA_NAME_LEN );
-
-    WORDSET_RegisterWord( p_wordset, 0, p_name, cp_my->sex == 1 ? PTL_SEX_MALE : PTL_SEX_FEMALE, TRUE, PM_LANG );
-    GFL_STR_DeleteBuffer( p_name );
+    WORDSET_RegisterPlayerName( p_wordset, 1, (const MYSTATUS*)cp_my->my_status );
   }
 
 	//元の文字列に数値を適用
@@ -1898,13 +1890,21 @@ static void SEQFUNC_StartGame( RESULT_MAIN_WORK *p_wk, u16 *p_seq )
 	if( p_wk->p_param->p_you_status )
 	{	
     COMPATIBLE_STATUS *p_you;
+    MYSTATUS  *p_mystatus;
 
 		p_sv	= IRC_COMPATIBLE_SV_GetSavedata( SaveControl_GetPointer() );
 		p_you	= p_wk->p_param->p_you_status;
+    p_mystatus  = (MYSTATUS*)p_you->my_status;
 
 		//セーブする
-		IRC_COMPATIBLE_SV_AddRanking( p_sv, p_you->name,
-        score, p_you->sex, p_you->barth_month, p_you->barth_day, p_you->trainerID );
+		IRC_COMPATIBLE_SV_AddRanking(
+        p_sv,
+        MyStatus_GetMyName( p_mystatus ),
+        score, 
+        MyStatus_GetMySex( p_mystatus ) == PTL_SEX_MALE, 
+        p_you->barth_month, 
+        p_you->barth_day, 
+        MyStatus_GetID( p_mystatus ) );
 	}
 
 	BACKOBJ_StartGather( &p_wk->backobj[BACKOBJ_SYS_MAIN], FALSE );
@@ -2103,6 +2103,12 @@ static void OBJNUMBER_Init( OBJNUMBER_WORK *p_wk, const GRAPHIC_WORK *cp_grp, in
 				//センタリング
 				clpos.x	= 256/2 + 40 * (i-1) - 20;
 			}
+      else if( 0 <= number && number < 10 )
+      { 
+        //１桁
+        //センタリング
+				clpos.x	= 256/2 + 40 * (i-1) - 40;
+      }
 			else
 			{
 				//通常処理
@@ -2145,6 +2151,12 @@ static void OBJNUMBER_Start( OBJNUMBER_WORK *p_wk, int fig )
 		//3の桁が0のときはやらない
 		if( fig == 0 && p_wk->number[CLWK_NUMBER_MAX -1 - fig] == 0 )
 		{	
+			p_wk->is_end[fig]	= TRUE;
+		}
+		else if( (fig == 0 && p_wk->number[CLWK_NUMBER_MAX -1 - fig] == 0)
+        && (fig == 1 && p_wk->number[CLWK_NUMBER_MAX -1 - fig] == 0) )
+		{	
+      //３の桁が０で２の桁が０のときもやらない
 			p_wk->is_end[fig]	= TRUE;
 		}
 		else

@@ -1113,13 +1113,11 @@ void COMPATIBLE_IRC_GetStatus( const GAMESYS_WORK *cp_gamesys, COMPATIBLE_STATUS
   OSOwnerInfo info;
 
   OS_GetOwnerInfo( &info );
-
   cp_player	= GAMESYSTEM_GetMyPlayerWork( (GAMESYS_WORK *)cp_gamesys );
-  MyStatus_CopyNameStrCode( &cp_player->mystatus, p_status->name, IRC_COMPATIBLE_SV_DATA_NAME_LEN );
-  p_status->sex          = MyStatus_GetMySex(&cp_player->mystatus) == PTL_SEX_MALE;
+
   p_status->barth_month  = info.birthday.month;
   p_status->barth_day    = info.birthday.day;
-  p_status->trainerID    = MyStatus_GetID( &cp_player->mystatus );
+  MyStatus_Copy(&cp_player->mystatus, (MYSTATUS*)p_status->my_status );
 }
 
 //=============================================================================

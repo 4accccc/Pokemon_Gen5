@@ -276,6 +276,8 @@ static GFL_PROC_RESULT IRC_COMPATIBLE_PROC_Init( GFL_PROC *p_proc, int *p_seq, v
 		SEQ_Change( p_wk, SEQFUNC_Start );
 	}
 
+  GF_ASSERT_MSG( COMPATIBLE_MYSTATUS_SIZE == MyStatus_GetWorkSize(), "number %d != mystatus %d!!\n", COMPATIBLE_MYSTATUS_SIZE, MyStatus_GetWorkSize() );
+
 	return GFL_PROC_RES_FINISH;
 }
 //----------------------------------------------------------------------------
@@ -1120,9 +1122,11 @@ static u32 RULE_CalcScore( u32 rhythm_score, u32 aura_score, u32 rhythm_minus, u
 	//‰^–½’lŒvŽZiƒQƒ^‚Ì•”•ªj
 	{	
 		fx32	rate;
-
     u32	name_score;
-    name_score	= RULE_CalcNameScore( cp_my_status->name, cp_you_status->name );
+    const MYSTATUS  *cp_my   = (const MYSTATUS  *)cp_my_status->my_status;
+    const MYSTATUS  *cp_you  = (const MYSTATUS  *)cp_you_status->my_status;
+
+    name_score	= RULE_CalcNameScore( MyStatus_GetMyName(cp_my), MyStatus_GetMyName(cp_you) );
 		rate	= FX32_CONST(name_score) / 150;
 		rate	= MATH_CLAMP( rate , FX32_CONST(0.2F), FX32_CONST(0.8F) );
 

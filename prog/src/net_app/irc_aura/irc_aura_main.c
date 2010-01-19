@@ -496,6 +496,7 @@ typedef struct
   GFL_POINT trg_right;
   SHAKE_SEARCH_WORK shake_left;
   SHAKE_SEARCH_WORK shake_right;
+  u32       minus;
 } AURANET_RESULT_DATA;
 //ネットメイン
 typedef struct
@@ -600,6 +601,8 @@ struct _AURA_MAIN_WORK
   u16             debug_player;     //自分か相手か
   u16             debug_game_cnt; //何ゲーム目か
 #endif //DEBUG_IRC_COMPATIBLE_ONLYPLAY
+
+  u32       minus;
 
   MSGWND_WORK     msgtitle; //タイトルメッセージ
 
@@ -2411,12 +2414,8 @@ static void MSGWND_PrintPlayerName( MSGWND_WORK* p_wk, const MSG_WORK *cp_msg, u
   cp_msgdata  = MSG_GetMsgDataConst( cp_msg );
 
   //ワードセットに登録
-  { 
-    STRBUF  *p_name = GFL_STR_CreateBuffer( IRC_COMPATIBLE_SV_DATA_NAME_LEN, heapID );
-    GFL_STR_SetStringCodeOrderLength( p_name, cp_status->name, IRC_COMPATIBLE_SV_DATA_NAME_LEN );
-
-    WORDSET_RegisterWord( p_wordset, 0, p_name, cp_status->sex == 1 ? PTL_SEX_MALE : PTL_SEX_FEMALE, TRUE, PM_LANG );
-    GFL_STR_DeleteBuffer( p_name );
+  {  
+    WORDSET_RegisterPlayerName( p_wordset, 0, (const MYSTATUS*)cp_status->my_status );
   }
 
   //元の文字列に数値を適用
@@ -2564,7 +2563,8 @@ static void SEQFUNC_StartGame( AURA_MAIN_WORK *p_wk, u16 *p_seq )
     {
       GUIDE_SetVisible( 0, HEAPID_IRCAURA );
 
-      MSGWND_Print( &p_wk->msgwnd[MSGWNDID_TEXT], &p_wk->msg, AURA_STR_001, 0, 0 );
+      MSGWND_PrintPlayerName( &p_wk->msgwnd[MSGWNDID_TEXT], &p_wk->msg,
+          AURA_STR_001, p_wk->p_param->p_you_status,  0, 0, HEAPID_IRCAURA );
 
       //左タッチ演出ON
       {
@@ -2662,8 +2662,8 @@ static void SEQFUNC_TouchLeft( AURA_MAIN_WORK *p_wk, u16 *p_seq )
     {
       GUIDE_SetVisible( 0, HEAPID_IRCAURA );
 
-
-      MSGWND_Print( &p_wk->msgwnd[MSGWNDID_TEXT], &p_wk->msg, AURA_STR_001, 0, 0 );
+      MSGWND_PrintPlayerName( &p_wk->msgwnd[MSGWNDID_TEXT], &p_wk->msg,
+          AURA_STR_001, p_wk->p_param->p_you_status,  0, 0, HEAPID_IRCAURA );
       SEQ_Change( p_wk, SEQFUNC_TouchRight );
 
       //右タッチ演出ON
@@ -2685,7 +2685,7 @@ static void SEQFUNC_TouchLeft( AURA_MAIN_WORK *p_wk, u16 *p_seq )
     break;
 
   case SEQ_RET:
-    p_wk->p_param->minus  += IRC_AURA_SCORE_MINUS;
+    p_wk->minus  += IRC_AURA_SCORE_MINUS;
     SEQ_Change( p_wk, SEQFUNC_StartGame );
     break;
   }
@@ -2762,7 +2762,7 @@ static void SEQFUNC_TouchRight( AURA_MAIN_WORK *p_wk, u16 *p_seq )
     break;
 
   case SEQ_RET:
-    p_wk->p_param->minus  += IRC_AURA_SCORE_MINUS;
+    p_wk->minus  += IRC_AURA_SCORE_MINUS;
     SEQ_Change( p_wk, SEQFUNC_StartGame );
     break;
   }
@@ -2825,6 +2825,7 @@ static void SEQFUNC_Result( AURA_MAIN_WORK *p_wk, u16 *p_seq )
     result.trg_right    = p_wk->trg_right[0];
     result.shake_left   = p_wk->shake_left[0];
     result.shake_right  = p_wk->shake_right[0];
+    result.minus        = p_wk->minus;
     if( AURANET_SendResultData( &p_wk->net, &result ) )
     {
       *p_seq  = SEQ_SCENE;
@@ -2859,6 +2860,11 @@ static void SEQFUNC_Result( AURA_MAIN_WORK *p_wk, u16 *p_seq )
 
   case SEQ_CALC:
     p_wk->p_param->score  = CalcScore( p_wk );
+    {
+      AURANET_RESULT_DATA you;
+      AURANET_GetResultData( &p_wk->net, &you );
+      p_wk->p_param->minus  = p_wk->minus + you.minus;
+    }
     p_wk->p_param->result = IRCAURA_RESULT_CLEAR;
     *p_seq  = SEQ_END;
     break;

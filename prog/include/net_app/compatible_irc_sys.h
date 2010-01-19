@@ -44,6 +44,9 @@
 #define TITLE_STR_SCALE_X	(FX32_ONE)
 #define TITLE_STR_SCALE_Y	(FX32_ONE)
 
+#define COMPATIBLE_MYSTATUS_SIZE    (32)
+
+
 //-------------------------------------
 ///		タイミング
 //=====================================
@@ -78,12 +81,10 @@ typedef enum {
 //=====================================
 typedef struct 
 {
-  STRCODE name[IRC_COMPATIBLE_SV_DATA_NAME_LEN];
   u8 barth_month;
   u8 barth_day;
-  u8 sex;
-  u8 dummy;
-  u32 trainerID;
+  u16 dummy;
+  u8 my_status[ COMPATIBLE_MYSTATUS_SIZE ];
 } COMPATIBLE_STATUS;
 
 

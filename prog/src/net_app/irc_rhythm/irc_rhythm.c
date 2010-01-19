@@ -429,6 +429,7 @@ typedef struct
 	RHYTHMSEARCH_DATA	data[RHYTHMSEARCH_DATA_MAX];
 	u32			data_idx;
 	OSTick	start_time;
+  u32     minus;
 } RHYTHMSEARCH_WORK;
 
 //-------------------------------------
@@ -562,6 +563,8 @@ struct _RHYTHM_MAIN_WORK
 
 	//その他
 	u32								marker_cnt;	//マーカー表示時間
+
+  u32   minus;
 
 	//引数
 	IRC_RHYTHM_PARAM	*p_param;
@@ -1932,11 +1935,7 @@ static void MSGWND_PrintPlayerName( MSGWND_WORK* p_wk, const MSG_WORK *cp_msg, u
 
   //ワードセットに登録
   { 
-    STRBUF  *p_name = GFL_STR_CreateBuffer( IRC_COMPATIBLE_SV_DATA_NAME_LEN, heapID );
-    GFL_STR_SetStringCodeOrderLength( p_name, cp_status->name, IRC_COMPATIBLE_SV_DATA_NAME_LEN );
-
-    WORDSET_RegisterWord( p_wordset, 0, p_name, cp_status->sex == 1 ? PTL_SEX_MALE : PTL_SEX_FEMALE, TRUE, PM_LANG );
-    GFL_STR_DeleteBuffer( p_name );
+    WORDSET_RegisterPlayerName( p_wordset, 0, (const MYSTATUS*)cp_status->my_status );
   }
 
 	//元の文字列に数値を適用
@@ -2428,6 +2427,7 @@ static void SEQFUNC_Result( RHYTHM_MAIN_WORK *p_wk, u16 *p_seq )
 		break;
 
 	case SEQ_SENDRESULT:
+    p_wk->search.minus  = CalcMinus( p_wk );
 		if( RHYTHMNET_SendResultData( &p_wk->net, &p_wk->search ) )
 		{	
 			*p_seq	= SEQ_SCENE;
@@ -2461,7 +2461,11 @@ static void SEQFUNC_Result( RHYTHM_MAIN_WORK *p_wk, u16 *p_seq )
 
 	case SEQ_CALC:
 		p_wk->p_param->score	= CalcScore( p_wk );
-    p_wk->p_param->minus  = CalcMinus( p_wk );
+    { 
+      RHYTHMSEARCH_WORK you;
+      RHYTHMNET_GetResultData( &p_wk->net, &you );
+      p_wk->p_param->minus  = CalcMinus( p_wk ) + you.minus;
+    }
 		p_wk->p_param->result	= IRCRHYTHM_RESULT_CLEAR;
 	//	*p_seq	= SEQ_FADEIN_START;
 		*p_seq	= SEQ_END;

@@ -47,7 +47,6 @@
 #ifdef PM_DEBUG
 static int sc_debug_num = FX32_ONE;
 
-#define NO_GAMESYS_FLAG 
 #endif
 
 #define DEG_TO_IDX(x) ( 0xFFFF * x / 360 )
@@ -733,11 +732,12 @@ static GFL_PROC_RESULT IRC_MENU_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p
     GAMEDATA *p_data  = NULL;
     SAVE_CONTROL_WORK *p_sv_ctrl  = NULL;
     IRC_COMPATIBLE_SAVEDATA *p_sv = NULL;
-#ifndef NO_GAMESYS_FLAG
-    p_data  = GAMESYSTEM_GetGameData( p_wk->p_param->p_gamesys );
-    p_sv_ctrl  = GAMEDATA_GetSaveControlWork( p_data );
-    p_sv = IRC_COMPATIBLE_SV_GetSavedata( p_sv_ctrl );
-#endif
+    if( p_wk->p_param->p_gamesys )
+    { 
+      p_data  = GAMESYSTEM_GetGameData( p_wk->p_param->p_gamesys );
+      p_sv_ctrl  = GAMEDATA_GetSaveControlWork( p_data );
+      p_sv = IRC_COMPATIBLE_SV_GetSavedata( p_sv_ctrl );
+    }
     BUTTERFLY_SYS_Init( &p_wk->butterfly, &p_wk->grp, p_sv, HEAPID_IRCCOMPATIBLE );
   }
 
