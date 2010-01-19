@@ -12,3 +12,6 @@ gym1.spa
 
 fly_out.spa
 	feather_out.spr
+
+plasma.spa
+	plasma.spr

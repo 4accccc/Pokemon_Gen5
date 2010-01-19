@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+
+<ita version="1.6.0">
+
+<head>
+	<create user="unno" host="W00199" date="2010-01-19T18:24:22" source="plasma_ci01.mb"/>
+	<title>Texture SRT Animation Data for NINTENDO NITRO-System</title>
+	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+</head>
+
+<body>
+
+<tex_srt_info
+	frame_size="111"
+	tool_start_frame="0"
+	tool_end_frame="110"
+	interpolation="frame"
+	tex_matrix_mode="maya"
+	compress_material="off" material_size="5 5"
+	frame_step_mode="1"
+	tolerance_tex_scale="0.100000"
+	tolerance_tex_rotate="0.100000"
+	tolerance_tex_translate="0.010000"
+/>
+
+<tex_scale_data size="1">
+	1.000000
+</tex_scale_data>
+
+<tex_rotate_data size="1">
+	0.000000
+</tex_rotate_data>
+
+<tex_translate_data size="111">
+	0.000000 0.061523 0.123047 0.184570 0.246094 0.307617 0.369141 0.430664 0.492188 0.553955
+	0.615479 0.677002 0.738525 0.800049 0.861572 0.923096 0.984619 1.046143 1.107666 1.169189
+	1.230713 1.292236 1.353760 1.415283 1.476807 1.538574 1.600098 1.661621 1.723145 1.784668
+	1.846191 1.907715 1.969238 2.030762 2.092285 2.153809 2.215332 2.276855 2.338379 2.399902
+	2.461426 2.523193 2.584717 2.646240 2.707764 2.769287 2.830811 2.892334 2.953857 3.015381
+	3.076904 3.138428 3.199951 3.261475 3.322998 3.384521 3.446045 3.507813 3.569336 3.630859
+	3.692383 3.753906 3.815430 3.876953 3.938477 4.000000 4.061523 4.123047 4.184570 4.246094
+	4.307617 4.369141 4.430664 4.492188 4.553955 4.615479 4.677002 4.738525 4.800049 4.861572
+	4.923096 4.984619 5.046143 5.107666 5.169189 5.230713 5.292236 5.353760 5.415283 5.476807
+	5.538574 5.600098 5.661621 5.723145 5.784668 5.846191 5.907715 5.969238 6.030762 6.092285
+	6.153809 6.215332 6.276855 6.338379 6.399902 6.461426 6.523193 6.584717 6.646240 6.707764
+	6.769287
+</tex_translate_data>
+
+<tex_srt_anm_array size="1">
+	<tex_srt_anm index="0" material_name="line01">
+		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
+		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
+		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
+		<tex_translate_s frame_step="1" data_size="111" data_head="0"/>
+		<tex_translate_t frame_step="1" data_size="1" data_head="0"/>
+	</tex_srt_anm>
+</tex_srt_anm_array>
+
+</body>
+
+</ita>
