@@ -42,6 +42,10 @@
 #include "net_app/union/union_gra_tool.h"
 #include "net/dwc_rapfriend.h"
 
+#include "system/blink_palanm.h"
+#include "app/app_menu_common.h"
+#include "ui/touchbar.h"
+
 #include "wifi_note.naix"
 #include "wifi_note_snd.h"
 
@@ -78,6 +82,12 @@ FS_EXTERN_OVERLAY(wifi2dmap);
 #define CLACT_MAIN_VRAM_SIZ   ( 0x14000 )
 #define CLACT_SUB_VRAM_SIZ    ( 0 )
 
+// パレット定義
+#define	CLACT_PALNUM_WIFINOTE		( 0 )
+#define	CLACT_PALSIZ_WIFINOTE		( 5 )
+#define	CLACT_PALNUM_TB					( CLACT_PALNUM_WIFINOTE + CLACT_PALSIZ_WIFINOTE )
+#define	CLACT_PALSIZ_TB					( 1 )
+
 //-------------------------------------
 /// VRAMTRANFER_MAN
 //=====================================
@@ -86,28 +96,30 @@ FS_EXTERN_OVERLAY(wifi2dmap);
 //-------------------------------------
 /// BG
 //=====================================
-#define DFRM_BACK (GFL_BG_FRAME0_M)
-#define DFRM_MSG  (GFL_BG_FRAME1_M)
-#define DFRM_SCROLL (GFL_BG_FRAME2_M)
-#define DFRM_SCRMSG (GFL_BG_FRAME3_M)
-#define UFRM_MSG  (GFL_BG_FRAME0_S)
-#define UFRM_BASE (GFL_BG_FRAME1_S)
-#define UFRM_BACK (GFL_BG_FRAME2_S)
-#define WFNOTE_BG_NUM (7)
+#define DFRM_BACK			(GFL_BG_FRAME0_M)
+#define DFRM_MSG			(GFL_BG_FRAME1_M)
+#define DFRM_SCROLL		(GFL_BG_FRAME2_M)
+#define DFRM_SCRMSG		(GFL_BG_FRAME3_M)
+//#define UFRM_MSG			(GFL_BG_FRAME0_S)
+//#define UFRM_BASE			(GFL_BG_FRAME1_S)
+#define UFRM_BACK			(GFL_BG_FRAME0_S)
+#define WFNOTE_BG_NUM	(5)
 
 enum{ // パレットテーブル
   // メイン
-  BGPLT_M_BACK_0 = 0,
-  BGPLT_M_BACK_1,
-  BGPLT_M_BACK_2,
-  BGPLT_M_BACK_3,
-  BGPLT_M_BACK_4,
-  BGPLT_M_BACK_5,
+  BGPLT_M_BACK_0 = 0,			// ベース
+  BGPLT_M_BACK_1,					// ボタン（通常時）
+  BGPLT_M_BACK_2,					// ボタン（選択時のグラデ用１）
+  BGPLT_M_BACK_3,					// ボタン（選択時のグラデ用１）
+  BGPLT_M_BACK_4,					// ボタン（項目なし用）
+  BGPLT_M_BACK_5,					// タッチバー用
+////////////////////////
   BGPLT_M_BACK_6,
   BGPLT_M_BACK_7,
   BGPLT_M_BACK_8,
   BGPLT_M_BACK_9,
   BGPLT_M_BACK_A,
+////////////////////////
   BGPLT_M_MSGFONT = 0x0B,
   BGPLT_M_TALKWIN = 0x0C,
   BGPLT_M_YNWIN = 0x0D,
@@ -123,8 +135,8 @@ enum{ // パレットテーブル
   BGPLT_S_MSGFONT = 0x0E,
   BGPLT_S_TRGRA = 0x0F,
 };
-#define BGPLT_M_BACK_NUM  ((BGPLT_M_BACK_A+1) - BGPLT_M_BACK_0)
-#define BGPLT_S_BACK_NUM  ((BGPLT_S_BACK_4+1) - BGPLT_S_BACK_0)
+#define BGPLT_M_BACK_NUM  ((BGPLT_M_BACK_5+1) - BGPLT_M_BACK_0)
+#define BGPLT_S_BACK_NUM  (BGPLT_M_BACK_NUM)
 
 //アクターアニメ
 enum{
@@ -181,12 +193,6 @@ enum{
 #define WFNOTE_OAM_COMM_CONTID  ( 100 ) // 基本的OAMの管理ID
 
 // FONTカラー
-#define WFNOTE_COL_BLACK_NUM  ( 1, 2, 0 )   // フォントカラー：黒
-#define WFNOTE_COL_WHITE_NUM  ( 15, 2, 0 )    // フォントカラー：白
-#define WFNOTE_COL_RED_NUM    ( 3, 4, 0 )   // フォントカラー：赤
-#define WFNOTE_COL_BLUE_NUM   ( 5, 6, 0 )   // フォントカラー：青
-#define WFNOTE_TCOL_BLACK_NUM ( 1, 15, 0 )    // フォントカラー：縁白の黒
-
 #define WFNOTE_COL_BLACK  ( PRINTSYS_LSB_Make( 1, 2, 0 ) )    // フォントカラー：黒
 #define WFNOTE_COL_WHITE  ( PRINTSYS_LSB_Make( 15, 2, 0 ) )   // フォントカラー：白
 #define WFNOTE_COL_RED    ( PRINTSYS_LSB_Make( 3, 4, 0 ) )    // フォントカラー：赤
@@ -283,7 +289,7 @@ enum{
 //=====================================
 // BMP
 #define BMPL_MODESEL_MSG_X    ( 4 ) // 開始位置（キャラ単位）
-#define BMPL_MODESEL_MSG_Y    ( 4 ) // 開始位置（キャラ単位）
+#define BMPL_MODESEL_MSG_Y    ( 5 ) // 開始位置（キャラ単位）
 #define BMPL_MODESEL_MSG_SIZX ( 24 )  // サイズ（キャラ単位）
 #define BMPL_MODESEL_MSG_SIZY ( 20 )  // サイズ（キャラ単位）
 #define BMPL_MODESEL_MSGCGX   ( 1 ) // キャラクタオフセット
@@ -619,6 +625,7 @@ enum{
 /////////////////////////////////
 //ビットマップ上画面
 /////////////////////////////////
+/*
 enum{
  FINFO_WIN_PAGE,
  FINFO_WIN_TITLE,
@@ -630,8 +637,9 @@ enum{
  FINFO_WIN_DAY01,
  FINFO_WIN_NUM,
 };
+*/
 
-#define BMPL_FINFO_FRM      ( UFRM_MSG )
+//#define BMPL_FINFO_FRM      ( UFRM_MSG )
 #define BMPL_FINFO_PAL      ( BGPLT_S_MSGFONT )
 //ページ
 #define BMPL_FINFO_PAGE_X   ( 26 )  // 開始位置（キャラ単位）
@@ -967,11 +975,11 @@ enum{
 //////////////////////////////////////////////////////////////////////////////
 //タッチパネル座標
 //////////////////////////////////////////////////////////////////////////////
-#define TP_MODESEL_BTN_X  (2*8+2)
-#define TP_MODESEL_BTN_W  (28*8-4)
-#define TP_MODESEL_BTN_H  (4*8-4)
-#define TP_MODESEL_BTN_OY (5*8)
-#define TP_MODESEL_BTN_Y01  (4*8+2)
+#define TP_MODESEL_BTN_X		(2*8+3)
+#define TP_MODESEL_BTN_W		(28*8-6-1)
+#define TP_MODESEL_BTN_H		(4*8-4-1)
+#define TP_MODESEL_BTN_OY		(5*8)
+#define TP_MODESEL_BTN_Y01  (5*8+2)
 #define TP_MODESEL_BTN_Y02  (TP_MODESEL_BTN_Y01+TP_MODESEL_BTN_OY)
 #define TP_MODESEL_BTN_Y03  (TP_MODESEL_BTN_Y02+TP_MODESEL_BTN_OY)
 #define TP_MODESEL_BTN_Y04  (TP_MODESEL_BTN_Y03+TP_MODESEL_BTN_OY)
@@ -984,10 +992,25 @@ enum{
 //OBJ用リソースIDX
 enum
 {
+/*
   WOR_OBJ_PLT,
   WOR_OBJ_NCG,
   WOR_OBJ_ANM,
   WNOTE_OBJ_RES_MAX,
+*/
+	// キャラ
+	CHR_RES_WOR = 0,
+	CHR_RES_TB,
+	CHR_RES_MAX,
+	// パレット
+	PAL_RES_WOR = 0,
+	PAL_RES_TB,
+	PAL_RES_MAX,
+	// セル
+	CEL_RES_WOR = 0,
+	CEL_RES_TB,
+	CEL_RES_MAX,
+
 }WNOTE_OBJ_RES;
 
 #pragma mark[>struct
@@ -1114,15 +1137,22 @@ typedef struct {
   GFL_CLUNIT  *cellUnit;
   GFL_CLUNIT  *cellUnitScroll;
   GFL_CLSYS_REND  *scrollRender;
-  u32     objResIdx[WNOTE_OBJ_RES_MAX];
+//  u32     objResIdx[WNOTE_OBJ_RES_MAX];
+	u32	chrRes[CHR_RES_MAX];
+	u32	palRes[PAL_RES_MAX];
+	u32	celRes[CEL_RES_MAX];
 
   GFL_CLWK *p_yazirushi[WFNOTE_YAZIRUSHINUM]; // 矢印アクター
   GFL_CLWK *p_cur;  // カーソルアクター
+  GFL_CLWK *p_tb;		// タッチバー×ボタンアクター
 
   WFNOTE_SCRNDATA scrn; // 基本スクリーンデータ
 
   GFL_FONT  *fontHandle;
   HEAPID    heapID;
+
+	BLINKPALANM_WORK * bpawk;
+
 } WFNOTE_DRAW;
 
 //-------------------------------------
@@ -1132,6 +1162,10 @@ typedef struct {
   // データ
   u32 cursor; // カーソル
   u32 wait;
+
+	// ボタンアニメ
+	u16	btn_anmSeq;		// シーケンス
+	u16	btn_anmCnt;		// カウンタ
 
   // グラフィック
   GFL_BMPWIN *msg;  // メッセージ面
@@ -1259,7 +1293,7 @@ typedef struct {
   WFNOTE_FINFO_DRAWAREA drawarea[WFNOTE_DRAWAREA_NUM];// 表示エリア
   WFNOTE_FINFO_SCRNDATA scrn[FINFO_SCRNDATA_NUM]; // 画面構成スクリーンデータ
   GFL_BMPWIN  *drawBmpWin[2];
-  GFL_BMPWIN  *win[ FINFO_WIN_NUM ];  //固定ウィンドウ
+//  GFL_BMPWIN  *win[ FINFO_WIN_NUM ];  //固定ウィンドウ
 } WFNOTE_FRIENDINFO;
 
 
@@ -1511,6 +1545,15 @@ static BOOL FInfo_PofinnCaseCheck( WFNOTE_DATA* p_data, u32 heapID );
 //=====================================
 static u64 WFNOTE_STRBUF_GetNumber( STRBUF *str , BOOL *pbFlag );
 
+static void Draw_BlinkAnmInit( WFNOTE_DRAW * p_draw, u32 heapID );
+static void Draw_BlinkAnmExit( WFNOTE_DRAW * p_draw );
+static void SetTopPageButtonPassive( WFNOTE_DRAW * p_draw, u32 pos );
+static void SetTopPageButtonActive( WFNOTE_DRAW * p_draw, u32 pos );
+static void ChangeTopPageButton( WFNOTE_DRAW * p_draw, u32 now, u32 old );
+static BOOL MainButtonDecedeAnime( WFNOTE_MODESELECT * p_wk );
+
+
+
 #pragma mark[>Data
 //-----------------------------------------------------------------------------
 /**
@@ -1554,6 +1597,7 @@ static const GFL_BG_BGCNT_HEADER DATA_BgCntTbl[ WFNOTE_BG_NUM ] = {
     GX_BG_SCRBASE_0xe000, GX_BG_CHARBASE_0x18000,0x8000, GX_BG_EXTPLTT_01,
     1, 0, 0, FALSE
   },
+/*
   { // UFRM_MSG
     0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
     GX_BG_SCRBASE_0xf800, GX_BG_CHARBASE_0x10000,0x8000, GX_BG_EXTPLTT_01,
@@ -1564,10 +1608,11 @@ static const GFL_BG_BGCNT_HEADER DATA_BgCntTbl[ WFNOTE_BG_NUM ] = {
     GX_BG_SCRBASE_0xf000, GX_BG_CHARBASE_0x00000,0x0000, GX_BG_EXTPLTT_01,
     1, 0, 0, FALSE
   },
+*/
   { // UFRM_BACK
     0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-    GX_BG_SCRBASE_0xe800, GX_BG_CHARBASE_0x00000,0x8000, GX_BG_EXTPLTT_01,
-    3, 0, 0, FALSE
+    GX_BG_SCRBASE_0xf800, GX_BG_CHARBASE_0x00000,0x8000, GX_BG_EXTPLTT_01,
+    0, 0, 0, FALSE
   },
 };
 
@@ -1579,23 +1624,23 @@ static GFL_REND_SURFACE_INIT DATA_ScrollSurfaceRect = {
 };
 
 static const GFL_DISP_VRAM vramSetTable = {
-  GX_VRAM_BG_128_A,       // メイン2DエンジンのBG
-  GX_VRAM_BGEXTPLTT_NONE,     // メイン2DエンジンのBG拡張パレット
+  GX_VRAM_BG_128_A,							// メイン2DエンジンのBG
+  GX_VRAM_BGEXTPLTT_NONE,				// メイン2DエンジンのBG拡張パレット
 
-  GX_VRAM_SUB_BG_128_C,     // サブ2DエンジンのBG
-  GX_VRAM_SUB_BGEXTPLTT_NONE,   // サブ2DエンジンのBG拡張パレット
+  GX_VRAM_SUB_BG_128_C,					// サブ2DエンジンのBG
+  GX_VRAM_SUB_BGEXTPLTT_NONE,		// サブ2DエンジンのBG拡張パレット
 
-  GX_VRAM_OBJ_128_B,        // メイン2DエンジンのOBJ
-  GX_VRAM_OBJEXTPLTT_NONE,    // メイン2DエンジンのOBJ拡張パレット
+  GX_VRAM_OBJ_128_B,						// メイン2DエンジンのOBJ
+  GX_VRAM_OBJEXTPLTT_NONE,			// メイン2DエンジンのOBJ拡張パレット
 
-  GX_VRAM_SUB_OBJ_16_I,     // サブ2DエンジンのOBJ
-  GX_VRAM_SUB_OBJEXTPLTT_NONE,  // サブ2DエンジンのOBJ拡張パレット
+  GX_VRAM_SUB_OBJ_16_I,					// サブ2DエンジンのOBJ
+  GX_VRAM_SUB_OBJEXTPLTT_NONE,	// サブ2DエンジンのOBJ拡張パレット
 
-  GX_VRAM_TEX_NONE,       // テクスチャイメージスロット
-  GX_VRAM_TEXPLTT_NONE,     // テクスチャパレットスロット
+  GX_VRAM_TEX_NONE,							// テクスチャイメージスロット
+  GX_VRAM_TEXPLTT_NONE,					// テクスチャパレットスロット
 
-  GX_OBJVRAMMODE_CHAR_1D_128K,  // メインOBJマッピングモード
-  GX_OBJVRAMMODE_CHAR_1D_128K,  // サブOBJマッピングモード
+  GX_OBJVRAMMODE_CHAR_1D_128K,	// メインOBJマッピングモード
+  GX_OBJVRAMMODE_CHAR_1D_128K,	// サブOBJマッピングモード
 };
 
 //-------------------------------------
@@ -1808,16 +1853,20 @@ GFL_PROC_RESULT WifiNoteProc_Init( GFL_PROC * proc, int * seq , void *pwk, void 
   GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_WIFINOTE, 0xC0000 );
   p_wk = GFL_PROC_AllocWork( proc, sizeof(WFNOTE_WK), HEAPID_WIFINOTE );
   GFL_STD_MemFill( p_wk, 0, sizeof(WFNOTE_WK) );
+/*
   if( pwk == NULL )
   {
-    p_wk->pp = GFL_HEAP_AllocMemory( GFL_HEAPID_APP , sizeof( WIFINOTE_PROC_PARAM));
-    p_wk->pp->pGameData = GAMEDATA_Create( GFL_HEAPID_APP );
+    p_wk->pp = GFL_HEAP_AllocMemory( HEAPID_WIFINOTE, sizeof( WIFINOTE_PROC_PARAM));
+    p_wk->pp->pGameData = GAMEDATA_Create( HEAPID_WIFINOTE );
   }
   else
   {
     p_wk->pp = pwk;
   }
+*/
+	p_wk->pp = pwk;
 
+#ifdef	PM_DEBUG
 //  デバッグ起動で名前が無い時用
   {
     MYSTATUS  *myStatus = GAMEDATA_GetMyStatus(p_wk->pp->pGameData);//SaveData_GetMyStatus( p_wk->pp->saveControlWork );
@@ -1831,6 +1880,7 @@ GFL_PROC_RESULT WifiNoteProc_Init( GFL_PROC * proc, int * seq , void *pwk, void 
       GFL_STR_DeleteBuffer( name );
     }
   }
+#endif	// PM_DEBUG
 
   // データワーク初期
   p_wk->vBlankTcb = NULL;
@@ -1962,10 +2012,12 @@ GFL_PROC_RESULT WifiNoteProc_End( GFL_PROC * proc, int * seq , void *pwk, void *
 
   //GFL_HEAP_FreeMemory( p_wk->pp );  //この処理は外側で行われる
 
+/*
   if( pwk == NULL )
   {
     GFL_HEAP_FreeMemory( p_wk->pp->pGameData );
   }
+*/
 
   GFL_PROC_FreeWork( proc );        // PROCワーク開放
   GFL_HEAP_DeleteHeap( HEAPID_WIFINOTE );
@@ -2162,7 +2214,7 @@ static void Data_SetReqStatus( WFNOTE_DATA* p_data, u8 reqstatus, u8 reqsubseq )
 static void Data_CheckKeyModeChange( WFNOTE_DATA* p_data )
 {
   if(GFL_UI_KEY_GetTrg() & GFL_PAD_BUTTON_KTST_CHG){
-    p_data->key_mode = GFL_APP_KTST_KEY;
+    p_data->key_mode = GFL_APP_END_KEY;
   }
 }
 
@@ -2351,6 +2403,8 @@ static void Draw_Init( WFNOTE_DRAW* p_draw, const WFNOTE_DATA* cp_data, u32 heap
   Draw_CommonActInit( p_draw, heapID );
   Draw_SCRNDATA_Init( p_draw, heapID );
 
+	Draw_BlinkAnmInit( p_draw, heapID );
+
   // OAM面表示
   GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
 }
@@ -2396,6 +2450,8 @@ static void Draw_VBlank( WFNOTE_DRAW* p_draw )
 //-----------------------------------------------------------------------------
 static void Draw_Exit( WFNOTE_DRAW* p_draw )
 {
+	Draw_BlinkAnmExit( p_draw );
+
   Draw_CommonActExit( p_draw );
   Draw_SCRNDATA_Exit( p_draw );
   Draw_BmpExit( p_draw );
@@ -2450,22 +2506,20 @@ static void Draw_BgInit( WFNOTE_DRAW* p_draw, u32 heapID )
   // キャラクタデータは、スクロール面にも転送
   GFL_ARCHDL_UTIL_TransVramPalette( p_draw->p_handle, NARC_wifi_note_friend_bg_d_NCLR, PALTYPE_MAIN_BG,
       BGPLT_M_BACK_0, BGPLT_M_BACK_NUM*32, heapID );
-  GFL_ARCHDL_UTIL_TransVramPalette( p_draw->p_handle, NARC_wifi_note_friend_bg_u_NCLR, PALTYPE_SUB_BG,
+  GFL_ARCHDL_UTIL_TransVramPalette( p_draw->p_handle, NARC_wifi_note_friend_bg_d_NCLR, PALTYPE_SUB_BG,
       BGPLT_S_BACK_0, BGPLT_S_BACK_NUM*32, heapID );
 
   GFL_ARCHDL_UTIL_TransVramBgCharacter( p_draw->p_handle, NARC_wifi_note_friend_bg_d_NCGR,
       DFRM_BACK, 0, 0, FALSE, heapID );
   GFL_ARCHDL_UTIL_TransVramBgCharacter( p_draw->p_handle, NARC_wifi_note_friend_bg_d_NCGR,
       DFRM_SCROLL, 0, 0, FALSE, heapID );
-  GFL_ARCHDL_UTIL_TransVramBgCharacter( p_draw->p_handle, NARC_wifi_note_friend_bg_u_NCGR,
+  GFL_ARCHDL_UTIL_TransVramBgCharacter( p_draw->p_handle, NARC_wifi_note_friend_bg_d_NCGR,
       UFRM_BACK, 0, 0, FALSE, heapID );
 
   GFL_ARCHDL_UTIL_TransVramScreen( p_draw->p_handle, NARC_wifi_note_friend_back_d_NSCR,
       DFRM_BACK, 0, 0, FALSE, heapID );
   GFL_ARCHDL_UTIL_TransVramScreen( p_draw->p_handle, NARC_wifi_note_friend_top_u_NSCR,
       UFRM_BACK, 0, 0, FALSE, heapID );
-
-
 }
 
 //----------------------------------------------------------------------------
@@ -2497,81 +2551,6 @@ static void Draw_BgExit( WFNOTE_DRAW* p_draw )
 //-----------------------------------------------------------------------------
 static void Draw_ClactInit( WFNOTE_DRAW* p_draw, u32 heapID )
 {
-/*
-  int i;
-  BOOL result;
-  // 共有OAMマネージャ作成
-  // レンダラ用OAMマネージャ作成
-  // ここで作成したOAMマネージャをみんなで共有する
-  REND_OAMInit(
-      0, 126,   // メイン画面OAM管理領域
-      0, 30,    // メイン画面アフィン管理領域
-      0, 126,   // サブ画面OAM管理領域
-      0, 30,    // サブ画面アフィン管理領域
-      heapID );
-
-  // キャラクタマネージャー初期化
-  {
-    CHAR_MANAGER_MAKE cm = {
-      CLACT_RESNUM,
-      CLACT_MAIN_VRAM_SIZ,
-      CLACT_SUB_VRAM_SIZ,
-      0
-    };
-    cm.heap = heapID;
-    InitCharManagerReg(&cm, GX_OBJVRAMMODE_CHAR_1D_128K, GX_OBJVRAMMODE_CHAR_1D_128K );
-  }
-  // パレットマネージャー初期化
-  InitPlttManager(CLACT_RESNUM, heapID);
-
-  // 読み込み開始位置を初期化
-  CharLoadStartAll();
-  PlttLoadStartAll();
-
-
-  // セルアクター初期化
-  p_draw->p_clact = CLACT_U_SetEasyInit( CLACT_WKNUM, &p_draw->renddata, heapID );
-
-  // スクロール用サーフェースの作成
-  REND_OAM_SetSurface( &p_draw->scrll_surface, &DATA_ScrollSurfaceRect,
-      NNS_G2D_SURFACETYPE_MAIN2D, &p_draw->renddata.Rend );
-
-  //リソースマネージャー初期化
-  for(i=0;i<CLACT_RESOURCE_NUM;i++){    //リソースマネージャー作成
-    p_draw->p_resman[i] = CLACT_U_ResManagerInit(CLACT_RESNUM, i, heapID);
-  }
-
-
-  // 基本的なリソースを読み込み
-  p_draw->p_resobj[0] = CLACT_U_ResManagerResAddArcChar_ArcHandle(
-      p_draw->p_resman[0], p_draw->p_handle, NARC_wifinote_gs_gra_obj_lz_ncgr,
-      TRUE, WFNOTE_OAM_COMM_CONTID, NNS_G2D_VRAM_TYPE_2DMAIN, heapID );
-  p_draw->p_resobj[1] = CLACT_U_ResManagerResAddArcPltt_ArcHandle(
-      p_draw->p_resman[1], p_draw->p_handle, NARC_wifinote_gs_gra_obj_nclr,
-      FALSE, WFNOTE_OAM_COMM_CONTID, NNS_G2D_VRAM_TYPE_2DMAIN, 5, heapID );
-  p_draw->p_resobj[2] = CLACT_U_ResManagerResAddArcKindCell_ArcHandle(
-      p_draw->p_resman[2], p_draw->p_handle, NARC_wifinote_gs_gra_obj_lz_ncer,
-      TRUE, WFNOTE_OAM_COMM_CONTID, CLACT_U_CELL_RES, heapID );
-  p_draw->p_resobj[3] = CLACT_U_ResManagerResAddArcKindCell_ArcHandle(
-      p_draw->p_resman[3], p_draw->p_handle, NARC_wifinote_gs_gra_obj_lz_nanr,
-      TRUE, WFNOTE_OAM_COMM_CONTID, CLACT_U_CELLANM_RES, heapID );
-
-  // VRAM転送
-  result = CLACT_U_CharManagerSetAreaCont( p_draw->p_resobj[0] );
-  GF_ASSERT( result );
-  result = CLACT_U_PlttManagerSetCleanArea( p_draw->p_resobj[1] );
-  GF_ASSERT( result );
-  CLACT_U_ResManagerResOnlyDelete( p_draw->p_resobj[0] );
-  CLACT_U_ResManagerResOnlyDelete( p_draw->p_resobj[1] );
-
-  // ヘッダー作成
-  CLACT_U_MakeHeader( &p_draw->clheader, WFNOTE_OAM_COMM_CONTID, WFNOTE_OAM_COMM_CONTID,
-      WFNOTE_OAM_COMM_CONTID, WFNOTE_OAM_COMM_CONTID, CLACT_U_HEADER_DATA_NONE,
-      CLACT_U_HEADER_DATA_NONE, FALSE, 0,
-      p_draw->p_resman[0], p_draw->p_resman[1], p_draw->p_resman[2], p_draw->p_resman[3],
-      NULL, NULL );
-  */
-
   //OBJの初期化
   GFL_CLSYS_INIT cellSysInitData = GFL_CLSYSINIT_DEF_DIVSCREEN;
   cellSysInitData.oamst_main = 0x10;  //デバッグメータの分
@@ -2587,10 +2566,35 @@ static void Draw_ClactInit( WFNOTE_DRAW* p_draw, u32 heapID )
   GFL_CLACT_UNIT_SetUserRend( p_draw->cellUnitScroll , p_draw->scrollRender );
 
   //リソースの読み込み
-  p_draw->objResIdx[WOR_OBJ_PLT] = GFL_CLGRP_PLTT_Register( p_draw->p_handle , NARC_wifi_note_friend_obj_d_NCLR , CLSYS_DRAW_MAIN , 0 , heapID );
-  p_draw->objResIdx[WOR_OBJ_NCG] = GFL_CLGRP_CGR_Register( p_draw->p_handle , NARC_wifi_note_friend_obj_d_NCGR , FALSE , CLSYS_DRAW_MAIN , heapID );
-  p_draw->objResIdx[WOR_OBJ_ANM] = GFL_CLGRP_CELLANIM_Register( p_draw->p_handle , NARC_wifi_note_friend_obj_d_NCER , NARC_wifi_note_friend_obj_d_NANR, heapID );
-
+	// 友達手帳専用
+  p_draw->chrRes[CHR_RES_WOR] = GFL_CLGRP_CGR_Register(
+																	p_draw->p_handle,
+																	NARC_wifi_note_friend_obj_d_NCGR,
+																	FALSE , CLSYS_DRAW_MAIN, heapID );
+  p_draw->palRes[PAL_RES_WOR] = GFL_CLGRP_PLTT_Register(
+																	p_draw->p_handle,
+																	NARC_wifi_note_friend_obj_d_NCLR,
+																	CLSYS_DRAW_MAIN, CLACT_PALNUM_WIFINOTE*0x20, heapID );
+  p_draw->celRes[CEL_RES_WOR] = GFL_CLGRP_CELLANIM_Register(
+																	p_draw->p_handle,
+																	NARC_wifi_note_friend_obj_d_NCER,
+																	NARC_wifi_note_friend_obj_d_NANR, heapID );
+	// タッチバー
+	{
+	  ARCHANDLE * ah = GFL_ARC_OpenDataHandle( APP_COMMON_GetArcId(), heapID );
+		p_draw->chrRes[CHR_RES_TB] = GFL_CLGRP_CGR_Register(
+																	ah, APP_COMMON_GetBarIconCharArcIdx(),
+																	FALSE, CLSYS_DRAW_MAIN, heapID );
+		p_draw->palRes[PAL_RES_TB] = GFL_CLGRP_PLTT_Register(
+																	ah, APP_COMMON_GetBarIconPltArcIdx(),
+																	CLSYS_DRAW_MAIN, CLACT_PALNUM_TB*0x20, heapID );
+		p_draw->celRes[CEL_RES_TB] = GFL_CLGRP_CELLANIM_Register(
+																	ah,
+																	APP_COMMON_GetBarIconCellArcIdx(APP_COMMON_MAPPING_128K),
+																	APP_COMMON_GetBarIconAnimeArcIdx(APP_COMMON_MAPPING_128K),
+																	heapID );
+	  GFL_ARC_CloseDataHandle( ah );
+	}
 }
 
 
@@ -2603,44 +2607,21 @@ static void Draw_ClactInit( WFNOTE_DRAW* p_draw, u32 heapID )
 //-----------------------------------------------------------------------------
 static void Draw_ClactExit( WFNOTE_DRAW* p_draw )
 {
-/*
-  int i;
+	u32	i;
 
-  // 基本OAMリソース破棄
-  CLACT_U_CharManagerDelete( p_draw->p_resobj[0] );
-  CLACT_U_PlttManagerDelete( p_draw->p_resobj[1] );
-  for( i=0; i<CLACT_RESOURCE_NUM; i++ ){
-    CLACT_U_ResManagerResDelete( p_draw->p_resman[i], p_draw->p_resobj[i] );
-  }
-
-  // リソースマネージャ破棄
-  for(i=0;i<CLACT_RESOURCE_NUM;i++){    //リソースマネージャー作成
-    CLACT_U_ResManagerDelete( p_draw->p_resman[i] );
-  }
-
-  // セルアクターセット破棄
-  CLACT_DestSet( p_draw->p_clact );
-
-  // キャラクタマネージャ破棄
-  DeleteCharManager();
-
-  // パレットマネージャ破棄
-  DeletePlttManager();
-
-  // レンダラー破棄
-  REND_OAM_Delete();
-
-  // Vram転送マネージャ破棄
-  DellVramTransferManager();
-*/
-  GFL_CLGRP_PLTT_Release( p_draw->objResIdx[WOR_OBJ_PLT] );
-  GFL_CLGRP_CGR_Release( p_draw->objResIdx[WOR_OBJ_NCG] );
-  GFL_CLGRP_CELLANIM_Release( p_draw->objResIdx[WOR_OBJ_ANM] );
+	for( i=0; i<CHR_RES_MAX; i++ ){
+		GFL_CLGRP_CGR_Release( p_draw->chrRes[i] );
+	}
+	for( i=0; i<PAL_RES_MAX; i++ ){
+		GFL_CLGRP_PLTT_Release( p_draw->palRes[i] );
+	}
+	for( i=0; i<CEL_RES_MAX; i++ ){
+		GFL_CLGRP_CELLANIM_Release( p_draw->celRes[i] );
+	}
   GFL_CLACT_UNIT_Delete( p_draw->cellUnitScroll );
   GFL_CLACT_USERREND_Delete( p_draw->scrollRender );
   GFL_CLACT_UNIT_Delete( p_draw->cellUnit );
   GFL_CLACT_SYS_Delete();
-
 }
 //----------------------------------------------------------------------------
 /**
@@ -2820,11 +2801,18 @@ static void Draw_BmpTitleWrite( WFNOTE_DRAW* p_draw, GFL_BMPWIN** win, u32 msg_i
 
   GFL_MSG_GetString( p_draw->p_msgman, msg_idx, p_draw->p_titletmp );
   WORDSET_ExpandStr( p_draw->p_wordset, p_draw->p_titlestr, p_draw->p_titletmp );
+/*
   p_draw->printHandle = PRINTSYS_PrintStream(*win,  0, BMPL_TITLE_PL_Y,
       p_draw->p_titlestr, p_draw->fontHandle , WFNOTE_TITLE_MSG_SPEED,
       p_draw->msgTcblSys , 10 , p_draw->heapID , PRINTSYS_LSB_GetB(WFNOTE_COL_WHITE) );
+*/
+	PRINTSYS_PrintQueColor(
+		p_draw->printQue, GFL_BMPWIN_GetBmp(*win),
+		0, BMPL_TITLE_PL_Y,
+		p_draw->p_titlestr, p_draw->fontHandle, WFNOTE_COL_WHITE );
 
 //    GF_BGL_BmpWinOnVReq(win);
+	GFL_BMPWIN_TransVramCharacter( *win );
   GFL_BMPWIN_MakeScreen( *win );
   GFL_BG_LoadScreenV_Req( GFL_BMPWIN_GetFrame(*win) );
 
@@ -3000,7 +2988,7 @@ static void Draw_WflbyGameSetWordSet( WFNOTE_DRAW* p_draw, u32 num )
 //-----------------------------------------------------------------------------
 static void Draw_CommonActInit( WFNOTE_DRAW* p_draw, u32 heapID )
 {
-  static GFL_CLWK_DATA act_add[3] = {
+  static GFL_CLWK_DATA act_add[4] = {
     { // ←
       WFNOTE_YAZIRUSHI_LX ,
       WFNOTE_YAZIRUSHI_LRY ,
@@ -3022,17 +3010,24 @@ static void Draw_CommonActInit( WFNOTE_DRAW* p_draw, u32 heapID )
       WFNOTE_YAZIRUSHI_PRI,
       0
     },
+    { // タッチバーキャンセルボタン
+			TOUCHBAR_ICON_X_07,
+			TOUCHBAR_ICON_Y,
+			APP_COMMON_BARICON_RETURN,
+      3,
+      0
+    },
   };
   int i;
 
   // 矢印アクター作成
   for( i=0; i<WFNOTE_YAZIRUSHINUM; i++ ){
     p_draw->p_yazirushi[i] = GFL_CLACT_WK_Create(
-          p_draw->cellUnit ,
-          p_draw->objResIdx[WOR_OBJ_NCG] ,
-          p_draw->objResIdx[WOR_OBJ_PLT] ,
-          p_draw->objResIdx[WOR_OBJ_ANM] ,
-          &act_add[i] , CLSYS_DEFREND_MAIN ,
+          p_draw->cellUnit,
+          p_draw->chrRes[CHR_RES_WOR],
+          p_draw->palRes[PAL_RES_WOR],
+          p_draw->celRes[CEL_RES_WOR],
+          &act_add[i], CLSYS_DEFREND_MAIN,
           heapID );
 
     GFL_CLACT_WK_SetAutoAnmFlag( p_draw->p_yazirushi[i], TRUE );
@@ -3041,13 +3036,23 @@ static void Draw_CommonActInit( WFNOTE_DRAW* p_draw, u32 heapID )
   //カーソルアクター作成
   //リスト画面のキャラとの前後関係でこっちのunitに登録
   p_draw->p_cur = GFL_CLACT_WK_Create(
-        p_draw->cellUnitScroll ,
-        p_draw->objResIdx[WOR_OBJ_NCG] ,
-        p_draw->objResIdx[WOR_OBJ_PLT] ,
-        p_draw->objResIdx[WOR_OBJ_ANM] ,
-        &act_add[2] , CLSYS_DEFREND_MAIN ,
+        p_draw->cellUnitScroll,
+        p_draw->chrRes[CHR_RES_WOR],
+        p_draw->palRes[PAL_RES_WOR],
+        p_draw->celRes[CEL_RES_WOR],
+        &act_add[2] , CLSYS_DEFREND_MAIN,
         heapID );
   GFL_CLACT_WK_SetDrawEnable( p_draw->p_cur, FALSE );
+
+	// タッチバーキャンセルボタンアクター作成
+  p_draw->p_tb = GFL_CLACT_WK_Create(
+        p_draw->cellUnitScroll,
+        p_draw->chrRes[CHR_RES_TB],
+        p_draw->palRes[PAL_RES_TB],
+        p_draw->celRes[CEL_RES_TB],
+        &act_add[3] , CLSYS_DEFREND_MAIN,
+        heapID );
+  GFL_CLACT_WK_SetDrawEnable( p_draw->p_tb, TRUE );
 }
 
 //----------------------------------------------------------------------------
@@ -3060,9 +3065,11 @@ static void Draw_CommonActInit( WFNOTE_DRAW* p_draw, u32 heapID )
 static void Draw_CommonActExit( WFNOTE_DRAW* p_draw )
 {
   int i;
+
+  //タッチバーキャンセルアクター破棄
+  GFL_CLACT_WK_Remove( p_draw->p_tb );
   //カーソルアクター破棄
   GFL_CLACT_WK_Remove( p_draw->p_cur );
-
   // 矢印アクター破棄
   for( i=0; i<WFNOTE_YAZIRUSHINUM; i++ ){
     GFL_CLACT_WK_Remove( p_draw->p_yazirushi[i] );
@@ -3210,6 +3217,7 @@ static int Draw_YesNoWinMain( WFNOTE_DATA* p_data, WFNOTE_DRAW* p_draw )
 //-----------------------------------------------------------------------------
 static void ModeSelect_Init( WFNOTE_MODESELECT* p_wk, WFNOTE_DATA* p_data, WFNOTE_DRAW* p_draw, u32 heapID )
 {
+  p_data->key_mode = GFL_UI_CheckTouchOrKey();	// キータッチ設定
   ModeSelect_DrawInit( p_wk, p_data, p_draw, heapID );
 }
 
@@ -3253,19 +3261,33 @@ static WFNOTE_STRET ModeSelect_Main( WFNOTE_MODESELECT* p_wk, WFNOTE_DATA* p_dat
     break;
 
   case SEQ_MODESEL_MAIN:
+		BLINKPALANM_Main( p_draw->bpawk );
     result = ModeSelectSeq_Main( p_wk, p_data, p_draw );
     if( result == FALSE ){
       break;
     }
-    p_wk->wait = 4;
+		if( p_wk->cursor == MODESEL_CUR_END ){
+			GFL_CLACT_WK_SetAnmFrame( p_draw->p_tb, 0 );
+			GFL_CLACT_WK_SetAnmSeq( p_draw->p_tb, APP_COMMON_BARICON_RETURN_ON );
+			GFL_CLACT_WK_SetAutoAnmFlag( p_draw->p_tb, TRUE );
+		}else{
+			p_wk->btn_anmSeq = 0;
+		}
     p_data->subseq = SEQ_MODESEL_MAIN_ENDWAIT;
     break;
+
   case SEQ_MODESEL_MAIN_ENDWAIT:
-    //ちょっとウェイト
-    if(p_wk->wait-- > 0){
-      break;
-    }
-    p_wk->wait = 0;
+		// ボタンアニメ
+		if( p_wk->cursor == MODESEL_CUR_END ){
+			if( GFL_CLACT_WK_CheckAnmActive( p_draw->p_tb ) == TRUE ){
+				break;
+			}
+		}else{
+			if( MainButtonDecedeAnime( p_wk ) == TRUE ){
+				break;
+			}
+		}
+
     // その状態に遷移して大丈夫かチェック
     if( ModeSelect_StatusChengeCheck( p_wk, p_data ) == TRUE ){
 
@@ -3453,14 +3475,17 @@ static void ModeSelect_DrawInit( WFNOTE_MODESELECT* p_wk, WFNOTE_DATA* p_data, W
   // 自分の名前をワードセットに設定
   WORDSET_RegisterPlayerName( p_draw->p_wordset, 0, GAMEDATA_GetMyStatus(p_data->pGameData) );
 
-  for( i=0; i<4; i++ ){
+  for( i=0; i<3; i++ ){
     u32 siz;
     GFL_MSG_GetString( p_draw->p_msgman, msg_top_menu01+i, p_tmp );
     WORDSET_ExpandStr( p_draw->p_wordset, p_str, p_tmp );
 
     siz = PRINTSYS_GetStrWidth( p_str, p_draw->fontHandle , 0 );
-    PRINTSYS_PrintQueColor( p_draw->printQue , GFL_BMPWIN_GetBmp(p_wk->msg), ((BMPL_MODESEL_MSG_SIZX*8)-siz)/2, 8+(40*i),
-        p_str, p_draw->fontHandle , WFNOTE_TCOL_BLACK );
+    PRINTSYS_PrintQueColor(
+			p_draw->printQue , GFL_BMPWIN_GetBmp(p_wk->msg),
+			((BMPL_MODESEL_MSG_SIZX*8)-siz)/2,
+			8+(40*i),
+      p_str, p_draw->fontHandle, WFNOTE_COL_BLACK );
   }
 
   GFL_BMPWIN_TransVramCharacter( p_wk->msg );
@@ -3526,15 +3551,20 @@ static void ModeSelectSeq_Init( WFNOTE_MODESELECT* p_wk, WFNOTE_DATA* p_data, WF
   GFL_BG_SetScroll( DFRM_SCROLL, GFL_BG_SCROLL_Y_SET, 0 );
 
   // カーソルアクター表示設定
-  Draw_CursorActorSet( p_draw, TRUE , ACTANM_CUR_MSEL );
-  Draw_CursorActorPriSet( p_draw, 1, 0 );
+  Draw_CursorActorSet( p_draw, FALSE , ACTANM_CUR_MSEL );
+//  Draw_CursorActorPriSet( p_draw, 1, 0 );
 
   // カーソル位置のパレットを設定
 //  ModeSelect_CursorScrnPalChange( p_wk, p_draw );
-  ModeSelect_CursorDraw( p_wk, p_draw );
+//  ModeSelect_CursorDraw( p_wk, p_draw );
+	if( p_data->key_mode == GFL_APP_END_KEY ){
+		SetTopPageButtonActive( p_draw, p_wk->cursor );
+	}else{
+		GFL_BG_LoadScreenV_Req( DFRM_SCROLL );
+	}
 
   // BG面転送
-  GFL_BG_LoadScreenV_Req( DFRM_SCROLL );
+//  GFL_BG_LoadScreenV_Req( DFRM_SCROLL );
 }
 
 //----------------------------------------------------------------------------
@@ -3549,18 +3579,20 @@ static void ModeSelectSeq_Init( WFNOTE_MODESELECT* p_wk, WFNOTE_DATA* p_data, WF
  *  @retval FALSE 何もおきていない
  */
 //-----------------------------------------------------------------------------
+/*
 static BOOL ModeSelectInput_Key( WFNOTE_MODESELECT* p_wk, WFNOTE_DATA* p_data, WFNOTE_DRAW* p_draw )
 {
   BOOL move = FALSE;
 
   if( GFL_UI_KEY_GetTrg() & GFL_PAD_BUTTON_KTST_CHG){
-    p_data->key_mode = GFL_APP_KTST_KEY;
+    p_data->key_mode = GFL_APP_END_KEY;
   }
 
   // 選択チェック
   if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE ){
     ModeSelect_CursorScrnPalChange( p_wk, p_draw );
     PMSND_PlaySE(WIFINOTE_DECIDE_SE);
+		GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
     return TRUE;
   }
 
@@ -3568,6 +3600,7 @@ static BOOL ModeSelectInput_Key( WFNOTE_MODESELECT* p_wk, WFNOTE_DATA* p_data, W
   if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL ){
     PMSND_PlaySE(WIFINOTE_BS_SE);
     p_wk->cursor = MODESEL_CUR_END; // 終了にする
+		GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
     return TRUE;
   }
 
@@ -3578,7 +3611,7 @@ static BOOL ModeSelectInput_Key( WFNOTE_MODESELECT* p_wk, WFNOTE_DATA* p_data, W
       move = TRUE;
     }
   }else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_DOWN ){
-    if( p_wk->cursor < MODESEL_CUR_END ){
+    if( p_wk->cursor < MODESEL_CUR_MYCODE ){
       p_wk->cursor++;
       move = TRUE;
     }
@@ -3590,7 +3623,56 @@ static BOOL ModeSelectInput_Key( WFNOTE_MODESELECT* p_wk, WFNOTE_DATA* p_data, W
 //    ModeSelect_CursorScrnPalChange( p_wk, p_draw );
     ModeSelect_CursorDraw( p_wk, p_draw );
     GFL_BG_LoadScreenV_Req( DFRM_SCROLL );
+		GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
   }
+  return FALSE;
+}
+*/
+static BOOL ModeSelectInput_Key( WFNOTE_MODESELECT* p_wk, WFNOTE_DATA* p_data, WFNOTE_DRAW* p_draw )
+{
+	// キー入力モードへ変更
+	if( p_data->key_mode == GFL_APP_END_TOUCH ){
+	  if( GFL_UI_KEY_GetTrg() & GFL_PAD_BUTTON_KTST_CHG){
+			PMSND_PlaySE( WIFINOTE_MOVE_SE );
+			ChangeTopPageButton( p_draw, p_wk->cursor, p_wk->cursor );
+			GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
+	    p_data->key_mode = GFL_APP_END_KEY;
+	  }
+		return FALSE;
+	}
+
+  // 選択チェック
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE ){
+    PMSND_PlaySE(WIFINOTE_DECIDE_SE);
+		BLINKPALANM_InitAnimeCount( p_draw->bpawk );
+    return TRUE;
+  }
+
+  // キャンセルチェック
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL ){
+    PMSND_PlaySE(WIFINOTE_BS_SE);
+		SetTopPageButtonPassive( p_draw, p_wk->cursor );
+    p_wk->cursor = MODESEL_CUR_END; // 終了にする
+    return TRUE;
+  }
+
+  // 移動チェック
+  if( GFL_UI_KEY_GetRepeat() & PAD_KEY_UP ){
+    if( p_wk->cursor > 0 ){
+	    PMSND_PlaySE( WIFINOTE_MOVE_SE );
+			ChangeTopPageButton( p_draw, p_wk->cursor-1, p_wk->cursor );
+      p_wk->cursor--;
+      return FALSE;
+    }
+  }else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_DOWN ){
+    if( p_wk->cursor < MODESEL_CUR_MYCODE ){
+	    PMSND_PlaySE( WIFINOTE_MOVE_SE );
+			ChangeTopPageButton( p_draw, p_wk->cursor+1, p_wk->cursor );
+      p_wk->cursor++;
+      return FALSE;
+    }
+  }
+
   return FALSE;
 }
 
@@ -3606,6 +3688,7 @@ static BOOL ModeSelectInput_Key( WFNOTE_MODESELECT* p_wk, WFNOTE_DATA* p_data, W
  *  @retval FALSE 何もおきていない
  */
 //-----------------------------------------------------------------------------
+/*
 static BOOL ModeSelectInput_Touch( WFNOTE_MODESELECT* p_wk, WFNOTE_DATA* p_data, WFNOTE_DRAW* p_draw ,BOOL* touch_f)
 {
   int ret;
@@ -3615,7 +3698,6 @@ static BOOL ModeSelectInput_Touch( WFNOTE_MODESELECT* p_wk, WFNOTE_DATA* p_data,
     {TP_MODESEL_BTN_Y01,TP_MODESEL_BTN_Y01+TP_MODESEL_BTN_H,TP_MODESEL_BTN_X,TP_MODESEL_BTN_X+TP_MODESEL_BTN_W},
     {TP_MODESEL_BTN_Y02,TP_MODESEL_BTN_Y02+TP_MODESEL_BTN_H,TP_MODESEL_BTN_X,TP_MODESEL_BTN_X+TP_MODESEL_BTN_W},
     {TP_MODESEL_BTN_Y03,TP_MODESEL_BTN_Y03+TP_MODESEL_BTN_H,TP_MODESEL_BTN_X,TP_MODESEL_BTN_X+TP_MODESEL_BTN_W},
-    {TP_MODESEL_BTN_Y04,TP_MODESEL_BTN_Y04+TP_MODESEL_BTN_H,TP_MODESEL_BTN_X,TP_MODESEL_BTN_X+TP_MODESEL_BTN_W},
     {GFL_UI_TP_HIT_END,0,0,0},
   };
   ret = GFL_UI_TP_HitTrg(TpRect);
@@ -3624,7 +3706,8 @@ static BOOL ModeSelectInput_Touch( WFNOTE_MODESELECT* p_wk, WFNOTE_DATA* p_data,
     return FALSE;
   }
   *touch_f = TRUE;
-  p_data->key_mode = GFL_APP_KTST_TOUCH;
+  p_data->key_mode = GFL_APP_END_TOUCH;
+	GFL_UI_SetTouchOrKey( GFL_APP_END_TOUCH );
 
   // 選択チェック
   p_wk->cursor = MODESEL_CUR_FLIST+ret;
@@ -3633,6 +3716,36 @@ static BOOL ModeSelectInput_Touch( WFNOTE_MODESELECT* p_wk, WFNOTE_DATA* p_data,
   ModeSelect_CursorDraw( p_wk, p_draw );
   GFL_BG_LoadScreenV_Req( DFRM_SCROLL );
   return TRUE;
+}
+*/
+static int ModeSelectInput_Touch( WFNOTE_MODESELECT* p_wk, WFNOTE_DATA* p_data, WFNOTE_DRAW* p_draw )
+{
+  int ret;
+
+  static const GFL_UI_TP_HITTBL TpRect[] = {
+  //  {0,191,0,255}, ty,by,lx,rx
+    {TP_MODESEL_BTN_Y01,TP_MODESEL_BTN_Y01+TP_MODESEL_BTN_H,TP_MODESEL_BTN_X,TP_MODESEL_BTN_X+TP_MODESEL_BTN_W},
+    {TP_MODESEL_BTN_Y02,TP_MODESEL_BTN_Y02+TP_MODESEL_BTN_H,TP_MODESEL_BTN_X,TP_MODESEL_BTN_X+TP_MODESEL_BTN_W},
+    {TP_MODESEL_BTN_Y03,TP_MODESEL_BTN_Y03+TP_MODESEL_BTN_H,TP_MODESEL_BTN_X,TP_MODESEL_BTN_X+TP_MODESEL_BTN_W},
+    {TOUCHBAR_ICON_Y,TOUCHBAR_ICON_Y+TOUCHBAR_ICON_HEIGHT-1,TOUCHBAR_ICON_X_07,TOUCHBAR_ICON_X_07+TOUCHBAR_ICON_WIDTH-1},
+    {GFL_UI_TP_HIT_END,0,0,0},
+  };
+  ret = GFL_UI_TP_HitTrg(TpRect);
+
+  if( ret != GFL_UI_TP_HIT_NONE ){
+		if( ret == MODESEL_CUR_END ){
+			PMSND_PlaySE( WIFINOTE_BS_SE );
+			SetTopPageButtonPassive( p_draw, p_wk->cursor );
+		}else{
+			PMSND_PlaySE( WIFINOTE_DECIDE_SE );
+			ChangeTopPageButton( p_draw, ret, p_wk->cursor );
+		}
+	  p_wk->cursor = MODESEL_CUR_FLIST+ret;
+		GFL_UI_SetTouchOrKey( GFL_APP_END_TOUCH );
+	  p_data->key_mode = GFL_APP_END_TOUCH;
+  }
+
+	return ret;
 }
 
 //----------------------------------------------------------------------------
@@ -3649,14 +3762,23 @@ static BOOL ModeSelectInput_Touch( WFNOTE_MODESELECT* p_wk, WFNOTE_DATA* p_data,
 //-----------------------------------------------------------------------------
 static BOOL ModeSelectSeq_Main( WFNOTE_MODESELECT* p_wk, WFNOTE_DATA* p_data, WFNOTE_DRAW* p_draw )
 {
+/*
   BOOL ret = FALSE,touch_f = FALSE;
 
   ret = ModeSelectInput_Touch( p_wk, p_data, p_draw ,&touch_f);
 
   if(touch_f){
-    p_data->key_mode = GFL_APP_KTST_TOUCH;
+    p_data->key_mode = GFL_APP_END_TOUCH;
     return ret;
   }
+  return ModeSelectInput_Key( p_wk, p_data, p_draw );
+*/
+	int	ret;
+
+  ret = ModeSelectInput_Touch( p_wk, p_data, p_draw );
+	if( ret != GFL_UI_TP_HIT_NONE ){
+		return TRUE;
+	}
   return ModeSelectInput_Key( p_wk, p_data, p_draw );
 }
 
@@ -3807,7 +3929,7 @@ static BOOL ModeSelect_TalkMsgEndCheck( const WFNOTE_MODESELECT* cp_wk, WFNOTE_D
 {
   if( PRINTSYS_PrintStreamGetState( p_draw->printHandleMsg ) == PRINTSTREAM_STATE_DONE ){
 //    p_data->key_mode = MsgPrintGetKeyTouchStatus();
-    p_data->key_mode = GFL_APP_KTST_KEY;
+    p_data->key_mode = GFL_APP_END_KEY;
     return TRUE;
   }
   return FALSE;
@@ -4230,11 +4352,11 @@ static void FList_DrawInit( WFNOTE_FRIENDLIST* p_wk, WFNOTE_DATA* p_data, WFNOTE
       0,0,
     };
     p_wk->p_clearact = GFL_CLACT_WK_Create(
-          p_draw->cellUnit ,
-          p_draw->objResIdx[WOR_OBJ_NCG] ,
-          p_draw->objResIdx[WOR_OBJ_PLT] ,
-          p_draw->objResIdx[WOR_OBJ_ANM] ,
-          &clearadd , CLSYS_DEFREND_MAIN ,
+          p_draw->cellUnit,
+          p_draw->chrRes[CHR_RES_WOR],
+          p_draw->palRes[PAL_RES_WOR],
+          p_draw->celRes[CEL_RES_WOR],
+          &clearadd, CLSYS_DEFREND_MAIN,
           heapID );
     // とりあえず非表示
     GFL_CLACT_WK_SetDrawEnable( p_wk->p_clearact, FALSE );
@@ -4457,7 +4579,7 @@ static u32 FListInputMain_Key( WFNOTE_FRIENDLIST* p_wk, WFNOTE_DATA* p_data, WFN
   BOOL move,pagechg,way;
 
   if(GFL_UI_KEY_GetTrg() & GFL_PAD_BUTTON_KTST_CHG){
-    p_data->key_mode = GFL_APP_KTST_KEY;
+    p_data->key_mode = GFL_APP_END_KEY;
   }
 
   if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE ){
@@ -4673,7 +4795,7 @@ static u32 FListSeq_Main( WFNOTE_FRIENDLIST* p_wk, WFNOTE_DATA* p_data, WFNOTE_D
 
   ret = FListInputMain_Touch( p_wk, p_data, p_draw, &touch_f);
   if(touch_f){
-    p_data->key_mode = GFL_APP_KTST_TOUCH;
+    p_data->key_mode = GFL_APP_END_TOUCH;
     return ret;
   }
   return FListInputMain_Key( p_wk, p_data, p_draw );
@@ -5212,7 +5334,7 @@ static BOOL FList_TalkMsgEndCheck( const WFNOTE_FRIENDLIST* cp_wk, WFNOTE_DATA* 
 {
   if( PRINTSYS_PrintStreamGetState( p_draw->printHandleMsg ) == PRINTSTREAM_STATE_DONE ){
 //    p_data->key_mode = MsgPrintGetKeyTouchStatus();
-    p_data->key_mode = GFL_APP_KTST_KEY;
+    p_data->key_mode = GFL_APP_END_KEY;
     return TRUE;
   }
   return FALSE;
@@ -6003,7 +6125,7 @@ static BOOL MyCode_Input( WFNOTE_MYCODE* p_wk, WFNOTE_DATA* p_data, WFNOTE_DRAW*
   ret = GFL_UI_TP_HitTrg(TpRect);
 
   if(ret == 0){
-    p_data->key_mode = GFL_APP_KTST_TOUCH;
+    p_data->key_mode = GFL_APP_END_TOUCH;
     return TRUE;
   }
 
@@ -6383,7 +6505,7 @@ static u32 FInfoInput_Exe( WFNOTE_FRIENDINFO* p_wk, WFNOTE_DATA* p_data, WFNOTE_
 static u32 FInfoInput_Key( WFNOTE_FRIENDINFO* p_wk, WFNOTE_DATA* p_data, WFNOTE_DRAW* p_draw )
 {
   if(GFL_UI_KEY_GetTrg() & GFL_PAD_BUTTON_KTST_CHG){
-    p_data->key_mode = GFL_APP_KTST_KEY;
+    p_data->key_mode = GFL_APP_END_KEY;
   }
 
   if( GFL_UI_KEY_GetTrg() & (PAD_BUTTON_DECIDE | PAD_BUTTON_CANCEL) ){
@@ -6501,7 +6623,7 @@ static u32 FInfo_Input( WFNOTE_FRIENDINFO* p_wk, WFNOTE_DATA* p_data, WFNOTE_DRA
   }
   ret = FInfoInput_Touch(p_wk, p_data, p_draw, &touch_f);
   if(touch_f){
-    p_data->key_mode = GFL_APP_KTST_TOUCH;
+    p_data->key_mode = GFL_APP_END_TOUCH;
     return ret;
   }
   return FInfoInput_Key( p_wk, p_data, p_draw );
@@ -6621,7 +6743,7 @@ static void FInfo_DrawInit( WFNOTE_FRIENDINFO* p_wk, WFNOTE_DATA* p_data, WFNOTE
   // 各ページのスクリーンデータ読み込み
   FInfoScrnData_Init( p_wk->scrn, p_draw, heapID );
   //ベースウィンドウ追加
-  FInfoBmpWin_Init( p_wk, p_draw );
+//  FInfoBmpWin_Init( p_wk, p_draw );
 
   // 描画用ビットマップ
   for( i=0; i < 2; i++ )
@@ -6678,7 +6800,7 @@ static void FInfo_DrawExit( WFNOTE_FRIENDINFO* p_wk, WFNOTE_DATA* p_data, WFNOTE
     GFL_BMPWIN_Delete( p_wk->drawBmpWin[i] );
   }
   //ウィンドウ破棄
-  FInfoBmpWin_Exit( p_wk, p_draw );
+//  FInfoBmpWin_Exit( p_wk, p_draw );
   // 各ページのスクリーンデータ破棄
   FInfoScrnData_Exit( p_wk->scrn );
 }
@@ -6699,16 +6821,17 @@ static void FInfo_DrawOn( WFNOTE_FRIENDINFO* p_wk, WFNOTE_DATA* p_data, WFNOTE_D
   // タイトル表示
   Draw_FriendNameSetWordset( p_draw, p_data,
       p_data->idx.fridx[p_data->select_listidx], heapID );
-  Draw_BmpTitleWrite( p_draw, &p_wk->win[FINFO_WIN_TITLE], msg_wifi_note_14 );
+//  Draw_BmpTitleWrite( p_draw, &p_wk->win[FINFO_WIN_TITLE], msg_wifi_note_14 );
 
   //上画面ベースBG表示
+/*
   GFL_BG_WriteScreen( UFRM_BASE,
       p_wk->scrn[FINFO_SCRNDATA_S].p_scrn->rawData,
       0, 0,
       p_wk->scrn[FINFO_SCRNDATA_S].p_scrn->screenWidth/8,
       p_wk->scrn[FINFO_SCRNDATA_S].p_scrn->screenHeight/8 );
   GFL_BG_LoadScreenV_Req( UFRM_BASE );
-
+*/
   //下画面ベースBG表示
   GFL_BG_WriteScreen( DFRM_BACK,
       p_wk->scrn[FINFO_SCRNDATA_MB].p_scrn->rawData,
@@ -6723,7 +6846,7 @@ static void FInfo_DrawOn( WFNOTE_FRIENDINFO* p_wk, WFNOTE_DATA* p_data, WFNOTE_D
       p_wk->scrn[FINFO_SCRNDATA_M].p_scrn->screenHeight/8 );
   GFL_BG_LoadScreenV_Req( DFRM_SCROLL );
 
-  FInfo_DrawBaseInfo( p_wk, p_data, p_draw, heapID );
+//  FInfo_DrawBaseInfo( p_wk, p_data, p_draw, heapID );
 
   Draw_CursorActorPriSet( p_draw, 0, 0 );
 
@@ -6777,13 +6900,13 @@ static void FInfo_DrawOff( WFNOTE_FRIENDINFO* p_wk, WFNOTE_DRAW* p_draw )
   }
   FInfo_ShioriOff( p_wk, p_draw );
   FInfo_CursorOff( p_wk, p_draw );
-  FInfo_DrawOffBaseInfo( p_wk );
+//  FInfo_DrawOffBaseInfo( p_wk );
 
-  GFL_BG_FillScreen( UFRM_BASE, 0, 0, 0, 32, 32, 0);
-  GFL_BG_FillScreen( UFRM_MSG, 0, 0, 0, 32, 32, 0);
+//  GFL_BG_FillScreen( UFRM_BASE, 0, 0, 0, 32, 32, 0);
+//  GFL_BG_FillScreen( UFRM_MSG, 0, 0, 0, 32, 32, 0);
   GFL_BG_FillScreen( DFRM_SCROLL, 0, 0, 0, 32, 32, 0);
-  GFL_BG_LoadScreenV_Req( UFRM_BASE );
-  GFL_BG_LoadScreenV_Req( UFRM_MSG );
+//  GFL_BG_LoadScreenV_Req( UFRM_BASE );
+//  GFL_BG_LoadScreenV_Req( UFRM_MSG );
   GFL_BG_LoadScreenV_Req( DFRM_SCROLL );
 
   GFL_BG_WriteScreen( DFRM_BACK,
@@ -6817,11 +6940,13 @@ static void FInfo_DrawOffFriendChange( WFNOTE_FRIENDINFO* p_wk, WFNOTE_DRAW* p_d
   for( i=0; i<WFNOTE_DRAWAREA_NUM; i++ ){
     FInfoDrawArea_PageOff( &p_wk->drawarea[ i ], p_draw );
   }
+/*
   //
   for(i = FINFO_WIN_PAGE;i <= FINFO_WIN_TRGRA;i++){
     GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->win[i]), 0 );
     GFL_BMPWIN_TransVramCharacter(p_wk->win[i]);
   }
+*/
   Draw_BmpTitleOff( p_draw );
 }
 
@@ -6837,6 +6962,7 @@ static void FInfo_DrawOffFriendChange( WFNOTE_FRIENDINFO* p_wk, WFNOTE_DRAW* p_d
 //-----------------------------------------------------------------------------
 static void FInfo_DrawBaseInfo( WFNOTE_FRIENDINFO* p_wk, WFNOTE_DATA* p_data, WFNOTE_DRAW* p_draw, u32 heapID )
 {
+/*
   WIFI_LIST* p_wifilist;
   u32 sex,col,i;
 
@@ -6934,12 +7060,12 @@ static void FInfo_DrawBaseInfo( WFNOTE_FRIENDINFO* p_wk, WFNOTE_DATA* p_data, WF
           BMPL_FINFO_TRGRA_X,BMPL_FINFO_TRGRA_Y,
           BMPL_FINFO_TRGRA_SIZX, BMPL_FINFO_TRGRA_SIZY, BGPLT_S_TRGRA );
 
-
   }
 
   for(i = 0; i < FINFO_WIN_NUM;i++){
     GFL_BMPWIN_MakeTransWindow_VBlank(p_wk->win[i]);
   }
+*/
 }
 
 //----------------------------------------------------------------------------
@@ -6954,11 +7080,13 @@ static void FInfo_DrawBaseInfo( WFNOTE_FRIENDINFO* p_wk, WFNOTE_DATA* p_data, WF
 //-----------------------------------------------------------------------------
 static void FInfo_DrawOffBaseInfo( WFNOTE_FRIENDINFO* p_wk )
 {
+/*
   int i;
 
   for(i = 0;i < FINFO_WIN_NUM;i++){
     GFL_BMPWIN_TransVramCharacter(p_wk->win[i]);
   }
+*/
 }
 
 //----------------------------------------------------------------------------
@@ -7251,6 +7379,7 @@ static void FInfoScrnData_Exit( WFNOTE_FINFO_SCRNDATA* p_scrn )
  */
 //-----------------------------------------------------------------------------
 ///ビットマップリスト用データ構造体
+/*
 typedef struct{
   u8  frm_num;  ///<ウインドウ使用フレーム
   u8  pos_x;    ///<ウインドウ領域の左上のX座標（キャラ単位で指定）
@@ -7260,8 +7389,10 @@ typedef struct{
   u8  palnum;   ///<ウインドウ領域のパレットナンバー
   u16 chrnum;   ///<ウインドウキャラ領域の開始キャラクタナンバー
 }WNOTE_BMPWIN_DAT;
+*/
 static void FInfoBmpWin_Init( WFNOTE_FRIENDINFO* p_wk, WFNOTE_DRAW* p_draw )
 {
+/*
   int i;
   static const WNOTE_BMPWIN_DAT BmpWinData[] = {
    {  // ページ
@@ -7305,6 +7436,7 @@ static void FInfoBmpWin_Init( WFNOTE_FRIENDINFO* p_wk, WFNOTE_DRAW* p_draw )
           BmpWinData[i].palnum , BmpWinData[i].chrnum ,
           0 );
   }
+*/
 }
 
 //----------------------------------------------------------------------------
@@ -7318,12 +7450,14 @@ static void FInfoBmpWin_Init( WFNOTE_FRIENDINFO* p_wk, WFNOTE_DRAW* p_draw )
 //-----------------------------------------------------------------------------
 static void FInfoBmpWin_Exit( WFNOTE_FRIENDINFO* p_wk, WFNOTE_DRAW* p_draw )
 {
+/*
   int i;
   for( i=0; i<FINFO_WIN_NUM; i++ ){
     GFL_BMPWIN_ClearTransWindow( p_wk->win[i] );
 //    GF_BGL_BmpWinOff( &p_wk->win[i] );
     GFL_BMPWIN_Delete( p_wk->win[i] );
   }
+*/
 }
 
 //----------------------------------------------------------------------------
@@ -8302,4 +8436,133 @@ static u64 WFNOTE_STRBUF_GetNumber( STRBUF *str , BOOL *pbFlag )
   *pbFlag = TRUE;
   return num;
 }
+
+
+
+
+
+//============================================================================================
+//	↓追加処理　2010/01/18 by nakahiro
+//============================================================================================
+
+#define SCRN_MODESEL_BTN_PX		( 2 )
+#define SCRN_MODESEL_BTN_PY		( 5 )
+#define SCRN_MODESEL_BTN_SX		( 28 )
+#define SCRN_MODESEL_BTN_SY		( 4 )
+#define SCRN_MODESEL_BTN_SY		( 4 )
+#define SCRN_MODESEL_BTN_OY		( 5 )
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		選択中カーソルアニメ作成
+ *
+ * @param		p_draw    ワーク
+ * @param		heapID		ヒープＩＤ
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+static void Draw_BlinkAnmInit( WFNOTE_DRAW * p_draw, u32 heapID )
+{
+	p_draw->bpawk = BLINKPALANM_Create( BGPLT_M_BACK_3*16, 16, GFL_BG_FRAME0_M, heapID );
+	BLINKPALANM_SetPalBufferArcHDL(
+		p_draw->bpawk, p_draw->p_handle, NARC_wifi_note_friend_bg_d_NCLR, BGPLT_M_BACK_3*16, BGPLT_M_BACK_2*16 );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		選択中カーソルアニメ削除
+ *
+ * @param		p_draw    ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+static void Draw_BlinkAnmExit( WFNOTE_DRAW * p_draw )
+{
+	BLINKPALANM_Exit( p_draw->bpawk );
+}
+
+//--------------------------------------------------------------------------------------------
+
+//--------------------------------------------------------------------------------------------
+/*
+  BGPLT_M_BACK_1,					// ボタン（通常時）
+  BGPLT_M_BACK_2,					// ボタン（選択時のグラデ用１）
+  BGPLT_M_BACK_3,					// ボタン（選択時のグラデ用１）
+  BGPLT_M_BACK_4,					// ボタン（項目なし用）
+*/
+
+static void SetTopPageButton( u32 pos, u32 pal )
+{
+	GFL_BG_ChangeScreenPalette(
+		DFRM_SCROLL,
+		SCRN_MODESEL_BTN_PX, SCRN_MODESEL_BTN_PY+SCRN_MODESEL_BTN_OY*pos,
+		SCRN_MODESEL_BTN_SX, SCRN_MODESEL_BTN_SY, pal );
+	GFL_BG_LoadScreenV_Req( DFRM_SCROLL );
+}
+
+static void SetTopPageButtonPassive( WFNOTE_DRAW * p_draw, u32 pos )
+{
+	SetTopPageButton( pos, BGPLT_M_BACK_1 );
+	BLINKPALANM_InitAnimeCount( p_draw->bpawk );
+}
+
+static void SetTopPageButtonActive( WFNOTE_DRAW * p_draw, u32 pos )
+{
+	SetTopPageButton( pos, BGPLT_M_BACK_3 );
+	BLINKPALANM_InitAnimeCount( p_draw->bpawk );
+}
+
+static void ChangeTopPageButton( WFNOTE_DRAW * p_draw, u32 now, u32 old )
+{
+	SetTopPageButtonPassive( p_draw, old );
+	SetTopPageButtonActive( p_draw, now );
+}
+
+static BOOL MainButtonDecedeAnime( WFNOTE_MODESELECT * p_wk )
+{
+	switch( p_wk->btn_anmSeq ){
+	case 0:
+		SetTopPageButton( p_wk->cursor, BGPLT_M_BACK_1 );
+		p_wk->btn_anmCnt = 0;
+		p_wk->btn_anmSeq++;
+		break;
+	case 1:
+		p_wk->btn_anmCnt++;
+		if( p_wk->btn_anmCnt == 4 ){
+			SetTopPageButton( p_wk->cursor, BGPLT_M_BACK_2 );
+			p_wk->btn_anmCnt = 0;
+			p_wk->btn_anmSeq++;
+		}
+		break;
+	case 2:
+		p_wk->btn_anmCnt++;
+		if( p_wk->btn_anmCnt == 4 ){
+			SetTopPageButton( p_wk->cursor, BGPLT_M_BACK_1 );
+			p_wk->btn_anmCnt = 0;
+			p_wk->btn_anmSeq++;
+		}
+		break;
+	case 3:
+		p_wk->btn_anmCnt++;
+		if( p_wk->btn_anmCnt == 4 ){
+			SetTopPageButton( p_wk->cursor, BGPLT_M_BACK_2 );
+			p_wk->btn_anmCnt = 0;
+			p_wk->btn_anmSeq++;
+		}
+		break;
+	case 4:
+		p_wk->btn_anmCnt++;
+		if( p_wk->btn_anmCnt == 4 ){
+			p_wk->btn_anmSeq = 0;
+			p_wk->btn_anmCnt = 0;
+			return FALSE;
+		}
+		break;
+	}
+
+	return TRUE;
+}
+
 

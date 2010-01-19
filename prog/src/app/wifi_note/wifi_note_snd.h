@@ -30,9 +30,9 @@
 
 //#define WIFINOTE_BS_SE		(SEQ_SE_SELECT)
 //#define WIFINOTE_BS_SE		(SEQ_SE_BUTTON3)
-#define WIFINOTE_BS_SE			(SEQ_SE_DECIDE1)
+#define WIFINOTE_BS_SE			(SEQ_SE_CANCEL1)
 
-#define WIFINOTE_MENU_BS_SE		(SEQ_SE_SELECT1)	// メニューのキャンセル
+#define WIFINOTE_MENU_BS_SE		(SEQ_SE_CANCEL1)	// メニューのキャンセル
 
 #define WIFINOTE_CLEAN_SE		(SEQ_SE_SELECT1)	// 消しゴムで消す音 仮
 

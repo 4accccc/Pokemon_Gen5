@@ -30,3 +30,5 @@ extern const GFL_PROC_DATA WifiNoteProcData;
 // ポインタ参照だけできるレコードコーナーワーク構造体
 typedef struct _WIFINOTE_WORK WIFINOTE_WORK;	
 
+FS_EXTERN_OVERLAY(wifinote);
+

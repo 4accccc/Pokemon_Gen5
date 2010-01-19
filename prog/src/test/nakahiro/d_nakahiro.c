@@ -19,6 +19,7 @@
 
 #include "app/box2.h"
 #include "app/zukan.h"
+#include "app/wifi_note.h"
 #include "demo/command_demo.h"
 #include "../../battle/app/vs_multi_list.h"
 
@@ -30,7 +31,7 @@
 //============================================================================================
 //	’è”’è‹`
 //============================================================================================
-#define	TOP_MENU_SIZ	( 11 )
+#define	TOP_MENU_SIZ	( 12 )
 
 typedef struct {
 	u32	main_seq;
@@ -57,6 +58,8 @@ typedef struct {
 
 	VS_MULTI_LIST_PARAM	vsl_data;
 
+	WIFINOTE_PROC_PARAM	wifi_note_data;
+
 }NAKAHIRO_MAIN_WORK;
 
 enum {
@@ -78,6 +81,8 @@ enum {
 
 	MAIN_SEQ_VSMLIST_L,
 	MAIN_SEQ_VSMLIST_R,
+
+	MAIN_SEQ_WIFI_NOTE,
 
 	MAIN_SEQ_END,
 };
@@ -366,6 +371,14 @@ static GFL_PROC_RESULT MainProcMain( GFL_PROC * proc, int * seq, void * pwk, voi
 		GFL_PROC_SysCallProc( FS_OVERLAY_ID(vs_multi_list), &VS_MULTI_LIST_ProcData, &wk->vsl_data );
 		wk->main_seq = MAIN_SEQ_END;
 		break;
+
+	case MAIN_SEQ_WIFI_NOTE:
+		wk->wifi_note_data.pGameData = wk->gamedata;
+		GFL_PROC_SysCallProc( FS_OVERLAY_ID(wifinote), &WifiNoteProcData, &wk->wifi_note_data );
+		wk->main_seq = MAIN_SEQ_END;
+		break;
+
+
 	}
 
   return GFL_PROC_RES_CONTINUE;

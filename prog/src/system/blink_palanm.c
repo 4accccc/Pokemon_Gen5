@@ -25,7 +25,8 @@ struct _BLINK_PALANM_WORK {
 	u16 * transPal;
 	u16	offs;
 	u16	size;
-	u32	cnt;
+	u16	cnt;
+	u16	seq;
 	NNS_GFD_DST_TYPE	type;
 	HEAPID	heapID;
 };
@@ -58,6 +59,7 @@ BLINKPALANM_WORK * BLINKPALANM_Create( u16 offs, u16 size, u16 bgfrm, HEAPID hea
 	wk->offs = offs;
 	wk->size = size;
 	wk->cnt = 0;
+	wk->seq = 0;
 	wk->heapID = heapID;
 
 	if( bgfrm <= GFL_BG_FRAME3_M ){
@@ -180,4 +182,18 @@ void BLINKPALANM_Main( BLINKPALANM_WORK * wk )
 	}
 
 	NNS_GfdRegisterNewVramTransferTask( wk->type, wk->offs * 2, wk->transPal, wk->size * 2 );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * アニメ動作カウンターを初期化
+ *
+ * @param		wk		パレットアニメワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+void BLINKPALANM_InitAnimeCount( BLINKPALANM_WORK * wk )
+{
+	wk->cnt = 0;
 }
