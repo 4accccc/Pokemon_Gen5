@@ -34,7 +34,8 @@ enum {
 	NARC_demo3d_n_demo_03_bin = 20,
 	NARC_demo3d_n_demo_03_nsbca = 21,
 	NARC_demo3d_n_demo_03_nsbma = 22,
-	NARC_demo3d_n_demo_03_nsbmd = 23
+	NARC_demo3d_n_demo_03_nsbmd = 23,
+	NARC_demo3d_n_demo_03_nsbta = 24
 };
 
 /* NARC_DEMO3D_NAIX_ */
