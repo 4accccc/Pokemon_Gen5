@@ -281,7 +281,6 @@ enum
   WEATHER_RAIKAMI_FADEIN_SEQ_SPARK_02,
   WEATHER_RAIKAMI_FADEIN_SEQ_OBJADD,
 
-  WEATHER_RAIKAMI_FADEIN_SEQ_END,
 };
 
 #define WEATHER_RAIKAMI_SPARK_DARK_COLOR   ( GX_RGB(4,4,8) )
@@ -294,6 +293,166 @@ enum
 #define WEATHER_RAIKAMI_LIGHT_DARKSPARK_WAIT ( 16 )
 
 #define WEATHER_RAIKAMI_LIGHT_FULL_RAIN_WAIT ( 48 )
+
+
+
+
+
+//-------------------------------------
+///	カザカミ　天気
+//=====================================
+// フェードインの流れ
+enum
+{
+  KAZAKAMI_FADEIN_SEQ_INIT,
+  KAZAKAMI_FADEIN_SEQ_LIGHT_DARK,
+  KAZAKAMI_FADEIN_SEQ_WIND02,
+};
+#define KAZAKAMI_FADEIN_WIND_WAIT ( WEATHER_RAIKAMI_LIGHT_SPARK_WAIT ) // 暗くなりだしてから風が出てくるまでの間
+#define KAZAKAMI_FADEIN_BGSTART_WAIT (8)
+
+
+#define	WEATHER_KAZAKAMI_TIMING_MIN		(1)					// 雨を出すタイミング最小
+#define WEATHER_KAZAKAMI_TIMING_MAX		(4)				// 雨を出すタイミング最大
+#define WEATHER_KAZAKAMI_TIMING_ADD		(3)					// タイミングを減らす数
+#define WEATHER_KAZAKAMI_ADD_START		(1)					// 最初の同時に雨を登録する数
+#define WEATHER_KAZAKAMI_ADD_TIMING		(1)					// 雨のタイミングをこれ回変更したら１回増やす
+#define WEATHER_KAZAKAMI_ADD			(1)						// 登録する数を増やす数
+#define WEATHER_KAZAKAMI_ADD_END		(-1)					// 登録する数を増やす数
+#define	WEATHER_KAZAKAMI_ADD_MAIN		(1)					// メインシーケンスでの登録する数
+
+/*== フェード無し開始の時 ==*/
+#define WEATHER_KAZAKAMI_NOFADE_OBJ_START_NUM	( 20 )				// 開始時の散布するオブジェクトの数
+#define	WEATHER_KAZAKAMI_NOFADE_OBJ_START_DUST_NUM	( 5 )		// 何個ずつ動作数を変更するか
+#define	WEATHER_KAZAKAMI_NOFADE_OBJ_START_DUST_MOVE	( 1 )		// ずらす動作数の値
+
+/*== フォグ ==*/
+#define	WEATHER_KAZAKAMI_FOG_TIMING		(10)						// に１回フォグテーブルを操作
+#define	WEATHER_KAZAKAMI_FOG_TIMING_END	(50)						// に１回フォグテーブルを操作
+#define WEATHER_KAZAKAMI_FOG_OFS			(0x100)
+#define WEATHER_KAZAKAMI_FOG_OFS_NORMAL			(0x300)
+
+enum
+{
+  KAZAKAMI_WIND_SCENE_NONE,
+  KAZAKAMI_WIND_SCENE_RAIN,
+  KAZAKAMI_WIND_SCENE_WINDRAIN,
+  
+  KAZAKAMI_WIND_SCENE_RAIN_TO_WINDRAIN,
+  KAZAKAMI_WIND_SCENE_WINDRAIN_TO_RAIN,
+
+  KAZAKAMI_WIND_SCENE_MAX,
+};
+#define KAZAKAMI_WIND_WINDRAIN_PARCENT  ( 80 )
+#define KAZAKAMI_RAIN_RAIN_TO_WINDRAIN_PARCENT  ( 80 )
+#define KAZAKAMI_WIND_RAIN_RAIN_TO_WINDRAIN_PARCENT  ( 96 )
+
+#define KAZAKAMI_FIRST_RAIN_TIME  ( 120 )
+
+/*== 雨オブジェクト ==*/
+enum
+{
+  KAZAKAMI_OBJ_WIND,      // 風表現オブジェクト
+  KAZAKAMI_OBJ_RAIN,      // 雨表現オブジェクト
+  KAZAKAMI_OBJ_WIND_RAIN, // 風雨表現オブジェクト
+
+  KAZAKAMI_OBJ_TYPE_NUM,  // オブジェクトタイプ数
+};
+
+// 風スピード　基準値
+#define KAZAKAMI_OBJ_WIND_SPEED_DEF ( 8 ) // 8=1
+#define KAZAKAMI_OBJ_WIND_SPEED_GET( x ) ((x) / KAZAKAMI_OBJ_WIND_SPEED_DEF)
+#define KAZAKAMI_OBJ_WIND_SPEED_SET( x ) ((x) * KAZAKAMI_OBJ_WIND_SPEED_DEF)
+
+
+// 風移り代わり情報
+#define KAZAKAMI_WIND_SCENE_RAIN_TIME_MIN ( 60 )
+#define KAZAKAMI_WIND_SCENE_RAIN_TIME_RND ( 200 )
+#define KAZAKAMI_WIND_SCENE_WINDRAIN_TIME_MIN ( 60 )
+#define KAZAKAMI_WIND_SCENE_WINDRAIN_TIME_RND ( 400 )
+#define KAZAKAMI_WIND_SCENE_RAIN_TO_WINDRAIN_TIME_MIN ( 16 )
+
+#define KAZAKAMI_WIND_SCENE_RAIN_WIND_SPEED_X (0)
+#define KAZAKAMI_WIND_SCENE_RAIN_WIND_SPEED_Y (0)
+
+#define KAZAKAMI_WIND_SCENE_RAIN_TO_WINDRAIN_WIND_SPEED_X (KAZAKAMI_OBJ_WIND_SPEED_SET(20))
+#define KAZAKAMI_WIND_SCENE_RAIN_TO_WINDRAIN_WIND_SPEED_Y (KAZAKAMI_OBJ_WIND_SPEED_SET(3))
+#define KAZAKAMI_WIND_SCENE_RAIN_TO_WINDRAIN_WIND_SCALE_X (0x800)
+
+#define KAZAKAMI_WIND_SCENE_WINDRAIN_WIND_SPEED_TBL_NUM (6)
+#define KAZAKAMI_WIND_SCENE_WINDRAIN_WIND_SPEED_CHANGE_TIME (12 * KAZAKAMI_WIND_SCENE_WINDRAIN_WIND_SPEED_TBL_NUM) // テーブルすべてを変更する間
+static const VecFx32 KAZAKAMI_WIND_SCENE_RAIN_RAINWIND_SPEED_TBL[ KAZAKAMI_WIND_SCENE_WINDRAIN_WIND_SPEED_TBL_NUM ] = 
+{
+  { KAZAKAMI_OBJ_WIND_SPEED_SET(26), KAZAKAMI_OBJ_WIND_SPEED_SET(3),}, 
+  { KAZAKAMI_OBJ_WIND_SPEED_SET(36), KAZAKAMI_OBJ_WIND_SPEED_SET(2),},
+  { KAZAKAMI_OBJ_WIND_SPEED_SET(30), KAZAKAMI_OBJ_WIND_SPEED_SET(3),},
+  { KAZAKAMI_OBJ_WIND_SPEED_SET(38), KAZAKAMI_OBJ_WIND_SPEED_SET(3),},
+  { KAZAKAMI_OBJ_WIND_SPEED_SET(24), KAZAKAMI_OBJ_WIND_SPEED_SET(3),},
+  { KAZAKAMI_OBJ_WIND_SPEED_SET(32), KAZAKAMI_OBJ_WIND_SPEED_SET(2),},
+};
+
+// 背景のスケール値
+static const fx32 KAZAKAMI_WIND_SCENE_RAIN_WIND_BG_BACK_SCALE_TBL[] = 
+{
+  0x1100, 
+  0x1200, 
+  0x1300, 
+  0x1300, 
+  0x1300, 
+  0x1200, 
+  0x1100, 
+  0x1000, 
+  0x1000, 
+  0x1200, 
+  0x1300, 
+  0x1200, 
+  0x1200, 
+  0x1100, 
+};
+#define KAZAKAMI_WIND_SCENE_RAIN_WIND_BG_BACK_SCALE_NUM ( NELEMS(KAZAKAMI_WIND_SCENE_RAIN_WIND_BG_BACK_SCALE_TBL) )
+#define KAZAKAMI_WIND_SCENE_RAIN_WIND_BG_BACK_SCALE_CHANGE_TIME ( 16*KAZAKAMI_WIND_SCENE_RAIN_WIND_BG_BACK_SCALE_NUM )
+
+
+// WINDRAINの時には、OBJの登録割合を変更する
+#define KAZAKAMI_WIND_SCENE_WIND_ADD_CUT_NUM ( 4 )
+
+
+// 風表現オブジェ
+#define KAZAKAMI_OBJ_WIND_DELETE_X  ( 256 )
+#define KAZAKAMI_OBJ_WIND_DELETE_Y  ( 192 )
+
+#define KAZAKAMI_OBJ_WIND_SPEED_X_MIN ( 16 )
+#define KAZAKAMI_OBJ_WIND_SPEED_X_RND ( 24 )
+#define KAZAKAMI_OBJ_WIND_SPEED_Y_MIN ( 8 )
+#define KAZAKAMI_OBJ_WIND_SPEED_Y_RND ( 24 )
+
+#define KAZAKAMI_OBJ_WIND_ADD_X ( -16 )
+#define KAZAKAMI_OBJ_WIND_ADD_X_RND ( 8 )
+#define KAZAKAMI_OBJ_WIND_ADD_Y_MIN ( -16 )
+#define KAZAKAMI_OBJ_WIND_ADD_Y_RND ( 160 )
+
+
+// 風雨表現オブジェ
+#define KAZAKAMI_OBJ_WINDRAIN_SPEED_X_MIN ( 80 )
+#define KAZAKAMI_OBJ_WINDRAIN_SPEED_X_RND ( 24 )
+#define KAZAKAMI_OBJ_WINDRAIN_SPEED_Y_MIN ( 14 )
+#define KAZAKAMI_OBJ_WINDRAIN_SPEED_Y_RND ( 24 )
+#define KAZAKAMI_OBJ_WINDRAIN_ADD_X_MIN ( -16 )
+#define KAZAKAMI_OBJ_WINDRAIN_ADD_X_RND ( 8 )
+#define KAZAKAMI_OBJ_WINDRAIN_ADD_Y_MIN ( -16 )
+#define KAZAKAMI_OBJ_WINDRAIN_ADD_Y_RND ( 160 )
+
+// 雨表現オブジェ
+#define KAZAKAMI_OBJ_RAIN_SPEED_X_MIN ( 256 ) // 8=1
+#define KAZAKAMI_OBJ_RAIN_SPEED_RND ( 320 ) // 8=1
+#define KAZAKAMI_OBJ_RAIN_SPEED_Y_MIN ( 256 )
+#define KAZAKAMI_OBJ_RAIN_ADD_X_MIN ( -160 )
+#define KAZAKAMI_OBJ_RAIN_ADD_X_RND ( 384 )
+#define KAZAKAMI_OBJ_RAIN_ADD_Y_MIN ( -80 )
+#define KAZAKAMI_OBJ_RAIN_ADD_Y_RND ( 40 )
+
+#define KAZAKAMI_OBJ_RAIN_DELETE_X  ( 256 )
+#define KAZAKAMI_OBJ_RAIN_DELETE_Y  ( 160 )
 
 
 //-----------------------------------------------------------------------------
@@ -365,6 +524,84 @@ typedef struct {
 	WEATHER_SPARK_WORK	spark;
 } WEATHER_RAIKAMI_WORK;
 
+
+
+
+//-------------------------------------
+///	カザカミ
+//=====================================
+typedef struct {
+  s16 seq;
+  s16 wait;
+
+  s16 scroll_x;
+  s16 scroll_y;
+  s16 scroll_back_x;
+  s16 scroll_back_y;
+  s16 wind_scene_count;
+  s16 wind_scene_count_max;
+  s16 wind_scene_type;
+
+  s16 wind_add_x; // 風つよさ（加速値）
+  s16 wind_add_y;
+  fx32 wind_bg_back_scale_x;
+
+} WEATHER_KAZAKAMI_WORK;
+
+
+//-------------------------------------
+/// カザカミ　風表現　オブジェ	
+//=====================================
+typedef struct 
+{
+  s16 pos_x;
+  s16 pos_y;
+  s16 speed_x;
+  s16 speed_y;
+  s16 last_speed_x;
+  s16 last_speed_y;
+} KAZAKAMI_OBJ_WIND_WK;
+
+//-------------------------------------
+/// カザカミ　雨表現　オブジェ	
+//=====================================
+typedef struct 
+{
+  s16 pos_x;
+  s16 pos_y;
+  s16 speed_x;
+  s16 speed_y;
+} KAZAKAMI_OBJ_RAIN_WK;
+
+//-------------------------------------
+/// カザカミ　風雨表現　オブジェ	
+//=====================================
+typedef struct 
+{
+  s16 pos_x;
+  s16 pos_y;
+  s16 speed_x;
+  s16 speed_y;
+  s16 last_speed_x;
+  s16 last_speed_y;
+} KAZAKAMI_OBJ_WINDRAIN_WK;
+
+//-------------------------------------
+///	カザカミ　オブジェワーク
+//=====================================
+typedef struct 
+{
+  u32 type;
+  const WEATHER_KAZAKAMI_WORK* cp_parent;
+
+  union
+  {
+    KAZAKAMI_OBJ_WIND_WK      wind; 
+    KAZAKAMI_OBJ_RAIN_WK      rain; 
+    KAZAKAMI_OBJ_WINDRAIN_WK  windrain; 
+  }objwk;
+} KAZAKAMI_OBJ_WK;
+
 //-----------------------------------------------------------------------------
 /**
  *					プロトタイプ宣言
@@ -417,6 +654,32 @@ static void WEATHER_RAIKAMI_SCROLL_Main( WEATHER_TASK* p_sys, WEATHER_RAIKAMI_WO
 
 
 //-------------------------------------
+///	カミシリーズ　カザカミ
+//=====================================
+static WEATHER_TASK_FUNC_RESULT WEATHER_KAZAKAMI_Init( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, u32 heapID ); 
+static WEATHER_TASK_FUNC_RESULT WEATHER_KAZAKAMI_FadeIn( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, u32 heapID ); 
+static WEATHER_TASK_FUNC_RESULT WEATHER_KAZAKAMI_NoFade( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, u32 heapID ); 
+static WEATHER_TASK_FUNC_RESULT WEATHER_KAZAKAMI_Main( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, u32 heapID ); 
+static WEATHER_TASK_FUNC_RESULT WEATHER_KAZAKAMI_InitFadeOut( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, u32 heapID ); 
+static WEATHER_TASK_FUNC_RESULT WEATHER_KAZAKAMI_FadeOut( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, u32 heapID ); 
+static WEATHER_TASK_FUNC_RESULT WEATHER_KAZAKAMI_Exit( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, u32 heapID ); 
+static void WEATHER_KAZAKAMI_OBJ_Move( WEATHER_OBJ_WORK* p_wk ); 
+static void WEATHER_KAZAKAMI_OBJ_Add( WEATHER_TASK* p_wk, int num, u32 heapID ); 
+
+static void WEATHER_KAZAKAMI_OBJ_WIND_Move( WEATHER_OBJ_WORK* p_wk, const WEATHER_KAZAKAMI_WORK* cp_parent, void* p_obj, GFL_CLWK* p_clwk ); 
+static void WEATHER_KAZAKAMI_OBJ_WIND_Add( WEATHER_OBJ_WORK* p_wk, const WEATHER_KAZAKAMI_WORK* cp_parent, void* p_obj, GFL_CLWK* p_clwk ); 
+static void WEATHER_KAZAKAMI_OBJ_RAIN_Move( WEATHER_OBJ_WORK* p_wk, const WEATHER_KAZAKAMI_WORK* cp_parent, void* p_obj, GFL_CLWK* p_clwk ); 
+static void WEATHER_KAZAKAMI_OBJ_RAIN_Add( WEATHER_OBJ_WORK* p_wk, const WEATHER_KAZAKAMI_WORK* cp_parent, void* p_obj, GFL_CLWK* p_clwk ); 
+static void WEATHER_KAZAKAMI_OBJ_WINDRAIN_Move( WEATHER_OBJ_WORK* p_wk, const WEATHER_KAZAKAMI_WORK* cp_parent, void* p_obj, GFL_CLWK* p_clwk ); 
+static void WEATHER_KAZAKAMI_OBJ_WINDRAIN_Add( WEATHER_OBJ_WORK* p_wk, const WEATHER_KAZAKAMI_WORK* cp_parent, void* p_obj, GFL_CLWK* p_clwk ); 
+
+
+static void WEATHER_KAZAKAMI_WindStartRain( WEATHER_TASK* p_sys, WEATHER_KAZAKAMI_WORK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, BOOL fadeout );
+static void WEATHER_KAZAKAMI_WindControl( WEATHER_TASK* p_sys, WEATHER_KAZAKAMI_WORK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, BOOL fadeout );
+static void WEATHER_KAZAKAMI_SCROLL_Main( WEATHER_TASK* p_sys, WEATHER_KAZAKAMI_WORK* p_wk );
+
+
+//-------------------------------------
 ///	雷
 //=====================================
 static void WEATHER_PARK_Init( WEATHER_SPARK_WORK* p_wk, u8 mode );
@@ -441,18 +704,31 @@ WEATHER_TASK_DATA c_WEATHER_TASK_DATA_RAIN = {
 	//	グラフィック情報
 	ARCID_FIELD_WEATHER,			// アークID
 	TRUE,		// OAMを使用するか？
-	FALSE,		// BGを使用するか？
+	WEATHER_TASK_3DBG_USE_NONE,		// BGを使用するか？
 	NARC_field_weather_rain_NCGR,			// OAM CG
 	NARC_field_weather_rain_NCLR,			// OAM PLTT
 	NARC_field_weather_rain_NCER,			// OAM CELL
 	NARC_field_weather_rain_NANR,			// OAM CELLANM
-	0,		// BGTEX
-	0,		// GXTexSizeS
-	0,		// GXTexSizeT
-	0,		// GXTexRepeat
-	0,		// GXTexFlip
-	0,		// GXTexFmt
-	0,		// GXTexPlttColor0
+  {
+    {
+      0,		// BGTEX
+      0,		// GXTexSizeS
+      0,		// GXTexSizeT
+      0,		// GXTexRepeat
+      0,		// GXTexFlip
+      0,		// GXTexFmt
+      0,		// GXTexPlttColor0
+    },
+    {
+      0,		// BGTEX
+      0,		// GXTexSizeS
+      0,		// GXTexSizeT
+      0,		// GXTexRepeat
+      0,		// GXTexFlip
+      0,		// GXTexFmt
+      0,		// GXTexPlttColor0
+    },
+  },
 
 	// ワークサイズ
 	sizeof(WEATHER_RAIN_WORK),
@@ -476,18 +752,31 @@ WEATHER_TASK_DATA c_WEATHER_TASK_DATA_SPARKRAIN = {
 	//	グラフィック情報
 	ARCID_FIELD_WEATHER,			// アークID
 	TRUE,		// OAMを使用するか？
-	FALSE,		// BGを使用するか？
+	WEATHER_TASK_3DBG_USE_NONE,		// BGを使用するか？
 	NARC_field_weather_rain_st_NCGR,			// OAM CG
 	NARC_field_weather_rain_NCLR,			// OAM PLTT
 	NARC_field_weather_rain_st_NCER,			// OAM CELL
 	NARC_field_weather_rain_st_NANR,			// OAM CELLANM
-	0,		// BGTEX
-	0,		// GXTexSizeS
-	0,		// GXTexSizeT
-	0,		// GXTexRepeat
-	0,		// GXTexFlip
-	0,		// GXTexFmt
-	0,		// GXTexPlttColor0
+  {
+    {
+      0,		// BGTEX
+      0,		// GXTexSizeS
+      0,		// GXTexSizeT
+      0,		// GXTexRepeat
+      0,		// GXTexFlip
+      0,		// GXTexFmt
+      0,		// GXTexPlttColor0
+    },
+    {
+      0,		// BGTEX
+      0,		// GXTexSizeS
+      0,		// GXTexSizeT
+      0,		// GXTexRepeat
+      0,		// GXTexFlip
+      0,		// GXTexFmt
+      0,		// GXTexPlttColor0
+    },
+  },
 
 	// ワークサイズ
 	sizeof(WEATHER_SPARKRAIN_WORK),
@@ -510,18 +799,31 @@ WEATHER_TASK_DATA c_WEATHER_TASK_DATA_RAIKAMI = {
 	//	グラフィック情報
 	ARCID_FIELD_WEATHER,			// アークID
 	TRUE,		// OAMを使用するか？
-	TRUE,		// BGを使用するか？
+	WEATHER_TASK_3DBG_USE_FRONT,		// BGを使用するか？
 	NARC_field_weather_rain_raikami_NCGR,			// OAM CG
 	NARC_field_weather_rain_NCLR,			// OAM PLTT
 	NARC_field_weather_rain_raikami_NCER,			// OAM CELL
 	NARC_field_weather_rain_raikami_NANR,			// OAM CELLANM
-	NARC_field_weather_rain_bg_nsbtx,		// BGTEX
-	GX_TEXSIZE_S32,		// GXTexSizeS
-	GX_TEXSIZE_T32,		// GXTexSizeT
-	GX_TEXREPEAT_ST,		// GXTexRepeat
-	GX_TEXFLIP_NONE,		// GXTexFlip
-	GX_TEXFMT_PLTT4,		// GXTexFmt
-	GX_TEXPLTTCOLOR0_TRNS,		// GXTexPlttColor0
+  {
+    {
+      NARC_field_weather_rain_bg_nsbtx,		// BGTEX
+      GX_TEXSIZE_S32,		// GXTexSizeS
+      GX_TEXSIZE_T32,		// GXTexSizeT
+      GX_TEXREPEAT_ST,		// GXTexRepeat
+      GX_TEXFLIP_NONE,		// GXTexFlip
+      GX_TEXFMT_PLTT4,		// GXTexFmt
+      GX_TEXPLTTCOLOR0_TRNS,		// GXTexPlttColor0
+    },
+    {
+      0,		// BGTEX
+      0,		// GXTexSizeS
+      0,		// GXTexSizeT
+      0,		// GXTexRepeat
+      0,		// GXTexFlip
+      0,		// GXTexFmt
+      0,		// GXTexPlttColor0
+    },
+  },
 
 	// ワークサイズ
 	sizeof(WEATHER_RAIKAMI_WORK),
@@ -537,6 +839,53 @@ WEATHER_TASK_DATA c_WEATHER_TASK_DATA_RAIKAMI = {
 
 	// オブジェ動作関数
 	WEATHER_RAIKAMI_OBJ_Move,
+};
+
+// かざカミ
+WEATHER_TASK_DATA c_WEATHER_TASK_DATA_KAZAKAMI = {
+	//	グラフィック情報
+	ARCID_FIELD_WEATHER,			// アークID
+	TRUE,		// OAMを使用するか？
+	WEATHER_TASK_3DBG_USE_ALL,		// BGを使用するか？
+	NARC_field_weather_kazakami_NCGR,			// OAM CG
+	NARC_field_weather_kazakami_NCLR,			// OAM PLTT
+	NARC_field_weather_kazakami_NCER,			// OAM CELL
+	NARC_field_weather_kazakami_NANR,			// OAM CELLANM
+  {
+    {
+      NARC_field_weather_rain_bg_nsbtx,		// BGTEX
+      GX_TEXSIZE_S32,		// GXTexSizeS
+      GX_TEXSIZE_T32,		// GXTexSizeT
+      GX_TEXREPEAT_ST,		// GXTexRepeat
+      GX_TEXFLIP_NONE,		// GXTexFlip
+      GX_TEXFMT_PLTT4,		// GXTexFmt
+      GX_TEXPLTTCOLOR0_TRNS,		// GXTexPlttColor0
+    },
+    {
+	    NARC_field_weather_kazakami_nsbtx,		// BGTEX
+      GX_TEXSIZE_S32,		// GXTexSizeS
+      GX_TEXSIZE_T32,		// GXTexSizeT
+      GX_TEXREPEAT_ST,		// GXTexRepeat
+      GX_TEXFLIP_NONE,		// GXTexFlip
+      GX_TEXFMT_PLTT4,		// GXTexFmt
+      GX_TEXPLTTCOLOR0_TRNS,		// GXTexPlttColor0
+    },
+  },
+
+	// ワークサイズ
+	sizeof(WEATHER_KAZAKAMI_WORK),
+
+	// 管理関数
+	WEATHER_KAZAKAMI_Init,		// 初期化
+	WEATHER_KAZAKAMI_FadeIn,		// フェードイン
+	WEATHER_KAZAKAMI_NoFade,		// フェードなし
+	WEATHER_KAZAKAMI_Main,		// メイン処理
+	WEATHER_KAZAKAMI_InitFadeOut,	// フェードアウト
+	WEATHER_KAZAKAMI_FadeOut,		// フェードアウト
+	WEATHER_KAZAKAMI_Exit,		// 破棄
+
+	// オブジェ動作関数
+	WEATHER_KAZAKAMI_OBJ_Move,
 };
 
 
@@ -575,8 +924,6 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_RAIN_Init( WEATHER_TASK* p_wk, WEATHER_T
 
 	// スクロール処理の初期化
 	WEATHER_TASK_InitScrollDist( p_wk );
-
-	
 
 	return WEATHER_TASK_FUNC_RESULT_FINISH;
 }
@@ -1436,7 +1783,7 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_RAIKAMI_FadeIn( WEATHER_TASK* p_wk, WEAT
       // 音
       WEATHER_TASK_PlayLoopSnd( p_wk, WEATHER_SND_SE_HIGHRAIN );	
       // BGON
-      WEATHER_TASK_3DBG_SetVisible( p_wk, TRUE );
+      WEATHER_TASK_3DBG_SetVisible( p_wk, TRUE, WEATHER_TASK_3DBG_FRONT );
     }
 
 	  result = WEATHER_TASK_ObjFade_Main( p_wk, heapID );	// 実行
@@ -1446,9 +1793,6 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_RAIKAMI_FadeIn( WEATHER_TASK* p_wk, WEAT
 			return WEATHER_TASK_FUNC_RESULT_FINISH;
     }
     break;
-
-  case WEATHER_RAIKAMI_FADEIN_SEQ_END:
-    return WEATHER_TASK_FUNC_RESULT_FINISH;
 
   default:
     GF_ASSERT(0);
@@ -1500,7 +1844,7 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_RAIKAMI_NoFade( WEATHER_TASK* p_wk, WEAT
   WEATHER_TASK_LIGHT_Set( p_wk, ARCID_FIELD_WEATHER_LIGHT, NARC_field_weather_light_light_raikami_dat );
 
   // BGON
-  WEATHER_TASK_3DBG_SetVisible( p_wk, TRUE );
+  WEATHER_TASK_3DBG_SetVisible( p_wk, TRUE, WEATHER_TASK_3DBG_FRONT );
 
 	return WEATHER_TASK_FUNC_RESULT_FINISH;
 }
@@ -1557,7 +1901,7 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_RAIKAMI_InitFadeOut( WEATHER_TASK* p_wk,
 	WEATHER_TASK_StopLoopSnd( p_wk );	
 
   // BGOFF
-  WEATHER_TASK_3DBG_SetVisible( p_wk, FALSE );
+  WEATHER_TASK_3DBG_SetVisible( p_wk, FALSE, WEATHER_TASK_3DBG_FRONT );
 
 	return WEATHER_TASK_FUNC_RESULT_FINISH;
 }
@@ -1749,11 +2093,809 @@ static void WEATHER_RAIKAMI_SCROLL_Main( WEATHER_TASK* p_sys, WEATHER_RAIKAMI_WO
 	WEATHER_TASK_ScrollObj( p_sys, x, y );
 
 	// BG面を斜め上に動かす
-	p_wk->scroll = (p_wk->scroll + 24) % 256;
-	WEATHER_TASK_3DBG_SetScrollX( p_sys, (-p_wk->scroll) - x );
-	WEATHER_TASK_3DBG_SetScrollY( p_sys, (-p_wk->scroll) + y );
+	p_wk->scroll = (p_wk->scroll + 9) % 256;
+	WEATHER_TASK_3DBG_SetScrollX( p_sys, (-p_wk->scroll) - x, WEATHER_TASK_3DBG_FRONT );
+	WEATHER_TASK_3DBG_SetScrollY( p_sys, (-p_wk->scroll) + y, WEATHER_TASK_3DBG_FRONT );
 }
 
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カザカミ　初期化
+ */
+//-----------------------------------------------------------------------------
+static WEATHER_TASK_FUNC_RESULT WEATHER_KAZAKAMI_Init( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, u32 heapID )
+{
+  WEATHER_KAZAKAMI_WORK* p_local_wk;
+
+	// ローカルワーク取得
+	p_local_wk = WEATHER_TASK_GetWorkData( p_wk );
+
+	// 作業領域の初期化
+	WEATHER_TASK_ObjFade_Init( p_wk, 
+		WEATHER_KAZAKAMI_ADD_START,	// obj登録数
+		WEATHER_KAZAKAMI_TIMING_MAX,// 登録タイミング
+		WEATHER_KAZAKAMI_ADD_MAIN,
+		WEATHER_KAZAKAMI_TIMING_MIN,
+		-WEATHER_KAZAKAMI_TIMING_ADD,
+		WEATHER_KAZAKAMI_ADD_TIMING,
+		WEATHER_KAZAKAMI_ADD,
+		WEATHER_KAZAKAMI_OBJ_Add );
+	
+
+	// フォグの設定
+	WEATHER_TASK_FogSet( p_wk, WEATHER_FOG_SLOPE_DEFAULT, WEATHER_FOG_DEPTH_DEFAULT_START, fog_cont );
+
+	// スクロール処理の初期化
+	WEATHER_TASK_InitScrollDist( p_wk );
+  
+	return WEATHER_TASK_FUNC_RESULT_FINISH;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カザカミ　フェードイン
+ */
+//-----------------------------------------------------------------------------
+static WEATHER_TASK_FUNC_RESULT WEATHER_KAZAKAMI_FadeIn( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, u32 heapID )
+{
+  WEATHER_KAZAKAMI_WORK* p_local_wk;
+  BOOL result;
+  BOOL fog_result;
+
+	// ローカルワーク取得
+	p_local_wk = WEATHER_TASK_GetWorkData( p_wk );
+
+  switch( p_local_wk->seq )
+  {
+  case KAZAKAMI_FADEIN_SEQ_INIT:
+    // ライト変更
+    WEATHER_TASK_LIGHT_Change( p_wk, ARCID_FIELD_WEATHER_LIGHT, NARC_field_weather_light_light_kazakami_dat );
+
+    p_local_wk->wait = KAZAKAMI_FADEIN_WIND_WAIT;
+    p_local_wk->seq++;
+    break;
+    
+  case KAZAKAMI_FADEIN_SEQ_LIGHT_DARK:
+    p_local_wk->wait--;
+    if(p_local_wk->wait <= 0)
+    {
+      // 雨も開始する
+      WEATHER_KAZAKAMI_WindStartRain( p_wk, p_local_wk, fog_cont, TRUE );
+
+      // ここだけ、雨の時間固定
+      p_local_wk->wind_scene_count_max = KAZAKAMI_FIRST_RAIN_TIME;
+        
+      // BG開始までのウエイト
+      p_local_wk->wait = KAZAKAMI_FADEIN_BGSTART_WAIT;
+      p_local_wk->seq++;
+    }
+    break;
+
+  case KAZAKAMI_FADEIN_SEQ_WIND02:
+    // 発動監視
+    p_local_wk->wait --;
+    if( p_local_wk->wait == 0 )
+    {
+      // 音
+      WEATHER_TASK_PlayLoopSnd( p_wk, WEATHER_SND_SE_HIGHRAIN );	
+      // BGON
+      WEATHER_TASK_3DBG_SetVisible( p_wk, TRUE, WEATHER_TASK_3DBG_FRONT );
+      //FOGON
+      WEATHER_TASK_FogFadeIn_Init( p_wk,
+        WEATHER_FOG_SLOPE_DEFAULT, 
+        WEATHER_FOG_DEPTH_DEFAULT + WEATHER_KAZAKAMI_FOG_OFS_NORMAL, 
+        WEATHER_KAZAKAMI_FOG_TIMING,
+        fog_cont );
+    }
+    
+	  result = WEATHER_TASK_ObjFade_Main( p_wk, heapID );	// 実行
+	  fog_result = WEATHER_TASK_FogFade_IsFade( p_wk );	// 実行
+    if( (result==TRUE) && (fog_result==TRUE) && (p_local_wk->wait <= 0) )
+    {
+			return WEATHER_TASK_FUNC_RESULT_FINISH;
+    }
+    break;
+    
+  default:
+    GF_ASSERT(0);
+    break;
+  }
+  
+  // 風の管理
+  WEATHER_KAZAKAMI_WindControl( p_wk, p_local_wk, fog_cont, FALSE );
+  
+  // スクロール処理
+  WEATHER_KAZAKAMI_SCROLL_Main( p_wk, p_local_wk );
+
+  return WEATHER_TASK_FUNC_RESULT_CONTINUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カザカミ　フェードなし
+ */
+//-----------------------------------------------------------------------------
+static WEATHER_TASK_FUNC_RESULT WEATHER_KAZAKAMI_NoFade( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, u32 heapID )
+{
+  WEATHER_KAZAKAMI_WORK* p_local_wk;
+
+	// ローカルワーク取得
+	p_local_wk = WEATHER_TASK_GetWorkData( p_wk );
+
+
+	// 作業領域の初期化
+	WEATHER_TASK_ObjFade_Init( p_wk,
+		WEATHER_KAZAKAMI_ADD_MAIN,	// obj登録数
+		WEATHER_KAZAKAMI_TIMING_MIN,// 登録タイミング
+		WEATHER_KAZAKAMI_ADD_MAIN,
+		WEATHER_KAZAKAMI_TIMING_MIN,
+		-WEATHER_KAZAKAMI_TIMING_ADD,
+		WEATHER_KAZAKAMI_ADD_TIMING,
+		WEATHER_KAZAKAMI_ADD,
+		WEATHER_KAZAKAMI_OBJ_Add );
+	
+
+	// フォグの設定
+	WEATHER_TASK_FogSet( p_wk, WEATHER_FOG_SLOPE_DEFAULT, WEATHER_FOG_DEPTH_DEFAULT, fog_cont );
+
+	// オブジェクトを散らばす
+	WEATHER_TASK_DustObj( p_wk, WEATHER_KAZAKAMI_OBJ_Add, WEATHER_KAZAKAMI_NOFADE_OBJ_START_NUM, WEATHER_KAZAKAMI_NOFADE_OBJ_START_DUST_NUM, WEATHER_KAZAKAMI_NOFADE_OBJ_START_DUST_MOVE, heapID );
+
+  // 音
+  WEATHER_TASK_PlayLoopSnd( p_wk, WEATHER_SND_SE_HIGHRAIN );	
+  WEATHER_KAZAKAMI_WindStartRain( p_wk, p_local_wk, fog_cont, FALSE );
+
+  // BGON
+  WEATHER_TASK_3DBG_SetVisible( p_wk, TRUE, WEATHER_TASK_3DBG_FRONT );
+
+  // ライト変更
+  WEATHER_TASK_LIGHT_Set( p_wk, ARCID_FIELD_WEATHER_LIGHT, NARC_field_weather_light_light_kazakami_dat );
+
+	return WEATHER_TASK_FUNC_RESULT_FINISH;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カザカミ　メイン
+ */
+//-----------------------------------------------------------------------------
+static WEATHER_TASK_FUNC_RESULT WEATHER_KAZAKAMI_Main( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, u32 heapID )
+{
+  WEATHER_KAZAKAMI_WORK* p_local_wk;
+	// ローカルワーク取得
+	p_local_wk = WEATHER_TASK_GetWorkData( p_wk );
+
+	// カウンタが0いかになったら雨登録
+	WEATHER_TASK_ObjFade_NoFadeMain( p_wk, heapID );
+
+  // 風の管理
+  WEATHER_KAZAKAMI_WindControl( p_wk, p_local_wk, fog_cont, FALSE );
+
+  // スクロール処理
+  WEATHER_KAZAKAMI_SCROLL_Main( p_wk, p_local_wk );
+
+	return WEATHER_TASK_FUNC_RESULT_CONTINUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カザカミ　フェードアウト初期化
+ */
+//-----------------------------------------------------------------------------
+static WEATHER_TASK_FUNC_RESULT WEATHER_KAZAKAMI_InitFadeOut( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, u32 heapID )
+{
+  WEATHER_KAZAKAMI_WORK* p_local_wk;
+	// ローカルワーク取得
+	p_local_wk = WEATHER_TASK_GetWorkData( p_wk );
+
+	// obj
+	// フェードアウト設定
+	WEATHER_TASK_ObjFade_SetOut( p_wk,
+			0,
+			WEATHER_KAZAKAMI_TIMING_MAX,
+			WEATHER_KAZAKAMI_TIMING_ADD,
+			WEATHER_KAZAKAMI_ADD_END );
+	
+	// 音
+	WEATHER_TASK_StopLoopSnd( p_wk );	
+
+  WEATHER_TASK_FogFadeOut_Init( p_wk,
+      WEATHER_FOG_DEPTH_DEFAULT_START, 
+      WEATHER_KAZAKAMI_FOG_TIMING_END, fog_cont );
+
+  // BGOFF
+  WEATHER_TASK_3DBG_SetVisible( p_wk, FALSE, WEATHER_TASK_3DBG_FRONT );
+  WEATHER_TASK_3DBG_SetVisible( p_wk, FALSE, WEATHER_TASK_3DBG_BACK );
+
+	return WEATHER_TASK_FUNC_RESULT_FINISH;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カザカミ　フェードアウト
+ */
+//-----------------------------------------------------------------------------
+static WEATHER_TASK_FUNC_RESULT WEATHER_KAZAKAMI_FadeOut( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, u32 heapID )
+{
+  WEATHER_KAZAKAMI_WORK* p_local_wk;
+	BOOL result;
+	BOOL fog_result;
+
+	// ローカルワーク取得
+	p_local_wk = WEATHER_TASK_GetWorkData( p_wk );
+
+	// オブジェクトフェード
+	result = WEATHER_TASK_ObjFade_Main( p_wk, heapID );	// 実行
+
+	
+  if( fog_cont ){
+    fog_result = WEATHER_TASK_FogFade_IsFade( p_wk );
+  }else{
+    fog_result = TRUE;
+  }
+
+  if( fog_result && result ){
+    // 登録数が０になったら終了するかチェック
+    // 自分の管理するあめが全て破棄されたら終了
+    if( WEATHER_TASK_GetActiveObjNum( p_wk ) == 0 ){//*/
+      
+      return WEATHER_TASK_FUNC_RESULT_FINISH;
+    }
+  }
+
+  // 風の管理
+  WEATHER_KAZAKAMI_WindControl( p_wk, p_local_wk, fog_cont, TRUE  );
+
+  // スクロール処理
+  WEATHER_KAZAKAMI_SCROLL_Main( p_wk, p_local_wk );
+
+	return WEATHER_TASK_FUNC_RESULT_CONTINUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カザカミ　終了
+ */
+//-----------------------------------------------------------------------------
+static WEATHER_TASK_FUNC_RESULT WEATHER_KAZAKAMI_Exit( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, u32 heapID )
+{
+	WEATHER_KAZAKAMI_WORK* p_local_wk;
+	// ローカルワーク取得
+	p_local_wk = WEATHER_TASK_GetWorkData( p_wk );
+
+	// FOG終了
+	WEATHER_TASK_FogClear( p_wk, fog_cont );
+
+	// ライト元に
+	WEATHER_TASK_LIGHT_Back( p_wk );
+
+	return WEATHER_TASK_FUNC_RESULT_FINISH;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カザカミ　オブジェ動作
+ */
+//-----------------------------------------------------------------------------
+static void WEATHER_KAZAKAMI_OBJ_Move( WEATHER_OBJ_WORK* p_wk )
+{
+	GFL_CLWK* p_clwk;
+  KAZAKAMI_OBJ_WK* p_obj_wk;
+
+  static void (*WEATHER_KAZAKAMI_OBJ_MOVE_TBL[KAZAKAMI_OBJ_TYPE_NUM])( WEATHER_OBJ_WORK* p_wk, const WEATHER_KAZAKAMI_WORK* cp_parent, void* p_obj, GFL_CLWK* p_clwk ) = 
+  {
+    WEATHER_KAZAKAMI_OBJ_WIND_Move,
+    WEATHER_KAZAKAMI_OBJ_RAIN_Move,
+    WEATHER_KAZAKAMI_OBJ_WINDRAIN_Move,
+  };
+
+	p_obj_wk = WEATHER_OBJ_WORK_GetWork( p_wk );
+	p_clwk = WEATHER_OBJ_WORK_GetClWk( p_wk );
+
+  WEATHER_KAZAKAMI_OBJ_MOVE_TBL[ p_obj_wk->type ]( p_wk, p_obj_wk->cp_parent, (void*)&p_obj_wk->objwk, p_clwk );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カザカミ　オブジェ登録
+ */
+//-----------------------------------------------------------------------------
+static void WEATHER_KAZAKAMI_OBJ_Add( WEATHER_TASK* p_wk, int num, u32 heapID )
+{
+	int i;		// ループ用
+	WEATHER_OBJ_WORK* add_obj;		// 登録オブジェ
+	WEATHER_KAZAKAMI_WORK*	p_local_wk;	// システムワーク
+  KAZAKAMI_OBJ_WK* p_obj_wk;
+	GFL_CLWK* p_clwk;
+
+  static void (*WEATHER_KAZAKAMI_OBJ_ADD_TBL[KAZAKAMI_OBJ_TYPE_NUM])( WEATHER_OBJ_WORK* p_wk, const WEATHER_KAZAKAMI_WORK* cp_parent, void* p_obj, GFL_CLWK* p_clwk ) = 
+  {
+    WEATHER_KAZAKAMI_OBJ_WIND_Add,
+    WEATHER_KAZAKAMI_OBJ_RAIN_Add,
+    WEATHER_KAZAKAMI_OBJ_WINDRAIN_Add,
+  };
+  u32 rand = GFUser_GetPublicRand(0);
+
+	// ユーザワーク取得
+	p_local_wk = WEATHER_TASK_GetWorkData( p_wk );
+
+  // 登録率を調整
+  if( (p_local_wk->wind_scene_type == KAZAKAMI_WIND_SCENE_WINDRAIN) )
+  {
+    if( (rand % KAZAKAMI_WIND_SCENE_WIND_ADD_CUT_NUM) != 0 )
+    {
+      return ;
+    }
+  }
+	
+	// num分オブジェクトを登録
+	for(i=0;i<num;i++){
+
+		add_obj = WEATHER_TASK_CreateObj( p_wk, heapID );		// 登録
+		if(add_obj == NULL){			// 失敗したら終了
+			break;
+		}
+		p_obj_wk = WEATHER_OBJ_WORK_GetWork( add_obj );		// オブジェワーク作成
+		p_clwk	= WEATHER_OBJ_WORK_GetClWk( add_obj );
+
+    GF_ASSERT( sizeof(KAZAKAMI_OBJ_WK) < WEATHER_OBJ_WORK_USE_WORKSIZE );
+
+    p_obj_wk->cp_parent = p_local_wk;
+    switch( p_local_wk->wind_scene_type )
+    {
+    case KAZAKAMI_WIND_SCENE_RAIN:
+      p_obj_wk->type = KAZAKAMI_OBJ_RAIN;
+      break;
+    case KAZAKAMI_WIND_SCENE_WINDRAIN:
+      if( (rand % 100) <= KAZAKAMI_WIND_WINDRAIN_PARCENT )
+      {
+        p_obj_wk->type = KAZAKAMI_OBJ_WIND_RAIN;
+      }
+      else
+      {
+        p_obj_wk->type = KAZAKAMI_OBJ_WIND;
+      }
+      break;
+
+    case KAZAKAMI_WIND_SCENE_RAIN_TO_WINDRAIN:
+    case KAZAKAMI_WIND_SCENE_WINDRAIN_TO_RAIN:
+      if( (rand % 100) <= KAZAKAMI_RAIN_RAIN_TO_WINDRAIN_PARCENT )
+      {
+        p_obj_wk->type = KAZAKAMI_OBJ_RAIN;
+      }
+      else if( (rand % 100) <= KAZAKAMI_WIND_RAIN_RAIN_TO_WINDRAIN_PARCENT )
+      {
+        p_obj_wk->type = KAZAKAMI_OBJ_WIND_RAIN;
+      }
+      else
+      {
+        p_obj_wk->type = KAZAKAMI_OBJ_WIND;
+      }
+      break;
+
+    default:
+      GF_ASSERT(0);
+      break;
+    }
+
+    // 登録作業
+    WEATHER_KAZAKAMI_OBJ_ADD_TBL[ p_obj_wk->type ]( add_obj, p_obj_wk->cp_parent, (void*)&p_obj_wk->objwk, p_clwk );
+	}
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  風表現オブジェの動き
+ */
+//-----------------------------------------------------------------------------
+static void WEATHER_KAZAKAMI_OBJ_WIND_Move( WEATHER_OBJ_WORK* p_wk, const WEATHER_KAZAKAMI_WORK* cp_parent, void* p_obj, GFL_CLWK* p_clwk )
+{
+  GFL_CLACTPOS pos;
+  KAZAKAMI_OBJ_WIND_WK* p_objwk = p_obj;
+  fx32 last_move_x, last_move_y;
+  fx32 move_x, move_y;
+  u16 rotate;
+  s32 wind_add_x, wind_add_y;
+
+  // もし風がなくなったら、前のスピードで進む
+  if( cp_parent->wind_add_x == 0 )
+  {
+    wind_add_x = p_objwk->last_speed_x;
+    wind_add_y = p_objwk->last_speed_y;
+  }
+  else
+  {
+    wind_add_x = cp_parent->wind_add_x;
+    wind_add_y = cp_parent->wind_add_y;
+    p_objwk->last_speed_x = wind_add_x;
+    p_objwk->last_speed_y = wind_add_y;
+  }
+
+  // 座標取得
+	WEATHER_OBJ_WORK_GetPos( p_wk, &pos );
+
+  // 通常スピード＋風
+  p_objwk->pos_x += p_objwk->speed_x + wind_add_x;
+  p_objwk->pos_y += p_objwk->speed_y + wind_add_y;
+  pos.x = KAZAKAMI_OBJ_WIND_SPEED_GET(p_objwk->pos_x);
+  pos.y = KAZAKAMI_OBJ_WIND_SPEED_GET(p_objwk->pos_y);
+
+  // 破棄監視
+  if( (pos.x >= KAZAKAMI_OBJ_WIND_DELETE_X) || (pos.y >= KAZAKAMI_OBJ_WIND_DELETE_Y) )
+  {
+    WEATHER_TASK_DeleteObj( p_wk );
+    return ;
+  }
+
+
+  WEATHER_OBJ_WORK_SetPosNoTurn( p_wk, &pos );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  風表現オブジェの追加
+ */
+//-----------------------------------------------------------------------------
+static void WEATHER_KAZAKAMI_OBJ_WIND_Add( WEATHER_OBJ_WORK* p_wk, const WEATHER_KAZAKAMI_WORK* cp_parent, void* p_obj, GFL_CLWK* p_clwk )
+{
+  GFL_CLACTPOS pos;
+  KAZAKAMI_OBJ_WIND_WK* p_objwk = p_obj;
+  u32 rand = GFUser_GetPublicRand(0);
+
+  p_objwk->speed_x = KAZAKAMI_OBJ_WIND_SPEED_X_MIN + (rand % KAZAKAMI_OBJ_WIND_SPEED_X_RND);
+  p_objwk->speed_y = KAZAKAMI_OBJ_WIND_SPEED_Y_MIN + (rand % KAZAKAMI_OBJ_WIND_SPEED_Y_RND);
+
+  p_objwk->last_speed_x = cp_parent->wind_add_x;
+  p_objwk->last_speed_y = cp_parent->wind_add_y;
+
+  // 座標
+  pos.x = KAZAKAMI_OBJ_WIND_ADD_X + (rand % KAZAKAMI_OBJ_WIND_ADD_X_RND);
+  pos.y = KAZAKAMI_OBJ_WIND_ADD_Y_MIN + (rand % KAZAKAMI_OBJ_WIND_ADD_Y_RND);
+  WEATHER_OBJ_WORK_SetPosNoTurn( p_wk, &pos );
+
+  p_objwk->pos_x = KAZAKAMI_OBJ_WIND_SPEED_SET( pos.x );
+  p_objwk->pos_y = KAZAKAMI_OBJ_WIND_SPEED_SET( pos.y );
+
+  GFL_CLACT_WK_SetAnmSeq( p_clwk, 0 );
+
+  GFL_CLACT_WK_SetAutoAnmFlag( p_clwk, TRUE );
+  GFL_CLACT_WK_SetAutoAnmSpeed( p_clwk, 2<<FX32_SHIFT );
+
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  雨表現オブジェの動き
+ */
+//-----------------------------------------------------------------------------
+static void WEATHER_KAZAKAMI_OBJ_RAIN_Move( WEATHER_OBJ_WORK* p_wk, const WEATHER_KAZAKAMI_WORK* cp_parent, void* p_obj, GFL_CLWK* p_clwk )
+{
+  GFL_CLACTPOS pos;
+  KAZAKAMI_OBJ_RAIN_WK* p_objwk = p_obj;
+
+  // 座標取得
+	WEATHER_OBJ_WORK_GetPos( p_wk, &pos );
+
+  // 通常スピード＋風
+  p_objwk->pos_x += p_objwk->speed_x;
+  p_objwk->pos_y += p_objwk->speed_y;
+
+    
+  pos.x = KAZAKAMI_OBJ_WIND_SPEED_GET(p_objwk->pos_x);
+  pos.y = KAZAKAMI_OBJ_WIND_SPEED_GET(p_objwk->pos_y);
+
+  // 破棄監視
+  if( (pos.x >= KAZAKAMI_OBJ_RAIN_DELETE_X) || (pos.y >= KAZAKAMI_OBJ_RAIN_DELETE_Y) )
+  {
+    WEATHER_TASK_DeleteObj( p_wk );
+    return ;
+  }
+
+
+  WEATHER_OBJ_WORK_SetPosNoTurn( p_wk, &pos );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  雨表現オブジェの追加
+ */
+//-----------------------------------------------------------------------------
+static void WEATHER_KAZAKAMI_OBJ_RAIN_Add( WEATHER_OBJ_WORK* p_wk, const WEATHER_KAZAKAMI_WORK* cp_parent, void* p_obj, GFL_CLWK* p_clwk )
+{
+  GFL_CLACTPOS pos;
+  KAZAKAMI_OBJ_RAIN_WK* p_objwk = p_obj;
+  u32 rand = GFUser_GetPublicRand(0);
+
+  p_objwk->speed_x = KAZAKAMI_OBJ_RAIN_SPEED_X_MIN + (rand % KAZAKAMI_OBJ_RAIN_SPEED_RND);
+  p_objwk->speed_y = KAZAKAMI_OBJ_RAIN_SPEED_Y_MIN + (rand % KAZAKAMI_OBJ_RAIN_SPEED_RND);
+
+  // 座標
+  pos.x = KAZAKAMI_OBJ_RAIN_ADD_X_MIN + (rand % KAZAKAMI_OBJ_RAIN_ADD_X_RND);
+  pos.y = KAZAKAMI_OBJ_RAIN_ADD_Y_MIN + (rand % KAZAKAMI_OBJ_RAIN_ADD_Y_RND);
+  WEATHER_OBJ_WORK_SetPosNoTurn( p_wk, &pos );
+
+  p_objwk->pos_x = KAZAKAMI_OBJ_WIND_SPEED_SET( pos.x );
+  p_objwk->pos_y = KAZAKAMI_OBJ_WIND_SPEED_SET( pos.y );
+
+  GFL_CLACT_WK_SetAnmSeq( p_clwk, 1 );
+
+  GFL_CLACT_WK_SetAutoAnmFlag( p_clwk, TRUE );
+  GFL_CLACT_WK_SetAutoAnmSpeed( p_clwk, 2<<FX32_SHIFT );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  風雨表現オブジェの動き
+ */
+//-----------------------------------------------------------------------------
+static void WEATHER_KAZAKAMI_OBJ_WINDRAIN_Move( WEATHER_OBJ_WORK* p_wk, const WEATHER_KAZAKAMI_WORK* cp_parent, void* p_obj, GFL_CLWK* p_clwk )
+{
+  GFL_CLACTPOS pos;
+  KAZAKAMI_OBJ_WINDRAIN_WK* p_objwk = p_obj;
+
+  // 座標取得
+	WEATHER_OBJ_WORK_GetPos( p_wk, &pos );
+
+  // 通常スピード＋風
+  if( cp_parent->wind_add_x != 0 )
+  {
+    p_objwk->pos_x += p_objwk->speed_x + cp_parent->wind_add_x;
+    p_objwk->pos_y += p_objwk->speed_y + cp_parent->wind_add_y;
+    pos.x = KAZAKAMI_OBJ_WIND_SPEED_GET(p_objwk->pos_x);
+    pos.y = KAZAKAMI_OBJ_WIND_SPEED_GET(p_objwk->pos_y);
+    
+    p_objwk->last_speed_x = p_objwk->speed_x + cp_parent->wind_add_x;
+    p_objwk->last_speed_y = p_objwk->speed_y + cp_parent->wind_add_y;
+  }
+  else
+  {
+    p_objwk->pos_x += p_objwk->last_speed_x;
+    p_objwk->pos_y += p_objwk->last_speed_y;
+    pos.x = KAZAKAMI_OBJ_WIND_SPEED_GET(p_objwk->pos_x);
+    pos.y = KAZAKAMI_OBJ_WIND_SPEED_GET(p_objwk->pos_y);
+  }
+
+  // 破棄監視
+  if( (pos.x >= KAZAKAMI_OBJ_WIND_DELETE_X) || (pos.y >= KAZAKAMI_OBJ_WIND_DELETE_Y) )
+  {
+    WEATHER_TASK_DeleteObj( p_wk );
+    return ;
+  }
+
+  WEATHER_OBJ_WORK_SetPosNoTurn( p_wk, &pos );
+
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  風雨表現オブジェの追加
+ */
+//-----------------------------------------------------------------------------
+static void WEATHER_KAZAKAMI_OBJ_WINDRAIN_Add( WEATHER_OBJ_WORK* p_wk, const WEATHER_KAZAKAMI_WORK* cp_parent, void* p_obj, GFL_CLWK* p_clwk )
+{
+  GFL_CLACTPOS pos;
+  KAZAKAMI_OBJ_WINDRAIN_WK* p_objwk = p_obj;
+  u32 rand = GFUser_GetPublicRand(0);
+
+  p_objwk->speed_x = KAZAKAMI_OBJ_WINDRAIN_SPEED_X_MIN + (rand % KAZAKAMI_OBJ_WINDRAIN_SPEED_X_RND);
+  p_objwk->speed_y = KAZAKAMI_OBJ_WINDRAIN_SPEED_Y_MIN + (rand % KAZAKAMI_OBJ_WINDRAIN_SPEED_Y_RND);
+
+  p_objwk->last_speed_x = p_objwk->speed_x + cp_parent->wind_add_x;
+  p_objwk->last_speed_y = p_objwk->speed_y + cp_parent->wind_add_y;
+
+  // 座標
+  pos.x = KAZAKAMI_OBJ_WINDRAIN_ADD_X_MIN + (rand % KAZAKAMI_OBJ_WINDRAIN_ADD_X_RND);
+  pos.y = KAZAKAMI_OBJ_WINDRAIN_ADD_Y_MIN + (rand % KAZAKAMI_OBJ_WINDRAIN_ADD_Y_RND);
+  WEATHER_OBJ_WORK_SetPosNoTurn( p_wk, &pos );
+
+  p_objwk->pos_x = KAZAKAMI_OBJ_WIND_SPEED_SET( pos.x );
+  p_objwk->pos_y = KAZAKAMI_OBJ_WIND_SPEED_SET( pos.y );
+
+  GFL_CLACT_WK_SetAnmSeq( p_clwk, 2 );
+
+  GFL_CLACT_WK_SetAutoAnmFlag( p_clwk, TRUE );
+  GFL_CLACT_WK_SetAutoAnmSpeed( p_clwk, 2<<FX32_SHIFT );
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  雨つき風の開始
+ */
+//-----------------------------------------------------------------------------
+static void WEATHER_KAZAKAMI_WindStartRain( WEATHER_TASK* p_sys, WEATHER_KAZAKAMI_WORK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, BOOL fadeout )
+{
+  u32 rand = GFUser_GetPublicRand(0);
+  // WINDRAINへ
+  p_wk->wind_scene_type   = KAZAKAMI_WIND_SCENE_RAIN;
+  p_wk->wind_scene_count_max  = KAZAKAMI_WIND_SCENE_WINDRAIN_TIME_MIN + (rand % KAZAKAMI_WIND_SCENE_WINDRAIN_TIME_RND);
+  p_wk->wind_scene_count = 0;
+
+  // FOGを動かす
+  if( fadeout == FALSE )
+  {
+    WEATHER_TASK_FogFadeIn_Init( p_sys,
+      WEATHER_FOG_SLOPE_DEFAULT, 
+      WEATHER_FOG_DEPTH_DEFAULT + WEATHER_KAZAKAMI_FOG_OFS_NORMAL, 
+      WEATHER_KAZAKAMI_FOG_TIMING,
+      fog_cont );
+
+    WEATHER_TASK_3DBG_SetVisible( p_sys, FALSE, WEATHER_TASK_3DBG_BACK );
+  }
+
+
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  風管理
+ */
+//-----------------------------------------------------------------------------
+static void WEATHER_KAZAKAMI_WindControl( WEATHER_TASK* p_sys, WEATHER_KAZAKAMI_WORK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, BOOL fadeout )
+{
+  // scene_typeの変更
+  switch( p_wk->wind_scene_type )
+  {
+  case  KAZAKAMI_WIND_SCENE_RAIN:
+    p_wk->wind_scene_count++;
+    if( p_wk->wind_scene_count >= p_wk->wind_scene_count_max )
+    {
+        // RAIN_TO_WINDRAINへ
+        p_wk->wind_scene_type   = KAZAKAMI_WIND_SCENE_RAIN_TO_WINDRAIN;
+        p_wk->wind_scene_count_max  = KAZAKAMI_WIND_SCENE_RAIN_TO_WINDRAIN_TIME_MIN;
+        p_wk->wind_scene_count = 0;
+
+        // FOGを動かす
+        if( fadeout == FALSE )
+        {
+          WEATHER_TASK_FogFadeIn_Init( p_sys,
+            WEATHER_FOG_SLOPE_DEFAULT, 
+            WEATHER_FOG_DEPTH_DEFAULT + WEATHER_KAZAKAMI_FOG_OFS, 
+            WEATHER_KAZAKAMI_FOG_TIMING,
+            fog_cont );
+        }
+    }
+    break;
+    
+  case  KAZAKAMI_WIND_SCENE_WINDRAIN:
+    {
+      p_wk->wind_scene_count++;
+      if( p_wk->wind_scene_count >= p_wk->wind_scene_count_max )
+      {
+        // WINDRAIN_TO_RAINへ
+        p_wk->wind_scene_type   = KAZAKAMI_WIND_SCENE_WINDRAIN_TO_RAIN;
+        p_wk->wind_scene_count_max  = KAZAKAMI_WIND_SCENE_RAIN_TO_WINDRAIN_TIME_MIN;
+        p_wk->wind_scene_count = 0;
+
+        // BGを消す
+        if( fadeout == FALSE )
+        {
+          // 3DBGの管理
+          WEATHER_TASK_3DBG_SetVisible( p_sys, FALSE, WEATHER_TASK_3DBG_BACK );
+        }
+      }
+    }
+    break;
+
+  case KAZAKAMI_WIND_SCENE_RAIN_TO_WINDRAIN:
+    {
+      p_wk->wind_scene_count++;
+      if( p_wk->wind_scene_count >= p_wk->wind_scene_count_max )
+      {
+        u32 rand = GFUser_GetPublicRand(0);
+        // WINDRAINへ
+        p_wk->wind_scene_type   = KAZAKAMI_WIND_SCENE_WINDRAIN;
+        p_wk->wind_scene_count_max  = KAZAKAMI_WIND_SCENE_WINDRAIN_TIME_MIN + (rand % KAZAKAMI_WIND_SCENE_WINDRAIN_TIME_RND);
+        p_wk->wind_scene_count = 0;
+
+        // BGを出す
+        if( fadeout == FALSE )
+        {
+          // 3DBGの管理
+          WEATHER_TASK_3DBG_SetVisible( p_sys, TRUE, WEATHER_TASK_3DBG_BACK );
+        }
+      }
+    }
+    break;
+    
+  case KAZAKAMI_WIND_SCENE_WINDRAIN_TO_RAIN:
+    {
+      p_wk->wind_scene_count++;
+      if( p_wk->wind_scene_count >= p_wk->wind_scene_count_max )
+      {
+        WEATHER_KAZAKAMI_WindStartRain( p_sys, p_wk, fog_cont, fadeout );
+      }
+    }
+    break;
+
+  case KAZAKAMI_WIND_SCENE_NONE:
+    break;
+    
+  default:
+    GF_ASSERT(0);
+    break;
+  }
+  
+  
+  // 風の設定
+  switch( p_wk->wind_scene_type )
+  {
+  case  KAZAKAMI_WIND_SCENE_RAIN:
+    p_wk->wind_add_x = KAZAKAMI_WIND_SCENE_RAIN_WIND_SPEED_X;
+    p_wk->wind_add_y = KAZAKAMI_WIND_SCENE_RAIN_WIND_SPEED_Y;
+    break;
+    
+  case  KAZAKAMI_WIND_SCENE_WINDRAIN:
+    {
+      u32 idx;
+
+      idx = ((p_wk->wind_scene_count%KAZAKAMI_WIND_SCENE_WINDRAIN_WIND_SPEED_CHANGE_TIME) * KAZAKAMI_WIND_SCENE_WINDRAIN_WIND_SPEED_TBL_NUM) / KAZAKAMI_WIND_SCENE_WINDRAIN_WIND_SPEED_CHANGE_TIME;
+      GF_ASSERT( idx < KAZAKAMI_WIND_SCENE_WINDRAIN_WIND_SPEED_TBL_NUM );
+      p_wk->wind_add_x = KAZAKAMI_WIND_SCENE_RAIN_RAINWIND_SPEED_TBL[idx].x;
+      p_wk->wind_add_y = KAZAKAMI_WIND_SCENE_RAIN_RAINWIND_SPEED_TBL[idx].y;
+
+      idx = ((p_wk->wind_scene_count%KAZAKAMI_WIND_SCENE_RAIN_WIND_BG_BACK_SCALE_CHANGE_TIME) * KAZAKAMI_WIND_SCENE_RAIN_WIND_BG_BACK_SCALE_NUM) / KAZAKAMI_WIND_SCENE_RAIN_WIND_BG_BACK_SCALE_CHANGE_TIME;
+      GF_ASSERT( idx < KAZAKAMI_WIND_SCENE_RAIN_WIND_BG_BACK_SCALE_NUM );
+      p_wk->wind_bg_back_scale_x = KAZAKAMI_WIND_SCENE_RAIN_WIND_BG_BACK_SCALE_TBL[idx];
+    }
+    break;
+
+
+  case KAZAKAMI_WIND_SCENE_RAIN_TO_WINDRAIN:
+  case KAZAKAMI_WIND_SCENE_WINDRAIN_TO_RAIN:
+    p_wk->wind_add_x = KAZAKAMI_WIND_SCENE_RAIN_TO_WINDRAIN_WIND_SPEED_X;
+    p_wk->wind_add_y = KAZAKAMI_WIND_SCENE_RAIN_TO_WINDRAIN_WIND_SPEED_Y;
+    p_wk->wind_bg_back_scale_x = KAZAKAMI_WIND_SCENE_RAIN_TO_WINDRAIN_WIND_SCALE_X;
+    break;
+
+  case KAZAKAMI_WIND_SCENE_NONE:
+    break;
+
+  default:
+    GF_ASSERT(0);
+    break;
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カザカミ　スクロール処理
+ */
+//-----------------------------------------------------------------------------
+static void WEATHER_KAZAKAMI_SCROLL_Main( WEATHER_TASK* p_sys, WEATHER_KAZAKAMI_WORK* p_wk )
+{
+	int x, y;
+	WEATHER_TASK_GetScrollDist( p_sys, &x, &y );
+	WEATHER_TASK_ScrollObj( p_sys, x, y );
+
+	// BG面を斜め上に動かす
+  if(p_wk->wind_add_x != 0 )
+  {
+  	p_wk->scroll_x = (p_wk->scroll_x + 9) % 256;
+	  p_wk->scroll_y = (p_wk->scroll_y + 4) % 256;
+  	p_wk->scroll_back_x = (p_wk->scroll_back_x + 9) % 256;
+	  p_wk->scroll_back_y = (p_wk->scroll_back_y + 4) % 256;
+  }
+  else
+  {
+  	p_wk->scroll_x = (p_wk->scroll_x + 7) % 256;
+	  p_wk->scroll_y = (p_wk->scroll_y + 7) % 256;
+  }
+
+	WEATHER_TASK_3DBG_SetScrollX( p_sys, (-p_wk->scroll_x) - x, WEATHER_TASK_3DBG_FRONT );
+	WEATHER_TASK_3DBG_SetScrollY( p_sys, (-p_wk->scroll_y) + y, WEATHER_TASK_3DBG_FRONT );
+
+	WEATHER_TASK_3DBG_SetScrollX( p_sys, (-p_wk->scroll_back_x) - x, WEATHER_TASK_3DBG_BACK );
+	WEATHER_TASK_3DBG_SetScrollY( p_sys, (-p_wk->scroll_back_y) + y, WEATHER_TASK_3DBG_BACK );
+
+  {
+    WEATHER_TASK_3DBG_SetScaleX( p_sys, p_wk->wind_bg_back_scale_x, WEATHER_TASK_3DBG_BACK );
+    WEATHER_TASK_3DBG_SetScaleY( p_sys, p_wk->wind_bg_back_scale_x, WEATHER_TASK_3DBG_BACK );
+  }
+}
 
 
 

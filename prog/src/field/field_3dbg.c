@@ -147,6 +147,7 @@ FIELD_3DBG* FIELD_3DBG_Create( const FIELD_3DBG_SETUP* cp_setup, u32 heapID )
 
 	// ƒƒ‚ƒŠŠm•Û
 	p_sys = GFL_HEAP_AllocClearMemory( heapID, sizeof(FIELD_3DBG) );
+  TOMOYA_Printf( "FIELD_3DBG_Memory 0x%x\n", sizeof(FIELD_3DBG) );
 
 	// Šî–{î•ñ‚ÌÝ’è
 	p_sys->size_x		= cp_setup->size_x;
@@ -868,7 +869,7 @@ static void FIELD_3DBG_SetTexParam( const FIELD_3DBG* cp_sys )
 {
 	GF_ASSERT( cp_sys->tex.load );
 	G3_TexImageParam( cp_sys->tex.texfmt,
-			GX_TEXGEN_VERTEX, 
+			GX_TEXGEN_TEXCOORD, 
 			cp_sys->tex.texsiz_s, cp_sys->tex.texsiz_t,
 			cp_sys->tex.repeat, cp_sys->tex.flip, 
 			cp_sys->tex.texpltt,

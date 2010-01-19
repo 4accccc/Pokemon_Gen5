@@ -99,6 +99,7 @@ enum{
 };
 
 
+
 //-------------------------------------
 ///	セルユニットワーク数
 //=====================================
@@ -108,10 +109,18 @@ enum{
 //-------------------------------------
 ///	3DBG
 //=====================================
-static const FIELD_3DBG_SETUP	sc_FIELD_3DBG_SETUP = {
-	256, 192,
-	FLD_3DPRI_WEATHER_OFFS,
-	0,
+#define FIELD_WEATHER_3DBG_NUM  (WEATHER_TASK_3DBG_NUM)
+static const FIELD_3DBG_SETUP	sc_FIELD_3DBG_SETUP[FIELD_WEATHER_3DBG_NUM] = {
+  {
+    256, 192,
+    FLD_3DPRI_WEATHER_OFFS,
+    0,
+  },
+  {
+    256, 192,
+    FLD_3DPRI_WEATHER_OFFS + (8<<FX32_SHIFT),
+    0,
+  },
 };
 
 //-----------------------------------------------------------------------------
@@ -125,7 +134,7 @@ static const FIELD_3DBG_SETUP	sc_FIELD_3DBG_SETUP = {
 struct _FIELD_WEATHER{
 
 	// 3DBG
-	FIELD_3DBG* p_3dbg;
+	FIELD_3DBG* p_3dbg[FIELD_WEATHER_3DBG_NUM];
 
 	// 切り替えシーケンス
 	u16		change_type;
@@ -215,7 +224,7 @@ static const FIELD_WEATHER_DATA sc_FIELD_WEATHER_DATA[] = {
 
 	// カザカミ
 	{
-		&c_WEATHER_TASK_DATA_RAIKAMI,
+		&c_WEATHER_TASK_DATA_KAZAKAMI,
 		FS_OVERLAY_ID(field_weather_rain)
 	},
 
@@ -267,7 +276,9 @@ FIELD_WEATHER* FIELD_WEATHER_Init( const FIELD_CAMERA* cp_camera, FIELD_LIGHT* p
 	p_sys = GFL_HEAP_AllocClearMemory( heapID, sizeof(FIELD_WEATHER) );
 
 	// 3DBGシステム初期化
-	p_sys->p_3dbg = FIELD_3DBG_Create( &sc_FIELD_3DBG_SETUP, heapID );
+  for( i=0; i<FIELD_WEATHER_3DBG_NUM; i++ ){
+  	p_sys->p_3dbg[i] = FIELD_3DBG_Create( &sc_FIELD_3DBG_SETUP[i], heapID );
+  }
 
 	// メンバ初期化
 	p_sys->change_type		= FIELD_WEATHER_CHANGETYPE_NORMAL;
@@ -318,7 +329,9 @@ void FIELD_WEATHER_Exit( FIELD_WEATHER* p_sys )
 
 
 	// 3DBGシステム破棄
-	FIELD_3DBG_Delete( p_sys->p_3dbg );
+  for( i=0; i<FIELD_WEATHER_3DBG_NUM; i++ ){
+  	FIELD_3DBG_Delete( p_sys->p_3dbg[i] );
+  }
 
 	GFL_HEAP_FreeMemory( p_sys );
 }
@@ -379,8 +392,11 @@ void FIELD_WEATHER_Main( FIELD_WEATHER* p_sys, u32 heapID )
 //-----------------------------------------------------------------------------
 void FIELD_WEATHER_3DWrite( FIELD_WEATHER* p_sys )
 {
+  int i;
 	if( p_sys ){
-		FIELD_3DBG_Write( p_sys->p_3dbg );
+    for( i=0; i<FIELD_WEATHER_3DBG_NUM; i++ ){
+		  FIELD_3DBG_Write( p_sys->p_3dbg[i] );
+    }
 	}
 }
 
@@ -542,8 +558,11 @@ static void FIELD_WEATHER_OVERLAY_UnLoad( FIELD_WEATHER* p_sys )
 static void FIELD_WEATHER_VBlank( GFL_TCB* p_tcb, void* p_work )
 {
 	FIELD_WEATHER* p_sys = p_work;
+  int i;
 
-	FIELD_3DBG_VBlank( p_sys->p_3dbg );
+  for( i=0; i<FIELD_WEATHER_3DBG_NUM; i++ ){
+  	FIELD_3DBG_VBlank( p_sys->p_3dbg[i] ); 
+  }
 }
 
 
