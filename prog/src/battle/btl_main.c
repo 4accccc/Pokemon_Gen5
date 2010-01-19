@@ -1788,7 +1788,7 @@ BOOL BTL_MAIN_IsZukanRegistered( const BTL_MAIN_MODULE* wk, const BTL_POKEPARAM*
  * @param   exPos         特殊ポケモン位置指定子
  * @param   dst           [out] 対象ポケ位置を格納するバッファ
  *
- * @retval  u8    対象クライアント数
+ * @retval  u8    対象ポケ位置数
  */
 //=============================================================================================
 u8 BTL_MAIN_ExpandBtlPos( const BTL_MAIN_MODULE* wk, BtlExPos exPos, u8* dst )
@@ -2349,7 +2349,36 @@ static u8 PokeID_to_ClientID( u8 pokeID )
   return 0;
 }
 
+//=============================================================================================
+/**
+ * 特殊ポケ位置指定子を、実際のポケ位置に展開後、
+ * 実際にそこに存在しているポケモンパラメータをポインタ配列に格納
+ *
+ * @param   wk
+ * @param   pokeCon
+ * @param   exPos
+ * @param   bppAry
+ *
+ * @retval  u8
+ */
+//=============================================================================================
+u8 BTL_MAIN_ExpandExistPokeParam( const BTL_MAIN_MODULE* wk, BTL_POKE_CONTAINER* pokeCon, BtlExPos exPos, BTL_POKEPARAM** bppAry )
+{
+  BTL_POKEPARAM* bpp;
+  u8 pokePos[ BTL_POS_MAX ];
+  u8 posCnt, existCnt, i;
 
+  posCnt = BTL_MAIN_ExpandBtlPos( wk, exPos, pokePos );
+  for(i=0, existCnt=0; i<posCnt; ++i)
+  {
+    bpp = BTL_POKECON_GetFrontPokeData( pokeCon, pokePos[i] );
+    if( (bpp != NULL) && !BPP_IsDead(bpp) )
+    {
+      bppAry[ existCnt++ ] = bpp;
+    }
+  }
+  return existCnt;
+}
 
 //=============================================================================================
 /**
@@ -2863,7 +2892,7 @@ static void PokeCon_AddParty( BTL_POKE_CONTAINER* pokecon, BTL_MAIN_MODULE* wk, 
     if( fIllusion ){
       BPP_SetViewSrcData( pokecon->pokeParam[ pokeID-1 ], pp );
     }
-    fIllusion = (BPP_GetValue( pokecon->pokeParam[pokeID], BPP_TOKUSEI) == POKETOKUSEI_IRYUUJON);
+    fIllusion = (BPP_GetValue( pokecon->pokeParam[pokeID], BPP_TOKUSEI_EFFECTIVE) == POKETOKUSEI_IRYUUJON);
 
     BTL_PARTY_AddMember( party, pokecon->pokeParam[ pokeID ] );
   }
@@ -3330,7 +3359,7 @@ void BTL_PARTY_SetFakeSrcMember( BTL_PARTY* party, u8 memberIdx )
   &&  (party->memberCount > 1)
   ){
     BTL_POKEPARAM* bpp = party->member[ memberIdx ];
-    if( BPP_GetValue(bpp, BPP_TOKUSEI) == POKETOKUSEI_IRYUUJON )
+    if( BPP_GetValue(bpp, BPP_TOKUSEI_EFFECTIVE) == POKETOKUSEI_IRYUUJON )
     {
       BTL_POKEPARAM* refPoke;
       u8 idx = memberIdx + 1;

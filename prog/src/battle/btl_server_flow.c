@@ -2129,7 +2129,7 @@ static void scproc_MemberInCore( BTL_SVFLOW_WORK* wk, u8 clientID, u8 posIdx, u8
 
   {
     BTL_POKEPARAM* tmpBpp = BTL_PARTY_GetMemberData( clwk->party, nextPokeIdx );
-    if( BPP_GetValue(tmpBpp, BPP_TOKUSEI) == POKETOKUSEI_IRYUUJON ){
+    if( BPP_GetValue(tmpBpp, BPP_TOKUSEI_EFFECTIVE) == POKETOKUSEI_IRYUUJON ){
       SCQUE_PUT_OP_SetFakeSrcMember( wk->que, clientID, nextPokeIdx );
       BTL_PARTY_SetFakeSrcMember( clwk->party, nextPokeIdx );
     }
@@ -6465,8 +6465,8 @@ static void scput_Fight_Uncategory_SkillSwap( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM
   BTL_POKEPARAM* target = BTL_POKESET_Get( targetRec, 0 );
   PokeTokusei atk_tok, tgt_tok;
 
-  atk_tok = BPP_GetValue( attacker, BPP_TOKUSEI );
-  tgt_tok = BPP_GetValue( target, BPP_TOKUSEI );
+  atk_tok = BPP_GetValue( attacker, BPP_TOKUSEI_EFFECTIVE );
+  tgt_tok = BPP_GetValue( target, BPP_TOKUSEI_EFFECTIVE );
 
   if( (!BTL_CALC_TOK_CheckCantChange(atk_tok)) && (!BTL_CALC_TOK_CheckCantChange(tgt_tok)) )
   {
@@ -9928,7 +9928,7 @@ BOOL BTL_SVFTOOL_CheckExistTokuseiPokemon( BTL_SVFLOW_WORK* wk, PokeTokusei toku
   FRONT_POKE_SEEK_InitWork( &fps, wk );
   while( FRONT_POKE_SEEK_GetNext( &fps, wk, &bpp ) )
   {
-    if( BPP_GetValue(bpp, BPP_TOKUSEI) == tokusei )
+    if( BPP_GetValue(bpp, BPP_TOKUSEI_EFFECTIVE) == tokusei )
     {
       return TRUE;
     }

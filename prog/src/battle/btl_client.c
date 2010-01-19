@@ -109,10 +109,11 @@ struct _BTL_CLIENT {
   ServerCmdProc        scProc;
   int                  scSeq;
 
-
   BTL_POKESELECT_PARAM    pokeSelParam;
   BTL_POKESELECT_RESULT   pokeSelResult;
   CANT_ESC_CONTROL        cantEscCtrl;
+  BTL_POKEPARAM           *bppToEscCheck[ BTL_POS_MAX ];
+
 
 
   HEAPID heapID;
@@ -148,6 +149,7 @@ static BOOL SelActProc_Call( BTL_CLIENT* wk );
 static BOOL SubProc_UI_SelectAction( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_REC_SelectAction( BTL_CLIENT* wk, int* seq );
 static BOOL selact_Start( BTL_CLIENT* wk, int* seq );
+static void selact_startMsg( BTL_CLIENT* wk, const BTLV_STRPARAM* strParam );
 static BOOL selact_Root( BTL_CLIENT* wk, int* seq );
 static BOOL selact_Fight( BTL_CLIENT* wk, int* seq );
 static BOOL selact_SelectChangePokemon( BTL_CLIENT* wk, int* seq );
@@ -163,7 +165,10 @@ static BOOL is_action_unselectable( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, BT
 static BOOL is_waza_unselectable( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, BTL_ACTION_PARAM* action );
 static void setWaruagakiAction( BTL_ACTION_PARAM* dst, BTL_CLIENT* wk, const BTL_POKEPARAM* bpp );
 static BOOL is_unselectable_waza( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, WazaID waza, BTLV_STRPARAM* strParam );
-static BtlCantEscapeCode is_prohibit_escape( BTL_CLIENT* wk, u8* pokeID, u16* tokuseiID );
+static BtlCantEscapeCode isForbidEscape( BTL_CLIENT* wk, const BTL_POKEPARAM* procPoke, u8* pokeID, u16* tokuseiID );
+static BOOL checkForbitEscapeEffective_Kagefumi( BTL_CLIENT* wk, const BTL_POKEPARAM* procPoke );
+static BOOL checkForbitEscapeEffective_Arijigoku( BTL_CLIENT* wk, const BTL_POKEPARAM* procPoke );
+static BOOL checkForbitEscapeEffective_Jiryoku( BTL_CLIENT* wk, const BTL_POKEPARAM* procPoke );
 static BOOL SubProc_AI_SelectAction( BTL_CLIENT* wk, int* seq );
 static u8 calcPuttablePokemons( BTL_CLIENT* wk, u8* list );
 static void setup_pokesel_param_change( BTL_CLIENT* wk, u8 mode, u8 numSelect, BTL_POKESELECT_PARAM* param, BTL_POKESELECT_RESULT* result );
@@ -256,7 +261,7 @@ static BOOL scProc_OP_SetStatus( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_SetWeight( BTL_CLIENT* wk, int* seq, const int* args );
 static void cec_addCode( CANT_ESC_CONTROL* ctrl, u8 pokeID, BtlCantEscapeCode code );
 static void cec_subCode( CANT_ESC_CONTROL* ctrl, u8 pokeID, BtlCantEscapeCode code );
-static u8 cec_isEnable( CANT_ESC_CONTROL* ctrl, BtlCantEscapeCode code, BTL_CLIENT* wk );
+static u8 cec_isEnable( CANT_ESC_CONTROL* ctrl, const BTL_POKEPARAM* procPoke, BtlCantEscapeCode code, BTL_CLIENT* wk );
 static BOOL _cec_check_kagefumi( BTL_CLIENT* wk );
 static BOOL _cec_check_arijigoku( BTL_CLIENT* wk );
 static BOOL _cec_check_jiryoku( BTL_CLIENT* wk );
@@ -871,7 +876,7 @@ static BOOL selact_SelectChangePokemon( BTL_CLIENT* wk, int* seq )
     {
       u16 tokuseiID;
       u8  code, pokeID, fCantEsc = FALSE;
-      code = is_prohibit_escape( wk, &pokeID, &tokuseiID );
+      code = isForbidEscape( wk, wk->procPoke, &pokeID, &tokuseiID );
       if( (code != BTL_CANTESC_NULL)
       ||  (BPP_GetID(wk->procPoke) == pokeID)
       ){
@@ -965,7 +970,7 @@ static BOOL selact_Escape( BTL_CLIENT* wk, int* seq )
         BtlCantEscapeCode  code;
         u16 tokuseiID;
         u8 pokeID;
-        code = is_prohibit_escape( wk, &pokeID, &tokuseiID );
+        code = isForbidEscape( wk, wk->procPoke, &pokeID, &tokuseiID );
         // とくせい、ワザ効果等による禁止チェック
         if( code == BTL_CANTESC_NULL )
         {
@@ -1355,51 +1360,130 @@ static BOOL is_unselectable_waza( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, Waza
  * 逃げ・交換の禁止チェック
  *
  * @param   wk
+ * @param   procPoke
  * @param   pokeID      [out] 逃げ・交換できない原因となるポケID（敵・味方ともあり得る）
  * @param   tokuseiID   [out] 逃げ・交換できない原因がとくせいの場合、そのとくせいID（それ以外POKETOKUSEI_NULL）
  *
  * @retval  BtlCantEscapeCode
  */
 //----------------------------------------------------------------------------------
-static BtlCantEscapeCode is_prohibit_escape( BTL_CLIENT* wk, u8* pokeID, u16* tokuseiID )
+static BtlCantEscapeCode isForbidEscape( BTL_CLIENT* wk, const BTL_POKEPARAM* procPoke, u8* pokeID, u16* tokuseiID )
 {
-  BtlCantEscapeCode  code;
+  BtlPokePos  myPos;
+  BtlExPos    exPos;
+  u16 checkTokusei;
+  u8 procPokeID;
+  u8 checkPokeCnt, checkPokeID, i;
 
   *tokuseiID = POKETOKUSEI_NULL;
+  *pokeID = BTL_POKEID_NULL;
 
-  // 相手のとくせい等による逃げ・交換禁止コードをチェック
-  for(code=0; code<BTL_CANTESC_MAX; ++code)
+  procPokeID = BPP_GetID( procPoke );
+  myPos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, procPokeID );
+  exPos = EXPOS_MAKE( BTL_EXPOS_AREA_ENEMY, myPos );
+
+  checkPokeCnt = BTL_MAIN_ExpandExistPokeParam( wk->mainModule, wk->pokeCon, exPos, wk->bppToEscCheck );
+  for(i=0; i<checkPokeCnt; ++i)
   {
-    *pokeID = cec_isEnable(&wk->cantEscCtrl, code, wk);
-    if( *pokeID != BTL_POKEID_NULL )
+    checkTokusei = BPP_GetValue( wk->bppToEscCheck[i], BPP_TOKUSEI_EFFECTIVE );
+    checkPokeID = BPP_GetID( wk->bppToEscCheck[i] );
+    if( checkTokusei == POKETOKUSEI_KAGEFUMI )
     {
-      switch( code ){
-      case BTL_CANTESC_KAGEFUMI:  *tokuseiID = POKETOKUSEI_KAGEFUMI;  break;
-      case BTL_CANTESC_ARIJIGOKU: *tokuseiID = POKETOKUSEI_ARIJIGOKU; break;
-      case BTL_CANTESC_JIRYOKU:   *tokuseiID = POKETOKUSEI_JIRYOKU;   break;
+      BTL_N_Printf( DBGSTR_CLIENT_ForbidEscape_Kagefumi_Chk, checkPokeID );
+      if( checkForbitEscapeEffective_Kagefumi(wk, procPoke) ){
+        BTL_N_Printf( DBGSTR_CLIENT_ForbidEscape_Kagefumi_Enable );
+        *pokeID = BPP_GetID( wk->bppToEscCheck[i] );
+        *tokuseiID = checkTokusei;
+        return BTL_CANTESC_KAGEFUMI;
       }
-      return code;
+    }
+
+    if( checkTokusei == BTL_CANTESC_ARIJIGOKU )
+    {
+      BTL_N_Printf( DBGSTR_CLIENT_ForbidEscape_Arijigoku_Chk, checkPokeID );
+      if( checkForbitEscapeEffective_Arijigoku(wk, procPoke) ){
+        BTL_N_Printf( DBGSTR_CLIENT_ForbidEscape_Arijigoku_Enable );
+        *pokeID = BPP_GetID( wk->bppToEscCheck[i] );
+        *tokuseiID = checkTokusei;
+        return BTL_CANTESC_KAGEFUMI;
+      }
+    }
+
+    if( checkTokusei == BTL_CANTESC_JIRYOKU )
+    {
+      BTL_N_Printf( DBGSTR_CLIENT_ForbidEscape_Jiryoku_Chk, checkPokeID );
+      if( checkForbitEscapeEffective_Arijigoku(wk, procPoke) ){
+        BTL_N_Printf( DBGSTR_CLIENT_ForbidEscape_Jiryoku_Enable );
+        *pokeID = BPP_GetID( wk->bppToEscCheck[i] );
+        *tokuseiID = checkTokusei;
+        return BTL_CANTESC_KAGEFUMI;
+      }
     }
   }
 
-  // こちらのポケモン状態異常による逃げ・交換禁止コードチェック
-  {
-    const BTL_POKEPARAM* bpp;
-    u32 i;
-    for(i=0; i<wk->numCoverPos; ++i)
-    {
-      bpp = BTL_POKECON_GetClientPokeDataConst( wk->pokeCon, wk->myID, i );
-      if( BPP_CheckSick(bpp, WAZASICK_TOOSENBOU)
-      ||  BPP_CheckSick(bpp, WAZASICK_BIND)
-      ){
-        *pokeID = BPP_GetID( bpp );
-        return BTL_CANTESC_TOOSENBOU;
-      }
-    }
+  // こちらのポケモン状態異常による逃げ・交換禁止チェック
+  if( BPP_CheckSick( procPoke, WAZASICK_TOOSENBOU )
+  ||  BPP_CheckSick( procPoke, WAZASICK_BIND )
+  ){
+     *pokeID = BPP_GetID( procPoke );
+     return BTL_CANTESC_TOOSENBOU;
   }
 
   return BTL_CANTESC_NULL;
 }
+
+/**
+ *  逃げ・交換禁止チェック：自分に「かげふみ」が効くか
+ */
+static BOOL checkForbitEscapeEffective_Kagefumi( BTL_CLIENT* wk, const BTL_POKEPARAM* procPoke )
+{
+  if( BPP_GetValue(procPoke, BPP_TOKUSEI_EFFECTIVE) == POKETOKUSEI_KAGEFUMI ){
+    return FALSE;
+  }
+  return TRUE;
+}
+/**
+ *  逃げ・交換禁止チェック：自分に「ありじごく」が効くか
+ */
+static BOOL checkForbitEscapeEffective_Arijigoku( BTL_CLIENT* wk, const BTL_POKEPARAM* procPoke )
+{
+  if( BTL_FIELD_CheckEffect(BTL_FLDEFF_JURYOKU) ){
+    return TRUE;
+  }
+  if( BPP_CheckSick(procPoke, WAZASICK_FLYING_CANCEL) ){
+    return TRUE;
+  }
+  if( BPP_GetItem(procPoke) == ITEM_KUROITEKKYUU ){
+    return TRUE;
+  }
+
+  if( BPP_GetValue(procPoke, BPP_TOKUSEI_EFFECTIVE) == POKETOKUSEI_FUYUU ){
+    return FALSE;
+  }
+  if( BPP_IsMatchType(procPoke, POKETYPE_HIKOU) ){
+    return FALSE;
+  }
+  if( BPP_CheckSick(procPoke, WAZASICK_FLYING) ){
+    return FALSE;
+  }
+  if( BPP_GetItem(procPoke) == ITEM_HUUSEN ){
+    return TRUE;
+  }
+
+  return TRUE;
+}
+
+/**
+ *  逃げ・交換禁止チェック：自分に「じりょく」が効くか
+ */
+static BOOL checkForbitEscapeEffective_Jiryoku( BTL_CLIENT* wk, const BTL_POKEPARAM* procPoke )
+{
+  if( BPP_IsMatchType(procPoke, POKETYPE_HAGANE) ){
+    return TRUE;
+  }
+  return FALSE;
+}
+
 
 
 static BOOL SubProc_AI_SelectAction( BTL_CLIENT* wk, int* seq )
@@ -3630,6 +3714,7 @@ static void cec_addCode( CANT_ESC_CONTROL* ctrl, u8 pokeID, BtlCantEscapeCode co
     GF_ASSERT(0);
   }
 }
+
 static void cec_subCode( CANT_ESC_CONTROL* ctrl, u8 pokeID, BtlCantEscapeCode code )
 {
   GF_ASSERT(code < BTL_CANTESC_MAX);
@@ -3644,7 +3729,7 @@ static void cec_subCode( CANT_ESC_CONTROL* ctrl, u8 pokeID, BtlCantEscapeCode co
   }
 }
 
-static u8 cec_isEnable( CANT_ESC_CONTROL* ctrl, BtlCantEscapeCode code, BTL_CLIENT* wk )
+static u8 cec_isEnable( CANT_ESC_CONTROL* ctrl, const BTL_POKEPARAM* procPoke, BtlCantEscapeCode code, BTL_CLIENT* wk )
 {
   GF_ASSERT(code < BTL_CANTESC_MAX);
   {
@@ -3702,7 +3787,7 @@ static u8 countFrontPokeTokusei( BTL_CLIENT* wk, PokeTokusei tokusei )
     bpp = BTL_PARTY_GetMemberDataConst( wk->myParty, i );
     if( !BPP_IsDead(bpp) )
     {
-      if( BPP_GetValue(bpp, BPP_TOKUSEI) == tokusei ){ ++cnt; }
+      if( BPP_GetValue(bpp, BPP_TOKUSEI_EFFECTIVE) == tokusei ){ ++cnt; }
     }
   }
   return cnt;

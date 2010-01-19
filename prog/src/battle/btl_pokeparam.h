@@ -45,7 +45,8 @@ typedef enum {
   BPP_HP,
   BPP_MAX_HP,
   BPP_LEVEL,
-  BPP_TOKUSEI,
+  BPP_TOKUSEI,                ///< ‚Æ‚­‚¹‚¢
+  BPP_TOKUSEI_EFFECTIVE,      ///< Œø‰Ê‚Ì‚ ‚é‚Æ‚­‚¹‚¢i‚¢‚¦‚«’†‚È‚çPOKETOKUSEI_NULLj
   BPP_SEX,
   BPP_FORM,
   BPP_ATTACK_RANK,

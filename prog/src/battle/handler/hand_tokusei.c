@@ -557,7 +557,7 @@ BTL_EVENT_FACTOR*  BTL_HANDLER_TOKUSEI_Add( const BTL_POKEPARAM* pp )
 
 //  if( !BPP_CheckSick(pp, WAZASICK_IEKI) )
   {
-    u16 tokusei = BPP_GetValue( pp, BPP_TOKUSEI );
+    u16 tokusei = BPP_GetValue( pp, BPP_TOKUSEI_EFFECTIVE );
     int i;
 
     for(i=0; i<NELEMS(funcTbl); i++)
@@ -5790,7 +5790,7 @@ static void handler_Kinchoukan_Ieki( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK
     common_KinchoukanOff( flowWk, pokeID, work );
   }
 }
-// とくせい変更確定ハンドラ
+// とくせい変更直前ハンドラ
 static void handler_Kinchoukan_ChangeTok( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   if( (BTL_EVENTVAR_GetValue(BTL_EVAR_TOKUSEI) != BTL_EVENT_FACTOR_GetSubID(myHandle))

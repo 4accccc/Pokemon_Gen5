@@ -1732,8 +1732,8 @@ static void handler_NayamiNoTane_NoEff( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_W
     const BTL_POKEPARAM* target = BTL_SVFTOOL_GetPokeParam( flowWk, targetPokeID );
 
     // Ç»Ç‹ÇØÅCÇ”Ç›ÇÒéùÇøÇ…ÇÕå¯Ç©Ç»Ç¢
-    if( (BPP_GetValue(target, BPP_TOKUSEI) == POKETOKUSEI_NAMAKE)
-    ||  (BPP_GetValue(target, BPP_TOKUSEI) == POKETOKUSEI_FUMIN)
+    if( (BPP_GetValue(target, BPP_TOKUSEI_EFFECTIVE) == POKETOKUSEI_NAMAKE)
+    ||  (BPP_GetValue(target, BPP_TOKUSEI_EFFECTIVE) == POKETOKUSEI_FUMIN)
     ){
       BTL_EVENTVAR_RewriteValue( BTL_EVAR_NOEFFECT_FLAG, TRUE );
     }
@@ -5210,7 +5210,7 @@ static void handler_Nemuru_exeCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK
         BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_CAUSE, SV_WAZAFAIL_HPFULL );
       }
       {
-        u16 tok = BPP_GetValue( bpp, BPP_TOKUSEI );
+        u16 tok = BPP_GetValue( bpp, BPP_TOKUSEI_EFFECTIVE );
         if( (tok == POKETOKUSEI_FUMIN) || (tok == POKETOKUSEI_YARUKI) ){
           BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_CAUSE, SV_WAZAFAIL_FUMIN );
         }

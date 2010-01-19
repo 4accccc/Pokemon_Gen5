@@ -1913,7 +1913,7 @@ static void common_DamageReactCore( BTL_SVFLOW_WORK* flowWk, u8 pokeID, u8 n )
 {
   const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
 
-  if( BPP_GetValue(bpp, BPP_TOKUSEI) == POKETOKUSEI_KUISINBOU ){
+  if( BPP_GetValue(bpp, BPP_TOKUSEI_EFFECTIVE) == POKETOKUSEI_KUISINBOU ){
     n /= 2;
   }
   if( n == 0 ){
@@ -4187,6 +4187,7 @@ static void handler_Huusen_ItemSetFixed( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
+    // 「ふうせん」を持たされたら飛行禁止状態を解除
     BTL_HANDEX_PARAM_CURE_SICK* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CURE_SICK, pokeID );
 
     param->poke_cnt = 1;
@@ -4195,6 +4196,7 @@ static void handler_Huusen_ItemSetFixed( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_
     param->fStdMsgDisable = TRUE;
   }
 }
+
 //------------------------------------------------------------------------------
 /**
  *  レッドカード

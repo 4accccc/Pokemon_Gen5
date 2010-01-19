@@ -605,7 +605,13 @@ int BPP_GetValue( const BTL_POKEPARAM* bpp, BppValueID vid )
   case BPP_MAX_HP:          return bpp->baseParam.hpMax;
   case BPP_SEX:             return bpp->baseParam.sex;
 
-  case BPP_TOKUSEI:         return bpp->tokusei;
+  case BPP_TOKUSEI_EFFECTIVE:
+    if( BPP_CheckSick(bpp, WAZASICK_IEKI) ){
+      return POKETOKUSEI_NULL;
+    }
+    /* fallthru */
+  case BPP_TOKUSEI:           return bpp->tokusei;
+
   case BPP_FORM:            return bpp->formNo;
   case BPP_EXP:             return bpp->coreParam.exp;
 

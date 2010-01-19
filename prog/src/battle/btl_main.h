@@ -194,6 +194,9 @@ static inline u8 EXPOS_GET_BASEPOS( BtlExPos exPos )
   return exPos & 0xff;
 }
 
+extern u8 BTL_MAIN_ExpandExistPokeParam( const BTL_MAIN_MODULE* wk, BTL_POKE_CONTAINER* pokeCon, BtlExPos exPos,
+    BTL_POKEPARAM** bppAry );
+
 //-------------------------------------------------------------------------------
 /**
  *  トリプルバトル専用

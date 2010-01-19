@@ -41,6 +41,12 @@ typedef enum {
   DBGSTR_CLIENT_NumChangePokeResult,
   DBGSTR_CLIENT_PokeSelCnt,
   DBGSTR_CLIENT_PokeChangeIdx,
+  DBGSTR_CLIENT_ForbidEscape_Kagefumi_Chk,
+  DBGSTR_CLIENT_ForbidEscape_Kagefumi_Enable,
+  DBGSTR_CLIENT_ForbidEscape_Arijigoku_Chk,
+  DBGSTR_CLIENT_ForbidEscape_Arijigoku_Enable,
+  DBGSTR_CLIENT_ForbidEscape_Jiryoku_Chk,
+  DBGSTR_CLIENT_ForbidEscape_Jiryoku_Enable,
 
   DBGSTR_MAIN_SwapPartyMember,
   DBGSTR_NET_DecideClientID,

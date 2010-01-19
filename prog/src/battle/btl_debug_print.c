@@ -57,26 +57,33 @@ void BTL_DEBUGPRINT_PrintDump( const char* caption, const void* data, u32 size )
 const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
 {
   switch( strID ){
-  case DBGSTR_SETUP_DONE:               return "セットアップ完了\n";
-  case DBGSTR_DEBUGFLAG_BIT:            return "デバッグフラグbit=%04x\n";
-  case DBGSTR_ADAPTER_SEND_START:       return " Adapter-%d, コマンド %d を送信開始します\n";
-  case DBGSTR_ADAPTER_RECV_DONE:        return " [Adapter] Received from All Clients\n";
-  case DBGSTR_ADAPTER_RECVED_A_CLIENT:  return " [Adapter] Received from AdapterID=%d\n";
-  case DBGSTR_CLIENT_RETURN_CMD_START:  return "ID[%d], 返信開始へ\n";
-  case DBGSTR_CLIENT_RETURN_CMD_DONE:   return "ID[%d], 返信しました\n";
-  case DBGSTR_CLIENT_SelectActionSkip:  return "Act選択(%d体目）スキップ\n";
-  case DBGSTR_CLIENT_SelActPokeDead:    return "死んでてスキップなのでCheckedCntそのまま\n";
-  case DBGSTR_CLIENT_SelectActionStart: return "Act選択(%d体目=ID:%d）開始します  checked %d poke\n";
-  case DBGSTR_CLIENT_SelectActionDone:  return "カバー位置数(%d)終了、アクション送信へ\n";
-  case DBGSTR_CLIENT_ReturnSeqDone:     return "返信シーケンス終了\n";
-  case DBGSTR_CLIENT_WazaLockInfo:      return "ワザロック：Client[%d] 前回使ったワザは %d, idx=%d, targetPos=%d\n";
+  case DBGSTR_SETUP_DONE:                 return "セットアップ完了\n";
+  case DBGSTR_DEBUGFLAG_BIT:              return "デバッグフラグbit=%04x\n";
+  case DBGSTR_ADAPTER_SEND_START:         return " Adapter-%d, コマンド %d を送信開始します\n";
+  case DBGSTR_ADAPTER_RECV_DONE:          return " [Adapter] Received from All Clients\n";
+  case DBGSTR_ADAPTER_RECVED_A_CLIENT:    return " [Adapter] Received from AdapterID=%d\n";
+  case DBGSTR_CLIENT_RETURN_CMD_START:    return "ID[%d], 返信開始へ\n";
+  case DBGSTR_CLIENT_RETURN_CMD_DONE:     return "ID[%d], 返信しました\n";
+  case DBGSTR_CLIENT_SelectActionSkip:    return "Act選択(%d体目）スキップ\n";
+  case DBGSTR_CLIENT_SelActPokeDead:      return "死んでてスキップなのでCheckedCntそのまま\n";
+  case DBGSTR_CLIENT_SelectActionStart:   return "Act選択(%d体目=ID:%d）開始します  checked %d poke\n";
+  case DBGSTR_CLIENT_SelectActionDone:    return "カバー位置数(%d)終了、アクション送信へ\n";
+  case DBGSTR_CLIENT_ReturnSeqDone:       return "返信シーケンス終了\n";
+  case DBGSTR_CLIENT_WazaLockInfo:        return "ワザロック：Client[%d] 前回使ったワザは %d, idx=%d, targetPos=%d\n";
   case DBGSTR_CLIENT_NoMorePuttablePoke:  return "myID=%d もう戦えるポケモンいない\n";
-  case DBGSTR_CLIENT_NotDeadMember:     return "myID=%d 誰も死んでないから選ぶ必要なし\n";
-  case DBGSTR_CLIENT_ChangePokeCmdInfo: return "myID=%d %d体選択する必要あり mode=%d\n";
-  case DBGSTR_CLIENT_NumChangePokeBegin:return " 全Client, 選択すべきポケモン数=%d\n　位置=";
+  case DBGSTR_CLIENT_NotDeadMember:       return "myID=%d 誰も死んでないから選ぶ必要なし\n";
+  case DBGSTR_CLIENT_ChangePokeCmdInfo:   return "myID=%d %d体選択する必要あり mode=%d\n";
+  case DBGSTR_CLIENT_NumChangePokeBegin:  return " 全Client, 選択すべきポケモン数=%d\n　位置=";
   case DBGSTR_CLIENT_NumChangePokeResult: return " 自分[%d]が選択すべきポケモン数=%d\n";
-  case DBGSTR_CLIENT_PokeSelCnt:        return "入れ替え%d体選んだ\n";
-  case DBGSTR_CLIENT_PokeChangeIdx:     return "ポケモン入れ替え %d体目 <-> %d体目\n";
+  case DBGSTR_CLIENT_PokeSelCnt:          return "入れ替え%d体選んだ\n";
+  case DBGSTR_CLIENT_PokeChangeIdx:       return "ポケモン入れ替え %d体目 <-> %d体目\n";
+  case DBGSTR_CLIENT_ForbidEscape_Kagefumi_Chk:     return "逃げ交換禁止チェック「かげふみ」by pokeID(%d)\n";
+  case DBGSTR_CLIENT_ForbidEscape_Kagefumi_Enable:  return "  「かげふみ」有効！\n";
+  case DBGSTR_CLIENT_ForbidEscape_Arijigoku_Chk:    return "逃げ交換禁止チェック「ありじごく」by pokeID(%d)\n";
+  case DBGSTR_CLIENT_ForbidEscape_Arijigoku_Enable: return "  「ありじごく」有効！\n";
+  case DBGSTR_CLIENT_ForbidEscape_Jiryoku_Chk:      return "逃げ交換禁止チェック「じりょく」by pokeID(%d)\n";
+  case DBGSTR_CLIENT_ForbidEscape_Jiryoku_Enable:   return "  「じりょく」有効！\n";
+
   case DBGSTR_VCORE_PokeListStart:      return "交換リスト画面  モード=%d   すでに%d体選択されている\n";
   case DBGSTR_VCORE_SelPokeEnd:         return "ポケ選択おわった\n";
   case DBGSTR_VCORE_SelPokeEnd_Sel:     return "  [%d]番目 選択された -> %d体 格納\n";
