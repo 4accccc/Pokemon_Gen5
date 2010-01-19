@@ -570,6 +570,36 @@ VMCMD_RESULT EvCmdGymDragon_JumpDown( VMHANDLE *core, void *wk )
 
 //--------------------------------------------------------------
 /**
+ * ドラゴンジムギミック　腕ギミックイベントコール
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdGymDragon_MoveArm( VMHANDLE *core, void *wk )
+{
+  u16 head,arm;
+  GMEVENT *call_event;
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+
+  head = SCRCMD_GetVMWorkValue( core, work );
+  arm = SCRCMD_GetVMWorkValue( core, work );
+
+  call_event = GYM_DRAGON_CreateArmMoveEvt(gsys, head, arm);
+
+  if (call_event == NULL){
+    GF_ASSERT(0);
+    return VMCMD_RESULT_SUSPEND;
+  }
+
+  SCRIPT_CallEvent( sc, call_event );
+  //イベントコールするので、一度制御を返す
+  return VMCMD_RESULT_SUSPEND;
+}
+
+//--------------------------------------------------------------
+/**
  * ドラゴンジムギミック　首ギミックイベントコール
  * @param  core    仮想マシン制御構造体へのポインタ
  * @retval VMCMD_RESULT

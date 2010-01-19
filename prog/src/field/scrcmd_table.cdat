@@ -709,11 +709,11 @@
   DEF_CMD( EvCmdPlBoat_CallDemo, EV_SEQ_PL_BOAT_CALL_DEMO )
   NO_CMD()
 
-  // 氷ジム
+  // 氷ジム 4つめはドラゴンジム
   DEF_CMD( EvCmdGymIce_SwAnm, EV_SEQ_GYM_ICE_SW_ANM )
   DEF_CMD( EvCmdGymIce_WallAnm, EV_SEQ_GYM_ICE_WALL_ANM )
   DEF_CMD( EvCmdGymIce_ChgRail, EV_SEQ_GYM_ICE_CHG_RAIL )
-  NO_CMD()
+  DEF_CMD( EvCmdGymDragon_MoveArm, EV_SEQ_GYM_DRAGON_MOVE_ARM )
 
   // マップフェード
   DEF_CMD( EvCmdMapFade_BlackIn, EV_SEQ_MAP_FADE_BLACK_IN )

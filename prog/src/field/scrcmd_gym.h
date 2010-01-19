@@ -40,4 +40,5 @@ extern VMCMD_RESULT EvCmdGymIce_ChgRail( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdGymDragon_Init( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdGymDragon_CallGmk( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdGymDragon_JumpDown( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdGymDragon_MoveArm( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdGymDragon_MoveHead( VMHANDLE *core, void *wk );

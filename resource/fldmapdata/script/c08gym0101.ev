@@ -37,6 +37,7 @@ _EVENT_DATA_END
 //--------------------------------------------------------------
 DEFINE_LOCAL TARGET_HEAD    //ギミック発動対象ドラゴン首インデックスを格納（0～2）
 DEFINE_LOCAL CAMERA_IDX     //カメラ移動識別用(0～5)
+DEFINE_LOCAL TARGET_ARM    //ギミック発動対象ドラゴン腕インデックスを格納（0～1）
 
 /************************************************************/
 /*					ジムギミック初期化						*/
@@ -381,10 +382,11 @@ EVENT_START	ev_pos_c08gym0101_gimmick_00
   _GYM_DRAGON_JUMP_DOWN(DIR_RIGHT)
   _GYM_DRAGON_CALL_GMK(0, 1)
 
-  //カメラ移動インデックッス0　対象首インデックッス0
+  //カメラ移動インデックッス0　対象首インデックッス0　対象腕インデックス1
   $CAMERA_IDX = 0
   $TARGET_HEAD = 0
-  _CALL move_head
+  $TARGET_ARM = 1
+  _CALL move_dragon
 EVENT_END
 
 /************************************************************/
@@ -395,10 +397,11 @@ EVENT_START	ev_pos_c08gym0101_gimmick_01
   _GYM_DRAGON_JUMP_DOWN(DIR_LEFT)
   _GYM_DRAGON_CALL_GMK(0, 0)
 
-  //カメラ移動インデックッス1　対象首インデックッス0
+  //カメラ移動インデックッス1　対象首インデックッス0  対象腕インデックス0
   $CAMERA_IDX = 1
   $TARGET_HEAD = 0
-  _CALL move_head
+  $TARGET_ARM = 0
+  _CALL move_dragon
 EVENT_END
 
 /************************************************************/
@@ -409,10 +412,11 @@ EVENT_START	ev_pos_c08gym0101_gimmick_02
   _GYM_DRAGON_JUMP_DOWN(DIR_RIGHT)
   _GYM_DRAGON_CALL_GMK(1, 0)
 
-  //カメラ移動インデックッス1　対象首インデックッス1
+  //カメラ移動インデックッス1　対象首インデックッス1  対象腕インデックス0
   $CAMERA_IDX = 2
   $TARGET_HEAD = 1
-  _CALL move_head
+  $TARGET_ARM = 0
+  _CALL move_dragon
 EVENT_END
 
 /************************************************************/
@@ -423,10 +427,11 @@ EVENT_START	ev_pos_c08gym0101_gimmick_03
   _GYM_DRAGON_JUMP_DOWN(DIR_LEFT)
   _GYM_DRAGON_CALL_GMK(1, 1)
 
-  //カメラ移動インデックッス2　対象首インデックッス1
+  //カメラ移動インデックッス2　対象首インデックッス1  対象腕インデックス1
   $CAMERA_IDX = 3
   $TARGET_HEAD = 1
-  _CALL move_head
+  $TARGET_ARM = 1
+  _CALL move_dragon
 EVENT_END
 
 /************************************************************/
@@ -437,10 +442,11 @@ EVENT_START	ev_pos_c08gym0101_gimmick_04
   _GYM_DRAGON_JUMP_DOWN(DIR_RIGHT)
   _GYM_DRAGON_CALL_GMK(2, 0)
 
-  //カメラ移動インデックッス4　対象首インデックッス2
+  //カメラ移動インデックッス4　対象首インデックッス2  対象腕インデックス0
   $CAMERA_IDX = 4
   $TARGET_HEAD = 2
-  _CALL move_head
+  $TARGET_ARM = 0
+  _CALL move_dragon
 EVENT_END
 
 /************************************************************/
@@ -451,11 +457,63 @@ EVENT_START	ev_pos_c08gym0101_gimmick_05
   _GYM_DRAGON_JUMP_DOWN(DIR_LEFT)
   _GYM_DRAGON_CALL_GMK(2, 1)
 
-  //カメラ移動インデックッス5　対象首インデックッス2
+  //カメラ移動インデックッス5　対象首インデックッス2  対象腕インデックス1
   $CAMERA_IDX = 5
   $TARGET_HEAD = 2
-  _CALL move_head
+  $TARGET_ARM = 1
+  _CALL move_dragon
 EVENT_END
+
+/************************************************************/
+/*				ドラゴン動作             */
+/************************************************************/
+move_dragon:
+  //カメラ移動
+  _CAMERA_START()
+
+	_CAMERA_PURGE()
+
+  _CALL move_arm
+
+  _CALL move_head
+
+  _CAMERA_DEF_MOVE( 30 )
+	_CAMERA_WAIT_MOVE()
+	_CAMERA_BIND()
+
+	_CAMERA_END()
+
+_RET
+
+/************************************************************/
+/*				カメラ移動+腕動作                       */
+/*        input:CAMERA_IDX TARGET_HEAD  TARGET_ARM*/
+/************************************************************/
+move_arm:
+  //分岐をかける
+  SWITCH $CAMERA_IDX
+  CASE 0 THEN
+    _CAMERA_MOVE( 9688,0,1232896,819200,0,1933312,30 )
+  CASE 1 THEN
+    _CAMERA_MOVE( 9688,0,1232896,819200,0,1933312,30 )
+  CASE 2 THEN
+    _CAMERA_MOVE( 9688,0,1232896,2818048,0,1474560,30 )
+  CASE 3 THEN
+    _CAMERA_MOVE( 9688,0,1232896,2818048,0,1474560,30 )
+  CASE 4 THEN
+    _CAMERA_MOVE( 9688,0,1232896,1818624,327759,1802240,30 )
+  CASE 5 THEN
+    _CAMERA_MOVE( 9688,0,1232896,1818624,327759,1802240,30 )
+  DEFAULT
+	ENDSWITCH
+
+	_CAMERA_WAIT_MOVE()
+
+  //腕移動
+  _GYM_DRAGON_MOVE_ARM(TARGET_HEAD, TARGET_ARM)
+
+_RET
+
 
 
 /************************************************************/
@@ -463,10 +521,6 @@ EVENT_END
 /*        input:CAMERA_IDX TARGET_HEAD  */
 /************************************************************/
 move_head:
-  //カメラ移動
-  _CAMERA_START()
-
-	_CAMERA_PURGE()
   //分岐をかける
   SWITCH $CAMERA_IDX
   CASE 0 THEN
@@ -489,12 +543,6 @@ move_head:
   //首移動
   _GYM_DRAGON_MOVE_HEAD(TARGET_HEAD)
 
-  //カメラ戻し
-  _CAMERA_RECV_MOVE( 30 )
-	_CAMERA_WAIT_MOVE()
-	_CAMERA_BIND()
-
-	_CAMERA_END()
 _RET
 
 

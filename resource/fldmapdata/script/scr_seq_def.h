@@ -4978,6 +4978,19 @@
   .short  EV_SEQ_GYM_DRAGON_JUMP_DOWN
   .short  \dir
   .endm
+
+//--------------------------------------------------------------
+/**
+ * ジムコマンド　ドラゴンジム腕移動
+ */
+//--------------------------------------------------------------
+#define _GYM_DRAGON_MOVE_ARM(head, arm) _ASM_GYM_DRAGON_MOVE_ARM head, arm
+
+  .macro  _ASM_GYM_DRAGON_MOVE_ARM head, arm
+  .short  EV_SEQ_GYM_DRAGON_MOVE_ARM
+  .short  \head
+  .short  \arm
+  .endm  
   
 //--------------------------------------------------------------
 /**

@@ -44,7 +44,7 @@
 
 #define GRID_HALF_SIZE ((FIELD_CONST_GRID_SIZE/2)*FX32_ONE)
 
-#define FLOOR_VISIBLE_HEIGHT    (5*FIELD_CONST_GRID_FX32_SIZE)
+#define FLOOR_VISIBLE_HEIGHT    (3*FIELD_CONST_GRID_FX32_SIZE)
 
 
 #define DRAGON1_X (12*FIELD_CONST_GRID_FX32_SIZE+GRID_HALF_SIZE)
@@ -431,6 +431,7 @@ static void SetupMdl(FLD_EXP_OBJ_CNT_PTR ptr,
 static void SetupAnm(GYM_DRAGON_SV_WORK *gmk_sv_work, FLD_EXP_OBJ_CNT_PTR ptr, const int inIdx);
 
 static GMEVENT_RESULT AnmMoveEvt( GMEVENT* event, int* seq, void* work );
+static GMEVENT_RESULT ArmMoveEvt( GMEVENT* event, int* seq, void* work );
 static GMEVENT_RESULT HeadMoveEvt( GMEVENT* event, int* seq, void* work );
 static GMEVENT_RESULT AnmEvt( GMEVENT* event, int* seq, void* work );
 static  HEAD_DIR GetHeadDirByArm(DRAGON_WORK *wk);
@@ -561,6 +562,19 @@ static void SetupMdl(FLD_EXP_OBJ_CNT_PTR ptr,
     //無効化
     FLD_EXP_OBJ_ValidCntAnm(ptr, GYM_DRAGON_UNIT_IDX, inIdx, i, FALSE);
   }
+/**
+  //アルファ設定テスト
+  {
+    GFL_G3D_UTIL *util = FLD_EXP_OBJ_GetUtil(ptr);
+    GFL_G3D_OBJ* obj = GFL_G3D_UTIL_GetObjHandle( util, inIdx );
+    GFL_G3D_RND* rnd = GFL_G3D_OBJECT_GetG3Drnd( obj );
+    GFL_G3D_RES* res = GFL_G3D_RENDER_GetG3DresMdl( rnd );
+    NNSG3dResFileHeader* res_head = GFL_G3D_GetResourceFileHeader( res );
+    NNSG3dResMdlSet* ms = NNS_G3dGetMdlSet(res_head);
+		NNSG3dResMdl* mdl = NNS_G3dGetMdlByIdx(ms, 0);
+    NNS_G3dMdlSetMdlAlphaAll((NNSG3dResMdl*)mdl, 24);
+  }
+*/  
 }
 
 //--------------------------------------------------------------
@@ -757,6 +771,40 @@ GMEVENT *GYM_DRAGON_CreateGmkEvt(GAMESYS_WORK *gsys, const int inDragonIdx, cons
 
   //イベント作成
   event = GMEVENT_Create( gsys, NULL, AnmMoveEvt, 0 );
+
+  return event;
+}
+
+//--------------------------------------------------------------
+/**
+ * 腕ギミック発動イベント作成
+ * @param	      gsys        ゲームシステムポインタ
+ * @param       inDragonIdx   対象ドラゴンインデックス0～2
+ * @param       inArmIdx   対象腕インデックス0～1　0：左　1：右
+ * 
+ * @return      GMEVENT     イベントポインタ
+ */
+//--------------------------------------------------------------
+GMEVENT *GYM_DRAGON_CreateArmMoveEvt(GAMESYS_WORK *gsys, const int inDragonIdx, const int inArmIdx)
+{
+  GMEVENT * event;
+
+  GYM_DRAGON_TMP *tmp;
+  GYM_DRAGON_SV_WORK *gmk_sv_work;
+  {
+    FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
+    GAMEDATA *gamedata = GAMESYSTEM_GetGameData( FIELDMAP_GetGameSysWork( fieldWork ) );
+    GIMMICKWORK *gmkwork = GAMEDATA_GetGimmickWork(gamedata);
+    gmk_sv_work = GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_GYM_DRAGON );
+    tmp = GMK_TMP_WK_GetWork(fieldWork, GYM_DRAGON_TMP_ASSIGN_ID);
+  }
+
+  tmp->TrgtHead = inDragonIdx;
+  tmp->TrgtArm = inArmIdx;
+  tmp->DraWk = &gmk_sv_work->DraWk[inDragonIdx];
+
+  //イベント作成
+  event = GMEVENT_Create( gsys, NULL, ArmMoveEvt, 0 );
 
   return event;
 }
@@ -967,6 +1015,9 @@ static GMEVENT_RESULT AnmMoveEvt( GMEVENT* event, int* seq, void* work )
     (*seq)++;
     break;
   case 1:
+    //終了
+    return GMEVENT_RES_FINISH;
+    
     {
       GMEVENT * call_event;
       int anm_idx;
@@ -1017,6 +1068,83 @@ static GMEVENT_RESULT AnmMoveEvt( GMEVENT* event, int* seq, void* work )
   
   return GMEVENT_RES_CONTINUE;
 }
+
+//--------------------------------------------------------------
+/**
+ * ギミックアニメイベント
+ * @param	  event   イベントポインタ
+ * @param   seq     シーケンサ
+ * @param   work    ワークポインタ
+ * @return  GMEVENT_RESULT  イベント結果
+ */
+//--------------------------------------------------------------
+static GMEVENT_RESULT ArmMoveEvt( GMEVENT* event, int* seq, void* work )
+{
+  GYM_DRAGON_SV_WORK *gmk_sv_work;
+  GAMESYS_WORK *gsys = GMEVENT_GetGameSysWork(event);
+  FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
+  FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( fieldWork );
+  GYM_DRAGON_TMP *tmp = GMK_TMP_WK_GetWork(fieldWork, GYM_DRAGON_TMP_ASSIGN_ID);
+
+  {
+    GAMEDATA *gamedata = GAMESYSTEM_GetGameData( FIELDMAP_GetGameSysWork( fieldWork ) );
+    GIMMICKWORK *gmkwork = GAMEDATA_GetGimmickWork(gamedata);
+    gmk_sv_work = GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_GYM_DRAGON );
+  }
+
+  switch(*seq){
+  case 0:
+    {
+      GMEVENT * call_event;
+      int anm_idx;
+      int obj_idx;
+      ARM_DIR next_dir;
+      //現在状況から動かす腕アニメを決定
+      if ( tmp->DraWk->ArmDir[tmp->TrgtArm] == ARM_DIR_UP )
+      {
+        anm_idx = 1;  //下に動かす
+        next_dir = ARM_DIR_DOWN;
+        OS_Printf("腕を下に動かす\n");
+      }
+      else
+      {
+        anm_idx = 0;  //上に動かす
+        next_dir = ARM_DIR_UP;
+        OS_Printf("腕を上に動かす\n");
+      }
+
+      if ( tmp->TrgtArm == DRA_ARM_LEFT ) obj_idx = OBJ_L_ARM_1;
+      else obj_idx = OBJ_R_ARM_1;
+
+      OS_Printf("動かす腕は%d obj= %d\n",tmp->TrgtArm,obj_idx);
+
+      obj_idx += (tmp->TrgtHead*DRAGON_PARTS_SET);
+
+      //腕のＯＢＪとアニメをセット
+      tmp->AnmPlayWk.ObjIdx = obj_idx;
+      tmp->AnmPlayWk.AnmNum = 1;
+      tmp->AnmPlayWk.AnmOfs[0] = anm_idx;
+      tmp->AnmPlayWk.AllAnmNum = ARM_ANM_NUM;
+      tmp->AnmPlayWk.SeNo[0] = GYM_DRAGON_SE_ARM_MOVE;
+      tmp->AnmPlayWk.SeNo[1] = GYM_DRAGON_SE_ARM_STOP;
+      
+      call_event = GMEVENT_Create(gsys, NULL, AnmEvt, 0);
+      //腕アニメイベントコール
+      GMEVENT_CallEvent(event, call_event);
+      
+      //腕の情報を更新
+      tmp->DraWk->ArmDir[tmp->TrgtArm] = next_dir;
+    }
+    (*seq)++;
+    break;
+  case 1:
+    //終了
+    return GMEVENT_RES_FINISH;
+  }
+  
+  return GMEVENT_RES_CONTINUE;
+}
+
 
 //--------------------------------------------------------------
 /**
@@ -1120,7 +1248,7 @@ static GMEVENT_RESULT HeadMoveEvt( GMEVENT* event, int* seq, void* work )
 
 //--------------------------------------------------------------
 /**
- * ボタンアニメイベント
+ * アニメイベント
  * @param	  event   イベントポインタ
  * @param   seq     シーケンサ
  * @param   work    ワークポインタ
