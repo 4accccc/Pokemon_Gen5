@@ -1187,8 +1187,6 @@ BOOL PMSND_PlayBGMdiv(u32 no, u32* seq, BOOL start)
 //============================================================================================
 BOOL  PMDSND_PresetExtraMusic( void* seqAdrs, void* bnkAdrs, u32 waveNo )
 {
-	int i;
-
 	SOUNDMAN_LoadHierarchyPlayer_forThread_heapsvSB();
 
 	// 事前に波形読み込み
@@ -1212,6 +1210,25 @@ BOOL  PMDSND_PresetExtraMusic( void* seqAdrs, void* bnkAdrs, u32 waveNo )
 		bnkInfo->waveArcNo[2] = 0xffff;
 		bnkInfo->waveArcNo[3] = 0xffff;
 	}
+	return TRUE;
+}
+
+BOOL  PMDSND_ChangeWaveData( u32 waveNo, u32 waveIdx, void* waveAdrs) 
+{
+	const NNSSndArcWaveArcInfo* waveInfo;
+	SNDWaveArc*									waveArc;
+
+	// 波形ファイルID取得
+	waveInfo = NNS_SndArcGetWaveArcInfo( waveNo );
+	if( waveInfo == NULL ){ return FALSE; }
+
+	// 波形ファイルアドレス取得
+	waveArc = (SNDWaveArc*)NNS_SndArcGetFileAddress( waveInfo->fileId );
+	if(waveArc == NULL){ return FALSE; }
+	
+	// 波形アドレス書き換え
+	SND_SetWaveDataAddress( waveArc, waveIdx, waveAdrs );
+
 	return TRUE;
 }
 
