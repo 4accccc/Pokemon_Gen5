@@ -353,12 +353,12 @@
   NO_CMD()
   NO_CMD()
 
-  NO_CMD()
+  //マップ遷移関連
+  DEF_CMD( EvCmdMapChangeBGMKeep, EV_SEQ_MAP_CHANGE_BGM_KEEP )
   NO_CMD()
   NO_CMD()
   NO_CMD()
 
-  //マップ遷移関連
   DEF_CMD( EvCmdMapChangeBySandStream, EV_SEQ_MAP_CHANGE_SAND_STREAM )
   DEF_CMD( EvCmdMapChange, EV_SEQ_MAP_CHANGE )
   DEF_CMD( EvCmdMapChangeToUnion, EV_SEQ_MAP_CHANGE_TO_UNION )

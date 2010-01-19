@@ -2532,7 +2532,7 @@
  * @param bgmno
  *
  * @note
- * 内部的には _BGM_STOP()と_BGM_PLAY()を続けて呼んでいる
+ * 内部的には _BGM_PLAY()を呼んでいる
  */
 //--------------------------------------------------------------
 #define _START_EVENT_BGM( bgmno ) \
@@ -2549,15 +2549,15 @@
  * @brief スクリプト簡易マクロ：イベントBGM終了
  *
  * @note
- * 内部的には、_BGM_FADEOUT(0,30)→_BGM_STOP() →_BGM_NOW_MAP_RECOVER()を続けて呼んでいる
+ * 内部的には、_BGM_NOW_MAP_RECOVER()を呼んでいる
  */
 //--------------------------------------------------------------
 #define _END_EVENT_BGM() \
     _ASM_END_EVENT_BGM
 
   .macro  _ASM_END_EVENT_BGM
-  _ASM_BGM_FADEOUT  0, 30
-  _ASM_BGM_STOP
+  //_ASM_BGM_FADEOUT  0, 30
+  //_ASM_BGM_STOP
   _ASM_BGM_NOW_MAP_RECOVER
   .endm
 
@@ -4575,7 +4575,28 @@
     
   
 //======================================================================
+// マップ遷移関連
 //======================================================================
+//--------------------------------------------------------------
+/**
+ * マップ遷移コマンド (BGM変更なし)
+ * @param zone_id   移動先ゾーンID指定
+ * @param gx        移動先Ｘ位置指定（グリッド単位）
+ * @param gz        移動先Ｚ位置指定（グリッド単位）
+ * @param dir       移動後の向き
+ */
+//--------------------------------------------------------------
+#define _MAP_CHANGE_BGM_KEEP( zone_id, gx, gz, dir )  \
+    _ASM_MAP_CHANGE_BGM_KEEP zone_id, gx, gz, dir
+
+  .macro  _ASM_MAP_CHANGE_BGM_KEEP zone_id, gx, gz, dir
+  .short  EV_SEQ_MAP_CHANGE_BGM_KEEP
+  .short  \zone_id
+  .short  \gx
+  .short  \gz
+  .short  \dir
+  .endm
+
 //--------------------------------------------------------------
 /**
  * マップ遷移コマンド（流砂）

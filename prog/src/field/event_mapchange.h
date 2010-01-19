@@ -184,6 +184,20 @@ extern GMEVENT * EVENT_ChangeMapPosNoFade(GAMESYS_WORK * gsys, FIELDMAP_WORK * f
     u16 zone_id, const VecFx32 * pos, u16 dir );
 
 //------------------------------------------------------------------
+/**
+ * @brief マップ遷移イベント生成 (BGM変更なし)
+ * @param gameSystem ゲームシステムへのポインタ
+ * @param fieldmap   フィールドシステムへのポインタ
+ * @param zoneID     遷移するマップのZONE指定
+ * @param pos        遷移するマップでの座標指定
+ * @param dir        遷移するマップでの方向指定
+ * @return GMEVENT  生成したマップ遷移イベント
+ */
+//------------------------------------------------------------------
+extern GMEVENT * EVENT_ChangeMapBGMKeep( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldmap,
+                                     u16 zoneID, const VecFx32* pos, u16 dir );
+
+//------------------------------------------------------------------
 //------------------------------------------------------------------
 extern void MAPCHANGE_setPlayerVanish(FIELDMAP_WORK * fieldmap, BOOL vanish_flag);
 
@@ -192,6 +206,4 @@ extern void MAPCHANGE_setPlayerVanish(FIELDMAP_WORK * fieldmap, BOOL vanish_flag
  * @brief 全滅時のマップ遷移処理（フィールド非生成時）
  */
 //--------------------------------------------------------------
-extern GMEVENT * EVENT_CallGameOver( GAMESYS_WORK * gsys );
-
-
+extern GMEVENT * EVENT_CallGameOver( GAMESYS_WORK * gsys ); 

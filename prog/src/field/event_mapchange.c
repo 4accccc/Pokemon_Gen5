@@ -208,7 +208,7 @@ static GMEVENT_RESULT EVENT_FirstMapIn(GMEVENT * event, int *seq, void *work)
         gmtime = SaveData_GetGameTime( scw );
         season = PMSEASON_GetCurrentSeasonID();
         season = PMSEASON_GetPrevSeasonID( season );
-        FIELD_STATUS_SetSeasonDispFlag( fstatus, TRUE  );
+        FIELD_STATUS_SetSeasonDispFlag( fstatus, TRUE );
         FIELD_STATUS_SetSeasonDispLast( fstatus, season );
       }
       else
@@ -450,7 +450,7 @@ static void CheckSeasonChange( MAPCHANGE_WORK* work )
     AREADATA_Delete( areadata );
   }
   // 季節表示の有無を決定
-  if( (work->next_season != last_season) && (outdoor != FALSE) )  // if(季節変化&&遷移先が屋外)
+  if( (work->next_season != last_season) && (outdoor == TRUE) )  // if(季節変化&&遷移先が屋外)
   {
     FIELD_STATUS_SetSeasonDispFlag( fstatus, TRUE );
   }
@@ -664,6 +664,54 @@ static GMEVENT_RESULT EVENT_MapChangeNoFade(GMEVENT * event, int *seq, void*work
     }
 #endif    
     (*seq) ++;
+    break;
+  case 4:
+    return GMEVENT_RES_FINISH; 
+  }
+  return GMEVENT_RES_CONTINUE;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief BGMを変更しないマップチェンジ
+ */
+//------------------------------------------------------------------
+static GMEVENT_RESULT EVENT_MapChangeBGMKeep(GMEVENT* event, int* seq, void* wk)
+{
+  MAPCHANGE_WORK*      work = wk;
+  GAMESYS_WORK* gamesSystem = work->gsys;
+  FIELDMAP_WORK*   fieldmap = work->fieldmap;
+  GAMEDATA*        gameData = work->gamedata;
+
+  switch( *seq )
+  {
+  case 0:
+    GMEVENT_CallEvent( event, EVENT_ObjPauseAll( gamesSystem, fieldmap ) );
+    CheckSeasonChange( work ); // 遷移後の季節を求める
+    (*seq)++;
+    break;
+  case 1:
+    // 画面フェードアウト
+    { 
+      GMEVENT* fadeOutEvent;
+      fadeOutEvent = EVENT_FieldFadeOut_Cross( gamesSystem, fieldmap ); // クロスフェード
+      GMEVENT_CallEvent( event, fadeOutEvent );
+    }
+    (*seq)++;
+    break;
+  case 2:
+    // マップチェンジ コア イベント
+    GMEVENT_CallEvent( event, EVENT_MapChangeCore( work, work->mapchange_type ) );
+    (*seq)++;
+    break;
+  case 3:
+    // 画面フェードイン
+    { 
+      GMEVENT* fadeInEvent;
+      fadeInEvent = EVENT_FieldFadeIn_Cross( gamesSystem, fieldmap ); // クロスフェード
+      GMEVENT_CallEvent( event, fadeInEvent );
+    }
+    (*seq)++;
     break;
   case 4:
     return GMEVENT_RES_FINISH; 
@@ -1178,6 +1226,33 @@ GMEVENT * EVENT_ChangeMapSorawotobu(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldma
 {
   return EVENT_ChangeMapPosNoFadeCore( gsys, fieldmap,
             EV_MAPCHG_FLYSKY, zone_id, pos, dir );
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief マップ遷移イベント生成 (BGM変更なし)
+ * @param gameSystem ゲームシステムへのポインタ
+ * @param fieldmap   フィールドシステムへのポインタ
+ * @param zoneID     遷移するマップのZONE指定
+ * @param pos        遷移するマップでの座標指定
+ * @param dir        遷移するマップでの方向指定
+ * @return GMEVENT  生成したマップ遷移イベント
+ */
+//------------------------------------------------------------------
+GMEVENT * EVENT_ChangeMapBGMKeep( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldmap,
+                                  u16 zoneID, const VecFx32* pos, u16 dir )
+{
+  MAPCHANGE_WORK* work;
+  GMEVENT* event;
+
+  event = GMEVENT_Create( gameSystem, NULL, EVENT_MapChangeBGMKeep, sizeof(MAPCHANGE_WORK) );
+  work = GMEVENT_GetEventWork( event );
+  MAPCHANGE_WORK_init( work, gameSystem );
+  
+  LOCATION_SetDirect( &work->loc_req, zoneID, dir, pos->x, pos->y, pos->z );
+  work->exit_type = EXIT_TYPE_NONE;
+  
+  return event;
 }
 
 
