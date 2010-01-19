@@ -74,7 +74,7 @@ $(TARGETDIR)/$(NARCNAME2):	$(NARCNAME2)
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 
 esf: $(notdir $(WAZAEFFSRCS:.esf=.s)) $(notdir $(WAZAEFFSRCS:.esf=.bin))
-%.s: $(RES_DIR)%.esf ../../prog/src/battle/btlv/btlv_effvm_def.h ../../prog/include/sound/wb_sound_data.sadl ..\..\..\pokemon_wb_doc\particle\wazaeffect\mkparticle_be.mk ..\..\..\pokemon_wb_doc\particle\wazaeffect\mkparticle_we.mk
+%.s: $(RES_DIR)%.esf ../../prog/src/battle/btlv/btlv_effvm_def.h ../../prog/include/sound/wb_sound_data.sadl ../../../pokemon_wb_doc/particle/wazaeffect/mkparticle_be.mk ../../../pokemon_wb_doc/particle/wazaeffect/mkparticle_we.mk
 	ruby eescmk.rb c:/home/pokemon_wb/prog/src/battle/btlv/btlv_effvm_def.h $(RES_DIR)$*.esf c:/home/pokemon_wb/
 
 %.bin: %.s ../../prog/src/battle/btlv/btlv_effvm_def.h
