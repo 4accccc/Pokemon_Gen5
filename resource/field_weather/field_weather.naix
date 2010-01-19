@@ -87,10 +87,11 @@ enum {
 	NARC_field_weather_volcano_NSCR = 73,
 	NARC_field_weather_volcano_bg_NCGR = 74,
 	NARC_field_weather_kazakami_nsbtx = 75,
-	NARC_field_weather_rain_bg_nsbtx = 76,
-	NARC_field_weather_snow_storm_nsbtx = 77,
-	NARC_field_weather_storm_nsbtx = 78,
-	NARC_field_weather_worm01_nsbtx = 79
+	NARC_field_weather_kazakami_rain_nsbtx = 76,
+	NARC_field_weather_rain_bg_nsbtx = 77,
+	NARC_field_weather_snow_storm_nsbtx = 78,
+	NARC_field_weather_storm_nsbtx = 79,
+	NARC_field_weather_worm01_nsbtx = 80
 };
 
 /* NARC_FIELD_WEATHER_NAIX_ */
