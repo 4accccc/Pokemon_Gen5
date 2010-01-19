@@ -488,5 +488,6 @@
 #define	W_467_2_SPA					(484)
 #define	W_476_SPA					(485)
 #define	W_485_SPA					(486)
+#define	W_500_SPA					(487)
 
 #endif
