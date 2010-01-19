@@ -71,8 +71,8 @@ static	void	MCSS_LoadResource( MCSS_SYS_WORK *mcss_sys, int count, const MCSS_AD
 static	void	MCSS_GetNewMultiCellAnimation(MCSS_WORK *mcss, NNSG2dMCType	mcType );
 static	void	MCSS_MaterialSetup( void );
 static	NNSG2dMultiCellAnimation*     GetNewMultiCellAnim_( u16 num );
-
 static	void	MCSS_CalcPaletteFade( MCSS_WORK *mcss );
+static  void  MCSS_FreeResource( MCSS_WORK* mcss );
 
 static	void	TCB_LoadResource( GFL_TCB *tcb, void *work );
 static	void	TCB_LoadPalette( GFL_TCB *tcb, void *work );
@@ -222,6 +222,7 @@ void	MCSS_SetCallBackWork( MCSS_SYS_WORK *mcss_sys, void* work )
 //--------------------------------------------------------------------------
 void	MCSS_ReloadResource( MCSS_SYS_WORK *mcss_sys, MCSS_WORK* mcss, MCSS_ADD_WORK* maw )
 { 
+  MCSS_FreeResource( mcss );
   MCSS_LoadResource( mcss_sys, mcss->index, maw );
 }
 
@@ -732,13 +733,7 @@ MCSS_WORK*	MCSS_Add( MCSS_SYS_WORK *mcss_sys, fx32	pos_x, fx32	pos_y, fx32	pos_z
 //--------------------------------------------------------------------------
 void	MCSS_Del( MCSS_SYS_WORK *mcss_sys, MCSS_WORK *mcss )
 {
-	GFL_HEAP_FreeMemory( mcss->mcss_ncer_buf );
-	GFL_HEAP_FreeMemory( mcss->mcss_nanr_buf );
-	GFL_HEAP_FreeMemory( mcss->mcss_nmcr_buf );
-	GFL_HEAP_FreeMemory( mcss->mcss_nmar_buf );
-	GFL_HEAP_FreeMemory( mcss->mcss_mcanim_buf );
-	GFL_HEAP_FreeMemory( mcss->mcss_ncec );
-	GFL_HEAP_FreeMemory( mcss->pltt_data );
+  MCSS_FreeResource( mcss );
 
 	mcss_sys->mcss[ mcss->index ] = NULL;
 	GFL_HEAP_FreeMemory( mcss );
@@ -1583,6 +1578,40 @@ static	void	MCSS_CalcPaletteFade( MCSS_WORK *mcss )
 	{	
 		mcss->pal_fade_wait--;
 	}
+}
+
+//--------------------------------------------------------------------------
+/**
+ * @brief 確保していたリソースをフリー
+ *
+ * @param[in]	mcss	マルチセルワーク構造体
+ */
+//--------------------------------------------------------------------------
+static  void  MCSS_FreeResource( MCSS_WORK* mcss )
+{ 
+	GF_ASSERT( mcss->mcss_ncer_buf   != NULL );
+	GF_ASSERT( mcss->mcss_nanr_buf   != NULL );
+	GF_ASSERT( mcss->mcss_nmcr_buf   != NULL );
+	GF_ASSERT( mcss->mcss_nmar_buf   != NULL );
+	GF_ASSERT( mcss->mcss_mcanim_buf != NULL );
+	GF_ASSERT( mcss->mcss_ncec       != NULL );
+	GF_ASSERT( mcss->pltt_data       != NULL );
+
+	GFL_HEAP_FreeMemory( mcss->mcss_ncer_buf );
+	GFL_HEAP_FreeMemory( mcss->mcss_nanr_buf );
+	GFL_HEAP_FreeMemory( mcss->mcss_nmcr_buf );
+	GFL_HEAP_FreeMemory( mcss->mcss_nmar_buf );
+	GFL_HEAP_FreeMemory( mcss->mcss_mcanim_buf );
+	GFL_HEAP_FreeMemory( mcss->mcss_ncec );
+	GFL_HEAP_FreeMemory( mcss->pltt_data );
+
+	mcss->mcss_ncer_buf   = NULL;
+	mcss->mcss_nanr_buf   = NULL;
+	mcss->mcss_nmcr_buf   = NULL;
+	mcss->mcss_nmar_buf   = NULL;
+	mcss->mcss_mcanim_buf = NULL;
+	mcss->mcss_ncec       = NULL;
+	mcss->pltt_data       = NULL;
 }
 
 //神王蟲からいただき
