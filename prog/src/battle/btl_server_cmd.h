@@ -346,14 +346,14 @@ static inline void SCQUE_PUT_OP_ClearConsumedItem( BTL_SERVER_CMD_QUE* que, u8 p
 
 
 //---------------------------------------------
-static inline void SCQUE_PUT_ACT_WazaEffect( BTL_SERVER_CMD_QUE* que, u8 atPokeID, u8 defPokeID, u16 waza )
+static inline void SCQUE_PUT_ACT_WazaEffect( BTL_SERVER_CMD_QUE* que, u8 atPokePos, u8 defPokePos, u16 waza )
 {
 //  OS_TPrintf("[CMD] WazaEffect atkPoke=%d, defPoke=%d\n", atPokeID, defPokeID);
-  SCQUE_PUT_Common( que, SC_ACT_WAZA_EFFECT, atPokeID, defPokeID, waza );
+  SCQUE_PUT_Common( que, SC_ACT_WAZA_EFFECT, atPokePos, defPokePos, waza );
 }
-static inline void SCQUE_PUT_ACT_WazaEffectEx( BTL_SERVER_CMD_QUE* que, u8 atPokeID, u8 defPokeID, u16 waza, u8 arg )
+static inline void SCQUE_PUT_ACT_WazaEffectEx( BTL_SERVER_CMD_QUE* que, u8 atPokePos, u8 defPokePos, u16 waza, u8 arg )
 {
-  SCQUE_PUT_Common( que, SC_ACT_WAZA_EFFECT_EX, atPokeID, defPokeID, waza, arg );
+  SCQUE_PUT_Common( que, SC_ACT_WAZA_EFFECT_EX, atPokePos, defPokePos, waza, arg );
 }
 
 // 【アクション】単体ダメージ処理

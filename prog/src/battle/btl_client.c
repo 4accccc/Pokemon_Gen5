@@ -1517,10 +1517,17 @@ static BOOL SubProc_AI_SelectAction( BTL_CLIENT* wk, int* seq )
   for(i=0; i<wk->numCoverPos; ++i)
   {
     pp = BTL_PARTY_GetMemberDataConst( wk->myParty, i );
+    wk->procPoke = pp;
+    wk->procAction = &wk->actionParam[i];
+
     if( !BPP_IsDead(pp) )
     {
       u8 wazaCount, wazaIdx, targetPos;
       u32 ai_bit = 0;
+
+      if( is_action_unselectable(wk, wk->procPoke,  wk->procAction) ){
+        continue;
+      }
 
       if( BPP_CheckSick(pp, WAZASICK_ENCORE)
       ||  BPP_CheckSick(pp, WAZASICK_WAZALOCK)

@@ -3736,6 +3736,14 @@ static void scproc_Fight_WazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, 
   if( wazaEffCtrl_IsEnable(&wk->wazaEffCtrl) ){
     scPut_WazaEffect( wk, waza, &wk->wazaEffCtrl, que_reserve_pos );
     BTL_WAZAREC_SetEffectiveLast( &wk->wazaRec );
+
+    // 反動で動けなくなる処理
+    if( !BPP_IsDead(attacker) ){
+      if( WAZADATA_GetFlag(waza, WAZAFLAG_Tire) ){
+        scPut_SetContFlag( wk, attacker, BPP_CONTFLG_CANT_ACTION );
+      }
+    }
+
   }else{
     u32 hem_state = Hem_PushState( &wk->HEManager );
     scEvent_WazaExe_NoEffect( wk, pokeID, waza );
@@ -3751,14 +3759,6 @@ static void scproc_Fight_WazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, 
   }
 
   scproc_CheckDeadCmd( wk, attacker );
-
-  if( !BPP_IsDead(attacker) )
-  {
-    // 反動で動けなくなるワザ処理
-    if( WAZADATA_GetFlag(waza, WAZAFLAG_Tire) ){
-      scPut_SetContFlag( wk, attacker, BPP_CONTFLG_CANT_ACTION );
-    }
-  }
 }
 
 //----------------------------------------------------------------------------------
@@ -4557,6 +4557,13 @@ static void svflowsub_damage_act_singular(  BTL_SVFLOW_WORK* wk,
     if( i == 0 ){
       scproc_Fight_Damage_Determine( wk, attacker, defender, wazaParam );
     }
+    // ２回目以降はワザエフェクトを追加で発生させる
+    else{
+      BtlPokePos atkPos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, BPP_GetID(attacker) );
+      BtlPokePos defPos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, BPP_GetID(defender) );
+
+      SCQUE_PUT_ACT_WazaEffect( wk->que, atkPos, defPos, wazaParam->wazaID );
+    }
 
 
     // デバッグを簡単にするため必ず大ダメージにする措置
@@ -4617,8 +4624,8 @@ static void svflowsub_damage_act_singular(  BTL_SVFLOW_WORK* wk,
     BPP_TURNFLAG_Set( defender, BPP_TURNFLG_DAMAGED );
   }
 
-  if( fPluralHit && (hit_count > 1))
-  {
+  // ○○回あたった！メッセージ
+  if( fPluralHit && (hit_count > 1)){
     SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_Hit_PluralTimes, hit_count );
   }
 }
@@ -5961,9 +5968,16 @@ static void scEvent_GetWazaRankEffectValue( BTL_SVFLOW_WORK* wk, WazaID waza, u3
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_DEF, BPP_GetID(target) );
     BTL_EVENTVAR_SetValue( BTL_EVAR_STATUS_TYPE, *effect );
     BTL_EVENTVAR_SetValue( BTL_EVAR_VOLUME, *volume );
+    BTL_EVENTVAR_SetValue( BTL_EVAR_RATIO, 1 );
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_GET_RANKEFF_VALUE );
     *effect = BTL_EVENTVAR_GetValue( BTL_EVAR_STATUS_TYPE );
     *volume = BTL_EVENTVAR_GetValue( BTL_EVAR_VOLUME );
+    {
+      u8 ratio = BTL_EVENTVAR_GetValue( BTL_EVAR_RATIO );
+      if( ratio > 1 ){
+        (*volume) *= ratio;
+      }
+    }
   BTL_EVENTVAR_Pop();
 
   if( *effect == WAZA_RANKEFF_SP ){

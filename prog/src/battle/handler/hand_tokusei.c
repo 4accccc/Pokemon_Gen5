@@ -506,7 +506,7 @@ BTL_EVENT_FACTOR*  BTL_HANDLER_TOKUSEI_Add( const BTL_POKEPARAM* pp )
     { POKETOKUSEI_KAGEFUMI,         HAND_TOK_ADD_Kagefumi      },
     { POKETOKUSEI_JIRYOKU,          HAND_TOK_ADD_Jiryoku       },
     { POKETOKUSEI_SIMERIKE,         HAND_TOK_ADD_Simerike      },
-    { POKETOKUSEI_MARUTITAIPU,      HAND_TOK_ADD_MultiType     },
+//    { POKETOKUSEI_MARUTITAIPU,      HAND_TOK_ADD_MultiType     },
     { POKETOKUSEI_FUSIGINAMAMORI,   HAND_TOK_ADD_FusiginaMamori},
     { POKETOKUSEI_ATODASI,          HAND_TOK_ADD_Atodasi       },
     { POKETOKUSEI_TENKIYA,          HAND_TOK_ADD_Tenkiya       },
@@ -1796,10 +1796,7 @@ static void handler_Tanjun( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk,
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) == pokeID )
   {
-    int volume = BTL_EVENTVAR_GetValue( BTL_EVAR_VOLUME );
-    volume *= 2;
-    BTL_EVENTVAR_RewriteValue( BTL_EVAR_VOLUME, volume );
-    BTL_Printf("ポケ[%d]の たんじゅん により効果倍増\n");
+    BTL_EVENTVAR_RewriteValue( BTL_EVAR_RATIO, 2 );
   }
 }
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Tanjun( u32* numElems )
@@ -2676,7 +2673,7 @@ static void handler_Housi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, 
     }else if( rand < 60 ){
       sick = WAZASICK_MAHI;
     }else{
-      sick = WAZASICK_YAKEDO;
+      sick = WAZASICK_NEMURI;
     }
     cont = BTL_CALC_MakeDefaultPokeSickCont( sick );
     common_touchAddSick( flowWk, pokeID, sick, cont, BTL_CALC_TOK_HOUSI_PER );
@@ -2910,32 +2907,6 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_NormalSkin( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_WAZA_PARAM,   handler_NormalSkin }, // ワザタイプ決定ハンドラ
-  };
-  *numElems = NELEMS(HandlerTable);
-  return HandlerTable;
-}
-//------------------------------------------------------------------------------
-/**
- *  とくせい「マルチタイプ」
- */
-//------------------------------------------------------------------------------
-// ワザタイプ決定ハンドラ
-static void handler_MultiType( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
-{
-  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID)
-  {
-    const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
-    if( BPP_GetMonsNo(bpp) == MONSNO_ARUSEUSU )
-    {
-      // @@@ 持っているアイテムでタイプを変える
-      BTL_EVENTVAR_RewriteValue( BTL_EVAR_WAZA_TYPE, POKETYPE_NORMAL );
-    }
-  }
-}
-static  const BtlEventHandlerTable*  HAND_TOK_ADD_MultiType( u32* numElems )
-{
-  static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_PARAM,   handler_MultiType },  // ワザタイプ決定ハンドラ
   };
   *numElems = NELEMS(HandlerTable);
   return HandlerTable;

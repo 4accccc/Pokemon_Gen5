@@ -638,6 +638,8 @@ static void handler_FreeFall_TameRelease( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW
 static void handler_FreeFall_TypeCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable*  ADD_MiracleEye( u32* numElems );
 static void handler_MiracleEye( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static const BtlEventHandlerTable*  ADD_Seityou( u32* numElems );
+static void handler_Seityou( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 
 
 //=============================================================================================
@@ -860,6 +862,7 @@ BOOL  BTL_HANDLER_Waza_Add( const BTL_POKEPARAM* pp, WazaID waza )
     { WAZANO_MIYABURU,        ADD_Miyaburu      },
     { WAZANO_KAGIWAKERU,      ADD_Miyaburu      },  // かぎわける=みやぶる
     { WAZANO_MIRAKURUAI,      ADD_MiracleEye    },
+    { WAZANO_SEITYOU,         ADD_Seityou       },
 
     // 以下、新ワザ
     { WAZANO_KARI_BENOMUSHOKKU,     ADD_BenomShock      },
@@ -9127,5 +9130,31 @@ static void handler_MiracleEye( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
     BTL_EVENTVAR_RewriteValue( BTL_EVAR_SICK_CONT, cont.raw );
   }
 }
-
-
+//----------------------------------------------------------------------------------
+/**
+ * せいちょう
+ */
+//----------------------------------------------------------------------------------
+static const BtlEventHandlerTable*  ADD_Seityou( u32* numElems )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_GET_RANKEFF_VALUE, handler_Seityou },    // ランク増減効果調整ハンドラ
+  };
+  *numElems = NELEMS( HandlerTable );
+  return HandlerTable;
+}
+// ランク増減効果調整ハンドラ
+static void handler_Seityou( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
+  {
+    if( BTL_SVFTOOL_GetWeather(flowWk) == BTL_WEATHER_SHINE )
+    {
+      int volume = BTL_EVENTVAR_GetValue( BTL_EVAR_VOLUME );
+      if( volume == 1 ){
+        ++volume;
+      }
+      BTL_EVENTVAR_RewriteValue( BTL_EVAR_VOLUME, volume );
+    }
+  }
+}
