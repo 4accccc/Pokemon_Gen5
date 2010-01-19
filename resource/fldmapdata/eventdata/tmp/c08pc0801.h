@@ -8,5 +8,7 @@
 #ifndef ZONE_C08PC0801_EVC_H
 #define ZONE_C08PC0801_EVC_H
 
+#define C08PC0801_SHOPM1_01                0
+#define C08PC0801_SHOPM1_02                1
 
 #endif //ZONE_C08PC0801_EVC_H

@@ -22,6 +22,7 @@
 _EVENT_DATA    ev_c06pc0101_shop
 _EVENT_DATA    ev_c06pc0101_pilot_01
 _EVENT_DATA    ev_c06pc0101_man1_01
+_EVENT_DATA		ev_c06pc0101_fix_shop
 _EVENT_DATA_END
 
 /************************************************************/
@@ -31,6 +32,15 @@ EVENT_START	ev_c06pc0101_shop
 	_TALK_OBJ_START()
 	_SHOP_CALL()
 EVENT_END
+
+//=============================================================
+//ショップカウンター 固定ショップ
+//=============================================================
+EVENT_START ev_c06pc0101_fix_shop
+  _TALK_OBJ_START()
+  _FIX_SHOP_CALL( C06_FS )
+EVENT_END
+
 
 /**************************************************************/
 /*  c06pc0101_pilot_01:一言メッセージ*/

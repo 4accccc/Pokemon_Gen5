@@ -22,6 +22,7 @@
 _EVENT_DATA		ev_c03pc0101_man1_01
 _EVENT_DATA		ev_c03pc0101_businessman_01
 _EVENT_DATA		ev_c03pc0101_shop
+_EVENT_DATA		ev_c03pc0101_fix_shop
 _EVENT_DATA_END
 
 
@@ -33,6 +34,13 @@ EVENT_START ev_c03pc0101_shop
   _SHOP_CALL()
 EVENT_END
 
+//=============================================================
+//ショップカウンター 固定ショップ
+//=============================================================
+EVENT_START ev_c03pc0101_fix_shop
+  _TALK_OBJ_START()
+  _FIX_SHOP_CALL( C03_FS )
+EVENT_END
 
 /**************************************************************/
 /* 			MAN1	C03PC0101								  */

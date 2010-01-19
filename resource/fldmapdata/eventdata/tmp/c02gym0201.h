@@ -11,7 +11,7 @@
 #define ZONE_C02GYM0201_EVC_H
 
 #define C02GYM0201_ASSITANTW_01            0
-#define C02GYM0201_SUNGLASSES_01           1
+#define C02GYM0201_DANPEI_01               1
 #define C02GYM0201_GIRL3_01                2
 #define C02GYM0201_BOOK_01D                3
 #define C02GYM0201_BOOK_01P                4

@@ -51,7 +51,7 @@ EVENT_END
 //=============================================================
 EVENT_START ev_c01pc0101_fix_shop
   _TALK_OBJ_START()
-  _FIX_SHOP_CALL(7)
+  _FIX_SHOP_CALL( C01_FS )
 EVENT_END
 
 //=============================================================

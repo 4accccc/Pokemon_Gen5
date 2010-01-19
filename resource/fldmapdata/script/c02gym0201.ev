@@ -21,9 +21,9 @@
 //--------------------------------------------------------------
 _EVENT_DATA    ev_c02gym0201
 _EVENT_DATA    ev_zone_c02gym0201
-_EVENT_DATA    ev_pos_c02gym0201_sunglasses_01
+_EVENT_DATA    ev_pos_c02gym0201_danpei_01
 _EVENT_DATA  	ev_pos_c02gym0201_trainer_01
-_EVENT_DATA    ev_c02gym0201_sunglasses_01
+_EVENT_DATA    ev_c02gym0201_danpei_01
 _EVENT_DATA    ev_c02gym0201_girl3_01
 _EVENT_DATA    ev_c02gym0201_assitantw_01
 _EVENT_DATA    ev_bg_c02gym0201_statue_01
@@ -130,10 +130,10 @@ INIT_EVENT_END
 /**************************************************************/
 /*     サングラス:おいしい水をくれる               　　　　　*/
 /**************************************************************/
-EVENT_START		ev_pos_c02gym0201_sunglasses_01
+EVENT_START		ev_pos_c02gym0201_danpei_01
     
     //サングラスが主人公に気づく。びっくりマーク
-    _OBJ_ANIME( C02GYM0201_SUNGLASSES_01,anm_obj_gyoe )
+    _OBJ_ANIME( C02GYM0201_DANPEI_01,anm_obj_gyoe )
     _OBJ_ANIME_WAIT() 
     
     //サングラスが主人公に近づく
@@ -147,15 +147,15 @@ EVENT_START		ev_pos_c02gym0201_sunglasses_01
     //プレイヤーが通る3グリッド分を用意
     SWITCH $POSX
     CASE 8 THEN
-     _OBJ_ANIME( C02GYM0201_SUNGLASSES_01,anm_sunglasses_move_a )
+     _OBJ_ANIME( C02GYM0201_DANPEI_01,anm_danpei_move_a )
      _OBJ_ANIME_WAIT()
      
     CASE 9 THEN
-     _OBJ_ANIME( C02GYM0201_SUNGLASSES_01,anm_sunglasses_move_b )
+     _OBJ_ANIME( C02GYM0201_DANPEI_01,anm_danpei_move_b )
      _OBJ_ANIME_WAIT()
      
     CASE 10 THEN
-     _OBJ_ANIME( C02GYM0201_SUNGLASSES_01,anm_sunglasses_move_c )
+     _OBJ_ANIME( C02GYM0201_DANPEI_01,anm_danpei_move_c )
      _OBJ_ANIME_WAIT()
  
     DEFAULT
@@ -171,14 +171,14 @@ EVENT_START		ev_pos_c02gym0201_sunglasses_01
 	//ジムバッジがない
 	
 	//はくぶつかんの　そのおくで　ちょうせんしゃを　まつ　ポケモンジム……
-	_BALLOONWIN_OBJMSG( msg_c02gym0101_glasses_01,C02GYM0201_SUNGLASSES_01)
+	_BALLOONWIN_OBJMSG( msg_c02gym0101_glasses_01,C02GYM0201_DANPEI_01)
 	_BALLOONWIN_CLOSE()
 	
 	//【仮】おいしい水をくれる　MEなし
 	_ITEM_EVENT_KEYWAIT(ITEM_OISIIMIZU, 1)
 	
 	// ジムリーダーの　アロエさんは　ノーマルタイプの　ポケモンを　つかう
-	_BALLOONWIN_OBJMSG( msg_c02gym0101_glasses_02,C02GYM0201_SUNGLASSES_01)
+	_BALLOONWIN_OBJMSG( msg_c02gym0101_glasses_02,C02GYM0201_DANPEI_01)
 	_BALLOONWIN_CLOSE()
 	
 	ENDIF
@@ -194,15 +194,15 @@ EVENT_START		ev_pos_c02gym0201_sunglasses_01
     //プレイヤーが通る3グリッド分を用意
     SWITCH $POSX
     CASE 8 THEN
-     _OBJ_ANIME( C02GYM0201_SUNGLASSES_01,anm_sunglasses_move_d )
+     _OBJ_ANIME( C02GYM0201_DANPEI_01,anm_danpei_move_d )
      _OBJ_ANIME_WAIT()
      
     CASE 9 THEN
-     _OBJ_ANIME( C02GYM0201_SUNGLASSES_01,anm_sunglasses_move_e )
+     _OBJ_ANIME( C02GYM0201_DANPEI_01,anm_danpei_move_e )
      _OBJ_ANIME_WAIT()
      
     CASE 10 THEN
-     _OBJ_ANIME( C02GYM0201_SUNGLASSES_01,anm_sunglasses_move_f )
+     _OBJ_ANIME( C02GYM0201_DANPEI_01,anm_danpei_move_f )
      _OBJ_ANIME_WAIT()
  
     DEFAULT
@@ -229,7 +229,7 @@ _ANIME_LABEL	anm_obj_gyoe
 //--------------------------------------------------------------
 //	サングラス：POSでサングラス移動
 //--------------------------------------------------------------
-	_ANIME_LABEL	anm_sunglasses_move_a 
+	_ANIME_LABEL	anm_danpei_move_a 
 	_ANIME_DATA	AC_STAY_WALK_L_8F,1
 	_ANIME_DATA	AC_WALK_L_8F,3
 	_ANIME_DATA	AC_STAY_WALK_D_8F,1
@@ -239,7 +239,7 @@ _ANIME_LABEL	anm_obj_gyoe
 //--------------------------------------------------------------
 //	サングラス：POSでサングラス移動
 //--------------------------------------------------------------
-	_ANIME_LABEL	anm_sunglasses_move_b 
+	_ANIME_LABEL	anm_danpei_move_b 
 	_ANIME_DATA	AC_STAY_WALK_L_8F,1
 	_ANIME_DATA	AC_WALK_L_8F,2
 	_ANIME_DATA	AC_STAY_WALK_D_8F,1
@@ -249,7 +249,7 @@ _ANIME_LABEL	anm_obj_gyoe
 //--------------------------------------------------------------
 //	サングラス：POSでサングラス移動
 //--------------------------------------------------------------
-	_ANIME_LABEL	anm_sunglasses_move_c 
+	_ANIME_LABEL	anm_danpei_move_c 
 	_ANIME_DATA	AC_STAY_WALK_L_8F,1
 	_ANIME_DATA	AC_WALK_L_8F,1
 	_ANIME_DATA	AC_STAY_WALK_D_8F,1
@@ -259,7 +259,7 @@ _ANIME_LABEL	anm_obj_gyoe
 //--------------------------------------------------------------
 //	サングラス：POSでサングラス移動
 //--------------------------------------------------------------
-	_ANIME_LABEL	anm_sunglasses_move_d
+	_ANIME_LABEL	anm_danpei_move_d
 	_ANIME_DATA	AC_DIR_U,1
 	_ANIME_DATA	AC_WALK_U_8F,1
 	_ANIME_DATA	AC_STAY_WALK_R_8F,1
@@ -270,7 +270,7 @@ _ANIME_LABEL	anm_obj_gyoe
 //--------------------------------------------------------------
 //	サングラス：POSでサングラス移動
 //--------------------------------------------------------------
-	_ANIME_LABEL	anm_sunglasses_move_e
+	_ANIME_LABEL	anm_danpei_move_e
 	_ANIME_DATA	AC_DIR_U,1
 	_ANIME_DATA	AC_WALK_U_8F,1
 	_ANIME_DATA	AC_STAY_WALK_R_8F,1
@@ -281,7 +281,7 @@ _ANIME_LABEL	anm_obj_gyoe
 //--------------------------------------------------------------
 //	サングラス：POSでサングラス移動
 //--------------------------------------------------------------
-	_ANIME_LABEL	anm_sunglasses_move_f
+	_ANIME_LABEL	anm_danpei_move_f
 	_ANIME_DATA	AC_DIR_U,1
 	_ANIME_DATA	AC_WALK_U_8F,1
 	_ANIME_DATA	AC_STAY_WALK_R_8F,1
@@ -292,7 +292,7 @@ _ANIME_LABEL	anm_obj_gyoe
 /**************************************************************/
 /*     サングラス               　　　　　　　　　　　　　*/
 /**************************************************************/
-EVENT_START		ev_c02gym0201_sunglasses_01
+EVENT_START		ev_c02gym0201_danpei_01
     
     //おいしい水イベントが終わって、定位置での話しかけイベント
     

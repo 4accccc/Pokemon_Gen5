@@ -17,5 +17,6 @@
 #define C07PC0101_CONNECT_00               3
 #define C07PC0101_CONNECT_01               4
 #define C07PC0101_CONNECT_02               5
+#define C07PC0101_SHOPM_02                 6
 
 #endif //ZONE_C07PC0101_EVC_H

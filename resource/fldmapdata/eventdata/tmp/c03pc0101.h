@@ -16,5 +16,6 @@
 #define C03PC0101_CONNECT_02               4
 #define C03PC0101_PCWOMAN                  5
 #define C03PC0101_SHOPM1_01                6
+#define C03PC0101_SHOPM1_02                7
 
 #endif //ZONE_C03PC0101_EVC_H

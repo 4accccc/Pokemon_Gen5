@@ -21,6 +21,7 @@
 //--------------------------------------------------------------
 _EVENT_DATA    ev_c07pc0101_shop
 _EVENT_DATA    ev_c07pc0101_oldwoman1_01
+_EVENT_DATA		ev_c07pc0101_fix_shop
 _EVENT_DATA_END
 
 
@@ -30,6 +31,14 @@ _EVENT_DATA_END
 EVENT_START	ev_c07pc0101_shop
 	_TALK_OBJ_START()
 	_SHOP_CALL()
+EVENT_END
+
+//=============================================================
+//ショップカウンター 固定ショップ
+//=============================================================
+EVENT_START ev_c07pc0101_fix_shop
+  _TALK_OBJ_START()
+  _FIX_SHOP_CALL( C07_FS )
 EVENT_END
 
 /**************************************************************/

@@ -1,5 +1,5 @@
 #../data/c08pc0801.mev
-../tmp/c08pc0801.bin:../data/c08pc0801.mev $(UNIQ_SCRIPTHEADER) ../tmp/c08pc0801.h 
+../tmp/c08pc0801.bin:../data/c08pc0801.mev $(UNIQ_SCRIPTHEADER) ../tmp/c08pc0801.h ../../../../prog/arc/fieldmap/fldmmdl_objcode.h ../../../../prog/src/field/fldmmdl_code.h ../../../../prog/include/field/field_dir.h ../../../../prog/src/field/fldmmdl.h ../../flagwork/flag_define.h ../../../../prog/include/field/eventdata_type.h ../../script/C08PC0801_def.h 
 	@echo ../data/c08pc0801.mev
-	@ruby make_binary.rb $< $(UNIQ_SCRIPTHEADER) ../tmp/c08pc0801.h 
+	@ruby make_binary.rb $< $(UNIQ_SCRIPTHEADER) ../tmp/c08pc0801.h ../../../../prog/arc/fieldmap/fldmmdl_objcode.h ../../../../prog/src/field/fldmmdl_code.h ../../../../prog/include/field/field_dir.h ../../../../prog/src/field/fldmmdl.h ../../flagwork/flag_define.h ../../../../prog/include/field/eventdata_type.h ../../script/C08PC0801_def.h 
 

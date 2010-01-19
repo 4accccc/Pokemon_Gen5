@@ -49,15 +49,15 @@ EVENT_START   ev_c02r0301_woman2_01
 	IF $SCWK_ANSWER == VERSION_BLACK THEN
 		//渡すポケモンをモンメン、貰うポケモンをチュリネに！
 		$LWK_POKE_NAME1 = FLD_TRADE_POKE_TYURINE
-		_MONS_NAME( 0, MONSNO_MONMEN  )
-		_MONS_NAME( 1, MONSNO_TYURINE )
+		_MONS_NAME( 0, MONSNO_521 )		//モンメン
+		_MONS_NAME( 1, MONSNO_517 )		//チュリネ
 				
 	//White
 	ELSE
 		//渡すポケモンをチュリネ、貰うポケモンをモンメンに！
 		$LWK_POKE_NAME1 = FLD_TRADE_POKE_MONMEN
-		_MONS_NAME( 0, MONSNO_TYURINE )
-		_MONS_NAME( 1, MONSNO_MONMEN )
+		_MONS_NAME( 0, MONSNO_517 )		//チュリネ
+		_MONS_NAME( 1, MONSNO_521 )		//モンメン
 		
 	ENDIF
 	
