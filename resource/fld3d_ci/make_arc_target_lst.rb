@@ -7,16 +7,18 @@ def CollectStr(vec, str)
     p "ERROR::指定文字列がありません"
     exit -1
   else
-    ret_idx = vec.index(str)
+    #加工
+    fix_str = str
+    fix_str = fix_str.sub(/\.imd/,".nsbmd")
+    fix_str = fix_str.sub(/\.ica/,".nsbca")
+    fix_str = fix_str.sub(/\.ima/,".nsbma")
+    fix_str = fix_str.sub(/\.itp/,".nsbtp")
+    fix_str = fix_str.sub(/\.ita/,".nsbta")
+    fix_str = fix_str.sub(/\.iva/,".nsbva")
+
+    ret_idx = vec.index(fix_str)
     if ret_idx == nil then
       #エントリー
-      fix_str = str
-      fix_str = fix_str.sub(/.imd/,".nsbmd")
-      fix_str = fix_str.sub(/.ica/,".nsbca")
-      fix_str = fix_str.sub(/.ima/,".nsbma")
-      fix_str = fix_str.sub(/.itp/,".nsbtp")
-      fix_str = fix_str.sub(/.ita/,".nsbta")
-      fix_str = fix_str.sub(/.iva/,".nsbva")
       vec << fix_str
     else
 #      printf("ERROR::指定文字列は既にある %s\n",str)

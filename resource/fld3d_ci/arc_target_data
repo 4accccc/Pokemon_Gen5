@@ -71,21 +71,10 @@ ARC_TARGET_DATA = \
 	fly_in1.nsbma \
 	fly_in1.nsbtp \
 	plasma.spa \
-	.nsbval_ci.nsbmd \
-	.nsbval_ci.nsbca \
-	.nsbval_ci.nsbma \
-	.nsbval_ci.nsbta \
-	plasma.spa \
-	.nsbval_ci.nsbmd \
-	.nsbval_ci.nsbca \
-	.nsbval_ci.nsbma \
-	.nsbval_ci.nsbta \
-	plasma.spa \
-	plasma_ci02.nsbmd \
-	plasma_ci02.nsbca \
-	plasma_ci02.nsbma \
-	plasma_ci02.nsbta \
-	plasma.spa \
+	rival_ci.nsbmd \
+	rival_ci.nsbca \
+	rival_ci.nsbma \
+	rival_ci.nsbta \
 	plasma_ci02.nsbmd \
 	plasma_ci02.nsbca \
 	plasma_ci02.nsbma \

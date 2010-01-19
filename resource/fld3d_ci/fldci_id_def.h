@@ -23,3 +23,7 @@
 #define FLDCIID_GYM08 (10)
 #define FLDCIID_FLY_OUT (11)
 #define FLDCIID_FLY_IN (12)
+#define FLDCIID_RIVAL (13)
+#define FLDCIID_SITEN (14)
+#define FLDCIID_PLASMA01 (15)
+#define FLDCIID_PLASMA02 (16)
