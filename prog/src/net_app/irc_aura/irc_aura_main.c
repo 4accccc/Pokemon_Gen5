@@ -2563,8 +2563,17 @@ static void SEQFUNC_StartGame( AURA_MAIN_WORK *p_wk, u16 *p_seq )
     {
       GUIDE_SetVisible( 0, HEAPID_IRCAURA );
 
-      MSGWND_PrintPlayerName( &p_wk->msgwnd[MSGWNDID_TEXT], &p_wk->msg,
-          AURA_STR_001, p_wk->p_param->p_you_status,  0, 0, HEAPID_IRCAURA );
+      if( p_wk->p_param->p_gamesys )
+      {
+        MSGWND_PrintPlayerName( &p_wk->msgwnd[MSGWNDID_TEXT], &p_wk->msg,
+            AURA_STR_001, p_wk->p_param->p_you_status,  0, 0, HEAPID_IRCAURA );
+      }
+      else
+      {
+        MSGWND_Print( &p_wk->msgwnd[MSGWNDID_TEXT], &p_wk->msg,
+            AURA_STR_001, 0, 0 );
+      }
+
 
       //左タッチ演出ON
       {
@@ -2662,8 +2671,18 @@ static void SEQFUNC_TouchLeft( AURA_MAIN_WORK *p_wk, u16 *p_seq )
     {
       GUIDE_SetVisible( 0, HEAPID_IRCAURA );
 
-      MSGWND_PrintPlayerName( &p_wk->msgwnd[MSGWNDID_TEXT], &p_wk->msg,
-          AURA_STR_001, p_wk->p_param->p_you_status,  0, 0, HEAPID_IRCAURA );
+      if( p_wk->p_param->p_gamesys )
+      {
+        MSGWND_PrintPlayerName( &p_wk->msgwnd[MSGWNDID_TEXT], &p_wk->msg,
+            AURA_STR_001, p_wk->p_param->p_you_status,  0, 0, HEAPID_IRCAURA );
+      }
+      else
+      {
+        MSGWND_Print( &p_wk->msgwnd[MSGWNDID_TEXT], &p_wk->msg,
+            AURA_STR_001, 0, 0 );
+      }
+
+
       SEQ_Change( p_wk, SEQFUNC_TouchRight );
 
       //右タッチ演出ON
