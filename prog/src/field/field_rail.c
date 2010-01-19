@@ -3505,7 +3505,7 @@ static void calcLineSwitchLineOfs( const RAIL_LINE_SWITCH* work, FIELD_RAIL_WORK
     // 始点は、色々なライン共通で使う分岐点なので、使用不可能でも通れる必要がある。
     getLineCrossAreaSize( railwk->rail_dat, railwk->line, &size_line, &size_width, work, railwk->ofs_unit );
 
-    TOMOYA_Printf( "line area line %d  width %d\n",size_line, size_width );
+    //TOMOYA_Printf( "line area line %d  width %d\n",size_line, size_width );
     
     railwk->line_ofs += front_ofs;
     railwk->width_ofs += side_ofs;

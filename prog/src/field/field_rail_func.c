@@ -464,6 +464,7 @@ BOOL FIELD_RAIL_LINE_HIT_LOCATION_FUNC_StraitLine( u32 rail_index, const FIELD_R
   int i;
   BOOL result;
   fx32 unit_size;
+  RAIL_LOCATION safe_location;
 
   cp_line = FIELD_RAIL_MAN_GetRailDatLine( cp_man, rail_index );
   cp_point_s = FIELD_RAIL_MAN_GetRailDatPoint( cp_man, cp_line->point_s );
@@ -493,7 +494,7 @@ BOOL FIELD_RAIL_LINE_HIT_LOCATION_FUNC_StraitLine( u32 rail_index, const FIELD_R
   
   // トータルサイズの取得
   cp_linepos = FIELD_RAIL_MAN_GetRailDatLinePos( cp_man, cp_line->line_pos_set );
-  total_ofs = cp_line->line_grid_max * RAIL_WALK_OFS;
+  total_ofs = (cp_line->line_grid_max) * RAIL_WALK_OFS; // 最後のグリッドにたつことはない
 
   // 交点のオフセット
   front_ofs = FX_Div( front_dist, unit_size ) >> FX32_SHIFT;
@@ -535,15 +536,23 @@ BOOL FIELD_RAIL_LINE_HIT_LOCATION_FUNC_StraitLine( u32 rail_index, const FIELD_R
     }
     p_location->line_grid = FIELD_RAIL_TOOL_GetOfsToGrid_Round(front_ofs);
 
+    TOMOYA_Printf( "line ofs to grid ofs[%d]  grid[%d]\n", front_ofs, p_location->line_grid );
+
 
 
     // レール範囲内のロケーションにする
-    FIELD_RAIL_MAN_CalcSafeLocation( cp_man, p_location, p_location );
+    FIELD_RAIL_MAN_CalcSafeLocation( cp_man, p_location, &safe_location );
 
-    DEBUG_RAIL_Printf( "location width_grid [%d] line_grid [%d]\n", p_location->width_grid, p_location->line_grid );
+    DEBUG_RAIL_Printf( "location width_grid [%d] line_grid [%d]\n", safe_location.width_grid, safe_location.line_grid );
 
-    FIELD_RAIL_MAN_GetLocationPosition( cp_man, p_location, p_pos );
-    return TRUE;
+    FIELD_RAIL_MAN_GetLocationPosition( cp_man, &safe_location, p_pos );
+
+    //　安全なロケーションを見つけられたかもチェック
+    if( GFL_STD_MemComp( p_location, &safe_location, sizeof(RAIL_LOCATION) ) == 0 )
+    {
+      return TRUE;
+    }
+    return FALSE;
   }
 
   return FALSE;
@@ -573,6 +582,7 @@ BOOL FIELD_RAIL_LINE_HIT_LOCATION_FUNC_CircleLine( u32 rail_index, const FIELD_R
   fx32 unit_size, front_dist;
   int i;
   BOOL result;
+  RAIL_LOCATION safe_location;
 
   //DEBUG_RAIL_Printf( "\ncheck circleLine\n" );
 
@@ -701,11 +711,16 @@ BOOL FIELD_RAIL_LINE_HIT_LOCATION_FUNC_CircleLine( u32 rail_index, const FIELD_R
         }
 
         // レール範囲内のロケーションにする
-        FIELD_RAIL_MAN_CalcSafeLocation( cp_man, p_location, p_location );
+        FIELD_RAIL_MAN_CalcSafeLocation( cp_man, p_location, &safe_location );
         FIELD_RAIL_MAN_GetLocationPosition( cp_man, p_location, p_pos );
 
         //DEBUG_RAIL_Printf( "OK width_grid[%d]\n", p_location->width_grid );
-        return TRUE;
+        //　安全なロケーションを見つけられたかもチェック
+        if( GFL_STD_MemComp( p_location, &safe_location, sizeof(RAIL_LOCATION) ) == 0 )
+        {
+          return TRUE;
+        }
+        return FALSE;
       }
     }
     
