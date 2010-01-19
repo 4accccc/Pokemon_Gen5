@@ -232,7 +232,7 @@ static GFL_PROC_RESULT DebugSogabeMainProcMain( GFL_PROC * proc, int * seq, void
         POKEMON_PARAM* pp = PP_Create( MONSNO_TUTININ, 1, 0, wk->heapID );
         PokeParty_Add( ppt, pp );
         GFL_OVERLAY_Load( FS_OVERLAY_ID(shinka_demo) );
-        wk->param = SHINKADEMO_AllocParam( wk->heapID, ppt, MONSNO_TEKKANIN, 0, 0 );
+        wk->param = SHINKADEMO_AllocParam( wk->heapID, NULL, ppt, MONSNO_TEKKANIN, 0, 0, FALSE );
         GFL_PROC_SysCallProc( NO_OVERLAY_ID, spt[ wk->pos ].gpd, wk->param );
         (*seq)++;
       }

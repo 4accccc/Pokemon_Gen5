@@ -288,7 +288,7 @@ static GFL_PROC_RESULT BtlRet_ProcMain( GFL_PROC * proc, int * seq, void * pwk, 
         if( after_mons_no )
         {
           GFL_OVERLAY_Load( FS_OVERLAY_ID(shinka_demo) );
-          wk->shinka_param = SHINKADEMO_AllocParam( wk->heapID, party, after_mons_no, pos, cond );
+          wk->shinka_param = SHINKADEMO_AllocParam( wk->heapID, param->gameData, party, after_mons_no, pos, cond, FALSE );
           GFL_PROC_SysCallProc( NO_OVERLAY_ID, &ShinkaDemoProcData, wk->shinka_param );
           (*seq) = 5;
           break;

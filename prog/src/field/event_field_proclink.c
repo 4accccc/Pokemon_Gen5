@@ -1758,10 +1758,12 @@ static void * FMenuCallProc_Evolution(PROCLINK_WORK* wk, u32 param,EVENT_PROCLIN
                               HEAPID_PROC );
 
     demoParam = SHINKADEMO_AllocParam(HEAPID_PROC ,
+                                      gmData , 
                                       party ,
                                       newMonsNo ,
                                       plistData->ret_sel ,
-                                      cond );
+                                      cond ,
+                                      TRUE );
 
   }
   return demoParam;
