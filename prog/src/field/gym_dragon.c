@@ -430,7 +430,7 @@ static void SetupMdl(FLD_EXP_OBJ_CNT_PTR ptr,
     const int inAnmNum, const BOOL inCulling);
 static void SetupAnm(GYM_DRAGON_SV_WORK *gmk_sv_work, FLD_EXP_OBJ_CNT_PTR ptr, const int inIdx);
 
-static GMEVENT_RESULT AnmMoveEvt( GMEVENT* event, int* seq, void* work );
+static GMEVENT_RESULT SwitchMoveEvt( GMEVENT* event, int* seq, void* work );
 static GMEVENT_RESULT ArmMoveEvt( GMEVENT* event, int* seq, void* work );
 static GMEVENT_RESULT HeadMoveEvt( GMEVENT* event, int* seq, void* work );
 static GMEVENT_RESULT AnmEvt( GMEVENT* event, int* seq, void* work );
@@ -770,7 +770,7 @@ GMEVENT *GYM_DRAGON_CreateGmkEvt(GAMESYS_WORK *gsys, const int inDragonIdx, cons
   OS_Printf("head=%d arm=%d\n",inDragonIdx, inArmIdx);
 
   //イベント作成
-  event = GMEVENT_Create( gsys, NULL, AnmMoveEvt, 0 );
+  event = GMEVENT_Create( gsys, NULL, SwitchMoveEvt, 0 );
 
   return event;
 }
@@ -977,7 +977,7 @@ static int GetArmAnmIdx(const ARM_DIR inNextDir, const DRA_ARM inArm)
  * @return  GMEVENT_RESULT  イベント結果
  */
 //--------------------------------------------------------------
-static GMEVENT_RESULT AnmMoveEvt( GMEVENT* event, int* seq, void* work )
+static GMEVENT_RESULT SwitchMoveEvt( GMEVENT* event, int* seq, void* work )
 {
   GYM_DRAGON_SV_WORK *gmk_sv_work;
   GAMESYS_WORK *gsys = GMEVENT_GetGameSysWork(event);
@@ -1015,53 +1015,6 @@ static GMEVENT_RESULT AnmMoveEvt( GMEVENT* event, int* seq, void* work )
     (*seq)++;
     break;
   case 1:
-    //終了
-    return GMEVENT_RES_FINISH;
-    
-    {
-      GMEVENT * call_event;
-      int anm_idx;
-      int obj_idx;
-      ARM_DIR next_dir;
-      //現在状況から動かす腕アニメを決定
-      if ( tmp->DraWk->ArmDir[tmp->TrgtArm] == ARM_DIR_UP )
-      {
-        anm_idx = 1;  //下に動かす
-        next_dir = ARM_DIR_DOWN;
-        OS_Printf("腕を下に動かす\n");
-      }
-      else
-      {
-        anm_idx = 0;  //上に動かす
-        next_dir = ARM_DIR_UP;
-        OS_Printf("腕を上に動かす\n");
-      }
-
-      if ( tmp->TrgtArm == DRA_ARM_LEFT ) obj_idx = OBJ_L_ARM_1;
-      else obj_idx = OBJ_R_ARM_1;
-
-      OS_Printf("動かす腕は%d obj= %d\n",tmp->TrgtArm,obj_idx);
-
-      obj_idx += (tmp->TrgtHead*DRAGON_PARTS_SET);
-
-      //腕のＯＢＪとアニメをセット
-      tmp->AnmPlayWk.ObjIdx = obj_idx;
-      tmp->AnmPlayWk.AnmNum = 1;
-      tmp->AnmPlayWk.AnmOfs[0] = anm_idx;
-      tmp->AnmPlayWk.AllAnmNum = ARM_ANM_NUM;
-      tmp->AnmPlayWk.SeNo[0] = GYM_DRAGON_SE_ARM_MOVE;
-      tmp->AnmPlayWk.SeNo[1] = GYM_DRAGON_SE_ARM_STOP;
-      
-      call_event = GMEVENT_Create(gsys, NULL, AnmEvt, 0);
-      //腕アニメイベントコール
-      GMEVENT_CallEvent(event, call_event);
-      
-      //腕の情報を更新
-      tmp->DraWk->ArmDir[tmp->TrgtArm] = next_dir;
-    }
-    (*seq)++;
-    break;
-  case 2:
     //終了
     return GMEVENT_RES_FINISH;
   }
