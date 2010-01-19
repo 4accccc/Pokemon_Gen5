@@ -371,12 +371,14 @@ typedef struct
 typedef struct 
 {
   GFL_CLWK  *p_clwk;  //描画
-  VecFx32 pre_pos;        //3D座標
-  u16     angle_now;  //現在の角度
-  u16     angle_std;  //目的値までの角度
-  u16     angle_max;  //角度最大
-  fx32    speed;      //進む速さ
-  u16     angle_speed;//角速度
+  VecFx32 pre_pos;    //3D座標
+  VecFx32 shake_pos;  //揺れる起動
+
+  VecFx32 pre_rot_pos;
+  fx32    angle_max;  //角度最大
+  fx32    move_sync;  //進む速さ
+  fx32    angle_speed;//角速度
+  s8      angle_dir;
   u8      dummy;
 
   u16     target_x;   //目的座標X
@@ -507,7 +509,7 @@ static void BACKOBJ_ONE_Start( BACKOBJ_ONE *p_wk, const GFL_POINT *cp_start, con
 static BOOL BACKOBJ_ONE_IsMove( const BACKOBJ_ONE *cp_wk );
 #endif
 //帳動作
-static void BUTTERFLY_Init( BUTTERFLY_WORK *p_wk, GFL_CLWK *p_clwk, fx32 speed, u16 angle_speed, u16 angle_max, BOOL is_blue, HEAPID heapID );
+static void BUTTERFLY_Init( BUTTERFLY_WORK *p_wk, GFL_CLWK *p_clwk, u32 move_sync, fx32 angle_speed, fx32 angle_max, BOOL is_blue, HEAPID heapID );
 static void BUTTERFLY_Exit( BUTTERFLY_WORK *p_wk );
 static void BUTTERFLY_Main( BUTTERFLY_WORK *p_wk );
 static void Butterfly_SetTarget( BUTTERFLY_WORK *p_wk );
@@ -1214,7 +1216,6 @@ static void GRAPHIC_OBJ_Init( GRAPHIC_OBJ_WORK *p_wk, const GFL_DISP_VRAM* cp_vr
 					);
 			GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[i], FALSE );
 			GFL_CLACT_WK_SetBgPri( p_wk->p_clwk[i], 3 );
-			GFL_CLACT_WK_SetBgPri( p_wk->p_clwk[i], 0 );
 			GFL_CLACT_WK_SetAutoAnmFlag( p_wk->p_clwk[i], TRUE );
       GFL_CLACT_WK_SetAffineParam( p_wk->p_clwk[i], CLSYS_AFFINETYPE_DOUBLE );
 		}
@@ -2761,14 +2762,14 @@ static void BGMOVE_Start( BGMOVE_WORK *p_wk )
  *	@param	heapID                ヒープID
  */
 //-----------------------------------------------------------------------------
-static void BUTTERFLY_Init( BUTTERFLY_WORK *p_wk, GFL_CLWK *p_clwk, fx32 speed, u16 angle_speed, u16 angle_max, BOOL is_blue, HEAPID heapID )
+static void BUTTERFLY_Init( BUTTERFLY_WORK *p_wk, GFL_CLWK *p_clwk, u32 move_sync, fx32 angle_speed, fx32 angle_max, BOOL is_blue, HEAPID heapID )
 { 
   GFL_STD_MemClear( p_wk, sizeof(BUTTERFLY_WORK) );
   p_wk->p_clwk      = p_clwk;
   p_wk->angle_max   = angle_max;
-  p_wk->speed       = speed;
+  p_wk->move_sync   = move_sync;
   p_wk->angle_speed = angle_speed;
-  p_wk->angle_now   = 0;
+  p_wk->angle_dir   = 1;
 
   //色の設定
   {
@@ -2787,7 +2788,7 @@ static void BUTTERFLY_Init( BUTTERFLY_WORK *p_wk, GFL_CLWK *p_clwk, fx32 speed, 
   //初期は画面外にいる
   { 
     GFL_CLACTPOS  pos;
-#if 0
+#if 1
     switch( GFUser_GetPublicRand0(4) )
     { 
     case 0: //左
@@ -2823,13 +2824,13 @@ static void BUTTERFLY_Init( BUTTERFLY_WORK *p_wk, GFL_CLWK *p_clwk, fx32 speed, 
     NAGI_Printf( "●蝶\n" );
     NAGI_Printf( "　初期座標 X=%d Y=%d\n", pos.x, pos.y );
     NAGI_Printf( "　目標座標 X=%d Y=%d\n", p_wk->target_x, p_wk->target_y );
-    NAGI_Printf( "　目標角度 0x%x\n", p_wk->angle_std );
-    NAGI_Printf( "　速度     0x%x\n", p_wk->speed );
+    NAGI_Printf( "　速度     0x%x\n", move_sync );
     NAGI_Printf( "　角速度 0x%x\n", p_wk->angle_speed );
     NAGI_Printf( "　最大角 0x%x\n", p_wk->angle_max );
   }
 
   GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk, TRUE );
+  GFL_CLACT_WK_SetAnmFrame( p_wk->p_clwk, GFUser_GetPublicRand0(FX32_ONE*2) );
 }
 //----------------------------------------------------------------------------
 /**
@@ -2851,9 +2852,23 @@ static void BUTTERFLY_Exit( BUTTERFLY_WORK *p_wk )
 //-----------------------------------------------------------------------------
 static void BUTTERFLY_Main( BUTTERFLY_WORK *p_wk )
 {
+  VecFx32 shake;
+
   //揺れる処理
   { 
-    p_wk->angle_now   += p_wk->angle_speed;
+    p_wk->shake_pos.x = 0;
+    p_wk->shake_pos.z = 0;
+    p_wk->shake_pos.y += p_wk->angle_speed * p_wk->angle_dir;
+    if( p_wk->shake_pos.y > p_wk->angle_max/2 )
+    { 
+      p_wk->shake_pos.y = p_wk->angle_max/2;
+      p_wk->angle_dir = -1;
+    }
+    if( p_wk->shake_pos.y < -p_wk->angle_max/2 )
+    { 
+      p_wk->shake_pos.y = -p_wk->angle_max/2;
+      p_wk->angle_dir   = 1;
+    }
   }
 
   //移動
@@ -2864,13 +2879,23 @@ static void BUTTERFLY_Main( BUTTERFLY_WORK *p_wk )
     Butterfly_SetTarget( p_wk );
   }
 
-  //回転
+   //回転
   { 
     VecFx32 vec_move;
 
     VEC_Subtract( &p_wk->cutmullrom.now_val, &p_wk->pre_pos, &vec_move );
     vec_move.z  = 0;
     VEC_Normalize( &vec_move, &vec_move );
+
+    //ゆれ
+    { 
+      VecFx32 vec0;
+      MtxFx33 rot;
+
+      VEC_Set( &vec0, FX32_ONE, 0, 0 );
+      GFL_CALC3D_MTX_GetRotVecToVec( &vec0, &vec_move, &rot );
+      MTX_MultVec33( &p_wk->shake_pos, &rot, &shake );
+    }
 
     //OBJの回転のために、移動する方向から角度を取り出す
     { 
@@ -2880,7 +2905,13 @@ static void BUTTERFLY_Main( BUTTERFLY_WORK *p_wk )
       u16 obj_angle;
 
       VEC_Set( &vec0, 0, -FX32_ONE, 0 );
-      vec_dir = vec_move;
+
+      vec_dir.x = p_wk->cutmullrom.now_val.x + shake.x;
+      vec_dir.y = p_wk->cutmullrom.now_val.y + shake.y;
+      vec_dir.z = 0;
+
+      VEC_Subtract( &vec_dir, &p_wk->pre_rot_pos, &vec_dir );
+      VEC_Normalize( &vec_dir, &vec_dir );
 
       obj_angle = FX_AcosIdx( GFL_CALC3D_VEC_GetCos( &vec_dir, &vec0 ) );
 
@@ -2898,14 +2929,20 @@ static void BUTTERFLY_Main( BUTTERFLY_WORK *p_wk )
     }
   }
 
+
   //設定
   { 
     GFL_CLACTPOS  pos;
 
-    pos.x = p_wk->cutmullrom.now_val.x >> FX32_SHIFT;
-    pos.y = p_wk->cutmullrom.now_val.y >> FX32_SHIFT;
-
+    pos.x = (p_wk->cutmullrom.now_val.x + shake.x) >> FX32_SHIFT;
+    pos.y = (p_wk->cutmullrom.now_val.y + shake.y) >> FX32_SHIFT;
     GFL_CLACT_WK_SetPos( p_wk->p_clwk, &pos, CLSYS_DEFREND_SUB );
+  }
+
+  { 
+    p_wk->pre_rot_pos.x = p_wk->cutmullrom.now_val.x + shake.x;
+    p_wk->pre_rot_pos.y = p_wk->cutmullrom.now_val.y + shake.y;
+    p_wk->pre_rot_pos.z = 0;
   }
 
 }
@@ -2937,7 +2974,7 @@ static void Butterfly_SetTarget( BUTTERFLY_WORK *p_wk )
     VEC_Set( &ctrl_pos0, GFUser_GetPublicRand0( 256 ) << FX32_SHIFT, GFUser_GetPublicRand0( 192 ) << FX32_SHIFT, 0 );
     VEC_Set( &ctrl_pos1, GFUser_GetPublicRand0( 256 ) << FX32_SHIFT, GFUser_GetPublicRand0( 192 ) << FX32_SHIFT, 0 );
 
-    PROGVAL_CATMULLROM_Init( &p_wk->cutmullrom, &start_pos, &ctrl_pos0, &ctrl_pos1, &end_pos, 1000 );
+    PROGVAL_CATMULLROM_Init( &p_wk->cutmullrom, &start_pos, &ctrl_pos0, &ctrl_pos1, &end_pos, p_wk->move_sync );
   }
 
 #if 0
@@ -2993,7 +3030,6 @@ static BOOL Butterfly_IsArriveTarget( const BUTTERFLY_WORK *cp_wk )
 	
 	return vx * vx + vy * vy <= r * r;
 }
-
 //----------------------------------------------------------------------------
 /**
  *	@brief  蝶動きシステム  初期化
@@ -3018,7 +3054,7 @@ static void BUTTERFLY_SYS_Init( BUTTERFLY_SYS *p_wk, const GRAPHIC_WORK *cp_grp,
   //蝶の設定
   { 
     GFL_CLWK *p_clwk;
-    fx32 speed;
+    u32 sync;
     u16 angle_speed;
     u16 angle_max;
     BOOL is_blue;
@@ -3027,9 +3063,9 @@ static void BUTTERFLY_SYS_Init( BUTTERFLY_SYS *p_wk, const GRAPHIC_WORK *cp_grp,
     for( i = 0; i < p_wk->idx_max; i++ )
     { 
       p_clwk      = GRAPHIC_GetClwk( cp_grp, CLWKID_BUTTERFLY_TOP + i );
-      speed       = FX32_CONST(0.5f); + GFUser_GetPublicRand0( FX32_CONST(0.3f) );
-      angle_speed = DEG_TO_IDX(1); + GFUser_GetPublicRand0( DEG_TO_IDX(1) );
-      angle_max   = DEG_TO_IDX(50); + GFUser_GetPublicRand0( DEG_TO_IDX(30) );
+      sync        = 1400 + GFUser_GetPublicRand0( 200 );
+      angle_speed = 0;//FX32_CONST(0.1f); + GFUser_GetPublicRand0( FX32_CONST(0.2f) );
+      angle_max   = 0;//FX32_CONST(160.0f); + GFUser_GetPublicRand0( FX32_CONST(40.0f) );
       if( cp_sv == NULL )
       {
         is_blue = GFUser_GetPublicRand0( 2 );
@@ -3038,7 +3074,7 @@ static void BUTTERFLY_SYS_Init( BUTTERFLY_SYS *p_wk, const GRAPHIC_WORK *cp_grp,
       { 
         is_blue     = IRC_COMPATIBLE_SV_GetSex( cp_sv, i ) == IRC_COMPATIBLE_SEX_MALE;
       }
-      BUTTERFLY_Init( &p_wk->wk[i], p_clwk, speed, angle_speed, angle_max, is_blue, heapID );
+      BUTTERFLY_Init( &p_wk->wk[i], p_clwk, sync, angle_speed, angle_max, is_blue, heapID );
     }
   }
 }
