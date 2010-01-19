@@ -4746,12 +4746,13 @@ enum {
 static const BtlEventHandlerTable*  ADD_Gaman( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_EXECUTE_FIX,     handler_Gaman          }, //
-    { BTL_EVENT_REQWAZA_MSG,          handler_Gaman_WazaMsg  },
-    { BTL_EVENT_WAZA_EXECUTE_CHECK_2ND,   handler_Gamen_ExeCheck },
-    { BTL_EVENT_WAZA_EXECUTE_FAIL,    handler_Gaman_Fail     },
-    { BTL_EVENT_DECIDE_TARGET,        handler_Gaman_Target   },
-    { BTL_EVENT_WAZA_DMG_PROC1,       handler_Gaman_Damage   },
+    { BTL_EVENT_WAZA_EXECUTE_FIX,        handler_Gaman          }, //
+    { BTL_EVENT_REQWAZA_MSG,             handler_Gaman_WazaMsg  },
+    { BTL_EVENT_WAZA_EXECUTE_CHECK_2ND,  handler_Gamen_ExeCheck },
+    { BTL_EVENT_DECIDE_TARGET,           handler_Gaman_Target   },
+    { BTL_EVENT_WAZA_DMG_PROC1,          handler_Gaman_Damage   },
+    { BTL_EVENT_WAZA_EXECUTE_FAIL,       handler_Gaman_Fail     },
+//    { BTL_EVENT_WAZA_DMG_DETERMINE,      handler_Gaman_DamageDetermine }
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -4802,7 +4803,6 @@ static void handler_Gaman_WazaMsg( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
       BTL_EVENTVAR_RewriteValue( BTL_EVAR_GEN_FLAG, TRUE );
       break;
     case GAMAN_STATE_3RD:
-
       HANDEX_STR_Setup( param, BTL_STRTYPE_SET, BTL_STRID_SET_GamanEnd );
       HANDEX_STR_AddArg( param, pokeID );
       BTL_EVENTVAR_RewriteValue( BTL_EVAR_GEN_FLAG, TRUE );
@@ -4841,7 +4841,7 @@ static void handler_Gaman_Damage( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
       BTL_EVENTVAR_RewriteValue( BTL_EVAR_FIX_DAMAGE, dmg_sum );
     }
     work[0] = GAMAN_STATE_END;
-    gaman_ReleaseStick( flowWk, pokeID, work );
+//    gaman_ReleaseStick( flowWk, pokeID, work );
   }
 }
 static void handler_Gamen_ExeCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
@@ -4855,7 +4855,6 @@ static void handler_Gamen_ExeCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK*
       BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_CAUSE, SV_WAZAFAIL_OTHER );
     }
     work[0] = GAMAN_STATE_END;
-    gaman_ReleaseStick( flowWk, pokeID, work );
   }
 }
 static void handler_Gaman_Fail( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
@@ -4870,6 +4869,7 @@ static void gaman_ReleaseStick( BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   if( work[WORKIDX_STICK] ){
     BTL_HANDEX_PARAM_CURE_SICK* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CURE_SICK, pokeID );
+    OS_TPrintf("ポケ[%d]のがまんハンドラ削除\n", pokeID);
     param->sickCode = WAZASICK_WAZALOCK;
     param->poke_cnt = 1;
     param->pokeID[0] = pokeID;

@@ -3349,6 +3349,9 @@ static BOOL ChangePokeCheck( BPLIST_WORK * wk, u32 pos )
   case BTL_RULE_DOUBLE:   // ダブル
   case BTL_RULE_TRIPLE:   // トリプル
   case BTL_RULE_ROTATION: // ローテーション
+		if( pos == wk->dat->change_sel[0] || pos == wk->dat->change_sel[1] ){
+			return TRUE;
+		}
 		return CheckListRow( wk, pos );
   }
   return FALSE;
@@ -3672,8 +3675,8 @@ static int BPL_SeqDeadErrRet( BPLIST_WORK * wk )
 
 static void GetDeadScrnPos( u8 * x, u8 * y, u8 num )
 {
-	*x = ( num & 1 ) * BPL_BSX_PLATE;
-	*y = num / 2 * BPL_BSY_PLATE + ( num & 1 );
+	*x = ( num & 1 ) * BPL_COMM_BSX_PLATE;
+	*y = num / 2 * BPL_COMM_BSY_PLATE + ( num & 1 );
 }
 
 static void MakeDeadChgScrn( u16 * scrn, u8 frm, u8 num )
@@ -3685,8 +3688,8 @@ static void MakeDeadChgScrn( u16 * scrn, u8 frm, u8 num )
 	buf = GFL_BG_GetScreenBufferAdrs( frm );
 	GetDeadScrnPos( &x, &y, num );
 
-	for( i=0; i<BPL_BSY_PLATE; i++ ){
-		GFL_STD_MemCopy16( &buf[(y+i)*32+x], &scrn[i*BPL_BSX_PLATE], BPL_BSX_PLATE*2 );
+	for( i=0; i<BPL_COMM_BSY_PLATE; i++ ){
+		GFL_STD_MemCopy16( &buf[(y+i)*32+x], &scrn[i*BPL_COMM_BSX_PLATE], BPL_COMM_BSX_PLATE*2 );
 	}
 }
 
@@ -3717,12 +3720,12 @@ static BOOL MoveDeadChangeMain( BPLIST_WORK * wk )
 	switch( wk->btn_seq ){
 	case 0:
 		wk->chg_wfrm = BGWINFRM_Create( BGWINFRM_TRANS_VBLANK, 4, wk->dat->heap );
-		BGWINFRM_Add( wk->chg_wfrm, 0, GFL_BG_FRAME1_S, BPL_BSX_PLATE, BPL_BSY_PLATE );
-		BGWINFRM_Add( wk->chg_wfrm, 1, GFL_BG_FRAME2_S, BPL_BSX_PLATE, BPL_BSY_PLATE );
-		BGWINFRM_Add( wk->chg_wfrm, 2, GFL_BG_FRAME1_S, BPL_BSX_PLATE, BPL_BSY_PLATE );
-		BGWINFRM_Add( wk->chg_wfrm, 3, GFL_BG_FRAME2_S, BPL_BSX_PLATE, BPL_BSY_PLATE );
+		BGWINFRM_Add( wk->chg_wfrm, 0, GFL_BG_FRAME1_S, BPL_COMM_BSX_PLATE, BPL_COMM_BSY_PLATE );
+		BGWINFRM_Add( wk->chg_wfrm, 1, GFL_BG_FRAME2_S, BPL_COMM_BSX_PLATE, BPL_COMM_BSY_PLATE );
+		BGWINFRM_Add( wk->chg_wfrm, 2, GFL_BG_FRAME1_S, BPL_COMM_BSX_PLATE, BPL_COMM_BSY_PLATE );
+		BGWINFRM_Add( wk->chg_wfrm, 3, GFL_BG_FRAME2_S, BPL_COMM_BSX_PLATE, BPL_COMM_BSY_PLATE );
 		{
-			u16 * buf = GFL_HEAP_AllocMemory( wk->dat->heap, BPL_BSX_PLATE*BPL_BSY_PLATE*2 );
+			u16 * buf = GFL_HEAP_AllocMemory( wk->dat->heap, BPL_COMM_BSX_PLATE*BPL_COMM_BSY_PLATE*2 );
 			MakeDeadChgScrn( buf, GFL_BG_FRAME1_S, wk->chg_pos1 );
 			BGWINFRM_FrameSet( wk->chg_wfrm, 0, buf );
 			MakeDeadChgScrn( buf, GFL_BG_FRAME2_S, wk->chg_pos1 );
@@ -3748,18 +3751,18 @@ static BOOL MoveDeadChangeMain( BPLIST_WORK * wk )
 
 	case 1:
 		if( wk->chg_pos1 & 1 ){
-			BGWINFRM_MoveInit( wk->chg_wfrm, 0, 1, 0, BPL_BSX_PLATE );
-			BGWINFRM_MoveInit( wk->chg_wfrm, 1, 1, 0, BPL_BSX_PLATE );
+			BGWINFRM_MoveInit( wk->chg_wfrm, 0, 1, 0, BPL_COMM_BSX_PLATE );
+			BGWINFRM_MoveInit( wk->chg_wfrm, 1, 1, 0, BPL_COMM_BSX_PLATE );
 		}else{
-			BGWINFRM_MoveInit( wk->chg_wfrm, 0, -1, 0, BPL_BSX_PLATE );
-			BGWINFRM_MoveInit( wk->chg_wfrm, 1, -1, 0, BPL_BSX_PLATE );
+			BGWINFRM_MoveInit( wk->chg_wfrm, 0, -1, 0, BPL_COMM_BSX_PLATE );
+			BGWINFRM_MoveInit( wk->chg_wfrm, 1, -1, 0, BPL_COMM_BSX_PLATE );
 		}
 		if( wk->chg_pos2 & 1 ){
-			BGWINFRM_MoveInit( wk->chg_wfrm, 2, 1, 0, BPL_BSX_PLATE );
-			BGWINFRM_MoveInit( wk->chg_wfrm, 3, 1, 0, BPL_BSX_PLATE );
+			BGWINFRM_MoveInit( wk->chg_wfrm, 2, 1, 0, BPL_COMM_BSX_PLATE );
+			BGWINFRM_MoveInit( wk->chg_wfrm, 3, 1, 0, BPL_COMM_BSX_PLATE );
 		}else{
-			BGWINFRM_MoveInit( wk->chg_wfrm, 2, -1, 0, BPL_BSX_PLATE );
-			BGWINFRM_MoveInit( wk->chg_wfrm, 3, -1, 0, BPL_BSX_PLATE );
+			BGWINFRM_MoveInit( wk->chg_wfrm, 2, -1, 0, BPL_COMM_BSX_PLATE );
+			BGWINFRM_MoveInit( wk->chg_wfrm, 3, -1, 0, BPL_COMM_BSX_PLATE );
 		}
 		wk->btn_seq++;
 		break;
@@ -3787,18 +3790,18 @@ static BOOL MoveDeadChangeMain( BPLIST_WORK * wk )
 	case 3:
 		BGWINFRM_MoveMain( wk->chg_wfrm );
 		if( wk->chg_pos2 & 1 ){
-			BGWINFRM_MoveInit( wk->chg_wfrm, 0, -1, 0, BPL_BSX_PLATE );
-			BGWINFRM_MoveInit( wk->chg_wfrm, 1, -1, 0, BPL_BSX_PLATE );
+			BGWINFRM_MoveInit( wk->chg_wfrm, 0, -1, 0, BPL_COMM_BSX_PLATE );
+			BGWINFRM_MoveInit( wk->chg_wfrm, 1, -1, 0, BPL_COMM_BSX_PLATE );
 		}else{
-			BGWINFRM_MoveInit( wk->chg_wfrm, 0, 1, 0, BPL_BSX_PLATE );
-			BGWINFRM_MoveInit( wk->chg_wfrm, 1, 1, 0, BPL_BSX_PLATE );
+			BGWINFRM_MoveInit( wk->chg_wfrm, 0, 1, 0, BPL_COMM_BSX_PLATE );
+			BGWINFRM_MoveInit( wk->chg_wfrm, 1, 1, 0, BPL_COMM_BSX_PLATE );
 		}
 		if( wk->chg_pos1 & 1 ){
-			BGWINFRM_MoveInit( wk->chg_wfrm, 2, -1, 0, BPL_BSX_PLATE );
-			BGWINFRM_MoveInit( wk->chg_wfrm, 3, -1, 0, BPL_BSX_PLATE );
+			BGWINFRM_MoveInit( wk->chg_wfrm, 2, -1, 0, BPL_COMM_BSX_PLATE );
+			BGWINFRM_MoveInit( wk->chg_wfrm, 3, -1, 0, BPL_COMM_BSX_PLATE );
 		}else{
-			BGWINFRM_MoveInit( wk->chg_wfrm, 2, 1, 0, BPL_BSX_PLATE );
-			BGWINFRM_MoveInit( wk->chg_wfrm, 3, 1, 0, BPL_BSX_PLATE );
+			BGWINFRM_MoveInit( wk->chg_wfrm, 2, 1, 0, BPL_COMM_BSX_PLATE );
+			BGWINFRM_MoveInit( wk->chg_wfrm, 3, 1, 0, BPL_COMM_BSX_PLATE );
 		}
 		wk->btn_seq++;
 		break;

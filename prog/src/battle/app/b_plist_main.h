@@ -14,6 +14,7 @@
 #include "system/bgwinfrm.h"
 #include "b_app_tool.h"
 #include "b_plist.h"
+#include "b_plist_comm_def.h"
 
 
 //============================================================================================
@@ -36,6 +37,7 @@ enum {
 };
 
 // パレット定義
+/*
 #define	BPL_PAL_NN_PLATE	( 0 )		///< パレット00：プレート（通常）
 #define	BPL_PAL_MN_PLATE	( 5 )		///< パレット01：プレート（マルチ）
 #define	BPL_PAL_DN_PLATE	( 7 )		///< パレット02：プレート（瀕死）
@@ -49,6 +51,7 @@ enum {
 #define	BPL_PAL_TALK_FONT	( BPL_PAL_SYS_FONT )		///< パレット15：会話フォント
 
 #define	BPL_HP_DOTTO_MAX	( 48 )		///< HPゲージのドットサイズ
+*/
 
 // ウィンドウインデックス
 enum {
@@ -349,8 +352,10 @@ typedef struct {
 #define	BPL_BANM_MAX_N	( 3 )		// ボタンアニメパターン数（通常）
 #define	BPL_BANM_MAX_E	( 4 )		// ボタンアニメパターン数（押せないボタンあり）
 // プレートボタンサイズ
+/*
 #define	BPL_BSX_PLATE	( 16 )
 #define	BPL_BSY_PLATE	( 6 )
+*/
 // 命令ボタンサイズ
 #define	BPL_BSX_COMMAND	( 13 )
 #define	BPL_BSY_COMMAND	( 5 )
@@ -391,8 +396,8 @@ typedef struct {
 
 	PALETTE_FADE_PTR pfd;	// パレットフェードデータ
 
-	u16	btn_plate1[BPL_BANM_MAX_E][BPL_BSX_PLATE*BPL_BSY_PLATE];		// 戦闘中のプレートボタン
-	u16	btn_plate2[BPL_BANM_MAX_E][BPL_BSX_PLATE*BPL_BSY_PLATE];		// 控えのプレートボタン
+	u16	btn_plate1[BPL_BANM_MAX_E][BPL_COMM_BSX_PLATE*BPL_COMM_BSY_PLATE];		// 戦闘中のプレートボタン
+	u16	btn_plate2[BPL_BANM_MAX_E][BPL_COMM_BSX_PLATE*BPL_COMM_BSY_PLATE];		// 控えのプレートボタン
 	u16	btn_command[BPL_BANM_MAX_E][BPL_BSX_COMMAND*BPL_BSY_COMMAND];	// 命令ボタン
 	u16	btn_up[BPL_BANM_MAX_E][BPL_BSX_UPDOWN*BPL_BSY_UPDOWN];			// 切り替えボタン（上）
 	u16	btn_down[BPL_BANM_MAX_E][BPL_BSX_UPDOWN*BPL_BSY_UPDOWN];		// 切り替えボタン（下）
@@ -466,8 +471,8 @@ typedef struct {
 
 	// 瀕死入れ替え
 	BGWINFRM_WORK * chg_wfrm;
-	u16	chg_scrn1[2][BPL_BSX_PLATE*BPL_BSY_PLATE];
-	u16	chg_scrn2[2][BPL_BSX_PLATE*BPL_BSY_PLATE];
+	u16	chg_scrn1[2][BPL_COMM_BSX_PLATE*BPL_COMM_BSY_PLATE];
+	u16	chg_scrn2[2][BPL_COMM_BSX_PLATE*BPL_COMM_BSY_PLATE];
 	u8	chg_poke_sel;						// 瀕死入れ替え時の位置保持用
 	u8	chg_pos1;
 	u8	chg_pos2;
