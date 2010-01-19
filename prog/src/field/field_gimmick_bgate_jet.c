@@ -167,9 +167,6 @@ static BOOL sub_MoveCheck( JET_BGATE_WORK* wk )
   if(MAPATTR_IsEnable(attr) == FALSE){
     return FALSE;
   }
-  if(MMDL_GetGridPosZ( wk->mmdl ) > 10){
-    return TRUE;
-  }
   //アトリビュートチェック
   return MAPATTR_VALUE_CheckUpDownFloor( MAPATTR_GetAttrValue(attr) );
 }
