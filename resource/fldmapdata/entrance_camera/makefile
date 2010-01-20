@@ -33,7 +33,7 @@ include	$(PROJECT_RSCDIR)\macro_define
 #------------------------------------------------------------------------------
 # マクロ定義
 #------------------------------------------------------------------------------
-XLS_TAB_CONVERTOR = ../../../tools/exceltool/xls2xml/tab_out.rb
+XLS_TAB_CONVERTOR = ../../../tools/exceltool/xls2xml/tab_out_sheet.rb
 BIN               = ./bin
 EXITTYPE_DEF_FILE = ../../../prog/include/field/eventdata_type.h
 
@@ -60,7 +60,7 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 # コンバート
 # タブ区切り
 entrance_camera.txt: entrance_camera.xls
-	ruby $(XLS_TAB_CONVERTOR) $< > $@ 
+	ruby $(XLS_TAB_CONVERTOR) -n 0 $< > $@ 
 endif
 
 # narc のコピーだけ実行する
