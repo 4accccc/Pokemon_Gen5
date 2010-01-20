@@ -1,8 +1,9 @@
 EFFSEQ
-$0003
+$0004
 C:\home\pokemon_wb\resource\particle\wazaeffect\w_425.spa
 C:\home\pokemon_wb\resource\particle\wazaeffect\w_424.spa
 C:\home\pokemon_wb\resource\particle\wazaeffect\w_269.spa
+C:\home\pokemon_wb\resource\particle\wazaeffect\w_014.spa
 #001
 %00
 カメラ移動	追従	攻撃側	16	0	12
@@ -16,11 +17,20 @@ SEパン	SE2	追従	攻撃側	攻撃側	0	90:0:0
 ポケモンアニメ	攻撃側	アニメストップ
 ポケモンアニメ	防御側	アニメストップ
 パーティクルデータロード	w_269
+指定されたワークを見て条件分岐	攻撃側向き	==	1	OKU
 パーティクル再生	w_269	W_269_269_BOMB1	攻撃側	方向無し	3	0
 パーティクル再生	w_269	W_269_269_BOMB2	攻撃側	方向無し	3	0
 パーティクル再生	w_269	W_269_269_YUBI1_CHOU	攻撃側	方向無し	3	0
 パーティクル再生	w_269	W_269_269_YUBI2_CHOU	攻撃側	方向無し	3	0
 エフェクト終了待ち	すべて
+指定されたワークを見て条件分岐	攻撃側向き	==	0	END
+ラベル	OKU
+パーティクル再生	w_269	W_269_269_BOMB1	攻撃側	方向無し	3	0
+パーティクル再生	w_269	W_269_269_BOMB2	攻撃側	方向無し	3	0
+パーティクル再生	w_269	W_269_269_YUBI1_E_CHOU	攻撃側	方向無し	3	0
+パーティクル再生	w_269	W_269_269_YUBI2_E_CHOU	攻撃側	方向無し	3	0
+エフェクト終了待ち	すべて
+ラベル	END
 カメラ移動	追従	防御側	16	0	12
 制御モード変更	継続
 SE再生	SEQ_SE_W099_01	PSG	0	0	120	0	0
