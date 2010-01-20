@@ -14,7 +14,15 @@ enum {
 	NARC_wifimatch_gra_bg_NCLR = 0,
 	NARC_wifimatch_gra_obj_NCLR = 1,
 	NARC_wifimatch_gra_bg_back_NCGR = 2,
-	NARC_wifimatch_gra_back_NSCR = 3
+	NARC_wifimatch_gra_obj_NCGR = 3,
+	NARC_wifimatch_gra_obj_NCER = 4,
+	NARC_wifimatch_gra_back_NSCR = 5,
+	NARC_wifimatch_gra_back2_NSCR = 6,
+	NARC_wifimatch_gra_pokesel_NSCR = 7,
+	NARC_wifimatch_gra_random_card_NSCR = 8,
+	NARC_wifimatch_gra_standby_card_NSCR = 9,
+	NARC_wifimatch_gra_wcs_card_NSCR = 10,
+	NARC_wifimatch_gra_obj_NANR = 11
 };
 
 /* NARC_WIFIMATCH_GRA_NAIX_ */
