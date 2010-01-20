@@ -20,6 +20,10 @@
  *					定数宣言
 */
 //=============================================================================
+///すれ違い通信でお礼を言われた回数の最大数
+#define CROSS_COMM_THANKS_RECV_COUNT_MAX    (9999)
+///すれ違い通信した人数の最大数
+#define CROSS_COMM_SURETIGAI_COUNT_MAX      (9999)
 
 enum {
   MY_GOLD_MAX = 999999,
@@ -67,6 +71,11 @@ extern const u32  MISC_GetPalparkHighscore(const MISC *misc);
 extern void  MISC_SetPalparkHighscore(MISC *misc , u32 score);
 extern const u8  MISC_GetPalparkFinishState(const MISC *misc);
 extern void  MISC_SetPalparkFinishState(MISC *misc , u8 state);
+//すれ違い
+extern u16 MISC_CrossComm_GetThanksRecvCount(const MISC *misc);
+extern u16 MISC_CrossComm_IncThanksRecvCount(MISC *misc);
+extern u16 MISC_CrossComm_GetSuretigaiCount(const MISC *misc);
+extern u16 MISC_CrossComm_IncSuretigaiCount(MISC *misc);
 //バッジ  
 extern BOOL MISC_GetBadgeFlag(const MISC *misc, int badge_id);
 extern void MISC_SetBadgeFlag(MISC *misc, int badge_id);
@@ -76,5 +85,4 @@ extern u32 MISC_GetGold(const MISC *misc);
 extern u32 MISC_SetGold(MISC *misc, u32 gold);
 extern u32 MISC_AddGold(MISC *misc, u32 add);
 extern u32 MISC_SubGold(MISC *misc, u32 sub);
-
 

@@ -10,6 +10,7 @@
 
 #include "buflen.h"
 #include "gamesystem/game_beacon.h"
+#include "gamesystem/game_beacon_types.h"
 
 //==============================================================================
 //  型定義
@@ -41,6 +42,11 @@ typedef struct
   u8 member_max;      ///<最大人数
   u8 error;           ///<エラー状況
   u8 beacon_type;     ///<ビーコンの種類 GBS_BEACONN_TYPE
+  
+  u8 restrictPhoto;   ///<TRUE:写真データ交換に制限がかかっている
+  u8 isTwl;           ///<TRUE:TWLモードで動作している
+  u8 padding[2];
+  
   union
   {
     GAMEBEACON_INFO info;

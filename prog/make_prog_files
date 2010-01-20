@@ -577,6 +577,7 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
 				field/event_comm_talk.c \
 				field/event_comm_talked.c \
 				field/fog_light_test.c \
+				gamesystem/game_beacon_accessor.c \
 				net_app/comm_entry_menu.c \
 				net_app/comm_entry_menu_comm_command.c \
         field/enceff.c \

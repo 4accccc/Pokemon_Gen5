@@ -215,6 +215,73 @@ void  MISC_SetPalparkFinishState(MISC *misc , u8 state)
 {
 	misc->palpark_finish_state = state;
 }
+
+
+//==============================================================================
+//  すれ違い通信
+//==============================================================================
+//==================================================================
+/**
+ * すれ違い通信：お礼を言われた回数を取得
+ *
+ * @param   misc		
+ *
+ * @retval  u16		お礼を言われた回数
+ */
+//==================================================================
+u16 MISC_CrossComm_GetThanksRecvCount(const MISC *misc)
+{
+  return misc->thanks_recv_count;
+}
+
+//==================================================================
+/**
+ * すれ違い通信：お礼を言われた回数をインクリメント
+ *
+ * @param   misc		
+ *
+ * @retval  u16		インクリメント後のお礼を言われた回数
+ */
+//==================================================================
+u16 MISC_CrossComm_IncThanksRecvCount(MISC *misc)
+{
+  if(misc->thanks_recv_count < CROSS_COMM_THANKS_RECV_COUNT_MAX){
+    misc->thanks_recv_count++;
+  }
+  return misc->thanks_recv_count;
+}
+
+//==================================================================
+/**
+ * すれ違いした人数を取得
+ *
+ * @param   misc		
+ *
+ * @retval  u16		すれ違いをした人数
+ */
+//==================================================================
+u16 MISC_CrossComm_GetSuretigaiCount(const MISC *misc)
+{
+  return misc->suretigai_count;
+}
+
+//==================================================================
+/**
+ * すれ違いをした人数をインクリメント
+ *
+ * @param   misc		
+ *
+ * @retval  u16		インクリメント後のすれ違いをした人数
+ */
+//==================================================================
+u16 MISC_CrossComm_IncSuretigaiCount(MISC *misc)
+{
+  if(misc->suretigai_count < CROSS_COMM_SURETIGAI_COUNT_MAX){
+    misc->suretigai_count++;
+  }
+  return misc->suretigai_count;
+}
+
 //----------------------------------------------------------
 /**
  * @brief バッジ保持状態の取得
@@ -330,5 +397,4 @@ u32 MISC_SubGold(MISC * misc, u32 sub)
   }
   return misc->gold;
 }
-
 

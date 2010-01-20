@@ -31,6 +31,7 @@
 #include "net/wih_dwc.h"
 
 #include "field/field_beacon_message.h"
+#include "gamesystem/game_beacon_accessor.h"
 
 #define _NET_DEBUG (1)  //デバッグ時は１
 #define _BRIGHTNESS_SYNC (0)  // フェードのＳＹＮＣは要調整
@@ -1231,14 +1232,19 @@ static void _gearCrossObjCreate(C_GEAR_WORK* pWork)
 //------------------------------------------------------------------------------
 static void _gearCrossObjMain(C_GEAR_WORK* pWork)
 {
+  const GAMEBEACON_INFO *beacon_info;
   int i;
+  
   for(i=0;i < _CLACT_CROSS_MAX ;i++)
   {
     GFL_CLWK* cp_wk =  pWork->cellCross[i];
     GXRgb dest_buf;
-    if(GAMEBEACON_Get_FavoriteColor(&dest_buf, i)){
+    beacon_info = GAMEBEACON_Get_BeaconLog(i);
+    if(beacon_info != NULL){
       //      if(pWork->crossColor[i] != 0){
-      u8 col = dest_buf; //pWork->crossColor[i] - 1;
+      u8 col;
+      GAMEBEACON_Get_FavoriteColor(&dest_buf, beacon_info);
+      col = dest_buf; //pWork->crossColor[i] - 1;
       GFL_CLACT_WK_SetDrawEnable( cp_wk, TRUE );
       if(GFL_CLACT_WK_GetAnmIndex(cp_wk) !=  col){
         GFL_CLACT_WK_SetAnmIndex( cp_wk,col);

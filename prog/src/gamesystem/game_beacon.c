@@ -9,8 +9,10 @@
 #include <gflib.h>
 #include "gamesystem/game_data.h"
 #include "gamesystem/game_beacon.h"
+#include "gamesystem/game_beacon_types.h"
 #include "msg/msg_beacon_status.h"
 #include "savedata/encount_sv.h"
+#include "savedata/misc.h"
 #include "net/net_whpipe.h"
 
 
@@ -20,20 +22,8 @@
 ///ビーコン寿命
 #define LIFE_TIME     (15 * 60)
 
-///行動番号
-typedef enum{
-  GAMEBEACON_ACTION_NULL,                 ///<データ無し
-  GAMEBEACON_ACTION_APPEAL,               ///<「ちかくにいます」
-  GAMEBEACON_ACTION_CONGRATULATIONS,      ///<「おめでとう！」
-  GAMEBEACON_ACTION_POKE_EVOLUTION,       ///<ポケモン進化
-  GAMEBEACON_ACTION_POKE_LVUP,            ///<ポケモンレベルアップ
-  GAMEBEACON_ACTION_POKE_GET,             ///<ポケモン捕獲
-  GAMEBEACON_ACTION_UNION_IN,             ///<ユニオンルーム入室
-  GAMEBEACON_ACTION_UNION_OUT,            ///<ユニオンルーム退室
-  GAMEBEACON_ACTION_ENCOUNT_DOWN,         ///<エンカウント率ダウン
-  
-  GAMEBEACON_ACTION_MAX,
-}GAMEBEACON_ACTION;
+//ここのASSERTにひっかかったらupdate_logをbit管理ではなく配列管理に変更する
+SDK_COMPILER_ASSERT(GAMEBEACON_SYSTEM_LOG_MAX < 32);
 
 
 //==============================================================================
@@ -56,7 +46,8 @@ typedef struct{
 typedef struct{
   GAMEDATA *gamedata;
   GAMEBEACON_SEND_MANAGER send;       ///<送信ビーコン管理
-  GAMEBEACON_LOG log[GAMEBEACON_LOG_MAX]; ///<ログ(チェーンバッファ)
+  GAMEBEACON_LOG log[GAMEBEACON_SYSTEM_LOG_MAX]; ///<ログ(チェーンバッファ)
+  u32 update_log;                     ///<更新のあったログ番号をbitで管理(32を超えたら変える)
   u32 log_count;                      ///<ログ全体の受信件数をカウント
   s8 start_log;                       ///<ログのチェーン開始位置
   s8 end_log;                         ///<ログのチェーン終端位置
@@ -183,11 +174,11 @@ void GAMEBEACON_SendBeaconUpdate(void)
 //--------------------------------------------------------------
 static void SendBeacon_Update(GAMEBEACON_SEND_MANAGER *send)
 {
-  if(send->info.action_no != GAMEBEACON_ACTION_APPEAL){
+  if(send->info.action.action_no != GAMEBEACON_ACTION_APPEAL){
     send->life++;
     if(send->life > LIFE_TIME){
       send->life = 0;
-      send->info.action_no = GAMEBEACON_ACTION_APPEAL;
+      send->info.action.action_no = GAMEBEACON_ACTION_APPEAL;
     }
   }
 }
@@ -209,21 +200,22 @@ static void BeaconInfo_Set(GAMEBEACON_SYSTEM *bsys, const GAMEBEACON_INFO *info)
 
   before_end_log = bsys->end_log;
   bsys->end_log++;
-  if(bsys->end_log >= GAMEBEACON_LOG_MAX){
+  if(bsys->end_log >= GAMEBEACON_SYSTEM_LOG_MAX){
     bsys->end_log = 0;
   }
   setlog = &bsys->log[bsys->end_log];
 
   if(bsys->log_num > 0 && bsys->end_log == bsys->start_log){
     bsys->start_log++;
-    if(bsys->start_log >= GAMEBEACON_LOG_MAX){
+    if(bsys->start_log >= GAMEBEACON_SYSTEM_LOG_MAX){
       bsys->start_log = 0;
     }
   }
   
   GFL_STD_MemClear(setlog, sizeof(GAMEBEACON_LOG));
   setlog->info = *info;
-  if(bsys->log_num < GAMEBEACON_LOG_MAX){
+  bsys->update_log |= 1 < bsys->end_log;
+  if(bsys->log_num < GAMEBEACON_SYSTEM_LOG_MAX){
     bsys->log_num++;
   }
 }
@@ -241,30 +233,43 @@ BOOL GAMEBEACON_SetRecvBeacon(const GAMEBEACON_INFO *info)
 {
   GAMEBEACON_SYSTEM *bsys = GameBeaconSys;
   int i;
+  BOOL same_player = FALSE;
   
-//  OS_TPrintf("SetRecv action_NO = %d\n", info->action_no);
-  if(info->action_no == GAMEBEACON_ACTION_NULL || info->action_no >= GAMEBEACON_ACTION_MAX){
+  if((info->version_bit & (1 << PM_VERSION)) == 0){
+    return FALSE; //受け取れないバージョン
+  }
+  
+//  OS_TPrintf("SetRecv action_NO = %d\n", info->action.action_no);
+  if(info->action.action_no == GAMEBEACON_ACTION_NULL || info->action.action_no >= GAMEBEACON_ACTION_MAX){
     return FALSE;
   }
   
   if(bsys->start_log <= bsys->end_log){
     for(i = bsys->start_log; i <= bsys->end_log; i++){
       if(bsys->log[i].info.trainer_id == info->trainer_id){
-        if(info->action_no == GAMEBEACON_ACTION_APPEAL 
+        if(info->action.action_no == GAMEBEACON_ACTION_APPEAL 
             || bsys->log[i].info.send_counter == info->send_counter){
 //        OS_TPrintf("既に受信済み\n");
           return FALSE; //ログに同じデータを受信済み
         }
+        same_player = TRUE; //1プレイヤーは対になった1つのログバッファしか持たない
+        break;
       }
     }
   }
   
-  BeaconInfo_Set(bsys, info);
-  bsys->log_count++;
-  OS_TPrintf("セット完了 %d件目\n", bsys->log_count);
+  if(same_player == TRUE){
+    bsys->log[i].info = *info;
+    bsys->update_log |= 1 << i;
+  }
+  else{
+    BeaconInfo_Set(bsys, info);
+    bsys->log_count++;
+    OS_TPrintf("セット完了 %d件目\n", bsys->log_count);
+  }
   
   //ログのパワー情報反映　※check ある程度パワーが決まってきたらフォーマット化する
-  switch(info->action_no){
+  switch(info->action.action_no){
   case GAMEBEACON_ACTION_ENCOUNT_DOWN:
     {
       SAVE_CONTROL_WORK *sv_ctrl = GAMEDATA_GetSaveControlWork(bsys->gamedata);
@@ -282,33 +287,35 @@ BOOL GAMEBEACON_SetRecvBeacon(const GAMEBEACON_INFO *info)
  * ログからビーコン情報を取得する
  *
  * @param   bsys		
- * @param   log_no  最新のログから遡って何件目のログを取得したいか
- *                  (0だと最新：0～GAMEBEACON_LOG_MAX-1)
+ * @param   log_no  ログ番号
  *
  * @retval  GAMEBEACON_INFO *		NULLの場合はデータ無し
  */
 //--------------------------------------------------------------
 static GAMEBEACON_INFO * BeaconInfo_Get(GAMEBEACON_SYSTEM *bsys, int log_no)
 {
-  int log_pos;
+//  int log_pos;
   
   if(bsys->log_num == 0 || bsys->log_num - log_no <= 0){
     return NULL;  //データ無し
   }
   
+#if 0 //直接ログ位置を見るように変更 2010.01.18(月)
   log_pos = bsys->end_log - log_no;
   if(log_pos < 0){
-    log_pos = GAMEBEACON_LOG_MAX + log_pos;
+    log_pos = GAMEBEACON_SYSTEM_LOG_MAX + log_pos;
   }
   return &bsys->log[log_pos].info;
+#else
+  return &bsys->log[log_no].info;
+#endif
 }
 
 //==================================================================
 /**
  * ログからビーコン情報を取得する
  *
- * @param   log_no  最新のログから遡って何件目のログを取得したいか
- *                  (0だと最新：0～GAMEBEACON_LOG_MAX-1)
+ * @param   log_no  ログ番号
  *
  * @retval  GAMEBEACON_INFO *		NULLの場合はデータ無し
  */
@@ -332,27 +339,50 @@ u32 GAMEBEACON_Get_LogCount(void)
 
 //==================================================================
 /**
- * ログからビーコン情報のお気に入りの色を取得する
+ * 新着のあったログ番号を取得する
  *
- * @param   dest_buf		色の代入先へのポインタ
- * @param   log_no      最新のログから遡って何件目のログを取得したいか
- *                      (0だと最新：0～GAMEBEACON_LOG_MAX-1)
+ * @param   start_log_no		検索開始位置(先頭から検索する場合は0を指定)
  *
- * @retval  BOOL		TRUE:ビーコン情報が存在している
- * @retval  BOOL		FALSE:ビーコン情報が無いため、色の取得が出来ない
+ * @retval  int		新着のあったログ番号(GAMEBEACON_SYSTEM_LOG_MAXの場合は新着無し)
+ *
+ * start_log_noの位置から調べ始めて、最初に新着があったログに引っかかった時点で
+ * returnします。
+ * start_log_noは新着に引っかかって終了した場合、start_log_noは引っかかった位置+1の状態になります
  */
 //==================================================================
-BOOL GAMEBEACON_Get_FavoriteColor(GXRgb *dest_buf, int log_no)
+int GAMEBEACON_Get_UpdateLogNo(int *start_log_no)
 {
-  GAMEBEACON_INFO *info = BeaconInfo_Get(GameBeaconSys, log_no);
-  if(info != NULL){
-    *dest_buf = info->favorite_color;
-    return TRUE;
+  for( ; (*start_log_no) < GAMEBEACON_SYSTEM_LOG_MAX; (*start_log_no)++){
+    if(GameBeaconSys->update_log & (1 << (*start_log_no))){
+      (*start_log_no)++;
+      return (*start_log_no) - 1;
+    }
   }
-  return FALSE;
+  return GAMEBEACON_SYSTEM_LOG_MAX;
+}
+
+//==================================================================
+/**
+ * 新着フラグをリセットする
+ *
+ * @param   log_no		
+ */
+//==================================================================
+void GAMEBEACON_Reset_UpdateFlag(int log_no)
+{
+  GF_ASSERT(log_no < GAMEBEACON_SYSTEM_LOG_MAX);
+  GameBeaconSys->update_log &= 0xffffffff ^ (1 << log_no);
 }
 
 
+
+
+
+//==============================================================================
+//
+//  
+//
+//==============================================================================
 //--------------------------------------------------------------
 /**
  * 送信ビーコンに初期データをセット
@@ -365,11 +395,25 @@ static void SendBeacon_Init(GAMEBEACON_SEND_MANAGER *send, GAMEDATA * gamedata)
 {
   GAMEBEACON_INFO *info = &send->info;
   MYSTATUS *myst = GAMEDATA_GetMyStatus(gamedata);
-
-  info->action_no = GAMEBEACON_ACTION_APPEAL;
-  MyStatus_CopyNameStrCode( myst, info->name, BUFLEN_PERSON_NAME );
+  const MISC *misc = SaveData_GetMisc( GAMEDATA_GetSaveControlWork(gamedata) );
+  
+  info->version_bit = 0xffffffff; //全バージョン指定
+  info->zone_id = PLAYERWORK_getZoneID(GAMEDATA_GetMyPlayerWork(gamedata));
+  info->g_power_id = GPOWER_ID_NULL;
   info->trainer_id = MyStatus_GetID(myst);
+  MyStatus_CopyNameStrCode( myst, info->name, BUFLEN_PERSON_NAME );
   info->favorite_color = *(OS_GetFavoriteColorTable());
+  info->trainer_view = MyStatus_GetTrainerView(myst);
+  info->sex = MyStatus_GetMySex( myst );
+  
+  info->thanks_recv_count = MISC_CrossComm_GetThanksRecvCount(misc);
+  info->suretigai_count = MISC_CrossComm_GetSuretigaiCount(misc);
+  
+  //詳細情報
+  info->details.details_no = GAMEBEACON_DETAILS_NO_ROAD;
+  
+  //行動パラメータ
+  info->action.action_no = GAMEBEACON_ACTION_NULL;
 }
 
 //--------------------------------------------------------------
@@ -404,11 +448,11 @@ void GAMEBEACON_Wordset(const GAMEBEACON_INFO *info, WORDSET *wordset, HEAPID te
 	GFL_STR_SetStringCodeOrderLength(name_strbuf, info->name, BUFLEN_PERSON_NAME);
   WORDSET_RegisterWord(wordset, 0, name_strbuf, 0, TRUE, PM_LANG);
 
-  switch(info->action_no){
+  switch(info->action.action_no){
   case GAMEBEACON_ACTION_POKE_EVOLUTION:       ///<ポケモン進化
   case GAMEBEACON_ACTION_POKE_LVUP:            ///<ポケモンレベルアップ
   case GAMEBEACON_ACTION_POKE_GET:             ///<ポケモン捕獲
-  	GFL_STR_SetStringCodeOrderLength(name_strbuf, info->nickname, BUFLEN_POKEMON_NAME);
+  	GFL_STR_SetStringCodeOrderLength(name_strbuf, info->action.nickname, BUFLEN_POKEMON_NAME);
     WORDSET_RegisterWord(wordset, 1, name_strbuf, 0, TRUE, PM_LANG);
     break;
   }
@@ -426,13 +470,20 @@ void GAMEBEACON_Wordset(const GAMEBEACON_INFO *info, WORDSET *wordset, HEAPID te
 //==================================================================
 u32 GAMEBEACON_GetMsgID(const GAMEBEACON_INFO *info)
 {
-  if(info->action_no == GAMEBEACON_ACTION_NULL || info->action_no >= GAMEBEACON_ACTION_MAX){
-    GF_ASSERT_MSG(0, "action_no = %d\n", info->action_no);
+  if(info->action.action_no == GAMEBEACON_ACTION_NULL || info->action.action_no >= GAMEBEACON_ACTION_MAX){
+    GF_ASSERT_MSG(0, "action_no = %d\n", info->action.action_no);
     return msg_beacon_001;
   }
-  return msg_beacon_001 + info->action_no - GAMEBEACON_ACTION_APPEAL;
+  return msg_beacon_001 + info->action.action_no - GAMEBEACON_ACTION_APPEAL;
 }
 
+
+
+//==============================================================================
+//
+//  ビーコンセット
+//
+//==============================================================================
 //==================================================================
 /**
  * ビーコンセット：「おめでとう！」
@@ -442,7 +493,7 @@ void GAMEBEACON_Set_Congratulations(void)
 {
   GAMEBEACON_SEND_MANAGER *send = &GameBeaconSys->send;
   
-  send->info.action_no = GAMEBEACON_ACTION_CONGRATULATIONS;
+  send->info.action.action_no = GAMEBEACON_ACTION_CONGRATULATIONS;
   SendBeacon_SetCommon(send);
 }
 
@@ -457,8 +508,8 @@ void GAMEBEACON_Set_PokemonEvolution(const STRBUF *nickname)
 {
   GAMEBEACON_SEND_MANAGER *send = &GameBeaconSys->send;
   
-  send->info.action_no = GAMEBEACON_ACTION_POKE_EVOLUTION;
-  GFL_STR_GetStringCode(nickname, send->info.nickname, BUFLEN_POKEMON_NAME);
+  send->info.action.action_no = GAMEBEACON_ACTION_POKE_EVOLUTION;
+  GFL_STR_GetStringCode(nickname, send->info.action.nickname, BUFLEN_POKEMON_NAME);
   SendBeacon_SetCommon(send);
 }
 
@@ -473,8 +524,8 @@ void GAMEBEACON_Set_PokemonLevelUp(const STRBUF *nickname)
 {
   GAMEBEACON_SEND_MANAGER *send = &GameBeaconSys->send;
   
-  send->info.action_no = GAMEBEACON_ACTION_POKE_LVUP;
-  GFL_STR_GetStringCode(nickname, send->info.nickname, BUFLEN_POKEMON_NAME);
+  send->info.action.action_no = GAMEBEACON_ACTION_POKE_LVUP;
+  GFL_STR_GetStringCode(nickname, send->info.action.nickname, BUFLEN_POKEMON_NAME);
   SendBeacon_SetCommon(send);
 }
 
@@ -489,8 +540,8 @@ void GAMEBEACON_Set_PokemonGet(const STRBUF *nickname)
 {
   GAMEBEACON_SEND_MANAGER *send = &GameBeaconSys->send;
   
-  send->info.action_no = GAMEBEACON_ACTION_POKE_GET;
-  GFL_STR_GetStringCode(nickname, send->info.nickname, BUFLEN_POKEMON_NAME);
+  send->info.action.action_no = GAMEBEACON_ACTION_POKE_GET;
+  GFL_STR_GetStringCode(nickname, send->info.action.nickname, BUFLEN_POKEMON_NAME);
   SendBeacon_SetCommon(send);
 }
 
@@ -503,7 +554,7 @@ void GAMEBEACON_Set_UnionIn(void)
 {
   GAMEBEACON_SEND_MANAGER *send = &GameBeaconSys->send;
   
-  send->info.action_no = GAMEBEACON_ACTION_UNION_IN;
+  send->info.action.action_no = GAMEBEACON_ACTION_UNION_IN;
   SendBeacon_SetCommon(send);
 }
 
@@ -516,7 +567,7 @@ void GAMEBEACON_Set_UnionOut(void)
 {
   GAMEBEACON_SEND_MANAGER *send = &GameBeaconSys->send;
   
-  send->info.action_no = GAMEBEACON_ACTION_UNION_OUT;
+  send->info.action.action_no = GAMEBEACON_ACTION_UNION_OUT;
   SendBeacon_SetCommon(send);
 }
 
@@ -529,6 +580,66 @@ void GAMEBEACON_Set_EncountDown(void)
 {
   GAMEBEACON_SEND_MANAGER *send = &GameBeaconSys->send;
   
-  send->info.action_no = GAMEBEACON_ACTION_ENCOUNT_DOWN;
+  send->info.action.action_no = GAMEBEACON_ACTION_ENCOUNT_DOWN;
   SendBeacon_SetCommon(send);
 }
+
+//==================================================================
+/**
+ * ビーコンセット：ゾーン切り替え
+ *
+ * @param   zone_id   現在地
+ */
+//==================================================================
+void GAMEBEACON_Set_ZoneChange(ZONEID zone_id)
+{
+  GAMEBEACON_SEND_MANAGER *send = &GameBeaconSys->send;
+  
+  send->info.zone_id = zone_id;
+  send->info.details.details_no = GAMEBEACON_DETAILS_NO_ROAD;
+  SendBeacon_SetCommon(send);
+}
+
+void GAMEBEACON_Set_GPower(GPOWER_ID g_power_id)
+{
+  GAMEBEACON_SEND_MANAGER *send = &GameBeaconSys->send;
+  
+  send->info.g_power_id = g_power_id;
+  SendBeacon_SetCommon(send);
+}
+
+void GAMEBEACON_Set_ThanksRecvCount(u16 count)
+{
+  GAMEBEACON_SEND_MANAGER *send = &GameBeaconSys->send;
+
+  send->info.thanks_recv_count = count;
+  SendBeacon_SetCommon(send);
+}
+
+void GAMEBEACON_Set_SuretigaiCount(u16 count)
+{
+  GAMEBEACON_SEND_MANAGER *send = &GameBeaconSys->send;
+
+  send->info.suretigai_count = count;
+  SendBeacon_SetCommon(send);
+}
+
+void GAMEBEACON_Set_BattleTrainer(u16 trainer_code)
+{
+  GAMEBEACON_SEND_MANAGER *send = &GameBeaconSys->send;
+
+  send->info.details.details_no = GAMEBEACON_DETAILS_NO_BATTLE_TRAINER;
+  send->info.details.battle_trainer = trainer_code;
+  SendBeacon_SetCommon(send);
+}
+
+void GAMEBEACON_Set_BattlePokemon(u16 monsno)
+{
+  GAMEBEACON_SEND_MANAGER *send = &GameBeaconSys->send;
+
+  send->info.details.details_no = GAMEBEACON_DETAILS_NO_BATTLE_POKEMON;
+  send->info.details.battle_monsno = monsno;
+  SendBeacon_SetCommon(send);
+}
+
+
