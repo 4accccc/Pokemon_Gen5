@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-14T19:28:56"/>
+	<create user="matsumiya" host="W00207" date="2010-01-20T22:23:13"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="172"/>
+		<comment position="4" width="290"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -263,15 +263,15 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="35" top="190" right="740" bottom="810" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
+		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,14 +292,85 @@
 	</lock>
 
 
-	<row id="msg_c03r0601_middleman2_01">
+	<row id="msg_c03r0601_white_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・ｃ03ジムバッジ取得後
+・pos（GRIDX=2~7、GRIDZ=9）を踏むと画面下から出現
+　主人公と隣接し向き合ってメッセージ表示</comment>
+		<attribute name="キャラ指定">友達♀</attribute>
+		<language name="JPN" width="256">ホワイティ『おうい！　[1:00:トレーナー名:0]
+もう　４ばんどうろにむかうの？▽
+やりのこしたことは　なあい？▼
+すれちがい　ちょうさたい　の
+たてものとか　あそびにいった？▼</language>
+		<language name="JPN_KANJI" width="256">ホワイティ『おうい！　[1:00:トレーナー名:0]
+もう　４ばんどうろにむかうの？▽
+やりのこしたことは　なあい？▼
+すれちがい　ちょうさたい　の
+たてものとか　あそびにいった？▼</language>
+	</row>
+
+	<row id="msg_c03r0601_white_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・画面下を見ながらメッセージ表示
+・続けてwhite_03</comment>
+		<attribute name="キャラ指定">友達♀</attribute>
+		<language name="JPN" width="256">カノコタウンと　ちがって
+すっごく　おおきいよねえ……▽
+まさに　だいとかい！▼
+こんなに　ひとが　いて　みんな
+じぶんを　みうしわないのかなあ？▼</language>
+		<language name="JPN_KANJI" width="256">カノコタウンと　ちがって
+すっごく　おおきいよねえ……▽
+まさに　だいとかい！▼
+こんなに　ひとが　いて　みんな
+じぶんを　みうしわないのかなあ？▼</language>
+	</row>
+
+	<row id="msg_c03r0601_white_03" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・メッセージ表示後、画面下に移動
+・画面外に消えると主人公操作可能に</comment>
+		<attribute name="キャラ指定">友達♀</attribute>
+		<language name="JPN" width="256">あっ！
+こくれんに　いくの　わすれてた！▼
+じゃ　また　どこかで　あおうね
+バイバイ！　[1:00:トレーナー名:0]▼</language>
+		<language name="JPN_KANJI" width="256">あっ！
+こくれんに　いくの　わすれてた！▼
+じゃ　また　どこかで　あおうね
+バイバイ！　[1:00:トレーナー名:0]▼</language>
+	</row>
+
+	<row id="msg_c03r0601_middleman2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
-・12月ロム用仮メッセージ</comment>
+・ストッパー解除前</comment>
 		<attribute name="キャラ指定">MIDDLEMAN2</attribute>
-		<language name="JPN" width="256">ライモンを　みてから　きましたが
-いやはや　ここは　すごおすなあ！！</language>
-		<language name="JPN_KANJI" width="256">ライモンを　観てから　来ましたが
-いやはや　ここは　すごおすなあ！！</language>
+		<language name="JPN" width="256">４ばんどうろで　みつかる
+ポケモンでも　つかまえるかの！</language>
+		<language name="JPN_KANJI" width="256">４ばんどうろで　みつかる
+ポケモンでも　つかまえるかの！</language>
+	</row>
+
+	<row id="msg_c03r0601_middleman2_02" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♂
+・ストッパー解除後</comment>
+		<language name="JPN" width="256">なんでも　さばく……
+リゾートデザートにある　いせきの▽
+いりぐちが　みつかったそうな！</language>
+		<language name="JPN_KANJI" width="256">なんでも　さばく……
+リゾートデザートにある　いせきの▽
+いりぐちが　みつかったそうな！</language>
+	</row>
+
+	<row id="msg_c03r0601_infomatinonw_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♀
+・</comment>
+		<attribute name="キャラ指定">INFOMATIONW</attribute>
+		<language name="JPN" width="256">４ばんどうろを　こえると
+ライモンシティで　ございます</language>
+		<language name="JPN_KANJI" width="256">４ばんどうろを　こえると
+ライモンシティで　ございます</language>
 	</row>
 
 	<flowchart-group-list>
