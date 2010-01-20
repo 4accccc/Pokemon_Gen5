@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-15T18:09:59"/>
+	<create user="matsumiya" host="W00207" date="2010-01-20T15:40:03"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -295,78 +295,42 @@
 	<row id="msg_c03r0303_cleaningm_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
 ・仮メッセージ
-・はい/いいえの選択肢表示
-　はい→cleaningm_03
-　いいえ→cleaningm_04</comment>
+・メッセージ表示後、戦闘に</comment>
 		<attribute name="キャラ指定">CLEANINGM
 清掃員</attribute>
 		<language name="JPN" width="256">おお！　きみは
-いりぐちで　であった　トレーナー！[BE:01:ページ切り替え（クリア）]
-よく　ここまで　これたね
-なかなかの　ツワモノのようだ[BE:01:ページ切り替え（クリア）]
-それで　おめあての
-かいちょう　とやらには　あえたかい？[BE:01:ページ切り替え（クリア）]
-ハハハ！　もうすでに　あっているよ
-きみの　めのまえにいるのは　だれかな？[BE:01:ページ切り替え（クリア）]
-そう　わたくしが　かいちょう　なんだ
-さあ！　ポケモンしょうぶを　するかね？</language>
+いりぐちで　であった　トレーナー！▼
+ここまで　きた　ということは
+なかなかの　ツワモノのようだね▼
+それでは　この　ビルで
+いちばん　つよい　わたし……▼
+そう！　かいちょうで　ある
+わたしが　あいてを　しましょう！▼</language>
 		<language name="JPN_KANJI" width="256">おお！　きみは
-入り口で　出会った　トレーナー！[BE:01:ページ切り替え（クリア）]
-よく　ここまで　来れたね
-なかなかの　ツワモノのようだ[BE:01:ページ切り替え（クリア）]
-それで　おめあての
-会長　とやらには　会えたかい？[BE:01:ページ切り替え（クリア）]
-ハハハ！　もうすでに　会っているよ
-きみの　目の前にいるのは　だれかな？[BE:01:ページ切り替え（クリア）]
-そう　私が　会長なんだよ
-さあ！　ポケモン勝負を　するかね？</language>
+いりぐちで　であった　トレーナー！▼
+ここまで　きた　ということは
+なかなかの　ツワモノのようだね▼
+それでは　この　ビルで
+いちばん　つよい　わたし……▼
+そう！　かいちょうで　ある
+わたしが　あいてを　しましょう！▼</language>
 	</row>
 
 	<row id="msg_c03r0303_cleaningm_02" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
-・cleaningm_01表示後に
-　いいえ選択で再度会話
-・はい/いいえの選択肢表示
-　はい→cleaningm_03
-　いいえ→cleaningm_04</comment>
-		<language name="JPN" width="256">そう　わたくしが　かいちょう　なんだ
-さあ！　ポケモンしょうぶを　するかね？</language>
-		<language name="JPN_KANJI" width="256">そう　私が　会長なんだよ
-さあ！　ポケモン勝負を　するかね？</language>
-	</row>
-
-	<row id="msg_c03r0303_cleaningm_03" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
-		<comment>♂
-・はい選択時
-　表示後、戦闘に
-・戦闘負けメッセージは別ファイル</comment>
-		<language name="JPN" width="256">ここまできた　きみの　じつりょく
-あますところなく　みせておくれ！</language>
-		<language name="JPN_KANJI" width="256">ここまできた　きみの　実力
-余すところなく　みせておくれ！</language>
-	</row>
-
-	<row id="msg_c03r0303_cleaningm_04" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
-		<comment>♂
-・戦闘後</comment>
-		<language name="JPN" width="256">うむ！[BE:01:ページ切り替え（クリア）]
-いい　しょうぶを　させてもらった
-これを　もっていきなさい[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">うむ！　いい勝負をさせてもらった
-これを　持って行きなさい[BE:01:ページ切り替え（クリア）]</language>
-	</row>
-
-	<row id="msg_c03r0303_cleaningm_05" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
-		<comment>♂
-・アイテム入手後</comment>
-		<language name="JPN" width="256">その　パレスへゴー（仮）を　つかえば
-パレスという　ばしょに　いける！▼
-パレスが　どういう　ばしょか？
-それは　まだ　ちょうさちゅう　だよ</language>
-		<language name="JPN_KANJI" width="256">その　パレスへゴー（仮）を　つかえば
-パレスという　場所に　いける！▼
-パレスが　どういう　場所か？
-それは　まだ　調査中　だよ</language>
+・戦闘後
+・仮メッセージ
+　何かもらえるようにするかも</comment>
+		<attribute name="キャラ指定">CLEANINGM
+清掃員</attribute>
+		<language name="JPN" width="256">ホッホー！
+いい　しょうぶを　させてもらったよ▼
+きみ！　おおきくなったら
+ここで　はたらいて　みないか？</language>
+		<language name="JPN_KANJI" width="256">ホッホー！
+いい　しょうぶを　させてもらったよ▼
+きみ！　おおきくなったら
+ここで　はたらいて　みないか？</language>
 	</row>
 
 	<flowchart-group-list>

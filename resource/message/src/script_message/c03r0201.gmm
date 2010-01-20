@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-11-10T15:29:25"/>
+	<create user="matsumiya" host="W00207" date="2010-01-20T16:11:12"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,9 +263,9 @@
 		</language>
 	</columns>
 
-	<dialog left="109" top="215" right="813" bottom="835" maximized="no" rayout="Vertical2">
+	<dialog left="96" top="261" right="800" bottom="881" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="803" top="136" right="1280" bottom="534" visible="yes"/>
+		<tag-palette left="802" top="136" right="1280" bottom="534" visible="yes"/>
 		<band id="0" index="1" style="0000" width="529"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="542"/>
@@ -292,47 +292,102 @@
 	</lock>
 
 
-	<row id="msg_c03r0201_sunglasses_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
-		<comment>（アトリエ）
+	<row id="msg_c03r0201_sunglasses_01" text-color=",,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+		<comment>♀
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">SUNGLASSES</attribute>
-		<language name="JPN" width="256">アートギャラリーでは
-みなさまの　えを　てんじいたしますよ</language>
-		<language name="JPN_KANJI" width="256">アートギャラリーでは
-みなさまの絵を　展示いたしますよ</language>
+		<language name="JPN" width="256">いまは　イッシュちほうの
+でんせつを　モチーフにした▽
+さくひんを　てんじ　しております</language>
+		<language name="JPN_KANJI" width="256">今は　イッシュ地方の
+伝説を　モチーフにした▽
+作品を　展示しております</language>
 	</row>
 
 	<row id="msg_c03r0201_lady_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
-		<comment>（アトリエ）
+		<comment>♀
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">LADY</attribute>
-		<language name="JPN" width="256">あたくし　もっと　いろんな
-ポケモンのえを　みたいざます</language>
-		<language name="JPN_KANJI" width="256">あたくし　もっと　いろんな
-ポケモンの絵を　みたいざます</language>
+		<language name="JPN" width="256">アーティさんの　えを　みたいなら
+ポケモンジムに　いけば　いいわ！▼
+あそこは　ちょっとした
+びじゅつかん　よね！</language>
+		<language name="JPN_KANJI" width="256">アーティさんの　絵を　見たいなら
+ポケモンジムに　行けば　いいわ！▽
+あそこは　ちょっとした　美術館よね！</language>
+	</row>
+
+	<row id="msg_c03r0201_painting1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>BGメッセージ
+・GRIDX=8~9、GRIDZ=10の絵画</comment>
+		<attribute name="キャラ指定">絵画</attribute>
+		<language name="JPN" width="256">タイトル「りそうと　しんじつ」</language>
+		<language name="JPN_KANJI" width="256">タイトル「理想と真実」</language>
+	</row>
+
+	<row id="msg_c03r0201_painting2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>BGメッセージ
+・GRIDX=11、GRIDZ=10の絵画</comment>
+		<attribute name="キャラ指定">絵画</attribute>
+		<language name="JPN" width="256">タイトル「まいあがる　りゅう」</language>
+		<language name="JPN_KANJI" width="256">タイトル「舞い上がる　白い竜」</language>
+	</row>
+
+	<row id="msg_c03r0201_painting3_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>BGメッセージ
+・GRIDX=7~8、GRIDZ=5の絵画</comment>
+		<attribute name="キャラ指定">絵画</attribute>
+		<language name="JPN" width="256">タイトル「しろき　ほのお」</language>
+		<language name="JPN_KANJI" width="256">タイトル「白き炎」</language>
+	</row>
+
+	<row id="msg_c03r0201_painting4_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>BGメッセージ
+・GRIDX=10、GRIDZ=5の絵画</comment>
+		<attribute name="キャラ指定">絵画</attribute>
+		<language name="JPN" width="256">タイトル「まいおりる　りゅう」</language>
+		<language name="JPN_KANJI" width="256">タイトル「舞い降りる　黒い竜」</language>
+	</row>
+
+	<row id="msg_c03r0201_painting5_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>BGメッセージ
+・GRIDX=12~13、GRIDZ=5の絵画</comment>
+		<attribute name="キャラ指定">絵画</attribute>
+		<language name="JPN" width="256">タイトル「くろい　いなずま」</language>
+		<language name="JPN_KANJI" width="256">タイトル「黒い稲妻」</language>
+	</row>
+
+	<row id="msg_c03r0201_painting6_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>BGメッセージ
+・GRIDX=2、GRIDZ=9の絵画</comment>
+		<attribute name="キャラ指定">絵画</attribute>
+		<language name="JPN" width="256">タイトル「ふたごの　えいゆう」</language>
+		<language name="JPN_KANJI" width="256">タイトル「双子の英雄」</language>
 	</row>
 
 	<row id="msg_c03r0201_juggling_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>（アトリエ）
+		<comment>♂
 ・仮メッセージ
 ・所定のタイプのポケモンを
-　連れている→test2_02
-　連れていない→test2_04
-
-0＝ポケモンのタイプ（ランダム）</comment>
+　連れている→juggling__02
+　連れていない→juggling__04
+・0＝ポケモンのタイプ（日替わりでランダム）</comment>
 		<attribute name="キャラ指定">JUGGLING</attribute>
 		<language name="JPN" width="256">ミーも　アーティさんほどでは　ないが
 ちょいと　えを　たしなんでいてね[BE:01:ページ切り替え（クリア）]
 そうですねー！　きょうは　タイプが
-[1:03:ポケモンタイプ:0]の　ポケモンを　かきたいな！[BE:01:ページ切り替え（クリア）]</language>
+[1:03:ポケモンタイプ:0]の　ポケモンを　かきたーい！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ミーも　アーティさんほどでは　ないが
 ちょいと　絵を　たしなんでいてね[BE:01:ページ切り替え（クリア）]
-そうですねー！　きょうは　タイプが
-[1:03:ポケモンタイプ:0]の　ポケモンを　描きたいな！[BE:01:ページ切り替え（クリア）]</language>
+そうですねー！　今日は　タイプが
+[1:03:ポケモンタイプ:0]の　ポケモンを　描きたーい！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_c03r0201_juggling_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>・持っている</comment>
+		<comment>・持っている
+・アイテム入手処理
+　No155「オレンのみ」（暫定）</comment>
+		<attribute name="キャラ指定">JUGGLING</attribute>
 		<language name="JPN" width="256">オー！　いるじゃん！
 なんだか　インスパイアされたね！[BE:01:ページ切り替え（クリア）]
 ありがとう！
@@ -344,20 +399,32 @@
 	</row>
 
 	<row id="msg_c03r0201_juggling_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>・持っていて
-　アイテムをもらった後</comment>
-		<language name="JPN" width="256">かいている　ほんにんが　たのしければ
-うまいとか　ヘタとか　かんけいないね</language>
-		<language name="JPN_KANJI" width="256">描いている　本人が　楽しければ
-うまいとか　下手とか　関係ないねー</language>
+		<comment>・アイテム入手後自動で表示</comment>
+		<attribute name="キャラ指定">JUGGLING</attribute>
+		<language name="JPN" width="256">きみ！　サイコー！
+また　あしたも　ここにきてよ！</language>
+		<language name="JPN_KANJI" width="256">きみ！　サイコー！
+また　明日も　ここに来てよ！</language>
 	</row>
 
 	<row id="msg_c03r0201_juggling_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・juggling_03表示後、日付が変わるまで
+・日付が変わった後に話しかければ
+　juggling_01から</comment>
+		<attribute name="キャラ指定">JUGGLING</attribute>
+		<language name="JPN" width="256">かいている　ほんにんが　たのしければ
+うまいとか　ヘタとか　かんけいないね</language>
+		<language name="JPN_KANJI" width="256">描いている　本人が　楽しければ
+うまいとか　ヘタとか　関係ないね</language>
+	</row>
+
+	<row id="msg_c03r0201_juggling_05" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>・持っていない</comment>
-		<language name="JPN" width="256">[1:03:ポケモンタイプ:0]の　ポケモンを
+		<attribute name="キャラ指定">JUGGLING</attribute>
+		<language name="JPN" width="256">[1:03:ポケモンタイプ:0]タイプの　ポケモンを
 つかまえていたら　みせてほしいなー！[BE:00:ページ切り替え（行送り）]
 ちょっとしたモノ　あげるからねー</language>
-		<language name="JPN_KANJI" width="256">[1:03:ポケモンタイプ:0]の　ポケモンを
+		<language name="JPN_KANJI" width="256">[1:03:ポケモンタイプ:0]タイプの　ポケモンを
 捕まえていたら　みせてほしいなー！[BE:00:ページ切り替え（行送り）]
 ちょっとしたモノ　あげるからねー</language>
 	</row>

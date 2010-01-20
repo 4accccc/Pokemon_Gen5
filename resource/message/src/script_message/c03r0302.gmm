@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-10T14:19:07"/>
+	<create user="matsumiya" host="W00207" date="2010-01-20T15:24:22"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,9 +235,9 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="124"/>
+		<comment position="4" width="178"/>
 		<erase position="-1" width="100"/>
-		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
+		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="139">
 		</attribute>
 		<language japanese="JPN" english="JPN">
 			<message position="2" width="274"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -294,7 +294,9 @@
 
 	<row id="msg_c03r0302_assistantm_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
-・仮メッセージ</comment>
+・仮メッセージ
+・アイテム入手処理
+　No216「がくしゅうそうち」</comment>
 		<attribute name="キャラ指定">ASSISTANTM</attribute>
 		<language name="JPN" width="256">ここは　けんきゅう　かいはつフロア！[BE:01:ページ切り替え（クリア）]
 けんがくに　きてくれた
@@ -307,12 +309,17 @@
 	<row id="msg_c03r0302_assistantm_02" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
 ・仮メッセージ</comment>
+		<attribute name="キャラ指定">ASSISTANTM</attribute>
 		<language name="JPN" width="256">がくしゅうそうちを　もたせた
-ポケモンは　たたかわなくても[BE:00:ページ切り替え（行送り）]
-けいけんちを　わけてもらえるんだ！</language>
+ポケモンは　たたかわなくても▽
+けいけんちを　わけてもらえる！▼
+よわい　ポケモンを　そだてるのには
+もってこいの　どうぐ　だよ</language>
 		<language name="JPN_KANJI" width="256">がくしゅうそうちを　持たせた
-ポケモンは　闘わなくても[BE:00:ページ切り替え（行送り）]
-経験値を　もらうことが　できるんだ！</language>
+ポケモンは　戦わなくても▽
+経験値を　わけてもらえる！▼
+弱い　ポケモンを　育てるのには
+もってこいの　道具だよ</language>
 	</row>
 
 	<flowchart-group-list>
