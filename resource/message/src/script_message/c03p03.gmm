@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-02T17:30:47"/>
+	<create user="matsumiya" host="W00207" date="2010-01-19T21:41:02"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="124"/>
+		<comment position="4" width="263"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -291,6 +291,69 @@
 		<operation add_message="no" header_setting="no" tag_setting="no" output_setting="no" display="no" sort="no" flowchart_window="no"/>
 	</lock>
 
+
+	<row id="msg_c03p03_guide_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・c03ジムバッジ取得前
+・続けて
+　c03p04方向を見ながら
+　guide_02</comment>
+		<attribute name="キャラ指定">？？？</attribute>
+		<language name="JPN" width="256">アタクシ　ヒウンシティ　だいすき
+あんないガール▼
+いきなりだけど
+あなた　まよっているわね！▼</language>
+		<language name="JPN_KANJI" width="256">アタクシ　ヒウンシティ　大好き
+案内ガール▼
+いきなりだけど
+あなた　迷っているわね！▼</language>
+	</row>
+
+	<row id="msg_c03p03_guide_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・c03ジムバッジ取得前
+・続けて
+　c03p07方向を見ながら
+　guide_03
+※場合によっては移動する</comment>
+		<attribute name="キャラ指定">？？？</attribute>
+		<language name="JPN" width="256">いい！　ポケモンセンターに　いくなら
+この　マークのある　みちを　まっすぐ！</language>
+		<language name="JPN_KANJI" width="256">いい！　ポケモンセンターに　行くなら
+この　マークのある　道を　まっすぐ！</language>
+	</row>
+
+	<row id="msg_c03p03_guide_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・c03ジムバッジ取得前</comment>
+		<attribute name="キャラ指定">？？？</attribute>
+		<language name="JPN" width="256">ポケモンジムに　むかうなら
+こちら　マークが　かかれた▽
+みちを　まっすぐに　すすむの！</language>
+		<language name="JPN_KANJI" width="256">ポケモンジムに　向かうなら
+こちら　マークが　描かれた▽
+道を　まっすぐに　進むの！</language>
+	</row>
+
+	<row id="msg_c03p03_guide_04" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・c03ジムバッジ取得後</comment>
+		<attribute name="キャラ指定">？？？</attribute>
+		<language name="JPN" width="256">アタクシ　ヒウンシティ　だいすき
+あんないガール▼
+あなた……▼
+ビートルバッジを　もっているのね！
+なら　ヒウンシティの　たつじん▼
+もう　じゆうじざい！
+いきたい　ばしょに　いけるはずよ！</language>
+		<language name="JPN_KANJI" width="256">アタクシ　ヒウンシティ　大好き
+案内ガール▼
+あなた……▼
+ビートルバッジを　持っているのね！
+なら　ヒウンシティの　達人▼
+もう　自由自在！
+行きたい　場所に　行けるはずよ！</language>
+	</row>
 
 	<row id="msg_c03p03_businessman1_01">
 		<comment>♂
