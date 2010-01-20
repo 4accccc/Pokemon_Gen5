@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-16T12:08:29"/>
+	<create user="matsumiya" host="W00207" date="2010-01-20T12:32:09"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="223"/>
+		<comment position="4" width="324"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -263,15 +263,15 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="39" top="205" right="744" bottom="825" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
+		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,24 +292,121 @@
 	</lock>
 
 
-	<row id="msg_c03r1001_mountain_01">
-		<comment>（汎用ビル）
-・仮メッセージ
-・姓名判断師のテキストは
-　namechange.gmm</comment>
-		<attribute name="キャラ指定">山男</attribute>
-		<language name="JPN" width="256">ひとから　もらった
-ポケモンの　なまえは　かえられないぞ</language>
-		<language name="JPN_KANJI" width="256">人から　もらった
-ポケモンの　名前は　変えられないぞ</language>
+	<row id="msg_c03r1001_woman3_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・はい/いいえの選択肢
+　はい　→woman3_03
+　いいえ→woman3_02
+・0＝先頭のポケモン
+※ポケモン選択できたほうがうれしいか？</comment>
+		<language name="JPN" width="256">こんにちは！▼
+よろしければ　あなたの　[1:01:ポケモン種族名:0]に
+マッサージしましょうか？</language>
+		<language name="JPN_KANJI" width="256">こんにちは！▼
+よろしければ　あなたの　[1:01:ポケモン種族名:0]に
+マッサージしましょうか？</language>
 	</row>
 
-	<row id="msg_c03r1001_poke_01">
-		<comment>（汎用ビル）
-・ポケモン</comment>
-		<attribute name="キャラ指定">ポケモン</attribute>
-		<language name="JPN" width="256">おだいじに『……ぎゅぎゅーーん？</language>
-		<language name="JPN_KANJI" width="256">おだいじに『……ぎゅぎゅーーん？</language>
+	<row id="msg_c03r1001_woman3_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・いいえ選択時</comment>
+		<language name="JPN" width="256">きがむいたら
+また　きてくださいね</language>
+		<language name="JPN_KANJI" width="256">きがむいたら
+また　きてくださいね</language>
+	</row>
+
+	<row id="msg_c03r1001_woman3_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・はい選択時
+・woman3_04表示後、画面暗転</comment>
+		<language name="JPN" width="256">はーい！
+それでは　はじめますね▼</language>
+		<language name="JPN_KANJI" width="256">はーい！
+それでは　はじめますね▼</language>
+	</row>
+
+	<row id="msg_c03r1001_woman3_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・画面暗転中にこのメッセージ表示
+・続けて暗転終了しwoman3_05表示</comment>
+		<language name="JPN" width="256">もみもみもみもみもみもみ
+もみもみもみもみもみもみ……▼</language>
+		<language name="JPN_KANJI" width="256">もみもみもみもみもみもみ
+もみもみもみもみもみもみ……▼</language>
+	</row>
+
+	<row id="msg_c03r1001_woman3_05" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・終了時
+・先頭のポケモンのなつき度＋３０のとき
+　＋３０　　５％
+　＋１０　２５％
+　＋　５　７０％</comment>
+		<language name="JPN" width="256">はい　おつかれさま！！▼
+いまの　マッサージで
+あなたに　とても　なついたみたい！</language>
+		<language name="JPN_KANJI" width="256">はい　おつかれさま！！▼
+いまの　マッサージで
+あなたに　とても　なついたみたい！</language>
+	</row>
+
+	<row id="msg_c03r1001_woman3_06" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・終了時
+・先頭のポケモンのなつき度　＋１０のとき</comment>
+		<language name="JPN" width="256">はい　おつかれさまでした！▼
+いまの　マッサージで
+あなたに　なついたみたいね！</language>
+		<language name="JPN_KANJI" width="256">はい　おつかれさまでした！▼
+いまの　マッサージで
+あなたに　なついたみたいね！</language>
+	</row>
+
+	<row id="msg_c03r1001_woman3_07" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・終了時
+・先頭のポケモンのなつき度　＋　５のとき</comment>
+		<language name="JPN" width="256">はい　おつかれさまでした！▼
+いまの　マッサージで
+あなたに　すこし　なついたみたいね！</language>
+		<language name="JPN_KANJI" width="256">はい　おつかれさまでした！▼
+いまの　マッサージで
+あなたに　すこし　なついたみたいね！</language>
+	</row>
+
+	<row id="msg_c03r1001_woman3_08" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・マッサージ後、日付が変わるまで</comment>
+		<language name="JPN" width="256">ごめんなさい！　さっきの
+マッサージで　あたし　クタクタ……▽
+また　あした　きてみてね！</language>
+		<language name="JPN_KANJI" width="256">ごめんなさい！　さっきの
+マッサージで　あたし　クタクタ……▽
+また　あした　きてみてね！</language>
+	</row>
+
+	<row id="msg_c03r1001_mountain_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+		<comment>♂
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">山男</attribute>
+		<language name="JPN" width="256">ポケモンが　よろこんでくれれば
+ワシも　うれしくて　わらう！▼
+ワシが　わらっているのを　みれば
+ポケモンも　うれしくなるだろう！</language>
+		<language name="JPN_KANJI" width="256">ポケモンが　よろこんでくれれば
+ワシも　うれしくて　わらう！▼
+ワシが　わらっているのを　みれば
+ポケモンも　うれしくなるだろう！</language>
+	</row>
+
+	<row id="msg_c03r1001_poke_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+		<comment>♂
+・メッセージ表示と共に鳴き声再生</comment>
+		<attribute name="キャラ指定">ポケモン
+チラーミィ</attribute>
+		<language name="JPN" width="256">……ぐふぐふぐふ！</language>
+		<language name="JPN_KANJI" width="256">……ぐふぐふぐふ！</language>
 	</row>
 
 	<flowchart-group-list>
