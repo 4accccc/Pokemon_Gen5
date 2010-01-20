@@ -134,9 +134,9 @@ extern void WIFIBATTLEMATCH_VIEW_Main( WIFIBATTLEMATCH_VIEW_RESOURCE *p_wk );
 #define PLAYERINFO_POKEICON_Y					(176)
 
 #define PLAYERINFO_TRAINER_CUP_X			(40)
-#define PLAYERINFO_TRAINER_CUP_Y			(112)
+#define PLAYERINFO_TRAINER_CUP_Y			(112-6)
 #define PLAYERINFO_TRAINER_RND_X			(32)
-#define PLAYERINFO_TRAINER_RND_Y			(74)
+#define PLAYERINFO_TRAINER_RND_Y			(74-6)
 
 #define PLAYERINFO_ALPHA_EV1           (15)
 #define PLAYERINFO_ALPHA_EV2           (3)
@@ -257,7 +257,7 @@ extern void PLAYERINFO_DEBUG_CreateLiveData( WIFIBATTLEMATCH_MODE mode, void *p_
 #define MATCHINFO_PLT_OBJ_TRAINER	(MATCHINFO_PLT_OBJ_PMS+PMS_DRAW_OBJ_PLTT_NUM)
 
 #define MATCHINFO_TRAINER_X			(32)
-#define MATCHINFO_TRAINER_Y			(48)
+#define MATCHINFO_TRAINER_Y			(48 - 6)
 //=============================================================================
 /**
  *					ç\ë¢ëÃêÈåæ
