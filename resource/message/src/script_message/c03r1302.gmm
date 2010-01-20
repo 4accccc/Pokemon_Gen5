@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tamada" host="W00139" date="2009-07-15T19:04:53"/>
+	<create user="matsumiya" host="W00207" date="2010-01-20T12:10:08"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -229,13 +229,13 @@
 	</tag-table>
 
 	<columns>
-		<id position="0" width="152"/>
+		<id position="0" width="170"/>
 		<group default=" 0:デフォルト" position="-1" width="100">
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="124"/>
+		<comment position="4" width="181"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,11 +292,76 @@
 	</lock>
 
 
-	<row id="msg_mapscript_dummy">
-		<comment>？？？</comment>
-		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	<row id="msg_c03r1302_gentleman_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♂
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">GENTLEMAN</attribute>
+		<language name="JPN" width="256">ようこそ！▼
+どんどん　はなしかけて
+ともだちを　ふやしてくださいな！</language>
+		<language name="JPN_KANJI" width="256">ようこそ！▼
+どんどん　はなしかけて
+ともだちを　ふやしてくださいな！</language>
+	</row>
+
+	<row id="msg_c03r1302_man3_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♂
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">MAN3</attribute>
+		<language name="JPN" width="256">かりメッセージ！</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ！</language>
+	</row>
+
+	<row id="msg_c03r1302_middleman2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♂
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">MIDDLEMAN2</attribute>
+		<language name="JPN" width="256">かりメッセージ！</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ！</language>
+	</row>
+
+	<row id="msg_c03r1302_dancer_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♂
+・仮メッセージ
+・外国語にする</comment>
+		<attribute name="キャラ指定">DANCER</attribute>
+		<language name="JPN" width="256">Hello, Trainer!</language>
+		<language name="JPN_KANJI" width="256">Hello, Trainer!</language>
+	</row>
+
+	<row id="msg_c03r1302_girl3_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♀
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">GIRL3</attribute>
+		<language name="JPN" width="256">かりメッセージ！</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ！</language>
+	</row>
+
+	<row id="msg_c03r1302_woman2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♀
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">WOMAN2</attribute>
+		<language name="JPN" width="256">かりメッセージ！</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ！</language>
+	</row>
+
+	<row id="msg_c03r1302_rangerw_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♀
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">RANGERW</attribute>
+		<language name="JPN" width="256">かりメッセージ！</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ！</language>
+	</row>
+
+	<row id="msg_c03r1302_trainerw_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♀
+・仮メッセージ
+・外国語にする
+※外国産設定のポケモン交換にして
+　国連へいく動機にしたい</comment>
+		<attribute name="キャラ指定">TRAINERW</attribute>
+		<language name="JPN" width="256">How do you do?</language>
+		<language name="JPN_KANJI" width="256">How do you do?</language>
 	</row>
 
 	<flowchart-group-list>
