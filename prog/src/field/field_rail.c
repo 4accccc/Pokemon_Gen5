@@ -213,7 +213,7 @@ static void offLineSwitch( RAIL_LINE_SWITCH* work, u16 line_index );
 static BOOL getLineSwitch( const RAIL_LINE_SWITCH* work, u16 line_index );
 static BOOL getLineSwitchPointer( const RAIL_LINE_SWITCH* work, const RAIL_LINE* line, const RAIL_SETTING* rail_dat );
 static const RAIL_LINE* getLineSwitchRailDatLine( const RAIL_LINE_SWITCH* work, const RAIL_SETTING * raildat, u32 index );
-static void calcLineSwitchLineOfs( const RAIL_LINE_SWITCH* work, FIELD_RAIL_WORK * railwk, s32 front_ofs, s32 side_ofs );
+static void calcLineSwitchLineOfs( const RAIL_LINE_SWITCH* work, FIELD_RAIL_WORK * railwk, s32 front_ofs, s32 side_ofs, u32 key );
 static BOOL IsLineSwitchMoveOk( const RAIL_LINE_SWITCH* work, const RAIL_LINE * line, int l_ofs, int w_ofs, const RAIL_SETTING * raildat, fx32 ofs_unit );
 
 
@@ -2201,8 +2201,8 @@ static void getLineCrossAreaSize( const RAIL_SETTING * rail_dat, const RAIL_LINE
   s32 line_ofs_max;
   s32 width_ofs_max;
 
-  s32 width_ofs_max_hi = 16;
-  s32 line_ofs_max_hi = 16;
+  s32 width_ofs_max_hi = 0;
+  s32 line_ofs_max_hi = 0;
 
   point = getRailDatPoint( rail_dat, line->point_s );
 
@@ -2238,7 +2238,10 @@ static void getLineCrossAreaSize( const RAIL_SETTING * rail_dat, const RAIL_LINE
     }else{
       width_ofs_max = getLineWidthOfsMax( left, line_ofs_max, line_ofs_max, rail_dat );
     }
-    line_ofs_max_hi = width_ofs_max;
+    if( width_ofs_max > line_ofs_max_hi  )
+    {
+      line_ofs_max_hi = width_ofs_max;
+    }
   }
   //right
   if(right)
@@ -2368,7 +2371,7 @@ static RAIL_KEY updateLineMove_new(FIELD_RAIL_WORK * work, RAIL_KEY key, u32 cou
     BOOL width_over = FALSE;
     //const RAIL_LINE * back = RAILPOINT_getLineByKey(nPoint, getReverseKey(key), work->rail_dat, work->line_switch);
     TAMADA_Printf("↑");
-    calcLineSwitchLineOfs( work->line_switch, work, count_up, 0 );
+    calcLineSwitchLineOfs( work->line_switch, work, count_up, 0, key );
     if (work->line_ofs < nLine_ofs_max) {   // nLine_ofs_max == 次のラインのline_ofs 0
       // 今の道幅チェック オーバーしてなければ、通常の更新
       now_line_width_max = getLineWidthOfsMax( nLine, work->line_ofs, nLine_ofs_max, work->rail_dat );
@@ -2492,7 +2495,7 @@ static RAIL_KEY updateLineMove_new(FIELD_RAIL_WORK * work, RAIL_KEY key, u32 cou
     const RAIL_LINE * back = RAILPOINT_getLineByKey(nPoint, key, work->rail_dat, work->line_switch, FALSE);
     BOOL width_over = FALSE;
     TAMADA_Printf("↓");
-    calcLineSwitchLineOfs( work->line_switch, work, -count_up, 0 );
+    calcLineSwitchLineOfs( work->line_switch, work, -count_up, 0, key );
     if (work->line_ofs >= 0) {
 
       // 今の道幅チェック オーバーしてなければ、通常の更新
@@ -2608,7 +2611,7 @@ static RAIL_KEY updateLineMove_new(FIELD_RAIL_WORK * work, RAIL_KEY key, u32 cou
   else if (key == getClockwiseKey(nLine->key))
   {//時計回り隣方向キーの場合
     TAMADA_Printf("→");
-    calcLineSwitchLineOfs( work->line_switch, work, 0, count_up );
+    calcLineSwitchLineOfs( work->line_switch, work, 0, count_up, key );
     if( (work->width_ofs > 0) && ((work->width_ofs % RAIL_WALK_OFS) == 0) ) // 右サイドに移っていたら
     { 
       {
@@ -2718,7 +2721,7 @@ static RAIL_KEY updateLineMove_new(FIELD_RAIL_WORK * work, RAIL_KEY key, u32 cou
   else if (key == getAntiClockwiseKey(nLine->key))
   {//反時計回り隣方向キーの場合
     TAMADA_Printf("←");
-    calcLineSwitchLineOfs( work->line_switch, work, 0, -count_up );
+    calcLineSwitchLineOfs( work->line_switch, work, 0, -count_up, key );
     if( (work->width_ofs < 0) && ((MATH_ABS(work->width_ofs) % RAIL_WALK_OFS) == 0) )
     {
       {
@@ -3489,23 +3492,26 @@ static const RAIL_LINE* getLineSwitchRailDatLine( const RAIL_LINE_SWITCH* work, 
  *	@param	railwk
  *	@param	front_ofs
  *	@param	side_ofs 
+ *	@param  key       進行方向キー
  *
  *	@retval TRUE  他のラインに乗るべき
  *	@retval FALSE 通常動作
  */
 //-----------------------------------------------------------------------------
-static void calcLineSwitchLineOfs( const RAIL_LINE_SWITCH* work, FIELD_RAIL_WORK * railwk, s32 front_ofs, s32 side_ofs )
+static void calcLineSwitchLineOfs( const RAIL_LINE_SWITCH* work, FIELD_RAIL_WORK * railwk, s32 front_ofs, s32 side_ofs, u32 key )
 {
   if( getLineSwitchPointer( work, railwk->line, railwk->rail_dat ) )
   {
     s32  size_line, size_width;
+    const RAIL_POINT* nPoint = getRailDatPoint( railwk->rail_dat, railwk->line->point_s );
+    const RAIL_LINE* side = RAILPOINT_getLineByKey(nPoint, key, railwk->rail_dat, work, FALSE);
     
     // 移動可能範囲を求める
     // 移動可能範囲内でのみ移動できる。 
     // 始点は、色々なライン共通で使う分岐点なので、使用不可能でも通れる必要がある。
     getLineCrossAreaSize( railwk->rail_dat, railwk->line, &size_line, &size_width, work, railwk->ofs_unit );
 
-    //TOMOYA_Printf( "line area line %d  width %d\n",size_line, size_width );
+    TOMOYA_Printf( "line area line %d  width %d\n",size_line, size_width );
     
     railwk->line_ofs += front_ofs;
     railwk->width_ofs += side_ofs;
@@ -3514,12 +3520,15 @@ static void calcLineSwitchLineOfs( const RAIL_LINE_SWITCH* work, FIELD_RAIL_WORK
     {
       railwk->line_ofs = size_line;
     }
-    if( MATH_ABS( railwk->width_ofs ) > size_width )
+    if( side == NULL )  // 横がないときにだけ、チェックする
     {
-      if( railwk->width_ofs > 0 ){
-        railwk->width_ofs = size_width;
-      }else{
-        railwk->width_ofs = -size_width;
+      if( MATH_ABS( railwk->width_ofs ) > size_width )
+      {
+        if( railwk->width_ofs > 0 ){
+          railwk->width_ofs = size_width;
+        }else{
+          railwk->width_ofs = -size_width;
+        }
       }
     }
   }
@@ -3554,7 +3563,9 @@ static BOOL IsLineSwitchMoveOk( const RAIL_LINE_SWITCH* work, const RAIL_LINE * 
     // 始点は、色々なライン共通で使う分岐点なので、使用不可能でも通れる必要がある。
     getLineCrossAreaSize( raildat, line, &size_line, &size_width, work, ofs_unit );
 
-    if( (l_ofs < size_line) && (MATH_ABS(w_ofs) < size_width) )
+    //TOMOYA_Printf( "cross lineSize %d  widthSize %d\n", size_line, size_width );
+
+    if( (l_ofs <= size_line) && (MATH_ABS(w_ofs) <= size_width) )
     {
       return TRUE;
     }
