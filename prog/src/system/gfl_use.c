@@ -384,6 +384,7 @@ void GFUser_SetStartRandContext(GFL_STD_RandContext *context)
 static void GFUser_PublicRandInit(void)
 {
 	GFUser_SetStartRandContext( &gfl_work->publicRandContext );
+  GFL_STD_MtRandInit(GFUser_GetPublicRand(0));
 }
 
 //------------------------------------------------------------------

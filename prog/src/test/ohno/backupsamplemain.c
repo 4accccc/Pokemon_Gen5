@@ -445,8 +445,6 @@ static SAMPLE_SETUP*	SetupGameSystem( HEAPID heapID )
 	SAMPLE_SETUP*	gs = GFL_HEAP_AllocClearMemory( heapID, sizeof(SAMPLE_SETUP) );
 	gs->heapID = heapID;
 
-	//乱数初期化
-	GFL_STD_MtRandInit(0);
 
 	//ARCシステム初期化
 //	GFL_ARC_Init( &GraphicFileTable[0], NELEMS(GraphicFileTable) );		gfl_use.cで1回だけ初期化に変更

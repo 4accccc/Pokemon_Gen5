@@ -2903,6 +2903,7 @@ static void Draw_FriendNameSetWordset( WFNOTE_DRAW* p_draw, const WFNOTE_DATA* c
 //-----------------------------------------------------------------------------
 static void Draw_FriendGroupSetWordset( WFNOTE_DRAW* p_draw, const WFNOTE_DATA* cp_data, u32 idx, u32 heapID )
 {
+#if 0
   MYSTATUS* p_mystatus = MyStatus_AllocWork( heapID );
   WIFI_LIST* p_wifilist = GAMEDATA_GetWiFiList(cp_data->pGameData); //SaveData_GetWifiListData( p_save );
 #if NOTE_DEBUG
@@ -2917,6 +2918,7 @@ static void Draw_FriendGroupSetWordset( WFNOTE_DRAW* p_draw, const WFNOTE_DATA* 
 #endif
   WORDSET_RegisterPlayerName( p_draw->p_wordset, 0, p_mystatus );
   GFL_HEAP_FreeMemory( p_mystatus );
+#endif
 }
 
 //----------------------------------------------------------------------------
@@ -8205,7 +8207,7 @@ static void FInfoDraw_Page06( WFNOTE_FINFO_DRAWAREA* p_wk, WFNOTE_DATA* p_data, 
       FINFO_PAGE06_BC_X, FINFO_PAGE06_BC_Y,
       WFNOTE_COL_BLACK, p_str, p_tmp );
   // ’l
-  num = WifiList_GetFriendInfo( p_wifilist, p_data->idx.fridx[p_data->select_listidx], WIFILIST_FRIEND_BALLSLOW_NUM );
+  num = 0;//WifiList_GetFriendInfo( p_wifilist, p_data->idx.fridx[p_data->select_listidx], WIFILIST_FRIEND_BALLSLOW_NUM );
   Draw_NumberSetWordset( p_draw, num );
   FInfoDraw_Bmp( p_wk, 1, FINFO_PAGE06_BA,
       p_data, p_draw, msg_wifi_note_56,
@@ -8219,7 +8221,7 @@ static void FInfoDraw_Page06( WFNOTE_FINFO_DRAWAREA* p_wk, WFNOTE_DATA* p_data, 
       FINFO_PAGE06_BB_X, FINFO_PAGE06_BB_Y,
       WFNOTE_COL_BLACK, p_str, p_tmp );
   // ’l
-  num = WifiList_GetFriendInfo( p_wifilist, p_data->idx.fridx[p_data->select_listidx], WIFILIST_FRIEND_BALANCEBALL_NUM );
+  num = 0;//WifiList_GetFriendInfo( p_wifilist, p_data->idx.fridx[p_data->select_listidx], WIFILIST_FRIEND_BALANCEBALL_NUM );
   Draw_NumberSetWordset( p_draw, num );
   FInfoDraw_Bmp( p_wk, 1, FINFO_PAGE06_BA,
       p_data, p_draw, msg_wifi_note_56,
@@ -8233,7 +8235,7 @@ static void FInfoDraw_Page06( WFNOTE_FINFO_DRAWAREA* p_wk, WFNOTE_DATA* p_data, 
       FINFO_PAGE06_BL_X, FINFO_PAGE06_BL_Y,
       WFNOTE_COL_BLACK, p_str, p_tmp );
   // ’l
-  num = WifiList_GetFriendInfo( p_wifilist, p_data->idx.fridx[p_data->select_listidx], WIFILIST_FRIEND_BALLOON_NUM );
+  num =  0;//WifiList_GetFriendInfo( p_wifilist, p_data->idx.fridx[p_data->select_listidx], WIFILIST_FRIEND_BALLOON_NUM );
   Draw_NumberSetWordset( p_draw, num );
   FInfoDraw_Bmp( p_wk, 1, FINFO_PAGE06_BA,
       p_data, p_draw, msg_wifi_note_56,

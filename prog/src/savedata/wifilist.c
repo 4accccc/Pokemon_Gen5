@@ -161,17 +161,8 @@ u32 WifiList_GetFriendInfo( WIFI_LIST* list, int no, int type )
   case WIFILIST_FRIEND_UNION_GRA:
     result = list->friendData[no].unionGra;
     break;
-  case WIFILIST_FRIEND_POFIN_NUM:  //todoなくなります
-//    result = list->friendData[no].pofin_num;
-    break;
-  case WIFILIST_FRIEND_BALLSLOW_NUM:
-//    result = list->friendData[no].minigame_ballslow;
-    break;
-  case WIFILIST_FRIEND_BALANCEBALL_NUM:
-//    result = list->friendData[no].minigame_balanceball;
-    break;
-  case WIFILIST_FRIEND_BALLOON_NUM:
-//    result = list->friendData[no].minigame_balloon;
+  default:
+    GF_ASSERT(0);
     break;
   }
   return result;
@@ -222,7 +213,7 @@ void WifiList_SetFriendInfo( WIFI_LIST* list, int no, int type, u32 value )
   case WIFILIST_FRIEND_UNION_GRA:
     list->friendData[no].unionGra = value;
     break;
-  case WIFILIST_FRIEND_POFIN_NUM:
+  default:
     GF_ASSERT(0);
     break;
   }
@@ -289,56 +280,6 @@ void WifiList_GetFriendName( WIFI_LIST *list, int no, STRBUF* pBuf )
 void WifiList_SetFriendName( WIFI_LIST *list, int no, STRBUF* pBuf )
 {
   GF_ASSERT( no < WIFILIST_FRIEND_MAX );
-  GFL_STR_GetStringCode(pBuf, list->friendData[no].name, sizeof(list->friendData[no].name));
-}
-
-//-----------------------------------------------------------------
-/**
- * $brief
- *
- * @param   list	WIFI_LIST構造体のポインタ
- * @param   no		何人目の友達か
- *
- * @retval  u8 *
- */
-//-----------------------------------------------------------------
-  //@todo なくなります
-STRCODE *WifiList_GetFriendGroupNamePtr( WIFI_LIST *list, int no )
-{
-  GF_ASSERT( no < WIFILIST_FRIEND_MAX );
-//  return list->friendData[no].groupName;
-  //@todo なくなります
-  return list->friendData[no].name;
-}
-
-//-----------------------------------------------------------------
-/**
- * $brief   セーブエリアの名前をSTRBUFにいれる
- * @param   list	WIFI_LIST構造体のポインタ
- * @param   no		何人目の友達か
- * @retval  u8 *
- */
-//-----------------------------------------------------------------
-  //@todo なくなります
-void WifiList_GetFriendGroupName( WIFI_LIST *list, int no, STRBUF* pBuf )
-{
-  GF_ASSERT( no < WIFILIST_FRIEND_MAX );
-  GFL_STR_SetStringCodeOrderLength(pBuf, list->friendData[no].name, sizeof(list->friendData[no].name));
-}
-
-//-----------------------------------------------------------------
-/**
- * $brief   STRBUFの中にある名前を、セーブエリアに格納する
- * @param   list	WIFI_LIST構造体のポインタ
- * @param   no		何人目の友達か
- * @retval  u8 *
- */
-//-----------------------------------------------------------------
-  //@todo なくなります
-void WifiList_SetFriendGroupName( WIFI_LIST *list, int no, STRBUF* pBuf )
-{
-  GF_ASSERT( no < WIFILIST_FRIEND_MAX );
-
   GFL_STR_GetStringCode(pBuf, list->friendData[no].name, sizeof(list->friendData[no].name));
 }
 

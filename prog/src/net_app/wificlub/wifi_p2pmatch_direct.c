@@ -42,7 +42,7 @@ static int _playerDirectInit1( WIFIP2PMATCH_WORK *wk, int seq )
 
 static int _playerDirectInit2( WIFIP2PMATCH_WORK *wk, int seq )
 {
-  if( !PRINTSYS_QUE_IsFinished(wk->SysMsgQue) ){
+  if( !WifiP2PMatchMessageEndCheck(wk) ){
     return seq;
   }
 
@@ -281,7 +281,7 @@ static int _playerDirectTrade( WIFIP2PMATCH_WORK *wk, int seq )
 
 static int _playerDirectSub1( WIFIP2PMATCH_WORK *wk, int seq )
 {
-  if( !PRINTSYS_QUE_IsFinished(wk->SysMsgQue) ){
+  if( !WifiP2PMatchMessageEndCheck(wk) ){
     return seq;
   }
   _yenowinCreateM2(wk);
@@ -351,6 +351,7 @@ static int _playerDirectSubStart( WIFIP2PMATCH_WORK *wk, int seq )
     break;
   }
   _myStatusChange(wk, status,gamemode);  // 接続中になる
+  wk->pParentWork->btalk = TRUE;  //ダイレクト
 
   switch(wk->directmode){
   case WIFIP2PMATCH_PLAYERDIRECT_VCT:
@@ -368,7 +369,6 @@ static int _playerDirectSubStart( WIFIP2PMATCH_WORK *wk, int seq )
 
       wk->endSeq = gamemode;
 
-      wk->pParentWork->btalk = TRUE;
       return SEQ_OUT;            //終了シーケンスへ
     }
     break;
@@ -419,10 +419,25 @@ static int _playerDirectBattle2( WIFIP2PMATCH_WORK *wk, int seq )
   case BMPMENULIST_NULL:
     return seq;
   case BMPMENULIST_CANCEL:
-    _CHANGESTATE(wk, WIFIP2PMATCH_PLAYERDIRECT_INIT6);
+    if(wk->pParentWork->btalk){  //会話の流れ
+      _CHANGESTATE(wk, WIFIP2PMATCH_PLAYERDIRECT_INIT6);
+    }
+    else{  //掲示板の流れ
+      _CHANGESTATE(wk, WIFIP2PMATCH_MODE_SELECT_INIT);
+    }
     break;
   default:
-    _CHANGESTATE(wk, ret);
+    if(wk->pParentWork->btalk){  //会話の流れ
+      _CHANGESTATE(wk, ret);
+    }
+    else{  //掲示板の流れ
+      if(WIFIP2PMATCH_PLAYERDIRECT_BATTLE_DECIDE==ret){
+        _CHANGESTATE(wk, WIFIP2PMATCH_PLAYERMACHINE_BATTLE_DECIDE);
+      }
+      else{
+        _CHANGESTATE(wk, ret);
+      }
+    }
     break;
   }
   EndMessageWindowOff(wk);
@@ -761,7 +776,7 @@ static int _playerDirectBattleDecide( WIFIP2PMATCH_WORK *wk, int seq )
 
 static int _playerDirectNoregParent( WIFIP2PMATCH_WORK *wk, int seq )
 {
-  if(!PRINTSYS_QUE_IsFinished(wk->SysMsgQue)){
+  if(!WifiP2PMatchMessageEndCheck(wk)){
     return seq;
   }
   if(GFL_UI_KEY_GetTrg()){
@@ -806,8 +821,8 @@ static int _playerDirectBattleGO( WIFIP2PMATCH_WORK *wk, int seq )
 
   if(!GFL_NET_IsParentMachine()){
     _friendNameExpand(wk,  wk->friendNo - 1);
-    WifiP2PMatchMessagePrint(wk, msg_wifilobby_1000, FALSE);
-    _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_BATTLE_GO1);
+    WifiP2PMatchMessagePrint(wk, msg_wifilobby_1001+wk->battleMode+wk->battleRule*4, FALSE);
+    _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_BATTLE_GO2);
   }
   else{
     _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_WAIT);
@@ -817,17 +832,13 @@ static int _playerDirectBattleGO( WIFIP2PMATCH_WORK *wk, int seq )
 
 static int _playerDirectBattleGO1( WIFIP2PMATCH_WORK *wk, int seq )
 {
-  if(GFL_UI_KEY_GetTrg()){
-    WifiP2PMatchMessagePrint(wk, msg_wifilobby_1001+wk->battleMode+wk->battleRule*4, FALSE);
-    _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_BATTLE_GO2);
-  }
   return seq;
 }
 
 
 static int _playerDirectBattleGO2( WIFIP2PMATCH_WORK *wk, int seq )
 {
-  if( !PRINTSYS_QUE_IsFinished(wk->SysMsgQue) ){
+  if( !WifiP2PMatchMessageEndCheck(wk) ){
     return seq;
   }
   _yenowinCreateM2(wk);
@@ -932,7 +943,7 @@ static int _playerDirectBattleStart( WIFIP2PMATCH_WORK *wk, int seq )
 
 static int _playerDirectBattleStart2( WIFIP2PMATCH_WORK *wk, int seq )
 {
-  if( !PRINTSYS_QUE_IsFinished(wk->SysMsgQue) ){
+  if( !WifiP2PMatchMessageEndCheck(wk) ){
     return seq;
   }
   _battlePokePartySelectMenu( wk );
@@ -1062,7 +1073,6 @@ static int _playerDirectBattleStart6( WIFIP2PMATCH_WORK *wk, int seq )
   {
     EndMessageWindowOff(wk);
   }
-  wk->pParentWork->btalk = TRUE;
   return SEQ_OUT;            //終了シーケンスへ
 }
 
@@ -1090,7 +1100,7 @@ static int _playerDirectFailed( WIFIP2PMATCH_WORK *wk, int seq )
   MCR_MOVEOBJ* p_npc;
   u32 way;
 
-  if( !PRINTSYS_QUE_IsFinished(wk->SysMsgQue) ){
+  if( !WifiP2PMatchMessageEndCheck(wk) ){
     return seq;
   }
 
@@ -1115,7 +1125,7 @@ static int _playerDirectFailed( WIFIP2PMATCH_WORK *wk, int seq )
 
 static int _playerDirectFailed2( WIFIP2PMATCH_WORK *wk, int seq )
 {
-  if( !PRINTSYS_QUE_IsFinished(wk->SysMsgQue) ){
+  if( !WifiP2PMatchMessageEndCheck(wk) ){
     return seq;
   }
 

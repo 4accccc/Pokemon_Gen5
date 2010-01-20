@@ -37,10 +37,6 @@ enum{
   WIFILIST_FRIEND_LASTBT_DAY,
   WIFILIST_FRIEND_UNION_GRA,
   WIFILIST_FRIEND_SEX,
-  WIFILIST_FRIEND_POFIN_NUM,
-  WIFILIST_FRIEND_BALLSLOW_NUM,
-  WIFILIST_FRIEND_BALANCEBALL_NUM,
-  WIFILIST_FRIEND_BALLOON_NUM,
 };
 
 //============================================================================================
@@ -59,9 +55,6 @@ extern DWCFriendData* WifiList_GetDwcDataPtr( WIFI_LIST* list, int no );
 extern STRCODE *WifiList_GetFriendNamePtr( WIFI_LIST *list, int no );
 extern void WifiList_GetFriendName( WIFI_LIST *list, int no, STRBUF* pBuf );
 extern void WifiList_SetFriendName( WIFI_LIST *list, int no, STRBUF* pBuf );
-extern STRCODE *WifiList_GetFriendGroupNamePtr( WIFI_LIST *list, int no );
-extern void WifiList_GetFriendGroupName( WIFI_LIST *list, int no, STRBUF* pBuf );
-extern void WifiList_SetFriendGroupName( WIFI_LIST *list, int no, STRBUF* pBuf );
 extern BOOL WifiList_IsFriendData( WIFI_LIST *list, int no );
 extern int WifiList_GetFriendDataNum( WIFI_LIST *list );
 extern int WifiList_GetFriendDataLastIdx( WIFI_LIST *list );

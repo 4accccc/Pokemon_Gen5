@@ -502,8 +502,6 @@ static MAINSEQ_RESULT mainSeqFunc_setup_system(GAMESYS_WORK *gsys, FIELDMAP_WORK
 { 
 	HEAPID heapID = fieldWork->heapID;
 	
-	//—”‰Šú‰»
-	GFL_STD_MtRandInit(0);
 
 	//VRAMƒNƒŠƒA
 	//GFL_DISP_ClearVRAM( GX_VRAM_D );

@@ -557,6 +557,7 @@ typedef struct{
   u16 beaconScanNum;
   s16 startScan;
 	HEAPID heapID;
+  u16 scanWaitFrame;
 	/* 親機接続時に使用する設定 */
 	u8 sConnectionSsid[(WM_SIZE_CHILD_SSID/4)*4];
 } _WM_INFO_STRUCT;
@@ -1580,7 +1581,7 @@ static void WH_StateOutStartScan(void *arg)
 		}
 		return;
 	}
-  _pWmInfo->startScan=SCAN_WAIT_FRAME;
+  _pWmInfo->startScan = _pWmInfo->scanWaitFrame;
 
 	//  NET_PRINT("WH_StateOutStartScan %d",state);
 	switch (state) {
@@ -2985,6 +2986,7 @@ BOOL WH_Initialize(HEAPID heapID, NetDevEndCallback callback,const BOOL isScanOn
 	_pWmInfo = GFL_NET_Align32Alloc(heapID, sizeof(_WM_INFO_STRUCT) + 32);
 
 	MI_CpuClear8(_pWmInfo, sizeof(_WM_INFO_STRUCT));
+  _pWmInfo->scanWaitFrame = SCAN_WAIT_FRAME;  //デフォルトの値
 
 	_pWmInfo->sConnectBitmap = WH_BITMAP_EMPTY;
 	_pWmInfo->sErrCode = WM_ERRCODE_SUCCESS;
@@ -3753,3 +3755,13 @@ void WHSetWIHDWCBeaconGetFunc(WIHDWCBeaconGetFunc getfunc)
   _pWmInfo->SetBeaconData = getfunc;
 }
 
+/*---------------------------------------------------------------------------*
+  Name:         WHSetScanWaitFrame
+  Description:  ビーコンの収集間隔を設定できる
+  Arguments:    no ビーコン間隔（フレーム数）
+  Returns:      none
+ *---------------------------------------------------------------------------*/
+void WHSetScanWaitFrame(int no)
+{
+  _pWmInfo->scanWaitFrame = no;  //デフォルトの値
+}

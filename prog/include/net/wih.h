@@ -814,3 +814,10 @@ extern void WHSetWIHDWCBeaconGetFunc(WIHDWCBeaconGetFunc getfunc);
 extern void HW_Main(void);
 extern void WH_StepScan(void);
 
+/*---------------------------------------------------------------------------*
+  Name:         WHSetScanWaitFrame
+  Description:  ビーコンの収集間隔を設定できる
+  Arguments:    no ビーコン間隔（フレーム数）
+  Returns:      none
+ *---------------------------------------------------------------------------*/
+extern void WHSetScanWaitFrame(int no);
