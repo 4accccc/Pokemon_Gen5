@@ -8939,7 +8939,7 @@ static void handler_Rinsyou_Pow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
     // Šù‚ÉŽ©•ª‚ÌƒƒU‚ªƒŒƒR[ƒh‚³‚ê‚Ä‚¢‚é‚Ì‚Å‚PŒ‚ð‰z‚¦‚Ä‚½‚ç‚Q”Ô–ÚˆÈ~‚Æ”»’è
     if( BTL_WAZAREC_GetUsedWazaCount(rec, wazaID, thisTurn) > 1)
     {
-      BTL_EVENTVAR_RewriteValue( BTL_EVAR_WAZA_POWER_RATIO, FX32_CONST(2) );
+      BTL_EVENTVAR_MulValue( BTL_EVAR_WAZA_POWER_RATIO, FX32_CONST(2) );
     }
   }
 }
