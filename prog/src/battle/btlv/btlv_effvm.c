@@ -31,6 +31,8 @@ enum{
 
 	ORTHO_WIDTH = 4,
 	ORTHO_HEIGHT = 3,
+
+  BTLV_EFFVM_TCB_MAX = 16,      //EFFVMで登録できるタスクのMAX
 };
 
 #ifdef PM_DEBUG
@@ -57,6 +59,7 @@ typedef struct{
   u32               sequence_work;                //シーケンスで使用する汎用ワーク
 
   GFL_TCBSYS*       tcbsys;
+  GFL_TCB*          tcb[ BTLV_EFFVM_TCB_MAX ];
   GFL_PTC_PTR       ptc[ PARTICLE_GLOBAL_MAX ];
   int               ptc_no[ PARTICLE_GLOBAL_MAX ];
   int               obj[ EFFVM_OBJ_MAX ];
@@ -144,6 +147,7 @@ typedef struct
   int               vol;
   int               mod_depth;
   int               mod_speed;
+  int               tcb_index;
 }BTLV_EFFVM_SEPLAY;
 
 //SEエフェクト用パラメータ構造体
@@ -163,6 +167,7 @@ typedef struct
   int               wait;
   int               wait_tmp;
   int               count;
+  int               tcb_index;
 }BTLV_EFFVM_SEEFFECT;
 
 //============================================================================================
@@ -256,6 +261,8 @@ static  int           EFFVM_GetWork( BTLV_EFFVM_WORK* bevw, int param );
 static  VMCMD_RESULT  EFFVM_INIT_EMITTER_CIRCLE_MOVE( VMHANDLE *vmh, void *context_work, BOOL ortho_mode );
 static  void          EFFVM_CalcPosOrtho( VecFx32 *pos, VecFx32 *ofs );
 static	void          MTX_MultVec44( const VecFx32 *cp_src, const MtxFx44 *cp_m, VecFx32 *p_dst, fx32 *p_w );
+static  int           EFFVM_GetTcbIndex( BTLV_EFFVM_WORK* bevw );
+static  void          EFFVM_FreeTcb( BTLV_EFFVM_WORK* bevw );
 
 //TCB関数
 static  void  TCB_EFFVM_SEPLAY( GFL_TCB* tcb, void* work );
@@ -463,6 +470,7 @@ void  BTLV_EFFVM_Exit( VMHANDLE *vmh )
 {
   BTLV_EFFVM_WORK *bevw = (BTLV_EFFVM_WORK *)VM_GetContext( vmh );
 
+  EFFVM_FreeTcb( bevw );
   GFL_HEAP_FreeMemory ( bevw );
   VM_Delete( vmh );
 }
@@ -2203,7 +2211,9 @@ static VMCMD_RESULT VMEC_SE_PLAY( VMHANDLE *vmh, void *context_work )
 
     bevw->se_play_wait_flag = 1;
 
-    GFL_TCB_AddTask( bevw->tcbsys, TCB_EFFVM_SEPLAY, bes, 0 );
+    bes->tcb_index = EFFVM_GetTcbIndex( bevw );
+
+    bevw->tcb[ bes->tcb_index ] = GFL_TCB_AddTask( bevw->tcbsys, TCB_EFFVM_SEPLAY, bes, 0 );
   }
 
   return bevw->control_mode;
@@ -2280,7 +2290,9 @@ static VMCMD_RESULT VMEC_SE_PAN( VMHANDLE *vmh, void *context_work )
 	bes->value = FX32_CONST( bes->start );
 	bes->vec_value = FX_Div( FX32_CONST( bes->end - bes->start ) , FX32_CONST( bes->frame ) );
 
-  GFL_TCB_AddTask( bevw->tcbsys, TCB_EFFVM_SEEFFECT, bes, 0 );
+  bes->tcb_index = EFFVM_GetTcbIndex( bevw );
+
+  bevw->tcb[ bes->tcb_index ] = GFL_TCB_AddTask( bevw->tcbsys, TCB_EFFVM_SEEFFECT, bes, 0 );
 
   bevw->se_effect_enable_flag = 1;
 
@@ -2326,7 +2338,9 @@ static VMCMD_RESULT VMEC_SE_EFFECT( VMHANDLE *vmh, void *context_work )
 	bes->value = FX32_CONST( bes->start );
 	bes->vec_value = FX_Div( FX32_CONST( bes->end - bes->start ) , FX32_CONST( bes->frame ) );
 
-  GFL_TCB_AddTask( bevw->tcbsys, TCB_EFFVM_SEEFFECT, bes, 0 );
+  bes->tcb_index = EFFVM_GetTcbIndex( bevw );
+
+  bevw->tcb[ bes->tcb_index ] = GFL_TCB_AddTask( bevw->tcbsys, TCB_EFFVM_SEEFFECT, bes, 0 );
 
   bevw->se_effect_enable_flag = 1;
 
@@ -3754,6 +3768,9 @@ static  int  EFFVM_GetWork( BTLV_EFFVM_WORK* bevw, int param )
   case BTLEFF_WORK_ATTACK_POKEMON_VANISH:
     ret = BTLV_MCSS_GetVanishFlag( BTLV_EFFECT_GetMcssWork(), bevw->attack_pos );
     break;
+  case BTLEFF_WORK_ATTACK_POKEMON_DIR:
+    ret = bevw->attack_pos & 1;
+    break;
   default:
     //未知のパラメータです
     GF_ASSERT( 0 );
@@ -3929,6 +3946,54 @@ static	void MTX_MultVec44( const VecFx32 *cp_src, const MtxFx44 *cp_m, VecFx32 *
     *p_w	+= cp_m->_33;//	W=1なので足すだけ
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief	TCBIndexを取得
+ *
+ *	@param[in]  bevw システム管理構造体
+ */
+//-----------------------------------------------------------------------------
+static  int EFFVM_GetTcbIndex( BTLV_EFFVM_WORK* bevw )
+{ 
+  int i;
+
+  for( i = 0 ; i < BTLV_EFFVM_TCB_MAX ; i++ )
+  { 
+    if( bevw->tcb[ i ] == NULL )
+    { 
+      break;
+    }
+  }
+
+  GF_ASSERT( i != BTLV_EFFVM_TCB_MAX );
+
+  return i;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	解放されていないTCBを解放
+ *
+ *	@param[in]  bevw システム管理構造体
+ */
+//-----------------------------------------------------------------------------
+static  void  EFFVM_FreeTcb( BTLV_EFFVM_WORK* bevw )
+{ 
+  int i;
+
+  for( i = 0 ; i < BTLV_EFFVM_TCB_MAX ; i++ )
+  { 
+    if( bevw->tcb[ i ] )
+    { 
+      void* work = GFL_TCB_GetWork( bevw->tcb[ i ] );
+      GFL_HEAP_FreeMemory( work );
+      GFL_TCB_DeleteTask( bevw->tcb[ i ] );
+      bevw->tcb[ i ] = NULL;
+      OS_TPrintf("TCB Free:%d\n",i);
+    }
+  }
+}
+
 //TCB関数
 //============================================================================================
 /**
@@ -3942,6 +4007,7 @@ static  void  TCB_EFFVM_SEPLAY( GFL_TCB* tcb, void* work )
   if( --bes->wait == 0 )
   { 
     bes->bevw->se_play_wait_flag = 0;
+    bes->bevw->tcb[ bes->tcb_index ] = NULL;
     EFFVM_SePlay( bes->se_no, bes->player, bes->pitch, bes->vol, bes->mod_depth, bes->mod_speed );
     GFL_HEAP_FreeMemory( bes );
     GFL_TCB_DeleteTask( tcb );
@@ -4052,6 +4118,7 @@ static  void  TCB_EFFVM_SEEFFECT( GFL_TCB* tcb, void* work )
   if( flag == TRUE )
   { 
     bes->bevw->se_effect_enable_flag = 0;
+    bes->bevw->tcb[ bes->tcb_index ] = NULL;
     GFL_HEAP_FreeMemory( bes );
     GFL_TCB_DeleteTask( tcb );
   }
