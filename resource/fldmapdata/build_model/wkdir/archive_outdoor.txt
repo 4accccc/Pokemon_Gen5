@@ -243,3 +243,4 @@
 "nsbmdfiles/c11_flag_01.nsbmd"
 "nsbmdfiles/h04_house_01.nsbmd"
 "nsbmdfiles/h04_house_02.nsbmd"
+"nsbmdfiles/gate_01_2.nsbmd"
