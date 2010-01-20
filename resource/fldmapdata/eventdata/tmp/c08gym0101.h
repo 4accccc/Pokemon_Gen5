@@ -17,10 +17,9 @@
 #define TR_C08GYM0101_F1_06                3
 #define C08GYM0101_WKOBJCODE00_01          4
 #define TR_C08GYM0101_F2_01                5
-#define TR_C08GYM0101_F2_02                6
-#define TR_C08GYM0101_F2_04                7
-#define TR_C08GYM0101_F1_05                8
-#define C08GYM0101_SUNGLASSES_01           9
-#define TR_C08GYM0101_F2_03               10
+#define TR_C08GYM0101_F2_04                6
+#define TR_C08GYM0101_F1_05                7
+#define C08GYM0101_SUNGLASSES_01           8
+#define TR_C08GYM0101_F2_03                9
 
 #endif //ZONE_C08GYM0101_EVC_H
