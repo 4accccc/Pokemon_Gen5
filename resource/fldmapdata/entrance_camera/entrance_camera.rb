@@ -154,12 +154,12 @@ LINE_HEAD_DATA.upto( fileData.size - 1 ) do |lineIndex|
   cameraData = CameraData.new
   cameraData.exitType_lavel = lineItem[ROW_EXIT_TYPE]
   cameraData.exitType       = GetExitTypeValue( lineItem[ROW_EXIT_TYPE] )
-  cameraData.pitch          = ConvertToNumber( lineItem[ROW_PITCH] )
-  cameraData.yaw            = ConvertToNumber( lineItem[ROW_YAW] )
-  cameraData.length         = ConvertToNumber( lineItem[ROW_LENGTH] )
-  cameraData.offsetX        = ConvertToNumber( lineItem[ROW_OFFSET_X] )
-  cameraData.offsetY        = ConvertToNumber( lineItem[ROW_OFFSET_Y] )
-  cameraData.offsetZ        = ConvertToNumber( lineItem[ROW_OFFSET_Z] )
+  cameraData.pitch          = ConvertToNumber( "0x" + lineItem[ROW_PITCH] )
+  cameraData.yaw            = ConvertToNumber( "0x" + lineItem[ROW_YAW] )
+  cameraData.length         = ConvertToNumber( "0x" + lineItem[ROW_LENGTH] )
+  cameraData.offsetX        = ConvertToNumber( "0x" + lineItem[ROW_OFFSET_X] )
+  cameraData.offsetY        = ConvertToNumber( "0x" + lineItem[ROW_OFFSET_Y] )
+  cameraData.offsetZ        = ConvertToNumber( "0x" + lineItem[ROW_OFFSET_Z] )
   cameraData.frame          = ConvertToNumber( lineItem[ROW_FRAME] )
   puts "#{cameraData.offsetX}, #{cameraData.offsetY}, #{cameraData.offsetZ}"
   # ”z—ñ‚É“o˜^
