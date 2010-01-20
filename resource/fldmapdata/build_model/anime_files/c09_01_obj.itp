@@ -3,7 +3,7 @@
 <itp version="1.6.0">
 
 <head>
-	<create user="fujiwara_maiko" host="W00194" date="2009-12-17T14:25:13" source="c09_01_obj.mb"/>
+	<create user="fujiwara_maiko" host="W00194" date="2010-01-19T23:56:48" source="m_siten01_00_00camera.mb"/>
 	<title>Texture Pattern Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
@@ -11,33 +11,102 @@
 <body>
 
 <tex_pattern_info
-	frame_size="325"
+	frame_size="201"
 	tool_start_frame="0"
-	tool_end_frame="324"
-	compress_material="on" material_size="1 1"
+	tool_end_frame="200"
+	compress_material="on" material_size="6 6"
 />
 
-<tex_pattern_list_data image_size="2" palette_size="2">
-	<image_name index="0" name="c09_01_ob.1"/>
-	<image_name index="1" name="c09_01_ob.2"/>
-	<palette_name index="0" name="c09_01_ob.1_pl"/>
-	<palette_name index="1" name="c09_01_ob.2_pl"/>
+<tex_pattern_list_data image_size="6" palette_size="6">
+	<image_name index="0" name="c09_hi.1"/>
+	<image_name index="1" name="c09_hi.2"/>
+	<image_name index="2" name="c09_hi.3"/>
+	<image_name index="3" name="c09_hka.1"/>
+	<image_name index="4" name="c09_hka.2"/>
+	<image_name index="5" name="c09_hka.3"/>
+	<palette_name index="0" name="c09_hi.1_pl"/>
+	<palette_name index="1" name="c09_hi.2_pl"/>
+	<palette_name index="2" name="c09_hi.3_pl"/>
+	<palette_name index="3" name="c09_hka.1_pl"/>
+	<palette_name index="4" name="c09_hka.2_pl"/>
+	<palette_name index="5" name="c09_hka.3_pl"/>
 </tex_pattern_list_data>
 
 <tex_pattern_data>
-	<frame_idx size="2">
-		0 1
+	<frame_idx size="202">
+		0 1 3 6 8 9 11 14 16 17
+		19 22 24 25 27 30 32 33 35 38
+		40 41 43 46 48 49 51 54 56 57
+		59 62 64 65 67 70 72 73 75 78
+		80 81 83 86 88 89 91 94 96 97
+		99 102 104 105 107 110 112 113 115 118
+		120 121 123 126 128 129 131 134 136 137
+		139 142 144 145 147 150 152 153 155 158
+		160 161 163 166 168 169 171 174 176 177
+		179 182 184 185 187 190 192 193 195 198
+		200 0 1 3 6 8 9 11 14 16
+		17 19 22 24 25 27 30 32 33 35
+		38 40 41 43 46 48 49 51 54 56
+		57 59 62 64 65 67 70 72 73 75
+		78 80 81 83 86 88 89 91 94 96
+		97 99 102 104 105 107 110 112 113 115
+		118 120 121 123 126 128 129 131 134 136
+		137 139 142 144 145 147 150 152 153 155
+		158 160 161 163 166 168 169 171 174 176
+		177 179 182 184 185 187 190 192 193 195
+		198 200
 	</frame_idx>
-	<image_idx size="2">
-		0 1
+	<image_idx size="202">
+		0 1 2 1 0 1 2 1 0 1
+		2 1 0 1 2 1 0 1 2 1
+		0 1 2 1 0 1 2 1 0 1
+		2 1 0 1 2 1 0 1 2 1
+		0 1 2 1 0 1 2 1 0 1
+		2 1 0 1 2 1 0 1 2 1
+		0 1 2 1 0 1 2 1 0 1
+		2 1 0 1 2 1 0 1 2 1
+		0 1 2 1 0 1 2 1 0 1
+		2 1 0 1 2 1 0 1 2 1
+		0 3 4 5 4 3 4 5 4 3
+		4 5 4 3 4 5 4 3 4 5
+		4 3 4 5 4 3 4 5 4 3
+		4 5 4 3 4 5 4 3 4 5
+		4 3 4 5 4 3 4 5 4 3
+		4 5 4 3 4 5 4 3 4 5
+		4 3 4 5 4 3 4 5 4 3
+		4 5 4 3 4 5 4 3 4 5
+		4 3 4 5 4 3 4 5 4 3
+		4 5 4 3 4 5 4 3 4 5
+		4 3
 	</image_idx>
-	<palette_idx size="2">
-		0 1
+	<palette_idx size="202">
+		0 1 2 1 0 1 2 1 0 1
+		2 1 0 1 2 1 0 1 2 1
+		0 1 2 1 0 1 2 1 0 1
+		2 1 0 1 2 1 0 1 2 1
+		0 1 2 1 0 1 2 1 0 1
+		2 1 0 1 2 1 0 1 2 1
+		0 1 2 1 0 1 2 1 0 1
+		2 1 0 1 2 1 0 1 2 1
+		0 1 2 1 0 1 2 1 0 1
+		2 1 0 1 2 1 0 1 2 1
+		0 3 4 5 4 3 4 5 4 3
+		4 5 4 3 4 5 4 3 4 5
+		4 3 4 5 4 3 4 5 4 3
+		4 5 4 3 4 5 4 3 4 5
+		4 3 4 5 4 3 4 5 4 3
+		4 5 4 3 4 5 4 3 4 5
+		4 3 4 5 4 3 4 5 4 3
+		4 5 4 3 4 5 4 3 4 5
+		4 3 4 5 4 3 4 5 4 3
+		4 5 4 3 4 5 4 3 4 5
+		4 3
 	</palette_idx>
 </tex_pattern_data>
 
-<tex_pattern_anm_array size="1">
-	<tex_pattern_anm index="0" material_name="c09_01_obake_1" data_size="2" data_head="0"/>
+<tex_pattern_anm_array size="2">
+	<tex_pattern_anm index="0" material_name="so_rousoku_1" data_size="101" data_head="0"/>
+	<tex_pattern_anm index="1" material_name="so_light_1" data_size="101" data_head="101"/>
 </tex_pattern_anm_array>
 
 </body>
