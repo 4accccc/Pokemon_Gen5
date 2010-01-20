@@ -204,7 +204,7 @@ VMCMD_RESULT EvCmdBgmNowMapPlay( VMHANDLE *core, void *wk )
     u32 soundIdx;
     zoneID = FIELDMAP_GetZoneID( fieldmap );
     soundIdx = FSND_GetFieldBGM( gdata, zoneID );
-    event = EVENT_FSND_ChangeBGM( gsys, soundIdx, FSND_FADE_SHORT, FSND_FADE_NORMAL );
+    event = EVENT_FSND_ChangeBGM( gsys, soundIdx, FSND_FADE_LONG, FSND_FADE_NORMAL );
     SCRIPT_CallEvent( sc, event );
   }
   return VMCMD_RESULT_SUSPEND;
