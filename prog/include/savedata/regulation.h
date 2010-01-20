@@ -101,10 +101,16 @@ typedef enum  {
   REGULATION_CARD_END_YEAR,    ///< I—¹”NF00-99
   REGULATION_CARD_END_MONTH,   ///< I—¹ŒŽF01-12
   REGULATION_CARD_END_DAY,     ///< I—¹“úF01-31
-  REGULATION_CARD_STATUS,      ///< ‘å‰ïó‘ÔF‚O–¢ŠJÃ^‚PŠJÃ’†^‚QI—¹
+  REGULATION_CARD_STATUS,      ///< ‘å‰ïó‘ÔF‚O–¢ŠJÃ^‚PŠJÃ’†^‚QI—¹REGULATION_CARD_STATUS_TYPE‚Ì’l
 } REGULATION_CARD_PARAM_TYPE;
 
-
+typedef enum  {
+  REGULATION_CARD_STATUS_TYPE_PRE     = 0,  ///< –¢“o˜^
+  REGULATION_CARD_STATUS_TYPE_ENTRY   = 1,  ///< ƒGƒ“ƒgƒŠ[’†
+  REGULATION_CARD_STATUS_TYPE_JOIN    = 2,  ///< ŽQ‰Á’†
+  REGULATION_CARD_STATUS_TYPE_END     = 3,  ///< ‘å‰ïI—¹
+  REGULATION_CARD_STATUS_TYPE_GIVEUP  = 4,  ///< ŠüŒ ‚µ‚½
+} REGULATION_CARD_STATUS_TYPE;
 
 
 //----------------------------------------------------------
@@ -156,7 +162,7 @@ typedef struct {
   char end_year;//I—¹”NF00-99
   char end_month;//I—¹ŒŽF01-12
   char end_day;//I—¹“úF01-31
-  char status;  //‘å‰ïó‘ÔF‚O–¢ŠJÃ^‚PŠJÃ’†^‚QI—¹
+  char status;  //‘å‰ïó‘ÔF‚O–¢ŠJÃ^‚PŠJÃ’†^‚QI—¹  REGULATION_CARD_STATUS_TYPE‚Ì’l
   u16 crc;  //®‡«ŒŸ¸
  // short rating;//‘å‰ï—pƒŒ[ƒeƒBƒ“ƒO
 //  short rd;//‘å‰ï—pRD
