@@ -7631,17 +7631,13 @@
 		<language name="JPN" width="256">W245-BUCKL</language>
 		<language name="JPN_KANJI" width="256">W245-BUCKL</language>
 	</row>
-	<row id="msg_seq_se_dmy_153">
-		<language name="JPN" width="256">DMY-153</language>
-		<language name="JPN_KANJI" width="256">DMY-153</language>
+	<row id="msg_seq_se_w250_uzushio">
+		<language name="JPN" width="256">W250-UZUSHIO</language>
+		<language name="JPN_KANJI" width="256">W250-UZUSHIO</language>
 	</row>
-	<row id="msg_seq_se_dmy_154">
-		<language name="JPN" width="256">DMY-154</language>
-		<language name="JPN_KANJI" width="256">DMY-154</language>
-	</row>
-	<row id="msg_seq_se_dmy_155">
-		<language name="JPN" width="256">DMY-155</language>
-		<language name="JPN_KANJI" width="256">DMY-155</language>
+	<row id="msg_seq_se_w258_arare">
+		<language name="JPN" width="256">W258-ARARE</language>
+		<language name="JPN_KANJI" width="256">W258-ARARE</language>
 	</row>
 	<row id="msg_seq_se_dmy_156">
 		<language name="JPN" width="256">DMY-156</language>
