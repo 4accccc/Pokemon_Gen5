@@ -46,6 +46,7 @@
 #include "script_message.naix"
 #include "arc/fieldmap/script_seq.naix"
 
+#include "script_debugger.h"
 //============================================================================================
 //  define
 //============================================================================================
@@ -637,8 +638,15 @@ static void loadScriptDataDirect( SCRCMD_WORK *work,
 	VMHANDLE *core, u32 scr_id, u32 msg_id, HEAPID heapID )
 {
 	//共通スクリプトデータロード
-	VM_CODE *script = GFL_ARC_UTIL_Load( ARCID_SCRSEQ, scr_id, 0, heapID );
-	core->pScript = (VM_CODE*)script;
+  VM_CODE * script = NULL;
+#ifdef  PM_DEBUG
+  script = SCRDEBUGGER_ReadScriptFile( heapID, scr_id );
+#endif
+  if ( script == NULL )
+  {
+    script = GFL_ARC_UTIL_Load( ARCID_SCRSEQ, scr_id, 0, heapID );
+  }
+  core->pScript = (VM_CODE*)script;
 	
 	if( msg_id != SCRIPT_MSG_NON ){
 		SCRCMD_WORK_CreateMsgData( work, msg_id );

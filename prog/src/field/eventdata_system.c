@@ -33,6 +33,8 @@
 
 #include "debug/debug_flg.h" //DEBUG_FLG_～
 
+#include "script_debugger.h"
+
 //============================================================================================
 //============================================================================================
 #ifdef PM_DEBUG
@@ -515,7 +517,10 @@ void EVENTDATA_SYS_DelConnectEventIdx( EVENTDATA_SYSTEM * evdata, u16 idx )
 static void loadSpecialScriptData( EVENTDATA_SYSTEM * evdata, u16 zone_id )
 {
   u16 sp_scr_id = ZONEDATA_GetSpScriptArcID( zone_id );
-  GFL_ARC_LoadData(evdata->spscr_buffer, ARCID_SCRSEQ,  sp_scr_id );
+  if ( SCRDEBUGGER_ReadSpecialScriptFile( sp_scr_id, evdata->spscr_buffer, SPSCR_DATA_SIZE ) == FALSE)
+  {
+    GFL_ARC_LoadData(evdata->spscr_buffer, ARCID_SCRSEQ,  sp_scr_id );
+  }
 }
 
 //------------------------------------------------------------------
@@ -529,11 +534,14 @@ static void loadEventDataTableNormal(EVENTDATA_SYSTEM * evdata, u16 zone_id)
   u32 arcID;
   u32 size;
 
-  arcID = ZONEDATA_GetEventDataArcID(zone_id);
-  size = GFL_ARC_GetDataSizeByHandle( evdata->eventHandle, arcID );
-  // サイズオーバーチェック
-  GF_ASSERT( EVDATA_SIZE > size );
-  GFL_ARC_LoadDataOfsByHandle(evdata->eventHandle, arcID, 0, size, evdata->load_buffer);
+  if ( SCRDEBUGGER_ReadEventFile( zone_id, evdata->load_buffer, EVDATA_SIZE ) == FALSE)
+  {
+    arcID = ZONEDATA_GetEventDataArcID(zone_id);
+    size = GFL_ARC_GetDataSizeByHandle( evdata->eventHandle, arcID );
+    // サイズオーバーチェック
+    GF_ASSERT( EVDATA_SIZE > size );
+    GFL_ARC_LoadDataOfsByHandle(evdata->eventHandle, arcID, 0, size, evdata->load_buffer);
+  }
   
   table = (const EVENTDATA_TABLE*)evdata->load_buffer; 
   buf = (const u8*)table->buf;

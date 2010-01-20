@@ -240,6 +240,7 @@ SRCS  +=    $(SOUNDSRC) \
         system/screentex.c \
         debug/debug_flg.c \
         debug/debug_hudson.c \
+        field/script_debugger.c \
    		debug/debug_str_conv.c \
         field/pleasure_boat_st.c \
         field/scrcmd_pl_boat_init.c \
@@ -1294,7 +1295,8 @@ SRCS_OVERLAY_OBATA_DEBUG = test/obata/debug_obata_menu.c \
 #LIB=>          libnnsmcs.$HYB.a
 SRCS_OVERLAY_MCS_LIB = debug/gf_mcs.c \
 											 debug/mcs_resident.c \
-                       debug/mcs_readfile.c
+                       debug/mcs_readfile.c \
+                       field/script_debugger_core.c
 
 #D_NUMINPUTƒ‰ƒCƒuƒ‰ƒŠ
 #===> SRCS_OVERLAY_DEV_WIFI
