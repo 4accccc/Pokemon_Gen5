@@ -4903,14 +4903,14 @@
 		<language name="JPN" width="256">BGM-WCS</language>
 		<language name="JPN_KANJI" width="256">BGM-WCS</language>
 	</row>
+	<row id="msg_seq_bgm_msl_dl_01">
+		<language name="JPN" width="256">BGM-MSL-DL-01</language>
+		<language name="JPN_KANJI" width="256">BGM-MSL-DL-01</language>
+	</row>
 	<row id="msg_seq_bgm_end">
 		<language name="JPN" width="256">BGM-END</language>
 		<language name="JPN_KANJI" width="256">BGM-END</language>
 	</row>
-          <row id="msg_seq_1138">
-          <language name="JPN" width="256">dmy</language>
-          <language name="JPN_KANJI" width="256">dmy</language>
-          </row>
           <row id="msg_seq_1139">
           <language name="JPN" width="256">dmy</language>
           <language name="JPN_KANJI" width="256">dmy</language>
@@ -7639,9 +7639,9 @@
 		<language name="JPN" width="256">W258-ARARE</language>
 		<language name="JPN_KANJI" width="256">W258-ARARE</language>
 	</row>
-	<row id="msg_seq_se_dmy_156">
-		<language name="JPN" width="256">DMY-156</language>
-		<language name="JPN_KANJI" width="256">DMY-156</language>
+	<row id="msg_seq_se_w300_pitya">
+		<language name="JPN" width="256">W300-PITYA</language>
+		<language name="JPN_KANJI" width="256">W300-PITYA</language>
 	</row>
 	<row id="msg_seq_se_dmy_157">
 		<language name="JPN" width="256">DMY-157</language>
