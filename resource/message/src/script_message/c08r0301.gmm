@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2010-01-20T17:49:26"/>
+	<create user="matsumiya" host="W00207" date="2010-01-20T17:52:30"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -310,12 +310,12 @@
 どう？　ミュージカルで　つかう
 グッズ　ほしいかい？</language>
 		<language name="JPN_KANJI" width="256">なんと　この　わたしはぁ
-ミュージカル　だいすき　おじさん♪▼
-おや　グッズケースを　もっているね
+ミュージカル　大好き　おじさん♪▼
+おや　グッズケースを　持っているね
 ということは　キミも▽
-ミュージカル　だいすき　にんげん♪▼
-どう？　ミュージカルで　つかう
-グッズ　ほしいかい？</language>
+ミュージカル　大好き　人間♪▼
+どう？　ミュージカルで　使う
+グッズ　欲しいかい？</language>
 	</row>
 
 	<row id="msg_c08r0301_goods_02">
@@ -327,7 +327,7 @@
 ポケモンに　いろいろ　グッズを
 つけてあげると　いいのさあ♪</language>
 		<language name="JPN_KANJI" width="256">うれしいねえ♪　キミも
-ミュージカル　だいすき　にんげん♪▼
+ミュージカル　大好き　人間♪▼
 ポケモンに　いろいろ　グッズを
 つけてあげると　いいのさあ♪</language>
 	</row>
@@ -340,7 +340,7 @@
 キュートさを　ごぞんじ　ないのか！</language>
 		<language name="JPN_KANJI" width="256">なんと　きみは！▼
 グッズを　つけた　ポケモンの
-キュートさを　ごぞんじ　ないのか！</language>
+キュートさを　ご存知　ないのか！</language>
 	</row>
 
 	<row id="msg_c08r0301_goods_04">
@@ -351,9 +351,9 @@
 また　あしたに　なれば
 べつの　グッズを　あげるよお♪</language>
 		<language name="JPN_KANJI" width="256">なんと　この　わたしはぁ
-ミュージカル　だいすき　おじさん♪▼
-また　あしたに　なれば
-べつの　グッズを　あげるよお♪</language>
+ミュージカル　大好き　おじさん♪▼
+また　明日に　なれば
+別の　グッズを　あげるよお♪</language>
 	</row>
 
 	<row id="msg_c08r0301_goods_05">
@@ -364,9 +364,9 @@
 せかいの　みんなに
 ミュージカルを　たのしんでほしいよ♪</language>
 		<language name="JPN_KANJI" width="256">なんと　この　わたしはぁ
-ミュージカル　だいすき　おじさん♪▼
-せかいの　みんなに
-ミュージカルを　たのしんでほしいよ♪</language>
+ミュージカル　大好き　おじさん♪▼
+世界の　みんなに
+ミュージカルを　楽しんでほしいよ♪</language>
 	</row>
 
 	<row id="msg_c08r0301_middlewoman1_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
