@@ -67,8 +67,6 @@ _EVENT_DATA_END
 /*            ZONE_CHANGE_LABEL                               */
 /**************************************************************/
 ev_zone_c03r0801:
-  //ローカル変数を定義
-	DEFINE_LOCAL	LWK_BTL_TYPE
 
   _PL_BOAT_GET_ROOM_INFO(0,PL_BOAT_ROOM_INFO_OBJ_CODE,0,OBJCHRWORK0)
   _PL_BOAT_GET_ROOM_INFO(1,PL_BOAT_ROOM_INFO_OBJ_CODE,0,OBJCHRWORK1)
@@ -91,7 +89,6 @@ ev_zone_c03r0801:
   _FLAG_RESET( FV_C03R0801_FUTAGO_02 )
 
   //バニッシュフラグセット(インデックス2、7　⇒　即ち　3号室と8号室)
-  _PL_BOAT_GET_ROOM_INFO(2,PL_BOAT_ROOM_INFO_BTL_TYPE,0,LWK_BTL_TYPE)
   IF $LWK_BTL_TYPE == PL_BOAT_BTL_TYPE_SINGLE THEN
     _FLAG_SET( FV_C03R0801_FUTAGO_01 )
   ENDIF
@@ -627,7 +624,7 @@ ev_trainer:
     //現在までの勝利数を取得
     _PL_BOAT_GET_TR_NUM(PL_TR_SEARCH_TYPE_WIN,LWK_WIN)
     //勝利数と総数が同じならば、システムメッセージを表示
-    IF $LWK_TOTAL >= LWK_WIN THEN
+    IF $LWK_TOTAL <= $LWK_WIN THEN
       _SYSWIN_MSG_DOWN( msg_c03r0801_sys_01 )
 		  _LAST_KEYWAIT()
 		  _SYSWIN_CLOSE()
@@ -687,6 +684,16 @@ ev_long_talker:
   //メッセージＩＤを取得
   _PL_BOAT_GET_ROOM_INFO(LOCALWORK0,PL_BOAT_ROOM_INFO_MSG,0,LWK_NPC_MSG_LONG)
 
+  //会話開始
+  _TALK_OBJ_START()
+  _BALLOONWIN_TALKOBJ_MSG(LWK_NPC_MSG_LONG)
+  _LAST_KEYWAIT()
+	_BALLOONWIN_CLOSE()
+
+  //ブザーならす
+
+  //メッセージＩＤを取得
+  _PL_BOAT_GET_ROOM_INFO(LOCALWORK0,PL_BOAT_ROOM_INFO_MSG,1,LWK_NPC_MSG_LONG)
   //会話開始
   _TALK_OBJ_START()
   _BALLOONWIN_TALKOBJ_MSG(LWK_NPC_MSG_LONG)
