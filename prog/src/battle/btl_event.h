@@ -30,6 +30,7 @@ typedef enum {
 
   BTL_EVENT_WAZASEQ_START,          ///< ワザ処理開始
   BTL_EVENT_WAZASEQ_END,            ///< ワザ処理終了
+  BTL_EVENT_CHECK_DELAY_WAZA,       ///< 遅延発動ワザ準備チェック
   BTL_EVENT_WAZASEQ_ROB,            ///< ワザ乗っ取り確定
   BTL_EVENT_WAZASEQ_REFRECT,        ///< ワザ跳ね返し確定
   BTL_EVENT_CHECK_CHANGE,           ///< いれかえチェック
@@ -82,7 +83,6 @@ typedef enum {
   BTL_EVENT_WAZA_DMG_PROC1,         ///< タイプ計算前ダメージ補正ハンドラ
   BTL_EVENT_WAZA_DMG_PROC2,         ///< タイプ計算後ダメージ補正ハンドラ
   BTL_EVENT_WAZA_DMG_LAST,          ///< 最終ダメージ補正ハンドラ
-  BTL_EVENT_KORAERU_CHECK,          ///< 「こらえる」チェック
   BTL_EVENT_WAZA_DMG_REACTION,      ///< ダメージ処理１体ごとの反応
   BTL_EVENT_WAZA_DMG_AFTER,         ///< ダメージを対象全部に与えた後の追加処理（１回のみ）
   BTL_EVENT_DECREMENT_PP_VOLUME,    ///< 使用ワザの減少PP値を取得
@@ -108,7 +108,7 @@ typedef enum {
   BTL_EVENT_ADDSICK_CHECKFAIL,      ///< 状態異常の失敗チェック
   BTL_EVENT_ADDSICK_FIX,            ///< 状態異常確定
   BTL_EVENT_ADDSICK_FAILED,         ///< 状態異常失敗
-  BTL_EVENT_POKESICK_FIXED,         ///< ポケモン系状態異常確定
+  BTL_EVENT_POKESICK_FIXED,         ///< 基本状態異常確定
   BTL_EVENT_WAZASICK_FIXED,         ///< ワザ系状態異常確定
   BTL_EVENT_IEKI_FIXED,             ///< いえきによる特性無効化の確定
   BTL_EVENT_SICK_DAMAGE,            ///< 状態異常によるダメージ計算
@@ -118,8 +118,10 @@ typedef enum {
   BTL_EVENT_SHRINK_FIX,             ///< ひるみ確定後
   BTL_EVENT_ICHIGEKI_CHECK,         ///< 一撃必殺チェック
   BTL_EVENT_NOT_WAZA_DAMAGE,        ///< ワザ以外のダメージチェック
-  BTL_EVENT_USE_ITEM,               ///< アイテム使用
-  BTL_EVENT_USE_ITEM_TMP,           ///< アイテム一時使用
+  BTL_EVENT_USE_ITEM,               ///< 装備アイテム使用
+  BTL_EVENT_USE_ITEM_TMP,           ///< 装備アイテム使用（一時処理）
+  BTL_EVENT_KORAERU_CHECK,          ///<「こらえる」チェック
+  BTL_EVENT_KORAERU_EXE,            ///<「こらえる」発動
   BTL_EVENT_TURNCHECK_BEGIN,        ///< ターンチェック（先頭）
   BTL_EVENT_TURNCHECK_END,          ///< ターンチェック（終端）
   BTL_EVENT_WEATHER_CHECK,          ///< 天候のチェック

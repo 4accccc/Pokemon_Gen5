@@ -33,7 +33,6 @@ enum {
   RANK_CRITICAL_DEF = 0,
 
   TURNFLG_BUF_SIZE = (BPP_TURNFLG_MAX/8)+(BPP_TURNFLG_MAX%8!=0),
-  ACTFLG_BUF_SIZE  = (BPP_ACTFLG_MAX/8)+(BPP_ACTFLG_MAX%8!=0),
   CONTFLG_BUF_SIZE = (BPP_CONTFLG_MAX/8)+(BPP_CONTFLG_MAX%8!=0),
 
   TURNCOUNT_NULL = BTL_TURNCOUNT_MAX+1,
@@ -140,7 +139,6 @@ struct _BTL_POKEPARAM {
   u16 sameWazaCounter;        ///< 同じワザを何連続で出しているかカウンタ
   BtlPokePos  prevTargetPos;  ///< 直前に狙った相手
   u8  turnFlag[ TURNFLG_BUF_SIZE ];
-  u8  actFlag [ ACTFLG_BUF_SIZE ];
   u8  contFlag[ CONTFLG_BUF_SIZE ];
   u8  counter[ BPP_COUNTER_MAX ];
   BPP_WAZADMG_REC  wazaDamageRec[ WAZADMG_REC_TURN_MAX ][ WAZADMG_REC_MAX ];
@@ -572,10 +570,6 @@ void BPP_SetBaseStatus( BTL_POKEPARAM* bpp, BppValueID vid, u16 value )
   BTL_Printf("ポケ[%d]の能力(%d)を%dに書き換えた\n", bpp->coreParam.myID, vid, value);
 }
 
-void BPP_DebugPrintTokuseiAdrs( const BTL_POKEPARAM* bpp )
-{
-  OS_TPrintf("Bpp = %p,  tok=%p\n", bpp, (void*)(&(bpp->tokusei)));
-}
 //=============================================================================================
 /**
  * 各種パラメータ取得
@@ -611,7 +605,13 @@ int BPP_GetValue( const BTL_POKEPARAM* bpp, BppValueID vid )
   case BPP_MAX_HP:          return bpp->baseParam.hpMax;
   case BPP_SEX:             return bpp->baseParam.sex;
 
-  case BPP_TOKUSEI:         return bpp->tokusei;
+  case BPP_TOKUSEI_EFFECTIVE:
+    if( BPP_CheckSick(bpp, WAZASICK_IEKI) ){
+      return POKETOKUSEI_NULL;
+    }
+    /* fallthru */
+  case BPP_TOKUSEI:           return bpp->tokusei;
+
   case BPP_FORM:            return bpp->formNo;
   case BPP_EXP:             return bpp->coreParam.exp;
 
@@ -783,20 +783,6 @@ BOOL BPP_TURNFLAG_Get( const BTL_POKEPARAM* pp, BppTurnFlag flagID )
 }
 //=============================================================================================
 /**
- * アクション毎クリアフラグの取得
- *
- * @param   pp
- * @param   flagID
- *
- * @retval  BOOL
- */
-//=============================================================================================
-BOOL BPP_GetActFlag( const BTL_POKEPARAM* pp, BppActFlag flagID )
-{
-  return flgbuf_get( pp->actFlag, flagID );
-}
-//=============================================================================================
-/**
  * 永続フラグ値取得
  *
  * @param   pp
@@ -870,10 +856,13 @@ fx32 BPP_GetHPRatio( const BTL_POKEPARAM* pp )
 //=============================================================================================
 u8 BPP_WAZA_SearchIdx( const BTL_POKEPARAM* pp, WazaID waza )
 {
-  u32 i;
-  for(i=0; i<PTL_WAZA_MAX; ++i){
-    if( pp->waza[i].number == waza ){
-      return i;
+  if( waza != WAZANO_NULL )
+  {
+    u32 i;
+    for(i=0; i<PTL_WAZA_MAX; ++i){
+      if( pp->waza[i].number == waza ){
+        return i;
+      }
     }
   }
   return PTL_WAZA_MAX;
@@ -1302,7 +1291,7 @@ void BPP_WAZA_UpdateID( BTL_POKEPARAM* pp, u8 wazaIdx, WazaID waza, u8 ppMax, BO
     pWaza->ppMax = ppMax;
   }
   pWaza->pp = pWaza->ppMax;
-  BTL_Printf("ワザ上書き: ppMax指定=%d, 実地:%d\n", ppMax, pWaza->ppMax);
+  OS_TPrintf("ワザ上書き: ppMax指定=%d, 実値:%d\n", ppMax, pWaza->ppMax);
 }
 //=============================================================================================
 /**
@@ -1337,18 +1326,6 @@ BOOL BPP_WAZA_IsUsable( const BTL_POKEPARAM* bpp, WazaID waza )
 void BPP_TURNFLAG_Set( BTL_POKEPARAM* pp, BppTurnFlag flagID )
 {
   flgbuf_set( pp->turnFlag, flagID );
-}
-//=============================================================================================
-/**
- * アクションごとフラグのセット
- *
- * @param   pp
- * @param   flagID
- */
-//=============================================================================================
-void BPP_ACTFLAG_Set( BTL_POKEPARAM* pp, BppActFlag flagID )
-{
-  flgbuf_set( pp->actFlag, flagID );
 }
 //=============================================================================================
 /**
@@ -1397,7 +1374,7 @@ void BPP_CONTFLAG_Clear( BTL_POKEPARAM* pp, BppContFlag flagID )
 //=============================================================================================
 void BPP_SetWazaSick( BTL_POKEPARAM* bpp, WazaSick sick, BPP_SICK_CONT contParam )
 {
-  if( (sick < POKESICK_MAX) || (sick == WAZASICK_DOKUDOKU) )
+  if( BTL_CALC_IsBasicSickID(sick) )
   {
     PokeSick pokeSick = BPP_GetPokeSick( bpp );
     GF_ASSERT(pokeSick == POKESICK_NULL);
@@ -1448,7 +1425,6 @@ void BPP_WazaSick_TurnCheck( BTL_POKEPARAM* bpp, BtlSickTurnCheckFunc callbackFu
         BTL_Printf("ポケ[%d - %p], 状態異常[%d] 最大ターン=%d, counter=%d ->",
           bpp->coreParam.myID, bpp, sick, turnMax, bpp->wazaSickCounter[sick] );
         bpp->wazaSickCounter[sick] += n;
-        OS_TPrintf(" %d (adrs=%p)\n", bpp->wazaSickCounter[sick], &(bpp->wazaSickCounter[sick]));
 
         if( bpp->wazaSickCounter[sick] >= turnMax )
         {
@@ -1530,7 +1506,7 @@ static void cureDependSick( BTL_POKEPARAM* bpp, WazaSick sickID  )
 //=============================================================================================
 void BPP_CureWazaSick( BTL_POKEPARAM* pp, WazaSick sick )
 {
-  if( sick < POKESICK_MAX )
+  if( BTL_CALC_IsBasicSickID(sick) )
   {
     BPP_CurePokeSick( pp );
   }
@@ -1761,10 +1737,6 @@ static void clearWazaSickWork( BTL_POKEPARAM* bpp, BOOL fPokeSickInclude )
   GFL_STD_MemClear( bpp->wazaSickCounter, sizeof(bpp->wazaSickCounter) );
 }
 
-
-
-
-
 //=============================================================================================
 /**
  * 場に入場した時のターンナンバーをセット
@@ -1815,17 +1787,6 @@ void BPP_TURNFLAG_ForceOff( BTL_POKEPARAM* bpp, BppTurnFlag flagID )
 }
 //=============================================================================================
 /**
- * アクションごとフラグのクリア
- *
- * @param   bpp
- */
-//=============================================================================================
-void BPP_ACTFLAG_Clear( BTL_POKEPARAM* bpp )
-{
-  flgbuf_clear( bpp->actFlag, sizeof(bpp->actFlag) );
-}
-//=============================================================================================
-/**
  * 死亡による各種状態クリア
  *
  * @param   pp
@@ -1833,7 +1794,6 @@ void BPP_ACTFLAG_Clear( BTL_POKEPARAM* bpp )
 //=============================================================================================
 void BPP_Clear_ForDead( BTL_POKEPARAM* bpp )
 {
-  flgbuf_clear( bpp->actFlag, sizeof(bpp->actFlag) );
   flgbuf_clear( bpp->turnFlag, sizeof(bpp->turnFlag) );
   flgbuf_clear( bpp->contFlag, sizeof(bpp->contFlag) );
 
@@ -1858,7 +1818,6 @@ void BPP_Clear_ForDead( BTL_POKEPARAM* bpp )
 //=============================================================================================
 void BPP_Clear_ForOut( BTL_POKEPARAM* bpp )
 {
-  flgbuf_clear( bpp->actFlag, sizeof(bpp->actFlag) );
   flgbuf_clear( bpp->turnFlag, sizeof(bpp->turnFlag) );
   /*
    * ※バトンタッチで引き継ぐ情報を記録しているため、
@@ -1970,9 +1929,13 @@ void BPP_ChangeForm( BTL_POKEPARAM* pp, u8 formNo )
 {
   pp->formNo = formNo;
 }
+
+
+
+
 //=============================================================================================
 /**
- * 所有アイテム削除
+ * 所有アイテム削除（所有アイテムが無くなるだけ）
  *
  * @param   pp
  */
@@ -1984,6 +1947,29 @@ void BPP_RemoveItem( BTL_POKEPARAM* bpp )
 }
 //=============================================================================================
 /**
+ * 所有アイテム消費（所有アイテムが無くなり、消費バッファに記憶する）
+ *
+ * @param   bpp
+ */
+//=============================================================================================
+void BPP_ConsumeItem( BTL_POKEPARAM* bpp )
+{
+  bpp->coreParam.usedItem = bpp->coreParam.item;
+  bpp->coreParam.item = ITEM_DUMMY_DATA;
+}
+//=============================================================================================
+/**
+ * アイテム消費情報のクリア
+ *
+ * @param   bpp
+ */
+//=============================================================================================
+void BPP_ClearConsumedItem( BTL_POKEPARAM* bpp )
+{
+  bpp->coreParam.usedItem = ITEM_DUMMY_DATA;
+}
+//=============================================================================================
+/**
  * 消費したアイテムナンバーを返す
  *
  * @param   bpp
@@ -1991,10 +1977,12 @@ void BPP_RemoveItem( BTL_POKEPARAM* bpp )
  * @retval  u16   消費したアイテムナンバー（消費していなければITEM_DUMMY_DATA）
  */
 //=============================================================================================
-u16 BPP_GetUsedItem( const BTL_POKEPARAM* bpp )
+u16 BPP_GetConsumedItem( const BTL_POKEPARAM* bpp )
 {
   return bpp->coreParam.usedItem;
 }
+
+
 
 
 //=============================================================================================
@@ -2307,7 +2295,6 @@ BOOL BPP_AddExp( BTL_POKEPARAM* bpp, u32* expRest, BTL_LEVELUP_INFO* info )
       info->agi    = bpp->baseParam.agility - info->agi;
 
       bpp->coreParam.hp += info->hp;
-      OS_TPrintf("レベルアップしたのでHPが%dに増加\n", bpp->coreParam.hp);
       PP_Put((POKEMON_PARAM*)(bpp->coreParam.ppSrc), ID_PARA_hp, bpp->coreParam.hp );
 
 //      PP_Put( (POKEMON_PARAM*)(bpp->coreParam.ppSrc), ID_PARA_exp, bpp->exp );
@@ -2328,6 +2315,20 @@ BOOL BPP_AddExp( BTL_POKEPARAM* bpp, u32* expRest, BTL_LEVELUP_INFO* info )
   GFL_STD_MemClear( info, sizeof(*info) );
   return FALSE;
 }
+//=============================================================================================
+/**
+ * レベル100になるまでに必要な経験値を取得
+ *
+ * @param   bpp
+ *
+ * @retval  u32
+ */
+//=============================================================================================
+u32 BPP_GetExpMargin( const BTL_POKEPARAM* bpp )
+{
+  return POKETOOL_GetMinExp( bpp->coreParam.monsno, bpp->formNo, 100 );
+}
+
 //=============================================================================================
 /**
  * レベルアップパラメータを反映させる（クライアント用）
@@ -2387,6 +2388,8 @@ void BPP_ReflectToPP( BTL_POKEPARAM* bpp )
     PP_SetWazaPos( pp, bpp->waza[i].number, i );
     PP_Put( pp, ID_PARA_pp1+i, bpp->waza[i].pp );
   }
+
+  PP_Put( pp, ID_PARA_item, bpp->coreParam.item );
 }
 //=============================================================================================
 /**

@@ -107,7 +107,8 @@ extern u8 BTL_CALC_GetResistTypes( PokeType type, PokeType* dst );
 //=============================================================================================
 extern void BTL_CALC_WazaSickContToBppSickCont( WAZA_SICKCONT_PARAM wazaSickCont, const BTL_POKEPARAM* attacker, BPP_SICK_CONT* sickCont );
 
-BPP_SICK_CONT BTL_CALC_MakeDefaultPokeSickCont( PokeSick sick );
+extern BPP_SICK_CONT BTL_CALC_MakeDefaultPokeSickCont( PokeSick sick );
+extern BOOL BTL_CALC_IsBasicSickID( WazaSick sickID );
 extern void BTL_CALC_MakeDefaultWazaSickCont( WazaSick sick, const BTL_POKEPARAM* attacker, BPP_SICK_CONT* cont );
 extern BPP_SICK_CONT BTL_CALC_MakeWazaSickCont_Turn( u8 turn_count );
 extern BPP_SICK_CONT BTL_CALC_MakeWazaSickCont_Poke( u8 pokeID );

@@ -251,14 +251,16 @@ extern BOOL BTLV_ACT_DamageEffectPlural_Wait( BTLV_CORE* wk );
 
 extern void BTLV_StartDeadAct( BTLV_CORE* wk, BtlPokePos pokePos );
 extern BOOL BTLV_WaitDeadAct( BTLV_CORE* wk );
+extern void BTLV_StartReliveAct( BTLV_CORE* wk, BtlPokePos pos );
+extern BOOL BTLV_WaitReliveAct( BTLV_CORE* wk );
 extern void BTLV_ACT_MemberOut_Start( BTLV_CORE* wk, BtlvMcssPos vpos );
 extern BOOL BTLV_ACT_MemberOut_Wait( BTLV_CORE* wk );
 extern void BTLV_ACT_SimpleHPEffect_Start( BTLV_CORE* wk, BtlPokePos pokePos );
 extern BOOL BTLV_ACT_SimpleHPEffect_Wait( BTLV_CORE* wk );
 extern void BTLV_AddEffectByPos( BTLV_CORE* wk, BtlvMcssPos vpos, u16 effectNo );
 extern BOOL BTLV_WaitEffectByPos( BTLV_CORE* wk, BtlvMcssPos vpos );
-extern void BTLV_AddEffectByVector( BTLV_CORE* wk, BtlvMcssPos vpos_from, BtlvMcssPos vpos_to, u16 effectNo );
-extern BOOL BTLV_WaitEffectAll( BTLV_CORE* wk );
+extern void BTLV_AddEffectByDir( BTLV_CORE* wk, BtlvMcssPos vpos_from, BtlvMcssPos vpos_to, u16 effectNo );
+extern BOOL BTLV_WaitEffectByDir( BTLV_CORE* wk );
 
 
 extern void BTLV_TokWin_DispStart( BTLV_CORE* wk, BtlPokePos pos, BOOL fFlash );

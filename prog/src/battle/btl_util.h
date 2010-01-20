@@ -454,18 +454,15 @@ static inline BOOL PokeTypePair_IsPure( PokeTypePair pair )
 // ÉoÉgÉãópPrintfèàóù
 //===================================================================
 
-typedef enum {
-  BTL_PRINTTYPE_UNKNOWN,
-  BTL_PRINTTYPE_SERVER,
-  BTL_PRINTTYPE_CLIENT,
-  BTL_PRINTTYPE_STANDALONE,
-}BtlPrintType;
+#include "btl_debug_print.h"
 
-//#if defined(DEBUG_ONLY_FOR_taya) | \
-//    defined(DEBUG_ONLY_FOR_nishino) | defined(DEBUG_ONLY_FOR_morimoto)
-#if defined(DEBUG_ONLY_FOR_taya)
+extern void BTL_UTIL_PRINTSYS_Init( void );
+extern void BTL_UTIL_PRINTSYS_Quit( void );
+
+#if defined(DEBUG_ONLY_FOR_taya) | \
+    defined(DEBUG_ONLY_FOR_nishino) | defined(DEBUG_ONLY_FOR_morimoto)
 #ifdef PM_DEBUG
-//  #define BTL_PRINT_SYSTEM_ENABLE
+  #define BTL_PRINT_SYSTEM_ENABLE
 #endif
 #endif
 
@@ -473,27 +470,30 @@ typedef enum {
 #ifdef BTL_PRINT_SYSTEM_ENABLE
 
 extern void BTL_UTIL_SetPrintType( BtlPrintType type );
-extern void BTL_UTIL_Printf( const char* filename, int line, const char* fmt, ... );
+extern void BTL_UTIL_Printf( const char* filename, int line, u32 strID, ... );
+extern void BTL_UTIL_PrintfSimple( u32 strID, ... );
 extern void BTL_UTIL_DumpPrintf( const char* caption, const void* data, u32 size );
 
-#define BTL_Printf( ... ) BTL_UTIL_Printf( __FILE__, __LINE__, __VA_ARGS__ )
-#define BTL_PrintfEx( flg, ... )  if( flg ){ BTL_UTIL_Printf( __FILE__, __LINE__, __VA_ARGS__ ); }
-#define BTL_PrintfSimple( ... ) OS_TPrintf( __VA_ARGS__ )
-#define BTL_DUMP_Printf( cap, dat, siz )  BTL_UTIL_DumpPrintf( cap, dat, siz );
+#define BTL_N_Printf( ... ) BTL_UTIL_Printf( __FILE__, __LINE__, __VA_ARGS__ )
+#define BTL_N_PrintfEx( flg, ... )  if( flg ){ BTL_UTIL_Printf( __FILE__, __LINE__, __VA_ARGS__ ); }
+#define BTL_N_PrintfSimple( ... ) BTL_UTIL_PrintfSimple( __VA_ARGS__ )
+#define BTL_N_PrintfSimpleEx( flg, ... ) if( flg ){ BTL_UTIL_PrintfSimple( __VA_ARGS__ ); }
 
 #else // #ifdef BTL_PRINT_SYSTEM_ENABLE
 
-#define BTL_UTIL_SetPrintType(t)  /* */
-#define BTL_Printf( ... )         /* */
-#define BTL_PrintfEx( flg, ... )  /* */
-#define BTL_PrintfSimple( ... )   /* */
-#define BTL_DUMP_Printf( cap, dat, siz )  /* */
+#define BTL_UTIL_SetPrintType(t)         /* */
+#define BTL_N_Printf( ... )              /* */
+#define BTL_N_PrintfEx( flg, ... )       /* */
+#define BTL_N_PrintfSimple( ... )        /* */
+#define BTL_N_PrintfSimpleEx( flg, ... ) /* */
 
 #endif  // #ifdef BTL_PRINT_SYSTEM_ENABLE
 
 
 
 
-
-#define BU_Printf( flg, ... ) if( flg ){ OS_TPrintf( __VA_ARGS__ ); }
+/* ãåPrintèàóù */
+#define BTL_Printf( ... )         /* */
+#define BTL_PrintfEx( flg, ... )  /* */
+#define BTL_PrintfSimple( ... )   /* */
 

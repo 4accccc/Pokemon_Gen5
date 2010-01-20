@@ -78,6 +78,8 @@ typedef enum {
 }ScArgFormat;
 
 
+
+
 //--------------------------------------------------------------
 /**
  *    サーバコマンドから引数の型を取得するためのテーブル
@@ -106,13 +108,11 @@ static const u8 ServerCmdToFmtTbl[] = {
   SC_ARGFMT_53bit,            // SC_OP_CANTESCAPE_SUB
   SC_ARGFMT_12byte,           // SC_OP_CHANGE_POKETYPE
   SC_ARGFMT_11byte,           // SC_OP_CHANGE_POKEFORM
-  SC_ARGFMT_1byte,            // SC_OP_REMOVE_ITEM
+  SC_ARGFMT_1byte,            // SC_OP_CONSUME_ITEM
   SC_ARGFMT_112byte,          // SC_OP_UPDATE_USE_WAZA,
   SC_ARGFMT_1byte,            // SC_OP_RESET_USED_WAZA
   SC_ARGFMT_11byte,           // SC_OP_SET_CONTFLAG
-  SC_ARGFMT_11byte,           // SC_OP_CLEAR_CONTFLAG
-  SC_ARGFMT_11byte,           // SC_OP_SET_ACTFLAG
-  SC_ARGFMT_1byte,            // SC_OP_CLEAR_ACTFLAG
+  SC_ARGFMT_11byte,           // SC_OP_RESET_CONTFLAG
   SC_ARGFMT_11byte,           // SC_OP_SET_TURNFLAG
   SC_ARGFMT_11byte,           // SC_OP_RESET_TURNFLAG
   SC_ARGFMT_12byte,           // SC_OP_CHANGE_TOKUSEI
@@ -128,6 +128,7 @@ static const u8 ServerCmdToFmtTbl[] = {
   SC_ARGFMT_1byte,            // SC_OP_MIGAWARI_DELETE
   SC_ARGFMT_44bit,            // SC_OP_SHOOTER_CHARGE
   SC_ARGFMT_44bit,            // SC_OP_SET_FAKESRC
+  SC_ARGFMT_1byte,            // SC_OP_CLEAR_CONSUMED_ITEM
   SC_ARGFMT_5_5_14bit,        // SC_ACT_WAZA_EFFECT
   SC_ARGFMT_5_5_14bit_1byte,  // SC_ACT_WAZA_EFFECT_EX
   SC_ARGFMT_5_5_14bit_2byte,  // SC_ACT_WAZA_DMG
@@ -138,6 +139,7 @@ static const u8 ServerCmdToFmtTbl[] = {
   SC_ARGFMT_555bit,           // SC_ACT_RANKUP
   SC_ARGFMT_555bit,           // SC_ACT_RANKDOWN
   SC_ARGFMT_1byte,            // SC_ACT_DEAD
+  SC_ARGFMT_1byte,            // SC_ACT_RELIVE
   SC_ARGFMT_1byte,            // SC_ACT_MEMBER_OUT
   SC_ARGFMT_5353bit,          // SC_ACT_MEMBER_IN
   SC_ARGFMT_44bit,            // SC_ACT_WEATHER_DMG,
@@ -148,7 +150,6 @@ static const u8 ServerCmdToFmtTbl[] = {
   SC_ARGFMT_53bit,            // SC_ACT_KILL
   SC_ARGFMT_555bit,           // SC_ACT_MOVE
   SC_ARGFMT_14byte,           // SC_ACT_EXP
-  SC_ARGFMT_1x8byte,          // SC_ACT_EXP_LVUP
   SC_ARGFMT_3311bit_2byte,    // SC_ACT_BALL_THROW
   SC_ARGFMT_44bit,            // SC_ACT_ROTATION
   SC_ARGFMT_12byte,           // SC_ACT_CHANGE_TOKUSEI
@@ -157,7 +158,6 @@ static const u8 ServerCmdToFmtTbl[] = {
   SC_ARGFMT_112byte,          // SC_ACT_EFFECT_BYVECTOR
   SC_ARGFMT_1byte,            // SC_TOKWIN_IN
   SC_ARGFMT_1byte,            // SC_TOKWIN_OUT
-
   SC_ARGFMT_12byte, // SC_MSG_WAZA
   SC_ARGFMT_MSG,    // SC_MSG_STD
   SC_ARGFMT_MSG,    // SC_MSG_SET
@@ -288,6 +288,72 @@ static inline void unpack_4args( int bytes, u32 pack, int bits1, int bits2, int 
     args[ idx_start++ ] = (pack >> (bits2+bits3)) & mask2;
     args[ idx_start++ ] = (pack >> (bits3)) & mask3;
     args[ idx_start ] = pack & mask4;
+  }
+}
+
+//---------------------------------------------------------------------------------------
+/**
+ * Que Read/Write
+ */
+//---------------------------------------------------------------------------------------
+
+void scque_put1byte( BTL_SERVER_CMD_QUE* que, u8 data )
+{
+  GF_ASSERT(que->writePtr < BTL_SERVER_CMD_QUE_SIZE);
+  que->buffer[ que->writePtr++ ] = data;
+}
+u8 scque_read1byte( BTL_SERVER_CMD_QUE* que )
+{
+  GF_ASSERT(que->readPtr < que->writePtr);
+  return que->buffer[ que->readPtr++ ];
+}
+void scque_put2byte( BTL_SERVER_CMD_QUE* que, u16 data )
+{
+  GF_ASSERT(que->writePtr < (BTL_SERVER_CMD_QUE_SIZE-1));
+  que->buffer[ que->writePtr++ ] = (data >> 8)&0xff;
+  que->buffer[ que->writePtr++ ] = (data & 0xff);
+}
+u16 scque_read2byte( BTL_SERVER_CMD_QUE* que )
+{
+  GF_ASSERT_MSG(que->readPtr < (que->writePtr-1), "rp=%d, wp=%d", que->readPtr, que->writePtr);
+  {
+    u16 data = ( (que->buffer[que->readPtr] << 8) | que->buffer[que->readPtr+1] );
+    que->readPtr += 2;
+    return data;
+  }
+}
+void scque_put3byte( BTL_SERVER_CMD_QUE* que, u32 data )
+{
+  GF_ASSERT(que->writePtr < (BTL_SERVER_CMD_QUE_SIZE-2));
+  que->buffer[ que->writePtr++ ] = (data >> 16)&0xff;
+  que->buffer[ que->writePtr++ ] = (data >> 8)&0xff;
+  que->buffer[ que->writePtr++ ] = (data & 0xff);
+}
+u32 scque_read3byte( BTL_SERVER_CMD_QUE* que )
+{
+  GF_ASSERT(que->readPtr < (que->writePtr-2));
+  {
+    u32 data = ( (que->buffer[que->readPtr]<<16) | (que->buffer[que->readPtr+1]<<8) | (que->buffer[que->readPtr+2]) );
+    que->readPtr += 3;
+    return data;
+  }
+}
+void scque_put4byte( BTL_SERVER_CMD_QUE* que, u32 data )
+{
+  GF_ASSERT(que->writePtr < (BTL_SERVER_CMD_QUE_SIZE-3));
+  que->buffer[ que->writePtr++ ] = (data >> 24)&0xff;
+  que->buffer[ que->writePtr++ ] = (data >> 16)&0xff;
+  que->buffer[ que->writePtr++ ] = (data >> 8)&0xff;
+  que->buffer[ que->writePtr++ ] = (data & 0xff);
+}
+u32 scque_read4byte( BTL_SERVER_CMD_QUE* que )
+{
+  GF_ASSERT(que->readPtr < (que->writePtr-3));
+  {
+    u32 data = ( (que->buffer[que->readPtr]<<24) | (que->buffer[que->readPtr+1]<<16)
+               | (que->buffer[que->readPtr+2]<<8) | (que->buffer[que->readPtr+3]) );
+    que->readPtr += 4;
+    return data;
   }
 }
 
@@ -621,12 +687,11 @@ void SCQUE_PUT_Common( BTL_SERVER_CMD_QUE* que, ServerCmd cmd, ... )
     va_end( list );
 
     #if 1
-    OS_TPrintf("[QUE]PutCmd=%d, Format=%02x, argCnt=%d, args=", cmd, fmt, arg_cnt);
-    for(i=0; i<arg_cnt; ++i)
-    {
-      OS_TPrintf("%d,", ArgBuffer[i]);
+    BTL_N_Printf( DBGSTR_SC_PutCmd, cmd, fmt, arg_cnt);
+    for(i=0; i<arg_cnt; ++i){
+      BTL_N_PrintfSimple( DBGSTR_val_comma, ArgBuffer[i]);
     }
-    OS_TPrintf("\n");
+    BTL_N_PrintfSimple(DBGSTR_LF);
     #endif
 
     put_core( que, cmd, fmt, ArgBuffer );
@@ -670,7 +735,7 @@ u16 SCQUE_RESERVE_Pos( BTL_SERVER_CMD_QUE* que, ServerCmd cmd )
 
     que->writePtr = pos + reserve_size;
 
-    OS_TPrintf("[QUE]reserved pos=%d, wp=%d\n", pos, que->writePtr);
+    BTL_N_Printf( DBGSTR_SC_ReservedPos, pos, que->writePtr);
 
     return pos;
   }
@@ -696,14 +761,15 @@ void SCQUE_PUT_ReservedPos( BTL_SERVER_CMD_QUE* que, u16 pos, ServerCmd cmd, ...
     }
     va_end( list );
 
-    OS_TPrintf("[QUE]Write Reserved Pos ... pos=%d, cmd=%d", pos, cmd );
-    if( arg_cnt ){
-      OS_TPrintf(" args = ");
+    BTL_N_Printf( DBGSTR_SC_WriteReservedPos, pos, cmd );
+    if( arg_cnt )
+    {
+      BTL_N_Printf( DBGSTR_SC_ArgsEqual );
       for( i=0; i<arg_cnt; ++i ){
-        OS_TPrintf("%d,", ArgBuffer[i]);
+        BTL_N_PrintfSimple(DBGSTR_val_comma, ArgBuffer[i]);
       }
     }
-    OS_TPrintf("\n");
+    BTL_N_PrintfSimple(DBGSTR_LF);
 
     {
       u16 default_read_pos = que->readPtr;
@@ -733,7 +799,6 @@ ServerCmd SCQUE_Read( BTL_SERVER_CMD_QUE* que, int* args )
   while( cmd == SCEX_RESERVE )
   {
     u8 reserve_size = scque_read1byte( que );
-    BTL_Printf("Reserved Skip! size=%d\n", reserve_size);
     que->readPtr += reserve_size;
     cmd = scque_read2byte( que );
   }
@@ -746,23 +811,10 @@ ServerCmd SCQUE_Read( BTL_SERVER_CMD_QUE* que, int* args )
     if( (fmt != SC_ARGFMT_MSG) && (fmt != SC_ARGFMT_MSG_SE) )
     {
       read_core( que, fmt, args );
-
-      #if 0
-      {
-        u8 arg_cnt = SC_ARGFMT_GetArgCount( fmt );
-        u8 i;
-        OS_TPrintf("[QUE]ReadCmd=%d, Format=%02x, argCnt=%d, args=", cmd, fmt, arg_cnt);
-        for(i=0; i<arg_cnt; ++i)
-        {
-          OS_TPrintf("%d,", args[i]);
-        }
-        OS_TPrintf("\n");
-      }
-      #endif
     }
     else
     {
-      read_core_msg( que, fmt, args );
+      read_core_msg( que, cmd, args );
     }
   }
   return cmd;
@@ -807,23 +859,26 @@ void SCQUE_PUT_MsgImpl( BTL_SERVER_CMD_QUE* que, u8 scType, ... )
     va_start( list, scType );
     strID = va_arg( list, int );
 
-    OS_TPrintf( "[QUE] PUT MSG SC=%d, StrID=%d", scType, strID );
-
     scque_put2byte( que, scType );
     scque_put2byte( que, strID );
-    if( scType == SC_ARGFMT_MSG_SE ){
+
+    BTL_N_Printf( DBGSTR_SC_PutMsgParam, scType, strID );
+
+    if( scType == SC_MSG_STD_SE ){
       u16 seID = va_arg( list, int );
       scque_put2byte( que, seID );
-      OS_TPrintf( "SE_ID=%d", seID);
+      BTL_N_PrintfSimple( DBGSTR_SC_PutMsg_SE, seID );
     }
-    OS_TPrintf( "\n  args=");
+    BTL_N_PrintfSimple( DBGSTR_SC_ArgsEqual );
 
     do {
       arg = va_arg( list, int );
-      OS_TPrintf("%d ", arg);
-      scque_put2byte( que, arg );
+      if( arg != MSGARG_TERMINATOR ){
+        BTL_N_PrintfSimple( DBGSTR_val_comma, arg );
+      }
+      scque_put4byte( que, arg );
     }while( arg != MSGARG_TERMINATOR );
-    OS_TPrintf("\n");
+    BTL_N_PrintfSimple( DBGSTR_LF );
 
     va_end( list );
   }
@@ -834,23 +889,27 @@ static void read_core_msg( BTL_SERVER_CMD_QUE* que, u8 scType, int* args )
   int idx_begin = 1;
 
   args[0] = scque_read2byte( que );
-//  OS_TPrintf("[QUE] READ MSG strID=%d\n", args[0]);
 
-  if( scType == SC_ARGFMT_MSG_SE ){
+  BTL_N_Printf( DBGSTR_SC_ReadMsgParam, scType, args[0] );
+
+  if( scType == SC_MSG_STD_SE ){
     args[1] = scque_read2byte( que );
+    BTL_N_Printf( DBGSTR_SC_PutMsg_SE, args[1] );
     ++idx_begin;
-//    OS_TPrintf(" setSE=%d\n", args[1]);
   }
+  BTL_N_PrintfSimple( DBGSTR_SC_ArgsEqual );
 
   {
     int i = idx_begin;
     for(i=idx_begin; i<BTL_SERVERCMD_ARG_MAX; ++i){
-      args[i] = scque_read2byte( que );
-//      OS_TPrintf(" msg arg[%d] = %d\n", i-idx_begin, args[i]);
+      args[i] = scque_read4byte( que );
       if( args[i] == MSGARG_TERMINATOR ){
         break;
       }
+      BTL_N_PrintfSimple( DBGSTR_val_comma, args[i] );
     }
+    BTL_N_PrintfSimple( DBGSTR_LF );
+
     if( i == BTL_SERVERCMD_ARG_MAX ){
       GF_ASSERT(0); // 引数使いすぎ
     }

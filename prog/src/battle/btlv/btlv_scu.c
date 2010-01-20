@@ -12,6 +12,7 @@
 #include "sound\pm_sndsys.h"
 #include "poke_tool/monsno_def.h"
 #include "print/printsys.h"
+#include "gamesystem/msgspeed.h"
 #include "arc_def.h"
 #include "message.naix"
 #include "font/font.naix"
@@ -27,32 +28,23 @@
 
 #include "btlv_scu.h"
 
-enum {
-  PRINT_FLG = FALSE,
-};
 
 
 /*--------------------------------------------------------------------------*/
 /* Consts                                                                   */
 /*--------------------------------------------------------------------------*/
 enum {
-  TEST_STATWIN_BGCOL = 7,
-  TEST_STATWIN_BGCOL_FLASH = 4,
-  TEST_TOKWIN_BGCOL = 6,
-  TEST_TOKWIN_CHAR_WIDTH = 10,
-  TEST_TOKWIN_DOT_WIDTH  = TEST_TOKWIN_CHAR_WIDTH*8,
-
   MAIN_STRBUF_LEN = 512,
   SUB_STRBUF_LEN  = 32,
   SUBPROC_WORK_SIZE = 64,
 
   PALIDX_MSGWIN     = 0,
   PALIDX_TOKWIN1    = 1,
+  PALIDX_SYSWIN     = 2,
 
   COLIDX_MSGWIN_CLEAR  = 0x0c,
   COLIDX_MSGWIN_LETTER = 0x01,
   COLIDX_MSGWIN_SHADOW = 0x09,
-
 
   MSGWIN_EVA_MAX = 31,
   MSGWIN_EVA_MIN = 0,
@@ -83,6 +75,8 @@ enum {
   TOKWIN_HIDEPOS_ENEMY = -(TOKWIN_CGRDATA_CHAR_W * 8),
 
   TOKWIN_MOVE_FRAMES = 8,
+
+  BTLIN_STD_FADE_WAIT = 2,
 };
 
 
@@ -493,6 +487,107 @@ BOOL BTLV_SCU_WaitBtlIn( BTLV_SCU* wk )
 {
   return BTL_UTIL_CallProc( &wk->proc );
 }
+
+
+/**
+ *  現状のマスター輝度値を参照してフェードパラメータ呼び分け
+ */
+static void btlin_startFade( int wait )
+{
+  if( GX_GetMasterBrightness() <= 0 ){
+    GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, wait );
+  }else{
+    GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_WHITEOUT, 16, 0, wait );
+  }
+}
+
+//--------------------------------------------------
+/**
+ *  描画位置-> 位置, ポケモンパラメータ変換
+ */
+//--------------------------------------------------
+static inline void btlinTool_vpos_exchange( BTLV_SCU* wk, BtlvMcssPos vpos, BtlvMcssPos* vposDst, BtlPokePos* posDst, const BTL_POKEPARAM** bppDst )
+{
+  *vposDst = vpos;
+  *posDst = BTL_MAIN_ViewPosToBtlPos( wk->mainModule, vpos );
+  *bppDst = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, *posDst );
+}
+
+//------------------------------------------------------------------------
+/**
+ *  戦闘画面セットアップ（デバッグ用簡易版 コア処理）
+ */
+//------------------------------------------------------------------------
+static BOOL btlin_skip_core( BTLV_SCU* wk, int* seq, const u8* vposAry, u8 vposCount )
+{
+  switch( *seq ){
+  case 0:
+    {
+      BtlvMcssPos  vpos;
+      BtlPokePos   pos;
+      const BTL_POKEPARAM* bpp;
+      u32 i;
+
+      for(i=0; i<vposCount; ++i){
+        btlinTool_vpos_exchange( wk, vposAry[i], &vpos, &pos, &bpp );
+        BTLV_EFFECT_SetPokemon( BPP_GetViewSrcData(bpp), vpos );
+        statwin_disp_start( &wk->statusWin[ pos ] );
+      }
+      (*seq)++;
+    }
+    break;
+  case 1:
+    btlin_startFade(0);
+    (*seq)++;
+    break;
+  case 2:
+    if( !BTLV_EFFECT_CheckExecute() ){
+      return TRUE;
+    }
+    break;
+  }
+  return FALSE;
+}
+
+//------------------------------------------------------------------------
+/**
+ *  戦闘画面セットアップ（デバッグ用簡易版／シングル）
+ */
+//------------------------------------------------------------------------
+static BOOL btlin_skip_single( BTLV_SCU* wk, int* seq )
+{
+  static const u8 vposAry[] = {
+    BTLV_MCSS_POS_BB, BTLV_MCSS_POS_AA
+  };
+  return btlin_skip_core( wk, seq, vposAry, NELEMS(vposAry) );
+}
+
+//------------------------------------------------------------------------
+/**
+ *  戦闘画面セットアップ（デバッグ用簡易版／ダブル）
+ */
+//------------------------------------------------------------------------
+static BOOL btlin_skip_double( BTLV_SCU* wk, int* seq )
+{
+  static const u8 vposAry[] = {
+    BTLV_MCSS_POS_A, BTLV_MCSS_POS_B, BTLV_MCSS_POS_C, BTLV_MCSS_POS_D,
+  };
+  return btlin_skip_core( wk, seq, vposAry, NELEMS(vposAry) );
+}
+//------------------------------------------------------------------------
+/**
+ *  戦闘画面セットアップ（デバッグ用簡易版／トリプル）
+ */
+//------------------------------------------------------------------------
+static BOOL btlin_skip_triple( BTLV_SCU* wk, int* seq )
+{
+  static const u8 vposAry[] = {
+    BTLV_MCSS_POS_A, BTLV_MCSS_POS_B, BTLV_MCSS_POS_C, BTLV_MCSS_POS_D,
+    BTLV_MCSS_POS_E, BTLV_MCSS_POS_F,
+  };
+  return btlin_skip_core( wk, seq, vposAry, NELEMS(vposAry) );
+}
+
 //--------------------------------------------------------------------------
 /**
  * 戦闘画面セットアップ完了までの演出（野生／シングル）
@@ -511,6 +606,12 @@ static BOOL btlin_wild_single( int* seq, void* wk_adrs )
   BTLV_SCU* wk = wk_adrs;
   ProcWork* subwk = Scu_GetProcWork( wk, sizeof(ProcWork) );
 
+  #ifdef PM_DEBUG
+  if( BTL_MAIN_GetDebugFlag(wk->mainModule, BTL_DEBUGFLAG_SKIP_BTLIN) ){
+    return btlin_skip_single( wk, seq );
+  }
+  #endif
+
   switch( *seq ){
   case 0:
     subwk->viewPos = BTLV_MCSS_POS_BB;
@@ -525,7 +626,7 @@ static BOOL btlin_wild_single( int* seq, void* wk_adrs )
     {
       BTLV_EFFECT_SetPokemon( BPP_GetViewSrcData(subwk->pp), subwk->viewPos );
       BTLV_EFFECT_AddByPos( subwk->viewPos, BTLEFF_SINGLE_ENCOUNT_1 );
-      GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 2 );
+      btlin_startFade( BTLIN_STD_FADE_WAIT );
       (*seq)++;
     }
     break;
@@ -613,6 +714,12 @@ static BOOL btlin_trainer_single( int* seq, void* wk_adrs )
   BTLV_SCU* wk = wk_adrs;
   ProcWork* subwk = Scu_GetProcWork( wk, sizeof(ProcWork) );
 
+  #ifdef PM_DEBUG
+  if( BTL_MAIN_GetDebugFlag(wk->mainModule, BTL_DEBUGFLAG_SKIP_BTLIN) ){
+    return btlin_skip_single( wk, seq );
+  }
+  #endif
+
   switch( *seq ){
   case 0:
     {
@@ -639,7 +746,7 @@ static BOOL btlin_trainer_single( int* seq, void* wk_adrs )
     if( msgWinVisible_Update(&wk->msgwinVisibleWork) )
     {
       BTLV_EFFECT_AddByPos( subwk->viewPos, BTLEFF_SINGLE_TRAINER_ENCOUNT_1 );
-      GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 2 );
+      btlin_startFade( BTLIN_STD_FADE_WAIT );
       (*seq)++;
     }
     break;
@@ -791,6 +898,12 @@ static BOOL btlin_wild_double( int* seq, void* wk_adrs )
   BTLV_SCU* wk = wk_adrs;
   ProcWork* subwk = Scu_GetProcWork( wk, sizeof(ProcWork) );
 
+  #ifdef PM_DEBUG
+  if( BTL_MAIN_GetDebugFlag(wk->mainModule, BTL_DEBUGFLAG_SKIP_BTLIN) ){
+    return btlin_skip_double( wk, seq );
+  }
+  #endif
+
   switch( *seq ){
   case 0:
     {
@@ -804,7 +917,8 @@ static BOOL btlin_wild_double( int* seq, void* wk_adrs )
 
       BTL_STR_MakeStringStd( wk->strBufMain, BTL_STRID_STD_Encount_Wild2, 2, subwk->pokeID[0], subwk->pokeID[1] );
       BTLV_SCU_StartMsg( wk, wk->strBufMain, BTLV_MSGWAIT_STD );
-      GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 2 );
+//      GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 2 );
+      btlin_startFade( BTLIN_STD_FADE_WAIT );
       (*seq)++;
     }
     break;
@@ -824,7 +938,7 @@ static BOOL btlin_wild_double( int* seq, void* wk_adrs )
       BTLV_EFFECT_SetPokemon( BPP_GetViewSrcData(subwk->pp[1]), viewPos );
       statwin_disp_start( &wk->statusWin[ subwk->pos[1] ] );
       (*seq)++;
-    }//subwk\f\[[0-1]\]\f\.\f[a-zA-Z]+
+    }
     break;
   case 3:
     if( !BTLV_EFFECT_CheckExecute() )
@@ -894,6 +1008,12 @@ static BOOL btlin_trainer_double( int* seq, void* wk_adrs )
   };
 
   BTLV_SCU* wk = wk_adrs;
+
+  #ifdef PM_DEBUG
+  if( BTL_MAIN_GetDebugFlag(wk->mainModule, BTL_DEBUGFLAG_SKIP_BTLIN) ){
+    return btlin_skip_double( wk, seq );
+  }
+  #endif
 
   if( wk->btlinSeq < NELEMS(funcs) )
   {
@@ -966,7 +1086,8 @@ static BOOL btlin_comm_double_multi( int* seq, void* wk_adrs )
 
       BTL_STR_MakeStringStd( wk->strBufMain, BTL_STRID_STD_Encount_Wild2, 2, subwk[0].pokeID, subwk[1].pokeID );
       BTLV_SCU_StartMsg( wk, wk->strBufMain, BTLV_MSGWAIT_STD );
-      GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 2 );
+//      GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 2 );
+      btlin_startFade( BTLIN_STD_FADE_WAIT );
       (*seq)++;
     }
     break;
@@ -1044,6 +1165,12 @@ static BOOL btlin_trainer_triple( int* seq, void* wk_adrs )
   };
 
   BTLV_SCU* wk = wk_adrs;
+
+  #ifdef PM_DEBUG
+  if( BTL_MAIN_GetDebugFlag(wk->mainModule, BTL_DEBUGFLAG_SKIP_BTLIN) ){
+    return btlin_skip_triple( wk, seq );
+  }
+  #endif
 
   if( wk->btlinSeq < NELEMS(funcs) )
   {
@@ -1128,7 +1255,8 @@ static BOOL  btlinEff_OpponentTrainerIn( BTLV_SCU* wk, int* seq )
     if( msgWinVisible_Update(&wk->msgwinVisibleWork) )
     {
       BTLV_EFFECT_AddByPos( subwk->vpos, BTLEFF_SINGLE_TRAINER_ENCOUNT_1 );
-      GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 2 );
+//      GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 2 );
+      btlin_startFade( BTLIN_STD_FADE_WAIT );
       (*seq)++;
     }
     break;
@@ -1988,7 +2116,6 @@ void BTLV_SCU_StartDeadAct( BTLV_SCU* wk, BtlPokePos pos )
   BTLV_EFFECT_DelGauge( BTL_MAIN_BtlPosToViewPos(wk->mainModule, pos) );
   BTLV_EFFECT_Hinshi( BTL_MAIN_BtlPosToViewPos(wk->mainModule, pos) );
 }
-
 //=============================================================================================
 /**
  * ポケモンひんしアクション終了待ち
@@ -2003,6 +2130,46 @@ BOOL BTLV_SCU_WaitDeadAct( BTLV_SCU* wk )
   //瀕死エフェクトが入ったらそれ待ちをいれる
   return !BTLV_EFFECT_CheckExecute();
 }
+
+//=============================================================================================
+/**
+ * ポケモン生き返りアクション開始
+ *
+ * @param   wk
+ * @param   pos   ひんしになったポケモンの位置ID
+ *
+ */
+//=============================================================================================
+void BTLV_SCU_StartReliveAct( BTLV_SCU* wk, BtlPokePos pos )
+{
+  BtlvMcssPos vpos = BTL_MAIN_BtlPosToViewPos( wk->mainModule, pos );
+  const BTL_POKEPARAM* bpp = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, pos );
+  if( bpp ){
+    BTL_N_Printf( DBGSTR_SCU_RelivePokeAct, pos, vpos, BPP_GetID(bpp) );
+  }else{
+    GF_ASSERT(0);
+  }
+
+  BTLV_EFFECT_SetPokemon( BPP_GetViewSrcData(bpp), vpos );
+  statwin_disp_start( &wk->statusWin[pos] );
+
+}
+//=============================================================================================
+/**
+ * ポケモンひんしアクション終了待ち
+ *
+ * @param   wk
+ *
+ * @retval  BOOL
+ */
+//=============================================================================================
+BOOL BTLV_SCU_WaitReliveAct( BTLV_SCU* wk )
+{
+  return !BTLV_EFFECT_CheckExecute();
+}
+
+
+
 
 //--------------------------------------------------------
 // ポケモン退場アクション
@@ -2519,7 +2686,6 @@ static TokwinSide PokePosToTokwinSide( const BTL_MAIN_MODULE* mainModule, BtlPok
 void BTLV_SCU_TokWin_DispStart( BTLV_SCU* wk, BtlPokePos pos, BOOL fFlash )
 {
   TokwinSide side = PokePosToTokwinSide( wk->mainModule, pos );
-  BU_Printf( PRINT_FLG, "[SCU] TOKWIN DISP ... pos=%d, side=%d\n", pos, side);
   tokwin_disp_first( &wk->tokWin[side], pos, fFlash );
 }
 BOOL BTLV_SCU_TokWin_DispWait( BTLV_SCU* wk, BtlPokePos pos )
@@ -2538,13 +2704,12 @@ BOOL BTLV_SCU_TokWin_DispWait( BTLV_SCU* wk, BtlPokePos pos )
 //=============================================================================================
 void BTLV_SCU_TokWin_HideStart( BTLV_SCU* wk, BtlPokePos pos )
 {
-  TokwinSide side = PokePosToTokwinSide( wk->mainModule, pos );
-  BU_Printf( PRINT_FLG, "[SCU] TOKWIN HIDE ... pos=%d, side=%d\n", pos, side);
+  BtlSide side = PokePosToTokwinSide( wk->mainModule, pos );
   tokwin_hide_first( &wk->tokWin[side] );
 }
 BOOL BTLV_SCU_TokWin_HideWait( BTLV_SCU* wk, BtlPokePos pos )
 {
-  TokwinSide side = PokePosToTokwinSide( wk->mainModule, pos );
+  BtlSide side = PokePosToTokwinSide( wk->mainModule, pos );
   return tokwin_hide_progress( &wk->tokWin[side] );
 }
 //=============================================================================================

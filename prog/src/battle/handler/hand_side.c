@@ -315,10 +315,15 @@ static const BtlEventHandlerTable* ADD_SIDE_Sinpinomamori( u32* numElems )
 static void handler_side_SinpiNoMamori_CheckFail( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 mySide, int* work )
 {
   u8 pokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_DEF );
-  if( (BTL_MAINUTIL_PokeIDtoSide(pokeID) == mySide)
-  &&  (BTL_EVENTVAR_GetValue(BTL_EVAR_SICKID) < POKESICK_MAX)
-  ){
-    work[0] = BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_FLAG, TRUE );
+  if( (BTL_MAINUTIL_PokeIDtoSide(pokeID) == mySide) )
+  {
+    WazaSick  sickID = BTL_EVENTVAR_GetValue( BTL_EVAR_SICKID );
+    if( BTL_CALC_IsBasicSickID(sickID)
+    ||  (sickID == WAZASICK_KONRAN)
+    ||  (sickID == WAZASICK_AKUBI)
+    ){
+      work[0] = BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_FLAG, TRUE );
+    }
   }
 }
 static void handler_side_SinpiNoMamori_FixFail( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 mySide, int* work )
@@ -430,7 +435,7 @@ static void handler_side_StealthRock( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WOR
   if( (BTL_MAINUTIL_PokeIDtoSide(pokeID) == mySide)
   ){
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
-    BtlTypeAff  affinity = BTL_CALC_TypeAff( POKETYPE_IWA, BPP_GetPokeType(bpp) );
+    BtlTypeAff  affinity = BTL_CALC_TypeAffPair( POKETYPE_IWA, BPP_GetPokeType(bpp) );
     u8 denom = 8;
     switch( affinity ){
     case BTL_TYPEAFF_25:

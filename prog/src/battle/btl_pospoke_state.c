@@ -71,12 +71,11 @@ void BTL_POSPOKE_PokeOut( BTL_POSPOKE_WORK* wk, u8 pokeID )
   {
     if( wk->state[i].fEnable && (wk->state[i].existPokeID == pokeID) ){
       wk->state[i].existPokeID = BTL_POKEID_NULL;
-      BTL_Printf(" poke[%d] out from pos[%d]\n", pokeID, i );
+      BTL_N_Printf( DBGSTR_POSPOKE_Out, pokeID, i );
       return;
     }
   }
   GF_ASSERT_MSG(0, "not exist pokeID=%d\n", pokeID);
-  BTL_Printf("DummyString..\n");
 }
 //=============================================================================================
 /**
@@ -90,7 +89,7 @@ void BTL_POSPOKE_PokeIn( BTL_POSPOKE_WORK* wk, BtlPokePos pos,  u8 pokeID, BTL_P
 {
   GF_ASSERT_MSG(wk->state[pos].fEnable, "pos=%d\n", pos);
   wk->state[pos].existPokeID = pokeID;
-  BTL_Printf(" poke[%d] in to pos[%d]\n", pokeID, pos );
+  BTL_N_Printf( DBGSTR_POSPOKE_In, pokeID, pos );
 
   checkConfrontRec( wk, pos, pokeCon );
 }
@@ -249,7 +248,7 @@ u8 BTL_POSPOKE_GetClientEmptyPos( const BTL_POSPOKE_WORK* wk, u8 clientID, u8* p
  * @param   wk
  * @param   pokeID
  *
- * @retval  BtlPokePos    出ている場合は位置ID、出ていない場合は BTL_POS_MAX
+ * @retval  BtlPokePos    出ている場合は位置ID、出ていない場合は BTL_POS_NULL
  */
 //=============================================================================================
 BtlPokePos BTL_POSPOKE_GetPokeExistPos( const BTL_POSPOKE_WORK* wk, u8 pokeID )

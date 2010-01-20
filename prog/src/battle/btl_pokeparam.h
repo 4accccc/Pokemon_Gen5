@@ -45,7 +45,8 @@ typedef enum {
   BPP_HP,
   BPP_MAX_HP,
   BPP_LEVEL,
-  BPP_TOKUSEI,
+  BPP_TOKUSEI,                ///< とくせい
+  BPP_TOKUSEI_EFFECTIVE,      ///< 効果のあるとくせい（いえき中ならPOKETOKUSEI_NULL）
   BPP_SEX,
   BPP_FORM,
   BPP_ATTACK_RANK,
@@ -83,31 +84,18 @@ enum {
 //--------------------------------------------------------------
 typedef enum {
 
-  BPP_TURNFLG_ACTION_DONE,  ///< 行動した
-  BPP_TURNFLG_DAMAGED,      ///< ダメージ喰らった
+  BPP_TURNFLG_ACTION_DONE,   ///< 行動した
+  BPP_TURNFLG_DAMAGED,       ///< ダメージ喰らった
   BPP_TURNFLG_WAZAPROC_DONE, ///< ワザ処理を修了した
-  BPP_TURNFLG_SHRINK,       ///< ひるまされた
-  BPP_TURNFLG_MUST_SHRINK,  ///< ダメージで必ずひるむ
-  BPP_TURNFLG_MAMORU,       ///< “まもる”発動
-  BPP_TURNFLG_FLYING,       ///< 宙に浮いてる
-  BPP_TURNFLG_ITEM_REMOVED, ///< アイテム（使用・どろぼうなどで）無くなった
+  BPP_TURNFLG_SHRINK,        ///< ひるまされた
+  BPP_TURNFLG_MUST_SHRINK,   ///< ダメージで必ずひるむ
+  BPP_TURNFLG_MAMORU,        ///< “まもる”発動
+  BPP_TURNFLG_FLYING,        ///< 宙に浮いてる
+  BPP_TURNFLG_ITEM_CONSUMED, ///< アイテムを使用して無くなった
 
   BPP_TURNFLG_MAX,
 
 }BppTurnFlag;
-
-//--------------------------------------------------------------
-/**
- *  アクション選択ごとにクリアされるフラグセット
- */
-//--------------------------------------------------------------
-typedef enum {
-
-  BPP_ACTFLG_CANT_ACTION,   ///< アクション選択不可
-
-  BPP_ACTFLG_MAX,
-
-}BppActFlag;
 
 //--------------------------------------------------------------
 /**
@@ -127,6 +115,7 @@ typedef enum {
   BPP_CONTFLG_KIAIDAME,
   BPP_CONTFLG_POWERTRICK,
   BPP_CONTFLG_MIKURUNOMI,
+  BPP_CONTFLG_CANT_ACTION,      ///< 反動で動けない
 
   BPP_CONTFLG_MAX,
 
@@ -142,6 +131,7 @@ typedef enum {
   BPP_COUNTER_TAKUWAERU,          ///< たくわえる段階数
   BPP_COUNTER_TAKUWAERU_DEF,      ///< たくわえるによって上がった防御ランク
   BPP_COUNTER_TAKUWAERU_SPDEF,    ///< たくわえるによって上がった特防ランク
+  BPP_COUNTER_MAMORU,             ///< まもる・みきりカウンタ
 
   BPP_COUNTER_MAX,
 }BppCounter;
@@ -170,6 +160,7 @@ typedef enum {
   BPP_KORAE_WAZA_DEFENDER,  ///< 防御側のワザによる（「こらえる」を使用など）
   BPP_KORAE_WAZA_ATTACKER,  ///< 攻撃側のワザによる（「みねうち」を使用など）
   BPP_KORAE_ITEM,           ///< 防御側の装備アイテム効果（きあいのタスキなど）
+  BPP_KORAE_TOKUSEI_DEFENDER,  ///< 防御側のとくせいによる
 
 }BppKoraeruCause;
 
@@ -218,6 +209,7 @@ typedef struct {
 }BTL_LEVELUP_INFO;
 
 extern BOOL BPP_AddExp( BTL_POKEPARAM* bpp, u32* exp, BTL_LEVELUP_INFO* info );
+extern u32 BPP_GetExpMargin( const BTL_POKEPARAM* bpp );
 
 
 //--------------------------------------------------------------
@@ -232,7 +224,6 @@ extern void BTL_POKEPARAM_Copy( BTL_POKEPARAM* dst, const BTL_POKEPARAM* src );
 extern u8 BPP_GetID( const BTL_POKEPARAM* pp );
 extern u16 BPP_GetMonsNo( const BTL_POKEPARAM* pp );
 extern PokeTypePair BPP_GetPokeType( const BTL_POKEPARAM* pp );
-extern u32 BPP_GetItem( const BTL_POKEPARAM* pp );
 extern BOOL BPP_IsMatchType( const BTL_POKEPARAM* pp, PokeType type );
 extern const POKEMON_PARAM* BPP_GetSrcData( const BTL_POKEPARAM* bpp );
 extern void BPP_SetViewSrcData( BTL_POKEPARAM* bpp, const POKEMON_PARAM* fakePP );
@@ -256,7 +247,6 @@ extern BOOL BPP_IsHPFull( const BTL_POKEPARAM* pp );
 extern BOOL BPP_IsPPFull( const BTL_POKEPARAM* pp, u8 wazaIdx );
 
 extern BOOL BPP_TURNFLAG_Get( const BTL_POKEPARAM* pp, BppTurnFlag flagID );
-extern BOOL BPP_GetActFlag( const BTL_POKEPARAM* pp, BppActFlag flagID );
 extern BOOL BPP_CONTFLAG_Get( const BTL_POKEPARAM* pp, BppContFlag flagID );
 extern u16 BPP_GetTurnCount( const BTL_POKEPARAM* pp );
 extern u16 BPP_GetAppearTurn( const BTL_POKEPARAM* pp );
@@ -365,16 +355,19 @@ extern BOOL BPP_Nemuri_CheckWake( BTL_POKEPARAM* pp );
 extern void BPP_TURNFLAG_Set( BTL_POKEPARAM* pp, BppTurnFlag flagID );
 extern void BPP_TURNFLAG_ForceOff( BTL_POKEPARAM* pp, BppTurnFlag flagID );
 extern void BPP_TurnCheck( BTL_POKEPARAM* pp );
-extern void BPP_ACTFLAG_Set( BTL_POKEPARAM* pp, BppActFlag flagID );
-extern void BPP_ACTFLAG_Clear( BTL_POKEPARAM* pp );
 extern void BPP_CONTFLAG_Set( BTL_POKEPARAM* pp, BppContFlag flagID );
 extern void BPP_CONTFLAG_Clear( BTL_POKEPARAM* pp, BppContFlag flagID );
 extern void BPP_ChangeTokusei( BTL_POKEPARAM* pp, PokeTokusei tok );
 extern void BPP_SetAppearTurn( BTL_POKEPARAM* pp, u16 turn );
 extern void BPP_ChangePokeType( BTL_POKEPARAM* pp, PokeTypePair type );
 extern void BPP_ChangeForm( BTL_POKEPARAM* pp, u8 formNo );
+
+extern u32 BPP_GetItem( const BTL_POKEPARAM* pp );
 extern void BPP_RemoveItem( BTL_POKEPARAM* pp );
-extern u16 BPP_GetUsedItem( const BTL_POKEPARAM* bpp );
+extern void BPP_ConsumeItem( BTL_POKEPARAM* pp );
+extern void BPP_ClearConsumedItem( BTL_POKEPARAM* bpp );
+extern u16 BPP_GetConsumedItem( const BTL_POKEPARAM* bpp );
+
 extern void BPP_UpdatePrevWazaID( BTL_POKEPARAM* pp, WazaID waza, BtlPokePos targetPos );
 extern void BPP_ResetWazaContConter( BTL_POKEPARAM* pp );
 extern void BPP_RankRecover( BTL_POKEPARAM* pp );
@@ -419,8 +412,5 @@ extern u8 BPP_CONFRONT_REC_GetCount( const BTL_POKEPARAM* bpp );
 extern u8 BPP_CONFRONT_REC_GetPokeID( const BTL_POKEPARAM* bpp, u8 idx );
 
 
-#ifdef PM_DEBUG
-extern void BPP_DebugPrintTokuseiAdrs( const BTL_POKEPARAM* bpp );
-#endif
 
 #endif

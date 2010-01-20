@@ -385,7 +385,8 @@ static void setup_core( BTLV_CORE* wk, HEAPID heapID )
     GFL_CLACT_SYS_Create( &clsysinit, &vramBank, heapID );
   }
 
-  GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 16, 0 );
+//  GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 16, 0 );
+
 }
 static void cleanup_core( BTLV_CORE* wk )
 {
@@ -628,25 +629,23 @@ void BTLV_StartPokeSelect( BTLV_CORE* wk, const BTL_POKESELECT_PARAM* param, BOO
   wk->plistData.tcb_sys = BTLV_EFFECT_GetTCBSYS();
   wk->plistData.pfd = BTLV_EFFECT_GetPfd();
   wk->plistData.chg_waza = fCantEsc;  // 逃げ・交換禁止フラグ
-  {
-    const POKEMON_PARAM* pp = PokeParty_GetMemberPointer( wk->plistData.pp, 0 );
-    u16 monsno = PP_Get(pp, ID_PARA_monsno, NULL);
-    OS_TPrintf("リストマルチモード=%d, 立ち位置=%d, 先頭ポケNo=%d\n", wk->plistData.multiMode, wk->plistData.multiPos, monsno );
-  }
 
+  // 既に選択されているポケモンの位置情報を初期化
   {
-    u32 i, max = BTL_POKESELECT_RESULT_GetCount( result );
-    for(i=0; i<max; ++i)
+    u32 i, selectedPokeCnt = BTL_POKESELECT_RESULT_GetCount( result );
+
+    BTL_N_Printf( DBGSTR_VCORE_PokeListStart, wk->plistData.mode, selectedPokeCnt);
+    for(i=0; i<selectedPokeCnt; ++i)
     {
       if( i >= NELEMS(wk->plistData.change_sel) ){ break; }
       wk->plistData.change_sel[i] = BTL_POKESELECT_RESULT_Get( result, i );
+      OS_TPrintf("  既に選択されたポケ%d体目 ... Index=%d\n", i, wk->plistData.change_sel[i]);
     }
     for( ; i<NELEMS(wk->plistData.change_sel); ++i){
       wk->plistData.change_sel[i] = BPL_CHANGE_SEL_NONE;
     }
   }
 
-  BTL_POKESELECT_RESULT_Init( result, param );
   wk->pokeselResult = result;
   wk->selectItemSeq = 0;
 }
@@ -670,23 +669,26 @@ BOOL BTLV_WaitPokeSelect( BTLV_CORE* wk )
   case 2:
     if( wk->plistData.end_flg )
     {
-      if( wk->plistData.sel_poke != BPL_SEL_EXIT )
+      u32 i;
+      BOOL fSelected = FALSE;
+
+      BTL_N_Printf( DBGSTR_VCORE_SelPokeEnd );
+
+      for(i=0; i<NELEMS(wk->plistData.sel_pos); ++i)
       {
-        if( wk->plistData.mode == BPL_MODE_NORMAL ){
-          BTL_Printf("選んだポケは%d番目\n", wk->plistData.sel_poke);
-          BTL_POKESELECT_RESULT_Push( wk->pokeselResult, wk->plistData.sel_poke );
-        }
-        else
-        {
-          u8 i;
-          for(i=0; i<NELEMS(wk->plistData.sel_pos); ++i){
-            if( wk->plistData.sel_pos[i] != BPL_SELPOS_NONE )
-            {
-              BTL_POKESELECT_RESULT_Push( wk->pokeselResult, wk->plistData.sel_pos[i] );
-            }
+        if( wk->plistData.sel_pos[i] != BPL_SELPOS_NONE ){
+          BTL_POKESELECT_RESULT_Push( wk->pokeselResult, wk->plistData.sel_pos[i] );
+          {
+            u8 storeCnt = BTL_POKESELECT_RESULT_GetCount( wk->pokeselResult );
+            BTL_N_Printf( DBGSTR_VCORE_SelPokeEnd_Sel, i, storeCnt);
+            fSelected = TRUE;
           }
         }
+        else{
+          BTL_N_Printf( DBGSTR_VCORE_SelPokeEnd_Unsel, i );
+        }
       }
+
       GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle_plist ) );
       BTLV_SCD_FadeIn( wk->scrnD );
       BTLV_SCD_Setup( wk->scrnD );
@@ -742,11 +744,6 @@ void BTLV_ITEMSELECT_Start( BTLV_CORE* wk, u8 bagMode, u8 energy, u8 reserved_en
     wk->plistData.cursor_flg = BTLV_SCD_GetCursorFlagPtr( wk->scrnD );
     wk->plistData.tcb_sys = BTLV_EFFECT_GetTCBSYS();
     wk->plistData.pfd = BTLV_EFFECT_GetPfd();
-    {
-      const POKEMON_PARAM* pp = PokeParty_GetMemberPointer( wk->plistData.pp, 0 );
-      u16 monsno = PP_Get(pp, ID_PARA_monsno, NULL);
-      OS_TPrintf("リストマルチモード=%d, 立ち位置=%d, 先頭ポケNo=%d\n", wk->plistData.multiMode, wk->plistData.multiPos, monsno);
-    }
 
     wk->selectItemSeq = 1;
   }
@@ -1105,7 +1102,6 @@ BOOL BTLV_ACT_SimpleHPEffect_Wait( BTLV_CORE* wk )
 //=============================================================================================
 void BTLV_AddEffectByPos( BTLV_CORE* wk, BtlvMcssPos vpos, u16 effectNo )
 {
-  BTL_Printf("vpos=%d にエフェクト発動\n", vpos);
   BTLV_EFFECT_AddByPos( vpos, effectNo );
 }
 BOOL BTLV_WaitEffectByPos( BTLV_CORE* wk, BtlvMcssPos vpos )
@@ -1115,21 +1111,21 @@ BOOL BTLV_WaitEffectByPos( BTLV_CORE* wk, BtlvMcssPos vpos )
   }
   return FALSE;
 }
+
 //=============================================================================================
 /**
- * 始点＆終点を指定してエフェクト開始
+ * 開始＆終端位置指定汎用エフェクト開始
  *
  * @param   wk
  * @param   vpos_from
  * @param   vpos_to
- * @param   effectNo
  */
 //=============================================================================================
-void BTLV_AddEffectByVector( BTLV_CORE* wk, BtlvMcssPos vpos_from, BtlvMcssPos vpos_to, u16 effectNo )
+void BTLV_AddEffectByDir( BTLV_CORE* wk, BtlvMcssPos vpos_from, BtlvMcssPos vpos_to, u16 effectNo )
 {
   BTLV_EFFECT_AddByDir( vpos_from, vpos_to, effectNo );
 }
-BOOL BTLV_WaitEffectAll( BTLV_CORE* wk )
+BOOL BTLV_WaitEffectByDir( BTLV_CORE* wk )
 {
   if( !BTLV_EFFECT_CheckExecute() ){
     return TRUE;
@@ -1154,6 +1150,23 @@ void BTLV_StartDeadAct( BTLV_CORE* wk, BtlPokePos pos )
 BOOL BTLV_WaitDeadAct( BTLV_CORE* wk )
 {
   return BTLV_SCU_WaitDeadAct( wk->scrnU );
+}
+//=============================================================================================
+/**
+ * ポケモン生き返りアクション開始
+ *
+ * @param   wk
+ * @param   pos   ひんしになったポケモンの位置ID
+ *
+ */
+//=============================================================================================
+void BTLV_StartReliveAct( BTLV_CORE* wk, BtlPokePos pos )
+{
+  BTLV_SCU_StartReliveAct( wk->scrnU, pos );
+}
+BOOL BTLV_WaitReliveAct( BTLV_CORE* wk )
+{
+  return BTLV_SCU_WaitReliveAct( wk->scrnU );
 }
 
 
@@ -1817,11 +1830,6 @@ void BTLV_WAZAWASURE_Start( BTLV_CORE* wk, u8 pos, WazaID waza )
   wk->plistData.cursor_flg = BTLV_SCD_GetCursorFlagPtr( wk->scrnD );
   wk->plistData.tcb_sys = BTLV_EFFECT_GetTCBSYS();
   wk->plistData.pfd = BTLV_EFFECT_GetPfd();
-  {
-    const POKEMON_PARAM* pp = PokeParty_GetMemberPointer( wk->plistData.pp, 0 );
-    u16 monsno = PP_Get(pp, ID_PARA_monsno, NULL);
-    OS_TPrintf("リストマルチモード=%d, 立ち位置=%d, 先頭ポケNo=%d, selPos=%d\n", wk->plistData.multiMode, wk->plistData.multiPos, monsno, pos);
-  }
 
   wk->selectItemSeq = 0;
 }

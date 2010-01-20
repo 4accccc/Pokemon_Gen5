@@ -32,6 +32,7 @@ extern BOOL BTL_MAIN_GetDebugFlag( const BTL_MAIN_MODULE* wk, BtlDebugFlag flag 
 /*------------------------------------------------------------------------------*/
 /* クライアントID，ポケモンID，位置IDなどの情報＆相互変換                       */
 /*------------------------------------------------------------------------------*/
+extern BOOL BTL_MAIN_IsExistClient( const BTL_MAIN_MODULE* wk, u8 clientID );
 extern BtlPokePos BTL_MAIN_GetClientPokePos( const BTL_MAIN_MODULE* wk, u8 clientID, u8 posIdx );
 extern BtlPokePos BTL_MAIN_GetOpponentPokePos( const BTL_MAIN_MODULE* wk, BtlPokePos basePos, u8 idx );
 extern BtlPokePos BTL_MAIN_GetNextPokePos( const BTL_MAIN_MODULE* wk, BtlPokePos basePos );
@@ -149,7 +150,6 @@ extern BTL_PARTY* BTL_POKECON_GetPartyData( BTL_POKE_CONTAINER* wk, u32 clientID
 extern const BTL_PARTY* BTL_POKECON_GetPartyDataConst( const BTL_POKE_CONTAINER* wk, u32 clientID );
 
 extern BtlPokePos BTL_MAIN_ViewPosToBtlPos( const BTL_MAIN_MODULE* wk, u8 vpos );
-extern BOOL BTL_POKECON_IsExsitClient( const BTL_POKE_CONTAINER* wk, u8 clientID );
 extern BOOL BTL_MAIN_CheckFrontPoke( BTL_MAIN_MODULE* wk, const BTL_POKE_CONTAINER* pokeCon, u8 pokeID );
 
 
@@ -169,6 +169,7 @@ typedef enum {
   BTL_EXPOS_AREA_ALL,         ///< （攻撃範囲内の）敵・味方全部
 
   BTL_EXPOS_FULL_ENEMY,       ///< （全フィールドの）相手ポケ全部
+  BTL_EXPOS_FULL_FRIENDS,     ///< （全フィールドの）自分以外の味方ポケ全部
   BTL_EXPOS_FULL_ALL,         ///< （全フィールドの）ポケ全部
 
 
@@ -192,6 +193,9 @@ static inline u8 EXPOS_GET_BASEPOS( BtlExPos exPos )
 {
   return exPos & 0xff;
 }
+
+extern u8 BTL_MAIN_ExpandExistPokeParam( const BTL_MAIN_MODULE* wk, BTL_POKE_CONTAINER* pokeCon, BtlExPos exPos,
+    BTL_POKEPARAM** bppAry );
 
 //-------------------------------------------------------------------------------
 /**

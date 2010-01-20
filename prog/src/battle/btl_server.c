@@ -455,7 +455,7 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
   switch( *seq ){
   case 0:
     if( BTL_SVFLOW_MakeShooterChargeCommand(server->flowWork) ){
-      BTL_Printf("シューターチャージコマンド発行\n");
+      BTL_N_Printf( DBGSTR_SERVER_SendShooterChargeCmd );
       SetAdapterCmdEx( server, BTL_ACMD_SERVER_CMD, server->que->buffer, server->que->writePtr );
       (*seq)++;
     }else{
@@ -466,14 +466,14 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
   case 1:
     if( WaitAdapterCmd(server) )
     {
-      BTL_Printf("全クライアントでシューターチャージコマンド処理終了\n");
+      BTL_Printf( DBGSTR_SERVER_ShooterChargeCmdDoneAll );
       ResetAdapterCmd( server );
       (*seq)++;
     }
     break;
 
   case 2:
-    BTL_Printf("アクション選択コマンド発行\n");
+    BTL_N_Printf( DBGSTR_SERVER_SendActionSelectCmd );
     SetAdapterCmd( server, BTL_ACMD_SELECT_ACTION );
     (*seq)++;
     break;
@@ -481,10 +481,10 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
   case 3:
     if( WaitAdapterCmd(server) )
     {
-      BTL_Printf("アクション受け付け完了\n");
+      BTL_N_Printf( DBGSTR_SERVER_ActionSelectDoneAll );
       ResetAdapterCmd( server );
-      server->flowResult = BTL_SVFLOW_Start( server->flowWork );
-      BTL_Printf("flow Result=%d\n", server->flowResult);
+      server->flowResult = BTL_SVFLOW_StartTurn( server->flowWork );
+      BTL_N_Printf( DBGSTR_SERVER_FlowResult, server->flowResult);
 
       if( SendActionRecord(server) ){
         (*seq)++;
@@ -497,14 +497,14 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
   case 4:
     if( WaitAdapterCmd(server) )
     {
-      BTL_Printf("操作記録データの送信完了\n");
+      BTL_N_Printf( DBGSTR_SVFL_RecDataSendComped );
       ResetAdapterCmd( server );
       (*seq)++;
     }
     break;
 
   case 5:
-      BTL_Printf("サーバコマンド送信します ... result=%d\n", server->flowResult);
+      BTL_N_Printf( DBGSTR_SVFL_SendServerCmd, server->flowResult);
       SetAdapterCmdEx( server, BTL_ACMD_SERVER_CMD, server->que->buffer, server->que->writePtr );
       (*seq)++;
       break;
@@ -512,7 +512,7 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
   case 6:
     if( WaitAdapterCmd(server) )
     {
-      BTL_Printf("全クライアントのコマンド再生終了...result=%d\n", server->flowResult);
+      BTL_N_Printf( DBGSTR_SVFL_AllClientCmdPlayComplete, server->flowResult);
       BTL_MAIN_SyncServerCalcData( server->mainModule );
       ResetAdapterCmd( server );
 
@@ -521,7 +521,7 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
         setMainProc_Root( server );
         break;
       case SVFLOW_RESULT_POKE_IN_REQ:
-        BTL_Printf("空き位置への新ポケ投入リクエスト受け付け\n");
+        BTL_N_Printf( DBGSTR_SV_PokeInReqForEmptyPos );
         {
           BtlCompetitor competitor = BTL_MAIN_GetCompetitor( server->mainModule );
           BtlRule rule = BTL_MAIN_GetRule( server->mainModule );
@@ -533,7 +533,7 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
         }
         break;
       case SVFLOW_RESULT_POKE_CHANGE:
-        BTL_Printf("ターン途中のポケ入れ替え発生\n");
+        BTL_N_Printf( DBGSTR_SV_ChangePokeOnTheTurn );
         GF_ASSERT( server->changePokeCnt );
         setMainProc( server, ServerMain_SelectPokemonChange );
         break;
@@ -545,14 +545,13 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
           return FALSE;
         }
       case SVFLOW_RESULT_BTL_SHOWDOWN:
-        BTL_Printf("決着！\n");
         setMainProc( server, ServerMain_ExitBattle );
         return FALSE;
       default:
         GF_ASSERT(0);
         /* fallthru */
       case SVFLOW_RESULT_BTL_QUIT:
-        BTL_Printf("バトル終了へ\n");
+        BTL_N_Printf( DBGSTR_SVFL_GotoQuit );
         return TRUE;
       }
     }
@@ -635,7 +634,7 @@ static BOOL ServerMain_SelectPokemonIn( BTL_SERVER* server, int* seq )
       ResetAdapterCmd( server );
       SCQUE_Init( server->que );
       server->flowResult = BTL_SVFLOW_StartAfterPokeIn( server->flowWork );
-      BTL_Printf("サーバー処理結果=%d\n", server->flowResult );
+      BTL_N_Printf( DBGSTR_SERVER_FlowResult, server->flowResult );
 
       if( SendActionRecord(server) ){
         (*seq)++;
@@ -695,7 +694,7 @@ static BOOL ServerMain_SelectPokemonChange( BTL_SERVER* server, int* seq )
 {
   switch( *seq ){
   case 0:
-    BTL_Printf("入れ替えポケモン選択へ  交替されるポケ数=%d\n", server->changePokeCnt);
+    BTL_N_Printf( DBGSTR_SV_StartChangePokeInfo, server->changePokeCnt);
     SetAdapterCmdEx( server, BTL_ACMD_SELECT_POKEMON_FOR_CHANGE, server->changePokePos,
         server->changePokeCnt*sizeof(server->changePokePos[0]) );
     (*seq)++;
@@ -704,11 +703,10 @@ static BOOL ServerMain_SelectPokemonChange( BTL_SERVER* server, int* seq )
   case 1:
     if( WaitAdapterCmd(server) )
     {
-      BTL_Printf("入れ替えポケモン選択後\n");
       ResetAdapterCmd( server );
       SCQUE_Init( server->que );
-      server->flowResult = BTL_SVFLOW_StartAfterPokeChange( server->flowWork );
-      BTL_Printf("サーバー結果=%d\n", server->flowResult );
+      server->flowResult = BTL_SVFLOW_ContinueAfterPokeChange( server->flowWork );
+      BTL_N_Printf( DBGSTR_SERVER_FlowResult, server->flowResult );
 
       if( SendActionRecord(server) ){
         (*seq)++;
@@ -737,6 +735,10 @@ static BOOL ServerMain_SelectPokemonChange( BTL_SERVER* server, int* seq )
       BTL_MAIN_SyncServerCalcData( server->mainModule );
 
       switch( server->flowResult ){
+      case SVFLOW_RESULT_POKE_CHANGE:
+        (*seq) = 0;
+        break;
+
       case SVFLOW_RESULT_POKE_IN_REQ:
         setMainProc( server, ServerMain_SelectPokemonIn );
         break;

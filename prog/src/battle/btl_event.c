@@ -20,6 +20,13 @@
 
 
 /*--------------------------------------------------------------------------*/
+/* Debug                                                                    */
+/*--------------------------------------------------------------------------*/
+enum {
+  PRINT_LINK_FLAG = 0,    ///< リンクリスト情報表示
+};
+
+/*--------------------------------------------------------------------------*/
 /* Consts                                                                   */
 /*--------------------------------------------------------------------------*/
 enum {
@@ -43,6 +50,8 @@ typedef enum {
 
   REWRITE_FREE = 0,   ///< 自由に可能
   REWRITE_ONCE,       ///< １回だけ可能
+  REWRITE_END,        ///< １回書き換えたのでもう終了
+  REWRITE_MUL,        ///< 乗算のみ可能
   REWRITE_LOCK,       ///< 不可
 
 }RewriteState;
@@ -60,11 +69,11 @@ struct _BTL_EVENT_FACTOR {
   const BtlEventHandlerTable* handlerTable;
   BtlEventSkipCheckHandler  skipCheckHandler;
   BtlEventFactorType  factorType;
-  u32       priority    : 16;  ///< ソートプライオリティ
+  u32       priority    : 20;  ///< ソートプライオリティ
   u32       numHandlers :  8;  ///< ハンドラテーブル要素数
   u32       callingFlag :  1;  ///< 呼び出し中を再呼び出ししないためのフラグ
   u32       sleepFlag   :  1;  ///< 休眠フラグ
-  u32       dmy         :  6;
+  u32       dmy         :  2;
   int       work[ EVENT_HANDLER_WORK_ELEMS ];
   u16       subID;      ///< イベント実体ID。ワザならワザID, とくせいならとくせいIDなど
   u8        dependID;   ///< 依存対象物ID。ワザ・とくせい・アイテムならポケID、場所依存なら場所idなど。
@@ -162,6 +171,35 @@ static inline BOOL isDependPokeFactorType( BtlEventFactorType factorType )
   return FALSE;
 }
 
+//----------------------------------------------------------------------------------
+/**
+ * リンクリスト情報をPrint（デバッグ用）
+ */
+//----------------------------------------------------------------------------------
+static void printLinkDebug( void )
+{
+  #if PRINT_LINK_FLAG
+  BTL_EVENT_FACTOR* fp;
+  u32 cnt = 0;
+
+  BTL_N_Printf( DBGSTR_EV_LinkInfoHeader );
+  for(fp=FirstFactorPtr; fp!=NULL; fp=fp->next)
+  {
+    BTL_N_PrintfSimple( DBGSTR_EV_LinkPtr, fp );
+    ++cnt;
+    if( cnt % 4 == 0 ){
+      BTL_N_PrintfSimple( DBGSTR_LF );
+    }
+  }
+  if( !cnt ){
+    BTL_N_PrintfSimple( DBGSTR_EV_LinkEmpty );
+  }else if( cnt % 4 ){
+    BTL_N_PrintfSimple( DBGSTR_LF );
+  }
+  BTL_N_Printf( DBGSTR_EV_LinkInfoFooder );
+  #endif
+}
+
 //=============================================================================================
 /**
  * イベント反応要素を追加
@@ -211,7 +249,7 @@ BTL_EVENT_FACTOR* BTL_EVENT_AddFactor( BtlEventFactorType factorType, u16 subID,
       FirstFactorPtr = newFactor;
     }
     // 現在先頭より高プライオリティ
-    else if( newFactor->priority < FirstFactorPtr->priority )
+    else if( newFactor->priority > FirstFactorPtr->priority )
     {
       FirstFactorPtr->prev = newFactor;
       newFactor->next = FirstFactorPtr;
@@ -242,6 +280,9 @@ BTL_EVENT_FACTOR* BTL_EVENT_AddFactor( BtlEventFactorType factorType, u16 subID,
         newFactor->prev = last;
       }
     }
+    BTL_N_PrintfEx( PRINT_LINK_FLAG, DBGSTR_EV_AddFactor,
+        newFactor, newFactor->dependID, newFactor->factorType, newFactor->priority );
+    printLinkDebug();
     return newFactor;
   }
   // スタックから見つからない
@@ -261,9 +302,6 @@ BTL_EVENT_FACTOR* BTL_EVENT_AddFactor( BtlEventFactorType factorType, u16 subID,
 //=============================================================================================
 void BTL_EVENT_FACTOR_Remove( BTL_EVENT_FACTOR* factor )
 {
-  if( factor->factorType == BTL_EVENT_FACTOR_TOKUSEI ){
-    OS_TPrintf("ポケ[%d]のとくせい(%d)ハンドラ除去確定\n", factor->dependID, factor->subID);
-  }
 
   if( factor == FirstFactorPtr )
   {
@@ -279,6 +317,9 @@ void BTL_EVENT_FACTOR_Remove( BTL_EVENT_FACTOR* factor )
   {
     factor->next->prev = factor->prev;
   }
+
+  BTL_N_PrintfEx( PRINT_LINK_FLAG, DBGSTR_EV_DelFactor, factor, factor->dependID, factor->factorType );
+  printLinkDebug();
 
   pushFactor( factor );
 }
@@ -420,7 +461,6 @@ static void CallHandlersCore( BTL_SVFLOW_WORK* flowWork, BtlEventType eventID, B
           if( !fSkipCheck || !check_handler_skip(flowWork, factor, eventID) )
           {
             factor->callingFlag = TRUE;
-//            BTL_Printf("ハンドラ[ %p ] を呼び出す\n", tbl[i].handler);
             tbl[i].handler( factor, flowWork, factor->dependID, factor->work );
             factor->callingFlag = FALSE;
           }
@@ -439,7 +479,6 @@ static BOOL check_handler_skip( BTL_SVFLOW_WORK* flowWork, BTL_EVENT_FACTOR* fac
 {
   const BTL_POKEPARAM* bpp = NULL;
 
-  BTL_Printf("イベント関連ポケID=%d\n", factor->pokeID);
   if( factor->pokeID != BTL_POKEID_NULL ){
     bpp = BTL_SVFTOOL_GetPokeParam( flowWork, factor->pokeID );
   }
@@ -495,8 +534,8 @@ static BOOL check_handler_skip( BTL_SVFLOW_WORK* flowWork, BTL_EVENT_FACTOR* fac
 void BTL_EVENT_FACTOR_AttachSkipCheckHandler( BTL_EVENT_FACTOR* factor, BtlEventSkipCheckHandler handler )
 {
   factor->skipCheckHandler = handler;
-  BTL_Printf("factor[%p] にスキップチェックハンドラ[%p]をアタッチ[%p]\n", factor, factor->skipCheckHandler, &(factor->skipCheckHandler));
 }
+
 //=============================================================================================
 /**
  * スキップチェックハンドラをデタッチする
@@ -528,11 +567,6 @@ BTL_EVENT_FACTOR* BTL_EVENT_SeekFactor( BtlEventFactorType factorType, u8 depend
 
   for( factor=FirstFactorPtr; factor!=NULL; factor=factor->next )
   {
-    /*
-    if( factor->factorType == BTL_EVENT_FACTOR_TOKUSEI ){
-      OS_TPrintf("seek dependID=%d, subID=%d\n", factor->dependID, factor->subID);
-    }
-    */
     if( (factor->factorType == factorType) && (factor->dependID == dependID) )
     {
       return factor;
@@ -550,7 +584,6 @@ BTL_EVENT_FACTOR* BTL_EVENT_GetNextFactor( BTL_EVENT_FACTOR* factor )
     factor = factor->next;
     while( factor ){
       if( (factor->factorType == type) && (factor->dependID == dependID) ){
-        BTL_Printf("イベントタイプ[%d], ポケ[%d]の次のハンドラが見つかった\n", type, dependID );
         return factor;
       }
       factor = factor->next;
@@ -634,6 +667,14 @@ static void varStack_Init( void )
   }
 }
 
+//------------------------------------------------------------------------------
+/**
+ * スタックが空になっているかチェック（毎ターン行う）
+ *
+ * 空になっていなければ → テスト時はASSERT停止する
+ *                       →非テスト時は次善の策としてスタックを空にする
+ */
+//------------------------------------------------------------------------------
 void BTL_EVENTVAR_CheckStackCleared( void )
 {
   VAR_STACK* stack = &VarStack;
@@ -644,7 +685,13 @@ void BTL_EVENTVAR_CheckStackCleared( void )
   }
 }
 
-
+//------------------------------------------------------------------------------
+/**
+ * スタックPush
+ *
+ * @param   line    Pushを実行した btl_server_flow.c 行番号（デバッグ用）
+ */
+//------------------------------------------------------------------------------
 void BTL_EVENTVAR_PushInpl( u32 line )
 {
   VAR_STACK* stack = &VarStack;
@@ -665,8 +712,7 @@ void BTL_EVENTVAR_PushInpl( u32 line )
       GF_ASSERT_MSG(0, "Event StackPointer =%d 危険水域です！！", stack->sp);
     }
     #endif
-    BTL_PrintfEx( EVAR_PRINT_FLG, "[EVAR] PUSH sp:%d\n", stack->sp );
-//    OS_TPrintf("PUSH [%5d] SP=%d\n", line, stack->sp);
+    BTL_N_PrintfEx( EVAR_PRINT_FLG, DBGSTR_EVAR_Push, line, stack->sp);
   }
   else
   {
@@ -682,14 +728,11 @@ void BTL_EVENTVAR_PopInpl( u32 line )
   {
     u16 p = stack->sp;
     while( (p < NELEMS(stack->label)) && (stack->label[p] != BTL_EVAR_NULL) ){
-      BTL_PrintfEx( EVAR_PRINT_FLG, "[EVAR]  <prePOPv clear:%d\n", p);
       stack->label[p++] = BTL_EVAR_NULL;
     }
 
     stack->sp--;
     stack->label[ stack->sp ] = BTL_EVAR_NULL;
-    BTL_PrintfEx( EVAR_PRINT_FLG, "[EVAR]  <prePOPs clear:%d\n", stack->sp);
-
 
     if( stack->sp )
     {
@@ -702,9 +745,8 @@ void BTL_EVENTVAR_PopInpl( u32 line )
         }
       }
     }
-//    OS_TPrintf("Pop! [%5d] SP=%d\n", line, stack->sp);
+    BTL_N_PrintfEx( EVAR_PRINT_FLG, DBGSTR_EVAR_Pop, line, stack->sp);
 
-    BTL_PrintfEx( EVAR_PRINT_FLG, "[EVAR] POP  sp:%d\n", stack->sp);
   }
   else
   {
@@ -803,7 +845,7 @@ void BTL_EVENTVAR_SetMulValue( BtlEvVarLabel label, int value, fx32 mulMin, fx32
     stack->value[p] = value;
     stack->mulMin[p] = mulMin;
     stack->mulMax[p] = mulMax;
-    stack->rewriteState[p] = REWRITE_FREE;
+    stack->rewriteState[p] = REWRITE_MUL;
   }
 }
 //=============================================================================================
@@ -826,16 +868,19 @@ BOOL BTL_EVENTVAR_RewriteValue( BtlEvVarLabel label, int value )
     int p = evar_getExistPoint( stack, label );
     if( p >= 0 )
     {
-      if( stack->rewriteState[p] != REWRITE_LOCK )
-      {
+      if( (stack->rewriteState[p] == REWRITE_FREE)
+      ||  (stack->rewriteState[p] == REWRITE_ONCE)
+      ){
         stack->label[p] = label;
         stack->value[p] = (int)value;
         if( stack->rewriteState[p] == REWRITE_ONCE ){
-          stack->rewriteState[p] = REWRITE_LOCK;
+          stack->rewriteState[p] = REWRITE_END;
         }
         return TRUE;
       }
-      else{
+      else if(  (stack->rewriteState[p] == REWRITE_LOCK)
+      ||        (stack->rewriteState[p] == REWRITE_MUL)
+      ){
         GF_ASSERT_MSG(0, "this label(%d) can't rewrite\n", label);
       }
     }
@@ -893,7 +938,7 @@ int BTL_EVENTVAR_GetValue( BtlEvVarLabel label )
       }
       ++p;
     }
-    GF_ASSERT_MSG(0,"label=%d",label);  // label not found
+    GF_ASSERT_MSG(0,"label-%d not found",label);  // label not found
     return 0;
   }
 }

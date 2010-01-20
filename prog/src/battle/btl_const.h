@@ -28,8 +28,8 @@ enum {
 
 
 // 状態異常処理関連
-  BTL_NEMURI_TURN_MIN = 3,  ///< 「ねむり」最小ターン数
-  BTL_NEMURI_TURN_MAX = 8,  ///< 「ねむり」最大ターン数
+  BTL_NEMURI_TURN_MIN = 2,  ///< 「ねむり」最小ターン数
+  BTL_NEMURI_TURN_MAX = 4,  ///< 「ねむり」最大ターン数
   BTL_NEMURI_TURN_RANGE = (BTL_NEMURI_TURN_MAX - BTL_NEMURI_TURN_MIN + 1),
 
   BTL_MAHI_EXE_PER = 25,        ///< 「まひ」でしびれて動けない確率
@@ -38,6 +38,7 @@ enum {
   BTL_MEROMERO_EXE_PER = 50,    ///< 「メロメロ」で動けない確率
 
   BTL_DOKU_SPLIT_DENOM = 8,         ///< 「どく」で最大HPの何分の１減るか
+  BTL_MOUDOKU_INC_MAX = 15,         ///< 「どくどく」でダメージ量が増加するターン数最大
   BTL_YAKEDO_SPLIT_DENOM = 8,       ///< 「やけど」で最大HPの何分の１減るか
   BTL_YAKEDO_DAMAGE_RATIO = 50,     ///< 「やけど」で物理ダメージを減じる率
   BTL_MOUDOKU_SPLIT_DENOM = 16,     ///< もうどく時、最大HPの何分の１減るか（基本値=最小値）

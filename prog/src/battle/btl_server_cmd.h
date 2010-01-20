@@ -13,7 +13,7 @@
 #include "btl_string.h"
 
 enum {
-  BTL_SERVER_CMD_QUE_SIZE = 384,
+  BTL_SERVER_CMD_QUE_SIZE = 800,
   BTL_SERVERCMD_ARG_MAX = 16,
 };
 
@@ -48,13 +48,11 @@ typedef enum {
   SC_OP_CANTESCAPE_SUB,     ///< にげ・交換禁止コードの削除を全クライアントに通知 [ClientID, CantCode]
   SC_OP_CHANGE_POKETYPE,    ///< 【計算】ポケモンのタイプ変更（ pokeID, type ）
   SC_OP_CHANGE_POKEFORM,    ///< 【計算】ポケモンのフォルム変更（ pokeID, type ）
-  SC_OP_REMOVE_ITEM,        ///< 所有アイテム削除
+  SC_OP_CONSUME_ITEM,       ///< 所有アイテム削除
   SC_OP_UPDATE_USE_WAZA,    ///< 直前使用ワザ更新
   SC_OP_RESET_USED_WAZA,    ///< 連続ワザ使用カウンタリセット
   SC_OP_SET_CONTFLAG,       ///< 永続フラグセット
   SC_OP_RESET_CONTFLAG,     ///< 永続フラグリセット
-  SC_OP_SET_ACTFLAG,        ///< アクション毎フラグセット
-  SC_OP_CLEAR_ACTFLAG,      ///< アクション毎フラグオールクリア
   SC_OP_SET_TURNFLAG,       ///< ターンフラグセット
   SC_OP_RESET_TURNFLAG,     ///< ターンフラグ強制リセット
   SC_OP_CHANGE_TOKUSEI,     ///< とくせい書き換え
@@ -70,6 +68,7 @@ typedef enum {
   SC_OP_MIGAWARI_DELETE,    ///< みがわり削除
   SC_OP_SHOOTER_CHARGE,     ///< シューターエネルギーチャージ
   SC_OP_SET_FAKESRC,        ///< イリュージョン用参照ポケモン変更
+  SC_OP_CLEAR_CONSUMED_ITEM,///< アイテム消費情報のクリア
   SC_ACT_WAZA_EFFECT,
   SC_ACT_WAZA_EFFECT_EX,    ///< 【アクション】ワザエフェクト拡張（溜めターンエフェクトなどに使用）
   SC_ACT_WAZA_DMG,          ///< 【アクション】[ AtClient, DefClient, wazaIdx, Affinity ]
@@ -79,7 +78,8 @@ typedef enum {
   SC_ACT_CONF_DMG,          ///< 【アクション】こんらん自爆ダメージ [ pokeID ]
   SC_ACT_RANKUP,            ///< 【ランクアップ効果】 ○○の×××があがった！[ ClientID, statusType, volume ]
   SC_ACT_RANKDOWN,          ///< 【ランクダウン効果】 ○○の×××がさがった！[ ClientID, statusType, volume ]
-  SC_ACT_DEAD,              ///< 【ポケモンひんし】[ ClientID ]
+  SC_ACT_DEAD,              ///< 【ポケモンひんし】
+  SC_ACT_RELIVE,            ///< 【ポケモン生き返り】
   SC_ACT_MEMBER_OUT,        ///< 【ポケモン退場】[ ClientID, memberIdx ]
   SC_ACT_MEMBER_IN,         ///< 【ポケモンイン】[ ClientID, posIdx, memberIdx ]
   SC_ACT_WEATHER_DMG,       ///< 天候による一斉ダメージ処理[ weather, pokeCnt ]
@@ -90,7 +90,6 @@ typedef enum {
   SC_ACT_KILL,              ///< 強制瀕死演出（みちづれ、一撃ワザなど）
   SC_ACT_MOVE,              ///< ムーブ
   SC_ACT_EXP,               ///< 経験値取得
-  SC_ACT_EXP_LVUP,          ///< 経験値取得＋レベルアップ
   SC_ACT_BALL_THROW,        ///< ボール投げ
   SC_ACT_ROTATION,          ///< ローテーション
   SC_ACT_CHANGE_TOKUSEI,    ///< とくせい変更
@@ -139,65 +138,14 @@ static inline void SCQUE_Setup( BTL_SERVER_CMD_QUE* que, const void* data, u16 d
 
 //----------------------------------------------------------------------------------------------
 //----------------------------------------------------------------------------------------------
-static inline void scque_put1byte( BTL_SERVER_CMD_QUE* que, u8 data )
-{
-  GF_ASSERT(que->writePtr < BTL_SERVER_CMD_QUE_SIZE);
-  que->buffer[ que->writePtr++ ] = data;
-}
-static inline u8 scque_read1byte( BTL_SERVER_CMD_QUE* que )
-{
-  GF_ASSERT(que->readPtr < que->writePtr);
-  return que->buffer[ que->readPtr++ ];
-}
-static inline void scque_put2byte( BTL_SERVER_CMD_QUE* que, u16 data )
-{
-  GF_ASSERT(que->writePtr < (BTL_SERVER_CMD_QUE_SIZE-1));
-  que->buffer[ que->writePtr++ ] = (data >> 8)&0xff;
-  que->buffer[ que->writePtr++ ] = (data & 0xff);
-}
-static inline u16 scque_read2byte( BTL_SERVER_CMD_QUE* que )
-{
-  GF_ASSERT_MSG(que->readPtr < (que->writePtr-1), "rp=%d, wp=%d", que->readPtr, que->writePtr);
-  {
-    u16 data = ( (que->buffer[que->readPtr] << 8) | que->buffer[que->readPtr+1] );
-    que->readPtr += 2;
-    return data;
-  }
-}
-static inline void scque_put3byte( BTL_SERVER_CMD_QUE* que, u32 data )
-{
-  GF_ASSERT(que->writePtr < (BTL_SERVER_CMD_QUE_SIZE-2));
-  que->buffer[ que->writePtr++ ] = (data >> 16)&0xff;
-  que->buffer[ que->writePtr++ ] = (data >> 8)&0xff;
-  que->buffer[ que->writePtr++ ] = (data & 0xff);
-}
-static inline u32 scque_read3byte( BTL_SERVER_CMD_QUE* que )
-{
-  GF_ASSERT(que->readPtr < (que->writePtr-2));
-  {
-    u32 data = ( (que->buffer[que->readPtr]<<16) | (que->buffer[que->readPtr+1]<<8) | (que->buffer[que->readPtr+2]) );
-    que->readPtr += 3;
-    return data;
-  }
-}
-static inline void scque_put4byte( BTL_SERVER_CMD_QUE* que, u32 data )
-{
-  GF_ASSERT(que->writePtr < (BTL_SERVER_CMD_QUE_SIZE-3));
-  que->buffer[ que->writePtr++ ] = (data >> 24)&0xff;
-  que->buffer[ que->writePtr++ ] = (data >> 16)&0xff;
-  que->buffer[ que->writePtr++ ] = (data >> 8)&0xff;
-  que->buffer[ que->writePtr++ ] = (data & 0xff);
-}
-static inline u32 scque_read4byte( BTL_SERVER_CMD_QUE* que )
-{
-  GF_ASSERT(que->readPtr < (que->writePtr-3));
-  {
-    u32 data = ( (que->buffer[que->readPtr]<<24) | (que->buffer[que->readPtr+1]<<16)
-               | (que->buffer[que->readPtr+2]<<8) | (que->buffer[que->readPtr+3]) );
-    que->readPtr += 4;
-    return data;
-  }
-}
+extern void scque_put1byte( BTL_SERVER_CMD_QUE* que, u8 data );
+extern u8 scque_read1byte( BTL_SERVER_CMD_QUE* que );
+extern void scque_put2byte( BTL_SERVER_CMD_QUE* que, u16 data );
+extern u16 scque_read2byte( BTL_SERVER_CMD_QUE* que );
+extern void scque_put3byte( BTL_SERVER_CMD_QUE* que, u32 data );
+extern u32 scque_read3byte( BTL_SERVER_CMD_QUE* que );
+extern void scque_put4byte( BTL_SERVER_CMD_QUE* que, u32 data );
+extern u32 scque_read4byte( BTL_SERVER_CMD_QUE* que );
 
 //----------------------------------------------------------------------------------------------
 //----------------------------------------------------------------------------------------------
@@ -305,9 +253,9 @@ static inline void SCQUE_PUT_OP_ChangePokeForm( BTL_SERVER_CMD_QUE* que, u8 poke
 {
   SCQUE_PUT_Common( que, SC_OP_CHANGE_POKEFORM, pokeID, formNo );
 }
-static inline void SCQUE_PUT_OP_RemoveItem( BTL_SERVER_CMD_QUE* que, u8 pokeID  )
+static inline void SCQUE_PUT_OP_ConsumeItem( BTL_SERVER_CMD_QUE* que, u8 pokeID  )
 {
-  SCQUE_PUT_Common( que, SC_OP_REMOVE_ITEM, pokeID );
+  SCQUE_PUT_Common( que, SC_OP_CONSUME_ITEM, pokeID );
 }
 static inline void SCQUE_PUT_OP_UpdateUseWaza( BTL_SERVER_CMD_QUE* que, u8 pokeID, u8 targetPos, WazaID waza  )
 {
@@ -338,15 +286,6 @@ static inline void SCQUE_PUT_OP_ResetContFlag( BTL_SERVER_CMD_QUE* que, u8 pokeI
 {
   SCQUE_PUT_Common( que, SC_OP_RESET_CONTFLAG, pokeID, flag );
 }
-static inline void SCQUE_PUT_OP_SetActFlag( BTL_SERVER_CMD_QUE* que, u8 pokeID, BppActFlag flag )
-{
-  SCQUE_PUT_Common( que, SC_OP_SET_ACTFLAG, pokeID, flag );
-}
-static inline void SCQUE_PUT_OP_ClearActFlag( BTL_SERVER_CMD_QUE* que, u8 pokeID )
-{
-  SCQUE_PUT_Common( que, SC_OP_CLEAR_ACTFLAG, pokeID );
-}
-
 static inline void SCQUE_PUT_OP_ChangeTokusei( BTL_SERVER_CMD_QUE* que, u8 pokeID, u16 tokID )
 {
   SCQUE_PUT_Common( que, SC_OP_CHANGE_TOKUSEI, pokeID, tokID );
@@ -399,18 +338,22 @@ static inline void SCQUE_PUT_OP_SetFakeSrcMember( BTL_SERVER_CMD_QUE* que, u8 cl
 {
   SCQUE_PUT_Common( que, SC_OP_SET_FAKESRC, clientID, memberIdx );
 }
+static inline void SCQUE_PUT_OP_ClearConsumedItem( BTL_SERVER_CMD_QUE* que, u8 pokeID )
+{
+  SCQUE_PUT_Common( que, SC_OP_CLEAR_CONSUMED_ITEM, pokeID );
+}
 
 
 
 //---------------------------------------------
-static inline void SCQUE_PUT_ACT_WazaEffect( BTL_SERVER_CMD_QUE* que, u8 atPokeID, u8 defPokeID, u16 waza )
+static inline void SCQUE_PUT_ACT_WazaEffect( BTL_SERVER_CMD_QUE* que, u8 atPokePos, u8 defPokePos, u16 waza )
 {
 //  OS_TPrintf("[CMD] WazaEffect atkPoke=%d, defPoke=%d\n", atPokeID, defPokeID);
-  SCQUE_PUT_Common( que, SC_ACT_WAZA_EFFECT, atPokeID, defPokeID, waza );
+  SCQUE_PUT_Common( que, SC_ACT_WAZA_EFFECT, atPokePos, defPokePos, waza );
 }
-static inline void SCQUE_PUT_ACT_WazaEffectEx( BTL_SERVER_CMD_QUE* que, u8 atPokeID, u8 defPokeID, u16 waza, u8 arg )
+static inline void SCQUE_PUT_ACT_WazaEffectEx( BTL_SERVER_CMD_QUE* que, u8 atPokePos, u8 defPokePos, u16 waza, u8 arg )
 {
-  SCQUE_PUT_Common( que, SC_ACT_WAZA_EFFECT_EX, atPokeID, defPokeID, waza, arg );
+  SCQUE_PUT_Common( que, SC_ACT_WAZA_EFFECT_EX, atPokePos, defPokePos, waza, arg );
 }
 
 // 【アクション】単体ダメージ処理
@@ -455,6 +398,11 @@ static inline void SCQUE_PUT_ACT_RankDown( BTL_SERVER_CMD_QUE* que, u8 pokeID, u
 static inline void SCQUE_PUT_ACT_Dead( BTL_SERVER_CMD_QUE* que, u8 pokeID )
 {
   SCQUE_PUT_Common( que, SC_ACT_DEAD, pokeID );
+}
+// 【アクション】ポケモン生き返り
+static inline void SCQUE_PUT_ACT_RelivePoke( BTL_SERVER_CMD_QUE* que, u8 pokeID )
+{
+  SCQUE_PUT_Common( que, SC_ACT_RELIVE, pokeID );
 }
 // 【アクション】ポケモン退場
 static inline void SCQUE_PUT_ACT_MemberOut( BTL_SERVER_CMD_QUE* que, BtlPokePos pos )
@@ -503,10 +451,6 @@ static inline void SCQUE_PUT_ACT_AddExp( BTL_SERVER_CMD_QUE* que, u8 pokeID, u32
 {
   SCQUE_PUT_Common( que, SC_ACT_EXP, pokeID, exp );
 }
-static inline void SCQUE_PUT_ACT_AddExpLevelup( BTL_SERVER_CMD_QUE* que, u8 pokeID, u8 level, u8 hp, u8 atk, u8 def, u8 sp_atk, u8 sp_def, u8 agi )
-{
-  SCQUE_PUT_Common( que, SC_ACT_EXP_LVUP, pokeID, level, hp, atk, def, sp_atk, sp_def, agi );
-}
 static inline void SCQUE_PUT_ACT_BallThrow( BTL_SERVER_CMD_QUE* que, BtlPokePos pos, u8 yureCnt, u8 fSuccess, u8 fZukanRegister, u16 ballItemID )
 {
   SCQUE_PUT_Common( que, SC_ACT_BALL_THROW, pos, yureCnt, fSuccess, fZukanRegister, ballItemID );
@@ -550,9 +494,9 @@ static inline void SCQUE_PUT_MSG_WAZA( BTL_SERVER_CMD_QUE* que, u8 pokeID, u16 w
 }
 
 //=====================================================
-typedef u16 ScMsgArg;
+typedef u32 ScMsgArg;
 enum {
-  MSGARG_TERMINATOR = 0xffff,
+  MSGARG_TERMINATOR = 0xffff0000,
 };
 
 #include <stdarg.h>

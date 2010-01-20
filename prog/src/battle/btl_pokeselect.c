@@ -68,6 +68,19 @@ void BTL_POKESELECT_PARAM_SetProhibit( BTL_POKESELECT_PARAM* param, BtlPokeselRe
   GF_ASSERT(idx<NELEMS(param->prohibit));
   param->prohibit[ idx ] = reason;
 }
+//=============================================================================================
+/**
+ * 選択するべき数を取得
+ *
+ * @param   param
+ *
+ * @retval  u8
+ */
+//=============================================================================================
+u8 BTL_POKESELECT_PARAM_GetNumSelect( const BTL_POKESELECT_PARAM* param )
+{
+  return param->numSelect;
+}
 
 
 
@@ -83,6 +96,7 @@ void BTL_POKESELECT_RESULT_Init( BTL_POKESELECT_RESULT *result, const BTL_POKESE
 {
   result->cnt = 0;
   result->max = param->numSelect;
+  OS_TPrintf("選択できるポケモン数=%d\n", result->max);
 }
 //=============================================================================================
 /**
@@ -98,6 +112,7 @@ void BTL_POKESELECT_RESULT_Push( BTL_POKESELECT_RESULT *result, u8 idx )
   if( result->cnt < result->max )
   {
     result->selIdx[ result->cnt++ ] = idx;
+    OS_TPrintf( "入れ替え対象 1 件追加  計 %d 件\n", result->cnt );
   }
   else
   {
@@ -117,6 +132,7 @@ void BTL_POKESELECT_RESULT_Pop( BTL_POKESELECT_RESULT* result )
   if( result->cnt )
   {
     result->cnt--;
+    OS_TPrintf( "入れ替え対象 1 件削除  計 %d 件\n", result->cnt );
   }
 }
 //=============================================================================================
