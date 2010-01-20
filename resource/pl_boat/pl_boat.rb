@@ -44,7 +44,7 @@ while line = csv_file.gets
   
   column = line.split ","
 
-  dat_file.printf("\t{%s, {%s, %s}},\n",column[0].upcase, column[1], column[2].chomp("\r").chomp("\n"))
+  dat_file.printf("\t{%s, {%s, %s}},\n",column[0].upcase, column[2], column[3].chomp("\r").chomp("\n"))
 
 end
 dat_file.printf("};\n")
@@ -60,7 +60,7 @@ while line = csv_file.gets
   
   column = line.split ","
 
-  dat_file.printf("\t{%s, {%s, %s}},\n",column[0].upcase, column[1], column[2].chomp("\r").chomp("\n"))
+  dat_file.printf("\t{%s, {%s, %s}},\n",column[0].upcase, column[2], column[3].chomp("\r").chomp("\n"))
 
 end
 dat_file.printf("};\n")
