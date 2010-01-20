@@ -62,6 +62,12 @@
 //ägí£çÇÇ≥ÇÃå¬êî
 #define EX_HEIGHT_NUM	(16)
 
+// G3D_MAP
+#define MAP_SETUP_OBJ_COUNT         (32)
+#define MAP_SETUP_DDOBJ_COUNT       (0)
+#define MAP_SETUP_OBJ_DRAW_LIMIT    (4096<<FX32_SHIFT)
+#define MAP_SETUP_OBJ_LOD_LIMIT    (1024<<FX32_SHIFT)
+
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 
@@ -630,12 +636,20 @@ void FLDMAPPER_ResistData( FLDMAPPER* g3Dmapper, const FLDMAPPER_RESISTDATA* res
 			setup.mapFileFunc = mapFileFuncTbl;
 			setup.externalWork = NULL;
       setup.mapLoadSize = 0x2000;
+      setup.obj_count     = MAP_SETUP_OBJ_COUNT;
+      setup.ddobj_count   = MAP_SETUP_DDOBJ_COUNT;
+      setup.obj_draw_limit= MAP_SETUP_OBJ_DRAW_LIMIT;
+      setup.obj_lod_limit = MAP_SETUP_OBJ_LOD_LIMIT;
 		} else {
 			setup.mapDataHeapSize = resistData->memsize;
 			setup.texVramSize = FLD_MAPPER_MAPTEX_SIZE;
 			setup.mapFileFunc = mapFileFuncTbl;
 			setup.externalWork = NULL;
       setup.mapLoadSize = 0x2000;
+      setup.obj_count     = MAP_SETUP_OBJ_COUNT;
+      setup.ddobj_count   = MAP_SETUP_DDOBJ_COUNT;
+      setup.obj_draw_limit= MAP_SETUP_OBJ_DRAW_LIMIT;
+      setup.obj_lod_limit = MAP_SETUP_OBJ_LOD_LIMIT;
 		}
 
 

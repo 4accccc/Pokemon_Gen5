@@ -12,6 +12,7 @@ extern "C" {
 
 
 #define GFL_G3D_MAP_ATTR_GETMAX	(16)	//アトリビュート取得最大数
+
 //------------------------------------------------------------------
 //システムハンドル定義
 typedef struct _GFL_G3D_MAP GFL_G3D_MAP;
@@ -141,6 +142,11 @@ typedef struct {
 	void *						externalWork;
   u32               mapLoadSize;
 
+  u16               obj_count;      // 配置オブジェ管理数
+  u16               ddobj_count;    // DirectDraw配置オブジェ管理数
+  fx32              obj_draw_limit; // 描画範囲
+  fx32              obj_lod_limit;  // HighQuallity(LOD)用描画範囲
+  
 }GFL_G3D_MAP_SETUP;
 
 //============================================================================================
