@@ -48,8 +48,7 @@
 
 #endif  //PM_DEBUG
 
-typedef void (*SETUP_CALLBACK)(FLD3D_CI_PTR ptr);
-
+typedef GMEVENT_RESULT (*SETUP_CALLBACK)( GMEVENT* event, int* seq, void* work );
 
 typedef struct FLD3D_CI_tag
 {
@@ -141,7 +140,7 @@ typedef struct {
 }FLYSKY_EFF_WORK;
 #endif
 
-static void SetupResource(FLD3D_CI_PTR ptr, RES_SETUP_DAT *outDat, const u8 inCutInNo);
+static void SetupResource(GMEVENT* event, FLD3D_CI_PTR ptr, RES_SETUP_DAT *outDat, const u8 inCutInNo);
 static void SetupResourceCore(FLD3D_CI_PTR ptr, const GFL_G3D_UTIL_SETUP *inSetup);
 static void DeleteResource(FLD3D_CI_PTR ptr, RES_SETUP_DAT *ioDat);
 static BOOL PlayParticle(FLD3D_CI_PTR ptr);
@@ -169,6 +168,7 @@ static void Graphic_Tcb_Capture( GFL_TCB *p_tcb, void *p_work );
 static GMEVENT_RESULT DebugFlySkyEffEvt( GMEVENT* event, int* seq, void* work );
 #endif  //PM_DEBUG
 
+static GMEVENT_RESULT PokeGraTransEvt( GMEVENT* event, int* seq, void* work );
 static void ReTransToPokeGra(FLD3D_CI_PTR ptr);
 
 static GMEVENT_RESULT WhiteOutEvt( GMEVENT* event, int* seq, void* work );
@@ -236,10 +236,10 @@ FLD3D_CI_PTR FLD3D_CI_Init(const HEAPID inHeapID, FLD_PRTCL_SYS_PTR inPrtclSysPt
     VecFx32 defaultCameraUp = { 0, FX32_ONE, 0 };
 
     ptr->g3DcameraOrth = GFL_G3D_CAMERA_Create(	GFL_G3D_PRJORTH, 
-									FX32_ONE*12.0f,
-                  -(FX32_ONE*12.0f),
-                  -(FX32_ONE*16.0f),
-                  FX32_ONE*16.0f,
+									FX32_ONE*48.0f,
+                  -(FX32_ONE*48.0f),
+                  -(FX32_ONE*64.0f),
+                  FX32_ONE*64.0f,
 									DEF_CAM_NEAR, DEF_CAM_FAR, 0,
 									&pos, &defaultCameraUp, &target, inHeapID );
   }
@@ -374,7 +374,7 @@ void FLD3D_CI_CallPokeCutIn( GAMESYS_WORK *gsys, FLD3D_CI_PTR ptr )
   int no = FLDCIID_POKE;
   event = FLD3D_CI_CreateCutInEvt(gsys, ptr, no);
   //セットアップ後コールバック設定
-  ptr->SetupCallBack = ReTransToPokeGra;
+  ptr->SetupCallBack = PokeGraTransEvt;
   //ポケモンカットイン用ポケモン指定変数セット
   ptr->MonsNo = 3;
   ptr->FormNo = 0;
@@ -423,8 +423,6 @@ GMEVENT *FLD3D_CI_CreateCutInEvt(GAMESYS_WORK *gsys, FLD3D_CI_PTR ptr, const u8 
   //ＳＥ無しでセット
   ptr->SePlayWait = 0;
   ptr->VoicePlayFlg = FALSE;
-  //カメラモードセット @todo
-  ptr->CameraMode = GFL_G3D_PRJORTH;
 
   //イベント作成
   {
@@ -461,7 +459,7 @@ GMEVENT *FLD3D_CI_CreatePokeCutInEvt( GAMESYS_WORK *gsys, FLD3D_CI_PTR ptr,
   int no = FLDCIID_POKE;
   event = FLD3D_CI_CreateCutInEvt(gsys, ptr, no);
   //セットアップ後コールバック設定
-  ptr->SetupCallBack = ReTransToPokeGra;
+  ptr->SetupCallBack = PokeGraTransEvt;
   //ポケモンカットイン用ポケモン指定変数セット
   ptr->MonsNo = inMonsNo;
   ptr->FormNo = inFormNo;
@@ -586,7 +584,7 @@ static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work )
     break;
   case 3:
     //リソースロード
-    SetupResource(ptr, &evt_work->SetupDat, ptr->CutInNo);
+    SetupResource(event, ptr, &evt_work->SetupDat, ptr->CutInNo);
     //セットアップ終了したので3Ｄ面もオン
     GFL_BG_SetVisible( GFL_BG_FRAME2_M, VISIBLE_ON );
     GFL_BG_SetVisible( GFL_BG_FRAME0_M, VISIBLE_ON );
@@ -599,15 +597,6 @@ static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work )
     (*seq)++;
     break;
   case 4:
-    //1シンク待ったので、ポケモングラフィックを展開していた場合は解放する
-    if (ptr->ImgBitmap != NULL)
-    {
-      GFL_BMP_Delete(ptr->ImgBitmap);
-      ptr->ImgBitmap = NULL;
-      GFL_HEAP_FreeMemory( ptr->chr_buf );
-      GFL_HEAP_FreeMemory( ptr->pal_buf );
-    }
-
     if ( IsFlySkyOut(ptr->CutInNo) )
     {
       GMEVENT* fade_event;
@@ -857,6 +846,7 @@ static BOOL PlayMdlAnm2(FLD3D_CI_PTR ptr)
 /**
  * リソースセットアップ
  *
+ * @param   event       イベントポインタ
  * @param   ptr         カットイン管理ポインタ
  * @param   outDat      セットアップデータ格納バッファ
  * @param   inCutInNo   カットインナンバー
@@ -864,7 +854,7 @@ static BOOL PlayMdlAnm2(FLD3D_CI_PTR ptr)
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-static void SetupResource(FLD3D_CI_PTR ptr, RES_SETUP_DAT *outDat, const u8 inCutInNo)
+static void SetupResource(GMEVENT* event, FLD3D_CI_PTR ptr, RES_SETUP_DAT *outDat, const u8 inCutInNo)
 {
   void *resource;
   //パーティクル生成
@@ -940,7 +930,11 @@ static void SetupResource(FLD3D_CI_PTR ptr, RES_SETUP_DAT *outDat, const u8 inCu
 
   if (ptr->SetupCallBack != NULL )
   {
-    ptr->SetupCallBack(ptr);
+    GMEVENT * call_event;
+    GAMESYS_WORK * gsys;
+    gsys = GMEVENT_GetGameSysWork(event);
+    call_event = GMEVENT_Create(gsys, event, ptr->SetupCallBack, 0);
+    GMEVENT_CallEvent(event, call_event);
   }
 }
 
@@ -1421,6 +1415,52 @@ static void PopDisp(FLD3D_CI_PTR ptr)
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief	ポケモングラフィックテクスチャ転送イベント
+ *
+ *	@param	event         イベントポインタ
+ *	@param  seq           シーケンサ
+ *	@param  work          ワークポインタ
+ *	@return GMEVENT_RESULT  イベント結果
+ */
+//-----------------------------------------------------------------------------
+static GMEVENT_RESULT PokeGraTransEvt( GMEVENT* event, int* seq, void* work )
+{
+  FLD3D_CI_PTR ptr;
+  FLD3D_CI_EVENT_WORK *evt_work;
+  GAMESYS_WORK * gsys;
+  FIELDMAP_WORK * fieldmap;
+  //親イベントからワークポインタを取得
+  {
+    GMEVENT * parent = GMEVENT_GetParentEvent(event);
+    evt_work = GMEVENT_GetEventWork(parent);
+  }
+  
+  ptr = evt_work->CiPtr;
+  gsys = GMEVENT_GetGameSysWork(event);
+  fieldmap = GAMESYSTEM_GetFieldMapWork(gsys);
+
+  switch(*seq){
+  case 0:
+    ReTransToPokeGra(ptr);
+    (*seq)++;
+    break;
+  case 1:
+    GFL_BMP_Delete(ptr->ImgBitmap);
+    GFL_HEAP_FreeMemory( ptr->chr_buf );
+    GFL_HEAP_FreeMemory( ptr->pal_buf );
+    (*seq)++;
+    break;
+  case 2:
+    //終了
+    return GMEVENT_RES_FINISH;
+  }
+
+  return GMEVENT_RES_CONTINUE;
+
+}
+
+//----------------------------------------------------------------------------
+/**
  *	@brief	ポケモングラフィックに書き換え
  *
  *	@param	ptr       カットイン管理ポインタ
@@ -1739,7 +1779,7 @@ static GMEVENT_RESULT EncCutInEvt( GMEVENT* event, int* seq, void* work )
     break;
   case 3:
     //リソースロード
-    SetupResource(ptr, &evt_work->SetupDat, ptr->CutInNo);
+    SetupResource(event, ptr, &evt_work->SetupDat, ptr->CutInNo);
     //セットアップ終了したので3Ｄ面もオン
     GFL_BG_SetVisible( GFL_BG_FRAME2_M, VISIBLE_ON );
     GFL_BG_SetVisible( GFL_BG_FRAME0_M, VISIBLE_ON );
@@ -1750,11 +1790,6 @@ static GMEVENT_RESULT EncCutInEvt( GMEVENT* event, int* seq, void* work )
     //フィールド表示モード切替
     FIELDMAP_SetDraw3DMode(fieldmap, DRAW3DMODE_CUTIN);
 
-    {
-      GMEVENT * call_event;
-      call_event = GMEVENT_Create(gsys, event, EncEffGraTransEvt, 0);
-      GMEVENT_CallEvent(event, call_event);
-    }
     (*seq)++;
     break;
   case 4:
@@ -1762,7 +1797,6 @@ static GMEVENT_RESULT EncCutInEvt( GMEVENT* event, int* seq, void* work )
       int size = GFL_HEAP_GetHeapFreeSize(ptr->HeapID);
       NOZOMU_Printf("EVTEND::FLD3DCUTIN_HEAP_REST %x\n",size);
     }
-
     (*seq)++;
     break;
   case 5:
@@ -1856,10 +1890,12 @@ static GMEVENT *CreateEncCutInEvt(GAMESYS_WORK *gsys, FLD3D_CI_PTR ptr, const u8
   ptr->PartGene = 0;
   ptr->CutInNo = inCutInNo;
   //セットアップ後コールバックなしでセットする
-  ptr->SetupCallBack = NULL;//ReTransToGra;
+  ptr->SetupCallBack = EncEffGraTransEvt;
   //ＳＥ無しでセット
   ptr->SePlayWait = 0;
   ptr->VoicePlayFlg = FALSE;
+  //カメラモードセット
+  ptr->CameraMode = GFL_G3D_PRJORTH;
 
   //イベント作成
   {
@@ -1982,6 +2018,16 @@ static void ReTransToGra( FLD3D_CI_PTR ptr,
   }
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief	エンカウントエフェクト用テクスチャ転送イベント
+ *
+ *	@param	event         イベントポインタ
+ *	@param  seq           シーケンサ
+ *	@param  work          ワークポインタ
+ *	@return GMEVENT_RESULT  イベント結果
+ */
+//-----------------------------------------------------------------------------
 static GMEVENT_RESULT EncEffGraTransEvt( GMEVENT* event, int* seq, void* work )
 {
   FLD3D_CI_PTR ptr;
