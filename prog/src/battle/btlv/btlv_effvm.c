@@ -926,13 +926,19 @@ static VMCMD_RESULT VMEC_PARTICLE_PLAY( VMHANDLE *vmh, void *context_work )
   OS_TPrintf("VMEC_PARTICLE_PLAY\n");
 #endif DEBUG_OS_PRINT
 
-  beeiw->vmh = vmh;
-  beeiw->src = ( int )VMGetU32( vmh );
-  beeiw->dst = ( int )VMGetU32( vmh );
-  beeiw->ofs.x = 0;
-  beeiw->ofs.y = ( fx32 )VMGetU32( vmh );
-  beeiw->ofs.z = 0;
-  beeiw->angle = ( fx32 )VMGetU32( vmh );
+  beeiw->vmh    = vmh;
+  beeiw->src    = ( int )VMGetU32( vmh );
+  beeiw->dst    = ( int )VMGetU32( vmh );
+  beeiw->ofs.x  = 0;
+  beeiw->ofs.y  = ( fx32 )VMGetU32( vmh );
+  beeiw->ofs.z  = 0;
+  beeiw->angle  = ( fx32 )VMGetU32( vmh );
+  //ダミーデータがあるので空読み；
+  ( fx32 )VMGetU32( vmh );
+  beeiw->radius = ( fx32 )VMGetU32( vmh );
+  beeiw->life   = ( fx32 )VMGetU32( vmh );
+  beeiw->scale  = ( fx32 )VMGetU32( vmh );
+  beeiw->speed  = ( fx32 )VMGetU32( vmh );
 
   if( beeiw->dst == BTLEFF_PARTICLE_PLAY_SIDE_NONE )
   {
@@ -964,19 +970,25 @@ static VMCMD_RESULT VMEC_PARTICLE_PLAY_COORDINATE( VMHANDLE *vmh, void *context_
   OS_TPrintf("VMEC_PARTICLE_PLAY_COORDINATE\n");
 #endif DEBUG_OS_PRINT
 
-  beeiw->vmh = vmh;
-  beeiw->src = BTLEFF_PARTICLE_PLAY_SIDE_NONE;
-  beeiw->dst = BTLEFF_PARTICLE_PLAY_SIDE_NONE;
-  beeiw->src_pos.x = ( fx32 )VMGetU32( vmh );
-  beeiw->src_pos.y = ( fx32 )VMGetU32( vmh );
-  beeiw->src_pos.z = ( fx32 )VMGetU32( vmh );
-  beeiw->dst_pos.x = ( fx32 )VMGetU32( vmh );
-  beeiw->dst_pos.y = ( fx32 )VMGetU32( vmh );
-  beeiw->dst_pos.z = ( fx32 )VMGetU32( vmh );
-  beeiw->ofs.x = 0;
-  beeiw->ofs.y = ( fx32 )VMGetU32( vmh );
-  beeiw->ofs.z = 0;
-  beeiw->angle = ( fx32 )VMGetU32( vmh );
+  beeiw->vmh        = vmh;
+  beeiw->src        = BTLEFF_PARTICLE_PLAY_SIDE_NONE;
+  beeiw->dst        = BTLEFF_PARTICLE_PLAY_SIDE_NONE;
+  beeiw->src_pos.x  = ( fx32 )VMGetU32( vmh );
+  beeiw->src_pos.y  = ( fx32 )VMGetU32( vmh );
+  beeiw->src_pos.z  = ( fx32 )VMGetU32( vmh );
+  beeiw->dst_pos.x  = ( fx32 )VMGetU32( vmh );
+  beeiw->dst_pos.y  = ( fx32 )VMGetU32( vmh );
+  beeiw->dst_pos.z  = ( fx32 )VMGetU32( vmh );
+  beeiw->ofs.x      = 0;
+  beeiw->ofs.y      = ( fx32 )VMGetU32( vmh );
+  beeiw->ofs.z      = 0;
+  beeiw->angle      = ( fx32 )VMGetU32( vmh );
+  //ダミーデータがあるので空読み；
+  ( fx32 )VMGetU32( vmh );
+  beeiw->radius     = ( fx32 )VMGetU32( vmh );
+  beeiw->life       = ( fx32 )VMGetU32( vmh );
+  beeiw->scale      = ( fx32 )VMGetU32( vmh );
+  beeiw->speed      = ( fx32 )VMGetU32( vmh );
 
   GFL_PTC_CreateEmitterCallback( bevw->ptc[ ptc_no ], index, &EFFVM_InitEmitterPos, beeiw );
 
@@ -1024,16 +1036,16 @@ static VMCMD_RESULT VMEC_PARTICLE_PLAY_ORTHO( VMHANDLE *vmh, void *context_work 
     }
   }
 
-  beeiw->vmh = vmh;
-  beeiw->src = ( int )VMGetU32( vmh );
-  beeiw->dst = ( int )VMGetU32( vmh );
-  beeiw->ofs.x = ( fx32 )VMGetU32( vmh );
-  beeiw->ofs.y = ( fx32 )VMGetU32( vmh );
-  beeiw->ofs.z = ( fx32 )VMGetU32( vmh );
-  beeiw->radius = ( fx32 )VMGetU32( vmh );
-  beeiw->life = ( fx32 )VMGetU32( vmh );
-  beeiw->scale = ( fx32 )VMGetU32( vmh );
-  beeiw->speed = ( fx32 )VMGetU32( vmh );
+  beeiw->vmh      = vmh;
+  beeiw->src      = ( int )VMGetU32( vmh );
+  beeiw->dst      = ( int )VMGetU32( vmh );
+  beeiw->ofs.x    = ( fx32 )VMGetU32( vmh );
+  beeiw->ofs.y    = ( fx32 )VMGetU32( vmh );
+  beeiw->ofs.z    = ( fx32 )VMGetU32( vmh );
+  beeiw->radius   = ( fx32 )VMGetU32( vmh );
+  beeiw->life     = ( fx32 )VMGetU32( vmh );
+  beeiw->scale    = ( fx32 )VMGetU32( vmh );
+  beeiw->speed    = ( fx32 )VMGetU32( vmh );
   beeiw->ortho_mode = 1;
 
   if( beeiw->dst == BTLEFF_PARTICLE_PLAY_SIDE_NONE )
@@ -1090,15 +1102,21 @@ static VMCMD_RESULT VMEC_EMITTER_MOVE( VMHANDLE *vmh, void *context_work )
   OS_TPrintf("VMEC_EMITTER_MOVE\n");
 #endif DEBUG_OS_PRINT
 
-  beeiw->vmh = vmh;
-  beeiw->move_type = ( int )VMGetU32( vmh );
-  beeiw->src = ( int )VMGetU32( vmh );
-  beeiw->dst = ( int )VMGetU32( vmh );
-  beeiw->ofs.x = 0;
-  beeiw->ofs.y = ( fx32 )VMGetU32( vmh );
-  beeiw->ofs.z = 0;
+  beeiw->vmh        = vmh;
+  beeiw->move_type  = ( int )VMGetU32( vmh );
+  beeiw->src        = ( int )VMGetU32( vmh );
+  beeiw->dst        = ( int )VMGetU32( vmh );
+  beeiw->ofs.x      = 0;
+  beeiw->ofs.y      = ( fx32 )VMGetU32( vmh );
+  beeiw->ofs.z      = 0;
   beeiw->move_frame = ( int )VMGetU32( vmh );
-  beeiw->top = ( fx32 )VMGetU32( vmh );
+  beeiw->top        = ( fx32 )VMGetU32( vmh );
+  beeiw->radius     = FX32_ONE;
+  beeiw->life       = ( fx32 )VMGetU32( vmh );
+  beeiw->scale      = FX32_ONE;
+  beeiw->speed      = ( fx32 )VMGetU32( vmh );
+  //ダミーデータがあるので空読み；
+  ( fx32 )VMGetU32( vmh );
 
   //移動元と移動先が同一のときは、アサートで止める
   GF_ASSERT( beeiw->dst != beeiw->src );
@@ -1128,18 +1146,24 @@ static VMCMD_RESULT VMEC_EMITTER_MOVE_COORDINATE( VMHANDLE *vmh, void *context_w
   OS_TPrintf("VMEC_EMITTER_MOVE_COORDINATE\n");
 #endif DEBUG_OS_PRINT
 
-  beeiw->vmh = vmh;
-  beeiw->move_type = ( int )VMGetU32( vmh );
-  beeiw->src = BTLEFF_PARTICLE_PLAY_SIDE_NONE;
-  beeiw->src_pos.x = ( fx32 )VMGetU32( vmh );
-  beeiw->src_pos.y = ( fx32 )VMGetU32( vmh );
-  beeiw->src_pos.z = ( fx32 )VMGetU32( vmh );
-  beeiw->dst = ( int )VMGetU32( vmh );
-  beeiw->ofs.x = 0;
-  beeiw->ofs.y = ( fx32 )VMGetU32( vmh );
-  beeiw->ofs.z = 0;
+  beeiw->vmh        = vmh;
+  beeiw->move_type  = ( int )VMGetU32( vmh );
+  beeiw->src        = BTLEFF_PARTICLE_PLAY_SIDE_NONE;
+  beeiw->src_pos.x  = ( fx32 )VMGetU32( vmh );
+  beeiw->src_pos.y  = ( fx32 )VMGetU32( vmh );
+  beeiw->src_pos.z  = ( fx32 )VMGetU32( vmh );
+  beeiw->dst        = ( int )VMGetU32( vmh );
+  beeiw->ofs.x      = 0;
+  beeiw->ofs.y      = ( fx32 )VMGetU32( vmh );
+  beeiw->ofs.z      = 0;
   beeiw->move_frame = ( int )VMGetU32( vmh );
-  beeiw->top = ( fx32 )VMGetU32( vmh );
+  beeiw->top        = ( fx32 )VMGetU32( vmh );
+  beeiw->radius     = FX32_ONE;
+  beeiw->life       = ( fx32 )VMGetU32( vmh );
+  beeiw->scale      = FX32_ONE;
+  beeiw->speed      = ( fx32 )VMGetU32( vmh );
+  //ダミーデータがあるので空読み；
+  ( fx32 )VMGetU32( vmh );
 
   //移動元と移動先が同一のときは、アサートで止める
   GF_ASSERT( beeiw->dst != beeiw->src );
@@ -3465,35 +3489,35 @@ static  void  EFFVM_InitEmitterPos( GFL_EMIT_PTR emit )
 
     GFL_PTC_SetEmitterAxis( emit, &dir );
   }
-  else
+//  else
   { 
     //正射影ではZで拡縮しないので、向こう側の再生時小さくする補正を入れる
-    if( ( beeiw->ortho_mode ) && ( beeiw->src & 1 ) )
+//    if( ( beeiw->ortho_mode ) && ( beeiw->src & 1 ) )
     { 
       fx32  radius  = GFL_PTC_GetEmitterRadius( emit );
       fx32  life    = ( GFL_PTC_GetEmitterParticleLife( emit ) << FX32_SHIFT );
       fx32  scale   = GFL_PTC_GetEmitterBaseScale( emit );
       if( beeiw->radius )
       { 
-        GFL_PTC_SetEmitterRadius( emit, FX_Div( radius, beeiw->radius ) );
+        GFL_PTC_SetEmitterRadius( emit, FX_Mul( radius, beeiw->radius ) );
       }
       if( beeiw->life )
       { 
-        u16 ptcl_life = FX_Div( life, beeiw->life ) >> FX32_SHIFT;
+        u16 ptcl_life = FX_Mul( life, beeiw->life ) >> FX32_SHIFT;
         GFL_PTC_SetEmitterParticleLife( emit, ptcl_life );
       }
       if( beeiw->scale )
       { 
-        GFL_PTC_SetEmitterBaseScale( emit, (fx16)FX_Div( scale, beeiw->scale ) );
+        GFL_PTC_SetEmitterBaseScale( emit, (fx16)FX_Mul( scale, beeiw->scale ) );
       }
       if( beeiw->speed )
       { 
         fx16  vel;
 
         vel = GFL_PTC_GetEmitterInitVelocityPos( emit );
-        GFL_PTC_SetEmitterInitVelocityPos( emit, FX_Div( vel, beeiw->speed ) );
+        GFL_PTC_SetEmitterInitVelocityPos( emit, FX_Mul( vel, beeiw->speed ) );
         vel = GFL_PTC_GetEmitterInitVelocityAxis( emit );
-        GFL_PTC_SetEmitterInitVelocityAxis( emit, FX_Div( vel, beeiw->speed ) );
+        GFL_PTC_SetEmitterInitVelocityAxis( emit, FX_Mul( vel, beeiw->speed ) );
       }
     }
   }

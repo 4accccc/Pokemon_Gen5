@@ -584,13 +584,14 @@ ex)
 /**
  * @brief	パーティクル再生
  *
- * #param_num	6
+ * #param_num	7
  * @param	num				再生パーティクルナンバー
  * @param	index			spa内インデックスナンバー
  * @param	start_pos	パーティクル再生開始立ち位置
  * @param	dir_pos		パーティクル再生方向立ち位置
- * @param	ofs_y			パーティクル再生Y方向オフセット
- * @param	dir_angle	パーティクル再生方向Y角度
+ * @param param1    ofs_y:パーティクル再生Y方向オフセット	dir_angle:パーティクル再生方向Y角度 dummy:未使用
+ * @param	param2		再生するときの補正値
+ * @param	speed			再生するときの移動速度補正値
  *
  * #param	FILE_DIALOG_COMBOBOX .spa
  * #param	COMBOBOX_HEADER
@@ -598,11 +599,14 @@ ex)
  * #param	COMBOBOX_VALUE	BTLEFF_PARTICLE_PLAY_SIDE_ATTACK	BTLEFF_PARTICLE_PLAY_SIDE_DEFENCE	BTLEFF_PARTICLE_PLAY_POS_AA	BTLEFF_PARTICLE_PLAY_POS_BB	BTLEFF_PARTICLE_PLAY_POS_A  BTLEFF_PARTICLE_PLAY_POS_B	BTLEFF_PARTICLE_PLAY_POS_C  BTLEFF_PARTICLE_PLAY_POS_D  BTLEFF_PARTICLE_PLAY_POS_E  BTLEFF_PARTICLE_PLAY_POS_F
  * #param	COMBOBOX_TEXT	方向無し	攻撃側	防御側	攻撃側－  防御側－  POS_AA	POS_BB	POS_A	POS_B	POS_C	POS_D POS_E POS_F
  * #param	COMBOBOX_VALUE	BTLEFF_PARTICLE_PLAY_SIDE_NONE	BTLEFF_PARTICLE_PLAY_SIDE_ATTACK	BTLEFF_PARTICLE_PLAY_SIDE_DEFENCE	BTLEFF_PARTICLE_PLAY_SIDE_ATTACK_MINUS  BTLEFF_PARTICLE_PLAY_SIDE_DEFENCE_MINUS BTLEFF_PARTICLE_PLAY_POS_AA	BTLEFF_PARTICLE_PLAY_POS_BB BTLEFF_PARTICLE_PLAY_POS_A	BTLEFF_PARTICLE_PLAY_POS_B	BTLEFF_PARTICLE_PLAY_POS_C	BTLEFF_PARTICLE_PLAY_POS_D BTLEFF_PARTICLE_PLAY_POS_E BTLEFF_PARTICLE_PLAY_POS_F
- * #param	VALUE_FX32	パーティクル再生Y方向オフセット
- * #param	VALUE_FX32	パーティクル再生方向Y角度
+ * #param VALUE_VECFX32 パーティクル再生Y方向オフセット パーティクル再生方向Y角度 未使用
+ * #param	VALUE_VECFX32 エミッタ半径 エミッタ寿命 エミッタスケール
+ * #param VALUE_INIT  1:1:1
+ * #param	VALUE_FX32 エミッタ速度
+ * #param VALUE_INIT  1
  */
 //======================================================================
-	.macro	PARTICLE_PLAY	num, index, start_pos, dir_pos, ofs_y, dir_angle
+	.macro	PARTICLE_PLAY	num, index, start_pos, dir_pos, ofs_y, dir_angle, dummy, radius, life, scale, speed
 	.short	EC_PARTICLE_PLAY
 	.long		\num
 	.long		\index
@@ -610,29 +614,38 @@ ex)
 	.long		\dir_pos
 	.long		\ofs_y
 	.long		\dir_angle
+	.long		\dummy
+	.long		\radius
+	.long		\life
+	.long		\scale
+	.long		\speed
 	.endm
 
 //======================================================================
 /**
  * @brief	パーティクル再生（座標指定）
  *
- * #param_num	6
+ * #param_num	7
  * @param	num				再生パーティクルナンバー
  * @param	index			spa内インデックスナンバー
  * @param	start_pos	パーティクル再生開始位置
  * @param	dir_pos		パーティクル再生方向位置
- * @param	ofs_y			パーティクル再生Y方向オフセット
- * @param	dir_angle	パーティクル再生方向Y角度
+ * @param param1    ofs_y:パーティクル再生Y方向オフセット	dir_angle:パーティクル再生方向Y角度 dummy:未使用
+ * @param	param2		再生するときの補正値
+ * @param	speed			再生するときの移動速度補正値
  *
  * #param	FILE_DIALOG_COMBOBOX .spa
  * #param	COMBOBOX_HEADER
  * #param	VALUE_VECFX32	POS_X	POS_Y	POS_Z
  * #param	VALUE_VECFX32	DIR_X	DIR_Y	DIR_Z
- * #param	VALUE_FX32	パーティクル再生Y方向オフセット
- * #param	VALUE_FX32	パーティクル再生方向Y角度
+ * #param VALUE_VECFX32 パーティクル再生Y方向オフセット パーティクル再生方向Y角度 未使用
+ * #param	VALUE_VECFX32 エミッタ半径 エミッタ寿命 エミッタスケール
+ * #param VALUE_INIT  1:1:1
+ * #param	VALUE_FX32 エミッタ速度
+ * #param VALUE_INIT  1
  */
 //======================================================================
-	.macro	PARTICLE_PLAY_COORDINATE	num, index, start_pos_x, start_pos_y, start_pos_z, dir_pos_x, dir_pos_y, dir_pos_z, ofs_y, dir_angle
+	.macro	PARTICLE_PLAY_COORDINATE	num, index, start_pos_x, start_pos_y, start_pos_z, dir_pos_x, dir_pos_y, dir_pos_z, ofs_y, dir_angle, dummy, radius, life, scale, speed
 	.short	EC_PARTICLE_PLAY_COORDINATE
 	.long		\num
 	.long		\index
@@ -644,6 +657,11 @@ ex)
 	.long		\dir_pos_z
 	.long		\ofs_y
 	.long		\dir_angle
+	.long		\dummy
+	.long		\radius
+	.long		\life
+	.long		\scale
+	.long		\speed
 	.endm
 
 //======================================================================
@@ -667,12 +685,12 @@ ex)
  * #param	COMBOBOX_VALUE	BTLEFF_PARTICLE_PLAY_SIDE_NONE	BTLEFF_PARTICLE_PLAY_SIDE_ATTACK	BTLEFF_PARTICLE_PLAY_SIDE_DEFENCE	BTLEFF_PARTICLE_PLAY_SIDE_ATTACK_MINUS  BTLEFF_PARTICLE_PLAY_SIDE_DEFENCE_MINUS BTLEFF_PARTICLE_PLAY_POS_AA	BTLEFF_PARTICLE_PLAY_POS_BB BTLEFF_PARTICLE_PLAY_POS_A	BTLEFF_PARTICLE_PLAY_POS_B	BTLEFF_PARTICLE_PLAY_POS_C	BTLEFF_PARTICLE_PLAY_POS_D BTLEFF_PARTICLE_PLAY_POS_E BTLEFF_PARTICLE_PLAY_POS_F
  * #param	VALUE_VECFX32 ofs_x ofs_y ofs_z
  * #param	VALUE_VECFX32 エミッタ半径 エミッタ寿命 エミッタスケール
- * #param VALUE_INIT  2:1:2
+ * #param VALUE_INIT  0.5:1:0.5
  * #param	VALUE_FX32 エミッタ速度
  * #param VALUE_INIT  1
  */
 //======================================================================
-	.macro	PARTICLE_PLAY_ORTHO	num, index, start_pos, dir, ofs_x, ofs_y, ofs_z, radius, length, scale, speed
+	.macro	PARTICLE_PLAY_ORTHO	num, index, start_pos, dir, ofs_x, ofs_y, ofs_z, radius, life, scale, speed
 	.short	EC_PARTICLE_PLAY_ORTHO
 	.long		\num
 	.long		\index
@@ -682,7 +700,7 @@ ex)
 	.long		\ofs_y
 	.long		\ofs_z
 	.long		\radius
-	.long		\length
+	.long		\life
 	.long		\scale
 	.long		\speed
 	.endm
@@ -706,13 +724,14 @@ ex)
 /**
  * @brief	エミッタ移動
  *
- * #param_num	6
+ * #param_num	7
  * @param	num					再生パーティクルナンバー
  * @param	index				spa内インデックスナンバー
  * @param	move_type		移動タイプ（直線、放物線）
  * @param	start_pos		移動開始立ち位置
  * @param	end_pos			移動終了立ち位置
  * @param	move_param	立ち位置Y方向オフセット(ofs_y)	移動フレーム(move_frame)	放物線頂点（放物線時のみ）(top)
+ * @param	param		    再生するときの補正値  life speed
  *
  * #param	FILE_DIALOG_COMBOBOX .spa
  * #param	COMBOBOX_HEADER
@@ -723,9 +742,11 @@ ex)
  * #param	COMBOBOX_TEXT	攻撃側	防御側
  * #param	COMBOBOX_VALUE	BTLEFF_PARTICLE_PLAY_SIDE_ATTACK	BTLEFF_PARTICLE_PLAY_SIDE_DEFENCE
  * #param	VALUE_VECFX32	立ち位置Y方向オフセット	移動フレーム	放物線頂点（放物線時のみ）
+ * #param VALUE_VECFX32 エミッタ寿命　エミッタスピード  未使用
+ * #param VALUE_INIT  1:1:0
  */
 //======================================================================
-	.macro	EMITTER_MOVE	num, index, move_type, start_pos, end_pos, ofs_y, move_frame, top
+	.macro	EMITTER_MOVE	num, index, move_type, start_pos, end_pos, ofs_y, move_frame, top, life, speed, dummy
 	.short	EC_EMITTER_MOVE
 	.long		\num
 	.long		\index
@@ -735,19 +756,23 @@ ex)
 	.long		\ofs_y
 	.long		\move_frame
 	.long		\top
+	.long		\life
+	.long		\speed
+	.long		\dummy
 	.endm
 
 //======================================================================
 /**
  * @brief	エミッタ移動（座標指定）
  *
- * #param_num	6
+ * #param_num	7
  * @param	num					再生パーティクルナンバー
  * @param	index				spa内インデックスナンバー
  * @param	move_type		移動タイプ（直線、放物線）
  * @param	start_pos		移動開始座標
  * @param	end_pos			移動終了立ち位置
  * @param	move_param	立ち位置Y方向オフセット(ofs_y)	移動フレーム(move_frame)	放物線頂点（放物線時のみ）(top)
+ * @param	param		    再生するときの補正値  life speed
  *
  * #param	FILE_DIALOG_COMBOBOX .spa
  * #param	COMBOBOX_HEADER
@@ -757,9 +782,11 @@ ex)
  * #param	COMBOBOX_TEXT	攻撃側	防御側 POS_AA POS_BB POS_A POS_B POS_C POS_D  POS_E POS_F
  * #param	COMBOBOX_VALUE	BTLEFF_PARTICLE_PLAY_SIDE_ATTACK	BTLEFF_PARTICLE_PLAY_SIDE_DEFENCE	BTLEFF_PARTICLE_PLAY_POS_AA	BTLEFF_PARTICLE_PLAY_POS_BB	BTLEFF_PARTICLE_PLAY_POS_A	BTLEFF_PARTICLE_PLAY_POS_B	BTLEFF_PARTICLE_PLAY_POS_C	BTLEFF_PARTICLE_PLAY_POS_D BTLEFF_PARTICLE_PLAY_POS_E BTLEFF_PARTICLE_PLAY_POS_F
  * #param	VALUE_VECFX32	立ち位置Y方向オフセット	移動フレーム	放物線頂点（放物線時のみ）
+ * #param VALUE_VECFX32 エミッタ寿命　エミッタスピード  未使用
+ * #param VALUE_INIT  1:1:0
  */
 //======================================================================
-	.macro	EMITTER_MOVE_COORDINATE	num, index, move_type, start_pos_x, start_pos_y, start_pos_z, end_pos, ofs_y, move_frame, top
+	.macro	EMITTER_MOVE_COORDINATE	num, index, move_type, start_pos_x, start_pos_y, start_pos_z, end_pos, ofs_y, move_frame, top, life, speed, dummy
 	.short	EC_EMITTER_MOVE_COORDINATE
 	.long		\num
 	.long		\index
@@ -771,6 +798,9 @@ ex)
 	.long		\ofs_y
 	.long		\move_frame
 	.long		\top
+	.long		\life
+	.long		\speed
+	.long		\dummy
 	.endm
 
 //======================================================================
