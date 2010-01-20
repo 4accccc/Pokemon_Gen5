@@ -635,7 +635,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
-			9700 324d ab56 c8e1 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
@@ -1924,7 +1924,7 @@
 	</tex_palette>
 	<tex_palette index="2" name="name_down_pl" color_size="16">
 		3ad7 5ebf 737f 5e5f 7c1f 7dc0 76ef 7f60
-		5ef5 3a80 0f45 47b3 296b 02ff 089d 7fff
+		5ef5 3a80 0f45 47b3 296b 02ff 089d 3ad7
 	</tex_palette>
 	<tex_palette index="3" name="name_up_pl" color_size="16">
 		3ad7 5ebf 737f 5e5f 7c1f 7dc0 76ef 7f60
