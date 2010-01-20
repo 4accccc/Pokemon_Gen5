@@ -150,7 +150,8 @@ typedef enum
   CTOAS_PEN,
   CTOAS_SUPOITO,
   CTOAS_KESHIGOMU,
-  CTOAS_CALL_BAR,
+  CTOAS_CAMERA_ON,
+  CTOAS_CAMERA_OFF,
 }COMM_TVT_OBJ_ANM_SUB;
 
 typedef enum
@@ -196,6 +197,7 @@ extern CTVT_MIC_WORK* COMM_TVT_GetMicWork( COMM_TVT_WORK *work );
 extern DRAW_SYS_WORK* COMM_TVT_GetDrawSys( COMM_TVT_WORK *work );
 
 extern const COMM_TVT_INIT_WORK* COMM_TVT_GetInitWork( const COMM_TVT_WORK *work );
+
 //êîíléÊìæån
 extern const HEAPID COMM_TVT_GetHeapId( const COMM_TVT_WORK *work );
 extern ARCHANDLE* COMM_TVT_GetArcHandle( const COMM_TVT_WORK *work );
@@ -203,6 +205,7 @@ extern const u32 COMM_TVT_GetObjResIdx( const COMM_TVT_WORK *work , const COMM_T
 extern GFL_CLUNIT* COMM_TVT_GetCellUnit( const COMM_TVT_WORK *work );
 extern const BOOL COMM_TVT_GetUpperFade( const COMM_TVT_WORK *work );
 extern void COMM_TVT_SetUpperFade( COMM_TVT_WORK *work , const BOOL flg );
+extern APP_TASKMENU_RES* COMM_TVT_GetTaskMenuRes( COMM_TVT_WORK *work );
 
 extern GFL_FONT* COMM_TVT_GetFontHandle( COMM_TVT_WORK *work );
 extern GFL_MSGDATA* COMM_TVT_GetMegHandle( COMM_TVT_WORK *work );

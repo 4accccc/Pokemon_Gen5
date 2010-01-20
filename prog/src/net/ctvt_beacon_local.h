@@ -34,7 +34,8 @@ struct _CTVT_COMM_BEACON
   MYSTATUS myStatus;
   
   u8      connectNum;
-  u8      pad;
+  u8      canUseCamera:1;
+  u8      pad:7;
   //呼び出しターゲット
   u8      callTarget[3][6];
 };

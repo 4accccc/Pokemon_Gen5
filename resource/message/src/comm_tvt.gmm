@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ariizumi_nobuhiko" host="W00147" date="2010-01-16T19:15:59"/>
+	<create user="ariizumi_nobuhiko" host="W00147" date="2010-01-19T21:33:03"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -317,7 +317,7 @@
 		</language>
 	</columns>
 
-	<dialog left="81" top="149" right="786" bottom="769" maximized="no" rayout="Vertical2">
+	<dialog left="119" top="139" right="824" bottom="759" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -421,6 +421,21 @@
 	<row id="COMM_TVT_CALL_03">
 		<language name="JPN">[2:00:１桁:0]/4</language>
 		<language name="JPN_KANJI">[2:00:１桁:0]/4</language>
+	</row>
+
+	<row id="COMM_TVT_CALL_04">
+		<language name="JPN">ともだちを　えらんでください</language>
+		<language name="JPN_KANJI">友達を　選んでください</language>
+	</row>
+
+	<row id="COMM_TVT_CALL_05">
+		<language name="JPN">ともだちを　よびだす</language>
+		<language name="JPN_KANJI">友達を　呼び出す</language>
+	</row>
+
+	<row id="COMM_TVT_CALL_06">
+		<language name="JPN">さんかする</language>
+		<language name="JPN_KANJI">参加する</language>
 	</row>
 
 	<row id="COMM_TVT_SYS_01">

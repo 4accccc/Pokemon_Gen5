@@ -184,9 +184,9 @@ static void COMM_TVT_Init( COMM_TVT_WORK *work )
   
   switch( work->initWork->mode )
   {
-  case CTM_TEST:   //テスト用(changeOver
-    CTVT_COMM_SetMode( work , work->commWork , CCIM_SCAN );
-    work->nextMode = CTM_CALL;
+  case CTM_TEST:   //テスト用(親
+    CTVT_COMM_SetMode( work , work->commWork , CCIM_PARENT );
+    work->nextMode = CTM_TALK;
     break;
   case CTM_PARENT: //親起動
     CTVT_COMM_SetMode( work , work->commWork , CCIM_SCAN );
@@ -695,6 +695,10 @@ GFL_MSGDATA* COMM_TVT_GetMegHandle( COMM_TVT_WORK *work )
 PRINT_QUE* COMM_TVT_GetPrintQue( COMM_TVT_WORK *work )
 {
   return work->printQue;
+}
+APP_TASKMENU_RES* COMM_TVT_GetTaskMenuRes( COMM_TVT_WORK *work )
+{
+  return work->taskMenuRes;
 }
 
 

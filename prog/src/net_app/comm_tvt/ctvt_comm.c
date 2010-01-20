@@ -244,6 +244,16 @@ CTVT_COMM_WORK* CTVT_COMM_InitSystem( COMM_TVT_WORK *work , const HEAPID heapId 
         commWork->beacon.callTarget[i][j] = 0xFF;
       }
     }
+    
+    if( OS_IsRunOnTwl() == TRUE &&
+        OS_IsRestrictPhotoExchange() == FALSE )
+    {
+      commWork->beacon.canUseCamera = 1;
+    }
+    else
+    {
+      commWork->beacon.canUseCamera = 0;
+    }
   }
   
   commWork->isLowerDataInit = TRUE;
