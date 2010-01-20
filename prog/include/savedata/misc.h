@@ -21,6 +21,11 @@
 */
 //=============================================================================
 
+enum {
+  MY_GOLD_MAX = 999999,
+};
+
+
 //=============================================================================
 /**
  *					構造体宣言
@@ -62,5 +67,14 @@ extern const u32  MISC_GetPalparkHighscore(const MISC *misc);
 extern void  MISC_SetPalparkHighscore(MISC *misc , u32 score);
 extern const u8  MISC_GetPalparkFinishState(const MISC *misc);
 extern void  MISC_SetPalparkFinishState(MISC *misc , u8 state);
+//バッジ  
+extern BOOL MISC_GetBadgeFlag(const MISC *misc, int badge_id);
+extern void MISC_SetBadgeFlag(MISC *misc, int badge_id);
+extern int MISC_GetBadgeCount(const MISC *misc);
+//お金 
+extern u32 MISC_GetGold(const MISC *misc);
+extern u32 MISC_SetGold(MISC *misc, u32 gold);
+extern u32 MISC_AddGold(MISC *misc, u32 add);
+extern u32 MISC_SubGold(MISC *misc, u32 sub);
 
 

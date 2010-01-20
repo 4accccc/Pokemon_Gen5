@@ -305,7 +305,6 @@ static void IRC_BATTLE_SUBPROC_InitStatusData( IRC_BATTLE_WORK *work , IRC_BATTL
   psData->ret_sel = 0;
   psData->ret_mode = 0;
   psData->waza = 0;
-  psData->zukan_mode = MyStatus_GetDpZenkokuFlag( myStatus );
   
   psData->canExitButton = FALSE;
   psData->isExitRequest = FALSE;

@@ -55,43 +55,46 @@ extern void MyStatus_SetMyNameFromString(MYSTATUS * my, const STRBUF * str);
 extern void MyStatus_SetID(MYSTATUS * my, u32 id);
 extern u32 MyStatus_GetID(const MYSTATUS * my);
 extern u16 MyStatus_GetID_Low(const MYSTATUS * my);
+
+//ProfileID
+extern void MyStatus_SetProfileID(MYSTATUS * my, u32 id);
+extern u32 MyStatus_GetProfileID(const MYSTATUS * my);
+
 //性別
 extern void MyStatus_SetMySex(MYSTATUS * my, int sex);
 extern u32 MyStatus_GetMySex(const MYSTATUS * my);
-//バッジ
-extern BOOL MyStatus_GetBadgeFlag(const MYSTATUS * my, int badge_id);
-extern void MyStatus_SetBadgeFlag(MYSTATUS * my, int badge_id);
-extern int MyStatus_GetBadgeCount(const MYSTATUS * my);
-//お金
-extern u32 MyStatus_GetGold(const MYSTATUS * my);
-extern u32 MyStatus_SetGold(MYSTATUS * my, u32 gold);
-extern u32 Mystatus_AddGold(MYSTATUS * my, u32 add);
-extern u32 Mystatus_SubGold(MYSTATUS * my, u32 sub);
+
+//バッジ  @todo 削除  MISCに移動
+//extern BOOL MyStatus_GetBadgeFlag(const MYSTATUS * my, int badge_id);
+//extern void MyStatus_SetBadgeFlag(MYSTATUS * my, int badge_id);
+//extern int MyStatus_GetBadgeCount(const MYSTATUS * my);
+
+//お金  @todo 削除  MISCに移動
+//extern u32 MyStatus_GetGold(const MYSTATUS * my);
+//extern u32 MyStatus_SetGold(MYSTATUS * my, u32 gold);
+//extern u32 Mystatus_AddGold(MYSTATUS * my, u32 add);
+//extern u32 Mystatus_SubGold(MYSTATUS * my, u32 sub);
 
 // ユニオンルームで使う自分の見た目
 extern u8 MyStatus_GetTrainerView( const MYSTATUS *my );
 extern void MyStatus_SetTrainerView( MYSTATUS *my, u8 view );
 
-// ROMコード（0:ダイヤ 1:パール）
-// DP では、0=ダイヤ 1=パールで扱う予定だったみたいだが
-// 実際、ダイヤ・パールともに、0しかはいってない。
-// プラチナでは、PM_VERSIONが初期値として設定されているので
-// DPとの比較は、0 = DP PM_VERSION = プラチナ　となります。
+// ROMコード = PM_VERSIONが初期値
 extern u8 MyStatus_GetRomCode( const MYSTATUS * my );
 extern void MyStatus_SetRomCode( MYSTATUS * my, u8 rom_code );
 extern u8 PokemonDP_GetRomCode( void );
 
-// リージョンコード
+// リージョンコード  //PM_LANGが初期値
 extern u8  MyStatus_GetRegionCode( const MYSTATUS * my );
 extern void  MyStatus_SetRegionCode( MYSTATUS * my, u8 region_code );
 
-// ゲームクリア
-void MyStatus_SetDpClearFlag( MYSTATUS * my );
-int MyStatus_GetDpClearFlag( MYSTATUS * my );
+// ゲームクリア  @todo削除予定
+//void MyStatus_SetDpClearFlag( MYSTATUS * my );
+//int MyStatus_GetDpClearFlag( MYSTATUS * my );
 
-// 全国図鑑
-void MyStatus_SetDpZenkokuFlag( MYSTATUS * my );
-int MyStatus_GetDpZenkokuFlag( MYSTATUS * my );
+// 全国図鑑 @todo削除予定
+//void MyStatus_SetDpZenkokuFlag( MYSTATUS * my );
+//int MyStatus_GetDpZenkokuFlag( MYSTATUS * my );
 
 // 外部セーブデータ初期化済みフラグ
 extern void MyStatus_SetExtraInitFlag(MYSTATUS * my);

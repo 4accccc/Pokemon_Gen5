@@ -31,6 +31,7 @@
 //#include "savedata/gimmickwork.h"
 #include "field/pleasure_boat_ptr.h"
 #include "savedata/wifilist.h"
+#include "savedata/misc.h"
 #include "gamesystem/comm_player_support.h"
 
 #include "field/bsubway_scr_proc.h"
@@ -548,6 +549,15 @@ extern WIFI_LIST * GAMEDATA_GetWiFiList(GAMEDATA * gamedata);
  */
 //----------------------------------------------------------
 extern BSUBWAY_SCRWORK * GAMEDATA_GetBSubwayScrWork(GAMEDATA * gamedata);
+
+//----------------------------------------------------------
+/**
+ * @brief   MISCワーク取得
+ * @param   gamedata      GAMEDATAへのポインタ
+ * @return  MISC*
+ */
+//----------------------------------------------------------
+extern MISC * GAMEDATA_GetMiscWork(GAMEDATA * gamedata);
 
 //----------------------------------------------------------
 /**

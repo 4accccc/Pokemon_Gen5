@@ -108,7 +108,7 @@ typedef struct{
   HEAPID  heapId;  // ƒq[ƒvID
   GFL_FONT *font;
   
-  MYSTATUS  *mystatus;
+  MISC  *misc;
   MYITEM    *myitem;  
 
   GFL_BMPWIN        *win[SHOP_BUY_BMPWIN_MAX];  // BMPWIN
@@ -219,7 +219,7 @@ VMCMD_RESULT EvCmdCallShopProcBuy( VMHANDLE* core, void* wk )
   SHOP_BUY_CALL_WORK* sbw = GFL_HEAP_AllocClearMemory(HEAPID_PROC,sizeof(SHOP_BUY_CALL_WORK));
   *scr_subproc_work = sbw;
   sbw->wk.font      = FLDMSGBG_GetFontHandle( fldmsg );
-  sbw->wk.mystatus  = GAMEDATA_GetMyStatus( gamedata );
+  sbw->wk.misc  = GAMEDATA_GetMiscWork( gamedata );
   sbw->wk.heapId    = HEAPID_FIELDMAP;
   sbw->wk.myitem    = GAMEDATA_GetMyItem( gamedata );
 
@@ -445,10 +445,10 @@ static void shop_call_init( GAMESYS_WORK *gsys, SHOP_BUY_APP_WORK *wk, int type,
   if(GFL_UI_KEY_GetCont()&PAD_BUTTON_SELECT){
     shop_item_set( wk, type, id, 8);
   }else{
-    shop_item_set( wk, type, id, MyStatus_GetBadgeCount(my));
+    shop_item_set( wk, type, id, MISC_GetBadgeCount(GAMEDATA_GetMiscWork(gamedata)));
   }
 #else
-    shop_item_set( wk, type, id, MyStatus_GetBadgeCount(my));
+    shop_item_set( wk, type, id, MISC_GetBadgeCount(GAMEDATA_GetMiscWork(gamedata)));
 #endif
 
   bg_trans( wk );     // BG“]‘—
@@ -492,7 +492,7 @@ static int get_item_max( int item )
 //----------------------------------------------------------------------------------
 static void can_player_buy_item( SHOP_BUY_APP_WORK *wk )
 {
-  int gold = MyStatus_GetGold(wk->mystatus);
+  int gold = MISC_GetGold(wk->misc);
   int num  = MYITEM_GetItemNum( wk->myitem, wk->selectitem, wk->heapId );
 
   // ‚à‚¿‚«‚ê‚È‚¢‚Å‚·‚æI
@@ -661,7 +661,7 @@ static BOOL ShopCallFunc( GAMESYS_WORK *gsys, SHOP_BUY_APP_WORK *wk, int type, i
   case SHOPBUY_SEQ_BUY:
     PMSND_PlaySE( SEQ_SE_SYS_22 );
     ShopPrintMsg( wk, mes_shop_02_04, wk->selectitem );
-    Mystatus_SubGold( wk->mystatus, wk->price*wk->item_multi);
+    MISC_SubGold( wk->misc , wk->price*wk->item_multi);
     MYITEM_AddItem( wk->myitem, wk->selectitem, wk->item_multi, wk->heapId);
     wk->seq  = SHOPBUY_SEQ_MSG_WAIT;
     wk->next = SHOPBUY_SEQ_JUDGE_PREMIER_BALL;
@@ -811,9 +811,9 @@ static void init_work( SHOP_BUY_APP_WORK *wk )
 #ifdef SHOP_DEBUG_COMMAND
 
   if(GFL_UI_KEY_GetCont()&PAD_BUTTON_L){
-    MyStatus_SetGold(wk->mystatus, 999999);
+    MISC_SetGold(wk->misc , 999999);
   }else if(GFL_UI_KEY_GetCont()&PAD_BUTTON_R){
-    MyStatus_SetGold(wk->mystatus, 5000);
+    MISC_SetGold(wk->misc , 5000);
   }
 #endif
 }
@@ -1194,7 +1194,7 @@ static void print_mygold( SHOP_BUY_APP_WORK *wk )
   STRBUF *expand = GFL_STR_CreateBuffer( SHOP_MYGOLD_STR_MAX, wk->heapId );
 
   // Žc‹àŽæ“¾
-  WORDSET_RegisterNumber( wk->wordSet, 0, MyStatus_GetGold(wk->mystatus), 6, 
+  WORDSET_RegisterNumber( wk->wordSet, 0, MISC_GetGold(wk->misc), 6, 
                           STR_NUM_DISP_SPACE, STR_NUM_CODE_HANKAKU );
   WORDSET_ExpandStr( wk->wordSet, expand, str );
 

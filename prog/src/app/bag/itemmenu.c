@@ -1852,7 +1852,7 @@ static void _itemSellYesnoInput( FIELD_ITEMMENU_WORK* pWork )
           ITEM_Sub( pWork, pWork->InputNum );
 
           // ŠŽ‹à‘‰Á
-          Mystatus_AddGold( pWork->mystatus, val );
+          MISC_AddGold( GAMEDATA_GetMiscWork(pWork->gamedata), val );
 
           // ”„‹p‰¹
           GFL_SOUND_PlaySE( SE_BAG_SELL );

@@ -133,6 +133,7 @@ typedef struct
   u8    length;    //メニューの長さ(キャラ単位
   
   MYSTATUS  *mystatus;
+  MISC*  misc;
   
   GFL_FONT *fontHandle;
   GFL_MSGDATA *msgMng; //メニュー作成のところでだけ有効
@@ -252,6 +253,7 @@ static GFL_PROC_RESULT START_MENU_ProcInit( GFL_PROC * proc, int * seq, void * p
     work->itemWork[i].enable = FALSE;
   }
   work->mystatus = SaveData_GetMyStatus( SaveControl_GetPointer() );
+  work->misc = SaveData_GetMisc( SaveControl_GetPointer() );
   work->state = SMS_FADE_IN;
   work->anmCnt = 0;
 
@@ -843,7 +845,7 @@ static void START_MENU_ITEM_ContinueDraw( START_MENU_WORK *work , GFL_BMPWIN *wi
   WORDSET_RegisterNumber( word, 0, 55, 3, STR_NUM_DISP_SPACE, STR_NUM_CODE_HANKAKU );
   START_MENU_ITEM_WordMsgDrawFunc( work , win ,160,48, START_MENU_STR_ITEM_01_08 , word);
   //バッジ
-  WORDSET_RegisterNumber( word, 0, MyStatus_GetBadgeCount(work->mystatus), 1, STR_NUM_DISP_SPACE, STR_NUM_CODE_HANKAKU );
+  WORDSET_RegisterNumber( word, 0, MISC_GetBadgeCount(work->misc), 1, STR_NUM_DISP_SPACE, STR_NUM_CODE_HANKAKU );
   START_MENU_ITEM_WordMsgDrawFunc( work , win ,160,64, START_MENU_STR_ITEM_01_09 , word);
 
   //Font色を戻す

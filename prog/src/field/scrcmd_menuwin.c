@@ -515,7 +515,7 @@ VMCMD_RESULT EvCmdGoldWinOpen( VMHANDLE *core, void *wk )
   GFL_MSGDATA*   msg_data = GFL_MSG_Create( 
       GFL_MSG_LOAD_NORMAL, ARCID_SCRIPT_MESSAGE, NARC_script_message_common_scr_dat, heap_id );
   STRBUF*          strbuf = GFL_STR_CreateBuffer( 128, heap_id );
-  u32                gold = MyStatus_GetGold( &player->mystatus );
+  u32                gold = MISC_GetGold( GAMEDATA_GetMiscWork(gdata) );
 
   // 表示中のウィンドウを削除
   if( msg_win != NULL )

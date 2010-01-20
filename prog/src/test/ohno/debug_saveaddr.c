@@ -150,6 +150,7 @@ static void _changeStateDebug(SAVEADDR_WORK* pWork,StateFunc state, int line)
 #include "savedata/worldtrade_data.h"
 #include "savedata/sodateya_work.h"
 #include "savedata/misc.h"
+#include "savedata/misc_local.h"
 #include "savedata/intrude_save.h"
 #include "savedata/system_data_local.h"
 #include "savedata/dreamworld_data_local.h"
@@ -196,19 +197,25 @@ static void _keyWait(SAVEADDR_WORK* pWork)
       OS_TPrintf("\"%s\",\"0x%x\",\"%d\"\n","ISIN_SLEEP_POKEMON", (u32)pAddr-(u32)topAddr, sizeof(u8));
       
     }
+    {//MISC
+      MISC* pMisc = SaveData_GetMisc(pWork->pSaveData);
+      pAddr = (u8*)&pMisc->gold;
+      OS_TPrintf("\"%s\",\"0x%x\",\"%d\"\n","PLAYER_GOLD", (u32)pAddr-(u32)topAddr, sizeof(pMisc->gold));
+    }
+
+
     {//Myステータス
       MYSTATUS* pMy = SaveData_GetMyStatus(pWork->pSaveData);
-      pAddr = (u8*)&pMy->gold;
-      OS_TPrintf("\"%s\",\"0x%x\",\"%d\"\n","PLAYER_GOLD", (u32)pAddr-(u32)topAddr, sizeof(pMy->gold));
       pAddr = (u8*)&pMy->name;
       OS_TPrintf("\"%s\",\"0x%x\",\"%d\"\n","PLAYER_NAME", (u32)pAddr-(u32)topAddr, sizeof(pMy->name));
       pAddr = (u8*)&pMy->id;
       OS_TPrintf("\"%s\",\"0x%x\",\"%d\"\n", "PLAYER_ID",(u32)pAddr-(u32)topAddr,sizeof(pMy->id));
-      pAddr = (u8*)&pMy->sex;
-      OS_TPrintf("\"%s\",\"0x%x\",\"%d\"\n", "PLAYER_SEX",(u32)pAddr-(u32)topAddr,sizeof(pMy->sex));
+      pAddr = (u8*)&pMy->rom_code;// 性別のアドレスをとるのにBIT配列だとエラーになるので手前の場所から+1している
+      OS_TPrintf("\"%s\",\"0x%x\",\"%d\"\n", "PLAYER_SEX",((u32)pAddr-(u32)topAddr) + 1, 1);
 
     }
 
+    
     { //ジオネット
       WIFI_HISTORY* pHis = SaveData_GetWifiHistory(pWork->pSaveData);
 

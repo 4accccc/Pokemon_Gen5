@@ -157,7 +157,7 @@ static GFL_PROC_RESULT BtlRet_ProcMain( GFL_PROC * proc, int * seq, void * pwk, 
         POKERUS_CheckContagion( party );
 
         // ‚¨‚±‚Ã‚©‚¢‘‚â‚·
-        MyStatus_SetGold( myStatus, MyStatus_GetGold(myStatus) + param->btlResult->getMoney );
+        MISC_AddGold( GAMEDATA_GetMiscWork(param->gameData), param->btlResult->getMoney);
       }
 
       // •ßŠl‚µ‚½

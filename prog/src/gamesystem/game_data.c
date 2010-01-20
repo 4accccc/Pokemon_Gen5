@@ -1449,6 +1449,18 @@ void GAMEDATA_SetBSubwayScrWork(GAMEDATA * gamedata, BSUBWAY_SCRWORK *bsw_scr )
 	gamedata->bsubway_scrwork = bsw_scr;
 }
 
+//----------------------------------------------------------
+/**
+ * @brief   MISCワーク取得
+ * @param   gamedata      GAMEDATAへのポインタ
+ * @return  MISC*
+ */
+//----------------------------------------------------------
+MISC * GAMEDATA_GetMiscWork(GAMEDATA * gamedata)
+{
+  return SaveData_GetMisc(gamedata->sv_control_ptr);
+}
+
 //==================================================================
 /**
  * サポートデータへのポインタ取得

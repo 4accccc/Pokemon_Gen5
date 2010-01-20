@@ -17,10 +17,6 @@
 //============================================================================================
 //============================================================================================
 
-enum {
-  MY_GOLD_MAX = 999999,
-};
-
 
 
 //============================================================================================
@@ -280,83 +276,6 @@ u32 MyStatus_GetMySex(const MYSTATUS * my)
   return my->sex;
 }
 
-//----------------------------------------------------------
-/**
- * @brief バッジ保持状態の取得
- * @param my      自分状態保持ワークへのポインタ
- * @param badge_id  バッジの指定
- * @return  BOOL  バッジを持っているかどうか
- */
-//----------------------------------------------------------
-BOOL MyStatus_GetBadgeFlag(const MYSTATUS * my, int badge_id)
-{
-  if (my->badge & (1 << badge_id)) {
-    return TRUE;
-  } else {
-    return FALSE;
-  }
-}
-
-//----------------------------------------------------------
-/**
- * @brief バッジ取得のセット
- * @param my      自分状態保持ワークへのポインタ
- * @param badge_id  バッジの指定
- */
-//----------------------------------------------------------
-void MyStatus_SetBadgeFlag(MYSTATUS * my, int badge_id)
-{
-  my->badge |= (1 << badge_id);
-}
-
-//----------------------------------------------------------
-/**
- * @brief 持っているバッジの数を取得する
- * @param my      自分状態保持ワークへのポインタ
- * @return  int   持っているバッジの数（０～８）
- */
-//----------------------------------------------------------
-int MyStatus_GetBadgeCount(const MYSTATUS * my)
-{
-  int count = 0;
-  u32 badge;
-
-  for (badge = my->badge; badge != 0; badge >>= 1) {
-    if (badge & 1) {
-      count ++;
-    }
-  }
-  return count;
-}
-//----------------------------------------------------------
-/**
- * @brief 持っている金額を取得する
- * @param my    自分状態保持ワークへのポインタ
- * @return  u32   持っている金額
- */
-//----------------------------------------------------------
-u32 MyStatus_GetGold(const MYSTATUS * my)
-{
-  return my->gold;
-}
-
-//----------------------------------------------------------
-/**
- * @brief
- * @param my    自分状態保持ワークへのポインタ
- * @param gold  セットする金額
- * @return  u32   現在の手持ち金額
- */
-//----------------------------------------------------------
-u32 MyStatus_SetGold(MYSTATUS * my, u32 gold)
-{
-  if (gold > MY_GOLD_MAX) {
-    gold = MY_GOLD_MAX;
-  }
-  my->gold = gold;
-  return my->gold;
-}
-
 //==============================================================================
 /**
  * $brief   自分がトレーナーとして見られる時の番号を返す（ユニオンルーム用）
@@ -385,46 +304,6 @@ void MyStatus_SetTrainerView( MYSTATUS *my, u8 view )
 {
   my->trainer_view = view;
 }
-
-//----------------------------------------------------------
-/**
- * @brief
- * @param my    自分状態保持ワークへのポインタ
- * @param add   加える金額
- * @return  u32   現在の手持ち金額
- */
-//----------------------------------------------------------
-u32 Mystatus_AddGold(MYSTATUS * my, u32 add)
-{
-  if (add > MY_GOLD_MAX) {
-    my->gold = MY_GOLD_MAX;
-  } else {
-    my->gold += add;
-  }
-  if (my->gold > MY_GOLD_MAX) {
-    my->gold = MY_GOLD_MAX;
-  }
-  return my->gold;
-}
-
-//----------------------------------------------------------
-/**
- * @brief
- * @param my    自分状態保持ワークへのポインタ
- * @param sub   引き出す金額
- * @return  u32   現在の手持ち金額
- */
-//----------------------------------------------------------
-u32 Mystatus_SubGold(MYSTATUS * my, u32 sub)
-{
-  if (my->gold < sub) {
-    my->gold = 0;
-  } else {
-    my->gold -= sub;
-  }
-  return my->gold;
-}
-
 
 
 //==============================================================================
@@ -510,15 +389,16 @@ void  MyStatus_SetRegionCode( MYSTATUS * my, u8 region_code )
  * @retval  none
  */
 //==============================================================================
-void MyStatus_SetDpClearFlag( MYSTATUS * my )
-{
-  my->dp_clear = 1;
-}
-
-int MyStatus_GetDpClearFlag( MYSTATUS * my )
-{
-  return my->dp_clear;
-}
+/* void MyStatus_SetDpClearFlag( MYSTATUS * my )
+ * {
+ *   my->dp_clear = 1;
+ * }
+ * 
+ * int MyStatus_GetDpClearFlag( MYSTATUS * my )
+ * {
+ *   return my->dp_clear;
+ * }
+ */
 
 //==============================================================================
 /**
@@ -530,15 +410,16 @@ int MyStatus_GetDpClearFlag( MYSTATUS * my )
  * @retval  none
  */
 //==============================================================================
-void MyStatus_SetDpZenkokuFlag( MYSTATUS * my )
-{
-  my->dp_zenkoku = 1;
-}
-
-int MyStatus_GetDpZenkokuFlag( MYSTATUS * my )
-{
-  return my->dp_zenkoku;
-}
+/* void MyStatus_SetDpZenkokuFlag( MYSTATUS * my )
+ * {
+ *   my->dp_zenkoku = 1;
+ * }
+ * 
+ * int MyStatus_GetDpZenkokuFlag( MYSTATUS * my )
+ * {
+ *   return my->dp_zenkoku;
+ * }
+ */
 
 
 

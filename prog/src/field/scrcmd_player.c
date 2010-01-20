@@ -39,10 +39,8 @@ VMCMD_RESULT EvCmdAddGold( VMHANDLE * core, void * wk )
   PLAYER_WORK* player = GAMEDATA_GetMyPlayerWork( gdata );
   MYSTATUS*  mystatus = &player->mystatus;
   u16             val = SCRCMD_GetVMWorkValue( core, wk );
-  u32            gold = MyStatus_GetGold( mystatus );
 
-  gold = gold + val;
-  MyStatus_SetGold( mystatus, gold );
+  MISC_AddGold( GAMEDATA_GetMiscWork(gdata), val );
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -61,12 +59,10 @@ VMCMD_RESULT EvCmdSubtractGold( VMHANDLE * core, void * wk )
   PLAYER_WORK* player = GAMEDATA_GetMyPlayerWork( gdata );
   MYSTATUS*  mystatus = &player->mystatus;
   u16             val = SCRCMD_GetVMWorkValue( core, wk );
-  u32            gold = MyStatus_GetGold( mystatus );
 
-  gold = gold - val;
-  MyStatus_SetGold( mystatus, gold );
+  MISC_SubGold( GAMEDATA_GetMiscWork(gdata), val );
 
-  OBATA_Printf( "EvCmdSubtractGold : %d\n", gold );
+  OBATA_Printf( "EvCmdSubtractGold : %d\n", MISC_GetGold( GAMEDATA_GetMiscWork(gdata) ) );
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -86,7 +82,7 @@ VMCMD_RESULT EvCmdCheckGold( VMHANDLE * core, void * wk )
   GAMEDATA*     gdata = SCRCMD_WORK_GetGameData( work );
   PLAYER_WORK* player = GAMEDATA_GetMyPlayerWork( gdata );
   MYSTATUS*  mystatus = &player->mystatus;
-  u32            gold = MyStatus_GetGold( mystatus );
+  u32            gold = MISC_GetGold( GAMEDATA_GetMiscWork(gdata) );
 
   if( val <= gold ) *ret_wk = TRUE;
   else              *ret_wk = FALSE; 

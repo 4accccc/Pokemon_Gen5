@@ -137,7 +137,7 @@ VMCMD_RESULT EvCmdGetTrainerCardRank( VMHANDLE *core, void *wk )
   GAMEDATA *gdata = SCRCMD_WORK_GetGameData( wk );
   u16 *ret_wk = SCRCMD_GetVMWork( core, wk );
 
-  *ret_wk = MyStatus_GetBadgeCount( GAMEDATA_GetMyStatus(gdata) );
+  *ret_wk = MISC_GetBadgeCount( GAMEDATA_GetMiscWork(gdata) );
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -295,7 +295,7 @@ VMCMD_RESULT EvCmdGetBadgeFlag( VMHANDLE * core, void *wk )
   u16 badge_id = SCRCMD_GetVMWorkValue( core, wk );
   GAMEDATA *gdata = SCRCMD_WORK_GetGameData( wk );
 
-  *ret_wk = MyStatus_GetBadgeFlag( GAMEDATA_GetMyStatus(gdata), badge_id );
+  *ret_wk = MISC_GetBadgeFlag( GAMEDATA_GetMiscWork(gdata), badge_id );
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -313,7 +313,7 @@ VMCMD_RESULT EvCmdSetBadgeFlag( VMHANDLE * core, void *wk )
   u16 badge_id = SCRCMD_GetVMWorkValue( core, wk );
   GAMEDATA *gdata = SCRCMD_WORK_GetGameData( wk );
 
-  MyStatus_SetBadgeFlag( GAMEDATA_GetMyStatus(gdata), badge_id );
+  MISC_SetBadgeFlag( GAMEDATA_GetMiscWork(gdata), badge_id );
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -331,7 +331,7 @@ VMCMD_RESULT EvCmdGetBadgeCount( VMHANDLE * core, void *wk )
   u16 *ret_wk = SCRCMD_GetVMWork( core, wk );
   GAMEDATA *gdata = SCRCMD_WORK_GetGameData( wk );
 
-  *ret_wk = MyStatus_GetBadgeCount( GAMEDATA_GetMyStatus(gdata) );
+  *ret_wk = MISC_GetBadgeCount( GAMEDATA_GetMiscWork(gdata) );
   return VMCMD_RESULT_CONTINUE;
 }
 

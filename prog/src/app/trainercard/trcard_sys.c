@@ -369,6 +369,7 @@ void TRAINERCARD_GetSelfData( TR_CARD_DATA *cardData , GAMEDATA *gameData , cons
   u8 i,flag;
   TR_CARD_SV_PTR trc_ptr = TRCSave_GetSaveDataPtr(GAMEDATA_GetSaveControlWork(gameData));
   MYSTATUS *mystatus = GAMEDATA_GetMyStatus( gameData );
+  MISC *misc = GAMEDATA_GetMiscWork( gameData );
   GMTIME *gameTime = SaveData_GetGameTime( GAMEDATA_GetSaveControlWork(gameData) );
   RECORD *rec = SaveData_GetRecord( GAMEDATA_GetSaveControlWork(gameData) );
 
@@ -395,7 +396,7 @@ void TRAINERCARD_GetSelfData( TR_CARD_DATA *cardData , GAMEDATA *gameData , cons
 
   cardData->TrSex = MyStatus_GetMySex( mystatus );
   cardData->TrainerID = MyStatus_GetID( mystatus );
-  cardData->Money = MyStatus_GetGold( mystatus );
+  cardData->Money = MISC_GetGold( misc );
   cardData->BadgeFlag = 0;
   cardData->Version   = PM_VERSION;
 
@@ -403,7 +404,7 @@ void TRAINERCARD_GetSelfData( TR_CARD_DATA *cardData , GAMEDATA *gameData , cons
   flag = 1;
   for( i=0; i<8; i++ )
   {
-    if( MyStatus_GetBadgeFlag( mystatus , i ) == TRUE )
+    if( MISC_GetBadgeFlag( misc , i ) == TRUE )
     {
       cardData->BadgeFlag &= flag;
     }

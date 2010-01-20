@@ -23,22 +23,7 @@
  *					構造体宣言
 */
 //=============================================================================
-//-------------------------------------
-///	未分類セーブデータ
-//	・どこに分類するべきか判断に迷うもの。
-//	・規模が小さくそのためにブロック確保をするのがもったいないもの
-//=====================================
-struct _MISC
-{	
-	u16 favorite_monsno;		//お気に入りポケモン
-	u8  favorite_form_no:7;		//お気に入りポケモンのフォルム番号
-	u8  favorite_egg_flag:1;	//お気に入りポケモンのタマゴフラグ
-	u8	namein_mode[NAMEIN_MAX];	//5つ
-
-	//パルパーク
-	u32 palpark_highscore:28;
-	u32 palpark_finish_state:4;
-};
+#include "misc_local.h"
 
 //=============================================================================
 /**
@@ -230,3 +215,120 @@ void  MISC_SetPalparkFinishState(MISC *misc , u8 state)
 {
 	misc->palpark_finish_state = state;
 }
+//----------------------------------------------------------
+/**
+ * @brief バッジ保持状態の取得
+ * @param my      自分状態保持ワークへのポインタ
+ * @param badge_id  バッジの指定
+ * @return  BOOL  バッジを持っているかどうか
+ */
+//----------------------------------------------------------
+BOOL MISC_GetBadgeFlag(const MISC * misc, int badge_id)
+{
+  if (misc->badge & (1 << badge_id)) {
+    return TRUE;
+  } else {
+    return FALSE;
+  }
+}
+
+//----------------------------------------------------------
+/**
+ * @brief バッジ取得のセット
+ * @param misc      自分状態保持ワークへのポインタ
+ * @param badge_id  バッジの指定
+ */
+//----------------------------------------------------------
+void MISC_SetBadgeFlag(MISC * misc, int badge_id)
+{
+  misc->badge |= (1 << badge_id);
+}
+
+//----------------------------------------------------------
+/**
+ * @brief 持っているバッジの数を取得する
+ * @param misc      自分状態保持ワークへのポインタ
+ * @return  int   持っているバッジの数（０～３２）
+ */
+//----------------------------------------------------------
+int MISC_GetBadgeCount(const MISC * misc)
+{
+  int count = 0;
+  u32 badge;
+
+  for (badge = misc->badge; badge != 0; badge >>= 1) {
+    if (badge & 1) {
+      count ++;
+    }
+  }
+  return count;
+}
+//----------------------------------------------------------
+/**
+ * @brief 持っている金額を取得する
+ * @param my    自分状態保持ワークへのポインタ
+ * @return  u32   持っている金額
+ */
+//----------------------------------------------------------
+u32 MISC_GetGold(const MISC * misc)
+{
+  return misc->gold;
+}
+
+//----------------------------------------------------------
+/**
+ * @brief   お金を設定する
+ * @param misc    自分状態保持ワークへのポインタ
+ * @param gold  セットする金額
+ * @return  u32   現在の手持ち金額
+ */
+//----------------------------------------------------------
+u32 MISC_SetGold(MISC * misc, u32 gold)
+{
+  if (gold > MY_GOLD_MAX) {
+    gold = MY_GOLD_MAX;
+  }
+  misc->gold = gold;
+  return misc->gold;
+}
+
+//----------------------------------------------------------
+/**
+ * @brief  お金を増やす
+ * @param misc    自分状態保持ワークへのポインタ
+ * @param add   加える金額
+ * @return  u32   現在の手持ち金額
+ */
+//----------------------------------------------------------
+u32 MISC_AddGold(MISC * misc, u32 add)
+{
+  if (add > MY_GOLD_MAX) {
+    misc->gold = MY_GOLD_MAX;
+  } else {
+    misc->gold += add;
+  }
+  if (misc->gold > MY_GOLD_MAX) {
+    misc->gold = MY_GOLD_MAX;
+  }
+  return misc->gold;
+}
+
+//----------------------------------------------------------
+/**
+ * @brief    お金を減らす
+ * @param misc    自分状態保持ワークへのポインタ
+ * @param sub   引き出す金額
+ * @return  u32   現在の手持ち金額
+ */
+//----------------------------------------------------------
+u32 MISC_SubGold(MISC * misc, u32 sub)
+{
+  if (misc->gold < sub) {
+    misc->gold = 0;
+  } else {
+    misc->gold -= sub;
+  }
+  return misc->gold;
+}
+
+

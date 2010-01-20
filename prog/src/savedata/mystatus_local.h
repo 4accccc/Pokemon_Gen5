@@ -18,6 +18,7 @@
  * @brief	自分状態データ型定義
  */
 //----------------------------------------------------------
+#if 0
 struct _MYSTATUS {
 	STRCODE name[PERSON_NAME_SIZE + EOM_SIZE];		// 16
 	u32 id;											// 20
@@ -36,6 +37,18 @@ struct _MYSTATUS {
 	u8 dummy2;										// 31
 	u8 dummy3;		//金銀用にキープ　2007.08.09(木) matsuda	// 32
 };
-
+#else
+struct _MYSTATUS {
+	STRCODE name[PERSON_NAME_SIZE + EOM_SIZE];		// 16
+	u32 id;								// 20
+	u32 profileID;				// 24
+	u8 region_code;				//PM_LANG   25
+	u8 rom_code;	       	// PM_VERSION   26
+  u8 sex:2;	   //27
+  u8 trainer_view:4;	// ユニオンルーム内での見た目フラグ //27
+	u8 dummy1:2;									// 27
+	u8 dummybuf[5];										// 32
+};
+#endif
 
 #endif	/* __MYSTATUS_LOCAL_H__ */
