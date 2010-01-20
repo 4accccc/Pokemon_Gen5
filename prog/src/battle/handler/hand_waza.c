@@ -1070,7 +1070,7 @@ static void handler_Texture( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
   {
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
     u16 waza_cnt = BPP_WAZA_GetCount( bpp );
-    PokeType next_type;
+    PokeTypePair next_type;
     {
       PokeType type[ PTL_WAZA_MAX ];
       u16 i;
@@ -1085,6 +1085,7 @@ static void handler_Texture( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
       BTL_HANDEX_PARAM_CHANGE_TYPE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CHANGE_TYPE, pokeID );
       param->next_type = next_type;
       param->pokeID = pokeID;
+      OS_TPrintf("テクスチャによるタイプへんこう : %04x / %04x\n", param->next_type, next_type);
     }
   }
 }
