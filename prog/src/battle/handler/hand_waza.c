@@ -3035,7 +3035,7 @@ static void handler_Abareru( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
       BTL_HANDEX_PARAM_ADD_SICK* param;
       u8 turns;
 
-      turns = 3 + BTL_SVFTOOL_GetRand( flowWk, 2);
+      turns = 2 + BTL_SVFTOOL_GetRand( flowWk, 2);
 
       param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_SICK, pokeID );
       param->sickID = WAZASICK_WAZALOCK;
