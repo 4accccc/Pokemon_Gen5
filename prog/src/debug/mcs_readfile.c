@@ -37,6 +37,8 @@ BOOL GF_MCS_FILE_Read( const char * path, void * buf, u32 buf_size )
   u32 fileSize;
   u32 readSize;
 
+  if ( NNS_McsIsServerConnect() == FALSE) return FALSE;
+
   // 読み込み用オープン
   errCode = NNS_McsOpenFile(
     &infoRead,
