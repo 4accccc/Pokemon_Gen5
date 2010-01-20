@@ -12,10 +12,35 @@
 
 enum {
 	NARC_entrance_camera_exit_type_sp1_bin = 0,
-	NARC_entrance_camera_exit_type_sp2_bin = 1,
-	NARC_entrance_camera_exit_type_sp3_bin = 2,
-	NARC_entrance_camera_exit_type_sp4_bin = 3,
-	NARC_entrance_camera_exit_type_sp5_bin = 4
+	NARC_entrance_camera_exit_type_sp10_bin = 1,
+	NARC_entrance_camera_exit_type_sp11_bin = 2,
+	NARC_entrance_camera_exit_type_sp12_bin = 3,
+	NARC_entrance_camera_exit_type_sp13_bin = 4,
+	NARC_entrance_camera_exit_type_sp14_bin = 5,
+	NARC_entrance_camera_exit_type_sp15_bin = 6,
+	NARC_entrance_camera_exit_type_sp16_bin = 7,
+	NARC_entrance_camera_exit_type_sp17_bin = 8,
+	NARC_entrance_camera_exit_type_sp18_bin = 9,
+	NARC_entrance_camera_exit_type_sp19_bin = 10,
+	NARC_entrance_camera_exit_type_sp2_bin = 11,
+	NARC_entrance_camera_exit_type_sp20_bin = 12,
+	NARC_entrance_camera_exit_type_sp21_bin = 13,
+	NARC_entrance_camera_exit_type_sp22_bin = 14,
+	NARC_entrance_camera_exit_type_sp23_bin = 15,
+	NARC_entrance_camera_exit_type_sp24_bin = 16,
+	NARC_entrance_camera_exit_type_sp25_bin = 17,
+	NARC_entrance_camera_exit_type_sp26_bin = 18,
+	NARC_entrance_camera_exit_type_sp27_bin = 19,
+	NARC_entrance_camera_exit_type_sp28_bin = 20,
+	NARC_entrance_camera_exit_type_sp29_bin = 21,
+	NARC_entrance_camera_exit_type_sp3_bin = 22,
+	NARC_entrance_camera_exit_type_sp30_bin = 23,
+	NARC_entrance_camera_exit_type_sp4_bin = 24,
+	NARC_entrance_camera_exit_type_sp5_bin = 25,
+	NARC_entrance_camera_exit_type_sp6_bin = 26,
+	NARC_entrance_camera_exit_type_sp7_bin = 27,
+	NARC_entrance_camera_exit_type_sp8_bin = 28,
+	NARC_entrance_camera_exit_type_sp9_bin = 29
 };
 
 /* NARC_ENTRANCE_CAMERA_NAIX_ */

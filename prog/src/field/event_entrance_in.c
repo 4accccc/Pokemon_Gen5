@@ -101,12 +101,37 @@ GMEVENT* EVENT_EntranceIn( GMEVENT* parent,
     EVENT_FUNC_EntranceIn_ExitTypeDoor,   //EXIT_TYPE_DOOR
     EVENT_FUNC_EntranceIn_ExitTypeStep,   //EXIT_TYPE_WALL
     EVENT_FUNC_EntranceIn_ExitTypeWarp,   //EXIT_TYPE_WARP
+    EVENT_FUNC_EntranceIn_ExitTypeNone,   //EXIT_TYPE_INTRUDE
     EVENT_FUNC_EntranceIn_ExitTypeSPx,    //EXIT_TYPE_SP1
     EVENT_FUNC_EntranceIn_ExitTypeSPx,    //EXIT_TYPE_SP2
     EVENT_FUNC_EntranceIn_ExitTypeSPx,    //EXIT_TYPE_SP3
     EVENT_FUNC_EntranceIn_ExitTypeSPx,    //EXIT_TYPE_SP4
     EVENT_FUNC_EntranceIn_ExitTypeSPx,    //EXIT_TYPE_SP5
-    EVENT_FUNC_EntranceIn_ExitTypeNone,   //EXIT_TYPE_INTRUDE
+    EVENT_FUNC_EntranceIn_ExitTypeSPx,    //EXIT_TYPE_SP6
+    EVENT_FUNC_EntranceIn_ExitTypeSPx,    //EXIT_TYPE_SP7
+    EVENT_FUNC_EntranceIn_ExitTypeSPx,    //EXIT_TYPE_SP8
+    EVENT_FUNC_EntranceIn_ExitTypeSPx,    //EXIT_TYPE_SP9
+    EVENT_FUNC_EntranceIn_ExitTypeSPx,    //EXIT_TYPE_SP10
+    EVENT_FUNC_EntranceIn_ExitTypeSPx,    //EXIT_TYPE_SP11
+    EVENT_FUNC_EntranceIn_ExitTypeSPx,    //EXIT_TYPE_SP12
+    EVENT_FUNC_EntranceIn_ExitTypeSPx,    //EXIT_TYPE_SP13
+    EVENT_FUNC_EntranceIn_ExitTypeSPx,    //EXIT_TYPE_SP14
+    EVENT_FUNC_EntranceIn_ExitTypeSPx,    //EXIT_TYPE_SP15
+    EVENT_FUNC_EntranceIn_ExitTypeSPx,    //EXIT_TYPE_SP16
+    EVENT_FUNC_EntranceIn_ExitTypeSPx,    //EXIT_TYPE_SP17
+    EVENT_FUNC_EntranceIn_ExitTypeSPx,    //EXIT_TYPE_SP18
+    EVENT_FUNC_EntranceIn_ExitTypeSPx,    //EXIT_TYPE_SP19
+    EVENT_FUNC_EntranceIn_ExitTypeSPx,    //EXIT_TYPE_SP20
+    EVENT_FUNC_EntranceIn_ExitTypeSPx,    //EXIT_TYPE_SP21
+    EVENT_FUNC_EntranceIn_ExitTypeSPx,    //EXIT_TYPE_SP22
+    EVENT_FUNC_EntranceIn_ExitTypeSPx,    //EXIT_TYPE_SP23
+    EVENT_FUNC_EntranceIn_ExitTypeSPx,    //EXIT_TYPE_SP24
+    EVENT_FUNC_EntranceIn_ExitTypeSPx,    //EXIT_TYPE_SP25
+    EVENT_FUNC_EntranceIn_ExitTypeSPx,    //EXIT_TYPE_SP26
+    EVENT_FUNC_EntranceIn_ExitTypeSPx,    //EXIT_TYPE_SP27
+    EVENT_FUNC_EntranceIn_ExitTypeSPx,    //EXIT_TYPE_SP28
+    EVENT_FUNC_EntranceIn_ExitTypeSPx,    //EXIT_TYPE_SP29
+    EVENT_FUNC_EntranceIn_ExitTypeSPx,    //EXIT_TYPE_SP30
   };
 
   // イベント作成
@@ -327,13 +352,37 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeSPx(GMEVENT* event, int* seq
   // 出入り口タイプに対応するカメラデータのインデックス
   const ARCDATID dataIndex[] = 
   {
-    0, 0, 0, 0, 0, 0,  // EXIT_TYPE_NONE - EXIT_TYPE_WARP
-    NARC_entrance_camera_exit_type_sp1_bin,  // EXIT_TYPE_SP1
-    NARC_entrance_camera_exit_type_sp2_bin,  // EXIT_TYPE_SP2
-    NARC_entrance_camera_exit_type_sp3_bin,  // EXIT_TYPE_SP3
-    NARC_entrance_camera_exit_type_sp4_bin,  // EXIT_TYPE_SP4
-    NARC_entrance_camera_exit_type_sp5_bin,  // EXIT_TYPE_SP5
-    0,                                       // EXIT_TYPE_INTRUDE
+    0, 0, 0, 0, 0, 0, 0,  // EXIT_TYPE_NONE - EXIT_TYPE_INTRUDE
+    NARC_entrance_camera_exit_type_sp1_bin,    // EXIT_TYPE_SP1
+    NARC_entrance_camera_exit_type_sp2_bin,    // EXIT_TYPE_SP2
+    NARC_entrance_camera_exit_type_sp3_bin,    // EXIT_TYPE_SP3
+    NARC_entrance_camera_exit_type_sp4_bin,    // EXIT_TYPE_SP4
+    NARC_entrance_camera_exit_type_sp5_bin,    // EXIT_TYPE_SP5
+    NARC_entrance_camera_exit_type_sp6_bin,    // EXIT_TYPE_SP6
+    NARC_entrance_camera_exit_type_sp7_bin,    // EXIT_TYPE_SP7
+    NARC_entrance_camera_exit_type_sp8_bin,    // EXIT_TYPE_SP8
+    NARC_entrance_camera_exit_type_sp9_bin,    // EXIT_TYPE_SP9
+    NARC_entrance_camera_exit_type_sp10_bin,   // EXIT_TYPE_SP10
+    NARC_entrance_camera_exit_type_sp11_bin,   // EXIT_TYPE_SP11
+    NARC_entrance_camera_exit_type_sp12_bin,   // EXIT_TYPE_SP12
+    NARC_entrance_camera_exit_type_sp13_bin,   // EXIT_TYPE_SP13
+    NARC_entrance_camera_exit_type_sp14_bin,   // EXIT_TYPE_SP14
+    NARC_entrance_camera_exit_type_sp15_bin,   // EXIT_TYPE_SP15
+    NARC_entrance_camera_exit_type_sp16_bin,   // EXIT_TYPE_SP16
+    NARC_entrance_camera_exit_type_sp17_bin,   // EXIT_TYPE_SP17
+    NARC_entrance_camera_exit_type_sp18_bin,   // EXIT_TYPE_SP18
+    NARC_entrance_camera_exit_type_sp19_bin,   // EXIT_TYPE_SP19
+    NARC_entrance_camera_exit_type_sp20_bin,   // EXIT_TYPE_SP20
+    NARC_entrance_camera_exit_type_sp21_bin,   // EXIT_TYPE_SP21
+    NARC_entrance_camera_exit_type_sp22_bin,   // EXIT_TYPE_SP22
+    NARC_entrance_camera_exit_type_sp23_bin,   // EXIT_TYPE_SP23
+    NARC_entrance_camera_exit_type_sp24_bin,   // EXIT_TYPE_SP24
+    NARC_entrance_camera_exit_type_sp25_bin,   // EXIT_TYPE_SP25
+    NARC_entrance_camera_exit_type_sp26_bin,   // EXIT_TYPE_SP26
+    NARC_entrance_camera_exit_type_sp27_bin,   // EXIT_TYPE_SP27
+    NARC_entrance_camera_exit_type_sp28_bin,   // EXIT_TYPE_SP28
+    NARC_entrance_camera_exit_type_sp29_bin,   // EXIT_TYPE_SP29
+    NARC_entrance_camera_exit_type_sp30_bin,   // EXIT_TYPE_SP30
   };
 
   // 処理シーケンス

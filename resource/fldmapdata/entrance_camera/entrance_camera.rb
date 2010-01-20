@@ -146,6 +146,8 @@ file = File.open( ARGV[0], "r" )
 fileData = file.readlines
 file.close
 
+puts fileData.size
+
 # ’l‚ðŽæ“¾
 LINE_HEAD_DATA.upto( fileData.size - 1 ) do |lineIndex|
   lineData = fileData[lineIndex]
@@ -161,7 +163,6 @@ LINE_HEAD_DATA.upto( fileData.size - 1 ) do |lineIndex|
   cameraData.offsetY        = ConvertToNumber( "0x" + lineItem[ROW_OFFSET_Y] )
   cameraData.offsetZ        = ConvertToNumber( "0x" + lineItem[ROW_OFFSET_Z] )
   cameraData.frame          = ConvertToNumber( lineItem[ROW_FRAME] )
-  puts "#{cameraData.offsetX}, #{cameraData.offsetY}, #{cameraData.offsetZ}"
   # ”z—ñ‚É“o˜^
   cameraDataArray << cameraData
 end
