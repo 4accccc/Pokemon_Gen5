@@ -5,6 +5,19 @@
 //
 //======================================================================
 
+//イベントで渡すグッズ
+#define MUSICAL_GOODS_KEEKI (24)
+#define MUSICAL_GOODS_KURAUN (55)
+#define MUSICAL_GOODS_THIARA (67)
+#define MUSICAL_GOODS_YUUSHOUBERUTO (82)
+#define MUSICAL_GOODS_OHESOBOTAN (87)
+#define MUSICAL_GOODS_NIKONIKOOMEN (86)
+#define MUSICAL_GOODS_EREKIGITAA (84)
+#define MUSICAL_GOODS_PUREZENTOBAKO (99)
+#define MUSICAL_GOODS_FUSAFUSANOHIGE (98)
+#define MUSICAL_GOODS_AKAIBOUSI (95)
+#define MUSICAL_GOODS_OOKINAFUKURO (96)
+
 //※がついているコマンドは控え室のみ有効です！
 
 //コンディションの定義
