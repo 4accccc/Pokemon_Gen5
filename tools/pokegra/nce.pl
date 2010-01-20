@@ -107,6 +107,13 @@ use constant MCSS_SHIFT		=>	8;			#ポリゴン1辺の重み（FX32_SHIFTと同値）
 	$write = pack "L",$cells;
 	print WRITE_NCE $write;
 
+  @write_data;
+  @cell_index;
+  @cell_min_x;
+  @cell_min_y;
+  @cell_max_x;
+  @cell_max_y;
+
 	#セルデータ読み込み
 	for( $cell = 0 ; $cell < $cells ; $cell++ ){
 		#セルを構成するOBJの数を読み込み
@@ -217,6 +224,11 @@ use constant MCSS_SHIFT		=>	8;			#ポリゴン1辺の重み（FX32_SHIFTと同値）
 			$size_y = 0;
 		}
 
+    push @cell_min_x, $min_x;
+    push @cell_min_y, $min_y;
+    push @cell_max_x, $max_x;
+    push @cell_max_y, $max_y;
+
 =pod
 		print "cell:$cell min_x:$min_x min_y:$min_y max_x:$max_x max_y:$max_y\n";
 		print "size_x:$size_x size_y:$size_y char_name:$char_name\n";
@@ -259,8 +271,10 @@ use constant MCSS_SHIFT		=>	8;			#ポリゴン1辺の重み（FX32_SHIFTと同値）
 		$mepachi_tex_t = ( ( $mepachi_char >> 5 ) * 8 ) << 12;
 
 		#セルの情報を書き出す
-		$write = pack "l l l l l l l l l l l l", $min_x, $min_y, $size_x, $size_y, $tex_s, $tex_t, $mepachi_min_x, $mepachi_min_y, $mepachi_size_x, $mepachi_size_y, $mepachi_tex_s, $mepachi_tex_t;
-		print WRITE_NCE $write;
+#		$write = pack "l l l l l l l l l l l l", $min_x, $min_y, $size_x, $size_y, $tex_s, $tex_t, $mepachi_min_x, $mepachi_min_y, $mepachi_size_x, $mepachi_size_y, $mepachi_tex_s, $mepachi_tex_t;
+#		print WRITE_NCE $write;
+		push @write_data , pack "l l l l l l l l l l l l", $min_x, $min_y, $size_x, $size_y, $tex_s, $tex_t, $mepachi_min_x, $mepachi_min_y, $mepachi_size_x, $mepachi_size_y, $mepachi_tex_s, $mepachi_tex_t;
+#		print WRITE_NCE $write;
 #=cut
 	}
 
@@ -285,8 +299,25 @@ use constant MCSS_SHIFT		=>	8;			#ポリゴン1辺の重み（FX32_SHIFTと同値）
   	  	die;
       }
   	}
-    #ブロックサイズ分読み飛ばし
-  	read READ_NCE, $header, $block_size - 8;
+    if( $block_type eq "ANIM" ){
+      read READ_NCE, $data, 4;
+  	  ($cell_anms) = unpack "L", $data;
+      for( $i = 0 ; $i < $cell_anms ; $i++ ){
+        read READ_NCE, $data, 12;
+  	    ($anm_label, $anm_cmnt, $cells) = unpack "L L L", $data;
+        for( $j = 0 ; $j < $cells ; $j++ ){
+          read READ_NCE, $data, 24;
+  	      ($index, $wait, $rot, $scaleX, $scaleY, $transX, $transY) = unpack "S S l l l l l", $data;
+          if( $j == 0 ){
+            push @cell_index, $index;
+          }
+        }
+      }
+    }
+    else{
+      #ブロックサイズ分読み飛ばし
+  	  read READ_NCE, $header, $block_size - 8;
+    }
   }
 
   #ヘッダーを読み込み
@@ -345,9 +376,36 @@ use constant MCSS_SHIFT		=>	8;			#ポリゴン1辺の重み（FX32_SHIFTと同値）
     push( @cell_anm_max, $cell_anms ); 
     for( $ca = 0 ; $ca < $cell_anms ; $ca++ ){
 	    read READ_NMC, $header, 12; 
- 	    ($cell_anm_pos_x, $cell_anm_pos_y, $cell_anm_index) = unpack "L L L", $header;
+ 	    ($cell_anm_pos_x, $cell_anm_pos_y, $cell_anm_index) = unpack "l l L", $header;
       $mcell_anms[$mc][$ca] = $cell_anm_index;
+
+      $index = $cell_index[ $cell_anm_index ];
+
+		  if( $size_min_x > $cell_anm_pos_x + $cell_min_x[ $index ] ){
+			  $size_min_x	= $cell_anm_pos_x + $cell_min_x[ $index ];
+		  }
+		  if( $size_max_x < $cell_anm_pos_x + $cell_max_x[ $index ] ){
+		    $size_max_x = $cell_anm_pos_x + $cell_max_x[ $index ];
+		  }
+		  if( $size_min_y > $cell_anm_pos_y + $cell_min_y[ $index ] ){
+			  $size_min_y	= $cell_anm_pos_y + $cell_min_y[ $index ];
+		  }
+		  if( $size_max_y < $cell_anm_pos_y + $cell_max_y[ $index ] ){
+		    $size_max_y = $cell_anm_pos_y + $cell_max_y[ $index ];
+		  }
     }
+  }
+
+  #マルチセルのおおよその大きさを算出
+  $size_x = $size_max_x - $size_min_x;
+  $size_y = $size_max_y - $size_min_y;
+
+  $write = pack "s s", $size_x, $size_y;
+  print WRITE_NCE $write;
+
+  for( $i = 0 ; $i < @write_data ; $i++ )
+  {
+    print WRITE_NCE $write_data[ $i ];
   }
 
   #ヘッダーを読み込み
