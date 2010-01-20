@@ -61,10 +61,7 @@ static GMEVENT_RESULT SeasonDisplay( GMEVENT* event, int* seq, void* wk )
   case SEQ_WAIT_CAMERA_SET:
     { // 全タスク処理終了で次のシーケンスへ
       FIELD_TASK_MAN* man = FIELDMAP_GetTaskManager( work->fieldmap );
-      if( FIELD_TASK_MAN_IsAllTaskEnd(man) )
-      { 
-       ++(*seq); 
-      }
+      if( FIELD_TASK_MAN_IsAllTaskEnd(man) ){ ++(*seq); }
     }
     break;
   // キー入力待ち
@@ -86,10 +83,7 @@ static GMEVENT_RESULT SeasonDisplay( GMEVENT* event, int* seq, void* wk )
   case SEQ_WAIT_CAMERA_RESET:
     { // 全タスク処理終了で次のシーケンスへ
       FIELD_TASK_MAN* man = FIELDMAP_GetTaskManager( work->fieldmap );
-      if( FIELD_TASK_MAN_IsAllTaskEnd(man) )
-      { 
-       ++(*seq); 
-      }
+      if( FIELD_TASK_MAN_IsAllTaskEnd(man) ){ ++(*seq); }
     }
     break;
   // イベント終了
