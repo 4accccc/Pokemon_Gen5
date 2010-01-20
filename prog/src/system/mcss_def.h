@@ -50,6 +50,8 @@ struct _MCSS_NCEC
 struct _MCSS_NCEC_WORK
 {
 	u32       cells;		//セル枚数
+  u16       size_x;   //
+  u16       size_y;
 	MCSS_NCEC	ncec[1];	//セル情報（可変なので、1個分だけ確保）
 };
 
