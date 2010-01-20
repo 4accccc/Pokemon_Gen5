@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2010-01-07T14:34:56"/>
+	<create user="taya" host="W00146" date="2010-01-14T01:28:41"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -4051,6 +4051,25 @@
 お互いの　道具を入れ替えた！</language>
 	</row>
 
+	<row id="BTL_STRID_SET_TrickGetItem">
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
+[1:09:どうぐ名:1]を　てにいれた！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
+[1:09:どうぐ名:1]を　手に入れた！</language>
+	</row>
+	<row id="BTL_STRID_SET_TrickGetItem_Y">
+		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
+[1:09:どうぐ名:1]を　てにいれた！</language>
+		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
+[1:09:どうぐ名:1]を　手に入れた！</language>
+	</row>
+	<row id="BTL_STRID_SET_TrickGetItem_E">
+		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
+[1:09:どうぐ名:1]を　てにいれた！</language>
+		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は
+[1:09:どうぐ名:1]を　手に入れた！</language>
+	</row>
+
 	<row id="BTL_STRID_SET_Monomane">
 		<comment>ものまね</comment>
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
@@ -5778,6 +5797,46 @@
 ステータスを　もとに　もどした！</language>
 		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は　[1:09:どうぐ名:1]で
 ステータスを　もとに　もどした！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_PokeNotExist">
+		<comment>アイテムコールなど：場に出ていない</comment>
+		<language name="JPN" width="216">…しかし　[1:02:ポケモンニックネーム:0]は
+このばに　いなかった！</language>
+		<language name="JPN_KANJI" width="216">…しかし　[1:02:ポケモンニックネーム:0]は
+この場に　いなかった！</language>
+	</row>
+	<row id="BTL_STRID_SET_PokeNotExist_Y">
+		<language name="JPN" width="216">…しかし　やせいの　[1:02:ポケモンニックネーム:0]は
+このばに　いなかった！</language>
+		<language name="JPN_KANJI" width="216">…しかし　野生の　[1:02:ポケモンニックネーム:0]は
+この場に　いなかった！</language>
+	</row>
+	<row id="BTL_STRID_SET_PokeNotExist_E">
+		<language name="JPN" width="216">…しかし　あいての　[1:02:ポケモンニックネーム:0]は
+このばに　いなかった！</language>
+		<language name="JPN_KANJI" width="216">…しかし　相手の　[1:02:ポケモンニックネーム:0]は
+この場に　いなかった！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_PokeHaveNotItem">
+		<comment>アイテムコール：有効な道具を持ってない</comment>
+		<language name="JPN" width="216">…しかし　[1:02:ポケモンニックネーム:0]は
+つかえる　どうぐを　もっていなかった！</language>
+		<language name="JPN_KANJI" width="216">…しかし　[1:02:ポケモンニックネーム:0]は
+使える道具を　持っていなかった！</language>
+	</row>
+	<row id="BTL_STRID_SET_PokeHaveNotItem_Y">
+		<language name="JPN" width="216">…しかし　やせいの　[1:02:ポケモンニックネーム:0]は
+つかえる　どうぐを　もっていなかった！</language>
+		<language name="JPN_KANJI" width="216">…しかし　野生の　[1:02:ポケモンニックネーム:0]は
+使える道具を　持っていなかった！</language>
+	</row>
+	<row id="BTL_STRID_SET_PokeHaveNotItem_E">
+		<language name="JPN" width="216">…しかし　あいての　[1:02:ポケモンニックネーム:0]は
+つかえる　どうぐを　もっていなかった！</language>
+		<language name="JPN_KANJI" width="216">…しかし　相手の　[1:02:ポケモンニックネーム:0]は
+使える道具を　持っていなかった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_UseItem_TameSkip">
