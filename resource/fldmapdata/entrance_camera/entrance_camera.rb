@@ -127,7 +127,7 @@ end
 # @return 指定した文字列を変換した値
 #========================================================================================
 def ConvertToNumber( string )
-  if string=~/0x\d+/ then return string.hex  # 16進
+  if string=~/0x(?:\d|[a-f])+/ then return string.hex  # 16進
   else return string.to_i end  # 10進
 end
 
@@ -161,6 +161,7 @@ LINE_HEAD_DATA.upto( fileData.size - 1 ) do |lineIndex|
   cameraData.offsetY        = ConvertToNumber( lineItem[ROW_OFFSET_Y] )
   cameraData.offsetZ        = ConvertToNumber( lineItem[ROW_OFFSET_Z] )
   cameraData.frame          = ConvertToNumber( lineItem[ROW_FRAME] )
+  puts "#{cameraData.offsetX}, #{cameraData.offsetY}, #{cameraData.offsetZ}"
   # 配列に登録
   cameraDataArray << cameraData
 end
