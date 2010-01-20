@@ -11,9 +11,18 @@
 #define NARC_BEACON_STATUS_NAIX_
 
 enum {
-	NARC_beacon_status_beacon_status_lz_NCGR = 0,
-	NARC_beacon_status_beacon_status_lz_NSCR = 1,
-	NARC_beacon_status_beacon_status_NCLR = 2
+	NARC_beacon_status_bstatus_obj_nclr = 0,
+	NARC_beacon_status_bstatus_obj_ncgr = 1,
+	NARC_beacon_status_bstatus_obj_ncer = 2,
+	NARC_beacon_status_bstatus_obj_nanr = 3,
+	NARC_beacon_status_bstatus_bg_nclr = 4,
+	NARC_beacon_status_bstatus_bg_lz_ncgr = 5,
+	NARC_beacon_status_bstatus_bg01_lz_nscr = 6,
+	NARC_beacon_status_bstatus_bg02_lz_nscr = 7,
+	NARC_beacon_status_bstatus_bg03_lz_nscr = 8,
+	NARC_beacon_status_beacon_status_lz_NCGR = 9,
+	NARC_beacon_status_beacon_status_lz_NSCR = 10,
+	NARC_beacon_status_beacon_status_NCLR = 11
 };
 
 /* NARC_BEACON_STATUS_NAIX_ */

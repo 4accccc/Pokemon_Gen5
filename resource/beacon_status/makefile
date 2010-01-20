@@ -7,7 +7,7 @@
 #------------------------------------------------------------------------------
 #※コンバートを行う人のユーザーIDをここに書く
 #------------------------------------------------------------------------------
-USERS	= matsuda ohmori
+USERS	= matsuda ohmori iwasawa
 
 #------------------------------------------------------------------------------
 #※ここに作成するnarc名を書く
@@ -81,10 +81,10 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
 	rm -f *.NCGR
 	rm -f *.NCLR
 	rm -f *.NCER
+	rm -f *.NANR
 	rm -f *.NSCR
 	rm -f *.narc
 	rm -f *.naix
-	rm -f *.nsbmd
 	rm -f $(targetname).narc
 	rm -f $(targetname).naix
 endif
