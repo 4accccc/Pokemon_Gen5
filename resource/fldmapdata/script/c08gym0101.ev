@@ -228,6 +228,9 @@ EVENT_END
 /************************************************************/
 EVENT_START	ev_pos_c08gym0101_f2_03
 
+	//視線曲PLAY
+	 _TRAINER_BGM_SET( TRID_VETERANM_04 )
+
 	//トレーナー近寄って来る
 	_OBJ_ANIME( TR_C08GYM0101_F2_03,anm_c08r0101_tr_com )
 	_OBJ_ANIME_WAIT()
@@ -261,10 +264,10 @@ EVENT_START	ev_pos_c08gym0101_f2_03
 EVENT_END
 
 //--------------------------------------------------------------
-//	トレーナー接近
+//	【仮】トレーナー接近
 //--------------------------------------------------------------
 	_ANIME_LABEL	anm_c08r0101_tr_com
-	_ANIME_DATA	AC_MARK_GYOE,1
+	//_ANIME_DATA	AC_MARK_GYOE,1
 	_ANIME_DATA	AC_WALK_U_8F,2
 	_ANIME_DATA	AC_DIR_U,1
 	_ANIME_DATA	ACMD_END,0

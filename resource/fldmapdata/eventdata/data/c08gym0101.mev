@@ -1,5 +1,5 @@
 #event data
-#save date:2010/01/14 16:43:18
+#save date:2010/01/20 12:18:53
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c08gym0101.wms
 #SECTION START:OBJ_EVENT
@@ -9,39 +9,8 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c08gym0101.wms
 #hold event type:
 1
 #hold event number:
-12
+11
 #event number: 0
-#type
-1
-#ID name
-TR_C08GYM0101_F1_01
-#OBJ CODE Number
-TRAINERM
-#MOVE CODE Number
-MV_DMY
-#EVENT TYPE Number
-EV_TYPE_TRAINER
-#Flag Name
-0
-#Event Script Name
-SCRID_TRID_ELITEM_13
-#Direction Type Number
-DIR_RIGHT
-#Parameter 0 Number
-2
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--152 0 136
-#event number: 1
 #type
 1
 #ID name
@@ -72,7 +41,7 @@ DIR_RIGHT
 EVENTDATA_POSTYPE_GRID
 #position
 72 0 104
-#event number: 2
+#event number: 1
 #type
 1
 #ID name
@@ -103,7 +72,7 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 248 0 -72
-#event number: 3
+#event number: 2
 #type
 1
 #ID name
@@ -134,7 +103,7 @@ DIR_UP
 EVENTDATA_POSTYPE_GRID
 #position
 600 0 -136
-#event number: 4
+#event number: 3
 #type
 1
 #ID name
@@ -165,7 +134,7 @@ DIR_RIGHT
 EVENTDATA_POSTYPE_GRID
 #position
 168 0 -376
-#event number: 5
+#event number: 4
 #type
 1
 #ID name
@@ -196,7 +165,7 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 184 192 216
-#event number: 6
+#event number: 5
 #type
 1
 #ID name
@@ -227,7 +196,7 @@ DIR_RIGHT
 EVENTDATA_POSTYPE_GRID
 #position
 584 96 8
-#event number: 7
+#event number: 6
 #type
 1
 #ID name
@@ -258,7 +227,7 @@ DIR_RIGHT
 EVENTDATA_POSTYPE_GRID
 #position
 -72 96 -568
-#event number: 8
+#event number: 7
 #type
 1
 #ID name
@@ -289,7 +258,7 @@ DIR_LEFT
 EVENTDATA_POSTYPE_GRID
 #position
 424 96 -424
-#event number: 9
+#event number: 8
 #type
 1
 #ID name
@@ -305,7 +274,7 @@ EV_TYPE_TRAINER
 #Event Script Name
 SCRID_TRID_ELITEW_12
 #Direction Type Number
-DIR_LEFT
+DIR_DOWN
 #Parameter 0 Number
 2
 #Parameter 1 Number
@@ -319,14 +288,14 @@ DIR_LEFT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--216 0 -200
-#event number: 10
+-232 0 -184
+#event number: 9
 #type
 1
 #ID name
 C08GYM0101_SUNGLASSES_01
 #OBJ CODE Number
-SUNGLASSES
+DANPEI
 #MOVE CODE Number
 MV_DMY
 #EVENT TYPE Number
@@ -351,7 +320,7 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 200 0 -520
-#event number: 11
+#event number: 10
 #type
 1
 #ID name
@@ -359,15 +328,15 @@ TR_C08GYM0101_F2_03
 #OBJ CODE Number
 VETERANM
 #MOVE CODE Number
-MV_DMY
+MV_RAIL_DMY
 #EVENT TYPE Number
-EV_TYPE_TRAINER
+EV_TYPE_NORMAL
 #Flag Name
 0
 #Event Script Name
 SCRID_TRID_VETERANM_04
 #Direction Type Number
-DIR_DOWN
+DIR_UP
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -379,9 +348,9 @@ DIR_DOWN
 #Move Limit Z Number
 0
 #Pos Type
-EVENTDATA_POSTYPE_GRID
+EVENTDATA_POSTYPE_RAIL
 #position
-360 0 -456
+40 2 0
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
@@ -516,9 +485,9 @@ WK_SCENE_C08GYM0101
 #Event Trigger Work Value
 0
 #Pos Type
-EVENTDATA_POSTYPE_GRID
+EVENTDATA_POSTYPE_RAIL
 #position
-152 0 -408
+41 1 0
 #size
 1 1
 #Map Event List Data End
