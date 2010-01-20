@@ -51,6 +51,7 @@ typedef enum {
   DBGSTR_CLIENT_ForbidEscape_Jiryoku_Chk,
   DBGSTR_CLIENT_ForbidEscape_Jiryoku_Enable,
 
+  DBGSTR_BPP_NemuriWakeCheck,
 
   DBGSTR_MAIN_SwapPartyMember,
   DBGSTR_NET_DecideClientID,

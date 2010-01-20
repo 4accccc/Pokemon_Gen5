@@ -3111,7 +3111,7 @@ static void handler_NebariNoKagidume( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WOR
   ){
     BPP_SICK_CONT cont;
     cont.raw = BTL_EVENTVAR_GetValue( BTL_EVAR_SICK_CONT );
-    BPP_SICKCONT_SetTurn( &cont, 5 );
+    BPP_SICKCONT_SetTurn( &cont, BTL_BIND_TURN_MAX );
     BTL_EVENTVAR_RewriteValue( BTL_EVAR_SICK_CONT, cont.raw );
   }
 }

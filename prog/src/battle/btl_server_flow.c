@@ -4213,7 +4213,7 @@ static void scproc_PokeSickCure_WazaCheck( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* a
 
   switch( sick ){
   case POKESICK_NEMURI:
-    if( BPP_Nemuri_CheckWake(attacker) ){
+    if( BPP_CheckNemuriWakeUp(attacker) ){
       f_cured = TRUE;
     }
     break;
@@ -6844,6 +6844,7 @@ static void scproc_turncheck_sick( BTL_SVFLOW_WORK* wk, BTL_POKESET* pokeSet )
 
     BPP_WazaSick_TurnCheck( bpp, BTL_SICK_TurnCheckCallback, wk );
     SCQUE_PUT_OP_WazaSickTurnCheck( wk->que, BPP_GetID(bpp) );
+
     scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
     Hem_PopState( &wk->HEManager, hem_state );
 

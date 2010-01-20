@@ -332,6 +332,7 @@ extern void BPP_CurePokeSick( BTL_POKEPARAM* pp );
 extern void BPP_CureWazaSick( BTL_POKEPARAM* pp, WazaSick sick );
 extern void BPP_CureWazaSickDependPoke( BTL_POKEPARAM* pp, u8 depend_pokeID, BppCureWazaSickDependPokeCallback callBackFunc, void* callbackArg );
 extern void BPP_WazaSick_TurnCheck( BTL_POKEPARAM* bpp, BtlSickTurnCheckFunc callbackFunc, void* callbackWork );
+extern BOOL BPP_CheckNemuriWakeUp( BTL_POKEPARAM* bpp );
 extern void BPP_ReflectLevelup( BTL_POKEPARAM* bpp, u8 nextLevel, u8 hpMax, u8 atk, u8 def, u8 spAtk, u8 spDef, u8 agi );
 extern void BPP_ReflectExpAdd( BTL_POKEPARAM* bpp );
 
@@ -351,7 +352,6 @@ extern void BPP_HpPlus( BTL_POKEPARAM* pp, u16 value );
 extern void BPP_HpZero( BTL_POKEPARAM* pp );
 extern void BPP_PPMinus( BTL_POKEPARAM* pp, u8 wazaIdx, u8 value );
 extern void BPP_PPPlus( BTL_POKEPARAM* pp, u8 wazaIdx, u8 value );
-extern BOOL BPP_Nemuri_CheckWake( BTL_POKEPARAM* pp );
 extern void BPP_TURNFLAG_Set( BTL_POKEPARAM* pp, BppTurnFlag flagID );
 extern void BPP_TURNFLAG_ForceOff( BTL_POKEPARAM* pp, BppTurnFlag flagID );
 extern void BPP_TurnCheck( BTL_POKEPARAM* pp );
