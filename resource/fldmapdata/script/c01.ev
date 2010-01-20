@@ -265,23 +265,23 @@ _TALK_OBJ_START()
 	//くさタイプ選択の場合
 	IF $WK_SYS_FIRST_POKETYPE  == FIRST_POKETYPE_KUSA THEN
 		//0に初期選択ポケモンの名前をセット
-		_MONS_NAME( 0, MONSNO_KUSAHEBI )
+		_MONS_NAME( 0, MONSNO_551 )	//クサヘビ
 		//1に選択ポケモンの弱点タイプをセット
 		_POKETYPE_NAME( 1, POKETYPE_HONOO )
 
 	//ほのおタイプ選択の場合
 	ELSIF $WK_SYS_FIRST_POKETYPE  == FIRST_POKETYPE_HONOO THEN
 		//0に初期選択ポケモンの名前をセット
-		_MONS_NAME( 0, MONSNO_HOTTON )
+		_MONS_NAME( 0, MONSNO_554 )	//ホットン
 		//1に選択ポケモンの弱点タイプをセット
 		_POKETYPE_NAME( 1, POKETYPE_MIZU )
 
 	//みずタイプ選択の場合
 	ELSE
 		//0に初期選択ポケモンの名前をセット
-		_MONS_NAME( 0, MONSNO_SUIKKO )
+		_MONS_NAME( 0, MONSNO_557 )	//スイッコ
 		//1に選択ポケモンの弱点タイプをセット
-		_POKETYPE_NAME( 1, POKETYPE_KUSA )
+		_POKETYPE_NAME( 1, POKETYPE_KUSA )	//クサヘビ
 		
 	ENDIF
 

@@ -152,9 +152,9 @@ EVENT_START   ev_t02r0401_man2_01
 EVENT_END
 
 /**************************************************************/
-/*  T02R0401 POKE2_01の会話用スクリプト	【仮】鳴き声が仮です  */
+/*  T02R0401 POKE2_01の会話用スクリプト						  */
 /**************************************************************/
 EVENT_START   ev_t02r0401_poke2_01
-	_EASY_TALK_POKEVOICE( MONSNO_DHIARUGA, msg_t02r0401_poke_01 )
+	_EASY_TALK_POKEVOICE( MONSNO_533, msg_t02r0401_poke_01 )	//チラーミィ
 EVENT_END
 
