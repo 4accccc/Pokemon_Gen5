@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2010-01-12T20:15:29"/>
+	<create user="matsumiya" host="W00207" date="2010-01-20T22:50:20"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -295,223 +295,289 @@
 	<row id="msg_h04_whistle_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂：草笛担当
 ・弾いていないとき
-・はい/いいえ選択肢表示
-　はい→whistle_02
-　いいえ→whistle_03</comment>
+・話しかけた時点でISS起動</comment>
 		<attribute name="キャラ指定">T
 草笛</attribute>
-		<language name="JPN" width="256">たそがれオヤジバンド▼
-ボクは　くさぶえ　たんとうの
-たかしさ！　よろしくな▼
-どう？　ボクの　くさぶえ　きく？</language>
-		<language name="JPN_KANJI" width="256">たそがれオヤジバンド▼
-ボクは　くさぶえ　たんとうの
-たかしさ！　よろしくな▼
-どう？　ボクの　くさぶえ　きく？</language>
+		<language name="JPN" width="256">たかし『ピー　ピー
+ピピピの　ピー……</language>
+		<language name="JPN_KANJI" width="256">たかし『ピー　ピィー
+ピピピの　ピー……</language>
 	</row>
 
 	<row id="msg_h04_whistle_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂：草笛担当
-・whistle_01表示後に、はい選択
-・ISS起動</comment>
+・弾いているとき
+・話しかけた時点でISS停止</comment>
 		<attribute name="キャラ指定">T
 草笛</attribute>
-		<language name="JPN" width="256">くさぶえの　メロディ
-きいてよ！　たのしんでよ！</language>
-		<language name="JPN_KANJI" width="256">くさぶえの　メロディ
-きいてよ！　たのしんでよ！</language>
+		<language name="JPN" width="256">たかし『こころに　しみいるは
+くさぶえの　ねいろ▼
+フトコロに　しみるは
+つめてぇ　よかぜ　ってね</language>
+		<language name="JPN_KANJI" width="256">たかし『心に　しみ入るは
+草笛の　音色▼
+フトコロに　しみるは
+冷てぇ　夜風　ってね</language>
 	</row>
 
 	<row id="msg_h04_whistle_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂：草笛担当
-・whistle_01表示後に、いいえ選択</comment>
+・そのマップ内から出ずに
+　再度（２度目以降）話しかけた時
+・弾いていないとき
+・話しかけた時点でISS起動</comment>
 		<attribute name="キャラ指定">T
 草笛</attribute>
-		<language name="JPN" width="256">……ですよね
-では　たそがれています</language>
-		<language name="JPN_KANJI" width="256">……ですよね
-では　たそがれています</language>
+		<language name="JPN" width="256">たかし『ピ……　ピ……
+プィー　プィイイーー</language>
+		<language name="JPN_KANJI" width="256">たかし『ピ……　ピ……
+プィー　プィイイーー</language>
 	</row>
 
 	<row id="msg_h04_whistle_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂：草笛担当
+・そのマップ内から出ずに
+　再度（２度目以降）話しかけた時
 ・弾いているとき
-・話しかけた時点でISS停止
-・はい/いいえ選択肢表示
-　はい→whistle_02
-　いいえ→whistle_03</comment>
+・話しかけた時点でISS停止</comment>
 		<attribute name="キャラ指定">T
 草笛</attribute>
-		<language name="JPN" width="256">どうしたの？
-まだ　くさぶえ　きく？</language>
-		<language name="JPN_KANJI" width="256">どうしたの？
-まだ　くさぶえ　きく？</language>
+		<language name="JPN" width="256">たかし『くちに　するのは
+この　くさぶえと▽
+うまく　いかねえ　まいにちへの▽
+ぐち　ばかり　ってね▼
+そんな　やつらの　ふきだまりが
+この　はしさ</language>
+		<language name="JPN_KANJI" width="256">たかし『口に　するのは
+この　草笛と▽
+うまく　いかねえ　毎日への▽
+ぐち　ばかり　ってね▼
+そんな　奴らの　ふきだまりが
+この　橋さ</language>
 	</row>
 
 	<row id="msg_h04_guitar_01">
 		<comment>♂：ギター担当
 ・弾いていないとき
-・はい/いいえ選択肢表示
-　はい→guitar_02
-　いいえ→guitar_03</comment>
+・話しかけた時点でISS起動</comment>
 		<attribute name="キャラ指定">S
 ギター弾き</attribute>
-		<language name="JPN" width="256">たそがれオヤジバンド▼
-ギター　たんとうの　ソン　です！
-どうですか？　ギター　ききますか？</language>
-		<language name="JPN_KANJI" width="256">たそがれオヤジバンド▼
-ギター　たんとうの　ソン　です！
-どうですか？　ギター　ききますか？</language>
+		<language name="JPN" width="256">ソン『どうだい！　このおと！
+きみの　たましい（ハート）に▽
+ひびいて　こないかい！</language>
+		<language name="JPN_KANJI" width="256">ソン『どうだい！　この音！
+君の　魂（ハート）に▽
+ひびいて　来ないかい！</language>
 	</row>
 
 	<row id="msg_h04_guitar_02">
 		<comment>♂：ギター担当
-・guitar_01表示後に、はい選択
-・ISS起動</comment>
+・弾いているとき
+・話しかけた時点でISS停止</comment>
 		<attribute name="キャラ指定">S
 ギター弾き</attribute>
-		<language name="JPN" width="256">ありがとうございます！
-では　ギターを　ひきますね！</language>
-		<language name="JPN_KANJI" width="256">ありがとうございます！
-では　ギターを　ひきますね！</language>
+		<language name="JPN" width="256">ソン『しってるさ　おれの　ギターは
+この　とかい（まち）には　にあわねえ▼
+だけど　おれは……
+じぶんの　じんせい（スタイル）を▽
+かえる　ことは　できないのさ</language>
+		<language name="JPN_KANJI" width="256">ソン『知ってるさ　おれの　ギターは
+この　都会（まち）には　にあわねえ▼
+だけど　おれは……
+自分の　人生（スタイル）を▽
+変えることは　できないのさ</language>
 	</row>
 
 	<row id="msg_h04_guitar_03">
 		<comment>♂：ギター担当
-・guitar_01表示後に、いいえ選択</comment>
+・そのマップ内から出ずに
+　再度（２度目以降）話しかけた時
+・弾いていないとき
+・話しかけた時点でISS起動</comment>
 		<attribute name="キャラ指定">S
 ギター弾き</attribute>
-		<language name="JPN" width="256">……ですよね
-では　たそがれています</language>
-		<language name="JPN_KANJI" width="256">……ですよね
-では　たそがれています</language>
+		<language name="JPN" width="256">ソン『この　ギターは
+だいじな　ともだち（あいぼう）さ▼
+おれの　なみだ（かなしみ）を
+すべて　しってるのさ</language>
+		<language name="JPN_KANJI" width="256">ソン『この　ギターは
+大事な　友達（あいぼう）さ▼
+おれの　涙（かなしみ）を
+全て　知ってるのさ</language>
 	</row>
 
 	<row id="msg_h04_guitar_04">
 		<comment>♂：ギター担当
+・そのマップ内から出ずに
+　再度（２度目以降）話しかけた時
 ・弾いているとき
-・話しかけた時点でISS停止
-・はい/いいえ選択肢表示
-　はい→guitar_02
-　いいえ→guitar_03</comment>
+・話しかけた時点でISS停止</comment>
 		<attribute name="キャラ指定">S
 ギター弾き</attribute>
-		<language name="JPN" width="256">どうですか？　まだ
-ギターの　おとを　ききますか？</language>
-		<language name="JPN_KANJI" width="256">どうですか？　まだ
-ギターの　おとを　ききますか？</language>
+		<language name="JPN" width="256">ソン『きみ……
+いい　ひかり（め）を　もってる▼
+おれたちの　きぼう（ゆめ）を
+かわりに　かなえて　くれるかい▼
+つかめよ！　えいこう（せかい）を！</language>
+		<language name="JPN_KANJI" width="256">ソン『君……
+いい　光（め）を　もってる▼
+おれたちの　希望（ゆめ）を
+代わりに　叶えて　くれるかい▼
+つかめよ！　栄光（せかい）を！</language>
 	</row>
 
 	<row id="msg_h04_voice_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>♂：ボイスパーカッション
+		<comment>♂：ボイパ担当
 ・弾いていないとき
-・はい/いいえ選択肢表示
-　はい→voice_02
-　いいえ→voice_03</comment>
+・話しかけた時点でISS起動</comment>
 		<attribute name="キャラ指定">G
 ボイスパーカス</attribute>
-		<language name="JPN" width="256">たそがれオヤジバンド▼
-ボイスパーカッションの
-ガリクソンと　いいます▼
-ねえ　ボイスパーカッション
-すっごく　ききたいですよね？</language>
-		<language name="JPN_KANJI" width="256">たそがれオヤジバンド▼
-ボイスパーカッションの
-ガリクソンと　いいます▼
-ねえ　ボイスパーカッション
-すっごく　ききたいですよね？</language>
+		<language name="JPN" width="256">ガリクソン『ドッ　ツッ
+プス　ドッツッ　ドドッ▼
+ボッ……　ボァっ　ボァっ！
+ドス　プフ　ドス　プフ▽
+ドス　プフ　プス　プス▽
+シャアァァーン！！！</language>
+		<language name="JPN_KANJI" width="256">ガリクソン『ドッ　ツッ
+プス　ドッツッ　ドドッ▼
+ボッ……　ボァっ　ボァっ！
+ドス　プフ　ドス　プフ▽
+ドス　プフ　プス　プス▽
+シャアァァーン！！！</language>
 	</row>
 
 	<row id="msg_h04_voice_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>♂：ボイスパーカッション
-・voice_01表示後に、はい選択
-・ISS起動</comment>
+		<comment>♂：ボイパ担当
+・弾いているとき
+・話しかけた時点でISS停止</comment>
 		<attribute name="キャラ指定">G
 ボイスパーカス</attribute>
-		<language name="JPN" width="256">では　じまんの
-ボイスパーカッション　きいてよ！</language>
-		<language name="JPN_KANJI" width="256">では　じまんの
-ボイスパーカッション　きいてよ！</language>
+		<language name="JPN" width="256">ガリクソン『ぺっ　ぺっ！
+きょうは　ちょうし　わりいだ▽
+マイクが　こわれてんだべー▼
+おらの　ボイパ
+こんなもんじゃ　ねんだけどなー</language>
+		<language name="JPN_KANJI" width="256">ガリクソン『ぺっ　ぺっ！
+今日は　調子　わりいだ▽
+マイクが　こわれてんだべー▼
+おらの　ボイパ
+こんなもんじゃ　ねんだけどなー</language>
 	</row>
 
 	<row id="msg_h04_voice_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>♂：ボイスパーカッション
-・voice_01表示後に、いいえ選択</comment>
+		<comment>♂：ボイパ担当
+・そのマップ内から出ずに
+　再度（２度目以降）話しかけた時
+・弾いていないとき
+・話しかけた時点でISS起動</comment>
 		<attribute name="キャラ指定">G
 ボイスパーカス</attribute>
-		<language name="JPN" width="256">……ですよね
-では　たそがれています</language>
-		<language name="JPN_KANJI" width="256">……ですよね
-では　たそがれています</language>
+		<language name="JPN" width="256">ガリクソン『べっ　べっ
+べべべべ▼
+べぼッ　べぼッ　ツス
+べぼべぼッ　プス　プス▽
+だべっ　だべっ　ピシャー！！！</language>
+		<language name="JPN_KANJI" width="256">ガリクソン『べっ　べっ
+べべべべ▼
+べぼッ　べぼッ　ツス
+べぼべぼッ　プス　プス▽
+だべっ　だべっ　ピシャー！！！</language>
 	</row>
 
 	<row id="msg_h04_voice_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>♂：ボイスパーカッション
+		<comment>♂：ボイパ担当
+・そのマップ内から出ずに
+　再度（２度目以降）話しかけた時
 ・弾いているとき
-・話しかけた時点でISS停止
-・はい/いいえ選択肢表示
-　はい→voice_02
-　いいえ→voice_03</comment>
+・話しかけた時点でISS停止</comment>
 		<attribute name="キャラ指定">G
 ボイスパーカス</attribute>
-		<language name="JPN" width="256">ねえねえ　ボイスパーカッション
-まだ　ききたいですよね？</language>
-		<language name="JPN_KANJI" width="256">ねえねえ　ボイスパーカッション
-まだ　ききたいですよね？</language>
+		<language name="JPN" width="256">ガリクソン『こったら　たのしそうに
+きーで　くれたのは……▼
+なんがい　ボイパじんせいで
+おまえさんが　はずめてだべー▽
+ありがとよ……</language>
+		<language name="JPN_KANJI" width="256">ガリクソン『こったら　楽しそうに
+きーで　くれたのは……▼
+なんがい　ボイパ人生で
+おまえさんが　はずめてだべー▽
+ありがとよ……</language>
 	</row>
 
 	<row id="msg_h04_leadsinger_01">
 		<comment>♂：ボーカル担当
 ・弾いていないとき
-・はい/いいえ選択肢表示</comment>
+・話しかけた時点でISS起動</comment>
 		<attribute name="キャラ指定">R
 ボーカル</attribute>
-		<language name="JPN" width="256">たそがれオヤジバンド▼
-リード　ボーカルを　やってる
-レイモンドですねん▼
-なあなあ　トレーナーはん
-うちの　ボーカル　きいてや！</language>
-		<language name="JPN_KANJI" width="256">たそがれオヤジバンド▼
-リード　ボーカルを　やってる
-レイモンドですねん▼
-なあなあ　トレーナーはん
-うちの　ボーカル　きいてや！</language>
+		<language name="JPN" width="256">レイモンド『は～♪
+たーそがれてー　ながされーて▽
+このまち　きたけれどお▼
+わかって　くれるのは
+おてんとさま　だけや～▽
+ひがくれたら　ハイ　さよならよ</language>
+		<language name="JPN_KANJI" width="256">レイモンド『は～♪
+たーそがれてー　ながされーて▽
+このまち　きたけれどお▼
+わかって　くれるのは
+おてんとさま　だけや～▽
+ひがくれたら　ハイ　さよならよ</language>
 	</row>
 
 	<row id="msg_h04_leadsinger_02">
 		<comment>♂：ボーカル担当
-・leadsinger_01表示後に、はい選択
-・ISS起動</comment>
+・弾いているとき
+・話しかけた時点でISS停止</comment>
 		<attribute name="キャラ指定">R
 ボーカル</attribute>
-		<language name="JPN" width="256">ほな　うちの　ボーカル
-たのしんでや！</language>
-		<language name="JPN_KANJI" width="256">ほな　うちの　ボーカル
-たのしんでや！</language>
+		<language name="JPN" width="256">レイモンド『どないや
+わしの　うた……▼
+これでも　わかいころは
+すーぱーすたー　なれる　ゆうて▽
+みんなからも▽
+きたい　されとったんやけどな</language>
+		<language name="JPN_KANJI" width="256">レイモンド『どないや
+わしの　歌……▼
+これでも　若いころは
+すーぱーすたー　なれる　ゆうて▽
+みんなからも▽
+期待　されとったんやけどな</language>
 	</row>
 
 	<row id="msg_h04_leadsinger_03">
 		<comment>♂：ボーカル担当
-・leadsinger_01表示後に、いいえ選択</comment>
+・そのマップ内から出ずに
+　再度（２度目以降）話しかけた時
+・弾いていないとき
+・話しかけた時点でISS起動</comment>
 		<attribute name="キャラ指定">R
 ボーカル</attribute>
-		<language name="JPN" width="256">……ですよね
-では　たそがれています</language>
-		<language name="JPN_KANJI" width="256">……ですよね
-では　たそがれています</language>
+		<language name="JPN" width="256">レイモンド『は♪　わ～しの
+じんせいも　ゆうぐれよ♪▼
+まいにち　しずんで
+ハイ　さよならよぉぉ～……</language>
+		<language name="JPN_KANJI" width="256">レイモンド『は♪　わ～しの
+じんせいも　ゆうぐれよ♪▼
+まいにち　しずんで
+ハイ　さよならよぉぉ～……</language>
 	</row>
 
 	<row id="msg_h04_leadsinger_04">
 		<comment>♂：ボーカル担当
+・そのマップ内から出ずに
+　再度（２度目以降）話しかけた時
 ・弾いているとき
-・話しかけた時点でISS停止
-・はい/いいえ選択肢表示</comment>
+・話しかけた時点でISS停止</comment>
 		<attribute name="キャラ指定">R
 ボーカル</attribute>
-		<language name="JPN" width="256">トレーナーはん　まだまだ
-うちの　ボーカル　きいてや！</language>
-		<language name="JPN_KANJI" width="256">トレーナーはん　まだまだ
-うちの　ボーカル　きいてや！</language>
+		<language name="JPN" width="256">レイモンド『まあ
+かんしょうに　ひたって▽
+じぶんのために　うたう　ってのも▽
+わるくは　ないんやけどな</language>
+		<language name="JPN_KANJI" width="256">レイモンド『まあ
+感傷に　ひたって▽
+自分のために　歌う　ってのも▽
+悪くは　ないんやけどな</language>
 	</row>
 
 	<flowchart-group-list>
