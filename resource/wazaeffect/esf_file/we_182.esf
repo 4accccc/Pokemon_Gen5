@@ -8,7 +8,7 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\w_182.spa
 SE再生	SEQ_SE_BC01	デフォルト	0	0	100	0	0
 エフェクト終了待ち	すべて
 パーティクルデータロード	w_182
-パーティクル再生	w_182	W_182_182_MAMORU_BALL	攻撃側	方向無し	2	0
+パーティクル再生	w_182	W_182_182_MAMORU_BALL	攻撃側	方向無し	2:0:0	1:1:1	1
 制御モード変更	継続
 SE再生	SEQ_SE_W112_02	SE1	0	0	115	0	0
 SE再生	SEQ_SE_DECIDE3	SE2	0	0	80	0	0

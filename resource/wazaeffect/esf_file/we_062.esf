@@ -7,7 +7,7 @@ c:\home\pokemon_wb\resource\particle\wazaeffect\w_062.spa
 SE再生	SEQ_SE_BC01	デフォルト	0	0	100	0	0
 エフェクト終了待ち	すべて
 パーティクルデータロード	w_062
-エミッタ移動	w_062	W_062_062_AURORA_BEAM	直線	攻撃側	防御側	2:0:0
+エミッタ移動	w_062	W_062_062_AURORA_BEAM	直線	攻撃側	防御側	2:0:0	1:1:0
 制御モード変更	継続
 SE再生	SEQ_SE_W054_01	SE1	0	500	120	0	0
 SE再生	SEQ_SE_W048_01	SE2	0	0	20	0	0

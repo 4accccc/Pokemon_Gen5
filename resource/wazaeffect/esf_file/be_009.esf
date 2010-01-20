@@ -38,16 +38,16 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\w_157.spa
 SE再生	SEQ_SE_NAGERU	デフォルト	0	0	127	0	0
 制御モード変更	継続
 立ち位置チェック	POS_BB	いない	NO_EXIST_BB_2
-パーティクル再生	be_m_ball_00_kaiten	BE_M_BALL_00_KAITEN_M_BALL_00_KAITEN	POS_BB	方向無し	4	0
+パーティクル再生	be_m_ball_00_kaiten	BE_M_BALL_00_KAITEN_M_BALL_00_KAITEN	POS_BB	方向無し	4:0:0	1:1:1	1
 ラベル	NO_EXIST_BB_2
 立ち位置チェック	POS_B	いない	NO_EXIST_B_2
-パーティクル再生	be_m_ball_00_kaiten	BE_M_BALL_00_KAITEN_M_BALL_00_KAITEN	POS_B	方向無し	4	0
+パーティクル再生	be_m_ball_00_kaiten	BE_M_BALL_00_KAITEN_M_BALL_00_KAITEN	POS_B	方向無し	4:0:0	1:1:1	1
 ラベル	NO_EXIST_B_2
 立ち位置チェック	POS_D	いない	NO_EXIST_D_2
-パーティクル再生	be_m_ball_00_kaiten	BE_M_BALL_00_KAITEN_M_BALL_00_KAITEN	POS_D	方向無し	4	0
+パーティクル再生	be_m_ball_00_kaiten	BE_M_BALL_00_KAITEN_M_BALL_00_KAITEN	POS_D	方向無し	4:0:0	1:1:1	1
 ラベル	NO_EXIST_D_2
 立ち位置チェック	POS_F	いない	NO_EXIST_F_2
-パーティクル再生	be_m_ball_00_kaiten	BE_M_BALL_00_KAITEN_M_BALL_00_KAITEN	POS_F	方向無し	4	0
+パーティクル再生	be_m_ball_00_kaiten	BE_M_BALL_00_KAITEN_M_BALL_00_KAITEN	POS_F	方向無し	4:0:0	1:1:1	1
 ラベル	NO_EXIST_F_2
 ポケモンα値	POS_TR_BB	追従	2	20	0	0
 エフェクト終了待ち	ポケモン
@@ -57,30 +57,30 @@ SE再生	SEQ_SE_NAGERU	デフォルト	0	0	127	0	0
 制御モード変更	継続
 SE再生	SEQ_SE_BOWA2	デフォルト	0	0	127	0	0
 立ち位置チェック	POS_BB	いない	NO_EXIST_BB_3
-パーティクル再生	be_ball_normal_1	BE_BALL_NORMAL_1_BALL_NORMAL_1	POS_BB	方向無し	4	0
-パーティクル再生	be_ball_normal_1	BE_BALL_NORMAL_1_BALL_NORMAL_2	POS_BB	方向無し	4	0
-パーティクル再生	be_ball_normal_1	BE_BALL_NORMAL_1_BALL_NORMAL_3	POS_BB	方向無し	4	0
+パーティクル再生	be_ball_normal_1	BE_BALL_NORMAL_1_BALL_NORMAL_1	POS_BB	方向無し	4:0:0	1:1:1	1
+パーティクル再生	be_ball_normal_1	BE_BALL_NORMAL_1_BALL_NORMAL_2	POS_BB	方向無し	4:0:0	1:1:1	1
+パーティクル再生	be_ball_normal_1	BE_BALL_NORMAL_1_BALL_NORMAL_3	POS_BB	方向無し	4:0:0	1:1:1	1
 ポケモンパレットフェード	POS_BB	16	16	0	31:31:31
 ポケモン拡縮	POS_BB	追従	1.2	1.2	32	0	0
 ラベル	NO_EXIST_BB_3
 立ち位置チェック	POS_B	いない	NO_EXIST_B_3
-パーティクル再生	be_ball_normal_1	BE_BALL_NORMAL_1_BALL_NORMAL_1	POS_B	方向無し	4	0
-パーティクル再生	be_ball_normal_1	BE_BALL_NORMAL_1_BALL_NORMAL_2	POS_B	方向無し	4	0
-パーティクル再生	be_ball_normal_1	BE_BALL_NORMAL_1_BALL_NORMAL_3	POS_B	方向無し	4	0
+パーティクル再生	be_ball_normal_1	BE_BALL_NORMAL_1_BALL_NORMAL_1	POS_B	方向無し	4:0:0	1:1:1	1
+パーティクル再生	be_ball_normal_1	BE_BALL_NORMAL_1_BALL_NORMAL_2	POS_B	方向無し	4:0:0	1:1:1	1
+パーティクル再生	be_ball_normal_1	BE_BALL_NORMAL_1_BALL_NORMAL_3	POS_B	方向無し	4:0:0	1:1:1	1
 ポケモンパレットフェード	POS_B	16	16	0	31:31:31
 ポケモン拡縮	POS_B	追従	1.2	1.2	32	0	0
 ラベル	NO_EXIST_B_3
 立ち位置チェック	POS_D	いない	NO_EXIST_D_3
-パーティクル再生	be_ball_normal_1	BE_BALL_NORMAL_1_BALL_NORMAL_1	POS_D	方向無し	4	0
-パーティクル再生	be_ball_normal_1	BE_BALL_NORMAL_1_BALL_NORMAL_2	POS_D	方向無し	4	0
-パーティクル再生	be_ball_normal_1	BE_BALL_NORMAL_1_BALL_NORMAL_3	POS_D	方向無し	4	0
+パーティクル再生	be_ball_normal_1	BE_BALL_NORMAL_1_BALL_NORMAL_1	POS_D	方向無し	4:0:0	1:1:1	1
+パーティクル再生	be_ball_normal_1	BE_BALL_NORMAL_1_BALL_NORMAL_2	POS_D	方向無し	4:0:0	1:1:1	1
+パーティクル再生	be_ball_normal_1	BE_BALL_NORMAL_1_BALL_NORMAL_3	POS_D	方向無し	4:0:0	1:1:1	1
 ポケモンパレットフェード	POS_D	16	16	0	31:31:31
 ポケモン拡縮	POS_D	追従	1.2	1.2	32	0	0
 ラベル	NO_EXIST_D_3
 立ち位置チェック	POS_F	いない	NO_EXIST_F_3
-パーティクル再生	be_ball_normal_1	BE_BALL_NORMAL_1_BALL_NORMAL_1	POS_F	方向無し	4	0
-パーティクル再生	be_ball_normal_1	BE_BALL_NORMAL_1_BALL_NORMAL_2	POS_F	方向無し	4	0
-パーティクル再生	be_ball_normal_1	BE_BALL_NORMAL_1_BALL_NORMAL_3	POS_F	方向無し	4	0
+パーティクル再生	be_ball_normal_1	BE_BALL_NORMAL_1_BALL_NORMAL_1	POS_F	方向無し	4:0:0	1:1:1	1
+パーティクル再生	be_ball_normal_1	BE_BALL_NORMAL_1_BALL_NORMAL_2	POS_F	方向無し	4:0:0	1:1:1	1
+パーティクル再生	be_ball_normal_1	BE_BALL_NORMAL_1_BALL_NORMAL_3	POS_F	方向無し	4:0:0	1:1:1	1
 ポケモンパレットフェード	POS_F	16	16	0	31:31:31
 ポケモン拡縮	POS_F	追従	1.2	1.2	32	0	0
 ラベル	NO_EXIST_F_3
@@ -111,7 +111,7 @@ SE再生	SEQ_SE_BOWA2	デフォルト	0	0	127	0	0
 立ち位置チェック	POS_BB	いない	NO_EXIST_BB_5
 ポケモン移動	POS_BB	追従	0	-3	10	0	0
 指定されたワークを見て条件分岐	POS_BB_WEIGHT	<	1500	WEIGHT_BB_M
-パーティクル再生	w_157	W_157_157_IWA_KEMURI	POS_BB	方向無し	1	0
+パーティクル再生	w_157	W_157_157_IWA_KEMURI	POS_BB	方向無し	1:0:0	1:1:1	1
 汎用ワークに値をセット	2
 ラベル	WEIGHT_BB_M
 指定されたワークを見て条件分岐	POS_BB_WEIGHT	<	500	NO_EXIST_BB_5
@@ -121,7 +121,7 @@ SE再生	SEQ_SE_BOWA2	デフォルト	0	0	127	0	0
 立ち位置チェック	POS_B	いない	NO_EXIST_B_5
 ポケモン移動	POS_B	追従	0	-3	10	0	0
 指定されたワークを見て条件分岐	POS_B_WEIGHT	<	1500	WEIGHT_B_M
-パーティクル再生	w_157	W_157_157_IWA_KEMURI	POS_B	方向無し	1	0
+パーティクル再生	w_157	W_157_157_IWA_KEMURI	POS_B	方向無し	1:0:0	1:1:1	1
 汎用ワークに値をセット	2
 ラベル	WEIGHT_B_M
 指定されたワークを見て条件分岐	POS_B_WEIGHT	<	500	NO_EXIST_B_5
@@ -131,7 +131,7 @@ SE再生	SEQ_SE_BOWA2	デフォルト	0	0	127	0	0
 立ち位置チェック	POS_D	いない	NO_EXIST_D_5
 ポケモン移動	POS_D	追従	0	-3	10	0	0
 指定されたワークを見て条件分岐	POS_D_WEIGHT	<	1500	WEIGHT_D_M
-パーティクル再生	w_157	W_157_157_IWA_KEMURI	POS_D	方向無し	1	0
+パーティクル再生	w_157	W_157_157_IWA_KEMURI	POS_D	方向無し	1:0:0	1:1:1	1
 汎用ワークに値をセット	2
 ラベル	WEIGHT_D_M
 指定されたワークを見て条件分岐	POS_D_WEIGHT	<	500	NO_EXIST_D_5
@@ -141,7 +141,7 @@ SE再生	SEQ_SE_BOWA2	デフォルト	0	0	127	0	0
 立ち位置チェック	POS_F	いない	NO_EXIST_F_5
 ポケモン移動	POS_F	追従	0	-3	10	0	0
 指定されたワークを見て条件分岐	POS_F_WEIGHT	<	1500	WEIGHT_F_M
-パーティクル再生	w_157	W_157_157_IWA_KEMURI	POS_F	方向無し	1	0
+パーティクル再生	w_157	W_157_157_IWA_KEMURI	POS_F	方向無し	1:0:0	1:1:1	1
 汎用ワークに値をセット	2
 ラベル	WEIGHT_F_M
 指定されたワークを見て条件分岐	POS_F_WEIGHT	<	500	NO_EXIST_F_5

@@ -6,8 +6,8 @@ c:\home\pokemon_wb\resource\particle\wazaeffect\w_112.spa
 カメラ移動	追従	攻撃側	16	0	8
 エフェクト終了待ち	すべて
 パーティクルデータロード	w_112
-パーティクル再生	w_112	W_112_112_BARRI_KIRA	攻撃側	方向無し	2	0
-パーティクル再生	w_112	W_112_112_BARRI_MIRRROR1	攻撃側	方向無し	2	0
+パーティクル再生	w_112	W_112_112_BARRI_KIRA	攻撃側	方向無し	2:0:0	1:1:1	1
+パーティクル再生	w_112	W_112_112_BARRI_MIRRROR1	攻撃側	方向無し	2:0:0	1:1:1	1
 制御モード変更	継続
 SE再生	SEQ_SE_W113_01	SE1	0	-60	100	0	0
 SE再生	SEQ_SE_W113_02	SE2	20	0	100	0	0

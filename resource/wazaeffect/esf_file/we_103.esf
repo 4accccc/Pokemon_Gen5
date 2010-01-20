@@ -6,8 +6,8 @@ c:\home\pokemon_wb\resource\particle\wazaeffect\w_103.spa
 カメラ移動	追従	攻撃側	16	0	8
 エフェクト終了待ち	すべて
 パーティクルデータロード	w_103
-パーティクル再生	w_103	W_103_103_BIKA_RADIATE	攻撃側	方向無し	2	0
-パーティクル再生	w_103	W_103_103_RING_RADIATE	攻撃側	方向無し	2	0
+パーティクル再生	w_103	W_103_103_BIKA_RADIATE	攻撃側	方向無し	2:0:0	1:1:1	1
+パーティクル再生	w_103	W_103_103_RING_RADIATE	攻撃側	方向無し	2:0:0	1:1:1	1
 制御モード変更	継続
 SE再生	SEQ_SE_W103_01	SE1	0	0	120	0	0
 SE再生	SEQ_SE_W103_01	SE2	30	0	80	0	0

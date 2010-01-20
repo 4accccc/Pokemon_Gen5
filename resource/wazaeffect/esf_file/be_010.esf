@@ -12,18 +12,18 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\be_ball_normal_1.spa
 #001
 %00
 パーティクルデータロード	be_m_ball_00_kaiten
-エミッタ移動（座標指定）	be_m_ball_00_kaiten	BE_M_BALL_00_KAITEN_M_BALL_00_KAITEN	放物線	0:-2:10	防御側	2.399902:35:5
+エミッタ移動（座標指定）	be_m_ball_00_kaiten	BE_M_BALL_00_KAITEN_M_BALL_00_KAITEN	放物線	0:-2:10	防御側	2.399902:35:5	1:1:0
 SE再生	SEQ_SE_NAGERU	SE1	0	0	127	0	0
 SEパン	SE1	追従	攻撃側	防御側	0	35:0:0
 タイマーによるウエイト	40
 パーティクルデータ削除	be_m_ball_00_kaiten
 パーティクルデータロード	be_m_ball_00_open1
 パーティクルデータロード	be_ball_normal_1
-パーティクル再生	be_ball_normal_1	BE_BALL_NORMAL_1_BALL_NORMAL_1	防御側	方向無し	2.4	0
-パーティクル再生	be_ball_normal_1	BE_BALL_NORMAL_1_BALL_NORMAL_2	防御側	方向無し	2.4	0
-パーティクル再生	be_ball_normal_1	BE_BALL_NORMAL_1_BALL_NORMAL_3	防御側	方向無し	2.4	0
-パーティクル再生	be_m_ball_00_open1	BE_M_BALL_00_OPEN1_M_BALL_00_OPEN1	防御側	方向無し	2	0
-パーティクル再生	be_m_ball_00_open1	BE_M_BALL_00_OPEN1_M_BALL_00_OPEN2	防御側	方向無し	2	0
+パーティクル再生	be_ball_normal_1	BE_BALL_NORMAL_1_BALL_NORMAL_1	防御側	方向無し	2.4:0:0	1:1:1	1
+パーティクル再生	be_ball_normal_1	BE_BALL_NORMAL_1_BALL_NORMAL_2	防御側	方向無し	2.4:0:0	1:1:1	1
+パーティクル再生	be_ball_normal_1	BE_BALL_NORMAL_1_BALL_NORMAL_3	防御側	方向無し	2.4:0:0	1:1:1	1
+パーティクル再生	be_m_ball_00_open1	BE_M_BALL_00_OPEN1_M_BALL_00_OPEN1	防御側	方向無し	2:0:0	1:1:1	1
+パーティクル再生	be_m_ball_00_open1	BE_M_BALL_00_OPEN1_M_BALL_00_OPEN2	防御側	方向無し	2:0:0	1:1:1	1
 SE再生	SEQ_SE_BOWA2	SE1	0	0	127	0	0
 ポケモンパレットフェード	防御側	0	16	1	31:31:31
 エフェクト終了待ち	ポケモン
@@ -32,7 +32,7 @@ SE再生	SEQ_SE_BOWA2	SE1	0	0	127	0	0
 エフェクト終了待ち	ポケモン
 ポケモン移動	防御側	追従	0	-2.7	0	0	0
 パーティクルデータロード	be_m_ball_00_close
-パーティクル再生	be_m_ball_00_close	BE_M_BALL_00_CLOSE_M_BALL_00_CLOSE	防御側	方向無し	2	0
+パーティクル再生	be_m_ball_00_close	BE_M_BALL_00_CLOSE_M_BALL_00_CLOSE	防御側	方向無し	2:0:0	1:1:1	1
 パーティクルデータ削除	be_m_ball_00_open1
 パーティクルデータ削除	be_ball_normal_1
 タイマーによるウエイト	20
@@ -71,13 +71,13 @@ SE再生	SEQ_SE_GETTING	デフォルト	0	0	127	0	0
 エフェクト終了
 ラベル	GET_FAIL
 パーティクルデータロード	be_m_ball_00_open1
-パーティクル再生	be_m_ball_00_open1	BE_M_BALL_00_OPEN1_M_BALL_00_OPEN2	防御側	方向無し	0.4	0
+パーティクル再生	be_m_ball_00_open1	BE_M_BALL_00_OPEN1_M_BALL_00_OPEN2	防御側	方向無し	0.4:0:0	1:1:1	1
 タイマーによるウエイト	16
 OBJ削除	0
 パーティクルデータロード	be_ball_normal_1
-パーティクル再生	be_ball_normal_1	BE_BALL_NORMAL_1_BALL_NORMAL_1	防御側	方向無し	1	0
-パーティクル再生	be_ball_normal_1	BE_BALL_NORMAL_1_BALL_NORMAL_2	防御側	方向無し	1	0
-パーティクル再生	be_ball_normal_1	BE_BALL_NORMAL_1_BALL_NORMAL_3	防御側	方向無し	1	0
+パーティクル再生	be_ball_normal_1	BE_BALL_NORMAL_1_BALL_NORMAL_1	防御側	方向無し	1:0:0	1:1:1	1
+パーティクル再生	be_ball_normal_1	BE_BALL_NORMAL_1_BALL_NORMAL_2	防御側	方向無し	1:0:0	1:1:1	1
+パーティクル再生	be_ball_normal_1	BE_BALL_NORMAL_1_BALL_NORMAL_3	防御側	方向無し	1:0:0	1:1:1	1
 SE再生	SEQ_SE_BOWA2	デフォルト	0	0	127	0	0
 タイマーによるウエイト	16
 パーティクルデータ削除	be_m_ball_00_open1

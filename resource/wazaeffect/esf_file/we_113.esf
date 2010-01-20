@@ -7,8 +7,8 @@ c:\home\pokemon_wb\resource\particle\wazaeffect\w_113.spa
 SE再生	SEQ_SE_BC01	デフォルト	0	0	100	0	0
 エフェクト終了待ち	すべて
 パーティクルデータロード	w_113
-パーティクル再生	w_113	W_113_113_HIKARIKABE_KIRA01	攻撃側	方向無し	2	0
-パーティクル再生	w_113	W_113_113_HIKARIKABE_MIRRROR	攻撃側	方向無し	2	0
+パーティクル再生	w_113	W_113_113_HIKARIKABE_KIRA01	攻撃側	方向無し	2:0:0	1:1:1	1
+パーティクル再生	w_113	W_113_113_HIKARIKABE_MIRRROR	攻撃側	方向無し	2:0:0	1:1:1	1
 制御モード変更	継続
 SE再生	SEQ_SE_W112_01	SE1	0	0	115	0	0
 SE再生	SEQ_SE_W112_02	SE2	20	0	90	0	0

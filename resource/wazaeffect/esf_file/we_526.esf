@@ -10,7 +10,7 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\be_se_012_ball_up.spa
 ポケモン拡縮	攻撃側	往復	0.1	-0.1	2	0	10
 エフェクト終了待ち	すべて
 パーティクルデータロード	be_se_012_ball_up
-パーティクル再生	be_se_012_ball_up	BE_SE_012_BALL_UP_SE_012_BALL_UP	攻撃側	方向無し	0	0
+パーティクル再生	be_se_012_ball_up	BE_SE_012_BALL_UP_SE_012_BALL_UP	攻撃側	方向無し	0:0:0	1:1:1	1
 ポケモン拡縮	攻撃側	往復	0.15	0	30	0	1
 エフェクト終了待ち	すべて
 ポケモンアニメ	攻撃側	アニメスタート
