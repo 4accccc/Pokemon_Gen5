@@ -33,25 +33,26 @@
 #include "field_task_camera_rot.h"
 #include "field_task_target_offset.h"
 
+#include "arc/arc_def.h"
+#include "../../resource/fldmapdata/entrance_camera/entrance_camera.naix"
+
+
 //=======================================================================================
-/**
- * @brief イベント・ワーク
- */
+// ■イベント ワーク
 //=======================================================================================
 typedef struct
 {
-  GAMESYS_WORK*    gsys;
-  GAMEDATA*        gdata;
+  GAMESYS_WORK*      gsys;
+  GAMEDATA*         gdata;
   FIELDMAP_WORK* fieldmap;
-  LOCATION         location;  // 遷移先指定
+  LOCATION       location;  // 遷移先指定
+  EXIT_TYPE      exitType;  // 出入り口タイプ
 }
 EVENT_WORK;
 
 
 //=======================================================================================
-/**
- * @breif 非公開関数のプロトタイプ宣言
- */
+// ■非公開関数のプロトタイプ宣言
 //======================================================================================= 
 
 // 各EXIT_TYPEごとのイベント
@@ -59,17 +60,11 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeNone(GMEVENT * event, int *s
 static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeDoor(GMEVENT * event, int *seq, void * work);
 static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeStep(GMEVENT * event, int *seq, void * work);
 static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeWarp(GMEVENT * event, int *seq, void * work);
-static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeSP1(GMEVENT * event, int *seq, void * work);
-static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeSP2(GMEVENT * event, int *seq, void * work);
-static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeSP3(GMEVENT * event, int *seq, void * work);
-static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeSP4(GMEVENT * event, int *seq, void * work);
-static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeSP5(GMEVENT * event, int *seq, void * work);
+static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeSPx(GMEVENT* event, int* seq, void* wk);
 
 
 //=======================================================================================
-/**
- * @breif 公開関数の定義
- */
+// ■公開関数の定義
 //=======================================================================================
 
 //---------------------------------------------------------------------------------------
@@ -95,6 +90,7 @@ GMEVENT* EVENT_EntranceIn( GMEVENT* parent,
 {
   GMEVENT* event;
   EVENT_WORK* work;
+  int eventFuncIndex;
 
   // イベントテーブル
   const GMEVENT_FUNC eventFuncTable[] = 
@@ -105,11 +101,11 @@ GMEVENT* EVENT_EntranceIn( GMEVENT* parent,
     EVENT_FUNC_EntranceIn_ExitTypeDoor,   //EXIT_TYPE_DOOR
     EVENT_FUNC_EntranceIn_ExitTypeStep,   //EXIT_TYPE_WALL
     EVENT_FUNC_EntranceIn_ExitTypeWarp,   //EXIT_TYPE_WARP
-    EVENT_FUNC_EntranceIn_ExitTypeSP1,    //EXIT_TYPE_SP1
-    EVENT_FUNC_EntranceIn_ExitTypeSP2,    //EXIT_TYPE_SP2
-    EVENT_FUNC_EntranceIn_ExitTypeSP3,    //EXIT_TYPE_SP3
-    EVENT_FUNC_EntranceIn_ExitTypeSP4,    //EXIT_TYPE_SP4
-    EVENT_FUNC_EntranceIn_ExitTypeSP5,    //EXIT_TYPE_SP5
+    EVENT_FUNC_EntranceIn_ExitTypeSPx,    //EXIT_TYPE_SP1
+    EVENT_FUNC_EntranceIn_ExitTypeSPx,    //EXIT_TYPE_SP2
+    EVENT_FUNC_EntranceIn_ExitTypeSPx,    //EXIT_TYPE_SP3
+    EVENT_FUNC_EntranceIn_ExitTypeSPx,    //EXIT_TYPE_SP4
+    EVENT_FUNC_EntranceIn_ExitTypeSPx,    //EXIT_TYPE_SP5
     EVENT_FUNC_EntranceIn_ExitTypeNone,   //EXIT_TYPE_INTRUDE
   };
 
@@ -122,6 +118,7 @@ GMEVENT* EVENT_EntranceIn( GMEVENT* parent,
   work->gdata    = gdata;
   work->fieldmap = fieldmap;
   work->location = location;
+  work->exitType = exit_type;
 
   // 作成したイベントを返す
   return event;
@@ -129,9 +126,7 @@ GMEVENT* EVENT_EntranceIn( GMEVENT* parent,
 
 
 //=======================================================================================
-/**
- * @breif 非公開関数の定義
- */
+// ■非公開関数の定義
 //=======================================================================================
 
 //---------------------------------------------------------------------------------------
@@ -297,181 +292,143 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeWarp(GMEVENT * event, int *s
   return GMEVENT_RES_CONTINUE;
 }
 
+
+//=======================================================================================
+// ■特殊進入イベントのカメラ動作データ
+//=======================================================================================
+typedef struct 
+{
+  u32 exitType;        // 出入り口タイプ
+  u32 pitch;           // ピッチ
+  u32 yaw;             // ヨー
+  u32 length;          // 距離
+  u32 targetOffsetX;   // ターゲットオフセットx
+  u32 targetOffsetY;   // ターゲットオフセットy
+  u32 targetOffsetZ;   // ターゲットオフセットz
+  u32 frame;           // フレーム数
+
+} ENTRANCE_CAMERA_ACTION;
+
+
 //---------------------------------------------------------------------------------------
 /**
- * @breif 進入イベント( SP1 )
+ * @breif 進入イベント( SPx )
  *
- * ※C01のジム
+ * ※カメラのアニメーション → ドア進入アニメ
  */
 //---------------------------------------------------------------------------------------
-static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeSP1(GMEVENT * event, int *seq, void * work)
+static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeSPx(GMEVENT* event, int* seq, void* wk)
 {
-	EVENT_WORK*      event_work = work;
-	GAMESYS_WORK*    gsys       = event_work->gsys;
-	FIELDMAP_WORK* fieldmap   = event_work->fieldmap;
+	EVENT_WORK*         work = wk;
+	GAMESYS_WORK* gameSystem = work->gsys;
+	FIELDMAP_WORK*  fieldmap = work->fieldmap;
+  FIELD_CAMERA*     camera = FIELDMAP_GetFieldCamera( fieldmap );
 
-  switch ( *seq )
+  // 出入り口タイプに対応するカメラデータのインデックス
+  const ARCDATID dataIndex[] = 
   {
-  case 0:
-    // タスク登録
+    0, 0, 0, 0, 0, 0,  // EXIT_TYPE_NONE - EXIT_TYPE_WARP
+    NARC_entrance_camera_exit_type_sp1_bin,  // EXIT_TYPE_SP1
+    NARC_entrance_camera_exit_type_sp2_bin,  // EXIT_TYPE_SP2
+    NARC_entrance_camera_exit_type_sp3_bin,  // EXIT_TYPE_SP3
+    NARC_entrance_camera_exit_type_sp4_bin,  // EXIT_TYPE_SP4
+    NARC_entrance_camera_exit_type_sp5_bin,  // EXIT_TYPE_SP5
+    0,                                       // EXIT_TYPE_INTRUDE
+  };
+
+  // 処理シーケンス
+  enum{
+    SEQ_CREATE_CAMERA_EFFECT_TASK,  // カメラ演出タスクの作成
+    SEQ_WAIT_CAMERA_EFFECT_TASK,    // カメラ演出タスク終了待ち
+    SEQ_CAMERA_STOP_TRACE_REQUEST,  // カメラの自機追従OFFリクエスト発行
+    SEQ_WAIT_CAMERA_TRACE,          // カメラの自機追従処理の終了待ち
+    SEQ_CAMERA_TRACE_OFF,           // カメラの自機追従OFF
+    SEQ_DOOR_IN_ANIME,              // ドア進入イベント
+    SEQ_EXIT,                       // イベント終了
+  };
+
+  switch( *seq )
+  {
+  // カメラ演出タスクの作成
+  case SEQ_CREATE_CAMERA_EFFECT_TASK:
     {
       u16 frame;
-      fx32 val_len;
-      u16 val_pitch, val_yaw;
-      VecFx32 val_target;
-      FIELD_TASK_MAN* man;
-      FIELD_TASK* zoom;
-      FIELD_TASK* pitch;
-      FIELD_TASK* yaw;
-      FIELD_TASK* target;
-      frame     = 20;
-      val_len   = 0x00ed << FX32_SHIFT;
-      val_pitch = 0x25fc;
-      val_yaw   = 0x0000;
-      VEC_Set( &val_target, 0x0000, 0x0028<<FX32_SHIFT, 0xfffD9000 );
-      zoom   = FIELD_TASK_CameraLinearZoom( fieldmap, frame, val_len );
-      pitch  = FIELD_TASK_CameraRot_Pitch( fieldmap, frame, val_pitch );
-      yaw    = FIELD_TASK_CameraRot_Yaw( fieldmap, frame, val_yaw );
-      target = FIELD_TASK_CameraTargetOffset( fieldmap, frame, &val_target );
-      man = FIELDMAP_GetTaskManager( fieldmap );
-      FIELD_TASK_MAN_AddTask( man, zoom, NULL );
-      FIELD_TASK_MAN_AddTask( man, pitch, NULL );
-      FIELD_TASK_MAN_AddTask( man, yaw, NULL );
-      FIELD_TASK_MAN_AddTask( man, target, NULL );
-    }
-    ++ *seq;
-    break;
-  case 1:
-    // タスク終了待ち
-    {
-      FIELD_TASK_MAN* man;
-      man = FIELDMAP_GetTaskManager( fieldmap );
-      if( FIELD_TASK_MAN_IsAllTaskEnd(man) )
+      u16 pitch, yaw;
+      fx32 length;
+      VecFx32 targetOffset;
+      // 各パラメータ取得
       {
-        ++ *seq; 
+        ENTRANCE_CAMERA_ACTION cameraAction;
+        GFL_ARC_LoadData( &cameraAction, ARCID_ENTRANCE_CAMERA, dataIndex[ work->exitType ] );
+        frame  = cameraAction.frame;
+        pitch  = cameraAction.pitch;
+        yaw    = cameraAction.yaw;
+        length = cameraAction.length << FX32_SHIFT;
+        VEC_Set( &targetOffset, 
+                 cameraAction.targetOffsetX << FX32_SHIFT,
+                 cameraAction.targetOffsetY << FX32_SHIFT,
+                 cameraAction.targetOffsetZ << FX32_SHIFT );
+        // DEBUG:
+        OBATA_Printf( "frame   = %d\n", cameraAction.frame );
+        OBATA_Printf( "pitch   = %x\n", cameraAction.pitch );
+        OBATA_Printf( "yaw     = %x\n", cameraAction.yaw );
+        OBATA_Printf( "length  = %x\n", cameraAction.length );
+        OBATA_Printf( "offsetX = %x\n", cameraAction.targetOffsetX );
+        OBATA_Printf( "offsetY = %x\n", cameraAction.targetOffsetX );
+        OBATA_Printf( "offsetZ = %x\n", cameraAction.targetOffsetX );
+      }
+      // タスク登録
+      {
+        FIELD_TASK_MAN* taskMan;
+        FIELD_TASK* zoomTaks;
+        FIELD_TASK* pitchTask;
+        FIELD_TASK* yawTask;
+        FIELD_TASK* targetOffsetTask;
+        // 生成
+        zoomTaks  = FIELD_TASK_CameraLinearZoom( fieldmap, frame, length );
+        pitchTask = FIELD_TASK_CameraRot_Pitch( fieldmap, frame, pitch );
+        yawTask   = FIELD_TASK_CameraRot_Yaw( fieldmap, frame, yaw );
+        targetOffsetTask = FIELD_TASK_CameraTargetOffset( fieldmap, frame, &targetOffset );
+        // 登録
+        taskMan = FIELDMAP_GetTaskManager( fieldmap );
+        FIELD_TASK_MAN_AddTask( taskMan, zoomTaks, NULL );
+        FIELD_TASK_MAN_AddTask( taskMan, pitchTask, NULL );
+        FIELD_TASK_MAN_AddTask( taskMan, yawTask, NULL );
+        FIELD_TASK_MAN_AddTask( taskMan, targetOffsetTask, NULL );
       }
     }
+    *seq = SEQ_WAIT_CAMERA_EFFECT_TASK;
     break;
-  case 2:
-    // カメラのトレース処理停止リクエスト発行
+  // タスク終了待ち
+  case SEQ_WAIT_CAMERA_EFFECT_TASK:
     {
-      FIELD_CAMERA* camera;
-      camera = FIELDMAP_GetFieldCamera( fieldmap );
-      FIELD_CAMERA_StopTraceRequest( camera );
-    }
-    ++ *seq; 
-    break;
-  case 3: 
-    // カメラのトレース処理終了待ち
-    { 
-      FIELD_CAMERA* camera;
-      camera = FIELDMAP_GetFieldCamera( fieldmap );
-      // トレースが終了したら, 自機の追従をOFF
-      if( FIELD_CAMERA_CheckTrace( camera ) == FALSE )
-      {
-        FIELD_CAMERA_FreeTarget( camera );
-        ++ *seq;
-      }
+      FIELD_TASK_MAN* taskMan;
+      taskMan = FIELDMAP_GetTaskManager( fieldmap );
+      if( FIELD_TASK_MAN_IsAllTaskEnd(taskMan) ){ *seq = SEQ_CAMERA_STOP_TRACE_REQUEST; }
     }
     break;
-  case 4:
-    GMEVENT_CallEvent( event, EVENT_FieldDoorInAnime( gsys, fieldmap, &event_work->location, FALSE ) );
-    ++ *seq;
+  // カメラのトレース処理停止リクエスト発行
+  case SEQ_CAMERA_STOP_TRACE_REQUEST:
+    FIELD_CAMERA_StopTraceRequest( camera );
+    *seq = SEQ_WAIT_CAMERA_TRACE;
     break;
-  case 5:
+  // カメラのトレース処理終了待ち
+  case SEQ_WAIT_CAMERA_TRACE: 
+    if( FIELD_CAMERA_CheckTrace( camera ) == FALSE ){ *seq = SEQ_CAMERA_TRACE_OFF; }
+    break;
+  // カメラのトレースOFF
+  case SEQ_CAMERA_TRACE_OFF:
+    FIELD_CAMERA_FreeTarget( camera );
+    *seq = SEQ_DOOR_IN_ANIME;
+    break;
+  // ドア進入アニメ
+  case SEQ_DOOR_IN_ANIME:
+    GMEVENT_CallEvent( event, EVENT_FieldDoorInAnime( gameSystem, fieldmap, &work->location, FALSE ) );
+    *seq = SEQ_EXIT;
+    break;
+  // イベント終了
+  case SEQ_EXIT:
     return GMEVENT_RES_FINISH;
   }
   return GMEVENT_RES_CONTINUE;
 }
-
-//---------------------------------------------------------------------------------------
-/**
- * @breif 進入イベント( SP2 )
- */
-//---------------------------------------------------------------------------------------
-static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeSP2(GMEVENT * event, int *seq, void * work)
-{
-	EVENT_WORK*      event_work = work;
-	GAMESYS_WORK*    gsys       = event_work->gsys;
-	FIELDMAP_WORK* fieldmap   = event_work->fieldmap;
-
-  switch ( *seq )
-  {
-  case 0:
-    GMEVENT_CallEvent( event, EVENT_FieldDoorInAnime( gsys, fieldmap, &event_work->location, FALSE ) );
-    ++ *seq;
-    break;
-  case 1:
-    return GMEVENT_RES_FINISH;
-  }
-  return GMEVENT_RES_CONTINUE;
-}
-
-//---------------------------------------------------------------------------------------
-/**
- * @breif 進入イベント( SP3 )
- */
-//---------------------------------------------------------------------------------------
-static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeSP3(GMEVENT * event, int *seq, void * work)
-{
-	EVENT_WORK*      event_work = work;
-	GAMESYS_WORK*    gsys       = event_work->gsys;
-	FIELDMAP_WORK* fieldmap   = event_work->fieldmap;
-
-  switch ( *seq )
-  {
-  case 0:
-    GMEVENT_CallEvent( event, EVENT_FieldDoorInAnime( gsys, fieldmap, &event_work->location, FALSE ) );
-    ++ *seq;
-    break;
-  case 1:
-    return GMEVENT_RES_FINISH;
-  }
-  return GMEVENT_RES_CONTINUE;
-}
-
-//---------------------------------------------------------------------------------------
-/**
- * @breif 進入イベント( SP4 )
- */
-//---------------------------------------------------------------------------------------
-static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeSP4(GMEVENT * event, int *seq, void * work)
-{
-	EVENT_WORK*      event_work = work;
-	GAMESYS_WORK*    gsys       = event_work->gsys;
-	FIELDMAP_WORK* fieldmap   = event_work->fieldmap;
-
-  switch ( *seq )
-  {
-  case 0:
-    GMEVENT_CallEvent( event, EVENT_FieldDoorInAnime( gsys, fieldmap, &event_work->location, FALSE ) );
-    ++ *seq;
-    break;
-  case 1:
-    return GMEVENT_RES_FINISH;
-  }
-  return GMEVENT_RES_CONTINUE;
-}
-
-//---------------------------------------------------------------------------------------
-/**
- * @breif 進入イベント( SP5 )
- */
-//---------------------------------------------------------------------------------------
-static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeSP5(GMEVENT * event, int *seq, void * work)
-{
-	EVENT_WORK*      event_work = work;
-	GAMESYS_WORK*    gsys       = event_work->gsys;
-	FIELDMAP_WORK* fieldmap   = event_work->fieldmap;
-
-  switch ( *seq )
-  {
-  case 0:
-    GMEVENT_CallEvent( event, EVENT_FieldDoorInAnime( gsys, fieldmap, &event_work->location, FALSE ) );
-    ++ *seq;
-    break;
-  case 1:
-    return GMEVENT_RES_FINISH;
-  }
-  return GMEVENT_RES_CONTINUE;
-} 
