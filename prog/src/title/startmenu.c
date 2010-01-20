@@ -324,9 +324,7 @@ static GFL_PROC_RESULT START_MENU_ProcEnd( GFL_PROC * proc, int * seq, void * pw
         break;
       
     case SMI_GBS_CONNECT: //バトル大会メニュー
-      // @todo irc_battleではなく大会メニューへつなぐ
-      //GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(battle_championship), &BATTLE_CHAMPIONSHIP_ProcData, NULL);
-      GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(battle_championship), &IRC_BATTLE_ProcData, NULL);
+      GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(battle_championship), &BATTLE_CHAMPIONSHIP_ProcData, NULL);
       break;
                 
     case SMI_RETURN_TITLE:

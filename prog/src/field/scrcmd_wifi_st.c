@@ -72,25 +72,27 @@ VMCMD_RESULT EvCmdWifiRandomMatchEventCall( VMHANDLE* core, void* wk )
 
   
   WIFIBATTLEMATCH_POKE poke;
-  BtlRule btl_rule;
+  WIFIBATTLEMATCH_BTLRULE btl_rule;
 
   switch( regulation )
   { 
   case REG_RND_SINGLE:
-    btl_rule  = BTL_RULE_SINGLE;
+    btl_rule  = WIFIBATTLEMATCH_BTLRULE_SINGLE;
     break;
   case REG_RND_DOUBLE:
-    btl_rule  = BTL_RULE_DOUBLE;
+    btl_rule  = WIFIBATTLEMATCH_BTLRULE_DOUBLE;
     break;
   case REG_RND_TRIPLE:
-    btl_rule  = BTL_RULE_TRIPLE;
+    btl_rule  = WIFIBATTLEMATCH_BTLRULE_TRIPLE;
     break;
   case REG_RND_ROTATION:
-    btl_rule  = BTL_RULE_ROTATION;
+    btl_rule  = WIFIBATTLEMATCH_BTLRULE_ROTATE;
     break;
   case REG_RND_TRIPLE_SHOOTER:
-    btl_rule  = BTL_RULE_TRIPLE;
+    btl_rule  = WIFIBATTLEMATCH_BTLRULE_SHOOTER;
     break;
+  default:
+    GF_ASSERT(0);
   }
 
   switch( party )
@@ -101,6 +103,8 @@ VMCMD_RESULT EvCmdWifiRandomMatchEventCall( VMHANDLE* core, void* wk )
   case SCR_BTL_PARTY_SELECT_BTLBOX:
     poke  = WIFIBATTLEMATCH_POKE_BTLBOX;
     break;
+  default:
+    GF_ASSERT(0);
   }
 
   SCRIPT_CallEvent( sc, EVENT_WifiBattleMatch( gsys, GAMESYSTEM_GetFieldMapWork(gsys), WIFIBATTLEMATCH_MODE_RANDOM, poke, btl_rule ) );

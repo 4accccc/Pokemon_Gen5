@@ -58,6 +58,7 @@
 #endif
 
 #define WIFIBATTLEMATCH_NET_TABLENAME "PlayerStats_v1" 
+#define WIFIBATTLEMATCH_NET_TABLENAME "PlayerStats_v1" 
 
 #define SAKE_STAT_INITIAL_PROFILE_ID  "INITIAL_PROFILE_ID"
 #define SAKE_STAT_NOW_PROFILE_ID      "NOW_PROFILE_ID"
@@ -143,6 +144,13 @@ typedef enum
   WIFIBATTLEMATCH_NET_RECVFLAG_MAX
 } WIFIBATTLEMATCH_NET_RECVFLAG;
 
+//-------------------------------------
+///	アトリビュート
+//=====================================
+#define WIFI_FILE_ATTR1			"REGCARD"
+#define WIFI_FILE_ATTR2			""
+#define WIFI_FILE_ATTR3			""
+#define REGULATION_CARD_DATA_SIZE (342)
 
 //=============================================================================
 /**
@@ -166,7 +174,7 @@ typedef struct
 //=====================================
 typedef struct 
 {
-  BtlRule   btl_rule;
+  WIFIBATTLEMATCH_BTLRULE   btl_rule;
   BtlResult btl_result;
 } DWC_SC_WRITE_DATA;
 
@@ -197,10 +205,12 @@ struct _WIFIBATTLEMATCH_NET_WORK
   HEAPID heapID;
 
   u32   seq;
+  u32   next_seq;
   BOOL  is_gdb_start;
   BOOL  is_gdb_w_start;
   BOOL  is_sc_start;
   BOOL  is_initialize;
+  BOOL  is_nd_start;
   u32   wait_cnt;
   
   DWC_SC_PLAYERDATA player[2];  //自分は０ 相手は１
@@ -219,6 +229,13 @@ struct _WIFIBATTLEMATCH_NET_WORK
   BOOL is_stop_connect;
   BOOL is_auth;
 
+  //以下ダウンロード用
+  char temp_buffer[REGULATION_CARD_DATA_SIZE];
+  DWCNdFileInfo fileInfo;
+  u32               percent;
+  u32               recived;
+  u32               contentlen;
+  int               server_filenum;
 
   //以下バックアップ用
   s32 init_profileID;
@@ -231,6 +248,15 @@ struct _WIFIBATTLEMATCH_NET_WORK
   BOOL is_debug;
   WIFIBATTLEMATCH_SC_DEBUG_DATA * p_debug_data;
 };
+
+//=============================================================================
+/**
+ *          グローバル
+ */
+//=============================================================================
+//NdCallback内の情報保持（外からワーク渡せないので……）
+static u8 s_callback_flag   = FALSE;
+static DWCNdError s_callback_result = 0;
 
 //=============================================================================
 /**
@@ -270,6 +296,12 @@ static void DwcRap_Gdb_Finalize( WIFIBATTLEMATCH_NET_WORK *p_wk );
 #ifdef PM_DEBUG
 static void print_field(DWCGdbField* field); // レコードをデバッグ出力する。
 #endif
+
+//-------------------------------------
+///	ダウンロード関係
+//=====================================
+static void DwcRap_Nd_WaitNdCallback( WIFIBATTLEMATCH_NET_WORK *p_wk, int next_seq );
+static void NdCallback(DWCNdCallbackReason reason, DWCNdError error, int servererror);
 
 //=============================================================================
 /**
@@ -926,7 +958,7 @@ BOOL WIFIBATTLEMATCH_NET_WaitInitialize( WIFIBATTLEMATCH_NET_WORK *p_wk, SAVE_CO
  *	@param	WIFIBATTLEMATCH_NET_WORK *p_wk ワーク
  */
 //-----------------------------------------------------------------------------
-void WIFIBATTLEMATCH_NET_StartMatchMake( WIFIBATTLEMATCH_NET_WORK *p_wk, BtlRule btl_rule )
+void WIFIBATTLEMATCH_NET_StartMatchMake( WIFIBATTLEMATCH_NET_WORK *p_wk, WIFIBATTLEMATCH_BTLRULE btl_rule )
 { 
   MATCHMAKE_KEY_Set( p_wk, MATCHMAKE_KEY_DEBUG, MATCHINGKEY );
   MATCHMAKE_KEY_Set( p_wk, MATCHMAKE_KEY_BTL, btl_rule );
@@ -1203,11 +1235,11 @@ static int WIFIBATTLEMATCH_Eval_Callback( int index, void* p_param_adrs )
  *	@brief  SCの開始
  *
  *	@param	WIFIBATTLEMATCH_NET_WORK *p_wk  ワーク
- *	@param  BtlRule rule              ルール
+ *	@param  WIFIBATTLEMATCH_BTLRULE rule              ルール
  *	@param  BtlResult result          対戦結果
  */
 //-----------------------------------------------------------------------------
-void WIFIBATTLEMATCH_SC_Start( WIFIBATTLEMATCH_NET_WORK *p_wk, BtlRule rule, BtlResult result )
+void WIFIBATTLEMATCH_SC_Start( WIFIBATTLEMATCH_NET_WORK *p_wk, WIFIBATTLEMATCH_BTLRULE rule, BtlResult result )
 { 
   if( GFL_NET_IsParentMachine() )
   { 
@@ -1230,7 +1262,7 @@ void WIFIBATTLEMATCH_SC_Start( WIFIBATTLEMATCH_NET_WORK *p_wk, BtlRule rule, Btl
  *	@brief  SCの開始
  *
  *	@param	WIFIBATTLEMATCH_NET_WORK *p_wk  ワーク
- *	@param  BtlRule rule              ルール
+ *	@param  WIFIBATTLEMATCH_BTLRULE rule              ルール
  *	@param  BtlResult result          対戦結果
  */
 //-----------------------------------------------------------------------------
@@ -2992,4 +3024,274 @@ BOOL WIFIBATTLEMATCH_NET_WaitEnemyData( WIFIBATTLEMATCH_NET_WORK *p_wk, WIFIBATT
 { 
   *pp_data  = p_wk->p_enemy_data[1];
   return p_wk->is_recv[WIFIBATTLEMATCH_NET_RECVFLAG_GAMEDATA];
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  初期化開始
+ *
+ *	@param	WIFIBATTLEMATCH_NET_WORK *p_wk ワーク
+ *
+ */
+//-----------------------------------------------------------------------------
+void WIFIBATTLEMATCH_NET_StartDownloadDigCard( WIFIBATTLEMATCH_NET_WORK *p_wk )
+{ 
+  p_wk->is_nd_start = TRUE;
+  p_wk->seq = 0;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  Wifiからダウンロード
+ *  @param  p_wk    ワーク
+ *  @retval TRUEシーケンス終了  FALSE処理中
+ */
+//-----------------------------------------------------------------------------
+BOOL WIFIBATTLEMATCH_NET_WaitDownloadDigCard( WIFIBATTLEMATCH_NET_WORK *p_wk )
+{ 
+  enum
+  { 
+    SEQ_INIT,
+    SEQ_ATTR,
+    SEQ_FILENUM,
+    SEQ_FILELIST,
+    SEQ_GET_FILE,
+    SEQ_GETTING_FILE,
+
+    SEQ_CANCEL,
+    SEQ_DOWNLOAD_COMPLETE,
+    SEQ_END,
+
+    SEQ_WAIT_CALLBACK         = 100,
+  };
+
+  if( !p_wk->is_nd_start )
+  { 
+    return TRUE;
+  }
+
+  switch( p_wk->seq )
+  { 
+  case SEQ_INIT:
+    if( DWC_NdInitAsync( NdCallback, GF_DWC_ND_LOGIN, WIFI_ND_LOGIN_PASSWD ) == FALSE )
+    {
+      OS_TPrintf( "DWC_NdInitAsync: Failed\n" );
+      GF_ASSERT(0);//@todo
+      break;
+    }
+    DwcRap_Nd_WaitNdCallback( p_wk, SEQ_ATTR );
+    break;
+
+  case SEQ_ATTR:
+    // ファイル属性の設定
+    if( DWC_NdSetAttr(WIFI_FILE_ATTR1, WIFI_FILE_ATTR2, WIFI_FILE_ATTR3) == FALSE )
+    {
+      OS_TPrintf( "DWC_NdSetAttr: Failed\n." );
+      GF_ASSERT(0);//@todo
+      break;
+    }
+    p_wk->seq = SEQ_FILENUM;
+    break;
+
+//-------------------------------------
+///	サーバーのファイルチェック
+//=====================================
+  case SEQ_FILENUM:
+    // サーバーにおかれているファイルの数を得る
+    if( DWC_NdGetFileListNumAsync( &p_wk->server_filenum ) == FALSE )
+    {
+      OS_TPrintf( "DWC_NdGetFileListNumAsync: Failed.\n" );
+      GF_ASSERT( 0 ); //@todo
+      break;
+    }
+    DwcRap_Nd_WaitNdCallback( p_wk, SEQ_FILELIST );
+    break;
+
+  case SEQ_FILELIST:
+    //ファイルがなかった場合
+    if( p_wk->server_filenum == 1 )
+    { 
+      //ファイルが１つだけの場合決定
+      OS_TPrintf( "server_filenum %d\n", p_wk->server_filenum );
+      if( DWC_NdGetFileListAsync( &p_wk->fileInfo, 0, 1 ) == FALSE)
+      {
+        OS_TPrintf( "DWC_NdGetFileListNumAsync: Failed.\n" );
+        GF_ASSERT(0);
+        break;
+      }
+      DwcRap_Nd_WaitNdCallback( p_wk, SEQ_GET_FILE );
+    }
+    else
+    { 
+      //@todo
+      GF_ASSERT(0);
+    }
+    break;
+
+//-------------------------------------
+///	ファイル読み込み開始
+//=====================================
+  case SEQ_GET_FILE:
+    // ファイル読み込み開始
+    if(DWC_NdGetFileAsync( &p_wk->fileInfo, p_wk->temp_buffer, REGULATION_CARD_DATA_SIZE) == FALSE){
+      OS_TPrintf( "DWC_NdGetFileAsync: Failed.\n" );
+      GF_ASSERT(0);
+      break;
+    }
+    s_callback_flag   = FALSE;
+    s_callback_result = DWC_ND_ERROR_NONE;
+    p_wk->seq = SEQ_GETTING_FILE;
+    break;
+    
+  case SEQ_GETTING_FILE:
+    // ファイル読み込み中
+    DWC_NdProcess();
+    if( s_callback_flag == FALSE )
+    {
+      // 進行度を表示
+      if(DWC_NdGetProgress( &p_wk->recived, &p_wk->contentlen ) == TRUE)
+      {
+        if(p_wk->percent != (p_wk->recived*100)/p_wk->contentlen)
+        {
+          p_wk->percent = (p_wk->recived*100)/p_wk->contentlen;
+          OS_Printf( "Download %d/100\n", p_wk->percent );
+        }
+      }
+    }
+    else if( s_callback_result != DWC_ND_ERROR_NONE)
+    {
+      //エラー
+      GF_ASSERT(0);
+    }
+    else
+    {
+      // ファイル読み込み終了
+      if( !DWC_NdCleanupAsync() ){  //FALSEの場合コールバックが呼ばれない
+        OS_Printf("DWC_NdCleanupAsyncに失敗\n");
+        GF_ASSERT(0);
+      }
+      DwcRap_Nd_WaitNdCallback( p_wk, SEQ_CANCEL );
+    }
+    break;
+
+//-------------------------------------
+///	終了・キャンセル処理
+//=====================================
+  case SEQ_CANCEL:
+    if( DWC_NdCancelAsync() == FALSE )
+    {
+      p_wk->seq = SEQ_DOWNLOAD_COMPLETE;
+    }
+    else 
+    {
+      OS_Printf("download cancel\n");
+      GF_ASSERT(0);
+    }
+    break;
+
+  case SEQ_DOWNLOAD_COMPLETE:
+    p_wk->seq  = SEQ_END;
+    break;
+
+  case SEQ_END:
+    return TRUE;
+
+//-------------------------------------
+///	コールバック待ち処理  
+//　　WIFI_DOWNLOAD_WaitNdCallbackを使ってください
+//=====================================
+  case SEQ_WAIT_CALLBACK:
+    //コールバック処理を待つ
+    DWC_NdProcess();
+    if( s_callback_flag )
+    { 
+      s_callback_flag = FALSE;
+      if( s_callback_result != DWC_ND_ERROR_NONE)
+      { 
+        GF_ASSERT(0); //@todo
+      }
+      else
+      { 
+        p_wk->seq  = p_wk->next_seq;
+      }
+    }
+    break;
+  }
+
+  return FALSE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  コールバック待ち
+ *
+ *	@param	*p_wk                     ワーク
+ *	@param	next_seq                  コールバック成功後へいくシーケンス
+ */
+//-----------------------------------------------------------------------------
+static void DwcRap_Nd_WaitNdCallback( WIFIBATTLEMATCH_NET_WORK *p_wk, int next_seq )
+{ 
+  s_callback_flag   = FALSE;
+  s_callback_result = DWC_ND_ERROR_NONE;
+  p_wk->next_seq    = next_seq;
+  p_wk->seq         = 100;
+}
+
+/*-------------------------------------------------------------------------*
+ * Name        : NdCallback
+ * Description : ND用コールバック
+ * Arguments   : None.
+ * Returns     : None.
+ *-------------------------------------------------------------------------*/
+static void NdCallback(DWCNdCallbackReason reason, DWCNdError error, int servererror)
+{
+  NET_PRINT("NdCallback: Called\n");
+  switch(reason) {
+  case DWC_ND_CBREASON_GETFILELISTNUM:
+    NET_PRINT("DWC_ND_CBREASON_GETFILELISTNUM\n");
+    break;
+  case DWC_ND_CBREASON_GETFILELIST:
+    NET_PRINT("DWC_ND_CBREASON_GETFILELIST\n");
+    break;
+  case DWC_ND_CBREASON_GETFILE:
+    NET_PRINT("DWC_ND_CBREASON_GETFILE\n");
+    break;
+  case DWC_ND_CBREASON_INITIALIZE:
+    NET_PRINT("DWC_ND_CBREASON_INITIALIZE\n");
+    break;
+  }
+	
+  switch(error) {
+  case DWC_ND_ERROR_NONE:
+    NET_PRINT("DWC_ND_NOERR\n");
+    break;
+  case DWC_ND_ERROR_ALLOC:
+    NET_PRINT("DWC_ND_MEMERR\n");
+    break;
+  case DWC_ND_ERROR_BUSY:
+    NET_PRINT("DWC_ND_BUSYERR\n");
+    break;
+  case DWC_ND_ERROR_HTTP:
+    NET_PRINT("DWC_ND_HTTPERR\n");
+    // ファイル数の取得でＨＴＴＰエラーが発生した場合はダウンロードサーバに繋がっていない可能性が高い
+    if( reason == DWC_ND_CBREASON_GETFILELISTNUM )
+      {
+          NET_PRINT( "It is not possible to connect download server.\n." );
+          ///	OS_Terminate();
+      }
+    break;
+  case DWC_ND_ERROR_BUFFULL:
+    NET_PRINT("DWC_ND_BUFFULLERR\n");
+    break;
+  case DWC_ND_ERROR_DLSERVER:
+    NET_PRINT("DWC_ND_SERVERERR\n");
+    break;
+  case DWC_ND_ERROR_CANCELED:
+    NET_PRINT("DWC_ND_CANCELERR\n");
+    break;
+  }
+  OS_Printf("errorcode = %d\n", servererror);
+  s_callback_flag   = TRUE;
+  s_callback_result = error;
+
+  //NdCleanupCallback();
 }

@@ -1269,7 +1269,7 @@ SRCS_OVERLAY_POKE_STATUS = app/p_status/p_sta_sys.c \
 		app/p_status/p_sta_oam.c \
 		app/p_status/ribbon.c
 
-# バトル大会
+# バトル大会メニュー
 #===> SRCS_OVERLAY_BATTLE
 #===> SRCS_OVERLAY_BATTLE_BAG
 #===> SRCS_OVERLAY_BATTLE_PLIST
@@ -1384,6 +1384,8 @@ SRCS_OVERLAY_WIFIBATTLEMATCH_SYS  = net_app/wifi_match/wifibattlematch_sys.c \
 #LIB=>          libdwcgdb.$HYB.a
 #LIB=>          libdwcgswebservices.$HYB.a
 SRCS_OVERLAY_WIFIBATTLEMATCH_CORE = net_app/wifi_match/wifibattlematch_core.c \
+                net_app/wifi_match/wifibattlematch_rnd.c \
+                net_app/wifi_match/wifibattlematch_wifi.c \
                 net_app/wifi_match/wifibattlematch_graphic.c \
 								net_app/wifi_match/wifibattlematch_view.c \
                 net_app/wifi_match/wifibattlematch_net.c \

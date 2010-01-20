@@ -37,6 +37,19 @@ typedef enum
 
 } WIFIBATTLEMATCH_POKE;
 
+//-------------------------------------
+///	戦闘タイプ
+//=====================================
+typedef enum
+{
+  WIFIBATTLEMATCH_BTLRULE_SINGLE,
+  WIFIBATTLEMATCH_BTLRULE_DOUBLE,
+  WIFIBATTLEMATCH_BTLRULE_TRIPLE,
+  WIFIBATTLEMATCH_BTLRULE_ROTATE,
+  WIFIBATTLEMATCH_BTLRULE_SHOOTER,
+} WIFIBATTLEMATCH_BTLRULE;
+
+
 //=============================================================================
 /**
  *					構造体宣言
@@ -44,13 +57,17 @@ typedef enum
 //=============================================================================
 //-------------------------------------
 ///	PROCパラメータ
+//    下記は上位PROCで持ち続けられない状況があるので、
+//    その場合はis_auto_releaseをTRUEにして引数を渡すことで、
+//    内部で解放する
 //=====================================
 typedef struct 
 {
-  GAMEDATA              *p_game_data; //[in ]ゲームデータ
-  BtlRule               btl_rule;     //[in ]バトルルール
+  GAMEDATA              *p_game_data; //[in ]ゲームデータ NULLの場合は内部で作成する
+  WIFIBATTLEMATCH_BTLRULE   btl_rule;     //[in ]バトルルール
 	WIFIBATTLEMATCH_MODE	mode;         //[in ]起動モード
   WIFIBATTLEMATCH_POKE  poke;         //[in ]選択用パーティ（手持ちorバトルボックスのはず）
+  BOOL                  is_auto_release;//[in]アドレスを内部解放するフラグ
 } WIFIBATTLEMATCH_PARAM;
 
 

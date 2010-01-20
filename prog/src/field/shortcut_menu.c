@@ -252,25 +252,32 @@ SHORTCUTMENU_WORK *SHORTCUTMENU_Init( SHORTCUTMENU_MODE mode, SHORTCUT_CURSOR *p
 
 	//リソース読みこみ
 	{	
+
 		ARCHANDLE	*p_handle	= GFL_ARC_OpenDataHandle( ARCID_SHORTCUT_MENU_GRA, res_heapID );
 
 		GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_fld_shortcut_menu_gra_bg_NCLR,
 				PALTYPE_MAIN_BG, PLT_BG_SCROLL_M*0x20, 0x20*2, res_heapID );
 
+    
+
 		p_wk->res[RESID_PLT]	= GFL_CLGRP_PLTT_Register( p_handle, 
 				NARC_fld_shortcut_menu_gra_obj_NCLR, CLSYS_DRAW_MAIN, PLT_OBJ_M	*0x20, res_heapID );
+
 
 		p_wk->res[RESID_CHR]	= GFL_CLGRP_CGR_Register( p_handle,
 				NARC_fld_shortcut_menu_gra_obj_NCGR, FALSE, CLSYS_DRAW_MAIN, res_heapID );
 
+
 		p_wk->res[RESID_CEL]	= GFL_CLGRP_CELLANIM_Register( p_handle,
 				NARC_fld_shortcut_menu_gra_obj_NCER, NARC_fld_shortcut_menu_gra_obj_NANR, res_heapID );
 
-
 		GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_fld_shortcut_menu_gra_shortcut_NCLR,
 				PALTYPE_MAIN_BG, PLT_BG_FRAME_M*0x20, 0x20*1, res_heapID );
+
     GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_fld_shortcut_menu_gra_shortcut_NCGR, BG_FRAME_SCROLL_M, 0, 0, FALSE, res_heapID );
+
     GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_fld_shortcut_menu_gra_shortcut_NSCR, BG_FRAME_SCROLL_M, 0, 0, FALSE, res_heapID );
+
 		GFL_BG_ChangeScreenPalette( 
 				BG_FRAME_SCROLL_M, 
 				SCROLL_BMPWIN_X-1, 
@@ -280,8 +287,37 @@ SHORTCUTMENU_WORK *SHORTCUTMENU_Init( SHORTCUTMENU_MODE mode, SHORTCUT_CURSOR *p
 				PLT_BG_FRAME_M
 				);
 
+#if 0
+    { 
+      struct _ARCHANDLE_TEMP{
+        FSFile  file;
+        u32     img_top;
+        u16     fat_top;
+        u16   file_cnt;
+      } temp;
+      u32 res_size  = sizeof( temp );
+      NAGI_Printf( "一時バッファサイズ %d\n", res_size );
+      res_size  = GFL_ARC_GetDataSizeByHandle( p_handle, NARC_fld_shortcut_menu_gra_bg_NCLR );
+      NAGI_Printf( "一時バッファサイズ %d\n", res_size );
+      res_size  = GFL_ARC_GetDataSizeByHandle( p_handle, NARC_fld_shortcut_menu_gra_obj_NCLR );
+      NAGI_Printf( "一時バッファサイズ %d\n", res_size );
+      res_size  = GFL_ARC_GetDataSizeByHandle( p_handle, NARC_fld_shortcut_menu_gra_obj_NCGR );
+      NAGI_Printf( "一時バッファサイズ %d\n", res_size );
+      res_size  = GFL_ARC_GetDataSizeByHandle( p_handle, NARC_fld_shortcut_menu_gra_obj_NCER );
+      NAGI_Printf( "一時バッファサイズ %d\n", res_size );
+      res_size  = GFL_ARC_GetDataSizeByHandle( p_handle, NARC_fld_shortcut_menu_gra_obj_NANR );
+      NAGI_Printf( "一時バッファサイズ %d\n", res_size );
+      res_size  = GFL_ARC_GetDataSizeByHandle( p_handle, NARC_fld_shortcut_menu_gra_shortcut_NCLR );
+      NAGI_Printf( "一時バッファサイズ %d\n", res_size );
+      res_size  = GFL_ARC_GetDataSizeByHandle( p_handle, NARC_fld_shortcut_menu_gra_shortcut_NCGR );
+      NAGI_Printf( "一時バッファサイズ %d\n", res_size );
+      res_size  = GFL_ARC_GetDataSizeByHandle( p_handle, NARC_fld_shortcut_menu_gra_shortcut_NSCR );
+      NAGI_Printf( "一時バッファサイズ %d\n", res_size );
+    }
+#endif
 
 		GFL_ARC_CloseDataHandle( p_handle );
+
 	}
 
 	//ワーク作成

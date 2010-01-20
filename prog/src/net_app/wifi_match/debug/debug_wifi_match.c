@@ -132,6 +132,7 @@ typedef struct
   WIFIBATTLEMATCH_SC_DEBUG_DATA       report;
   WBM_TEXT_WORK             *p_text;
   GFL_FONT                  *p_font;
+  PRINT_QUE                 *p_que;
   NUMINPUT_WORK             numinput;
   u32                       select;
   STRBUF                    *p_strbuf;
@@ -152,6 +153,7 @@ typedef struct
   WIFIBATTLEMATCH_GDB_RND_SCORE_DATA  score;
   WBM_TEXT_WORK             *p_text;
   GFL_FONT                  *p_font;
+  PRINT_QUE                 *p_que;
   NUMINPUT_WORK             numinput;
   u32                       select;
   STRBUF                    *p_strbuf;
@@ -498,7 +500,8 @@ static void SAKE_Init( DEBUG_SAKE_WORK *p_wk,WIFI_LIST *p_wifilist, HEAPID heapI
 	p_wk->p_font		= GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr,
 			GFL_FONT_LOADTYPE_FILE, FALSE, heapID );
   p_wk->p_strbuf  = GFL_STR_CreateBuffer( 255, heapID );
-  p_wk->p_text  = WBM_TEXT_Init( BG_FRAME_M_FONT, PLT_FONT_M, 0, 0, heapID );
+  p_wk->p_que     = PRINTSYS_QUE_Create( heapID );
+  p_wk->p_text  = WBM_TEXT_Init( BG_FRAME_M_FONT, PLT_FONT_M, 0, 0, p_wk->p_que, p_wk->p_font, heapID );
   Sake_CreateDisplay( p_wk, heapID );
   { 
     DWCUserData *p_user_data  = WifiList_GetMyUserInfo( p_wifilist );
@@ -712,6 +715,7 @@ static BOOL SAKE_Main( DEBUG_SAKE_WORK *p_wk )
 
   WIFIBATTLEMATCH_NET_Main( p_wk->p_net );
   WBM_TEXT_Main( p_wk->p_text );
+  PRINTSYS_QUE_Main( p_wk->p_que );
 
   return FALSE;
 }
@@ -816,7 +820,8 @@ static void ATLAS_Init( DEBUG_ATLAS_WORK *p_wk, WIFI_LIST *p_wifilist, SAVE_CONT
 	p_wk->p_font		= GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr,
 			GFL_FONT_LOADTYPE_FILE, FALSE, heapID );
   p_wk->p_strbuf  = GFL_STR_CreateBuffer( 255, heapID );
-  p_wk->p_text  = WBM_TEXT_Init( BG_FRAME_M_FONT, PLT_FONT_M, 0, 0, heapID );
+  p_wk->p_que     = PRINTSYS_QUE_Create( heapID );
+  p_wk->p_text  = WBM_TEXT_Init( BG_FRAME_M_FONT, PLT_FONT_M, 0, 0, p_wk->p_que, p_wk->p_font, heapID );
   Atlas_CreateReportDisplay( p_wk, heapID );
 
   { 
@@ -843,6 +848,7 @@ static void ATLAS_Exit( DEBUG_ATLAS_WORK *p_wk )
   WIFIBATTLEMATCH_NET_Exit( p_wk->p_net );
   Atlas_DeleteRecvDisplay( p_wk );
   WBM_TEXT_Main( p_wk->p_text );
+  PRINTSYS_QUE_Delete( p_wk->p_que );
 	GFL_FONT_Delete( p_wk->p_font );
   GFL_STD_MemClear( p_wk, sizeof(DEBUG_ATLAS_WORK) );
 }
@@ -1161,6 +1167,7 @@ static BOOL ATLAS_Main( DEBUG_ATLAS_WORK *p_wk )
 
   WIFIBATTLEMATCH_NET_Main( p_wk->p_net );
   WBM_TEXT_Main( p_wk->p_text );
+  PRINTSYS_QUE_Main( p_wk->p_que );
 
   return FALSE;
 }

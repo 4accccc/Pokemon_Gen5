@@ -40,7 +40,7 @@ typedef struct
   void              * p_sub_wk;
   WIFIBATTLEMATCH_MODE mode;
   WIFIBATTLEMATCH_POKE  poke;
-  BtlRule btl_rule;
+  WIFIBATTLEMATCH_BTLRULE btl_rule;
 } EVENT_WIFIBTLMATCH_WORK;
 
 
@@ -157,7 +157,7 @@ static GMEVENT_RESULT EVENT_WifiBattleMatchMain(GMEVENT * event, int *  seq, voi
  *	@param	* fieldmap          フィールドマップ
  */
 //-----------------------------------------------------------------------------
-GMEVENT* EVENT_WifiBattleMatch( GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, WIFIBATTLEMATCH_MODE mode, WIFIBATTLEMATCH_POKE  poke, BtlRule btl_rule )
+GMEVENT* EVENT_WifiBattleMatch( GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, WIFIBATTLEMATCH_MODE mode, WIFIBATTLEMATCH_POKE  poke, WIFIBATTLEMATCH_BTLRULE btl_rule )
 {
   GMEVENT * event = GMEVENT_Create(gsys, NULL, EVENT_WifiBattleMatchMain, sizeof(EVENT_WIFIBTLMATCH_WORK));
   if(GAME_COMM_NO_NULL!= GameCommSys_BootCheck(GAMESYSTEM_GetGameCommSysPtr(gsys))){

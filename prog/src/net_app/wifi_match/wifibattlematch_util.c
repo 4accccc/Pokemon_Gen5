@@ -14,6 +14,7 @@
 #include "system/gfl_use.h"
 #include "gamesystem/msgspeed.h"
 #include "system/bmp_winframe.h"
+#include "app/app_keycursor.h"
 
 //文字表示
 #include "print/printsys.h"
@@ -28,20 +29,32 @@
 //-------------------------------------
 ///	定数
 //=====================================
+#define WBM_TEXT_TYPE_NONE  (WBM_TEXT_TYPE_MAX)
 
 //-------------------------------------
 ///	メッセージウィンドウ
 //=====================================
 struct _WBM_TEXT_WORK
 {
-	PRINT_STREAM			*p_stream;	//プリントストリーム
-  GFL_TCBLSYS       *p_tcblsys; //タスクシステム
-	GFL_BMPWIN*				p_bmpwin;		//BMPWIN
-	STRBUF*						p_strbuf;		//文字バッファ
-  HEAPID            heapID;     //ヒープID
-	u16								clear_chr;	//クリアキャラ
-	u16								frm;        //BG面
+  GFL_MSGDATA       *p_msg;
+  GFL_FONT          *p_font;
+  PRINT_STREAM      *p_stream;
+  GFL_TCBLSYS       *p_tcbl;
+  GFL_BMPWIN*       p_bmpwin;
+  STRBUF*           p_strbuf;
+  u16               clear_chr;
+  u16               heapID;
+  PRINT_UTIL        util;
+  PRINT_QUE         *p_que;
+  u32               print_update;
+  BOOL              is_end_print;
+  APP_KEYCURSOR_WORK* p_keycursor;
 };
+//-------------------------------------
+///	プロトタイプ
+//=====================================
+static void WBM_TEXT_PrintInner( WBM_TEXT_WORK* p_wk, WBM_TEXT_TYPE type );
+
 //-------------------------------------
 ///	パブリック
 //=====================================
@@ -58,31 +71,37 @@ struct _WBM_TEXT_WORK
  *	@return ワーク
  */
 //-----------------------------------------------------------------------------
-WBM_TEXT_WORK * WBM_TEXT_Init( u16 frm, u16 font_plt, u16 frm_plt, u16 frm_chr, HEAPID heapID )
+WBM_TEXT_WORK * WBM_TEXT_Init( u16 frm, u16 font_plt, u16 frm_plt, u16 frm_chr, PRINT_QUE *p_que, GFL_FONT *p_font, HEAPID heapID )
 { 
   WBM_TEXT_WORK *p_wk;
 
   p_wk  = GFL_HEAP_AllocMemory( heapID, sizeof(WBM_TEXT_WORK) );
   GFL_STD_MemClear( p_wk, sizeof(WBM_TEXT_WORK) );
-  p_wk->clear_chr = 15;
-  p_wk->frm       = frm;
-  p_wk->heapID    = heapID;
+  p_wk->clear_chr = 0xF;
+  p_wk->p_font    = p_font;
+  p_wk->p_que     = p_que;
+  p_wk->print_update  = WBM_TEXT_TYPE_NONE;
+
+  //文字送りカーソル作成
+  p_wk->p_keycursor  = APP_KEYCURSOR_Create( p_wk->clear_chr, TRUE, TRUE, heapID );
 
   //バッファ作成
-	p_wk->p_strbuf	= GFL_STR_CreateBuffer( 255, heapID );
+	p_wk->p_strbuf	= GFL_STR_CreateBuffer( 512, heapID );
 
 	//BMPWIN作成
 	p_wk->p_bmpwin	= GFL_BMPWIN_Create( frm, 1, 19, 30, 4, font_plt, GFL_BMP_CHRAREA_GET_B );
 
-  //フレーム描画
-  BmpWinFrame_Write( p_wk->p_bmpwin, WINDOW_TRANS_OFF, frm_chr, frm_plt );
-
-  //タスクシステム作成
-  p_wk->p_tcblsys = GFL_TCBL_Init( heapID, heapID, 1, 32 );
+	//プリントキュー設定
+	PRINT_UTIL_Setup( &p_wk->util, p_wk->p_bmpwin );
 
 	//転送
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin), p_wk->clear_chr );
 	GFL_BMPWIN_MakeTransWindow( p_wk->p_bmpwin );
+
+  p_wk->p_tcbl    = GFL_TCBL_Init( heapID, heapID, 1, 32 );
+
+  //フレーム
+  BmpWinFrame_Write( p_wk->p_bmpwin, WINDOW_TRANS_ON, frm_chr, frm_plt );
 
   return p_wk;
 }
@@ -95,15 +114,20 @@ WBM_TEXT_WORK * WBM_TEXT_Init( u16 frm, u16 font_plt, u16 frm_plt, u16 frm_chr, 
 //-----------------------------------------------------------------------------
 void WBM_TEXT_Exit( WBM_TEXT_WORK* p_wk )
 { 
-  //BMPWIN破棄
-  GFL_BMPWIN_ClearScreen( p_wk->p_bmpwin );
-	GFL_BMPWIN_Delete( p_wk->p_bmpwin );
+  if( p_wk->p_stream )
+  {
+    PRINTSYS_PrintStreamDelete( p_wk->p_stream );
+    p_wk->p_stream  = NULL;
+  }
 
-  //タスクシステム破棄
-  GFL_TCBL_Exit( p_wk->p_tcblsys );
+  GFL_TCBL_Exit( p_wk->p_tcbl );
 
-	//バッファ破棄
-	GFL_STR_DeleteBuffer( p_wk->p_strbuf );
+  BmpWinFrame_Clear( p_wk->p_bmpwin, WINDOW_TRANS_ON );
+  GFL_BMPWIN_Delete( p_wk->p_bmpwin );
+
+  GFL_STR_DeleteBuffer( p_wk->p_strbuf );
+
+  APP_KEYCURSOR_Delete( p_wk->p_keycursor );
 
   GFL_HEAP_FreeMemory( p_wk );
 }
@@ -116,18 +140,54 @@ void WBM_TEXT_Exit( WBM_TEXT_WORK* p_wk )
 //-----------------------------------------------------------------------------
 void WBM_TEXT_Main( WBM_TEXT_WORK* p_wk )
 { 
-  //ストリーム終了検知
-  if( p_wk->p_stream )
+  switch( p_wk->print_update )
   { 
-    if( PRINTSTREAM_STATE_DONE == PRINTSYS_PrintStreamGetState( p_wk->p_stream ) )
+  default:
+    /* fallthor */
+  case WBM_TEXT_TYPE_NONE:
+    break;
+
+  case WBM_TEXT_TYPE_QUE:
+    p_wk->is_end_print  = PRINT_UTIL_Trans( &p_wk->util, p_wk->p_que );
+    break;
+
+  case WBM_TEXT_TYPE_STREAM:
+    if( p_wk->p_stream )
     { 
-      PRINTSYS_PrintStreamDelete( p_wk->p_stream );
-      p_wk->p_stream  = NULL;
+      PRINTSTREAM_STATE state;
+      state  = PRINTSYS_PrintStreamGetState( p_wk->p_stream );
+
+      APP_KEYCURSOR_Main( p_wk->p_keycursor, p_wk->p_stream, p_wk->p_bmpwin );
+
+      switch( state )
+      { 
+      case PRINTSTREAM_STATE_RUNNING:  ///< 処理実行中（文字列が流れている）
+
+        // メッセージスキップ
+        if( GFL_UI_KEY_GetCont() & (PAD_BUTTON_DECIDE|PAD_BUTTON_CANCEL) )
+        {
+          PRINTSYS_PrintStreamShortWait( p_wk->p_stream, 0 );
+        }
+        break;
+
+      case PRINTSTREAM_STATE_PAUSE:    ///< 一時停止中（ページ切り替え待ち等）
+
+        //改行
+        if( GFL_UI_KEY_GetTrg() & (PAD_BUTTON_DECIDE|PAD_BUTTON_CANCEL) )
+        { 
+          PRINTSYS_PrintStreamReleasePause( p_wk->p_stream );
+        }
+        break;
+
+      case PRINTSTREAM_STATE_DONE:     ///< 文字列終端まで表示完了
+        p_wk->is_end_print  = TRUE;
+        break;
+      }
     }
+    break;
   }
 
-  //タスクシステム面処理
-  GFL_TCBL_Main( p_wk->p_tcblsys );
+  GFL_TCBL_Main( p_wk->p_tcbl );
 }
 //----------------------------------------------------------------------------
 /**
@@ -139,23 +199,14 @@ void WBM_TEXT_Main( WBM_TEXT_WORK* p_wk )
  *	@param	*p_font           フォント
  */
 //-----------------------------------------------------------------------------
-void WBM_TEXT_Print( WBM_TEXT_WORK* p_wk, GFL_MSGDATA *p_msg, u32 strID, GFL_FONT *p_font )
+void WBM_TEXT_Print( WBM_TEXT_WORK* p_wk, GFL_MSGDATA *p_msg, u32 strID, WBM_TEXT_TYPE type )
 { 
-	//一端消去
-	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin), p_wk->clear_chr );	
+  //文字列作成
+  GFL_MSG_GetString( p_msg, strID, p_wk->p_strbuf );
 
-	//文字列作成
-	GFL_MSG_GetString( p_msg, strID, p_wk->p_strbuf );
-
-  //ストリーム中ならばストリーム破棄
-  if( p_wk->p_stream )
-  { 
-    PRINTSYS_PrintStreamDelete( p_wk->p_stream );
-  }
-
-  //ストリーム作成
-  p_wk->p_stream  =  PRINTSYS_PrintStream( p_wk->p_bmpwin, 0, 0, p_wk->p_strbuf, p_font, MSGSPEED_GetWait(), p_wk->p_tcblsys, 0, p_wk->heapID, p_wk->clear_chr );
+  WBM_TEXT_PrintInner( p_wk, type );
 }
+
 //----------------------------------------------------------------------------
 /**
  *	@brief  BMPWINメッセージ  プリント開始  （デバッグ版）
@@ -167,22 +218,51 @@ void WBM_TEXT_Print( WBM_TEXT_WORK* p_wk, GFL_MSGDATA *p_msg, u32 strID, GFL_FON
 //-----------------------------------------------------------------------------
 void WBM_TEXT_PrintDebug( WBM_TEXT_WORK* p_wk, const u16 *cp_str, u16 len, GFL_FONT *p_font )
 { 
-  	//一端消去
-	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin), p_wk->clear_chr );	
-
 	//文字列作成
 	GFL_STR_SetStringCodeOrderLength( p_wk->p_strbuf, cp_str, len );
 
-  //ストリーム中ならばストリーム破棄
+  WBM_TEXT_PrintInner( p_wk, WBM_TEXT_TYPE_QUE );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  テキスト文字描画プライベート
+ *
+ *	@param	WBM_TEXT_WORK* p_wk ワーク
+ *	@param	type              描画タイプ
+ *
+ */
+//-----------------------------------------------------------------------------
+static void WBM_TEXT_PrintInner( WBM_TEXT_WORK* p_wk, WBM_TEXT_TYPE type )
+{ 
+  //一端消去
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin), p_wk->clear_chr );
+
+  //ストリーム破棄
   if( p_wk->p_stream )
-  { 
+  {
     PRINTSYS_PrintStreamDelete( p_wk->p_stream );
+    p_wk->p_stream  = NULL;
   }
 
-  //ストリーム作成
-  p_wk->p_stream  =  PRINTSYS_PrintStream( p_wk->p_bmpwin, 0, 0, p_wk->p_strbuf, p_font, MSGSPEED_GetWait(), p_wk->p_tcblsys, 0, p_wk->heapID, p_wk->clear_chr );
+  //タイプごとの文字描画
+  switch( type )
+  { 
+  case WBM_TEXT_TYPE_QUE:     //プリントキューを使う
+    PRINT_UTIL_Print( &p_wk->util, p_wk->p_que, 0, 0, p_wk->p_strbuf, p_wk->p_font );
+    p_wk->print_update  = WBM_TEXT_TYPE_QUE;
+    break;
 
+  case WBM_TEXT_TYPE_STREAM:  //ストリームを使う
+    p_wk->p_stream  = PRINTSYS_PrintStream( p_wk->p_bmpwin, 0, 0, p_wk->p_strbuf,
+        p_wk->p_font, MSGSPEED_GetWait(), p_wk->p_tcbl, 0, p_wk->heapID, p_wk->clear_chr );
+    p_wk->print_update  = WBM_TEXT_TYPE_STREAM;
+    break;
+  }
+
+  p_wk->is_end_print  = FALSE;
 }
+
 
 //----------------------------------------------------------------------------
 /**
@@ -195,7 +275,7 @@ void WBM_TEXT_PrintDebug( WBM_TEXT_WORK* p_wk, const u16 *cp_str, u16 len, GFL_F
 //-----------------------------------------------------------------------------
 BOOL WBM_TEXT_IsEnd( const WBM_TEXT_WORK* cp_wk )
 { 
-  return cp_wk->p_stream == NULL;
+  return cp_wk->is_end_print;
 }
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 /**
@@ -348,3 +428,137 @@ u32 WBM_LIST_Main( WBM_LIST_WORK *p_wk )
   return BmpMenuList_Main( p_wk->p_list );
 }
 
+//_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+/**
+ *				  シーケンス管理
+*/
+//_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+//-------------------------------------
+///	シーケンスワーク
+//=====================================
+struct _WBM_SEQ_WORK
+{
+	WBM_SEQ_FUNCTION	seq_function;		//実行中のシーケンス関数
+	BOOL is_end;									//シーケンスシステム終了フラグ
+	int seq;											//実行中のシーケンス関数の中のシーケンス
+	void *p_wk_adrs;							//実行中のシーケンス関数に渡すワーク
+  int reserv_seq;               //予約シーケンス
+};
+
+//-------------------------------------
+///	パブリック
+//=====================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief	SEQ	初期化
+ *
+ *	@param	WBM_SEQ_WORK *p_wk	ワーク
+ *	@param	*p_param				パラメータ
+ *	@param	seq_function		シーケンス
+ *
+ */
+//-----------------------------------------------------------------------------
+WBM_SEQ_WORK * WBM_SEQ_Init( void *p_wk_adrs, WBM_SEQ_FUNCTION seq_function, HEAPID heapID )
+{	
+  WBM_SEQ_WORK *p_wk;
+
+	//作成
+  p_wk  = GFL_HEAP_AllocMemory( heapID, sizeof(WBM_SEQ_WORK) );
+	GFL_STD_MemClear( p_wk, sizeof(WBM_SEQ_WORK) );
+
+	//初期化
+	p_wk->p_wk_adrs	= p_wk_adrs;
+
+	//セット
+	WBM_SEQ_SetNext( p_wk, seq_function );
+
+  return p_wk;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	SEQ	破棄
+ *
+ *	@param	WBM_SEQ_WORK *p_wk	ワーク
+ */
+//-----------------------------------------------------------------------------
+void WBM_SEQ_Exit( WBM_SEQ_WORK *p_wk )
+{
+  GFL_HEAP_FreeMemory( p_wk );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	SEQ	メイン処理
+ *
+ *	@param	WBM_SEQ_WORK *p_wk ワーク
+ *
+ */
+//-----------------------------------------------------------------------------
+void WBM_SEQ_Main( WBM_SEQ_WORK *p_wk )
+{	
+	if( !p_wk->is_end )
+	{	
+		p_wk->seq_function( p_wk, &p_wk->seq, p_wk->p_wk_adrs );
+	}
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	SEQ	終了取得
+ *
+ *	@param	const WBM_SEQ_WORK *cp_wk		ワーク
+ *
+ *	@return	TRUEならば終了	FALSEならば処理中
+ */	
+//-----------------------------------------------------------------------------
+BOOL WBM_SEQ_IsEnd( const WBM_SEQ_WORK *cp_wk )
+{	
+	return cp_wk->is_end;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	SEQ	次のシーケンスを設定
+ *
+ *	@param	WBM_SEQ_WORK *p_wk	ワーク
+ *	@param	seq_function		シーケンス
+ *
+ */
+//-----------------------------------------------------------------------------
+void WBM_SEQ_SetNext( WBM_SEQ_WORK *p_wk, WBM_SEQ_FUNCTION seq_function )
+{	
+	p_wk->seq_function	= seq_function;
+	p_wk->seq	= 0;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	SEQ	終了
+ *
+ *	@param	WBM_SEQ_WORK *p_wk	ワーク
+ *
+ */
+//-----------------------------------------------------------------------------
+void WBM_SEQ_End( WBM_SEQ_WORK *p_wk )
+{	
+	p_wk->is_end	= TRUE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  SEQ 次のシーケンスを予約
+ *
+ *	@param	WBM_SEQ_WORK *p_wk  ワーク
+ *	@param	seq             次のシーケンス
+ */
+//-----------------------------------------------------------------------------
+void WBM_SEQ_SetReservSeq( WBM_SEQ_WORK *p_wk, int seq )
+{ 
+  p_wk->reserv_seq  = seq;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  SEQ 予約されたシーケンスへ飛ぶ
+ *
+ *	@param	WBM_SEQ_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+void WBM_SEQ_NextReservSeq( WBM_SEQ_WORK *p_wk )
+{ 
+  p_wk->seq = p_wk->reserv_seq;
+}

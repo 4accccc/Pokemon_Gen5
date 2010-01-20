@@ -13,6 +13,8 @@
 #include "gdb/dwc_gdb.h"
 #include "battle/battle.h"
 #include "wifibattlematch_data.h"
+#include "pm_define.h"
+#include "net_app/wifibattlematch.h"
 //=============================================================================
 /**
  *					定数宣言
@@ -62,6 +64,21 @@ typedef enum
  *					構造体宣言
 */
 //=============================================================================
+
+//-------------------------------------
+///	ポケモンデータ
+//=====================================
+typedef struct
+{ 
+  char  data[128];
+}WIFIBATTLEMATCH_ND_POKEMON;
+typedef struct 
+{
+	///	現在保持しているポケモン数
+	int poke_count;
+	///	ポケモンデータ
+	WIFIBATTLEMATCH_ND_POKEMON member[TEMOTI_POKEMAX];
+} WIFIBATTLEMATCH_ND_POKEPARTY;
 
 //-------------------------------------
 ///	SAKEからのデータ受け取り
@@ -154,7 +171,7 @@ extern BOOL WIFIBATTLEMATCH_NET_IsInitialize( const WIFIBATTLEMATCH_NET_WORK *cp
 ///	マッチング
 //=====================================
 //マッチング
-extern void WIFIBATTLEMATCH_NET_StartMatchMake( WIFIBATTLEMATCH_NET_WORK *p_wk, BtlRule btl_rule );
+extern void WIFIBATTLEMATCH_NET_StartMatchMake( WIFIBATTLEMATCH_NET_WORK *p_wk, WIFIBATTLEMATCH_BTLRULE btl_rule );
 extern BOOL WIFIBATTLEMATCH_NET_WaitMatchMake( WIFIBATTLEMATCH_NET_WORK *p_wk );
 extern WIFIBATTLEMATCH_NET_SEQ WIFIBATTLEMATCH_NET_GetSeqMatchMake( const WIFIBATTLEMATCH_NET_WORK *cp_wk );
 
@@ -169,7 +186,7 @@ extern void WIFIBATTLEMATCH_NET_StopConnect( WIFIBATTLEMATCH_NET_WORK *p_wk, BOO
 //-------------------------------------
 ///	統計・競争関係（SC）
 //=====================================
-extern void WIFIBATTLEMATCH_SC_Start( WIFIBATTLEMATCH_NET_WORK *p_wk, BtlRule rule, BtlResult result );
+extern void WIFIBATTLEMATCH_SC_Start( WIFIBATTLEMATCH_NET_WORK *p_wk, WIFIBATTLEMATCH_BTLRULE rule, BtlResult result );
 extern BOOL WIFIBATTLEMATCH_SC_Process( WIFIBATTLEMATCH_NET_WORK *p_wk, DWCScResult *p_result );
 
 extern WIFIBATTLEMATCH_NET_ERROR_REPAIR_TYPE WIFIBATTLEMATCH_SC_GetErrorRepairType( DWCScResult error );
@@ -235,3 +252,9 @@ extern WIFIBATTLEMATCH_NET_ERROR_REPAIR_TYPE WIFIBATTLEMATCH_GDB_GetErrorRepairT
 extern BOOL WIFIBATTLEMATCH_NET_StartEnemyData( WIFIBATTLEMATCH_NET_WORK *p_wk, const void *cp_buff );
 extern BOOL WIFIBATTLEMATCH_NET_WaitEnemyData( WIFIBATTLEMATCH_NET_WORK *p_wk, WIFIBATTLEMATCH_ENEMYDATA **pp_data );
 
+
+//-------------------------------------
+///	GPFサーバー　ダウンロード（SC)
+//=====================================
+extern void WIFIBATTLEMATCH_NET_StartDownloadDigCard( WIFIBATTLEMATCH_NET_WORK *p_wk );
+extern BOOL WIFIBATTLEMATCH_NET_WaitDownloadDigCard( WIFIBATTLEMATCH_NET_WORK *p_wk );

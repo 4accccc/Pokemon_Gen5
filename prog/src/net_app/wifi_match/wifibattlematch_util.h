@@ -25,17 +25,29 @@
 */
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 //-------------------------------------
+///	描画方式
+//=====================================
+typedef enum
+{
+  WBM_TEXT_TYPE_QUE,     //プリントキューを使う
+  WBM_TEXT_TYPE_STREAM,  //ストリームを使う
+
+  WBM_TEXT_TYPE_MAX,    //c内部にて使用
+} WBM_TEXT_TYPE;
+
+//-------------------------------------
 ///	メッセージウィンドウ
 //=====================================
 typedef struct _WBM_TEXT_WORK WBM_TEXT_WORK;
 //-------------------------------------
 ///	パブリック
 //=====================================
-extern WBM_TEXT_WORK * WBM_TEXT_Init( u16 frm, u16 font_plt, u16 frm_plt, u16 frm_chr, HEAPID heapID );
+extern WBM_TEXT_WORK * WBM_TEXT_Init( u16 frm, u16 font_plt, u16 frm_plt, u16 frm_chr, PRINT_QUE *p_que, GFL_FONT *p_font, HEAPID heapID );
 extern void WBM_TEXT_Exit( WBM_TEXT_WORK* p_wk );
 extern void WBM_TEXT_Main( WBM_TEXT_WORK* p_wk );
-extern void WBM_TEXT_Print( WBM_TEXT_WORK* p_wk, GFL_MSGDATA *p_msg, u32 strID, GFL_FONT *p_font );
+extern void WBM_TEXT_Print( WBM_TEXT_WORK* p_wk, GFL_MSGDATA *p_msg, u32 strID, WBM_TEXT_TYPE type );
 extern BOOL WBM_TEXT_IsEnd( const WBM_TEXT_WORK* cp_wk );
+
 
 extern void WBM_TEXT_PrintDebug( WBM_TEXT_WORK* p_wk, const u16 *cp_str, u16 len, GFL_FONT *p_font );
 
@@ -79,3 +91,30 @@ typedef struct _WBM_LIST_WORK WBM_LIST_WORK;
 extern WBM_LIST_WORK * WBM_LIST_Init( const WBM_LIST_SETUP *cp_setup, HEAPID heapID );
 extern void WBM_LIST_Exit( WBM_LIST_WORK *p_wk );
 extern u32 WBM_LIST_Main( WBM_LIST_WORK *p_wk );
+
+//_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+/**
+ *				  シーケンス管理
+*/
+//_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+//-------------------------------------
+///	シーケンスワーク
+//=====================================
+typedef struct _WBM_SEQ_WORK WBM_SEQ_WORK;
+
+//-------------------------------------
+///	シーケンス関数
+//=====================================
+typedef void (*WBM_SEQ_FUNCTION)( WBM_SEQ_WORK *p_wk, int *p_seq, void *p_wk_adrs );
+
+//-------------------------------------
+///	パブリック
+//=====================================
+extern WBM_SEQ_WORK *WBM_SEQ_Init( void *p_wk_adrs, WBM_SEQ_FUNCTION seq_function, HEAPID heapID );
+extern void WBM_SEQ_Exit( WBM_SEQ_WORK *p_wk );
+extern void WBM_SEQ_Main( WBM_SEQ_WORK *p_wk );
+extern BOOL WBM_SEQ_IsEnd( const WBM_SEQ_WORK *cp_wk );
+extern void WBM_SEQ_SetNext( WBM_SEQ_WORK *p_wk, WBM_SEQ_FUNCTION seq_function );
+extern void WBM_SEQ_End( WBM_SEQ_WORK *p_wk );
+extern void WBM_SEQ_SetReservSeq( WBM_SEQ_WORK *p_wk, int seq );
+extern void WBM_SEQ_NextReservSeq( WBM_SEQ_WORK *p_wk );

@@ -3259,19 +3259,19 @@ static BOOL debugMenuCallProc_BeaconFriendCode( DEBUG_MENU_EVENT_WORK *wk )
 static BOOL debugMenuCallProc_WifiBattleMatch( DEBUG_MENU_EVENT_WORK *wk )
 { 
   WIFIBATTLEMATCH_MODE mode = WIFIBATTLEMATCH_MODE_RANDOM;
-  BtlRule btl_rule  = BTL_RULE_SINGLE;
+  WIFIBATTLEMATCH_BTLRULE btl_rule  = WIFIBATTLEMATCH_BTLRULE_SINGLE;
 #ifdef PM_DEBUG
   if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L && GFL_UI_KEY_GetCont() & PAD_BUTTON_R )
   { 
-    btl_rule  = BTL_RULE_ROTATION;
+    btl_rule  = WIFIBATTLEMATCH_BTLRULE_ROTATE;
   }
   else if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L )
   { 
-    btl_rule  = BTL_RULE_DOUBLE;
+    btl_rule  = WIFIBATTLEMATCH_BTLRULE_DOUBLE;
   }
   else if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R )
   { 
-    btl_rule  = BTL_RULE_TRIPLE;
+    btl_rule  = WIFIBATTLEMATCH_BTLRULE_TRIPLE;
   }
 #endif
 

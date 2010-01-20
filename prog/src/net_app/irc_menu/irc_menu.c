@@ -217,10 +217,10 @@ typedef enum
 //-------------------------------------
 ///	背景動作
 //=====================================
-#define BGMOVE_MOVE_SYNC        (200)
+#define BGMOVE_MOVE_SYNC        (120)
 #define BGMOVE_MOVE_START_Y     (0)
 #define BGMOVE_MOVE_END_Y       (11*8)
-#define BGMOVE_MOVE_VELOCITY_Y  (FX32_CONST(2.0f))
+#define BGMOVE_MOVE_VELOCITY_Y  (FX32_CONST(0))
 
 //-------------------------------------
 ///	CLWK取得
@@ -335,14 +335,13 @@ typedef struct
 ///	加速度
 //=====================================
 typedef struct {
-	fx32 now_val;		//現在の値
-	fx32 start_val;		//開始の値
-	fx32 end_val;		//終了の値
-	fx32 velocity;		//初速度
-	fx32 aclr;			//加速度
+	int now_val;		//現在の値
+	int start_val;		//開始の値
+	int end_val;		//終了の値
+	fx32 add_val;		//加算値(誤差をださないようにここだけfx)
 	int sync_now;		//現在のシンク
 	int sync_max;		//シンク最大数
-} PROGVAL_ACLR_WORK_FX;
+} PROGVAL_VELOCITY_WORK;
 //-------------------------------------
 ///	３次曲線
 //=====================================
@@ -360,7 +359,7 @@ typedef struct {
 //=====================================
 typedef struct 
 {
-  PROGVAL_ACLR_WORK_FX  aclr;
+  PROGVAL_VELOCITY_WORK  vel;
   BOOL is_start;
 } BGMOVE_WORK;
 
@@ -527,8 +526,8 @@ static void MainModules( IRC_MENU_MAIN_WORK *p_wk );
 static BOOL TP_GetRectTrg( const BUTTON_SETUP *cp_btn );
 
 //加速度
-static void PROGVAL_ACLR_InitFx( PROGVAL_ACLR_WORK_FX* p_wk, fx32 start, fx32 end, fx32 velocity, int sync );
-static BOOL	PROGVAL_ACLR_MainFx( PROGVAL_ACLR_WORK_FX* p_wk );
+static void PROGVAL_VEL_Init( PROGVAL_VELOCITY_WORK* p_wk, int start, int end, int sync );
+static BOOL	PROGVAL_VEL_Main( PROGVAL_VELOCITY_WORK* p_wk );
 //３次曲線
 static void PROGVAL_CATMULLROM_Init( PROGVAL_CATMULLROM_WORK* p_wk, const VecFx32 *cp_start_pos, const VecFx32 *cp_ctrl_pos0, const VecFx32 *cp_ctrl_pos1, const VecFx32 *cp_end_pos, int sync );
 static BOOL PROGVAL_CATMULLROM_Main( PROGVAL_CATMULLROM_WORK* p_wk );
@@ -2712,6 +2711,7 @@ static void BGMOVE_Exit( BGMOVE_WORK *p_wk )
 { 
   GFL_STD_MemClear( p_wk, sizeof(BGMOVE_WORK) );
 }
+static int test = 0;
 //----------------------------------------------------------------------------
 /**
  *	@brief  BGワーク  メイン
@@ -2721,17 +2721,22 @@ static void BGMOVE_Exit( BGMOVE_WORK *p_wk )
 //-----------------------------------------------------------------------------
 static void BGMOVE_Main( BGMOVE_WORK *p_wk )
 { 
+
   if( p_wk->is_start )
   {
   
-    if( PROGVAL_ACLR_MainFx(&p_wk->aclr)  )
+    if( PROGVAL_VEL_Main(&p_wk->vel)  )
     { 
       p_wk->is_start = FALSE;
     }
 
-    GFL_BG_SetScrollReq( sc_bgcnt_frame[ GRAPHIC_BG_FRAME_S_ROGO ], GFL_BG_SCROLL_Y_SET, BGMOVE_MOVE_END_Y - (p_wk->aclr.now_val >> FX32_SHIFT) );
-    GFL_BG_SetScrollReq( sc_bgcnt_frame[ GRAPHIC_BG_FRAME_S_TITLE ], GFL_BG_SCROLL_Y_SET, BGMOVE_MOVE_END_Y - (p_wk->aclr.now_val >> FX32_SHIFT) );
+    GFL_BG_SetScrollReq( sc_bgcnt_frame[ GRAPHIC_BG_FRAME_S_ROGO ], GFL_BG_SCROLL_Y_SET, BGMOVE_MOVE_END_Y - p_wk->vel.now_val );
+    GFL_BG_SetScrollReq( sc_bgcnt_frame[ GRAPHIC_BG_FRAME_S_TITLE ], GFL_BG_SCROLL_Y_SET, BGMOVE_MOVE_END_Y - p_wk->vel.now_val );
+
+    test++;
   }
+
+  NAGI_Printf( "bgmove %d\n", test );
 }
 //----------------------------------------------------------------------------
 /**
@@ -2742,8 +2747,9 @@ static void BGMOVE_Main( BGMOVE_WORK *p_wk )
 //-----------------------------------------------------------------------------
 static void BGMOVE_Start( BGMOVE_WORK *p_wk )
 { 
+  test  = 0;
   p_wk->is_start  = TRUE;
-  PROGVAL_ACLR_InitFx( &p_wk->aclr, FX32_CONST(BGMOVE_MOVE_START_Y), FX32_CONST(BGMOVE_MOVE_END_Y), BGMOVE_MOVE_VELOCITY_Y, BGMOVE_MOVE_SYNC );
+  PROGVAL_VEL_Init( &p_wk->vel, BGMOVE_MOVE_START_Y, BGMOVE_MOVE_END_Y, BGMOVE_MOVE_SYNC );
 }
 //=============================================================================
 /**
@@ -2910,22 +2916,26 @@ static void BUTTERFLY_Main( BUTTERFLY_WORK *p_wk )
       vec_dir.y = p_wk->cutmullrom.now_val.y + shake.y;
       vec_dir.z = 0;
 
+      //前回と同じ座標ではないときだけ回転
+
       VEC_Subtract( &vec_dir, &p_wk->pre_rot_pos, &vec_dir );
       VEC_Normalize( &vec_dir, &vec_dir );
-
-      obj_angle = FX_AcosIdx( GFL_CALC3D_VEC_GetCos( &vec_dir, &vec0 ) );
-
+      if( vec_dir.x != 0 && vec_dir.y != 0 )
       { 
-        VecFx32 vec_norm;
-        VEC_Set( &vec_norm, 0, 0, FX32_ONE );
-        //cosでは0～180までしか求められないので左右判別する
-        if( GFL_CALC3D_VEC_CalcRotVectorLR( &vec_norm, &vec0, &vec_dir ) < 0 )
-        { 
-          obj_angle = DEG_TO_IDX(360) - obj_angle;
-        }
-      }
+        obj_angle = FX_AcosIdx( GFL_CALC3D_VEC_GetCos( &vec_dir, &vec0 ) );
 
-      GFL_CLACT_WK_SetRotation( p_wk->p_clwk, obj_angle );
+        { 
+          VecFx32 vec_norm;
+          VEC_Set( &vec_norm, 0, 0, FX32_ONE );
+          //cosでは0～180までしか求められないので左右判別する
+          if( GFL_CALC3D_VEC_CalcRotVectorLR( &vec_norm, &vec0, &vec_dir ) < 0 )
+          { 
+            obj_angle = DEG_TO_IDX(360) - obj_angle;
+          }
+        }
+
+        GFL_CLACT_WK_SetRotation( p_wk->p_clwk, obj_angle );
+      }
     }
   }
 
@@ -3161,81 +3171,48 @@ static BOOL TP_GetRectTrg( const BUTTON_SETUP *cp_btn )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	等加速度直線運動シンク同期版　初期化
+ *	@brief	等速直線運動初期化
  *
- *	@param	PROGVAL_ACLR_WORK_FX* p_wk	ワーク
- *	@param	start						初期値
- *	@param	end							終了値
- *	@param	velocity					初速
+ *	@param	PROGVAL_VELOCITY_WORK* p_wk	ワーク
+ *	@param	start						開始座標
+ *	@param	end							終了座標
  *	@param	sync						かかるシンク
  *
  *	@return	none
  */
 //-----------------------------------------------------------------------------
-static void PROGVAL_ACLR_InitFx( PROGVAL_ACLR_WORK_FX* p_wk, fx32 start, fx32 end, fx32 velocity, int sync )
+void PROGVAL_VEL_Init( PROGVAL_VELOCITY_WORK* p_wk, int start, int end, int sync )
 {
-	fx32 t_x_t;	// タイムの２乗
-	fx32 vot;	// 初速度＊タイム
-	fx32 dis;
-	fx32 a;
-
-	dis = end - start;
-	
-	// 加速値を求める
-	// a = 2(x - vot)/(t*t)
-	t_x_t	= (sync * sync) << FX32_SHIFT;
-	vot		= velocity * sync;
-	vot		= (dis - vot) * 2;
-	a		= FX_Div( vot, t_x_t );
-
 	p_wk->now_val	= start;
 	p_wk->start_val	= start;
 	p_wk->end_val	= end;
-	p_wk->velocity	= velocity;
-	p_wk->aclr		= a;
-	p_wk->sync_now	= 0;
 	p_wk->sync_max	= sync;
+	if( sync ) {
+		p_wk->add_val	= FX32_CONST(p_wk->end_val - p_wk->start_val) / sync;
+		p_wk->sync_now	= 0;
+	}else{
+		//	sync == 0 の場合は即処理終了
+		p_wk->sync_now	= p_wk->sync_max-2;	//(p_wk->sync_max-1)より下の値
+	}
 }
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	等加速度直線運動シンク同期版　メイン処理
+ *	@brief	等速直線運動メイン処理（毎フレームよぶこと）
  *
- *	@param	PROGVAL_ACLR_WORK_FX* p_wk		ワーク
+ *	@param	PROGVAL_VELOCITY_WORK* p_wk ワーク
  *
- *	@return	TRUEなら処理終了、FALSEなら処理中
+ *	@return	TRUEなら処理終了、FALSEなら処理中。
  */
 //-----------------------------------------------------------------------------
-static BOOL PROGVAL_ACLR_MainFx( PROGVAL_ACLR_WORK_FX* p_wk )
+BOOL PROGVAL_VEL_Main( PROGVAL_VELOCITY_WORK* p_wk )
 {
-	fx32 dis;
-	fx32 t_x_t;
-	fx32 calc_work;
-	fx32 vot;
-
-	if( p_wk->sync_now < (p_wk->sync_max-1) ) {
+	if( p_wk->sync_now < (p_wk->sync_max-1) ) {	//	なぜ-1かというと、elseの中をふくめてのsyncだから
 		p_wk->sync_now++;
-
-		// 等加速度運動
-		// dis = vot + 1/2( a*(t*t) )
-		vot = FX_Mul( p_wk->velocity, p_wk->sync_now << FX32_SHIFT );
-		t_x_t = (p_wk->sync_now * p_wk->sync_now) << FX32_SHIFT;
-		calc_work = FX_Mul( p_wk->aclr, t_x_t );
-		calc_work = calc_work / 2;	// 1/2(a*(t*t))
-		dis = vot + calc_work;		///<移動距離
-
-		p_wk->now_val = p_wk->start_val + dis;
-
-
-		if( 0 < p_wk->aclr ) {
-			p_wk->now_val = MATH_MIN( p_wk->now_val, p_wk->end_val );
-		}else{
-			p_wk->now_val = MATH_MIN( p_wk->now_val, p_wk->end_val );
-		}
-
+		p_wk->now_val	= p_wk->start_val + ((p_wk->add_val * (p_wk->sync_now)) >> FX32_SHIFT);
 		return FALSE;
-	}else {
-		p_wk->now_val = p_wk->end_val;
+	}else{
+		p_wk->now_val	= p_wk->end_val;
 		return TRUE;
 	}
 }

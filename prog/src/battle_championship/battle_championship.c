@@ -3,7 +3,8 @@
  * @file	battle_championship.c
  * @brief	大会メニュー
  * @author	ariizumi
- * @data	09/10/08
+ * @author  Toru=Nagihashi 引継
+ * @data	09/10/08 -> 100112
  *
  * モジュール名：BATTLE_CHAMPINONSHIP
  */
@@ -20,12 +21,18 @@
 #include "system/main.h"
 #include "system/gfl_use.h"
 #include "system/wipe.h"
+#include "system/bmp_menulist.h"
+#include "app/app_keycursor.h"
 
 #include "arc_def.h"
 #include "battle_championship.naix"
 #include "message.naix"
 #include "font/font.naix"
-#include "msg/msg_irc_battle.h"
+#include "msg/msg_battle_championship.h"
+
+#include "title/title.h"
+#include "net_app/irc_battle.h"
+#include "net_app/wifibattlematch.h"
 
 #include "battle_championship/battle_championship.h"
 #include "battle_championship/battle_championship_def.h"
@@ -42,11 +49,11 @@
 
 #define BATTLE_CHAMPIONSHIP_FRAME_SUB_BG  ( GFL_BG_FRAME3_S )
 
-#define BATTLE_CHAMPIONSHIP_BG_PAL_TASKMENU (0xC)
 #define BATTLE_CHAMPIONSHIP_BG_PAL_WINFRAME (0xD)
 #define BATTLE_CHAMPIONSHIP_BG_PAL_FONT (0xE)
 
-#define BATTLE_CHAMPIONSHIP_WINFRAME_CGX (1)
+#define BATTLE_CHAMPIONSHIP_FRAME_MENU_CGX (1)
+#define BATTLE_CHAMPIONSHIP_FRAME_STR_CGX (1)
 
 #define BATTLE_CHAMPIONSHIP_MENU_ITEM_NUM (4)
 
@@ -55,6 +62,11 @@
 #define BATTLE_CHAMPIONSHIP_MENU_LEFT (4)
 
 #define BATTLE_CHAMPIONSHIP_MEMBER_NUM (2)
+//-------------------------------------
+/// LIST
+//=====================================
+#define BC_LIST_SELECT_NULL  (BMPMENULIST_NULL)
+#define BC_LIST_WINDOW_MAX   (5)
 
 //======================================================================
 //	enum
@@ -66,14 +78,14 @@ typedef enum
   BCS_FADEIN,
   BCS_FADEIN_WAIT,
 
+  BCS_FIRSTMSG_SHOW,
+  BCS_FIRSTMSG_WAIT,
+
   BCS_FIRSTMENU_OPEN,
   BCS_FIRSTMENU_WAIT,
   
-  BCS_CHANGEPROC_FADEOUT,
-  BCS_CHANGEPROC_FADEOUT_WAIT,
-  BCS_CHANGEPROC_WAIT,
-  BCS_CHANGEPROC_FADEIN,
-  BCS_CHANGEPROC_FADEIN_WAIT,
+  BCS_INFOMSG_SHOW,
+  BCS_INFOMSG_WAIT,
 
   BCS_FADEOUT,
   BCS_FADEOUT_WAIT,
@@ -82,16 +94,55 @@ typedef enum
 //切り替え先Proc種類
 typedef enum
 {
+  BCNP_TITLE,
   BCNP_WIFI_BATTLE,
   BCNP_EVENT_BATTLE,
   BCNP_DIGITAL_MEMBERSHIP,
   
 }BATTLE_CHAMPIONSHIP_NEXT_PROC;
+
+//-------------------------------------
+///	描画方式
+//=====================================
+typedef enum
+{
+  BC_TEXT_TYPE_QUE,     //プリントキューを使う
+  BC_TEXT_TYPE_STREAM,  //ストリームを使う
+
+  BC_TEXT_TYPE_MAX,    //c内部にて使用
+} BC_TEXT_TYPE;
+
+
+
 //======================================================================
 //	typedef struct
 //======================================================================
 #pragma mark [> struct
 
+//-------------------------------------
+///	メッセージウィンドウ
+//=====================================
+typedef struct _BC_TEXT_WORK BC_TEXT_WORK;
+
+//-------------------------------------
+///	選択リスト
+//=====================================
+typedef struct 
+{
+  GFL_MSGDATA *p_msg;
+  GFL_FONT    *p_font;
+  PRINT_QUE   *p_que;
+  u32 strID[BC_LIST_WINDOW_MAX];
+  u32 list_max;
+
+  u16 frm;
+  u16 font_plt;
+  u16 frm_plt;
+  u16 frm_chr;
+} BC_LIST_SETUP;
+typedef struct _BC_LIST_WORK BC_LIST_WORK;
+
+//メインワーク
 typedef struct
 {
   HEAPID heapId;
@@ -102,18 +153,14 @@ typedef struct
   BATTLE_CHAMPIONSHIP_DATA csData;
   
   //メッセージ用
-  GFL_TCBLSYS     *tcblSys;
-  GFL_BMPWIN      *msgWin;
+  BC_TEXT_WORK    *text;
   GFL_FONT        *fontHandle;
-  PRINT_STREAM    *printHandle;
   GFL_MSGDATA     *msgHandle;
-  STRBUF          *msgStr;
-  
   PRINT_QUE       *taskMenuQue;
   
   //taskmenu
-  APP_TASKMENU_RES *taskMenuRes;
-  APP_TASKMENU_WORK *taskMenuWork;
+  BC_LIST_WORK    *list;
+
 }BATTLE_CHAMPIONSHIP_WORK;
 
 
@@ -153,12 +200,30 @@ static void BATTLE_CHAMPIONSHIP_InitMessage( BATTLE_CHAMPIONSHIP_WORK *work );
 static void BATTLE_CHAMPIONSHIP_TermMessage( BATTLE_CHAMPIONSHIP_WORK *work );
 static void BATTLE_CHAMPIONSHIP_UpdateMessage( BATTLE_CHAMPIONSHIP_WORK *work );
 static void BATTLE_CHAMPIONSHIP_ShowMessage( BATTLE_CHAMPIONSHIP_WORK *work  , const u16 msgNo );
-static void BATTLE_CHAMPIONSHIP_HideMessage( BATTLE_CHAMPIONSHIP_WORK *work );
 static const BOOL BATTLE_CHAMPIONSHIP_IsFinishMessage( BATTLE_CHAMPIONSHIP_WORK *work );
 
 static void BATTLE_CHAMPIONSHIP_OpenFirstMenu( BATTLE_CHAMPIONSHIP_WORK *work );
 static void BATTLE_CHAMPIONSHIP_CloseFirstMenu( BATTLE_CHAMPIONSHIP_WORK *work );
-static const BOOL BATTLE_CHAMPIONSHIP_UpdateFirstMenu( BATTLE_CHAMPIONSHIP_WORK *work );
+static const u32 BATTLE_CHAMPIONSHIP_UpdateFirstMenu( BATTLE_CHAMPIONSHIP_WORK *work );
+
+//-------------------------------------
+///	テキスト
+//=====================================
+extern BC_TEXT_WORK * BC_TEXT_Init( u16 frm, u8 font_plt, PRINT_QUE *p_que, GFL_FONT *p_font, HEAPID heapID );
+extern void BC_TEXT_Exit( BC_TEXT_WORK* p_wk );
+extern void BC_TEXT_Main( BC_TEXT_WORK* p_wk );
+extern void BC_TEXT_Print( BC_TEXT_WORK* p_wk, GFL_MSGDATA *p_msg, u32 strID, BC_TEXT_TYPE type );
+extern void BC_TEXT_PrintBuf( BC_TEXT_WORK* p_wk, const STRBUF *cp_strbuf, BC_TEXT_TYPE type );
+extern BOOL BC_TEXT_IsEndPrint( const BC_TEXT_WORK *cp_wk );
+extern void BC_TEXT_WriteWindowFrame( BC_TEXT_WORK *p_wk, u16 frm_chr, u8 frm_plt );
+
+//-------------------------------------
+///	LIST
+//=====================================
+extern BC_LIST_WORK * BC_LIST_Init( const BC_LIST_SETUP *cp_setup, HEAPID heapID );
+extern void BC_LIST_Exit( BC_LIST_WORK *p_wk );
+extern u32 BC_LIST_Main( BC_LIST_WORK *p_wk );
+
 
 GFL_PROC_DATA BATTLE_CHAMPIONSHIP_ProcData =
 {
@@ -177,12 +242,13 @@ static GFL_PROC_RESULT BATTLE_CHAMPIONSHIP_ProcInit( GFL_PROC * proc, int * seq 
   GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_BATTLE_CHAMPIONSHIP, 0x18000 );
 
   work = GFL_PROC_AllocWork( proc, sizeof(BATTLE_CHAMPIONSHIP_WORK), HEAPID_BATTLE_CHAMPIONSHIP );
-  
+  GFL_STD_MemClear( work, sizeof(BATTLE_CHAMPIONSHIP_WORK) );
+  work->nextProcType  = BCNP_TITLE;
   work->heapId = HEAPID_BATTLE_CHAMPIONSHIP;
 
   BATTLE_CHAMPIONSHIP_InitGraphic( work );
-  BATTLE_CHAMPIONSHIP_InitMessage( work );
   BATTLE_CHAMPIONSHIP_LoadResource( work );
+  BATTLE_CHAMPIONSHIP_InitMessage( work );
   
   work->state = BCS_FADEIN;
 
@@ -198,9 +264,36 @@ static GFL_PROC_RESULT BATTLE_CHAMPIONSHIP_ProcTerm( GFL_PROC * proc, int * seq 
 {
   BATTLE_CHAMPIONSHIP_WORK *work = mywk;
 
-  BATTLE_CHAMPIONSHIP_ReleaseResource( work );
+  //仮データ破棄
+  BATTLE_CHAMPIONSHIP_TermDebugData( &work->csData );
+
   BATTLE_CHAMPIONSHIP_TermMessage( work );
+  BATTLE_CHAMPIONSHIP_ReleaseResource( work );
   BATTLE_CHAMPIONSHIP_TermGraphic( work );
+
+  switch( work->nextProcType )
+  { 
+  default:
+    GF_ASSERT(0);
+  case BCNP_TITLE:
+    GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(title), &TitleProcData, NULL);
+    break;
+  case BCNP_WIFI_BATTLE:
+    { 
+      WIFIBATTLEMATCH_PARAM *p_param;
+      p_param = GFL_HEAP_AllocMemory( GFL_HEAPID_APP, sizeof(WIFIBATTLEMATCH_PARAM) );
+      GFL_STD_MemClear( p_param, sizeof(WIFIBATTLEMATCH_PARAM) );
+      p_param->mode             = WIFIBATTLEMATCH_MODE_WIFI;
+      p_param->is_auto_release  = TRUE;
+      GFL_PROC_SysSetNextProc( FS_OVERLAY_ID(wifibattlematch_sys), &WifiBattleMaptch_ProcData, p_param );
+    }
+    break;
+  case BCNP_EVENT_BATTLE:
+    GFL_PROC_SysSetNextProc(NO_OVERLAY_ID, &IRC_BATTLE_ProcData, NULL);
+    break;
+  case BCNP_DIGITAL_MEMBERSHIP:
+    break;
+  }
 
   GFL_PROC_FreeWork( proc );
   GFL_HEAP_DeleteHeap( HEAPID_BATTLE_CHAMPIONSHIP );
@@ -215,13 +308,26 @@ static GFL_PROC_RESULT BATTLE_CHAMPIONSHIP_ProcMain( GFL_PROC * proc, int * seq 
   switch( work->state )
   {
   case BCS_FADEIN:
-    WIPE_SYS_Start( WIPE_PATTERN_FSAM , WIPE_TYPE_FADEIN , WIPE_TYPE_FADEIN , 
+    WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEIN , WIPE_TYPE_FADEIN , 
                     WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , work->heapId );
     work->state = BCS_FADEIN_WAIT;
     break;
     
   case BCS_FADEIN_WAIT:
     if( WIPE_SYS_EndCheck() == TRUE )
+    {
+      work->state = BCS_FIRSTMSG_SHOW;
+    }
+    break;
+
+  case BCS_FIRSTMSG_SHOW:
+    BATTLE_CHAMPIONSHIP_ShowMessage( work, BC_STR_01 );
+    work->state = BCS_FIRSTMSG_WAIT;
+    break;
+
+  case BCS_FIRSTMSG_WAIT:
+    BATTLE_CHAMPIONSHIP_UpdateMessage( work );
+    if( BATTLE_CHAMPIONSHIP_IsFinishMessage( work ) == TRUE )
     {
       work->state = BCS_FIRSTMENU_OPEN;
     }
@@ -234,34 +340,46 @@ static GFL_PROC_RESULT BATTLE_CHAMPIONSHIP_ProcMain( GFL_PROC * proc, int * seq 
 
   case BCS_FIRSTMENU_WAIT:
     {
-      const BOOL ret = BATTLE_CHAMPIONSHIP_UpdateFirstMenu( work );
-      if( ret == TRUE )
+      const u32 ret = BATTLE_CHAMPIONSHIP_UpdateFirstMenu( work );
+      if( ret != BC_LIST_SELECT_NULL )
       {
-        const u8 curPos = APP_TASKMENU_GetCursorPos( work->taskMenuWork );
-        switch( curPos )
+        switch( ret )
         {
         case 0: //WiFi大会
           work->nextProcType = BCNP_WIFI_BATTLE;
-          //戻すためにステート移項仮
           work->state = BCS_FADEOUT;
-          //work->state = BCS_CHANGEPROC_FADEOUT;
           break;
         case 1: //イベント大会
           work->nextProcType = BCNP_EVENT_BATTLE;
-          work->state = BCS_CHANGEPROC_FADEOUT;
+          work->state = BCS_FADEOUT;
           break;
         case 2: //デジタル選手証
           work->nextProcType = BCNP_DIGITAL_MEMBERSHIP;
-          //戻すためにステート移項仮
           work->state = BCS_FADEOUT;
-          //work->state = BCS_CHANGEPROC_FADEOUT;
           break;
-        case 3: //やめる
+        case 3: //説明をきく
+          work->state = BCS_INFOMSG_SHOW;
+          break;
+        case 4: //やめる
           work->state = BCS_FADEOUT;
           break;
         }
         BATTLE_CHAMPIONSHIP_CloseFirstMenu( work );
       }
+    }
+    break;
+
+  case BCS_INFOMSG_SHOW:
+    BATTLE_CHAMPIONSHIP_ShowMessage( work, BC_STR_02 );
+    work->state = BCS_INFOMSG_WAIT;
+    break;
+  
+    break;
+  case BCS_INFOMSG_WAIT:
+    BATTLE_CHAMPIONSHIP_UpdateMessage( work );
+    if( BATTLE_CHAMPIONSHIP_IsFinishMessage( work ) == TRUE )
+    {
+      work->state = BCS_FIRSTMSG_SHOW;
     }
     break;
 
@@ -277,42 +395,9 @@ static GFL_PROC_RESULT BATTLE_CHAMPIONSHIP_ProcMain( GFL_PROC * proc, int * seq 
       return GFL_PROC_RES_FINISH;
     }
     break;
-    
-  //フェードしてProcを切り替える処理
-  case BCS_CHANGEPROC_FADEOUT:
-    WIPE_SYS_Start( WIPE_PATTERN_FSAM , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
-                    WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , work->heapId );
-    work->state = BCS_CHANGEPROC_FADEOUT_WAIT;
-    break;
-    
-  case BCS_CHANGEPROC_FADEOUT_WAIT:
-    if( WIPE_SYS_EndCheck() == TRUE )
-    {
-      work->state = BCS_CHANGEPROC_WAIT;
-    }
-    break;
-    
-  case BCS_CHANGEPROC_WAIT:
-    work->state = BCS_CHANGEPROC_FADEIN;
-    break;
-
-  case BCS_CHANGEPROC_FADEIN:
-    WIPE_SYS_Start( WIPE_PATTERN_FSAM , WIPE_TYPE_FADEIN , WIPE_TYPE_FADEIN , 
-                    WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , work->heapId );
-    work->state = BCS_CHANGEPROC_FADEIN_WAIT;
-    break;
-    
-  case BCS_CHANGEPROC_FADEIN_WAIT:
-    if( WIPE_SYS_EndCheck() == TRUE )
-    {
-      work->state = BCS_FIRSTMENU_OPEN;
-    }
-    break;
-    
   }
 
   return GFL_PROC_RES_CONTINUE;
-//  return GFL_PROC_RES_FINISH;
 }
 
 #pragma mark [>change proc func
@@ -338,7 +423,7 @@ static void BATTLE_CHAMPIONSHIP_InitGraphic( BATTLE_CHAMPIONSHIP_WORK *work )
   WIPE_ResetWndMask(WIPE_DISP_MAIN);
   WIPE_ResetWndMask(WIPE_DISP_SUB);
   
-  GX_SetDispSelect(GX_DISP_SELECT_SUB_MAIN);
+  GX_SetDispSelect(GX_DISP_SELECT_MAIN_SUB);
   GFL_DISP_SetBank( &vramBank );
 
   //BG系の初期化
@@ -354,8 +439,8 @@ static void BATTLE_CHAMPIONSHIP_InitGraphic( BATTLE_CHAMPIONSHIP_WORK *work )
     // BG0 MAIN (メニュー
     static const GFL_BG_BGCNT_HEADER header_main0 = {
       0, 0, 0x800, 0, // scrX, scrY, scrbufSize, scrbufofs,
-      GFL_BG_SCRSIZ_512x256, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0x6000, GX_BG_CHARBASE_0x08000,0x8000,
+      GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+      GX_BG_SCRBASE_0x0000, GX_BG_CHARBASE_0x04000,0x8000,
       GX_BG_EXTPLTT_01, 1, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
     };
 
@@ -363,8 +448,8 @@ static void BATTLE_CHAMPIONSHIP_InitGraphic( BATTLE_CHAMPIONSHIP_WORK *work )
     static const GFL_BG_BGCNT_HEADER header_main1 = {
       0, 0, 0x800, 0, // scrX, scrY, scrbufSize, scrbufofs,
       GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0x6800, GX_BG_CHARBASE_0x08000,0x8000,
-      GX_BG_EXTPLTT_01, 1, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
+      GX_BG_SCRBASE_0x1000, GX_BG_CHARBASE_0x08000,0x8000,
+      GX_BG_EXTPLTT_01, 0, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
     };
 /*
     // BG2 MAIN (
@@ -379,7 +464,7 @@ static void BATTLE_CHAMPIONSHIP_InitGraphic( BATTLE_CHAMPIONSHIP_WORK *work )
     static const GFL_BG_BGCNT_HEADER header_main3 = {
       0, 0, 0x800, 0,  // scrX, scrY, scrbufSize, scrbufofs,
       GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0x7800, GX_BG_CHARBASE_0x00000,0x06000,
+      GX_BG_SCRBASE_0x2000, GX_BG_CHARBASE_0x10000,0x06000,
       GX_BG_EXTPLTT_23, 3, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
     };
 
@@ -387,7 +472,7 @@ static void BATTLE_CHAMPIONSHIP_InitGraphic( BATTLE_CHAMPIONSHIP_WORK *work )
     static const GFL_BG_BGCNT_HEADER header_sub3 = {
       0, 0, 0x800, 0,  // scrX, scrY, scrbufSize, scrbufofs,
       GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0x7800, GX_BG_CHARBASE_0x00000,0x06000,
+      GX_BG_SCRBASE_0x3000, GX_BG_CHARBASE_0x04000,0x06000,
       GX_BG_EXTPLTT_23, 3, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
     };
 
@@ -426,14 +511,14 @@ static void BATTLE_CHAMPIONSHIP_LoadResource( BATTLE_CHAMPIONSHIP_WORK *work )
   ARCHANDLE *arcHandle = GFL_ARC_OpenDataHandle( ARCID_BATTLE_CHAMPIONSHIP , work->heapId );
 
   ////BGリソース
-  //下画面背景
+  //上画面背景
   GFL_ARCHDL_UTIL_TransVramPalette( arcHandle , NARC_battle_championship_connect_NCLR , 
-                    PALTYPE_MAIN_BG , 0 , 0 , work->heapId );
+                    PALTYPE_MAIN_BG , 0, 0x20 * 10, work->heapId );
   GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_battle_championship_connect_sub_NCGR ,
                     BATTLE_CHAMPIONSHIP_FRAME_BG , 0 , 0, FALSE , work->heapId );
   GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_battle_championship_connect_sub_NSCR , 
                     BATTLE_CHAMPIONSHIP_FRAME_BG ,  0 , 0, FALSE , work->heapId );
-  //上画面背景
+  //下画面背景
   GFL_ARCHDL_UTIL_TransVramPalette( arcHandle , NARC_battle_championship_connect_NCLR , 
                     PALTYPE_SUB_BG , 0 , 0 , work->heapId );
   GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_battle_championship_connect_NCGR ,
@@ -442,185 +527,93 @@ static void BATTLE_CHAMPIONSHIP_LoadResource( BATTLE_CHAMPIONSHIP_WORK *work )
                     BATTLE_CHAMPIONSHIP_FRAME_SUB_BG ,  0 , 0, FALSE , work->heapId );
 
   GFL_ARC_CloseDataHandle( arcHandle );
+
+  //フレーム枠
+  GFL_BG_FillCharacter( BATTLE_CHAMPIONSHIP_FRAME_STR, 0, 1, 0 );
+  BmpWinFrame_GraphicSet( BATTLE_CHAMPIONSHIP_FRAME_STR, BATTLE_CHAMPIONSHIP_FRAME_MENU_CGX, BATTLE_CHAMPIONSHIP_BG_PAL_WINFRAME, MENU_TYPE_SYSTEM, work->heapId );
+  GFL_BG_FillCharacter( BATTLE_CHAMPIONSHIP_FRAME_MENU, 0, 1, 0 );
+  BmpWinFrame_GraphicSet( BATTLE_CHAMPIONSHIP_FRAME_MENU, BATTLE_CHAMPIONSHIP_FRAME_STR_CGX, BATTLE_CHAMPIONSHIP_BG_PAL_WINFRAME, MENU_TYPE_SYSTEM, work->heapId );
   
-  //TaskMenu用
-  work->taskMenuRes = APP_TASKMENU_RES_Create( BATTLE_CHAMPIONSHIP_FRAME_MENU , 
-                                               BATTLE_CHAMPIONSHIP_BG_PAL_TASKMENU ,
-                                               work->fontHandle , work->taskMenuQue ,
-                                               work->heapId );
-  
+
+  //フォント
+  GFL_ARC_UTIL_TransVramPalette( ARCID_FONT , NARC_font_default_nclr , PALTYPE_MAIN_BG , BATTLE_CHAMPIONSHIP_BG_PAL_FONT*0x20, 0x20, work->heapId );
   
 }
 
 static void BATTLE_CHAMPIONSHIP_ReleaseResource( BATTLE_CHAMPIONSHIP_WORK *work )
 {
-  APP_TASKMENU_RES_Delete( work->taskMenuRes );
+  GFL_BG_FillCharacterRelease( BATTLE_CHAMPIONSHIP_FRAME_MENU, 1, 0 );
+  GFL_BG_FillCharacterRelease( BATTLE_CHAMPIONSHIP_FRAME_STR, 1, 0 );
 }
 
 #pragma mark [>message func
 static void BATTLE_CHAMPIONSHIP_InitMessage( BATTLE_CHAMPIONSHIP_WORK *work )
 {
-  //メッセージ
-  work->msgWin = GFL_BMPWIN_Create( BATTLE_CHAMPIONSHIP_FRAME_STR , 
-                  1 , 19 , 30 , 4 , BATTLE_CHAMPIONSHIP_BG_PAL_FONT ,
-                  GFL_BMP_CHRAREA_GET_B );
-  GFL_BMPWIN_MakeScreen( work->msgWin );
-
   work->fontHandle = GFL_FONT_Create( ARCID_FONT , NARC_font_large_gftr , GFL_FONT_LOADTYPE_FILE , FALSE , work->heapId );
   
-  work->msgHandle = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL , ARCID_MESSAGE , NARC_message_irc_battle_dat , work->heapId );
-
-  GFL_ARC_UTIL_TransVramPalette( ARCID_FONT , NARC_font_default_nclr , PALTYPE_MAIN_BG , BATTLE_CHAMPIONSHIP_BG_PAL_FONT*16*2, 16*2, work->heapId );
-  BmpWinFrame_GraphicSet( BATTLE_CHAMPIONSHIP_FRAME_STR , BATTLE_CHAMPIONSHIP_WINFRAME_CGX , 
-                          BATTLE_CHAMPIONSHIP_BG_PAL_WINFRAME , 1 , work->heapId );
-  
-  work->tcblSys = GFL_TCBL_Init( work->heapId , work->heapId , 3 , 0x100 );
-  work->printHandle = NULL;
-  work->msgStr = NULL;
+  work->msgHandle = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL , ARCID_MESSAGE , NARC_message_battle_championship_dat , work->heapId );
   
   work->taskMenuQue = PRINTSYS_QUE_Create( work->heapId );
   
+  //メッセージ
+  work->text    = BC_TEXT_Init( BATTLE_CHAMPIONSHIP_FRAME_STR, BATTLE_CHAMPIONSHIP_BG_PAL_FONT, work->taskMenuQue, work->fontHandle, work->heapId );
+  BC_TEXT_WriteWindowFrame( work->text, BATTLE_CHAMPIONSHIP_FRAME_STR_CGX, BATTLE_CHAMPIONSHIP_BG_PAL_WINFRAME );
 }
 
 static void BATTLE_CHAMPIONSHIP_TermMessage( BATTLE_CHAMPIONSHIP_WORK *work )
 {
+  BC_TEXT_Exit( work->text );
+
   PRINTSYS_QUE_Delete( work->taskMenuQue );
   
-  GFL_TCBL_Exit( work->tcblSys );
-  if( work->msgStr != NULL )
-  {
-    GFL_STR_DeleteBuffer( work->msgStr );
-  }
-  if( work->printHandle != NULL )
-  {
-    PRINTSYS_PrintStreamDelete( work->printHandle );
-  }
-  GFL_BMPWIN_Delete( work->msgWin );
   GFL_MSG_Delete( work->msgHandle );
   GFL_FONT_Delete( work->fontHandle );
 }
 
 static void BATTLE_CHAMPIONSHIP_UpdateMessage( BATTLE_CHAMPIONSHIP_WORK *work )
 {
-  GFL_TCBL_Main( work->tcblSys );
-
-  if( work->printHandle != NULL  )
-  {
-    const PRINTSTREAM_STATE state = PRINTSYS_PrintStreamGetState( work->printHandle );
-    if( state == PRINTSTREAM_STATE_DONE )
-    {
-      if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
-      {
-        PRINTSYS_PrintStreamDelete( work->printHandle );
-        work->printHandle = NULL;
-      }
-    }
-    else
-    if( state == PRINTSTREAM_STATE_PAUSE )
-    {
-      if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
-      {
-        PRINTSYS_PrintStreamReleasePause( work->printHandle );
-      }
-    }
-  }
+  BC_TEXT_Main( work->text );
+  PRINTSYS_QUE_Main( work->taskMenuQue );
 }
 static void BATTLE_CHAMPIONSHIP_ShowMessage( BATTLE_CHAMPIONSHIP_WORK *work  , const u16 msgNo )
 {
-  if( work->printHandle != NULL )
-  {
-    OS_TPrintf( "Message is not finish!!\n" );
-    PRINTSYS_PrintStreamDelete( work->printHandle );
-    work->printHandle = NULL;
-  }
-  {
-    if( work->msgStr != NULL )
-    {
-      GFL_STR_DeleteBuffer( work->msgStr );
-      work->msgStr = NULL;
-    }
-    
-    GFL_BMP_Clear( GFL_BMPWIN_GetBmp( work->msgWin ) , 0xF );
-    work->msgStr = GFL_MSG_CreateString( work->msgHandle , msgNo );
-    work->printHandle = PRINTSYS_PrintStream( work->msgWin , 0,0, work->msgStr ,work->fontHandle ,
-                        MSGSPEED_GetWait() , work->tcblSys , 2 , work->heapId , 0xf );
-    BmpWinFrame_Write( work->msgWin , WINDOW_TRANS_ON_V , 
-                       BATTLE_CHAMPIONSHIP_WINFRAME_CGX , BATTLE_CHAMPIONSHIP_BG_PAL_WINFRAME );
-  }
-}
-
-static void BATTLE_CHAMPIONSHIP_HideMessage( BATTLE_CHAMPIONSHIP_WORK *work )
-{
-  if( work->printHandle != NULL )
-  {
-    OS_TPrintf( "Message is not finish!!\n" );
-    PRINTSYS_PrintStreamDelete( work->printHandle );
-    work->printHandle = NULL;
-  }
-  if( work->msgStr != NULL )
-  {
-    GFL_STR_DeleteBuffer( work->msgStr );
-    work->msgStr = NULL;
-  }
-  GFL_BMP_Clear( GFL_BMPWIN_GetBmp( work->msgWin ) , 0 );
-  BmpWinFrame_Clear( work->msgWin , WINDOW_TRANS_ON_V );
-  GFL_BMPWIN_TransVramCharacter( work->msgWin );
-
+  BC_TEXT_Print( work->text, work->msgHandle, msgNo, BC_TEXT_TYPE_STREAM );
 }
 
 static const BOOL BATTLE_CHAMPIONSHIP_IsFinishMessage( BATTLE_CHAMPIONSHIP_WORK *work )
 {
-  if( work->printHandle == NULL )
-  {
-    return TRUE;
-  }
-  else
-  {
-    return FALSE;
-  }
+  return BC_TEXT_IsEndPrint( work->text );
 }
 
 #pragma mark [>menu func
 static void BATTLE_CHAMPIONSHIP_OpenFirstMenu( BATTLE_CHAMPIONSHIP_WORK *work )
 {
-  u8 i;
-  APP_TASKMENU_ITEMWORK taskMenuItem[BATTLE_CHAMPIONSHIP_MENU_ITEM_NUM];
-  APP_TASKMENU_INITWORK taskMenuInit;
-  
-  taskMenuInit.heapId = work->heapId;
-  taskMenuInit.itemWork = taskMenuItem;
-  taskMenuInit.itemNum = BATTLE_CHAMPIONSHIP_MENU_ITEM_NUM;
-  taskMenuInit.posType = ATPT_LEFT_UP;
-  taskMenuInit.charPosX = BATTLE_CHAMPIONSHIP_MENU_LEFT;
-  taskMenuInit.charPosY = BATTLE_CHAMPIONSHIP_MENU_TOP;
-  taskMenuInit.w = BATTLE_CHAMPIONSHIP_MENU_WIDTH;
-  taskMenuInit.h = APP_TASKMENU_PLATE_HEIGHT_YN_WIN;
-  //BATTLE_CHAMPIONSHIP_MENU_WIDTH;
-  
-  for( i=0;i<BATTLE_CHAMPIONSHIP_MENU_ITEM_NUM;i++ )
-  {
-    taskMenuItem[i].str = GFL_MSG_CreateString( work->msgHandle , IRC_CHAMPIONSHIP_MSG_0+i );
-    taskMenuItem[i].msgColor = APP_TASKMENU_ITEM_MSGCOLOR;
-    taskMenuItem[i].type = APP_TASKMENU_WIN_TYPE_NORMAL;
-  }
-  
-  work->taskMenuWork = APP_TASKMENU_OpenMenu( &taskMenuInit , work->taskMenuRes );
-
-  for( i=0;i<BATTLE_CHAMPIONSHIP_MENU_ITEM_NUM;i++ )
-  {
-    GFL_STR_DeleteBuffer( taskMenuItem[i].str );
-  }
+  BC_LIST_SETUP  setup;
+  GFL_STD_MemClear( &setup, sizeof(BC_LIST_SETUP) );
+  setup.p_msg   = work->msgHandle;
+  setup.p_font  = work->fontHandle;
+  setup.p_que   = work->taskMenuQue;
+  setup.strID[0]= BC_SELECT_01;
+  setup.strID[1]= BC_SELECT_02;
+  setup.strID[2]= BC_SELECT_03;
+  setup.strID[3]= BC_SELECT_04;
+  setup.strID[4]= BC_SELECT_05;
+  setup.list_max= 5;
+  setup.frm     = BATTLE_CHAMPIONSHIP_FRAME_MENU;
+  setup.font_plt= BATTLE_CHAMPIONSHIP_BG_PAL_FONT;
+  setup.frm_plt = BATTLE_CHAMPIONSHIP_BG_PAL_WINFRAME;
+  setup.frm_chr = BATTLE_CHAMPIONSHIP_FRAME_MENU_CGX;
+  work->list  = BC_LIST_Init( &setup, work->heapId );
 }
 
 static void BATTLE_CHAMPIONSHIP_CloseFirstMenu( BATTLE_CHAMPIONSHIP_WORK *work )
 {
-  APP_TASKMENU_CloseMenu( work->taskMenuWork );
+  BC_LIST_Exit( work->list );
 }
 
-static const BOOL BATTLE_CHAMPIONSHIP_UpdateFirstMenu( BATTLE_CHAMPIONSHIP_WORK *work )
+static const u32 BATTLE_CHAMPIONSHIP_UpdateFirstMenu( BATTLE_CHAMPIONSHIP_WORK *work )
 {
-  APP_TASKMENU_UpdateMenu( work->taskMenuWork );
-  return APP_TASKMENU_IsFinish( work->taskMenuWork );
+  return BC_LIST_Main( work->list );;
 }
 
 #pragma mark [>debug
@@ -665,3 +658,428 @@ void BATTLE_CHAMPIONSHIP_TermDebugData( BATTLE_CHAMPIONSHIP_DATA *csData )
     GFL_HEAP_FreeMemory( csData->ppp[i] );
   }
 }
+
+
+//_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+/**
+ *					テキスト描画構造体
+*/
+//_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+//-------------------------------------
+///	定数
+//=====================================
+#define BC_TEXT_TYPE_NONE  (BC_TEXT_TYPE_MAX)
+
+//-------------------------------------
+/// メッセージウィンドウ
+//=====================================
+struct _BC_TEXT_WORK
+{
+  GFL_MSGDATA       *p_msg;
+  GFL_FONT          *p_font;
+  PRINT_STREAM      *p_stream;
+  GFL_TCBLSYS       *p_tcbl;
+  GFL_BMPWIN*       p_bmpwin;
+  STRBUF*           p_strbuf;
+  u16               clear_chr;
+  u16               heapID;
+  PRINT_UTIL        util;
+  PRINT_QUE         *p_que;
+  u32               print_update;
+  BOOL              is_end_print;
+  APP_KEYCURSOR_WORK* p_keycursor;
+} ;
+
+//-------------------------------------
+///	プロトタイプ
+//=====================================
+static void BC_TEXT_PrintInner( BC_TEXT_WORK* p_wk, BC_TEXT_TYPE type );
+
+//-------------------------------------
+///	パブリック
+//=====================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief  テキスト  初期化
+ *
+ *	@param	u16 frm       BG面
+ *	@param	font_plt      フォントパレット
+ *	@param  PRINT_QUE     プリントQ
+ *	@param  GFL_FONT      フォント
+ *	@param	heapID        ヒープID
+ *
+ *	@return ワーク
+ */
+//-----------------------------------------------------------------------------
+BC_TEXT_WORK * BC_TEXT_Init( u16 frm, u8 font_plt, PRINT_QUE *p_que, GFL_FONT *p_font, HEAPID heapID )
+{ 
+  BC_TEXT_WORK *p_wk;
+
+  p_wk  = GFL_HEAP_AllocMemory( heapID, sizeof(BC_TEXT_WORK) );
+  GFL_STD_MemClear( p_wk, sizeof(BC_TEXT_WORK) );
+  p_wk->clear_chr = 0xF;
+  p_wk->p_font    = p_font;
+  p_wk->p_que     = p_que;
+  p_wk->print_update  = BC_TEXT_TYPE_NONE;
+
+  //文字送りカーソル作成
+  p_wk->p_keycursor  = APP_KEYCURSOR_Create( p_wk->clear_chr, TRUE, FALSE, heapID );
+
+  //バッファ作成
+	p_wk->p_strbuf	= GFL_STR_CreateBuffer( 512, heapID );
+
+	//BMPWIN作成
+	p_wk->p_bmpwin	= GFL_BMPWIN_Create( frm, 1, 19, 30, 4, font_plt, GFL_BMP_CHRAREA_GET_B );
+
+	//プリントキュー設定
+	PRINT_UTIL_Setup( &p_wk->util, p_wk->p_bmpwin );
+
+	//転送
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin), p_wk->clear_chr );
+	GFL_BMPWIN_MakeTransWindow( p_wk->p_bmpwin );
+
+  p_wk->p_tcbl    = GFL_TCBL_Init( heapID, heapID, 1, 32 );
+
+  return p_wk;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  テキスト  破棄
+ *
+ *	@param	BC_TEXT_WORK* p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+void BC_TEXT_Exit( BC_TEXT_WORK* p_wk )
+{ 
+  if( p_wk->p_stream )
+  {
+    PRINTSYS_PrintStreamDelete( p_wk->p_stream );
+    p_wk->p_stream  = NULL;
+  }
+
+  GFL_TCBL_Exit( p_wk->p_tcbl );
+
+  BmpWinFrame_Clear( p_wk->p_bmpwin, WINDOW_TRANS_ON );
+  GFL_BMPWIN_Delete( p_wk->p_bmpwin );
+
+  GFL_STR_DeleteBuffer( p_wk->p_strbuf );
+
+  APP_KEYCURSOR_Delete( p_wk->p_keycursor );
+
+  GFL_HEAP_FreeMemory( p_wk );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  テキスト  描画処理
+ *
+ *	@param	BC_TEXT_WORK* p_wk   ワーク
+ *
+ */
+//-----------------------------------------------------------------------------
+void BC_TEXT_Main( BC_TEXT_WORK* p_wk )
+{ 
+  switch( p_wk->print_update )
+  { 
+  default:
+    /* fallthor */
+  case BC_TEXT_TYPE_NONE:
+    break;
+
+  case BC_TEXT_TYPE_QUE:
+    p_wk->is_end_print  = PRINT_UTIL_Trans( &p_wk->util, p_wk->p_que );
+    break;
+
+  case BC_TEXT_TYPE_STREAM:
+    if( p_wk->p_stream )
+    { 
+      PRINTSTREAM_STATE state;
+      state  = PRINTSYS_PrintStreamGetState( p_wk->p_stream );
+
+      APP_KEYCURSOR_Main( p_wk->p_keycursor, p_wk->p_stream, p_wk->p_bmpwin );
+
+      switch( state )
+      { 
+      case PRINTSTREAM_STATE_RUNNING:  ///< 処理実行中（文字列が流れている）
+
+        // メッセージスキップ
+        if( GFL_UI_KEY_GetTrg() & (PAD_BUTTON_DECIDE|PAD_BUTTON_CANCEL) )
+        {
+          PRINTSYS_PrintStreamShortWait( p_wk->p_stream, 0 );
+        }
+        break;
+
+      case PRINTSTREAM_STATE_PAUSE:    ///< 一時停止中（ページ切り替え待ち等）
+
+        //改行
+        if( GFL_UI_KEY_GetTrg() & (PAD_BUTTON_DECIDE|PAD_BUTTON_CANCEL) )
+        { 
+          PRINTSYS_PrintStreamReleasePause( p_wk->p_stream );
+        }
+        break;
+
+      case PRINTSTREAM_STATE_DONE:     ///< 文字列終端まで表示完了
+        p_wk->is_end_print  = TRUE;
+        break;
+      }
+    }
+    break;
+  }
+
+  GFL_TCBL_Main( p_wk->p_tcbl );
+
+}
+//----------------------------------------------------------------------------
+/*
+ *	@brief  テキスト プリント開始
+ *
+ *	@param	BC_TEXT_WORK* p_wk ワーク
+ *	@param	*p_msg            メッセージ
+ *	@param	strID             メッセージID
+ *	@param  type              描画タイプ
+ */
+//-----------------------------------------------------------------------------
+void BC_TEXT_Print( BC_TEXT_WORK* p_wk, GFL_MSGDATA *p_msg, u32 strID, BC_TEXT_TYPE type )
+{ 
+  //文字列作成
+  GFL_MSG_GetString( p_msg, strID, p_wk->p_strbuf );
+
+  //文字描画
+  BC_TEXT_PrintInner( p_wk, type );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  テキスト  プリント開始  バッファ版
+ *
+ *	@param	BC_TEXT_WORK* p_wk ワーク
+ *	@param	STRBUF *cp_strbuf       文字バッファ
+ *	@param	type                    描画タイプ
+ *
+ */
+//-----------------------------------------------------------------------------
+void BC_TEXT_PrintBuf( BC_TEXT_WORK* p_wk, const STRBUF *cp_strbuf, BC_TEXT_TYPE type )
+{ 
+  //文字列作成
+  GFL_STR_CopyBuffer( p_wk->p_strbuf, cp_strbuf );
+
+  //文字描画
+  BC_TEXT_PrintInner( p_wk, type );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  テキスト文字描画プライベート
+ *
+ *	@param	BC_TEXT_WORK* p_wk ワーク
+ *	@param	type              描画タイプ
+ *
+ */
+//-----------------------------------------------------------------------------
+static void BC_TEXT_PrintInner( BC_TEXT_WORK* p_wk, BC_TEXT_TYPE type )
+{ 
+  //一端消去
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin), p_wk->clear_chr );
+
+  //ストリーム破棄
+  if( p_wk->p_stream )
+  {
+    PRINTSYS_PrintStreamDelete( p_wk->p_stream );
+    p_wk->p_stream  = NULL;
+  }
+
+  //タイプごとの文字描画
+  switch( type )
+  { 
+  case BC_TEXT_TYPE_QUE:     //プリントキューを使う
+    PRINT_UTIL_Print( &p_wk->util, p_wk->p_que, 0, 0, p_wk->p_strbuf, p_wk->p_font );
+    p_wk->print_update  = BC_TEXT_TYPE_QUE;
+    break;
+
+  case BC_TEXT_TYPE_STREAM:  //ストリームを使う
+    p_wk->p_stream  = PRINTSYS_PrintStream( p_wk->p_bmpwin, 0, 0, p_wk->p_strbuf,
+        p_wk->p_font, MSGSPEED_GetWait(), p_wk->p_tcbl, 0, p_wk->heapID, p_wk->clear_chr );
+    p_wk->print_update  = BC_TEXT_TYPE_STREAM;
+    break;
+  }
+
+  p_wk->is_end_print  = FALSE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  テキスト  プリント終了待ち  （QUEの場合はQUE終了、STREAMのときは最後まで文字描画終了）
+ *
+ *	@param	const BC_TEXT_WORK *cp_wk ワーク
+ *
+ *	@return TRUEならば文字描画完了  FALSEならば最中。
+ */
+//-----------------------------------------------------------------------------
+BOOL BC_TEXT_IsEndPrint( const BC_TEXT_WORK *cp_wk )
+{ 
+  return cp_wk->is_end_print;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  テキスト  枠を描画
+ *
+ *	@param	BC_TEXT_WORK *p_wk   ワーク
+ *	@param  フレームのキャラ
+ *	@param  フレームのパレット
+ */
+//-----------------------------------------------------------------------------
+void BC_TEXT_WriteWindowFrame( BC_TEXT_WORK *p_wk, u16 frm_chr, u8 frm_plt )
+{ 
+  BmpWinFrame_Write( p_wk->p_bmpwin, WINDOW_TRANS_ON, frm_chr, frm_plt );
+}
+
+//_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+/**
+ *				  リスト
+ *				    ・簡単にリストを出すために最大値決めうち
+ *            ・表示数＝リスト最大数
+*/
+//_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+//-------------------------------------
+///	定数
+//=====================================/
+#define BC_LIST_W  (28)
+//-------------------------------------
+///	選択リスト
+//=====================================
+struct _BC_LIST_WORK
+{ 
+  GFL_BMPWIN        *p_bmpwin;
+  PRINT_QUE         *p_que;
+  PRINT_UTIL        print_util;
+  BMPMENULIST_WORK  *p_list;
+  BMP_MENULIST_DATA *p_list_data;
+};
+//-------------------------------------
+///	パブリック
+//=====================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief  リスト初期化
+ *
+ *	@param	BC_LIST_SETUP *cp_setup  リスト設定ワーク
+ *	@param	heapID                    heapID
+ *
+ *	@return ワーク
+ */
+//-----------------------------------------------------------------------------
+BC_LIST_WORK * BC_LIST_Init( const BC_LIST_SETUP *cp_setup, HEAPID heapID )
+{ 
+  BC_LIST_WORK *p_wk;
+  p_wk  = GFL_HEAP_AllocMemory( heapID, sizeof(BC_LIST_WORK) );
+  GFL_STD_MemClear( p_wk, sizeof(BC_LIST_WORK) );
+  p_wk->p_que = cp_setup->p_que;
+
+  //BMPWIN作成
+  { 
+    //右下、テキストボックスの上に位置するため
+    //表示項目から位置、高さを計算
+    const u8 w  = BC_LIST_W;
+    const u8 h  = cp_setup->list_max * 2;
+    const u8 x  = 32 / 2 - w / 2; //1はフレーム分
+    const u8 y  = (24 - 6) / 2 - h / 2; //１は自分のフレーム分と6はテキスト分
+    p_wk->p_bmpwin  = GFL_BMPWIN_Create( cp_setup->frm, x, y, w, h, cp_setup->font_plt, GFL_BMP_CHRAREA_GET_B );
+    BmpWinFrame_Write( p_wk->p_bmpwin, WINDOW_TRANS_OFF, cp_setup->frm_chr, cp_setup->frm_plt );
+    GFL_BMPWIN_MakeTransWindow( p_wk->p_bmpwin );
+
+    PRINT_UTIL_Setup( &p_wk->print_util, p_wk->p_bmpwin );
+  }
+  //リストデータ作成
+  { 
+    int i;
+    p_wk->p_list_data = BmpMenuWork_ListCreate( cp_setup->list_max, heapID );
+    for( i = 0; i < cp_setup->list_max; i++ )
+    { 
+      BmpMenuWork_ListAddArchiveString( p_wk->p_list_data,
+          cp_setup->p_msg, cp_setup->strID[ i ], i, heapID );
+    }
+  }
+  //リスト作成
+  { 
+    static const BMPMENULIST_HEADER sc_def_header =
+    { 
+      NULL,
+      NULL,
+      NULL,
+      NULL,
+
+      0,  //count
+      0,  //line
+      0,  //rabel_x
+      13, //data_x  
+      0,  //cursor_x
+      3,  //line_y
+      1,  //f
+      15, //b
+      2,  //s
+      0,  //msg_spc
+      1,  //line_spc
+      BMPMENULIST_NO_SKIP,  //page_skip
+      0,  //font
+      0,  //c_disp_f
+      NULL,
+      12,
+      12,
+
+      NULL,
+      NULL,
+      NULL,
+      NULL,
+      
+    };
+    BMPMENULIST_HEADER  header;
+    header  = sc_def_header;
+
+    header.list         = p_wk->p_list_data;
+    header.count        = cp_setup->list_max;
+    header.line         = cp_setup->list_max;
+    header.win          = p_wk->p_bmpwin;
+    header.msgdata      = cp_setup->p_msg;
+    header.print_util   = &p_wk->print_util;
+    header.print_que    = cp_setup->p_que;
+    header.font_handle  = cp_setup->p_font;
+    p_wk->p_list  = BmpMenuList_Set( &header, 0, 0, heapID );
+
+    BmpMenuList_SetCursorBmp( p_wk->p_list, heapID );
+    BmpMenuList_SetCancelMode( p_wk->p_list, BMPMENULIST_CANCELMODE_NOT );
+    
+  }
+
+  return p_wk;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  リスト破棄処理
+ *
+ *	@param	BC_LIST_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+void BC_LIST_Exit( BC_LIST_WORK *p_wk )
+{ 
+  BmpMenuList_Exit( p_wk->p_list, NULL, NULL );
+  BmpMenuWork_ListDelete( p_wk->p_list_data );
+
+  BmpWinFrame_Clear( p_wk->p_bmpwin, WINDOW_TRANS_ON );
+  GFL_BMPWIN_ClearScreen( p_wk->p_bmpwin );
+  GFL_BMPWIN_Delete( p_wk->p_bmpwin );
+  GFL_HEAP_FreeMemory( p_wk );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  リストメイン処理
+ *
+ *	@param	BC_LIST_WORK *p_wk   ワーク
+ *
+ *	@return 選択していないならばBC_LIST_SELECT_NULL それ以外ならば選択したリストインデックス
+ */
+//-----------------------------------------------------------------------------
+u32 BC_LIST_Main( BC_LIST_WORK *p_wk )
+{ 
+  PRINT_UTIL_Trans( &p_wk->print_util, p_wk->p_que );
+  return BmpMenuList_Main( p_wk->p_list );
+}
+
