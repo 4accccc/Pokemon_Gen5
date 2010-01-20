@@ -2502,7 +2502,7 @@
 #define TMFLG_WC10_ITEM_09                2728 /* 0x0aa8 WC10のアイテム０９ */
 #define TMFLG_WC10_ITEM_10                2729 /* 0x0aa9 WC10のアイテム１０ */
 #define TMFLG_WC10R0101_OLDMAN            2730 /* 0x0aaa WC村長 */
-		/* not used  2731(0x0aab) */
+#define TMFLG_C08R0301_GOODS              2731 /* 0x0aab ミュージカル大好きおじさん */
 		/* not used  2732(0x0aac) */
 		/* not used  2733(0x0aad) */
 		/* not used  2734(0x0aae) */
