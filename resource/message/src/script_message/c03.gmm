@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-02T17:22:13"/>
+	<create user="matsumiya" host="W00207" date="2010-01-20T21:58:54"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="124"/>
+		<comment position="4" width="251"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -291,6 +291,271 @@
 		<operation add_message="no" header_setting="no" tag_setting="no" output_setting="no" display="no" sort="no" flowchart_window="no"/>
 	</lock>
 
+
+	<row id="msg_c03_black_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・h01r0201からc03に来て
+　一歩移動したら（どの方向でも）
+　GRIDZ=72、GRIDX=33に出現
+・主人公と向き合ってメッセージ表示
+・続けてblack_02</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">ブラッカー『やあ　[1:00:トレーナー名:0]▼</language>
+		<language name="JPN_KANJI" width="256">ブラッカー『やあ　[1:00:トレーナー名:0]▼</language>
+	</row>
+
+	<row id="msg_c03_black_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・画面下を見ながらメッセージ表示
+　（主人公の位置を調整の可能性あり）
+・続けてblack_03</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">きいたよ
+ヤグルマのもり　でのこと▼
+おかしな　プラズマだんを
+きみが　こらしめて　くれて▽
+うれしい　かぎりさ▼</language>
+		<language name="JPN_KANJI" width="256">きいたよ
+ヤグルマのもり　でのこと▼
+おかしな　プラズマだんを
+きみが　こらしめて　くれて▽
+うれしい　かぎりさ▼</language>
+	</row>
+
+	<row id="msg_c03_black_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・再度主人公と向き合ってメッセージ表示
+・以下の選択肢表示
+　ポケモンセンター→black_04
+　ポケモンジム→black_05</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">それは　さておき……▼
+シッポウシティでも
+アドバイス　したけれど▼
+あたらしい　まちに　ついたら
+さいしょに　むかうべき　なのは……？</language>
+		<language name="JPN_KANJI" width="256">それは　さておき……▼
+シッポウシティでも
+アドバイス　したけれど▼
+あたらしい　まちに　ついたら
+さいしょに　むかうべき　なのは……？</language>
+	</row>
+
+	<row id="msg_c03_black_win01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>選択肢</comment>
+		<attribute name="キャラ指定">選択肢</attribute>
+		<language name="JPN" width="256">ポケモンセンター</language>
+		<language name="JPN_KANJI" width="256">ポケモンセンター</language>
+	</row>
+
+	<row id="msg_c03_black_win02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>選択肢</comment>
+		<attribute name="キャラ指定">選択肢</attribute>
+		<language name="JPN" width="256">ポケモンジム</language>
+		<language name="JPN_KANJI" width="256">ポケモンジム</language>
+	</row>
+
+	<row id="msg_c03_black_04" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・ライバル先導で連れ歩き開始
+・続けてblack_06</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">そう！　そのとおり
+ポケモンセンターだよね▼
+この　ヒウンシティの
+ポケモンセンターは　こっちなんだ▼
+ついておいでよ！
+あんない　するから▼</language>
+		<language name="JPN_KANJI" width="256">そう！　そのとおり
+ポケモンセンターだよね▼
+この　ヒウンシティの
+ポケモンセンターは　こっちなんだ▼
+ついておいでよ！
+あんない　するから▼</language>
+	</row>
+
+	<row id="msg_c03_black_05" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・ライバル先導で連れ歩き開始
+・続けてblack_06</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">ポケモンジム……？
+ずいぶんと　もえているんだね▼
+でも　さいしょに　いくべきなのは
+ポケモンセンターだと　おもうよ▼
+この　ヒウンシティの
+ポケモンセンターは　こっちなんだ▼
+ついておいでよ！
+あんない　するから▼</language>
+		<language name="JPN_KANJI" width="256">ポケモンジム……？
+ずいぶんと　もえているんだね▼
+でも　さいしょに　いくべきなのは
+ポケモンセンターだと　おもうよ▼
+この　ヒウンシティの
+ポケモンセンターは　こっちなんだ▼
+ついておいでよ！
+あんない　するから▼</language>
+	</row>
+
+	<row id="msg_c03_black_06" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・ライバルがGRIDX=73、GRIDZ=60に到達すると
+　主人公と向き合ってメッセージ表示
+・続けてblack_07</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">ブラッカー『ほら
+ポケモンセンターが　あるだろ？▼</language>
+		<language name="JPN_KANJI" width="256">ブラッカー『ほら
+ポケモンセンターが　あるだろ？▼</language>
+	</row>
+
+	<row id="msg_c03_black_07" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・ライバル、画面上（中央部）向きでこのメッセージ表示
+・続けてblack_08</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">あちらには　ポケモンセンターの
+シンボルマークも　かかれている▼</language>
+		<language name="JPN_KANJI" width="256">あちらには　ポケモンセンターの
+シンボルマークも　かかれている▼</language>
+	</row>
+
+	<row id="msg_c03_black_08" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・再度ライバル先導で連れ歩き開始</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">ついでだから
+ポケモンジムも　あんない　するよ▼</language>
+		<language name="JPN_KANJI" width="256">ついでだから
+ポケモンジムも　あんない　するよ▼</language>
+	</row>
+
+	<row id="msg_c03_leader3_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・ライバルがGRIDX=39、GRIDZ=74に到達すると
+　c03r0301からジムリーダーが登場
+　GRIDX=38、GRIDZ=74に移動して
+　ライバル、主人公と向き合いメッセージ表示
+・続けてleader3_02
+・0＝主人公名前</comment>
+		<attribute name="キャラ指定">LEADER3
+アーティ</attribute>
+		<language name="JPN" width="256">アーティ『んうん？▼
+ああ　きみ！　[1:00:トレーナー名:0]！▼
+ごめんね　ごめんよ
+ポケモンジムで　まつって▽
+やくそく　だったよね▼</language>
+		<language name="JPN_KANJI" width="256">アーティ『んうん？▼
+ああ　きみ！　[1:00:トレーナー名:0]！▼
+ごめんね　ごめんよ
+ポケモンジムで　まつって▽
+やくそく　だったよね▼</language>
+	</row>
+
+	<row id="msg_c03_leader3_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・画面下を見ながらメッセージ表示
+・続けてleader3_03</comment>
+		<attribute name="キャラ指定">LEADER3
+アーティ</attribute>
+		<language name="JPN" width="256">ヒウンシティにも
+プラズマだんが　いたんだ▼
+ぜったい　ポケモンが　つかまえらない
+にせの　モンスターボールを▽
+うりつけて　いてさ……▼</language>
+		<language name="JPN_KANJI" width="256">ヒウンシティにも
+プラズマだんが　いたんだ▼
+ぜったい　ポケモンが　つかまえらない
+にせの　モンスターボールを▽
+うりつけて　いてさ……▼</language>
+	</row>
+
+	<row id="msg_c03_leader3_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・主人公たちと向き合ってメッセージ表示
+・表示後、C03P07方面に移動
+・画面外に消えると続けてblack_09</comment>
+		<attribute name="キャラ指定">LEADER3
+アーティ</attribute>
+		<language name="JPN" width="256">もちろん　おっぱったけどね▼
+それじゃあ
+ポケモンジムで　まってる▼</language>
+		<language name="JPN_KANJI" width="256">もちろん　おっぱったけどね▼
+それじゃあ
+ポケモンジムで　まってる▼</language>
+	</row>
+
+	<row id="msg_c03_black_09" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・画面左をみたままメッセージ表示
+・続けてblack_10</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">ブラッカー『アーティさん▼
+とらえどころが　ないようで
+やはり　すきが　ないね▽
+さすが　ジムリーダー▼
+でも　バトルカンパニーに
+どんな　ようが　あったんだろう？▼</language>
+		<language name="JPN_KANJI" width="256">ブラッカー『アーティさん▼
+とらえどころが　ないようで
+やはり　すきが　ないね▽
+さすが　ジムリーダー▼
+でも　バトルカンパニーに
+どんな　ようが　あったんだろう？▼</language>
+	</row>
+
+	<row id="msg_c03_black_10" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・主人公と向き合ってメッセージ表示
+・表示後、ライバル先導で連れ歩き開始</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">バトルカンパニーと　いうのは
+ポケモンしょうぶ　だいすきな▽
+ビジネスマンばかりの　かいしゃ▼
+うでだめしに　いってみるのも
+おもしろいかも　しれないね▼
+さて　ポケモンジムに　むかおうか▼</language>
+		<language name="JPN_KANJI" width="256">バトルカンパニーと　いうのは
+ポケモンしょうぶ　だいすきな▽
+ビジネスマンばかりの　かいしゃ▼
+うでだめしに　いってみるのも
+おもしろいかも　しれないね▼
+さて　ポケモンジムに　むかおうか▼</language>
+	</row>
+
+	<row id="msg_c03_black_11" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・ライバルがGRIDX=22、GRIDZ=36に到達すると
+　画面上を向いてメッセージ表示
+・続けてblack_12</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">ブラッカー『こっちの　ろめん　には
+ポケモンジムの　マークが　あるよね▼
+この　みちを　すすめば
+ヒウンシティ　ポケモンジム　だよ▼</language>
+		<language name="JPN_KANJI" width="256">ブラッカー『こっちの　ろめん　には
+ポケモンジムの　マークが　あるよね▼
+この　みちを　すすめば
+ヒウンシティ　ポケモンジム　だよ▼</language>
+	</row>
+
+	<row id="msg_c03_black_12" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・表示後、画面右に移動する
+・画面外に消えると主人公操作可能に
+※r04に出現</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">ブラッカー『ボクは　いちど
+ポケモンセンターに　もどる▼
+そのあとは　４ばんどうろで
+ポケモンたちを　きたえる　つもり▼
+それでは　けんとうを　いのるよ▼</language>
+		<language name="JPN_KANJI" width="256">ブラッカー『ボクは　いちど
+ポケモンセンターに　もどる▼
+そのあとは　４ばんどうろで
+ポケモンたちを　きたえる　つもり▼
+それでは　けんとうを　いのるよ▼</language>
+	</row>
 
 	<row id="msg_c03_businessman1_01">
 		<comment>♂
