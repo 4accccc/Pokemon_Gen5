@@ -5318,21 +5318,10 @@ static void handler_Meromero_CheckNoEffect( BTL_EVENT_FACTOR* myHandle, BTL_SVFL
 static const BtlEventHandlerTable*  ADD_Texture2( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_NOEFFECT_CHECK_L2,   handler_Texture2_CheckNoEffect },
     { BTL_EVENT_UNCATEGORIZE_WAZA,     handler_Texture2 },          // ñ¢ï™óﬁÉèÉUÉnÉìÉhÉâ
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
-}
-static void handler_Texture2_CheckNoEffect( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
-{
-  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
-  {
-    const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) );
-    if( BPP_GetPrevWazaID(bpp) == WAZANO_NULL ){
-      BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_CAUSE, SV_WAZAFAIL_OTHER );
-    }
-  }
 }
 static void handler_Texture2( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
