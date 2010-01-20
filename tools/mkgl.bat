@@ -1,5 +1,5 @@
 echo off
-pushd %GFL_MAKE_DIR%
+pushd %GFL_MAKE_DIR:/=\\%
 make %1 %2
 
 if %1.==. GOTO NEXT
