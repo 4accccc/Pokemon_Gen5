@@ -1,9 +1,9 @@
 //======================================================================
 /**
- * @file	field_menu.c
- * @brief	フィールドメニュー
- * @author	ariizumi
- * @date	09/05/12
+ * @file  field_menu.c
+ * @brief フィールドメニュー
+ * @author  ariizumi
+ * @date  09/05/12
  */
 //======================================================================
 #include <gflib.h>
@@ -21,7 +21,8 @@
 #include "sound/pm_sndsys.h"
 #include "system/wipe.h"
 #include "../../../resource/fldmapdata/flagwork/flag_define.h"
-
+#include "app/app_menu_common.h"
+#include "infowin/infowin.h"
 
 #include "field/field_msgbg.h"
 #include "field/fieldmap.h"
@@ -31,13 +32,15 @@
 #include "eventwork.h"
 
 //======================================================================
-//	define
+//  define
 //======================================================================
 #pragma mark [> define
 
 //InfoBarでS0
-#define FIELD_MENU_BG_BACK (GFL_BG_FRAME1_S)
-#define FIELD_MENU_BG_NAME (GFL_BG_FRAME2_S)
+#define FIELD_MENU_BG_BUTTON  (GFL_BG_FRAME1_S)
+#define FIELD_MENU_BG_NAME    (GFL_BG_FRAME2_S)
+#define FIELD_MENU_BG_BACK    (GFL_BG_FRAME3_S)
+#define FIELD_MENU_INFOBAR    (GFL_BG_FRAME0_S)
 
 //スクロール速度
 #define FIELD_MENU_SCROLL_SPD (64) 
@@ -62,14 +65,18 @@
 //InfoBarで0x0f
 
 //======================================================================
-//	enum
+//  enum
 //======================================================================
 #pragma mark [> enum
 enum
 {
   FMO_COM_PLT,
   FMO_COM_CHR,
-  FMO_COM_ANM,
+  FMO_COM_CEL,
+  
+  TOUCHBAR_PLT,
+  TOUCHBAR_CHR,
+  TOUCHBAR_CEL,
   
   FIELD_MENU_OBJ_RES_NUM,
 }FIELD_MENU_OBJ_RES;
@@ -96,6 +103,7 @@ typedef enum
   FMS_WAIT_MOVEIN,
   FMS_WAIT_INIT,
   FMS_LOOP,
+  FMS_EXIT_ANIME_WAIT,  // 「×」OBJ点滅
   FMS_EXIT_INIT,  
   FMS_WAIT_ICON_ANIME ,
   FMS_EXIT_ENDMENU,     //終了時の処理
@@ -107,7 +115,7 @@ typedef enum
 }FIELD_MENU_STATE;
 
 //======================================================================
-//	typedef struct
+//  typedef struct
 //======================================================================
 #pragma mark [> struct
 //アイコン作成用ワーク
@@ -168,13 +176,14 @@ struct _FIELD_MENU_WORK
   GFL_CLUNIT *cellUnit;
   GFL_CLSYS_REND *cellRender;
   GFL_CLWK  *cellCursor;
+  GFL_CLWK  *cellEndButton;
   PRINT_QUE *printQue;
   
   GFL_TCB *vBlankTcb;
 };
 
 //======================================================================
-//	proto
+//  proto
 //======================================================================
 #pragma mark [> proto
 static void FIELD_MENU_InitGraphic(  FIELD_MENU_WORK* work , ARCHANDLE *arcHandle, int menuType );
@@ -192,6 +201,8 @@ static void FIELD_MENU_Icon_DeleteIcon( FIELD_MENU_WORK* work , FIELD_MENU_ICON 
 static void FIELD_MENU_Icon_TransBmp( FIELD_MENU_WORK* work , FIELD_MENU_ICON *icon );
 
 static int  _get_menuType( EVENTWORK *ev, int zoneId );
+static void _trans_touchbar_screen( HEAPID heapId, int bgfrm );
+static void _cancel_func_set( FIELD_MENU_WORK *work, BOOL isCancel );
 
 
 
@@ -315,14 +326,21 @@ void FIELD_MENU_ExitMenu( FIELD_MENU_WORK* work )
   FLDMSGBG_SetBlendAlpha( FALSE );
   GFL_TCB_DeleteTask( work->vBlankTcb );
   
+  GFL_CLACT_WK_Remove( work->cellEndButton );
   GFL_CLACT_WK_Remove( work->cellCursor );
   GFL_CLACT_USERREND_Delete( work->cellRender );
-  GFL_CLACT_UNIT_Delete(work->cellUnit);
-  GFL_CLGRP_CELLANIM_Release(work->objRes[FMO_COM_ANM]);
-  GFL_CLGRP_CGR_Release(work->objRes[FMO_COM_CHR]);
-  GFL_CLGRP_PLTT_Release(work->objRes[FMO_COM_PLT]);
+
+  GFL_CLACT_UNIT_Delete( work->cellUnit );
+  GFL_CLGRP_CELLANIM_Release( work->objRes[FMO_COM_CEL] );
+  GFL_CLGRP_CGR_Release( work->objRes[FMO_COM_CHR] );
+  GFL_CLGRP_PLTT_Release( work->objRes[FMO_COM_PLT] );
+  GFL_CLGRP_CELLANIM_Release( work->objRes[TOUCHBAR_CEL] );
+  GFL_CLGRP_CGR_Release( work->objRes[TOUCHBAR_CHR] );
+  GFL_CLGRP_PLTT_Release( work->objRes[TOUCHBAR_PLT] );
+
   GFL_BG_SetScroll( FIELD_MENU_BG_NAME , GFL_BG_SCROLL_Y_SET , 0 );
   GFL_BG_FreeBGControl(FIELD_MENU_BG_BACK);
+  GFL_BG_FreeBGControl(FIELD_MENU_BG_BUTTON);
   GFL_BG_FreeBGControl(FIELD_MENU_BG_NAME);
   PRINTSYS_QUE_Delete( work->printQue ); 
   GFL_HEAP_FreeMemory( work );
@@ -345,12 +363,14 @@ void FIELD_MENU_UpdateMenu( FIELD_MENU_WORK* work )
       }
       if( work->scrollOffset != 0 )
       {
-				PMSND_PlaySystemSE( SEQ_SE_OPEN1 );
+        PMSND_PlaySystemSE( SEQ_SE_OPEN1 );
         work->state = FMS_WAIT_MOVEIN;
       }
       else
       {
         work->state = FMS_LOOP;
+//        GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG0, VISIBLE_ON );
+        GFL_BG_SetVisible( FIELD_MENU_INFOBAR, VISIBLE_ON );
       }
     }
     break;
@@ -360,6 +380,9 @@ void FIELD_MENU_UpdateMenu( FIELD_MENU_WORK* work )
     {
       work->scrollOffset = 0;
       work->state = FMS_LOOP;
+//      GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG0, VISIBLE_ON );
+      GFL_BG_SetVisible( FIELD_MENU_INFOBAR, VISIBLE_ON );
+
     }
     else
     {
@@ -374,6 +397,14 @@ void FIELD_MENU_UpdateMenu( FIELD_MENU_WORK* work )
     FIELD_MENU_UpdateCursor( work );
     break;
    
+  case FMS_EXIT_ANIME_WAIT:
+    if(GFL_CLACT_WK_CheckAnmActive( work->cellEndButton )==FALSE){
+      work->state = FMS_EXIT_INIT;
+      // インフォバー・タッチバーの面をON
+//      GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG0, VISIBLE_ON );
+      GFL_BG_SetVisible( FIELD_MENU_INFOBAR, VISIBLE_ON );
+    }
+    break;
   case FMS_EXIT_INIT:
     if( work->isCancel == TRUE ||
         work->cursorPosY == 3 )
@@ -381,6 +412,10 @@ void FIELD_MENU_UpdateMenu( FIELD_MENU_WORK* work )
       //work->state = FMS_EXIT_ENDMENU;
       work->state = FMS_WAIT_MOVEOUT;
       PMSND_PlaySystemSE( SEQ_SE_CLOSE1 );
+      // インフォバー・タッチバーの面をOFF
+//      GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG0, VISIBLE_OFF );
+        GFL_BG_SetVisible( FIELD_MENU_INFOBAR, VISIBLE_OFF );
+
     }
     else
     {
@@ -439,7 +474,7 @@ void FIELD_MENU_DrawMenu( FIELD_MENU_WORK* work )
     u8 i;
     GFL_CLACTPOS sufacePos;
 
-    GFL_BG_SetScrollReq( FIELD_MENU_BG_BACK , GFL_BG_SCROLL_Y_SET , -work->scrollOffset );
+    GFL_BG_SetScrollReq( FIELD_MENU_BG_BUTTON , GFL_BG_SCROLL_Y_SET , -work->scrollOffset );
     GFL_BG_SetScrollReq( FIELD_MENU_BG_NAME , GFL_BG_SCROLL_Y_SET , -work->scrollOffset -4 );
     
     sufacePos.x = 0;
@@ -496,7 +531,7 @@ static const u32 menu_screen_table[] = {
 //--------------------------------------------------------------
 static void FIELD_MENU_InitGraphic(  FIELD_MENU_WORK* work , ARCHANDLE *arcHandle, int menuType )
 {
-  static const GFL_BG_BGCNT_HEADER bgCont_BackGround = {
+  static const GFL_BG_BGCNT_HEADER bgCont_Button = {
   0, 0, 0x1000, 0,
   GFL_BG_SCRSIZ_256x512, GX_BG_COLORMODE_16,
   GX_BG_SCRBASE_0x7000, GX_BG_CHARBASE_0x00000, 0x5800,
@@ -508,26 +543,46 @@ static void FIELD_MENU_InitGraphic(  FIELD_MENU_WORK* work , ARCHANDLE *arcHandl
   GX_BG_SCRBASE_0x6000, GX_BG_CHARBASE_0x00000, 0x5800,
   GX_BG_EXTPLTT_01, 2, 0, 0, FALSE
   };
+  static const GFL_BG_BGCNT_HEADER bgCont_BackGround = {
+  0, 0, 0x800, 0,
+  GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+  GX_BG_SCRBASE_0x5000, GX_BG_CHARBASE_0x00000, 0x5800,
+  GX_BG_EXTPLTT_01, 3, 0, 0, FALSE
+  };
+
 
   GXS_SetMasterBrightness(-16);
-
-  GFL_BG_SetBGControl( FIELD_MENU_BG_BACK, &bgCont_BackGround, GFL_BG_MODE_TEXT );
-  GFL_BG_SetVisible( FIELD_MENU_BG_BACK, VISIBLE_ON );
-  GFL_BG_ClearScreen( FIELD_MENU_BG_BACK );
+  // BG初期化
+  GFL_BG_SetBGControl( FIELD_MENU_BG_BUTTON, &bgCont_Button, GFL_BG_MODE_TEXT );
+  GFL_BG_SetVisible( FIELD_MENU_BG_BUTTON, VISIBLE_ON );
+  GFL_BG_ClearScreen( FIELD_MENU_BG_BUTTON );
   
   GFL_BG_SetBGControl( FIELD_MENU_BG_NAME, &bgCont_BackStr, GFL_BG_MODE_TEXT );
   GFL_BG_SetVisible( FIELD_MENU_BG_NAME, VISIBLE_ON );
   GFL_BG_ClearScreen( FIELD_MENU_BG_NAME );
+
+  GFL_BG_SetBGControl( FIELD_MENU_BG_BACK, &bgCont_BackGround, GFL_BG_MODE_TEXT );
+  GFL_BG_SetVisible( FIELD_MENU_BG_BACK, VISIBLE_ON );
+  GFL_BG_ClearScreen( FIELD_MENU_BG_BACK );
+
+
+
   //フォントをずらした位置に出したいので
   GFL_BG_SetScroll( FIELD_MENU_BG_NAME , GFL_BG_SCROLL_Y_SET , -4 );
   
+  // BGグラフィック転送
   GFL_ARCHDL_UTIL_TransVramPalette( arcHandle , NARC_field_menu_menu_bg_NCLR , 
                     PALTYPE_SUB_BG , 0 , 0 , work->tempHeapId );
   GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_field_menu_menu_bg_NCGR ,
-                    FIELD_MENU_BG_BACK , 0 , 0, FALSE , work->tempHeapId );
+                    FIELD_MENU_BG_BUTTON , 0 , 0, FALSE , work->tempHeapId );
 
   GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , menu_screen_table[menuType] , 
+                      FIELD_MENU_BG_BUTTON ,  0 , 0, FALSE , work->tempHeapId );
+  GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_field_menu_menu_back_NSCR, 
                       FIELD_MENU_BG_BACK ,  0 , 0, FALSE , work->tempHeapId );
+
+
+  // セルアクターリソース転送(カーソル）
   work->objRes[FMO_COM_PLT] = GFL_CLGRP_PLTT_Register( arcHandle , 
                                   NARC_field_menu_menu_obj_common_NCLR ,
                                   CLSYS_DRAW_SUB , 0 , work->heapId );
@@ -536,18 +591,38 @@ static void FIELD_MENU_InitGraphic(  FIELD_MENU_WORK* work , ARCHANDLE *arcHandl
                                   NARC_field_menu_menu_obj_common_NCGR ,
                                   FALSE , CLSYS_DRAW_SUB , work->heapId );
   
-  work->objRes[FMO_COM_ANM] = GFL_CLGRP_CELLANIM_Register( arcHandle , 
+  work->objRes[FMO_COM_CEL] = GFL_CLGRP_CELLANIM_Register( arcHandle , 
                                   NARC_field_menu_menu_obj_common_NCER ,
                                   NARC_field_menu_menu_obj_common_NANR ,
                                   work->heapId );
   
-  GFL_BG_LoadScreenReq( FIELD_MENU_BG_BACK );
+  // セルアクターリソース転送(タッチバー『×』）
+  {
+    ARCHANDLE *commonHandle = GFL_ARC_OpenDataHandle( APP_COMMON_GetArcId(), work->tempHeapId );
+//    work->objRes[TOUCHBAR_PLT] = GFL_CLGRP_PLTT_Register( commonHandle, 
+//                                    APP_COMMON_GetBarIconPltArcIdx(),
+//                                    CLSYS_DRAW_SUB, 0 , work->heapId );
+    work->objRes[TOUCHBAR_PLT] = GFL_CLGRP_PLTT_RegisterEx( commonHandle, APP_COMMON_GetBarIconPltArcIdx(), 
+                                                            CLSYS_DRAW_SUB, 2*32, 0, 4, work->heapId );
+  
+    work->objRes[TOUCHBAR_CHR] = GFL_CLGRP_CGR_Register( commonHandle, 
+                                    APP_COMMON_GetBarIconCharArcIdx(),
+                                    FALSE, CLSYS_DRAW_SUB, work->heapId );
+    
+    work->objRes[TOUCHBAR_CEL] = GFL_CLGRP_CELLANIM_Register( commonHandle, 
+                                    APP_COMMON_GetBarIconCellArcIdx(APP_COMMON_MAPPING_32K) ,
+                                    APP_COMMON_GetBarIconAnimeArcIdx(APP_COMMON_MAPPING_32K),
+                                    work->heapId );
+    GFL_ARC_CloseDataHandle( commonHandle );
+  }
+  
+  GFL_BG_LoadScreenReq( FIELD_MENU_BG_BUTTON );
   
   //フォント用パレット
   GFL_ARC_UTIL_TransVramPalette( ARCID_FONT , NARC_font_default_nclr , PALTYPE_SUB_BG , FIELD_MENU_PLT_FONT * 32, 16*2, work->tempHeapId );
   
   //セル系システムの作成
-  work->cellUnit = GFL_CLACT_UNIT_Create( 7 , 0 , work->heapId );
+  work->cellUnit = GFL_CLACT_UNIT_Create( 8 , 0 , work->heapId );
   
   //レンダラー作成
   {
@@ -557,6 +632,7 @@ static void FIELD_MENU_InitGraphic(  FIELD_MENU_WORK* work , ARCHANDLE *arcHandl
     GFL_CLACT_UNIT_SetUserRend( work->cellUnit , work->cellRender );
   }
   
+  // セルアクター登録
   {
     GFL_CLWK_DATA cellInitData;
     //セルの生成
@@ -569,24 +645,58 @@ static void FIELD_MENU_InitGraphic(  FIELD_MENU_WORK* work , ARCHANDLE *arcHandl
     work->cellCursor = GFL_CLACT_WK_Create( work->cellUnit ,
                           work->objRes[FMO_COM_CHR],
                           work->objRes[FMO_COM_PLT],
-                          work->objRes[FMO_COM_ANM],
+                          work->objRes[FMO_COM_CEL],
                           &cellInitData , 
                           FIELD_MENU_RENDER_SURFACE , 
                           work->heapId );
     GFL_CLACT_WK_SetAutoAnmSpeed( work->cellCursor, FX32_ONE );
     GFL_CLACT_WK_SetAutoAnmFlag( work->cellCursor, TRUE );
     GFL_CLACT_WK_SetDrawEnable( work->cellCursor, FALSE );
+
+    //タッチバーの「×」
+    cellInitData.pos_x = 224;
+    cellInitData.pos_y = 168;
+    work->cellEndButton = GFL_CLACT_WK_Create( work->cellUnit ,
+                          work->objRes[TOUCHBAR_CHR],
+                          work->objRes[TOUCHBAR_PLT],
+                          work->objRes[TOUCHBAR_CEL],
+                          &cellInitData , 
+                          FIELD_MENU_RENDER_SURFACE , 
+                          work->heapId );
+    GFL_CLACT_WK_SetAutoAnmSpeed( work->cellEndButton, FX32_ONE );
+    GFL_CLACT_WK_SetAutoAnmFlag( work->cellEndButton, TRUE );
+    GFL_CLACT_WK_SetDrawEnable( work->cellEndButton, TRUE );
+    GFL_CLACT_WK_SetAutoAnmSpeed( work->cellEndButton, FX32_ONE*2 );
     
   }
+  
+}
+
+//=============================================================================================
+/**
+ * @brief INFOBARのセットアップ後にBG0面のスクリーンを操作する
+ *
+ * @param   heap    
+ */
+//=============================================================================================
+void FIELDMENU_RewriteInfoScreen( HEAPID heapId )
+{
+  // タッチバーのBGを背景面に転送
+  _trans_touchbar_screen( heapId, GFL_BG_FRAME0_S );
+
+  // インフォバー・タッチバーの面をOFF
+//  GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG0, VISIBLE_OFF );
+  GFL_BG_SetVisible( FIELD_MENU_INFOBAR, VISIBLE_OFF );
+
 }
 
 //----------------------------------------------------------------------------------
 /**
- * @brief	現在のメニュータイプを取得する
+ * @brief 現在のメニュータイプを取得する
  *
- * @param   ev		
+ * @param   ev    
  *
- * @retval  int		
+ * @retval  int   
  */
 //----------------------------------------------------------------------------------
 static int _get_menuType( EVENTWORK *ev, int zoneId )
@@ -763,7 +873,7 @@ static void FIELD_MENU_InitScrollIn( FIELD_MENU_WORK* work )
 {
   GFL_CLACTPOS sufacePos;
   work->scrollOffset = 192;
-  GFL_BG_SetScroll( FIELD_MENU_BG_BACK , GFL_BG_SCROLL_Y_SET , -192 );
+  GFL_BG_SetScroll( FIELD_MENU_BG_BUTTON , GFL_BG_SCROLL_Y_SET , -192 );
   GFL_BG_SetScroll( FIELD_MENU_BG_NAME , GFL_BG_SCROLL_Y_SET , -192 -4);
   
   sufacePos.x = 0;
@@ -841,12 +951,12 @@ enum{
 
 //----------------------------------------------------------------------------------
 /**
- * @brief	XYからカーソル位置を算出
+ * @brief XYからカーソル位置を算出
  *
- * @param   x		cursorPosX
- * @param   y		cursorPosY
+ * @param   x   cursorPosX
+ * @param   y   cursorPosY
  *
- * @retval  int		メニュー番号(下のコメント参照）
+ * @retval  int   メニュー番号(下のコメント参照）
  */
 //----------------------------------------------------------------------------------
 static int _get_nowcursor_pos( int x, int y )
@@ -878,13 +988,13 @@ static const u8 pos2xy_table[][2]={
 
 //----------------------------------------------------------------------------------
 /**
- * @brief	移動方向を渡すと実際に移動できるメニューの場所にカーソル位置を変更する
+ * @brief 移動方向を渡すと実際に移動できるメニューの場所にカーソル位置を変更する
  *
- * @param   work	FIELD_MENU_WORK
- * @param   mx		移動方向X
- * @param   my		移動方向Y
+ * @param   work  FIELD_MENU_WORK
+ * @param   mx    移動方向X
+ * @param   my    移動方向Y
  *
- * @retval  BOOL	移動した:TRUE  してない:FALSE
+ * @retval  BOOL  移動した:TRUE  してない:FALSE
  */
 //----------------------------------------------------------------------------------
 static BOOL _move_cursor( FIELD_MENU_WORK* work, int move )
@@ -937,8 +1047,9 @@ static void  FIELD_MENU_UpdateKey( FIELD_MENU_WORK* work )
     if( trg & PAD_BUTTON_B || 
         trg & PAD_BUTTON_X )
     {
-      work->isCancel = TRUE;
-      work->state = FMS_EXIT_INIT;
+      _cancel_func_set( work, TRUE );
+//      work->isCancel = TRUE;
+//      work->state = FMS_EXIT_INIT;
     }
     else
     { // カーソル表示
@@ -990,28 +1101,36 @@ static void  FIELD_MENU_UpdateKey( FIELD_MENU_WORK* work )
   if( trg & PAD_BUTTON_B || 
       trg & PAD_BUTTON_X )
   {
-    work->isCancel = TRUE;
-    work->state = FMS_EXIT_INIT;
+    _cancel_func_set( work, TRUE );
+//    work->isCancel = TRUE;
+//    work->state = FMS_EXIT_INIT;
   }
   else
   if( trg & PAD_BUTTON_A )
   {
-    work->isCancel = FALSE;
-    work->state = FMS_EXIT_INIT;
+    _cancel_func_set( work, FALSE );
+//    work->isCancel = FALSE;
+//    work->state = FMS_EXIT_INIT;
   }
 }
 
+
+#define MENU_BUTTON_END   ( 6 )
 static void  FIELD_MENU_UpdateTP( FIELD_MENU_WORK* work )
 {
+  // 1  2
+  // 3  4
+  // 5  6
+  //    7
   const GFL_UI_TP_HITTBL hitTbl[FIELD_MENU_ITEM_NUM+1] =
   {
-    { 24, 64 ,  8,120},
-    { 24, 64 ,136,248},
-    { 72,112 ,  8,120},
-    { 72,112 ,136,248},
-    {120,160 ,  8,120},
-    {120,160 ,136,248},
-    {168,192 ,  0,255},
+    { 24, 64 ,  8,120},   // 
+    { 24, 64 ,136,248},   // 
+    { 72,112 ,  8,120},   // 
+    { 72,112 ,136,248},   // 
+    {120,160 ,  8,120},   // 
+    {120,160 ,136,248},   // 
+    {168,192 ,  0,255},   // 「×」ボタン(MENU_BUTTON_END)
     {GFL_UI_TP_HIT_END,0,0,0},
   };
   
@@ -1024,10 +1143,36 @@ static void  FIELD_MENU_UpdateTP( FIELD_MENU_WORK* work )
     work->isUpdateCursor = TRUE;
     work->isDispCursor = FALSE;
     GFL_CLACT_WK_SetDrawEnable( work->cellCursor, FALSE );
+
+    // 「×」の時はアニメさせる
+    if(ret==MENU_BUTTON_END){
+      _cancel_func_set( work, TRUE );
+    }else{
+      _cancel_func_set( work, FALSE );
+    }
+  }
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief キャンセル操作の挙動を設定
+ *
+ * @param   work    
+ * @param   isCancel    
+ */
+//----------------------------------------------------------------------------------
+static void _cancel_func_set( FIELD_MENU_WORK *work, BOOL isCancel )
+{
+  if(isCancel==TRUE){
+    work->isCancel = TRUE;
+    work->state = FMS_EXIT_ANIME_WAIT;
+    GFL_CLACT_WK_SetAnmSeq( work->cellEndButton, 8 );
+  }else{
     work->isCancel = FALSE;
     work->state = FMS_EXIT_INIT;
   }
 }
+
 
 static void  FIELD_MENU_UpdateCursor( FIELD_MENU_WORK* work )
 {
@@ -1155,3 +1300,48 @@ static void FIELD_MENU_Icon_TransBmp( FIELD_MENU_WORK* work , FIELD_MENU_ICON *i
   }
 }
 
+
+#define FIELD_MENU_BG_OFFSET  ( INFOWIN_CHARAREA_SIZE/32 )   // menu_bg.ncgのキャラ数
+#define TOUCHBAR_PAL_OFFSET   ( 0x0003 )
+#define SCREEN_PAL_OFFSET     ( TOUCHBAR_PAL_OFFSET<<12 )
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief タッチバーのBGスクリーンを背景面に転送
+ *
+ * @param   work    
+ * @param   bg    
+ */
+//----------------------------------------------------------------------------------
+static void _trans_touchbar_screen( HEAPID heapId, int bgfrm )
+{
+  //  FIELD_MENU_BG_BACK
+  void *buf;
+  NNSG2dScreenData* screen;
+  // パレット
+  GFL_ARC_UTIL_TransVramPalette( APP_COMMON_GetArcId(),  APP_COMMON_GetBarPltArcIdx(), 
+                                 PALTYPE_SUB_BG, TOUCHBAR_PAL_OFFSET*16*2, 
+                                 32, heapId );
+  // キャラ
+  GFL_ARC_UTIL_TransVramBgCharacter( APP_COMMON_GetArcId(), APP_COMMON_GetBarCharArcIdx(), 
+                                    bgfrm, FIELD_MENU_BG_OFFSET, 0, 0, heapId );
+  // スクリーン読み込み
+  buf = GFL_ARC_UTIL_LoadScreen( APP_COMMON_GetArcId(), APP_COMMON_GetBarScrnArcIdx(),
+                                  0, &screen, heapId );
+  // スクリーン加工
+  {
+    int i;
+    u16 *scr = (u16*)screen->rawData;
+    for(i=0;i<32*24;i++){
+      scr[i] = (scr[i]+FIELD_MENU_BG_OFFSET) | SCREEN_PAL_OFFSET;
+    }
+  }
+
+  // スクリーン書き込み＆転送
+  GFL_BG_WriteScreenExpand( bgfrm,           0, 21, 32,  3,
+                            screen->rawData, 0, 21, 32, 24 );
+  GFL_BG_LoadScreenV_Req( bgfrm );
+
+  GFL_HEAP_FreeMemory( buf );
+  
+}

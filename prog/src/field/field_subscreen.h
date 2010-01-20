@@ -1,10 +1,10 @@
 //[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
 /**
- *	GAME FREAK inc.
+ *  GAME FREAK inc.
  *
- *	@file		field_subscreen.h
- *	@brief		InforBerの初期化・破棄　
- *	@date		2009.03.26	fieldmapから移植
+ *  @file   field_subscreen.h
+ *  @brief    InforBerの初期化・破棄　
+ *  @date   2009.03.26  fieldmapから移植
  *
  */
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
@@ -20,27 +20,27 @@ extern "C"{
 
 //-----------------------------------------------------------------------------
 /**
- *					定数宣言
+ *          定数宣言
 */
 //-----------------------------------------------------------------------------
 //BG面とパレット番号(仮設定
-#define FIELD_SUBSCREEN_BGPLANE	(GFL_BG_FRAME0_S)
-#define FIELD_SUBSCREEN_PALLET	(0xE)
+#define FIELD_SUBSCREEN_BGPLANE (GFL_BG_FRAME0_S)
+#define FIELD_SUBSCREEN_PALLET  (0xE)
 
 ///下画面のモード指定（デバッグでしかつかわないはず）
-typedef enum {	
-	FIELD_SUBSCREEN_NORMAL = 0,
-  FIELD_SUBSCREEN_TOPMENU,
-  FIELD_SUBSCREEN_UNION,
-	FIELD_SUBSCREEN_INTRUDE,
-	FIELD_SUBSCREEN_BEACON_VIEW,
-  FIELD_SUBSCREEN_NOGEAR,
+typedef enum {  
+  FIELD_SUBSCREEN_NORMAL = 0,         // Cギア
+  FIELD_SUBSCREEN_TOPMENU,            // フィールドメニュー
+  FIELD_SUBSCREEN_UNION,              // ユニオン下画面
+  FIELD_SUBSCREEN_INTRUDE,            // 侵入
+  FIELD_SUBSCREEN_BEACON_VIEW,        // すれ違い結果画面
+  FIELD_SUBSCREEN_NOGEAR,             // Cギアの未取得時
 #if PM_DEBUG
-	FIELD_SUBSCREEN_DEBUG_LIGHT,
-	FIELD_SUBSCREEN_DEBUG_TOUCHCAMERA,
-	FIELD_SUBSCREEN_DEBUG_SOUNDVIEWER,
+  FIELD_SUBSCREEN_DEBUG_LIGHT,        // デバッグライト制御パネル
+  FIELD_SUBSCREEN_DEBUG_TOUCHCAMERA,  // デバッグカメラ
+  FIELD_SUBSCREEN_DEBUG_SOUNDVIEWER,  // デバッグサウンド
 #endif
-	FIELD_SUBSCREEN_MODE_MAX,
+  FIELD_SUBSCREEN_MODE_MAX,
 
     //サブメニューの初期化に渡す前回モードで起動時に呼ばれた場合
   FIELD_SUBSCREEN_FIRST_CALL,
@@ -71,7 +71,7 @@ typedef enum {
 
 //-----------------------------------------------------------------------------
 /**
- *					構造体宣言
+ *          構造体宣言
 */
 //-----------------------------------------------------------------------------
 
@@ -79,7 +79,7 @@ typedef struct _FIELD_SUBSCREEN_WORK FIELD_SUBSCREEN_WORK;
 
 //-----------------------------------------------------------------------------
 /**
- *					プロトタイプ宣言
+ *          プロトタイプ宣言
 */
 //-----------------------------------------------------------------------------
 extern FIELD_SUBSCREEN_WORK* FIELD_SUBSCREEN_Init( u32 heapID,
@@ -104,12 +104,12 @@ extern const FIELD_MENU_ITEM_TYPE FIELD_SUBSCREEN_GetTopMenuItemNo( FIELD_SUBSCR
 extern void FIELD_SUBSCREEN_SetTopMenuItemNo( FIELD_SUBSCREEN_WORK* pWork , const FIELD_MENU_ITEM_TYPE itemType );
 
 
-#ifdef	PM_DEBUG
+#ifdef  PM_DEBUG
 extern void * FIELD_SUBSCREEN_DEBUG_GetControl(FIELD_SUBSCREEN_WORK * pWork);
-#endif	//PM_DEBUG
+#endif  //PM_DEBUG
 
 #ifdef _cplusplus
-}	// extern "C"{
+} // extern "C"{
 #endif
 
 
