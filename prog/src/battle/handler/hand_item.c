@@ -4220,7 +4220,7 @@ static void handler_RedCard( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
 
     // 相手を吹き飛ばしたら、アイテムを消費する
     {
-      BTL_HANDEX_PARAM_CONSUME_ITEM* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_SET_ITEM, pokeID );
+      BTL_HANDEX_PARAM_CONSUME_ITEM* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CONSUME_ITEM, pokeID );
       param->header.failSkipFlag = TRUE;
 
       HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_RedCard );
