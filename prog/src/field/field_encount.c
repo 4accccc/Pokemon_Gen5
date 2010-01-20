@@ -243,6 +243,9 @@ void* FIELD_ENCOUNT_SetWildEncount( FIELD_ENCOUNT *enc, u16 mons_no, u8 mons_lv,
     poke->monsNo = mons_no;
     poke->level = mons_lv;
 
+    if( flags & SCR_WILD_BTL_FLAG_ITEMNONE ){
+      poke->item = 0xFFFF;  //アイテム所持ナシ
+    }
     if( flags & SCR_WILD_BTL_FLAG_RARE ){
       poke->rare = TRUE;
     }

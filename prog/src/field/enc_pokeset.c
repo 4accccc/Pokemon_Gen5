@@ -55,12 +55,12 @@ typedef enum{
 
 #define PPD_ITEM_SLOT_NUM (3) //パーソナルのアイテムスロット数
 
-///@todo アイテムを持たせる確率定義 ビンゴがなくなる場合、変更が必要かも
-static u8 DATA_ItemRangeTable[][PPD_ITEM_SLOT_NUM] = {
+///アイテムを持たせる確率定義
+static const u8 DATA_ItemRangeTable[][PPD_ITEM_SLOT_NUM] = {
    {50,5,0},  //通常
-   {60,20,0}, //通常ふくがん
-   {45,5,5},  //ビンゴ
-   {55,20,5}, //ビンゴふくがん
+   {60,20,0}, //通常+ふくがん
+   {50,5,1},  //ハイレベルエンカウント時
+   {60,20,5}, //ハイレベルエンカウント時+ふくがん
 };
 
 //大量発生データ
@@ -86,7 +86,7 @@ static void eps_CheckSpaEncountLevel(const ENCPOKE_FLD_PARAM* efp,const ENC_COMM
 static void eps_PokeLottery( const ENCPOKE_FLD_PARAM* efp, const ENC_COMMON_DATA* enc_tbl, ENC_POKE_PARAM* outPoke );
 
 static void eps_EncPokeItemSet(POKEMON_PARAM* pp,
-    POKEMON_PERSONAL_DATA* personal,ITEM_RANGE item_range,u8 bingo_f,u8 negau_hosei);
+    POKEMON_PERSONAL_DATA* personal,ITEM_RANGE item_range, BOOL itemlv_up);
 static u32 eps_EncPokeCalcPersonalRand(
     const ENCPOKE_FLD_PARAM* efp, const POKEMON_PERSONAL_DATA*  personal,const ENC_POKE_PARAM* poke );
 
@@ -413,12 +413,12 @@ void ENCPOKE_PPSetup(POKEMON_PARAM* pp,const ENCPOKE_FLD_PARAM* efp, const ENC_P
   PP_Put( pp, ID_PARA_form_no, poke->form );
 
   //アイテムセット
-  if(poke->item != ITEM_DUMMY_DATA){
-    PP_Put( pp, ID_PARA_item, poke->item );
-  }else if(efp->enc_type == ENC_TYPE_BINGO){
-    eps_EncPokeItemSet(pp,personal,efp->spa_item_rate_up,TRUE,0); //@todo
-  }else{
-    eps_EncPokeItemSet(pp,personal,efp->spa_item_rate_up,FALSE,0);
+  if( poke->item <= ITEM_DATA_MAX ){
+    if(poke->item != ITEM_DUMMY_DATA){
+      PP_Put( pp, ID_PARA_item, poke->item );
+    }else{
+      eps_EncPokeItemSet(pp,personal,efp->spa_item_rate_up, efp->location == ENC_LOCATION_GROUND_H);
+    }
   }
 
   //親の性別と名前をPut
@@ -651,13 +651,6 @@ static u32 eps_GetEncountTable( const ENCOUNT_DATA *inData, ENCPOKE_FLD_PARAM* i
   u32 num = 0,calctype = ENCPROB_CALCTYPE_NORMAL;
   const ENC_COMMON_DATA* src;
 
-  if(ioEfp->enc_type == ENC_TYPE_BINGO)
-  {
-    //ここでビンゴエンカウントテーブルを取得
-    ioEfp->prob_calctype = ENCPROB_CALCTYPE_EQUAL;
-    ioEfp->tbl_num = ENC_MONS_NUM_BINGO;
-    return ioEfp->tbl_num;
-  }
   //@todo 大量発生チェック
   if( eps_CheckGeneratePoke( inData, ioEfp, zone_id, outTable)){
     return ioEfp->tbl_num;
@@ -788,9 +781,9 @@ static void eps_CheckSpaEncountLevel(const ENCPOKE_FLD_PARAM* efp,const ENC_COMM
       max = enc_tbl[i].maxLevel;
     }
   }
-  //ビンゴorMinMaxに差があるエンカウントタイプの場合+5level。ただし、テーブル内のmaxlevelは超えない
+  //MinMaxに差があるエンカウントタイプの場合+5level。ただし、テーブル内のmaxlevelは超えない
   if((ioPoke->level + 5) <= max){
-    if(efp->enc_type == ENC_TYPE_BINGO || lv_diff == TRUE){
+    if(lv_diff == TRUE){
       ioPoke->level += 5;
       return;
     }
@@ -830,27 +823,21 @@ static void eps_PokeLottery( const ENCPOKE_FLD_PARAM* efp, const ENC_COMMON_DATA
  *  @brief  エンカウントポケモンアイテムセット
  */
 static void eps_EncPokeItemSet(POKEMON_PARAM* pp,
-    POKEMON_PERSONAL_DATA* personal,ITEM_RANGE item_range,u8 bingo_f,u8 negau_hosei)
+    POKEMON_PERSONAL_DATA* personal,ITEM_RANGE item_range,BOOL itemlv_up)
 {
   int i;
   u16 item[PPD_ITEM_SLOT_NUM];
-  u8  rnd,tmp,range[PPD_ITEM_SLOT_NUM];
+  u8  rnd,tmp;
+  const u8  *range;
 
   for(i = 0;i < 3;i++){
     item[i] = POKE_PERSONAL_GetParam(personal,POKEPER_ID_item1+i);
   }
-  if(item[0] == item[1] && item[1] == item[2]){
-    PP_Put(pp,ID_PARA_item,item[0]);  //3スロットが全部同じアイテムなら必ず持たせる
+  if(item[0] == item[1]){
+    PP_Put(pp,ID_PARA_item,item[0]);  //2スロットが同じアイテムなら必ず持たせる
     return;
   }
-  MI_CpuCopy8(range,DATA_ItemRangeTable[item_range+bingo_f*2],sizeof(u8)*PPD_ITEM_SLOT_NUM);
-
-  //ビンゴならレンジ補正
-  if(bingo_f){
-    //@todo
-    range[0] -= negau_hosei;
-    range[2] += negau_hosei;
-  }
+  range = DATA_ItemRangeTable[item_range+itemlv_up*2];
   rnd = eps_GetPercentRand();
 
   tmp = 0;

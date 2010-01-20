@@ -101,6 +101,7 @@
 #define SCR_WILD_BTL_FLAG_NONE    (0x0000)  //フラグ無し
 #define SCR_WILD_BTL_FLAG_REGEND  (0x0001)  //伝説戦闘(エンカウントメッセージが変化する)
 #define SCR_WILD_BTL_FLAG_RARE    (0x0002)  //強制レアポケ戦闘
+#define SCR_WILD_BTL_FLAG_ITEMNONE  (0x0004)  //所持アイテム強制無し
 
 ///野生ポケモン戦　再戦コードチェック
 #define SCR_WILD_BTL_RET_CAPTURE  (0) //捕まえた

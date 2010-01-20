@@ -41,7 +41,6 @@ typedef enum{
 typedef enum{
  ENC_TYPE_NORMAL,   ///<通常エンカウント
  ENC_TYPE_EFFECT,   ///<エフェクトエンカウント
- ENC_TYPE_BINGO,    ///<ビンゴエンカウント
  ENC_TYPE_FORCE,    ///<強制エンカウント(甘い香り/甘い蜜)
  ENC_TYPE_WFBC,    ///<WFBCエンカウント(ランダムマップ)
  ENC_TYPE_MAX,
