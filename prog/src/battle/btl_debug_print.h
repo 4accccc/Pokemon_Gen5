@@ -125,6 +125,7 @@ typedef enum {
   DBGSTR_SVFL_SendServerCmd,
   DBGSTR_SVFL_AllClientCmdPlayComplete,
   DBGSTR_SVFL_GotoQuit,
+  DBGSTR_SVFL_ReqWazaCallActOrder,
 
   DBGSTR_SC_PutCmd,
   DBGSTR_SC_ReservedPos,

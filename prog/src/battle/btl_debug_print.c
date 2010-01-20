@@ -167,7 +167,7 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_SVFL_SendServerCmd:       return "サーバコマンド送信します ... result=%d\n";
   case DBGSTR_SVFL_AllClientCmdPlayComplete:  return "全クライアントのコマンド再生終了...result=%d\n";
   case DBGSTR_SVFL_GotoQuit:            return "バトル終了へ\n";
-
+  case DBGSTR_SVFL_ReqWazaCallActOrder: return "他ワザ呼び出し [%d] --> [%d], target=%d\n";
 
 
   case DBGSTR_POSPOKE_Out:              return " poke[%d] out from pos[%d]\n";
