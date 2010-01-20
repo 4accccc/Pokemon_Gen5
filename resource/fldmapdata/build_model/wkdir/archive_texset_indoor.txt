@@ -57,5 +57,10 @@
 "texset/indoor057.nsbtx"
 "texset/indoor058.nsbtx"
 "texset/indoor059.nsbtx"
+"texset/indoor060.nsbtx"
+"texset/indoor061.nsbtx"
+"texset/indoor062.nsbtx"
+"texset/indoor063.nsbtx"
+"texset/indoor064.nsbtx"
 
 

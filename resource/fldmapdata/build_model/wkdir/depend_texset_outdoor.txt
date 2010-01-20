@@ -46,7 +46,10 @@ DEP_TEXSET_OUTDOOR =	\
 	texset/outdoor045.nsbtx	\
 	texset/outdoor046.nsbtx	\
 	texset/outdoor047.nsbtx	\
-	texset/outdoor048.nsbtx
+	texset/outdoor048.nsbtx	\
+	texset/outdoor049.nsbtx	\
+	texset/outdoor050.nsbtx	\
+	texset/outdoor051.nsbtx
 
 DEP_TEXSET_IMD_OUTDOOR001 = \
 	$(SRCDIR)/pc_01.imd \
@@ -655,8 +658,6 @@ DEP_TEXSET_IMD_OUTDOOR017 = \
 	$(SRCDIR)/out_vender01.imd \
 	$(SRCDIR)/out_dust01.imd \
 	$(SRCDIR)/tennis_01.imd \
-	$(SRCDIR)/d19_shirne01.imd \
-	$(SRCDIR)/d19_house01.imd \
 	$(SRCDIR)/outwarp01.imd \
 	$(SRCDIR)/outwarp02.imd \
 	$(SRCDIR)/outwarp03.imd
@@ -1274,13 +1275,7 @@ DEP_TEXSET_IMD_OUTDOOR036 = \
 	$(SRCDIR)/door01.imd \
 	$(SRCDIR)/c0101.imd \
 	$(SRCDIR)/thouse_01.imd \
-	$(SRCDIR)/c04_carousel_01.imd \
-	$(SRCDIR)/c04_fwheel_01.imd \
-	$(SRCDIR)/c04_gym_01.imd \
-	$(SRCDIR)/c04_plant_01.imd \
 	$(SRCDIR)/cart_01.imd \
-	$(SRCDIR)/c4_gate_01.imd \
-	$(SRCDIR)/c04_poke01.imd \
 	$(SRCDIR)/sign01.imd \
 	$(SRCDIR)/sign02.imd \
 	$(SRCDIR)/sign03.imd \
@@ -1309,7 +1304,13 @@ DEP_TEXSET_IMD_OUTDOOR037 = \
 	$(SRCDIR)/door01.imd \
 	$(SRCDIR)/c0101.imd \
 	$(SRCDIR)/thouse_01.imd \
+	$(SRCDIR)/c04_carousel_01.imd \
+	$(SRCDIR)/c04_fwheel_01.imd \
+	$(SRCDIR)/c04_gym_01.imd \
+	$(SRCDIR)/c04_plant_01.imd \
 	$(SRCDIR)/cart_01.imd \
+	$(SRCDIR)/c4_gate_01.imd \
+	$(SRCDIR)/c04_poke01.imd \
 	$(SRCDIR)/sign01.imd \
 	$(SRCDIR)/sign02.imd \
 	$(SRCDIR)/sign03.imd \
@@ -1681,4 +1682,101 @@ DEP_TEXSET_IMD_OUTDOOR048 = \
 
 texset/outdoor048.imd: $(DEP_TEXSET_IMD_OUTDOOR048) texset/tmp/outdoor048.list
 	$(TEXMAG) -q -n -o $@ -S texset/tmp/outdoor048.list
+
+DEP_TEXSET_IMD_OUTDOOR049 = \
+	$(SRCDIR)/pc_01.imd \
+	$(SRCDIR)/gate_01.imd \
+	$(SRCDIR)/rock_01.imd \
+	$(SRCDIR)/fountain_01.imd \
+	$(SRCDIR)/o_chair_01.imd \
+	$(SRCDIR)/o_parasol_01.imd \
+	$(SRCDIR)/o_table_01.imd \
+	$(SRCDIR)/searock_01.imd \
+	$(SRCDIR)/searock_02.imd \
+	$(SRCDIR)/plant_01.imd \
+	$(SRCDIR)/door_pc.imd \
+	$(SRCDIR)/door01.imd \
+	$(SRCDIR)/c0101.imd \
+	$(SRCDIR)/thouse_01.imd \
+	$(SRCDIR)/cart_01.imd \
+	$(SRCDIR)/sign01.imd \
+	$(SRCDIR)/sign02.imd \
+	$(SRCDIR)/sign03.imd \
+	$(SRCDIR)/sign04.imd \
+	$(SRCDIR)/out_vender01.imd \
+	$(SRCDIR)/out_dust01.imd \
+	$(SRCDIR)/d19_shirne01.imd \
+	$(SRCDIR)/d19_house01.imd \
+	$(SRCDIR)/outwarp01.imd \
+	$(SRCDIR)/outwarp02.imd \
+	$(SRCDIR)/outwarp03.imd
+
+texset/outdoor049.imd: $(DEP_TEXSET_IMD_OUTDOOR049) texset/tmp/outdoor049.list
+	$(TEXMAG) -q -n -o $@ -S texset/tmp/outdoor049.list
+
+DEP_TEXSET_IMD_OUTDOOR050 = \
+	$(SRCDIR)/pc_01.imd \
+	$(SRCDIR)/gate_01.imd \
+	$(SRCDIR)/stump_01.imd \
+	$(SRCDIR)/stump_02.imd \
+	$(SRCDIR)/rock_01.imd \
+	$(SRCDIR)/dtree_01.imd \
+	$(SRCDIR)/dtree_02.imd \
+	$(SRCDIR)/fountain_01.imd \
+	$(SRCDIR)/o_chair_01.imd \
+	$(SRCDIR)/o_parasol_01.imd \
+	$(SRCDIR)/o_table_01.imd \
+	$(SRCDIR)/searock_01.imd \
+	$(SRCDIR)/searock_02.imd \
+	$(SRCDIR)/plant_01.imd \
+	$(SRCDIR)/door_pc.imd \
+	$(SRCDIR)/door01.imd \
+	$(SRCDIR)/c0101.imd \
+	$(SRCDIR)/thouse_01.imd \
+	$(SRCDIR)/cart_01.imd \
+	$(SRCDIR)/sign01.imd \
+	$(SRCDIR)/sign02.imd \
+	$(SRCDIR)/sign03.imd \
+	$(SRCDIR)/sign04.imd \
+	$(SRCDIR)/out_vender01.imd \
+	$(SRCDIR)/out_dust01.imd \
+	$(SRCDIR)/outwarp01.imd \
+	$(SRCDIR)/outwarp02.imd \
+	$(SRCDIR)/outwarp03.imd
+
+texset/outdoor050.imd: $(DEP_TEXSET_IMD_OUTDOOR050) texset/tmp/outdoor050.list
+	$(TEXMAG) -q -n -o $@ -S texset/tmp/outdoor050.list
+
+DEP_TEXSET_IMD_OUTDOOR051 = \
+	$(SRCDIR)/pc_01.imd \
+	$(SRCDIR)/gate_01.imd \
+	$(SRCDIR)/stump_01.imd \
+	$(SRCDIR)/stump_02.imd \
+	$(SRCDIR)/rock_01.imd \
+	$(SRCDIR)/dtree_01.imd \
+	$(SRCDIR)/dtree_02.imd \
+	$(SRCDIR)/fountain_01.imd \
+	$(SRCDIR)/o_chair_01.imd \
+	$(SRCDIR)/o_parasol_01.imd \
+	$(SRCDIR)/o_table_01.imd \
+	$(SRCDIR)/searock_01.imd \
+	$(SRCDIR)/searock_02.imd \
+	$(SRCDIR)/plant_01.imd \
+	$(SRCDIR)/door_pc.imd \
+	$(SRCDIR)/door01.imd \
+	$(SRCDIR)/c0101.imd \
+	$(SRCDIR)/thouse_01.imd \
+	$(SRCDIR)/cart_01.imd \
+	$(SRCDIR)/sign01.imd \
+	$(SRCDIR)/sign02.imd \
+	$(SRCDIR)/sign03.imd \
+	$(SRCDIR)/sign04.imd \
+	$(SRCDIR)/out_vender01.imd \
+	$(SRCDIR)/out_dust01.imd \
+	$(SRCDIR)/outwarp01.imd \
+	$(SRCDIR)/outwarp02.imd \
+	$(SRCDIR)/outwarp03.imd
+
+texset/outdoor051.imd: $(DEP_TEXSET_IMD_OUTDOOR051) texset/tmp/outdoor051.list
+	$(TEXMAG) -q -n -o $@ -S texset/tmp/outdoor051.list
 

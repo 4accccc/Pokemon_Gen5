@@ -562,6 +562,15 @@ LAND_DEPEND_LIST = \
 	$(DIR_OUTPUT)/m_dun2102_00_00.3dppack \
 	$(DIR_OUTPUT)/m_dun2001_00_00.3dppack \
 	$(DIR_OUTPUT)/m_dun2102_00_01.3dppack \
+	$(DIR_OUTPUT)/m_dun2201_00_00.3dppack \
+	$(DIR_OUTPUT)/m_dun2202_00_00.3dppack \
+	$(DIR_OUTPUT)/m_dun2203_00_00.3dppack \
+	$(DIR_OUTPUT)/m_dun2001_00_00.3dppack \
+	$(DIR_OUTPUT)/m_dun2002_00_00.3dppack \
+	$(DIR_OUTPUT)/m_dun2003_00_00.3dppack \
+	$(DIR_OUTPUT)/m_dun2004_00_00.3dppack \
+	$(DIR_OUTPUT)/m_dun2005_00_00.3dppack \
+	$(DIR_OUTPUT)/m_dun2005_00_00.3dppack \
 	$(DIR_OUTPUT)/m_ruin01_00_00.3dppack \
 	$(DIR_OUTPUT)/m_gate01_00_00.3dppack \
 	$(DIR_OUTPUT)/m_pc01_00_00.3dppack \
@@ -733,6 +742,7 @@ LAND_DEPEND_LIST = \
 	$(DIR_OUTPUT)/m_bsubway02_03_00.3dppack \
 	$(DIR_OUTPUT)/m_labo03_00_01.3dppack \
 	$(DIR_OUTPUT)/m_hh03_00_00.3dppack \
+	$(DIR_OUTPUT)/m_zbuill01_00_00.3dppack \
 	$(DIR_OUTPUT)/C3_00_00.ngpack \
 	$(DIR_OUTPUT)/C3_00_01.ngpack \
 	$(DIR_OUTPUT)/C3_01_00.ngpack \
