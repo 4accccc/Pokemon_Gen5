@@ -1,0 +1,22 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: entrance_camera.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_ENTRANCE_CAMERA_NAIX_
+#define NARC_ENTRANCE_CAMERA_NAIX_
+
+enum {
+	NARC_entrance_camera_exit_type_sp1_bin = 0,
+	NARC_entrance_camera_exit_type_sp2_bin = 1,
+	NARC_entrance_camera_exit_type_sp3_bin = 2,
+	NARC_entrance_camera_exit_type_sp4_bin = 3,
+	NARC_entrance_camera_exit_type_sp5_bin = 4
+};
+
+/* NARC_ENTRANCE_CAMERA_NAIX_ */
+#endif

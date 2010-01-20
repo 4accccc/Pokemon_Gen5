@@ -28,6 +28,7 @@ SUBDIRS	=	zonetable/zoneindex \
 					gimmick \
 					camera_scroll \
 					camera_scene \
+					entrance_camera \
 					pushrock \
 					eventdata/binary \
 					zonetable/fieldskill_mapeffect \
