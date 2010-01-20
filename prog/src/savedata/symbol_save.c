@@ -23,9 +23,9 @@
 //  構造体定義
 //==============================================================================
 ///シンボルエンカウントセーブデータ
-typedef struct{
+struct _SYMBOL_SAVE_WORK{
   u16 monsno[SYMBOL_POKE_MAX];    ///<シンボルポケモン
-}SYMBOL_SAVE_WORK;
+};
 
 
 
@@ -56,3 +56,28 @@ void SymbolSave_WorkInit(void *work)
   GFL_STD_MemClear(symbol_save, sizeof(SYMBOL_SAVE_WORK));
 }
 
+
+//==============================================================================
+//
+//  
+//
+//==============================================================================
+//==================================================================
+/**
+ * ポケモン登録
+ *
+ * @param   symbol_save		シンボルセーブ領域へのポインタ
+ * @param   monsno        ポケモン番号
+ */
+//==================================================================
+void SymbolSave_Set(SYMBOL_SAVE_WORK *symbol_save, u16 monsno)
+{
+  int i;
+  
+  for(i = 0; i < SYMBOL_POKE_MAX; i++){
+    if(symbol_save->monsno[i] == 0){
+      symbol_save->monsno[i] = monsno;
+      return;
+    }
+  }
+}
