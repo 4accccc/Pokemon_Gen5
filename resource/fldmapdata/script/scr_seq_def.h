@@ -6284,13 +6284,15 @@
 /**
  * 遊覧船内時間更新
  * @param add_time    加算時間（秒）
+ * @param whistle     加算結果後、汽笛がなる時間の場合、汽笛を鳴らすかどうか　0：鳴らさない　1：鳴らす
  */
 //--------------------------------------------------------------
-#define _PL_BOAT_ADD_TIME(add_time) _ASM_PL_BOAT_ADD_TIME add_time
+#define _PL_BOAT_ADD_TIME(add_time, whistle) _ASM_PL_BOAT_ADD_TIME add_time, whistle
 
-  .macro  _ASM_PL_BOAT_ADD_TIME add_time
+  .macro  _ASM_PL_BOAT_ADD_TIME add_time, whistle
   .short  EV_SEQ_PL_BOAT_ADD_TIME
   .short  \add_time
+  .short  \whistle
   .endm
 
 

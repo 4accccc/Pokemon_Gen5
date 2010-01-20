@@ -670,7 +670,7 @@ ev_short_talker:
 	_BALLOONWIN_CLOSE()
 
   //時間経過（10秒）
-  _PL_BOAT_ADD_TIME(10)
+  _PL_BOAT_ADD_TIME(10, 1)
 
   _RET
 
@@ -701,7 +701,7 @@ ev_long_talker:
 	_BALLOONWIN_CLOSE()
 
   //時間経過（45秒）
-  _PL_BOAT_ADD_TIME(45)
+  _PL_BOAT_ADD_TIME(45, 0)
 
   _RET
   

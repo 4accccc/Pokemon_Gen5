@@ -139,10 +139,11 @@ GMEVENT *PL_BOAT_CheckEvt(GAMESYS_WORK *gsys, PL_BOAT_WORK_PTR work)
  * @brief	‹­§“I‚ÉŽžŠÔŒo‰ß‚³‚¹‚é@‹D“JŽžŠÔ‚ð‚Ü‚½‚¢‚½ê‡‚Í‹D“JŽžŠÔ’¼‘O‚Ü‚Å‚Ì§ŒÀ‚ð‚©‚¯‚é
  * @param   work      PL_BOAT_WORK_PTR
  * @param   inAddSec  ‰ÁŽZŽžŠÔi•bj
+ * @param   inWhistle   ‰ÁŽZŒ‹‰ÊŒãA‹D“J‚ª‚È‚éŽžŠÔ‚Ìê‡A‹D“J‚ð–Â‚ç‚·‚©‚Ç‚¤‚©@0F–Â‚ç‚³‚È‚¢@1F–Â‚ç‚·
  * @retval  none
 */
 //--------------------------------------------------------------
-void PL_BOAT_AddTimeEvt(PL_BOAT_WORK_PTR work, const int inAddSec)
+void PL_BOAT_AddTimeEvt(PL_BOAT_WORK_PTR work, const int inAddSec, const int inWhistle)
 {
   int margine = work->Time%(WHISTLE_MARGINE*30);
   OS_Printf("now_time = %d::%d SEC\n",work->Time, work->Time/30);
@@ -150,8 +151,16 @@ void PL_BOAT_AddTimeEvt(PL_BOAT_WORK_PTR work, const int inAddSec)
   margine += (inAddSec*30);
   if ( margine >= WHISTLE_MARGINE*30 )
   {
-    //‹D“J‚ª–Â‚é’¼‘O‚Ü‚ÅŽžŠÔ‚ðis
-    work->Time = (work->WhistleCount+1)*(WHISTLE_MARGINE*30)-1;
+    if ( inWhistle )
+    {
+      //‹D“J‚ª–Â‚é’¼‘O‚Ü‚ÅŽžŠÔ‚ðis
+      work->Time = (work->WhistleCount+1)*(WHISTLE_MARGINE*30)-1;
+    }
+    else
+    {
+      //‹D“J‚ª–Â‚Á‚½’¼Œã‚Ü‚ÅŽžŠÔ‚ðis
+      work->Time = (work->WhistleCount+1)*(WHISTLE_MARGINE*30);
+    }
   }
   else
   {
