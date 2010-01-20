@@ -191,7 +191,7 @@ def print_access_table(file,dir)
       # 2文字の数値チェック
       if i.slice(/camera/) == "camera"
           line = "\t{ " + dir + "_setup, NELEMS(" + dir + "_setup), NARC_demo3d_" + i.sub(/.ica/,"_bin") + ", "
-          line += param[0].to_s + ", " + param[1].to_s + ", " + param[2].to_s + "," + " },"
+          line += param[0].to_s + ", " + param[1].to_s + ", " + param[2].to_s + ", " + param[3].to_s + ", " + " },"
           file.puts line        
       end
     end

@@ -139,7 +139,8 @@ DEMO3D_ENGINE_WORK* Demo3D_ENGINE_Init( DEMO3D_GRAPHIC_WORK* graphic, DEMO3D_ID 
   HOSAKA_Printf("anime_speed=%d\n", wk->anime_speed );
   
   // 2画面連結フラグを取得
-  wk->is_double =  Demo3D_DATA_GetDoubleFlag( demo_id );
+  wk->is_double = Demo3D_DATA_GetDoubleFlag( demo_id );
+  HOSAKA_Printf("is_double=%d\n", wk->is_double );
   
   // 2画面連結設定初期化
   if( wk->is_double )
@@ -297,6 +298,7 @@ BOOL Demo3D_ENGINE_Main( DEMO3D_ENGINE_WORK* wk )
 
   ICA_CAMERA_SetCameraStatus( p_camera, wk->ica_anime );
   
+#if 0
   // アニメーション更新
   {
     int i;
@@ -311,6 +313,7 @@ BOOL Demo3D_ENGINE_Main( DEMO3D_ENGINE_WORK* wk )
       }
     }
   }
+#endif
 
   // 描画
 	DEMO3D_GRAPHIC_3D_StartDraw( wk->graphic );
@@ -324,7 +327,7 @@ BOOL Demo3D_ENGINE_Main( DEMO3D_ENGINE_WORK* wk )
     VEC_Set( &status.scale, FX32_ONE, FX32_ONE, FX32_ONE );
     MTX_Identity33( &status.rotate );
 
-    for( i=0; i<Demo3D_DATA_GetUnitMax( wk->demo_id ); i++ )
+    for( i=0; i<1; i++ )//Demo3D_DATA_GetUnitMax( wk->demo_id ); i++ )
     {
       GFL_G3D_OBJ* obj = GFL_G3D_UTIL_GetObjHandle( wk->g3d_util, wk->unit_idx[i] );
       GFL_G3D_DRAW_DrawObject( obj, &status );

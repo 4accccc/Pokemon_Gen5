@@ -462,14 +462,12 @@ static GFL_PROC_RESULT Demo3DProc_Main( GFL_PROC *proc, int *seq, void *pwk, voi
 	//3D描画
   is_end = Demo3D_ENGINE_Main( wk->engine );
 
-  // [OUT] フレーム値を設定
-  {
-    wk->param->end_frame  = DEMO3D_ENGINE_GetNowFrame( wk->engine ) >> FX32_SHIFT; 
-  }
 
   // ループ検出で終了
   if( is_end )
   {
+    // [OUT] フレーム値を設定
+    wk->param->end_frame  = DEMO3D_ENGINE_GetNowFrame( wk->engine ) >> FX32_SHIFT; 
     wk->param->result     = DEMO3D_RESULT_FINISH;
     return GFL_PROC_RES_FINISH;
   }

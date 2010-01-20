@@ -15,7 +15,7 @@
 static const DEMO3D_CMD_DATA demo3d_cmd01_data[] = 
 { 
   // èâä˙âªÉpÉâÉÅÅ[É^
-  {  DEMO3D_CMD_TYPE_SE, DEMO3D_CMD_SYNC_INIT,      { SEQ_SE_FLD_79, } }, // îg
+  {  DEMO3D_CMD_TYPE_SE, DEMO3D_CMD_SYNC_INIT, { SEQ_SE_FLD_79, } }, // îg
   // ãDìJ
   {  DEMO3D_CMD_TYPE_SE, 0,       { SEQ_SE_FLD_78, } }, 
   {  DEMO3D_CMD_TYPE_SE, 1*45*30, { SEQ_SE_FLD_78, } },
@@ -24,6 +24,7 @@ static const DEMO3D_CMD_DATA demo3d_cmd01_data[] =
   {  DEMO3D_CMD_TYPE_SE, 4*45*30, { SEQ_SE_FLD_78, } },
   {  DEMO3D_CMD_TYPE_END, 0, { 0 } }, ///< ÉRÉ}ÉìÉhèIóπ
 };
+
 static const DEMO3D_CMD_DATA demo3d_cmd01_end_data[] = 
 { 
   { DEMO3D_CMD_TYPE_SE_STOP, 0, { SEQ_SE_FLD_79 } }, // îgí‚é~
@@ -34,7 +35,6 @@ static const DEMO3D_CMD_DATA demo3d_cmd01_end_data[] =
 static const DEMO3D_CMD_DATA demo3d_cmd02_data[] = 
 { 
 #if 0
-
   { DEMO3D_CMD_TYPE_BRIGHTNESS_REQ, 10, { 4, 16, 0 }, },
   { DEMO3D_CMD_TYPE_BRIGHTNESS_REQ, 15, { 4, 0, 16 }, },
   
