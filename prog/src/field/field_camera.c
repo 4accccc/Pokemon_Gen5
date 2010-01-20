@@ -2691,6 +2691,30 @@ void FIELD_CAMERA_LoadCameraArea( FIELD_CAMERA * camera, u32 area_id, HEAPID hea
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief  カメラ可動範囲処理後のターゲットポジション
+ */
+//-----------------------------------------------------------------------------
+void FIELD_CAMERA_GetCameraAreaAfterTargetPos( const FIELD_CAMERA * camera, VecFx32* p_pos )
+{
+  GF_ASSERT( camera );
+  GF_ASSERT( p_pos );
+  *p_pos = camera->target_write;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カメラ可動範囲処理後のカメラポジション
+ */
+//-----------------------------------------------------------------------------
+void FIELD_CAMERA_GetCameraAreaAfterCameraPos( const FIELD_CAMERA * camera, VecFx32* p_pos )
+{
+  GF_ASSERT( camera );
+  GF_ASSERT( p_pos );
+  *p_pos = camera->campos_write;
+}
+
+//----------------------------------------------------------------------------
+/**
  *	@brief  カメラエリア　動作フラグを設定
  *
  *	@param	camera    カメラ
