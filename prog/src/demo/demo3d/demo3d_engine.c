@@ -59,7 +59,6 @@ struct _DEMO3D_ENGINE_WORK {
   u32                     start_frame;
   // [PRIVATE]
   BOOL          is_double;
-  VecFx32       def_camera_pos;
   fx32          anime_speed;  ///< アニメーションスピード
   ICA_ANIME*    ica_anime;
   GFL_G3D_UTIL* g3d_util;
@@ -129,9 +128,6 @@ DEMO3D_ENGINE_WORK* Demo3D_ENGINE_Init( DEMO3D_GRAPHIC_WORK* graphic, DEMO3D_ID 
 
     GFL_G3D_CAMERA_SetfovySin( p_camera, FX_SinIdx( (fovySin>>FX32_SHIFT) / 2 * PERSPWAY_COEFFICIENT ) );
     GFL_G3D_CAMERA_SetfovyCos( p_camera, FX_CosIdx( (fovyCos>>FX32_SHIFT) / 2 * PERSPWAY_COEFFICIENT ) );
-  
-    // 起動時のカメラPOSを保持
-    GFL_G3D_CAMERA_GetPos( p_camera, &wk->def_camera_pos );
   }
    
   // アニメーションスピードを取得
@@ -140,6 +136,15 @@ DEMO3D_ENGINE_WORK* Demo3D_ENGINE_Init( DEMO3D_GRAPHIC_WORK* graphic, DEMO3D_ID 
   
   // 2画面連結フラグを取得
   wk->is_double = Demo3D_DATA_GetDoubleFlag( demo_id );
+
+#ifdef PM_DEBUG
+  //@TODO セレクトを押しながら起動すると強制的に二画面化
+  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_SELECT )
+  {
+    wk->is_double = TRUE;
+  }
+#endif // PM_DEBUG
+  
   HOSAKA_Printf("is_double=%d\n", wk->is_double );
   
   // 2画面連結設定初期化
@@ -245,6 +250,113 @@ void Demo3D_ENGINE_Exit( DEMO3D_ENGINE_WORK* wk )
   GFL_HEAP_FreeMemory( wk );
 }
 
+#if 0
+static void debug_camera_test( GFL_G3D_CAMERA* camera )
+{ 
+  VecFx32 pos;
+
+  static int num = 1;
+  static BOOL mode = 0;
+
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_START )
+  {
+    mode = (mode+1)%3;
+
+    if( mode == 0 )
+    {
+      OS_Printf("mode=%d Pos\n",mode);
+    }
+    else if( mode == 1 )
+    {
+      OS_Printf("mode=%d CamUp\n",mode);
+    }
+    else
+    {
+      OS_Printf("mode=%d Target\n",mode);
+    }
+  }
+  
+  if( mode == 0 )
+  {
+    GFL_G3D_CAMERA_GetPos( camera, &pos );
+  }
+  else if( mode == 1 )
+  {
+    GFL_G3D_CAMERA_GetCamUp( camera, &pos );
+  }
+  else
+  {
+    GFL_G3D_CAMERA_GetTarget( camera, &pos );
+  }
+
+  if( CHECK_KEY_CONT( PAD_BUTTON_X ) )
+  {
+    num++;
+    OS_Printf("num=%d \n",num);
+  }
+  else if( CHECK_KEY_CONT( PAD_BUTTON_Y ) )
+  {
+    num--;
+    OS_Printf("num=%d \n",num);
+  }
+  else if( CHECK_KEY_CONT( PAD_KEY_UP ) )
+  {
+    pos.y += num;
+    OS_Printf("pos{ 0x%x, 0x%x, 0x%x } \n", pos.x, pos.y, pos.z );
+  }
+  else if( CHECK_KEY_CONT( PAD_KEY_DOWN ) )
+  {
+    pos.y -= num;
+    OS_Printf("pos{ 0x%x, 0x%x, 0x%x } \n", pos.x, pos.y, pos.z );
+  }    
+  else if( CHECK_KEY_CONT( PAD_KEY_LEFT ) )
+  {
+    pos.x += num;
+    OS_Printf("pos{ 0x%x, 0x%x, 0x%x } \n", pos.x, pos.y, pos.z );
+  }
+  else if( CHECK_KEY_CONT( PAD_KEY_RIGHT ) )
+  {
+    pos.x -= num;
+    OS_Printf("pos{ 0x%x, 0x%x, 0x%x } \n", pos.x, pos.y, pos.z );
+  }
+  else if( CHECK_KEY_CONT( PAD_BUTTON_L ) )
+  {
+    pos.z += num;
+    OS_Printf("pos{ 0x%x, 0x%x, 0x%x } \n", pos.x, pos.y, pos.z );
+  }
+  else if( CHECK_KEY_CONT( PAD_BUTTON_R ) )
+  {
+    pos.z -= num;
+    OS_Printf("pos{ 0x%x, 0x%x, 0x%x } \n", pos.x, pos.y, pos.z );
+  }
+  
+  // データセット
+  if( mode == 0 )
+  {
+    GFL_G3D_CAMERA_SetPos( camera, &pos );
+  }
+  else if( mode == 1 )
+  {
+    GFL_G3D_CAMERA_SetCamUp( camera, &pos );
+  }
+  else
+  {
+    GFL_G3D_CAMERA_SetTarget( camera, &pos );
+  }
+
+  // データ吐き出し
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT )
+  {
+    GFL_G3D_CAMERA_GetPos( camera, &pos );
+    OS_Printf("static const sc_camera_pos = { 0x%x, 0x%x, 0x%x }; \n", pos.x, pos.y, pos.z );
+    GFL_G3D_CAMERA_GetCamUp( camera, &pos );
+    OS_Printf("static const sc_camera_up =  { 0x%x, 0x%x, 0x%x }; \n", pos.x, pos.y, pos.z );
+    GFL_G3D_CAMERA_GetTarget( camera, &pos );
+    OS_Printf("static const sc_camera_target = { 0x%x, 0x%x, 0x%x }; \n", pos.x, pos.y, pos.z );
+  }
+}
+#endif
+
 //-----------------------------------------------------------------------------
 /**
  *	@brief  3Dグラフィック 主処理
@@ -257,46 +369,64 @@ void Demo3D_ENGINE_Exit( DEMO3D_ENGINE_WORK* wk )
 BOOL Demo3D_ENGINE_Main( DEMO3D_ENGINE_WORK* wk )
 {
   GFL_G3D_CAMERA* p_camera;
-  BOOL is_loop;
+  BOOL is_end;
 
-  OS_Printf("frame=%f \n", FX_FX32_TO_F32(ICA_ANIME_GetNowFrame( wk->ica_anime )) );
+//  OS_Printf("frame=%f \n", FX_FX32_TO_F32(ICA_ANIME_GetNowFrame( wk->ica_anime )) );
 
   // コマンド実行
   Demo3D_CMD_Main( wk->cmd, ICA_ANIME_GetNowFrame( wk->ica_anime ) );
 
   p_camera = DEMO3D_GRAPHIC_GetCamera( wk->graphic );
+  
+  // ICAカメラ更新
+  is_end = ICA_ANIME_IncAnimeFrame( wk->ica_anime, wk->anime_speed );
+
+  ICA_CAMERA_SetCameraStatus( p_camera, wk->ica_anime );
 
   //@TODO
-#if 0
   // 片方の画面の表示位置をずらす
   if( wk->is_double )
   {
     VecFx32 pos;
+    VecFx32 tar;
+    
+    static int num = 20;
+    static int _pos_y = 0;
+    static int _tar_y = 0;
+    
+    GFL_G3D_CAMERA_GetPos( p_camera, &pos );
+    GFL_G3D_CAMERA_GetTarget( p_camera, &tar );
+
+#ifdef DEBUG_CAMERA
+    debug_camera_test()
+    if( GFL_UI_KEY_GetCont() & PAD_BUTTON_A )
+    {
+      wk->anime_speed = 0;
+    }
+    else if( GFL_UI_KEY_GetCont() & PAD_BUTTON_B )
+    {
+      wk->anime_speed = FX32_ONE;
+    }
+#endif
 
     if( GFL_G3D_DOUBLE3D_GetFlip() )
     {
-      pos.x = wk->def_camera_pos.x;
-      pos.y = wk->def_camera_pos.y + FX32_CONST(2.0);
-      pos.z = wk->def_camera_pos.z;
+      // 下画面
     }
     else
     {
       // 上画面
-      pos.x = wk->def_camera_pos.x;
-      pos.y = wk->def_camera_pos.y;
-      pos.z = wk->def_camera_pos.z;
+      pos.y += _pos_y;
+      tar.y += _tar_y;
     }
-
-    HOSAKA_Printf("camera pos=%d %d %d \n", pos.x, pos.y, pos.z );
       
     GFL_G3D_CAMERA_SetPos( p_camera, &pos );
-  }
-#endif 
-  
-  // ICAカメラ更新
-  is_loop = ICA_ANIME_IncAnimeFrame( wk->ica_anime, wk->anime_speed );
+    GFL_G3D_CAMERA_SetTarget( p_camera, &tar );
 
-  ICA_CAMERA_SetCameraStatus( p_camera, wk->ica_anime );
+//  HOSAKA_Printf("pos.y=%d tar.y=%d \n", pos.y, tar.y );
+
+//  HOSAKA_Printf("camera pos= %d %d %d flip=%d \n", pos.x, pos.y, pos.z, GFL_G3D_DOUBLE3D_GetFlip() );
+  }
   
   // アニメーション更新
   {
@@ -340,7 +470,7 @@ BOOL Demo3D_ENGINE_Main( DEMO3D_ENGINE_WORK* wk )
   }
 
   // ループ検出で終了
-  return is_loop;
+  return is_end;
 }
 
 //-----------------------------------------------------------------------------

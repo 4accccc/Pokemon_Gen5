@@ -12,6 +12,10 @@
 
 typedef struct _DEMO3D_ENGINE_WORK DEMO3D_ENGINE_WORK;
 
+#ifdef PM_DEBUG
+//#define DEBUG_CAMERA //@TODO 2画面のカメラ操作デバッグ
+#endif //PM_DEBUG
+
 //=============================================================================
 /**
  *								定数定義

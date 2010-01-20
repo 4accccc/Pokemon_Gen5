@@ -141,6 +141,6 @@ static const GFL_G3D_UTIL_SETUP n_castle_setup[] = {
 //=========================================================================
 static const DEMO3D_SETUP_DATA c_demo3d_setup_data[ DEMO3D_ID_MAX ] = {
 	{ 0 }, // DEMO3D_ID_NULL
-	{ c_cruiser_setup, NELEMS(c_cruiser_setup), NARC_demo3d_c_camera_bin, 2048, 163840, 163840, 1,  },
-	{ n_castle_setup, NELEMS(n_castle_setup), NARC_demo3d_n_camera_bin, 4096, 286720, 286720, 1,  },
+	{ c_cruiser_setup, NELEMS(c_cruiser_setup), NARC_demo3d_c_camera_bin, 2048, 163840, 163840, 0,  },
+	{ n_castle_setup, NELEMS(n_castle_setup), NARC_demo3d_n_camera_bin, 4096, 286720, 286720, 0,  },
 };
