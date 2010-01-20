@@ -8,6 +8,7 @@
 //======================================================================
 
 #include "print/gf_font.h"
+#include "system/net_err.h"
 
 
 #ifndef DEBUGWIN_SYS_H__
@@ -30,9 +31,9 @@
 #define DEBUGWIN_TRG_KEY (PAD_BUTTON_SELECT)
 
 //各種退避領域サイズ(WBではエラー画面から拝借するのでサイズをあわせてる
-#define DEBUGWIN_CHAR_TEMP_AREA (0x4000)
-#define DEBUGWIN_SCRN_TEMP_AREA (0x800)
-#define DEBUGWIN_PLTT_TEMP_AREA (0x20)
+#define DEBUGWIN_CHAR_TEMP_AREA (NETERR_PUSH_CHARVRAM_SIZE)
+#define DEBUGWIN_SCRN_TEMP_AREA (NETERR_PUSH_SCRNVRAM_SIZE)
+#define DEBUGWIN_PLTT_TEMP_AREA (NETERR_PUSH_PLTTVRAM_SIZE)
 
 //======================================================================
 //	enum
