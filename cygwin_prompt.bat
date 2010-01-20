@@ -65,7 +65,7 @@ SET SVN_EDITOR=c:\tools\vim\gvim
 SET BMDS_SDK_ROOT=%PROJECT_ROOT%lib/BMDS_SDK/
 
 
-PATH=C:\tools;c:\cygwin\bin;c:\tools\vim;%WBLIBDIR%\TwlSDK\tools\bin;%WBLIBDIR%\TwlSystem\tools\bin;%WBLIBDIR%\..\..\tools;%PATH%;
+PATH=C:\tools;c:\cygwin\bin;c:\tools\vim;%WBLIBDIR%\TwlSDK\tools\bin;%WBLIBDIR%\TwlSystem\tools\bin;%WBLIBDIR%\..\tools;%PATH%;
 
 REM C:
 REM chdir C:\Cygwin\bin
