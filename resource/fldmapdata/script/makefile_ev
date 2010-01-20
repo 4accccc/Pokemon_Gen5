@@ -39,7 +39,8 @@ DEBUG_SCR_LIST_BIN	= scr_debug/debug_list.bin
 DEBUG_SCR_LIST_H		= scr_debug/debug_list.h
 COMPILE_TARGETS += $(DEBUG_SCR_LIST_BIN)
 ARCHIVE_TARGETS += $(DEBUG_SCR_LIST_BIN)
-ALL_SCRIPT_CDAT			= scr_debug/scr_filepath.cdat
+FILEPATH_CDAT			= scr_debug/scr_filepath.cdat
+FILEPATH_CONVERTER	= scr_debug/make_filepath.rb
 endif
 
 #MWAS,MWLD
@@ -70,7 +71,7 @@ endif
 LDIRT_CLEAN	= $(TARGET_DIR)/$(TARGET_NARC) $(TARGET_DIR)/$(TARGET_NAIX)
 ifeq ($(CONVERTUSER),true) #CONVERTUSER
 LDIRT_CLEAN	+= $(TARGET_NARC) $(TARGET_NAIX) $(COMPILE_TARGETS)
-LDIRT_CLEAN += $(ALL_SCRIPT_CDAT)
+LDIRT_CLEAN += $(FILEPATH_CDAT)
 else
 endif
 
@@ -84,7 +85,7 @@ endif
 #----------------------------------------------------------------------------
 #narc
 ifeq ($(PM_DEBUG),yes)		#デバッグビルドの場合
-do-build: $(TARGET_DIR)/$(TARGET_NARC) $(ALL_SCRIPT_CDAT)
+do-build: $(TARGET_DIR)/$(TARGET_NARC) $(FILEPATH_CDAT)
 else
 do-build: $(TARGET_DIR)/$(TARGET_NARC) 
 endif
@@ -124,9 +125,9 @@ $(TARGET_NARC): $(COMPILE_TARGETS)
 
 
 ifeq ($(PM_DEBUG),yes)
-$(ALL_SCRIPT_CDAT):	zone_script.list uniq_script.list
+$(FILEPATH_CDAT):	zone_script.list uniq_script.list $(FILEPATH_CONVERTER)
 	@echo スクリプトデバッガ用ファイル生成
-	@echo $(ARCHIVE_TARGETS) | ruby scr_debug/make_filepath.rb $(ALL_SCRIPT_CDAT)
+	@echo $(ARCHIVE_TARGETS) | ruby $(FILEPATH_CONVERTER) $(FILEPATH_CDAT)
 endif
 
 #----------------------------------------------------------------------------
@@ -147,5 +148,5 @@ diff:
 #----------------------------------------------------------------------------
 test:
 	@#echo $(SCRIPTFILES)
-	@echo $(ARCHIVE_TARGETS) | ruby scr_debug/make_filepath.rb $(ALL_SCRIPT_CDAT)
+	@echo $(ARCHIVE_TARGETS) | ruby $(FILEPATH_CONVERTER) $(FILEPATH_CDAT)
 
