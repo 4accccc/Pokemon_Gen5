@@ -91,7 +91,7 @@ static void WFBC_CORE_SortPeopleArray( FIELD_WFBC_CORE_PEOPLE* p_array, HEAPID h
 // 人データをつめる
 static void WFBC_CORE_PackPeopleArray( FIELD_WFBC_CORE_PEOPLE* p_array );
 // 人データを押し出し設定
-static void WFBC_CORE_PushPeople( FIELD_WFBC_CORE* p_wk, const MYSTATUS* cp_mystatus, const FIELD_WFBC_CORE_PEOPLE* cp_people );
+static void WFBC_CORE_PushPeople( FIELD_WFBC_CORE* p_wk, const MYSTATUS* cp_mystatus, const FIELD_WFBC_CORE_PEOPLE* cp_people, BOOL parent_set );
 // 配列がいっぱいかチェック
 static BOOL WFBC_CORE_IsPeopleArrayFull( const FIELD_WFBC_CORE_PEOPLE* cp_array );
 // 人を入れる
@@ -533,47 +533,11 @@ void FIELD_WFBC_CORE_CalcMoodInTown( FIELD_WFBC_CORE* p_wk )
 //-----------------------------------------------------------------------------
 void FIELD_WFBC_CORE_AddPeople( FIELD_WFBC_CORE* p_wk, const MYSTATUS* cp_mystatus, const FIELD_WFBC_CORE_PEOPLE* cp_people )
 {
-  WFBC_CORE_PushPeople( p_wk, cp_mystatus, cp_people );
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  人を探す  NPCIDの人
- *
- *	@param	p_wk      ワーク
- *	@param	npc_id    NPC　ID
- *
- *	@retval 人ワーク
- *	@retval NULL    いない
- */
-//-----------------------------------------------------------------------------
-FIELD_WFBC_CORE_PEOPLE* FIELD_WFBC_CORE_GetNpcIDPeople( FIELD_WFBC_CORE* p_wk, u32 npc_id )
-{
-  int i;
-
-  GF_ASSERT( p_wk );
-  GF_ASSERT( npc_id < FIELD_WFBC_NPCID_MAX );
-
-  for( i=0; i<FIELD_WFBC_PEOPLE_MAX; i++ )
-  {
-    if( FIELD_WFBC_CORE_PEOPLE_IsInData( &p_wk->people[i] ) )
-    {
-      if( p_wk->people[i].npc_id == npc_id )
-      {
-        return &p_wk->people[i];
-      }
-    }
-
-    if( FIELD_WFBC_CORE_PEOPLE_IsInData( &p_wk->back_people[i] ) )
-    {
-      if( p_wk->back_people[i].npc_id == npc_id )
-      {
-        return &p_wk->back_people[i];
-      }
-    }
+  if( p_wk->type == FIELD_WFBC_CORE_TYPE_BLACK_CITY ){
+    WFBC_CORE_PushPeople( p_wk, cp_mystatus, cp_people, TRUE );
+  }else{
+    WFBC_CORE_PushPeople( p_wk, cp_mystatus, cp_people, FALSE );
   }
-
-  return NULL;
 }
 
 //----------------------------------------------------------------------------
@@ -669,68 +633,6 @@ MMDL_HEADER* FIELD_WFBC_CORE_MMDLHeaderCreateHeapLo( const FIELD_WFBC_CORE* cp_w
 //-------------------------------------
 ///	FIELD_WFBC_CORE_PEOPLE用関数
 //=====================================
-//----------------------------------------------------------------------------
-/**
- *	@brief  情報の整合性チェック
- *
- *	@param	cp_wk   ワーク
- *
- *	@retval TRUE    正常
- *	@retval FALSE   不正
- */
-//-----------------------------------------------------------------------------
-BOOL FIELD_WFBC_CORE_PEOPLE_IsConfomity( const FIELD_WFBC_CORE_PEOPLE* cp_wk )
-{
-  GF_ASSERT( cp_wk );
-
-  return TRUE;
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  データ調整  不正データの場合は、正常な情報に書き換えます。
- *
- *	@param	p_wk  人物ワーク
- */
-//-----------------------------------------------------------------------------
-void FIELD_WFBC_CORE_PEOPLE_Management( FIELD_WFBC_CORE_PEOPLE* p_wk )
-{
-  GF_ASSERT( p_wk );
-
-  // npc_idが範囲内？
-
-  // 機嫌値が最大値以上？
-
-  // 親の名前に終端コードがある？
-
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  データの有無   不正データの場合、FALSEを返します。
- *
- *	@param	cp_wk   人物ワーク
- *
- *	@retval TRUE    データあり
- *	@retval FALSE   データなし
- */
-//-----------------------------------------------------------------------------
-BOOL FIELD_WFBC_CORE_PEOPLE_IsInData( const FIELD_WFBC_CORE_PEOPLE* cp_wk )
-{
-  GF_ASSERT( cp_wk );
-  
-  if( !cp_wk->data_in )
-  {
-    return FALSE;
-  }
-  if( FIELD_WFBC_CORE_PEOPLE_IsConfomity( cp_wk ) == FALSE )
-  {
-    return FALSE;
-  }
-
-  return TRUE;
-}
-
 //----------------------------------------------------------------------------
 /**
  *	@brief  話しかけたときの計算
@@ -1554,9 +1456,10 @@ static void WFBC_CORE_PackPeopleArray( FIELD_WFBC_CORE_PEOPLE* p_array )
  *
  *	@param	p_wk          ワーク
  *	@param	cp_people     追加する人データ
+ *	@param  parent_set    親の情報を設定するか？  （BCならせっていしてください）
  */
 //-----------------------------------------------------------------------------
-static void WFBC_CORE_PushPeople( FIELD_WFBC_CORE* p_wk, const MYSTATUS* cp_mystatus, const FIELD_WFBC_CORE_PEOPLE* cp_people )
+static void WFBC_CORE_PushPeople( FIELD_WFBC_CORE* p_wk, const MYSTATUS* cp_mystatus, const FIELD_WFBC_CORE_PEOPLE* cp_people, BOOL parent_set )
 {
   FIELD_WFBC_CORE_PEOPLE* p_add_people;
   
@@ -1572,7 +1475,10 @@ static void WFBC_CORE_PushPeople( FIELD_WFBC_CORE* p_wk, const MYSTATUS* cp_myst
 
   // 通常世界の情報に追加
   p_add_people = WFBC_CORE_PushPeopleArray( p_wk->people, cp_people );
-  FIELD_WFBC_CORE_PEOPLE_SetParentData( p_add_people, cp_mystatus );
+  if( parent_set )
+  {
+    FIELD_WFBC_CORE_PEOPLE_SetParentData( p_add_people, cp_mystatus );
+  }
 }
 
 //----------------------------------------------------------------------------

@@ -20,6 +20,7 @@ extern "C"{
 #include "field/intrude_common.h"
 #include "field/field_wfbc_people_def.h"
 #include "field/fldmmdl.h"
+#include "field/intrude_common.h"
 
 #include "savedata/mystatus.h"
 
@@ -60,6 +61,18 @@ typedef enum {
   GAMEDATA_WFBC_ID_MINE,        // 自分のWFBCワーク
   GAMEDATA_WFBC_ID_MAX,
 } GAMEDATA_WFBC_ID;
+
+
+//-------------------------------------
+///	表裏定義
+//=====================================
+typedef enum {
+  FIELD_WFBC_FRONT,   // 表
+  FIELD_WFBC_BACK,    // 裏
+    
+  FIELD_WFBC_MAX,     // FIELD_WFBC_CORE_GetNpcIDPeopleでは両方という意味になる
+
+} FIELD_WFBC_FRONT_BACK_TYPE;
 
 
 //-------------------------------------
@@ -190,8 +203,8 @@ extern void FIELD_WFBC_CORE_SortData( FIELD_WFBC_CORE* p_wk, HEAPID heapID );
 extern void FIELD_WFBC_CORE_CalcMoodInTown( FIELD_WFBC_CORE* p_wk );
 // 人を足しこむ
 extern void FIELD_WFBC_CORE_AddPeople( FIELD_WFBC_CORE* p_wk, const MYSTATUS* cp_mystatus, const FIELD_WFBC_CORE_PEOPLE* cp_people );
-// 人を探す
-extern FIELD_WFBC_CORE_PEOPLE* FIELD_WFBC_CORE_GetNpcIDPeople( FIELD_WFBC_CORE* p_wk, u32 npc_id );
+// 人を探す 常駐システム
+extern FIELD_WFBC_CORE_PEOPLE* FIELD_WFBC_CORE_GetNpcIDPeople( FIELD_WFBC_CORE* p_wk, u32 npc_id, FIELD_WFBC_FRONT_BACK_TYPE type );
 // データから、MMDLヘッダーを生成
 // mapmode == field_status_local.h MAPMODE
 // 戻り値は、GFL_HEAP_Freeをしてください。
@@ -209,11 +222,11 @@ extern u32 FIELD_WFBC_CORE_DEBUG_GetRandomNpcID( const FIELD_WFBC_CORE* cp_wk );
 //ワークのクリア
 extern void FIELD_WFBC_CORE_PEOPLE_Clear( FIELD_WFBC_CORE_PEOPLE* p_wk ); // 『常駐』
 
-//整合性チェック 
+//整合性チェック 　常駐システム
 extern BOOL FIELD_WFBC_CORE_PEOPLE_IsConfomity( const FIELD_WFBC_CORE_PEOPLE* cp_wk );
-//データの調整  不正データの場合、正常な情報に書き換えます。
+//データの調整  不正データの場合、正常な情報に書き換えます。　常駐システム
 extern void FIELD_WFBC_CORE_PEOPLE_Management( FIELD_WFBC_CORE_PEOPLE* p_wk );
-// データの有無   不正データの場合、FALSEを返します。
+// データの有無   不正データの場合、FALSEを返します。 常駐システム
 extern BOOL FIELD_WFBC_CORE_PEOPLE_IsInData( const FIELD_WFBC_CORE_PEOPLE* cp_wk );
 
 // 話しかけた計算！
@@ -474,6 +487,125 @@ extern u16 FIELD_WFBC_EVENT_GetWFPokeCatchEventItem( const FIELD_WFBC_EVENT* cp_
 extern void FIELD_WFBC_EVENT_SetWFPokeCatchEventItem( FIELD_WFBC_EVENT* p_wk, u16 item );
 
 
+//-----------------------------------------------------------------------------
+/**
+ *					通信情報
+*/
+//-----------------------------------------------------------------------------
+//-------------------------------------
+///	NPC_IDさんの状態取得リクエストタイプ
+//=====================================
+typedef enum 
+{
+  FIELD_WFBC_COMM_NPC_REQ_THERE,      // 所在確認
+  FIELD_WFBC_COMM_NPC_REQ_WISH_TAKE,  // 連れて行きたい
+  FIELD_WFBC_COMM_NPC_REQ_TAKE,       // 連れていった
+
+  FIELD_WFBC_COMM_NPC_REQ_TYPE_NUM,   // システム内で使用
+} FIELD_WFBC_COMM_NPC_REQ_TYPE;
+
+
+//-------------------------------------
+///	NPC_IDさんの状態 応答タイプ
+//=====================================
+typedef enum 
+{
+  FIELD_WFBC_COMM_NPC_ANS_ON,         // います。
+  FIELD_WFBC_COMM_NPC_ANS_OFF,        // いません。
+  FIELD_WFBC_COMM_NPC_ANS_TAKE_OK,    // つれていってください。
+  FIELD_WFBC_COMM_NPC_ANS_TAKE_NG,    // つれていけません。
+
+  FIELD_WFBC_COMM_NPC_ANS_TYPE_NUM,   // システム内で使用
+} FIELD_WFBC_COMM_NPC_ANS_TYPE;
+
+
+//-------------------------------------
+///	子ー＞親  NPC_ID関連　リクエスト
+//=====================================
+typedef struct {
+  int net_id;   // リクエストを出しているのは誰か？
+  u16 npc_id;
+  u16 req_type; // FIELD_WFBC_COMM_NPC_REQ_TYPE
+} FIELD_WFBC_COMM_NPC_REQ;
+
+//-------------------------------------
+///	親ー＞子  NPC_ID関連　アンサー
+//=====================================
+typedef struct {
+  int net_id;   // 誰に対する返答か？
+  u16 npc_id;
+  u16 ans_type; // FIELD_WFBC_COMM_NPC_ANS_TYPE
+} FIELD_WFBC_COMM_NPC_ANS;
+
+//-------------------------------------
+///	通信用情報
+//=====================================
+typedef struct {
+  u16 netID;
+  
+  u16 buff_msk;
+  
+  // 通信バッファ
+  FIELD_WFBC_COMM_NPC_REQ recv_req_que[ FIELD_COMM_MEMBER_MAX ];
+  FIELD_WFBC_COMM_NPC_ANS recv_ans;
+  
+  FIELD_WFBC_COMM_NPC_REQ send_req;
+  FIELD_WFBC_COMM_NPC_ANS send_ans_que[ FIELD_COMM_MEMBER_MAX ];
+} WFBC_COMM_DATA;
+
+//-------------------------------------
+///	処理管理
+//=====================================
+extern void FIELD_WFBC_COMM_DATA_Init( WFBC_COMM_DATA* p_wk );
+extern void FIELD_WFBC_COMM_DATA_Exit( WFBC_COMM_DATA* p_wk );
+extern void FIELD_WFBC_COMM_DATA_Oya_Main( WFBC_COMM_DATA* p_wk, FIELD_WFBC_CORE* p_mywfbc );
+extern void FIELD_WFBC_COMM_DATA_Ko_ChangeNpc( WFBC_COMM_DATA* p_wk, FIELD_WFBC_CORE* p_mywfbc, FIELD_WFBC_CORE* p_oyawfbc, const MYSTATUS* cp_mystatus, u16 npc_id );
+
+
+//-------------------------------------
+///	通信用処理
+//    受信のながれ
+//      受信した情報を以下の関数に渡すだけです。
+//        FIELD_WFBC_COMM_DATA_SetRecvCommAnsData
+//        FIELD_WFBC_COMM_DATA_SetRecvCommReqData
+//    送信の流れ
+//      以下の関数で、送信情報があるかチェックし、送信してください。
+//        FIELD_WFBC_COMM_DATA_GetSendCommAnsData
+//        FIELD_WFBC_COMM_DATA_GetSendCommAnsData
+//      送信が完了したら、送信情報をクリアしてください。
+//        FIELD_WFBC_COMM_DATA_ClearSendCommAnsData
+//        FIELD_WFBC_COMM_DATA_ClearSendCommReqData
+//
+//    親にリクエストを出す。応答を待つ
+//      まず、内部バッファをクリアします。
+//        FIELD_WFBC_COMM_DATA_ClearReqAnsData
+//      リクエスト情報を設定します。
+//        FIELD_WFBC_COMM_DATA_SetReqData
+//      応答を待ちます。
+//        FIELD_WFBC_COMM_DATA_WaitAnsData
+//      応答情報を取得します。
+//        FIELD_WFBC_GetAnsData
+//      
+//=====================================
+// 受信情報の設定
+extern void FIELD_WFBC_COMM_DATA_SetRecvCommAnsData( WFBC_COMM_DATA* p_wk, const FIELD_WFBC_COMM_NPC_ANS* cp_ans );
+extern void FIELD_WFBC_COMM_DATA_SetRecvCommReqData( WFBC_COMM_DATA* p_wk, u16 netID, const FIELD_WFBC_COMM_NPC_REQ* cp_req );
+
+// 送信情報の取得
+extern BOOL FIELD_WFBC_COMM_DATA_GetSendCommAnsData( const WFBC_COMM_DATA* cp_wk, u16 netID, FIELD_WFBC_COMM_NPC_ANS* p_ans );
+extern BOOL FIELD_WFBC_COMM_DATA_GetSendCommReqData( const WFBC_COMM_DATA* cp_wk, FIELD_WFBC_COMM_NPC_REQ* p_req );
+
+// 送信完了したデータは破棄してください。
+extern void FIELD_WFBC_COMM_DATA_ClearSendCommAnsData( WFBC_COMM_DATA* p_wk, u16 netID );
+extern void FIELD_WFBC_COMM_DATA_ClearSendCommReqData( WFBC_COMM_DATA* p_wk );
+
+// リクエスト情報の設定
+extern void FIELD_WFBC_COMM_DATA_SetReqData( WFBC_COMM_DATA* p_wk, u16 npc_id, FIELD_WFBC_COMM_NPC_REQ_TYPE req_type );
+extern BOOL FIELD_WFBC_COMM_DATA_WaitAnsData( const WFBC_COMM_DATA* cp_wk, u16 npc_id );
+extern FIELD_WFBC_COMM_NPC_ANS_TYPE FIELD_WFBC_GetAnsData( const WFBC_COMM_DATA* cp_wk );
+
+// リクエストを出す前に呼んでください
+extern void FIELD_WFBC_COMM_DATA_ClearReqAnsData( WFBC_COMM_DATA* p_wk );
 
 
 #ifdef _cplusplus

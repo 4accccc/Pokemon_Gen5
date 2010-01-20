@@ -59,6 +59,9 @@ static const u32 sc_FIELD_WFBC_BLOCK_FILE[ FIELD_WFBC_CORE_TYPE_MAX ] =
 //=====================================
 #define FIELD_WFBC_NOW_MAP_ERR  ( 0xffff )
 
+
+
+
 //-----------------------------------------------------------------------------
 /**
  *					\‘¢‘ÌéŒ¾
@@ -175,6 +178,7 @@ typedef struct {
 } WFBC_DRAW_PARAM;
 
 
+
 //-------------------------------------
 ///	WFBCƒ[ƒN
 //=====================================
@@ -274,7 +278,6 @@ FIELD_WFBC* FIELD_WFBC_Create( HEAPID heapID )
   p_wk = GFL_HEAP_AllocClearMemory( heapID, sizeof(FIELD_WFBC) );
 
   WFBC_Clear( p_wk );
-
 
   return p_wk;
 }
@@ -712,7 +715,6 @@ BOOL FIELD_WFBC_IsBattlePeople( const FIELD_WFBC* cp_wk, u32 npc_id )
 
   return FIELD_WFBC_CORE_PEOPLE_IsBattle( &cp_people->people_local );
 }
-
 
 
 
@@ -1442,8 +1444,6 @@ static void WFBC_DRAW_PARAM_MakeMapData( WFBC_DRAW_PARAM* p_wk, const FIELD_WFBC
     }
   }
 }
-
-
 
 
 

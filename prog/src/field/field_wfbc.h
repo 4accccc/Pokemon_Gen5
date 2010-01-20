@@ -135,6 +135,7 @@ extern BOOL FIELD_WFBC_IsBattlePeople( const FIELD_WFBC* cp_wk, u32 npc_id );
 
 
 
+
 //-------------------------------------
 ///	l•¨î•ñ‚Ìæ“¾
 //=====================================
