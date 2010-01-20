@@ -245,8 +245,12 @@ CTVT_COMM_WORK* CTVT_COMM_InitSystem( COMM_TVT_WORK *work , const HEAPID heapId 
       }
     }
     
+#if (defined(SDK_TWL))
     if( OS_IsRunOnTwl() == TRUE &&
         OS_IsRestrictPhotoExchange() == FALSE )
+#else
+    if( TRUE )
+#endif
     {
       commWork->beacon.canUseCamera = 1;
     }
