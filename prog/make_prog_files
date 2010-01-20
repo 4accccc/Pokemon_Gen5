@@ -1550,3 +1550,7 @@ SRCS_OVERLAY_ZUKAN = app/zukan/zukan.c \
 
 
 
+# ƒoƒgƒ‹Ú‘±ƒfƒ‚
+#===> SRCS_OVERLAY_UI_COMMON
+SRCS_OVERLAY_COMM_BATTLE_DEMO = demo/comm_battle_demo/comm_battle_demo.c
+
