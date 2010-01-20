@@ -311,6 +311,9 @@ enum {
   LX_DEFAULT_BTN = LX_HPVAL_BOX+CALC_NUMBOX_WIDTH(3)+4,
   LY_DEFAULT_BTN = LY_LV8,
 
+  LX_HANERU_BTN = LX_DEFAULT_BTN,
+  LY_HANERU_BTN = LY_LV10,
+
   ID_PARA_SEIKAKU = ID_PARA_end,
 };
 
@@ -380,6 +383,7 @@ typedef enum {
   INPUTBOX_ID_TYPE1,
   INPUTBOX_ID_TYPE2,
   INPUTBOX_ID_DEF_BUTTON,
+  INPUTBOX_ID_HANERU_BUTTON,
 
   INPUTBOX_ID_MAX,
 
@@ -617,6 +621,10 @@ static const INPUT_BOX_PARAM InputBoxParams[] = {
   { INPUTBOX_TYPE_BTN,  DMPSTR_NULL,      LX_TYPE_CAP,   LY_TYPE_CAP,
     LX_DEFAULT_BTN, LY_DEFAULT_BTN,    CALC_STRBOX_WIDTH(6), LINE_HEIGHT,
     ID_PARA_type2,  NARC_message_debug_makepoke_dat,  DMPSTR_DEFWAZA },
+
+  { INPUTBOX_TYPE_BTN,  DMPSTR_NULL,      LX_TYPE_CAP,   LY_TYPE_CAP,
+    LX_HANERU_BTN,  LY_HANERU_BTN,    CALC_STRBOX_WIDTH(6), LINE_HEIGHT,
+    ID_PARA_type2,  NARC_message_debug_makepoke_dat,  DMPSTR_HANERUDAKE },
 
 };
 
@@ -982,13 +990,28 @@ static BOOL root_ctrl( DMP_MAINWORK* wk )
             box_update( wk, wk->boxIdx, val );
           }
           break;
-        case INPUTBOX_TYPE_BTN: // 今のところデフォルトワザセットボタンだけ
+        case INPUTBOX_TYPE_BTN:
           {
             u32 i;
+
             update_dst( wk );
-            PP_SetWazaDefault( wk->dst );
-            for(i=0; i<PTL_WAZA_MAX; ++i)
+
+          // はねるだけボタンか…
+            if( wk->boxIdx == INPUTBOX_ID_HANERU_BUTTON )
             {
+              PP_SetWazaPos( wk->dst, WAZANO_HANERU, 0 );
+              for(i=1; i<PTL_WAZA_MAX; ++i){
+                PP_SetWazaPos( wk->dst, WAZANO_NULL, i );
+              }
+            }
+          // そうじゃなきゃデフォルトワザセットボタン
+            else
+            {
+              PP_SetWazaDefault( wk->dst );
+            }
+
+            // わざパラメータを反映
+            for(i=0; i<PTL_WAZA_MAX; ++i){
               box_setup( wk, INPUTBOX_ID_WAZA1+i, wk->dst );
               box_setup( wk, INPUTBOX_ID_PPMAX1+i, wk->dst );
             }
