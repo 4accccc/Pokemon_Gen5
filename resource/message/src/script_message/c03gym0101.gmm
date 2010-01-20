@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-20T14:05:04"/>
+	<create user="matsumiya" host="W00207" date="2010-01-20T22:12:25"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="544"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="698"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,30 +292,18 @@
 	</lock>
 
 
-	<row id="msg_c03gym0101_leader_01" text-color=",,,#000000,,,,,,,,,,,,,,,">
+	<row id="msg_c03gym0101_leader_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>戦闘前メッセージ</comment>
 		<attribute name="キャラ指定">LEADER3
 アーティ</attribute>
-		<language name="JPN" width="256">ぬうん？　……キミ
-どこかで　であったっけ？[BE:00:ページ切り替え（行送り）]
-なんとなく　みたような……？[BE:01:ページ切り替え（クリア）]
-……　……　……
-……　……　……[BE:01:ページ切り替え（クリア）]
-おわあ！　おもいだしたよ
-ヤグルマのもりで……[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">まちくたびれたよ！！▼
 むしポケモンが　キミと
-たたかいたいって　さわいでたよ[BE:01:ページ切り替え（クリア）]
+たたかいたいって　さわいでさ[BE:01:ページ切り替え（クリア）]
 じゃあ
 さっそくだけど　しょうぶ　だね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ぬうん？　……キミ
-どこかで　出会ったっけ？[BE:00:ページ切り替え（行送り）]
-なんとなく　見たような……？[BE:01:ページ切り替え（クリア）]
-……　……　……
-……　……　……[BE:01:ページ切り替え（クリア）]
-おわあ！　思い出したよ
-ヤグルマの森で……[BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">待ちくたびれたよ！！▼
 むしポケモンが　キミと
-闘いたいって　騒いでたよ[BE:01:ページ切り替え（クリア）]
+戦いたいって　騒いでさ[BE:01:ページ切り替え（クリア）]
 じゃあ
 さっそくだけど　勝負だね[BE:01:ページ切り替え（クリア）]</language>
 	</row>
