@@ -5,10 +5,10 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\w_332.spa
 %00
 BGのパレットフェード	すべて	0	12	0	0:0:0
 制御モード変更	継続
-SE再生	SEQ_SE_W002_01	SE2	10	0	120	0	0
-SE再生	SEQ_SE_W010_01	SE2	20	0	120	0	0
-SE再生	SEQ_SE_W014_03	SE2	40	100	120	0	0
-SE再生	SEQ_SE_W001_01	SE1	40	100	80	0	0
+SE再生	SEQ_SE_W002_01	SE2	10	600	120	0	0
+SE再生	SEQ_SE_W010_01	SE2	20	800	120	0	0
+SE再生	SEQ_SE_W010_01	SE2	40	300	120	0	0
+SE再生	SEQ_SE_W001_01	SE1	40	200	80	0	0
 SEパン	SE1	追従	防御側	防御側	0	50:0:0
 SEパン	SE2	追従	防御側	防御側	0	50:0:0
 制御モード変更	逐次

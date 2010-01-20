@@ -7,8 +7,9 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\w_348.spa
 SE再生	SEQ_SE_BC01	デフォルト	0	0	100	0	0
 エフェクト終了待ち	すべて
 制御モード変更	継続
-SE再生	SEQ_SE_W014_02	SE1	0	0	110	0	0
-SE再生	SEQ_SE_W348_02	SE2	30	0	120	0	0
+SE再生	SEQ_SE_W010_01	SE1	0	0	127	0	0
+SE再生	SEQ_SE_W010_01	SE1	12	0	127	0	0
+SE再生	SEQ_SE_W010_01	SE2	30	-200	80	0	0
 SE再生	SEQ_SE_W017_01	SE1	30	200	120	0	0
 SEパン	SE1	追従	防御側	防御側	0	60:0:0
 SEパン	SE2	追従	防御側	防御側	0	60:0:0

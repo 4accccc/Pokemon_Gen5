@@ -7,8 +7,8 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\w_422.spa
 SE再生	SEQ_SE_BC01	SYSTEM	0	0	100	0	0
 ポケモンアニメ	攻撃側	アニメストップ
 制御モード変更	継続
-SE再生	SEQ_SE_W011_01	SE1	20	0	120	0	0
-SE再生	SEQ_SE_W077_02	SE2	25	0	120	0	0
+SE再生	SEQ_SE_W044_02	SE1	20	-500	127	0	0
+SE再生	SEQ_SE_W077_02	SE2	25	0	90	0	0
 SEパン	SE1	追従	防御側	防御側	0	60:0:0
 SEパン	SE2	追従	防御側	防御側	0	60:0:0
 制御モード変更	逐次
