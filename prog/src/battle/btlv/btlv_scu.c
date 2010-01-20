@@ -75,6 +75,8 @@ enum {
   TOKWIN_HIDEPOS_ENEMY = -(TOKWIN_CGRDATA_CHAR_W * 8),
 
   TOKWIN_MOVE_FRAMES = 8,
+
+  BTLIN_STD_FADE_WAIT = 2,
 };
 
 
@@ -487,6 +489,18 @@ BOOL BTLV_SCU_WaitBtlIn( BTLV_SCU* wk )
 }
 
 
+/**
+ *  現状のマスター輝度値を参照してフェードパラメータ呼び分け
+ */
+static void btlin_startFade( int wait )
+{
+  if( GX_GetMasterBrightness() <= 0 ){
+    GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, wait );
+  }else{
+    GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_WHITEOUT, 16, 0, wait );
+  }
+}
+
 //--------------------------------------------------
 /**
  *  描画位置-> 位置, ポケモンパラメータ変換
@@ -523,7 +537,7 @@ static BOOL btlin_skip_core( BTLV_SCU* wk, int* seq, const u8* vposAry, u8 vposC
     }
     break;
   case 1:
-    GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 0 );
+    btlin_startFade(0);
     (*seq)++;
     break;
   case 2:
@@ -612,7 +626,7 @@ static BOOL btlin_wild_single( int* seq, void* wk_adrs )
     {
       BTLV_EFFECT_SetPokemon( BPP_GetViewSrcData(subwk->pp), subwk->viewPos );
       BTLV_EFFECT_AddByPos( subwk->viewPos, BTLEFF_SINGLE_ENCOUNT_1 );
-      GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 2 );
+      btlin_startFade( BTLIN_STD_FADE_WAIT );
       (*seq)++;
     }
     break;
@@ -732,7 +746,7 @@ static BOOL btlin_trainer_single( int* seq, void* wk_adrs )
     if( msgWinVisible_Update(&wk->msgwinVisibleWork) )
     {
       BTLV_EFFECT_AddByPos( subwk->viewPos, BTLEFF_SINGLE_TRAINER_ENCOUNT_1 );
-      GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 2 );
+      btlin_startFade( BTLIN_STD_FADE_WAIT );
       (*seq)++;
     }
     break;
@@ -903,7 +917,8 @@ static BOOL btlin_wild_double( int* seq, void* wk_adrs )
 
       BTL_STR_MakeStringStd( wk->strBufMain, BTL_STRID_STD_Encount_Wild2, 2, subwk->pokeID[0], subwk->pokeID[1] );
       BTLV_SCU_StartMsg( wk, wk->strBufMain, BTLV_MSGWAIT_STD );
-      GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 2 );
+//      GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 2 );
+      btlin_startFade( BTLIN_STD_FADE_WAIT );
       (*seq)++;
     }
     break;
@@ -1071,7 +1086,8 @@ static BOOL btlin_comm_double_multi( int* seq, void* wk_adrs )
 
       BTL_STR_MakeStringStd( wk->strBufMain, BTL_STRID_STD_Encount_Wild2, 2, subwk[0].pokeID, subwk[1].pokeID );
       BTLV_SCU_StartMsg( wk, wk->strBufMain, BTLV_MSGWAIT_STD );
-      GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 2 );
+//      GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 2 );
+      btlin_startFade( BTLIN_STD_FADE_WAIT );
       (*seq)++;
     }
     break;
@@ -1239,7 +1255,8 @@ static BOOL  btlinEff_OpponentTrainerIn( BTLV_SCU* wk, int* seq )
     if( msgWinVisible_Update(&wk->msgwinVisibleWork) )
     {
       BTLV_EFFECT_AddByPos( subwk->vpos, BTLEFF_SINGLE_TRAINER_ENCOUNT_1 );
-      GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 2 );
+//      GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 2 );
+      btlin_startFade( BTLIN_STD_FADE_WAIT );
       (*seq)++;
     }
     break;

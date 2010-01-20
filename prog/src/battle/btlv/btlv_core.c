@@ -385,7 +385,8 @@ static void setup_core( BTLV_CORE* wk, HEAPID heapID )
     GFL_CLACT_SYS_Create( &clsysinit, &vramBank, heapID );
   }
 
-  GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 16, 0 );
+//  GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 16, 0 );
+
 }
 static void cleanup_core( BTLV_CORE* wk )
 {
