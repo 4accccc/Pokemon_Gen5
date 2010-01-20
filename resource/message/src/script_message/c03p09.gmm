@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-02T17:30:10"/>
+	<create user="matsumiya" host="W00207" date="2010-01-19T21:50:13"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,7 +292,15 @@
 	</lock>
 
 
-	<row id="msg_c03p09_businessman1_01">
+	<row id="msg_c03p09_sign1_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>アトリエの看板
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">看板</attribute>
+		<language name="JPN" width="256">アトリエ</language>
+		<language name="JPN_KANJI" width="256">アトリエ</language>
+	</row>
+
+	<row id="msg_c03p09_businessman1_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・実験用</comment>
 		<attribute name="キャラ指定">BUSINESSMAN
@@ -301,7 +309,7 @@
 		<language name="JPN_KANJI" width="256">忙しい　忙しいッ！</language>
 	</row>
 
-	<row id="msg_c03p09_businessman2_01">
+	<row id="msg_c03p09_businessman2_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・実験用</comment>
 		<attribute name="キャラ指定">BUSINESSMAN
@@ -310,7 +318,7 @@
 		<language name="JPN_KANJI" width="256">一秒を　争う！</language>
 	</row>
 
-	<row id="msg_c03p09_businessman3_01">
+	<row id="msg_c03p09_businessman3_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・実験用</comment>
 		<attribute name="キャラ指定">BUSINESSMAN
@@ -321,7 +329,7 @@
 歩くだけでも　かっこいいよな！</language>
 	</row>
 
-	<row id="msg_c03p09_businessman4_01">
+	<row id="msg_c03p09_businessman4_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・実験用</comment>
 		<attribute name="キャラ指定">BUSINESSMAN
@@ -332,7 +340,7 @@
 きみの　ポケモン　元気かい？</language>
 	</row>
 
-	<row id="msg_c03p09_businessman5_01">
+	<row id="msg_c03p09_businessman5_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・実験用</comment>
 		<attribute name="キャラ指定">BUSINESSMAN
@@ -341,7 +349,7 @@
 		<language name="JPN_KANJI" width="256">……ブツブツ</language>
 	</row>
 
-	<row id="msg_c03p09_businessman6_01">
+	<row id="msg_c03p09_businessman6_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・実験用</comment>
 		<attribute name="キャラ指定">BUSINESSMAN
@@ -350,7 +358,7 @@
 		<language name="JPN_KANJI" width="256">１・２！　１・２！</language>
 	</row>
 
-	<row id="msg_c03p09_businessman7_01">
+	<row id="msg_c03p09_businessman7_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・実験用</comment>
 		<attribute name="キャラ指定">BUSINESSMAN
@@ -359,7 +367,7 @@
 		<language name="JPN_KANJI" width="256">タイム　イズ　マネー</language>
 	</row>
 
-	<row id="msg_c03p09_businessman8_01">
+	<row id="msg_c03p09_businessman8_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・実験用</comment>
 		<attribute name="キャラ指定">BUSINESSMAN
@@ -368,7 +376,7 @@
 		<language name="JPN_KANJI" width="256">あいかわらず　人が　多い……</language>
 	</row>
 
-	<row id="msg_c03p09_businessman9_01">
+	<row id="msg_c03p09_businessman9_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・実験用</comment>
 		<attribute name="キャラ指定">BUSINESSMAN
@@ -377,7 +385,7 @@
 		<language name="JPN_KANJI" width="256">……どこで　さぼろうかな</language>
 	</row>
 
-	<row id="msg_c03p09_businessman10_01">
+	<row id="msg_c03p09_businessman10_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・実験用</comment>
 		<attribute name="キャラ指定">BUSINESSMAN
@@ -388,7 +396,7 @@
 眠らない　街……</language>
 	</row>
 
-	<row id="msg_c03p09_businessman11_01">
+	<row id="msg_c03p09_businessman11_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・実験用</comment>
 		<attribute name="キャラ指定">BUSINESSMAN
@@ -399,7 +407,7 @@
 明後日も　明明後日も……</language>
 	</row>
 
-	<row id="msg_c03p09_businessman12_01">
+	<row id="msg_c03p09_businessman12_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・実験用</comment>
 		<attribute name="キャラ指定">BUSINESSMAN
@@ -410,7 +418,7 @@
 待っているだろうなあ……</language>
 	</row>
 
-	<row id="msg_c03p09_businessman13_01">
+	<row id="msg_c03p09_businessman13_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・実験用</comment>
 		<attribute name="キャラ指定">BUSINESSMAN
@@ -419,7 +427,7 @@
 		<language name="JPN_KANJI" width="256">私は　闘う　ビジネスマン</language>
 	</row>
 
-	<row id="msg_c03p09_businessman14_01">
+	<row id="msg_c03p09_businessman14_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・実験用</comment>
 		<attribute name="キャラ指定">BUSINESSMAN
@@ -428,7 +436,7 @@
 		<language name="JPN_KANJI" width="256">がんばれ！　おれ！！</language>
 	</row>
 
-	<row id="msg_c03p09_businessman15_01">
+	<row id="msg_c03p09_businessman15_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・実験用</comment>
 		<attribute name="キャラ指定">BUSINESSMAN
@@ -439,7 +447,7 @@
 ベースボール観戦だな</language>
 	</row>
 
-	<row id="msg_c03p09_ol1_01">
+	<row id="msg_c03p09_ol1_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・実験用</comment>
 		<attribute name="キャラ指定">OL
@@ -450,7 +458,7 @@
 ちょっと　急いでいるの！</language>
 	</row>
 
-	<row id="msg_c03p09_ol2_01">
+	<row id="msg_c03p09_ol2_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・実験用</comment>
 		<attribute name="キャラ指定">OL
@@ -459,7 +467,7 @@
 		<language name="JPN_KANJI" width="256">あら？　こんにちは！</language>
 	</row>
 
-	<row id="msg_c03p09_ol3_01">
+	<row id="msg_c03p09_ol3_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・実験用</comment>
 		<attribute name="キャラ指定">OL
@@ -468,7 +476,7 @@
 		<language name="JPN_KANJI" width="256">働く　女性は　美しい</language>
 	</row>
 
-	<row id="msg_c03p09_ol4_01">
+	<row id="msg_c03p09_ol4_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・実験用</comment>
 		<attribute name="キャラ指定">OL
@@ -477,7 +485,7 @@
 		<language name="JPN_KANJI" width="256">えっと　次の　仕事は……</language>
 	</row>
 
-	<row id="msg_c03p09_ol5_01">
+	<row id="msg_c03p09_ol5_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・実験用</comment>
 		<attribute name="キャラ指定">OL
