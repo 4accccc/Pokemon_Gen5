@@ -1298,6 +1298,9 @@ SRCS_OVERLAY_MCS_LIB = debug/gf_mcs.c \
                        debug/mcs_readfile.c \
                        field/script_debugger_core.c
 
+#===> SRCS_OVERLAY_MCS_LIB
+SRCS_OVERLAY_BATTLE_PRINT = battle/btl_debug_print.c
+
 #D_NUMINPUTƒ‰ƒCƒuƒ‰ƒŠ
 #===> SRCS_OVERLAY_DEV_WIFI
 #===> SRCS_OVERLAY_DEV_IRC
