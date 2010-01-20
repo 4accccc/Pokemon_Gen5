@@ -122,3 +122,5 @@
 "nsbmdfiles/c09_02_fire02.nsbmd"
 "nsbmdfiles/c09_04_tengai.nsbmd"
 "nsbmdfiles/c09_04_obj01.nsbmd"
+"nsbmdfiles/c09_03_obj.nsbmd"
+"nsbmdfiles/c09_03_light.nsbmd"

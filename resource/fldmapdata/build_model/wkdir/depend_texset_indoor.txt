@@ -2385,7 +2385,9 @@ DEP_TEXSET_IMD_INDOOR053 = \
 	$(SRCDIR)/warp02.imd \
 	$(SRCDIR)/warp03.imd \
 	$(SRCDIR)/warp04.imd \
-	$(SRCDIR)/c09_03_cart.imd
+	$(SRCDIR)/c09_03_cart.imd \
+	$(SRCDIR)/c09_03_obj.imd \
+	$(SRCDIR)/c09_03_light.imd
 
 texset/indoor053.imd: $(DEP_TEXSET_IMD_INDOOR053) texset/tmp/indoor053.list
 	$(TEXMAG) -q -n -o $@ -S texset/tmp/indoor053.list

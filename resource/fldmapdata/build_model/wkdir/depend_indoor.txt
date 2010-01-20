@@ -123,4 +123,6 @@ DEP_INDOOR	=	\
 	$(RESDIR)/c09_02_fire02.nsbmd \
 	$(RESDIR)/c09_04_tengai.nsbmd \
 	$(RESDIR)/c09_04_obj01.nsbmd \
+	$(RESDIR)/c09_03_obj.nsbmd \
+	$(RESDIR)/c09_03_light.nsbmd \
 
