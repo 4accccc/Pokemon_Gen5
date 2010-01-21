@@ -41,6 +41,10 @@
  */
 //=============================================================================
 
+// キー同時押しマクロ
+#define CHECK_KEY_TRG( key ) ( (GFL_UI_KEY_GetTrg() & (key) ) == (key) )
+#define CHECK_KEY_CONT( key ) ( (GFL_UI_KEY_GetCont() & (key) ) == (key) )
+
 //=============================================================================
 /**
  *								構造体定義
@@ -250,112 +254,202 @@ void Demo3D_ENGINE_Exit( DEMO3D_ENGINE_WORK* wk )
   GFL_HEAP_FreeMemory( wk );
 }
 
-#if 0
-static void debug_camera_test( GFL_G3D_CAMERA* camera )
+//===========================================================================
+// debug camera test
+//===========================================================================
+#ifdef DEBUG_CAMERA
+
+static void debug_vec_move( VecFx32* pos, int num )
 { 
-  VecFx32 pos;
-
-  static int num = 1;
-  static BOOL mode = 0;
-
-  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_START )
+  if( CHECK_KEY_CONT( PAD_KEY_UP ) )
   {
-    mode = (mode+1)%3;
-
-    if( mode == 0 )
-    {
-      OS_Printf("mode=%d Pos\n",mode);
-    }
-    else if( mode == 1 )
-    {
-      OS_Printf("mode=%d CamUp\n",mode);
-    }
-    else
-    {
-      OS_Printf("mode=%d Target\n",mode);
-    }
-  }
-  
-  if( mode == 0 )
-  {
-    GFL_G3D_CAMERA_GetPos( camera, &pos );
-  }
-  else if( mode == 1 )
-  {
-    GFL_G3D_CAMERA_GetCamUp( camera, &pos );
-  }
-  else
-  {
-    GFL_G3D_CAMERA_GetTarget( camera, &pos );
-  }
-
-  if( CHECK_KEY_CONT( PAD_BUTTON_X ) )
-  {
-    num++;
-    OS_Printf("num=%d \n",num);
-  }
-  else if( CHECK_KEY_CONT( PAD_BUTTON_Y ) )
-  {
-    num--;
-    OS_Printf("num=%d \n",num);
-  }
-  else if( CHECK_KEY_CONT( PAD_KEY_UP ) )
-  {
-    pos.y += num;
-    OS_Printf("pos{ 0x%x, 0x%x, 0x%x } \n", pos.x, pos.y, pos.z );
+    pos->y += num;
+    //OS_Printf("{ 0x%x, 0x%x, 0x%x } \n", pos->x, pos->y, pos->z );
   }
   else if( CHECK_KEY_CONT( PAD_KEY_DOWN ) )
   {
-    pos.y -= num;
-    OS_Printf("pos{ 0x%x, 0x%x, 0x%x } \n", pos.x, pos.y, pos.z );
+    pos->y -= num;
+    //OS_Printf("{ 0x%x, 0x%x, 0x%x } \n", pos->x, pos->y, pos->z );
   }    
   else if( CHECK_KEY_CONT( PAD_KEY_LEFT ) )
   {
-    pos.x += num;
-    OS_Printf("pos{ 0x%x, 0x%x, 0x%x } \n", pos.x, pos.y, pos.z );
+    pos->x += num;
+    //OS_Printf("{ 0x%x, 0x%x, 0x%x } \n", pos->x, pos->y, pos->z );
   }
   else if( CHECK_KEY_CONT( PAD_KEY_RIGHT ) )
   {
-    pos.x -= num;
-    OS_Printf("pos{ 0x%x, 0x%x, 0x%x } \n", pos.x, pos.y, pos.z );
+    pos->x -= num;
+    //OS_Printf("{ 0x%x, 0x%x, 0x%x } \n", pos->x, pos->y, pos->z );
   }
   else if( CHECK_KEY_CONT( PAD_BUTTON_L ) )
   {
-    pos.z += num;
-    OS_Printf("pos{ 0x%x, 0x%x, 0x%x } \n", pos.x, pos.y, pos.z );
+    pos->z += num;
+    //OS_Printf("{ 0x%x, 0x%x, 0x%x } \n", pos->x, pos->y, pos->z );
   }
   else if( CHECK_KEY_CONT( PAD_BUTTON_R ) )
   {
-    pos.z -= num;
-    OS_Printf("pos{ 0x%x, 0x%x, 0x%x } \n", pos.x, pos.y, pos.z );
+    pos->z -= num;
+    //OS_Printf("{ 0x%x, 0x%x, 0x%x } \n", pos->x, pos->y, pos->z );
   }
+
+}
+
+#endif // DEBUG_CAMERA
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  ２画面：ICAカメラ座標からのオフセットを設定
+ *
+ *	@param	GFL_G3D_CAMERA* p_camera 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void set_camera_offset( GFL_G3D_CAMERA* p_camera )
+{ 
+#if 0
+  static const VecFx32 pos_ofs[2] = {
+    { 0 },
+    { 0x0,   0xfffff844, 0x28 }
+  };
+
+  static const VecFx32 tar_ofs[2] = {
+    { 0 },
+    { 0x140, 0x8ac,      0x0 }
+  };
+#endif
+
+  VecFx32 pos;
+  VecFx32 tar;
   
-  // データセット
-  if( mode == 0 )
+  GFL_G3D_CAMERA_GetPos( p_camera, &pos );
+  GFL_G3D_CAMERA_GetTarget( p_camera, &tar );
+
+#ifdef DEBUG_CAMERA
   {
-    GFL_G3D_CAMERA_SetPos( camera, &pos );
+    static BOOL _is_up = TRUE;
+
+    static VecFx32 _pos[2] = {
+      { 0 },
+      { 0x0,   0xfffff844, 0x28 },
+    };
+    static VecFx32 _tar[2] = {
+      { 0 },
+      { 0x140, 0x8ac,      0x0 },
+    };
+
+    static int _mode = 0;
+    static int _num = 20;
+   
+    // 操作画面の切り替え
+    if( CHECK_KEY_TRG( PAD_BUTTON_Y ) )
+    {
+      _is_up ^= 1;
+      if( _is_up == 0 ){ OS_TPrintf("** set down disp **\n"); } else
+      if( _is_up == 1 ){ OS_TPrintf("** set up disp **\n"); }
+    }
+    // 操作項目切り替え
+    else if( CHECK_KEY_TRG( PAD_BUTTON_X ) )
+    {
+      _mode = (_mode+1)%2;
+      if( _mode == 0 ){ OS_TPrintf("** set pos mode **\n"); } else
+      if( _mode == 1 ){ OS_TPrintf("** set target mode **\n"); }
+    }
+    // 操作座標リセット
+    else if( CHECK_KEY_TRG( PAD_BUTTON_SELECT ) )
+    {
+      _pos[_is_up] = (VecFx32){0};
+      _tar[_is_up] = (VecFx32){0};
+    }
+    
+    // 座標操作
+    if( _mode == 0 )
+    {
+      debug_vec_move( &_pos[_is_up], _num );
+    }
+    else
+    {
+      debug_vec_move( &_tar[_is_up], _num );
+    }
+    
+    // データ吐き出し
+    {
+      OS_Printf("======\n");
+      OS_Printf("up pos = { 0x%x, 0x%x, 0x%x }; \n",
+          _pos[TRUE].x,
+          _pos[TRUE].y,
+          _pos[TRUE].z );
+      
+      OS_Printf("up tar = { 0x%x, 0x%x, 0x%x }; \n",
+          _tar[TRUE].x, 
+          _tar[TRUE].y,
+          _tar[TRUE].z );
+      
+      OS_Printf("down pos = { 0x%x, 0x%x, 0x%x }; \n",
+          _pos[FALSE].x,
+          _pos[FALSE].y,
+          _pos[FALSE].z );
+      
+      OS_Printf("down tar = { 0x%x, 0x%x, 0x%x }; \n",
+          _tar[FALSE].x, 
+          _tar[FALSE].y,
+          _tar[FALSE].z );
+      
+    }
+
+    // 上画面はオフセットを足しこむ
+    if( GFL_G3D_DOUBLE3D_GetFlip() == FALSE )
+    {
+      // 操作座標反映
+      pos.x += _pos[TRUE].x;
+      pos.y += _pos[TRUE].y;
+      pos.z += _pos[TRUE].z;
+      tar.x += _tar[TRUE].x;
+      tar.y += _tar[TRUE].y;
+      tar.z += _tar[TRUE].z;
+    }
+    else
+    {
+      // 操作座標反映
+      pos.x += _pos[FALSE].x;
+      pos.y += _pos[FALSE].y;
+      pos.z += _pos[FALSE].z;
+      tar.x += _tar[FALSE].x;
+      tar.y += _tar[FALSE].y;
+      tar.z += _tar[FALSE].z;
+    }
   }
-  else if( mode == 1 )
+      
+#endif // DEBUG_CAMERA
+    
+#if 0
+  // オフセットを足しこむ
+  if( GFL_G3D_DOUBLE3D_GetFlip() == FALSE )
   {
-    GFL_G3D_CAMERA_SetCamUp( camera, &pos );
+    // 操作座標反映
+    pos.x += pos_ofs[TRUE].x;
+    pos.y += pos_ofs[TRUE].y;
+    pos.z += pos_ofs[TRUE].z;
+    tar.x += tar_ofs[TRUE].x;
+    tar.y += tar_ofs[TRUE].y;
+    tar.z += tar_ofs[TRUE].z;
   }
   else
   {
-    GFL_G3D_CAMERA_SetTarget( camera, &pos );
+    // 操作座標反映
+    pos.x += pos_ofs[FALSE].x;
+    pos.y += pos_ofs[FALSE].y;
+    pos.z += pos_ofs[FALSE].z;
+    tar.x += tar_ofs[FALSE].x;
+    tar.y += tar_ofs[FALSE].y;
+    tar.z += tar_ofs[FALSE].z;
   }
-
-  // データ吐き出し
-  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT )
-  {
-    GFL_G3D_CAMERA_GetPos( camera, &pos );
-    OS_Printf("static const sc_camera_pos = { 0x%x, 0x%x, 0x%x }; \n", pos.x, pos.y, pos.z );
-    GFL_G3D_CAMERA_GetCamUp( camera, &pos );
-    OS_Printf("static const sc_camera_up =  { 0x%x, 0x%x, 0x%x }; \n", pos.x, pos.y, pos.z );
-    GFL_G3D_CAMERA_GetTarget( camera, &pos );
-    OS_Printf("static const sc_camera_target = { 0x%x, 0x%x, 0x%x }; \n", pos.x, pos.y, pos.z );
-  }
-}
 #endif
+    
+  GFL_G3D_CAMERA_SetPos( p_camera, &pos );
+  GFL_G3D_CAMERA_SetTarget( p_camera, &tar );
+
+}
 
 //-----------------------------------------------------------------------------
 /**
@@ -381,53 +475,30 @@ BOOL Demo3D_ENGINE_Main( DEMO3D_ENGINE_WORK* wk )
   // ICAカメラ更新
   is_end = ICA_ANIME_IncAnimeFrame( wk->ica_anime, wk->anime_speed );
 
+  // ICAカメラ座標を設定
   ICA_CAMERA_SetCameraStatus( p_camera, wk->ica_anime );
+  
+#ifdef DEBUG_CAMERA
+  // アニメ再生切り替え
+  if( CHECK_KEY_TRG( PAD_BUTTON_START ) )
+  {
+    static BOOL _is_anime = TRUE;
+    _is_anime ^= 1;
+    if( _is_anime == TRUE ) {
+      wk->anime_speed = Demo3D_DATA_GetAnimeSpeed( wk->demo_id );
+    } else {
+      wk->anime_speed = 0;
+    }
+  }
+#endif
 
-  //@TODO
   // 片方の画面の表示位置をずらす
   if( wk->is_double )
   {
-    VecFx32 pos;
-    VecFx32 tar;
-    
-    static int num = 20;
-    static int _pos_y = 0;
-    static int _tar_y = 0;
-    
-    GFL_G3D_CAMERA_GetPos( p_camera, &pos );
-    GFL_G3D_CAMERA_GetTarget( p_camera, &tar );
-
-#ifdef DEBUG_CAMERA
-    debug_camera_test()
-    if( GFL_UI_KEY_GetCont() & PAD_BUTTON_A )
-    {
-      wk->anime_speed = 0;
-    }
-    else if( GFL_UI_KEY_GetCont() & PAD_BUTTON_B )
-    {
-      wk->anime_speed = FX32_ONE;
-    }
-#endif
-
-    if( GFL_G3D_DOUBLE3D_GetFlip() )
-    {
-      // 下画面
-    }
-    else
-    {
-      // 上画面
-      pos.y += _pos_y;
-      tar.y += _tar_y;
-    }
-      
-    GFL_G3D_CAMERA_SetPos( p_camera, &pos );
-    GFL_G3D_CAMERA_SetTarget( p_camera, &tar );
-
-//  HOSAKA_Printf("pos.y=%d tar.y=%d \n", pos.y, tar.y );
-
-//  HOSAKA_Printf("camera pos= %d %d %d flip=%d \n", pos.x, pos.y, pos.z, GFL_G3D_DOUBLE3D_GetFlip() );
+    // カメラのオフセットを操作
+    set_camera_offset( p_camera );
   }
-  
+
   // アニメーション更新
   {
     int i;
