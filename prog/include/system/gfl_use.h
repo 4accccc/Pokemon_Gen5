@@ -36,10 +36,13 @@ extern GFL_TCB * GFUser_HIntr_CreateTCB(GFL_TCB_FUNC * func, void * work, u32 pr
 //GFL関連VBlank割り込み処理
 extern void GFLUser_VIntr(void);
 
-//VBlank中TCBの登録処理を追加
+//GFL関連VBlankタイミング処理
+extern void GFLUser_VTiming(void);
+
+//VBlankタイミング中TCBの登録処理を追加
 extern GFL_TCB * GFUser_VIntr_CreateTCB(GFL_TCB_FUNC * func, void * work, u32 pri);
 
-//VBlank中TCBSYSの取得
+//VBlankタイミング中TCBSYSの取得
 extern	GFL_TCBSYS * GFUser_VIntr_GetTCBSYS( void );
 
 //VBlankカウンター取得とリセット
@@ -59,4 +62,10 @@ extern const char * GFUser_GetFileNameByArcID(ARCID arcID);
 
 //アサートの終了処理関数(DEBUG_SD_PRINTで使うため定義を出す
 extern void GFUser_AssertFinish( void );
+
+typedef void (*GFL_USE_VINTR_FUNC)( void );
+//VBlank割り込み関数の登録
+extern BOOL GFUser_SetVIntrFunc(GFL_USE_VINTR_FUNC func);
+//VBlank割り込み関数の解除
+extern void GFUser_ResetVIntrFunc(void);
 
