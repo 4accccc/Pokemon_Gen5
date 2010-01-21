@@ -13,6 +13,7 @@
 #include "savedata/save_tbl.h"
 #include "savedata/wifi_negotiation.h"
 #include "savedata/mystatus_local.h"
+#include "system/pms_data.h"
 #include "buflen.h"
 
 //----------------------------------------------------------
@@ -23,9 +24,12 @@
 
 struct _WIFI_NEGOTIATION_SAVEDATA{
   MYSTATUS aMyStatus[WIFI_NEGOTIATION_DATAMAX];
-  s32 dummyUnitedNations[WIFI_NEGOTIATION_DATAMAX];  //@todo国連用仮確保
-  s32 dummyUnitedNations2[WIFI_NEGOTIATION_DATAMAX];  //@todo国連用仮確保
-  u32 count;
+  u16 getPokemon[WIFI_NEGOTIATION_DATAMAX];   //上げたポケモン
+  u16 setPokemon[WIFI_NEGOTIATION_DATAMAX];  //もらったポケモン
+  u16 date[WIFI_NEGOTIATION_DATAMAX];         //交換日時
+  PMS_DATA message;   //簡易文 自己紹介文
+  u16 count;   //データ循環の為のカウンタ
+  u16 num;  //自分の交換ポケモン数
 };
 
 
@@ -129,6 +133,23 @@ BOOL WIFI_NEGOTIATION_SV_IsCheckFriend(WIFI_NEGOTIATION_SAVEDATA* pSV,s32 profil
   return FALSE;
 }
 
+
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief   渡したプロファイルIDに一致する物があるかどうかさがす
+ * @param   WIFI_NEGOTIATION_SAVEDATAポインタ
+ * @param   profile 検査profileID
+ * @return	一致したらTRUE
+ */
+//--------------------------------------------------------------------------------------------
+#if 0
+void WIFI_NEGOTIATION_SV_GetDate(WIFI_NEGOTIATION_SAVEDATA* pSV,RTCDate * date)
+{
+//  RTCDate * date
+  int i;
+}
+#endif
 
 
 

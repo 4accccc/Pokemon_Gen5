@@ -1109,12 +1109,12 @@ u16 UnionMsg_GetMsgID_MultiIntrudeParentNG(int target_sex)
 //==================================================================
 u16 UnionMsg_GetMsgID_TrainerCardStart(UNION_SYSTEM_PTR unisys, int target_nation, int target_area)
 {
-  WIFI_HISTORY *wifihistory;
+  MYSTATUS *mystatus;
   int my_nation, my_area;
   
-  wifihistory = SaveData_GetWifiHistory(GAMEDATA_GetSaveControlWork(unisys->uniparent->game_data));
-  my_nation = WIFIHISTORY_GetMyNation(wifihistory);
-  my_area = WIFIHISTORY_GetMyArea(wifihistory);
+  mystatus = GAMEDATA_GetMyStatus(unisys->uniparent->game_data);
+  my_nation = MyStatus_GetMyNation(mystatus);
+  my_area = MyStatus_GetMyArea(mystatus);
 
   if(target_nation == 0){ //‘‚ª‚È‚¢
   	return msg_union_connect_01_02_3;

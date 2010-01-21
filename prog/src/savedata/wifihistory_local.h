@@ -28,8 +28,6 @@ struct _WIFI_HISTORY{
 	///日付
 	u32	date;
 	u8 world_flag;			///<全世界対象モードかどうかのフラグ
-	u8 my_nation;			///<自分の国
-	u8 my_area;				///<自分の地域
 	///履歴データ
 	u8	data[(WIFI_NATION_MAX - 1) * NATION_DATA_SIZE];
 

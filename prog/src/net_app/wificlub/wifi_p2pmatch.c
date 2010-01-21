@@ -2525,7 +2525,6 @@ static void _sendMatchStatus(WIFIP2PMATCH_WORK *wk)
 static void _makeMyMatchStatus(WIFIP2PMATCH_WORK* wk, u32 status, u32 gamemode)
 {
   MYSTATUS* pMyStatus = GAMEDATA_GetMyStatus(wk->pGameData);
-  WIFI_HISTORY* pHistry = SaveData_GetWifiHistory(wk->pSaveData);
 
   WIFI_STATUS_SetPMVersion(wk->pMatch, PM_VERSION);
   WIFI_STATUS_SetPMLang(wk->pMatch, PM_LANG);
@@ -2542,8 +2541,8 @@ static void _makeMyMatchStatus(WIFIP2PMATCH_WORK* wk, u32 status, u32 gamemode)
 #endif
 
   _myStatusChange_not_send(wk, status, gamemode); // BGMó‘Ô‚È‚Ç‚ð’²®
-  WIFI_STATUS_SetMyNation(wk->pMatch, WIFIHISTORY_GetMyNation(pHistry));
-  WIFI_STATUS_SetMyArea(wk->pMatch, WIFIHISTORY_GetMyArea(pHistry));
+  WIFI_STATUS_SetMyNation(wk->pMatch, MyStatus_GetMyNation(pMyStatus));
+  WIFI_STATUS_SetMyArea(wk->pMatch, MyStatus_GetMyArea(pMyStatus));
   WIFI_STATUS_SetVChatStatus(wk->pMatch, TRUE);
 
   _sendMatchStatus(wk);

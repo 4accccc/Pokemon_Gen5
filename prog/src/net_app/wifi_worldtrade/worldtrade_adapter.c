@@ -177,8 +177,8 @@ static void EMAILSAVE_DCProfileCreateCommon( SAVE_CONTROL_WORK *sv, Dpw_Common_P
 
   dc_profile->version = PM_VERSION;
   dc_profile->language = PM_LANG;
-  dc_profile->countryCode = WIFIHISTORY_GetMyNation(wh);
-  dc_profile->localCode = WIFIHISTORY_GetMyArea(wh);
+  dc_profile->countryCode = MyStatus_GetMyNation(my);
+  dc_profile->localCode = MyStatus_GetMyArea(my);
   dc_profile->playerId = MyStatus_GetID(my);
 
   STRTOOL_Copy( MyStatus_GetMyName(my), dc_profile->playerName, DPW_TR_NAME_SIZE );

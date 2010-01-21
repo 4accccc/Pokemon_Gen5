@@ -23,7 +23,6 @@
 #include "union_subproc.h"
 #include "union_chat.h"
 #include "net/net_whpipe.h"
-#include "savedata/wifihistory.h"
 
 
 //==============================================================================
@@ -629,7 +628,6 @@ static void* UnionComm_GetBeaconData(void* pWork)
 static void UnionComm_SetBeaconParam(UNION_SYSTEM_PTR unisys, UNION_BEACON *beacon)
 {
   UNION_MY_SITUATION *situ = &unisys->my_situation;
-  WIFI_HISTORY *wifihistory;
   
   GFL_STD_MemClear(beacon, sizeof(UNION_BEACON));
   
@@ -660,9 +658,8 @@ static void UnionComm_SetBeaconParam(UNION_SYSTEM_PTR unisys, UNION_BEACON *beac
   beacon->pmsdata = situ->chat_pmsdata;
   beacon->pms_rand = situ->chat_pms_rand;
   
-  wifihistory = SaveData_GetWifiHistory(GAMEDATA_GetSaveControlWork(unisys->uniparent->game_data));
-  beacon->my_nation = WIFIHISTORY_GetMyNation(wifihistory);
-  beacon->my_area = WIFIHISTORY_GetMyArea(wifihistory);
+  beacon->my_nation = MyStatus_GetMyNation(unisys->uniparent->mystatus);
+  beacon->my_area = MyStatus_GetMyArea(unisys->uniparent->mystatus);
   
   beacon->party = situ->mycomm.party;
   

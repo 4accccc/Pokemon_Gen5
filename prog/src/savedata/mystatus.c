@@ -8,6 +8,7 @@
 //============================================================================================
 #include <gflib.h>
 #include "savedata/mystatus.h"
+#include "savedata/wifihistory.h"
 #include "mystatus_local.h"
 #include "system/main.h"
 #include "print/str_tool.h"
@@ -413,48 +414,45 @@ void  MyStatus_SetRegionCode( MYSTATUS * my, u8 region_code )
   my->region_code = region_code;
 }
 
-//==============================================================================
+//----------------------------------------------------------
 /**
- * @brief   DPクリアしているかフラグのセット
- *
- * @param   my
- * @param   flag  0:してない  1:クリアしている
- *
- * @retval  none
+ * @brief	自分の国コードを取得
+ * @param	my			自分状態保持ワークへのポインタ
+ * @return	int			国指定コード
  */
-//==============================================================================
-/* void MyStatus_SetDpClearFlag( MYSTATUS * my )
- * {
- *   my->dp_clear = 1;
- * }
- * 
- * int MyStatus_GetDpClearFlag( MYSTATUS * my )
- * {
- *   return my->dp_clear;
- * }
- */
+//----------------------------------------------------------
+int MyStatus_GetMyNation(const MYSTATUS * my)
+{
+	return my->nation;
+}
 
-//==============================================================================
+//----------------------------------------------------------
 /**
- * @brief   DP全国図鑑だしているフラグのセット
- *
- * @param   my
- * @param   flag  0:シンオウ図鑑  1:全国図鑑
- *
- * @retval  none
+ * @brief	自分の地域コードを取得
+ * @param	my			自分状態保持ワークへのポインタ
+ * @return	int			地域指定コード
  */
-//==============================================================================
-/* void MyStatus_SetDpZenkokuFlag( MYSTATUS * my )
- * {
- *   my->dp_zenkoku = 1;
- * }
- * 
- * int MyStatus_GetDpZenkokuFlag( MYSTATUS * my )
- * {
- *   return my->dp_zenkoku;
- * }
- */
+//----------------------------------------------------------
+int MyStatus_GetMyArea(const MYSTATUS * my)
+{
+	return my->area;
+}
 
+//----------------------------------------------------------
+/**
+ * @brief	自分の地域コードを取得
+ * @param	my			自分状態保持ワークへのポインタ
+ * @return	int			地域指定コード
+ */
+//----------------------------------------------------------
+int MyStatus_SetMyNationArea(MYSTATUS * my, int nation, int area)
+{
+	GF_ASSERT(nation < WIFI_NATION_MAX);
+	GF_ASSERT(area < WIFI_AREA_MAX);
+
+	my->nation = nation;
+	my->area = area;
+}
 
 
 

@@ -10,6 +10,7 @@
 #define	__WIFIHISTORY_H__
 
 #include "savedata/save_control.h"
+#include "savedata/mystatus.h"
 
 //============================================================================================
 //============================================================================================
@@ -59,10 +60,9 @@ extern void WIFIHISTORY_Init(WIFI_HISTORY * hist);
 //セーブデータ取得（使う箇所で呼ぶ）
 extern WIFI_HISTORY * SaveData_GetWifiHistory(SAVE_CONTROL_WORK * sv);
 
-//↓動作確認していません。
-extern void WIFIHISTORY_SetMyNationArea(WIFI_HISTORY * wh, int nation, int area);
-extern int WIFIHISTORY_GetMyNation(const WIFI_HISTORY * wh);
-extern int WIFIHISTORY_GetMyArea(const WIFI_HISTORY * wh);
+//自分の国と地域登録
+extern void WIFIHISTORY_SetMyNationArea(WIFI_HISTORY * wh, MYSTATUS* my, int nation, int area);
+
 extern void WIFIHISTORY_SetStat(WIFI_HISTORY * wh, int nation, int area, WIFIHIST_STAT stat);
 extern WIFIHIST_STAT WIFIHISTORY_GetStat(const WIFI_HISTORY * wh, int nation, int area);
 

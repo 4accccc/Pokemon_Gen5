@@ -280,14 +280,8 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_PROC_Init( GFL_PROC *p_proc, int *p_seq, 
       p_player->sex           = MyStatus_GetMySex(p_my);
       p_player->trainer_view  = MyStatus_GetTrainerView(p_my);
 
-    }
-    { 
-      WIFI_HISTORY *p_wifi_histroy;
-      SAVE_CONTROL_WORK *p_sv;
-      p_sv              = GAMEDATA_GetSaveControlWork(p_wk->param.p_game_data);
-      p_wifi_histroy    = SaveData_GetWifiHistory(p_sv);
-      p_player->nation  = WIFIHISTORY_GetMyNation(p_wifi_histroy); 
-      p_player->area    = WIFIHISTORY_GetMyArea(p_wifi_histroy); 
+      p_player->nation  = MyStatus_GetMyNation(p_my); 
+      p_player->area    = MyStatus_GetMyArea(p_my); 
     }
     { 
       const MYPMS_DATA *cp_mypms;

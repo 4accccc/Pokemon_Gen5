@@ -2177,8 +2177,8 @@ void WorldTrade_PostPokemonBaseDataMake( Dpw_Tr_Data *dtd, WORLDTRADE_WORK *wk )
 	dtd->trainerID   = MyStatus_GetID_Low( wk->param->mystatus );
 
 	// ‘E’nˆæ
-	dtd->countryCode = WIFIHISTORY_GetMyNation( wk->param->wifihistory );
-	dtd->localCode   = WIFIHISTORY_GetMyArea( wk->param->wifihistory );
+	dtd->countryCode = MyStatus_GetMyNation( wk->param->mystatus );
+	dtd->localCode   = MyStatus_GetMyArea( wk->param->mystatus );
 
 	// Œ©‚½–Ú
 	dtd->trainerType = MyStatus_GetTrainerView( wk->param->mystatus );

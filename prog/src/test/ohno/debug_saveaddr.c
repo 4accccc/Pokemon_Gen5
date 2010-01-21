@@ -210,19 +210,18 @@ static void _keyWait(SAVEADDR_WORK* pWork)
       OS_TPrintf("\"%s\",\"0x%x\",\"%d\"\n","PLAYER_NAME", (u32)pAddr-(u32)topAddr, sizeof(pMy->name));
       pAddr = (u8*)&pMy->id;
       OS_TPrintf("\"%s\",\"0x%x\",\"%d\"\n", "PLAYER_ID",(u32)pAddr-(u32)topAddr,sizeof(pMy->id));
-      pAddr = (u8*)&pMy->rom_code;// 性別のアドレスをとるのにBIT配列だとエラーになるので手前の場所から+1している
-      OS_TPrintf("\"%s\",\"0x%x\",\"%d\"\n", "PLAYER_SEX",((u32)pAddr-(u32)topAddr) + 1, 1);
-
+      pAddr = (u8*)&pMy->sex;
+      OS_TPrintf("\"%s\",\"0x%x\",\"%d\"\n", "PLAYER_SEX",((u32)pAddr-(u32)topAddr), sizeof(pMy->sex));
+      pAddr = (u8*)&pMy->nation;
+      OS_TPrintf("\"%s\",\"0x%x\",\"%d\"\n","MY_NATION", (u32)pAddr-(u32)topAddr, sizeof(pMy->nation));
+      pAddr = (u8*)&pMy->area;
+      OS_TPrintf("\"%s\",\"0x%x\",\"%d\"\n","MY_AREA", (u32)pAddr-(u32)topAddr, sizeof(pMy->area));
     }
 
     
     { //ジオネット
       WIFI_HISTORY* pHis = SaveData_GetWifiHistory(pWork->pSaveData);
 
-      pAddr = (u8*)&pHis->my_nation;
-      OS_TPrintf("\"%s\",\"0x%x\",\"%d\"\n","MY_COUNTRY", (u32)pAddr-(u32)topAddr, sizeof(pHis->my_nation));
-      pAddr = (u8*)&pHis->my_area;
-      OS_TPrintf("\"%s\",\"0x%x\",\"%d\"\n","MY_LOCAL", (u32)pAddr-(u32)topAddr, sizeof(pHis->my_area));
     }
 
     

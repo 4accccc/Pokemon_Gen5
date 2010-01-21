@@ -10,6 +10,7 @@
 #include "savedata/save_control.h"
 #include "savedata/save_tbl.h"
 #include "savedata/wifihistory.h"
+#include "savedata/mystatus.h"
 #include "wifihistory_local.h"
 
 
@@ -43,9 +44,6 @@ int WIFIHISTORY_GetWorkSize(void)
 void WIFIHISTORY_Init(WIFI_HISTORY * hist)
 {
 	GFL_STD_MemClear32(hist, sizeof(WIFI_HISTORY));
-#if (CRC_LOADCHECK && CRCLOADCHECK_GMDATA_ID_WIFIHISTORY)
-	SVLD_SetCrc(GMDATA_ID_WIFIHISTORY);
-#endif //CRC_LOADCHECK
 }
 
 //============================================================================================
@@ -59,9 +57,6 @@ void WIFIHISTORY_Init(WIFI_HISTORY * hist)
 //----------------------------------------------------------
 WIFI_HISTORY * SaveData_GetWifiHistory(SAVE_CONTROL_WORK * sv)
 {
-#if (CRC_LOADCHECK && CRCLOADCHECK_GMDATA_ID_WIFIHISTORY)
-	SVLD_CheckCrc(GMDATA_ID_WIFIHISTORY);
-#endif //CRC_LOADCHECK
 	return (WIFI_HISTORY*)SaveControl_DataPtrGet(sv, GMDATA_ID_WIFIHISTORY);
 }
 
@@ -75,40 +70,13 @@ WIFI_HISTORY * SaveData_GetWifiHistory(SAVE_CONTROL_WORK * sv)
  * @param	area		地域指定コード
  */
 //----------------------------------------------------------
-void WIFIHISTORY_SetMyNationArea(WIFI_HISTORY * wh, int nation, int area)
+void WIFIHISTORY_SetMyNationArea(WIFI_HISTORY * wh, MYSTATUS* my, int nation, int area)
 {
 	GF_ASSERT(nation < WIFI_NATION_MAX);
 	GF_ASSERT(area < WIFI_AREA_MAX);
-	wh->my_nation = nation;
-	wh->my_area = area;
+
+  MyStatus_SetMyNationArea(my,nation,area);
 	WIFIHISTORY_SetStat(wh, nation, area, WIFIHIST_STAT_MINE);
-#if (CRC_LOADCHECK && CRCLOADCHECK_GMDATA_ID_WIFIHISTORY)
-	SVLD_SetCrc(GMDATA_ID_WIFIHISTORY);
-#endif //CRC_LOADCHECK
-}
-
-//----------------------------------------------------------
-/**
- * @brief	自分の国コードを取得
- * @param	wh			WIFI履歴データへのポインタ
- * @return	int			国指定コード
- */
-//----------------------------------------------------------
-int WIFIHISTORY_GetMyNation(const WIFI_HISTORY * wh)
-{
-	return wh->my_nation;
-}
-
-//----------------------------------------------------------
-/**
- * @brief	自分の地域コードを取得
- * @param	wh			WIFI履歴データへのポインタ
- * @return	int			地域指定コード
- */
-//----------------------------------------------------------
-int WIFIHISTORY_GetMyArea(const WIFI_HISTORY * wh)
-{
-	return wh->my_area;
 }
 
 //----------------------------------------------------------
@@ -163,9 +131,6 @@ void WIFIHISTORY_SetStat(WIFI_HISTORY * wh, int nation, int area, WIFIHIST_STAT 
 	if (nation != WIFI_NATION_JAPAN) {
 		WIFIHISTORY_SetWorldFlag(wh, TRUE);
 	}
-#if (CRC_LOADCHECK && CRCLOADCHECK_GMDATA_ID_WIFIHISTORY)
-	SVLD_SetCrc(GMDATA_ID_WIFIHISTORY);
-#endif //CRC_LOADCHECK
 }
 
 
@@ -192,9 +157,6 @@ BOOL WIFIHISTORY_GetWorldFlag(const WIFI_HISTORY * wh)
 void WIFIHISTORY_SetWorldFlag(WIFI_HISTORY * wh, BOOL flag)
 {
 	wh->world_flag = flag;
-#if (CRC_LOADCHECK && CRCLOADCHECK_GMDATA_ID_WIFIHISTORY)
-	SVLD_SetCrc(GMDATA_ID_WIFIHISTORY);
-#endif //CRC_LOADCHECK
 }
 
 
@@ -218,9 +180,6 @@ void WIFIHISTORY_Update(WIFI_HISTORY * wh)
 		}
 		wh->data[i] = data;
 	}
-#if (CRC_LOADCHECK && CRCLOADCHECK_GMDATA_ID_WIFIHISTORY)
-	SVLD_SetCrc(GMDATA_ID_WIFIHISTORY);
-#endif //CRC_LOADCHECK
 }
 
 

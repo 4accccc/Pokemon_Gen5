@@ -64,16 +64,13 @@ extern s32 MyStatus_GetProfileID(const MYSTATUS * my);
 extern void MyStatus_SetMySex(MYSTATUS * my, int sex);
 extern u32 MyStatus_GetMySex(const MYSTATUS * my);
 
-//バッジ  @todo 削除  MISCに移動
-//extern BOOL MyStatus_GetBadgeFlag(const MYSTATUS * my, int badge_id);
-//extern void MyStatus_SetBadgeFlag(MYSTATUS * my, int badge_id);
-//extern int MyStatus_GetBadgeCount(const MYSTATUS * my);
+//国 地域
+extern int MyStatus_GetMyNation(const MYSTATUS * my);
+extern int MyStatus_GetMyArea(const MYSTATUS * my);
 
-//お金  @todo 削除  MISCに移動
-//extern u32 MyStatus_GetGold(const MYSTATUS * my);
-//extern u32 MyStatus_SetGold(MYSTATUS * my, u32 gold);
-//extern u32 Mystatus_AddGold(MYSTATUS * my, u32 add);
-//extern u32 Mystatus_SubGold(MYSTATUS * my, u32 sub);
+// この関数だけだと、地球儀に登録されません。 WIFIHISTORY_SetMyNationAreaを使ってください
+extern int MyStatus_SetMyNationArea(MYSTATUS * my, int nation, int area);
+
 
 // ユニオンルームで使う自分の見た目
 extern u8 MyStatus_GetTrainerView( const MYSTATUS *my );
@@ -87,14 +84,6 @@ extern u8 PokemonDP_GetRomCode( void );
 // リージョンコード  //PM_LANGが初期値
 extern u8  MyStatus_GetRegionCode( const MYSTATUS * my );
 extern void  MyStatus_SetRegionCode( MYSTATUS * my, u8 region_code );
-
-// ゲームクリア  @todo削除予定
-//void MyStatus_SetDpClearFlag( MYSTATUS * my );
-//int MyStatus_GetDpClearFlag( MYSTATUS * my );
-
-// 全国図鑑 @todo削除予定
-//void MyStatus_SetDpZenkokuFlag( MYSTATUS * my );
-//int MyStatus_GetDpZenkokuFlag( MYSTATUS * my );
 
 // 外部セーブデータ初期化済みフラグ
 extern void MyStatus_SetExtraInitFlag(MYSTATUS * my);

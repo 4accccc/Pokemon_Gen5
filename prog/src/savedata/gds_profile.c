@@ -106,8 +106,8 @@ void GDS_Profile_MyDataSet(GDS_PROFILE_PTR gpp, SAVE_CONTROL_WORK *sv)
 	gpp->monsno = monsno;
 	gpp->form_no = form_no;
 	gpp->egg_flag = egg_flag;
-	gpp->country_code = WIFIHISTORY_GetMyNation(wh);
-	gpp->local_code = WIFIHISTORY_GetMyArea(wh);
+	gpp->country_code = MyStatus_GetMyNation(my);
+	gpp->local_code = MyStatus_GetMyArea(my);
 	
 	for(i = 0; i < EVENT_SELF_INTRO; i++){
 		gpp->event_self_introduction[i] = GFL_STR_GetEOMCode();
