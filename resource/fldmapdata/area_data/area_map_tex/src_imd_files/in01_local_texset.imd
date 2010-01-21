@@ -3,7 +3,7 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="lee_hyunjung" host="W00154A" date="2010-01-15T20:02:42"/>
+	<create user="lee_hyunjung" host="W00154A" date="2010-01-19T16:22:10"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="NNS_3DMaterialEditor" version="2.8.0.20050620"/>
 </head>
@@ -1562,7 +1562,7 @@
 		190b 1d4d 2190 25f2
 	</tex_palette>
 	<tex_palette index="24" name="m_h01_06_pl" color_size="4">
-		190b 1d4d 2190 7fff
+		25b0 3234 3a97 7fff
 	</tex_palette>
 	<tex_palette index="25" name="m_h01_07_pl" color_size="8">
 		366c 36cd 4711 5776 5f98 7fff 7fff 7fff

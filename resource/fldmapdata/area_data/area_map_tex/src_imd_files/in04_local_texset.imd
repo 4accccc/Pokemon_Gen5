@@ -3,7 +3,7 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="lee_hyunjung" host="W00154A" date="2010-01-16T19:27:39"/>
+	<create user="lee_hyunjung" host="W00154A" date="2010-01-19T18:12:40"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="NNS_3DMaterialEditor" version="2.8.0.20050620"/>
 </head>
@@ -380,14 +380,14 @@
 		path="C:/home/wb_data3d/field/in04/chip/tex/m_lab01_09.tga"
 	>
 		<bitmap size="64">
-			bddd ddd9 0055 fdfd fffd dfff 1166 fdfd
-			fdfd dfdd ccee fdfd fffd dfff ccee fdfd
-			ddfd dfdd 2222 2222 fffd dfff ddd2 2ddd
-			ddfd dfdf fbf2 2fbb fffd dfff fff2 2fff
-			3333 3333 bbf2 2ffd bd23 3dbb fff2 2fff
-			8f23 3bba dbf2 2fbb 8723 3baa fff2 2fff
-			8723 37a8 bbf2 2f4b b723 3bd4 fff2 2fff
-			2223 3222 3332 2333 3333 3333 2222 2222
+			feee eee9 ccbb dede ddde eddd 8866 dede
+			dede edee 0011 dede ddde eddd 0011 dede
+			eede edee aaaa aaaa ddde eddd eeea aeee
+			eede eded ddda addd ddde eddd 11da ad11
+			9999 9999 11da ad11 fea9 9eff 22da ad11
+			4da9 9ff5 33da ad12 43a9 9f55 33da ad23
+			43a9 9354 ddda addd f3a9 9fe7 ddda addd
+			aaa9 9aaa 999a a999 9999 9999 aaaa aaaa
 		</bitmap>
 	</tex_image>
 	<tex_image index="18" name="m_lab01_10"
@@ -398,14 +398,14 @@
 		path="C:/home/wb_data3d/field/in04/chip/tex/m_lab01_10.tga"
 	>
 		<bitmap size="64">
-			0000 0000 4400 0004 0000 0340 3340 0002
-			0000 2330 0220 0000 0000 2200 0055 0000
-			0000 0000 0432 0000 4000 5144 4325 0000
-			4400 0233 3205 0000 3300 5023 0005 0000
-			0000 5000 3222 0043 4400 5044 2002 0333
-			3320 0443 0025 0220 2200 2233 4445 0000
-			0000 2000 4333 0004 0000 0000 2225 0000
-			0000 0000 0055 0000 0000 0000 0022 0000
+			0000 0000 0000 0000 0000 0000 4440 0000
+			0000 0034 2334 0000 0000 0233 0022 0000
+			0000 2220 0001 0000 0000 2000 0000 0000
+			4400 2214 0000 0000 3440 2023 4400 0044
+			3330 2002 3440 0333 2220 2000 3222 0244
+			0000 2000 2001 0022 0000 2000 0000 0000
+			0000 2000 0000 0000 0000 1000 0002 0000
+			0000 1000 0002 0000 0000 1000 0002 0000
 		</bitmap>
 	</tex_image>
 	<tex_image index="19" name="m_lab01_11"
@@ -489,11 +489,11 @@
 		0000 1ce7 35ad 4631 4e94 5f18 6b7b 7fff
 	</tex_palette>
 	<tex_palette index="17" name="m_lab01_09_pl" color_size="16">
-		2116 21b6 254c 2db0 2e18 319f 327f 3a8d
-		4696 5207 531a 56b5 5a28 6f7b 7f2c 7fff
+		5a28 7f2c 3ac9 1e8b 4696 531a 327f 2e18
+		21b6 2db0 254c 319f 2116 7fff 6f7b 56b5
 	</tex_palette>
 	<tex_palette index="18" name="m_lab01_10_pl" color_size="8">
-		0000 1dc6 1e0a 26cd 2aee 2da8 7fff 7fff
+		0000 2207 226c 2f0f 3330 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="19" name="m_lab01_11_pl" color_size="16">
 		10ea 1d74 2108 21b7 294a 2a19 2e3a 327b
