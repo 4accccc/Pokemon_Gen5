@@ -382,6 +382,10 @@ typedef struct
   u16     target_x;   //目的座標X
   u16     target_y;   //目的座標Y
 
+  u32     safe_dir_bit;
+  u32     safe_pre_angle;
+  s32     safe_pre_dir;
+
   PROGVAL_CATMULLROM_WORK cutmullrom;
 } BUTTERFLY_WORK;
 typedef struct
@@ -512,6 +516,10 @@ static void BUTTERFLY_Exit( BUTTERFLY_WORK *p_wk );
 static void BUTTERFLY_Main( BUTTERFLY_WORK *p_wk );
 static void Butterfly_SetTarget( BUTTERFLY_WORK *p_wk );
 static BOOL Butterfly_IsArriveTarget( const BUTTERFLY_WORK *cp_wk );
+
+static void Butterfly_Safe_Main( BUTTERFLY_WORK *p_wk );
+static void Butterfly_Safe_Check( BUTTERFLY_WORK *p_wk, u16 angle );
+static BOOL Butterfly_Safe_IsOk( const BUTTERFLY_WORK *cp_wk );
 
 static void BUTTERFLY_SYS_Init( BUTTERFLY_SYS *p_wk, const GRAPHIC_WORK *cp_grp, const IRC_COMPATIBLE_SAVEDATA *cp_sv, HEAPID heapID );
 static void BUTTERFLY_SYS_Exit( BUTTERFLY_SYS *p_wk );
@@ -711,6 +719,7 @@ static GFL_PROC_RESULT IRC_MENU_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p
 			MSGWND_MSG_X, MSGWND_MSG_Y, MSGWND_MSG_W, MSGWND_MSG_H, IRC_MENU_BG_PAL_S_08, HEAPID_IRCCOMPATIBLE );
 	BmpWinFrame_Write( p_wk->msgwnd.p_bmpwin, WINDOW_TRANS_ON, 
 					GFL_ARCUTIL_TRANSINFO_GetPos(p_wk->bg.frame_char2), IRC_MENU_BG_PAL_S_06 );
+  MSGWND_Print( &p_wk->msgwnd, &p_wk->msg, COMPATI_STR_005, 0, 0  );
 
 	MSGWND_InitEx( &p_wk->msgtitle, sc_bgcnt_frame[GRAPHIC_BG_FRAME_S_TITLE],
 			MSGWND_TITLE_X, MSGWND_TITLE_Y, MSGWND_TITLE_W, MSGWND_TITLE_H, IRC_MENU_BG_PAL_S_08, 1, GFL_BMP_CHRAREA_GET_B, HEAPID_IRCCOMPATIBLE );
@@ -1085,12 +1094,6 @@ static void GRAPHIC_BG_Init( GRAPHIC_BG_WORK* p_wk, HEAPID heapID )
 		GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_irccompatible_gra_shita_frame_01_NSCR,
 				sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_BTN], 0, 0, FALSE, heapID );
 
-		//test
-/*		GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_irccompatible_gra_result_bg_03_NCGR,
-				sc_bgcnt_frame[GRAPHIC_BG_FRAME_S_TITLE], 0, 0, FALSE, heapID );
-		GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_irccompatible_gra_result_bg_03_NSCR,
-				sc_bgcnt_frame[GRAPHIC_BG_FRAME_S_TITLE], 0, 0, FALSE, heapID );
-*/
 		//ワク
 		GFL_BG_FillCharacter( sc_bgcnt_frame[ GRAPHIC_BG_FRAME_S_TEXT], 0, 1, 0 );
 		p_wk->frame_char2	= GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( p_handle, NARC_irccompatible_gra_ue_frame_NCGR, sc_bgcnt_frame[ GRAPHIC_BG_FRAME_S_TEXT], 0, FALSE, heapID );
@@ -2055,7 +2058,18 @@ static void SEQFUNC_NextProc( IRC_MENU_MAIN_WORK *p_wk, u16 *p_seq )
 	switch( *p_seq )
 	{	
 	case SEQ_INIT:
-		*p_seq	= SEQ_END;
+    if( p_wk->p_param->select	== IRCMENU_SELECT_RANKING )
+    { 
+      if( p_wk->cnt++ > 10 )
+      { 
+        p_wk->cnt = 0;
+        *p_seq	= SEQ_END;
+      }
+    }
+    else
+    { 
+      *p_seq	= SEQ_END;
+    }
 		break;
 
 	case SEQ_END:
@@ -2711,7 +2725,6 @@ static void BGMOVE_Exit( BGMOVE_WORK *p_wk )
 { 
   GFL_STD_MemClear( p_wk, sizeof(BGMOVE_WORK) );
 }
-static int test = 0;
 //----------------------------------------------------------------------------
 /**
  *	@brief  BGワーク  メイン
@@ -2733,10 +2746,8 @@ static void BGMOVE_Main( BGMOVE_WORK *p_wk )
     GFL_BG_SetScrollReq( sc_bgcnt_frame[ GRAPHIC_BG_FRAME_S_ROGO ], GFL_BG_SCROLL_Y_SET, BGMOVE_MOVE_END_Y - p_wk->vel.now_val );
     GFL_BG_SetScrollReq( sc_bgcnt_frame[ GRAPHIC_BG_FRAME_S_TITLE ], GFL_BG_SCROLL_Y_SET, BGMOVE_MOVE_END_Y - p_wk->vel.now_val );
 
-    test++;
   }
 
-  NAGI_Printf( "bgmove %d\n", test );
 }
 //----------------------------------------------------------------------------
 /**
@@ -2747,7 +2758,6 @@ static void BGMOVE_Main( BGMOVE_WORK *p_wk )
 //-----------------------------------------------------------------------------
 static void BGMOVE_Start( BGMOVE_WORK *p_wk )
 { 
-  test  = 0;
   p_wk->is_start  = TRUE;
   PROGVAL_VEL_Init( &p_wk->vel, BGMOVE_MOVE_START_Y, BGMOVE_MOVE_END_Y, BGMOVE_MOVE_SYNC );
 }
@@ -2933,8 +2943,15 @@ static void BUTTERFLY_Main( BUTTERFLY_WORK *p_wk )
             obj_angle = DEG_TO_IDX(360) - obj_angle;
           }
         }
+        //NAGI_Printf( "アングル 0x%x X=[0x%x] Y=[0x%x]\n", obj_angle, vec_dir.x, vec_dir.y );
 
-        GFL_CLACT_WK_SetRotation( p_wk->p_clwk, obj_angle );
+        Butterfly_Safe_Check( p_wk, obj_angle );
+        if( Butterfly_Safe_IsOk( p_wk ) )
+        { 
+          GFL_CLACT_WK_SetRotation( p_wk->p_clwk, obj_angle );
+        }
+
+        Butterfly_Safe_Main( p_wk );
       }
     }
   }
@@ -3039,6 +3056,67 @@ static BOOL Butterfly_IsArriveTarget( const BUTTERFLY_WORK *cp_wk )
 	r	= 20;
 	
 	return vx * vx + vy * vy <= r * r;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  回転が急に何回もかわるとちらつくのをチェック　メイン
+ *
+ *	@param	BUTTERFLY_WORK *p_wk  ワーク
+ */
+//-----------------------------------------------------------------------------
+static void Butterfly_Safe_Main( BUTTERFLY_WORK *p_wk )
+{ 
+  p_wk->safe_dir_bit <<= 1;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  回転が急に何回もかわるとちらつくのをチェック　チェック
+ *
+ *	@param	BUTTERFLY_WORK *p_wk  ワーク
+ *	@param	angle                 角度
+ */
+//-----------------------------------------------------------------------------
+static void Butterfly_Safe_Check( BUTTERFLY_WORK *p_wk, u16 angle )
+{ 
+  s32 dir;
+  //前回の方向と同じならば
+  dir = ( (s32)angle  - (s32)p_wk->safe_pre_angle ) / MATH_IAbs( (s32)angle  - (s32)p_wk->safe_pre_angle );
+  if( dir == p_wk->safe_pre_dir )
+  {
+    p_wk->safe_dir_bit |= 0x1;
+  }
+  p_wk->safe_pre_angle  = angle;
+  p_wk->safe_pre_dir    = dir;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  回転が急に何回もかわるとちらつくのをチェック　チェック
+ *
+ *	@param	const BUTTERFLY_WORK *cp_wk ワーク
+ *	@retval TRUE ok FALSE ダメ
+ */
+//-----------------------------------------------------------------------------
+static BOOL Butterfly_Safe_IsOk( const BUTTERFLY_WORK *cp_wk )
+{
+  enum
+  { 
+    SCROLL_CHAGEPLT_SAFE_SYNC = 1,   //何シンク同じならばOKか
+  };
+
+  int i;
+  int cnt = 0;
+
+  int now_bit = cp_wk->safe_dir_bit & 0x1;
+
+  for( i = 1; i <= 1+SCROLL_CHAGEPLT_SAFE_SYNC; i++ )
+  {
+    if( (cp_wk->safe_dir_bit >> i) & 0x1 == now_bit )
+    {
+      cnt++;
+    }
+  }
+
+  return cnt == SCROLL_CHAGEPLT_SAFE_SYNC;
 }
 //----------------------------------------------------------------------------
 /**

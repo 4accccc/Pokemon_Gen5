@@ -1001,6 +1001,10 @@ static void *SUBPROC_ALLOC_Result( HEAPID heapID, void *p_wk_adrs )
     { 
       p_param->score	= 80;
     }
+    if( GFL_UI_KEY_GetCont() & PAD_BUTTON_A )
+    { 
+      p_param->score	-= 1;
+    }
 		p_param->is_only_play	= p_wk->p_param->is_only_play;
 		return p_param;
 	}
