@@ -157,7 +157,6 @@ SRCS  +=    $(SOUNDSRC) \
         system/touch_subwindow.c \
         app/trainercard/trcard_sys.c \
         app/pms_input/pmsi_param.c \
-        sound/snd_viewer.c \
         sound/snd_viewer_mcs.c \
         system/laster.c \
         field/fldmmdl.c \
@@ -165,11 +164,6 @@ SRCS  +=    $(SOUNDSRC) \
 				field/fldmmdl_railsetup.c \
         system/pms_data.c \
         system/pms_word.c \
-        musical/musical_system.c \
-        musical/musical_event.c \
-        musical/dressup/musical_dressup_sys.c \
-        musical/stage/musical_stage_sys.c \
-        musical/musical_program.c \
         infowin/infowin.c \
         system/actor_tool.c \
         system/bmp_oam.c \
@@ -342,7 +336,13 @@ SRCS_OVERLAY_DEV_WIFILIB   = net/net_devwifi.c \
 # WIFI施設で必要ない常駐にあった物はここに配置してください
 # k.ohno 10.01.12
 #===> main
-SRCS_OVERLAY_NOTWIFI = field/event_ircbattle.c \
+SRCS_OVERLAY_NOTWIFI = sound/snd_viewer.c \
+				field/event_ircbattle.c \
+        musical/musical_system.c \
+        musical/musical_event.c \
+        musical/dressup/musical_dressup_sys.c \
+        musical/stage/musical_stage_sys.c \
+        musical/musical_program.c \
         field/event_cg_wireless.c \
         field/itemuse_event.c
 
