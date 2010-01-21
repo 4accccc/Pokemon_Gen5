@@ -127,8 +127,8 @@ static const VecFx32 EV_DEMO_HAICHI_ANIME_POS[ FIELD_EVENT_FOURKINGS_MAX ] =
 {
   {0,0,0},
   {0,0,0},
-  {GRID_TO_FX32(15), 0, GRID_TO_FX32(15)},
-  {0,0,0},
+  {GRID_TO_FX32(24), 0, GRID_TO_FX32(16)},
+  {GRID_TO_FX32(16), 0, GRID_TO_FX32(16)},
 };
 
 

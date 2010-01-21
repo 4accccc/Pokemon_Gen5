@@ -240,7 +240,6 @@ EVENT_START	ev_pos_c09r0401_enter_01
 	//ローカル定義
 	DEFINE_LOCAL	BM_ANIME_ID1
 	DEFINE_LOCAL	BM_ANIME_ID2
-	DEFINE_LOCAL	BM_ANIME_ID3
 
 	//天蓋のアニメコントローラを作成
 	_BMODEL_ANIME_CREATE( BM_ANIME_ID2, SCR_BMID_NULL, 24, 16 )
@@ -249,16 +248,8 @@ EVENT_START	ev_pos_c09r0401_enter_01
 	_BMODEL_ANIME_SET( BM_ANIME_ID2, 0 )
 	_BMODEL_ANIME_STOP( BM_ANIME_ID2 )	//アニメの最初が閉じた状態になっている。すぐに停止させることで閉じたままにしている。
 	
-	//螺旋階段のアニメコントローラの作成
-	_BMODEL_ANIME_CREATE( BM_ANIME_ID3, SCR_BMID_NULL, 16, 16 )
-	//螺旋階段のアニメーション再生（主人公が登るのに合わせて階段が光っていく）
-	_BMODEL_ANIME_SET( BM_ANIME_ID3, 0 )
-	
 	//主人公：螺旋を登る
 	_FOURKINGS_WALKEVENT( 4 )
-	
-	_BMODEL_ANIME_WAIT( BM_ANIME_ID3 )
-	_BMODEL_ANIME_DELETE( BM_ANIME_ID3 )
 	
 	//登りきったところでウェイト
 	_TIME_WAIT( 8 )
