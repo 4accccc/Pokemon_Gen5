@@ -43,11 +43,14 @@ FS_EXTERN_OVERLAY(field_gym_ground);
 FS_EXTERN_OVERLAY(field_gym_ground_ent);
 FS_EXTERN_OVERLAY(field_gym_ice);
 FS_EXTERN_OVERLAY(field_gym_dragon);
+FS_EXTERN_OVERLAY(field_gimmick_gate);
+FS_EXTERN_OVERLAY(field_gimmick_h01);
+FS_EXTERN_OVERLAY(field_gimmick_h03);
 
 const static FSOverlayID FldGimmickOverlay[FLD_GIMMICK_MAX] = {
 	NULL,					//0:–³‚µ
   NULL,
-  NULL,//H01_GIMMICK_Setup,
+  FS_OVERLAY_ID(field_gimmick_h01),
   FS_OVERLAY_ID(field_gym_elec),
   FS_OVERLAY_ID(field_gym_normal),
   FS_OVERLAY_ID(field_gym_anti),
@@ -57,20 +60,20 @@ const static FSOverlayID FldGimmickOverlay[FLD_GIMMICK_MAX] = {
   FS_OVERLAY_ID(field_gym_ground_ent),
   FS_OVERLAY_ID(field_gym_ice),
   FS_OVERLAY_ID(field_gym_dragon),
-  NULL,//H03_GIMMICK_Setup,
-  NULL,//GATE_GIMMICK_Setup,  // C04R0601
-  NULL,//GATE_GIMMICK_Setup,  // C08R0601
-  NULL,//GATE_GIMMICK_Setup,  // R13R0201
-  NULL,//GATE_GIMMICK_Setup,  // R02R0101
-  NULL,//GATE_GIMMICK_Setup,  // C04R0701
-  NULL,//GATE_GIMMICK_Setup,  // C04R0801
-  NULL,//GATE_GIMMICK_Setup,  // C02R0701
-  NULL,//GATE_GIMMICK_Setup,  // R14R0101
-  NULL,//GATE_GIMMICK_Setup,  // C08R0501
-  NULL,//GATE_GIMMICK_Setup,  // C08R0701
-  NULL,//GATE_GIMMICK_Setup,  // H01R0101
-  NULL,//GATE_GIMMICK_Setup,  // H01R0201
-  NULL,//GATE_GIMMICK_Setup,  // C03R0601
+  FS_OVERLAY_ID(field_gimmick_h03),
+  FS_OVERLAY_ID(field_gimmick_gate),  // C04R0601
+  FS_OVERLAY_ID(field_gimmick_gate),  // C08R0601
+  FS_OVERLAY_ID(field_gimmick_gate),  // R13R0201
+  FS_OVERLAY_ID(field_gimmick_gate),  // R02R0101
+  FS_OVERLAY_ID(field_gimmick_gate),  // C04R0701
+  FS_OVERLAY_ID(field_gimmick_gate),  // C04R0801
+  FS_OVERLAY_ID(field_gimmick_gate),  // C02R0701
+  FS_OVERLAY_ID(field_gimmick_gate),  // R14R0101
+  FS_OVERLAY_ID(field_gimmick_gate),  // C08R0501
+  FS_OVERLAY_ID(field_gimmick_gate),  // C08R0701
+  FS_OVERLAY_ID(field_gimmick_gate),  // H01R0101
+  FS_OVERLAY_ID(field_gimmick_gate),  // H01R0201
+  FS_OVERLAY_ID(field_gimmick_gate),  // C03R0601
   NULL,//D06_GIMMICK_Setup,
   NULL,//D06_GIMMICK_Setup,
   NULL,//D06_GIMMICK_Setup,
