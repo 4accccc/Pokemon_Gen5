@@ -471,12 +471,12 @@ u16 MP_CheckMovePokeWeather( GAMEDATA * gdata, u16 zone_id )
 	
   if ( EncDataSave_IsMovePokeValid( enc, MOVE_POKE_RAIKAMI) ){
     if( zone_id == MP_GetMovePokeZoneID(enc,MOVE_POKE_RAIKAMI)){
-      return WEATHER_NO_SPARK;
+      return WEATHER_NO_RAIKAMI;
     }
 	}
   if( EncDataSave_IsMovePokeValid( enc, MOVE_POKE_KAZAKAMI) ){
     if( zone_id == MP_GetMovePokeZoneID(enc,MOVE_POKE_KAZAKAMI)){
-      return WEATHER_NO_SNOWSTORM;
+      return WEATHER_NO_KAZAKAMI;
     }
   }
   return WEATHER_NO_NONE; //ïœçXÇ»Çµ 
