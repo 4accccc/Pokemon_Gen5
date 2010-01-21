@@ -56,28 +56,29 @@ use constant IDX_RankEffPer3		=> 31;	# ステータス効果３の発生率
 use constant IDX_DmgRecoverRatio	=> 32;	# ダメージ回復率
 use constant IDX_HPRecoverRatio		=> 33;	# ＨＰ回復率
 use constant IDX_Target				=> 34;	# 効果範囲
-use constant IDX_FLG_Touch			=> 35;	# 【接触ワザ】
-use constant IDX_FLG_Tame			=> 36;	# 【１ターン溜め】
-use constant IDX_FLG_Tire			=> 37;	# 【１ターン反動】
-use constant IDX_FLG_Mamoru			=> 38;	# 【まもる対象】
-use constant IDX_FLG_MagicCoat		=> 39;	# 【マジックコート対象】
-use constant IDX_FLG_Yokodori		=> 40;	# 【よこどり対象】
-use constant IDX_FLG_Oumu			=> 41;	# 【オウムがえし対象】
-use constant IDX_FLG_TetsuNoKobusi	=> 42;	# 【てつのこぶし対象】
-use constant IDX_FLG_Bouon			=> 43;	# 【ぼうおん対象】
-use constant IDX_FLG_Juryoku		=> 44;	# 【重力で失敗する】
-use constant IDX_FLG_KoriMelt		=> 45;	# 【凍り解除】
-use constant IDX_FLG_TripleFar		=> 46;	# 【トリプル遠隔ワザ】
+use constant IDX_SeqNo				=> 35;	# AI用シーケンスナンバー
+use constant IDX_FLG_Touch			=> 36;	# 【接触ワザ】
+use constant IDX_FLG_Tame			=> 37;	# 【１ターン溜め】
+use constant IDX_FLG_Tire			=> 38;	# 【１ターン反動】
+use constant IDX_FLG_Mamoru			=> 39;	# 【まもる対象】
+use constant IDX_FLG_MagicCoat		=> 30;	# 【マジックコート対象】
+use constant IDX_FLG_Yokodori		=> 41;	# 【よこどり対象】
+use constant IDX_FLG_Oumu			=> 42;	# 【オウムがえし対象】
+use constant IDX_FLG_TetsuNoKobusi	=> 43;	# 【てつのこぶし対象】
+use constant IDX_FLG_Bouon			=> 44;	# 【ぼうおん対象】
+use constant IDX_FLG_Juryoku		=> 45;	# 【重力で失敗する】
+use constant IDX_FLG_KoriMelt		=> 46;	# 【凍り解除】
+use constant IDX_FLG_TripleFar		=> 47;	# 【トリプル遠隔ワザ】
 
-use constant IDX_FLG_End			=> 47;	# 最後（waza.tabにはありません）
-use constant IDX_FLG_Start			=> 35;	# 最初
+use constant IDX_FLG_End			=> 48;	# 最後（waza.tabにはありません）
+use constant IDX_FLG_Start			=> 36;	# 最初
 
 
 #----------------------------------------------------------------------------------
 #レコード名称（レコード順番に従って自動でソートされます）
 #----------------------------------------------------------------------------------
 %RecOrder = (
-	"名称",		IDX_WAZANAME,
+	"名称",				IDX_WAZANAME,
 	"攻撃メッセージ",	IDX_ATKMSG,
 	"説明文１",			IDX_INFOMSG1,
 	"説明文２",			IDX_INFOMSG2,
@@ -112,6 +113,7 @@ use constant IDX_FLG_Start			=> 35;	# 最初
 	"ダメージ回復率",				IDX_DmgRecoverRatio,
 	"ＨＰ回復率",					IDX_HPRecoverRatio,
 	"効果範囲",						IDX_Target,
+	"詳細説明",						IDX_SeqNo,
 	"【接触ワザ】",					IDX_FLG_Touch,
 	"【１ターン溜め】",				IDX_FLG_Tame,
 	"【１ターン反動】",				IDX_FLG_Tire,
@@ -590,13 +592,27 @@ sub storeRecord {
 		}
 	}
 
-
 	# 効果範囲
 	$Record[ IDX_Target ] = checkMatch( \@TargetName, $$refElems[IDX_Target] );
-	if( $Record[ IDX_Target ] < 0 )
-	{
+	if( $Record[ IDX_Target ] < 0 ){
 		$result .= ($errorHeader . "正しい効果範囲が指定されていません\n");
 	}
+
+	# AI用シーケンスナンバー
+	{
+		my $str_num = substr( $$refElems[IDX_SeqNo], 0, 3 );
+		if( $str_num =~ /[0-9][0-9][0-9].*/ )
+		{
+			$str_num =~ s/^0+//g;
+			$Record[ IDX_SeqNo ] = $str_num;
+		}
+		else
+		{
+#			$result .= ($errorHeader . "正しいシーケンスナンバーが指定されていません\n");
+			$result .= ($errorHeader . "SEQERR " . $str_num . "\n");
+		}
+	}
+
 
 	# 各種フラグ
 	$i = IDX_FLG_Touch;
@@ -644,14 +660,14 @@ sub outputBin {
 			# 最大ヒット・最小ヒットはまとめて1byte
 			if( ($i == IDX_HitCntMax) ){
 				if( $Record[$i] >= 16 ){
-					_print("エラー：レコード[$recID]  不正な値 ($RecName[$i] = $Record[$i]）\n");
+					_print("エラーA：レコード[$recID]  不正な値 ($RecName[$i] = $Record[$i]）\n");
 					return 0;
 				}
 				$buf = $Record[$i];
 			}
 			elsif( ($i == IDX_HitCntMin) ){
 				if( $Record[$i] >= 16 ){
-					_print("エラー：レコード[$recID]  不正な値 ($RecName[$i] = $Record[$i]）\n");
+					_print("エラーB：レコード[$recID]  不正な値 ($RecName[$i] = $Record[$i]）\n");
 					return 0;
 				}
 				$buf = ($buf << 4) | $Record[$i];
@@ -660,7 +676,7 @@ sub outputBin {
 			}
 			elsif( ($i == IDX_SickID) ){
 				if( $Record[$i] > 0xffff ){
-					_print("エラー：レコード[$recID]  不正な値 ($RecName[$i] = $Record[$i]）\n");
+					_print("エラーC：レコード[$recID]  不正な値 ($RecName[$i] = $Record[$i]）\n");
 					return 0;
 				}
 				$buf = pack('S', $Record[$i] );
@@ -673,15 +689,24 @@ sub outputBin {
 			||	($i == IDX_HPRecoverRatio)
 			){
 				if( $Record[$i] < -128 || $Record[$i] > 127){
-					_print("エラー：レコード[$recID]  不正な値 ($RecName[$i] = $Record[$i]）\n");
+					_print("エラーD：レコード[$recID]  不正な値 ($RecName[$i] = $Record[$i]）\n");
 					return 0;
 				}
 				$buf = pack('c', $Record[$i]);
 				syswrite( OUT_FILE, $buf, 1);
 			}
+			elsif( $i == IDX_SeqNo )
+			{
+				if( $Record[$i] < 0 || $Record[$i] > 65535){
+					_print("エラーD：レコード[$recID]  不正な値 ($RecName[$i] = $Record[$i]）\n");
+					return 0;
+				}
+				$buf = pack('S', $Record[$i]);
+				syswrite( OUT_FILE, $buf, 2);
+			}
 			else{
 				if( $Record[$i] < 0 || $Record[$i] > 255){
-					_print("エラー：レコード[$recID]  不正な値 ($RecName[$i] = $Record[$i]）\n");
+					_print("エラーE：レコード[$recID]  不正な値 ($RecName[$i] = $Record[$i]）\n");
 					return 0;
 				}
 				$buf = pack('C', $Record[$i]);

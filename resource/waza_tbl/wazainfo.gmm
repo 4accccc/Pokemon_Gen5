@@ -7179,39 +7179,39 @@
 		<language name="JPN" width="216">じぶんを　ふるいたてて
 こうげきと　とくこうを　あげる。
 
-0
-0</language>
+
+</language>
 		<language name="JPN_KANJI" width="216">じぶんを　ふるいたてて
 こうげきと　とくこうを　あげる。
 
-0
-0</language>
+
+</language>
 	</row>
 
 	<row id="WAZAINFO_527">
 		<language name="JPN" width="216">でんきの　ネットで
 あいてを　つかまえて　こうげきする。
 あいての　すばやさを　さげる。
-0
-1</language>
+
+</language>
 		<language name="JPN_KANJI" width="216">でんきの　ネットで
 あいてを　つかまえて　こうげきする。
 あいての　すばやさを　さげる。
-0
-1</language>
+
+</language>
 	</row>
 
 	<row id="WAZAINFO_528">
 		<language name="JPN" width="216">でんきを　まとって
 あいてに　ぶつかって　こうげきする。
 じぶんも　すこし　ダメージを　うける。
-1
-1</language>
+
+</language>
 		<language name="JPN_KANJI" width="216">でんきを　まとって
 あいてに　ぶつかって　こうげきする。
 じぶんも　すこし　ダメージを　うける。
-1
-1</language>
+
+</language>
 	</row>
 
 	<row id="WAZAINFO_529">

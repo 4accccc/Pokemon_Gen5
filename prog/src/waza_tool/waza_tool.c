@@ -48,6 +48,7 @@ struct _WAZA_DATA {
   s8  damageRecoverRatio; ///< ダメージ回復率
   s8  HPRecoverRatio;     ///< HP回復率
   u8  target;       ///< ワザ効果範囲( enum WazaTarget )
+  u16 AISeqNo;      ///< AI用シーケンスナンバー
   u32 flags;        ///< 各種フラグ
 
 };
@@ -192,7 +193,6 @@ int WAZADATA_PTR_GetParam( const WAZA_DATA* wazaData, WazaDataParam param )
       return 0;
     }
   case WAZAPARAM_TARGET:             ///< ワザ効果範囲( enum WazaTarget )
-
     return wazaData->target;
 
   default:
