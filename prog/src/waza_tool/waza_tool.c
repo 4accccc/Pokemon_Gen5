@@ -46,18 +46,16 @@ struct _WAZA_DATA {
   u8  criticalRank; ///< クリティカルランク
   u8  shrinkPer;    ///< ひるみ確率
 
-  u8  rankEffType[WAZA_RANKEFF_NUM_MAX]; ///< ステータスランク効果
-
-  s8  rankEffValue[WAZA_RANKEFF_NUM_MAX];///< ステータスランク増減値
-
-  u8  rankEffPer[WAZA_RANKEFF_NUM_MAX];  ///< ステータスランク発生率
-
+  u16 AISeqNo;            ///< AI用シーケンスナンバー
   s8  damageRecoverRatio; ///< ダメージ回復率
   s8  HPRecoverRatio;     ///< HP回復率
-  u8  target;       ///< ワザ効果範囲( enum WazaTarget )
-  u32 padding;
 
-  u16 AISeqNo;      ///< AI用シーケンスナンバー
+  u8  target;             ///< ワザ効果範囲( enum WazaTarget )
+
+  u8  rankEffType[WAZA_RANKEFF_NUM_MAX]; ///< ステータスランク効果
+  s8  rankEffValue[WAZA_RANKEFF_NUM_MAX];///< ステータスランク増減値
+  u8  rankEffPer[WAZA_RANKEFF_NUM_MAX];  ///< ステータスランク発生率
+
   u32 flags;        ///< 各種フラグ
 
 };
@@ -81,7 +79,6 @@ static WAZA_DATA  gWazaData = {0};
 
 static inline WAZA_DATA* loadWazaDataTmp( WazaID id )
 {
-  OS_TPrintf("DataSize=%d, BufSize=%d\n", GFL_ARC_GetDataSize(ARCID_WAZA_TBL, id ), sizeof(gWazaData) );
   GFL_ARC_LoadData( &gWazaData, ARCID_WAZA_TBL, id );
   return &gWazaData;
 }
@@ -162,6 +159,9 @@ int WAZADATA_PTR_GetParam( const WAZA_DATA* wazaData, WazaDataParam param )
   case WAZAPARAM_SICK_TURN_MAX:       ///< 状態異常の継続ターン最大
     return wazaData->sickTurnMax;
 
+  case WAZAPARAM_AI_SEQNO:
+    return wazaData->AISeqNo;
+
   case WAZAPARAM_RANKTYPE_1:          ///< ステータスランク効果１
   case WAZAPARAM_RANKTYPE_2:          ///< ステータスランク効果２
   case WAZAPARAM_RANKTYPE_3:          ///< ステータスランク効果３
@@ -176,6 +176,7 @@ int WAZADATA_PTR_GetParam( const WAZA_DATA* wazaData, WazaDataParam param )
   case WAZAPARAM_RANKPER_2:           ///< ステータスランク効果２の発生率
   case WAZAPARAM_RANKPER_3:           ///< ステータスランク効果３の発生率
     return wazaData->rankEffPer[ param - WAZAPARAM_RANKPER_1 ];
+
 
 
   case WAZAPARAM_DAMAGE_RECOVER_RATIO:///< ダメージ回復率
