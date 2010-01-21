@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="suginaka_katsunori" host="W00161" date="2010-01-14T19:47:30"/>
+	<create user="suginaka_katsunori" host="W00161" date="2010-01-21T16:52:56"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -334,17 +334,17 @@
 
 
 	<row id="AURA_STR_000">
-		<language name="JPN" width="256">[FF:00:色:3][1:00:トレーナー名:0][FF:00:色:0]さんとの　[FF:00:色:2]シンクロど[FF:00:色:0]を　しらべます
-ガイドに　ひだりておやゆびを　のせましょう！</language>
-		<language name="JPN_KANJI" width="256">[FF:00:色:3][1:00:トレーナー名:0][FF:00:色:0]さんとの　[FF:00:色:2]シンクロ度[FF:00:色:0]を　調べます
-ガイドに　左手親指を　乗せましょう！</language>
+		<language name="JPN" width="256">つづいて　シンクロチェックを　します
+ガイドに　ひだりておやゆびを　のせましょう</language>
+		<language name="JPN_KANJI" width="256">続いて　シンクロチェックを　します[FF:00:色:2]
+[FF:00:色:0]ガイドに　左手親指を　乗せましょう！</language>
 	</row>
 
 	<row id="AURA_STR_001">
-		<language name="JPN" width="256">[1:00:トレーナー名:0]さんとの
-[FF:00:色:2]シンクロど[FF:00:色:0]を　しらべています……</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]さんとの
-[FF:00:色:2]シンクロ度[FF:00:色:0]を　調べています……</language>
+		<language name="JPN" width="256">[FF:00:色:2][1:00:トレーナー名:0][FF:00:色:0]さんとの
+シンクロを　しらべています……</language>
+		<language name="JPN_KANJI" width="256">[FF:00:色:2][1:00:トレーナー名:0][FF:00:色:0]さんとの
+シンクロを　調べています……</language>
 	</row>
 
 	<row id="AURA_STR_002">
@@ -356,26 +356,26 @@
 
 	<row id="AURA_STR_003">
 		<language name="JPN" width="256">チェックが　おわりました
-[FF:00:色:1]せきがいせん　つうしん[FF:00:色:0]を　しましょう！</language>
+[FF:00:色:1]せきがいせん[FF:00:色:0]を　むけてください</language>
 		<language name="JPN_KANJI" width="256">チェックが　終わりました
-[FF:00:色:1]赤外線通信[FF:00:色:0]を　しましょう！</language>
+相手に　[FF:00:色:1]赤外線[FF:00:色:0]を　向けてください</language>
 	</row>
 
 	<row id="AURA_STR_004">
 		<language name="JPN" width="256">チェックちゅう　です
-[FF:00:色:1]せきがいせん　つうしん[FF:00:色:0]を　つづけてください</language>
+[FF:00:色:1]つうしん[FF:00:色:0]を　つづけてください</language>
 		<language name="JPN_KANJI" width="256">チェック中　です
 [FF:00:色:1]赤外線通信[FF:00:色:0]を　続けてください</language>
 	</row>
 
 	<row id="AURA_STR_005">
-		<language name="JPN" width="256">[FF:00:色:1]せきがいせん　つうしん[FF:00:色:0]が　つながりました</language>
+		<language name="JPN" width="256">[FF:00:色:1]せきがいせんつうしん[FF:00:色:0]が　つながりました</language>
 		<language name="JPN_KANJI" width="256">[FF:00:色:1]赤外線通信[FF:00:色:0]が　つながりました</language>
 	</row>
 
 	<row id="AURA_STR_006">
 		<language name="JPN" width="256">つながりが　きれました
-[FF:00:色:1]せきがいせん　つうしん[FF:00:色:0]を　してください</language>
+[FF:00:色:1]せきがいせんつうしん[FF:00:色:0]を　してください</language>
 		<language name="JPN_KANJI" width="256">つながりが　きれました
 [FF:00:色:1]赤外線通信[FF:00:色:0]を　してください</language>
 	</row>
@@ -433,8 +433,8 @@
 	</row>
 
 	<row id="AURA_TITLE_000">
-		<language name="JPN" width="256">オーラチェック</language>
-		<language name="JPN_KANJI" width="256">オーラチェック</language>
+		<language name="JPN" width="256">シンクロチェック</language>
+		<language name="JPN_KANJI" width="256">シンクロチェック</language>
 	</row>
 
 	<flowchart-group-list>
