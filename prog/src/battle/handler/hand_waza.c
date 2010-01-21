@@ -4003,7 +4003,7 @@ static void handler_Kaminari_hitRatio( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WO
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
     if( BTL_SVFTOOL_GetWeather(flowWk) == BTL_WEATHER_SHINE ){
-      BTL_EVENTVAR_MulValue( BTL_EVAR_HIT_PER, 50 );
+      BTL_EVENTVAR_RewriteValue( BTL_EVAR_HIT_PER, 50 );
     }
   }
 }

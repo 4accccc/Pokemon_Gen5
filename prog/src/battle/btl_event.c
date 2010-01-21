@@ -905,9 +905,14 @@ void BTL_EVENTVAR_MulValue( BtlEvVarLabel label, fx32 value )
     int p = evar_getExistPoint( stack, label );
     if( p >= 0 )
     {
-      value = FX_Mul( stack->value[p], value );
-      value = evar_mulValueRound( stack, p, value );
-      stack->value[p] = (int)value;
+      if( stack->rewriteState[p] == REWRITE_MUL )
+      {
+        value = FX_Mul( stack->value[p], value );
+        value = evar_mulValueRound( stack, p, value );
+        stack->value[p] = (int)value;
+      }else{
+        GF_ASSERT_MSG(0, "this label(%d) can't mul\n", label);
+      }
     }
   }
 }

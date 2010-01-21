@@ -8873,7 +8873,7 @@ static u8 scEvent_getHitPer( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker,
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_DEF, BPP_GetID(defender) );
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_WAZAID, wazaParam->wazaID );
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_DAMAGE_TYPE, wazaParam->damageType );
-    BTL_EVENTVAR_SetValue( BTL_EVAR_HIT_PER, per );
+    BTL_EVENTVAR_SetRewriteOnceValue( BTL_EVAR_HIT_PER, per );
     BTL_EVENTVAR_SetMulValue( BTL_EVAR_RATIO, FX32_CONST(1), FX32_CONST(0.1), FX32_CONST(32) );
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_WAZA_HIT_RATIO );
     per = BTL_EVENTVAR_GetValue( BTL_EVAR_HIT_PER );
