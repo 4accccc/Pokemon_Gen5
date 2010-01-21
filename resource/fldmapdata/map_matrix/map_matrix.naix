@@ -287,7 +287,17 @@ enum {
 	NARC_map_matrix_d12h02_mat_bin = 273,
 	NARC_map_matrix_d12h03_mat_bin = 274,
 	NARC_map_matrix_tryhouse01_mat_bin = 275,
-	NARC_map_matrix_hh03_mat_bin = 276
+	NARC_map_matrix_hh03_mat_bin = 276,
+	NARC_map_matrix_zbuill01_mat_bin = 277,
+	NARC_map_matrix_dun2002_mat_bin = 278,
+	NARC_map_matrix_dun2003_mat_bin = 279,
+	NARC_map_matrix_dun2004_mat_bin = 280,
+	NARC_map_matrix_dun2005_mat_bin = 281,
+	NARC_map_matrix_dun2006_mat_bin = 282,
+	NARC_map_matrix_dun2007_mat_bin = 283,
+	NARC_map_matrix_dun2201_mat_bin = 284,
+	NARC_map_matrix_dun2202_mat_bin = 285,
+	NARC_map_matrix_dun2203_mat_bin = 286
 };
 
 /* NARC_MAP_MATRIX_NAIX_ */
