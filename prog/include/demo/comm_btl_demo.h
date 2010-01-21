@@ -27,21 +27,21 @@
 //==============================================================
 typedef enum
 { 
-  COMM_BATTLE_DEMO_TYPE_NORMAL_START,  ///< ノーマル開始
-  COMM_BATTLE_DEMO_TYPE_NORMAL_END,    ///< ノーマル終了
-  COMM_BATTLE_DEMO_TYPE_MULTI_START,   ///< マルチバトル開始
-  COMM_BATTLE_DEMO_TYPE_MULTI_END,     ///< マルチバトル終了
-} COMM_BATTLE_DEMO_TYPE;
+  COMM_BTL_DEMO_TYPE_NORMAL_START,  ///< ノーマル開始
+  COMM_BTL_DEMO_TYPE_NORMAL_END,    ///< ノーマル終了
+  COMM_BTL_DEMO_TYPE_MULTI_START,   ///< マルチバトル開始
+  COMM_BTL_DEMO_TYPE_MULTI_END,     ///< マルチバトル終了
+} COMM_BTL_DEMO_TYPE;
 
 //--------------------------------------------------------------
 ///	初期化パラメータ
 //==============================================================
 typedef struct {
   // [IN]
-  COMM_BATTLE_DEMO_TYPE type;
+  COMM_BTL_DEMO_TYPE type;
   //@TODO ４人分の名前、性別、所持ポケモンの個数や状態
   // [OUT]
-} COMM_BATTLE_DEMO_PARAM;
+} COMM_BTL_DEMO_PARAM;
 
 //=============================================================================
 /**
