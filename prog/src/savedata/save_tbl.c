@@ -52,6 +52,7 @@
 #include "savedata/symbol_save.h"
 #include "savedata/my_pms_data.h"
 #include "savedata/battle_examination.h"
+#include "savedata/anketo_save.h"
 
 //==============================================================================
 //  定数定義
@@ -408,6 +409,11 @@ static const GFL_SAVEDATA_TABLE SaveDataTbl_Normal[] = {
     GMDATA_ID_MYPMS,
     (FUNC_GET_SIZE)MYPMS_GetWorkSize,
     (FUNC_INIT_WORK)MYPMS_Init,
+  },
+  { //すれ違いアンケート
+    GMDATA_ID_ANKETO,
+    (FUNC_GET_SIZE)AnketoSave_GetWorkSize,
+    (FUNC_INIT_WORK)AnketoSave_WorkInit,
   },
 };
 
