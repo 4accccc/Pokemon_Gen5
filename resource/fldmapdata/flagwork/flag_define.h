@@ -657,9 +657,9 @@
 #define FV_WF10_D                          633 /* 0x0279 ホワイトフォレスト：移住人口DのOBJ */
 #define FV_WF10_E                          634 /* 0x027a ホワイトフォレスト：移住人口EのOBJ */
 #define FV_R03_RIVAL_03                    635 /* 0x027b ３番道路：洞窟前のライバル */
-		/* not used   636(0x027c) */
-		/* not used   637(0x027d) */
-		/* not used   638(0x027e) */
+#define FV_D02R0101_SAGE5                  636 /* 0x027c ヤグルマの森：盗難イベントに出てくる七賢者（５） */
+#define FV_T02_SPEECH_BEFORE               637 /* 0x027d カラクサタウン：演説誘導イベント前に表示されている群集 */
+#define FV_T02_SPEECH_AFTER                638 /* 0x027e カラクサタウン：演説誘導イベント後に表示されている群集 */
 		/* not used   639(0x027f) */
 		/* not used   640(0x0280) */
 		/* not used   641(0x0281) */
