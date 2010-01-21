@@ -1277,7 +1277,13 @@ DEP_TEXSET_IMD_OUTDOOR036 = \
 	$(SRCDIR)/door01.imd \
 	$(SRCDIR)/c0101.imd \
 	$(SRCDIR)/thouse_01.imd \
+	$(SRCDIR)/c04_carousel_01.imd \
+	$(SRCDIR)/c04_fwheel_01.imd \
+	$(SRCDIR)/c04_gym_01.imd \
+	$(SRCDIR)/c04_plant_01.imd \
 	$(SRCDIR)/cart_01.imd \
+	$(SRCDIR)/c4_gate_01.imd \
+	$(SRCDIR)/c04_poke01.imd \
 	$(SRCDIR)/sign01.imd \
 	$(SRCDIR)/sign02.imd \
 	$(SRCDIR)/sign03.imd \
@@ -1306,13 +1312,7 @@ DEP_TEXSET_IMD_OUTDOOR037 = \
 	$(SRCDIR)/door01.imd \
 	$(SRCDIR)/c0101.imd \
 	$(SRCDIR)/thouse_01.imd \
-	$(SRCDIR)/c04_carousel_01.imd \
-	$(SRCDIR)/c04_fwheel_01.imd \
-	$(SRCDIR)/c04_gym_01.imd \
-	$(SRCDIR)/c04_plant_01.imd \
 	$(SRCDIR)/cart_01.imd \
-	$(SRCDIR)/c4_gate_01.imd \
-	$(SRCDIR)/c04_poke01.imd \
 	$(SRCDIR)/sign01.imd \
 	$(SRCDIR)/sign02.imd \
 	$(SRCDIR)/sign03.imd \
