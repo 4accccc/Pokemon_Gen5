@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2010-01-21T14:32:19"/>
+	<create user="matsumiya" host="W00207" date="2010-01-21T15:36:33"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="541"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="695"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -524,22 +524,16 @@
 少々　手荒い　けどな！▼</language>
 	</row>
 
-	<row id="msg_c08gym0101_veteranm4_02" text-color="#000000,,,#ff0000,,,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c08gym0101_veteranm4_02" text-color="#000000,,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・戦闘後</comment>
 		<attribute name="キャラ指定">VETERANM
 ・トレーナーデータ
 　veteranm_04</attribute>
-		<language name="JPN" width="256">オマエ……
-ずっとずっと　ポケモンを▽
-すきで　いろよ▼
-それこそが　つよくなる
-シンプルな　こたえ　さ</language>
-		<language name="JPN_KANJI" width="256">オマエ……
-ずっとずっと　ポケモンを▽
-好きで　いろよ▼
-それこそが　強くなる
-シンプルな　答え　さ</language>
+		<language name="JPN" width="256">もう　したには　もどれない！
+かくごを　きめて　まえに　すすめ！</language>
+		<language name="JPN_KANJI" width="256">もう　下には　、戻れない！
+覚悟を　決めて　前進しろ！</language>
 	</row>
 
 	<row id="msg_c02gym0101_glasses_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -569,13 +563,24 @@
 サングラス</attribute>
 		<language name="JPN" width="256">ソウリュウジムの　しかけに　ついて
 かんたんに　せつめい　するっす！▼
-
-ドラゴンの背中を通る
-腕がスイッチで
-首と連動しています
-
-１２３４５６７８９０１２３４５６７８</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+この　ジムは
+ドラゴンの　せなか　くび　そして▽
+あたまが　とおりみちに　なってるっす▼
+この　とおりみち　ですけど
+ドラゴンの　うでに　ある　スイッチに▽
+のることで　いきさきが　かわるっす▼
+ドラゴンの　くびが　どう　うごくか
+ちゅうい　してくださいっす！</language>
+		<language name="JPN_KANJI" width="256">ソウリュウジムの　仕掛けに　ついて
+かんたんに　せつめい　するっす！▼
+この　ジムは
+ドラゴンの　背中　首　そして▽
+頭が　通り道に　なってるっす▼
+この　通り道ですけど
+ドラゴンの　腕にある　スイッチに▽
+乗ることで　行き先が　変わるっす▼
+ドラゴンの首が　どう動くか
+注意してくださいっす！</language>
 	</row>
 
 	<row id="msg_c02gym0101_glasses_03" text-color=",,,#ff0000,,#000000,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
