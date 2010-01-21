@@ -12,6 +12,7 @@
 
 #include "savedata/save_tbl.h"
 #include "savedata/wifi_negotiation.h"
+#include "savedata/mystatus_local.h"
 #include "buflen.h"
 
 //----------------------------------------------------------
@@ -21,8 +22,7 @@
 //----------------------------------------------------------
 
 struct _WIFI_NEGOTIATION_SAVEDATA{
-  s32 aFriendData[WIFI_NEGOTIATION_DATAMAX];
-  STRCODE name[WIFI_NEGOTIATION_DATAMAX][PERSON_NAME_SIZE + EOM_SIZE];		// 16
+  MYSTATUS aMyStatus[WIFI_NEGOTIATION_DATAMAX];
   s32 dummyUnitedNations[WIFI_NEGOTIATION_DATAMAX];  //@todo国連用仮確保
   s32 dummyUnitedNations2[WIFI_NEGOTIATION_DATAMAX];  //@todo国連用仮確保
   u32 count;
@@ -68,20 +68,24 @@ void WIFI_NEGOTIATION_SV_Init(WIFI_NEGOTIATION_SAVEDATA* pSV)
 //--------------------------------------------------------------------------------------------
 /**
  * @brief   Wi-Fiネゴシエーション用ともだちデータをループ保存
- * @param   WIFI_NEGOTIATION_SAVEDATAポインタ
- * @param   profileID  ProfileID
- * @return	type  パネルタイプ CGEAR_PANELTYPE_ENUM
+ * @param   pSV       WIFI_NEGOTIATION_SAVEDATAポインタ
+ * @param   pMyStatus MYSTATUS
  */
 //--------------------------------------------------------------------------------------------
-void WIFI_NEGOTIATION_SV_SetFriend(WIFI_NEGOTIATION_SAVEDATA* pSV,s32 profileID)
+void WIFI_NEGOTIATION_SV_SetFriend(WIFI_NEGOTIATION_SAVEDATA* pSV,const MYSTATUS* pMyStatus)
 {
+  int profileID = MyStatus_GetProfileID(pMyStatus);
+
   if(profileID==0){
     return;
   }
-  if(pSV->count >= WIFI_NEGOTIATION_DATAMAX){
-    pSV->count=0;
+  if(WIFI_NEGOTIATION_SV_IsCheckFriend(pSV,profileID)){
+    return;
   }
-  pSV->aFriendData[ pSV->count ] = profileID;
+  if(pSV->count >= WIFI_NEGOTIATION_DATAMAX){
+    pSV->count = 0;
+  }
+  MyStatus_Copy(pMyStatus, &pSV->aMyStatus[pSV->count]);
   pSV->count++;  //繰り返し保存
 }
 
@@ -95,11 +99,13 @@ void WIFI_NEGOTIATION_SV_SetFriend(WIFI_NEGOTIATION_SAVEDATA* pSV,s32 profileID)
 //--------------------------------------------------------------------------------------------
 s32 WIFI_NEGOTIATION_SV_GetFriend(WIFI_NEGOTIATION_SAVEDATA* pSV,u32 index)
 {
+  int i = index;
   GF_ASSERT(index < WIFI_NEGOTIATION_DATAMAX);
+
   if(index >= WIFI_NEGOTIATION_DATAMAX){
-    return pSV->aFriendData[0];
+    i=0;
   }
-  return pSV->aFriendData[ index ];
+  return MyStatus_GetProfileID(&pSV->aMyStatus[ i ]);
 }
 
 
@@ -116,7 +122,7 @@ BOOL WIFI_NEGOTIATION_SV_IsCheckFriend(WIFI_NEGOTIATION_SAVEDATA* pSV,s32 profil
   int i;
 
   for(i=0;i<WIFI_NEGOTIATION_DATAMAX;i++){
-    if(pSV->aFriendData[ i ] == profile){
+    if(MyStatus_GetProfileID(&pSV->aMyStatus[ i ]) == profile){
       return TRUE;
     }
   }

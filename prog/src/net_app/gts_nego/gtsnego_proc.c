@@ -851,7 +851,7 @@ static GFL_PROC_RESULT GameSyncMenuProcInit( GFL_PROC * proc, int * seq, void * 
   pWork->pSave = GAMEDATA_GetSaveControlWork(pEv->gamedata);
   pWork->pList = GAMEDATA_GetWiFiList(pEv->gamedata);
 
-  pWork->profileID = SYSTEMDATA_GetDpwInfo( SaveData_GetSystemData(pWork->pSave) );
+  pWork->profileID = MyStatus_GetProfileID( GAMEDATA_GetMyStatus(pEv->gamedata) );
   
   if(GFL_NET_IsInit()){
     GFL_NET_AddCommandTable(GFL_NET_CMD_GTSNEGO,_PacketTbl,NELEMS(_PacketTbl), pWork);

@@ -13,6 +13,8 @@
 #include "gamesystem/gamesystem.h"
 #include "gamesystem/game_event.h"
 #include "field/fieldmap.h"
+#include "net_app/pokemontrade.h"
+#include "net_app/irc_compatible.h"
 
 typedef struct _EVENT_IRCBATTLE_WORK EVENT_IRCBATTLE_WORK;
 
@@ -29,6 +31,21 @@ enum EVENTIRCBTL_IBMODE_ENTRY {
 	EVENTIRCBTL_ENTRYMODE_COMPATIBLE,
   EVENTIRCBTL_ENTRYMODE_EXIT,
   EVENTIRCBTL_ENTRYMODE_RETRY,
+};
+
+struct _EVENT_IRCBATTLE_WORK{
+  GAMESYS_WORK * gsys;
+  GAMEDATA* gamedata;
+  POKEMONTRADE_PARAM aPokeTr;
+  POKEPARTY* pParty;
+  SAVE_CONTROL_WORK *ctrl;
+  int selectType;
+  IRC_COMPATIBLE_PARAM  compatible_param; //ê‘äOê¸ÉÅÉjÉÖÅ[Ç…ìnÇ∑èÓïÒ
+  BOOL push;
+#if PM_DEBUG
+  int debugseq;
+#endif
+  BATTLE_SETUP_PARAM* para;
 };
 
 

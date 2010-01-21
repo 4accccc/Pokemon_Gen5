@@ -1461,6 +1461,18 @@ MISC * GAMEDATA_GetMiscWork(GAMEDATA * gamedata)
   return SaveData_GetMisc(gamedata->sv_control_ptr);
 }
 
+//----------------------------------------------------------
+/**
+ * @brief   WIFI_NEGOTIATION_SAVEDATAワーク取得
+ * @param   gamedata      GAMEDATAへのポインタ
+ * @return  WIFI_NEGOTIATION_SAVEDATA*
+ */
+//----------------------------------------------------------
+WIFI_NEGOTIATION_SAVEDATA * GAMEDATA_GetWifiNegotiation(GAMEDATA * gamedata)
+{
+  return WIFI_NEGOTIATION_SV_GetSaveData(gamedata->sv_control_ptr);
+}
+
 //==================================================================
 /**
  * サポートデータへのポインタ取得

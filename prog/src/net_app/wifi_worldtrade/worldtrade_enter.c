@@ -1052,19 +1052,10 @@ static int Enter_DpwTrInit( WORLDTRADE_WORK *wk )
 	// DWCUser構造体取得
 	MyUserData = WifiList_GetMyUserInfo(wk->param->wifilist);
 
+	MyStatus_SetProfileID( wk->param->mystatus, WifiList_GetMyGSID(wk->param->wifilist) );
 
-	// このFriendKeyはプレイヤーが始めて取得したものか？
-	profileId = SYSTEMDATA_GetDpwInfo( wk->param->systemdata );
-	if( profileId==0 ){
-		OS_TPrintf("初回取得profileIdなのでDpwInfoとして登録した %08x \n", wk->param->profileId);
-
-		// 初回取得FriendKeyなので、DpwIdとして保存する
-		SYSTEMDATA_SetDpwInfo( wk->param->systemdata, wk->param->profileId );
-	}
-
-	
 	// 正式なデータを取得
-	profileId = SYSTEMDATA_GetDpwInfo( wk->param->systemdata );
+	profileId = MyStatus_GetProfileID( wk->param->mystatus );
 	OS_Printf("Dpwサーバーログイン情報 profileId=%08x\n", profileId);
 
 	// DPW_TR初期化

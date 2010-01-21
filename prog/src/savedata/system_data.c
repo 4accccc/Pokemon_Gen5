@@ -232,12 +232,13 @@ void SYSTEMDATA_SetWifiMPOpenFlag(SYSTEMDATA * sysdt, BOOL flag)
  * @param	u64			ともだちコードの値（初めて取得したFriendKeyをずっと保持）
  */
 //---------------------------------------------------------------------------
-s32 SYSTEMDATA_GetDpwInfo( const SYSTEMDATA * sysdt )
-{
-
-	return sysdt->profileId;
-
-}
+/* s32 SYSTEMDATA_GetDpwInfo( const SYSTEMDATA * sysdt )
+ * {
+ * 
+ * 	return sysdt->profileId;
+ * 
+ * }
+ */
 
 //---------------------------------------------------------------------------
 /**
@@ -246,18 +247,19 @@ s32 SYSTEMDATA_GetDpwInfo( const SYSTEMDATA * sysdt )
  * @param	none
  */
 //---------------------------------------------------------------------------
-void SYSTEMDATA_SetDpwInfo( SYSTEMDATA * sysdt, s32 profileId )
-{
-
-	// GTS・Wifiバトルタワー用のID・ともだちコードが
-	// 一回も登録されていなかった場合登録する
-	if( sysdt->profileId==0 ){
-
-		// 一度登録したら、GameSpyIdが変更になっても変わらない
-		sysdt->profileId = profileId;
-
-	}
-}
+/* void SYSTEMDATA_SetDpwInfo( SYSTEMDATA * sysdt, s32 profileId )
+ * {
+ * 
+ * 	// GTS・Wifiバトルタワー用のID・ともだちコードが
+ * 	// 一回も登録されていなかった場合登録する
+ * 	if( sysdt->profileId==0 ){
+ * 
+ * 		// 一度登録したら、GameSpyIdが変更になっても変わらない
+ * 		sysdt->profileId = profileId;
+ * 
+ * 	}
+ * }
+ */
 
 //============================================================================================
 //

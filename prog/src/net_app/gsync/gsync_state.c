@@ -32,6 +32,7 @@
 #include "net/nhttp_rap.h"
 #include "../../field/event_gsync.h"
 #include "savedata/dreamworld_data.h"
+#include "savedata/symbol_save.h"
 #include "gsync_obj_NANR_LBLDEFS.h"
 #include "gsync_poke.cdat"
 #include "msg/msg_gsync.h"
@@ -272,37 +273,13 @@ static void _wakeupAction7(G_SYNC_WORK* pWork)
 
 static void _wakeupAction_test4(G_SYNC_WORK* pWork)
 {
-  if(GFL_NET_IsInit()){
-    if(NHTTP_ERROR_NONE== NHTTP_RAP_Process(pWork->pNHTTPRap)){
-      NET_PRINT("終了\n");
-      {
-        u8* pEvent = (u8*)NHTTP_RAP_GetRecvBuffer(pWork->pNHTTPRap);
-
-        NHTTP_DEBUG_GPF_HEADER_PRINT((gs_response*)pEvent);
-        
-      }
-      _CHANGE_STATE(_wakeupAction7);
-    }
-  }
+  _CHANGE_STATE(_wakeupAction7);
 }
 
 //テスト 
-
-static DREAM_WORLD_SERVER_WORLDBATTLE_SET_DATA aDWSBattle;
-
 static void _wakeupAction_test3(G_SYNC_WORK* pWork)
 {
-  if(GFL_NET_IsInit()){
-    if(NHTTP_RAP_ConectionCreate(NHTTPRAP_URL_BATTLE_UPLOAD, pWork->pNHTTPRap)){
-      aDWSBattle.WifiMatchUpState=1;
-      aDWSBattle.padding=0;
-      NHTTP_AddPostDataRaw(NHTTP_RAP_GetHandle(pWork->pNHTTPRap), &aDWSBattle, sizeof(aDWSBattle) );
-
-      if(NHTTP_RAP_StartConnect(pWork->pNHTTPRap)){
-        _CHANGE_STATE(_wakeupAction_test4);
-      }
-    }
-  }
+  _CHANGE_STATE(_wakeupAction_test4);
 }
 //------------------------------------------------------------------------------
 /**
@@ -313,36 +290,14 @@ static void _wakeupAction_test3(G_SYNC_WORK* pWork)
 
 static void _wakeupAction_test2(G_SYNC_WORK* pWork)
 {
-  if(GFL_NET_IsInit()){
-    if(NHTTP_ERROR_NONE== NHTTP_RAP_Process(pWork->pNHTTPRap)){
-      NET_PRINT("終了\n");
-      {
-        u8* pEvent = (u8*)NHTTP_RAP_GetRecvBuffer(pWork->pNHTTPRap);
-        DREAM_WORLD_SERVER_WORLDBATTLE_STATE_DATA* pDream = (DREAM_WORLD_SERVER_WORLDBATTLE_STATE_DATA*)&pEvent[sizeof(gs_response)];
-
-        NHTTP_DEBUG_GPF_HEADER_PRINT((gs_response*)pEvent);
-        
-        NET_PRINT("ID %x\n",pDream->WifiMatchUpID);
-        NET_PRINT("FLG %x\n",pDream->GPFEntryFlg);
-        NET_PRINT("ST %d\n",pDream->WifiMatchUpState);
-        
-      }
-      _CHANGE_STATE(_wakeupAction_test3);
-    }
-  }
+  _CHANGE_STATE(_wakeupAction_test3);
 }
 
 //テスト 
 
 static void _wakeupAction_test1(G_SYNC_WORK* pWork)
 {
-  if(GFL_NET_IsInit()){
-    if(NHTTP_RAP_ConectionCreate(NHTTPRAP_URL_BATTLE_DOWNLOAD, pWork->pNHTTPRap)){
-      if(NHTTP_RAP_StartConnect(pWork->pNHTTPRap)){
-        _CHANGE_STATE(_wakeupAction_test2);
-      }
-    }
-  }
+  _CHANGE_STATE(_wakeupAction_test2);
 }
 
 
@@ -363,14 +318,9 @@ static void _wakeupAction6(G_SYNC_WORK* pWork)
         DREAM_WORLD_SERVER_DOWNLOAD_DATA* pDream = (DREAM_WORLD_SERVER_DOWNLOAD_DATA*)&pEvent[sizeof(gs_response)];
 
         NHTTP_DEBUG_GPF_HEADER_PRINT((gs_response*)pEvent);
-        
-        NET_PRINT("ROM %x\n",pDream->RomCodeBit);
-        NET_PRINT("PASS %x\n",pDream->PassCode);
-        NET_PRINT("Type %d\n",pDream->TreatType);
-        NET_PRINT("Country %d\n",pDream->CountryBit);
-        NET_PRINT("Once %d\n",pDream->OnceBit);
-        NET_PRINT("PSt %d\n",pDream->PokemonState);
-        
+
+        SymbolSave_Set(SymbolSave_GetSymbolData(pWork->pSaveData), pDream->findPokemon);
+
       }
       _CHANGE_STATE(_wakeupAction_test1);
     }
@@ -894,6 +844,7 @@ static GFL_PROC_RESULT GSYNCProc_Init( GFL_PROC * proc, int * seq, void * pwk, v
 {
   EVENT_GSYNC_WORK* pParent = pwk;
   G_SYNC_WORK* pWork;
+  s32 profileID;
 
   GFL_OVERLAY_Load( FS_OVERLAY_ID(dpw_common));
   GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_GAMESYNC, 0x88000 );
@@ -905,7 +856,9 @@ static GFL_PROC_RESULT GSYNCProc_Init( GFL_PROC * proc, int * seq, void * pwk, v
   if(pParent){
     pWork->pParent = pParent;
     pWork->pSaveData = GAMEDATA_GetSaveControlWork(pParent->gameData);
-    pWork->pNHTTPRap = NHTTP_RAP_Init(HEAPID_GAMESYNC, SYSTEMDATA_GetDpwInfo(SaveData_GetSystemData(pWork->pSaveData)));
+    profileID = MyStatus_GetProfileID( GAMEDATA_GetMyStatus(pParent->gameData) );
+    GF_ASSERT(profileID);
+    pWork->pNHTTPRap = NHTTP_RAP_Init(HEAPID_GAMESYNC, profileID);
     pWork->pBox = GAMEDATA_GetBoxManager(GAMESYSTEM_GetGameData(pParent->gsys));
     pWork->trayno = pParent->boxNo;
     pWork->indexno = pParent->boxIndex;

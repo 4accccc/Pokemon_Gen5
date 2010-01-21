@@ -81,3 +81,18 @@ void SymbolSave_Set(SYMBOL_SAVE_WORK *symbol_save, u16 monsno)
     }
   }
 }
+
+//==================================================================
+/**
+ * @brief   SYMBOL_SAVE_WORKデータ取得
+ * @param   pSave		セーブデータポインタ
+ * @return  SYMBOL_SAVE_WORKデータ
+ */
+//==================================================================
+
+SYMBOL_SAVE_WORK* SymbolSave_GetSymbolData(SAVE_CONTROL_WORK* pSave)
+{
+	SYMBOL_SAVE_WORK* pData;
+	pData = SaveControl_DataPtrGet(pSave, GMDATA_ID_SYMBOL);
+	return pData;
+}

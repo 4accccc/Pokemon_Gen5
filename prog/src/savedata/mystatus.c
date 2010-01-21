@@ -253,6 +253,40 @@ u16 MyStatus_GetID_Low(const MYSTATUS * my)
   return (u16)(my->id&TR_LOW_MASK);
 }
 
+
+
+//---------------------------------------------------------------------------
+/**
+ * @brief	GTS・Wifiバトルタワー用Idの取得
+ * @param	sysdt		システムデータへのポインタ
+ * @param	profileId	[out]GameSpyプロファイルIDを出力するポインタ
+ * @param	FriendKey	[out]ともだちコードを出力するポインタ
+ * @param	u64			ともだちコードの値（初めて取得したFriendKeyをずっと保持）
+ */
+//---------------------------------------------------------------------------
+s32 MyStatus_GetProfileID( const MYSTATUS* my )
+{
+  return my->profileID;
+}
+
+//---------------------------------------------------------------------------
+/**
+ * @brief	GTS・Wifiバトルタワー用Idの設定(初回のみ代入できる）
+ * @param	sysdt		システムデータへのポインタ
+ * @param	none
+ */
+//---------------------------------------------------------------------------
+void MyStatus_SetProfileID( MYSTATUS* my, s32 profileID )
+{
+	// GTS・Wifiバトルタワー用のID・ともだちコードが
+	// 一回も登録されていなかった場合登録する
+	if( my->profileID==0 ){
+		// 一度登録したら、GameSpyIdが変更になっても変わらない
+		my->profileID = profileID;
+	}
+}
+
+
 //----------------------------------------------------------
 /**
  * @brief 自分の性別セット

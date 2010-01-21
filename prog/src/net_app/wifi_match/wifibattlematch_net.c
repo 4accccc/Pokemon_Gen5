@@ -688,7 +688,7 @@ BOOL WIFIBATTLEMATCH_NET_WaitInitialize( WIFIBATTLEMATCH_NET_WORK *p_wk, SAVE_CO
 	
 	      SYSTEMDATA  *p_systemdata  = SaveData_GetSystemData( p_save );
 	
-	      const s32 init_profileID  = SYSTEMDATA_GetDpwInfo( p_systemdata );
+	      const s32 init_profileID  = MyStatus_GetProfileID( SaveData_GetMyStatus(p_save) );
 	      const s32 now_profileID   = WifiList_GetMyGSID( p_wk->p_wifilist );
         DEBUG_NET_Printf( "INITIAL_PROFILE_ID = %d And NOW_PROFILE_ID = %d", init_profileID, now_profileID );
 	
@@ -782,7 +782,7 @@ BOOL WIFIBATTLEMATCH_NET_WaitInitialize( WIFIBATTLEMATCH_NET_WORK *p_wk, SAVE_CO
         //新規の場合、デフォルト値をいれる
         int i;
         SYSTEMDATA  *p_systemdata  = SaveData_GetSystemData( p_save );
-	      const s32 init_profileID  = SYSTEMDATA_GetDpwInfo( p_systemdata );
+	      const s32 init_profileID  = MyStatus_GetProfileID( SaveData_GetMyStatus(p_save) );
 	      const s32 now_profileID   = WifiList_GetMyGSID( p_wk->p_wifilist );
 	      for( i = 0; i < ATLAS_GetFieldNameNum(); i++ )
 	      { 

@@ -25,9 +25,8 @@
 
 struct _DREAMWORLD_SAVEDATA {
   POKEMON_PARAM pp;   ///< 眠るポケモン
-  u8 recv_flag[DREAM_WORLD_DATA_MAX_EVENT / 8];		//256 * 8 = 2048 bit
-  u16 categoryType;    //カテゴリID						2byte			夢の結果データのカテゴリ（イベントなのか、アイテムなのか、エンカウントなのか）
-  DREAM_WORLD_TREAT_DATA treat;  //ご褒美データ 
+  u16 itemID[DREAM_WORLD_DATA_MAX_ITEMBOX];  ///持ち帰ったアイテム
+  u8 itemNum[DREAM_WORLD_DATA_MAX_ITEMBOX];
 	DREAM_WORLD_FURNITUREDATA furnitureID[DREAM_WORLD_DATA_MAX_FURNITURE];  //9	配信家具
   u8 pokemoStatus;        //8	送信したポケモン						1byte			送信したポケモンの状態を受け取る
   u8 pokemonIn;  ///ppにポケモンが入っているかどうか

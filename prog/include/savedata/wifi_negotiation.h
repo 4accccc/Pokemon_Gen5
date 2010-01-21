@@ -11,6 +11,7 @@
 #include <gflib.h>
 #include <dwc.h>
 #include "savedata/save_control.h"	//SAVE_CONTROL_WORK
+#include "savedata/mystatus.h"
 
 
 //----------------------------------------------------------
@@ -31,7 +32,7 @@ extern int WIFI_NEGOTIATION_SV_GetWorkSize(void);
 extern WIFI_NEGOTIATION_SAVEDATA* WIFI_NEGOTIATION_SV_AllocWork(HEAPID heapID);
 extern void WIFI_NEGOTIATION_SV_Init(WIFI_NEGOTIATION_SAVEDATA* pSV);
 
-extern void WIFI_NEGOTIATION_SV_SetFriend(WIFI_NEGOTIATION_SAVEDATA* pSV,s32 profileID);
+extern void WIFI_NEGOTIATION_SV_SetFriend(WIFI_NEGOTIATION_SAVEDATA* pSV,const MYSTATUS* pMyStatus);
 extern s32 WIFI_NEGOTIATION_SV_GetFriend(WIFI_NEGOTIATION_SAVEDATA* pSV,u32 index);
 extern BOOL WIFI_NEGOTIATION_SV_IsCheckFriend(WIFI_NEGOTIATION_SAVEDATA* pSV,s32 profile);
 

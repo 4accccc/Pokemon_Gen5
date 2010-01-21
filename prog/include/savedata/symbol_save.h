@@ -21,3 +21,8 @@ typedef struct _SYMBOL_SAVE_WORK SYMBOL_SAVE_WORK;
 extern u32 SymbolSave_GetWorkSize( void );
 extern void SymbolSave_WorkInit(void *work);
 extern void SymbolSave_Set(SYMBOL_SAVE_WORK *symbol_save, u16 monsno);
+
+//----------------------------------------------------------
+//	セーブデータ取得のための関数
+//----------------------------------------------------------
+extern SYMBOL_SAVE_WORK* SymbolSave_GetSymbolData(SAVE_CONTROL_WORK* pSave);

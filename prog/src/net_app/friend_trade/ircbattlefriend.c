@@ -41,7 +41,6 @@
 typedef enum {
   _NETCMD_MYSTATUS = GFL_NET_CMD_IRCFRIEND,
   _NETCMD_FRIENDCODE,
-  _NETCMD_PROFILEID,
 } _BATTLEIRC_SENDCMD;
 
 typedef void (StateFunc)(IRC_BATTLE_FRIEND* pState);
@@ -68,7 +67,6 @@ static void _changeState(IRC_BATTLE_FRIEND* pWork,StateFunc* state);
 static void _changeStateDebug(IRC_BATTLE_FRIEND* pWork,StateFunc* state, int line);
 static void _recvFriendCode(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
 static void _recvMystatus(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
-static void _recvProfile(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
 
 #ifdef _NET_DEBUG
 #define   _CHANGE_STATE(pWork, state)  _changeStateDebug(pWork ,state, __LINE__)
@@ -82,7 +80,6 @@ static void _recvProfile(const int netID, const int size, const void* pData, voi
 static const NetRecvFuncTable _PacketTbl[] = {
   {_recvMystatus,          NULL},  ///_NETCMD_MYSTATUS
   {_recvFriendCode,         NULL},    ///_NETCMD_FRIENDCODE
-  {_recvProfile,         NULL},    ///_NETCMD_PROFILEID
 
 };
 
@@ -132,30 +129,10 @@ static void _recvFriendCode(const int netID, const int size, const void* pData, 
   GFL_STD_MemCopy(pData,&pWork->friendData, sizeof(DWCFriendData));
 }
 
-static void _recvProfile(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle)
-{
-  IRC_BATTLE_FRIEND *pWork = pWk;
-  const s32* pProfID=pData;
-  
-  if(pNetHandle != GFL_NET_HANDLE_GetCurrentHandle()){
-    return;	//自分のハンドルと一致しない場合、親としてのデータ受信なので無視する
-  }
-  if(netID == GFL_NET_SystemGetCurrentID()){
-    return;	//自分のデータは無視
-  }
-
-  WIFI_NEGOTIATION_SV_SetFriend(
-    WIFI_NEGOTIATION_SV_GetSaveData(IrcBattle_GetSAVE_CONTROL_WORK(pWork->pParentWork)),
-    pProfID[0]);
-
-  
-}
-
-
-
 static void _recvMystatus(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle)
 {
   IRC_BATTLE_FRIEND *pWork = pWk;
+  GAMEDATA* pGameData = GAMESYSTEM_GetGameData(IrcBattle_GetGAMESYS_WORK(pWork->pParentWork));
 
   if(pNetHandle != GFL_NET_HANDLE_GetCurrentHandle()){
     return;	//自分のハンドルと一致しない場合、親としてのデータ受信なので無視する
@@ -164,8 +141,11 @@ static void _recvMystatus(const int netID, const int size, const void* pData, vo
     return;	//自分のデータは無視
   }
 
-  GFL_NET_DWC_FriendDataAdd(GAMESYSTEM_GetGameData(IrcBattle_GetGAMESYS_WORK(pWork->pParentWork)),
+  GFL_NET_DWC_FriendDataAdd(pGameData,
                             (MYSTATUS*)pData, &pWork->friendData, HEAPID_IRCBATTLE);
+
+  WIFI_NEGOTIATION_SV_SetFriend(GAMEDATA_GetWifiNegotiation(pGameData),(const MYSTATUS*)pData);
+
 }
 
 
@@ -207,12 +187,13 @@ static void _sendMystatus(IRC_BATTLE_FRIEND* pWork)
 {
   DWCFriendData friendData;
 
-  GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),_NETCMD_MYSTATUS,
+  if(GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),_NETCMD_MYSTATUS,
                    MyStatus_GetWorkSize(),
-                   GAMEDATA_GetMyStatus(GAMESYSTEM_GetGameData(IrcBattle_GetGAMESYS_WORK(pWork->pParentWork))));
-
-  _CHANGE_STATE(pWork,_sendTiming);
+                      GAMEDATA_GetMyStatus(GAMESYSTEM_GetGameData(IrcBattle_GetGAMESYS_WORK(pWork->pParentWork))))){
+    _CHANGE_STATE(pWork,_sendTiming);
+  }
 }
+
 
 //----------------------------------------------------------------------------
 /**
@@ -227,19 +208,12 @@ static void _sendFriendCode(IRC_BATTLE_FRIEND* pWork)
 
   GFL_NET_DWC_GetMySendedFriendCode(
     GAMEDATA_GetWiFiList(GAMESYSTEM_GetGameData(IrcBattle_GetGAMESYS_WORK(pWork->pParentWork))) ,&friendData);
-  GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),_NETCMD_FRIENDCODE,
-                   sizeof(DWCFriendData),&friendData);
 
-  {
-    s32 proid  =  SYSTEMDATA_GetDpwInfo( SaveData_GetSystemData(IrcBattle_GetSAVE_CONTROL_WORK(pWork->pParentWork)) );
-
-    GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),_NETCMD_PROFILEID,
-                     sizeof(proid),&proid);
+  if(GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),_NETCMD_FRIENDCODE,
+                      sizeof(DWCFriendData),&friendData)){
+      _CHANGE_STATE(pWork,_sendMystatus);
 
   }
-
-
-  _CHANGE_STATE(pWork,_sendMystatus);
 
 }
 

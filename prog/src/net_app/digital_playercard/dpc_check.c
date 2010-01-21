@@ -539,7 +539,8 @@ static GFL_PROC_RESULT DPC_CheckProc_Init( GFL_PROC * proc, int * seq, void * pw
 
   pWork->pParent = pParent;
   pWork->pSaveData = GAMEDATA_GetSaveControlWork(pParent->gameData);
-  pWork->pNHTTPRap = NHTTP_RAP_Init(pWork->heapID, SYSTEMDATA_GetDpwInfo(SaveData_GetSystemData(pWork->pSaveData)));
+  
+  pWork->pNHTTPRap = NHTTP_RAP_Init(pWork->heapID, MyStatus_GetProfileID(SaveData_GetMyStatus(pWork->pSaveData)));
 
   _CHANGE_STATE(_wakeupAction_test1);
 

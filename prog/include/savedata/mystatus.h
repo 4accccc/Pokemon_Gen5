@@ -57,8 +57,8 @@ extern u32 MyStatus_GetID(const MYSTATUS * my);
 extern u16 MyStatus_GetID_Low(const MYSTATUS * my);
 
 //ProfileID
-extern void MyStatus_SetProfileID(MYSTATUS * my, u32 id);
-extern u32 MyStatus_GetProfileID(const MYSTATUS * my);
+extern void MyStatus_SetProfileID(MYSTATUS * my, s32 id);
+extern s32 MyStatus_GetProfileID(const MYSTATUS * my);
 
 //ê´ï 
 extern void MyStatus_SetMySex(MYSTATUS * my, int sex);

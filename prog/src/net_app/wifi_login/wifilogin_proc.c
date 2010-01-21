@@ -576,8 +576,8 @@ static void _saveingStart(WIFILOGIN_WORK* pWork)
     _connectingCommonWait(pWork);
   }
   else{
-		SYSTEMDATA_SetDpwInfo( SaveData_GetSystemData(pWork->pSave), WifiList_GetMyGSID(pWork->pList) );
-
+    MyStatus_SetProfileID( GAMEDATA_GetMyStatus(pWork->gamedata), WifiList_GetMyGSID(pWork->pList) );
+    
     GAMEDATA_SaveAsyncStart(pWork->gamedata);
 
 //    GFL_NET_DWC_SaveAsyncInit(pWork->pSave);

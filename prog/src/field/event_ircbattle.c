@@ -89,21 +89,6 @@ enum _EVENT_IRCBATTLE {
   _WAIT_IRCCOMMPATIBLE,
 };
 
-struct _EVENT_IRCBATTLE_WORK{
-  GAMESYS_WORK * gsys;
-  GAMEDATA* gamedata;
-  POKEMONTRADE_PARAM aPokeTr;
-  POKEPARTY* pParty;
-  SAVE_CONTROL_WORK *ctrl;
-  int selectType;
-  IRC_COMPATIBLE_PARAM  compatible_param; //ê‘äOê¸ÉÅÉjÉÖÅ[Ç…ìnÇ∑èÓïÒ
-  BOOL push;
-#if PM_DEBUG
-  int debugseq;
-#endif
-  BATTLE_SETUP_PARAM* para;
-};
-
 static void _battleParaFree(EVENT_IRCBATTLE_WORK *dbw);
 
 //============================================================================================

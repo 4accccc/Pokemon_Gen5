@@ -106,6 +106,7 @@ struct _PDWACC_WORK {
   BOX_MANAGER * pBox;
   SAVE_CONTROL_WORK* pSaveData;
   void* pTopAddr;
+  s32 profileID;
   u16 trayno;
   u16 indexno;
   StateFunc* state;      ///< ハンドルのプログラム状態
@@ -212,7 +213,7 @@ static void _createAccount8(PDWACC_WORK* pWork)
 static void _createAccount7(PDWACC_WORK* pWork)
 {
   int i;
-  s32 id = SYSTEMDATA_GetDpwInfo( SaveData_GetSystemData(pWork->pSaveData) );
+  s32 id = pWork->profileID;
   u16 crc = GFL_STD_CrcCalc( &id, 4 );
   u64 code = id + crc * 0x100000000;
   OS_TPrintf("id=%x crc=%x code=%x\n",id,crc,code);
@@ -400,8 +401,7 @@ static void _ghttpInfoWait0(PDWACC_WORK* pWork)
 
   if(GFL_NET_IsInit()){
     if(NHTTP_RAP_ConectionCreate(NHTTPRAP_URL_ACCOUNT_CREATE, pWork->pNHTTPRap)){
-
-      s32 proid  =  SYSTEMDATA_GetDpwInfo( SaveData_GetSystemData(pWork->pSaveData) );
+      s32 proid = pWork->profileID;
 
       GFL_STD_MemClear(pWork->tempbuffer, sizeof(pWork->tempbuffer));
       STD_TSNPrintf(pWork->tempbuffer, sizeof(pWork->tempbuffer), "%d\0\0\0\0\0\0\0\0\0\0\0\0", proid);
@@ -480,7 +480,8 @@ static GFL_PROC_RESULT PDWACCProc_Init( GFL_PROC * proc, int * seq, void * pwk, 
 
   pWork->heapID = pParent->heapID;
   pWork->pSaveData = GAMEDATA_GetSaveControlWork(pParent->gameData);
-  pWork->pNHTTPRap = NHTTP_RAP_Init(pParent->heapID, SYSTEMDATA_GetDpwInfo(SaveData_GetSystemData(pWork->pSaveData)));
+  pWork->profileID = MyStatus_GetProfileID( GAMEDATA_GetMyStatus(pParent->gameData) );
+  pWork->pNHTTPRap = NHTTP_RAP_Init(pParent->heapID, pWork->profileID);
 
   switch(pParent->type){
   case PDWACC_GETACC:

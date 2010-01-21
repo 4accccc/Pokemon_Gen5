@@ -1372,6 +1372,7 @@ static int Enter_DpwTrInit( GDS_CONNECT_SYS *wk )
 	s32 profileId;
 	SYSTEMDATA *systemdata;
 	WIFI_LIST *wifilist;
+  GAMEDATA* pGameData = wk->oya_proc_work->proc_param->gamedata;
 	
 	wifilist = GAMEDATA_GetWiFiList(wk->oya_proc_work->proc_param->gamedata);
 	systemdata = SaveData_GetSystemData(wk->oya_proc_work->proc_param->savedata);
@@ -1379,21 +1380,8 @@ static int Enter_DpwTrInit( GDS_CONNECT_SYS *wk )
 	// DWCUser構造体取得
 	MyUserData = WifiList_GetMyUserInfo(wifilist);
 
-	// このFriendKeyはプレイヤーが始めて取得したものか？
-	//↓森さんと相談した結果、使用意図がいまいちハッキリしないので世界交換などと同じように
-	//	とりあえずセットしておくことになった	2008.01.17(木)
-	profileId = SYSTEMDATA_GetDpwInfo( systemdata );
-	if( profileId==0 ){
-		OS_TPrintf("初回取得profileIdなのでDpwInfoとして登録した %08x \n", WifiList_GetMyGSID(GAMEDATA_GetWiFiList(wk->oya_proc_work->proc_param->gamedata)));
+	MyStatus_SetProfileID( GAMEDATA_GetMyStatus(pGameData), WifiList_GetMyGSID(wifilist) );
 
-		// 初回取得FriendKeyなので、DpwIdとして保存する
-		SYSTEMDATA_SetDpwInfo( systemdata, WifiList_GetMyGSID(wifilist) );
-	}
-
-	
-	// 正式なデータを取得
-	profileId = SYSTEMDATA_GetDpwInfo( systemdata );
-	OS_Printf("Dpwサーバーログイン情報 profileId=%08x\n", profileId);
 
 	// DPW_TR初期化
 //	Dpw_Tr_Init( profileId, DWC_CreateFriendKey( MyUserData ) );

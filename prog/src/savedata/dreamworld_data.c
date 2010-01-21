@@ -128,55 +128,83 @@ BOOL DREAMWORLD_SV_GetSleepPokemonFlg(DREAMWORLD_SAVEDATA* pSV)
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief   貰ったお土産のカテゴリーを得る
+ * @brief   貰ったお土産のアイテムNoを得る
  * @param	  pSV		DREAMWORLD_SAVEDATA
- * @return	DREAM_WORLD_RESULT_TYPE
+ * @param	  index インデックス
+ * @return	アイテムNo
  */
 //--------------------------------------------------------------------------------------------
-DREAM_WORLD_RESULT_TYPE DREAMWORLD_SV_GetCategoryType(DREAMWORLD_SAVEDATA* pSV)
+
+u16 DREAMWORLD_SV_GetItem(DREAMWORLD_SAVEDATA* pSV,int index)
 {
-  return pSV->categoryType;
+  if(index > DREAM_WORLD_DATA_MAX_ITEMBOX){
+    return 0;
+  }
+  return pSV->itemID[index];
 }
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief   貰ったお土産のカテゴリーをセット
- * @param	  pSV		DREAMWORLD_SAVEDATA
- * @return	DREAM_WORLD_RESULT_TYPE
+ * @brief   アイテムの数を取得
+ * @param	  pSV		DREAMWORLD_SAVEDATAポインタ
+ * @param	  index		場所
+ * @return	  num		 数
  */
 //--------------------------------------------------------------------------------------------
-void DREAMWORLD_SV_SetCategoryType(DREAMWORLD_SAVEDATA* pSV,DREAM_WORLD_RESULT_TYPE type)
+
+u8 DREAMWORLD_SV_GetItemNum(DREAMWORLD_SAVEDATA* pSV, int index)
 {
-  GF_ASSERT(type < DREAM_WORLD_RESULT_TYPE_MAX);
-  if(!(type < DREAM_WORLD_RESULT_TYPE_MAX)){
+  if(index > DREAM_WORLD_DATA_MAX_ITEMBOX){
+    return 0;
+  }
+  return pSV->itemNum[index];
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief   貰ったアイテムをいれる
+ * @param	  pSV		DREAMWORLD_SAVEDATAポインタ
+ * @param	  index		場所
+ * @param	  itemNo		アイテム番号
+ * @param	  num		 数
+ */
+//--------------------------------------------------------------------------------------------
+
+void DREAMWORLD_SV_SetItem(DREAMWORLD_SAVEDATA* pSV,int index ,int itemNo, int num)
+{
+  if(index > DREAM_WORLD_DATA_MAX_ITEMBOX){
     return;
   }
-  pSV->categoryType = type;
+  pSV->itemID[index] =itemNo;
+  pSV->itemNum[index] =num;
 }
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief   貰ったお土産をえる
+ * @brief   貰ったアイテム消す
  * @param	  pSV		DREAMWORLD_SAVEDATAポインタ
- * @return	DREAM_WORLD_TREAT_DATA*
+ * @param	  index		場所
  */
 //--------------------------------------------------------------------------------------------
-DREAM_WORLD_TREAT_DATA* DREAMWORLD_SV_GetTreatData(DREAMWORLD_SAVEDATA* pSV)
+void DREAMWORLD_SV_DeleteItem(DREAMWORLD_SAVEDATA* pSV,int index)
 {
-  return &pSV->treat;
+  DREAMWORLD_SV_SetItem(pSV,index,0,0);
 }
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief   貰ったお土産を格納
-            データの検査はここではしてないので必ず入れる前にする事
+ * @brief   貰ったアイテム全部消す
  * @param	  pSV		DREAMWORLD_SAVEDATAポインタ
- * @return	DREAM_WORLD_TREAT_DATA*
  */
 //--------------------------------------------------------------------------------------------
-void DREAMWORLD_SV_SetTreatData(DREAMWORLD_SAVEDATA* pSV,DREAM_WORLD_TREAT_DATA* pTreat)
+
+void DREAMWORLD_SV_ClearAllItem(DREAMWORLD_SAVEDATA* pSV)
 {
-  GFL_STD_MemCopy(pTreat,&pSV->treat,sizeof(DREAM_WORLD_TREAT_DATA));
+  int i;
+
+  for(i=0;i<DREAM_WORLD_DATA_MAX_ITEMBOX;i++){
+    DREAMWORLD_SV_DeleteItem(pSV,i);
+  }
 }
 
 //--------------------------------------------------------------------------------------------
@@ -218,7 +246,7 @@ void DREAMWORLD_SV_SetFurnitureData(DREAMWORLD_SAVEDATA* pSV,int index,DREAM_WOR
  * @return	DREAM_WORLD_RESULT_TYPE
  */
 //--------------------------------------------------------------------------------------------
-DREAM_WORLD_RESULT_TYPE DREAMWORLD_SV_GetPokemonStatus(DREAMWORLD_SAVEDATA* pSV)
+DREAM_WORLD_SLEEP_TYPE DREAMWORLD_SV_GetPokemonStatus(DREAMWORLD_SAVEDATA* pSV)
 {
   return pSV->pokemoStatus;
 }
@@ -230,47 +258,13 @@ DREAM_WORLD_RESULT_TYPE DREAMWORLD_SV_GetPokemonStatus(DREAMWORLD_SAVEDATA* pSV)
  * @param	  status
  */
 //--------------------------------------------------------------------------------------------
-void DREAMWORLD_SV_SetPokemonStatus(DREAMWORLD_SAVEDATA* pSV,DREAM_WORLD_RESULT_TYPE status)
+void DREAMWORLD_SV_SetPokemonStatus(DREAMWORLD_SAVEDATA* pSV,DREAM_WORLD_SLEEP_TYPE status)
 {
-  GF_ASSERT(status < DREAM_WORLD_RESULT_TYPE_MAX);
-  if(!(status < DREAM_WORLD_RESULT_TYPE_MAX)){
+  GF_ASSERT(status < DREAM_WORLD_SLEEP_TYPE_MAX);
+  if(!(status < DREAM_WORLD_SLEEP_TYPE_MAX)){
     return;
   }
   pSV->pokemoStatus = status;
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * @brief   一回受け取ったかどうか
- * @param	  pSV		セーブデータへのポインタ
- * @param   num     通し番号
- * @return	受け取ったらTRUE
- */
-//--------------------------------------------------------------------------------------------
-BOOL DREAMWORLD_SV_IsEventRecvFlag(DREAMWORLD_SAVEDATA* pSV,int num)
-{
-  GF_ASSERT(num < DREAM_WORLD_DATA_MAX_EVENT);
-  if(num > DREAM_WORLD_DATA_MAX_EVENT){
-    return TRUE;
-  }
-  return (pSV->recv_flag[num / 8] & (1 << (num & 7)));
-}
-
-//------------------------------------------------------------------
-/**
- * @brief	指定のイベントもらったよフラグを立てる
- * @param	pSV		セーブデータへのポインタ
- * @param	num		イベント番号
- * @return	NONE
- */
-//------------------------------------------------------------------
-void DREAMWORLD_SV_SetEventRecvFlag(DREAMWORLD_SAVEDATA* pSV, int num)
-{
-  GF_ASSERT(num < DREAM_WORLD_DATA_MAX_EVENT);
-  if(num > DREAM_WORLD_DATA_MAX_EVENT){
-    return;
-  }
-  pSV->recv_flag[num / 8] |= (1 << (num & 7));
 }
 
 

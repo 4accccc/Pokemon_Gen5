@@ -44,8 +44,8 @@ extern BOOL SYSTEMDATA_GetBeaconMPOpenFlag(const SYSTEMDATA * sysdt);
 extern void SYSTEMDATA_SetBeaconMPOpenFlag(SYSTEMDATA * sysdt, BOOL flag);
 extern BOOL SYSTEMDATA_GetWifiMPOpenFlag(const SYSTEMDATA * sysdt);
 extern void SYSTEMDATA_SetWifiMPOpenFlag(SYSTEMDATA * sysdt, BOOL flag);
-extern void SYSTEMDATA_SetDpwInfo( SYSTEMDATA * sysdt, s32 profileId );
-extern s32 SYSTEMDATA_GetDpwInfo( const SYSTEMDATA * sysdt );
+//extern void SYSTEMDATA_SetDpwInfo( SYSTEMDATA * sysdt, s32 profileId );
+//extern s32 SYSTEMDATA_GetDpwInfo( const SYSTEMDATA * sysdt );
 
 
 #ifdef CREATE_INDEX
