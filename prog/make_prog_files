@@ -504,7 +504,6 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/field_gimmick.c \
         field/fld_exp_obj.c \
         field/test_gimmick.c \
-        field/field_gimmick_h01.c \
         field/event_field_fade.c \
         field/event_appear.c \
         field/event_disappear.c \
@@ -519,16 +518,11 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/event_rail_slipdown.c \
         field/fldeff_ripple.c \
         field/fldeff_splash.c \
-        field/field_gimmick_h03.c \
         field/sound_obj.c \
 				field/shortcut_menu.c \
         field/event_name_input.c \
         field/event_fishing.c \
         field/fskill_amaikaori.c \
-        field/field_gimmick_gate.c \
-        field/gimmick_obj_elboard.c \
-        field/elboard_zone_data.c \
-        field/scrcmd_gate.c \
 				field/event_debug_beacon.c \
         field/field_g3dobj.c \
         field/fieldmap_tcb_camera_zoom.c \
@@ -549,7 +543,6 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/scrcmd_fldci.c \
         field/event_fourkings.c \
         field/fskill_sorawotobu.c \
-        field/event_look_elboard.c \
         field/event_season_display.c \
         field/pleasure_boat.c \
         field/scrcmd_pl_boat.c \
@@ -569,7 +562,6 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/bsubway_tr.c \
         field/fld_trade.c \
         field/scrcmd_league_front.c \
-        field/elboard_spnews_data.c \
         field/scrcmd_palpark.c \
         field/party_select_list.c \
         field/field_fk_sound_anime.c \
@@ -680,6 +672,23 @@ SRCS_OVERLAY_FIELD_GYM_DRAGON = field/gym_dragon.c
 #===> SRCS_OVERLAY_FIELD_INTRUDE
 SRCS_OVERLAY_FIELD_GIMMICK_BGATE = field/field_gimmick_bgate_jet.c
 
+#===> SRCS_OVERLAY_UNION_ROOM
+#===> SRCS_OVERLAY_FIELD_INTRUDE
+SRCS_OVERLAY_FIELD_GIMMICK_GATE = field/field_gimmick_gate.c \
+                                  field/scrcmd_gate.c \
+                                  field/gimmick_obj_elboard.c \
+                                  field/elboard_zone_data.c \
+                                  field/event_look_elboard.c \
+                                  field/elboard_spnews_data.c
+
+#===> SRCS_OVERLAY_UNION_ROOM
+#===> SRCS_OVERLAY_FIELD_INTRUDE
+SRCS_OVERLAY_FIELD_GIMMICK_H01 = field/field_gimmick_h01.c
+
+#===> SRCS_OVERLAY_UNION_ROOM
+#===> SRCS_OVERLAY_FIELD_INTRUDE
+SRCS_OVERLAY_FIELD_GIMMICK_H03 = field/field_gimmick_h03.c
+
 # マッパーサンプル
 #===> SRCS_OVERLAY_DEV_IRC
 SRCS_OVERLAY_WATANABE_SAMPLE  = test/tetsu/sample/g3d_mapper.c \
@@ -751,6 +760,9 @@ SRCS_OVERLAY_TOWNMAP = app/townmap/townmap.c \
 #===> SRCS_OVERLAY_FIELD_GYM_ICE
 #===> SRCS_OVERLAY_FIELD_GYM_DRAGON
 #===> SRCS_OVERLAY_FIELD_GIMMICK_BGATE
+#==>  SRCS_OVERLAY_FIELD_GIMMICK_GATE
+#==>  SRCS_OVERLAY_FIELD_GIMMICK_H01
+#==>  SRCS_OVERLAY_FIELD_GIMMICK_H03
 SRCS_OVERLAY_ENCEFF_CI = field/enceff_ci.c
 
 #===> SRCS_OVERLAY_PL_BOAT_SETUP
@@ -765,6 +777,9 @@ SRCS_OVERLAY_ENCEFF_CI = field/enceff_ci.c
 #===> SRCS_OVERLAY_FIELD_GYM_ICE
 #===> SRCS_OVERLAY_FIELD_GYM_DRAGON
 #===> SRCS_OVERLAY_FIELD_GIMMICK_BGATE
+#==>  SRCS_OVERLAY_FIELD_GIMMICK_GATE
+#==>  SRCS_OVERLAY_FIELD_GIMMICK_H01
+#==>  SRCS_OVERLAY_FIELD_GIMMICK_H03
 SRCS_OVERLAY_ENCEFF_PRG = field/enceff_prg.c
 
 #===> SRCS_OVERLAY_PL_BOAT_SETUP
@@ -779,6 +794,9 @@ SRCS_OVERLAY_ENCEFF_PRG = field/enceff_prg.c
 #===> SRCS_OVERLAY_FIELD_GYM_ICE
 #===> SRCS_OVERLAY_FIELD_GYM_DRAGON
 #===> SRCS_OVERLAY_FIELD_GIMMICK_BGATE
+#==>  SRCS_OVERLAY_FIELD_GIMMICK_GATE
+#==>  SRCS_OVERLAY_FIELD_GIMMICK_H01
+#==>  SRCS_OVERLAY_FIELD_GIMMICK_H03
 SRCS_OVERLAY_ENCEFF_MDL = field/enceff_mdl.c
 
 #===> SRCS_OVERLAY_ENCEFF_PRG
