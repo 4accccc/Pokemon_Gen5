@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2010-01-14T20:24:05"/>
+	<create user="taya" host="W00146" date="2010-01-20T17:35:40"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -362,6 +362,18 @@
 		<language name="JPN" width="256">とくせい</language>
 	</row>
 
+	<row id="DMPSTR_JOUTAI">
+		<language name="JPN" width="256">びょうき</language>
+	</row>
+
+	<row id="DMPSTR_NATUKI">
+		<language name="JPN" width="256">なつきど</language>
+	</row>
+
+	<row id="DMPSTR_FORM">
+		<language name="JPN" width="256">フォルム</language>
+	</row>
+
 	<row id="DMPSTR_HP_RND">
 		<language name="JPN" width="256">rnd</language>
 	</row>
@@ -492,6 +504,30 @@
 
 	<row id="DMPSTR_SLASH">
 		<language name="JPN" width="256">/</language>
+	</row>
+
+	<row id="DMPSTR_SICK_NULL">
+		<language name="JPN" width="256">なし</language>
+	</row>
+
+	<row id="DMPSTR_SICK_MAHI">
+		<language name="JPN" width="256">まひ</language>
+	</row>
+
+	<row id="DMPSTR_SICK_NEMURI">
+		<language name="JPN" width="256">ねむり</language>
+	</row>
+
+	<row id="DMPSTR_SICK_KOORI">
+		<language name="JPN" width="256">こおり</language>
+	</row>
+
+	<row id="DMPSTR_SICK_YAKEDO">
+		<language name="JPN" width="256">やけど</language>
+	</row>
+
+	<row id="DMPSTR_SICK_DOKU">
+		<language name="JPN" width="256">どく</language>
 	</row>
 
 	<flowchart-group-list>
