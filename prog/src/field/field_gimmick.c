@@ -79,7 +79,7 @@ const static FSOverlayID FldGimmickOverlay[FLD_GIMMICK_MAX] = {
   NULL,//D06_GIMMICK_Setup,
   NULL,//LEAGUE_FRONT_01_GIMMICK_Setup,
   NULL,//LEAGUE_FRONT_02_GIMMICK_Setup,
-  NULL,//GATE_GIMMICK_Setup,  // D03R0201
+  FS_OVERLAY_ID(field_gimmick_gate),  // D03R0201
   FS_OVERLAY_ID(field_gimmick_bgate),
 };
 
