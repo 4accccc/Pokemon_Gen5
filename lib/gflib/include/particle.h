@@ -115,6 +115,8 @@ typedef void (*pEmitFunc)(GFL_EMIT_PTR);
 ///SPL_SetCallbackFuncに指定するコールバック関数の型
 typedef void (*pEmitCBFunc)( GFL_EMIT_PTR, unsigned int );
 
+#define PTC_NON_CREATE_EMITTER  (GFL_EMIT_PTR)( 0xffffffff )  //エミッタのCreateに失敗
+
 //==============================================================================
 //	外部関数宣言
 //==============================================================================
