@@ -270,6 +270,9 @@ YESNO_MENU_WORK* YESNO_MENU_CreateRes(
                                      GFL_ARCUTIL_TRANSINFO_GetPos( work->btn_transinfo ),
                                      32*24*GFL_BG_1SCRDATASIZ,
                                      FALSE, work->heap_id );
+    GFL_BG_ChangeScreenPalette( work->btn_bg_frame, 0, 0, 32, 11, work->btn_yes_bg_pal );
+    GFL_BG_ChangeScreenPalette( work->btn_bg_frame, 0, 11, 32, 13, work->btn_no_bg_pal );
+    GFL_BG_LoadScreenReq( work->btn_bg_frame );
  
     // ファイルクローズ 
     GFL_ARC_CloseDataHandle( handle );

@@ -260,7 +260,7 @@ static const GFL_CLSYS_INIT sc_clsys_init	=
 ///	テクスチャ、ﾊﾟﾚｯﾄのVRAMｻｲｽﾞ
 //=====================================
 #define GRAPHIC_G3D_TEXSIZE	(GFL_G3D_TEX128K)	//バンクのテクスチャイメージスロットｻｲｽﾞとあわせてください
-#define GRAPHIC_G3D_PLTSIZE	(GFL_G3D_PLT32K)	//バンクのﾊﾟﾚｯﾄイメージスロットｻｲｽﾞとあわせてください
+#define GRAPHIC_G3D_PLTSIZE	(GFL_G3D_PLT16K)	//バンクのﾊﾟﾚｯﾄイメージスロットｻｲｽﾞとあわせてください
 
 //-------------------------------------
 ///	カメラ位置
@@ -269,9 +269,9 @@ static const GFL_CLSYS_INIT sc_clsys_init	=
 //static const VecFx32 sc_CAMERA_PER_UP			= { 0,FX32_ONE,0 };					//上方向
 //static const VecFx32 sc_CAMERA_PER_TARGET	= { 0,0,FX32_CONST( 0 ) };	//ターゲット
 
-static const VecFx32 sc_CAMERA_PER_POS	= { FX_F32_TO_FX32( 6.7f ), FX_F32_TO_FX32( 6.7f ), FX_F32_TO_FX32( 17.3f ) };
-static const VecFx32 sc_CAMERA_PER_UP = { FX_F32_TO_FX32( 0.0f ), FX_F32_TO_FX32( 2.6f ), FX_F32_TO_FX32( 0.0f ) };
-static const VecFx32 sc_CAMERA_PER_TARGET		= { 0,						FX32_ONE,				0 };
+static const VecFx32 sc_CAMERA_PER_POS    	= { FX_F32_TO_FX32( 0.0f ), FX_F32_TO_FX32( 30.0f ), FX_F32_TO_FX32( 3000.0f ) };
+static const VecFx32 sc_CAMERA_PER_UP       = { FX_F32_TO_FX32( 0.0f ), FX_F32_TO_FX32(  1.0f ), FX_F32_TO_FX32(    0.0f ) };
+static const VecFx32 sc_CAMERA_PER_TARGET		= { FX_F32_TO_FX32( 0.0f ), FX_F32_TO_FX32( 30.0f ), FX_F32_TO_FX32(    0.0f ) };
 
 //-------------------------------------
 ///	プロジェクション
@@ -281,7 +281,7 @@ static const VecFx32 sc_CAMERA_PER_TARGET		= { 0,						FX32_ONE,				0 };
 static inline GFL_G3D_CAMERA* GRAPHIC_G3D_CAMERA_Create
 		( const VecFx32* cp_pos, const VecFx32* cp_up, const VecFx32* cp_target, HEAPID heapID )
 {
-#if 1	//射影
+#if 0	//射影
 	return GFL_G3D_CAMERA_Create(	GFL_G3D_PRJPERS, 
 									FX_SinIdx( defaultCameraFovy/2 *PERSPWAY_COEFFICIENT ),
 									FX_CosIdx( defaultCameraFovy/2 *PERSPWAY_COEFFICIENT ),
@@ -291,7 +291,7 @@ static inline GFL_G3D_CAMERA* GRAPHIC_G3D_CAMERA_Create
 #else	//正射影	クリップ面は適当です
 	return GFL_G3D_CAMERA_CreateOrtho( 
 		// const fx32 top, const fx32 bottom, const fx32 left, const fx32 right, 
-			FX32_CONST(24), -FX32_CONST(24), -FX32_CONST(32), FX32_CONST(32),
+			FX32_CONST(96), -FX32_CONST(96), -FX32_CONST(128), FX32_CONST(128),
 									defaultCameraNear, defaultCameraFar, 0,
 									cp_pos, cp_up, cp_target, heapID );
 #endif
