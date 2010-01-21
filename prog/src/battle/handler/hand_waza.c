@@ -7940,21 +7940,7 @@ static void handler_GensiNoTikara( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
   if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) == pokeID)
   &&  (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID)
   ){
-    const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
-    u8* validEffect;
-    u8  validEffectCount, i;
-
-    validEffect = BTL_SVFTOOL_GetTmpWork( flowWk, WAZA_RANKEFF_NUMS );
-    for(i=BPP_RANKPARAM_START, validEffectCount=0; i<=BPP_RANKPARAM_END; ++i)
-    {
-      if( BPP_IsRankEffectValid(bpp, i, 1) ){
-        validEffect[ validEffectCount++ ] = i;
-      }
-    }
-    if( validEffectCount ){
-      i = BTL_CALC_GetRand( validEffectCount );
-      BTL_EVENTVAR_RewriteValue( BTL_EVAR_STATUS_TYPE, validEffect[i] );
-    }
+    BTL_EVENTVAR_RewriteValue( BTL_EVAR_STATUS_TYPE, WAZA_RANKEFF_SP );
   }
 }
 

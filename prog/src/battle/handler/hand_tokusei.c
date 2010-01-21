@@ -4702,17 +4702,21 @@ static void handler_Makenki( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
-    int volume = BTL_EVENTVAR_GetValue( BTL_EVAR_VOLUME );
-    if( volume < 0 )
+    u8 atkPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_ATK );
+    if( !BTL_MAINUTIL_IsFriendPokeID(pokeID, atkPokeID) )
     {
-      BTL_HANDEX_PARAM_RANK_EFFECT* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RANK_EFFECT, pokeID );
+      int volume = BTL_EVENTVAR_GetValue( BTL_EVAR_VOLUME );
+      if( volume < 0 )
+      {
+        BTL_HANDEX_PARAM_RANK_EFFECT* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RANK_EFFECT, pokeID );
 
-      param->header.tokwin_flag = TRUE;
-      param->rankType = BPP_ATTACK;
-      param->rankVolume = 2;
-      param->fAlmost = TRUE;
-      param->poke_cnt = 1;
-      param->pokeID[0] = pokeID;
+        param->header.tokwin_flag = TRUE;
+        param->rankType = BPP_ATTACK;
+        param->rankVolume = 2;
+        param->fAlmost = TRUE;
+        param->poke_cnt = 1;
+        param->pokeID[0] = pokeID;
+      }
     }
   }
 }
