@@ -17,7 +17,7 @@
 #include  "print/gf_font.h"
 
 enum {
-  DEBUG_PRINT_FLAG = 1,
+  DEBUG_PRINT_FLAG = 0,
 };
 
 typedef u8 (*pWidthGetFunc)( const GFL_FONT*, u32 );

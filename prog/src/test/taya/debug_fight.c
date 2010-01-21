@@ -678,6 +678,14 @@ static GFL_PROC_RESULT DebugFightProcInit( GFL_PROC * proc, int * seq, void * pw
 
   setupBagItem( wk->gameData, wk->heapID );
 
+  // 仮想フィールドBGMスタック設定
+  {
+    PMSND_PlayBGM(SEQ_BGM_R_A_SP);
+    PMSND_PauseBGM(TRUE);
+    PMSND_PushBGM();
+  }
+
+
   setMainProc( wk, mainProc_Setup );
 
   return GFL_PROC_RES_FINISH;
@@ -690,6 +698,13 @@ static GFL_PROC_RESULT DebugFightProcInit( GFL_PROC * proc, int * seq, void * pw
 static GFL_PROC_RESULT DebugFightProcQuit( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
   DEBUG_BTL_WORK* wk = mywk;
+
+  // 仮想フィールドBGMスタック復帰
+  {
+    PMSND_StopBGM();
+    PMSND_PopBGM();
+    //PMSND_PauseBGM(FALSE);
+  }
 
   GFL_HEAP_FreeMemory( wk->ppTmpWork );
   deleteTemporaryModules( wk );
@@ -1726,6 +1741,8 @@ FS_EXTERN_OVERLAY(battle);
     }
     BATTLE_PARAM_Init( &wk->setupParam );
     savework_SetParty( &wk->saveData, wk );
+
+    GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 16, 0 );
 
     if( btltype_IsComm(wk->saveData.btlType)
     &&  (wk->saveData.recMode != DBF_RECMODE_PLAY)
