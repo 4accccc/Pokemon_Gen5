@@ -113,6 +113,10 @@ struct _CTVT_DRAW_WORK
   
   u16 penCol;
   u8  penSize;
+
+  u32 samplingRes;
+  TP_ONE_DATA	tpData;
+
   
   BOOL isUpdateMsg;
   GFL_BMPWIN *infoWin;
@@ -168,10 +172,22 @@ void CTVT_DRAW_InitMode( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork )
   GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_comm_tvt_tv_t_oekaki_win_NSCR , 
                     CTVT_FRAME_SUB_MISC ,  0 , 0, FALSE , heapId );
   GFL_BG_LoadScreenReq( CTVT_FRAME_SUB_MISC );
-  GFL_BG_SetScroll( CTVT_FRAME_MAIN_BAR , GFL_BG_SCROLL_Y_SET , -24 );
+  GFL_BG_SetScroll( CTVT_FRAME_MAIN_MSG , GFL_BG_SCROLL_Y_SET , -24 );
   GFL_BG_SetVisible( CTVT_FRAME_SUB_BAR , FALSE );
   GX_SetDispSelect(GX_DISP_SELECT_SUB_MAIN);
 
+  {
+    //MSGと共用なのでここでスクリーンを読む
+    ARCHANDLE *commonArcHandle = GFL_ARC_OpenDataHandle( APP_COMMON_GetArcId() , heapId );
+    GFL_BG_ClearScreen( CTVT_FRAME_MAIN_MSG );
+    GFL_ARCHDL_UTIL_TransVramScreen( commonArcHandle , APP_COMMON_GetBarScrnArcIdx() , 
+                      CTVT_FRAME_MAIN_MSG ,  0 , 0, FALSE , heapId );
+    GFL_BG_ChangeScreenPalette( CTVT_FRAME_MAIN_MSG , 0 , 21 , 32 , 3 , CTVT_PAL_BG_MAIN_BAR );
+    GFL_BG_LoadScreenReq( CTVT_FRAME_MAIN_MSG );
+    
+    GFL_BG_SetScroll( CTVT_FRAME_MAIN_MSG , GFL_BG_SCROLL_Y_SET , -24 );
+    GFL_ARC_CloseDataHandle( commonArcHandle );
+  }
   {
     u8 i;
     //編集ボタン
@@ -300,6 +316,9 @@ void CTVT_DRAW_InitMode( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork )
   
   GFL_NET_WirelessIconEasy_HoldLCD( TRUE , heapId );
   GFL_NET_ReloadIcon();
+
+  GFL_UI_TP_AutoStartNoBuff();
+  
 }
 
 //--------------------------------------------------------------
@@ -310,18 +329,30 @@ void CTVT_DRAW_TermMode( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork )
   u8 i;
   const HEAPID heapId = COMM_TVT_GetHeapId( work );
   
+  //サンプリング終了
+  GFL_UI_TP_AutoStop();
+
   GFL_NET_WirelessIconEasy_HoldLCD( FALSE , heapId );
   GFL_NET_ReloadIcon();
 
   GFL_BMPWIN_ClearTransWindow( drawWork->infoWin );
   GFL_BMPWIN_Delete( drawWork->infoWin );
   
+  for( i=0;i<CDEX_MAX;i++ )
+  {
+    GFL_CLACT_WK_Remove( drawWork->clwkExplainButton[i] );
+  }
   for( i=0;i<CDED_MAX;i++ )
   {
     GFL_CLACT_WK_Remove( drawWork->clwkEditButton[i] );
   }
+  GFL_CLACT_WK_SetDrawEnable( drawWork->clwkPenSize , FALSE );
+  GFL_CLACT_WK_Remove( drawWork->clwkPenSize );
 
-  GFL_BG_SetScroll( CTVT_FRAME_MAIN_BAR , GFL_BG_SCROLL_Y_SET , -24 );
+  GFL_BG_ClearScreen( CTVT_FRAME_MAIN_MSG );
+  GFL_BG_LoadScreenReq( CTVT_FRAME_MAIN_MSG );
+  GFL_BG_SetScroll( CTVT_FRAME_MAIN_MSG , GFL_BG_SCROLL_Y_SET , 0 );
+
   GFL_BG_ClearScreen( CTVT_FRAME_SUB_MISC );
   GFL_BG_LoadScreenReq( CTVT_FRAME_SUB_MISC );
   GFL_BG_SetVisible( CTVT_FRAME_SUB_BAR , TRUE );
@@ -335,7 +366,10 @@ const COMM_TVT_MODE CTVT_DRAW_Main( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWo
 {
   const HEAPID heapId = COMM_TVT_GetHeapId( work );
   
-
+  int i;
+  drawWork->samplingRes = GFL_UI_TP_AutoSamplingMain( &drawWork->tpData, TP_BUFFERING_JUST, 1 );
+  drawWork->isTouch = FALSE;
+  
   switch( drawWork->state )
   {
   case CDS_FADEIN:
@@ -451,7 +485,6 @@ static void CTVT_DRAW_UpdateEdit( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork
   const int ret = GFL_UI_TP_HitTrg( hitTbl );
   if( ret == CDED_PEN )
   {
-    //TODO 処理無し
     drawWork->editMode = CDED_PEN;
     CTVT_DRAW_UpdateEditButton( work , drawWork );
     drawWork->isTouch = TRUE;
@@ -516,6 +549,7 @@ static void CTVT_DRAW_UpdateEdit( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork
     drawWork->barScroll = 24;
     drawWork->isTouch = TRUE;
     CTVT_DRAW_DrawInfoMsg( work , drawWork , FALSE );
+    GFL_CLACT_WK_SetDrawEnable( drawWork->clwkPenSize , FALSE );
   }
 }
 
@@ -532,15 +566,23 @@ static void CTVT_DRAW_UpdateDrawing( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawW
     if( drawWork->editMode == CDED_SPOITO )
     {
       u16* spoitColAdr = (u16*)(HW_OBJ_PLTT + 3*32 + 2*0xf);
+      //BG2と3のアドレス
       u16* adr2 = (u16*)((u32)G2_GetBG2ScrPtr() + tpx*2 + tpy*256*2);
+      u16* adr3 = (u16*)((u32)G2_GetBG3ScrPtr() + tpx*2 + tpy*256*2);
       if( *adr2 & 0x8000 )
       {
         drawWork->penCol = *adr2;
       }
       else
+      if( *adr3 & 0x8000 )
       {
-        u16* adr3 = (u16*)((u32)G2_GetBG3ScrPtr() + tpx*2 + tpy*256*2);
         drawWork->penCol = *adr3;
+      }
+      else
+      {
+        //強制黒
+        drawWork->penCol = 0x8000;
+        
       }
       *spoitColAdr = (drawWork->penCol&0x7FFF);
       
@@ -550,62 +592,82 @@ static void CTVT_DRAW_UpdateDrawing( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawW
     }
     else
     {
-      drawWork->befPenX = tpx;
-      drawWork->befPenY = tpy;
-      drawWork->isHold = TRUE;
+      //drawWork->befPenX = tpx;
+      //drawWork->befPenY = tpy;
+      //drawWork->isHold = TRUE;
     }
+    drawWork->isTouch = TRUE;
+
   }
-  drawWork->isTouch = FALSE;
   
-  if( GFL_UI_TP_GetCont() == TRUE )
+  //落書き部分
+  if( drawWork->samplingRes == TP_OK &&
+      drawWork->isTouch == FALSE )
   {
-    u32 tpx,tpy;
-    GFL_UI_TP_GetPointCont( &tpx,&tpy );
-    if( drawWork->befPenX != tpx &&
-        drawWork->befPenY != tpy )
+    u8 i;
+    if( drawWork->tpData.Size > 0 )
     {
-      if( drawWork->isHold == TRUE )
+      for(i=0 ; i<drawWork->tpData.Size ; i++ )
       {
-        BOOL isFull;
-        const u8 connectNum = COMM_TVT_GetConnectNum( work );
-        CTVT_COMM_WORK *commWork = COMM_TVT_GetCommWork( work );
-        DRAW_SYS_WORK *drawSys = COMM_TVT_GetDrawSys( work );
-        DRAW_SYS_PEN_INFO *info = CTVT_COMM_GetDrawBuf(work,commWork,&isFull);
-        if( isFull == FALSE ||
-            connectNum == 1 )
+        if( drawWork->tpData.TPDataTbl[i].validity ==  TP_VALIDITY_VALID &&
+            drawWork->tpData.TPDataTbl[i].touch == TRUE )
         {
-          info->startX = drawWork->befPenX;
-          info->startY = drawWork->befPenY;
-        }
-        info->endX = tpx;
-        info->endY = tpy;
-        info->penType = drawWork->penSize;
-        if( drawWork->editMode == CDED_KESHIGOMU )
-        {
-          info->col = 0;
+          if( drawWork->isHold == TRUE )
+          {
+            BOOL isFull;
+            const u8 connectNum = COMM_TVT_GetConnectNum( work );
+            CTVT_COMM_WORK *commWork = COMM_TVT_GetCommWork( work );
+            DRAW_SYS_WORK *drawSys = COMM_TVT_GetDrawSys( work );
+            DRAW_SYS_PEN_INFO *info = CTVT_COMM_GetDrawBuf(work,commWork,&isFull);
+            if( isFull == FALSE ||
+                connectNum == 1 )
+            {
+              info->startX = drawWork->befPenX;
+              info->startY = drawWork->befPenY;
+            }
+            info->endX = drawWork->tpData.TPDataTbl[i].x;
+            info->endY = drawWork->tpData.TPDataTbl[i].y;
+            info->penType = drawWork->penSize;
+            if( drawWork->editMode == CDED_KESHIGOMU )
+            {
+              info->col = 0;
+            }
+            else
+            {
+              info->col  = drawWork->penCol;
+            }
+            
+            if( connectNum == 1 )
+            {
+              DRAW_SYS_SetPenInfo( drawSys , info );
+            }
+            else
+            {
+              CTVT_COMM_AddDrawBuf( work , commWork );
+            }
+          }
+          else
+          {
+            drawWork->isHold = TRUE;
+          }
+          drawWork->befPenX = drawWork->tpData.TPDataTbl[i].x;
+          drawWork->befPenY = drawWork->tpData.TPDataTbl[i].y;
         }
         else
         {
-          info->col  = drawWork->penCol;
-        }
-        
-        if( connectNum == 1 )
-        {
-          DRAW_SYS_SetPenInfo( drawSys , info );
-        }
-        else
-        {
-          CTVT_COMM_AddDrawBuf( work , commWork );
         }
       }
-      drawWork->befPenX = tpx;
-      drawWork->befPenY = tpy;
+    }
+    if( GFL_UI_TP_GetCont() == FALSE )
+    {
+      drawWork->isHold = FALSE;
     }
   }
   else
   {
     drawWork->isHold = FALSE;
   }
+
 }
 
 //--------------------------------------------------------------
@@ -629,7 +691,7 @@ static void CTVT_DRAW_UpdateBar( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork 
   if( isUpdate == TRUE )
   {
     u8 i;
-    GFL_BG_SetScrollReq( CTVT_FRAME_MAIN_BAR , GFL_BG_SCROLL_Y_SET , -drawWork->dispBarScroll );
+    GFL_BG_SetScrollReq( CTVT_FRAME_MAIN_MSG , GFL_BG_SCROLL_Y_SET , -drawWork->dispBarScroll );
     for( i=0;i<CDED_MAX;i++ )
     {
       GFL_CLACTPOS pos;

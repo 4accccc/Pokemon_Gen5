@@ -297,6 +297,10 @@ static const BOOL COMM_TVT_Main( COMM_TVT_WORK *work )
                                         CTVT_PAL_BG_SUB_BG * 32 + 15*2,
                                         &work->palAnmBuf , 2 );
   }
+
+  GFL_BG_SetScroll( CTVT_FRAME_MAIN_BG , GFL_BG_SCROLL_X_SET , GFUser_GetPublicRand0(256) );
+  GFL_BG_SetScroll( CTVT_FRAME_MAIN_BG , GFL_BG_SCROLL_Y_SET , GFUser_GetPublicRand0(256) );
+
   return FALSE;
 }
 //--------------------------------------------------------------
@@ -377,18 +381,18 @@ static void COMM_TVT_InitGraphic( COMM_TVT_WORK *work )
       GX_BG_SCRBASE_0x7000, GX_BG_CHARBASE_0x00000,0x07000,
       GX_BG_EXTPLTT_23, 0, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
     };
-    // BG1 BAR (バー
+    // BG1 BG (BGノイズ
     static const GFL_BG_BGCNT_HEADER header_main1 = {
       0, 0, 0x0800, 0,  // scrX, scrY, scrbufSize, scrbufofs,
       GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
       GX_BG_SCRBASE_0x7800, GX_BG_CHARBASE_0x08000,0x08000,
-      GX_BG_EXTPLTT_23, 1, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
+      GX_BG_EXTPLTT_23, 3, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
     };
 
     GFL_BG_SetBGMode( &sys_data );
     
     COMM_TVT_SetupBgFunc( &header_main0 , CTVT_FRAME_MAIN_MSG  , GFL_BG_MODE_TEXT );
-    COMM_TVT_SetupBgFunc( &header_main1 , CTVT_FRAME_MAIN_BAR  , GFL_BG_MODE_TEXT );
+    COMM_TVT_SetupBgFunc( &header_main1 , CTVT_FRAME_MAIN_BG  , GFL_BG_MODE_TEXT );
 
     COMM_TVT_SetupBgFunc( &header_sub0 , CTVT_FRAME_SUB_MSG  , GFL_BG_MODE_TEXT );
     COMM_TVT_SetupBgFunc( &header_sub1 , CTVT_FRAME_SUB_BAR  , GFL_BG_MODE_TEXT );
@@ -403,12 +407,11 @@ static void COMM_TVT_InitGraphic( COMM_TVT_WORK *work )
     GFL_STD_MemClear( G2_GetBG2ScrPtr() , 256*192*sizeof(u16) );
     GFL_STD_MemClear( G2_GetBG3ScrPtr() , 256*192*sizeof(u16) );
 
-    G2_SetBG2Priority(2);
-    G2_SetBG3Priority(3);
+    G2_SetBG2Priority(1);
+    G2_SetBG3Priority(2);
     GFL_BG_SetVisible( CTVT_FRAME_MAIN_DRAW, VISIBLE_ON );
     GFL_BG_SetVisible( CTVT_FRAME_MAIN_CAMERA, VISIBLE_ON );
     
-    GFL_BG_SetScroll( CTVT_FRAME_MAIN_BAR , GFL_BG_SCROLL_Y_SET , -24 );
   }
   //OBJ系の初期化
   {
@@ -435,7 +438,7 @@ static void COMM_TVT_TermGraphic( COMM_TVT_WORK *work )
   GFL_BG_FreeBGControl( CTVT_FRAME_SUB_MISC );
   GFL_BG_FreeBGControl( CTVT_FRAME_SUB_BAR );
   GFL_BG_FreeBGControl( CTVT_FRAME_SUB_MSG );
-  GFL_BG_FreeBGControl( CTVT_FRAME_MAIN_BAR );
+  GFL_BG_FreeBGControl( CTVT_FRAME_MAIN_BG );
   GFL_BG_FreeBGControl( CTVT_FRAME_MAIN_MSG );
   GFL_BMPWIN_Exit();
   GFL_BG_Exit();
@@ -465,6 +468,16 @@ static void COMM_TVT_LoadResource( COMM_TVT_WORK *work )
                     CTVT_FRAME_SUB_BG , 0 , 0, FALSE , work->heapId );
   GFL_ARCHDL_UTIL_TransVramScreen( work->arcHandle , NARC_comm_tvt_tv_t_common_bg_NSCR , 
                     CTVT_FRAME_SUB_BG ,  0 , 0, FALSE , work->heapId );
+  GFL_BG_LoadScreenReq( CTVT_FRAME_SUB_BG );
+
+  //上画面
+  GFL_ARCHDL_UTIL_TransVramPalette( work->arcHandle , NARC_comm_tvt_noise_bg_NCLR , 
+                    PALTYPE_MAIN_BG , CTVT_PAL_BG_MAIN_BG*32 , 32*1 , work->heapId );
+  GFL_ARCHDL_UTIL_TransVramBgCharacter( work->arcHandle , NARC_comm_tvt_noise_bg_NCGR ,
+                    CTVT_FRAME_MAIN_BG , 0 , 0, FALSE , work->heapId );
+  GFL_ARCHDL_UTIL_TransVramScreen( work->arcHandle , NARC_comm_tvt_noise_bg_NSCR , 
+                    CTVT_FRAME_MAIN_BG ,  0 , 0, FALSE , work->heapId );
+  GFL_BG_LoadScreenReq( CTVT_FRAME_MAIN_BG );
 
   //下画面 BGMisc(キャラは共通なの先読み
   //各々で読むように変更
@@ -498,11 +511,11 @@ static void COMM_TVT_LoadResource( COMM_TVT_WORK *work )
     GFL_ARCHDL_UTIL_TransVramPalette( commonArcHandle , APP_COMMON_GetBarPltArcIdx() , 
                       PALTYPE_MAIN_BG , CTVT_PAL_BG_MAIN_BAR*32 , 32 , work->heapId );
     GFL_ARCHDL_UTIL_TransVramBgCharacter( commonArcHandle , APP_COMMON_GetBarCharArcIdx() ,
-                      CTVT_FRAME_MAIN_BAR , 0 , 0, FALSE , work->heapId );
-    GFL_ARCHDL_UTIL_TransVramScreen( commonArcHandle , APP_COMMON_GetBarScrnArcIdx() , 
-                      CTVT_FRAME_MAIN_BAR ,  0 , 0, FALSE , work->heapId );
-    GFL_BG_ChangeScreenPalette( CTVT_FRAME_MAIN_BAR , 0 , 21 , 32 , 3 , CTVT_PAL_BG_MAIN_BAR );
-    GFL_BG_LoadScreenReq( CTVT_FRAME_MAIN_BAR );
+                      CTVT_FRAME_MAIN_MSG , 0 , 0, FALSE , work->heapId );
+    //GFL_ARCHDL_UTIL_TransVramScreen( commonArcHandle , APP_COMMON_GetBarScrnArcIdx() , 
+    //                  CTVT_FRAME_MAIN_MSG ,  0 , 0, FALSE , work->heapId );
+    //GFL_BG_ChangeScreenPalette( CTVT_FRAME_MAIN_MSG , 0 , 21 , 32 , 3 , CTVT_PAL_BG_MAIN_BAR );
+    //GFL_BG_LoadScreenReq( CTVT_FRAME_MAIN_BAR );
 
     GFL_ARCHDL_UTIL_TransVramPalette( commonArcHandle , APP_COMMON_GetBarPltArcIdx() , 
                       PALTYPE_SUB_BG , CTVT_PAL_BG_SUB_BAR*32 , 32 , work->heapId );
@@ -532,7 +545,6 @@ static void COMM_TVT_LoadResource( COMM_TVT_WORK *work )
     GFL_ARC_CloseDataHandle( commonArcHandle );
   }
 
-  GFL_BG_LoadScreenReq( CTVT_FRAME_SUB_BG );
 }
 
 //--------------------------------------------------------------------------
@@ -719,7 +731,8 @@ const COMM_TVT_DISP_MODE COMM_TVT_GetDispMode( const COMM_TVT_WORK *work )
   const u8 num = COMM_TVT_GetConnectNum( work );
   if( num == 1 )
   {
-    return CTDM_SINGLE;
+    return CTDM_DOUBLE;
+//    return CTDM_SINGLE;
   }
   else
   if( num == 2 )

@@ -119,7 +119,7 @@ void CTVT_CAMERA_Main( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork )
 {
   if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_R )
   {
-    GFL_STD_MemFill32( G2_GetBG3ScrPtr() ,0x80008000 , CTVT_BUFFER_SCR_SIZE );
+    GFL_STD_MemFill32( G2_GetBG3ScrPtr() ,0x00000000 , CTVT_BUFFER_SCR_SIZE );
     if( COMM_TVT_IsTwlMode() == FALSE )
     {
       CTVT_CAMERA_CapCallBack( camWork->picBuf , work );
@@ -173,7 +173,7 @@ void CTVT_CAMERA_VBlank( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork )
       }
       else
       {
-        GFL_STD_MemFill32( G2_GetBG3ScrPtr() ,0x80008000 , CTVT_BUFFER_SCR_SIZE );
+        GFL_STD_MemFill32( G2_GetBG3ScrPtr() ,0x00000000 , CTVT_BUFFER_SCR_SIZE );
         camWork->isWaitAllRefresh = FALSE;
       }
     }

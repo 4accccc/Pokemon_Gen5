@@ -32,7 +32,7 @@
 
 
 #define CTVT_FRAME_MAIN_MSG     (GFL_BG_FRAME0_M)
-#define CTVT_FRAME_MAIN_BAR     (GFL_BG_FRAME1_M)
+#define CTVT_FRAME_MAIN_BG      (GFL_BG_FRAME1_M)
 #define CTVT_FRAME_MAIN_DRAW    (GFL_BG_FRAME2_M)
 #define CTVT_FRAME_MAIN_CAMERA  (GFL_BG_FRAME3_M)
 
@@ -42,6 +42,7 @@
 #define CTVT_FRAME_SUB_BG    (GFL_BG_FRAME3_S)
 
 #define CTVT_PAL_BG_MAIN_BAR   (0) //1本
+#define CTVT_PAL_BG_MAIN_BG    (1) //1本
 #define CTVT_PAL_BG_MAIN_FONT   (10) //1本
 
 #define CTVT_PAL_BG_SUB_BG    (0) //5本
