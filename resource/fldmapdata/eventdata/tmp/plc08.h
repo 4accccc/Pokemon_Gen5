@@ -2,6 +2,8 @@
 #ifndef ZONE_PLC08_EVD_H
 #define ZONE_PLC08_EVD_H
 
+#define DOOR_ID_PLC08_PLR09_EXIT01        0
+#define DOOR_ID_PLC08_PLR11_EXIT01        1
 
 #endif //ZONE_PLC08_EVD_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/plc08.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

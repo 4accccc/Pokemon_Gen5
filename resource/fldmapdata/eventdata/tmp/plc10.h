@@ -2,6 +2,7 @@
 #ifndef ZONE_PLC10_EVD_H
 #define ZONE_PLC10_EVD_H
 
+#define DOOR_ID_PLC10_PLR15_EXIT01        0
 
 #endif //ZONE_PLC10_EVD_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/plc10.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

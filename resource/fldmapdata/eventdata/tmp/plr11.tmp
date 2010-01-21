@@ -1,5 +1,5 @@
 #../data/plr11.mev
-../tmp/plr11.bin:../data/plr11.mev $(UNIQ_SCRIPTHEADER) ../tmp/plr11.h 
+../tmp/plr11.bin:../data/plr11.mev $(UNIQ_SCRIPTHEADER) ../tmp/plr11.h ../../zonetable/zone_id.h ../tmp/plc08.h ../../../../prog/include/field/field_dir.h ../../../../prog/include/field/eventdata_type.h ../tmp/plh04.h 
 	@echo ../data/plr11.mev
-	@ruby make_binary.rb $< $(UNIQ_SCRIPTHEADER) ../tmp/plr11.h 
+	@ruby make_binary.rb $< $(UNIQ_SCRIPTHEADER) ../tmp/plr11.h ../../zonetable/zone_id.h ../tmp/plc08.h ../../../../prog/include/field/field_dir.h ../../../../prog/include/field/eventdata_type.h ../tmp/plh04.h 
 

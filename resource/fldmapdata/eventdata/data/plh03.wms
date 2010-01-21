@@ -1,15 +1,26 @@
 #WorldMap SaveData 
-#save date:2009/10/13 21:30:01
+#save date:2010/01/21 12:24:37
 #Width
-1
+2
 #Height
-1
+6
 #block x offset
 0
 #block z offset
 0
 #3dp file names
-C:\home\wb_data3d\field\in01\m_buill01_00_00.3dp
+C:\home\wb_data3d\field\out12\h03_a00_00.3dp
+C:\home\wb_data3d\field\out12\h03_a00_01.3dp
+C:\home\wb_data3d\field\out12\h03_a00_02.3dp
+C:\home\wb_data3d\field\out12\h03_a00_03.3dp
+C:\home\wb_data3d\field\out12\h03_a00_04.3dp
+C:\home\wb_data3d\field\out12\h03_a00_05.3dp
+
+
+
+
+
+
 #block size
 32 32
 #End of WorldMap SaveData

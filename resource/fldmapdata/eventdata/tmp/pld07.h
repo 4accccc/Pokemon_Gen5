@@ -2,6 +2,7 @@
 #ifndef ZONE_PLD07_EVD_H
 #define ZONE_PLD07_EVD_H
 
+#define DOOR_ID_PLD07_PLC07_EXIT01        0
 
 #endif //ZONE_PLD07_EVD_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/pld07.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

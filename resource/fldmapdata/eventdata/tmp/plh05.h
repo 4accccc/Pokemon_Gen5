@@ -2,6 +2,8 @@
 #ifndef ZONE_PLH05_EVD_H
 #define ZONE_PLH05_EVD_H
 
+#define DOOR_ID_PLH05_PLR16_EXIT01        0
+#define DOOR_ID_PLH05_PLR15_EXIT01        1
 
 #endif //ZONE_PLH05_EVD_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/plh05.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

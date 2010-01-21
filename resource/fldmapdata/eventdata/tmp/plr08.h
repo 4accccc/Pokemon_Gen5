@@ -2,6 +2,7 @@
 #ifndef ZONE_PLR08_EVD_H
 #define ZONE_PLR08_EVD_H
 
+#define DOOR_ID_PLR08_PLH03_EXIT01        0
 
 #endif //ZONE_PLR08_EVD_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/plr08.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
