@@ -12,6 +12,7 @@
 #include "gamesystem/gamedata_def.h"
 #include "print/wordset.h"
 #include "field/gpower_id.h"
+#include "gamesystem/playerwork.h"  //typedef ZONEID
 
 
 //==============================================================================
@@ -92,6 +93,12 @@ extern void GAMEBEACON_Set_PokemonGet(const STRBUF *nickname);
 extern void GAMEBEACON_Set_UnionIn(void);
 extern void GAMEBEACON_Set_UnionOut(void);
 extern void GAMEBEACON_Set_EncountDown(void);
+extern void GAMEBEACON_Set_ZoneChange(ZONEID zone_id);
+extern void GAMEBEACON_Set_GPower(GPOWER_ID g_power_id);
+extern void GAMEBEACON_Set_ThanksRecvCount(u16 count);
+extern void GAMEBEACON_Set_SuretigaiCount(u16 count);
+extern void GAMEBEACON_Set_BattleTrainer(u16 trainer_code);
+extern void GAMEBEACON_Set_BattlePokemon(u16 monsno);
 
 //--------------------------------------------------------------
 //  çÌèúó\íË

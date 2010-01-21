@@ -36,6 +36,11 @@ int GAMEBEACON_Stack_Update(GAMEBEACON_INFO_TBL *stack_infotbl)
   int start_log_no = 0, update_logno;
   const GAMEBEACON_INFO *update_info;
   int new_stack_count = 0;
+  RTCTime recv_time;
+  u16 time;
+  
+  GFL_RTC_GetTime(&recv_time);
+  time = (recv_time.hour << 8) | recv_time.minute;
   
   do{
     update_logno = GAMEBEACON_Get_UpdateLogNo(&start_log_no);
@@ -43,7 +48,8 @@ int GAMEBEACON_Stack_Update(GAMEBEACON_INFO_TBL *stack_infotbl)
       break;  //ビーコンログ無し
     }
     update_info = GAMEBEACON_Get_BeaconLog(update_logno);
-    if(GAMEBEACON_InfoTbl_SetBeacon(stack_infotbl, update_info, FALSE) == GAMEBEACON_INFO_TBL_MAX){
+    if(GAMEBEACON_InfoTbl_SetBeacon(
+        stack_infotbl, update_info, time, FALSE) == GAMEBEACON_INFO_TBL_MAX){
       break;  //スタックテーブルがいっぱいになった
     }
     GAMEBEACON_Reset_UpdateFlag(update_logno);
@@ -59,13 +65,14 @@ int GAMEBEACON_Stack_Update(GAMEBEACON_INFO_TBL *stack_infotbl)
  *
  * @param   stack_infotbl		スタックテーブルへのポインタ
  * @param   dest_info		    ビーコン情報代入先へのポインタ
+ * @param   time            受信日時の代入先へのポインタ(上位8bit：時(0～23)、下位8bit：分(0～59))
  *
  * @retval  BOOL		TRUE:情報を取得した　　FALSE:情報取得失敗(スタックテーブルにデータが無い)
  *
  * 情報取得に成功した場合、スタックテーブル内のデータが前詰めされます
  */
 //==================================================================
-BOOL GAMEBEACON_Stack_GetInfo(GAMEBEACON_INFO_TBL *stack_infotbl, GAMEBEACON_INFO *dest_info)
+BOOL GAMEBEACON_Stack_GetInfo(GAMEBEACON_INFO_TBL *stack_infotbl, GAMEBEACON_INFO *dest_info, u16 *time)
 {
   int log_no;
   
@@ -74,10 +81,12 @@ BOOL GAMEBEACON_Stack_GetInfo(GAMEBEACON_INFO_TBL *stack_infotbl, GAMEBEACON_INF
   }
   
   *dest_info = stack_infotbl->info[0];
+  *time = stack_infotbl->time[0];
   
   //スタックテーブルを前詰め
   for(log_no = 1; log_no < GAMEBEACON_INFO_TBL_MAX; log_no++){
     stack_infotbl->info[log_no - 1] = stack_infotbl->info[log_no];
+    stack_infotbl->time[log_no - 1] = stack_infotbl->time[log_no];
   }
   GFL_STD_MemClear(&stack_infotbl->info[GAMEBEACON_INFO_TBL_MAX - 1], sizeof(GAMEBEACON_INFO));
   
@@ -90,6 +99,7 @@ BOOL GAMEBEACON_Stack_GetInfo(GAMEBEACON_INFO_TBL *stack_infotbl, GAMEBEACON_INF
  *
  * @param   infotbl		  ビーコンテーブルへのポインタ
  * @param   set_info		登録するビーコン
+ * @param   time        受信日時(上位8bit：時(0～23)、下位8bit：分(0～59))
  * @param   push_out    TRUE:データがいっぱいの場合、先頭のデータをところてん式に
  *                           押し出ししてセットします。
  *                      FALSE:データいっぱいの場合、登録不可として処理を終了します
@@ -100,7 +110,7 @@ BOOL GAMEBEACON_Stack_GetInfo(GAMEBEACON_INFO_TBL *stack_infotbl, GAMEBEACON_INF
  * 新規ユーザーの場合はテーブルの最後に追加
  */
 //==================================================================
-int GAMEBEACON_InfoTbl_SetBeacon(GAMEBEACON_INFO_TBL *infotbl, const GAMEBEACON_INFO *set_info, BOOL push_out)
+int GAMEBEACON_InfoTbl_SetBeacon(GAMEBEACON_INFO_TBL *infotbl, const GAMEBEACON_INFO *set_info, u16 time, BOOL push_out)
 {
   int log_no;
   
@@ -116,8 +126,10 @@ int GAMEBEACON_InfoTbl_SetBeacon(GAMEBEACON_INFO_TBL *infotbl, const GAMEBEACON_
     //スタックテーブルを前詰め
     for(log_no = 1; log_no < GAMEBEACON_INFO_TBL_MAX; log_no++){
       infotbl->info[log_no - 1] = infotbl->info[log_no];
+      infotbl->time[log_no - 1] = infotbl->time[log_no];
     }
     infotbl->info[GAMEBEACON_INFO_TBL_MAX - 1] = *set_info;
+    infotbl->time[GAMEBEACON_INFO_TBL_MAX - 1] = time;
     return GAMEBEACON_INFO_TBL_MAX - 1;
   }
   
@@ -130,12 +142,13 @@ int GAMEBEACON_InfoTbl_SetBeacon(GAMEBEACON_INFO_TBL *infotbl, const GAMEBEACON_
  *
  * @param   infotbl		  ビーコンテーブルへのポインタ
  * @param   dest_info		ログ情報代入先
+ * @param   time        受信日時の代入先(上位8bit：時(0～23)、下位8bit：分(0～59))
  * @param   log_no		  ログ番号
  *
  * @retval  BOOL		    TRUE:ログ情報取得成功　　FALSE:取得失敗(データが無い)
  */
 //==================================================================
-BOOL GAMEBEACON_InfoTbl_GetBeacon(GAMEBEACON_INFO_TBL *infotbl, GAMEBEACON_INFO *dest_info, int log_no)
+BOOL GAMEBEACON_InfoTbl_GetBeacon(GAMEBEACON_INFO_TBL *infotbl, GAMEBEACON_INFO *dest_info, u16 *time, int log_no)
 {
   GF_ASSERT(log_no < GAMEBEACON_INFO_TBL_MAX);
   
@@ -143,6 +156,7 @@ BOOL GAMEBEACON_InfoTbl_GetBeacon(GAMEBEACON_INFO_TBL *infotbl, GAMEBEACON_INFO 
     return FALSE;
   }
   *dest_info = infotbl->info[log_no];
+  *time = infotbl->time[log_no];
   return TRUE;
 }
 

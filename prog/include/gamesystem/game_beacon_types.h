@@ -95,4 +95,5 @@ struct _GAMEBEACON_INFO{
 //==================================================================
 struct _GAMEBEACON_INFO_TBL{
   struct _GAMEBEACON_INFO info[GAMEBEACON_INFO_TBL_MAX];
+  u16 time[GAMEBEACON_INFO_TBL_MAX];    ///<ŽóM“úŽž(ãˆÊ8bitFŽž(0`23)A‰ºˆÊ8bitF•ª(0`59))
 };
