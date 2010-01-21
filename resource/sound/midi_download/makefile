@@ -7,7 +7,7 @@
 #------------------------------------------------------------------------------
 #※コンバートを行う人のユーザーIDをここに書く
 #------------------------------------------------------------------------------
-USERS	= ohno 
+USERS	= ohno watanabe
 
 
 #------------------------------------------------------------------------------
@@ -33,9 +33,10 @@ include	$(PROJECT_RSCDIR)\macro_define
 # 自動でリソースを集める
 bnksources:=$(wildcard *.sbnk)
 seqsources:=$(wildcard *.sseq)
+wavsources:=$(wildcard *.swav)
 
 
-OBJ_FILE 	= $(bnksources) $(seqsources)
+OBJ_FILE 	= $(bnksources) $(seqsources) $(wavsources)
 
 
 .PHONY:	do-build clean subdir
@@ -62,6 +63,7 @@ LIST_FILE = list.txt
 $(targetname).narc:  $(OBJ_FILE) makefile
 	-ls *.sseq > $(LIST_FILE)
 	-ls *.sbnk >> $(LIST_FILE)
+	-ls *.swav >> $(LIST_FILE)
 	perl $(PROJECT_ROOT)tools/arc_list_make.pl $(LIST_FILE)
 	nnsarc -r -l -n -i $(targetname) -S $(LIST_FILE)
 	$(NAIXCUT) $(targetname).naix

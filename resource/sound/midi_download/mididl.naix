@@ -11,8 +11,16 @@
 #define NARC_MIDIDL_NAIX_
 
 enum {
-	NARC_mididl_mus_wb_msl_field_sseq = 0,
-	NARC_mididl_mus_wb_msl_field_sbnk = 1
+	NARC_mididl_mus_wb_msl_dl_01_sseq = 0,
+	NARC_mididl_mus_wb_msl_dl_02_sseq = 1,
+	NARC_mididl_mus_wb_msl_field_sseq = 2,
+	NARC_mididl_mus_wb_msl_dl_01_sbnk = 3,
+	NARC_mididl_mus_wb_msl_dl_02_sbnk = 4,
+	NARC_mididl_mus_wb_msl_field_sbnk = 5,
+	NARC_mididl_msl_voice_01_adpcm_swav = 6,
+	NARC_mididl_msl_voice_02_adpcm_swav = 7,
+	NARC_mididl_msl_voice_03_adpcm_swav = 8,
+	NARC_mididl_msl_voice_04_adpcm_swav = 9
 };
 
 /* NARC_MIDIDL_NAIX_ */
