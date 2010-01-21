@@ -20,7 +20,7 @@ include zone_script.list
 include uniq_script.list
 
 #
-HEADER_TARGETS	= $(UNIQ_SCRIPTFILES:.ev=_def.h) $(SCRIPTFILES:.ev=_def.h)
+HEADER_TARGETS	= $(UNIQ_SCRIPTFILES:.ev=_def.h) $(filter-out sp_%,$(SCRIPTFILES:.ev=_def.h))
 
 
 
@@ -37,11 +37,6 @@ EV_DEF = ruby ./scr_tools/ev_def.rb
 #----------------------------------------------------------------------------
 #	SUFFIXES
 #----------------------------------------------------------------------------
-.SUFFIXES: _def.h .ev
-
-%_def.h:	%.ev
-		@$(EV_DEF) $< $(SCR_OFFS_ID_H)
-
 ifeq ($(CONVERTUSER),true) #CONVERTUSER
 #--- target-user ---
 do-build: $(HEADER_TARGETS)
@@ -49,6 +44,7 @@ do-build: $(HEADER_TARGETS)
 clean:
 	@-rm -f $(HEADER_TARGETS)
 
+include makefile_h.depend
 else
 #--- non-user ------
 do-build:
