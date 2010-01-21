@@ -1228,9 +1228,12 @@ BOOL  PMDSND_PresetExtraMusic2( void* seqAdrs, void* bnkAdrs, u32 dummyNo )
 	SOUNDMAN_LoadHierarchyPlayer_forThread_heapsvSB();
 
 	// éñëOÇ…îgå`ì«Ç›çûÇ›
-	for(i=0; i<4; i++){
-		if(wavNo[i]){
-			if(NNS_SndArcLoadWaveArc(wavNo[i], PmSndHeapHandle) == FALSE ){
+	for(i=0; i<4; i++)
+	{
+		if(wavNo[i] != 0xFFFF )
+		{
+			if(NNS_SndArcLoadWaveArc(wavNo[i], PmSndHeapHandle) == FALSE )
+			{
 				return FALSE;		// îgå`ì«Ç›çûÇ›é∏îs
 			}
 		}

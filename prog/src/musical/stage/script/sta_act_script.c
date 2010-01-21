@@ -133,6 +133,13 @@ void STA_SCRIPT_UpdateSystem( STA_SCRIPT_SYS *work )
     }
 #endif
   }
+#if DEB_ARI
+  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_Y )
+  {
+    subVCount = 3;
+  }
+#endif
+
   for( /*subVCount*/ ; subVCount> 0 ; subVCount-- )
   {
     for( i=0;i<SCRIPT_NUM;i++ )

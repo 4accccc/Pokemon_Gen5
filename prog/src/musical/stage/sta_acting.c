@@ -15,6 +15,7 @@
 #include "arc_def.h"
 #include "musical_item.naix"
 #include "stage_gra.naix"
+#include "mididl.naix"
 #include "message.naix"
 #include "print/printsys.h"
 
@@ -172,6 +173,12 @@ struct _ACTING_WORK
   MUS_POKE_EQUIP_POS useItemReqPos;
   
   BOOL isEditorMode;
+  
+#if MUSICAL_ACT_DL_TEST
+  void* seqData;
+  void* bankData;
+  void* waveData[4];
+#endif //MUSICAL_ACT_DL_TEST
 };
 
 //======================================================================
@@ -337,6 +344,24 @@ ACTING_WORK*  STA_ACT_InitActing( STAGE_INIT_WORK *initWork , HEAPID heapId )
   
   SND_STRM_Init( work->heapId );
   
+#if MUSICAL_ACT_DL_TEST
+  {
+    work->seqData = GFL_ARC_UTIL_Load( ARCID_MIDI_DOWNLOAD , NARC_mididl_mus_wb_msl_dl_01_sseq , FALSE , work->heapId );
+    work->bankData = GFL_ARC_UTIL_Load( ARCID_MIDI_DOWNLOAD , NARC_mididl_mus_wb_msl_dl_01_sbnk , FALSE , work->heapId );
+    work->waveData[0] = GFL_ARC_UTIL_Load( ARCID_MIDI_DOWNLOAD , NARC_mididl_msl_voice_01_adpcm_swav , FALSE , work->heapId );
+    work->waveData[1] = GFL_ARC_UTIL_Load( ARCID_MIDI_DOWNLOAD , NARC_mididl_msl_voice_02_adpcm_swav , FALSE , work->heapId );
+    work->waveData[2] = GFL_ARC_UTIL_Load( ARCID_MIDI_DOWNLOAD , NARC_mididl_msl_voice_03_adpcm_swav , FALSE , work->heapId );
+    work->waveData[3] = GFL_ARC_UTIL_Load( ARCID_MIDI_DOWNLOAD , NARC_mididl_msl_voice_04_adpcm_swav , FALSE , work->heapId );
+    
+    //PMDSND_PresetExtraMusic( work->seqData , work->bankData , WAVE_MUS_WB_MSL_DL_DUMMY_01 );
+    PMDSND_PresetExtraMusic2( work->seqData , work->bankData , SEQ_BGM_MSL_DL_01 );
+    PMDSND_ChangeWaveData( WAVE_MUS_WB_MSL_DL_DUMMY_01 , 15 , work->waveData[0] );
+    PMDSND_ChangeWaveData( WAVE_MUS_WB_MSL_DL_DUMMY_01 , 16 , work->waveData[1] );
+    PMDSND_ChangeWaveData( WAVE_MUS_WB_MSL_DL_DUMMY_01 , 17, work->waveData[2] );
+    PMDSND_ChangeWaveData( WAVE_MUS_WB_MSL_DL_DUMMY_01 , 18 , work->waveData[3] );
+  }
+#endif //MUSICAL_ACT_DL_TEST
+  
   return work;
 }
 
@@ -346,6 +371,18 @@ void  STA_ACT_TermActing( ACTING_WORK *work )
 #if USE_DEBUGWIN_SYSTEM
   DEBUGWIN_ExitProc();
 #endif  //USE_DEBUGWIN_SYSTEM
+  
+#if MUSICAL_ACT_DL_TEST
+	PMDSND_StopExtraMusic();
+	PMDSND_ReleaseExtraMusic();
+  GFL_HEAP_FreeMemory( work->waveData[3] );
+  GFL_HEAP_FreeMemory( work->waveData[2] );
+  GFL_HEAP_FreeMemory( work->waveData[1] );
+  GFL_HEAP_FreeMemory( work->waveData[0] );
+  GFL_HEAP_FreeMemory( work->bankData );
+  GFL_HEAP_FreeMemory( work->seqData );
+#endif //MUSICAL_ACT_DL_TEST
+
   //フェードないので仮処理
   GX_SetMasterBrightness(-16);  
   GXS_SetMasterBrightness(-16);
@@ -430,11 +467,13 @@ ACTING_RETURN STA_ACT_LoopActing( ACTING_WORK *work )
     {
       stopScript = !stopScript;
     }
+    /*
     if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X )
     {
       void *scriptData = GFL_ARCHDL_UTIL_Load( work->arcHandle, NARC_stage_gra_sub_script_01_bin , FALSE , work->heapId );
       STA_SCRIPT_SetSubScript( work->scriptSys , scriptData , 0 , 5 );
     }
+    */
   }
 #endif
 
@@ -1164,7 +1203,8 @@ void STA_ACT_HideMessage( ACTING_WORK *work )
 {
   if( work->printHandle != NULL )
   {
-    GF_ASSERT_MSG( NULL , "Message is not finish!!\n" )
+    //GF_ASSERT_MSG( NULL , "Message is not finish!!\n" )
+//    GF_ASSERT_MSG( NULL , "Message is not finish!!\n" )
     PRINTSYS_PrintStreamDelete( work->printHandle );
     work->printHandle = NULL;
   }

@@ -14,6 +14,8 @@
 #include "musical/musical_program.h"
 #include "musical/comm/mus_comm_func.h"
 
+#define MUSICAL_ACT_DL_TEST (0)
+
 //BG’è‹`
 #define ACT_FRAME_MAIN_3D       (GFL_BG_FRAME0_M)
 #define ACT_FRAME_MAIN_FONT     (GFL_BG_FRAME1_M)
