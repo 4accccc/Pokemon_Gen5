@@ -579,6 +579,24 @@ void GATE_GIMMICK_Move( FIELDMAP_WORK* fieldmap )
 }
 
 
+//------------------------------------------------------------------------------------------
+/**
+ * @brief ìdåıåfé¶î¬ÇÃå¸Ç´ÇéÊìæÇ∑ÇÈ
+ *
+ * @param fieldmap
+ *
+ * @return ìdåıåfé¶î¬ÇÃå¸Ç´( DIR_xxxx )
+ */
+//------------------------------------------------------------------------------------------
+u8 GATE_GIMMICK_GetElboardDir( FIELDMAP_WORK* fieldmap )
+{ 
+  SAVEWORK* gimmickSaveWork = GetGimmickSaveWork( fieldmap );
+  GATEWORK* gateWork        = (GATEWORK*)gimmickSaveWork->gateWork;
+
+  return gateWork->gateData->dir;
+}
+
+
 //==========================================================================================
 // Å°ÉJÉÅÉâ
 //==========================================================================================
