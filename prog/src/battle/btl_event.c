@@ -206,7 +206,7 @@ static void printLinkDebug( void )
  *
  * @param   factorType      ファクタータイプ
  * @param   subID           タイプごとの個別ID（とくせいID，アイテムID等と一致）
- * @param   priority
+ * @param   priority        プライオリティ ( = 数値が高いほど先に呼び出される )
  * @param   pokeID
  * @param   handlerTable
  *
@@ -263,7 +263,7 @@ BTL_EVENT_FACTOR* BTL_EVENT_AddFactor( BtlEventFactorType factorType, u16 subID,
       last = FirstFactorPtr;
       for( find=FirstFactorPtr->next; find!=NULL; find=find->next )
       {
-        if( newFactor->priority < find->priority )
+        if( newFactor->priority > find->priority )
         {
           newFactor->next = find;
           newFactor->prev = find->prev;

@@ -372,8 +372,10 @@ static void scproc_WazaDamageAfter( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker
   const SVFL_WAZAPARAM* wazaParam, u32 damage, BOOL critical_flag );
 static void scproc_CheckItemReaction( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
 static void scEvent_CheckItemReaction( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
-static void scproc_Fight_Damage_After( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARAM* attacker, BTL_POKESET* targets );
+static void scproc_Fight_Damage_After( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam, BTL_POKEPARAM* attacker, BTL_POKESET* targets );
 static void scproc_Fight_Damage_Shrink( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARAM* attacker, BTL_POKESET* targets );
+static void scproc_Fight_Damage_KoriCure( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam,
+  BTL_POKEPARAM* attacker, BTL_POKESET* targets );
 static BOOL scproc_AddShrinkCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, WazaID waza, u32 per );
 static void scproc_Fight_Damage_Drain( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARAM* attacker, BTL_POKESET* targets );
 static BOOL scproc_DrainCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_POKEPARAM* target, u16 drainHP );
@@ -4367,7 +4369,7 @@ static void scproc_Fight_Damage_Root( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM*
     scproc_Fight_Damage_side( wk, wazaParam, attacker, &wk->pokesetSubTarget, dmg_ratio );
   }
 
-  scproc_Fight_Damage_After( wk, wazaParam->wazaID, attacker, &wk->pokesetDamaged );
+  scproc_Fight_Damage_After( wk, wazaParam, attacker, &wk->pokesetDamaged );
 }
 static void scproc_Fight_Damage_ToRecover( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker,
   const SVFL_WAZAPARAM* wazaParam, BTL_POKESET* targets )
@@ -4919,15 +4921,16 @@ static void scEvent_CheckItemReaction( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM*
 //------------------------------------------------------------------
 // サーバーフロー：ダメージ受け後の処理
 //------------------------------------------------------------------
-static void scproc_Fight_Damage_After( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARAM* attacker, BTL_POKESET* targets )
+static void scproc_Fight_Damage_After( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam, BTL_POKEPARAM* attacker, BTL_POKESET* targets )
 {
-  scproc_Fight_Damage_Drain( wk, waza, attacker, targets );
-  scproc_Fight_Damage_Shrink( wk, waza, attacker, targets );
+  scproc_Fight_Damage_Drain( wk, wazaParam->wazaID, attacker, targets );
+  scproc_Fight_Damage_Shrink( wk, wazaParam->wazaID, attacker, targets );
+  scproc_Fight_Damage_KoriCure( wk, wazaParam, attacker, targets );
 
   {
     u32 hem_state = Hem_PushState( &wk->HEManager );
 
-    scEvent_DamageProcEnd( wk, attacker, targets, waza );
+    scEvent_DamageProcEnd( wk, attacker, targets, wazaParam->wazaID );
     scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
 
     Hem_PopState( &wk->HEManager, hem_state );
@@ -4947,6 +4950,27 @@ static void scproc_Fight_Damage_Shrink( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_PO
     if( !BPP_TURNFLAG_Get(bpp, BPP_TURNFLG_ACTION_DONE) )
     {
       scproc_AddShrinkCore( wk, bpp, waza, waza_per );
+    }
+  }
+}
+//------------------------------------------------------------------
+// サーバーフロー：ダメージ受け後の処理 > ほのおワザで「こおり」が治る処理
+// 追加効果処理の後に置くこと。でないと「こおりがとけた」→「やけどになった」が起きてしまう。
+//------------------------------------------------------------------
+static void scproc_Fight_Damage_KoriCure( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam,
+  BTL_POKEPARAM* attacker, BTL_POKESET* targets )
+{
+  if( wazaParam->wazaType == POKETYPE_HONOO )
+  {
+    BTL_POKEPARAM* bpp;
+
+    BTL_POKESET_SeekStart( targets );
+    while( (bpp = BTL_POKESET_SeekNext(targets)) != NULL )
+    {
+      if( BPP_GetPokeSick(bpp) == POKESICK_KOORI )
+      {
+        scPut_CurePokeSick( wk, bpp, POKESICK_KOORI );
+      }
     }
   }
 }
@@ -8579,7 +8603,7 @@ static u8 scEvent_GetWazaTargetIntr( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* a
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_WAZA_TYPE, wazaParam->wazaType );
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_WAZAID, wazaParam->wazaID );
-    BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_DEF, pokeID );
+    BTL_EVENTVAR_SetRewriteOnceValue( BTL_EVAR_POKEID_DEF, pokeID );
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_DECIDE_TARGET );
     pokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_DEF );
   BTL_EVENTVAR_Pop();
