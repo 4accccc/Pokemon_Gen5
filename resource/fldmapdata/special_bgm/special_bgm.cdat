@@ -5,8 +5,8 @@
 
 typedef struct
 {
-  u32 flagNo;
-  u32 zoneID;
+  u16 flagNo;
+  u16 zoneID;
   u32 soundIdx;
 
 } SPECIAL_BGM;
@@ -15,4 +15,5 @@ static const SPECIAL_BGM specialBGMTable[] =
   {FE_PC_GOLD, ZONE_ID_R01, SEQ_BGM_SHINKA},
   {FE_SODATE_TAMAGO, ZONE_ID_T02, SEQ_BGM_E_SUPPORT},
   {FE_ZUKAN_GET, ZONE_ID_R02R0101, SEQ_BGM_EYE_08},
+  {FE_FIRST_POKE_GET, ZONE_ID_T01R0301, SEQ_BGM_EYE_03},
 };
