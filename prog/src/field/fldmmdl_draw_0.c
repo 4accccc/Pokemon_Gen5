@@ -855,10 +855,6 @@ static void DrawFishingHero_Draw( MMDL *mmdl )
   }
   
   { //64x64•â³
-    fx16 sizX = FX16_ONE*8-1;
-    fx16 sizY = FX16_ONE*8-1;
-    GFL_BBD_SetObjectSiz( GFL_BBDACT_GetBBDSystem(actSys),
-        work->actID, &sizX, &sizY );
     pos.y += NUM_FX32( -12 );
     pos.z += NUM_FX32( 8 );
   }
@@ -1238,10 +1234,10 @@ static void TsurePoke_GetDrawOffsetFromDir( MMDL* mmdl, u8 dir, const OBJCODE_PA
 			outVec->z -= MMDL_POKE_OFS_UPDOWN;
 			break;
 		case DIR_LEFT:
-			outVec->x += MMDL_POKE_OFS_RIGHTLEFT;
+//			outVec->x += MMDL_POKE_OFS_RIGHTLEFT;
 			break;
 		case DIR_RIGHT:
-			outVec->x -= MMDL_POKE_OFS_RIGHTLEFT;
+//			outVec->x -= MMDL_POKE_OFS_RIGHTLEFT;
 			break;
     }
 	}else{

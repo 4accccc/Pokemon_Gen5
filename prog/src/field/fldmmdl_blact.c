@@ -431,6 +431,16 @@ static GFL_BBDACT_ACTUNIT_ID blact_AddActorCore(
         actID, (GFL_BBDACT_ANMTBL)anmTbl->pAnmTbl, anmTbl->anm_max );
 	    GFL_BBDACT_SetAnimeIdxOn( pBlActCont->pBbdActSys, actID, 0 );
     }
+    
+    //なぜか64x64だと32x32サイズで表示されてしまう
+    //ひとまずサイズ等倍にして対処。kagaya
+    if( prm->mdl_size == MMDL_BLACT_MDLSIZE_64x64 ){
+      fx16 sizX = FX16_ONE*8-1;
+      fx16 sizY = FX16_ONE*8-1;
+      GFL_BBD_SetObjectSiz(
+        GFL_BBDACT_GetBBDSystem(pBlActCont->pBbdActSys),
+        actID, &sizX, &sizY );
+    }
 	}
 	
 	return( actID );
@@ -1969,17 +1979,16 @@ static GFL_BBDACT_RESUNIT_ID BlActRes_AddRes(
 	data.texFmt = GFL_BBD_TEXFMT_PAL16;
 	data.texSiz = prm->tex_size;
   
-#if 0
-	data.celSizX = 32;				//いずれmdl_sizeから
-	data.celSizY = 32;
-#else 
   {
     const u16 *size = DATA_MMDL_BLACT_MdlSize[prm->mdl_size];
     data.celSizX = size[0];
     data.celSizY = size[1];
-  }
+#if 0   
+    KAGAYA_Printf( "テクスチャリソース追加 セルサイズ X=%d,Y=%d\n",
+        data.celSizX, data.celSizY );
 #endif
-
+  }
+  
   data.dataCut = type;
   
 	id = GFL_BBDACT_AddResourceG3DResUnit( pBlActCont->pBbdActSys, &data, 1 );
