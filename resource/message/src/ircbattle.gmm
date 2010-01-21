@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00176" date="2009-12-21T20:23:01"/>
+	<create user="tetsuji_ohta" host="W00176" date="2010-01-21T19:47:52"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,7 +312,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -335,12 +335,12 @@
 
 	<row id="IRCBTL_STR_01">
 		<language name="JPN" width="256">たいせん</language>
-		<language name="JPN_KANJI" width="256">対戦</language>
+		<language name="JPN_KANJI" width="256">Ｂａｔｔｌｅ</language>
 	</row>
 
 	<row id="IRCBTL_STR_02">
 		<language name="JPN" width="256">こうかん</language>
-		<language name="JPN_KANJI" width="256">交換</language>
+		<language name="JPN_KANJI" width="256">Ｔｒａｄｅ</language>
 	</row>
 
 	<row id="IRCBTL_STR_03">
@@ -374,17 +374,17 @@
 	</row>
 
 	<row id="IRCBTL_STR_09">
-		<language name="JPN" width="256">たいせん　あいてに
-せきがいせんを　むけて　ください</language>
-		<language name="JPN_KANJI" width="256">対戦相手に
-赤外線を向けて下さい</language>
+		<language name="JPN" width="256">たいせん　あいてと
+せきがいせんつうしんを　してください</language>
+		<language name="JPN_KANJI" width="256">対戦相手と
+赤外線通信をして下さい</language>
 	</row>
 
 	<row id="IRCBTL_STR_10">
-		<language name="JPN" width="256">パートナーとなる　ともだちに
-せきがいせんを　むけて　ください</language>
-		<language name="JPN_KANJI" width="256">パートナーとなる友達に
-赤外線を向けて下さい</language>
+		<language name="JPN" width="256">パートナーとなる　ともだちと
+せきがいせんつうしんを　してください</language>
+		<language name="JPN_KANJI" width="256">パートナーとなる友達と
+赤外線通信をして下さい</language>
 	</row>
 
 	<row id="IRCBTL_STR_11">
@@ -393,10 +393,10 @@
 	</row>
 
 	<row id="IRCBTL_STR_12">
-		<language name="JPN" width="256">たいせん　あいての　リーダーに
-せきがいせんを　むけて　ください</language>
-		<language name="JPN_KANJI" width="256">対戦相手のリーダーに
-赤外線を向けて下さい</language>
+		<language name="JPN" width="256">たいせん　あいての　リーダーと
+せきがいせんつうしんを　してください</language>
+		<language name="JPN_KANJI" width="256">対戦相手のリーダーと
+赤外線通信をして下さい</language>
 	</row>
 
 	<row id="IRCBTL_STR_13">
@@ -406,14 +406,14 @@
 
 	<row id="IRCBTL_STR_14">
 		<language name="JPN" width="256">ともだちコードこうかん</language>
-		<language name="JPN_KANJI" width="256">ともだちコードこうかん</language>
+		<language name="JPN_KANJI" width="256">ＦｒｉｅｎｄＣｏｄｅ</language>
 	</row>
 
 	<row id="IRCBTL_STR_15">
 		<language name="JPN" width="256">あいしょう
 チェック</language>
-		<language name="JPN_KANJI" width="256">相性
-チェック</language>
+		<language name="JPN_KANJI" width="256">Ｆｅｅｌｉｎｇ
+Ｃｈｅｃｋ</language>
 	</row>
 
 	<row id="IRCBTL_STR_16">
@@ -422,10 +422,10 @@
 	</row>
 
 	<row id="IRCBTL_STR_17">
-		<language name="JPN" width="256">こうかんする　ともだちに
-せきがいせんを　むけて　ください</language>
-		<language name="JPN_KANJI" width="256">交換する友達に
-赤外線を向けて下さい</language>
+		<language name="JPN" width="256">こうかんする　ともだちと
+せきがいせんつうしんを　してください</language>
+		<language name="JPN_KANJI" width="256">交換する友達と
+赤外線通信をして下さい</language>
 	</row>
 
 	<row id="IRCBTL_STR_18">
