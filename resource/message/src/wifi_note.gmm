@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ariizumi_nobuhiko" host="W00147" date="2009-04-06T15:35:15"/>
+	<create user="hiro_nakamura" host="W00144" date="2010-01-21T12:36:15"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -788,6 +788,16 @@
 さくじょ　しますか？</language>
 		<language name="JPN_KANJI" width="216">[1:00:トレーナー名:0]　の　データを
 さくじょ　しますか？</language>
+	</row>
+
+	<row id="msg_wifi_note_yes">
+		<language name="JPN" width="216">はい</language>
+		<language name="JPN_KANJI" width="216">はい</language>
+	</row>
+
+	<row id="msg_wifi_note_no">
+		<language name="JPN" width="216">いいえ</language>
+		<language name="JPN_KANJI" width="216">いいえ</language>
 	</row>
 
 	<flowchart-group-list>
