@@ -115,6 +115,8 @@ typedef void (*pEmitFunc)(GFL_EMIT_PTR);
 ///SPL_SetCallbackFuncに指定するコールバック関数の型
 typedef void (*pEmitCBFunc)( GFL_EMIT_PTR, unsigned int );
 
+#define PTC_NON_CREATE_EMITTER  (GFL_EMIT_PTR)( 0xffffffff )  //エミッタのCreateに失敗
+
 //==============================================================================
 //	外部関数宣言
 //==============================================================================
@@ -169,8 +171,11 @@ extern  void      GFL_PTC_SetEmitterRadius(GFL_EMIT_PTR emit, fx32 radius);
 extern  fx32      GFL_PTC_GetEmitterLength(GFL_EMIT_PTR emit);
 extern  void      GFL_PTC_SetEmitterLength(GFL_EMIT_PTR emit, fx32 length);
 extern	fx16			GFL_PTC_GetEmitterInitVelocityPos(GFL_EMIT_PTR emit);
+extern	void			GFL_PTC_SetEmitterInitVelocityPos(GFL_EMIT_PTR emit, fx16 vel);
 extern	fx16			GFL_PTC_GetEmitterInitVelocityAxis(GFL_EMIT_PTR emit);
+extern	void			GFL_PTC_SetEmitterInitVelocityAxis(GFL_EMIT_PTR emit, fx16 vel);
 extern	fx16			GFL_PTC_GetEmitterBaseScale(GFL_EMIT_PTR emit);
+extern	u16			  GFL_PTC_GetEmitterParticleLife(GFL_EMIT_PTR emit);
 extern	u16				GFL_PTC_GetEmitterEmissionInterval(GFL_EMIT_PTR emit);
 extern	u16				GFL_PTC_GetEmitterBaseAlpha(GFL_EMIT_PTR emit);
 extern	GXRgb			GFL_PTC_GetEmitterGlobalColor(GFL_EMIT_PTR emit);
@@ -185,6 +190,8 @@ extern	void			GFL_PTC_SetEmitterPosition(GFL_EMIT_PTR emit, const VecFx32 * p_po
 extern	void			GFL_PTC_SetEmitterAxis(GFL_EMIT_PTR emit, const VecFx16 * p_vec);
 //エミッタのスケールを設定する
 extern	void			GFL_PTC_SetEmitterBaseScale(GFL_EMIT_PTR emit, const fx16 p_scale);
+//エミッタの寿命を設定する
+extern	void			GFL_PTC_SetEmitterParticleLife(GFL_EMIT_PTR emit, const u16 ptcl_life);
 
 // -----------------------------------------
 //
