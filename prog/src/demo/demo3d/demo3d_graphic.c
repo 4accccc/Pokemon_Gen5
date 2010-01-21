@@ -199,8 +199,8 @@ static const GFL_CLSYS_INIT sc_clsys_init	=
 {	
 	0, 0,		//メインサーフェースの左上X,Y座標
 	0, 512,	//サブサーフェースの左上X,Y座標
-	4, 124-12,	//メインOAM管理開始～終了	（通信アイコン用に開始は4以上に、またすべて4の倍数いしてください）
-	4, 124-12,	//差bOAM管理開始～終了	（通信アイコン用に開始は4以上に、またすべて4の倍数いしてください）
+	4, 124,	//メインOAM管理開始,個数	（通信アイコン用に開始は4以上に、またすべて4の倍数いしてください）
+	4, 124-12,	//サブOAM管理開始,個数	（通信アイコン用に開始は4以上に、またすべて4の倍数いしてください) (2画面表示のキャプチャーに後ろから12個のOAMを使っています。)
 	0,			//セルVram転送管理数
 	32,32,32,32,	//ｷｬﾗ、ﾊﾟﾚｯﾄ、ｾﾙｱﾆﾒ、ﾏﾙﾁｾﾙの登録できるリソース管理最大数
   16, 16,				//メイン、サブのCGRVRAM管理領域開始オフセット（通信アイコン用に16以上にしてください）
@@ -209,8 +209,8 @@ static const GFL_CLSYS_INIT sc_clsys_init	=
 {	
 	0, 0,		//メインサーフェースの左上X,Y座標
 	0, 192,	//サブサーフェースの左上X,Y座標
-	4, 124-12,	//メインOAM管理開始～終了	（通信アイコン用に開始は4以上に、またすべて4の倍数いしてください）
-	4, 124-12,	//差bOAM管理開始～終了	（通信アイコン用に開始は4以上に、またすべて4の倍数いしてください）
+	4, 124,	//メインOAM管理開始,個数	（通信アイコン用に開始は4以上に、またすべて4の倍数いしてください）
+	4, 124-12,	//サブOAM管理開始,個数	（通信アイコン用に開始は4以上に、またすべて4の倍数いしてください） (2画面表示のキャプチャーに後ろから12個のOAMを使っています。)
 	0,			//セルVram転送管理数
 	32,32,32,32,	//ｷｬﾗ、ﾊﾟﾚｯﾄ、ｾﾙｱﾆﾒ、ﾏﾙﾁｾﾙの登録できるリソース管理最大数
   16, 16,				//メイン、サブのCGRVRAM管理領域開始オフセット（通信アイコン用に16以上にしてください）
@@ -233,37 +233,6 @@ static const GFL_CLSYS_INIT sc_clsys_init	=
 //=====================================
 #define GRAPHIC_G3D_TEXSIZE	(GFL_G3D_TEX128K)	//バンクのテクスチャイメージスロットｻｲｽﾞとあわせてください
 #define GRAPHIC_G3D_PLTSIZE	(GFL_G3D_PLT32K)	//バンクのﾊﾟﾚｯﾄイメージスロットｻｲｽﾞとあわせてください
-
-//-------------------------------------
-///	カメラ位置
-//=====================================
-static const VecFx32 sc_CAMERA_PER_POS		= { 0,0,FX32_CONST( 0 ) };	//位置
-static const VecFx32 sc_CAMERA_PER_UP			= { 0,FX32_ONE,0 };					//上方向
-static const VecFx32 sc_CAMERA_PER_TARGET	= { 0,0,FX32_CONST( 0 ) };	//ターゲット
-
-//-------------------------------------
-///	プロジェクション
-//		プロジェクションの細かい調整は各自でおこなってください
-//=====================================
-//正射影カメラ。射影カメラ
-static inline GFL_G3D_CAMERA* GRAPHIC_G3D_CAMERA_Create
-		( const VecFx32* cp_pos, const VecFx32* cp_up, const VecFx32* cp_target, HEAPID heapID )
-{
-#if 1	//射影
-	return GFL_G3D_CAMERA_Create(	GFL_G3D_PRJPERS, 
-									FX_SinIdx( defaultCameraFovy/2 *PERSPWAY_COEFFICIENT ),
-									FX_CosIdx( defaultCameraFovy/2 *PERSPWAY_COEFFICIENT ),
-									defaultCameraAspect, 0,
-									defaultCameraNear, defaultCameraFar, 0,
-									cp_pos, cp_up, cp_target, heapID );
-#else	//正射影	クリップ面は適当です
-	return GFL_G3D_CAMERA_CreateOrtho( 
-		// const fx32 top, const fx32 bottom, const fx32 left, const fx32 right, 
-			FX32_CONST(24), -FX32_CONST(24), -FX32_CONST(32), FX32_CONST(32),
-									defaultCameraNear, defaultCameraFar, 0,
-									cp_pos, cp_up, cp_target, heapID );
-#endif
-}
 
 //-------------------------------------
 ///	3D設定コールバック関数
@@ -402,7 +371,6 @@ static void GRAPHIC_G3D_Init( GRAPHIC_G3D_WORK *p_wk, HEAPID heapID );
 static void GRAPHIC_G3D_Exit( GRAPHIC_G3D_WORK *p_wk );
 static void GRAPHIC_G3D_StartDraw( GRAPHIC_G3D_WORK *p_wk );
 static void GRAPHIC_G3D_EndDraw( GRAPHIC_G3D_WORK *p_wk );
-static GFL_G3D_CAMERA * GRAPHIC_G3D_GetCamera( const GRAPHIC_G3D_WORK *cp_wk );
 static void Graphic_3d_SetUp( void );
 #endif //GRAPHIC_G3D_USE
 
@@ -559,23 +527,7 @@ GFL_CLUNIT * DEMO3D_GRAPHIC_GetClunit( const DEMO3D_GRAPHIC_WORK *cp_wk )
 	return NULL;
 #endif //GRAPHIC_OBJ_USE
 }
-//----------------------------------------------------------------------------
-/**
- *	@brief	G3D_CAMERAの取得
- *
- *	@param	const GRAPHIC_WORK *cp_wk		ワーク
- *
- *	@return	CAMERA取得
- */
-//-----------------------------------------------------------------------------
-GFL_G3D_CAMERA * DEMO3D_GRAPHIC_GetCamera( const DEMO3D_GRAPHIC_WORK *cp_wk )
-{	
-#ifdef GRAPHIC_G3D_USE
-	return GRAPHIC_G3D_GetCamera( &cp_wk->g3d );
-#else
-	return NULL;
-#endif //GRAPHIC_G3D_USE
-}
+
 //=============================================================================
 /**
  *						共通
@@ -791,17 +743,6 @@ static void GRAPHIC_G3D_Init( GRAPHIC_G3D_WORK *p_wk, HEAPID heapID )
 	GFL_G3D_Init( GFL_G3D_VMANLNK, GRAPHIC_G3D_TEXSIZE,
 			GFL_G3D_VMANLNK, GRAPHIC_G3D_PLTSIZE, 0, heapID, Graphic_3d_SetUp );
 
-  // カメラ生成
-	p_wk->p_camera = GRAPHIC_G3D_CAMERA_Create( &sc_CAMERA_PER_POS, &sc_CAMERA_PER_UP, &sc_CAMERA_PER_TARGET, heapID );
-  
-  // カメラ設定
-  {
-    fx32 far = FX32_ONE * 2048;   ///< 最大値
-    fx32 near = FX32_CONST(0.1);  ///< 最低値
-    GFL_G3D_CAMERA_SetFar( p_wk->p_camera, &far );
-    GFL_G3D_CAMERA_SetNear( p_wk->p_camera, &near );
-  }
-
   // ライト作成
   {
     //ライト初期設定データ
@@ -831,8 +772,6 @@ static void GRAPHIC_G3D_Exit( GRAPHIC_G3D_WORK *p_wk )
 {
   // ライト破棄
   GFL_G3D_LIGHT_Delete( p_wk->p_lightset );
-  // カメラ破棄
-	GFL_G3D_CAMERA_Delete( p_wk->p_camera );
 
 	GFL_G3D_Exit();
 }
@@ -846,8 +785,6 @@ static void GRAPHIC_G3D_Exit( GRAPHIC_G3D_WORK *p_wk )
 //-----------------------------------------------------------------------------
 static void GRAPHIC_G3D_StartDraw( GRAPHIC_G3D_WORK *p_wk )
 {	
-	GFL_G3D_CAMERA_Switching( p_wk->p_camera );
-
 	GFL_G3D_DRAW_Start();
 	GFL_G3D_DRAW_SetLookAt();
 }
@@ -863,17 +800,5 @@ static void GRAPHIC_G3D_EndDraw( GRAPHIC_G3D_WORK *p_wk )
 {	
 	GFL_G3D_DRAW_End();
 }
-//----------------------------------------------------------------------------
-/**
- *	@brief	カメラ取得
- *
- *	@param	const GRAPHIC_G3D_WORK *cp_wk		ワーク
- *
- *	@return	カメラ
- */
-//-----------------------------------------------------------------------------
-static GFL_G3D_CAMERA * GRAPHIC_G3D_GetCamera( const GRAPHIC_G3D_WORK *cp_wk )
-{	
-	return cp_wk->p_camera;
-}
+
 #endif// GRAPHIC_G3D_USE

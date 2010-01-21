@@ -65,8 +65,10 @@ struct _DEMO3D_ENGINE_WORK {
   BOOL          is_double;
   fx32          anime_speed;  ///< アニメーションスピード
   ICA_ANIME*    ica_anime;
-  GFL_G3D_UTIL* g3d_util;
-  GFL_TCB*      dbl3DdispVintr;
+  GFL_G3D_UTIL*   g3d_util;
+  GFL_G3D_CAMERA* camera;
+  fx32 def_top;
+  fx32 def_buttom;
   DEMO3D_CMD_WORK*  cmd;
 
   u16* unit_idx; // unit_idx保持（ALLOC)
@@ -80,20 +82,85 @@ struct _DEMO3D_ENGINE_WORK {
 
 //=============================================================================
 /**
- *								外部公開関数
- */
-//=============================================================================
-
-//=============================================================================
-/**
  *								static関数
  */
 //=============================================================================
+
 // DoubleDisp用VIntr割り込み関数
 static void vintrFunc(void)
 {
 	GFL_G3D_DOUBLE3D_VblankIntr();
 }
+
+//-------------------------------------
+///	カメラ位置
+//=====================================
+static const VecFx32 sc_CAMERA_PER_POS		= { 0,0,FX32_CONST( 0 ) };	//位置
+static const VecFx32 sc_CAMERA_PER_UP			= { 0,FX32_ONE,0 };					//上方向
+static const VecFx32 sc_CAMERA_PER_TARGET	= { 0,0,FX32_CONST( 0 ) };	//ターゲット
+
+#if 0
+//Perspectiveカメラの生成
+static inline GFL_G3D_CAMERA* GRAPHIC_G3D_CAMERA_Create
+		( const VecFx32* cp_pos, const VecFx32* cp_up, const VecFx32* cp_target, HEAPID heapID )
+{
+	return GFL_G3D_CAMERA_Create(	GFL_G3D_PRJPERS, 
+									FX_SinIdx( defaultCameraFovy/2 *PERSPWAY_COEFFICIENT ),
+									FX_CosIdx( defaultCameraFovy/2 *PERSPWAY_COEFFICIENT ),
+									defaultCameraAspect, 0,
+									defaultCameraNear, defaultCameraFar, 0,
+									cp_pos, cp_up, cp_target, heapID );
+}
+#endif
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  Frustカメラの生成
+ *
+ *	@param	
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static GFL_G3D_CAMERA* FrustCamera_Create
+		( const VecFx32* cp_pos, const VecFx32* cp_up, const VecFx32* cp_target,
+      fx32 fovySin, fx32 fovyCos, fx32 near, fx32 far, HEAPID heapID )
+{
+  fx32 t, b, l, r;
+
+  t = near * fovySin / fovyCos;
+  b = -t;
+  r = near * defaultCameraAspect / FX32_ONE * fovySin / fovyCos;
+  l = -r;
+
+  return GFL_G3D_CAMERA_CreateFrustum(
+      t, b, l, r, 
+      near, far, 0, 
+      cp_pos, cp_up, cp_target, heapID
+      );
+}
+  
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  Frustカメラ 削除
+ *
+ *	@param	GFL_G3D_CAMERA* p_camera 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void FrustCamera_Delete( GFL_G3D_CAMERA* p_camera )
+{
+  GF_ASSERT( p_camera );
+  GFL_G3D_CAMERA_Delete( p_camera );
+}
+
+
+//=============================================================================
+/**
+ *								外部公開関数
+ */
+//=============================================================================
 
 //-----------------------------------------------------------------------------
 /**
@@ -124,19 +191,25 @@ DEMO3D_ENGINE_WORK* Demo3D_ENGINE_Init( DEMO3D_GRAPHIC_WORK* graphic, DEMO3D_ID 
   wk->demo_id       = demo_id;
   wk->start_frame   = start_frame;
 
-  // コンバータデータからの初期化
+  // コンバータデータからカメラ生成
   {
-    GFL_G3D_CAMERA* p_camera;
     fx32 fovySin;
     fx32 fovyCos;
-
-    p_camera = DEMO3D_GRAPHIC_GetCamera( wk->graphic );
 
     fovySin = Demo3D_DATA_GetCameraFovySin( demo_id );
     fovyCos = Demo3D_DATA_GetCameraFovyCos( demo_id );
 
-    GFL_G3D_CAMERA_SetfovySin( p_camera, FX_SinIdx( (fovySin>>FX32_SHIFT) / 2 * PERSPWAY_COEFFICIENT ) );
-    GFL_G3D_CAMERA_SetfovyCos( p_camera, FX_CosIdx( (fovyCos>>FX32_SHIFT) / 2 * PERSPWAY_COEFFICIENT ) );
+    fovySin = FX_SinIdx( (fovySin>>FX32_SHIFT) / 2 * PERSPWAY_COEFFICIENT );
+    fovyCos = FX_CosIdx( (fovyCos>>FX32_SHIFT) / 2 * PERSPWAY_COEFFICIENT );
+
+    wk->camera = FrustCamera_Create( 
+                  &sc_CAMERA_PER_POS, &sc_CAMERA_PER_UP, &sc_CAMERA_PER_TARGET,
+                  fovySin, fovyCos, FX32_CONST(0.1), FX32_CONST(2048), heapID );
+
+    // デフォルトのtop/buttomを取得
+    GFL_G3D_CAMERA_GetTop( wk->camera, &wk->def_top );
+    GFL_G3D_CAMERA_GetBottom( wk->camera, &wk->def_buttom );
+
   }
    
   // アニメーションスピードを取得
@@ -160,7 +233,6 @@ DEMO3D_ENGINE_WORK* Demo3D_ENGINE_Init( DEMO3D_GRAPHIC_WORK* graphic, DEMO3D_ID 
   if( wk->is_double )
   {
     GFL_G3D_DOUBLE3D_Init( heapID );
-    //wk->dbl3DdispVintr = GFUser_VIntr_CreateTCB( GFL_G3D_DOUBLE3D_VblankIntrTCB, NULL, 0 );
 		GFUser_SetVIntrFunc(vintrFunc);
   }
   
@@ -231,10 +303,12 @@ DEMO3D_ENGINE_WORK* Demo3D_ENGINE_Init( DEMO3D_GRAPHIC_WORK* graphic, DEMO3D_ID 
 //-----------------------------------------------------------------------------
 void Demo3D_ENGINE_Exit( DEMO3D_ENGINE_WORK* wk )
 { 
+  // カメラ破棄
+  FrustCamera_Delete( wk->camera );
+
   if( wk->is_double )
   {
 		//終了
-		//GFL_TCB_DeleteTask( wk->dbl3DdispVintr );
 		GFUser_ResetVIntrFunc();
     GFL_G3D_DOUBLE3D_Exit();
   }
@@ -264,85 +338,101 @@ void Demo3D_ENGINE_Exit( DEMO3D_ENGINE_WORK* wk )
 //===========================================================================
 // debug camera test
 //===========================================================================
-#ifdef DEBUG_CAMERA
+#ifdef DEBUG_CAMERA_CONTROL
 
-static void debug_vec_move( VecFx32* pos, int num )
+static BOOL debug_vec_move( VecFx32* pos, int num )
 { 
   if( CHECK_KEY_CONT( PAD_KEY_UP ) )
   {
     pos->y += num;
     //OS_Printf("{ 0x%x, 0x%x, 0x%x } \n", pos->x, pos->y, pos->z );
+    return TRUE;
   }
   else if( CHECK_KEY_CONT( PAD_KEY_DOWN ) )
   {
     pos->y -= num;
     //OS_Printf("{ 0x%x, 0x%x, 0x%x } \n", pos->x, pos->y, pos->z );
+    return TRUE;
   }    
   else if( CHECK_KEY_CONT( PAD_KEY_LEFT ) )
   {
     pos->x += num;
     //OS_Printf("{ 0x%x, 0x%x, 0x%x } \n", pos->x, pos->y, pos->z );
+    return TRUE;
   }
   else if( CHECK_KEY_CONT( PAD_KEY_RIGHT ) )
   {
     pos->x -= num;
     //OS_Printf("{ 0x%x, 0x%x, 0x%x } \n", pos->x, pos->y, pos->z );
+    return TRUE;
   }
   else if( CHECK_KEY_CONT( PAD_BUTTON_L ) )
   {
     pos->z += num;
     //OS_Printf("{ 0x%x, 0x%x, 0x%x } \n", pos->x, pos->y, pos->z );
+    return TRUE;
   }
   else if( CHECK_KEY_CONT( PAD_BUTTON_R ) )
   {
     pos->z -= num;
     //OS_Printf("{ 0x%x, 0x%x, 0x%x } \n", pos->x, pos->y, pos->z );
+    return TRUE;
   }
 
+  return FALSE;
 }
 
-#endif // DEBUG_CAMERA
+// データ吐き出し
+static void _debug_vec_print( const VecFx32* pos, const VecFx32* tar )
+{
+  OS_Printf("======\n");
+  OS_Printf("up pos = { 0x%x, 0x%x, 0x%x }; \n",
+      pos[TRUE].x,
+      pos[TRUE].y,
+      pos[TRUE].z );
+  
+  OS_Printf("up tar = { 0x%x, 0x%x, 0x%x }; \n",
+      tar[TRUE].x, 
+      tar[TRUE].y,
+      tar[TRUE].z );
+  
+  OS_Printf("down pos = { 0x%x, 0x%x, 0x%x }; \n",
+      pos[FALSE].x,
+      pos[FALSE].y,
+      pos[FALSE].z );
+  
+  OS_Printf("down tar = { 0x%x, 0x%x, 0x%x }; \n",
+      tar[FALSE].x, 
+      tar[FALSE].y,
+      tar[FALSE].z );
+}
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  ２画面：ICAカメラ座標からのオフセットを設定
+ *	@brief  DEBUG:カメラのPOS/TARGETを上下画面毎に操作/設定
  *
  *	@param	GFL_G3D_CAMERA* p_camera 
  *
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static void set_camera_offset( GFL_G3D_CAMERA* p_camera )
+static void debug_camera_control( GFL_G3D_CAMERA* p_camera )
 { 
-#if 0
-  static const VecFx32 pos_ofs[2] = {
-    { 0 },
-    { 0x0,   0xfffff844, 0x28 }
-  };
-
-  static const VecFx32 tar_ofs[2] = {
-    { 0 },
-    { 0x140, 0x8ac,      0x0 }
-  };
-#endif
-
   VecFx32 pos;
   VecFx32 tar;
   
   GFL_G3D_CAMERA_GetPos( p_camera, &pos );
   GFL_G3D_CAMERA_GetTarget( p_camera, &tar );
-
-#ifdef DEBUG_CAMERA
   {
     static BOOL _is_up = TRUE;
 
     static VecFx32 _pos[2] = {
       { 0 },
-      { 0x0,   0xfffff844, 0x28 },
+ //     { 0x0,   0xfffff844, 0x28 },
     };
     static VecFx32 _tar[2] = {
       { 0 },
-      { 0x140, 0x8ac,      0x0 },
+//      { 0x140, 0x8ac,      0x0 },
     };
 
     static int _mode = 0;
@@ -372,39 +462,19 @@ static void set_camera_offset( GFL_G3D_CAMERA* p_camera )
     // 座標操作
     if( _mode == 0 )
     {
-      debug_vec_move( &_pos[_is_up], _num );
+      if( debug_vec_move( &_pos[_is_up], _num ) )
+      {
+        _debug_vec_print( _pos, _tar );
+      }
     }
     else
     {
-      debug_vec_move( &_tar[_is_up], _num );
-    }
-    
-    // データ吐き出し
-    {
-      OS_Printf("======\n");
-      OS_Printf("up pos = { 0x%x, 0x%x, 0x%x }; \n",
-          _pos[TRUE].x,
-          _pos[TRUE].y,
-          _pos[TRUE].z );
-      
-      OS_Printf("up tar = { 0x%x, 0x%x, 0x%x }; \n",
-          _tar[TRUE].x, 
-          _tar[TRUE].y,
-          _tar[TRUE].z );
-      
-      OS_Printf("down pos = { 0x%x, 0x%x, 0x%x }; \n",
-          _pos[FALSE].x,
-          _pos[FALSE].y,
-          _pos[FALSE].z );
-      
-      OS_Printf("down tar = { 0x%x, 0x%x, 0x%x }; \n",
-          _tar[FALSE].x, 
-          _tar[FALSE].y,
-          _tar[FALSE].z );
-      
+      if( debug_vec_move( &_tar[_is_up], _num ) )
+      {
+        _debug_vec_print( _pos, _tar );
+      }
     }
 
-    // 上画面はオフセットを足しこむ
     if( GFL_G3D_DOUBLE3D_GetFlip() == FALSE )
     {
       // 操作座標反映
@@ -426,35 +496,47 @@ static void set_camera_offset( GFL_G3D_CAMERA* p_camera )
       tar.z += _tar[FALSE].z;
     }
   }
-      
-#endif // DEBUG_CAMERA
-    
-#if 0
-  // オフセットを足しこむ
-  if( GFL_G3D_DOUBLE3D_GetFlip() == FALSE )
-  {
-    // 操作座標反映
-    pos.x += pos_ofs[TRUE].x;
-    pos.y += pos_ofs[TRUE].y;
-    pos.z += pos_ofs[TRUE].z;
-    tar.x += tar_ofs[TRUE].x;
-    tar.y += tar_ofs[TRUE].y;
-    tar.z += tar_ofs[TRUE].z;
-  }
-  else
-  {
-    // 操作座標反映
-    pos.x += pos_ofs[FALSE].x;
-    pos.y += pos_ofs[FALSE].y;
-    pos.z += pos_ofs[FALSE].z;
-    tar.x += tar_ofs[FALSE].x;
-    tar.y += tar_ofs[FALSE].y;
-    tar.z += tar_ofs[FALSE].z;
-  }
-#endif
     
   GFL_G3D_CAMERA_SetPos( p_camera, &pos );
   GFL_G3D_CAMERA_SetTarget( p_camera, &tar );
+
+}
+
+#endif // DEBUG_CAMERA_CONTROL
+
+static void set_camera_disp_offset( GFL_G3D_CAMERA* p_camera, const fx32 def_top, const fx32 def_buttom )
+{
+  static int offset = 610;
+
+  // デバッグ距離操作
+  if( CHECK_KEY_CONT( PAD_KEY_UP ) )
+  {
+    offset += 10;
+    HOSAKA_Printf("offset=%d\n",offset);
+  }
+  else if( CHECK_KEY_CONT( PAD_KEY_DOWN ) )
+  {
+    offset -= 10;
+    HOSAKA_Printf("offset=%d\n",offset);
+  }
+
+  // 上画面
+  if( GFL_G3D_DOUBLE3D_GetFlip() == FALSE )
+  {
+    fx32 top = def_top + offset;
+    fx32 buttom = def_buttom + offset;
+
+    // クリップ面を上にずらす
+    GFL_G3D_CAMERA_SetTop( p_camera, top );
+    GFL_G3D_CAMERA_SetBottom( p_camera, buttom );
+  }
+  // 下画面
+  else
+  {
+    // デフォルト値
+    GFL_G3D_CAMERA_SetTop( p_camera, def_top );
+    GFL_G3D_CAMERA_SetBottom( p_camera, def_buttom );
+  }
 
 }
 
@@ -477,7 +559,7 @@ BOOL Demo3D_ENGINE_Main( DEMO3D_ENGINE_WORK* wk )
   // コマンド実行
   Demo3D_CMD_Main( wk->cmd, ICA_ANIME_GetNowFrame( wk->ica_anime ) );
 
-  p_camera = DEMO3D_GRAPHIC_GetCamera( wk->graphic );
+  p_camera = wk->camera;
   
   // ICAカメラ更新
   is_end = ICA_ANIME_IncAnimeFrame( wk->ica_anime, wk->anime_speed );
@@ -485,7 +567,7 @@ BOOL Demo3D_ENGINE_Main( DEMO3D_ENGINE_WORK* wk )
   // ICAカメラ座標を設定
   ICA_CAMERA_SetCameraStatus( p_camera, wk->ica_anime );
   
-#ifdef DEBUG_CAMERA
+#ifdef DEBUG_USE_KEY
   // アニメ再生切り替え
   if( CHECK_KEY_TRG( PAD_BUTTON_START ) )
   {
@@ -502,8 +584,13 @@ BOOL Demo3D_ENGINE_Main( DEMO3D_ENGINE_WORK* wk )
   // 片方の画面の表示位置をずらす
   if( wk->is_double )
   {
-    // カメラのオフセットを操作
-    set_camera_offset( p_camera );
+#ifdef DEBUG_CAMERA_CONTROL
+    // カメラのPOS/TARGETを上下画面毎に操作/設定
+    debug_camera_control( p_camera );
+#endif
+#ifdef DEBUG_CAMERA_DISP_OFFSET_CONTROL
+    set_camera_disp_offset( p_camera, wk->def_top, wk->def_buttom );
+#endif
   }
   // アニメーション更新
 	{
@@ -519,6 +606,9 @@ BOOL Demo3D_ENGINE_Main( DEMO3D_ENGINE_WORK* wk )
       }
     }
   }
+
+  // カメラ切り替え
+  GFL_G3D_CAMERA_Switching( p_camera );
 
   // 描画
 	DEMO3D_GRAPHIC_3D_StartDraw( wk->graphic );

@@ -415,7 +415,7 @@ static GFL_PROC_RESULT Demo3DProc_Main( GFL_PROC *proc, int *seq, void *pwk, voi
   // 特定キーでアプリ終了
   if( 
       GFL_UI_TP_GetTrg() 
-#ifndef DEBUG_CAMERA
+#ifndef DEBUG_USE_KEY
       ||
       CHECK_KEY_TRG( PAD_BUTTON_A ) ||
       CHECK_KEY_TRG( PAD_BUTTON_B ) ||

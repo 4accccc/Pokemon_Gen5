@@ -59,7 +59,3 @@ extern void DEMO3D_GRAPHIC_3D_EndDraw( DEMO3D_GRAPHIC_WORK *p_wk );
 //=====================================
 extern GFL_CLUNIT * DEMO3D_GRAPHIC_GetClunit( const DEMO3D_GRAPHIC_WORK *cp_wk );
 
-//-------------------------------------
-///î•ñæ“¾	“à•”‚Åİ’è‚µ‚½ƒJƒƒ‰‚ğ•Ô‚µ‚Ü‚·	3Dg‚í‚È‚¢ê‡NULL
-//=====================================
-extern GFL_G3D_CAMERA * DEMO3D_GRAPHIC_GetCamera( const DEMO3D_GRAPHIC_WORK *cp_wk );
