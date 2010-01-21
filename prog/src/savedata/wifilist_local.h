@@ -21,9 +21,9 @@ typedef struct{
   u8     month;	                             //47								
   u8     day;
   u8     unionGra;
-  u8     sex:1;
+  u8     sex:2;
   u8 isIN:1;        // このデータが有効の場合1
-  u8 dummy:6;
+  u8 dummy:5;
 }WIFI_FRIEND;
 
 struct _WIFI_LIST{
