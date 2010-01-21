@@ -198,6 +198,7 @@ extern void	PMSND_ReleasePreset( void );
  */
 //============================================================================================
 extern BOOL PMDSND_PresetExtraMusic( void* seqAdrs, void* bnkAdrs, u32 waveNo );
+extern BOOL PMDSND_PresetExtraMusic2( void* seqAdrs, void* bnkAdrs, u32 dummyNo );
 extern BOOL PMDSND_ChangeWaveData( u32 waveNo, u32 waveIdx, void* waveAdrs); 
 extern BOOL PMDSND_PlayExtraMusic( void );
 extern void PMDSND_StopExtraMusic( void );
