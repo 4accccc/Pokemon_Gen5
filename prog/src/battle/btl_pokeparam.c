@@ -1269,7 +1269,7 @@ void BPP_WAZA_SetUsedFlag( BTL_POKEPARAM* pp, u8 wazaIdx )
  * @param   pp
  * @param   wazaIdx       何番目のワザ[0-3]？
  * @param   waza          上書き後ワザナンバー
- * @param   ppMax         PP最大値の上限（0ならデフォルト値）
+ * @param   ppMax         PP最大値の上限（最大でもデフォルト値まで。0ならデフォルト値になる）
  * @param   fPermenent    永続フラグ（TRUEならバトル後まで引き継ぐ／FALSEなら瀕死・入れかえで元に戻る）
  */
 //=============================================================================================
@@ -1285,8 +1285,9 @@ void BPP_WAZA_UpdateID( BTL_POKEPARAM* pp, u8 wazaIdx, WazaID waza, u8 ppMax, BO
   pWaza->number = waza;
   pWaza->usedFlag = FALSE;
   pWaza->ppMax = WAZADATA_GetMaxPP( waza, 0 );
+
   if( (ppMax != 0)
-  &&  (pWaza->ppMax < ppMax)
+  &&  (pWaza->ppMax > ppMax)
   ){
     pWaza->ppMax = ppMax;
   }

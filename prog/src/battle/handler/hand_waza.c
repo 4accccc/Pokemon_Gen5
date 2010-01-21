@@ -1412,7 +1412,7 @@ static void handler_Monomane( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
         param->pokeID = pokeID;
         param->wazaIdx = wazaIdx;
         param->waza = waza;
-        param->ppMax = 5;
+        param->ppMax = 0;
         param->fPermanent = FALSE;
 
         msg_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );

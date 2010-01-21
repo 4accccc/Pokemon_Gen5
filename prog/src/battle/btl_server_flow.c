@@ -4072,6 +4072,7 @@ static BOOL scproc_Fight_CheckWazaExecuteFail_1st( BTL_SVFLOW_WORK* wk, BTL_POKE
   PokeSick sick;
 
   do {
+
     // こんらん自爆判定
     if( scproc_Fight_CheckConf(wk, attacker) ){
       cause = SV_WAZAFAIL_KONRAN;
@@ -4127,6 +4128,17 @@ static BOOL scproc_Fight_CheckWazaExecuteFail_2nd( BTL_SVFLOW_WORK* wk, BTL_POKE
   SV_WazaFailCause  cause = SV_WAZAFAIL_NULL;
 
   do {
+    // PPがゼロ
+    {
+      u8 wazaIdx = BPP_WAZA_SearchIdx( attacker, waza );
+      if( (wazaIdx != PTL_WAZA_MAX)
+      &&  (BPP_WAZA_GetPP(attacker, wazaIdx) == 0)
+      ){
+        cause = SV_WAZAFAIL_PP_ZERO;
+        break;
+      }
+    }
+
     // かいふくふうじチェック
     if( BPP_CheckSick(attacker, WAZASICK_KAIHUKUHUUJI)
     &&  (WAZADATA_GetCategory(waza) == WAZADATA_CATEGORY_SIMPLE_RECOVER)
