@@ -497,6 +497,7 @@ static void BUTTON_Init( BUTTON_WORK *p_wk, u8 frm, const	 BUTTON_SETUP *cp_btn_
 static void BUTTON_Exit( BUTTON_WORK *p_wk );
 static void BUTTON_Main( BUTTON_WORK *p_wk );
 static BOOL BUTTON_IsTouch( const BUTTON_WORK *cp_wk, u32 *p_btnID );
+static void BUTTON_Reset( BUTTON_WORK *p_wk );
 static void Button_TouchCallBack( u32 btnID, u32 event, void *p_param );
 //BACKOBJ
 #if 0
@@ -1799,7 +1800,10 @@ static void SEQFUNC_Connect( IRC_MENU_MAIN_WORK *p_wk, u16 *p_seq )
 		{
 			PMSND_PlaySystemSE( MENU_SE_CANCEL );
 			COMPATIBLE_IRC_Cancel( p_wk->p_param->p_irc );
-			SEQ_Change( p_wk, SEQFUNC_End );
+			SEQ_Change( p_wk, SEQFUNC_DisConnect );
+      APPBAR_SetNormal( p_wk->p_appbar );
+      MSGWND_Print( &p_wk->msgwnd, &p_wk->msg, COMPATI_STR_005, 0, 0  );
+      BUTTON_Reset( &p_wk->btn );
 		}
 		break;
 
@@ -1819,7 +1823,10 @@ static void SEQFUNC_Connect( IRC_MENU_MAIN_WORK *p_wk, u16 *p_seq )
 		{
 			PMSND_PlaySystemSE( MENU_SE_CANCEL );
 			COMPATIBLE_IRC_Cancel( p_wk->p_param->p_irc );
-			SEQ_Change( p_wk, SEQFUNC_End );
+			SEQ_Change( p_wk, SEQFUNC_DisConnect );
+      APPBAR_SetNormal( p_wk->p_appbar );
+      MSGWND_Print( &p_wk->msgwnd, &p_wk->msg, COMPATI_STR_005, 0, 0  );
+      BUTTON_Reset( &p_wk->btn );
 		}
 		break;
 
@@ -2229,11 +2236,9 @@ static void MainModules( IRC_MENU_MAIN_WORK *p_wk )
 	//INFOWIN_Update();
 
 	//メッセージ処理
-	if( MSG_Main( &p_wk->msg ) )
-	{	
-		MSGWND_Main( &p_wk->msgwnd, &p_wk->msg );
-		MSGWND_Main( &p_wk->msgtitle, &p_wk->msg );
-	}
+	MSG_Main( &p_wk->msg );
+  MSGWND_Main( &p_wk->msgwnd, &p_wk->msg );
+  MSGWND_Main( &p_wk->msgtitle, &p_wk->msg );
 	//１たん停止
 	//BACKOBJ_Main( &p_wk->backobj );
 
@@ -2426,7 +2431,43 @@ static BOOL BUTTON_IsTouch( const BUTTON_WORK *cp_wk, u32 *p_btnID )
 
 	return FALSE;
 }
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ボタンリセット
+ *
+ *	@param	BUTTON_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void BUTTON_Reset( BUTTON_WORK *p_wk )
+{ 
+  int i;
+  for( i = 0; i < p_wk->btn_num; i++ )
+  {	
+    u8 frm;
+    u8 active_plt;
+    u8 x, y, w, h;
+    GFL_BMPWIN	*p_bmpwin	= p_wk->p_bmpwin[i];
+    frm	= GFL_BMPWIN_GetFrame(p_bmpwin);
+    x		= p_wk->cp_btn_setup_tbl[i].x;
+    y		= p_wk->cp_btn_setup_tbl[i].y;
+    w		= p_wk->cp_btn_setup_tbl[i].w;
+    h		= p_wk->cp_btn_setup_tbl[i].h;
+    switch( i )
+    {
+    case BTNID_COMATIBLE:
+      active_plt		= 0xb;
+      break;
+    case BTNID_RANKING:
+      active_plt		= 4;
+      break;
+    }
 
+    //選ばれたボタン
+    GFL_BG_ChangeScreenPalette( frm, x, y, w, h, active_plt );
+    GFL_BG_LoadScreenReq( frm );
+  }
+
+}
 //----------------------------------------------------------------------------
 /**
  *	@brief	ボタンが押された時のコールバック
@@ -2447,6 +2488,7 @@ static void Button_TouchCallBack( u32 btnID, u32 event, void *p_param )
 		p_wk->select_btn_id	= btnID;
 	}
 }
+
 #if 0
 //=============================================================================
 /**

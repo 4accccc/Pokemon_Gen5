@@ -1936,6 +1936,7 @@ static void SEQFUNC_DecideScore( RESULT_MAIN_WORK *p_wk, u16 *p_seq )
 		SEQ_END_MSG,
     SEQ_WAIT,
 		SEQ_END_WAIT,
+		SEQ_END,
 	};
 
 	switch( *p_seq )
@@ -2052,7 +2053,22 @@ static void SEQFUNC_DecideScore( RESULT_MAIN_WORK *p_wk, u16 *p_seq )
 		break;
 
 	case SEQ_END_WAIT:
+    if( !PMSND_CheckPlayBGM() )
+    { 
+      if( p_wk->cnt++ > 30 )
+      { 
+        p_wk->cnt = 0;
+        *p_seq  = SEQ_END;
+      }
+    }
 		break;
+
+  case SEQ_END:
+    if( GFL_UI_TP_GetTrg() )
+    { 
+      SEQ_End( p_wk );
+    }
+    break;
 	}
 
 	if( APPBAR_GetTrg(p_wk->p_appbar) == APPBAR_ICON_RETURN )

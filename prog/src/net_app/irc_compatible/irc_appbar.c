@@ -235,6 +235,19 @@ APPBAR_ICON APPBAR_GetTrg( const APPBAR_WORK *cp_wk )
 {	
 	return cp_wk->trg;
 }
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ‘I‘ð‚³‚ê‚½‚à‚Ì‚ð’¼‚·
+ *
+ *	@param	APPBAR_WORK *p_wk ƒ[ƒN
+ *
+ */
+//-----------------------------------------------------------------------------
+void APPBAR_SetNormal( APPBAR_WORK *p_wk )
+{ 
+  APP_TASKMENU_WIN_SetDecide( p_wk->p_win, FALSE );
+  APP_TASKMENU_WIN_SetActive( p_wk->p_win, FALSE );
+}
 //=============================================================================
 /**
  *			EXTERN
