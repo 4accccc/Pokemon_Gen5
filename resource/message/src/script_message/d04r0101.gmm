@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-17T21:52:01"/>
+	<create user="matsumiya" host="W00207" date="2010-01-21T22:44:12"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,7 +292,108 @@
 	</lock>
 
 
-	<row id="msg_d04r0101_sunglasses_01">
+	<row id="msg_d04r0101_backpackerw_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・カセキ選択イベント
+・アイテム名による選択肢
+　選択後、アイテム入手処理
+　そして選んだアイテムに対応した
+　メッセージを表示</comment>
+		<attribute name="キャラ指定">BACKPACKERW
+バックパッカー♀</attribute>
+		<language name="JPN" width="256">アタシ　ポケモンのカセキを　２つ
+もっているんだけど　おもくって……▼
+よければ　あなた　どちらか
+すきな　カセキを　もらってくれない？[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">アタシ　ポケモンのカセキを　２つ
+持っているんだけど　重くって……▼
+よければ　あなた　どちらか
+好きな　カセキを　もらってくれない？[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_d04r0101_backpackerw_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・アイテム１選択時</comment>
+		<attribute name="キャラ指定">BACKPACKERW
+バックパッカー♀</attribute>
+		<language name="JPN" width="256">カセキその１　なんだ
+それは（ポケモンの　とくちょう）</language>
+		<language name="JPN_KANJI" width="256">カセキその１　なんだ
+それは（ポケモンの　特徴）</language>
+	</row>
+
+	<row id="msg_d04r0101_backpackerw_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・アイテム２選択時</comment>
+		<attribute name="キャラ指定">BACKPACKERW
+バックパッカー♀</attribute>
+		<language name="JPN" width="256">カセキその２　なんだ
+それは（ポケモンの　とくちょう）</language>
+		<language name="JPN_KANJI" width="256">カセキその２　なんだ
+それは（ポケモンの　特徴）</language>
+	</row>
+
+	<row id="msg_d04r0101_backpackerw_04" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・キャンセル時</comment>
+		<attribute name="キャラ指定">BACKPACKERW
+バックパッカー♀</attribute>
+		<language name="JPN" width="256">あれれ……
+えんりょ　しなくて　いいのに</language>
+		<language name="JPN_KANJI" width="256">あれれ……
+遠慮しなくて　いいのに</language>
+	</row>
+
+	<row id="msg_d04r0101_backpackerw_05" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・キャンセル後、再度話しかけ
+・アイテム名による選択肢</comment>
+		<attribute name="キャラ指定">BACKPACKERW
+バックパッカー♀</attribute>
+		<language name="JPN" width="256">やっぱり　カセキが　きになる？[BE:01:ページ切り替え（クリア）]
+いいよ！　どちらか
+えらんだ　カセキを　あげるから！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">やっぱり　カセキが　気になる？[BE:01:ページ切り替え（クリア）]
+いいよ！　どちらか
+選んだ　カセキを　あげるから！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_d04r0101_backpackerw_06" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・カセキ入手後、再度話しかけ</comment>
+		<attribute name="キャラ指定">BACKPACKERW
+バックパッカー♀</attribute>
+		<language name="JPN" width="256">シッポウシティの　はくぶつかん[BE:01:ページ切り替え（クリア）]
+あそこでなら　カセキを　ふくげんして
+ポケモンに　もどせるって　はなしよ[BE:01:ページ切り替え（クリア）]
+なんたって　アロエさんは
+ホネや　カセキが　だいすき　だもんね！</language>
+		<language name="JPN_KANJI" width="256">シッポウシティの　博物館[BE:01:ページ切り替え（クリア）]
+あそこでなら　カセキを　復元して
+ポケモンに　戻せるって　話だよ[BE:01:ページ切り替え（クリア）]
+なんたって　アロエさんは
+ホネや　カセキが　大好きだもんね！</language>
+	</row>
+
+	<row id="msg_d04r0101_kaseki_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff00,,,#ffff00,,#ffff00,#ffff00,,,,,,#ffff00,,,,,,">
+		<comment>選択肢ウインドウ用</comment>
+		<language name="JPN" width="256">カセキその１</language>
+		<language name="JPN_KANJI" width="256">カセキその１</language>
+	</row>
+
+	<row id="msg_d04r0101_kaseki_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff00,,,#ffff00,,#ffff00,#ffff00,,,,,,#ffff00,,,,,,">
+		<comment>選択肢ウインドウ用</comment>
+		<language name="JPN" width="256">カセキその２</language>
+		<language name="JPN_KANJI" width="256">カセキその２</language>
+	</row>
+
+	<row id="msg_d04r0101_kaseki_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff00,,,#ffff00,,#ffff00,#ffff00,,,,,,#ffff00,,,,,,">
+		<comment>選択肢ウインドウ用</comment>
+		<language name="JPN" width="256">やめる</language>
+		<language name="JPN_KANJI" width="256">やめる</language>
+	</row>
+
+	<row id="msg_d04r0101_sunglasses_01" text-color="#ffffff,,,,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・d03r0101で、じてんしゃをくれた人</comment>
 		<attribute name="キャラ指定">SUNGLASSES
@@ -311,7 +412,7 @@
 つくった　国の　跡地　らしいね</language>
 	</row>
 
-	<row id="msg_d04r0101_sunglasses_02">
+	<row id="msg_d04r0101_sunglasses_02" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・d08竜の塔でのイベント後
 　いける範囲が広がっていることをアナウンス
@@ -319,6 +420,8 @@
 　メッセージ繰り返し
 ・d04r0601のイベント終了後は
 　sunglasses_01を表示</comment>
+		<attribute name="キャラ指定">SUNGLASSES
+サングラス</attribute>
 		<language name="JPN" width="256">おう！
 おいしいみずを　くれた　人[BE:01:ページ切り替え（クリア）]
 こだいのしろを　おおう　すな　だが
