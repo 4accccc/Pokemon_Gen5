@@ -2054,6 +2054,8 @@ static RAIL_KEY setLine(FIELD_RAIL_WORK * work, const RAIL_LINE * line, RAIL_KEY
         work->point->name, debugGetRailKeyName(key), line->name);
   }
 
+  //TOMOYA_Printf( "l_ofs %d w_ofs %d l_ofs_max %d w_ofs_max %d\n", l_ofs, w_ofs, l_ofs_max, w_ofs_max );
+
   //  接続ラインスイッチチェック front_ofsが0である必要がある。
   if( IsLineSwitchMoveOk( work->line_switch, line, l_ofs, w_ofs, work->rail_dat, work->ofs_unit )==FALSE )
   {
@@ -2434,7 +2436,7 @@ static RAIL_KEY updateLineMove_new(FIELD_RAIL_WORK * work, RAIL_KEY key, u32 cou
           return result;
         }
       }
-      else GF_ASSERT_MSG(width_over, "%sから%sへの接続異常\n", nLine->name, left->name);
+      //else GF_ASSERT_MSG(width_over, "%sから%sへの接続異常\n", nLine->name, left->name);
     }
     if (right && work->width_ofs >= 0)
     { //右側移行処理
@@ -2470,7 +2472,7 @@ static RAIL_KEY updateLineMove_new(FIELD_RAIL_WORK * work, RAIL_KEY key, u32 cou
           return result;
         }
       }
-      else GF_ASSERT_MSG(width_over, "%sから%sへの接続異常\n", nLine->name, right->name);
+      //else GF_ASSERT_MSG(width_over, "%sから%sへの接続異常\n", nLine->name, right->name);
     }
 
     if( width_over )
@@ -2483,6 +2485,19 @@ static RAIL_KEY updateLineMove_new(FIELD_RAIL_WORK * work, RAIL_KEY key, u32 cou
     {
       return key;
     }
+    
+    /*
+    if( (left != NULL) || (right != NULL) )
+    {
+      if((left != NULL)){
+        GF_ASSERT_MSG(width_over, "%sから%sへの接続異常\n", nLine->name, left->name);
+      }
+      if((right != NULL)){
+        GF_ASSERT_MSG(width_over, "%sから%sへの接続異常\n", nLine->name, left->name);
+      }
+    }
+    //*/
+
     work->line_ofs -= count_up;
     return RAIL_KEY_NULL;
   }
@@ -2525,7 +2540,7 @@ static RAIL_KEY updateLineMove_new(FIELD_RAIL_WORK * work, RAIL_KEY key, u32 cou
         return result;
 			}
     }
-    if (left && work->width_ofs <= 0)
+    if (left && (work->width_ofs <= 0))
     { //左側移行処理
 			if ( isLinePoint_S( work->rail_dat, left, nPoint ) )
       { //始端の場合
@@ -2559,9 +2574,9 @@ static RAIL_KEY updateLineMove_new(FIELD_RAIL_WORK * work, RAIL_KEY key, u32 cou
           return result;
         }
       }
-      else GF_ASSERT_MSG(width_over, "%sから%sへの接続異常\n", nLine->name, left->name);
+      //else GF_ASSERT_MSG(width_over, "%sから%sへの接続異常\n", nLine->name, left->name);
     }
-    if (right && work->width_ofs >= 0)
+    if (right && (work->width_ofs >= 0))
     { //右側移行処理
 			if ( isLinePoint_S( work->rail_dat, right, nPoint ) )
       { //始端の場合
@@ -2595,7 +2610,7 @@ static RAIL_KEY updateLineMove_new(FIELD_RAIL_WORK * work, RAIL_KEY key, u32 cou
           return result;
         }
       }
-      else GF_ASSERT_MSG(width_over, "%sから%sへの接続異常\n", nLine->name, right->name);
+      //else GF_ASSERT_MSG(width_over, "%sから%sへの接続異常\n", nLine->name, right->name);
     }
 
     //  幅オーバー処理
@@ -2603,6 +2618,18 @@ static RAIL_KEY updateLineMove_new(FIELD_RAIL_WORK * work, RAIL_KEY key, u32 cou
     {
 			return updateLine( work, nLine, nLine_ofs_max, key );
     }
+
+    /*
+    if( (left != NULL) || (right != NULL) )
+    {
+      if((left != NULL)){
+        GF_ASSERT_MSG(width_over, "%sから%sへの接続異常\n", nLine->name, left->name);
+      }
+      if((right != NULL)){
+        GF_ASSERT_MSG(width_over, "%sから%sへの接続異常\n", nLine->name, left->name);
+      }
+    }
+    //*/
 
     //行くあてがない…LINEそのまま、減算を取り消し
     work->line_ofs += count_up;
@@ -3511,7 +3538,7 @@ static void calcLineSwitchLineOfs( const RAIL_LINE_SWITCH* work, FIELD_RAIL_WORK
     // 始点は、色々なライン共通で使う分岐点なので、使用不可能でも通れる必要がある。
     getLineCrossAreaSize( railwk->rail_dat, railwk->line, &size_line, &size_width, work, railwk->ofs_unit );
 
-    TOMOYA_Printf( "line area line %d  width %d\n",size_line, size_width );
+    //TOMOYA_Printf( "line area line %d  width %d\n",size_line, size_width );
     
     railwk->line_ofs += front_ofs;
     railwk->width_ofs += side_ofs;
