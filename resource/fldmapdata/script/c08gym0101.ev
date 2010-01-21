@@ -1,4 +1,3 @@
-
 //======================================================================
 //                c08gym0101.ev
 //
@@ -140,7 +139,7 @@ EVENT_START	ev_c08gym0101_leader8_01
 				_BALLOONWIN_CLOSE()
 			ELSE
 			//未クリア
-				_BALLOONWIN_OBJMSG( msg_c08gym0101_leader_06b0002 , C08GYM0101_WKOBJCODE00_01 )
+				_BALLOONWIN_OBJMSG( msg_c08gym0101_leader_06b , C08GYM0101_WKOBJCODE00_01 )
 				_LAST_KEYWAIT()
 				_BALLOONWIN_CLOSE()
 			ENDIF
@@ -213,7 +212,7 @@ EVENT_START	ev_c08gym0101_leader8_01
 				_BALLOONWIN_CLOSE()
 			ELSE
 			//未クリア
-				_BALLOONWIN_OBJMSG( msg_c08gym0101_leader_06w0002 , C08GYM0101_WKOBJCODE00_01 )
+				_BALLOONWIN_OBJMSG( msg_c08gym0101_leader_06w , C08GYM0101_WKOBJCODE00_01 )
 				_LAST_KEYWAIT()
 				_BALLOONWIN_CLOSE()
 			ENDIF
