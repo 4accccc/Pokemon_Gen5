@@ -1,5 +1,5 @@
 #event data
-#save date:2010/01/07 11:57:19
+#save date:2010/01/21 17:03:31
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r04.wms
 #SECTION START:OBJ_EVENT
@@ -195,7 +195,7 @@ DIR_LEFT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-168 -16 -936
+184 -16 -936
 #event number: 6
 #type
 1
@@ -350,7 +350,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--136 0 -664
+72 0 -696
 #event number: 11
 #type
 1
@@ -381,7 +381,7 @@ DIR_RIGHT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-456 0 -1560
+440 0 -1416
 #event number: 12
 #type
 1
@@ -412,7 +412,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-40 0 -488
+24 0 -552
 #event number: 13
 #type
 1
@@ -478,9 +478,9 @@ WK_SCENE_R04
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-472 0 -1560
+456 0 -1416
 #size
-4 1
+6 1
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
@@ -505,7 +505,7 @@ EXIT_TYPE_WALL
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-472 0 -120
+472 0 152
 #size
 3 1
 #event number: 1
@@ -539,7 +539,7 @@ EXIT_TYPE_MAT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-120 0 -616
+-88 0 -616
 #size
 1 1
 #event number: 3
@@ -556,7 +556,7 @@ EXIT_TYPE_MAT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-584 0 -968
+-56 0 -840
 #size
 1 1
 #Map Event List Data End
