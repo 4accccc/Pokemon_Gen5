@@ -34,8 +34,9 @@
 #define R03_FLD_ITEM_02                   19
 #define R03_FLD_ITEM_03                   20
 #define TR_R03_DUMMY_OBJ_04               21
-#define R03_SUPPORT_02                    22
-#define R03_BABYGIRL_03                   23
-#define R03_RIVAL_01                      24
+#define R03_RIVAL_01                      22
+#define R03_RIVAL_03                      23
+#define R03_POKE3_01                      24
+#define R03_POKE4_01                      25
 
 #endif //ZONE_R03_EVC_H

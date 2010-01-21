@@ -1,5 +1,5 @@
 #event data
-#save date:2009/12/24 18:46:01
+#save date:2010/01/21 18:32:36
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d01r0101.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d01r0101.wms
 #hold event type:
 1
 #hold event number:
-12
+14
 #event number: 0
 #type
 1
@@ -80,7 +80,7 @@ D01R0101_POKE_01
 #OBJ CODE Number
 POKE2
 #MOVE CODE Number
-MV_RND
+MV_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
@@ -102,24 +102,24 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-184 0 72
+184 0 56
 #event number: 3
 #type
 1
 #ID name
-D01R0101_ITEM_01
+D01R0101_HAKAIW_01
 #OBJ CODE Number
-BABYGIRL1
+HAKAIW
 #MOVE CODE Number
 MV_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
-FV_D01R0101_ITEM_01
+FV_D01R0101_POKE_01
 #Event Script Name
-SCRID_D01R0101_ITEM_01
+SCRID_DUMMY
 #Direction Type Number
-DIR_DOWN
+DIR_RIGHT
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -133,7 +133,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-184 0 88
+104 0 152
 #event number: 4
 #type
 1
@@ -382,6 +382,68 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 184 0 -168
+#event number: 12
+#type
+1
+#ID name
+D01R0101_HAKAIM_01
+#OBJ CODE Number
+HAKAIM
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_D01R0101_POKE_01
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_RIGHT
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+88 0 152
+#event number: 13
+#type
+1
+#ID name
+D01R0101_ITEM_01
+#OBJ CODE Number
+MONSTERBALL
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_D01R0101_ITEM_01
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+184 0 120
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT

@@ -1,5 +1,5 @@
 #event data
-#save date:2010/01/15 16:32:51
+#save date:2010/01/15 19:31:05
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r03r0301.wms
 #SECTION START:OBJ_EVENT
@@ -226,7 +226,7 @@ DIR_RIGHT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-24 0 168
+8 0 168
 #event number: 7
 #type
 1
@@ -257,7 +257,7 @@ DIR_RIGHT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-24 0 152
+8 0 152
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
@@ -288,7 +288,7 @@ POS_CHECK_TYPE_NORMAL
 #Event Trigger Work Name
 WK_SCENE_R03_PLASMA
 #Event Trigger Work Value
-0
+3
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position

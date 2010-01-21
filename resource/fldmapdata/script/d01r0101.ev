@@ -325,6 +325,8 @@ EVENT_START   ev_pos_d01r0101_support_01
 	//D01R0101夢ポケモンイベントOBJ表示
 	_FLAG_RESET( FV_D01R0101_POKE_01 )
 	_OBJ_ADD(D01R0101_POKE_01)
+	_OBJ_ADD(D01R0101_HAKAIM_01)
+	_OBJ_ADD(D01R0101_HAKAIW_01)
 	
 	
 	//======================================//
@@ -346,14 +348,11 @@ EVENT_START   ev_d01r0101_support_02
 	ELSIF $WK_SCENE_D01R0101_POKE == 2 THEN
 		_EASY_BALLOONWIN_TALKOBJ_MSG(msg_d01r0101_white_03)
 
-	//夢アイテム取得前
+	//イベント終了時
 	ELSIF $WK_SCENE_D01R0101_POKE == 3 THEN
-		_EASY_BALLOONWIN_TALKOBJ_MSG(msg_d01r0101_white_04)
-
-	//夢アイテム取得後
-	ELSIF $WK_SCENE_D01R0101_POKE == 4 THEN
+		//プレイヤーネームを格納
 		_PLAYER_NAME(0)
-		_EASY_BALLOONWIN_TALKOBJ_MSG(msg_d01r0101_white_05)
+		_EASY_BALLOONWIN_TALKOBJ_MSG(msg_d01r0101_white_12)
 
 	//例外処理では夢の話をする
 	ELSE
@@ -396,8 +395,7 @@ EVENT_START   ev_pos_d01r0101_support_03
 	_OBJ_ANIME_WAIT()
 	
     ENDSWITCH
-    
-	_OBJ_ANIME_WAIT()
+
 	
 	//サポート何かに気づく
 	_BALLOONWIN_OBJMSG(msg_d01r0101_white_03,D01R0101_SUPPORT)
@@ -420,43 +418,465 @@ EVENT_START   ev_pos_d01r0101_support_04
 
 	//プレイヤーネームを格納
 	_PLAYER_NAME(0)
+	
+	//自機座標取得
+	DEFINE_LOCAL  POSX02
+    DEFINE_LOCAL  POSZ02
+    _PLAYER_POS_GET( POSX02,POSZ02 ) 
+    
+    //サポートの位置を変更
+    _OBJ_POS_CHANGE( D01R0101_SUPPORT, 27, 0, 18, DIR_UP )
+	
+	//プレイヤーが通る3グリッド分をアニメを用意
+    SWITCH $POSX02
+	CASE 26 THEN
+	_OBJ_ANIME( D01R0101_SUPPORT, anm_d01r0101_support_04 )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_d01r0101_player_pos_x26 )
+	_OBJ_ANIME_WAIT()
+	
+	CASE 27 THEN
+	_OBJ_ANIME( D01R0101_SUPPORT, anm_d01r0101_support_04 )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_d01r0101_player_pos_x27 )
+	_OBJ_ANIME_WAIT()
+	
+	CASE 28 THEN
+	_OBJ_ANIME( D01R0101_SUPPORT, anm_d01r0101_support_04 )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_d01r0101_player_pos_x28 )
+	_OBJ_ANIME_WAIT()
+	
+	CASE 29 THEN
+	_OBJ_ANIME( D01R0101_SUPPORT, anm_d01r0101_support_04 )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_d01r0101_player_pos_x29 )
+	_OBJ_ANIME_WAIT()
+	
+    DEFAULT
+    _OBJ_ANIME( D01R0101_SUPPORT, anm_d01r0101_support_04 )
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_d01r0101_player_pos_x27 )
+	_OBJ_ANIME_WAIT()
+	
+    ENDSWITCH
 
-	//夢ポケモン鳴いて退場
+	//ムンナ鳴く
 	_BALLOONWIN_OBJMSG_POS(msg_d01r0101_poke_01,D01R0101_POKE_01, WIN_DOWN )
 	_BALLOONWIN_CLOSE()
 	
-	//======================================//
-	//だいじなもの出現
-	_FLAG_RESET(FV_D01R0101_ITEM_01)
-	_OBJ_ADD(D01R0101_ITEM_01)
-	
-	//======================================//
-	
+	//ムンナ少し上に移動
 	_OBJ_ANIME(D01R0101_POKE_01,anm_d01r0101_pokemon_01)
 	_OBJ_ANIME_WAIT()
 	
-	//夢ポケモン非表示
+	//サポート：まってぇ！
+	_BALLOONWIN_OBJMSG(msg_d01r0101_white_04,D01R0101_SUPPORT)
+	_BALLOONWIN_CLOSE()
+	
+	//サポートと主人公も上に移動
+	_OBJ_ANIME(D01R0101_SUPPORT,anm_d01r0101_player_upgo)
+	_OBJ_ANIME(MMDL_ID_PLAYER,anm_d01r0101_player_upgo)
+	_OBJ_ANIME_WAIT()
+	
+	//画面外からプラズマ団登場
+	_OBJ_ANIME(D01R0101_HAKAIW_01,anm_d01r0101_hakaiw_coming01)
+	_OBJ_ANIME(D01R0101_HAKAIM_01,anm_d01r0101_hakaim_coming01)
+	_OBJ_ANIME_WAIT()
+	
+	//プラズマ女：みっけ
+	_BALLOONWIN_OBJMSG(msg_d01r0101_hakaiw_01,D01R0101_HAKAIW_01)
+	_BALLOONWIN_CLOSE()
+	
+	//プラズマ団ムンナを囲む
+	_OBJ_ANIME(D01R0101_HAKAIW_01,anm_d01r0101_hakaiw_coming02)
+	_OBJ_ANIME(D01R0101_HAKAIM_01,anm_d01r0101_hakaim_coming02)
+	_OBJ_ANIME_WAIT()
+	
+	//ムンナ左右を見て困惑
+	_OBJ_ANIME(D01R0101_POKE_01,anm_d01r0101_pokemon_02)
+	_OBJ_ANIME_WAIT()
+	
+	//プラズマ男：夢のけむりを出せ！
+	_BALLOONWIN_OBJMSG(msg_d01r0101_hakaim_01,D01R0101_HAKAIM_01)
+	_BALLOONWIN_CLOSE()
+	
+	//プラズマ男その場歩き
+	_OBJ_ANIME(D01R0101_HAKAIM_01,anm_d01r0101_hakaim_kick)
+	_OBJ_ANIME_WAIT()
+	
+	//ムンナ：むう！
+	_BALLOONWIN_OBJMSG_POS(msg_d01r0101_poke_02,D01R0101_POKE_01, WIN_DOWN )
+	_BALLOONWIN_CLOSE()
+	
+	//サポート：ちょっと！
+	_BALLOONWIN_OBJMSG(msg_d01r0101_white_05,D01R0101_SUPPORT)
+	_BALLOONWIN_CLOSE()
+	
+	//プラズマ団下を向く
+	_OBJ_ANIME(D01R0101_HAKAIW_01,anm_d01r0101_hakai_to_down)
+	_OBJ_ANIME(D01R0101_HAKAIM_01,anm_d01r0101_hakai_to_down)
+	_OBJ_ANIME_WAIT()
+	
+	//プラズマ男：わたしたちのことか？
+	_BALLOONWIN_OBJMSG(msg_d01r0101_hakaim_02,D01R0101_HAKAIM_01)
+	_BALLOONWIN_CLOSE()
+	
+	//プラズマ女：なにをしてるのか？
+	_BALLOONWIN_OBJMSG(msg_d01r0101_hakaiw_02,D01R0101_HAKAIW_01)
+	_BALLOONWIN_CLOSE()
+	
+	//プラズマ男ムンナを蹴る
+	_OBJ_ANIME(D01R0101_HAKAIM_01,anm_d01r0101_hakaim_kick)
+	_OBJ_ANIME_WAIT()
+	
+	//プラズマ男：おっ！夢のけむり回収！
+	_BALLOONWIN_OBJMSG(msg_d01r0101_hakaim_03,D01R0101_HAKAIM_01)
+	_BALLOONWIN_CLOSE()
+	
+	//サポート：ひどい！
+	_BALLOONWIN_OBJMSG(msg_d01r0101_white_06,D01R0101_SUPPORT)
+	_BALLOONWIN_CLOSE()
+	
+	//プラズマ男サポートの方を向く
+	_OBJ_ANIME(D01R0101_HAKAIM_01,anm_d01r0101_hakai_to_down)
+	_OBJ_ANIME_WAIT()
+	
+	//プラズマ女：くだらないトレーナーと一緒にするな！
+	_BALLOONWIN_OBJMSG(msg_d01r0101_hakaiw_03,D01R0101_HAKAIW_01)
+	_BALLOONWIN_CLOSE()
+	
+	//プラズマ男：というわけで
+	_BALLOONWIN_OBJMSG(msg_d01r0101_hakaim_04,D01R0101_HAKAIM_01)
+	_BALLOONWIN_CLOSE()
+	
+	//プラズマ男隣接
+	_OBJ_ANIME(D01R0101_HAKAIM_01,anm_d01r0101_hakaim_battle01)
+	_OBJ_ANIME_WAIT()
+	
+	//サポート：えええ！
+	_BALLOONWIN_OBJMSG(msg_d01r0101_white_07,D01R0101_SUPPORT)
+	_BALLOONWIN_CLOSE()
+	
+	//戦闘処理
+	
+	//ムンナOBJ削除
 	_OBJ_DEL(D01R0101_POKE_01)
 	
-	//サポートアイテムについて話す
-	_OBJ_ANIME(D01R0101_SUPPORT,anm_d01r0101_support_04)
+	//プラズマ女：みくびったか？まあいい
+	_BALLOONWIN_OBJMSG(msg_d01r0101_hakaiw_04,D01R0101_HAKAIW_01)
+	_BALLOONWIN_CLOSE()
+	
+	//プラズマ女接近
+	_OBJ_ANIME(D01R0101_HAKAIW_01,anm_d01r0101_hakaiw_battle01)
+	_OBJ_ANIME(D01R0101_HAKAIM_01,anm_d01r0101_hakaim_battle02)
 	_OBJ_ANIME_WAIT()
-	_BALLOONWIN_OBJMSG(msg_d01r0101_white_04,D01R0101_SUPPORT)
+	
+	//戦闘処理
+	
+	//プラズマ男下を向く
+	_OBJ_ANIME(D01R0101_HAKAIM_01,anm_d01r0101_hakai_to_down)
+	_OBJ_ANIME_WAIT()
+	
+	//まさか二人してまけるとはな
+	_BALLOONWIN_OBJMSG(msg_d01r0101_hakaim_05,D01R0101_HAKAIM_01)
+	_BALLOONWIN_CLOSE()
+	
+	//暗転処理
+	_BLACK_OUT()
+	_DISP_FADE_END_CHECK()
+
+	//======================================//
+	
+	//ゆめのけむりOBJ表示
+	_FLAG_RESET( FV_D01R0101_ITEM_01 )
+	_OBJ_ADD(D01R0101_ITEM_01)
+	
+	//======================================//
+	//プラズマ団OBJ削除
+	_OBJ_DEL(D01R0101_HAKAIM_01)
+	_OBJ_DEL(D01R0101_HAKAIW_01)
+	
+	//暗転復帰
+	_BLACK_IN()
+	_DISP_FADE_END_CHECK()
+	
+	//サポート主人公のほうを向く
+	_OBJ_ANIME(D01R0101_SUPPORT,anm_d01r0101_support_to_player01)
+	_OBJ_ANIME_WAIT()
+	
+	//サポート：ありがとう！
+	_BALLOONWIN_OBJMSG(msg_d01r0101_white_08,D01R0101_SUPPORT)
+	_BALLOONWIN_CLOSE()
+	
+	//サポートアイテムに気づいて隣接
+	_OBJ_ANIME(D01R0101_SUPPORT,anm_d01r0101_support_to_item)
+	_OBJ_ANIME_WAIT()
+	
+	//アイテムOBJ削除
+	_OBJ_DEL(D01R0101_ITEM_01)
+	
+	//サポート：これってゆめのけむり？
+	_BALLOONWIN_OBJMSG(msg_d01r0101_white_09,D01R0101_SUPPORT)
+	_BALLOONWIN_CLOSE()
+	
+	//マコモ：わっ！
+	_PLAINWIN_MSG_DOWN( msg_d01r0101_inventor_01 )
+	_MSGWIN_CLOSE()
+	
+	//サポート下を向く
+	_OBJ_ANIME(D01R0101_SUPPORT,anm_d01r0101_hakai_to_down)
+	_OBJ_ANIME(MMDL_ID_PLAYER,anm_d01r0101_hakai_to_down)
+	_OBJ_ANIME_WAIT()
+	
+	//マコモOBJ一時生成
+	_OBJ_ADD_EX( 27, 17, DIR_UP, MMDL_ID_EVENTOBJ_00, ASSISTANTW, MV_DMY )
+	
+	//マコモ隣接（ウィンドウも同時に消す）
+	_OBJ_ANIME(MMDL_ID_EVENTOBJ_00,anm_d01r0101_inventor_coming)
+	_OBJ_ANIME_WAIT()
+	
+	//マコモ：待ちきれなくて来ちゃった
+	_BALLOONWIN_OBJMSG(msg_d01r0101_inventor_02,MMDL_ID_EVENTOBJ_00)
+	_BALLOONWIN_CLOSE()
+	
+	//サポート：これなんですけど…
+	_BALLOONWIN_OBJMSG(msg_d01r0101_white_10,D01R0101_SUPPORT)
+	_BALLOONWIN_CLOSE()
+	
+	//なになに？
+	_BALLOONWIN_OBJMSG(msg_d01r0101_inventor_03,MMDL_ID_EVENTOBJ_00)
+	_BALLOONWIN_CLOSE()
+	
+	//マコモ：サポートに隣接（ダンス）・主人公隣接
+	_OBJ_ANIME(MMDL_ID_EVENTOBJ_00,anm_d01r0101_inventor_to_support)
+	_OBJ_ANIME(MMDL_ID_PLAYER,anm_d01r0101_player_to_invetor)
+	_OBJ_ANIME_WAIT()
+	
+	//マコモ：これは！！！
+	_BALLOONWIN_OBJMSG(msg_d01r0101_inventor_04,MMDL_ID_EVENTOBJ_00)
+	_BALLOONWIN_CLOSE()
+	
+	//マコモ退場
+	_OBJ_ANIME(MMDL_ID_EVENTOBJ_00,anm_d01r0101_inventor_goodbye)
+	_OBJ_ANIME_WAIT()
+	
+	//サポート主人公に隣接
+	_OBJ_ANIME(D01R0101_SUPPORT,anm_d01r0101_support_to_player02)
+	_OBJ_ANIME_WAIT()
+	
+	//サポート：ふええ
+	_BALLOONWIN_OBJMSG(msg_d01r0101_white_11,D01R0101_SUPPORT)
 	_LAST_KEYWAIT()
 	_BALLOONWIN_CLOSE()
 	
+	//マコモを消す
+	_OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
+	
 	//======================================//
 	
-	//アイテム拾う前フラグ起動
+	//夢イベント終了フラグ
 	$WK_SCENE_D01R0101_POKE = 3
 	
 	//夢ポケモン非表示
 	_FLAG_SET(FV_D01R0101_POKE_01)
+	//アイテムOBJ非表示
+	_FLAG_SET( FV_D01R0101_ITEM_01 )
 	
 	//======================================//
 
 EVENT_END
 
+//--------------------------------------------------------------
+//	R01　夢イベント用：夢ポケモン去っていく  
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_d01r0101_pokemon_01
+	_ANIME_DATA	AC_WALK_U_8F,4
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	R01　夢イベント用：ムンナを発見して　サポートが隣接 
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_d01r0101_support_04
+	_ANIME_DATA	AC_WALK_U_8F,3
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	R01　夢イベント用：プレイヤームンナの前に立つx26
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_d01r0101_player_pos_x26
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	R01　夢イベント用：プレイヤームンナの前に立つx27
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_d01r0101_player_pos_x27
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	R01　夢イベント用：プレイヤームンナの前に立つx28
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_d01r0101_player_pos_x28
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	R01　夢イベント用：プレイヤームンナの前に立つx29
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_d01r0101_player_pos_x29
+	_ANIME_DATA	AC_WALK_L_8F,2
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	R01　夢イベント用：サポートとプレイヤー、ムンナを追う
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_d01r0101_player_upgo
+	_ANIME_DATA	AC_WALK_U_8F,4
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	R01　夢イベント用：プラズマ団女登場
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_d01r0101_hakaiw_coming01
+	_ANIME_DATA	AC_WALK_R_8F,3
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	R01　夢イベント用：プラズマ団男登場
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_d01r0101_hakaim_coming01
+	_ANIME_DATA	AC_WALK_R_8F,3
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	R01　夢イベント用：プラズマ団女ムンナを囲む
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_d01r0101_hakaiw_coming02
+	_ANIME_DATA	AC_WALK_R_8F,3
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_STAY_WALK_L_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	R01　夢イベント用：プラズマ団男ムンナを囲む
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_d01r0101_hakaim_coming02
+	_ANIME_DATA	AC_WALK_R_8F,2
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_STAY_WALK_R_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	R01　夢イベント用：ムンナ囲まれて左右を見る
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_d01r0101_pokemon_02
+	_ANIME_DATA	AC_DIR_R,24
+	_ANIME_DATA	AC_DIR_L,24
+	_ANIME_DATA	AC_DIR_R,24
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	R01　夢イベント用：プラズマ団下を向く
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_d01r0101_hakai_to_down
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	R01　夢イベント用：プラズマ団男ムンナを蹴る
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_d01r0101_hakaim_kick
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	R01　夢イベント用：プラズマ団男、主人公に隣接
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_d01r0101_hakaim_battle01
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	R01　夢イベント用：プラズマ団男、戦闘に負けておしのけられる
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_d01r0101_hakaim_battle02
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_DIR_PAUSE_ON,1
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	R01　夢イベント用：プラズマ団女、プラズマ男をおしのける
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_d01r0101_hakaiw_battle01
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	R01　夢イベント用：サポート、主人公の方を向く
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_d01r0101_support_to_player01
+	_ANIME_DATA	AC_STAY_WALK_R_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	R01　夢イベント用：サポート、ゆめのけむりに気づく
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_d01r0101_support_to_item
+	_ANIME_DATA	AC_STAY_WALK_U_8F,0
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	AC_STAY_WALK_R_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	R01　夢イベント用：マコモ登場
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_d01r0101_inventor_coming
+	_ANIME_DATA	AC_WALK_U_8F,6
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	R01　夢イベント用：マコモ、サポートに隣接
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_d01r0101_inventor_to_support
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA AC_STAY_JUMP_U_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	R01　夢イベント用：マコモ、高速で帰る
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_d01r0101_inventor_goodbye
+	_ANIME_DATA	AC_WALK_D_4F,9
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	R01　夢イベント用：主人公、マコモを見る
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_d01r0101_player_to_invetor
+	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	AC_STAY_WALK_L_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	R01　夢イベント用：サポート、主人公に隣接
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_d01r0101_support_to_player02
+	_ANIME_DATA	AC_STAY_WALK_R_8F,0
+	_ANIME_DATA	ACMD_END,0
+	
 /**************************************************************/
 /*   D01R0101　だいじなもの入手                               */
 /**************************************************************/
@@ -464,9 +884,6 @@ EVENT_START   ev_d01r0101_item_01
 
 	//プレイヤーネームを格納
 	_PLAYER_NAME(0)
-
-	//【仮】アイテム入手処理仮：だいじなもの非表示
-	_OBJ_DEL(D01R0101_ITEM_01)
 
 	//サポート駆け寄って来る
 	_OBJ_ANIME(D01R0101_SUPPORT,anm_d01r0101_support_05)
@@ -479,9 +896,6 @@ EVENT_START   ev_d01r0101_item_01
 
 	//夢イベント終了フラグ起動
 	$WK_SCENE_D01R0101_POKE = 4
-	
-	//夢アイテム非表示
-	_FLAG_RESET(D01R0101_ITEM_01)
 	
 	//======================================//
 	
@@ -554,20 +968,6 @@ _ANIME_LABEL	anm_d01r0101_support_03
 	_ANIME_DATA	AC_WALK_R_8F,1
 	_ANIME_DATA	ACMD_END,0
 
-//--------------------------------------------------------------
-//	R01　夢イベント用：夢ポケモン去っていく  
-//--------------------------------------------------------------
-_ANIME_LABEL	anm_d01r0101_pokemon_01
-	_ANIME_DATA	AC_WALK_U_8F,10
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------
-//	R01　夢イベント用：アイテムを発見して　サポートが隣接 
-//--------------------------------------------------------------
-_ANIME_LABEL	anm_d01r0101_support_04
-	_ANIME_DATA	AC_WALK_R_8F,3
-	_ANIME_DATA	AC_WALK_U_8F,7
-	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
 //	R01　夢イベント用：アイテムを取得後サポートが隣接 

@@ -26,21 +26,85 @@ _EVENT_DATA    ev_r03_babygirl1a
 _EVENT_DATA    ev_r03_babygirl1b
 _EVENT_DATA    ev_pos_r03_rival_01
 _EVENT_DATA    ev_pos_r03_rival_02
+_EVENT_DATA    ev_pos_r03_rival_03
 _EVENT_DATA    ev_pos_r03_support_01
-_EVENT_DATA    ev_r03_support_02
+_EVENT_DATA    ev_r03_support_01
+_EVENT_DATA    ev_r03_babygirl_02
 _EVENT_DATA    ev_pos_r03_support_03
-_EVENT_DATA    ev_r03_babygirl_03
 _EVENT_DATA    ev_bg_r03_board_01
 _EVENT_DATA    ev_bg_r03_board_02
 _EVENT_DATA    ev_bg_r03_board_03
+_EVENT_DATA    ev_init_r03
+_EVENT_DATA    ev_pos_r03_babygirl1_01
+_EVENT_DATA    ev_r03_rival_03
 _EVENT_DATA_END
 
+/************************************************************/
+/*					FIELD_INIT_LABEL						*/
+/************************************************************/
+INIT_EVENT_START	ev_init_r03
+	
+
+	//誘拐イベントワークの値によってサポートの位置を変更する
+	IF $WK_SCENE_R03_PLASMA == 4 THEN
+		_OBJ_POS_CHANGE( R03_SUPPORT_01, 715, 0, 566, DIR_UP )
+		_OBJ_POS_CHANGE( R03_BABYGIRL_02, 717, 0, 566, DIR_UP )
+	ELSE
+	
+	ENDIF
+
+INIT_EVENT_END
 
 /**************************************************************/
-/*            FLAG_CHANGE_LABEL                               */
+/*  R03 POSでふたごちゃんストッパー*/
 /**************************************************************/
-//ev_r03_flag_change:
-//  _END
+EVENT_START   ev_pos_r03_babygirl1_01
+	
+	//手持ちポケモンカウント
+	DEFINE_LOCAL LCW_POKECOUNT
+	_GET_PARTY_POKE_COUNT( LCW_POKECOUNT , POKECOUNT_MODE_BATTLE_ENABLE )
+	
+	//戦えるポケモンが１匹しかいない
+	IF $LCW_POKECOUNT < 2 THEN
+	
+		_OBJ_ANIME(TR_FUTAGO_01,anm_babygirl1_stop_01)
+		_OBJ_ANIME_WAIT()
+		
+		_BALLOONWIN_OBJMSG(msg_r03_futago_02,TR_FUTAGO_01)
+		_BALLOONWIN_CLOSE()
+		
+		_OBJ_ANIME(MMDL_ID_PLAYER,anm_stoper_player_return01)
+		_OBJ_ANIME_WAIT()
+	
+	ELSE
+	
+		//======================================//
+		
+		//***フラグ操作：R03の長い草イベントを有効に***
+		$WK_SCENE_R03 = 1
+		
+		//======================================//
+	
+	ENDIF
+
+EVENT_END
+
+//--------------------------------------------------------------
+//	ふたごちゃんストッパー主人公を引き止める
+//--------------------------------------------------------------
+
+_ANIME_LABEL	 anm_babygirl1_stop_01
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ストッパーで戻される（ふたごちゃん）
+//--------------------------------------------------------------
+
+_ANIME_LABEL	 anm_stoper_player_return01
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
 
 /**************************************************************/
 /*  R03 POSで友達とバトル、プラズマ団と出会う*/
@@ -49,6 +113,7 @@ EVENT_START   ev_pos_r03_rival_01
 
 	//オブジェクトを出現させる
 	_FLAG_RESET(FV_R03_RIVAL_01)
+	_FLAG_RESET(FV_R03_SUPPORT_01)
 	_OBJ_ADD(R03_RIVAL_01)
 	_OBJ_ADD(R03_SUPPORT_01)
 	_OBJ_ADD(R03_BABYGIRL_02)
@@ -146,6 +211,8 @@ EVENT_START   ev_pos_r03_rival_01
 		
 	ENDIF
 	
+	//専用曲止まる
+	_END_EVENT_BGM()
 	
 	//戦闘後会話
 	_BALLOONWIN_OBJMSG(msg_r03_black_02,R03_RIVAL_01)
@@ -228,28 +295,22 @@ EVENT_START   ev_pos_r03_rival_01
 	_BALLOONWIN_OBJMSG( msg_r03_black_08 , R03_RIVAL_01 )
 	_BALLOONWIN_CLOSE()
 	
-	//ライバルと主人公洞窟方面へ
-	_OBJ_ANIME( R03_RIVAL_01 , anm_rival_01_07 )
-	_OBJ_ANIME( MMDL_ID_PLAYER , anm_player_01 )
+	//ライバル洞窟方面へ
+	_OBJ_ANIME( R03_RIVAL_01 , anm_rival_go01 )
 	_OBJ_ANIME_WAIT()
-	_OBJ_DEL(R03_RIVAL_01)
+	
 	
 	//======================================//
 	
-	//プラズマ団とRIVAL01とSUPPORT01とBABYGIRL_02のフラグをSETして以降非表示に
+	//プラズマ団とRIVAL01のフラグをSETして以降非表示に
 	_FLAG_SET(FV_R03_RIVAL_01)
+	_OBJ_DEL(R03_RIVAL_01)
 	
-	_OBJ_DEL(R03_SUPPORT_01)
-	_OBJ_DEL(R03_BABYGIRL_02)
-	
-	//SUPPORT02とBABYGIRL03を出現させる
-	_FLAG_RESET(FV_R03_SUPPORT_01)
-	
-	_OBJ_ADD(R03_SUPPORT_02)
-	_OBJ_ADD(R03_BABYGIRL_03)
+	//洞窟前のRIVALを表示
+	_FLAG_SET(FV_R03_RIVAL_03)
 	
 	//***フラグ操作：ストッパーを有効にする***
-	$WK_SCENE_R03 = 1
+	$WK_SCENE_R03_PLASMA = 1
 	
 	//======================================//
 	
@@ -260,33 +321,160 @@ EVENT_END
 /**************************************************************/
 EVENT_START   ev_pos_r03_support_01
 
-	_OBJ_ANIME( R03_SUPPORT_02 , anm_support_stop_01 )
+	_OBJ_ANIME( R03_SUPPORT_01 , anm_support_stop_01 )
 	_OBJ_ANIME_WAIT()
 
-	_BALLOONWIN_OBJMSG( msg_r03_white_06 , R03_SUPPORT_02 )
+	_BALLOONWIN_OBJMSG( msg_r03_white_06 , R03_SUPPORT_01 )
 	_BALLOONWIN_CLOSE()
 	_OBJ_ANIME( MMDL_ID_PLAYER , anm_player_stop_01 )
 	_OBJ_ANIME_WAIT()
 	
-	_OBJ_ANIME( R03_SUPPORT_02 , anm_support_stop_02 )
-	_OBJ_ANIME_WAIT()
 	
 EVENT_END
 
 /**************************************************************/
-/*  R03 support02に直接話しかけ*/
+/*  R03 support01に直接話しかけ*/
 /**************************************************************/
-EVENT_START   ev_r03_support_02
+EVENT_START   ev_r03_support_01
 	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_r03_white_05 )
 EVENT_END
 
 /**************************************************************/
-/*  R03 BABYGIRL03に直接話しかけ*/
+/*  R03 BABYGIRL02に直接話しかけ*/
 /**************************************************************/
-EVENT_START   ev_r03_babygirl_03
+EVENT_START   ev_r03_babygirl_02
 	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_r03_babygirl1_02 )
 EVENT_END
 
+/**************************************************************/
+/*  R03 RIVAL03（ストッパー）に直接話しかけ*/
+/**************************************************************/
+EVENT_START   ev_r03_rival_03
+
+	_TALK_OBJ_START()
+	_CALL ev_r03_rival_stoper
+	
+EVENT_END
+
+/**************************************************************/
+/*  R03 RIVAL03（ストッパー）POS*/
+/**************************************************************/
+EVENT_START   ev_pos_r03_rival_03
+
+	_OBJ_ANIME( R03_RIVAL_03 , anm_rival_01_06_down )
+	_OBJ_ANIME( MMDL_ID_PLAYER , anm_stoper_player_up )
+	_OBJ_ANIME_WAIT()
+	_CALL ev_r03_rival_stoper
+	
+EVENT_END
+
+
+/**************************************************************/
+/*CALL：ライバルストッパー                               */
+/**************************************************************/
+ev_r03_rival_stoper:
+
+	//プレイヤーネームを格納
+	_PLAYER_NAME(0)
+	
+	//初回話しかけ
+	IF $WK_SCENE_R03_PLASMA == 1 THEN
+		_BALLOONWIN_OBJMSG( msg_r03_black_08a , R03_RIVAL_03 )
+		
+		//先に行くか質問
+		DEFINE_LOCAL SCWK_ANSWER01
+		_YES_NO_WIN( SCWK_ANSWER01 )
+		_BALLOONWIN_CLOSE()
+		
+		//はい
+		IF $SCWK_ANSWER01 == 0 THEN
+		
+				_BALLOONWIN_OBJMSG( msg_r03_black_08b , R03_RIVAL_03 )
+				_BALLOONWIN_CLOSE()
+			
+				_OBJ_ANIME( R03_RIVAL_03 , anm_stoper_rival_go )
+				_OBJ_ANIME_WAIT()
+
+			
+			//======================================//
+			
+			//OBJ非表示
+			_OBJ_DEL(R03_RIVAL_03)
+			//洞窟前のRIVALを非表示
+			_FLAG_SET(FV_R03_RIVAL_03)
+			
+			//***フラグ操作：R03R0301のPOS起動***
+			$WK_SCENE_R03_PLASMA = 3
+			
+			//======================================//
+		
+		ELSE
+			
+			//準備してこいよ
+			_BALLOONWIN_OBJMSG( msg_r03_black_08c , R03_RIVAL_03 )
+			_BALLOONWIN_CLOSE()
+			_OBJ_ANIME( MMDL_ID_PLAYER , anm_stoper_player_return02 )
+			_OBJ_ANIME_WAIT()
+			
+			//======================================//
+			
+			//***フラグ操作：ストッパーの会話を２回目に***
+			$WK_SCENE_R03_PLASMA = 2
+			
+			//======================================//
+			
+		ENDIF
+	
+	//２回目以降の話しかけ
+	ELSE
+
+		_BALLOONWIN_OBJMSG( msg_r03_black_08e , R03_RIVAL_03 )
+		
+		//先に行くか質問
+		DEFINE_LOCAL SCWK_ANSWER02
+		_YES_NO_WIN( SCWK_ANSWER02 )
+		_BALLOONWIN_CLOSE()
+		
+		//はい
+		IF $SCWK_ANSWER02 == 0 THEN
+			
+			_BALLOONWIN_OBJMSG( msg_r03_black_08b , R03_RIVAL_03 )
+			_BALLOONWIN_CLOSE()
+			
+			_OBJ_ANIME( R03_RIVAL_03 , anm_stoper_rival_go )
+			_OBJ_ANIME_WAIT()
+			
+			//======================================//
+			
+			//OBJ非表示
+			_OBJ_DEL(R03_RIVAL_03)
+			//洞窟前のRIVALを非表示
+			_FLAG_SET(FV_R03_RIVAL_03)
+			
+			//***フラグ操作：R03R0301のPOS起動***
+			$WK_SCENE_R03_PLASMA = 3
+			
+			//======================================//
+			
+		ELSE
+
+			//準備してこいよ
+			_BALLOONWIN_OBJMSG( msg_r03_black_08c , R03_RIVAL_03 )
+			_BALLOONWIN_CLOSE()
+			_OBJ_ANIME( MMDL_ID_PLAYER , anm_stoper_player_return02 )
+			_OBJ_ANIME_WAIT()
+			
+			//======================================//
+			
+			//***フラグ操作：ストッパーの会話を２回目に***
+			$WK_SCENE_R03_PLASMA = 2
+			
+			//======================================//
+
+		ENDIF
+	
+	ENDIF
+_RET
 
 /**************************************************************/
 /*  R03 R03R0301イベント終了後POSでお礼イベント*/
@@ -324,7 +512,7 @@ EVENT_START   ev_pos_r03_support_03
     ENDSWITCH
 
 
-	_BALLOONWIN_OBJMSG( msg_r03_white_07 , R03_SUPPORT_02 )
+	_BALLOONWIN_OBJMSG( msg_r03_white_07 , R03_SUPPORT_01 )
 	_BALLOONWIN_CLOSE()
 	
 	//性別が格納されるローカル変数を定義
@@ -334,13 +522,13 @@ EVENT_START   ev_pos_r03_support_03
 	//男性だった場合
 	IF $SCWK_SEX == PM_MALE THEN
 	
-	_BALLOONWIN_OBJMSG( msg_r03_babygirl1_03 , R03_BABYGIRL_03 )
+	_BALLOONWIN_OBJMSG( msg_r03_babygirl1_03 , R03_BABYGIRL_02 )
 	_BALLOONWIN_CLOSE()
 	
 	//女性だった場合
 	ELSE
 	
-	_BALLOONWIN_OBJMSG( msg_r03_babygirl1_04 , R03_BABYGIRL_03 )
+	_BALLOONWIN_OBJMSG( msg_r03_babygirl1_04 , R03_BABYGIRL_02 )
 	_BALLOONWIN_CLOSE()
 	
 	ENDIF
@@ -349,15 +537,15 @@ EVENT_START   ev_pos_r03_support_03
 	_ITEM_EVENT_KEYWAIT(ITEM_MONSUTAABOORU, 5)
 	
 	//バイバーイ。サポートとBABYRIRL退場
-	_BALLOONWIN_OBJMSG( msg_r03_white_08 , R03_SUPPORT_02 )
+	_BALLOONWIN_OBJMSG( msg_r03_white_08 , R03_SUPPORT_01 )
 	_BALLOONWIN_CLOSE()
-	_OBJ_ANIME( R03_SUPPORT_02 , anm_support_goodbye01 )
+	_OBJ_ANIME( R03_SUPPORT_01 , anm_support_goodbye01 )
 	_OBJ_ANIME_WAIT()
-	_OBJ_ANIME( R03_SUPPORT_02 , anm_support_goodbye02 )
-	_OBJ_ANIME( R03_BABYGIRL_03 , anm_babygirl_goodbye01 )
+	_OBJ_ANIME( R03_SUPPORT_01 , anm_support_goodbye02 )
+	_OBJ_ANIME( R03_BABYGIRL_02 , anm_babygirl_goodbye01 )
 	_OBJ_ANIME_WAIT()
-	_OBJ_ANIME( R03_BABYGIRL_03 ,  anm_support_goodbye03 )
-	_OBJ_ANIME( R03_SUPPORT_02 , anm_support_goodbye03 )
+	_OBJ_ANIME( R03_BABYGIRL_02 ,  anm_support_goodbye03 )
+	_OBJ_ANIME( R03_SUPPORT_01 , anm_support_goodbye03 )
 	_OBJ_ANIME_WAIT()
 
 	//======================================//
@@ -365,11 +553,11 @@ EVENT_START   ev_pos_r03_support_03
 	//SUPPORT02とBABYGIRL03のフラグをSETして以降非表示に
 	_FLAG_SET(FV_R03_SUPPORT_01)
 	
-	_OBJ_DEL(R03_SUPPORT_02)
-	_OBJ_DEL(R03_BABYGIRL_03)
+	_OBJ_DEL(R03_SUPPORT_01)
+	_OBJ_DEL(R03_BABYGIRL_02)
 	
 	//***フラグ操作：長い草イベントを有効にする***
-	$WK_SCENE_R03 = 3
+	$WK_SCENE_R03_PLASMA = 5
 	
 	//======================================//
 	
@@ -431,7 +619,7 @@ EVENT_START   ev_pos_r03_rival_02
 	_OBJ_DEL(R03_RIVAL_02)
 	
 	//***フラグ操作：R03の全てのイベントを無効に***
-	$WK_SCENE_R03 = 4
+	$WK_SCENE_R03 = 2
 	
 	//======================================//
 	
@@ -644,24 +832,20 @@ _ANIME_LABEL	anm_rival_01_06_up
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
+// ポケモン誘拐イベント：ライバル主人公のほうを向く
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_rival_01_06_down
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
 //	ポケモン誘拐イベント：ライバル洞窟方面へ
 //--------------------------------------------------------------
 
-_ANIME_LABEL	 anm_rival_01_07
-	_ANIME_DATA	AC_WALK_L_6F,35
-	_ANIME_DATA	AC_WALK_U_6F,9
-	_ANIME_DATA	AC_WALK_L_6F,4
+_ANIME_LABEL	 anm_rival_go01
+	_ANIME_DATA	AC_WALK_L_4F,10
 	_ANIME_DATA	ACMD_END,0
 
-//--------------------------------------------------------------
-//	ポケモン誘拐イベント：主人公洞窟方面へ
-//--------------------------------------------------------------
-
-_ANIME_LABEL	 anm_player_01
-	_ANIME_DATA	AC_WALK_L_6F,35
-	_ANIME_DATA	AC_WALK_U_6F,9
-	_ANIME_DATA	AC_DIR_L,1
-	_ANIME_DATA	ACMD_END,0
 
 
 //--------------------------------------------------------------
@@ -673,20 +857,49 @@ _ANIME_LABEL	 anm_player_stop_01
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
-//	ポケモン誘拐イベント：サポート主人公のほうに向く
+//	ポケモン誘拐イベント：サポート主人公を引き止める
 //--------------------------------------------------------------
 
 _ANIME_LABEL	 anm_support_stop_01
-	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,0
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
-//	ポケモン誘拐イベント：サポート上を向く
+//	ポケモン誘拐イベント：ライバル洞窟の中へ
 //--------------------------------------------------------------
 
-_ANIME_LABEL	 anm_support_stop_02
+_ANIME_LABEL	 anm_stoper_player_up
+	_ANIME_DATA	AC_STAY_WALK_U_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ポケモン誘拐イベント：ストッパー
+//--------------------------------------------------------------
+
+_ANIME_LABEL	 anm_stoper_player_return02
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ポケモン誘拐イベント：ライバル洞窟の中へ
+//--------------------------------------------------------------
+
+_ANIME_LABEL	 anm_stoper_rival_go
+	_ANIME_DATA	AC_STAY_WALK_L_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ポケモン誘拐イベント：主人公ライバルに押しのけられる
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_stoper_player_koutai
 	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_DIR_PAUSE_ON,1
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_DIR_PAUSE_OFF,1
 	_ANIME_DATA	ACMD_END,0
+
+
 
 //--------------------------------------------------------------
 //	ポケモン誘拐イベント：R03主人公振り向く

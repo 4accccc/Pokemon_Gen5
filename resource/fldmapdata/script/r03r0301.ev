@@ -28,6 +28,9 @@ _EVENT_DATA_END
 /**************************************************************/
 EVENT_START   ev_pos_r03r0301_rival_01
 
+	//プレイヤーネームを格納
+	_PLAYER_NAME(0)
+
 	//主人公位置格納
 	DEFINE_LOCAL  POSX
 	DEFINE_LOCAL  POSZ
@@ -54,7 +57,8 @@ EVENT_START   ev_pos_r03r0301_rival_01
 	_BALLOONWIN_CLOSE()
 	
 	//隣接して戦闘へ
-	_OBJ_ANIME( R03R0301_RIVAL_01 , anm_r03r0301_plasma_go1 )
+	_OBJ_ANIME( R03R0301_HAKAIM_01 , anm_r03r0301_plasma_go1 )
+	_OBJ_ANIME( R03R0301_HAKAIM_02 , anm_r03r0301_plasma_go1 )
 	_OBJ_ANIME_WAIT()
 	_BALLOONWIN_OBJMSG( msg_r03r0301_hakaim1_01 , R03R0301_HAKAIM_01 )
 	_BALLOONWIN_CLOSE()
@@ -66,19 +70,25 @@ EVENT_START   ev_pos_r03r0301_rival_01
 	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
 		_TRAINER_WIN()
 	ELSE
+		//======================================//
+		
+		//洞窟前のRIVALを表示
+		_FLAG_RESET(FV_R03_RIVAL_03)
+		
+		//***フラグ操作：ストッパーの会話を２回目に***
+		$WK_SCENE_R03_PLASMA = 2
+			
+		//======================================//
 		_TRAINER_LOSE()
 	ENDIF
-	
-	//オブジェクト生成
-	_OBJ_ADD_EX( 18 , 5, DIR_RIGHT , R03R0301_HAKAIM_03 , HAKAIM , MV_DMY )
-	_OBJ_ADD_EX( 18 , 6, DIR_RIGHT , R03R0301_HAKAIW_01 , HAKAIW , MV_DMY )
+
 	
 	//戦闘後プラズマ団と会話
 	_BALLOONWIN_OBJMSG( msg_r03r0301_hakaim1_02 , R03R0301_HAKAIM_01 )
 	_BALLOONWIN_CLOSE()
 	_BALLOONWIN_OBJMSG( msg_r03r0301_black_02 , R03R0301_RIVAL_01 )
 	_BALLOONWIN_CLOSE()
-	_GIZAWIN_OBJMSG_POS( msg_r03r0301_hakaim_04 , R03R0301_HAKAIM_03 ,WIN_NONE  )
+	_GIZAWIN_OBJMSG_POS( msg_r03r0301_hakaim2_01 , R03R0301_HAKAIM_03 ,WIN_NONE  )
 	_GIZAWIN_CLOSE()
 	
 	//第一陣どく
@@ -103,9 +113,6 @@ EVENT_START   ev_pos_r03r0301_rival_01
 	//主人公を見て
 	_OBJ_ANIME( R03R0301_RIVAL_01 , anm_r03r0301_rival_down )
 	_OBJ_ANIME_WAIT()
-	
-	//プレイヤーネームを格納
-	_PLAYER_NAME(0)
 	
 	_BALLOONWIN_OBJMSG( msg_r03r0301_black_04 , R03R0301_RIVAL_01 )
 	_BALLOONWIN_CLOSE()
@@ -173,9 +180,8 @@ EVENT_START   ev_pos_r03r0301_rival_01
 	//ポケモン誘拐イベント関連OBJを削除
 	_FLAG_SET( FV_R03R0301_RIVAL_01 )
 
-	//R03R0301の誘拐イベントを終了
-	$WK_SCENE_R03_PLASMA = 3
-	//R03の誘拐イベントお礼POS起動
+	//R03のお礼イベントを起動
+	$WK_SCENE_R03_PLASMA = 4
 
 	//==================================//
 
@@ -187,7 +193,7 @@ EVENT_END
 
 _ANIME_LABEL	anm_r03r0301_player_goz4
 	_ANIME_DATA	AC_WALK_D_8F,2
-	_ANIME_DATA	AC_WALK_L_8F,2
+	_ANIME_DATA	AC_WALK_L_8F,3
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
@@ -196,7 +202,7 @@ _ANIME_LABEL	anm_r03r0301_player_goz4
 
 _ANIME_LABEL	anm_r03r0301_player_goz5
 	_ANIME_DATA	AC_WALK_D_8F,1
-	_ANIME_DATA	AC_WALK_L_8F,2
+	_ANIME_DATA	AC_WALK_L_8F,3
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
@@ -204,7 +210,7 @@ _ANIME_LABEL	anm_r03r0301_player_goz5
 //--------------------------------------------------------------
 
 _ANIME_LABEL	anm_r03r0301_player_goz6
-	_ANIME_DATA	AC_WALK_L_8F,2
+	_ANIME_DATA	AC_WALK_L_8F,3
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
@@ -223,7 +229,7 @@ _ANIME_LABEL	anm_r03r0301_plasma_go2_01
 	_ANIME_DATA	AC_WALK_L_8F,1
 	_ANIME_DATA	AC_WALK_U_8F,2
 	_ANIME_DATA	AC_WALK_L_8F,2
-	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	AC_WALK_D_8F,3
 	_ANIME_DATA	AC_DIR_R,1
 	_ANIME_DATA	ACMD_END,0
 
@@ -235,7 +241,7 @@ _ANIME_LABEL	anm_r03r0301_plasma_go2_02
 	_ANIME_DATA	AC_WALK_L_8F,1
 	_ANIME_DATA	AC_WALK_U_8F,3
 	_ANIME_DATA	AC_WALK_L_8F,2
-	_ANIME_DATA	AC_WALK_D_8F,3
+	_ANIME_DATA	AC_WALK_D_8F,2
 	_ANIME_DATA	AC_DIR_R,1
 	_ANIME_DATA	ACMD_END,0
 
@@ -244,7 +250,7 @@ _ANIME_LABEL	anm_r03r0301_plasma_go2_02
 //--------------------------------------------------------------
 
 _ANIME_LABEL	anm_r03r0301_plasma_go3
-	_ANIME_DATA	AC_WALK_R_8F,6
+	_ANIME_DATA	AC_WALK_R_8F,7
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
@@ -283,7 +289,7 @@ _ANIME_LABEL	anm_r03r0301_rival_01
 //--------------------------------------------------------------
 
 _ANIME_LABEL	anm_r03r0301_rival_down
-	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_DIR_D,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
@@ -291,7 +297,7 @@ _ANIME_LABEL	anm_r03r0301_rival_down
 //--------------------------------------------------------------
 
 _ANIME_LABEL	anm_r03r0301_player_to_rival
-	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_DIR_U,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------

@@ -30,6 +30,7 @@ _EVENT_DATA		ev_pos_c08gym0101_gimmick_05	//２階の竜（右側）
 _EVENT_DATA		ev_c08gym0101_sunglasses_01
 _EVENT_DATA		ev_bg_c08gym0101_statue_01
 _EVENT_DATA		ev_pos_c08gym0101_f2_03
+_EVENT_DATA		ev_c08gym0101_f2_03
 _EVENT_DATA_END
 
 //--------------------------------------------------------------
@@ -271,6 +272,13 @@ EVENT_END
 	_ANIME_DATA	AC_WALK_U_8F,2
 	_ANIME_DATA	AC_DIR_U,1
 	_ANIME_DATA	ACMD_END,0
+
+/************************************************************/
+/*	POS起動トレーナー：会話時                                */
+/************************************************************/
+EVENT_START	ev_c08gym0101_f2_03
+	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_c08gym0101_veteranm4_02)
+EVENT_END
 
 /************************************************************/
 /*						ジムガイド							*/
