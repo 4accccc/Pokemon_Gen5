@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2010-01-20T15:35:55"/>
+	<create user="matsumiya" host="W00207" date="2010-01-21T18:39:25"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -747,7 +747,7 @@
 あれ……？▼</language>
 	</row>
 
-	<row id="msg_d01r0101_white_09" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_d01r0101_white_09" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・続けてinventor_01</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
@@ -759,15 +759,15 @@
 ムンナの　ゆめのけむり！？▼</language>
 	</row>
 
-	<row id="msg_d01r0101_inventor_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_d01r0101_inventor_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
 		<comment>♀
 ・まずメッセージだけ表示
 ・続けてマコモ登場してから
 　inventor_02表示</comment>
 		<attribute name="キャラ指定">ASSISTANTW
 発明家</attribute>
-		<language name="JPN" width="256">[FF:01:サイズ:200]わっ！▼</language>
-		<language name="JPN_KANJI" width="256">[FF:01:サイズ:200]わっ！▼</language>
+		<language name="JPN" width="256">わっ！▼</language>
+		<language name="JPN_KANJI" width="256">わっ！▼</language>
 	</row>
 
 	<row id="msg_d01r0101_inventor_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
