@@ -52,7 +52,7 @@ typedef struct{
   
   //action_noによってセットされるものが変わる
   union{
-    u8 work[12];
+    u8 work[24];
     u16 itemno;                             ///<アイテム番号
     STRCODE nickname[BUFLEN_POKEMON_NAME];  ///<ポケモン名(ニックネーム)
   };
