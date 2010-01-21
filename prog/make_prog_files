@@ -191,6 +191,7 @@ SRCS  +=    $(SOUNDSRC) \
         system/cursor_move.c \
         gamesystem/game_comm.c \
         gamesystem/game_beacon.c \
+        gamesystem/beacon_status.c \
         field/field_comm/game_beacon_search.c \
         debug/debugwin_sys.c \
         test/tetsu/debug_common.c \

@@ -46,7 +46,7 @@
 #include "net/wih_dwc.h"
 
 #include "field/fldmmdl.h"      //MMDLSYS
-
+#include "gamesystem/beacon_status.h"
 #include "savedata/gimmickwork_local.h"
 #include "savedata/gimmickwork.h"
 
@@ -110,6 +110,8 @@ struct _GAMEDATA{
   COMM_PLAYER_SUPPORT *comm_player_support;   ///<通信プレイヤーサポート
   
   BSUBWAY_SCRWORK *bsubway_scrwork; //バトルサブウェイワーク
+
+  BEACON_STATUS* beacon_status; ///<ビーコン関連ログ他
 };
 
 //==============================================================================
@@ -231,6 +233,9 @@ GAMEDATA * GAMEDATA_Create(HEAPID heapID)
   //通信相手からのサポートデータ
   gd->comm_player_support = COMM_PLAYER_SUPPORT_Alloc(heapID);
 
+  //ビーコンステータスワーク生成
+  gd->beacon_status = BEACON_STATUS_Create( heapID );
+
   return gd;
 }
 
@@ -238,6 +243,7 @@ GAMEDATA * GAMEDATA_Create(HEAPID heapID)
 //------------------------------------------------------------------
 void GAMEDATA_Delete(GAMEDATA * gamedata)
 {
+  BEACON_STATUS_Delete( gamedata->beacon_status );
   COMM_PLAYER_SUPPORT_Free(gamedata->comm_player_support);
   ENCOUNT_WORK_Delete( gamedata->enc_work );
   FIELD_BEACON_MSG_DeleteData( gamedata->fbmData );
@@ -816,6 +822,18 @@ u32 GAMEDATA_GetLastBattleResult( const GAMEDATA * gamedata )
 void GAMEDATA_SetLastBattleResult( GAMEDATA * gamedata, u32 btl_result )
 {
   gamedata->last_battle_result = btl_result;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief ビーコンステータスワーク取得
+ * @param   gamedata	GAMEDATAへのポインタ
+ * @param   BEACON_STATUS*
+ */
+//--------------------------------------------------------------
+BEACON_STATUS* GAMEDATA_GetBeaconStatus( GAMEDATA * gamedata )
+{
+  return gamedata->beacon_status;
 }
 
 //============================================================================================

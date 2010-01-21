@@ -943,7 +943,7 @@ static void exit_beacon_view_subscreen( FIELD_SUBSCREEN_WORK* pWork )
 //-----------------------------------------------------------------------------
 static void update_beacon_view_subscreen( FIELD_SUBSCREEN_WORK* pWork,BOOL bActive )
 {
-  BEACON_VIEW_Update(pWork->beaconViewWork);
+  BEACON_VIEW_Update(pWork->beaconViewWork, bActive);
 }
 
 //----------------------------------------------------------------------------
