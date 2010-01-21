@@ -856,6 +856,7 @@ BOOL  BTL_HANDLER_Waza_Add( const BTL_POKEPARAM* pp, WazaID waza )
     { WAZANO_IKARI,           ADD_Ikari         },
     { WAZANO_GENSINOTIKARA,   ADD_GensiNoTikara },
     { WAZANO_AYASIIKAZE,      ADD_GensiNoTikara },  // ‚ ‚â‚µ‚¢‚©‚º=‚°‚ñ‚µ‚Ì‚¿‚©‚ç
+    { WAZANO_GINIRONOKAZE,    ADD_GensiNoTikara },  // ‚¬‚ñ‚¢‚ë‚Ì‚©‚º=‚°‚ñ‚µ‚Ì‚¿‚©‚ç
     { WAZANO_KAMINARI,        ADD_Kaminari      },
     { WAZANO_HUBUKI,          ADD_Fubuki        },
     { WAZANO_NEGAIGOTO,       ADD_Negaigoto     },
@@ -7940,7 +7941,7 @@ static void handler_GensiNoTikara( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
   if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) == pokeID)
   &&  (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID)
   ){
-    BTL_EVENTVAR_RewriteValue( BTL_EVAR_STATUS_TYPE, WAZA_RANKEFF_SP );
+    BTL_EVENTVAR_RewriteValue( BTL_EVAR_STATUS_TYPE, WAZA_RANKEFF_MULTI5 );
   }
 }
 

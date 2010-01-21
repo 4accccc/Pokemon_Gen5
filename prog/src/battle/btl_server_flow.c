@@ -5957,7 +5957,7 @@ static BOOL scproc_WazaRankEffect_Common( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPA
     scEvent_GetWazaRankEffectValue( wk, wazaParam->wazaID, i, attacker, target, &effect, &volume );
     if( effect != WAZA_RANKEFF_NULL )
     {
-      if( effect != WAZA_RANKEFF_SP )
+      if( effect != WAZA_RANKEFF_MULTI5 )
       {
         fEffective = scproc_RankEffectCore( wk, atkPokeID, target, effect, volume, atkPokeID, ITEM_DUMMY_DATA, fAlmost, TRUE );
       }
@@ -5966,7 +5966,7 @@ static BOOL scproc_WazaRankEffect_Common( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPA
         u8 e;
         for( e=WAZA_RANKEFF_ORIGIN; e<WAZA_RANKEFF_BASE_MAX; ++e )
         {
-          if( scproc_RankEffectCore(wk, atkPokeID, target, effect, volume, atkPokeID,
+          if( scproc_RankEffectCore(wk, atkPokeID, target, e, volume, atkPokeID,
               ITEM_DUMMY_DATA, fAlmost, TRUE)
           ){
             fEffective = TRUE;

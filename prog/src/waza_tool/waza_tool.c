@@ -30,25 +30,32 @@ struct _WAZA_DATA {
   u8  category;     ///< カテゴリ（ enum WazaCategory )
   u8  damageType;   ///< ダメージタイプ（ enum WazaDamageType )
   u8  power;        ///< 威力
+
   u8  hitPer;       ///< 命中率
   u8  basePP;       ///< 基本PPMax
   s8  priority;     ///< ワザ優先度
   u8  hitCountMin : 4;  ///< 最小ヒット回数
   u8  hitCountMax : 4;  ///< 最大ヒット回数
+
   u16 sickID;       ///< 状態異常コード（enum WazaSick）
   u8  sickPer;      ///< 状態異常の発生率
   u8  sickCont;     ///< 状態異常継続パターン（enum WazaSickCont）
+
   u8  sickTurnMin;  ///< 状態異常の継続ターン最小
   u8  sickTurnMax;  ///< 状態異常の継続ターン最大
   u8  criticalRank; ///< クリティカルランク
   u8  shrinkPer;    ///< ひるみ確率
+
+  u16 AISeqNo;            ///< AI用シーケンスナンバー
+  s8  damageRecoverRatio; ///< ダメージ回復率
+  s8  HPRecoverRatio;     ///< HP回復率
+
+  u8  target;             ///< ワザ効果範囲( enum WazaTarget )
+
   u8  rankEffType[WAZA_RANKEFF_NUM_MAX]; ///< ステータスランク効果
   s8  rankEffValue[WAZA_RANKEFF_NUM_MAX];///< ステータスランク増減値
   u8  rankEffPer[WAZA_RANKEFF_NUM_MAX];  ///< ステータスランク発生率
-  s8  damageRecoverRatio; ///< ダメージ回復率
-  s8  HPRecoverRatio;     ///< HP回復率
-  u8  target;       ///< ワザ効果範囲( enum WazaTarget )
-  u16 AISeqNo;      ///< AI用シーケンスナンバー
+
   u32 flags;        ///< 各種フラグ
 
 };
@@ -152,6 +159,9 @@ int WAZADATA_PTR_GetParam( const WAZA_DATA* wazaData, WazaDataParam param )
   case WAZAPARAM_SICK_TURN_MAX:       ///< 状態異常の継続ターン最大
     return wazaData->sickTurnMax;
 
+  case WAZAPARAM_AI_SEQNO:
+    return wazaData->AISeqNo;
+
   case WAZAPARAM_RANKTYPE_1:          ///< ステータスランク効果１
   case WAZAPARAM_RANKTYPE_2:          ///< ステータスランク効果２
   case WAZAPARAM_RANKTYPE_3:          ///< ステータスランク効果３
@@ -166,6 +176,7 @@ int WAZADATA_PTR_GetParam( const WAZA_DATA* wazaData, WazaDataParam param )
   case WAZAPARAM_RANKPER_2:           ///< ステータスランク効果２の発生率
   case WAZAPARAM_RANKPER_3:           ///< ステータスランク効果３の発生率
     return wazaData->rankEffPer[ param - WAZAPARAM_RANKPER_1 ];
+
 
 
   case WAZAPARAM_DAMAGE_RECOVER_RATIO:///< ダメージ回復率
