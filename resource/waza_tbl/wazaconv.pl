@@ -44,19 +44,19 @@ use constant IDX_SickTurnMin		=> 19;	# 状態異常の継続ターン数　最�
 use constant IDX_SickTurnMax		=> 20;	# 状態異常の継続ターン数　最大
 use constant IDX_CriticalRank		=> 21;	# クリティカルランク
 use constant IDX_ShrinkPer			=> 22;	# ひるみ確率
-use constant IDX_RankEffType1		=> 23;	# ステータス効果１
-use constant IDX_RankEffType2		=> 24;	# ステータス効果２
-use constant IDX_RankEffType3		=> 25;	# ステータス効果３
-use constant IDX_RankEffValue1		=> 26;	# ステータス効果１の変動値
-use constant IDX_RankEffValue2		=> 27;	# ステータス効果２の変動値
-use constant IDX_RankEffValue3		=> 28;	# ステータス効果３の変動値
-use constant IDX_RankEffPer1		=> 29;	# ステータス効果１の発生率
-use constant IDX_RankEffPer2		=> 30;	# ステータス効果２の発生率
-use constant IDX_RankEffPer3		=> 31;	# ステータス効果３の発生率
-use constant IDX_DmgRecoverRatio	=> 32;	# ダメージ回復率
-use constant IDX_HPRecoverRatio		=> 33;	# ＨＰ回復率
-use constant IDX_Target				=> 34;	# 効果範囲
-use constant IDX_SeqNo				=> 35;	# AI用シーケンスナンバー
+use constant IDX_SeqNo				=> 23;	# AI用シーケンスナンバー
+use constant IDX_DmgRecoverRatio	=> 24;	# ダメージ回復率
+use constant IDX_HPRecoverRatio		=> 25;	# ＨＰ回復率
+use constant IDX_Target				=> 26;	# 効果範囲
+use constant IDX_RankEffType1		=> 27;	# ステータス効果１
+use constant IDX_RankEffType2		=> 28;	# ステータス効果２
+use constant IDX_RankEffType3		=> 29;	# ステータス効果３
+use constant IDX_RankEffValue1		=> 30;	# ステータス効果１の変動値
+use constant IDX_RankEffValue2		=> 31;	# ステータス効果２の変動値
+use constant IDX_RankEffValue3		=> 32;	# ステータス効果３の変動値
+use constant IDX_RankEffPer1		=> 33;	# ステータス効果１の発生率
+use constant IDX_RankEffPer2		=> 34;	# ステータス効果２の発生率
+use constant IDX_RankEffPer3		=> 35;	# ステータス効果３の発生率
 use constant IDX_FLG_Touch			=> 36;	# 【接触ワザ】
 use constant IDX_FLG_Tame			=> 37;	# 【１ターン溜め】
 use constant IDX_FLG_Tire			=> 38;	# 【１ターン反動】
@@ -70,8 +70,8 @@ use constant IDX_FLG_Juryoku		=> 45;	# 【重力で失敗する】
 use constant IDX_FLG_KoriMelt		=> 46;	# 【凍り解除】
 use constant IDX_FLG_TripleFar		=> 47;	# 【トリプル遠隔ワザ】
 
-use constant IDX_FLG_End			=> 48;	# 最後（waza.tabにはありません）
-use constant IDX_FLG_Start			=> 36;	# 最初
+use constant IDX_FLG_End			=> 48;	# フラグ最後（waza.tabにはありません）
+use constant IDX_FLG_Start			=> 36;	# フラグ最初
 
 
 #----------------------------------------------------------------------------------
@@ -608,8 +608,7 @@ sub storeRecord {
 		}
 		else
 		{
-#			$result .= ($errorHeader . "正しいシーケンスナンバーが指定されていません\n");
-			$result .= ($errorHeader . "SEQERR " . $str_num . "\n");
+			$result .= ($errorHeader . "シーケンスナンバー不正" . $str_num . "\n");
 		}
 	}
 
@@ -654,6 +653,7 @@ sub outputBin {
 		binmode OUT_FILE;
 		my $i;
 		my $buf;
+		my $write_size = 0;
 		my $idx_start = IDX_Type;
 		for($i = $idx_start; $i<IDX_FLG_Touch; $i++)
 		{
@@ -673,6 +673,7 @@ sub outputBin {
 				$buf = ($buf << 4) | $Record[$i];
 				$buf = pack('c', $buf );
 				syswrite(OUT_FILE, $buf, 1);
+				$write_size += 1;
 			}
 			elsif( ($i == IDX_SickID) ){
 				if( $Record[$i] > 0xffff ){
@@ -681,6 +682,7 @@ sub outputBin {
 				}
 				$buf = pack('S', $Record[$i] );
 				syswrite(OUT_FILE, $buf, 2);
+				$write_size += 2;
 			}elsif( ($i == IDX_Priority )
 			||	($i == IDX_RankEffValue1)
 			||	($i == IDX_RankEffValue2)
@@ -694,6 +696,7 @@ sub outputBin {
 				}
 				$buf = pack('c', $Record[$i]);
 				syswrite( OUT_FILE, $buf, 1);
+				$write_size += 1;
 			}
 			elsif( $i == IDX_SeqNo )
 			{
@@ -702,7 +705,8 @@ sub outputBin {
 					return 0;
 				}
 				$buf = pack('S', $Record[$i]);
-				syswrite( OUT_FILE, $buf, 2);
+				syswrite( OUT_FILE, $buf, 2 );
+				$write_size += 2;
 			}
 			else{
 				if( $Record[$i] < 0 || $Record[$i] > 255){
@@ -711,16 +715,18 @@ sub outputBin {
 				}
 				$buf = pack('C', $Record[$i]);
 				syswrite(OUT_FILE, $buf, 1);
+				$write_size += 1;
 			}
 		}
 
 		# 4byte アラインメント
-		my $size = $i - $idx_start;
+		my $size = $write_size;
 		while( $size % 4 ){
-			$buf = pack('C', 0);
+			$buf = pack('C', 83);
 			syswrite( OUT_FILE, $buf, 1 );
 			$size++;
 		}
+
 
 		# フラグ出力
 		my $flag = 0;
