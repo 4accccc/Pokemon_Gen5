@@ -84,4 +84,5 @@ extern APPBAR_WORK * APPBAR_Init( APPBAR_OPTION_MASK mask, GFL_CLUNIT* p_unit, u
 extern void APPBAR_Exit( APPBAR_WORK *p_wk );
 extern void APPBAR_Main( APPBAR_WORK *p_wk );
 extern APPBAR_ICON APPBAR_GetTrg( const APPBAR_WORK *cp_wk );
+extern void APPBAR_SetNormal( APPBAR_WORK *p_wk );
 
