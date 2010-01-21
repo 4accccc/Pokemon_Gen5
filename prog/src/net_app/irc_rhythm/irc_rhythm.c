@@ -913,6 +913,16 @@ static GFL_PROC_RESULT IRC_RHYTHM_PROC_Init( GFL_PROC *p_proc, int *p_seq, void 
 	BmpWinFrame_Write( p_wk->msgwnd[MSGWNDID_TEXT].p_bmpwin, WINDOW_TRANS_ON, 
 					GFL_ARCUTIL_TRANSINFO_GetPos(p_wk->grp.bg.frame_char), RHYTHM_BG_PAL_S_06 );
 
+  if( p_wk->p_param->p_gamesys )
+  {	
+    MSGWND_PrintPlayerName( &p_wk->msgwnd[MSGWNDID_TEXT], &p_wk->msg, 
+        RHYTHM_STR_000, p_wk->p_param->p_you_status,  0, 0, HEAPID_IRCRHYTHM );
+  }
+  else
+  {	
+      MSGWND_Print( &p_wk->msgwnd[MSGWNDID_TEXT], &p_wk->msg, RHYTHM_STR_000, 0, 0 );
+  }
+
   COUNTDOWN_Init( &p_wk->cntdown, &p_wk->grp, HEAPID_IRCRHYTHM );
 
 	//タイトル文字列作成
@@ -940,6 +950,10 @@ static GFL_PROC_RESULT IRC_RHYTHM_PROC_Init( GFL_PROC *p_proc, int *p_seq, void 
 
 	//リズムシーンセット
 	COMPATIBLE_IRC_SetScene( p_wk->p_param->p_irc, COMPATIBLE_SCENE_RHYTHM );
+
+  //輝度変更
+  G2_SetBlendBrightness( GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_BG2 |
+      GX_BLEND_PLANEMASK_BG3 | GX_BLEND_PLANEMASK_BD, -8 );
 
 	SEQ_Change( p_wk, SEQFUNC_StartGame );
 	return GFL_PROC_RES_FINISH;
@@ -985,6 +999,8 @@ static GFL_PROC_RESULT IRC_RHYTHM_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void 
 			BACKOBJ_Exit( &p_wk->backobj[i] );
 		}
 	}
+
+  G2_BlendNone();
 
 	//APPBAR
 	APPBAR_Exit( p_wk->p_appbar );	
@@ -2268,18 +2284,39 @@ static void SEQ_End( RHYTHM_MAIN_WORK *p_wk )
 //-----------------------------------------------------------------------------
 static void SEQFUNC_StartGame( RHYTHM_MAIN_WORK *p_wk, u16 *p_seq )
 {	
-  if( p_wk->p_param->p_gamesys )
-  {	
-    MSGWND_PrintPlayerName( &p_wk->msgwnd[MSGWNDID_TEXT], &p_wk->msg, 
-        RHYTHM_STR_000, p_wk->p_param->p_you_status,  0, 0, HEAPID_IRCRHYTHM );
+  enum
+  { 
+    SEQ_INIT,
+    SEQ_MAIN,
+    SEQ_EXIT,
+  };
+
+  switch( *p_seq )
+  { 
+  case SEQ_INIT:
+    p_wk->cnt = 0;
+    *p_seq  = SEQ_MAIN;
+    break;
+
+  case SEQ_MAIN:
+    if( p_wk->cnt++ > 60 )
+    { 
+      p_wk->cnt = 0;
+      *p_seq  = SEQ_EXIT;
+    }
+    break;
+
+  case SEQ_EXIT:
+    COUNTDOWN_Start( &p_wk->cntdown );
+    SEQ_Change( p_wk, SEQFUNC_CountDown );	
+    break;
   }
-  else
-  {	
-    MSGWND_Print( &p_wk->msgwnd[MSGWNDID_TEXT], &p_wk->msg, RHYTHM_STR_000, 0, 0 );
-  }
-	
-  COUNTDOWN_Start( &p_wk->cntdown );
-	SEQ_Change( p_wk, SEQFUNC_CountDown );	
+  if( APPBAR_GetTrg(p_wk->p_appbar) == APPBAR_ICON_RETURN )
+	{
+		PMSND_PlaySystemSE( SEQ_SE_CANCEL1 );
+		p_wk->p_param->result	= IRCRHYTHM_RESULT_RETURN;
+		SEQ_End( p_wk );
+	}
 	
 	//シーンが異なるチェック
 	if( COMPATIBLE_IRC_CompScene( p_wk->p_param->p_irc ) != 0 )
@@ -2302,6 +2339,7 @@ static void SEQFUNC_CountDown( RHYTHM_MAIN_WORK *p_wk, u16 *p_seq )
   COUNTDOWN_Main( &p_wk->cntdown );
   if( COUNTDOWN_IsEnd( &p_wk->cntdown ) )
   { 
+    G2_BlendNone();
     RHYTHMSEARCH_Start( &p_wk->search );
     SEQ_Change( p_wk, SEQFUNC_MainGame );	
   }

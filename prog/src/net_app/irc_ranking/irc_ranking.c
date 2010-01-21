@@ -155,7 +155,7 @@ enum
 #define SCROLL_WRITE_POS_START_M	(4)	//どの位置から張り始めるか
 #define SCROLL_WRITE_POS_START_S	(0)	//どの位置から張り始めるか
 
-#define SCROLL_FONT_Y_OFS	(2)	//文字Y位置
+#define SCROLL_FONT_Y_OFS	(1)	//文字Y位置
 
 #define SCROLL_NEWRANK_NULL	(0xFFFF)
 
@@ -413,9 +413,6 @@ typedef struct _IRC_RANKING_WORK
 	//データ
 	RANKING_DATA	*p_rank_data;
 
-	//パラメータ
-	GAME_COMM_SYS_PTR	p_gamecomm;
-
 	//etc
 	s16	move_new_sync;
 	u16 dummy;
@@ -458,7 +455,7 @@ static void SEQFUNC_MoveNew( SEQ_WORK *p_seqwk, int *p_seq, void *p_param );
 //-------------------------------------
 ///	BG
 //=====================================
-static void GRAPHIC_BG_Init( GRAPHIC_BG_WORK *p_wk, GAME_COMM_SYS_PTR	p_gamecomm, HEAPID heapID );
+static void GRAPHIC_BG_Init( GRAPHIC_BG_WORK *p_wk, GAMESYS_WORK *p_gamesys, HEAPID heapID );
 static void GRAPHIC_BG_Exit( GRAPHIC_BG_WORK *p_wk );
 static void GRAPHIC_BG_VBlankFunction( GRAPHIC_BG_WORK *p_wk );
 static GFL_ARCUTIL_TRANSINFO GRAPHIC_BG_GetTransInfo( const GRAPHIC_BG_WORK *cp_wk, BOOL is_m );
@@ -474,7 +471,7 @@ static GFL_CLUNIT * GRAPHIC_OBJ_GetUnit( const GRAPHIC_OBJ_WORK *cp_wk );
 //-------------------------------------
 ///	GRAPHIC
 //=====================================
-static void GRAPHIC_Init( GRAPHIC_WORK *p_wk, GAME_COMM_SYS_PTR	p_gamecomm, HEAPID heapID );
+static void GRAPHIC_Init( GRAPHIC_WORK *p_wk, GAMESYS_WORK*	p_gamesys, HEAPID heapID );
 static void GRAPHIC_Exit( GRAPHIC_WORK *p_wk );
 static void GRAPHIC_Draw( GRAPHIC_WORK *p_wk );
 static const GRAPHIC_BG_WORK *GRAPHIC_GetBgWorkConst( const GRAPHIC_WORK *cp_wk );
@@ -526,6 +523,7 @@ static BOOL ACLR_IsExist( const ACLR_WORK *cp_wk );
 ///	ETC
 //=====================================
 static void PRINT_PrintCenter( GFL_BMPWIN *p_bmpwin, STRBUF *p_strbuf, GFL_FONT *p_font );
+static void PRINT_PrintNameCenter( GFL_BMPWIN *p_bmpwin, STRBUF *p_strbuf, const MYSTATUS *cp_status, GFL_FONT *p_font );
 static void BMP_Copy( const GFL_BMP_DATA *cp_src, GFL_BMP_DATA *p_dst, u16 src_x, u16 src_y, u16 dst_x, u16 dst_y, u16 w, u16 h );
 static s32 GFL_POINT_Distance( const GFL_POINT *cp_a, const GFL_POINT *cp_b );
 static void ARCHDL_UTIL_TransVramScreenEx( ARCHANDLE *handle, ARCDATID datID, u32 frm, u32 chr_ofs, u8 src_x, u8 src_y, u8 src_w, u8 src_h, u8 dst_x, u8 dst_y, u8 dst_w, u8 dst_h,  u8 plt, BOOL compressedFlag, HEAPID heapID );
@@ -693,15 +691,6 @@ static GFL_PROC_RESULT IRC_RANKING_PROC_Init( GFL_PROC *p_proc, int *p_seq, void
 
 	//パラメータうけとり
 	p_rank_param	= p_param;
-	if( p_rank_param->p_gamesys )
-	{	
-		p_wk->p_gamecomm	= GAMESYSTEM_GetGameCommSysPtr(p_rank_param->p_gamesys);
-	}
-	else
-	{	
-		p_wk->p_gamecomm	= NULL;
-	}
-
   p_wk->p_que   = PRINTSYS_QUE_Create( HEAPID_IRCRANKING );
   p_wk->p_font  = GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr, 
 				GFL_FONT_LOADTYPE_FILE, FALSE, HEAPID_IRCRANKING ); 
@@ -712,7 +701,7 @@ static GFL_PROC_RESULT IRC_RANKING_PROC_Init( GFL_PROC *p_proc, int *p_seq, void
 	NAGI_Printf( "data_len %d\n", data_len );
 
 	//モジュール初期化
-	GRAPHIC_Init( &p_wk->grp, p_wk->p_gamecomm, HEAPID_IRCRANKING );
+	GRAPHIC_Init( &p_wk->grp, p_rank_param->p_gamesys, HEAPID_IRCRANKING );
 	SEQ_Init( &p_wk->seq, p_wk, SEQFUNC_FadeOut );
 	UI_Init( &p_wk->ui, HEAPID_IRCRANKING );
 	ACLR_Init( &p_wk->aclr );
@@ -1191,7 +1180,7 @@ static void SEQFUNC_MoveNew( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
  *
  */
 //-----------------------------------------------------------------------------
-static void GRAPHIC_BG_Init( GRAPHIC_BG_WORK *p_wk, GAME_COMM_SYS_PTR	p_gamecomm, HEAPID heapID )
+static void GRAPHIC_BG_Init( GRAPHIC_BG_WORK *p_wk, GAMESYS_WORK *p_gamesys, HEAPID heapID )
 {	
 	//クリア
 	GFL_STD_MemClear( p_wk, sizeof(GRAPHIC_BG_WORK) );
@@ -1305,7 +1294,16 @@ static void GRAPHIC_BG_Init( GRAPHIC_BG_WORK *p_wk, GAME_COMM_SYS_PTR	p_gamecomm
 
 		//文字描画
 		p_strbuf	= GFL_MSG_CreateString( p_msg, RANKING_TITLE_000 );
-		PRINT_PrintCenter( p_wk->p_bmpwin[BMPWIN_ID_TITLE], p_strbuf, p_font );
+    { 
+      GAMEDATA  *p_gamedata = NULL;
+      MYSTATUS  *p_mystatus = NULL;
+      if( p_gamesys )
+      { 
+        p_gamedata = GAMESYSTEM_GetGameData(p_gamesys);
+        p_mystatus =GAMEDATA_GetMyStatus(p_gamedata);
+      }
+      PRINT_PrintNameCenter( p_wk->p_bmpwin[BMPWIN_ID_TITLE], p_strbuf, p_mystatus, p_font );
+    }
 		GFL_STR_DeleteBuffer( p_strbuf );
 
 		p_strbuf	= GFL_MSG_CreateString( p_msg, RANKING_CAPTION_000 );
@@ -1337,8 +1335,15 @@ static void GRAPHIC_BG_Init( GRAPHIC_BG_WORK *p_wk, GAME_COMM_SYS_PTR	p_gamecomm
 		GFL_BG_LoadScreenReq(GRAPHIC_BG_GetFrame(GRAPHIC_BG_FRAME_TOP_M) );
 	}
 
-	INFOWIN_Init( GRAPHIC_BG_GetFrame(GRAPHIC_BG_FRAME_INFO_S),
-			RANKING_BG_PAL_S_15, p_gamecomm, HEAPID_IRCRANKING );
+  { 
+    GAME_COMM_SYS_PTR p_gamecomm  = NULL;
+    if( p_gamesys )
+    { 
+      p_gamecomm  = GAMESYSTEM_GetGameCommSysPtr( p_gamesys );
+    }
+    INFOWIN_Init( GRAPHIC_BG_GetFrame(GRAPHIC_BG_FRAME_INFO_S),
+          RANKING_BG_PAL_S_15, p_gamecomm, HEAPID_IRCRANKING );
+  }
 
 
 }
@@ -1591,7 +1596,7 @@ static GFL_CLUNIT * GRAPHIC_OBJ_GetUnit( const GRAPHIC_OBJ_WORK *cp_wk )
  *
  */
 //-----------------------------------------------------------------------------
-static void GRAPHIC_Init( GRAPHIC_WORK *p_wk, GAME_COMM_SYS_PTR	p_gamecomm, HEAPID heapID )
+static void GRAPHIC_Init( GRAPHIC_WORK *p_wk, GAMESYS_WORK*	p_gamesys, HEAPID heapID )
 {	
 	static const GFL_DISP_VRAM sc_vramSetTable =
 	{
@@ -1635,7 +1640,7 @@ static void GRAPHIC_Init( GRAPHIC_WORK *p_wk, GAME_COMM_SYS_PTR	p_gamecomm, HEAP
 	GFL_FONTSYS_Init();
 
 	//	モジュール初期化
-	GRAPHIC_BG_Init( &p_wk->bg, p_gamecomm, heapID );
+	GRAPHIC_BG_Init( &p_wk->bg, p_gamesys, heapID );
 	GRAPHIC_OBJ_Init( &p_wk->obj, &sc_vramSetTable, heapID );
 
 	//VBlankTask登録
@@ -2392,6 +2397,7 @@ static RANKING_DATA	*RANKING_DATA_Create( u16 data_len, HEAPID heapID )
 		int i;
 		u8	pre_score	= 128;	//100以上のあたい
 		u8	pre_rank	= 0;
+    u8  sex;
 
 		rank_max	= IRC_COMPATIBLE_SV_GetRankNum( p_sv );
 		new_rank	= IRC_COMPATIBLE_SV_GetNewRank( p_sv );
@@ -2422,24 +2428,25 @@ static RANKING_DATA	*RANKING_DATA_Create( u16 data_len, HEAPID heapID )
 				GF_ASSERT(0);
 			}
 			//パレット
+      sex = IRC_COMPATIBLE_SV_GetSex( p_sv, i );
 			if( new_rank == i )
 			{	
-				p_data[i].plt		= 5;
+				p_data[i].plt		= 5 + !sex * 5;
 			}else if( p_data[i].rank == 1 )
 			{	
-				p_data[i].plt		= 2;
+				p_data[i].plt		= 2 + !sex * 5;
 			}
 			else if( p_data[i].rank == 2 )
 			{	
-				p_data[i].plt		= 3;
+				p_data[i].plt		= 3 + !sex * 5;
 			}
 			else if( p_data[i].rank == 3 )
 			{	
-				p_data[i].plt		= 4;
+				p_data[i].plt		= 4 + !sex * 5;
 			}
 			else
 			{	
-				p_data[i].plt		= 1;
+				p_data[i].plt		= 1 + !sex * 5;
 			}
 
 			//前の人のスコア保存
@@ -2827,6 +2834,52 @@ static void PRINT_PrintCenter( GFL_BMPWIN *p_bmpwin, STRBUF *p_strbuf, GFL_FONT 
 	y	-= PRINTSYS_GetStrHeight( p_strbuf, p_font )/2;
 
 	PRINTSYS_Print( GFL_BMPWIN_GetBmp(p_bmpwin), x, y, p_strbuf, p_font );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  センター位置へのプリント
+ *
+ *	@param	GFL_BMPWIN *p_bmpwin	BMPWIN
+ *	@param	*p_strbuf							文字
+ *	@param	MYSTATUS *cp_status   ステータス
+ *	@param	*p_font								フォント
+ */
+//-----------------------------------------------------------------------------
+static void PRINT_PrintNameCenter( GFL_BMPWIN *p_bmpwin, STRBUF *p_strbuf, const MYSTATUS *cp_status, GFL_FONT *p_font )
+{ 
+  if( cp_status == NULL )
+  { 
+	u16 x, y;
+
+	x	= GFL_BMPWIN_GetSizeX( p_bmpwin )*4;
+	y	= GFL_BMPWIN_GetSizeY( p_bmpwin )*4;
+	x	-= PRINTSYS_GetStrWidth( p_strbuf, p_font, 0 )/2;
+	y	-= PRINTSYS_GetStrHeight( p_strbuf, p_font )/2;
+
+	PRINTSYS_Print( GFL_BMPWIN_GetBmp(p_bmpwin), x, y, p_strbuf, p_font );
+  }
+  else
+  { 
+
+	u16 x, y;
+  STRBUF *p_dst;
+  WORDSET *p_word = WORDSET_Create( GFL_HEAP_LOWID(HEAPID_IRCRANKING) );
+
+  p_dst = GFL_STR_CreateCopyBuffer( p_strbuf, GFL_HEAP_LOWID(HEAPID_IRCRANKING ) );
+  WORDSET_RegisterPlayerName( p_word, 0, cp_status );
+  WORDSET_ExpandStr( p_word, p_dst, p_strbuf );
+
+	x	= GFL_BMPWIN_GetSizeX( p_bmpwin )*4;
+	y	= GFL_BMPWIN_GetSizeY( p_bmpwin )*4;
+	x	-= PRINTSYS_GetStrWidth( p_dst, p_font, 0 )/2;
+	y	-= PRINTSYS_GetStrHeight( p_dst, p_font )/2;
+
+
+	PRINTSYS_Print( GFL_BMPWIN_GetBmp(p_bmpwin), x, y, p_dst, p_font );
+
+  GFL_STR_DeleteBuffer( p_dst );
+  WORDSET_Delete( p_word );
+  }
 }
 
 //----------------------------------------------------------------------------

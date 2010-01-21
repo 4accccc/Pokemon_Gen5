@@ -699,6 +699,7 @@ static BOOL AURA_ONLYRESULT_Main( AURA_ONLYRESULT_WORK* p_wk );
 #endif
 //SEQ
 static void SEQ_Change( AURA_MAIN_WORK *p_wk, SEQ_FUNCTION  seq_function );
+static void SEQ_ChangeEx( AURA_MAIN_WORK *p_wk, SEQ_FUNCTION  seq_function, u32 next_seq );
 static void SEQ_End( AURA_MAIN_WORK *p_wk );
 //SEQ_FUNC
 static void SEQFUNC_StartGame( AURA_MAIN_WORK *p_wk, u16 *p_seq );
@@ -773,6 +774,7 @@ static void DEBUGAURA_PRINT_UpDate( AURA_MAIN_WORK *p_wk );
 static void SHAKESEARCH_Init( SHAKE_SEARCH_WORK *p_wk );
 static void SHAKESEARCH_Exit( SHAKE_SEARCH_WORK *p_wk );
 static BOOL SHAKESEARCH_Main( SHAKE_SEARCH_WORK *p_wk, const GFL_RECT *cp_rect );
+static BOOL SHAKESEARCH_IsEnd( const SHAKE_SEARCH_WORK *cp_wk );
 //DEBUG_PRINT
 #ifdef DEBUG_AURA_MSG
 static void DEBUGPRINT_Init( u8 frm, BOOL is_now_save, HEAPID heapID );
@@ -2490,6 +2492,20 @@ static void SEQ_Change( AURA_MAIN_WORK *p_wk, SEQ_FUNCTION  seq_function )
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief  シーケンス変更  シーケンス変数指定可能版
+ *
+ *	@param	AURA_MAIN_WORK *p_wk  ワーク
+ *	@param	seq_function          シーケンス関数
+ *	@param	next_seq              シーケンス変数
+ */
+//-----------------------------------------------------------------------------
+static void SEQ_ChangeEx( AURA_MAIN_WORK *p_wk, SEQ_FUNCTION  seq_function, u32 next_seq )
+{ 
+  p_wk->seq_function  = seq_function;
+  p_wk->seq = next_seq;
+}
+//----------------------------------------------------------------------------
+/**
  *  @brief  PROC終了
  *
  *  @param  AURA_MAIN_WORK *p_wk  ワーク
@@ -2520,7 +2536,6 @@ static void SEQFUNC_StartGame( AURA_MAIN_WORK *p_wk, u16 *p_seq )
   enum{
     SEQ_INIT,
     SEQ_MAIN,
-    SEQ_END,
   };
   GFL_POINT   *p_trg_left;
 
@@ -2563,16 +2578,7 @@ static void SEQFUNC_StartGame( AURA_MAIN_WORK *p_wk, u16 *p_seq )
     {
       GUIDE_SetVisible( 0, HEAPID_IRCAURA );
 
-      if( p_wk->p_param->p_gamesys )
-      {
-        MSGWND_PrintPlayerName( &p_wk->msgwnd[MSGWNDID_TEXT], &p_wk->msg,
-            AURA_STR_001, p_wk->p_param->p_you_status,  0, 0, HEAPID_IRCAURA );
-      }
-      else
-      {
-        MSGWND_Print( &p_wk->msgwnd[MSGWNDID_TEXT], &p_wk->msg,
-            AURA_STR_001, 0, 0 );
-      }
+
 
 
       //左タッチ演出ON
@@ -2584,15 +2590,32 @@ static void SEQFUNC_StartGame( AURA_MAIN_WORK *p_wk, u16 *p_seq )
         PMSND_PlaySE( IRCAURA_SE_AURA_L );
       }
 
+      //計測終了待ち
+      if( SHAKESEARCH_IsEnd( &p_wk->shake_left[0] ) )
+      {
+        MSGWND_Print( &p_wk->msgwnd[MSGWNDID_TEXT], &p_wk->msg, AURA_STR_002, 0, 0 );
+        GUIDE_SetVisible( GUIDE_VISIBLE_BOTH, HEAPID_IRCAURA );
 
-      *p_seq  = SEQ_END;
+        SEQ_ChangeEx( p_wk, SEQFUNC_TouchLeft, 1 );
+      }
+      else
+      { 
+        if( p_wk->p_param->p_gamesys )
+        {
+          MSGWND_PrintPlayerName( &p_wk->msgwnd[MSGWNDID_TEXT], &p_wk->msg,
+              AURA_STR_001, p_wk->p_param->p_you_status,  0, 0, HEAPID_IRCAURA );
+        }
+        else
+        {
+          MSGWND_Print( &p_wk->msgwnd[MSGWNDID_TEXT], &p_wk->msg,
+              AURA_STR_001, 0, 0 );
+        }
+        SEQ_Change( p_wk, SEQFUNC_TouchLeft );
+      }
     }
 
     break;
 
-  case SEQ_END:
-    SEQ_Change( p_wk, SEQFUNC_TouchLeft );
-    break;
   }
 
   if( APPBAR_GetTrg(p_wk->p_appbar) == APPBAR_ICON_RETURN )
@@ -2661,7 +2684,18 @@ static void SEQFUNC_TouchLeft( AURA_MAIN_WORK *p_wk, u16 *p_seq )
     }
     else
     {
-      SHAKESEARCH_Init( p_shake_left);
+      //計測終了待ち
+      if( SHAKESEARCH_IsEnd( p_shake_left ) )
+      {
+        MSGWND_Print( &p_wk->msgwnd[MSGWNDID_TEXT], &p_wk->msg, AURA_STR_002, 0, 0 );
+        GUIDE_SetVisible( GUIDE_VISIBLE_BOTH, HEAPID_IRCAURA );
+
+        *p_seq  = SEQ_WAIT_RIGHT;
+      }
+      else
+      { 
+        SHAKESEARCH_Init( p_shake_left);
+      }
       *p_seq  = SEQ_RET;
     }
     break;
@@ -4665,6 +4699,18 @@ static BOOL SHAKESEARCH_Main( SHAKE_SEARCH_WORK *p_wk, const GFL_RECT *cp_rect )
   }
 
   return FALSE;
+}
+//----------------------------------------------------------------------------
+/** 
+ *	@brief  検知終了しているかチェック
+ *
+ *	@param	const SHAKE_SEARCH_WORK *cp_wk ワーク
+ *	@retval TRUE終了  FALSE計測中
+ */
+//-----------------------------------------------------------------------------
+static BOOL SHAKESEARCH_IsEnd( const SHAKE_SEARCH_WORK *cp_wk )
+{ 
+  return cp_wk->is_end;
 }
 
 #ifdef DEBUG_AURA_MSG
