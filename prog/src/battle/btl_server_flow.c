@@ -8901,32 +8901,43 @@ static u8 scEvent_getHitPer( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker,
 //--------------------------------------------------------------------------
 static BOOL scEvent_IchigekiCheck( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, WazaID waza )
 {
-  BOOL ret = FALSE;
-  BTL_EVENTVAR_Push();
-    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );
-    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_DEF, BPP_GetID(defender) );
-    BTL_EVENTVAR_SetRewriteOnceValue( BTL_EVAR_FAIL_FLAG, FALSE );
-    BTL_EVENT_CallHandlers( wk, BTL_EVENT_ICHIGEKI_CHECK );
-    if( !BTL_EVENTVAR_GetValue(BTL_EVAR_FAIL_FLAG) )
-    {
-      // とくせい等による強制無効化を受けない場合、必中有効。
-      if( IsMustHit(attacker, defender) ){
-        ret = TRUE;
-      }else{
-        u8 per = WAZADATA_GetParam( waza, WAZAPARAM_HITPER );
-        u8 atLevel = BPP_GetValue( attacker, BPP_LEVEL );
-        u8 defLevel = BPP_GetValue( defender, BPP_LEVEL );
-        BTL_Printf("デフォ命中率=%d\n", per);
-        if( atLevel > defLevel )
-        {
-          per += (atLevel - defLevel);
-          ret = perOccur( wk, per );
-          BTL_Printf("レベル補正命中率=%d, hit=%d\n", per, ret);
-        }
-      }
+  u8 atkLevel = BPP_GetValue( attacker, BPP_LEVEL );
+  u8 defLevel = BPP_GetValue( defender, BPP_LEVEL );
+
+  // 攻撃側レベルが防御側レベル未満なら常に失敗
+  if( atkLevel < defLevel )
+  {
+    return FALSE;
+  }
+
+  {
+    BOOL ret = FALSE;
+    BOOL fFail = FALSE;
+
+    BTL_EVENTVAR_Push();
+      BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );
+      BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_DEF, BPP_GetID(defender) );
+      BTL_EVENTVAR_SetRewriteOnceValue( BTL_EVAR_FAIL_FLAG, FALSE );
+      BTL_EVENT_CallHandlers( wk, BTL_EVENT_ICHIGEKI_CHECK );
+      fFail = BTL_EVENTVAR_GetValue( BTL_EVAR_FAIL_FLAG );
+    BTL_EVENTVAR_Pop();
+
+    // とくせい等による強制無効化があれば失敗
+    if( fFail ){
+      return FALSE;
     }
-  BTL_EVENTVAR_Pop();
-  return ret;
+
+    if( IsMustHit(attacker, defender) ){
+      ret = TRUE;
+    }else{
+      u8 per = WAZADATA_GetParam( waza, WAZAPARAM_HITPER );
+      BTL_Printf("デフォ命中率=%d\n", per);
+      per += (atkLevel - defLevel);
+      ret = perOccur( wk, per );
+      BTL_Printf("レベル補正命中率=%d, hit=%d\n", per, ret);
+    }
+    return ret;
+  }
 }
 //--------------------------------------------------------------------------
 /**
