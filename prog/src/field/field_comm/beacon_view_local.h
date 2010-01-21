@@ -24,6 +24,10 @@
 #define PANEL_MAX   (5)   //同時描画されるパネル数
 #define PANEL_LINE_MAX    (4)   //画面内に描画されるパネル数
 
+
+///パネル文字列バッファ長
+#define BUFLEN_PANEL_MSG  (10+EOM_SIZE)
+
 //OBJリソース参照コード
 enum{
  OBJ_RES_PLTT,
@@ -52,12 +56,13 @@ enum{
 };
 
 #define ACT_PANEL_OX  (13)
-#define ACT_PANEL_OY  (8*5)
+#define ACT_PANEL_OY  (5*8)
 #define ACT_UNION_OX  (4*8)
 #define ACT_UNION_OY  (3*8)
 #define ACT_ICON_OX   (ACT_UNION_OX+28)
 #define ACT_ICON_OY   (ACT_UNION_OY)
-
+#define ACT_MSG_OX    (9*8)
+#define ACT_MSG_OY    (2*8)
 
 ///アイコンパターン数
 enum{
@@ -76,24 +81,12 @@ enum{
   ICON_MAX,
 };
 
+#define BMP_PANEL_OAM_SX  (15)
+#define BMP_PANEL_OAM_SY  (2)
+
 //==============================================================================
 //  構造体定義
 //==============================================================================
-//パネル管理構造体
-typedef struct _PANEL_WORK{
-  u8  id;
-  u8  data_idx;
-  s16 px;
-  s16 py;
-  GFL_CLWK* cPanel;
-  GFL_CLWK* cUnion;
-  GFL_CLWK* cIcon;
-  GFL_CLWK* cMsg;
-
-  struct _PANEL_WORK* next;
-  struct _PANEL_WORK* prev;
-}PANEL_WORK;
-
 //オブジェリソース管理
 typedef struct _OBJ_RES{
   u32   num;
@@ -123,6 +116,28 @@ typedef struct _RES2D_PLTT{
   void* buf;
 }RES2D_PLTT;
 
+// OAMフォントワーク
+typedef struct {
+	BMPOAM_ACT_PTR oam;
+	GFL_BMP_DATA * bmp;
+}FONT_OAM;
+
+//パネル管理構造体
+typedef struct _PANEL_WORK{
+  u8  id;
+  u8  data_idx;
+  s16 px;
+  s16 py;
+  GFL_CLWK* cPanel;
+  GFL_CLWK* cUnion;
+  GFL_CLWK* cIcon;
+  FONT_OAM  msgOam;
+	STRBUF* str;
+
+  struct _PANEL_WORK* next;
+  struct _PANEL_WORK* prev;
+}PANEL_WORK;
+
 ///すれ違い通信状態参照画面管理ワーク
 typedef struct _BEACON_VIEW{
   GAMESYS_WORK *gsys;
@@ -138,7 +153,8 @@ typedef struct _BEACON_VIEW{
   GFL_MSGDATA *mm_status;
   STRBUF *strbuf_temp;
   STRBUF *strbuf_expand;
- 
+
+  BMPOAM_SYS_PTR bmpOam;
   GFL_CLUNIT* cellUnit;
   OBJ_RES_TBL objResNormal;
   OBJ_RES_TBL objResUnion;

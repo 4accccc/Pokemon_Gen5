@@ -8,6 +8,7 @@
 //==============================================================================
 #include <gflib.h>
 #include "system/main.h"
+#include "system/bmp_oam.h"
 #include "gamesystem/gamesystem.h"
 #include "field/field_subscreen.h"
 #include "gamesystem/game_beacon.h"
@@ -461,6 +462,9 @@ static void _BeaconView_ActorCreate( BEACON_VIEW_PTR wk, ARCHANDLE *handle )
   //セル系システムの作成
   wk->cellUnit = GFL_CLACT_UNIT_Create( BEACON_VIEW_OBJ_MAX , 0 , wk->heapID );
 
+  //FontOAMシステムの作成
+  wk->bmpOam = BmpOam_Init( wk->heapID, wk->cellUnit );
+
   for(i = 0; i < PANEL_MAX;i++){
     panel_PanelObjAdd( wk, i );
   }
@@ -484,6 +488,7 @@ static void _BeaconView_ActorDelete( BEACON_VIEW_PTR wk )
   for(i = 0; i < PANEL_MAX;i++){
     panel_PanelObjDel( wk, i );
   }
+  BmpOam_Exit( wk->bmpOam );
   GFL_CLACT_UNIT_Delete( wk->cellUnit );
 }
 
@@ -621,6 +626,7 @@ static GFL_CLWK* obj_ObjAdd(
  */
 static void panel_PanelObjAdd( BEACON_VIEW_PTR wk, u8 idx )
 {
+	BMPOAM_ACT_DATA	finit;
   PANEL_WORK* pp = &(wk->panel[idx]);
 
   MI_CpuClear8( pp, sizeof(PANEL_WORK));
@@ -653,6 +659,28 @@ static void panel_PanelObjAdd( BEACON_VIEW_PTR wk, u8 idx )
     wk->objResIcon.res[OBJ_RES_CELLANIM].tbl[0],
     pp->px+ACT_ICON_OX, pp->py+ACT_ICON_OY, 0, OBJ_BG_PRI, OBJ_SPRI_ICON+idx);
 
+	pp->msgOam.bmp = GFL_BMP_Create( BMP_PANEL_OAM_SX, BMP_PANEL_OAM_SY, GFL_BMP_16_COLOR, wk->heapID );
+
+	finit.bmp = pp->msgOam.bmp;
+	finit.x = pp->px + ACT_MSG_OX;
+	finit.y = pp->py + ACT_MSG_OY;
+	finit.pltt_index = wk->objResNormal.res[OBJ_RES_PLTT].tbl[0];
+	finit.pal_offset = ACT_PAL_FONT;		// pltt_indexのパレット内でのオフセット
+	finit.soft_pri = OBJ_SPRI_MSG;			// ソフトプライオリティ
+	finit.bg_pri = OBJ_BG_PRI;				// BGプライオリティ
+	finit.setSerface = CLSYS_DEFREND_SUB;
+//	finit.setSerface = CLWK_SETSF_NONE;
+	finit.draw_type  = CLSYS_DRAW_SUB;
+
+	pp->msgOam.oam = BmpOam_ActorAdd( wk->bmpOam, &finit );
+
+  pp->str = GFL_STR_CreateBuffer( BUFLEN_PANEL_MSG, wk->heapID );
+  GFL_BMP_Clear( pp->msgOam.bmp, 1 );
+//	x = ( BOX2OBJ_FNTOAM_BOXNAME_SX * 8 - PRINTSYS_GetStrWidth( str, syswk->app->font, 0 ) ) / 2;
+//	PRINTSYS_PrintColor( syswk->app->fobj[idx].bmp, x, 0, str, syswk->app->font, FCOL_FNTOAM );
+	BmpOam_ActorBmpTrans( pp->msgOam.oam );
+
+	BmpOam_ActorSetDrawEnable( pp->msgOam.oam, TRUE );
   GFL_CLACT_WK_SetDrawEnable( pp->cPanel, TRUE );
   GFL_CLACT_WK_SetDrawEnable( pp->cUnion, TRUE );
   GFL_CLACT_WK_SetDrawEnable( pp->cIcon, TRUE );
@@ -664,6 +692,12 @@ static void panel_PanelObjAdd( BEACON_VIEW_PTR wk, u8 idx )
 static void panel_PanelObjDel( BEACON_VIEW_PTR wk, u8 idx )
 {
   PANEL_WORK* pp = &(wk->panel[idx]);
+
+  GFL_STR_DeleteBuffer( pp->str );
+
+	BmpOam_ActorSetDrawEnable( pp->msgOam.oam, FALSE );
+  BmpOam_ActorDel( pp->msgOam.oam );
+	GFL_BMP_Delete( pp->msgOam.bmp );
 
   GFL_CLACT_WK_SetDrawEnable( pp->cIcon, FALSE );
   GFL_CLACT_WK_Remove( pp->cIcon );
