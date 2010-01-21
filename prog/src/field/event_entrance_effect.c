@@ -60,10 +60,10 @@ static GMEVENT_RESULT ExitEvent_DoorOut(GMEVENT * event, int *seq, void * work)
   enum {
     SEQ_DOOROUT_INIT = 0,
     SEQ_DOOROUT_WAIT_SOUND_LOAD,
-    SEQ_DOOROUT_OPENANIME_START,
-    SEQ_DOOROUT_CAMERA_ACT,
     SEQ_DOOROUT_BGM_PLAY_START,
     SEQ_DOOROUT_FADEIN,
+    SEQ_DOOROUT_CAMERA_ACT,
+    SEQ_DOOROUT_OPENANIME_START,
     SEQ_DOOROUT_OPENANIME_WAIT,
     SEQ_DOOROUT_PLAYER_STEP,
     SEQ_DOOROUT_CLOSEANIME_START,
@@ -94,30 +94,8 @@ static GMEVENT_RESULT ExitEvent_DoorOut(GMEVENT * event, int *seq, void * work)
   case SEQ_DOOROUT_WAIT_SOUND_LOAD:
     if( PMSND_IsLoading() != TRUE )
     {
-      *seq = SEQ_DOOROUT_OPENANIME_START;
+      *seq = SEQ_DOOROUT_BGM_PLAY_START;
     }
-    break;
-
-  case SEQ_DOOROUT_OPENANIME_START:
-    fdaw->ctrl = FIELD_BMODEL_Create_Search( bmodel_man, BM_SEARCH_ID_DOOR, &fdaw->pos );
-    if (fdaw->ctrl)
-    {
-      u16 seNo;
-      FIELD_BMODEL_StartAnime( fdaw->ctrl, BMANM_INDEX_DOOR_OPEN );
-      if( FIELD_BMODEL_GetCurrentSENo( fdaw->ctrl, &seNo) )
-      {
-        PMSND_PlaySE( seNo );
-      }
-    }
-    *seq = SEQ_DOOROUT_CAMERA_ACT;
-    break;
-
-  case SEQ_DOOROUT_CAMERA_ACT:
-    if( fdaw->cam_anm_flag )
-    {
-      EVENT_CAMERA_ACT_CallDoorOutEvent( event, gsys, fieldmap );
-    }
-    *seq = SEQ_DOOROUT_BGM_PLAY_START;
     break;
 
   case SEQ_DOOROUT_BGM_PLAY_START:
@@ -143,14 +121,30 @@ static GMEVENT_RESULT ExitEvent_DoorOut(GMEVENT * event, int *seq, void * work)
       }
       GMEVENT_CallEvent( event, fade_event );
     }
-    if (fdaw->ctrl == NULL)
-    { /* エラーよけ、ドアがない場合 */
-      *seq = SEQ_DOOROUT_PLAYER_STEP;
-    } 
-    else
+    *seq = SEQ_DOOROUT_CAMERA_ACT;
+    break;
+
+  case SEQ_DOOROUT_CAMERA_ACT:
+    if( fdaw->cam_anm_flag )
     {
-      *seq = SEQ_DOOROUT_OPENANIME_WAIT;
+      EVENT_CAMERA_ACT_CallDoorOutEvent( event, gsys, fieldmap );
     }
+    *seq = SEQ_DOOROUT_OPENANIME_START;
+    break;
+
+  case SEQ_DOOROUT_OPENANIME_START:
+    fdaw->ctrl = FIELD_BMODEL_Create_Search( bmodel_man, BM_SEARCH_ID_DOOR, &fdaw->pos );
+    if (fdaw->ctrl)
+    {
+      u16 seNo;
+      FIELD_BMODEL_StartAnime( fdaw->ctrl, BMANM_INDEX_DOOR_OPEN );
+      if( FIELD_BMODEL_GetCurrentSENo( fdaw->ctrl, &seNo) )
+      {
+        PMSND_PlaySE( seNo );
+      }
+    }
+    if (fdaw->ctrl == NULL){ *seq = SEQ_DOOROUT_PLAYER_STEP; } /* エラーよけ、ドアがない場合 */
+    else{ *seq = SEQ_DOOROUT_OPENANIME_WAIT; }
     break;
 
   case SEQ_DOOROUT_OPENANIME_WAIT:
