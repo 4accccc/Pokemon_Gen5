@@ -96,16 +96,7 @@ enum
 
 	//メインOBJ
 	PLTID_OBJ_TOUCHBAR_M	= 0, // 3本使用
-	PLTID_OBJ_TYPEICON_M	= 3, // 3本使用
-  PLTID_OBJ_OAM_MAPMODEL_M = 6, // 1本使用
-  PLTID_OBJ_POKEICON_M = 7,     // 3本使用
-  PLTID_OBJ_POKEITEM_M = 10,    // 1本使用
-  PLTID_OBJ_ITEMICON_M = 11,
-  PLTID_OBJ_POKE_M = 12,
-  PLTID_OBJ_BALLICON_M = 13, // 1本使用
 	PLTID_OBJ_TOWNMAP_M	= 14,		
-	//サブOBJ
-  PLTID_OBJ_PMS_DRAW = 0, // 5本使用
 };
 
 //=============================================================================
