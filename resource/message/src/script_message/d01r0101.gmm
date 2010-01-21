@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2010-01-21T18:39:25"/>
+	<create user="matsumiya" host="W00207" date="2010-01-21T19:59:47"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -336,7 +336,7 @@
 	</lock>
 
 
-	<row id="msg_d01r0101_girl_01">
+	<row id="msg_d01r0101_girl_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<comment>♀
 ・初回会話時
 ・続けてmsg_d01r0101_girl_02表示
@@ -358,7 +358,7 @@
 じゃあ　この　[1:01:ポケモン種族名:1]は　ぴったりよ▼</language>
 	</row>
 
-	<row id="msg_d01r0101_girl_02">
+	<row id="msg_d01r0101_girl_02" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<comment>♀
 ・ポケモンをもらわずに２回目以降の会話
 ・はい/いいえの選択肢
@@ -382,7 +382,7 @@
 この　[1:01:ポケモン種族名:1]が　ほしい？</language>
 	</row>
 
-	<row id="msg_d01r0101_girl_03">
+	<row id="msg_d01r0101_girl_03" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<comment>♀
 ・はい選択、でも手持ちがいっぱい</comment>
 		<attribute name="キャラ指定">GIRL2</attribute>
@@ -396,7 +396,7 @@
 パソコンに　預けてきてね</language>
 	</row>
 
-	<row id="msg_d01r0101_girl_04">
+	<row id="msg_d01r0101_girl_04" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<comment>♀
 ・いいえ選択
 ・次回会話時はmsg_d01r0101_girl_02から</comment>
@@ -407,7 +407,7 @@
 また　話しかけてね！</language>
 	</row>
 
-	<row id="msg_d01r0101_girl_05">
+	<row id="msg_d01r0101_girl_05" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<comment>♀
 ・はい選択時
 ・自室で、みずタイプ選択時</comment>
@@ -420,7 +420,7 @@
 くさタイプに　相性　いいわよ▼</language>
 	</row>
 
-	<row id="msg_d01r0101_girl_06">
+	<row id="msg_d01r0101_girl_06" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<comment>♀
 ・はい選択時
 ・自室で、くさタイプ選択時</comment>
@@ -433,7 +433,7 @@
 ほのおタイプに　相性　いいわよ▼</language>
 	</row>
 
-	<row id="msg_d01r0101_girl_07">
+	<row id="msg_d01r0101_girl_07" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<comment>♀
 ・はい選択時
 ・自室で、ほのおタイプ選択時</comment>
@@ -446,7 +446,7 @@
 みずタイプに　相性　いいわよ▼</language>
 	</row>
 
-	<row id="msg_d01r0101_girl_08" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+	<row id="msg_d01r0101_girl_08" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<comment>0＝主人公名
 
 ※ポケモン名が未定</comment>
@@ -457,7 +457,7 @@
 ポケモンを　てにいれた！▼</language>
 	</row>
 
-	<row id="msg_d01r0101_girl_09" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+	<row id="msg_d01r0101_girl_09" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<comment>・はい／いいえの選択肢表示
 　はい　→名前入力画面に
 　いいえ→終了
@@ -469,7 +469,7 @@
 ニックネームを　つけますか？</language>
 	</row>
 
-	<row id="msg_d01r0101_girl_10">
+	<row id="msg_d01r0101_girl_10" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<comment>♀
 ・ポケモン入手後</comment>
 		<attribute name="キャラ指定">GIRL2</attribute>
@@ -481,7 +481,7 @@
 きっと　なんとか　なるわよ！</language>
 	</row>
 
-	<row id="msg_d01r0101_white_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_d01r0101_white_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・Cギア登録後に
 　いあいぎり後にPOSを踏むと画面左から登場
@@ -494,7 +494,7 @@
 不思議な　ポケモンを　探すの？▼</language>
 	</row>
 
-	<row id="msg_d01r0101_white_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_d01r0101_white_02" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・廃墟内のPOS（GRIDX=23、GRIDZ=23）を踏むと
  主人公のほうを向いてメッセージ表示</comment>
@@ -507,7 +507,7 @@
 どんな　仕組み　なのかしら？</language>
 	</row>
 
-	<row id="msg_d01r0101_white_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_d01r0101_white_03" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・廃墟内のPOS（GRIDX=25、GRIDZ=22~23）を踏んだとき
 ・主人公に隣接してメッセージ表示
@@ -524,7 +524,7 @@
 ねえねえ　行ってみようよ！▼</language>
 	</row>
 
-	<row id="msg_d01r0101_poke_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_d01r0101_poke_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<comment>ポケモン
 ・あわせて鳴き声
 ・メッセージ表示後、画面上に移動し
@@ -536,7 +536,7 @@
 		<language name="JPN_KANJI" width="256">ムンナ『……むううん▼</language>
 	</row>
 
-	<row id="msg_d01r0101_white_04" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_d01r0101_white_04" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・メッセージ表示後、画面上に移動
 ・POS（GRIDX=27、GRIDZ=15）を踏むと
@@ -547,7 +547,7 @@
 		<language name="JPN_KANJI" width="256">ホワイティ『あっ　待ってえ！▼</language>
 	</row>
 
-	<row id="msg_d01r0101_hakaiw_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,,,#80ffff,,,,,,,,,,,,,">
+	<row id="msg_d01r0101_hakaiw_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ffff,,,,,#80ffff,,,,,,,,,,,,,">
 		<comment>♀
 ・続けてhakaim_01</comment>
 		<attribute name="キャラ指定">プラズマ団♀</attribute>
@@ -555,7 +555,7 @@
 		<language name="JPN_KANJI" width="256">？？？『ムンナ　みっけ！▼</language>
 	</row>
 
-	<row id="msg_d01r0101_hakaim_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_d01r0101_hakaim_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・続けてpoke_02</comment>
 		<attribute name="キャラ指定">プラズマ団♂</attribute>
@@ -565,7 +565,7 @@
 ゆめのけむりを　だせ！▼</language>
 	</row>
 
-	<row id="msg_d01r0101_poke_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_d01r0101_poke_02" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<comment>ポケモン
 ・あわせて鳴き声
 ・メッセージ表示後、ポケモンの動作モデル左右を見る
@@ -576,7 +576,7 @@
 		<language name="JPN_KANJI" width="256">ムンナ『……むう！▼</language>
 	</row>
 
-	<row id="msg_d01r0101_white_05" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_d01r0101_white_05" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・続けてhakaim_02</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
@@ -588,7 +588,7 @@
 なに　してるの！？▼</language>
 	</row>
 
-	<row id="msg_d01r0101_hakaim_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_d01r0101_hakaim_02" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・続けてhakaiw_02</comment>
 		<attribute name="キャラ指定">プラズマ団♂</attribute>
@@ -602,7 +602,7 @@
 日夜　闘って　いるのだ▼</language>
 	</row>
 
-	<row id="msg_d01r0101_hakaiw_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,,,#80ffff,,,,,,,,,,,,,">
+	<row id="msg_d01r0101_hakaiw_02" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ffff,,,,,#80ffff,,,,,,,,,,,,,">
 		<comment>♀
 ・続けてhakaimをムンナのほうを向かせてから
 　hakaim_03表示</comment>
@@ -625,7 +625,7 @@
 そんな　夢を　みせるのよ▼</language>
 	</row>
 
-	<row id="msg_d01r0101_hakaim_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_d01r0101_hakaim_03" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・続けてwhite_06</comment>
 		<attribute name="キャラ指定">プラズマ団♂</attribute>
@@ -635,7 +635,7 @@
 ゆめのけむり　回収成功！▼</language>
 	</row>
 
-	<row id="msg_d01r0101_white_06" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_d01r0101_white_06" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・続けてhakaiw_03</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
@@ -649,7 +649,7 @@
 あなたたちも　トレーナーなんでしょ？▼</language>
 	</row>
 
-	<row id="msg_d01r0101_hakaiw_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,,,#80ffff,,,,,,,,,,,,,">
+	<row id="msg_d01r0101_hakaiw_03" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ffff,,,,,#80ffff,,,,,,,,,,,,,">
 		<comment>♀
 ・続けてhakaim_04</comment>
 		<attribute name="キャラ指定">プラズマ団♀</attribute>
@@ -667,7 +667,7 @@
 ポケモンの　すごさを　教えるため！▼</language>
 	</row>
 
-	<row id="msg_d01r0101_hakaim_04" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_d01r0101_hakaim_04" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・続けてwhite_07</comment>
 		<attribute name="キャラ指定">プラズマ団♂</attribute>
@@ -683,7 +683,7 @@
 私たちが　救い出そう！▼</language>
 	</row>
 
-	<row id="msg_d01r0101_white_07" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_d01r0101_white_07" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
 		<comment>♀
 ・メッセージ表示後、hakaimと戦闘に
 ・勝利するとフィールドに戻りhakaiw_04表示
@@ -695,7 +695,7 @@
 ちょっと　[1:00:トレーナー名:0]！▼</language>
 	</row>
 
-	<row id="msg_d01r0101_hakaiw_04" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_d01r0101_hakaiw_04" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
 ・メッセージ表示後、hakaiwと戦闘に
 ・勝利するとフィールドに戻りhakaim_05表示
@@ -711,7 +711,7 @@
 次は　ワタシだ▼</language>
 	</row>
 
-	<row id="msg_d01r0101_hakaim_05" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_d01r0101_hakaim_05" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・メッセージ表示後、画面暗転して
 　プラズマ団の動作モデルを削除
@@ -727,7 +727,7 @@
 ここには　もう　用は　ないな！▼</language>
 	</row>
 
-	<row id="msg_d01r0101_white_08" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_d01r0101_white_08" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・メッセージ表示後、移動してアイテム取得
 ・再度主人公の隣に戻りwhite_09表示
@@ -747,7 +747,7 @@
 あれ……？▼</language>
 	</row>
 
-	<row id="msg_d01r0101_white_09" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_d01r0101_white_09" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・続けてinventor_01</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
@@ -759,7 +759,7 @@
 ムンナの　ゆめのけむり！？▼</language>
 	</row>
 
-	<row id="msg_d01r0101_inventor_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+	<row id="msg_d01r0101_inventor_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<comment>♀
 ・まずメッセージだけ表示
 ・続けてマコモ登場してから
@@ -770,7 +770,7 @@
 		<language name="JPN_KANJI" width="256">わっ！▼</language>
 	</row>
 
-	<row id="msg_d01r0101_inventor_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_d01r0101_inventor_02" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<comment>♀
 ・続けてwhite_10</comment>
 		<attribute name="キャラ指定">ASSISTANTW
@@ -781,7 +781,7 @@
 あら　あなたたち　知り合い　なの？▼</language>
 	</row>
 
-	<row id="msg_d01r0101_white_10" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_d01r0101_white_10" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・続けてinventor_03</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
@@ -791,7 +791,7 @@
 これ　なんですけど……▼</language>
 	</row>
 
-	<row id="msg_d01r0101_inventor_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_d01r0101_inventor_03" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<comment>♀
 ・msg_c01r0102_inventor_05表示後と同じアニメ
 ・続けてinventor_04</comment>
@@ -801,7 +801,7 @@
 		<language name="JPN_KANJI" width="256">マコモ『なになに？▼</language>
 	</row>
 
-	<row id="msg_d01r0101_inventor_04" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_d01r0101_inventor_04" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<comment>♀
 ・メッセージ表示後、画面から退場
 ・退場後、続けてwhite_11
@@ -824,7 +824,7 @@
 あたしの　家に　来てねー！！▼</language>
 	</row>
 
-	<row id="msg_d01r0101_white_11" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_d01r0101_white_11" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・メッセージ表示後、主人公フリーに</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
@@ -842,7 +842,7 @@
 さっきの　ポケモン　探すんだから！</language>
 	</row>
 
-	<row id="msg_d01r0101_white_12" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_d01r0101_white_12" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・white_11表示以降繰り返し
 ・r03でのプラズマ団イベント発生でここから削除</comment>
