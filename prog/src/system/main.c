@@ -172,6 +172,8 @@ static	void	SkeltonHBlankFunc(void)
 //------------------------------------------------------------------
 static	void	SkeltonVBlankFunc(void)
 {
+	GFLUser_VIntr();
+
 	OS_SetIrqCheckFlag(OS_IE_V_BLANK);
 	MI_WaitDma(GX_DEFAULT_DMAID);
 }
@@ -188,7 +190,7 @@ static void GameVBlankFunc(void)
 #endif
 
 	MachineSystem_VIntr();
-	GFLUser_VIntr();
+	GFLUser_VTiming();
 
 #ifdef PM_DEBUG
 	DEBUG_PerformanceEndLine(PERFORMANCE_ID_VBLANK);

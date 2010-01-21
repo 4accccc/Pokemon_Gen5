@@ -81,6 +81,8 @@ BOOL  mcs_recv_auto;
 static void mcsRecv( void );
 #endif
 
+static GFL_USE_VINTR_FUNC GflUseVintrFunc;
+
 //=============================================================================================
 //
 //      関数
@@ -197,7 +199,7 @@ void GFLUser_Init(void)
   }
 #endif //MULTI_BOOT_MAKE
 #endif
-
+	GFUser_ResetVIntrFunc();
 }
 
 
@@ -314,6 +316,33 @@ GFL_TCB * GFUser_HIntr_CreateTCB(GFL_TCB_FUNC * func, void * work, u32 pri)
  */
 //------------------------------------------------------------------
 void GFLUser_VIntr(void)
+{
+	if(GflUseVintrFunc){ GflUseVintrFunc(); }
+}
+
+//VBlank割り込み関数の登録
+BOOL GFUser_SetVIntrFunc(GFL_USE_VINTR_FUNC func)
+{
+	if(GflUseVintrFunc){
+		GF_ASSERT(0);
+		return FALSE;
+	}
+	GflUseVintrFunc = func;
+	return TRUE;
+}
+
+//VBlank割り込み関数の解除
+void GFUser_ResetVIntrFunc(void)
+{
+	GflUseVintrFunc = NULL;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief GFライブラリ利用部分：VBlankタイミング処理
+ */
+//------------------------------------------------------------------
+void GFLUser_VTiming(void)
 {
   GFL_TCB_Main(gfl_work->TCBSysVintr);
   GFL_BG_VBlankFunc();
