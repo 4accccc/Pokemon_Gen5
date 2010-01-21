@@ -21,6 +21,7 @@ SUBDIRS	=	zonetable/zoneindex \
 					scr_cam_prm \
 					script \
 					effect \
+					special_bgm \
 					rail_data \
 					zonefog_table \
 					zonelight_table \

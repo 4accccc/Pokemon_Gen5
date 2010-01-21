@@ -1,0 +1,18 @@
+// resource/fldmapdata/special_bgm/special_bgm.rb Ç…ÇÊÇËé©ìÆê∂ê¨
+#include "sound/wb_sound_data.sadl"
+#include "../../../resource/fldmapdata/flagwork/flag_define.h"
+#include "../../../resource/fldmapdata/zonetable/zone_id.h"
+
+typedef struct
+{
+  u32 flagNo;
+  u32 zoneID;
+  u32 soundIdx;
+
+} SPECIAL_BGM;
+static const SPECIAL_BGM specialBGMTable[] = 
+{
+  {FE_PC_GOLD, ZONE_ID_R01, SEQ_BGM_SHINKA},
+  {FE_SODATE_TAMAGO, ZONE_ID_T02, SEQ_BGM_E_SUPPORT},
+  {FE_ZUKAN_GET, ZONE_ID_R02R0101, SEQ_BGM_EYE_08},
+};
