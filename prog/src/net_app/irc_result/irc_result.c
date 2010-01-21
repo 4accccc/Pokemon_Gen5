@@ -717,7 +717,7 @@ static GFL_PROC_RESULT IRC_RESULT_PROC_Init( GFL_PROC *p_proc, int *p_seq, void 
 		{	
 			comm	= GAMESYSTEM_GetGameCommSysPtr(p_wk->p_param->p_gamesys);
 		}
-		INFOWIN_Init( GFL_BG_FRAME0_M, RESULT_BG_PAL_M_15, comm, HEAPID_IRCRESULT );
+		//INFOWIN_Init( GFL_BG_FRAME0_M, RESULT_BG_PAL_M_15, comm, HEAPID_IRCRESULT );
 	}
 
 	MSGWND_Init( &p_wk->msgwnd[MSGWNDID_SUB], sc_bgcnt_frame[GRAPHIC_BG_FRAME_S_TEXT],
@@ -819,7 +819,7 @@ static GFL_PROC_RESULT IRC_RESULT_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void 
 			MSGWND_Exit( &p_wk->msgwnd[i] );
 		}
 	}
-	INFOWIN_Exit();
+	//INFOWIN_Exit();
 	GRAPHIC_Exit( &p_wk->grp );
 	MSG_Exit( &p_wk->msg );
 
@@ -914,7 +914,7 @@ static GFL_PROC_RESULT IRC_RESULT_PROC_Main( GFL_PROC *p_proc, int *p_seq, void 
 		GF_ASSERT_MSG( 0, "IRC_RESULT_PROC_Main‚ÌSEQƒGƒ‰[ %d", *p_seq );
 	}
 
-	INFOWIN_Update();
+	//INFOWIN_Update();
 	if( MSG_Main( &p_wk->msg ) )
 	{
 		int i;
@@ -2111,7 +2111,7 @@ static void OBJNUMBER_Init( OBJNUMBER_WORK *p_wk, const GRAPHIC_WORK *cp_grp, in
 				//’Êíˆ—
 				clpos.x	= 256/2 + 36 * (i-1);
 			}
-			clpos.y	= 92;
+			clpos.y	= 92 - 8;
 			GFL_CLACT_WK_SetPos( p_wk->p_clwk[i], &clpos, 0 );
 
 #ifdef OBJNUMBER_SCALE

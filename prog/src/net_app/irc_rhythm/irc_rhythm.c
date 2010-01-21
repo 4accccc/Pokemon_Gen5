@@ -906,7 +906,7 @@ static GFL_PROC_RESULT IRC_RHYTHM_PROC_Init( GFL_PROC *p_proc, int *p_seq, void 
 		{	
 			comm	= GAMESYSTEM_GetGameCommSysPtr(p_wk->p_param->p_gamesys);
 		}
-		INFOWIN_Init( INFOWIN_BG_FRAME, INFOWIN_PLT_NO, comm, HEAPID_IRCRHYTHM );
+		//INFOWIN_Init( INFOWIN_BG_FRAME, INFOWIN_PLT_NO, comm, HEAPID_IRCRHYTHM );
 	}
 	MSGWND_Init( &p_wk->msgwnd[MSGWNDID_TEXT], sc_bgcnt_frame[GRAPHIC_BG_FRAME_S_TEXT],
 			MSGWND_TEXT_X, MSGWND_TEXT_Y, MSGWND_TEXT_W, MSGWND_TEXT_H, RHYTHM_BG_PAL_S_08, HEAPID_IRCRHYTHM );
@@ -1018,7 +1018,7 @@ static GFL_PROC_RESULT IRC_RHYTHM_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void 
 			MSGWND_Exit( &p_wk->msgwnd[i] );
 		}
 	}
-	INFOWIN_Exit();
+	//INFOWIN_Exit();
 	GRAPHIC_Exit( &p_wk->grp );
 	MSG_Exit( &p_wk->msg );
 
@@ -1111,7 +1111,7 @@ static GFL_PROC_RESULT IRC_RHYTHM_PROC_Main( GFL_PROC *p_proc, int *p_seq, void 
 		GF_ASSERT_MSG( 0, "IRC_RHYTHM_PROC_Main‚ÌSEQƒGƒ‰[ %d", *p_seq );
 	}
 
-	INFOWIN_Update();
+	//INFOWIN_Update();
 	if( MSG_Main( &p_wk->msg ) )
 	{
 		int i;

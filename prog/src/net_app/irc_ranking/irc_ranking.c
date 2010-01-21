@@ -140,7 +140,7 @@ enum
 
 //余白
 #define SCROLL_MARGIN_SIZE_Y_M	(-4*GFL_BG_1CHRDOTSIZ)
-#define SCROLL_MARGIN_SIZE_Y_S	(0)
+#define SCROLL_MARGIN_SIZE_Y_S	(2*GFL_BG_1CHRDOTSIZ)
 
 #define SCROLL_REWITE_DISTANCE	(SCROLL_BAR_HEIGHT*GFL_BG_1CHRDOTSIZ)	//どのくらいの距離すすんだら張り替えて、戻すか
 #define	SCROLL_WRITE_BAR_START_M	(0)	//開始インデックス
@@ -248,7 +248,7 @@ enum
 //=====================================
 #define DRAG_MOVE_DIV_ADD_RATE				(FX32_CONST(0.04f))
 #define DRAG_MOVE_DIV_MAX							(20)
-#define DRAG_MOVE_INIT_DISTANCE				(16)
+#define DRAG_MOVE_INIT_DISTANCE				(1)
 
 
 //-------------------------------------
@@ -378,6 +378,8 @@ typedef struct
 {
 	GFL_POINT start;
 	GFL_POINT end;
+  GFL_POINT drag_start;
+  GFL_POINT drag_pos;
 	u32	flik_sync;
 	u32	release_sync;
 	u32 key_cont_sync;
@@ -416,10 +418,6 @@ typedef struct _IRC_RANKING_WORK
 	//etc
 	s16	move_new_sync;
 	u16 dummy;
-	s16 drag_add;
-	u16	drag_add_cnt;
-	BOOL drag_init;
-	GFL_POINT	drag_end;
 }IRC_RANKING_WORK;
 
 //=============================================================================
@@ -506,7 +504,7 @@ static u16 RANKING_DATA_GetExistLength( void );
 static void UI_Init( UI_WORK *p_wk, HEAPID heapID );
 static void UI_Exit( UI_WORK *p_wk );
 static void UI_Main( UI_WORK *p_wk );
-static BOOL UI_GetDrag( const UI_WORK *cp_wk, GFL_POINT *p_start, GFL_POINT *p_end, VecFx32 *p_vec );
+static BOOL UI_GetDrag( UI_WORK *p_wk, GFL_POINT *p_start, GFL_POINT *p_end, GFL_POINT *p_drag_pos );
 static BOOL UI_GetFlik( UI_WORK *p_wk, GFL_POINT *p_start, GFL_POINT *p_end, VecFx32 *p_vec, u32 *p_sync );
 static int UI_IsContKey( const UI_WORK *cp_wk, u32 *p_sync );
 //-------------------------------------
@@ -738,7 +736,7 @@ static GFL_PROC_RESULT IRC_RANKING_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void
 
 	//モジュール破棄
 	APPBAR_Exit( p_wk->p_appbar );
-	INFOWIN_Exit();
+	//INFOWIN_Exit();
 	SCROLL_Exit( &p_wk->scroll );
 	ACLR_Exit( &p_wk->aclr );
 	UI_Exit( &p_wk->ui );
@@ -779,7 +777,7 @@ static GFL_PROC_RESULT IRC_RANKING_PROC_Main( GFL_PROC *p_proc, int *p_seq, void
 	SEQ_Main( &p_wk->seq );
 
 	//情報バー
-	INFOWIN_Update();
+	//INFOWIN_Update();
 
 	//描画
 	GRAPHIC_Draw( &p_wk->grp );
@@ -1032,11 +1030,10 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
 	else
 	//タッチによる移動
 	{	
+    GFL_POINT drag_now;
 		VecFx32 dist;
 		fx32 distance;
 		u32		sync;
-		GFL_POINT	drag_end;
-		GFL_POINT	drag_start;
 
 		static const VecFx32 sc_up_norm	= 
 		{
@@ -1044,29 +1041,9 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
 		};
 
 		//ドラッグによる移動
-		if( UI_GetDrag( &p_wk->ui, &drag_start, &drag_end, &dist ) && MATH_IAbs(VEC_Mag(&dist )) > FX32_CONST(DRAG_MOVE_INIT_DISTANCE) )
+		if( UI_GetDrag( &p_wk->ui, NULL, NULL, &drag_now ) )
 		{	
-			fx32 distance;
-			s8	dir;
-			if( p_wk->drag_init == FALSE ||
-					(MATH_IAbs(MATH_IAbs(GFL_POINT_Distance( &drag_end, &drag_start )) - MATH_IAbs(GFL_POINT_Distance( &p_wk->drag_end, &drag_start ))) > DRAG_MOVE_INIT_DISTANCE ) )
-			{	
-				distance	= VEC_DotProduct( &sc_up_norm, &dist );
-				p_wk->drag_add_cnt	= 0;
-				p_wk->drag_add	= FX_Mul(distance, DRAG_MOVE_DIV_ADD_RATE);
-				dir	= p_wk->drag_add / MATH_IAbs(p_wk->drag_add);
-				p_wk->drag_add	= MATH_CLAMP( MATH_IAbs(p_wk->drag_add), FX32_ONE, MATH_IAbs(p_wk->drag_add));
-				p_wk->drag_add	*= dir;
-				p_wk->drag_end	= drag_end;
-				p_wk->drag_init	= TRUE;
-				OS_Printf( "init cnt%d add%f\n", p_wk->drag_add_cnt, FX_FX32_TO_F32(p_wk->drag_add) );
-			}
-			
-			if( p_wk->drag_add_cnt++ < DRAG_MOVE_DIV_MAX )
-			{
-				SCROLL_AddPos( &p_wk->scroll, p_wk->drag_add >> FX32_SHIFT );
-				OS_Printf( "move cnt%d add%f\n", p_wk->drag_add_cnt, FX_FX32_TO_F32(p_wk->drag_add) );
-			}
+      SCROLL_AddPos( &p_wk->scroll, -drag_now.y );
 			ACLR_Stop( &p_wk->aclr );
 		}
 		//はじきにより移動		
@@ -1074,10 +1051,6 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
 		{	
 			distance	= VEC_DotProduct( &sc_up_norm, &dist );
 			ACLR_SetAclr( &p_wk->aclr, distance, sync );
-		}
-		else
-		{	
-			p_wk->drag_init	= FALSE;
 		}
 	}
 
@@ -1341,8 +1314,7 @@ static void GRAPHIC_BG_Init( GRAPHIC_BG_WORK *p_wk, GAMESYS_WORK *p_gamesys, HEA
     { 
       p_gamecomm  = GAMESYSTEM_GetGameCommSysPtr( p_gamesys );
     }
-    INFOWIN_Init( GRAPHIC_BG_GetFrame(GRAPHIC_BG_FRAME_INFO_S),
-          RANKING_BG_PAL_S_15, p_gamecomm, HEAPID_IRCRANKING );
+    //INFOWIN_Init( GRAPHIC_BG_GetFrame(GRAPHIC_BG_FRAME_INFO_S), RANKING_BG_PAL_S_15, p_gamecomm, HEAPID_IRCRANKING );
   }
 
 
@@ -2162,7 +2134,7 @@ static void Scroll_Write( SCROLL_WORK *p_wk )
 		}
 	}
 
-	//下[画面書き込み
+	//下画面書き込み
 	for( i = SCROLL_WRITE_BAR_START_EX_S+p_wk->top_bar; i < SCROLL_WRITE_BAR_END_S+p_wk->top_bar; i++ )
 	{	
 		if( 0 <= i &&i < p_wk->data_len )
@@ -2544,11 +2516,23 @@ static void UI_Main( UI_WORK *p_wk )
 		p_wk->start.y		= y;
 		p_wk->end.x		= x;
 		p_wk->end.y		= y;
+    p_wk->drag_start.x  = x;
+    p_wk->drag_start.y  = y;
+    p_wk->drag_pos.x  = 0;
+    p_wk->drag_pos.y  = 0;
 
 		p_wk->flik_sync	= 0;
 	}
 	else if(GFL_UI_TP_GetPointCont( &x, &y ) )
 	{	
+    if( MATH_IAbs( y - p_wk->start.y ) >= DRAG_MOVE_INIT_DISTANCE )
+    {
+      p_wk->drag_pos.x  = x - p_wk->drag_start.x;
+      p_wk->drag_pos.y  = y - p_wk->drag_start.y;
+      p_wk->drag_start.x  = x;
+      p_wk->drag_start.y  = y;
+    }
+
 		p_wk->end.x		= x;
 		p_wk->end.y		= y;
 
@@ -2581,24 +2565,21 @@ static void UI_Main( UI_WORK *p_wk )
  *
  */
 //-----------------------------------------------------------------------------
-static BOOL UI_GetDrag( const UI_WORK *cp_wk, GFL_POINT *p_start, GFL_POINT *p_end, VecFx32 *p_vec )
+static BOOL UI_GetDrag( UI_WORK *p_wk, GFL_POINT *p_start, GFL_POINT *p_end, GFL_POINT *p_drag_pos )
 {	
 	if( GFL_UI_TP_GetCont() )
 	{	
 		if( p_start )
 		{	
-			*p_start	= cp_wk->start;
+			*p_start	= p_wk->start;
 		}
 		if( p_end )
 		{	
-			*p_end	= cp_wk->end;
+			*p_end	  = p_wk->end;
 		}
-		if( p_vec )
+		if( p_drag_pos )
 		{	
-			VecFx32	s, e;
-			VEC_Set( &s, FX32_CONST( cp_wk->start.x ), FX32_CONST( cp_wk->start.y ), 0 );
-			VEC_Set( &e, FX32_CONST( cp_wk->end.x ), FX32_CONST( cp_wk->end.y ), 0 );
-			VEC_Subtract( &s, &e, p_vec );
+      *p_drag_pos = p_wk->drag_pos;
 		}
 		return TRUE;
 	}

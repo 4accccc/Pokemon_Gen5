@@ -151,7 +151,7 @@ enum{
 #define	MSGWND_MSG_H	(5)
 
 #define	MSGWND_GAME_X	(3)
-#define	MSGWND_GAME_Y	(4)
+#define	MSGWND_GAME_Y	(2)
 #define	MSGWND_GAME_W	(26)
 #define	MSGWND_GAME_H	(5)
 
@@ -532,7 +532,6 @@ static void BGMOVE_Start( BGMOVE_WORK *p_wk );
 //汎用
 static void MainModules( IRC_MENU_MAIN_WORK *p_wk );
 static BOOL TP_GetRectTrg( const BUTTON_SETUP *cp_btn );
-
 //加速度
 static void PROGVAL_VEL_Init( PROGVAL_VELOCITY_WORK* p_wk, int start, int end, int sync );
 static BOOL	PROGVAL_VEL_Main( PROGVAL_VELOCITY_WORK* p_wk );
@@ -709,7 +708,7 @@ static GFL_PROC_RESULT IRC_MENU_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p
 		{	
 			comm	= GAMESYSTEM_GetGameCommSysPtr(p_wk->p_param->p_gamesys);
 		}
-		INFOWIN_Init( sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_INFOWIN], IRC_MENU_BG_PAL_M_05, comm, HEAPID_IRCCOMPATIBLE );
+		//INFOWIN_Init( sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_INFOWIN], IRC_MENU_BG_PAL_M_05, comm, HEAPID_IRCCOMPATIBLE );
 	}
 	
 	BUTTON_Init( &p_wk->btn, sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_BTN],
@@ -806,7 +805,7 @@ static GFL_PROC_RESULT IRC_MENU_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void *p
 
 	MSGWND_Exit( &p_wk->msgtitle );
 	MSGWND_Exit( &p_wk->msgwnd );
-	INFOWIN_Exit();
+	//INFOWIN_Exit();
 	GRAPHIC_BG_Exit( &p_wk->bg );
 	GRAPHIC_Exit( &p_wk->grp );
 	MSG_Exit( &p_wk->msg );
@@ -2227,7 +2226,7 @@ static void SEQFUNC_SceneError( IRC_MENU_MAIN_WORK *p_wk, u16 *p_seq )
 //-----------------------------------------------------------------------------
 static void MainModules( IRC_MENU_MAIN_WORK *p_wk )
 {	
-	INFOWIN_Update();
+	//INFOWIN_Update();
 
 	//メッセージ処理
 	if( MSG_Main( &p_wk->msg ) )
