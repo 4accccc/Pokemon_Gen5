@@ -17,7 +17,7 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\be_se_012_ball_up.spa
 SE再生	SEQ_SE_BE_SE_12	SE1	0	0	127	0	0
 SEパン	SE1	追従	攻撃側	攻撃側	0	60:0:0
 制御モード変更	逐次
-パーティクル再生（正射影）	be_se_012_ball_up	BE_SE_012_BALL_UP_SE_012_BALL_UP	攻撃側	方向無し	0:0:0	2:1:2	1
+パーティクル再生（正射影）	be_se_012_ball_up	BE_SE_012_BALL_UP_SE_012_BALL_UP	攻撃側	方向無し	0:0:0	0.5:1:0.5	1
 エフェクト終了待ち	すべて
 エフェクト終了
 &

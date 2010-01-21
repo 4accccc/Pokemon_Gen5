@@ -15,7 +15,7 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\be_se_002_doku_bub.spa
 SE再生	SEQ_SE_BE_SE_02	SE1	25	0	127	0	0
 SEパン	SE1	追従	攻撃側	攻撃側	0	60:0:0
 制御モード変更	逐次
-パーティクル再生（正射影）	be_se_002_doku_bub	BE_SE_002_DOKU_BUB_SE_002_DOKU_BUB	攻撃側	方向無し	0:2:0	2:1:2	1
+パーティクル再生（正射影）	be_se_002_doku_bub	BE_SE_002_DOKU_BUB_SE_002_DOKU_BUB	攻撃側	方向無し	0:2:0	0.5:1:0.5	1
 エフェクト終了待ち	すべて
 エフェクト終了
 &

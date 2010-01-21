@@ -17,7 +17,7 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\w_240.spa
 %00
 BGのパレットフェード	お盆＋フィールド	0	10	2	0:0:0
 パーティクルデータロード	w_240
-パーティクル再生（正射影）	w_240	W_240_240_RAIN_SHOWER	POS_AA	方向無し	0:2:0	2:1:2	1
+パーティクル再生（正射影）	w_240	W_240_240_RAIN_SHOWER	POS_AA	方向無し	0:2:0	0.5:1:0.5	1
 制御モード変更	継続
 SE再生	SEQ_SE_BE_SE_017	SE1	0	0	100	0	0
 SEパン	SE1	追従	攻撃側	攻撃側	0	60:0:0
