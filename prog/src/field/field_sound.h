@@ -71,11 +71,5 @@ extern void FSND_ChangeBGM_byPlayerFormChange( FIELD_SOUND* fieldSound,
 // 指定したフィールド上で再生すべき BGM No.
 extern u32 FSND_GetFieldBGM( GAMEDATA* gdata, u32 zoneID ); 
 
-// ゾーンチェンジ時に再生すべき BGM No.
-extern u32 FSND_GetZoneChangeBGM( GAMEDATA* gdata, u32 prevZoneID, u32 nextZoneID );
-
-// マップチェンジ時に再生すべき BGM No.
-extern u32 FSND_GetMapChangeBGM( GAMEDATA* gdata, u32 prevZoneID, u32 nextZoneID );
-
 // トレーナー視線 BGM No.
 extern u32 FSND_GetTrainerEyeBGM( u32 trType ); 

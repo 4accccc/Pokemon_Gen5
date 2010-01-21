@@ -30,10 +30,8 @@
 static PLAYER_MOVE_FORM GetPlayerMoveForm( GAMEDATA* gameData );
 // BGM 番号取得
 static u32 GetZoneBGM( GAMEDATA* gameData, u32 zoneID );
-static u32 GetFieldBGM( GAMEDATA* gameData, u32 zoneID );
-static u32 GetZoneChangeBGM( GAMEDATA* gameData, u32 prevZoneID, u32 nextZoneID );
-static u32 GetMapChangeBGM( GAMEDATA* gameData, u32 prevZoneID, u32 nextZoneID ); 
 static u32 GetSpecialBGM( GAMEDATA* gameData, u32 zoneID );
+static u32 GetFieldBGM( GAMEDATA* gameData, u32 zoneID );
 
 
 //=================================================================================
@@ -659,25 +657,30 @@ GMEVENT* EVENT_FSND_WaitBGMFade( GAMESYS_WORK* gameSystem )
 void FSND_ChangeBGM_byZoneChange( FIELD_SOUND* fieldSound, GAMEDATA* gameData, 
                                   u16 prevZoneID, u16 nextZoneID )
 {
-  u32 soundIdx;
+  u32 nextSoundIdx, prevSoundIdx;
   u16 fadeOutFrame, fadeInFrame;
 
-  soundIdx = GetZoneChangeBGM( gameData, prevZoneID, nextZoneID ); 
+  // 前後のゾーンのBGMを取得
+  prevSoundIdx = GetSpecialBGM( gameData, prevZoneID );
+  nextSoundIdx = GetSpecialBGM( gameData, nextZoneID );
+  if( prevSoundIdx == SPECIAL_BGM_NONE ){ prevSoundIdx = GetZoneBGM( gameData, prevZoneID ); }
+  if( nextSoundIdx == SPECIAL_BGM_NONE ){ nextSoundIdx = GetZoneBGM( gameData, nextZoneID ); }
+  if( prevSoundIdx == nextSoundIdx ){ return; }  // 前後のゾーンでBGMが変化しない
 
   // フェード フレーム数を決定
   if( GetPlayerMoveForm(gameData) == PLAYER_MOVE_FORM_CYCLE )
   { // 自転車
     fadeOutFrame = FSND_FADE_NORMAL;
-    fadeInFrame = FSND_FADE_NORMAL;
+    fadeInFrame  = FSND_FADE_NORMAL;
   }
   else
   { // 歩き
     fadeOutFrame = FSND_FADE_NORMAL;
-    fadeInFrame = FSND_FADE_NONE;
+    fadeInFrame  = FSND_FADE_NONE;
   }
 
   // リクエスト登録
-  FIELD_SOUND_RegisterRequest_CHANGE( fieldSound, soundIdx, fadeOutFrame, fadeInFrame );
+  FIELD_SOUND_RegisterRequest_CHANGE( fieldSound, nextSoundIdx, fadeOutFrame, fadeInFrame );
 }
 
 //---------------------------------------------------------------------------------
@@ -693,12 +696,16 @@ void FSND_ChangeBGM_byZoneChange( FIELD_SOUND* fieldSound, GAMEDATA* gameData,
 void FSND_StandByNextMapBGM( FIELD_SOUND* fieldSound, GAMEDATA* gameData, 
                              u16 prevZoneID, u16 nextZoneID )
 {
-  u32 soundIdx;
+  u32 nextSoundIdx, prevSoundIdx;
 
-  soundIdx = GetMapChangeBGM( gameData, prevZoneID, nextZoneID ); 
+  // 前後のゾーンのBGMを取得
+  prevSoundIdx = GetSpecialBGM( gameData, prevZoneID );
+  nextSoundIdx = GetSpecialBGM( gameData, nextZoneID );
+  if( prevSoundIdx == SPECIAL_BGM_NONE ){ prevSoundIdx = GetZoneBGM( gameData, prevZoneID ); }
+  if( nextSoundIdx == SPECIAL_BGM_NONE ){ nextSoundIdx = GetZoneBGM( gameData, nextZoneID ); }
 
   // リクエスト登録
-  FIELD_SOUND_RegisterRequest_STAND_BY( fieldSound, soundIdx, FSND_FADE_NORMAL );
+  FIELD_SOUND_RegisterRequest_STAND_BY( fieldSound, nextSoundIdx, FSND_FADE_NORMAL );
 }
 
 //---------------------------------------------------------------------------------
@@ -752,38 +759,6 @@ void FSND_ChangeBGM_byPlayerFormChange( FIELD_SOUND* fieldSound,
 u32 FSND_GetFieldBGM( GAMEDATA* gameData, u32 zoneID )
 {
   return GetFieldBGM( gameData, zoneID );
-}
-
-//---------------------------------------------------------------------------------
-/**
- * @brief ゾーンチェンジ時に再生すべきBGM No.
- *
- * @param gameData
- * @param prevZoneID チェンジ前のゾーンID
- * @param nextZoneID チェンジ後のゾーンID
- *
- * @return 指定したゾーン間をまたいだ時に再生すべきBGM
- */
-//---------------------------------------------------------------------------------
-u32 FSND_GetZoneChangeBGM( GAMEDATA* gdata, u32 prevZoneID, u32 nextZoneID )
-{
-  return GetZoneChangeBGM( gdata, prevZoneID, nextZoneID );
-}
-
-//---------------------------------------------------------------------------------
-/**
- * @brief マップチェンジ時に再生すべきBGM No.
- *
- * @param gameData
- * @param prevZoneID チェンジ前のゾーンID
- * @param nextZoneID チェンジ後のゾーンID
- *
- * @return 指定したゾーン間のマップ切り替え時に再生すべきBGM
- */
-//---------------------------------------------------------------------------------
-u32 FSND_GetMapChangeBGM( GAMEDATA* gdata, u32 prevZoneID, u32 nextZoneID )
-{
-  return GetMapChangeBGM( gdata, prevZoneID, nextZoneID );
 }
 
 //---------------------------------------------------------------------------------
@@ -851,111 +826,11 @@ static u32 GetZoneBGM( GAMEDATA* gameData, u32 zoneID )
   u32 soundIdx;
   u8 seasonID;
 
-  // 特殊BGM
-  soundIdx = GetSpecialBGM( gameData, zoneID );
-
-  // 通常BGM
-  if( soundIdx == SPECIAL_BGM_NONE )
-  {
-    seasonID = GAMEDATA_GetSeasonID( gameData );
-    soundIdx = ZONEDATA_GetBGMID( zoneID, seasonID );
-  }
+  seasonID = GAMEDATA_GetSeasonID( gameData );
+  soundIdx = ZONEDATA_GetBGMID( zoneID, seasonID );
 
   return soundIdx;
 }
-
-//---------------------------------------------------------------------------------
-/**
- * @brief 指定ゾーンにおける, 再生すべきBGMを取得する
- *
- * @param gameData
- * @param zoneID
- *
- * @return 指定したゾーンで再生すべきBGM
- */
-//---------------------------------------------------------------------------------
-static u32 GetFieldBGM( GAMEDATA* gameData, u32 zoneID )
-{
-  u32 soundIdx;
-  PLAYER_MOVE_FORM playerForm;
-  FIELD_SOUND* fieldSound;
-
-  playerForm = GetPlayerMoveForm( gameData );
-  fieldSound = GAMEDATA_GetFieldSound( gameData );
-
-  // なみのり
-  if( playerForm == PLAYER_MOVE_FORM_SWIM ){ soundIdx = SEQ_BGM_NAMINORI; } 
-  // 自転車
-  else if( playerForm == PLAYER_MOVE_FORM_CYCLE ){ soundIdx = SEQ_BGM_BICYCLE; }
-  // 歩き
-  else{ soundIdx = GetZoneBGM( gameData, zoneID ); }
-
-  return soundIdx;
-}
-
-//---------------------------------------------------------------------------------
-/**
- * @brief ゾーンチェンジ時における, 再生すべきBGMを取得する
- *
- * @param gameData
- * @param prevZoneID チェンジ前のゾーンID
- * @param nextZoneID チェンジ後のゾーンID
- *
- * @return 指定したゾーンをまたいだ時に再生すべきBGM
- */
-//---------------------------------------------------------------------------------
-static u32 GetZoneChangeBGM( GAMEDATA* gameData, u32 prevZoneID, u32 nextZoneID )
-{
-  u32 soundIdx;
-  PLAYER_MOVE_FORM playerForm;
-
-  playerForm = GetPlayerMoveForm( gameData );
-
-  // 自転車に乗っている
-  if( playerForm == PLAYER_MOVE_FORM_CYCLE )
-  {
-    u32 prevZoneBGM, nextZoneBGM;
-
-    prevZoneBGM = GetZoneBGM( gameData, prevZoneID );
-    nextZoneBGM = GetZoneBGM( gameData, nextZoneID );
-
-    if( prevZoneBGM == nextZoneBGM ){ soundIdx = SEQ_BGM_BICYCLE; }
-    else{ soundIdx = nextZoneBGM; }
-  }
-  else
-  {
-    soundIdx = GetFieldBGM( gameData, nextZoneID );
-  }
-
-  return soundIdx;
-}
-
-//---------------------------------------------------------------------------------
-/**
- * @brief マップチェンジ時における, 再生すべきBGMを取得する
- *
- * @param gameData
- * @param prevZoneID チェンジ前のゾーンID
- * @param nextZoneID チェンジ後のゾーンID
- *
- * @return 指定したゾーンをマップチェンジした時に再生すべきBGM
- */
-//---------------------------------------------------------------------------------
-static u32 GetMapChangeBGM( GAMEDATA* gameData, u32 prevZoneID, u32 nextZoneID )
-{
-  u32 soundIdx;
-
-  soundIdx = GetZoneChangeBGM( gameData, prevZoneID, nextZoneID );
-
-  // 次のマップが自転車に乗れない場所
-  if( (soundIdx == SEQ_BGM_BICYCLE) &&
-      (ZONEDATA_BicycleEnable(nextZoneID) == FALSE) )
-  {
-    soundIdx = GetZoneBGM( gameData, nextZoneID );
-  }
-
-  return soundIdx;
-} 
 
 //---------------------------------------------------------------------------------
 /**
@@ -978,6 +853,7 @@ static u32 GetSpecialBGM( GAMEDATA* gameData, u32 zoneID )
   // 検索
   for( i=0; i<NELEMS(specialBGMTable); i++)
   {
+    // 発見
     if( (specialBGMTable[i].zoneID == zoneID) &&
         (EVENTWORK_CheckEventFlag(eventWork, specialBGMTable[i].flagNo) == TRUE) )
     {
@@ -987,4 +863,37 @@ static u32 GetSpecialBGM( GAMEDATA* gameData, u32 zoneID )
 
   // 一致なし
   return SPECIAL_BGM_NONE;
+}
+
+//---------------------------------------------------------------------------------
+/**
+ * @brief 指定ゾーンにおける, 再生すべきBGMを取得する
+ *
+ * @param gameData
+ * @param zoneID
+ *
+ * @return 指定したゾーンで再生すべきBGM
+ */
+//---------------------------------------------------------------------------------
+static u32 GetFieldBGM( GAMEDATA* gameData, u32 zoneID )
+{
+  u32 soundIdx;
+  PLAYER_MOVE_FORM playerForm;
+  FIELD_SOUND* fieldSound;
+
+  playerForm = GetPlayerMoveForm( gameData );
+  fieldSound = GAMEDATA_GetFieldSound( gameData );
+
+  // 特殊BGMを取得
+  soundIdx = GetSpecialBGM( gameData, zoneID );
+
+  // 特殊BGMが無い
+  if( soundIdx == SPECIAL_BGM_NONE )
+  {
+    if( playerForm == PLAYER_MOVE_FORM_SWIM ){ soundIdx = SEQ_BGM_NAMINORI; }      // なみのり
+    else if( playerForm == PLAYER_MOVE_FORM_CYCLE ){ soundIdx = SEQ_BGM_BICYCLE; } // 自転車
+    else{ soundIdx = GetZoneBGM( gameData, zoneID ); }                             // 歩き
+  } 
+
+  return soundIdx;
 }
