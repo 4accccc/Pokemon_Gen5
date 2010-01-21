@@ -5224,7 +5224,8 @@ static void handler_Nemuru_exeCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
     SV_WazaFailCause  cause = BTL_EVENTVAR_GetValue( BTL_EVAR_FAIL_CAUSE );
-    if( cause == SV_WAZAFAIL_NULL ){
+    if( cause == SV_WAZAFAIL_NULL )
+    {
       const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
 
       if( BPP_CheckSick(bpp, WAZASICK_KAIHUKUHUUJI) )
@@ -5253,6 +5254,17 @@ static void handler_Nemuru( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk,
     {
       BTL_HANDEX_PARAM_RECOVER_HP    *hp_param;
       BTL_HANDEX_PARAM_ADD_SICK      *sick_param;
+
+    // Šî–{ó‘ÔˆÙí‚Í‘S‚ÄŽ¡‚·
+      if( BPP_GetPokeSick(bpp) != POKESICK_NULL )
+      {
+        BTL_HANDEX_PARAM_CURE_SICK     *cure_param;
+        cure_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CURE_SICK, pokeID );
+        cure_param->sickCode = WAZASICK_EX_POKEFULL;
+        cure_param->pokeID[0] = pokeID;
+        cure_param->poke_cnt = 1;
+        cure_param->fStdMsgDisable = TRUE;
+      }
 
       sick_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_SICK, pokeID );
       sick_param->poke_cnt = 1;
