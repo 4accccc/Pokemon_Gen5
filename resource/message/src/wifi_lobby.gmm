@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohno" host="W00141" date="2010-01-20T17:10:37"/>
+	<create user="ohno" host="W00141" date="2010-01-21T18:44:20"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1185,6 +1185,13 @@ TVトランシーバをしますか？</language>
 カメラを　つかえるように　するには
 ほんたいせっていにもどり[BE:00:ページ切り替え（行送り）]
 せいげんを　かいじょ　してください</language>
+	</row>
+
+	<row id="msg_wifilobby_1013" back-color=",,,,,,#808080,#808080,,#808080,#808080,,,,,,,">
+		<language name="JPN" width="216">こうかん　するには　ポケモンが
+２ひき　いじょう　ひつようです</language>
+		<language name="JPN_KANJI" width="216">こうかん　するには　ポケモンが
+２ひき　いじょう　ひつようです</language>
 	</row>
 
 	<flowchart-group-list>

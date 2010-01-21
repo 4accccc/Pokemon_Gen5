@@ -25,8 +25,8 @@ typedef struct {
 #define _X8(a)  (a)*8
 
 
-#define _WIFIMAIN_GSYNC_ST_X (8)
-#define _WIFIMAIN_GSYNC_ST_Y (0x0a)
+#define _WIFIMAIN_GSYNC_ST_X (11)
+#define _WIFIMAIN_GSYNC_ST_Y (0x0c)
 #define _WIFIMAIN_GSYNC_WIDTH (16)
 #define _WIFIMAIN_GSYNC_HEIGHT (5)
 
@@ -42,7 +42,7 @@ typedef struct {
 
 static _WINDOWPOS wind_wifi[]={
   {    _WIFIMAIN_GSYNC_ST_X  ,    _WIFIMAIN_GSYNC_ST_Y, _WIFIMAIN_GSYNC_WIDTH,  _WIFIMAIN_GSYNC_HEIGHT},
-  {    _WIFIMAIN_SETTING_ST_X  ,    _WIFIMAIN_SETTING_ST_Y, _WIFIMAIN_SETTING_WIDTH,  _WIFIMAIN_SETTING_HEIGHT},
+//  {    _WIFIMAIN_SETTING_ST_X  ,    _WIFIMAIN_SETTING_ST_Y, _WIFIMAIN_SETTING_WIDTH,  _WIFIMAIN_SETTING_HEIGHT},
 };
 
 static const GFL_UI_TP_HITTBL btn_wifi[] = {
@@ -62,7 +62,7 @@ static const GFL_UI_TP_HITTBL btn_wifi[] = {
 
 //ボタンのパレット場所
 static u8 Btn_PalettePos[] =
-{ 6, 7 };  //
+{ 6, 7,  8 };  //
 
 
 //ボタンのパレット変化テーブル

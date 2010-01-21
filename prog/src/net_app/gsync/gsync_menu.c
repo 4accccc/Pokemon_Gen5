@@ -151,7 +151,7 @@ struct _GAMESYNC_MENU {
   APP_TASKMENU_WORK* pAppTask;
   APP_TASKMENU_ITEMWORK appitem[_SUBMENU_LISTMAX];
 	APP_TASKMENU_RES* pAppTaskRes;
-  APP_TASKMENU_WIN_WORK* pAppWin;
+//  APP_TASKMENU_WIN_WORK* pAppWin;
   EVENT_GSYNC_WORK * dbw;
   int windowNum;
   GAMEDATA* gamedata;
@@ -379,8 +379,8 @@ static void _modeButtonFlash(GAMESYNC_MENU* pWork)
 
   if( pWork->anmCnt >= APP_TASKMENU_ANM_CNT )
   {
-    APP_TASKMENU_WIN_Delete( pWork->pAppWin );
-    pWork->pAppWin = NULL;
+//    APP_TASKMENU_WIN_Delete( pWork->pAppWin );
+ //   pWork->pAppWin = NULL;
 
     if(WIRELESSSAVE_ON == CONFIG_GetWirelessSaveMode(SaveData_GetConfig(pWork->dbw->ctrl))){
       _CHANGE_STATE(pWork, _modeReportInit);
@@ -568,7 +568,7 @@ static void _modeInit(GAMESYNC_MENU* pWork)
 static void _modeSelectMenuInit(GAMESYNC_MENU* pWork)
 {
 
-  int aMsgBuff[]={GAMESYNC_001,GAMESYNC_002};
+  int aMsgBuff[]={GAMESYNC_001};
 
   _buttonWindowCreate(NELEMS(aMsgBuff), aMsgBuff, pWork,wind_wifi);
 
@@ -637,8 +637,8 @@ static void _hitAnyKey(GAMESYNC_MENU* pWork)
   }
 	if(GFL_UI_TP_GetTrg()){
     _infoMessageEnd(pWork);
-    APP_TASKMENU_WIN_Delete( pWork->pAppWin );
-    pWork->pAppWin = NULL;
+//    APP_TASKMENU_WIN_Delete( pWork->pAppWin );
+//    pWork->pAppWin = NULL;
 		_CHANGE_STATE(pWork, _modeSelectMenuInit); //戻る
 	}
 }
@@ -652,8 +652,25 @@ static void _hitAnyKey(GAMESYNC_MENU* pWork)
 
 static void _modeAppWinFlash(GAMESYNC_MENU* pWork)
 {
-  if(APP_TASKMENU_WIN_IsFinish(pWork->pAppWin)){
-    _CHANGE_STATE(pWork,_modeFadeoutStart);        // 終わり
+    //決定時アニメ
+  int pltNo = Btn_PalettePos[pWork->bttnid];
+  const u8 isBlink = (pWork->anmCnt/APP_TASKMENU_ANM_INTERVAL)%2;
+  if( isBlink == 0 )
+  {
+    NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_2D_BG_PLTT_SUB ,
+                                        pltNo * 32 ,
+                                        &pWork->BackupPalette[32*pltNo] , 32 );
+  }
+  else
+  {
+    NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_2D_BG_PLTT_SUB ,
+                                        pltNo * 32 ,
+                                        &pWork->LightPalette[32*pltNo] , 32 );
+  }
+  pWork->anmCnt++;
+  if( pWork->anmCnt >= APP_TASKMENU_ANM_CNT )
+  {
+    _CHANGE_STATE(pWork, _modeFadeoutStart);        // 終わり
   }
 }
 
@@ -696,7 +713,7 @@ static BOOL _modeSelectMenuButtonCallback(int bttnid,GAMESYNC_MENU* pWork)
     break;
   case _SELECTMODE_EXIT:
 		PMSND_PlaySystemSE(SEQ_SE_CANCEL1);
-    APP_TASKMENU_WIN_SetDecide(pWork->pAppWin, TRUE);
+//    APP_TASKMENU_WIN_SetDecide(pWork->pAppWin, TRUE);
     pWork->selectType = GAMESYNC_RETURNMODE_NONE;
     _CHANGE_STATE(pWork,_modeAppWinFlash);        // 終わり
     break;
@@ -819,6 +836,7 @@ static void _YesNoStart(GAMESYNC_MENU* pWork)
 
 static void _ReturnButtonStart(GAMESYNC_MENU* pWork)
 {
+#if 0
   int i;
 
   pWork->appitem[0].str = GFL_STR_CreateBuffer(100, pWork->heapID);
@@ -826,10 +844,10 @@ static void _ReturnButtonStart(GAMESYNC_MENU* pWork)
   pWork->appitem[0].msgColor = APP_TASKMENU_ITEM_MSGCOLOR;
   pWork->appitem[0].type = APP_TASKMENU_WIN_TYPE_RETURN;
 
-  pWork->pAppWin =APP_TASKMENU_WIN_Create( pWork->pAppTaskRes,
-                                           pWork->appitem, 32-10, 24-4, 10, pWork->heapID);
+ // pWork->pAppWin =APP_TASKMENU_WIN_Create( pWork->pAppTaskRes,
+               //                            pWork->appitem, 32-10, 24-4, 10, pWork->heapID);
   GFL_STR_DeleteBuffer(pWork->appitem[0].str);
-
+#endif
 }
 
 //------------------------------------------------------------------------------
@@ -1101,6 +1119,7 @@ static GFL_PROC_RESULT GameSyncMenuProcInit( GFL_PROC * proc, int * seq, void * 
       APP_TASKMENU_RES_Create( GFL_BG_FRAME1_S, _SUBLIST_NORMAL_PAL,
                                pWork->pFontHandle, pWork->SysMsgQue, pWork->heapID  );
 
+    G2S_SetBlendAlpha( GX_BLEND_PLANEMASK_BG2, GX_BLEND_PLANEMASK_BG0 , 15, 4 );
 		WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEIN , WIPE_TYPE_FADEIN , 
 									WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
 		_CHANGE_STATE(pWork,_modeSelectMenuInit);
@@ -1130,9 +1149,9 @@ static GFL_PROC_RESULT GameSyncMenuProcMain( GFL_PROC * proc, int * seq, void * 
   if(pWork->pAppTask){
     APP_TASKMENU_UpdateMenu(pWork->pAppTask);
   }
-  if(pWork->pAppWin){
-    APP_TASKMENU_WIN_Update( pWork->pAppWin );
-  }
+//  if(pWork->pAppWin){
+//    APP_TASKMENU_WIN_Update( pWork->pAppWin );
+//  }
   if(GFL_NET_IsInit()){
     pWork->bitold =  pWork->bit;
     pWork->bit = WIH_DWC_GetAllBeaconTypeBit();
@@ -1169,9 +1188,9 @@ static GFL_PROC_RESULT GameSyncMenuProcEnd( GFL_PROC * proc, int * seq, void * p
   if(pWork->infoDispWin){
     GFL_BMPWIN_Delete(pWork->infoDispWin);
   }
-  if(pWork->pAppWin){
-    APP_TASKMENU_WIN_Delete(pWork->pAppWin);
-  }
+//  if(pWork->pAppWin){
+//    APP_TASKMENU_WIN_Delete(pWork->pAppWin);
+//  }
 
   APP_TASKMENU_RES_Delete( pWork->pAppTaskRes );
 

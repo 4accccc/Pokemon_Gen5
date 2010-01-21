@@ -141,7 +141,9 @@ enum _IBMODE_SELECT {
   _SELECTMODE_POKE_CHANGE,
 	_SELECTMODE_COMPATIBLE,	//相性チェック
   _SELECTMODE_FRIENDCODE,
-  _SELECTMODE_EXIT
+  _SELECTMODE_EXIT,
+  _SELECTMODE_BATTLE2,
+  _SELECTMODE_POKE_CHANGE2,
 };
 
 enum _IBMODE_ENTRY {
@@ -372,7 +374,7 @@ static void _createSubBg(IRC_BATTLE_MENU* pWork)
  * @brief   メッセージの画面消去
  * @retval  none
  */
-//------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
 
 static void _infoMessageDispClear(IRC_BATTLE_MENU* pWork)
 {
@@ -428,8 +430,8 @@ static BOOL _flashDispAndCheck(IRC_BATTLE_MENU* pWork,u8* btnplt)
                                         pltNo * 32 ,
                                         &pWork->BackupPalette[32*pltNo] , 32 );
     pWork->anmCnt=0;
-    APP_TASKMENU_WIN_Delete( pWork->pAppWin );
-    pWork->pAppWin = NULL;
+//    APP_TASKMENU_WIN_Delete( pWork->pAppWin );
+//    pWork->pAppWin = NULL;
     return TRUE;
   }
   return FALSE;
@@ -763,7 +765,7 @@ static void _modeFadeoutStart(IRC_BATTLE_MENU* pWork)
 
 static void _modeAppWinFlash(IRC_BATTLE_MENU* pWork)
 {
-  if(APP_TASKMENU_WIN_IsFinish(pWork->pAppWin)){
+  if( _flashDispAndCheck( pWork , Btn_PalettePos) ){
     _CHANGE_STATE(pWork,_modeFadeoutStart);        // 終わり
   }
 }
@@ -807,12 +809,14 @@ static BOOL _modeSelectMenuButtonCallback(int bttnid,IRC_BATTLE_MENU* pWork)
   pWork->bttnid=bttnid;
   switch( bttnid ){
   case _SELECTMODE_BATTLE:
+  case _SELECTMODE_BATTLE2:
 		PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
     _CHANGE_STATE(pWork,_modeButtonFlash);
     pWork->selectType = EVENTIRCBTL_ENTRYMODE_SINGLE;
     ret = TRUE;
     break;
   case _SELECTMODE_POKE_CHANGE:
+  case _SELECTMODE_POKE_CHANGE2:
 		PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
     pWork->selectType = EVENTIRCBTL_ENTRYMODE_TRADE;
     _CHANGE_STATE(pWork,_modeButtonFlash);
@@ -832,7 +836,7 @@ static BOOL _modeSelectMenuButtonCallback(int bttnid,IRC_BATTLE_MENU* pWork)
     break;
   case _SELECTMODE_EXIT:
 		PMSND_PlaySystemSE(SEQ_SE_CANCEL1);
-    APP_TASKMENU_WIN_SetDecide(pWork->pAppWin, TRUE);
+//    APP_TASKMENU_WIN_SetDecide(pWork->pAppWin, TRUE);
     pWork->selectType = EVENTIRCBTL_ENTRYMODE_EXIT;
     _CHANGE_STATE(pWork,_modeAppWinFlash);        // 終わり
     break;
@@ -913,9 +917,7 @@ static void _modeSelectEntryButtonFlash(IRC_BATTLE_MENU* pWork)
 
 static void _modeAppWinFlash2(IRC_BATTLE_MENU* pWork)
 {
-  if(APP_TASKMENU_WIN_IsFinish(pWork->pAppWin)){
-    APP_TASKMENU_WIN_Delete(pWork->pAppWin);
-    pWork->pAppWin = NULL;
+  if( _flashDispAndCheck( pWork , Btn_PalettePos) ){
     _CHANGE_STATE(pWork,_modeSelectMenuInit);        // モード選択にもどる
   }
 }
@@ -945,7 +947,7 @@ static BOOL _modeSelectEntryNumButtonCallback(int bttnid,IRC_BATTLE_MENU* pWork)
     break;
   case _ENTRYNUM_EXIT:
 		PMSND_PlaySystemSE(SEQ_SE_CANCEL1);
-    APP_TASKMENU_WIN_SetDecide(pWork->pAppWin, TRUE);
+//    APP_TASKMENU_WIN_SetDecide(pWork->pAppWin, TRUE);
     pWork->selectType = EVENTIRCBTL_ENTRYMODE_EXIT;
     _CHANGE_STATE(pWork,_modeAppWinFlash2);        // 終わり
     break;
@@ -1004,10 +1006,7 @@ static void _modeSelectBattleTypeButtonFlash(IRC_BATTLE_MENU* pWork)
 
 static void _modeAppWinFlash3(IRC_BATTLE_MENU* pWork)
 {
-  if(APP_TASKMENU_WIN_IsFinish(pWork->pAppWin)){
-
-    APP_TASKMENU_WIN_Delete(pWork->pAppWin);
-    pWork->pAppWin = NULL;
+  if( _flashDispAndCheck( pWork , Btn_PalettePos) ){
     _CHANGE_STATE(pWork,_modeSelectEntryNumInit);        // ２人４人選択へ
   }
 }
@@ -1051,7 +1050,7 @@ static BOOL _modeSelectBattleTypeButtonCallback(int bttnid,IRC_BATTLE_MENU* pWor
     break;
   case _SELECTBT_EXIT:
     PMSND_PlaySystemSE(SEQ_SE_CANCEL1);
-    APP_TASKMENU_WIN_SetDecide(pWork->pAppWin, TRUE);
+//    APP_TASKMENU_WIN_SetDecide(pWork->pAppWin, TRUE);
     pWork->selectType = EVENTIRCBTL_ENTRYMODE_EXIT;
     _CHANGE_STATE(pWork,_modeAppWinFlash3);        // 終わり
 
@@ -1203,7 +1202,7 @@ static void _YesNoStart(IRC_BATTLE_MENU* pWork)
 static void _ReturnButtonStart(IRC_BATTLE_MENU* pWork)
 {
   int i;
-
+#if 0
   pWork->appitem[0].str = GFL_STR_CreateBuffer(100, pWork->heapID);
   GFL_MSG_GetString(pWork->pMsgData, IRCBTL_STR_03, pWork->appitem[0].str);
   pWork->appitem[0].msgColor = APP_TASKMENU_ITEM_MSGCOLOR;
@@ -1213,7 +1212,7 @@ static void _ReturnButtonStart(IRC_BATTLE_MENU* pWork)
 
   
   GFL_STR_DeleteBuffer(pWork->appitem[0].str);
-
+#endif
 }
 
 
@@ -1477,7 +1476,11 @@ static GFL_PROC_RESULT IrcBattleMenuProcInit( GFL_PROC * proc, int * seq, void *
 									WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
 		_CHANGE_STATE(pWork,_modeSelectMenuInit);
     pWork->dbw = pwk;
-	}
+
+    G2S_SetBlendAlpha( GX_BLEND_PLANEMASK_BG2, GX_BLEND_PLANEMASK_BG0 , 15, 4 );
+
+
+  }
   GFL_DISP_GX_SetVisibleControlDirect( GX_PLANEMASK_BG0|GX_PLANEMASK_BG1|GX_PLANEMASK_OBJ );
   
   return GFL_PROC_RES_FINISH;

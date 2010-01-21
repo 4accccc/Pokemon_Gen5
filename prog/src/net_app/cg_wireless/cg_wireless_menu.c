@@ -175,7 +175,7 @@ struct _CG_WIRELESS_MENU {
   APP_TASKMENU_WORK* pAppTask;
   APP_TASKMENU_ITEMWORK appitem[_SUBMENU_LISTMAX];
 	APP_TASKMENU_RES* pAppTaskRes;
-  APP_TASKMENU_WIN_WORK* pAppWin;
+//  APP_TASKMENU_WIN_WORK* pAppWin;
   EVENT_CG_WIRELESS_WORK * dbw;
   int windowNum;
   int tvtIndex;
@@ -651,8 +651,8 @@ static void _modeButtonFlash(CG_WIRELESS_MENU* pWork)
 
   if( pWork->anmCnt >= APP_TASKMENU_ANM_CNT )
   {
-    APP_TASKMENU_WIN_Delete( pWork->pAppWin );
-    pWork->pAppWin = NULL;
+//    APP_TASKMENU_WIN_Delete( pWork->pAppWin );
+  //  pWork->pAppWin = NULL;
 
     if(WIRELESSSAVE_ON == CONFIG_GetWirelessSaveMode(SaveData_GetConfig(pWork->dbw->ctrl))){
       _CHANGE_STATE(pWork, _modeReportInit);
@@ -672,8 +672,27 @@ static void _modeButtonFlash(CG_WIRELESS_MENU* pWork)
 
 static void _modeAppWinFlash(CG_WIRELESS_MENU* pWork)
 {
-  if(APP_TASKMENU_WIN_IsFinish(pWork->pAppWin)){
-    _CHANGE_STATE(pWork,_modeFadeoutStart);        // 終わり
+
+    //決定時アニメ
+  int pltNo = Btn_PalettePos[pWork->bttnid];
+  const u8 isBlink = (pWork->anmCnt/APP_TASKMENU_ANM_INTERVAL)%2;
+  if( isBlink == 0 )
+  {
+    NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_2D_BG_PLTT_SUB ,
+                                        pltNo * 32 ,
+                                        &pWork->BackupPalette[32*pltNo] , 32 );
+  }
+  else
+  {
+    NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_2D_BG_PLTT_SUB ,
+                                        pltNo * 32 ,
+                                        &pWork->LightPalette[32*pltNo] , 32 );
+  }
+  pWork->anmCnt++;
+
+  if( pWork->anmCnt >= APP_TASKMENU_ANM_CNT )
+  {
+    _CHANGE_STATE(pWork, _modeFadeoutStart);        // 終わり
   }
 }
 
@@ -729,7 +748,7 @@ static BOOL _modeSelectMenuButtonCallback(int bttnid,CG_WIRELESS_MENU* pWork)
     break;
   case _SELECTMODE_EXIT:
 		PMSND_PlaySystemSE(SEQ_SE_CANCEL1);
-    APP_TASKMENU_WIN_SetDecide(pWork->pAppWin, TRUE);
+//    APP_TASKMENU_WIN_SetDecide(pWork->pAppWin, TRUE);
     pWork->selectType = CG_WIRELESS_RETURNMODE_NONE;
     _CHANGE_STATE(pWork,_modeAppWinFlash);        // 終わり
     break;
@@ -869,8 +888,8 @@ static void _ReturnButtonStart(CG_WIRELESS_MENU* pWork)
   GFL_MSG_GetString(pWork->pMsgData, CGEAR_WIRLESS_010, pWork->appitem[0].str);
   pWork->appitem[0].msgColor = APP_TASKMENU_ITEM_MSGCOLOR;
   pWork->appitem[0].type = APP_TASKMENU_WIN_TYPE_RETURN;
-  pWork->pAppWin =APP_TASKMENU_WIN_Create( pWork->pAppTaskRes,
-                                           pWork->appitem, 32-10, 24-4, 10, pWork->heapID);
+//  pWork->pAppWin =APP_TASKMENU_WIN_Create( pWork->pAppTaskRes,
+//                                           pWork->appitem, 32-10, 24-4, 10, pWork->heapID);
 
   
   GFL_STR_DeleteBuffer(pWork->appitem[0].str);
@@ -1267,6 +1286,7 @@ static GFL_PROC_RESULT CG_WirelessMenuProcInit( GFL_PROC * proc, int * seq, void
       APP_TASKMENU_RES_Create( GFL_BG_FRAME1_S, _SUBLIST_NORMAL_PAL,
                                pWork->pFontHandle, pWork->SysMsgQue, pWork->heapID  );
 
+    G2S_SetBlendAlpha( GX_BLEND_PLANEMASK_BG2, GX_BLEND_PLANEMASK_BG0 , 15, 4 );
 		WIPE_SYS_Start( WIPE_PATTERN_S , WIPE_TYPE_FADEIN , WIPE_TYPE_FADEIN , 
 									WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
 
@@ -1297,9 +1317,9 @@ static GFL_PROC_RESULT CG_WirelessMenuProcMain( GFL_PROC * proc, int * seq, void
   if(pWork->pAppTask){
     APP_TASKMENU_UpdateMenu(pWork->pAppTask);
   }
-  if(pWork->pAppWin){
-    APP_TASKMENU_WIN_Update( pWork->pAppWin );
-  }
+//  if(pWork->pAppWin){
+//    APP_TASKMENU_WIN_Update( pWork->pAppWin );
+//  }
   _setTVTParentName(pWork);
 
   if(GFL_NET_IsInit()){
@@ -1345,9 +1365,9 @@ static GFL_PROC_RESULT CG_WirelessMenuProcEnd( GFL_PROC * proc, int * seq, void 
   if(pWork->infoDispWin){
     GFL_BMPWIN_Delete(pWork->infoDispWin);
   }
-  if(pWork->pAppWin){
-    APP_TASKMENU_WIN_Delete(pWork->pAppWin);
-  }
+//  if(pWork->pAppWin){
+//    APP_TASKMENU_WIN_Delete(pWork->pAppWin);
+//  }
   
   APP_TASKMENU_RES_Delete( pWork->pAppTaskRes );
 

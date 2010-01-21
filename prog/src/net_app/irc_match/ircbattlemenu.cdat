@@ -11,7 +11,7 @@ typedef struct {
 
 #define _X8(a)  (a)*8
 
-#define _IRMAIN_BATTLE_ST_X (4)
+#define _IRMAIN_BATTLE_ST_X (6)
 #define _IRMAIN_BATTLE_ST_Y (6)
 #define _IRMAIN_BATTLE_WIDTH (10)
 #define _IRMAIN_BATTLE_HEIGHT (4)
@@ -21,13 +21,13 @@ typedef struct {
 #define _IRMAIN_TRADE_WIDTH (10)
 #define _IRMAIN_TRADE_HEIGHT (4)
 
-#define _IRMAIN_CHECK_ST_X (0x0b)
-#define _IRMAIN_CHECK_ST_Y (0x0e)
+#define _IRMAIN_CHECK_ST_X (0x0c)
+#define _IRMAIN_CHECK_ST_Y (0x0b)
 #define _IRMAIN_CHECK_WIDTH (10)
 #define _IRMAIN_CHECK_HEIGHT (4)
 
-#define _IRMAIN_FRIEND_ST_X (0x02)
-#define _IRMAIN_FRIEND_ST_Y (0x14)
+#define _IRMAIN_FRIEND_ST_X (0x05)
+#define _IRMAIN_FRIEND_ST_Y (0x13)
 #define _IRMAIN_FRIEND_WIDTH (16)
 #define _IRMAIN_FRIEND_HEIGHT (4)
 
@@ -47,11 +47,11 @@ static _WINDOWPOS wind_irmain[]={
 
 static const GFL_UI_TP_HITTBL btn_irmain[] = {
   //上下左右
-	{ _X8(_IRMAIN_BATTLE_ST_Y-1),_X8(_IRMAIN_BATTLE_ST_Y+_IRMAIN_BATTLE_HEIGHT+1),
-	  _X8(_IRMAIN_BATTLE_ST_X-1),_X8(_IRMAIN_BATTLE_ST_X+_IRMAIN_BATTLE_WIDTH+1)},
+	{ _X8(5),  _X8(11),
+	  _X8(1), _X8(15)},
 
-	{ _X8(_IRMAIN_TRADE_ST_Y-1),_X8(_IRMAIN_TRADE_ST_Y+_IRMAIN_TRADE_HEIGHT+1),
-	  _X8(_IRMAIN_TRADE_ST_X-1),_X8(_IRMAIN_TRADE_ST_X+_IRMAIN_TRADE_WIDTH+1)},
+	{ _X8(5),_X8(11),
+	  _X8(17),_X8(31)},
 
 	{ _X8(_IRMAIN_CHECK_ST_Y-1),_X8(_IRMAIN_CHECK_ST_Y+_IRMAIN_CHECK_HEIGHT+1),
 	  _X8(_IRMAIN_CHECK_ST_X-1),_X8(_IRMAIN_CHECK_ST_X+_IRMAIN_CHECK_WIDTH+1)},
@@ -62,17 +62,28 @@ static const GFL_UI_TP_HITTBL btn_irmain[] = {
 	{ _X8(_IRMAIN_EXIT_ST_Y-1),_X8(_IRMAIN_EXIT_ST_Y+_IRMAIN_EXIT_HEIGHT+1),
 	  _X8(_IRMAIN_EXIT_ST_X-1),_X8(_IRMAIN_EXIT_ST_X+_IRMAIN_EXIT_WIDTH+1)},
 
+// 対戦　交換はさらにタッチパネル座標追加
+
+	{ _X8(11),_X8(14),
+	  _X8(1),_X8(7)},
+	{ _X8(11),_X8(14),
+	  _X8(24),_X8(31)},
+
   {GFL_UI_TP_HIT_END,0,0,0},		 //終了データ
 };
 
 
 
-#define _IRVS1_VS_ST_X (5)
+
+
+
+
+#define _IRVS1_VS_ST_X (8)
 #define _IRVS1_VS_ST_Y (8)
 #define _IRVS1_VS_WIDTH (24)
 #define _IRVS1_VS_HEIGHT (4)
 
-#define _IRVS1_MULTI_ST_X (5)
+#define _IRVS1_MULTI_ST_X (8)
 #define _IRVS1_MULTI_ST_Y (0xe)
 #define _IRVS1_MULTI_WIDTH (24)
 #define _IRVS1_MULTI_HEIGHT (4)
@@ -105,23 +116,23 @@ static const GFL_UI_TP_HITTBL btn_irvs1[] = {
 
 
 
-#define _IRVS2_SINGLE_ST_X (5)
+#define _IRVS2_SINGLE_ST_X (8)
 #define _IRVS2_SINGLE_ST_Y (2)
 #define _IRVS2_SINGLE_WIDTH (24)
 #define _IRVS2_SINGLE_HEIGHT (4)
 
-#define _IRVS2_DOUBLE_ST_X (5)
+#define _IRVS2_DOUBLE_ST_X (8)
 #define _IRVS2_DOUBLE_ST_Y (7)
 #define _IRVS2_DOUBLE_WIDTH (24)
 #define _IRVS2_DOUBLE_HEIGHT (4)
 
 
-#define _IRVS2_TRIPLE_ST_X (5)
+#define _IRVS2_TRIPLE_ST_X (8)
 #define _IRVS2_TRIPLE_ST_Y (0xc)
 #define _IRVS2_TRIPLE_WIDTH (24)
 #define _IRVS2_TRIPLE_HEIGHT (4)
 
-#define _IRVS2_ROTATE_ST_X (5)
+#define _IRVS2_ROTATE_ST_X (8)
 #define _IRVS2_ROTATE_ST_Y (0x11)
 #define _IRVS2_ROTATE_WIDTH (24)
 #define _IRVS2_ROTATE_HEIGHT (4)
@@ -160,7 +171,7 @@ static const GFL_UI_TP_HITTBL btn_irvs2[] = {
 
 
 //ボタンのパレット場所
-static u8 Btn_PalettePos[] = { 1, 2, 3,4 };  //
+static u8 Btn_PalettePos[] = { 1, 2, 3, 4, 5 };  //
 
 static u8 Btn_PaletteSelectEntry[] ={ 1,6};
 static u8 Btn_PaletteSelectBattle[] ={ 1,6,7,8};
