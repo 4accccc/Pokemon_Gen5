@@ -13,9 +13,9 @@
 //================================================================================= 
 // ■定数
 //================================================================================= 
-#define FSND_PRINT_NO (1)  // printf出力先コンソール番号
-#define FSND_BGM_NULL (0)  // BGM番号の無効値
-#define FSND_REQUEST_QUEUE_SIZE (10)  // バッファできるリクエストの数
+#define PRINT_NO            (1)  // printf出力先コンソール番号
+#define BGM_NONE            (0)  // BGM番号の無効値
+#define REQUEST_QUEUE_SIZE (10)  // バッファできるリクエストの数
 
 // 内部状態
 typedef enum{
@@ -37,7 +37,12 @@ typedef enum{
   FSND_STATE_NUM
 } FSND_STATE;
 
+//---------------------------------------------------------------------------------
 // 各内部状態に対する, リクエストの可不可テーブル
+//
+// RequestAcceptTable[ システム状態 ][ リクエスト ] が TRUE の時,
+// システムは そのリクエストを処理することが出来る.
+//
 static BOOL RequestAcceptTable[ FSND_STATE_NUM ][ FSND_BGM_REQUEST_NUM ] = 
 {
                         /* NONE    F_IN    F_OUT   PUSH    POP     CHANGE  S_BY    F_PLAY */
@@ -58,7 +63,12 @@ static BOOL RequestAcceptTable[ FSND_STATE_NUM ][ FSND_BGM_REQUEST_NUM ] =
   /* STAND_BY_load    */{  FALSE,  FALSE,  FALSE,  FALSE,  FALSE,  FALSE,  FALSE,  FALSE,  },
 };
 
+//---------------------------------------------------------------------------------
 //  新規リクエストによるデッドロック テーブル
+//
+//  DeadRockTable[ 最終リクエスト ][ 新規リクエスト ] が FALSE の時, 
+//  新規リクエストを受理することが出来ずに, デッドロック状態となる.
+//
 static BOOL DeadRockTable[ FSND_BGM_REQUEST_NUM ][ FSND_BGM_REQUEST_NUM ] = 
 {
               /* NONE    F_IN    F_OUT   PUSH    POP     CHANGE  S_BY    F_PLAY */
@@ -108,7 +118,7 @@ struct _FIELD_SOUND
   u32            pushBGM[FSND_PUSHCOUNT_MAX];  // 退避中のBGN No.
 
   // リクエストキュー
-  FSND_REQUEST_DATA requestData[ FSND_REQUEST_QUEUE_SIZE ];  // リクエスト配列
+  FSND_REQUEST_DATA requestData[ REQUEST_QUEUE_SIZE ];  // リクエスト配列
   u8                requestHeadPos;  // キューの先頭位置( 先頭リクエストの位置 )
   u8                requestTailPos;  // キューの末尾位置( 新規リクエストの追加位置 )
 };
@@ -428,19 +438,19 @@ static void InitFieldSoundSystem( FIELD_SOUND* fieldSound )
 
   fieldSound->state        = FSND_STATE_STOP;
   fieldSound->request      = FSND_BGM_REQUEST_NONE;
-  fieldSound->currentBGM   = FSND_BGM_NULL;
-  fieldSound->requestBGM   = FSND_BGM_NULL;
-  fieldSound->loadBGM      = FSND_BGM_NULL;
+  fieldSound->currentBGM   = BGM_NONE;
+  fieldSound->requestBGM   = BGM_NONE;
+  fieldSound->loadBGM      = BGM_NONE;
   fieldSound->fadeInFrame  = 0;
   fieldSound->fadeOutFrame = 0;
   fieldSound->pushCount    = FSND_PUSHCOUNT_NONE;
 
   for( i=0; i<FSND_PUSHCOUNT_MAX; i++ )
   {
-    fieldSound->pushBGM[i] = FSND_BGM_NULL; 
+    fieldSound->pushBGM[i] = BGM_NONE; 
   }
 
-  for( i=0; i<FSND_REQUEST_QUEUE_SIZE; i++ )
+  for( i=0; i<REQUEST_QUEUE_SIZE; i++ )
   {
     fieldSound->requestData[i].request = FSND_BGM_REQUEST_NONE;
   }
@@ -518,7 +528,7 @@ const FSND_REQUEST_DATA* GetNextRequest( const FIELD_SOUND* fieldSound )
 {
   int pos;
 
-  pos = (fieldSound->requestHeadPos + 1) % FSND_REQUEST_QUEUE_SIZE;
+  pos = (fieldSound->requestHeadPos + 1) % REQUEST_QUEUE_SIZE;
 
   return &fieldSound->requestData[ pos ];
 }
@@ -558,7 +568,7 @@ void RegisterNewRequest( FIELD_SOUND* fieldSound, const FSND_REQUEST_DATA* reque
   // デッドロック
   if( CanRegisterRequest(fieldSound, requestData->request) == FALSE )
   {
-    OS_TFPrintf( FSND_PRINT_NO, "FIELD-SOUND-QUEUE: Can't register request\n" );
+    OS_TFPrintf( PRINT_NO, "FIELD-SOUND-QUEUE: Can't register request\n" );
     GF_ASSERT(0);
     return;
   }
@@ -573,10 +583,10 @@ void RegisterNewRequest( FIELD_SOUND* fieldSound, const FSND_REQUEST_DATA* reque
 
   // 登録
   fieldSound->requestData[ addPos ] = *requestData;
-  fieldSound->requestTailPos = (addPos + 1) % FSND_REQUEST_QUEUE_SIZE;
+  fieldSound->requestTailPos = (addPos + 1) % REQUEST_QUEUE_SIZE;
 
   // DEBUG:
-  OS_TFPrintf( FSND_PRINT_NO, "FIELD-SOUND-QUEUE: Regist new request\n" );
+  OS_TFPrintf( PRINT_NO, "FIELD-SOUND-QUEUE: Regist new request\n" );
 
   // DEBUG: キューの状態を出力
   DebugPrint_RequestQueue( fieldSound );
@@ -639,10 +649,10 @@ void RemoveHeadRequest( FIELD_SOUND* fieldSound )
 
   // 削除
   fieldSound->requestData[ delPos ].request = FSND_BGM_REQUEST_NONE;
-  fieldSound->requestHeadPos = (delPos + 1) % FSND_REQUEST_QUEUE_SIZE;
+  fieldSound->requestHeadPos = (delPos + 1) % REQUEST_QUEUE_SIZE;
 
   // DEBUG:
-  OS_TFPrintf( FSND_PRINT_NO, "FIELD-SOUND-QUEUE: Remove head request\n" );
+  OS_TFPrintf( PRINT_NO, "FIELD-SOUND-QUEUE: Remove head request\n" );
 
   // DEBUG: キューの状態を出力
   DebugPrint_RequestQueue( fieldSound );
@@ -702,7 +712,7 @@ static void ThrowRequest_FADE_IN( FIELD_SOUND* fieldSound, u16 fadeInFrame )
   // リクエストを受理できない
   if( CanAcceptRequest(fieldSound, FSND_BGM_REQUEST_FADE_IN) == FALSE )
   {
-    OS_TFPrintf( FSND_PRINT_NO, "FIELD-SOUND: Can't Accept BGM fade in request\n" );
+    OS_TFPrintf( PRINT_NO, "FIELD-SOUND: Can't Accept BGM fade in request\n" );
     GF_ASSERT(0);
     return;
   }
@@ -712,7 +722,7 @@ static void ThrowRequest_FADE_IN( FIELD_SOUND* fieldSound, u16 fadeInFrame )
   fieldSound->fadeInFrame = fadeInFrame;
 
 #ifdef DEBUG_ONLY_FOR_obata_toshihiro
-  OS_TFPrintf( FSND_PRINT_NO, "FIELD-SOUND: accept request(FADE_IN)\n" );
+  OS_TFPrintf( PRINT_NO, "FIELD-SOUND: accept request(FADE_IN)\n" );
 #endif
 }
 
@@ -729,7 +739,7 @@ static void ThrowRequest_FADE_OUT( FIELD_SOUND* fieldSound, u16 fadeOutFrame )
   // リクエストを受理できない
   if( CanAcceptRequest(fieldSound, FSND_BGM_REQUEST_FADE_OUT) == FALSE )
   {
-    OS_TFPrintf( FSND_PRINT_NO, "FIELD-SOUND: Can't Accept BGM fade out request\n" );
+    OS_TFPrintf( PRINT_NO, "FIELD-SOUND: Can't Accept BGM fade out request\n" );
     GF_ASSERT(0);
     return;
   }
@@ -739,7 +749,7 @@ static void ThrowRequest_FADE_OUT( FIELD_SOUND* fieldSound, u16 fadeOutFrame )
   fieldSound->fadeOutFrame = fadeOutFrame;
 
 #ifdef DEBUG_ONLY_FOR_obata_toshihiro
-  OS_TFPrintf( FSND_PRINT_NO, "FIELD-SOUND: accept request(FADE_OUT)\n" );
+  OS_TFPrintf( PRINT_NO, "FIELD-SOUND: accept request(FADE_OUT)\n" );
 #endif
 }
 
@@ -756,7 +766,7 @@ static void ThrowRequest_PUSH( FIELD_SOUND* fieldSound, u16 fadeOutFrame )
   // リクエストを受理できない
   if( CanAcceptRequest(fieldSound, FSND_BGM_REQUEST_PUSH) == FALSE )
   {
-    OS_TFPrintf( FSND_PRINT_NO, "FIELD-SOUND: Can't Accept BGM push request\n" );
+    OS_TFPrintf( PRINT_NO, "FIELD-SOUND: Can't Accept BGM push request\n" );
     GF_ASSERT(0);
     return;
   }
@@ -766,7 +776,7 @@ static void ThrowRequest_PUSH( FIELD_SOUND* fieldSound, u16 fadeOutFrame )
   fieldSound->fadeOutFrame = fadeOutFrame;
 
 #ifdef DEBUG_ONLY_FOR_obata_toshihiro
-  OS_TFPrintf( FSND_PRINT_NO, "FIELD-SOUND: accept request(PUSH)\n" );
+  OS_TFPrintf( PRINT_NO, "FIELD-SOUND: accept request(PUSH)\n" );
 #endif
 }
 
@@ -785,7 +795,7 @@ static void ThrowRequest_POP( FIELD_SOUND* fieldSound,
   // リクエストを受理できない
   if( CanAcceptRequest(fieldSound, FSND_BGM_REQUEST_POP) == FALSE )
   {
-    OS_TFPrintf( FSND_PRINT_NO, "FIELD-SOUND: Can't Accept BGM pop request\n" );
+    OS_TFPrintf( PRINT_NO, "FIELD-SOUND: Can't Accept BGM pop request\n" );
     GF_ASSERT(0);
     return;
   }
@@ -796,7 +806,7 @@ static void ThrowRequest_POP( FIELD_SOUND* fieldSound,
   fieldSound->fadeOutFrame = fadeOutFrame;
 
 #ifdef DEBUG_ONLY_FOR_obata_toshihiro
-  OS_TFPrintf( FSND_PRINT_NO, "FIELD-SOUND: accept request(POP)\n" );
+  OS_TFPrintf( PRINT_NO, "FIELD-SOUND: accept request(POP)\n" );
 #endif
 }
 
@@ -816,7 +826,7 @@ static void ThrowRequest_CHANGE( FIELD_SOUND* fieldSound, u32 soundIdx,
   // リクエストを受理できない
   if( CanAcceptRequest(fieldSound, FSND_BGM_REQUEST_CHANGE) == FALSE )
   {
-    OS_TFPrintf( FSND_PRINT_NO, "FIELD-SOUND: Can't Accept BGM change request\n" );
+    OS_TFPrintf( PRINT_NO, "FIELD-SOUND: Can't Accept BGM change request\n" );
     GF_ASSERT(0);
     return;
   } 
@@ -828,7 +838,7 @@ static void ThrowRequest_CHANGE( FIELD_SOUND* fieldSound, u32 soundIdx,
   fieldSound->fadeOutFrame = fadeOutFrame;
 
 #ifdef DEBUG_ONLY_FOR_obata_toshihiro
-  OS_TFPrintf( FSND_PRINT_NO, "FIELD-SOUND: accept request(CHANGE)\n" );
+  OS_TFPrintf( PRINT_NO, "FIELD-SOUND: accept request(CHANGE)\n" );
 #endif
 }
 
@@ -847,7 +857,7 @@ static void ThrowRequest_STAND_BY( FIELD_SOUND* fieldSound,
   // リクエストを受理できない
   if( CanAcceptRequest(fieldSound, FSND_BGM_REQUEST_STAND_BY) == FALSE )
   {
-    OS_TFPrintf( FSND_PRINT_NO, "FIELD-SOUND: Can't Accept BGM stand-by request\n" );
+    OS_TFPrintf( PRINT_NO, "FIELD-SOUND: Can't Accept BGM stand-by request\n" );
     GF_ASSERT(0);
     return;
   }
@@ -858,7 +868,7 @@ static void ThrowRequest_STAND_BY( FIELD_SOUND* fieldSound,
   fieldSound->fadeOutFrame = fadeOutFrame;
   
 #ifdef DEBUG_ONLY_FOR_obata_toshihiro
-  OS_TFPrintf( FSND_PRINT_NO, "FIELD-SOUND: accept request(STAND_BY)\n" );
+  OS_TFPrintf( PRINT_NO, "FIELD-SOUND: accept request(STAND_BY)\n" );
 #endif
 }
 
@@ -875,7 +885,7 @@ static void ThrowRequest_FORCE_PLAY( FIELD_SOUND* fieldSound, u16 soundIdx )
   // リクエストを受理できない
   if( CanAcceptRequest(fieldSound, FSND_BGM_REQUEST_FORCE_PLAY) == FALSE )
   {
-    OS_TFPrintf( FSND_PRINT_NO, "FIELD-SOUND: Can't Accept BGM force play request\n" );
+    OS_TFPrintf( PRINT_NO, "FIELD-SOUND: Can't Accept BGM force play request\n" );
     GF_ASSERT(0);
     return;
   }
@@ -885,7 +895,7 @@ static void ThrowRequest_FORCE_PLAY( FIELD_SOUND* fieldSound, u16 soundIdx )
   fieldSound->requestBGM = soundIdx;
 
 #ifdef DEBUG_ONLY_FOR_obata_toshihiro
-  OS_TFPrintf( FSND_PRINT_NO, "FIELD-SOUND: accept request(FORCE_PLAY)\n" );
+  OS_TFPrintf( PRINT_NO, "FIELD-SOUND: accept request(FORCE_PLAY)\n" );
 #endif
 }
 
@@ -1403,7 +1413,7 @@ static void Main_CHANGE_load( FIELD_SOUND* fieldSound )
   // 分割ロード完了(再生開始)
   if( loadFinished )
   { 
-    if( (fieldSound->requestBGM != FSND_BGM_NULL) &&
+    if( (fieldSound->requestBGM != BGM_NONE) &&
         (fieldSound->requestBGM != fieldSound->currentBGM) )
     { 
       // 再ロード開始
@@ -1430,7 +1440,7 @@ static void Main_CHANGE_in( FIELD_SOUND* fieldSound )
   if( PMSND_CheckFadeOnBGM() == FALSE )
   {
     // 再生開始以降に BGM変更リクエストを受けた場合
-    if( (fieldSound->requestBGM != FSND_BGM_NULL) &&
+    if( (fieldSound->requestBGM != BGM_NONE) &&
         (fieldSound->requestBGM != fieldSound->currentBGM) )
     {
       // フェードアウト開始
@@ -1530,40 +1540,40 @@ static void ChangeState( FIELD_SOUND* fieldSound, FSND_STATE nextState )
 #ifdef DEBUG_ONLY_FOR_obata_toshihiro
   switch( fieldSound->state )
   {
-  case FSND_STATE_STOP:              OS_TFPrintf( FSND_PRINT_NO, "FIELD-SOUND: change state (STOP ==> " );  break;
-  case FSND_STATE_PLAY:              OS_TFPrintf( FSND_PRINT_NO, "FIELD-SOUND: change state (PLAY ==> " );  break;
-  case FSND_STATE_WAIT:              OS_TFPrintf( FSND_PRINT_NO, "FIELD-SOUND: change state (WAIT ==> " );  break;
-  case FSND_STATE_FADE_OUT:          OS_TFPrintf( FSND_PRINT_NO, "FIELD-SOUND: change state (FADE OUT ==> " );  break;
-  case FSND_STATE_FADE_IN:           OS_TFPrintf( FSND_PRINT_NO, "FIELD-SOUND: change state (FADE IN ==> " );  break;
-  case FSND_STATE_PUSH:              OS_TFPrintf( FSND_PRINT_NO, "FIELD-SOUND: change state (PUSH ==> " );  break;
-  case FSND_STATE_POP_out:           OS_TFPrintf( FSND_PRINT_NO, "FIELD-SOUND: change state (POP out ==> " );  break;
-  case FSND_STATE_POP_in:            OS_TFPrintf( FSND_PRINT_NO, "FIELD-SOUND: change state (POP in ==> " );  break;
-  case FSND_STATE_CHANGE_out:        OS_TFPrintf( FSND_PRINT_NO, "FIELD-SOUND: change state (CHANGE out ==> " );  break;
-  case FSND_STATE_CHANGE_load:       OS_TFPrintf( FSND_PRINT_NO, "FIELD-SOUND: change state (CHANGE load ==> " );  break;
-  case FSND_STATE_CHANGE_in:         OS_TFPrintf( FSND_PRINT_NO, "FIELD-SOUND: change state (CHANGE in ==> " );  break;
-  case FSND_STATE_CHANGE_PUSH_out:   OS_TFPrintf( FSND_PRINT_NO, "FIELD-SOUND: change state (CHANGE PUSH out ==> " );  break;
-  case FSND_STATE_CHANGE_PUSH_load:  OS_TFPrintf( FSND_PRINT_NO, "FIELD-SOUND: change state (CHANGE PUSH load ==> " );  break;
-  case FSND_STATE_STAND_BY_out:      OS_TFPrintf( FSND_PRINT_NO, "FIELD-SOUND: change state (STAND BY out ==> " );  break;
-  case FSND_STATE_STAND_BY_load:     OS_TFPrintf( FSND_PRINT_NO, "FIELD-SOUND: change state (STAND BY load ==> " );  break;
+  case FSND_STATE_STOP:              OS_TFPrintf( PRINT_NO, "FIELD-SOUND: change state (STOP ==> " );  break;
+  case FSND_STATE_PLAY:              OS_TFPrintf( PRINT_NO, "FIELD-SOUND: change state (PLAY ==> " );  break;
+  case FSND_STATE_WAIT:              OS_TFPrintf( PRINT_NO, "FIELD-SOUND: change state (WAIT ==> " );  break;
+  case FSND_STATE_FADE_OUT:          OS_TFPrintf( PRINT_NO, "FIELD-SOUND: change state (FADE OUT ==> " );  break;
+  case FSND_STATE_FADE_IN:           OS_TFPrintf( PRINT_NO, "FIELD-SOUND: change state (FADE IN ==> " );  break;
+  case FSND_STATE_PUSH:              OS_TFPrintf( PRINT_NO, "FIELD-SOUND: change state (PUSH ==> " );  break;
+  case FSND_STATE_POP_out:           OS_TFPrintf( PRINT_NO, "FIELD-SOUND: change state (POP out ==> " );  break;
+  case FSND_STATE_POP_in:            OS_TFPrintf( PRINT_NO, "FIELD-SOUND: change state (POP in ==> " );  break;
+  case FSND_STATE_CHANGE_out:        OS_TFPrintf( PRINT_NO, "FIELD-SOUND: change state (CHANGE out ==> " );  break;
+  case FSND_STATE_CHANGE_load:       OS_TFPrintf( PRINT_NO, "FIELD-SOUND: change state (CHANGE load ==> " );  break;
+  case FSND_STATE_CHANGE_in:         OS_TFPrintf( PRINT_NO, "FIELD-SOUND: change state (CHANGE in ==> " );  break;
+  case FSND_STATE_CHANGE_PUSH_out:   OS_TFPrintf( PRINT_NO, "FIELD-SOUND: change state (CHANGE PUSH out ==> " );  break;
+  case FSND_STATE_CHANGE_PUSH_load:  OS_TFPrintf( PRINT_NO, "FIELD-SOUND: change state (CHANGE PUSH load ==> " );  break;
+  case FSND_STATE_STAND_BY_out:      OS_TFPrintf( PRINT_NO, "FIELD-SOUND: change state (STAND BY out ==> " );  break;
+  case FSND_STATE_STAND_BY_load:     OS_TFPrintf( PRINT_NO, "FIELD-SOUND: change state (STAND BY load ==> " );  break;
   default: GF_ASSERT(0);
   }
   switch( nextState )
   {
-  case FSND_STATE_STOP:              OS_TFPrintf( FSND_PRINT_NO, "STOP)\n" );  break;
-  case FSND_STATE_PLAY:              OS_TFPrintf( FSND_PRINT_NO, "PLAY)\n" );  break;
-  case FSND_STATE_WAIT:              OS_TFPrintf( FSND_PRINT_NO, "WAIT)\n" );  break;
-  case FSND_STATE_FADE_OUT:          OS_TFPrintf( FSND_PRINT_NO, "FADE OUT)\n" );  break;
-  case FSND_STATE_FADE_IN:           OS_TFPrintf( FSND_PRINT_NO, "FADE IN)\n" );  break;
-  case FSND_STATE_PUSH:              OS_TFPrintf( FSND_PRINT_NO, "PUSH)\n" );  break;
-  case FSND_STATE_POP_out:           OS_TFPrintf( FSND_PRINT_NO, "POP out)\n" );  break;
-  case FSND_STATE_POP_in:            OS_TFPrintf( FSND_PRINT_NO, "POP in)\n" );  break;
-  case FSND_STATE_CHANGE_out:        OS_TFPrintf( FSND_PRINT_NO, "CHANGE out)\n" );  break;
-  case FSND_STATE_CHANGE_load:       OS_TFPrintf( FSND_PRINT_NO, "CHANGE load)\n" );  break;
-  case FSND_STATE_CHANGE_in:         OS_TFPrintf( FSND_PRINT_NO, "CHANGE in)\n" );  break;
-  case FSND_STATE_CHANGE_PUSH_out:   OS_TFPrintf( FSND_PRINT_NO, "CHANGE PUSH out)\n" );  break;
-  case FSND_STATE_CHANGE_PUSH_load:  OS_TFPrintf( FSND_PRINT_NO, "CHANGE PUSH load)\n" );  break;
-  case FSND_STATE_STAND_BY_out:      OS_TFPrintf( FSND_PRINT_NO, "STAND BY out)\n" );  break;
-  case FSND_STATE_STAND_BY_load:     OS_TFPrintf( FSND_PRINT_NO, "STAND BY load)\n" );  break;
+  case FSND_STATE_STOP:              OS_TFPrintf( PRINT_NO, "STOP)\n" );  break;
+  case FSND_STATE_PLAY:              OS_TFPrintf( PRINT_NO, "PLAY)\n" );  break;
+  case FSND_STATE_WAIT:              OS_TFPrintf( PRINT_NO, "WAIT)\n" );  break;
+  case FSND_STATE_FADE_OUT:          OS_TFPrintf( PRINT_NO, "FADE OUT)\n" );  break;
+  case FSND_STATE_FADE_IN:           OS_TFPrintf( PRINT_NO, "FADE IN)\n" );  break;
+  case FSND_STATE_PUSH:              OS_TFPrintf( PRINT_NO, "PUSH)\n" );  break;
+  case FSND_STATE_POP_out:           OS_TFPrintf( PRINT_NO, "POP out)\n" );  break;
+  case FSND_STATE_POP_in:            OS_TFPrintf( PRINT_NO, "POP in)\n" );  break;
+  case FSND_STATE_CHANGE_out:        OS_TFPrintf( PRINT_NO, "CHANGE out)\n" );  break;
+  case FSND_STATE_CHANGE_load:       OS_TFPrintf( PRINT_NO, "CHANGE load)\n" );  break;
+  case FSND_STATE_CHANGE_in:         OS_TFPrintf( PRINT_NO, "CHANGE in)\n" );  break;
+  case FSND_STATE_CHANGE_PUSH_out:   OS_TFPrintf( PRINT_NO, "CHANGE PUSH out)\n" );  break;
+  case FSND_STATE_CHANGE_PUSH_load:  OS_TFPrintf( PRINT_NO, "CHANGE PUSH load)\n" );  break;
+  case FSND_STATE_STAND_BY_out:      OS_TFPrintf( PRINT_NO, "STAND BY out)\n" );  break;
+  case FSND_STATE_STAND_BY_load:     OS_TFPrintf( PRINT_NO, "STAND BY load)\n" );  break;
   default: GF_ASSERT(0);
   }
 #endif
@@ -1582,7 +1592,7 @@ static void ChangeState( FIELD_SOUND* fieldSound, FSND_STATE nextState )
 static void ResetRequest( FIELD_SOUND* fieldSound )
 {
   fieldSound->request = FSND_BGM_REQUEST_NONE;
-  fieldSound->requestBGM = FSND_BGM_NULL;
+  fieldSound->requestBGM = BGM_NONE;
   fieldSound->fadeInFrame = 0;
   fieldSound->fadeOutFrame = 0;
 }
@@ -1599,7 +1609,7 @@ static void CancelRequest( FIELD_SOUND* fieldSound )
   // リクエストを持っていない
   if( fieldSound->request == FSND_BGM_REQUEST_NONE )
   {
-    OS_TFPrintf( FSND_PRINT_NO, "FIELD-SOUND: Don't have BGM request\n" );
+    OS_TFPrintf( PRINT_NO, "FIELD-SOUND: Don't have BGM request\n" );
     GF_ASSERT(0);
     return;
   }
@@ -1608,7 +1618,7 @@ static void CancelRequest( FIELD_SOUND* fieldSound )
   ResetRequest( fieldSound );
 
   // DEBUG:
-  OS_TFPrintf( FSND_PRINT_NO, "FIELD-SOUND: Cancel request\n" );
+  OS_TFPrintf( PRINT_NO, "FIELD-SOUND: Cancel request\n" );
 }
 
 //---------------------------------------------------------------------------------
@@ -1623,7 +1633,7 @@ static void FinishRequest( FIELD_SOUND* fieldSound )
   // リクエストを持っていない
   if( fieldSound->request == FSND_BGM_REQUEST_NONE )
   {
-    OS_TFPrintf( FSND_PRINT_NO, "FIELD-SOUND: Don't have BGM request\n" );
+    OS_TFPrintf( PRINT_NO, "FIELD-SOUND: Don't have BGM request\n" );
     GF_ASSERT(0);
     return;
   }
@@ -1631,13 +1641,13 @@ static void FinishRequest( FIELD_SOUND* fieldSound )
 #ifdef DEBUG_ONLY_FOR_obata_toshihiro
   switch( fieldSound->request )
   {
-  case FSND_BGM_REQUEST_FADE_IN:     OS_TFPrintf( FSND_PRINT_NO, "FIELD-SOUND: request(FADE IN) finished!!\n" );  break;
-  case FSND_BGM_REQUEST_FADE_OUT:    OS_TFPrintf( FSND_PRINT_NO, "FIELD-SOUND: request(FADE OUT) finished!!\n" );  break;
-  case FSND_BGM_REQUEST_PUSH:        OS_TFPrintf( FSND_PRINT_NO, "FIELD-SOUND: request(PUSH) finished!!\n" );  break;
-  case FSND_BGM_REQUEST_POP:         OS_TFPrintf( FSND_PRINT_NO, "FIELD-SOUND: request(POP) finished!!\n" );  break;
-  case FSND_BGM_REQUEST_CHANGE:      OS_TFPrintf( FSND_PRINT_NO, "FIELD-SOUND: request(CHANGE) finished!!\n" );  break;
-  case FSND_BGM_REQUEST_STAND_BY:    OS_TFPrintf( FSND_PRINT_NO, "FIELD-SOUND: request(STAND BY) finished!!\n" );  break;
-  case FSND_BGM_REQUEST_FORCE_PLAY:  OS_TFPrintf( FSND_PRINT_NO, "FIELD-SOUND: request(FORCE_PLAY) finished!!\n" );  break;
+  case FSND_BGM_REQUEST_FADE_IN:     OS_TFPrintf( PRINT_NO, "FIELD-SOUND: request(FADE IN) finished!!\n" );  break;
+  case FSND_BGM_REQUEST_FADE_OUT:    OS_TFPrintf( PRINT_NO, "FIELD-SOUND: request(FADE OUT) finished!!\n" );  break;
+  case FSND_BGM_REQUEST_PUSH:        OS_TFPrintf( PRINT_NO, "FIELD-SOUND: request(PUSH) finished!!\n" );  break;
+  case FSND_BGM_REQUEST_POP:         OS_TFPrintf( PRINT_NO, "FIELD-SOUND: request(POP) finished!!\n" );  break;
+  case FSND_BGM_REQUEST_CHANGE:      OS_TFPrintf( PRINT_NO, "FIELD-SOUND: request(CHANGE) finished!!\n" );  break;
+  case FSND_BGM_REQUEST_STAND_BY:    OS_TFPrintf( PRINT_NO, "FIELD-SOUND: request(STAND BY) finished!!\n" );  break;
+  case FSND_BGM_REQUEST_FORCE_PLAY:  OS_TFPrintf( PRINT_NO, "FIELD-SOUND: request(FORCE_PLAY) finished!!\n" );  break;
   }
 #endif
 
@@ -1655,9 +1665,9 @@ static void FinishRequest( FIELD_SOUND* fieldSound )
 static void FadeInBGM( FIELD_SOUND* fieldSound )
 {
   // BGMが鳴っていない
-  if( fieldSound->currentBGM == FSND_BGM_NULL )
+  if( fieldSound->currentBGM == BGM_NONE )
   {
-    OS_TFPrintf( FSND_PRINT_NO, "FIELD-SOUND: Can't fade in BGM (Don't playing BGM)\n" );
+    OS_TFPrintf( PRINT_NO, "FIELD-SOUND: Can't fade in BGM (Don't playing BGM)\n" );
     GF_ASSERT(0);
     return;
   } 
@@ -1666,7 +1676,7 @@ static void FadeInBGM( FIELD_SOUND* fieldSound )
   PMSND_PauseBGM( FALSE );
 
 #ifdef DEBUG_ONLY_FOR_obata_toshihiro
-  OS_TFPrintf( FSND_PRINT_NO, "FIELD-SOUND: BGM fade in start\n" );
+  OS_TFPrintf( PRINT_NO, "FIELD-SOUND: BGM fade in start\n" );
 #endif
 }
 
@@ -1680,9 +1690,9 @@ static void FadeInBGM( FIELD_SOUND* fieldSound )
 static void FadeOutBGM( FIELD_SOUND* fieldSound )
 {
   // BGMが鳴っていない
-  if( fieldSound->currentBGM == FSND_BGM_NULL )
+  if( fieldSound->currentBGM == BGM_NONE )
   {
-    OS_TFPrintf( FSND_PRINT_NO, "FIELD-SOUND: Can't fade out BGM (Don't playing BGM)\n" );
+    OS_TFPrintf( PRINT_NO, "FIELD-SOUND: Can't fade out BGM (Don't playing BGM)\n" );
     GF_ASSERT(0);
     return;
   } 
@@ -1690,7 +1700,7 @@ static void FadeOutBGM( FIELD_SOUND* fieldSound )
   PMSND_FadeOutBGM( fieldSound->fadeOutFrame );
 
 #ifdef DEBUG_ONLY_FOR_obata_toshihiro
-  OS_TFPrintf( FSND_PRINT_NO, "FIELD-SOUND: BGM fade out start\n" );
+  OS_TFPrintf( PRINT_NO, "FIELD-SOUND: BGM fade out start\n" );
 #endif
 }
 
@@ -1704,16 +1714,16 @@ static void FadeOutBGM( FIELD_SOUND* fieldSound )
 static void PushBGM( FIELD_SOUND* fieldSound )
 {
   // BGMが鳴っていない
-  if( fieldSound->currentBGM == FSND_BGM_NULL )
+  if( fieldSound->currentBGM == BGM_NONE )
   {
-    OS_TFPrintf( FSND_PRINT_NO, "FIELD-SOUND: Can't push BGM (Don't playing BGM)\n" );
+    OS_TFPrintf( PRINT_NO, "FIELD-SOUND: Can't push BGM (Don't playing BGM)\n" );
     GF_ASSERT(0);
     return;
   } 
   // 退避数オーバー
   if( FSND_PUSHCOUNT_MAX <= fieldSound->pushCount )
   {
-    OS_TFPrintf( FSND_PRINT_NO, "FIELD-SOUND: Can't push BGM (Push count over)\n" );
+    OS_TFPrintf( PRINT_NO, "FIELD-SOUND: Can't push BGM (Push count over)\n" );
     GF_ASSERT(0);
     return;
   }
@@ -1724,10 +1734,10 @@ static void PushBGM( FIELD_SOUND* fieldSound )
   // 内部情報を更新
   fieldSound->pushBGM[ fieldSound->pushCount ] = fieldSound->currentBGM;
   fieldSound->pushCount++;
-  fieldSound->currentBGM = FSND_BGM_NULL; 
+  fieldSound->currentBGM = BGM_NONE; 
 
 #ifdef DEBUG_ONLY_FOR_obata_toshihiro
-  OS_TFPrintf( FSND_PRINT_NO, "FIELD-SOUND: push BGM(%d)\n", fieldSound->pushBGM[ fieldSound->pushCount-1 ] );
+  OS_TFPrintf( PRINT_NO, "FIELD-SOUND: push BGM(%d)\n", fieldSound->pushBGM[ fieldSound->pushCount-1 ] );
 #endif
 }
 
@@ -1743,7 +1753,7 @@ static void PopBGM( FIELD_SOUND* fieldSound )
   // 退避されていない
   if( fieldSound->pushCount <= FSND_PUSHCOUNT_NONE )
   {
-    OS_TFPrintf( FSND_PRINT_NO, "FIELD-SOUND: Can't pop BGM (There is no pushed BGM)\n" );
+    OS_TFPrintf( PRINT_NO, "FIELD-SOUND: Can't pop BGM (There is no pushed BGM)\n" );
     GF_ASSERT(0);
     return;
   }
@@ -1756,7 +1766,7 @@ static void PopBGM( FIELD_SOUND* fieldSound )
   fieldSound->currentBGM = fieldSound->pushBGM[ fieldSound->pushCount ];
 
 #ifdef DEBUG_ONLY_FOR_obata_toshihiro
-  OS_TFPrintf( FSND_PRINT_NO, "FIELD-SOUND: pop BGM(%d)\n", fieldSound->currentBGM );
+  OS_TFPrintf( PRINT_NO, "FIELD-SOUND: pop BGM(%d)\n", fieldSound->currentBGM );
 #endif
 }
 
@@ -1770,9 +1780,9 @@ static void PopBGM( FIELD_SOUND* fieldSound )
 static void DivLoadBGM_start( FIELD_SOUND* fieldSound )
 {
   // 読み込むBGMが予約されていない
-  if( fieldSound->requestBGM == FSND_BGM_NULL )
+  if( fieldSound->requestBGM == BGM_NONE )
   {
-    OS_TFPrintf( FSND_PRINT_NO, "FIELD-SOUND: Can't start load BGM (Don't know target BGM)\n" );
+    OS_TFPrintf( PRINT_NO, "FIELD-SOUND: Can't start load BGM (Don't know target BGM)\n" );
     GF_ASSERT(0);
     return;
   }
@@ -1782,11 +1792,11 @@ static void DivLoadBGM_start( FIELD_SOUND* fieldSound )
 
   // 内部情報を更新
   fieldSound->loadBGM = fieldSound->requestBGM;
-  fieldSound->requestBGM = FSND_BGM_NULL;
-  fieldSound->currentBGM = FSND_BGM_NULL;
+  fieldSound->requestBGM = BGM_NONE;
+  fieldSound->currentBGM = BGM_NONE;
 
 #ifdef DEBUG_ONLY_FOR_obata_toshihiro
-  OS_TFPrintf( FSND_PRINT_NO, "FIELD-SOUND: div load BGM(%d) start\n", fieldSound->loadBGM );
+  OS_TFPrintf( PRINT_NO, "FIELD-SOUND: div load BGM(%d) start\n", fieldSound->loadBGM );
 #endif
 }
 
@@ -1805,9 +1815,9 @@ static BOOL DivLoadBGM_load( FIELD_SOUND* fieldSound )
   BOOL loadFinished;
 
   // ロードが開始されていない
-  if( fieldSound->loadBGM == FSND_BGM_NULL )
+  if( fieldSound->loadBGM == BGM_NONE )
   {
-    OS_TFPrintf( FSND_PRINT_NO, "FIELD-SOUND: Can't load BGM (Don't know target BGM)\n" );
+    OS_TFPrintf( PRINT_NO, "FIELD-SOUND: Can't load BGM (Don't know target BGM)\n" );
     GF_ASSERT(0); 
   }
 
@@ -1819,10 +1829,10 @@ static BOOL DivLoadBGM_load( FIELD_SOUND* fieldSound )
   {
     // 内部情報を更新
     fieldSound->currentBGM = fieldSound->loadBGM;
-    fieldSound->loadBGM = FSND_BGM_NULL;
+    fieldSound->loadBGM = BGM_NONE;
 
 #ifdef DEBUG_ONLY_FOR_obata_toshihiro
-    OS_TFPrintf( FSND_PRINT_NO, "FIELD-SOUND: div load BGM(%d) finish\n", fieldSound->currentBGM );
+    OS_TFPrintf( PRINT_NO, "FIELD-SOUND: div load BGM(%d) finish\n", fieldSound->currentBGM );
 #endif
   } 
   return loadFinished;
@@ -1838,9 +1848,9 @@ static BOOL DivLoadBGM_load( FIELD_SOUND* fieldSound )
 static void ForcePlayBGM( FIELD_SOUND* fieldSound )
 {
   // 再生するBGMが指定されていない
-  if( fieldSound->requestBGM == FSND_BGM_NULL )
+  if( fieldSound->requestBGM == BGM_NONE )
   {
-    OS_TFPrintf( FSND_PRINT_NO, "FIELD-SOUND: Can't force play BGM (Don't know target BGM)\n" );
+    OS_TFPrintf( PRINT_NO, "FIELD-SOUND: Can't force play BGM (Don't know target BGM)\n" );
     GF_ASSERT(0);
     return;
   }
@@ -1850,11 +1860,11 @@ static void ForcePlayBGM( FIELD_SOUND* fieldSound )
 
   // 内部情報を更新
   fieldSound->currentBGM = fieldSound->requestBGM;
-  fieldSound->requestBGM = FSND_BGM_NULL;
-  fieldSound->loadBGM = FSND_BGM_NULL;
+  fieldSound->requestBGM = BGM_NONE;
+  fieldSound->loadBGM = BGM_NONE;
 
 #ifdef DEBUG_ONLY_FOR_obata_toshihiro
-  OS_TFPrintf( FSND_PRINT_NO, "FIELD-SOUND: force play BGM(%d) finish\n", fieldSound->currentBGM );
+  OS_TFPrintf( PRINT_NO, "FIELD-SOUND: force play BGM(%d) finish\n", fieldSound->currentBGM );
 #endif
 } 
 
@@ -1870,7 +1880,7 @@ static void DebugPrint_RequestQueue( const FIELD_SOUND* fieldSound )
   int pos;
   const FSND_REQUEST_DATA* requestData;
 
-  OS_TFPrintf( FSND_PRINT_NO, "FIELD-SOUND-QUEUE: " );
+  OS_TFPrintf( PRINT_NO, "FIELD-SOUND-QUEUE: " );
 
   // 先頭リクエスト取得
   pos = fieldSound->requestHeadPos;
@@ -1880,23 +1890,23 @@ static void DebugPrint_RequestQueue( const FIELD_SOUND* fieldSound )
   {
     switch( requestData->request )
     {
-    case FSND_BGM_REQUEST_FADE_IN:     OS_TFPrintf( FSND_PRINT_NO, "FADE IN" );  break;
-    case FSND_BGM_REQUEST_FADE_OUT:    OS_TFPrintf( FSND_PRINT_NO, "FADE OUT" );  break;
-    case FSND_BGM_REQUEST_PUSH:        OS_TFPrintf( FSND_PRINT_NO, "PUSH" );  break;
-    case FSND_BGM_REQUEST_POP:         OS_TFPrintf( FSND_PRINT_NO, "POP" );  break;
-    case FSND_BGM_REQUEST_CHANGE:      OS_TFPrintf( FSND_PRINT_NO, "CHANGE" );  break;
-    case FSND_BGM_REQUEST_STAND_BY:    OS_TFPrintf( FSND_PRINT_NO, "STAND BY" );  break;
-    case FSND_BGM_REQUEST_FORCE_PLAY:  OS_TFPrintf( FSND_PRINT_NO, "FORCE_PLAY" );  break;
+    case FSND_BGM_REQUEST_FADE_IN:     OS_TFPrintf( PRINT_NO, "FADE IN" );  break;
+    case FSND_BGM_REQUEST_FADE_OUT:    OS_TFPrintf( PRINT_NO, "FADE OUT" );  break;
+    case FSND_BGM_REQUEST_PUSH:        OS_TFPrintf( PRINT_NO, "PUSH" );  break;
+    case FSND_BGM_REQUEST_POP:         OS_TFPrintf( PRINT_NO, "POP" );  break;
+    case FSND_BGM_REQUEST_CHANGE:      OS_TFPrintf( PRINT_NO, "CHANGE" );  break;
+    case FSND_BGM_REQUEST_STAND_BY:    OS_TFPrintf( PRINT_NO, "STAND BY" );  break;
+    case FSND_BGM_REQUEST_FORCE_PLAY:  OS_TFPrintf( PRINT_NO, "FORCE_PLAY" );  break;
     }
-    OS_TFPrintf( FSND_PRINT_NO, " | " );
+    OS_TFPrintf( PRINT_NO, " | " );
 
     // 次のリクエストへ
-    pos = (pos + 1) % FSND_REQUEST_QUEUE_SIZE;
+    pos = (pos + 1) % REQUEST_QUEUE_SIZE;
     requestData = &( fieldSound->requestData[ pos ] );
 
     // 一周した
     if( pos == fieldSound->requestHeadPos ){ break; }
   }
 
-  OS_TFPrintf( FSND_PRINT_NO, "\n" );
+  OS_TFPrintf( PRINT_NO, "\n" );
 }

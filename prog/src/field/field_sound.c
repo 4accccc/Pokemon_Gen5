@@ -14,6 +14,13 @@
 #include "field/zonedata.h"
 #include "tr_tool/trtype_def.h"
 #include "../../../resource/trtype_bgm/trtype_bgm.cdat" 
+#include "../../../resource/fldmapdata/special_bgm/special_bgm.cdat"
+
+
+//================================================================================= 
+// Å°íËêî
+//================================================================================= 
+#define SPECIAL_BGM_NONE (0xffffffff)  // ì¡éÍBGMÇ»Çµ
 
 
 //================================================================================= 
@@ -26,6 +33,7 @@ static u32 GetZoneBGM( GAMEDATA* gameData, u32 zoneID );
 static u32 GetFieldBGM( GAMEDATA* gameData, u32 zoneID );
 static u32 GetZoneChangeBGM( GAMEDATA* gameData, u32 prevZoneID, u32 nextZoneID );
 static u32 GetMapChangeBGM( GAMEDATA* gameData, u32 prevZoneID, u32 nextZoneID ); 
+static u32 GetSpecialBGM( GAMEDATA* gameData, u32 zoneID );
 
 
 //=================================================================================
@@ -843,8 +851,15 @@ static u32 GetZoneBGM( GAMEDATA* gameData, u32 zoneID )
   u32 soundIdx;
   u8 seasonID;
 
-  seasonID = GAMEDATA_GetSeasonID( gameData );
-  soundIdx = ZONEDATA_GetBGMID( zoneID, seasonID );
+  // ì¡éÍBGM
+  soundIdx = GetSpecialBGM( gameData, zoneID );
+
+  // í èÌBGM
+  if( soundIdx == SPECIAL_BGM_NONE )
+  {
+    seasonID = GAMEDATA_GetSeasonID( gameData );
+    soundIdx = ZONEDATA_GetBGMID( zoneID, seasonID );
+  }
 
   return soundIdx;
 }
@@ -941,3 +956,35 @@ static u32 GetMapChangeBGM( GAMEDATA* gameData, u32 prevZoneID, u32 nextZoneID )
 
   return soundIdx;
 } 
+
+//---------------------------------------------------------------------------------
+/**
+ * @brief ì¡éÍBGMÇéÊìæÇ∑ÇÈ
+ *
+ * @param gameData
+ * @param zoneID   ì¡éÍBGMÇåüçıÇ∑ÇÈÉ]Å[Éì
+ *
+ * @return èåèÇ™àÍívÇ∑ÇÈì¡éÍBGMÇ™ë∂ç›Ç∑ÇÈèÍçá, ÇªÇÃBGM No.
+ *         ì¡éÍBGMÇ™ë∂ç›ÇµÇ»Ç¢èÍçá, SPECIAL_BGM_NONE
+ */
+//---------------------------------------------------------------------------------
+static u32 GetSpecialBGM( GAMEDATA* gameData, u32 zoneID )
+{
+  int i;
+  EVENTWORK* eventWork;
+
+  eventWork = GAMEDATA_GetEventWork( gameData );
+
+  // åüçı
+  for( i=0; i<NELEMS(specialBGMTable); i++)
+  {
+    if( (specialBGMTable[i].zoneID == zoneID) &&
+        (EVENTWORK_CheckEventFlag(eventWork, specialBGMTable[i].flagNo) == TRUE) )
+    {
+      return specialBGMTable[i].soundIdx;
+    }
+  }
+
+  // àÍívÇ»Çµ
+  return SPECIAL_BGM_NONE;
+}
