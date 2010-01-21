@@ -19,8 +19,8 @@ STRUCT =
 "
 typedef struct
 {
-  u32 flagNo;
-  u32 zoneID;
+  u16 flagNo;
+  u16 zoneID;
   u32 soundIdx;
 
 } SPECIAL_BGM;
