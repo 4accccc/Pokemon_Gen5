@@ -30,24 +30,33 @@ struct _WAZA_DATA {
   u8  category;     ///< カテゴリ（ enum WazaCategory )
   u8  damageType;   ///< ダメージタイプ（ enum WazaDamageType )
   u8  power;        ///< 威力
+
   u8  hitPer;       ///< 命中率
   u8  basePP;       ///< 基本PPMax
   s8  priority;     ///< ワザ優先度
   u8  hitCountMin : 4;  ///< 最小ヒット回数
   u8  hitCountMax : 4;  ///< 最大ヒット回数
+
   u16 sickID;       ///< 状態異常コード（enum WazaSick）
   u8  sickPer;      ///< 状態異常の発生率
   u8  sickCont;     ///< 状態異常継続パターン（enum WazaSickCont）
+
   u8  sickTurnMin;  ///< 状態異常の継続ターン最小
   u8  sickTurnMax;  ///< 状態異常の継続ターン最大
   u8  criticalRank; ///< クリティカルランク
   u8  shrinkPer;    ///< ひるみ確率
+
   u8  rankEffType[WAZA_RANKEFF_NUM_MAX]; ///< ステータスランク効果
+
   s8  rankEffValue[WAZA_RANKEFF_NUM_MAX];///< ステータスランク増減値
+
   u8  rankEffPer[WAZA_RANKEFF_NUM_MAX];  ///< ステータスランク発生率
+
   s8  damageRecoverRatio; ///< ダメージ回復率
   s8  HPRecoverRatio;     ///< HP回復率
   u8  target;       ///< ワザ効果範囲( enum WazaTarget )
+  u32 padding;
+
   u16 AISeqNo;      ///< AI用シーケンスナンバー
   u32 flags;        ///< 各種フラグ
 
@@ -72,6 +81,7 @@ static WAZA_DATA  gWazaData = {0};
 
 static inline WAZA_DATA* loadWazaDataTmp( WazaID id )
 {
+  OS_TPrintf("DataSize=%d, BufSize=%d\n", GFL_ARC_GetDataSize(ARCID_WAZA_TBL, id ), sizeof(gWazaData) );
   GFL_ARC_LoadData( &gWazaData, ARCID_WAZA_TBL, id );
   return &gWazaData;
 }
