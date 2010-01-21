@@ -19,6 +19,9 @@
 #include "message.naix"
 #include "msg/msg_sptr_name.h"
 #include "system/font2tex.h"
+#include "font/font.naix"
+
+#include "enc_cutin_no.h"
 
 #define EMITCOUNT_MAX  (2)
 #define OBJCOUNT_MAX  (2)
@@ -48,7 +51,26 @@
 
 #endif  //PM_DEBUG
 
+#define ENC_CUTIN_MDL_Z_OFS (700)
+
+
 typedef GMEVENT_RESULT (*SETUP_CALLBACK)( GMEVENT* event, int* seq, void* work );
+
+typedef struct POKE_WORK_tag
+{
+  int MonsNo;
+  int FormNo;
+  int Sex;
+  int Rare;
+  BOOL Egg;
+}POKE_WORK;
+
+typedef struct ENC_WORK_tag
+{
+  int MsgIdx;
+  int ChrArcIdx;
+  int PltArcIdx;
+}ENC_WORK;
 
 typedef struct FLD3D_CI_tag
 {
@@ -77,21 +99,21 @@ typedef struct FLD3D_CI_tag
   BOOL Anm1Flg;
   BOOL Anm2Flg;
 
-  //ポケモン展開用
+  //転送画像展開用
   NNSG2dCharacterData * chr;
   NNSG2dPaletteData* plt;
   GFL_BMP_DATA* ImgBitmap;
   void *chr_buf;
   void *pal_buf;
-  int MonsNo;
-  int FormNo;
-  int Sex;
-  int Rare;
-  BOOL Egg;
+
+  u8 *Work[20];
 
   BOOL VoicePlayFlg;
   int SePlayWait;
   u32 VoicePlayerIdx;
+
+  //エンカウントカットイン用
+  int Param;
 
   SETUP_CALLBACK SetupCallBack;
 }FLD3D_CI;
@@ -177,19 +199,18 @@ static GMEVENT_RESULT WhiteInEvt( GMEVENT* event, int* seq, void* work );
 static BOOL IsFlySkyOut(const int inCutinNo);
 static BOOL IsFlySkyIn(const int inCutinNo);
 
-static GMEVENT *CreateEncCutInEvt(GAMESYS_WORK *gsys, FLD3D_CI_PTR ptr, const u8 inCutInNo);
 static GMEVENT_RESULT EncCutInEvt( GMEVENT* event, int* seq, void* work );
 
 
 
 static void* GetTexStartVRAMAdrSub(NNSG3dResTex *inResTex,const NNSG3dResDictTexData* pData);
-static void* GetTexStartVRAMAdrByName(NNSG3dResTex *inResTex, const char *name, const int inLen);
+static void* GetTexStartVRAMAdrByName(NNSG3dResTex *inResTex, const char *name);
 static void* GetPlttStartVRAMAdrSub(NNSG3dResTex *inResTex,const NNSG3dResDictPlttData* pData);
-static void* GetPlttStartVRAMAdrByName(NNSG3dResTex *inResTex, const char *name, const int inLen);
-void SetResName(NNSG3dResName *outName,const char *inName, const int inLen);
+static void* GetPlttStartVRAMAdrByName(NNSG3dResTex *inResTex, const char *name);
+void SetResName(NNSG3dResName *outName,const char *inName);
 static void ReTransToGra( FLD3D_CI_PTR ptr,
-                          const char *inTexName, const int inTexNameLen,
-                          const char *inPlttName, const int inPlttNameLen,
+                          const char *inTexName,
+                          const char *inPlttName,
                           const int inBaseArcID );
 static GMEVENT_RESULT EncEffGraTransEvt( GMEVENT* event, int* seq, void* work );
 
@@ -197,6 +218,8 @@ static void SetFont2Tex(FLD3D_CI_PTR ptr, const char* inTexName, const char* inP
 
 #define DEF_CAM_NEAR	( 1 << FX32_SHIFT )
 #define DEF_CAM_FAR	( 1024 << FX32_SHIFT )
+
+FS_EXTERN_OVERLAY(enc_cutin_no);
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -332,7 +355,7 @@ void FLD3D_CI_Draw( FLD3D_CI_PTR ptr )
   
   GFL_G3D_CAMERA_Switching( camera );
   {
-    fx32 ofs;
+/**    
 	  MtxFx44 org_pm,pm;
 		const MtxFx44 *m;
 		m = NNS_G3dGlbGetProjectionMtx();
@@ -342,7 +365,7 @@ void FLD3D_CI_Draw( FLD3D_CI_PTR ptr )
 		NNS_G3dGlbSetProjectionMtx(&pm);
 		NNS_G3dGlbFlush();		  //　ジオメトリコマンドを転送
     NNS_G3dGeFlushBuffer(); // 転送まち
-
+*/
     //ユニット数分ループ
     if (ptr->UnitIdx != UNIT_NONE){
       u16 obj_idx = GFL_G3D_UTIL_GetUnitObjIdx( ptr->Util, ptr->UnitIdx );
@@ -353,8 +376,10 @@ void FLD3D_CI_Draw( FLD3D_CI_PTR ptr )
         GFL_G3D_DRAW_DrawObject( pObj, &ptr->Status );
       }
     }
+/**    
     NNS_G3dGlbSetProjectionMtx(&org_pm);
 		NNS_G3dGlbFlush();		//　ジオメトリコマンドを転送
+*/    
   }
 }
 
@@ -376,10 +401,13 @@ void FLD3D_CI_CallPokeCutIn( GAMESYS_WORK *gsys, FLD3D_CI_PTR ptr )
   //セットアップ後コールバック設定
   ptr->SetupCallBack = PokeGraTransEvt;
   //ポケモンカットイン用ポケモン指定変数セット
-  ptr->MonsNo = 3;
-  ptr->FormNo = 0;
-  ptr->Sex = 0;
-  ptr->Rare = 0;
+  {
+    POKE_WORK *poke_work;
+    poke_work = (POKE_WORK*)ptr->Work;
+    poke_work->MonsNo = 3;
+    poke_work->FormNo = 0;
+    poke_work->Rare = 0;
+  }
   ptr->SePlayWait = POKE_VOICE_WAIT;
   ptr->VoicePlayFlg = TRUE;
 
@@ -390,7 +418,7 @@ void FLD3D_CI_CallPokeCutIn( GAMESYS_WORK *gsys, FLD3D_CI_PTR ptr )
 void FLD3D_CI_CallEncCutIn( GAMESYS_WORK *gsys, FLD3D_CI_PTR ptr )
 {
   GMEVENT * event;
-  int no = FLDCIID_RIVAL;
+  int no = 0;
   event = FLD3D_CI_CreateEncCutInEvt(gsys, ptr, no);
 
   GAMESYSTEM_SetEvent(gsys, event);
@@ -461,11 +489,16 @@ GMEVENT *FLD3D_CI_CreatePokeCutInEvt( GAMESYS_WORK *gsys, FLD3D_CI_PTR ptr,
   //セットアップ後コールバック設定
   ptr->SetupCallBack = PokeGraTransEvt;
   //ポケモンカットイン用ポケモン指定変数セット
-  ptr->MonsNo = inMonsNo;
-  ptr->FormNo = inFormNo;
-  ptr->Sex = inSex;
-  ptr->Rare = inRare;
-  ptr->Egg  = inEgg;
+  {
+    POKE_WORK *poke_work;
+    poke_work = (POKE_WORK*)ptr->Work;
+    poke_work->MonsNo = inMonsNo;
+    poke_work->FormNo = inFormNo;
+    poke_work->Sex = inSex;
+    poke_work->Rare = inRare;
+    poke_work->Egg  = inEgg;
+  }
+
   ptr->SePlayWait = POKE_VOICE_WAIT;
   ptr->VoicePlayFlg = TRUE;
 
@@ -618,12 +651,14 @@ static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work )
 
       //鳴き声再生    @todo
       {
+        POKE_WORK *poke_work;
+        poke_work = (POKE_WORK*)ptr->Work;
         if (ptr->VoicePlayFlg && ptr->SePlayWait)
         {
           ptr->SePlayWait--;
           if ( ptr->SePlayWait == 0 )
           {
-            ptr->VoicePlayerIdx = PMV_PlayVoice( ptr->MonsNo, ptr->FormNo );
+            ptr->VoicePlayerIdx = PMV_PlayVoice( poke_work->MonsNo, poke_work->FormNo );
           }
         }
       }
@@ -1488,9 +1523,11 @@ static void ReTransToPokeGra(FLD3D_CI_PTR ptr)
   //ポケモングラフィック取得
   {
     u32 cgr, pal;
+    POKE_WORK *pwk;
+    pwk = (POKE_WORK*)ptr->Work;
     //リソース受け取り
-    cgr	= POKEGRA_GetCgrArcIndex( ptr->MonsNo,ptr->FormNo,ptr->Sex,ptr->Rare,POKEGRA_DIR_FRONT, ptr->Egg );
-    pal = POKEGRA_GetPalArcIndex( ptr->MonsNo,ptr->FormNo,ptr->Sex,ptr->Rare,POKEGRA_DIR_FRONT, ptr->Egg );
+    cgr	= POKEGRA_GetCgrArcIndex( pwk->MonsNo, pwk->FormNo, pwk->Sex, pwk->Rare, POKEGRA_DIR_FRONT, pwk->Egg );
+    pal = POKEGRA_GetPalArcIndex( pwk->MonsNo, pwk->FormNo, pwk->Sex, pwk->Rare, POKEGRA_DIR_FRONT, pwk->Egg );
     ptr->chr = NULL;
     ptr->plt = NULL;
     //リソースはOBJとして作っているので、LoadOBJじゃないと読み込めない
@@ -1802,13 +1839,14 @@ static GMEVENT_RESULT EncCutInEvt( GMEVENT* event, int* seq, void* work )
   case 5:
     {
       BOOL rc1,rc2,rc3;
+      
       //パーティクル再生
       rc1 = PlayParticle(ptr);
       //3Ｄモデル1アニメ再生
       rc2 = PlayMdlAnm1(ptr);
       //3Ｄモデル2アニメ再生
       rc3 = PlayMdlAnm2(ptr);
-
+/**
       //鳴き声再生    @todo
       {
         if (ptr->VoicePlayFlg && ptr->SePlayWait)
@@ -1820,7 +1858,7 @@ static GMEVENT_RESULT EncCutInEvt( GMEVENT* event, int* seq, void* work )
           }
         }
       }
-
+*/
       if (rc1&&rc2&&rc3)
       {
         //PMV_StopVoice();    //鳴き声なっているならストップ  @todo
@@ -1863,39 +1901,36 @@ static GMEVENT_RESULT EncCutInEvt( GMEVENT* event, int* seq, void* work )
 GMEVENT *FLD3D_CI_CreateEncCutInEvt( GAMESYS_WORK *gsys, FLD3D_CI_PTR ptr, const int inEncCutinNo )
 {
   GMEVENT * event;
-  int no = inEncCutinNo;
-  event = CreateEncCutInEvt(gsys, ptr, no);
-
-  return event;
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * カットインイベント作成
- *
- * @param   gsys        ゲームシステムポインタ
- * @param   ptr         カットイン管理ポインタ
- * @param   inCutInNo   カットインナンバー
- *
- * @return	event       イベントポインタ
- */
-//--------------------------------------------------------------------------------------------
-static GMEVENT *CreateEncCutInEvt(GAMESYS_WORK *gsys, FLD3D_CI_PTR ptr, const u8 inCutInNo)
-{
-  GMEVENT * event;
   FLD3D_CI_EVENT_WORK *work;
   int size;
+  const ENC_CUTIN_DAT *dat;
+
+  //オーバーレイロード
+  GFL_OVERLAY_Load( FS_OVERLAY_ID(enc_cutin_no) ); 
+  
+  dat = ENC_CUTIN_NO_GetDat(inEncCutinNo);
 
   size = sizeof(FLD3D_CI_EVENT_WORK);
   ptr->PartGene = 0;
-  ptr->CutInNo = inCutInNo;
-  //セットアップ後コールバックなしでセットする
-  ptr->SetupCallBack = EncEffGraTransEvt;
+  ptr->CutInNo = dat->CutinNo;
+  //コールバックセット
+  if ( dat->TransType != GRA_TRANS_NONE ) ptr->SetupCallBack = EncEffGraTransEvt;
+  else ptr->SetupCallBack = NULL;
+
   //ＳＥ無しでセット
   ptr->SePlayWait = 0;
   ptr->VoicePlayFlg = FALSE;
   //カメラモードセット
   ptr->CameraMode = GFL_G3D_PRJORTH;
+
+  //カットインナンバーから、転送データ等を確定する
+  {
+    ENC_WORK *wk;
+    wk = (ENC_WORK*)ptr->Work;
+    wk->MsgIdx = dat->MsgIdx;
+    wk->ChrArcIdx = dat->ChrArcIdx;
+    wk->PltArcIdx = dat->PltArcIdx;
+  }
 
   //イベント作成
   {
@@ -1906,6 +1941,10 @@ static GMEVENT *CreateEncCutInEvt(GAMESYS_WORK *gsys, FLD3D_CI_PTR ptr, const u8
     work->gsys = gsys;
     work->CiPtr = ptr;
   }
+
+  //オーバーレイアンロード
+  GFL_OVERLAY_Unload( FS_OVERLAY_ID(enc_cutin_no) );
+  
   return event;
 }
 
@@ -1918,8 +1957,8 @@ static GMEVENT *CreateEncCutInEvt(GAMESYS_WORK *gsys, FLD3D_CI_PTR ptr, const u8
  */
 //-----------------------------------------------------------------------------
 static void ReTransToGra( FLD3D_CI_PTR ptr,
-                          const char *inTexName, const int inTexNameLen,
-                          const char *inPlttName, const int inPlttNameLen,
+                          const char *inTexName,
+                          const char *inPlttName,
                           const int inBaseArcID)
 {
   u32 tex_adr;
@@ -1935,9 +1974,9 @@ static void ReTransToGra( FLD3D_CI_PTR ptr,
       NNSG3dResTex *resTex;
       NNSG3dResFileHeader* res_head = GFL_G3D_GetResourceFileHeader( res );
       resTex = NNS_G3dGetTex( res_head );
-      adr = GetTexStartVRAMAdrByName(resTex, inTexName, inTexNameLen );
+      adr = GetTexStartVRAMAdrByName(resTex, inTexName);
       tex_adr = (u32)adr;
-      adr = GetPlttStartVRAMAdrByName(resTex, inPlttName, inPlttNameLen );
+      adr = GetPlttStartVRAMAdrByName(resTex, inPlttName);
       pal_adr = (u32)adr;
     }
 
@@ -2034,6 +2073,7 @@ static GMEVENT_RESULT EncEffGraTransEvt( GMEVENT* event, int* seq, void* work )
   FLD3D_CI_EVENT_WORK *evt_work;
   GAMESYS_WORK * gsys;
   FIELDMAP_WORK * fieldmap;
+  ENC_WORK *enc_wk;
   //親イベントからワークポインタを取得
   {
     GMEVENT * parent = GMEVENT_GetParentEvent(event);
@@ -2043,12 +2083,12 @@ static GMEVENT_RESULT EncEffGraTransEvt( GMEVENT* event, int* seq, void* work )
   ptr = evt_work->CiPtr;
   gsys = GMEVENT_GetGameSysWork(event);
   fieldmap = GAMESYSTEM_GetFieldMapWork(gsys);
-
+  enc_wk = (ENC_WORK*)ptr->Work;
   switch(*seq){
   case 0:
     //相手側の画像データ転送
     ptr->ImgBitmap = GFL_BMP_Create(TEXSIZ_S/8, TEXSIZ_T/8, GFL_BMP_16_COLOR, ptr->HeapID);
-    ReTransToGra( ptr, "trwb_face001", 12, "trwb_face001_pl", 15, 3);
+    ReTransToGra( ptr, "trwb_face001", "trwb_face001_pl", 3);
     (*seq)++;
     break;
   case 1:
@@ -2056,7 +2096,7 @@ static GMEVENT_RESULT EncEffGraTransEvt( GMEVENT* event, int* seq, void* work )
     GFL_HEAP_FreeMemory( ptr->chr_buf );
     GFL_HEAP_FreeMemory( ptr->pal_buf );
     //相手側の文字データ転送
-    SetFont2Tex(ptr, "name_up", "name_up_pl", 1 );
+    SetFont2Tex(ptr, "name_up", "name_up_pl", enc_wk->MsgIdx );
     (*seq)++;
     break;
   case 2:
@@ -2065,7 +2105,7 @@ static GMEVENT_RESULT EncEffGraTransEvt( GMEVENT* event, int* seq, void* work )
     {
       //自分側の画像データ転送
       ptr->ImgBitmap = GFL_BMP_Create(TEXSIZ_S/8, TEXSIZ_T/8, GFL_BMP_16_COLOR, ptr->HeapID);
-      ReTransToGra( ptr, "trwb_hero_ine", 13, "trwb_hero_ine_pl", 16, 6);
+      ReTransToGra( ptr, "trwb_hero_ine", "trwb_hero_ine_pl", 6);
       (*seq)++;
     }
     break;
@@ -2074,10 +2114,13 @@ static GMEVENT_RESULT EncEffGraTransEvt( GMEVENT* event, int* seq, void* work )
     GFL_HEAP_FreeMemory( ptr->chr_buf );
     GFL_HEAP_FreeMemory( ptr->pal_buf );
     //自分側の文字データ転送
-    SetFont2Tex(ptr, "name_down", "name_down_pl", 2 );
+    SetFont2Tex(ptr, "name_down", "name_down_pl", SPTR_PLAYER );
     (*seq)++;
     break;
   case 4:
+    //座標セット
+    VEC_Set( &ptr->Status.trans, 0, 0, -(ENC_CUTIN_MDL_Z_OFS*FX32_ONE) );
+    GFL_G3D_SetSystemSwapBufferMode( GX_SORTMODE_AUTO, GX_BUFFERMODE_Z );
     //終了
     return GMEVENT_RES_FINISH;
   }
@@ -2104,13 +2147,13 @@ static void* GetPlttStartVRAMAdrSub(NNSG3dResTex *inResTex,const NNSG3dResDictPl
 
 }
 
-static void* GetTexStartVRAMAdrByName(NNSG3dResTex *inResTex, const char *name, const int inLen)
+static void* GetTexStartVRAMAdrByName(NNSG3dResTex *inResTex, const char *name)
 {
 	NNSG3dResName tmpResName;
 	const NNSG3dResDictTexData* pData;
 
 	//テクスチャの実体をサーチ
-	SetResName(&tmpResName, name, inLen);	//文字列をNNSG3dResNameに変換
+	SetResName(&tmpResName, name);	//文字列をNNSG3dResNameに変換
 	pData = NNS_G3dGetTexDataByName( inResTex, &tmpResName );
 
 	if (pData == NULL){
@@ -2121,13 +2164,13 @@ static void* GetTexStartVRAMAdrByName(NNSG3dResTex *inResTex, const char *name, 
 	return GetTexStartVRAMAdrSub(inResTex, pData);
 }
 
-static void* GetPlttStartVRAMAdrByName(NNSG3dResTex *inResTex, const char *name, const int inLen)
+static void* GetPlttStartVRAMAdrByName(NNSG3dResTex *inResTex, const char *name)
 {
 	NNSG3dResName tmpResName;
 	const NNSG3dResDictPlttData* pData;
 
 	//テクスチャの実体をサーチ
-	SetResName(&tmpResName, name, inLen);	//文字列をNNSG3dResNameに変換
+	SetResName(&tmpResName, name);	//文字列をNNSG3dResNameに変換
 	pData = NNS_G3dGetPlttDataByName( inResTex, &tmpResName );
 
 	if (pData == NULL){
@@ -2138,21 +2181,23 @@ static void* GetPlttStartVRAMAdrByName(NNSG3dResTex *inResTex, const char *name,
 	return GetPlttStartVRAMAdrSub(inResTex, pData);
 }
 
-void SetResName(NNSG3dResName *outName,const char *inName, const int inLen)
+void SetResName(NNSG3dResName *outName,const char *inName)
 {
 	u8 i;
+  int len = STD_StrLen(inName);
 
 	//初期化
 	for (i=0;i<4;i++){
 		outName->val[i] = 0;
 	}
-	for (i=0;i<inLen;i++){
+	for (i=0;i<len;i++){
 		outName->name[i] = inName[i];
 	}
 }
 
 static void SetFont2Tex(FLD3D_CI_PTR ptr, const char* inTexName, const char* inPltName, const int inMsgIdx )
 {
+  F2T_WORK f2t_work;
   GFL_MSGDATA* msg; // メッセージデータ
   STRBUF*   strbuf; // 描画文字列
   GFL_G3D_RES* res = GFL_G3D_UTIL_GetResHandle( ptr->Util, 0 );
@@ -2177,10 +2222,29 @@ static void SetFont2Tex(FLD3D_CI_PTR ptr, const char* inTexName, const char* inP
     strbuf = GFL_MSG_CreateString( msg, inMsgIdx );
   }
 
-  F2T_CopyString(res, inTexName, inPltName, strbuf, 0, 0, heapID, NULL );
+  {
+    PRINTSYS_LSB  lsb = PRINTSYS_LSB_Make(1,2,0);
+    F2T_CopyString(res, inTexName, inPltName, strbuf, 0, 0, lsb, heapID, &f2t_work );
+  }
 
   // 後始末
   GFL_HEAP_FreeMemory( strbuf );
   GFL_MSG_Delete( msg );
 
+  //パレットロード
+  {
+    ptr->pal_buf = GFL_ARC_UTIL_LoadPalette( ARCID_FONT, NARC_font_default_nclr, &ptr->plt, heapID );
+    {
+      //テクスチャ転送
+      void* src = src = ptr->plt->pRawData;
+      u32   dst = NNS_GfdGetTexKeyAddr(f2t_work.plttVramKey) + f2t_work.plttOffset;
+      u32   siz = 0x20;
+
+      GX_BeginLoadTexPltt();
+      DC_FlushRange(src, siz);
+      GX_LoadTexPltt(src, dst, siz);
+      GX_EndLoadTexPltt();
+    }
+    GFL_HEAP_FreeMemory( ptr->pal_buf );
+  }
 }

@@ -167,7 +167,6 @@ SRCS  +=    $(SOUNDSRC) \
         infowin/infowin.c \
         system/actor_tool.c \
         system/bmp_oam.c \
-        system/el_scoreboard.c \
         net_app/wifi_earth/wifi_country.c \
         field/script.c \
         field/script_hideitem.c \
@@ -381,7 +380,8 @@ SRCS_OVERLAY_FIELD_INIT		=	field/event_mapchange.c \
         field/ev_time.c \
         field/field_wfbc_data_local.c \
         field/scrcmd_wfbc.c \
-        field/areadata.c
+        field/areadata.c \
+        system/el_scoreboard.c
 
 # field
 #===> SRCS_OVERLAY_FIELD_INIT
@@ -761,10 +761,13 @@ SRCS_OVERLAY_TOWNMAP = app/townmap/townmap.c \
 #===> SRCS_OVERLAY_FIELD_GYM_ICE
 #===> SRCS_OVERLAY_FIELD_GYM_DRAGON
 #===> SRCS_OVERLAY_FIELD_GIMMICK_BGATE
-#==>  SRCS_OVERLAY_FIELD_GIMMICK_GATE
-#==>  SRCS_OVERLAY_FIELD_GIMMICK_H01
-#==>  SRCS_OVERLAY_FIELD_GIMMICK_H03
+#===> SRCS_OVERLAY_FIELD_GIMMICK_GATE
+#===> SRCS_OVERLAY_FIELD_GIMMICK_H01
+#===> SRCS_OVERLAY_FIELD_GIMMICK_H03
 SRCS_OVERLAY_ENCEFF_CI = field/enceff_ci.c
+
+#===>  SRCS_OVERLAY_ENCEFF_CI
+SRCS_OVERLAY_ENC_CUTIN_NO = field/enc_cutin_no.c
 
 #===> SRCS_OVERLAY_PL_BOAT_SETUP
 #===> SRCS_OVERLAY_FIELD_GYM_INIT
@@ -778,9 +781,9 @@ SRCS_OVERLAY_ENCEFF_CI = field/enceff_ci.c
 #===> SRCS_OVERLAY_FIELD_GYM_ICE
 #===> SRCS_OVERLAY_FIELD_GYM_DRAGON
 #===> SRCS_OVERLAY_FIELD_GIMMICK_BGATE
-#==>  SRCS_OVERLAY_FIELD_GIMMICK_GATE
-#==>  SRCS_OVERLAY_FIELD_GIMMICK_H01
-#==>  SRCS_OVERLAY_FIELD_GIMMICK_H03
+#===> SRCS_OVERLAY_FIELD_GIMMICK_GATE
+#===> SRCS_OVERLAY_FIELD_GIMMICK_H01
+#===> SRCS_OVERLAY_FIELD_GIMMICK_H03
 SRCS_OVERLAY_ENCEFF_PRG = field/enceff_prg.c
 
 #===> SRCS_OVERLAY_PL_BOAT_SETUP
@@ -795,9 +798,9 @@ SRCS_OVERLAY_ENCEFF_PRG = field/enceff_prg.c
 #===> SRCS_OVERLAY_FIELD_GYM_ICE
 #===> SRCS_OVERLAY_FIELD_GYM_DRAGON
 #===> SRCS_OVERLAY_FIELD_GIMMICK_BGATE
-#==>  SRCS_OVERLAY_FIELD_GIMMICK_GATE
-#==>  SRCS_OVERLAY_FIELD_GIMMICK_H01
-#==>  SRCS_OVERLAY_FIELD_GIMMICK_H03
+#===> SRCS_OVERLAY_FIELD_GIMMICK_GATE
+#===> SRCS_OVERLAY_FIELD_GIMMICK_H01
+#===> SRCS_OVERLAY_FIELD_GIMMICK_H03
 SRCS_OVERLAY_ENCEFF_MDL = field/enceff_mdl.c
 
 #===> SRCS_OVERLAY_ENCEFF_PRG

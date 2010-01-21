@@ -20,7 +20,6 @@
 
 #define BCOL1 (0)
 #define BCOL2 (0)
-#define LCOL  (3)
 
 typedef struct {
   u16           texSizIdxS;
@@ -51,11 +50,11 @@ static const GX_TEXSIZ_TBL GX_texSizTbl[] = {
 
 static void clearBitmap(GFL_BMP_DATA* bmp);
 static void printStr
-      (const STRBUF* str, u16 xpos, u16 ypos, GFL_BMP_DATA* bmp,
+      (const STRBUF* str, u16 xpos, u16 ypos, PRINTSYS_LSB lsb, GFL_BMP_DATA* bmp,
        PRINT_QUE* printQue, GFL_FONT* fontHandle);
 static void convBitmap(GFL_BMP_DATA* src, GFL_BMP_DATA* dst);
 static void LoadTex
-      (F2T_SETDATA * setData, const STRBUF* str, u16 xpos, u16 ypos, HEAPID heapID);
+      (F2T_SETDATA * setData, const STRBUF* str, u16 xpos, u16 ypos, PRINTSYS_LSB lsb, HEAPID heapID);
 
 //----------------------------------------------------------------------------
 /**
@@ -67,7 +66,7 @@ static void LoadTex
 //-----------------------------------------------------------------------------
 BOOL F2T_CopyString(
     const GFL_G3D_RES* g3Dtex, const char* tex_name, const char* plt_name,
-    const STRBUF* str, u16 xpos, u16 ypos, HEAPID heapID, F2T_WORK *outWork )
+    const STRBUF* str, u16 xpos, u16 ypos, PRINTSYS_LSB lsb, HEAPID heapID, F2T_WORK *outWork )
 {
 
   F2T_WORK work;
@@ -168,7 +167,7 @@ BOOL F2T_CopyString(
       setData.texOffset = work.texOffset;
       setData.fontHandle = fontHandle;
 
-      LoadTex(&setData, str, xpos, ypos, heapID);
+      LoadTex(&setData, str, xpos, ypos, lsb, heapID);
     }
     GFL_FONT_Delete(fontHandle);
   }
@@ -186,7 +185,7 @@ BOOL F2T_CopyString(
  */
 //-----------------------------------------------------------------------------
 BOOL F2T_CopyStringAlloc(
-    const STRBUF* str, u16 xpos, u16 ypos, HEAPID heapID, F2T_WORK *outWork )
+    const STRBUF* str, u16 xpos, u16 ypos, PRINTSYS_LSB lsb, HEAPID heapID, F2T_WORK *outWork )
 {
   F2T_WORK work;
   GFL_FONT*     fontHandle;
@@ -235,7 +234,7 @@ BOOL F2T_CopyStringAlloc(
     setData.texOffset = 0;
     setData.fontHandle = fontHandle;
 
-    LoadTex(&setData, str, xpos, ypos, heapID);
+    LoadTex(&setData, str, xpos, ypos, lsb, heapID);
   }
 
   GFL_FONT_Delete(fontHandle);
@@ -253,6 +252,11 @@ BOOL F2T_CopyStringAlloc(
  *	@return none
  */
 //-----------------------------------------------------------------------------
+u16 F2T_GetTexSizTblSize(void)
+{
+  return NELEMS(GX_texSizTbl);
+}
+
 u16 F2T_GetTexSize(const int inIdx)
 {
   return GX_texSizTbl[inIdx].siz;
@@ -280,12 +284,10 @@ static void clearBitmap(GFL_BMP_DATA* bmp)
 }
 // 文字列描画
 static void printStr
-      (const STRBUF* str, u16 xpos, u16 ypos, GFL_BMP_DATA* bmp,
+      (const STRBUF* str, u16 xpos, u16 ypos, PRINTSYS_LSB lsb, GFL_BMP_DATA* bmp,
        PRINT_QUE* printQue, GFL_FONT* fontHandle)
 {
-  PRINTSYS_LSB  lsb = PRINTSYS_LSB_Make(LCOL,0,0);
   clearBitmap(bmp);
-
   PRINTSYS_PrintQueColor(printQue, bmp, xpos, ypos, str, fontHandle, lsb);
 }
 // ビットマップ変換
@@ -308,7 +310,7 @@ static void convBitmap(GFL_BMP_DATA* src, GFL_BMP_DATA* dst)
 
 //------------------------------------------------------------------
 static void LoadTex
-      (F2T_SETDATA * setData, const STRBUF* str, u16 xpos, u16 ypos, HEAPID heapID)
+      (F2T_SETDATA * setData, const STRBUF* str, u16 xpos, u16 ypos, PRINTSYS_LSB lsb, HEAPID heapID)
 {
   //テクスチャ作成
   u16           texSizS, texSizT;
@@ -326,7 +328,7 @@ static void LoadTex
   bmp = GFL_BMP_Create(texSizS/8, texSizT/8, GFL_BMP_16_COLOR, heapID);
   bmpTmp = GFL_BMP_Create(texSizS/8, texSizT/8, GFL_BMP_16_COLOR, heapID);
 
-  printStr(str, xpos, ypos, bmpTmp, printQue, setData->fontHandle);
+  printStr(str, xpos, ypos, lsb, bmpTmp, printQue, setData->fontHandle);
   convBitmap(bmpTmp, bmp);
   {
     //テクスチャ転送

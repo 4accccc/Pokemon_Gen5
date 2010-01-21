@@ -23,9 +23,10 @@ typedef struct F2T_WORK_tag
 
 extern BOOL F2T_CopyString(
     const GFL_G3D_RES* g3Dtex, const char* tex_name, const char* plt_name,
-    const STRBUF* str, u16 xpos, u16 ypos, HEAPID heapID, F2T_WORK *outWork );
+    const STRBUF* str, u16 xpos, u16 ypos, PRINTSYS_LSB lsb, HEAPID heapID, F2T_WORK *outWork );
 extern BOOL F2T_CopyStringAlloc(
-    const STRBUF* str, u16 xpos, u16 ypos, HEAPID heapID, F2T_WORK *outWork );
+    const STRBUF* str, u16 xpos, u16 ypos, PRINTSYS_LSB lsb, HEAPID heapID, F2T_WORK *outWork );
+extern u16 F2T_GetTexSizTblSize(void);
 extern u16 F2T_GetTexSize(const int inIdx);
 extern GXTexSizeS F2T_GetTexSizeS(const int inIdx);
 extern GXTexSizeT F2T_GetTexSizeT(const int inIdx);

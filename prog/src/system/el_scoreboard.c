@@ -18,6 +18,8 @@
 
 #include "system/el_scoreboard.h"
 
+#include "system/font2tex.h"
+
 //============================================================================================
 /**
  *
@@ -49,6 +51,7 @@ typedef struct {
 }EL_SCOREBOARD_SETDATA;
 
 //------------------------------------------------------------------
+#if 0
 typedef struct {
   u16         siz;
   GXTexSizeS  s;
@@ -67,6 +70,8 @@ static const GX_TEXSIZ_TBL GX_texSizTbl[] = {
 
 static void makeElboard
       (EL_SCOREBOARD_SETDATA* setData, const STRBUF* str, u16 xpos, u16 ypos, HEAPID heapID);
+#endif
+
 //------------------------------------------------------------------
 /**
  * @brief   パレットアニメデータ
@@ -93,11 +98,12 @@ static const u16 plttData3[PLTT_SIZ/COL_SIZ] = { 0x0000, COL_B2, COL_B1, COL_F2 
 static const u16* plttData[] = {
   plttData0, plttData1, plttData2, plttData3, plttData0, plttData1, plttData2, plttData3,
 };
-
+#if 0
 #define BCOL1 (0)
 #define BCOL2 (0)
-#define LCOL  (3)
+#endif
 
+#define LCOL  (3)
 static void anmElboard(EL_SCOREBOARD_ANMDATA* anmData, int timer);
 
 //============================================================================================
@@ -142,9 +148,20 @@ EL_SCOREBOARD* ELBOARD_Add( const STRBUF* str, const ELB_MODE mode, HEAPID heapI
 {
   EL_SCOREBOARD* elb = GFL_HEAP_AllocClearMemory(heapID, sizeof(EL_SCOREBOARD));
   GFL_FONT*     fontHandle;
-
+  F2T_WORK f2t_work;
+  PRINTSYS_LSB  lsb;
   elb->mode = mode;
 
+  lsb = PRINTSYS_LSB_Make(LCOL,0,0);
+  F2T_CopyStringAlloc( str, 0, 2, lsb, heapID, &f2t_work );
+
+  elb->texSizIdxS = f2t_work.texSizIdxS;
+  elb->texSizIdxT = f2t_work.texSizIdxT;
+  elb->texVramKey = f2t_work.texVramKey;
+  elb->plttVramKey = f2t_work.plttVramKey;
+  elb->timer = 0;
+
+#if 0
   //フォントハンドル作成
   fontHandle = GFL_FONT_Create
             (ARCID_FONT, NARC_font_large_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, heapID);
@@ -196,7 +213,7 @@ EL_SCOREBOARD* ELBOARD_Add( const STRBUF* str, const ELB_MODE mode, HEAPID heapI
   GFL_FONT_Delete(fontHandle);
 
   elb->timer = 0;
-
+#endif
   return elb;
 }
 
@@ -253,8 +270,8 @@ void  ELBOARD_Draw( EL_SCOREBOARD* elb,
                     GFL_G3D_CAMERA* g3Dcamera, GFL_G3D_LIGHTSET* g3Dlightset )
 {
   VecFx16     vecN;
-  u16 texSizS = GX_texSizTbl[elb->texSizIdxS].siz;
-  u16 texSizT = GX_texSizTbl[elb->texSizIdxT].siz;
+  u16 texSizS = F2T_GetTexSize(elb->texSizIdxS);//GX_texSizTbl[elb->texSizIdxS].siz;
+  u16 texSizT = F2T_GetTexSize(elb->texSizIdxT);//GX_texSizTbl[elb->texSizIdxT].siz;
 
   if(width >= texSizS){ width = texSizS; }
   if(height >= texSizT){ height = texSizT; }
@@ -289,7 +306,7 @@ void  ELBOARD_Draw( EL_SCOREBOARD* elb,
   G3_Translate(FX_Div(trans->x,scale), FX_Div(trans->y,scale), FX_Div(trans->z,scale));
 
   G3_TexImageParam( GX_TEXFMT_PLTT16, GX_TEXGEN_TEXCOORD,
-                    GX_texSizTbl[elb->texSizIdxS].s, GX_texSizTbl[elb->texSizIdxT].t,
+                    F2T_GetTexSizeS(elb->texSizIdxS), F2T_GetTexSizeT(elb->texSizIdxT),
                     GX_TEXREPEAT_ST, GX_TEXFLIP_NONE,
                     GX_TEXPLTTCOLOR0_TRNS, NNS_GfdGetTexKeyAddr(elb->texVramKey) );
   G3_TexPlttBase( NNS_GfdGetPlttKeyAddr(elb->plttVramKey), GX_TEXFMT_PLTT16 );
@@ -381,15 +398,31 @@ EL_SCOREBOARD_TEX*  ELBOARD_TEX_Add_Ex(
     const GFL_G3D_RES* g3Dtex, const char* tex_name, const char* plt_name,
     const STRBUF* str, u16 xpos, u16 ypos, HEAPID heapID )
 {
+  F2T_WORK f2t_work;
+  BOOL rc;
+  PRINTSYS_LSB  lsb;
   EL_SCOREBOARD_TEX* elb_tex = GFL_HEAP_AllocClearMemory(heapID, sizeof(EL_SCOREBOARD_TEX));
 
   elb_tex->mode = ELB_MODE_NONE;
 
-  elb_tex->texSizIdxS = NELEMS(GX_texSizTbl)-1; //初期設定
-  elb_tex->texSizIdxT = NELEMS(GX_texSizTbl)-1; //初期設定
+  elb_tex->texSizIdxS = F2T_GetTexSizTblSize()-1; //初期設定
+  elb_tex->texSizIdxT = F2T_GetTexSizTblSize()-1; //初期設定
   elb_tex->texOffset = INVALID_DATA;
   elb_tex->plttOffset = INVALID_DATA;
-
+#if 1
+  lsb = PRINTSYS_LSB_Make(LCOL,0,0);
+  rc = F2T_CopyString(g3Dtex, tex_name, plt_name, str, xpos, ypos, lsb, heapID, &f2t_work );
+  if (rc)
+  {
+    elb_tex->texVramKey = f2t_work.texVramKey;
+    elb_tex->plttVramKey = f2t_work.plttVramKey;
+    elb_tex->texOffset = f2t_work.texOffset;
+    elb_tex->texSizIdxS = f2t_work.texSizIdxS;
+    elb_tex->texSizIdxT = f2t_work.texSizIdxT;
+    elb_tex->plttOffset = f2t_work.plttOffset;
+    elb_tex->timer = 0;
+  }
+#else
   //binary内辞書からから転送先データ取得
   {
     const NNSG3dResTex*   NNSresTex = GFL_G3D_GetResTex(g3Dtex);
@@ -412,7 +445,7 @@ EL_SCOREBOARD_TEX*  ELBOARD_TEX_Add_Ex(
 
 
       entryTex = NNS_G3dGetResDataByName(NNSresDict, &name);
-      if(entryTex == NULL){ return elb_tex; }   // find name Error
+      if(entryTex == NULL){ GF_ASSERT(0); return elb_tex; }   // find name Error
 
       elb_tex->texOffset = (entryTex->texImageParam & 0x0000ffff) << 3;
       s = (entryTex->texImageParam & 0x00700000) >> 20;
@@ -447,8 +480,8 @@ EL_SCOREBOARD_TEX*  ELBOARD_TEX_Add_Ex(
       for( ; i<NNS_G3D_RESNAME_SIZE; i++ ) name.name[i] = NULL;
 
       entryPltt = NNS_G3dGetResDataByName(NNSresDict, &name);
-      if(entryPltt == NULL){ return elb_tex; }    // find name Error
-      if(entryPltt->flag == 1){ return elb_tex; } // format Error
+      if(entryPltt == NULL){ GF_ASSERT(0); return elb_tex; }    // find name Error
+      if(entryPltt->flag == 1){ GF_ASSERT(0); return elb_tex; } // format Error
 
       elb_tex->plttOffset = (entryPltt->offset & 0x0000ffff) << 3;
       //OS_Printf("pltt offset = 0x%x\n", elb_tex->plttOffset);
@@ -472,9 +505,8 @@ EL_SCOREBOARD_TEX*  ELBOARD_TEX_Add_Ex(
     }
     GFL_FONT_Delete(fontHandle);
   }
-
   elb_tex->timer = 0;
-
+#endif
   return elb_tex;
 }
 
@@ -512,7 +544,7 @@ void  ELBOARD_TEX_Main( EL_SCOREBOARD_TEX* elb_tex )
 
 
 
-
+#if 0
 //============================================================================================
 /**
  *
@@ -605,7 +637,7 @@ static void makeElboard
   PRINTSYS_QUE_Clear(printQue);
   PRINTSYS_QUE_Delete(printQue);
 }
-
+#endif
 
 
 
