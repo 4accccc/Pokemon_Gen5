@@ -89,6 +89,11 @@ struct _DEMO3D_ENGINE_WORK {
  *								static関数
  */
 //=============================================================================
+// DoubleDisp用VIntr割り込み関数
+static void vintrFunc(void)
+{
+	GFL_G3D_DOUBLE3D_VblankIntr();
+}
 
 //-----------------------------------------------------------------------------
 /**
@@ -155,7 +160,8 @@ DEMO3D_ENGINE_WORK* Demo3D_ENGINE_Init( DEMO3D_GRAPHIC_WORK* graphic, DEMO3D_ID 
   if( wk->is_double )
   {
     GFL_G3D_DOUBLE3D_Init( heapID );
-    wk->dbl3DdispVintr = GFUser_VIntr_CreateTCB( GFL_G3D_DOUBLE3D_VblankIntrTCB, NULL, 0 );
+    //wk->dbl3DdispVintr = GFUser_VIntr_CreateTCB( GFL_G3D_DOUBLE3D_VblankIntrTCB, NULL, 0 );
+		GFUser_SetVIntrFunc(vintrFunc);
   }
   
   wk->cmd = Demo3D_CMD_Init( demo_id, start_frame, heapID );
@@ -228,7 +234,8 @@ void Demo3D_ENGINE_Exit( DEMO3D_ENGINE_WORK* wk )
   if( wk->is_double )
   {
 		//終了
-		GFL_TCB_DeleteTask( wk->dbl3DdispVintr );
+		//GFL_TCB_DeleteTask( wk->dbl3DdispVintr );
+		GFUser_ResetVIntrFunc();
     GFL_G3D_DOUBLE3D_Exit();
   }
   
@@ -498,9 +505,8 @@ BOOL Demo3D_ENGINE_Main( DEMO3D_ENGINE_WORK* wk )
     // カメラのオフセットを操作
     set_camera_offset( p_camera );
   }
-
   // アニメーション更新
-  {
+	{
     int i;
     for( i=0; i<Demo3D_DATA_GetUnitMax( wk->demo_id ); i++ )
     {
