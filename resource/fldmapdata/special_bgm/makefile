@@ -34,7 +34,7 @@ include	$(PROJECT_RSCDIR)\macro_define
 # マクロ定義
 #------------------------------------------------------------------------------
 XLS_TAB_CONVERTOR = ../../../tools/exceltool/xls2xml/tab_out_sheet.rb
-CONVERTDATA       = specail_bgm_table.cdat
+CONVERTDATA       = specail_bgm.cdat
 
 
 ifeq ($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
