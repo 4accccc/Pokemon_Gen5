@@ -32,6 +32,8 @@ _EVENT_DATA_END
 /**************************************************************/
 EVENT_START   ev_wc10r0101_oldman1
 
+	_TALK_OBJ_START()
+
 	//今日既にイベントを終えたかチェック
 	IF FLAG_ON( TMFLG_WC10R0101_OLDMAN ) THEN
 	
