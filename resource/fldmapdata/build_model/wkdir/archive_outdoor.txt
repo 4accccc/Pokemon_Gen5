@@ -244,3 +244,5 @@
 "nsbmdfiles/h04_house_01.nsbmd"
 "nsbmdfiles/h04_house_02.nsbmd"
 "nsbmdfiles/gate_01_2.nsbmd"
+"nsbmdfiles/d13_house_01.nsbmd"
+"nsbmdfiles/d22_ruins_01.nsbmd"

@@ -660,7 +660,8 @@ DEP_TEXSET_IMD_OUTDOOR017 = \
 	$(SRCDIR)/tennis_01.imd \
 	$(SRCDIR)/outwarp01.imd \
 	$(SRCDIR)/outwarp02.imd \
-	$(SRCDIR)/outwarp03.imd
+	$(SRCDIR)/outwarp03.imd \
+	$(SRCDIR)/d22_ruins_01.imd
 
 texset/outdoor017.imd: $(DEP_TEXSET_IMD_OUTDOOR017) texset/tmp/outdoor017.list
 	$(TEXMAG) -q -n -o $@ -S texset/tmp/outdoor017.list
@@ -1120,7 +1121,8 @@ DEP_TEXSET_IMD_OUTDOOR031 = \
 	$(SRCDIR)/out_dust01.imd \
 	$(SRCDIR)/outwarp01.imd \
 	$(SRCDIR)/outwarp02.imd \
-	$(SRCDIR)/outwarp03.imd
+	$(SRCDIR)/outwarp03.imd \
+	$(SRCDIR)/d13_house_01.imd
 
 texset/outdoor031.imd: $(DEP_TEXSET_IMD_OUTDOOR031) texset/tmp/outdoor031.list
 	$(TEXMAG) -q -n -o $@ -S texset/tmp/outdoor031.list
