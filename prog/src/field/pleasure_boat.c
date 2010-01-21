@@ -56,7 +56,7 @@ PL_BOAT_WORK_PTR PL_BOAT_Init(void)
   work->TrNumRight = 0;
   work->TrNumSingle = 0;
   work->TrNumDouble = 0;
-
+  work->GameEnd = FALSE;
   //@todo イベント時間テーブルをロードするかも
   ;
   GFL_OVERLAY_Load( FS_OVERLAY_ID(pl_boat_setup) );
@@ -76,6 +76,8 @@ PL_BOAT_WORK_PTR PL_BOAT_Init(void)
 void PL_BOAT_Main(PL_BOAT_WORK_PTR work)
 {
   if ( work == NULL ) return;
+
+  if ( work->GameEnd ) return;
 
   //汽笛のリクエストがかかっている場合はＳＥ再生
   if (work->WhistleReq)
@@ -99,6 +101,8 @@ GMEVENT *PL_BOAT_CheckEvt(GAMESYS_WORK *gsys, PL_BOAT_WORK_PTR work)
   GMEVENT *event;
 
   if ( work == NULL ) return NULL;
+
+  if ( work->GameEnd ) return NULL;
 
   //時間経過
   work->Time++;
@@ -313,3 +317,16 @@ static PL_BOAT_EVT GetEvt(PL_BOAT_WORK_PTR work)
   }
   return PL_BOAT_EVT_NONE;
 }
+
+//--------------------------------------------------------------
+/**
+ * @brief　ゲーム終了
+ * @param   work      PL_BOAT_WORK_PTR
+ * @retval  none
+*/
+//--------------------------------------------------------------
+void PL_BOAT_EndGame(PL_BOAT_WORK_PTR work)
+{
+  work->GameEnd = TRUE;
+}
+

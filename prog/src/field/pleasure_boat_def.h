@@ -33,5 +33,6 @@ typedef struct PL_BOAT_WORK_tag
   u8 TrNumSingle;
   u8 TrNumDouble;
 //  BOOL DblBtl[DBL_BTL_ROOM_NUM];
+  BOOL GameEnd;
 }PL_BOAT_WORK;
 

@@ -41,6 +41,9 @@ EVENT_START		ev_reserve_c03p16_cabinguide_01
 	_BALLOONWIN_OBJMSG( msg_c03p16_cabinguide_07 , C03P16_CABINGUIDE_01 )
 	_BALLOONWIN_CLOSE()
 
+  //óVóóëDèIóπ
+  _PL_BOAT_END()
+
 EVENT_END
 
 //--------------------------------------------------------------

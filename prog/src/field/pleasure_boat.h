@@ -35,4 +35,6 @@ extern void PL_BOAT_SetTime(PL_BOAT_WORK_PTR work, const int inTime);
 
 GMEVENT * PL_BOAT_CreateDemoEvt(GAMESYS_WORK *gsys, PL_BOAT_WORK_PTR work, u16 *ret_wk);
 
+extern void PL_BOAT_EndGame(PL_BOAT_WORK_PTR work);
+
 

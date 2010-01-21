@@ -110,8 +110,8 @@ EVENT_START ev_prg_c03r0801_timeup
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_cabin_kari )
 	_OBJ_ANIME_WAIT()
 
-	//望さんスクリプト終了
-	_PL_BOAT_END()
+	//遊覧船内ゲーム終了
+	_PL_BOAT_GAME_END()
 
 	//ブラックアウト
 	_MAP_FADE_BLACK_OUT()
@@ -157,8 +157,8 @@ _TALK_OBJ_START()
 		_BALLOONWIN_TALKOBJ_MSG( msg_c03r0801_retire_01 )
 		_BALLOONWIN_CLOSE()
 	
-		//望さんスクリプト終了
-		_PL_BOAT_END()
+		//遊覧船内ゲーム終了
+    _PL_BOAT_GAME_END()
 
 		//ブラックアウト
 		_MAP_FADE_BLACK_OUT()
@@ -721,8 +721,8 @@ EVENT_START		ev_pos_c03r0801_move_01
 
   IF $SCWK_ANSWER == PL_BOAT_DEMO_FINISHED  THEN
     
-    //望さんスクリプト終了
-	_PL_BOAT_END()
+  //遊覧船内ゲーム終了
+	_PL_BOAT_GAME_END()
 
 	//予約スクリプト
 	_RESERVE_SCRIPT( SCRID_RESERVE_C03P16_CABINGUIDE_01 )

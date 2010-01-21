@@ -707,7 +707,7 @@
   DEF_CMD( EvCmdPlBoat_GetRoomInfo, EV_SEQ_PL_BOAT_GET_ROOM_INFO )
   DEF_CMD( EvCmdPlBoat_SetRoomInfo, EV_SEQ_PL_BOAT_SET_ROOM_INFO )
   DEF_CMD( EvCmdPlBoat_CallDemo, EV_SEQ_PL_BOAT_CALL_DEMO )
-  NO_CMD()
+  DEF_CMD( EvCmdPlBoat_EndGame, EV_SEQ_PL_BOAT_GAME_END )
 
   // •XƒWƒ€ 4‚Â‚ß‚Íƒhƒ‰ƒSƒ“ƒWƒ€
   DEF_CMD( EvCmdGymIce_SwAnm, EV_SEQ_GYM_ICE_SW_ANM )
