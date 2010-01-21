@@ -307,9 +307,9 @@ static int AC_RailWalk_1( MMDL * mmdl )
 
   // RAIL_WORK
   p_rail = MMDL_GetRailWork( mmdl );
-  FIELD_RAIL_WORK_Update( p_rail );
+  MMDL_UpdateRail( mmdl );
 
-  //FIELD_RAIL_WORK_DEBUG_PrintRailGrid( p_rail );
+  FIELD_RAIL_WORK_DEBUG_PrintRailGrid( p_rail );
 
   // 新ポジションの設定
   FIELD_RAIL_WORK_GetPos( p_rail, &pos );
@@ -936,9 +936,9 @@ static int AC_Jump_1( MMDL * mmdl )
 	if( work->val ){
     // RAIL_WORK
     p_rail = MMDL_GetRailWork( mmdl );
-    FIELD_RAIL_WORK_Update( p_rail );
+    MMDL_UpdateRail( mmdl );
 
-    FIELD_RAIL_WORK_DEBUG_PrintRailOffset( p_rail );
+    //FIELD_RAIL_WORK_DEBUG_PrintRailOffset( p_rail );
 
     // 新ポジションの設定
     FIELD_RAIL_WORK_GetPos( p_rail, &pos );

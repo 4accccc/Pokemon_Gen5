@@ -446,6 +446,28 @@ FIELD_RAIL_WORK* MMDL_GetRailWork( const MMDL * fmmdl )
   return cp_work->rail_wk;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  レールのアップデート処理を行う
+ *
+ *	@param	fmmdl   ワーク
+ */
+//-----------------------------------------------------------------------------
+void MMDL_UpdateRail( MMDL* fmmdl )
+{
+  MV_RAIL_COMMON_WORK* p_work;
+
+  // レール動作チェック
+  GF_ASSERT( MMDL_CheckStatusBit( fmmdl, MMDL_STABIT_RAIL_MOVE ) );
+
+	p_work = MMDL_GetMoveProcWork( (MMDL*)fmmdl );
+  FIELD_RAIL_WORK_Update( p_work->rail_wk );
+
+  // ロケーションのセーブ
+  MMdl_RailCommon_Move( p_work, fmmdl );
+}
+
+
 
 //----------------------------------------------------------------------------
 /**
@@ -1386,6 +1408,7 @@ static void MMdl_RailCommon_Move( MV_RAIL_COMMON_WORK* p_work, MMDL * fmmdl )
   RAIL_LOCATION location;
   // 位置情報の保存
   FIELD_RAIL_WORK_GetLocation( p_work->rail_wk, &location );
+  TOMOYA_Printf( "location index %d  line %d  side %d\n", location.rail_index, location.line_grid, location.width_grid );
   MMdl_RailCommon_SetSaveLocation( p_work, &location );
 }
 

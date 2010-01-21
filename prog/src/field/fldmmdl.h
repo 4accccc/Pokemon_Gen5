@@ -1222,6 +1222,7 @@ extern BOOL MMDL_GetRailDirLocation( const MMDL *mmdl, u16 dir, RAIL_LOCATION* l
 extern void MMDL_Rail_UpdateGridPosDir( MMDL *mmdl, u16 dir );
 
 extern FIELD_RAIL_WORK* MMDL_GetRailWork( const MMDL * fmmdl );
+extern void MMDL_UpdateRail( MMDL* fmmdl );
 extern BOOL MMDL_ReqRailMove( MMDL * fmmdl, u16 dir, s16 wait );
 extern u32 MMDL_HitCheckRailMove( const MMDL *mmdl,
 	const RAIL_LOCATION* now_location, const RAIL_LOCATION* next_location );
