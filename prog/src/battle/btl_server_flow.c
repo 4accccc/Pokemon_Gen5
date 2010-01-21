@@ -854,7 +854,7 @@ SvflowResult BTL_SVFLOW_StartAfterPokeIn( BTL_SVFLOW_WORK* wk )
 
   {
     u8 numDeadPokeAfter = BTL_DEADREC_GetCount( &wk->deadRec, 0 );
-    return (numDeadPoke == numDeadPokeAfter)?  SVFLOW_RESULT_DEFAULT : SVFLOW_RESULT_POKE_IN_REQ;
+    return (numDeadPoke == numDeadPokeAfter)?  SVFLOW_RESULT_DEFAULT : SVFLOW_RESULT_POKE_COVER;
   }
 }
 
@@ -911,7 +911,7 @@ static u32 ActOrderProc_Main( BTL_SVFLOW_WORK* wk, u32 startOrderIdx )
     ||  (numDeadPoke != 0)
     ){
       reqChangePokeForServer( wk );
-      wk->flowResult = SVFLOW_RESULT_POKE_IN_REQ;
+      wk->flowResult = SVFLOW_RESULT_POKE_COVER;
       return i;
     }
 
@@ -10794,6 +10794,7 @@ static void relivePokeRec_Init( BTL_SVFLOW_WORK* wk )
 static void relivePokeRec_Add( BTL_SVFLOW_WORK* wk, u8 pokeID )
 {
   u32 i;
+
   for(i=0; i<wk->numRelivePoke; ++i)
   {
     if( wk->relivedPokeID[i] == pokeID ){
@@ -10803,6 +10804,7 @@ static void relivePokeRec_Add( BTL_SVFLOW_WORK* wk, u8 pokeID )
 
   if( i < NELEMS(wk->relivedPokeID) ){
     wk->relivedPokeID[i] = pokeID;
+    wk->numRelivePoke++;
   }
 }
 
@@ -10812,9 +10814,11 @@ static BOOL relivePokeRec_CheckNecessaryPokeIn( BTL_SVFLOW_WORK* wk )
   u32 i;
   u8 pos[ BTL_POSIDX_MAX ];
   u8 clientID;
+
   for(i=0; i<wk->numRelivePoke; ++i)
   {
     clientID = BTL_MAINUTIL_PokeIDtoClientID( wk->relivedPokeID[i] );
+
     // １個所でも空き位置があれば入場させる必要アリ
     if( BTL_POSPOKE_GetClientEmptyPos(&wk->pospokeWork, clientID, pos) ){
       return TRUE;
