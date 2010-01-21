@@ -97,7 +97,7 @@ struct _BTL_CLIENT {
   u8                numCoverPos;    ///< 担当する戦闘ポケモン数
   u8                procPokeIdx;    ///< 処理中ポケモンインデックス
   s8                prevPokeIdx;    ///< 前回の処理ポケモンインデックス
-  u8                checkedPokeCnt; ///< アクション指示したポケモン数（スキップ状態を勘案）
+  u8                firstPokeIdx;   ///< アクション指示できる最初のポケモンインデックス
   u8                fStdMsgChanged; ///< 標準メッセージ内容を書き換えたフラグ
   BtlPokePos        basePos;        ///< 戦闘ポケモンの位置ID
 
@@ -652,7 +652,7 @@ static BOOL selact_Start( BTL_CLIENT* wk, int* seq )
 {
   wk->procPokeIdx = 0;
   wk->prevPokeIdx = -1;
-  wk->checkedPokeCnt = 0;
+  wk->firstPokeIdx = 0;
 
   // ダブル以上の時、「既に選ばれているポケモン」を記録するために初期化をここで行う
   setupPokeSelParam( wk, BPL_MODE_NORMAL, wk->numCoverPos, &wk->pokeSelParam, &wk->pokeSelResult  );
@@ -660,10 +660,23 @@ static BOOL selact_Start( BTL_CLIENT* wk, int* seq )
   shooterCost_Init( wk );
 
   {
+    const BTL_POKEPARAM* bpp;
     u32 i;
+
     for(i=0; i<NELEMS(wk->actionParam); ++i){
       BTL_ACTION_SetNULL( &wk->actionParam[i] );
     }
+
+    for(i=0; i<wk->numCoverPos; ++i)
+    {
+      bpp = BTL_POKECON_GetClientPokeData( wk->pokeCon, wk->myID, i );
+      OS_TPrintf("Client_%d, %d番目のポケ=%p\n", wk->myID, i, bpp );
+      if( !is_action_unselectable(wk, bpp,  NULL) ){
+        wk->firstPokeIdx = i;
+        break;
+      }
+    }
+
   }
 
   SelActProc_Set( wk, selact_Root );
@@ -725,8 +738,8 @@ static BOOL selact_Root( BTL_CLIENT* wk, int* seq )
 
   case 3:
     // アクション選択開始
-    BTL_N_Printf( DBGSTR_CLIENT_SelectActionStart, wk->procPokeIdx, BPP_GetID(wk->procPoke), wk->checkedPokeCnt );
-    BTLV_UI_SelectAction_Start( wk->viewCore, wk->procPoke, (wk->checkedPokeCnt!=0), wk->procAction );
+    BTL_N_Printf( DBGSTR_CLIENT_SelectActionStart, wk->procPokeIdx, BPP_GetID(wk->procPoke), wk->firstPokeIdx );
+    BTLV_UI_SelectAction_Start( wk->viewCore, wk->procPoke, (wk->procPokeIdx>wk->firstPokeIdx), wk->procAction );
     (*seq)++;
     break;
 
@@ -754,8 +767,7 @@ static BOOL selact_Root( BTL_CLIENT* wk, int* seq )
     // 「にげる」or「もどる」
     case BTL_ACTION_ESCAPE:
       // 先頭のポケなら「にげる」として処理
-      // （先頭ポケが行動選択不可のケースもあるので checkedPokeCnt で判定）
-      if( wk->checkedPokeCnt == 0 ){
+      if( wk->procPokeIdx == wk->firstPokeIdx ){
         shooterCost_Save( wk, wk->procPokeIdx, 0 );
         SelActProc_Set( wk, selact_Escape );
       // ２体目以降は「もどる」として処理
@@ -767,7 +779,6 @@ static BOOL selact_Root( BTL_CLIENT* wk, int* seq )
           bpp = BTL_POKECON_GetClientPokeData( wk->pokeCon, wk->myID, wk->procPokeIdx );
           if( !is_action_unselectable(wk, bpp, NULL) )
           {
-            wk->checkedPokeCnt--;
             wk->shooterEnergy += shooterCost_Get( wk, wk->procPokeIdx );
             // 「もどる」先のポケモンが、既に「ポケモン」で交換対象を選んでいた場合はその情報をPopする
             if( BTL_ACTION_GetAction( &wk->actionParam[wk->procPokeIdx] ) == BTL_ACTION_CHANGE ){
@@ -1044,12 +1055,6 @@ static BOOL selact_CheckFinish( BTL_CLIENT* wk, int* seq )
 
   wk->procPokeIdx++;
 
-  if( BTL_ACTION_GetAction(wk->procAction) != BTL_ACTION_NULL ){
-    wk->checkedPokeCnt++;
-  }else{
-    BTL_N_PrintfEx( PRINT_FLG, DBGSTR_CLIENT_SelActPokeDead );
-  }
-
   if( wk->procPokeIdx >= wk->numCoverPos )
   {
     BTL_N_PrintfEx( PRINT_FLG, DBGSTR_CLIENT_SelectActionDone, wk->numCoverPos);
@@ -1148,7 +1153,7 @@ static u8 shooterCost_GetSum( BTL_CLIENT* wk )
 static BOOL is_action_unselectable( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, BTL_ACTION_PARAM* action )
 {
   // 死んでたらNULLデータを返す
-  if( BPP_IsDead(wk->procPoke) )
+  if( BPP_IsDead(bpp) )
   {
     if( action ){
       // 死んでる状態のアクション内容セット
@@ -1157,7 +1162,7 @@ static BOOL is_action_unselectable( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, BT
     return TRUE;
   }
   // アクション選択できない（攻撃の反動など）場合はスキップ
-  if( BPP_CONTFLAG_Get(wk->procPoke, BPP_CONTFLG_CANT_ACTION) )
+  if( BPP_CONTFLAG_Get(bpp, BPP_CONTFLG_CANT_ACTION) )
   {
     if( action ){
       BTL_ACTION_SetSkip( action );
@@ -1165,22 +1170,22 @@ static BOOL is_action_unselectable( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, BT
     return TRUE;
   }
   // ワザロック状態（前回ワザをそのまま使う）は勝手にワザ選択処理してスキップ
-  if( BPP_CheckSick(wk->procPoke, WAZASICK_WAZALOCK) )
+  if( BPP_CheckSick(bpp, WAZASICK_WAZALOCK) )
   {
-    WazaID waza = BPP_GetPrevWazaID( wk->procPoke );
-    BtlPokePos pos = BPP_GetPrevTargetPos( wk->procPoke );
-    u8 waza_idx = BPP_WAZA_SearchIdx( wk->procPoke, waza );
+    WazaID waza = BPP_GetPrevWazaID( bpp );
+    BtlPokePos pos = BPP_GetPrevTargetPos( bpp );
+    u8 waza_idx = BPP_WAZA_SearchIdx( bpp, waza );
 
     BTL_N_PrintfEx( PRINT_FLG, DBGSTR_CLIENT_WazaLockInfo, wk->myID, waza, waza_idx, pos);
 
-    if( BPP_WAZA_GetPP(wk->procPoke, waza_idx) ){
+    if( BPP_WAZA_GetPP(bpp, waza_idx) ){
       if( action ){
         BTL_ACTION_SetFightParam( action, waza, pos );
       }
     }else{
       // PPゼロならわるあがき
       if( action ){
-        setWaruagakiAction( action, wk, wk->procPoke );
+        setWaruagakiAction( action, wk, bpp );
       }
     }
     return TRUE;

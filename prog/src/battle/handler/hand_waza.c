@@ -1070,7 +1070,7 @@ static void handler_Texture( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
   {
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
     u16 waza_cnt = BPP_WAZA_GetCount( bpp );
-    PokeType next_type;
+    PokeTypePair next_type;
     {
       PokeType type[ PTL_WAZA_MAX ];
       u16 i;
@@ -1085,6 +1085,7 @@ static void handler_Texture( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
       BTL_HANDEX_PARAM_CHANGE_TYPE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CHANGE_TYPE, pokeID );
       param->next_type = next_type;
       param->pokeID = pokeID;
+      OS_TPrintf("テクスチャによるタイプへんこう : %04x / %04x\n", param->next_type, next_type);
     }
   }
 }
@@ -1397,8 +1398,9 @@ static void handler_Monomane( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
     const BTL_POKEPARAM* self = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
     const BTL_POKEPARAM* target = BTL_SVFTOOL_GetPokeParam( flowWk, BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_TARGET1) );
     WazaID waza = BPP_GetPrevWazaID( target );
-    if( waza != WAZANO_NULL)
-    {
+    if( (waza != WAZANO_NULL)
+    &&  (BPP_WAZA_SearchIdx(self, waza) != PTL_WAZA_MAX)
+    ){
       u8 wazaIdx = BPP_WAZA_SearchIdx( self, BTL_EVENT_FACTOR_GetSubID(myHandle) );
       if( wazaIdx != PTL_WAZA_MAX )
       {
@@ -4001,7 +4003,7 @@ static void handler_Kaminari_hitRatio( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WO
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
     if( BTL_SVFTOOL_GetWeather(flowWk) == BTL_WEATHER_SHINE ){
-      BTL_EVENTVAR_MulValue( BTL_EVAR_HIT_PER, 50 );
+      BTL_EVENTVAR_RewriteValue( BTL_EVAR_HIT_PER, 50 );
     }
   }
 }
@@ -5222,7 +5224,8 @@ static void handler_Nemuru_exeCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
     SV_WazaFailCause  cause = BTL_EVENTVAR_GetValue( BTL_EVAR_FAIL_CAUSE );
-    if( cause == SV_WAZAFAIL_NULL ){
+    if( cause == SV_WAZAFAIL_NULL )
+    {
       const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
 
       if( BPP_CheckSick(bpp, WAZASICK_KAIHUKUHUUJI) )
@@ -5251,6 +5254,17 @@ static void handler_Nemuru( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk,
     {
       BTL_HANDEX_PARAM_RECOVER_HP    *hp_param;
       BTL_HANDEX_PARAM_ADD_SICK      *sick_param;
+
+    // 基本状態異常は全て治す
+      if( BPP_GetPokeSick(bpp) != POKESICK_NULL )
+      {
+        BTL_HANDEX_PARAM_CURE_SICK     *cure_param;
+        cure_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CURE_SICK, pokeID );
+        cure_param->sickCode = WAZASICK_EX_POKEFULL;
+        cure_param->pokeID[0] = pokeID;
+        cure_param->poke_cnt = 1;
+        cure_param->fStdMsgDisable = TRUE;
+      }
 
       sick_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_SICK, pokeID );
       sick_param->poke_cnt = 1;
@@ -5317,21 +5331,10 @@ static void handler_Meromero_CheckNoEffect( BTL_EVENT_FACTOR* myHandle, BTL_SVFL
 static const BtlEventHandlerTable*  ADD_Texture2( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_NOEFFECT_CHECK_L2,   handler_Texture2_CheckNoEffect },
     { BTL_EVENT_UNCATEGORIZE_WAZA,     handler_Texture2 },          // 未分類ワザハンドラ
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
-}
-static void handler_Texture2_CheckNoEffect( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
-{
-  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
-  {
-    const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) );
-    if( BPP_GetPrevWazaID(bpp) == WAZANO_NULL ){
-      BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_CAUSE, SV_WAZAFAIL_OTHER );
-    }
-  }
 }
 static void handler_Texture2( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
@@ -7937,21 +7940,7 @@ static void handler_GensiNoTikara( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
   if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) == pokeID)
   &&  (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID)
   ){
-    const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
-    u8* validEffect;
-    u8  validEffectCount, i;
-
-    validEffect = BTL_SVFTOOL_GetTmpWork( flowWk, WAZA_RANKEFF_NUMS );
-    for(i=BPP_RANKPARAM_START, validEffectCount=0; i<=BPP_RANKPARAM_END; ++i)
-    {
-      if( BPP_IsRankEffectValid(bpp, i, 1) ){
-        validEffect[ validEffectCount++ ] = i;
-      }
-    }
-    if( validEffectCount ){
-      i = BTL_CALC_GetRand( validEffectCount );
-      BTL_EVENTVAR_RewriteValue( BTL_EVAR_STATUS_TYPE, validEffect[i] );
-    }
+    BTL_EVENTVAR_RewriteValue( BTL_EVAR_STATUS_TYPE, WAZA_RANKEFF_SP );
   }
 }
 
@@ -8949,7 +8938,7 @@ static void handler_Rinsyou_Pow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
     // 既に自分のワザがレコードされているので１件を越えてたら２番目以降と判定
     if( BTL_WAZAREC_GetUsedWazaCount(rec, wazaID, thisTurn) > 1)
     {
-      BTL_EVENTVAR_RewriteValue( BTL_EVAR_WAZA_POWER_RATIO, FX32_CONST(2) );
+      BTL_EVENTVAR_MulValue( BTL_EVAR_WAZA_POWER_RATIO, FX32_CONST(2) );
     }
   }
 }

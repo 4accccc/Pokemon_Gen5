@@ -520,7 +520,7 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
       case SVFLOW_RESULT_DEFAULT:
         setMainProc_Root( server );
         break;
-      case SVFLOW_RESULT_POKE_IN_REQ:
+      case SVFLOW_RESULT_POKE_COVER:
         BTL_N_Printf( DBGSTR_SV_PokeInReqForEmptyPos );
         {
           BtlCompetitor competitor = BTL_MAIN_GetCompetitor( server->mainModule );
@@ -663,7 +663,7 @@ static BOOL ServerMain_SelectPokemonIn( BTL_SERVER* server, int* seq )
       BTL_MAIN_SyncServerCalcData( server->mainModule );
 
       switch( server->flowResult ){
-      case SVFLOW_RESULT_POKE_IN_REQ:
+      case SVFLOW_RESULT_POKE_COVER:
         (*seq) = 0;
         break;
       case SVFLOW_RESULT_BTL_SHOWDOWN:
@@ -739,7 +739,7 @@ static BOOL ServerMain_SelectPokemonChange( BTL_SERVER* server, int* seq )
         (*seq) = 0;
         break;
 
-      case SVFLOW_RESULT_POKE_IN_REQ:
+      case SVFLOW_RESULT_POKE_COVER:
         setMainProc( server, ServerMain_SelectPokemonIn );
         break;
       case SVFLOW_RESULT_BTL_SHOWDOWN:

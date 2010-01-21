@@ -1291,7 +1291,7 @@ void BPP_WAZA_UpdateID( BTL_POKEPARAM* pp, u8 wazaIdx, WazaID waza, u8 ppMax, BO
     pWaza->ppMax = ppMax;
   }
   pWaza->pp = pWaza->ppMax;
-  OS_TPrintf("ワザ上書き: ppMax指定=%d, 実値:%d\n", ppMax, pWaza->ppMax);
+//  OS_TPrintf("ワザ上書き: ppMax指定=%d, 実値:%d\n", ppMax, pWaza->ppMax);
 }
 //=============================================================================================
 /**
@@ -1382,6 +1382,9 @@ void BPP_SetWazaSick( BTL_POKEPARAM* bpp, WazaSick sick, BPP_SICK_CONT contParam
 
   bpp->sickCont[ sick ] = contParam;
   bpp->wazaSickCounter[sick] = 0;
+  if( sick == WAZASICK_NEMURI ){
+    OS_TPrintf("ねむりカウンタ [%p].. %d\n", &(bpp->wazaSickCounter[sick]), bpp->wazaSickCounter[sick]);
+  }
 
   // 「どくどく」になる時は同時に「どく」にもかける
   if( sick == WAZASICK_DOKUDOKU )
@@ -1407,6 +1410,10 @@ void BPP_WazaSick_TurnCheck( BTL_POKEPARAM* bpp, BtlSickTurnCheckFunc callbackFu
 
   for(sick=0; sick<NELEMS(bpp->sickCont); ++sick)
   {
+    // ねむりはアクション開始のタイミングで独自のカウンタデクリメント処理
+    if( sick == WAZASICK_NEMURI ){
+      continue;
+    }
     if( bpp->sickCont[sick].type != WAZASICK_CONT_NONE )
     {
       u32 turnMax = BPP_SICCONT_GetTurnMax( bpp->sickCont[sick] );
@@ -1418,26 +1425,14 @@ void BPP_WazaSick_TurnCheck( BTL_POKEPARAM* bpp, BtlSickTurnCheckFunc callbackFu
       // 継続ターン経過チェック
       if( turnMax )
       {
-        u8 n = 1;
-        if( (sick == WAZASICK_NEMURI) && (IsMatchTokusei(bpp, POKETOKUSEI_HAYAOKI)) ){
-          n = 2;    // とくせい「はやおき」は眠りカウンタ２倍速
-        }
-        BTL_Printf("ポケ[%d - %p], 状態異常[%d] 最大ターン=%d, counter=%d ->",
-          bpp->coreParam.myID, bpp, sick, turnMax, bpp->wazaSickCounter[sick] );
-        bpp->wazaSickCounter[sick] += n;
+        bpp->wazaSickCounter[sick] += 1;
 
         if( bpp->wazaSickCounter[sick] >= turnMax )
         {
           BTL_Printf("経過ターンが最大ターンを越えた\n");
-          // 眠り自体のオフは行動チェック時に行う
-          if( sick != WAZASICK_NEMURI ){
-            bpp->sickCont[sick] = BPP_SICKCONT_MakeNull();;
-            bpp->wazaSickCounter[sick] = 0;
-            fCure = TRUE;
-          }
-          else{
-            BTL_Printf("しかし眠りなのでまだ起きない\n");
-          }
+          bpp->sickCont[sick] = BPP_SICKCONT_MakeNull();;
+          bpp->wazaSickCounter[sick] = 0;
+          fCure = TRUE;
         }
       }
       // 永続型で最大ターン数が指定されているものはカウンタをインクリメント
@@ -1459,6 +1454,42 @@ void BPP_WazaSick_TurnCheck( BTL_POKEPARAM* bpp, BtlSickTurnCheckFunc callbackFu
     }
   }
 }
+
+//=============================================================================================
+/**
+ * 「ねむり」独自のターンチェック処理
+ * 状態異常カウンタをインクリメントし、起きる／起きないのチェックを行う
+ *
+ * @param   bpp
+ *
+ * @retval  BOOL    今回の呼び出しによって起きた場合はTRUE／それ以外はFALSE
+ */
+//=============================================================================================
+BOOL BPP_CheckNemuriWakeUp( BTL_POKEPARAM* bpp )
+{
+  BPP_SICK_CONT* cont = &(bpp->sickCont[ WAZASICK_NEMURI ]);
+
+  if( cont->type != WAZASICK_CONT_NONE )
+  {
+    u32 turnMax = BPP_SICCONT_GetTurnMax( *cont );
+    if( turnMax )
+    {
+      // とくせい「はやおき」は眠りカウンタ２倍速
+      u32 incValue = IsMatchTokusei(bpp, POKETOKUSEI_HAYAOKI)? 2 : 1;
+
+      bpp->wazaSickCounter[ WAZASICK_NEMURI ] += incValue;
+      BTL_N_Printf( DBGSTR_BPP_NemuriWakeCheck, bpp->coreParam.myID, turnMax, bpp->wazaSickCounter[ WAZASICK_NEMURI ] );
+      if( bpp->wazaSickCounter[ WAZASICK_NEMURI ] > turnMax )
+      {
+        *cont = BPP_SICKCONT_MakeNull();;
+        BPP_CureWazaSick( bpp, WAZASICK_NEMURI );
+        return TRUE;
+      }
+    }
+  }
+  return FALSE;
+}
+
 //=============================================================================================
 /**
  * ポケモン系状態異常を回復させる
@@ -1473,6 +1504,7 @@ void BPP_CurePokeSick( BTL_POKEPARAM* bpp )
   for(i=POKESICK_ORIGIN; i<POKESICK_MAX; ++i)
   {
     bpp->sickCont[ i ] = BPP_SICKCONT_MakeNull();
+    bpp->wazaSickCounter[ i ] = 0;
     cureDependSick( bpp, i );
   }
 }
@@ -1489,9 +1521,11 @@ static void cureDependSick( BTL_POKEPARAM* bpp, WazaSick sickID  )
   switch( sickID ){
   case WAZASICK_NEMURI:
     bpp->sickCont[ WAZASICK_AKUMU ] = BPP_SICKCONT_MakeNull();    // 眠りが治れば“あくむ”も治る
+    bpp->wazaSickCounter[ WAZASICK_AKUMU ] = 0;
     break;
   case WAZASICK_DOKU:
     bpp->sickCont[ WAZASICK_DOKUDOKU ] = BPP_SICKCONT_MakeNull(); // 毒が治れば“どくどく”も治る
+    bpp->wazaSickCounter[ WAZASICK_DOKUDOKU ] = 0;
     break;
   }
 }
@@ -1504,15 +1538,16 @@ static void cureDependSick( BTL_POKEPARAM* bpp, WazaSick sickID  )
  *
  */
 //=============================================================================================
-void BPP_CureWazaSick( BTL_POKEPARAM* pp, WazaSick sick )
+void BPP_CureWazaSick( BTL_POKEPARAM* bpp, WazaSick sick )
 {
   if( BTL_CALC_IsBasicSickID(sick) )
   {
-    BPP_CurePokeSick( pp );
+    BPP_CurePokeSick( bpp );
   }
   else
   {
-    pp->sickCont[ sick ] = BPP_SICKCONT_MakeNull();
+    bpp->sickCont[ sick ] = BPP_SICKCONT_MakeNull();
+    bpp->wazaSickCounter[ sick ] = 0;
   }
 }
 //=============================================================================================
@@ -1545,34 +1580,6 @@ void BPP_CureWazaSickDependPoke( BTL_POKEPARAM* bpp, u8 depend_pokeID, BppCureWa
       callbackFunc( callbackArg, bpp, i, depend_pokeID );
     }
   }
-}
-//=============================================================================================
-/**
- * 「ねむり」ターン進行　※ポケモン状態異常チェックは、「たたかう」を選んだ場合にのみ行う
- *
- * @param   pp
- *
- * @retval  BOOL    目が覚めた場合はTrue
- */
-//=============================================================================================
-BOOL BPP_Nemuri_CheckWake( BTL_POKEPARAM* pp )
-{
-  if( BPP_CheckSick(pp, WAZASICK_NEMURI) )
-  {
-    u8 turnMax = BPP_SICCONT_GetTurnMax( pp->sickCont[POKESICK_NEMURI] );
-    BTL_Printf("ねむりターンチェック：turnMax=%d, turnCount=%d\n", turnMax, pp->wazaSickCounter[POKESICK_NEMURI]);
-    if( (turnMax != 0 ) && (pp->wazaSickCounter[POKESICK_NEMURI] >= turnMax) )
-    {
-      pp->sickCont[ POKESICK_NEMURI ] = BPP_SICKCONT_MakeNull();
-      pp->sickCont[ WAZASICK_AKUMU ] = BPP_SICKCONT_MakeNull();
-      pp->wazaSickCounter[ POKESICK_NEMURI ] = 0;
-      pp->wazaSickCounter[ WAZASICK_AKUMU ] = 0;
-      return TRUE;
-    }
-  }else{
-    GF_ASSERT(0);
-  }
-  return FALSE;
 }
 //=============================================================================================
 /**

@@ -44,6 +44,8 @@ enum {
   BTL_MOUDOKU_SPLIT_DENOM = 16,     ///< もうどく時、最大HPの何分の１減るか（基本値=最小値）
   BTL_MOUDOKU_COUNT_MAX = BTL_MOUDOKU_SPLIT_DENOM-1,  ///< もうどく時、ダメージ倍率をいくつまでカウントアップするか
 
+  BTL_BIND_TURN_MAX = 6,        ///< まきつき系の継続ターン数最大値
+
 
   BTL_CONF_EXE_RATIO = 30,    ///< 混乱時の自爆確率
   BTL_CONF_TURN_MIN = 2,

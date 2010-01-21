@@ -3107,11 +3107,11 @@ static const BtlEventHandlerTable* HAND_ADD_ITEM_NebariNoKagidume( u32* numElems
 static void handler_NebariNoKagidume( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID)
-  &&  (BTL_EVENTVAR_GetValue(BTL_EVAR_SICKID == WAZASICK_BIND))
+  &&  (BTL_EVENTVAR_GetValue(BTL_EVAR_SICKID) == WAZASICK_BIND)
   ){
     BPP_SICK_CONT cont;
     cont.raw = BTL_EVENTVAR_GetValue( BTL_EVAR_SICK_CONT );
-    BPP_SICKCONT_SetTurn( &cont, 5 );
+    BPP_SICKCONT_SetTurn( &cont, BTL_BIND_TURN_MAX );
     BTL_EVENTVAR_RewriteValue( BTL_EVAR_SICK_CONT, cont.raw );
   }
 }
@@ -4217,15 +4217,14 @@ static void handler_RedCard( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
   {
     BTL_HANDEX_PARAM_PUSHOUT* push_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_PUSHOUT, pokeID );
     push_param->pokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_ATK );
+    HANDEX_STR_Setup( &push_param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_RedCard );
+    HANDEX_STR_AddArg( &push_param->exStr, pokeID );
+    HANDEX_STR_AddArg( &push_param->exStr, push_param->pokeID );
 
     // 相手を吹き飛ばしたら、アイテムを消費する
     {
-      BTL_HANDEX_PARAM_CONSUME_ITEM* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_SET_ITEM, pokeID );
+      BTL_HANDEX_PARAM_CONSUME_ITEM* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CONSUME_ITEM, pokeID );
       param->header.failSkipFlag = TRUE;
-
-      HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_RedCard );
-      HANDEX_STR_AddArg( &param->exStr, pokeID );
-      HANDEX_STR_AddArg( &param->exStr, push_param->pokeID );
     }
   }
 }
