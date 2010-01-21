@@ -1213,6 +1213,37 @@ BOOL  PMDSND_PresetExtraMusic( void* seqAdrs, void* bnkAdrs, u32 waveNo )
 	return TRUE;
 }
 
+BOOL  PMDSND_PresetExtraMusic2( void* seqAdrs, void* bnkAdrs, u32 dummyNo )
+{
+	const NNSSndArcSeqInfo* seqInfo = NNS_SndArcGetSeqInfo(dummyNo);
+	u32 seqFileID = seqInfo->fileId;
+	u32 bnkNo = seqInfo->param.bankNo;
+
+	const NNSSndArcBankInfo* bnkInfo = NNS_SndArcGetBankInfo(bnkNo);
+	u16 wavNo[4] = {0, 0, 0, 0};
+	u32 bnkFileID = bnkInfo->fileId;
+	int i;
+	for(i=0; i<4; i++){ wavNo[i] = bnkInfo->waveArcNo[i]; }
+
+	SOUNDMAN_LoadHierarchyPlayer_forThread_heapsvSB();
+
+	// 事前に波形読み込み
+	for(i=0; i<4; i++){
+		if(wavNo[i]){
+			if(NNS_SndArcLoadWaveArc(wavNo[i], PmSndHeapHandle) == FALSE ){
+				return FALSE;		// 波形読み込み失敗
+			}
+		}
+	}
+	// ダミー音楽のFileIDを入力アドレスに置き換える
+	NNS_SndArcSetFileAddress(bnkFileID, bnkAdrs); 
+	NNS_SndArcSetFileAddress(seqFileID, seqAdrs); 
+
+	SOUNDMAN_LoadHierarchyPlayer_forThread_end(dummyNo);
+
+	return TRUE;
+}
+
 BOOL  PMDSND_ChangeWaveData( u32 waveNo, u32 waveIdx, void* waveAdrs) 
 {
 	const NNSSndArcWaveArcInfo* waveInfo;
