@@ -3156,6 +3156,7 @@ static void handler_KaigaraNoSuzu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
     u32 damage_sum = BTL_EVENTVAR_GetValue( BTL_EVAR_DAMAGE );
     damage_sum /= common_GetItemParam( myHandle, ITEM_PRM_ATTACK );
 
+    if( damage_sum )
     {
       BTL_HANDEX_PARAM_RECOVER_HP* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RECOVER_HP, pokeID );
       param->pokeID = pokeID;

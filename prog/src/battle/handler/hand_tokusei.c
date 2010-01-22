@@ -5409,7 +5409,7 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_Surinuke( u32* numElems )
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_JisinKajou( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_DAMAGEPROC_END, handler_JisinKajou   },    // ワザダメージプロセス最終ハンドラ
+    { BTL_EVENT_DAMAGEPROC_END_INFO, handler_JisinKajou   },    // ワザダメージプロセス最終ハンドラ
   };
   *numElems = NELEMS(HandlerTable);
   return HandlerTable;

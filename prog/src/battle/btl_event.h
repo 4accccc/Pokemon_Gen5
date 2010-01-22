@@ -130,7 +130,8 @@ typedef enum {
   BTL_EVENT_WEATHER_CHANGE_AFTER,   ///< 天候の変化（直後）
   BTL_EVENT_WEATHER_REACTION,       ///< 天候ダメージに対する反応
   BTL_EVENT_SIMPLE_DAMAGE_ENABLE,   ///< ワザ以外ダメージ有効判定
-  BTL_EVENT_DAMAGEPROC_END,         ///< ダメージワザ処理直後
+  BTL_EVENT_DAMAGEPROC_END_INFO,    ///< ダメージワザシーケンス終了（ダメージを受けたポケモンが居る時のみ）
+  BTL_EVENT_DAMAGEPROC_END,         ///< ダメージワザシーケンス終了（常に呼び出し）
   BTL_EVENT_CHANGE_TOKUSEI_BEFORE,  ///< とくせい書き換え直前（書き換え確定）
   BTL_EVENT_CHANGE_TOKUSEI_AFTER,   ///< とくせい書き換え後
   BTL_EVENT_CHECK_PUSHOUT,          ///< ふきとばし系ワザチェック

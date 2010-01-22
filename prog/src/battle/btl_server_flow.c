@@ -5096,11 +5096,15 @@ static BOOL scproc_DrainCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_
 //----------------------------------------------------------------------------------
 static void scEvent_DamageProcEnd( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, BTL_POKESET* targets, WazaID waza )
 {
+  u32 cnt;
+
   BTL_EVENTVAR_Push();
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );
     {
-      u32 i, damage_sum, cnt = BTL_POKESET_GetCount( targets );
+      u32 i, damage_sum;
       const BTL_POKEPARAM* bpp;
+
+      cnt = BTL_POKESET_GetCount( targets );
       BTL_EVENTVAR_SetConstValue( BTL_EVAR_TARGET_POKECNT, cnt );
       if( cnt )
       {
@@ -5116,7 +5120,11 @@ static void scEvent_DamageProcEnd( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* att
       }
       BTL_EVENTVAR_SetConstValue( BTL_EVAR_DAMAGE, damage_sum );
     }
+    if( cnt ){
+      BTL_EVENT_CallHandlers( wk, BTL_EVENT_DAMAGEPROC_END_INFO );
+    }
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_DAMAGEPROC_END );
+
   BTL_EVENTVAR_Pop();
 }
 
