@@ -50,7 +50,6 @@ struct _SYMBOL_SAVE_WORK{
 //------------------------------------------------------------------
 u32 SymbolSave_GetWorkSize( void )
 {
-  OS_TPrintf("SYMBOL_SAVE SIZE = %d\n", sizeof(SYMBOL_SAVE_WORK));
 	return sizeof(SYMBOL_SAVE_WORK);
 }
 
