@@ -2538,7 +2538,6 @@ void BPP_MIGAWARI_Create( BTL_POKEPARAM* bpp, u16 migawariHP )
 {
   GF_ASSERT(bpp->migawariHP==0);
   bpp->migawariHP = migawariHP;
-  OS_TPrintf("‚Ý‚ª‚í‚èì¬ HP=%d\n", bpp->migawariHP);
 }
 void BPP_MIGAWARI_Delete( BTL_POKEPARAM* bpp )
 {
@@ -2553,15 +2552,10 @@ BOOL BPP_MIGAWARI_AddDamage( BTL_POKEPARAM* bpp, u16 damage )
 {
   GF_ASSERT(bpp->migawariHP!=0);
 
-  OS_TPrintf("‚Ý‚ª‚í‚èƒ_ƒ[ƒW HP=%d, Dmg=%d\n", bpp->migawariHP, damage);
-
-
   if( bpp->migawariHP <= damage ){
-    OS_TPrintf("  Ž€‚ñ‚¾\n");
     bpp->migawariHP = 0;
     return TRUE;
   }else{
-    OS_TPrintf("  ‚¢‚«‚Ä‚é\n");
     bpp->migawariHP -= damage;
     return FALSE;
   }

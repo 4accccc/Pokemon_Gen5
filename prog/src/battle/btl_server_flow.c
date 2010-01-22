@@ -359,6 +359,7 @@ static void svflowsub_damage_act_singular(  BTL_SVFLOW_WORK* wk,
     const SVFL_WAZAPARAM* wazaParam, BtlTypeAff affinity, fx32 targetDmgRatio );
 static void scproc_Fight_damage_side_plural( BTL_SVFLOW_WORK* wk,
     BTL_POKEPARAM* attacker, BTL_POKESET* targets, BtlTypeAff* affAry, const SVFL_WAZAPARAM* wazaParam, fx32 dmg_ratio );
+static u32 MarumeDamage( const BTL_POKEPARAM* bpp, u32 damage );
 static BppKoraeruCause scEvent_CheckKoraeru( BTL_SVFLOW_WORK* wk,
   const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, u16* damage );
 static void scproc_Koraeru( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BppKoraeruCause cause );
@@ -4641,7 +4642,11 @@ static void svflowsub_damage_act_singular(  BTL_SVFLOW_WORK* wk,
     if( BPP_MIGAWARI_IsExist(defender) ){
       scproc_Migawari_Damage( wk, defender, damage );
     }else{
-      u8 koraeru_cause = scEvent_CheckKoraeru( wk, attacker, defender, &damage );
+      u8 koraeru_cause;
+
+      damage = MarumeDamage( defender, damage );
+
+      koraeru_cause = scEvent_CheckKoraeru( wk, attacker, defender, &damage );
       scPut_WazaDamageSingle( wk, wazaParam, defender, affinity, damage, fCritical, fPluralHit );
 
       // こらえ
@@ -4707,6 +4712,7 @@ static void scproc_Fight_damage_side_plural( BTL_SVFLOW_WORK* wk,
       affAry[i] = BTL_TYPEAFF_100;
       critical_flg[i] = FALSE;
     }
+    dmg[i] = MarumeDamage( bpp[i], dmg[i] );
     koraeru_cause[i] = scEvent_CheckKoraeru( wk, attacker, bpp[i], &dmg[i] );
     dmg_sum += dmg[i];
   }
@@ -4756,6 +4762,18 @@ static void scproc_Fight_damage_side_plural( BTL_SVFLOW_WORK* wk,
   }
   scproc_CheckDeadCmd( wk, attacker );
 }
+/**
+ * 最高で残りＨＰの範囲に収まるようにダメージ最終補正
+ */
+static u32 MarumeDamage( const BTL_POKEPARAM* bpp, u32 damage )
+{
+  u32 hp = BPP_GetValue( bpp, BPP_HP );
+  if( damage > hp ){
+    damage = hp;
+  }
+  return damage;
+}
+
 //----------------------------------------------------------------------------------
 /**
  * [Event] ワザによるダメージを「こらえる」かどうかチェック
@@ -5291,11 +5309,14 @@ static BOOL scEvent_CalcDamage( BTL_SVFLOW_WORK* wk,
     }
   } /* if( rawDamage == 0 ) */
 
+
   // 最高で残りＨＰの範囲に収まるように最終補正
+  #if 0
   if( rawDamage > BPP_GetValue(defender, BPP_HP) ){
     rawDamage = BPP_GetValue( defender, BPP_HP );
     BTL_N_PrintfEx( PRINT_FLG, DBGSTR_CALCDMG_DamageMarume, rawDamage);
   }
+  #endif
 
   BTL_EVENTVAR_Pop();
 
