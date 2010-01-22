@@ -725,14 +725,16 @@ static void PlayExBGM(SOUNDTEST_WORK* sw)
   sw->testWave[2] = GFL_ARC_UTIL_Load( ARCID_MIDI_DOWNLOAD , NARC_mididl_msl_voice_03_adpcm_swav , FALSE , sw->heapID );
   sw->testWave[3] = GFL_ARC_UTIL_Load( ARCID_MIDI_DOWNLOAD , NARC_mididl_msl_voice_04_adpcm_swav , FALSE , sw->heapID );
   
-  //PMDSND_PresetExtraMusic( sw->testSeq , sw->testBank , WAVE_MUS_WB_MSL_DL_DUMMY_01 );
-  PMDSND_PresetExtraMusic2( sw->testSeq , sw->testBank , SEQ_BGM_MSL_DL_01 );
-  PMDSND_ChangeWaveData( WAVE_MUS_WB_MSL_DL_DUMMY_01 , 0 , sw->testWave[0] );
-  PMDSND_ChangeWaveData( WAVE_MUS_WB_MSL_DL_DUMMY_01 , 1 , sw->testWave[1] );
-  PMDSND_ChangeWaveData( WAVE_MUS_WB_MSL_DL_DUMMY_01 , 2 , sw->testWave[2] );
-  PMDSND_ChangeWaveData( WAVE_MUS_WB_MSL_DL_DUMMY_01 , 3 , sw->testWave[3] );
+  PMDSND_PresetExtraMusic( sw->testSeq , sw->testBank , SEQ_BGM_MSL_DL_01 );
+	PMDSND_ChangeWaveData( WAVE_MUS_WB_MSL_DL_DUMMY_01, 11 , sw->testWave[0] );
+  PMDSND_PresetExtraMusic( sw->testSeq , sw->testBank , SEQ_BGM_MSL_DL_01 );
+	PMDSND_ChangeWaveData( WAVE_MUS_WB_MSL_DL_DUMMY_01, 12 , sw->testWave[1] );
+  PMDSND_PresetExtraMusic( sw->testSeq , sw->testBank , SEQ_BGM_MSL_DL_01 );
+	PMDSND_ChangeWaveData( WAVE_MUS_WB_MSL_DL_DUMMY_01, 13 , sw->testWave[2] );
+  PMDSND_PresetExtraMusic( sw->testSeq , sw->testBank , SEQ_BGM_MSL_DL_01 );
+	PMDSND_ChangeWaveData( WAVE_MUS_WB_MSL_DL_DUMMY_01, 14 , sw->testWave[3] );
 
-  NNS_SndArcPlayerStartSeq( SOUNDMAN_GetHierarchyPlayerSndHandle(), SEQ_BGM_MSL_DL_01 );
+	PMDSND_PlayExtraMusic( SEQ_BGM_MSL_DL_01 );
 }
 
 static void StopExBGM(SOUNDTEST_WORK* sw)

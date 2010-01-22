@@ -986,6 +986,19 @@ BOOL	PMSND_CheckPlaySE( void )
 
 //------------------------------------------------------------------
 /**
+ * @brief	ＳＥ再生検出
+ */
+//------------------------------------------------------------------
+BOOL	PMSND_CheckPlayingSEIdx( u32 soundIdx )
+{
+	int count = NNS_SndPlayerCountPlayingSeqBySeqNo( soundIdx );
+
+	if( count )	{ return TRUE; }
+	return FALSE;
+}
+
+//------------------------------------------------------------------
+/**
  * @brief	ＳＥステータス変更
  */
 //------------------------------------------------------------------
@@ -1185,6 +1198,7 @@ BOOL PMSND_PlayBGMdiv(u32 no, u32* seq, BOOL start)
  *
  */
 //============================================================================================
+#if 0
 BOOL  PMDSND_PresetExtraMusic( void* seqAdrs, void* bnkAdrs, u32 waveNo )
 {
 	SOUNDMAN_LoadHierarchyPlayer_forThread_heapsvSB();
@@ -1212,30 +1226,27 @@ BOOL  PMDSND_PresetExtraMusic( void* seqAdrs, void* bnkAdrs, u32 waveNo )
 	}
 	return TRUE;
 }
+#endif
 
-BOOL  PMDSND_PresetExtraMusic2( void* seqAdrs, void* bnkAdrs, u32 dummyNo )
+BOOL  PMDSND_PresetExtraMusic( void* seqAdrs, void* bnkAdrs, u32 dummyNo )
 {
 	const NNSSndArcSeqInfo* seqInfo = NNS_SndArcGetSeqInfo(dummyNo);
 	u32 seqFileID = seqInfo->fileId;
 	u32 bnkNo = seqInfo->param.bankNo;
 
 	const NNSSndArcBankInfo* bnkInfo = NNS_SndArcGetBankInfo(bnkNo);
-	u16 wavNo[4] = {0, 0, 0, 0};
 	u32 bnkFileID = bnkInfo->fileId;
 	int i;
-	for(i=0; i<4; i++){ wavNo[i] = bnkInfo->waveArcNo[i]; }
 
 	SOUNDMAN_LoadHierarchyPlayer_forThread_heapsvSB();
 
 	// 事前に波形読み込み
-	for(i=0; i<4; i++)
-	{
-		if(wavNo[i] != 0xFFFF )
-		{
-			if(NNS_SndArcLoadWaveArc(wavNo[i], PmSndHeapHandle) == FALSE )
-			{
+	for(i=0; i<4; i++){
+		if(bnkInfo->waveArcNo[i] != 0xFFFF ){
+			if(NNS_SndArcLoadWaveArc(bnkInfo->waveArcNo[i], PmSndHeapHandle) == FALSE ){
 				return FALSE;		// 波形読み込み失敗
 			}
+			//OS_Printf("外部BGM再生...事前波形ロード waveID(%d)\n", bnkInfo->waveArcNo[i]);
 		}
 	}
 	// ダミー音楽のFileIDを入力アドレスに置き換える
@@ -1246,6 +1257,9 @@ BOOL  PMDSND_PresetExtraMusic2( void* seqAdrs, void* bnkAdrs, u32 dummyNo )
 
 	return TRUE;
 }
+
+NNSSndArcWaveArcInfo	waveArcInfo;
+SNDWaveArc						debugWaveArc;
 
 BOOL  PMDSND_ChangeWaveData( u32 waveNo, u32 waveIdx, void* waveAdrs) 
 {
@@ -1260,15 +1274,19 @@ BOOL  PMDSND_ChangeWaveData( u32 waveNo, u32 waveIdx, void* waveAdrs)
 	waveArc = (SNDWaveArc*)NNS_SndArcGetFileAddress( waveInfo->fileId );
 	if(waveArc == NULL){ return FALSE; }
 	
+	waveArcInfo = *waveInfo;
+	debugWaveArc = *waveArc;
+	//OS_Printf("外部BGM再生...波形書き換え waveArcAdrs(%x)\n", waveArc);
+
 	// 波形アドレス書き換え
 	SND_SetWaveDataAddress( waveArc, waveIdx, waveAdrs );
 
 	return TRUE;
 }
 
-BOOL  PMDSND_PlayExtraMusic( void )
+BOOL  PMDSND_PlayExtraMusic( u32 dummyNo )
 {
-	return NNS_SndArcPlayerStartSeq( SOUNDMAN_GetHierarchyPlayerSndHandle(), SEQ_BGM_SHINKA );
+	return NNS_SndArcPlayerStartSeq( SOUNDMAN_GetHierarchyPlayerSndHandle(), dummyNo );
 }
 
 void	PMDSND_StopExtraMusic( void )
