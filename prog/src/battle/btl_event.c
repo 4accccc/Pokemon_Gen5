@@ -512,7 +512,7 @@ static BOOL check_handler_skip( BTL_SVFLOW_WORK* flowWork, BTL_EVENT_FACTOR* fac
       {
         BOOL result;
         BTL_Printf("factor[%p]にスキップチェックハンドラ( 0x%p )が見つかったので判断してもらう...\n", fp, fp->skipCheckHandler);
-        result = (fp->skipCheckHandler)( factor, factor->factorType, eventID, factor->subID, factor->dependID );
+        result = (fp->skipCheckHandler)( fp, factor->factorType, eventID, factor->subID, factor->dependID );
         if( result ){
           BTL_Printf("スキップするそうです\n");
           return TRUE;
