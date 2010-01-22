@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fuchino" host="W00152" date="2010-01-15T20:51:03" source="bc_house_03_01.mb"/>
+	<create user="fuchino" host="W00152" date="2010-01-21T23:07:01" source="bc_house_03_01.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="fuchino" host="W00152" date="2010-01-15T20:51:03" source="bc_house_03_01.mb"/>
+<original_create user="fuchino" host="W00152" date="2010-01-21T23:07:01" source="bc_house_03_01.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -940,30 +940,30 @@
 					<tex st="-32.000000 64.000000"/>
 					<nrm xyz="-1.000000 0.000000 0.000000"/>
 					<pos_xy xy="-0.625000 1.000000"/>
-					<tex st="-64.000000 64.000000"/>
+					<tex st="-48.000000 64.000000"/>
 					<pos_xz xz="-0.625000 -0.875000"/>
 					<tex st="-32.000000 77.000000"/>
 					<pos_yz yz="0.625000 0.375000"/>
-					<tex st="-64.000000 77.000000"/>
+					<tex st="-48.000000 77.000000"/>
 					<pos_xz xz="-0.625000 -0.875000"/>
 					<tex st="-32.000000 96.000000"/>
 					<pos_yz yz="0.062500 0.375000"/>
-					<tex st="-64.000000 96.000000"/>
+					<tex st="-48.000000 96.000000"/>
 					<pos_xz xz="-0.625000 -0.875000"/>
 				</primitive>
 				<primitive index="4" type="quad_strip" vertex_size="6">
 					<tex st="-32.000000 64.000000"/>
 					<nrm xyz="0.998047 0.000000 0.000000"/>
 					<pos_xy xy="2.375000 1.000000"/>
-					<tex st="-64.000000 64.000000"/>
+					<tex st="-48.000000 64.000000"/>
 					<pos_xz xz="2.375000 0.375000"/>
 					<tex st="-32.000000 77.000000"/>
 					<pos_yz yz="0.625000 -0.875000"/>
-					<tex st="-64.000000 77.000000"/>
+					<tex st="-48.000000 77.000000"/>
 					<pos_xz xz="2.375000 0.375000"/>
 					<tex st="-32.000000 96.000000"/>
 					<pos_yz yz="0.062500 -0.875000"/>
-					<tex st="-64.000000 96.000000"/>
+					<tex st="-48.000000 96.000000"/>
 					<pos_xz xz="2.375000 0.375000"/>
 				</primitive>
 				<primitive index="5" type="quad_strip" vertex_size="6">
