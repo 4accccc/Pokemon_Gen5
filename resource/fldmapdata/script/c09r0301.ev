@@ -66,9 +66,12 @@ INIT_EVENT_START	ev_recover_c09r0301
 		
 	ENDIF
 
-	//頂上にいるならカメラ設定を変更
+	//頂上にいるならカメラ設定を変更。スポットライトを点灯状態に。
 	IF $LOCALWORK0 == 1 THEN
+	
 		_FOURKINGS_SET_TOP_CAMERA( 3 )
+		_BMODEL_DIRECT_ANIME_SET_FINISHED( SCR_BMID_NULL, 24, 16 )
+		
 	ENDIF
 
 INIT_EVENT_END
@@ -241,27 +244,34 @@ EVENT_END
 EVENT_START	ev_pos_c09r0301_enter_01
 	
 	//ローカル定義
-	DEFINE_LOCAL	BM_ANIME_ID
+	DEFINE_LOCAL	BM_ANIME_ID1
+
+	//スポットライトのアニメコントローラを作成
+	_BMODEL_ANIME_CREATE( BM_ANIME_ID1, SCR_BMID_NULL, 16, 16 )
 	
-	//ドアアニメコントローラの作成
-	//_BMODEL_ANIME_CREATE( BM_ANIME_ID, SCR_BMID_NULL, 15, 15 )
-	
-	//ドアを地面下に下げておく ※アニメを再生させすぐに停止させることで降りた状態を表現しています）
-	//_BMODEL_ANIME_SET( BM_ANIME_ID, SCR_BMANM_DOOR_OPEN )
-	//_BMODEL_ANIME_STOP( BM_ANIME_ID )
+	//スポットライトを消しておく
+	//※スポットライトは通常が点灯状態。消→点灯のアニメが登録されている。
+	_BMODEL_ANIME_SET( BM_ANIME_ID1, 0 )
+	_BMODEL_ANIME_STOP( BM_ANIME_ID1 )	//アニメをすぐに停止させることで消えた状態をキープ
 	
 	//主人公：螺旋を登る
 	_FOURKINGS_WALKEVENT( 3 )
+	
+	//ウェイト
+	_TIME_WAIT( 16 )
 	
 	//主人公：上へ進む
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_ply_move_01 )
 	_OBJ_ANIME_WAIT()
 	
-	//ドアが地面下から出てくる
-	//_BMODEL_ANIME_SET( BM_ANIME_ID, SCR_BMANM_DOOR_OPEN )
-	//_BMODEL_ANIME_WAIT( BM_ANIME_ID )
+	//ウェイト
+	_TIME_WAIT( 16 )
 	
-	//_BMODEL_ANIME_DELETE( BM_ANIME_ID )
+	//スポットライトON
+	_BMODEL_ANIME_SET( BM_ANIME_ID1, 0 )
+	_BMODEL_ANIME_WAIT( BM_ANIME_ID1 )
+	_BMODEL_ANIME_DELETE( BM_ANIME_ID1 )
+	
 	
 	//頂上に移動した
 	$LOCALWORK0 = 1
@@ -273,7 +283,7 @@ EVENT_END
 //主人公：上へ進む
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_ply_move_01
-	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	AC_WALK_U_8F,3
 	_ANIME_DATA	ACMD_END,0
 
 
