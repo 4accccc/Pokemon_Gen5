@@ -188,6 +188,7 @@ static void BBAG_ScrnCopy( u16 * buf, u16 * scrn, u8 px, u8 py, u8 sx, u8 sy );
 //============================================================================================
 //	グローバル変数
 //============================================================================================
+/*
 // ボタンアニメデータ
 static const BUTTON_ANM ButtonScreenAnm[] =
 {
@@ -211,6 +212,7 @@ static const BUTTON_ANM ButtonScreenAnm[] =
 	{ P3_USE_SCR_PX, P3_USE_SCR_PY, BBAG_BSX_USE, BBAG_BSY_USE },
 	{ P3_RETURN_SCR_PX, P3_RETURN_SCR_PY, BBAG_BSX_RET, BBAG_BSY_RET },
 };
+*/
 
 // ボタン上のBMP
 static const u8 BtnBmpWin_Page1[] = { WIN_P1_HP, 0xff };		// 「PPかいふく」
@@ -368,10 +370,12 @@ void BBAGANM_PageButtonPut( BBAG_WORK * wk, u8 page )
 		BGWINFRM_FramePut( wk->bgwfrm,BBAG_BGWF_USE, P1_LASTITEM_SCR_PX, P1_LASTITEM_SCR_PY );
 		if( wk->used_item == ITEM_DUMMY_DATA ){
 			BGWINFRM_PaletteChange(
-				wk->bgwfrm, BBAG_BGWF_USE, 0, 0, ButtonAddData[i].sx, ButtonAddData[i].sy, SYSBTN_PAL_OFF );
+				wk->bgwfrm, BBAG_BGWF_USE, 0, 0,
+				ButtonAddData[BBAG_BGWF_USE].sx, ButtonAddData[BBAG_BGWF_USE].sy, SYSBTN_PAL_OFF );
 		}else{
 			BGWINFRM_PaletteChange(
-				wk->bgwfrm, BBAG_BGWF_USE, 0, 0, ButtonAddData[i].sx, ButtonAddData[i].sy, SYSBTN_PAL_NORMAL );
+				wk->bgwfrm, BBAG_BGWF_USE, 0, 0,
+				ButtonAddData[BBAG_BGWF_USE].sx, ButtonAddData[BBAG_BGWF_USE].sy, SYSBTN_PAL_NORMAL );
 		}
 		BGWINFRM_FrameOn( wk->bgwfrm, BBAG_BGWF_POCKET01 );
 		BGWINFRM_FrameOn( wk->bgwfrm, BBAG_BGWF_POCKET02 );
@@ -836,6 +840,7 @@ static void BBAG_ButtonPageIconSet( BBAG_WORK * wk, u16 * buf, u8 id, u8 anm )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
+/*
 static void BBAG_ButtonBufMake( BBAG_WORK * wk, u16 * buf, u8 id, u8 anm, u8 page )
 {
 	u16 * get;
@@ -851,6 +856,7 @@ static void BBAG_ButtonBufMake( BBAG_WORK * wk, u16 * buf, u8 id, u8 anm, u8 pag
 
 	BBAG_ButtonPageIconSet( wk, buf, id, anm );
 }
+*/
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -864,6 +870,7 @@ static void BBAG_ButtonBufMake( BBAG_WORK * wk, u16 * buf, u8 id, u8 anm, u8 pag
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
+/*
 static void BBAG_ButtonScreenWrite( BBAG_WORK * wk, u8 id, u8 anm, u8 page )
 {
 	u16 * buf;
@@ -880,6 +887,7 @@ static void BBAG_ButtonScreenWrite( BBAG_WORK * wk, u8 id, u8 anm, u8 page )
 
 	GFL_HEAP_FreeMemory( buf );
 }
+*/
 
 //--------------------------------------------------------------------------------------------
 /**

@@ -250,6 +250,7 @@ static BOOL CheckDeadPoke( BPLIST_WORK * wk );
 static void SetDeadChangeData( BPLIST_WORK * wk );
 static BOOL CheckNextDeadSel( BPLIST_WORK * wk );
 static void SetSelPosCancel( BPLIST_WORK * wk );
+static BOOL CheckTimeOut( BPLIST_WORK * wk );
 
 
 
@@ -764,6 +765,10 @@ static int BPL_SeqPokeSelect( BPLIST_WORK * wk )
 {
   if( PaletteFadeCheck( wk->pfd ) != 0 ){ return SEQ_BPL_SELECT; }
 
+	if( CheckTimeOut( wk ) == TRUE ){
+		return SEQ_BPL_ENDSET;
+	}
+
   if( BPL_PokemonSelect( wk ) == TRUE ){
     if( wk->dat->sel_poke == BPL_SEL_EXIT ){
 			// 瀕死いれかえ時
@@ -941,7 +946,13 @@ static int BPL_PokeItemUse( BPLIST_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static int BPL_SeqPokeIrekae( BPLIST_WORK * wk )
 {
-  u8  ret = BPL_IrekaeSelect( wk );
+	u8	ret;
+
+	if( CheckTimeOut( wk ) == TRUE ){
+		return SEQ_BPL_ENDSET;
+	}
+
+	ret = BPL_IrekaeSelect( wk );
 
   switch( ret ){
   case 0:   // 入れ替える
@@ -1001,7 +1012,13 @@ static int BPL_SeqPokeIrekae( BPLIST_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static int BPL_SeqStatusMain( BPLIST_WORK * wk )
 {
-  u8  ret = BPL_StatusMainSelect( wk );
+	u8	ret;
+
+	if( CheckTimeOut( wk ) == TRUE ){
+		return SEQ_BPL_ENDSET;
+	}
+
+	ret = BPL_StatusMainSelect( wk );
 
   switch( ret ){
   case 0:   // 前のポケモンへ
@@ -1054,7 +1071,13 @@ static int BPL_SeqStatusMain( BPLIST_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static int BPL_SeqWazaSelect( BPLIST_WORK * wk )
 {
-  u8  ret = BPL_StWazaSelect( wk );
+	u8	ret;
+
+	if( CheckTimeOut( wk ) == TRUE ){
+		return SEQ_BPL_ENDSET;
+	}
+
+	ret = BPL_StWazaSelect( wk );
 
   switch( ret ){
   case 0:   // 技１
@@ -1121,7 +1144,13 @@ static int BPL_SeqWazaSelect( BPLIST_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static int BPL_SeqStInfoWaza( BPLIST_WORK * wk )
 {
-  u8  ret = BPL_StInfoWazaSelect( wk );
+	u8	ret;
+
+	if( CheckTimeOut( wk ) == TRUE ){
+		return SEQ_BPL_ENDSET;
+	}
+
+	ret = BPL_StInfoWazaSelect( wk );
 
   switch( ret ){
   case 0:   // 技１
@@ -1693,6 +1722,10 @@ static int BPL_SeqMsgWait( BPLIST_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static int BPL_SeqTrgWait( BPLIST_WORK * wk )
 {
+	if( CheckTimeOut( wk ) == TRUE ){
+		return SEQ_BPL_ENDSET;
+	}
+
   if( ( GFL_UI_KEY_GetTrg() & (PAD_BUTTON_DECIDE|PAD_BUTTON_CANCEL) ) || GFL_UI_TP_GetTrg() == TRUE ){
     return wk->ret_seq;
   }
@@ -3667,7 +3700,7 @@ static int BPL_SeqDeadErrRet( BPLIST_WORK * wk )
 {
   BmpWinFrame_Clear( wk->win[WIN_TALK].win, WINDOW_TRANS_ON );
 	BPLISTBMP_DeadSelInfoMesPut( wk );
-	BPLISTBMP_SetCommentScen( wk );
+	BPLISTBMP_SetCommentScrn( wk );
   return SEQ_BPL_POKESEL_DEAD;
 }
 
@@ -3837,7 +3870,7 @@ static int BPL_SeqPokeChgDead( BPLIST_WORK * wk )
 		}
 		BPLISTANM_RetButtonPut( wk );
 		BPLISTBMP_PokeSelInfoMesPut( wk );
-		BPLISTBMP_SetCommentScen( wk );
+		BPLISTBMP_SetCommentScrn( wk );
 	  return SEQ_BPL_SELECT;
 	}
 	return SEQ_BPL_POKECHG_DEAD;
@@ -3943,3 +3976,21 @@ static void SetSelPosCancel( BPLIST_WORK * wk )
 		wk->dat->sel_pos[i] = BPL_SELPOS_NONE;
 	}
 }
+
+// 強制終了チェック
+static BOOL CheckTimeOut( BPLIST_WORK * wk )
+{
+/*
+	// テスト
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT ){
+		SetSelPosCancel( wk );
+		return TRUE;
+	}
+*/
+	if( wk->dat->time_out_flg == TRUE ){
+		SetSelPosCancel( wk );
+		return TRUE;
+	}
+	return FALSE;
+}
+

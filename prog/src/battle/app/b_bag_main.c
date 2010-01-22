@@ -96,7 +96,7 @@ enum {
 
   SEQ_BBAG_ERR,     // エラーメッセージ終了待ち
   SEQ_BBAG_MSG_WAIT,    // メッセージ表示
-  SEQ_BBAG_TRG_WAIT,    // トロガーウェイト
+  SEQ_BBAG_TRG_WAIT,    // トリガーウェイト
 
   SEQ_BBAG_BUTTON_WAIT, // ボタンアニメ終了待ち
 
@@ -150,6 +150,8 @@ static int BBAG_ItemUse( BBAG_WORK * wk );
 
 static void BBAG_PageChgBgScroll( BBAG_WORK * wk, u8 page );
 static void BBAG_PageChange( BBAG_WORK * wk, u8 next_page );
+
+static BOOL CheckTimeOut( BBAG_WORK * wk );
 
 //static void BattleBag_SubItem( BATTLE_WORK * bw, u16 item, u16 page, u32 heap );
 
@@ -469,7 +471,13 @@ static int BBAG_SeqShooterInit( BBAG_WORK * wk )
 static int BBAG_SeqPokeSelect( BBAG_WORK * wk )
 {
   if( PaletteFadeCheck( wk->pfd ) == 0 ){
-    u32 ret = CURSORMOVE_MainCont( wk->cmwk );
+    u32 ret;
+		
+		if( CheckTimeOut( wk ) == TRUE ){
+      return SEQ_BBAG_ENDSET;
+		}
+
+		ret = CURSORMOVE_MainCont( wk->cmwk );
 
     switch( ret ){
     case BBAG_UI_P1_HP_POCKET:        // HP回復ポケット
@@ -529,7 +537,13 @@ static int BBAG_SeqPokeSelect( BBAG_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static int BBAG_SeqItemSelect( BBAG_WORK * wk )
 {
-  u32 ret = CURSORMOVE_MainCont( wk->cmwk );
+  u32 ret;
+	
+	if( CheckTimeOut( wk ) == TRUE ){
+		return SEQ_BBAG_ENDSET;
+	}
+
+	ret = CURSORMOVE_MainCont( wk->cmwk );
 
   switch( ret ){
   case BBAG_UI_P2_ITEM1:    // アイテム１
@@ -682,7 +696,13 @@ static int BBAG_SeqItemSelWait( BBAG_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static int BBAG_SeqUseSelect( BBAG_WORK * wk )
 {
-  u32 ret = CURSORMOVE_MainCont( wk->cmwk );
+  u32 ret;
+
+	if( CheckTimeOut( wk ) == TRUE ){
+		return SEQ_BBAG_ENDSET;
+	}
+
+	ret = CURSORMOVE_MainCont( wk->cmwk );
 
   switch( ret ){
   case BBAG_UI_P3_USE:    // 使う
@@ -952,6 +972,10 @@ static int BBAG_SeqMsgWait( BBAG_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static int BBAG_SeqTrgWait( BBAG_WORK * wk )
 {
+	if( CheckTimeOut( wk ) == TRUE ){
+		return SEQ_BBAG_ENDSET;
+	}
+
   if( ( GFL_UI_KEY_GetTrg() & (PAD_BUTTON_DECIDE|PAD_BUTTON_CANCEL) ) || GFL_UI_TP_GetTrg() == TRUE ){
     return wk->ret_seq;
   }
@@ -1543,3 +1567,24 @@ static void BattleBag_SubItem( BATTLE_WORK * bw, u16 item, u16 page, u32 heap )
   MyItem_BattleBagLastItemSet( BattleWorkBagCursorGet(bw), item, page );
 }
 */
+
+
+// 強制終了チェック
+static BOOL CheckTimeOut( BBAG_WORK * wk )
+{
+/*
+	// テスト
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT ){
+		wk->dat->ret_item = ITEM_DUMMY_DATA;
+		wk->dat->ret_cost = 0;
+		return TRUE;
+	}
+*/
+	if( wk->dat->time_out_flg == TRUE ){
+		wk->dat->ret_item = ITEM_DUMMY_DATA;
+		wk->dat->ret_cost = 0;
+		return TRUE;
+	}
+	return FALSE;
+}
+

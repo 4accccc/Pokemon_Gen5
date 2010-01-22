@@ -63,6 +63,8 @@ typedef struct {
   GFL_TCBSYS* tcb_sys;
 	PALETTE_FADE_PTR pfd;	// パレットフェードデータ
 
+	BOOL time_out_flg;		// 強制終了フラグ TRUE = 強制終了　※バトル側がリアルタイムで変更します
+
 	// [in & out]
 	u8 * cursor_flg;							// カーソル表示フラグ
 

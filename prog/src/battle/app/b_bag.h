@@ -48,6 +48,8 @@ typedef struct {
 
   BAG_CURSOR* bagcursor;  ///< バッグカーソルの管理構造体ポインタ
 
+	BOOL time_out_flg;		// 強制終了フラグ TRUE = 強制終了　※バトル側がリアルタイムで変更します
+
 
   u32 skill_item_use; // 技で使用不可
   s32 client_no;    // クライアントNo

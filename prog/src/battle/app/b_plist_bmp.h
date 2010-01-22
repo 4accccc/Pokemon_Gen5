@@ -168,7 +168,7 @@ extern void BattlePokeList_ItemUseSkillErrMsgSet( BPLIST_WORK * wk );
 extern void BPLISTBMP_PrintMain( BPLIST_WORK * wk );
 
 extern void BPLISTBMP_SetStrScrn( BPLIST_WORK * wk );
-extern void BPLISTBMP_SetCommentScen( BPLIST_WORK * wk );
+extern void BPLISTBMP_SetCommentScrn( BPLIST_WORK * wk );
 
 extern void BPLISTBMP_PokeSelInfoMesPut( BPLIST_WORK * wk );
 extern void BPLISTBMP_DeadSelInfoMesPut( BPLIST_WORK * wk );

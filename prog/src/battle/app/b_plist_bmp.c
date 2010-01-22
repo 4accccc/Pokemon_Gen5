@@ -3386,10 +3386,10 @@ void BPLISTBMP_PrintMain( BPLIST_WORK * wk )
 void BPLISTBMP_SetStrScrn( BPLIST_WORK * wk )
 {
   BAPPTOOL_SetStrScrn( wk->add_win, wk->putWin );
-	BPLISTBMP_SetCommentScen( wk );
+	BPLISTBMP_SetCommentScrn( wk );
 }
 
-void BPLISTBMP_SetCommentScen( BPLIST_WORK * wk )
+void BPLISTBMP_SetCommentScrn( BPLIST_WORK * wk )
 {
   if( wk->page_chg_comm == 1 ){
 		BmpWinFrame_Write(
