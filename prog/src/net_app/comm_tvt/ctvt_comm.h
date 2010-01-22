@@ -35,6 +35,7 @@ typedef enum
 
   //COMMが使う＆親機が子に通知する用
   CCFT_TALK_MEMBER,
+  CCFT_DRAW_BUFFER_NO,
     
   //外で使う
   CCFT_REQ_TALK,  //会話要求通知

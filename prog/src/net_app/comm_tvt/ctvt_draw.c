@@ -293,6 +293,7 @@ void CTVT_DRAW_InitMode( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork )
     GFL_CLACT_WK_SetDrawEnable( drawWork->clwkPenSize , FALSE );
 
   }
+  CTVT_DRAW_UpdateEditButton( work , drawWork );
   
   drawWork->infoWin = GFL_BMPWIN_Create( CTVT_FRAME_SUB_MSG , 
                                         2 , 13 , 28 , 10 ,
@@ -308,7 +309,7 @@ void CTVT_DRAW_InitMode( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork )
   drawWork->dispBarScroll = 24;
   drawWork->isHold = FALSE;
   drawWork->isTouch = FALSE;
-  drawWork->editMode = CDEX_PEN;
+  drawWork->editMode = CDED_PEN;
   drawWork->isDispPenSize = FALSE;
   drawWork->isUpdateMsg = FALSE;
 
@@ -446,9 +447,15 @@ static void CTVT_DRAW_UpdateDraw( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork
     CTVT_DRAW_DrawInfoMsg( work , drawWork , TRUE );
 
   }
-  if( GFL_UI_KEY_GetTrg() & CTVT_BUTTON_DRAW )
+  if( GFL_UI_KEY_GetTrg() & CTVT_BUTTON_DRAW ||
+      GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
   {
     drawWork->state = CDS_FADEOUT;
+  }
+  if( GFL_UI_KEY_GetTrg() & CTVT_BUTTON_PAUSE )
+  {
+    COMM_TVT_FlipPause( work );
+    CTVT_DRAW_UpdateEditButton( work , drawWork );
   }
 }
 
@@ -508,7 +515,10 @@ static void CTVT_DRAW_UpdateEdit( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork
   }
   if( ret == CDED_PAUSE )
   {
-    //TODO 処理無し
+    COMM_TVT_FlipPause( work );
+    CTVT_DRAW_UpdateEditButton( work , drawWork );
+    drawWork->isTouch = TRUE;
+    CTVT_TPrintf("Pause\n");
   }
   
   //ペンサイズ
@@ -543,6 +553,7 @@ static void CTVT_DRAW_UpdateEdit( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork
   }
   
   if( GFL_UI_KEY_GetTrg() & CTVT_BUTTON_DRAW_EDIT ||
+      GFL_UI_KEY_GetTrg() & PAD_BUTTON_B ||
       ret == CDED_RETURN )
   {
     drawWork->state = CDS_DRAW;
@@ -551,6 +562,11 @@ static void CTVT_DRAW_UpdateEdit( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork
     CTVT_DRAW_DrawInfoMsg( work , drawWork , FALSE );
     GFL_CLACT_WK_SetDrawEnable( drawWork->clwkPenSize , FALSE );
   }
+  if( GFL_UI_KEY_GetTrg() & CTVT_BUTTON_PAUSE )
+  {
+    COMM_TVT_FlipPause( work );
+    CTVT_DRAW_UpdateEditButton( work , drawWork );
+  }
 }
 
 //--------------------------------------------------------------
@@ -558,11 +574,31 @@ static void CTVT_DRAW_UpdateEdit( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork
 //--------------------------------------------------------------
 static void CTVT_DRAW_UpdateDrawing( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork )
 {
+  u32 tpx,tpy;
+  GFL_UI_TP_GetPointTrg( &tpx,&tpy );
+  if( COMM_TVT_GetSusspendDraw( work ) == TRUE )
+  {
+    return;
+  }
+  
+  if( GFL_UI_TP_GetTrg() == TRUE &&
+      drawWork->isTouch == FALSE &&
+      drawWork->state == CDS_EDIT &&
+      tpy >= 192-24 )
+  {
+    if( drawWork->editMode == CDED_SPOITO )
+    {
+      drawWork->editMode = CDED_PEN;
+      CTVT_DRAW_UpdateEditButton( work , drawWork );
+    }
+    GFL_CLACT_WK_SetDrawEnable( drawWork->clwkPenSize , FALSE );
+    return;
+  }
+      
+  
   if( GFL_UI_TP_GetTrg() == TRUE &&
       drawWork->isTouch == FALSE )
   {
-    u32 tpx,tpy;
-    GFL_UI_TP_GetPointTrg( &tpx,&tpy );
     if( drawWork->editMode == CDED_SPOITO )
     {
       u16* spoitColAdr = (u16*)(HW_OBJ_PLTT + 3*32 + 2*0xf);
@@ -594,76 +630,78 @@ static void CTVT_DRAW_UpdateDrawing( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawW
     {
       //drawWork->befPenX = tpx;
       //drawWork->befPenY = tpy;
-      //drawWork->isHold = TRUE;
+      drawWork->isHold = TRUE;
+      drawWork->befPenX = 0xFFFF;
+      drawWork->befPenY = 0xFFFF;
+      GFL_CLACT_WK_SetDrawEnable( drawWork->clwkPenSize , FALSE );
     }
-    drawWork->isTouch = TRUE;
-
   }
   
   //落書き部分
-  if( drawWork->samplingRes == TP_OK &&
-      drawWork->isTouch == FALSE )
+  if( drawWork->editMode == CDED_PEN ||
+      drawWork->editMode == CDED_KESHIGOMU )
   {
-    u8 i;
-    if( drawWork->tpData.Size > 0 )
+    if( drawWork->samplingRes == TP_OK )
     {
-      for(i=0 ; i<drawWork->tpData.Size ; i++ )
+      u8 i;
+      if( drawWork->tpData.Size > 0 )
       {
-        if( drawWork->tpData.TPDataTbl[i].validity ==  TP_VALIDITY_VALID &&
-            drawWork->tpData.TPDataTbl[i].touch == TRUE )
+        for(i=0 ; i<drawWork->tpData.Size ; i++ )
         {
-          if( drawWork->isHold == TRUE )
+          if( drawWork->tpData.TPDataTbl[i].validity ==  TP_VALIDITY_VALID &&
+              drawWork->tpData.TPDataTbl[i].touch == TRUE )
           {
-            BOOL isFull;
-            const u8 connectNum = COMM_TVT_GetConnectNum( work );
-            CTVT_COMM_WORK *commWork = COMM_TVT_GetCommWork( work );
-            DRAW_SYS_WORK *drawSys = COMM_TVT_GetDrawSys( work );
-            DRAW_SYS_PEN_INFO *info = CTVT_COMM_GetDrawBuf(work,commWork,&isFull);
-            if( isFull == FALSE ||
-                connectNum == 1 )
+            if( drawWork->isHold == TRUE &&
+                drawWork->befPenX < 0xFFFF &&
+                drawWork->befPenY < 0xFFFF )
             {
-              info->startX = drawWork->befPenX;
-              info->startY = drawWork->befPenY;
+              BOOL isFull;
+              const u8 connectNum = COMM_TVT_GetConnectNum( work );
+              CTVT_COMM_WORK *commWork = COMM_TVT_GetCommWork( work );
+              DRAW_SYS_WORK *drawSys = COMM_TVT_GetDrawSys( work );
+              DRAW_SYS_PEN_INFO *info = CTVT_COMM_GetDrawBuf(work,commWork,&isFull);
+              if( isFull == FALSE ||
+                  connectNum == 1 )
+              {
+                info->startX = drawWork->befPenX;
+                info->startY = drawWork->befPenY;
+              }
+              if( drawWork->befPenX != drawWork->tpData.TPDataTbl[i].x ||
+                  drawWork->befPenY != drawWork->tpData.TPDataTbl[i].y )
+              {
+                info->endX = drawWork->tpData.TPDataTbl[i].x;
+                info->endY = drawWork->tpData.TPDataTbl[i].y;
+                info->penType = drawWork->penSize;
+                if( drawWork->editMode == CDED_KESHIGOMU )
+                {
+                  info->col = 0;
+                }
+                else
+                {
+                  info->col  = drawWork->penCol;
+                }
+                
+                if( connectNum == 1 )
+                {
+                  DRAW_SYS_SetPenInfo( drawSys , info );
+                }
+                else
+                {
+                  CTVT_COMM_AddDrawBuf( work , commWork );
+                }
+              }
             }
-            info->endX = drawWork->tpData.TPDataTbl[i].x;
-            info->endY = drawWork->tpData.TPDataTbl[i].y;
-            info->penType = drawWork->penSize;
-            if( drawWork->editMode == CDED_KESHIGOMU )
-            {
-              info->col = 0;
-            }
-            else
-            {
-              info->col  = drawWork->penCol;
-            }
-            
-            if( connectNum == 1 )
-            {
-              DRAW_SYS_SetPenInfo( drawSys , info );
-            }
-            else
-            {
-              CTVT_COMM_AddDrawBuf( work , commWork );
-            }
+            drawWork->befPenX = drawWork->tpData.TPDataTbl[i].x;
+            drawWork->befPenY = drawWork->tpData.TPDataTbl[i].y;
           }
           else
           {
-            drawWork->isHold = TRUE;
           }
-          drawWork->befPenX = drawWork->tpData.TPDataTbl[i].x;
-          drawWork->befPenY = drawWork->tpData.TPDataTbl[i].y;
-        }
-        else
-        {
         }
       }
     }
-    if( GFL_UI_TP_GetCont() == FALSE )
-    {
-      drawWork->isHold = FALSE;
-    }
   }
-  else
+  if( GFL_UI_TP_GetCont() == FALSE )
   {
     drawWork->isHold = FALSE;
   }
@@ -726,6 +764,15 @@ static void CTVT_DRAW_UpdateEditButton( COMM_TVT_WORK *work , CTVT_DRAW_WORK *dr
                             anmIdx[CDED_SPOITO][(drawWork->editMode==CDED_SPOITO?1:0)] );
     GFL_CLACT_WK_SetAnmSeq( drawWork->clwkEditButton[CDED_KESHIGOMU] , 
                             anmIdx[CDED_KESHIGOMU][(drawWork->editMode==CDED_KESHIGOMU?1:0)] );
+  }
+  
+  if( COMM_TVT_GetPause( work ) == TRUE )
+  {
+    GFL_CLACT_WK_SetAnmSeq( drawWork->clwkEditButton[CDED_PAUSE] , CTOAM_PAUSE );
+  }
+  else
+  {
+    GFL_CLACT_WK_SetAnmSeq( drawWork->clwkEditButton[CDED_PAUSE] , CTOAM_PLAY );
   }
   
   if( drawWork->editMode != CDED_PEN &&

@@ -117,15 +117,6 @@ void CTVT_CAMERA_Term( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork )
 //--------------------------------------------------------------
 void CTVT_CAMERA_Main( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork )
 {
-  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_R )
-  {
-    GFL_STD_MemFill32( G2_GetBG3ScrPtr() ,0x00000000 , CTVT_BUFFER_SCR_SIZE );
-    if( COMM_TVT_IsTwlMode() == FALSE )
-    {
-      CTVT_CAMERA_CapCallBack( camWork->picBuf , work );
-    }
-  }
-  
   if( COMM_TVT_IsTwlMode() == TRUE )
   {
   }
@@ -234,6 +225,8 @@ static void CTVT_CAMERA_CapCallBack( void *captureArea , void *userWork )
   const BOOL isDouble = COMM_TVT_IsDoubleMode( work );
   const u8 idx = COMM_TVT_GetSelfIdx( work );
 
+  //サスペンドは完全停止、ポーズは更新扱い
+
   if( COMM_TVT_GetSusspend(work) == TRUE )
   {
     return;
@@ -246,43 +239,46 @@ static void CTVT_CAMERA_CapCallBack( void *captureArea , void *userWork )
     return;
   }
   
-  if( mode == CTDM_SINGLE )
+  if( COMM_TVT_GetPause(work) == FALSE )
   {
-    GFL_STD_MemCopy32( captureArea , camWork->scrBuf , CTVT_BUFFER_SCR_SIZE );
-  }
-  else
-  {
-    int iy;
-    //どこを切り取るか？
-    u16 capPosX;
-    u16 capPosY;
-    u16 capSizeX;
-    u16 capSizeY;
-    //どこに貼り付けるか？
-    u32 bufTopAdr;
-    if( isDouble == FALSE )
+    if( mode == CTDM_SINGLE )
     {
-      capPosX = ( mode == CTDM_DOUBLE ? 64 : 64 );
-      capPosY = ( mode == CTDM_DOUBLE ?  0 : 48 );
-      capSizeX= ( mode == CTDM_DOUBLE ?128 :128 );
-      capSizeY= ( mode == CTDM_DOUBLE ?192 : 96 );
+      GFL_STD_MemCopy32( captureArea , camWork->scrBuf , CTVT_BUFFER_SCR_SIZE );
     }
     else
     {
-      capPosX = ( mode == CTDM_DOUBLE ? 96 : 96 );
-      capPosY = ( mode == CTDM_DOUBLE ? 48 : 80 );
-      capSizeX= ( mode == CTDM_DOUBLE ? 64 : 64 );
-      capSizeY= ( mode == CTDM_DOUBLE ? 96 : 48 );
-    }
-    bufTopAdr = capSizeX*capSizeY*idx;
-    
-    
-    for( iy=0;iy<capSizeY;iy++ )
-    {
-      const u32 capTopAdr = (u32)captureArea     + (capPosY+iy)*256*2 + capPosX*2;
-      const u32 bufTopAdr = (u32)camWork->scrBuf + capSizeX*capSizeY*2*idx + capSizeX*iy*2 ;
-      GFL_STD_MemCopy32( (void*)capTopAdr , (void*)bufTopAdr , capSizeX*2 );
+      int iy;
+      //どこを切り取るか？
+      u16 capPosX;
+      u16 capPosY;
+      u16 capSizeX;
+      u16 capSizeY;
+      //どこに貼り付けるか？
+      u32 bufTopAdr;
+      if( isDouble == FALSE )
+      {
+        capPosX = ( mode == CTDM_DOUBLE ? 64 : 64 );
+        capPosY = ( mode == CTDM_DOUBLE ?  0 : 48 );
+        capSizeX= ( mode == CTDM_DOUBLE ?128 :128 );
+        capSizeY= ( mode == CTDM_DOUBLE ?192 : 96 );
+      }
+      else
+      {
+        capPosX = ( mode == CTDM_DOUBLE ? 96 : 96 );
+        capPosY = ( mode == CTDM_DOUBLE ? 48 : 80 );
+        capSizeX= ( mode == CTDM_DOUBLE ? 64 : 64 );
+        capSizeY= ( mode == CTDM_DOUBLE ? 96 : 48 );
+      }
+      bufTopAdr = capSizeX*capSizeY*idx;
       
+      
+      for( iy=0;iy<capSizeY;iy++ )
+      {
+        const u32 capTopAdr = (u32)captureArea     + (capPosY+iy)*256*2 + capPosX*2;
+        const u32 bufTopAdr = (u32)camWork->scrBuf + capSizeX*capSizeY*2*idx + capSizeX*iy*2 ;
+        GFL_STD_MemCopy32( (void*)capTopAdr , (void*)bufTopAdr , capSizeX*2 );
+        
+      }
     }
   }
   camWork->isUpdateBit |= 1<<idx;

@@ -77,3 +77,6 @@ extern void DRAW_SYS_UpdateSystem( DRAW_SYS_WORK* work );
 extern void DRAW_SYS_UpdateSystemVBlank( DRAW_SYS_WORK* work );
 
 extern void DRAW_SYS_SetPenInfo( DRAW_SYS_WORK* work , const DRAW_SYS_PEN_INFO *info );
+extern void* DRAW_SYS_GetBufferAddress( DRAW_SYS_WORK* work );
+extern u16 DRAW_SYS_GetBufferTopPos( DRAW_SYS_WORK* work );
+extern void DRAW_SYS_SetRedrawBuffer( DRAW_SYS_WORK* work , u16 finishBufNo );

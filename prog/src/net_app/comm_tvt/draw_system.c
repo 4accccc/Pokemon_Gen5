@@ -31,7 +31,6 @@
 struct _DRAW_SYS_WORK
 {
   u8 frame;
-  BOOL isLoop;    //バッファが一周したか？
   
   u16 bufNum;
   u16 topBuffer;  //セットされている位置
@@ -66,7 +65,6 @@ DRAW_SYS_WORK* DRAW_SYS_CreateSystem( const DRAW_SYS_INIT_WORK *initWork )
   work->infoBuf = GFL_NET_Align32Alloc( initWork->heapId , sizeof(DRAW_SYS_PEN_INFO)*initWork->bufferNum );
 
   work->frame = initWork->frame;
-  work->isLoop = FALSE;
   
   work->bufNum     = initWork->bufferNum;
   work->areaLeft   = initWork->areaLeft;
@@ -186,6 +184,35 @@ void DRAW_SYS_SetPenInfo( DRAW_SYS_WORK* work , const DRAW_SYS_PEN_INFO *info )
 }
 
 //--------------------------------------------------------------
+//	バッファアドレス取得
+//--------------------------------------------------------------
+void* DRAW_SYS_GetBufferAddress( DRAW_SYS_WORK* work )
+{
+  return work->infoBuf;
+}
+//--------------------------------------------------------------
+//	バッファ位置取得
+//--------------------------------------------------------------
+u16 DRAW_SYS_GetBufferTopPos( DRAW_SYS_WORK* work )
+{
+  return work->topBuffer;
+}
+
+//--------------------------------------------------------------
+//	バッファ再描画
+//  基本的に上でもらう値を入れる
+//--------------------------------------------------------------
+void DRAW_SYS_SetRedrawBuffer( DRAW_SYS_WORK* work , u16 finishBufNo )
+{
+  work->topBuffer = finishBufNo;
+  work->nowBuffer = finishBufNo+5;  //一応余裕
+  if( work->nowBuffer >= work->bufNum )
+  {
+    work->nowBuffer -= work->bufNum;
+  }
+}
+
+//--------------------------------------------------------------
 //	VRAM取得
 //--------------------------------------------------------------
 static void* DRAW_SYS_GetVramAdr( DRAW_SYS_WORK* work )
@@ -221,3 +248,4 @@ static void DRAW_SYS_IncBufCnt( DRAW_SYS_WORK* work , u16 *pos )
   }
   
 }
+

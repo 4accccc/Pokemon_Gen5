@@ -43,6 +43,8 @@
 #define CTVT_COMM_RELEASE_COMMAND_SYNC (9)
 #define CTVT_COMM_SCAN_BEACON_NUM (16)
 
+//新規接続時のお絵描き共有
+#define CTVT_COMM_SHARE_DRAW_BUFF (0)
 
 //======================================================================
 //	enum
@@ -87,6 +89,9 @@ typedef enum
   CCST_SEND_FLG = GFL_NET_CMD_COMM_TVT,
   CCST_SEND_WAVE,
   CCST_SEND_DRAW,
+#if CTVT_COMM_SHARE_DRAW_BUFF
+  CCST_SEND_DRAW_BUFF,
+#endif //CTVT_COMM_SHARE_DRAW_BUFF
   CCST_MAX,
 }CTVT_COMM_SEND_TYPE;
 
@@ -147,6 +152,11 @@ struct _CTVT_COMM_WORK
   
   //親機専用処理
   BOOL updateReqTalk;
+#if CTVT_COMM_SHARE_DRAW_BUFF
+  BOOL reqSendDrawBuffer;
+  BOOL sendingDrawBuffer;
+  BOOL postDrawBuffer;
+#endif //CTVT_COMM_SHARE_DRAW_BUFF
   
   BOOL updateTalkMember;
   u8 tempTalkMember;
@@ -176,11 +186,20 @@ static void CTVT_COMM_Post_WaveData( const int netID, const int size , const voi
 static const BOOL CTVT_COMM_SendDrawData( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork );
 static void CTVT_COMM_PostDrawData( const int netID, const int size , const void* pData , void* pWork , GFL_NETHANDLE *pNetHandle );
 
+#if CTVT_COMM_SHARE_DRAW_BUFF
+static const BOOL CTVT_COMM_SendDrawBuff( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork );
+static void CTVT_COMM_PostDrawBuff( const int netID, const int size , const void* pData , void* pWork , GFL_NETHANDLE *pNetHandle );
+static u8*  CTVT_COMM_Post_DrawBuff_Buff( int netID, void* pWork , int size );
+#endif //CTVT_COMM_SHARE_DRAW_BUFF
+
 static const NetRecvFuncTable CTVT_COMM_RecvTable[] = 
 {
   { CTVT_COMM_PostFlg   ,NULL  },
   { CTVT_COMM_Post_WaveData   ,CTVT_COMM_Post_WaveData_Buff  },
   { CTVT_COMM_PostDrawData   ,NULL  },
+#if CTVT_COMM_SHARE_DRAW_BUFF
+  { CTVT_COMM_PostDrawBuff   , CTVT_COMM_Post_DrawBuff_Buff },
+#endif CTVT_COMM_SHARE_DRAW_BUFF
 };
 
 //--------------------------------------------------------------
@@ -225,6 +244,11 @@ CTVT_COMM_WORK* CTVT_COMM_InitSystem( COMM_TVT_WORK *work , const HEAPID heapId 
   commWork->talkMember = CTVT_COMM_INVALID_MEMBER;
   
   commWork->updateReqTalk = FALSE;
+#if CTVT_COMM_SHARE_DRAW_BUFF
+  commWork->reqSendDrawBuffer = FALSE;
+  commWork->sendingDrawBuffer = FALSE;
+  commWork->postDrawBuffer = FALSE;
+#endif //CTVT_COMM_SHARE_DRAW_BUFF
   commWork->updateTalkMember = FALSE;
   commWork->tempTalkMember = CTVT_COMM_INVALID_MEMBER;
   
@@ -621,6 +645,17 @@ static void CTVT_COMM_UpdateComm( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork
     if( commWork->connectNum != connectNum )
     {
       CTVT_COMM_RefureshCommState( work , commWork );
+      if( commWork->connectNum < connectNum )
+      {
+#if CTVT_COMM_SHARE_DRAW_BUFF
+        //新メンバー追加
+        if( selfId == 0 )
+        {
+          commWork->reqSendDrawBuffer = TRUE;
+          COMM_TVT_SetSusspendDraw( work , TRUE );
+        }
+#endif //CTVT_COMM_SHARE_DRAW_BUFF
+      }
       commWork->connectNum = connectNum;
       commWork->beacon.connectNum = connectNum;
     }
@@ -699,6 +734,35 @@ static void CTVT_COMM_UpdateComm( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork
   //親機の処理
   if( selfId == 0 )
   {
+#if CTVT_COMM_SHARE_DRAW_BUFF
+    //お絵描きバッファの送信
+    if( commWork->reqSendDrawBuffer == TRUE )
+    {
+      const BOOL ret = CTVT_COMM_SendDrawBuff( work , commWork );
+      if( ret == TRUE )
+      {
+        commWork->reqSendDrawBuffer = FALSE;
+        commWork->sendingDrawBuffer = TRUE;
+        commWork->postDrawBuffer = FALSE;
+      }
+    }
+    if( commWork->sendingDrawBuffer == TRUE )
+    {
+      if( commWork->postDrawBuffer == TRUE )
+      {
+        DRAW_SYS_WORK *drawSys = COMM_TVT_GetDrawSys( work );
+        const u16 buffNo = DRAW_SYS_GetBufferTopPos( drawSys );
+        const BOOL ret = CTVT_COMM_SendFlg( work , commWork , CCFT_DRAW_BUFFER_NO , buffNo );
+        if( ret == TRUE )
+        {
+          commWork->sendingDrawBuffer = FALSE;
+          commWork->postDrawBuffer = FALSE;
+        }
+      }
+    }
+#endif //CTVT_COMM_SHARE_DRAW_BUFF
+
+    
     if( commWork->updateReqTalk == TRUE )
     {
       u8 i;
@@ -973,6 +1037,13 @@ static void CTVT_COMM_PostFlg( const int netID, const int size , const void* pDa
     CTVT_TPrintf("TalkMember [%d].\n",pkt->value);
     break;
     
+  case CCFT_DRAW_BUFFER_NO:
+    {
+      DRAW_SYS_WORK *drawSys = COMM_TVT_GetDrawSys( commWork->parentWork );
+      DRAW_SYS_SetRedrawBuffer( drawSys , pkt->value );
+      COMM_TVT_SetSusspendDraw( commWork->parentWork , FALSE );
+    }
+    break;
   //外で使う
   case CCFT_REQ_TALK:  //会話要求通知
     if( selfId == 0 )
@@ -1123,6 +1194,61 @@ static void CTVT_COMM_PostDrawData( const int netID, const int size , const void
   }
   
 }
+
+#if CTVT_COMM_SHARE_DRAW_BUFF
+static const BOOL CTVT_COMM_SendDrawBuff( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
+{
+  DRAW_SYS_WORK *drawSys = COMM_TVT_GetDrawSys( work );
+  void *sendBuf = DRAW_SYS_GetBufferAddress( drawSys );
+  GFL_NETHANDLE *selfHandle = GFL_NET_HANDLE_GetCurrentHandle();
+  
+  CTVT_TPrintf("Send DrawBuff.\n");
+  
+  {
+    const BOOL ret = GFL_NET_SendDataEx( selfHandle , GFL_NET_SENDID_ALLUSER , 
+      CCST_SEND_DRAW_BUFF , sizeof(DRAW_SYS_PEN_INFO)*CTVT_DRAW_BUFFER_NUM , 
+      (void*)sendBuf , TRUE , TRUE , TRUE );
+    
+    if( ret == FALSE )
+    {
+      CTVT_TPrintf("Send DrawBuff failue!\n");
+    }
+    return ret;
+  }
+  /*
+  {
+    const BOOL ret = GFL_NET_SendDataEx( selfHandle , GFL_NET_SENDID_ALLUSER , 
+      CCST_SEND_DRAW_BUFF , 256*192*2 , 
+      (void*)G2_GetBG2ScrPtr() , TRUE , TRUE , TRUE );
+    
+    if( ret == FALSE )
+    {
+      CTVT_TPrintf("Send DrawBuff failue!\n");
+    }
+    return ret;
+  }
+  */
+  return FALSE;
+}
+
+static void CTVT_COMM_PostDrawBuff( const int netID, const int size , const void* pData , void* pWork , GFL_NETHANDLE *pNetHandle )
+{
+  CTVT_COMM_WORK *commWork = (CTVT_COMM_WORK*)pWork;
+  
+  commWork->postDrawBuffer = TRUE;
+}
+
+static u8*  CTVT_COMM_Post_DrawBuff_Buff( int netID, void* pWork , int size )
+{
+  CTVT_COMM_WORK *commWork = (CTVT_COMM_WORK*)pWork;
+  
+  DRAW_SYS_WORK *drawSys = COMM_TVT_GetDrawSys( commWork->parentWork );
+  COMM_TVT_SetSusspendDraw( commWork->parentWork , TRUE );
+  
+  return DRAW_SYS_GetBufferAddress( drawSys );
+//  return G2_GetBG2ScrPtr();
+}
+#endif //CTVT_COMM_SHARE_DRAW_BUFF
 
 #pragma mark [>outer func
 const u8 CTVT_COMM_GetSelfNetId( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )

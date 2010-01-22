@@ -65,6 +65,8 @@ struct _COMM_TVT_WORK
   u8 selfIdx;
   BOOL isDouble;
   BOOL isSusspend;
+  BOOL isPause;
+  BOOL isSusspendDraw;  //お絵描きログ受信中の待機
   BOOL isReqFinish; //親からの終了通知
   u16 palAnmBuf;
   u16 palAnmCnt;
@@ -177,6 +179,8 @@ static void COMM_TVT_Init( COMM_TVT_WORK *work )
 
   work->isUpperFade = TRUE;
   work->isSusspend = FALSE;
+  work->isPause = FALSE;
+  work->isSusspendDraw = FALSE;
   work->isReqFinish = FALSE;
 
   GFL_NET_WirelessIconEasy_HoldLCD( FALSE , work->heapId );
@@ -300,6 +304,13 @@ static const BOOL COMM_TVT_Main( COMM_TVT_WORK *work )
 
   GFL_BG_SetScroll( CTVT_FRAME_MAIN_BG , GFL_BG_SCROLL_X_SET , GFUser_GetPublicRand0(256) );
   GFL_BG_SetScroll( CTVT_FRAME_MAIN_BG , GFL_BG_SCROLL_Y_SET , GFUser_GetPublicRand0(256) );
+
+
+  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R )
+  {
+    CTVT_TPrintf("BuffNo[%d]\n",DRAW_SYS_GetBufferTopPos(work->drawSys));
+  }
+  
 
   return FALSE;
 }
@@ -770,6 +781,37 @@ void COMM_TVT_SetSusspend( COMM_TVT_WORK *work , const BOOL flg )
 {
   work->isSusspend = flg;
 }
+
+//--------------------------------------------------------------
+//	一時停止(機能側
+//--------------------------------------------------------------
+const BOOL COMM_TVT_GetPause( COMM_TVT_WORK *work )
+{
+  return work->isPause;
+}
+
+void COMM_TVT_SetPause( COMM_TVT_WORK *work , const BOOL flg )
+{
+  work->isPause = flg;
+}
+
+void COMM_TVT_FlipPause( COMM_TVT_WORK *work )
+{
+  work->isPause = !work->isPause;
+}
+//--------------------------------------------------------------
+//	お絵描き一時停止
+//--------------------------------------------------------------
+const BOOL COMM_TVT_GetSusspendDraw( COMM_TVT_WORK *work )
+{
+  return work->isSusspendDraw;
+}
+
+void COMM_TVT_SetSusspendDraw( COMM_TVT_WORK *work , const BOOL flg )
+{
+  work->isSusspendDraw = flg;
+}
+
 //--------------------------------------------------------------
 //	終了リクエスト
 //--------------------------------------------------------------

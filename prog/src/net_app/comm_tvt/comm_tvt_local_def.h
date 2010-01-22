@@ -222,6 +222,11 @@ extern const u8   COMM_TVT_GetSelfIdx( const COMM_TVT_WORK *work );
 extern void COMM_TVT_SetSelfIdx( COMM_TVT_WORK *work , const u8 idx );
 extern const BOOL COMM_TVT_GetSusspend( COMM_TVT_WORK *work );
 extern void COMM_TVT_SetSusspend( COMM_TVT_WORK *work , const BOOL flg );
+extern const BOOL COMM_TVT_GetPause( COMM_TVT_WORK *work );
+extern void COMM_TVT_SetPause( COMM_TVT_WORK *work , const BOOL flg );
+extern void COMM_TVT_FlipPause( COMM_TVT_WORK *work );
+extern const BOOL COMM_TVT_GetSusspendDraw( COMM_TVT_WORK *work );
+extern void COMM_TVT_SetSusspendDraw( COMM_TVT_WORK *work , const BOOL flg );
 extern const BOOL COMM_TVT_GetFinishReq( COMM_TVT_WORK *work );
 extern void COMM_TVT_SetFinishReq( COMM_TVT_WORK *work , const BOOL flg );
 
