@@ -153,7 +153,7 @@ EL_SCOREBOARD* ELBOARD_Add( const STRBUF* str, const ELB_MODE mode, HEAPID heapI
   elb->mode = mode;
 
   lsb = PRINTSYS_LSB_Make(LCOL,0,0);
-  F2T_CopyStringAlloc( str, 0, 2, lsb, heapID, &f2t_work );
+  F2T_CopyStringAlloc( NULL, str, 0, 2, lsb, heapID, &f2t_work );
 
   elb->texSizIdxS = f2t_work.texSizIdxS;
   elb->texSizIdxT = f2t_work.texSizIdxT;
@@ -411,7 +411,7 @@ EL_SCOREBOARD_TEX*  ELBOARD_TEX_Add_Ex(
   elb_tex->plttOffset = INVALID_DATA;
 #if 1
   lsb = PRINTSYS_LSB_Make(LCOL,0,0);
-  rc = F2T_CopyString(g3Dtex, tex_name, plt_name, str, xpos, ypos, lsb, heapID, &f2t_work );
+  rc = F2T_CopyString(g3Dtex, tex_name, NULL, plt_name, str, xpos, ypos, lsb, heapID, &f2t_work );
   if (rc)
   {
     elb_tex->texVramKey = f2t_work.texVramKey;
