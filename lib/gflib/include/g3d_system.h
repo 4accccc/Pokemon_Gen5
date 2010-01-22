@@ -996,6 +996,9 @@ extern BOOL
 	GFL_G3D_OBJECT_SetAnimeFrame
 		( GFL_G3D_OBJ* g3Dobj, const u16 anmIdx, const int* anmFrm );
 
+extern BOOL
+	GFL_G3D_OBJECT_GetAnimeFrameMax
+		( const GFL_G3D_OBJ* g3Dobj, const u16 anmIdx, int* anmFrmMax );
 //--------------------------------------------------------------------------------------------
 /**
  * ３Ｄオブジェクトのアニメーションフレームを進める
