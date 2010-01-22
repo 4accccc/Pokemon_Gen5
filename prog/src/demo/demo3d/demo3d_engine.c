@@ -113,6 +113,27 @@ static inline GFL_G3D_CAMERA* GRAPHIC_G3D_CAMERA_Create
 }
 #endif
 
+static fx32 PerspectiveToFrustTop( fx32 near, fx32 fovySin, fx32 fovyCos )
+{
+  return near * fovySin / fovyCos;
+}
+
+static fx32 PerspectiveToFrustButtom( fx32 near, fx32 fovySin, fx32 fovyCos )
+{
+  return -(near * fovySin / fovyCos);
+}
+
+static fx32 PerspectiveToFrustRight( fx32 near, fx32 aspect, fx32 fovySin, fx32 fovyCos )
+{
+  return near * aspect / FX32_ONE * fovySin / fovyCos;
+}
+
+static fx32 PerspectiveToFrustLeft( fx32 near, fx32 aspect, fx32 fovySin, fx32 fovyCos )
+{
+  return -(near * aspect / FX32_ONE * fovySin / fovyCos);
+}
+
+
 //-----------------------------------------------------------------------------
 /**
  *	@brief  PerspectiveのパラメータでFrustカメラを生成
@@ -124,14 +145,14 @@ static inline GFL_G3D_CAMERA* GRAPHIC_G3D_CAMERA_Create
 //-----------------------------------------------------------------------------
 static GFL_G3D_CAMERA* FrustCamera_Create
 		( const VecFx32* cp_pos, const VecFx32* cp_up, const VecFx32* cp_target,
-      fx32 fovySin, fx32 fovyCos, fx32 near, fx32 far, HEAPID heapID )
+      fx32 fovySin, fx32 fovyCos, fx32 aspect, fx32 near, fx32 far, HEAPID heapID )
 {
   fx32 t, b, l, r;
 
-  t = near * fovySin / fovyCos;
-  b = -t;
-  r = near * defaultCameraAspect / FX32_ONE * fovySin / fovyCos;
-  l = -r;
+  t = PerspectiveToFrustTop( near, fovySin, fovyCos );
+  b = PerspectiveToFrustButtom( near, fovySin, fovyCos );
+  r = PerspectiveToFrustRight( near, aspect, fovySin, fovyCos );
+  l = PerspectiveToFrustLeft( near, aspect, fovySin, fovyCos );
 
   return GFL_G3D_CAMERA_CreateFrustum(
       t, b, l, r, 
@@ -204,7 +225,7 @@ DEMO3D_ENGINE_WORK* Demo3D_ENGINE_Init( DEMO3D_GRAPHIC_WORK* graphic, DEMO3D_ID 
 
     wk->camera = FrustCamera_Create( 
                   &sc_CAMERA_PER_POS, &sc_CAMERA_PER_UP, &sc_CAMERA_PER_TARGET,
-                  fovySin, fovyCos, FX32_CONST(0.1), FX32_CONST(2048), heapID );
+                  fovySin, fovyCos, defaultCameraAspect, FX32_CONST(0.1), FX32_CONST(2048), heapID );
 
     // デフォルトのtop/buttomを取得
     GFL_G3D_CAMERA_GetTop( wk->camera, &wk->def_top );
