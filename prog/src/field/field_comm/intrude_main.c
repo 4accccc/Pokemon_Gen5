@@ -132,8 +132,8 @@ const PALACE_TOWN_DATA PalaceTownData[] = {
     },
   },
   {
-    ZONE_ID_BC10,    //Å¶check WFBCÇ…ï\ó†ï ÇÃÉ]Å[ÉìIDÇ™ñ≥Ç¢ÇÃÇ≈Ç∆ÇËÇ†Ç¶Ç∏ìØÇ∂ÇÃÇéwíË
-    ZONE_ID_BC10, 
+    ZONE_ID_BC10,
+    ZONE_ID_PLC10, 
     0x19*8, 0x11*8,
     {
       5,4, 0, 
