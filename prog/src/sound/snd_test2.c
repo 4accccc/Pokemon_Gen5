@@ -27,6 +27,7 @@
 #include "sound/pm_wb_voice.h"
 
 #include "sound/snd_viewer.h"
+#include "sound/sound_manager.h"
 
 #include "arc/soundtest.naix"
 
@@ -413,6 +414,7 @@ typedef struct {
 
   void*						testSeq;
   void*						testBank;
+  void*           testWave[4];
 }SOUNDTEST_WORK;
 
 enum {
@@ -480,6 +482,10 @@ static void SoundWorkInitialize(SOUNDTEST_WORK* sw)
 
   sw->testSeq = NULL;
   sw->testBank = NULL;
+  for( i=0;i<4;i++ )
+  {
+    sw->testWave[i] = NULL;
+  }
 }
 
 static void SoundWorkFinalize(SOUNDTEST_WORK* sw)
@@ -696,6 +702,7 @@ static void PlayExBGM(SOUNDTEST_WORK* sw)
 
 	StopExBGM(sw);
 
+/*
   sw->testBank = GFL_ARC_LoadDataAlloc
 		(ARCID_MIDI_DOWNLOAD, NARC_mididl_mus_wb_msl_field_sbnk, sw->heapID);
   sw->testSeq = GFL_ARC_LoadDataAlloc
@@ -709,15 +716,39 @@ static void PlayExBGM(SOUNDTEST_WORK* sw)
 	if(result == FALSE){
 		OS_Printf("Ä¶Ž¸”s\n");
 	}
+*/
+
+  sw->testSeq = GFL_ARC_UTIL_Load( ARCID_MIDI_DOWNLOAD , NARC_mididl_mus_wb_msl_dl_01_sseq , FALSE , sw->heapID );
+  sw->testBank = GFL_ARC_UTIL_Load( ARCID_MIDI_DOWNLOAD , NARC_mididl_mus_wb_msl_dl_01_sbnk , FALSE , sw->heapID );
+  sw->testWave[0] = GFL_ARC_UTIL_Load( ARCID_MIDI_DOWNLOAD , NARC_mididl_msl_voice_01_adpcm_swav , FALSE , sw->heapID );
+  sw->testWave[1] = GFL_ARC_UTIL_Load( ARCID_MIDI_DOWNLOAD , NARC_mididl_msl_voice_02_adpcm_swav , FALSE , sw->heapID );
+  sw->testWave[2] = GFL_ARC_UTIL_Load( ARCID_MIDI_DOWNLOAD , NARC_mididl_msl_voice_03_adpcm_swav , FALSE , sw->heapID );
+  sw->testWave[3] = GFL_ARC_UTIL_Load( ARCID_MIDI_DOWNLOAD , NARC_mididl_msl_voice_04_adpcm_swav , FALSE , sw->heapID );
+  
+  //PMDSND_PresetExtraMusic( sw->testSeq , sw->testBank , WAVE_MUS_WB_MSL_DL_DUMMY_01 );
+  PMDSND_PresetExtraMusic2( sw->testSeq , sw->testBank , SEQ_BGM_MSL_DL_01 );
+  PMDSND_ChangeWaveData( WAVE_MUS_WB_MSL_DL_DUMMY_01 , 0 , sw->testWave[0] );
+  PMDSND_ChangeWaveData( WAVE_MUS_WB_MSL_DL_DUMMY_01 , 1 , sw->testWave[1] );
+  PMDSND_ChangeWaveData( WAVE_MUS_WB_MSL_DL_DUMMY_01 , 2 , sw->testWave[2] );
+  PMDSND_ChangeWaveData( WAVE_MUS_WB_MSL_DL_DUMMY_01 , 3 , sw->testWave[3] );
+
+  NNS_SndArcPlayerStartSeq( SOUNDMAN_GetHierarchyPlayerSndHandle(), SEQ_BGM_MSL_DL_01 );
 }
 
 static void StopExBGM(SOUNDTEST_WORK* sw)
 {
+  u8 i;
+
 	PMDSND_StopExtraMusic();
 	PMDSND_ReleaseExtraMusic();
 
   if(sw->testSeq){ GFL_HEAP_FreeMemory(sw->testSeq); }
   if(sw->testBank){ GFL_HEAP_FreeMemory(sw->testBank); }
+  for( i=0;i<4;i++ )
+  {
+    if(sw->testWave[i]){ GFL_HEAP_FreeMemory(sw->testWave[i]); }
+    sw->testWave[i] = NULL;
+  }
   sw->testSeq = NULL;
   sw->testBank = NULL;
 }
