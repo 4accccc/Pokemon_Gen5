@@ -77,13 +77,17 @@ MCSSNCLFILE	:= $(wildcard $(RES_DIR)trwb_*.ncl)
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 .SUFFIXES:	.ncg.nce.ncl
 
-do-build:	sub_dir ncg nce nmc ncl obj	$(NARCNAME_F) $(NARCNAME_B)
+do-build:	sub_dir nmc ncg ncgc nce ncl obj	$(NARCNAME_F) $(NARCNAME_B)
 
 sub_dir:
 	@$(MAKE_SUBDIR)
 
 #nmcデータからの生成ルール
-ncg: $(notdir $(MCSSNCGFILE:.ncg=.NCBR))
+ncg: $(notdir $(MCSSNCGFILE:.ncg=.NCGR))
+%.NCGR: $(RES_DIR)%.ncg
+	perl $(SCRIPT_DIR)tr_ncg.pl $(COPY_DIR)$(notdir $<) $(CNV_DIR)
+
+ncgc: $(notdir $(MCSSNCGFILE:.ncg=.NCBR))
 %.NCBR: $(RES_DIR)%.ncg
 	perl $(SCRIPT_DIR)tr_ncgc.pl $(COPY_DIR)$(notdir $<) $(CNV_DIR)
 
