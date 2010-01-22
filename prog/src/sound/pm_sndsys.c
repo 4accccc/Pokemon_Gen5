@@ -1258,9 +1258,6 @@ BOOL  PMDSND_PresetExtraMusic( void* seqAdrs, void* bnkAdrs, u32 dummyNo )
 	return TRUE;
 }
 
-NNSSndArcWaveArcInfo	waveArcInfo;
-SNDWaveArc						debugWaveArc;
-
 BOOL  PMDSND_ChangeWaveData( u32 waveNo, u32 waveIdx, void* waveAdrs) 
 {
 	const NNSSndArcWaveArcInfo* waveInfo;
@@ -1274,8 +1271,6 @@ BOOL  PMDSND_ChangeWaveData( u32 waveNo, u32 waveIdx, void* waveAdrs)
 	waveArc = (SNDWaveArc*)NNS_SndArcGetFileAddress( waveInfo->fileId );
 	if(waveArc == NULL){ return FALSE; }
 	
-	waveArcInfo = *waveInfo;
-	debugWaveArc = *waveArc;
 	//OS_Printf("外部BGM再生...波形書き換え waveArcAdrs(%x)\n", waveArc);
 
 	// 波形アドレス書き換え
