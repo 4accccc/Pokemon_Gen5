@@ -247,12 +247,12 @@ EVENT_START	ev_pos_c09r0301_enter_01
 	DEFINE_LOCAL	BM_ANIME_ID1
 
 	//スポットライトのアニメコントローラを作成
-	_BMODEL_ANIME_CREATE( BM_ANIME_ID1, SCR_BMID_NULL, 16, 16 )
+//	_BMODEL_ANIME_CREATE( BM_ANIME_ID1, SCR_BMID_NULL, 16, 16 )
 	
 	//スポットライトを消しておく
 	//※スポットライトは通常が点灯状態。消→点灯のアニメが登録されている。
-	_BMODEL_ANIME_SET( BM_ANIME_ID1, 0 )
-	_BMODEL_ANIME_STOP( BM_ANIME_ID1 )	//アニメをすぐに停止させることで消えた状態をキープ
+//	_BMODEL_ANIME_SET( BM_ANIME_ID1, 0 )
+//	_BMODEL_ANIME_STOP( BM_ANIME_ID1 )	//アニメをすぐに停止させることで消えた状態をキープ
 	
 	//主人公：螺旋を登る
 	_FOURKINGS_WALKEVENT( 3 )
@@ -268,9 +268,9 @@ EVENT_START	ev_pos_c09r0301_enter_01
 	_TIME_WAIT( 16 )
 	
 	//スポットライトON
-	_BMODEL_ANIME_SET( BM_ANIME_ID1, 0 )
-	_BMODEL_ANIME_WAIT( BM_ANIME_ID1 )
-	_BMODEL_ANIME_DELETE( BM_ANIME_ID1 )
+//	_BMODEL_ANIME_SET( BM_ANIME_ID1, 0 )
+//	_BMODEL_ANIME_WAIT( BM_ANIME_ID1 )
+//	_BMODEL_ANIME_DELETE( BM_ANIME_ID1 )
 	
 	
 	//頂上に移動した

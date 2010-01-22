@@ -228,6 +228,10 @@ EVENT_END
 /************************************************************/
 EVENT_START	ev_pos_c08gym0101_f2_03
 
+	//[100122斉藤]！マーク表示
+//	_OBJ_ANIME( TR_C08GYM0101_F2_03,anm_c08r0101_tr_gyoe )
+//	_OBJ_ANIME_WAIT()
+
 	//視線曲PLAY
 	 _TRAINER_BGM_SET( TRID_VETERANM_04 )
 
@@ -247,35 +251,45 @@ EVENT_START	ev_pos_c08gym0101_f2_03
 	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
 	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
 			
+			//[100122斉藤]トレーナー勝利の処理がメッセージ表示の後にきていたので修正。
+			_TRAINER_WIN()
+			
 			//トレーナーメッセージ
-			_TALK_OBJ_START()
 			_BALLOONWIN_OBJMSG( msg_c08gym0101_veteranm4_02,TR_C08GYM0101_F2_03 )
+			_LAST_KEYWAIT()
 			_BALLOONWIN_CLOSE()
-	
+			
 			//========================================//
 			//POS起動をオフに
 			$WK_SCENE_C08GYM0101 = 1
 			//========================================//
 			
-			_TRAINER_WIN()
 		ELSE
 			_TRAINER_LOSE()
 		ENDIF
 EVENT_END
 
 //--------------------------------------------------------------
+//	トレーナー！マーク
+//--------------------------------------------------------------
+	_ANIME_LABEL	anm_c08r0101_tr_gyoe
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
 //	【仮】トレーナー接近
 //--------------------------------------------------------------
 	_ANIME_LABEL	anm_c08r0101_tr_com
-	//_ANIME_DATA	AC_MARK_GYOE,1
 	_ANIME_DATA	AC_WALK_U_8F,2
 	_ANIME_DATA	AC_DIR_U,1
 	_ANIME_DATA	ACMD_END,0
+
 
 /************************************************************/
 /*	POS起動トレーナー：会話時                                */
 /************************************************************/
 EVENT_START	ev_c08gym0101_f2_03
+	//【仮】直接話しかけによる戦闘もあり得る。その場合は勝利後にPOSイベントを無効にする。
 	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_c08gym0101_veteranm4_02)
 EVENT_END
 

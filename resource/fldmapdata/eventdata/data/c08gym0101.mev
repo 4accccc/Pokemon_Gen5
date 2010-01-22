@@ -1,5 +1,5 @@
 #event data
-#save date:2010/01/21 19:16:11
+#save date:2010/01/22 12:46:51
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c08gym0101.wms
 #SECTION START:OBJ_EVENT
@@ -319,7 +319,7 @@ DIR_UP
 #Pos Type
 EVENTDATA_POSTYPE_RAIL
 #position
-40 2 0
+40 1 0
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
@@ -456,7 +456,7 @@ WK_SCENE_C08GYM0101
 #Pos Type
 EVENTDATA_POSTYPE_RAIL
 #position
-41 1 0
+41 0 0
 #size
 1 1
 #Map Event List Data End
