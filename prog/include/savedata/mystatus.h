@@ -23,6 +23,8 @@
 //----------------------------------------------------------
 typedef struct _MYSTATUS MYSTATUS;
 
+#define MYSTATUS_SAVE_SIZE (32)
+
 #define POKEMON_DP_ROM_CODE ( 0 )   ///< PokemonDP ‚Å ˆµ‚í‚ê‚Ä‚¢‚½ RomCode
 
 //============================================================================================
