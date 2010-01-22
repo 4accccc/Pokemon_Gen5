@@ -135,7 +135,8 @@ SUBDIRS	=	wmi \
 			beacon_status \
 			tr_ai \
 			enceff_imd \
-			pl_boat
+			pl_boat \
+			enc_ci_face
 
 include $(RESOURCE_MACRO)
 
