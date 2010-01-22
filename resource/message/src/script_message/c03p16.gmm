@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-14T19:10:11"/>
+	<create user="suginaka_katsunori" host="W00161" date="2010-01-22T14:44:11"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -312,16 +312,14 @@
 ・続けてcabinguide_03</comment>
 		<attribute name="キャラ指定">WAITRESS
 仮OBJです</attribute>
-		<language name="JPN" width="256">この　ゆうらんせんは[BE:01:ページ切り替え（クリア）]
-イッシュちほうの　おおきな　はし
+		<language name="JPN" width="256">イッシュちほうの　おおきな　はし
 スカイアローブリッジを　くぐり[BE:01:ページ切り替え（クリア）]
 ５ばんめのはしを　まわり
 ヒウンシティに　もどる　ふねです[BE:01:ページ切り替え（クリア）]
 じょうせんじかんは
 ぜんぶで　５かい　ボォォォ！と[BE:00:ページ切り替え（行送り）]
 きてきで　おしらせ　いたします[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">当　遊覧船は[BE:01:ページ切り替え（クリア）]
-イッシュ地方の　大きな橋
+		<language name="JPN_KANJI" width="256">イッシュ地方の　大きな橋
 スカイアローブリッジを　くぐり[BE:01:ページ切り替え（クリア）]
 ５番目の橋を　まわり
 ヒウンシティに　戻ります[BE:01:ページ切り替え（クリア）]
@@ -406,6 +404,24 @@ C03R0801へマップ移動</comment>
 また　あす　おこしくださいませ[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">本日の　出港は　終了　いたしました
 また　明日　お越しくださいませ[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c03p16_cabinguide_09">
+		<comment>♀（仮）
+・全抜き時
+何か景品</comment>
+		<attribute name="キャラ指定">WAITRESS
+仮OBJです</attribute>
+		<language name="JPN" width="256">おめでとうございます！[BE:01:ページ切り替え（クリア）]
+あなたは　せんない　すべての
+トレーナーを　たおしました！[BE:01:ページ切り替え（クリア）]
+こちらは　けいひんに　なります
+おうけとり　くださいませ</language>
+		<language name="JPN_KANJI" width="256">おめでとうございます！[BE:01:ページ切り替え（クリア）]
+あなたは　せんない　すべての
+トレーナーを　たおしました！[BE:01:ページ切り替え（クリア）]
+こちらは　けいひんに　なります
+おうけとり　くださいませ</language>
 	</row>
 
 	<flowchart-group-list>
