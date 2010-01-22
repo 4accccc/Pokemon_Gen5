@@ -597,8 +597,16 @@
 #define ITEM_WAZAMASIN101		( 608 )		// わざマシン１０１
 #define ITEM_TORANSIIBAA		( 609 )		// トランシーバー
 #define ITEM_GODDOSUTOON		( 610 )		// ゴッドストーン
+#define ITEM_RIBATHITIKETTO		( 611 )		// リバティチケット
+#define ITEM_AKUAKASETTO		( 612 )		// アクアカセット
+#define ITEM_INAZUMAKASETTO		( 613 )		// イナズマカセット
+#define ITEM_BUREIZUKASETTO		( 614 )		// ブレイズカセット
+#define ITEM_HURIIZUKASETTO		( 615 )		// フリーズカセット
+#define ITEM_PARESUBOORU		( 616 )		// パレスボール
+#define ITEM_KIREINAISI		( 617 )		// きれいないし
+#define ITEM_POKEZYARASI		( 618 )		// ポケじゃらし
 
-#define ITEM_DATA_MAX		( 610 )		// アイテム最大数
+#define ITEM_DATA_MAX		( 618 )		// アイテム最大数
 
 #define ITEM_MAIL_MAX	( 12 )	// メール数
 #define ITEM_NUTS_MAX	( 64 )	// きのみ数

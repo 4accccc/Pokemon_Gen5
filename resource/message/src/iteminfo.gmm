@@ -5625,6 +5625,78 @@
 </language>
 	</row>
 
+	<row id="ITEMINFO_611">
+		<language name="JPN" width="256">イベントが　はっせいします。
+
+</language>
+		<language name="JPN_KANJI" width="256">イベントが　はっせいします。
+
+</language>
+	</row>
+
+	<row id="ITEMINFO_612">
+		<language name="JPN" width="256">かりメッセージ１
+
+</language>
+		<language name="JPN_KANJI" width="256">かりメッセージ１
+
+</language>
+	</row>
+
+	<row id="ITEMINFO_613">
+		<language name="JPN" width="256">かりメッセージ１
+
+</language>
+		<language name="JPN_KANJI" width="256">かりメッセージ１
+
+</language>
+	</row>
+
+	<row id="ITEMINFO_614">
+		<language name="JPN" width="256">かりメッセージ１
+
+</language>
+		<language name="JPN_KANJI" width="256">かりメッセージ１
+
+</language>
+	</row>
+
+	<row id="ITEMINFO_615">
+		<language name="JPN" width="256">かりメッセージ１
+
+</language>
+		<language name="JPN_KANJI" width="256">かりメッセージ１
+
+</language>
+	</row>
+
+	<row id="ITEMINFO_616">
+		<language name="JPN" width="256">かりメッセージ１
+
+</language>
+		<language name="JPN_KANJI" width="256">かりメッセージ１
+
+</language>
+	</row>
+
+	<row id="ITEMINFO_617">
+		<language name="JPN" width="256">かりメッセージ１
+
+</language>
+		<language name="JPN_KANJI" width="256">かりメッセージ１
+
+</language>
+	</row>
+
+	<row id="ITEMINFO_618">
+		<language name="JPN" width="256">かりメッセージ１
+
+</language>
+		<language name="JPN_KANJI" width="256">かりメッセージ１
+
+</language>
+	</row>
+
 
 	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>

@@ -3185,6 +3185,46 @@
 		<language name="JPN_KANJI" width="256">ゴッドストーン</language>
 	</row>
 
+	<row id="ITEMNAME_611">
+		<language name="JPN" width="256">リバティチケット</language>
+		<language name="JPN_KANJI" width="256">リバティチケット</language>
+	</row>
+
+	<row id="ITEMNAME_612">
+		<language name="JPN" width="256">アクアカセット</language>
+		<language name="JPN_KANJI" width="256">アクサカセット</language>
+	</row>
+
+	<row id="ITEMNAME_613">
+		<language name="JPN" width="256">イナズマカセット</language>
+		<language name="JPN_KANJI" width="256">イナズマカセット</language>
+	</row>
+
+	<row id="ITEMNAME_614">
+		<language name="JPN" width="256">ブレイズカセット</language>
+		<language name="JPN_KANJI" width="256">ブレイズカセット</language>
+	</row>
+
+	<row id="ITEMNAME_615">
+		<language name="JPN" width="256">フリーズカセット</language>
+		<language name="JPN_KANJI" width="256">フリーズカセット</language>
+	</row>
+
+	<row id="ITEMNAME_616">
+		<language name="JPN" width="256">パレスボール</language>
+		<language name="JPN_KANJI" width="256">パレスボール</language>
+	</row>
+
+	<row id="ITEMNAME_617">
+		<language name="JPN" width="256">きれいないし</language>
+		<language name="JPN_KANJI" width="256">きれいないし</language>
+	</row>
+
+	<row id="ITEMNAME_618">
+		<language name="JPN" width="256">ポケじゃらし</language>
+		<language name="JPN_KANJI" width="256">ポケじゃらし</language>
+	</row>
+
 
 	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>

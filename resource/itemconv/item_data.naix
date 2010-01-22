@@ -599,7 +599,15 @@ enum {
 	NARC_item_data_item607_dat = 585,
 	NARC_item_data_item608_dat = 586,
 	NARC_item_data_item609_dat = 587,
-	NARC_item_data_item610_dat = 588
+	NARC_item_data_item610_dat = 588,
+	NARC_item_data_item611_dat = 589,
+	NARC_item_data_item612_dat = 590,
+	NARC_item_data_item613_dat = 591,
+	NARC_item_data_item614_dat = 592,
+	NARC_item_data_item615_dat = 593,
+	NARC_item_data_item616_dat = 594,
+	NARC_item_data_item617_dat = 595,
+	NARC_item_data_item618_dat = 596
 };
 
 /* NARC_ITEM_DATA_NAIX_ */
