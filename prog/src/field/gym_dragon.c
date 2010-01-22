@@ -45,6 +45,8 @@
 #define GRID_HALF_SIZE ((FIELD_CONST_GRID_SIZE/2)*FX32_ONE)
 
 #define FLOOR_VISIBLE_HEIGHT    (4*FIELD_CONST_GRID_FX32_SIZE)
+#define FLOOR_VANISH_X          (16*FIELD_CONST_GRID_FX32_SIZE)
+#define FLOOR_VANISH_Z          (30*FIELD_CONST_GRID_FX32_SIZE)
 
 
 #define DRAGON1_X (12*FIELD_CONST_GRID_FX32_SIZE+GRID_HALF_SIZE)
@@ -442,6 +444,7 @@ static void VanishFloor(FLD_EXP_OBJ_CNT_PTR ptr, FIELDMAP_WORK *fieldWork, const
 static MMDL *SeatchMmdl(FIELDMAP_WORK *fieldWork, const int inObjID);
 static void SetObjVanish(FIELDMAP_WORK *fieldWork, const int inObjID, BOOL inVanish);
 static void SetRailSt(FIELDMAP_WORK *fieldWork, const int inHeadIdx, const HEAD_DIR inDir);
+static BOOL CheckFloorVanish(const VecFx32 *inVec);
 
 //--------------------------------------------------------------
 /**
@@ -513,8 +516,8 @@ void GYM_DRAGON_Setup(FIELDMAP_WORK *fieldWork)
     FIELD_PLAYER *fld_player;
     fld_player = FIELDMAP_GetFieldPlayer( fieldWork );
     FIELD_PLAYER_GetPos( fld_player, &pos );
-    if (pos.y >= FLOOR_VISIBLE_HEIGHT) vanish = FALSE;     //2階の床と竜を表示
-    else vanish = TRUE;       //2階の床と竜を非表示
+    if ( CheckFloorVanish(&pos) ) vanish = TRUE;     //2階の床と竜を非表示
+    else vanish = FALSE;       //2階の床と竜を表示
 
     VanishFloor(ptr, fieldWork, vanish);
 
@@ -716,8 +719,8 @@ void GYM_DRAGON_Move(FIELDMAP_WORK *fieldWork)
     FIELD_PLAYER *fld_player;
     fld_player = FIELDMAP_GetFieldPlayer( fieldWork );
     FIELD_PLAYER_GetPos( fld_player, &pos );
-    if (pos.y >= FLOOR_VISIBLE_HEIGHT) vanish = FALSE;     //2階の床と竜を表示
-    else vanish = TRUE;       //2階の床と竜を非表示
+    if ( CheckFloorVanish(&pos) ) vanish = TRUE;     //2階の床と竜を非表示
+    else vanish = FALSE;       //2階の床と竜を表示
 
     if (tmp->FloorVanish != vanish)
     {
@@ -1429,4 +1432,22 @@ static void SetRailSt(FIELDMAP_WORK *fieldWork, const int inHeadIdx, const HEAD_
     FLDNOGRID_MAPPER_SetLineActive( p_mapper, line_idx[i], valid[i] );
     NOZOMU_Printf("line%d = %d  Valid=%d\n",i,line_idx[i],valid[i]);
   }
+}
+
+//--------------------------------------------------------------
+/**
+ * 2Fを表示するかのチェック
+ * @param   inVec       チェック座標
+ * @return  BOOL        TRUEで非表示
+ */
+//--------------------------------------------------------------
+static BOOL CheckFloorVanish(const VecFx32 *inVec)
+{
+  if ( inVec->y > FLOOR_VISIBLE_HEIGHT ) return FALSE;
+  else
+  {
+    if ( (inVec->x >= FLOOR_VANISH_X)&&(inVec->z >= FLOOR_VANISH_Z) ) return TRUE;
+  }
+
+  return FALSE;
 }
