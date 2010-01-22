@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsuda" host="W00142" date="2010-01-18T21:54:05"/>
+	<create user="tetsuji_ohta" host="W00176" date="2010-01-22T16:14:31"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,7 +312,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -3122,6 +3122,12 @@ msg_connect_union_08からの分岐メッセージ
 		<comment>その他のあいさつ</comment>
 		<language name="JPN" width="120">コンニチハ！</language>
 		<language name="JPN_KANJI" width="120">コンニチハ！</language>
+	</row>
+
+	<row id="msg_union_greeting_08" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>韓国語のあいさつ</comment>
+		<language name="JPN" width="120">안녕하십니까</language>
+		<language name="JPN_KANJI" width="120">안녕하십니까</language>
 	</row>
 
 	<row id="msg_union_battle_01_01" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,#80ffff,#80ffff,#80ffff,#80ffff,,,#80ffff,,">
