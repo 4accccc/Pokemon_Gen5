@@ -3961,9 +3961,12 @@ static BOOL scEvent_CheckHit( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker
 
       hitRank = BTL_EVENTVAR_GetValue( BTL_EVAR_HIT_RANK );
       avoidRank = BTL_EVENTVAR_GetValue( BTL_EVAR_AVOID_RANK );
-      if( BPP_CheckSick(defender, WAZASICK_MIYABURU) ){
-        OS_TPrintf( "みやぶられてるから回避率フラットでーす\n" );
-        avoidRank = BTL_CALC_HITRATIO_MID;
+      if( BPP_CheckSick(defender, WAZASICK_MIYABURU) )
+      {
+        if( avoidRank > BTL_CALC_HITRATIO_MID ){
+          OS_TPrintf( "みやぶられてるから回避率フラットに戻すでーす\n" );
+          avoidRank = BTL_CALC_HITRATIO_MID;
+        }
       }
       ratio = BTL_EVENTVAR_GetValue( BTL_EVAR_RATIO );
 
