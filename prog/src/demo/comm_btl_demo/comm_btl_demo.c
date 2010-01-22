@@ -126,6 +126,8 @@ typedef struct
   // シーンコントローラ
   UI_SCENE_CNT_PTR  cntScene;
 
+  int timer;
+
 } COMM_BTL_DEMO_MAIN_WORK;
 
 
@@ -301,7 +303,7 @@ static GFL_PROC_RESULT CommBtlDemoProc_Init( GFL_PROC *proc, int *seq, void *pwk
   // シーンコントローラ作成
   wk->cntScene = UI_SCENE_CNT_Create( 
       wk->heapID, c_scene_func_tbl, CBD_SCENE_ID_MAX, 
-      calc_first_scene(wk), NULL );
+      calc_first_scene(wk), wk );
 
 	//BGリソース読み込み
 	CommBtlDemo_BG_LoadResource( &wk->wk_bg, wk->heapID );
@@ -429,6 +431,8 @@ static GFL_PROC_RESULT CommBtlDemoProc_Main( GFL_PROC *proc, int *seq, void *pwk
 
 	COMM_BTL_DEMO_GRAPHIC_3D_EndDraw( wk->graphic );
 
+  wk->timer++;
+
   return GFL_PROC_RES_CONTINUE;
 }
 //=============================================================================
@@ -499,9 +503,10 @@ static BOOL SceneNormalStart_Init( UI_SCENE_CNT_PTR cnt, void* work )
 //-----------------------------------------------------------------------------
 static BOOL SceneNormalStart_Main( UI_SCENE_CNT_PTR cnt, void* work )
 { 
+  COMM_BTL_DEMO_MAIN_WORK* wk = work;
 
-  // デバッグボタンでアプリ終了
-  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DEBUG )
+  // @TODO 2秒で終了
+  if( wk->timer > 60 * 2 )
   {
     return TRUE;
   }
