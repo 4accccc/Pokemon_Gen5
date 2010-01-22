@@ -16,7 +16,16 @@
  */
 //=============================================================================
 
-#define TRAINER_NAME_BUF_LEN ( PERSON_NAME_SIZE*2+EOM_SIZE ) ///< プレイヤー名BUFの長さ
+//--------------------------------------------------------------
+///	通信バトルデモ 起動タイプ
+//==============================================================
+typedef enum
+{ 
+  COMM_BTL_DEMO_TYPE_NORMAL_START,  ///< ノーマル開始
+  COMM_BTL_DEMO_TYPE_NORMAL_END,    ///< ノーマル終了
+  COMM_BTL_DEMO_TYPE_MULTI_START,   ///< マルチバトル開始
+  COMM_BTL_DEMO_TYPE_MULTI_END,     ///< マルチバトル終了
+} COMM_BTL_DEMO_TYPE;
 
 //--------------------------------------------------------------
 ///	トレーナーID配列のID
@@ -31,6 +40,8 @@ enum
   COMM_BTL_DEMO_TRDATA_MAX,
 };
 
+#define TRAINER_NAME_BUF_LEN ( PERSON_NAME_SIZE*2+EOM_SIZE ) ///< プレイヤー名BUFの長さ
+
 //=============================================================================
 /**
  *								構造体定義
@@ -38,24 +49,14 @@ enum
 //=============================================================================
 
 //--------------------------------------------------------------
-///	通信バトルデモ 起動タイプ
-//==============================================================
-typedef enum
-{ 
-  COMM_BTL_DEMO_TYPE_NORMAL_START,  ///< ノーマル開始
-  COMM_BTL_DEMO_TYPE_NORMAL_END,    ///< ノーマル終了
-  COMM_BTL_DEMO_TYPE_MULTI_START,   ///< マルチバトル開始
-  COMM_BTL_DEMO_TYPE_MULTI_END,     ///< マルチバトル終了
-} COMM_BTL_DEMO_TYPE;
-
-//--------------------------------------------------------------
 ///	トレーナー毎のデータ
 //==============================================================
 typedef struct {
   const POKEPARTY* party; ///< 所有ポケモンデータ
   const STRBUF* str_trname[ TRAINER_NAME_BUF_LEN ]; ///< トレイナー名
-  int trsex;                                        ///< トレイナーの性別:PTL_SEX_XXX
-  int server_version;                               ///< サーババージョン
+  u8 trsex;                                        ///< トレイナーの性別:PTL_SEX_XXX
+  u8 server_version;                               ///< ROMのサーババージョン
+  u8 padding[2];
 } COMM_BTL_DEMO_TRAINER_DATA;
 
 //--------------------------------------------------------------
