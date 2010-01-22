@@ -1408,7 +1408,7 @@ static void MMdl_RailCommon_Move( MV_RAIL_COMMON_WORK* p_work, MMDL * fmmdl )
   RAIL_LOCATION location;
   // ˆÊ’uî•ñ‚Ì•Û‘¶
   FIELD_RAIL_WORK_GetLocation( p_work->rail_wk, &location );
-  TOMOYA_Printf( "location index %d  line %d  side %d\n", location.rail_index, location.line_grid, location.width_grid );
+//  TOMOYA_Printf( "location index %d  line %d  side %d\n", location.rail_index, location.line_grid, location.width_grid );
   MMdl_RailCommon_SetSaveLocation( p_work, &location );
 }
 
