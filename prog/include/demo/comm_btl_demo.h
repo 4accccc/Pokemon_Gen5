@@ -49,4 +49,6 @@ typedef struct {
  */
 //=============================================================================
 
+FS_EXTERN_OVERLAY(comm_btl_demo);
+extern const GFL_PROC_DATA CommBtlDemoProcData;
 

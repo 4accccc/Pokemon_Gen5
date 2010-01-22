@@ -15,6 +15,7 @@
  */
 //=============================================================================
 //static BOOL TESTMODE_ITEM_SelectIntro( TESTMODE_WORK *work , const int idx );
+static BOOL TESTMODE_ITEM_SelectCmmBtlDemo( TESTMODE_WORK* work, const int idx );
 static BOOL TESTMODE_ITEM_SelectPmsSelect( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_SelectMicTest( TESTMODE_WORK *work , const int idx );
 
@@ -22,6 +23,7 @@ static BOOL TESTMODE_ITEM_SelectMicTest( TESTMODE_WORK *work , const int idx );
 static TESTMODE_MENU_LIST menuHosaka[] = 
 {
 //	{L"イントロデモ",TESTMODE_ITEM_SelectIntro },
+  {L"通信バトルデモ",TESTMODE_ITEM_SelectCmmBtlDemo},
 	{L"かんい会話選択",TESTMODE_ITEM_SelectPmsSelect },
 	{L"マイクテスト",TESTMODE_ITEM_SelectMicTest },
 	
@@ -48,6 +50,18 @@ static BOOL TESTMODE_ITEM_SelectIntro( TESTMODE_WORK *work , const int idx )
   return TRUE;
 }
 #endif
+  
+#include "demo/comm_btl_demo.h"
+static COMM_BTL_DEMO_PARAM g_CommBTlDemoParam;
+
+static BOOL TESTMODE_ITEM_SelectCmmBtlDemo( TESTMODE_WORK* work, const int idx )
+{
+  g_CommBTlDemoParam.type = COMM_BTL_DEMO_TYPE_NORMAL_START;
+
+	TESTMODE_COMMAND_ChangeProc(work,FS_OVERLAY_ID(comm_btl_demo), &CommBtlDemoProcData, &g_CommBTlDemoParam);
+
+  return TRUE;
+}
 
 // 簡易会話 選択
 #include "app/pms_select.h"

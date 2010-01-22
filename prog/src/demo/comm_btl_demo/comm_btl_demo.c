@@ -260,84 +260,84 @@ typedef struct
 //-------------------------------------
 ///	PROC
 //=====================================
-static GFL_PROC_RESULT CommBTLDemoProc_Init( GFL_PROC *proc, int *seq, void *pwk, void *mywk );
-static GFL_PROC_RESULT CommBTLDemoProc_Main( GFL_PROC *proc, int *seq, void *pwk, void *mywk );
-static GFL_PROC_RESULT CommBTLDemoProc_Exit( GFL_PROC *proc, int *seq, void *pwk, void *mywk );
+static GFL_PROC_RESULT CommBtlDemoProc_Init( GFL_PROC *proc, int *seq, void *pwk, void *mywk );
+static GFL_PROC_RESULT CommBtlDemoProc_Main( GFL_PROC *proc, int *seq, void *pwk, void *mywk );
+static GFL_PROC_RESULT CommBtlDemoProc_Exit( GFL_PROC *proc, int *seq, void *pwk, void *mywk );
 //-------------------------------------
 ///	汎用処理ユーティリティ
 //=====================================
-static void CommBTLDemo_BG_LoadResource( COMM_BTL_DEMO_BG_WORK* wk, HEAPID heapID );
+static void CommBtlDemo_BG_LoadResource( COMM_BTL_DEMO_BG_WORK* wk, HEAPID heapID );
 
 #ifdef COMM_BTL_DEMO_MCSS
 //-------------------------------------
 ///	MCSS
 //=====================================
-static MCSS_SYS_WORK * CommBTLDemo_MCSS_Init( u16 wk_max, HEAPID heapID );
-static void CommBTLDemo_MCSS_Exit( MCSS_SYS_WORK * mcss );
-static void CommBTLDemo_MCSS_Draw( MCSS_SYS_WORK * mcss );
-static MCSS_WORK * CommBTLDemo_MCSS_CreateWkPP( MCSS_SYS_WORK * mcss, POKEMON_PARAM *pp, const VecFx32 *pos );
-static void CommBTLDemo_MCSS_DeleteWk( MCSS_SYS_WORK * mcss, MCSS_WORK *wk );
+static MCSS_SYS_WORK * CommBtlDemo_MCSS_Init( u16 wk_max, HEAPID heapID );
+static void CommBtlDemo_MCSS_Exit( MCSS_SYS_WORK * mcss );
+static void CommBtlDemo_MCSS_Draw( MCSS_SYS_WORK * mcss );
+static MCSS_WORK * CommBtlDemo_MCSS_CreateWkPP( MCSS_SYS_WORK * mcss, POKEMON_PARAM *pp, const VecFx32 *pos );
+static void CommBtlDemo_MCSS_DeleteWk( MCSS_SYS_WORK * mcss, MCSS_WORK *wk );
 #endif //COMM_BTL_DEMO_MCSS
 
 #ifdef COMM_BTL_DEMO_TASKMENU
 //-------------------------------------
 ///	リストシステムはい、いいえ
 //=====================================
-static APP_TASKMENU_WORK * CommBTLDemo_TASKMENU_Init( APP_TASKMENU_RES *menu_res, GFL_MSGDATA *msg, HEAPID heapID );
-static void CommBTLDemo_TASKMENU_Exit( APP_TASKMENU_WORK *menu );
-static void CommBTLDemo_TASKMENU_Main( APP_TASKMENU_WORK *menu );
+static APP_TASKMENU_WORK * CommBtlDemo_TASKMENU_Init( APP_TASKMENU_RES *menu_res, GFL_MSGDATA *msg, HEAPID heapID );
+static void CommBtlDemo_TASKMENU_Exit( APP_TASKMENU_WORK *menu );
+static void CommBtlDemo_TASKMENU_Main( APP_TASKMENU_WORK *menu );
 #endif //COMM_BTL_DEMO_TASKMENU
 
 #ifdef COMM_BTL_DEMO_TYPEICON
 //-------------------------------------
 ///	分類、技アイコン
 //=====================================
-static void CommBTLDemo_TYPEICON_CreateCLWK( COMM_BTL_DEMO_MAIN_WORK *wk, PokeType type, GFL_CLUNIT *unit, HEAPID heapID );
-static void CommBTLDemo_TYPEICON_DeleteCLWK( COMM_BTL_DEMO_MAIN_WORK *wk );
+static void CommBtlDemo_TYPEICON_CreateCLWK( COMM_BTL_DEMO_MAIN_WORK *wk, PokeType type, GFL_CLUNIT *unit, HEAPID heapID );
+static void CommBtlDemo_TYPEICON_DeleteCLWK( COMM_BTL_DEMO_MAIN_WORK *wk );
 #endif //COMM_BTL_DEMO_TYPEICON
 
 #ifdef COMM_BTL_DEMO_ITEM_ICON
 //-------------------------------------
 ///	どうぐアイコン
 //=====================================
-static void CommBTLDemo_ITEM_ICON_CreateCLWK( COMM_BTL_DEMO_MAIN_WORK* wk, u16 item_id, GFL_CLUNIT* unit, HEAPID heapID );
-static void CommBTLDemo_ITEM_ICON_DeleteCLWK( COMM_BTL_DEMO_MAIN_WORK* wk );
+static void CommBtlDemo_ITEM_ICON_CreateCLWK( COMM_BTL_DEMO_MAIN_WORK* wk, u16 item_id, GFL_CLUNIT* unit, HEAPID heapID );
+static void CommBtlDemo_ITEM_ICON_DeleteCLWK( COMM_BTL_DEMO_MAIN_WORK* wk );
 #endif //COMM_BTL_DEMO_ITEM_ICON
 
 #ifdef COMM_BTL_DEMO_POKE_ICON
 //-------------------------------------
 ///	ポケアイコン
 //=====================================
-static void CommBTLDemo_POKE_ICON_CreateCLWK( COMM_BTL_DEMO_MAIN_WORK* wk, u32 mons, u32 form_no, BOOL egg, GFL_CLUNIT* unit, HEAPID heapID );
-static void CommBTLDemo_POKE_ICON_DeleteCLWK( COMM_BTL_DEMO_MAIN_WORK* wk );
+static void CommBtlDemo_POKE_ICON_CreateCLWK( COMM_BTL_DEMO_MAIN_WORK* wk, u32 mons, u32 form_no, BOOL egg, GFL_CLUNIT* unit, HEAPID heapID );
+static void CommBtlDemo_POKE_ICON_DeleteCLWK( COMM_BTL_DEMO_MAIN_WORK* wk );
 #endif //COMM_BTL_DEMO_POKE_ICON
 
 #ifdef COMM_BTL_DEMO_OAM_MAPMODEL
 //-------------------------------------
 ///	OAMでマップモデル表示
 //=====================================
-static void CommBTLDemo_OAM_MAPMODEL_CreateCLWK( COMM_BTL_DEMO_MAIN_WORK *wk, u16 tex_idx, u8 ptn_ofs, GFL_CLUNIT *unit, HEAPID heapID );
-static void CommBTLDemo_OAM_MAPMODEL_DeleteCLWK( COMM_BTL_DEMO_MAIN_WORK* wk );
+static void CommBtlDemo_OAM_MAPMODEL_CreateCLWK( COMM_BTL_DEMO_MAIN_WORK *wk, u16 tex_idx, u8 ptn_ofs, GFL_CLUNIT *unit, HEAPID heapID );
+static void CommBtlDemo_OAM_MAPMODEL_DeleteCLWK( COMM_BTL_DEMO_MAIN_WORK* wk );
 #endif //COMM_BTL_DEMO_OAM_MAPMODEL
 
 #ifdef COMM_BTL_DEMO_POKE2D
 //-------------------------------------
 ///	ポケモンOBJ,BG読みこみ
 //=====================================
-static void CommBTLDemo_POKE2D_LoadResourceBG( COMM_BTL_DEMO_MAIN_WORK *wk, HEAPID heapID );
-static void CommBTLDemo_POKE2D_UnLoadResourceBG( COMM_BTL_DEMO_MAIN_WORK *wk );
-static void CommBTLDemo_POKE2D_LoadResourceOBJ( COMM_BTL_DEMO_MAIN_WORK *wk, HEAPID heapID );
-static void CommBTLDemo_POKE2D_UnLoadResourceOBJ( COMM_BTL_DEMO_MAIN_WORK *wk );
-static void CommBTLDemo_POKE2D_CreateCLWK( COMM_BTL_DEMO_MAIN_WORK *wk, GFL_CLUNIT *clunit, HEAPID heapID );
-static void CommBTLDemo_POKE2D_DeleteCLWK( COMM_BTL_DEMO_MAIN_WORK *wk );
+static void CommBtlDemo_POKE2D_LoadResourceBG( COMM_BTL_DEMO_MAIN_WORK *wk, HEAPID heapID );
+static void CommBtlDemo_POKE2D_UnLoadResourceBG( COMM_BTL_DEMO_MAIN_WORK *wk );
+static void CommBtlDemo_POKE2D_LoadResourceOBJ( COMM_BTL_DEMO_MAIN_WORK *wk, HEAPID heapID );
+static void CommBtlDemo_POKE2D_UnLoadResourceOBJ( COMM_BTL_DEMO_MAIN_WORK *wk );
+static void CommBtlDemo_POKE2D_CreateCLWK( COMM_BTL_DEMO_MAIN_WORK *wk, GFL_CLUNIT *clunit, HEAPID heapID );
+static void CommBtlDemo_POKE2D_DeleteCLWK( COMM_BTL_DEMO_MAIN_WORK *wk );
 #endif //COMM_BTL_DEMO_POKE2D
 
 #ifdef COMM_BTL_DEMO_BALL
 //-------------------------------------
 ///	ボールアイコン
 //=====================================
-static void CommBTLDemo_BALLICON_CreateCLWK( COMM_BTL_DEMO_MAIN_WORK *wk, BALL_ID ballID, GFL_CLUNIT *unit, HEAPID heapID );
-static void CommBTLDemo_BALLICON_DeleteCLWK( COMM_BTL_DEMO_MAIN_WORK* wk );
+static void CommBtlDemo_BALLICON_CreateCLWK( COMM_BTL_DEMO_MAIN_WORK *wk, BALL_ID ballID, GFL_CLUNIT *unit, HEAPID heapID );
+static void CommBtlDemo_BALLICON_DeleteCLWK( COMM_BTL_DEMO_MAIN_WORK* wk );
 #endif //COMM_BTL_DEMO_BALL
 
 
@@ -345,9 +345,9 @@ static void CommBTLDemo_BALLICON_DeleteCLWK( COMM_BTL_DEMO_MAIN_WORK* wk );
 //-------------------------------------
 ///	簡易会話表示
 //=====================================
-static void CommBTLDemo_PMSDRAW_Init( COMM_BTL_DEMO_MAIN_WORK* wk );
-static void CommBTLDemo_PMSDRAW_Exit( COMM_BTL_DEMO_MAIN_WORK* wk );
-static void CommBTLDemo_PMSDRAW_Proc( COMM_BTL_DEMO_MAIN_WORK* wk );
+static void CommBtlDemo_PMSDRAW_Init( COMM_BTL_DEMO_MAIN_WORK* wk );
+static void CommBtlDemo_PMSDRAW_Exit( COMM_BTL_DEMO_MAIN_WORK* wk );
+static void CommBtlDemo_PMSDRAW_Proc( COMM_BTL_DEMO_MAIN_WORK* wk );
 #endif // COMM_BTL_DEMO_PMSDRAW
 
 
@@ -356,11 +356,11 @@ static void CommBTLDemo_PMSDRAW_Proc( COMM_BTL_DEMO_MAIN_WORK* wk );
  *								外部公開
  */
 //=============================================================================
-const GFL_PROC_DATA CommBTLDemoProcData = 
+const GFL_PROC_DATA CommBtlDemoProcData = 
 {
-	CommBTLDemoProc_Init,
-	CommBTLDemoProc_Main,
-	CommBTLDemoProc_Exit,
+	CommBtlDemoProc_Init,
+	CommBtlDemoProc_Main,
+	CommBtlDemoProc_Exit,
 };
 //=============================================================================
 /**
@@ -379,7 +379,7 @@ const GFL_PROC_DATA CommBTLDemoProcData =
  *	@retval	終了コード
  */
 //-----------------------------------------------------------------------------
-static GFL_PROC_RESULT CommBTLDemoProc_Init( GFL_PROC *proc, int *seq, void *pwk, void *mywk )
+static GFL_PROC_RESULT CommBtlDemoProc_Init( GFL_PROC *proc, int *seq, void *pwk, void *mywk )
 {
 	COMM_BTL_DEMO_MAIN_WORK *wk;
 	COMM_BTL_DEMO_PARAM *param;
@@ -413,17 +413,17 @@ static GFL_PROC_RESULT CommBTLDemoProc_Init( GFL_PROC *proc, int *seq, void *pwk
 	wk->print_que		= PRINTSYS_QUE_Create( wk->heapID );
 
 	//BGリソース読み込み
-	CommBTLDemo_BG_LoadResource( &wk->wk_bg, wk->heapID );
+	CommBtlDemo_BG_LoadResource( &wk->wk_bg, wk->heapID );
 
 #ifdef COMM_BTL_DEMO_MCSS
 	//MCSS初期化&ワーク作成
-	wk->mcss_sys	= CommBTLDemo_MCSS_Init( 1, wk->heapID );
+	wk->mcss_sys	= CommBtlDemo_MCSS_Init( 1, wk->heapID );
 	{
 		POKEMON_PARAM	*pp;  
 		VecFx32 pos	= { 0, -FX32_ONE*10, 0	};
 
 		pp	= PP_Create( MONSNO_HUSIGIBANA, 0, 0, wk->heapID );
-		wk->mcss_wk		= CommBTLDemo_MCSS_CreateWkPP( wk->mcss_sys, pp, &pos );
+		wk->mcss_wk		= CommBtlDemo_MCSS_CreateWkPP( wk->mcss_sys, pp, &pos );
 		GFL_HEAP_FreeMemory( pp );
 	}
 #endif //COMM_BTL_DEMO_MCSS
@@ -431,14 +431,14 @@ static GFL_PROC_RESULT CommBTLDemoProc_Init( GFL_PROC *proc, int *seq, void *pwk
 #ifdef COMM_BTL_DEMO_TASKMENU
 	//TASKMENUリソース読み込み＆初期化
 	wk->menu_res	= APP_TASKMENU_RES_Create( BG_FRAME_BAR_M, PLTID_BG_TASKMENU_M, wk->font, wk->print_que, wk->heapID );
-	wk->menu			= CommBTLDemo_TASKMENU_Init( wk->menu_res, wk->msg, wk->heapID );
+	wk->menu			= CommBtlDemo_TASKMENU_Init( wk->menu_res, wk->msg, wk->heapID );
 #endif //COMM_BTL_DEMO_TASKMENU
 
 #ifdef COMM_BTL_DEMO_TYPEICON
 	//属性アイコンの読み込み
 	{	
 		GFL_CLUNIT	*clunit	= COMM_BTL_DEMO_GRAPHIC_GetClunit( wk->graphic );
-		CommBTLDemo_TYPEICON_CreateCLWK( wk, POKETYPE_KUSA, clunit, wk->heapID );
+		CommBtlDemo_TYPEICON_CreateCLWK( wk, POKETYPE_KUSA, clunit, wk->heapID );
 	}
 #endif //COMM_BTL_DEMO_TYPEICON
 
@@ -450,7 +450,7 @@ static GFL_PROC_RESULT CommBTLDemoProc_Init( GFL_PROC *proc, int *seq, void *pwk
     u16 ptn_ofs = 3;
 		GFL_CLUNIT	*clunit	= COMM_BTL_DEMO_GRAPHIC_GetClunit( wk->graphic );
 
-		CommBTLDemo_OAM_MAPMODEL_CreateCLWK( wk, NARC_fldmmdl_mdlres_hero_nsbtx, ptn_ofs, clunit, wk->heapID );
+		CommBtlDemo_OAM_MAPMODEL_CreateCLWK( wk, NARC_fldmmdl_mdlres_hero_nsbtx, ptn_ofs, clunit, wk->heapID );
   }
 #endif //COMM_BTL_DEMO_OAM_MAPMODEL
 
@@ -458,7 +458,7 @@ static GFL_PROC_RESULT CommBTLDemoProc_Init( GFL_PROC *proc, int *seq, void *pwk
   // ポケアイコンの読み込み
   {
 		GFL_CLUNIT	*clunit	= COMM_BTL_DEMO_GRAPHIC_GetClunit( wk->graphic );
-    CommBTLDemo_POKE_ICON_CreateCLWK( wk, MONSNO_HUSIGIDANE, 0, FALSE, clunit, wk->heapID );
+    CommBtlDemo_POKE_ICON_CreateCLWK( wk, MONSNO_HUSIGIDANE, 0, FALSE, clunit, wk->heapID );
   }
 #endif //COMM_BTL_DEMO_POKE_ICON
 
@@ -466,17 +466,17 @@ static GFL_PROC_RESULT CommBTLDemoProc_Init( GFL_PROC *proc, int *seq, void *pwk
   // どうぐアイコンの読み込み
   { 
 		GFL_CLUNIT	*clunit	= COMM_BTL_DEMO_GRAPHIC_GetClunit( wk->graphic );
-    CommBTLDemo_ITEM_ICON_CreateCLWK( wk, ITEM_KIZUGUSURI, clunit, wk->heapID );
+    CommBtlDemo_ITEM_ICON_CreateCLWK( wk, ITEM_KIZUGUSURI, clunit, wk->heapID );
   }
 #endif //COMM_BTL_DEMO_ITEM_ICON
 
 #ifdef COMM_BTL_DEMO_POKE2D
 	//ポケモンOBJ,BG読みこみ
-	CommBTLDemo_POKE2D_LoadResourceBG( wk, wk->heapID );
+	CommBtlDemo_POKE2D_LoadResourceBG( wk, wk->heapID );
 	{	
 		GFL_CLUNIT *clunit = COMM_BTL_DEMO_GRAPHIC_GetClunit( wk->graphic );
-		CommBTLDemo_POKE2D_LoadResourceOBJ( wk, wk->heapID );
-		CommBTLDemo_POKE2D_CreateCLWK( wk, clunit, wk->heapID );
+		CommBtlDemo_POKE2D_LoadResourceOBJ( wk, wk->heapID );
+		CommBtlDemo_POKE2D_CreateCLWK( wk, clunit, wk->heapID );
 	}
 #endif //COMM_BTL_DEMO_POKE2D
 
@@ -484,12 +484,12 @@ static GFL_PROC_RESULT CommBTLDemoProc_Init( GFL_PROC *proc, int *seq, void *pwk
   // ボールアイコンの読み込み
   { 
 		GFL_CLUNIT	*clunit	= COMM_BTL_DEMO_GRAPHIC_GetClunit( wk->graphic );
-    CommBTLDemo_BALLICON_CreateCLWK( wk, BALLID_MONSUTAABOORU, clunit, wk->heapID );
+    CommBtlDemo_BALLICON_CreateCLWK( wk, BALLID_MONSUTAABOORU, clunit, wk->heapID );
   }
 #endif //COMM_BTL_DEMO_BALL
 
 #ifdef COMM_BTL_DEMO_PMSDRAW  
-  CommBTLDemo_PMSDRAW_Init( wk );
+  CommBtlDemo_PMSDRAW_Init( wk );
 #endif //COMM_BTL_DEMO_PMSDRAW
 
 	//@todo	フェードシーケンスがないので
@@ -510,24 +510,24 @@ static GFL_PROC_RESULT CommBTLDemoProc_Init( GFL_PROC *proc, int *seq, void *pwk
  *	@retval	終了コード
  */
 //-----------------------------------------------------------------------------
-static GFL_PROC_RESULT CommBTLDemoProc_Exit( GFL_PROC *proc, int *seq, void *pwk, void *mywk )
+static GFL_PROC_RESULT CommBtlDemoProc_Exit( GFL_PROC *proc, int *seq, void *pwk, void *mywk )
 { 
 	COMM_BTL_DEMO_MAIN_WORK* wk = mywk;
 
 #ifdef COMM_BTL_DEMO_BALL
   // どうぐアイコンの破棄
-   CommBTLDemo_BALLICON_DeleteCLWK( wk );
+   CommBtlDemo_BALLICON_DeleteCLWK( wk );
 #endif //COMM_BTL_DEMO_BALL
 
 #ifdef COMM_BTL_DEMO_POKE2D
-	CommBTLDemo_POKE2D_DeleteCLWK( wk );
-	CommBTLDemo_POKE2D_UnLoadResourceOBJ( wk );
-	CommBTLDemo_POKE2D_UnLoadResourceBG( wk );
+	CommBtlDemo_POKE2D_DeleteCLWK( wk );
+	CommBtlDemo_POKE2D_UnLoadResourceOBJ( wk );
+	CommBtlDemo_POKE2D_UnLoadResourceBG( wk );
 #endif //COMM_BTL_DEMO_POKE2D
 
 #ifdef COMM_BTL_DEMO_TYPEICON
 	//属性アイコンの破棄
-	CommBTLDemo_TYPEICON_DeleteCLWK( wk );
+	CommBtlDemo_TYPEICON_DeleteCLWK( wk );
 #endif //COMM_BTL_DEMO_TYPEICON
 
 #ifdef COMM_BTL_DEMO_ITEM_ICON
@@ -535,32 +535,32 @@ static GFL_PROC_RESULT CommBTLDemoProc_Exit( GFL_PROC *proc, int *seq, void *pwk
 
 #ifdef COMM_BTL_DEMO_ITEM_ICON
   //どうぐアイコンの破棄
-  CommBTLDemo_ITEM_ICON_DeleteCLWK( wk );
+  CommBtlDemo_ITEM_ICON_DeleteCLWK( wk );
 #endif //COMM_BTL_DEMO_ITEM_ICON
 
 #ifdef COMM_BTL_DEMO_OAM_MAPMODEL
   //OAMマップモデルの破棄
-  CommBTLDemo_OAM_MAPMODEL_DeleteCLWK( wk );
+  CommBtlDemo_OAM_MAPMODEL_DeleteCLWK( wk );
 #endif //COMM_BTL_DEMO_OAM_MAPMODEL
 
 #ifdef COMM_BTL_DEMO_POKE_ICON
-   CommBTLDemo_POKE_ICON_DeleteCLWK( wk );
+   CommBtlDemo_POKE_ICON_DeleteCLWK( wk );
 #endif //COMM_BTL_DEMO_POKE_ICON
 
 #ifdef COMM_BTL_DEMO_TASKMENU
 	//TASKMENUシステム＆リソース破棄
-	CommBTLDemo_TASKMENU_Exit( wk->menu );
+	CommBtlDemo_TASKMENU_Exit( wk->menu );
 	APP_TASKMENU_RES_Delete( wk->menu_res );	
 #endif //COMM_BTL_DEMO_TASKMENU
 
 #ifdef COMM_BTL_DEMO_MCSS
 	//MCSS破棄
-	CommBTLDemo_MCSS_DeleteWk( wk->mcss_sys, wk->mcss_wk );
-	CommBTLDemo_MCSS_Exit( wk->mcss_sys );
+	CommBtlDemo_MCSS_DeleteWk( wk->mcss_sys, wk->mcss_wk );
+	CommBtlDemo_MCSS_Exit( wk->mcss_sys );
 #endif //COMM_BTL_DEMO_MCSS
 
 #ifdef COMM_BTL_DEMO_PMSDRAW
-  CommBTLDemo_PMSDRAW_Exit( wk );
+  CommBtlDemo_PMSDRAW_Exit( wk );
 #endif //COMM_BTL_DEMO_PMSDRAW
 
 	//メッセージ破棄
@@ -596,7 +596,7 @@ static GFL_PROC_RESULT CommBTLDemoProc_Exit( GFL_PROC *proc, int *seq, void *pwk
  *	@retval	終了コード
  */
 //-----------------------------------------------------------------------------
-static GFL_PROC_RESULT CommBTLDemoProc_Main( GFL_PROC *proc, int *seq, void *pwk, void *mywk )
+static GFL_PROC_RESULT CommBtlDemoProc_Main( GFL_PROC *proc, int *seq, void *pwk, void *mywk )
 { 
 	COMM_BTL_DEMO_MAIN_WORK* wk = mywk;
 
@@ -608,14 +608,14 @@ static GFL_PROC_RESULT CommBTLDemoProc_Main( GFL_PROC *proc, int *seq, void *pwk
 
 #ifdef COMM_BTL_DEMO_TASKMENU
 	//タスクメニューメイン処理
-	CommBTLDemo_TASKMENU_Main( wk->menu );
+	CommBtlDemo_TASKMENU_Main( wk->menu );
 #endif //COMM_BTL_DEMO_TASKMENU
 
 	//PRINT_QUE
 	PRINTSYS_QUE_Main( wk->print_que );
 
 #ifdef COMM_BTL_DEMO_PMSDRAW
-  CommBTLDemo_PMSDRAW_Proc( wk );
+  CommBtlDemo_PMSDRAW_Proc( wk );
 #endif //COMM_BTL_DEMO_PMSDRAW
 
 	//2D描画
@@ -625,7 +625,7 @@ static GFL_PROC_RESULT CommBTLDemoProc_Main( GFL_PROC *proc, int *seq, void *pwk
 	COMM_BTL_DEMO_GRAPHIC_3D_StartDraw( wk->graphic );
 
 #ifdef COMM_BTL_DEMO_MCSS
-	CommBTLDemo_MCSS_Draw( wk->mcss_sys );
+	CommBtlDemo_MCSS_Draw( wk->mcss_sys );
 #endif //COMM_BTL_DEMO_MCSS
 	COMM_BTL_DEMO_GRAPHIC_3D_EndDraw( wk->graphic );
 
@@ -646,7 +646,7 @@ static GFL_PROC_RESULT CommBTLDemoProc_Main( GFL_PROC *proc, int *seq, void *pwk
  *	@retval none
  */
 //-----------------------------------------------------------------------------
-static void CommBTLDemo_BG_LoadResource( COMM_BTL_DEMO_BG_WORK* wk, HEAPID heapID )
+static void CommBtlDemo_BG_LoadResource( COMM_BTL_DEMO_BG_WORK* wk, HEAPID heapID )
 {
   //@TODO とりあえずマイクテストのリソース
 	ARCHANDLE	*handle;
@@ -688,7 +688,7 @@ static void CommBTLDemo_BG_LoadResource( COMM_BTL_DEMO_BG_WORK* wk, HEAPID heapI
  *	@return	MCSS_SYS
  */
 //-----------------------------------------------------------------------------
-static MCSS_SYS_WORK * CommBTLDemo_MCSS_Init( u16 wk_max, HEAPID heapID )
+static MCSS_SYS_WORK * CommBtlDemo_MCSS_Init( u16 wk_max, HEAPID heapID )
 {	
 	MCSS_SYS_WORK *mcss;
 	mcss = MCSS_Init( wk_max , heapID );
@@ -703,7 +703,7 @@ static MCSS_SYS_WORK * CommBTLDemo_MCSS_Init( u16 wk_max, HEAPID heapID )
  *	@param	MCSS_SYS_WORK * mcss	MCSS＿SYS
  */
 //-----------------------------------------------------------------------------
-static void CommBTLDemo_MCSS_Exit( MCSS_SYS_WORK * mcss )
+static void CommBtlDemo_MCSS_Exit( MCSS_SYS_WORK * mcss )
 {	
 	MCSS_Exit(mcss);
 }
@@ -714,7 +714,7 @@ static void CommBTLDemo_MCSS_Exit( MCSS_SYS_WORK * mcss )
  *	@param	MCSS_SYS_WORK * mcss MCSS＿SYS
  */
 //-----------------------------------------------------------------------------
-static void CommBTLDemo_MCSS_Draw( MCSS_SYS_WORK * mcss )
+static void CommBtlDemo_MCSS_Draw( MCSS_SYS_WORK * mcss )
 {	
 	MCSS_Main( mcss );
 	MCSS_Draw( mcss );
@@ -730,7 +730,7 @@ static void CommBTLDemo_MCSS_Draw( MCSS_SYS_WORK * mcss )
  *	@return	MCSS_WK
  */
 //-----------------------------------------------------------------------------
-static MCSS_WORK * CommBTLDemo_MCSS_CreateWkPP( MCSS_SYS_WORK * mcss, POKEMON_PARAM *pp, const VecFx32 *pos )
+static MCSS_WORK * CommBtlDemo_MCSS_CreateWkPP( MCSS_SYS_WORK * mcss, POKEMON_PARAM *pp, const VecFx32 *pos )
 {	
 	MCSS_WORK *poke;
 	MCSS_ADD_WORK addWork;
@@ -751,7 +751,7 @@ static MCSS_WORK * CommBTLDemo_MCSS_CreateWkPP( MCSS_SYS_WORK * mcss, POKEMON_PA
  *
  */
 //-----------------------------------------------------------------------------
-static void CommBTLDemo_MCSS_DeleteWk( MCSS_SYS_WORK * mcss, MCSS_WORK *wk )
+static void CommBtlDemo_MCSS_DeleteWk( MCSS_SYS_WORK * mcss, MCSS_WORK *wk )
 {	
 	MCSS_SetVanishFlag( wk );
 	MCSS_Del(mcss,wk);
@@ -766,7 +766,7 @@ static void CommBTLDemo_MCSS_DeleteWk( MCSS_SYS_WORK * mcss, MCSS_WORK *wk )
  *	@param	menu_res	リソース
  */
 //-----------------------------------------------------------------------------
-static APP_TASKMENU_WORK * CommBTLDemo_TASKMENU_Init( APP_TASKMENU_RES *menu_res, GFL_MSGDATA *msg, HEAPID heapID )
+static APP_TASKMENU_WORK * CommBtlDemo_TASKMENU_Init( APP_TASKMENU_RES *menu_res, GFL_MSGDATA *msg, HEAPID heapID )
 {	
 	int i;
 	APP_TASKMENU_INITWORK	init;
@@ -809,7 +809,7 @@ static APP_TASKMENU_WORK * CommBTLDemo_TASKMENU_Init( APP_TASKMENU_RES *menu_res
  *	@param	APP_TASKMENU_WORK *menu	ワーク
  */
 //-----------------------------------------------------------------------------
-static void CommBTLDemo_TASKMENU_Exit( APP_TASKMENU_WORK *menu )
+static void CommBtlDemo_TASKMENU_Exit( APP_TASKMENU_WORK *menu )
 {	
 	APP_TASKMENU_CloseMenu( menu );
 }
@@ -820,7 +820,7 @@ static void CommBTLDemo_TASKMENU_Exit( APP_TASKMENU_WORK *menu )
  *	@param	APP_TASKMENU_WORK *menu	ワーク
  */
 //-----------------------------------------------------------------------------
-static void CommBTLDemo_TASKMENU_Main( APP_TASKMENU_WORK *menu )
+static void CommBtlDemo_TASKMENU_Main( APP_TASKMENU_WORK *menu )
 {	
 	APP_TASKMENU_UpdateMenu( menu );
 }
@@ -844,7 +844,7 @@ static void CommBTLDemo_TASKMENU_Main( APP_TASKMENU_WORK *menu )
  *	@return	void
  */
 //-----------------------------------------------------------------------------
-static void CommBTLDemo_TYPEICON_CreateCLWK( COMM_BTL_DEMO_MAIN_WORK *wk, PokeType type, GFL_CLUNIT *unit, HEAPID heapID )
+static void CommBtlDemo_TYPEICON_CreateCLWK( COMM_BTL_DEMO_MAIN_WORK *wk, PokeType type, GFL_CLUNIT *unit, HEAPID heapID )
 {	
   UI_EASY_CLWK_RES_PARAM prm;
 
@@ -875,7 +875,7 @@ static void CommBTLDemo_TYPEICON_CreateCLWK( COMM_BTL_DEMO_MAIN_WORK *wk, PokeTy
  *	@retval none
  */
 //-----------------------------------------------------------------------------
-static void CommBTLDemo_TYPEICON_DeleteCLWK( COMM_BTL_DEMO_MAIN_WORK *wk )
+static void CommBtlDemo_TYPEICON_DeleteCLWK( COMM_BTL_DEMO_MAIN_WORK *wk )
 {	
 	//CLWK破棄
 	GFL_CLACT_WK_Remove( wk->clwk_type_icon );
@@ -904,7 +904,7 @@ static void CommBTLDemo_TYPEICON_DeleteCLWK( COMM_BTL_DEMO_MAIN_WORK *wk )
  *	@retval none
  */
 //-----------------------------------------------------------------------------
-static void CommBTLDemo_ITEM_ICON_CreateCLWK( COMM_BTL_DEMO_MAIN_WORK* wk, u16 item_id, GFL_CLUNIT* unit, HEAPID heapID )
+static void CommBtlDemo_ITEM_ICON_CreateCLWK( COMM_BTL_DEMO_MAIN_WORK* wk, u16 item_id, GFL_CLUNIT* unit, HEAPID heapID )
 {	
   UI_EASY_CLWK_RES_PARAM prm;
 
@@ -933,7 +933,7 @@ static void CommBTLDemo_ITEM_ICON_CreateCLWK( COMM_BTL_DEMO_MAIN_WORK* wk, u16 i
  *	@retval none
  */
 //-----------------------------------------------------------------------------
-static void CommBTLDemo_ITEM_ICON_DeleteCLWK( COMM_BTL_DEMO_MAIN_WORK* wk )
+static void CommBtlDemo_ITEM_ICON_DeleteCLWK( COMM_BTL_DEMO_MAIN_WORK* wk )
 {
 	//CLWK破棄
 	GFL_CLACT_WK_Remove( wk->clwk_item_icon );
@@ -962,7 +962,7 @@ static void CommBTLDemo_ITEM_ICON_DeleteCLWK( COMM_BTL_DEMO_MAIN_WORK* wk )
  *	@retval none
  */
 //-----------------------------------------------------------------------------
-static void CommBTLDemo_POKE_ICON_CreateCLWK( COMM_BTL_DEMO_MAIN_WORK* wk, u32 mons, u32 form_no, BOOL egg, GFL_CLUNIT* unit, HEAPID heapID )
+static void CommBtlDemo_POKE_ICON_CreateCLWK( COMM_BTL_DEMO_MAIN_WORK* wk, u32 mons, u32 form_no, BOOL egg, GFL_CLUNIT* unit, HEAPID heapID )
 {
   // ポケアイコン本体
   {
@@ -1030,7 +1030,7 @@ static void CommBTLDemo_POKE_ICON_CreateCLWK( COMM_BTL_DEMO_MAIN_WORK* wk, u32 m
  *	@retval none
  */
 //-----------------------------------------------------------------------------
-static void CommBTLDemo_POKE_ICON_DeleteCLWK( COMM_BTL_DEMO_MAIN_WORK* wk )
+static void CommBtlDemo_POKE_ICON_DeleteCLWK( COMM_BTL_DEMO_MAIN_WORK* wk )
 { 
 	//CLWK破棄
 	GFL_CLACT_WK_Remove( wk->clwk_poke_icon );
@@ -1065,7 +1065,7 @@ static void CommBTLDemo_POKE_ICON_DeleteCLWK( COMM_BTL_DEMO_MAIN_WORK* wk )
  *	@retval none
  */
 //-----------------------------------------------------------------------------
-static void CommBTLDemo_OAM_MAPMODEL_CreateCLWK( COMM_BTL_DEMO_MAIN_WORK *wk, u16 tex_idx, u8 ptn_ofs, GFL_CLUNIT *unit, HEAPID heapID )
+static void CommBtlDemo_OAM_MAPMODEL_CreateCLWK( COMM_BTL_DEMO_MAIN_WORK *wk, u16 tex_idx, u8 ptn_ofs, GFL_CLUNIT *unit, HEAPID heapID )
 {	
   UI_EASY_CLWK_RES_PARAM prm;
 
@@ -1104,7 +1104,7 @@ static void CommBTLDemo_OAM_MAPMODEL_CreateCLWK( COMM_BTL_DEMO_MAIN_WORK *wk, u1
  *	@retval none
  */
 //-----------------------------------------------------------------------------
-static void CommBTLDemo_OAM_MAPMODEL_DeleteCLWK( COMM_BTL_DEMO_MAIN_WORK* wk )
+static void CommBtlDemo_OAM_MAPMODEL_DeleteCLWK( COMM_BTL_DEMO_MAIN_WORK* wk )
 {
 	//CLWK破棄
 	GFL_CLACT_WK_Remove( wk->clwk_oam_mmdl );
@@ -1129,7 +1129,7 @@ static void CommBTLDemo_OAM_MAPMODEL_DeleteCLWK( COMM_BTL_DEMO_MAIN_WORK* wk )
  *	@param	heapID										ヒープID
  */
 //-----------------------------------------------------------------------------
-static void CommBTLDemo_POKE2D_LoadResourceBG( COMM_BTL_DEMO_MAIN_WORK *wk, HEAPID heapID )
+static void CommBtlDemo_POKE2D_LoadResourceBG( COMM_BTL_DEMO_MAIN_WORK *wk, HEAPID heapID )
 {	
 
 	POKEMON_PASO_PARAM	*ppp;
@@ -1159,7 +1159,7 @@ static void CommBTLDemo_POKE2D_LoadResourceBG( COMM_BTL_DEMO_MAIN_WORK *wk, HEAP
  *	@param	COMM_BTL_DEMO_MAIN_WORK *wk ワーク
  */
 //-----------------------------------------------------------------------------
-static void CommBTLDemo_POKE2D_UnLoadResourceBG( COMM_BTL_DEMO_MAIN_WORK *wk )
+static void CommBtlDemo_POKE2D_UnLoadResourceBG( COMM_BTL_DEMO_MAIN_WORK *wk )
 {		
 	GFL_BG_FillCharacterRelease( BG_FRAME_POKE_M, 1, 0 );
 }
@@ -1171,7 +1171,7 @@ static void CommBTLDemo_POKE2D_UnLoadResourceBG( COMM_BTL_DEMO_MAIN_WORK *wk )
  *	@param	heapID										ヒープID
  */
 //-----------------------------------------------------------------------------
-static void CommBTLDemo_POKE2D_LoadResourceOBJ( COMM_BTL_DEMO_MAIN_WORK *wk, HEAPID heapID )
+static void CommBtlDemo_POKE2D_LoadResourceOBJ( COMM_BTL_DEMO_MAIN_WORK *wk, HEAPID heapID )
 {	
 	POKEMON_PASO_PARAM	*ppp;
 	ARCHANDLE						*handle;
@@ -1198,7 +1198,7 @@ static void CommBTLDemo_POKE2D_LoadResourceOBJ( COMM_BTL_DEMO_MAIN_WORK *wk, HEA
  *
  */
 //-----------------------------------------------------------------------------
-static void CommBTLDemo_POKE2D_UnLoadResourceOBJ( COMM_BTL_DEMO_MAIN_WORK *wk )
+static void CommBtlDemo_POKE2D_UnLoadResourceOBJ( COMM_BTL_DEMO_MAIN_WORK *wk )
 {	
 	//リソース破棄
 	GFL_CLGRP_PLTT_Release( wk->ncl_poke2d );
@@ -1215,7 +1215,7 @@ static void CommBTLDemo_POKE2D_UnLoadResourceOBJ( COMM_BTL_DEMO_MAIN_WORK *wk )
  *	@param	heapID	ヒープID
  */
 //-----------------------------------------------------------------------------
-static void CommBTLDemo_POKE2D_CreateCLWK( COMM_BTL_DEMO_MAIN_WORK *wk, GFL_CLUNIT *clunit, HEAPID heapID )
+static void CommBtlDemo_POKE2D_CreateCLWK( COMM_BTL_DEMO_MAIN_WORK *wk, GFL_CLUNIT *clunit, HEAPID heapID )
 {	
 	GFL_CLWK_DATA	cldata;
 		GFL_STD_MemClear( &cldata, sizeof(GFL_CLWK_DATA) );
@@ -1235,7 +1235,7 @@ static void CommBTLDemo_POKE2D_CreateCLWK( COMM_BTL_DEMO_MAIN_WORK *wk, GFL_CLUN
  *	@param	COMM_BTL_DEMO_MAIN_WORK *wk ワーク
  */
 //-----------------------------------------------------------------------------
-static void CommBTLDemo_POKE2D_DeleteCLWK( COMM_BTL_DEMO_MAIN_WORK *wk )
+static void CommBtlDemo_POKE2D_DeleteCLWK( COMM_BTL_DEMO_MAIN_WORK *wk )
 {	
 	GFL_CLACT_WK_Remove( wk->clwk_poke2d );
 }
@@ -1257,7 +1257,7 @@ static void CommBTLDemo_POKE2D_DeleteCLWK( COMM_BTL_DEMO_MAIN_WORK *wk )
  *	@param	heapID	ヒープID
  */
 //-----------------------------------------------------------------------------
-static void CommBTLDemo_BALLICON_CreateCLWK( COMM_BTL_DEMO_MAIN_WORK *wk, BALL_ID ballID, GFL_CLUNIT *unit, HEAPID heapID )
+static void CommBtlDemo_BALLICON_CreateCLWK( COMM_BTL_DEMO_MAIN_WORK *wk, BALL_ID ballID, GFL_CLUNIT *unit, HEAPID heapID )
 {	
   UI_EASY_CLWK_RES_PARAM prm;
 
@@ -1284,7 +1284,7 @@ static void CommBTLDemo_BALLICON_CreateCLWK( COMM_BTL_DEMO_MAIN_WORK *wk, BALL_I
  *	@param	COMM_BTL_DEMO_MAIN_WORK* wk ワーク
  */
 //-----------------------------------------------------------------------------
-static void CommBTLDemo_BALLICON_DeleteCLWK( COMM_BTL_DEMO_MAIN_WORK* wk )
+static void CommBtlDemo_BALLICON_DeleteCLWK( COMM_BTL_DEMO_MAIN_WORK* wk )
 {	
 	//CLWK破棄
 	GFL_CLACT_WK_Remove( wk->clwk_ball );
@@ -1396,7 +1396,7 @@ static void PrintTool_PrintHP( COMM_BTL_DEMO_MAIN_WORK * wk )
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static void CommBTLDemo_PMSDRAW_Init( COMM_BTL_DEMO_MAIN_WORK* wk )
+static void CommBtlDemo_PMSDRAW_Init( COMM_BTL_DEMO_MAIN_WORK* wk )
 {
 	GFL_CLUNIT	*clunit;
   
@@ -1448,7 +1448,7 @@ static void CommBTLDemo_PMSDRAW_Init( COMM_BTL_DEMO_MAIN_WORK* wk )
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static void CommBTLDemo_PMSDRAW_Exit( COMM_BTL_DEMO_MAIN_WORK* wk )
+static void CommBtlDemo_PMSDRAW_Exit( COMM_BTL_DEMO_MAIN_WORK* wk )
 {
   PMS_DRAW_Exit( wk->pms_draw );
   {
@@ -1469,7 +1469,7 @@ static void CommBTLDemo_PMSDRAW_Exit( COMM_BTL_DEMO_MAIN_WORK* wk )
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static void CommBTLDemo_PMSDRAW_Proc( COMM_BTL_DEMO_MAIN_WORK* wk )
+static void CommBtlDemo_PMSDRAW_Proc( COMM_BTL_DEMO_MAIN_WORK* wk )
 {
 #if 1
   // SELECTでクリア
