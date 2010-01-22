@@ -28,6 +28,15 @@ typedef enum
 } COMM_BTL_DEMO_TYPE;
 
 //--------------------------------------------------------------
+/// バトルの勝敗
+//==============================================================
+typedef enum {
+  COMM_BTL_DEMO_RESULT_WIN = 0, ///< 勝ち
+  COMM_BTL_DEMO_RESULT_LOSE,    ///< 負け
+  COMM_BTL_DEMO_RESULT_DRAW,    ///< 引き分け
+} COMM_BTL_DEMO_RESULT;
+
+//--------------------------------------------------------------
 ///	トレーナーID配列のID
 //==============================================================
 enum
@@ -64,9 +73,9 @@ typedef struct {
 //==============================================================
 typedef struct {
   // [IN]
-  COMM_BTL_DEMO_TYPE type; ///< 通信バトルデモ 起動タイプ
+  COMM_BTL_DEMO_TYPE type;      ///< 通信バトルデモ 起動タイプ
+  COMM_BTL_DEMO_RESULT result;  ///< バトルの勝敗
   COMM_BTL_DEMO_TRAINER_DATA trainer_data[ COMM_BTL_DEMO_TRDATA_MAX ];  ///< トレーナー毎のデータ
-  // [OUT]
 } COMM_BTL_DEMO_PARAM;
 
 //=============================================================================
