@@ -1,5 +1,5 @@
 #event data
-#save date:2010/01/22 12:46:51
+#save date:2010/01/22 17:01:58
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c08gym0101.wms
 #SECTION START:OBJ_EVENT
@@ -121,7 +121,7 @@ SCRID_TRID_ELITEM_10
 #Direction Type Number
 DIR_RIGHT
 #Parameter 0 Number
-2
+3
 #Parameter 1 Number
 0
 #Parameter 2 Number
