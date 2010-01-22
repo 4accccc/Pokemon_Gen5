@@ -1310,6 +1310,8 @@ static GMEVENT_RESULT PushWallEvt( GMEVENT* event, int* seq, void* work )
         child = EVENT_ObjAnime( gsys, fieldWork, MMDL_ID_PLAYER, tbl );
         GMEVENT_CallEvent(event, child);
       }
+      //ＳＥ停止
+      PMSND_StopSE();
       //壁つきぬけSE
       PMSND_PlaySE(GYM_INSECT_SE_WALL_THROUGH);
     }
@@ -1406,7 +1408,7 @@ static GMEVENT_RESULT WallReverseEvt( GMEVENT* event, int* seq, void* work )
     }
 
     //シーケンスシフトが発生したら
-    if (*seq == 1) {
+    if (*seq == 2) {
       //SE再生フラグ初期化
       tmp->SeFlg = FALSE;
     }
