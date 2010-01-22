@@ -266,8 +266,15 @@ void CTVT_TALK_InitMode( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork )
     //ˆêŽž’âŽ~ƒ{ƒ^ƒ“
     cellInitData.pos_x = CTVT_TALK_PAUSE_X;
     cellInitData.pos_y = CTVT_TALK_BAR_ICON_Y;
-    //TODO ˆêŽž’âŽ~‘Î‰ž
-    cellInitData.anmseq = CTOAS_PAUSE;
+    
+    if( COMM_TVT_GetPause( work ) == TRUE )
+    {
+      cellInitData.anmseq = CTOAS_PAUSE;
+    }
+    else
+    {
+      cellInitData.anmseq = CTOAS_PLAY;
+    }
     cellInitData.softpri = 0;
     cellInitData.bgpri = 0;
     
@@ -657,33 +664,45 @@ static void CTVT_TALK_UpdateWait( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork
   }
   
   {
-    static const GFL_UI_TP_HITTBL hitTbl[2] = 
+    static const GFL_UI_TP_HITTBL hitTbl[3] = 
     {
       {
         CTVT_TALK_BAR_ICON_Y-12 , CTVT_TALK_BAR_ICON_Y+12 ,
         CTVT_TALK_RETURN_X , CTVT_TALK_RETURN_X+24 ,
       },
+      {
+        CTVT_TALK_BAR_ICON_Y-12 , CTVT_TALK_BAR_ICON_Y+12 ,
+        CTVT_TALK_PAUSE_X-12 , CTVT_TALK_PAUSE_X+12 ,
+      },
       {GFL_UI_TP_HIT_END,0,0,0}
     };
     const int ret = GFL_UI_TP_HitTrg( hitTbl );
-    if( ret == 0 )
+    if( ret == 0 ||
+        GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
     {
       talkWork->state = CTS_END_CONFIRM_INIT;
-      /*
-      talkWork->subState = CTSS_GO_END;
-      talkWork->state = CTS_FADEOUT_BOTH;
-      COMM_TVT_SetSusspend( work , TRUE );
-      */
+    }
+    else
+    if( ret == 1 ||
+        GFL_UI_KEY_GetTrg() & CTVT_BUTTON_PAUSE )
+    {
+      COMM_TVT_FlipPause( work );
+      if( COMM_TVT_GetPause( work ) == TRUE )
+      {
+        GFL_CLACT_WK_SetAnmSeq( talkWork->clwkPause , CTOAS_PAUSE );
+      }
+      else
+      {
+        GFL_CLACT_WK_SetAnmSeq( talkWork->clwkPause , CTOAS_PLAY );
+      }
     }
   }
-
-  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT )
+  if( COMM_TVT_GetSelfIdx(work) == 0 &&
+      GFL_UI_KEY_GetTrg() & PAD_BUTTON_L )
   {
-    talkWork->subState = CTSS_GO_END;
-    talkWork->state = CTS_FADEOUT_BOTH;
-    COMM_TVT_SetSusspend( work , TRUE );
+    COMM_TVT_FlipDoubleMode( work );
   }
-  
+
   CTVT_TALK_UpdateVoiceBar( work , talkWork );
 }
 
@@ -881,6 +900,7 @@ static void CTVT_TALK_UpdateVoiceBar( COMM_TVT_WORK *work , CTVT_TALK_WORK *talk
     if( GFL_UI_TP_HitTrg( hitTbl ) == 0 )
     {
       talkWork->isHoldSlider = TRUE;
+      GFL_CLACT_WK_SetAnmSeq( talkWork->clwkSlider , CTOAS_SLIDER_ACTIVE );
     }
   }
   else
@@ -917,6 +937,7 @@ static void CTVT_TALK_UpdateVoiceBar( COMM_TVT_WORK *work , CTVT_TALK_WORK *talk
     else
     {
       talkWork->isHoldSlider = FALSE;
+      GFL_CLACT_WK_SetAnmSeq( talkWork->clwkSlider , CTOAS_SLIDER );
     }
   }
 

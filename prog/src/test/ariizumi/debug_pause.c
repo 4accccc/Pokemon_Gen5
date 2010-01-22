@@ -46,7 +46,7 @@ void DEBUG_PAUSE_Init( void )
 	debPauseWork.isEnable = FALSE;
 	
 #if DEBUG_ONLY_FOR_ariizumi_nobuhiko
-	debPauseWork.isEnable = TRUE;
+	//debPauseWork.isEnable = TRUE;
 #endif
 
 }

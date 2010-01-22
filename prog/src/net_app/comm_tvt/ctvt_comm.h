@@ -35,6 +35,7 @@ typedef enum
 
   //COMMが使う＆親機が子に通知する用
   CCFT_TALK_MEMBER,
+  CCFT_CHANGE_DOUBLE,
   CCFT_DRAW_BUFFER_NO,
     
   //外で使う
@@ -92,6 +93,7 @@ extern void CTVT_COMM_SetMacAddress( COMM_TVT_WORK *work , CTVT_COMM_WORK *commW
 
 extern const BOOL CTVT_COMM_IsInitNet( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork );
 
+extern const void CTVT_COMM_SendFlgReq_Double( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork , const BOOL flg );
 extern const BOOL CTVT_COMM_SendFlg( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork , const u8 flg , const u32 value );
 extern const BOOL CTVT_COMM_SendWave( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork , void* sendData );
 

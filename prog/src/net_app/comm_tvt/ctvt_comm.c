@@ -152,6 +152,8 @@ struct _CTVT_COMM_WORK
   
   //親機専用処理
   BOOL updateReqTalk;
+  BOOL reqSendDoubleFlg;
+  BOOL sendDoubleFlgValue;
 #if CTVT_COMM_SHARE_DRAW_BUFF
   BOOL reqSendDrawBuffer;
   BOOL sendingDrawBuffer;
@@ -244,6 +246,8 @@ CTVT_COMM_WORK* CTVT_COMM_InitSystem( COMM_TVT_WORK *work , const HEAPID heapId 
   commWork->talkMember = CTVT_COMM_INVALID_MEMBER;
   
   commWork->updateReqTalk = FALSE;
+  commWork->reqSendDoubleFlg = FALSE;
+  commWork->sendDoubleFlgValue = FALSE;
 #if CTVT_COMM_SHARE_DRAW_BUFF
   commWork->reqSendDrawBuffer = FALSE;
   commWork->sendingDrawBuffer = FALSE;
@@ -647,14 +651,17 @@ static void CTVT_COMM_UpdateComm( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork
       CTVT_COMM_RefureshCommState( work , commWork );
       if( commWork->connectNum < connectNum )
       {
-#if CTVT_COMM_SHARE_DRAW_BUFF
         //新メンバー追加
         if( selfId == 0 )
         {
+          //画面の拡縮設定同期
+          commWork->reqSendDoubleFlg = TRUE;
+          commWork->sendDoubleFlgValue = COMM_TVT_IsDoubleMode(work);
+#if CTVT_COMM_SHARE_DRAW_BUFF
           commWork->reqSendDrawBuffer = TRUE;
           COMM_TVT_SetSusspendDraw( work , TRUE );
-        }
 #endif //CTVT_COMM_SHARE_DRAW_BUFF
+        }
       }
       commWork->connectNum = connectNum;
       commWork->beacon.connectNum = connectNum;
@@ -762,6 +769,14 @@ static void CTVT_COMM_UpdateComm( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork
     }
 #endif //CTVT_COMM_SHARE_DRAW_BUFF
 
+    if( commWork->reqSendDoubleFlg == TRUE )
+    {
+      const BOOL ret = CTVT_COMM_SendFlg( work , commWork , CCFT_CHANGE_DOUBLE , commWork->sendDoubleFlgValue );
+      if( ret == TRUE )
+      {
+        commWork->reqSendDoubleFlg = FALSE;
+      }
+    }
     
     if( commWork->updateReqTalk == TRUE )
     {
@@ -973,6 +988,16 @@ static void CTVT_COMM_UpdateMemberState( COMM_TVT_WORK *work , CTVT_COMM_WORK *c
 
 #pragma mark [>send/post
 
+const void CTVT_COMM_SendFlgReq_Double( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork , const BOOL flg )
+{
+  if( CTVT_COMM_SendFlg( work , commWork , CCFT_CHANGE_DOUBLE , flg ) == FALSE )
+  {
+    commWork->reqSendDoubleFlg = TRUE;
+    commWork->sendDoubleFlgValue = flg;
+  }
+}
+
+
 typedef struct
 {
   u32 value;
@@ -1042,6 +1067,14 @@ static void CTVT_COMM_PostFlg( const int netID, const int size , const void* pDa
       DRAW_SYS_WORK *drawSys = COMM_TVT_GetDrawSys( commWork->parentWork );
       DRAW_SYS_SetRedrawBuffer( drawSys , pkt->value );
       COMM_TVT_SetSusspendDraw( commWork->parentWork , FALSE );
+    }
+    break;
+    
+  case CCFT_CHANGE_DOUBLE:
+    {
+      CTVT_CAMERA_WORK *camWork = COMM_TVT_GetCameraWork(commWork->parentWork);
+      CTVT_CAMERA_SetWaitAllRefreshFlg( commWork->parentWork , camWork );
+      COMM_TVT_SetDoubleMode_Flag( commWork->parentWork , pkt->value );
     }
     break;
   //外で使う

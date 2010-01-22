@@ -47,6 +47,7 @@ struct _CTVT_CAMERA_WORK
   CAMERA_SYSTEM_WORK *camSys;       //  1サイズ*2 //0x30000
   void *cnvBuf;   //変換用バッファ  //  1/2サイズ //0x0c000
   void *sendBuf;  //送信用バッファ  //  1/2サイズ //0x0c000
+  void *tempBuf;  //一時用バッファ  //  1/2サイズ //0x0c000
 };
 
 //======================================================================
@@ -64,7 +65,7 @@ CTVT_CAMERA_WORK* CTVT_CAMERA_Init( COMM_TVT_WORK *work , const HEAPID heapId )
   if( COMM_TVT_IsTwlMode() == TRUE )
   {
     camWork->camHeapId = HEAPID_CTVT_CAMERA;
-    GFL_HEAP_CreateHeap( GFL_HEAPID_TWL, HEAPID_CTVT_CAMERA, 0x50000 );
+    GFL_HEAP_CreateHeap( GFL_HEAPID_TWL, HEAPID_CTVT_CAMERA, 0x60000 );
     
     camWork->camSys = CAMERA_SYS_InitSystem( camWork->camHeapId );
     CAMERA_SYS_SetResolution( camWork->camSys , CAMERA_SIZE_256x192 );
@@ -76,6 +77,7 @@ CTVT_CAMERA_WORK* CTVT_CAMERA_Init( COMM_TVT_WORK *work , const HEAPID heapId )
 
     camWork->cnvBuf  = GFL_HEAP_AllocClearMemory( GFL_HEAP_LOWID(camWork->camHeapId) , CTVT_BUFFER_SCR_SIZE/2 );
     camWork->sendBuf = GFL_HEAP_AllocClearMemory( GFL_HEAP_LOWID(camWork->camHeapId) , CTVT_BUFFER_SCR_SIZE/2 );
+    camWork->tempBuf = GFL_HEAP_AllocClearMemory( GFL_HEAP_LOWID(camWork->camHeapId) , CTVT_BUFFER_SCR_SIZE/2 );
   }
   else
   {
@@ -98,6 +100,7 @@ void CTVT_CAMERA_Term( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork )
   GFL_HEAP_FreeMemory( camWork->scrBuf );
   if( COMM_TVT_IsTwlMode() == TRUE )
   {
+    GFL_HEAP_FreeMemory( camWork->tempBuf );
     GFL_HEAP_FreeMemory( camWork->cnvBuf );
     GFL_HEAP_FreeMemory( camWork->sendBuf );
     CAMERA_SYS_ExitSystem( camWork->camSys );
@@ -157,8 +160,9 @@ void CTVT_CAMERA_VBlank( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork )
       {
         return;
       }
-      if( camWork->waitAllConut == 0 )
+      if( camWork->waitAllConut < 2 )
       {
+        camWork->isUpdateBit = 0;
         camWork->waitAllConut++;
         return;
       }
@@ -166,6 +170,23 @@ void CTVT_CAMERA_VBlank( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork )
       {
         GFL_STD_MemFill32( G2_GetBG3ScrPtr() ,0x00000000 , CTVT_BUFFER_SCR_SIZE );
         camWork->isWaitAllRefresh = FALSE;
+        {
+          //BGの拡大
+          MtxFx22 mtx;
+          if( COMM_TVT_IsDoubleMode(work) == TRUE )
+          {
+            mtx._00 = FX_Inv(FX32_ONE*2);
+            mtx._11 = FX_Inv(FX32_ONE*2);
+          }
+          else
+          {
+            mtx._00 = FX_Inv(FX32_ONE);
+            mtx._11 = FX_Inv(FX32_ONE);
+          }
+          mtx._01 = 0;
+          mtx._10 = 0;
+          G2_SetBG3Affine(&mtx,0,0,0,0);
+        }
       }
     }
     
@@ -241,44 +262,59 @@ static void CTVT_CAMERA_CapCallBack( void *captureArea , void *userWork )
   
   if( COMM_TVT_GetPause(work) == FALSE )
   {
-    if( mode == CTDM_SINGLE )
-    {
-      GFL_STD_MemCopy32( captureArea , camWork->scrBuf , CTVT_BUFFER_SCR_SIZE );
-    }
-    else
+    //tempバッファにコピー
     {
       int iy;
-      //どこを切り取るか？
-      u16 capPosX;
-      u16 capPosY;
-      u16 capSizeX;
-      u16 capSizeY;
-      //どこに貼り付けるか？
-      u32 bufTopAdr;
-      if( isDouble == FALSE )
-      {
-        capPosX = ( mode == CTDM_DOUBLE ? 64 : 64 );
-        capPosY = ( mode == CTDM_DOUBLE ?  0 : 48 );
-        capSizeX= ( mode == CTDM_DOUBLE ?128 :128 );
-        capSizeY= ( mode == CTDM_DOUBLE ?192 : 96 );
-      }
-      else
-      {
-        capPosX = ( mode == CTDM_DOUBLE ? 96 : 96 );
-        capPosY = ( mode == CTDM_DOUBLE ? 48 : 80 );
-        capSizeX= ( mode == CTDM_DOUBLE ? 64 : 64 );
-        capSizeY= ( mode == CTDM_DOUBLE ? 96 : 48 );
-      }
-      bufTopAdr = capSizeX*capSizeY*idx;
-      
+      const u16 capPosX = 64;
+      const u16 capPosY = 0;
+      const u16 capSizeX = 128;
+      const u16 capSizeY = 192;
       
       for( iy=0;iy<capSizeY;iy++ )
       {
         const u32 capTopAdr = (u32)captureArea     + (capPosY+iy)*256*2 + capPosX*2;
-        const u32 bufTopAdr = (u32)camWork->scrBuf + capSizeX*capSizeY*2*idx + capSizeX*iy*2 ;
+        const u32 bufTopAdr = (u32)camWork->tempBuf + capSizeX*iy*2 ;
         GFL_STD_MemCopy32( (void*)capTopAdr , (void*)bufTopAdr , capSizeX*2 );
-        
       }
+    }
+  }
+
+  if( mode == CTDM_SINGLE )
+  {
+    //もうココには来ない
+    //GFL_STD_MemCopy32( captureArea , camWork->scrBuf , CTVT_BUFFER_SCR_SIZE );
+    GF_ASSERT_MSG(0,"mode CTDM_SINGLE is no support!\n");
+  }
+  else
+  {
+    int iy;
+    //どこを切り取るか？
+    u16 capPosX;
+    u16 capPosY;
+    u16 capSizeX;
+    u16 capSizeY;
+    //この段階でサイズは1/2サイズ
+    if( isDouble == FALSE )
+    {
+      capPosX = ( mode == CTDM_DOUBLE ?  0 :  0 );
+      capPosY = ( mode == CTDM_DOUBLE ?  0 : 48 );
+      capSizeX= ( mode == CTDM_DOUBLE ?128 :128 );
+      capSizeY= ( mode == CTDM_DOUBLE ?192 : 96 );
+    }
+    else
+    {
+      capPosX = ( mode == CTDM_DOUBLE ? 32 : 32 );
+      capPosY = ( mode == CTDM_DOUBLE ? 48 : 80 );
+      capSizeX= ( mode == CTDM_DOUBLE ? 64 : 64 );
+      capSizeY= ( mode == CTDM_DOUBLE ? 96 : 48 );
+    }
+    
+    for( iy=0;iy<capSizeY;iy++ )
+    {
+      const u32 capTopAdr = (u32)camWork->tempBuf+ (capPosY+iy)*128*2 + capPosX*2;
+      const u32 bufTopAdr = (u32)camWork->scrBuf + capSizeX*capSizeY*2*idx + capSizeX*iy*2 ;
+      GFL_STD_MemCopy32( (void*)capTopAdr , (void*)bufTopAdr , capSizeX*2 );
+      
     }
   }
   camWork->isUpdateBit |= 1<<idx;
@@ -368,7 +404,7 @@ const u32 CTVT_CAMERA_GetBufferSize( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *cam
   }
   else
   {
-    return bufSizeArr[mode]/2;
+    return bufSizeArr[mode]/4;
   }
 }
 

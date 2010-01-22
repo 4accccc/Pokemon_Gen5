@@ -216,8 +216,12 @@ extern PRINT_QUE* COMM_TVT_GetPrintQue( COMM_TVT_WORK *work );
 extern const u8   COMM_TVT_GetConnectNum( const COMM_TVT_WORK *work );
 extern void   COMM_TVT_SetConnectNum( COMM_TVT_WORK *work , const u8 num);
 extern const COMM_TVT_DISP_MODE COMM_TVT_GetDispMode( const COMM_TVT_WORK *work );
+//Doubleモードの切り替えはTrueがついているほうが実際のフラグ変更
+//無い方がフラグ送信リクエスト
 extern const BOOL COMM_TVT_IsDoubleMode( const COMM_TVT_WORK *work );
 extern void COMM_TVT_SetDoubleMode( COMM_TVT_WORK *work , const BOOL flg );
+extern void   COMM_TVT_FlipDoubleMode( COMM_TVT_WORK *work );
+extern void   COMM_TVT_SetDoubleMode_Flag( COMM_TVT_WORK *work , const BOOL flg );
 extern const u8   COMM_TVT_GetSelfIdx( const COMM_TVT_WORK *work );
 extern void COMM_TVT_SetSelfIdx( COMM_TVT_WORK *work , const u8 idx );
 extern const BOOL COMM_TVT_GetSusspend( COMM_TVT_WORK *work );

@@ -605,6 +605,16 @@ static void CTVT_DRAW_UpdateDrawing( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawW
       //BG2と3のアドレス
       u16* adr2 = (u16*)((u32)G2_GetBG2ScrPtr() + tpx*2 + tpy*256*2);
       u16* adr3 = (u16*)((u32)G2_GetBG3ScrPtr() + tpx*2 + tpy*256*2);
+
+      if( COMM_TVT_IsDoubleMode(work) == TRUE )
+      {
+        //拡大時はアドレスがずれる
+        adr3 = (u16*)((u32)G2_GetBG3ScrPtr() + (tpx/2)*2 + (tpy/2)*256*2);
+      }
+      else
+      {
+        adr3 = (u16*)((u32)G2_GetBG3ScrPtr() + tpx*2 + tpy*256*2);
+      }
       if( *adr2 & 0x8000 )
       {
         drawWork->penCol = *adr2;

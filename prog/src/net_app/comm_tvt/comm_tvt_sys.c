@@ -14,6 +14,7 @@
 #include "system/wipe.h"
 #include "system/bmp_winframe.h"
 #include "system/net_err.h"
+#include "sound/pm_sndsys.h"
 #include "app/app_menu_common.h"
 
 #include "arc_def.h"
@@ -207,6 +208,7 @@ static void COMM_TVT_Init( COMM_TVT_WORK *work )
     break;
   }
 
+  PMSND_ChangeBGMVolume( 0xFFFF , 48 );
 
 }
 
@@ -215,6 +217,8 @@ static void COMM_TVT_Init( COMM_TVT_WORK *work )
 //--------------------------------------------------------------
 static void COMM_TVT_Term( COMM_TVT_WORK *work )
 {
+  PMSND_ChangeBGMVolume( 0xFFFF , 127 );
+
   GFL_TCB_DeleteTask( work->vBlankTcb );
   
   DRAW_SYS_DeleteSystem( work->drawSys );
@@ -757,10 +761,22 @@ const BOOL COMM_TVT_IsDoubleMode( const COMM_TVT_WORK *work )
 {
   return work->isDouble;
 }
+//フラグ送信リクエスト
 void   COMM_TVT_SetDoubleMode( COMM_TVT_WORK *work , const BOOL flg )
+{
+  CTVT_COMM_SendFlgReq_Double( work , work->commWork , flg );
+}
+void   COMM_TVT_FlipDoubleMode( COMM_TVT_WORK *work )
+{
+  COMM_TVT_SetDoubleMode( work , !work->isDouble );
+}
+
+//フラグ変更
+void   COMM_TVT_SetDoubleMode_Flag( COMM_TVT_WORK *work , const BOOL flg )
 {
   work->isDouble = flg;
 }
+
 const u8   COMM_TVT_GetSelfIdx( const COMM_TVT_WORK *work )
 {
   return work->selfIdx;

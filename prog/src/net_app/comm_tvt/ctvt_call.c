@@ -755,6 +755,7 @@ static void CTVT_CALL_UpdateTP( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork )
         tpy <= CTVT_CALL_SCROLL_Y + CTVT_CALL_SCROLL_HIT_HEIGHT + callWork->scrollBarPos )
     {
       callWork->isHoldScroll = TRUE;
+      GFL_CLACT_WK_SetAnmSeq( callWork->clwkScrollBar , CTOAS_SCROLL_BAR_ACTIVE );
     }
   }
   if( isHold == TRUE &&
@@ -790,6 +791,7 @@ static void CTVT_CALL_UpdateTP( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork )
   else
   {
     callWork->isHoldScroll = FALSE;
+    GFL_CLACT_WK_SetAnmSeq( callWork->clwkScrollBar , CTOAS_SCROLL_BAR );
   }
   
   if( callWork->barMenuWork != NULL )
