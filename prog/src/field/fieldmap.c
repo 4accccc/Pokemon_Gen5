@@ -575,6 +575,9 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
 {
   GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
 
+  //フラグ操作：フィールドマップ生成タイミング
+  FIELD_FLAGCONT_INIT_FieldIn( gdata, fieldWork->map_id );
+
   //フィールド3Ｄカットインヒープ確保
   GFL_HEAP_CreateHeap( HEAPID_FIELDMAP, HEAPID_FLD3DCUTIN, FLD3DCUTIN_SIZE );
 
