@@ -2866,18 +2866,18 @@ static void handler_YadorigiNoTane_Param( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW
 }
 //----------------------------------------------------------------------------------
 /**
- * みやぶる
+ * みやぶる・かぎわける
  */
 //----------------------------------------------------------------------------------
 static const BtlEventHandlerTable*  ADD_Miyaburu( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZASICK_PARAM, handler_Miyaburu },    // ワザ出し確定ハンドラ
+    { BTL_EVENT_WAZASICK_PARAM, handler_Miyaburu },    // 状態異常パラメータ調整ハンドラ
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
 }
-
+// 状態異常パラメータ調整ハンドラ
 static void handler_Miyaburu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
