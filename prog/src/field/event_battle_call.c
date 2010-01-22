@@ -38,7 +38,7 @@
 
 #include "gamesystem/btl_setup.h"
 
-#include "demo/comm_btl_demo.h"
+#include "field/event_battle_call.h"
 
 //============================================================================================
 //============================================================================================
@@ -50,22 +50,12 @@ extern const NetRecvFuncTable BtlRecvFuncTable[];
 
 FS_EXTERN_OVERLAY(battle);
 
-//==============================================================================
-//  構造体定義
-//==============================================================================
-typedef struct{
-  GAMESYS_WORK * gsys;
-  FIELDMAP_WORK * fieldmap;
-  BATTLE_SETUP_PARAM para;
-  COMM_BTL_DEMO_PARAM demo_prm;
-}EVENT_BATTLE_CALL_WORK;
-
 //============================================================================================
 //
 //    サブイベント
 //
 //============================================================================================
-static GMEVENT_RESULT EVENT_BattleMain(GMEVENT * event, int *  seq, void * work)
+GMEVENT_RESULT EVENT_BattleMain(GMEVENT * event, int *  seq, void * work)
 {
   enum
   {
@@ -95,20 +85,20 @@ static GMEVENT_RESULT EVENT_BattleMain(GMEVENT * event, int *  seq, void * work)
     {
       GFL_OVERLAY_Load( FS_OVERLAY_ID( battle ) );
       GFL_NET_AddCommandTable(GFL_NET_CMD_BATTLE, BtlRecvFuncTable, BTL_NETFUNCTBL_ELEMS, NULL);
-      GFL_NET_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_BATTLE_ADD_CMD_TBL_AFTER);
+      GFL_NET_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle(), EVENT_BATTLE_ADD_CMD_TBL_TIMING);
       OS_TPrintf("戦闘用通信コマンドテーブルをAddしたので同期取り\n");
       (*seq) ++;
     }
     break;
   case SEQ_BATTLE_TIMING_WAIT:
-    if(GFL_NET_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_BATTLE_ADD_CMD_TBL_AFTER)){
+    if(GFL_NET_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(), EVENT_BATTLE_ADD_CMD_TBL_TIMING)){
       OS_TPrintf("戦闘用通信コマンドテーブルをAdd後の同期取り完了\n");
       (*seq) ++;
     }
     break;
   case SEQ_BATTLE_INIT:
-    GMEVENT_CallEvent(event, EVENT_FSND_PushPlayNextBGM(gsys, bcw->para.musicDefault, FSND_FADE_SHORT, FSND_FADE_NONE)); 
-    GAMESYSTEM_CallProc(gsys, NO_OVERLAY_ID, &BtlProcData, &bcw->para);
+    GMEVENT_CallEvent(event, EVENT_FSND_PushPlayNextBGM(gsys, bcw->btl_setup_prm.musicDefault, FSND_FADE_SHORT, FSND_FADE_NONE)); 
+    GAMESYSTEM_CallProc(gsys, NO_OVERLAY_ID, &BtlProcData, &bcw->btl_setup_prm);
     (*seq)++;
     break;
   case SEQ_BATTLE_END:
@@ -117,7 +107,7 @@ static GMEVENT_RESULT EVENT_BattleMain(GMEVENT * event, int *  seq, void * work)
     }
     OS_TPrintf("バトル完了\n");
     GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle ) );
-    BATTLE_PARAM_Release( &bcw->para );
+    BATTLE_PARAM_Release( &bcw->btl_setup_prm );
     (*seq)++;
     break;
   case SEQ_CALL_END_DEMO:

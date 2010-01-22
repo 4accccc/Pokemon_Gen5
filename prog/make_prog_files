@@ -114,6 +114,7 @@ SRCS  +=    $(SOUNDSRC) \
         net_app/wificlub/wifi_p2pevent.c \
         field/event_wificlub.c \
         field/event_colosseum_battle.c \
+        field/event_battle_call.c \
         field/event_bsubway.c \
         field/field_comm/intrude_comm.c \
         field/field_comm/intrude_comm_command.c \
