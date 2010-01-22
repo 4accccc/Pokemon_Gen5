@@ -1061,6 +1061,8 @@ static  void  ai_if( VMHANDLE* vmh, TR_AI_WORK* tr_ai_work, BranchCond cond )
   int value = ( int )VMGetU32( vmh );
   int adrs  = ( int )VMGetU32( vmh );
 
+  OS_TPrintf("ai_if:\nsrc:%d dst:%d cond:%d\n",tr_ai_work->calc_work,value,cond);
+
   branch_act( vmh, cond, tr_ai_work->calc_work, value, adrs );
 }
 
@@ -1369,7 +1371,7 @@ static  VMCMD_RESULT  AI_CHECK_WAZASEQNO( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* tr_ai_work = (TR_AI_WORK*)context_work;
 
-  tr_ai_work->calc_work = 0;  //@todo Žæ“¾ŠÖ”
+  tr_ai_work->calc_work = WAZADATA_GetParam( tr_ai_work->waza_no, WAZAPARAM_AI_SEQNO );
 
   return tr_ai_work->vmcmd_result;
 }
@@ -1507,7 +1509,7 @@ static  void  ai_if_waza_seq_no_jump( VMHANDLE* vmh, TR_AI_WORK* tr_ai_work, Bra
 {
   int seqno = ( int )VMGetU32( vmh );
   int adrs  = ( int )VMGetU32( vmh );
-  int data  = 0;//@todo Žæ“¾ŠÖ”
+  int data  = WAZADATA_GetParam( tr_ai_work->waza_no, WAZAPARAM_AI_SEQNO );
 
   branch_act( vmh, cond, data, seqno, adrs );
 }
@@ -1709,7 +1711,7 @@ static  void  ai_if_have_waza_seqno( VMHANDLE* vmh, TR_AI_WORK* tr_ai_work, Bran
   case CHECK_ATTACK:
     for( i = 0 ; i < BPP_WAZA_GetCount( tr_ai_work->atk_bpp ) ; i++ )
     {
-      int have_seqno = 0; //@todo Žæ“¾ŠÖ” BPP_WAZA_GetID( tr_ai_work->atk_bpp, i );
+      int have_seqno = WAZADATA_GetParam( BPP_WAZA_GetID( tr_ai_work->atk_bpp, i ), WAZAPARAM_AI_SEQNO );
       if( have_seqno == seqno )
       {
         ret = TRUE;
@@ -1720,7 +1722,7 @@ static  void  ai_if_have_waza_seqno( VMHANDLE* vmh, TR_AI_WORK* tr_ai_work, Bran
   case CHECK_DEFENCE:
     for( i = 0 ; i < PTL_WAZA_MAX ; i++ )
     {
-      int have_seqno = 0; //@todo Žæ“¾ŠÖ” tr_ai_work->use_waza[ pos ][ i ];
+      int have_seqno = WAZADATA_GetParam( tr_ai_work->use_waza[ pos ][ i ], WAZAPARAM_AI_SEQNO );
       if( have_seqno == seqno )
       {
         ret = TRUE;
@@ -1927,7 +1929,7 @@ static  VMCMD_RESULT  AI_CHECK_WORKWAZA_SEQNO( VMHANDLE* vmh, void* context_work
 {
   TR_AI_WORK* tr_ai_work = (TR_AI_WORK*)context_work;
 
-  tr_ai_work->calc_work = 0; //@todo Žæ“¾ŠÖ” tr_ai_work->calc_work;
+  tr_ai_work->calc_work = WAZADATA_GetParam( tr_ai_work->calc_work, WAZAPARAM_AI_SEQNO );
 
   return tr_ai_work->vmcmd_result;
 }
@@ -2119,6 +2121,7 @@ static  VMCMD_RESULT  AI_IF_HAVE_ITEM( VMHANDLE* vmh, void* context_work )
   BtlPokePos  pos = get_poke_pos( tr_ai_work, side );
   u32 have_item = BPP_GetItem( get_bpp( tr_ai_work, pos ) );
 
+  //@todo
   GF_ASSERT_MSG( 0, "–¢ì¬" );
 
   return tr_ai_work->vmcmd_result;
