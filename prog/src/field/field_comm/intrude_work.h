@@ -10,6 +10,7 @@
 
 #include "gamesystem/game_comm.h"
 #include "field/field_comm/intrude_types.h"
+#include "field\field_wfbc_data.h"
 
 
 //==============================================================================
@@ -27,3 +28,4 @@ extern MISSION_CHOICE_LIST * Intrude_GetChoiceList(INTRUDE_COMM_SYS_PTR intcomm,
 extern u8 Intrude_GetPalaceArea(INTRUDE_COMM_SYS_PTR intcomm);
 extern BOOL Intrude_GetRecvWfbc(INTRUDE_COMM_SYS_PTR intcomm);
 extern BOOL Intrude_GetNewMissionRecvFlag(INTRUDE_COMM_SYS_PTR intcomm);
+extern WFBC_COMM_DATA * Intrude_GetWfbcCommData(INTRUDE_COMM_SYS_PTR intcomm);

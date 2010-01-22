@@ -269,3 +269,17 @@ BOOL Intrude_GetNewMissionRecvFlag(INTRUDE_COMM_SYS_PTR intcomm)
   intcomm->new_mission_recv = FALSE;
   return new_mission;
 }
+
+//==================================================================
+/**
+ * WFBC通信ワークを取得
+ *
+ * @param   intcomm		
+ *
+ * @retval  WFBC_COMM_DATA *		WFBC通信ワークへのポインタ
+ */
+//==================================================================
+WFBC_COMM_DATA * Intrude_GetWfbcCommData(INTRUDE_COMM_SYS_PTR intcomm)
+{
+  return &intcomm->wfbc_comm_data;
+}
