@@ -26,8 +26,9 @@ typedef struct {
   u16           texSizIdxT;
 
   NNSGfdTexKey  texVramKey;   //テクスチャＶＲＡＭキー
+  NNSGfdPlttKey plttVramKey;  //パレットＶＲＡＭキー
   u32           texOffset;
-
+  u32           plttOffset;
   GFL_FONT*     fontHandle;
 }F2T_SETDATA;
 
@@ -55,7 +56,7 @@ static void printStr
 static void convBitmap(GFL_BMP_DATA* src, GFL_BMP_DATA* dst);
 static void LoadTex
       (F2T_SETDATA * setData, const STRBUF* str, u16 xpos, u16 ypos, PRINTSYS_LSB lsb, HEAPID heapID);
-
+static void LoadPlt( F2T_SETDATA * setData, void *data );
 //----------------------------------------------------------------------------
 /**
  *	@brief	フォント文字列をテクスチャに貼り付ける
@@ -65,7 +66,8 @@ static void LoadTex
  */
 //-----------------------------------------------------------------------------
 BOOL F2T_CopyString(
-    const GFL_G3D_RES* g3Dtex, const char* tex_name, const char* plt_name,
+    const GFL_G3D_RES* g3Dtex, const char* tex_name,
+    void *plt_data, const char* plt_name,
     const STRBUF* str, u16 xpos, u16 ypos, PRINTSYS_LSB lsb, HEAPID heapID, F2T_WORK *outWork )
 {
 
@@ -165,9 +167,15 @@ BOOL F2T_CopyString(
       setData.texSizIdxT = work.texSizIdxT;
       setData.texVramKey = work.texVramKey;
       setData.texOffset = work.texOffset;
+      setData.plttVramKey = work.plttVramKey;
+      setData.plttOffset = work.plttOffset;
       setData.fontHandle = fontHandle;
 
       LoadTex(&setData, str, xpos, ypos, lsb, heapID);
+      if ( plt_data != NULL )
+      {
+        LoadPlt( &setData, plt_data );
+      }
     }
     GFL_FONT_Delete(fontHandle);
   }
@@ -185,7 +193,8 @@ BOOL F2T_CopyString(
  */
 //-----------------------------------------------------------------------------
 BOOL F2T_CopyStringAlloc(
-    const STRBUF* str, u16 xpos, u16 ypos, PRINTSYS_LSB lsb, HEAPID heapID, F2T_WORK *outWork )
+    void *plt_data, const STRBUF* str,
+    u16 xpos, u16 ypos, PRINTSYS_LSB lsb, HEAPID heapID, F2T_WORK *outWork )
 {
   F2T_WORK work;
   GFL_FONT*     fontHandle;
@@ -232,9 +241,15 @@ BOOL F2T_CopyStringAlloc(
     setData.texSizIdxT = work.texSizIdxT;
     setData.texVramKey = work.texVramKey;
     setData.texOffset = 0;
+    setData.plttVramKey = work.plttVramKey;
+    setData.plttOffset = 0;
     setData.fontHandle = fontHandle;
 
     LoadTex(&setData, str, xpos, ypos, lsb, heapID);
+    if ( plt_data != NULL )
+    {
+      LoadPlt( &setData, plt_data );
+    }
   }
 
   GFL_FONT_Delete(fontHandle);
@@ -348,4 +363,18 @@ static void LoadTex
   PRINTSYS_QUE_Clear(printQue);
   PRINTSYS_QUE_Delete(printQue);
 }
+
+static void LoadPlt( F2T_SETDATA * setData, void *data )
+{
+  //パレット転送
+  void* src = data;
+  u32   dst = NNS_GfdGetTexKeyAddr(setData->plttVramKey) + setData->plttOffset;
+  u32   siz = 0x20;
+
+  GX_BeginLoadTexPltt();
+  DC_FlushRange(src, siz);
+  GX_LoadTexPltt(src, dst, siz);
+  GX_EndLoadTexPltt();
+}
+
 

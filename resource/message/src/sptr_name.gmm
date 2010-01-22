@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="saitou" host="W00158" date="2010-01-20T16:07:16"/>
+	<create user="saitou" host="W00158" date="2010-01-21T22:25:00"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -327,7 +327,7 @@
 		</language>
 	</columns>
 
-	<dialog left="463" top="171" right="1168" bottom="791" maximized="no" rayout="Vertical2">
+	<dialog left="474" top="182" right="1179" bottom="802" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -356,8 +356,9 @@
 
 
 	<row id="SPTR_PLAYER">
-		<language name="JPN" width="256">プレーヤー</language>
-		<language name="JPN_KANJI" width="256">プレーヤー</language>
+		<comment>プレーヤー</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]</language>
 	</row>
 
 	<row id="SPTR_RIVAL">
