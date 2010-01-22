@@ -55,7 +55,18 @@ FS_EXTERN_OVERLAY(battle);
 //    サブイベント
 //
 //============================================================================================
-GMEVENT_RESULT EVENT_BattleMain(GMEVENT * event, int *  seq, void * work)
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  イベント：通信バトル呼び出し
+ *
+ *	@param	* event
+ *	@param	*  seq
+ *	@param	* work
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+GMEVENT_RESULT EVENT_CommBattleMain(GMEVENT * event, int *  seq, void * work)
 {
   enum
   {
