@@ -6403,26 +6403,36 @@
 	</row>
 
 	<row id="TRID_ELITEM_11_TRMSG_FIGHT_START">
-		<language name="JPN" width="216">なぜ　トレーナーは　きそうのか
-かんがえたことが　あるか？▼</language>
-		<language name="JPN_KANJI" width="216">なぜ　トレーナーは　競うのか
-考えたことが　あるか？▼</language>
+		<language name="JPN" width="216">ドラゴンの　くびが
+どう　うごくか　わかったか？▼</language>
+		<language name="JPN_KANJI" width="216">ドラゴンの　首が
+どう　動くか　理解できたか？▼</language>
 	</row>
 
 	<row id="TRID_ELITEM_11_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">きみが　かって
-おれが　まけた……</language>
-		<language name="JPN_KANJI" width="216">きみが　勝って
-おれが　負けた……</language>
+		<language name="JPN" width="216">つよいな！　それだけ　ドラゴンの
+くびについて　しりたいか！</language>
+		<language name="JPN_KANJI" width="216">強いな！　それだけ　ドラゴンの
+首について　知りたいか！</language>
 	</row>
 
 	<row id="TRID_ELITEM_11_TRMSG_FIGHT_AFTER">
-		<language name="JPN" width="216">きそうことで　じぶんを　しる
-まければ　さらに　つよくなる！▽
-ただ　それだけの　ことさ！</language>
-		<language name="JPN_KANJI" width="216">競うことで　自分を　知る
-負ければ　さらに強くなる！▽
-ただ　それだけの　ことさ！</language>
+		<language name="JPN" width="216">ドラゴンの　うでは
+あがったり　さがったり……▼
+それに　あわせて　ドラゴンの
+くびは　みぎや　ひだり……▽
+うえにも　したにも　うごく▼
+いいか！　ヒントだ▼
+りょうほうの　うでが　さがると
+ドラゴンの　くびも　さがるぜ</language>
+		<language name="JPN_KANJI" width="216">ドラゴンの　腕は
+上がったり　下がったり……▼
+それに　あわせて
+ドラゴンの　首は▽
+上下左右に　動く▼
+いいか！　ヒントだ▼
+両方の　腕が　下がると
+ドラゴンの　首も　下がるぜ</language>
 	</row>
 
 	<row id="TRID_ELITEM_12_TRMSG_FIGHT_START">
@@ -6473,27 +6483,27 @@
 
 	<row id="TRID_ELITEW_10_TRMSG_FIGHT_START">
 		<language name="JPN" width="216">わたしを　うわまわる　トレーナーに
-わざを　えらぶコツを　おしえるわ！▼</language>
-		<language name="JPN_KANJI" width="216">わたしを　うわまわる　トレーナーに
-技を　選ぶコツを　教えるわ！▼</language>
+ジムの　すすみかたを　おしえるわ！▼</language>
+		<language name="JPN_KANJI" width="216">わたしを　上回る　トレーナーに
+ジムの　進み方を　教えるわ！▼</language>
 	</row>
 
 	<row id="TRID_ELITEW_10_TRMSG_FIGHT_LOSE">
 		<language name="JPN" width="216">うわ！　あなた
 わたしを　うわまわってる！</language>
 		<language name="JPN_KANJI" width="216">うわ！　あなた
-わたしを　うわまわってる！</language>
+わたしを　上回ってる！</language>
 	</row>
 
 	<row id="TRID_ELITEW_10_TRMSG_FIGHT_AFTER">
-		<language name="JPN" width="216">じぶんが　なにを　したいか
-ポケモンが　なにを　のぞんでいるか▽
-あいては　どんな　ひとか▽
-いろいろ　かんがえ　わざをえらぶの</language>
-		<language name="JPN_KANJI" width="216">自分が　なにを　したいか
-ポケモンが　なにを　望んでいるか▽
-相手は　どんな　ひとか▽
-いろいろ　考え　技を選ぶの</language>
+		<language name="JPN" width="216">あおい　ゆかから　とびおりなさい！▼
+うでの　スイッチに　のれば
+ドラゴンの　くびが　うごき
+さきに　すすめるように　なるから！</language>
+		<language name="JPN_KANJI" width="216">青い　床から　飛び降りなさい！▼
+うでの　スイッチに　乗れば
+ドラゴンの　首が　動き▽
+先に　進めるように　なるから！</language>
 	</row>
 
 	<row id="TRID_ELITEW_11_TRMSG_FIGHT_START">
