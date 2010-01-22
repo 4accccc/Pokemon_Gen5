@@ -6871,7 +6871,7 @@ static void handler_FukuroDataki( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
         --cnt;
       }
     }
-    BTL_Printf("¶‚«‚Ä‚Äó‘ÔˆÙí‚¶‚á‚È‚¢’‡ŠÔ=%d\n", cnt);
+    BTL_Printf("¶‚«‚Ä‚Äó‘ÔˆÙí‚¶‚á‚È‚¢’‡ŠÔ‚Ì”=%d\n", cnt);
     if( cnt ){
       BTL_EVENTVAR_RewriteValue( BTL_EVAR_HITCOUNT, cnt );
     }
@@ -6897,7 +6897,7 @@ static void handler_Nekodamasi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
-    if( BPP_GetTurnCount(bpp) )
+    if( BPP_CONTFLAG_Get(bpp, BPP_CONTFLG_ACTION_DONE) )
     {
       BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_CAUSE, SV_WAZAFAIL_OTHER );
     }

@@ -1754,12 +1754,12 @@ static void clearWazaSickWork( BTL_POKEPARAM* bpp, BOOL fPokeSickInclude )
  *
  */
 //=============================================================================================
-void BPP_SetAppearTurn( BTL_POKEPARAM* pp, u16 turn )
+void BPP_SetAppearTurn( BTL_POKEPARAM* bpp, u16 turn )
 {
   GF_ASSERT(turn < BTL_TURNCOUNT_MAX);
-  pp->appearedTurn = turn;
-  pp->turnCount = 0;
-  dmgrecClearWork( pp );
+  bpp->appearedTurn = turn;
+  bpp->turnCount = 0;
+  dmgrecClearWork( bpp );
 }
 //=============================================================================================
 /**

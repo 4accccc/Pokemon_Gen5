@@ -1703,6 +1703,7 @@ static void ActOrder_Proc( BTL_SVFLOW_WORK* wk, ACTION_ORDER_WORK* actOrder )
       }
 
       BPP_TURNFLAG_Set( bpp, BPP_TURNFLG_ACTION_DONE );
+      scPut_SetContFlag( wk, bpp, BPP_CONTFLG_ACTION_DONE );
     }
 
   }
