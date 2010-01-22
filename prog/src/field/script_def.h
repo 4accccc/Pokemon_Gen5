@@ -159,7 +159,6 @@
 //--------------------------------------------------------------
 //  配置モデル用アニメ指定
 //--------------------------------------------------------------
-#define SCR_BMID_NULL           (0)       ///<配置モデル分類：なし
 #define SCR_BMID_DOOR           (1)       ///<配置モデル分類：ドア
 #define SCR_BMID_SANDSTREAM     (2)       ///<配置モデル分類：流砂
 #define SCR_BMID_PCMACHINE      (3)       ///<配置モデル分類：回復マシン
@@ -167,6 +166,7 @@
 #define SCR_BMID_PCEV_DOOR      (5)       ///<配置モデル分類：ポケセンエレベーター：ドア
 #define SCR_BMID_PCEV_FLOOR     (6)       ///<配置モデル分類：ポケセンエレベーター：フロア
 #define SCR_BMID_WARP           (7)       ///<配置モデル分類：ワープ
+#define SCR_BMID_EVENT          (8)       ///<配置モデル分類：ワープ
 
 #define  SCR_BMANM_DOOR_OPEN    (0)       ///<ドアアニメ：開く
 #define  SCR_BMANM_DOOR_CLOSE   (1)       ///<ドアアニメ：閉じる

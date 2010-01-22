@@ -50,7 +50,7 @@ INIT_EVENT_END
 /**************************************************************/
 INIT_EVENT_START  ev_init_c03p15
   IF $LOCALWORK1 == 1 THEN
-    _BMODEL_CHANGE_VIEW_FLAG( SCR_BMID_NULL, 6, 10, FALSE )
+    _BMODEL_CHANGE_VIEW_FLAG( SCR_BMID_EVENT, 6, 10, FALSE )
   ENDIF
 INIT_EVENT_END
 
@@ -58,7 +58,7 @@ INIT_EVENT_END
 /**************************************************************/
 INIT_EVENT_START  ev_recover_c03p15
   IF $LOCALWORK1 == 1 THEN
-    _BMODEL_CHANGE_VIEW_FLAG( SCR_BMID_NULL, 6, 10, FALSE )
+    _BMODEL_CHANGE_VIEW_FLAG( SCR_BMID_EVENT, 6, 10, FALSE )
   ENDIF
 INIT_EVENT_END
 
