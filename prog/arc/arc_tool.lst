@@ -261,3 +261,4 @@
   ARCID_ENCEFF_MDL   "enceff_mdl.narc" #エンカウントエフェクトアーカイブ
   ARCID_ENTRANCE_CAMERA "entrance_camera.narc"  # 出入り口のカメラ演出データ
   ARCID_ENC_CI_FACE "enc_ci_face.narc"  # エンカウントカットインバストアップ画像データ
+  ARCID_COMM_BTL_DEMO_GRA "comm_btl_demo.narc" " 通信バトルデモ
