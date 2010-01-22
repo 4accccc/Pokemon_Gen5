@@ -1784,7 +1784,10 @@ void CGEAR_Main( C_GEAR_WORK* pWork,BOOL bAction )
           _PaletteMake(pWork, PalleteONOFFTbl[st][0], PalleteONOFFTbl[st][1], PalleteONOFFTbl[st][2], 1);
         }
         if(!(bit & GAME_COMM_STATUS_BIT_WIRELESS_TR)){
-          PMSND_StopSE_byPlayerID( PMSND_GetSE_DefaultPlayerID(SEQ_SE_SYS_35) );
+          if(PMSND_CheckPlayingSEIdx(SEQ_SE_SYS_35)){
+            NET_PRINT("-‚¯‚µ‚½-----\n");
+            PMSND_StopSE_byPlayerID( PMSND_GetSE_DefaultPlayerID(SEQ_SE_SYS_35) );
+          }
         }
 
       }
