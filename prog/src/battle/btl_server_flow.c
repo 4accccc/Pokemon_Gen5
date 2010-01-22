@@ -326,6 +326,7 @@ static void scproc_Fight_WazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, 
 static BOOL IsMustHit( const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* target );
 static void flowsub_checkNotEffect( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam, const BTL_POKEPARAM* attacker, BTL_POKESET* targets );
 static void flowsub_checkWazaAvoid( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam, const BTL_POKEPARAM* attacker, BTL_POKESET* targets );
+static BOOL IsTripleFarPos( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* target, WazaID waza );
 static BOOL scEvent_CheckHit( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender,
   const SVFL_WAZAPARAM* wazaParam );
 static void scPut_WazaEffect( BTL_SVFLOW_WORK* wk, WazaID waza, const WAZAEFF_CTRL* effCtrl, u32 que_reserve_pos );
@@ -3886,7 +3887,7 @@ static void flowsub_checkWazaAvoid( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* w
   u8 pokeID[ BTL_POS_MAX ];
   u8 count = 0;
 
-  // 対象が最初から自分１人のワザは命中率などによる判定を行わない
+  // 対象が最初からワザを打ったポケモン１体のワザは命中率などによる判定を行わない
   if( (BTL_POKESET_GetCountMax(targets) == 1)
   &&  (BTL_POKESET_Get(targets,0) == attacker)
   ){
@@ -3896,8 +3897,9 @@ static void flowsub_checkWazaAvoid( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* w
   BTL_POKESET_SeekStart( targets );
   while( (bpp = BTL_POKESET_SeekNext(targets)) != NULL )
   {
-    if( !scEvent_CheckHit(wk, attacker, bpp, wazaParam) )
-    {
+    if( IsTripleFarPos(wk, attacker, bpp, wazaParam->wazaID)
+    ||  !scEvent_CheckHit(wk, attacker, bpp, wazaParam)
+    ){
       pokeID[count++] = BPP_GetID( bpp );
       BTL_POKESET_Remove( targets, bpp );
       scPut_WazaAvoid( wk, bpp, wazaParam->wazaID );
@@ -3911,6 +3913,34 @@ static void flowsub_checkWazaAvoid( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* w
     Hem_PopState( &wk->HEManager, hem_state );
   }
 }
+//----------------------------------------------------------------------------------
+/**
+ * トリプル時、当たらない位置のポケモンかどうかを判定
+ *
+ * @param   wk
+ * @param   attacker    攻撃するポケ
+ * @param   target      攻撃されるポケ
+ * @param   waza        ワザID
+ *
+ * @retval  BOOL        トリプルで当たらない位置ならTRUE／それ以外FALSE
+ */
+//----------------------------------------------------------------------------------
+static BOOL IsTripleFarPos( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* target, WazaID waza )
+{
+  if( (BTL_MAIN_GetRule(wk->mainModule) == BTL_RULE_TRIPLE)
+  &&  (WAZADATA_GetFlag(waza, WAZAFLAG_TripleFar) == FALSE)
+  ){
+    BtlPokePos  atkPos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, BPP_GetID(attacker) );
+    BtlPokePos  tgtPos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, BPP_GetID(target) );
+
+    if( !BTL_MAINUTIL_CheckTripleHitArea(atkPos, tgtPos) ){
+      return TRUE;
+    }
+  }
+  return FALSE;
+}
+
+
 //--------------------------------------------------------------------------
 /**
  * [Event] 出したワザが対象に当たるか判定（一撃必殺以外のポケモン対象ワザ）
@@ -6229,7 +6259,10 @@ static void scproc_Fight_Ichigeki( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wa
       u8 defLevel = BPP_GetValue( target, BPP_LEVEL );
       u8 targetPokeID = BPP_GetID( target );
 
-      if( atkLevel < defLevel ){
+      if( IsTripleFarPos(wk, attacker, target, wazaParam->wazaID) ){
+        scput_WazaNoEffect( wk, target );
+      }
+      else if( atkLevel < defLevel ){
         scput_WazaNoEffect( wk, target );
       }
       else if( scProc_checkWazaDamageAffinity(wk, attacker, target, wazaParam->wazaType) == BTL_TYPEAFF_0 ){
