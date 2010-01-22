@@ -35,6 +35,11 @@ extern VMCMD_RESULT EvCmdWfbc_AddBCNpcWinTarget( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdWfbc_CheckWFTargetPokemon( VMHANDLE *core, void *wk );
 
 
+// 進入
+// 通信イベント
+extern VMCMD_RESULT EvCmdWfbc_StartPalaceTalk( VMHANDLE *core, void *wk );
+
+
 #ifdef _cplusplus
 }	// extern "C"{
 #endif

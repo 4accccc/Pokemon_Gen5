@@ -13,7 +13,12 @@
 
 #include <gflib.h>
 
+#include "arc/arc_def.h"
+#include "arc/message.naix"
+
 #include "print/wordset.h"
+
+#include "field/field_msgbg.h"
 
 #include "script.h"
 #include "script_local.h"
@@ -21,15 +26,19 @@
 #include "scrcmd.h"
 #include "scrcmd_work.h"
 
+#include "event_field_fade.h"
+
 #include "fieldmap.h"
 #include "field_wfbc.h"
 #include "fldmmdl.h"
+#include "field_status_local.h"
 
 #include "scrcmd_wfbc.h"
 
 #include "scrcmd_wfbc_define.h" 
 
 #include "msg/msg_place_name.h"  // for MAPNAME_xxxx
+#include "msg/script/msg_plc10.h"  
 
 //-----------------------------------------------------------------------------
 /**
@@ -48,6 +57,10 @@
  *					プロトタイプ宣言
 */
 //-----------------------------------------------------------------------------
+// Palace通信会話イベント
+static GMEVENT* EVENT_SetUp_WFBC_Palece_Talk( GAMESYS_WORK* p_gsys, FIELDMAP_WORK* p_fieldmap );
+static GMEVENT_RESULT EVENT_WFBC_Palece_Talk( GMEVENT* p_event, int* p_seq, void* p_wk );
+
 
 
 //----------------------------------------------------------------------------
@@ -381,6 +394,566 @@ VMCMD_RESULT EvCmdWfbc_CheckWFTargetPokemon( VMHANDLE *core, void *wk )
   }
 
 	return VMCMD_RESULT_CONTINUE;
+}
+
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  進入用会話処理起動
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdWfbc_StartPalaceTalk( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK*  work = (SCRCMD_WORK*)wk;
+  SCRIPT_WORK*   scw = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
+  FIELDMAP_WORK* fieldWork = GAMESYSTEM_GetFieldMapWork( gsys );
+
+  // イベント起動
+  SCRIPT_CallEvent( scw, EVENT_SetUp_WFBC_Palece_Talk(gsys, fieldWork) );
+
+	return VMCMD_RESULT_SUSPEND;
+}
+
+
+//-----------------------------------------------------------------------------
+/**
+ *    private関数
+ */
+//-----------------------------------------------------------------------------
+
+
+
+//-----------------------------------------------------------------------------
+/**
+ *    Palace時の会話
+ */
+//-----------------------------------------------------------------------------
+//-------------------------------------
+///	イベントシーケンス
+//=====================================
+enum {
+  WFBC_PALACE_TALK_SEQ_IS_OBJID_ON,   // 親の世界に目の前の人がいるのかチェック
+  WFBC_PALACE_TALK_SEQ_WAIL_OBJID_ON, // 親の世界に目の前の人がいるのかチェック待ち
+  WFBC_PALACE_TALK_SEQ_TALK_01,       // おれ、別VERSIONの街にいくんだいいでしょう。
+  WFBC_PALACE_TALK_SEQ_IS_MYROMVER,   // 自分ROMバージョンをチェック
+  WFBC_PALACE_TALK_SEQ_TALK_02,       // この街はつまらない・・・
+  WFBC_PALACE_TALK_SEQ_IS_MYWFBC_CAN_TAKE, // 自分の世界に持ってこれるかチェック
+  WFBC_PALACE_TALK_SEQ_TALK_03,       // たのしそうだな
+  WFBC_PALACE_TALK_SEQ_TALK_04,       // つれていって！　YES/NO表示
+  WFBC_PALACE_TALK_SEQ_YESNO_WAIT,    // つれていって！　YES/NOまち
+  WFBC_PALACE_TALK_SEQ_TALK_05,       // つれだしてよー。　NOの場合
+  WFBC_PALACE_TALK_SEQ_IS_OBJID_ON01, // もう一度親の世界にいるかチェック
+  WFBC_PALACE_TALK_SEQ_WAIT_OBJID_ON01,// もう一度親の世界にいるかチェック
+  WFBC_PALACE_TALK_SEQ_TALK_06,       // やっぱり別の街にいく！
+  WFBC_PALACE_TALK_SEQ_TALK_08,       // やったー！（人移動＆移動したことを親に通知）
+  WFBC_PALACE_TALK_SEQ_MAP_RESET_FADE_OUT,        // マップの再構築 フェードアウト
+  WFBC_PALACE_TALK_SEQ_MAP_RESET_PEOPLE_CHANGE,   // マップの再構築 フェードアウトウエイト　＆　つれてきた人を消す処理
+
+
+  WFBC_PALACE_TALK_SEQ_TALK_WAIT,   //メッセージ完了まち　
+
+  WFBC_PALACE_TALK_SEQ_END,
+} ;
+
+//-------------------------------------
+///	会話処理内　シーケンス
+//=====================================
+enum {
+  WFBC_PALACE_TALKSYS_SEQ_PRINT,
+  WFBC_PALACE_TALKSYS_SEQ_YESNO_START,
+  WFBC_PALACE_TALKSYS_SEQ_YESNO_WAIT,
+  WFBC_PALACE_TALKSYS_SEQ_CLOSE,
+  WFBC_PALACE_TALKSYS_SEQ_CLOSE_WAIT,
+} ;
+enum{
+  WFBC_PALACE_TALKMODE_NORMAL,
+  WFBC_PALACE_TALKMODE_YESNO,
+
+  WFBC_PALACE_TALKMODE_MAX,
+};
+
+
+//-------------------------------------
+///	Palace時の会話ワーク
+//=====================================
+typedef struct {
+  GAMESYS_WORK* p_gsys;
+  FIELDMAP_WORK* p_fieldmap;
+
+  HEAPID heapID;
+  
+  FLDMSGBG*         p_fmb;
+  FLDTALKMSGWIN *   p_talkwin;
+  FLDMENUFUNC *     p_yesno;
+  GFL_MSGDATA*      p_msgdata;
+  WORDSET*          p_wordset;
+  STRBUF*           p_strbuf;
+  STRBUF*           p_strbuf_tmp;
+
+  FIELD_WFBC* p_wfbc;
+  const FIELD_WFBC_PEOPLE* cp_people;
+  MMDL*       p_mmdl;
+  VecFx32     pos;
+
+  WFBC_COMM_DATA* p_commsys;
+
+  FIELD_WFBC_CORE* p_my;
+  FIELD_WFBC_CORE* p_oya;
+
+  u16 npc_id;
+  u16 yes_next_seq;
+  u16 no_next_seq;
+
+  u16 talk_seq;
+  u8  is_yes;
+  u8  mode;
+  u8  pad[2];
+} WFBC_PALACE_TALK_WK;
+
+
+//-------------------------------------
+///	会話メッセージ情報
+//=====================================
+static const u16 sc_WFBC_PALACE_TALK_START_IDX[FIELD_WFBC_CORE_TYPE_MAX] = 
+{
+  plwc10_01_01,
+  plbc10_01_01,
+};
+#define WFBC_PALACE_TALK_NPC_MSG_NUM  (8)
+
+// private
+static void EVENT_WFBC_WFBC_TalkStart( WFBC_PALACE_TALK_WK* p_wk, u16 palace_msg_idx, int* p_seq, u16 next_seq );
+static void EVENT_WFBC_WFBC_TalkStartYesNo( WFBC_PALACE_TALK_WK* p_wk, u16 palace_msg_idx, int* p_seq, u16 yes_next_seq, u16 no_next_seq );
+static BOOL EVENT_WFBC_WFBC_TalkMain( WFBC_PALACE_TALK_WK* p_wk );
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  WFBC　Palace時　の会話
+ *
+ *	@param	p_gsys      システム
+ *	@param	p_fieldmap  フィールドマップ
+ */
+//-----------------------------------------------------------------------------
+static GMEVENT* EVENT_SetUp_WFBC_Palece_Talk( GAMESYS_WORK* p_gsys, FIELDMAP_WORK* p_fieldmap )
+{
+  GMEVENT*              p_event;
+  WFBC_PALACE_TALK_WK*   p_work;
+  HEAPID heapID = FIELDMAP_GetHeapID( p_fieldmap );
+  FLDMSGBG* p_msgbg = FIELDMAP_GetFldMsgBG( p_fieldmap );
+  GAMEDATA* p_gdata = GAMESYSTEM_GetGameData( p_gsys );
+
+  // @TODO デバック用
+  static WFBC_COMM_DATA s_debug_data;
+
+
+
+  // イベント生成
+  p_event = GMEVENT_Create( p_gsys, NULL, EVENT_WFBC_Palece_Talk, sizeof( WFBC_PALACE_TALK_WK ) );
+
+  // イベントワークを初期化
+  p_work                  = GMEVENT_GetEventWork( p_event );
+  p_work->p_gsys          = p_gsys;
+  p_work->p_fieldmap      = p_fieldmap;
+  p_work->p_strbuf        = GFL_STR_CreateBuffer( 128, heapID );
+  p_work->p_strbuf_tmp    = GFL_STR_CreateBuffer( 128, heapID );
+  p_work->p_msgdata       = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_tower_trainer_dat, heapID );
+  p_work->p_wordset       = WORDSET_Create( heapID );
+  p_work->p_fmb           = p_msgbg;
+  p_work->p_commsys       = &s_debug_data;
+
+  p_work->heapID          = GFL_HEAP_LOWID(heapID);
+
+  // WFBC情報取得
+  p_work->p_my   = GAMEDATA_GetWFBCCoreData( p_gdata, GAMEDATA_WFBC_ID_MINE );
+  p_work->p_oya  = GAMEDATA_GetWFBCCoreData( p_gdata, GAMEDATA_WFBC_ID_COMM );
+
+  // 目の前の人物をチェック
+  {
+    FLDMAPPER * p_mapper = FIELDMAP_GetFieldG3Dmapper( p_fieldmap );
+    FIELD_WFBC* p_wfbc = FLDMAPPER_GetWfbcWork( p_mapper );
+    FIELD_PLAYER* p_player = FIELDMAP_GetFieldPlayer( p_fieldmap );
+    const MMDLSYS * cp_mmdlsys = FIELDMAP_GetMMdlSys( p_fieldmap );
+    GAMEDATA* p_gamedata = GAMESYSTEM_GetGameData( p_gsys );
+    FIELD_WFBC_EVENT* p_event = GAMEDATA_GetWFBCEventData( p_gamedata );
+    s16 gx, gy, gz;
+    MMDL* p_frontmmdl;
+    u32 objid;
+    const FIELD_WFBC_PEOPLE* cp_people;
+
+    // 目の前のグリッド取得
+    FIELD_PLAYER_GetFrontGridPos( p_player, &gx, &gy, &gz );
+
+    // 目の前にいる人物を検索
+    p_frontmmdl = MMDLSYS_SearchGridPos( cp_mmdlsys, gx, gz, FALSE );
+    GF_ASSERT( p_frontmmdl );
+
+    // 座標を取得
+    MMDL_GetVectorPos( p_frontmmdl, &p_work->pos );
+
+    // OBJID
+    objid = MMDL_GetOBJID( p_frontmmdl );
+
+    // 人物情報取得
+    cp_people = FIELD_WFBC_GetPeople( p_wfbc, objid );
+    GF_ASSERT( cp_people );
+
+    p_work->p_wfbc    = p_wfbc;
+    p_work->cp_people = cp_people;
+    p_work->p_mmdl    = p_frontmmdl;
+    p_work->npc_id    = objid;
+  }
+  // 生成したイベントを返す
+  return p_event;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  WFBC　Palece　会話イベント
+ *
+ *	@param	p_event   イベントシステム
+ *	@param	p_seq     シーケンス
+ *	@param	p_wk      ワーク
+ */
+//-----------------------------------------------------------------------------
+static GMEVENT_RESULT EVENT_WFBC_Palece_Talk( GMEVENT* p_event, int* p_seq, void* p_wk )
+{
+  WFBC_PALACE_TALK_WK*   p_work = p_wk;
+
+  switch( (*p_seq) )
+  {
+  // 親の世界に目の前の人がいるのかチェック
+  case WFBC_PALACE_TALK_SEQ_IS_OBJID_ON:
+    FIELD_WFBC_COMM_DATA_ClearReqAnsData( p_work->p_commsys );
+    FIELD_WFBC_COMM_DATA_SetReqData( p_work->p_commsys, p_work->npc_id, FIELD_WFBC_COMM_NPC_REQ_THERE );
+
+    (*p_seq) = WFBC_PALACE_TALK_SEQ_WAIL_OBJID_ON;
+    break;
+
+  // 親の世界に目の前の人がいるのかチェック待ち
+  case WFBC_PALACE_TALK_SEQ_WAIL_OBJID_ON:
+    if( FIELD_WFBC_COMM_DATA_WaitAnsData( p_work->p_commsys, p_work->npc_id ) )
+    {
+      if( FIELD_WFBC_GetAnsData( p_work->p_commsys ) == FIELD_WFBC_COMM_NPC_ANS_ON )
+      {
+        (*p_seq) = WFBC_PALACE_TALK_SEQ_IS_MYROMVER;
+      }else{
+        (*p_seq) = WFBC_PALACE_TALK_SEQ_TALK_01;
+      }
+    }
+    break;
+
+  // おれ、別VERSIONの街にいくんだいいでしょう。
+  case WFBC_PALACE_TALK_SEQ_TALK_01:
+    EVENT_WFBC_WFBC_TalkStart( p_work, 0, p_seq, WFBC_PALACE_TALK_SEQ_END );
+    break;
+
+  // 自分ROMバージョンをチェック
+  case WFBC_PALACE_TALK_SEQ_IS_MYROMVER:
+    if( p_work->p_my->type != p_work->p_oya->type )
+    {
+      // OK
+      (*p_seq) = WFBC_PALACE_TALK_SEQ_IS_MYWFBC_CAN_TAKE;
+    }
+    else
+    {
+      // NG
+      (*p_seq) = WFBC_PALACE_TALK_SEQ_TALK_02;
+    }
+    break;
+
+  // この街はつまらない・・・
+  case WFBC_PALACE_TALK_SEQ_TALK_02:
+    EVENT_WFBC_WFBC_TalkStart( p_work, 1, p_seq, WFBC_PALACE_TALK_SEQ_END );
+    break;
+
+  // 自分の世界に持ってこれるかチェック
+  case WFBC_PALACE_TALK_SEQ_IS_MYWFBC_CAN_TAKE:
+    // 自分の世界に空きがあるか？
+    if( FIELD_WFBC_CORE_GetPeopleNum( p_work->p_my, MAPMODE_NORMAL ) >= FIELD_WFBC_PEOPLE_MAX )
+    {
+      // 空きなし
+      (*p_seq) = WFBC_PALACE_TALK_SEQ_TALK_03;
+    }
+    // その人がいなか？
+    else if( FIELD_WFBC_CORE_IsOnNpcIDPeople( p_work->p_my, p_work->npc_id, MAPMODE_MAX ) )
+    {
+      // 空きなし
+      (*p_seq) = WFBC_PALACE_TALK_SEQ_TALK_03;
+    }
+    // OK
+    (*p_seq) = WFBC_PALACE_TALK_SEQ_TALK_04;
+    break;
+
+  // たのしそうだな
+  case WFBC_PALACE_TALK_SEQ_TALK_03:
+    EVENT_WFBC_WFBC_TalkStart( p_work, 2, p_seq, WFBC_PALACE_TALK_SEQ_END );
+    break;
+
+  // つれていって！　YES/NO表示
+  case WFBC_PALACE_TALK_SEQ_TALK_04:
+    break;
+
+  // つれていって！　YES/NOまち
+  case WFBC_PALACE_TALK_SEQ_YESNO_WAIT:
+    break;
+
+  // つれだしてよー。　NOの場合
+  case WFBC_PALACE_TALK_SEQ_TALK_05:
+    EVENT_WFBC_WFBC_TalkStart( p_work, 4, p_seq, WFBC_PALACE_TALK_SEQ_END );
+    break;
+
+  // もう一度親の世界にいるかチェック
+  case WFBC_PALACE_TALK_SEQ_IS_OBJID_ON01: 
+    FIELD_WFBC_COMM_DATA_ClearReqAnsData( p_work->p_commsys );
+    FIELD_WFBC_COMM_DATA_SetReqData( p_work->p_commsys, p_work->npc_id, FIELD_WFBC_COMM_NPC_REQ_WISH_TAKE );
+
+    (*p_seq) = WFBC_PALACE_TALK_SEQ_WAIT_OBJID_ON01;
+    break;
+
+  // もう一度親の世界にいるかチェック
+  case WFBC_PALACE_TALK_SEQ_WAIT_OBJID_ON01:
+    if( FIELD_WFBC_COMM_DATA_WaitAnsData( p_work->p_commsys, p_work->npc_id ) )
+    {
+      if( FIELD_WFBC_GetAnsData( p_work->p_commsys ) == FIELD_WFBC_COMM_NPC_ANS_TAKE_OK )
+      {
+        (*p_seq) = WFBC_PALACE_TALK_SEQ_TALK_08;
+      }else{
+        (*p_seq) = WFBC_PALACE_TALK_SEQ_TALK_06;
+      }
+    }
+    break;
+
+  // やっぱり別の街にいく！
+  case WFBC_PALACE_TALK_SEQ_TALK_06:       
+    EVENT_WFBC_WFBC_TalkStart( p_work, 5, p_seq, WFBC_PALACE_TALK_SEQ_END );
+    break;
+
+  // やったー！（人移動＆移動したことを親に通知）
+  case WFBC_PALACE_TALK_SEQ_TALK_08:       
+    EVENT_WFBC_WFBC_TalkStart( p_work, 7, p_seq, WFBC_PALACE_TALK_SEQ_MAP_RESET_FADE_OUT );
+
+
+    // 親に通知
+    FIELD_WFBC_COMM_DATA_ClearReqAnsData( p_work->p_commsys );
+    FIELD_WFBC_COMM_DATA_SetReqData( p_work->p_commsys, p_work->npc_id, FIELD_WFBC_COMM_NPC_REQ_TAKE );
+    break;
+
+  // マップの再構築 フェードアウト
+  case WFBC_PALACE_TALK_SEQ_MAP_RESET_FADE_OUT:
+    {
+      GMEVENT* fade_event;
+      fade_event = EVENT_FieldFadeOut_Black( p_work->p_gsys, p_work->p_fieldmap, FIELD_FADE_WAIT);
+      GMEVENT_CallEvent( p_event, fade_event );
+    }
+    (*p_seq) = WFBC_PALACE_TALK_SEQ_MAP_RESET_PEOPLE_CHANGE;
+    break;
+
+  // マップの再構築 フェードアウトウエイト　＆　つれてきた人を消す処理
+  case WFBC_PALACE_TALK_SEQ_MAP_RESET_PEOPLE_CHANGE:
+
+    {
+      const MYSTATUS* cp_mystatus = GAMEDATA_GetMyStatus( GAMESYSTEM_GetGameData(p_work->p_gsys) );
+      // 人を移し変える。
+      FIELD_WFBC_COMM_DATA_Ko_ChangeNpc( p_work->p_commsys, p_work->p_my, p_work->p_oya, cp_mystatus, p_work->npc_id );
+    }
+    
+    // その人を消す
+    {
+      FIELD_WFBC_DeletePeople( p_work->p_wfbc, p_work->npc_id );
+      MMDL_Delete( p_work->p_mmdl );
+    }
+    
+    // フェードイン
+    {
+      GMEVENT* fade_event;
+      fade_event = EVENT_FieldFadeIn_Black( p_work->p_gsys, p_work->p_fieldmap, FIELD_FADE_WAIT);
+      GMEVENT_CallEvent( p_event, fade_event );
+    }
+    (*p_seq) = WFBC_PALACE_TALK_SEQ_END;
+    break;
+
+  //メッセージ完了まち　
+  case WFBC_PALACE_TALK_SEQ_TALK_WAIT:   
+    if( EVENT_WFBC_WFBC_TalkMain( p_work ) )
+    {
+      if( p_work->is_yes ){
+        *p_seq = p_work->yes_next_seq;
+      }else{
+        *p_seq = p_work->no_next_seq;
+      }
+    }
+    break;
+
+  // 終了
+  case WFBC_PALACE_TALK_SEQ_END:  
+    // 後始末
+    {
+      GFL_STR_DeleteBuffer( p_work->p_strbuf );
+      GFL_STR_DeleteBuffer( p_work->p_strbuf_tmp );
+
+      GFL_MSG_Delete( p_work->p_msgdata );
+      WORDSET_Delete( p_work->p_wordset );
+    }
+    return GMEVENT_RES_FINISH;
+
+  default:
+    GF_ASSERT(0);
+    break;
+  }
+
+  return GMEVENT_RES_CONTINUE;
+}
+
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  会話開始
+ *
+ *	@param	p_wk        ワーク
+ *	@param	msg_id      メッセージID
+ *	@param	p_seq       シーケンス変更ワーク
+ *	@param	next_seq    次のシーケンス
+ */
+//-----------------------------------------------------------------------------
+static void EVENT_WFBC_WFBC_TalkStart( WFBC_PALACE_TALK_WK* p_wk, u16 palace_msg_idx, int* p_seq, u16 next_seq )
+{
+  u16 msg_id;
+  
+  GF_ASSERT( p_wk->p_talkwin == NULL );
+
+  msg_id = sc_WFBC_PALACE_TALK_START_IDX[ p_wk->p_oya->type ] + (p_wk->npc_id*WFBC_PALACE_TALK_NPC_MSG_NUM) + palace_msg_idx;
+
+  // ワードセットを使用して、文字列展開
+  GFL_MSG_GetString( p_wk->p_msgdata, msg_id, p_wk->p_strbuf_tmp );
+
+  WORDSET_ExpandStr( p_wk->p_wordset, p_wk->p_strbuf, p_wk->p_strbuf_tmp );
+
+  // 描画開始
+  p_wk->p_talkwin = FLDTALKMSGWIN_AddStrBuf( p_wk->p_fmb, FLDTALKMSGWIN_IDX_AUTO, &p_wk->pos, p_wk->p_strbuf, TALKMSGWIN_TYPE_NORMAL );
+
+
+  (*p_seq) = WFBC_PALACE_TALK_SEQ_TALK_WAIT;
+  p_wk->yes_next_seq = next_seq;
+
+  p_wk->talk_seq = 0;
+  p_wk->is_yes = TRUE;
+  p_wk->mode  = WFBC_PALACE_TALKMODE_NORMAL;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  会話開始
+ *
+ *	@param	p_wk        ワーク
+ *	@param	msg_id      メッセージID
+ *	@param	p_seq       シーケンス変更ワーク
+ *	@param	yes_next_seqYESの場合のシーケンス
+ *	@param	no_next_seq NOの場合のシーケンス
+ */
+//-----------------------------------------------------------------------------
+static void EVENT_WFBC_WFBC_TalkStartYesNo( WFBC_PALACE_TALK_WK* p_wk, u16 palace_msg_idx, int* p_seq, u16 yes_next_seq, u16 no_next_seq )
+{
+  u16 msg_id;
+  
+  GF_ASSERT( p_wk->p_talkwin == NULL );
+
+  msg_id = sc_WFBC_PALACE_TALK_START_IDX[ p_wk->p_oya->type ] + (p_wk->npc_id*WFBC_PALACE_TALK_NPC_MSG_NUM) + palace_msg_idx;
+
+  // ワードセットを使用して、文字列展開
+  GFL_MSG_GetString( p_wk->p_msgdata, msg_id, p_wk->p_strbuf_tmp );
+
+  WORDSET_ExpandStr( p_wk->p_wordset, p_wk->p_strbuf, p_wk->p_strbuf_tmp );
+
+  // 描画開始
+  p_wk->p_talkwin = FLDTALKMSGWIN_AddStrBuf( p_wk->p_fmb, FLDTALKMSGWIN_IDX_AUTO, &p_wk->pos, p_wk->p_strbuf, TALKMSGWIN_TYPE_NORMAL );
+
+
+  (*p_seq) = WFBC_PALACE_TALK_SEQ_TALK_WAIT;
+  p_wk->yes_next_seq = yes_next_seq;
+  p_wk->no_next_seq = no_next_seq;
+
+  p_wk->talk_seq = 0;
+  p_wk->is_yes = TRUE;
+  p_wk->mode  = WFBC_PALACE_TALKMODE_YESNO;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  メッセージ完了まち
+ *
+ *	@param	cp_wk   ワーク
+ *
+ *	@retval TRUE    完了
+ *	@retval FALSE   途中
+ */
+//-----------------------------------------------------------------------------
+static BOOL EVENT_WFBC_WFBC_TalkMain( WFBC_PALACE_TALK_WK* p_wk )
+{
+  switch( p_wk->talk_seq )
+  {
+  case WFBC_PALACE_TALKSYS_SEQ_PRINT:
+    {
+      BOOL result;
+      result = FLDTALKMSGWIN_Print( p_wk->p_talkwin );
+      if( result )
+      {
+        if( p_wk->mode == WFBC_PALACE_TALKMODE_NORMAL ){
+          // クローズへ
+          p_wk->talk_seq = WFBC_PALACE_TALKSYS_SEQ_CLOSE;
+        }else{
+          // YESNOチェックへ
+          p_wk->talk_seq = WFBC_PALACE_TALKSYS_SEQ_YESNO_START;
+        }
+      }
+    }
+    break;
+    
+  //YESNOチェック
+  case WFBC_PALACE_TALKSYS_SEQ_YESNO_START:
+    p_wk->p_yesno = FLDMENUFUNC_AddYesNoMenu( p_wk->p_fmb, FLDMENUFUNC_YESNO_YES );
+    p_wk->talk_seq ++;
+    break;
+
+  //YESNOチェックウエイト
+  case WFBC_PALACE_TALKSYS_SEQ_YESNO_WAIT:
+    {
+      FLDMENUFUNC_YESNO result = FLDMENUFUNC_ProcYesNoMenu( p_wk->p_yesno );
+      
+      if( result != FLDMENUFUNC_YESNO_NULL )
+      {
+        if( result == FLDMENUFUNC_YESNO_YES ){
+          p_wk->is_yes = TRUE;
+        }else{
+          p_wk->is_yes = FALSE;
+        }
+        p_wk->talk_seq = WFBC_PALACE_TALKSYS_SEQ_CLOSE;
+      }
+    }
+    break;
+
+  //クローズ
+  case WFBC_PALACE_TALKSYS_SEQ_CLOSE:
+    FLDTALKMSGWIN_StartClose(p_wk->p_talkwin);
+    p_wk->talk_seq ++;
+    break;
+
+  // 終了
+  case WFBC_PALACE_TALKSYS_SEQ_CLOSE_WAIT:
+    if(FLDTALKMSGWIN_WaitClose(p_wk->p_talkwin))
+    {
+      p_wk->p_talkwin = NULL;
+      return TRUE;
+    }
+    break;
+
+  default:
+    GF_ASSERT(0);
+    break;
+  }
+  return FALSE;
 }
 
 

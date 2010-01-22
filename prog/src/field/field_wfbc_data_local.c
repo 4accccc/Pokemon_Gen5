@@ -314,7 +314,7 @@ BOOL FIELD_WFBC_CORE_IsInData( const FIELD_WFBC_CORE* cp_wk )
  *	@return 人の数
  */
 //-----------------------------------------------------------------------------
-u32 FIELD_WFBC_CORE_GetPeopleNum( const FIELD_WFBC_CORE* cp_wk, u32 mapmode )
+u32 FIELD_WFBC_CORE_GetPeopleNum( const FIELD_WFBC_CORE* cp_wk, MAPMODE mapmode )
 {
   int i;
   int num;
@@ -551,7 +551,7 @@ void FIELD_WFBC_CORE_AddPeople( FIELD_WFBC_CORE* p_wk, const MYSTATUS* cp_mystat
  *	@retval NULL  人物はいない
  */
 //-----------------------------------------------------------------------------
-MMDL_HEADER* FIELD_WFBC_CORE_MMDLHeaderCreateHeapLo( const FIELD_WFBC_CORE* cp_wk, u32 mapmode, HEAPID heapID )
+MMDL_HEADER* FIELD_WFBC_CORE_MMDLHeaderCreateHeapLo( const FIELD_WFBC_CORE* cp_wk, MAPMODE mapmode, HEAPID heapID )
 {
   u32 count;
   u32 num;
@@ -1067,7 +1067,7 @@ BOOL FIELD_WFBC_CORE_ITEM_IsInItemData( const FIELD_WFBC_CORE_ITEM* cp_wk, u32 i
  *	@retval その他　ITEMのMMDLヘッダー　設定後Freeしてください
  */
 //-----------------------------------------------------------------------------
-MMDL_HEADER* FIELD_WFBC_CORE_ITEM_MMDLHeaderCreateHeapLo( const FIELD_WFBC_CORE_ITEM* cp_wk, u32 mapmode, FIELD_WFBC_CORE_TYPE type, HEAPID heapID )
+MMDL_HEADER* FIELD_WFBC_CORE_ITEM_MMDLHeaderCreateHeapLo( const FIELD_WFBC_CORE_ITEM* cp_wk, MAPMODE mapmode, FIELD_WFBC_CORE_TYPE type, HEAPID heapID )
 {
   int i;
   int item_num;

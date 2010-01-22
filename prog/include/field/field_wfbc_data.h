@@ -22,6 +22,8 @@ extern "C"{
 #include "field/fldmmdl.h"
 #include "field/intrude_common.h"
 
+#include "field/field_status_local.h"
+
 #include "savedata/mystatus.h"
 
 #include "buflen.h"
@@ -62,17 +64,6 @@ typedef enum {
   GAMEDATA_WFBC_ID_MAX,
 } GAMEDATA_WFBC_ID;
 
-
-//-------------------------------------
-///	表裏定義
-//=====================================
-typedef enum {
-  FIELD_WFBC_FRONT,   // 表
-  FIELD_WFBC_BACK,    // 裏
-    
-  FIELD_WFBC_MAX,     // FIELD_WFBC_CORE_GetNpcIDPeopleでは両方という意味になる
-
-} FIELD_WFBC_FRONT_BACK_TYPE;
 
 
 //-------------------------------------
@@ -195,7 +186,7 @@ extern void FIELD_WFBC_CORE_Management( FIELD_WFBC_CORE* p_wk );
 // データの有無   不正データの場合、FALSEを返します。
 extern BOOL FIELD_WFBC_CORE_IsInData( const FIELD_WFBC_CORE* cp_wk );
 // 人の数を返す
-extern u32 FIELD_WFBC_CORE_GetPeopleNum( const FIELD_WFBC_CORE* cp_wk, u32 mapmode );
+extern u32 FIELD_WFBC_CORE_GetPeopleNum( const FIELD_WFBC_CORE* cp_wk, MAPMODE mapmode );
 // 機嫌値でソートする
 // ソートに使用するテンポラリワークを生成するためのheapIDです。
 extern void FIELD_WFBC_CORE_SortData( FIELD_WFBC_CORE* p_wk, HEAPID heapID );
@@ -204,11 +195,12 @@ extern void FIELD_WFBC_CORE_CalcMoodInTown( FIELD_WFBC_CORE* p_wk );
 // 人を足しこむ
 extern void FIELD_WFBC_CORE_AddPeople( FIELD_WFBC_CORE* p_wk, const MYSTATUS* cp_mystatus, const FIELD_WFBC_CORE_PEOPLE* cp_people );
 // 人を探す 常駐システム
-extern FIELD_WFBC_CORE_PEOPLE* FIELD_WFBC_CORE_GetNpcIDPeople( FIELD_WFBC_CORE* p_wk, u32 npc_id, FIELD_WFBC_FRONT_BACK_TYPE type );
+extern FIELD_WFBC_CORE_PEOPLE* FIELD_WFBC_CORE_GetNpcIDPeople( FIELD_WFBC_CORE* p_wk, u32 npc_id, MAPMODE mapmode );
+extern BOOL FIELD_WFBC_CORE_IsOnNpcIDPeople( const FIELD_WFBC_CORE* cp_wk, u32 npc_id, MAPMODE mapmode );
 // データから、MMDLヘッダーを生成
 // mapmode == field_status_local.h MAPMODE
 // 戻り値は、GFL_HEAP_Freeをしてください。
-extern MMDL_HEADER* FIELD_WFBC_CORE_MMDLHeaderCreateHeapLo( const FIELD_WFBC_CORE* cp_wk, u32 mapmode, HEAPID heapID );
+extern MMDL_HEADER* FIELD_WFBC_CORE_MMDLHeaderCreateHeapLo( const FIELD_WFBC_CORE* cp_wk, MAPMODE mapmode, HEAPID heapID );
 
 
 #ifdef PM_DEBUG
@@ -422,7 +414,7 @@ extern BOOL FIELD_WFBC_CORE_ITEM_IsInItemData( const FIELD_WFBC_CORE_ITEM* cp_wk
 //-------------------------------------
 ///	データから、MMDLヘッダーを生成
 //=====================================
-extern MMDL_HEADER* FIELD_WFBC_CORE_ITEM_MMDLHeaderCreateHeapLo( const FIELD_WFBC_CORE_ITEM* cp_wk, u32 mapmode, FIELD_WFBC_CORE_TYPE type, HEAPID heapID );
+extern MMDL_HEADER* FIELD_WFBC_CORE_ITEM_MMDLHeaderCreateHeapLo( const FIELD_WFBC_CORE_ITEM* cp_wk, MAPMODE mapmode, FIELD_WFBC_CORE_TYPE type, HEAPID heapID );
 
 
 

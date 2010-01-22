@@ -16,6 +16,8 @@
 #include "field/field_wfbc_data.h"
 #include "field/zonedata.h"
 
+#include "system/net_err.h"
+
 
 //-----------------------------------------------------------------------------
 /**
@@ -55,6 +57,8 @@ typedef enum {
 //-------------------------------------
 ///	WFBC_COMM_DATA
 //=====================================
+static BOOL WFBC_COMM_DATA_IsError( const WFBC_COMM_DATA* cp_wk );
+
 static void WFBC_COMM_DATA_MainOya( WFBC_COMM_DATA* p_wk, FIELD_WFBC_CORE* p_mywfbc );
 
 static BOOL WFBC_COMM_DATA_Oya_AnserThere( WFBC_COMM_DATA* p_wk, FIELD_WFBC_CORE* p_mywfbc, const FIELD_WFBC_COMM_NPC_REQ* cp_req, FIELD_WFBC_COMM_NPC_ANS* p_ans );
@@ -131,19 +135,19 @@ void FIELD_WFBC_CORE_Clear( FIELD_WFBC_CORE* p_wk )
  *
  *	@param	p_wk      ワーク
  *	@param	npc_id    NPC　ID
- *	@param  type      タイプ
+ *	@param  mapmode   マップモード
  *
- *	type
-      FIELD_WFBC_FRONT,   // 表
-      FIELD_WFBC_BACK,    // 裏
-      FIELD_WFBC_MAX,     // 両方  
-  
+ *	mapmode
+ *	  マップモード
+ *      MAPMODE_NORMAL,     ///<通常状態
+ *      MAPMODE_INTRUDE,    ///<侵入中
+ *      MAPMODE_MAX,        ///<両方をチェック
  *
  *	@retval 人ワーク
  *	@retval NULL    いない
  */
 //-----------------------------------------------------------------------------
-FIELD_WFBC_CORE_PEOPLE* FIELD_WFBC_CORE_GetNpcIDPeople( FIELD_WFBC_CORE* p_wk, u32 npc_id, FIELD_WFBC_FRONT_BACK_TYPE type )
+FIELD_WFBC_CORE_PEOPLE* FIELD_WFBC_CORE_GetNpcIDPeople( FIELD_WFBC_CORE* p_wk, u32 npc_id, MAPMODE mapmode )
 {
   int i;
 
@@ -152,7 +156,7 @@ FIELD_WFBC_CORE_PEOPLE* FIELD_WFBC_CORE_GetNpcIDPeople( FIELD_WFBC_CORE* p_wk, u
 
   for( i=0; i<FIELD_WFBC_PEOPLE_MAX; i++ )
   {
-    if( (type == FIELD_WFBC_FRONT) || (type == FIELD_WFBC_MAX) )
+    if( (mapmode == MAPMODE_NORMAL) || (mapmode == MAPMODE_MAX) )
     {
       if( FIELD_WFBC_CORE_PEOPLE_IsInData( &p_wk->people[i] ) )
       {
@@ -163,7 +167,7 @@ FIELD_WFBC_CORE_PEOPLE* FIELD_WFBC_CORE_GetNpcIDPeople( FIELD_WFBC_CORE* p_wk, u
       }
     }
 
-    if( (type == FIELD_WFBC_BACK) || (type == FIELD_WFBC_MAX) )
+    if( (mapmode == MAPMODE_INTRUDE) || (mapmode == MAPMODE_MAX) )
     {
       if( FIELD_WFBC_CORE_PEOPLE_IsInData( &p_wk->back_people[i] ) )
       {
@@ -176,6 +180,34 @@ FIELD_WFBC_CORE_PEOPLE* FIELD_WFBC_CORE_GetNpcIDPeople( FIELD_WFBC_CORE* p_wk, u
   }
 
   return NULL;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  いるのかチェック
+ *
+ *	@param	p_wk      ワーク
+ *	@param	npc_id    NPC　ID
+ *	@param  mapmode   マップモード
+ *
+ *	mapmode
+ *	  マップモード
+ *      MAPMODE_NORMAL,     ///<通常状態
+ *      MAPMODE_INTRUDE,    ///<侵入中
+ *      MAPMODE_MAX,        ///<両方をチェック
+ *
+ *	@retval TRUE  いる
+ *	@retval FALSE いない
+ */
+//-----------------------------------------------------------------------------
+BOOL FIELD_WFBC_CORE_IsOnNpcIDPeople( const FIELD_WFBC_CORE* cp_wk, u32 npc_id, MAPMODE mapmode )
+{
+  // 内部でワークを書き換えるわけではないので、許可
+  if( FIELD_WFBC_CORE_GetNpcIDPeople( (FIELD_WFBC_CORE*)cp_wk, npc_id, mapmode ) == NULL )
+  {
+    return FALSE;
+  }
+  return TRUE;
 }
 
 //-------------------------------------
@@ -317,7 +349,6 @@ void FIELD_WFBC_COMM_DATA_Init( WFBC_COMM_DATA* p_wk )
   GFL_STD_MemClear( p_wk, sizeof(WFBC_COMM_DATA) );
 
   p_wk->netID = GFL_NET_SystemGetCurrentID();
-
 }
 
 //----------------------------------------------------------------------------
@@ -340,8 +371,13 @@ void FIELD_WFBC_COMM_DATA_Exit( WFBC_COMM_DATA* p_wk )
 //-----------------------------------------------------------------------------
 void FIELD_WFBC_COMM_DATA_Oya_Main( WFBC_COMM_DATA* p_wk, FIELD_WFBC_CORE* p_mywfbc )
 {
+  // エラー中は空回り
+  if( WFBC_COMM_DATA_IsError( p_wk ) ){
+    return ;
+  }
+  
   // 親の処理
-  if( p_wk->netID == 0 )
+  if( GFL_NET_IsParentMachine() )
   {
     WFBC_COMM_DATA_MainOya( p_wk, p_mywfbc );
   }
@@ -361,7 +397,7 @@ void FIELD_WFBC_COMM_DATA_Ko_ChangeNpc( WFBC_COMM_DATA* p_wk, FIELD_WFBC_CORE* p
 {
   FIELD_WFBC_CORE_PEOPLE* p_people;
 
-  p_people = FIELD_WFBC_CORE_GetNpcIDPeople( p_oyawfbc, npc_id, FIELD_WFBC_BACK );
+  p_people = FIELD_WFBC_CORE_GetNpcIDPeople( p_oyawfbc, npc_id, MAPMODE_INTRUDE );
 
   // いないのはおかしい
   GF_ASSERT( p_people );
@@ -384,6 +420,11 @@ void FIELD_WFBC_COMM_DATA_Ko_ChangeNpc( WFBC_COMM_DATA* p_wk, FIELD_WFBC_CORE* p
 //-----------------------------------------------------------------------------
 void FIELD_WFBC_COMM_DATA_SetRecvCommAnsData( WFBC_COMM_DATA* p_wk, const FIELD_WFBC_COMM_NPC_ANS* cp_ans )
 {
+  // エラー中は空回り
+  if( WFBC_COMM_DATA_IsError( p_wk ) ){
+    return ;
+  }
+
   WFBC_COMM_DATA_SetRecvCommAnsData( p_wk, cp_ans );
 }
 
@@ -398,6 +439,11 @@ void FIELD_WFBC_COMM_DATA_SetRecvCommAnsData( WFBC_COMM_DATA* p_wk, const FIELD_
 //-----------------------------------------------------------------------------
 void FIELD_WFBC_COMM_DATA_SetRecvCommReqData( WFBC_COMM_DATA* p_wk, u16 netID, const FIELD_WFBC_COMM_NPC_REQ* cp_req )
 {
+  // エラー中は空回り
+  if( WFBC_COMM_DATA_IsError( p_wk ) ){
+    return ;
+  }
+
   WFBC_COMM_DATA_SetRecvCommReqData( p_wk, netID, cp_req );
 }
 
@@ -470,7 +516,30 @@ void FIELD_WFBC_COMM_DATA_ClearSendCommReqData( WFBC_COMM_DATA* p_wk )
 //-----------------------------------------------------------------------------
 void FIELD_WFBC_COMM_DATA_SetReqData( WFBC_COMM_DATA* p_wk, u16 npc_id, FIELD_WFBC_COMM_NPC_REQ_TYPE req_type )
 {
-  WFBC_COMM_DATA_SetSendCommReqData( p_wk, npc_id, req_type );
+  
+  if( WFBC_COMM_DATA_IsError(p_wk) == FALSE )
+  {
+    WFBC_COMM_DATA_SetSendCommReqData( p_wk, npc_id, req_type );
+  }
+  else
+  {
+    static const FIELD_WFBC_COMM_NPC_ANS_TYPE sc_REQ_TO_ANS[ FIELD_WFBC_COMM_NPC_REQ_TYPE_NUM ] = 
+    {
+      FIELD_WFBC_COMM_NPC_ANS_OFF,
+      FIELD_WFBC_COMM_NPC_ANS_TAKE_NG,
+      FIELD_WFBC_COMM_NPC_ANS_TYPE_NUM,
+    };
+    FIELD_WFBC_COMM_NPC_ANS ans;
+    // エラー時の処理
+    // req_typeに対するNGを受信したことにする
+    if( sc_REQ_TO_ANS[ req_type ] != FIELD_WFBC_COMM_NPC_ANS_TYPE_NUM )
+    {
+      ans.net_id  = p_wk->netID;
+      ans.npc_id  = npc_id;
+      ans.ans_type= sc_REQ_TO_ANS[ req_type ];
+      WFBC_COMM_DATA_SetRecvCommAnsData( p_wk, &ans );
+    }
+  }
 }
 
 //----------------------------------------------------------------------------
@@ -543,6 +612,33 @@ void FIELD_WFBC_COMM_DATA_ClearReqAnsData( WFBC_COMM_DATA* p_wk )
  *    通信用データ
  */
 //-----------------------------------------------------------------------------
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  エラー状態チェック
+ *
+ *	@retval TRUE    エラー
+ *	@retval FALSE   通常
+ */
+//-----------------------------------------------------------------------------
+static BOOL WFBC_COMM_DATA_IsError( const WFBC_COMM_DATA* cp_wk )
+{
+  
+  
+  if( NetErr_App_CheckError() != NET_ERR_CHECK_NONE )
+  {
+    return TRUE;
+  }
+
+  if( cp_wk->netID == GFL_NET_NO_PARENTMACHINE )
+  {
+    return TRUE;
+  }
+
+  return FALSE;
+}
+
+
 //----------------------------------------------------------------------------
 /**
  *	@brief  通信情報のメイン処理　親
@@ -603,7 +699,7 @@ static BOOL WFBC_COMM_DATA_Oya_AnserThere( WFBC_COMM_DATA* p_wk, FIELD_WFBC_CORE
   p_ans->net_id = cp_req->net_id;
   p_ans->npc_id = cp_req->npc_id;
 
-  if( FIELD_WFBC_CORE_GetNpcIDPeople( p_mywfbc, cp_req->npc_id, FIELD_WFBC_BACK ) )
+  if( FIELD_WFBC_CORE_GetNpcIDPeople( p_mywfbc, cp_req->npc_id, MAPMODE_INTRUDE ) )
   {
     // いる
     p_ans->ans_type = FIELD_WFBC_COMM_NPC_ANS_ON;
@@ -634,7 +730,7 @@ static BOOL WFBC_COMM_DATA_Oya_AnserWishTake( WFBC_COMM_DATA* p_wk, FIELD_WFBC_C
   p_ans->net_id = cp_req->net_id;
   p_ans->npc_id = cp_req->npc_id;
 
-  if( FIELD_WFBC_CORE_GetNpcIDPeople( p_mywfbc, cp_req->npc_id, FIELD_WFBC_BACK ) )
+  if( FIELD_WFBC_CORE_GetNpcIDPeople( p_mywfbc, cp_req->npc_id, MAPMODE_INTRUDE ) )
   {
     // つれていってください
     p_ans->ans_type = FIELD_WFBC_COMM_NPC_ANS_TAKE_OK;
@@ -665,7 +761,7 @@ static BOOL WFBC_COMM_DATA_Oya_AnserTake( WFBC_COMM_DATA* p_wk, FIELD_WFBC_CORE*
   FIELD_WFBC_CORE_PEOPLE* p_people;
 
   // その人の情報を消す。
-  p_people = FIELD_WFBC_CORE_GetNpcIDPeople( p_mywfbc, cp_req->npc_id, FIELD_WFBC_BACK );
+  p_people = FIELD_WFBC_CORE_GetNpcIDPeople( p_mywfbc, cp_req->npc_id, MAPMODE_INTRUDE );
   if( p_people )
   {
     FIELD_WFBC_CORE_PEOPLE_Clear( p_people );
