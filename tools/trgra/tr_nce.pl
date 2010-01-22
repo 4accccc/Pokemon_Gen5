@@ -104,7 +104,7 @@ use constant MCSS_SHIFT		=>	8;			#ポリゴン1辺の重み（FX32_SHIFTと同値）
 	}
 
 	#セルの枚数を書き出す
-	$write = pack "L",$cells;
+	$write = pack "L S S",$cells, 0, 0;
 	print WRITE_NCE $write;
 
 	#セルデータ読み込み
