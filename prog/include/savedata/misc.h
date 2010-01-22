@@ -21,9 +21,9 @@
 */
 //=============================================================================
 ///Ç∑ÇÍà·Ç¢í êMÇ≈Ç®óÁÇåæÇÌÇÍÇΩâÒêîÇÃç≈ëÂêî
-#define CROSS_COMM_THANKS_RECV_COUNT_MAX    (9999)
+#define CROSS_COMM_THANKS_RECV_COUNT_MAX    (99999)
 ///Ç∑ÇÍà·Ç¢í êMÇµÇΩêlêîÇÃç≈ëÂêî
-#define CROSS_COMM_SURETIGAI_COUNT_MAX      (9999)
+#define CROSS_COMM_SURETIGAI_COUNT_MAX      (99999)
 
 enum {
   MY_GOLD_MAX = 999999,
@@ -72,10 +72,10 @@ extern void  MISC_SetPalparkHighscore(MISC *misc , u32 score);
 extern const u8  MISC_GetPalparkFinishState(const MISC *misc);
 extern void  MISC_SetPalparkFinishState(MISC *misc , u8 state);
 //Ç∑ÇÍà·Ç¢
-extern u16 MISC_CrossComm_GetThanksRecvCount(const MISC *misc);
-extern u16 MISC_CrossComm_IncThanksRecvCount(MISC *misc);
-extern u16 MISC_CrossComm_GetSuretigaiCount(const MISC *misc);
-extern u16 MISC_CrossComm_IncSuretigaiCount(MISC *misc);
+extern u32 MISC_CrossComm_GetThanksRecvCount(const MISC *misc);
+extern u32 MISC_CrossComm_IncThanksRecvCount(MISC *misc);
+extern u32 MISC_CrossComm_GetSuretigaiCount(const MISC *misc);
+extern u32 MISC_CrossComm_IncSuretigaiCount(MISC *misc);
 extern const STRCODE * MISC_CrossComm_GetSelfIntroduction(const MISC *misc);
 extern void MISC_CrossComm_SetSelfIntroduction(MISC *misc, const STRBUF *srcbuf);
 extern const STRCODE * MISC_CrossComm_GetThankyouMessage(const MISC *misc);

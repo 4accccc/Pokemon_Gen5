@@ -29,8 +29,8 @@ struct _MISC
 	u32 palpark_finish_state:4;
 
 	//すれ違い
-  u16 thanks_recv_count;         ///<お礼を受けた回数
-  u16 suretigai_count;           ///<すれ違い人数
+  u32 thanks_recv_count;         ///<お礼を受けた回数
+  u32 suretigai_count;           ///<すれ違い人数
   STRCODE self_introduction[SAVE_SURETIGAI_SELFINTRODUCTION_LEN]; ///<自己紹介
   STRCODE thankyou_message[SAVE_SURETIGAI_THANKYOU_LEN];  ///<お礼メッセージ
 };

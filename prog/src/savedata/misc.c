@@ -228,10 +228,10 @@ void  MISC_SetPalparkFinishState(MISC *misc , u8 state)
  *
  * @param   misc		
  *
- * @retval  u16		お礼を言われた回数
+ * @retval  u32		お礼を言われた回数
  */
 //==================================================================
-u16 MISC_CrossComm_GetThanksRecvCount(const MISC *misc)
+u32 MISC_CrossComm_GetThanksRecvCount(const MISC *misc)
 {
   return misc->thanks_recv_count;
 }
@@ -242,10 +242,10 @@ u16 MISC_CrossComm_GetThanksRecvCount(const MISC *misc)
  *
  * @param   misc		
  *
- * @retval  u16		インクリメント後のお礼を言われた回数
+ * @retval  u32		インクリメント後のお礼を言われた回数
  */
 //==================================================================
-u16 MISC_CrossComm_IncThanksRecvCount(MISC *misc)
+u32 MISC_CrossComm_IncThanksRecvCount(MISC *misc)
 {
   if(misc->thanks_recv_count < CROSS_COMM_THANKS_RECV_COUNT_MAX){
     misc->thanks_recv_count++;
@@ -259,10 +259,10 @@ u16 MISC_CrossComm_IncThanksRecvCount(MISC *misc)
  *
  * @param   misc		
  *
- * @retval  u16		すれ違いをした人数
+ * @retval  u32		すれ違いをした人数
  */
 //==================================================================
-u16 MISC_CrossComm_GetSuretigaiCount(const MISC *misc)
+u32 MISC_CrossComm_GetSuretigaiCount(const MISC *misc)
 {
   return misc->suretigai_count;
 }
@@ -273,10 +273,10 @@ u16 MISC_CrossComm_GetSuretigaiCount(const MISC *misc)
  *
  * @param   misc		
  *
- * @retval  u16		インクリメント後のすれ違いをした人数
+ * @retval  u32		インクリメント後のすれ違いをした人数
  */
 //==================================================================
-u16 MISC_CrossComm_IncSuretigaiCount(MISC *misc)
+u32 MISC_CrossComm_IncSuretigaiCount(MISC *misc)
 {
   if(misc->suretigai_count < CROSS_COMM_SURETIGAI_COUNT_MAX){
     misc->suretigai_count++;

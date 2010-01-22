@@ -405,6 +405,10 @@ static void SendBeacon_Init(GAMEBEACON_SEND_MANAGER *send, GAMEDATA * gamedata)
   info->favorite_color = *(OS_GetFavoriteColorTable());
   info->trainer_view = MyStatus_GetTrainerView(myst);
   info->sex = MyStatus_GetMySex( myst );
+  info->pm_version = PM_VERSION;
+  info->language = PM_LANG;
+  info->nation = MyStatus_GetMyNation(myst);
+  info->area = MyStatus_GetMyArea(myst);
   
   info->thanks_recv_count = MISC_CrossComm_GetThanksRecvCount(misc);
   info->suretigai_count = MISC_CrossComm_GetSuretigaiCount(misc);

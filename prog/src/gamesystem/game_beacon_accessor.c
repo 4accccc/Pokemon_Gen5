@@ -272,10 +272,10 @@ u16 GAMEBEACON_Get_ZoneID(const GAMEBEACON_INFO *info)
 /**
  * お礼を受けた回数を取得
  * @param   info		ビーコン情報へのポインタ
- * @retval  u16		  お礼を受けた回数
+ * @retval  u32		  お礼を受けた回数
  */
 //==================================================================
-u16 GAMEBEACON_Get_ThanksRecvCount(const GAMEBEACON_INFO *info)
+u32 GAMEBEACON_Get_ThanksRecvCount(const GAMEBEACON_INFO *info)
 {
   return info->thanks_recv_count;
 }
@@ -284,10 +284,10 @@ u16 GAMEBEACON_Get_ThanksRecvCount(const GAMEBEACON_INFO *info)
 /**
  * すれ違い人数を取得
  * @param   info		ビーコン情報へのポインタ
- * @retval  u16		  すれ違い人数
+ * @retval  u32		  すれ違い人数
  */
 //==================================================================
-u16 GAMEBEACON_Get_SuretigaiCount(const GAMEBEACON_INFO *info)
+u32 GAMEBEACON_Get_SuretigaiCount(const GAMEBEACON_INFO *info)
 {
   return info->suretigai_count;
 }

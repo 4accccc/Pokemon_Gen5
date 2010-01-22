@@ -75,23 +75,29 @@ typedef struct{
 struct _GAMEBEACON_INFO{
   u8 version_bit;                          ///<受信可能なPM_VERSIONをbit指定
   u8 send_counter;                         ///<送信No(同じデータの無視判定に使用)
-  u16 zone_id;                              ///<現在地
+  u8 nation;                               ///<国コード
+  u8 area;                                 ///<地域コード
+  
+  u32 zone_id:16;                          ///<現在地
+  u32 g_power_id:8;                        ///<発動しているGパワーID(GPOWER_ID_xxx)
+  u32 pm_version:7;
+  u32 sex:1;                               ///<性別
 
+  u32 suretigai_count:17;                  ///<すれ違い人数
+  u32 language:5;
+  u32 trainer_view:3;                      ///<ユニオンルームでの見た目
+  u32           :7;                        ///<送信No(同じデータの無視判定に使用)
+
+  u32 favorite_color:15;                   ///<本体情報の色(GXRgb)
+  u32 thanks_recv_count:17;                ///<お礼を受けた回数
+  
   STRCODE name[PERSON_NAME_SIZE + EOM_SIZE];         ///<トレーナー名
-  u32 trainer_id;                           ///<トレーナーID
+  u32 trainer_id;                          ///<トレーナーID
   
   STRCODE self_introduction[GAMEBEACON_SELFINTRODUCTION_MESSAGE_LEN]; ///<自己紹介メッセージ
   
-  GXRgb favorite_color;                     ///<本体情報の色
-  u8 g_power_id;                            ///<発動しているGパワーID(GPOWER_ID_xxx)
-  u8 trainer_view:7;                          ///<ユニオンルームでの見た目
-  u8 sex:1;                                   ///<性別
-
-  u16 thanks_recv_count;                    ///<お礼を受けた回数
-  u16 suretigai_count;                      ///<すれ違い人数
-  
-  GAMEBEACON_INFO_DETAILS details;          ///<詳細情報
-  GAMEBEACON_INFO_ACTION action;            ///<行動パラメータ
+  GAMEBEACON_INFO_DETAILS details;         ///<詳細情報
+  GAMEBEACON_INFO_ACTION action;           ///<行動パラメータ
 };
 
 
