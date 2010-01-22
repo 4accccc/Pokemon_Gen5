@@ -1269,7 +1269,7 @@ void BPP_WAZA_SetUsedFlag( BTL_POKEPARAM* pp, u8 wazaIdx )
  * @param   pp
  * @param   wazaIdx       何番目のワザ[0-3]？
  * @param   waza          上書き後ワザナンバー
- * @param   ppMax         PP最大値の上限（0ならデフォルト値）
+ * @param   ppMax         PP最大値の上限（最大でもデフォルト値まで。0ならデフォルト値になる）
  * @param   fPermenent    永続フラグ（TRUEならバトル後まで引き継ぐ／FALSEなら瀕死・入れかえで元に戻る）
  */
 //=============================================================================================
@@ -1285,8 +1285,9 @@ void BPP_WAZA_UpdateID( BTL_POKEPARAM* pp, u8 wazaIdx, WazaID waza, u8 ppMax, BO
   pWaza->number = waza;
   pWaza->usedFlag = FALSE;
   pWaza->ppMax = WAZADATA_GetMaxPP( waza, 0 );
+
   if( (ppMax != 0)
-  &&  (pWaza->ppMax < ppMax)
+  &&  (pWaza->ppMax > ppMax)
   ){
     pWaza->ppMax = ppMax;
   }
@@ -1753,12 +1754,12 @@ static void clearWazaSickWork( BTL_POKEPARAM* bpp, BOOL fPokeSickInclude )
  *
  */
 //=============================================================================================
-void BPP_SetAppearTurn( BTL_POKEPARAM* pp, u16 turn )
+void BPP_SetAppearTurn( BTL_POKEPARAM* bpp, u16 turn )
 {
   GF_ASSERT(turn < BTL_TURNCOUNT_MAX);
-  pp->appearedTurn = turn;
-  pp->turnCount = 0;
-  dmgrecClearWork( pp );
+  bpp->appearedTurn = turn;
+  bpp->turnCount = 0;
+  dmgrecClearWork( bpp );
 }
 //=============================================================================================
 /**
@@ -2385,9 +2386,7 @@ void BPP_ReflectToPP( BTL_POKEPARAM* bpp )
   if( bpp->coreParam.hp )
   {
     PokeSick  sick = BPP_GetPokeSick( bpp );
-    if( sick != POKESICK_NULL ){
-      PP_SetSick( pp, sick );
-    }
+    PP_SetSick( pp, sick );
   }
 
   for(i=0; i<PTL_WAZA_MAX; ++i)

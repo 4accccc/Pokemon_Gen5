@@ -4260,14 +4260,31 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_HedoroEki( u32* numElems )
 //------------------------------------------------------------------------------
 static BOOL handler_Bukiyou_SkipCheck( BTL_EVENT_FACTOR* myHandle, BtlEventFactorType factorType, BtlEventType eventType, u16 subID, u8 pokeID )
 {
-  if( factorType == BTL_EVENT_FACTOR_ITEM ){
-    if( BTL_EVENT_FACTOR_GetPokeID(myHandle) == pokeID ){
+  if( factorType == BTL_EVENT_FACTOR_ITEM )
+  {
+    if( BTL_EVENT_FACTOR_GetPokeID(myHandle) == pokeID )
+    {
+      // これらのアイテムは無効化しない
+      static const u16 IgnoreItems[] = {
+        ITEM_KYOUSEIGIPUSU, ITEM_GAKUSYUUSOUTI, ITEM_OMAMORIKOBAN, ITEM_KIYOMENOOHUDA,
+        ITEM_KAWARAZUNOISI, ITEM_SIAWASETAMAGO, ITEM_PAWAARISUTO,  ITEM_PAWAABERUTO,
+        ITEM_PAWAARENZU,    ITEM_PAWAABANDO,    ITEM_PAWAAANKURU,  ITEM_PAWAAUEITO,
+      };
+      u32 i;
+      for(i=0; i<NELEMS(IgnoreItems); ++i)
+      {
+        if( IgnoreItems[i] == subID ){
+          return FALSE;
+        }
+      }
+
       return TRUE;
     }
   }
+
   return FALSE;
 }
-/// メンバー入場ハンドラ
+// メンバー入場ハンドラ
 static void handler_Bukiyou_MemberIn( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   if( work[0] == 0 ){
@@ -4275,10 +4292,26 @@ static void handler_Bukiyou_MemberIn( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WOR
     work[0] = 1;
   }
 }
+// ワザ出し成否チェックハンドラ
+static void handler_Bukiyou_ExeCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  WazaID waza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
+
+  if( waza == WAZANO_SIZENNOMEGUMI )
+  {
+    SV_WazaFailCause cause = BTL_EVENTVAR_GetValue( BTL_EVAR_FAIL_CAUSE );
+    if( cause == SV_WAZAFAIL_NULL ){
+      BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_CAUSE, SV_WAZAFAIL_TOKUSEI );
+    }
+  }
+}
+
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Bukiyou( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_MEMBER_IN, handler_Bukiyou_MemberIn },  /// メンバー入場ハンドラ
+    { BTL_EVENT_MEMBER_IN,                handler_Bukiyou_MemberIn }, /// メンバー入場ハンドラ
+    { BTL_EVENT_WAZA_EXECUTE_CHECK_2ND,   handler_Bukiyou_ExeCheck }, // ワザ出し成否チェックハンドラ
+
   };
 
   *numElems = NELEMS(HandlerTable);
@@ -5376,7 +5409,7 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_Surinuke( u32* numElems )
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_JisinKajou( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_DAMAGEPROC_END, handler_JisinKajou   },    // ワザダメージプロセス最終ハンドラ
+    { BTL_EVENT_DAMAGEPROC_END_INFO, handler_JisinKajou   },    // ワザダメージプロセス最終ハンドラ
   };
   *numElems = NELEMS(HandlerTable);
   return HandlerTable;

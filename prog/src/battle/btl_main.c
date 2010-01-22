@@ -3101,6 +3101,34 @@ const BTL_TRIPLE_ATTACK_AREA* BTL_MAINUTIL_GetTripleAttackArea( BtlPokePos pos )
   return &tbl[pos];
 }
 
+//=============================================================================================
+/**
+ * トリプルバトル時の攻撃可能エリア判定
+ *
+ * @param   attackerPos
+ * @param   targetPos
+ *
+ * @retval  BOOL
+ */
+//=============================================================================================
+BOOL BTL_MAINUTIL_CheckTripleHitArea( BtlPokePos attackerPos, BtlPokePos targetPos )
+{
+  const BTL_TRIPLE_ATTACK_AREA* area = BTL_MAINUTIL_GetTripleAttackArea( attackerPos );
+  u32 i;
+
+  for(i=0; i<area->numEnemys; ++i)
+  {
+    if( area->enemyPos[i] == targetPos ){ return TRUE; }
+  }
+  for(i=0; i<area->numFriends; ++i)
+  {
+    if( area->friendPos[i] == targetPos ){ return TRUE; }
+  }
+
+  return FALSE;
+}
+
+
 //------------------------------------------------------------------------------
 /**
  * 指定クライアントのパーティデータを返す

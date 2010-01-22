@@ -224,7 +224,8 @@ static const BtlEventHandlerTable* HAND_ADD_ITEM_KodawariMegane( u32* numElems )
 static void handler_KodawariMegane_Pow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable* HAND_ADD_ITEM_KodawariScarf( u32* numElems );
 static void handler_KodawariScarf( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
-static void handler_Kodawari_Common( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_Kodawari_Common_WazaExe( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_Kodawari_Common_ItemChange( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable* HAND_ADD_ITEM_KiaiNoTasuki( u32* numElems );
 static void handler_KiaiNoTasuki_Check( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_KiaiNoTasuki_Exe( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
@@ -351,8 +352,8 @@ static void handler_Juudenti_Use( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
 static const BtlEventHandlerTable* HAND_ADD_ITEM_DassyutuPod( u32* numElems );
 static void handler_DassyutuPod_Reaction( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_DassyutuPod_Use( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
-static void common_Juel_DmgDetermine( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work, PokeType type );
 static void common_Juel_Power( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work, PokeType type );
+static void common_Juel_DmgDetermine( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work, PokeType type );
 static const BtlEventHandlerTable* HAND_ADD_ITEM_HonooNoJuel( u32* numElems );
 static void handler_HonooNoJuel_Pow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_HonooNoJuel_Dmg( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
@@ -591,7 +592,7 @@ static BTL_EVENT_FACTOR* AddItemEventCore( const BTL_POKEPARAM* bpp, u16 itemID 
 }
 //=============================================================================================
 /**
- * ポケモンの「アイテム」ハンドラをシステムから全て削除
+ * 特定ポケモンの「アイテム」ハンドラをシステムから全て削除
  *
  * @param   pp
  *
@@ -2845,12 +2846,14 @@ static void handler_FutoiHone( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
 static const BtlEventHandlerTable* HAND_ADD_ITEM_KodawariHachimaki( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_EXECUTE_FIX,   handler_Kodawari_Common },
-    { BTL_EVENT_ATTACKER_POWER,     handler_KodawariHachimaki_Pow },
+    { BTL_EVENT_WAZA_EXECUTE_FIX,   handler_Kodawari_Common_WazaExe    }, // ワザ出し確定ハンドラ
+    { BTL_EVENT_ITEMSET_DECIDE,     handler_Kodawari_Common_ItemChange }, // アイテム変更確定ハンドラ
+    { BTL_EVENT_ATTACKER_POWER,     handler_KodawariHachimaki_Pow      }, // 攻撃力決定ハンドラ
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
 }
+// 攻撃力決定ハンドラ
 static void handler_KodawariHachimaki_Pow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   // 自分が攻撃側なら
@@ -2872,12 +2875,14 @@ static void handler_KodawariHachimaki_Pow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLO
 static const BtlEventHandlerTable* HAND_ADD_ITEM_KodawariMegane( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_EXECUTE_FIX,   handler_Kodawari_Common },
-    { BTL_EVENT_ATTACKER_POWER,     handler_KodawariMegane_Pow },
+    { BTL_EVENT_WAZA_EXECUTE_FIX,   handler_Kodawari_Common_WazaExe    }, // ワザ出し確定ハンドラ
+    { BTL_EVENT_ITEMSET_DECIDE,     handler_Kodawari_Common_ItemChange }, // アイテム変更確定ハンドラ
+    { BTL_EVENT_ATTACKER_POWER,     handler_KodawariMegane_Pow         }, // 攻撃力決定ハンドラ
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
 }
+// 攻撃力決定ハンドラ
 static void handler_KodawariMegane_Pow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   // 自分が攻撃側なら
@@ -2899,22 +2904,24 @@ static void handler_KodawariMegane_Pow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_W
 static const BtlEventHandlerTable* HAND_ADD_ITEM_KodawariScarf( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_EXECUTE_FIX, handler_Kodawari_Common },
-    { BTL_EVENT_CALC_AGILITY,     handler_KodawariScarf },
+    { BTL_EVENT_WAZA_EXECUTE_FIX, handler_Kodawari_Common_WazaExe      }, // ワザ出し確定ハンドラ
+    { BTL_EVENT_ITEMSET_DECIDE,   handler_Kodawari_Common_ItemChange   }, // アイテム変更確定ハンドラ
+    { BTL_EVENT_CALC_AGILITY,     handler_KodawariScarf                }, // 素早さ計算ハンドラ
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
 }
+// 素早さ計算ハンドラ
 static void handler_KodawariScarf( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
-  {
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID ){
     // すばやさ上昇
-    BTL_EVENTVAR_MulValue( BTL_EVAR_AGILITY, FX32_CONST(1.5) );
+    BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, FX32_CONST(1.5) );
   }
 }
-// こだわり系共通
-static void handler_Kodawari_Common( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+
+// ワザ出し確定ハンドラ（こだわり系共通）
+static void handler_Kodawari_Common_WazaExe( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
@@ -2923,6 +2930,19 @@ static void handler_Kodawari_Common( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK
     param->flag = BPP_CONTFLG_KODAWARI_LOCK;
   }
 }
+// ワザ出し確定ハンドラ（アイテム変更確定ハンドラ）
+static void handler_Kodawari_Common_ItemChange( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
+  {
+    BTL_HANDEX_PARAM_RESET_CONTFLAG* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RESET_CONTFLAG, pokeID );
+    param->pokeID = pokeID;
+    param->flag = BPP_CONTFLG_KODAWARI_LOCK;
+  }
+}
+
+
+
 //------------------------------------------------------------------------------
 /**
  *  きあいのタスキ
@@ -2931,8 +2951,8 @@ static void handler_Kodawari_Common( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK
 static const BtlEventHandlerTable* HAND_ADD_ITEM_KiaiNoTasuki( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_KORAERU_CHECK,  handler_KiaiNoTasuki_Check },   // こらえるチェックハンドラ
-    { BTL_EVENT_KORAERU_EXE,    handler_KiaiNoTasuki_Exe   },   // こらえる発動ハンドラ
+    { BTL_EVENT_KORAERU_CHECK,  handler_KiaiNoTasuki_Check },    // こらえるチェックハンドラ
+    { BTL_EVENT_KORAERU_EXE,    handler_KiaiNoTasuki_Exe      }, // こらえる発動ハンドラ
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -3136,6 +3156,7 @@ static void handler_KaigaraNoSuzu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
     u32 damage_sum = BTL_EVENTVAR_GetValue( BTL_EVAR_DAMAGE );
     damage_sum /= common_GetItemParam( myHandle, ITEM_PRM_ATTACK );
 
+    if( damage_sum )
     {
       BTL_HANDEX_PARAM_RECOVER_HP* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RECOVER_HP, pokeID );
       param->pokeID = pokeID;
@@ -4144,7 +4165,7 @@ static const BtlEventHandlerTable* HAND_ADD_ITEM_Huusen( u32* numElems )
     { BTL_EVENT_MEMBER_IN,           handler_Huusen_MemberIn       },   // メンバー入場ハンドラ
     { BTL_EVENT_CHECK_FLYING,        handler_Huusen_CheckFlying    },   // 飛行フラグチェックハンドラ
     { BTL_EVENT_WAZA_DMG_REACTION,   handler_Huusen_DamageReaction },   // ダメージ反応ハンドラ
-    { BTL_EVENT_ITEMSET_FIXED,       handler_Huusen_ItemSetFixed   },   // アイテム書き換え確定後
+    { BTL_EVENT_ITEMSET_FIXED,       handler_Huusen_ItemSetFixed   },   // アイテム書き換え完了ハンドラ
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -4182,7 +4203,7 @@ static void handler_Huusen_DamageReaction( BTL_EVENT_FACTOR* myHandle, BTL_SVFLO
     HANDEX_STR_AddArg( &param->exStr, pokeID );
   }
 }
-// アイテム書き換え確定後ハンドラ
+// アイテム書き換え完了ハンドラ
 static void handler_Huusen_ItemSetFixed( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )

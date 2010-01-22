@@ -172,6 +172,7 @@ typedef enum {
 
   WAZA_RANKEFF_SP = WAZA_RANKEFF_MAX,
   WAZA_RANKEFF_CRITICAL_RATIO,
+  WAZA_RANKEFF_MULTI5,  ///< ‚±‚¤‚°‚«A‚Æ‚­‚±‚¤A–hŒäA“Á–hA‘f‘‚³‚Ì‚T‚Â“¯ŽžŽw’è
 
 }WazaRankEffect;
 

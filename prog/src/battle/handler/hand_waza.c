@@ -140,7 +140,9 @@ static void handler_Kiribarai( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
 static const BtlEventHandlerTable*  ADD_Kawarawari( u32* numElems );
 static void handler_Kawarawari( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable*  ADD_Tobigeri( u32* numElems );
-static void handler_Tobigeri( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_Tobigeri_Avoid( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_Tobigeri_NoEffect( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void  common_TobigeriReaction( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable*  ADD_Monomane( u32* numElems );
 static void handler_Monomane( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable*  ADD_Sketch( u32* numElems );
@@ -358,8 +360,9 @@ static const BtlEventHandlerTable*  ADD_Mineuti( u32* numElems );
 static void handler_Mineuti( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable*  ADD_Koraeru( u32* numElems );
 static void handler_Koraeru_ExeCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
-static void handler_Koraeru_Check( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Koraeru( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_Koraeru_Check( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_Koraeru_TurnCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable*  ADD_Mamoru( u32* numElems );
 static void handler_Mamoru_ExeCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Mamoru_ExeFail( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
@@ -393,7 +396,6 @@ static void handler_Nemuru( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk,
 static const BtlEventHandlerTable*  ADD_Meromero( u32* numElems );
 static void handler_Meromero_CheckNoEffect( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable*  ADD_Texture2( u32* numElems );
-static void handler_Texture2_CheckNoEffect( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Texture2( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable*  ADD_Encore( u32* numElems );
 static void handler_Encore( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
@@ -462,7 +464,7 @@ static const BtlEventHandlerTable*  ADD_Negaigoto( u32* numElems );
 static void handler_Negaigoto( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable*  ADD_Miraiyoti( u32* numElems );
 static void handler_Miraiyoti( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
-static void common_delayAttack( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, u8 targetPokeID, u16 strID );
+static void common_delayAttack( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, u8 targetPos, u16 strID );
 static const BtlEventHandlerTable*  ADD_HametuNoNegai( u32* numElems );
 static void handler_HametuNoNegai( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable*  ADD_Ieki( u32* numElems );
@@ -856,6 +858,7 @@ BOOL  BTL_HANDLER_Waza_Add( const BTL_POKEPARAM* pp, WazaID waza )
     { WAZANO_IKARI,           ADD_Ikari         },
     { WAZANO_GENSINOTIKARA,   ADD_GensiNoTikara },
     { WAZANO_AYASIIKAZE,      ADD_GensiNoTikara },  // あやしいかぜ=げんしのちから
+    { WAZANO_GINIRONOKAZE,    ADD_GensiNoTikara },  // ぎんいろのかぜ=げんしのちから
     { WAZANO_KAMINARI,        ADD_Kaminari      },
     { WAZANO_HUBUKI,          ADD_Fubuki        },
     { WAZANO_NEGAIGOTO,       ADD_Negaigoto     },
@@ -1338,44 +1341,46 @@ static void handler_Kawarawari( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
 //----------------------------------------------------------------------------------
 /**
  * とびげり・とびひざげり
+ *
+ * ワザが外れた時、または効果がなかった時に、自分のHPの1/3ダメージを受ける
  */
 //----------------------------------------------------------------------------------
 static const BtlEventHandlerTable*  ADD_Tobigeri( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_AVOID, handler_Tobigeri },    // ワザはずれた
+    { BTL_EVENT_WAZA_AVOID,             handler_Tobigeri_Avoid     }, // ワザはずれたハンドラ
+    { BTL_EVENT_WAZA_EXECUTE_NO_EFFECT, handler_Tobigeri_NoEffect  }, // 効果なかったハンドラ
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
 }
-static void handler_Tobigeri( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+static void handler_Tobigeri_Avoid( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
-    u8 targetPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_TARGET1 );
-    WazaID  waza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
-    u32 damage = BTL_SVFTOOL_SimulationDamage( flowWk, pokeID, targetPokeID, waza, FALSE, TRUE );
-    const BTL_POKEPARAM* target = BTL_SVFTOOL_GetPokeParam( flowWk, targetPokeID );
-    u32 maxHP = BPP_GetValue( target, BPP_MAX_HP );
-
-//    BTL_Printf("与えるハズだったダメージ=%d, MaxHP=%d\n", damage, maxHP);
-    damage /= 2;
-    maxHP /= 2;
-    if( damage > maxHP ){
-      damage = maxHP;
-    }
-
-
-    {
-      BTL_HANDEX_PARAM_DAMAGE* param;
-
-      param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_DAMAGE, pokeID );
-      param->pokeID = pokeID;
-      param->damage = damage;
-      HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_HazureJibaku );
-      HANDEX_STR_AddArg( &param->exStr, pokeID );
-    }
+    common_TobigeriReaction( myHandle, flowWk, pokeID, work );
   }
+}
+static void handler_Tobigeri_NoEffect( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
+  {
+    common_TobigeriReaction( myHandle, flowWk, pokeID, work );
+  }
+}
+/**
+ *  とびげり反動ダメージ処理共通
+ */
+static void  common_TobigeriReaction( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
+  u32 damage = BTL_CALC_QuotMaxHP( bpp, 3 );
+
+  BTL_HANDEX_PARAM_DAMAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_DAMAGE, pokeID );
+  param->pokeID = pokeID;
+  param->damage = damage;
+  HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_HazureJibaku );
+  HANDEX_STR_AddArg( &param->exStr, pokeID );
 }
 //----------------------------------------------------------------------------------
 /**
@@ -1399,7 +1404,7 @@ static void handler_Monomane( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
     const BTL_POKEPARAM* target = BTL_SVFTOOL_GetPokeParam( flowWk, BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_TARGET1) );
     WazaID waza = BPP_GetPrevWazaID( target );
     if( (waza != WAZANO_NULL)
-    &&  (BPP_WAZA_SearchIdx(self, waza) != PTL_WAZA_MAX)
+    &&  (BPP_WAZA_SearchIdx(self, waza) == PTL_WAZA_MAX)
     ){
       u8 wazaIdx = BPP_WAZA_SearchIdx( self, BTL_EVENT_FACTOR_GetSubID(myHandle) );
       if( wazaIdx != PTL_WAZA_MAX )
@@ -1411,7 +1416,7 @@ static void handler_Monomane( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
         param->pokeID = pokeID;
         param->wazaIdx = wazaIdx;
         param->waza = waza;
-        param->ppMax = 5;
+        param->ppMax = 0;
         param->fPermanent = FALSE;
 
         msg_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
@@ -2861,18 +2866,18 @@ static void handler_YadorigiNoTane_Param( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW
 }
 //----------------------------------------------------------------------------------
 /**
- * みやぶる
+ * みやぶる・かぎわける
  */
 //----------------------------------------------------------------------------------
 static const BtlEventHandlerTable*  ADD_Miyaburu( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZASICK_PARAM, handler_Miyaburu },    // ワザ出し確定ハンドラ
+    { BTL_EVENT_WAZASICK_PARAM, handler_Miyaburu },    // 状態異常パラメータ調整ハンドラ
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
 }
-
+// 状態異常パラメータ調整ハンドラ
 static void handler_Miyaburu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
@@ -3562,12 +3567,13 @@ static void handler_Yatuatari( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
 static const BtlEventHandlerTable*  ADD_MezamasiBinta( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_POWER,   handler_MezamasiBinta },    // ワザ威力チェックハンドラ
-    { BTL_EVENT_DAMAGEPROC_END, handler_MezamasiBinta_AfterDamage },
+    { BTL_EVENT_WAZA_POWER,          handler_MezamasiBinta             }, // ワザ威力チェックハンドラ
+    { BTL_EVENT_DAMAGEPROC_END_INFO, handler_MezamasiBinta_AfterDamage }, // ダメージプロセス終了ハンドラ
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
 }
+// ワザ威力チェックハンドラ
 static void handler_MezamasiBinta( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
@@ -3580,6 +3586,7 @@ static void handler_MezamasiBinta( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
     }
   }
 }
+// ダメージプロセス終了ハンドラ
 static void handler_MezamasiBinta_AfterDamage( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
@@ -3602,12 +3609,13 @@ static void handler_MezamasiBinta_AfterDamage( BTL_EVENT_FACTOR* myHandle, BTL_S
 static const BtlEventHandlerTable*  ADD_Kituke( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_POWER,   handler_Kituke },    // ワザ威力チェックハンドラ
-    { BTL_EVENT_DAMAGEPROC_END, handler_Kituke_AfterDamage },
+    { BTL_EVENT_WAZA_POWER,          handler_Kituke             },  // ワザ威力チェックハンドラ
+    { BTL_EVENT_DAMAGEPROC_END_INFO, handler_Kituke_AfterDamage },  // ダメージプロセス終了ハンドラ
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
 }
+// ワザ威力チェックハンドラ
 static void handler_Kituke( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
@@ -3619,17 +3627,21 @@ static void handler_Kituke( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk,
     }
   }
 }
+// ダメージプロセス終了ハンドラ
 static void handler_Kituke_AfterDamage( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
     u8 target_pokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_TARGET1 );
-    const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, target_pokeID );
-    if( BPP_CheckSick(bpp, WAZASICK_MAHI) ){
-      BTL_HANDEX_PARAM_CURE_SICK* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CURE_SICK, pokeID );
-      param->pokeID[0] = target_pokeID;
-      param->poke_cnt = 1;
-      param->sickCode = WAZASICK_MAHI;
+    if( target_pokeID != BTL_POKEID_NULL )
+    {
+      const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, target_pokeID );
+      if( BPP_CheckSick(bpp, WAZASICK_MAHI) ){
+        BTL_HANDEX_PARAM_CURE_SICK* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CURE_SICK, pokeID );
+        param->pokeID[0] = target_pokeID;
+        param->poke_cnt = 1;
+        param->sickCode = WAZASICK_MAHI;
+      }
     }
   }
 }
@@ -4162,10 +4174,10 @@ static void handler_MezameruPower_Pow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WO
 static const BtlEventHandlerTable*  ADD_SizenNoMegumi( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_EXECUTE_CHECK_2ND,  handler_SizenNoMegumi_ExeCheck },  // わざ出し成否チェック
-    { BTL_EVENT_DAMAGEPROC_END,        handler_SizenNoMegumi_AfterDamage }, // わざ出し確定
-    { BTL_EVENT_WAZA_PARAM,   handler_SizenNoMegumi_Type },                 // わざパラメータチェック
-    { BTL_EVENT_WAZA_POWER,   handler_SizenNoMegumi_Pow  },                 // わざ威力チェック
+    { BTL_EVENT_WAZA_EXECUTE_CHECK_2ND, handler_SizenNoMegumi_ExeCheck    }, // わざ出し成否チェック
+    { BTL_EVENT_WAZA_PARAM,             handler_SizenNoMegumi_Type        }, // わざパラメータチェック
+    { BTL_EVENT_WAZA_POWER,             handler_SizenNoMegumi_Pow         }, // わざ威力チェック
+    { BTL_EVENT_DAMAGEPROC_END,         handler_SizenNoMegumi_AfterDamage }, // ワザダメージシーケンス終了
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -4177,11 +4189,16 @@ static void handler_SizenNoMegumi_ExeCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFL
   {
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
     u16 item = BPP_GetItem( bpp );
-    if( BTL_CALC_ITEM_GetParam(item, ITEM_PRM_SIZENNOMEGUMI_ATC) ){
+    int prm = BTL_CALC_ITEM_GetParam(item, ITEM_PRM_SIZENNOMEGUMI_ATC);
+    // 所持アイテムのしぜんのめぐみパラメータが無効値（0）なら失敗する
+    if( (item == ITEM_DUMMY_DATA)
+    ||  (BTL_CALC_ITEM_GetParam(item, ITEM_PRM_SIZENNOMEGUMI_ATC) == 0)
+    ){
       BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_CAUSE, SV_WAZAFAIL_OTHER );
     }
   }
 }
+// わざパラメータチェック
 static void handler_SizenNoMegumi_Type( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
@@ -4192,6 +4209,7 @@ static void handler_SizenNoMegumi_Type( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_W
     BTL_EVENTVAR_RewriteValue( BTL_EVAR_WAZA_TYPE, type );
   }
 }
+// わざ威力チェック
 static void handler_SizenNoMegumi_Pow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
@@ -4202,6 +4220,7 @@ static void handler_SizenNoMegumi_Pow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WO
     BTL_EVENTVAR_RewriteValue( BTL_EVAR_WAZA_POWER, pow );
   }
 }
+// ワザダメージシーケンス終了
 static void handler_SizenNoMegumi_AfterDamage( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
@@ -4211,6 +4230,7 @@ static void handler_SizenNoMegumi_AfterDamage( BTL_EVENT_FACTOR* myHandle, BTL_S
     param->itemID = ITEM_DUMMY_DATA;
   }
 }
+
 //----------------------------------------------------------------------------------
 /**
  * はたきおとす
@@ -4219,27 +4239,31 @@ static void handler_SizenNoMegumi_AfterDamage( BTL_EVENT_FACTOR* myHandle, BTL_S
 static const BtlEventHandlerTable*  ADD_Hatakiotosu( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_DAMAGEPROC_END,      handler_Hatakiotosu }, // ダメージ後
+    { BTL_EVENT_DAMAGEPROC_END_INFO,      handler_Hatakiotosu },  // ダメージプロセス終了ハンドラ
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
 }
+// ダメージプロセス終了ハンドラ
 static void handler_Hatakiotosu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
     u8 target_pokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_TARGET1 );
-    const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, target_pokeID );
-    u16 itemID = BPP_GetItem( bpp );
-    if( itemID != ITEM_DUMMY_DATA )
+    if( target_pokeID != BTL_POKEID_NULL )
     {
-      BTL_HANDEX_PARAM_SET_ITEM* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_SET_ITEM, pokeID );
-      param->pokeID = target_pokeID;
-      param->itemID = ITEM_DUMMY_DATA;
-      HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_Hatakiotosu );
-      HANDEX_STR_AddArg( &param->exStr, pokeID );
-      HANDEX_STR_AddArg( &param->exStr, target_pokeID );
-      HANDEX_STR_AddArg( &param->exStr, itemID );
+      const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, target_pokeID );
+      u16 itemID = BPP_GetItem( bpp );
+      if( itemID != ITEM_DUMMY_DATA )
+      {
+        BTL_HANDEX_PARAM_SET_ITEM* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_SET_ITEM, pokeID );
+        param->pokeID = target_pokeID;
+        param->itemID = ITEM_DUMMY_DATA;
+        HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_Hatakiotosu );
+        HANDEX_STR_AddArg( &param->exStr, pokeID );
+        HANDEX_STR_AddArg( &param->exStr, target_pokeID );
+        HANDEX_STR_AddArg( &param->exStr, itemID );
+      }
     }
   }
 }
@@ -4389,11 +4413,12 @@ static void handler_Yokodori_TurnCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_W
 static const BtlEventHandlerTable*  ADD_Dorobou( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_DAMAGEPROC_END,      handler_Dorobou }, // ダメージ後
+    { BTL_EVENT_DAMAGEPROC_END_INFO,      handler_Dorobou }, // ダメージプロセス終了ハンドラ
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
 }
+// ダメージプロセス終了ハンドラ
 static void handler_Dorobou( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
@@ -4402,15 +4427,18 @@ static void handler_Dorobou( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
     if( BPP_GetItem(self) == ITEM_DUMMY_DATA )
     {
       u8 target_pokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_TARGET1 );
-      const BTL_POKEPARAM* target = BTL_SVFTOOL_GetPokeParam( flowWk, target_pokeID );
-      if( BPP_GetItem(target) != ITEM_DUMMY_DATA )
+      if( target_pokeID != BTL_POKEID_NULL )
       {
-        BTL_HANDEX_PARAM_SWAP_ITEM* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_SWAP_ITEM, pokeID );
-        param->pokeID = target_pokeID;
-        HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_Dorobou );
-        HANDEX_STR_AddArg( &param->exStr, pokeID );
-        HANDEX_STR_AddArg( &param->exStr, target_pokeID );
-        HANDEX_STR_AddArg( &param->exStr, BPP_GetItem(target) );
+        const BTL_POKEPARAM* target = BTL_SVFTOOL_GetPokeParam( flowWk, target_pokeID );
+        if( BPP_GetItem(target) != ITEM_DUMMY_DATA )
+        {
+          BTL_HANDEX_PARAM_SWAP_ITEM* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_SWAP_ITEM, pokeID );
+          param->pokeID = target_pokeID;
+          HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_Dorobou );
+          HANDEX_STR_AddArg( &param->exStr, pokeID );
+          HANDEX_STR_AddArg( &param->exStr, target_pokeID );
+          HANDEX_STR_AddArg( &param->exStr, BPP_GetItem(target) );
+        }
       }
     }
   }
@@ -4624,9 +4652,10 @@ static void handler_Mineuti( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
 static const BtlEventHandlerTable*  ADD_Koraeru( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_EXECUTE_CHECK_2ND,  handler_Koraeru_ExeCheck }, // ワザ出し成否チェックハンドラ
-    { BTL_EVENT_KORAERU_CHECK,           handler_Koraeru_Check },    // こらえるチェックハンドラ
-    { BTL_EVENT_UNCATEGORIZE_WAZA,       handler_Koraeru },          // 未分類ワザハンドラ
+    { BTL_EVENT_WAZA_EXECUTE_CHECK_2ND,  handler_Koraeru_ExeCheck },  // ワザ出し成否チェックハンドラ
+    { BTL_EVENT_UNCATEGORIZE_WAZA,       handler_Koraeru },           // 未分類ワザハンドラ
+    { BTL_EVENT_KORAERU_CHECK,           handler_Koraeru_Check },     // こらえるチェックハンドラ
+    { BTL_EVENT_TURNCHECK_BEGIN,         handler_Koraeru_TurnCheck }, // ターンチェックハンドラ
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -4658,11 +4687,24 @@ static void handler_Koraeru_ExeCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WOR
     }
   }
 }
+// 未分類ワザハンドラ
+static void handler_Koraeru( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
+  {
+    // ワザが出たら貼り付いて「こらえる」体勢になる
+    BTL_HANDEX_PARAM_MESSAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
+    HANDEX_STR_Setup( &param->str, BTL_STRTYPE_SET, BTL_STRID_SET_Koraeru_Ready );
+    HANDEX_STR_AddArg( &param->str, pokeID );
+    work[ WORKIDX_STICK ] = 1;
+  }
+}
 // こらえるチェックハンドラ
 static void handler_Koraeru_Check( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) == pokeID )
   {
+    // 貼り付き中なら「こらえる」発動
     if( work[ WORKIDX_STICK] )
     {
       BTL_EVENTVAR_RewriteValue( BTL_EVAR_KORAERU_CAUSE, BPP_KORAE_WAZA_DEFENDER );
@@ -4670,17 +4712,17 @@ static void handler_Koraeru_Check( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
     }
   }
 }
-// 未分類ワザハンドラ
-static void handler_Koraeru( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+// ターンチェックハンドラ
+static void handler_Koraeru_TurnCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
-    BTL_HANDEX_PARAM_MESSAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
-    HANDEX_STR_Setup( &param->str, BTL_STRTYPE_SET, BTL_STRID_SET_Koraeru_Ready );
-    HANDEX_STR_AddArg( &param->str, pokeID );
-    work[ WORKIDX_STICK ] = 1;
+    // ターンチェックまで貼り付いていたら自分自身を削除
+    BTL_EVENT_FACTOR_Remove( myHandle );
   }
 }
+
+
 //----------------------------------------------------------------------------------
 /**
  * まもる・みきり
@@ -5098,9 +5140,9 @@ static void handler_Haradaiko( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
 static const BtlEventHandlerTable*  ADD_Feint( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_NOEFFECT_CHECK_L2,  handler_Feint_NoEffect },      // ワザ無効チェックLv2
-    { BTL_EVENT_CHECK_MAMORU_BREAK, handler_Feint_MamoruBreak },   // まもる無効化チェック
-    { BTL_EVENT_DAMAGEPROC_END,     handler_Feint_AfterDamage },   // ダメージ処理後
+    { BTL_EVENT_NOEFFECT_CHECK_L2,   handler_Feint_NoEffect    },  // ワザ無効チェックLv2
+    { BTL_EVENT_CHECK_MAMORU_BREAK,  handler_Feint_MamoruBreak },  // まもる無効化チェック
+    { BTL_EVENT_DAMAGEPROC_END_INFO, handler_Feint_AfterDamage },  // ダメージ処理後
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -5588,15 +5630,29 @@ static void common_CureFriendPokeSick( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WO
   {
     BTL_HANDEX_PARAM_MESSAGE   *msg_param;
     BTL_HANDEX_PARAM_CURE_SICK *cure_param;
-    BtlPokePos myPos = BTL_SVFTOOL_GetExistFrontPokeID( flowWk, pokeID );
-    BtlExPos   expos = EXPOS_MAKE( BTL_EXPOS_AREA_MYTEAM, myPos );
+    const BTL_PARTY* party = BTL_SVFTOOL_GetPartyData( flowWk, pokeID );
+    u8 i;
 
     msg_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
     HANDEX_STR_Setup( &msg_param->str, BTL_STRTYPE_STD, strID );
 
     cure_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CURE_SICK, pokeID );
-    cure_param->poke_cnt = BTL_SVFTOOL_ExpandPokeID( flowWk, expos, cure_param->pokeID );
+
+    // 場所数最大（6）を格納できる配列にパーティメンバー（最大6）を格納するので大丈夫なハズだが、
+    // 念のため、オーバーした分は格納しないような処理をしておく
+    cure_param->poke_cnt = BTL_PARTY_GetMemberCount( party );
+    if( cure_param->poke_cnt > NELEMS(cure_param->pokeID) ){
+      cure_param->poke_cnt = NELEMS(cure_param->pokeID);
+    }
+
     cure_param->sickCode = WAZASICK_EX_POKEFULL;
+    for(i=0; i<cure_param->poke_cnt; ++i){
+      {
+        const BTL_POKEPARAM* bpp = BTL_PARTY_GetMemberDataConst( party, i );
+        cure_param->pokeID[ i ] = BPP_GetID( bpp );
+      }
+    }
+
   }
 }
 //----------------------------------------------------------------------------------
@@ -6831,7 +6887,7 @@ static void handler_FukuroDataki( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
         --cnt;
       }
     }
-    BTL_Printf("生きてて状態異常じゃない仲間=%d\n", cnt);
+    BTL_Printf("生きてて状態異常じゃない仲間の数=%d\n", cnt);
     if( cnt ){
       BTL_EVENTVAR_RewriteValue( BTL_EVAR_HITCOUNT, cnt );
     }
@@ -6857,7 +6913,7 @@ static void handler_Nekodamasi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
-    if( BPP_GetTurnCount(bpp) )
+    if( BPP_CONTFLAG_Get(bpp, BPP_CONTFLG_ACTION_DONE) )
     {
       BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_CAUSE, SV_WAZAFAIL_OTHER );
     }
@@ -6938,10 +6994,10 @@ static void handler_SoraWoTobu_TameRelease( BTL_EVENT_FACTOR* myHandle, BTL_SVFL
 static const BtlEventHandlerTable*  ADD_ShadowDive( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_TAME_START,         handler_ShadowDive_TameStart },     // 溜め開始
-    { BTL_EVENT_TAME_RELEASE,       handler_ShadowDive_TameRelease },   // 溜め解放
-    { BTL_EVENT_CHECK_MAMORU_BREAK, handler_Feint_MamoruBreak },        // まもる無効化チェック
-    { BTL_EVENT_DAMAGEPROC_END,     handler_ShadowDive_AfterDamage },   // ダメージ処理後
+    { BTL_EVENT_TAME_START,          handler_ShadowDive_TameStart },     // 溜め開始
+    { BTL_EVENT_TAME_RELEASE,        handler_ShadowDive_TameRelease },   // 溜め解放
+    { BTL_EVENT_CHECK_MAMORU_BREAK,  handler_Feint_MamoruBreak },        // まもる無効化チェック
+    { BTL_EVENT_DAMAGEPROC_END_INFO, handler_ShadowDive_AfterDamage },   // ダメージ処理後
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -7229,7 +7285,7 @@ static void handler_RocketZutuki_TameStart( BTL_EVENT_FACTOR* myHandle, BTL_SVFL
 static const BtlEventHandlerTable* ADD_Tuibamu( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_DAMAGEPROC_END,  handler_Tuibamu },
+    { BTL_EVENT_DAMAGEPROC_END_INFO,  handler_Tuibamu },
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -7940,7 +7996,7 @@ static void handler_GensiNoTikara( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
   if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) == pokeID)
   &&  (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID)
   ){
-    BTL_EVENTVAR_RewriteValue( BTL_EVAR_STATUS_TYPE, WAZA_RANKEFF_SP );
+    BTL_EVENTVAR_RewriteValue( BTL_EVAR_STATUS_TYPE, WAZA_RANKEFF_MULTI5 );
   }
 }
 
@@ -8713,7 +8769,7 @@ static void handler_MagicRoom( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
 static const BtlEventHandlerTable*  ADD_HajikeruHonoo( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_DAMAGEPROC_END, handler_HajikeruHonoo },    // ダメージ処理最終ハンドラ
+    { BTL_EVENT_DAMAGEPROC_END_INFO, handler_HajikeruHonoo },    // ダメージ処理最終ハンドラ
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;

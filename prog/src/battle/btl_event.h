@@ -130,7 +130,8 @@ typedef enum {
   BTL_EVENT_WEATHER_CHANGE_AFTER,   ///< 天候の変化（直後）
   BTL_EVENT_WEATHER_REACTION,       ///< 天候ダメージに対する反応
   BTL_EVENT_SIMPLE_DAMAGE_ENABLE,   ///< ワザ以外ダメージ有効判定
-  BTL_EVENT_DAMAGEPROC_END,         ///< ダメージワザ処理直後
+  BTL_EVENT_DAMAGEPROC_END_INFO,    ///< ダメージワザシーケンス終了（ダメージを受けたポケモンが居る時のみ）
+  BTL_EVENT_DAMAGEPROC_END,         ///< ダメージワザシーケンス終了（常に呼び出し）
   BTL_EVENT_CHANGE_TOKUSEI_BEFORE,  ///< とくせい書き換え直前（書き換え確定）
   BTL_EVENT_CHANGE_TOKUSEI_AFTER,   ///< とくせい書き換え後
   BTL_EVENT_CHECK_PUSHOUT,          ///< ふきとばし系ワザチェック
@@ -145,7 +146,8 @@ typedef enum {
   BTL_EVENT_TAME_RELEASE,           ///< 溜め解放
   BTL_EVENT_CHECK_POKE_HIDE,        ///< ポケモンが消えている状態のワザ命中チェック
   BTL_EVENT_ITEMSET_CHECK,          ///< アイテム書き換え前の成否チェック
-  BTL_EVENT_ITEMSET_FIXED,          ///< アイテム書き換え確定
+  BTL_EVENT_ITEMSET_DECIDE,         ///< アイテム書き換え確定
+  BTL_EVENT_ITEMSET_FIXED,          ///< アイテム書き換え完了
   BTL_EVENT_FIELD_EFFECT_CALL,      ///< フィールドエフェクト追加
   BTL_EVENT_CHECK_SIDEEFF_PARAM,    ///< サイドエフェクトパラメータ調整
   BTL_EVENT_UNCATEGORIZE_WAZA,            ///< 未分類ワザ処理

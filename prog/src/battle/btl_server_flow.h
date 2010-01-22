@@ -506,6 +506,8 @@ typedef struct {
   u8              pokeID;
 }BTL_HANDEX_PARAM_SET_CONTFLAG;
 
+typedef BTL_HANDEX_PARAM_SET_CONTFLAG  BTL_HANDEX_PARAM_RESET_CONTFLAG;
+
 /**
  * サイドエフェクト追加処理
  */
