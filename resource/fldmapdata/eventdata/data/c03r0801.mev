@@ -1,5 +1,5 @@
 #event data
-#save date:2010/01/20 17:54:48
+#save date:2010/01/22 16:37:13
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c03r0801.wms
 #SECTION START:OBJ_EVENT
@@ -71,7 +71,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-152 0 40
+168 0 24
 #event number: 2
 #type
 1
@@ -119,7 +119,7 @@ EV_TYPE_NORMAL
 #Event Script Name
 SCRID_C03R0801_CREW_04
 #Direction Type Number
-DIR_DOWN
+DIR_LEFT
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -133,7 +133,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-248 0 8
+232 0 24
 #event number: 4
 #type
 1
@@ -164,7 +164,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-344 0 -40
+264 0 24
 #event number: 5
 #type
 1
@@ -297,7 +297,7 @@ C03R0801_VISITOR_05
 #OBJ CODE Number
 BOY1
 #MOVE CODE Number
-MV_RTLU         
+MV_SPIN_L
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
@@ -315,11 +315,11 @@ DIR_DOWN
 #Move Limit X Number
 4
 #Move Limit Z Number
-2
+4
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-584 0 -24
+488 0 -8
 #event number: 10
 #type
 1
@@ -856,20 +856,7 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-1
-#event number: 0
-#Bg Event Label
-BG_C03R0801_LOCK_01
-#Bg Event Type
-BG_TALK_TYPE_NORMAL
-#Bg Event Reaction Direction ID
-BG_TALK_DIR_DOWN
-#Bg Script Name
-SCRID_BG_C03R0801_LOCK_01
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-680 0 168
+0
 #Map Event List Data End
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT

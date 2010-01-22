@@ -450,6 +450,7 @@ EVENT_START		ev_pos_d02r0101_event_02
 
     //ざんねん！　おれは　なにも　もっていない
     _BALLOONWIN_OBJMSG( msg_d02r0101_hakaim1_02 , D02R0101_HAKAIM1_01 )
+	_LAST_KEYWAIT()
     _BALLOONWIN_CLOSE()
 
 	//盗難イベントを次に進める
@@ -567,6 +568,7 @@ EVENT_START		ev_pos_d02r0101_event_03
 
     //ごめんね　アタシ　てぶら
     _BALLOONWIN_OBJMSG( msg_d02r0101_hakaiw1_02 , D02R0101_HAKAIW1_01 )
+    _LAST_KEYWAIT()
     _BALLOONWIN_CLOSE()
 
 	//盗難イベントを次に進める
@@ -651,6 +653,7 @@ EVENT_START		ev_pos_d02r0101_event_04
 
     //そう！　おれは　じかんかせぎの
     _BALLOONWIN_OBJMSG( msg_d02r0101_hakaim2_02 , D02R0101_HAKAIM2_01 )
+    _LAST_KEYWAIT()
     _BALLOONWIN_CLOSE()
 
 	//盗難イベントを次に進める
@@ -698,8 +701,16 @@ EVENT_START		ev_pos_d02r0101_event_05
 	ENDIF
 	*/
 
+	//============フラグワーク操作=============//
+
 	//賢者とリーダーを画面下部に表示
 	_FLAG_RESET( FV_D02R0101_LEADER2 )
+	_FLAG_RESET( FV_D02R0101_SAGE5 )
+	
+	_OBJ_ADD( D02R0101_SAGE5_01 )
+	_OBJ_ADD( D02R0101_LEADER2_01 )
+	
+	//=========================================//
 	
 	//アーティも同じ位置に
 	_OBJ_POS_CHANGE( D02R0101_LEADER3_01, 43, 0, 36, DIR_UP )

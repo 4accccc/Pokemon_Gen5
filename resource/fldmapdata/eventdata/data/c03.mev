@@ -1,5 +1,5 @@
 #event data
-#save date:2009/12/20 18:02:04
+#save date:2010/01/22 16:47:43
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c03.wms
 #SECTION START:OBJ_EVENT
@@ -34,13 +34,13 @@ DIR_DOWN
 #Parameter 2 Number
 0
 #Move Limit X Number
-3
+1
 #Move Limit Z Number
-3
+1
 #Pos Type
 EVENTDATA_POSTYPE_RAIL
 #position
-18 15 -1
+18 17 -2
 #event number: 1
 #type
 1
@@ -65,13 +65,13 @@ DIR_DOWN
 #Parameter 2 Number
 0
 #Move Limit X Number
-3
+1
 #Move Limit Z Number
-3
+1
 #Pos Type
 EVENTDATA_POSTYPE_RAIL
 #position
-7 10 1
+7 14 -2
 #event number: 2
 #type
 1
@@ -96,13 +96,13 @@ DIR_DOWN
 #Parameter 2 Number
 0
 #Move Limit X Number
-3
+1
 #Move Limit Z Number
-3
+1
 #Pos Type
 EVENTDATA_POSTYPE_RAIL
 #position
-4 16 -1
+4 20 2
 #event number: 3
 #type
 1
@@ -127,13 +127,13 @@ DIR_DOWN
 #Parameter 2 Number
 0
 #Move Limit X Number
-3
+1
 #Move Limit Z Number
-3
+1
 #Pos Type
 EVENTDATA_POSTYPE_RAIL
 #position
-13 9 0
+13 22 -2
 #event number: 4
 #type
 1
@@ -142,7 +142,7 @@ C03_BUSINESSMAN2_01
 #OBJ CODE Number
 BUSINESSMAN
 #MOVE CODE Number
-MV_RAIL_DIR_RND_ALL
+MV_RAIL_RND
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
@@ -158,13 +158,13 @@ DIR_DOWN
 #Parameter 2 Number
 0
 #Move Limit X Number
-0
+1
 #Move Limit Z Number
-0
+1
 #Pos Type
 EVENTDATA_POSTYPE_RAIL
 #position
-7 19 0
+7 7 -2
 #event number: 5
 #type
 1
@@ -173,7 +173,7 @@ C03_OL1_01
 #OBJ CODE Number
 OL
 #MOVE CODE Number
-MV_RAIL_RT2
+MV_RAIL_RND
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
@@ -189,13 +189,13 @@ DIR_DOWN
 #Parameter 2 Number
 0
 #Move Limit X Number
-2
+1
 #Move Limit Z Number
-2
+1
 #Pos Type
 EVENTDATA_POSTYPE_RAIL
 #position
-4 7 0
+4 8 -2
 #event number: 6
 #type
 1
@@ -204,7 +204,7 @@ C03_OL2_01
 #OBJ CODE Number
 OL
 #MOVE CODE Number
-MV_RAIL_DIR_RND_DL
+MV_RAIL_RND
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
@@ -220,13 +220,13 @@ DIR_DOWN
 #Parameter 2 Number
 0
 #Move Limit X Number
-0
+1
 #Move Limit Z Number
-0
+1
 #Pos Type
 EVENTDATA_POSTYPE_RAIL
 #position
-7 8 -1
+7 20 2
 #event number: 7
 #type
 1
@@ -235,7 +235,7 @@ C03_OL4_01
 #OBJ CODE Number
 OL
 #MOVE CODE Number
-MV_RAIL_DIR_RND_ALL
+MV_RAIL_RND
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
@@ -251,13 +251,13 @@ DIR_DOWN
 #Parameter 2 Number
 0
 #Move Limit X Number
-0
+1
 #Move Limit Z Number
-0
+1
 #Pos Type
 EVENTDATA_POSTYPE_RAIL
 #position
-18 23 1
+18 22 2
 #event number: 8
 #type
 1
@@ -282,13 +282,13 @@ DIR_DOWN
 #Parameter 2 Number
 0
 #Move Limit X Number
-3
+1
 #Move Limit Z Number
-3
+1
 #Pos Type
 EVENTDATA_POSTYPE_RAIL
 #position
-18 7 -1
+18 14 2
 #event number: 9
 #type
 1
@@ -313,13 +313,13 @@ DIR_DOWN
 #Parameter 2 Number
 0
 #Move Limit X Number
-3
+1
 #Move Limit Z Number
-3
+1
 #Pos Type
 EVENTDATA_POSTYPE_RAIL
 #position
-13 11 -2
+13 10 2
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
@@ -367,6 +367,8 @@ EVENTDATA_POSTYPE_RAIL
 2 4 -2
 #size
 1 5
+#rail way
+DIR_UP
 #event number: 1
 #Door Event Label
 DOOR_ID_C03_C03P17_EXIT01
@@ -384,6 +386,8 @@ EVENTDATA_POSTYPE_RAIL
 3 0 -2
 #size
 1 5
+#rail way
+DIR_UP
 #event number: 2
 #Door Event Label
 DOOR_ID_C03_C03P10_EXIT01
@@ -401,6 +405,8 @@ EVENTDATA_POSTYPE_RAIL
 5 5 -2
 #size
 1 5
+#rail way
+DIR_UP
 #event number: 3
 #Door Event Label
 DOOR_ID_C03_C03P16_EXIT01
@@ -418,6 +424,8 @@ EVENTDATA_POSTYPE_RAIL
 17 0 -3
 #size
 1 7
+#rail way
+DIR_UP
 #event number: 4
 #Door Event Label
 DOOR_ID_C03_C03P11_EXIT01
@@ -435,6 +443,8 @@ EVENTDATA_POSTYPE_RAIL
 8 5 -2
 #size
 1 5
+#rail way
+DIR_UP
 #event number: 5
 #Door Event Label
 DOOR_ID_C03_C03P15_EXIT01
@@ -452,6 +462,8 @@ EVENTDATA_POSTYPE_RAIL
 9 0 -4
 #size
 1 9
+#rail way
+DIR_UP
 #event number: 6
 #Door Event Label
 DOOR_ID_C03_C03P12_EXIT01
@@ -469,6 +481,8 @@ EVENTDATA_POSTYPE_RAIL
 11 5 -2
 #size
 1 5
+#rail way
+DIR_UP
 #event number: 7
 #Door Event Label
 DOOR_ID_C03_C03P14_EXIT01
@@ -486,6 +500,8 @@ EVENTDATA_POSTYPE_RAIL
 19 0 -2
 #size
 1 5
+#rail way
+DIR_UP
 #event number: 8
 #Door Event Label
 DOOR_ID_C03_C03P07_EXIT01
@@ -503,6 +519,8 @@ EVENTDATA_POSTYPE_RAIL
 14 5 -2
 #size
 1 5
+#rail way
+DIR_UP
 #event number: 9
 #Door Event Label
 DOOR_ID_C03_C03P13_EXIT01
@@ -520,6 +538,8 @@ EVENTDATA_POSTYPE_RAIL
 20 0 -2
 #size
 1 6
+#rail way
+DIR_UP
 #event number: 10
 #Door Event Label
 DOOR_ID_C03_H01R0201_EXIT01
@@ -537,6 +557,8 @@ EVENTDATA_POSTYPE_RAIL
 0 1 -1
 #size
 1 3
+#rail way
+DIR_UP
 #event number: 11
 #Door Event Label
 DOOR_ID_C03_C03PC0101_EXIT01
@@ -554,6 +576,8 @@ EVENTDATA_POSTYPE_RAIL
 7 8 3
 #size
 1 1
+#rail way
+DIR_UP
 #event number: 12
 #Door Event Label
 DOOR_ID_C03_H01R0201_EXIT02
@@ -571,6 +595,8 @@ EVENTDATA_POSTYPE_RAIL
 1 2 -1
 #size
 1 3
+#rail way
+DIR_UP
 #event number: 13
 #Door Event Label
 DOOR_ID_C03_C03R0301_EXIT01
@@ -588,6 +614,8 @@ EVENTDATA_POSTYPE_RAIL
 18 9 3
 #size
 1 1
+#rail way
+DIR_UP
 #event number: 14
 #Door Event Label
 DOOR_ID_C03_C03R0101_EXIT01
@@ -605,6 +633,8 @@ EVENTDATA_POSTYPE_RAIL
 13 17 3
 #size
 1 1
+#rail way
+DIR_UP
 #event number: 15
 #Door Event Label
 DOOR_ID_C03_C03R0701_EXIT01
@@ -622,5 +652,7 @@ EVENTDATA_POSTYPE_RAIL
 4 14 3
 #size
 1 1
+#rail way
+DIR_UP
 #Map Event List Data End
 #SECTION End:DOOR_EVENT

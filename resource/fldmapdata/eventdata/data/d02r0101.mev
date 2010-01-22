@@ -1,5 +1,5 @@
 #event data
-#save date:2010/01/16 18:52:06
+#save date:2010/01/21 22:24:02
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d02r0101.wms
 #SECTION START:OBJ_EVENT
@@ -859,7 +859,7 @@ MV_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
-FV_D02R0101_LEADER2
+FV_D02R0101_SAGE5
 #Event Script Name
 SCRID_DUMMY
 #Direction Type Number

@@ -21,7 +21,6 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA		ev_prg_c03r0801_timeup
-_EVENT_DATA		ev_bg_c03r0801_lock_01
 _EVENT_DATA		ev_c03r0801_crew_01
 _EVENT_DATA		ev_c03r0801_crew_02
 _EVENT_DATA		ev_c03r0801_crew_03
@@ -52,6 +51,7 @@ _EVENT_DATA		ev_c03r0801_babygirl1_02
 _EVENT_DATA		ev_zone_c03r0801
 _EVENT_DATA		ev_pos_c03r0801_move_01
 _EVENT_DATA		ev_reserve_c03r0801_cabinguide_01
+_EVENT_DATA		ev_init_c03r0801
 _EVENT_DATA_END
 
 //------------------------------注意--------------------------------//
@@ -62,6 +62,20 @@ _EVENT_DATA_END
 //	LOCALWORK11⇒船員のおじさんヒントで使用
 //
 //------------------------------------------------------------------//
+
+/************************************************************/
+/*					FIELD_INIT_LABEL						*/
+/************************************************************/
+INIT_EVENT_START	ev_init_c03r0801
+
+	//乗船時の場合
+	IF $WK_OTHER_PASSENGERBOAT == 0 THEN
+
+		_OBJ_POS_CHANGE( C03R0801_CREW_01, 29, 3, 28, DIR_DOWN )
+	
+	ENDIF
+
+INIT_EVENT_END
 
 /**************************************************************/
 /*            ZONE_CHANGE_LABEL                               */
@@ -132,21 +146,35 @@ _ANIME_LABEL	anm_cabin_kari
 	_ANIME_DATA	ACMD_END,0
 
 /**************************************************************/
-/*		遊覧船カギのかかった部屋							  */
-/**************************************************************/
-EVENT_START		ev_bg_c03r0801_lock_01
-		_SYSWIN_MSG_DOWN( msg_bg_c03r0801_lock_01 )
-		_LAST_KEYWAIT()
-		_SYSWIN_CLOSE()
-EVENT_END
-
-/**************************************************************/
 /*		船員	リタイア受付								  */
 /**************************************************************/
 EVENT_START		ev_c03r0801_crew_01
 _TALK_OBJ_START()
 
-	_BALLOONWIN_TALKOBJ_MSG( msg_c03r0801_crew_01 )
+	//ローカル変数を定義
+	DEFINE_LOCAL	LWK_TOTAL3
+	DEFINE_LOCAL	LWK_WIN3
+	
+	//遊覧船内のトレーナー総数と勝利数
+	_PL_BOAT_GET_TR_NUM(PL_TR_SEARCH_TYPE_TOTAL,LWK_TOTAL3)
+	_PL_BOAT_GET_TR_NUM(PL_TR_SEARCH_TYPE_WIN,LWK_WIN3)
+
+	//セリフ内に格納
+	_NUMBER(3,LWK_TOTAL3,1)
+	_NUMBER(4,LWK_WIN3,1)
+	
+    //勝利数と総数が同じならば、特別なメッセージを表示
+    IF $LWK_TOTAL3 <= $LWK_WIN3 THEN
+
+		//せんないの　トレーナーさんは……（全抜き用メッセージ）
+		_BALLOONWIN_TALKOBJ_MSG( msg_c03r0801_ex_02 )
+
+	ELSE
+
+		//せんないの　トレーナーさんは……
+		_BALLOONWIN_TALKOBJ_MSG( msg_c03r0801_crew_01 )
+
+    ENDIF
 
 	_YES_NO_WIN( SCWK_ANSWER )
 	
@@ -174,6 +202,7 @@ _TALK_OBJ_START()
 		_BALLOONWIN_CLOSE()
 	
 		_BALLOONWIN_TALKOBJ_MSG( msg_c03r0801_retire_02 )
+		_LAST_KEYWAIT()
 		_BALLOONWIN_CLOSE()
 	
 	ENDIF
@@ -263,13 +292,16 @@ EVENT_START		ev_c03r0801_crew_05
 	
 	//１人しかいない場合
 	IF $LWK_ROOM == 1 THEN
-		
+
 		//ひとりしか　いないよ
 		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r0801_crew_05 )
 
 	//２人以上いる場合
 	ELSE
-	
+
+		//セリフ内にを格納
+		_NUMBER( 2, LWK_ROOM, 1 )
+
 		//ふたり　いじょう　いるね
 		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r0801_crew_06 )
 
@@ -758,10 +790,29 @@ _ANIME_LABEL	anm_player_out
 /*			予約スクリプトイベント							  */
 /**************************************************************/
 EVENT_START		ev_reserve_c03r0801_cabinguide_01
+{
+	//ローカル変数を定義
+	DEFINE_LOCAL	LWK_TOTAL1
+	
+	//遊覧船内のトレーナー総数
+	_PL_BOAT_GET_TR_NUM(PL_TR_SEARCH_TYPE_TOTAL,LWK_TOTAL1)
 
+	//連れ歩き
 	_OBJ_ANIME( C03R0801_CREW_01, anm_crew_ship )
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_ship )
 	_OBJ_ANIME_WAIT()
+
+	//セリフ内にを格納
+	_NUMBER( 3, LWK_TOTAL1, 1 )
+
+	//ヒウンゆうらんせんの　ごじょうせん
+	_BALLOONWIN_OBJMSG( msg_c03r0801_ex_01 , C03R0801_CREW_01 )
+	_BALLOONWIN_CLOSE()
+}
+	//出港デモ再生
+
+	//乗船アニメ終了
+	$WK_OTHER_PASSENGERBOAT = 1
 
 EVENT_END
 
@@ -770,17 +821,18 @@ EVENT_END
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_crew_ship
 	_ANIME_DATA	AC_STAY_WALK_D_8F,1
-	_ANIME_DATA	AC_WALK_U_8F,9
+	_ANIME_DATA	AC_WALK_U_8F,8
 	_ANIME_DATA	AC_DIR_L,1
 	_ANIME_DATA	AC_DIR_PAUSE_ON,1
 	_ANIME_DATA	AC_WALK_R_8F,1
 	_ANIME_DATA	AC_WAIT_8F,1
 	_ANIME_DATA	AC_DIR_PAUSE_OFF,1
 	_ANIME_DATA	AC_WALK_L_8F,1
-	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_WALK_U_8F,2
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_player_ship
 	_ANIME_DATA	AC_WAIT_8F,1
 	_ANIME_DATA	AC_WALK_U_8F,12
+	_ANIME_DATA	AC_DIR_D,1
 	_ANIME_DATA	ACMD_END,0

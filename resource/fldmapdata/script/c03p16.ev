@@ -37,12 +37,32 @@ EVENT_START		ev_reserve_c03p16_cabinguide_01
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_out )
 	_OBJ_ANIME_WAIT()
 
+	//ローカル変数を定義
+	DEFINE_LOCAL	LWK_TOTAL2
+	DEFINE_LOCAL	LWK_WIN2
+	
+	//遊覧船内のトレーナー数と勝利数
+	_PL_BOAT_GET_TR_NUM(PL_TR_SEARCH_TYPE_TOTAL,LWK_TOTAL2)
+	_PL_BOAT_GET_TR_NUM(PL_TR_SEARCH_TYPE_WIN,LWK_WIN2)
+
+    //勝利数と総数が同じならば、特別なメッセージを表示
+    IF $LWK_TOTAL2 <= $LWK_WIN2 THEN
+
+		//おめでとうございます！（全抜き用メッセージ）
+		_BALLOONWIN_OBJMSG( msg_c03p16_cabinguide_09 , C03P16_CABINGUIDE_01 )
+		_BALLOONWIN_CLOSE()
+
+    ENDIF
+
 	//ごじょうせん　ありがとうございました
 	_BALLOONWIN_OBJMSG( msg_c03p16_cabinguide_07 , C03P16_CABINGUIDE_01 )
 	_BALLOONWIN_CLOSE()
 
-  //遊覧船終了
-  _PL_BOAT_END()
+	//遊覧船終了
+	_PL_BOAT_END()
+
+	//乗船アニメ用ワークを０にする
+	$WK_OTHER_PASSENGERBOAT = 0
 
 EVENT_END
 
