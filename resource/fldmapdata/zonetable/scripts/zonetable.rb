@@ -237,7 +237,6 @@ class ZoneDataFile < OutputFile
 			exit 1
 		end
 		movemodel = column[@cl.cMOVEMODEL]
-		matrixArc = 0
     matrixId = "MATRIX_ID_#{column[@cl.cMATRIXID]}".upcase
 
     event_id = "NARC_eventdata_#{id.downcase}_bin"
@@ -293,9 +292,8 @@ class ZoneDataFile < OutputFile
 	@fp.puts <<DOCUMENT
 	{//ZONE_ID_#{id.upcase} = #{linecount}
 		#{maprsc.upcase},
-		#{area.upcase},
 		#{movemodel.upcase},
-		#{matrixArc},
+		#{area.upcase},
 		#{matrixId},
 		#{script},
 		#{sp_script},	//#{sp_script},

@@ -15,9 +15,8 @@
 //------------------------------------------------------------------
 typedef struct{
 	u8 maprsc_id;						///<マップ種別指定（新規）
-	u8 area_id;							///<AREA_IDの指定
 	u8 movemodel_id;					///<動作モデルの指定
-	u8 dummy00;						///<未使用領域
+	u16 area_id;							///<AREA_IDの指定
 	u16 matrix_id;						///<マップマトリックスの指定
 	u16 script_id;						///<スクリプトファイルのアーカイブID
 	u16 sp_script_id;					///<特殊スクリプトファイルのアーカイブID
