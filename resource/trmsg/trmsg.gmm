@@ -6373,11 +6373,11 @@
 
 	<row id="TRID_ELITEM_10_TRMSG_FIGHT_START">
 		<language name="JPN" width="216">ソウリュウの　ドラゴンジムは
-じぶんで　みちを　きりひらける▽
-タフな　トレーナーを　まっている！▼</language>
+じぶんで　みちを　きりひらく▽
+タフな　トレーナーを　まつ！▼</language>
 		<language name="JPN_KANJI" width="216">ソウリュウの　ドラゴンジムは
-自分で　道を　切り開ける▽
-タフな　トレーナーを　待っている！▼</language>
+自分で　道を　切り開く▽
+タフな　トレーナーを　待つ！▼</language>
 	</row>
 
 	<row id="TRID_ELITEM_10_TRMSG_FIGHT_LOSE">
@@ -6388,12 +6388,18 @@
 	</row>
 
 	<row id="TRID_ELITEM_10_TRMSG_FIGHT_AFTER">
-		<language name="JPN" width="216">ドラゴンの　うでにある
-スイッチをふみ　みちを　つくれ！▽
-ドラゴンが　きみを　みちびく！</language>
-		<language name="JPN_KANJI" width="216">ドラゴンの　腕にある
-スイッチを踏み　道を　つくれ！▽
-ドラゴンが　キミを　導く！</language>
+		<language name="JPN" width="216">ジムリーダーは　もじどおり
+ジムで　ちょうてんの　そんざい！▼
+この　ソウリュウジムの
+いちばん　たかい　ところにいる！▼
+あいたいなら　ドラゴンの　せなかを
+かけあがり　うえのフロアを　めざせ！</language>
+		<language name="JPN_KANJI" width="216">ジムリーダーは　文字通り
+ジムで　頂点の　存在！▼
+この　ソウリュウジムの
+一番　高い　ところにいる！▼
+会たいなら　ドラゴンの　背中を
+駆けあがり　上のフロアを　目指せ！</language>
 	</row>
 
 	<row id="TRID_ELITEM_11_TRMSG_FIGHT_START">
