@@ -235,7 +235,7 @@ BOOL GAMEBEACON_SetRecvBeacon(const GAMEBEACON_INFO *info)
   int i;
   BOOL same_player = FALSE;
   
-  if((info->version_bit & (1 << PM_VERSION)) == 0){
+  if((info->version_bit & (1 << (PM_VERSION - VERSION_WHITE))) == 0){
     return FALSE; //受け取れないバージョン
   }
   
@@ -397,7 +397,7 @@ static void SendBeacon_Init(GAMEBEACON_SEND_MANAGER *send, GAMEDATA * gamedata)
   MYSTATUS *myst = GAMEDATA_GetMyStatus(gamedata);
   const MISC *misc = SaveData_GetMisc( GAMEDATA_GetSaveControlWork(gamedata) );
   
-  info->version_bit = 0xffffffff; //全バージョン指定
+  info->version_bit = 0xffff; //全バージョン指定
   info->zone_id = PLAYERWORK_getZoneID(GAMEDATA_GetMyPlayerWork(gamedata));
   info->g_power_id = GPOWER_ID_NULL;
   info->trainer_id = MyStatus_GetID(myst);
@@ -408,6 +408,18 @@ static void SendBeacon_Init(GAMEBEACON_SEND_MANAGER *send, GAMEDATA * gamedata)
   
   info->thanks_recv_count = MISC_CrossComm_GetThanksRecvCount(misc);
   info->suretigai_count = MISC_CrossComm_GetSuretigaiCount(misc);
+  { //自己紹介文コピー　文字数がFullの場合はEOMを差し込まないので
+    //STRTOOL_Copyは使用せずに独自コピー
+    STRCODE code_eom = GFL_STR_GetEOMCode();
+    const STRCODE *src_code = MISC_CrossComm_GetSelfIntroduction(misc);
+    int i;
+    for(i = 0; i < GAMEBEACON_SELFINTRODUCTION_MESSAGE_LEN; i++){
+      info->self_introduction[i] = src_code[i];
+      if(src_code[i] == code_eom){
+        break;
+      }
+    }
+  }
   
   //詳細情報
   info->details.details_no = GAMEBEACON_DETAILS_NO_ROAD;
@@ -495,6 +507,23 @@ void GAMEBEACON_Set_Congratulations(void)
   
   send->info.action.action_no = GAMEBEACON_ACTION_CONGRATULATIONS;
   SendBeacon_SetCommon(send);
+}
+
+//==================================================================
+/**
+ * ビーコンセット：「ありがとう！」
+ *
+ * @param   gamedata		
+ */
+//==================================================================
+void GAMEBEACON_Set_Thankyou(GAMEDATA *gamedata)
+{
+  GAMEBEACON_SEND_MANAGER *send = &GameBeaconSys->send;
+  const MISC *misc = SaveData_GetMisc( GAMEDATA_GetSaveControlWork(gamedata) );
+
+  STRTOOL_Copy(MISC_CrossComm_GetSelfIntroduction(misc), 
+    send->info.action.thankyou_message, GAMEBEACON_THANKYOU_MESSAGE_LEN);
+  send->info.action.action_no = GAMEBEACON_ACTION_THANKYOU;
 }
 
 //==================================================================

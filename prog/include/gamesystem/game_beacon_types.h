@@ -17,6 +17,11 @@
 ///システムログ件数
 #define GAMEBEACON_SYSTEM_LOG_MAX       (30)
 
+///お礼メッセージの文字数(EOM込み)
+#define GAMEBEACON_THANKYOU_MESSAGE_LEN   (11)
+///自己紹介メッセージの文字数(!! EOM除く !!)
+#define GAMEBEACON_SELFINTRODUCTION_MESSAGE_LEN   (10)
+
 
 //==============================================================================
 //  構造体定義
@@ -55,6 +60,7 @@ typedef struct{
     u8 work[24];
     u16 itemno;                             ///<アイテム番号
     STRCODE nickname[BUFLEN_POKEMON_NAME];  ///<ポケモン名(ニックネーム)
+    STRCODE thankyou_message[GAMEBEACON_THANKYOU_MESSAGE_LEN]; ///お礼メッセージ
   };
 }GAMEBEACON_INFO_ACTION;
 
@@ -67,16 +73,19 @@ typedef struct{
  */
 //==================================================================
 struct _GAMEBEACON_INFO{
-  u32 version_bit;                          ///<受信可能なPM_VERSIONをbit指定
-  u16 send_counter;                         ///<送信No(同じデータの無視判定に使用)
+  u8 version_bit;                          ///<受信可能なPM_VERSIONをbit指定
+  u8 send_counter;                         ///<送信No(同じデータの無視判定に使用)
   u16 zone_id;                              ///<現在地
-  u8 g_power_id;                            ///<発動しているGパワーID(GPOWER_ID_xxx)
-  u32 trainer_id;                           ///<トレーナーID
+
   STRCODE name[PERSON_NAME_SIZE + EOM_SIZE];         ///<トレーナー名
+  u32 trainer_id;                           ///<トレーナーID
+  
+  STRCODE self_introduction[GAMEBEACON_SELFINTRODUCTION_MESSAGE_LEN]; ///<自己紹介メッセージ
   
   GXRgb favorite_color;                     ///<本体情報の色
-  u8 trainer_view;                          ///<ユニオンルームでの見た目
-  u8 sex;                                   ///<性別
+  u8 g_power_id;                            ///<発動しているGパワーID(GPOWER_ID_xxx)
+  u8 trainer_view:7;                          ///<ユニオンルームでの見た目
+  u8 sex:1;                                   ///<性別
 
   u16 thanks_recv_count;                    ///<お礼を受けた回数
   u16 suretigai_count;                      ///<すれ違い人数
@@ -84,6 +93,7 @@ struct _GAMEBEACON_INFO{
   GAMEBEACON_INFO_DETAILS details;          ///<詳細情報
   GAMEBEACON_INFO_ACTION action;            ///<行動パラメータ
 };
+
 
 //==================================================================
 /**

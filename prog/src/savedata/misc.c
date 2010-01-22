@@ -65,6 +65,8 @@ void MISC_Init( MISC *p_msc )
 	MISC_InitNameIn( p_msc );
 	
 	p_msc->palpark_highscore = 100; //仮
+	
+	p_msc->self_introduction[0] = GFL_STR_GetEOMCode();
 }
 
 //=============================================================================
@@ -280,6 +282,60 @@ u16 MISC_CrossComm_IncSuretigaiCount(MISC *misc)
     misc->suretigai_count++;
   }
   return misc->suretigai_count;
+}
+
+//==================================================================
+/**
+ * すれ違い通信の自己紹介文を取得
+ *
+ * @param   misc		
+ *
+ * @retval  const STRCODE *		
+ */
+//==================================================================
+const STRCODE * MISC_CrossComm_GetSelfIntroduction(const MISC *misc)
+{
+  return misc->self_introduction;
+}
+
+//==================================================================
+/**
+ * すれ違い通信の自己紹介文をセット
+ *
+ * @param   misc		
+ * @param   srcbuf		
+ */
+//==================================================================
+void MISC_CrossComm_SetSelfIntroduction(MISC *misc, const STRBUF *srcbuf)
+{
+  GFL_STR_GetStringCode( srcbuf, misc->self_introduction, SAVE_SURETIGAI_SELFINTRODUCTION_LEN );
+}
+
+//==================================================================
+/**
+ * すれ違い通信のお礼メッセージを取得
+ *
+ * @param   misc		
+ *
+ * @retval  const STRCODE *		
+ */
+//==================================================================
+const STRCODE * MISC_CrossComm_GetThankyouMessage(const MISC *misc)
+{
+  return misc->thankyou_message;
+}
+
+//==================================================================
+/**
+ * すれ違い通信のお礼メッセージをセット
+ *
+ * @param   misc		
+ * @param   srcbuf		
+ */
+//==================================================================
+void MISC_CrossComm_SetThankyouMessage(MISC *misc, const STRBUF *srcbuf)
+{
+  GFL_STR_GetStringCode( srcbuf, misc->thankyou_message, SAVE_SURETIGAI_THANKYOU_LEN );
 }
 
 //----------------------------------------------------------

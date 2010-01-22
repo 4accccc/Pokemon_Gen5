@@ -43,6 +43,7 @@ typedef enum{
   GAMEBEACON_ACTION_NULL,                 ///<データ無し
   GAMEBEACON_ACTION_APPEAL,               ///<「ちかくにいます」
   GAMEBEACON_ACTION_CONGRATULATIONS,      ///<「おめでとう！」
+  GAMEBEACON_ACTION_THANKYOU,             ///<「ありがとう！」
   GAMEBEACON_ACTION_POKE_EVOLUTION,       ///<ポケモン進化
   GAMEBEACON_ACTION_POKE_LVUP,            ///<ポケモンレベルアップ
   GAMEBEACON_ACTION_POKE_GET,             ///<ポケモン捕獲
@@ -87,6 +88,7 @@ extern void GAMEBEACON_Reset_UpdateFlag(int log_no);
 //  ビーコンセット
 //--------------------------------------------------------------
 extern void GAMEBEACON_Set_Congratulations(void);
+extern void GAMEBEACON_Set_Thankyou(GAMEDATA *gamedata);
 extern void GAMEBEACON_Set_PokemonEvolution(const STRBUF *nickname);
 extern void GAMEBEACON_Set_PokemonLevelUp(const STRBUF *nickname);
 extern void GAMEBEACON_Set_PokemonGet(const STRBUF *nickname);

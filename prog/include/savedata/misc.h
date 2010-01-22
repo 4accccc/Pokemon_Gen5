@@ -76,6 +76,10 @@ extern u16 MISC_CrossComm_GetThanksRecvCount(const MISC *misc);
 extern u16 MISC_CrossComm_IncThanksRecvCount(MISC *misc);
 extern u16 MISC_CrossComm_GetSuretigaiCount(const MISC *misc);
 extern u16 MISC_CrossComm_IncSuretigaiCount(MISC *misc);
+extern const STRCODE * MISC_CrossComm_GetSelfIntroduction(const MISC *misc);
+extern void MISC_CrossComm_SetSelfIntroduction(MISC *misc, const STRBUF *srcbuf);
+extern const STRCODE * MISC_CrossComm_GetThankyouMessage(const MISC *misc);
+extern void MISC_CrossComm_SetThankyouMessage(MISC *misc, const STRBUF *srcbuf);
 //ƒoƒbƒW  
 extern BOOL MISC_GetBadgeFlag(const MISC *misc, int badge_id);
 extern void MISC_SetBadgeFlag(MISC *misc, int badge_id);

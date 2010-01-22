@@ -38,14 +38,16 @@ enum
 typedef struct
 {
   GameServiceID gsid; ///<Game Service ID
-  u8 member_num;      ///<現在の参加人数
-  u8 member_max;      ///<最大人数
-  u8 error;           ///<エラー状況
-  u8 beacon_type;     ///<ビーコンの種類 GBS_BEACONN_TYPE
   
-  u8 restrictPhoto;   ///<TRUE:写真データ交換に制限がかかっている
-  u8 isTwl;           ///<TRUE:TWLモードで動作している
-  u8 padding[2];
+  u8 member_num:4;      ///<現在の参加人数
+  u8 member_max:4;      ///<最大人数
+  
+  u8 error:1;           ///<エラー状況
+  u8 beacon_type:5;     ///<ビーコンの種類 GBS_BEACONN_TYPE
+  u8 restrictPhoto:1;   ///<TRUE:写真データ交換に制限がかかっている
+  u8 isTwl:1;           ///<TRUE:TWLモードで動作している
+  
+  u8 padding;
   
   union
   {

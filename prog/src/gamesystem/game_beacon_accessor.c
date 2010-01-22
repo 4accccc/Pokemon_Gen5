@@ -294,6 +294,39 @@ u16 GAMEBEACON_Get_SuretigaiCount(const GAMEBEACON_INFO *info)
 
 //==================================================================
 /**
+ * 自己紹介メッセージを取得
+ *
+ * @param   info		ビーコン情報へのポインタ
+ * @param   dest		メッセージ代入先
+ */
+//==================================================================
+void GAMEBEACON_Get_SelfIntroduction(const GAMEBEACON_INFO *info, STRBUF *dest)
+{
+  STRCODE temp_self[GAMEBEACON_SELFINTRODUCTION_MESSAGE_LEN + EOM_SIZE];
+  
+  //文字数がFullの場合はEOMがついていないので一時バッファにコピーして終端にEOMをつける
+  GFL_STD_MemCopy16(info->self_introduction, temp_self, GAMEBEACON_SELFINTRODUCTION_MESSAGE_LEN*2);
+  temp_self[GAMEBEACON_SELFINTRODUCTION_MESSAGE_LEN] = GFL_STR_GetEOMCode();
+  
+  GFL_STR_SetStringCode( dest, temp_self );
+}
+
+//==================================================================
+/**
+ * お礼メッセージを取得
+ *
+ * @param   info		ビーコン情報へのポインタ
+ * @param   dest		メッセージ代入先
+ */
+//==================================================================
+void GAMEBEACON_Get_ThankyouMessage(const GAMEBEACON_INFO *info, STRBUF *dest)
+{
+  GF_ASSERT(info->action.action_no == GAMEBEACON_ACTION_THANKYOU);
+  GFL_STR_SetStringCode( dest, info->action.thankyou_message );
+}
+
+//==================================================================
+/**
  * 詳細情報パラメータ取得：戦闘相手のトレーナーコード
  * @param   info		ビーコン情報へのポインタ
  * @retval  u16		  トレーナーコード
@@ -380,3 +413,4 @@ const STRCODE * GAMEBEACON_Get_Action_Nickname(const GAMEBEACON_INFO *info)
   GF_ASSERT(0);
   return info->action.nickname;
 }
+
