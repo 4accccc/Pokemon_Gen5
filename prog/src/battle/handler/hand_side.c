@@ -413,7 +413,7 @@ static void handler_side_Omajinai( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
   u8 pokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_DEF );
   if( (BTL_MAINUTIL_PokeIDtoSide(pokeID) == mySide)
   ){
-    BTL_EVENTVAR_MulValue( BTL_EVAR_FAIL_FLAG, TRUE );
+    BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_FLAG, TRUE );
   }
 }
 //--------------------------------------------------------------------------------------

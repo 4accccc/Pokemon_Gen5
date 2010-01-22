@@ -867,7 +867,7 @@ static void handler_Hayaasi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
     if( BPP_GetPokeSick(bpp) != POKESICK_NULL )
     {
-      BTL_EVENTVAR_MulValue( BTL_EVAR_AGILITY, BTL_CALC_TOK_HAYAASI_AGIRATIO );
+      BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, BTL_CALC_TOK_HAYAASI_AGIRATIO );
       BTL_EVENTVAR_RewriteValue( BTL_EVAR_GEN_FLAG, FALSE );
     }
   }

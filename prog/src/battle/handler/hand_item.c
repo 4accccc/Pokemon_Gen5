@@ -4084,7 +4084,7 @@ static void handler_KuroiTekkyuu_Agility( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
-    BTL_EVENTVAR_MulValue( BTL_EVAR_AGILITY, FX32_CONST(0.5) );
+    BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, FX32_CONST(0.5) );
   }
 }
 // ふゆうチェックハンドラ
@@ -4092,7 +4092,7 @@ static void handler_KuroiTekkyuu_CheckFly( BTL_EVENT_FACTOR* myHandle, BTL_SVFLO
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
-    BTL_EVENTVAR_MulValue( BTL_EVAR_FAIL_FLAG, TRUE );
+    BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_FLAG, TRUE );
   }
 }
 

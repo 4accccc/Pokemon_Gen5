@@ -5332,6 +5332,7 @@ static BOOL scproc_SimpleDamage( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u32 da
       }
 
       scPut_SimpleHp( wk, bpp, value, TRUE );
+      scproc_CheckItemReaction( wk, bpp );
       BPP_TURNFLAG_Set( bpp, BPP_TURNFLG_DAMAGED );
 
       if( scproc_CheckDeadCmd(wk, bpp) ){
@@ -6698,14 +6699,14 @@ static void scproc_Migawari_Create( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
 
       BPP_MIGAWARI_Create( bpp, migawariHP );
       SCQUE_PUT_OP_MigawariCreate( wk->que, BPP_GetID(bpp), migawariHP );
-      // @@@ ここでたぶん身代わり作成エフェクトコマンド
+      // @todo ここでたぶん身代わり作成エフェクトコマンド
     }
     else{
       scPut_Message_StdEx( wk, BTL_STRID_STD_MigawariFail, 0, NULL );
     }
   }
   else{
-    // すでに出ていた
+    // すでに出ていたメッセージ
     scPut_Message_Set( wk, bpp, BTL_STRID_SET_MigawariExist );
   }
 }
