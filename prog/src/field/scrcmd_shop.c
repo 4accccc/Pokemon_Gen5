@@ -716,6 +716,8 @@ static const u8 normal_shop_offset[]={
  0,1,1,2,2,3,3,4,5,
 };
 
+// ショップコンバーターで出力した際に固定ショップが始まっている行番号
+#define FIXSHOP_START_NUMBER ( 6 )
 
 //----------------------------------------------------------------------------------
 /**
@@ -740,7 +742,7 @@ static void shop_item_set( SHOP_BUY_APP_WORK *wk, int type, int id, int badge )
     offset = normal_shop_offset[badge];
   // 固定リストショップ
   } else {
-    offset = id;
+    offset = id+FIXSHOP_START_NUMBER;
   }
 
   // どうぐ名登録・BMPMENULISTデータ作成
@@ -1195,7 +1197,7 @@ static void print_mygold( SHOP_BUY_APP_WORK *wk )
 
   // 残金取得
   WORDSET_RegisterNumber( wk->wordSet, 0, MISC_GetGold(wk->misc), 6, 
-                          STR_NUM_DISP_SPACE, STR_NUM_CODE_HANKAKU );
+                          STR_NUM_DISP_SPACE, STR_NUM_CODE_ZENKAKU );
   WORDSET_ExpandStr( wk->wordSet, expand, str );
 
   // 描画
@@ -1232,7 +1234,7 @@ static void print_carry_item( SHOP_BUY_APP_WORK *wk, u16 itemno )
 
   // 個数登録
   WORDSET_RegisterNumber( wk->wordSet, 0, MYITEM_GetItemNum(wk->myitem, itemno, wk->heapId), 
-                          3, STR_NUM_DISP_LEFT, STR_NUM_CODE_HANKAKU );
+                          3, STR_NUM_DISP_LEFT, STR_NUM_CODE_ZENKAKU );
   WORDSET_ExpandStr( wk->wordSet, expand, str );
 
   // 描画
@@ -1302,14 +1304,14 @@ static void print_multiitem_price( SHOP_BUY_APP_WORK *wk, u16 number, int one_pr
 
   // 「ｘ？？？」
   WORDSET_RegisterNumber( wk->wordSet, 0, number, 
-                          2, STR_NUM_DISP_LEFT, STR_NUM_CODE_HANKAKU );
+                          2, STR_NUM_DISP_LEFT, STR_NUM_CODE_ZENKAKU );
   WORDSET_ExpandStr( wk->wordSet, expand, kake_str );
 
   PRINTSYS_PrintColor( bmp,  0, 0, expand, wk->font, PRINTSYS_LSB_Make(1,2,15) );
 
   // 「？？？円」
   WORDSET_RegisterNumber( wk->wordSet, 0, number*one_price, 
-                          6, STR_NUM_DISP_SPACE, STR_NUM_CODE_HANKAKU );
+                          6, STR_NUM_DISP_SPACE, STR_NUM_CODE_ZENKAKU );
   WORDSET_ExpandStr( wk->wordSet, expand, yen_str );
 
   PRINTSYS_PrintColor( bmp,  13*3+2, 0, expand, wk->font, PRINTSYS_LSB_Make(1,2,15) );
@@ -1389,12 +1391,19 @@ static void line_callback(BMPMENULIST_WORK * wk, u32 param, u8 y )
 
   // 「やめる」以外には値段を表示
   if(param!=BMPMENULIST_CANCEL){
+    int length,bmp_w;
+    // 値段セット
     WORDSET_RegisterNumber( sbw->wordSet, 1, ITEM_GetParam( param, ITEM_PRM_PRICE, sbw->heapId ), 
-                            4, STR_NUM_DISP_SPACE, STR_NUM_CODE_HANKAKU );  
+                            4, STR_NUM_DISP_SPACE, STR_NUM_CODE_ZENKAKU );  
     WORDSET_ExpandStr( sbw->wordSet, sbw->expandBuf, sbw->priceStr );
-  
+    
+    // 右揃え用の数値取得
+    length = PRINTSYS_GetStrWidth( sbw->expandBuf, sbw->font, 0 );
+    bmp_w  = GFL_BMP_GetSizeX( GFL_BMPWIN_GetBmp( sbw->win[SHOP_BUY_BMPWIN_LIST]) );
+    
+    // 値段描画
     PRINTSYS_PrintQueColor( sbw->printQue, GFL_BMPWIN_GetBmp( sbw->win[SHOP_BUY_BMPWIN_LIST]), 
-                          14*8, y, sbw->expandBuf, sbw->font, PRINTSYS_LSB_Make(12,13,0) );
+                          bmp_w-length, y, sbw->expandBuf, sbw->font, PRINTSYS_LSB_Make(12,13,0) );
   }
 }
 
@@ -1510,10 +1519,10 @@ static void ShopDecideMsg( SHOP_BUY_APP_WORK *wk, int strId, u16 itemno, u16 num
 
   WORDSET_RegisterItemName( wk->wordSet, 0, itemno );
   WORDSET_RegisterNumber( wk->wordSet, 1, num, 
-                            2, STR_NUM_DISP_SPACE, STR_NUM_CODE_HANKAKU );  
+                            2, STR_NUM_DISP_SPACE, STR_NUM_CODE_ZENKAKU );  
 
   WORDSET_RegisterNumber( wk->wordSet, 2, num*ITEM_GetParam( itemno, ITEM_PRM_PRICE, wk->heapId ),
-                            6, STR_NUM_DISP_SPACE, STR_NUM_CODE_HANKAKU );  
+                            6, STR_NUM_DISP_SPACE, STR_NUM_CODE_ZENKAKU );  
 
   {
     STRBUF *str    = GFL_MSG_CreateString( wk->shopMsgData, strId );
