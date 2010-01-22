@@ -1907,6 +1907,7 @@ G3DMAPOBJST * FIELD_BMODEL_MAN_SearchObjStatusRect(
   entry = array[0];
   //矩形範囲内の配置モデルリストを解放する
   GFL_HEAP_FreeMemory(array);
+
   return entry;
 }
 //------------------------------------------------------------------
@@ -2225,6 +2226,8 @@ BOOL FIELD_BMODEL_CheckCurrentSE( const FIELD_BMODEL * bmodel )
 
 
 
+
+
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 static void makeRect(FLDHIT_RECT * rect, const VecFx32 * pos)
@@ -2240,6 +2243,34 @@ static void makeRect(FLDHIT_RECT * rect, const VecFx32 * pos)
 }
 
 
+
+#ifdef PM_DEBUG
+
+// スクリプト用情報を表示
+void FIELD_BMODEL_DEBUG_ScriptPrintInfo( const FIELD_BMODEL * bmodel )
+{
+  static const char* ANMTYPE_STR[BMANIME_TYPE_MAX] = 
+  {
+    "BMANIME_TYPE_NONE",
+    "BMANIME_TYPE_ETERNAL",
+    "BMANIME_TYPE_EVENT",
+    "BMANIME_TYPE_TIMEZONE",
+  };
+  
+  OS_TPrintf( "配置モデル ID　      %d\n", bmodel->objHdl.res->bmInfo->bm_id+1 );
+  OS_TPrintf( "配置モデルアニメ ID　%d\n", bmodel->objHdl.res->bmInfo->anm_id+1 );
+  OS_TPrintf( "配置モデル位置　x[%d] y[%d] z[%d]\n", FX_Whole(bmodel->g3dObjStatus.trans.x), FX_Whole(bmodel->g3dObjStatus.trans.y), FX_Whole(bmodel->g3dObjStatus.trans.z) );
+  OS_TPrintf( "配置モデルグリッド　x[%d] y[%d] z[%d]\n", 
+      FX_Whole(bmodel->g3dObjStatus.trans.x)/FIELD_CONST_GRID_SIZE, 
+      FX_Whole(bmodel->g3dObjStatus.trans.y)/FIELD_CONST_GRID_SIZE,
+      FX_Whole(bmodel->g3dObjStatus.trans.z)/FIELD_CONST_GRID_SIZE );
+
+  OS_TPrintf( "アニメーションタイプ %s\n", ANMTYPE_STR[ bmodel->objHdl.res->bmInfo->animeData.anm_type ] );
+
+  GF_ASSERT_MSG( bmodel->objHdl.res->bmInfo->animeData.anm_type == BMANIME_TYPE_EVENT, "スクリプトからANIMETYPE EVENT以外の配置オブジェを操作しようとしています。　位置を確認してください。\n" );
+}
+
+#endif
 
 
 

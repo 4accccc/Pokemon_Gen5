@@ -261,6 +261,9 @@ extern FIELD_BMODEL_MAN * FLDMAPPER_GetBuildModelManager( FLDMAPPER* g3Dmapper);
 
 #define BMODEL_DEBUG_RESOURCE_MEMORY_SIZE // ONでメモリサイズを計算
 
+// 情報を表示
+extern void FIELD_BMODEL_DEBUG_ScriptPrintInfo( const FIELD_BMODEL * bmodel );
+
 #endif
 
 

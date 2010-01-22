@@ -512,6 +512,15 @@ VMCMD_RESULT EvCmdBModelAnimeCreate( VMHANDLE * core, void *wk )
   bmodel = FIELD_BMODEL_Create_Search( bmodel_man, bm_id, &pos );
   *ret_wk = FIELD_BMODEL_MAN_GetUniqKey( bmodel_man, bmodel );
 
+
+#ifdef PM_DEBUG
+  
+  OS_TPrintf( "======= EV_SEQ_BMODEL_ANIME_CREATE INFO ======\n" );
+  FIELD_BMODEL_DEBUG_ScriptPrintInfo( bmodel ); 
+  OS_TPrintf( "======= EV_SEQ_BMODEL_ANIME_CREATE INFO END ======\n" );
+  
+#endif
+
   return VMCMD_RESULT_CONTINUE;
 }
 

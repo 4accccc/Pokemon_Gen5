@@ -903,8 +903,6 @@ static void EV_CAMERA_SetUpParam( EV_CIRCLEWALK_CAMERA* p_wk )
   VEC_Add( &pos, &EV_DEMO_CenterVec, &pos );
   VEC_Add( &target, &EV_DEMO_CenterVec, &target );
 
-  TOMOYA_Printf( "pos x[0x%x] y[0x%x] z[0x%x]\n", pos.x, pos.y, pos.z );
-
   // 座標をフィールドカメラに設定
   FIELD_CAMERA_SetCameraPos( p_wk->p_camera, &pos ); 
   FIELD_CAMERA_SetTargetPos( p_wk->p_camera, &target ); 
