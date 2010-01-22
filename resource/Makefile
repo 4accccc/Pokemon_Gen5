@@ -136,7 +136,8 @@ SUBDIRS	=	wmi \
 			tr_ai \
 			enceff_imd \
 			pl_boat \
-			enc_ci_face
+			enc_ci_face \
+			comm_btl_demo
 
 include $(RESOURCE_MACRO)
 
