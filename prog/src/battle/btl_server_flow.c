@@ -3964,7 +3964,6 @@ static BOOL scEvent_CheckHit( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker
       if( BPP_CheckSick(defender, WAZASICK_MIYABURU) )
       {
         if( avoidRank > BTL_CALC_HITRATIO_MID ){
-          OS_TPrintf( "みやぶられてるから回避率フラットに戻すでーす\n" );
           avoidRank = BTL_CALC_HITRATIO_MID;
         }
       }
