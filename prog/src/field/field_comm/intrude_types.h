@@ -14,6 +14,7 @@
 #include "field/field_comm/bingo_types.h"
 #include "savedata/intrude_save.h"  //OCCUPY_INFO
 #include "field/field_comm/mission_types.h"
+#include "field/field_wfbc_data.h"
 
 
 //==============================================================================
@@ -139,6 +140,8 @@ typedef struct _INTRUDE_COMM_SYS{
   
   MISSION_SYSTEM mission;     ///<ミッションシステム
   BINGO_SYSTEM bingo;         ///<ビンゴシステムワーク
+  
+  WFBC_COMM_DATA wfbc_comm_data;  ///<WFBC通信ワーク
   
 //  BOOL comm_act_vanish[FIELD_COMM_MEMBER_MAX];   ///<TRUE:非表示
   u8 invalid_netid;           ///<侵入先ROMのnet_id

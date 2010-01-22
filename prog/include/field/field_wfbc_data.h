@@ -550,7 +550,7 @@ typedef struct {
 //=====================================
 extern void FIELD_WFBC_COMM_DATA_Init( WFBC_COMM_DATA* p_wk );
 extern void FIELD_WFBC_COMM_DATA_Exit( WFBC_COMM_DATA* p_wk );
-extern void FIELD_WFBC_COMM_DATA_Oya_Main( WFBC_COMM_DATA* p_wk, FIELD_WFBC_CORE* p_mywfbc );
+extern void FIELD_WFBC_COMM_DATA_Oya_Main( WFBC_COMM_DATA* p_wk, FIELD_WFBC_CORE* p_mywfbc, u8 member_bit );
 extern void FIELD_WFBC_COMM_DATA_Ko_ChangeNpc( WFBC_COMM_DATA* p_wk, FIELD_WFBC_CORE* p_mywfbc, FIELD_WFBC_CORE* p_oyawfbc, const MYSTATUS* cp_mystatus, u16 npc_id );
 
 

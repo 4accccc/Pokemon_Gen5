@@ -131,6 +131,7 @@ void * IntrudeComm_InitCommSystem( int *seq, void *pwk )
   Bingo_InitBingoSystem(Bingo_GetBingoSystemWork(intcomm));
   MISSION_Init(&intcomm->mission);
   IntrudeComm_CreateBeaconData(&intcomm->send_beacon);
+  FIELD_WFBC_COMM_DATA_Init(&intcomm->wfbc_comm_data);
 
   GAMEDATA_SetIntrudeMyID(gamedata, 0);
   
@@ -186,6 +187,13 @@ void  IntrudeComm_UpdateSystem( int *seq, void *pwk, void *pWork )
   FIELD_INVALID_PARENT_WORK *invalid_parent = pwk;
   GAMEDATA *gamedata = GameCommSys_GetGameData(invalid_parent->game_comm);
 
+  if(intcomm != NULL && intcomm->comm_status >= INTRUDE_COMM_STATUS_UPDATE){
+    //エラーであっても呼び続ける必要がある為、最初にコール
+    FIELD_WFBC_COMM_DATA_Oya_Main(
+      &intcomm->wfbc_comm_data, GAMEDATA_GetMyWFBCCoreData(gamedata), 
+      intcomm->recv_profile);
+  }
+  
   //通信エラーチェック
   if(NetErr_App_CheckError()){
     intcomm->comm_status = INTRUDE_COMM_STATUS_ERROR;
@@ -230,6 +238,8 @@ void  IntrudeComm_UpdateSystem( int *seq, void *pwk, void *pWork )
     }
     break;
   case 2: //最初にやり取りする必要があるデータがあればここで。
+    //WFBC初期化
+    FIELD_WFBC_COMM_DATA_Init(&intcomm->wfbc_comm_data);
     //自分プロフィールを自分の受信バッファにセット
     Intrude_SetSendProfileBuffer(intcomm);  //送信バッファに現在のデータをセット
     Intrude_SetProfile(intcomm, GFL_NET_SystemGetCurrentID(), &intcomm->send_profile);
@@ -361,6 +371,7 @@ BOOL  IntrudeComm_TermCommSystemWait( int *seq, void *pwk, void *pWork )
   switch(*seq){
   case 0:
     if(intcomm->comm_status == INTRUDE_COMM_STATUS_EXIT || NetErr_App_CheckError()){
+      FIELD_WFBC_COMM_DATA_Exit(&intcomm->wfbc_comm_data);
       GAMEDATA_ClearPalaceWFBCCoreData( gamedata );
       GAMEDATA_SetIntrudeReverseArea(gamedata, FALSE);
       CommPlayer_Exit(intcomm->cps);

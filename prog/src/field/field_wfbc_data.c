@@ -367,9 +367,10 @@ void FIELD_WFBC_COMM_DATA_Exit( WFBC_COMM_DATA* p_wk )
  *
  *	@param	p_wk      ワーク
  *	@param	p_wfbc    WFBC情報
+ *  @param  member_bit  接続情報(bit指定)
  */
 //-----------------------------------------------------------------------------
-void FIELD_WFBC_COMM_DATA_Oya_Main( WFBC_COMM_DATA* p_wk, FIELD_WFBC_CORE* p_mywfbc )
+void FIELD_WFBC_COMM_DATA_Oya_Main( WFBC_COMM_DATA* p_wk, FIELD_WFBC_CORE* p_mywfbc, u8 member_bit )
 {
   // エラー中は空回り
   if( WFBC_COMM_DATA_IsError( p_wk ) ){

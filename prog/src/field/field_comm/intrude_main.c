@@ -352,10 +352,28 @@ static void Intrude_CheckTalkAnswerNG(INTRUDE_COMM_SYS_PTR intcomm)
 static void Intrude_CheckWfbcReq(INTRUDE_COMM_SYS_PTR intcomm)
 {
   GAMEDATA *gamedata = GameCommSys_GetGameData(intcomm->game_comm);
-
+  FIELD_WFBC_COMM_NPC_ANS npc_ans;
+  FIELD_WFBC_COMM_NPC_REQ npc_req;
+  NetID net_id;
+  
   if(intcomm->wfbc_req != 0){
     if(IntrudeSend_Wfbc(intcomm, intcomm->wfbc_req, GAMEDATA_GetMyWFBCCoreData(gamedata)) == TRUE){
       intcomm->wfbc_req = 0;
+    }
+  }
+  
+  for(net_id = 0; net_id < FIELD_COMM_MEMBER_MAX; net_id++){
+    if(FIELD_WFBC_COMM_DATA_GetSendCommAnsData( 
+        &intcomm->wfbc_comm_data, net_id, &npc_ans ) == TRUE){
+      if(IntrudeSend_WfbcNpcAns(&npc_ans, net_id) == TRUE){
+        FIELD_WFBC_COMM_DATA_ClearSendCommAnsData(&intcomm->wfbc_comm_data, net_id);
+      }
+    }
+  }
+  
+  if(FIELD_WFBC_COMM_DATA_GetSendCommReqData(&intcomm->wfbc_comm_data, &npc_req) == TRUE){
+    if(IntrudeSend_WfbcNpcReq(&npc_req) == TRUE){
+      FIELD_WFBC_COMM_DATA_ClearSendCommReqData(&intcomm->wfbc_comm_data);
     }
   }
 }

@@ -49,6 +49,8 @@ enum INTRUDE_CMD{
   INTRUDE_CMD_PLAYER_SUPPORT,                 ///<通信相手をサポート
   INTRUDE_CMD_WFBC_REQ,                       ///<WFBCパラメータ要求
   INTRUDE_CMD_WFBC,                           ///<WFBCパラメータ
+  INTRUDE_CMD_WFBC_NPC_ANS,                   ///<WFBCパラメータ
+  INTRUDE_CMD_WFBC_NPC_REQ,                   ///<WFBCパラメータ
   
   INTRUDE_CMD_MAX,
   INTRUDE_CMD_NUM = INTRUDE_CMD_MAX - INTRUDE_CMD_START,
@@ -94,4 +96,6 @@ extern BOOL IntrudeSend_PlayerSupport(
   INTRUDE_COMM_SYS_PTR intcomm, NetID send_netid, SUPPORT_TYPE support_type);
 extern BOOL IntrudeSend_WfbcReq(INTRUDE_COMM_SYS_PTR intcomm, NetID send_netid);
 extern BOOL IntrudeSend_Wfbc(INTRUDE_COMM_SYS_PTR intcomm, u32 send_netid_bit, const FIELD_WFBC_CORE *wfbc_core);
+extern BOOL IntrudeSend_WfbcNpcAns(const FIELD_WFBC_COMM_NPC_ANS *npc_ans, NetID send_netid);
+extern BOOL IntrudeSend_WfbcNpcReq(const FIELD_WFBC_COMM_NPC_REQ *npc_req);
 
