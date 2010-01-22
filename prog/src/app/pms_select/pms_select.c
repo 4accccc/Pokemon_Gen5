@@ -35,6 +35,7 @@
 //簡易CLWK読み込み＆開放ユーティリティー
 #include "ui/ui_easy_clwk.h"
 
+//シーンコントローラー
 #include "ui/ui_scene.h"
 
 //タッチバー
