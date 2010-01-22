@@ -173,7 +173,8 @@ extern BOOL	PMSND_CheckPlaySE_byPlayerID( SEPLAYER_ID sePlayerID );
 extern void	PMSND_SetStatusSE( int tempoRatio, int pitch, int pan );
 //ＳＥのステータスをプレーヤーを指定して変更
 extern void	PMSND_SetStatusSE_byPlayerID(SEPLAYER_ID sePlayerID,int tempoRatio,int pitch,int pan);
-
+//再生中のＳＥが入力されたＩＤＸと一致するかチェック
+extern BOOL	PMSND_CheckPlayingSEIdx( u32 soundIdx );
 //============================================================================================
 /**
  *
@@ -197,10 +198,9 @@ extern void	PMSND_ReleasePreset( void );
  *
  */
 //============================================================================================
-extern BOOL PMDSND_PresetExtraMusic( void* seqAdrs, void* bnkAdrs, u32 waveNo );
-extern BOOL PMDSND_PresetExtraMusic2( void* seqAdrs, void* bnkAdrs, u32 dummyNo );
+extern BOOL PMDSND_PresetExtraMusic( void* seqAdrs, void* bnkAdrs, u32 dummyNo );
 extern BOOL PMDSND_ChangeWaveData( u32 waveNo, u32 waveIdx, void* waveAdrs); 
-extern BOOL PMDSND_PlayExtraMusic( void );
+extern BOOL PMDSND_PlayExtraMusic( u32 dummyNo );
 extern void PMDSND_StopExtraMusic( void );
 extern void PMDSND_ReleaseExtraMusic( void );
 
