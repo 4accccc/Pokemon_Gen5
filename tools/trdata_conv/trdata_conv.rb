@@ -166,6 +166,7 @@ end
 
 	#トレーナーグラフィックscrファイル生成
 	fp_trfgra = open( "trfgra_wb.scr", "w" )
+  fp_trfgra.print "\"trwb_hero.NCGR\"\n"
   fp_trfgra.print "\"trwb_hero.NCBR\"\n"
   fp_trfgra.print "\"trwb_hero.NCER\"\n"
   fp_trfgra.print "\"trwb_hero.NANR\"\n"
@@ -173,6 +174,7 @@ end
   fp_trfgra.print "\"trwb_hero.NMAR\"\n"
   fp_trfgra.print "\"trwb_hero.NCEC\"\n"
   fp_trfgra.print "\"trwb_hero.NCLR\"\n"
+  fp_trfgra.print "\"trwb_heroine.NCGR\"\n"
   fp_trfgra.print "\"trwb_heroine.NCBR\"\n"
   fp_trfgra.print "\"trwb_heroine.NCER\"\n"
   fp_trfgra.print "\"trwb_heroine.NANR\"\n"
@@ -549,6 +551,7 @@ end
   no = 2
   trainer.size.times { |i|
     fp_trgra.printf( "trwb_%s,%s\n", trainer[ i ][ 3 ], trainer[ i ][ 2 ] )
+    fp_trfgra.printf( "\"trwb_%s.NCGR\"\n", trainer[ i ][ 3 ] )
     fp_trfgra.printf( "\"trwb_%s.NCBR\"\n", trainer[ i ][ 3 ] )
     fp_trfgra.printf( "\"trwb_%s.NCER\"\n", trainer[ i ][ 3 ] )
     fp_trfgra.printf( "\"trwb_%s.NANR\"\n", trainer[ i ][ 3 ] )
