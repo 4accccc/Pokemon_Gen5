@@ -1,0 +1,61 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: enc_ci_face.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+	Update:2010-01-22T13:39:22
+ *****************************************************************************/
+
+#ifndef NARC_ENC_CI_FACE_NAIX_
+#define NARC_ENC_CI_FACE_NAIX_
+
+enum {
+	NARC_enc_ci_face_enc_hero_lz_bin = 0,
+	NARC_enc_ci_face_enc_heroine_lz_bin = 1,
+	NARC_enc_ci_face_enc_rival_lz_bin = 2,
+	NARC_enc_ci_face_enc_support_lz_bin = 3,
+	NARC_enc_ci_face_enc_gym01a_lz_bin = 4,
+	NARC_enc_ci_face_enc_gym01b_lz_bin = 5,
+	NARC_enc_ci_face_enc_gym01c_lz_bin = 6,
+	NARC_enc_ci_face_enc_gym02_lz_bin = 7,
+	NARC_enc_ci_face_enc_gym03_lz_bin = 8,
+	NARC_enc_ci_face_enc_gym04_lz_bin = 9,
+	NARC_enc_ci_face_enc_gym05_lz_bin = 10,
+	NARC_enc_ci_face_enc_gym06_lz_bin = 11,
+	NARC_enc_ci_face_enc_gym07_lz_bin = 12,
+	NARC_enc_ci_face_enc_gym08a_lz_bin = 13,
+	NARC_enc_ci_face_enc_gym08b_lz_bin = 14,
+	NARC_enc_ci_face_enc_bigfour01_lz_bin = 15,
+	NARC_enc_ci_face_enc_bigfour02_lz_bin = 16,
+	NARC_enc_ci_face_enc_bigfour03_lz_bin = 17,
+	NARC_enc_ci_face_enc_bigfour04_lz_bin = 18,
+	NARC_enc_ci_face_enc_champ_lz_bin = 19,
+	NARC_enc_ci_face_enc_boss_lz_bin = 20,
+	NARC_enc_ci_face_enc_sage_lz_bin = 21,
+	NARC_enc_ci_face_enc_hero_nclr = 22,
+	NARC_enc_ci_face_enc_heroine_nclr = 23,
+	NARC_enc_ci_face_enc_rival_nclr = 24,
+	NARC_enc_ci_face_enc_support_nclr = 25,
+	NARC_enc_ci_face_enc_gym01a_nclr = 26,
+	NARC_enc_ci_face_enc_gym01b_nclr = 27,
+	NARC_enc_ci_face_enc_gym01c_nclr = 28,
+	NARC_enc_ci_face_enc_gym02_nclr = 29,
+	NARC_enc_ci_face_enc_gym03_nclr = 30,
+	NARC_enc_ci_face_enc_gym04_nclr = 31,
+	NARC_enc_ci_face_enc_gym05_nclr = 32,
+	NARC_enc_ci_face_enc_gym06_nclr = 33,
+	NARC_enc_ci_face_enc_gym07_nclr = 34,
+	NARC_enc_ci_face_enc_gym08a_nclr = 35,
+	NARC_enc_ci_face_enc_gym08b_nclr = 36,
+	NARC_enc_ci_face_enc_bigfour01_nclr = 37,
+	NARC_enc_ci_face_enc_bigfour02_nclr = 38,
+	NARC_enc_ci_face_enc_bigfour03_nclr = 39,
+	NARC_enc_ci_face_enc_bigfour04_nclr = 40,
+	NARC_enc_ci_face_enc_champ_nclr = 41,
+	NARC_enc_ci_face_enc_boss_nclr = 42,
+	NARC_enc_ci_face_enc_sage_nclr = 43
+};
+
+/* NARC_ENC_CI_FACE_NAIX_ */
+#endif
