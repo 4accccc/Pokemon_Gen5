@@ -9896,7 +9896,7 @@ static u32 scEvent_CalcRecoverHP( BTL_SVFLOW_WORK* wk, WazaID waza, const BTL_PO
 }
 //----------------------------------------------------------------------------------
 /**
- * [Event] アイテムを強制的にセット（あるいは消去）される
+ * [Event] アイテムをセット（あるいは消去）されるチェック
  *
  * @param   wk
  * @param   bpp
@@ -9919,7 +9919,25 @@ static BOOL scEvent_CheckItemSet( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp,
 }
 //----------------------------------------------------------------------------------
 /**
- * [Event] アイテム書き換え決定直後
+ * [Event] アイテム書き換え決定
+ *
+ * @param   wk
+ * @param   bpp
+ * @param   nextItemID   書き換え後のアイテムナンバー
+ */
+//----------------------------------------------------------------------------------
+static void scEvent_ItemSetDecide( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp, u16 nextItemID )
+{
+  BTL_EVENTVAR_Push();
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID, BPP_GetID(bpp) );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_ITEM, nextItemID );
+    BTL_EVENT_CallHandlers( wk, BTL_EVENT_ITEMSET_DECIDE );
+  BTL_EVENTVAR_Pop();
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * [Event] アイテム書き換え完了
  *
  * @param   wk
  * @param   bpp
@@ -11810,14 +11828,21 @@ static void handexSub_itemSet( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 item
 {
   u8 pokeID = BPP_GetID( bpp );
   u16 prevItemID = BPP_GetItem( bpp );
+  u32 hem_state;
+
+  // アイテム書き換え確定ハンドラ呼び出し
+  hem_state = Hem_PushState( &wk->HEManager );
+  scEvent_ItemSetDecide( wk, bpp, itemID );
+  scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
+  Hem_PopState( &wk->HEManager, hem_state );
 
   BTL_HANDLER_ITEM_Remove( bpp );
   SCQUE_PUT_OP_SetItem( wk->que, pokeID, itemID );
   BPP_SetItem( bpp, itemID );
 
-  if( itemID != ITEM_DUMMY_DATA ){
-    u32 hem_state;
-
+  // アイテム書き換え完了ハンドラ呼び出し
+  if( itemID != ITEM_DUMMY_DATA )
+  {
     BTL_HANDLER_ITEM_Add( bpp );
     hem_state = Hem_PushState( &wk->HEManager );
     scEvent_ItemSetFixed( wk, bpp );

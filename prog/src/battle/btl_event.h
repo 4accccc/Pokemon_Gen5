@@ -145,7 +145,8 @@ typedef enum {
   BTL_EVENT_TAME_RELEASE,           ///< 溜め解放
   BTL_EVENT_CHECK_POKE_HIDE,        ///< ポケモンが消えている状態のワザ命中チェック
   BTL_EVENT_ITEMSET_CHECK,          ///< アイテム書き換え前の成否チェック
-  BTL_EVENT_ITEMSET_FIXED,          ///< アイテム書き換え確定
+  BTL_EVENT_ITEMSET_DECIDE,         ///< アイテム書き換え確定
+  BTL_EVENT_ITEMSET_FIXED,          ///< アイテム書き換え完了
   BTL_EVENT_FIELD_EFFECT_CALL,      ///< フィールドエフェクト追加
   BTL_EVENT_CHECK_SIDEEFF_PARAM,    ///< サイドエフェクトパラメータ調整
   BTL_EVENT_UNCATEGORIZE_WAZA,            ///< 未分類ワザ処理
