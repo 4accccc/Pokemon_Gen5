@@ -8,8 +8,17 @@
  *
  */
 //=============================================================================
-//@TODO コンバータから出力する予定
+//@TODO 最終的にはもう少し記述しやすい独自文法を作って、コンバータから出力したい
 //@TODO 30FPS,60FPSをコンバート時に換算する
+
+//==========================================================
+/*
+ * 文法
+ *  { コマンドラベル, 再生フレーム, { コマンドラベル毎のパラメータ1, 2, 3, 4 }  },
+ *
+ *  ※フレーム値は絶対小さい値から並べてください。
+ */
+//==========================================================
 
 // コマンド定義 >> demo3d_cmd_def.h
 static const DEMO3D_CMD_DATA demo3d_cmd01_data[] = 
@@ -35,6 +44,7 @@ static const DEMO3D_CMD_DATA demo3d_cmd01_end_data[] =
 static const DEMO3D_CMD_DATA demo3d_cmd02_data[] = 
 { 
 #if 0
+  // ブライドネスリクエストによるフラッシュ
   { DEMO3D_CMD_TYPE_BRIGHTNESS_REQ, 10, { 4, 16, 0 }, },
   { DEMO3D_CMD_TYPE_BRIGHTNESS_REQ, 15, { 4, 0, 16 }, },
   
@@ -44,7 +54,10 @@ static const DEMO3D_CMD_DATA demo3d_cmd02_data[] =
   { DEMO3D_CMD_TYPE_BRIGHTNESS_REQ, 120, { 4, 16, 0 }, },
   { DEMO3D_CMD_TYPE_BRIGHTNESS_REQ, 125, { 4, 0, 16 }, },
   
+  // モーションブラー開始
   { DEMO3D_CMD_TYPE_MOTIONBL_START, 150, {5,13} },
+
+  // モーションブラー停止
   { DEMO3D_CMD_TYPE_MOTIONBL_END, 400, },
 #endif
   {  DEMO3D_CMD_TYPE_END, 0, { 0 } },

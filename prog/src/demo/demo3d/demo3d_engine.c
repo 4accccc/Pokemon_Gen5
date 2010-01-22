@@ -115,7 +115,7 @@ static inline GFL_G3D_CAMERA* GRAPHIC_G3D_CAMERA_Create
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  Frustカメラの生成
+ *	@brief  PerspectiveのパラメータでFrustカメラを生成
  *
  *	@param	
  *
