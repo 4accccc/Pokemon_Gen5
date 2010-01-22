@@ -4116,7 +4116,7 @@ static BOOL scproc_Fight_CheckWazaExecuteFail_1st( BTL_SVFLOW_WORK* wk, BTL_POKE
   }while( 0 );
 
   if( cause != SV_WAZAFAIL_NULL ){
-    BTL_Printf("ワザ出し失敗（１）  ポケID=%d, 失敗コード=%d\n", BPP_GetID(attacker), cause);
+    BTL_N_Printf( DBGSTR_SVFL_WazaExeFail_1, BPP_GetID(attacker), cause);
     scproc_WazaExecuteFailed( wk, attacker, waza, cause );
     return TRUE;
   }
@@ -4161,7 +4161,7 @@ static BOOL scproc_Fight_CheckWazaExecuteFail_2nd( BTL_SVFLOW_WORK* wk, BTL_POKE
   }while( 0 );
 
   if( cause != SV_WAZAFAIL_NULL ){
-    BTL_Printf("ワザ出し失敗（２）  ポケID=%d, 失敗コード=%d\n", BPP_GetID(attacker), cause);
+    BTL_N_Printf( DBGSTR_SVFL_WazaExeFail_2, BPP_GetID(attacker), cause);
     scproc_WazaExecuteFailed( wk, attacker, waza, cause );
     return TRUE;
   }
@@ -7657,7 +7657,7 @@ static WazaSick scPut_CureSick( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BtlWaza
     {
       BPP_CurePokeSick( bpp );
       SCQUE_PUT_OP_CurePokeSick( wk->que, pokeID );
-      if ( BTL_POSPOKE_GetPokeExistPos(&wk->pospokeWork, BPP_GetID(bpp) != BTL_POS_NULL) ){
+      if ( BTL_POSPOKE_GetPokeExistPos(&wk->pospokeWork, pokeID) != BTL_POS_NULL ){
         SCQUE_PUT_ACT_SickIcon( wk->que, pokeID, POKESICK_NULL );
       }
     }

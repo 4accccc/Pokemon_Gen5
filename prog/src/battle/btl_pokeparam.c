@@ -2386,9 +2386,7 @@ void BPP_ReflectToPP( BTL_POKEPARAM* bpp )
   if( bpp->coreParam.hp )
   {
     PokeSick  sick = BPP_GetPokeSick( bpp );
-    if( sick != POKESICK_NULL ){
-      PP_SetSick( pp, sick );
-    }
+    PP_SetSick( pp, sick );
   }
 
   for(i=0; i<PTL_WAZA_MAX; ++i)

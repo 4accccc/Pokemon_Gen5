@@ -4178,11 +4178,16 @@ static void handler_SizenNoMegumi_ExeCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFL
   {
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
     u16 item = BPP_GetItem( bpp );
-    if( BTL_CALC_ITEM_GetParam(item, ITEM_PRM_SIZENNOMEGUMI_ATC) ){
+    int prm = BTL_CALC_ITEM_GetParam(item, ITEM_PRM_SIZENNOMEGUMI_ATC);
+    // 所持アイテムのしぜんのめぐみパラメータが無効値（0）なら失敗する
+    if( (item == ITEM_DUMMY_DATA)
+    ||  (BTL_CALC_ITEM_GetParam(item, ITEM_PRM_SIZENNOMEGUMI_ATC) == 0)
+    ){
       BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_CAUSE, SV_WAZAFAIL_OTHER );
     }
   }
 }
+// わざ出し確定
 static void handler_SizenNoMegumi_Type( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
@@ -4193,6 +4198,7 @@ static void handler_SizenNoMegumi_Type( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_W
     BTL_EVENTVAR_RewriteValue( BTL_EVAR_WAZA_TYPE, type );
   }
 }
+// わざパラメータチェック
 static void handler_SizenNoMegumi_Pow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
@@ -4203,6 +4209,7 @@ static void handler_SizenNoMegumi_Pow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WO
     BTL_EVENTVAR_RewriteValue( BTL_EVAR_WAZA_POWER, pow );
   }
 }
+// わざ威力チェック
 static void handler_SizenNoMegumi_AfterDamage( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
@@ -5589,15 +5596,29 @@ static void common_CureFriendPokeSick( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WO
   {
     BTL_HANDEX_PARAM_MESSAGE   *msg_param;
     BTL_HANDEX_PARAM_CURE_SICK *cure_param;
-    BtlPokePos myPos = BTL_SVFTOOL_GetExistFrontPokeID( flowWk, pokeID );
-    BtlExPos   expos = EXPOS_MAKE( BTL_EXPOS_AREA_MYTEAM, myPos );
+    const BTL_PARTY* party = BTL_SVFTOOL_GetPartyData( flowWk, pokeID );
+    u8 i;
 
     msg_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
     HANDEX_STR_Setup( &msg_param->str, BTL_STRTYPE_STD, strID );
 
     cure_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CURE_SICK, pokeID );
-    cure_param->poke_cnt = BTL_SVFTOOL_ExpandPokeID( flowWk, expos, cure_param->pokeID );
+
+    // 場所数最大（6）を格納できる配列にパーティメンバー（最大6）を格納するので大丈夫なハズだが、
+    // 念のため、オーバーした分は格納しないような処理をしておく
+    cure_param->poke_cnt = BTL_PARTY_GetMemberCount( party );
+    if( cure_param->poke_cnt > NELEMS(cure_param->pokeID) ){
+      cure_param->poke_cnt = NELEMS(cure_param->pokeID);
+    }
+
     cure_param->sickCode = WAZASICK_EX_POKEFULL;
+    for(i=0; i<cure_param->poke_cnt; ++i){
+      {
+        const BTL_POKEPARAM* bpp = BTL_PARTY_GetMemberDataConst( party, i );
+        cure_param->pokeID[ i ] = BPP_GetID( bpp );
+      }
+    }
+
   }
 }
 //----------------------------------------------------------------------------------
