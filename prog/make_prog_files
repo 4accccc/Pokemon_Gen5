@@ -220,6 +220,7 @@ SRCS  +=    $(SOUNDSRC) \
         system/gra_tool.c \
         field/field_comm/field_beacon_message.c \
 				system/pokegra.c \
+				system/trgra.c \
 				system/poke2dgra.c \
         system/nsbtx_to_clwk.c \
         system/pms_draw.c \
@@ -935,7 +936,7 @@ SRCS_OVERLAY_BATTLE =	battle/btl_main.c \
 			battle/btlv/btlv_b_gauge.c \
 			battle/btlv/btlv_timer.c \
 			battle/btlv/btlv_bg.c \
-			battle/tr_ai/tr_ai.c
+      battle/tr_ai/tr_ai.c
 
 # バトル用バッグ&ポケモンリスト共通ツール
 #===> SRCS_OVERLAY_BATTLE
@@ -957,6 +958,11 @@ SRCS_OVERLAY_BATTLE_PLIST = battle/app/b_plist_anm.c \
 			battle/app/b_plist_obj.c \
 			battle/app/b_plist_main.c \
 			battle/app/b_plist_ui.c
+
+# 戦闘はVRAM_Hが空いているのでLCDCのメモリに割り当てて配置
+# 戦闘で使う以外のソースは配置しないでください
+# ===> LCDC_VRAM_H
+# SRCS_OVERLAY_VRAM_H = battle/tr_ai/tr_ai.c
 
 # マルチバトル開始前ポケモンリスト
 #===> SRCS_OVERLAY_BATTLE
