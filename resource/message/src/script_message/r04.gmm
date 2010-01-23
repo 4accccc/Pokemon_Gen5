@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-26T20:18:20"/>
+	<create user="matsumiya" host="W00207" date="2010-01-23T15:34:00"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,15 +263,15 @@
 		</language>
 	</columns>
 
-	<dialog left="57" top="195" right="762" bottom="815" maximized="no" rayout="Vertical2">
+	<dialog left="57" top="196" right="761" bottom="815" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="790" top="142" right="1263" bottom="540" visible="yes"/>
-		<band id="0" index="1" style="0000" width="530"/>
+		<band id="0" index="1" style="0000" width="529"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="543"/>
+		<band id="2" index="3" style="0000" width="542"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<band id="4" index="0" style="0000" width="696"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,51 +292,144 @@
 	</lock>
 
 
-	<row id="msg_r04_stop_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r04_stop_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・ストッパー
-　GRIDX＝427、GRIDZ=593に配置
-　GRIDX=428～433を踏んだときもストッパー機能
-　ｃ03のジムバッジ入手前（仮）</comment>
+　GRIDX＝431、GRIDZ=564に配置
+　ｃ03のジムバッジ入手前
+・話しかけたとき
+
+※福島の方言をチェック</comment>
 		<attribute name="キャラ指定">WORKMAN</attribute>
-		<language name="JPN" width="256">なんだ？[BE:01:ページ切り替え（クリア）]
-ヒウンジムの　ジムバッジも
-もってない　やつに[BE:00:ページ切り替え（行送り）]
-はなすことなんか　なんにもないぞ！</language>
-		<language name="JPN_KANJI" width="256">なんだ？[BE:01:ページ切り替え（クリア）]
-ヒウンジムの　ジムバッジも
-持ってない　やつに[BE:00:ページ切り替え（行送り）]
-話すことなんか　なんにもないぞ！</language>
+		<language name="JPN" width="256">おい！　トレーナー▼
+わるいが　いまは　とおれないぞ▼
+なんでも　さばくで
+いせきの　いりぐちが　みつかってな▽
+なかまは　そっちに　いってるんだ▼
+まあ　ヒウンシティの　ジムに
+ちょうせんして　じかんを　つぶすぞい</language>
+		<language name="JPN_KANJI" width="256">おい！　トレーナー▼
+悪いが　今は　通れないぞ▼
+なんでも　砂漠で
+遺跡の　入り口が　見つかってな▽
+仲間は　そっちに　行ってるんだ▼
+まあ　ヒウンシティの　ジムに
+挑戦して　時間を　つぶすぞい</language>
 	</row>
 
-	<row id="msg_r04_stop_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r04_stop_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・ストッパー
-　カンパニーで「トランシーバー」入手前（仮）</comment>
+　GRIDX＝431、GRIDZ=564に配置
+　ｃ03のジムバッジ入手前
+・posを踏んだとき</comment>
 		<attribute name="キャラ指定">WORKMAN</attribute>
-		<language name="JPN" width="256">なんだ？[BE:01:ページ切り替え（クリア）]
-ヒウンシティの　バトルカンパニーに
-いっていない　やつに[BE:00:ページ切り替え（行送り）]
-はなすことなんか　なんにもないぞ！</language>
-		<language name="JPN_KANJI" width="256">なんだ？[BE:01:ページ切り替え（クリア）]
-ヒウンシティの　バトルカンパニーに
-行っていない　やつに[BE:00:ページ切り替え（行送り）]
-話すことなんか　なんにもないぞ！</language>
+		<language name="JPN" width="256">おい！　トレーナー▼
+わるいが　いまは　とおれないぞ▼
+なんでも　さばくで
+いせきの　いりぐちが　みつかってな▽
+なかまは　そっちに　いってるんだ▼
+まあ　ヒウンシティの　ジムに
+ちょうせんして　じかんを　つぶすぞい▼</language>
+		<language name="JPN_KANJI" width="256">おい！　トレーナー▼
+悪いが　今は　通れないぞ▼
+なんでも　砂漠で
+遺跡の　入り口が　見つかってな▽
+仲間は　そっちに　行ってるんだ▼
+まあ　ヒウンシティの　ジムに
+挑戦して　時間を　つぶすぞい▼</language>
 	</row>
 
-	<row id="msg_r04_stop_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r04_stop_03" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
-・上記二つのフラグを両方満たしたとき</comment>
+・ジムバッジ取得後
+・仮メッセージ</comment>
 		<attribute name="キャラ指定">WORKMAN</attribute>
-		<language name="JPN" width="256">ポケモンしょうぶを　いどんでくる……
-そんな　さぎょういんも　いるぞ！</language>
-		<language name="JPN_KANJI" width="256">ポケモン勝負を　挑んでくる……
-そんな　さぎょういんも　いるぞ！</language>
+		<language name="JPN" width="256">このさきの　さばく……
+リゾートデザートの　おくには▼
+いせきが　あって
+かんこうちに　なっているんだが▼
+さいきん　その　いせきの
+いちぐちが　みつかったぞい！</language>
+		<language name="JPN_KANJI" width="256">このさきの　さばく……
+リゾートデザートの　おくには▼
+いせきが　あって
+かんこうちに　なっているんだが▼
+さいきん　その　いせきの
+いちぐちが　みつかったぞい！</language>
 	</row>
 
-	<row id="msg_r04_man2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_r04_black_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
-・仮メッセージ
+・msg_c03_black_12表示後から出現
+　GRIDX＝00、GRIDZ=00に配置
+・c03ジムバッジ取得前まで</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">ブラッカー『じめんタイプの
+ポケモンを　つかまえておくか？▼
+それとも　ポケモンを　きたえるか
+なやましい　もんだい　だよね</language>
+		<language name="JPN_KANJI" width="256">ブラッカー『じめんタイプの
+ポケモンを　捕まえておくか？▼
+それとも　ポケモンを　鍛えるか
+悩ましい　問題だよね</language>
+	</row>
+
+	<row id="msg_r04_black_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・c03ジムバッジ取得後
+・0＝主人公名前</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">ブラッカー『やあ　[1:00:トレーナー名:0]
+ジムバッジを　てにいれたんだね▼
+いきなりで　わるいけれど
+おねがいが　あるんだ▼
+きみと　たたかうことで
+アーティさんと　ぼくの　じつりょくが▽
+どれほど　ちがうのか　たしかめたい▼
+というわけで
+よろしく　たのむよ！▼</language>
+		<language name="JPN_KANJI" width="256">ブラッカー『やあ　[1:00:トレーナー名:0]
+ジムバッジを　てにいれたんだね▼
+いきなりで　わるいけれど
+おねがいが　あるんだ▼
+きみと　たたかうことで
+アーティさんと　ぼくの　じつりょくが▽
+どれほど　ちがうのか　たしかめたい▼
+というわけで
+よろしく　たのむよ！▼</language>
+	</row>
+
+	<row id="msg_r04_black_03" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・戦闘後
+・メッセージ表示後、画面下に移動
+　msg_r04_tvt_01</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">ブラッカー『ありがとう！
+なんとなく　わかったことがある▼
+それを　たしかめるため
+ぼくも　アーティさんに　いどむよ▼
+それじゃあね▼</language>
+		<language name="JPN_KANJI" width="256">ブラッカー『ありがとう！
+なんとなく　わかったことがある▼
+それを　たしかめるため
+ぼくも　アーティさんに　いどむよ▼
+それじゃあね▼</language>
+	</row>
+
+	<row id="msg_r04_tvt_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・アララギ博士（娘）からの連絡</comment>
+		<attribute name="キャラ指定">システム
+TVトランシーバー</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]は
+ＴＶトランシーバーを　つなげた[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は
+ＴＶトランシーバーを　つなげた[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_r04_man2_01">
+		<comment>♂
 ・高速道路のそばに配置</comment>
 		<attribute name="キャラ指定">MAN2</attribute>
 		<language name="JPN" width="256">フリーウェイを　みていると
@@ -347,9 +440,8 @@
 自分でも　訳が　わからないけれど</language>
 	</row>
 
-	<row id="msg_r04_woman2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_r04_woman2_01">
 		<comment>♀
-・仮メッセージ
 ・砂漠に行く手前に配置</comment>
 		<attribute name="キャラ指定">WOMAN1</attribute>
 		<language name="JPN" width="256">さばくに　うもれた　いせき……
