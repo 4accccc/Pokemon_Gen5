@@ -2,7 +2,6 @@
 /**
  * @file	  wifi_negotiation.c
  * @brief	  WIFIネゴシエーション用ともだち履歴データ
-            国連と共通
  * @author	k.ohno
  * @date	  2009.10.16
  */
@@ -24,8 +23,6 @@
 
 struct _WIFI_NEGOTIATION_SAVEDATA{
   MYSTATUS aMyStatus[WIFI_NEGOTIATION_DATAMAX];
-  u16 getPokemon[WIFI_NEGOTIATION_DATAMAX];   //上げたポケモン
-  u16 setPokemon[WIFI_NEGOTIATION_DATAMAX];  //もらったポケモン
   u16 date[WIFI_NEGOTIATION_DATAMAX];         //交換日時
   PMS_DATA message;   //簡易文 自己紹介文
   u16 count;   //データ循環の為のカウンタ
