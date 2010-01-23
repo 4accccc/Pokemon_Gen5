@@ -54,21 +54,56 @@ EVENT_END
 /*  _c06pc0101_man1_01:めざぱ判定*/
 /**************************************************************/
 EVENT_START   ev_c06pc0101_man1_01
-	
+{
 	//【仮】ポケモンリストのメニュー操作や、めざめるパワーの種類取得が情報不足
-	_TALK_OBJ_START()
-	_BALLOONWIN_TALKOBJ_MSG(msg_c06pc0101_man1_01) 
-	_BALLOONWIN_CLOSE()
+    _TALK_OBJ_START()
+    _BALLOONWIN_TALKOBJ_MSG(msg_c06pc0101_man1_01) 
+    _BALLOONWIN_CLOSE()
 	
-	_YES_NO_WIN( SCWK_ANSWER )
+    _YES_NO_WIN( SCWK_ANSWER )
 	
-	IF $SCWK_ANSWER ==  SCR_NO THEN
-		_BALLOONWIN_TALKOBJ_MSG(msg_c06pc0101_man1_05)
-	ELSE
-    	_BALLOONWIN_TALKOBJ_MSG(msg_c06pc0101_man1_03)
+    IF $SCWK_ANSWER ==  SCR_NO THEN
+		    _BALLOONWIN_TALKOBJ_MSG(msg_c06pc0101_man1_05)
+	  ELSE
+        _CALL sub_c06pc0101_mezameru_power_check
     ENDIF
     
     _LAST_KEYWAIT()
     _BALLOONWIN_CLOSE()
-    
+}   
 EVENT_END
+
+sub_c06pc0101_mezameru_power_check:
+{
+    DEFINE_LOCAL  SEL_POS
+
+    _SELECT_TEMOTI_POKE( SCWK_ANSWER, SEL_POS, 0 )
+    IF $SCWK_ANSWER == FALSE THEN
+        _BALLOONWIN_TALKOBJ_MSG(msg_c06pc0101_man1_05)  //「しりたくなったら～」
+        _RET
+    ENDIF
+
+    _CHECK_TEMOTI_EGG( SCWK_ANSWER, SEL_POS )
+    IF $SCWK_ANSWER == TRUE THEN
+        _BALLOONWIN_TALKOBJ_MSG(msg_c06pc0101_man1_06)  //「タマゴがめざめるパワーを～」
+        _RET
+    ENDIF
+
+    _GET_MEZAMERU_POWER_TYPE( SCWK_ANSWER, SEL_POS )
+    IF $SCWK_ANSWER >= POKETYPE_MAX THEN
+        _BALLOONWIN_TALKOBJ_MSG(msg_c06pc0101_man1_07)  //このポケモンがつかうのは無理
+        _RET
+    ENDIF
+
+    _POKETYPE_NAME( 0, SEL_POS )  //タグにタイプ名をセット
+    _DEBUG_PRINT_WK( SEL_POS )
+    _CHECK_POKE_WAZA( SCWK_ANSWER, WAZANO_MEZAMERUPAWAA, SEL_POS )
+    IF $SCWK_ANSWER == TRUE THEN
+        _BALLOONWIN_TALKOBJ_MSG(msg_c06pc0101_man1_04)
+    ELSE
+        _BALLOONWIN_TALKOBJ_MSG(msg_c06pc0101_man1_03)
+    ENDIF
+    
+    _RET
+}
+
