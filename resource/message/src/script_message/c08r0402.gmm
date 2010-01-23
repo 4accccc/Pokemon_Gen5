@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-13T15:47:51"/>
+	<create user="matsumiya" host="W00207" date="2010-01-23T18:05:03"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="432" top="366" right="1137" bottom="986" maximized="no" rayout="Vertical2">
+	<dialog left="91" top="233" right="796" bottom="853" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,38 +292,321 @@
 	</lock>
 
 
-	<row id="msg_c08r0402_test1_01w">
-		<comment>♂
-・メッセージ表示のみ</comment>
-		<attribute name="キャラ指定">BOY2</attribute>
-		<language name="JPN" width="256">どんどん　はってん　すれば
-この　まちは　もっともっと▽
-みらいっぽく　なるよね　きっと！▼
-はやく　おとなに　なりたいな！</language>
-		<language name="JPN_KANJI" width="256">どんどん　発展すれば
-この　街は　もっともっと▽
-未来っぽく　なるよね　きっと！▼
-はやく　大人に　なりたいな！</language>
+	<row id="msg_c08_man1_01w">
+		<comment>♂：WhiteVer
+・続けてman1_02w</comment>
+		<attribute name="キャラ指定">MAN1
+青年</attribute>
+		<language name="JPN" width="256">ぼくは　みらいを　しりたい！▼
+とても　ふあんだよ……
+ぼくのこども　タイムは　どんな▽
+みらいを　すごすのだろうか▼
+みらいと　げんざいを　つなぐ
+きかいを　つくっているのだけど▽
+まるで　でんきが　たりない▼</language>
+		<language name="JPN_KANJI" width="256">ぼくは　みらいを　しりたい！▼
+とても　ふあんだよ……
+ぼくのこども　タイムは　どんな▽
+みらいを　すごすのだろうか▼
+みらいと　げんざいを　つなぐ
+きかいを　つくっているのだけど▽
+まるで　でんきが　たりない▼</language>
 	</row>
 
-	<row id="msg_c08r0402_test1_01b">
-		<comment>♂
-・メッセージ表示のみ</comment>
-		<attribute name="キャラ指定">OLDMAN</attribute>
-		<language name="JPN" width="256">むかし　からある　ものを
-だいじに　しておれば　よういに▽
-あのころを　おもいだせただろうに……▼
-じぶんが　どんな　こどもだったか
-すっかり　わすれてしまったよ▼
-はやく　おとなに　なりたいと
-ねがってたような　きがするが……</language>
-		<language name="JPN_KANJI" width="256">昔からある　ものを
-大事に　しておれば　容易に▽
-あのころを　思い出せただろうに……▼
-自分が　どんな　子供だったか
-すっかり　忘れてしまったよ▽
-はやく　大人に　なりたいと
-願ってたような　気がするが……</language>
+	<row id="msg_c08_man1_02w">
+		<comment>♂：WhiteVer
+・はい/いいえの選択肢表示
+　はい→man1_03w
+　いいえ→man1_04w
+・アイテム入手するまでに
+　再度話しかけたときはここから開始</comment>
+		<attribute name="キャラ指定">MAN1
+青年</attribute>
+		<language name="JPN" width="256">どこかに　このまちと　にているが
+みらいのような　としが　あるらしい▼
+その　としが　ある　せかいで
+うまれた　ポケモンで▽
+じゅうでんが　できるものが　いたら▽
+きかいが　うごくかも　しれない▼
+きみ　よければ
+じゅうでんが　できる　ポケモンを
+かして　くれないか？▼</language>
+		<language name="JPN_KANJI" width="256">どこかに　このまちと　にているが
+みらいのような　としが　あるらしい▼
+その　としが　ある　せかいで
+うまれた　ポケモンで▽
+じゅうでんが　できるものが　いたら▽
+きかいが　うごくかも　しれない▼
+きみ　よければ
+じゅうでんが　できる　ポケモンを
+かして　くれないか？▼</language>
+	</row>
+
+	<row id="msg_c08_man1_03w">
+		<comment>♂：WhiteVer
+・いいえ選択時</comment>
+		<attribute name="キャラ指定">MAN1
+青年</attribute>
+		<language name="JPN" width="256">そ……　そうか　ざんねんだな
+きがむいたら　また　きてくれ▼</language>
+		<language name="JPN_KANJI" width="256">そ……　そうか　ざんねんだな
+きがむいたら　また　きてくれ▼</language>
+	</row>
+
+	<row id="msg_c08_man1_04w">
+		<comment>♂：WhiteVer
+・はい選択時</comment>
+		<attribute name="キャラ指定">MAN1
+青年</attribute>
+		<language name="JPN" width="256">あ　ありがとう！
+これで　きかいが　うごくぞ▼</language>
+		<language name="JPN_KANJI" width="256">あ　ありがとう！
+これで　きかいが　うごくぞ▼</language>
+	</row>
+
+	<row id="msg_c08_man1_05w">
+		<comment>♂：WhiteVer
+・メッセージ表示後、装置に隣接する</comment>
+		<attribute name="キャラ指定">MAN1
+青年</attribute>
+		<language name="JPN" width="256">さあ　みらいを　みせておくれ！▼</language>
+		<language name="JPN_KANJI" width="256">さあ　みらいを　みせておくれ！▼</language>
+	</row>
+
+	<row id="msg_c08_machine_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>BG
+・機械の稼動音のSE発注
+・Whiteなら→man1_06w
+　Blackなら→man1_06b
+</comment>
+		<attribute name="キャラ指定">機械</attribute>
+		<language name="JPN" width="256">キィィィィイイイン▼</language>
+		<language name="JPN_KANJI" width="256">キィィィィイイイン▼</language>
+	</row>
+
+	<row id="msg_c08_man1_06w">
+		<comment>♂：WhiteVer
+・メッセージ表示後、機械のSE停止
+・続けてman1_07w</comment>
+		<attribute name="キャラ指定">MAN1
+青年</attribute>
+		<language name="JPN" width="256">おおっ！　みらいは……
+みらいは　こうなっているのか！▼
+タイム！▼
+いい　こに　そだっている！▼</language>
+		<language name="JPN_KANJI" width="256">おおっ！　みらいは……
+みらいは　こうなっているのか！▼
+タイム！▼
+いい　こに　そだっている！▼</language>
+	</row>
+
+	<row id="msg_c08_man1_07w">
+		<comment>♂：WhiteVer
+・続けてman1_08w</comment>
+		<attribute name="キャラ指定">MAN1
+青年</attribute>
+		<language name="JPN" width="256">……もとに　もどった？
+いい　たいけんだった！▽
+ふるえが　とまらないよ！▼
+でも……　みらいを　しっても　　
+わたしが　いる　「いま」は▽
+なにも　かわらないのだね▼</language>
+		<language name="JPN_KANJI" width="256">……もとに　もどった？
+いい　たいけんだった！▽
+ふるえが　とまらないよ！▼
+でも……　みらいを　しっても　　
+わたしが　いる　「いま」は▽
+なにも　かわらないのだね▼</language>
+	</row>
+
+	<row id="msg_c08_man1_08w" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♂：WhiteVer
+・アイテム入手処理
+　No155「オレンのみ」（暫定）
+※内容未定、</comment>
+		<attribute name="キャラ指定">MAN1
+青年</attribute>
+		<language name="JPN" width="256">そうだ！
+ポケモンを　かえすよ▼
+ありがとう
+これは　おれいです▼</language>
+		<language name="JPN_KANJI" width="256">そうだ！
+ポケモンを　かえすよ▼
+ありがとう
+これは　おれいです▼</language>
+	</row>
+
+	<row id="msg_c08_man1_09w">
+		<comment>♂：WhiteVer
+・アイテム入手後
+　以降、繰り返し</comment>
+		<attribute name="キャラ指定">MAN1
+青年</attribute>
+		<language name="JPN" width="256">みらいについて　ふあんに　なるより
+みらいに　つながっている▽
+いまを　せいいっぱい　いきるのが▽
+だいじってこと……だね！▼
+よし　ジキル！　あとで　でかけよう！
+きょうは　めいいっぱい　あそぼう</language>
+		<language name="JPN_KANJI" width="256">みらいについて　ふあんに　なるより
+みらいに　つながっている▽
+いまを　せいいっぱい　いきるのが▽
+だいじってこと……だね！▼
+よし　ジキル！　あとで　でかけよう！
+きょうは　めいいっぱい　あそぼう</language>
+	</row>
+
+	<row id="msg_c08_man1_01b" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂：BlackVer
+・続けてman1_02b</comment>
+		<attribute name="キャラ指定">MAN1
+青年</attribute>
+		<language name="JPN" width="256">ぼくは　かこに　もどりたい！
+やりなおしたい　ことばかりだ！▼
+ぼくのちち　バックは
+みらいを　みる▽
+きかいを　つくったんだ▼
+ぼくは　かこと　げんざいを　つなぐ
+きかいを　つくっている▽
+…けど　でんきが　たりないよ▼</language>
+		<language name="JPN_KANJI" width="256">ぼくは　かこに　もどりたい！
+やりなおしたい　ことばかりだ！▼
+ぼくのちち　バックは
+みらいを　みる▽
+きかいを　つくったんだ▼
+ぼくは　かこと　げんざいを　つなぐ
+きかいを　つくっている▽
+…けど　でんきが　たりないよ▼</language>
+	</row>
+
+	<row id="msg_c08_man1_02b" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂：BlackVer
+・はい/いいえの選択肢表示
+　はい→man1_03w
+　いいえ→man1_04w
+・アイテム入手するまでに
+　再度話しかけたときはここから開始</comment>
+		<attribute name="キャラ指定">MAN1
+青年</attribute>
+		<language name="JPN" width="256">どこかに　このまちと　にているけど
+ふるい　かんじの　としが　あるらしい▼
+その　としが　ある　せかいで
+うまれた　ポケモンで▽
+じゅうでんが　できるものが　いたら▽
+きかいが　うごくかも　しれない▼
+きみ　よければ
+じゅうでんが　できる　ポケモンを
+かして　くれませんか？▼</language>
+		<language name="JPN_KANJI" width="256">どこかに　このまちと　にているけど
+ふるい　かんじの　としが　あるらしい▼
+その　としが　ある　せかいで
+うまれた　ポケモンで▽
+じゅうでんが　できるものが　いたら▽
+きかいが　うごくかも　しれない▼
+きみ　よければ
+じゅうでんが　できる　ポケモンを
+かして　くれませんか？▼</language>
+	</row>
+
+	<row id="msg_c08_man1_03b" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂：BlackVer
+・いいえ選択時</comment>
+		<attribute name="キャラ指定">MAN1
+青年</attribute>
+		<language name="JPN" width="256">なんだ……　ざんねんだな
+ほかに　ほうほうも　ないし……▼</language>
+		<language name="JPN_KANJI" width="256">なんだ……　ざんねんだな
+ほかに　ほうほうも　ないし……▼</language>
+	</row>
+
+	<row id="msg_c08_man1_04b" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂：BlackVer
+・はい選択時</comment>
+		<attribute name="キャラ指定">MAN1
+青年</attribute>
+		<language name="JPN" width="256">やった！
+さあ　きかいが　うごくぞ▼</language>
+		<language name="JPN_KANJI" width="256">やった！
+さあ　きかいが　うごくぞ▼</language>
+	</row>
+
+	<row id="msg_c08_man1_05b" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂：BlackVer
+・メッセージ表示後、装置に隣接する</comment>
+		<attribute name="キャラ指定">MAN1
+青年</attribute>
+		<language name="JPN" width="256">これで　かこに　つながる！▼</language>
+		<language name="JPN_KANJI" width="256">これで　かこに　つながる！▼</language>
+	</row>
+
+	<row id="msg_c08_man1_06b" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂：BlackVer
+・メッセージ表示後、機械のSE停止
+・続けてman1_07w</comment>
+		<attribute name="キャラ指定">MAN1
+青年</attribute>
+		<language name="JPN" width="256">かこに　つながった……！？▼
+とうさん！！▼
+タイムです
+ぼくは　あやまりたいことが……▼</language>
+		<language name="JPN_KANJI" width="256">かこに　つながった……！？▼
+とうさん！！▼
+タイムです
+ぼくは　あやまりたいことが……▼</language>
+	</row>
+
+	<row id="msg_c08_man1_07b" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂：BlackVer
+・続けてman1_08w</comment>
+		<attribute name="キャラ指定">MAN1
+青年</attribute>
+		<language name="JPN" width="256">もどってしまった？
+でんきが　きれてしまった　みたいだ▼
+かこには　もどれたけど……
+ぼくの　いる　「いま」は▽
+なにも　かわらないのだね▼</language>
+		<language name="JPN_KANJI" width="256">もどってしまった？
+でんきが　きれてしまった　みたいだ▼
+かこには　もどれたけど……
+ぼくの　いる　「いま」は▽
+なにも　かわらないのだね▼</language>
+	</row>
+
+	<row id="msg_c08_man1_08b" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂：BlackVer
+・アイテム入手処理
+　No155「オレンのみ」（暫定）
+※内容未定、</comment>
+		<attribute name="キャラ指定">MAN1
+青年</attribute>
+		<language name="JPN" width="256">そうだ！
+ポケモンを　かえすよ▼
+ありがとう
+これは　おれいです▼</language>
+		<language name="JPN_KANJI" width="256">そうだ！
+ポケモンを　かえすよ▼
+ありがとう
+これは　おれいです▼</language>
+	</row>
+
+	<row id="msg_c08_man1_09b" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂：BlackVer
+・アイテム入手後
+　以降、繰り返し</comment>
+		<attribute name="キャラ指定">MAN1
+青年</attribute>
+		<language name="JPN" width="256">むかしのことを　こうかいするより
+かこから　つながる▽
+いまを　せいいっぱい　いきるのが▽
+だいじって……ことか▼
+よし！
+まえむきに　がんばろう！</language>
+		<language name="JPN_KANJI" width="256">むかしのことを　こうかいするより
+かこから　つながる▽
+いまを　せいいっぱい　いきるのが▽
+だいじって……ことか▼
+よし！
+まえむきに　がんばろう！</language>
 	</row>
 
 	<flowchart-group-list>
