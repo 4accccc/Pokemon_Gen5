@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2010-01-20T17:52:30"/>
+	<create user="matsumiya" host="W00207" date="2010-01-23T16:57:09"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -373,16 +373,26 @@
 		<comment>♀</comment>
 		<attribute name="キャラ指定">MIDDLEWOMAN1
 中年女性1</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">いろんな　グッズが　あると
+ポケモンに　つけてあげたくなる▼
+ポケモンに　グッズを　つけると
+こんどは　ミュージカルに▽
+さんか　したくなるのよね！</language>
+		<language name="JPN_KANJI" width="256">いろんな　グッズが　あると
+ポケモンに　つけてあげたくなる▼
+ポケモンに　グッズを　つけると
+今度は　ミュージカルに▽
+参加したく　なるのよね！</language>
 	</row>
 
 	<row id="msg_c08r0301_girl4_01">
 		<comment>♀</comment>
 		<attribute name="キャラ指定">GIRL4
 お嬢様</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">ミュージカルの　グッズは　なんでも
+２００しゅるい　ぐらい　あるそうよ</language>
+		<language name="JPN_KANJI" width="256">ミュージカルの　グッズは　なんでも
+２００種類ぐらい　あるそうよ</language>
 	</row>
 
 	<flowchart-group-list>
