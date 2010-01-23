@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2010-01-23T18:05:03"/>
+	<create user="matsumiya" host="W00207" date="2010-01-23T18:12:34"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="222"/>
+		<comment position="4" width="269"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -316,8 +316,9 @@
 	<row id="msg_c08_man1_02w">
 		<comment>♂：WhiteVer
 ・はい/いいえの選択肢表示
-　はい→man1_03w
-　いいえ→man1_04w
+　はい→man1_04w
+　はい、だが条件を満たしていない→man1_05w
+　いいえ→man1_03w
 ・アイテム入手するまでに
 　再度話しかけたときはここから開始</comment>
 		<attribute name="キャラ指定">MAN1
@@ -355,6 +356,22 @@
 
 	<row id="msg_c08_man1_04w">
 		<comment>♂：WhiteVer
+・はい選択だが
+　条件を満たしていない時</comment>
+		<attribute name="キャラ指定">MAN1
+青年</attribute>
+		<language name="JPN" width="256">あ　ありがとう！▼
+……って　ぼくの　おねがいした
+じょうけんを　みたした▽
+ポケモンが　いないよ！！</language>
+		<language name="JPN_KANJI" width="256">あ　ありがとう！▼
+……って　ぼくの　おねがいした
+じょうけんを　みたした▽
+ポケモンが　いないよ！！</language>
+	</row>
+
+	<row id="msg_c08_man1_05w">
+		<comment>♂：WhiteVer
 ・はい選択時</comment>
 		<attribute name="キャラ指定">MAN1
 青年</attribute>
@@ -364,7 +381,7 @@
 これで　きかいが　うごくぞ▼</language>
 	</row>
 
-	<row id="msg_c08_man1_05w">
+	<row id="msg_c08_man1_06w">
 		<comment>♂：WhiteVer
 ・メッセージ表示後、装置に隣接する</comment>
 		<attribute name="キャラ指定">MAN1
@@ -376,18 +393,18 @@
 	<row id="msg_c08_machine_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>BG
 ・機械の稼動音のSE発注
-・Whiteなら→man1_06w
-　Blackなら→man1_06b
+・Whiteなら→man1_07w
+　Blackなら→man1_07b
 </comment>
 		<attribute name="キャラ指定">機械</attribute>
 		<language name="JPN" width="256">キィィィィイイイン▼</language>
 		<language name="JPN_KANJI" width="256">キィィィィイイイン▼</language>
 	</row>
 
-	<row id="msg_c08_man1_06w">
+	<row id="msg_c08_man1_07w">
 		<comment>♂：WhiteVer
 ・メッセージ表示後、機械のSE停止
-・続けてman1_07w</comment>
+・続けてman1_08w</comment>
 		<attribute name="キャラ指定">MAN1
 青年</attribute>
 		<language name="JPN" width="256">おおっ！　みらいは……
@@ -400,9 +417,9 @@
 いい　こに　そだっている！▼</language>
 	</row>
 
-	<row id="msg_c08_man1_07w">
+	<row id="msg_c08_man1_08w">
 		<comment>♂：WhiteVer
-・続けてman1_08w</comment>
+・続けてman1_09w</comment>
 		<attribute name="キャラ指定">MAN1
 青年</attribute>
 		<language name="JPN" width="256">……もとに　もどった？
@@ -419,11 +436,11 @@
 なにも　かわらないのだね▼</language>
 	</row>
 
-	<row id="msg_c08_man1_08w" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c08_man1_09w" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂：WhiteVer
 ・アイテム入手処理
 　No155「オレンのみ」（暫定）
-※内容未定、</comment>
+※内容未定</comment>
 		<attribute name="キャラ指定">MAN1
 青年</attribute>
 		<language name="JPN" width="256">そうだ！
@@ -436,7 +453,7 @@
 これは　おれいです▼</language>
 	</row>
 
-	<row id="msg_c08_man1_09w">
+	<row id="msg_c08_man1_10w">
 		<comment>♂：WhiteVer
 ・アイテム入手後
 　以降、繰り返し</comment>
@@ -482,8 +499,9 @@
 	<row id="msg_c08_man1_02b" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂：BlackVer
 ・はい/いいえの選択肢表示
-　はい→man1_03w
-　いいえ→man1_04w
+　はい→man1_04b
+　はい、だが条件を満たしていない→man1_05b
+　いいえ→man1_03b
 ・アイテム入手するまでに
 　再度話しかけたときはここから開始</comment>
 		<attribute name="キャラ指定">MAN1
@@ -532,6 +550,22 @@
 
 	<row id="msg_c08_man1_05b" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂：BlackVer
+・はい選択だが
+　条件を満たしていない時</comment>
+		<attribute name="キャラ指定">MAN1
+青年</attribute>
+		<language name="JPN" width="256">あ　ありがとう！▼
+……って　ぼくの　おねがいした
+じょうけんを　みたした▽
+ポケモンが　いないよ！！</language>
+		<language name="JPN_KANJI" width="256">あ　ありがとう！▼
+……って　ぼくの　おねがいした
+じょうけんを　みたした▽
+ポケモンが　いないよ！！</language>
+	</row>
+
+	<row id="msg_c08_man1_06b" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂：BlackVer
 ・メッセージ表示後、装置に隣接する</comment>
 		<attribute name="キャラ指定">MAN1
 青年</attribute>
@@ -539,10 +573,10 @@
 		<language name="JPN_KANJI" width="256">これで　かこに　つながる！▼</language>
 	</row>
 
-	<row id="msg_c08_man1_06b" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c08_man1_07b" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂：BlackVer
 ・メッセージ表示後、機械のSE停止
-・続けてman1_07w</comment>
+・続けてman1_08w</comment>
 		<attribute name="キャラ指定">MAN1
 青年</attribute>
 		<language name="JPN" width="256">かこに　つながった……！？▼
@@ -555,9 +589,9 @@
 ぼくは　あやまりたいことが……▼</language>
 	</row>
 
-	<row id="msg_c08_man1_07b" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c08_man1_08b" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂：BlackVer
-・続けてman1_08w</comment>
+・続けてman1_09w</comment>
 		<attribute name="キャラ指定">MAN1
 青年</attribute>
 		<language name="JPN" width="256">もどってしまった？
@@ -572,11 +606,11 @@
 なにも　かわらないのだね▼</language>
 	</row>
 
-	<row id="msg_c08_man1_08b" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c08_man1_09b" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂：BlackVer
 ・アイテム入手処理
 　No155「オレンのみ」（暫定）
-※内容未定、</comment>
+※内容未定</comment>
 		<attribute name="キャラ指定">MAN1
 青年</attribute>
 		<language name="JPN" width="256">そうだ！
@@ -589,7 +623,7 @@
 これは　おれいです▼</language>
 	</row>
 
-	<row id="msg_c08_man1_09b" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c08_man1_10b" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂：BlackVer
 ・アイテム入手後
 　以降、繰り返し</comment>
