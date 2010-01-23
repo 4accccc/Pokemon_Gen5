@@ -71,7 +71,7 @@ extern int MyStatus_GetMyNation(const MYSTATUS * my);
 extern int MyStatus_GetMyArea(const MYSTATUS * my);
 
 // この関数だけだと、地球儀に登録されません。 WIFIHISTORY_SetMyNationAreaを使ってください
-extern int MyStatus_SetMyNationArea(MYSTATUS * my, int nation, int area);
+extern void MyStatus_SetMyNationArea(MYSTATUS * my, int nation, int area);
 
 
 // ユニオンルームで使う自分の見た目

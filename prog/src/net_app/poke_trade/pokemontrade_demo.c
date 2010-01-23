@@ -264,7 +264,7 @@ static void _changeDemo_ModelT1(POKEMON_TRADE_WORK* pWork)
     return;
   }
 
-  if(GFL_NET_IsInit()){
+  if(POKEMONTRADEPROC_IsNetworkMode(pWork)){
     GFL_NET_HANDLE_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_ANIMEEND);
     _CHANGE_STATE(pWork,_changeDemo_ModelT2);
   }

@@ -62,6 +62,8 @@
 #include "pokemontrade.cdat"
 
 
+
+
 static void _recvSelectPokemon(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
 static void _recvChangePokemon(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
 static void _recvChangeCancel(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
@@ -113,6 +115,29 @@ static const NetRecvFuncTable _PacketTbl[] = {
   {_recvFriendScrollBar, NULL}, //_NETCMD_SCROLLBAR
 
 };
+
+//------------------------------------------------------------------
+/**
+ * @brief   通信モードで動いているかどうか
+ * @param   POKEMON_TRADE_WORK
+ * @retval  TRUEなら通信モード
+ */
+//------------------------------------------------------------------
+
+BOOL POKEMONTRADEPROC_IsNetworkMode(POKEMON_TRADE_WORK* pWork)
+{
+  if(pWork->pParentWork==NULL){
+    return FALSE;
+  }
+  if(pWork->type==POKEMONTRADE_EVENT){
+    return FALSE;
+  }
+  if(GFL_NET_IsInit()){
+    return TRUE;
+  }
+  return FALSE;
+}
+
 
 int IRC_TRADE_LINE2TRAY(int lineno,POKEMON_TRADE_WORK* pWork)
 {
@@ -358,9 +383,13 @@ static u8* _setThreePokemon(int netID, void* pWk, int size)
 //------------------------------------------------------------------------------
 POKEMON_PARAM* IRC_POKEMONTRADE_GetRecvPP(POKEMON_TRADE_WORK *pWork, int index)
 {
+  BOOL bMode = POKEMONTRADEPROC_IsNetworkMode(pWork);
   GF_ASSERT(index < 2);
 
-  if(!GFL_NET_IsInit() || (0==GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle()) )  ){
+  if(bMode==FALSE){
+    return (POKEMON_PARAM*)pWork->recvPoke[index];
+  }
+  if(0 == GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle())){
     return (POKEMON_PARAM*)pWork->recvPoke[index];
   }
   return (POKEMON_PARAM*)pWork->recvPoke[1-index];
@@ -660,8 +689,9 @@ static BOOL _IsEggAndLastBattlePokemonChange(POKEMON_TRADE_WORK* pWork)
 void POKETRE_MAIN_ChangePokemonSendDataNetwork(POKEMON_TRADE_WORK* pWork)
 {
   BOOL bSend = FALSE;
+  BOOL bMode = POKEMONTRADEPROC_IsNetworkMode(pWork);
 
-  if( GFL_NET_IsInit() ){
+  if( bMode ){
     if(_IsEggAndLastBattlePokemonChange(pWork)){
       bSend=GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),_NETCMD_EGG_AND_BATTLE,0,NULL);
     }
@@ -863,14 +893,18 @@ static void _networkFriendsStandbyWait(POKEMON_TRADE_WORK* pWork)
 // ポケモンデータを相手に送る
 static void _pokeSendDataState(POKEMON_TRADE_WORK* pWork)
 {
-  if(!GFL_NET_IsInit()){
+  BOOL bMode = POKEMONTRADEPROC_IsNetworkMode(pWork);
+
+  if( !bMode ){
     pWork->userNetCommand[0]=_NETCMD_LOOKATPOKE;
     pWork->userNetCommand[1]=_NETCMD_LOOKATPOKE;
   }
-
-  if(!GFL_NET_IsInit() || GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),_NETCMD_LOOKATPOKE, 0,NULL)){
-    _CHANGE_STATE(pWork, _networkFriendsStandbyWait);// あいても選ぶまで待つ
+  if(bMode){
+     if( !GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),_NETCMD_LOOKATPOKE, 0,NULL) ){
+       return;
+     }
   }
+  _CHANGE_STATE(pWork, _networkFriendsStandbyWait);// あいても選ぶまで待つ
 }
 
 
@@ -1116,17 +1150,24 @@ static void _dispSubState(POKEMON_TRADE_WORK* pWork)
 //通信同期を取る
 static void _changeTimingDemoStart(POKEMON_TRADE_WORK* pWork)
 {
-  if(!GFL_NET_IsInit() || GFL_NET_HANDLE_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_TRADEDEMO_START)){
-    switch(pWork->type){
-    case POKEMONTRADE_IRC:   ///< 赤外線
-      _CHANGE_STATE(pWork,POKMEONTRADE_IRCDEMO_ChangeDemo);
-      break;
-    case POKEMONTRADE_UNION: ///< ユニオン
-    case POKEMONTRADE_WIFICLUB: ///< WIFIクラブ
-    case POKEMONTRADE_GTSNEGO: ///< GTSネゴシエーション
-      _CHANGE_STATE(pWork,IRC_POKMEONTRADE_STEP_ChangeDemo_PokeMove);
-      break;
+  BOOL bMode = POKEMONTRADEPROC_IsNetworkMode(pWork);
+
+  if(bMode){
+    if(!GFL_NET_HANDLE_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_TRADEDEMO_START)){
+      return;
     }
+  }
+  
+
+  switch(pWork->type){
+  case POKEMONTRADE_IRC:   ///< 赤外線
+    _CHANGE_STATE(pWork,POKMEONTRADE_IRCDEMO_ChangeDemo);
+    break;
+  case POKEMONTRADE_UNION: ///< ユニオン
+  case POKEMONTRADE_WIFICLUB: ///< WIFIクラブ
+  case POKEMONTRADE_GTSNEGO: ///< GTSネゴシエーション
+    _CHANGE_STATE(pWork,IRC_POKMEONTRADE_STEP_ChangeDemo_PokeMove);
+    break;
   }
 }
 
@@ -1152,7 +1193,7 @@ static void _changeWaitState(POKEMON_TRADE_WORK* pWork)
     break;
   case _NETCMD_CHANGE_POKEMON:
     if(pWork->userNetCommand[targetID]==_NETCMD_CHANGE_POKEMON){
-      if(GFL_NET_IsInit()){
+      if(POKEMONTRADEPROC_IsNetworkMode(pWork)){
         GFL_NET_HANDLE_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_TRADEDEMO_START);
       }
       _CHANGE_STATE(pWork, _changeTimingDemoStart);
@@ -1209,7 +1250,7 @@ void IRC_POKMEONTRADE_ChangeFinish(POKEMON_TRADE_WORK* pWork)
 //キャンセルまち
 static void _cancelPokemonSendDataNetwork(POKEMON_TRADE_WORK* pWork)
 {
-  if(!GFL_NET_IsInit()){
+  if(!POKEMONTRADEPROC_IsNetworkMode(pWork)){
     GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR_97, pWork->pMessageStrBuf );
     POKETRADE_MESSAGE_WindowOpen(pWork);
     _CHANGE_STATE(pWork, _endCancelState);
@@ -1259,7 +1300,7 @@ static void _endWaitStateNetwork(POKEMON_TRADE_WORK* pWork)
   if(!POKETRADE_MESSAGE_EndCheck(pWork)){
     return;
   }
-  if(GFL_NET_IsInit()){
+  if(POKEMONTRADEPROC_IsNetworkMode(pWork)){
     if(GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),_NETCMD_END,0,NULL)){
       _CHANGE_STATE(pWork,_endWaitStateNetwork2);
     }
@@ -1304,26 +1345,31 @@ static BOOL _PokemonsetAndSendData(POKEMON_TRADE_WORK* pWork)
   POKEMON_PASO_PARAM* ppp = IRCPOKEMONTRADE_GetPokeDataAddress(pWork->pBox, pWork->selectBoxno, pWork->selectIndex,pWork);
   POKEMON_PARAM* pp = PP_CreateByPPP(ppp,pWork->heapID);
 
-  if(!GFL_NET_IsInit() || GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),_NETCMD_SELECT_POKEMON, POKETOOL_GetWorkSize(), pp)){
-    POKE_MAIN_Pokemonset(pWork,0,pp);
-#if PM_DEBUG
-    if(!GFL_NET_IsInit()){
-      const STRCODE *name;
-      POKEMON_PARAM* pp2; 
-
-      pp2 = PP_Create(MONSNO_ONOKKUSU, 100, 123456, GFL_HEAPID_APP);
-      name = MyStatus_GetMyName( pWork->pMy );
-      PP_Put( pp2 , ID_PARA_oyaname_raw , (u32)name );
-      PP_Put( pp2 , ID_PARA_oyasex , MyStatus_GetMySex( pWork->pMy ) );
-      POKE_MAIN_Pokemonset(pWork,1,pp2); 
-      GFL_STD_MemCopy(pp2,pWork->recvPoke[1],POKETOOL_GetWorkSize());
-      GFL_HEAP_FreeMemory(pp2);
-      GFL_STD_MemCopy(pp,pWork->recvPoke[0],POKETOOL_GetWorkSize());
-
+  if(POKEMONTRADEPROC_IsNetworkMode(pWork)){
+    if(!GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),_NETCMD_SELECT_POKEMON, POKETOOL_GetWorkSize(), pp)){
+      GFL_HEAP_FreeMemory(pp);
+      return FALSE;
     }
-#endif
-    bRet= TRUE;
   }
+    
+  POKE_MAIN_Pokemonset(pWork,0,pp);
+#if PM_DEBUG
+  if(!POKEMONTRADEPROC_IsNetworkMode(pWork)){
+    const STRCODE *name;
+    POKEMON_PARAM* pp2; 
+
+    pp2 = PP_Create(MONSNO_ONOKKUSU, 100, 123456, GFL_HEAPID_APP);
+    name = MyStatus_GetMyName( pWork->pMy );
+    PP_Put( pp2 , ID_PARA_oyaname_raw , (u32)name );
+    PP_Put( pp2 , ID_PARA_oyasex , MyStatus_GetMySex( pWork->pMy ) );
+    POKE_MAIN_Pokemonset(pWork,1,pp2); 
+    GFL_STD_MemCopy(pp2,pWork->recvPoke[1],POKETOOL_GetWorkSize());
+    GFL_HEAP_FreeMemory(pp2);
+    GFL_STD_MemCopy(pp,pWork->recvPoke[0],POKETOOL_GetWorkSize());
+    
+  }
+#endif
+  bRet= TRUE;
   GFL_HEAP_FreeMemory(pp);
   return bRet;
 }
@@ -1357,16 +1403,6 @@ static void _endRequestState(POKEMON_TRADE_WORK* pWork)
 
   _CHANGE_STATE(pWork,_recvEndReqFunc);
 
-#if 0
-  if(GFL_NET_IsInit()){
-    if( GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),_NETCMD_END_REQ, 0, NULL)){
-      _CHANGE_STATE(pWork,_noneState);
-    }
-  }
-  else{
-    _CHANGE_STATE(pWork,_recvEndReqFunc);
-  }
-#endif
 }
 
 
@@ -1664,11 +1700,9 @@ static void _scrollMainFunc(POKEMON_TRADE_WORK* pWork,BOOL bSE, BOOL bNetSend)
     PMSND_PlaySystemSE(POKETRADESE_RIBBON);
   }
 
-  if(GFL_NET_IsInit() && bNetSend){  // 特に失敗してもかまわない通信 相手に位置を知らせているだけ
+  if(POKEMONTRADEPROC_IsNetworkMode(pWork) && bNetSend){  // 特に失敗してもかまわない通信 相手に位置を知らせているだけ
     GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(),GFL_NET_SENDID_ALLUSER,
                        _NETCMD_SCROLLBAR,2,&pWork->BoxScrollNum,FALSE,TRUE,TRUE);
-    
-//    GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),_NETCMD_SCROLLBAR,4,&pWork->BoxScrollNum);
   }
 }
 
@@ -1753,7 +1787,7 @@ static void _touchState(POKEMON_TRADE_WORK* pWork)
 
   _PokemonReset(pWork,0);
   
-  if(!GFL_NET_IsInit()){
+  if(!POKEMONTRADEPROC_IsNetworkMode(pWork)){
     _PokemonReset(pWork,1);
     _userNetCommandClear(pWork);
   }
@@ -2388,7 +2422,7 @@ static GFL_PROC_RESULT PokemonTradeProcInit( GFL_PROC * proc, int * seq, void * 
   //セル系システムの作成
   pWork->cellUnit = GFL_CLACT_UNIT_Create( 340 , 0 , pWork->heapID );
   // 通信テーブル追加
-  if(GFL_NET_IsInit()){
+  if(POKEMONTRADEPROC_IsNetworkMode(pWork)){
     GFL_NET_AddCommandTable(GFL_NET_CMD_IRCTRADE,_PacketTbl,NELEMS(_PacketTbl), pWork);
   }
   // ワークの初期化
@@ -2631,7 +2665,7 @@ static GFL_PROC_RESULT PokemonTradeProcEnd( GFL_PROC * proc, int * seq, void * p
   IRC_POKETRADE_ItemIconReset(&pWork->aItemMark);
   IRC_POKETRADE_ItemIconReset(&pWork->aPokerusMark);
 
-  if(GFL_NET_IsInit()){
+  if(POKEMONTRADEPROC_IsNetworkMode(pWork)){
     GFL_NET_DelCommandTable(GFL_NET_CMD_IRCTRADE);
   }
 

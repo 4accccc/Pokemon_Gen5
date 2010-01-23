@@ -270,7 +270,7 @@ static void _changeDemo_ModelT1(POKEMON_TRADE_WORK* pWork)
     return;
   }
 
-  if(GFL_NET_IsInit()){
+  if(POKEMONTRADEPROC_IsNetworkMode(pWork)){
     GFL_NET_HANDLE_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_ANIMEEND);
     _CHANGE_STATE(pWork,_changeDemo_ModelT2);
   }
@@ -603,13 +603,13 @@ static void _changeDemo_ModelTrade20(POKEMON_TRADE_WORK* pWork)
   GFL_HEAP_FreeMemory(pWork->pPokemonTradeDemo);
   pWork->pPokemonTradeDemo = NULL;
 
-  if(pWork->type == POKEMONTRADE_EVENT){
-    pWork->pParentWork->ret = POKEMONTRADE_END;
-    _CHANGE_STATE(pWork,NULL);
-  }
-  else{
+//  if(pWork->type == POKEMONTRADE_EVENT){
+  //  pWork->pParentWork->ret = POKEMONTRADE_END;
+//    /_CHANGE_STATE(pWork,NULL);
+  //}/
+ // else{
     _CHANGE_STATE(pWork,POKMEONTRADE_SAVE_Init);
-  }
+ // }
 }
 
 

@@ -170,6 +170,15 @@ static void _changeDemo_ModelTrade23(POKEMON_TRADE_WORK* pWork)
   IRCPOKETRADE_PokeDeleteMcss(pWork, 2);
   IRCPOKETRADE_PokeDeleteMcss(pWork, 3);
 
+
+
+  if(pWork->type == POKEMONTRADE_EVENT){
+    pWork->pParentWork->ret = POKEMONTRADE_END;
+    _CHANGE_STATE(pWork,NULL);
+    return;
+  }
+
+  
 //  _pokemonCreateCLACTExit(pWork);
 //  POKEMONTRADE_DEMO_PTC_End(pWork->pPokemonTradeDemo,PTC_KIND_NUM_MAX);
 //  POKEMONTRADE_DEMO_ICA_Delete(pWork->pPokemonTradeDemo);
@@ -261,7 +270,7 @@ static void _changeTimingSaveStart(POKEMON_TRADE_WORK* pWork)
   if(!POKETRADE_MESSAGE_EndCheck(pWork)){
     return;
   }
-  if(GFL_NET_IsInit()){
+  if(POKEMONTRADEPROC_IsNetworkMode(pWork)){
     GFL_NET_HANDLE_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_SAVEST);
     _CHANGE_STATE(pWork, _changeTimingSaveStart2);
   }
@@ -282,7 +291,7 @@ static void _changeTimingSaveStart2(POKEMON_TRADE_WORK* pWork)
 static void _changeTimingSaveStart3(POKEMON_TRADE_WORK* pWork)
 {
   if(GAMEDATA_SaveAsyncMain(pWork->pGameData) == SAVE_RESULT_LAST){
-    if(GFL_NET_IsInit()){
+    if(POKEMONTRADEPROC_IsNetworkMode(pWork)){
       pWork->saveStep = GFUser_GetPublicRand(_CHANGERAND);
       _CHANGE_STATE(pWork,_changeTimingSaveStart4);
     }
@@ -296,7 +305,7 @@ static void _changeTimingSaveStart4(POKEMON_TRADE_WORK* pWork)
 {
   pWork->saveStep--;
   if(pWork->saveStep<0){
-    if(GFL_NET_IsInit()){
+    if(POKEMONTRADEPROC_IsNetworkMode(pWork)){
       GFL_NET_HANDLE_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_SAVELAST);
       _CHANGE_STATE(pWork, _changeTimingSaveStart5);
     }

@@ -525,6 +525,7 @@ extern void IRC_POKETRADE_SubStatusInit(POKEMON_TRADE_WORK* pWork,int pokeposx, 
 extern void IRC_POKETRADE_SubStatusEnd(POKEMON_TRADE_WORK* pWork);
 
 
+extern BOOL POKEMONTRADEPROC_IsNetworkMode(POKEMON_TRADE_WORK* pWork);
 
 extern void IRC_POKETRADE_TrayDisp(POKEMON_TRADE_WORK* pWork);
 extern void IRC_POKETRADE_InitBoxIcon( BOX_MANAGER* boxData ,POKEMON_TRADE_WORK* pWork );

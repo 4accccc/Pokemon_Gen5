@@ -443,16 +443,16 @@ int MyStatus_GetMyArea(const MYSTATUS * my)
 
 //----------------------------------------------------------
 /**
- * @brief	自分の地域コードを取得
+ * @brief	自分の地域コードを設定
  * @param	my			自分状態保持ワークへのポインタ
- * @return	int			地域指定コード
+ * @param	nation	
+ * @param	area		
  */
 //----------------------------------------------------------
-int MyStatus_SetMyNationArea(MYSTATUS * my, int nation, int area)
+void MyStatus_SetMyNationArea(MYSTATUS * my, int nation, int area)
 {
 	GF_ASSERT(nation < WIFI_NATION_MAX);
 	GF_ASSERT(area < WIFI_AREA_MAX);
-
 	my->nation = nation;
 	my->area = area;
 }
