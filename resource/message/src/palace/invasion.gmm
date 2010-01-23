@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsuda" host="W00142" date="2009-12-21T18:43:19"/>
+	<create user="matsuda" host="W00142" date="2010-01-23T20:20:25"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -533,6 +533,24 @@
 ・子プレイヤー３</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:3]の　パレスに　しんにゅうしました</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:3]の　パレスに　しんにゅうしました</language>
+	</row>
+
+	<row id="msg_invasion_title_000" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>タイトルメッセージ</comment>
+		<language name="JPN" width="256">タッチで　パレスにいけます</language>
+		<language name="JPN_KANJI" width="256">タッチで　パレスにいけます</language>
+	</row>
+
+	<row id="msg_invasion_title_001" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>タイトルメッセージ</comment>
+		<language name="JPN" width="256">いま　じぶんの　パレスにいます</language>
+		<language name="JPN_KANJI" width="256">いま　じぶんの　パレスにいます</language>
+	</row>
+
+	<row id="msg_invasion_title_002" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>タイトルメッセージ</comment>
+		<language name="JPN" width="256">いま　[1:00:トレーナー名:0]の　パレスにいます</language>
+		<language name="JPN_KANJI" width="256">いま　[1:00:トレーナー名:0]の　パレスにいます</language>
 	</row>
 
 	<row id="msg_invasion_test09_00">

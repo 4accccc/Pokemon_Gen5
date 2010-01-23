@@ -112,15 +112,16 @@ void IntrudeField_UpdateCommSystem( FIELDMAP_WORK *fieldWork ,
     return;
   }
 
-
-  if(intcomm->comm_status != INTRUDE_COMM_STATUS_UPDATE){
-    return;
-  }
   if(intcomm->palace_in == FALSE){
     PLAYER_WORK *my_player = GAMEDATA_GetMyPlayerWork(gamedata);
     if(ZONEDATA_IsPalace( PLAYERWORK_getZoneID( my_player ) ) == TRUE){
       intcomm->palace_in = TRUE;
     }
+  }
+  IntrudeField_ConnectMap(fieldWork, gameSys, intcomm);
+
+  if(intcomm->comm_status != INTRUDE_COMM_STATUS_UPDATE){
+    return;
   }
 
   my_net_id = GAMEDATA_GetIntrudeMyID(gamedata);
@@ -152,7 +153,6 @@ void IntrudeField_UpdateCommSystem( FIELDMAP_WORK *fieldWork ,
     }
   }
   
-  IntrudeField_ConnectMap(fieldWork, gameSys, intcomm);
   _PalaceFieldPlayerWarp(fieldWork, gameSys, pcActor, intcomm);
   
   //※check　デバッグ
@@ -816,7 +816,15 @@ void IntrudeField_ConnectMap(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameSys, IN
     return;
   }
   
+#if 0 //ループマップなのに1つも連結されていないのはチラつきの原因っぽいので
+      //最低でも一つは連結しておく 2010.01.23(土)
   use_num = intcomm->member_num - 1;  // -1 = 自分の分は引く
+#else
+  use_num = intcomm->member_num - 1;
+  if(use_num <= 0){
+    use_num = 1;
+  }
+#endif
   if(intcomm->connect_map_count < use_num){
     MAP_MATRIX *mmatrix = MAP_MATRIX_Create( HEAPID_WORLD );
     MAP_MATRIX_Init(mmatrix, NARC_map_matrix_palace02_mat_bin, ZONE_ID_PALACE01);

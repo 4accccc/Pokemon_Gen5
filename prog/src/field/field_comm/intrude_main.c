@@ -57,7 +57,7 @@ const PALACE_TOWN_DATA PalaceTownData[] = {
   {
     ZONE_ID_C07, 
     ZONE_ID_PLC07, 
-    7*8, 3*8,
+    9*8, 7*8,
     {
       2792/16, 3112/16, 32,
       2792/16, 2888/16, 32,
@@ -68,7 +68,7 @@ const PALACE_TOWN_DATA PalaceTownData[] = {
   {
     ZONE_ID_C08, 
     ZONE_ID_PLC08, 
-    0x10*8, 3*8,
+    0x10*8, 7*8,
     {
       6632/16, 2856/16, 33,
       6952/16, 2792/16, 33,
@@ -79,7 +79,7 @@ const PALACE_TOWN_DATA PalaceTownData[] = {
   {
     ZONE_ID_C06, 
     ZONE_ID_PLC06, 
-    0x19*8, 3*8,
+    0x17*8, 7*8,
     {
       1656/16,4888/16, 0, 
       1688/16,4760/16, 0, 
@@ -90,7 +90,7 @@ const PALACE_TOWN_DATA PalaceTownData[] = {
   {
     ZONE_ID_T03, 
     ZONE_ID_PLT03, 
-    2*8, 0xa*8,
+    5*8, 0xb*8+4,
     {
       10552/16, 2824/16, 80,
       10488/16,3000/16, 0, 
@@ -101,7 +101,7 @@ const PALACE_TOWN_DATA PalaceTownData[] = {
   {
     ZONE_ID_T04, 
     ZONE_ID_PLT04, 
-    0x1e*8, 0xa*8,
+    0x1b*8, 0xb*8+4,
     {
       11640/16, 4824/16, 16,
       11816/16,4888/16, 0, 
@@ -112,7 +112,7 @@ const PALACE_TOWN_DATA PalaceTownData[] = {
   {
     ZONE_ID_C05, 
     ZONE_ID_PLC05, 
-    7*8, 0x11*8,
+    9*8, 0x10*8,
     {
       3752/16,6952/16, 0, 
       3320/16,6920/16, 0, 
@@ -123,7 +123,7 @@ const PALACE_TOWN_DATA PalaceTownData[] = {
   {
     ZONE_ID_C04, 
     ZONE_ID_PLC04, 
-    0x10*8, 0x11*8,
+    0x10*8, 0x10*8,
     {
       6936/16, 7448/16, 16,
       6856/16, 7000/16, 16,
@@ -134,7 +134,7 @@ const PALACE_TOWN_DATA PalaceTownData[] = {
   {
     ZONE_ID_BC10,
     ZONE_ID_PLC10, 
-    0x19*8, 0x11*8,
+    0x17*8, 0x10*8,
     {
       5,4, 0, 
       5,4, 0, 
@@ -147,9 +147,9 @@ SDK_COMPILER_ASSERT(NELEMS(PalaceTownData) == PALACE_TOWN_DATA_MAX);
 
 ///パレスへワープしてきたときの出現座標
 static const VecFx32 PalaceWarpPos = {
-  1016 * FX32_ONE,
-  0*FX32_ONE,
-  552 * FX32_ONE,
+  PALACE_MAP_LEN/2,
+  32*FX32_ONE,
+  488 * FX32_ONE,
 };
 
 //--------------------------------------------------------------
