@@ -162,9 +162,11 @@ static GFL_PROC_RESULT MonolithProc_Init(GFL_PROC * proc, int * seq, void * pwk,
 	GXS_SetVisiblePlane(0);
 	GX_SetVisibleWnd(GX_WNDMASK_NONE);
 	GXS_SetVisibleWnd(GX_WNDMASK_NONE);
-	G2_BlendNone();
-	G2S_BlendNone();
-	
+//	G2_BlendNone();
+//	G2S_BlendNone();
+	G2_SetBlendAlpha(GX_BLEND_PLANEMASK_BG2, GX_BLEND_PLANEMASK_BG3, 15, 15);
+	G2S_SetBlendAlpha(GX_BLEND_PLANEMASK_BG2, GX_BLEND_PLANEMASK_BG3, 15, 15);
+
 	//ã‰º‰æ–ÊÝ’è
 	GFL_DISP_SetDispSelect(GFL_DISP_3D_TO_MAIN);
 
@@ -346,6 +348,9 @@ static GFL_PROC_RESULT MonolithProc_End( GFL_PROC * proc, int * seq, void * pwk,
   _Setup_VramExit();
 
 	GFL_ARC_CloseDataHandle(monosys->setup.hdl);
+
+	G2_BlendNone();
+	G2S_BlendNone();
 
   GFL_PROC_FreeWork(proc);
 	GFL_HEAP_DeleteHeap(HEAPID_MONOLITH);
