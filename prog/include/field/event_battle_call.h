@@ -40,9 +40,8 @@ enum
 //==============================================================================
 typedef struct{
   GAMESYS_WORK * gsys;
-  FIELDMAP_WORK * fieldmap;
-  BATTLE_SETUP_PARAM  btl_setup_prm;
-  COMM_BTL_DEMO_PARAM demo_prm;
+  BATTLE_SETUP_PARAM  *btl_setup_prm;
+  COMM_BTL_DEMO_PARAM *demo_prm;
 }EVENT_BATTLE_CALL_WORK;
 
 //=============================================================================
@@ -50,6 +49,19 @@ typedef struct{
  *								EXTERN宣言
  */
 //=============================================================================
+
+//==================================================================
+/**
+ * イベント作成：通信バトル呼び出し
+ *
+ * @param   gsys		
+ * @param   para		
+ * @param   demo_prm		
+ *
+ * @retval  GMEVENT *		
+ */
+//==================================================================
+extern GMEVENT * EVENT_CommBattle(GAMESYS_WORK * gsys, BATTLE_SETUP_PARAM *btl_setup_prm, COMM_BTL_DEMO_PARAM *demo_prm);
 
 //-----------------------------------------------------------------------------
 /**

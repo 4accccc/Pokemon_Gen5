@@ -3832,6 +3832,7 @@ static BOOL OneselfSeq_ColosseumBattle(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATI
     
     battle_setup->partyPlayer = clsys->recvbuf.pokeparty[my_net_id];
     battle_setup->standing_pos = clsys->recvbuf.stand_position[my_net_id];
+    ColosseumTool_SetupBattleDemoParent(clsys, &battle_setup->demo, HEAPID_UNION);
     
     unisys->parent_work = battle_setup;
     UnionSubProc_EventSet(unisys, UNION_SUBPROC_ID_BATTLE, battle_setup);
@@ -3844,7 +3845,9 @@ static BOOL OneselfSeq_ColosseumBattle(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATI
     }
     
     UnionOneself_ReqStatus(unisys, UNION_STATUS_COLOSSEUM_STANDING_BACK);
-
+    
+    battle_setup = unisys->parent_work;
+    ColosseumTool_DeleteBattleDemoParent(&battle_setup->demo);
     GFL_HEAP_FreeMemory(unisys->parent_work);
     unisys->parent_work = NULL;
     return TRUE;

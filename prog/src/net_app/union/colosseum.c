@@ -17,6 +17,7 @@
 #include "field\field_player.h"
 #include "field\fieldmap.h"
 #include "colosseum_comm_command.h"
+#include "battle/btl_net.h"
 
 
 //==============================================================================
@@ -69,6 +70,7 @@ COLOSSEUM_SYSTEM_PTR Colosseum_InitSystem(GAMEDATA *game_data, GAMESYS_WORK *gsy
   my_basic->trainer_view = MyStatus_GetTrainerView(myst);
   my_basic->occ = TRUE;
   my_basic->force_entry = (intrude == TRUE) ? FALSE : TRUE;
+  my_basic->battle_server_version = BTL_NET_SERVER_VERSION;
   
   //自分のトレーナーカード情報セット
   TRAINERCARD_GetSelfData(clsys->recvbuf.tr_card[my_net_id], game_data, TRUE);

@@ -68,6 +68,12 @@ static const POINT_S16 ColosseumWayOutPos_multi[] = {
 };
 
 
+//==============================================================================
+//  プロトタイプ宣言
+//==============================================================================
+static void _BattleDemoParent_SetTrainerData(COLOSSEUM_SYSTEM_PTR clsys, COMM_BTL_DEMO_TRAINER_DATA *demo_tr, NetID net_id, HEAPID heap_id);
+
+
 
 //==================================================================
 /**
@@ -348,6 +354,89 @@ void ColosseumTool_CommPlayerUpdate(COLOSSEUM_SYSTEM_PTR clsys)
     }
   }
 }
+
+//==================================================================
+/**
+ * バトル開始・終了デモ用ParentWork作成
+ *
+ * @param   clsys		
+ * @param   cbdp		
+ * @param   heap_id		
+ */
+//==================================================================
+void ColosseumTool_SetupBattleDemoParent(COLOSSEUM_SYSTEM_PTR clsys, COMM_BTL_DEMO_PARAM *cbdp, HEAPID heap_id)
+{
+  int net_id, member_max, set_id, stand_pos;
+  
+  GFL_STD_MemClear(cbdp, sizeof(COMM_BTL_DEMO_PARAM));
+  
+  cbdp->type = COMM_BTL_DEMO_TYPE_MULTI_START;
+  member_max = 0;
+  for(net_id = 0; net_id < COLOSSEUM_MEMBER_MAX; net_id++){
+    member_max++;
+    if(clsys->recvbuf.pokeparty_occ[net_id] == FALSE){
+      cbdp->type = COMM_BTL_DEMO_TYPE_NORMAL_START;
+      break;
+    }
+  }
+  
+  for(net_id = 0; net_id < member_max; net_id++){
+    stand_pos = clsys->recvbuf.stand_position[net_id];
+    if((stand_pos & 1) == 0){  //左側
+      set_id = COMM_BTL_DEMO_TRDATA_A;
+    }
+    else{ //右側
+      if(cbdp->type == COMM_BTL_DEMO_TYPE_NORMAL_START){
+        set_id = COMM_BTL_DEMO_TRDATA_B;
+      }
+      else{
+        set_id = COMM_BTL_DEMO_TRDATA_C;
+      }
+    }
+    _BattleDemoParent_SetTrainerData(
+      clsys, &cbdp->trainer_data[set_id + (stand_pos >> 1)], net_id, heap_id);
+  }
+}
+
+//==================================================================
+/**
+ * バトル開始・終了デモ用ParentWork解放処理
+ *
+ * @param   cbdp		
+ */
+//==================================================================
+void ColosseumTool_DeleteBattleDemoParent(COMM_BTL_DEMO_PARAM *cbdp)
+{
+  int net_id;
+  
+  for(net_id = 0; net_id < COLOSSEUM_MEMBER_MAX; net_id++){
+    if(cbdp->trainer_data[net_id].str_trname != NULL){
+      GFL_STR_DeleteBuffer(cbdp->trainer_data[net_id].str_trname);
+    }
+  }
+  GFL_STD_MemClear(cbdp, sizeof(COMM_BTL_DEMO_PARAM));
+}
+
+//--------------------------------------------------------------
+/**
+ * バトル開始・終了デモで使用するトレーナーデータをセット
+ *
+ * @param   clsys		
+ * @param   demo_tr		トレーナーデータ代入先
+ * @param   net_id		対象のNetID
+ * @param   heap_id		
+ */
+//--------------------------------------------------------------
+static void _BattleDemoParent_SetTrainerData(COLOSSEUM_SYSTEM_PTR clsys, COMM_BTL_DEMO_TRAINER_DATA *demo_tr, NetID net_id, HEAPID heap_id)
+{
+  demo_tr->party = clsys->recvbuf.pokeparty[net_id];
+  demo_tr->str_trname = GFL_STR_CreateBuffer( PERSON_NAME_SIZE + EOM_SIZE, heap_id );
+  GFL_STR_SetStringCodeOrderLength(demo_tr->str_trname, clsys->basic_status[net_id].name,
+    PERSON_NAME_SIZE + EOM_SIZE);
+  demo_tr->trsex = clsys->basic_status[net_id].sex;
+  demo_tr->server_version = clsys->basic_status[net_id].battle_server_version;
+}
+
 
 #if 0 //※check
 void ColosseumTool_ActorSetup(COLOSSEUM_SYSTEM_PTR clsys)

@@ -34,6 +34,7 @@
 #include "field/event_fldmmdl_control.h"
 #include "field/event_colosseum_battle.h"
 #include "gamesystem\btl_setup.h"
+#include "field/event_battle_call.h"
 
 
 //============================================================================================
@@ -54,6 +55,7 @@ typedef struct{
   GAMESYS_WORK * gsys;
   FIELDMAP_WORK * fieldmap;
   BATTLE_SETUP_PARAM para;
+  COMM_BTL_DEMO_PARAM *demo_prm;
 }EVENT_COLOSSEUM_BATTLE_WORK;
 
 
@@ -86,42 +88,16 @@ static GMEVENT_RESULT EVENT_ColosseumBattleMain(GMEVENT * event, int *  seq, voi
     (*seq)++;
     break;
   case 3:
-    {
-      GFL_OVERLAY_Load( FS_OVERLAY_ID( battle ) );
-      GFL_NET_AddCommandTable(GFL_NET_CMD_BATTLE, BtlRecvFuncTable, BTL_NETFUNCTBL_ELEMS, NULL);
-      GFL_NET_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_BATTLE_ADD_CMD_TBL_AFTER);
-      OS_TPrintf("戦闘用通信コマンドテーブルをAddしたので同期取り\n");
-      (*seq) ++;
-    }
+    GMEVENT_CallEvent( event, EVENT_CommBattle(gsys, &cbw->para, cbw->demo_prm) );
     break;
   case 4:
-    if(GFL_NET_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_BATTLE_ADD_CMD_TBL_AFTER)){
-      OS_TPrintf("戦闘用通信コマンドテーブルをAdd後の同期取り完了\n");
-      (*seq) ++;
-    }
-    break;
-  case 5:
-    GMEVENT_CallEvent(event, EVENT_FSND_PushPlayNextBGM(gsys, cbw->para.musicDefault, FSND_FADE_SHORT, FSND_FADE_NONE)); 
-    GAMESYSTEM_CallProc(gsys, NO_OVERLAY_ID, &BtlProcData, &cbw->para);
-//    GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 1);
-    (*seq)++;
-    break;
-  case 6:
-    if (GAMESYSTEM_IsProcExists(gsys) != GFL_PROC_MAIN_NULL){
-      break;
-    }
-    OS_TPrintf("バトル完了\n");
-    GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle ) );
-    BATTLE_PARAM_Release( &cbw->para );
-    (*seq)++;
-    break;
-
-  case 7:
+    BATTLE_PARAM_Release( &cbw->para ); //バトルSetupParam解放
+    
     OS_TPrintf("_FIELD_OPEN\n");
     GMEVENT_CallEvent(event, EVENT_FieldOpen(gsys));
     (*seq) ++;
     break;
-  case 8:
+  case 5:
     OS_TPrintf("_FIELD_FADEIN\n");
     {
       GMEVENT* fade_event;
@@ -130,11 +106,11 @@ static GMEVENT_RESULT EVENT_ColosseumBattleMain(GMEVENT * event, int *  seq, voi
     }
     (*seq) ++;
     break;
-  case 9:
+  case 6:
     GMEVENT_CallEvent(event, EVENT_FSND_PopBGM(gsys, FSND_FADE_SHORT, FSND_FADE_NORMAL));
     (*seq) ++;
     break;
-  case 10:
+  case 7:
     return GMEVENT_RES_FINISH;
   default:
     GF_ASSERT(0);
@@ -145,7 +121,7 @@ static GMEVENT_RESULT EVENT_ColosseumBattleMain(GMEVENT * event, int *  seq, voi
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-GMEVENT* EVENT_ColosseumBattle(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, UNION_PLAY_CATEGORY play_category, const COLOSSEUM_BATTLE_SETUP *setup)
+GMEVENT* EVENT_ColosseumBattle(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, UNION_PLAY_CATEGORY play_category, COLOSSEUM_BATTLE_SETUP *setup)
 {
   BATTLE_SETUP_PARAM * para;
   EVENT_COLOSSEUM_BATTLE_WORK * cbw;
@@ -158,6 +134,7 @@ GMEVENT* EVENT_ColosseumBattle(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, UN
   cbw = GMEVENT_GetEventWork(event);
   cbw->gsys = gsys;
   cbw->fieldmap = fieldmap;
+  cbw->demo_prm = &setup->demo;
   para = &cbw->para;
 
   switch(play_category){

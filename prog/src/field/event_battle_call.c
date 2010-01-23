@@ -55,6 +55,31 @@ FS_EXTERN_OVERLAY(battle);
 //    サブイベント
 //
 //============================================================================================
+//==================================================================
+/**
+ * イベント作成：通信バトル呼び出し
+ *
+ * @param   gsys		
+ * @param   para		
+ * @param   demo_prm		
+ *
+ * @retval  GMEVENT *		
+ */
+//==================================================================
+GMEVENT * EVENT_CommBattle(GAMESYS_WORK * gsys, BATTLE_SETUP_PARAM *btl_setup_prm, COMM_BTL_DEMO_PARAM *demo_prm)
+{
+  EVENT_BATTLE_CALL_WORK *bcw;
+  GMEVENT * event;
+
+  event = GMEVENT_Create( gsys, NULL, EVENT_CommBattleMain, sizeof(EVENT_BATTLE_CALL_WORK) );
+  bcw = GMEVENT_GetEventWork(event);
+  bcw->gsys = gsys;
+  bcw->btl_setup_prm = btl_setup_prm;
+  bcw->demo_prm = demo_prm;
+  
+  return event;
+}
+
 //-----------------------------------------------------------------------------
 /**
  *	@brief  イベント：通信バトル呼び出し
@@ -93,6 +118,9 @@ GMEVENT_RESULT EVENT_CommBattleMain(GMEVENT * event, int *  seq, void * work)
     break;
 
   case SEQ_BATTLE_TIMING_INIT:
+    if (GAMESYSTEM_IsProcExists(gsys) != GFL_PROC_MAIN_NULL){
+      break;
+    }
     {
       GFL_OVERLAY_Load( FS_OVERLAY_ID( battle ) );
       GFL_NET_AddCommandTable(GFL_NET_CMD_BATTLE, BtlRecvFuncTable, BTL_NETFUNCTBL_ELEMS, NULL);
@@ -108,8 +136,8 @@ GMEVENT_RESULT EVENT_CommBattleMain(GMEVENT * event, int *  seq, void * work)
     }
     break;
   case SEQ_BATTLE_INIT:
-    GMEVENT_CallEvent(event, EVENT_FSND_PushPlayNextBGM(gsys, bcw->btl_setup_prm.musicDefault, FSND_FADE_SHORT, FSND_FADE_NONE)); 
-    GAMESYSTEM_CallProc(gsys, NO_OVERLAY_ID, &BtlProcData, &bcw->btl_setup_prm);
+    GMEVENT_CallEvent(event, EVENT_FSND_PushPlayNextBGM(gsys, bcw->btl_setup_prm->musicDefault, FSND_FADE_SHORT, FSND_FADE_NONE)); 
+    GAMESYSTEM_CallProc(gsys, NO_OVERLAY_ID, &BtlProcData, bcw->btl_setup_prm);
     (*seq)++;
     break;
   case SEQ_BATTLE_END:
@@ -118,7 +146,6 @@ GMEVENT_RESULT EVENT_CommBattleMain(GMEVENT * event, int *  seq, void * work)
     }
     OS_TPrintf("バトル完了\n");
     GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle ) );
-    BATTLE_PARAM_Release( &bcw->btl_setup_prm );
     (*seq)++;
     break;
   case SEQ_CALL_END_DEMO:

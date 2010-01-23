@@ -8,6 +8,8 @@
 //==============================================================================
 #pragma once
 
+#include "demo/comm_btl_demo.h"
+
 //==============================================================================
 //  äOïîä÷êîêÈåæ
 //==============================================================================
@@ -23,3 +25,5 @@ extern BOOL ColosseumTool_AllReceiveCheck_Leave(COLOSSEUM_SYSTEM_PTR clsys);
 extern BOOL ColosseumTool_ReceiveCheck_Leave(COLOSSEUM_SYSTEM_PTR clsys);
 extern BOOL ColosseumTool_CheckWayOut(FIELDMAP_WORK *fieldWork);
 extern void ColosseumTool_CommPlayerUpdate(COLOSSEUM_SYSTEM_PTR clsys);
+extern void ColosseumTool_SetupBattleDemoParent(COLOSSEUM_SYSTEM_PTR clsys, COMM_BTL_DEMO_PARAM *cbdp, HEAPID heap_id);
+extern void ColosseumTool_DeleteBattleDemoParent(COMM_BTL_DEMO_PARAM *cbdp);

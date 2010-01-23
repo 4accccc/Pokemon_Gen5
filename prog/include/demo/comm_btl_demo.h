@@ -62,8 +62,8 @@ enum
 //==============================================================
 typedef struct {
   const POKEPARTY* party; ///< 所有ポケモンデータ
-  const STRBUF* str_trname[ TRAINER_NAME_BUF_LEN ]; ///< トレイナー名
-  u8 trsex;                                        ///< トレイナーの性別:PTL_SEX_XXX
+  STRBUF* str_trname;  ///< トレイナー名
+  u8 trsex;                                        ///< トレイナーの性別:PM_MALE or PM_FEMALE
   u8 server_version;                               ///< ROMのサーババージョン
   u8 padding[2];
 } COMM_BTL_DEMO_TRAINER_DATA;

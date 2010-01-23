@@ -42,7 +42,8 @@ typedef struct{
   u8 trainer_view;
   u8 occ;               ///< TRUE:データ有効
   u8 force_entry;       ///< TRUE:強制エントリー
-  u8 padding[2];
+  u8 battle_server_version;    ///< バトルサーバーバージョン
+  u8 padding;
 }COLOSSEUM_BASIC_STATUS;
 
 ///親だけが持つシステムデータ
