@@ -33,7 +33,8 @@ enum {
 	NARC_comm_tvt_tv_t_upper_obj_NANR = 19,
 	NARC_comm_tvt_tv_t_lower_obj_NCGR = 20,
 	NARC_comm_tvt_tv_t_upper_obj_NCGR = 21,
-	NARC_comm_tvt_tv_t_ds_mode_ntft = 22
+	NARC_comm_tvt_tv_t_ds_mode_ntft = 22,
+	NARC_comm_tvt_tv_t_ds_mode_double_ntft = 23
 };
 
 /* NARC_COMM_TVT_NAIX_ */

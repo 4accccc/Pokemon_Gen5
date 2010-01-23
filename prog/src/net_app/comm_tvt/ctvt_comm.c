@@ -282,19 +282,7 @@ CTVT_COMM_WORK* CTVT_COMM_InitSystem( COMM_TVT_WORK *work , const HEAPID heapId 
       }
     }
     
-#if (defined(SDK_TWL))
-    if( OS_IsRunOnTwl() == TRUE &&
-        OS_IsRestrictPhotoExchange() == FALSE )
-#else
-    if( TRUE )
-#endif
-    {
-      commWork->beacon.canUseCamera = 1;
-    }
-    else
-    {
-      commWork->beacon.canUseCamera = 0;
-    }
+    commWork->beacon.canUseCamera = COMM_TVT_CanUseCamera();
   }
   
   //自身のデータセット
@@ -1408,6 +1396,10 @@ CTVT_COMM_MEMBER_DATA* CTVT_COMM_GetSelfMemberData( COMM_TVT_WORK *work , CTVT_C
 const BOOL CTVT_COMM_IsEnableMember( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork , const u8 idx )
 {
   return commWork->member[idx].isEnable;
+}
+const BOOL CTVT_COMM_CanUseCameraMember( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork , const u8 idx )
+{
+  return commWork->member[idx].data.canUseCamera;
 }
 
 //お絵描きバッファ取得

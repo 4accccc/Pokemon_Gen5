@@ -994,6 +994,20 @@ const BOOL COMM_TVT_IsTwlMode( void )
   return OS_IsRunOnTwl();
 }
 
+const BOOL COMM_TVT_CanUseCamera( void )
+{
+#if (defined(SDK_TWL))
+  if( OS_IsRunOnTwl() == TRUE &&
+      OS_IsRestrictPhotoExchange() == FALSE )
+#else
+  if( TRUE )
+#endif
+  {
+    return TRUE;
+  }
+  return FALSE;
+}
+
 //--------------------------------------------------------------------------
 //  YesNoÇèoÇ∑
 //--------------------------------------------------------------------------
