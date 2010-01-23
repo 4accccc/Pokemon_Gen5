@@ -1082,6 +1082,11 @@ static void CTVT_COMM_PostFlg( const int netID, const int size , const void* pDa
   //COMMが使う＆親機が子に通知する用
   case CCFT_TALK_MEMBER:
     commWork->talkMember = pkt->value;
+    if( pkt->value != CTVT_COMM_INVALID_MEMBER )
+    {
+      COMM_TVT_DispTalkIcon( commWork->parentWork , pkt->value );
+    }
+
     CTVT_TPrintf("TalkMember [%d].\n",pkt->value);
     break;
     
@@ -1120,6 +1125,7 @@ static void CTVT_COMM_PostFlg( const int netID, const int size , const void* pDa
       commWork->member[netID].reqTalk = FALSE;
       commWork->updateReqTalk = TRUE;
     }
+    COMM_TVT_EraseTalkIcon( commWork->parentWork );
     break;
     
   case CCFT_CANCEL_TALK:  //会話取り消し通知 //何かしらうまくいかなかったとき

@@ -954,7 +954,7 @@ static void CTVT_TALK_DrawLine( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork ,
   fx32 subX = 0;
   fx32 subY = 0;
   u8 i;
-  OS_TFPrintf(3,"[%d:%d][%d:%d]\n",x1,y1,x2,y2 );
+  //OS_TFPrintf(3,"[%d:%d][%d:%d]\n",x1,y1,x2,y2 );
   for( i=0;i<loopNum;i++ )
   {
     const int posX = x1 + (subX>>FX32_SHIFT);

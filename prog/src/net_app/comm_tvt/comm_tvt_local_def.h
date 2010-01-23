@@ -240,4 +240,6 @@ extern const BOOL COMM_TVT_IsTwlMode( void );
 extern const BOOL COMM_TVT_CanUseCamera( void );
 extern APP_TASKMENU_WORK* COMM_TVT_OpenYesNoMenu( COMM_TVT_WORK *work );
 extern void COMM_TVT_RedrawName( COMM_TVT_WORK *work );
+extern void COMM_TVT_DispTalkIcon( COMM_TVT_WORK *work , const u8 idx );
+extern void COMM_TVT_EraseTalkIcon( COMM_TVT_WORK *work );
 

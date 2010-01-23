@@ -574,8 +574,6 @@ static const BOOL CTVT_CAMERA_UpdateMemberState( CTVT_CAMERA_WORK *camWork ,CTVT
   if( memWork->isUpdate == TRUE )
   {
     BOOL ret = FALSE;
-    OS_TFPrintf(3,"[%3d][%3d][%3d][%3d]\n",memWork->dispPosX,memWork->dispPosY,memWork->dispSizeX,memWork->dispSizeY);
-    
     ret |= CTVT_CAMERA_UpdateMemberState_Util( camWork , &memWork->dispPosX  , &memWork->targetPosX  );
     ret |= CTVT_CAMERA_UpdateMemberState_Util( camWork , &memWork->dispPosY  , &memWork->targetPosY  );
     ret |= CTVT_CAMERA_UpdateMemberState_Util( camWork , &memWork->dispSizeX , &memWork->targetSizeX );

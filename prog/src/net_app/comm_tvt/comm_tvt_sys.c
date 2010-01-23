@@ -77,6 +77,7 @@ struct _COMM_TVT_WORK
   //セル系
   u32         cellResIdx[CTOR_MAX];
   GFL_CLUNIT  *cellUnit;
+  GFL_CLWK    *clwkRec;
 
   //上画面名前
   u8         nameDrawBit;   //netIdに対応
@@ -597,6 +598,23 @@ static void COMM_TVT_LoadResource( COMM_TVT_WORK *work )
     
     GFL_ARC_CloseDataHandle( commonArcHandle );
   }
+  
+  //会話アイコン
+  {
+    GFL_CLWK_DATA cellInitData;
+    cellInitData.pos_x = 0;
+    cellInitData.pos_y = 0;
+    cellInitData.anmseq = CTOAM_TALK;
+    cellInitData.softpri = 0;
+    cellInitData.bgpri = 0;
+
+    work->clwkRec = GFL_CLACT_WK_Create( COMM_TVT_GetCellUnit(work) ,
+              COMM_TVT_GetObjResIdx( work, CTOR_COMMON_M_NCG ),
+              COMM_TVT_GetObjResIdx( work, CTOR_COMMON_M_PLT ),
+              COMM_TVT_GetObjResIdx( work, CTOR_COMMON_M_ANM ),
+              &cellInitData ,CLSYS_DRAW_MAIN , work->heapId );
+    GFL_CLACT_WK_SetDrawEnable( work->clwkRec , FALSE );
+  }
 
 }
 
@@ -606,6 +624,9 @@ static void COMM_TVT_LoadResource( COMM_TVT_WORK *work )
 static void COMM_TVT_ReleaseResource( COMM_TVT_WORK *work )
 {
   u8 i;
+  
+  GFL_CLACT_WK_Remove( work->clwkRec );
+  
   for( i=CTOR_PLT_TOP;i<CTOR_NCG_TOP;i++ )
   {
     GFL_CLGRP_PLTT_Release( work->cellResIdx[i] );
@@ -1058,7 +1079,52 @@ void COMM_TVT_RedrawName( COMM_TVT_WORK *work )
       GFL_BMPWIN_ClearScreen( work->nameWin[i] );
     }
   }
-  GFL_BG_LoadScreenV_Req( CTVT_FRAME_MAIN_MSG );
+  //GFL_BG_LoadScreenV_Req( CTVT_FRAME_MAIN_MSG );
+}
+
+//--------------------------------------------------------------------------
+//  会話アイコンの表示
+//--------------------------------------------------------------------------
+void COMM_TVT_DispTalkIcon( COMM_TVT_WORK *work , const u8 idx )
+{
+  const COMM_TVT_DISP_MODE mode = COMM_TVT_GetDispMode( work );
+  u8 pos = idx;
+  if( mode == CTDM_DOUBLE )
+  {
+    if( idx == 0 )
+    {
+      pos = 2;
+    }
+    else
+    {
+      pos = 3;
+    }
+  }
+  
+  {
+    //Xは名前の分足す
+    const u8 posX[4] = { 64+8, 128+64+8 , 64+8 , 128+64+8 };
+    const u8 posY[4] = { 96-8 , 96-8 , 192-8 , 192-8 };
+    GFL_CLACTPOS cellPos;
+
+    CTVT_COMM_MEMBER_DATA *memData = CTVT_COMM_GetMemberData( work , work->commWork , idx );
+    MYSTATUS *myStatus = (MYSTATUS*)memData->myStatusBuff;
+    STRBUF *str = MyStatus_CreateNameString( myStatus , work->heapId );
+    const u8 nameLen = PRINTSYS_GetStrWidth( str , work->fontHandle , 0 );
+    GFL_STR_DeleteBuffer( str );
+
+    
+    cellPos.x = posX[pos] + nameLen/2 ;
+    cellPos.y = posY[pos];
+    
+    GFL_CLACT_WK_SetPos( work->clwkRec , &cellPos , CLSYS_DRAW_MAIN );
+    GFL_CLACT_WK_SetDrawEnable( work->clwkRec , TRUE );
+  }
+}
+
+void COMM_TVT_EraseTalkIcon( COMM_TVT_WORK *work )
+{
+  GFL_CLACT_WK_SetDrawEnable( work->clwkRec , FALSE );
 }
 
 #pragma mark [>proc func
