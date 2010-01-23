@@ -24,7 +24,9 @@ enum {
 	NARC_palace_palace_obj_NCLR = 10,
 	NARC_palace_palace_bg_lz_NCGR = 11,
 	NARC_palace_palace_bg_lz_NSCR = 12,
-	NARC_palace_palace_bg_NCLR = 13
+	NARC_palace_palace_bar_lz_NSCR = 13,
+	NARC_palace_palace_bar2_lz_NSCR = 14,
+	NARC_palace_palace_bg_NCLR = 15
 };
 
 /* NARC_PALACE_NAIX_ */
