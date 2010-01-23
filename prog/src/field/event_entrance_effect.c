@@ -42,10 +42,13 @@ static void getPlayerFrontPos(FIELDMAP_WORK * fieldmap, VecFx32 * pos);
 //------------------------------------------------------------------
 typedef struct {
   //以下はワーク生成時にセットされる
-  GAMESYS_WORK * gsys;  //<<<ゲームシステムへのポインタ
-  LOCATION loc_req;     //<<<次のマップを指すロケーション指定（BGMフェード処理の係数）
-  VecFx32 pos;          //<<<ドアを検索する場所
-  BOOL cam_anm_flag;    //<<<カメラアニメーションの有無
+  GAMESYS_WORK * gsys;   //<<<ゲームシステムへのポインタ
+  LOCATION loc_req;      //<<<次のマップを指すロケーション指定（BGMフェード処理の係数）
+  VecFx32 pos;           //<<<ドアを検索する場所
+  BOOL cam_anm_flag;     //<<<カメラアニメーションの有無
+  BOOL season_disp_flag; //<<<四季表示を行うかどうか
+  u8 start_season;       //<<<最初に表示する季節 ( 四季表示を行う場合のみ有効 )
+  u8 end_season;         //<<<最後に表示する季節 ( 四季表示を行う場合のみ有効 )
 
   //以下はシーケンス動作中にセットされる
   //FIELD_BMODEL * entry;
@@ -107,19 +110,15 @@ static GMEVENT_RESULT ExitEvent_DoorOut(GMEVENT * event, int *seq, void * work)
     break;
 
   case SEQ_DOOROUT_FADEIN:
-    { // フェードイン
-      GMEVENT* fade_event;
-      FIELD_STATUS* fstatus; 
-      fstatus = GAMEDATA_GetFieldStatus( gamedata );
-      if( FIELD_STATUS_GetSeasonDispFlag(fstatus) )  // if(季節表示あり)
-      { // 季節フェード
-        fade_event = EVENT_FieldFadeIn_Season(gsys, fieldmap);
-      }
-      else
-      { // クロスフェード
-        fade_event = EVENT_FieldFadeIn_Cross(gsys, fieldmap);
-      }
-      GMEVENT_CallEvent( event, fade_event );
+    // 画面フェードイン
+    if( fdaw->season_disp_flag )
+    { // 季節フェード
+      GMEVENT_CallEvent( event, 
+          EVENT_FieldFadeIn_Season(gsys, fieldmap, fdaw->start_season, fdaw->end_season) );
+    }
+    else
+    { // クロスフェード
+      GMEVENT_CallEvent( event, EVENT_FieldFadeIn_Cross(gsys, fieldmap) );
     }
     *seq = SEQ_DOOROUT_CAMERA_ACT;
     break;
@@ -200,20 +199,27 @@ static GMEVENT_RESULT ExitEvent_DoorOut(GMEVENT * event, int *seq, void * work)
  * @param gsys
  * @param fieldmap
  * @param loc
+ * @param cam_anm_flag
+ * @param season_disp_flag
  * @return  GMEVENT
  */
 //------------------------------------------------------------------
-GMEVENT * EVENT_FieldDoorOutAnime( GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, BOOL cam_anm_flag )
+GMEVENT * EVENT_FieldDoorOutAnime ( GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, 
+                                    BOOL cam_anm_flag,
+                                    BOOL season_disp_flag, u8 start_season, u8 end_season )
 {
   GMEVENT * event;
   FIELD_DOOR_ANIME_WORK * fdaw;
-  event = GMEVENT_Create( gsys, NULL,ExitEvent_DoorOut, sizeof(FIELD_DOOR_ANIME_WORK) ); 
+  event = GMEVENT_Create( gsys, NULL, ExitEvent_DoorOut, sizeof(FIELD_DOOR_ANIME_WORK) ); 
 
   fdaw = GMEVENT_GetEventWork( event );
   fdaw->gsys = gsys;
   //fdaw->loc_req = * loc;
   getPlayerFrontPos(fieldmap, &fdaw->pos);
   fdaw->cam_anm_flag = cam_anm_flag;
+  fdaw->season_disp_flag = season_disp_flag;
+  fdaw->start_season = start_season;
+  fdaw->end_season = end_season;
 
   return event;
 }
@@ -294,19 +300,14 @@ static GMEVENT_RESULT ExitEvent_DoorIn(GMEVENT * event, int *seq, void * work)
     break;
 
   case SEQ_DOORIN_FADEOUT:
-    { // フェードアウト
-      GMEVENT* fade_event;
-      FIELD_STATUS* fstatus; 
-      fstatus = GAMEDATA_GetFieldStatus( gamedata );
-      if( FIELD_STATUS_GetSeasonDispFlag(fstatus) )  // if(季節表示あり)
-      { // 輝度フェード
-        fade_event = EVENT_FieldFadeOut_Black(gsys, fieldmap, FIELD_FADE_WAIT);
-      }
-      else
-      { // クロスフェード
-        fade_event = EVENT_FieldFadeOut_Cross(gsys, fieldmap);
-      }
-      GMEVENT_CallEvent( event, fade_event );
+    // 画面フェードアウト
+    if( fdaw->season_disp_flag )
+    { // 輝度フェード
+      GMEVENT_CallEvent( event, EVENT_FieldFadeOut_Black(gsys, fieldmap, FIELD_FADE_WAIT) );
+    }
+    else
+    { // クロスフェード
+      GMEVENT_CallEvent( event, EVENT_FieldFadeOut_Cross(gsys, fieldmap) );
     }
     *seq = SEQ_DOORIN_END;
     break;
@@ -331,8 +332,9 @@ static GMEVENT_RESULT ExitEvent_DoorIn(GMEVENT * event, int *seq, void * work)
  * @return  GMEVENT
  */
 //------------------------------------------------------------------
-GMEVENT * EVENT_FieldDoorInAnime
-( GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, const LOCATION * loc, BOOL cam_anm_flag )
+GMEVENT * EVENT_FieldDoorInAnime ( 
+    GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, const LOCATION * loc, 
+    BOOL cam_anm_flag, BOOL season_disp_flag )
 {
   GMEVENT * event;
   FIELD_DOOR_ANIME_WORK * fdaw;
@@ -344,6 +346,7 @@ GMEVENT * EVENT_FieldDoorInAnime
   getPlayerFrontPos(fieldmap, &fdaw->pos);
   fdaw->ctrl = NULL;
   fdaw->cam_anm_flag = cam_anm_flag;
+  fdaw->season_disp_flag = season_disp_flag;
 
   return event;
 }
@@ -376,6 +379,4 @@ static void getPlayerFrontPos(FIELDMAP_WORK * fieldmap, VecFx32 * pos)
                   GF_ASSERT(0);
   }
 #endif
-}
-
-
+} 

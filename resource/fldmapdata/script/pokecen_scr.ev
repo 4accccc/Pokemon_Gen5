@@ -25,6 +25,7 @@ _EVENT_DATA    ev_init_pokecen
 _EVENT_DATA    ev_recover_pokecen
 _EVENT_DATA    ev_pokecen_elevator_in
 _EVENT_DATA    ev_pokecen_elevator_out
+_EVENT_DATA    ev_pokecen_elevator_out_continue
 _EVENT_DATA_END
 
 /**************************************************************/
@@ -450,12 +451,30 @@ _ANIME_LABEL    anm_player_board_elevator
   _ANIME_DATA   AC_DIR_D, 1
   _ANIME_DATA   ACMD_END,0
 
+
+
 /**************************************************************/
-/*  ポケセンエレベーターから出てくる */
+/*  ポケセンエレベーターから出てくる                          */
 /**************************************************************/
+DEFINE_LOCAL LWK_CONTINUE  // コンティニュー復帰かどうか
+
+/*------------------------------------------------------------*
+  通常の復帰用。
+ *------------------------------------------------------------*/
 ev_pokecen_elevator_out:
+  $LWK_CONTINUE = FALSE
   _CALL sub_pokecen_elevator_out
   _CHG_LOCAL_SCR
+
+/*------------------------------------------------------------*
+  コンティニュー復帰用。
+  画面フェードインの際にゲーム内の季節を表示する。
+ *------------------------------------------------------------*/
+ev_pokecen_elevator_out_continue:
+  $LWK_CONTINUE = TRUE
+  _CALL sub_pokecen_elevator_out
+  _CHG_LOCAL_SCR
+
 
 sub_pokecen_elevator_out:
 {
@@ -489,7 +508,11 @@ sub_pokecen_elevator_out:
   _BMODEL_ANIME_STOP( LWK_BM_FLOOR_ID )
 
 //マップフェードイン
-	_MAP_FADE_BLACK_IN_FORCE( )
+  IF $LWK_CONTINUE == TRUE THEN
+    _MAP_FADE_SEASON_IN_FORCE() 
+  ELSE 
+    _MAP_FADE_BLACK_IN_FORCE() 
+  ENDIF
 	_MAP_FADE_END_CHECK()
 
 //エレベーター上昇アニメ

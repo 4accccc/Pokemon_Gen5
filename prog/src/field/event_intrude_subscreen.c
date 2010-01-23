@@ -68,7 +68,7 @@ GMEVENT * EVENT_IntrudeTownWarp(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, in
   warp_zone_id = Intrude_GetPalaceTownZoneID(town_tblno);
   Intrude_GetPalaceTownRandPos(town_tblno, &pos, palace_area);
   
-  event = EVENT_ChangeMapPos(gsys, fieldWork, warp_zone_id, &pos, DIR_UP);
+  event = EVENT_ChangeMapPos(gsys, fieldWork, warp_zone_id, &pos, DIR_UP, FALSE);
   return event;
 }
 
@@ -99,7 +99,7 @@ GMEVENT * EVENT_IntrudePlayerWarp(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, 
   warp_zone_id = intcomm->intrude_status[player_netid].zone_id;
   pos = intcomm->intrude_status[player_netid].player_pack.pos;
   pos.z += 32 << FX32_SHIFT;
-  event = EVENT_ChangeMapPos(gsys, fieldWork, warp_zone_id, &pos, DIR_UP);
+  event = EVENT_ChangeMapPos(gsys, fieldWork, warp_zone_id, &pos, DIR_UP, FALSE);
   return event;
 }
 

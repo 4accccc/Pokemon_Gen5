@@ -91,7 +91,6 @@ static GMEVENT_RESULT EVENT_MapChangeNoFade(GMEVENT * event, int *seq, void*work
 
 
 
-
 //============================================================================================
 //
 //  イベント：ゲーム開始
@@ -168,17 +167,19 @@ static GMEVENT_RESULT EVENT_FirstMapIn(GMEVENT * event, int *seq, void *work)
 
     default:
       GF_ASSERT(0);
-    }
+    } 
 
     (*seq)++;
     break;
     
   case 1:
+    // BGM再生開始 ( フェードイン )
     {
-      FIELD_SOUND* fsnd = GAMEDATA_GetFieldSound( gamedata );
-      u32 no = FSND_GetFieldBGM( gamedata, fmw->loc_req.zone_id );
+      u32 soundIdx;
+      
+      soundIdx = FSND_GetFieldBGM( gamedata, fmw->loc_req.zone_id );
       GMEVENT_CallEvent( event, 
-          EVENT_FSND_ChangeBGM( gsys, no, FSND_FADE_NONE, FSND_FADE_NORMAL ) );
+          EVENT_FSND_ChangeBGM( gsys, soundIdx, FSND_FADE_NONE, FSND_FADE_NORMAL ) );
     }
     (*seq)++;
     break;
@@ -187,72 +188,43 @@ static GMEVENT_RESULT EVENT_FirstMapIn(GMEVENT * event, int *seq, void *work)
     GMEVENT_CallEvent(event, EVENT_FieldOpen_FieldProcOnly(gsys));
     (*seq)++;
     break;
+
   case 3:
-    fieldmap = GAMESYSTEM_GetFieldMapWork(gsys);
-    { // 季節表示の初期設定
-      BOOL disp = FALSE;
-      AREADATA* areadata = FIELDMAP_GetAreaData( fieldmap );
-      BOOL outdoor = ( AREADATA_GetInnerOuterSwitch(areadata) != 0 );
-      u8 season = GAMEDATA_GetSeasonID( gamedata );
-      FIELD_STATUS* fstatus = GAMEDATA_GetFieldStatus( gamedata );
-      if( fmw->game_init_mode == GAMEINIT_MODE_DEBUG )
-      { // デバッグスタート ==> 表示なし
-        FIELD_STATUS_SetSeasonDispFlag( fstatus, FALSE );
-        FIELD_STATUS_SetSeasonDispLast( fstatus, season );
-      }
-      else if( (fmw->game_init_mode == GAMEINIT_MODE_CONTINUE) && (outdoor != TRUE) )
-      { // 「つづきから」で屋内にいる場合 ==> 現在時刻の季節
-        GMTIME* gmtime;
-        SAVE_CONTROL_WORK* scw;
-        scw    = GAMEDATA_GetSaveControlWork( gamedata );
-        gmtime = SaveData_GetGameTime( scw );
-        season = PMSEASON_GetCurrentSeasonID();
-        season = PMSEASON_GetPrevSeasonID( season );
-        FIELD_STATUS_SetSeasonDispFlag( fstatus, TRUE );
-        FIELD_STATUS_SetSeasonDispLast( fstatus, season );
-      }
-      else
-      { // それ以外 ==> セーブした時点の季節を表示
-        season = PMSEASON_GetPrevSeasonID( season );
-        FIELD_STATUS_SetSeasonDispFlag( fstatus, TRUE );
-        FIELD_STATUS_SetSeasonDispLast( fstatus, season );
-      }
-    }
     if ( fmw->game_init_mode == GAMEINIT_MODE_CONTINUE 
         &&EVENTWORK_CheckEventFlag( ev, SYS_FLAG_SPEXIT_REQUEST ) )
     {
       EVENTWORK_ResetEventFlag( ev, SYS_FLAG_SPEXIT_REQUEST );
       if ( *(EVENTWORK_GetEventWorkAdrs( ev, WK_SYS_SCENE_COMM )) != 0 )
       {
-        SCRIPT_CallScript( event, SCRID_POKECEN_ELEVATOR_OUT, NULL, NULL, HEAPID_FIELDMAP );
+        SCRIPT_CallScript( event, SCRID_POKECEN_ELEVATOR_OUT_CONTINUE, NULL, NULL, HEAPID_FIELDMAP );
         *seq = 5;
         break;
       }
     }
     (*seq) ++;
     break;
+
   case 4:
-    {
-      GMEVENT* fade_event;
-      FIELD_STATUS* fstatus;
-      fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
-      fstatus = GAMEDATA_GetFieldStatus( gamedata );
-      if( FIELD_STATUS_GetSeasonDispFlag(fstatus) )
-      {
-        fade_event = EVENT_FieldFadeIn_Season(gsys, fieldmap);
-      }
-      else
-      { 
-        fade_event = EVENT_FieldFadeIn_Black(gsys, fieldmap, FIELD_FADE_WAIT);
-      }
-      GMEVENT_CallEvent(event, fade_event);
+    fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+    // 画面フェードイン
+    if( fmw->game_init_mode == GAMEINIT_MODE_DEBUG )
+    { // デバッグ開始
+      GMEVENT_CallEvent( event, EVENT_FieldFadeIn_Black( gsys, fieldmap, FIELD_FADE_WAIT ) );
     }
-    (*seq) ++;
+    else
+    { // はじめから / つづきから
+      u8 season = GAMEDATA_GetSeasonID( gamedata );
+      GMEVENT_CallEvent( event, EVENT_FieldFadeIn_Season( gsys, fieldmap, season, season ) );
+    }
+    (*seq)++;
     break;
+
   case 5:
-    fieldmap = GAMESYSTEM_GetFieldMapWork(gsys);
-    if(FIELDMAP_GetPlaceNameSys(fieldmap)){
-      FIELD_PLACE_NAME_DisplayForce(FIELDMAP_GetPlaceNameSys(fieldmap), fmw->loc_req.zone_id);
+    // 地名を表示する
+    fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+    if( FIELDMAP_GetPlaceNameSys(fieldmap) )
+    {
+      FIELD_PLACE_NAME_DisplayForce( FIELDMAP_GetPlaceNameSys(fieldmap), fmw->loc_req.zone_id );
     }
     return GMEVENT_RES_FINISH;
   }
@@ -294,8 +266,9 @@ GMEVENT * EVENT_CallGameStart(GAMESYS_WORK * gsys, GAME_INIT_WORK * game_init_wo
   GMEVENT * event;
 
   event = GMEVENT_Create(gsys, NULL, EVENT_FirstMapIn, sizeof(FIRST_MAPIN_WORK));
-  fmw = GMEVENT_GetEventWork(event);
-  fmw->gsys = gsys;
+  fmw   = GMEVENT_GetEventWork(event);
+
+  fmw->gsys     = gsys;
   fmw->gamedata = GAMESYSTEM_GetGameData(gsys);
   //fmw->game_init_work = game_init_work;
   fmw->game_init_mode = game_init_work->mode;
@@ -324,6 +297,7 @@ GMEVENT * EVENT_CallGameStart(GAMESYS_WORK * gsys, GAME_INIT_WORK * game_init_wo
     break;
 #endif //PM_DEBUG
   }
+
   return event;
 }
 
@@ -400,17 +374,24 @@ GMEVENT * DEBUG_EVENT_CallGameEnd( GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap
  * @brief マップ遷移処理イベント用ワーク
  */
 //------------------------------------------------------------------
-typedef struct {
-  GAMESYS_WORK * gsys;
-  GAMEDATA * gamedata;
-  FIELDMAP_WORK * fieldmap;
-  LOCATION loc_req;           ///<遷移先指定
+typedef struct 
+{
+  GAMESYS_WORK*  gameSystem;
+  GAMEDATA*      gameData;
+  FIELDMAP_WORK* fieldmap;
+
+  u16 before_zone_id;   ///<遷移前マップID
+  LOCATION loc_req;     ///<遷移先指定
   EXIT_TYPE exit_type;
-  u16 before_zone_id;         ///<遷移前マップID
-  u8  next_season;  ///<遷移後の季節
-  u8  mapchange_type; ///<チェンジタイプ EV_MAPCHG_TYPE
-  VecFx32 stream_pos;  ///<流砂遷移時にのみ使用
-}MAPCHANGE_WORK;
+  u8 mapchange_type; ///<チェンジタイプ EV_MAPCHG_TYPE
+  VecFx32 stream_pos;  ///<流砂中心座標 ( 流砂遷移時にのみ使用 )
+
+  BOOL seasonUpdateEnable; ///<季節の更新を許可するかどうか ( イベント呼び出し側で指定 )
+  BOOL seasonUpdateOccur;  ///<季節を更新するかどうか ( イベント内で決定 )
+  u16  prevSeason;         ///<遷移前の季節
+  u16  nextSeason;         ///<遷移後の季節
+
+} MAPCHANGE_WORK;
 
 typedef MAPCHANGE_WORK* MAPCHANGE_WORK_PTR;
 
@@ -421,119 +402,110 @@ typedef enum{
   EV_MAPCHG_FLYSKY,
   EV_MAPCHG_ESCAPE,
   EV_MAPCHG_TELEPORT,
-}EV_MAPCHG_TYPE;
+} EV_MAPCHG_TYPE;
+
 
 //------------------------------------------------------------------
 /**
- * @brief 季節の変化をチェックする
+ * @brief 季節を更新するかどうかを決定する
+ *
+ * @param work
  */
 //------------------------------------------------------------------
-static void CheckSeasonChange( MAPCHANGE_WORK* work )
+static void SetSeasonUpdate( MAPCHANGE_WORK* work )
 {
-  BOOL outdoor;
-  u8 last_season;
-  FIELD_STATUS* fstatus = GAMEDATA_GetFieldStatus( work->gamedata );
+  BOOL nextZoneIsOutdoor;
+  u16 prevSeason, nextSeason;
 
-  // 現在時刻から季節を求める
-  work->next_season = PMSEASON_GetCurrentSeasonID();
-  // 最後に表示した季節を取得
-  last_season = FIELD_STATUS_GetSeasonDispLast( fstatus );
-  // 遷移先が屋内か屋外かを判定
+  // 遷移前・遷移後の季節を決定
+  prevSeason = GAMEDATA_GetSeasonID( work->gameData );
+  nextSeason = PMSEASON_GetRealTimeSeasonID();
+  
+  // 遷移先が屋外かどうかを判定
   {
-    HEAPID heap_id;
-    u16 area_id;
-    AREADATA* areadata;
-    heap_id  = FIELDMAP_GetHeapID( work->fieldmap );
-    area_id  = ZONEDATA_GetAreaID( work->loc_req.zone_id );
-    areadata = AREADATA_Create( heap_id, area_id, work->next_season );
-    outdoor  = ( AREADATA_GetInnerOuterSwitch(areadata) != 0 );
-    AREADATA_Delete( areadata );
+    HEAPID heapID;
+    u16 areaID;
+    AREADATA* areaData;
+
+    heapID   = FIELDMAP_GetHeapID( work->fieldmap );
+    areaID   = ZONEDATA_GetAreaID( work->loc_req.zone_id );
+    areaData = AREADATA_Create( heapID, areaID, PMSEASON_SPRING );
+    nextZoneIsOutdoor = ( AREADATA_GetInnerOuterSwitch(areaData) != 0 );
+
+    AREADATA_Delete( areaData );
   }
-  // 季節表示の有無を決定
-  if( (work->next_season != last_season) && (outdoor == TRUE) )  // if(季節変化&&遷移先が屋外)
-  {
-    FIELD_STATUS_SetSeasonDispFlag( fstatus, TRUE );
-  }
-  else
-  {
-    FIELD_STATUS_SetSeasonDispFlag( fstatus, FALSE );
+
+  // 季節が変化 && 遷移先が屋外
+  if( (nextSeason != prevSeason) && (nextZoneIsOutdoor) )
+  { 
+    work->seasonUpdateOccur = TRUE; 
+    work->prevSeason = prevSeason;
+    work->nextSeason = nextSeason;
   }
 }
+
 //------------------------------------------------------------------
 /**
- * @brief 季節を更新する
+ * @brief マップチェンジ コア処理
  */
 //------------------------------------------------------------------
-static void UpdateSeason( MAPCHANGE_WORK* work )
+static GMEVENT_RESULT EVENT_FUNC_MapChangeCore( GMEVENT* event, int* seq, void* wk )
 {
-  // 遷移先の季節が求められていない
-  if( work->next_season == INVALID_SEASON_ID )
-  {
-    OBATA_Printf( "遷移先の季節が求められていません！\n" );
-    return;
-  }
-  // ゲームデータ更新
-  GAMEDATA_SetSeasonID( work->gamedata, work->next_season );
-
-  // DEBUG:
-  OBATA_Printf( "change season: ==> %d\n", work->next_season );
-}
-
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-static GMEVENT_RESULT EVENT_FUNC_MapChangeCore( GMEVENT* event, int* seq, void* work )
-{
-  MAPCHANGE_WORK*     mcw = *( (MAPCHANGE_WORK_PTR*)work );
-  GAMESYS_WORK*      gsys = mcw->gsys;
-  FIELDMAP_WORK* fieldmap = mcw->fieldmap;
-  GAMEDATA*      gamedata = mcw->gamedata;
+  MAPCHANGE_WORK* work       = *( (MAPCHANGE_WORK_PTR*)wk );
+  GAMESYS_WORK*   gameSystem = work->gameSystem;
+  FIELDMAP_WORK*  fieldmap   = work->fieldmap;
+  GAMEDATA*       gameData   = work->gameData;
 
   switch( *seq )
   {
   case 0:
     //フィールドマップを終了待ち
-    GMEVENT_CallEvent(event, EVENT_FieldClose_FieldProcOnly(gsys, fieldmap));
+    GMEVENT_CallEvent( event, EVENT_FieldClose_FieldProcOnly(gameSystem, fieldmap) );
     (*seq)++;
     break;
   case 1:
     //マップモードなど機能指定を解除する
-    MAPCHG_releaseMapTools( gsys );
+    MAPCHG_releaseMapTools( gameSystem );
 
     { 
-      FIELD_STATUS_SetFieldInitFlag( GAMEDATA_GetFieldStatus(gamedata), TRUE );
+      FIELD_STATUS_SetFieldInitFlag( GAMEDATA_GetFieldStatus(gameData), TRUE );
     }
 
     // 季節の更新
-    UpdateSeason( mcw );
+    if( (work->seasonUpdateEnable) && (work->seasonUpdateOccur) )
+    {
+      GAMEDATA_SetSeasonID( gameData, work->nextSeason );
+      OBATA_Printf( "update season %d ==> %d\n", work->prevSeason, work->nextSeason );
+    }
 
     //新しいマップモードなど機能指定を行う
-    MAPCHG_setupMapTools( gsys, &mcw->loc_req );
+    MAPCHG_setupMapTools( gameSystem, &work->loc_req );
     
     //新しいマップID、初期位置をセット
-    MAPCHG_updateGameData( gsys, &mcw->loc_req );
+    MAPCHG_updateGameData( gameSystem, &work->loc_req );
 
     //タイプに応じたフラグ初期化
-    switch(mcw->mapchange_type){
+    switch(work->mapchange_type){
     case EV_MAPCHG_FLYSKY:
-      FIELD_FLAGCONT_INIT_FlySky( gamedata, mcw->loc_req.zone_id );
+      FIELD_FLAGCONT_INIT_FlySky( gameData, work->loc_req.zone_id );
       break;
     case EV_MAPCHG_ESCAPE:
-      FIELD_FLAGCONT_INIT_Escape( gamedata, mcw->loc_req.zone_id );
+      FIELD_FLAGCONT_INIT_Escape( gameData, work->loc_req.zone_id );
       break;
     case EV_MAPCHG_TELEPORT:
-      FIELD_FLAGCONT_INIT_Teleport( gamedata, mcw->loc_req.zone_id );
+      FIELD_FLAGCONT_INIT_Teleport( gameData, work->loc_req.zone_id );
       break;
     }
     (*seq)++;
     break;
   case 2:
     //フィールドマップを開始待ち
-    GMEVENT_CallEvent(event, EVENT_FieldOpen_FieldProcOnly(gsys));
+    GMEVENT_CallEvent( event, EVENT_FieldOpen_FieldProcOnly(gameSystem) );
     (*seq) ++;
     break;
   case 3:
     // BGM フェード完了待ち
-    GMEVENT_CallEvent(event, EVENT_FSND_WaitBGMFade(gsys));
+    GMEVENT_CallEvent( event, EVENT_FSND_WaitBGMFade(gameSystem) );
     (*seq) ++;
     break;
   case 4:
@@ -547,27 +519,29 @@ static GMEVENT_RESULT EVENT_FUNC_MapChangeCore( GMEVENT* event, int* seq, void* 
 static GMEVENT* EVENT_MapChangeCore( MAPCHANGE_WORK* mcw, EV_MAPCHG_TYPE type )
 {
   GMEVENT* event;
-  MAPCHANGE_WORK_PTR* work;
+  MAPCHANGE_WORK_PTR* workPtr;
 
-  event = GMEVENT_Create( mcw->gsys, NULL, EVENT_FUNC_MapChangeCore, sizeof( MAPCHANGE_WORK_PTR ) );
-  work  = GMEVENT_GetEventWork( event );
-  *work = mcw;
+  event = GMEVENT_Create( mcw->gameSystem, NULL, EVENT_FUNC_MapChangeCore, sizeof(MAPCHANGE_WORK_PTR) );
+  workPtr  = GMEVENT_GetEventWork( event );
+  *workPtr = mcw;
   mcw->mapchange_type = type;
   return event;
 }
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-static GMEVENT_RESULT EVENT_MapChange(GMEVENT * event, int *seq, void*work)
+static GMEVENT_RESULT EVENT_MapChange( GMEVENT* event, int* seq, void* wk )
 {
-  MAPCHANGE_WORK * mcw = work;
-  GAMESYS_WORK  * gsys = mcw->gsys;
-  FIELDMAP_WORK * fieldmap = mcw->fieldmap;
-  GAMEDATA * gamedata = mcw->gamedata;
-  switch (*seq) {
+  MAPCHANGE_WORK* work       = wk;
+  GAMESYS_WORK*   gameSystem = work->gameSystem;
+  FIELDMAP_WORK*  fieldmap   = work->fieldmap;
+  GAMEDATA*       gameData   = work->gameData;
+
+  switch(*seq)
+  {
   case 0:
-    // 遷移後の季節を求める
-    CheckSeasonChange( mcw );
+    // 季節更新の有無を決定
+    SetSeasonUpdate( work );
     // 動作モデルの移動を止める
     {
       MMDLSYS *fmmdlsys = FIELDMAP_GetMMdlSys( fieldmap );
@@ -575,18 +549,23 @@ static GMEVENT_RESULT EVENT_MapChange(GMEVENT * event, int *seq, void*work)
     }
     // 入口進入イベント
     GMEVENT_CallEvent( event, 
-        EVENT_EntranceIn( event, gsys, gamedata, fieldmap, mcw->loc_req, mcw->exit_type ) );
+        EVENT_EntranceIn( event, gameSystem, gameData, fieldmap, 
+                          work->loc_req, work->exit_type, work->seasonUpdateOccur ) );
     (*seq)++;
     break;
   case 1:
     // マップチェンジ・コア・イベント
-    GMEVENT_CallEvent( event, EVENT_MapChangeCore( mcw, EV_MAPCHG_NORMAL ) );
+    GMEVENT_CallEvent( event, 
+        EVENT_MapChangeCore( work, EV_MAPCHG_NORMAL ) );
     (*seq)++;
     break;
   case 2:
     // 入口退出イベント
-    GMEVENT_CallEvent( event, EVENT_EntranceOut( event, gsys, gamedata, fieldmap, mcw->loc_req ) );
-    (*seq) ++;
+    GMEVENT_CallEvent( event, 
+        EVENT_EntranceOut( event, gameSystem, gameData, fieldmap, work->loc_req, 
+                           work->seasonUpdateOccur, 
+                           PMSEASON_GetNextSeasonID(work->prevSeason), work->nextSeason ) );
+    (*seq)++;
     break;
   case 3:
     return GMEVENT_RES_FINISH; 
@@ -595,33 +574,40 @@ static GMEVENT_RESULT EVENT_MapChange(GMEVENT * event, int *seq, void*work)
 }
 
 //------------------------------------------------------------------
+/**
+ * @brief 瞬間マップチェンジ ( デバッグ用 )
+ */
 //------------------------------------------------------------------
-static GMEVENT_RESULT DEBUG_EVENT_QuickMapChange(GMEVENT * event, int *seq, void*work)
+static GMEVENT_RESULT DEBUG_EVENT_QuickMapChange( GMEVENT* event, int* seq, void* wk )
 {
-  MAPCHANGE_WORK * mcw = work;
-  GAMESYS_WORK  * gsys = mcw->gsys;
-  FIELDMAP_WORK * fieldmap = mcw->fieldmap;
-  GAMEDATA * gamedata = mcw->gamedata;
-  FIELD_SOUND* fsnd = GAMEDATA_GetFieldSound( gamedata );
+  MAPCHANGE_WORK* work       = wk;
+  GAMESYS_WORK*   gameSystem = work->gameSystem;
+  FIELDMAP_WORK*  fieldmap   = work->fieldmap;
+  GAMEDATA*       gameData   = work->gameData;
+  FIELD_SOUND*    fieldSound = GAMEDATA_GetFieldSound( gameData );
 
-  switch (*seq) {
+  switch(*seq)
+  {
   case 0:
-    GMEVENT_CallEvent( event, DEBUG_EVENT_QuickFadeOut( gsys, fieldmap ) );
+    // フェードアウト
+    GMEVENT_CallEvent( event, DEBUG_EVENT_QuickFadeOut( gameSystem, fieldmap ) );
     (*seq)++;
     break;
   case 1:
     // マップチェンジ・コア・イベント
-    GMEVENT_CallEvent( event, EVENT_MapChangeCore( mcw, EV_MAPCHG_NORMAL ) );
+    GMEVENT_CallEvent( event, EVENT_MapChangeCore( work, EV_MAPCHG_NORMAL ) );
     (*seq)++;
     break;
   case 2:
-    FSND_StandByNextMapBGM( fsnd, gamedata, mcw->before_zone_id, mcw->loc_req.zone_id );
-    FSND_PlayStartBGM( fsnd );
+    // BGM変更
+    FSND_StandByNextMapBGM( fieldSound, gameData, work->before_zone_id, work->loc_req.zone_id );
+    FSND_PlayStartBGM( fieldSound );
     (*seq)++;
     break;
   case 3:
-    GMEVENT_CallEvent( event, DEBUG_EVENT_QuickFadeIn( gsys, fieldmap ) );
-    (*seq) ++;
+    // フェードイン
+    GMEVENT_CallEvent( event, DEBUG_EVENT_QuickFadeIn( gameSystem, fieldmap ) );
+    (*seq)++;
     break;
   case 4:
     return GMEVENT_RES_FINISH; 
@@ -630,42 +616,37 @@ static GMEVENT_RESULT DEBUG_EVENT_QuickMapChange(GMEVENT * event, int *seq, void
 }
 
 //------------------------------------------------------------------
+/**
+ * @brief フェードなしマップチェンジ
+ */
 //------------------------------------------------------------------
-static GMEVENT_RESULT EVENT_MapChangeNoFade(GMEVENT * event, int *seq, void*work)
+static GMEVENT_RESULT EVENT_MapChangeNoFade( GMEVENT* event, int* seq, void* wk )
 {
-  MAPCHANGE_WORK * mcw = work;
-  GAMESYS_WORK  * gsys = mcw->gsys;
-  FIELDMAP_WORK * fieldmap = mcw->fieldmap;
-  GAMEDATA * gamedata = mcw->gamedata;
-  switch (*seq) {
+  MAPCHANGE_WORK* work       = wk;
+  GAMESYS_WORK*   gameSystem = work->gameSystem;
+  FIELDMAP_WORK*  fieldmap   = work->fieldmap;
+  GAMEDATA*       gameData   = work->gameData;
+  FIELD_SOUND*    fieldSound = GAMEDATA_GetFieldSound( work->gameData );
+
+  switch(*seq) 
+  {
   case 0:
-    GMEVENT_CallEvent( event, EVENT_ObjPauseAll(gsys, fieldmap) );
-    // 遷移後の季節を求める
-    CheckSeasonChange( mcw );
-    (*seq) ++;
+    // 動作モデル停止
+    GMEVENT_CallEvent( event, EVENT_ObjPauseAll(gameSystem, fieldmap) );
+    (*seq)++;
     break;
   case 1:
-    { // BGM更新リクエスト
-      FIELD_SOUND* fsnd = GAMEDATA_GetFieldSound( gamedata );
-      FSND_StandByNextMapBGM( fsnd, gamedata, mcw->before_zone_id, mcw->loc_req.zone_id );
-      FSND_PlayStartBGM( fsnd );
-    }
+    // BGM更新リクエスト
+    FSND_StandByNextMapBGM( fieldSound, gameData, work->before_zone_id, work->loc_req.zone_id );
+    FSND_PlayStartBGM( fieldSound );
     (*seq)++;
     break;
   case 2:
-    // マップチェンジ・コア・イベント
-    GMEVENT_CallEvent( event, EVENT_MapChangeCore( mcw, mcw->mapchange_type ) );
+    // マップチェンジ コアイベント
+    GMEVENT_CallEvent( event, EVENT_MapChangeCore( work, work->mapchange_type ) );
     (*seq)++;
     break;
   case 3:
-#if 0   //地名表示はリクエストしない
-    if(FIELDMAP_GetPlaceNameSys(fieldmap)){
-      FIELD_PLACE_NAME_Display(FIELDMAP_GetPlaceNameSys(fieldmap), mcw->loc_req.zone_id);
-    }
-#endif    
-    (*seq) ++;
-    break;
-  case 4:
     return GMEVENT_RES_FINISH; 
   }
   return GMEVENT_RES_CONTINUE;
@@ -676,27 +657,23 @@ static GMEVENT_RESULT EVENT_MapChangeNoFade(GMEVENT * event, int *seq, void*work
  * @brief BGMを変更しないマップチェンジ
  */
 //------------------------------------------------------------------
-static GMEVENT_RESULT EVENT_MapChangeBGMKeep(GMEVENT* event, int* seq, void* wk)
+static GMEVENT_RESULT EVENT_MapChangeBGMKeep( GMEVENT* event, int* seq, void* wk )
 {
-  MAPCHANGE_WORK*      work = wk;
-  GAMESYS_WORK* gamesSystem = work->gsys;
-  FIELDMAP_WORK*   fieldmap = work->fieldmap;
-  GAMEDATA*        gameData = work->gamedata;
+  MAPCHANGE_WORK*  work       = wk;
+  GAMESYS_WORK*    gameSystem = work->gameSystem;
+  GAMEDATA*        gameData   = work->gameData;
+  FIELDMAP_WORK*   fieldmap   = work->fieldmap;
 
   switch( *seq )
   {
   case 0:
-    GMEVENT_CallEvent( event, EVENT_ObjPauseAll( gamesSystem, fieldmap ) );
-    CheckSeasonChange( work ); // 遷移後の季節を求める
+    // 動作モデル停止
+    GMEVENT_CallEvent( event, EVENT_ObjPauseAll( gameSystem, fieldmap ) );
     (*seq)++;
     break;
   case 1:
-    // 画面フェードアウト
-    { 
-      GMEVENT* fadeOutEvent;
-      fadeOutEvent = EVENT_FieldFadeOut_Cross( gamesSystem, fieldmap ); // クロスフェード
-      GMEVENT_CallEvent( event, fadeOutEvent );
-    }
+    // 画面フェードアウト ( クロスフェード )
+    GMEVENT_CallEvent( event, EVENT_FieldFadeOut_Cross( gameSystem, fieldmap ) );
     (*seq)++;
     break;
   case 2:
@@ -705,12 +682,8 @@ static GMEVENT_RESULT EVENT_MapChangeBGMKeep(GMEVENT* event, int* seq, void* wk)
     (*seq)++;
     break;
   case 3:
-    // 画面フェードイン
-    { 
-      GMEVENT* fadeInEvent;
-      fadeInEvent = EVENT_FieldFadeIn_Cross( gamesSystem, fieldmap ); // クロスフェード
-      GMEVENT_CallEvent( event, fadeInEvent );
-    }
+    // 画面フェードイン ( クロスフェード )
+    GMEVENT_CallEvent( event, EVENT_FieldFadeIn_Cross( gameSystem, fieldmap ) );
     (*seq)++;
     break;
   case 4:
@@ -720,33 +693,37 @@ static GMEVENT_RESULT EVENT_MapChangeBGMKeep(GMEVENT* event, int* seq, void* wk)
 }
 
 //------------------------------------------------------------------
+/**
+ * @brief 流砂によるマップチェンジ
+ */
 //------------------------------------------------------------------
-static GMEVENT_RESULT EVENT_MapChangeBySandStream(GMEVENT * event, int *seq, void*work)
+static GMEVENT_RESULT EVENT_MapChangeBySandStream( GMEVENT* event, int* seq, void* wk )
 {
-  MAPCHANGE_WORK*       mcw = work;
-  GAMESYS_WORK*        gsys = mcw->gsys;
-  FIELDMAP_WORK* fieldmap = mcw->fieldmap;
-  GAMEDATA*        gamedata = mcw->gamedata;
+  MAPCHANGE_WORK* work       = wk;
+  GAMESYS_WORK*   gameSystem = work->gameSystem;
+  FIELDMAP_WORK*  fieldmap   = work->fieldmap;
 
-  switch (*seq)
+  switch( *seq )
   {
   case 0:
-    GMEVENT_CallEvent( event, EVENT_ObjPauseAll(gsys, fieldmap) );
-    // 遷移後の季節を求める
-    CheckSeasonChange( mcw );
-    (*seq) ++;
-    break;
-  case 1: // 流砂退場イベント
-    GMEVENT_CallEvent( 
-        event, EVENT_DISAPPEAR_FallInSand( event, gsys, fieldmap, &mcw->stream_pos ) );
+    // 動作モデル停止
+    GMEVENT_CallEvent( event, EVENT_ObjPauseAll(gameSystem, fieldmap) );
     (*seq)++;
     break;
-  case 2: // マップチェンジ・コア・イベント
-    GMEVENT_CallEvent( event, EVENT_MapChangeCore( mcw, EV_MAPCHG_NORMAL ) );
+  case 1: 
+    // 流砂退場イベント
+    GMEVENT_CallEvent( event, 
+        EVENT_DISAPPEAR_FallInSand( event, gameSystem, fieldmap, &work->stream_pos ) );
     (*seq)++;
     break;
-  case 3: // 流砂登場イベント
-    GMEVENT_CallEvent( event, EVENT_APPEAR_Fall( event, gsys, fieldmap ) );
+  case 2: 
+    // マップチェンジ・コア・イベント
+    GMEVENT_CallEvent( event, EVENT_MapChangeCore( work, EV_MAPCHG_NORMAL ) );
+    (*seq)++;
+    break;
+  case 3: 
+    // 流砂登場イベント
+    GMEVENT_CallEvent( event, EVENT_APPEAR_Fall( event, gameSystem, fieldmap ) );
     (*seq) ++;
     break;
   case 4:
@@ -756,34 +733,38 @@ static GMEVENT_RESULT EVENT_MapChangeBySandStream(GMEVENT * event, int *seq, voi
 }
 
 //------------------------------------------------------------------
+/**
+ * @brief 「あなぬけのヒモ」によるマップチェンジ
+ */
 //------------------------------------------------------------------
-static GMEVENT_RESULT EVENT_MapChangeByAnanukenohimo(GMEVENT * event, int *seq, void*work)
+static GMEVENT_RESULT EVENT_MapChangeByAnanukenohimo( GMEVENT* event, int* seq, void* wk )
 {
-  MAPCHANGE_WORK*     mcw = work;
-  GAMESYS_WORK*      gsys = mcw->gsys;
-  GAMEDATA*      gamedata = mcw->gamedata;
-  FIELDMAP_WORK* fieldmap = mcw->fieldmap;
+  MAPCHANGE_WORK* work       = wk;
+  GAMESYS_WORK*   gameSystem = work->gameSystem;
+  FIELDMAP_WORK*  fieldmap   = work->fieldmap;
 
-  switch (*seq)
+  switch( *seq )
   {
   case 0:
-    GMEVENT_CallEvent( event, EVENT_ObjPauseAll(gsys, fieldmap) );
-    // 遷移後の季節を求める
-    CheckSeasonChange( mcw );
-    (*seq) ++;
-    break;
-  case 1: // 退場イベント
-    GMEVENT_CallEvent( 
-        event, EVENT_DISAPPEAR_Ananukenohimo( event, gsys, fieldmap ) );
+    // 動作モデル停止
+    GMEVENT_CallEvent( event, EVENT_ObjPauseAll( gameSystem, fieldmap ) );
     (*seq)++;
     break;
-  case 2: // マップチェンジ・コア・イベント
-    GMEVENT_CallEvent( event, EVENT_MapChangeCore( mcw, EV_MAPCHG_ESCAPE ) );
+  case 1: 
+    // 退場イベント
+    GMEVENT_CallEvent( event, 
+        EVENT_DISAPPEAR_Ananukenohimo( event, gameSystem, fieldmap ) );
     (*seq)++;
     break;
-  case 3: // 登場イベント
-    GMEVENT_CallEvent( event, EVENT_APPEAR_Ananukenohimo( event, gsys, fieldmap ) );
-    (*seq) ++;
+  case 2: 
+    // マップチェンジ コアイベント
+    GMEVENT_CallEvent( event, EVENT_MapChangeCore( work, EV_MAPCHG_ESCAPE ) );
+    (*seq)++;
+    break;
+  case 3: 
+    // 登場イベント
+    GMEVENT_CallEvent( event, EVENT_APPEAR_Ananukenohimo( event, gameSystem, fieldmap ) );
+    (*seq)++;
     break;
   case 4:
     return GMEVENT_RES_FINISH; 
@@ -792,34 +773,36 @@ static GMEVENT_RESULT EVENT_MapChangeByAnanukenohimo(GMEVENT * event, int *seq, 
 }
 
 //------------------------------------------------------------------
+/**
+ * @brief 「あなをほる」によるマップチェンジ
+ */
 //------------------------------------------------------------------
-static GMEVENT_RESULT EVENT_MapChangeByAnawohoru(GMEVENT * event, int *seq, void*work)
+static GMEVENT_RESULT EVENT_MapChangeByAnawohoru( GMEVENT* event, int* seq, void* wk )
 {
-  MAPCHANGE_WORK*     mcw = work;
-  GAMESYS_WORK*      gsys = mcw->gsys;
-  GAMEDATA*      gamedata = mcw->gamedata;
-  FIELDMAP_WORK* fieldmap = mcw->fieldmap;
+  MAPCHANGE_WORK* work       = wk;
+  GAMESYS_WORK*   gameSystem = work->gameSystem;
+  FIELDMAP_WORK*  fieldmap   = work->fieldmap;
 
-  switch (*seq)
+  switch( *seq )
   {
   case 0:
-    GMEVENT_CallEvent( event, EVENT_ObjPauseAll(gsys, fieldmap) );
-    // 遷移後の季節を求める
-    CheckSeasonChange( mcw );
+    // 動作モデル停止
+    GMEVENT_CallEvent( event, EVENT_ObjPauseAll(gameSystem, fieldmap) );
     (*seq) ++;
     break;
-  case 1: // 退場イベント
-    GMEVENT_CallEvent( 
-        event, EVENT_DISAPPEAR_Anawohoru( event, gsys, fieldmap ) );
+  case 1: 
+    // 退場イベント
+    GMEVENT_CallEvent( event, EVENT_DISAPPEAR_Anawohoru( event, gameSystem, fieldmap ) );
     (*seq)++;
     break;
-  case 2: // マップチェンジ・コア・イベント
-    GMEVENT_CallEvent( event, EVENT_MapChangeCore( mcw, EV_MAPCHG_ESCAPE ) );
+  case 2: // マップチェンジ コアイベント
+    GMEVENT_CallEvent( event, EVENT_MapChangeCore( work, EV_MAPCHG_ESCAPE ) );
     (*seq)++;
     break;
-  case 3: // 登場イベント
-    GMEVENT_CallEvent( event, EVENT_APPEAR_Anawohoru( event, gsys, fieldmap ) );
-    (*seq) ++;
+  case 3: 
+    // 登場イベント
+    GMEVENT_CallEvent( event, EVENT_APPEAR_Anawohoru( event, gameSystem, fieldmap ) );
+    (*seq)++;
     break;
   case 4:
     return GMEVENT_RES_FINISH; 
@@ -828,34 +811,37 @@ static GMEVENT_RESULT EVENT_MapChangeByAnawohoru(GMEVENT * event, int *seq, void
 }
 
 //------------------------------------------------------------------
+/**
+ * @brief 「テレポート」によるマップチェンジ
+ */
 //------------------------------------------------------------------
-static GMEVENT_RESULT EVENT_MapChangeByTeleport(GMEVENT * event, int *seq, void*work)
+static GMEVENT_RESULT EVENT_MapChangeByTeleport( GMEVENT* event, int* seq, void* wk )
 {
-  MAPCHANGE_WORK*     mcw = work;
-  GAMESYS_WORK*      gsys = mcw->gsys;
-  GAMEDATA*      gamedata = mcw->gamedata;
-  FIELDMAP_WORK* fieldmap = mcw->fieldmap;
+  MAPCHANGE_WORK* work       = wk;
+  GAMESYS_WORK*   gameSystem = work->gameSystem;
+  FIELDMAP_WORK*  fieldmap   = work->fieldmap;
 
-  switch (*seq)
+  switch( *seq )
   {
   case 0:
-    GMEVENT_CallEvent( event, EVENT_ObjPauseAll(gsys, fieldmap) );
-    // 遷移後の季節を求める
-    CheckSeasonChange( mcw );
-    (*seq) ++;
-    break;
-  case 1: // 退場イベント
-    GMEVENT_CallEvent( 
-        event, EVENT_DISAPPEAR_Teleport( event, gsys, fieldmap ) );
+    // 動作モデル停止
+    GMEVENT_CallEvent( event, EVENT_ObjPauseAll( gameSystem, fieldmap ) );
     (*seq)++;
     break;
-  case 2: // マップチェンジ・コア・イベント
-    GMEVENT_CallEvent( event, EVENT_MapChangeCore( mcw, EV_MAPCHG_TELEPORT ) );
+  case 1: 
+    // 退場イベント
+    GMEVENT_CallEvent( event, EVENT_DISAPPEAR_Teleport( event, gameSystem, fieldmap ) );
     (*seq)++;
     break;
-  case 3: // 登場イベント
-    GMEVENT_CallEvent( event, EVENT_APPEAR_Teleport( event, gsys, fieldmap ) );
-    (*seq) ++;
+  case 2: 
+    // マップチェンジ コアイベント
+    GMEVENT_CallEvent( event, EVENT_MapChangeCore( work, EV_MAPCHG_TELEPORT ) );
+    (*seq)++;
+    break;
+  case 3: 
+    // 登場イベント
+    GMEVENT_CallEvent( event, EVENT_APPEAR_Teleport( event, gameSystem, fieldmap ) );
+    (*seq)++;
     break;
   case 4:
     return GMEVENT_RES_FINISH; 
@@ -864,75 +850,74 @@ static GMEVENT_RESULT EVENT_MapChangeByTeleport(GMEVENT * event, int *seq, void*
 }
 
 //------------------------------------------------------------------
+/**
+ * @brief ユニオンルームからのマップチェンジ
+ */
 //------------------------------------------------------------------
-static GMEVENT_RESULT EVENT_MapChangeFromUnion( GMEVENT * event, int *seq, void * work )
+static GMEVENT_RESULT EVENT_MapChangeFromUnion( GMEVENT * event, int *seq, void * wk )
 {
-  MAPCHANGE_WORK*     mcw = work;
-  GAMESYS_WORK*      gsys = mcw->gsys;
-  FIELDMAP_WORK* fieldmap = mcw->fieldmap;
-  GAMEDATA*      gamedata = mcw->gamedata;
+  MAPCHANGE_WORK* work       = wk;
+  GAMESYS_WORK*   gameSystem = work->gameSystem;
+  FIELDMAP_WORK*  fieldmap   = work->fieldmap;
 
-  switch (*seq)
+  switch( *seq )
   {
   case 0:
-    GMEVENT_CallEvent( event, EVENT_DISAPPEAR_Teleport( event, gsys, fieldmap ) );
+    // 退場イベント
+    GMEVENT_CallEvent( event, EVENT_DISAPPEAR_Teleport( event, gameSystem, fieldmap ) );
     (*seq)++;
     break;
   case 1:
-    GMEVENT_CallEvent( event, EVENT_MapChangeCore( mcw, EV_MAPCHG_NORMAL ) );
+    // マップチェンジ コアイベント
+    GMEVENT_CallEvent( event, EVENT_MapChangeCore( work, EV_MAPCHG_NORMAL ) );
     (*seq)++;
     break;
   case 2:
+    // エレベータからの登場スクリプト実行
     SCRIPT_CallScript( event, SCRID_POKECEN_ELEVATOR_OUT, NULL, NULL, HEAPID_FIELDMAP );
     (*seq)++;
     break;
   case 3:
     return GMEVENT_RES_FINISH;
-  }
-
+  } 
   return GMEVENT_RES_CONTINUE;
 }
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-static GMEVENT_RESULT EVENT_MapChangeToUnion(GMEVENT * event, int *seq, void*work)
-{
-  MAPCHANGE_WORK*     mcw = work;
-  GAMESYS_WORK*      gsys = mcw->gsys;
-  FIELDMAP_WORK* fieldmap = mcw->fieldmap;
-  GAMEDATA*      gamedata = mcw->gamedata;
 
-  switch (*seq)
+//------------------------------------------------------------------
+/**
+ * @brief ユニオンルームへのマップチェンジ
+ */
+//------------------------------------------------------------------
+static GMEVENT_RESULT EVENT_MapChangeToUnion( GMEVENT* event, int* seq, void* wk )
+{
+  MAPCHANGE_WORK* work       = wk;
+  GAMESYS_WORK*   gameSystem = work->gameSystem;
+  FIELDMAP_WORK*  fieldmap   = work->fieldmap;
+  GAMEDATA*       gameData   = work->gameData;
+
+  switch( *seq )
   {
   case 0:
-    GMEVENT_CallEvent( event, EVENT_ObjPauseAll(gsys, fieldmap) );
-    // 遷移後の季節を求める
-    CheckSeasonChange( mcw );
-    (*seq) ++;
-    break;
-  case 1:
-#if 0
-    // 入口進入イベント
-    GMEVENT_CallEvent( event, 
-        EVENT_EntranceIn( event, gsys, gamedata, fieldmap, mcw->loc_req, mcw->exit_type ) );
-#endif
+    // 動作モデル停止
+    GMEVENT_CallEvent( event, EVENT_ObjPauseAll( gameSystem, fieldmap ) );
     (*seq)++;
     break;
-  case 2: // マップチェンジ・コア・イベント
-    GMEVENT_CallEvent( event, EVENT_MapChangeCore( mcw, EV_MAPCHG_NORMAL ) );
+  case 1: 
+    // マップチェンジ コアイベント
+    GMEVENT_CallEvent( event, EVENT_MapChangeCore( work, EV_MAPCHG_NORMAL ) );
     (*seq)++;
     break;
-  case 3: // ユニオン通信起動
-    UNION_CommBoot( gsys );
-    (*seq) ++;
+  case 2: 
+    // ユニオン通信起動
+    UNION_CommBoot( gameSystem );
+    (*seq)++;
+    break;
+  case 3:
+    // 入口退出イベント
+    GMEVENT_CallEvent( event, EVENT_APPEAR_Fall( event, gameSystem, fieldmap ) );
+    (*seq)++;
     break;
   case 4:
-    // 入口退出イベント
-    //GMEVENT_CallEvent( event, EVENT_EntranceOut( event, gsys, gamedata, fieldmap, mcw->loc_req ) );
-    //GMEVENT_CallEvent( event, EVENT_APPEAR_Teleport( event, gsys, fieldmap ) );
-    GMEVENT_CallEvent( event, EVENT_APPEAR_Fall( event, gsys, fieldmap ) );
-    (*seq) ++;
-    break;
-  case 5:
     return GMEVENT_RES_FINISH; 
   }
   return GMEVENT_RES_CONTINUE;
@@ -941,291 +926,339 @@ static GMEVENT_RESULT EVENT_MapChangeToUnion(GMEVENT * event, int *seq, void*wor
 //============================================================================================
 //============================================================================================
 //------------------------------------------------------------------
+/**
+ * @brief マップチェンジ イベントワークの初期化
+ */
 //------------------------------------------------------------------
-static void MAPCHANGE_WORK_init(MAPCHANGE_WORK * mcw, GAMESYS_WORK * gsys)
+static void MAPCHANGE_WORK_init( MAPCHANGE_WORK* work, GAMESYS_WORK* gameSystem )
 {
-  mcw->gsys = gsys;
-  mcw->gamedata = GAMESYSTEM_GetGameData( gsys );
-  mcw->fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
-  mcw->before_zone_id = FIELDMAP_GetZoneID( mcw->fieldmap );
-  mcw->next_season = INVALID_SEASON_ID;
+  FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( gameSystem ); 
+
+  work->gameSystem         = gameSystem;
+  work->gameData           = GAMESYSTEM_GetGameData( gameSystem );
+  work->fieldmap           = fieldmap;
+  work->before_zone_id     = FIELDMAP_GetZoneID( fieldmap );
+  work->seasonUpdateEnable = FALSE;
+  work->seasonUpdateOccur  = FALSE;
+  work->prevSeason         = 0;
+  work->nextSeason         = 0;
 
   //コモン処理としてここに書く
-  EFFECT_ENC_EffectAnmPauseSet( FIELDMAP_GetEncount( mcw->fieldmap), TRUE );
+  EFFECT_ENC_EffectAnmPauseSet( FIELDMAP_GetEncount( work->fieldmap), TRUE );
 }
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-GMEVENT * EVENT_ChangeMapPos(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,
-    u16 zone_id, const VecFx32 * pos, u16 dir )
+GMEVENT* EVENT_ChangeMapPos( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldmap,
+                             u16 zoneID, const VecFx32* pos, u16 dir, BOOL seasonUpdateEnable )
 {
-  MAPCHANGE_WORK * mcw;
-  GMEVENT * event;
+  MAPCHANGE_WORK* work;
+  GMEVENT* event;
 
-  event = GMEVENT_Create(gsys, NULL, EVENT_MapChange, sizeof(MAPCHANGE_WORK));
-  mcw = GMEVENT_GetEventWork(event);
-  MAPCHANGE_WORK_init( mcw, gsys );
-  
-  LOCATION_SetDirect(&mcw->loc_req, zone_id, dir, pos->x, pos->y, pos->z);
-  mcw->exit_type = EXIT_TYPE_NONE;
-  
+  event = GMEVENT_Create( gameSystem, NULL, EVENT_MapChange, sizeof(MAPCHANGE_WORK) );
+  work  = GMEVENT_GetEventWork( event );
+
+  // イベントワーク初期化
+  MAPCHANGE_WORK_init( work, gameSystem );
+  LOCATION_SetDirect( &(work->loc_req), zoneID, dir, pos->x, pos->y, pos->z ); 
+  work->exit_type          = EXIT_TYPE_NONE;
+  work->seasonUpdateEnable = seasonUpdateEnable;
+
   return event;
 }
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-GMEVENT * DEBUG_EVENT_ChangeMapRailLocation(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,
-    u16 zone_id, const RAIL_LOCATION * rail_loc, u16 dir )
+GMEVENT* DEBUG_EVENT_ChangeMapRailLocation( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldmap,
+                                            u16 zoneID, const RAIL_LOCATION* rail_loc, u16 dir )
 {
-  MAPCHANGE_WORK * mcw;
-  GMEVENT * event;
+  MAPCHANGE_WORK* work;
+  GMEVENT* event;
 
-  event = GMEVENT_Create(gsys, NULL, EVENT_MapChange, sizeof(MAPCHANGE_WORK));
-  mcw = GMEVENT_GetEventWork(event);
-  MAPCHANGE_WORK_init( mcw, gsys );
-  
-  LOCATION_SetDirectRail(&mcw->loc_req, zone_id, dir, rail_loc->rail_index, rail_loc->line_grid, rail_loc->width_grid);
-  mcw->exit_type = EXIT_TYPE_NONE;
+  event = GMEVENT_Create(gameSystem, NULL, EVENT_MapChange, sizeof(MAPCHANGE_WORK));
+  work  = GMEVENT_GetEventWork( event );
+
+  // イベントワーク初期化
+  MAPCHANGE_WORK_init( work, gameSystem ); 
+  LOCATION_SetDirectRail( &(work->loc_req), zoneID, dir, 
+                          rail_loc->rail_index, rail_loc->line_grid, rail_loc->width_grid);
+  work->exit_type = EXIT_TYPE_NONE;
   
   return event;
-}
-
-
+} 
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-GMEVENT * DEBUG_EVENT_ChangeMapDefaultPos(GAMESYS_WORK * gsys,
-    FIELDMAP_WORK * fieldmap, u16 zone_id)
+GMEVENT* DEBUG_EVENT_ChangeMapDefaultPos( GAMESYS_WORK* gameSystem, 
+                                          FIELDMAP_WORK* fieldmap, u16 zoneID )
 {
-  MAPCHANGE_WORK * mcw;
-  GMEVENT * event;
+  MAPCHANGE_WORK* work;
+  GMEVENT* event;
 
-  event = GMEVENT_Create(gsys, NULL, EVENT_MapChange, sizeof(MAPCHANGE_WORK));
-  mcw = GMEVENT_GetEventWork(event);
-  MAPCHANGE_WORK_init( mcw, gsys );
-
-  if (zone_id >= ZONEDATA_GetZoneIDMax()) {
-    GF_ASSERT( 0 );
-    zone_id = 0;
+  if( zoneID >= ZONEDATA_GetZoneIDMax() )
+  {
+    GF_ASSERT(0);
+    zoneID = 0;
   }
-  LOCATION_DEBUG_SetDefaultPos(&mcw->loc_req, zone_id);
-  mcw->exit_type = EXIT_TYPE_NONE;
+
+  event = GMEVENT_Create( gameSystem, NULL, EVENT_MapChange, sizeof(MAPCHANGE_WORK) );
+  work  = GMEVENT_GetEventWork( event );
+
+  // イベントワーク初期化
+  MAPCHANGE_WORK_init( work, gameSystem ); 
+  LOCATION_DEBUG_SetDefaultPos( &(work->loc_req), zoneID );
+  work->exit_type = EXIT_TYPE_NONE;
+
   return event;
 }
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-GMEVENT * DEBUG_EVENT_QuickChangeMapDefaultPos(GAMESYS_WORK * gsys,
-    FIELDMAP_WORK * fieldmap, u16 zone_id)
+GMEVENT* DEBUG_EVENT_QuickChangeMapDefaultPos( GAMESYS_WORK * gameSystem,
+                                                FIELDMAP_WORK* fieldmap, u16 zoneID )
 {
-  MAPCHANGE_WORK * mcw;
-  GMEVENT * event;
+  MAPCHANGE_WORK* work;
+  GMEVENT* event;
 
-  event = GMEVENT_Create(gsys, NULL, DEBUG_EVENT_QuickMapChange, sizeof(MAPCHANGE_WORK));
-  mcw = GMEVENT_GetEventWork(event);
-  MAPCHANGE_WORK_init( mcw, gsys );
-
-  if (zone_id >= ZONEDATA_GetZoneIDMax()) {
-    GF_ASSERT( 0 );
-    zone_id = 0;
+  if( zoneID >= ZONEDATA_GetZoneIDMax() )
+  {
+    GF_ASSERT(0);
+    zoneID = 0;
   }
-  LOCATION_DEBUG_SetDefaultPos(&mcw->loc_req, zone_id);
-  mcw->exit_type = EXIT_TYPE_NONE;
+
+  event = GMEVENT_Create( gameSystem, NULL, DEBUG_EVENT_QuickMapChange, sizeof(MAPCHANGE_WORK) );
+  work  = GMEVENT_GetEventWork( event );
+
+  // イベントワーク初期化
+  MAPCHANGE_WORK_init( work, gameSystem ); 
+  LOCATION_DEBUG_SetDefaultPos( &(work->loc_req), zoneID );
+  work->exit_type = EXIT_TYPE_NONE;
+
   return event;
 }
 
 //------------------------------------------------------------------
 /**
  * @brief マップ遷移イベント生成（ 流砂 ）
- * @param gsys          ゲームシステムへのポインタ
+ * @param gameSystem          ゲームシステムへのポインタ
  * @param fieldmap      フィールドシステムへのポインタ
- * @param disappear_pos 流砂中心点の座標
- * @param zone_id       遷移するマップのZONE指定
- * @param appear        遷移先での座標
+ * @param disappearPos 流砂中心点の座標
+ * @param zoneID       遷移するマップのZONE指定
+ * @param appearPos        遷移先での座標
  * @return GMEVENT 生成したマップ遷移イベント
  */
 //------------------------------------------------------------------
-GMEVENT * EVENT_ChangeMapBySandStream(
-    GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, 
-    const VecFx32* disappear_pos, u16 zone_id, const VecFx32* appear_pos )
+GMEVENT* EVENT_ChangeMapBySandStream( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldmap,  
+                                      const VecFx32* disappearPos, 
+                                      u16 zoneID, const VecFx32* appearPos )
 {
-  MAPCHANGE_WORK * mcw;
-  GMEVENT * event;
+  MAPCHANGE_WORK* work;
+  GMEVENT* event;
 
-  event = GMEVENT_Create(gsys, NULL, EVENT_MapChangeBySandStream, sizeof(MAPCHANGE_WORK));
-  mcw = GMEVENT_GetEventWork(event);
-  MAPCHANGE_WORK_init( mcw, gsys ); 
-  LOCATION_SetDirect(
-      &mcw->loc_req, zone_id, DIR_DOWN, appear_pos->x, appear_pos->y, appear_pos->z);
-  mcw->exit_type = EXIT_TYPE_NONE;
-  VEC_Set( &mcw->stream_pos, disappear_pos->x, disappear_pos->y, disappear_pos->z );
+  event = GMEVENT_Create( gameSystem, NULL, EVENT_MapChangeBySandStream, sizeof(MAPCHANGE_WORK) );
+  work  = GMEVENT_GetEventWork( event );
+
+  // イベントワーク初期化
+  MAPCHANGE_WORK_init( work, gameSystem ); 
+  LOCATION_SetDirect( &(work->loc_req), zoneID, DIR_DOWN, appearPos->x, appearPos->y, appearPos->z);
+  VEC_Set( &(work->stream_pos), disappearPos->x, disappearPos->y, disappearPos->z );
+  work->exit_type = EXIT_TYPE_NONE;
+
   return event;
 }
 
 //------------------------------------------------------------------
 /**
  * @brief マップ遷移イベント生成（ あなぬけのヒモ ）
- * @param gsys ゲームシステムへのポインタ
+ * @param gameSystem ゲームシステムへのポインタ
  * @return GMEVENT 生成したマップ遷移イベント
  */
 //------------------------------------------------------------------
-GMEVENT* EVENT_ChangeMapByAnanukenohimo( FIELDMAP_WORK *fieldWork, GAMESYS_WORK * gsys )
+GMEVENT* EVENT_ChangeMapByAnanukenohimo( FIELDMAP_WORK* fieldWork, GAMESYS_WORK* gameSystem )
 {
   GMEVENT* event;
   MAPCHANGE_WORK* work;
 
-  event = GMEVENT_Create(gsys, NULL, EVENT_MapChangeByAnanukenohimo, sizeof(MAPCHANGE_WORK));
-  work = GMEVENT_GetEventWork(event);
-  MAPCHANGE_WORK_init( work, gsys ); 
-  work->loc_req = *(GAMEDATA_GetEscapeLocation( work->gamedata ));
+  event = GMEVENT_Create( gameSystem, NULL, EVENT_MapChangeByAnanukenohimo, sizeof(MAPCHANGE_WORK) );
+  work  = GMEVENT_GetEventWork( event );
+
+  // イベントワーク初期化
+  MAPCHANGE_WORK_init( work, gameSystem ); 
+  work->loc_req      = *(GAMEDATA_GetEscapeLocation( work->gameData ));
   work->loc_req.type = LOCATION_TYPE_DIRECT;
-  work->exit_type = EXIT_TYPE_NONE;
+  work->exit_type    = EXIT_TYPE_NONE;
+
   return event;
 }
 
 //------------------------------------------------------------------
 /**
  * @brief マップ遷移イベント生成（ あなをほる )
- * @param gsys ゲームシステムへのポインタ
+ * @param gameSystem ゲームシステムへのポインタ
  * @return GMEVENT 生成したマップ遷移イベント
  */
 //------------------------------------------------------------------
-GMEVENT* EVENT_ChangeMapByAnawohoru( GAMESYS_WORK * gsys )
+GMEVENT* EVENT_ChangeMapByAnawohoru( GAMESYS_WORK* gameSystem )
 {
   GMEVENT* event;
   MAPCHANGE_WORK* work;
 
-  event = GMEVENT_Create(gsys, NULL, EVENT_MapChangeByAnawohoru, sizeof(MAPCHANGE_WORK));
-  work = GMEVENT_GetEventWork(event);
-  MAPCHANGE_WORK_init( work, gsys ); 
-  work->loc_req = *(GAMEDATA_GetEscapeLocation( work->gamedata ));
+  event = GMEVENT_Create( gameSystem, NULL, EVENT_MapChangeByAnawohoru, sizeof(MAPCHANGE_WORK) );
+  work  = GMEVENT_GetEventWork( event );
+
+  // イベントワーク初期化
+  MAPCHANGE_WORK_init( work, gameSystem ); 
+  work->loc_req      = *(GAMEDATA_GetEscapeLocation( work->gameData ));
   work->loc_req.type = LOCATION_TYPE_DIRECT;
-  work->exit_type = EXIT_TYPE_NONE;
+  work->exit_type    = EXIT_TYPE_NONE;
+
   return event;
 }
 
 //------------------------------------------------------------------
 /**
  * @brief マップ遷移イベント生成（ テレポート )
- * @param gsys ゲームシステムへのポインタ
+ * @param gameSystem ゲームシステムへのポインタ
  * @return GMEVENT 生成したマップ遷移イベント
  */
 //------------------------------------------------------------------
-GMEVENT* EVENT_ChangeMapByTeleport( GAMESYS_WORK * gsys )
+GMEVENT* EVENT_ChangeMapByTeleport( GAMESYS_WORK* gameSystem )
 {
-  u16 warp_id;
   GMEVENT* event;
   MAPCHANGE_WORK* work;
+  GAMEDATA* gameData;
+  u16 warpID;
 
-  event = GMEVENT_Create(gsys, NULL, EVENT_MapChangeByTeleport, sizeof(MAPCHANGE_WORK));
-  work = GMEVENT_GetEventWork(event);
-  MAPCHANGE_WORK_init( work, gsys ); 
-  warp_id = GAMEDATA_GetWarpID( work->gamedata );
-  WARPDATA_GetWarpLocation( warp_id, &work->loc_req );
-  LOCATION_DEBUG_SetDefaultPos( &work->loc_req, work->loc_req.zone_id );
+  // ワープID取得
+  gameData = GAMESYSTEM_GetGameData( gameSystem );
+  warpID   = GAMEDATA_GetWarpID( gameData );
+
+  event = GMEVENT_Create( gameSystem, NULL, EVENT_MapChangeByTeleport, sizeof(MAPCHANGE_WORK) );
+  work  = GMEVENT_GetEventWork( event );
+
+  // イベントワーク初期化
+  MAPCHANGE_WORK_init( work, gameSystem ); 
+  WARPDATA_GetWarpLocation( warpID, &(work->loc_req) );
+  LOCATION_DEBUG_SetDefaultPos( &(work->loc_req), work->loc_req.zone_id );
   work->loc_req.type = LOCATION_TYPE_DIRECT;
+  work->exit_type    = EXIT_TYPE_NONE;
+
+  return event;
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+GMEVENT* EVENT_ChangeMapToUnion( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldmap )
+{
+  MAPCHANGE_WORK* work;
+  GMEVENT* event;
+
+  event = GMEVENT_Create( gameSystem, NULL, EVENT_MapChangeToUnion, sizeof(MAPCHANGE_WORK) );
+  work  = GMEVENT_GetEventWork( event );
+
+  // イベントワーク初期化
+  MAPCHANGE_WORK_init( work, gameSystem ); 
+  LOCATION_DEBUG_SetDefaultPos( &(work->loc_req), ZONE_ID_UNION );
   work->exit_type = EXIT_TYPE_NONE;
+
   return event;
 }
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-GMEVENT * EVENT_ChangeMapToUnion( GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap )
+GMEVENT* EVENT_ChangeMapFromUnion( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldmap )
 {
-  MAPCHANGE_WORK * mcw;
-  GMEVENT * event;
+  MAPCHANGE_WORK* work;
+  GMEVENT* event;
+  const LOCATION* spLoc;
 
-  event = GMEVENT_Create(gsys, NULL, EVENT_MapChangeToUnion, sizeof(MAPCHANGE_WORK));
-  mcw = GMEVENT_GetEventWork(event);
-  MAPCHANGE_WORK_init( mcw, gsys ); 
-  LOCATION_DEBUG_SetDefaultPos( &mcw->loc_req, ZONE_ID_UNION );
-  mcw->exit_type = EXIT_TYPE_NONE;
+  spLoc = GAMEDATA_GetSpecialLocation( GAMESYSTEM_GetGameData( gameSystem ) );
+
+  event = GMEVENT_Create( gameSystem, NULL, EVENT_MapChangeFromUnion, sizeof(MAPCHANGE_WORK) );
+  work  = GMEVENT_GetEventWork( event );
+
+  // イベントワーク初期化
+  MAPCHANGE_WORK_init( work, gameSystem ); 
+  work->loc_req = *spLoc;
+
   return event;
-}
+} 
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-GMEVENT * EVENT_ChangeMapFromUnion( GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap )
+GMEVENT* EVENT_ChangeMapByConnect( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldmap,
+                                   const CONNECT_DATA* connectData, LOC_EXIT_OFS exitOfs )
 {
-  MAPCHANGE_WORK * mcw;
-  GMEVENT * event;
-  const LOCATION * spLoc;
+  MAPCHANGE_WORK* work;
+  GMEVENT* event;
+  GAMEDATA* gameData;
 
-  event = GMEVENT_Create(gsys, NULL, EVENT_MapChangeFromUnion, sizeof(MAPCHANGE_WORK));
-  mcw = GMEVENT_GetEventWork(event);
-  MAPCHANGE_WORK_init( mcw, gsys ); 
-  spLoc = GAMEDATA_GetSpecialLocation( GAMESYSTEM_GetGameData( gsys ) );
-  mcw->loc_req = *spLoc;
-  return event;
-}
+  gameData = GAMESYSTEM_GetGameData( gameSystem );
 
+  event = GMEVENT_Create( gameSystem, NULL, EVENT_MapChange, sizeof(MAPCHANGE_WORK) );
+  work  = GMEVENT_GetEventWork( event );
 
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-GMEVENT * EVENT_ChangeMapByConnect(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,
-    const CONNECT_DATA * cnct, LOC_EXIT_OFS exit_ofs)
-{
-  GAMEDATA * gamedata = GAMESYSTEM_GetGameData(gsys);
-  MAPCHANGE_WORK * mcw;
-  GMEVENT * event;
+  MAPCHANGE_WORK_init( work, gameSystem );
+  work->seasonUpdateEnable = TRUE;
 
-  event = GMEVENT_Create(gsys, NULL, EVENT_MapChange, sizeof(MAPCHANGE_WORK));
-  mcw = GMEVENT_GetEventWork(event);
-  MAPCHANGE_WORK_init( mcw, gsys );
-
-  if (CONNECTDATA_IsSpecialExit(cnct))
+  if( CONNECTDATA_IsSpecialExit( connectData ) )
   {
     //特殊接続先が指定されている場合、記憶しておいた場所に飛ぶ
-    const LOCATION * sp = GAMEDATA_GetSpecialLocation(gamedata);
-    mcw->loc_req = *sp;
+    const LOCATION * sp = GAMEDATA_GetSpecialLocation( gameData );
+    work->loc_req = *sp;
   }
   else
   {
-    CONNECTDATA_SetNextLocation(cnct, &mcw->loc_req, exit_ofs);
+    CONNECTDATA_SetNextLocation( connectData, &(work->loc_req), exitOfs );
   }
-  mcw->exit_type = CONNECTDATA_GetExitType(cnct);
+  work->exit_type = CONNECTDATA_GetExitType( connectData );
 
   {
     //フィールド→屋内への移動の際は脱出先位置を記憶しておく
-    const LOCATION * ent = GAMEDATA_GetEntranceLocation(gamedata);
-    if (ZONEDATA_IsFieldMatrixID(ent->zone_id) == TRUE
-        && ZONEDATA_IsFieldMatrixID(mcw->loc_req.zone_id) == FALSE)
+    const LOCATION* ent = GAMEDATA_GetEntranceLocation( gameData );
+    if( ZONEDATA_IsFieldMatrixID(ent->zone_id) == TRUE
+        && ZONEDATA_IsFieldMatrixID(work->loc_req.zone_id) == FALSE )
     {
-      GAMEDATA_SetEscapeLocation( gamedata, ent );
+      GAMEDATA_SetEscapeLocation( gameData, ent );
     }
   }
   return event;
 }
 
-static GMEVENT * EVENT_ChangeMapPosNoFadeCore(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,
-    EV_MAPCHG_TYPE type, u16 zone_id, const VecFx32 * pos, u16 dir )
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static GMEVENT* EVENT_ChangeMapPosNoFadeCore( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldmap,
+                                              EV_MAPCHG_TYPE type, u16 zoneID, const VecFx32* pos, u16 dir )
 {
-  MAPCHANGE_WORK * mcw;
-  GMEVENT * event;
+  MAPCHANGE_WORK* work;
+  GMEVENT* event;
 
-  event = GMEVENT_Create(gsys, NULL, EVENT_MapChangeNoFade, sizeof(MAPCHANGE_WORK));
-  mcw = GMEVENT_GetEventWork(event);
-  MAPCHANGE_WORK_init( mcw, gsys );
-  
-  LOCATION_SetDirect(&mcw->loc_req, zone_id, dir, pos->x, pos->y, pos->z);
-  mcw->exit_type = EXIT_TYPE_NONE;
-  mcw->mapchange_type = type; 
+  event = GMEVENT_Create(gameSystem, NULL, EVENT_MapChangeNoFade, sizeof(MAPCHANGE_WORK));
+  work  = GMEVENT_GetEventWork(event);
+
+  // イベントワーク初期化
+  MAPCHANGE_WORK_init( work, gameSystem ); 
+  LOCATION_SetDirect( &(work->loc_req), zoneID, dir, pos->x, pos->y, pos->z );
+  work->exit_type      = EXIT_TYPE_NONE;
+  work->mapchange_type = type; 
+
   return event;
 }
+
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-GMEVENT * EVENT_ChangeMapPosNoFade(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,
-    u16 zone_id, const VecFx32 * pos, u16 dir )
+GMEVENT* EVENT_ChangeMapPosNoFade( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldmap,
+                                   u16 zoneID, const VecFx32* pos, u16 dir )
 {
-  return EVENT_ChangeMapPosNoFadeCore( gsys, fieldmap,
-            EV_MAPCHG_NORMAL, zone_id, pos, dir );
+  return EVENT_ChangeMapPosNoFadeCore( gameSystem, fieldmap, EV_MAPCHG_NORMAL, zoneID, pos, dir );
 }
 
-GMEVENT * EVENT_ChangeMapSorawotobu(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,
-    u16 zone_id, const VecFx32 * pos, u16 dir )
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+GMEVENT* EVENT_ChangeMapSorawotobu( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldmap,
+                                    u16 zoneID, const VecFx32* pos, u16 dir )
 {
-  return EVENT_ChangeMapPosNoFadeCore( gsys, fieldmap,
-            EV_MAPCHG_FLYSKY, zone_id, pos, dir );
+  return EVENT_ChangeMapPosNoFadeCore( gameSystem, fieldmap, EV_MAPCHG_FLYSKY, zoneID, pos, dir );
 }
 
 //------------------------------------------------------------------
@@ -1246,10 +1279,11 @@ GMEVENT * EVENT_ChangeMapBGMKeep( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* field
   GMEVENT* event;
 
   event = GMEVENT_Create( gameSystem, NULL, EVENT_MapChangeBGMKeep, sizeof(MAPCHANGE_WORK) );
-  work = GMEVENT_GetEventWork( event );
-  MAPCHANGE_WORK_init( work, gameSystem );
-  
-  LOCATION_SetDirect( &work->loc_req, zoneID, dir, pos->x, pos->y, pos->z );
+  work  = GMEVENT_GetEventWork( event );
+
+  // イベントワーク初期化
+  MAPCHANGE_WORK_init( work, gameSystem ); 
+  LOCATION_SetDirect( &(work->loc_req), zoneID, dir, pos->x, pos->y, pos->z );
   work->exit_type = EXIT_TYPE_NONE;
   
   return event;
@@ -1260,10 +1294,10 @@ GMEVENT * EVENT_ChangeMapBGMKeep( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* field
 //------------------------------------------------------------------
 //  ※マップIDをインクリメントしている。最大値になったら先頭に戻る
 //------------------------------------------------------------------
-GMEVENT * DEBUG_EVENT_ChangeToNextMap(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap)
+GMEVENT* DEBUG_EVENT_ChangeToNextMap( GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldmap )
 {
-  GAMEDATA * gamedata = GAMESYSTEM_GetGameData(gsys);
-  PLAYER_WORK * myplayer = GAMEDATA_GetMyPlayerWork(gamedata);
+  GAMEDATA* gamedata = GAMESYSTEM_GetGameData(gsys);
+  PLAYER_WORK* myplayer = GAMEDATA_GetMyPlayerWork(gamedata);
   ZONEID next = PLAYERWORK_getZoneID(myplayer);
   next ++;
   if (next >= ZONEDATA_GetZoneIDMax()) {

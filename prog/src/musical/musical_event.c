@@ -809,7 +809,7 @@ static const void MUSICAL_EVENT_JumpWaitingRoom( GMEVENT *event, MUSICAL_EVENT_W
   const VecFx32 pos = { FX32_CONST(40.0f) , FX32_CONST(0.0f) , FX32_CONST(360.0f) };
   
   newEvent = EVENT_ChangeMapPos( evWork->gsys, fieldWork ,
-                ZONE_ID_C04R0202 , &pos , 0 );
+                ZONE_ID_C04R0202 , &pos , 0, FALSE );
   GMEVENT_CallEvent(event, newEvent);
 }
 
@@ -826,7 +826,7 @@ static const void MUSICAL_EVENT_JumpMusicalHall( GMEVENT *event, MUSICAL_EVENT_W
   const VecFx32 pos = { FX32_CONST(232.0f) , FX32_CONST(0.0f) , FX32_CONST(200.0f) };
   
   newEvent = EVENT_ChangeMapPos( evWork->gsys, fieldWork ,
-                ZONE_ID_C04R0201 , &pos , 2 );
+                ZONE_ID_C04R0201 , &pos , 2, FALSE );
   GMEVENT_CallEvent(event, newEvent);
 }
 

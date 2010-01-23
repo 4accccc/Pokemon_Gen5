@@ -77,7 +77,7 @@ VMCMD_RESULT EvCmdMapChange( VMHANDLE *core, void *wk )
     
     parent_event = GAMESYSTEM_GetEvent( gsys ); //åªç›ÇÃÉCÉxÉìÉg
     mapchange_event = EVENT_ChangeMapPos( 
-        gsys, fieldmap, zone_id, &appear_pos, DirToExitDir(dir) );
+        gsys, fieldmap, zone_id, &appear_pos, DirToExitDir(dir), FALSE );
     GMEVENT_CallEvent( parent_event, mapchange_event );
   }
 

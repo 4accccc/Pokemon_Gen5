@@ -285,7 +285,7 @@ GMEVENT * EVENT_PalaceJumpUse(FIELDMAP_WORK *fieldWork,GAMESYS_WORK *gsys)
     pos.z = 234 << FX32_SHIFT;
     jump_zone = ZONE_ID_PALACE01;
   }
-  return EVENT_ChangeMapPos(gsys, fieldWork, jump_zone, &pos, 0);
+  return EVENT_ChangeMapPos(gsys, fieldWork, jump_zone, &pos, 0, FALSE);
 }
 
 

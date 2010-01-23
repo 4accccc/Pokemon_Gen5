@@ -50,7 +50,7 @@ typedef struct BRIGHT_CNT_WORK_tag
   GAMESYS_WORK* gsys;
   FIELDMAP_WORK* fieldmap;
 	FIELD_FADE_TYPE fade_type;
-  FIELD_FADE_WAIT_TYPE wait_type;
+  FIELD_FADE_WAIT_FLAG wait_flag;
   FADE_IO   fade_io;
   int Seq;
 }BRIGHT_CNT_WORK;
@@ -58,7 +58,7 @@ typedef struct BRIGHT_CNT_WORK_tag
 static BOOL EvWaitDispFade( VMHANDLE *core, void *wk );
 static BOOL EvWaitMapFade( VMHANDLE *core, void *wk );
 static void CreateBrightFadeTask( GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldmap, FADE_IO fade_io,
-                             FIELD_FADE_TYPE type, FIELD_FADE_WAIT_TYPE wait );
+                             FIELD_FADE_TYPE type, FIELD_FADE_WAIT_FLAG wait );
 static void BrightCntTcb( GFL_TCB* tcb, void* work );
 
 #ifdef PM_DEBUG
@@ -118,6 +118,37 @@ static BOOL EvWaitMapFade( VMHANDLE *core, void *wk )
     return FALSE;
   }
   return TRUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * マップチェンジ用　季節イン
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT 
+ *
+ * @note
+ * コンティニュー時に使用すると、フェードアウトしていないために
+ * Assertになってしまう。この使い分けのためのコマンド。
+ * 現在のゲーム内季節を表示してからフェードインする。
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdMapFade_SeasonIn_Force( VMHANDLE *core, void *wk )
+{
+  GMEVENT* event;
+  SCRCMD_WORK*   work       = (SCRCMD_WORK*)wk;
+  SCRIPT_WORK*   scriptWork = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK*  gameSystem = SCRCMD_WORK_GetGameSysWork( work );
+  GAMEDATA*      gameData   = GAMESYSTEM_GetGameData( gameSystem );
+  FIELDMAP_WORK* fieldmap   = GAMESYSTEM_GetFieldMapWork( gameSystem );
+  u16            season     = GAMEDATA_GetSeasonID( gameData );
+  
+  event = EVENT_FieldFadeIn_Season( gameSystem, fieldmap, season, season ); 
+  SCRIPT_CallEvent( scriptWork, event );
+#ifdef PM_DEBUG
+  //GF_ASSERT_MSG(MapFadeReqFlg,"ERROR:NOT CALL MAP_FADE_OUT");
+  MapFadeReqFlg = FALSE;
+#endif
+  return VMCMD_RESULT_CONTINUE;
 }
 
 //--------------------------------------------------------------
@@ -669,7 +700,7 @@ static BOOL evWaitBModelAnime( VMHANDLE *core, void *wk )
  */
 //------------------------------------------------------------------
 static void CreateBrightFadeTask( GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldmap, FADE_IO fade_io,
-                             FIELD_FADE_TYPE type, FIELD_FADE_WAIT_TYPE wait )
+                             FIELD_FADE_TYPE type, FIELD_FADE_WAIT_FLAG wait )
 {
   BRIGHT_CNT_WORK *task_wk;
   GFL_TCBSYS*  tcbsys = FIELDMAP_GetFieldmapTCBSys( fieldmap );
@@ -685,7 +716,7 @@ static void CreateBrightFadeTask( GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldmap, 
   task_wk->gsys      = gsys;
   task_wk->fieldmap  = fieldmap;
 	task_wk->fade_type = type;
-  task_wk->wait_type = wait;
+  task_wk->wait_flag = wait;
   task_wk->fade_io = fade_io;
 }
 
@@ -744,7 +775,7 @@ static void BrightCntTcb( GFL_TCB* tcb, void* work )
   case 1:
     {
       BOOL rc = FALSE;
-      if( wk->wait_type == FIELD_FADE_NO_WAIT ) rc = TRUE;
+      if( wk->wait_flag == FIELD_FADE_NO_WAIT ) rc = TRUE;
 		  if( GFL_FADE_CheckFade() == FALSE ) rc = TRUE;
 
       if (rc) { //フェード終了

@@ -36,166 +36,166 @@ extern GMEVENT * EVENT_CallGameStart(GAMESYS_WORK * gsys, GAME_INIT_WORK * game_
 extern GMEVENT * DEBUG_EVENT_CallGameEnd( GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap);
 
 //------------------------------------------------------------------
-/**
- */
 //------------------------------------------------------------------
-extern GMEVENT * EVENT_ChangeMapByConnect(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,
-    const CONNECT_DATA * cnct, LOC_EXIT_OFS exit_ofs);
+extern GMEVENT* EVENT_ChangeMapByConnect( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldmap,
+                                          const CONNECT_DATA* connectData, LOC_EXIT_OFS exitOfs );
 
 //------------------------------------------------------------------
 /**
- * @brief マップ遷移イベント生成（座標指定）
- * @param gsys    ゲームシステムへのポインタ
- * @param fieldmap  フィールドシステムへのポインタ
- * @param zone_id   遷移するマップのZONE指定
- * @param pos     遷移するマップでの座標指定
- * @param dir     遷移するマップでの方向指定
- * @return  GMEVENT   生成したマップ遷移イベント
+ * @brief マップ遷移イベント生成 ( 座標指定 )
+ *
+ * @param gameSystem
+ * @param fieldmap
+ * @param zoneID             遷移先マップのZONE指定
+ * @param pos                遷移先マップでの座標指定
+ * @param dir                遷移先マップでの方向指定
+ * @param seasonUpdateEnable 季節の更新処理を行うかどうか
+ *
+ * @return 生成したマップ遷移イベント
  */
 //------------------------------------------------------------------
-extern GMEVENT * EVENT_ChangeMapPos(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,
-    u16 zone_id, const VecFx32 * pos, u16 dir );
+extern GMEVENT* EVENT_ChangeMapPos( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldmap,
+                                    u16 zoneID, const VecFx32* pos, u16 dir, 
+                                    BOOL seasonUpdateEnable );
 
 //------------------------------------------------------------------
 /**
- * @brief 空を飛ぶマップ遷移イベント生成（座標指定）
- * @param gsys    ゲームシステムへのポインタ
- * @param fieldmap  フィールドシステムへのポインタ
- * @param zone_id   遷移するマップのZONE指定
- * @param pos     遷移するマップでの座標指定
- * @param dir     遷移するマップでの方向指定
- * @return  GMEVENT   生成したマップ遷移イベント
+ * @brief 空を飛ぶマップ遷移イベント生成 ( 座標指定 )
+ *
+ * @param gameSystem
+ * @param fieldmap
+ * @param zoneID      遷移先マップのZONE指定
+ * @param pos         遷移先マップでの座標指定
+ * @param dir         遷移先マップでの方向指定
+ *
+ * @return 生成したマップ遷移イベント
  */
 //------------------------------------------------------------------
-extern GMEVENT * EVENT_ChangeMapSorawotobu(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,
-    u16 zone_id, const VecFx32 * pos, u16 dir );
+extern GMEVENT* EVENT_ChangeMapSorawotobu( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldmap,
+                                           u16 zoneID, const VecFx32* pos, u16 dir );
 
 //------------------------------------------------------------------
 /**
- * @brief マップ遷移イベント生成（レール座標指定）
- * @param gsys    ゲームシステムへのポインタ
- * @param fieldmap  フィールドシステムへのポインタ
- * @param zone_id   遷移するマップのZONE指定
- * @param rail_loc  遷移するマップでのレール座標指定
- * @param dir     遷移するマップでの方向指定
- * @return  GMEVENT   生成したマップ遷移イベント
+ * @brief マップ遷移イベント生成 ( レール座標指定 )
+ *
+ * @param gameSystem
+ * @param fieldmap
+ * @param zoneID    遷移先マップのZONE指定
+ * @param rail_loc  遷移先マップでのレール座標指定
+ * @param dir       遷移先マップでの方向指定
+ *
+ * @return 生成したマップ遷移イベント
  */
 //------------------------------------------------------------------
-extern GMEVENT * DEBUG_EVENT_ChangeMapRailLocation(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,
-    u16 zone_id, const RAIL_LOCATION * rail_loc, u16 dir );
+extern GMEVENT* DEBUG_EVENT_ChangeMapRailLocation( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldmap,
+                                                   u16 zoneID, const RAIL_LOCATION* rail_loc, u16 dir );
 
 //------------------------------------------------------------------
 /**
- * @brief マップ遷移イベント生成（デフォルト座標）
- * @param gsys    ゲームシステムへのポインタ
- * @param fieldmap  フィールドシステムへのポインタ
- * @param zone_id   遷移するマップのZONE指定
- * @return  GMEVENT   生成したマップ遷移イベント
+ * @brief マップ遷移イベント生成 ( デフォルト座標 )
+ *
+ * @param gameSystem
+ * @param fieldmap
+ * @param zoneID      遷移先マップのZONE指定
+ *
+ * @return 生成したマップ遷移イベント
  */
 //------------------------------------------------------------------
-extern GMEVENT * DEBUG_EVENT_ChangeMapDefaultPos(GAMESYS_WORK * gsys,
-    FIELDMAP_WORK * fieldmap, u16 zone_id);
+extern GMEVENT* DEBUG_EVENT_ChangeMapDefaultPos( GAMESYS_WORK* gameSystem, 
+                                                 FIELDMAP_WORK* fieldmap, u16 zoneID );
 
 //------------------------------------------------------------------
 /**
- * @brief マップ遷移イベント生成（デフォルト座標, フェード短縮版）
- * @param gsys    ゲームシステムへのポインタ
- * @param fieldmap  フィールドシステムへのポインタ
- * @param zone_id   遷移するマップのZONE指定
- * @return  GMEVENT   生成したマップ遷移イベント
+ * @brief マップ遷移イベント生成 ( デフォルト座標 / フェード短縮 )
+ *
+ * @param gameSystem
+ * @param fieldmap
+ * @param zoneID    遷移先マップのZONE指定
+ *
+ * @return 生成したマップ遷移イベント
  */
 //------------------------------------------------------------------
-extern GMEVENT * DEBUG_EVENT_QuickChangeMapDefaultPos(GAMESYS_WORK * gsys,
-    FIELDMAP_WORK * fieldmap, u16 zone_id);
+extern GMEVENT* DEBUG_EVENT_QuickChangeMapDefaultPos( GAMESYS_WORK * gameSystem,
+                                                      FIELDMAP_WORK* fieldmap, u16 zoneID );
 
 //------------------------------------------------------------------
 /**
  * @brief マップ遷移イベント生成（ 流砂 ）
- * @param gsys          ゲームシステムへのポインタ
- * @param fieldmap      フィールドシステムへのポインタ
- * @param disappear_pos 流砂中心点の座標
- * @param zone_id       遷移するマップのZONE指定
- * @param appear        遷移先での座標
+ *
+ * @param gameSystem
+ * @param fieldmap
+ * @param disappearPos  流砂中心点の座標
+ * @param zoneID        遷移先マップのZONE指定
+ * @param appearPos     遷移先での座標指定
+ *
  * @return GMEVENT 生成したマップ遷移イベント
  */
 //------------------------------------------------------------------
-extern GMEVENT * EVENT_ChangeMapBySandStream(
-    GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, 
-    const VecFx32* disappear_pos, u16 zone_id, const VecFx32* appear_pos );
+extern GMEVENT* EVENT_ChangeMapBySandStream( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldmap,  
+                                             const VecFx32* disappearPos, 
+                                             u16 zoneID, const VecFx32* appearPos );
 
 //------------------------------------------------------------------
 /**
- * @brief マップ遷移イベント生成（ あなぬけのヒモ ）
- * @param gsys ゲームシステムへのポインタ
+ * @brief マップ遷移イベント生成 ( あなぬけのヒモ / あなをほる / テレポート )
+ *
+ * @param gameSystem
+ *
  * @return GMEVENT 生成したマップ遷移イベント
  */
 //------------------------------------------------------------------
-extern GMEVENT* EVENT_ChangeMapByAnanukenohimo( FIELDMAP_WORK *fieldWork, GAMESYS_WORK * gsys );
-
-//------------------------------------------------------------------
-/**
- * @brief マップ遷移イベント生成（ あなをほる )
- * @param gsys ゲームシステムへのポインタ
- * @return GMEVENT 生成したマップ遷移イベント
- */
-//------------------------------------------------------------------
-extern GMEVENT* EVENT_ChangeMapByAnawohoru( GAMESYS_WORK * gsys );
-
-//------------------------------------------------------------------
-/**
- * @brief マップ遷移イベント生成（ テレポート )
- * @param gsys ゲームシステムへのポインタ
- * @return GMEVENT 生成したマップ遷移イベント
- */
-//------------------------------------------------------------------
-extern GMEVENT* EVENT_ChangeMapByTeleport( GAMESYS_WORK * gsys );
+extern GMEVENT* EVENT_ChangeMapByAnanukenohimo( FIELDMAP_WORK* fieldWork, GAMESYS_WORK* gameSystem );
+extern GMEVENT* EVENT_ChangeMapByAnawohoru( GAMESYS_WORK* gameSystem );
+extern GMEVENT* EVENT_ChangeMapByTeleport( GAMESYS_WORK* gameSystem );
 
 //------------------------------------------------------------------
 /**
  * @brief マップ遷移イベント生成（ ワープ )
- * @param gsys
+ * @param gameSystem
  * @param fieldmap
- * @param zone_id
+ * @param zoneID 
  * @return GMEVENT 生成したマップ遷移イベント
  */
 //------------------------------------------------------------------
-GMEVENT* EVENT_ChangeMapByWarp( GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldmap,
-                                u16 zone_id, const VecFx32 * pos, u16 dir );
+extern GMEVENT* EVENT_ChangeMapByWarp( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldmap,
+                                       u16 zoneID , const VecFx32 * pos, u16 dir );
 
 //------------------------------------------------------------------
 /**
  * @brief ユニオンへのマップ遷移イベント生成
- * @param  gsys      ゲームシステムへのポインタ
- * @param  fieldmap  フィールドシステムへのポインタ
- * @return GMEVENT   生成したマップ遷移イベント
+ *
+ * @param  gameSystem
+ * @param  fieldmap
+ *
+ * @return 生成したマップ遷移イベント
  */
 //------------------------------------------------------------------
-extern GMEVENT * EVENT_ChangeMapToUnion( GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap );
-
-extern GMEVENT * EVENT_ChangeMapFromUnion( GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap );
+extern GMEVENT* EVENT_ChangeMapToUnion( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldmap );
+extern GMEVENT* EVENT_ChangeMapFromUnion( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldmap );
 
 //------------------------------------------------------------------
 /**
  */
 //------------------------------------------------------------------
-extern GMEVENT * DEBUG_EVENT_ChangeToNextMap(GAMESYS_WORK * gsys, FIELDMAP_WORK *fieldmap);
-
-extern GMEVENT * EVENT_ChangeMapPosNoFade(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,
-    u16 zone_id, const VecFx32 * pos, u16 dir );
+extern GMEVENT* DEBUG_EVENT_ChangeToNextMap( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldmap );
+extern GMEVENT* EVENT_ChangeMapPosNoFade( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldmap,
+                                          u16 zoneID, const VecFx32* pos, u16 dir );
 
 //------------------------------------------------------------------
 /**
- * @brief マップ遷移イベント生成 (BGM変更なし)
- * @param gameSystem ゲームシステムへのポインタ
- * @param fieldmap   フィールドシステムへのポインタ
- * @param zoneID     遷移するマップのZONE指定
- * @param pos        遷移するマップでの座標指定
- * @param dir        遷移するマップでの方向指定
- * @return GMEVENT  生成したマップ遷移イベント
+ * @brief マップ遷移イベント生成 ( BGM変更なし )
+ *
+ * @param gameSystem
+ * @param fieldmap
+ * @param zoneID     遷移先マップのZONE指定
+ * @param pos        遷移先マップでの座標指定
+ * @param dir        遷移先マップでの方向指定
+ *
+ * @return 生成したマップ遷移イベント
  */
 //------------------------------------------------------------------
-extern GMEVENT * EVENT_ChangeMapBGMKeep( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldmap,
-                                     u16 zoneID, const VecFx32* pos, u16 dir );
+extern GMEVENT* EVENT_ChangeMapBGMKeep( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldmap,
+                                        u16 zoneID, const VecFx32* pos, u16 dir );
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------

@@ -341,7 +341,7 @@ GMEVENT * DEBUG_IntrudeTreeMapWarp(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameS
     	pos.x = PALACE_MAP_LEN/2;
     	pos.y = 0;
     	pos.z = 408 << FX32_SHIFT;
-      return EVENT_ChangeMapPos(gameSys, fieldWork, ZONE_ID_PALACE01, &pos, 0);
+      return EVENT_ChangeMapPos(gameSys, fieldWork, ZONE_ID_PALACE01, &pos, 0, FALSE);
     }
     return NULL;
   }
@@ -367,7 +367,7 @@ GMEVENT * DEBUG_IntrudeTreeMapWarp(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameS
         //親が通信状態で自分の街に入る場合は切断
         return DEBUG_EVENT_ChangeMapPosCommEnd(gameSys, fieldWork, ZONE_ID_T01, &pos, intcomm);
       }
-      return EVENT_ChangeMapPos(gameSys, fieldWork, ZONE_ID_T01, &pos, 0);
+      return EVENT_ChangeMapPos(gameSys, fieldWork, ZONE_ID_T01, &pos, 0, FALSE);
     }
   }
   //ビンゴマップへワープ
@@ -378,7 +378,7 @@ GMEVENT * DEBUG_IntrudeTreeMapWarp(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameS
       pos.x = 472 << FX32_SHIFT;
       pos.y = 0;
       pos.z = 504 << FX32_SHIFT;
-      return EVENT_ChangeMapPos(gameSys, fieldWork, ZONE_ID_PALACE02, &pos, 0);
+      return EVENT_ChangeMapPos(gameSys, fieldWork, ZONE_ID_PALACE02, &pos, 0, FALSE);
     }
   }
   
@@ -480,7 +480,7 @@ static GMEVENT_RESULT DebugEVENT_MapChangeCommEnd(GMEVENT * event, int *seq, voi
     break;
 	case 4:
   	GMEVENT_CallEvent(
-  	  event, EVENT_ChangeMapPos(gsys, dsw->fieldmap, dsw->zoneID, &dsw->pos, 0));
+  	  event, EVENT_ChangeMapPos(gsys, dsw->fieldmap, dsw->zoneID, &dsw->pos, 0, FALSE));
     (*seq)++;
     break;
 	default:
@@ -686,7 +686,7 @@ GMEVENT * DEBUG_PalaceJamp(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameSys, FIEL
   	pos.z = 408 << FX32_SHIFT;
   	jump_zone = ZONE_ID_PALACE01;
   }
-  return EVENT_ChangeMapPos(gameSys, fieldWork, jump_zone, &pos, 0);
+  return EVENT_ChangeMapPos(gameSys, fieldWork, jump_zone, &pos, 0, FALSE);
 }
 
 //--------------------------------------------------------------

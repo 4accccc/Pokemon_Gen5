@@ -15,19 +15,21 @@
 /**
  * @brief 出入口進入イベントを作成する
  *
- * @param parent    親イベント
- * @param gsys      ゲームシステム
- * @param gdata     ゲームデータ
- * @param fieldmap  フィールドマップ
- * @param location  遷移先指定
- * @param exit_type 遷移タイプ指定
+ * @param parent            親イベント
+ * @param gameSystem
+ * @param gameData
+ * @param fieldmap
+ * @param nextLocation      遷移先指定
+ * @param exitType          遷移タイプ指定
+ * @param seasonDisplayFlag 季節表示を行うかどうか
  *
  * @return 作成したイベント
  */
 //---------------------------------------------------------------------------------------
-GMEVENT* EVENT_EntranceIn( GMEVENT* parent, 
-                           GAMESYS_WORK* gsys,
-                           GAMEDATA* gdata, 
-                           FIELDMAP_WORK* fieldmap, 
-                           LOCATION location, 
-                           EXIT_TYPE exit_type );
+extern GMEVENT* EVENT_EntranceIn( GMEVENT* parent, 
+                                  GAMESYS_WORK* gameSystem,
+                                  GAMEDATA* gameData, 
+                                  FIELDMAP_WORK* fieldmap, 
+                                  LOCATION nextLocation, 
+                                  EXIT_TYPE exitType,
+                                  BOOL seasonDisplayFlag );

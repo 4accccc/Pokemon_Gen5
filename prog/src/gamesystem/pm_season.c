@@ -18,7 +18,7 @@
  * @return åªç›éûçèÇÃãGêﬂ( PMSEASON_SPRING Ç»Ç« )
  */
 //--------------------------------------------------------------------------------------------
-u8 PMSEASON_GetCurrentSeasonID()
+u8 PMSEASON_GetRealTimeSeasonID()
 {
   RTCDate date;
   u8 season;
