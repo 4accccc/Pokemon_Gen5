@@ -261,7 +261,9 @@ static void handler_Sawagu_turnCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WOR
 static void handler_Sawagu_CheckSickFail( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable*  ADD_Korogaru( u32* numElems );
 static void handler_Korogaru_ExeFix( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
-static void handler_Korogaru_ExeFail( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_Korugaru_Avoid( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_Korogaru_NoEffect( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void  common_Korogaru_Unlock( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Korogaru_Pow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable*  ADD_TripleKick( u32* numElems );
 static void handler_TripleKick( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
@@ -3189,9 +3191,10 @@ static const BtlEventHandlerTable*  ADD_Korogaru( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_WAZA_EXECUTE_FIX,       handler_Korogaru_ExeFix    },  // ワザ出し確定ハンドラ
-    { BTL_EVENT_WAZA_EXECUTE_FAIL,      handler_Korogaru_ExeFail   },  // ワザ出し失敗確定ハンドラ
-    { BTL_EVENT_WAZA_EXECUTE_NO_EFFECT, handler_Korogaru_ExeFail  },   // ワザ無効ハンドラ
-    { BTL_EVENT_WAZA_POWER,             handler_Korogaru_Pow      },
+    { BTL_EVENT_WAZA_EXECUTE_FAIL,      handler_Korogaru_NoEffect  },  // ワザ出し失敗確定ハンドラ
+    { BTL_EVENT_WAZA_AVOID,             handler_Korugaru_Avoid     },  // ワザはずれたハンドラ
+    { BTL_EVENT_WAZA_EXECUTE_NO_EFFECT, handler_Korogaru_NoEffect  },   // ワザ無効ハンドラ
+    { BTL_EVENT_WAZA_POWER,             handler_Korogaru_Pow       },
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -3219,25 +3222,42 @@ static void handler_Korogaru_ExeFix( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK
       param->pokeID[0] = pokeID;
 
       work[0] = 0;
+      work[1] = KOROGARU_TURNS;
       work[ WORKIDX_STICK ] = 1;
-      BTL_Printf("ポケ(%d)がころがる。ワザハンドラ貼り付き\n", pokeID);
     }
   }
 }
-// ワザだし失敗
-static void handler_Korogaru_ExeFail( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+// ワザはずれた
+static void handler_Korugaru_Avoid( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
+  {
+    common_Korogaru_Unlock( myHandle, flowWk, pokeID, work );
+  }
+}
+// ワザだしたが効果なし
+static void handler_Korogaru_NoEffect( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
-    // 失敗したらワザロック解除＆貼り付き解除
-    BTL_HANDEX_PARAM_CURE_SICK* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CURE_SICK, pokeID );
-    param->pokeID[0] = pokeID;
-    param->poke_cnt = 1;
-    param->sickCode = WAZASICK_WAZALOCK;
-
-    removeHandlerForce( pokeID, BTL_EVENT_FACTOR_GetSubID(myHandle) );
+    common_Korogaru_Unlock( myHandle, flowWk, pokeID, work );
   }
 }
+/**
+ *  ころがるロック解除＆貼り付き解除共通
+ */
+static void  common_Korogaru_Unlock( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  BTL_HANDEX_PARAM_CURE_SICK* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CURE_SICK, pokeID );
+
+  param->pokeID[0] = pokeID;
+  param->poke_cnt = 1;
+  param->sickCode = WAZASICK_WAZALOCK;
+
+  work[ WORKIDX_STICK ] = 0;
+  removeHandlerForce( pokeID, BTL_EVENT_FACTOR_GetSubID(myHandle) );
+}
+
 // 威力決定
 static void handler_Korogaru_Pow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
@@ -3256,7 +3276,7 @@ static void handler_Korogaru_Pow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
     BTL_EVENTVAR_MulValue( BTL_EVAR_WAZA_POWER_RATIO, FX32_CONST(mul) );
 
     work[0]++;
-    if( work[0] >= 5 ){
+    if( work[0] >= work[1] ){
       removeHandlerForce( pokeID, BTL_EVENT_FACTOR_GetSubID(myHandle) );
     }
   }
