@@ -1,4 +1,3 @@
-
 //======================================================================
 //                c08r0401.ev
 //
@@ -9,7 +8,7 @@
   .text
 
   .include  "scr_seq_def.h"
-  .include  "../../message/dst/script/msg_c08r0401.h"
+  .include  "msg_c08r0401.h"
   //.include  "c08r0401.h"
 
 //--------------------------------------------------------------
@@ -19,20 +18,51 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_c08r0401
-_EVENT_DATA_END
+_EVENT_DATA   ev_c08r0401_gentleman_01
+_EVENT_DATA   ev_c08r0401_lady_01
+_EVENT_DATA   ev_c08r0401_girl4_01
+_EVENT_DATA_END //データ終端を指定しています。
 
 
-/**************************************************************/
-/*            FLAG_CHANGE_LABEL                               */
-/**************************************************************/
-//ev_c08r0401_flag_change:
-//  _END
 
 /**************************************************************/
 /*                                                            */
 /**************************************************************/
-ev_c08r0401:
-  //とりあえず最初のラベルだけ生成している
-  _END
+EVENT_START   ev_c08r0401_gentleman_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c08r0401_gentleman_01 )
+EVENT_END
+
+/**************************************************************/
+/*                                                            */
+/**************************************************************/
+EVENT_START   ev_c08r0401_lady_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c08r0401_lady_01 )
+EVENT_END
+
+/**************************************************************/
+/*   努力値を見るお嬢様                                       */
+/**************************************************************/
+EVENT_START ev_c08r0401_girl4_01
+{
+  DEFINE_LOCAL  SEL_POS
+
+  _TALK_OBJ_START()
+
+  //「あなたの．．．」
+  _GET_PARTY_FRONT_POKEMON( SEL_POS, POKECOUNT_MODE_NOT_EGG )
+  _TEMOTI_MONS_NAME( 0, SEL_POS )
+  _BALLOONWIN_TALKOBJ_MSG( msg_c08r0401_girl4_01 )
+  _BALLOONWIN_CLOSE()
+  _GET_TEMOTI_PARAM_EXP( SCWK_ANSWER, SEL_POS )
+  IF $SCWK_ANSWER == 511 THEN
+    //「ものすごく　がんばったのね！」
+    _BALLOONWIN_TALKOBJ_MSG( msg_c08r0401_girl4_02 )
+  ELSE
+    //「まだまだ　がんばれるって　かんじね」
+    _BALLOONWIN_TALKOBJ_MSG( msg_c08r0401_girl4_03 )
+  ENDIF
+  _LAST_KEYWAIT()
+  _BALLOONWIN_CLOSE()
+}
+EVENT_END
 
