@@ -584,6 +584,7 @@ static void _recvChangePokemon(const int netID, const int size, const void* pDat
 static void _sendTimingCheck(POKEMON_TRADE_WORK* pWork)
 {
   if(GFL_NET_HANDLE_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_ENDNO)){
+    pWork->pParentWork->ret = POKEMONTRADE_END;
     _CHANGE_STATE(pWork,NULL);
   }
 }
@@ -1240,6 +1241,7 @@ static void _endWaitStateNetwork2(POKEMON_TRADE_WORK* pWork)
   int targetID = 1 - GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
 
   if((pWork->userNetCommand[0] == _NETCMD_END) && (pWork->userNetCommand[1] == _NETCMD_END)){
+    pWork->pParentWork->ret = POKEMONTRADE_END;
     _CHANGE_STATE(pWork, NULL);
   }
   if(pWork->userNetCommand[targetID] == _NETCMD_LOOKATPOKE){
@@ -1263,6 +1265,7 @@ static void _endWaitStateNetwork(POKEMON_TRADE_WORK* pWork)
     }
   }
   else{
+    pWork->pParentWork->ret = POKEMONTRADE_END;
     _CHANGE_STATE(pWork, NULL);
   }
 }
@@ -2162,7 +2165,7 @@ static void DEBUG_MyPokeAdd(POKEPARTY *party,MYSTATUS *myStatus,HEAPID heapID)
 
   name = MyStatus_GetMyName( myStatus );
 
-  pp = PP_Create(MONSNO_ONOKKUSU, 100, 123456, GFL_HEAPID_APP);
+  pp = PP_Create(93, 100, 123456, GFL_HEAPID_APP);
   PP_Put( pp , ID_PARA_oyaname_raw , (u32)name );
   PP_Put( pp , ID_PARA_oyasex , MyStatus_GetMySex( myStatus ) );
 
@@ -2372,6 +2375,7 @@ static GFL_PROC_RESULT PokemonTradeProcInit( GFL_PROC * proc, int * seq, void * 
 
   pWork->heapID = HEAPID_IRCBATTLE;
   pWork->type = type;
+  pWork->pParentWork = pParentWork;
   pWork->recvPoke[0] = GFL_HEAP_AllocClearMemory(pWork->heapID, POKETOOL_GetWorkSize());
   pWork->recvPoke[1] = GFL_HEAP_AllocClearMemory(pWork->heapID, POKETOOL_GetWorkSize());
   if(pParentWork){
@@ -2391,12 +2395,18 @@ static GFL_PROC_RESULT PokemonTradeProcInit( GFL_PROC * proc, int * seq, void * 
   pWork->g3dVintr = GFUser_VIntr_CreateTCB( _VBlank, (void*)pWork, 0 );
   pWork->pCatchCLWK = NULL;
   pWork->selectIndex = -1;
+  pWork->modelno = -1;
+
+  IRC_POKETRADEDEMO_Init(pWork);
+  if(POKEMONTRADE_EVOLUTION_RET == pParentWork->type){
+    _CHANGE_STATE(pWork, POKMEONTRADE_SAVE_TimingStart);
+    return GFL_PROC_RES_FINISH;
+  }
   
   POKETRADE_MESSAGE_HeapInit(pWork);
   _dispInit(pWork);
   POKETRADE_TOUCHBAR_Init(pWork);
   
-  IRC_POKETRADEDEMO_Init(pWork);
 
 #if DEBUG_ONLY_FOR_ohno | DEBUG_ONLY_FOR_ibe_mana
   DEBUGWIN_InitProc( GFL_BG_FRAME3_M , pWork->pFontHandle );

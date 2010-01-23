@@ -329,6 +329,7 @@ typedef struct
 
 
 struct _POKEMON_TRADE_WORK{
+  POKEMONTRADE_PARAM* pParentWork;
   POKEMONTRADE_DEMO_WORK* pPokemonTradeDemo;
   u8 FriendPokemonCol[732];         ///< 相手のポケモンBOXにあるポケモン色
   GFL_BMPWIN* StatusWin[2];     ///< ステータス表示
@@ -501,6 +502,8 @@ struct _POKEMON_TRADE_WORK{
   u16* scrTemoti;
   u8* pCharMem;
   POKEMONTRADE_TYPE type;
+  u8 BGClearFlg;
+  u8 DemoBGClearFlg;
 
 } ;
 
@@ -528,6 +531,7 @@ extern void IRC_POKETRADE_InitBoxIcon( BOX_MANAGER* boxData ,POKEMON_TRADE_WORK*
 extern void IRC_POKETRADE_AllDeletePokeIconResource(POKEMON_TRADE_WORK* pWork);
 extern void IRC_POKETRADE_G3dDraw(POKEMON_TRADE_WORK* pWork);
 extern void IRC_POKETRADE_SetSubdispGraphicDemo(POKEMON_TRADE_WORK* pWork,int type);
+extern void IRC_POKETRADE_ResetSubdispGraphicDemo(POKEMON_TRADE_WORK* pWork);
 extern void IRC_POKETRADE_GraphicFreeVram(POKEMON_TRADE_WORK* pWork);
 extern void IRC_POKETRADE_SetMainDispGraphic(POKEMON_TRADE_WORK* pWork);
 extern void IRC_POKETRADE_ResetSubDispGraphic(POKEMON_TRADE_WORK* pWork);
@@ -557,6 +561,7 @@ extern void POKETRE_MAIN_ChangePokemonSendDataNetwork(POKEMON_TRADE_WORK* pWork)
 extern void IRC_POKMEONTRADE_STEP_ChangeDemo_PokeMove(POKEMON_TRADE_WORK* pWork);
 extern void POKMEONTRADE_IRCDEMO_ChangeDemo(POKEMON_TRADE_WORK* pWork);
 extern void POKMEONTRADE_SAVE_Init(POKEMON_TRADE_WORK* pWork);
+extern void POKMEONTRADE_SAVE_TimingStart(POKEMON_TRADE_WORK* pWork);
 
 extern void IRCPOKETRADE_PokeDeleteMcss( POKEMON_TRADE_WORK *pWork,int no  );
 extern void IRCPOKETRADE_PokeCreateMcss( POKEMON_TRADE_WORK *pWork ,int no, int bFront, const POKEMON_PARAM *pp );

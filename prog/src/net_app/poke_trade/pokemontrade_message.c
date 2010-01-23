@@ -290,6 +290,10 @@ void POKETRADE_MESSAGE_HeapEnd(POKEMON_TRADE_WORK* pWork)
 {
   int i;
 
+  if(pWork->pMsgTcblSys==NULL){
+    return;
+  }
+  
   if(pWork->MyInfoWin){
     GFL_BMPWIN_Delete(pWork->MyInfoWin);
     pWork->MyInfoWin=NULL;

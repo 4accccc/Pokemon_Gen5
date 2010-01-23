@@ -30,6 +30,9 @@
 #include "system/bmp_menulist.h"
 #include "system/bmp_menu.h"
 
+#include "demo/shinka_demo.h"
+#include "poke_tool/shinka_check.h"
+
 #include "msg/msg_poke_trade.h"
 #include "ircbattle.naix"
 #include "trade.naix"
@@ -67,6 +70,7 @@ static void _changeTimingSaveStart4(POKEMON_TRADE_WORK* pWork);
 static void _changeTimingSaveStart5(POKEMON_TRADE_WORK* pWork);
 static void _saveStart(POKEMON_TRADE_WORK* pWork);
 static void _mailBoxStart(POKEMON_TRADE_WORK* pWork);
+static void _changeTimingSaveStart(POKEMON_TRADE_WORK* pWork);
 
 //------------------------------------------------------------------
 /**
@@ -82,6 +86,9 @@ static void _setNextAnim(POKEMON_TRADE_WORK* pWork, int timer)
   pWork->anmCount = timer;
 }
 
+
+
+
 //------------------------------------------------------------------
 /**
  * @brief   ポケモン交換終了。
@@ -95,6 +102,9 @@ void POKMEONTRADE_SAVE_Init(POKEMON_TRADE_WORK* pWork)
   GFL_CLACT_UNIT_Delete(pWork->cellUnit);
   GFL_CLACT_SYS_Delete();
   IRC_POKETRADE_CLACT_Create(pWork);
+
+
+
   pWork->cellUnit = GFL_CLACT_UNIT_Create( 340 , 0 , pWork->heapID );
   POKETRADE_MESSAGE_HeapInit(pWork);
 
@@ -110,6 +120,7 @@ void POKMEONTRADE_SAVE_Init(POKEMON_TRADE_WORK* pWork)
   _setNextAnim(pWork, 0);
 
   GFL_BG_SetVisible( GFL_BG_FRAME2_S , TRUE );
+
   
   _CHANGE_STATE(pWork,_changeDemo_ModelTrade21);
 
@@ -165,7 +176,7 @@ static void _changeDemo_ModelTrade23(POKEMON_TRADE_WORK* pWork)
 //  GFL_HEAP_FreeMemory(pWork->pPokemonTradeDemo);
 //  pWork->pPokemonTradeDemo = NULL;
 
-  //@todo 進化デモにとぶが、メールが先
+  //@todo メールにとぶ必要がある
 
 
   {
@@ -205,6 +216,19 @@ static void _saveStart(POKEMON_TRADE_WORK* pWork)
     return;
   }
   else{
+    if(pWork->pParentWork){
+      SHINKA_COND cond;
+      POKEMON_PARAM* pp = IRC_POKEMONTRADE_GetRecvPP(pWork, 1);
+    
+      u16 after_mons_no = SHINKA_Check( NULL, pp, SHINKA_TYPE_TUUSHIN, 0, &cond, pWork->heapID );
+      if( after_mons_no ){
+        pWork->pParentWork->ret = POKEMONTRADE_EVOLUTION;
+        pWork->pParentWork->after_mons_no = after_mons_no;
+        pWork->pParentWork->cond = cond;
+        _CHANGE_STATE(pWork,NULL);   //交換デモに行く
+        return ;
+      }
+    }
     GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR_51, pWork->pMessageStrBuf );
     POKETRADE_MESSAGE_WindowOpen(pWork);
     _CHANGE_STATE(pWork, _changeTimingSaveStart);
@@ -212,8 +236,28 @@ static void _saveStart(POKEMON_TRADE_WORK* pWork)
 }
 
 
-static void _changeTimingSaveStart(POKEMON_TRADE_WORK* pWork)
+void POKMEONTRADE_SAVE_TimingStart(POKEMON_TRADE_WORK* pWork)
 {
+
+  pWork->cellUnit = GFL_CLACT_UNIT_Create( 340 , 0 , pWork->heapID );
+  POKETRADE_MESSAGE_HeapInit(pWork);
+  GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR_51, pWork->pMessageStrBuf );
+  pWork->bgchar = BmpWinFrame_GraphicSetAreaMan(GFL_BG_FRAME2_S, _BUTTON_WIN_PAL, MENU_TYPE_SYSTEM, pWork->heapID);
+  POKETRADE_MESSAGE_WindowOpen(pWork);
+  _setNextAnim(pWork, 0);
+
+  GFL_BG_SetVisible( GFL_BG_FRAME2_S , TRUE );
+  GFL_NET_WirelessIconEasy_HoldLCD(TRUE,pWork->heapID); //通信アイコン
+  GFL_NET_ReloadIcon();
+
+  
+  GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, _BRIGHTNESS_SYNC);
+
+  _CHANGE_STATE(pWork,_changeTimingSaveStart);
+}
+
+static void _changeTimingSaveStart(POKEMON_TRADE_WORK* pWork)
+{  
   if(!POKETRADE_MESSAGE_EndCheck(pWork)){
     return;
   }
@@ -292,11 +336,8 @@ static void _changeDemo_ModelTrade30(POKEMON_TRADE_WORK* pWork)
 
   POKETRADE_MESSAGE_WindowClose(pWork);
 
-//  IRC_POKETRADE_GraphicFreeVram(pWork);
-
-  GFL_BG_FillCharacterRelease(GFL_BG_FRAME2_S,1,0);
-  GFL_BG_FreeBGControl(GFL_BG_FRAME2_S);
-  GFL_BG_FreeBGControl(GFL_BG_FRAME3_S);
+  IRC_POKETRADE_ResetSubDispGraphic(pWork);
+  IRC_POKETRADE_ResetSubdispGraphicDemo(pWork);
 
   IRC_POKETRADE_SetBgMode(SETUP_TRADE_BG_MODE_NORMAL);
 

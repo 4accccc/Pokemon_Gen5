@@ -665,7 +665,9 @@ void IRC_POKETRADEDEMO_SetModel( POKEMON_TRADE_WORK* pWork, int modelno)
   
   Initialize( pWork, modelno);
 
-  modelset[pWork->modelno].setCamera(pWork);
+  if( pWork->modelno != -1){
+    modelset[pWork->modelno].setCamera(pWork);
+  }
 
 
 }

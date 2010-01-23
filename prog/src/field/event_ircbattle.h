@@ -10,6 +10,7 @@
 
 #include <gflib.h>
 
+#include "demo/shinka_demo.h"
 #include "gamesystem/gamesystem.h"
 #include "gamesystem/game_event.h"
 #include "field/fieldmap.h"
@@ -38,6 +39,7 @@ struct _EVENT_IRCBATTLE_WORK{
   GAMEDATA* gamedata;
   POKEMONTRADE_PARAM aPokeTr;
   POKEPARTY* pParty;
+  SHINKA_DEMO_PARAM* shinka_param;
   SAVE_CONTROL_WORK *ctrl;
   int selectType;
   IRC_COMPATIBLE_PARAM  compatible_param; //ÔŠOüƒƒjƒ…[‚É“n‚·î•ñ

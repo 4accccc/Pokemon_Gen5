@@ -604,6 +604,7 @@ static void _changeDemo_ModelTrade20(POKEMON_TRADE_WORK* pWork)
   pWork->pPokemonTradeDemo = NULL;
 
   if(pWork->type == POKEMONTRADE_EVENT){
+    pWork->pParentWork->ret = POKEMONTRADE_END;
     _CHANGE_STATE(pWork,NULL);
   }
   else{

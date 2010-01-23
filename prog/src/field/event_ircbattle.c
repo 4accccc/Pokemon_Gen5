@@ -56,6 +56,7 @@ FS_EXTERN_OVERLAY(battle);
 FS_EXTERN_OVERLAY(fieldmap);
 FS_EXTERN_OVERLAY(ircbattlematch);
 FS_EXTERN_OVERLAY(pokemon_trade);
+FS_EXTERN_OVERLAY(shinka_demo);
 
 #define _LOCALMATCHNO (100)
 
@@ -76,6 +77,8 @@ enum _EVENT_IRCBATTLE {
   _WAIT_IRCBATTLE_FRIEND,
   _CALL_TRADE,
   _WAIT_TRADE,
+  _CALL_EVOLUTION,
+  _WAIT_EVOLUTION,
   _CALL_NET_END,
   _WAIT_NET_END,
   _FIELD_OPEN,
@@ -163,6 +166,7 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
         *seq = _CALL_IRCBATTLE_FRIEND;
         break;
       case EVENTIRCBTL_ENTRYMODE_TRADE:
+        dbw->aPokeTr.type = POKEMONTRADE_IRC;
         *seq = _CALL_TRADE;
         break;
       default:
@@ -238,21 +242,39 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
       (*seq) = _CALL_NET_END;
     }
     break;
-
   case _CALL_TRADE:  //  ポケモン交換
-    dbw->aPokeTr.gamedata=dbw->gamedata;
-    dbw->aPokeTr.type=POKEMONTRADE_IRC;
+    dbw->aPokeTr.gamedata = dbw->gamedata;
     GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(pokemon_trade), &PokemonTradeIrcProcData, &dbw->aPokeTr);
     (*seq)++;
     break;
   case _WAIT_TRADE:
     if (GAMESYSTEM_IsProcExists(gsys) == GFL_PROC_MAIN_NULL){
       NET_PRINT("ポケモン交換おわり\n");
-      (*seq) = _CALL_NET_END;
+      if(dbw->aPokeTr.ret == POKEMONTRADE_EVOLUTION){
+        (*seq) = _CALL_EVOLUTION;
+      }
+      else{
+        (*seq) = _CALL_NET_END;
+      }
     }
     break;
-
-
+  case _CALL_EVOLUTION:
+    GFL_OVERLAY_Load( FS_OVERLAY_ID(shinka_demo) );
+    dbw->shinka_param = SHINKADEMO_AllocParam( HEAPID_PROC, dbw->gamedata,
+                                              GAMEDATA_GetMyPokemon(dbw->gamedata),
+                                              dbw->aPokeTr.after_mons_no,
+                                              0, dbw->aPokeTr.cond, TRUE );
+    GAMESYSTEM_CallProc( gsys, NO_OVERLAY_ID, &ShinkaDemoProcData, dbw->shinka_param );
+    (*seq)++;
+    break;
+  case _WAIT_EVOLUTION:
+    if (GAMESYSTEM_IsProcExists(gsys) == GFL_PROC_MAIN_NULL){
+      SHINKADEMO_FreeParam( dbw->shinka_param );
+      GFL_OVERLAY_Unload( FS_OVERLAY_ID(shinka_demo) );
+      dbw->aPokeTr.type = POKEMONTRADE_EVOLUTION_RET;
+      (*seq)=_CALL_TRADE;
+    }
+    break;
   case _CALL_NET_END:
     if(GFL_NET_IsParentMachine()){
       GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),GFL_NET_CMD_EXIT_REQ,0,NULL);
