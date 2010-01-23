@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2010-01-13T11:30:05"/>
+	<create user="matsumiya" host="W00207" date="2010-01-23T16:06:04"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -378,7 +378,7 @@
 遊園地で　待ち合わせ　だぜ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c04_oldman_03">
+	<row id="msg_c04_oldman_03" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
 ・メッセージ表示後、アイテム入手処理
 　ItemNo421「わざマシン「そらをとぶ」」入手処理（暫定）</comment>
@@ -497,6 +497,42 @@
 行けるように　してあげる[BE:01:ページ切り替え（クリア）]
 ワタシ　５番道路の
 橋の前で　待ってるね[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c04_veteranm_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・トライアルハウスストッパー
+・クリア前
+　GRIDX=399、GRIDZ=468に配置</comment>
+		<attribute name="キャラ指定">VETERANM</attribute>
+		<language name="JPN" width="256">この　トライアルハウスは
+イッシュちほうで　いちばん▽
+つよい　トレーナーが▽
+その　うでまえを　きそうところだ</language>
+		<language name="JPN_KANJI" width="256">この　トライアルハウスは
+イッシュちほうで　いちばん▽
+つよい　トレーナーが▽
+その　うでまえを　きそうところだ</language>
+	</row>
+
+	<row id="msg_c04_veteranm_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・トライアルハウスストッパー
+・クリア後
+　扉の前から移動している</comment>
+		<attribute name="キャラ指定">VETERANM</attribute>
+		<language name="JPN" width="256">この　トライアルハウスは
+イッシュちほうで　いちばん▽
+つよい　トレーナーが▽
+その　うでまえを　きそうところだ▼
+なかに　はいって
+おのれの　じつりょく　ためすがいい</language>
+		<language name="JPN_KANJI" width="256">この　トライアルハウスは
+イッシュちほうで　いちばん▽
+つよい　トレーナーが▽
+その　うでまえを　きそうところだ▼
+なかに　はいって
+おのれの　じつりょく　ためすがいい</language>
 	</row>
 
 	<row id="msg_c04_footballm_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
