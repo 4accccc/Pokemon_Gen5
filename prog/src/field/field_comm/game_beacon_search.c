@@ -425,7 +425,7 @@ static void GameBeacon_SetBeaconParam(GBS_BEACON *beacon)
   GFL_STD_MemClear(beacon, sizeof(GBS_BEACON));
   beacon->gsid = aGFLNetInit.gsid;
   beacon->member_num = GFL_NET_GetConnectNum();
-  beacon->member_max = 4;
+  beacon->member_max = 3;
   beacon->error = GFL_NET_SystemGetErrorCode();
   beacon->beacon_type = GBS_BEACONN_TYPE_NONE;
   beacon->isTwl = OS_IsRunOnTwl();

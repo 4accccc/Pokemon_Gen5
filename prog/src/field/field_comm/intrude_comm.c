@@ -86,7 +86,7 @@ static const GFLNetInitializeStruct aGFLNetInit = {
   HEAPID_WIFI,  //wifi用にcreateされるHEAPID
   HEAPID_NETWORK, //
   GFL_WICON_POSX,GFL_WICON_POSY,  // 通信アイコンXY位置
-  4,//_MAXNUM,  //最大接続人数
+  3,//4,//_MAXNUM,  //最大接続人数
   48,//_MAXSIZE,  //最大送信バイト数
   4,//_BCON_GET_NUM,  // 最大ビーコン収集数
   TRUE,   // CRC計算
@@ -121,6 +121,7 @@ void * IntrudeComm_InitCommSystem( int *seq, void *pwk )
   FIELD_INVALID_PARENT_WORK *invalid_parent = pwk;
   GAMEDATA *gamedata = GameCommSys_GetGameData(invalid_parent->game_comm);
   MYSTATUS *myst = GAMEDATA_GetMyStatus(gamedata);
+  NetID net_id;
   
   intcomm = GFL_HEAP_AllocClearMemory(HEAPID_APP_CONTROL, sizeof(INTRUDE_COMM_SYS));
   intcomm->game_comm = invalid_parent->game_comm;
@@ -134,6 +135,13 @@ void * IntrudeComm_InitCommSystem( int *seq, void *pwk )
   FIELD_WFBC_COMM_DATA_Init(&intcomm->wfbc_comm_data);
 
   GAMEDATA_SetIntrudeMyID(gamedata, 0);
+  
+  //もし意図しないタイミングでアクセスしても問題が無いように
+  //NetIDのMYSTATSUエリアには自分のMyStatusをコピーしておく
+  for(net_id = 0; net_id < FIELD_COMM_MEMBER_MAX; net_id++){
+    MYSTATUS *dest_myst = GAMEDATA_GetMyStatusPlayer(gamedata, net_id);
+    MyStatus_Copy(myst, dest_myst);
+  }
   
   GFL_NET_Init( &aGFLNetInit, IntrudeComm_FinishInitCallback, intcomm );
   OS_TPrintf("INTRUDE_CMD_SHUTDOWN = %d\n", INTRUDE_CMD_SHUTDOWN);
