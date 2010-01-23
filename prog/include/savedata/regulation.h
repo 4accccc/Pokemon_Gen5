@@ -162,7 +162,7 @@ typedef struct {
   char end_year;//終了年：00-99
   char end_month;//終了月：01-12
   char end_day;//終了日：01-31
-  char status;  //大会状態：０未開催／１開催中／２終了  REGULATION_CARD_STATUS_TYPEの値
+  char status;  //大会状態： REGULATION_CARD_STATUS_TYPEの値
   u16 crc;  //整合性検査
  // short rating;//大会用レーティング
 //  short rd;//大会用RD
@@ -209,6 +209,7 @@ extern void RegulationData_Init(REGULATION_CARDDATA * my);
 //カップ名
 extern void Regulation_GetCardCupName(const REGULATION_CARDDATA* pReg,STRBUF* pReturnCupName);
 extern STRBUF* Regulation_CreateCardCupName(const REGULATION_CARDDATA* pReg, HEAPID heapID);
+extern const STRCODE *Regulation_GetCardCupNamePointer( const REGULATION_CARDDATA* pReg );
 
 extern int Regulation_GetCardParam(const REGULATION_CARDDATA* pReg, REGULATION_CARD_PARAM_TYPE type);
 extern void Regulation_SetCardParam(REGULATION_CARDDATA * pReg, REGULATION_CARD_PARAM_TYPE type, int param);
@@ -225,3 +226,9 @@ extern REGULATION_CARDDATA* SaveData_GetRegulationCardData(SAVE_CONTROL_WORK* pS
 
 
 
+//----------------------------------------------------------
+//	デバッグ用
+//----------------------------------------------------------
+#ifdef PM_DEBUG
+extern void Regulation_SetDebugData( REGULATION_CARDDATA* pReg );
+#endif //PM_DEBUG

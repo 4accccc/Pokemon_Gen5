@@ -314,6 +314,31 @@ struct _WBM_LIST_WORK
 //-----------------------------------------------------------------------------
 WBM_LIST_WORK * WBM_LIST_Init( const WBM_LIST_SETUP *cp_setup, HEAPID heapID )
 { 
+  //右下、テキストボックスの上に位置するため
+  //表示項目から位置、高さを計算
+  const u8 w  = WBM_LIST_W;
+  const u8 h  = cp_setup->list_max * 2;
+  const u8 x  = 32 - w - 1; //1はフレーム分
+  const u8 y  = 24 - h - 1 - 6; //１は自分のフレーム分と6はテキスト分
+  return WBM_LIST_InitEx( cp_setup, x, y, w, h, heapID );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  リスト初期化
+ *
+ *	@param	WBM_LIST_SETUP *cp_setup  リスト設定ワーク
+ *	@param  x 座標X
+ *	@param  y 座標Y
+ *	@param  w 幅
+ *	@param  h 高さ
+ *	@param	heapID                    heapID
+ *
+ *	@return ワーク
+ */
+//-----------------------------------------------------------------------------
+WBM_LIST_WORK * WBM_LIST_InitEx( const WBM_LIST_SETUP *cp_setup, u8 x, u8 y, u8 w, u8 h, HEAPID heapID )
+{ 
   WBM_LIST_WORK *p_wk;
   p_wk  = GFL_HEAP_AllocMemory( heapID, sizeof(WBM_LIST_WORK) );
   GFL_STD_MemClear( p_wk, sizeof(WBM_LIST_WORK) );
@@ -321,12 +346,6 @@ WBM_LIST_WORK * WBM_LIST_Init( const WBM_LIST_SETUP *cp_setup, HEAPID heapID )
 
   //BMPWIN作成
   { 
-    //右下、テキストボックスの上に位置するため
-    //表示項目から位置、高さを計算
-    const u8 w  = WBM_LIST_W;
-    const u8 h  = cp_setup->list_max * 2;
-    const u8 x  = 32 - w - 1; //1はフレーム分
-    const u8 y  = 24 - h - 1 - 6; //１は自分のフレーム分と6はテキスト分
     p_wk->p_bmpwin  = GFL_BMPWIN_Create( cp_setup->frm, x, y, w, h, cp_setup->font_plt, GFL_BMP_CHRAREA_GET_B );
     BmpWinFrame_Write( p_wk->p_bmpwin, WINDOW_TRANS_OFF, cp_setup->frm_chr, cp_setup->frm_plt );
     GFL_BMPWIN_MakeTransWindow( p_wk->p_bmpwin );
@@ -439,7 +458,6 @@ u32 WBM_LIST_Main( WBM_LIST_WORK *p_wk )
 struct _WBM_SEQ_WORK
 {
 	WBM_SEQ_FUNCTION	seq_function;		//実行中のシーケンス関数
-	BOOL is_end;									//シーケンスシステム終了フラグ
 	int seq;											//実行中のシーケンス関数の中のシーケンス
 	void *p_wk_adrs;							//実行中のシーケンス関数に渡すワーク
   int reserv_seq;               //予約シーケンス
@@ -495,7 +513,7 @@ void WBM_SEQ_Exit( WBM_SEQ_WORK *p_wk )
 //-----------------------------------------------------------------------------
 void WBM_SEQ_Main( WBM_SEQ_WORK *p_wk )
 {	
-	if( !p_wk->is_end )
+	if( p_wk->seq_function )
 	{	
 		p_wk->seq_function( p_wk, &p_wk->seq, p_wk->p_wk_adrs );
 	}
@@ -511,7 +529,7 @@ void WBM_SEQ_Main( WBM_SEQ_WORK *p_wk )
 //-----------------------------------------------------------------------------
 BOOL WBM_SEQ_IsEnd( const WBM_SEQ_WORK *cp_wk )
 {	
-	return cp_wk->is_end;
+	return cp_wk->seq_function == NULL;
 }
 //----------------------------------------------------------------------------
 /**
@@ -537,7 +555,7 @@ void WBM_SEQ_SetNext( WBM_SEQ_WORK *p_wk, WBM_SEQ_FUNCTION seq_function )
 //-----------------------------------------------------------------------------
 void WBM_SEQ_End( WBM_SEQ_WORK *p_wk )
 {	
-	p_wk->is_end	= TRUE;
+  WBM_SEQ_SetNext( p_wk, NULL );
 }
 //----------------------------------------------------------------------------
 /**

@@ -21,9 +21,9 @@
 //=====================================
 typedef enum
 {
-	WIFIBATTLEMATCH_MODE_RANDOM,  //ランダム対戦
 	WIFIBATTLEMATCH_MODE_WIFI,    //WIFI大会
 	WIFIBATTLEMATCH_MODE_LIVE,    //ライブ大会
+	WIFIBATTLEMATCH_MODE_RANDOM,  //ランダム対戦　（マッチメイクのときにRANDOM＋０がフリー＋１がレーティングにしている）
 
 } WIFIBATTLEMATCH_MODE;
 

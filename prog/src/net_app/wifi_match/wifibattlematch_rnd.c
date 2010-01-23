@@ -168,7 +168,8 @@ static void WbmRndSeq_Free_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
 static void WbmRndSeq_Free_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 //エラー処理
 static void WbmRndSeq_Err_ReturnLogin( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
-
+//切断
+static void WbmRndSeq_DisConnectEnd( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 //-------------------------------------
 ///	便利
 //=====================================
@@ -180,8 +181,17 @@ static void Util_MatchInfo_Delete( WIFIBATTLEMATCH_RND_WORK *p_wk );
 static BOOL Util_MatchInfo_Main( WIFIBATTLEMATCH_RND_WORK *p_wk );
 static void Util_SaveScore( RNDMATCH_DATA *p_save, WIFIBATTLEMATCH_BTLRULE btl_rule, const WIFIBATTLEMATCH_RND_WORK *cp_wk );
 
+typedef enum
+{ 
+  UTIL_LIST_TYPE_YESNO,
+  UTIL_LIST_TYPE_FREERATE,
+}UTIL_LIST_TYPE;
+static void Util_List_Create( WIFIBATTLEMATCH_RND_WORK *p_wk, UTIL_LIST_TYPE type );
+static void Util_List_Delete( WIFIBATTLEMATCH_RND_WORK *p_wk );
+static u32 Util_List_Main( WIFIBATTLEMATCH_RND_WORK *p_wk );
+
 //-------------------------------------
-///	便利
+///	デバッグ
 //=====================================
 #ifdef DEBUGWIN_USE
 static void DEBUGWIN_VisiblePlayerInfo( void* userWork , DEBUGWIN_ITEM* item );
@@ -272,6 +282,8 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_RND_PROC_Init( GFL_PROC *p_proc, int *p_s
     WBM_WAITICON_SetDrawEnable( p_wk->p_wait, FALSE );
 	}
 
+  PMSND_PlayBGM( SEQ_BGM_WCS );
+
 #ifdef DEBUGWIN_USE
   DEBUGWIN_InitProc( GFL_BG_FRAME0_M, p_wk->p_font );
   DEBUGWIN_AddGroupToTop( 0, "ランダムマッチ", HEAPID_WIFIBATTLEMATCH_CORE );
@@ -323,33 +335,8 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_RND_PROC_Init( GFL_PROC *p_proc, int *p_s
 //-----------------------------------------------------------------------------
 static GFL_PROC_RESULT WIFIBATTLEMATCH_RND_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void *p_param_adrs, void *p_wk_adrs )
 {
-  enum 
-  { 
-    SEQ_START_DISCONNECT,
-    SEQ_WAIT_DISCONNECT,
-  };
-
 	WIFIBATTLEMATCH_RND_WORK	      *p_wk	= p_wk_adrs;
   WIFIBATTLEMATCH_CORE_PARAM  *p_param  = p_param_adrs;
-
-  if( p_param->result ==  WIFIBATTLEMATCH_CORE_RESULT_FINISH )
-  { 
-    switch( *p_seq )
-    { 
-    case SEQ_START_DISCONNECT:
-      WIFIBATTLEMATCH_NET_Exit( p_wk->p_net );
-      GFL_NET_Exit( NULL );
-      *p_seq  = SEQ_WAIT_DISCONNECT;
-      return GFL_PROC_RES_CONTINUE; 
-
-    case SEQ_WAIT_DISCONNECT:
-      if( GFL_NET_IsExit() )
-      { 
-        break;
-      }
-      return GFL_PROC_RES_CONTINUE;
-    }
-  }
 
 #ifdef DEBUGWIN_USE
   DEBUGWIN_RemoveGroup( 0 );
@@ -357,22 +344,15 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_RND_PROC_Exit( GFL_PROC *p_proc, int *p_s
 #endif
 
 	//モジュールの破棄
-	{	
-    WBM_WAITICON_Exit( p_wk->p_wait );
-
-    WBM_SEQ_Exit( p_wk->p_seq );
-
-    WBM_TEXT_Exit( p_wk->p_text );
-
-    if( p_param->result !=  WIFIBATTLEMATCH_CORE_RESULT_FINISH )
-    { 
-      WIFIBATTLEMATCH_NET_Exit( p_wk->p_net );
-    }
-
-    Util_MatchInfo_Delete( p_wk );
-
-    Util_PlayerInfo_Delete( p_wk );
-	}
+  WBM_WAITICON_Exit( p_wk->p_wait );
+  WBM_SEQ_Exit( p_wk->p_seq );
+  WBM_TEXT_Exit( p_wk->p_text );
+  if( p_wk->p_net )
+  { 
+    WIFIBATTLEMATCH_NET_Exit( p_wk->p_net );
+  }
+  Util_MatchInfo_Delete( p_wk );
+  Util_PlayerInfo_Delete( p_wk );
 
 	//共通モジュールの破棄
 	WORDSET_Delete( p_wk->p_word );
@@ -647,31 +627,16 @@ static void WbmRndSeq_Start( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs 
     break;
 
   case SEQ_START_SELECT_MODE:
-    { 
-      WBM_LIST_SETUP  setup;
-      GFL_STD_MemClear( &setup, sizeof(WBM_LIST_SETUP) );
-      setup.p_msg   = p_wk->p_msg;
-      setup.p_font  = p_wk->p_font;
-      setup.p_que   = p_wk->p_que;
-      setup.strID[0]= WIFIMATCH_TEXT_003;
-      setup.strID[1]= WIFIMATCH_TEXT_004;
-      setup.strID[2]= WIFIMATCH_TEXT_005;
-      setup.list_max= 3;
-      setup.frm     = BG_FRAME_M_TEXT;
-      setup.font_plt= PLT_FONT_M;
-      setup.frm_plt = PLT_LIST_M;
-      setup.frm_chr = CGR_OFS_M_LIST;
-      p_wk->p_list  = WBM_LIST_Init( &setup, HEAPID_WIFIBATTLEMATCH_CORE );
-      *p_seq     = SEQ_WAIT_SELECT_MODE;
-    }
+    Util_List_Create( p_wk, UTIL_LIST_TYPE_FREERATE );
+    *p_seq     = SEQ_WAIT_SELECT_MODE;
     break;
 
   case SEQ_WAIT_SELECT_MODE:
     {
-      const u32 select  = WBM_LIST_Main( p_wk->p_list );
+      const u32 select  = Util_List_Main( p_wk );
       if( select != WBM_LIST_SELECT_NULL )
       { 
-        WBM_LIST_Exit( p_wk->p_list );
+        Util_List_Delete( p_wk );
         switch( select )
         { 
         case 0:
@@ -702,35 +667,21 @@ static void WbmRndSeq_Start( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs 
     break;
 
   case SEQ_START_CANCEL_SELECT:
-    { 
-      WBM_LIST_SETUP  setup;
-      GFL_STD_MemClear( &setup, sizeof(WBM_LIST_SETUP) );
-      setup.p_msg   = p_wk->p_msg;
-      setup.p_font  = p_wk->p_font;
-      setup.p_que   = p_wk->p_que;
-      setup.strID[0]= WIFIMATCH_TEXT_007;
-      setup.strID[1]= WIFIMATCH_TEXT_008;
-      setup.list_max= 2;
-      setup.frm     = BG_FRAME_M_TEXT;
-      setup.font_plt= PLT_FONT_M;
-      setup.frm_plt = PLT_LIST_M;
-      setup.frm_chr = CGR_OFS_M_LIST;
-      p_wk->p_list  = WBM_LIST_Init( &setup, HEAPID_WIFIBATTLEMATCH_CORE );
-      *p_seq     = SEQ_WAIT_CANCEL_SELECT;
-    }
+    Util_List_Create( p_wk, UTIL_LIST_TYPE_YESNO );
+    *p_seq     = SEQ_WAIT_CANCEL_SELECT;
     break;
 
   case SEQ_WAIT_CANCEL_SELECT:
     {
-      const u32 select  = WBM_LIST_Main( p_wk->p_list );
+      const u32 select  = Util_List_Main( p_wk );
       if( select != WBM_LIST_SELECT_NULL )
       { 
-        WBM_LIST_Exit( p_wk->p_list );
+        Util_List_Delete( p_wk );
         switch( select )
         { 
         case 0:
           p_param->result = WIFIBATTLEMATCH_CORE_RESULT_FINISH;
-          WBM_SEQ_End( p_seqwk );
+          WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_DisConnectEnd );
           break;
 
         case 1:
@@ -907,7 +858,7 @@ static void WbmRndSeq_Rate_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
     //=====================================
   case SEQ_START_MATCHING:
     WBM_WAITICON_SetDrawEnable( p_wk->p_wait, TRUE );
-    WIFIBATTLEMATCH_NET_StartMatchMake( p_wk->p_net, p_param->p_param->btl_rule ); 
+    WIFIBATTLEMATCH_NET_StartMatchMake( p_wk->p_net, p_param->p_param->mode, TRUE, p_param->p_param->btl_rule ); 
     *p_seq = SEQ_START_MATCHING_MSG;
     break;
 
@@ -935,7 +886,7 @@ static void WbmRndSeq_Rate_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
     ///	見つかった後の相手の不正チェック
     //=====================================
   case SEQ_START_CHECK_CHEAT:
-
+    //@todo
 
     *p_seq = SEQ_WAIT_CHECK_CHEAT;
     break;
@@ -1015,36 +966,22 @@ static void WbmRndSeq_Rate_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
     break;
 
   case SEQ_START_SELECT_CANCEL:
-    { 
-      WBM_LIST_SETUP  setup;
-      GFL_STD_MemClear( &setup, sizeof(WBM_LIST_SETUP) );
-      setup.p_msg   = p_wk->p_msg;
-      setup.p_font  = p_wk->p_font;
-      setup.p_que   = p_wk->p_que;
-      setup.strID[0]= WIFIMATCH_TEXT_007;
-      setup.strID[1]= WIFIMATCH_TEXT_008;
-      setup.list_max= 2;
-      setup.frm     = BG_FRAME_M_TEXT;
-      setup.font_plt= PLT_FONT_M;
-      setup.frm_plt = PLT_LIST_M;
-      setup.frm_chr = CGR_OFS_M_LIST;
-      p_wk->p_list  = WBM_LIST_Init( &setup, HEAPID_WIFIBATTLEMATCH_CORE );
-      *p_seq     = SEQ_WAIT_SELECT_CANCEL;
-    }
+    Util_List_Create( p_wk, UTIL_LIST_TYPE_YESNO );
+    *p_seq     = SEQ_WAIT_SELECT_CANCEL;
     break;
 
   case SEQ_WAIT_SELECT_CANCEL:
     {
-      const u32 select  = WBM_LIST_Main( p_wk->p_list );
+      const u32 select  = Util_List_Main( p_wk );
       if( select != WBM_LIST_SELECT_NULL )
       { 
-        WBM_LIST_Exit( p_wk->p_list );
+        Util_List_Delete( p_wk );
         switch( select )
         { 
         case 0:
           WBM_WAITICON_SetDrawEnable( p_wk->p_wait, FALSE );
           p_param->result = WIFIBATTLEMATCH_CORE_RESULT_FINISH;
-          WBM_SEQ_End( p_seqwk );
+          WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_DisConnectEnd );
           break;
         case 1:
           *p_seq = SEQ_START_MATCHING_MSG;
@@ -1256,33 +1193,20 @@ static void WbmRndSeq_Rate_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p
     break;
 
   case SEQ_START_SELECTBTLREC:
-    { 
-      WBM_LIST_SETUP  setup;
-      GFL_STD_MemClear( &setup, sizeof(WBM_LIST_SETUP) );
-      setup.p_msg   = p_wk->p_msg;
-      setup.p_font  = p_wk->p_font;
-      setup.p_que   = p_wk->p_que;
-      setup.strID[0]= WIFIMATCH_TEXT_007;
-      setup.strID[1]= WIFIMATCH_TEXT_008;
-      setup.list_max= 2;
-      setup.frm     = BG_FRAME_M_TEXT;
-      setup.font_plt= PLT_FONT_M;
-      setup.frm_plt = PLT_LIST_M;
-      setup.frm_chr = CGR_OFS_M_LIST;
-      p_wk->p_list  = WBM_LIST_Init( &setup, HEAPID_WIFIBATTLEMATCH_CORE );
-      *p_seq     = SEQ_WAIT_SELECTBTLREC;
-    }
+    Util_List_Create( p_wk, UTIL_LIST_TYPE_YESNO );
+    *p_seq     = SEQ_WAIT_SELECTBTLREC;  
     break;
 
   case SEQ_WAIT_SELECTBTLREC:
     {
-      const u32 select  = WBM_LIST_Main( p_wk->p_list );
+      const u32 select  = Util_List_Main( p_wk );
       if( select != WBM_LIST_SELECT_NULL )
       { 
-        WBM_LIST_Exit( p_wk->p_list );
+        Util_List_Delete( p_wk );
         switch( select )
         { 
         case 0:
+          //@todo
           *p_seq = SEQ_START_SELECT_CONTINUE_MSG;
           break;
         case 1:
@@ -1302,29 +1226,15 @@ static void WbmRndSeq_Rate_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p
     WBM_SEQ_SetReservSeq( p_seqwk, SEQ_START_SELECT_CONTINUE );
     break;
   case SEQ_START_SELECT_CONTINUE:
-    { 
-      WBM_LIST_SETUP  setup;
-      GFL_STD_MemClear( &setup, sizeof(WBM_LIST_SETUP) );
-      setup.p_msg   = p_wk->p_msg;
-      setup.p_font  = p_wk->p_font;
-      setup.p_que   = p_wk->p_que;
-      setup.strID[0]= WIFIMATCH_TEXT_007;
-      setup.strID[1]= WIFIMATCH_TEXT_008;
-      setup.list_max= 2;
-      setup.frm     = BG_FRAME_M_TEXT;
-      setup.font_plt= PLT_FONT_M;
-      setup.frm_plt = PLT_LIST_M;
-      setup.frm_chr = CGR_OFS_M_LIST;
-      p_wk->p_list  = WBM_LIST_Init( &setup, HEAPID_WIFIBATTLEMATCH_CORE );
-      *p_seq     = SEQ_WAIT_SELECT_CONTINUE;
-    }
+    Util_List_Create( p_wk, UTIL_LIST_TYPE_YESNO );
+    *p_seq     = SEQ_WAIT_SELECT_CONTINUE;
     break;
   case SEQ_WAIT_SELECT_CONTINUE:
     {
-      const u32 select  = WBM_LIST_Main( p_wk->p_list );
+      const u32 select  = Util_List_Main( p_wk );
       if( select != WBM_LIST_SELECT_NULL )
       { 
-        WBM_LIST_Exit( p_wk->p_list );
+        Util_List_Delete( p_wk );
         switch( select )
         { 
         case 0:
@@ -1348,34 +1258,20 @@ static void WbmRndSeq_Rate_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p
     break;
 
   case SEQ_START_SELECT_CANCEL:
-    { 
-      WBM_LIST_SETUP  setup;
-      GFL_STD_MemClear( &setup, sizeof(WBM_LIST_SETUP) );
-      setup.p_msg   = p_wk->p_msg;
-      setup.p_font  = p_wk->p_font;
-      setup.p_que   = p_wk->p_que;
-      setup.strID[0]= WIFIMATCH_TEXT_007;
-      setup.strID[1]= WIFIMATCH_TEXT_008;
-      setup.list_max= 2;
-      setup.frm     = BG_FRAME_M_TEXT;
-      setup.font_plt= PLT_FONT_M;
-      setup.frm_plt = PLT_LIST_M;
-      setup.frm_chr = CGR_OFS_M_LIST;
-      p_wk->p_list  = WBM_LIST_Init( &setup, HEAPID_WIFIBATTLEMATCH_CORE );
-      *p_seq     = SEQ_WAIT_SELECT_CANCEL;
-    }
+    Util_List_Create( p_wk, UTIL_LIST_TYPE_YESNO );
+    *p_seq     = SEQ_WAIT_SELECT_CANCEL;
     break;
   case SEQ_WAIT_SELECT_CANCEL:
     {
-      const u32 select  = WBM_LIST_Main( p_wk->p_list );
+      const u32 select  = Util_List_Main( p_wk );
       if( select != WBM_LIST_SELECT_NULL )
       { 
-        WBM_LIST_Exit( p_wk->p_list );
+        Util_List_Delete( p_wk );
         switch( select )
         { 
         case 0:
           p_param->result = WIFIBATTLEMATCH_CORE_RESULT_FINISH;
-          WBM_SEQ_End( p_seqwk );
+          WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_DisConnectEnd );
           break;
         case 1:
           *p_seq = SEQ_START_SELECT_CONTINUE_MSG;
@@ -1489,7 +1385,7 @@ static void WbmRndSeq_Free_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
     //=====================================
   case SEQ_START_MATCHING:
     WBM_WAITICON_SetDrawEnable( p_wk->p_wait, TRUE );
-    WIFIBATTLEMATCH_NET_StartMatchMake( p_wk->p_net, p_param->p_param->btl_rule ); 
+    WIFIBATTLEMATCH_NET_StartMatchMake( p_wk->p_net, p_param->p_param->mode, FALSE, p_param->p_param->btl_rule ); 
     *p_seq = SEQ_START_MATCHING_MSG;
     break;
 
@@ -1584,36 +1480,22 @@ static void WbmRndSeq_Free_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
     break;
 
   case SEQ_START_SELECT_CANCEL:
-    { 
-      WBM_LIST_SETUP  setup;
-      GFL_STD_MemClear( &setup, sizeof(WBM_LIST_SETUP) );
-      setup.p_msg   = p_wk->p_msg;
-      setup.p_font  = p_wk->p_font;
-      setup.p_que   = p_wk->p_que;
-      setup.strID[0]= WIFIMATCH_TEXT_007;
-      setup.strID[1]= WIFIMATCH_TEXT_008;
-      setup.list_max= 2;
-      setup.frm     = BG_FRAME_M_TEXT;
-      setup.font_plt= PLT_FONT_M;
-      setup.frm_plt = PLT_LIST_M;
-      setup.frm_chr = CGR_OFS_M_LIST;
-      p_wk->p_list  = WBM_LIST_Init( &setup, HEAPID_WIFIBATTLEMATCH_CORE );
-      *p_seq     = SEQ_WAIT_SELECT_CANCEL;
-    }
+    Util_List_Create( p_wk, UTIL_LIST_TYPE_YESNO );
+    *p_seq     = SEQ_WAIT_SELECT_CANCEL;
     break;
 
   case SEQ_WAIT_SELECT_CANCEL:
     {
-      const u32 select  = WBM_LIST_Main( p_wk->p_list );
+      const u32 select  = Util_List_Main( p_wk );
       if( select != WBM_LIST_SELECT_NULL )
       { 
-        WBM_LIST_Exit( p_wk->p_list );
+        Util_List_Delete( p_wk );
         switch( select )
         { 
         case 0:
           WBM_WAITICON_SetDrawEnable( p_wk->p_wait, FALSE );
           p_param->result = WIFIBATTLEMATCH_CORE_RESULT_FINISH;
-          WBM_SEQ_End( p_seqwk );
+          WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_DisConnectEnd );
           break;
         case 1:
           *p_seq = SEQ_START_MATCHING_MSG;
@@ -1684,29 +1566,15 @@ static void WbmRndSeq_Free_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p
     WBM_SEQ_SetReservSeq( p_seqwk, SEQ_START_SELECTBTLREC );
     break;
   case SEQ_START_SELECTBTLREC:
-    { 
-      WBM_LIST_SETUP  setup;
-      GFL_STD_MemClear( &setup, sizeof(WBM_LIST_SETUP) );
-      setup.p_msg   = p_wk->p_msg;
-      setup.p_font  = p_wk->p_font;
-      setup.p_que   = p_wk->p_que;
-      setup.strID[0]= WIFIMATCH_TEXT_007;
-      setup.strID[1]= WIFIMATCH_TEXT_008;
-      setup.list_max= 2;
-      setup.frm     = BG_FRAME_M_TEXT;
-      setup.font_plt= PLT_FONT_M;
-      setup.frm_plt = PLT_LIST_M;
-      setup.frm_chr = CGR_OFS_M_LIST;
-      p_wk->p_list  = WBM_LIST_Init( &setup, HEAPID_WIFIBATTLEMATCH_CORE );
-      *p_seq     = SEQ_WAIT_SELECTBTLREC;
-    }
+    Util_List_Create( p_wk, UTIL_LIST_TYPE_YESNO );
+    *p_seq     = SEQ_WAIT_SELECTBTLREC;
     break;
   case SEQ_WAIT_SELECTBTLREC:
     {
-      const u32 select  = WBM_LIST_Main( p_wk->p_list );
+      const u32 select  = Util_List_Main( p_wk );
       if( select != WBM_LIST_SELECT_NULL )
       { 
-        WBM_LIST_Exit( p_wk->p_list );
+        Util_List_Delete( p_wk );
         switch( select )
         { 
         case 0:
@@ -1785,29 +1653,15 @@ static void WbmRndSeq_Free_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p
     WBM_SEQ_SetReservSeq( p_seqwk, SEQ_START_SELECT_CONTINUE );
     break;
   case SEQ_START_SELECT_CONTINUE:
-    { 
-      WBM_LIST_SETUP  setup;
-      GFL_STD_MemClear( &setup, sizeof(WBM_LIST_SETUP) );
-      setup.p_msg   = p_wk->p_msg;
-      setup.p_font  = p_wk->p_font;
-      setup.p_que   = p_wk->p_que;
-      setup.strID[0]= WIFIMATCH_TEXT_007;
-      setup.strID[1]= WIFIMATCH_TEXT_008;
-      setup.list_max= 2;
-      setup.frm     = BG_FRAME_M_TEXT;
-      setup.font_plt= PLT_FONT_M;
-      setup.frm_plt = PLT_LIST_M;
-      setup.frm_chr = CGR_OFS_M_LIST;
-      p_wk->p_list  = WBM_LIST_Init( &setup, HEAPID_WIFIBATTLEMATCH_CORE );
-      *p_seq     = SEQ_WAIT_SELECT_CONTINUE;
-    }
+    Util_List_Create( p_wk, UTIL_LIST_TYPE_YESNO );
+    *p_seq     = SEQ_WAIT_SELECT_CONTINUE;
     break;
   case SEQ_WAIT_SELECT_CONTINUE:
     {
-      const u32 select  = WBM_LIST_Main( p_wk->p_list );
+      const u32 select  = Util_List_Main( p_wk );
       if( select != WBM_LIST_SELECT_NULL )
       { 
-        WBM_LIST_Exit( p_wk->p_list );
+        Util_List_Delete( p_wk );
         switch( select )
         { 
         case 0:
@@ -1830,34 +1684,20 @@ static void WbmRndSeq_Free_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p
     WBM_SEQ_SetReservSeq( p_seqwk, SEQ_START_SELECT_CANCEL );
     break;
   case SEQ_START_SELECT_CANCEL:
-    { 
-      WBM_LIST_SETUP  setup;
-      GFL_STD_MemClear( &setup, sizeof(WBM_LIST_SETUP) );
-      setup.p_msg   = p_wk->p_msg;
-      setup.p_font  = p_wk->p_font;
-      setup.p_que   = p_wk->p_que;
-      setup.strID[0]= WIFIMATCH_TEXT_007;
-      setup.strID[1]= WIFIMATCH_TEXT_008;
-      setup.list_max= 2;
-      setup.frm     = BG_FRAME_M_TEXT;
-      setup.font_plt= PLT_FONT_M;
-      setup.frm_plt = PLT_LIST_M;
-      setup.frm_chr = CGR_OFS_M_LIST;
-      p_wk->p_list  = WBM_LIST_Init( &setup, HEAPID_WIFIBATTLEMATCH_CORE );
-      *p_seq     = SEQ_WAIT_SELECT_CANCEL;
-    }
+    Util_List_Create( p_wk, UTIL_LIST_TYPE_YESNO );
+    *p_seq     = SEQ_WAIT_SELECT_CANCEL;
     break;
   case SEQ_WAIT_SELECT_CANCEL:
     {
-      const u32 select  = WBM_LIST_Main( p_wk->p_list );
+      const u32 select  = Util_List_Main( p_wk );
       if( select != WBM_LIST_SELECT_NULL )
       { 
-        WBM_LIST_Exit( p_wk->p_list );
+        Util_List_Delete( p_wk );
         switch( select )
         { 
         case 0:
           p_param->result = WIFIBATTLEMATCH_CORE_RESULT_FINISH;
-          WBM_SEQ_End( p_seqwk );
+          WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_DisConnectEnd );
           break;
         case 1:
           *p_seq = SEQ_START_SELECT_CONTINUE_MSG;
@@ -1879,7 +1719,6 @@ static void WbmRndSeq_Free_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p
   }
 }
 
-
 //----------------------------------------------------------------------------
 /**
  *	@brief  エラーのためログインに戻る
@@ -1891,12 +1730,61 @@ static void WbmRndSeq_Free_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p
 //-----------------------------------------------------------------------------
 static void WbmRndSeq_Err_ReturnLogin( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
 { 
-  WIFIBATTLEMATCH_RND_WORK	      *p_wk	    = p_wk_adrs;
+  WIFIBATTLEMATCH_RND_WORK	  *p_wk	    = p_wk_adrs;
   WIFIBATTLEMATCH_CORE_PARAM  *p_param  = p_wk->p_param;
   
   p_param->result = WIFIBATTLEMATCH_CORE_RESULT_ERR_NEXT_LOGIN;
   WBM_SEQ_End( p_seqwk );
   
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  切断して終了
+ *
+ *	@param	WBM_SEQ_WORK *p_seqwk       シーケンスワーク
+ *	@param  p_peq                       シーケンス
+ *	@param	p_wk_adrs                   ワークアドレス
+ */
+//-----------------------------------------------------------------------------
+static void WbmRndSeq_DisConnectEnd( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+{ 
+  enum
+  { 
+    SEQ_START_DISCONNECT,
+    SEQ_WAIT_DISCONNECT,
+    SEQ_END,
+  };
+
+  WIFIBATTLEMATCH_RND_WORK	  *p_wk	    = p_wk_adrs;
+  WIFIBATTLEMATCH_CORE_PARAM  *p_param  = p_wk->p_param;
+
+  switch( *p_seq )
+  { 
+  case SEQ_START_DISCONNECT:
+    if( GFL_NET_IsInit())
+    { 
+      WIFIBATTLEMATCH_NET_Exit( p_wk->p_net );
+      p_wk->p_net = NULL;
+      GFL_NET_Exit( NULL );
+      *p_seq  = SEQ_WAIT_DISCONNECT;
+    }
+    else
+    { 
+      *p_seq  = SEQ_END;
+    }
+    break;
+
+  case SEQ_WAIT_DISCONNECT:
+    if( !GFL_NET_IsInit( ) )
+    { 
+      *p_seq  = SEQ_END;
+    }
+    break;
+
+  case SEQ_END:
+    WBM_SEQ_End( p_seqwk );
+    break;
+  }
 }
 //----------------------------------------------------------------------------
 /**
@@ -1974,7 +1862,7 @@ static void Util_PlayerInfo_Create( WIFIBATTLEMATCH_RND_WORK *p_wk, WIFIBATTLEMA
       info_setup.lose_cnt = RNDMATCH_GetParam( p_wk->p_param->p_rndmatch, p_wk->p_param->p_param->btl_rule, RNDMATCH_PARAM_IDX_LOSE );
       info_setup.btl_cnt  = info_setup.win_cnt + info_setup.lose_cnt;
     }
-    
+    info_setup.trainerID  = MyStatus_GetTrainerView( p_my );
     p_wk->p_playerinfo	= PLAYERINFO_RND_Init( &info_setup, is_rate, p_my, p_unit, p_wk->p_res, p_wk->p_font, p_wk->p_que, p_wk->p_msg, p_wk->p_word, HEAPID_WIFIBATTLEMATCH_CORE );
   }
 }
@@ -2018,7 +1906,7 @@ static void Util_MatchInfo_Create( WIFIBATTLEMATCH_RND_WORK *p_wk, const WIFIBAT
   if( p_wk->p_matchinfo == NULL )
   { 
     GFL_CLUNIT  *p_unit	= WIFIBATTLEMATCH_GRAPHIC_GetClunit( p_wk->p_graphic );
-    p_wk->p_matchinfo		= MATCHINFO_Init( cp_enemy_data, p_unit, p_wk->p_res, p_wk->p_font, p_wk->p_que, p_wk->p_msg, p_wk->p_word, HEAPID_WIFIBATTLEMATCH_CORE );
+    p_wk->p_matchinfo		= MATCHINFO_Init( cp_enemy_data, p_unit, p_wk->p_res, p_wk->p_font, p_wk->p_que, p_wk->p_msg, p_wk->p_word, p_wk->p_param->p_param->mode, HEAPID_WIFIBATTLEMATCH_CORE );
   }
 }
 //----------------------------------------------------------------------------
@@ -2104,6 +1992,85 @@ static void Util_SaveScore( RNDMATCH_DATA *p_save, WIFIBATTLEMATCH_BTLRULE btl_r
   RNDMATCH_SetParam( p_save, RNDMATCH_TYPE_RATE_SINGLE + btl_rule, RNDMATCH_PARAM_IDX_RATE, rate );
   RNDMATCH_SetParam( p_save, RNDMATCH_TYPE_RATE_SINGLE + btl_rule, RNDMATCH_PARAM_IDX_WIN, win_cnt );
   RNDMATCH_SetParam( p_save, RNDMATCH_TYPE_RATE_SINGLE + btl_rule, RNDMATCH_PARAM_IDX_LOSE, btl_cnt );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  リスト初期化
+ *
+ *	@param	WIFIBATTLEMATCH_RND_WORK *p_wk  ワーク
+ *	@param	type                            リストの種類
+ */
+//-----------------------------------------------------------------------------
+static void Util_List_Create( WIFIBATTLEMATCH_RND_WORK *p_wk, UTIL_LIST_TYPE type )
+{ 
+  if( p_wk->p_list != NULL )
+  { 
+    WBM_LIST_SETUP  setup;
+    GFL_STD_MemClear( &setup, sizeof(WBM_LIST_SETUP) );
+    setup.p_msg   = p_wk->p_msg;
+    setup.p_font  = p_wk->p_font;
+    setup.p_que   = p_wk->p_que;
+    setup.frm     = BG_FRAME_M_TEXT;
+    setup.font_plt= PLT_FONT_M;
+    setup.frm_plt = PLT_LIST_M;
+    setup.frm_chr = CGR_OFS_M_LIST;
+
+
+    switch( type )
+    {
+    case UTIL_LIST_TYPE_YESNO:
+      setup.strID[0]= WIFIMATCH_TEXT_007;
+      setup.strID[1]= WIFIMATCH_TEXT_008;
+      setup.list_max= 2;
+      break;
+
+    case UTIL_LIST_TYPE_FREERATE:
+      setup.strID[0]= WIFIMATCH_TEXT_003;
+      setup.strID[1]= WIFIMATCH_TEXT_004;
+      setup.strID[2]= WIFIMATCH_TEXT_005;
+      setup.list_max= 3;
+      break;
+    }
+
+    p_wk->p_list  = WBM_LIST_Init( &setup, HEAPID_WIFIBATTLEMATCH_CORE );
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  リスト破棄
+ *
+ *	@param	WIFIBATTLEMATCH_RND_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void Util_List_Delete( WIFIBATTLEMATCH_RND_WORK *p_wk )
+{
+  if( p_wk->p_list )
+  { 
+    WBM_LIST_Exit( p_wk->p_list );
+    p_wk->p_list  = NULL;
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  リストメイン
+ *
+ *	@param	WIFIBATTLEMATCH_RND_WORK *p_wk ワーク
+ *
+ *	@return 選択したもの
+ */
+//-----------------------------------------------------------------------------
+static u32 Util_List_Main( WIFIBATTLEMATCH_RND_WORK *p_wk )
+{ 
+  if( p_wk->p_list )
+  { 
+    return WBM_LIST_Main( p_wk->p_list );
+  }
+  else
+  { 
+    NAGI_Printf( "List not exist !!!\n" );
+    return WBM_LIST_SELECT_NULL;
+  }
 }
 
 //=============================================================================

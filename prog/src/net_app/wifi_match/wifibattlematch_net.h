@@ -116,6 +116,20 @@ typedef struct
 } WIFIBATTLEMATCH_GDB_RND_SCORE_DATA;
 
 //-------------------------------------
+///	PDFから落としてきたデータ
+//=====================================
+typedef struct 
+{
+  char  status;
+  short no;
+
+  //登録ポケモン？
+  //todo
+
+} WIFIBATTLEMATCH_PDF_DATA;
+
+
+//-------------------------------------
 ///	エラー
 //=====================================
 /*typedef struct {
@@ -165,13 +179,11 @@ extern void WIFIBATTLEMATCH_NET_StartInitialize( WIFIBATTLEMATCH_NET_WORK *p_wk 
 extern BOOL WIFIBATTLEMATCH_NET_WaitInitialize( WIFIBATTLEMATCH_NET_WORK *p_wk, SAVE_CONTROL_WORK *p_save, DWCGdbError *p_result );
 extern BOOL WIFIBATTLEMATCH_NET_IsInitialize( const WIFIBATTLEMATCH_NET_WORK *cp_wk );
 
-
-
 //-------------------------------------
 ///	マッチング
 //=====================================
 //マッチング
-extern void WIFIBATTLEMATCH_NET_StartMatchMake( WIFIBATTLEMATCH_NET_WORK *p_wk, WIFIBATTLEMATCH_BTLRULE btl_rule );
+extern void WIFIBATTLEMATCH_NET_StartMatchMake( WIFIBATTLEMATCH_NET_WORK *p_wk, WIFIBATTLEMATCH_MODE mode, BOOL is_rnd_rate, WIFIBATTLEMATCH_BTLRULE btl_rule );
 extern BOOL WIFIBATTLEMATCH_NET_WaitMatchMake( WIFIBATTLEMATCH_NET_WORK *p_wk );
 extern WIFIBATTLEMATCH_NET_SEQ WIFIBATTLEMATCH_NET_GetSeqMatchMake( const WIFIBATTLEMATCH_NET_WORK *cp_wk );
 

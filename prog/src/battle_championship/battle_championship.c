@@ -802,7 +802,7 @@ void BC_TEXT_Main( BC_TEXT_WORK* p_wk )
       case PRINTSTREAM_STATE_RUNNING:  ///< 処理実行中（文字列が流れている）
 
         // メッセージスキップ
-        if( GFL_UI_KEY_GetTrg() & (PAD_BUTTON_DECIDE|PAD_BUTTON_CANCEL) )
+        if( GFL_UI_KEY_GetCont() & (PAD_BUTTON_DECIDE|PAD_BUTTON_CANCEL) )
         {
           PRINTSYS_PrintStreamShortWait( p_wk->p_stream, 0 );
         }

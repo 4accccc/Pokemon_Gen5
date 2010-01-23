@@ -125,8 +125,10 @@ typedef enum
 //=====================================
 typedef enum
 {
-  MATCHMAKE_KEY_BTL,  //ランダム
-  MATCHMAKE_KEY_DEBUG,  //ダミー
+  MATCHMAKE_KEY_WBM,    //Wifiバトルマッチを示す（必ず１）
+  MATCHMAKE_KEY_MODE,    //バトルモード
+  MATCHMAKE_KEY_RULE,    //バトルルール
+  MATCHMAKE_KEY_DEBUG,  //デバッグ用
 
   MATCHMAKE_KEY_MAX,
 } MATCHMAKE_KEY;
@@ -186,7 +188,7 @@ typedef struct
   int ivalue;       // キーに対応する値（int型）
   u8  keyID;        // マッチメイク用キーID
   u8 pad;           // パディング
-  char keyStr[3];   // マッチメイク用キー文字列
+  char keyStr[4];   // マッチメイク用キー文字列
 } MATCHMAKE_KEY_WORK;
 
 //-------------------------------------
@@ -229,6 +231,9 @@ struct _WIFIBATTLEMATCH_NET_WORK
   BOOL is_stop_connect;
   BOOL is_auth;
 
+  //マッチメイク
+   DWCEvalPlayerCallback matchmake_eval_callback;
+
   //以下ダウンロード用
   char temp_buffer[REGULATION_CARD_DATA_SIZE];
   DWCNdFileInfo fileInfo;
@@ -264,7 +269,9 @@ static DWCNdError s_callback_result = 0;
 */
 //=============================================================================
 static void MATCHMAKE_KEY_Set( WIFIBATTLEMATCH_NET_WORK *p_wk, MATCHMAKE_KEY key, int value );
-static int WIFIBATTLEMATCH_Eval_Callback( int index, void* p_param_adrs );
+static int WIFIBATTLEMATCH_RND_FREE_Eval_Callback( int index, void* p_param_adrs );
+static int WIFIBATTLEMATCH_RND_RATE_Eval_Callback( int index, void* p_param_adrs );
+static int WIFIBATTLEMATCH_WIFI_Eval_Callback( int index, void* p_param_adrs );
 
 //-------------------------------------
 ///	SGFL_NETコールバック
@@ -361,11 +368,14 @@ static const int sc_default_value[]  =
 
 //-------------------------------------
 ///	マッチメイクキー文字列
+//    3文字固定
 //=====================================
 static const char *sc_matchmake_key_str[ MATCHMAKE_KEY_MAX ] =
 { 
-  "rndbt",
-  "db",
+  "wbm"
+  "mod",
+  "rul",
+  "deb",
 };
 //-------------------------------------
 ///	通信コマンド
@@ -958,12 +968,41 @@ BOOL WIFIBATTLEMATCH_NET_WaitInitialize( WIFIBATTLEMATCH_NET_WORK *p_wk, SAVE_CO
  *	@param	WIFIBATTLEMATCH_NET_WORK *p_wk ワーク
  */
 //-----------------------------------------------------------------------------
-void WIFIBATTLEMATCH_NET_StartMatchMake( WIFIBATTLEMATCH_NET_WORK *p_wk, WIFIBATTLEMATCH_BTLRULE btl_rule )
+void WIFIBATTLEMATCH_NET_StartMatchMake( WIFIBATTLEMATCH_NET_WORK *p_wk, WIFIBATTLEMATCH_MODE mode, BOOL is_rnd_rate, WIFIBATTLEMATCH_BTLRULE btl_rule )
 { 
+  u32 btl_mode  = mode;
+  if( mode == WIFIBATTLEMATCH_MODE_RANDOM )
+  { 
+    btl_mode  += is_rnd_rate;
+  }
+
+  MATCHMAKE_KEY_Set( p_wk, MATCHMAKE_KEY_WBM, TRUE );
+  MATCHMAKE_KEY_Set( p_wk, MATCHMAKE_KEY_MODE, btl_mode );
+  MATCHMAKE_KEY_Set( p_wk, MATCHMAKE_KEY_RULE, btl_rule );
   MATCHMAKE_KEY_Set( p_wk, MATCHMAKE_KEY_DEBUG, MATCHINGKEY );
-  MATCHMAKE_KEY_Set( p_wk, MATCHMAKE_KEY_BTL, btl_rule );
-  STD_TSPrintf( p_wk->filter, "rndbt=%d And db=%d", btl_rule, MATCHINGKEY );
+  STD_TSPrintf( p_wk->filter, "wbm=%d And mod=%d And rul=%d And deb=%d", TRUE, btl_mode, btl_rule, MATCHINGKEY );
   p_wk->seq_matchmake = WIFIBATTLEMATCH_NET_SEQ_MATCH_START;
+
+  //接続評価コールバック指定
+  switch( mode )
+  { 
+  case WIFIBATTLEMATCH_MODE_WIFI:    //WIFI大会
+    p_wk->matchmake_eval_callback = WIFIBATTLEMATCH_WIFI_Eval_Callback;
+    break;
+  case WIFIBATTLEMATCH_MODE_LIVE:    //ライブ大会
+    GF_ASSERT( 0 );
+    break;
+  case WIFIBATTLEMATCH_MODE_RANDOM:  //ランダム対戦　（マッチメイクのときにRANDOM＋０がフリー＋１がレーティングにしている）
+    if( is_rnd_rate )
+    { 
+      p_wk->matchmake_eval_callback = WIFIBATTLEMATCH_RND_RATE_Eval_Callback;
+    }
+    else
+    { 
+      p_wk->matchmake_eval_callback = WIFIBATTLEMATCH_RND_FREE_Eval_Callback;
+    }
+    break;
+  }
 }
 
 //----------------------------------------------------------------------------
@@ -975,10 +1014,14 @@ void WIFIBATTLEMATCH_NET_StartMatchMake( WIFIBATTLEMATCH_NET_WORK *p_wk, WIFIBAT
 //-----------------------------------------------------------------------------
 void WIFIBATTLEMATCH_NET_StartMatchMakeDebug( WIFIBATTLEMATCH_NET_WORK *p_wk )
 { 
+  MATCHMAKE_KEY_Set( p_wk, MATCHMAKE_KEY_WBM, 0 );
+  MATCHMAKE_KEY_Set( p_wk, MATCHMAKE_KEY_MODE, 0 );
+  MATCHMAKE_KEY_Set( p_wk, MATCHMAKE_KEY_RULE, 0 );
   MATCHMAKE_KEY_Set( p_wk, MATCHMAKE_KEY_DEBUG, 0xF );
-  MATCHMAKE_KEY_Set( p_wk, MATCHMAKE_KEY_BTL, 0 );
-  STD_TSPrintf( p_wk->filter, "rndbt=%d And db=%d", 0, 0xF );
+  STD_TSPrintf( p_wk->filter, "wbm=%d And mod=%d And rul=%d And deb=%d", 0, 0, 0, 0xF );
   p_wk->seq_matchmake = WIFIBATTLEMATCH_NET_SEQ_MATCH_START;
+
+  p_wk->matchmake_eval_callback = WIFIBATTLEMATCH_RND_FREE_Eval_Callback;
 }
 
 //----------------------------------------------------------------------------
@@ -998,7 +1041,7 @@ BOOL WIFIBATTLEMATCH_NET_WaitMatchMake( WIFIBATTLEMATCH_NET_WORK *p_wk )
     break;
 
   case WIFIBATTLEMATCH_NET_SEQ_MATCH_START:
-    if( GFL_NET_DWC_StartMatchFilter( p_wk->filter, 2 ,WIFIBATTLEMATCH_Eval_Callback, p_wk ) != 0 )
+    if( GFL_NET_DWC_StartMatchFilter( p_wk->filter, 2 ,p_wk->matchmake_eval_callback, p_wk ) != 0 )
     {
       GFL_NET_DWC_SetVChat( FALSE );
       p_wk->seq_matchmake = WIFIBATTLEMATCH_NET_SEQ_MATCH_START2;
@@ -1183,7 +1226,7 @@ static void MATCHMAKE_KEY_Set( WIFIBATTLEMATCH_NET_WORK *p_wk, MATCHMAKE_KEY key
   MATCHMAKE_KEY_WORK *p_key_wk = &p_wk->key_wk[ key ];
 
   p_key_wk->ivalue  = value;
-  GFL_STD_MemCopy( sc_matchmake_key_str[ key ], p_key_wk->keyStr, 2 );
+  GFL_STD_MemCopy( sc_matchmake_key_str[ key ], p_key_wk->keyStr, 4 );
   p_wk->key_wk[ key ].keyID  = DWC_AddMatchKeyInt( p_key_wk->keyID,
       p_key_wk->keyStr, &p_key_wk->ivalue );
   if( p_key_wk->keyID == 0 )
@@ -1205,7 +1248,47 @@ static void MATCHMAKE_KEY_Set( WIFIBATTLEMATCH_NET_WORK *p_wk, MATCHMAKE_KEY key
  *	                                        ライブラリ内部で8ビット左シフトし下位8ビットに乱数をいれる
  */
 //-----------------------------------------------------------------------------
-static int WIFIBATTLEMATCH_Eval_Callback( int index, void* p_param_adrs )
+static int WIFIBATTLEMATCH_RND_RATE_Eval_Callback( int index, void* p_param_adrs )
+{ 
+  WIFIBATTLEMATCH_NET_WORK *p_wk  = p_param_adrs;
+
+  int value=0;
+/*
+  targetlv = DWC_GetMatchIntValue(index,pWork->aMatchKey[_MATCHKEY_LEVEL].keyStr,-1);
+  targetfriend = DWC_GetMatchIntValue(index,pWork->aMatchKey[_MATCHKEY_IMAGE_FRIEND].keyStr,-1);
+  targetmy = DWC_GetMatchIntValue(index,pWork->aMatchKey[_MATCHKEY_IMAGE_MY].keyStr,-1);
+*/
+ 
+  //@todo   ここに評価条件を書く
+  value = 100;
+
+
+  OS_TPrintf("評価コールバック %d \n",value );
+  return value;
+
+}
+//フリーモード用
+static int WIFIBATTLEMATCH_RND_FREE_Eval_Callback( int index, void* p_param_adrs )
+{ 
+  WIFIBATTLEMATCH_NET_WORK *p_wk  = p_param_adrs;
+
+  int value=0;
+/*
+  targetlv = DWC_GetMatchIntValue(index,pWork->aMatchKey[_MATCHKEY_LEVEL].keyStr,-1);
+  targetfriend = DWC_GetMatchIntValue(index,pWork->aMatchKey[_MATCHKEY_IMAGE_FRIEND].keyStr,-1);
+  targetmy = DWC_GetMatchIntValue(index,pWork->aMatchKey[_MATCHKEY_IMAGE_MY].keyStr,-1);
+*/
+ 
+  //@todo   ここに評価条件を書く
+  value = 100;
+
+
+  OS_TPrintf("評価コールバック %d \n",value );
+  return value;
+
+}
+//WIFI大会用
+static int WIFIBATTLEMATCH_WIFI_Eval_Callback( int index, void* p_param_adrs )
 { 
   WIFIBATTLEMATCH_NET_WORK *p_wk  = p_param_adrs;
 

@@ -496,6 +496,21 @@ STRBUF* Regulation_CreateCardCupName(const REGULATION_CARDDATA* pReg, HEAPID hea
   return tmpBuf;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カップ名取得
+ *
+ *	@param	const REGULATION_CARDDATA* pReg   ワークへのポインタ
+ *
+ *	@return カップ名が入ったSTRCODEのポインタ
+ */
+//-----------------------------------------------------------------------------
+const STRCODE *Regulation_GetCardCupNamePointer( const REGULATION_CARDDATA* pReg )
+{ 
+  return pReg->cupname;
+}
+
+
 //----------------------------------------------------------
 /**
  * @brief	デジタル選手証パラメーターを引き出す
@@ -641,3 +656,59 @@ REGULATION_CARDDATA* SaveData_GetRegulationCardData(SAVE_CONTROL_WORK* pSave)
   return SaveControl_DataPtrGet(pSave, GMDATA_ID_REGULATION_DATA);
 }
 
+#ifdef PM_DEBUG
+//----------------------------------------------------------------------------
+/**
+ *	@brief  デバッグ用にデータを設定
+ *
+ *	@param	REGULATION_CARDDATA* pReg ワーク
+ */
+//-----------------------------------------------------------------------------
+void Regulation_SetDebugData( REGULATION_CARDDATA* pReg )
+{ 
+  { 
+    REGULATION  *p_data = &pReg->regulation_buff;
+    p_data->cupNo   = 1;
+    p_data->ruleNo  = 0;
+    p_data->NUM_LO  = 1;
+    p_data->NUM_HI  = 6;
+    p_data->LEVEL   = 1;
+    p_data->LEVEL_RANGE = REGULATION_LEVEL_RANGE_NORMAL;
+    p_data->LEVEL_TOTAL = 600;
+    p_data->BOTH_POKE   = 1;
+    p_data->BOTH_ITEM   = 1;
+    GFL_STD_MemClear( p_data->VETO_POKE_BIT, REG_POKENUM_MAX_BYTE );
+    GFL_STD_MemClear( p_data->VETO_ITEM, REG_ITEMNUM_MAX_BYTE );
+    p_data->MUST_POKE   = 0;
+    p_data->MUST_POKE_FORM   = 0;
+    p_data->SHOOTER     = 0;
+    p_data->TIME_VS     = 99;
+    p_data->TIME_COMMAND= 99;
+    p_data->NICKNAME    = 1;
+    p_data->AGE_LO      = 0;
+    p_data->AGE_HI      = 0;
+    p_data->SHOW_POKE   = 1;
+    p_data->SHOW_POKE_TIME  = 99;
+    p_data->BATTLE_TYPE = REGULATION_BATTLE_SINGLE;
+  }
+  pReg->cupname[ 0] = 'デ';
+  pReg->cupname[ 1] = 'バ';
+  pReg->cupname[ 2] = 'ッ';
+  pReg->cupname[ 3] = 'ク';
+  pReg->cupname[ 4] = 'た';
+  pReg->cupname[ 5] = 'い';
+  pReg->cupname[ 6] = 'か';
+  pReg->cupname[ 7] = 'い';
+  pReg->cupname[ 8] = 0xFFFF;
+  pReg->ver         = PM_VERSION;
+  pReg->no          = 1234;
+  pReg->start_year  = 10;
+  pReg->start_month = 1;
+  pReg->start_day   = 22;
+  pReg->end_year    = 10;
+  pReg->end_month   = 12;
+  pReg->end_day     = 24;
+  pReg->status      = 0;
+  pReg->status      = 0;
+}
+#endif //PM_DEBUG

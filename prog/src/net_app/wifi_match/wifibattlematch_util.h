@@ -89,6 +89,7 @@ typedef struct _WBM_LIST_WORK WBM_LIST_WORK;
 ///	パブリック
 //=====================================
 extern WBM_LIST_WORK * WBM_LIST_Init( const WBM_LIST_SETUP *cp_setup, HEAPID heapID );
+extern WBM_LIST_WORK * WBM_LIST_InitEx( const WBM_LIST_SETUP *cp_setup, u8 x, u8 y, u8 w, u8 h, HEAPID heapID );
 extern void WBM_LIST_Exit( WBM_LIST_WORK *p_wk );
 extern u32 WBM_LIST_Main( WBM_LIST_WORK *p_wk );
 

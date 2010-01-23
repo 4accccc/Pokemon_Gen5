@@ -44,7 +44,7 @@
 #define TITLE_STR_SCALE_X	(FX32_ONE)
 #define TITLE_STR_SCALE_Y	(FX32_ONE)
 
-#define COMPATIBLE_MYSTATUS_SIZE    (32)
+#define COMPATIBLE_MYSTATUS_SIZE    (MYSTATUS_SAVE_SIZE)
 
 
 //-------------------------------------
