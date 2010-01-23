@@ -17,16 +17,16 @@
 ///パレスマップの範囲(この座標外に出た場合、ワープさせる必要がある)
 enum{
   PALACE_MAP_LEFT = 0 << FX32_SHIFT,              ///<パレスマップ左端
-  PALACE_MAP_RIGHT = 2048 << FX32_SHIFT,          ///<パレスマップ右端
+  PALACE_MAP_RIGHT = 1024 << FX32_SHIFT,          ///<パレスマップ右端
   PALACE_MAP_LEN = PALACE_MAP_RIGHT - PALACE_MAP_LEFT,  ///<パレスマップ幅
   
   PALACE_MAP_WARP_OFFSET = 0, //(PALACE_MAP_LEN / 4) * 3,///残りこれ以内の座標になったらワープ
   
-  PALACE_MAP_RANGE_LEN = (2056-1016) << FX32_SHIFT,     ///<パレスマップのX長
+//  PALACE_MAP_RANGE_LEN = (2056-1016) << FX32_SHIFT,     ///<パレスマップのX長
   
-  PALACE_MAP_MONOLITH_X = 1000 << FX32_SHIFT,       ///<モノリス配置開始座標X
-  PALACE_MAP_MONOLITH_Y = 0,
-  PALACE_MAP_MONOLITH_Z = 504 << FX32_SHIFT,
+  PALACE_MAP_MONOLITH_X = 488 << FX32_SHIFT,       ///<モノリス配置開始座標X
+  PALACE_MAP_MONOLITH_Y = 32,
+  PALACE_MAP_MONOLITH_Z = 472 << FX32_SHIFT,
   PALACE_MAP_MONOLITH_NUM = 3,                      ///<モノリスの連続設置数
 };
 
