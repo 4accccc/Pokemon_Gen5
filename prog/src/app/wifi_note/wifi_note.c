@@ -1224,7 +1224,7 @@ typedef struct {
 	u32	celRes[CEL_RES_MAX];
 
   GFL_CLWK *p_yazirushi[WFNOTE_YAZIRUSHINUM]; // 矢印アクター
-  GFL_CLWK *p_cur;  // カーソルアクター
+//  GFL_CLWK *p_cur;  // カーソルアクター
   GFL_CLWK *p_tb;		// タッチバー×ボタンアクター
 
   WFNOTE_SCRNDATA scrn; // 基本スクリーンデータ
@@ -1501,8 +1501,8 @@ static void Draw_CommonActExit( WFNOTE_DRAW* p_draw );
 static void Draw_YazirushiSetDrawFlag( WFNOTE_DRAW* p_draw, BOOL flag );
 static void Draw_YazirushiSetAnmFlag( WFNOTE_DRAW* p_draw, BOOL flag );
 static void Draw_YazirushiAnmChg( WFNOTE_DRAW* p_draw, u8 idx, u8 anm_no);
-static void Draw_CursorActorSet( WFNOTE_DRAW* p_draw, BOOL draw_f, u8 anm_no );
-static void Draw_CursorActorPriSet( WFNOTE_DRAW* p_draw, u8 bg_pri, u32 s_pri );
+//static void Draw_CursorActorSet( WFNOTE_DRAW* p_draw, BOOL draw_f, u8 anm_no );
+//static void Draw_CursorActorPriSet( WFNOTE_DRAW* p_draw, u8 bg_pri, u32 s_pri );
 static APP_TASKMENU_WORK * Draw_YesNoWinSet( APP_TASKMENU_ITEMWORK * list, APP_TASKMENU_RES ** res, BOOL putType, HEAPID heapID );
 static int Draw_YesNoWinMain( APP_TASKMENU_WORK * wk );
 
@@ -3158,6 +3158,7 @@ static void Draw_CommonActInit( WFNOTE_DRAW* p_draw, HEAPID heapID )
       WFNOTE_YAZIRUSHI_PRI,
       2
     },
+/*
     { // カーソル
       0 ,
       0 ,
@@ -3165,6 +3166,7 @@ static void Draw_CommonActInit( WFNOTE_DRAW* p_draw, HEAPID heapID )
       WFNOTE_YAZIRUSHI_PRI,
       0
     },
+*/
     { // タッチバーキャンセルボタン
 			TOUCHBAR_ICON_X_07,
 			TOUCHBAR_ICON_Y,
@@ -3190,6 +3192,7 @@ static void Draw_CommonActInit( WFNOTE_DRAW* p_draw, HEAPID heapID )
   }
   //カーソルアクター作成
   //リスト画面のキャラとの前後関係でこっちのunitに登録
+/*
   p_draw->p_cur = GFL_CLACT_WK_Create(
         p_draw->cellUnitScroll,
         p_draw->chrRes[CHR_RES_WOR],
@@ -3198,14 +3201,14 @@ static void Draw_CommonActInit( WFNOTE_DRAW* p_draw, HEAPID heapID )
         &act_add[2] , CLSYS_DEFREND_MAIN,
         heapID );
   GFL_CLACT_WK_SetDrawEnable( p_draw->p_cur, FALSE );
-
+*/
 	// タッチバーキャンセルボタンアクター作成
   p_draw->p_tb = GFL_CLACT_WK_Create(
         p_draw->cellUnit,
         p_draw->chrRes[CHR_RES_TB],
         p_draw->palRes[PAL_RES_TB],
         p_draw->celRes[CEL_RES_TB],
-        &act_add[3] , CLSYS_DEFREND_MAIN,
+        &act_add[2] , CLSYS_DEFREND_MAIN,
         heapID );
   GFL_CLACT_WK_SetDrawEnable( p_draw->p_tb, TRUE );
 }
@@ -3224,7 +3227,7 @@ static void Draw_CommonActExit( WFNOTE_DRAW* p_draw )
   //タッチバーキャンセルアクター破棄
   GFL_CLACT_WK_Remove( p_draw->p_tb );
   //カーソルアクター破棄
-  GFL_CLACT_WK_Remove( p_draw->p_cur );
+//  GFL_CLACT_WK_Remove( p_draw->p_cur );
   // 矢印アクター破棄
   for( i=0; i<WFNOTE_YAZIRUSHINUM; i++ ){
     GFL_CLACT_WK_Remove( p_draw->p_yazirushi[i] );
@@ -3293,6 +3296,7 @@ static void Draw_YazirushiAnmChg( WFNOTE_DRAW* p_draw, u8 idx, u8 anm_no)
  *  @param  flag  フラグ
  */
 //-----------------------------------------------------------------------------
+/*
 static void Draw_CursorActorSet( WFNOTE_DRAW* p_draw, BOOL draw_f, u8 anm_no )
 {
   if(anm_no != ACTANM_NULL){
@@ -3300,6 +3304,7 @@ static void Draw_CursorActorSet( WFNOTE_DRAW* p_draw, BOOL draw_f, u8 anm_no )
   }
   GFL_CLACT_WK_SetDrawEnable( p_draw->p_cur, draw_f );
 }
+*/
 
 //----------------------------------------------------------------------------
 /**
@@ -3309,11 +3314,13 @@ static void Draw_CursorActorSet( WFNOTE_DRAW* p_draw, BOOL draw_f, u8 anm_no )
  *  @param  flag  フラグ
  */
 //-----------------------------------------------------------------------------
+/*
 static void Draw_CursorActorPriSet( WFNOTE_DRAW* p_draw, u8 bg_pri, u32 s_pri )
 {
   GFL_CLACT_WK_SetBgPri( p_draw->p_cur, bg_pri );
   GFL_CLACT_WK_SetSoftPri( p_draw->p_cur, s_pri );
 }
+*/
 
 //----------------------------------------------------------------------------
 /**
@@ -3737,7 +3744,7 @@ static void ModeSelectSeq_Init( WFNOTE_MODESELECT* p_wk, WFNOTE_DATA* p_data, WF
   GFL_BG_SetScroll( DFRM_SCROLL, GFL_BG_SCROLL_Y_SET, 0 );
 
   // カーソルアクター表示設定
-  Draw_CursorActorSet( p_draw, FALSE , ACTANM_CUR_MSEL );
+//  Draw_CursorActorSet( p_draw, FALSE , ACTANM_CUR_MSEL );
 //  Draw_CursorActorPriSet( p_draw, 1, 0 );
 
   // カーソル位置のパレットを設定
@@ -3976,6 +3983,7 @@ static BOOL ModeSelectSeq_Main( WFNOTE_MODESELECT* p_wk, WFNOTE_DATA* p_data, WF
  *  @param  p_draw  描画システム
  */
 //-----------------------------------------------------------------------------
+/*
 static void ModeSelect_CursorDraw( WFNOTE_MODESELECT* p_wk, WFNOTE_DRAW* p_draw )
 {
   GFL_CLACTPOS pos;
@@ -3983,6 +3991,7 @@ static void ModeSelect_CursorDraw( WFNOTE_MODESELECT* p_wk, WFNOTE_DRAW* p_draw 
   pos.y = 40*p_wk->cursor+48;
   GFL_CLACT_WK_SetPos( p_draw->p_cur, &pos , CLSYS_DEFREND_MAIN );
 }
+*/
 
 //----------------------------------------------------------------------------
 /**
@@ -4055,7 +4064,7 @@ static void ModeSelect_DrawOff( WFNOTE_MODESELECT* p_wk, WFNOTE_DRAW* p_draw )
 //  GF_BGL_BmpWinOffVReq(&p_wk->msg);
 
   // カーソルアクター表示設定
-  Draw_CursorActorSet( p_draw, FALSE , ACTANM_NULL );
+//  Draw_CursorActorSet( p_draw, FALSE , ACTANM_NULL );
 }
 
 //----------------------------------------------------------------------------
@@ -4732,8 +4741,8 @@ static void FList_DrawOff( WFNOTE_FRIENDLIST* p_wk, WFNOTE_DATA* p_data, WFNOTE_
         p_draw, &p_draw->scrn );
   }
   // カーソルアクター表示設定
-  Draw_CursorActorSet( p_draw, FALSE , ACTANM_NULL );
-  Draw_CursorActorPriSet( p_draw, WFNOTE_CURSOR_BGPRI, WFNOTE_CURSOR_PRI );
+//  Draw_CursorActorSet( p_draw, FALSE , ACTANM_NULL );
+//	Draw_CursorActorPriSet( p_draw, WFNOTE_CURSOR_BGPRI, WFNOTE_CURSOR_PRI );
 
   // 矢印描画OFF
 //  Draw_YazirushiSetDrawFlag( p_draw, FALSE );
@@ -5704,7 +5713,7 @@ static void FList_DeleteAnmStart( WFNOTE_FRIENDLIST* p_wk ,WFNOTE_DRAW* p_draw )
 
   // 表示ON
   GFL_CLACT_WK_SetDrawEnable( p_wk->p_clearact, TRUE );
-  Draw_CursorActorSet( p_draw, FALSE, ACTANM_NULL );
+//  Draw_CursorActorSet( p_draw, FALSE, ACTANM_NULL );
 
   // アニメ初期
   GFL_CLACT_WK_SetAnmSeq( p_wk->p_clearact, ACTANM_CLEAR );
@@ -7573,6 +7582,7 @@ static void FInfo_DrawPage( WFNOTE_FRIENDINFO* p_wk, WFNOTE_DATA* p_data, WFNOTE
  *  @param  heapID    ヒープID
  */
 //-----------------------------------------------------------------------------
+/*
 static void FInfo_CursorDraw( WFNOTE_FRIENDINFO* p_wk,  WFNOTE_DRAW* p_draw, u32 page )
 {
   GFL_CLACTPOS pos;
@@ -7601,6 +7611,7 @@ static void FInfo_CursorOff( WFNOTE_FRIENDINFO* p_wk,  WFNOTE_DRAW* p_draw )
 {
   Draw_CursorActorSet( p_draw,FALSE, ACTANM_NULL );
 }
+*/
 
 //----------------------------------------------------------------------------
 /**
@@ -9317,7 +9328,7 @@ static void PutBmpWin( GFL_BMPWIN * win )
   GFL_BG_LoadScreenV_Req( GFL_BMPWIN_GetFrame(win) );
 }
 
-
+// トレーナーグラフィックＯＢＪ削除
 static void FInfo_TrGraDelete( WFNOTE_FRIENDINFO * p_wk )
 {
 	GFL_CLGRP_CGR_Release( p_wk->trRes[0] );
