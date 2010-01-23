@@ -271,7 +271,7 @@ static GMEVENT_RESULT debugMenuZoneJump(GMEVENT *event, int *seq, void *wk )
           mapchange_event = EVENT_ChangeMapToUnion(work->gmSys, work->fieldWork);
         }
         else if(ret == ZONE_ID_PALACE01){
-          VecFx32 pos = {PALACE_MAP_LEN/2, 0, 408*FX32_ONE};
+          VecFx32 pos = {PALACE_MAP_LEN/2, 32*FX32_ONE, 488*FX32_ONE};
           mapchange_event = EVENT_ChangeMapPos(work->gmSys, work->fieldWork, ret, &pos, 0);
         }
         else{
