@@ -67,7 +67,7 @@
 #define _DEBUG_ALONETEST (18)
 #else
 //誰でも繋がる、、、が、パレスの通信バージョンとして使用 昔の通信と接続で問題があるときにバージョンを上げていく
-#define _DEBUG_ALONETEST (103)
+#define _DEBUG_ALONETEST (104)
 #endif
 
 /**
