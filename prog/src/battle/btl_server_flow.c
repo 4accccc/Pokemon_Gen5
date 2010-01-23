@@ -559,7 +559,7 @@ static void scEvent_WazaDamageAfter( BTL_SVFLOW_WORK* wk,
 static void scEvent_ItemEquip( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
 static void scEvent_ItemEquipTmp( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
 static BtlTypeAff scProc_checkWazaDamageAffinity( BTL_SVFLOW_WORK* wk,
-  BTL_POKEPARAM* attacker, BTL_POKEPARAM* defender, PokeType wazaType );
+  BTL_POKEPARAM* attacker, BTL_POKEPARAM* defender, const SVFL_WAZAPARAM* wazaParam );
 static BtlTypeAff scEvent_CheckDamageAffinity( BTL_SVFLOW_WORK* wk,
   const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, PokeType waza_type, PokeType poke_type );
 static BtlTypeAff CalcTypeAffForDamage( PokeType wazaType, PokeTypePair pokeTypePair );
@@ -2904,7 +2904,6 @@ static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, REQWAZA_
     // ワザメッセージ出力
     if( scEvent_CheckWazaMsgCustom(wk, attacker, orgWaza, actWaza, &wk->strParam) ){
       // 他ワザ呼び出し時など、ワザ名メッセージをカスタマイズした場合
-      OS_TPrintf("メッセージカスタマイズあり\n");
       handexSub_putString( wk, &wk->strParam );
       HANDEX_STR_Clear( &wk->strParam );
     }else{
@@ -4460,7 +4459,7 @@ static void scproc_Fight_Damage_side( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM*
   BTL_POKESET_SeekStart( targets );
   while( (bpp = BTL_POKESET_SeekNext(targets) ) != NULL )
   {
-    affAry[poke_cnt] = scProc_checkWazaDamageAffinity( wk, attacker, bpp, wazaParam->wazaType );
+    affAry[poke_cnt] = scProc_checkWazaDamageAffinity( wk, attacker, bpp, wazaParam );
     if( affAry[ poke_cnt ] == BTL_TYPEAFF_0 ){
       scput_WazaNoEffect( wk, bpp );
       BTL_POKESET_Remove( targets, bpp );
@@ -4641,7 +4640,8 @@ static void svflowsub_damage_act_singular(  BTL_SVFLOW_WORK* wk,
 
     if( BPP_MIGAWARI_IsExist(defender) ){
       scproc_Migawari_Damage( wk, defender, damage );
-    }else{
+    }
+    else{
       u8 koraeru_cause;
 
       damage = MarumeDamage( defender, damage );
@@ -5277,6 +5277,7 @@ static BOOL scEvent_CalcDamage( BTL_SVFLOW_WORK* wk,
       BTL_N_PrintfEx( PRINT_FLG, DBGSTR_CALCDMG_RandomHosei, ratio, fxDamage);
     }
     // タイプ一致補正
+    if( !(wazaParam->fTypeFlat) )
     {
       fx32 ratio = scEvent_CalcTypeMatchRatio( wk, attacker, wazaParam->wazaType );
       fxDamage = BTL_CALC_MulRatio( fxDamage, ratio );
@@ -6287,7 +6288,7 @@ static void scproc_Fight_Ichigeki( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wa
       else if( atkLevel < defLevel ){
         scput_WazaNoEffect( wk, target );
       }
-      else if( scProc_checkWazaDamageAffinity(wk, attacker, target, wazaParam->wazaType) == BTL_TYPEAFF_0 ){
+      else if( scProc_checkWazaDamageAffinity(wk, attacker, target, wazaParam) == BTL_TYPEAFF_0 ){
         scput_WazaNoEffect( wk, target );
       }
       else
@@ -8622,11 +8623,13 @@ static void scEvent_GetWazaParam( BTL_SVFLOW_WORK* wk, WazaID waza, const BTL_PO
     BTL_EVENTVAR_SetValue( BTL_EVAR_WAZA_TYPE, WAZADATA_GetType(waza) );
     BTL_EVENTVAR_SetValue( BTL_EVAR_USER_TYPE, BPP_GetPokeType(attacker) );
     BTL_EVENTVAR_SetValue( BTL_EVAR_DAMAGE_TYPE, WAZADATA_GetDamageType(waza) );
+    BTL_EVENTVAR_SetRewriteOnceValue( BTL_EVAR_FLAT_FLAG, FALSE );
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_WAZA_PARAM );
     param->wazaID = waza;
-    param->wazaType   = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZA_TYPE );
-    param->userType   = BTL_EVENTVAR_GetValue( BTL_EVAR_USER_TYPE );
-    param->damageType = BTL_EVENTVAR_GetValue( BTL_EVAR_DAMAGE_TYPE );
+    param->wazaType    = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZA_TYPE );
+    param->userType    = BTL_EVENTVAR_GetValue( BTL_EVAR_USER_TYPE );
+    param->damageType  = BTL_EVENTVAR_GetValue( BTL_EVAR_DAMAGE_TYPE );
+    param->fTypeFlat   = BTL_EVENTVAR_GetValue( BTL_EVAR_FLAT_FLAG );
   BTL_EVENTVAR_Pop();
 }
 //----------------------------------------------------------------------------------
@@ -9307,10 +9310,14 @@ static void scEvent_ItemEquipTmp( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp 
  */
 //----------------------------------------------------------------------------------
 static BtlTypeAff scProc_checkWazaDamageAffinity( BTL_SVFLOW_WORK* wk,
-  BTL_POKEPARAM* attacker, BTL_POKEPARAM* defender, PokeType wazaType )
+  BTL_POKEPARAM* attacker, BTL_POKEPARAM* defender, const SVFL_WAZAPARAM* wazaParam )
 {
+  if( wazaParam->fTypeFlat ){
+    return BTL_TYPEAFF_100;
+  }
+
   // ふゆう状態のポケモンに地面ワザは効果がない
-  if( wazaType == POKETYPE_JIMEN )
+  if( wazaParam->wazaType == POKETYPE_JIMEN )
   {
     scproc_CheckFlying( wk, defender );
 
@@ -9324,10 +9331,10 @@ static BtlTypeAff scProc_checkWazaDamageAffinity( BTL_SVFLOW_WORK* wk,
     PokeTypePair defPokeTypePair = BPP_GetPokeType( defender );
     PokeType  defPokeType = PokeTypePair_GetType1( defPokeTypePair );
 
-    affinity = scEvent_CheckDamageAffinity( wk, attacker, defender, wazaType, defPokeType );
+    affinity = scEvent_CheckDamageAffinity( wk, attacker, defender, wazaParam->wazaType, defPokeType );
     if( !PokeTypePair_IsPure(defPokeTypePair) ){
       PokeTypePair  type2 = PokeTypePair_GetType2( defPokeTypePair );
-      BtlTypeAff    aff2 = scEvent_CheckDamageAffinity( wk, attacker, defender, wazaType, type2 );
+      BtlTypeAff    aff2 = scEvent_CheckDamageAffinity( wk, attacker, defender, wazaParam->wazaType, type2 );
       affinity = BTL_CALC_TypeAffMul( affinity, aff2 );
     }
 

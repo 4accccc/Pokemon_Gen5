@@ -1046,11 +1046,11 @@ BOOL BTLV_ACT_DamageEffectPlural_Wait( BTLV_CORE* wk )
       switch( subwk->affAbout ){
       case BTL_TYPEAFF_ABOUT_ADVANTAGE:
         BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_AffGood, 0 );
-        BTLV_SCU_StartMsg( wk->scrnU, wk->strBuf, BTLV_MSGWAIT_NONE );
+        BTLV_SCU_StartMsg( wk->scrnU, wk->strBuf, BTLV_MSGWAIT_STD );
         break;
       case BTL_TYPEAFF_ABOUT_DISADVANTAGE:
         BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_AffBad, 0 );
-        BTLV_SCU_StartMsg( wk->scrnU, wk->strBuf, BTLV_MSGWAIT_NONE );
+        BTLV_SCU_StartMsg( wk->scrnU, wk->strBuf, BTLV_MSGWAIT_STD );
         break;
       }
       subwk->seq++;

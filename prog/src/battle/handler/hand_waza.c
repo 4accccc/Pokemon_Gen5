@@ -528,7 +528,7 @@ static const BtlEventHandlerTable* ADD_Tuibamu( u32* numElems );
 static void handler_Tuibamu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable* ADD_Waruagaki( u32* numElems );
 static void handler_Waruagaki( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
-static void handler_Waruagaki_CheckAffinity( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_Waruagaki_WazaParam( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable*  ADD_Michidure( u32* numElems );
 static void handler_Michidure_Ready( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Michidure_WazaDamage( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
@@ -7323,11 +7323,19 @@ static void handler_Tuibamu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
 static const BtlEventHandlerTable* ADD_Waruagaki( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_DAMAGEPROC_END,  handler_Waruagaki },               // ダメージプロセス終了ハンドラ
-    { BTL_EVENT_CHECK_AFFINITY,  handler_Waruagaki_CheckAffinity }, // ワザ相性チェックハンドラ
+    { BTL_EVENT_WAZA_PARAM,      handler_Waruagaki_WazaParam     }, // ワザパラメータ取得
+    { BTL_EVENT_DAMAGEPROC_END,  handler_Waruagaki               }, // ダメージプロセス終了ハンドラ
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
+}
+// ワザパラメータ取得
+static void handler_Waruagaki_WazaParam( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
+  {
+    BTL_EVENTVAR_RewriteValue( BTL_EVAR_FLAT_FLAG, TRUE );
+  }
 }
 // ダメージプロセス終了ハンドラ
 static void handler_Waruagaki( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
@@ -7339,15 +7347,6 @@ static void handler_Waruagaki( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
     param->poke_cnt = 1;
     param->pokeID[0] = pokeID;
     param->volume[0] = -BTL_CALC_QuotMaxHP( bpp, 4 );
-  }
-}
-// ワザ相性チェックハンドラ
-static void handler_Waruagaki_CheckAffinity( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
-{
-  // 攻撃側が自分の時、相性をフラットにする
-  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
-  {
-    BTL_EVENTVAR_RewriteValue( BTL_EVAR_FLATMASTER_FLAG, TRUE );
   }
 }
 
