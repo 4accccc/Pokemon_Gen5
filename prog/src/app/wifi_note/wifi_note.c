@@ -42,10 +42,12 @@
 #include "net_app/union/union_gra_tool.h"
 #include "net/dwc_rapfriend.h"
 
+#include "system/trgra.h"
 #include "system/blink_palanm.h"
 #include "app/app_menu_common.h"
 #include "app/app_taskmenu.h"
 #include "ui/touchbar.h"
+#include "ui/print_tool.h"
 
 #include "wifi_note.naix"
 #include "wifi_note_snd.h"
@@ -87,7 +89,9 @@ FS_EXTERN_OVERLAY(wifi2dmap);
 #define	CLACT_PALNUM_WIFINOTE		( 0 )
 #define	CLACT_PALSIZ_WIFINOTE		( 5 )
 #define	CLACT_PALNUM_TB					( CLACT_PALNUM_WIFINOTE + CLACT_PALSIZ_WIFINOTE )
-#define	CLACT_PALSIZ_TB					( 1 )
+#define	CLACT_PALSIZ_TB					( 4 )
+#define	CLACT_PALNUM_TRGRA			( CLACT_PALNUM_TB + CLACT_PALSIZ_TB )
+#define	CLACT_PALSIZ_TRGRA			( 1 )
 
 //-------------------------------------
 /// VRAMTRANFER_MAN
@@ -118,9 +122,10 @@ enum{ // パレットテーブル
   BGPLT_M_BACK_6,
   BGPLT_M_BACK_7,
   BGPLT_M_BACK_8,
-  BGPLT_M_BACK_9,
+//  BGPLT_M_BACK_9,
 //  BGPLT_M_BACK_A,
 ////////////////////////
+  BGPLT_M_TRGRA = 0x09,
   BGPLT_M_MSGFONT = 0x0A,
   BGPLT_M_TALKWIN = 0x0B,
   BGPLT_M_YNWIN = 0x0C,
@@ -269,8 +274,10 @@ enum{
 #define WFNOTE_YAZIRUSHI_BY   (17*8)
 
 enum{
+/*
   ACT_YAZI_L,
   ACT_YAZI_R,
+*/
   ACT_YAZI_T,
   ACT_YAZI_B,
 };
@@ -339,8 +346,8 @@ enum{
 };
 #define MODESEL_CUR_CSIZX ( 28 )  // カーソル部分の横サイズ（キャラ）
 #define MODESEL_CUR_CSIZY ( 4 ) // カーソル部分の縦サイズ（キャラ）
-#define MODESEL_CUR_PAL_ON  ( BGPLT_M_BACK_9 )  // 選択時
-#define MODESEL_CUR_PAL_ANM ( BGPLT_M_BACK_9 )  // 選択時
+#define MODESEL_CUR_PAL_ON  ( BGPLT_M_BACK_8 )  // 選択時
+#define MODESEL_CUR_PAL_ANM ( BGPLT_M_BACK_8 )  // 選択時
 #define MODESEL_CUR_PAL_OFF ( BGPLT_M_BACK_2 )  // 非選択時
 
 
@@ -595,10 +602,10 @@ enum{
 
 //実行コード
 enum{
-  FINFO_EXE_DECIDE,
+//  FINFO_EXE_DECIDE,
   FINFO_EXE_CANCEL,
-  FINFO_EXE_LEFT,
-  FINFO_EXE_RIGHT,
+//  FINFO_EXE_LEFT,
+//  FINFO_EXE_RIGHT,
   FINFO_EXE_TOP,
   FINFO_EXE_BOTTOM,
 };
@@ -633,22 +640,82 @@ enum{
 /////////////////////////////////
 //ビットマップ上画面
 /////////////////////////////////
-/*
 enum{
- FINFO_WIN_PAGE,
- FINFO_WIN_TITLE,
- FINFO_WIN_NAME,
+ FINFO_WIN_PAGE,					// ページ
+ FINFO_WIN_RECORD,				//「たいせんせいせき」
+ FINFO_WIN_WIN,						//「かち」
+ FINFO_WIN_LOSE,					//「まけ」
+ FINFO_WIN_WIN_NUM,				// 勝ち数
+ FINFO_WIN_LOSE_NUM,			// 負け数
+ FINFO_WIN_CHANGE,				//「ポケモンこうかん」
+ FINFO_WIN_CHANGE_NUM,		// 交換回数
+ FINFO_WIN_LAST_DAY,			//「さいごにあそんだひづけ」
+ FINFO_WIN_LAST_DAY_NUM,	// 最後に遊んだ日付
+/*
+ FINFO_WIN_NAME,		
  FINFO_WIN_GRP02,
  FINFO_WIN_DAY02,
  FINFO_WIN_TRGRA,
  FINFO_WIN_GRP01,
  FINFO_WIN_DAY01,
- FINFO_WIN_NUM,
-};
 */
+ FINFO_WIN_MAX,
+};
 
-//#define BMPL_FINFO_FRM      ( UFRM_MSG )
-#define BMPL_FINFO_PAL      ( BGPLT_S_MSGFONT )
+#define BMPL_FINFO_FRM      ( DFRM_MSG )
+#define BMPL_FINFO_PAL      ( BGPLT_M_MSGFONT )
+// ページ
+#define	BMPL_FINFO_WIN_PAGE_PX	( 26 )
+#define	BMPL_FINFO_WIN_PAGE_PY	( 1 )
+#define	BMPL_FINFO_WIN_PAGE_SX	( 5 )
+#define	BMPL_FINFO_WIN_PAGE_SY	( 2 )
+//「たいせんせいせき」
+#define	BMPL_FINFO_WIN_RECORD_PX	( 14 )
+#define	BMPL_FINFO_WIN_RECORD_PY	( 5 )
+#define	BMPL_FINFO_WIN_RECORD_SX	( 12 )
+#define	BMPL_FINFO_WIN_RECORD_SY	( 2 )
+//「かち」
+#define	BMPL_FINFO_WIN_WIN_PX	( 23 )
+#define	BMPL_FINFO_WIN_WIN_PY	( 8 )
+#define	BMPL_FINFO_WIN_WIN_SX	( 3 )
+#define	BMPL_FINFO_WIN_WIN_SY	( 2 )
+//「まけ」
+#define	BMPL_FINFO_WIN_LOSE_PX	( 23 )
+#define	BMPL_FINFO_WIN_LOSE_PY	( 10 )
+#define	BMPL_FINFO_WIN_LOSE_SX	( 3 )
+#define	BMPL_FINFO_WIN_LOSE_SY	( 2 )
+// 勝ち数
+#define	BMPL_FINFO_WIN_WIN_NUM_PX	( 27 )
+#define	BMPL_FINFO_WIN_WIN_NUM_PY	( 8 )
+#define	BMPL_FINFO_WIN_WIN_NUM_SX	( 4 )
+#define	BMPL_FINFO_WIN_WIN_NUM_SY	( 2 )
+// 負け数
+#define	BMPL_FINFO_WIN_LOSE_NUM_PX	( 27 )
+#define	BMPL_FINFO_WIN_LOSE_NUM_PY	( 10 )
+#define	BMPL_FINFO_WIN_LOSE_NUM_SX	( 4 )
+#define	BMPL_FINFO_WIN_LOSE_NUM_SY	( 2 )
+//「ポケモンこうかん」
+#define	BMPL_FINFO_WIN_CHANGE_PX	( 14 )
+#define	BMPL_FINFO_WIN_CHANGE_PY	( 13 )
+#define	BMPL_FINFO_WIN_CHANGE_SX	( 12 )
+#define	BMPL_FINFO_WIN_CHANGE_SY	( 2 )
+// 交換回数
+#define	BMPL_FINFO_WIN_CHANGE_NUM_PX	( 27 )
+#define	BMPL_FINFO_WIN_CHANGE_NUM_PY	( 13 )
+#define	BMPL_FINFO_WIN_CHANGE_NUM_SX	( 4 )
+#define	BMPL_FINFO_WIN_CHANGE_NUM_SY	( 2 )
+//「さいごにあそんだひづけ」
+#define	BMPL_FINFO_WIN_LAST_DAY_PX	( 2 )
+#define	BMPL_FINFO_WIN_LAST_DAY_PY	( 17 )
+#define	BMPL_FINFO_WIN_LAST_DAY_SX	( 17 )
+#define	BMPL_FINFO_WIN_LAST_DAY_SY	( 2 )
+// 最後に遊んだ日付
+#define	BMPL_FINFO_WIN_LAST_DAY_NUM_PX	( 20 )
+#define	BMPL_FINFO_WIN_LAST_DAY_NUM_PY	( 17 )
+#define	BMPL_FINFO_WIN_LAST_DAY_NUM_SX	( 10 )
+#define	BMPL_FINFO_WIN_LAST_DAY_NUM_SY	( 2 )
+
+/*
 //ページ
 #define BMPL_FINFO_PAGE_X   ( 26 )  // 開始位置（キャラ単位）
 #define BMPL_FINFO_PAGE_Y   ( 1 ) // 開始位置（キャラ単位）
@@ -699,15 +766,16 @@ enum{
 #define BMPL_FINFO_DAY02_SIZY ( 2 ) // サイズ（キャラ単位）
 #define BMPL_FINFO_DAY02_SIZ  ( BMPL_FINFO_DAY02_SIZX * BMPL_FINFO_DAY02_SIZY ) // サイズ（キャラ単位）
 #define BMPL_FINFO_DAY02_CGX  ( BMPL_FINFO_DAY01_CGX+BMPL_FINFO_DAY01_SIZ ) // キャラクタオフセット
+*/
 
 //トレーナーグラフィック
-#define BMPL_FINFO_TRGRA_X    ( 4 ) // 開始位置（キャラ単位）
-#define BMPL_FINFO_TRGRA_Y    ( 4 ) // 開始位置（キャラ単位）
+#define BMPL_FINFO_TRGRA_X    ( 2 ) // 開始位置（キャラ単位）
+#define BMPL_FINFO_TRGRA_Y    ( 5 ) // 開始位置（キャラ単位）
 #define BMPL_FINFO_TRGRA_SIZX ( 10 )  // サイズ（キャラ単位）
 #define BMPL_FINFO_TRGRA_SIZY ( 10 )  // サイズ（キャラ単位）
 #define BMPL_FINFO_TRGRA_SIZ  ( BMPL_FINFO_TRGRA_SIZX * BMPL_FINFO_TRGRA_SIZY ) // サイズ（キャラ単位）
 #define BMPL_FINFO_TRGRA_CGX  ( BMPL_FINFO_DAY02_CGX+BMPL_FINFO_DAY02_SIZ ) // キャラクタオフセット
-#define BMPL_FINFO_TRGRA_PAL  ( BGPLT_S_TRGRA )
+#define BMPL_FINFO_TRGRA_PAL  ( BGPLT_M_TRGRA )
 #define BMPL_FINFO_TRGRA_CUTX ( 0 )
 #define BMPL_FINFO_TRGRA_CUTY ( 0 )
 
@@ -980,6 +1048,8 @@ enum{
 #define TP_FINFO_YAZI_Y1  (WFNOTE_YAZIRUSHI_TY-16)
 #define TP_FINFO_YAZI_Y2  (WFNOTE_YAZIRUSHI_BY-16)
 
+#define	NOTE_PRINTUTIL_MAX	( 64 )
+
 //////////////////////////////////////////////////////////////////////////////
 //タッチパネル座標
 //////////////////////////////////////////////////////////////////////////////
@@ -1130,7 +1200,7 @@ typedef struct {
   TOUCH_SW_SYS    *ynbtn_wk;  ///<YesNoボタンワーク
 */
 
-  GFL_BMPWIN *title;    // タイトル用ビットマップ
+	PRINT_UTIL	title;    // タイトル用ビットマップ
   STRBUF* p_titlestr;     // タイトル文字列
   STRBUF* p_titletmp;     // タイトル文字列
   STRBUF* p_str;        // 文字列汎用バッファ
@@ -1142,6 +1212,7 @@ typedef struct {
   PRINT_STREAM  *printHandleMsg;  //メッセージ用
 
   PRINT_QUE   *printQue;
+	PRINT_UTIL * printUtil[NOTE_PRINTUTIL_MAX];
 
   //Obj系
   GFL_CLUNIT  *cellUnit;
@@ -1178,10 +1249,10 @@ typedef struct {
 	u16	btn_anmCnt;		// カウンタ
 
   // グラフィック
-  GFL_BMPWIN *msg;  // メッセージ面
+	PRINT_UTIL	msg;  // メッセージ面
   void* p_scrnbuff; // スクリーンデータ
   NNSG2dScreenData* p_scrn; // スクリーンデータ
-  GFL_BMPWIN *talk; // 会話ウィンドウ
+	PRINT_UTIL	talk; // 会話ウィンドウ
   BMPMENU_WORK* p_yesno;// YESNOウィンドウ
   u32 talkmsg_idx;  // 会話メッセージidx
   STRBUF* p_str;
@@ -1199,7 +1270,8 @@ typedef struct {
 //=====================================
 typedef struct {
   WFNOTE_SCRNAREA scrn_area;  // 描画スクリーンエリア
-  GFL_BMPWIN **text;  // メッセージ面
+	PRINT_UTIL * text;
+//	GFL_BMPWIN **text;  // メッセージ面
   WF_2DCWK* p_clwk[FLIST_PAGE_FRIEND_NUM];
 
   GFL_CLWK * p_hate[FLIST_PAGE_FRIEND_NUM];
@@ -1230,14 +1302,15 @@ typedef struct {
 	u16	btn_anmCnt;		// カウンタ
 
   WFNOTE_FLIST_DRAWAREA drawdata[WFNOTE_DRAWAREA_NUM];
-  GFL_BMPWIN  *drawBmpWin[2];
+//  GFL_BMPWIN  *drawBmpWin[2];
+	PRINT_UTIL	drawBmpWin[2];
   s16 count;  // スクロールカウンタ
   u16 way;  // スクロール方向
   WF_2DCSYS* p_charsys; // キャラクタ表示システム
 
 //  GFL_BMPWIN *backmsg;  // 戻るメッセージ用
 
-  GFL_BMPWIN *talk; // トークメッセージ用
+	PRINT_UTIL	talk; // トークメッセージ用
   STRBUF* p_talkstr;
   u32 msgidx;
 //  GF_BGL_BMPWIN menu; // メニューリスト用
@@ -1277,8 +1350,8 @@ typedef struct {
 //=====================================
 typedef struct {
   // グラフィックデータ
-  GFL_BMPWIN *msg;  // メッセージ面
-  GFL_BMPWIN *code; // コード面
+	PRINT_UTIL	msg;  // メッセージ面
+	PRINT_UTIL	code; // コード面
 //  GFL_BMPWIN *back; // もどる面
   void* p_scrnbuff; // スクリーンデータ
   NNSG2dScreenData* p_scrn; // スクリーンデータ
@@ -1303,7 +1376,8 @@ typedef struct {
 typedef struct {
   WFNOTE_SCRNAREA scrnarea;
   u32 cgx;
-  GFL_BMPWIN**  p_msg[ FINFO_PAGE_NUM ];  //表示物
+//  GFL_BMPWIN**  p_msg[ FINFO_PAGE_NUM ];  //表示物
+	PRINT_UTIL * p_msg[ FINFO_PAGE_NUM ];  //表示物
   u32 msgnum[ FINFO_PAGE_NUM ];   // 今のmsgビットマップ数
 } WFNOTE_FINFO_DRAWAREA;
 
@@ -1322,8 +1396,12 @@ typedef struct {
 
   WFNOTE_FINFO_DRAWAREA drawarea[WFNOTE_DRAWAREA_NUM];// 表示エリア
   WFNOTE_FINFO_SCRNDATA scrn[FINFO_SCRNDATA_NUM]; // 画面構成スクリーンデータ
-  GFL_BMPWIN  *drawBmpWin[2];
-//  GFL_BMPWIN  *win[ FINFO_WIN_NUM ];  //固定ウィンドウ
+	PRINT_UTIL	drawBmpWin[2];
+	PRINT_UTIL	win[ FINFO_WIN_MAX ];  //固定ウィンドウ
+
+  GFL_CLWK * p_trgra;
+	u32	trRes[3];
+
 } WFNOTE_FRIENDINFO;
 
 
@@ -1410,7 +1488,7 @@ static void Draw_BmpInit( WFNOTE_DRAW* p_draw, const WFNOTE_DATA* cp_data, HEAPI
 static void Draw_BmpExit( WFNOTE_DRAW* p_draw );
 static void Draw_SCRNDATA_Init( WFNOTE_DRAW* p_draw, HEAPID heapID );
 static void Draw_SCRNDATA_Exit( WFNOTE_DRAW* p_draw );
-static void Draw_BmpTitleWrite( WFNOTE_DRAW* p_draw, GFL_BMPWIN** win, u32 msg_idx );
+static void Draw_BmpTitleWrite( WFNOTE_DRAW* p_draw, PRINT_UTIL * wk, u32 msg_idx );
 static void Draw_BmpTitleOff( WFNOTE_DRAW* p_draw );
 static void Draw_FriendCodeSetWordset( WFNOTE_DRAW* p_draw, u64 code );
 static void Draw_FriendNameSetWordset( WFNOTE_DRAW* p_draw, const WFNOTE_DATA* cp_data, u32 idx, HEAPID heapID );
@@ -1541,6 +1619,7 @@ static void FInfo_ShioriOff( WFNOTE_FRIENDINFO* p_wk,  WFNOTE_DRAW* p_draw );
 static void FInfo_ShioriAnm00( WFNOTE_FRIENDINFO* p_wk,  WFNOTE_DRAW* p_draw, u32 page00, u32 page01 );
 static void FInfo_ShioriAnm01( WFNOTE_FRIENDINFO* p_wk,  WFNOTE_DRAW* p_draw, u32 page00, u32 page01 );
 static BOOL FInfo_SelectListIdxAdd( WFNOTE_DATA* p_data, WF_COMMON_WAY way );
+static BOOL FInfo_SelectListIdxCheck( WFNOTE_DATA* p_data, WF_COMMON_WAY way );
 static void FInfoScrnData_Init( WFNOTE_FINFO_SCRNDATA* p_scrn, WFNOTE_DRAW* p_draw, HEAPID heapID );
 static void FInfoScrnData_Exit( WFNOTE_FINFO_SCRNDATA* p_scrn );
 static void FInfoBmpWin_Init( WFNOTE_FRIENDINFO* p_wk, WFNOTE_DRAW* p_draw );
@@ -1551,19 +1630,19 @@ static void FInfoDrawArea_MsgBmpInit( WFNOTE_FINFO_DRAWAREA* p_wk, WFNOTE_DRAW* 
 static void FInfoDrawArea_MsgBmpExit( WFNOTE_FINFO_DRAWAREA* p_wk, u32 idx );
 static void FInfoDrawArea_MsgBmpOnVReq( WFNOTE_FINFO_DRAWAREA* p_wk, u32 idx );
 static void FInfoDrawArea_MsgBmpOffVReq( WFNOTE_FINFO_DRAWAREA* p_wk, u32 idx );
-static void FInfoDrawArea_Page( WFNOTE_FINFO_DRAWAREA* p_wk, WFNOTE_DATA* p_data, WFNOTE_DRAW* p_draw, u32 page, const WFNOTE_FINFO_SCRNDATA* cp_scrn, BOOL bf_on,HEAPID heapID );
+//static void FInfoDrawArea_Page( WFNOTE_FINFO_DRAWAREA* p_wk, WFNOTE_DATA* p_data, WFNOTE_DRAW* p_draw, u32 page, const WFNOTE_FINFO_SCRNDATA* cp_scrn, BOOL bf_on,HEAPID heapID );
 static void FInfoDrawArea_PageOff( WFNOTE_FINFO_DRAWAREA* p_wk, WFNOTE_DRAW* p_draw );
-static void FInfoDraw_Page00( WFNOTE_FINFO_DRAWAREA* p_wk, WFNOTE_DATA* p_data, WFNOTE_DRAW* p_draw, HEAPID heapID );
-static void FInfoDraw_Page01( WFNOTE_FINFO_DRAWAREA* p_wk, WFNOTE_DATA* p_data, WFNOTE_DRAW* p_draw, HEAPID heapID );
-static void FInfoDraw_Page02( WFNOTE_FINFO_DRAWAREA* p_wk, WFNOTE_DATA* p_data, WFNOTE_DRAW* p_draw, HEAPID heapID );
-static void FInfoDraw_Page03( WFNOTE_FINFO_DRAWAREA* p_wk, WFNOTE_DATA* p_data, WFNOTE_DRAW* p_draw, HEAPID heapID );
-static void FInfoDraw_Page04( WFNOTE_FINFO_DRAWAREA* p_wk, WFNOTE_DATA* p_data, WFNOTE_DRAW* p_draw, HEAPID heapID );
-static void FInfoDraw_Page05( WFNOTE_FINFO_DRAWAREA* p_wk, WFNOTE_DATA* p_data, WFNOTE_DRAW* p_draw, HEAPID heapID );
-static void FInfoDraw_Page06( WFNOTE_FINFO_DRAWAREA* p_wk, WFNOTE_DATA* p_data, WFNOTE_DRAW* p_draw, HEAPID heapID );
-static void FInfoDraw_Page07( WFNOTE_FINFO_DRAWAREA* p_wk, WFNOTE_DATA* p_data, WFNOTE_DRAW* p_draw, HEAPID heapID );
+//static void FInfoDraw_Page00( WFNOTE_FINFO_DRAWAREA* p_wk, WFNOTE_DATA* p_data, WFNOTE_DRAW* p_draw, HEAPID heapID );
+//static void FInfoDraw_Page01( WFNOTE_FINFO_DRAWAREA* p_wk, WFNOTE_DATA* p_data, WFNOTE_DRAW* p_draw, HEAPID heapID );
+//static void FInfoDraw_Page02( WFNOTE_FINFO_DRAWAREA* p_wk, WFNOTE_DATA* p_data, WFNOTE_DRAW* p_draw, HEAPID heapID );
+//static void FInfoDraw_Page03( WFNOTE_FINFO_DRAWAREA* p_wk, WFNOTE_DATA* p_data, WFNOTE_DRAW* p_draw, HEAPID heapID );
+//static void FInfoDraw_Page04( WFNOTE_FINFO_DRAWAREA* p_wk, WFNOTE_DATA* p_data, WFNOTE_DRAW* p_draw, HEAPID heapID );
+//static void FInfoDraw_Page05( WFNOTE_FINFO_DRAWAREA* p_wk, WFNOTE_DATA* p_data, WFNOTE_DRAW* p_draw, HEAPID heapID );
+//static void FInfoDraw_Page06( WFNOTE_FINFO_DRAWAREA* p_wk, WFNOTE_DATA* p_data, WFNOTE_DRAW* p_draw, HEAPID heapID );
+//static void FInfoDraw_Page07( WFNOTE_FINFO_DRAWAREA* p_wk, WFNOTE_DATA* p_data, WFNOTE_DRAW* p_draw, HEAPID heapID );
 static void FInfoDraw_Clean( WFNOTE_DRAW* p_draw, const WFNOTE_SCRNAREA* cp_scrnarea );
 static void FInfoDraw_Bmp( WFNOTE_FINFO_DRAWAREA* p_wk, u32 page, u32 bmp, WFNOTE_DATA* p_data, WFNOTE_DRAW* p_draw, u32 msg_idx, u32 x, u32 y, u32 col, STRBUF* p_str, STRBUF* p_tmp );
-static void FInfoDraw_BaseBmp( GFL_BMPWIN** win, WFNOTE_DATA* p_data, WFNOTE_DRAW* p_draw,u32 msg_idx, u32 x, u32 y, u32 col );
+static void FInfoDraw_BaseBmp( PRINT_UTIL * util, WFNOTE_DATA* p_data, WFNOTE_DRAW* p_draw,u32 msg_idx, u32 x, u32 y, u32 col );
 static void FInfo_PageChange( WFNOTE_FRIENDINFO* p_wk, s32 add );
 
 #if NOTE_TEMP_COMMENT //未使用。DP・Pt用？
@@ -1598,6 +1677,14 @@ static void ChangeListPageNumAnime( WFNOTE_FRIENDLIST * p_wk, u32 page );
 static void PutListTitle( WFNOTE_DRAW * p_draw );
 static void SetListDispActive( WFNOTE_FRIENDLIST * p_wk, WFNOTE_DRAW * p_draw, BOOL flg );
 
+static void InitPrintUtil( WFNOTE_DRAW * p_draw );
+static void SetPrintUtil( WFNOTE_DRAW * p_draw, PRINT_UTIL * util );
+static void TransPrintUtil( WFNOTE_DRAW * p_draw );
+static void PutBmpWin( GFL_BMPWIN * win );
+
+static void FInfo_TrGraDelete( WFNOTE_FRIENDINFO * p_wk );
+
+FS_EXTERN_OVERLAY(ui_common);
 
 
 #pragma mark[>Data
@@ -1696,40 +1783,40 @@ static const WFNOTE_FLIST_CURSORDATA DATA_FListCursorData[ FLIST_CURSORDATA_NUM 
   // プレイヤー0～8
   {
     { 2, 4, 15, 4 },
-    GFL_BG_FRAME2_M, BGPLT_M_BACK_2, BGPLT_M_BACK_9,
+    GFL_BG_FRAME2_M, BGPLT_M_BACK_2, BGPLT_M_BACK_8,
   },
   {
     { 2, 8, 15, 4 },
-    GFL_BG_FRAME2_M, BGPLT_M_BACK_2, BGPLT_M_BACK_9,
+    GFL_BG_FRAME2_M, BGPLT_M_BACK_2, BGPLT_M_BACK_8,
   },
   {
     { 2, 12, 15, 4 },
-    GFL_BG_FRAME2_M, BGPLT_M_BACK_2, BGPLT_M_BACK_9,
+    GFL_BG_FRAME2_M, BGPLT_M_BACK_2, BGPLT_M_BACK_8,
   },
   {
     { 2, 16, 15, 4 },
-    GFL_BG_FRAME2_M, BGPLT_M_BACK_2, BGPLT_M_BACK_9,
+    GFL_BG_FRAME2_M, BGPLT_M_BACK_2, BGPLT_M_BACK_8,
   },
   {
     { 16, 4, 15, 4 },
-    GFL_BG_FRAME2_M, BGPLT_M_BACK_2, BGPLT_M_BACK_9,
+    GFL_BG_FRAME2_M, BGPLT_M_BACK_2, BGPLT_M_BACK_8,
   },
   {
     { 16, 8, 15, 4 },
-    GFL_BG_FRAME2_M, BGPLT_M_BACK_2, BGPLT_M_BACK_9,
+    GFL_BG_FRAME2_M, BGPLT_M_BACK_2, BGPLT_M_BACK_8,
   },
   {
     { 16, 12, 15, 4 },
-    GFL_BG_FRAME2_M, BGPLT_M_BACK_2, BGPLT_M_BACK_9,
+    GFL_BG_FRAME2_M, BGPLT_M_BACK_2, BGPLT_M_BACK_8,
   },
   {
     { 16, 16, 15, 4 },
-    GFL_BG_FRAME2_M, BGPLT_M_BACK_2, BGPLT_M_BACK_9,
+    GFL_BG_FRAME2_M, BGPLT_M_BACK_2, BGPLT_M_BACK_8,
   },
   // 戻る
   {
     { FLIST_BACK_X, FLIST_BACK_Y, FLIST_BACK_SIZX, FLIST_BACK_SIZY },
-    GFL_BG_FRAME0_M, BGPLT_M_BACK_1, BGPLT_M_BACK_9,
+    GFL_BG_FRAME0_M, BGPLT_M_BACK_1, BGPLT_M_BACK_8,
   },
 };
 
@@ -1891,9 +1978,10 @@ GFL_PROC_RESULT WifiNoteProc_Init( GFL_PROC * proc, int * seq , void *pwk, void 
 {
   WFNOTE_WK* p_wk;
 
-
   // wifi_2dcharを使用するためにOVERLAYをLOAD
-  GFL_OVERLAY_Load(FS_OVERLAY_ID(wifi2dmap));
+  GFL_OVERLAY_Load( FS_OVERLAY_ID(wifi2dmap) );
+	// ui
+	GFL_OVERLAY_Load( FS_OVERLAY_ID(ui_common) );
 
   // ワーク作成
   GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_WIFINOTE, 0xC0000 );
@@ -2069,6 +2157,7 @@ GFL_PROC_RESULT WifiNoteProc_End( GFL_PROC * proc, int * seq , void *pwk, void *
   GFL_HEAP_DeleteHeap( HEAPID_WIFINOTE );
 
   // オーバーレイ破棄
+	GFL_OVERLAY_Unload( FS_OVERLAY_ID(ui_common) );
   GFL_OVERLAY_Unload( FS_OVERLAY_ID(wifi2dmap) );
 
   return GFL_PROC_RES_FINISH;
@@ -2165,12 +2254,13 @@ static void WFNOTE_DrawExit( WFNOTE_WK* p_wk )
  *  @brief  BmpWindowの追加と初期化
  */
 //-----------------------------------------------------------------------------
-static void Sub_BmpWinAdd( GFL_BMPWIN ** win, u8 frmnum,
-  u8 posx, u8 posy, u8 sizx, u8 sizy, u8 palnum, u16 chrofs ,u8 clear_col)
+static void Sub_BmpWinAdd(
+							WFNOTE_DRAW * p_draw, PRINT_UTIL * util, u8 frmnum,
+							u8 posx, u8 posy, u8 sizx, u8 sizy, u8 palnum, u16 chrofs ,u8 clear_col)
 {
-//  OS_TPrintf("[BG:%d][size:%d]\n",frmnum,sizx*sizy);
-  *win = GFL_BMPWIN_Create( frmnum , posx , posy , sizx , sizy , palnum , GFL_BMP_CHRAREA_GET_B );
-  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(*win) , clear_col );
+  util->win = GFL_BMPWIN_Create( frmnum , posx , posy , sizx , sizy , palnum , GFL_BMP_CHRAREA_GET_B );
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(util->win) , clear_col );
+	SetPrintUtil( p_draw, util );
 }
 
 //-------------------------------------
@@ -2467,6 +2557,8 @@ static void Draw_Init( WFNOTE_DRAW* p_draw, const WFNOTE_DATA* cp_data, HEAPID h
 static void Draw_Main( WFNOTE_DRAW* p_draw )
 {
   PRINTSYS_QUE_Main( p_draw->printQue );
+	TransPrintUtil( p_draw );
+
   GFL_TCBL_Main( p_draw->msgTcblSys );
 
   GFL_CLACT_SYS_Main();
@@ -2747,7 +2839,9 @@ static void Draw_BmpInit( WFNOTE_DRAW* p_draw, const WFNOTE_DATA* cp_data, HEAPI
 
   // 基本ビットマップ
   GFL_BMPWIN_Init( heapID );
-  Sub_BmpWinAdd( &p_draw->title ,
+  Sub_BmpWinAdd(
+			p_draw,
+			&p_draw->title,
       DFRM_MSG,
       BMPL_TITLE_X, BMPL_TITLE_Y,
       BMPL_TITLE_SIZX, BMPL_TITLE_SIZY,
@@ -2791,7 +2885,7 @@ static void Draw_BmpExit( WFNOTE_DRAW* p_draw )
   GFL_STR_DeleteBuffer( p_draw->p_tmp );
   GFL_STR_DeleteBuffer( p_draw->p_titlestr );
   GFL_STR_DeleteBuffer( p_draw->p_titletmp );
-  GFL_BMPWIN_Delete( p_draw->title );
+  GFL_BMPWIN_Delete( p_draw->title.win );
   GFL_BMPWIN_Exit();
 }
 
@@ -2842,33 +2936,39 @@ static void Draw_SCRNDATA_Exit( WFNOTE_DRAW* p_draw )
  *  @param  msg_idx メッセージID
  */
 //-----------------------------------------------------------------------------
-static void Draw_BmpTitleWrite( WFNOTE_DRAW* p_draw, GFL_BMPWIN** win, u32 msg_idx )
+static void Draw_BmpTitleWrite( WFNOTE_DRAW* p_draw, PRINT_UTIL * util, u32 msg_idx )
 {
+/*
   // タスク動作停止
   if( p_draw->printHandle != NULL ){
     PRINTSYS_PrintStreamDelete( p_draw->printHandle );
     p_draw->printHandle = NULL;
   }
+*/
 
   // クリア
-  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(*win), 0 );
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(util->win), 0 );
 
   GFL_MSG_GetString( p_draw->p_msgman, msg_idx, p_draw->p_titletmp );
   WORDSET_ExpandStr( p_draw->p_wordset, p_draw->p_titlestr, p_draw->p_titletmp );
 /*
-  p_draw->printHandle = PRINTSYS_PrintStream(*win,  0, BMPL_TITLE_PL_Y,
-      p_draw->p_titlestr, p_draw->fontHandle , WFNOTE_TITLE_MSG_SPEED,
-      p_draw->msgTcblSys , 10 , p_draw->heapID , PRINTSYS_LSB_GetB(WFNOTE_COL_WHITE) );
-*/
 	PRINTSYS_PrintQueColor(
 		p_draw->printQue, GFL_BMPWIN_GetBmp(*win),
 		0, BMPL_TITLE_PL_Y,
 		p_draw->p_titlestr, p_draw->fontHandle, WFNOTE_COL_WHITE );
+*/
+	PRINTTOOL_PrintColor(
+		util, p_draw->printQue,
+		0, BMPL_TITLE_PL_Y,
+		p_draw->p_titlestr, p_draw->fontHandle, WFNOTE_COL_WHITE, PRINTTOOL_MODE_LEFT );
 
+	PutBmpWin( util->win );
+/*
 //    GF_BGL_BmpWinOnVReq(win);
 	GFL_BMPWIN_TransVramCharacter( *win );
   GFL_BMPWIN_MakeScreen( *win );
   GFL_BG_LoadScreenV_Req( GFL_BMPWIN_GetFrame(*win) );
+*/
 }
 
 //----------------------------------------------------------------------------
@@ -2886,9 +2986,9 @@ static void Draw_BmpTitleOff( WFNOTE_DRAW* p_draw )
     p_draw->printHandle = NULL;
   }
 
-  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_draw->title), 0 );
-  GFL_BMPWIN_TransVramCharacter( p_draw->title );
-  GFL_BMPWIN_ClearTransWindow_VBlank( p_draw->title );
+//  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_draw->title), 0 );
+//  GFL_BMPWIN_TransVramCharacter( p_draw->title );
+  GFL_BMPWIN_ClearTransWindow_VBlank( p_draw->title.win );
 //  GF_BGL_BmpWinOffVReq(&p_draw->title);
 }
 
@@ -3044,19 +3144,19 @@ static void Draw_WflbyGameSetWordSet( WFNOTE_DRAW* p_draw, u32 num )
 static void Draw_CommonActInit( WFNOTE_DRAW* p_draw, HEAPID heapID )
 {
   static GFL_CLWK_DATA act_add[4] = {
-    { // ←
-      WFNOTE_YAZIRUSHI_LX ,
-      WFNOTE_YAZIRUSHI_LRY ,
-      ACTANM_YAZI_LN ,
+    { // ↓
+      TOUCHBAR_ICON_X_00,
+			TOUCHBAR_ICON_Y,
+      APP_COMMON_BARICON_CURSOR_DOWN,
       WFNOTE_YAZIRUSHI_PRI,
-      0
+      2
     },
-    { // →
-      WFNOTE_YAZIRUSHI_RX ,
-      WFNOTE_YAZIRUSHI_LRY ,
-      ACTANM_YAZI_RN ,
+    { // ↑
+      TOUCHBAR_ICON_X_01,
+			TOUCHBAR_ICON_Y,
+      APP_COMMON_BARICON_CURSOR_UP,
       WFNOTE_YAZIRUSHI_PRI,
-      0
+      2
     },
     { // カーソル
       0 ,
@@ -3079,9 +3179,9 @@ static void Draw_CommonActInit( WFNOTE_DRAW* p_draw, HEAPID heapID )
   for( i=0; i<WFNOTE_YAZIRUSHINUM; i++ ){
     p_draw->p_yazirushi[i] = GFL_CLACT_WK_Create(
           p_draw->cellUnit,
-          p_draw->chrRes[CHR_RES_WOR],
-          p_draw->palRes[PAL_RES_WOR],
-          p_draw->celRes[CEL_RES_WOR],
+          p_draw->chrRes[CHR_RES_TB],
+          p_draw->palRes[PAL_RES_TB],
+          p_draw->celRes[CEL_RES_TB],
           &act_add[i], CLSYS_DEFREND_MAIN,
           heapID );
 
@@ -3173,12 +3273,15 @@ static void Draw_YazirushiSetAnmFlag( WFNOTE_DRAW* p_draw, BOOL flag )
 //-----------------------------------------------------------------------------
 static void Draw_YazirushiAnmChg( WFNOTE_DRAW* p_draw, u8 idx, u8 anm_no)
 {
+/*
   u8 anm_ofs = idx*2;
   if(idx >= ACT_YAZI_T){
     idx -= ACT_YAZI_T;
   }
+*/
   GFL_CLACT_WK_SetAutoAnmFlag( p_draw->p_yazirushi[idx], TRUE );
-  GFL_CLACT_WK_SetAnmSeq( p_draw->p_yazirushi[idx], ACTANM_YAZI_LN+anm_ofs+anm_no);
+//  GFL_CLACT_WK_SetAnmSeq( p_draw->p_yazirushi[idx], ACTANM_YAZI_LN+anm_ofs+anm_no);
+  GFL_CLACT_WK_SetAnmSeq( p_draw->p_yazirushi[idx], anm_no );
   GFL_CLACT_WK_ResetAnm( p_draw->p_yazirushi[idx] );
 }
 
@@ -3230,7 +3333,7 @@ static APP_TASKMENU_WORK * Draw_YesNoWinSet( APP_TASKMENU_ITEMWORK * list, APP_T
 	wk.posType  = ATPT_RIGHT_DOWN;
   wk.charPosX = 32;
 	if( putType == TRUE ){
-		 wk.charPosY = 17;
+		 wk.charPosY = 18;
 	}else{
 		 wk.charPosY = 12;
 	}
@@ -3299,7 +3402,7 @@ static WFNOTE_STRET ModeSelect_Main( WFNOTE_MODESELECT* p_wk, WFNOTE_DATA* p_dat
     ModeSelect_Init( p_wk, p_data, p_draw, HEAPID_WIFINOTE );
 
     ModeSelectSeq_Init( p_wk, p_data, p_draw );
-    WIPE_SYS_Start( WIPE_PATTERN_WMS, WIPE_TYPE_HOLEIN, WIPE_TYPE_HOLEIN, WIPE_FADE_BLACK,
+    WIPE_SYS_Start( WIPE_PATTERN_WMS, WIPE_TYPE_FADEIN, WIPE_TYPE_FADEIN, WIPE_FADE_BLACK,
         WIPE_DEF_DIV, WIPE_DEF_SYNC, heapID);
     p_data->subseq = SEQ_MODESEL_FADEINWAIT;
     break;
@@ -3368,7 +3471,7 @@ static WFNOTE_STRET ModeSelect_Main( WFNOTE_MODESELECT* p_wk, WFNOTE_DATA* p_dat
     break;
     // そのまま終了するとき
   case SEQ_MODESEL_FADEOUT:
-    WIPE_SYS_Start( WIPE_PATTERN_WMS, WIPE_TYPE_HOLEOUT, WIPE_TYPE_HOLEOUT, WIPE_FADE_BLACK,
+    WIPE_SYS_Start( WIPE_PATTERN_WMS, WIPE_TYPE_FADEOUT, WIPE_TYPE_FADEOUT, WIPE_FADE_BLACK,
             WIPE_DEF_DIV, WIPE_DEF_SYNC, heapID);
 
     p_data->subseq ++;
@@ -3386,7 +3489,7 @@ static WFNOTE_STRET ModeSelect_Main( WFNOTE_MODESELECT* p_wk, WFNOTE_DATA* p_dat
     ModeSelect_Init( p_wk, p_data, p_draw, HEAPID_WIFINOTE );
 
     ModeSelectSeq_Init( p_wk, p_data, p_draw );
-    WIPE_SYS_Start( WIPE_PATTERN_WMS, WIPE_TYPE_HOLEIN, WIPE_TYPE_HOLEIN, WIPE_FADE_BLACK,
+    WIPE_SYS_Start( WIPE_PATTERN_WMS, WIPE_TYPE_FADEIN, WIPE_TYPE_FADEIN, WIPE_FADE_BLACK,
         WIPE_DEF_DIV, WIPE_DEF_SYNC, heapID);
     p_data->subseq = SEQ_MODESEL_CODECHECK_FADEINWAIT;
     break;
@@ -3479,6 +3582,7 @@ static WFNOTE_STRET ModeSelect_Main( WFNOTE_MODESELECT* p_wk, WFNOTE_DATA* p_dat
     }
     break;
   }
+
   return WFNOTE_STRET_CONTINUE;
 }
 
@@ -3513,12 +3617,16 @@ static void ModeSelect_DrawInit( WFNOTE_MODESELECT* p_wk, WFNOTE_DATA* p_data, W
   int i;
 
   // ビットマップウィンドウ作成
-  Sub_BmpWinAdd( &p_wk->msg, DFRM_SCRMSG,
+  Sub_BmpWinAdd(
+			p_draw,
+			&p_wk->msg, DFRM_SCRMSG,
       BMPL_MODESEL_MSG_X, BMPL_MODESEL_MSG_Y,
       BMPL_MODESEL_MSG_SIZX, BMPL_MODESEL_MSG_SIZY,
       BGPLT_M_MSGFONT, BMPL_MODESEL_MSGCGX , 0 );
 
-  Sub_BmpWinAdd( &p_wk->talk, DFRM_MSG,
+  Sub_BmpWinAdd(
+			p_draw,
+			&p_wk->talk, DFRM_MSG,
       BMPL_MODESEL_TALK_X, BMPL_MODESEL_TALK_Y,
       BMPL_MODESEL_TALK_SIZX, BMPL_MODESEL_TALK_SIZY,
       BGPLT_M_MSGFONT, BMPL_MODESEL_TALKCGX , 0 );
@@ -3539,15 +3647,19 @@ static void ModeSelect_DrawInit( WFNOTE_MODESELECT* p_wk, WFNOTE_DATA* p_data, W
     WORDSET_ExpandStr( p_draw->p_wordset, p_str, p_tmp );
 
     siz = PRINTSYS_GetStrWidth( p_str, p_draw->fontHandle , 0 );
-    PRINTSYS_PrintQueColor(
-			p_draw->printQue , GFL_BMPWIN_GetBmp(p_wk->msg),
+
+		PRINTTOOL_PrintColor(
+			&p_wk->msg, p_draw->printQue, 
 			((BMPL_MODESEL_MSG_SIZX*8)-siz)/2,
 			8+(40*i),
-      p_str, p_draw->fontHandle, WFNOTE_COL_BLACK );
+      p_str, p_draw->fontHandle, WFNOTE_COL_BLACK, PRINTTOOL_MODE_LEFT );
   }
 
+	PutBmpWin( p_wk->msg.win );
+/*
   GFL_BMPWIN_TransVramCharacter( p_wk->msg );
   GFL_BG_LoadScreenV_Req( DFRM_SCRMSG );
+*/
 
   GFL_STR_DeleteBuffer( p_str );
   GFL_STR_DeleteBuffer( p_tmp );
@@ -3579,6 +3691,10 @@ static void ModeSelect_DrawInit( WFNOTE_MODESELECT* p_wk, WFNOTE_DATA* p_data, W
 //-----------------------------------------------------------------------------
 static void ModeSelect_DrawExit( WFNOTE_MODESELECT* p_wk, WFNOTE_DATA* p_data, WFNOTE_DRAW* p_draw )
 {
+	// PrintUtilの転送データを初期化
+	InitPrintUtil( p_draw );
+	SetPrintUtil( p_draw, &p_draw->title );
+
 	// はい・いいえ破棄
 	APP_TASKMENU_RES_Delete( p_wk->listRes );
 	GFL_STR_DeleteBuffer( p_wk->ynlist[0].str );
@@ -3588,8 +3704,8 @@ static void ModeSelect_DrawExit( WFNOTE_MODESELECT* p_wk, WFNOTE_DATA* p_data, W
   GFL_STR_DeleteBuffer( p_wk->p_str );
 
   // ビットマップ破棄
-  GFL_BMPWIN_Delete( p_wk->talk );
-  GFL_BMPWIN_Delete( p_wk->msg );
+  GFL_BMPWIN_Delete( p_wk->talk.win );
+  GFL_BMPWIN_Delete( p_wk->msg.win );
 
   // スクリーンデータ破棄
   GFL_HEAP_FreeMemory( p_wk->p_scrnbuff );
@@ -3608,13 +3724,10 @@ static void ModeSelectSeq_Init( WFNOTE_MODESELECT* p_wk, WFNOTE_DATA* p_data, WF
 {
   // タイトル表示
   Draw_BmpTitleWrite( p_draw, &p_draw->title, msg_wifi_note_01 );
-  GFL_BG_LoadScreenV_Req( DFRM_MSG );
+//  GFL_BG_LoadScreenV_Req( DFRM_MSG );
 
   // 文字列描画
-  //TODO
-  //GF_BGL_BmpWinOnVReq( &p_wk->msg );
-  GFL_BMPWIN_MakeScreen( p_wk->msg );
-  GFL_BG_LoadScreenV_Req( GFL_BMPWIN_GetFrame(p_wk->msg) );
+//	PutBmpWin( p_wk->msg.win );
   // ボタン表示
   GFL_BG_WriteScreen( DFRM_SCROLL,
       p_wk->p_scrn->rawData, 0, 0,
@@ -3938,7 +4051,7 @@ static void ModeSelect_DrawOff( WFNOTE_MODESELECT* p_wk, WFNOTE_DRAW* p_draw )
   GFL_BG_LoadScreenV_Req( DFRM_SCRMSG );
 
   // msg
-  GFL_BMPWIN_ClearTransWindow_VBlank( p_wk->msg );
+  GFL_BMPWIN_ClearTransWindow_VBlank( p_wk->msg.win );
 //  GF_BGL_BmpWinOffVReq(&p_wk->msg);
 
   // カーソルアクター表示設定
@@ -3968,18 +4081,18 @@ static void ModeSelect_TalkMsgPrint( WFNOTE_MODESELECT* p_wk, WFNOTE_DRAW* p_dra
   p_tmp = GFL_STR_CreateBuffer( WFNOTE_STRBUF_SIZE, heapID );
 
   // クリア
-  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->talk), 15 );
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->talk.win), 15 );
 
   GFL_MSG_GetString( p_draw->p_msgman, msgidx, p_tmp );
   WORDSET_ExpandStr( p_draw->p_wordset, p_wk->p_str, p_tmp );
-  p_draw->printHandleMsg = PRINTSYS_PrintStream(p_wk->talk, 0, 0,
+  p_draw->printHandleMsg = PRINTSYS_PrintStream(p_wk->talk.win, 0, 0,
       p_wk->p_str, p_draw->fontHandle , MSGSPEED_GetWait(),
-      p_draw->msgTcblSys , 10 , p_draw->heapID , PRINTSYS_LSB_GetB(WFNOTE_COL_BLACK) );
+      p_draw->msgTcblSys, 10 , p_draw->heapID , PRINTSYS_LSB_GetB(WFNOTE_COL_BLACK) );
 
-  BmpWinFrame_Write( p_wk->talk, WINDOW_TRANS_OFF,
+  BmpWinFrame_Write( p_wk->talk.win, WINDOW_TRANS_OFF,
       BMPL_WIN_CGX_TALK, BGPLT_M_TALKWIN );
 
-  GFL_BMPWIN_MakeTransWindow_VBlank( p_wk->talk );
+  GFL_BMPWIN_MakeTransWindow_VBlank( p_wk->talk.win );
 
   GFL_STR_DeleteBuffer( p_tmp );
 
@@ -4017,8 +4130,8 @@ static BOOL ModeSelect_TalkMsgEndCheck( const WFNOTE_MODESELECT* cp_wk, WFNOTE_D
 static void ModeSelect_TalkMsgOff( WFNOTE_MODESELECT* p_wk, WFNOTE_DRAW* p_draw )
 {
 	SetDispActive( p_draw, FALSE );
-  BmpWinFrame_Clear( p_wk->talk, WINDOW_TRANS_ON );
-  GFL_BMPWIN_ClearTransWindow_VBlank( p_wk->talk );
+  BmpWinFrame_Clear( p_wk->talk.win, WINDOW_TRANS_ON );
+  GFL_BMPWIN_ClearTransWindow_VBlank( p_wk->talk.win );
 //  GF_BGL_BmpWinOffVReq(&p_wk->talk);
 }
 
@@ -4199,7 +4312,7 @@ static WFNOTE_STRET FList_Main( WFNOTE_FRIENDLIST* p_wk, WFNOTE_DATA* p_data, WF
     break;
 
   case SEQ_FLIST_NAMECHG_INIT:  // 名前変更
-    WIPE_SYS_Start( WIPE_PATTERN_WMS, WIPE_TYPE_HOLEOUT, WIPE_TYPE_HOLEOUT, WIPE_FADE_BLACK,
+    WIPE_SYS_Start( WIPE_PATTERN_WMS, WIPE_TYPE_FADEOUT, WIPE_TYPE_FADEOUT, WIPE_FADE_BLACK,
         WIPE_DEF_DIV, WIPE_DEF_SYNC, heapID);
 
     // 文字列初期化データを設定
@@ -4229,7 +4342,7 @@ static WFNOTE_STRET FList_Main( WFNOTE_FRIENDLIST* p_wk, WFNOTE_DATA* p_data, WF
     // 描画初期化
     FList_Init( p_wk, p_data, p_draw, HEAPID_WIFINOTE );
     FList_DrawOn( p_wk, p_data, p_draw, heapID );
-    WIPE_SYS_Start( WIPE_PATTERN_WMS, WIPE_TYPE_HOLEIN, WIPE_TYPE_HOLEIN, WIPE_FADE_BLACK,
+    WIPE_SYS_Start( WIPE_PATTERN_WMS, WIPE_TYPE_FADEIN, WIPE_TYPE_FADEIN, WIPE_FADE_BLACK,
         WIPE_DEF_DIV, WIPE_DEF_SYNC, heapID);
     p_data->subseq = SEQ_FLIST_NAMECHG_WAITWIPEWAIT;
     break;
@@ -4373,7 +4486,9 @@ static void FList_DrawInit( WFNOTE_FRIENDLIST* p_wk, WFNOTE_DATA* p_data, WFNOTE
   // ビットマップ
   for( i=0; i < 2; i++ )
   {
-    Sub_BmpWinAdd( &p_wk->drawBmpWin[i],
+    Sub_BmpWinAdd(
+				p_draw,
+				&p_wk->drawBmpWin[i],
         DFRM_SCRMSG,
         BMPL_FLIST_TEXT_OFSX+MATH_ABS(DATA_ScrnArea[i].scrn_x),
         BMPL_FLIST_TEXT_OFSY+MATH_ABS(DATA_ScrnArea[i].scrn_y),
@@ -4443,7 +4558,9 @@ static void FList_DrawInit( WFNOTE_FRIENDLIST* p_wk, WFNOTE_DATA* p_data, WFNOTE
 										DFRM_MSG, BGPLT_M_SBOX, p_draw->fontHandle, p_draw->printQue, heapID );
 
   // 会話ウィンドウ作成
-  Sub_BmpWinAdd( &p_wk->talk, DFRM_MSG,
+  Sub_BmpWinAdd(
+			p_draw,
+			&p_wk->talk, DFRM_MSG,
       BMPL_FLIST_TALK_X, BMPL_FLIST_TALK_Y,
       BMPL_FLIST_TALK_SIZX, BMPL_FLIST_TALK_SIZY,
       BGPLT_M_MSGFONT, BMPL_FLIST_TALK_CGX ,15);
@@ -4499,13 +4616,17 @@ static void FList_DrawExit( WFNOTE_FRIENDLIST* p_wk, WFNOTE_DATA* p_data, WFNOTE
 {
   int i;
 
+	// PrintUtilの転送データを初期化
+	InitPrintUtil( p_draw );
+	SetPrintUtil( p_draw, &p_draw->title );
+
 	// ページ番号アクター
   GFL_CLACT_WK_Remove( p_wk->p_pageact );
   // 消しゴムアクター
   GFL_CLACT_WK_Remove( p_wk->p_clearact );
 
   // 会話ウィンドウ
-  GFL_BMPWIN_Delete( p_wk->talk );
+  GFL_BMPWIN_Delete( p_wk->talk.win );
   GFL_STR_DeleteBuffer( p_wk->p_talkstr );
 
   // メニューデータ破棄
@@ -4536,7 +4657,7 @@ static void FList_DrawExit( WFNOTE_FRIENDLIST* p_wk, WFNOTE_DATA* p_data, WFNOTE
   // ビットマップ
   for( i=0; i < 2; i++ )
   {
-    GFL_BMPWIN_Delete( p_wk->drawBmpWin[i] );
+    GFL_BMPWIN_Delete( p_wk->drawBmpWin[i].win );
   }
 }
 
@@ -5457,21 +5578,21 @@ static void FList_TalkMsgWrite( WFNOTE_FRIENDLIST* p_wk, WFNOTE_DRAW* p_draw, u3
     p_draw->printHandleMsg = NULL;
   }
   // クリア
-  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->talk), 15 );
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->talk.win), 15 );
 
   p_tmp = GFL_STR_CreateBuffer( WFNOTE_STRBUF_SIZE, heapID );
 
   GFL_MSG_GetString( p_draw->p_msgman, msgid, p_tmp );
   WORDSET_ExpandStr( p_draw->p_wordset, p_wk->p_talkstr, p_tmp );
 
-  p_draw->printHandleMsg = PRINTSYS_PrintStream(p_wk->talk, 0, 0,
+  p_draw->printHandleMsg = PRINTSYS_PrintStream(p_wk->talk.win, 0, 0,
       p_wk->p_talkstr, p_draw->fontHandle , MSGSPEED_GetWait(),
       p_draw->msgTcblSys , 10 , p_draw->heapID , PRINTSYS_LSB_GetB(WFNOTE_COL_BLACK) );
 
-  BmpWinFrame_Write( p_wk->talk, WINDOW_TRANS_OFF,
+  BmpWinFrame_Write( p_wk->talk.win, WINDOW_TRANS_OFF,
       BMPL_WIN_CGX_TALK, BGPLT_M_TALKWIN );
 
-  GFL_BMPWIN_MakeTransWindow_VBlank( p_wk->talk );
+  GFL_BMPWIN_MakeTransWindow_VBlank( p_wk->talk.win );
 
   GFL_STR_DeleteBuffer( p_tmp );
 
@@ -5507,9 +5628,11 @@ static BOOL FList_TalkMsgEndCheck( const WFNOTE_FRIENDLIST* cp_wk, WFNOTE_DATA* 
 //-----------------------------------------------------------------------------
 static void FList_TalkMsgOff( WFNOTE_FRIENDLIST* p_wk, WFNOTE_DRAW * p_draw )
 {
-  BmpWinFrame_Clear( p_wk->talk, WINDOW_TRANS_ON_V );
+  BmpWinFrame_Clear( p_wk->talk.win, WINDOW_TRANS_ON_V );
+/*
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp( p_wk->talk ), 0 );
   GFL_BMPWIN_TransVramCharacter( p_wk->talk );
+*/
 
 	PutListTitle( p_draw );
 	ResetListPageButton( p_wk );
@@ -5529,8 +5652,8 @@ static void FList_TalkMsgOff( WFNOTE_FRIENDLIST* p_wk, WFNOTE_DRAW * p_draw )
 //-----------------------------------------------------------------------------
 static void FList_TalkMsgClear( WFNOTE_FRIENDLIST* p_wk )
 {
-  GFL_BMP_Clear( GFL_BMPWIN_GetBmp( p_wk->talk ), WFNOTE_FONT_COL_WHITE );
-  GFL_BMPWIN_TransVramCharacter( p_wk->talk );
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp( p_wk->talk.win ), WFNOTE_FONT_COL_WHITE );
+  GFL_BMPWIN_TransVramCharacter( p_wk->talk.win );
 }
 
 //----------------------------------------------------------------------------
@@ -5626,7 +5749,7 @@ static BOOL FList_DeleteAnmMain( WFNOTE_FRIENDLIST* p_wk ,WFNOTE_DRAW* p_draw)
   frame = GFL_CLACT_WK_GetAnmFrame( p_wk->p_clearact );
   if( (frame - p_wk->last_frame) >= 2 ){
     p_wk->last_frame = frame;
-    PMSND_PlaySE( WIFINOTE_CLEAN_SE );
+//    PMSND_PlaySE( WIFINOTE_CLEAN_SE );
   }
 
   return FALSE;
@@ -5795,32 +5918,39 @@ static void FListDrawArea_WritePlayer( WFNOTE_FLIST_DRAWAREA* p_wk, WFNOTE_DATA*
   int i;
   int idx;
   WIFI_LIST* p_list;
+	BOOL	set;
 
   p_list = GAMEDATA_GetWiFiList(p_data->pGameData); //SaveData_GetWifiListData( p_data->p_save );
 
   // クリア
-  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(*p_wk->text), 0 );
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->text->win), 0 );
 
   // アクターが残っていたらはき
   FListDrawArea_CharWkDel( p_wk, p_draw );
 
   // 名前とアクターの生成
+	set = FALSE;
   idx = page * FLIST_PAGE_FRIEND_NUM;
   for( i=0; i<FLIST_PAGE_FRIEND_NUM; i++ ){
     if( cp_idx->friendnum > (idx+i) ){
       // 表示する
       FListDrawArea_SetPlayer( p_wk, p_charsys, p_draw, cp_scrn, i, p_list, cp_idx->fridx[idx+i],  heapID );
+			set = TRUE;
     }else{
       // プレイヤーは表示しない
       FListDrawArea_SetNoPlayer( p_wk, p_draw, cp_scrn, i, heapID );
     }
   }
+	if( set == FALSE ){
+		GFL_BMPWIN_TransVramCharacter( p_wk->text->win );
+	}
+	PutBmpWin( p_wk->text->win );
 
   // 書き込んだBGを更新
   GFL_BG_LoadScreenV_Req( DFRM_SCROLL );
 
   // テキスト面表示
-  GFL_BMPWIN_MakeTransWindow_VBlank( *p_wk->text );
+//  GFL_BMPWIN_MakeTransWindow_VBlank( *p_wk->text );
 }
 
 //----------------------------------------------------------------------------
@@ -5838,7 +5968,7 @@ static void FListDrawArea_DrawOff( WFNOTE_FLIST_DRAWAREA* p_wk, WFNOTE_DRAW* p_d
   FListDrawArea_CharWkDel( p_wk, p_draw );
 
   // 表示OFF
-  GFL_BMPWIN_ClearTransWindow_VBlank( *p_wk->text );
+  GFL_BMPWIN_ClearTransWindow_VBlank( p_wk->text->win );
 //  GF_BGL_BmpWinOffVReq( &p_wk->text );
 
   // 背景クリア
@@ -5898,7 +6028,6 @@ static void FListDrawArea_CharWkDel( WFNOTE_FLIST_DRAWAREA* p_wk, WFNOTE_DRAW* p
  *  @param  heapID    ヒープID
  */
 //-----------------------------------------------------------------------------
-
 static void FListDrawArea_SetPlayer( WFNOTE_FLIST_DRAWAREA* p_wk, WF_2DCSYS* p_charsys, WFNOTE_DRAW* p_draw, const WFNOTE_SCRNDATA* cp_scrn, u32 pos, WIFI_LIST* p_list, u32 idx, HEAPID heapID )
 {
   int sex;
@@ -5934,7 +6063,9 @@ static void FListDrawArea_SetPlayer( WFNOTE_FLIST_DRAWAREA* p_wk, WF_2DCSYS* p_c
   p_str = GFL_STR_CreateBuffer( WFNOTE_STRBUF_SIZE, heapID );
   GFL_STR_SetStringCode( p_str, WifiList_GetFriendNamePtr(p_list,idx) );
 
-  PRINTSYS_PrintQueColor( p_draw->printQue , GFL_BMPWIN_GetBmp(*p_wk->text), x, y, p_str, p_draw->fontHandle , sc_SEXCOL[sex] );
+//  PRINTSYS_PrintQueColor( p_draw->printQue , GFL_BMPWIN_GetBmp(*p_wk->text), x, y, p_str, p_draw->fontHandle , sc_SEXCOL[sex] );
+	PRINTTOOL_PrintColor(
+		p_wk->text, p_draw->printQue, x, y, p_str, p_draw->fontHandle , sc_SEXCOL[sex], PRINTTOOL_MODE_LEFT );
 
   GFL_STR_DeleteBuffer( p_str );
 }
@@ -6004,7 +6135,8 @@ static WFNOTE_STRET CodeIn_Main( WFNOTE_CODEIN* p_wk, WFNOTE_WK* p_sys, WFNOTE_D
 
   switch( p_data->subseq ){
   case SEQ_CODEIN_NAMEIN:
-
+		// ui削除
+		GFL_OVERLAY_Unload( FS_OVERLAY_ID(ui_common) );
     // 名前入力、コード入力パラメータ作成
 		GFL_OVERLAY_Load( FS_OVERLAY_ID(namein) );
     p_wk->p_namein = CodeIn_NameInParamMake( p_wk, p_data, heapID );
@@ -6060,13 +6192,16 @@ static WFNOTE_STRET CodeIn_Main( WFNOTE_CODEIN* p_wk, WFNOTE_WK* p_sys, WFNOTE_D
     NAMEIN_FreeParam( p_wk->p_namein );
 		GFL_OVERLAY_Unload( FS_OVERLAY_ID(namein) );
     CodeInput_ParamDelete( p_wk->p_codein );
-
+		// ui読み込み
+		GFL_OVERLAY_Load( FS_OVERLAY_ID(ui_common) );
     WFNOTE_DrawInit( p_sys, heapID ); // 画面復帰
     return WFNOTE_STRET_FINISH;
 
 
 
   case SEQ_CODEIN_NAMEINONLY: // 名前入力のみ
+		// ui削除
+		GFL_OVERLAY_Unload( FS_OVERLAY_ID(ui_common) );
     // 名前入力、コード入力パラメータ作成
 		GFL_OVERLAY_Load( FS_OVERLAY_ID(namein) );
     p_wk->p_namein = CodeIn_NameInParamMake( p_wk, p_data, heapID );
@@ -6107,7 +6242,8 @@ static WFNOTE_STRET CodeIn_Main( WFNOTE_CODEIN* p_wk, WFNOTE_WK* p_sys, WFNOTE_D
 		GFL_OVERLAY_Load( FS_OVERLAY_ID(namein) );
     NAMEIN_FreeParam( p_wk->p_namein );
 		GFL_OVERLAY_Unload( FS_OVERLAY_ID(namein) );
-
+		// ui読み込み
+		GFL_OVERLAY_Load( FS_OVERLAY_ID(ui_common) );
     WFNOTE_DrawInit( p_sys, heapID ); // 画面復帰
     return WFNOTE_STRET_FINISH;
   }
@@ -6249,6 +6385,7 @@ static WFNOTE_STRET MyCode_Main( WFNOTE_MYCODE* p_wk, WFNOTE_DATA* p_data, WFNOT
 //    p_wk->ct = WFNOTE_BTNANM_WAIT;
     p_data->subseq = SEQ_MYCODE_BTNANM;
     break;
+
   case SEQ_MYCODE_BTNANM:
 /*
     if(--p_wk->ct > 0){
@@ -6335,11 +6472,15 @@ static void MyCode_DrawInit( WFNOTE_MYCODE* p_wk, WFNOTE_DATA* p_data, WFNOTE_DR
   STRBUF* p_tmp;
 
   // ビットマップ作成
-  Sub_BmpWinAdd( &p_wk->msg, DFRM_SCRMSG,
+  Sub_BmpWinAdd(
+			p_draw,
+			&p_wk->msg, DFRM_SCRMSG,
       BMPL_MYCODE_MSG_X, BMPL_MYCODE_MSG_Y,
       BMPL_MYCODE_MSG_SIZX, BMPL_MYCODE_MSG_SIZY,
       BGPLT_M_MSGFONT, BMPL_MYCODE_MSG_CGX , 0);
-  Sub_BmpWinAdd( &p_wk->code, DFRM_SCRMSG,
+  Sub_BmpWinAdd(
+			p_draw,
+			&p_wk->code, DFRM_SCRMSG,
       BMPL_MYCODE_CODE_X, BMPL_MYCODE_CODE_Y,
       BMPL_MYCODE_CODE_SIZX, BMPL_MYCODE_CODE_SIZY,
       BGPLT_M_MSGFONT, BMPL_MYCODE_CODE_CGX , 0);
@@ -6362,18 +6503,27 @@ static void MyCode_DrawInit( WFNOTE_MYCODE* p_wk, WFNOTE_DATA* p_data, WFNOTE_DR
     // コードあり
     // メッセージ
     GFL_MSG_GetString( p_draw->p_msgman, msg_mycode_codeon, p_str );
-    PRINTSYS_PrintQueColor( p_draw->printQue , GFL_BMPWIN_GetBmp(p_wk->msg), 4, 0, p_str, p_draw->fontHandle , WFNOTE_COL_BLACK);
+		PRINTTOOL_PrintColor(
+			&p_wk->msg, p_draw->printQue,
+			4, 0, p_str, p_draw->fontHandle, WFNOTE_COL_BLACK, PRINTTOOL_MODE_LEFT );
+		PutBmpWin( p_wk->msg.win );
 
     // 数字
     Draw_FriendCodeSetWordset( p_draw, code );
     GFL_MSG_GetString( p_draw->p_msgman, msg_mycode_code, p_tmp );
     WORDSET_ExpandStr( p_draw->p_wordset, p_str, p_tmp );
-    PRINTSYS_PrintQueColor( p_draw->printQue , GFL_BMPWIN_GetBmp(p_wk->code), 0, 0, p_str, p_draw->fontHandle , WFNOTE_COL_WHITE);
+		PRINTTOOL_PrintColor(
+			&p_wk->code, p_draw->printQue,
+			0, 0, p_str, p_draw->fontHandle , WFNOTE_COL_WHITE, PRINTTOOL_MODE_LEFT );
+		PutBmpWin( p_wk->code.win );
   }else{
     // コードなし
     // メッセージ
     GFL_MSG_GetString( p_draw->p_msgman, msg_mycode_codeoff, p_str );
-    PRINTSYS_PrintQueColor( p_draw->printQue , GFL_BMPWIN_GetBmp(p_wk->msg), 4, 0, p_str, p_draw->fontHandle , WFNOTE_COL_BLACK);
+		PRINTTOOL_PrintColor(
+			&p_wk->msg, p_draw->printQue,
+			4, 0, p_str, p_draw->fontHandle, WFNOTE_COL_BLACK, PRINTTOOL_MODE_LEFT );
+		PutBmpWin( p_wk->msg.win );
   }
   //戻るボタン
 /*
@@ -6399,8 +6549,12 @@ static void MyCode_DrawInit( WFNOTE_MYCODE* p_wk, WFNOTE_DATA* p_data, WFNOTE_DR
 //-----------------------------------------------------------------------------
 static void MyCode_DrawExit( WFNOTE_MYCODE* p_wk, WFNOTE_DATA* p_data, WFNOTE_DRAW* p_draw )
 {
-  GFL_BMPWIN_Delete( p_wk->msg );
-  GFL_BMPWIN_Delete( p_wk->code );
+	// PrintUtilの転送データを初期化
+	InitPrintUtil( p_draw );
+	SetPrintUtil( p_draw, &p_draw->title );
+
+  GFL_BMPWIN_Delete( p_wk->msg.win );
+  GFL_BMPWIN_Delete( p_wk->code.win );
 //  GFL_BMPWIN_Delete( p_wk->back );
   GFL_HEAP_FreeMemory( p_wk->p_scrnbuff );
 }
@@ -6416,7 +6570,6 @@ static void MyCode_DrawExit( WFNOTE_MYCODE* p_wk, WFNOTE_DATA* p_data, WFNOTE_DR
 //-----------------------------------------------------------------------------
 static void MyCodeSeq_Init( WFNOTE_MYCODE* p_wk, WFNOTE_DATA* p_data, WFNOTE_DRAW* p_draw )
 {
-
   // タイトル設定
   WORDSET_RegisterPlayerName( p_draw->p_wordset, 0, GAMEDATA_GetMyStatus(p_data->pGameData) );
   Draw_BmpTitleWrite( p_draw, &p_draw->title, msg_mycode_title );
@@ -6428,9 +6581,8 @@ static void MyCodeSeq_Init( WFNOTE_MYCODE* p_wk, WFNOTE_DATA* p_data, WFNOTE_DRA
   GFL_BG_LoadScreenV_Req( DFRM_SCROLL );
 
   // 文字列設定
-
-  GFL_BMPWIN_MakeTransWindow_VBlank( p_wk->msg );
-  GFL_BMPWIN_MakeTransWindow_VBlank( p_wk->code );
+//  GFL_BMPWIN_MakeTransWindow_VBlank( p_wk->msg.win );
+//  GFL_BMPWIN_MakeTransWindow_VBlank( p_wk->code.win );
 //  GFL_BMPWIN_MakeTransWindow_VBlank( p_wk->back );
 }
 
@@ -6452,9 +6604,8 @@ static void MyCode_DrawOff( WFNOTE_MYCODE* p_wk, WFNOTE_DRAW* p_draw )
   GFL_BG_LoadScreenV_Req( DFRM_SCROLL );
 
   // msg
-  GFL_BMPWIN_ClearTransWindow_VBlank( p_wk->msg );
-//  GF_BGL_BmpWinOffVReq(&p_wk->msg);
-  GFL_BMPWIN_ClearTransWindow_VBlank( p_wk->code );
+  GFL_BMPWIN_ClearTransWindow_VBlank( p_wk->msg.win );
+  GFL_BMPWIN_ClearTransWindow_VBlank( p_wk->code.win );
 //  GF_BGL_BmpWinOffVReq(&p_wk->code);
 //  GFL_BMPWIN_ClearTransWindow_VBlank( p_wk->back );
 //  GF_BGL_BmpWinOffVReq(&p_wk->back);
@@ -6558,6 +6709,12 @@ static WFNOTE_STRET FInfo_Main( WFNOTE_FRIENDINFO* p_wk, WFNOTE_DATA* p_data, WF
 
     // 表示する人をかえる
   case SEQ_FINFO_FRIENDCHG:
+/*
+		if( GFL_CLACT_WK_CheckAnmActive( p_draw->p_yazirushi[ACT_YAZI_T] ) == TRUE ||
+				GFL_CLACT_WK_CheckAnmActive( p_draw->p_yazirushi[ACT_YAZI_B] ) == TRUE ){
+			break;
+		}
+*/
     if( p_wk->rep ){  // リピート中ならウエイト
       p_wk->wait --;
       if( p_wk->wait > 0 ){
@@ -6584,6 +6741,9 @@ static WFNOTE_STRET FInfo_Main( WFNOTE_FRIENDINFO* p_wk, WFNOTE_DATA* p_data, WF
     break;
 
   case SEQ_FINFO_END:
+		if( GFL_CLACT_WK_CheckAnmActive( p_draw->p_tb ) == TRUE ){
+			break;
+		}
     FInfo_DrawOff( p_wk, p_draw );
     Data_SetReqStatus( p_data, STATUS_FRIENDLIST, SEQ_FLIST_INFORET );
     FInfo_DrawExit( p_wk, p_data, p_draw );
@@ -6643,15 +6803,19 @@ static u32 FInfoInput_Exe( WFNOTE_FRIENDINFO* p_wk, WFNOTE_DATA* p_data, WFNOTE_
   u8 page_num;
 
   switch( code ){
+/*
   case FINFO_EXE_DECIDE:
     if( FInfoInput_IsEndPage( p_wk, p_wk->page )){
       PMSND_PlaySE( WIFINOTE_DECIDE_SE );
       return SEQ_FINFO_END;
     }
     break;
+*/
   case FINFO_EXE_CANCEL:
-    PMSND_PlaySE( WIFINOTE_DECIDE_SE );
+    PMSND_PlaySE( WIFINOTE_BS_SE );
+		SetCancelButtonAnime( p_draw );
     return SEQ_FINFO_END;
+/*
   case FINFO_EXE_LEFT:
     FInfo_CursorDraw( p_wk, p_draw, p_wk->page );
     FInfo_ShioriDraw( p_wk, p_draw, p_wk->page );
@@ -6662,16 +6826,24 @@ static u32 FInfoInput_Exe( WFNOTE_FRIENDINFO* p_wk, WFNOTE_DATA* p_data, WFNOTE_
     FInfo_ShioriDraw( p_wk, p_draw, p_wk->page );
     p_wk->way = WF_COMMON_RIGHT;
     return SEQ_FINFO_SCRINIT;
+*/
   case FINFO_EXE_TOP:
-    p_wk->way = WF_COMMON_TOP;
-    p_wk->wait = FINFO_PAGECHG_WAIT;
-    Draw_YazirushiAnmChg( p_draw, ACT_YAZI_T, ACT_YAZIANM_ACTIVE );
-    return SEQ_FINFO_FRIENDCHG;
+		if( FInfo_SelectListIdxCheck( p_data, WF_COMMON_TOP ) == TRUE ){
+	    p_wk->way = WF_COMMON_TOP;
+	    p_wk->wait = FINFO_PAGECHG_WAIT;
+	    Draw_YazirushiAnmChg( p_draw, ACT_YAZI_B, APP_COMMON_BARICON_CURSOR_UP_ON );
+	    return SEQ_FINFO_FRIENDCHG;
+		}
+		break;
+
   case FINFO_EXE_BOTTOM:
-    p_wk->way = WF_COMMON_BOTTOM;
-    p_wk->wait = FINFO_PAGECHG_WAIT;
-    Draw_YazirushiAnmChg( p_draw, ACT_YAZI_B, ACT_YAZIANM_ACTIVE );
-    return SEQ_FINFO_FRIENDCHG;
+		if( FInfo_SelectListIdxCheck( p_data, WF_COMMON_BOTTOM ) == TRUE ){
+	    p_wk->way = WF_COMMON_BOTTOM;
+	    p_wk->wait = FINFO_PAGECHG_WAIT;
+	    Draw_YazirushiAnmChg( p_draw, ACT_YAZI_T, APP_COMMON_BARICON_CURSOR_DOWN_ON );
+	    return SEQ_FINFO_FRIENDCHG;
+		}
+		break;
   }
   return SEQ_FINFO_MAIN;
 }
@@ -6687,13 +6859,17 @@ static u32 FInfoInput_Exe( WFNOTE_FRIENDINFO* p_wk, WFNOTE_DATA* p_data, WFNOTE_
 //-----------------------------------------------------------------------------
 static u32 FInfoInput_Key( WFNOTE_FRIENDINFO* p_wk, WFNOTE_DATA* p_data, WFNOTE_DRAW* p_draw )
 {
-  if(GFL_UI_KEY_GetTrg() & GFL_PAD_BUTTON_KTST_CHG){
-    p_data->key_mode = GFL_APP_END_KEY;
-  }
+	if( p_data->key_mode == GFL_APP_END_TOUCH ){
+	  if( GFL_UI_KEY_GetTrg() & GFL_PAD_BUTTON_KTST_CHG ){
+			GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
+	    p_data->key_mode = GFL_APP_END_KEY;
+	  }
+	}
 
-  if( GFL_UI_KEY_GetTrg() & (PAD_BUTTON_DECIDE | PAD_BUTTON_CANCEL) ){
-    return FInfoInput_Exe( p_wk, p_data, p_draw ,FINFO_EXE_CANCEL );
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL ){
+    return FInfoInput_Exe( p_wk, p_data, p_draw, FINFO_EXE_CANCEL );
   }else{
+/*
     if( ( GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT ) ||
       ( p_data->lr_key_enable && (GFL_UI_KEY_GetRepeat()  & PAD_BUTTON_L) ) ){
       FInfo_PageChange( p_wk, -1 );
@@ -6703,6 +6879,12 @@ static u32 FInfoInput_Key( WFNOTE_FRIENDINFO* p_wk, WFNOTE_DATA* p_data, WFNOTE_
       FInfo_PageChange( p_wk, 1 );
       return FInfoInput_Exe( p_wk, p_data, p_draw ,FINFO_EXE_RIGHT);
     }else if( GFL_UI_KEY_GetCont() & PAD_KEY_UP ){
+      return FInfoInput_Exe( p_wk, p_data, p_draw ,FINFO_EXE_TOP);
+    }else if( GFL_UI_KEY_GetCont() & PAD_KEY_DOWN ){
+      return FInfoInput_Exe( p_wk, p_data, p_draw ,FINFO_EXE_BOTTOM);
+    }
+*/
+    if( GFL_UI_KEY_GetCont() & PAD_KEY_UP ){
       return FInfoInput_Exe( p_wk, p_data, p_draw ,FINFO_EXE_TOP);
     }else if( GFL_UI_KEY_GetCont() & PAD_KEY_DOWN ){
       return FInfoInput_Exe( p_wk, p_data, p_draw ,FINFO_EXE_BOTTOM);
@@ -6725,6 +6907,7 @@ static u32 FInfoInput_Touch( WFNOTE_FRIENDINFO* p_wk, WFNOTE_DATA* p_data, WFNOT
   u32 ret;
   s16 dif;
 
+/*
   static const GFL_UI_TP_HITTBL TpRectBfOn[] = {
   //  {0,191,0,255}, ty,by,lx,rx
     {TP_FINFO_YAZI_Y1,TP_FINFO_YAZI_Y1+TP_FINFO_YAZI_H,TP_FINFO_YAZI_X,TP_FINFO_YAZI_X+TP_FINFO_YAZI_W},
@@ -6753,18 +6936,30 @@ static u32 FInfoInput_Touch( WFNOTE_FRIENDINFO* p_wk, WFNOTE_DATA* p_data, WFNOT
   }else{
     ret = GFL_UI_TP_HitTrg(TpRectBfOff);
   }
+*/
+  static const GFL_UI_TP_HITTBL TpRect[] = {
+  //  {0,191,0,255}, ty,by,lx,rx
+    {TOUCHBAR_ICON_Y,TOUCHBAR_ICON_Y+TOUCHBAR_ICON_HEIGHT-1,TOUCHBAR_ICON_X_00,TOUCHBAR_ICON_X_00+TOUCHBAR_ICON_WIDTH-1},
+    {TOUCHBAR_ICON_Y,TOUCHBAR_ICON_Y+TOUCHBAR_ICON_HEIGHT-1,TOUCHBAR_ICON_X_01,TOUCHBAR_ICON_X_01+TOUCHBAR_ICON_WIDTH-1},
+    {TOUCHBAR_ICON_Y,TOUCHBAR_ICON_Y+TOUCHBAR_ICON_HEIGHT-1,TOUCHBAR_ICON_X_07,TOUCHBAR_ICON_X_07+TOUCHBAR_ICON_WIDTH-1},
+    {GFL_UI_TP_HIT_END,0,0,0},
+  };
+  ret = GFL_UI_TP_HitTrg(TpRect);
 
   if(ret == GFL_UI_TP_HIT_NONE){
     return SEQ_FINFO_MAIN;
   }
-  if(ret == 0){
-    *touch_f = TRUE;
-    return FInfoInput_Exe( p_wk, p_data, p_draw ,FINFO_EXE_TOP );
-  }else if(ret == 1){
-    *touch_f = TRUE;
-    return FInfoInput_Exe( p_wk, p_data, p_draw ,FINFO_EXE_BOTTOM );
-  }
 
+	*touch_f = TRUE;
+
+  if(ret == 0){
+    return FInfoInput_Exe( p_wk, p_data, p_draw, FINFO_EXE_BOTTOM );
+  }else if(ret == 1){
+    return FInfoInput_Exe( p_wk, p_data, p_draw, FINFO_EXE_TOP );
+  }
+	return FInfoInput_Exe( p_wk, p_data, p_draw, FINFO_EXE_CANCEL );
+
+/*
   ret -= 2;
   if( FInfoInput_IsEndPage( p_wk, ret )){
     p_wk->page = ret;
@@ -6784,6 +6979,7 @@ static u32 FInfoInput_Touch( WFNOTE_FRIENDINFO* p_wk, WFNOTE_DATA* p_data, WFNOT
     return FInfoInput_Exe( p_wk, p_data, p_draw ,FINFO_EXE_LEFT);
   }
   return SEQ_FINFO_MAIN;
+*/
 }
 
 //----------------------------------------------------------------------------
@@ -6801,11 +6997,15 @@ static u32 FInfo_Input( WFNOTE_FRIENDINFO* p_wk, WFNOTE_DATA* p_data, WFNOTE_DRA
   u32 ret;
   BOOL touch_f = FALSE;
 
+/*
   if( (GFL_UI_KEY_GetCont() & (PAD_KEY_UP|PAD_KEY_DOWN)) == 0 ){
     p_wk->rep = FALSE;
   }
+*/
+
   ret = FInfoInput_Touch(p_wk, p_data, p_draw, &touch_f);
   if(touch_f){
+		GFL_UI_SetTouchOrKey( GFL_APP_END_TOUCH );
     p_data->key_mode = GFL_APP_END_TOUCH;
     return ret;
   }
@@ -6926,12 +7126,14 @@ static void FInfo_DrawInit( WFNOTE_FRIENDINFO* p_wk, WFNOTE_DATA* p_data, WFNOTE
   // 各ページのスクリーンデータ読み込み
   FInfoScrnData_Init( p_wk->scrn, p_draw, heapID );
   //ベースウィンドウ追加
-//  FInfoBmpWin_Init( p_wk, p_draw );
+  FInfoBmpWin_Init( p_wk, p_draw );
 
   // 描画用ビットマップ
   for( i=0; i < 2; i++ )
   {
-    Sub_BmpWinAdd( &p_wk->drawBmpWin[i],
+    Sub_BmpWinAdd(
+				p_draw,
+				&p_wk->drawBmpWin[i],
         DFRM_SCRMSG,
         FINFO_PAGE_X+MATH_ABS(DATA_ScrnArea[i].scrn_x),
         FINFO_PAGE_Y+MATH_ABS(DATA_ScrnArea[i].scrn_y),
@@ -6939,10 +7141,9 @@ static void FInfo_DrawInit( WFNOTE_FRIENDINFO* p_wk, WFNOTE_DATA* p_data, WFNOTE
         BGPLT_M_MSGFONT, 0 , 0 );
   }
 
-
   // 描画エリア初期化
   for( i=0; i<WFNOTE_DRAWAREA_NUM; i++ ){
-    FInfoDrawArea_Init( &p_wk->drawarea[i],  p_draw, &DATA_ScrnArea[i],
+    FInfoDrawArea_Init( &p_wk->drawarea[i], p_draw, &DATA_ScrnArea[i],
       tbl_DrawAreaCgx[i], heapID );
     // 描画エリア内のビットマップ作成
     for( j=0; j<FINFO_PAGE_NUM; j++ ){
@@ -6970,6 +7171,10 @@ static void FInfo_DrawExit( WFNOTE_FRIENDINFO* p_wk, WFNOTE_DATA* p_data, WFNOTE
 {
   int i, j;
 
+	// PrintUtilの転送データを初期化
+	InitPrintUtil( p_draw );
+	SetPrintUtil( p_draw, &p_draw->title );
+
   // 描画エリア破棄
   for( i=0; i<WFNOTE_DRAWAREA_NUM; i++ ){
     for( j=0; j<FINFO_PAGE_NUM; j++ ){
@@ -6980,10 +7185,10 @@ static void FInfo_DrawExit( WFNOTE_FRIENDINFO* p_wk, WFNOTE_DATA* p_data, WFNOTE
   // 描画用ビットマップ
   for( i=0; i < 2; i++ )
   {
-    GFL_BMPWIN_Delete( p_wk->drawBmpWin[i] );
+    GFL_BMPWIN_Delete( p_wk->drawBmpWin[i].win );
   }
   //ウィンドウ破棄
-//  FInfoBmpWin_Exit( p_wk, p_draw );
+  FInfoBmpWin_Exit( p_wk, p_draw );
   // 各ページのスクリーンデータ破棄
   FInfoScrnData_Exit( p_wk->scrn );
 }
@@ -7001,10 +7206,11 @@ static void FInfo_DrawExit( WFNOTE_FRIENDINFO* p_wk, WFNOTE_DATA* p_data, WFNOTE
 static void FInfo_DrawOn( WFNOTE_FRIENDINFO* p_wk, WFNOTE_DATA* p_data, WFNOTE_DRAW* p_draw, HEAPID heapID )
 {
   GFL_CLACTPOS pos;
+
   // タイトル表示
   Draw_FriendNameSetWordset( p_draw, p_data,
       p_data->idx.fridx[p_data->select_listidx], heapID );
-//  Draw_BmpTitleWrite( p_draw, &p_wk->win[FINFO_WIN_TITLE], msg_wifi_note_14 );
+	Draw_BmpTitleWrite( p_draw, &p_draw->title, msg_wifi_note_14 );
 
   //上画面ベースBG表示
 /*
@@ -7029,14 +7235,25 @@ static void FInfo_DrawOn( WFNOTE_FRIENDINFO* p_wk, WFNOTE_DATA* p_data, WFNOTE_D
       p_wk->scrn[FINFO_SCRNDATA_M].p_scrn->screenHeight/8 );
   GFL_BG_LoadScreenV_Req( DFRM_SCROLL );
 
-//  FInfo_DrawBaseInfo( p_wk, p_data, p_draw, heapID );
+  FInfo_DrawBaseInfo( p_wk, p_data, p_draw, heapID );
 
-  Draw_CursorActorPriSet( p_draw, 0, 0 );
+//  Draw_CursorActorPriSet( p_draw, 0, 0 );
 
   // ページの表示
   FInfo_DrawPage( p_wk, p_data, p_draw, WFNOTE_DRAWAREA_MAIN,
       p_wk->page, heapID );
 
+  // 矢印表示
+	if( FInfo_SelectListIdxCheck( p_data, WF_COMMON_TOP ) == TRUE ){
+    Draw_YazirushiAnmChg( p_draw, ACT_YAZI_B, APP_COMMON_BARICON_CURSOR_UP );
+    Draw_YazirushiAnmChg( p_draw, ACT_YAZI_T, APP_COMMON_BARICON_CURSOR_DOWN );
+	}else{
+    Draw_YazirushiAnmChg( p_draw, ACT_YAZI_B, APP_COMMON_BARICON_CURSOR_UP_OFF );
+    Draw_YazirushiAnmChg( p_draw, ACT_YAZI_T, APP_COMMON_BARICON_CURSOR_DOWN_OFF );
+	}
+	Draw_YazirushiSetDrawFlag( p_draw, TRUE );
+
+/*
   // 矢印表示
   pos.x = WFNOTE_YAZIRUSHI_TBX;
   pos.y = WFNOTE_YAZIRUSHI_TY;
@@ -7047,9 +7264,10 @@ static void FInfo_DrawOn( WFNOTE_FRIENDINFO* p_wk, WFNOTE_DATA* p_data, WFNOTE_D
   GFL_CLACT_WK_SetPos( p_draw->p_yazirushi[ACT_YAZI_R], &pos , CLSYS_DEFREND_MAIN );
   Draw_YazirushiAnmChg( p_draw, ACT_YAZI_B, ACT_YAZIANM_NORMAL );
   Draw_YazirushiSetDrawFlag( p_draw, TRUE );
+*/
 
   //キャラクタベース更新
-  GFL_BG_SetPriority( DFRM_SCROLL, 0);
+//  GFL_BG_SetPriority( DFRM_SCROLL, 0);
 //  GF_BGL_BGControlReset( p_draw->p_bgl, DFRM_MSG, BGL_RESET_CHRBASE,GX_BG_CHARBASE_0x10000 );
 }
 
@@ -7069,6 +7287,7 @@ static void FInfo_DrawOff( WFNOTE_FRIENDINFO* p_wk, WFNOTE_DRAW* p_draw )
 
   Draw_YazirushiSetDrawFlag( p_draw, FALSE );
 
+/*
   pos.x = WFNOTE_YAZIRUSHI_LX;
   pos.y = WFNOTE_YAZIRUSHI_LRY;
   GFL_CLACT_WK_SetPos( p_draw->p_yazirushi[ACT_YAZI_L], &pos , CLSYS_DEFREND_MAIN );
@@ -7077,13 +7296,15 @@ static void FInfo_DrawOff( WFNOTE_FRIENDINFO* p_wk, WFNOTE_DRAW* p_draw )
   pos.x = WFNOTE_YAZIRUSHI_RX;
   GFL_CLACT_WK_SetPos( p_draw->p_yazirushi[ACT_YAZI_R], &pos , CLSYS_DEFREND_MAIN );
   Draw_YazirushiAnmChg( p_draw, ACT_YAZI_R, ACT_YAZIANM_NORMAL );
-
+*/
+/*
   for( i=0; i<WFNOTE_DRAWAREA_NUM; i++ ){
     FInfoDrawArea_PageOff( &p_wk->drawarea[ i ], p_draw );
   }
+*/
   FInfo_ShioriOff( p_wk, p_draw );
-  FInfo_CursorOff( p_wk, p_draw );
-//  FInfo_DrawOffBaseInfo( p_wk );
+//  FInfo_CursorOff( p_wk, p_draw );
+  FInfo_DrawOffBaseInfo( p_wk );
 
 //  GFL_BG_FillScreen( UFRM_BASE, 0, 0, 0, 32, 32, 0);
 //  GFL_BG_FillScreen( UFRM_MSG, 0, 0, 0, 32, 32, 0);
@@ -7100,9 +7321,10 @@ static void FInfo_DrawOff( WFNOTE_FRIENDINFO* p_wk, WFNOTE_DRAW* p_draw )
   GFL_BG_LoadScreenV_Req( DFRM_BACK );
 
   Draw_BmpTitleOff( p_draw );
+	FInfo_TrGraDelete( p_wk );
 
 //  GF_BGL_BGControlReset( p_draw->p_bgl, DFRM_MSG, BGL_RESET_CHRBASE,GX_BG_CHARBASE_0x00000 );
-  GFL_BG_SetPriority( DFRM_SCROLL, 2);
+//  GFL_BG_SetPriority( DFRM_SCROLL, 2);
 }
 
 //----------------------------------------------------------------------------
@@ -7131,6 +7353,7 @@ static void FInfo_DrawOffFriendChange( WFNOTE_FRIENDINFO* p_wk, WFNOTE_DRAW* p_d
   }
 */
   Draw_BmpTitleOff( p_draw );
+	FInfo_TrGraDelete( p_wk );
 }
 
 //----------------------------------------------------------------------------
@@ -7145,60 +7368,103 @@ static void FInfo_DrawOffFriendChange( WFNOTE_FRIENDINFO* p_wk, WFNOTE_DRAW* p_d
 //-----------------------------------------------------------------------------
 static void FInfo_DrawBaseInfo( WFNOTE_FRIENDINFO* p_wk, WFNOTE_DATA* p_data, WFNOTE_DRAW* p_draw, HEAPID heapID )
 {
-/*
   WIFI_LIST* p_wifilist;
   u32 sex,col,i;
 
   p_wifilist = GAMEDATA_GetWiFiList(p_data->pGameData); //SaveData_GetWifiListData( p_data->p_save );
   sex = WifiList_GetFriendInfo( p_wifilist, p_data->idx.fridx[p_data->select_listidx], WIFILIST_FRIEND_SEX );
 
-  for(i = 0; i < FINFO_WIN_NUM;i++){
-    GFL_BMP_Clear(GFL_BMPWIN_GetBmp(p_wk->win[i]),0);
+  for(i = 0; i < FINFO_WIN_MAX;i++){
+    GFL_BMP_Clear(GFL_BMPWIN_GetBmp(p_wk->win[i].win),0);
   }
-  //ページナンバー
-  WORDSET_RegisterNumber( p_draw->p_wordset, 0, p_data->idx.infoidx[p_data->select_listidx]+1,
-              2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
-  WORDSET_RegisterNumber( p_draw->p_wordset, 1, p_data->idx.infonum,
-              2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
 
-  FInfoDraw_BaseBmp( &p_wk->win[FINFO_WIN_PAGE],
-        p_data, p_draw, msg_finfo_page, 0, 0, WFNOTE_COL_WHITE);
-
-  // トレーナーの名前
-  if(sex == PM_MALE ){
-    col = WFNOTE_COL_BLUE;
-  }else if( sex == PM_FEMALE ){
-    col = WFNOTE_COL_RED;
-  }else{
-    col = WFNOTE_COL_BLACK;
-  }
-  Draw_FriendNameSetWordset( p_draw, p_data, p_data->idx.fridx[p_data->select_listidx],heapID );
-  FInfoDraw_BaseBmp( &p_wk->win[FINFO_WIN_NAME],
-        p_data, p_draw, msg_finfo_name, 0, 0, col);
-
-  //グループ
-  FInfoDraw_BaseBmp( &p_wk->win[FINFO_WIN_GRP01], p_data, p_draw, msg_finfo_grp01, 0, 0, WFNOTE_COL_WHITE );
-
-  Draw_FriendGroupSetWordset( p_draw, p_data,
-      p_data->idx.fridx[p_data->select_listidx], heapID );
-  FInfoDraw_BaseBmp( &p_wk->win[FINFO_WIN_GRP02], p_data, p_draw, msg_finfo_grp02, 0, 0, WFNOTE_COL_BLACK );
-
-  // 最後に遊んだ日付
+  // ページ
+	PRINTTOOL_PrintFractionColor(
+		&p_wk->win[FINFO_WIN_PAGE], p_draw->printQue, p_draw->fontHandle,
+		GFL_BMPWIN_GetScreenSizeX(p_wk->win[FINFO_WIN_PAGE].win)*8/2, 0, WFNOTE_COL_WHITE,
+		p_data->idx.infoidx[p_data->select_listidx]+1,
+		p_data->idx.infonum,
+		heapID );
+	//「たいせんせいせき」
+  FInfoDraw_BaseBmp( &p_wk->win[FINFO_WIN_RECORD], p_data, p_draw, msg_finfo_p00_btt, 0, 0, WFNOTE_COL_WHITE );
+	//「かち」
+  FInfoDraw_BaseBmp( &p_wk->win[FINFO_WIN_WIN], p_data, p_draw, msg_finfo_p00_bt01, 0, 0, WFNOTE_COL_WHITE );
+	//「まけ」
+  FInfoDraw_BaseBmp( &p_wk->win[FINFO_WIN_LOSE], p_data, p_draw, msg_finfo_p00_bt02, 0, 0, WFNOTE_COL_WHITE );
+	// 勝ち数
+	Draw_NumberSetWordset(
+		p_draw,
+		WifiList_GetFriendInfo(p_wifilist,p_data->idx.fridx[p_data->select_listidx],WIFILIST_FRIEND_BATTLE_WIN));
+  FInfoDraw_BaseBmp( &p_wk->win[FINFO_WIN_WIN_NUM], p_data, p_draw, msg_finfo_p00_btnum, 0, 0, WFNOTE_COL_WHITE );
+	// 負け数
+	Draw_NumberSetWordset(
+		p_draw,
+		WifiList_GetFriendInfo(p_wifilist,p_data->idx.fridx[p_data->select_listidx],WIFILIST_FRIEND_BATTLE_LOSE));
+  FInfoDraw_BaseBmp( &p_wk->win[FINFO_WIN_LOSE_NUM], p_data, p_draw, msg_finfo_p00_btnum, 0, 0, WFNOTE_COL_WHITE );
+	//「ポケモンこうかん」
+  FInfoDraw_BaseBmp( &p_wk->win[FINFO_WIN_CHANGE], p_data, p_draw, msg_finfo_p00_trt, 0, 0, WFNOTE_COL_WHITE );
+	// 交換回数
+  Draw_NumberSetWordset(
+		p_draw,
+    WifiList_GetFriendInfo(p_wifilist,p_data->idx.fridx[p_data->select_listidx],WIFILIST_FRIEND_TRADE_NUM));
+  FInfoDraw_BaseBmp( &p_wk->win[FINFO_WIN_CHANGE_NUM], p_data, p_draw, msg_finfo_p00_trnum, 0, 0, WFNOTE_COL_WHITE );
+	//「さいごにあそんだひづけ」
+  FInfoDraw_BaseBmp( &p_wk->win[FINFO_WIN_LAST_DAY], p_data, p_draw, msg_finfo_day01, 0, 0, WFNOTE_COL_WHITE );
+	// 最後に遊んだ日付
   {
-    u32 result;
-
-    FInfoDraw_BaseBmp( &p_wk->win[FINFO_WIN_DAY01], p_data, p_draw,
-        msg_finfo_day01,0, 0, WFNOTE_COL_WHITE );
-
-    result = Draw_FriendDaySetWordset( p_draw, p_data,
-        p_data->idx.fridx[p_data->select_listidx] );
+    u32 result = Draw_FriendDaySetWordset( p_draw, p_data, p_data->idx.fridx[p_data->select_listidx] );
     if( result ){
-      FInfoDraw_BaseBmp( &p_wk->win[FINFO_WIN_DAY02], p_data, p_draw,
-        msg_finfo_day02, 0, 0, WFNOTE_COL_BLACK );
-    }
+      FInfoDraw_BaseBmp(
+				&p_wk->win[FINFO_WIN_LAST_DAY_NUM], p_data, p_draw, msg_finfo_day02, 0, 0, WFNOTE_COL_WHITE );
+    }else{
+			GFL_BMPWIN_TransVramCharacter( p_wk->win[FINFO_WIN_LAST_DAY_NUM].win );
+		}
   }
+
+  for( i=0; i<FINFO_WIN_MAX;i++ ){
+		PutBmpWin( p_wk->win[i].win );
+  }
+
   //トレーナーグラフィック
   {
+		ARCHANDLE * ah;
+		u32 num;
+
+    GFL_CLWK_DATA clearadd = {
+      56,80,
+      0,
+      0,0,
+    };
+
+    num = WifiList_GetFriendInfo(
+						p_wifilist,
+		        p_data->idx.fridx[p_data->select_listidx], WIFILIST_FRIEND_UNION_GRA );
+    num = UnionView_GetTrainerInfo( sex, num, UNIONVIEW_TRTYPE );
+
+		ah = GFL_ARC_OpenDataHandle( TRGRA_GetArcID(), heapID );
+
+		p_wk->trRes[0] = GFL_CLGRP_CGR_Register(
+											ah, TRGRA_GetCgrArcIndex(num),
+											FALSE , CLSYS_DRAW_MAIN, heapID );
+	  p_wk->trRes[1] = GFL_CLGRP_PLTT_Register(
+											ah, TRGRA_GetPalArcIndex(num),
+											CLSYS_DRAW_MAIN, CLACT_PALNUM_TRGRA*0x20, heapID );
+
+	  GFL_ARC_CloseDataHandle( ah );
+
+		p_wk->trRes[2] = GFL_CLGRP_CELLANIM_Register(
+											p_draw->p_handle,
+											NARC_wifi_note_tr_128_NCER,
+											NARC_wifi_note_tr_128_NANR, heapID );
+
+    p_wk->p_trgra = GFL_CLACT_WK_Create(
+												p_draw->cellUnit,
+												p_wk->trRes[0],
+												p_wk->trRes[1],
+												p_wk->trRes[2],
+												&clearadd, CLSYS_DEFREND_MAIN, heapID );
+
+/*
     TR_CLACT_GRA arcdata;
     void*   p_trgrabuff;
     GFL_BMP_DATA* tempBmp;
@@ -7209,31 +7475,34 @@ static void FInfo_DrawBaseInfo( WFNOTE_FRIENDINFO* p_wk, WFNOTE_DATA* p_data, WF
 
     no = UnionView_GetTrainerInfo(sex, num, UNIONVIEW_TRTYPE);
 
-    TrCLACTGraDataGet( no, TR_PARA_FRONT, &arcdata);
+//    TrCLACTGraDataGet( no, TR_PARA_FRONT, &arcdata);
     //p_trgrabuff = GFL_BMP_LoadCharacter( arcdata.arcID, arcdata.ncbrID, FALSE , heapID );
 
-    p_trgrabuff = GFL_HEAP_AllocMemory( heapID, (BMPL_FINFO_TRGRA_SIZX*BMPL_FINFO_TRGRA_SIZY)*32 );
-    ChangesInto_1D_from_2D( arcdata.arcID, arcdata.ncbrID, heapID,
+//    p_trgrabuff = GFL_HEAP_AllocMemory( heapID, (BMPL_FINFO_TRGRA_SIZX*BMPL_FINFO_TRGRA_SIZY)*32 );
+
+	ChangesInto_1D_from_2D( arcdata.arcID, arcdata.ncbrID, heapID,
         BMPL_FINFO_TRGRA_CUTX,
         BMPL_FINFO_TRGRA_CUTY,
         BMPL_FINFO_TRGRA_SIZX,
         BMPL_FINFO_TRGRA_SIZY, p_trgrabuff);
-    tempBmp = GFL_BMP_CreateWithData( p_trgrabuff , BMPL_FINFO_TRGRA_SIZX,BMPL_FINFO_TRGRA_SIZY,GFL_BMP_16_COLOR,heapID );
-#if 0
-    MI_CpuFill8(p_trgrabuff,0x11,32*10*10);
-#endif
+
+		buf = GFL_ARC_UTIL_LoadBGCharacter( TRGRA_GetArcID(), TRGRA_GetCgrArcIndex(0), FALSE, &chr, heapID );
+
+    tempBmp = GFL_BMP_CreateWithData( (u8 *)chr->pRawData, BMPL_FINFO_TRGRA_SIZX, BMPL_FINFO_TRGRA_SIZY, GFL_BMP_16_COLOR, heapID );
+
+    GFL_HEAP_FreeMemory( buf );
+
     // ビットマップに書き込む
-    GFL_BMP_Clear(GFL_BMPWIN_GetBmp(p_wk->win[FINFO_WIN_TRGRA]),1);
+    GFL_BMP_Clear(GFL_BMPWIN_GetBmp(p_wk->win[FINFO_WIN_TRGRA].win),1);
     GFL_BMP_Print(
         tempBmp,
-        GFL_BMPWIN_GetBmp(p_wk->win[FINFO_WIN_TRGRA]),
+        GFL_BMPWIN_GetBmp(p_wk->win[FINFO_WIN_TRGRA].win),
         0, 0,
         0, 0,
         BMPL_FINFO_TRGRA_SIZX*8,
         BMPL_FINFO_TRGRA_SIZY*8 ,
         GF_BMPPRT_NOTNUKI);
     GFL_BMP_Delete( tempBmp );
-    GFL_HEAP_FreeMemory( p_trgrabuff );
 
     // トレーナーパレット転送
     GFL_ARC_UTIL_TransVramPalette( arcdata.arcID, arcdata.nclrID, PALTYPE_SUB_BG,
@@ -7243,12 +7512,9 @@ static void FInfo_DrawBaseInfo( WFNOTE_FRIENDINFO* p_wk, WFNOTE_DATA* p_data, WF
           BMPL_FINFO_TRGRA_X,BMPL_FINFO_TRGRA_Y,
           BMPL_FINFO_TRGRA_SIZX, BMPL_FINFO_TRGRA_SIZY, BGPLT_S_TRGRA );
 
-  }
-
-  for(i = 0; i < FINFO_WIN_NUM;i++){
-    GFL_BMPWIN_MakeTransWindow_VBlank(p_wk->win[i]);
-  }
+		GFL_BMPWIN_TransVramCharacter( p_wk->win[FINFO_WIN_TRGRA].win );
 */
+  }
 }
 
 //----------------------------------------------------------------------------
@@ -7263,13 +7529,11 @@ static void FInfo_DrawBaseInfo( WFNOTE_FRIENDINFO* p_wk, WFNOTE_DATA* p_data, WF
 //-----------------------------------------------------------------------------
 static void FInfo_DrawOffBaseInfo( WFNOTE_FRIENDINFO* p_wk )
 {
-/*
   int i;
 
-  for(i = 0;i < FINFO_WIN_NUM;i++){
-    GFL_BMPWIN_TransVramCharacter(p_wk->win[i]);
+  for( i=0; i<FINFO_WIN_MAX; i++ ){
+		GFL_BMPWIN_ClearTransWindow_VBlank( p_wk->win[i].win );
   }
-*/
 }
 
 //----------------------------------------------------------------------------
@@ -7290,11 +7554,13 @@ static void FInfo_DrawPage( WFNOTE_FRIENDINFO* p_wk, WFNOTE_DATA* p_data, WFNOTE
     p_wk->page = page;  // 表示ページ更新
     // しおり更新
 //    FInfo_ShioriDraw( p_wk, p_draw, page );
-    FInfo_CursorDraw( p_wk, p_draw, page );
+//    FInfo_CursorDraw( p_wk, p_draw, page );
   }
+/*
   // ページ描画
   FInfoDrawArea_Page( &p_wk->drawarea[ drawarea ], p_data,
       p_draw, page, &p_wk->scrn[FINFO_SCRNDATA_M], p_wk->frontier_draw,heapID );
+*/
 }
 
 //----------------------------------------------------------------------------
@@ -7508,6 +7774,47 @@ static BOOL FInfo_SelectListIdxAdd( WFNOTE_DATA* p_data, WF_COMMON_WAY way )
   return FALSE;
 }
 
+static BOOL FInfo_SelectListIdxCheck( WFNOTE_DATA* p_data, WF_COMMON_WAY way )
+{
+  int i;
+  u32 sex;
+  s32 select_listidx;
+  WIFI_LIST* p_wifilist;
+
+  p_wifilist = GAMEDATA_GetWiFiList(p_data->pGameData); //SaveData_GetWifiListData( p_data->p_save );
+  select_listidx = p_data->select_listidx;
+
+  if( way == WF_COMMON_TOP ){
+    for( i=0; i<p_data->idx.friendnum-1; i++ ){
+      select_listidx --;
+      if( select_listidx < 0 ){
+        select_listidx += p_data->idx.friendnum;
+      }
+			if( p_data->select_listidx == select_listidx ){
+				break;
+			}
+      // その人の性別をチェック
+      sex = WifiList_GetFriendInfo( p_wifilist, p_data->idx.fridx[select_listidx], WIFILIST_FRIEND_SEX );
+      if( sex != PM_NEUTRAL ){
+        return TRUE;
+      }
+    }
+  }else{
+    for( i=0; i<p_data->idx.friendnum-1; i++ ){
+      select_listidx = (select_listidx + 1) % p_data->idx.friendnum;
+			if( p_data->select_listidx == select_listidx ){
+				break;
+			}
+      // その人の性別をチェック
+      sex = WifiList_GetFriendInfo( p_wifilist, p_data->idx.fridx[select_listidx], WIFILIST_FRIEND_SEX );
+      if( sex != PM_NEUTRAL ){
+        return TRUE;
+      }
+    }
+  }
+  return FALSE;
+}
+
 //----------------------------------------------------------------------------
 /**
  *  @brief  スクリーンデータ初期化
@@ -7562,64 +7869,52 @@ static void FInfoScrnData_Exit( WFNOTE_FINFO_SCRNDATA* p_scrn )
  */
 //-----------------------------------------------------------------------------
 ///ビットマップリスト用データ構造体
-/*
 typedef struct{
-  u8  frm_num;  ///<ウインドウ使用フレーム
+//  u8  frm_num;  ///<ウインドウ使用フレーム
   u8  pos_x;    ///<ウインドウ領域の左上のX座標（キャラ単位で指定）
   u8  pos_y;    ///<ウインドウ領域の左上のY座標（キャラ単位で指定）
   u8  siz_x;    ///<ウインドウ領域のXサイズ（キャラ単位で指定）
   u8  siz_y;    ///<ウインドウ領域のYサイズ（キャラ単位で指定）
-  u8  palnum;   ///<ウインドウ領域のパレットナンバー
-  u16 chrnum;   ///<ウインドウキャラ領域の開始キャラクタナンバー
+//  u8  palnum;   ///<ウインドウ領域のパレットナンバー
+//  u16 chrnum;   ///<ウインドウキャラ領域の開始キャラクタナンバー
 }WNOTE_BMPWIN_DAT;
-*/
+
 static void FInfoBmpWin_Init( WFNOTE_FRIENDINFO* p_wk, WFNOTE_DRAW* p_draw )
 {
-/*
   int i;
-  static const WNOTE_BMPWIN_DAT BmpWinData[] = {
-   {  // ページ
-    BMPL_FINFO_FRM, BMPL_FINFO_PAGE_X, BMPL_FINFO_PAGE_Y,
-    BMPL_FINFO_PAGE_SIZX, BMPL_FINFO_PAGE_SIZY, BMPL_FINFO_PAL, BMPL_FINFO_PAGE_CGX
-   },
-   {  // タイトル
-    BMPL_FINFO_FRM, BMPL_FINFO_TITLE_X, BMPL_FINFO_TITLE_Y,
-    BMPL_FINFO_TITLE_SIZX, BMPL_FINFO_TITLE_SIZY, BMPL_FINFO_PAL, BMPL_FINFO_TITLE_CGX
-   },
-   {  // ネーム
-    BMPL_FINFO_FRM, BMPL_FINFO_NAME_X, BMPL_FINFO_NAME_Y,
-    BMPL_FINFO_NAME_SIZX, BMPL_FINFO_NAME_SIZY, BMPL_FINFO_PAL, BMPL_FINFO_NAME_CGX
-   },
-   {  // グループ
-    BMPL_FINFO_FRM, BMPL_FINFO_GRP02_X, BMPL_FINFO_GRP02_Y,
-    BMPL_FINFO_GRP02_SIZX, BMPL_FINFO_GRP02_SIZY, BMPL_FINFO_PAL, BMPL_FINFO_GRP02_CGX
-   },
-   {  // 日付
-    BMPL_FINFO_FRM, BMPL_FINFO_DAY02_X, BMPL_FINFO_DAY02_Y,
-    BMPL_FINFO_DAY02_SIZX, BMPL_FINFO_DAY02_SIZY, BMPL_FINFO_PAL, BMPL_FINFO_DAY02_CGX
-   },
-   {  // トレーナーグラフィック
-    BMPL_FINFO_FRM, BMPL_FINFO_TRGRA_X, BMPL_FINFO_TRGRA_Y,
-    BMPL_FINFO_TRGRA_SIZX, BMPL_FINFO_TRGRA_SIZY, BMPL_FINFO_TRGRA_PAL, BMPL_FINFO_TRGRA_CGX
-   },
-   {  // グループ
-    BMPL_FINFO_FRM, BMPL_FINFO_GRP01_X, BMPL_FINFO_GRP01_Y,
-    BMPL_FINFO_GRP01_SIZX, BMPL_FINFO_GRP01_SIZY, BMPL_FINFO_PAL, BMPL_FINFO_GRP01_CGX
-   },
-   {  // 日付
-    BMPL_FINFO_FRM, BMPL_FINFO_DAY01_X, BMPL_FINFO_DAY01_Y,
-    BMPL_FINFO_DAY01_SIZX, BMPL_FINFO_DAY01_SIZY, BMPL_FINFO_PAL, BMPL_FINFO_DAY01_CGX
-   },
+  static const WNOTE_BMPWIN_DAT BmpWinData[] =
+	{
+		// ページ
+		{	BMPL_FINFO_WIN_PAGE_PX, BMPL_FINFO_WIN_PAGE_PY, BMPL_FINFO_WIN_PAGE_SX, BMPL_FINFO_WIN_PAGE_SY },
+		//「たいせんせいせき」
+		{ BMPL_FINFO_WIN_RECORD_PX, BMPL_FINFO_WIN_RECORD_PY, BMPL_FINFO_WIN_RECORD_SX, BMPL_FINFO_WIN_RECORD_SY },
+		//「かち」
+		{ BMPL_FINFO_WIN_WIN_PX, BMPL_FINFO_WIN_WIN_PY, BMPL_FINFO_WIN_WIN_SX, BMPL_FINFO_WIN_WIN_SY },
+		//「まけ」
+		{ BMPL_FINFO_WIN_LOSE_PX, BMPL_FINFO_WIN_LOSE_PY, BMPL_FINFO_WIN_LOSE_SX, BMPL_FINFO_WIN_LOSE_SY },
+		// 勝ち数
+		{ BMPL_FINFO_WIN_WIN_NUM_PX, BMPL_FINFO_WIN_WIN_NUM_PY, BMPL_FINFO_WIN_WIN_NUM_SX, BMPL_FINFO_WIN_WIN_NUM_SY },
+		// 負け数
+		{ BMPL_FINFO_WIN_LOSE_NUM_PX, BMPL_FINFO_WIN_LOSE_NUM_PY, BMPL_FINFO_WIN_LOSE_NUM_SX, BMPL_FINFO_WIN_LOSE_NUM_SY },
+		//「ポケモンこうかん」
+		{ BMPL_FINFO_WIN_CHANGE_PX, BMPL_FINFO_WIN_CHANGE_PY, BMPL_FINFO_WIN_CHANGE_SX, BMPL_FINFO_WIN_CHANGE_SY },
+		// 交換回数
+		{ BMPL_FINFO_WIN_CHANGE_NUM_PX, BMPL_FINFO_WIN_CHANGE_NUM_PY, BMPL_FINFO_WIN_CHANGE_NUM_SX, BMPL_FINFO_WIN_CHANGE_NUM_SY },
+		//「さいごにあそんだひづけ」
+		{ BMPL_FINFO_WIN_LAST_DAY_PX, BMPL_FINFO_WIN_LAST_DAY_PY, BMPL_FINFO_WIN_LAST_DAY_SX, BMPL_FINFO_WIN_LAST_DAY_SY },
+		// 最後に遊んだ日付
+		{ BMPL_FINFO_WIN_LAST_DAY_NUM_PX, BMPL_FINFO_WIN_LAST_DAY_NUM_PY, BMPL_FINFO_WIN_LAST_DAY_NUM_SX, BMPL_FINFO_WIN_LAST_DAY_NUM_SY },
   };
 
-  for( i=0; i<FINFO_WIN_NUM; i++ ){
-    Sub_BmpWinAdd( &p_wk->win[i],   BmpWinData[i].frm_num ,
-          BmpWinData[i].pos_x , BmpWinData[i].pos_y ,
-          BmpWinData[i].siz_x , BmpWinData[i].siz_y ,
-          BmpWinData[i].palnum , BmpWinData[i].chrnum ,
-          0 );
+  for( i=0; i<FINFO_WIN_MAX; i++ ){
+    Sub_BmpWinAdd(
+			p_draw,
+			&p_wk->win[i], BMPL_FINFO_FRM,
+      BmpWinData[i].pos_x , BmpWinData[i].pos_y ,
+			BmpWinData[i].siz_x , BmpWinData[i].siz_y ,
+			BMPL_FINFO_PAL, 0,
+			0 );
   }
-*/
 }
 
 //----------------------------------------------------------------------------
@@ -7633,14 +7928,13 @@ static void FInfoBmpWin_Init( WFNOTE_FRIENDINFO* p_wk, WFNOTE_DRAW* p_draw )
 //-----------------------------------------------------------------------------
 static void FInfoBmpWin_Exit( WFNOTE_FRIENDINFO* p_wk, WFNOTE_DRAW* p_draw )
 {
-/*
   int i;
-  for( i=0; i<FINFO_WIN_NUM; i++ ){
-    GFL_BMPWIN_ClearTransWindow( p_wk->win[i] );
+
+  for( i=0; i<FINFO_WIN_MAX; i++ ){
+//    GFL_BMPWIN_ClearTransWindow( p_wk->win[i] );
 //    GF_BGL_BmpWinOff( &p_wk->win[i] );
-    GFL_BMPWIN_Delete( p_wk->win[i] );
+    GFL_BMPWIN_Delete( p_wk->win[i].win );
   }
-*/
 }
 
 //----------------------------------------------------------------------------
@@ -7747,7 +8041,7 @@ static void FInfoDrawArea_MsgBmpOnVReq( WFNOTE_FINFO_DRAWAREA* p_wk, u32 idx )
 {
   int i;
   for( i=0; i<p_wk->msgnum[idx]; i++ ){
-    GFL_BMPWIN_MakeTransWindow_VBlank( *p_wk->p_msg[idx] );
+    GFL_BMPWIN_MakeTransWindow_VBlank( p_wk->p_msg[idx]->win );
   }
 }
 
@@ -7763,8 +8057,8 @@ static void FInfoDrawArea_MsgBmpOffVReq( WFNOTE_FINFO_DRAWAREA* p_wk, u32 idx )
   int i;
 
   for( i=0; i<p_wk->msgnum[idx]; i++ ){
-    GFL_BMP_Clear(GFL_BMPWIN_GetBmp(*p_wk->p_msg[idx]),0);
-    GFL_BMPWIN_ClearTransWindow_VBlank( *p_wk->p_msg[idx] );
+    GFL_BMP_Clear(GFL_BMPWIN_GetBmp(p_wk->p_msg[idx]->win),0);
+    GFL_BMPWIN_ClearTransWindow_VBlank( p_wk->p_msg[idx]->win );
 //    GF_BGL_BmpWinOffVReq( &p_wk->p_msg[idx][i] );
   }
 }
@@ -7781,6 +8075,7 @@ static void FInfoDrawArea_MsgBmpOffVReq( WFNOTE_FINFO_DRAWAREA* p_wk, u32 idx )
  *  @param  heapID    ヒープID
  */
 //-----------------------------------------------------------------------------
+/*
 static void FInfoDrawArea_Page( WFNOTE_FINFO_DRAWAREA* p_wk, WFNOTE_DATA* p_data,
   WFNOTE_DRAW* p_draw, u32 page, const WFNOTE_FINFO_SCRNDATA* cp_scrn, BOOL bf_on,HEAPID heapID )
 {
@@ -7810,6 +8105,7 @@ static void FInfoDrawArea_Page( WFNOTE_FINFO_DRAWAREA* p_wk, WFNOTE_DATA* p_data
     pWriteBfOff[page]( p_wk, p_data, p_draw, heapID );
   }
 }
+*/
 
 //----------------------------------------------------------------------------
 /**
@@ -7838,6 +8134,7 @@ static void FInfoDrawArea_PageOff( WFNOTE_FINFO_DRAWAREA* p_wk, WFNOTE_DRAW* p_d
  *  @param  heapID    ヒープID
  */
 //-----------------------------------------------------------------------------
+/*
 static void FInfoDraw_Page00( WFNOTE_FINFO_DRAWAREA* p_wk, WFNOTE_DATA* p_data, WFNOTE_DRAW* p_draw, HEAPID heapID )
 {
   WIFI_LIST* p_wifilist;
@@ -8231,9 +8528,11 @@ static void FInfoDraw_Page04( WFNOTE_FINFO_DRAWAREA* p_wk, WFNOTE_DATA* p_data, 
   num = 123;
 #endif
   p_monsstr = GFL_MSG_CreateString( GlobalMsg_PokeName , num );
+
   PRINTSYS_PrintQueColor( p_draw->printQue , GFL_BMPWIN_GetBmp(p_wk->p_msg[5][FINFO_PAGE04_BA]),
       FINFO_PAGE04_TT_X, FINFO_PAGE04_TT2_Y,
       p_monsstr, p_draw->fontHandle , WFNOTE_COL_BLACK );
+
   GFL_STR_DeleteBuffer( p_monsstr );
 
   // 前回
@@ -8441,6 +8740,7 @@ static void FInfoDraw_Page07( WFNOTE_FINFO_DRAWAREA* p_wk, WFNOTE_DATA* p_data, 
 
   FInfoDrawArea_MsgBmpOnVReq( p_wk, 7 );
 }
+*/
 
 //----------------------------------------------------------------------------
 /**
@@ -8481,9 +8781,14 @@ static void FInfoDraw_Clean( WFNOTE_DRAW* p_draw, const WFNOTE_SCRNAREA* cp_scrn
 //-----------------------------------------------------------------------------
 static void FInfoDraw_Bmp( WFNOTE_FINFO_DRAWAREA* p_wk, u32 page, u32 bmp, WFNOTE_DATA* p_data, WFNOTE_DRAW* p_draw, u32 msg_idx, u32 x, u32 y, u32 col, STRBUF* p_str, STRBUF* p_tmp )
 {
+/*
   GFL_MSG_GetString( p_draw->p_msgman, msg_idx, p_tmp );
   WORDSET_ExpandStr( p_draw->p_wordset, p_str, p_tmp );
-  PRINTSYS_PrintQueColor( p_draw->printQue , GFL_BMPWIN_GetBmp(p_wk->p_msg[page][bmp]), x, y, p_str, p_draw->fontHandle , col );
+//  PRINTSYS_PrintQueColor( p_draw->printQue , GFL_BMPWIN_GetBmp(p_wk->p_msg[page][bmp]), x, y, p_str, p_draw->fontHandle , col );
+	PRINTTOOL_PrintColor(
+		p_wk->p_msg[page][bmp], p_draw->printQue,
+		x, y, p_str, p_draw->fontHandle, col, PRINTTOOL_MODE_LEFT );
+*/
 }
 
 //----------------------------------------------------------------------------
@@ -8503,12 +8808,13 @@ static void FInfoDraw_Bmp( WFNOTE_FINFO_DRAWAREA* p_wk, u32 page, u32 bmp, WFNOT
  *  @param  p_tmp   使用するSTRBUF
  */
 //-----------------------------------------------------------------------------
-static void FInfoDraw_BaseBmp( GFL_BMPWIN** win, WFNOTE_DATA* p_data, WFNOTE_DRAW* p_draw,
+static void FInfoDraw_BaseBmp( PRINT_UTIL * util, WFNOTE_DATA* p_data, WFNOTE_DRAW* p_draw,
         u32 msg_idx, u32 x, u32 y, u32 col )
 {
   GFL_MSG_GetString( p_draw->p_msgman, msg_idx, p_draw->p_tmp );
   WORDSET_ExpandStr( p_draw->p_wordset, p_draw->p_str, p_draw->p_tmp );
-  PRINTSYS_PrintQueColor( p_draw->printQue , GFL_BMPWIN_GetBmp(*win), x, y, p_draw->p_str, p_draw->fontHandle , col );
+	PRINTTOOL_PrintColor(
+		util, p_draw->printQue, x, y, p_draw->p_str, p_draw->fontHandle, col, PRINTTOOL_MODE_LEFT );
 }
 
 //----------------------------------------------------------------------------
@@ -8929,8 +9235,8 @@ static void ChangeListPageNumAnime( WFNOTE_FRIENDLIST * p_wk, u32 page )
 
 static void PutListTitle( WFNOTE_DRAW * p_draw )
 {
-  GFL_BMPWIN_MakeScreen( p_draw->title );
-  GFL_BG_LoadScreenV_Req( GFL_BMPWIN_GetFrame(p_draw->title) );
+  GFL_BMPWIN_MakeScreen( p_draw->title.win );
+  GFL_BG_LoadScreenV_Req( GFL_BMPWIN_GetFrame(p_draw->title.win) );
 }
 
 static void SetListDispActive( WFNOTE_FRIENDLIST * p_wk, WFNOTE_DRAW * p_draw, BOOL flg )
@@ -8968,4 +9274,54 @@ static void SetListDispActive( WFNOTE_FRIENDLIST * p_wk, WFNOTE_DRAW * p_draw, B
 		}
 		G2_BlendNone();
 	}
+}
+
+// 登録初期化
+static void InitPrintUtil( WFNOTE_DRAW * p_draw )
+{
+	u32	i;
+
+	for( i=0; i<NOTE_PRINTUTIL_MAX; i++ ){
+		p_draw->printUtil[i] = NULL;
+	}
+}
+
+// セット
+static void SetPrintUtil( WFNOTE_DRAW * p_draw, PRINT_UTIL * util )
+{
+	u32	i;
+
+	for( i=0; i<NOTE_PRINTUTIL_MAX; i++ ){
+		if( p_draw->printUtil[i] == NULL ){
+			p_draw->printUtil[i] = util;
+			break;
+		}
+	}
+}
+
+// 転送
+static void TransPrintUtil( WFNOTE_DRAW * p_draw )
+{
+	u32	i;
+
+	for( i=0; i<NOTE_PRINTUTIL_MAX; i++ ){
+		if( p_draw->printUtil[i] == NULL ){ break; }
+		PRINT_UTIL_Trans( p_draw->printUtil[i], p_draw->printQue );
+	}
+}
+
+// ＢＭＰＷＩＮスクリーン転送
+static void PutBmpWin( GFL_BMPWIN * win )
+{
+  GFL_BMPWIN_MakeScreen( win );
+  GFL_BG_LoadScreenV_Req( GFL_BMPWIN_GetFrame(win) );
+}
+
+
+static void FInfo_TrGraDelete( WFNOTE_FRIENDINFO * p_wk )
+{
+	GFL_CLGRP_CGR_Release( p_wk->trRes[0] );
+	GFL_CLGRP_PLTT_Release( p_wk->trRes[1] );
+	GFL_CLGRP_CELLANIM_Release( p_wk->trRes[2] );
+  GFL_CLACT_WK_Remove( p_wk->p_trgra );
 }

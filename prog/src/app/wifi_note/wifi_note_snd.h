@@ -34,7 +34,7 @@
 
 #define WIFINOTE_MENU_BS_SE		(SEQ_SE_CANCEL1)	// メニューのキャンセル
 
-#define WIFINOTE_CLEAN_SE		(SEQ_SE_SELECT1)	// 消しゴムで消す音 仮
+#define WIFINOTE_CLEAN_SE		(SEQ_SE_SYS_41)	// 消しゴムで消す音
 
 //#define WIFINOTE_SCRLL_SE		(SEQ_SE_BOX02)	// スクロール音
 #define WIFINOTE_SCRLL_SE		(SEQ_SE_SELECT1)	// スクロール音
