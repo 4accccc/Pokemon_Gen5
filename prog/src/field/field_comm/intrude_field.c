@@ -108,19 +108,22 @@ void IntrudeField_UpdateCommSystem( FIELDMAP_WORK *fieldWork ,
   }
 #endif
 
-  if(GameCommSys_BootCheck(game_comm) != GAME_COMM_NO_INVASION || intcomm == NULL
-      || intcomm->comm_status != INTRUDE_COMM_STATUS_UPDATE){
+  if(GameCommSys_BootCheck(game_comm) != GAME_COMM_NO_INVASION || intcomm == NULL){
     return;
   }
 
-  my_net_id = GAMEDATA_GetIntrudeMyID(gamedata);
-  
+
+  if(intcomm->comm_status != INTRUDE_COMM_STATUS_UPDATE){
+    return;
+  }
   if(intcomm->palace_in == FALSE){
     PLAYER_WORK *my_player = GAMEDATA_GetMyPlayerWork(gamedata);
     if(ZONEDATA_IsPalace( PLAYERWORK_getZoneID( my_player ) ) == TRUE){
       intcomm->palace_in = TRUE;
     }
   }
+
+  my_net_id = GAMEDATA_GetIntrudeMyID(gamedata);
 
   if(Intrude_SetSendStatus(intcomm) == TRUE){
     intcomm->send_status = TRUE;
@@ -387,7 +390,7 @@ GMEVENT * DEBUG_IntrudeTreeMapWarp(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameS
     FIELD_PLAYER_GetPos( pcActor, &pos );
     pos.x >>= FX32_SHIFT;
     pos.z >>= FX32_SHIFT;
-    if(GFL_NET_GetConnectNum() <= 1 && ((pos.x <= 424 && pos.x >= 424-32) || (pos.x >= 1624 && pos.x <= 1624+32)) && (pos.z >= 440 && pos.z <= 584)){
+    if(GFL_NET_GetConnectNum() <= 1 && ((pos.x <= 136 && pos.x >= 136-16) || (pos.x >= 872 && pos.x <= 872+16)) && (pos.z >= 472 && pos.z <= 536)){
       left_right = pos.x <= (PALACE_MAP_LEN/2 >> FX32_SHIFT) ? 0 : 1;
       return EVENT_DebugPalaceNGWin( gameSys, fieldWork, pcActor, left_right );
     }
