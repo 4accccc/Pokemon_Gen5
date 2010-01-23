@@ -32,9 +32,11 @@ CameraNo,Length,Pitch,Yow,Roll,ViewType,depth,fovy,Near,Far,Player Link ›or~,
 30,ed,1a9f,0,0,PER,ZBUF,e38,1,400,›,0,4000,0,l“V‰¤•”‰®iŠi“¬j’¸ã,
 31,f1,2561,0,0,PER,ZBUF,e38,1,400,›,0,29000,fffe0000,l“V‰¤•”‰®iƒGƒXƒp[j’¸ã,
 32,ed,2958,0,0,PER,ZBUF,e38,1,400,›,0,4000,0,C08ƒhƒ‰ƒSƒ“ƒWƒ€,
-33,ed,25d8,0,0,PER,ZBUF,e38,1,400,›,0,4000,0,–¢’è,
+33,ec,1b9c,0,0,PER,ZBUF,e38,1,400,›,0,4000,0,ƒ^ƒ[ƒIƒuƒwƒuƒ“‚PF&#xff5e;‚SF,
 34,ed,25d8,0,0,PER,ZBUF,e38,1,400,›,0,4000,0,–¢’è,
 35,ed,25d8,0,0,PER,ZBUF,e38,1,400,›,0,4000,0,–¢’è,
+36,ed,25d8,0,0,PER,ZBUF,e38,1,400,›,0,4000,0,–¢’è,
+37,ed,25d8,0,0,PER,ZBUF,e38,1,400,›,0,4000,0,–¢’è,
 
 
 CameraNo,,ƒiƒ“ƒo[w’è,
