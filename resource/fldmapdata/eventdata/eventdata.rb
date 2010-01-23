@@ -53,7 +53,11 @@ class EventHeader
     @wmsFile = line
     if FileTest.exist? line then
     else
-      raise ReadWMSError, "#{line}‚ª‚Ý‚Â‚©‚è‚Ü‚¹‚ñ"
+      path = File.dirname(stream.path) + "/" + File.basename(@wmsFile)
+      unless FileTest.exist?(path) then
+        raise ReadWMSError, "#{line}‚ª‚Ý‚Â‚©‚è‚Ü‚¹‚ñ"
+      end
+      @wmsFile = path
     end
     File.open(@wmsFile){|file|
       readWMS file
