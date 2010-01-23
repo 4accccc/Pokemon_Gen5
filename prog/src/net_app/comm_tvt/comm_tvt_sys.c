@@ -42,6 +42,7 @@
 #define COMM_TVT_PAL_ANM_EB (20)
 #define COMM_TVT_PAL_ANM_SPD (0x80)
 
+#define COMM_TVT_NAME_WIDTH (12)
 //======================================================================
 //	enum
 //======================================================================
@@ -76,6 +77,11 @@ struct _COMM_TVT_WORK
   //セル系
   u32         cellResIdx[CTOR_MAX];
   GFL_CLUNIT  *cellUnit;
+
+  //上画面名前
+  u8         nameDrawBit;   //netIdに対応
+  u8         nameWinUpdateBit; //bmpWinの配列に対応
+  GFL_BMPWIN *nameWin[CTVT_MEMBER_NUM];
 
   //メッセージ系
   GFL_FONT        *fontHandle;
@@ -116,6 +122,8 @@ static void COMM_TVT_InitMessage( COMM_TVT_WORK *work );
 static void COMM_TVT_TermMessage( COMM_TVT_WORK *work );
 
 static void COMM_TVT_ChangeMode( COMM_TVT_WORK *work );
+static void COMM_TVT_UpdateUpperName( COMM_TVT_WORK *work );
+static void COMM_TVT_UpdateUpperNameFunc( COMM_TVT_WORK *work , MYSTATUS *myStatus , GFL_BMPWIN *bmpWin );
 
 static const GFL_DISP_VRAM vramBank = {
   GX_VRAM_BG_256_AB,             // メイン2DエンジンのBG
@@ -137,6 +145,8 @@ static const GFL_DISP_VRAM vramBank = {
 //--------------------------------------------------------------
 static void COMM_TVT_Init( COMM_TVT_WORK *work )
 {
+  u8 i;
+  
   work->connectNum = 1;
   work->selfIdx = 0;
   work->isDouble = FALSE;
@@ -208,6 +218,33 @@ static void COMM_TVT_Init( COMM_TVT_WORK *work )
     break;
   }
 
+  work->nameWin[0] = GFL_BMPWIN_Create( CTVT_FRAME_MAIN_MSG , 
+                                         (16-COMM_TVT_NAME_WIDTH)/2 , 10 , 
+                                         COMM_TVT_NAME_WIDTH , 2 ,
+                                        CTVT_PAL_BG_MAIN_FONT ,
+                                        GFL_BMP_CHRAREA_GET_B );
+  work->nameWin[1] = GFL_BMPWIN_Create( CTVT_FRAME_MAIN_MSG , 
+                                        16+(16-COMM_TVT_NAME_WIDTH)/2 , 10 , 
+                                        COMM_TVT_NAME_WIDTH , 2 ,
+                                        CTVT_PAL_BG_MAIN_FONT ,
+                                        GFL_BMP_CHRAREA_GET_B );
+  work->nameWin[2] = GFL_BMPWIN_Create( CTVT_FRAME_MAIN_MSG , 
+                                         (16-COMM_TVT_NAME_WIDTH)/2 , 22 , 
+                                         COMM_TVT_NAME_WIDTH , 2 ,
+                                        CTVT_PAL_BG_MAIN_FONT ,
+                                        GFL_BMP_CHRAREA_GET_B );
+  work->nameWin[3] = GFL_BMPWIN_Create( CTVT_FRAME_MAIN_MSG , 
+                                        16+(16-COMM_TVT_NAME_WIDTH)/2 , 22 , 
+                                        COMM_TVT_NAME_WIDTH , 2 ,
+                                        CTVT_PAL_BG_MAIN_FONT ,
+                                        GFL_BMP_CHRAREA_GET_B );
+  for( i=0;i<CTVT_MEMBER_NUM;i++ )
+  {
+    GFL_BMP_Clear( GFL_BMPWIN_GetBmp( work->nameWin[i] ) , 0x0 );
+  }
+  work->nameDrawBit = 0;
+  work->nameWinUpdateBit = 0;
+
   PMSND_ChangeBGMVolume( 0xFFFF , 48 );
 
 }
@@ -217,7 +254,13 @@ static void COMM_TVT_Init( COMM_TVT_WORK *work )
 //--------------------------------------------------------------
 static void COMM_TVT_Term( COMM_TVT_WORK *work )
 {
+  u8 i;
   PMSND_ChangeBGMVolume( 0xFFFF , 127 );
+
+  for( i=0;i<CTVT_MEMBER_NUM;i++ )
+  {
+    GFL_BMPWIN_Delete( work->nameWin[i] );
+  }
 
   GFL_TCB_DeleteTask( work->vBlankTcb );
   
@@ -286,6 +329,8 @@ static const BOOL COMM_TVT_Main( COMM_TVT_WORK *work )
   GFL_CLACT_SYS_Main();
 
   PRINTSYS_QUE_Main( work->printQue );
+  
+  COMM_TVT_UpdateUpperName( work );
 
   //フェード
   if( work->palAnmCnt + COMM_TVT_PAL_ANM_SPD < 0x10000 )
@@ -308,13 +353,6 @@ static const BOOL COMM_TVT_Main( COMM_TVT_WORK *work )
 
   GFL_BG_SetScroll( CTVT_FRAME_MAIN_BG , GFL_BG_SCROLL_X_SET , GFUser_GetPublicRand0(256) );
   GFL_BG_SetScroll( CTVT_FRAME_MAIN_BG , GFL_BG_SCROLL_Y_SET , GFUser_GetPublicRand0(256) );
-
-
-  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R )
-  {
-    CTVT_TPrintf("BuffNo[%d]\n",DRAW_SYS_GetBufferTopPos(work->drawSys));
-  }
-  
 
   return FALSE;
 }
@@ -654,6 +692,107 @@ static void COMM_TVT_ChangeMode( COMM_TVT_WORK *work )
   work->mode = work->nextMode;
 }
 
+//--------------------------------------------------------------------------
+//  上画面への名前表示
+//--------------------------------------------------------------------------
+static void COMM_TVT_UpdateUpperName( COMM_TVT_WORK *work )
+{
+  u8 i;
+
+  if( work->mode == CTM_DRAW )
+  {
+    //落書き中は更新しない
+    return;
+  }
+  if( COMM_TVT_GetConnectNum(work) < 2 )
+  {
+    //一人の時は参照場所が違う
+    if( work->nameDrawBit == 0 )
+    {
+      CTVT_COMM_MEMBER_DATA *memData = CTVT_COMM_GetSelfMemberData( work , work->commWork );
+      COMM_TVT_UpdateUpperNameFunc( work , (MYSTATUS*)memData->myStatusBuff , work->nameWin[2] );
+      work->nameDrawBit = 1;
+      work->nameWinUpdateBit = 1<<2;
+    }
+  }
+  else
+  {
+    const COMM_TVT_DISP_MODE mode = COMM_TVT_GetDispMode( work );
+    for( i=0;i<CTVT_MEMBER_NUM;i++ )
+    {
+      if( CTVT_COMM_IsEnableMemberData( work , work->commWork , i ) &&
+          ( work->nameDrawBit & 1<<i ) == 0 )
+      {
+        u8 bmpIdx;
+        CTVT_COMM_MEMBER_DATA *memData = CTVT_COMM_GetMemberData( work , work->commWork , i );
+        if( mode == CTDM_DOUBLE )
+        {
+          if( i == 0 )
+          {
+            bmpIdx = 2;
+          }
+          else
+          {
+            bmpIdx = 3;
+          }
+        }
+        else
+        {
+          bmpIdx = i;
+        }
+        COMM_TVT_UpdateUpperNameFunc( work , (MYSTATUS*)memData->myStatusBuff , work->nameWin[bmpIdx] );
+        
+        work->nameDrawBit += (1<<i);
+        work->nameWinUpdateBit += 1<<bmpIdx;
+      }
+    }
+  }
+  
+  for( i=0;i<CTVT_MEMBER_NUM;i++ )
+  {
+    if( (1<<i) & work->nameWinUpdateBit )
+    {
+      if( PRINTSYS_QUE_IsExistTarget( work->printQue , GFL_BMPWIN_GetBmp( work->nameWin[i] )) == FALSE )
+      {
+        GFL_BMPWIN_MakeTransWindow_VBlank( work->nameWin[i] );
+        work->nameWinUpdateBit -= (1<<i);
+      }
+    }
+  }
+}
+
+static void COMM_TVT_UpdateUpperNameFunc( COMM_TVT_WORK *work , MYSTATUS *myStatus , GFL_BMPWIN *bmpWin )
+{
+  //名前書く
+  
+  STRBUF *str = MyStatus_CreateNameString( myStatus , work->heapId );
+  const u8 nameLen = PRINTSYS_GetStrWidth( str , work->fontHandle , 0 );
+
+  PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( bmpWin ) ,
+                          ((COMM_TVT_NAME_WIDTH*8) - nameLen)/2+1 , 1 , str ,
+                          work->fontHandle , PRINTSYS_LSB_Make( 0xf,0,0 ) );
+  PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( bmpWin ) ,
+                          ((COMM_TVT_NAME_WIDTH*8) - nameLen)/2-1 , 1 , str ,
+                          work->fontHandle , PRINTSYS_LSB_Make( 0xf,0,0 ) );
+  PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( bmpWin ) ,
+                          ((COMM_TVT_NAME_WIDTH*8) - nameLen)/2 , 1+1 , str ,
+                          work->fontHandle , PRINTSYS_LSB_Make( 0xf,0,0 ) );
+  PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( bmpWin ) ,
+                          ((COMM_TVT_NAME_WIDTH*8) - nameLen)/2 , 1-1 , str ,
+                          work->fontHandle , PRINTSYS_LSB_Make( 0xf,0,0 ) );
+
+  PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( bmpWin ) ,
+                          ((COMM_TVT_NAME_WIDTH*8) - nameLen)/2 , 1 , str ,
+                          work->fontHandle , PRINTSYS_LSB_Make( 1,0,0 ) );
+
+
+  //    PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( charaWork->nameWin ) ,
+  //                            ((COMM_TVT_NAME_WIDTH*8) - charaWork->nameLen)/2 , 0 , str ,
+  //                            work->fontHandle , PRINTSYS_LSB_Make( 1,0xf,0 ) );
+
+  GFL_STR_DeleteBuffer( str );
+}
+
 #pragma mark [>outer func (system
 CTVT_CAMERA_WORK* COMM_TVT_GetCameraWork( COMM_TVT_WORK *work )
 {
@@ -881,6 +1020,26 @@ APP_TASKMENU_WORK* COMM_TVT_OpenYesNoMenu( COMM_TVT_WORK *work )
   GFL_STR_DeleteBuffer( itemWork[1].str );
   
   return menuWork;
+}
+
+
+//--------------------------------------------------------------------------
+//  名前を書き直す
+//--------------------------------------------------------------------------
+void COMM_TVT_RedrawName( COMM_TVT_WORK *work )
+{
+  u8 i;
+  work->nameDrawBit = 0;
+  work->nameWinUpdateBit = 0;
+  for( i=0;i<CTVT_MEMBER_NUM;i++ )
+  {
+    GFL_BMP_Clear( GFL_BMPWIN_GetBmp( work->nameWin[i] ) , 0x0 );
+    if( work->mode != CTM_DRAW )
+    {
+      GFL_BMPWIN_ClearScreen( work->nameWin[i] );
+    }
+  }
+  GFL_BG_LoadScreenV_Req( CTVT_FRAME_MAIN_MSG );
 }
 
 #pragma mark [>proc func

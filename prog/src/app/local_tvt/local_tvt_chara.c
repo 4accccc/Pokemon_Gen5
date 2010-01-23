@@ -374,16 +374,16 @@ static void LOCAL_TVT_CHARA_DispName( LOCAL_TVT_WORK *work , LOCAL_TVT_CHARA *ch
 
     PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( charaWork->nameWin ) ,
                             ((LTVT_CHARA_NAME_WIDTH*8) - charaWork->nameLen)/2+1 , 1 , str ,
-                            work->fontHandle , PRINTSYS_LSB_Make( 1,0,0 ) );
+                            work->fontHandle , PRINTSYS_LSB_Make( 0xf,0,0 ) );
     PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( charaWork->nameWin ) ,
                             ((LTVT_CHARA_NAME_WIDTH*8) - charaWork->nameLen)/2-1 , 1 , str ,
-                            work->fontHandle , PRINTSYS_LSB_Make( 1,0,0 ) );
+                            work->fontHandle , PRINTSYS_LSB_Make( 0xf,0,0 ) );
     PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( charaWork->nameWin ) ,
                             ((LTVT_CHARA_NAME_WIDTH*8) - charaWork->nameLen)/2 , 1+1 , str ,
-                            work->fontHandle , PRINTSYS_LSB_Make( 1,0,0 ) );
+                            work->fontHandle , PRINTSYS_LSB_Make( 0xf,0,0 ) );
     PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( charaWork->nameWin ) ,
                             ((LTVT_CHARA_NAME_WIDTH*8) - charaWork->nameLen)/2 , 1-1 , str ,
-                            work->fontHandle , PRINTSYS_LSB_Make( 1,0,0 ) );
+                            work->fontHandle , PRINTSYS_LSB_Make( 0xf,0,0 ) );
 
     PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( charaWork->nameWin ) ,
                             ((LTVT_CHARA_NAME_WIDTH*8) - charaWork->nameLen)/2 , 1 , str ,

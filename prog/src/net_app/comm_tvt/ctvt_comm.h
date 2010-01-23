@@ -12,6 +12,7 @@
 #pragma once
 
 #include "comm_tvt_local_def.h"
+#include "savedata/mystatus.h"
 #include "net/ctvt_beacon.h"
 //======================================================================
 //	define
@@ -72,10 +73,11 @@ typedef struct
   u8  pad;
 }CTVT_COMM_WAVE_HEADER;
 
+
 typedef struct
 {
-  STRCODE name[PERSON_NAME_SIZE];
-  u8  voiceOnly;
+  u8  myStatusBuff[MYSTATUS_SAVE_SIZE];
+  u8  canUseCamera;
 }CTVT_COMM_MEMBER_DATA;
 
 //======================================================================
@@ -103,6 +105,7 @@ extern const BOOL CTVT_COMM_GetCommWaveData( COMM_TVT_WORK *work , CTVT_COMM_WOR
 extern const BOOL CTVT_COMM_ReqPlayWaveData( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork );
 extern void CTVT_COMM_ResetReqPlayWaveData( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork );
 
+extern const BOOL CTVT_COMM_IsEnableMemberData( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork , const u8 idx );
 extern CTVT_COMM_MEMBER_DATA* CTVT_COMM_GetMemberData( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork , const u8 idx );
 extern CTVT_COMM_MEMBER_DATA* CTVT_COMM_GetSelfMemberData( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork );
 

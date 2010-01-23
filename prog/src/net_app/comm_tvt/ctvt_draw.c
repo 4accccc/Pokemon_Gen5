@@ -358,6 +358,8 @@ void CTVT_DRAW_TermMode( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork )
   GFL_BG_LoadScreenReq( CTVT_FRAME_SUB_MISC );
   GFL_BG_SetVisible( CTVT_FRAME_SUB_BAR , TRUE );
   GX_SetDispSelect(GX_DISP_SELECT_MAIN_SUB);
+  
+  COMM_TVT_RedrawName( work );
 }
 
 //--------------------------------------------------------------
