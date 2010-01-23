@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tamada" host="W00139" date="2009-07-15T19:04:53"/>
+	<create user="matsumiya" host="W00207" date="2010-01-23T19:10:59"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,11 +292,48 @@
 	</lock>
 
 
-	<row id="msg_mapscript_dummy">
-		<comment>？？？</comment>
-		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	<row id="msg_c04r1001_trainerm_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>♂
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">TRAINERM</attribute>
+		<language name="JPN" width="256">はてさて
+じてんしゃで　さばくを　こえる……[BE:01:ページ切り替え（クリア）]
+そんな　チャレンジを　こころみる
+オレの　ともだちは　きっと　すごいな</language>
+		<language name="JPN_KANJI" width="256">はてさて
+じてんしゃで　砂漠を　越える……[BE:01:ページ切り替え（クリア）]
+そんな　チャレンジを　試みる
+オレの　友達は　きっと　すごいな</language>
+	</row>
+
+	<row id="msg_c04r1001_lady_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>♀
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">LADY</attribute>
+		<language name="JPN" width="256">ミュージカルを　みましたか？[BE:01:ページ切り替え（クリア）]
+じぶんの　ポケモンが
+ぶたいの　うえで……[BE:01:ページ切り替え（クリア）]
+あれは　ことばに　できない
+かんどうの　たいけん　ですよ</language>
+		<language name="JPN_KANJI" width="256">ミュージカルは
+ご覧に　なりましたか？[BE:01:ページ切り替え（クリア）]
+自分のポケモンが　舞台の上で……[BE:01:ページ切り替え（クリア）]
+あれは　言葉に　できない
+感動体験　ですよ</language>
+	</row>
+
+	<row id="msg_c04r1001_middleman2_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>♂
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">MIDDLEMAN2</attribute>
+		<language name="JPN" width="256">ヒウンシティが　ビジネスの　ちゅうしん
+ライモンシティは　ごらくの　ちゅうしん[BE:01:ページ切り替え（クリア）]
+イッシュには　いろんな　ひとがあつまり
+さらに　かっきづいて　いくんだな</language>
+		<language name="JPN_KANJI" width="256">ヒウンシティが　ビジネスの中心
+ライモンシティは　娯楽の中心[BE:01:ページ切り替え（クリア）]
+イッシュには　いろんな　人が集い
+さらに　活気づいていくんだな</language>
 	</row>
 
 	<flowchart-group-list>

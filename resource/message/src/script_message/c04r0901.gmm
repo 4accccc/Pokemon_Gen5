@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-06T21:17:28"/>
+	<create user="matsumiya" host="W00207" date="2010-01-23T19:09:49"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="124"/>
+		<comment position="4" width="209"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -292,10 +292,42 @@
 	</lock>
 
 
-	<row id="msg_mapscript_dummy" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
-		<comment>（フットボール場）
-♂
-・仮メッセージ</comment>
+	<row id="msg_c04r0901_veteranm_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♂
+・トライアルハウスストッパー</comment>
+		<attribute name="キャラ指定">VETERANM</attribute>
+		<language name="JPN" width="256">この　トライアルハウスは
+イッシュちほうで　いちばん▽
+つよい　トレーナーが▽
+その　うでまえを　きそうところだ</language>
+		<language name="JPN_KANJI" width="256">この　トライアルハウスは
+イッシュちほうで　いちばん▽
+つよい　トレーナーが▽
+その　うでまえを　きそうところだ</language>
+	</row>
+
+	<row id="msg_c04r0901_veteranm_02">
+		<comment>♂
+・トライアルハウスストッパー
+・クリア後
+　扉の前から移動している</comment>
+		<attribute name="キャラ指定">VETERANM</attribute>
+		<language name="JPN" width="256">この　トライアルハウスは
+イッシュちほうで　いちばん▽
+つよい　トレーナーが▽
+その　うでまえを　きそうところだ▼
+なかに　はいって
+おのれの　じつりょく　ためすがいい</language>
+		<language name="JPN_KANJI" width="256">この　トライアルハウスは
+イッシュちほうで　いちばん▽
+つよい　トレーナーが▽
+その　うでまえを　きそうところだ▼
+なかに　はいって
+おのれの　じつりょく　ためすがいい</language>
+	</row>
+
+	<row id="msg_mapscript_dummy" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除予定</comment>
 		<attribute name="キャラ指定">GENTLEMAN
 紳士</attribute>
 		<language name="JPN" width="256">フットボールとは！
