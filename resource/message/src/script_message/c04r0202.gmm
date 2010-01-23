@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-18T11:41:48"/>
+	<create user="matsumiya" host="W00207" date="2010-01-23T20:14:32"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -299,29 +299,31 @@
 	</row>
 
 	<row id="msg_mus_01_001">
-		<comment>？？？</comment>
+		<comment>♀</comment>
 		<attribute name="キャラ指定">オーナー
 ドレスアップ前</attribute>
-		<language name="JPN" width="256">ようこそ　ミュージカルへ！
-さんかしてもらえて　とても　うれしいわ▼
+		<language name="JPN" width="256">ようこそ　ミュージカルへ！▼
+さんか　してくれて
+とても　うれしいわ！▼
 こんかいの　えんもくは
 [1:22:コンテスト名称:0]▼
 [1:23:コンテストランク:1]の　おきゃくさんに
 とても　にんきのある　えんもくよ▼
 それじゃあ　さっそくだけど
-ポケモンを　ドレスアップ　してあげて！</language>
-		<language name="JPN_KANJI" width="256">ようこそ　ミュージカルへ！
-参加してもらえて　とても　うれしいわ▼
+ポケモンを　ドレスアップしてあげて！</language>
+		<language name="JPN_KANJI" width="256">ようこそ　ミュージカルへ！▼
+参加してもらえて
+とても　うれしいわ！▼
 今回の　演目は
 [1:22:コンテスト名称:0]▼
 [1:23:コンテストランク:1]の　お客さんに
 とても　人気のある　演目よ▼
 それじゃあ　さっそくだけど
-ポケモンを　ドレスアップ　してあげて！</language>
+ポケモンを　ドレスアップしてあげて！</language>
 	</row>
 
 	<row id="msg_mus_02_001">
-		<comment>？？？</comment>
+		<comment>♀</comment>
 		<attribute name="キャラ指定">オーナー
 ドレスアップ後
 ショー前</attribute>
@@ -336,7 +338,7 @@
 	</row>
 
 	<row id="msg_mus_03_001_01">
-		<comment>？？？</comment>
+		<comment>♀</comment>
 		<attribute name="キャラ指定">オーナー
 ショー後
 全体評価：全員同じ点(50点)</attribute>
@@ -359,6 +361,7 @@
 	</row>
 
 	<row id="msg_mus_03_001_02">
+		<comment>♀</comment>
 		<attribute name="キャラ指定">オーナー
 ショー後
 全体評価：全員40点以上</attribute>
@@ -377,6 +380,7 @@
 	</row>
 
 	<row id="msg_mus_03_001_03">
+		<comment>♀</comment>
 		<attribute name="キャラ指定">オーナー
 ショー後
 全体評価：それ以外</attribute>
@@ -393,6 +397,7 @@
 	</row>
 
 	<row id="msg_mus_03_001_04">
+		<comment>♀</comment>
 		<attribute name="キャラ指定">オーナー
 ショー後
 全体評価：一人100以上</attribute>
@@ -411,6 +416,7 @@
 	</row>
 
 	<row id="msg_mus_03_002_01">
+		<comment>ファンレター</comment>
 		<attribute name="キャラ指定">オーナー
 個人評価１：コンディション別</attribute>
 		<language name="JPN">あなたの　ドレスアップが
@@ -420,6 +426,7 @@
 	</row>
 
 	<row id="msg_mus_03_002_02">
+		<comment>ファンレター</comment>
 		<attribute name="キャラ指定">オーナー
 個人評価１：0か対象複数</attribute>
 		<language name="JPN">あなたの　ドレスアップが
@@ -429,6 +436,7 @@
 	</row>
 
 	<row id="msg_mus_03_003_01">
+		<comment>ファンレター</comment>
 		<attribute name="キャラ指定">オーナー
 個人評価2：評価点100以上</attribute>
 		<language name="JPN">こんかいの　ミュージカルは▼
@@ -440,6 +448,7 @@
 	</row>
 
 	<row id="msg_mus_03_003_02">
+		<comment>ファンレター</comment>
 		<attribute name="キャラ指定">オーナー
 個人評価2：評価点50以上</attribute>
 		<language name="JPN">こんかいは　あなたの　ポケモンが
@@ -451,6 +460,7 @@
 	</row>
 
 	<row id="msg_mus_03_003_03">
+		<comment>ファンレター</comment>
 		<attribute name="キャラ指定">オーナー
 個人評価2：評価点40以上</attribute>
 		<language name="JPN">キレのある　うごきを　みていたら
@@ -462,6 +472,7 @@
 	</row>
 
 	<row id="msg_mus_03_003_04">
+		<comment>ファンレター</comment>
 		<attribute name="キャラ指定">オーナー
 個人評価2：評価点30以上</attribute>
 		<language name="JPN">ポケモンも　じぶんの　やくわりを
@@ -471,6 +482,7 @@
 	</row>
 
 	<row id="msg_mus_03_003_05">
+		<comment>ファンレター</comment>
 		<attribute name="キャラ指定">オーナー
 個人評価2：評価点20以上</attribute>
 		<language name="JPN">ポケモンも　それに　こたえようと
@@ -480,17 +492,19 @@
 	</row>
 
 	<row id="msg_mus_03_003_06">
+		<comment>ファンレター</comment>
 		<attribute name="キャラ指定">オーナー
 個人評価2：評価点20未満</attribute>
 		<language name="JPN">あまり　めだって　なかったけど……▼
-ぼくは　すきでした！
+ぼくは　すき　でした！
 また　みにきます！</language>
 		<language name="JPN_KANJI">あまり　目立って　なかったけど……▼
-僕は　好きでした！
+ぼくは　好きでした！
 また　見に来ます！</language>
 	</row>
 
 	<row id="msg_mus_03_004_01">
+		<comment>♀</comment>
 		<attribute name="キャラ指定">オーナー
 閉めの言葉</attribute>
 		<language name="JPN">みにきた　おきゃくさんも

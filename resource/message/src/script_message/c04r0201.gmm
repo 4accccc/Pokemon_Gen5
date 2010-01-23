@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-15T20:54:47"/>
+	<create user="matsumiya" host="W00207" date="2010-01-23T21:09:56"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -229,13 +229,13 @@
 	</tag-table>
 
 	<columns>
-		<id position="0" width="152"/>
+		<id position="0" width="165"/>
 		<group default=" 0:デフォルト" position="-1" width="100">
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="135"/>
+		<comment position="4" width="274"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -292,139 +292,335 @@
 	</lock>
 
 
-	<row id="msg_c04r0201_owner_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c04r0201_owner_01">
 		<comment>♀
-・仮メッセージ
 ・初回</comment>
-		<attribute name="キャラ指定">LADY
+		<attribute name="キャラ指定">VETERANW
 ＝オーナー</attribute>
-		<language name="JPN" width="256">ようこそ　わが　ホールへ！[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">ようこそ　わが　ホールへ！▼
 よければ　あなたの　ポケモンを
 ドレスアップ　してあげて！！</language>
-		<language name="JPN_KANJI" width="256">ようこそ　わが　劇場へ！[BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">ようこそ　わが　劇場へ！▼
 よければ　あなたの　ポケモンを
 ドレスアップ　してあげて！！</language>
 	</row>
 
-	<row id="msg_c04r0201_owner_02" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c04r0201_owner_02">
 		<comment>♀
-・仮メッセージ
 ・何も条件を満たしていない</comment>
+		<attribute name="キャラ指定">VETERANW
+＝オーナー</attribute>
 		<language name="JPN" width="256">グッズを　イヤがる
-ポケモンが　いても　ゆるしてあげてね[BE:01:ページ切り替え（クリア）]
+ポケモンが　いても　ゆるしてあげてね▼
 だって　ポケモン　なんですもの</language>
 		<language name="JPN_KANJI" width="256">グッズを　嫌がる
-ポケモンが　いても　許してあげてね[BE:01:ページ切り替え（クリア）]
+ポケモンが　いても　許してあげてね▼
 だって　ポケモン　なんですもの</language>
 	</row>
 
-	<row id="msg_c04r0201_owner_03" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c04r0201_owner_03">
 		<comment>♀
-・仮メッセージ
-・ワイヤレス</comment>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">テストメッセージ</language>
+・はじめてワイヤレス通信の複数プレイに参加
+・グッズ「ティアラ」入手処理</comment>
+		<attribute name="キャラ指定">VETERANW
+＝オーナー</attribute>
+		<language name="JPN" width="256">ちょっと！　あなた！▼
+おともだちと　いっしょに
+ミュージカルに　さんか　したのね！▼
+ミュージカルの　あたらしい
+かのうせいを　かんじたわ！▼
+そんな　あなたに　プレゼントよ
+えんりょ　しないで　うけとって！▼</language>
+		<language name="JPN_KANJI" width="256">ちょっと！　あなた！▼
+おともだちと　いっしょに
+ミュージカルに　さんか　したのね！▼
+ミュージカルの　あたらしい
+かのうせいを　かんじたわ！▼
+そんな　あなたに　プレゼントよ
+えんりょ　しないで　うけとって！▼</language>
 	</row>
 
-	<row id="msg_c04r0201_owner_04" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c04r0201_owner_03_01">
 		<comment>♀
-・仮メッセージ
-・5回以上最高得点</comment>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">テストメッセージ</language>
+・グッズ「ティアラ」入手処理後
+　自動で表示</comment>
+		<attribute name="キャラ指定">VETERANW
+＝オーナー</attribute>
+		<language name="JPN" width="256">では　ぶたいで　あえる　ひを
+たのしみに　しているわ！▼</language>
+		<language name="JPN_KANJI" width="256">では　ぶたいで　あえる　ひを
+たのしみに　しているわ！▼</language>
 	</row>
 
-	<row id="msg_c04r0201_owner_05" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c04r0201_owner_04">
 		<comment>♀
-・仮メッセージ
-・10回以上最高得点</comment>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">テストメッセージ</language>
+・5回以上最高得点
+・グッズ「クラウン」入手処理</comment>
+		<attribute name="キャラ指定">VETERANW
+＝オーナー</attribute>
+		<language name="JPN" width="256">いつも　さんか　してくれて
+オーナーとして　うれしいわ！▼
+きたいの　スタイリストとして
+かなり　ちゅうもく　されているわね▼
+もちろん　わたしも　あなたに
+ちゅうもく　しているのよ▼
+これは　そんな　わたしの　きもち
+えんりょ　しないで　うけとって！▼</language>
+		<language name="JPN_KANJI" width="256">いつも　さんか　してくれて
+オーナーとして　うれしいわ！▼
+きたいの　スタイリストとして
+かなり　ちゅうもく　されているわね▼
+もちろん　わたしも　あなたに
+ちゅうもく　しているのよ▼
+これは　そんな　わたしの　きもち
+えんりょ　しないで　うけとって！▼</language>
 	</row>
 
-	<row id="msg_c04r0201_owner_06" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c04r0201_owner_04_01">
 		<comment>♀
-・仮メッセージ
-・誕生日</comment>
-		<language name="JPN" width="256">ハッピー　バースデイ！！[BE:01:ページ切り替え（クリア）]
+・グッズ「クラウン」入手処理後
+　自動で表示</comment>
+		<attribute name="キャラ指定">VETERANW
+＝オーナー</attribute>
+		<language name="JPN" width="256">では　ぶたいで　あえる　ひを
+たのしみに　しているわ！▼
+って　まえにも　おなじ　せりふを
+いったきが　するわね▼
+いいのよ
+わたし　オーナーだから</language>
+		<language name="JPN_KANJI" width="256">では　ぶたいで　あえる　ひを
+たのしみに　しているわ！▼
+って　まえにも　おなじ　せりふを
+いったきが　するわね▼
+いいのよ
+わたし　オーナーだから</language>
+	</row>
+
+	<row id="msg_c04r0201_owner_05">
+		<comment>♀
+・10回以上最高得点
+・グッズ「ゆうしょうベルト」入手処理</comment>
+		<attribute name="キャラ指定">VETERANW
+＝オーナー</attribute>
+		<language name="JPN" width="256">いつも　さんか　してくれて
+オーナーとして　うれしいわ！▼
+ちかごろでは　あなたのことを
+トップスタイリスト　なんて　よぶ▽
+かんきゃくも　いるみたいなの▼
+もっとも……　あなたの　さいのうを
+みぬいた　わたしが　すごいのね▼
+これは　かんしゃの　きもち
+えんりょ　しないで　うけとって！▼</language>
+		<language name="JPN_KANJI" width="256">いつも　さんか　してくれて
+オーナーとして　うれしいわ！▼
+ちかごろでは　あなたのことを
+トップスタイリスト　なんて　よぶ▽
+かんきゃくも　いるみたいなの▼
+もっとも……　あなたの　さいのうを
+みぬいた　わたしが　すごいのね▼
+これは　かんしゃの　きもち
+えんりょ　しないで　うけとって！▼</language>
+	</row>
+
+	<row id="msg_c04r0201_owner_05_01">
+		<comment>♀
+・グッズ「ゆうしょうベルト」入手後
+　自動で表示</comment>
+		<attribute name="キャラ指定">VETERANW
+＝オーナー</attribute>
+		<language name="JPN" width="256">これからも　ぜひぜひ
+ミュージカルを　たのしんでね！</language>
+		<language name="JPN_KANJI" width="256">これからも　ぜひぜひ
+ミュージカルを　たのしんでね！</language>
+	</row>
+
+	<row id="msg_c04r0201_owner_06">
+		<comment>♀
+・誕生日
+・グッズ「ケーキのもけい」入手処理</comment>
+		<attribute name="キャラ指定">VETERANW
+＝オーナー</attribute>
+		<language name="JPN" width="256">ハッピー　バースデイ！！▼
 わたしからは　この　ハッピーな
-グッズを　アナタに　プレゼントよ！</language>
-		<language name="JPN_KANJI" width="256">ハッピー　バースデイ！！[BE:01:ページ切り替え（クリア）]
+グッズを　あなたに　プレゼントよ！▼
+オーナーの　わたしが
+わたすのは　ケーキ！▼
+もちろん　グッズだから
+ポケモンに　つけてあげられるわ！▼
+ちなみに　きょうが　あなたの
+たんじょうび　じゃなくても▽
+わたし　あやまったりしないわ！▼
+だって　わたし　オーナーだもの！</language>
+		<language name="JPN_KANJI" width="256">ハッピー　バースデイ！！▼
 わたしからは　この　ハッピーな
-グッズを　アナタに　プレゼントよ！</language>
+グッズを　あなたに　プレゼントよ！▼
+オーナーの　わたしが
+わたすのは　ケーキ！▼
+もちろん　グッズだから
+ポケモンに　つけてあげられるわ！▼
+ちなみに　きょうが　あなたの
+たんじょうび　じゃなくても▽
+わたし　あやまったりしないわ！▼
+だって　わたし　オーナーだもの！</language>
 	</row>
 
-	<row id="msg_c04r0201_man2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c04r0201_man2_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
-・仮メッセージ</comment>
+・参加回数＝0</comment>
 		<attribute name="キャラ指定">MAN2
 ＝スタイリスト</attribute>
 		<language name="JPN" width="256">そうそう　そうなんだよ！
-きみが　えらぶ　グッズ！[BE:01:ページ切り替え（クリア）]
+きみが　えらぶ　グッズ！▼
 チャーミングな　ポケモンを
 いっそう　チャーミングに　してるさ</language>
 		<language name="JPN_KANJI" width="256">そうそう　そうなんだよ！
-きみが　選ぶ　グッズ！[BE:01:ページ切り替え（クリア）]
+きみが　選ぶ　グッズ！▼
 チャーミングな　ポケモンを
 いっそう　チャーミングに　してるさ</language>
 	</row>
 
-	<row id="msg_c04r0201_man2_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c04r0201_man2_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
-・仮メッセージ
-・5回以上参加</comment>
+・参加回数＝1</comment>
+		<attribute name="キャラ指定">MAN2
+＝スタイリスト</attribute>
 		<language name="JPN" width="256">テストメッセージ</language>
 		<language name="JPN_KANJI" width="256">テストメッセージ</language>
 	</row>
 
-	<row id="msg_c04r0201_man2_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c04r0201_man2_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
-・仮メッセージ
-・10回以上参加</comment>
+・参加回数＝5</comment>
+		<attribute name="キャラ指定">MAN2
+＝スタイリスト</attribute>
 		<language name="JPN" width="256">テストメッセージ</language>
 		<language name="JPN_KANJI" width="256">テストメッセージ</language>
 	</row>
 
-	<row id="msg_c04r0201_stylistpoke_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff00,,,#ffff00,,#ffff00,#ffff00,,,,,,#ffff00,,,,,,">
+	<row id="msg_c04r0201_man2_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・参加回数＝10</comment>
+		<attribute name="キャラ指定">MAN2
+＝スタイリスト</attribute>
+		<language name="JPN" width="256">テストメッセージ</language>
+		<language name="JPN_KANJI" width="256">テストメッセージ</language>
+	</row>
+
+	<row id="msg_c04r0201_stylistpoke_01" back-color="#ffff00,,,#ffff00,,#ffff00,#ffff00,,,,,,#ffff00,,,,,,">
 		<comment>ポケモン
-・上記OBJに隣接</comment>
-		<attribute name="キャラ指定">ポケモン</attribute>
+・上記OBJに隣接
+・メッセージ表示と共に鳴き声再生</comment>
+		<attribute name="キャラ指定">ポケモン
+ワルビル</attribute>
 		<language name="JPN" width="256">ずもっ！！</language>
 		<language name="JPN_KANJI" width="256">ずもっ！！</language>
 	</row>
 
 	<row id="msg_c04r0201_dancer_02">
+		<comment>♂
+・オネエ系</comment>
 		<attribute name="キャラ指定">ダンサー
 ＝スタイリストその2</attribute>
-		<language name="JPN" width="256">スタイリストからの　アドバイス！[BE:01:ページ切り替え（クリア）]
-おんがくの　ふんいきに　あった
-グッズで　ドレスアップすると[BE:00:ページ切り替え（行送り）]
-おきゃくさんも　だいまんぞく　だね！</language>
-		<language name="JPN_KANJI" width="256">スタイリストからの　アドバイス！[BE:01:ページ切り替え（クリア）]
-音楽の　雰囲気に　あった
-グッズで　ドレスアップすると[BE:00:ページ切り替え（行送り）]
-お客さんも　大満足　だね！</language>
+		<language name="JPN" width="256">ドレスアップ　するなら
+ミュージカルの　えんもくに▽
+あっているかが　ポ・イ・ン・ト！▼
+あっていれば　かんきゃくの
+ハートを　わしづかみ！▽
+まちがいなく　ちゅうもく　されるわ！▼
+せっかく　ステージに　あがるなら
+めだたないと　もったいないもの！</language>
+		<language name="JPN_KANJI" width="256">ドレスアップ　するなら
+ミュージカルの　えんもくに▽
+あっているかが　ポ・イ・ン・ト！▼
+あっていれば　かんきゃくの
+ハートを　わしづかみ！▽
+まちがいなく　ちゅうもく　されるわ！▼
+せっかく　ステージに　あがるなら
+めだたないと　もったいないもの！</language>
 	</row>
 
-	<row id="msg_c04r0201_maid_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c04r0201_maid_01">
 		<comment>♀
-・仮メッセージ</comment>
+・ヒント</comment>
 		<attribute name="キャラ指定">MAID
 ＝スタイリストその3</attribute>
-		<language name="JPN" width="256">ミュージカルの　ほんしつは！[BE:01:ページ切り替え（クリア）]
-ミュージック！　ダンス！
-もちろん　それもあります！[BE:01:ページ切り替え（クリア）]
-ですが　いちばん　だいじなのは
-ステージの　うえで[BE:00:ページ切り替え（行送り）]
-かがやく　ポケモンたち　でッすッ！！</language>
-		<language name="JPN_KANJI" width="256">ミュージカルの　本質は！[BE:01:ページ切り替え（クリア）]
-ミュージック！　ダンス！
-もちろん　それもあります！[BE:01:ページ切り替え（クリア）]
-ですが　一番　重要なのは
-舞台で　輝く　ポケモンたちでッすッ！！</language>
+		<language name="JPN" width="256">ポケモンの　グッズには
+それぞれ　イメージが　あるです▼
+クール　キュート　エレガント
+そして　ユニーク▼
+どういう　イメージにするか
+かんがえて　ドレスアップするのも▽
+ありだと　おもいますです</language>
+		<language name="JPN_KANJI" width="256">ポケモンの　グッズには
+それぞれ　イメージが　あるです▼
+クール　キュート　エレガント
+そして　ユニーク▼
+どういう　イメージにするか
+かんがえて　ドレスアップするのも▽
+ありだと　おもいますです</language>
 	</row>
 
-	<row id="msg_c04r0201_breederw_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c04r0201_lady_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・</comment>
+		<attribute name="キャラ指定">ＬＡＤＹ
+＝セレブその１</attribute>
+		<language name="JPN" width="256">じぶんで　いうのも　なんだけど
+セレブなのね　あたしたち▼
+で　セレブといえば　ミュージカル
+いわゆる　たしなみって　やつね</language>
+		<language name="JPN_KANJI" width="256">じぶんで　いうのも　なんだけど
+セレブなのね　あたしたち▼
+で　セレブといえば　ミュージカル
+いわゆる　たしなみって　やつね</language>
+	</row>
+
+	<row id="msg_c04r0201_gentleman_01" back-color="#ffff00,,,#ffff00,,#ffff00,#ffff00,,,,,,#ffff00,,,,,,">
+		<comment>♂
+・参加回数＝0</comment>
+		<attribute name="キャラ指定">GENTLEMAN
+＝セレブその２</attribute>
+		<language name="JPN" width="256">すばらしい！　ポケモンを
+みりょくてきに　ドレスアップできる▽
+トレーナーは　じつに　すばらしい！</language>
+		<language name="JPN_KANJI" width="256">すばらしい！　ポケモンを
+みりょくてきに　ドレスアップできる▽
+トレーナーは　じつに　すばらしい！</language>
+	</row>
+
+	<row id="msg_c04r0201_gentleman_02" back-color="#ffff00,,,#ffff00,,#ffff00,#ffff00,,,,,,#ffff00,,,,,,">
+		<comment>♂
+・参加回数＝1</comment>
+		<attribute name="キャラ指定">GENTLEMAN
+＝セレブその２</attribute>
+		<language name="JPN" width="256">きみの　ポケモンは　すばらしいね
+いつも　みているんだよ▼
+これからも　われわれを
+たのしませてくれると　うれしいな</language>
+		<language name="JPN_KANJI" width="256">きみの　ポケモンは　すばらしいね
+いつも　みているんだよ▼
+これからも　われわれを
+たのしませてくれると　うれしいな</language>
+	</row>
+
+	<row id="msg_c04r0201_gentleman_03" back-color="#ffff00,,,#ffff00,,#ffff00,#ffff00,,,,,,#ffff00,,,,,,">
+		<comment>♂
+・参加回数＝5</comment>
+		<attribute name="キャラ指定">GENTLEMAN
+＝セレブその２</attribute>
+		<language name="JPN" width="256">きみが　さんかする　えんもくは
+すべて　みさせて　もらっている！▼
+セレブな　わたしから　みても
+じつに　すばらしい！▽
+ごくじょうの　エンターテイメントだ！</language>
+		<language name="JPN_KANJI" width="256">きみが　さんかする　えんもくは
+すべて　みさせて　もらっている！▼
+セレブな　わたしから　みても
+じつに　すばらしい！▽
+ごくじょうの　エンターテイメントだ！</language>
+	</row>
+
+	<row id="msg_c04r0201_breederw_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ･条件を満たすと出現
 ・アイテムくれない
@@ -432,25 +628,27 @@
 		<attribute name="キャラ指定">BREEDERW
 ＝ファンその１</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]さん！　さっきの
-ミュージカル　さいこう　でした！[BE:01:ページ切り替え（クリア）]
+ミュージカル　さいこう　でした！▼
 なんだか　げんきが　わいてくるんです
 これからも　がんばってください！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]さん！　さっきの
-ミュージカル　最高でした！[BE:01:ページ切り替え（クリア）]
+ミュージカル　最高でした！▼
 なんだか　元気が　わいてくるんです
 これからも　がんばってください！</language>
 	</row>
 
-	<row id="msg_c04r0201_breederw_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c04r0201_breederw_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・アイテムくれる</comment>
+		<attribute name="キャラ指定">BREEDERW
+＝ファンその１</attribute>
 		<language name="JPN" width="256">もし　よろしければ
-このアクセ　つかってください！[BE:01:ページ切り替え（クリア）]</language>
+このアクセ　つかってください！▼</language>
 		<language name="JPN_KANJI" width="256">もし　よろしければ
-このアクセ　つかってください！[BE:01:ページ切り替え（クリア）]</language>
+このアクセ　つかってください！▼</language>
 	</row>
 
-	<row id="msg_c04r0201_girl2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c04r0201_girl2_01">
 		<comment>♀
 ･条件を満たすと出現
 ・アイテムくれない
@@ -458,25 +656,27 @@
 		<attribute name="キャラ指定">GIRL2
 ＝ファンその２</attribute>
 		<language name="JPN" width="256">ポケモン　まぶしいほど
-かがやいていました！[BE:01:ページ切り替え（クリア）]
+かがやいていました！▼
 [1:00:トレーナー名:0]さんの　センス
 あたしも　まねして　いきたいです！</language>
 		<language name="JPN_KANJI" width="256">ポケモン　まぶしいほど
-輝いていました！[BE:01:ページ切り替え（クリア）]
+輝いていました！▼
 [1:00:トレーナー名:0]さんの　センス
 あたしも　真似していきたいです！</language>
 	</row>
 
-	<row id="msg_c04r0201_girl2_02" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c04r0201_girl2_02">
 		<comment>♀
 ・アイテムくれる</comment>
+		<attribute name="キャラ指定">GIRL2
+＝ファンその２</attribute>
 		<language name="JPN" width="256">もし　よろしければ
-このアクセ　つかってください！[BE:01:ページ切り替え（クリア）]</language>
+このアクセ　つかってください！▼</language>
 		<language name="JPN_KANJI" width="256">もし　よろしければ
-このアクセ　つかってください！[BE:01:ページ切り替え（クリア）]</language>
+このアクセ　つかってください！▼</language>
 	</row>
 
-	<row id="msg_c04r0201_baker_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c04r0201_baker_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ･条件を満たすと出現
 ・アイテムくれない
@@ -484,75 +684,152 @@
 		<attribute name="キャラ指定">BAKER
 ＝ファンその３</attribute>
 		<language name="JPN" width="256">また　みにきますね
-[1:00:トレーナー名:0]さん[BE:01:ページ切り替え（クリア）]
+[1:00:トレーナー名:0]さん▼
 だって　じんせい　かわるほど
 すばらしかったんですもの</language>
 		<language name="JPN_KANJI" width="256">また　観に来ますね
-[1:00:トレーナー名:0]さん[BE:01:ページ切り替え（クリア）]
+[1:00:トレーナー名:0]さん▼
 だって　人生観　変わるほど
 すばらしかったんですもの</language>
 	</row>
 
-	<row id="msg_c04r0201_baker_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c04r0201_baker_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・アイテムくれる</comment>
+		<attribute name="キャラ指定">BAKER
+＝ファンその３</attribute>
 		<language name="JPN" width="256">この　グッズ……
-きにいってもらえると　うれしいです[BE:01:ページ切り替え（クリア）]</language>
+きにいってもらえると　うれしいです▼</language>
 		<language name="JPN_KANJI" width="256">この　グッズ……
-気に入ってもらえると　うれしいです[BE:01:ページ切り替え（クリア）]</language>
+気に入ってもらえると　うれしいです▼</language>
 	</row>
 
-	<row id="msg_c04r0201_man3_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c04r0201_man3_01">
 		<comment>♂
 ･条件を満たすと出現
 ・アイテムくれない
 0＝主人公名前</comment>
 		<attribute name="キャラ指定">MAN3
 ＝ファンその４</attribute>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]さん！[BE:01:ページ切り替え（クリア）]
-[1:00:トレーナー名:0]さん！[BE:01:ページ切り替え（クリア）]
-[1:00:トレーナー名:0]さん！[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">[1:00:トレーナー名:0]さん！▼
+[1:00:トレーナー名:0]さん！▼
+[1:00:トレーナー名:0]さん！▼
 かんげきの　あまり
 ことばが　でてこないです……</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]さん！[BE:01:ページ切り替え（クリア）]
-[1:00:トレーナー名:0]さん！[BE:01:ページ切り替え（クリア）]
-[1:00:トレーナー名:0]さん！[BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]さん！▼
+[1:00:トレーナー名:0]さん！▼
+[1:00:トレーナー名:0]さん！▼
 感激のあまり
 言葉が　でてこないです……</language>
 	</row>
 
-	<row id="msg_c04r0201_man3_02" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c04r0201_man3_02">
 		<comment>♂
 ・アイテムくれる</comment>
+		<attribute name="キャラ指定">MAN3
+＝ファンその４</attribute>
 		<language name="JPN" width="256">これ　オレの　きもちです
-グッズ　どうぞ！[BE:01:ページ切り替え（クリア）]</language>
+グッズ　どうぞ！▼</language>
 		<language name="JPN_KANJI" width="256">これ　オレの　気持ちです
-グッズ　どうぞ！[BE:01:ページ切り替え（クリア）]</language>
+グッズ　どうぞ！▼</language>
 	</row>
 
-	<row id="msg_c04r0201_mountain_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c04r0201_mountain_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ･条件を満たすと出現
 ・アイテムくれない</comment>
 		<attribute name="キャラ指定">MOUNTAIN
 ＝ファンその５</attribute>
 		<language name="JPN" width="256">よかったよ……
-アンタ　すごいよ……[BE:01:ページ切り替え（クリア）]
+アンタ　すごいよ……▼
 ゆめや　きぼうが　つまっていて
 オレも　もういちど　やまにのぼるよ！</language>
 		<language name="JPN_KANJI" width="256">よかったよ……
-アンタ　すごいよ……[BE:01:ページ切り替え（クリア）]
+アンタ　すごいよ……▼
 夢や　希望が　詰まっていて
 オレも　もう一度　山に登るよ！</language>
 	</row>
 
-	<row id="msg_c04r0201_mountain_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c04r0201_mountain_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・アイテムくれる</comment>
+		<attribute name="キャラ指定">MOUNTAIN
+＝ファンその５</attribute>
 		<language name="JPN" width="256">めいわく　じゃなかったら
-これ　もらってくれ！[BE:01:ページ切り替え（クリア）]</language>
+これ　もらってくれ！▼</language>
 		<language name="JPN_KANJI" width="256">迷惑じゃなかったら
-これ　もらってくれ！[BE:01:ページ切り替え（クリア）]</language>
+これ　もらってくれ！▼</language>
+	</row>
+
+	<row id="msg_c04r0201_photo_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>BGメッセージ
+・ミュージカルショットのデータがある</comment>
+		<attribute name="キャラ指定">壁の写真</attribute>
+		<language name="JPN" width="256">ぜんかい　ほぞんした
+ミュージカルショットが▽
+かざられて　います</language>
+		<language name="JPN_KANJI" width="256">前回　保存した
+ミュージカルショットが▽
+飾れて　います</language>
+	</row>
+
+	<row id="msg_c04r0201_photo_02" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>BGメッセージ
+・ミュージカルショットのデータがない</comment>
+		<attribute name="キャラ指定">壁の写真</attribute>
+		<language name="JPN" width="256">ここには　さんかした　えんもくの
+ミュージカルショットを▽
+かざることが　できます</language>
+		<language name="JPN_KANJI" width="256">ここには　参加した　演目の
+ミュージカルショットを▽
+飾ることが　できます</language>
+	</row>
+
+	<row id="msg_c04r0201_girl3_01">
+		<comment>♀
+・ヒント</comment>
+		<attribute name="キャラ指定">GIRL3</attribute>
+		<language name="JPN" width="256">あたしねー
+キュートな　ポケモンが　いると▽
+くぎづけに　なっちゃう！</language>
+		<language name="JPN_KANJI" width="256">あたしねー
+キュートな　ポケモンが　いると▽
+くぎづけに　なっちゃう！</language>
+	</row>
+
+	<row id="msg_c04r0201_middleman1_01">
+		<comment>♂
+・ミュージカルの由来</comment>
+		<attribute name="キャラ指定">MIDDLEMAN1</attribute>
+		<language name="JPN" width="256">この　ミュージカルホールだが
+もともとは　ひとが　えんじていたんだ▼
+だけどね　あるとき　うっかり
+ポケモンが　ステージの　うえにあがり▽
+ひとの　まねを　しだしたんだよね▼
+それが　おおもりあがり　で
+じゃあ！　ってことで　ポケモンだけの▽
+ミュージカルを　はじめたんだよね</language>
+		<language name="JPN_KANJI" width="256">この　ミュージカルホールだが
+もともとは　人が　演じていたんだ▼
+だけどね　あるとき　うっかり
+ポケモンが　ステージの　上にあがり▽
+人の　まねを　しだしたんだよね▼
+それが　大盛りあがり　で
+じゃあ！　ってことで　ポケモンだけの▽
+ミュージカルを　始めたんだよね</language>
+	</row>
+
+	<row id="msg_c04r0201_add_goods_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>システム
+・0＝グッズ名
+・1＝プレイヤー名</comment>
+		<attribute name="キャラ指定">システム</attribute>
+		<language name="JPN" width="256">[1:0A:グッズ名:0]を　もらった！▼
+[1:00:トレーナー名:1]は　[1:0A:グッズ名:0]を
+グッズケースの　なかに　しまった！</language>
+		<language name="JPN_KANJI" width="256">[1:0A:グッズ名:0]を　もらった！▼
+[1:00:トレーナー名:1]は　[1:0A:グッズ名:0]を
+グッズケースの　なかに　しまった！</language>
 	</row>
 
 	<flowchart-group-list>
