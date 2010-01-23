@@ -25,6 +25,7 @@ static int _playerMachineInit1( WIFIP2PMATCH_WORK *wk, int seq )
     {
       GFLNetInitializeStruct* pNetInit = GFL_NET_GetNETInitStruct();
       GFL_NET_DWC_StartVChat();
+      WifiP2PMatchMessagePrint(wk, msg_wifilobby_1015, FALSE);
       _CHANGESTATE(wk,WIFIP2PMATCH_MODE_VCT_CONNECT);
       return seq;
     }

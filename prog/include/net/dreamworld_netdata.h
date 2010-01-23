@@ -52,8 +52,12 @@ struct DREAM_WORLD_SERVER_CREATE_DATA{
 typedef struct {
   u32 RomCodeBit;   ///< ROMコード	4byte			ROMのバージョン		pm_version.hのBIT管理 一致したら受け取る
   u32 PassCode;     ///<  特殊イベント用起動キーコード（簡単に起動できないように暗号化）
-  u16 findPokemon;  // であったポケモンは必ず一種類
+  u16 findPokemon;         ///< であったポケモンは必ず一種類
   u16 findPokemonTecnique; ///< 覚えさせる技
+  u8 form;                ///< フォルム番号
+  u8 musicalNo;      ///< 変更があった場合NO なければ 0xff
+  u8 cgearNo;        ///< 変更があった場合NO なければ 0xff
+  u8 zukanNo;        ///< 変更があった場合NO なければ 0xff
   u16 itemID[DREAM_WORLD_DATA_MAX_ITEMBOX];  ///持ち帰ったアイテム
   u8 itemNum[DREAM_WORLD_DATA_MAX_ITEMBOX];
   DREAM_WORLD_FURNITUREDATA Furniture[DREAM_WORLD_DATA_MAX_FURNITURE];  ///<	26*5=130  配信家具

@@ -197,6 +197,9 @@ static void WifiP2PMatchMessagePrint( WIFIP2PMATCH_WORK *wk, int msgno, BOOL bSy
   if(!PRINTSYS_QUE_IsFinished(wk->SysMsgQue)){
     PRINTSYS_QUE_Clear(wk->SysMsgQue);
   }
+  if(wk->pStream){
+    PRINTSYS_PrintStreamDelete( wk->pStream );
+  }
 
   wk->MsgWin=GFL_BMPWIN_Create(
     GFL_BG_FRAME2_M,
@@ -971,6 +974,10 @@ static void FreeMessageWork( WIFIP2PMATCH_WORK *wk )
   PRINTSYS_QUE_Clear(wk->SysMsgQue);
   PRINTSYS_QUE_Delete(wk->SysMsgQue);
   wk->SysMsgQue=NULL;
+  if(wk->pStream){
+    PRINTSYS_PrintStreamDelete( wk->pStream );
+    wk->pStream=NULL;
+  }
 }
 
 
@@ -1228,7 +1235,7 @@ static u32 MCVSys_StatusMsgIdGet( u32 status, u32 gamemode, int* col )
   }
 
   {//WIFI_GAME_eéQè∆
-    u32 message[]={msg_wifilobby_046,msg_wifilobby_046,msg_wifilobby_027, msg_wifilobby_076,
+    u32 message[]={msg_wifilobby_046,msg_wifilobby_046,msg_wifilobby_1014,msg_wifilobby_027, msg_wifilobby_076,
     msg_wifilobby_025, msg_wifilobby_0571,msg_wifilobby_0571,msg_wifilobby_0572,msg_wifilobby_0572,
     msg_wifilobby_0573,msg_wifilobby_0573,msg_wifilobby_0574,msg_wifilobby_0574,msg_wifilobby_056};
 

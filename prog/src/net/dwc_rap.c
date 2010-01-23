@@ -148,6 +148,8 @@ enum{
   MDSTATE_CONNECTING,
   MDSTATE_CONNECTED,
   MDSTATE_TRYLOGIN,
+  MDSTATE_UPDATESERVERS,
+  MDSTATE_UPDATESERVERSASYNC,
   MDSTATE_LOGIN,
   MDSTATE_MATCHING,
   MDSTATE_CANCEL,
@@ -358,6 +360,7 @@ void GFL_NET_DWC_free()
 //==============================================================================
 int GFL_NET_DWC_connect()
 {
+  int result;
   //    NET_PRINT("mydwc_connect %d\n",_dWork->state);
   switch( _dWork->state )
   {
@@ -463,6 +466,30 @@ int GFL_NET_DWC_connect()
     DWC_ProcessFriendsMatch();
     break;
 
+  case MDSTATE_UPDATESERVERS:
+    // 認証成功、プロファイルID取得
+    result = DWC_UpdateServersAsync(NULL, //（過去との互換性のため、必ずNULL)
+                                    UpdateServersCallback, _dWork->pUserData,
+                                    FriendStatusCallback, &_dWork,
+                                    DeleteFriendListCallback, &_dWork);
+
+    if (result == FALSE){
+      // 呼んでもいい状態（ログインが完了していない状態）で呼んだ時のみ
+      // FALSEが返ってくるので、普通はTRUE
+      MYDWC_DEBUGPRINT("DWC_UpdateServersAsync error teminated.\n");
+      GFL_NET_StateSetError(GFL_NET_ERROR_RESET_SAVEPOINT);
+    }
+    else{
+      // GameSpyサーバ上バディ成立コールバックを登録する
+      DWC_SetBuddyFriendCallback(BuddyFriendCallback, NULL);
+      DWC_ProcessFriendsMatch();
+    }
+    _CHANGE_STATE(MDSTATE_UPDATESERVERSASYNC);
+    break;
+  case MDSTATE_UPDATESERVERSASYNC:
+    DWC_ProcessFriendsMatch();
+    break;
+    
   case MDSTATE_LOGIN:
     DWC_ProcessFriendsMatch();   // 2006.04.07 k.ohno ログインしただけの状態を持続する為
     _dWork->stepMatchResult = STEPMATCH_CONNECT;
@@ -755,6 +782,8 @@ int GFL_NET_DWC_stepmatch( int isCancel )
   case MDSTATE_CONNECTING:
   case MDSTATE_CONNECTED:
   case MDSTATE_TRYLOGIN:
+  case MDSTATE_UPDATESERVERS:
+  case MDSTATE_UPDATESERVERSASYNC:
 
     return GFL_NET_DWC_connect();
   case MDSTATE_MATCHING:
@@ -1062,32 +1091,17 @@ static void LoginCallback(DWCError error, int profileID, void *param)
     DWCUserData *userdata = NULL;
     DWC_ClearDirtyFlag(_dWork->pUserData);
     _dWork->saveing = 1;  //セーブ中に1
-
     MYDWC_DEBUGPRINT("自分のフレンドコードが変更\n");
   }
 
   if (error == DWC_ERROR_NONE){
-    // 認証成功、プロファイルID取得
-    result = DWC_UpdateServersAsync(NULL, //（過去との互換性のため、必ずNULL)
-                                    UpdateServersCallback, _dWork->pUserData,
-                                    FriendStatusCallback, param,
-                                    DeleteFriendListCallback, param);
-
-    if (result == FALSE){
-      // 呼んでもいい状態（ログインが完了していない状態）で呼んだ時のみ
-      // FALSEが返ってくるので、普通はTRUE
-      MYDWC_DEBUGPRINT("DWC_UpdateServersAsync error teminated.\n");
-      GFL_NET_StateSetError(GFL_NET_ERROR_RESET_SAVEPOINT);
-      return;
-    }
-    // GameSpyサーバ上バディ成立コールバックを登録する
-    DWC_SetBuddyFriendCallback(BuddyFriendCallback, NULL);
+    NET_PRINT("MDSTATE_UPDATESERVERS \n");
+    _CHANGE_STATE(MDSTATE_UPDATESERVERS);
   }
   else
   {
     // 認証失敗
     _CHANGE_STATE(MDSTATE_ERROR);
-   // _dWork->state = MDSTATE_ERROR;
   }
 }
 
@@ -1137,6 +1151,9 @@ static void FriendStatusCallback(int index, u8 status, const char* statusString,
 {
 #pragma unused(param)
 
+  if( !DWC_IsBuddyFriendData( &(_dWork->pFriendData[index]) ) ){
+    _CHANGE_STATE(MDSTATE_UPDATESERVERS);
+  }
   MYDWC_DEBUGPRINT("Friend[%d] changed status -> %d (statusString : %s).\n",
                    index, status, statusString);
 
