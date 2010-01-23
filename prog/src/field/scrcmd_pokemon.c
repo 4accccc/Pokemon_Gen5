@@ -65,7 +65,7 @@ static GMEVENT_RESULT EVENT_FUNC_PokeSelect(GMEVENT * event, int * seq, void * w
 //--------------------------------------------------------------
 /// ツール関数：指定位置の手持ちポケモンを取得する
 //--------------------------------------------------------------
-static POKEMON_PARAM * getTemotiPP( SCRCMD_WORK * work, u16 pos )
+POKEMON_PARAM * SCRCMD_GetTemotiPP( SCRCMD_WORK * work, u16 pos )
 {
   GAMEDATA *gamedata = SCRCMD_WORK_GetGameData( work );
   POKEPARTY * party = GAMEDATA_GetMyPokemon( gamedata );
@@ -131,7 +131,7 @@ VMCMD_RESULT EvCmdGetMezameruPowerType( VMHANDLE * core, void *wk )
 {
   u16 * ret_wk = SCRCMD_GetVMWork( core, wk );  //結果格納ワーク
   u16 pos = SCRCMD_GetVMWorkValue( core, wk );  //ポケモンの位置
-  POKEMON_PARAM * pp = getTemotiPP( wk, pos );
+  POKEMON_PARAM * pp = SCRCMD_GetTemotiPP( wk, pos );
   *ret_wk = POKETOOL_GetMezaPa_Type( pp );
 
 #if 0
@@ -140,6 +140,22 @@ VMCMD_RESULT EvCmdGetMezameruPowerType( VMHANDLE * core, void *wk )
     *ret_wk = 0xffff;
   }
 #endif
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief てもちポケモンのタイプ取得
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdGetPartyPokeType( VMHANDLE * core, void *wk )
+{
+  u16 * ret_wk1 = SCRCMD_GetVMWork( core, wk );  //結果格納ワーク
+  u16 * ret_wk2 = SCRCMD_GetVMWork( core, wk );  //結果格納ワーク
+  u16 pos = SCRCMD_GetVMWorkValue( core, wk );  //ポケモンの位置
+  POKEMON_PARAM * pp = SCRCMD_GetTemotiPP( wk, pos );
+  *ret_wk1 = PP_Get( pp, ID_PARA_type1, NULL );
+  *ret_wk2 = PP_Get( pp, ID_PARA_type2, NULL );
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -173,7 +189,7 @@ VMCMD_RESULT EvCmdGetParamEXP( VMHANDLE *core, void *wk )
 {
   u16 * ret_wk = SCRCMD_GetVMWork( core, wk );  //結果格納ワーク
   u16 pos = SCRCMD_GetVMWorkValue( core, wk );  //ポケモンの位置
-  POKEMON_PARAM * pp = getTemotiPP( wk, pos );
+  POKEMON_PARAM * pp = SCRCMD_GetTemotiPP( wk, pos );
   u16 exp = 0;
 
   exp += PP_Get( pp, ID_PARA_hp_exp, NULL );

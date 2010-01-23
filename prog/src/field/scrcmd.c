@@ -49,6 +49,7 @@
 #include "scrcmd_fldmmdl.h"
 #include "scrcmd_gym.h"
 #include "scrcmd_pokemon.h"
+#include "scrcmd_pokemon_fld.h"
 #include "scrcmd_screeneffects.h"
 #include "scrcmd_enviroments.h"
 #include "scrcmd_sodateya.h"
