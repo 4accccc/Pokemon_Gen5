@@ -670,6 +670,7 @@ static void CTVT_COMM_UpdateComm( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork
     if( commWork->connectNum != connectNum )
     {
       CTVT_COMM_RefureshCommState( work , commWork );
+      COMM_TVT_RedrawName( work );
       if( commWork->connectNum < connectNum )
       {
         //新メンバー追加
@@ -887,6 +888,7 @@ static void CTVT_COMM_RefureshCommState( COMM_TVT_WORK *work , CTVT_COMM_WORK *c
     {
       if( commWork->member[i].isEnable == FALSE )
       {
+        CTVT_CAMERA_WORK *camWork = COMM_TVT_GetCameraWork( work );
         commWork->member[i].isEnable = TRUE;
         if( i == selfIdx )
         {
@@ -912,6 +914,7 @@ static void CTVT_COMM_RefureshCommState( COMM_TVT_WORK *work , CTVT_COMM_WORK *c
           commWork->member[i].state = CCSU_REQ_PHOTO;
           CTVT_TPrintf("Join user[%d] postBuf[%d]\n",i,j);
         }
+        CTVT_CAMERA_SetNewMember( work , camWork , i );
         isUpdateState = TRUE;
       }
       connectNum++;
@@ -1400,6 +1403,11 @@ CTVT_COMM_MEMBER_DATA* CTVT_COMM_GetMemberData( COMM_TVT_WORK *work , CTVT_COMM_
 CTVT_COMM_MEMBER_DATA* CTVT_COMM_GetSelfMemberData( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
 {
   return &commWork->selfData;
+}
+
+const BOOL CTVT_COMM_IsEnableMember( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork , const u8 idx )
+{
+  return commWork->member[idx].isEnable;
 }
 
 //お絵描きバッファ取得

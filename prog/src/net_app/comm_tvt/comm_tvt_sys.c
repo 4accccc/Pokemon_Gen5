@@ -707,12 +707,15 @@ static void COMM_TVT_UpdateUpperName( COMM_TVT_WORK *work )
   if( COMM_TVT_GetConnectNum(work) < 2 )
   {
     //ˆêl‚ÌŽž‚ÍŽQÆêŠ‚ªˆá‚¤
-    if( work->nameDrawBit == 0 )
+    if( CTVT_COMM_IsEnableMember( work , work->commWork , COMM_TVT_GetSelfIdx(work) ) == TRUE )
     {
-      CTVT_COMM_MEMBER_DATA *memData = CTVT_COMM_GetSelfMemberData( work , work->commWork );
-      COMM_TVT_UpdateUpperNameFunc( work , (MYSTATUS*)memData->myStatusBuff , work->nameWin[2] );
-      work->nameDrawBit = 1;
-      work->nameWinUpdateBit = 1<<2;
+      if( work->nameDrawBit == 0 )
+      {
+        CTVT_COMM_MEMBER_DATA *memData = CTVT_COMM_GetSelfMemberData( work , work->commWork );
+        COMM_TVT_UpdateUpperNameFunc( work , (MYSTATUS*)memData->myStatusBuff , work->nameWin[2] );
+        work->nameDrawBit = 1;
+        work->nameWinUpdateBit = 1<<2;
+      }
     }
   }
   else
@@ -720,7 +723,9 @@ static void COMM_TVT_UpdateUpperName( COMM_TVT_WORK *work )
     const COMM_TVT_DISP_MODE mode = COMM_TVT_GetDispMode( work );
     for( i=0;i<CTVT_MEMBER_NUM;i++ )
     {
-      if( CTVT_COMM_IsEnableMemberData( work , work->commWork , i ) &&
+      if( CTVT_COMM_IsEnableMember( work , work->commWork , i ) == TRUE &&
+          CTVT_COMM_IsEnableMemberData( work , work->commWork , i ) == TRUE &&
+          CTVT_CAMERA_IsUpdateCameraAnime( work , work->camWork , i ) == FALSE &&
           ( work->nameDrawBit & 1<<i ) == 0 )
       {
         u8 bmpIdx;

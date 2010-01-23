@@ -16,11 +16,15 @@
 
 #include "comm_tvt.naix"
 #include "ctvt_camera.h"
+#include "ctvt_comm.h"
 
 //======================================================================
 //	define
 //======================================================================
 #pragma mark [> define
+
+#define CTVT_CAMERA_ANIME_SPD (8)
+
 
 //======================================================================
 //	enum
@@ -32,6 +36,22 @@
 //	typedef struct
 //======================================================================
 #pragma mark [> struct
+typedef struct
+{
+  BOOL isUpdate;
+  BOOL isNew;
+  u16 dispPosX;
+  u16 dispPosY;
+  u16 dispSizeX;
+  u16 dispSizeY;
+  
+  u16 targetPosX;
+  u16 targetPosY;
+  u16 targetSizeX;
+  u16 targetSizeY;
+}CTVT_CAMERA_MEMBER_WORK;
+
+
 struct _CTVT_CAMERA_WORK
 {
   HEAPID camHeapId;
@@ -41,7 +61,10 @@ struct _CTVT_CAMERA_WORK
   
   u8   isUpdateBit;
   BOOL isWaitAllRefresh;
+  BOOL isDispDouble;
   u8   waitAllConut;  //2‰ñ‘Ò‚½‚È‚¢‚Æ‚¢‚¯‚È‚¢
+  
+  CTVT_CAMERA_MEMBER_WORK memWork[CTVT_MEMBER_NUM];
   
   //ˆÈ‰ºTWLŽž‚Ì‚Ýì‚ç‚ê‚é‚à‚Ì
   CAMERA_SYSTEM_WORK *camSys;       //  1ƒTƒCƒY*2 //0x30000
@@ -55,12 +78,18 @@ struct _CTVT_CAMERA_WORK
 //======================================================================
 #pragma mark [> proto
 static void CTVT_CAMERA_CapCallBack( void *captureArea , void *userWork );
+static void CTVT_CAMERA_SetMemberState_Disp( CTVT_CAMERA_MEMBER_WORK *memWork , const u16 posX , const u16 posY , const u16 sizeX , const u16 sizeY );
+static void CTVT_CAMERA_SetMemberState_Target( CTVT_CAMERA_MEMBER_WORK *memWork , const u16 posX , const u16 posY , const u16 sizeX , const u16 sizeY );
+static const BOOL CTVT_CAMERA_UpdateMemberState( CTVT_CAMERA_WORK *camWork , CTVT_CAMERA_MEMBER_WORK *memWork );
+static const BOOL CTVT_CAMERA_UpdateMemberState_Util( CTVT_CAMERA_WORK *camWork , u16 *now , u16 *target );
+static void CTVT_CAMERA_SetMemberState_TargetPos( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork , const u8 tempIdx );
 
 //--------------------------------------------------------------
 //	‰Šú‰»
 //--------------------------------------------------------------
 CTVT_CAMERA_WORK* CTVT_CAMERA_Init( COMM_TVT_WORK *work , const HEAPID heapId )
 {
+  u8 i;
   CTVT_CAMERA_WORK* camWork = GFL_HEAP_AllocClearMemory( heapId , sizeof(CTVT_CAMERA_WORK) );
   if( COMM_TVT_IsTwlMode() == TRUE )
   {
@@ -88,7 +117,16 @@ CTVT_CAMERA_WORK* CTVT_CAMERA_Init( COMM_TVT_WORK *work , const HEAPID heapId )
   camWork->isUpdateBit = 0;
   camWork->waitAllConut = 0;
   camWork->isWaitAllRefresh = FALSE;
+  camWork->isDispDouble = FALSE;
   camWork->scrBuf = GFL_HEAP_AllocClearMemory( GFL_HEAP_LOWID(heapId) , CTVT_BUFFER_SCR_SIZE );
+  
+  for( i=0;i<CTVT_MEMBER_NUM;i++ )
+  {
+    CTVT_CAMERA_SetMemberState_Disp( &camWork->memWork[i] , 0 , 0 , 0 , 0 );
+    CTVT_CAMERA_SetMemberState_Target( &camWork->memWork[i] , 0 , 0 , 0 , 0 );
+    camWork->memWork[i].isUpdate = FALSE;
+    camWork->memWork[i].isNew = TRUE;
+  }
   return camWork;
 }
 
@@ -120,6 +158,20 @@ void CTVT_CAMERA_Term( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork )
 //--------------------------------------------------------------
 void CTVT_CAMERA_Main( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork )
 {
+  u8 i;
+  if( camWork->isWaitAllRefresh == FALSE )
+  {
+    for( i=0;i<CTVT_MEMBER_NUM;i++ )
+    {
+      const BOOL ret = CTVT_CAMERA_UpdateMemberState( camWork , &camWork->memWork[i] );
+      if( ret == TRUE )
+      {
+        camWork->isUpdateBit |= 1<<i;
+        break;
+      }
+    }
+  }
+  
   if( COMM_TVT_IsTwlMode() == TRUE )
   {
   }
@@ -149,6 +201,7 @@ void CTVT_CAMERA_VBlank( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork )
     if( camWork->isWaitAllRefresh == TRUE )
     {
       u8 num = 0;
+      //‘Sˆõ“ž’…‚Ü‚Å‚Ì‘Ò‹@
       for( i=0;i<CTVT_MEMBER_NUM;i++ )
       {
         if( camWork->isUpdateBit & (1<<i) )
@@ -168,12 +221,16 @@ void CTVT_CAMERA_VBlank( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork )
       }
       else
       {
+        u8 i;
+        //ŠG‚ª‚»‚ë‚Á‚½‚ç‹–‰Â•”{Šp‚Ì”½‰f
         GFL_STD_MemFill32( G2_GetBG3ScrPtr() ,0x00000000 , CTVT_BUFFER_SCR_SIZE );
         camWork->isWaitAllRefresh = FALSE;
+        if( camWork->isDispDouble != COMM_TVT_IsDoubleMode(work) )
         {
           //BG‚ÌŠg‘å
           MtxFx22 mtx;
-          if( COMM_TVT_IsDoubleMode(work) == TRUE )
+          camWork->isDispDouble = COMM_TVT_IsDoubleMode(work);
+          if( camWork->isDispDouble == TRUE )
           {
             mtx._00 = FX_Inv(FX32_ONE*2);
             mtx._11 = FX_Inv(FX32_ONE*2);
@@ -186,6 +243,31 @@ void CTVT_CAMERA_VBlank( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork )
           mtx._01 = 0;
           mtx._10 = 0;
           G2_SetBG3Affine(&mtx,0,0,0,0);
+          for( i=0;i<CTVT_MEMBER_NUM;i++ )
+          {
+            if( camWork->isDispDouble == TRUE )
+            {
+              camWork->memWork[i].targetPosX  /= 2;
+              camWork->memWork[i].targetPosY  /= 2;
+              camWork->memWork[i].targetSizeX /= 2;
+              camWork->memWork[i].targetSizeY /= 2;
+              camWork->memWork[i].dispPosX  /= 2;
+              camWork->memWork[i].dispPosY  /= 2;
+              camWork->memWork[i].dispSizeX /= 2;
+              camWork->memWork[i].dispSizeY /= 2;
+            }
+            else
+            {
+              camWork->memWork[i].targetPosX  *= 2;
+              camWork->memWork[i].targetPosY  *= 2;
+              camWork->memWork[i].targetSizeX *= 2;
+              camWork->memWork[i].targetSizeY *= 2;
+              camWork->memWork[i].dispPosX  *= 2;
+              camWork->memWork[i].dispPosY  *= 2;
+              camWork->memWork[i].dispSizeX *= 2;
+              camWork->memWork[i].dispSizeY *= 2;
+            }
+          }
         }
       }
     }
@@ -205,6 +287,7 @@ void CTVT_CAMERA_VBlank( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork )
         {
           idx = 1;
         }
+        
         if( isDouble == FALSE )
         {
           scrPosX = ( idx == 0 || idx == 2 ? 0 : 128 );
@@ -219,14 +302,20 @@ void CTVT_CAMERA_VBlank( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork )
           scrSizeX = ( mode == CTDM_DOUBLE ?64 :64 );
           scrSizeY = ( mode == CTDM_DOUBLE ?96 :48 );
         }
+        
         bufferBase = (u32)camWork->scrBuf + scrSizeX*scrSizeY*2*idx;
         DC_FlushRange( (void*)bufferBase , scrSizeX*scrSizeY*2 );
         
-        for( iy=0;iy<scrSizeY;iy++ )
+        for( iy=0;iy<camWork->memWork[i].dispSizeY;iy++ )
         {
-          const u32 bufTopAdr = bufferBase + iy*scrSizeX*2;
-          const u32 scrTopAdr = (scrPosY+iy)*256*2 + scrPosX*2;
-          GX_LoadBG3Bmp( (void*)bufTopAdr , scrTopAdr , scrSizeX*2 );
+          const u32 bufX = scrSizeX-camWork->memWork[i].dispSizeX;
+          const u32 bufY = scrSizeY-camWork->memWork[i].dispSizeY+iy;
+          const u32 bufTopAdr = bufferBase + bufY*scrSizeX*2 + bufX*2;
+          
+          const u32 scrTopAdr = (camWork->memWork[i].dispPosY+iy)*256*2 + camWork->memWork[i].dispPosX*2;
+          GX_LoadBG3Bmp( (void*)bufTopAdr , 
+                          scrTopAdr , 
+                          camWork->memWork[i].dispSizeX*2 );
         }
         
         camWork->isUpdateBit -= 1<<i;
@@ -333,6 +422,8 @@ void CTVT_CAMERA_SetRefreshFlg( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork 
 //--------------------------------------------------------------
 void CTVT_CAMERA_SetWaitAllRefreshFlg( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork )
 {
+  u8 i;
+  CTVT_COMM_WORK *commWork = COMM_TVT_GetCommWork( work );
   camWork->isWaitAllRefresh = TRUE;
 
   camWork->isUpdateBit = 0;
@@ -340,6 +431,14 @@ void CTVT_CAMERA_SetWaitAllRefreshFlg( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *c
   if( COMM_TVT_IsTwlMode() == FALSE )
   {
     CTVT_CAMERA_CapCallBack( camWork->picBuf , work );
+  }
+  
+  for( i=0;i<CTVT_MEMBER_NUM;i++ )
+  {
+    if( CTVT_COMM_IsEnableMember( work , commWork , i ) == TRUE )
+    {
+      CTVT_CAMERA_SetMemberState_TargetPos( work , camWork , i );
+    }
   }
 }
 
@@ -408,3 +507,194 @@ const u32 CTVT_CAMERA_GetBufferSize( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *cam
   }
 }
 
+static void CTVT_CAMERA_SetMemberState_Disp( CTVT_CAMERA_MEMBER_WORK *memWork , const u16 posX , const u16 posY , const u16 sizeX , const u16 sizeY )
+{
+  memWork->isUpdate = TRUE;
+  memWork->dispPosX  = posX;
+  memWork->dispPosY  = posY;
+  memWork->dispSizeX = sizeX;
+  memWork->dispSizeY = sizeY;
+}
+
+static void CTVT_CAMERA_SetMemberState_Target( CTVT_CAMERA_MEMBER_WORK *memWork , const u16 posX , const u16 posY , const u16 sizeX , const u16 sizeY )
+{
+  memWork->isUpdate = TRUE;
+  memWork->targetPosX  = posX;
+  memWork->targetPosY  = posY;
+  memWork->targetSizeX = sizeX;
+  memWork->targetSizeY = sizeY;
+}
+
+static const BOOL CTVT_CAMERA_UpdateMemberState( CTVT_CAMERA_WORK *camWork ,CTVT_CAMERA_MEMBER_WORK *memWork )
+{
+  if( memWork->isUpdate == TRUE )
+  {
+    BOOL ret = FALSE;
+    OS_TFPrintf(3,"[%3d][%3d][%3d][%3d]\n",memWork->dispPosX,memWork->dispPosY,memWork->dispSizeX,memWork->dispSizeY);
+    
+    ret |= CTVT_CAMERA_UpdateMemberState_Util( camWork , &memWork->dispPosX  , &memWork->targetPosX  );
+    ret |= CTVT_CAMERA_UpdateMemberState_Util( camWork , &memWork->dispPosY  , &memWork->targetPosY  );
+    ret |= CTVT_CAMERA_UpdateMemberState_Util( camWork , &memWork->dispSizeX , &memWork->targetSizeX );
+    ret |= CTVT_CAMERA_UpdateMemberState_Util( camWork , &memWork->dispSizeY , &memWork->targetSizeY );
+    if( ret == FALSE )
+    {
+      memWork->isUpdate = FALSE;
+      memWork->isNew = FALSE;
+    }
+    return TRUE;
+  }
+  return FALSE;
+}
+ 
+
+static const BOOL CTVT_CAMERA_UpdateMemberState_Util( CTVT_CAMERA_WORK *camWork , u16 *now , u16 *target )
+{
+  const u8 spd = (camWork->isDispDouble == TRUE ? CTVT_CAMERA_ANIME_SPD/2 : CTVT_CAMERA_ANIME_SPD );
+  if( *now < *target )
+  {
+    if( *now + spd < *target )
+    {
+      *now += spd;
+    }
+    else
+    {
+      *now = *target;
+    }
+    return TRUE;
+  }
+  if( *now > *target )
+  {
+    if( *now - spd > *target )
+    {
+      *now -= spd;
+    }
+    else
+    {
+      *now = *target;
+    }
+    return TRUE;
+  }
+  return FALSE;
+}
+
+static void CTVT_CAMERA_SetMemberState_TargetPos( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork , const u8 tempIdx )
+{
+  const COMM_TVT_DISP_MODE mode = COMM_TVT_GetDispMode( work );
+  u8 idx = tempIdx;
+  
+  if( mode == CTDM_DOUBLE && idx != 0 )
+  {
+    idx = 1;
+  }
+  if( camWork->isDispDouble == FALSE )
+  {
+    camWork->memWork[tempIdx].targetPosX = ( idx == 0 || idx == 2 ? 0 : 128 );
+    camWork->memWork[tempIdx].targetPosY = ( idx == 0 || idx == 1 ? 0 :  96 );
+    camWork->memWork[tempIdx].targetSizeX = ( mode == CTDM_DOUBLE ?128 :128 );
+    camWork->memWork[tempIdx].targetSizeY = ( mode == CTDM_DOUBLE ?192 : 96 );
+  }
+  else
+  {
+    camWork->memWork[tempIdx].targetPosX = ( idx == 0 || idx == 2 ? 0 : 64 );
+    camWork->memWork[tempIdx].targetPosY = ( idx == 0 || idx == 1 ? 0 : 48 );
+    camWork->memWork[tempIdx].targetSizeX = ( mode == CTDM_DOUBLE ?64 :64 );
+    camWork->memWork[tempIdx].targetSizeY = ( mode == CTDM_DOUBLE ?96 :48 );
+  }
+  
+  if( camWork->memWork[tempIdx].isNew == FALSE )
+  {
+    camWork->memWork[tempIdx].dispPosX  = camWork->memWork[tempIdx].targetPosX;
+    camWork->memWork[tempIdx].dispPosY  = camWork->memWork[tempIdx].targetPosY;
+    camWork->memWork[tempIdx].dispSizeX = camWork->memWork[tempIdx].targetSizeX;
+    camWork->memWork[tempIdx].dispSizeY = camWork->memWork[tempIdx].targetSizeY;
+  }
+  else
+  {
+    switch( idx )
+    {
+      case 0:
+        if( camWork->isDispDouble == FALSE )
+        {
+          CTVT_CAMERA_SetMemberState_Disp( &camWork->memWork[tempIdx] , 
+                                           0,
+                                           0,
+                                           128 ,
+                                           0 );
+        }
+        else
+        {
+          CTVT_CAMERA_SetMemberState_Disp( &camWork->memWork[tempIdx] , 
+                                           0,
+                                           0,
+                                           64 ,
+                                           0 );
+        }
+        break;
+      case 1:
+        if( camWork->isDispDouble == FALSE )
+        {
+          CTVT_CAMERA_SetMemberState_Disp( &camWork->memWork[tempIdx] , 
+                                           128,
+                                           0,
+                                           0 ,
+                                           ( mode == CTDM_DOUBLE ?192 : 96 ) );
+        }
+        else
+        {
+          CTVT_CAMERA_SetMemberState_Disp( &camWork->memWork[tempIdx] , 
+                                           64,
+                                           0,
+                                           0 ,
+                                           ( mode == CTDM_DOUBLE ?96 : 48 ) );
+        }
+        break;
+      case 2:
+        if( camWork->isDispDouble == FALSE )
+        {
+          CTVT_CAMERA_SetMemberState_Disp( &camWork->memWork[tempIdx] , 
+                                           0 ,
+                                           96,
+                                           128,
+                                           0 );
+        }
+        else
+        {
+          CTVT_CAMERA_SetMemberState_Disp( &camWork->memWork[tempIdx] , 
+                                           0 ,
+                                           48,
+                                           64,
+                                           0 );
+        }
+        break;
+      case 3:
+        if( camWork->isDispDouble == FALSE )
+        {
+          CTVT_CAMERA_SetMemberState_Disp( &camWork->memWork[tempIdx] , 
+                                           128,
+                                           96,
+                                           0 ,
+                                           96 );
+        }
+        else
+        {
+          CTVT_CAMERA_SetMemberState_Disp( &camWork->memWork[tempIdx] , 
+                                           64,
+                                           48,
+                                           0 ,
+                                           48);
+        }
+        break;
+    }
+  }
+  camWork->memWork[tempIdx].isUpdate = TRUE;
+}
+
+void CTVT_CAMERA_SetNewMember( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork , const u8 idx )
+{
+  camWork->memWork[idx].isNew = TRUE;
+}
+
+const BOOL CTVT_CAMERA_IsUpdateCameraAnime( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork , const u8 idx )
+{
+  return camWork->memWork[idx].isUpdate;
+}
