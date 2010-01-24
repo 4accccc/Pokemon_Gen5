@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2010-01-12T14:07:19"/>
+	<create user="tamada" host="W00139" date="2010-01-24T20:30:54"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -403,7 +403,7 @@
 		<comment>ポケモン１匹
 0＝ポケモン名
 ・続けて18</comment>
-		<language name="JPN" width="256">[1:01:ポケモン種族名:0]　ですねね▼</language>
+		<language name="JPN" width="256">[1:01:ポケモン種族名:0]　ですね▼</language>
 		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:0]　ですね▼</language>
 	</row>
 
@@ -473,7 +473,7 @@
 		<language name="JPN_KANJI" width="256">ほかの　ジムバッジも　みましょうか？</language>
 	</row>
 
-	<row id="msg_badgeparty_selecrt_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_badgeparty_select_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>選択肢
 ・c01バッジ</comment>
 		<attribute name="キャラ指定">選択肢</attribute>
@@ -481,7 +481,7 @@
 		<language name="JPN_KANJI" width="256">トライバッジ</language>
 	</row>
 
-	<row id="msg_badgeparty_selecrt_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_badgeparty_select_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>選択肢
 ・c02バッジ</comment>
 		<attribute name="キャラ指定">選択肢</attribute>
@@ -489,7 +489,7 @@
 		<language name="JPN_KANJI" width="256">ベーシックバッジ</language>
 	</row>
 
-	<row id="msg_badgeparty_selecrt_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_badgeparty_select_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>選択肢
 ・c03バッジ</comment>
 		<attribute name="キャラ指定">選択肢</attribute>
@@ -497,7 +497,7 @@
 		<language name="JPN_KANJI" width="256">ビートルバッジ</language>
 	</row>
 
-	<row id="msg_badgeparty_selecrt_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_badgeparty_select_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>選択肢
 ・c04バッジ</comment>
 		<attribute name="キャラ指定">選択肢</attribute>
@@ -505,7 +505,7 @@
 		<language name="JPN_KANJI" width="256">ボルトバッジ</language>
 	</row>
 
-	<row id="msg_badgeparty_selecrt_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_badgeparty_select_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>選択肢
 ・c05バッジ</comment>
 		<attribute name="キャラ指定">選択肢</attribute>
@@ -513,7 +513,7 @@
 		<language name="JPN_KANJI" width="256">クエイクバッジ</language>
 	</row>
 
-	<row id="msg_badgeparty_selecrt_06" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_badgeparty_select_06" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>選択肢
 ・c06バッジ</comment>
 		<attribute name="キャラ指定">選択肢</attribute>
@@ -521,7 +521,7 @@
 		<language name="JPN_KANJI" width="256">ジェットバッジ</language>
 	</row>
 
-	<row id="msg_badgeparty_selecrt_07" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_badgeparty_select_07" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>選択肢
 ・c07バッジ</comment>
 		<attribute name="キャラ指定">選択肢</attribute>
@@ -529,7 +529,7 @@
 		<language name="JPN_KANJI" width="256">アイシクルバッジ</language>
 	</row>
 
-	<row id="msg_badgeparty_selecrt_08" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_badgeparty_select_08" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>選択肢
 ・c08バッジ</comment>
 		<attribute name="キャラ指定">選択肢</attribute>
@@ -537,7 +537,7 @@
 		<language name="JPN_KANJI" width="256">レジェンドバッジ</language>
 	</row>
 
-	<row id="msg_badgeparty_selecrt_09" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_badgeparty_select_09" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>選択肢
 ・キャンセル</comment>
 		<attribute name="キャラ指定">選択肢</attribute>
