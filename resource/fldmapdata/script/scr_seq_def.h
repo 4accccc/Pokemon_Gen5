@@ -3910,6 +3910,23 @@
 
 //--------------------------------------------------------------
 /**
+ * @def _GET_GYM_VICTORY_INFO
+ * @brief ジムリーダー戦勝利時の手持ちポケモン種族名をセットする
+ * @param gym_id  BADGE_ID_??を指定してください
+ * @param ret_wk  ジムリーダー戦勝利時の手持ちポケモン数
+ */
+//--------------------------------------------------------------
+#define _GET_GYM_VICTORY_INFO( gym_id, ret_wk ) \
+    _ASM_GET_GYM_VICTORY_INFO gym_id, ret_wk
+
+    .macro _ASM_GET_GYM_VICTORY_INFO gym_id, ret_wk
+    .short  EV_SEQ_GET_GYM_VICTORY_INFO
+    .short  \gym_id
+    .short  \ret_wk
+    .endm
+
+//--------------------------------------------------------------
+/**
  * @def   _SET_FAVORITE_POKEMON
  * @brief 好きなポケモンの指定（バトルレコーダー用）
  * @param pos   指定するポケモンの位置

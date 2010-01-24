@@ -86,6 +86,8 @@ EVENT_START		ev_c07gym0101_leader7_01
 		_BALLOONWIN_OBJMSG( msg_c07gym0101_leader_02 , C07GYM0101_LEADER7_01 )
 		_BALLOONWIN_CLOSE()
 
+    //リーダー戦勝利時の情報登録
+    _SET_GYM_VICTORY_INFO( BADGE_ID_07 )
 		//アイシクルバッジ入手処理
 		_SET_BADGE_FLAG( BADGE_ID_07 )
 		

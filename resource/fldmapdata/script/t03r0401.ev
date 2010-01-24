@@ -9,7 +9,7 @@
   .text
 
   .include  "scr_seq_def.h"
-  .include  "../../message/dst/script/msg_t03r0401.h"
+  .include  "msg_t03r0401.h"
   //.include  "t03r0401.h"
 
 //--------------------------------------------------------------
@@ -19,20 +19,156 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_t03r0401
+_EVENT_DATA    ev_badgeparty
 _EVENT_DATA_END
 
 
-/**************************************************************/
-/*            FLAG_CHANGE_LABEL                               */
-/**************************************************************/
-//ev_t03r0401_flag_change:
-//  _END
-
+DEFINE_LOCAL  select_result
 /**************************************************************/
 /*                                                            */
 /**************************************************************/
-ev_t03r0401:
-  //とりあえず最初のラベルだけ生成している
-  _END
+EVENT_START ev_badgeparty
+{
+
+    _TALK_OBJ_START()
+
+    //前説
+    _BALLOONWIN_TALKOBJ_MSG( msg_badgeparty_01 )
+    _YES_NO_WIN( SCWK_ANSWER )
+    _BALLOONWIN_CLOSE()
+
+    IF $SCWK_ANSWER == SCR_NO THEN
+
+        //「わたしが　みなくても～」
+        _BALLOONWIN_TALKOBJ_MSG( msg_badgeparty_02 )
+        _LAST_KEYWAIT()
+        _BALLOONWIN_CLOSE()
+
+    ELSE
+
+        $select_result = TRUE
+
+        WHILE $select_result == TRUE
+
+            _CALL sub_badgeparty
+
+        ENDWHILE
+
+    ENDIF
+
+}
+EVENT_END
+
+
+sub_badgeparty:
+{
+    DEFINE_LOCAL  SEL_POS
+
+    //「どの　ジムバッジを　みましょうか？」
+    _BALLOONWIN_TALKOBJ_MSG( msg_badgeparty_03 )
+
+    // X=1,Y=1,カーソル初期位置=0,Bキャンセル=1(有効)
+    _BMPMENU_INIT_EX( 1, 1, 0, 1, SEL_POS )
+    _GET_BADGE_FLAG( SCWK_ANSWER, BADGE_ID_01 )
+    IF $SCWK_ANSWER == TRUE THEN
+        _BMPMENU_MAKE_LIST( msg_badgeparty_select_01, BADGE_ID_01 )
+    ENDIF
+    _GET_BADGE_FLAG( SCWK_ANSWER, BADGE_ID_02 )
+    IF $SCWK_ANSWER == TRUE THEN
+        _BMPMENU_MAKE_LIST( msg_badgeparty_select_02, BADGE_ID_02 )
+    ENDIF
+    _GET_BADGE_FLAG( SCWK_ANSWER, BADGE_ID_03 )
+    IF $SCWK_ANSWER == TRUE THEN
+        _BMPMENU_MAKE_LIST( msg_badgeparty_select_03, BADGE_ID_03 )
+    ENDIF
+    _GET_BADGE_FLAG( SCWK_ANSWER, BADGE_ID_04 )
+    IF $SCWK_ANSWER == TRUE THEN
+        _BMPMENU_MAKE_LIST( msg_badgeparty_select_04, BADGE_ID_04 )
+    ENDIF
+    _GET_BADGE_FLAG( SCWK_ANSWER, BADGE_ID_05 )
+    IF $SCWK_ANSWER == TRUE THEN
+        _BMPMENU_MAKE_LIST( msg_badgeparty_select_05, BADGE_ID_05 )
+    ENDIF
+    _GET_BADGE_FLAG( SCWK_ANSWER, BADGE_ID_06 )
+    IF $SCWK_ANSWER == TRUE THEN
+        _BMPMENU_MAKE_LIST( msg_badgeparty_select_06, BADGE_ID_06 )
+    ENDIF
+    _GET_BADGE_FLAG( SCWK_ANSWER, BADGE_ID_07 )
+    IF $SCWK_ANSWER == TRUE THEN
+        _BMPMENU_MAKE_LIST( msg_badgeparty_select_07, BADGE_ID_07 )
+    ENDIF
+    _GET_BADGE_FLAG( SCWK_ANSWER, BADGE_ID_08 )
+    IF $SCWK_ANSWER == TRUE THEN
+        _BMPMENU_MAKE_LIST( msg_badgeparty_select_08, BADGE_ID_08 )
+    ENDIF
+
+    //「やめる」のメニュー項目は無条件に追加
+    _BMPMENU_MAKE_LIST( msg_badgeparty_select_09, EV_WIN_B_CANCEL )
+
+    _BMPMENU_START()
+    _BALLOONWIN_CLOSE()
+
+    IF $SEL_POS == EV_WIN_B_CANCEL THEN
+        //「わたしが　みなくても～」
+        _BALLOONWIN_TALKOBJ_MSG( msg_badgeparty_02 )
+        _LAST_KEYWAIT()
+        _BALLOONWIN_CLOSE()
+        $select_result = FALSE
+        _RET
+    ENDIF
+
+    // 「あなたが　～バッジを　てにしたときの…」
+    SWITCH $SEL_POS
+    CASE BADGE_ID_01 THEN
+      _BALLOONWIN_TALKOBJ_MSG( msg_badgeparty_04 )
+    CASE BADGE_ID_02 THEN
+      _BALLOONWIN_TALKOBJ_MSG( msg_badgeparty_05 )
+    CASE BADGE_ID_03 THEN
+      _BALLOONWIN_TALKOBJ_MSG( msg_badgeparty_06 )
+    CASE BADGE_ID_04 THEN
+      _BALLOONWIN_TALKOBJ_MSG( msg_badgeparty_07 )
+    CASE BADGE_ID_05 THEN
+      _BALLOONWIN_TALKOBJ_MSG( msg_badgeparty_08 )
+    CASE BADGE_ID_06 THEN
+      _BALLOONWIN_TALKOBJ_MSG( msg_badgeparty_09 )
+    CASE BADGE_ID_07 THEN
+      _BALLOONWIN_TALKOBJ_MSG( msg_badgeparty_10 )
+    CASE BADGE_ID_08 THEN
+      _BALLOONWIN_TALKOBJ_MSG( msg_badgeparty_11 )
+    ENDSWITCH
+    _BALLOONWIN_CLOSE()
+
+    // 「～、～　ですね」
+    //  勝利時の情報取得：SCWK_ANSWER == そのときの手持ちポケモン数
+    //  _GET_GYM_VICTORY_INFO内でタグに種族名をセットしている
+    _GET_GYM_VICTORY_INFO( SEL_POS, SCWK_ANSWER )
+
+    SWITCH $SCWK_ANSWER
+    CASE 1 THEN
+      _BALLOONWIN_TALKOBJ_MSG( msg_badgeparty_12 )
+    CASE 2 THEN
+      _BALLOONWIN_TALKOBJ_MSG( msg_badgeparty_13 )
+    CASE 3 THEN
+      _BALLOONWIN_TALKOBJ_MSG( msg_badgeparty_14 )
+    CASE 4 THEN
+      _BALLOONWIN_TALKOBJ_MSG( msg_badgeparty_15 )
+    CASE 5 THEN
+      _BALLOONWIN_TALKOBJ_MSG( msg_badgeparty_16 )
+    CASE 6 THEN
+      _BALLOONWIN_TALKOBJ_MSG( msg_badgeparty_17 )
+    ENDSWITCH
+    _BALLOONWIN_CLOSE()
+
+    //「ほかの　ジムバッジも　みましょうか？」
+    _BALLOONWIN_TALKOBJ_MSG( msg_badgeparty_18 )
+    _YES_NO_WIN( SCWK_ANSWER )
+    _BALLOONWIN_CLOSE()
+    IF $SCWK_ANSWER == SCR_NO THEN
+        $select_result = FALSE
+        _RET
+    ENDIF
+
+}
+    $select_result = TRUE
+    _RET
 

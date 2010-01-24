@@ -555,6 +555,8 @@ EVENT_START		ev_c01gym0101_leader1b_01
 			_BALLOONWIN_OBJMSG( msg_c01gym0101_leader1_06b , C01GYM0101_LEADER1B_01 )
 			_BALLOONWIN_CLOSE()
 			
+      //リーダー戦勝利時の情報登録
+      _SET_GYM_VICTORY_INFO( BADGE_ID_01 )
 			//トライバッジ入手処理
 			_SET_BADGE_FLAG( BADGE_ID_01 )
 			_PLAYER_NAME( 0 )
@@ -674,6 +676,8 @@ EVENT_START		ev_c01gym0101_leader1a_01
 			_BALLOONWIN_OBJMSG( msg_c01gym0101_leader1_06a , C01GYM0101_LEADER1A_01 )
 			_BALLOONWIN_CLOSE()
 			
+      //リーダー戦勝利時の情報登録
+      _SET_GYM_VICTORY_INFO( BADGE_ID_01 )
 			//トライバッジ入手処理
 			_SET_BADGE_FLAG( BADGE_ID_01 )
 			_PLAYER_NAME( 0 )
@@ -800,6 +804,8 @@ EVENT_START		ev_c01gym0101_leader1c_01
 			_BALLOONWIN_OBJMSG( msg_c01gym0101_leader1_06c , C01GYM0101_LEADER1C_01 )
 			_BALLOONWIN_CLOSE()
 				
+      //リーダー戦勝利時の情報登録
+      _SET_GYM_VICTORY_INFO( BADGE_ID_01 )
 			//トライバッジ入手処理
 			_SET_BADGE_FLAG( BADGE_ID_01 )
 			_PLAYER_NAME( 0 )

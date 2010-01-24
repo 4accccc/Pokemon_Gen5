@@ -98,6 +98,8 @@ EVENT_START	ev_c08gym0101_leader8_01
 			_BALLOONWIN_OBJMSG( msg_c08gym0101_leader_02b , C08GYM0101_WKOBJCODE00_01 )
 			_BALLOONWIN_CLOSE()
 
+      //リーダー戦勝利時の情報登録
+      _SET_GYM_VICTORY_INFO( BADGE_ID_08 )
 			//レジェンドバッジ入手処理
 			_SET_BADGE_FLAG( BADGE_ID_08)
 			
@@ -171,6 +173,8 @@ EVENT_START	ev_c08gym0101_leader8_01
 			_BALLOONWIN_OBJMSG( msg_c08gym0101_leader_02w , C08GYM0101_WKOBJCODE00_01 )
 			_BALLOONWIN_CLOSE()
 
+      //リーダー戦勝利時の情報登録
+      _SET_GYM_VICTORY_INFO( BADGE_ID_08 )
 			//レジェンドバッジ入手処理
 			_SET_BADGE_FLAG( BADGE_ID_08)
 			

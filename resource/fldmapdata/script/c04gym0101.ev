@@ -101,6 +101,8 @@ ev_leader4_btl:
 	_BALLOONWIN_TALKOBJ_MSG( msg_c04gym0101_leader_02 )
 	_BALLOONWIN_CLOSE()
 
+  //リーダー戦勝利時の情報登録
+  _SET_GYM_VICTORY_INFO( BADGE_ID_04 )
 	//バッジ入手処理
 	_SET_BADGE_FLAG( BADGE_ID_04 )		//バッジフラグon
 
