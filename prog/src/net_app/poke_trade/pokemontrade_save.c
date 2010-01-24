@@ -87,8 +87,6 @@ static void _setNextAnim(POKEMON_TRADE_WORK* pWork, int timer)
 }
 
 
-
-
 //------------------------------------------------------------------
 /**
  * @brief   ポケモン交換終了。
@@ -172,9 +170,9 @@ static void _changeDemo_ModelTrade23(POKEMON_TRADE_WORK* pWork)
 
 
 
-  if(pWork->type == POKEMONTRADE_EVENT){
-    pWork->pParentWork->ret = POKEMONTRADE_END;
-    _CHANGE_STATE(pWork,NULL);
+  if(pWork->type == POKEMONTRADE_TYPE_EVENT){
+    pWork->pParentWork->ret = POKEMONTRADE_MOVE_END;
+    _CHANGE_STATE(pWork,POKEMONTRADE_PROC_FadeoutStart);
     return;
   }
 
@@ -231,10 +229,15 @@ static void _saveStart(POKEMON_TRADE_WORK* pWork)
     
       u16 after_mons_no = SHINKA_Check( NULL, pp, SHINKA_TYPE_TUUSHIN, 0, &cond, pWork->heapID );
       if( after_mons_no ){
-        pWork->pParentWork->ret = POKEMONTRADE_EVOLUTION;
+        pWork->pParentWork->ret = POKEMONTRADE_MOVE_EVOLUTION;
         pWork->pParentWork->after_mons_no = after_mons_no;
         pWork->pParentWork->cond = cond;
-        _CHANGE_STATE(pWork,NULL);   //交換デモに行く
+        pWork->pParentWork->selectBoxno = pWork->selectBoxno;
+        pWork->pParentWork->selectIndex = pWork->selectIndex;
+
+        PokeParty_Init( pWork->pParentWork->pParty, TEMOTI_POKEMAX );
+        PokeParty_Add( pWork->pParentWork->pParty, pp );
+        _CHANGE_STATE(pWork,POKEMONTRADE_PROC_FadeoutStart);   //交換デモに行く
         return ;
       }
     }
@@ -259,7 +262,23 @@ void POKMEONTRADE_SAVE_TimingStart(POKEMON_TRADE_WORK* pWork)
   GFL_NET_WirelessIconEasy_HoldLCD(TRUE,pWork->heapID); //通信アイコン
   GFL_NET_ReloadIcon();
 
-  
+  //戻ってきたポケモンと入れ替え
+  pWork->selectBoxno = pWork->pParentWork->selectBoxno;
+  pWork->selectIndex = pWork->pParentWork->selectIndex;
+  {
+    POKEMON_PARAM* pp=PokeParty_GetMemberPointer( pWork->pParentWork->pParty, 0 );
+    
+    // 相手のポケを自分の選んでいた場所に入れる
+    if(pWork->selectBoxno == BOXDAT_GetTrayMax(pWork->pBox)){ //てもちの交換の場合
+      POKEPARTY* party = pWork->pMyParty;
+      PokeParty_SetMemberData(party, pWork->selectIndex, pp);
+    }
+    else{
+      BOXDAT_PutPokemonPos(pWork->pBox, pWork->selectBoxno,
+                           pWork->selectIndex, (POKEMON_PASO_PARAM*)PP_GetPPPPointerConst(pp));
+    }
+  }
+
   GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, _BRIGHTNESS_SYNC);
 
   _CHANGE_STATE(pWork,_changeTimingSaveStart);

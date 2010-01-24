@@ -25,6 +25,7 @@ typedef struct {
   void* pWork;
   BATTLE_SETUP_PARAM para;
   BOOL isEndProc;
+  BOOL bFieldEnd;
   int selectType;
 } EVENT_WIFICLUB_WORK;
 

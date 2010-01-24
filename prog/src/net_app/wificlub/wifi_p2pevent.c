@@ -94,6 +94,7 @@ enum{
   P2P_BATTLE_START,
   P2P_BATTLE_END,
   P2P_TRADE,
+  P2P_TRADE_MAIN,
   P2P_TRADE_END,
   P2P_TVT,
   P2P_TVT_END,
@@ -321,9 +322,12 @@ static GFL_PROC_RESULT WifiClubProcMain( GFL_PROC * proc, int * seq, void * pwk,
     GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle ) );
     break;
   case P2P_TRADE:
+    ep2p->aPokeTr.ret = POKEMONTRADE_MOVE_START;
+    ep2p->seq++;
+    break;
+  case P2P_TRADE_MAIN:
     ep2p->aPokeTr.gamedata = GAMESYSTEM_GetGameData(pClub->gsys);
-    ep2p->aPokeTr.type = POKEMONTRADE_WIFICLUB;
-    GFL_PROC_SysCallProc(FS_OVERLAY_ID(pokemon_trade), &PokemonTradeProcData, &ep2p->aPokeTr);
+    GFL_PROC_SysCallProc(FS_OVERLAY_ID(pokemon_trade), &PokemonTradeClubProcData, &ep2p->aPokeTr);
     ep2p->seq++;
     break;
   case P2P_TRADE_END:

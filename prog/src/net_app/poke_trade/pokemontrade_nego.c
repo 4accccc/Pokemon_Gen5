@@ -561,7 +561,7 @@ static void _pokemonStatusWait(POKEMON_TRADE_WORK* pWork)
     POKE_MAIN_Pokemonset(pWork, 0, IRC_POKEMONTRADE_GetRecvPP(pWork, 0));
     POKE_MAIN_Pokemonset(pWork, 1, IRC_POKEMONTRADE_GetRecvPP(pWork, 1));
 
-    if(pWork->type==POKEMONTRADE_GTSNEGO){
+    if(POKEMONTRADEPROC_IsTriSelect(pWork)){
       _CHANGE_STATE(pWork, POKETRADE_NEGO_Select6keywait);
     }
     else{

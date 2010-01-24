@@ -124,7 +124,7 @@ void IRC_POKETRADE_GraphicInitMainDisp(POKEMON_TRADE_WORK* pWork)
 	ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_POKETRADE, pWork->heapID );
   int ncgr,nscr;
 
-  if(pWork->type==POKEMONTRADE_GTSNEGO){
+  if(POKEMONTRADEPROC_IsTriSelect(pWork)){
     nscr = NARC_trade_wb_gts_bg01_back_NSCR;
   }
   else{

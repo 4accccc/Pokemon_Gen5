@@ -651,7 +651,7 @@ void POKETRADE_MESSAGE_CreatePokemonParamDisp(POKEMON_TRADE_WORK* pWork,POKEMON_
   POKETRADE_MESSAGE_ChangePokemonStatusDisp(pWork,pp);
   IRC_POKETRADE_SetMainStatusBG(pWork);  // 背景BGと
 
-  if(pWork->type!=POKEMONTRADE_GTSNEGO){
+  if(!POKEMONTRADEPROC_IsTriSelect(pWork)){
     IRC_POKETRADE_SetSubStatusIcon(pWork);  //選択アイコン
     IRC_POKETRADE_GraphicInitSubDispStatusDisp(pWork);
     GFL_DISP_GX_SetVisibleControlDirect( GX_PLANEMASK_BG0|GX_PLANEMASK_BG2|GX_PLANEMASK_BG3|GX_PLANEMASK_OBJ );

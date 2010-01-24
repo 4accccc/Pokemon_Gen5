@@ -99,7 +99,9 @@ static GMEVENT_RESULT EVENT_WiFiClubMain(GMEVENT * event, int *  seq, void * wor
     (*seq) ++;
     break;
   case _FIELD_FADEIN:
-    //GMEVENT_CallEvent(event,EVENT_FieldFadeIn_Black(gsys, dbw->fieldmap, FIELD_FADE_WAIT));
+    if(dbw->bFieldEnd){
+      GMEVENT_CallEvent(event,EVENT_FieldFadeIn_Black(gsys, dbw->fieldmap, FIELD_FADE_WAIT));
+    }
     (*seq) ++;
     break;
   case _FIELD_END:
@@ -114,7 +116,7 @@ static GMEVENT_RESULT EVENT_WiFiClubMain(GMEVENT * event, int *  seq, void * wor
 /*
  *  @brief  WiFiクラブ呼び出しパラメータセット
  */
-static void wifi_SetEventParam( GMEVENT* event, GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldmap )
+static void wifi_SetEventParam( GMEVENT* event, GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldmap,BOOL bFieldEnd )
 {
   BATTLE_SETUP_PARAM * para;
   EVENT_WIFICLUB_WORK * dbw;
@@ -129,6 +131,7 @@ static void wifi_SetEventParam( GMEVENT* event, GAMESYS_WORK* gsys, FIELDMAP_WOR
   dbw->gsys = gsys;
   dbw->fieldmap = fieldmap;
   dbw->event = event;
+  dbw->bFieldEnd = bFieldEnd;
 
   para = &dbw->para;
   {
@@ -159,7 +162,7 @@ static void wifi_SetEventParam( GMEVENT* event, GAMESYS_WORK* gsys, FIELDMAP_WOR
 GMEVENT* EVENT_WiFiClub( GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap )
 {
   GMEVENT * event = GMEVENT_Create(gsys, NULL, EVENT_WiFiClubMain, sizeof(EVENT_WIFICLUB_WORK));
-  wifi_SetEventParam( event, gsys, fieldmap );
+  wifi_SetEventParam( event, gsys, fieldmap, FALSE );
 
   return event;
 }
@@ -171,7 +174,7 @@ GMEVENT* EVENT_WiFiClub( GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap )
 void EVENT_WiFiClubChange(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,GMEVENT * event)
 {
   GMEVENT_Change( event, EVENT_WiFiClubMain, sizeof(EVENT_WIFICLUB_WORK) );
-  wifi_SetEventParam( event, gsys, fieldmap );
+  wifi_SetEventParam( event, gsys, fieldmap,TRUE );
 }
 
 

@@ -166,7 +166,7 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
         *seq = _CALL_IRCBATTLE_FRIEND;
         break;
       case EVENTIRCBTL_ENTRYMODE_TRADE:
-        dbw->aPokeTr.type = POKEMONTRADE_IRC;
+        dbw->aPokeTr.ret = POKEMONTRADE_MOVE_START;
         *seq = _CALL_TRADE;
         break;
       default:
@@ -244,13 +244,14 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
     break;
   case _CALL_TRADE:  //  ポケモン交換
     dbw->aPokeTr.gamedata = dbw->gamedata;
+    dbw->aPokeTr.pParty = dbw->pParty;  //本物のポインタ渡し
     GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(pokemon_trade), &PokemonTradeIrcProcData, &dbw->aPokeTr);
     (*seq)++;
     break;
   case _WAIT_TRADE:
     if (GAMESYSTEM_IsProcExists(gsys) == GFL_PROC_MAIN_NULL){
       NET_PRINT("ポケモン交換おわり\n");
-      if(dbw->aPokeTr.ret == POKEMONTRADE_EVOLUTION){
+      if(dbw->aPokeTr.ret == POKEMONTRADE_MOVE_EVOLUTION){
         (*seq) = _CALL_EVOLUTION;
       }
       else{
@@ -260,18 +261,18 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
     break;
   case _CALL_EVOLUTION:
     GFL_OVERLAY_Load( FS_OVERLAY_ID(shinka_demo) );
-    dbw->shinka_param = SHINKADEMO_AllocParam( HEAPID_PROC, dbw->gamedata,
-                                              GAMEDATA_GetMyPokemon(dbw->gamedata),
-                                              dbw->aPokeTr.after_mons_no,
-                                              0, dbw->aPokeTr.cond, TRUE );
-    GAMESYSTEM_CallProc( gsys, NO_OVERLAY_ID, &ShinkaDemoProcData, dbw->shinka_param );
+    dbw->aPokeTr.shinka_param = SHINKADEMO_AllocParam( HEAPID_PROC, dbw->gamedata,
+                                               dbw->aPokeTr.pParty,
+                                               dbw->aPokeTr.after_mons_no,
+                                               0, dbw->aPokeTr.cond, TRUE );
+    GAMESYSTEM_CallProc( gsys, NO_OVERLAY_ID, &ShinkaDemoProcData, dbw->aPokeTr.shinka_param );
     (*seq)++;
     break;
   case _WAIT_EVOLUTION:
     if (GAMESYSTEM_IsProcExists(gsys) == GFL_PROC_MAIN_NULL){
-      SHINKADEMO_FreeParam( dbw->shinka_param );
+      SHINKADEMO_FreeParam( dbw->aPokeTr.shinka_param );
       GFL_OVERLAY_Unload( FS_OVERLAY_ID(shinka_demo) );
-      dbw->aPokeTr.type = POKEMONTRADE_EVOLUTION_RET;
+      dbw->aPokeTr.ret = POKEMONTRADE_MOVE_EVOLUTION;
       (*seq)=_CALL_TRADE;
     }
     break;
@@ -366,6 +367,9 @@ GMEVENT* EVENT_IrcBattle(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,GMEVENT *
   dbw->para =BATTLE_PARAM_Create(HEAPID_PROC);
 
   bxsv = BATTLE_BOX_SAVE_GetBattleBoxSave(dbw->ctrl);
+  dbw->pParty = PokeParty_AllocPartyWork( HEAPID_PROC );  ///< プレイヤーのパーティ
+
+#if 0
   if(!BATTLE_BOX_SAVE_IsIn(bxsv)){
     dbw->pParty = PokeParty_AllocPartyWork( HEAPID_PROC );  ///< プレイヤーのパーティ
     PokeParty_Copy(GAMEDATA_GetMyPokemon(GAMESYSTEM_GetGameData(gsys)), dbw->pParty);
@@ -373,12 +377,14 @@ GMEVENT* EVENT_IrcBattle(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,GMEVENT *
   else{
     dbw->pParty  = BATTLE_BOX_SAVE_MakePokeParty( bxsv, HEAPID_PROC );
   }
+#endif
   return event;
 }
 
 
 static void _battleParaFree(EVENT_IRCBATTLE_WORK *dbw)
 {
+  
   GFL_HEAP_FreeMemory(dbw->pParty);
   BATTLE_PARAM_Delete(dbw->para);
 }

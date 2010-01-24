@@ -49,6 +49,8 @@ enum _EVENT_GTSNEGO {
   _WAIT_WIFINEGO,
   _CALL_TRADE,
   _WAIT_TRADE,
+  _SEQ_EVOLUTION,
+  _SEQ_EVOLUTIONEND,
   _WAIT_NET_END,
   _FIELD_OPEN,
   _FIELD_END
@@ -64,6 +66,7 @@ typedef struct
   EVENT_GTSNEGO_WORK  gts;
   POKEMONTRADE_PARAM aPokeTr;
   WIFILOGIN_PARAM     login;
+  BOOL bFieldEnd;
 } EVENT_GTSNEGO_LINK_WORK;
 
 
@@ -114,28 +117,52 @@ static GMEVENT_RESULT EVENT_GTSNegoMain(GMEVENT * event, int *  seq, void * work
   case _WAIT_WIFINEGO:
     if (GAMESYSTEM_IsProcExists(gsys) == GFL_PROC_MAIN_NULL){
       (*seq) ++;
+      dbw->aPokeTr.ret = POKEMONTRADE_MOVE_START;
     }
     break;
   case _CALL_TRADE:
     dbw->aPokeTr.gamedata=gamedata;
-    dbw->aPokeTr.type = POKEMONTRADE_GTSNEGO;
     dbw->aPokeTr.pNego = &dbw->gts;
     GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(pokemon_trade), &PokemonTradeWiFiProcData, &dbw->aPokeTr);
     (*seq)++;
     break;
   case _WAIT_TRADE:
     if (GAMESYSTEM_IsProcExists(gsys) == GFL_PROC_MAIN_NULL){
-      (*seq) ++;
+      if(dbw->aPokeTr.ret == POKEMONTRADE_MOVE_EVOLUTION){
+        (*seq) = _SEQ_EVOLUTION;
+      }
+      else{
+        (*seq) = _WAIT_NET_END;
+      }
     }
     break;
-
+    
+  case _SEQ_EVOLUTION:
+    GFL_OVERLAY_Load( FS_OVERLAY_ID(shinka_demo) );
+    dbw->aPokeTr.shinka_param = SHINKADEMO_AllocParam( HEAPID_PROC, dbw->aPokeTr.gamedata,
+                                               dbw->aPokeTr.pParty,
+                                               dbw->aPokeTr.after_mons_no,
+                                               0, dbw->aPokeTr.cond, TRUE );
+    GAMESYSTEM_CallProc( gsys, NO_OVERLAY_ID, &ShinkaDemoProcData, dbw->aPokeTr.shinka_param );
+		(*seq) ++;
+    break;
+  case _SEQ_EVOLUTIONEND:
+    if (GAMESYSTEM_IsProcExists(gsys) == GFL_PROC_MAIN_NULL){
+      SHINKADEMO_FreeParam( dbw->aPokeTr.shinka_param );
+      GFL_OVERLAY_Unload( FS_OVERLAY_ID(shinka_demo) );
+      dbw->aPokeTr.ret = POKEMONTRADE_MOVE_EVOLUTION;
+      (*seq) = _CALL_TRADE;
+    }
+    break;
   case _WAIT_NET_END:
     if(GFL_NET_IsExit()){
       (*seq) ++;
     }
     break;
   case _FIELD_OPEN:
-    GMEVENT_CallEvent(event, EVENT_FieldOpen(gsys));
+    if(dbw->bFieldEnd){
+      GMEVENT_CallEvent(event, EVENT_FieldOpen(gsys));
+    }
     (*seq) ++;
     break;
   case _FIELD_END:
@@ -152,7 +179,7 @@ static GMEVENT_RESULT EVENT_GTSNegoMain(GMEVENT * event, int *  seq, void * work
 /*
  *  @brief  WiFiクラブ呼び出しパラメータセット
  */
-static void wifi_SetEventParam( GMEVENT* event, GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldmap )
+static void wifi_SetEventParam( GMEVENT* event, GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldmap,BOOL bFieldEnd )
 {
   BATTLE_SETUP_PARAM * para;
   EVENT_GTSNEGO_LINK_WORK * dbw;
@@ -164,6 +191,7 @@ static void wifi_SetEventParam( GMEVENT* event, GAMESYS_WORK* gsys, FIELDMAP_WOR
   dbw = GMEVENT_GetEventWork(event);
   dbw->gsys = gsys;
   dbw->fieldmap = fieldmap;
+  dbw->bFieldEnd = bFieldEnd;
 
   //GTSNEGO引数の設定
   {
@@ -191,8 +219,7 @@ static void wifi_SetEventParam( GMEVENT* event, GAMESYS_WORK* gsys, FIELDMAP_WOR
 GMEVENT* EVENT_GTSNego( GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap )
 {
   GMEVENT * event = GMEVENT_Create(gsys, NULL, EVENT_GTSNegoMain, sizeof(EVENT_GTSNEGO_LINK_WORK));
-  wifi_SetEventParam( event, gsys, fieldmap );
-
+  wifi_SetEventParam( event, gsys, fieldmap,FALSE );
   return event;
 }
 //------------------------------------------------------------------
@@ -203,7 +230,7 @@ GMEVENT* EVENT_GTSNego( GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap )
 void EVENT_GTSNegoChange(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,GMEVENT * event)
 {
   GMEVENT_Change( event, EVENT_GTSNegoMain, sizeof(EVENT_GTSNEGO_LINK_WORK) );
-  wifi_SetEventParam( event, gsys, fieldmap );
+  wifi_SetEventParam( event, gsys, fieldmap,TRUE );
 }
 
 

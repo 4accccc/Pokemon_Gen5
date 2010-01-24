@@ -2238,12 +2238,10 @@ static BOOL OneselfSeq_TradeUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *
   case 5:
     {
       POKEMONTRADE_PARAM* eibw;
-
       eibw = GFL_HEAP_AllocClearMemory(HEAPID_UNION, sizeof(POKEMONTRADE_PARAM));
-      
       eibw->gamedata = GAMESYSTEM_GetGameData(unisys->uniparent->gsys);
-      eibw->type = POKEMONTRADE_UNION;
-      
+      eibw->pParty = PokeParty_AllocPartyWork(HEAPID_UNION);
+      eibw->ret = POKEMONTRADE_MOVE_START;
       unisys->parent_work = eibw;
       UnionSubProc_EventSet(unisys, UNION_SUBPROC_ID_TRADE, eibw);
       (*seq)++;
@@ -2251,6 +2249,8 @@ static BOOL OneselfSeq_TradeUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *
     break;
   case 6:
     if(UnionSubProc_IsExits(unisys) == FALSE){
+      POKEMONTRADE_PARAM* eibw = unisys->parent_work;
+      GFL_HEAP_FreeMemory(eibw->pParty);
       GFL_HEAP_FreeMemory(unisys->parent_work);
       unisys->parent_work = NULL;
       OS_TPrintf("ÉTÉuPROCèIóπ\n");

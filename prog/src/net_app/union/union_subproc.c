@@ -412,16 +412,49 @@ static BOOL SubEvent_TrainerCard(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys, FI
 //--------------------------------------------------------------
 static BOOL SubEvent_Trade(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys, FIELDMAP_WORK *fieldWork, void *pwk, GMEVENT * parent_event, GMEVENT **child_event, u8 *seq)
 {
-  switch(*seq){
-  case 0:
+#if 1
+  POKEMONTRADE_PARAM* pPTP = pwk;
+  enum{
+    _SEQ_TRADE,
+    _SEQ_CHECK,
+    _SEQ_EVOLUTION,
+    _SEQ_EVOLUTIONEND,
+    _SEQ_END,
+  };
+	switch(*seq) {
+	case _SEQ_TRADE:
     *child_event = EVENT_FieldSubProc(
-  	    gsys, fieldWork, FS_OVERLAY_ID(pokemon_trade), &PokemonTradeProcData, pwk);
+  	    gsys, fieldWork, FS_OVERLAY_ID(pokemon_trade), &PokemonTradeProcData, pPTP);
+		(*seq) ++;
+    break;
+  case _SEQ_CHECK:
+    if(pPTP->ret == POKEMONTRADE_MOVE_EVOLUTION){
+      (*seq) = _SEQ_EVOLUTION;
+    }
+    else{
+      (*seq) = _SEQ_END;
+    }
+    break;
+  case _SEQ_EVOLUTION:
+    GFL_OVERLAY_Load( FS_OVERLAY_ID(shinka_demo) );
+    pPTP->shinka_param = SHINKADEMO_AllocParam( HEAPID_PROC, pPTP->gamedata,
+                                               pPTP->pParty,
+                                               pPTP->after_mons_no,
+                                               0, pPTP->cond, TRUE );
+    *child_event = EVENT_FieldSubProc( gsys, fieldWork, NO_OVERLAY_ID, &ShinkaDemoProcData, pPTP->shinka_param );
+		(*seq) ++;
+    break;
+  case _SEQ_EVOLUTIONEND:
+    SHINKADEMO_FreeParam( pPTP->shinka_param );
+    GFL_OVERLAY_Unload( FS_OVERLAY_ID(shinka_demo) );
+    pPTP->ret = POKEMONTRADE_MOVE_EVOLUTION;
+    (*seq)=_SEQ_TRADE;
     break;
   default:
     return TRUE;
   }
   
-  (*seq)++;
+#endif
   return FALSE;
 }
 
