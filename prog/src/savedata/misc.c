@@ -459,10 +459,30 @@ u32 MISC_SubGold(MISC * misc, u32 sub)
 //
 //      サブイベント関連
 //
+//
 //==================================================================
 //----------------------------------------------------------
 //----------------------------------------------------------
-void MISC_SetGymVictoryInfo( int gym_id, u16 * monsnos )
+void MISC_SetGymVictoryInfo( MISC * misc, int gym_id, const u16 * monsnos )
 {
+  int i;
   GF_ASSERT( gym_id < GYM_MAX );
+  for (i = 0; i < TEMOTI_POKEMAX; i++)
+  {
+    misc->gym_win_monsno[gym_id][i] = monsnos[i];
+  }
 }
+
+//----------------------------------------------------------
+//----------------------------------------------------------
+void MISC_GetGymVictoryInfo( const MISC * misc, int gym_id, u16 * monsnos )
+{
+  int i;
+  GF_ASSERT( gym_id < GYM_MAX );
+  for (i = 0; i < TEMOTI_POKEMAX; i++)
+  {
+    monsnos[i] = misc->gym_win_monsno[gym_id][i];
+  }
+}
+
+

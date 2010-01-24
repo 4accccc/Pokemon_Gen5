@@ -90,6 +90,7 @@ extern u32 MISC_SetGold(MISC *misc, u32 gold);
 extern u32 MISC_AddGold(MISC *misc, u32 add);
 extern u32 MISC_SubGold(MISC *misc, u32 sub);
 //ジム勝利時のデータ登録
-extern void MISC_SetGymVictoryInfo( int gym_id, u16 * monsnos );
+extern void MISC_SetGymVictoryInfo( MISC * misc, int gym_id, const u16 * monsnos );
+extern void MISC_GetGymVictoryInfo( const MISC * misc, int gym_id, u16 * monsnos );
 
 
