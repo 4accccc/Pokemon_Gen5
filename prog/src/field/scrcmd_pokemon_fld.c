@@ -124,3 +124,74 @@ VMCMD_RESULT EvCmdGetGymVictoryInfo( VMHANDLE * core, void *wk )
 
 
 
+//--------------------------------------------------------------
+/**
+ * @brief
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdGetBreederJudgeResult( VMHANDLE * core, void *wk )
+{
+  u16 max_val;  //0～31
+  u16 total;
+  u16 max_bits;
+  u32 i;
+  u16 temp[6];
+  POKEMON_PARAM* pp;
+  u16 pos         = SCRCMD_GetVMWorkValue( core, wk );    //手持ちの何番目かを代入しておく
+  u16 mode        = SCRCMD_GetVMWorkValue( core, wk );    //取得したい値の指定
+  u16* ret_wk    = SCRCMD_GetVMWork( core, wk );   //パワー乱数の合計
+
+  //ポケモンへのポインタ取得
+  pp = SCRCMD_GetTemotiPP( wk, pos );
+
+  //パワー乱数取得
+  temp[0] = PP_Get( pp, ID_PARA_hp_rnd, NULL );
+  temp[1] = PP_Get( pp, ID_PARA_pow_rnd, NULL );
+  temp[2] = PP_Get( pp, ID_PARA_def_rnd, NULL );
+  temp[3] = PP_Get( pp, ID_PARA_agi_rnd, NULL );
+  temp[4] = PP_Get( pp, ID_PARA_spepow_rnd, NULL );
+  temp[5] = PP_Get( pp, ID_PARA_spedef_rnd, NULL );
+
+  //パワー乱数の合計ならびに、最高値を調べる
+  total = 0;
+  max_val = 0;
+  for( i=0; i < 6 ;i++ )
+  {
+    total += temp[i];
+    if (max_val < temp[i]){
+      max_val = temp[i];
+    }
+  }
+  switch ( mode )
+  {
+  case SCR_JUDGE_MODE_TOTAL:
+    *ret_wk = total;
+    break;
+  case SCR_JUDGE_MODE_HIGH_VALUE:
+    *ret_wk = max_val;
+    break;
+  case SCR_JUDGE_MODE_HP:
+    *ret_wk = temp[0];
+    break;
+  case SCR_JUDGE_MODE_POW:
+    *ret_wk = temp[1];
+    break;
+  case SCR_JUDGE_MODE_DEF:
+    *ret_wk = temp[2];
+    break;
+  case SCR_JUDGE_MODE_AGI:
+    *ret_wk = temp[3];
+    break;
+  case SCR_JUDGE_MODE_SPPOW:
+    *ret_wk = temp[4];
+    break;
+  case SCR_JUDGE_MODE_SPDEF:
+    *ret_wk = temp[5];
+    break;
+  default:
+    GF_ASSERT_MSG( 0, "未対応のSCR_JUDGE_MODE(%d)です\n", mode );
+  }
+
+  return VMCMD_RESULT_CONTINUE;
+}
+

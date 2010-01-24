@@ -239,6 +239,17 @@
 
 //--------------------------------------------------------------
 //--------------------------------------------------------------
+#define SCR_JUDGE_MODE_TOTAL      (0)
+#define SCR_JUDGE_MODE_HIGH_VALUE (1)
+#define SCR_JUDGE_MODE_HP         (2)
+#define SCR_JUDGE_MODE_POW        (3)
+#define SCR_JUDGE_MODE_DEF        (4)
+#define SCR_JUDGE_MODE_AGI        (5)
+#define SCR_JUDGE_MODE_SPPOW      (6)
+#define SCR_JUDGE_MODE_SPDEF      (7)
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
 /*
 //フラグ操作関数のモード指定用
 #define	FLAG_MODE_RESET				(0)
