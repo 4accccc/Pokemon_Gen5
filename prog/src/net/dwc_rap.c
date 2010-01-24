@@ -1151,9 +1151,6 @@ static void FriendStatusCallback(int index, u8 status, const char* statusString,
 {
 #pragma unused(param)
 
-  if( !DWC_IsBuddyFriendData( &(_dWork->pFriendData[index]) ) ){
-    _CHANGE_STATE(MDSTATE_UPDATESERVERS);
-  }
   MYDWC_DEBUGPRINT("Friend[%d] changed status -> %d (statusString : %s).\n",
                    index, status, statusString);
 
@@ -2120,9 +2117,6 @@ static void mydwc_updateFriendInfo( void )
 
     if( DWC_IsBuddyFriendData( &(_dWork->pFriendData[index]) ) ){
       _dWork->friend_status[index] = DWC_GetFriendStatusData(&_dWork->pFriendData[ index ],(char*)_dWork->friendinfo[index],&size);
-#ifdef PM_DEBUG
-      GF_ASSERT( (size <= MYDWC_STATUS_DATA_SIZE_MAX) || (size == -1));
-#endif
     }
     _dWork->friendupdate_index = (_dWork->friendupdate_index + 1);
   }

@@ -111,6 +111,9 @@ void POKMEONTRADE_SAVE_Init(POKEMON_TRADE_WORK* pWork)
     POKEMON_PARAM* pp = IRC_POKEMONTRADE_GetRecvPP(pWork, 1);
     WORDSET_RegisterPokeNickName( pWork->pWordSet, 1,  pp );
   }
+  {
+    WORDSET_RegisterPlayerName( pWork->pWordSet, 0, pWork->pFriend  );
+  }
   WORDSET_ExpandStr( pWork->pWordSet, pWork->pMessageStrBuf, pWork->pMessageStrBufEx);
 
   pWork->bgchar = BmpWinFrame_GraphicSetAreaMan(GFL_BG_FRAME2_S, _BUTTON_WIN_PAL, MENU_TYPE_SYSTEM, pWork->heapID);
@@ -251,7 +254,7 @@ static void _saveStart(POKEMON_TRADE_WORK* pWork)
 void POKMEONTRADE_SAVE_TimingStart(POKEMON_TRADE_WORK* pWork)
 {
 
-  pWork->cellUnit = GFL_CLACT_UNIT_Create( 340 , 0 , pWork->heapID );
+//  pWork->cellUnit = GFL_CLACT_UNIT_Create( 340 , 0 , pWork->heapID );
   POKETRADE_MESSAGE_HeapInit(pWork);
   GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR_51, pWork->pMessageStrBuf );
   pWork->bgchar = BmpWinFrame_GraphicSetAreaMan(GFL_BG_FRAME2_S, _BUTTON_WIN_PAL, MENU_TYPE_SYSTEM, pWork->heapID);

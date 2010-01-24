@@ -126,6 +126,9 @@ static int _playerDirectInit5( WIFIP2PMATCH_WORK *wk, int seq )
 
 static int _playerDirectInit6( WIFIP2PMATCH_WORK *wk, int seq )
 {
+  if( !WifiP2PMatchMessageEndCheck(wk) ){
+    return seq;
+  }
   _ParentModeSelectMenu(wk);
   _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_INIT7);
   return seq;
@@ -335,20 +338,55 @@ static int _playerDirectSub2( WIFIP2PMATCH_WORK *wk, int seq )
     return seq;
   }
   else if(ret == 0){ // はいを選択した場合
-    command = WIFIP2PMATCH_PLAYERDIRECT_SUBSTART;
-    GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), CNM_WFP2PMF_DIRECT_COMMAND,
-                     1, &command);
+    _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_SUBSTARTCALL);
   }
   else{  // いいえを選択した場合
-    command = WIFIP2PMATCH_PLAYERDIRECT_END;
-    GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), CNM_WFP2PMF_DIRECT_COMMAND,
-                     1, &command);
+    _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_ENDCALL);
   }
   EndMessageWindowOff(wk);
 
-  _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_WAIT);
+ // _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_WAIT);
   return seq;
 }
+
+//------------------------------------------------------------------
+/**
+ * @brief   親機が何をするか選択 WIFIP2PMATCH_PLAYERDIRECT_SUBSTARTCALL
+ * @param   wk
+ * @retval  none
+ */
+//------------------------------------------------------------------
+
+static int _playerDirectSubstartCall( WIFIP2PMATCH_WORK *wk, int seq )
+{
+  u8 command;
+  
+  command = WIFIP2PMATCH_PLAYERDIRECT_SUBSTART;
+  if(GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), CNM_WFP2PMF_DIRECT_COMMAND, 1, &command)){
+    _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_WAIT);
+  }
+  return seq;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief   親機が何をするか選択 WIFIP2PMATCH_PLAYERDIRECT_ENDCALL
+ * @param   wk
+ * @retval  none
+ */
+//------------------------------------------------------------------
+
+static int _playerDirectEndCall( WIFIP2PMATCH_WORK *wk, int seq )
+{
+  u8 command;
+  
+  command = WIFIP2PMATCH_PLAYERDIRECT_END;
+  if(GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), CNM_WFP2PMF_DIRECT_COMMAND, 1, &command)){
+    _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_WAIT);
+  }
+  return seq;
+}
+
 
 
 

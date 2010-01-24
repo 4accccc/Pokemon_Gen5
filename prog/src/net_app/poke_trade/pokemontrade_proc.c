@@ -200,18 +200,17 @@ static void _vectorUpMath(POKEMON_TRADE_WORK *pWork)
 
   {
     if(GFL_UI_TP_GetPointCont(&x,&y)){   //ベクトルを監視  // 上向き判定
-      if(pWork->y > (y + 6)){   // 上に移動した場合跳ね上げる処理
-        pWork->bUpVec = TRUE;
-      }
-      else{
-        pWork->bUpVec = FALSE;
-      }
-      if(pWork->pCatchCLWK){
-        //GFL_CLACTPOS pos;
-        //GFL_CLACT_WK_GetPos( pWork->pCatchCLWK, &pos, CLSYS_DRAW_SUB);
-//        aCatchOldPos
-        if(GFL_STD_Abs(pWork->aCatchOldPos.x - x)+GFL_STD_Abs(pWork->aCatchOldPos.y - y) < 10){
+      if(pWork->pCatchCLWK){  //ペンにポケモンがくっついている時
+        if(pWork->y > (y+2)){   // 上に移動した場合跳ね上げる処理
+          if(pWork->aPanWork.bAreaOver){
+            pWork->bUpVec = TRUE;
+          }
+        }
+        else{
           pWork->bUpVec = FALSE;
+        }
+        if(GFL_STD_Abs(pWork->aCatchOldPos.x - x)+GFL_STD_Abs(pWork->aCatchOldPos.y - y) > 10){
+          pWork->aPanWork.bAreaOver = TRUE;
         }
         if(GFL_STD_Abs(pWork->aCatchOldPos.x - x) > 6  && GFL_STD_Abs(pWork->aCatchOldPos.y - y) > 6){
           pWork->bStatusDisp = FALSE;
@@ -224,6 +223,8 @@ static void _vectorUpMath(POKEMON_TRADE_WORK *pWork)
       }
     }
   }
+
+
 }
 
 
@@ -265,6 +266,7 @@ static void _CatchPokemonPositionRewind(POKEMON_TRADE_WORK *pWork)
     GFL_CLACT_WK_SetPos(pWork->pCatchCLWK, &pWork->aCatchOldPos, CLSYS_DRAW_SUB);
     GFL_CLACT_WK_SetDrawEnable( pWork->pCatchCLWK, TRUE);
     pWork->pCatchCLWK=NULL;
+    GFL_STD_MemClear(&pWork->aPanWork,sizeof(PENMOVE_WORK));
   }
 }
 
@@ -1270,6 +1272,8 @@ static void _changeWaitState(POKEMON_TRADE_WORK* pWork)
   }
 }
 
+
+//セーブルーチンから戻ってきたところ
 void IRC_POKMEONTRADE_ChangeFinish(POKEMON_TRADE_WORK* pWork)
 {
   int id = 1-GFL_NET_SystemGetCurrentID();
@@ -1281,6 +1285,10 @@ void IRC_POKMEONTRADE_ChangeFinish(POKEMON_TRADE_WORK* pWork)
   IRCPOKETRADE_PokeDeleteMcss(pWork, 0);
   IRCPOKETRADE_PokeDeleteMcss(pWork, 1);
 
+  if(POKEMONTRADEPROC_IsTriSelect(pWork)){
+    POKE_GTS_InitWork(pWork);
+  }
+  
   {
     int i;
     for(i = 0;i< CELL_DISP_NUM;i++){
@@ -2403,7 +2411,10 @@ void POKMEONTRADE_RemoveCoreResource(POKEMON_TRADE_WORK* pWork)
     pWork->pTouchWork=NULL;
   }
   IRC_POKETRADE_EndIconResource(pWork);
-  GFL_CLACT_UNIT_Delete(pWork->cellUnit);
+  if(pWork->cellUnit){
+    GFL_CLACT_UNIT_Delete(pWork->cellUnit);
+    pWork->cellUnit=NULL;
+  }
   POKETRADE_MESSAGE_HeapEnd(pWork);
   
   POKE_GTS_EndWork(pWork);

@@ -23,7 +23,6 @@ typedef struct {
   FIELDMAP_WORK * fieldmap;
   SAVE_CONTROL_WORK *ctrl;
   void* pWork;
-  BATTLE_SETUP_PARAM para;
   BOOL isEndProc;
   BOOL bFieldEnd;
   int selectType;

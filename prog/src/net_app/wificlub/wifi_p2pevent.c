@@ -96,6 +96,8 @@ enum{
   P2P_TRADE,
   P2P_TRADE_MAIN,
   P2P_TRADE_END,
+  P2P_EVOLUTION,
+  P2P_EVOLUTION_END,
   P2P_TVT,
   P2P_TVT_END,
   P2P_EXIT,
@@ -153,22 +155,22 @@ static void _battleSetting(EVENT_WIFICLUB_WORK* pClub,EV_P2PEVENT_WORK * ep2p,in
   case WIFI_GAME_BATTLE_SINGLE_ALL:
   case WIFI_GAME_BATTLE_SINGLE_FLAT:
     BTL_SETUP_Single_Comm(
-      &pClub->para , gamedata , GFL_NET_HANDLE_GetCurrentHandle() , BTL_COMM_DS, HEAPID_PROC );
+      &ep2p->para , gamedata , GFL_NET_HANDLE_GetCurrentHandle() , BTL_COMM_DS, HEAPID_PROC );
     break;
   case WIFI_GAME_BATTLE_DOUBLE_ALL:
   case WIFI_GAME_BATTLE_DOUBLE_FLAT:
-    BTL_SETUP_Double_Comm( &pClub->para , gamedata , GFL_NET_HANDLE_GetCurrentHandle() , BTL_COMM_DS, HEAPID_PROC );
+    BTL_SETUP_Double_Comm( &ep2p->para , gamedata , GFL_NET_HANDLE_GetCurrentHandle() , BTL_COMM_DS, HEAPID_PROC );
     break;
   case WIFI_GAME_BATTLE_TRIPLE_ALL:
   case WIFI_GAME_BATTLE_TRIPLE_FLAT:
-    BTL_SETUP_Triple_Comm( &pClub->para , gamedata , GFL_NET_HANDLE_GetCurrentHandle() , BTL_COMM_DS, HEAPID_PROC );
+    BTL_SETUP_Triple_Comm( &ep2p->para , gamedata , GFL_NET_HANDLE_GetCurrentHandle() , BTL_COMM_DS, HEAPID_PROC );
     break;
   case WIFI_GAME_BATTLE_ROTATION_ALL:
   case WIFI_GAME_BATTLE_ROTATION_FLAT:
-    BTL_SETUP_Rotation_Comm( &pClub->para , gamedata , GFL_NET_HANDLE_GetCurrentHandle() , BTL_COMM_DS, HEAPID_PROC );
+    BTL_SETUP_Rotation_Comm( &ep2p->para , gamedata , GFL_NET_HANDLE_GetCurrentHandle() , BTL_COMM_DS, HEAPID_PROC );
     break;
   }
-  BATTLE_PARAM_SetPokeParty( &pClub->para, ep2p->pPokeParty, BTL_CLIENT_PLAYER );
+  BATTLE_PARAM_SetPokeParty( &ep2p->para, ep2p->pPokeParty, BTL_CLIENT_PLAYER );
 
 }
 
@@ -310,10 +312,10 @@ static GFL_PROC_RESULT WifiClubProcMain( GFL_PROC * proc, int * seq, void * pwk,
   case P2P_BATTLE_START:
 
     _battleSetting(pClub, ep2p ,ep2p->pMatchParam->seq);
-    PMSND_PlayBGM(pClub->para.musicDefault);
+    PMSND_PlayBGM(ep2p->para.musicDefault);
 
     GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 1);
-    GAMESYSTEM_CallProc(ep2p->gsys, NO_OVERLAY_ID, &BtlProcData, &pClub->para);
+    GAMESYSTEM_CallProc(ep2p->gsys, NO_OVERLAY_ID, &BtlProcData, &ep2p->para);
     //        GFL_PROC_SysCallProc(NO_OVERLAY_ID, GMEVENT_Sub_BattleProc, battle_param);
     ep2p->seq++;
     break;
@@ -331,7 +333,27 @@ static GFL_PROC_RESULT WifiClubProcMain( GFL_PROC * proc, int * seq, void * pwk,
     ep2p->seq++;
     break;
   case P2P_TRADE_END:
-    ep2p->seq = P2P_MATCH_BOARD;
+    if(ep2p->aPokeTr.ret == POKEMONTRADE_MOVE_EVOLUTION){
+      ep2p->seq = P2P_EVOLUTION;
+    }
+    else{
+      ep2p->seq = P2P_MATCH_BOARD;
+    }
+    break;
+  case P2P_EVOLUTION:
+    GFL_OVERLAY_Load( FS_OVERLAY_ID(shinka_demo) );
+    ep2p->aPokeTr.shinka_param = SHINKADEMO_AllocParam( HEAPID_PROC, GAMESYSTEM_GetGameData(pClub->gsys),
+                                               ep2p->aPokeTr.pParty,
+                                               ep2p->aPokeTr.after_mons_no,
+                                               0, ep2p->aPokeTr.cond, TRUE );
+    GFL_PROC_SysCallProc( NO_OVERLAY_ID, &ShinkaDemoProcData, ep2p->aPokeTr.shinka_param );
+    ep2p->seq = P2P_EVOLUTION_END;
+    break;
+  case P2P_EVOLUTION_END:
+    SHINKADEMO_FreeParam( ep2p->aPokeTr.shinka_param );
+    GFL_OVERLAY_Unload( FS_OVERLAY_ID(shinka_demo) );
+    ep2p->aPokeTr.ret = POKEMONTRADE_MOVE_EVOLUTION;
+    ep2p->seq = P2P_TRADE_MAIN;
     break;
   case P2P_TVT:
     ep2p->aTVT.gameData = GAMESYSTEM_GetGameData(ep2p->gsys);
@@ -379,6 +401,7 @@ static GFL_PROC_RESULT WifiClubProcInit( GFL_PROC * proc, int * seq, void * pwk,
   ep2p->pMatchParam->seq = WIFI_GAME_NONE;
   ep2p->gsys = pClub->gsys;
   ep2p->pPokeParty = PokeParty_AllocPartyWork(GetHeapLowID(HEAPID_PROC));
+  ep2p->aPokeTr.pParty = ep2p->pPokeParty; // “¯‚¶•¨‚ðŽg‚¤
 
   pClub->pWork = ep2p;
 

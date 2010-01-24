@@ -25,11 +25,6 @@
 #include "print/str_tool.h"
 #include "pokeicon/pokeicon.h"
 
-#include "system/bmp_menuwork.h"
-#include "system/bmp_winframe.h"
-#include "system/bmp_menulist.h"
-#include "system/bmp_menu.h"
-
 #include "msg/msg_poke_trade.h"
 #include "ircbattle.naix"
 #include "trade.naix"
@@ -51,7 +46,10 @@
 
 #include "spahead.h"
 
+#include "sound/pm_voice.h"
 
+
+static void _changeDemo_ModelTrade2_1(POKEMON_TRADE_WORK* pWork);
 static void _changeDemo_ModelT1(POKEMON_TRADE_WORK* pWork);
 static void _changeDemo_ModelT2(POKEMON_TRADE_WORK* pWork);
 static void _changeDemo_ModelTrade0(POKEMON_TRADE_WORK* pWork);
@@ -245,9 +243,13 @@ void IRC_POKMEONTRADE_STEP_ChangeDemo_PokeMove(POKEMON_TRADE_WORK* pWork)
   int i;
 
   //待機アニメが止まるのを待つ
+#if 0
   pWork->mcssStop[0] = FALSE;
   MCSS_SetAnimCtrlCallBack(pWork->pokeMcss[0], (u32)pWork, _McssAnmStop, NNS_G2D_ANMCALLBACKTYPE_LAST_FRM);
-
+#else
+  pWork->mcssStop[0] = TRUE;
+  MCSS_SetAnimeIndex(pWork->pokeMcss[0], 0);
+#endif  
   _CHANGE_STATE(pWork,_changeDemo_ModelT1);
 }
 
@@ -349,10 +351,31 @@ static void _changeDemo_ModelTrade1(POKEMON_TRADE_WORK* pWork)
 
     _setNextAnim(pWork, 0);
 
+//    pWork->anmCount = 60;
+    {
+      POKEMON_PARAM* pp= IRC_POKEMONTRADE_GetRecvPP(pWork, 0);
+      if(! PP_Get(pp,ID_PARA_tamago_flag,NULL) ){
+        int monsno = PP_Get(pp,ID_PARA_monsno_egg,NULL);
+        int formno = PP_Get(pp,ID_PARA_form_no,NULL);
+        PMVOICE_Play( monsno, formno, 64, FALSE, 0, 0, FALSE, 0 );
+      }
+    }
+    _CHANGE_STATE(pWork,_changeDemo_ModelTrade2_1);
+  }
+  
+}
+
+
+
+static void _changeDemo_ModelTrade2_1(POKEMON_TRADE_WORK* pWork)
+{
+  if(pWork->anmCount>60){
     _CHANGE_STATE(pWork,_changeDemo_ModelTrade2);
   }
 }
 
+
+//3dスタート
 static void _changeDemo_ModelTrade2(POKEMON_TRADE_WORK* pWork)
 {
   int i;

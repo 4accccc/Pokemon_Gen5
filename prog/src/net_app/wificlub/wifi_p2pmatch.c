@@ -993,6 +993,8 @@ static int (*FuncTable[])(WIFIP2PMATCH_WORK *wk, int seq)={
   _playerDirectSub1, // WIFIP2PMATCH_PLAYERDIRECT_SUB1
   _playerDirectSub2, // WIFIP2PMATCH_PLAYERDIRECT_SUB2
   _playerDirectSubStart, //WIFIP2PMATCH_PLAYERDIRECT_SUBSTART
+  _playerDirectSubstartCall, //WIFIP2PMATCH_PLAYERDIRECT_SUBSTARTCALL
+  _playerDirectEndCall, // WIFIP2PMATCH_PLAYERDIRECT_ENDCALL
   _playerDirectBattle2,//WIFIP2PMATCH_PLAYERDIRECT_BATTLE2
   _playerDirectBattleMode,  //WIFIP2PMATCH_PLAYERDIRECT_BATTLE_MODE,
   _playerDirectBattleMode2,  //WIFIP2PMATCH_PLAYERDIRECT_BATTLE_MODE2,
@@ -5337,6 +5339,7 @@ void WifiP2PMatchRecvDirectMode(const int netID, const int size, const void* pDa
   }
 
   if(wk->seq == WIFIP2PMATCH_PLAYERDIRECT_WAIT){
+    NET_PRINT("%d\n",pChangeStateNo[0]);
     _CHANGESTATE(wk, pChangeStateNo[0]);
   }
   else{

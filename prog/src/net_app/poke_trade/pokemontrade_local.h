@@ -328,7 +328,16 @@ typedef struct
 #include "pokemontrade_demo_local.h"
 
 
+typedef struct
+{
+  u16 bAreaOver;   //一回でもエリア外に出たかどうか
+} PENMOVE_WORK;
+
+
+
+
 struct _POKEMON_TRADE_WORK{
+  PENMOVE_WORK aPanWork;
   POKEMONTRADE_PARAM* pParentWork;
   POKEMONTRADE_DEMO_WORK* pPokemonTradeDemo;
   u8 FriendPokemonCol[732];         ///< 相手のポケモンBOXにあるポケモン色

@@ -132,7 +132,7 @@ static void wifi_SetEventParam( GMEVENT* event, GAMESYS_WORK* gsys, FIELDMAP_WOR
   dbw->fieldmap = fieldmap;
   dbw->event = event;
   dbw->bFieldEnd = bFieldEnd;
-
+#if 0
   para = &dbw->para;
   {
     para->rule = BTL_RULE_SINGLE;
@@ -152,6 +152,7 @@ static void wifi_SetEventParam( GMEVENT* event, GAMESYS_WORK* gsys, FIELDMAP_WOR
 
     PokeParty_Copy(GAMEDATA_GetMyPokemon(GAMESYSTEM_GetGameData(gsys)), para->party[ BTL_CLIENT_PLAYER ]);
   }
+#endif
 }
 
 //------------------------------------------------------------------
@@ -181,9 +182,11 @@ void EVENT_WiFiClubChange(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,GMEVENT 
 
 static void _battleParaFree(EVENT_WIFICLUB_WORK *dbw)
 {
+#if 0
   BATTLE_SETUP_PARAM * para;
 
   para = &dbw->para;
   GFL_HEAP_FreeMemory(para->party[ BTL_CLIENT_PLAYER ]);
+#endif
 }
 

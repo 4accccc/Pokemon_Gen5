@@ -762,7 +762,9 @@ void POKETRADE_MESSAGE_ChangePokemonStatusDisp(POKEMON_TRADE_WORK* pWork,POKEMON
     MCSS_ResetVanishFlag(pWork->pokeMcss[pWork->pokemonselectno]);
 
     //‘ŠŽè‚Ì‚ÍOFF
-    MCSS_SetVanishFlag(pWork->pokeMcss[1-pWork->pokemonselectno]);
+    if(pWork->pokeMcss[1-pWork->pokemonselectno]){
+      MCSS_SetVanishFlag(pWork->pokeMcss[1-pWork->pokemonselectno]);
+    }
 
   }
   if(pWork->MyInfoWin){
