@@ -3,7 +3,7 @@
  * @file  scr_offset_id.h
  * @bfief  スクリプトIDのオフセット定義
  * @author  tamada GAMEFREAK inc.
- * @date  2009 12/20 (Sun) 01:28
+ * @date  2010 01/24 (Sun) 23:21
  *
  * このファイルはコンバータにより自動生成されています
  */
@@ -93,6 +93,9 @@
 
 #define ID_PALPARK_SCR_OFFSET            (10290) //パルパーク
 #define ID_PALPARK_SCR_OFFSET_END        (10309)
+
+#define ID_JUDGE_SCR_OFFSET              (10310) //ジャッジイベント
+#define ID_JUDGE_SCR_OFFSET_END          (10314)
 
 #define ID_DEBUG_SCR_OFFSET              (12000) //デバッグ用共通スクリプト（この下にはファイルを追加しない！！）
 #define ID_DEBUG_SCR_OFFSET_END          (12199)

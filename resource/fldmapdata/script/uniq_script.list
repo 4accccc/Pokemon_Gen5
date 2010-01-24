@@ -3,7 +3,7 @@
 # @file  uniq_script.list
 # @bfief 非マップ依存のスクリプトリスト
 # @author  tamada GAMEFREAK inc.
-# @date  2009 12/20 (Sun) 01:28
+# @date  2010 01/24 (Sun) 23:21
 #
 #  このファイルはコンバータにより自動生成されています
 #
@@ -36,6 +36,7 @@ UNIQ_SCRIPTFILES = \
 	deox_change_scr.ev \
 	fossil_scr.ev \
 	palpark_scr.ev \
+	judge_scr.ev \
 	debug_scr.ev 
 
 #イベントデータで指定され直接呼ばれるスクリプトファイル
@@ -58,7 +59,8 @@ UNIQ_TOP_EVENT_SCRFILES = \
 	btl_util_scr.ev \
 	deox_change_scr.ev \
 	fossil_scr.ev \
-	palpark_scr.ev 
+	palpark_scr.ev \
+	judge_scr.ev 
 
 #プログラムやスクリプトから呼ばれるスクリプトファイル
 UNIQ_SUB_EVENT_SCRFILES = \

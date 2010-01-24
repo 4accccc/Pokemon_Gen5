@@ -1,0 +1,166 @@
+//======================================================================
+//
+//                judge_scr.ev
+//
+//    スクリプトファイル：judge_scr用
+//
+//======================================================================
+
+  .text
+
+  .include  "scr_seq_def.h"
+  .include  "msg_judge_scr.h"
+
+
+//--------------------------------------------------------------
+//               スクリプト本体
+//--------------------------------------------------------------
+
+//--------------------------------------------------------------
+//               スクリプトテーブル
+//--------------------------------------------------------------
+_EVENT_DATA   ev_breeder_judge
+_EVENT_DATA_END
+
+DEFINE_LOCAL  SEL_POS
+DEFINE_LOCAL  FIRST_MSG_FLAG
+DEFINE_LOCAL  HIGH_VALUE
+
+/**************************************************************/
+/*                                                            */
+/**************************************************************/
+EVENT_START ev_breeder_judge
+    _TALK_OBJ_START()
+    IF FLAG_ON( FH_01 ) THEN
+        _BALLOONWIN_TALKOBJ_MSG( msg_judge_02 )
+    ELSE
+        _BALLOONWIN_TALKOBJ_MSG( msg_judge_01 )
+        _FLAG_SET( FH_01 )
+    ENDIF
+    _BALLOONWIN_CLOSE()
+
+    _CALL sub_breeder_judge
+
+EVENT_END
+
+
+sub_breeder_judge:
+    //手持ちポケモン選択
+    _SELECT_TEMOTI_POKE( SCWK_ANSWER , SEL_POS , 0 )
+
+    IF $SCWK_ANSWER == FALSE THEN
+        _BALLOONWIN_TALKOBJ_MSG( msg_judge_03 )
+        _LAST_KEYWAIT()
+        _BALLOONWIN_CLOSE()
+        _RET
+    ENDIF
+
+    _CHECK_TEMOTI_EGG( SCWK_ANSWER, SEL_POS )
+    IF $SCWK_ANSWER == TRUE THEN
+        _BALLOONWIN_TALKOBJ_MSG( msg_judge_23 )
+        _LAST_KEYWAIT()
+        _BALLOONWIN_CLOSE()
+        _RET
+    ENDIF
+
+    _GET_BREEDER_JUDGE_RESULT( SEL_POS, SCR_JUDGE_MODE_TOTAL, SCWK_ANSWER )
+    IF $SCWK_ANSWER <= 90 THEN
+        _BALLOONWIN_TALKOBJ_MSG( msg_judge_04 ) //まずまず
+    ELSIF $SCWK_ANSWER <= 120 THEN
+        _BALLOONWIN_TALKOBJ_MSG( msg_judge_05 ) //平均以上
+    ELSIF $SCWK_ANSWER <= 150 THEN
+        _BALLOONWIN_TALKOBJ_MSG( msg_judge_06 ) //そうとう優秀
+    ELSE
+        _BALLOONWIN_TALKOBJ_MSG( msg_judge_07 ) //すばらしい
+    ENDIF
+    _BALLOONWIN_CLOSE()
+
+    // $HIGH_VALUE == 個体値の最大の値
+    _GET_BREEDER_JUDGE_RESULT( SEL_POS, SCR_JUDGE_MODE_HIGH_VALUE, HIGH_VALUE )
+    $FIRST_MSG_FLAG = TRUE
+
+    //  HPのメッセージをだすか？チェック
+    _GET_BREEDER_JUDGE_RESULT( SEL_POS, SCR_JUDGE_MODE_HP, SCWK_ANSWER )
+    IF $SCWK_ANSWER == $HIGH_VALUE THEN
+        $FIRST_MSG_FLAG = FALSE
+        _BALLOONWIN_TALKOBJ_MSG( msg_judge_08 )
+        _BALLOONWIN_CLOSE()
+    ENDIF
+
+    //  こうげきのメッセージをだすか？チェック
+    _GET_BREEDER_JUDGE_RESULT( SEL_POS, SCR_JUDGE_MODE_POW, SCWK_ANSWER )
+    IF $SCWK_ANSWER == $HIGH_VALUE THEN
+        IF $FIRST_MSG_FLAG == TRUE THEN
+            _BALLOONWIN_TALKOBJ_MSG( msg_judge_09 )
+        ELSE
+            _BALLOONWIN_TALKOBJ_MSG( msg_judge_14 )
+        ENDIF
+        _BALLOONWIN_CLOSE()
+        $FIRST_MSG_FLAG = FALSE
+    ENDIF
+
+    //  ぼうぎょのメッセージをだすか？チェック
+    _GET_BREEDER_JUDGE_RESULT( SEL_POS, SCR_JUDGE_MODE_DEF, SCWK_ANSWER )
+    IF $SCWK_ANSWER == $HIGH_VALUE THEN
+        IF $FIRST_MSG_FLAG == TRUE THEN
+            _BALLOONWIN_TALKOBJ_MSG( msg_judge_10 )
+        ELSE
+            _BALLOONWIN_TALKOBJ_MSG( msg_judge_15 )
+        ENDIF
+        _BALLOONWIN_CLOSE()
+        $FIRST_MSG_FLAG = FALSE
+    ENDIF
+
+    //  とくこうのメッセージをだすか？チェック
+    _GET_BREEDER_JUDGE_RESULT( SEL_POS, SCR_JUDGE_MODE_SPPOW, SCWK_ANSWER )
+    IF $SCWK_ANSWER == $HIGH_VALUE THEN
+        IF $FIRST_MSG_FLAG == TRUE THEN
+            _BALLOONWIN_TALKOBJ_MSG( msg_judge_11 )
+        ELSE
+            _BALLOONWIN_TALKOBJ_MSG( msg_judge_16 )
+        ENDIF
+        _BALLOONWIN_CLOSE()
+        $FIRST_MSG_FLAG = FALSE
+    ENDIF
+
+    //  とくぼうのメッセージをだすか？チェック
+    _GET_BREEDER_JUDGE_RESULT( SEL_POS, SCR_JUDGE_MODE_SPDEF, SCWK_ANSWER )
+    IF $SCWK_ANSWER == $HIGH_VALUE THEN
+        IF $FIRST_MSG_FLAG == TRUE THEN
+            _BALLOONWIN_TALKOBJ_MSG( msg_judge_12 )
+        ELSE
+            _BALLOONWIN_TALKOBJ_MSG( msg_judge_17 )
+        ENDIF
+        _BALLOONWIN_CLOSE()
+        $FIRST_MSG_FLAG = FALSE
+    ENDIF
+
+    //  すばやさのメッセージをだすか？チェック
+    _GET_BREEDER_JUDGE_RESULT( SEL_POS, SCR_JUDGE_MODE_AGI, SCWK_ANSWER )
+    IF $SCWK_ANSWER == $HIGH_VALUE THEN
+        IF $FIRST_MSG_FLAG == TRUE THEN
+            _BALLOONWIN_TALKOBJ_MSG( msg_judge_13 )
+        ELSE
+            _BALLOONWIN_TALKOBJ_MSG( msg_judge_18 )
+        ENDIF
+        _BALLOONWIN_CLOSE()
+        $FIRST_MSG_FLAG = FALSE
+    ENDIF
+
+    IF $HIGH_VALUE <= 15 THEN
+        _BALLOONWIN_TALKOBJ_MSG( msg_judge_19 ) //まあまあ
+    ELSIF $HIGH_VALUE <= 25 THEN
+        _BALLOONWIN_TALKOBJ_MSG( msg_judge_20 ) //かなり
+    ELSIF $HIGH_VALUE <= 30 THEN
+        _BALLOONWIN_TALKOBJ_MSG( msg_judge_21 ) //すばらしい
+    ELSE
+        _BALLOONWIN_TALKOBJ_MSG( msg_judge_22 ) //最高
+    ENDIF
+    _LAST_KEYWAIT()
+    _BALLOONWIN_CLOSE()
+
+    _RET
+
+
+
+
