@@ -513,7 +513,7 @@
   DEF_CMD( EvCmdGetPartyPokeType, EV_SEQ_GET_TEMOTI_POKE_TYPE )
   DEF_CMD( EvCmdSetFavoritePoke, EV_SEQ_SET_FAVORITE_POKEMON )
   DEF_CMD( EvCmdSetGymVictoryInfo, EV_SEQ_SET_GYM_VICTORY_INFO )
-  NO_CMD()
+  DEF_CMD( EvCmdGetGymVictoryInfo, EV_SEQ_GET_GYM_VICTORY_INFO )
 
   NO_CMD()
   NO_CMD()
