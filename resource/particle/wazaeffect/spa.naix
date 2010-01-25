@@ -497,8 +497,10 @@ enum {
 	NARC_spa_w_466_spa = 483,
 	NARC_spa_w_467_2_spa = 484,
 	NARC_spa_w_476_spa = 485,
-	NARC_spa_w_485_spa = 486,
-	NARC_spa_w_500_spa = 487
+	NARC_spa_w_479_spa = 486,
+	NARC_spa_w_483_spa = 487,
+	NARC_spa_w_485_spa = 488,
+	NARC_spa_w_500_spa = 489
 };
 
 /* NARC_SPA_NAIX_ */
