@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2010-01-23T21:09:56"/>
+	<create user="matsumiya" host="W00207" date="2010-01-25T15:35:25"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -479,31 +479,60 @@
 いっそう　チャーミングに　してるさ</language>
 	</row>
 
-	<row id="msg_c04r0201_man2_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c04r0201_man2_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
-・参加回数＝1</comment>
+・参加回数＝1
+・コンディションに関するタグがない（要発注）</comment>
 		<attribute name="キャラ指定">MAN2
 ＝スタイリスト</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">テストメッセージ</language>
+		<language name="JPN" width="256">おつかれっ！　きみの
+ポケモンの　かつやく　みてたよ！▼
+ぜんたいてきに
+とても　キュート！▼
+アクセントで　ユニークな　グッズを
+つけていて　よかったと　おもうな！▼
+クールさは　ひかえめ　だったね▼
+よし！　ぼくも　まけないよ！！</language>
+		<language name="JPN_KANJI" width="256">おつかれっ！　きみの
+ポケモンの　かつやく　みてたよ！▼
+ぜんたいてきに
+とても　キュート！▼
+アクセントで　ユニークな　グッズを
+つけていて　よかったと　おもうな！▼
+クールさは　ひかえめ　だったね▼
+よし！　ぼくも　まけないよ！！</language>
 	</row>
 
 	<row id="msg_c04r0201_man2_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
-・参加回数＝5</comment>
+・参加回数＝5
+・グッズ「おへそボタン」入手処理</comment>
 		<attribute name="キャラ指定">MAN2
 ＝スタイリスト</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">テストメッセージ</language>
+		<language name="JPN" width="256">やあ！　ミュージカル
+たのしんで　いるようだね！▼
+そんな　きみに
+ぼくからの　プレゼントだよ！▼</language>
+		<language name="JPN_KANJI" width="256">やあ！　ミュージカル
+たのしんで　いるようだね！▼
+そんな　きみに
+ぼくからの　プレゼントだよ！▼</language>
 	</row>
 
 	<row id="msg_c04r0201_man2_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
-・参加回数＝10</comment>
+・参加回数＝10
+・グッズ「にこにこおめん」入手処理</comment>
 		<attribute name="キャラ指定">MAN2
 ＝スタイリスト</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">テストメッセージ</language>
+		<language name="JPN" width="256">やあ！　ミュージカルを
+とても　たのしんで　いるようだね！▼
+そんな　きみに　ぼくからの
+とっておきの　プレゼントだよ！▼</language>
+		<language name="JPN_KANJI" width="256">やあ！　ミュージカルを
+とても　たのしんで　いるようだね！▼
+そんな　きみに　ぼくからの
+とっておきの　プレゼントだよ！▼</language>
 	</row>
 
 	<row id="msg_c04r0201_stylistpoke_01" back-color="#ffff00,,,#ffff00,,#ffff00,#ffff00,,,,,,#ffff00,,,,,,">
