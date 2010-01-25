@@ -81,6 +81,9 @@ palpark_scr_def.h: palpark_scr.ev
 judge_scr_def.h: judge_scr.ev
 	$(EV_DEF) judge_scr.ev $(SCR_OFFS_ID_H)
 
+rotom_change_scr_def.h: rotom_change_scr.ev
+	$(EV_DEF) rotom_change_scr.ev $(SCR_OFFS_ID_H)
+
 debug_scr_def.h: debug_scr.ev
 	$(EV_DEF) debug_scr.ev $(SCR_OFFS_ID_H)
 
