@@ -324,33 +324,28 @@ _END
 
 sub_field_comm_exit_main:
 {
-  DEFINE_LOCAL  i_comm_no
-  DEFINE_LOCAL  i_ret
-  
-  _GET_FIELD_COMM_NO( i_comm_no )
+  _GET_FIELD_COMM_NO( SCWK_ANSWER )
 
-  IF $i_comm_no == GAME_COMM_NO_NULL THEN
+  IF $SCWK_ANSWER == GAME_COMM_NO_NULL THEN
     $SCWK_PARAM0 = SCR_FIELD_COMM_EXIT_OK
     _RET
   ENDIF
 
-  IF $i_comm_no == GAME_COMM_NO_INVASION THEN
+  IF $SCWK_ANSWER == GAME_COMM_NO_INVASION THEN
     //ÉpÉåÉXéûÇÕìØà”ÇìæÇÈÇ‹Ç≈êÿífÇµÇ»Ç¢
     _SYSWIN_MSG_DOWN( msg_common_fldcomm_exit_01)
-    _YES_NO_WIN( i_ret )
+    _YES_NO_WIN( SCWK_ANSWER )
 
-    IF $i_ret == SCR_NO THEN
+    IF $SCWK_ANSWER == SCR_NO THEN
       $SCWK_PARAM0 = SCR_FIELD_COMM_EXIT_CANCEL
       _RET
     ENDIF
     _SYSWIN_MSG_DOWN( msg_common_fldcomm_exit_02)
-    _FIELD_COMM_EXIT( i_ret )
+    _FIELD_COMM_EXIT( SCWK_PARAM0 )
     _SYSWIN_CLOSE()
   ELSE
-    _FIELD_COMM_EXIT( i_ret )
+    _FIELD_COMM_EXIT( SCWK_PARAM0 )
   ENDIF
-  
-  $SCWK_PARAM0 = $i_ret
 }
 _RET
 
