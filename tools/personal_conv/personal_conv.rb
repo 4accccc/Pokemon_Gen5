@@ -749,21 +749,6 @@ end
 	fp_lst.print( "egg/pmwb_egg_manafi_n.ncl\n" )
 	fp_lst.print( "egg/pmwb_egg_manafi_r.ncl\n" )
 
-  #みがわり人形も独自の持ち方をする
-  fp_gra.print( "\"pfwb_migawari.NCBR\"\n" )
-	fp_gra.print( "\"pfwb_migawari.NCER\"\n" )
-	fp_gra.print( "\"pfwb_migawari.NANR\"\n" )
-	fp_gra.print( "\"pfwb_migawari.NMCR\"\n" )
-	fp_gra.print( "\"pfwb_migawari.NMAR\"\n" )
-	fp_gra.print( "\"pfwb_migawari.NCEC\"\n" )
-  fp_gra.print( "\"pbwb_migawari.NCBR\"\n" )
-	fp_gra.print( "\"pbwb_migawari.NCER\"\n" )
-	fp_gra.print( "\"pbwb_migawari.NANR\"\n" )
-	fp_gra.print( "\"pbwb_migawari.NMCR\"\n" )
-	fp_gra.print( "\"pbwb_migawari.NMAR\"\n" )
-	fp_gra.print( "\"pbwb_migawari.NCEC\"\n" )
-	fp_gra.print( "\"pmwb_migawari.NCLR\"\n" )
-
   fp_lst.print( "migawari/pfwb_migawari.ncg\n" )
 	fp_lst.print( "migawari/pfwb_migawari.nce\n" )
 	fp_lst.print( "migawari/pfwb_migawari.nmc\n" )
@@ -842,6 +827,21 @@ end
       fp_monsno.print( "\n" )
     end
   }
+
+  #みがわり人形は最後に連結する
+  fp_form.print( "\"pfwb_migawari.NCBR\"\n" )
+	fp_form.print( "\"pfwb_migawari.NCER\"\n" )
+	fp_form.print( "\"pfwb_migawari.NANR\"\n" )
+	fp_form.print( "\"pfwb_migawari.NMCR\"\n" )
+	fp_form.print( "\"pfwb_migawari.NMAR\"\n" )
+	fp_form.print( "\"pfwb_migawari.NCEC\"\n" )
+  fp_form.print( "\"pbwb_migawari.NCBR\"\n" )
+	fp_form.print( "\"pbwb_migawari.NCER\"\n" )
+	fp_form.print( "\"pbwb_migawari.NANR\"\n" )
+	fp_form.print( "\"pbwb_migawari.NMCR\"\n" )
+	fp_form.print( "\"pbwb_migawari.NMAR\"\n" )
+	fp_form.print( "\"pbwb_migawari.NCEC\"\n" )
+	fp_form.print( "\"pmwb_migawari.NCLR\"\n" )
 
   fp_monsno.close
   fp_monsnum.close
