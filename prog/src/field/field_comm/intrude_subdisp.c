@@ -456,6 +456,9 @@ void INTRUDE_SUBDISP_Update(INTRUDE_SUBDISP_PTR intsub)
           intsub->wfbc_go = FALSE;
         }
         break;
+      default:
+        GF_ASSERT(0);
+        break;
       }
     }
   }
@@ -1455,8 +1458,14 @@ static void _IntSub_TouchUpdate(INTRUDE_COMM_SYS_PTR intcomm, INTRUDE_SUBDISP_PT
         GFL_CLACT_WK_GetPos( act, &pos, CLSYS_DRAW_SUB );
         if(x - TOUCH_RANGE_PLAYER_ICON_X <= pos.x && x + TOUCH_RANGE_PLAYER_ICON_X >= pos.x
             && y - TOUCH_RANGE_PLAYER_ICON_Y <= pos.y && y + TOUCH_RANGE_PLAYER_ICON_Y >= pos.y){
-          Intrude_SetWarpPlayerNetID(game_comm, net_id);
-          FIELD_SUBSCREEN_SetAction(subscreen, FIELD_SUBSCREEN_ACTION_INTRUDE_PLAYER_WARP);
+          if(ZONEDATA_IsWfbc(intcomm->intrude_status[net_id].zone_id) == TRUE){
+            intsub->wfbc_go = TRUE;
+            intsub->wfbc_seq = 0;
+          }
+          else{
+            Intrude_SetWarpPlayerNetID(game_comm, net_id);
+            FIELD_SUBSCREEN_SetAction(subscreen, FIELD_SUBSCREEN_ACTION_INTRUDE_PLAYER_WARP);
+          }
           return;
         }
       }
