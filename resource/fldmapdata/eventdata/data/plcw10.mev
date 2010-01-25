@@ -1,0 +1,61 @@
+#event data
+#save date:2010/01/21 13:13:01
+# linked worldmap file name
+C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\plcw10.wms
+#SECTION START:OBJ_EVENT
+#Map Event List data
+#save date:
+2
+#hold event type:
+1
+#hold event number:
+0
+#Map Event List Data End
+#SECTION End:OBJ_EVENT
+#SECTION START:BG_EVENT
+#Map Event List data
+#save date:
+2
+#hold event type:
+1
+#hold event number:
+0
+#Map Event List Data End
+#SECTION End:BG_EVENT
+#SECTION START:POS_EVENT
+#Map Event List data
+#save date:
+2
+#hold event type:
+1
+#hold event number:
+0
+#Map Event List Data End
+#SECTION End:POS_EVENT
+#SECTION START:DOOR_EVENT
+#Map Event List data
+#save date:
+2
+#hold event type:
+1
+#hold event number:
+1
+#event number: 0
+#Door Event Label
+DOOR_ID_PLCW10_PLR15_EXIT01
+#Next Zone ID Name
+ZONE_ID_PLR15
+#Next Door ID Name
+DOOR_ID_PLR15_PLC10_EXIT01
+#Door Direction
+EXIT_DIR_RIGHT
+#Door Type
+EXIT_TYPE_INTRUDE
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-184 0 -728
+#size
+1 1
+#Map Event List Data End
+#SECTION End:DOOR_EVENT

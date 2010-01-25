@@ -768,6 +768,9 @@ static void _PalaceFieldPlayerWarp(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameS
     else{
       GAMEDATA_SetIntrudeReverseArea(gamedata, TRUE);
     }
+
+    // WFBCCOMM‚ÉV’ÊMæ‚ð’Ê’m
+    FIELD_WFBC_COMM_DATA_SetIntrudeNetID( &intcomm->wfbc_comm_data, new_area );
   }
 }
 

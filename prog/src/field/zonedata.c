@@ -71,6 +71,7 @@ static ZONE_DATA_HANDLE* data_handle = NULL;
 static u16 ZONEDATA_CHANGE_ID_TBL[ ZONEDATA_CHANGE_MAX ][ ZONEDATA_CHANGE_ID_TBL_NUM ] =
 {
   { ZONE_ID_BC10, ZONE_ID_WC10 },   // ZONEDATA_CHANGE_BC_WF_ID BCをWFに変更する。
+  { ZONE_ID_PLC10, ZONE_ID_PLCW10 },   // ZONEDATA_CHANGE_BC_WF_ID BCをWFに変更する。
 };
 
 
@@ -660,7 +661,7 @@ BOOL ZONEDATA_IsBingo(u16 zone_id)
 BOOL ZONEDATA_IsWfbc(u16 zone_id)
 {
   zone_id = ControlZoneID(zone_id);
-  return ((zone_id == ZONE_ID_BCWFTEST) || (zone_id == ZONE_ID_WC10) || (zone_id == ZONE_ID_BC10));
+  return ((zone_id == ZONE_ID_BCWFTEST) || (zone_id == ZONE_ID_WC10) || (zone_id == ZONE_ID_BC10) || (zone_id == ZONE_ID_PLC10) || (zone_id == ZONE_ID_PLCW10));
 }
 
 //------------------------------------------------------------------

@@ -33,6 +33,7 @@ enum {
 typedef enum
 {
   ZONEDATA_CHANGE_BC_WF_ID, // BCをWFに変更する。
+  ZONEDATA_CHANGE_PLC10_PLCW10_ID, // PalaceのBCをWFに変更する。
 
   ZONEDATA_CHANGE_MAX,
 } ZONEDATA_CHANGE_ID;

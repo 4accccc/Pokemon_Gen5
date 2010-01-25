@@ -2182,7 +2182,7 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_KAZAKAMI_FadeIn( WEATHER_TASK* p_wk, WEA
     if( p_local_wk->wait == 0 )
     {
       // 音
-      WEATHER_TASK_PlayLoopSnd( p_wk, WEATHER_SND_SE_HIGHRAIN );	
+      WEATHER_TASK_PlayLoopSnd( p_wk, WEATHER_SND_SE_KAZAKAMI_NORMAL_RAIN );	
       // BGON
       WEATHER_TASK_3DBG_SetVisible( p_wk, TRUE, WEATHER_TASK_3DBG_FRONT );
       //FOGON
@@ -2247,7 +2247,7 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_KAZAKAMI_NoFade( WEATHER_TASK* p_wk, WEA
 	WEATHER_TASK_DustObj( p_wk, WEATHER_KAZAKAMI_OBJ_Add, WEATHER_KAZAKAMI_NOFADE_OBJ_START_NUM, WEATHER_KAZAKAMI_NOFADE_OBJ_START_DUST_NUM, WEATHER_KAZAKAMI_NOFADE_OBJ_START_DUST_MOVE, heapID );
 
   // 音
-  WEATHER_TASK_PlayLoopSnd( p_wk, WEATHER_SND_SE_HIGHRAIN );	
+  WEATHER_TASK_PlayLoopSnd( p_wk, WEATHER_SND_SE_KAZAKAMI_NORMAL_RAIN );	
   WEATHER_KAZAKAMI_WindStartRain( p_wk, p_local_wk, fog_cont, FALSE );
 
   // BGON
@@ -2728,6 +2728,10 @@ static void WEATHER_KAZAKAMI_WindStartRain( WEATHER_TASK* p_sys, WEATHER_KAZAKAM
       fog_cont );
 
     WEATHER_TASK_3DBG_SetVisible( p_sys, FALSE, WEATHER_TASK_3DBG_BACK );
+
+    // SEの変更
+    PMSND_PlaySE( WEATHER_SND_SE_KAZAKAMI_NORMAL_MIDDLE_WIND );
+    WEATHER_TASK_PlayLoopSnd( p_sys, WEATHER_SND_SE_KAZAKAMI_NORMAL_RAIN );	
   }
 
 
@@ -2761,6 +2765,11 @@ static void WEATHER_KAZAKAMI_WindControl( WEATHER_TASK* p_sys, WEATHER_KAZAKAMI_
             WEATHER_FOG_DEPTH_DEFAULT + WEATHER_KAZAKAMI_FOG_OFS, 
             WEATHER_KAZAKAMI_FOG_TIMING,
             fog_cont );
+
+          // SEの変更
+          PMSND_PlaySE( WEATHER_SND_SE_KAZAKAMI_NORMAL_MIDDLE_WIND );
+          WEATHER_TASK_PlayLoopSnd( p_sys, WEATHER_SND_SE_KAZAKAMI_MIDDLE_RAIN );	
+          
         }
     }
     break;
@@ -2782,7 +2791,13 @@ static void WEATHER_KAZAKAMI_WindControl( WEATHER_TASK* p_sys, WEATHER_KAZAKAMI_
           WEATHER_TASK_3DBG_SetVisible( p_sys, FALSE, WEATHER_TASK_3DBG_BACK );
           WEATHER_TASK_3DBG_SetScaleX( p_sys, FX32_ONE, WEATHER_TASK_3DBG_FRONT );
           WEATHER_TASK_3DBG_SetScaleY( p_sys, FX32_ONE, WEATHER_TASK_3DBG_FRONT );
+
+          // SEの変更
+          PMSND_PlaySE( WEATHER_SND_SE_KAZAKAMI_MIDDLE_HIGH_WIND );
+          WEATHER_TASK_PlayLoopSnd( p_sys, WEATHER_SND_SE_KAZAKAMI_MIDDLE_RAIN );	
+        
         }
+
       }
     }
     break;
@@ -2805,6 +2820,10 @@ static void WEATHER_KAZAKAMI_WindControl( WEATHER_TASK* p_sys, WEATHER_KAZAKAMI_
           WEATHER_TASK_3DBG_SetVisible( p_sys, TRUE, WEATHER_TASK_3DBG_BACK );
           WEATHER_TASK_3DBG_SetScaleX( p_sys, FX32_HALF, WEATHER_TASK_3DBG_FRONT );
           WEATHER_TASK_3DBG_SetScaleY( p_sys, FX32_ONE + FX32_HALF, WEATHER_TASK_3DBG_FRONT );
+
+          // SEの変更
+          PMSND_PlaySE( WEATHER_SND_SE_KAZAKAMI_MIDDLE_HIGH_WIND );
+          WEATHER_TASK_PlayLoopSnd( p_sys, WEATHER_SND_SE_KAZAKAMI_HIGH_RAIN );	
         }
       }
     }

@@ -3,7 +3,7 @@
 #
 #   WFBC  人物情報のコンバート
 #
-#   wfbc_people_conv.pl excel_tab objcode trtypedef monsno_def  script_bc_h script_wf_h item_def script_item_h trdata_def output_header
+#   wfbc_people_conv.pl excel_tab objcode trtypedef monsno_def  script_bc_h script_wf_h script_plc_h script_plcw_h item_def script_item_h trdata_def output_header
 #
 #
 #
@@ -11,9 +11,9 @@
 
 
 #引数　チェック
-if( @ARGV < 10 )
+if( @ARGV < 12 )
 {
-  print( "wfbc_people_conv.pl excel_tab objcode trtypedef monsno_def  script_bc_h script_wf_h item_def script_item_h trdata_def output_header\n" );
+  print( "wfbc_people_conv.pl excel_tab objcode trtypedef monsno_def  script_bc_h script_wf_h script_plc_h script_plcw_h item_def script_item_h trdata_def output_header\n" );
   exit(1);
 }
 
@@ -23,6 +23,8 @@ if( @ARGV < 10 )
 @MONSNO_DEF = undef;
 @SCRIPT_BC = undef;
 @SCRIPT_WF = undef;
+@SCRIPT_PLC = undef;
+@SCRIPT_PLCW = undef;
 @SCRIPT_ITEM = undef;
 @ITEM_DEF = undef;
 @TRDATA_DEF = undef;
@@ -51,12 +53,18 @@ open( FILEIN, $ARGV[5] );
 @SCRIPT_WF = <FILEIN>;
 close( FILEIN );
 open( FILEIN, $ARGV[6] );
-@ITEM_DEF = <FILEIN>;
+@SCRIPT_PLC = <FILEIN>;
 close( FILEIN );
 open( FILEIN, $ARGV[7] );
-@SCRIPT_ITEM = <FILEIN>;
+@SCRIPT_PLCW = <FILEIN>;
 close( FILEIN );
 open( FILEIN, $ARGV[8] );
+@ITEM_DEF = <FILEIN>;
+close( FILEIN );
+open( FILEIN, $ARGV[9] );
+@SCRIPT_ITEM = <FILEIN>;
+close( FILEIN );
+open( FILEIN, $ARGV[10] );
 @TRDATA_DEF = <FILEIN>;
 close( FILEIN );
 
@@ -87,13 +95,15 @@ $PP_DATA_IDX_ENC_PERCENT_02 = 14;
 $PP_DATA_IDX_BTL_TRDATA = 15;
 $PP_DATA_IDX_SCRIPT_WF_00 = 16;
 $PP_DATA_IDX_SCRIPT_BC_00 = 17;
-$PP_DATA_IDX_ITEM_WF = 18;
-$PP_DATA_IDX_ITEM_PERCENT_WF = 19;
-$PP_DATA_IDX_ITEM_BC = 20;
-$PP_DATA_IDX_ITEM_MONEY_BC = 21;
-$PP_DATA_IDX_HIT_PERCENT = 22;
-$PP_DATA_IDX_BLOCK_PARAM = 23;
-$PP_DATA_IDX_NUM = 24;
+$PP_DATA_IDX_SCRIPT_PLCW_00 = 18;
+$PP_DATA_IDX_SCRIPT_PLC_00 = 19;
+$PP_DATA_IDX_ITEM_WF = 20;
+$PP_DATA_IDX_ITEM_PERCENT_WF = 21;
+$PP_DATA_IDX_ITEM_BC = 22;
+$PP_DATA_IDX_ITEM_MONEY_BC = 23;
+$PP_DATA_IDX_HIT_PERCENT = 24;
+$PP_DATA_IDX_BLOCK_PARAM = 25;
+$PP_DATA_IDX_NUM = 26;
 
 
 
@@ -138,7 +148,7 @@ foreach $one ( @EXCEL )
 #情報の出力
 
 #まずヘッダー
-open( FILEOUT, ">".$ARGV[9] );
+open( FILEOUT, ">".$ARGV[11] );
 
 print( FILEOUT "// output resource/field_wfbc_data/wfbc_people_conv.pl\n" );
 print( FILEOUT "#pragma once\n" );
@@ -210,6 +220,12 @@ for( $i=0; $i<$PEOPLE_MAX; $i++ )
   print( FILEOUT pack( "S", $outnum ) );
   #スクリプト　BC
   $outnum = &SCRIPT_BC_GetIdx( $PP_DATA[ $index + $PP_DATA_IDX_SCRIPT_BC_00 ] );
+  print( FILEOUT pack( "S", $outnum ) );
+  #スクリプト　PLCW
+  $outnum = &SCRIPT_PLCW_GetIdx( $PP_DATA[ $index + $PP_DATA_IDX_SCRIPT_PLCW_00 ] );
+  print( FILEOUT pack( "S", $outnum ) );
+  #スクリプト　PLC
+  $outnum = &SCRIPT_PLC_GetIdx( $PP_DATA[ $index + $PP_DATA_IDX_SCRIPT_PLC_00 ] );
   print( FILEOUT pack( "S", $outnum ) );
   #道具 WF
   $outnum = &ITEMSCRIPT_GetIdx( $PP_DATA[ $index + $PP_DATA_IDX_ITEM_WF ] );
@@ -369,6 +385,56 @@ sub SCRIPT_WF_GetIdx
   $name = uc( $name );
 
   foreach $code (@SCRIPT_WF)
+  {
+    $code =~ s/ +/ /g;
+    $code =~ s/\t+/ /g;
+    @codeline = split( /\s/, $code );
+    if( "".$codeline[1] eq "".$name )
+    {
+      $codeline[2] =~ s/\(//;
+      $codeline[2] =~ s/\)//;
+      return $codeline[2];
+    }
+  }
+
+  print( "script $name がみつかりません\n" );
+  exit(1);
+}
+
+sub SCRIPT_PLC_GetIdx
+{
+  my( $name ) = @_;
+  my( $code, @codeline );
+
+  #大文字化
+  $name = uc( $name );
+
+  foreach $code (@SCRIPT_PLC)
+  {
+    $code =~ s/ +/ /g;
+    $code =~ s/\t+/ /g;
+    @codeline = split( /\s/, $code );
+    if( "".$codeline[1] eq "".$name )
+    {
+      $codeline[2] =~ s/\(//;
+      $codeline[2] =~ s/\)//;
+      return $codeline[2];
+    }
+  }
+
+  print( "script $name がみつかりません\n" );
+  exit(1);
+}
+
+sub SCRIPT_PLCW_GetIdx
+{
+  my( $name ) = @_;
+  my( $code, @codeline );
+
+  #大文字化
+  $name = uc( $name );
+
+  foreach $code (@SCRIPT_PLCW)
   {
     $code =~ s/ +/ /g;
     $code =~ s/\t+/ /g;

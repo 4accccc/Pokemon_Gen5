@@ -605,10 +605,22 @@ MMDL_HEADER* FIELD_WFBC_CORE_MMDLHeaderCreateHeapLo( const FIELD_WFBC_CORE* cp_w
       p_buff[count].id          = FIELD_WFBC_CORE_PEOPLE_GetNpcID( &cp_people_array[i] );
       p_buff[count].obj_code    = cp_people_data->objid;
       p_buff[count].move_code   = MV_RND;
-      if( cp_wk->type == FIELD_WFBC_CORE_TYPE_BLACK_CITY ){
-        p_buff[count].event_id    = cp_people_data->script_wf;
-      }else{
-        p_buff[count].event_id    = cp_people_data->script_bc;
+      
+      if( mapmode == MAPMODE_NORMAL )
+      {
+        if( cp_wk->type == FIELD_WFBC_CORE_TYPE_BLACK_CITY ){
+          p_buff[count].event_id    = cp_people_data->script_wf;
+        }else{
+          p_buff[count].event_id    = cp_people_data->script_bc;
+        }
+      }
+      else
+      {
+        if( cp_wk->type == FIELD_WFBC_CORE_TYPE_BLACK_CITY ){
+          p_buff[count].event_id    = cp_people_data->script_plcw;
+        }else{
+          p_buff[count].event_id    = cp_people_data->script_plc;
+        }
       }
 
       MMDLHEADER_SetGridPos( &p_buff[count], p_pos[i].gx, p_pos[i].gz, 0 );
@@ -1645,6 +1657,7 @@ u32 FIELD_WFBC_CORE_DEBUG_GetRandomNpcID( const FIELD_WFBC_CORE* cp_wk )
   u32 npc_num;
 
   npc_num = FIELD_WFBC_CORE_GetPeopleNum( cp_wk, MAPMODE_NORMAL );
+  npc_num += FIELD_WFBC_CORE_GetPeopleNum( cp_wk, MAPMODE_INTRUDE );
 
   npc_idx = GFUser_GetPublicRand( FIELD_WFBC_NPCID_MAX - npc_num );
 

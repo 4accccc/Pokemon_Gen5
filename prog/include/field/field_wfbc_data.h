@@ -16,6 +16,8 @@
 extern "C"{
 #endif
 
+#include <net.h>
+
 #include "gamesystem/gamedata_def.h"  //GAMEDATA
 #include "field/intrude_common.h"
 #include "field/field_wfbc_people_def.h"
@@ -295,6 +297,8 @@ typedef struct
   // SCRIPT
   u16     script_wf; 
   u16     script_bc; 
+  u16     script_plcw; 
+  u16     script_plc; 
   // 道具
   u16     goods_wf;
   u16     goods_wf_percent;
@@ -536,6 +540,8 @@ typedef struct {
   u16 netID;
   
   u16 buff_msk;
+
+  u16 intrudeNetID;
   
   // 通信バッファ
   FIELD_WFBC_COMM_NPC_REQ recv_req_que[ FIELD_COMM_MEMBER_MAX ];
@@ -553,6 +559,8 @@ extern void FIELD_WFBC_COMM_DATA_Exit( WFBC_COMM_DATA* p_wk );
 extern void FIELD_WFBC_COMM_DATA_Oya_Main( WFBC_COMM_DATA* p_wk, FIELD_WFBC_CORE* p_mywfbc, u8 member_bit );
 extern void FIELD_WFBC_COMM_DATA_Ko_ChangeNpc( WFBC_COMM_DATA* p_wk, FIELD_WFBC_CORE* p_mywfbc, FIELD_WFBC_CORE* p_oyawfbc, const MYSTATUS* cp_mystatus, u16 npc_id );
 
+
+extern void FIELD_WFBC_COMM_DATA_SetIntrudeNetID( WFBC_COMM_DATA* p_wk, NetID intrudeNetID );
 
 //-------------------------------------
 ///	通信用処理
@@ -585,7 +593,7 @@ extern void FIELD_WFBC_COMM_DATA_SetRecvCommReqData( WFBC_COMM_DATA* p_wk, u16 n
 
 // 送信情報の取得
 extern BOOL FIELD_WFBC_COMM_DATA_GetSendCommAnsData( const WFBC_COMM_DATA* cp_wk, u16 netID, FIELD_WFBC_COMM_NPC_ANS* p_ans ); // 0～3ループでまわして、毎フレームチェックしてください。
-extern BOOL FIELD_WFBC_COMM_DATA_GetSendCommReqData( const WFBC_COMM_DATA* cp_wk, FIELD_WFBC_COMM_NPC_REQ* p_req );
+extern BOOL FIELD_WFBC_COMM_DATA_GetSendCommReqData( const WFBC_COMM_DATA* cp_wk, FIELD_WFBC_COMM_NPC_REQ* p_req, NetID* p_send_netID );
 
 // 送信完了したデータは破棄してください。
 extern void FIELD_WFBC_COMM_DATA_ClearSendCommAnsData( WFBC_COMM_DATA* p_wk, u16 netID );

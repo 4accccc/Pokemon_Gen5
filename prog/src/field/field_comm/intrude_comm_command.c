@@ -1576,7 +1576,7 @@ static void _IntrudeRecv_WfbcNpcReq(const int netID, const int size, const void*
  * @retval  BOOL		TRUE:送信成功。　FALSE:失敗
  */
 //==================================================================
-BOOL IntrudeSend_WfbcNpcReq(const FIELD_WFBC_COMM_NPC_REQ *npc_req)
+BOOL IntrudeSend_WfbcNpcReq(const FIELD_WFBC_COMM_NPC_REQ *npc_req, NetID send_netid)
 {
   BOOL ret;
 
@@ -1585,7 +1585,7 @@ BOOL IntrudeSend_WfbcNpcReq(const FIELD_WFBC_COMM_NPC_REQ *npc_req)
   }
   
   ret = GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(), 
-    GFL_NET_NO_PARENTMACHINE, INTRUDE_CMD_WFBC_NPC_REQ, sizeof(FIELD_WFBC_COMM_NPC_REQ), npc_req, 
+    send_netid, INTRUDE_CMD_WFBC_NPC_REQ, sizeof(FIELD_WFBC_COMM_NPC_REQ), npc_req, 
     FALSE, FALSE, FALSE);
   if(ret == TRUE){
     OS_TPrintf("SEND：WFBCパラメータ:NPC_REQ\n");

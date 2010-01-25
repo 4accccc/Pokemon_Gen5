@@ -371,8 +371,8 @@ static void Intrude_CheckWfbcReq(INTRUDE_COMM_SYS_PTR intcomm)
     }
   }
   
-  if(FIELD_WFBC_COMM_DATA_GetSendCommReqData(&intcomm->wfbc_comm_data, &npc_req) == TRUE){
-    if(IntrudeSend_WfbcNpcReq(&npc_req) == TRUE){
+  if(FIELD_WFBC_COMM_DATA_GetSendCommReqData(&intcomm->wfbc_comm_data, &npc_req, &net_id) == TRUE){
+    if(IntrudeSend_WfbcNpcReq(&npc_req, net_id) == TRUE){
       FIELD_WFBC_COMM_DATA_ClearSendCommReqData(&intcomm->wfbc_comm_data);
     }
   }

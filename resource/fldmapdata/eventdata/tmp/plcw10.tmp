@@ -1,0 +1,5 @@
+#../data/plcw10.mev
+../tmp/plcw10.bin:../data/plcw10.mev $(UNIQ_SCRIPTHEADER) ../tmp/plcw10.h ../../zonetable/zone_id.h ../tmp/plr15.h ../../../../prog/include/field/field_dir.h ../../../../prog/include/field/eventdata_type.h 
+	@echo ../data/plcw10.mev
+	@ruby make_binary.rb $< $(UNIQ_SCRIPTHEADER) ../tmp/plcw10.h ../../zonetable/zone_id.h ../tmp/plr15.h ../../../../prog/include/field/field_dir.h ../../../../prog/include/field/eventdata_type.h 
+

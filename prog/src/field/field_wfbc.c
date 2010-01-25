@@ -447,7 +447,7 @@ int FIELD_WFBC_SetUpBlock( FIELD_WFBC* p_wk, NormalVtxFormat* p_attr, FIELD_BMOD
  *	@param	heapID    ヒープID
  */
 //-----------------------------------------------------------------------------
-void FILED_WFBC_EventDataOverwrite( const FIELD_WFBC* cp_wk, EVENTDATA_SYSTEM* p_evdata, HEAPID heapID )
+void FILED_WFBC_EventDataOverwrite( const FIELD_WFBC* cp_wk, EVENTDATA_SYSTEM* p_evdata, MAPMODE mapmode, HEAPID heapID )
 {
   int i;
   FIELD_WFBC_EVENT_IF* p_event_if;
@@ -459,6 +459,12 @@ void FILED_WFBC_EventDataOverwrite( const FIELD_WFBC* cp_wk, EVENTDATA_SYSTEM* p
     NARC_field_wfbc_data_wf_block_event_evp,
   };
   u32 add_connect_num;
+
+  // 裏世界ではなにもしない
+  if( mapmode != MAPMODE_NORMAL )
+  {
+    return ;
+  }
 
   // 拡張イベント情報を取得
   load_size = GFL_ARC_GetDataSizeByHandle( cp_wk->p_handle, sc_EVIF[ cp_wk->type ] );
@@ -1504,6 +1510,20 @@ static void DEBWIN_Update_CityLevel( void* userWork , DEBUGWIN_ITEM* item )
         break;
       }
     }
+
+    // サブにも増やす
+    for( i=0; i<FIELD_WFBC_PEOPLE_MAX; i++ )
+    {
+      if( p_wk->back_people[i].data_in == FALSE )
+      {
+        p_wk->back_people[i].npc_id  = FIELD_WFBC_CORE_DEBUG_GetRandomNpcID( p_wk );
+        p_wk->back_people[i].mood  = 0;
+        p_wk->back_people[i].one_day_msk  = FIELD_WFBC_ONEDAY_MSK_INIT;
+        p_wk->back_people[i].data_in = TRUE;
+        break;
+      }
+    }
+    
     DEBUGWIN_RefreshScreen();
   }
   if( GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT )

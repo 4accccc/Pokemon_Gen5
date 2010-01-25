@@ -14,11 +14,13 @@
 #include <gflib.h>
 
 #include "arc/arc_def.h"
-#include "arc/message.naix"
+#include "arc/script_message.naix"
 
 #include "print/wordset.h"
 
 #include "field/field_msgbg.h"
+
+#include "field_comm/intrude_work.h"
 
 #include "script.h"
 #include "script_local.h"
@@ -442,7 +444,6 @@ enum {
   WFBC_PALACE_TALK_SEQ_IS_MYWFBC_CAN_TAKE, // 自分の世界に持ってこれるかチェック
   WFBC_PALACE_TALK_SEQ_TALK_03,       // たのしそうだな
   WFBC_PALACE_TALK_SEQ_TALK_04,       // つれていって！　YES/NO表示
-  WFBC_PALACE_TALK_SEQ_YESNO_WAIT,    // つれていって！　YES/NOまち
   WFBC_PALACE_TALK_SEQ_TALK_05,       // つれだしてよー。　NOの場合
   WFBC_PALACE_TALK_SEQ_IS_OBJID_ON01, // もう一度親の世界にいるかチェック
   WFBC_PALACE_TALK_SEQ_WAIT_OBJID_ON01,// もう一度親の世界にいるかチェック
@@ -450,6 +451,7 @@ enum {
   WFBC_PALACE_TALK_SEQ_TALK_08,       // やったー！（人移動＆移動したことを親に通知）
   WFBC_PALACE_TALK_SEQ_MAP_RESET_FADE_OUT,        // マップの再構築 フェードアウト
   WFBC_PALACE_TALK_SEQ_MAP_RESET_PEOPLE_CHANGE,   // マップの再構築 フェードアウトウエイト　＆　つれてきた人を消す処理
+  WFBC_PALACE_TALK_SEQ_MAP_RESET_FADE_INWAIT,        // マップの再構築 フェードアウト
 
 
   WFBC_PALACE_TALK_SEQ_TALK_WAIT,   //メッセージ完了まち　
@@ -518,8 +520,8 @@ typedef struct {
 //=====================================
 static const u16 sc_WFBC_PALACE_TALK_START_IDX[FIELD_WFBC_CORE_TYPE_MAX] = 
 {
-  plwc10_01_01,
   plbc10_01_01,
+  plwc10_01_01,
 };
 #define WFBC_PALACE_TALK_NPC_MSG_NUM  (8)
 
@@ -544,8 +546,9 @@ static GMEVENT* EVENT_SetUp_WFBC_Palece_Talk( GAMESYS_WORK* p_gsys, FIELDMAP_WOR
   FLDMSGBG* p_msgbg = FIELDMAP_GetFldMsgBG( p_fieldmap );
   GAMEDATA* p_gdata = GAMESYSTEM_GetGameData( p_gsys );
 
-  // @TODO デバック用
-  static WFBC_COMM_DATA s_debug_data;
+  GAME_COMM_SYS_PTR p_game_comm = GAMESYSTEM_GetGameCommSysPtr(p_gsys);
+  INTRUDE_COMM_SYS_PTR p_intcomm = GameCommSys_GetAppWork( p_game_comm );
+  WFBC_COMM_DATA * p_wfbc_comm = Intrude_GetWfbcCommData( p_intcomm  );
 
 
 
@@ -558,10 +561,10 @@ static GMEVENT* EVENT_SetUp_WFBC_Palece_Talk( GAMESYS_WORK* p_gsys, FIELDMAP_WOR
   p_work->p_fieldmap      = p_fieldmap;
   p_work->p_strbuf        = GFL_STR_CreateBuffer( 128, heapID );
   p_work->p_strbuf_tmp    = GFL_STR_CreateBuffer( 128, heapID );
-  p_work->p_msgdata       = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_tower_trainer_dat, heapID );
+  p_work->p_msgdata       = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_SCRIPT_MESSAGE, NARC_script_message_plc10_dat, heapID );
   p_work->p_wordset       = WORDSET_Create( heapID );
   p_work->p_fmb           = p_msgbg;
-  p_work->p_commsys       = &s_debug_data;
+  p_work->p_commsys       = p_wfbc_comm;
 
   p_work->heapID          = GFL_HEAP_LOWID(heapID);
 
@@ -682,8 +685,11 @@ static GMEVENT_RESULT EVENT_WFBC_Palece_Talk( GMEVENT* p_event, int* p_seq, void
       // 空きなし
       (*p_seq) = WFBC_PALACE_TALK_SEQ_TALK_03;
     }
-    // OK
-    (*p_seq) = WFBC_PALACE_TALK_SEQ_TALK_04;
+    else
+    {
+      // OK
+      (*p_seq) = WFBC_PALACE_TALK_SEQ_TALK_04;
+    }
     break;
 
   // たのしそうだな
@@ -693,10 +699,7 @@ static GMEVENT_RESULT EVENT_WFBC_Palece_Talk( GMEVENT* p_event, int* p_seq, void
 
   // つれていって！　YES/NO表示
   case WFBC_PALACE_TALK_SEQ_TALK_04:
-    break;
-
-  // つれていって！　YES/NOまち
-  case WFBC_PALACE_TALK_SEQ_YESNO_WAIT:
+    EVENT_WFBC_WFBC_TalkStartYesNo( p_work, 3, p_seq, WFBC_PALACE_TALK_SEQ_IS_OBJID_ON01, WFBC_PALACE_TALK_SEQ_TALK_05 );
     break;
 
   // つれだしてよー。　NOの場合
@@ -742,16 +745,15 @@ static GMEVENT_RESULT EVENT_WFBC_Palece_Talk( GMEVENT* p_event, int* p_seq, void
 
   // マップの再構築 フェードアウト
   case WFBC_PALACE_TALK_SEQ_MAP_RESET_FADE_OUT:
-    {
-      GMEVENT* fade_event;
-      fade_event = EVENT_FieldFadeOut_Black( p_work->p_gsys, p_work->p_fieldmap, FIELD_FADE_WAIT);
-      GMEVENT_CallEvent( p_event, fade_event );
-    }
+    GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN, 0, 16, FIELD_FADE_WAIT);
     (*p_seq) = WFBC_PALACE_TALK_SEQ_MAP_RESET_PEOPLE_CHANGE;
     break;
 
   // マップの再構築 フェードアウトウエイト　＆　つれてきた人を消す処理
   case WFBC_PALACE_TALK_SEQ_MAP_RESET_PEOPLE_CHANGE:
+    if( GFL_FADE_CheckFade() ){
+      break;
+    }
 
     {
       const MYSTATUS* cp_mystatus = GAMEDATA_GetMyStatus( GAMESYSTEM_GetGameData(p_work->p_gsys) );
@@ -766,10 +768,13 @@ static GMEVENT_RESULT EVENT_WFBC_Palece_Talk( GMEVENT* p_event, int* p_seq, void
     }
     
     // フェードイン
-    {
-      GMEVENT* fade_event;
-      fade_event = EVENT_FieldFadeIn_Black( p_work->p_gsys, p_work->p_fieldmap, FIELD_FADE_WAIT);
-      GMEVENT_CallEvent( p_event, fade_event );
+    GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN, 16, 0, FIELD_FADE_WAIT);
+    (*p_seq) = WFBC_PALACE_TALK_SEQ_MAP_RESET_FADE_INWAIT;
+    break;
+
+  case WFBC_PALACE_TALK_SEQ_MAP_RESET_FADE_INWAIT:        // マップの再構築 フェードアウト
+    if( GFL_FADE_CheckFade() ){
+      break;
     }
     (*p_seq) = WFBC_PALACE_TALK_SEQ_END;
     break;
@@ -825,6 +830,8 @@ static void EVENT_WFBC_WFBC_TalkStart( WFBC_PALACE_TALK_WK* p_wk, u16 palace_msg
   GF_ASSERT( p_wk->p_talkwin == NULL );
 
   msg_id = sc_WFBC_PALACE_TALK_START_IDX[ p_wk->p_oya->type ] + (p_wk->npc_id*WFBC_PALACE_TALK_NPC_MSG_NUM) + palace_msg_idx;
+
+  TOMOYA_Printf( "print msg %d\n", msg_id );
 
   // ワードセットを使用して、文字列展開
   GFL_MSG_GetString( p_wk->p_msgdata, msg_id, p_wk->p_strbuf_tmp );
@@ -930,6 +937,8 @@ static BOOL EVENT_WFBC_WFBC_TalkMain( WFBC_PALACE_TALK_WK* p_wk )
           p_wk->is_yes = FALSE;
         }
         p_wk->talk_seq = WFBC_PALACE_TALKSYS_SEQ_CLOSE;
+        FLDMENUFUNC_DeleteMenu( p_wk->p_yesno );
+        p_wk->p_yesno = NULL;
       }
     }
     break;

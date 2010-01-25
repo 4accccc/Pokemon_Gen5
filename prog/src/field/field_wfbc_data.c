@@ -38,9 +38,9 @@ typedef enum {
   FIELD_WFBC_COMM_BUFF_MSK_SEND_ANS_END = FIELD_WFBC_COMM_BUFF_MSK_SEND_ANS_0 + FIELD_COMM_MEMBER_MAX,
     
 } FIELD_WFBC_COMM_BUFF_MSK;
-#define FIELD_WFBC_COMM_BUFF_MSK_CHECK(val, x)   ((val) & (1<<(x)))
-#define FIELD_WFBC_COMM_BUFF_MSK_ON(val, x)   ((val) | (1<<(x)))
-#define FIELD_WFBC_COMM_BUFF_MSK_OFF(val, x)   ((val) & ~(1<<(x)))
+#define FIELD_WFBC_COMM_BUFF_MSK_CHECK(val, x)   ((u32)(val) & (u32)(1<<(x)))
+#define FIELD_WFBC_COMM_BUFF_MSK_ON(val, x)   ((u32)(val) | (u32)(1<<(x)))
+#define FIELD_WFBC_COMM_BUFF_MSK_OFF(val, x)   ((u32)(val) & (~(u32)(1<<(x))))
 
 //-----------------------------------------------------------------------------
 /**
@@ -59,7 +59,7 @@ typedef enum {
 //=====================================
 static BOOL WFBC_COMM_DATA_IsError( const WFBC_COMM_DATA* cp_wk );
 
-static void WFBC_COMM_DATA_MainOya( WFBC_COMM_DATA* p_wk, FIELD_WFBC_CORE* p_mywfbc );
+static void WFBC_COMM_DATA_MainOya( WFBC_COMM_DATA* p_wk, FIELD_WFBC_CORE* p_mywfbc, u8 member_bit );
 
 static BOOL WFBC_COMM_DATA_Oya_AnserThere( WFBC_COMM_DATA* p_wk, FIELD_WFBC_CORE* p_mywfbc, const FIELD_WFBC_COMM_NPC_REQ* cp_req, FIELD_WFBC_COMM_NPC_ANS* p_ans );
 static BOOL WFBC_COMM_DATA_Oya_AnserWishTake( WFBC_COMM_DATA* p_wk, FIELD_WFBC_CORE* p_mywfbc, const FIELD_WFBC_COMM_NPC_REQ* cp_req, FIELD_WFBC_COMM_NPC_ANS* p_ans );
@@ -96,10 +96,12 @@ void FIELD_WFBC_CORE_SetUpZoneData( const FIELD_WFBC_CORE* cp_wk )
   if( cp_wk->type == FIELD_WFBC_CORE_TYPE_WHITE_FOREST )
   {
     ZONEDATA_SetChangeZoneID( ZONEDATA_CHANGE_BC_WF_ID, TRUE );
+    ZONEDATA_SetChangeZoneID( ZONEDATA_CHANGE_PLC10_PLCW10_ID, TRUE );
   }
   if( cp_wk->type == FIELD_WFBC_CORE_TYPE_BLACK_CITY )
   {
     ZONEDATA_SetChangeZoneID( ZONEDATA_CHANGE_BC_WF_ID, FALSE );
+    ZONEDATA_SetChangeZoneID( ZONEDATA_CHANGE_PLC10_PLCW10_ID, FALSE );
   }
 }
 
@@ -349,6 +351,7 @@ void FIELD_WFBC_COMM_DATA_Init( WFBC_COMM_DATA* p_wk )
   GFL_STD_MemClear( p_wk, sizeof(WFBC_COMM_DATA) );
 
   p_wk->netID = GFL_NET_SystemGetCurrentID();
+  
 }
 
 //----------------------------------------------------------------------------
@@ -359,6 +362,7 @@ void FIELD_WFBC_COMM_DATA_Init( WFBC_COMM_DATA* p_wk )
 void FIELD_WFBC_COMM_DATA_Exit( WFBC_COMM_DATA* p_wk )
 {
   GFL_STD_MemClear( p_wk, sizeof(WFBC_COMM_DATA) );
+
 }
 
 //----------------------------------------------------------------------------
@@ -378,10 +382,7 @@ void FIELD_WFBC_COMM_DATA_Oya_Main( WFBC_COMM_DATA* p_wk, FIELD_WFBC_CORE* p_myw
   }
   
   // 親の処理
-  if( GFL_NET_IsParentMachine() )
-  {
-    WFBC_COMM_DATA_MainOya( p_wk, p_mywfbc );
-  }
+  WFBC_COMM_DATA_MainOya( p_wk, p_mywfbc, member_bit );
 }
 
 //----------------------------------------------------------------------------
@@ -409,6 +410,21 @@ void FIELD_WFBC_COMM_DATA_Ko_ChangeNpc( WFBC_COMM_DATA* p_wk, FIELD_WFBC_CORE* p
   // 親の情報からは破棄
   FIELD_WFBC_CORE_PEOPLE_Clear( p_people );
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  進入先のNETIDを設定
+ *
+ *	@param	p_wk          ワーク
+ *	@param	intrudeNetID  ネットID
+ */
+//-----------------------------------------------------------------------------
+void FIELD_WFBC_COMM_DATA_SetIntrudeNetID( WFBC_COMM_DATA* p_wk, NetID intrudeNetID )
+{
+  GF_ASSERT( p_wk );
+  p_wk->intrudeNetID = intrudeNetID;
+}
+
 
 
 //----------------------------------------------------------------------------
@@ -471,13 +487,15 @@ BOOL FIELD_WFBC_COMM_DATA_GetSendCommAnsData( const WFBC_COMM_DATA* cp_wk, u16 n
  *
  *	@param	cp_wk   ワーク
  *	@param	p_req   送信リクエスト情報の格納先
+ *	@param  p_send_netID  送信先NETID
  *
  *	@retval TRUE  情報がある
  *	@retval FALSE 情報なし
  */
 //-----------------------------------------------------------------------------
-BOOL FIELD_WFBC_COMM_DATA_GetSendCommReqData( const WFBC_COMM_DATA* cp_wk, FIELD_WFBC_COMM_NPC_REQ* p_req )
+BOOL FIELD_WFBC_COMM_DATA_GetSendCommReqData( const WFBC_COMM_DATA* cp_wk, FIELD_WFBC_COMM_NPC_REQ* p_req, NetID* p_send_netID )
 {
+  *p_send_netID = cp_wk->intrudeNetID;
   return WFBC_COMM_DATA_GetSendCommReqData( cp_wk, p_req );
 }
 
@@ -631,11 +649,6 @@ static BOOL WFBC_COMM_DATA_IsError( const WFBC_COMM_DATA* cp_wk )
     return TRUE;
   }
 
-  if( cp_wk->netID == GFL_NET_NO_PARENTMACHINE )
-  {
-    return TRUE;
-  }
-
   return FALSE;
 }
 
@@ -644,11 +657,12 @@ static BOOL WFBC_COMM_DATA_IsError( const WFBC_COMM_DATA* cp_wk )
 /**
  *	@brief  通信情報のメイン処理　親
  *
- *	@param	p_wk      ワーク
- *	@param	p_wfbc    WFBC情報
+ *	@param	p_wk        ワーク
+ *	@param	p_wfbc      WFBC情報
+ *	@param  member_bit  子機の接続状況
  */
 //-----------------------------------------------------------------------------
-static void WFBC_COMM_DATA_MainOya( WFBC_COMM_DATA* p_wk, FIELD_WFBC_CORE* p_mywfbc )
+static void WFBC_COMM_DATA_MainOya( WFBC_COMM_DATA* p_wk, FIELD_WFBC_CORE* p_mywfbc, u8 member_bit )
 {
   int i;
   FIELD_WFBC_COMM_NPC_ANS ans;
@@ -666,17 +680,26 @@ static void WFBC_COMM_DATA_MainOya( WFBC_COMM_DATA* p_wk, FIELD_WFBC_CORE* p_myw
   // 子からのリクエストに答える。
   for( i=0; i<FIELD_COMM_MEMBER_MAX; i++ )
   {
-    result = WFBC_COMM_DATA_GetRecvCommReqData( p_wk, i, &req );
-
-    if( result )
+    // その人がいるかチェック
+    if( (member_bit & (1<<i)) == 0 )
     {
-      ans_result = pAnser[ req.req_type ]( p_wk, p_mywfbc, &req, &ans );
+      // その人の情報は無視
+      WFBC_COMM_DATA_ClearRecvCommReqData( p_wk, i );
     }
-
-    WFBC_COMM_DATA_ClearRecvCommReqData( p_wk, i );
-    if( ans_result )
+    else
     {
-      WFBC_COMM_DATA_SetSendCommAnsData( p_wk, i, ans.npc_id, ans.ans_type );
+      result = WFBC_COMM_DATA_GetRecvCommReqData( p_wk, i, &req );
+
+      if( result ){
+        ans_result = pAnser[ req.req_type ]( p_wk, p_mywfbc, &req, &ans );
+       
+        WFBC_COMM_DATA_ClearRecvCommReqData( p_wk, i );
+        if( ans_result )
+        {
+          WFBC_COMM_DATA_SetSendCommAnsData( p_wk, i, ans.npc_id, ans.ans_type );
+        }
+      }
+
     }
   }
 }
@@ -788,6 +811,7 @@ static void WFBC_COMM_DATA_SetRecvCommAnsData( WFBC_COMM_DATA* p_wk, const FIELD
     GF_ASSERT( FIELD_WFBC_COMM_BUFF_MSK_CHECK(p_wk->buff_msk, FIELD_WFBC_COMM_BUFF_MSK_RECV_ANS) == 0 );
     GFL_STD_MemCopy( cp_ans, &p_wk->recv_ans, sizeof(FIELD_WFBC_COMM_NPC_ANS) );
     p_wk->buff_msk = FIELD_WFBC_COMM_BUFF_MSK_ON( p_wk->buff_msk, FIELD_WFBC_COMM_BUFF_MSK_RECV_ANS );
+
   }
 }
 
@@ -806,6 +830,7 @@ static void WFBC_COMM_DATA_SetRecvCommReqData( WFBC_COMM_DATA* p_wk, u16 netID, 
   GF_ASSERT( netID < FIELD_COMM_MEMBER_MAX );
   GFL_STD_MemCopy( cp_req, &p_wk->recv_req_que[netID], sizeof(FIELD_WFBC_COMM_NPC_REQ) );
   p_wk->buff_msk = FIELD_WFBC_COMM_BUFF_MSK_ON(p_wk->buff_msk, FIELD_WFBC_COMM_BUFF_MSK_RECV_REQ_0+netID);
+
 }
 
 //----------------------------------------------------------------------------
@@ -890,11 +915,12 @@ static void WFBC_COMM_DATA_SetSendCommReqData( WFBC_COMM_DATA* p_wk, u16 npc_id,
 {
   GF_ASSERT( FIELD_WFBC_COMM_BUFF_MSK_CHECK( p_wk->buff_msk, FIELD_WFBC_COMM_BUFF_MSK_SEND_REQ ) == 0 );
 
-  p_wk->send_req.net_id     = p_wk->netID;
+  p_wk->send_req.net_id     = p_wk->intrudeNetID;
   p_wk->send_req.npc_id     = npc_id;
   p_wk->send_req.req_type   = req_type;
 
   p_wk->buff_msk = FIELD_WFBC_COMM_BUFF_MSK_ON( p_wk->buff_msk, FIELD_WFBC_COMM_BUFF_MSK_SEND_REQ );
+
 }
 
 //----------------------------------------------------------------------------
