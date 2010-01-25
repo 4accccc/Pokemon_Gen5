@@ -91,7 +91,7 @@ VMCMD_RESULT EvCmdWfbc_TalkStart( VMHANDLE *core, void *wk )
   // 目の前にいる人物を検索
   p_frontmmdl = MMDLSYS_SearchGridPos( cp_mmdlsys, gx, gz, FALSE );
 
-  objid = MMDL_GetOBJID( p_frontmmdl );
+  objid = FIELD_WFBC_CORE_GetMMdlNpcID( p_frontmmdl );
 
   // 会話カウント　（1日1回）
   FIELD_WFBC_AddTalkPointPeople( p_wfbc, objid );
@@ -127,7 +127,7 @@ VMCMD_RESULT EvCmdWfbc_TalkEnd( VMHANDLE *core, void *wk )
   p_frontmmdl = MMDLSYS_SearchGridPos( cp_mmdlsys, gx, gz, FALSE );
 
   // 会話スコア加算
-  objid = MMDL_GetOBJID( p_frontmmdl );
+  objid = FIELD_WFBC_CORE_GetMMdlNpcID( p_frontmmdl );
 
 
   // Palaceなら連れて行く処理
@@ -178,7 +178,7 @@ VMCMD_RESULT EvCmdWfbc_SetRirekiPlayerName( VMHANDLE *core, void *wk )
   p_frontmmdl = MMDLSYS_SearchGridPos( cp_mmdlsys, gx, gz, FALSE );
 
   // OBJID
-  objid = MMDL_GetOBJID( p_frontmmdl );
+  objid = FIELD_WFBC_CORE_GetMMdlNpcID( p_frontmmdl );
 
   // ワードセットに設定
   FIELD_WFBC_SetWordSetParentPlayer( p_wfbc, *pp_wordset, objid, idx, heapID );
@@ -234,7 +234,7 @@ VMCMD_RESULT EvCmdWfbc_GetData( VMHANDLE *core, void *wk )
     // OBJID
     if( p_frontmmdl )
     {
-      objid = MMDL_GetOBJID( p_frontmmdl );
+      objid = FIELD_WFBC_CORE_GetMMdlNpcID( p_frontmmdl );
 
       // 人物情報取得
       cp_people = FIELD_WFBC_GetPeople( p_wfbc, objid );
@@ -596,7 +596,7 @@ static GMEVENT* EVENT_SetUp_WFBC_Palece_Talk( GAMESYS_WORK* p_gsys, FIELDMAP_WOR
     MMDL_GetVectorPos( p_frontmmdl, &p_work->pos );
 
     // OBJID
-    objid = MMDL_GetOBJID( p_frontmmdl );
+    objid = FIELD_WFBC_CORE_GetMMdlNpcID( p_frontmmdl );
 
     // 人物情報取得
     cp_people = FIELD_WFBC_GetPeople( p_wfbc, objid );

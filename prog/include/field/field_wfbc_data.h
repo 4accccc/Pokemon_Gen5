@@ -57,6 +57,15 @@ typedef enum {
 // CHECK
 #define FIELD_WFBC_ONEDAY_MSK_CHECK( val, msk )  ( (val) & (msk) )
 
+
+//-------------------------------------
+///	OBJID操作
+//=====================================
+#define FIELD_WFBC_OBJID_START  ( 128 )
+#define FIELD_WFBC_OBJID_SET(x)  ( (x) + FIELD_WFBC_OBJID_START )
+#define FIELD_WFBC_OBJID_GET(x)  ( (x) - FIELD_WFBC_OBJID_START )
+
+
 //-------------------------------------
 ///	GAMEDATA　街情報インデックス
 //=====================================
@@ -170,6 +179,12 @@ extern void FIELD_WFBC_CORE_CalcOneDataStart( GAMEDATA * gamedata, s32 diff_day,
 //  ZONEDATAの操作    『常駐』
 //----------------------------------------------------------
 extern void FIELD_WFBC_CORE_SetUpZoneData( const FIELD_WFBC_CORE* cp_wk );
+
+
+//-------------------------------------
+///	MMDLワークから、WFBC　NPCIDを取得
+//=====================================
+extern u32 FIELD_WFBC_CORE_GetMMdlNpcID( const MMDL* cp_mmdl );
 
 
 //-------------------------------------

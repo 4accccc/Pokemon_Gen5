@@ -110,6 +110,19 @@ static BOOL WFBC_CORE_People_AddMood( FIELD_WFBC_CORE_PEOPLE* p_people, int add 
 
 
 //-------------------------------------
+///	MMDLワークから、WFBC　NPCIDを取得
+//=====================================
+u32 FIELD_WFBC_CORE_GetMMdlNpcID( const MMDL* cp_mmdl )
+{
+  u32 objid;
+  objid = MMDL_GetOBJID( cp_mmdl );
+  objid = FIELD_WFBC_OBJID_GET( objid );
+
+  return objid;
+}
+
+
+//-------------------------------------
 ///	FIELD_WFBC_CORE用関数
 //=====================================
 //----------------------------------------------------------------------------
@@ -602,7 +615,7 @@ MMDL_HEADER* FIELD_WFBC_CORE_MMDLHeaderCreateHeapLo( const FIELD_WFBC_CORE* cp_w
       FIELD_WFBC_PEOPLE_DATA_Load( p_people_loader, FIELD_WFBC_CORE_PEOPLE_GetNpcID( &cp_people_array[i] ) );
       cp_people_data = FIELD_WFBC_PEOPLE_DATA_GetData( p_people_loader );
 
-      p_buff[count].id          = FIELD_WFBC_CORE_PEOPLE_GetNpcID( &cp_people_array[i] );
+      p_buff[count].id          = FIELD_WFBC_OBJID_SET( FIELD_WFBC_CORE_PEOPLE_GetNpcID( &cp_people_array[i] ) );
       p_buff[count].obj_code    = cp_people_data->objid;
       p_buff[count].move_code   = MV_RND;
       
