@@ -207,6 +207,10 @@ typedef enum
 }
 SOUND_STEP;
 
+// 上下に黒帯を表示するためのwnd
+#define WND_UP_Y_APPEAR   ( 20)
+#define WND_DOWN_Y_APPEAR (130)
+
 // 文字列中のタグに登録するもの
 typedef enum
 {
@@ -292,6 +296,9 @@ typedef struct
   // 上下に黒帯を表示するためのwnd
   u8                          wnd_up_y;    // wnd_up_y <= 見えるピクセル < wnd_down_y
   u8                          wnd_down_y;  //        0 <= 見えるピクセル < 192
+  s16                         wnd_appear_speed;    // 1回の移動で何ピクセル移動するか(0=移動しない、+=黒帯が見えてくる、-=黒帯がはけていく)
+  u8                          wnd_appear_wait;     // 1回の移動をするのに何フレーム待つか(0=毎フレーム移動、1=1フレームごとに移動)
+  u8                          wnd_count;
   // 白く飛ばす演出のためのパレットフェード
   GFL_TCBSYS*                 pfade_tcbsys;
   void*                       pfade_tcbsys_work;
@@ -317,6 +324,8 @@ static void ShinkaDemo_DeleteSimpleBG( SHINKA_DEMO_PARAM* param, SHINKA_DEMO_WOR
 static void ShinkaDemo_InitWnd( SHINKA_DEMO_PARAM* param, SHINKA_DEMO_WORK* work );
 static void ShinkaDemo_ExitWnd( SHINKA_DEMO_PARAM* param, SHINKA_DEMO_WORK* work );
 static void ShinkaDemo_MainWnd( SHINKA_DEMO_PARAM* param, SHINKA_DEMO_WORK* work );
+static void ShinkaDemo_AppearWnd( SHINKA_DEMO_PARAM* param, SHINKA_DEMO_WORK* work );
+static void ShinkaDemo_DisappearWnd( SHINKA_DEMO_PARAM* param, SHINKA_DEMO_WORK* work );
 
 static void ShinkaDemo_ZeroPFade( SHINKA_DEMO_PARAM* param, SHINKA_DEMO_WORK* work );
 static void ShinkaDemo_InitPFade( SHINKA_DEMO_PARAM* param, SHINKA_DEMO_WORK* work );  // パレットを書き換えるので、全パレットの用意が済んでから呼ぶこと
@@ -595,6 +604,9 @@ static GFL_PROC_RESULT ShinkaDemoProcMain( GFL_PROC * proc, int * seq, void * pw
         
         work->evo_cancel = FALSE;
         SHINKADEMO_VIEW_StartShinka( work->view );
+
+        // 上下に黒帯を表示するためのwnd
+        ShinkaDemo_AppearWnd( param, work );
       }
     }
     break;
@@ -615,6 +627,9 @@ static GFL_PROC_RESULT ShinkaDemoProcMain( GFL_PROC * proc, int * seq, void * pw
       {
         // 白く飛ばす演出のためのパレットフェード
         ShinkaDemo_ToFromWhitePFade( param, work );
+
+        // 上下に黒帯を表示するためのwnd
+        ShinkaDemo_DisappearWnd( param, work );
       }
 
       if( !SHINKADEMO_VIEW_IsBGMPlay( work->view ) )
@@ -1241,6 +1256,9 @@ static GFL_PROC_RESULT ShinkaDemoProcMain( GFL_PROC * proc, int * seq, void * pw
   }
 
   ShinkaDemo_SoundMain( param, work );
+
+  // 上下に黒帯を表示するためのwnd
+  ShinkaDemo_MainWnd( param, work );
   
   // 白く飛ばす演出のためのパレットフェード
   ShinkaDemo_MainPFade( param, work );
@@ -1647,8 +1665,10 @@ static void ShinkaDemo_DeleteSimpleBG( SHINKA_DEMO_PARAM* param, SHINKA_DEMO_WOR
 //=====================================
 static void ShinkaDemo_InitWnd( SHINKA_DEMO_PARAM* param, SHINKA_DEMO_WORK* work )
 {
-  work->wnd_up_y     =  20;
-  work->wnd_down_y   = 130;
+  //work->wnd_up_y     = WND_UP_Y_APPEAR;
+  //work->wnd_down_y   = WND_DOWN_Y_APPEAR;
+  work->wnd_up_y     = 0;
+  work->wnd_down_y   = 192;
 
   GX_SetVisibleWnd( GX_WNDMASK_W0 | GX_WNDMASK_W1 );
 
@@ -1665,6 +1685,10 @@ static void ShinkaDemo_InitWnd( SHINKA_DEMO_PARAM* param, SHINKA_DEMO_WORK* work
   G2_SetWndOutsidePlane(
     GX_WND_PLANEMASK_BG1,
     TRUE );
+
+  work->wnd_appear_speed  = 0;
+  work->wnd_appear_wait   = 0;
+  work->wnd_count         = 0;
 }
 static void ShinkaDemo_ExitWnd( SHINKA_DEMO_PARAM* param, SHINKA_DEMO_WORK* work )
 {
@@ -1672,6 +1696,61 @@ static void ShinkaDemo_ExitWnd( SHINKA_DEMO_PARAM* param, SHINKA_DEMO_WORK* work
 }
 static void ShinkaDemo_MainWnd( SHINKA_DEMO_PARAM* param, SHINKA_DEMO_WORK* work )
 {
+  if( work->wnd_appear_speed != 0 )
+  {
+    work->wnd_count++;
+    if( work->wnd_count >= work->wnd_appear_wait )
+    {
+      BOOL b_up_y_move  = FALSE;
+      s16  down_y       = work->wnd_down_y;
+      s16  up_y         = work->wnd_up_y;
+
+      down_y -= work->wnd_appear_speed;
+      if( work->wnd_appear_speed > 0 )
+      {
+        if( down_y < WND_DOWN_Y_APPEAR + WND_UP_Y_APPEAR ) b_up_y_move = TRUE;
+      }
+      else
+      {
+        b_up_y_move = TRUE;
+      }
+      if( b_up_y_move ) up_y += work->wnd_appear_speed;
+
+      if( down_y < WND_DOWN_Y_APPEAR ) work->wnd_down_y = WND_DOWN_Y_APPEAR;
+      else if( down_y > 192 )          work->wnd_down_y = 192;
+      else                             work->wnd_down_y = (u8)down_y;
+
+      if( up_y < 0 )                    work->wnd_up_y = 0;
+      else if( up_y > WND_UP_Y_APPEAR ) work->wnd_up_y = WND_UP_Y_APPEAR;
+      else                              work->wnd_up_y = (u8)up_y;
+
+      G2_SetWnd0Position(   0, work->wnd_up_y,      128, work->wnd_down_y );
+      G2_SetWnd1Position( 128, work->wnd_up_y, 0/*256*/, work->wnd_down_y );
+
+      {
+        if( work->wnd_appear_speed > 0 )
+        {
+          if( work->wnd_up_y == WND_UP_Y_APPEAR && work->wnd_down_y == WND_DOWN_Y_APPEAR )
+            work->wnd_appear_speed = 0;
+        }
+        else
+        {
+          if( work->wnd_up_y == 0 && work->wnd_down_y == 192 )
+            work->wnd_appear_speed = 0;
+        }
+      }
+
+      work->wnd_count = 0;
+    }
+  }
+}
+static void ShinkaDemo_AppearWnd( SHINKA_DEMO_PARAM* param, SHINKA_DEMO_WORK* work )
+{
+  work->wnd_appear_speed = 1;
+}
+static void ShinkaDemo_DisappearWnd( SHINKA_DEMO_PARAM* param, SHINKA_DEMO_WORK* work )
+{
+  work->wnd_appear_speed = -2;
 }
 
 //-------------------------------------
