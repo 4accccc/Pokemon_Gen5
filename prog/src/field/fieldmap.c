@@ -2720,7 +2720,7 @@ static void setupWfbc( GAMEDATA* gdata, FIELDMAP_WORK *fieldWork, u32 zone_id )
     p_evdata = GAMEDATA_GetEventData( gdata );
 
     // イベントの設定
-    FILED_WFBC_EventDataOverwrite( p_wfbc, p_evdata, fieldWork->heapID );
+    FILED_WFBC_EventDataOverwrite( p_wfbc, p_evdata, mapmode, fieldWork->heapID );
     
     // カメラのセットアップ
     FIELD_WFBC_SetUpCamera( p_wfbc, fieldWork->camera_control, fieldWork->heapID );
