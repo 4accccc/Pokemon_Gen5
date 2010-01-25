@@ -19,6 +19,17 @@
 #include "system/net_err.h"
 
 
+
+
+//-------------------------------------
+///	デバック用宣言
+//=====================================
+#ifdef FIELD_WFBC_MAKE_MAPDATA_DEBUG
+s16 DEBUG_FIELD_WFBC_MAKE_score = 0;
+u16 DEBUG_FIELD_WFBC_MAKE_flag = 0;
+#endif
+
+
 //-----------------------------------------------------------------------------
 /**
  *					定数宣言
