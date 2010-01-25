@@ -56,33 +56,33 @@ static const ENCEFF_TBL EncEffTbl[] = {
 
   {ENCEFF_PNL2_Create, ENCEFF_PNL_Draw, FS_OVERLAY_ID(enceff_pnl2)},    //バトルサブウェイ
 
-  {ENCEFF_PNL2_Create, ENCEFF_PNL_Draw, FS_OVERLAY_ID(enceff_pnl2)},    //ライバル
-  {ENCEFF_PNL2_Create, ENCEFF_PNL_Draw, FS_OVERLAY_ID(enceff_pnl2)},    //サポーター
-  {ENCEFF_PNL2_Create, ENCEFF_PNL_Draw, FS_OVERLAY_ID(enceff_pnl2)},    //C1ジムリーダーＡ
-  {ENCEFF_PNL2_Create, ENCEFF_PNL_Draw, FS_OVERLAY_ID(enceff_pnl2)},    //C1ジムリーダーＢ
-  {ENCEFF_PNL2_Create, ENCEFF_PNL_Draw, FS_OVERLAY_ID(enceff_pnl2)},    //C1ジムリーダーＣ
-  {ENCEFF_PNL2_Create, ENCEFF_PNL_Draw, FS_OVERLAY_ID(enceff_pnl2)},    //C2ジムリーダー
-  {ENCEFF_PNL2_Create, ENCEFF_PNL_Draw, FS_OVERLAY_ID(enceff_pnl2)},    //C3ジムリーダー
-  {ENCEFF_PNL2_Create, ENCEFF_PNL_Draw, FS_OVERLAY_ID(enceff_pnl2)},    //C4ジムリーダー
-  {ENCEFF_PNL2_Create, ENCEFF_PNL_Draw, FS_OVERLAY_ID(enceff_pnl2)},    //C5ジムリーダー
-  {ENCEFF_PNL2_Create, ENCEFF_PNL_Draw, FS_OVERLAY_ID(enceff_pnl2)},    //C6ジムリーダー
-  {ENCEFF_PNL2_Create, ENCEFF_PNL_Draw, FS_OVERLAY_ID(enceff_pnl2)},    //C7ジムリーダー
-  {ENCEFF_PNL2_Create, ENCEFF_PNL_Draw, FS_OVERLAY_ID(enceff_pnl2)},    //C8ジムリーダーＡ
-  {ENCEFF_PNL2_Create, ENCEFF_PNL_Draw, FS_OVERLAY_ID(enceff_pnl2)},    //C8ジムリーダーＢ
-  {ENCEFF_PNL2_Create, ENCEFF_PNL_Draw, FS_OVERLAY_ID(enceff_pnl2)},    //四天王1
-  {ENCEFF_PNL2_Create, ENCEFF_PNL_Draw, FS_OVERLAY_ID(enceff_pnl2)},    //四天王2
-  {ENCEFF_PNL2_Create, ENCEFF_PNL_Draw, FS_OVERLAY_ID(enceff_pnl2)},    //四天王3
-  {ENCEFF_PNL2_Create, ENCEFF_PNL_Draw, FS_OVERLAY_ID(enceff_pnl2)},    //四天王4
-  {ENCEFF_PNL2_Create, ENCEFF_PNL_Draw, FS_OVERLAY_ID(enceff_pnl2)},    //チャンプ
-  {ENCEFF_PNL2_Create, ENCEFF_PNL_Draw, FS_OVERLAY_ID(enceff_pnl2)},    //プラズマ団
-  {ENCEFF_PNL2_Create, ENCEFF_PNL_Draw, FS_OVERLAY_ID(enceff_pnl2)},    //N
-  {ENCEFF_PNL2_Create, ENCEFF_PNL_Draw, FS_OVERLAY_ID(enceff_pnl2)},    //ゲーツィス
+  {ENCEFF_CI_CreateRival, NULL, FS_OVERLAY_ID(enceff_ci)},    //ライバル
+  {ENCEFF_CI_CreateSupport, NULL, FS_OVERLAY_ID(enceff_ci)},    //サポーター
+  {ENCEFF_CI_CreateGym01A, NULL, FS_OVERLAY_ID(enceff_ci)},    //C1ジムリーダーＡ
+  {ENCEFF_CI_CreateGym01B, NULL, FS_OVERLAY_ID(enceff_ci)},    //C1ジムリーダーＢ
+  {ENCEFF_CI_CreateGym01C, NULL, FS_OVERLAY_ID(enceff_ci)},    //C1ジムリーダーＣ
+  {ENCEFF_CI_CreateGym02, NULL, FS_OVERLAY_ID(enceff_ci)},    //C2ジムリーダー
+  {ENCEFF_CI_CreateGym03, NULL, FS_OVERLAY_ID(enceff_ci)},    //C3ジムリーダー
+  {ENCEFF_CI_CreateGym04, NULL, FS_OVERLAY_ID(enceff_ci)},    //C4ジムリーダー
+  {ENCEFF_CI_CreateGym05, NULL, FS_OVERLAY_ID(enceff_ci)},    //C5ジムリーダー
+  {ENCEFF_CI_CreateGym06, NULL, FS_OVERLAY_ID(enceff_ci)},    //C6ジムリーダー
+  {ENCEFF_CI_CreateGym07, NULL, FS_OVERLAY_ID(enceff_ci)},    //C7ジムリーダー
+  {ENCEFF_CI_CreateGym08A, NULL, FS_OVERLAY_ID(enceff_ci)},    //C8ジムリーダーＡ
+  {ENCEFF_CI_CreateGym08B, NULL, FS_OVERLAY_ID(enceff_ci)},    //C8ジムリーダーＢ
+  {ENCEFF_CI_CreateBigFour1, NULL, FS_OVERLAY_ID(enceff_ci)},    //四天王1
+  {ENCEFF_CI_CreateBigFour2, NULL, FS_OVERLAY_ID(enceff_ci)},    //四天王2
+  {ENCEFF_CI_CreateBigFour3, NULL, FS_OVERLAY_ID(enceff_ci)},    //四天王3
+  {ENCEFF_CI_CreateBigFour4, NULL, FS_OVERLAY_ID(enceff_ci)},    //四天王4
+  {ENCEFF_CI_CreateChamp, NULL, FS_OVERLAY_ID(enceff_ci)},    //チャンプ
+  {ENCEFF_CI_CreateBoss, NULL, FS_OVERLAY_ID(enceff_ci)},    //N
+  {ENCEFF_CI_CreateSage, NULL, FS_OVERLAY_ID(enceff_ci)},    //ゲーツィス
+  {ENCEFF_CI_CreatePlasma, NULL, FS_OVERLAY_ID(enceff_ci)},    //プラズマ団
 
+  {ENCEFF_PNL2_Create, ENCEFF_PNL_Draw, FS_OVERLAY_ID(enceff_pnl2)},    //エフェクト
   {ENCEFF_PNL2_Create, ENCEFF_PNL_Draw, FS_OVERLAY_ID(enceff_pnl2)},    //パッケージポケ
   {ENCEFF_PNL2_Create, ENCEFF_PNL_Draw, FS_OVERLAY_ID(enceff_pnl2)},    //移動ポケ
   {ENCEFF_PNL2_Create, ENCEFF_PNL_Draw, FS_OVERLAY_ID(enceff_pnl2)},    //三銃士ポケ
 
-  {ENCEFF_CI_Create1, NULL, FS_OVERLAY_ID(enceff_ci)},
 };
 
 
@@ -114,8 +114,7 @@ ENCEFF_CNT_PTR ENCEFF_CreateCntPtr(const HEAPID inHeapID, FIELDMAP_WORK * fieldm
 //--------------------------------------------------------------
 void ENCEFF_DeleteCntPtr(ENCEFF_CNT_PTR ptr)
 {
-  if (ptr->UserWorkPtr != NULL) GFL_HEAP_FreeMemory( ptr->UserWorkPtr );
-
+  ENCEFF_FreeUserWork(ptr);
   //オーバーレイスタックがある場合はここでアンロード
   ENCEFF_UnloadEffOverlay(ptr);
   
@@ -206,7 +205,6 @@ void *ENCEFF_AllocUserWork(ENCEFF_CNT_PTR ptr, const int size, const HEAPID inHe
   if (ptr->UserWorkPtr != NULL)
   {
     GF_ASSERT(0);
-    return NULL;
   }
 
   NOZOMU_Printf("user_work_size = %x\n",size); 
@@ -214,6 +212,23 @@ void *ENCEFF_AllocUserWork(ENCEFF_CNT_PTR ptr, const int size, const HEAPID inHe
   ptr->UserWorkPtr = GFL_HEAP_AllocClearMemory(inHeapID, size);
   return ptr->UserWorkPtr;
 }
+
+//--------------------------------------------------------------
+/**
+ * @brief   ユーザーワーク解放
+ * @param ptr   コントローラポインタ
+ * @retval  none
+ */
+//--------------------------------------------------------------
+void ENCEFF_FreeUserWork(ENCEFF_CNT_PTR ptr)
+{
+  if (ptr->UserWorkPtr != NULL)
+  {
+    GFL_HEAP_FreeMemory( ptr->UserWorkPtr );
+    ptr->UserWorkPtr = NULL;
+  }
+}
+
 
 //--------------------------------------------------------------
 /**
