@@ -2,7 +2,7 @@
 /**
  * @file    beacon_view.c
  * @brief   すれ違い通信状態参照画面
- * @author  matsuda
+ * @author  iwasawa 
  * @date    2009.12.13(日)
  */
 //==============================================================================
@@ -32,17 +32,23 @@
 //==============================================================================
 //  プロトタイプ宣言
 //==============================================================================
+static int seq_Main( BEACON_VIEW_PTR wk );
+
+
+
 static void BEACON_VIEW_TouchUpdata(BEACON_VIEW_PTR view);
-static void _BeaconView_SystemSetup(BEACON_VIEW_PTR view);
-static void _BeaconView_SystemExit(BEACON_VIEW_PTR view);
-static void _BeaconView_BGLoad(BEACON_VIEW_PTR view, ARCHANDLE *handle);
-static void _BeaconView_BGUnload(BEACON_VIEW_PTR view);
-static void _BeaconView_ActorResourceLoad(BEACON_VIEW_PTR view, ARCHANDLE *handle);
-static void _BeaconView_ActorResourceUnload(BEACON_VIEW_PTR view);
-static void _BeaconView_ActorCreate(BEACON_VIEW_PTR view, ARCHANDLE *handle);
-static void _BeaconView_ActorDelete(BEACON_VIEW_PTR view);
-static void _BeaconView_BmpWinCreate(BEACON_VIEW_PTR view);
-static void _BeaconView_BmpWinDelete(BEACON_VIEW_PTR view);
+static void _sub_DataSetup(BEACON_VIEW_PTR wk);
+static void _sub_DataExit(BEACON_VIEW_PTR wk);
+static void _sub_SystemSetup(BEACON_VIEW_PTR view);
+static void _sub_SystemExit(BEACON_VIEW_PTR view);
+static void _sub_BGLoad(BEACON_VIEW_PTR view, ARCHANDLE *handle);
+static void _sub_BGUnload(BEACON_VIEW_PTR view);
+static void _sub_ActorResourceLoad(BEACON_VIEW_PTR view, ARCHANDLE *handle);
+static void _sub_ActorResourceUnload(BEACON_VIEW_PTR view);
+static void _sub_ActorCreate(BEACON_VIEW_PTR view, ARCHANDLE *handle);
+static void _sub_ActorDelete(BEACON_VIEW_PTR view);
+static void _sub_BmpWinCreate(BEACON_VIEW_PTR view);
+static void _sub_BmpWinDelete(BEACON_VIEW_PTR view);
 
 static void obj_ObjResInit( BEACON_VIEW_PTR wk, OBJ_RES_TBL* res, const OBJ_RES_SRC* srcTbl, ARCHANDLE* p_handle );
 static void obj_ObjResRelease( BEACON_VIEW_PTR wk, OBJ_RES_TBL* res );
@@ -96,6 +102,7 @@ BEACON_VIEW_PTR BEACON_VIEW_Init(GAMESYS_WORK *gsys, FIELD_SUBSCREEN_WORK *subsc
   
   wk = GFL_HEAP_AllocClearMemory(HEAPID_BVIEW_TMP, sizeof(BEACON_VIEW));
   wk->gsys = gsys;
+  wk->gdata = GAMESYSTEM_GetGameData(gsys);
   wk->subscreen = subscreen;
  
   wk->heapID = HEAPID_FIELDMAP;
@@ -103,11 +110,12 @@ BEACON_VIEW_PTR BEACON_VIEW_Init(GAMESYS_WORK *gsys, FIELD_SUBSCREEN_WORK *subsc
 
   wk->arc_handle = GFL_ARC_OpenDataHandle(ARCID_BEACON_STATUS, HEAPID_BVIEW_TMP);
   
-  _BeaconView_SystemSetup(wk);
-  _BeaconView_BGLoad(wk, wk->arc_handle);
-  _BeaconView_ActorResourceLoad(wk, wk->arc_handle);
-  _BeaconView_ActorCreate(wk, wk->arc_handle);
-  _BeaconView_BmpWinCreate(wk);
+  _sub_DataSetup(wk);
+  _sub_SystemSetup(wk);
+  _sub_BGLoad(wk, wk->arc_handle);
+  _sub_ActorResourceLoad(wk, wk->arc_handle);
+  _sub_ActorCreate(wk, wk->arc_handle);
+  _sub_BmpWinCreate(wk);
   
   GFL_ARC_CloseDataHandle(wk->arc_handle);
 
@@ -123,11 +131,15 @@ BEACON_VIEW_PTR BEACON_VIEW_Init(GAMESYS_WORK *gsys, FIELD_SUBSCREEN_WORK *subsc
 //==================================================================
 void BEACON_VIEW_Exit(BEACON_VIEW_PTR wk)
 {
-  _BeaconView_BmpWinDelete( wk );
-  _BeaconView_ActorDelete( wk );
-  _BeaconView_ActorResourceUnload( wk );
-  _BeaconView_BGUnload( wk );
-  _BeaconView_SystemExit( wk );
+  //今生きている全てのタスクを削除
+  GFL_TCBL_DeleteAll( wk->pTcbSys );
+
+  _sub_BmpWinDelete( wk );
+  _sub_ActorDelete( wk );
+  _sub_ActorResourceUnload( wk );
+  _sub_BGUnload( wk );
+  _sub_SystemExit( wk );
+  _sub_DataExit(wk);
 
   GFL_HEAP_FreeMemory( wk );
 }
@@ -141,18 +153,45 @@ void BEACON_VIEW_Exit(BEACON_VIEW_PTR wk)
 //==================================================================
 void BEACON_VIEW_Update(BEACON_VIEW_PTR wk, BOOL bActive )
 {
+  int i;
+
+  //スタックテーブル更新
+  GAMEBEACON_Stack_Update( wk->infoStack );
+
+  if( wk->active != bActive ){
+    wk->active = bActive;
+  }
+  if(!bActive){
+    return;
+  }
+  switch( wk->seq ){
+  case SEQ_MAIN:
+    wk->seq = seq_Main( wk );
+  }
+}
+
+//==================================================================
+/**
+ * すれ違い参照画面：描画
+ *
+ * @param   wk		
+ */
+//==================================================================
+void BEACON_VIEW_Draw(BEACON_VIEW_PTR wk)
+{
+  BEACON_VIEW_TouchUpdata( wk );
+#if 0
   const GAMEBEACON_INFO *info;
   u32 old_log_count;
   s32 new_log_num, copy_src, copy_dest, write_start;
   int i;
-  
-  BEACON_VIEW_TouchUpdata( wk );
 
   PRINTSYS_QUE_Main(wk->printQue);
   for(i = 0; i < VIEW_LOG_MAX; i++){
     PRINT_UTIL_Trans( &wk->print_util[i], wk->printQue );
   }
-  
+
+
   //BMP描画
   {
     old_log_count = wk->log_count;
@@ -192,18 +231,17 @@ void BEACON_VIEW_Update(BEACON_VIEW_PTR wk, BOOL bActive )
       }
     }
   }
+#endif
 }
 
-//==================================================================
-/**
- * すれ違い参照画面：描画
- *
- * @param   wk		
- */
-//==================================================================
-void BEACON_VIEW_Draw(BEACON_VIEW_PTR wk)
+/////////////////////////////////////////////////////////////////
+//
+/////////////////////////////////////////////////////////////////
+static int seq_Main( BEACON_VIEW_PTR wk )
 {
-  ;
+  //スタックチェック
+
+  return SEQ_MAIN;
 }
 
 //--------------------------------------------------------------
@@ -239,13 +277,49 @@ static void BEACON_VIEW_TouchUpdata(BEACON_VIEW_PTR wk)
 //==============================================================================
 //--------------------------------------------------------------
 /**
+ * データ関連のセットアップ
+ *
+ * @param   wk		
+ */
+//--------------------------------------------------------------
+static void _sub_DataSetup(BEACON_VIEW_PTR wk)
+{
+  wk->b_status = GAMEDATA_GetBeaconStatus( wk->gdata );
+  wk->infoLog = BEACON_STATUS_GetInfoTbl( wk->b_status );
+
+  wk->ctrl.max = 0;
+  wk->ctrl.top = 0;
+  wk->ctrl.next_panel = 0;
+
+  //スタックワーク領域取得
+  wk->infoStack = GAMEBEACON_InfoTbl_Alloc( wk->heapID );
+  wk->tmpInfo = GAMEBEACON_Alloc( wk->heapID );
+}
+
+//--------------------------------------------------------------
+/**
+ * データ関連の破棄＆終了処理
+ *
+ * @param   wk		
+ */
+//--------------------------------------------------------------
+static void _sub_DataExit(BEACON_VIEW_PTR wk)
+{
+  GFL_HEAP_FreeMemory( wk->tmpInfo );
+  GFL_HEAP_FreeMemory( wk->infoStack );
+}
+
+//--------------------------------------------------------------
+/**
  * システム関連のセットアップ
  *
  * @param   wk		
  */
 //--------------------------------------------------------------
-static void _BeaconView_SystemSetup(BEACON_VIEW_PTR wk)
+static void _sub_SystemSetup(BEACON_VIEW_PTR wk)
 {
+  wk->pTcbSys = GFL_TCBL_Init( wk->heapID, wk->heapID, 5, 128 );
+
 	wk->printQue = PRINTSYS_QUE_Create( wk->heapID );
 	wk->fontHandle = GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr,
 		GFL_FONT_LOADTYPE_FILE, FALSE, wk->heapID );
@@ -265,7 +339,7 @@ static void _BeaconView_SystemSetup(BEACON_VIEW_PTR wk)
  * @param   wk		
  */
 //--------------------------------------------------------------
-static void _BeaconView_SystemExit(BEACON_VIEW_PTR wk)
+static void _sub_SystemExit(BEACON_VIEW_PTR wk)
 {
   GFL_STR_DeleteBuffer(wk->strbuf_temp);
   GFL_STR_DeleteBuffer(wk->strbuf_expand);
@@ -275,6 +349,8 @@ static void _BeaconView_SystemExit(BEACON_VIEW_PTR wk)
 	WORDSET_Delete(wk->wordset);
   GFL_FONT_Delete(wk->fontHandle);
   PRINTSYS_QUE_Delete(wk->printQue);
+  
+  GFL_TCBL_Exit( wk->pTcbSys );
 }
 
 //--------------------------------------------------------------
@@ -285,7 +361,7 @@ static void _BeaconView_SystemExit(BEACON_VIEW_PTR wk)
  * @param   handle		
  */
 //--------------------------------------------------------------
-static void _BeaconView_BGLoad( BEACON_VIEW_PTR wk, ARCHANDLE *handle )
+static void _sub_BGLoad( BEACON_VIEW_PTR wk, ARCHANDLE *handle )
 {
 	static const GFL_BG_BGCNT_HEADER TextBgCntDat[] = {
   	{//GFL_BG_FRAME1_S
@@ -351,7 +427,7 @@ static void _BeaconView_BGLoad( BEACON_VIEW_PTR wk, ARCHANDLE *handle )
  * @param   view		
  */
 //--------------------------------------------------------------
-static void _BeaconView_BGUnload(BEACON_VIEW_PTR wk )
+static void _sub_BGUnload(BEACON_VIEW_PTR wk )
 {
 	GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_OFF );
 	GFL_BG_SetVisible( GFL_BG_FRAME2_S, VISIBLE_OFF );
@@ -369,7 +445,7 @@ static void _BeaconView_BGUnload(BEACON_VIEW_PTR wk )
  * @param   handle		
  */
 //--------------------------------------------------------------
-static void _BeaconView_ActorResourceLoad( BEACON_VIEW_PTR wk, ARCHANDLE *handle)
+static void _sub_ActorResourceLoad( BEACON_VIEW_PTR wk, ARCHANDLE *handle)
 {
   int i;
   ARCHANDLE* handle_union = GFL_ARC_OpenDataHandle( ARCID_WIFIUNIONCHAR, wk->tmpHeapID );
@@ -401,12 +477,18 @@ static void _BeaconView_ActorResourceLoad( BEACON_VIEW_PTR wk, ARCHANDLE *handle
   }
 
   //再転送用のリソースをロードしておく
+  wk->resPlttPanel.buf = GFL_ARC_LoadDataAllocByHandle( handle,
+                          NARC_beacon_status_bstatus_panel_nclr,
+                          wk->tmpHeapID );
+  NNS_G2dGetUnpackedPaletteData( wk->resPlttPanel.buf, &wk->resPlttPanel.p_pltt );
+  wk->resPlttPanel.dat = (u16*)wk->resPlttPanel.p_pltt->pRawData;
+
   wk->resPlttUnion.buf = GFL_ARC_LoadDataAllocByHandle( handle_union,
                           NARC_wifi_unionobj_wf_match_top_trainer_NCLR,
                           wk->tmpHeapID );
   NNS_G2dGetUnpackedPaletteData( wk->resPlttUnion.buf, &wk->resPlttUnion.p_pltt );
   wk->resPlttUnion.dat = (u16*)wk->resPlttUnion.p_pltt->pRawData;
-
+  
   for(i = 0;i < UNION_CHAR_MAX;i++){
     wk->resCharUnion[i].buf = GFL_ARC_LoadDataAllocByHandle( handle_union,
                               NARC_wifi_unionobj_front00_NCGR+i,
@@ -420,6 +502,8 @@ static void _BeaconView_ActorResourceLoad( BEACON_VIEW_PTR wk, ARCHANDLE *handle
                           wk->tmpHeapID );
     NNS_G2dGetUnpackedCharacterData( wk->resCharIcon[i].buf, &wk->resCharIcon[i].p_char );
   }
+  DC_FlushAll();
+
   GFL_ARC_CloseDataHandle( handle_union );
 }
 
@@ -430,7 +514,7 @@ static void _BeaconView_ActorResourceLoad( BEACON_VIEW_PTR wk, ARCHANDLE *handle
  * @param   view		
  */
 //--------------------------------------------------------------
-static void _BeaconView_ActorResourceUnload( BEACON_VIEW_PTR wk )
+static void _sub_ActorResourceUnload( BEACON_VIEW_PTR wk )
 {
   int i;
 
@@ -440,6 +524,7 @@ static void _BeaconView_ActorResourceUnload( BEACON_VIEW_PTR wk )
   for( i = 0;i < UNION_CHAR_MAX;i++){
     GFL_HEAP_FreeMemory( wk->resCharUnion[i].buf );
   }
+  GFL_HEAP_FreeMemory( wk->resPlttPanel.buf );
   GFL_HEAP_FreeMemory( wk->resPlttUnion.buf );
 
   obj_ObjResRelease( wk, &wk->objResUnion );
@@ -455,7 +540,7 @@ static void _BeaconView_ActorResourceUnload( BEACON_VIEW_PTR wk )
  * @param   handle		
  */
 //--------------------------------------------------------------
-static void _BeaconView_ActorCreate( BEACON_VIEW_PTR wk, ARCHANDLE *handle )
+static void _sub_ActorCreate( BEACON_VIEW_PTR wk, ARCHANDLE *handle )
 {
   int i;
 
@@ -479,7 +564,7 @@ static void _BeaconView_ActorCreate( BEACON_VIEW_PTR wk, ARCHANDLE *handle )
  * @param   wk		
  */
 //--------------------------------------------------------------
-static void _BeaconView_ActorDelete( BEACON_VIEW_PTR wk )
+static void _sub_ActorDelete( BEACON_VIEW_PTR wk )
 {
   int i;
 
@@ -499,7 +584,7 @@ static void _BeaconView_ActorDelete( BEACON_VIEW_PTR wk )
  * @param   view		
  */
 //--------------------------------------------------------------
-static void _BeaconView_BmpWinCreate(BEACON_VIEW_PTR view)
+static void _sub_BmpWinCreate(BEACON_VIEW_PTR view)
 {
   int i;
   
@@ -518,7 +603,7 @@ static void _BeaconView_BmpWinCreate(BEACON_VIEW_PTR view)
  * @param   wk		
  */
 //--------------------------------------------------------------
-static void _BeaconView_BmpWinDelete(BEACON_VIEW_PTR wk)
+static void _sub_BmpWinDelete(BEACON_VIEW_PTR wk)
 {
   int i;
   
@@ -675,6 +760,7 @@ static void panel_PanelObjAdd( BEACON_VIEW_PTR wk, u8 idx )
 	pp->msgOam.oam = BmpOam_ActorAdd( wk->bmpOam, &finit );
 
   pp->str = GFL_STR_CreateBuffer( BUFLEN_PANEL_MSG, wk->heapID );
+  pp->name = GFL_STR_CreateBuffer( BUFLEN_TR_NAME, wk->heapID );
   GFL_BMP_Clear( pp->msgOam.bmp, 1 );
 //	x = ( BOX2OBJ_FNTOAM_BOXNAME_SX * 8 - PRINTSYS_GetStrWidth( str, syswk->app->font, 0 ) ) / 2;
 //	PRINTSYS_PrintColor( syswk->app->fobj[idx].bmp, x, 0, str, syswk->app->font, FCOL_FNTOAM );
@@ -693,6 +779,7 @@ static void panel_PanelObjDel( BEACON_VIEW_PTR wk, u8 idx )
 {
   PANEL_WORK* pp = &(wk->panel[idx]);
 
+  GFL_STR_DeleteBuffer( pp->name );
   GFL_STR_DeleteBuffer( pp->str );
 
 	BmpOam_ActorSetDrawEnable( pp->msgOam.oam, FALSE );

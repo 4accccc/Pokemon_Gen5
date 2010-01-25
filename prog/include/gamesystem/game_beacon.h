@@ -20,6 +20,7 @@
 //==============================================================================
 ///GAMEBEACON_INFO_TBL‚Å‹L˜^‚·‚éƒƒOŒ”
 #define GAMEBEACON_INFO_TBL_MAX   (30)
+#define GAMEBEACON_INFO_TBL_END   (GAMEBEACON_INFO_TBL_MAX-1)
 
 ///Ú×No
 typedef enum{

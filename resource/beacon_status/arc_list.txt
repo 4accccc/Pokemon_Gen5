@@ -2,6 +2,7 @@
 "bstatus_obj.ncgr"
 "bstatus_obj.ncer"
 "bstatus_obj.nanr"
+"bstatus_panel.nclr"
 "bstatus_icon01.ncer"
 "bstatus_icon01.nanr"
 "bstatus_icon01.ncgr"
@@ -22,7 +23,4 @@
 "bstatus_bg01_lz.nscr"
 "bstatus_bg02_lz.nscr"
 "bstatus_bg03_lz.nscr"
-"beacon_status_lz.NCGR"
-"beacon_status_lz.NSCR"
-"beacon_status.NCLR"
 

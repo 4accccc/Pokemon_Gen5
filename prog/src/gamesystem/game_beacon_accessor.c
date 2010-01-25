@@ -118,21 +118,19 @@ int GAMEBEACON_InfoTbl_SetBeacon(GAMEBEACON_INFO_TBL *infotbl, const GAMEBEACON_
     if(infotbl->info[log_no].version_bit == 0 
         || infotbl->info[log_no].trainer_id == set_info->trainer_id){
       infotbl->info[log_no] = *set_info;
+      infotbl->time[log_no] = time;
       return log_no;
     }
   }
   
   if(push_out == TRUE){
     //スタックテーブルを前詰め
-    for(log_no = 1; log_no < GAMEBEACON_INFO_TBL_MAX; log_no++){
-      infotbl->info[log_no - 1] = infotbl->info[log_no];
-      infotbl->time[log_no - 1] = infotbl->time[log_no];
-    }
-    infotbl->info[GAMEBEACON_INFO_TBL_MAX - 1] = *set_info;
-    infotbl->time[GAMEBEACON_INFO_TBL_MAX - 1] = time;
-    return GAMEBEACON_INFO_TBL_MAX - 1;
+    MI_CpuCopy32( &infotbl->info[1], &infotbl->info[0], sizeof(GAMEBEACON_INFO)*GAMEBEACON_INFO_TBL_END);
+    MI_CpuCopy16( &infotbl->time[1], &infotbl->time[0], sizeof(u16)*GAMEBEACON_INFO_TBL_END);
+    infotbl->info[GAMEBEACON_INFO_TBL_END] = *set_info;
+    infotbl->time[GAMEBEACON_INFO_TBL_END] = time;
+    return GAMEBEACON_INFO_TBL_END;
   }
-  
   return GAMEBEACON_INFO_TBL_MAX;
 }
 
@@ -162,6 +160,103 @@ BOOL GAMEBEACON_InfoTbl_GetBeacon(GAMEBEACON_INFO_TBL *infotbl, GAMEBEACON_INFO 
 
 //==================================================================
 /**
+ * リング式ビーコンテーブルのTopからのオフセットindexを配列への実参照indexに変換
+ *
+ * @param   infotbl		  ビーコンテーブルへのポインタ
+ * @param   ofs         リングトップからのindexオフセット
+ *
+ * @retval  int		配列の実参照index
+ */
+//==================================================================
+int GAMEBEACON_InfoTblRing_Ofs2Idx(GAMEBEACON_INFO_TBL *infotbl, int ofs )
+{
+  int top = infotbl->ring_top;
+
+  if( ofs < 0 ){
+    return ((top+ofs+GAMEBEACON_INFO_TBL_MAX)%GAMEBEACON_INFO_TBL_MAX);
+  }else{
+    return ((top+ofs)%GAMEBEACON_INFO_TBL_MAX);
+  }
+}
+
+//==================================================================
+/**
+ * ビーコンテーブルへ新しいビーコンを登録する(リングバッファ方式)
+ *
+ * @param   infotbl		  ビーコンテーブルへのポインタ
+ * @param   set_info		登録するビーコン
+ * @param   time        受信日時(上位8bit：時(0～23)、下位8bit：分(0～59))
+ *  @param  new_f       新着かどうか(NULL可)
+ * @retval  int		登録したログ位置(登録できなかった場合はGAMEBEACON_INFO_TBL_MAX)
+ * 
+ * 既にテーブルに存在しているユーザーの場合は上書き。
+ * 新規ユーザーの場合はテーブルの最後に追加
+ */
+//==================================================================
+int GAMEBEACON_InfoTblRing_SetBeacon(GAMEBEACON_INFO_TBL *infotbl, const GAMEBEACON_INFO *set_info, u16 time, BOOL* new_f)
+{
+  int i, log_no;
+  
+  //逆にサーチ
+  if(new_f != NULL){
+    *new_f = 0;
+  }
+  for( i = 0;i < GAMEBEACON_INFO_TBL_MAX;i++){  //既存データチェック
+    log_no = GAMEBEACON_InfoTblRing_Ofs2Idx(infotbl, i);
+
+    if( infotbl->info[log_no].version_bit == 0 ){
+      break;
+    }
+    if( infotbl->info[log_no].trainer_id == set_info->trainer_id ){
+
+      infotbl->info[log_no] = *set_info;
+      infotbl->time[log_no] = time;
+      return i;
+    }
+  }
+  //既存リストになければ新規追加
+  if(new_f != NULL){
+    *new_f = TRUE;
+  }
+  //一番古い一つを上書き
+  log_no =  GAMEBEACON_InfoTblRing_Ofs2Idx(infotbl, -1);
+  infotbl->info[log_no] = *set_info;
+  infotbl->time[log_no] = time;
+
+  //リングトップを更新
+  infotbl->ring_top =  log_no;
+  return 0;
+}
+
+//==================================================================
+/**
+ * リング式ビーコンテーブルから指定オフセット位置のビーコン情報を取得する
+ *
+ * @param   infotbl		  ビーコンテーブルへのポインタ
+ * @param   dest_info		ログ情報代入先
+ * @param   time        受信日時の代入先(上位8bit：時(0～23)、下位8bit：分(0～59))
+ * @param   ofs		      リングバッファ先頭からのindexオフセット
+ *
+ * @retval  BOOL		    TRUE:ログ情報取得成功　　FALSE:取得失敗(データが無い)
+ */
+//==================================================================
+BOOL GAMEBEACON_InfoTblRing_GetBeacon(GAMEBEACON_INFO_TBL *infotbl, GAMEBEACON_INFO *dest_info, u16 *time, int ofs )
+{
+  int log_no;
+  GF_ASSERT(log_no < GAMEBEACON_INFO_TBL_MAX);
+  
+  log_no = GAMEBEACON_InfoTblRing_Ofs2Idx( infotbl, ofs );
+  if(infotbl->info[log_no].version_bit == 0){
+    return FALSE;
+  }
+  *dest_info = infotbl->info[log_no];
+  *time = infotbl->time[log_no];
+  return TRUE;
+}
+
+
+//==================================================================
+/**
  * GAMEBEACON_INFO構造体をAllocする
  *
  * @param   heap_id		
@@ -185,7 +280,10 @@ GAMEBEACON_INFO * GAMEBEACON_Alloc(HEAPID heap_id)
 //==================================================================
 GAMEBEACON_INFO_TBL * GAMEBEACON_InfoTbl_Alloc(HEAPID heap_id)
 {
-  return GFL_HEAP_AllocClearMemory(heap_id, sizeof(GAMEBEACON_INFO_TBL));
+  GAMEBEACON_INFO_TBL* tbl = GFL_HEAP_AllocClearMemory(heap_id, sizeof(GAMEBEACON_INFO_TBL));
+  tbl->ring_top = 0; 
+  tbl->entry_num = 0;
+  return tbl;
 }
 
 
@@ -205,6 +303,18 @@ GAMEBEACON_INFO_TBL * GAMEBEACON_InfoTbl_Alloc(HEAPID heap_id)
 const STRCODE * GAMEBEACON_Get_PlayerName(const GAMEBEACON_INFO *info)
 {
   return info->name;
+}
+
+//==================================================================
+/**
+ * プレイヤー名をSTRBUFに取得する
+ * @param   info		ビーコン情報へのポインタ
+ * @retval  const STRCODE *		プレイヤー名へのポインタ
+ */
+//==================================================================
+void GAMEBEACON_Get_PlayerNameToBuf(const GAMEBEACON_INFO *info, STRBUF* strbuf)
+{
+  GFL_STR_SetStringCode( strbuf, info->name );
 }
 
 //==================================================================

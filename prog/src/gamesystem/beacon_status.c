@@ -34,3 +34,11 @@ void BEACON_STATUS_Delete( BEACON_STATUS* wk )
   GFL_HEAP_FreeMemory( wk );
 }
 
+/*
+ *  @brief  InfoTbl‚ðŽæ“¾
+ */
+GAMEBEACON_INFO_TBL* BEACON_STATUS_GetInfoTbl( BEACON_STATUS* wk )
+{
+  return &wk->view_log;
+}
+

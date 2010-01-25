@@ -7,26 +7,42 @@
 
 #pragma once
 
+#include "gamesystem/game_beacon.h"
+#include "gamesystem/game_beacon_types.h"
+#include "gamesystem/game_beacon_accessor.h"
+#include "gamesystem/beacon_status.h"
+
+enum{
+  SEQ_MAIN,
+
+};
+
 /////////////////////////////////////
 //リテラル
 #define HEAPID_BVIEW_TMP      GFL_HEAP_LOWID( HEAPID_FIELDMAP )
 #define HEAPID_BEACON_VIEW    (HEAPID_FIELDMAP)
 
-///フォントパレット展開位置
+///パレット展開位置
 #define FONT_PAL    (15)
 #define ACT_PAL_FONT  (3)
+#define ACT_PAL_PANEL (4)
 #define ACT_PAL_UNION (9)
+
+#define	FCOL_FNTOAM	( PRINTSYS_LSB_Make(1,2,0) )		// フォントカラー：OAMフォント黒抜
 
 ///表示するログ件数
 #define VIEW_LOG_MAX    (4)
 
 #define BS_LOG_MAX  (30)  //ログ管理数
 #define PANEL_MAX   (5)   //同時描画されるパネル数
-#define PANEL_LINE_MAX    (4)   //画面内に描画されるパネル数
+#define PANEL_VIEW_MAX    (4)   //画面内に描画されるパネル数
 
+#define PANEL_DATA_BLANK (0xFF)
 
 ///パネル文字列バッファ長
 #define BUFLEN_PANEL_MSG  (10+EOM_SIZE)
+///トレーナー名バッファ長
+#define BUFLEN_TR_NAME  (PERSON_NAME_SIZE+EOM_SIZE)
 
 //OBJリソース参照コード
 enum{
@@ -38,6 +54,11 @@ enum{
 
 #define UNION_CHAR_MAX      (16)  ///<ユニオンキャラクターmax
 #define BEACON_VIEW_OBJ_MAX (5*8) ///<画面内に表示するOBJの登録max数
+
+
+#define FRM_POPUP  ( GFL_BG_FRAME1_S )
+#define FRM_PANEL  ( GFL_BG_FRAME2_S )
+#define FRM_BACK  ( GFL_BG_FRAME3_S )
 
 ///OBJ BGプライオリティ
 #define OBJ_BG_PRI (3)
@@ -87,6 +108,7 @@ enum{
 //==============================================================================
 //  構造体定義
 //==============================================================================
+
 //オブジェリソース管理
 typedef struct _OBJ_RES{
   u32   num;
@@ -124,8 +146,9 @@ typedef struct {
 
 //パネル管理構造体
 typedef struct _PANEL_WORK{
-  u8  id;
-  u8  data_idx;
+  u8  id; //パネルID
+  u8  data_ofs; //データ参照オフセット
+  u8  data_idx; //データ配列参照実index
   s16 px;
   s16 py;
   GFL_CLWK* cPanel;
@@ -133,19 +156,46 @@ typedef struct _PANEL_WORK{
   GFL_CLWK* cIcon;
   FONT_OAM  msgOam;
 	STRBUF* str;
+	STRBUF* name;
 
   struct _PANEL_WORK* next;
   struct _PANEL_WORK* prev;
 }PANEL_WORK;
 
+typedef struct _LOG_CTRL{
+  u8  max;  //ログ数
+  u8  top;  //今描画されている先頭index
+  u8  next_panel; //次にデータが来た時書き込むパネルindex
+  u8  view_top;
+  u8  view_btm;
+  u8  view_max;
+
+  u8  panel_list[PANEL_VIEW_MAX];
+}LOG_CTRL;
+
 ///すれ違い通信状態参照画面管理ワーク
 typedef struct _BEACON_VIEW{
   GAMESYS_WORK *gsys;
+  GAMEDATA* gdata;
   FIELD_SUBSCREEN_WORK *subscreen;
 
+  ////////////////////////////////////////
+  BEACON_STATUS* b_status;
+  GAMEBEACON_INFO_TBL*  infoStack;  //スタックワーク
+  GAMEBEACON_INFO_TBL*  infoLog;    //ログテーブル
+  GAMEBEACON_INFO*      tmpInfo;
+  u16                   tmpTime;
+
+  BOOL      active;
+  int       seq;
+  LOG_CTRL  ctrl;
+
+  ////////////////////////////////////////
   HEAPID      heapID;
   HEAPID      tmpHeapID;
   ARCHANDLE*  arc_handle;
+
+  GFL_TCBLSYS*  pTcbSys;
 
   GFL_FONT *fontHandle;
   PRINT_QUE *printQue;
@@ -171,6 +221,7 @@ typedef struct _BEACON_VIEW{
   RES2D_CHAR  resCharIcon[ICON_MAX];
   RES2D_CHAR  resCharUnion[UNION_CHAR_MAX];
   RES2D_PLTT  resPlttUnion;
+  RES2D_PLTT  resPlttPanel;
 }BEACON_VIEW;
 
 

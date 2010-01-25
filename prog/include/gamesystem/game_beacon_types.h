@@ -112,4 +112,7 @@ struct _GAMEBEACON_INFO{
 struct _GAMEBEACON_INFO_TBL{
   struct _GAMEBEACON_INFO info[GAMEBEACON_INFO_TBL_MAX];
   u16 time[GAMEBEACON_INFO_TBL_MAX];    ///<受信日時(上位8bit：時(0～23)、下位8bit：分(0～59))
+  
+  u8  ring_top;   //リングバッファ制御用 リストのトップindexを保持
+  u8  entry_num;  //リング登録数
 };

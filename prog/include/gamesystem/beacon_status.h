@@ -32,4 +32,8 @@ extern BEACON_STATUS* BEACON_STATUS_Create( HEAPID heapID );
  */
 extern void BEACON_STATUS_Delete( BEACON_STATUS* wk );
 
+/*
+ *  @brief  InfoTbl‚ðŽæ“¾
+ */
+extern GAMEBEACON_INFO_TBL* BEACON_STATUS_GetInfoTbl( BEACON_STATUS* wk );
 
