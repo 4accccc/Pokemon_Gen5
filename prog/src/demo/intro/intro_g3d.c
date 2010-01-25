@@ -212,18 +212,22 @@ void INTRO_G3D_Exit( INTRO_G3D_WORK* wk )
  *	@retval
  */
 //-----------------------------------------------------------------------------
+#ifdef PM_DEBUG
 #include "..\..\ui\debug_code\g3d\camera_test.c"
 #include "..\..\ui\debug_code\g3d\g3d_util_anime_frame_test.c"
+#endif
 
 void INTRO_G3D_Main( INTRO_G3D_WORK* wk )
 {
   int i;
   
+#ifdef PM_DEBUG
   // アニメーション調整
 //  debug_g3d_util_anime_frame_test( wk->g3d_util, 0 );
  
   // 座標調整
 //  debug_camera_test( wk->camera );
+#endif
 
   // 専用カメラにスイッチ
   GFL_G3D_CAMERA_Switching( wk->camera );
