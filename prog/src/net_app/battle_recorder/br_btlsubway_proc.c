@@ -494,7 +494,7 @@ static void Br_BtlSubway_CreateMainDisplayNone( BR_BTLSUBWAY_WORK	*p_wk, BR_BTLS
   BR_TEXT_Print( p_wk->p_text, p_param->p_res, msg_805 );
 
   { 
-    const u16 bp  = BSUBWAY_SCOREDATA_SetBattlePoint( p_param->p_subway, 0, BSWAY_SETMODE_get ); 
+    const u16 bp  = BSUBWAY_SCOREDATA_GetBattlePoint( p_param->p_subway );
     OBJNUMBER_Init( &p_wk->objnum, p_param->p_unit, bp, 88, 88, p_wk->heapID );
   }
 }
@@ -631,7 +631,7 @@ static void Br_BtlSubway_CreateMainDisplaySingle( BR_BTLSUBWAY_WORK	*p_wk, BR_BT
 
 
   { 
-    const u16 bp  = BSUBWAY_SCOREDATA_SetBattlePoint( p_param->p_subway, 0, BSWAY_SETMODE_get ); 
+    const u16 bp  = BSUBWAY_SCOREDATA_GetBattlePoint( p_param->p_subway );
     OBJNUMBER_Init( &p_wk->objnum, p_param->p_unit, bp, 144, 32, p_wk->heapID );
   }
 
@@ -768,7 +768,7 @@ static void Br_BtlSubway_CreateMainDisplayDouble( BR_BTLSUBWAY_WORK	*p_wk, BR_BT
   }
 
   { 
-    const u16 bp  = BSUBWAY_SCOREDATA_SetBattlePoint( p_param->p_subway, 0, BSWAY_SETMODE_get ); 
+    const u16 bp  = BSUBWAY_SCOREDATA_GetBattlePoint( p_param->p_subway );
     OBJNUMBER_Init( &p_wk->objnum, p_param->p_unit, bp, 144, 32, p_wk->heapID );
   }
 }
@@ -981,7 +981,7 @@ static void Br_BtlSubway_CreateMainDisplayMulti( BR_BTLSUBWAY_WORK	*p_wk, BR_BTL
   }
 
   { 
-    const u16 bp  = BSUBWAY_SCOREDATA_SetBattlePoint( p_param->p_subway, 0, BSWAY_SETMODE_get ); 
+    const u16 bp  = BSUBWAY_SCOREDATA_GetBattlePoint( p_param->p_subway );
     OBJNUMBER_Init( &p_wk->objnum, p_param->p_unit, bp, 144, 32, p_wk->heapID );
   }
 }
@@ -1064,7 +1064,7 @@ static void Br_BtlSubway_CreateMainDisplayWifi( BR_BTLSUBWAY_WORK	*p_wk, BR_BTLS
       { 
       case BR_BTLSUBWAY_MSGWINID_M_WIFI_NOW_NUM:  //ƒ‰ƒ“ƒN
         { 
-         const int number  = BSUBWAY_SCOREDATA_SetWifiRank( p_param->p_subway, BSWAY_SETMODE_get ); 
+         const int number  = BSUBWAY_SCOREDATA_GetWifiRank( p_param->p_subway );
           p_src     = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
           p_strbuf  = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
           WORDSET_RegisterNumber( p_word, 0, number, 4, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
@@ -1083,7 +1083,7 @@ static void Br_BtlSubway_CreateMainDisplayWifi( BR_BTLSUBWAY_WORK	*p_wk, BR_BTLS
     }
   }
   { 
-    const u16 bp  = BSUBWAY_SCOREDATA_SetBattlePoint( p_param->p_subway, 0, BSWAY_SETMODE_get ); 
+    const u16 bp  = BSUBWAY_SCOREDATA_GetBattlePoint( p_param->p_subway );
     OBJNUMBER_Init( &p_wk->objnum, p_param->p_unit, bp, 144, 32, p_wk->heapID );
   }
 }
