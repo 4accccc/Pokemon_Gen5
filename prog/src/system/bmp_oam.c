@@ -23,7 +23,7 @@
 #define DUMMY_CELL_SIZE_TOTAL		((DUMMY_CELL_SIZE_X/8) * (DUMMY_CELL_SIZE_Y/8) * 0x20)
 
 ///1つのフォントOAMで管理出来る最大アクター数
-#define FACT_ONE_ACT_NUM			(8)
+#define FACT_ONE_ACT_NUM			(16)
 
 
 ///データのマッピングモード毎のアクセスindex
