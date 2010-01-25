@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-18T22:58:19"/>
+	<create user="matsumiya" host="W00207" date="2010-01-25T11:48:24"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,9 +263,9 @@
 		</language>
 	</columns>
 
-	<dialog left="57" top="145" right="759" bottom="774" maximized="no" rayout="Vertical2">
+	<dialog left="-13" top="164" right="689" bottom="793" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
+		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="527"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="540"/>
@@ -295,10 +295,9 @@
 	<row id="msg_iai_01">
 		<comment>秘伝いあいぎり
 ・秘伝使用可能時
-
-はい／いいえの選択
-はい→msg_iai_02
-いいえ→終了</comment>
+・はい／いいえの選択
+　はい→msg_iai_02
+　いいえ→終了</comment>
 		<language name="JPN" width="256">この　きは　なんだか　きれそうだ！
 いあいぎりで　きりますか？</language>
 		<language name="JPN_KANJI" width="256">この　木は　なんだか　切れそうだ！
@@ -308,8 +307,7 @@
 	<row id="msg_iai_02">
 		<comment>秘伝いあいぎり
 ・秘伝使用時
-
-0＝ポケモン名</comment>
+・0＝ポケモン名</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]は
 いあいぎりを　つかった！▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は
@@ -346,8 +344,7 @@
 	<row id="msg_iwa_03">
 		<comment>秘伝いわくだき
 ・秘伝使用時
-
-0＝ポケモン名</comment>
+・0＝ポケモン名</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]は
 いわくだきを　つかった！▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は
@@ -357,12 +354,10 @@
 	<row id="msg_kairiki_01">
 		<comment>秘伝かいりき
 ・秘伝使用可能時
-
-はい／いいえの選択
-はい→msg_kairiki_02
-いいえ→終了
-
-0＝ポケモン名</comment>
+・はい／いいえの選択
+　はい→msg_kairiki_02
+　いいえ→終了
+・0＝ポケモン名</comment>
 		<language name="JPN" width="256">おおきな　いわ　だけど……
 ポケモンの　わざで　おせるかも？▼
 かいりきを　つかいますか？</language>
@@ -374,8 +369,7 @@
 	<row id="msg_kairiki_02">
 		<comment>秘伝かいりき
 ・秘伝使用可能時
-
-0＝ポケモン名</comment>
+・0＝ポケモン名</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]は
 かいりきを　はっき　した！▼
 [1:00:トレーナー名:0]の　かいりきの　おかげで
@@ -407,8 +401,7 @@
 	<row id="msg_kairiki_05">
 		<comment>秘伝かいりき
 ・秘伝使用可能時
-
-0＝ポケモン名</comment>
+・0＝ポケモン名</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]は
 かいりきを　はっき　した！▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は
@@ -418,8 +411,7 @@
 	<row id="msg_kairiki_06">
 		<comment>秘伝かいりき
 ・秘伝使用可能時
-
-0＝ポケモン名</comment>
+・0＝ポケモン名</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]の　かいりきの　おかげで
 いわを　おせるように　なった！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]の　かいりきの　おかげで
@@ -445,8 +437,7 @@
 
 	<row id="msg_naminori_02">
 		<comment>秘伝なみのり
-
-0＝ポケモン名</comment>
+・0＝ポケモン名</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]は
 なみのりを　つかった！▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は
@@ -464,10 +455,9 @@
 	<row id="msg_kiri_01">
 		<comment>秘伝きりはらい
 ・秘伝使用可能時
-
-はい／いいえの選択
-はい→msg_kiri_02
-いいえ→終了</comment>
+・はい／いいえの選択
+　はい→msg_kiri_02
+　いいえ→終了</comment>
 		<language name="JPN" width="256">ふかい　きりに　おおわれている……
 きりばらいを　つかいますか？</language>
 		<language name="JPN_KANJI" width="256">深い　霧に　おおわれている……
@@ -476,8 +466,7 @@
 
 	<row id="msg_kiri_02">
 		<comment>秘伝きりはらい
-
-0＝ポケモン名</comment>
+・0＝ポケモン名</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]は
 きりばらいを　つかった！▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は
@@ -496,10 +485,9 @@
 	<row id="msg_rock_01">
 		<comment>秘伝ロッククライム
 ・秘伝使用可能時
-
-はい／いいえの選択
-はい→msg_rock_02
-いいえ→終了</comment>
+・はい／いいえの選択
+　はい→msg_rock_02
+　いいえ→終了</comment>
 		<language name="JPN" width="256">いわはだが　ゴツゴツしている……
 ロッククライムを　つかいますか？</language>
 		<language name="JPN_KANJI" width="256">岩肌が　ゴツゴツしている……
@@ -508,8 +496,7 @@
 
 	<row id="msg_rock_02">
 		<comment>秘伝ロッククライム
-
-0＝ポケモン名</comment>
+・0＝ポケモン名</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]は
 ロッククライムを　つかった！▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は
@@ -536,10 +523,9 @@
 	<row id="msg_taki_01">
 		<comment>秘伝たきのぼり
 ・秘伝使用可能時
-
-はい／いいえの選択
-はい→msg_taki_02
-いいえ→終了</comment>
+・はい／いいえの選択
+　はい→msg_taki_02
+　いいえ→終了</comment>
 		<language name="JPN" width="256">おおきな　たきだ！
 たきのぼりを　つかいますか？</language>
 		<language name="JPN_KANJI" width="256">大きな　滝だ！
@@ -548,8 +534,7 @@
 
 	<row id="msg_taki_02">
 		<comment>秘伝たきのぼり
-
-0＝ポケモン名</comment>
+・0＝ポケモン名</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]は
 たきのぼりを　つかった！▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は
@@ -567,18 +552,16 @@
 
 	<row id="msg_teleport_ask_01">
 		<comment>フィールド技テレポート
-
-0＝マップ名</comment>
+・0＝マップ名</comment>
 		<language name="JPN" width="256">さいごに　やすんだ
-[1:04:ポケモン分類:0]に　テレポートする？</language>
+[1:05:マップ名:0]に　テレポートする？</language>
 		<language name="JPN_KANJI" width="256">最後に　休んだ
-[1:04:ポケモン分類:0]に　テレポートする？</language>
+[1:05:マップ名:0]に　テレポートする？</language>
 	</row>
 
 	<row id="msg_flash_01">
 		<comment>フィールド技フラッシュ
-
-0＝ポケモン名</comment>
+・0＝ポケモン名</comment>
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]は
 フラッシュを　つかった！▼</language>
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]は
@@ -587,8 +570,7 @@
 
 	<row id="msg_teleport_01">
 		<comment>フィールド技テレポート
-
-0＝ポケモン名</comment>
+・0＝ポケモン名</comment>
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]は
 テレポートを　つかった！▼</language>
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]は
@@ -597,8 +579,7 @@
 
 	<row id="msg_anawohoru_01">
 		<comment>フィールド技あなをほる
-
-0＝ポケモン名</comment>
+・0＝ポケモン名</comment>
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]は
 あなをほるを　つかった！▼</language>
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]は
