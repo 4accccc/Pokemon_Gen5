@@ -2881,7 +2881,7 @@ $(DIR_TEMP)/wf_00_01.nsbmd: $(DIR_RES)/wf_00_01.imd
 #wf_01_01
 $(DIR_OUTPUT)/wf_01_01.3dppack: $(DIR_TEMP)/wf_01_01.nsbmd $(DIR_RES)/wf_01_01.bin $(DIR_RES)/wf_01_01.3dmd
 	@echo create 3dppack wf_01_01
-	@$(BINLINKER) $(DIR_TEMP)/wf_01_01.nsbmd $(DIR_RES)/wf_01_01.bin $(DIR_RES)/wf_01_01.3dmd $(DIR_OUTPUT)/wf_01_01.3dppack WB
+	@$(BINLINKER) $(DIR_TEMP)/wf_01_01.nsbmd $(DIR_RES)/wf_01_01.bin $(DIR_RES)/wf_01_01.3dmd $(DIR_OUTPUT)/wf_01_01.3dppack RD
 
 $(DIR_TEMP)/wf_01_01.nsbmd: $(DIR_RES)/wf_01_01.imd
 	@echo create_nsbmd wf_01_01
