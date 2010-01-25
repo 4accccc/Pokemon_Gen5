@@ -353,8 +353,8 @@ GMEVENT * DEBUG_IntrudeTreeMapWarp(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameS
   FIELD_PLAYER_GetPos( pcActor, &pos );
   //T01Ç÷ÉèÅ[Év
   for(i = 0; i < FIELD_COMM_MEMBER_MAX; i++){
-    if(pos.x >= FX32_CONST(1016) + PALACE_MAP_LEN*i && pos.x <= FX32_CONST(1032) + PALACE_MAP_LEN*i
-        && pos.z >= FX32_CONST(920) && pos.z <= FX32_CONST(936)){
+    if(pos.x >= FX32_CONST(504) + PALACE_MAP_LEN*i && pos.x <= FX32_CONST(504) + PALACE_MAP_LEN*i
+        && pos.z >= FX32_CONST(712) && pos.z <= FX32_CONST(712)){
       pos.x = 12536 << FX32_SHIFT;
       pos.y = 0;
       pos.z = 12120 << FX32_SHIFT;
