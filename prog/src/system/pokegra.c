@@ -62,7 +62,6 @@ enum{
 	POKEGRA_NMAR,
 	POKEGRA_NCEC,
 
-  MIGAWARI_FILE_MAX = 13, //みがわりを構成するグラフィックファイルの総数
 };
 
 //=============================================================================
@@ -356,7 +355,7 @@ static void PokeGra_GetFileOffset( int mons_no, int form_no, int sex, int rare, 
     int form_max = POKETOOL_GetPersonalParam( mons_no, 0, POKEPER_ID_form_max );
     if( form_no < form_max )
     { 
-      file_start = POKEGRA_FILE_MAX * ( MONSNO_MAX + 1 ) + POKEGRA_FILE_MAX * ( gra_index + form_no - 1 ) + MIGAWARI_FILE_MAX;
+      file_start = POKEGRA_FILE_MAX * ( MONSNO_MAX + 1 ) + POKEGRA_FILE_MAX * ( gra_index + form_no - 1 );
     }
   }
 
