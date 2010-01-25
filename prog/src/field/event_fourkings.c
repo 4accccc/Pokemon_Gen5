@@ -281,6 +281,9 @@ typedef struct {
   
   // 
   FIELD_BMODEL* p_model;
+  G3DMAPOBJST * p_objst;
+
+  FIELD_BMODEL_MAN* p_modelman;
 
   
 } EV_BMODEL_ANIME;
@@ -657,10 +660,13 @@ static void EV_BMODEL_Init( EV_BMODEL_ANIME* p_wk, FIELD_BMODEL_MAN * bmodel_man
   if( EV_DEMO_HAICHI_ANIME[ fourkings_no ] )
   {
     p_wk->p_model = FIELD_BMODEL_Create_Search( bmodel_man, BM_SEARCH_ID_NULL, &EV_DEMO_HAICHI_ANIME_POS[fourkings_no] );
+    p_wk->p_objst = FIELD_BMODEL_MAN_SearchObjStatusPos( bmodel_man, BM_SEARCH_ID_NULL, &EV_DEMO_HAICHI_ANIME_POS[fourkings_no] );
+    p_wk->p_modelman = bmodel_man;
   }
   else
   {
     p_wk->p_model = NULL;
+    p_wk->p_objst = NULL;
   }
 }
 
@@ -676,7 +682,14 @@ static void EV_BMODEL_Exit( EV_BMODEL_ANIME* p_wk )
   if( p_wk->p_model )
   {
     FIELD_BMODEL_Delete( p_wk->p_model );
+
+    // ‘å–{‚à“®‚©‚µ‚Ä‚¨‚­
+    G3DMAPOBJST_setAnime( p_wk->p_modelman, p_wk->p_objst, 0, BMANM_REQ_REVERSE_START );
+    G3DMAPOBJST_setAnime( p_wk->p_modelman, p_wk->p_objst, 0, BMANM_REQ_STOP );
+    
     p_wk->p_model = NULL;
+    p_wk->p_objst = NULL;
+    p_wk->p_modelman = NULL;
   }
 }
 
