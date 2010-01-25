@@ -364,11 +364,12 @@ enum
 #define KAZAKAMI_OBJ_WIND_SPEED_SET( x ) ((x) * KAZAKAMI_OBJ_WIND_SPEED_DEF)
 
 // 切り替わり風SE再生タイミング
-#define KAZAKAMI_WIND_SCENE_CHANGE_SE_PLAY_TIMING ( 6 )
+#define KAZAKAMI_WIND_SCENE_CHANGE_SE_PLAY_TIMING ( 24 )
 
 // 暴風の風ループタイミング
 #define KAZAKAMI_WIND_SE_LOOP_TIME_MIN  (50)
 #define KAZAKAMI_WIND_SE_LOOP_TIME_DIF  (16)
+#define KAZAKAMI_WIND_SE_LOOP_TIME      (KAZAKAMI_WIND_SE_LOOP_TIME_MIN)
 
 #define KAZAKAMI_WIND_SE_LOOP_VOLUME_MIN  ( 50 )
 #define KAZAKAMI_WIND_SE_LOOP_VOLUME_DIF  ( 100 - KAZAKAMI_WIND_SE_LOOP_VOLUME_MIN )
@@ -694,7 +695,7 @@ static void WEATHER_KAZAKAMI_WindControl( WEATHER_TASK* p_sys, WEATHER_KAZAKAMI_
 static void WEATHER_KAZAKAMI_SCROLL_Main( WEATHER_TASK* p_sys, WEATHER_KAZAKAMI_WORK* p_wk );
 static void WEATHER_KAZAKAMI_WindSePlay( const WEATHER_KAZAKAMI_WORK* cp_wk, BOOL fog_cont, u16 se_no );
 static void WEATHER_KAZAKAMI_WINDRAIN_SCENE_InitWindSePlay( WEATHER_KAZAKAMI_WORK* p_wk );
-static void WEATHER_KAZAKAMI_WINDRAIN_SCENE_WindSePlay( WEATHER_KAZAKAMI_WORK* p_wk, BOOL fog_cont, u16 se_no );
+static void WEATHER_KAZAKAMI_WINDRAIN_SCENE_WindSePlay( WEATHER_KAZAKAMI_WORK* p_wk, BOOL fog_cont );
 
 
 //-------------------------------------
@@ -2796,7 +2797,8 @@ static void WEATHER_KAZAKAMI_WindControl( WEATHER_TASK* p_sys, WEATHER_KAZAKAMI_
     {
       p_wk->wind_scene_count++;
       //WEATHER_KAZAKAMI_WindSePlay( p_wk, fog_cont, WEATHER_SND_SE_KAZAKAMI_MIDDLE_HIGH_WIND );
-      WEATHER_KAZAKAMI_WINDRAIN_SCENE_WindSePlay( p_wk, fog_cont, WEATHER_SND_SE_KAZAKAMI_MIDDLE_HIGH_WIND );
+      WEATHER_KAZAKAMI_WindSePlay( p_wk, fog_cont, WEATHER_SND_SE_KAZAKAMI_NORMAL_MIDDLE_WIND );
+      WEATHER_KAZAKAMI_WINDRAIN_SCENE_WindSePlay( p_wk, fog_cont );
       if( p_wk->wind_scene_count >= p_wk->wind_scene_count_max )
       {
         // WINDRAIN_TO_RAINへ
@@ -2853,7 +2855,6 @@ static void WEATHER_KAZAKAMI_WindControl( WEATHER_TASK* p_sys, WEATHER_KAZAKAMI_
   case KAZAKAMI_WIND_SCENE_WINDRAIN_TO_RAIN:
     {
       p_wk->wind_scene_count++;
-      WEATHER_KAZAKAMI_WindSePlay( p_wk, fog_cont, WEATHER_SND_SE_KAZAKAMI_NORMAL_MIDDLE_WIND );
       if( p_wk->wind_scene_count >= p_wk->wind_scene_count_max )
       {
         WEATHER_KAZAKAMI_WindStartRain( p_sys, p_wk, fog_cont, fadeout );
@@ -2999,16 +3000,25 @@ static void WEATHER_KAZAKAMI_WINDRAIN_SCENE_InitWindSePlay( WEATHER_KAZAKAMI_WOR
  *	@param	se_no 
  */
 //-----------------------------------------------------------------------------
-static void WEATHER_KAZAKAMI_WINDRAIN_SCENE_WindSePlay( WEATHER_KAZAKAMI_WORK* p_wk, BOOL fog_cont, u16 se_no )
+static void WEATHER_KAZAKAMI_WINDRAIN_SCENE_WindSePlay( WEATHER_KAZAKAMI_WORK* p_wk, BOOL fog_cont )
 {
   if( fog_cont )
   {
-    p_wk->wind_se_count ++;
-    if( p_wk->wind_se_count >= p_wk->wind_se_count_max )
+    if( p_wk->wind_scene_count <= (p_wk->wind_scene_count_max - KAZAKAMI_WIND_SE_LOOP_TIME - KAZAKAMI_WIND_SCENE_CHANGE_SE_PLAY_TIMING) )
     {
-      u32 vol = KAZAKAMI_WIND_SE_LOOP_VOLUME_MIN + GFUser_GetPublicRand( KAZAKAMI_WIND_SE_LOOP_VOLUME_DIF );
-      PMSND_PlaySEVolume( se_no, vol );
-      WEATHER_KAZAKAMI_WINDRAIN_SCENE_InitWindSePlay( p_wk );
+      p_wk->wind_se_count ++;
+      if( p_wk->wind_se_count >= p_wk->wind_se_count_max )
+      {
+        
+        // 鳴っていないときに鳴らす
+        if( PMSND_CheckPlaySE_byPlayerID( PMSND_GetSE_DefaultPlayerID(WEATHER_SND_SE_KAZAKAMI_NORMAL_MIDDLE_WIND) ) == FALSE )
+        {
+          u32 vol = KAZAKAMI_WIND_SE_LOOP_VOLUME_MIN + GFUser_GetPublicRand( KAZAKAMI_WIND_SE_LOOP_VOLUME_DIF );
+        
+          PMSND_PlaySEVolume( WEATHER_SND_SE_KAZAKAMI_MIDDLE_HIGH_WIND, vol );
+          WEATHER_KAZAKAMI_WINDRAIN_SCENE_InitWindSePlay( p_wk );
+        }
+      }
     }
   }
 }

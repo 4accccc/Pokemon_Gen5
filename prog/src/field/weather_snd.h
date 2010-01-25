@@ -48,7 +48,6 @@ extern "C"{
 // カザカミ
 #define WEATHER_SND_SE_KAZAKAMI_NORMAL_RAIN ( SEQ_SE_FLD_31 )         // 通常の雨
 #define WEATHER_SND_SE_KAZAKAMI_NORMAL_MIDDLE_WIND ( SEQ_SE_FLD_99 )  // 中間の風
-#define WEATHER_SND_SE_KAZAKAMI_MIDDLE_RAIN ( SEQ_SE_FLD_101 )        // 中間の雨
 #define WEATHER_SND_SE_KAZAKAMI_MIDDLE_HIGH_WIND ( SEQ_SE_FLD_98 )    // 強い風
 #define WEATHER_SND_SE_KAZAKAMI_HIGH_RAIN   ( SEQ_SE_FLD_100 )        // 強い雨
 
