@@ -41,5 +41,7 @@
 #define T02_BOODLE_05                     24
 #define T02_BOODLE_08                     25
 #define T02_BOODLE_07                     26
+#define T02_BOODLE_02A                    27
+#define T02_BOODLE_01A                    28
 
 #endif //ZONE_T02_EVC_H

@@ -63,7 +63,5 @@
 #define C03R0801_WKOBJCODE11_01           22
 #define C03R0801_WKOBJCODE09_01           23
 #define C03R0801_WKOBJCODE10_01           24
-#define C03R0801_BABYGIRL1_01             25
-#define C03R0801_BABYGIRL1_02             26
 
 #endif //ZONE_C03R0801_EVC_H

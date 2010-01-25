@@ -30,23 +30,7 @@ _EVENT_DATA		ev_bg_t02_sign1_01
 _EVENT_DATA		ev_bg_t02_sign2_01
 _EVENT_DATA		ev_scene_t02_speech_01
 _EVENT_DATA		ev_pos_t02_rival_speech2
-_EVENT_DATA		ev_init_t02
 _EVENT_DATA_END
-
-/************************************************************/
-/*					FIELD_INIT_LABEL						*/
-/************************************************************/
-INIT_EVENT_START	ev_init_t02
-
-	//演説イベント前で群集イベント終了後の場合
-	IF $WK_SCENE_T02 == 2 THEN
-
-		_OBJ_POS_CHANGE( T02_BOODLE_01, 785, 0, 657, DIR_LEFT )
-		_OBJ_POS_CHANGE( T02_BOODLE_02, 785, 0, 655, DIR_LEFT )
-	
-	ENDIF
-
-INIT_EVENT_END
 
 /**************************************************************/
 /*  BABYGIRL1_1	じゃんけん少女								  */
@@ -478,8 +462,10 @@ EVENT_START		ev_scene_t02_speech_01
 	_OBJ_ANIME_WAIT()
 
 	//群集ワープ
-	_OBJ_POS_CHANGE( T02_BOODLE_01, 785, 0, 657, DIR_LEFT )
-	_OBJ_POS_CHANGE( T02_BOODLE_02, 785, 0, 655, DIR_LEFT )
+	_OBJ_DEL( T02_BOODLE_01 )
+	_OBJ_DEL( T02_BOODLE_02 )
+	
+	_FLAG_SET( FV_T02_SPEECH_BEFORE )
 
 	//========================================/
 
@@ -695,28 +681,28 @@ t02_speech:
 	_END_EVENT_BGM()
 
 	//群集おじいさん：キョロキョロ
-	_OBJ_ANIME( T02_BOODLE_01, anm_boodle2_look )
+	_OBJ_ANIME( T02_BOODLE_08, anm_boodle2_look )
 
 	//Ｎ：右向き
 	_OBJ_ANIME( T02_N_01, anm_dir_r )
 	_OBJ_ANIME_WAIT()
 
 	//今の　演説　わしたちは　どうすれば　いいんだ
-	_BALLOONWIN_OBJMSG( msg_t02_boodle_04 , T02_BOODLE_01 )
+	_BALLOONWIN_OBJMSG( msg_t02_boodle_04 , T02_BOODLE_08 )
 	_OBJ_ANIME_WAIT()
 	_BALLOONWIN_CLOSE()
 
 	//群集おにいさん：キョロキョロ
-	_OBJ_ANIME( T02_BOODLE_02, anm_boodle1_look )
+	_OBJ_ANIME( T02_BOODLE_02A, anm_boodle1_look )
 	
 	//ポケモンを　解放って　そんな話　ありえないでしょ！
-	_BALLOONWIN_OBJMSG( msg_t02_boodle_05 , T02_BOODLE_02 )
+	_BALLOONWIN_OBJMSG( msg_t02_boodle_05 , T02_BOODLE_02A )
 	_OBJ_ANIME_WAIT()
 	_BALLOONWIN_CLOSE()
 	
 	//群集：街の方へ移動
-	_OBJ_ANIME( T02_BOODLE_01, anm_boodle1_leave )
-	_OBJ_ANIME( T02_BOODLE_02, anm_boodle2_leave )
+	_OBJ_ANIME( T02_BOODLE_01A, anm_boodle1_leave )
+	_OBJ_ANIME( T02_BOODLE_02A, anm_boodle2_leave )
 	_OBJ_ANIME( T02_BOODLE_03, anm_boodle3_leave )
 	_OBJ_ANIME( T02_BOODLE_04, anm_boodle4_leave )
 	_OBJ_ANIME( T02_BOODLE_05, anm_boodle1_leave )
@@ -733,14 +719,21 @@ t02_speech:
 	_TIME_WAIT( 10 )
 	
 	//群集消す
-	_OBJ_DEL( T02_BOODLE_01 )
-	_OBJ_DEL( T02_BOODLE_02 )
+	_OBJ_DEL( T02_BOODLE_01A )
+	_OBJ_DEL( T02_BOODLE_02A )
 	_OBJ_DEL( T02_BOODLE_03 )
 	_OBJ_DEL( T02_BOODLE_04 )
 	_OBJ_DEL( T02_BOODLE_05 )
 	_OBJ_DEL( T02_BOODLE_06 )
 	_OBJ_DEL( T02_BOODLE_07 )
 	_OBJ_DEL( T02_BOODLE_08 )
+	
+	//町民復活
+	_FLAG_RESET( FV_T02_SPEECH_AFTER )
+	_OBJ_ADD( T02_BABYGIRL1_01 )
+	_OBJ_ADD( T02_OLDWOMAN1_01 )
+	_OBJ_ADD( T02_OLDMAN1_01 )
+	_OBJ_ADD( T02_WOMAN1_01 )
 
 	//Ｎ：下向き
 	_OBJ_ANIME( T02_N_01, anm_dir_d )

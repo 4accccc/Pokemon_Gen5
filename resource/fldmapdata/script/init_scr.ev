@@ -39,6 +39,7 @@ init_flags:
 	_FLAG_SET( FV_T02_NNN )
 	_FLAG_SET( FV_T02_MAN )
 	_FLAG_SET( FV_T02_RIVAL_02 )
+	_FLAG_SET( FV_T02_SPEECH_BEFORE )
 
 	//２番道路：イベント後、カラクサタウンＰＣ内に出現
 	_FLAG_SET( FV_T02PC0101_RIVAL )

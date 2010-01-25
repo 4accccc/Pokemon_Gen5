@@ -1,5 +1,5 @@
 #event data
-#save date:2010/01/07 15:11:16
+#save date:2010/01/22 20:15:00
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\t02.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\t02.wms
 #hold event type:
 1
 #hold event number:
-27
+29
 #event number: 0
 #type
 1
@@ -53,7 +53,7 @@ MV_RND
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
-0
+FV_T02_SPEECH_AFTER
 #Event Script Name
 SCRID_T02_WOMAN1_01
 #Direction Type Number
@@ -84,7 +84,7 @@ MV_RND
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
-0
+FV_T02_SPEECH_AFTER
 #Event Script Name
 SCRID_T02_OLDWOMAN1_01
 #Direction Type Number
@@ -96,13 +96,13 @@ DIR_DOWN
 #Parameter 2 Number
 0
 #Move Limit X Number
-3
+1
 #Move Limit Z Number
-3
+1
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--72 0 136
+-72 0 120
 #event number: 3
 #type
 1
@@ -115,7 +115,7 @@ MV_DIR_RND
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
-0
+FV_T02_SPEECH_AFTER
 #Event Script Name
 SCRID_T02_OLDMAN1_01
 #Direction Type Number
@@ -127,9 +127,9 @@ DIR_DOWN
 #Parameter 2 Number
 0
 #Move Limit X Number
-2
+1
 #Move Limit Z Number
-3
+1
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
@@ -146,7 +146,7 @@ MV_RND
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
-0
+FV_T02_SPEECH_AFTER
 #Event Script Name
 SCRID_T02_BABYGIRL1_01
 #Direction Type Number
@@ -158,13 +158,13 @@ DIR_DOWN
 #Parameter 2 Number
 0
 #Move Limit X Number
-0
+1
 #Move Limit Z Number
-0
+1
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-152 0 -152
+184 0 -104
 #event number: 5
 #type
 1
@@ -332,7 +332,7 @@ MV_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
-FV_T02_MAN
+FV_T02_SPEECH_BEFORE
 #Event Script Name
 SCRID_DUMMY
 #Direction Type Number
@@ -425,7 +425,7 @@ MV_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
-FV_T02_MAN
+FV_T02_SPEECH_BEFORE
 #Event Script Name
 SCRID_DUMMY
 #Direction Type Number
@@ -791,7 +791,7 @@ EVENTDATA_POSTYPE_GRID
 #ID name
 T02_BOODLE_08
 #OBJ CODE Number
-WOMAN1
+MIDDLEMAN2
 #MOVE CODE Number
 MV_DMY
 #EVENT TYPE Number
@@ -847,6 +847,68 @@ DIR_LEFT
 EVENTDATA_POSTYPE_GRID
 #position
 56 0 24
+#event number: 27
+#type
+1
+#ID name
+T02_BOODLE_02A
+#OBJ CODE Number
+MAN1
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_T02_MAN
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_LEFT
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+24 0 8
+#event number: 28
+#type
+1
+#ID name
+T02_BOODLE_01A
+#OBJ CODE Number
+MIDDLEMAN1
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_T02_MAN
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_LEFT
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+24 0 -24
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
@@ -869,7 +931,7 @@ SCRID_BG_T02_SIGN1_01
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-152 0 -8
+-232 0 -232
 #event number: 1
 #Bg Event Label
 T02_SIGN2_01
