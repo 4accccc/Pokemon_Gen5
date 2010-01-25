@@ -3,7 +3,7 @@
  * @file  scr_offset_id.h
  * @bfief  スクリプトIDのオフセット定義
  * @author  tamada GAMEFREAK inc.
- * @date  2010 01/24 (Sun) 23:21
+ * @date  2010 01/25 (Mon) 21:48
  *
  * このファイルはコンバータにより自動生成されています
  */
@@ -96,6 +96,9 @@
 
 #define ID_JUDGE_SCR_OFFSET              (10310) //ジャッジイベント
 #define ID_JUDGE_SCR_OFFSET_END          (10314)
+
+#define ID_ROTOM_CHANGE_SCR_OFFSET       (10315) //ロトムフォルムチェンジ
+#define ID_ROTOM_CHANGE_SCR_OFFSET_END   (10324)
 
 #define ID_DEBUG_SCR_OFFSET              (12000) //デバッグ用共通スクリプト（この下にはファイルを追加しない！！）
 #define ID_DEBUG_SCR_OFFSET_END          (12199)

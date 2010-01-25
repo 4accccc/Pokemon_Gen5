@@ -1,0 +1,169 @@
+//======================================================================
+//                rotom_change_scr.ev
+//
+//    スクリプトファイル：rotom_change_scr用
+//
+//======================================================================
+
+  .text
+
+  .include  "scr_seq_def.h"
+  .include  "../../message/dst/script/msg_rotom_wb_scr.h"
+
+//----------------------------------------------------------------------
+//               スクリプトテーブル
+//----------------------------------------------------------------------
+_EVENT_DATA   ev_rotom_change
+_EVENT_DATA_END
+
+//----------------------------------------------------------------------
+// ローカルワーク
+//----------------------------------------------------------------------
+DEFINE_LOCAL SEL_POS            // ポケモンリスト選択位置 or ロトムが見つかった位置
+DEFINE_LOCAL END_MSG            // 最後のメッセージＩＤ
+
+EVENT_START ev_rotom_change
+  //ローカルワーク定義
+  DEFINE_LOCAL ROTO_NUM            // 手持ちロトムの数
+
+  //ロトムいるか
+  _GET_PARTY_POKE_COUNT_BY_MONSNO(MONSNO_ROTOMU, ROTO_NUM)
+
+  IF $ROTO_NUM == 0 THEN
+    //ロトムいないときのメッセージ
+    $END_MSG = msg_rotom_01
+    _CALL end_msg
+  ELSE
+    //ロトムいれる？
+    _SYSWIN_MSG_DOWN(msg_rotom_02)
+    _YES_NO_WIN( SCWK_ANSWER )
+    _SYSWIN_CLOSE()
+    IF $SCWK_ANSWER == 0 THEN
+      //手持ちのロトムは２匹以上か？
+      IF $ROTO_NUM == 1 THEN    //1匹
+        _GET_PARTY_POS( MONSNO_ROTOMU, SCWK_ANSWER, SEL_POS )
+        IF $SCWK_ANSWER == TRUE THEN
+          //家電選択シーケンスコール
+          _CALL select_elec
+        ENDIF
+      ELSE                      //複数発見
+          //「ロトム選んで」
+          _SYSWIN_MSG_DOWN(msg_rotom_04)
+          _SYSWIN_CLOSE()
+          //ポケモン選択
+          _SELECT_TEMOTI_POKE( SCWK_ANSWER , SEL_POS , 0 )
+          IF $SCWK_ANSWER == TRUE THEN
+            _CALL check_poke
+          ELSE        //選択しなかった
+            //あきらめた
+            $END_MSG = msg_rotom_03
+            _CALL end_msg
+          ENDIF
+      ENDIF
+    ELSE
+      //あきらめた
+      $END_MSG = msg_rotom_03
+      _CALL end_msg
+    ENDIF
+  ENDIF  
+EVENT_END
+
+//最終メッセージ共通処理
+end_msg:
+  _SYSWIN_MSG_DOWN( END_MSG )
+  _LAST_KEYWAIT()
+  _SYSWIN_CLOSE()
+_RET
+
+//ポケモンのチェック⇒フォルム変更
+check_poke:
+  DEFINE_LOCAL SEL_MONS_NO            //選択したポケモンのモンスターナンバー
+  //タマゴチェックする
+  _CHECK_TEMOTI_EGG( SCWK_ANSWER, SEL_POS )
+  IF $SCWK_ANSWER == TRUE THEN
+    //タマゴなので終了
+    $END_MSG = msg_rotom_06
+    _CALL end_msg
+  ELSE
+    _GET_PARTY_POKE_MONSNO( SEL_MONS_NO, SEL_POS )
+    //選んだのはロトム？
+    IF $SEL_MONS_NO == MONSNO_ROTOMU THEN
+      //家電選択シーケンスコール
+      _CALL select_elec
+    ELSE
+      //「ロトムではない」
+      $END_MSG = msg_rotom_05
+      _CALL end_msg
+    ENDIF
+  ENDIF
+_RET
+
+
+//家電選択
+select_elec:
+  //ローカルワーク定義
+  DEFINE_LOCAL FORM_NO            // フォルムナンバー
+  DEFINE_LOCAL ELEC_TO_FORM_NO    // 家電から求めたフォルムナンバー
+  DEFINE_LOCAL EXIT            // ループ脱出フラグ
+  DEFINE_LOCAL LIST_SEL_RET     //リスト選択項目
+
+  $EXIT = FALSE
+  //現在のフォルムを取得
+  _GET_PARTY_POKE_FORMNO( FORM_NO, SEL_POS )
+
+  WHILE $EXIT == FALSE
+    //どの家電？
+    _SYSWIN_MSG_DOWN(msg_rotom_07)
+    //リスト作成
+    _BMPMENU_INIT_EX( 1,1,0,1,LIST_SEL_RET ) 
+    _BMPMENU_MAKE_LIST(msg_rotom_window_01, 1 )          //レンジ
+    _BMPMENU_MAKE_LIST(msg_rotom_window_01, 2 )          //洗濯機
+    _BMPMENU_MAKE_LIST(msg_rotom_window_01, 3 )          //扇風機
+    _BMPMENU_MAKE_LIST(msg_rotom_window_01, 4 )          //掃除機
+    _BMPMENU_MAKE_LIST(msg_rotom_window_01, 5 )          //芝刈り機
+    _BMPMENU_MAKE_LIST(msg_rotom_window_01, 0 )          //元に戻す(ノーマル)
+    _BMPMENU_MAKE_LIST( msg_rotom_cancel, 6 )            //やめる
+    _BMPMENU_START()
+    _SYSWIN_CLOSE()
+    
+    //やめるを選んだ?
+    IF $LIST_SEL_RET == 6 THEN       //やめるを選んだ
+      //あきらめた
+      $END_MSG = msg_rotom_03
+      _CALL end_msg
+      _RET
+    ENDIF
+    
+    //選んだ家電をフォルムナンバーに変換
+    $ELEC_TO_FORM_NO = $LIST_SEL_RET
+
+    //変換したフォルムナンバーと選択したロトムのフォルムナンバーを比較
+    IF $FORM_NO == $ELEC_TO_FORM_NO   THEN       //同じ
+      IF $FORM_NO == 0 THEN     //現在ノーマルフォルム
+        _SYSWIN_MSG_DOWN(msg_rotom_10)      //モーターに入ってないよ
+      ELSE
+        _SYSWIN_MSG_DOWN(msg_rotom_08)      //既に入ってるよ
+      ENDIF
+      _SYSWIN_CLOSE()
+    ELSE          //違う
+      $EXIT = TRUE
+    ENDIF
+  ENDWHILE
+
+  //忘れる技の選出
+
+  //フォルムチェンジ(図鑑登録含む)
+// _CHANGE_FORM_NO( SEL_POS, FORM_NO )
+
+//  $END_MSG = $FORM_MSG
+//  _CALL end_msg
+_RET
+
+//忘れる技の場所を決定する
+//select_del_skill:
+
+
+
+
+
+
