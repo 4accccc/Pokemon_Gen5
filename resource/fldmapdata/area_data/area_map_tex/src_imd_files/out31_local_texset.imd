@@ -3,9 +3,9 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fuchino" host="W00152" date="2009-06-29T21:17:13" source="out31_local_texset.mb"/>
+	<create user="fuchino" host="W00152" date="2010-01-25T22:49:19"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
-	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+	<generator name="NNS_3DMaterialEditor" version="2.8.0.20050620"/>
 </head>
 
 <body>
@@ -22,14 +22,14 @@
 	tex_matrix_mode="maya"
 	compress_node="merge" node_size="6 6"
 	compress_material="on" material_size="5 5"
-	output_texture="used"
+	output_texture="all"
 	force_full_weight="off"
 	use_primitive_strip="on"
 />
 
 <box_test pos_scale="4" xyz="-0.500000 0.000000 -5.500000" whd="7.000000 0.000000 6.000000"/>
 
-<tex_image_array size="5">
+<tex_image_array size="6">
 	<tex_image index="0" name="sea_asase02"
 		width="16" height="16" original_width="16" original_height="16"
 		format="palette4"
@@ -62,7 +62,25 @@
 			0010 0000 0000 0000 0001 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="2" name="sea_simi.1"
+	<tex_image index="2" name="sea_nagare01"
+		width="16" height="16" original_width="16" original_height="16"
+		format="palette16"
+		color0_mode="color"
+		palette_name="sea_nagare01_pl"
+		path="C:/home/wb_data3d/field/out31/chip/tex/sea_nagare01.tga"
+	>
+		<bitmap size="64">
+			0000 0000 0000 0000 0002 0000 0000 2000
+			0002 0000 0000 2000 0003 0000 0000 3000
+			0025 0002 2000 5200 1147 1112 2001 7400
+			1258 1313 3131 8521 2578 1515 5151 8752
+			5788 3557 7553 8875 7886 5578 8755 6887
+			8863 7788 8877 3688 8632 8888 8888 2368
+			3211 8886 6888 1123 1100 8632 2368 0111
+			0000 3320 0233 0000 0000 0000 0000 0000
+		</bitmap>
+	</tex_image>
+	<tex_image index="3" name="sea_simi.1"
 		width="16" height="16" original_width="16" original_height="16"
 		format="palette16"
 		color0_mode="color"
@@ -80,7 +98,7 @@
 			1111 1111 1111 1111 1111 1111 1111 1111
 		</bitmap>
 	</tex_image>
-	<tex_image index="3" name="sea_zanami"
+	<tex_image index="4" name="sea_zanami"
 		width="16" height="64" original_width="16" original_height="64"
 		format="a3i5"
 		palette_name="sea_zanami_pl"
@@ -153,7 +171,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="4" name="sea_zanami2"
+	<tex_image index="5" name="sea_zanami2"
 		width="16" height="16" original_width="16" original_height="16"
 		format="palette16"
 		color0_mode="transparency"
@@ -173,21 +191,25 @@
 	</tex_image>
 </tex_image_array>
 
-<tex_palette_array size="5">
+<tex_palette_array size="6">
 	<tex_palette index="0" name="sea_asase02_pl" color_size="4">
 		6ad0 5e8f 62b0 7fff
 	</tex_palette>
 	<tex_palette index="1" name="sea_jimen_pl" color_size="8">
 		6bbf 77df 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="2" name="sea_simi.1_pl" color_size="8">
+	<tex_palette index="2" name="sea_nagare01_pl" color_size="16">
+		5d82 5d83 5da3 61c4 61e5 6606 6627 6a48
+		6a69 7fff 7fff 7fff 7fff 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="3" name="sea_simi.1_pl" color_size="8">
 		4b1c 4afb 575d 639e 5f7d 679f 6bbf 533c
 	</tex_palette>
-	<tex_palette index="3" name="sea_zanami2_pl" color_size="16">
+	<tex_palette index="4" name="sea_zanami2_pl" color_size="16">
 		7c1f 59a0 59a0 59c2 59e3 5a06 5a29 5e4b
 		5e6d 5e8f 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="4" name="sea_zanami_pl" color_size="16">
+	<tex_palette index="5" name="sea_zanami_pl" color_size="16">
 		59a0 59c2 59e3 5a06 5a29 5e4b 5e6d 5e8f
 		5eb1 62f4 6b59 6f9a 73bc 77de 7bff 7fff
 	</tex_palette>
@@ -259,7 +281,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="2" tex_palette_idx="2"
+		tex_image_idx="3" tex_palette_idx="3"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -283,7 +305,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="4" tex_palette_idx="3"
+		tex_image_idx="5" tex_palette_idx="4"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -307,7 +329,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="3" tex_palette_idx="4"
+		tex_image_idx="4" tex_palette_idx="5"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -581,6 +603,48 @@
 
 <output_info vertex_size="20" polygon_size="5"
 	triangle_size="0" quad_size="5"/>
+
+<ex_nns_3dme>
+	<ex_model_info scene_name="デフォルトシーン" disp_pos="0.000000 60.000000"/>
+	<ex_tex_image_array size="6">
+		<ex_tex_image index="0" disp_pos="240.000000 360.000000"/>
+		<ex_tex_image index="1" disp_pos="-240.000000 360.000000"/>
+		<ex_tex_image index="2" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="3" disp_pos="-120.000000 360.000000"/>
+		<ex_tex_image index="4" disp_pos="0.000000 360.000000"/>
+		<ex_tex_image index="5" disp_pos="120.000000 360.000000"/>
+	</ex_tex_image_array>
+	<ex_tex_palette_array size="6">
+		<ex_tex_palette index="0" disp_pos="240.000000 420.000000"/>
+		<ex_tex_palette index="1" disp_pos="-240.000000 420.000000"/>
+		<ex_tex_palette index="2" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="3" disp_pos="-120.000000 420.000000"/>
+		<ex_tex_palette index="4" disp_pos="120.000000 420.000000"/>
+		<ex_tex_palette index="5" disp_pos="0.000000 420.000000"/>
+	</ex_tex_palette_array>
+	<ex_material_array size="5">
+		<ex_material index="0" disp_pos="240.000000 300.000000"/>
+		<ex_material index="1" disp_pos="-240.000000 300.000000"/>
+		<ex_material index="2" disp_pos="-120.000000 300.000000"/>
+		<ex_material index="3" disp_pos="120.000000 300.000000"/>
+		<ex_material index="4" disp_pos="0.000000 300.000000"/>
+	</ex_material_array>
+	<ex_polygon_array size="5">
+		<ex_polygon index="0" disp_pos="-240.000000 240.000000"/>
+		<ex_polygon index="1" disp_pos="-120.000000 240.000000"/>
+		<ex_polygon index="2" disp_pos="0.000000 240.000000"/>
+		<ex_polygon index="3" disp_pos="120.000000 240.000000"/>
+		<ex_polygon index="4" disp_pos="240.000000 240.000000"/>
+	</ex_polygon_array>
+	<ex_node_array size="6">
+		<ex_node index="0" disp_pos="0.000000 120.000000"/>
+		<ex_node index="1" disp_pos="-240.000000 180.000000"/>
+		<ex_node index="2" disp_pos="-120.000000 180.000000"/>
+		<ex_node index="3" disp_pos="0.000000 180.000000"/>
+		<ex_node index="4" disp_pos="120.000000 180.000000"/>
+		<ex_node index="5" disp_pos="240.000000 180.000000"/>
+	</ex_node_array>
+</ex_nns_3dme>
 
 </body>
 
