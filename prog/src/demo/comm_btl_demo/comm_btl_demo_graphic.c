@@ -261,9 +261,9 @@ static const GFL_CLSYS_INIT sc_clsys_init	=
 //-------------------------------------
 ///	カメラ位置
 //=====================================
-static const VecFx32 sc_CAMERA_PER_POS		= { 0,0,FX32_CONST( 180 ) };	//位置
-static const VecFx32 sc_CAMERA_PER_TARGET	= { 0,0,FX32_CONST( 0 ) };	//ターゲット
+static const VecFx32 sc_CAMERA_PER_POS		= { 0,0,FX32_CONST( 128 ) };	//位置
 static const VecFx32 sc_CAMERA_PER_UP			= { 0,FX32_ONE,0 };					//上方向
+static const VecFx32 sc_CAMERA_PER_TARGET	= { 0,0,0 };	//ターゲット
 
 //-------------------------------------
 ///	プロジェクション
@@ -274,9 +274,12 @@ static inline GFL_G3D_CAMERA* GRAPHIC_G3D_CAMERA_Create
 		( const VecFx32* cp_pos, const VecFx32* cp_up, const VecFx32* cp_target, HEAPID heapID )
 {
 #if 1	//射影
+  // @TODO
+  return  GFL_G3D_CAMERA_CreateDefault( cp_pos, cp_target, heapID );
+  
 	return GFL_G3D_CAMERA_Create(	GFL_G3D_PRJPERS, 
-									FX_SinIdx( FX32_CONST(20.7)/2 *PERSPWAY_COEFFICIENT ),
-									FX_CosIdx( FX32_CONST(20.7)/2 *PERSPWAY_COEFFICIENT ),
+									FX_SinIdx( 10/2 *PERSPWAY_COEFFICIENT ),
+									FX_CosIdx( 10/2 *PERSPWAY_COEFFICIENT ),
 									defaultCameraAspect, 0,
 									FX32_CONST(0.1), FX32_CONST(2048), 0,
 									cp_pos, cp_up, cp_target, heapID );
