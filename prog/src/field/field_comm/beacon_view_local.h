@@ -36,6 +36,7 @@ enum{
 #define BS_LOG_MAX  (30)  //ログ管理数
 #define PANEL_MAX   (5)   //同時描画されるパネル数
 #define PANEL_VIEW_MAX    (4)   //画面内に描画されるパネル数
+#define PANEL_LINE_END    (5)
 
 #define PANEL_DATA_BLANK (0xFF)
 
@@ -43,6 +44,8 @@ enum{
 #define BUFLEN_PANEL_MSG  (10+EOM_SIZE)
 ///トレーナー名バッファ長
 #define BUFLEN_TR_NAME  (PERSON_NAME_SIZE+EOM_SIZE)
+
+#define ACT_RENDER_ID (0)
 
 //OBJリソース参照コード
 enum{
@@ -78,6 +81,9 @@ enum{
 
 #define ACT_PANEL_OX  (13)
 #define ACT_PANEL_OY  (5*8)
+#define ACT_PANEL_PX  (-ACT_PANEL_OX)
+#define ACT_PANEL_PY  (-ACT_PANEL_OY)
+
 #define ACT_UNION_OX  (4*8)
 #define ACT_UNION_OY  (3*8)
 #define ACT_ICON_OX   (ACT_UNION_OX+28)
@@ -105,6 +111,9 @@ enum{
 #define BMP_PANEL_OAM_SX  (15)
 #define BMP_PANEL_OAM_SY  (2)
 
+//スクロール方向定義
+#define SCROLL_UP   (0)
+#define SCROLL_DOWN (1)
 //==============================================================================
 //  構造体定義
 //==============================================================================
@@ -149,6 +158,8 @@ typedef struct _PANEL_WORK{
   u8  id; //パネルID
   u8  data_ofs; //データ参照オフセット
   u8  data_idx; //データ配列参照実index
+
+  u8  n_line; //現在のライン
   s16 px;
   s16 py;
   GFL_CLWK* cPanel;
@@ -206,6 +217,8 @@ typedef struct _BEACON_VIEW{
 
   BMPOAM_SYS_PTR bmpOam;
   GFL_CLUNIT* cellUnit;
+  GFL_CLSYS_REND* cellRender;
+  GFL_CLACTPOS  cellSurfacePos;
   OBJ_RES_TBL objResNormal;
   OBJ_RES_TBL objResUnion;
   OBJ_RES_TBL objResIcon;

@@ -243,7 +243,7 @@ int GAMEBEACON_InfoTblRing_SetBeacon(GAMEBEACON_INFO_TBL *infotbl, const GAMEBEA
 BOOL GAMEBEACON_InfoTblRing_GetBeacon(GAMEBEACON_INFO_TBL *infotbl, GAMEBEACON_INFO *dest_info, u16 *time, int ofs )
 {
   int log_no;
-  GF_ASSERT(log_no < GAMEBEACON_INFO_TBL_MAX);
+  GF_ASSERT( ofs < GAMEBEACON_INFO_TBL_MAX);
   
   log_no = GAMEBEACON_InfoTblRing_Ofs2Idx( infotbl, ofs );
   if(infotbl->info[log_no].version_bit == 0){

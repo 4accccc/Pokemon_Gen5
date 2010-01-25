@@ -495,6 +495,7 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/fieldmap_func.c \
         net_app/union/union_subdisp.c \
         net_app/union/union_chat.c \
+        field/field_comm/beacon_view_sub.c \
         field/field_comm/beacon_view.c \
         field/fldeff_footmark.c \
         field/fldeff_reflect.c \

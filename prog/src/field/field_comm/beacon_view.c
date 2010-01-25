@@ -157,6 +157,7 @@ void BEACON_VIEW_Update(BEACON_VIEW_PTR wk, BOOL bActive )
 
   //スタックテーブル更新
   GAMEBEACON_Stack_Update( wk->infoStack );
+  GFL_TCBL_Main( wk->pTcbSys );
 
   if( wk->active != bActive ){
     wk->active = bActive;
@@ -546,6 +547,17 @@ static void _sub_ActorCreate( BEACON_VIEW_PTR wk, ARCHANDLE *handle )
 
   //セル系システムの作成
   wk->cellUnit = GFL_CLACT_UNIT_Create( BEACON_VIEW_OBJ_MAX , 0 , wk->heapID );
+ 
+  //レンダラー作成
+  {
+    const GFL_REND_SURFACE_INIT renderInitData = { 8*16,0,256,192,CLSYS_DRAW_SUB};
+    
+    wk->cellRender = GFL_CLACT_USERREND_Create( &renderInitData , 1 , wk->heapID );
+    GFL_CLACT_UNIT_SetUserRend( wk->cellUnit, wk->cellRender );
+  }
+
+  //サブサーフェスの位置を設定
+//  GFL_CLACT_USERREND_GetSurfacePos( , ACT_RENDER_ID, &wk->cellSurfacePos );
 
   //FontOAMシステムの作成
   wk->bmpOam = BmpOam_Init( wk->heapID, wk->cellUnit );
@@ -574,6 +586,8 @@ static void _sub_ActorDelete( BEACON_VIEW_PTR wk )
     panel_PanelObjDel( wk, i );
   }
   BmpOam_Exit( wk->bmpOam );
+
+  GFL_CLACT_USERREND_Delete( wk->cellRender );
   GFL_CLACT_UNIT_Delete( wk->cellUnit );
 }
 
@@ -701,7 +715,7 @@ static GFL_CLWK* obj_ObjAdd(
   
   obj = GFL_CLACT_WK_Create( wk->cellUnit,
           cgrNo,palNo,cellNo,
-          &ini, CLSYS_DEFREND_SUB, wk->heapID );
+          &ini, ACT_RENDER_ID, wk->heapID );
 
   return obj;
 }
@@ -753,7 +767,7 @@ static void panel_PanelObjAdd( BEACON_VIEW_PTR wk, u8 idx )
 	finit.pal_offset = ACT_PAL_FONT;		// pltt_indexのパレット内でのオフセット
 	finit.soft_pri = OBJ_SPRI_MSG;			// ソフトプライオリティ
 	finit.bg_pri = OBJ_BG_PRI;				// BGプライオリティ
-	finit.setSerface = CLSYS_DEFREND_SUB;
+	finit.setSerface = ACT_RENDER_ID;
 //	finit.setSerface = CLWK_SETSF_NONE;
 	finit.draw_type  = CLSYS_DRAW_SUB;
 
