@@ -1194,6 +1194,7 @@ static void _WordsetSetDefaultData(UNION_SYSTEM_PTR unisys)
 	case LANG_ITALY	: 	msgno = msg_union_greeting_04;	break;
 	case LANG_GERMANY: 	msgno = msg_union_greeting_05;	break;
 	case LANG_SPAIN	: 	msgno = msg_union_greeting_06;	break;
+	case LANG_KOREA :   msgno = msg_union_greeting_08;  break;
 	default:
 		msgno = msg_union_greeting_07;
 		break;
