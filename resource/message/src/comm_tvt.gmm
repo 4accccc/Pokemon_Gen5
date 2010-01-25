@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ariizumi_nobuhiko" host="W00147" date="2010-01-19T21:33:03"/>
+	<create user="ariizumi_nobuhiko" host="W00147" date="2010-01-25T11:51:08"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -317,7 +317,7 @@
 		</language>
 	</columns>
 
-	<dialog left="119" top="139" right="824" bottom="759" maximized="no" rayout="Vertical2">
+	<dialog left="250" top="153" right="955" bottom="773" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -352,18 +352,18 @@
 	</row>
 
 	<row id="COMM_TVT_DRAW_002">
-		<language name="JPN">SELECT</language>
-		<language name="JPN_KANJI">SELECT</language>
+		<language name="JPN">ＳＥＬＥＣＴ</language>
+		<language name="JPN_KANJI">ＳＥＬＥＣＴ</language>
 	</row>
 
 	<row id="COMM_TVT_DRAW_003">
-		<language name="JPN">START</language>
-		<language name="JPN_KANJI">START</language>
+		<language name="JPN">Ｂボタン</language>
+		<language name="JPN_KANJI">Ｂボタン</language>
 	</row>
 
 	<row id="COMM_TVT_DRAW_004">
-		<language name="JPN">へんしゅうモードON</language>
-		<language name="JPN_KANJI">編集モードON</language>
+		<language name="JPN">へんしゅうモードＯＮ</language>
+		<language name="JPN_KANJI">編集モードＯＮ</language>
 	</row>
 
 	<row id="COMM_TVT_DRAW_005">

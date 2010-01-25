@@ -247,7 +247,8 @@ SRCS  +=    $(SOUNDSRC) \
 		net/ctvt_beacon.c \
         system/blink_palanm.c \
         system/font2tex.c \
-		debug/debug_sd_print.c
+		debug/debug_sd_print.c \
+		system/ds_system.c
 
 
 #================================================

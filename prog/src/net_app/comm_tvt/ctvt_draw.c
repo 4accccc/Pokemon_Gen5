@@ -449,8 +449,7 @@ static void CTVT_DRAW_UpdateDraw( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork
     CTVT_DRAW_DrawInfoMsg( work , drawWork , TRUE );
 
   }
-  if( GFL_UI_KEY_GetTrg() & CTVT_BUTTON_DRAW ||
-      GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
   {
     drawWork->state = CDS_FADEOUT;
   }

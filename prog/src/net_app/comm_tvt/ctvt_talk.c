@@ -656,6 +656,7 @@ static void CTVT_TALK_UpdateWait( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork
   if( talkWork->state == CTS_WAIT )
   {
     if( GFL_UI_KEY_GetTrg() & CTVT_BUTTON_DRAW ||
+        GFL_UI_KEY_GetTrg() & PAD_BUTTON_X ||
         (GFL_UI_TP_HitTrg( CTVT_TALK_HitDrawButton ) == 0) )
     {
       talkWork->state = CTS_FADEOUT_BOTH;
