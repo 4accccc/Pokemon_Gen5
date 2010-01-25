@@ -2123,6 +2123,7 @@ static BOOL OneselfSeq_TrainerCardUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUA
     if(situ->mycomm.trcard.target_card_receive == TRUE
         && UnionMsg_TalkStream_Check(unisys) == TRUE){
       OS_TPrintf("相手のカード受信\n");
+      situ->mycomm.trcard.target_card->SignDisenable = TRUE;
       situ->mycomm.trcard.card_param = TRAINERCASR_CreateCallParam_CommData(
         unisys->uniparent->game_data, situ->mycomm.trcard.target_card, HEAPID_UNION);
       (*seq)++;
@@ -3985,6 +3986,7 @@ static BOOL OneselfSeq_ColosseumTrainerCardUpdate(UNION_SYSTEM_PTR unisys, UNION
   case 0:
     _PlayerMinePause(unisys, fieldWork, TRUE);
 
+    clsys->recvbuf.tr_card[clsys->talk_obj_id]->SignDisenable = TRUE;
     unisys->parent_work = TRAINERCASR_CreateCallParam_CommData(
       unisys->uniparent->game_data, clsys->recvbuf.tr_card[clsys->talk_obj_id], HEAPID_UNION);
 
