@@ -1,0 +1,83 @@
+//============================================================================
+/**
+ *
+ *	@file		comm_btl_demo_res.cdat
+ *	@brief  通信バトルデモ用のリソース
+ *	@author hosaka genya
+ *	@data		2010.01.25
+ *
+ */
+//============================================================================
+#pragma once
+
+//=============================================================================
+/**
+ *								定数定義
+ */
+//=============================================================================
+
+//=============================================================================
+/**
+ *								構造体定義
+ */
+//=============================================================================
+
+// デモID
+enum 
+{ 
+  DEMO_ID_01_A = 0,   ///< デモID 01_A
+#if 0
+  DEMO_ID_01_B,
+  DEMO_ID_02_A,
+  DEMO_ID_02_B,
+  DEMO_ID_DRAW,
+  DEMO_ID_START,
+#endif
+  DEMO_ID_MAX,
+};
+
+//=======================================================================================
+// demo01a
+//=======================================================================================
+// UNIT
+
+//@TODO
+#include "demo3d.naix"
+static const GFL_G3D_UTIL_RES res_demo01a[] = {
+ // { ARCID_COMM_BTL_DEMO_GRA, NARC_comm_btl_demo_vs_demo01a_nsbmd, GFL_G3D_UTIL_RESARC },
+ // { ARCID_COMM_BTL_DEMO_GRA, NARC_comm_btl_demo_vs_demo01a_nsbca, GFL_G3D_UTIL_RESARC },
+ // { ARCID_COMM_BTL_DEMO_GRA, NARC_comm_btl_demo_vs_demo01a_nsbma, GFL_G3D_UTIL_RESARC },
+	{ ARCID_DEMO3D_GRA, NARC_demo3d_n_demo_01_nsbmd, GFL_G3D_UTIL_RESARC },
+	{ ARCID_DEMO3D_GRA, NARC_demo3d_n_demo_01_nsbca, GFL_G3D_UTIL_RESARC },
+	{ ARCID_DEMO3D_GRA, NARC_demo3d_n_demo_01_nsbma, GFL_G3D_UTIL_RESARC },
+};
+// ANM
+static const GFL_G3D_UTIL_ANM anm_demo01a[] = {
+  { 1, 0 },
+  { 2, 0 },
+};
+// OBJ
+static const GFL_G3D_UTIL_OBJ obj_demo01a[] = {
+  {
+    0, 0, 0,
+    anm_demo01a, NELEMS(anm_demo01a),
+  },
+};
+// SETUP
+static const GFL_G3D_UTIL_SETUP sc_setup[ DEMO_ID_MAX ] = {
+  {
+    res_demo01a, NELEMS(res_demo01a), obj_demo01a, NELEMS(obj_demo01a),
+  },
+};
+
+//=======================================================================================
+// demo02a
+//=======================================================================================
+
+//=============================================================================
+/**
+ *								EXTERN宣言
+ */
+//=============================================================================
+
+

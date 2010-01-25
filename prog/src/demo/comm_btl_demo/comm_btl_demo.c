@@ -46,8 +46,9 @@
 #include "message.naix"
 #include "comm_btl_demo.naix"	// アーカイブ
 
-#include "townmap_gra.naix"		// タッチバーカスタムボタン用サンプルにタウンマップリソース
 #include "msg/msg_mictest.h"  // GMM
+
+#include "comm_btl_demo_res.cdat"
 
 FS_EXTERN_OVERLAY(ui_common);
 
@@ -58,7 +59,8 @@ FS_EXTERN_OVERLAY(ui_common);
 //=============================================================================
 enum
 { 
-  COMM_BTL_DEMO_HEAP_SIZE = 0x30000,  ///< ヒープサイズ
+  //@TODO デカめにとってある
+  COMM_BTL_DEMO_HEAP_SIZE = 0x90000,  ///< ヒープサイズ
 };
 
 //-------------------------------------
@@ -93,6 +95,7 @@ enum
  *								構造体定義
  */
 //=============================================================================
+
 //--------------------------------------------------------------
 ///	BG管理ワーク
 //==============================================================
@@ -102,6 +105,15 @@ typedef struct
 } COMM_BTL_DEMO_BG_WORK;
 
 //--------------------------------------------------------------
+///	G3D管理ワーク
+//==============================================================
+typedef struct {
+  GFL_G3D_UTIL*   g3d_util;
+  u16             unit_idx;
+  u8              padding[2];
+} COMM_BTL_DEMO_G3D_WORK;
+
+//--------------------------------------------------------------
 ///	メインワーク
 //==============================================================
 typedef struct 
@@ -109,6 +121,7 @@ typedef struct
   HEAPID heapID;
 
 	COMM_BTL_DEMO_BG_WORK				wk_bg;
+  COMM_BTL_DEMO_G3D_WORK      wk_g3d;
 
 	//描画設定
 	COMM_BTL_DEMO_GRAPHIC_WORK	*graphic;
@@ -120,13 +133,10 @@ typedef struct
 	PRINT_QUE						*print_que;
 	GFL_MSGDATA					*msg;
   
-  // G3D
-  GFL_G3D_UTIL*     g3d_util;
-
   // シーンコントローラ
   UI_SCENE_CNT_PTR  cntScene;
 
-  int timer;
+  int timer;  ///< デモ起動時間カウンタ
 
 } COMM_BTL_DEMO_MAIN_WORK;
 
@@ -223,7 +233,11 @@ static CBD_SCENE_ID calc_first_scene( COMM_BTL_DEMO_MAIN_WORK* wk )
  *							プロトタイプ宣言
  */
 //=============================================================================
-//-------------------------------------
+static void G3D_Init( COMM_BTL_DEMO_G3D_WORK* g3d, HEAPID heapID );
+static void G3D_Draw( COMM_BTL_DEMO_G3D_WORK* g3d );
+static void G3D_End( COMM_BTL_DEMO_G3D_WORK* g3d );
+
+  //-------------------------------------
 ///	PROC
 //=====================================
 static GFL_PROC_RESULT CommBtlDemoProc_Init( GFL_PROC *proc, int *seq, void *pwk, void *mywk );
@@ -297,8 +311,6 @@ static GFL_PROC_RESULT CommBtlDemoProc_Init( GFL_PROC *proc, int *seq, void *pwk
 	//PRINT_QUE作成
 	wk->print_que		= PRINTSYS_QUE_Create( wk->heapID );
   
-  // 3D管理ユーティリティーの生成
-  wk->g3d_util = GFL_G3D_UTIL_Create( 10, 16, wk->heapID );
 
   // シーンコントローラ作成
   wk->cntScene = UI_SCENE_CNT_Create( 
@@ -307,12 +319,15 @@ static GFL_PROC_RESULT CommBtlDemoProc_Init( GFL_PROC *proc, int *seq, void *pwk
 
 	//BGリソース読み込み
 	CommBtlDemo_BG_LoadResource( &wk->wk_bg, wk->heapID );
+
+  G3D_Init( &wk->wk_g3d, wk->heapID );
   
   // フェードイン リクエスト
   GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 2 );
 
   return GFL_PROC_RES_FINISH;
 }
+
 //-----------------------------------------------------------------------------
 /**
  *	@brief  PROC 終了処理
@@ -347,22 +362,11 @@ static GFL_PROC_RESULT CommBtlDemoProc_Exit( GFL_PROC *proc, int *seq, void *pwk
 	//FONT
 	GFL_FONT_Delete( wk->font );
 
+  // 3Dシステム開放
+  G3D_End( &wk->wk_g3d );
+
 	//描画設定破棄
 	COMM_BTL_DEMO_GRAPHIC_Exit( wk->graphic );
-
-#if 0
-  // ユニット破棄
-  {
-    int i;
-    for( i=0; i<G3D_DATA_GetUnitMax(); i++ )
-    {
-      GFL_G3D_UTIL_DelUnit( wk->g3d_util, wk->unit_idx[i] );
-    }
-  }
-#endif
-
-  // 3D管理ユーティリティーの破棄
-  GFL_G3D_UTIL_Delete( wk->g3d_util );
 
 	//PROC用メモリ解放
   GFL_PROC_FreeWork( proc );
@@ -385,9 +389,16 @@ static GFL_PROC_RESULT CommBtlDemoProc_Exit( GFL_PROC *proc, int *seq, void *pwk
  *	@retval	終了コード
  */
 //-----------------------------------------------------------------------------
+#include "ui/debug_code/g3d/camera_test.c"
 static GFL_PROC_RESULT CommBtlDemoProc_Main( GFL_PROC *proc, int *seq, void *pwk, void *mywk )
 { 
 	COMM_BTL_DEMO_MAIN_WORK* wk = mywk;
+
+  // デバッグカメラ
+  {
+    GFL_G3D_CAMERA* p_camera = COMM_BTL_DEMO_GRAPHIC_GetCamera( wk->graphic );
+    debug_camera_test( p_camera );
+  }
   
   // フェード中は処理しない
   if( GFL_FADE_CheckFade() == TRUE )
@@ -409,25 +420,10 @@ static GFL_PROC_RESULT CommBtlDemoProc_Main( GFL_PROC *proc, int *seq, void *pwk
 	//2D描画
 	COMM_BTL_DEMO_GRAPHIC_2D_Draw( wk->graphic );
   
-#if 0
-  // アニメーション更新
-	{
-    int i;
-    for( i=0; i<G3D_DATA_GetUnitMax( wk->demo_id ); i++ )
-    {
-      int j;
-      GFL_G3D_OBJ* obj = GFL_G3D_UTIL_GetObjHandle( wk->g3d_util, wk->unit_idx[i] );
-      int anime_count = GFL_G3D_OBJECT_GetAnimeCount( obj );
-      for( j=0; j<anime_count; j++ )
-      {
-        GFL_G3D_OBJECT_LoopAnimeFrame( obj, j, wk->anime_speed );
-      }
-    }
-  }
-#endif
-
 	//3D描画
 	COMM_BTL_DEMO_GRAPHIC_3D_StartDraw( wk->graphic );
+
+  G3D_Draw( &wk->wk_g3d );
 
 	COMM_BTL_DEMO_GRAPHIC_3D_EndDraw( wk->graphic );
 
@@ -505,8 +501,13 @@ static BOOL SceneNormalStart_Main( UI_SCENE_CNT_PTR cnt, void* work )
 { 
   COMM_BTL_DEMO_MAIN_WORK* wk = work;
 
-  // @TODO 2秒で終了
-  if( wk->timer > 60 * 2 )
+// @TODO 保坂のみデバッグボタンで終了
+#ifdef DEBUG_ONLY_FOR_genya_hosaka
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DEBUG )
+#else
+  // @TODO 5秒で終了
+  if( wk->timer > 60 * 5 )
+#endif
   {
     return TRUE;
   }
@@ -575,5 +576,89 @@ static BOOL SceneMultiStart_Main( UI_SCENE_CNT_PTR cnt, void* work )
 static BOOL SceneMultiEnd_Main( UI_SCENE_CNT_PTR cnt, void* work )
 {
   return TRUE;
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  初期化
+ *
+ *	@param	COMM_BTL_DEMO_G3D_WORK* g3d 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void G3D_Init( COMM_BTL_DEMO_G3D_WORK* g3d, HEAPID heapID )
+{
+
+  // 3D管理ユーティリティーの生成
+  g3d->g3d_util = GFL_G3D_UTIL_Create( 10, 16, heapID );
+  
+  // ユニット生成
+  //@TODO 汎用化
+  g3d->unit_idx = GFL_G3D_UTIL_AddUnit( g3d->g3d_util, &sc_setup[ 0 ] );
+
+
+  HOSAKA_Printf("add unit idx=%d\n", g3d->unit_idx);
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  描画処理
+ *
+ *	@param	COMM_BTL_DEMO_G3D_WORK* g3d 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void G3D_Draw( COMM_BTL_DEMO_G3D_WORK* g3d )
+{ 
+  GFL_G3D_OBJSTATUS status;
+
+  GF_ASSERT( g3d );
+  GF_ASSERT( g3d->g3d_util );
+
+  // ステータス初期化
+  VEC_Set( &status.trans, 0, 0, 0 );
+  VEC_Set( &status.scale, FX32_ONE, FX32_ONE, FX32_ONE );
+  MTX_Identity33( &status.rotate );
+  
+  {
+    int j;
+
+    GFL_G3D_OBJ* obj = GFL_G3D_UTIL_GetObjHandle( g3d->g3d_util, g3d->unit_idx );
+    int anime_count = GFL_G3D_OBJECT_GetAnimeCount( obj );
+    static int frame = 0;
+
+    // アニメーション更新
+    for( j=0; j<anime_count; j++ )
+    {
+//    GFL_G3D_OBJECT_SetAnimeFrame( obj, j, &frame );
+      GFL_G3D_OBJECT_LoopAnimeFrame( obj, j, FX32_ONE );
+    }
+    
+    // 描画
+    GFL_G3D_DRAW_DrawObject( obj, &status );
+  }
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  終了処理
+ *
+ *	@param	COMM_BTL_DEMO_G3D_WORK* g3d 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void G3D_End( COMM_BTL_DEMO_G3D_WORK* g3d )
+{ 
+  GF_ASSERT( g3d );
+  GF_ASSERT( g3d->g3d_util );
+
+  // ユニット削除
+  GFL_G3D_UTIL_DelUnit( g3d->g3d_util, g3d->unit_idx );
+
+  // 3D管理ユーティリティーの破棄
+  GFL_G3D_UTIL_Delete( g3d->g3d_util );
 }
 

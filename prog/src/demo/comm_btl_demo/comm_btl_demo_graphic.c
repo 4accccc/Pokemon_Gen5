@@ -261,13 +261,9 @@ static const GFL_CLSYS_INIT sc_clsys_init	=
 //-------------------------------------
 ///	カメラ位置
 //=====================================
-//static const VecFx32 sc_CAMERA_PER_POS		= { 0,0,FX32_CONST( 70 ) };	//位置
-//static const VecFx32 sc_CAMERA_PER_UP			= { 0,FX32_ONE,0 };					//上方向
-//static const VecFx32 sc_CAMERA_PER_TARGET	= { 0,0,FX32_CONST( 0 ) };	//ターゲット
-
-static const VecFx32 sc_CAMERA_PER_POS	= { FX_F32_TO_FX32( 6.7f ), FX_F32_TO_FX32( 6.7f ), FX_F32_TO_FX32( 17.3f ) };
-static const VecFx32 sc_CAMERA_PER_UP = { FX_F32_TO_FX32( 0.0f ), FX_F32_TO_FX32( 2.6f ), FX_F32_TO_FX32( 0.0f ) };
-static const VecFx32 sc_CAMERA_PER_TARGET		= { 0,						FX32_ONE,				0 };
+static const VecFx32 sc_CAMERA_PER_POS		= { 0,0,FX32_CONST( 180 ) };	//位置
+static const VecFx32 sc_CAMERA_PER_TARGET	= { 0,0,FX32_CONST( 0 ) };	//ターゲット
+static const VecFx32 sc_CAMERA_PER_UP			= { 0,FX32_ONE,0 };					//上方向
 
 //-------------------------------------
 ///	プロジェクション
@@ -279,10 +275,10 @@ static inline GFL_G3D_CAMERA* GRAPHIC_G3D_CAMERA_Create
 {
 #if 1	//射影
 	return GFL_G3D_CAMERA_Create(	GFL_G3D_PRJPERS, 
-									FX_SinIdx( defaultCameraFovy/2 *PERSPWAY_COEFFICIENT ),
-									FX_CosIdx( defaultCameraFovy/2 *PERSPWAY_COEFFICIENT ),
+									FX_SinIdx( FX32_CONST(20.7)/2 *PERSPWAY_COEFFICIENT ),
+									FX_CosIdx( FX32_CONST(20.7)/2 *PERSPWAY_COEFFICIENT ),
 									defaultCameraAspect, 0,
-									defaultCameraNear, defaultCameraFar, 0,
+									FX32_CONST(0.1), FX32_CONST(2048), 0,
 									cp_pos, cp_up, cp_target, heapID );
 #else	//正射影	クリップ面は適当です
 	return GFL_G3D_CAMERA_CreateOrtho( 
@@ -389,7 +385,7 @@ struct _COMM_BTL_DEMO_GRAPHIC_WORK
 {
 	GRAPHIC_BG_WORK		bg;
 	GRAPHIC_OBJ_WORK	obj;
-	GRAPHIC_G3D_WORK		g3d;
+	GRAPHIC_G3D_WORK	g3d;
 	GFL_TCB						*p_vblank_task;
 };
 
