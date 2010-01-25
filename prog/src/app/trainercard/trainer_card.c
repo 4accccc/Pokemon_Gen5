@@ -1711,6 +1711,29 @@ static void Change_SignAnime( TR_CARD_WORK *wk, int flag )
   Trans_SignScreen( TRC_BG_SIGN, wk->SignAnimePat );
 }
 
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief タッチされたボタンは機能するか？
+ *
+ * @param   wk    TR_CARD_WORK
+ * @param   hitNo ボタンナンバー
+ *
+ * @retval  BOOL  起動させるない
+ */
+//----------------------------------------------------------------------------------
+static BOOL _sign_eneble_check( TR_CARD_WORK *wk, int hitNo )
+{
+  // 操作できないモードか？
+  if(wk->TrCardData->SignDisenable){
+    // できないモードの時はエディット関連のボタンは無効
+    if( hitNo>=3 && hitNo<=9 ){
+      return TRUE;
+    }
+  }
+  return FALSE;
+}
+
 //----------------------------------------------------------------------------------
 /**
  * @brief 通常時タッチ処理
@@ -1723,6 +1746,11 @@ static void Change_SignAnime( TR_CARD_WORK *wk, int flag )
 //----------------------------------------------------------------------------------
 static int normal_touch_func( TR_CARD_WORK *wk, int hitNo )
 {
+  // サイン不可モードの時はエディット関連は機能させない
+  if(_sign_eneble_check(wk, hitNo)==TRUE){
+    return TRC_KEY_REQ_NONE;
+  }
+
   switch(hitNo){
   case 0:     // 戻る
     PMSND_PlaySE( SND_TRCARD_DECIDE );
@@ -1748,7 +1776,6 @@ static int normal_touch_func( TR_CARD_WORK *wk, int hitNo )
     break;
   case 4:     // 精密描画ボタン
     if(wk->is_back && (!wk->isComm) && wk->TrCardData->SignAnimeOn==0){
-//      return TRC_KEY_REQ_SIGN_CALL;
         if(wk->ScaleMode==0){
           wk->sub_seq = 0;
         }else{
@@ -1852,7 +1879,7 @@ static void normal_sign_func( TR_CARD_WORK *wk )
     {GFL_UI_TP_HIT_END,0,0,0}
   };
     u32 x,y;
-    if(GFL_UI_TP_HitCont(Scrol_TpRect)==0){
+    if(GFL_UI_TP_HitCont( Scrol_TpRect )==0){
       if(GFL_UI_TP_GetTrg()){
         GFL_UI_TP_GetPointTrg( &x, &y );
         wk->touch_sy    = y;
@@ -2416,6 +2443,12 @@ static void Stock_TouchPoint( TR_CARD_WORK *wk, int scale_mode )
 {
   //  サンプリング情報を取得して格納
   u32 x,y;
+
+  // サイン書き換え不可だったら終了
+  if(wk->TrCardData->SignDisenable){
+    return;
+  }
+
   if(GFL_UI_TP_GetPointCont( &x, &y )){
 
     // 通常

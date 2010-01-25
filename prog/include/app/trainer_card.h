@@ -28,41 +28,42 @@ typedef enum{
 
 typedef struct TR_CARD_DATA_tag
 {
-  u8 Version;     //バージョン
+  u8 Version;       //バージョン
   u8 CountryCode;   //国コード
   u8 GymReaderMask; //ジムリーダー８人顔マスクフラグ
-  u8 CardRank;    //カードランク
+  u8 CardRank;      //カードランク
   
   u8 TimeUpdate:1;  //時間更新フラグ
-  u8 TrSex:1;     //性別
+  u8 TrSex:1;       //性別
   u8 PokeBookFlg:1; //図鑑所持フラグ
   u8 MySignValid:1; //サインデータ有効/無効フラグ
   u8 SignAnimeOn:1; // サインデータはアニメしているか？（0:してない　1:してる）
+  u8 SignDisenable:1; // サインを書けなくする？（0:サインは書ける 1:書け無くする ）
   u8 Padding:3;
-  u8 UnionTrNo;   //ユニオントレーナーナンバー（0～15）指定無しのときはUNION_TR_NONE(0xff)
+  u8 UnionTrNo;     //ユニオントレーナーナンバー（0～15）指定無しのときはUNION_TR_NONE(0xff)
 
   u16 BadgeFlag;    //バッジ入手フラグ(16bit)
   
   STRCODE TrainerName[PERSON_NAME_SIZE+EOM_SIZE]; //トレーナー名
   const PLAYTIME *PlayTime; //プレイ時間構造体（通信時は時間更新が行われないのでNULLをセットする）
   
-  u32 Money;      //おこづかい
-  u32 PokeBook;   //図鑑モンスター数
-  u32 Score;      //スコア
+  u32 Money;        //おこづかい
+  u32 PokeBook;     //図鑑モンスター数
+  u32 Score;        //スコア
   u16 TrainerID;    //トレーナーID
   
   u16 PlayTime_h;   //プレイ時間（時）
   u16 ClearTime_h;  //クリア時間（時）
   
   u8 PlayTime_m;    //プレイ時間（分）
-  u8 Start_y;     //開始年
-  u8 Start_m;     //開始月
-  u8 Start_d;     //開始日
+  u8 Start_y;       //開始年
+  u8 Start_m;       //開始月
+  u8 Start_d;       //開始日
   
-  u8 Clear_y;     //クリア年
-  u8 Clear_m;     //クリア月
-  u8 Clear_d;     //クリア日
-  u8 ClearTime_m; //クリア時間（分）
+  u8 Clear_y;       //クリア年
+  u8 Clear_m;       //クリア月
+  u8 Clear_d;       //クリア日
+  u8 ClearTime_m;   //クリア時間（分）
   
   u16 CommNum;        //通信回数
   u16 CommBattleNum;  // 
@@ -73,8 +74,8 @@ typedef struct TR_CARD_DATA_tag
   PMS_DATA Pms;       //トレーナーカード内簡易会話
   
   u8  SignRawData[SIGN_SIZE_X*SIGN_SIZE_Y*8]; //サインデータ
-  u16 _xor;     // 検証用
-  u16 reached;    // 到着フラグ(通信時に使用）
+  u16 _xor;         // 検証用
+  u16 reached;      // 到着フラグ(通信時に使用）
 }TR_CARD_DATA;
 
 typedef struct TRCARD_CALL_PARAM_tag{
