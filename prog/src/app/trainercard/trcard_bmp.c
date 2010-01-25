@@ -881,9 +881,9 @@ static void WriteNumDateYYMMDD( TR_CARD_WORK* wk,
 {
   u32 len;
 
-  WORDSET_RegisterNumber( wk->wordset, 0, wk->TrCardData->Start_y, 2, inDisptype, STR_NUM_CODE_HANKAKU );
-  WORDSET_RegisterNumber( wk->wordset, 1, wk->TrCardData->Start_m, 2, inDisptype, STR_NUM_CODE_HANKAKU );
-  WORDSET_RegisterNumber( wk->wordset, 2, wk->TrCardData->Start_d, 2, inDisptype, STR_NUM_CODE_HANKAKU );
+  WORDSET_RegisterNumber( wk->wordset, 0, wk->TrCardData->Start_y, 2, inDisptype, STR_NUM_CODE_ZENKAKU );
+  WORDSET_RegisterNumber( wk->wordset, 1, wk->TrCardData->Start_m, 2, inDisptype, STR_NUM_CODE_ZENKAKU );
+  WORDSET_RegisterNumber( wk->wordset, 2, wk->TrCardData->Start_d, 2, inDisptype, STR_NUM_CODE_ZENKAKU );
   WORDSET_ExpandStr( wk->wordset, buff, wk->CreditBuf[TR_CARD_CREDIT_YYMMDD] );
   len = PRINTSYS_GetStrWidth(buff,wk->fontHandle,0);
 
