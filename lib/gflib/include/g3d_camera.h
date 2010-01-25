@@ -290,6 +290,95 @@ extern u16
 	GFL_G3D_CAMERA_GetRadianXZ
 		( const GFL_G3D_CAMERA* g3Dcamera );
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief           Perspective ==> Frustum  変換   ニア上座標
+ * @param	near      ニア
+ * @param fovySin   視野角SIN
+ * @param fovyCos   視野角COS
+ */
+//--------------------------------------------------------------------------------------------
+inline fx32 GFL_G3D_CAMERA_PerspectiveToFrustumTop( fx32 near, fx32 fovySin, fx32 fovyCos )
+{
+  return near * fovySin / fovyCos;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief           Perspective ==> Frustum  変換　ニア下座標
+ * @param	near      ニア
+ * @param fovySin   視野角SIN
+ * @param fovyCos   視野角COS
+ */
+//--------------------------------------------------------------------------------------------
+inline fx32 GFL_G3D_CAMERA_PerspectiveToFrustumButtom( fx32 near, fx32 fovySin, fx32 fovyCos )
+{
+  return -(near * fovySin / fovyCos);
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief           Perspective ==> Frustum  変換　　ニア左座標
+ * @param	near      ニア
+ * @param aspect    アスペクト比
+ * @param fovySin   視野角SIN
+ * @param fovyCos   視野角COS
+ */
+//--------------------------------------------------------------------------------------------
+inline fx32 GFL_G3D_CAMERA_PerspectiveToFrustumLeft( fx32 near, fx32 aspect, fx32 fovySin, fx32 fovyCos )
+{
+  return -(near * aspect / FX32_ONE * fovySin / fovyCos);
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief           Perspective ==> Frustum  変換 　ニア右座標
+ * @param	near      ニア
+ * @param aspect    アスペクト比
+ * @param fovySin   視野角SIN
+ * @param fovyCos   視野角COS
+ */
+//--------------------------------------------------------------------------------------------
+inline fx32 GFL_G3D_CAMERA_PerspectiveToFrustumRight( fx32 near, fx32 aspect, fx32 fovySin, fx32 fovyCos )
+{
+  return near * aspect / FX32_ONE * fovySin / fovyCos;
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  PerspectiveのパラメータでFrustumカメラを生成
+ *
+ *	@param	cp_pos        カメラ位置
+ *	@param  cp_up         カメラ上方向
+ *	@param  cp_target     注視点
+ *	@param  fovySin       視野角SIN
+ *	@param  fovyCos     　視野角COS
+ *	@param  aspect        アスペクト比
+ *	@param  near          ニア
+ *	@param  far           ファー
+ *	@param  heapID        ヒープID
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+inline GFL_G3D_CAMERA* GFL_G3D_CAMERA_CreateFrustumByPersPrm
+		( const VecFx32* cp_pos, const VecFx32* cp_up, const VecFx32* cp_target,
+      fx32 fovySin, fx32 fovyCos, fx32 aspect, fx32 near, fx32 far, HEAPID heapID )
+{
+  fx32 t, b, l, r;
+
+  t = GFL_G3D_CAMERA_PerspectiveToFrustumTop( near, fovySin, fovyCos );
+  b = GFL_G3D_CAMERA_PerspectiveToFrustumButtom( near, fovySin, fovyCos );
+  r = GFL_G3D_CAMERA_PerspectiveToFrustumRight( near, aspect, fovySin, fovyCos );
+  l = GFL_G3D_CAMERA_PerspectiveToFrustumLeft( near, aspect, fovySin, fovyCos );
+
+  return GFL_G3D_CAMERA_CreateFrustum(
+      t, b, l, r, 
+      near, far, 0, 
+      cp_pos, cp_up, cp_target, heapID
+      );
+}
+
 #endif
 
 #ifdef __cplusplus
