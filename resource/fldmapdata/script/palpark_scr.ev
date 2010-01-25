@@ -20,7 +20,6 @@ _EVENT_DATA_END
 
 
 DEFINE_LOCAL EndMsg        //ラストメッセージ
-DEFINE_LOCAL TEST
 
 EVENT_START ev_palpark_reception
   _TALK_OBJ_START()
