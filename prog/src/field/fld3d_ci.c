@@ -154,6 +154,7 @@ typedef struct {
   FLD3D_CI_PTR CiPtr;
   RES_SETUP_DAT SetupDat;
   BOOL ObjPause;
+  BOOL MainHook;
 }FLD3D_CI_EVENT_WORK;
 
 #ifdef PM_DEBUG
@@ -436,6 +437,7 @@ GMEVENT *FLD3D_CI_CreateCutInEvt(GAMESYS_WORK *gsys, FLD3D_CI_PTR ptr, const u8 
     MI_CpuClear8( work, size );
     work->CiPtr = ptr;
     work->ObjPause = TRUE;
+    work->MainHook = TRUE;
   }
   return event;
 }
@@ -591,9 +593,15 @@ static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work )
   switch(*seq){
   case 0:
     //ＯＢＪのポーズ
-    if (evt_work->ObjPause){
+    if (evt_work->ObjPause)
+    {
       MMDLSYS *mmdlsys = FIELDMAP_GetMMdlSys( fieldmap );
       MMDLSYS_PauseMoveProc(mmdlsys);
+    }
+    //メイン処理フック
+    if ( evt_work->MainHook )
+    {
+      SetMainFuncHookFlg(fieldmap, TRUE);
     }
     //プライオリティの保存
     PushPriority(ptr);
@@ -751,6 +759,11 @@ static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work )
     //表示状態の復帰
     PopDisp(ptr);
 
+    //メインフック解除
+    if ( evt_work->MainHook )
+    {
+      SetMainFuncHookFlg(fieldmap, FALSE);
+    }
     //ＯＢＪのポーズ解除
     if (evt_work->ObjPause)
     {

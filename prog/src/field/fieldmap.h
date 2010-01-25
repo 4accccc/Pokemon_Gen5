@@ -144,3 +144,5 @@ extern BOOL FIELDMAP_CheckCanSoundPlay( const FIELDMAP_WORK* fieldWork );
 
 extern void FIELDMAP_InitBGMode( void );
 extern void FIELDMAP_InitBG( FIELDMAP_WORK* fieldWork );
+
+extern void SetMainFuncHookFlg(FIELDMAP_WORK * fieldWork, const BOOLinFlg);

@@ -13,6 +13,8 @@
 #include "system/main.h"
 #include "fld3d_ci.h"
 
+#include "enc_cutin_no.h"   //for ENC_CUTIN_～
+
 //--------------------------------------------------------------
 /// ENCEFF_CI_WORK
 //--------------------------------------------------------------
@@ -25,6 +27,13 @@ typedef struct
 static GMEVENT *CreateEffCommon(  GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const int inType );
 static GMEVENT_RESULT ev_encEffectFunc( GMEVENT *event, int *seq, void *wk );
 
+GMEVENT *ENCEFF_CI_Create1(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork)
+{
+  GMEVENT *event;
+  event = CreateEffCommon( gsys, fieldWork, 0 );
+  return( event );
+}
+
 //--------------------------------------------------------------
 /**
  * イベント作成
@@ -33,13 +42,312 @@ static GMEVENT_RESULT ev_encEffectFunc( GMEVENT *event, int *seq, void *wk );
  * @retval GMEVENT*
  */
 //--------------------------------------------------------------
-GMEVENT *ENCEFF_CI_Create1(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork)
+GMEVENT *ENCEFF_CI_CreateRival(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork)
 {
   GMEVENT *event;
-  event = CreateEffCommon( gsys, fieldWork, 0 );
+  event = CreateEffCommon( gsys, fieldWork, ENC_CUTIN_RIVAL );
   return( event );
 }
 
+//--------------------------------------------------------------
+/**
+ * イベント作成
+ * @param gsys  GAMESYS_WORK
+ * @param fieldWork FIELDMAP_WORK
+ * @retval GMEVENT*
+ */
+//--------------------------------------------------------------
+GMEVENT *ENCEFF_CI_CreateSupport(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork)
+{
+  GMEVENT *event;
+  event = CreateEffCommon( gsys, fieldWork, ENC_CUTIN_SUPPORT );
+  return( event );
+}
+
+//--------------------------------------------------------------
+/**
+ * イベント作成
+ * @param gsys  GAMESYS_WORK
+ * @param fieldWork FIELDMAP_WORK
+ * @retval GMEVENT*
+ */
+//--------------------------------------------------------------
+GMEVENT *ENCEFF_CI_CreateGym01A(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork)
+{
+  GMEVENT *event;
+  event = CreateEffCommon( gsys, fieldWork, ENC_CUTIN_GYM1A );
+  return( event );
+}
+
+//--------------------------------------------------------------
+/**
+ * イベント作成
+ * @param gsys  GAMESYS_WORK
+ * @param fieldWork FIELDMAP_WORK
+ * @retval GMEVENT*
+ */
+//--------------------------------------------------------------
+GMEVENT *ENCEFF_CI_CreateGym01B(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork)
+{
+  GMEVENT *event;
+  event = CreateEffCommon( gsys, fieldWork, ENC_CUTIN_GYM1B );
+  return( event );
+}
+
+//--------------------------------------------------------------
+/**
+ * イベント作成
+ * @param gsys  GAMESYS_WORK
+ * @param fieldWork FIELDMAP_WORK
+ * @retval GMEVENT*
+ */
+//--------------------------------------------------------------
+GMEVENT *ENCEFF_CI_CreateGym01C(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork)
+{
+  GMEVENT *event;
+  event = CreateEffCommon( gsys, fieldWork, ENC_CUTIN_GYM1C );
+  return( event );
+}
+
+//--------------------------------------------------------------
+/**
+ * イベント作成
+ * @param gsys  GAMESYS_WORK
+ * @param fieldWork FIELDMAP_WORK
+ * @retval GMEVENT*
+ */
+//--------------------------------------------------------------
+GMEVENT *ENCEFF_CI_CreateGym02(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork)
+{
+  GMEVENT *event;
+  event = CreateEffCommon( gsys, fieldWork, ENC_CUTIN_GYM2 );
+  return( event );
+}
+
+//--------------------------------------------------------------
+/**
+ * イベント作成
+ * @param gsys  GAMESYS_WORK
+ * @param fieldWork FIELDMAP_WORK
+ * @retval GMEVENT*
+ */
+//--------------------------------------------------------------
+GMEVENT *ENCEFF_CI_CreateGym03(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork)
+{
+  GMEVENT *event;
+  event = CreateEffCommon( gsys, fieldWork, ENC_CUTIN_GYM3 );
+  return( event );
+}
+
+//--------------------------------------------------------------
+/**
+ * イベント作成
+ * @param gsys  GAMESYS_WORK
+ * @param fieldWork FIELDMAP_WORK
+ * @retval GMEVENT*
+ */
+//--------------------------------------------------------------
+GMEVENT *ENCEFF_CI_CreateGym04(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork)
+{
+  GMEVENT *event;
+  event = CreateEffCommon( gsys, fieldWork, ENC_CUTIN_GYM4 );
+  return( event );
+}
+
+//--------------------------------------------------------------
+/**
+ * イベント作成
+ * @param gsys  GAMESYS_WORK
+ * @param fieldWork FIELDMAP_WORK
+ * @retval GMEVENT*
+ */
+//--------------------------------------------------------------
+GMEVENT *ENCEFF_CI_CreateGym05(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork)
+{
+  GMEVENT *event;
+  event = CreateEffCommon( gsys, fieldWork, ENC_CUTIN_GYM5 );
+  return( event );
+}
+
+//--------------------------------------------------------------
+/**
+ * イベント作成
+ * @param gsys  GAMESYS_WORK
+ * @param fieldWork FIELDMAP_WORK
+ * @retval GMEVENT*
+ */
+//--------------------------------------------------------------
+GMEVENT *ENCEFF_CI_CreateGym06(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork)
+{
+  GMEVENT *event;
+  event = CreateEffCommon( gsys, fieldWork, ENC_CUTIN_GYM6 );
+  return( event );
+}
+
+//--------------------------------------------------------------
+/**
+ * イベント作成
+ * @param gsys  GAMESYS_WORK
+ * @param fieldWork FIELDMAP_WORK
+ * @retval GMEVENT*
+ */
+//--------------------------------------------------------------
+GMEVENT *ENCEFF_CI_CreateGym07(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork)
+{
+  GMEVENT *event;
+  event = CreateEffCommon( gsys, fieldWork, ENC_CUTIN_GYM7 );
+  return( event );
+}
+
+//--------------------------------------------------------------
+/**
+ * イベント作成
+ * @param gsys  GAMESYS_WORK
+ * @param fieldWork FIELDMAP_WORK
+ * @retval GMEVENT*
+ */
+//--------------------------------------------------------------
+GMEVENT *ENCEFF_CI_CreateGym08A(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork)
+{
+  GMEVENT *event;
+  event = CreateEffCommon( gsys, fieldWork, ENC_CUTIN_GYM8A );
+  return( event );
+}
+
+//--------------------------------------------------------------
+/**
+ * イベント作成
+ * @param gsys  GAMESYS_WORK
+ * @param fieldWork FIELDMAP_WORK
+ * @retval GMEVENT*
+ */
+//--------------------------------------------------------------
+GMEVENT *ENCEFF_CI_CreateGym08B(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork)
+{
+  GMEVENT *event;
+  event = CreateEffCommon( gsys, fieldWork, ENC_CUTIN_GYM8B );
+  return( event );
+}
+
+//--------------------------------------------------------------
+/**
+ * イベント作成
+ * @param gsys  GAMESYS_WORK
+ * @param fieldWork FIELDMAP_WORK
+ * @retval GMEVENT*
+ */
+//--------------------------------------------------------------
+GMEVENT *ENCEFF_CI_CreateBigFour1(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork)
+{
+  GMEVENT *event;
+  event = CreateEffCommon( gsys, fieldWork, ENC_CUTIN_BIGFOUR1 );
+  return( event );
+}
+
+//--------------------------------------------------------------
+/**
+ * イベント作成
+ * @param gsys  GAMESYS_WORK
+ * @param fieldWork FIELDMAP_WORK
+ * @retval GMEVENT*
+ */
+//--------------------------------------------------------------
+GMEVENT *ENCEFF_CI_CreateBigFour2(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork)
+{
+  GMEVENT *event;
+  event = CreateEffCommon( gsys, fieldWork, ENC_CUTIN_BIGFOUR2 );
+  return( event );
+}
+
+//--------------------------------------------------------------
+/**
+ * イベント作成
+ * @param gsys  GAMESYS_WORK
+ * @param fieldWork FIELDMAP_WORK
+ * @retval GMEVENT*
+ */
+//--------------------------------------------------------------
+GMEVENT *ENCEFF_CI_CreateBigFour3(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork)
+{
+  GMEVENT *event;
+  event = CreateEffCommon( gsys, fieldWork, ENC_CUTIN_BIGFOUR3 );
+  return( event );
+}
+
+//--------------------------------------------------------------
+/**
+ * イベント作成
+ * @param gsys  GAMESYS_WORK
+ * @param fieldWork FIELDMAP_WORK
+ * @retval GMEVENT*
+ */
+//--------------------------------------------------------------
+GMEVENT *ENCEFF_CI_CreateBigFour4(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork)
+{
+  GMEVENT *event;
+  event = CreateEffCommon( gsys, fieldWork, ENC_CUTIN_BIGFOUR4 );
+  return( event );
+}
+
+//--------------------------------------------------------------
+/**
+ * イベント作成
+ * @param gsys  GAMESYS_WORK
+ * @param fieldWork FIELDMAP_WORK
+ * @retval GMEVENT*
+ */
+//--------------------------------------------------------------
+GMEVENT *ENCEFF_CI_CreateChamp(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork)
+{
+  GMEVENT *event;
+  event = CreateEffCommon( gsys, fieldWork, ENC_CUTIN_CHAMP );
+  return( event );
+}
+
+//--------------------------------------------------------------
+/**
+ * イベント作成
+ * @param gsys  GAMESYS_WORK
+ * @param fieldWork FIELDMAP_WORK
+ * @retval GMEVENT*
+ */
+//--------------------------------------------------------------
+GMEVENT *ENCEFF_CI_CreateBoss(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork)
+{
+  GMEVENT *event;
+  event = CreateEffCommon( gsys, fieldWork, ENC_CUTIN_BOSS );
+  return( event );
+}
+
+//--------------------------------------------------------------
+/**
+ * イベント作成
+ * @param gsys  GAMESYS_WORK
+ * @param fieldWork FIELDMAP_WORK
+ * @retval GMEVENT*
+ */
+//--------------------------------------------------------------
+GMEVENT *ENCEFF_CI_CreateSage(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork)
+{
+  GMEVENT *event;
+  event = CreateEffCommon( gsys, fieldWork, ENC_CUTIN_SAGE );
+  return( event );
+}
+
+//--------------------------------------------------------------
+/**
+ * イベント作成
+ * @param gsys  GAMESYS_WORK
+ * @param fieldWork FIELDMAP_WORK
+ * @retval GMEVENT*
+ */
+//--------------------------------------------------------------
+GMEVENT *ENCEFF_CI_CreatePlasma(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork)
+{
+  GMEVENT *event;
+  event = CreateEffCommon( gsys, fieldWork, ENC_CUTIN_PLASMA );
+  return( event );
+}
 
 //--------------------------------------------------------------
 /**

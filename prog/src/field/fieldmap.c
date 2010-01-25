@@ -110,8 +110,7 @@
 #include "field_task.h"  
 #include "field_task_manager.h"
 #include "ev_time.h"  //EVTIME_Update
-
-#include "field_bbd_color.h"  //
+#include "field_bbd_color.h"
 
 #include "net_app/union_eff.h"
 
@@ -332,6 +331,8 @@ struct _FIELDMAP_WORK
   BOOL MapFadeReq;     //マップ遷移用フェードリクエスト
 
   ENCEFF_CNT_PTR EncEffCntPtr;
+
+  BOOL MainHookFlg;
 };
 
 //--------------------------------------------------------------
@@ -766,7 +767,6 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
   fieldWork->FldPrtclSys = FLD_PRTCL_Init(HEAPID_FLD3DCUTIN);
   //フィールド3Dカットイン
   fieldWork->Fld3dCiPtr = FLD3D_CI_Init(HEAPID_FLD3DCUTIN, fieldWork->FldPrtclSys);
-
   //エンカウントエフェクト
   fieldWork->EncEffCntPtr = ENCEFF_CreateCntPtr(fieldWork->heapID, fieldWork);
 
@@ -859,6 +859,8 @@ static MAINSEQ_RESULT mainSeqFunc_ready(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
 //--------------------------------------------------------------
 static MAINSEQ_RESULT mainSeqFunc_update_top(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork )
 {
+  if (fieldWork->MainHookFlg) return MAINSEQ_RESULT_CONTINUE;
+
 	//キーの分割取得カウンタをリセット
 	GFL_UI_ResetFrameRate();
 	//ゾーン更新処理
@@ -1095,7 +1097,7 @@ static MAINSEQ_RESULT mainSeqFunc_free(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldW
   
   //自機破棄
   FIELD_PLAYER_Delete( fieldWork->field_player );
-  
+
   FLDMAPPER_ReleaseData( fieldWork->g3Dmapper );
 
   // 所持金表示ウィンドウ破棄
@@ -1139,7 +1141,7 @@ static MAINSEQ_RESULT mainSeqFunc_end(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWo
 
 	GFL_TCB_DeleteTask( fieldWork->g3dVintr );
 
-	FLDMAPPER_Delete( fieldWork->g3Dmapper );
+  FLDMAPPER_Delete( fieldWork->g3Dmapper );
 
 	fldmap_G3D_Unload( fieldWork );	//３Ｄデータ破棄
 	
@@ -3093,7 +3095,7 @@ static void Draw3DNormalMode( FIELDMAP_WORK * fieldWork )
     if (GFL_UI_KEY_GetTrg() & PAD_BUTTON_L){
 //      FLD3D_CI_CallCutIn(fieldWork->gsys, fieldWork->Fld3dCiPtr, 0);
     }else if (GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT){
-//      FLD3D_CI_CallPokeCutIn(fieldWork->gsys, fieldWork->Fld3dCiPtr);
+      FLD3D_CI_CallEncCutIn(fieldWork->gsys, fieldWork->Fld3dCiPtr);
     }else if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_R){
       FLD3D_CI_FlySkyCameraDebug(
           fieldWork->gsys, fieldWork->Fld3dCiPtr, fieldWork->camera_control,
@@ -3128,7 +3130,6 @@ static void Draw3DCutinMode(FIELDMAP_WORK * fieldWork)
 
   FLD_PRTCL_Main();
   FLD3D_CI_Draw( fieldWork->Fld3dCiPtr );
-
 }
 
 //==================================================================
@@ -3277,5 +3278,17 @@ BOOL FIELDMAP_CheckCanSoundPlay( const FIELDMAP_WORK* fieldWork )
   return PMSND_IsLoading();
 }
 
-
-
+//==================================================================
+/**
+ * 更新処理フックフラグセット関数
+ *
+ * @param   fieldWork   フィールドワークポインタ
+ * @param   inFlg       フックフラグ　TRUEで処理をフック
+ *
+ * @return none
+ */
+//==================================================================
+void SetMainFuncHookFlg(FIELDMAP_WORK * fieldWork, const BOOL inFlg)
+{
+  fieldWork->MainHookFlg = inFlg;
+}
