@@ -23,7 +23,7 @@ TARGETDIR = $(PROJECT_ARCDIR)
 #------------------------------------------------------------------------------
 #※サブディレクトリでもMakeしたい場合、ここにディレクトリ名を書く
 #------------------------------------------------------------------------------
-SUBDIRS	= g3d particle
+SUBDIRS	= g3d
 
 #共通ルールファイルのインクルード
 include	$(PROJECT_RSCDIR)\macro_define
@@ -37,6 +37,8 @@ lsources:=$(wildcard *.ncl)
 gsources:=$(wildcard *.ncg)
 ssources:=$(wildcard *.nsc)
 esources:=$(wildcard *.nce)
+
+spa_obj:=$(wildcard *.spa)
 
 # リソースが吐き出すファイルを自動でつくる
 lobjects = $(subst .ncl,.NCLR,$(lsources))
@@ -82,9 +84,8 @@ $(TARGETDIR)/$(targetname).narc: $(targetname).narc
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 # コピー先のnarcが古い場合実行する
-$(targetname).narc: $(obj_g3d) $(obj_mcss) $(lobjects) $(gobjects) $(sobjects) $(eobjects) $(aobjects)
-
-	-ls *.N*R g3d/*.nsb* particle/*.* > arclist.txt
+$(targetname).narc: $(obj_g3d) $(obj_mcss) $(lobjects) $(gobjects) $(sobjects) $(eobjects) $(aobjects) $(spa_obj)
+	-ls *.N*R g3d/*.nsb* *.spa > arclist.txt
 	perl $(PROJECT_ROOT)tools/arc_list_make.pl arclist.txt
 	nnsarc -r -l -n -i $(targetname) -S arclist.txt
 	$(NAIXCUT) $(targetname).naix
