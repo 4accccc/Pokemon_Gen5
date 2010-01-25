@@ -7,10 +7,10 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\w_259.spa
 カメラ移動	追従	攻撃側	16	0	12
 ポケモンアニメ	攻撃側	アニメストップ
 制御モード変更	継続
-SE再生	SEQ_SE_W253_02	SE2	0	-300	120	0	0
-SE再生	SEQ_SE_W253_02	SE2	45	-300	120	0	0
-SE再生	SEQ_SE_W253_02	SE2	90	-300	120	0	0
-SE再生	SEQ_SE_W253_02	SE2	130	-300	120	0	0
+SE再生	SEQ_SE_W259_BOSO	SE2	0	-300	120	0	0
+SE再生	SEQ_SE_W259_BOSO	SE2	45	-300	120	0	0
+SE再生	SEQ_SE_W259_BOSO	SE2	90	-300	120	0	0
+SE再生	SEQ_SE_W259_BOSO	SE2	130	-300	120	0	0
 SEパン	SE2	追従	攻撃側	攻撃側	0	140:0:0
 制御モード変更	逐次
 パーティクルデータロード	w_259
@@ -34,10 +34,9 @@ SEパン	SE2	追従	攻撃側	攻撃側	0	140:0:0
 SE再生	SEQ_SE_BC01	デフォルト	0	0	100	0	0
 タイマーによるウエイト	20
 制御モード変更	継続
-SE再生	SEQ_SE_W099_02	SE1	0	0	120	0	0
-SE再生	SEQ_SE_DUMMY5	SE1	60	0	0	0	0
-SE動的変化	SE1	追従	ピッチ	-1000	1000	0	60:0:0
-SE動的変化	SE1	追従	ボリューム	120	0	0	60:0:0
+SE再生	SEQ_SE_W259_PAKIP	SE1	0	0	120	0	0
+SE再生	SEQ_SE_W259_PAKIP	SE1	18	-500	80	0	0
+SE再生	SEQ_SE_W259_PAKIP	SE1	30	300	127	0	0
 SEパン	SE1	追従	防御側	防御側	0	60:0:0
 制御モード変更	逐次
 ポケモンパレットフェード	防御側	0	12	1	22:0:0

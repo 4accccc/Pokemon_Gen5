@@ -5,8 +5,11 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\w_258.spa
 %00
 BGのパレットフェード	すべて	0	13	2	0:0:0
 エフェクト終了待ち	すべて
-SE再生	SEQ_SE_W077_01	SE1	0	0	120	0	0
-SE再生	SEQ_SE_W006_04	SE2	0	0	110	0	0
+SE再生	SEQ_SE_W258_ARARE	SE1	0	0	100	0	0
+SE動的変化	SE1	追従	ボリューム	100	0	20	20:0:0
+SE再生	SEQ_SE_W008_01	SE2	0	0	127	0	0
+SE再生	SEQ_SE_W008_01	SE2	30	0	127	0	0
+SE再生	SEQ_SE_W008_01	SE2	60	300	80	0	0
 パーティクルデータロード	w_258
 パーティクル再生（座標指定）	w_258	W_258_258_ICE_BOUND	0:5:6	0:0:0	0:0:0	1:1:1	1
 パーティクル再生（座標指定）	w_258	W_258_258_ICE_SHOWER	0:6:3	0:0:0	0:0:0	1:1:1	1

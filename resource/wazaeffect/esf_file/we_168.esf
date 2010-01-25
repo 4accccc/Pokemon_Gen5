@@ -2,10 +2,18 @@ EFFSEQ
 $0002
 C:\home\pokemon_wb\resource\particle\wazaeffect\w_168_1.spa
 C:\home\pokemon_wb\resource\particle\wazaeffect\w_168_2.spa
+!0006
+カメラ移動	追従	攻撃側	10	0	8
+エフェクト終了待ち	すべて
+エフェクト終了待ち	すべて
+カメラ移動	追従	初期位置	10	0	8
+エフェクト終了待ち	すべて
+エフェクト終了
+&
 #001
 %00
 制御モード変更	継続
-SE再生	SEQ_SE_W028_02	SE1	0	50	110	0	0
+SE再生	SEQ_SE_W028_02	SE1	0	1000	110	0	0
 SEパン	SE1	追従	攻撃側	攻撃側	0	40:0:0
 制御モード変更	逐次
 ポケモン移動	攻撃側	往復	01	0	6	1	1

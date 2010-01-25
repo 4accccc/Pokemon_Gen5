@@ -4,9 +4,9 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\w_350.spa
 #001
 %00
 制御モード変更	継続
-SE再生	SEQ_SE_W319_02	SE1	0	0	110	0	0
+SE再生	SEQ_SE_SHOOTER	SE1	0	0	110	0	0
 SEパン	SE1	追従	攻撃側	防御側	0	30:0:0
-SE再生	SEQ_SE_W088_02	SE2	30	0	120	0	0
+SE再生	SEQ_SE_W155_02	SE2	30	-500	120	0	0
 SEパン	SE2	追従	防御側	防御側	0	40:0:0
 制御モード変更	逐次
 パーティクルデータロード	w_350
