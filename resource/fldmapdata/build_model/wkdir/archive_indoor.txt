@@ -124,3 +124,4 @@
 "nsbmdfiles/c09_04_obj01.nsbmd"
 "nsbmdfiles/c09_03_obj.nsbmd"
 "nsbmdfiles/c09_03_light.nsbmd"
+"nsbmdfiles/shelf06.nsbmd"

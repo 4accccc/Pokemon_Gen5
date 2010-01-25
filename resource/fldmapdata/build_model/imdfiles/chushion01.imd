@@ -3,18 +3,18 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fuchino" host="W00152" date="2009-04-22T20:47:03" source="rock_01.mb"/>
+	<create user="fuchino" host="W00152" date="2010-01-25T15:45:45" source="chushion01.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="fuchino" host="W00152" date="2009-04-22T20:47:03" source="rock_01.mb"/>
+<original_create user="fuchino" host="W00152" date="2010-01-25T15:45:45" source="chushion01.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
-	pos_scale="0"
+	pos_scale="1"
 	scaling_rule="standard"
 	vertex_style="direct"
 	magnify="1.000000"
@@ -27,74 +27,50 @@
 	use_primitive_strip="on"
 />
 
-<box_test pos_scale="3" xyz="-2.000000 0.250000 -1.000000" whd="4.000000 3.000000 3.000000"/>
+<box_test pos_scale="2" xyz="-2.000000 0.250000 -2.000000" whd="4.000000 0.000000 4.000000"/>
 
 <tex_image_array size="1">
-	<tex_image index="0" name="rock01"
-		width="32" height="32" original_width="32" original_height="32"
+	<tex_image index="0" name="chushion01a"
+		width="16" height="16" original_width="16" original_height="16"
 		format="palette16"
 		color0_mode="transparency"
-		palette_name="rock01_pl"
-		path="C:/home/wb_data3d/build_model/outdoor/rock_01/tex/rock01.tga"
+		palette_name="chushion01a_pl"
+		path="C:/home/wb_data3d/build_model/indoor/chushion01/tex/chushion01a.tga"
 	>
-		<bitmap size="256">
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 7700 0777 0000 0000 0000
-			0000 0000 0000 4467 1555 0000 0000 0000
-			0000 0000 7000 5446 7655 0001 0000 0000
-			0000 0000 5700 5554 6565 0017 0000 0000
-			0000 0000 4610 5554 5565 0177 0000 0000
-			0000 0000 4611 5554 5565 1775 0000 0000
-			0000 1000 4711 5555 5565 1775 0001 0000
-			0000 1110 6777 5556 5765 1775 0111 0000
-			0000 1771 6777 5566 7675 1777 0117 0000
-			0000 1771 6777 6666 6766 2777 2117 0000
-			0000 1171 5777 6655 7676 2177 2177 0000
-			1000 1111 5777 6555 7766 2177 1772 0002
-			1000 1171 7776 7555 7177 1117 1772 0002
-			1000 6671 7766 7777 1177 1117 7712 0002
-			1100 6671 7666 7777 1177 1111 7111 0002
-			2100 6677 1666 7777 1177 1111 1111 0022
-			2200 6677 1766 7777 2117 1112 1112 0321
-			7230 7177 1777 1771 2221 7777 1122 0321
-			7230 1117 1111 2711 7222 7777 1222 0321
-			7230 1171 1221 1111 7122 7777 2222 0322
-			1230 1117 1221 1111 1721 7717 2222 0322
-			7230 1171 2222 1111 7111 2171 2222 0332
-			2330 2111 2222 1111 1221 2211 2222 0332
-			2300 2112 2222 1111 2221 2222 2222 0032
-			3300 2222 2222 1111 2221 2222 2222 0033
-			3000 2223 2222 1222 2222 2222 3322 0003
-			0000 2330 2222 2222 2222 3222 0033 0000
-			0000 3000 3333 2222 2222 3322 0033 0000
-			0000 0000 3330 2233 3222 3333 0000 0000
-			0000 0000 0000 3333 3333 0033 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
+		<bitmap size="64">
+			0000 0000 0000 0000 7700 7777 7777 0077
+			6570 2226 2222 0751 2670 1111 1111 0731
+			1670 3111 1113 0731 1270 5311 1135 0731
+			1270 5311 1135 0731 1270 3111 1113 0731
+			1270 1111 1111 0731 1170 1111 1111 0731
+			3570 3333 3333 0753 5570 5555 5555 0755
+			5570 5555 5555 0755 5470 5555 5555 0745
+			7700 7777 7777 0077 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
 </tex_image_array>
 
 <tex_palette_array size="1">
-	<tex_palette index="0" name="rock01_pl" color_size="8">
-		7c1f 292e 2509 3dad 5b3c 52db 4657 39d3
+	<tex_palette index="0" name="chushion01a_pl" color_size="8">
+		57f5 2f9f 67df 2afe 1a16 2239 7fff 318c
 	</tex_palette>
 </tex_palette_array>
 
 <material_array size="1">
-	<material index="0" name="rock01_lm1"
-		light0="on" light1="off" light2="off" light3="off"
+	<material index="0" name="chushion01a"
+		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
 		wire_mode="off"
 		polygon_mode="modulate"
 		polygon_id="0"
-		fog_flag="on"
+		fog_flag="off"
 		depth_test_decal="off"
 		translucent_update_depth="off"
 		render_1_pixel="off"
 		far_clipping="off"
 		diffuse="25 25 25"
-		ambient="31 31 31"
+		ambient="0 0 0"
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
@@ -115,26 +91,26 @@
 	<polygon index="0" name="polygon0"
 		vertex_size="4" polygon_size="1"
 		triangle_size="0" quad_size="1"
-		volume_min="-0.396484 0.049561 -0.198242"
-		volume_max="0.396484 0.644531 0.396484"
-		volume_r="0.782227"
+		volume_min="-4.000000 0.500000 -4.000000"
+		volume_max="4.000000 0.500000 4.000000"
+		volume_r="5.678955"
 		mtx_prim_size="1"
-		nrm_flag="on" clr_flag="off" tex_flag="on"
+		nrm_flag="off" clr_flag="on" tex_flag="on"
 	>
 		<mtx_prim index="0">
 			<mtx_list size="1">0</mtx_list>
 			<primitive_array size="1">
 				<primitive index="0" type="quads" vertex_size="4">
 					<mtx idx="0"/>
-					<tex st="0.000000 32.000000"/>
-					<nrm xyz="0.000000 0.707031 0.707031"/>
-					<pos_xyz xyz="-0.396484 0.049561 0.396484"/>
-					<tex st="32.000000 32.000000"/>
-					<pos_xy xy="0.396484 0.049561"/>
-					<tex st="32.000000 0.000000"/>
-					<pos_yz yz="0.644531 -0.198242"/>
 					<tex st="0.000000 0.000000"/>
-					<pos_xy xy="-0.396484 0.644531"/>
+					<clr rgb="31 31 31"/>
+					<pos_s xyz="-4.000000 0.500000 4.000000"/>
+					<tex st="16.000000 0.000000"/>
+					<pos_xy xy="4.000000 0.500000"/>
+					<tex st="16.000000 -16.000000"/>
+					<pos_xz xz="4.000000 -4.000000"/>
+					<tex st="0.000000 -16.000000"/>
+					<pos_xy xy="-4.000000 0.500000"/>
 				</primitive>
 			</primitive_array>
 		</mtx_prim>
@@ -142,23 +118,23 @@
 </polygon_array>
 
 <node_array size="1">
-	<node index="0" name="pCube1" kind="mesh"
+	<node index="0" name="a" kind="mesh"
 		parent="-1"
 		child="-1"
 		brother_next="-1"
 		brother_prev="-1"
 		draw_mtx="on"
-		billboard="y_on"
-		scale="40.342285 40.342285 40.342285"
+		billboard="off"
+		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
 		translate="0.000000 0.000000 0.000000"
 		visibility="on"
 		display_size="1"
 		vertex_size="4" polygon_size="1"
 		triangle_size="0" quad_size="1"
-		volume_min="-0.396484 0.049561 -0.198242"
-		volume_max="0.396484 0.644531 0.396484"
-		volume_r="0.782227"
+		volume_min="-4.000000 0.500000 -4.000000"
+		volume_max="4.000000 0.500000 4.000000"
+		volume_r="5.678955"
 	>
 		<display index="0" material="0" polygon="0" priority="0"/>
 	</node>
