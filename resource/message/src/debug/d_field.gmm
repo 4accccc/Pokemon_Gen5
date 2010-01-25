@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tomoya_takahashi" host="W00148" date="2010-01-14T13:12:19"/>
+	<create user="saitou" host="W00158" date="2010-01-22T21:24:26"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,9 +305,9 @@
 		</language>
 	</columns>
 
-	<dialog left="129" top="208" right="834" bottom="836" maximized="no" rayout="Vertical2">
+	<dialog left="137" top="142" right="842" bottom="770" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="752" top="128" right="1280" bottom="650" visible="yes"/>
+		<tag-palette left="752" top="128" right="1280" bottom="650" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
@@ -950,6 +950,186 @@ allocable (0x[2:07:８桁:5])</language>
 	<row id="DEBUG_FIELD_FOG_TEST">
 		<language name="JPN" width="160">実験 FOG表現</language>
 		<language name="JPN_KANJI" width="160">実験 FOG表現</language>
+	</row>
+
+	<row id="DEBUG_FIELD_ENCEFF">
+		<language name="JPN" width="160">エンカウントエフェクト</language>
+		<language name="JPN_KANJI" width="160">エンカウントエフェクト</language>
+	</row>
+
+	<row id="DEBUG_FIELD_ENCEFF01">
+		<language name="JPN" width="160">やせい1</language>
+		<language name="JPN_KANJI" width="160">野生1</language>
+	</row>
+
+	<row id="DEBUG_FIELD_ENCEFF02">
+		<language name="JPN" width="160">やせい2</language>
+		<language name="JPN_KANJI" width="160">野生2</language>
+	</row>
+
+	<row id="DEBUG_FIELD_ENCEFF03">
+		<language name="JPN" width="160">すいじょう</language>
+		<language name="JPN_KANJI" width="160">水上</language>
+	</row>
+
+	<row id="DEBUG_FIELD_ENCEFF04">
+		<language name="JPN" width="160">どうくつ</language>
+		<language name="JPN_KANJI" width="160">洞くつ</language>
+	</row>
+
+	<row id="DEBUG_FIELD_ENCEFF05">
+		<language name="JPN" width="160">さばく</language>
+		<language name="JPN_KANJI" width="160">砂漠</language>
+	</row>
+
+	<row id="DEBUG_FIELD_ENCEFF06">
+		<language name="JPN" width="160">トレーナー</language>
+		<language name="JPN_KANJI" width="160">トレーナー</language>
+	</row>
+
+	<row id="DEBUG_FIELD_ENCEFF07">
+		<language name="JPN" width="160">トレーナーすいじょう</language>
+		<language name="JPN_KANJI" width="160">トレーナー水上</language>
+	</row>
+
+	<row id="DEBUG_FIELD_ENCEFF08">
+		<language name="JPN" width="160">トレーナーどうくつ</language>
+		<language name="JPN_KANJI" width="160">トレーナー洞くつ</language>
+	</row>
+
+	<row id="DEBUG_FIELD_ENCEFF09">
+		<language name="JPN" width="160">トレーナーさばく</language>
+		<language name="JPN_KANJI" width="160">トレーナー砂漠</language>
+	</row>
+
+	<row id="DEBUG_FIELD_ENCEFF10">
+		<language name="JPN" width="160">サブウェイ</language>
+		<language name="JPN_KANJI" width="160">サブウェイ</language>
+	</row>
+
+	<row id="DEBUG_FIELD_ENCEFF11">
+		<language name="JPN" width="160">ライバル</language>
+		<language name="JPN_KANJI" width="160">ライバル</language>
+	</row>
+
+	<row id="DEBUG_FIELD_ENCEFF12">
+		<language name="JPN" width="160">サポート</language>
+		<language name="JPN_KANJI" width="160">サポート</language>
+	</row>
+
+	<row id="DEBUG_FIELD_ENCEFF13">
+		<language name="JPN" width="160">ジム1A</language>
+		<language name="JPN_KANJI" width="160">ジム1A</language>
+	</row>
+
+	<row id="DEBUG_FIELD_ENCEFF14">
+		<language name="JPN" width="160">ジム1B</language>
+		<language name="JPN_KANJI" width="160">ジム1B</language>
+	</row>
+
+	<row id="DEBUG_FIELD_ENCEFF15">
+		<language name="JPN" width="160">ジム1C</language>
+		<language name="JPN_KANJI" width="160">ジム1C</language>
+	</row>
+
+	<row id="DEBUG_FIELD_ENCEFF16">
+		<language name="JPN" width="160">ジム2</language>
+		<language name="JPN_KANJI" width="160">ジム2</language>
+	</row>
+
+	<row id="DEBUG_FIELD_ENCEFF17">
+		<language name="JPN" width="160">ジム3</language>
+		<language name="JPN_KANJI" width="160">ジム3</language>
+	</row>
+
+	<row id="DEBUG_FIELD_ENCEFF18">
+		<language name="JPN" width="160">ジム4</language>
+		<language name="JPN_KANJI" width="160">ジム4</language>
+	</row>
+
+	<row id="DEBUG_FIELD_ENCEFF19">
+		<language name="JPN" width="160">ジム5</language>
+		<language name="JPN_KANJI" width="160">ジム5</language>
+	</row>
+
+	<row id="DEBUG_FIELD_ENCEFF20">
+		<language name="JPN" width="160">ジム6</language>
+		<language name="JPN_KANJI" width="160">ジム6</language>
+	</row>
+
+	<row id="DEBUG_FIELD_ENCEFF21">
+		<language name="JPN" width="160">ジム7</language>
+		<language name="JPN_KANJI" width="160">ジム7</language>
+	</row>
+
+	<row id="DEBUG_FIELD_ENCEFF22">
+		<language name="JPN" width="160">ジム8A</language>
+		<language name="JPN_KANJI" width="160">ジム8A</language>
+	</row>
+
+	<row id="DEBUG_FIELD_ENCEFF23">
+		<language name="JPN" width="160">ジム8B</language>
+		<language name="JPN_KANJI" width="160">ジム8B</language>
+	</row>
+
+	<row id="DEBUG_FIELD_ENCEFF24">
+		<language name="JPN" width="160">してんのう1</language>
+		<language name="JPN_KANJI" width="160">四天王1</language>
+	</row>
+
+	<row id="DEBUG_FIELD_ENCEFF25">
+		<language name="JPN" width="160">してんのう2</language>
+		<language name="JPN_KANJI" width="160">四天王2</language>
+	</row>
+
+	<row id="DEBUG_FIELD_ENCEFF26">
+		<language name="JPN" width="160">してんのう3</language>
+		<language name="JPN_KANJI" width="160">四天王3</language>
+	</row>
+
+	<row id="DEBUG_FIELD_ENCEFF27">
+		<language name="JPN" width="160">してんのう4</language>
+		<language name="JPN_KANJI" width="160">四天王4</language>
+	</row>
+
+	<row id="DEBUG_FIELD_ENCEFF28">
+		<language name="JPN" width="160">チャンプ</language>
+		<language name="JPN_KANJI" width="160">チャンプ</language>
+	</row>
+
+	<row id="DEBUG_FIELD_ENCEFF29">
+		<language name="JPN" width="160">プラズマだん</language>
+		<language name="JPN_KANJI" width="160">プラズマ団</language>
+	</row>
+
+	<row id="DEBUG_FIELD_ENCEFF30">
+		<language name="JPN" width="160">N</language>
+		<language name="JPN_KANJI" width="160">N</language>
+	</row>
+
+	<row id="DEBUG_FIELD_ENCEFF31">
+		<language name="JPN" width="160">ゲーチス</language>
+		<language name="JPN_KANJI" width="160">ゲーチス</language>
+	</row>
+
+	<row id="DEBUG_FIELD_ENCEFF32">
+		<language name="JPN" width="160">エフェクト</language>
+		<language name="JPN_KANJI" width="160">エフェクト</language>
+	</row>
+
+	<row id="DEBUG_FIELD_ENCEFF33">
+		<language name="JPN" width="160">パッケージ</language>
+		<language name="JPN_KANJI" width="160">パッケージ</language>
+	</row>
+
+	<row id="DEBUG_FIELD_ENCEFF34">
+		<language name="JPN" width="160">いどう</language>
+		<language name="JPN_KANJI" width="160">移動</language>
+	</row>
+
+	<row id="DEBUG_FIELD_ENCEFF35">
+		<language name="JPN" width="160">さんじゅうし</language>
+		<language name="JPN_KANJI" width="160">三銃士</language>
 	</row>
 
 	<flowchart-group-list>

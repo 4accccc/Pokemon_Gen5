@@ -191,6 +191,8 @@ static BOOL debugMenuCallProc_DebugMvPokemon( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL debugMenuCallProc_BBDColor( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL debugMenuCallProc_FogLightTest( DEBUG_MENU_EVENT_WORK *wk );
 
+static BOOL debugMenuCallProc_EncEffList( DEBUG_MENU_EVENT_WORK *wk );
+
 //======================================================================
 //  デバッグメニューリスト
 //======================================================================
@@ -252,7 +254,8 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
   { DEBUG_FIELD_DEMO3D,   debugMenuCallProc_Demo3d }, 
   { DEBUG_FIELD_MVPOKE,   debugMenuCallProc_DebugMvPokemon }, 
   { DEBUG_FIELD_STR62,   debugMenuCallProc_BBDColor }, 
-  { DEBUG_FIELD_FOG_TEST,   debugMenuCallProc_FogLightTest }, 
+  { DEBUG_FIELD_FOG_TEST,   debugMenuCallProc_FogLightTest },
+  { DEBUG_FIELD_ENCEFF, debugMenuCallProc_EncEffList },
 };
 
 
@@ -4355,3 +4358,193 @@ static BOOL debugMenuCallProc_FogLightTest( DEBUG_MENU_EVENT_WORK *wk )
   return( FALSE );
 }
 
+//======================================================================
+//  デバッグメニュー　エンカウントエフェクトリスト
+//======================================================================
+//--------------------------------------------------------------
+/// DEBUG_ENCEFF_LIST_EVENT_WORK
+//--------------------------------------------------------------
+typedef struct
+{
+  int seq_no;
+  HEAPID heapID;
+  GAMESYS_WORK *gmSys;
+  GMEVENT *gmEvent;
+  FIELDMAP_WORK *fieldWork;
+  GFL_MSGDATA *msgData;
+  FLDMENUFUNC *menuFunc;
+}DEBUG_ENCEFF_LIST_EVENT_WORK;
+
+///リスト最大
+#define ENCEFFLISTMAX (35)
+
+///リスト メニューヘッダー
+static const FLDMENUFUNC_HEADER DATA_DebugMenuList_EncEffList =
+{
+  1,    //リスト項目数
+  6,    //表示最大項目数
+  0,    //ラベル表示Ｘ座標
+  13,   //項目表示Ｘ座標
+  0,    //カーソル表示Ｘ座標
+  0,    //表示Ｙ座標
+  1,    //表示文字色
+  15,   //表示背景色
+  2,    //表示文字影色
+  0,    //文字間隔Ｘ
+  1,    //文字間隔Ｙ
+  FLDMENUFUNC_SKIP_LRKEY, //ページスキップタイプ
+  12,   //文字サイズX(ドット
+  12,   //文字サイズY(ドット
+  0,    //表示座標X キャラ単位
+  0,    //表示座標Y キャラ単位
+  0,    //表示サイズX キャラ単位
+  0,    //表示サイズY キャラ単位
+};
+
+///メニューリスト
+static const FLDMENUFUNC_LIST DATA_EncEffMenuList[ENCEFFLISTMAX] =
+{
+  { DEBUG_FIELD_ENCEFF01, (void*)0 },
+  { DEBUG_FIELD_ENCEFF02, (void*)1 },
+  { DEBUG_FIELD_ENCEFF03, (void*)2 },
+  { DEBUG_FIELD_ENCEFF04, (void*)3 },
+  { DEBUG_FIELD_ENCEFF05, (void*)4 },
+  { DEBUG_FIELD_ENCEFF06, (void*)5 },
+  { DEBUG_FIELD_ENCEFF07, (void*)6 },
+  { DEBUG_FIELD_ENCEFF08, (void*)7 },
+  { DEBUG_FIELD_ENCEFF09, (void*)8 },
+  { DEBUG_FIELD_ENCEFF10, (void*)9 },
+  { DEBUG_FIELD_ENCEFF11, (void*)10 },
+  { DEBUG_FIELD_ENCEFF12, (void*)11 },
+  { DEBUG_FIELD_ENCEFF13, (void*)12 },
+  { DEBUG_FIELD_ENCEFF14, (void*)13 },
+  { DEBUG_FIELD_ENCEFF15, (void*)14 },
+  { DEBUG_FIELD_ENCEFF16, (void*)15 },
+  { DEBUG_FIELD_ENCEFF17, (void*)16 },
+  { DEBUG_FIELD_ENCEFF18, (void*)17 },
+  { DEBUG_FIELD_ENCEFF19, (void*)18 },
+  { DEBUG_FIELD_ENCEFF20, (void*)19 },
+  { DEBUG_FIELD_ENCEFF21, (void*)20 },
+  { DEBUG_FIELD_ENCEFF22, (void*)21 },
+  { DEBUG_FIELD_ENCEFF23, (void*)22 },
+  { DEBUG_FIELD_ENCEFF24, (void*)23 },
+  { DEBUG_FIELD_ENCEFF25, (void*)24 },
+  { DEBUG_FIELD_ENCEFF26, (void*)25 },
+  { DEBUG_FIELD_ENCEFF27, (void*)26 },
+  { DEBUG_FIELD_ENCEFF28, (void*)27 },
+  { DEBUG_FIELD_ENCEFF29, (void*)28 },
+  { DEBUG_FIELD_ENCEFF30, (void*)29 },
+  { DEBUG_FIELD_ENCEFF31, (void*)30 },
+  { DEBUG_FIELD_ENCEFF32, (void*)31 },
+  { DEBUG_FIELD_ENCEFF33, (void*)32 },
+  { DEBUG_FIELD_ENCEFF34, (void*)33 },
+  { DEBUG_FIELD_ENCEFF35, (void*)34 },
+};
+
+static const DEBUG_MENU_INITIALIZER DebugEncEffMenuListData = {
+  NARC_message_d_field_dat,
+  NELEMS(DATA_EncEffMenuList),
+  DATA_EncEffMenuList,
+  &DATA_DebugMenuList_EncEffList, //流用
+  1, 1, 16, 11,
+  NULL,
+  NULL
+};
+
+
+//--------------------------------------------------------------
+/// proto
+//--------------------------------------------------------------
+static GMEVENT_RESULT debugMenuEncEffListEvent( GMEVENT *event, int *seq, void *wk );
+
+
+//--------------------------------------------------------------
+/**
+ * デバッグメニュー呼び出し　エンカウントエフェクト
+ * @param wk  DEBUG_MENU_EVENT_WORK*
+ * @retval  BOOL  TRUE=イベント継続
+ */
+//--------------------------------------------------------------
+static BOOL debugMenuCallProc_EncEffList( DEBUG_MENU_EVENT_WORK *wk )
+{
+  GAMESYS_WORK *gsys = wk->gmSys;
+  GMEVENT *event = wk->gmEvent;
+  HEAPID heapID = wk->heapID;
+  FIELDMAP_WORK *fieldWork = wk->fieldWork;
+  DEBUG_ENCEFF_LIST_EVENT_WORK *work;
+  
+  GMEVENT_Change( event,
+    debugMenuEncEffListEvent, sizeof(DEBUG_ENCEFF_LIST_EVENT_WORK) );
+  
+  work = GMEVENT_GetEventWork( event );
+  GFL_STD_MemClear( work, sizeof(DEBUG_ENCEFF_LIST_EVENT_WORK) );
+  
+  work->gmSys = gsys;
+  work->gmEvent = event;
+  work->heapID = heapID;
+  work->fieldWork = fieldWork;
+
+  return( TRUE );
+}
+
+//--------------------------------------------------------------
+/**
+ * イベント：エンカウントエフェクトリスト
+ * @param event GMEVENT
+ * @param seq   シーケンス
+ * @param wk    event work
+ * @retval  GMEVENT_RESULT
+ */
+//--------------------------------------------------------------
+static GMEVENT_RESULT debugMenuEncEffListEvent(
+    GMEVENT *event, int *seq, void *wk )
+{
+  DEBUG_ENCEFF_LIST_EVENT_WORK *work = wk;
+  
+  switch( (*seq) ){
+  case 0:
+    work->menuFunc = DEBUGFLDMENU_Init( work->fieldWork, work->heapID,  &DebugEncEffMenuListData );
+    (*seq)++;
+    break;
+  case 1:
+    {
+      u32 ret;
+      ret = FLDMENUFUNC_ProcMenu( work->menuFunc );
+      
+      if( ret == FLDMENUFUNC_NULL ){  //操作無し
+        break;
+      }
+      
+      FLDMENUFUNC_DeleteMenu( work->menuFunc );
+      
+      if( ret != FLDMENUFUNC_CANCEL ) //決定
+      {
+        //エンカウントエフェクトコール
+        OS_Printf("enceff= %d\n",ret);
+        ENCEFF_SetEncEff(FIELDMAP_GetEncEffCntPtr(work->fieldWork), event, ret);
+        (*seq)++;
+        return( GMEVENT_RES_CONTINUE );
+      }
+      else return( GMEVENT_RES_FINISH );
+    }
+    break;
+  case 2:
+    {
+      ENCEFF_CNT_PTR cnt_ptr = FIELDMAP_GetEncEffCntPtr(work->fieldWork);
+      ENCEFF_FreeUserWork(cnt_ptr);
+      //オーバーレイアンロード
+      ENCEFF_UnloadEffOverlay(cnt_ptr);
+    }
+    
+    GFL_FADE_SetMasterBrightReq(
+          GFL_FADE_MASTER_BRIGHT_WHITEOUT_MAIN, 16, 0, -1 );
+    (*seq)++;
+    break;
+  case 3:
+    if( GFL_FADE_CheckFade() == FALSE ){
+      return( GMEVENT_RES_FINISH );
+    }
+  }
+  
+  return( GMEVENT_RES_CONTINUE );
+}
