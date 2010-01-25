@@ -3,4 +3,4 @@
 //-------------------------------------
 ///	NPCIDÇÃç≈ëÂíl
 //=====================================
-#define FIELD_WFBC_NPCID_MAX  ( 50 )
+#define FIELD_WFBC_NPCID_MAX  ( 30 )
