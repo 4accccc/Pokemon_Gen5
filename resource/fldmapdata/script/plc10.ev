@@ -58,6 +58,8 @@ EVENT_END
 /*  WFBCÇ…Ç¢ÇÈêlÇÃâÔòbèàóù                                    */
 /**************************************************************/
 EVENT_START ev_plc_npc
+	_TALK_OBJ_START()
+
   _WFBC_PALACE_TALK()
 EVENT_END
 

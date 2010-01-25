@@ -606,6 +606,8 @@ static GMEVENT* EVENT_SetUp_WFBC_Palece_Talk( GAMESYS_WORK* p_gsys, FIELDMAP_WOR
     p_work->cp_people = cp_people;
     p_work->p_mmdl    = p_frontmmdl;
     p_work->npc_id    = objid;
+
+    // ©•ª‚Ì‚Ù‚¤‚ğŒü‚©‚¹‚é
   }
   // ¶¬‚µ‚½ƒCƒxƒ“ƒg‚ğ•Ô‚·
   return p_event;
