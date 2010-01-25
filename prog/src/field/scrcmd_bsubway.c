@@ -30,7 +30,7 @@
 #include "scrcmd_work.h"
 
 #include "bsubway_scr.h"
-#include "bsubway_scr_common.h"
+#include "bsubway_scrwork.h"
 #include "scrcmd_bsubway.h"
 
 #include "event_bsubway.h"
@@ -85,7 +85,7 @@ VMCMD_RESULT EvCmdBSubwayWorkCreate( VMHANDLE* core, void *wk )
  *  @brief  バトルサブウェイ制御用ワークポインタ初期化
  */
 //--------------------------------------------------------------
-VMCMD_RESULT EvCmdBSubwayWorkClear(VMHANDLE* core, void *wk )
+VMCMD_RESULT EvCmdBSubwayWorkClear( VMHANDLE* core, void *wk )
 {
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
@@ -126,73 +126,177 @@ VMCMD_RESULT EvCmdBSubwayWorkRelease(VMHANDLE* core, void *wk )
 VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
 {
   void **buf;
-  BSUBWAY_SCRWORK *bsw_scr;
-  BSUBWAY_PLAYDATA *playData;
-  BSUBWAY_SCOREDATA *scoreData;
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
   SCRIPT_FLDPARAM *fparam = SCRIPT_GetFieldParam( sc );
   GAMESYS_WORK *gsys = SCRIPT_GetGameSysWork( sc );
   GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
   SAVE_CONTROL_WORK *save = GAMEDATA_GetSaveControlWork( gdata );
+  EVENTWORK *event = GAMEDATA_GetEventWork( gdata );
+  BSUBWAY_SCRWORK *bsw_scr = GAMEDATA_GetBSubwayScrWork( gdata );
+  BSUBWAY_PLAYDATA *playData =
+    SaveControl_DataPtrGet( save, GMDATA_ID_BSUBWAY_PLAYDATA );
+  u32 play_mode = (u32)BSUBWAY_PLAYDATA_GetData(
+        playData, BSWAY_PLAYDATA_ID_playmode, NULL );
+  BSUBWAY_SCOREDATA *scoreData = SaveControl_DataPtrGet(
+      save, GMDATA_ID_BSUBWAY_SCOREDATA );
+  FIELDMAP_WORK *fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
   u16 com_id = VMGetU16( core );
   u16 param = SCRCMD_GetVMWorkValue( core, work );
   u16 retwk_id = VMGetU16( core );
   u16 *ret_wk = SCRIPT_GetEventWork( sc, gdata, retwk_id );
   
-  bsw_scr = GAMEDATA_GetBSubwayScrWork( gdata );
-  playData = SaveControl_DataPtrGet( save, GMDATA_ID_BSUBWAY_PLAYDATA );
-  scoreData = SaveControl_DataPtrGet( save, GMDATA_ID_BSUBWAY_SCOREDATA );
+  if( bsw_scr == NULL && //バグチェック　ワーク依存コマンド
+      com_id >= BSWSUB_START && com_id < BSWSUB_END ){
+    GF_ASSERT( 0 );
+    return( VMCMD_RESULT_CONTINUE );
+  }
   
   switch( com_id ){
-  //-------------------------ワーク非依存--------------------------------
-  //参加可能なポケモン数のチェック
-  case BSWAY_TOOL_CHK_ENTRY_POKE_NUM:
+  //リセット
+  case BSWTOOL_SYSTEM_RESET:
+    OS_ResetSystem( 0 );
+    break;
+  //プレイデータクリア
+  case BSWTOOL_CLEAR_PLAY_DATA:
+    BSUBWAY_PLAYDATA_Init( playData );
+    break;
+  //手持ちポケモン数チェック
+  case BSWTOOL_CHK_ENTRY_POKE_NUM:
     if( param == 0 ){
       GF_ASSERT( bsw_scr != NULL );
-  *ret_wk = bsway_CheckEntryPokeNum( bsw_scr->member_num, gsys, 1 );
+      *ret_wk = bsway_CheckEntryPokeNum( bsw_scr->member_num, gsys, 1 );
     }else{
       *ret_wk = bsway_CheckEntryPokeNum( param, gsys, 1 );
     }
     break;
-  //リセット
-  case BSWAY_TOOL_SYSTEM_RESET:
-    OS_ResetSystem( 0 );
-    break;
-  //プレイデータクリア
-  case BSWAY_TOOL_CLEAR_PLAY_DATA:
-    BSUBWAY_PLAYDATA_Init( playData );
-    break;
-  //セーブしているか？
-  case BSWAY_TOOL_IS_SAVE_DATA_ENABLE:
+  //セーブされているか
+  case BSWTOOL_IS_SAVE_DATA_ENABLE:
     *ret_wk = BSUBWAY_PLAYDATA_GetSaveFlag( playData );
     break;
-  //脱出用に現在のロケーションを記憶する
-  case BSWAY_TOOL_PUSH_NOW_LOCATION:
+  //復帰位置設定
+  case BSWTOOL_PUSH_NOW_LOCATION:
     {
       VecFx32 pos;
       LOCATION loc;
-      FIELDMAP_WORK *fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
       FIELD_PLAYER *fld_player = FIELDMAP_GetFieldPlayer( fieldmap );
+      
       FIELD_PLAYER_GetPos( fld_player, &pos );
       LOCATION_SetDirect( &loc, FIELDMAP_GetZoneID(fieldmap),
-          FIELD_PLAYER_GetDir(fld_player),
-          pos.x, pos.y, pos.z );
-
+          FIELD_PLAYER_GetDir(fld_player), pos.x, pos.y, pos.z );
       GAMEDATA_SetSpecialLocation( gdata, &loc );
-      EVENTWORK_SetEventFlag(
-          GAMEDATA_GetEventWork(gdata), SYS_FLAG_SPEXIT_REQUEST );
+      EVENTWORK_SetEventFlag( event, SYS_FLAG_SPEXIT_REQUEST );
     }
     break;
-  case BSWAY_SUB_SET_PLAY_MODE_LOCATION:
+  //復帰位置無効
+  case BSWTOOL_POP_NOW_LOCATION:
+    EVENTWORK_ResetEventFlag( event, SYS_FLAG_SPEXIT_REQUEST );
+    break;
+  //エラー時のスコアセット
+  case BSWTOOL_SET_NG_SCORE:
+    *ret_wk = BSUBWAY_SCRWORK_SetNGScore( gsys );
+    break;
+  //連勝数取得
+  case BSWTOOL_GET_RENSHOU_CNT:
+    *ret_wk = BSUBWAY_SCOREDATA_GetRenshou( scoreData, param );
+    if( (s16)(*ret_wk) < 0 ){ 
+      *ret_wk = 0;
+    }
+    break;
+  //自機OBJコード取得
+  case BSWTOOL_GET_MINE_OBJ:
+    {
+      FIELD_PLAYER *fld_player = FIELDMAP_GetFieldPlayer( fieldmap );
+      int sex = FIELD_PLAYER_GetSex( fld_player );
+      *ret_wk = FIELD_PLAYER_GetDrawFormToOBJCode(
+          sex, PLAYER_DRAW_FORM_NORMAL );
+    }
+    break;
+  //自機非表示
+  case BSWTOOL_PLAYER_VANISH:
+    {
+      FIELD_PLAYER *fld_player = FIELDMAP_GetFieldPlayer( fieldmap );
+      MMDL *mmdl = FIELD_PLAYER_GetMMdl( fld_player );
+      MMDL_SetStatusBitVanish( mmdl, TRUE );
+    }
+    break;
+  //レギュレーションチェック
+  case BSWTOOL_CHK_REGULATION:
+    *ret_wk = 0; //ok
+    if( bsway_CheckRegulation(param,gsys) == FALSE ){
+      *ret_wk = 1;
+    }
+    break;
+  //プレイモード取得
+  case BSWTOOL_GET_PLAY_MODE:
+    *ret_wk = BSUBWAY_PLAYDATA_GetData(
+        playData, BSWAY_PLAYDATA_ID_playmode, NULL );
+    break;
+  //現在ラウンド数取得
+  case BSWTOOL_GET_NOW_ROUND:
+    *ret_wk = BSUBWAY_PLAYDATA_GetRoundNo( playData );
+    break;
+  //ラウンド数増加
+  case BSWTOOL_INC_ROUND:
+    BSUBWAY_PLAYDATA_IncRoundNo( playData );
+    BSUBWAY_SCOREDATA_IncRenshou( scoreData, play_mode );
+    *ret_wk = BSUBWAY_SCOREDATA_GetRenshou( scoreData, play_mode );
+    break;
+  //次のラウンド数取得
+  case BSWTOOL_GET_NEXT_ROUND:
+    *ret_wk = BSUBWAY_PLAYDATA_GetRoundNo( bsw_scr->playData ) + 1;
+    break;
+  //Wifiランクダウン
+  case BSWTOOL_WIFI_RANK_DOWN:
+    #if 0
+    *ret_wk = TowerScr_SetWifiRank(NULL,core->fsys->savedata,2);
+    #else
+    GF_ASSERT( 0 && "BSWTOOL_WIFI_RANK_DOWN WB未作成" );
+    #endif
+    break;
+  //Wifiランク取得
+  case BSWTOOL_GET_WIFI_RANK:
+    #if 0
+    *ret_wk = TowerScr_SetWifiRank(NULL,core->fsys->savedata,0);
+    #else
+    GF_ASSERT( 0 && "BSWTOOL_GET_WIFI_RANK WB未作成" );
+    #endif
+    break;
+  //Wifiアップロードフラグをセット
+  case BSWTOOL_SET_WIFI_UPLOAD_FLAG:
+    #if 0
+    TowerScrTools_SetWifiUploadFlag(core->fsys->savedata,param);
+    #else
+    GF_ASSERT( 0 && "BSWTOOL_SET_WIFI_UPLOAD_FLAG WB未作成" );
+    #endif
+    break;
+  //Wifiアップロードフラグを取得
+  case BSWTOOL_GET_WIFI_UPLOAD_FLAG:
+    #if 0
+    *ret_wk = TowerScrTools_GetWifiUploadFlag(core->fsys->savedata);
+    #else
+    GF_ASSERT( 0 && "BSWTOOL_GET_WIFI_UPLOAD_FLAG WB未作成" );
+    #endif
+    break;
+  //Wifi接続
+  case BSWTOOL_WIFI_CONNECT:
+    #if 0
+    EventCmd_BTowerWifiCall(core->event_work,param,retwk_id,*ret_wk);
+    return 1;
+    #else
+    GF_ASSERT( 0 && "BSWTOOL_WIFI_CONNECT WB未作成コマンドです" );
+    #endif
+    break;
+  //----ワーク依存
+  //プレイモード別復帰位置セット
+  case BSWSUB_SET_PLAY_MODE_LOCATION:
     {
       VecFx32 pos;
       LOCATION loc;
-      FIELDMAP_WORK *fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
       FIELD_PLAYER *fld_player = FIELDMAP_GetFieldPlayer( fieldmap );
+      
       FIELD_PLAYER_GetPos( fld_player, &pos );
-
-
+      
       switch( bsw_scr->play_mode ){
       case BSWAY_MODE_SINGLE:
         LOCATION_SetDirect( &loc, ZONE_ID_C04R0102, DIR_RIGHT, 13, 0, 13 );
@@ -204,317 +308,130 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
       }
       
       GAMEDATA_SetSpecialLocation( gdata, &loc );
-      EVENTWORK_SetEventFlag(
-          GAMEDATA_GetEventWork(gdata), SYS_FLAG_SPEXIT_REQUEST );
+      EVENTWORK_SetEventFlag( event, SYS_FLAG_SPEXIT_REQUEST );
     }
-  //記録したロケーションに戻す。
-  case BSWAY_TOOL_POP_NOW_LOCATION:
-    EVENTWORK_ResetEventFlag(
-      GAMEDATA_GetEventWork(gdata), SYS_FLAG_SPEXIT_REQUEST );
     break;
-  //連勝レコード数取得
-  case BSWAY_TOOL_GET_RENSHOU_RECORD:
-    #if 0 //wb null
-    *ret_wk = TowerScrTools_GetRenshouRecord(core->fsys->savedata,param);
-    #else
-    GF_ASSERT( 0 && "BSWAY_TOOL_GET_RENSHOU_RECORD WB未作成" );
-    #endif
-    break;
-  case BSWAY_TOOL_WIFI_RANK_DOWN:
-    #if 0 // wb null 
-    *ret_wk = TowerScr_SetWifiRank(NULL,core->fsys->savedata,2);
-    #else
-    GF_ASSERT( 0 && "BSWAY_TOOL_WIFI_RANK_DOWN WB未作成" );
-    #endif
-    break;
-  case BSWAY_TOOL_GET_WIFI_RANK:
-    #if 0
-    *ret_wk = TowerScr_SetWifiRank(NULL,core->fsys->savedata,0);
-    #else
-    GF_ASSERT( 0 && "BSWAY_TOOL_GET_WIFI_RANK WB未作成" );
-    #endif
-    break;
-  case BSWAY_TOOL_SET_WIFI_UPLOAD_FLAG:
-    #if 0
-    TowerScrTools_SetWifiUploadFlag(core->fsys->savedata,param);
-    #else
-    GF_ASSERT( 0 && "BSWAY_TOOL_SET_WIFI_UPLOAD_FLAG WB未作成" );
-    #endif
-    break;
-  case BSWAY_TOOL_GET_WIFI_UPLOAD_FLAG:
-    #if 0
-    *ret_wk = TowerScrTools_GetWifiUploadFlag(core->fsys->savedata);
-    #else
-    GF_ASSERT( 0 && "BSWAY_TOOL_GET_WIFI_UPLOAD_FLAG WB未作成" );
-    #endif
-    break;
-  case BSWAY_TOOL_SET_NG_SCORE:
-    #if 0
-    *ret_wk = TowerScrTools_SetNGScore(core->fsys->savedata);
-    #else
-    *ret_wk = BSUBWAY_SCRWORK_SetNGScore( gsys );
-    #endif
-    break;
-  case BSWAY_TOOL_IS_PLAYER_DATA_ENABLE:
-    #if 0
-    *ret_wk = TowerScrTools_IsPlayerDataEnable(core->fsys->savedata);
-    break;
-    #else
-    GF_ASSERT( 0 && "BSWAY_TOOL_IS_PLAYER_DATA_ENABLE WB未作成" );
-    #endif
-  case BSWAY_TOOL_WIFI_CONNECT:
-    #if 0
-    EventCmd_BTowerWifiCall(core->event_work,param,retwk_id,*ret_wk);
-    return 1;
-    #else
-    GF_ASSERT( 0 && "BSWAY_TOOL_WIFI_CONNECT WB未作成コマンドです" );
-    #endif
-  //---------------------ワーク依存--------------------------------
-  case BSWAY_SUB_GET_NOW_ROUND:
-    *ret_wk = bsw_scr->now_round;
-    break;
-  case BSWAY_SUB_INC_ROUND:
-    /*
-    *ret_wk = TowerScr_IncRound(wk); //dpではランダムの種も更新していた
-    */
-    bsw_scr->now_win++;
-    bsw_scr->now_round++;
-    *ret_wk = bsw_scr->now_round;
-    break;
-  //ポケモンリスト画面呼び出し
-  case BSWAY_SUB_SELECT_POKE:
-    #if 0
-    buf = GetEvScriptWorkMemberAdrs(core->fsys, ID_EVSCR_SUBPROC_WORK);
-    TowerScr_SelectPoke(wk,core->event_work,buf);
-    #else
+  //ポケモン選択画面へ
+  case BSWSUB_SELECT_POKE:
     SCRIPT_CallEvent( sc, BSUBWAY_EVENT_SetSelectPokeList(bsw_scr,gsys) );
-    #endif
     return VMCMD_RESULT_SUSPEND;
-  //選択されたポケモン取得
-  case BSWAY_SUB_GET_ENTRY_POKE:
+  //選択ポケモン取得
+  case BSWSUB_GET_ENTRY_POKE:
     *ret_wk = BSUBWAY_SCRWORK_GetEntryPoke( bsw_scr, gsys );
     break;
   //参加指定した手持ちポケモンの条件チェック
-  case BSWAY_SUB_CHK_ENTRY_POKE:
+  case BSWSUB_CHK_ENTRY_POKE:
     #if 0
     *ret_wk = TowerScr_CheckEntryPoke(bsw_scr,core->fsys->savedata);
     #else
-    OS_Printf( "BSWAY_SUB_GET_ENTRY_POKE WB未作成" );
+    OS_Printf( "BSWSUB_GET_ENTRY_POKE WB未作成" );
     *ret_wk = 0; //0=OK 1=同じポケモン 2=同じアイテム
     #endif
     break;
-  case BSWAY_SUB_IS_CLEAR:
-    #if 0
-    *ret_wk = TowerScr_IsClear(bsw_scr);
-    #else
-    if( bsw_scr->clear_f ){
-      *ret_wk = TRUE;
-    }else if( bsw_scr->now_round > BSWAY_CLEAR_WINCNT ){
-      //クリアフラグon
-      bsw_scr->clear_f = 1;
+  //クリアしているか
+  case BSWSUB_IS_CLEAR:
+    if( BSUBWAY_SCRWORK_IsClear(bsw_scr) == TRUE ){
       *ret_wk = TRUE;
     }else{
       *ret_wk = FALSE;
     }
-    #endif
     break;
-  case BSWAY_TOOL_GET_RENSHOU_CNT:
-    *ret_wk = BSUBWAY_SCOREDATA_GetRenshouCount( scoreData, param );
-    
-    if( (s16)(*ret_wk) < 0 ){
-      *ret_wk = 0;
-    }
-    
-    KAGAYA_Printf( "PLAYDATA 連勝数 = %d\n", (*ret_wk) );
-    break;
-  case BSWAY_SUB_GET_RENSHOU_CNT:
-    if( (u32)bsw_scr->renshou+bsw_scr->now_win > 0xFFFF ){
-      *ret_wk = 0xFFFF;
-    }else{
-      *ret_wk = bsw_scr->renshou + bsw_scr->now_win;
-    }
-    break;
-  case BSWAY_SUB_SET_LOSE_SCORE:
+  //敗北時のスコアセット
+  case BSWSUB_SET_LOSE_SCORE:
     BSUBWAY_SCRWORK_SetLoseScore( gsys, bsw_scr );
     break;
-  case BSWAY_SUB_SET_CLEAR_SCORE:
+  //クリア時のスコアセット
+  case BSWSUB_SET_CLEAR_SCORE:
     BSUBWAY_SCRWORK_SetClearScore( bsw_scr, gsys );
     break;
-  case BSWAY_SUB_SAVE_REST_PLAY_DATA:
-    #if 0
-    TowerScr_SaveRestPlayData(bsw_scr);
-    #else
+  //休む際のプレイデータ処理
+  case BSWSUB_SAVE_REST_PLAY_DATA:
     BSUBWAY_SCRWORK_SaveRestPlayData( bsw_scr );
-    #endif
     break;
-  case BSWAY_SUB_CHOICE_BTL_PARTNER:
+  //対戦トレーナー抽選
+  case BSWSUB_CHOICE_BTL_PARTNER:
     BSUBWAY_SCRWORK_ChoiceBattlePartner( bsw_scr );
     break;
-  case BSWAY_SUB_CHOICE_BTL_SEVEN:
-    #if 0
-    TowerScr_ChoiceBtlSeven(bsw_scr);
-    #else
-    GF_ASSERT( 0 && "BSWAY_SUB_CHOICE_BTL_SEVEN WB未作成" );
-    #endif
+  //敵トレーナーOBJコード取得
+  case BSWSUB_GET_ENEMY_OBJ:
+    *ret_wk = BSUBWAY_SCRWORK_GetTrainerOBJCode( bsw_scr, param );
     break;
-  case BSWAY_SUB_GET_ENEMY_OBJ:
-    *ret_wk = BSUBWAY_SCRWORK_GetEnemyObj( bsw_scr, param );
-    break;
-	case BSWAY_SUB_LOCAL_BTL_CALL:
-    {
-      FIELDMAP_WORK *fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
-      SCRIPT_CallEvent( sc,
-          BSUBWAY_EVENT_TrainerBattle(bsw_scr,gsys,fieldmap) );
-    }
+  //バトル呼び出し
+	case BSWSUB_LOCAL_BTL_CALL:
+    SCRIPT_CallEvent(
+        sc, BSUBWAY_EVENT_TrainerBattle(bsw_scr,gsys,fieldmap) );
     return VMCMD_RESULT_SUSPEND;
   //現在のプレイモードを取得
-  case BSWAY_SUB_GET_PLAY_MODE:
+  case BSWSUB_GET_PLAY_MODE:
     *ret_wk = bsw_scr->play_mode;
     break;
-  case BSWAY_SUB_SET_LEADER_CLEAR_FLAG:
+  //リーダークリアフラグをセット
+  case BSWSUB_SET_LEADER_CLEAR_FLAG:
     bsw_scr->leader_f = param;
     break;
-  case BSWAY_SUB_GET_LEADER_CLEAR_FLAG:
+  //リーダークリアフラグを取得
+  case BSWSUB_GET_LEADER_CLEAR_FLAG:
     *ret_wk = bsw_scr->leader_f;
     break;
-  case BSWAY_SUB_ADD_BATTLE_POINT:
+  //バトルポイント加算
+  case BSWSUB_ADD_BATTLE_POINT:
     *ret_wk = BSUBWAY_SCRWORK_AddBattlePoint( bsw_scr );
     break;
-  case BSWAY_SUB_GOODS_FLAG_SET:
-    #if 0
-    TowerScr_GoodsFlagSet(bsw_scr,core->fsys->savedata);
-    #else
-    GF_ASSERT( 0 && "BSWAY_SUB_GOODS_FLAG_SET WB未作成" );
-    #endif
-    break;
-  case BSWAY_SUB_LEADER_RIBBON_SET:
-    #if 0
-    *ret_wk = TowerScr_LeaderRibbonSet(bsw_scr,core->fsys->savedata);
-    #else
-    GF_ASSERT( 0 && "BSWAY_SUB_LEADER_RIBBON_SET WB未作成です" );
-    #endif
-    break;
-  case BSWAY_SUB_RENSHOU_RIBBON_SET:
-    #if 0
-    *ret_wk = TowerScr_RenshouRibbonSet(bsw_scr,core->fsys->savedata);
-    #else
-    GF_ASSERT( 0 && "BSWAY_SUB_RENSHOU_RIBBON_SET WB未作成" );
-    #endif
-    break;
-  case BSWAY_SUB_SET_PARTNER_NO:
+  //パートナー番号セット
+  case BSWSUB_SET_PARTNER_NO:
     bsw_scr->partner = param;
     break;
-  case BSWAY_SUB_GET_PARTNER_NO:
+  //パートナー番号取得
+  case BSWSUB_GET_PARTNER_NO:
     *ret_wk = bsw_scr->partner;
     break;
-  case BSWAY_SUB_BTL_TRAINER_SET:
+  //戦闘トレーナーセット
+  case BSWSUB_BTL_TRAINER_SET:
     BSUBWAY_SCRWORK_SetBtlTrainerNo( bsw_scr );
     break;
-  case BSWAY_SUB_GET_SELPOKE_IDX:
-    #if 0
-    *ret_wk = wk->member[param];
-    #else
-    GF_ASSERT( 0 && "BSWAY_SUB_GET_SELPOKE_IDX WB未作成" );
-    #endif
+  //選択ポケモン番号取得
+  case BSWSUB_GET_SELPOKE_IDX:
+    *ret_wk = bsw_scr->member[param];
     break;
   //(BTS通信142)変更の対象
-  case BSWAY_SUB_WIFI_RANK_UP:
+  case BSWSUB_WIFI_RANK_UP:
     #if 0
     *ret_wk = TowerScr_SetWifiRank(bsw_scr,core->fsys->savedata,1);
     #else
-    GF_ASSERT( 0 && "BSWAY_SUB_WIFI_RANK_UP WB未作成" );
+    GF_ASSERT( 0 && "BSWSUB_WIFI_RANK_UP WB未作成" );
     #endif
     break;
-  case BSWAY_TOOL_GET_MINE_OBJ:
-    {
-      FIELDMAP_WORK *fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
-      FIELD_PLAYER *fld_player = FIELDMAP_GetFieldPlayer( fieldmap );
-      int sex = FIELD_PLAYER_GetSex( fld_player );
-      *ret_wk = FIELD_PLAYER_GetDrawFormToOBJCode(
-          sex, PLAYER_DRAW_FORM_NORMAL );
-    }
-    break;
-  //プレイランダムシードを更新する
-  case BSWAY_SUB_UPDATE_RANDOM:
-    #if 0 //wb null
-    *ret_wk = TowerScr_PlayRandUpdate(bsw_scr,core->fsys->savedata);
-    #endif
-    break;
-  case BSWAY_DEB_IS_WORK_NULL:
-    if(bsw_scr == NULL){
-      *ret_wk = 1;
-    }else{
-      *ret_wk = 0;
-    }
-    break;
-  //58:受信バッファクリア
-  case BSWAY_SUB_RECV_BUF_CLEAR:
+  //受信バッファクリア
+  case BSWSUB_RECV_BUF_CLEAR:
     #if 0
     MI_CpuClear8(wk->recv_buf,BSWAY_SIO_BUF_LEN);
     #else
-    GF_ASSERT( 0 && "BSWAY_SUB_RECV_BUF_CLEAR WB未作成" );
+    GF_ASSERT( 0 && "BSWSUB_RECV_BUF_CLEAR WB未作成" );
     #endif
     break;
-  //自機を非表示
-  case BSWAY_TOOL_PLAYER_VANISH:
-    {
-      FIELDMAP_WORK *fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
-      FIELD_PLAYER *fld_player = FIELDMAP_GetFieldPlayer( fieldmap );
-      MMDL *mmdl = FIELD_PLAYER_GetMMdl( fld_player );
-      MMDL_SetStatusBitVanish( mmdl, TRUE );
-    }
-    break;
-  //トレーナー対戦前メッセージ
-  case BSWAY_SUB_TRAINER_BEFORE_MSG:
+  //トレーナー対戦前メッセージ表示
+  case BSWSUB_TRAINER_BEFORE_MSG:
     SCRIPT_CallEvent(
         sc, BSUBWAY_EVENT_TrainerBeforeMsg(bsw_scr,gsys,param) );
     return( VMCMD_RESULT_SUSPEND );
-  case BSWAY_TOOL_CHK_REGULATION:
-    *ret_wk = 0; //ok
-    
-    if( bsway_CheckRegulation(param,gsys) == FALSE ){
-      *ret_wk = 1;
-    }
-    #ifdef DEBUG_ONLY_FOR_Kagaya
-//    *ret_wk = 1;
-    #endif
-    break;
-  case BSWAY_TOOL_GET_PLAY_MODE:
-    *ret_wk = BSUBWAY_PLAYDATA_GetData(
-        playData, BSWAY_PLAYDATA_ID_playmode, NULL );
-    break;
-  //車両数
-  case BSWAY_SUB_GET_NEXT_CARNUM:
-    *ret_wk = bsw_scr->now_round % 8;
-    break;
-  case BSWAY_SUB_SAVE_GAMECLEAR:
-    #if 0
-    TowerScr_SaveRestPlayData(bsw_scr);
-    #else
+  //ゲームクリア時のプレイデータをセーブ
+  case BSWSUB_SAVE_GAMECLEAR:
     BSUBWAY_SCRWORK_SaveGameClearPlayData( bsw_scr );
-    #endif
     break;
-  case BSWAY_SUB_LOAD_POKEMON_MEMBER:
+  //ポケモンメンバーロード
+  case BSWSUB_LOAD_POKEMON_MEMBER:
     BSUBWAY_SCRWORK_LoadPokemonMember( bsw_scr, gsys );
-    break;
-  case BSWAY_SUB_COUNT_NEXT_STAGE:
-    BSUBWAY_SCOREDATA_SetStage( bsw_scr->scoreData,
-      bsw_scr->play_mode, BSWAY_SETMODE_inc );
     break;
   //エラー
   default:
     OS_Printf( "渡されたcom_id = %d\n", com_id );
     GF_ASSERT( 0 && "com_idが未対応です！" );
-//    *ret_wk = 0;
+    *ret_wk = 0;
     break;
   }
   
   return VMCMD_RESULT_CONTINUE;
 }
-
-//======================================================================
-//  ポケモン選択
-//======================================================================
 
 //======================================================================
 //  parts
@@ -542,9 +459,10 @@ static BOOL bsway_CheckEntryPokeNum(
 
 //--------------------------------------------------------------
 /**
- *
- * @param
- * @retval
+ * レギュレーションチェック
+ * @param mode プレイモード
+ * @param gsys GAMESYS_WORK
+ * @retval BOOL TRUE=OK
  */
 //--------------------------------------------------------------
 static BOOL bsway_CheckRegulation( int mode, GAMESYS_WORK *gsys )

@@ -275,7 +275,8 @@ static GMEVENT * gjiki_CheckEventKairiki(
 //======================================================================
 //  ‰ö—ÍƒCƒxƒ“ƒg
 //======================================================================
-#define KAIRIKI_FALLDOWN_HEIGHT (NUM_FX32(-14))
+#define KAIRIKI_FALLDOWN_HEIGHT_1x1 (NUM_FX32(-14))
+#define KAIRIKI_FALLDOWN_HEIGHT_2x2 (NUM_FX32(-26))
 
 //--------------------------------------------------------------
 /// EVENT_KAIRIKI_WORK
@@ -381,13 +382,13 @@ static GMEVENT_RESULT event_Kairki( GMEVENT *event, int *seq, void *wk )
       
       MMDL_GetVectorPos( work->mmdl, &pos );
       MMDL_GetMapPosHeight( work->mmdl, &pos, &work->bottom );
-      work->bottom += KAIRIKI_FALLDOWN_HEIGHT;
       
-      {
-        u16 code = MMDL_GetOBJCode( work->mmdl ); 
-        if( code == BIGROCK || code == JUNK ){
-          work->bottom += NUM_FX32( -12 );
-        }
+      switch( MMDL_GetOBJCode(work->mmdl) ){
+      case ROCK:
+        work->bottom += KAIRIKI_FALLDOWN_HEIGHT_1x1;
+        break;
+      default:
+        work->bottom += KAIRIKI_FALLDOWN_HEIGHT_2x2;
       }
       
       MMDL_SetStatusBitHeightGetOFF( work->mmdl, TRUE );

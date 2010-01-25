@@ -39,20 +39,19 @@ SDK_COMPILER_ASSERT(sizeof(BSUBWAY_WIFI_PLAYER) == 228);
 //--------------------------------------------------------------
 struct _BSUBWAY_PLAYDATA
 {
-  u8  itemfix_f  :1;  ///<固定アイテムかどうかのフラグ
-  u8  saved_f    :1;  ///<セーブ済みかどうか
-  u8  play_mode  :3;  ///<現在どこにチャレンジ中か?
-  u8  partner    :3;  ///<現在誰と組んでいるか?
-  u8  dummy; ///<4byte境界ダミー
-  u8  tower_round;    ///<バトルサブウェイ今何人目？
-  u8  wifi_rec_down;    ///<勝ち抜きまでに倒されたポケモン数
+  u8 itemfix_f  :1;  ///<固定アイテムかどうかのフラグ
+  u8 saved_f    :1;  ///<セーブ済みかどうか
+  u8 play_mode  :3;  ///<現在どこにチャレンジ中か?
+  u8 partner    :3;  ///<現在誰と組んでいるか?
+  u8 wifi_rec_down;    ///<勝ち抜きまでに倒されたポケモン数
+  u8 round;  ///<バトルサブウェイ ラウンド数
+  u16 stage; ///<バトルサブウェイ ステージ数　周回数
+  
   u16  wifi_rec_turn;    ///<勝ち抜きにかかったターン数
   u16  wifi_rec_damage;  ///<勝ち抜きまでに受けたダメージ数
   
-  u8  member_poke[BSUBWAY_STOCK_MEMBER_MAX];    ///<選択したポケモンの位置
-  u16  trainer_no[BSUBWAY_STOCK_TRAINER_MAX];    ///<対戦トレーナーNo保存
-  
-  u32  play_rnd_seed;  ///<タワープレイ変化ランダムシード保存場所
+  u8 member_poke[BSUBWAY_STOCK_MEMBER_MAX];    ///<選択したポケモンの位置
+  u16 trainer_no[BSUBWAY_STOCK_TRAINER_MAX];    ///<対戦トレーナーNo保存
   
   ///<AIマルチのペアのポケモン再生成に必要なパラメータ
   struct _BSUBWAY_PAREPOKE_PARAM  pare_poke;
@@ -65,11 +64,9 @@ struct _BSUBWAY_PLAYDATA
 //--------------------------------------------------------------
 struct _BSUBWAY_SCOREDATA
 {
-  u16  btl_point;  ///<バトルポイント
-  u8  wifi_lose;  ///<連続敗戦カウント
-  u8  wifi_rank;  ///<WiFiランク
-  
-  u32  day_rnd_seed;  ///<タワー用日付変化ランダムシード保存場所
+  u16 btl_point;  ///<バトルポイント
+  u8 wifi_lose;  ///<連続敗戦カウント
+  u8 wifi_rank;  ///<WiFiランク
   
   union{
     struct{
@@ -93,13 +90,10 @@ struct _BSUBWAY_SCOREDATA
     u16  flags;
   };
   
-  ///<バトルサブウェイ周回数(paddingをWIFI_MULTI用に加えた)
-  u16  tower_stage[6];
-  
   //連勝記録
   u16 renshou[BSWAY_PLAYMODE_MAX];
   u16 renshou_max[BSWAY_PLAYMODE_MAX];
- 
+  
   //WiFiチャレンジデータ
   u16  wifi_score;  ///<WiFi成績
   
@@ -182,7 +176,7 @@ u32 BSUBWAY_PLAYDATA_GetData(
   case BSWAY_PLAYDATA_ID_playmode:
     return (u32)bsw_play->play_mode;
   case BSWAY_PLAYDATA_ID_round:
-    return (u32)bsw_play->tower_round;
+    return (u32)bsw_play->round;
   case BSWAY_PLAYDATA_ID_rec_down:
     return (u32)bsw_play->wifi_rec_down;
   case BSWAY_PLAYDATA_ID_rec_turn:
@@ -205,8 +199,8 @@ u32 BSUBWAY_PLAYDATA_GetData(
     return 0;
   case BSWAY_PLAYDATA_ID_partner:
     return bsw_play->partner;
-  case BSWAY_PLAYDATA_ID_rnd_seed:
-    return bsw_play->play_rnd_seed;
+  case BSWAY_PLAYDATA_ID_stage:
+    return (u32)bsw_play->stage;
   default:
     GF_ASSERT( 0 );
   }
@@ -237,7 +231,7 @@ void BSUBWAY_PLAYDATA_SetData(
     bsw_play->play_mode = buf8[0];
     break;
   case BSWAY_PLAYDATA_ID_round:
-    bsw_play->tower_round = buf8[0];
+    bsw_play->round = buf8[0];
     break;
   case BSWAY_PLAYDATA_ID_rec_down:
     bsw_play->wifi_rec_down = buf8[0];
@@ -261,21 +255,14 @@ void BSUBWAY_PLAYDATA_SetData(
   case BSWAY_PLAYDATA_ID_trainer:
     MI_CpuCopy8( buf16, bsw_play->trainer_no, 2*BSUBWAY_STOCK_TRAINER_MAX );
     break;
-  case BSWAY_PLAYDATA_ID_rnd_seed:
-    bsw_play->play_rnd_seed = buf32[0];
-    break;
   case BSWAY_PLAYDATA_ID_partner:
     bsw_play->partner = buf8[0];
     break;
+  case BSWAY_PLAYDATA_ID_stage:
+    bsw_play->stage = buf16[0];
   default:
     GF_ASSERT( 0 );
   }
-  
-  /* //wb
-  #if (CRC_LOADCHECK && CRCLOADCHECK_GMDATA_ID_FRONTIER)
-  SVLD_SetCrc(GMDATA_ID_FRONTIER);
-  #endif //CRC_LOADCHECK
-  */
 }
 
 //--------------------------------------------------------------
@@ -298,21 +285,117 @@ void BSUBWAY_PLAYDATA_AddWifiRecord(
   if(bsw_play->wifi_rec_damage + damage < 65535){
     bsw_play->wifi_rec_damage += damage;
   }
+}
 
-#if  PL_T0855_080710_FIX
-  /*
-  OS_Printf( "********************\n" );
-  OS_Printf( "dat->wifi_rec_turn = %d\n", dat->wifi_rec_turn );
-  OS_Printf( "dat->wifi_rec_down = %d\n", dat->wifi_rec_down );
-  OS_Printf( "dat->wifi_rec_damage = %d\n", dat->wifi_rec_damage );
-  */
-#endif
+//--------------------------------------------------------------
+/**
+ * プレイデータ　ラウンド数リセット
+ * @param bsw_play BSUBWAY_PLAYDATA
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void BSUBWAY_PLAYDATA_ResetRoundNo( BSUBWAY_PLAYDATA *bsw_play )
+{
+  u8 buf = 1;
+  BSUBWAY_PLAYDATA_SetData( bsw_play, BSWAY_PLAYDATA_ID_round, &buf );
+}
 
-/*
-#if (CRC_LOADCHECK && CRCLOADCHECK_GMDATA_ID_FRONTIER)
-  SVLD_SetCrc(GMDATA_ID_FRONTIER);
-#endif //CRC_LOADCHECK
-*/
+//--------------------------------------------------------------
+/**
+ * プレイデータ　ラウンド数増加
+ * @param bsw_play BSUBWAY_PLAYDATA
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void BSUBWAY_PLAYDATA_IncRoundNo( BSUBWAY_PLAYDATA *bsw_play )
+{
+  u8 buf = BSUBWAY_PLAYDATA_GetData( 
+      bsw_play, BSWAY_PLAYDATA_ID_round, NULL );
+  if( buf < 0xff ){
+    buf++;
+  }
+  BSUBWAY_PLAYDATA_SetData( bsw_play, BSWAY_PLAYDATA_ID_round, &buf );
+}
+
+//--------------------------------------------------------------
+/**
+ * プレイデータ　ラウンド数セット
+ * @param bsw_play BSUBWAY_PLAYDATA
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void BSUBWAY_PLAYDATA_SetRoundNo( BSUBWAY_PLAYDATA *bsw_play, u8 round )
+{
+  BSUBWAY_PLAYDATA_SetData( bsw_play, BSWAY_PLAYDATA_ID_round, &round );
+}
+
+//--------------------------------------------------------------
+/**
+ * プレイデータ　ラウンド数取得
+ * @param bsw_play BSUBWAY_PLAYDATA
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+u16 BSUBWAY_PLAYDATA_GetRoundNo( const BSUBWAY_PLAYDATA *bsw_play )
+{
+  u16 buf = BSUBWAY_PLAYDATA_GetData( bsw_play, BSWAY_PLAYDATA_ID_round, NULL );
+  return( buf );
+}
+
+//--------------------------------------------------------------
+/**
+ * プレイデータ　ステージ数リセット
+ * @param bsw_play BSUBWAY_PLAYDATA
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void BSUBWAY_PLAYDATA_ResetStageNo( BSUBWAY_PLAYDATA *bsw_play )
+{
+  u16 buf = 1;
+  BSUBWAY_PLAYDATA_SetData( bsw_play, BSWAY_PLAYDATA_ID_stage, &buf );
+}
+
+//--------------------------------------------------------------
+/**
+ * プレイデータ　ステージ数増加
+ * @param bsw_play BSUBWAY_PLAYDATA
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void BSUBWAY_PLAYDATA_IncStageNo( BSUBWAY_PLAYDATA *bsw_play )
+{
+  u16 buf = BSUBWAY_PLAYDATA_GetData(
+      bsw_play, BSWAY_PLAYDATA_ID_stage, NULL );
+  if( buf < 9999 ){
+    buf++;
+  }
+  BSUBWAY_PLAYDATA_SetData( bsw_play, BSWAY_PLAYDATA_ID_stage, &buf );
+}
+
+//--------------------------------------------------------------
+/**
+ * プレイデータ　ステージ数セット
+ * @param bsw_play BSUBWAY_PLAYDATA
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void BSUBWAY_PLAYDATA_SetStageNo( BSUBWAY_PLAYDATA *bsw_play, u16 stage )
+{
+  BSUBWAY_PLAYDATA_SetData( bsw_play, BSWAY_PLAYDATA_ID_stage, &stage );
+}
+
+//--------------------------------------------------------------
+/**
+ * プレイデータ　ステージ数取得
+ * @param bsw_play BSUBWAY_PLAYDATA
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+u16 BSUBWAY_PLAYDATA_GetStageNo( const BSUBWAY_PLAYDATA *bsw_play )
+{
+  u16 buf = BSUBWAY_PLAYDATA_GetData(
+      bsw_play, BSWAY_PLAYDATA_ID_stage, NULL );
+  return( buf );
 }
 
 //======================================================================
@@ -345,124 +428,195 @@ void BSUBWAY_SCOREDATA_Init( BSUBWAY_SCOREDATA *bsw_score )
 
 //--------------------------------------------------------------
 /**
- * スコアデータ　バトルポイント操作
+ * スコアデータ　バトルポイント追加
  * @param bsw_score BSUBWAY_SCOREDATA
  * @param num セットする値
- * @param mode BSWAY_SETMODE
- * @retval u16 操作後のバトルポイント
+ * @retval u16 追加後のバトルポイント
  */
 //--------------------------------------------------------------
-u16 BSUBWAY_SCOREDATA_SetBattlePoint(
-    BSUBWAY_SCOREDATA *bsw_score, u16 num, BSWAY_SETMODE mode )
+void BSUBWAY_SCOREDATA_AddBattlePoint( BSUBWAY_SCOREDATA *bsw_score, u16 num )
 {
-  switch( mode ){
-  case BSWAY_SETMODE_set:
-    if( num > 9999 ){
-      bsw_score->btl_point = 9999;
-    }else{
-      bsw_score->btl_point = num;
-    }
-    break;
-  case BSWAY_SETMODE_add:
-    if( bsw_score->btl_point+num > 9999 ){
-      bsw_score->btl_point = 9999;
-    }else{
-      bsw_score->btl_point += num;
-    }
-    break;
-  case BSWAY_SETMODE_sub:
-    if( bsw_score->btl_point < num ){
-      bsw_score->btl_point = 0;
-    }else{
-      bsw_score->btl_point -= num;
-    }
-  case BSWAY_SETMODE_get:
-    break;
-  default:
-    GF_ASSERT( 0 );
+  if( bsw_score->btl_point+num > 9999 ){
+    bsw_score->btl_point = 9999;
+  }else{
+    bsw_score->btl_point += num;
   }
-
-  /* //wb
-  #if (CRC_LOADCHECK && CRCLOADCHECK_GMDATA_ID_FRONTIER)
-  SVLD_SetCrc(GMDATA_ID_FRONTIER);
-  #endif //CRC_LOADCHECK
-  */
-  return bsw_score->btl_point;
 }
 
 //--------------------------------------------------------------
 /**
- * スコアデータ　連勝数操作
- * @param
- * @retval
+ * スコアデータ　バトルポイント減少
+ * @param bsw_score BSUBWAY_SCOREDATA
+ * @param num セットする値
+ * @retval u16 追加後のバトルポイント
  */
 //--------------------------------------------------------------
-u16 BSUBWAY_SCOREDATA_CalcRenshou(
-    BSUBWAY_SCOREDATA *bsw_score, BSWAY_SETMODE mode )
+void BSUBWAY_SCOREDATA_SubBattlePoint( BSUBWAY_SCOREDATA *bsw_score, u16 num )
 {
-  switch(mode){
-  case BSWAY_SETMODE_reset:
-    bsw_score->renshou[mode] = 0;
-    break;
-  case BSWAY_SETMODE_inc:
-    if( bsw_score->renshou[mode] < 65534 ){
-      bsw_score->renshou[mode]++;
-    }
-    break;
-  case BSWAY_SETMODE_get:
-    break;
-  default:
-    GF_ASSERT( 0 );
+  if( (s16)((s16)bsw_score->btl_point - (s16)num) >= 0 ){
+    bsw_score->btl_point -= num;
+  }else{
+    bsw_score->btl_point = 0;
   }
-  
+}
+
+//--------------------------------------------------------------
+/**
+ * スコアデータ　バトルポイントセット
+ * @param bsw_score BSUBWAY_SCOREDATA
+ * @param num セットする値
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void BSUBWAY_SCOREDATA_SetBattlePoint( BSUBWAY_SCOREDATA *bsw_score, u16 num )
+{
+  if( num > 9999 ){
+    bsw_score->btl_point = 9999;
+  }else{
+    bsw_score->btl_point = num;
+  }
+}
+
+//--------------------------------------------------------------
+/**
+ * スコアデータ　バトルポイント取得
+ * @param bsw_score BSUBWAY_SCOREDATA
+ * @retval u16 バトルポイント
+ */
+//--------------------------------------------------------------
+u16 BSUBWAY_SCOREDATA_GetBattlePoint( const BSUBWAY_SCOREDATA *bsw_score )
+{
+  return( bsw_score->btl_point );
+}
+
+//--------------------------------------------------------------
+/**
+ * スコアデータ　連勝数増加
+ * @param bsw_score BSUBWAY_SCOREDATA
+ * @param mode BSWAY_PLAYMODE
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void BSUBWAY_SCOREDATA_IncRenshou(
+    BSUBWAY_SCOREDATA *bsw_score, BSWAY_PLAYMODE mode )
+{
+  if( bsw_score->renshou[mode] < 65534 ){
+    bsw_score->renshou[mode]++;
+  }
+}
+
+//--------------------------------------------------------------
+/**
+ * スコアデータ　連勝数リセット
+ * @param bsw_score BSUBWAY_SCOREDATA
+ * @param mode BSWAY_PLAYMODE
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void BSUBWAY_SCOREDATA_ResetRenshou(
+    BSUBWAY_SCOREDATA *bsw_score, BSWAY_PLAYMODE mode )
+{
+  bsw_score->renshou[mode] = 0;
+}
+
+//--------------------------------------------------------------
+/**
+ * スコアデータ　連勝数取得
+ * @param bsw_score BSUBWAY_SCOREDATA
+ * @param mode BSWAY_PLAYMODE
+ * @retval u16 連勝数
+ */
+//--------------------------------------------------------------
+u16 BSUBWAY_SCOREDATA_GetRenshou(
+    const BSUBWAY_SCOREDATA *bsw_score, BSWAY_PLAYMODE mode )
+{
   return( bsw_score->renshou[mode] );
 }
 
 //--------------------------------------------------------------
 /**
- * スコアデータ　周回数操作
+ * スコアデータ、最大連勝記録を取得
  * @param bsw_score BSUBWAY_SCOREDATA
- * @param id スコアID
- * @param value セットする値
- * @param mode BSWAY_SETMODE
- * @retval u16 操作後の周回数
+ * @retval u16
  */
 //--------------------------------------------------------------
-u16 BSUBWAY_SCOREDATA_SetStage(
-    BSUBWAY_SCOREDATA *bsw_score, u16 id, BSWAY_SETMODE mode )
+u16 BSUBWAY_SCOREDATA_GetRenshouMax(
+    const BSUBWAY_SCOREDATA *bsw_score, BSWAY_PLAYMODE mode )
 {
-  u16 id2;
-  
-  if( id == BSWAY_MODE_RETRY ){
-    return 0;  //リトライモードではカウントしない
-  }
-  
-  //プラチナ追加　wifiマルチ
-  if( id == BSWAY_MODE_WIFI_MULTI ){
-    id2 = 5; //tower_stage[5]
-  }else{
-    id2 = id;
-  }
-
-  switch(mode){
-  case BSWAY_SETMODE_reset:
-    bsw_score->tower_stage[id2] = 0;
-    break;
-  case BSWAY_SETMODE_inc:
-    if( bsw_score->tower_stage[id2] < 65534 ){
-      bsw_score->tower_stage[id2] += 1;
-    }
-    break;
-  }
-  
-  /* //wb null
-  #if (CRC_LOADCHECK && CRCLOADCHECK_GMDATA_ID_FRONTIER)
-  SVLD_SetCrc(GMDATA_ID_FRONTIER);
-  #endif //CRC_LOADCHECK
-  */
-  return bsw_score->tower_stage[id2];
+  return bsw_score->renshou_max[mode];
 }
-  
+
+//--------------------------------------------------------------
+/**
+ * スコアデータ、最大連勝記録をセット
+ * @param bsw_score BSUBWAY_SCOREDATA
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void BSUBWAY_SCOREDATA_SetRenshouMax(
+    BSUBWAY_SCOREDATA *bsw_score, BSWAY_PLAYMODE mode, u16 count )
+{
+  bsw_score->renshou_max[mode] = count;
+}
+
+//--------------------------------------------------------------
+/**
+ * スコアデータ、最大連勝記録更新
+ * @param bsw_score BSUBWAY_SCOREDATA
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void BSUBWAY_SCOREDATA_UpdateRenshouMax(
+    BSUBWAY_SCOREDATA *bsw_score, BSWAY_PLAYMODE mode, u16 count )
+{
+  if( bsw_score->renshou_max[mode] < count ){
+    bsw_score->renshou_max[mode] = count;
+  }
+}
+
+#if 0
+//--------------------------------------------------------------
+/**
+ * スコアデータ 周回数増加
+ * @param bsw_score BSUBWAY_SCOREDATA
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void BSUBWAY_SCOREDATA_IncStageCount(
+    BSUBWAY_SCOREDATA *bsw_score, BSWAY_PLAYMODE mode )
+{
+  if( bsw_score->stage_count[mode] < 65534 ){
+    bsw_score->stage_count[mode]++;
+  }
+}
+
+//--------------------------------------------------------------
+/**
+ * スコアデータ 周回数リセット
+ * @param bsw_score BSUBWAY_SCOREDATA
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void BSUBWAY_SCOREDATA_ResetStageCount(
+    BSUBWAY_SCOREDATA *bsw_score, BSWAY_PLAYMODE mode )
+{
+  bsw_score->stage_count[mode] = 0;
+}
+
+//--------------------------------------------------------------
+/**
+ * スコアデータ 周回数取得
+ * @param bsw_score BSUBWAY_SCOREDATA
+ * @retval u16 周回数
+ */
+//--------------------------------------------------------------
+u16 BSUBWAY_SCOREDATA_GetStageCount(
+    const BSUBWAY_SCOREDATA *bsw_score, BSWAY_PLAYMODE mode )
+{
+  return( bsw_score->stage_count[mode] );
+}
+#endif
+
 //--------------------------------------------------------------
 /**
  *  スコアデータ フラグエリアセット
@@ -503,98 +657,47 @@ BOOL BSUBWAY_SCOREDATA_SetFlag( BSUBWAY_SCOREDATA *bsw_score,
     GF_ASSERT( 0 );
   }
   
-  /* //wb null
-  #if (CRC_LOADCHECK && CRCLOADCHECK_GMDATA_ID_FRONTIER)
-  SVLD_SetCrc(GMDATA_ID_FRONTIER);
-  #endif //CRC_LOADCHECK
-  */
   return 0;
 }
 
 //--------------------------------------------------------------
 /**
- *  スコアデータ　Wifiランク操作
- *  有効コマンド get/reset/inc/dec
+ *  スコアデータ　Wifiランク増加
  *  @param bsw_score BSUBWAY_SCOREDATA*
- *  @param mode BSWAY_SETMODE
- *  @retval u8 Wifiランキング
+ *  @retval nothing
  */
 //--------------------------------------------------------------
-u8 BSUBWAY_SCOREDATA_SetWifiRank(
-    BSUBWAY_SCOREDATA *bsw_score, BSWAY_SETMODE mode )
+void BSUBWAY_SCOREDATA_IncWifiRank( BSUBWAY_SCOREDATA *bsw_score )
 {
-  switch( mode ){
-  case BSWAY_SETMODE_reset:
-    bsw_score->wifi_rank = 1;
-    break;
-  case BSWAY_SETMODE_inc:
-    if( bsw_score->wifi_rank < 10 ){
-      bsw_score->wifi_rank += 1;
-    }
-    break;
-  case BSWAY_SETMODE_dec:
-    if( bsw_score->wifi_rank > 1 ){
-      bsw_score->wifi_rank -= 1;
-    }
-    break;
+  if( bsw_score->wifi_rank < 10 ){
+    bsw_score->wifi_rank++;
   }
-/*  //wb null  
-#if (CRC_LOADCHECK && CRCLOADCHECK_GMDATA_ID_FRONTIER)
-  SVLD_SetCrc(GMDATA_ID_FRONTIER);
-#endif //CRC_LOADCHECK
-*/
-  return bsw_score->wifi_rank;
 }
 
 //--------------------------------------------------------------
 /**
- * スコアデータ、前回の連勝記録を取得
- * @param
- * @retval
+ *  スコアデータ　Wifiランク減少
+ *  @param bsw_score BSUBWAY_SCOREDATA*
+ *  @retval nothing
  */
 //--------------------------------------------------------------
-u16 BSUBWAY_SCOREDATA_GetRenshouCount( const BSUBWAY_SCOREDATA *bsw_score, BSWAY_PLAYMODE mode )
+void BSUBWAY_SCOREDATA_DecWifiRank( BSUBWAY_SCOREDATA *bsw_score )
 {
-  return bsw_score->renshou[mode];
+  if( bsw_score->wifi_rank > 1 ){
+      bsw_score->wifi_rank--;
+  }
 }
 
 //--------------------------------------------------------------
 /**
- * スコアデータ、前回の連勝記録をセット
- * @param
- * @retval
+ *  スコアデータ　Wifiランク取得
+ *  @param bsw_score BSUBWAY_SCOREDATA*
+ *  @retval u8 wifiランク
  */
 //--------------------------------------------------------------
-void BSUBWAY_SCOREDATA_SetRenshouCount(
-    BSUBWAY_SCOREDATA *bsw_score, BSWAY_PLAYMODE mode, u16 count )
+u8 BSUBWAY_SCOREDATA_GetWifiRank( const BSUBWAY_SCOREDATA *bsw_score )
 {
-  bsw_score->renshou[mode] = count;
-}
-
-//--------------------------------------------------------------
-/**
- * スコアデータ、最大連勝記録を取得
- * @param
- * @retval
- */
-//--------------------------------------------------------------
-u16 BSUBWAY_SCOREDATA_GetMaxRenshouCount(
-    const BSUBWAY_SCOREDATA *bsw_score, BSWAY_PLAYMODE mode )
-{
-  return bsw_score->renshou_max[mode];
-}
-
-//--------------------------------------------------------------
-/**
- * スコアデータ、最大連勝記録をセット
- * @param
- * @retval
- */
-//--------------------------------------------------------------
-void BSUBWAY_SCOREDATA_SetMaxRenshouCount(
-    BSUBWAY_SCOREDATA *bsw_score, BSWAY_PLAYMODE mode, u16 count )
-{
-  bsw_score->renshou_max[mode] = count;
+  return( bsw_score->wifi_rank );
 }
 
 //======================================================================
@@ -787,7 +890,7 @@ u16  BSUBWAY_ScoreData_SetWifiScore(BSUBWAY_SCOREWORK* dat,BSUBWAY_PLAYWORK *pla
   u16  score = 0;
 
   //ラウンド数は勝ち抜き数+1になっているのでマイナス１して計算する
-  sa = (playdata->tower_round-1)*1000;
+  sa = (playdata->round-1)*1000;
   sb = playdata->wifi_rec_turn*10;
   sc = playdata->wifi_rec_down*20;
   if(sb+sc > 950){
@@ -840,7 +943,6 @@ u8  BSUBWAY_ScoreData_GetWifiWinNum(BSUBWAY_SCOREWORK* dat)
 {
   u8 ret = 0;
   ret = (dat->wifi_score)/1000;
-
   return ret;
 }
 
@@ -859,19 +961,7 @@ u8  BSUBWAY_ScoreData_GetWifiWinNum(BSUBWAY_SCOREWORK* dat)
 u16 BSUBWAY_ScoreData_SetStageValue(BSUBWAY_SCOREWORK* dat,u16 id,u16 value)
 {
   u16 id2;
-
-  //if(id >= BSWAY_MODE_RETRY){
-  if(id == BSWAY_MODE_RETRY){
-    return 0;  //リトライモードではカウントしない
-  }
-
-  //プラチナ追加
-  if(id == BSWAY_MODE_WIFI_MULTI){
-    id2 = 5;            //tower_stage[5]
-  }else{
-    id2 = id;
-  }
-
+  
   dat->tower_stage[id2] = value;
 #if (CRC_LOADCHECK && CRCLOADCHECK_GMDATA_ID_FRONTIER)
   SVLD_SetCrc(GMDATA_ID_FRONTIER);
@@ -885,7 +975,8 @@ u16 BSUBWAY_ScoreData_SetStageValue(BSUBWAY_SCOREWORK* dat,u16 id,u16 value)
  */
 //--------------------------------------------------------------
 #ifdef PM_DEBUG
-u16 BSUBWAY_ScoreData_DebugSetStageValue(BSUBWAY_SCOREWORK* dat,u16 id,u16 value)
+u16 BSUBWAY_ScoreData_DebugSetStageValue(
+    BSUBWAY_SCOREWORK* dat,u16 id,u16 value)
 {
   return BSUBWAY_ScoreData_SetStageValue( dat, id, value );
 }
@@ -928,29 +1019,6 @@ BOOL  BSUBWAY_ScoreData_SetFlags(
   SVLD_SetCrc(GMDATA_ID_FRONTIER);
 #endif //CRC_LOADCHECK
   return 0;
-}
-
-//--------------------------------------------------------------
-/**
- *  @brief  サブウェイ用日付変化ランダムシード保存
- */
-//--------------------------------------------------------------
-void BSUBWAY_ScoreData_SetDayRndSeed(BSUBWAY_SCOREWORK* dat,u32 rnd_seed)
-{
-  dat->day_rnd_seed = rnd_seed;
-#if (CRC_LOADCHECK && CRCLOADCHECK_GMDATA_ID_FRONTIER)
-  SVLD_SetCrc(GMDATA_ID_FRONTIER);
-#endif //CRC_LOADCHECK
-}
-
-//--------------------------------------------------------------
-/**
- *  @brief  サブウェイ用日付変化ランダムシード取得
- */
-//--------------------------------------------------------------
-u32 BSUBWAY_ScoreData_GetDayRndSeed(BSUBWAY_SCOREWORK* dat)
-{
-  return dat->day_rnd_seed;
 }
 
 //======================================================================

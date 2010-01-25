@@ -31,7 +31,7 @@
 
 #include "bsubway_scr_def.h"
 #include "bsubway_scr.h"
-#include "bsubway_scr_common.h"
+#include "bsubway_scrwork.h"
 #include "savedata/bsubway_savedata.h"
 
 #include "../mystery/fntequ.h"
@@ -61,16 +61,19 @@
 //======================================================================
 //  proto
 //======================================================================
-static BOOL BattleTowerPokemonSetAct(
+static BOOL set_BSWayPokemonParam(
     BSUBWAY_SCRWORK* wk,BSUBWAY_TRAINER_ROM_DATA *trd,
     u16 tr_no,BSUBWAY_POKEMON *pwd,u8 cnt,
     u16 *set_poke_no,u16 *set_item_no,
     BSUBWAY_PAREPOKE_PARAM *poke, HEAPID heapID );
-static void * BattleTowerTrainerRomDataGet(u16 tr_no,HEAPID heapID);
-static void BattleTowerPokemonRomDataGet(
+
+static void * get_TrainerRomData(u16 tr_no,HEAPID heapID);
+
+static void get_PokemonRomData(
     BSUBWAY_POKEMON_ROM_DATA *prd,int index);
 
 static STRCODE * PM_strcpy( STRCODE* to_str, const STRCODE* from_str );
+static u16 get_Rand( BSUBWAY_SCRWORK *wk );
 
 //======================================================================
 //  トレーナータイプ
@@ -78,7 +81,8 @@ static STRCODE * PM_strcpy( STRCODE* to_str, const STRCODE* from_str );
 //--------------------------------------------------------------
 /// タワーに出現するトレーナータイプ←→OBJコード
 //--------------------------------------------------------------
-static const u16 btower_trtype2objcode[][2] = {
+static const u16 btower_trtype2objcode[][2] =
+{
  {TRTYPE_TANPAN,  BOY2},  ///<たんパンこぞう
  {TRTYPE_MINI,  GIRL1},  ///<ミニスカート
  {TRTYPE_SCHOOLB,  BOY1},  ///<じゅくがえり
@@ -141,53 +145,66 @@ static const u16 btower_trtype2objcode[][2] = {
 
 #define TRTYPE2OBJCODE_MAX  (NELEMS(btower_trtype2objcode))
 
-
+//--------------------------------------------------------------
 /**
- *  @brief  トレーナータイプから人物OBJコードを返す
+ * @brief  トレーナータイプから人物OBJコードを返す
+ * @param tr_type トレーナータイプ
+ * @retval u16 OBJコード
  */
-u16 BtlTower_TrType2ObjCode(u8 tr_type)
+//--------------------------------------------------------------
+u16 BSUBWAY_GetTrainerOBJCode( u8 tr_type )
 {
-  int i = 0;
-
-  for(i = 0;i < TRTYPE2OBJCODE_MAX;i++){
-    if(btower_trtype2objcode[i][0] == tr_type){
+  int i;
+  
+  for( i = 0; i < TRTYPE2OBJCODE_MAX; i++ ){
+    if( btower_trtype2objcode[i][0] == tr_type ){
       return btower_trtype2objcode[i][1];
     }
   }
   return BOY1;  
 }
 
-static BOOL BtlTower_CheckTrType(u8 tr_type)
+//--------------------------------------------------------------
+/**
+ * @brief  トレーナータイプが対応しているか
+ * @param tr_type トレーナータイプ
+ * @retval BOOL TRUE=対応
+ */
+//--------------------------------------------------------------
+static BOOL check_TrainerType(u8 tr_type)
 {
-  int i = 0;
-
-  for(i = 0;i < TRTYPE2OBJCODE_MAX;i++){
-    if(btower_trtype2objcode[i][0] == tr_type){
+  int i;
+  
+  for( i = 0;i < TRTYPE2OBJCODE_MAX; i++ ){
+    if( btower_trtype2objcode[i][0] == tr_type ){
       return( TRUE );
     }
   }
   return( FALSE );
 }
 
-//-----------------------------------------------------------------------------
+//======================================================================
+//  バトルサブウェイ関連 
+//======================================================================
+//--------------------------------------------------------------
 /**
- *  @brief  バトルタワー用ポケモンデータからPOKEMON_PARAMを生成
- *
- * ★TOWER_AI_MULTI_ONLY フィールド上で呼ばれる処理 
- * ★TOWER_AI_MULTI_ONLY 似た処理frontier_tool.c Frontier_PokeParaMake
+ *  @brief バトルサブウェイ用ポケモンデータからPOKEMON_PARAMを生成
+ *  @param src BSUBWAY_POKEMON
+ *  @param dest POKEMON_PARAM
+ *  @retval nothing
  */
-//-----------------------------------------------------------------------------
-static void BtlTower_PokeParaMake(
-    const BSUBWAY_POKEMON *src, POKEMON_PARAM *dest)
+//--------------------------------------------------------------
+static void make_PokePara(
+    const BSUBWAY_POKEMON *src, POKEMON_PARAM *dest )
 {
   int i;
-  u8  buf8,waza_pp;
-  u16  buf16;
-  u32  buf32;
+  u8 buf8,waza_pp;
+  u16 buf16;
+  u32 buf32;
   
   PP_Clear(dest);
   
-	//monsno,level,pow_rnd,idno
+  //monsno,level,pow_rnd,idno
   PP_SetupEx( dest, src->mons_no, 50, PTL_SETUP_ID_AUTO,
       (src->power_rnd & 0x3FFFFFFF), src->personal_rnd);
   
@@ -235,34 +252,8 @@ static void BtlTower_PokeParaMake(
   PP_Put(dest,ID_PARA_friend,src->natuki);
   
   //NGネームフラグをチェック
-  #if 0
-  if( src->ngname_f ){
-    //デフォルトネームを展開する
-    GFL_MSGDATA *msgdata;
-    STRBUF *def_name;
-
-    msgdata= GFL_MSG_Create( GFL_MSG_LOAD_NORMAL,
-        ARCID_MESSAGE, NARC_message_monsname_dat, HEAPID_PROC );
-    def_name = GFL_STR_CreateBuffer( HEAPID_PROC, MONS_NAME_SIZE+EOM_SIZE );
-    
-    GFL_MSG_GetString( msgdata, src->mons_no, def_name );
-    PP_Put( dest, ID_PARA_nickname, (u32)def_name );
-
-    GFL_STR_DeleteBuffer( def_name );
-    GFL_MSG_Delete( msgdata );
-  }else{
-    //ニックネーム
-    STRBUF *nick_name;
-    nick_name = GFL_STR_CreateBuffer(
-        HEAPID_PROC, MONS_NAME_SIZE+EOM_SIZE );
-	  GFL_STR_SetStringCode( nick_name, src->nickname );
-    PP_Put( dest, ID_PARA_nickname, (u32)nick_name );
-    GFL_STR_DeleteBuffer( nick_name );
-  }
-#else
-  if( 1 ){
+  if( 1 ){ //デフォルトネームを展開する
 #if 0
-    //デフォルトネームを展開する
     GFL_MSGDATA *msgdata;
     STRBUF *def_name;
 
@@ -276,19 +267,16 @@ static void BtlTower_PokeParaMake(
     GFL_STR_DeleteBuffer( def_name );
     GFL_MSG_Delete( msgdata );
 #endif
-  }else{
-    //ニックネーム
+  }else{ //ニックネーム
     STRBUF *nick_name;
     nick_name = GFL_STR_CreateBuffer(
         HEAPID_PROC, MONS_NAME_SIZE+EOM_SIZE );
-	  GFL_STR_SetStringCode( nick_name, src->nickname );
+    GFL_STR_SetStringCode( nick_name, src->nickname );
     PP_Put( dest, ID_PARA_nickname, (u32)nick_name );
     GFL_STR_DeleteBuffer( nick_name );
   }
-#endif
 
-  //カントリーコード
-  PP_Put(dest,ID_PARA_country_code,src->country_code);
+  PP_Put(dest,ID_PARA_country_code,src->country_code); //カントリーコード
   
   //パラメータ再計算
   {
@@ -297,10 +285,14 @@ static void BtlTower_PokeParaMake(
   }
 }
 
+//--------------------------------------------------------------
 /**
- * @brief  バトルタワー　プレイモードからFIGHT_TYPEを返す
+ * @brief  バトルサブウェイ　プレイモードからFIGHT_TYPEを返す
+ * @param play_mode プレイモード
+ * @retval u32 FIGHT_TYPE
  */
-static u32 btower_GetFightType(u8 play_mode)
+//--------------------------------------------------------------
+static u32 get_FightType(u8 play_mode)
 {
   switch(play_mode){
   case BSWAY_MODE_SINGLE:
@@ -321,100 +313,36 @@ static u32 btower_GetFightType(u8 play_mode)
   return BTL_RULE_SINGLE;
 }
 
+//--------------------------------------------------------------
 /**
- *  @brief  バトルタワー　トレーナーデータ生成
+ * @brief  バトルサブウェイ　トレーナーデータ生成
+ * @param heapID HEAPID
+ * @retval BSP_TRAINER_DATA*
  */
-
-
-
-#if 0
-static void btwoer_TrainerDataMake(
-    u8 play_mode,BSUBWAY_TRAINER* src,BSP_TRAINER_DATA * dest, HEAPID heapID )
-{
-  MI_CpuClear8(dest,sizeof(BSP_TRAINER_DATA));
-  
-  dest->tr_type = src->tr_type;  //トレーナータイプ
-//dest->tr_gra = 0;//src->tr_type;  //トレーナータイプ
-  dest->ai_bit = 0xFFFFFFFF;  //最強
-
-  //トレーナー名
-  dest->name = GFL_STR_CreateBuffer( PERSON_NAME_SIZE+EOM_SIZE, 
-
-//  GFL_STR_CopyBuffer( 
-  PM_strcpy(dest->name,src->name);
-  
-  //勝ち負けメッセージ
-  MI_CpuCopy8(src->win_word,&dest->win_word,sizeof(PMS_DATA));
-  MI_CpuCopy8(src->lose_word,&dest->lose_word,sizeof(PMS_DATA));
-  
-  switch(play_mode){
-  case BSWAY_MODE_SINGLE:
-  case BSWAY_MODE_WIFI:
-    dest->fight_type = BTL_RULE_SINGLE;
-    break;
-  case BSWAY_MODE_DOUBLE:
-  case BSWAY_MODE_MULTI:
-  case BSWAY_MODE_COMM_MULTI:
-  case BSWAY_MODE_WIFI_MULTI:
-    dest->fight_type = BTL_RULE_DOUBLE;
-    break;  
-  }
-}
-#endif
-
-/**
- *  @brief  トレーナー対戦データ生成
- */
-#if 0
-static void btltower_SetTrainerData(BSUBWAY_SCRWORK* wk,BATTLE_PARAM* bp,
-    BSUBWAY_PARTNER_DATA* tr,u8 tr_id,u8 tr_client,u8 poke_client )
-{
-  int i;
-  POKEMON_PARAM *pp;
-  
-  //トレーナーデータをセット
-  btower_TrainerDataMake(
-      wk->play_mode,&(tr->bt_trd),&(bp->trainer_data[tr_client]));
-  
-  //トレーナーID入力
-  bp->trainer_id[tr_client] = tr_id;//wk->tr_data[0].bt_trd.tr_type;
-  
-  //対戦相手のポケモンデータをセット
-  pp = GFL_HEAP_AllocClearMemory( wk->heapID, POKETOOL_GetWorkSize() );
-  
-  PokeParty_Init(bp->poke_party[poke_client],wk->member_num);
-
-  for(i = 0;i < wk->member_num;i++){
-    BtlTower_PokeParaMake(&(tr->btpwd[i]),pp);
-    #if 0
-    BattleParam_AddPokemon(bp,pp,poke_client);
-    #else
-    {
-      int result;
-      result = PokeParty_Add(bp->poke_party[client_no], pp);
-    }
-    #endif
-  }
-  GFL_HEAP_FreeMemory( pp );
-}
-#endif
-
-static BSP_TRAINER_DATA * BSP_TRAINER_DATA_Create( HEAPID heapID )
+//--------------------------------------------------------------
+static BSP_TRAINER_DATA * create_BSP_TRAINER_DATA( HEAPID heapID )
 {
   BSP_TRAINER_DATA* tr_data = GFL_HEAP_AllocClearMemory( heapID, sizeof( BSP_TRAINER_DATA ) );
   tr_data->name =   GFL_STR_CreateBuffer( BUFLEN_PERSON_NAME, heapID );
   return tr_data;
 }
 
-//BATTLE_SETUP_PARAM
-BATTLE_SETUP_PARAM * BtlTower_CreateBattleParam(
+//--------------------------------------------------------------
+/**
+ * BATTLE_SETUP_PARAM作成
+ * @param bsw_scr BSUBWAY_SCRWORK
+ * @param gsys GAMESYS_WORK
+ * @retval BATTLE_SETUP_PARAM
+ */
+//--------------------------------------------------------------
+BATTLE_SETUP_PARAM * BSUBWAY_SCRWORK_CreateBattleParam(
     BSUBWAY_SCRWORK *wk, GAMESYS_WORK *gsys )
 {
-	BATTLE_SETUP_PARAM *dst;
+  BATTLE_SETUP_PARAM *dst;
   BTL_FIELD_SITUATION sit;
   GAMEDATA *gameData = GAMESYSTEM_GetGameData( gsys );
   
-	dst = BATTLE_PARAM_Create( HEAPID_PROC );
+  dst = BATTLE_PARAM_Create( HEAPID_PROC );
   
   {
     sit.bgType = BATTLE_BG_TYPE_ROOM;
@@ -478,8 +406,8 @@ BATTLE_SETUP_PARAM * BtlTower_CreateBattleParam(
   }
  
   { //トレーナーデータ確保
-    dst->tr_data[BTL_CLIENT_PLAYER] = BSP_TRAINER_DATA_Create( HEAPID_PROC );
-    dst->tr_data[BTL_CLIENT_ENEMY1] = BSP_TRAINER_DATA_Create( HEAPID_PROC );
+    dst->tr_data[BTL_CLIENT_PLAYER] = create_BSP_TRAINER_DATA( HEAPID_PROC );
+    dst->tr_data[BTL_CLIENT_ENEMY1] = create_BSP_TRAINER_DATA( HEAPID_PROC );
   }
   
   { //敵トレーナーセット
@@ -495,28 +423,27 @@ BATTLE_SETUP_PARAM * BtlTower_CreateBattleParam(
     tr_data->tr_type = bsw_trainer->tr_type;
     tr_data->ai_bit = 0xFFFFFFFF;  //最強
     
-    
     //name
     GFL_STR_SetStringCode( tr_data->name, bsw_trainer->name );
     
     //win word
-	  pd = (PMS_DATA*)bsw_trainer->win_word;
-	  tr_data->win_word = *pd;
+    pd = (PMS_DATA*)bsw_trainer->win_word;
+    tr_data->win_word = *pd;
     
-	  pd = (PMS_DATA*)bsw_trainer->lose_word;
-	  tr_data->lose_word = *pd;
+    pd = (PMS_DATA*)bsw_trainer->lose_word;
+    tr_data->lose_word = *pd;
     
     //敵ポケモンセット
     {
       int i;
-	    POKEMON_PARAM*  pp;
+      POKEMON_PARAM*  pp;
       
-	    pp = GFL_HEAP_AllocMemoryLo( HEAPID_PROC, POKETOOL_GetWorkSize() );
+      pp = GFL_HEAP_AllocMemoryLo( HEAPID_PROC, POKETOOL_GetWorkSize() );
       *party = PokeParty_AllocPartyWork( HEAPID_PROC );
       PokeParty_Init( *party, TEMOTI_POKEMAX );
       
       for( i = 0; i < wk->member_num; i++ ){
-        BtlTower_PokeParaMake( &(bsw_partner->btpwd[i]), pp );
+        make_PokePara( &(bsw_partner->btpwd[i]), pp );
         PokeParty_Add( *party, pp );
       }
       GFL_HEAP_FreeMemory( pp );
@@ -539,7 +466,7 @@ BATTLE_SETUP_PARAM * BtlTower_CreateBattleParam(
     {
       int i;
       POKEMON_PARAM *entry_pp;
-	    const POKEMON_PARAM *my_pp;
+      const POKEMON_PARAM *my_pp;
       const POKEPARTY *myparty = GAMEDATA_GetMyPokemon(gameData);
       
       entry_pp = GFL_HEAP_AllocMemoryLo(
@@ -564,7 +491,10 @@ BATTLE_SETUP_PARAM * BtlTower_CreateBattleParam(
           PP_Put( entry_pp, ID_PARA_exp, exp );
           PP_Renew( entry_pp );
         }
-        
+
+#ifdef DEBUG_ONLY_FOR_kagaya        
+        PP_Put( entry_pp, ID_PARA_hp, 1 );
+#endif
         PokeParty_Add( *party, entry_pp );
       }
       
@@ -579,7 +509,7 @@ BATTLE_SETUP_PARAM * BtlTower_CreateBattleParam(
     }
   }
   
-	return dst;
+  return dst;
 }
 
 #if 0
@@ -588,61 +518,59 @@ BATTLE_SETUP_PARAM * BtlTower_CreateBattleParam(
 
   dst->result = BTL_RESULT_WIN;
 
-	sv = fsys->savedata;
-	party = SaveData_GetTemotiPokemon(sv);
-	
+  sv = fsys->savedata;
+  party = SaveData_GetTemotiPokemon(sv);
+  
   BattleParam_SetParamByGameDataCore(bp,fsys);
-	bp->bg_id = BG_ID_ROOM_A;			//基本背景指定
-	bp->ground_id = GROUND_ID_FLOOR;	//基本地面指定
+  bp->bg_id = BG_ID_ROOM_A;      //基本背景指定
+  bp->ground_id = GROUND_ID_FLOOR;  //基本地面指定
 
-	//ポケモンデータセット
-	pp = PokemonParam_AllocWork(wk->heapID);
-	
-	//選んだ手持ちポケモンをセット
-	val8 = 50;
-	PokeParty_Init(bp->poke_party[POKEPARTY_MINE],wk->member_num);
-	for(i = 0;i < wk->member_num;i++){
-		PokeCopyPPtoPP(PokeParty_GetMemberPointer(party,wk->member[i]),pp);
+  //ポケモンデータセット
+  pp = PokemonParam_AllocWork(wk->heapID);
+  
+  //選んだ手持ちポケモンをセット
+  val8 = 50;
+  PokeParty_Init(bp->poke_party[POKEPARTY_MINE],wk->member_num);
+  for(i = 0;i < wk->member_num;i++){
+    PokeCopyPPtoPP(PokeParty_GetMemberPointer(party,wk->member[i]),pp);
 
-		//レベル調整
-		if(PokeParaGet(pp,ID_PARA_level,NULL) > val8){
-			val32 = PokeLevelExpGet(PokeParaGet(pp,ID_PARA_monsno,NULL),val8);
+    //レベル調整
+    if(PokeParaGet(pp,ID_PARA_level,NULL) > val8){
+      val32 = PokeLevelExpGet(PokeParaGet(pp,ID_PARA_monsno,NULL),val8);
 
-			PokeParaPut(pp,ID_PARA_exp,&val32);
-			PokeParaCalc(pp);
-		}
-		BattleParam_AddPokemon(bp,pp,POKEPARTY_MINE);
-	}
-	sys_FreeMemoryEz(pp);
+      PokeParaPut(pp,ID_PARA_exp,&val32);
+      PokeParaCalc(pp);
+    }
+    BattleParam_AddPokemon(bp,pp,POKEPARTY_MINE);
+  }
+  sys_FreeMemoryEz(pp);
 
-	//トレーナーデータ生成（自分側）
-	BattleParam_TrainerDataMake(bp);
+  //トレーナーデータ生成（自分側）
+  BattleParam_TrainerDataMake(bp);
 
-	//トレーナーデータ(enemy1)をセット
-	BattleTowerTrainerDataMake(bp,&(wk->tr_data[0]),wk->member_num,CLIENT_NO_ENEMY,wk->heapID);
-	
-	switch(wk->play_mode){
-	case BTWR_MODE_MULTI:
-		//ペアデータをセット
-		BattleTowerTrainerDataMake(bp,&(wk->five_data[wk->partner]),wk->member_num,CLIENT_NO_MINE2,wk->heapID);
-		//↓ここは共通処理で流れていい
-	case BTWR_MODE_COMM_MULTI:
-		//トレーナーデータ(enemy2)をセット
-		BattleTowerTrainerDataMake(bp,&(wk->tr_data[1]),wk->member_num,CLIENT_NO_ENEMY2,wk->heapID);
-		break;
-	default:
-		break;
-	}
+  //トレーナーデータ(enemy1)をセット
+  BattleTowerTrainerDataMake(bp,&(wk->tr_data[0]),wk->member_num,CLIENT_NO_ENEMY,wk->heapID);
+  
+  switch(wk->play_mode){
+  case BTWR_MODE_MULTI:
+    //ペアデータをセット
+    BattleTowerTrainerDataMake(bp,&(wk->five_data[wk->partner]),wk->member_num,CLIENT_NO_MINE2,wk->heapID);
+    //↓ここは共通処理で流れていい
+  case BTWR_MODE_COMM_MULTI:
+    //トレーナーデータ(enemy2)をセット
+    BattleTowerTrainerDataMake(bp,&(wk->tr_data[1]),wk->member_num,CLIENT_NO_ENEMY2,wk->heapID);
+    break;
+  default:
+    break;
+  }
 #endif
 
-//============================================================================
-/**
- *  通信関連コマンド
- */
-//============================================================================
+//======================================================================
+//  通信関連コマンド
+//======================================================================
 #if 0
 /**
- *  @brief  バトルタワー　送られてきたプレイヤーデータを受け取る
+ *  @brief  バトルサブウェイ　送られてきたプレイヤーデータを受け取る
  */
 u16 BTowerComm_RecvPlayerData(FIELDSYS_WORK* fsys,const u16* recv_buf)
 {
@@ -669,7 +597,7 @@ u16 BTowerComm_RecvPlayerData(FIELDSYS_WORK* fsys,const u16* recv_buf)
 }
 
 /**
- *  @brief  バトルタワー　送られてきたトレーナーデータを受け取る
+ *  @brief  バトルサブウェイ　送られてきたトレーナーデータを受け取る
  */
 u16  BTowerComm_RecvTrainerData(FIELDSYS_WORK* fsys,const u16* recv_buf)
 {
@@ -693,7 +621,7 @@ u16  BTowerComm_RecvTrainerData(FIELDSYS_WORK* fsys,const u16* recv_buf)
 }
 
 /**
- *  @brief  バトルタワー　送られてきたリタイアするかどうかの結果を受け取る
+ *  @brief  バトルサブウェイ　送られてきたリタイアするかどうかの結果を受け取る
  *
  *  @retval  0  リタイアしない
  *  @retval  1  リタイアする
@@ -711,7 +639,7 @@ u16  BTowerComm_RecvRetireSelect(FIELDSYS_WORK* fsys,const u16* recv_buf)
 }
   
 /**
- *  @brief  バトルタワー　自機性別とモンスターNoを送信
+ *  @brief  バトルサブウェイ　自機性別とモンスターNoを送信
  */
 void BTowerComm_SendPlayerData(BSUBWAY_SCRWORK* wk,SAVEDATA *sv)
 {
@@ -735,7 +663,7 @@ void BTowerComm_SendPlayerData(BSUBWAY_SCRWORK* wk,SAVEDATA *sv)
 }
 
 /**
- *  @brief  バトルタワー　通信マルチ　抽選したトレーナーNoを子機に送信
+ *  @brief  バトルサブウェイ　通信マルチ　抽選したトレーナーNoを子機に送信
  */
 void BTowerComm_SendTrainerData(BSUBWAY_SCRWORK* wk)
 {
@@ -743,7 +671,7 @@ void BTowerComm_SendTrainerData(BSUBWAY_SCRWORK* wk)
 }
 
 /**
- *  @brief  バトルタワー　通信マルチ　リタイアするかどうかを互いに送信
+ *  @brief  バトルサブウェイ　通信マルチ　リタイアするかどうかを互いに送信
  *
  *  @param  retire  TRUEならリタイア
  */
@@ -755,17 +683,12 @@ void BTowerComm_SendRetireSelect(BSUBWAY_SCRWORK* wk,u16 retire)
 }
 #endif
 
-//============================================================================================
-/**
- *  バトルタワートレーナーNo取得（ロムデータのためのトレーナーID取得）
- *
- * @param[in]  stage    周回数
- * @param[in]  round    何人目
- * @param[in]  play_mode  対戦モード
- *
- * @retval  trainer_id
- */
-//============================================================================================
+//======================================================================
+//  トレーナーデータ
+//======================================================================
+//--------------------------------------------------------------
+//  トレーナー番号テーブル　その１
+//--------------------------------------------------------------
 static const u16 TrainerNoRangeTable[][2]={
   {  1-1,100-1},
   { 81-1,120-1},
@@ -777,6 +700,9 @@ static const u16 TrainerNoRangeTable[][2]={
   {201-1,300-1},
 };
 
+//--------------------------------------------------------------
+//  トレーナー番号テーブル　その１２
+//--------------------------------------------------------------
 static const u16 TrainerNoRangeTable2[][2]={
   {101-1,120-1},
   {121-1,140-1},
@@ -788,39 +714,29 @@ static const u16 TrainerNoRangeTable2[][2]={
   {201-1,300-1},
 };
 
-#define  TOWER_MASTER_FIRST  (305)    //0オリジン
-#define  TOWER_MASTER_SECOND  (306)
+#define TOWER_MASTER_FIRST  (305)    //0オリジン
+#define TOWER_MASTER_SECOND  (306)
 
-static u16 btower_rand( BSUBWAY_SCRWORK *wk )
-{
-#if 0
-  //プラチナで追加されたWIFIマルチは通常のランダムを使用
-  if( wk->play_mode == BTWR_MODE_WIFI_MULTI ){
-    return ( gf_rand() );
-  }
-
-  wk->play_rnd_seed = BtlTower_PlayFixRand(wk->play_rnd_seed);
-
-  OS_Printf("btower_rand = %d\n",wk->play_rnd_seed);
-  return (wk->play_rnd_seed/65535);
-#else
-  return( GFUser_GetPublicRand(0xffffffff)/65535 );
-#endif
-}
-
+//--------------------------------------------------------------
 /**
- *  @brief  トレーナーナンバー抽選
+ * @brief  トレーナーナンバー抽選
+ * @param bsw_scr BSUBWAY_SCRWORK
+ * @param stage ステージ数
+ * @param round 何人目か
+ * @param play_mode プレイモード
+ * @retval u16 トレーナーナンバー
  */
-u16  BattleTowerTrainerNoGet(
-    BSUBWAY_SCRWORK* wk,u8 stage,u8 round,int play_mode)
+//--------------------------------------------------------------
+u16 BSUBWAY_SCRWORK_GetTrainerNo(
+    BSUBWAY_SCRWORK* wk, u16 stage, u8 round, int play_mode )
 {
   u16  no;
-
+  
   OS_Printf( "stage = %d\n", stage );
   OS_Printf( "round = %d\n", round );
-
+  
   //タワータイクーンはシングルのみ
-  if(play_mode==BSWAY_MODE_SINGLE){
+  if( play_mode==BSWAY_MODE_SINGLE ){
     //タワータイクーン1回目
     if((stage==2)&&(round==6)){
       return TOWER_MASTER_FIRST;
@@ -830,40 +746,42 @@ u16  BattleTowerTrainerNoGet(
       return TOWER_MASTER_SECOND;
     }
   }
-
+  
   if(stage<7){
     if(round==(7-1)){
       no=(TrainerNoRangeTable2[stage][1]-TrainerNoRangeTable2[stage][0])+1;
 //      no=TrainerNoRangeTable2[stage][0]+(gf_rand()%no);
-      no=TrainerNoRangeTable2[stage][0]+(btower_rand(wk)%no);
+      no= TrainerNoRangeTable2[stage][0]+(get_Rand(wk)%no);
     }
     else{
       no=(TrainerNoRangeTable[stage][1]-TrainerNoRangeTable[stage][0])+1;
 //      no=TrainerNoRangeTable[stage][0]+(gf_rand()%no);
-      no=TrainerNoRangeTable[stage][0]+(btower_rand(wk)%no);
+      no=TrainerNoRangeTable[stage][0]+(get_Rand(wk)%no);
     }
   }
   else{
     no=(TrainerNoRangeTable[7][1]-TrainerNoRangeTable[7][0])+1;
 //    no=TrainerNoRangeTable[7][0]+(gf_rand()%no);
-    no=TrainerNoRangeTable[7][0]+(btower_rand(wk)%no);
+    no=TrainerNoRangeTable[7][0]+(get_Rand(wk)%no);
   }
   return no;
 }
 
-//============================================================================================
+//--------------------------------------------------------------
 /**
- *  バトルタワー　romトレーナーデータ展開
- *
+ *  バトルサブウェイ　romトレーナーデータ展開
  *  BSUBWAY_TRAINER_ROM_DATA型をメモリ確保して返すので、
  *  呼び出し側が明示的に解放すること
- *
- * ★TOWER_AI_MULTI_ONLY フィールド上で呼ばれる処理 
- * ★TOWER_AI_MULTI_ONLY 似た処理frontier_tool.c Frontier_TrainerDataGet
+ *  @param tr_data BSUBWAY_PARTER_DATA
+ *  @param tr_no トレーナーナンバー
+ *  @param heapID HEAPID
+ *  @retval BSUBWAY_TRAINER_ROM_DATA*
+ *  TOWER_AI_MULTI_ONLY フィールド上で呼ばれる処理 
+ *  TOWER_AI_MULTI_ONLY 似た処理frontier_tool.c Frontier_TrainerDataGet
  */
-//============================================================================================
-static BSUBWAY_TRAINER_ROM_DATA * RomTrainerDataAlloc(
-    BSUBWAY_PARTNER_DATA *tr_data,u16 tr_no,HEAPID heapID)
+//--------------------------------------------------------------
+static BSUBWAY_TRAINER_ROM_DATA * alloc_TrainerRomData(
+    BSUBWAY_PARTNER_DATA *tr_data, u16 tr_no, HEAPID heapID )
 {
   BSUBWAY_TRAINER_ROM_DATA  *trd;
   GFL_MSGDATA *msgdata;
@@ -874,7 +792,7 @@ static BSUBWAY_TRAINER_ROM_DATA * RomTrainerDataAlloc(
       NARC_message_btdtrname_dat, heapID );
   
   MI_CpuClear8(tr_data, sizeof(BSUBWAY_PARTNER_DATA));
-  trd=BattleTowerTrainerRomDataGet(tr_no,heapID);
+  trd=get_TrainerRomData(tr_no,heapID);
   
   //トレーナーIDをセット
   tr_data->bt_trd.player_id=tr_no;
@@ -889,7 +807,7 @@ static BSUBWAY_TRAINER_ROM_DATA * RomTrainerDataAlloc(
   //GSデータからの移植による処理
   //wbでは存在していないタイプを書き換え
   #if 1
-  if( BtlTower_CheckTrType(trd->tr_type) == FALSE ){
+  if( check_TrainerType(trd->tr_type) == FALSE ){
     tr_data->bt_trd.tr_type = TRTYPE_TANPAN;
   }
   #endif
@@ -902,9 +820,12 @@ static BSUBWAY_TRAINER_ROM_DATA * RomTrainerDataAlloc(
   return trd;
 }
 
-//持ちポケモン決定はランダムでしているが無限ループ防止のため、
-//ある程度まわしたら、ポケモンの不一致のみをチェックして、
-//アイテムを固定で持たせるためのアイテムテーブル
+//--------------------------------------------------------------
+/// アイテムテーブル
+//  持ちポケモン決定はランダムでしているが無限ループ防止のため、
+//  ある程度まわしたら、ポケモンの不一致のみをチェックして、
+//  アイテムを固定で持たせるためのアイテムテーブル
+//--------------------------------------------------------------
 static const u16 BattleTowerPokemonItem[]={
   ITEM_HIKARINOKONA,
   ITEM_RAMUNOMI,
@@ -912,45 +833,39 @@ static const u16 BattleTowerPokemonItem[]={
   ITEM_SENSEINOTUME,
 };
 
-//============================================================================================
+//--------------------------------------------------------------
 /**
- *	ポケモンの性格を取得
- *
- *	性格は、個性乱数を25で割った余りから算出される
- *
- * @param[in]	rnd	取得したい個性乱数
- *
- * @return	取得した性格
+ * ポケモンの性格を取得
+ * 性格は、個性乱数を25で割った余りから算出される
+ * @param[in]  rnd  取得したい個性乱数
+ * @return  取得した性格
  */
-//============================================================================================
-static u8	PokeSeikakuGetRnd(u32 rnd)
+//--------------------------------------------------------------
+static u8  get_PokeSeikaku(u32 rnd)
 {
-	return(u8)(rnd%25);
+  return (u8)(rnd % 25);
 }
 
-//============================================================================================
+//--------------------------------------------------------------
 /**
- *  @brief  バトルタワーのポケモンパラメータ生成
- *
- *  @param[in/out]  pwd  ポケモンパラメータの展開場所
- *  @param[in]    poke_no  タワーromデータポケモンナンバー
- *  @param[in]    poke_id  ポケモンにセットするid
- *  @param[in]    poke_rnd  ポケモンにセットする個性乱数(0が引き渡されたら関数内で生成)
- *  @param[in]    pow_rnd  ポケモンにセットするpow_rnd値
- *  @param[in]    mem_idx  メンバーindex。一体目or二体目
- *  @param[in]    itemfix  TRUEなら固定アイテム。FALSEならromデータのアイテム
- *  @param[in]    heapID  テンポラリメモリを確保するヒープID
- *
- *  @return  personal_rnd:生成されたポケモンの個性乱数値
- *
- * ★TOWER_AI_MULTI_ONLY フィールド上で呼ばれる処理 
- * ★TOWER_AI_MULTI_ONLY 似た処理frontier_tool.c Frontier_PokemonParamMake
+ *  @brief  バトルサブウェイのポケモンパラメータ生成
+ *  @param pwd  [in/out]ポケモンパラメータの展開場所
+ *  @param poke_no  [in]タワーromデータポケモンナンバー
+ *  @param poke_id  [in]ポケモンにセットするid
+ *  @param poke_rnd [in]セットする個性乱数(0が引き渡されたら関数内で生成)
+ *  @param pow_rnd  [in]ポケモンにセットするpow_rnd値
+ *  @param mem_idx  [in]メンバーindex。一体目or二体目
+ *  @param itemfix  [in]TRUEなら固定アイテム。FALSEならromデータのアイテム
+ *  @param heapID [in]テンポラリメモリを確保するヒープID
+ *  @retval u32 personal_rnd:生成されたポケモンの個性乱数値
+ * TOWER_AI_MULTI_ONLY フィールド上で呼ばれる処理 
+ * TOWER_AI_MULTI_ONLY 似た処理frontier_tool.c Frontier_PokemonParamMake
  */
-//============================================================================================
-static u32 BattleTowerPokemonParamMake(
-    BSUBWAY_SCRWORK* wk,BSUBWAY_POKEMON* pwd,
-    u16 poke_no,u32 poke_id,u32 poke_rnd,u8 pow_rnd,
-    u8 mem_idx,BOOL itemfix,HEAPID heapID)
+//--------------------------------------------------------------
+static u32 make_PokemonParam(
+    BSUBWAY_SCRWORK *bsw_scr, BSUBWAY_POKEMON *pwd,
+    u16 poke_no, u32 poke_id, u32 poke_rnd, u8 pow_rnd,
+    u8 mem_idx, BOOL itemfix, HEAPID heapID )
 {
   int i;
   int  exp;
@@ -961,7 +876,7 @@ static u32 BattleTowerPokemonParamMake(
   MI_CpuClear8(pwd,sizeof(BSUBWAY_POKEMON));
   
   //ロムデータロード
-  BattleTowerPokemonRomDataGet(&prd_s,poke_no);
+  get_PokemonRomData(&prd_s,poke_no);
   
   //モンスターナンバー
   pwd->mons_no=prd_s.mons_no;
@@ -996,17 +911,17 @@ static u32 BattleTowerPokemonParamMake(
     //個性乱数
     do{
 //    personal_rnd=(gf_rand()|gf_rand()<<16);
-      personal_rnd=(btower_rand(wk)|btower_rand(wk)<<16);
+      personal_rnd=(get_Rand(bsw_scr)|get_Rand(bsw_scr)<<16);
 #if 0
-    }while((prd_s.chr!=PokeSeikakuGetRnd(personal_rnd))&&(PokeRareGetPara(poke_id,personal_rnd)==TRUE));
+    }while((prd_s.chr!=get_PokeSeikaku(personal_rnd))&&(PokeRareGetPara(poke_id,personal_rnd)==TRUE));
 #else
     //プラチナはタワーも修正する(08.03.17)(似た処理がfrontier_tool.cにもあるので注意！)
     //データの性格と一致していない"もしくは"レアの時は、ループを回す
-    }while((prd_s.chr!=PokeSeikakuGetRnd(personal_rnd))||(
+    }while((prd_s.chr!=get_PokeSeikaku(personal_rnd))||(
           POKETOOL_CheckRare(poke_id,personal_rnd)==TRUE));
 #endif
     //OS_Printf( "決定したpersonal_rnd = %d\n", personal_rnd );
-    //OS_Printf( "PokeSeikakuGetRnd = %d\n",PokeSeikakuGetRnd(personal_rnd) );
+    //OS_Printf( "get_PokeSeikaku = %d\n",get_PokeSeikaku(personal_rnd) );
     //OS_Printf( "レアじゃないか = %d\n", PokeRareGetPara(poke_id,personal_rnd) );
     pwd->personal_rnd=personal_rnd;
   }else{
@@ -1076,29 +991,26 @@ static u32 BattleTowerPokemonParamMake(
   return personal_rnd;
 }
 
-//============================================================================================
+//--------------------------------------------------------------
 /**
- *  バトルタワートレーナーデータ生成（ロムデータをBSUBWAY_PARTNER_DATA構造体に展開）
- *
- * @param[in/out]  tr_data    生成するBSUBWAY_PARTNAER_DATA構造体
- * @param[in]    tr_no    生成元になるトレーナーID
- * @param[in]    cnt      トレーナーに持たせるポケモンの数
- * @param[in]    set_poke_no  ペアを組んでいるトレーナーの持ちポケモン（NULLだとチェックなし）
- * @param[in]    set_item_no  ペアを組んでいるトレーナーの持ちポケモンの装備アイテム（NULLだとチェックなし）
- * @param[in/out]  poke    抽選されたポケモンの二体のパラメータを格納して返す構造体型データへのポインタ(NULLだとチェックなし）
- * @param[in]    heapID    ヒープID
- *
- * @retval  FALSE  抽選ループが50回以内で終わった
- * @retval  TRUE  抽選ループが50回以内で終わらなかった
- *
- * ★TOWER_AI_MULTI_ONLY フィールド上で呼ばれる処理 
- * ★TOWER_AI_MULTI_ONLY 似た処理tower_tool.c FSRomBattleTowerTrainerDataMake
- * ★TOWER_AI_MULTI_ONLY サロンで、5人衆の手持ちポケモンを生成している
+ * バトルサブウェイトレーナーデータ生成
+ * （ロムデータをBSUBWAY_PARTNER_DATA構造体に展開）
+ * @param tr_data  [in/out]生成するBSUBWAY_PARTNAER_DATA構造体
+ * @param tr_no [in]生成元になるトレーナーID
+ * @param cnt [in]トレーナーに持たせるポケモンの数
+ * @param set_poke_no [in]ペアトレーナーのポケモン（NULL チェックなし）
+ * @param set_item_no [in]ペアのポケモンの装備アイテム（NULL チェックなし）
+ * @param poke [in/out] 抽選ポケモン二体のパラメータ格納先(NULLだとなし）
+ * @param heapID  [in]ヒープID
+ * @retval TRUE 抽選ループが50回超えた FALSE 抽選ループが50回以内で終わった
+ * TOWER_AI_MULTI_ONLY フィールド上で呼ばれる処理 
+ * TOWER_AI_MULTI_ONLY 似た処理tower_tool.c FSRomBattleTowerTrainerDataMake
+ * TOWER_AI_MULTI_ONLY サロンで、5人衆の手持ちポケモンを生成している
  */
-//============================================================================================
-BOOL  RomBattleTowerTrainerDataMake(
-    BSUBWAY_SCRWORK* wk,BSUBWAY_PARTNER_DATA *tr_data,
-    u16 tr_no,int cnt,
+//--------------------------------------------------------------
+BOOL BSUBWAY_SCRWORK_MakeRomTrainerData(
+    BSUBWAY_SCRWORK *bsw_scr, BSUBWAY_PARTNER_DATA *tr_data,
+    u16 tr_no, int cnt,
     u16 *set_poke_no,u16 *set_item_no,
     BSUBWAY_PAREPOKE_PARAM* poke,HEAPID heapID)
 {
@@ -1106,75 +1018,72 @@ BOOL  RomBattleTowerTrainerDataMake(
   BSUBWAY_TRAINER_ROM_DATA  *trd;
   
   //トレーナーデータセット
-  trd = RomTrainerDataAlloc(tr_data,tr_no,heapID);
+  trd = alloc_TrainerRomData(tr_data,tr_no,heapID);
 
   //ポケモンデータをセット
-  ret = BattleTowerPokemonSetAct(
-      wk,trd,tr_no,&tr_data->btpwd[0],cnt,
+  ret = set_BSWayPokemonParam(
+      bsw_scr,trd,tr_no,&tr_data->btpwd[0],cnt,
       set_poke_no,set_item_no,poke,heapID);
   GFL_HEAP_FreeMemory( trd );
   return ret;
 }
 
-//---------------------------------------------------------------------------------------------
+//--------------------------------------------------------------
 /**
- * バトルタワートレーナーの持ちポケモンのパワー乱数を決定する
- *
- * @param	tr_no	トレーナーナンバー
- *
- * @return	パワー乱数
- *
+ * バトルサブウェイトレーナーの持ちポケモンのパワー乱数を決定する
+ * @param  tr_no  トレーナーナンバー
+ * @return  パワー乱数
  * b_tower_fld.c→b_tower_evに移動
  */
-//---------------------------------------------------------------------------------------------
-static u8	BattleTowerPowRndGet(u16 tr_no)
+//--------------------------------------------------------------
+static u8 get_PowerRnd(u16 tr_no)
 {
-	u8	pow_rnd;
-
-	if(tr_no<100){
-		pow_rnd=(0x1f/8)*1;
-	}
-	else if(tr_no<120){
-		pow_rnd=(0x1f/8)*2;
-	}
-	else if(tr_no<140){
-		pow_rnd=(0x1f/8)*3;
-	}
-	else if(tr_no<160){
-		pow_rnd=(0x1f/8)*4;
-	}
-	else if(tr_no<180){
-		pow_rnd=(0x1f/8)*5;
-	}
-	else if(tr_no<200){
-		pow_rnd=(0x1f/8)*6;
-	}
-	else if(tr_no<220){
-		pow_rnd=(0x1f/8)*7;
-	}
-	else{
-		pow_rnd=0x1f;
-	}
-	return pow_rnd;
+  u8  pow_rnd;
+  
+  if(tr_no<100){
+    pow_rnd=(0x1f/8)*1;
+  }
+  else if(tr_no<120){
+    pow_rnd=(0x1f/8)*2;
+  }
+  else if(tr_no<140){
+    pow_rnd=(0x1f/8)*3;
+  }
+  else if(tr_no<160){
+    pow_rnd=(0x1f/8)*4;
+  }
+  else if(tr_no<180){
+    pow_rnd=(0x1f/8)*5;
+  }
+  else if(tr_no<200){
+    pow_rnd=(0x1f/8)*6;
+  }
+  else if(tr_no<220){
+    pow_rnd=(0x1f/8)*7;
+  }
+  else{
+    pow_rnd=0x1f;
+  }
+  return pow_rnd;
 }
 
-//============================================================================================
+//--------------------------------------------------------------
 /**
- *  バトルタワー ペアトレーナーデータ再生成
- *  （セーブされたAIマルチパートナーのデータをBSUBWAY_PARTNER_DATA構造体に展開）
- *
- * @param[in/out]  tr_data    生成するBSUBWAY_PARTNAER_DATA構造体
- * @param[in]    tr_no    生成元になるトレーナーID
- * @param[in]    fixitem    TUREなら固定アイテムを、FALSEならromアイテムをセットする
- * @param[in]    poke    ポケモンデータ再生成に必要な構造体型データへのポインタ
- * @param[in]    heapID    ヒープID
- *
- * ★TOWER_AI_MULTI_ONLY フィールド上で呼ばれる処理 
- * ★TOWER_AI_MULTI_ONLY AIマルチで休むの後、再開した時に呼ばれる
+ * バトルサブウェイ ペアトレーナーデータ再生成
+ * （セーブされたAIマルチパートナーのデータを
+ * BSUBWAY_PARTNER_DATA構造体に展開）
+ * @param tr_data [in/out] 生成するBSUBWAY_PARTNAER_DATA構造体
+ * @param tr_no [in]  生成元になるトレーナーID
+ * @param fixitem [in] TUREなら固定アイテム、FALSEならromアイテムをセット
+ * @param poke  [in] ポケモンデータ再生成に必要な構造体型データへのポインタ
+ * @param heapID [in] ヒープID
+ * @retval nothing
+ * TOWER_AI_MULTI_ONLY フィールド上で呼ばれる処理 
+ * TOWER_AI_MULTI_ONLY AIマルチで休むの後、再開した時に呼ばれる
  */
-//============================================================================================
-void RomBattleTowerPartnerDataMake(
-    BSUBWAY_SCRWORK* wk,BSUBWAY_PARTNER_DATA *tr_data,
+//--------------------------------------------------------------
+void BSUBWAY_SCRWORK_MakePartnerRomData(
+    BSUBWAY_SCRWORK *wk, BSUBWAY_PARTNER_DATA *tr_data,
     u16 tr_no,BOOL itemfix,
     const BSUBWAY_PAREPOKE_PARAM* poke,HEAPID heapID)
 {
@@ -1183,13 +1092,13 @@ void RomBattleTowerPartnerDataMake(
   BSUBWAY_TRAINER_ROM_DATA  *trd;
 
   //トレーナーデータセット
-  trd = RomTrainerDataAlloc(tr_data,tr_no,heapID);
+  trd = alloc_TrainerRomData(tr_data,tr_no,heapID);
   
   //ポケモンデータをセット
-  pow_rnd=BattleTowerPowRndGet(tr_no);
+  pow_rnd=get_PowerRnd(tr_no);
 
   for(i = 0;i < BSUBWAY_STOCK_PAREPOKE_MAX;i++){
-    BattleTowerPokemonParamMake(
+    make_PokemonParam(
       wk,&(tr_data->btpwd[i]),
       poke->poke_no[i],poke->poke_id,
       poke->poke_rnd[i],pow_rnd,i,itemfix,heapID);
@@ -1197,30 +1106,27 @@ void RomBattleTowerPartnerDataMake(
   GFL_HEAP_FreeMemory( trd );
 }
 
-//============================================================================================
+//--------------------------------------------------------------
 /**
- *  バトルタワーのポケモンを決める
- *
- * @param[in]    trd      トレーナーデータ
- * @param[in]    tr_no    トレーナーナンバー
- * @param[in/out]  pwd      BSUBWAY_POKEMON構造体
- * @param[in]    cnt      トレーナーに持たせるポケモンの数
- * @param[in]    set_poke_no  ペアを組んでいるトレーナーの持ちポケモン（NULLだとチェックなし）
- * @param[in]    set_item_no  ペアを組んでいるトレーナーの持ちポケモンの装備アイテム（NULLだとチェックなし）
- * @param[in/out]  poke    抽選されたポケモンの二体のパラメータを格納して返す構造体型データへのポインタ(NULLだとチェックなし）
- * @param[in]    heapID    ヒープID
- *
+ * バトルサブウェイのポケモンを決める
+ * @param trd [in]トレーナーデータ
+ * @param tr_no [in]トレーナーナンバー
+ * @param pwd [in/out]BSUBWAY_POKEMON構造体
+ * @param cnt [in]トレーナーに持たせるポケモンの数
+ * @param set_poke_no [in]ペアトレーナーポケモン (NULLだとチェックなし
+ * @param set_item_no [in]ペアトレーナーポケモンアイテム (NULL チェックなし
+ * @param poke [in/out]抽選ポケモン二体のパラメータ格納先(NULL チェックなし
+ * @param heapID [in]ヒープID
  * @retval  FALSE  抽選ループが50回以内で終わった
  * @retval  TRUE  抽選ループが50回以内で終わらなかった
- *
- * ★TOWER_AI_MULTI_ONLY フィールド上で呼ばれる処理 
+ * TOWER_AI_MULTI_ONLY フィールド上で呼ばれる処理 
  */
-//============================================================================================
-static BOOL BattleTowerPokemonSetAct(
-    BSUBWAY_SCRWORK* wk,BSUBWAY_TRAINER_ROM_DATA *trd,
-    u16 tr_no,BSUBWAY_POKEMON *pwd,u8 cnt,
-    u16 *set_poke_no,u16 *set_item_no,
-    BSUBWAY_PAREPOKE_PARAM* poke,HEAPID heapID)
+//--------------------------------------------------------------
+static BOOL set_BSWayPokemonParam(
+    BSUBWAY_SCRWORK *wk, BSUBWAY_TRAINER_ROM_DATA *trd,
+    u16 tr_no, BSUBWAY_POKEMON *pwd, u8 cnt,
+    u16 *set_poke_no, u16 *set_item_no,
+    BSUBWAY_PAREPOKE_PARAM *poke, HEAPID heapID )
 {
   int  i,j;
   u8  pow_rnd;
@@ -1242,13 +1148,13 @@ static BOOL BattleTowerPokemonSetAct(
   loop_count=0;
   while(set_count!=cnt){
 //    poke_index = gf_rand()%trd->use_poke_cnt;
-    poke_index = btower_rand(wk)%trd->use_poke_cnt;
+    poke_index = get_Rand(wk)%trd->use_poke_cnt;
     set_index=trd->use_poke_table[poke_index];
-    BattleTowerPokemonRomDataGet(&prd_d,set_index);
+    get_PokemonRomData(&prd_d,set_index);
 
     //モンスターナンバーのチェック（同一のポケモンは持たない）
     for(i=0;i<set_count;i++){
-      BattleTowerPokemonRomDataGet(&prd_s,set_index_no[i]);
+      get_PokemonRomData(&prd_s,set_index_no[i]);
       if(prd_s.mons_no==prd_d.mons_no){
         break;
       }
@@ -1274,7 +1180,7 @@ static BOOL BattleTowerPokemonSetAct(
     if(loop_count<50){
       //装備アイテムのチェック（同一のアイテムは持たない）
       for(i=0;i<set_count;i++){
-        BattleTowerPokemonRomDataGet(&prd_s,set_index_no[i]);
+        get_PokemonRomData(&prd_s,set_index_no[i]);
         if((prd_s.item_no)&&(prd_s.item_no==prd_d.item_no)){
           break;
         }
@@ -1302,15 +1208,15 @@ static BOOL BattleTowerPokemonSetAct(
     set_count++;
   }
 
-  pow_rnd=BattleTowerPowRndGet(tr_no);
+  pow_rnd=get_PowerRnd(tr_no);
 //id=(gf_rand()|(gf_rand()<<16));
-  id=(btower_rand(wk)|(btower_rand(wk)<<16));
+  id=(get_Rand(wk)|(get_Rand(wk)<<16));
 
   if(loop_count >= 50){
     ret = TRUE;
   }
   for(i=0;i<set_count;i++){
-    set_rnd_no[i] = BattleTowerPokemonParamMake(wk,&(pwd[i]),
+    set_rnd_no[i] = make_PokemonParam(wk,&(pwd[i]),
       set_index_no[i],id,0,pow_rnd,i,ret,heapID);
   }
   if(poke == NULL){
@@ -1325,44 +1231,36 @@ static BOOL BattleTowerPokemonSetAct(
   return ret;
 }
 
-//---------------------------------------------------------------------------------------------
+//--------------------------------------------------------------
 /**
- *  バトルタワートレーナーロムデータの読み出し
- *
- * @param[in]  tr_no  トレーナーナンバー
- * @param[in]  heapID  メモリ確保するためのヒープID
- *
- * ★TOWER_AI_MULTI_ONLY フィールド上で呼ばれる処理 
- * ★TOWER_AI_MULTI_ONLY 似た処理 frontier_tool.c Frontier_TrainerRomDataGet
+ *  バトルサブウェイトレーナーロムデータの読み出し
+ * @param tr_no  [in]トレーナーナンバー
+ * @param heapID  [in]メモリ確保するためのヒープID
+ * TOWER_AI_MULTI_ONLY フィールド上で呼ばれる処理 
+ * TOWER_AI_MULTI_ONLY 似た処理 frontier_tool.c Frontier_TrainerRomDataGet
  */
-//---------------------------------------------------------------------------------------------
-static void * BattleTowerTrainerRomDataGet(u16 tr_no,HEAPID heapID)
+//--------------------------------------------------------------
+static void * get_TrainerRomData( u16 tr_no, HEAPID heapID )
 {
   //AIマルチ限定なのでプラチナ！
   return GFL_ARC_UTIL_Load( ARCID_PL_BTD_TR, tr_no, 0, heapID );
 }
 
-//---------------------------------------------------------------------------------------------
+//--------------------------------------------------------------
 /**
- *  バトルタワーポケモンロムデータの読み出し
- *
+ *  バトルサブウェイポケモンロムデータの読み出し
  * @param[in]  prd    読み出したポケモンデータの格納先
  * @param[in]  index  読み出すポケモンデータのインデックス
- *
- * ★TOWER_AI_MULTI_ONLY フィールド上で呼ばれる処理 
- * ★TOWER_AI_MULTI_ONLY 似た処理 frontier_tool.c Frontier_PokemonRomDataGet
+ * TOWER_AI_MULTI_ONLY フィールド上で呼ばれる処理 
+ * TOWER_AI_MULTI_ONLY 似た処理 frontier_tool.c Frontier_PokemonRomDataGet
  */
-//---------------------------------------------------------------------------------------------
-static void BattleTowerPokemonRomDataGet(
+//--------------------------------------------------------------
+static void get_PokemonRomData(
     BSUBWAY_POKEMON_ROM_DATA *prd,int index)
 {
   //ここは通信はありえないのでプラチナ限定！(AIマルチ)
-	GFL_ARC_LoadData( (void*)prd, ARCID_PL_BTD_PM, index );
+  GFL_ARC_LoadData( (void*)prd, ARCID_PL_BTD_PM, index );
 }
-
-//======================================================================
-//  POKEMON_PARAM
-//======================================================================
 
 //======================================================================
 //  パーツ
@@ -1433,4 +1331,91 @@ WORDSET * BtlTower_SetNgPokeName(SAVEDATA* sv,u16 pokenum,u16 sex,u8 flag,u8* nu
 }
 #endif
 
+//--------------------------------------------------------------
+/**
+ * 乱数取得
+ * @param bsw_scr BSUBWAY_SCRWORK
+ * @retval u16 乱数
+ * @note 乱数固定の名残
+ */
+//--------------------------------------------------------------
+static u16 get_Rand( BSUBWAY_SCRWORK *wk )
+{
+  return( GFUser_GetPublicRand(0xffffffff)/65535 );
+}
+
+//======================================================================
+//  wb null
+//======================================================================
+#if 0
+static void btwoer_TrainerDataMake(
+    u8 play_mode,BSUBWAY_TRAINER* src,BSP_TRAINER_DATA * dest, HEAPID heapID )
+{
+  MI_CpuClear8(dest,sizeof(BSP_TRAINER_DATA));
+  
+  dest->tr_type = src->tr_type;  //トレーナータイプ
+//dest->tr_gra = 0;//src->tr_type;  //トレーナータイプ
+  dest->ai_bit = 0xFFFFFFFF;  //最強
+
+  //トレーナー名
+  dest->name = GFL_STR_CreateBuffer( PERSON_NAME_SIZE+EOM_SIZE, 
+
+//  GFL_STR_CopyBuffer( 
+  PM_strcpy(dest->name,src->name);
+  
+  //勝ち負けメッセージ
+  MI_CpuCopy8(src->win_word,&dest->win_word,sizeof(PMS_DATA));
+  MI_CpuCopy8(src->lose_word,&dest->lose_word,sizeof(PMS_DATA));
+  
+  switch(play_mode){
+  case BSWAY_MODE_SINGLE:
+  case BSWAY_MODE_WIFI:
+    dest->fight_type = BTL_RULE_SINGLE;
+    break;
+  case BSWAY_MODE_DOUBLE:
+  case BSWAY_MODE_MULTI:
+  case BSWAY_MODE_COMM_MULTI:
+  case BSWAY_MODE_WIFI_MULTI:
+    dest->fight_type = BTL_RULE_DOUBLE;
+    break;  
+  }
+}
+#endif
+
+/**
+ *  @brief  トレーナー対戦データ生成
+ */
+#if 0
+static void btltower_SetTrainerData(BSUBWAY_SCRWORK* wk,BATTLE_PARAM* bp,
+    BSUBWAY_PARTNER_DATA* tr,u8 tr_id,u8 tr_client,u8 poke_client )
+{
+  int i;
+  POKEMON_PARAM *pp;
+  
+  //トレーナーデータをセット
+  btower_TrainerDataMake(
+      wk->play_mode,&(tr->bt_trd),&(bp->trainer_data[tr_client]));
+  
+  //トレーナーID入力
+  bp->trainer_id[tr_client] = tr_id;//wk->tr_data[0].bt_trd.tr_type;
+  
+  //対戦相手のポケモンデータをセット
+  pp = GFL_HEAP_AllocClearMemory( wk->heapID, POKETOOL_GetWorkSize() );
+  
+  PokeParty_Init(bp->poke_party[poke_client],wk->member_num);
+
+  for(i = 0;i < wk->member_num;i++){
+    make_PokePara(&(tr->btpwd[i]),pp);
+    #if 0
+    BattleParam_AddPokemon(bp,pp,poke_client);
+    #else
+    {
+      int result;
+      result = PokeParty_Add(bp->poke_party[client_no], pp);
+    }
+    #endif
+  }
+  GFL_HEAP_FreeMemory( pp );
+}
+#endif
 

@@ -39,7 +39,7 @@ ev_c04r0110_init_map_change_work:
 
 //ワーク初期化　負け
 ev_playmode_init_lose:
-  _BSUBWAY_TOOL( BSWAY_SUB_GET_PLAY_MODE, BSWAY_NULL, SCWK_ANSWER )
+  _BSUBWAY_TOOL( BSWSUB_GET_PLAY_MODE, BSWAY_NULL, SCWK_ANSWER )
   _IFVAL_JUMP SCWK_ANSWER,EQ,BSWAY_MODE_DOUBLE,playmode_init_lose_double
 
 playmode_init_lose_single:
@@ -52,7 +52,7 @@ playmode_init_lose_double:
 
 //ワーク初期化　休み
 ev_playmode_init_rest:
-  _BSUBWAY_TOOL( BSWAY_SUB_GET_PLAY_MODE, BSWAY_NULL, SCWK_ANSWER )
+  _BSUBWAY_TOOL( BSWSUB_GET_PLAY_MODE, BSWAY_NULL, SCWK_ANSWER )
   _IFVAL_JUMP SCWK_ANSWER,EQ,BSWAY_MODE_DOUBLE,playmode_init_rest_double
 
 playmode_init_rest_single:
@@ -65,7 +65,7 @@ playmode_init_rest_double:
 
 //ワーク初期化　リタイア
 ev_playmode_init_retire:
-  _BSUBWAY_TOOL( BSWAY_SUB_GET_PLAY_MODE, BSWAY_NULL, SCWK_ANSWER )
+  _BSUBWAY_TOOL( BSWSUB_GET_PLAY_MODE, BSWAY_NULL, SCWK_ANSWER )
   _IFVAL_JUMP SCWK_ANSWER,EQ,BSWAY_MODE_DOUBLE,playmode_init_retire_double
 
 playmode_init_retire_single:
@@ -78,7 +78,7 @@ playmode_init_retire_double:
 
 //マップ戻り
 ev_playmode_retmap:
-  _BSUBWAY_TOOL( BSWAY_SUB_GET_PLAY_MODE, BSWAY_NULL, SCWK_ANSWER )
+  _BSUBWAY_TOOL( BSWSUB_GET_PLAY_MODE, BSWAY_NULL, SCWK_ANSWER )
   _IFVAL_JUMP SCWK_ANSWER,EQ,BSWAY_MODE_DOUBLE,playmode_retmap_double
 
 playmode_retmap_single:
@@ -103,11 +103,11 @@ INIT_EVENT_START ev_init_c04r0110
   _IFVAL_JUMP WK_OTHER_SCENE_C04R0110,EQ,0,ev_init_c04r0110_end
   
   //自機非表示
-  _BSUBWAY_TOOL( BSWAY_TOOL_PLAYER_VANISH,BSWAY_NULL, BSWAY_NULL )
+  _BSUBWAY_TOOL( BSWTOOL_PLAYER_VANISH,BSWAY_NULL, BSWAY_NULL )
   
   //ダミー自機出現
   _FLAG_RESET( FV_C04R0110_PLAYER )
-  _BSUBWAY_TOOL( BSWAY_TOOL_GET_MINE_OBJ,BSWAY_PTCODE_MINE,LOCALWORK0 )
+  _BSUBWAY_TOOL( BSWTOOL_GET_MINE_OBJ,BSWAY_PTCODE_MINE,LOCALWORK0 )
   _LDWK( OBJCHRWORK0,LOCALWORK0 )
   _OBJ_ADD( C04R0110_HERO )
   
@@ -124,7 +124,7 @@ ev_init_set_player_continue:
 /*
 ev_init_set_trainer:
   //ボス戦闘の場合は事前にトレーナーを配置
-  _BSUBWAY_TOOL( BSWAY_SUB_GET_RENSHOU_CNT,BSWAY_NULL,SCWK_ANSWER )
+  _BSUBWAY_TOOL( BSWTOOL_GET_RENSHOU_CNT,BSWAY_NULL,SCWK_ANSWER )
   _IFVAL_JUMP SCWK_ANSWER,EQ,LEADER_SET_1ST,ev_init_leader_add
   _IFVAL_JUMP SCWK_ANSWER,EQ,LEADER_SET_2ND,ev_init_leader_add
   _JUMP ev_init_c04r0110_end
@@ -138,14 +138,14 @@ ev_init_leader_add:
  
 ev_init_set_trainer:
   //抽選
-  _BSUBWAY_TOOL( BSWAY_SUB_CHOICE_BTL_PARTNER, BSWAY_NULL, BSWAY_NULL )
+  _BSUBWAY_TOOL( BSWSUB_CHOICE_BTL_PARTNER, BSWAY_NULL, BSWAY_NULL )
   
   //ボス戦闘の場合は特殊コード
-  _BSUBWAY_TOOL( BSWAY_SUB_GET_RENSHOU_CNT,BSWAY_NULL,SCWK_ANSWER )
+  _BSUBWAY_TOOL( BSWTOOL_GET_RENSHOU_CNT,BSWAY_NULL,SCWK_ANSWER )
   _IFVAL_JUMP SCWK_ANSWER,EQ,LEADER_SET_1ST,ev_init_leader_add
   _IFVAL_JUMP SCWK_ANSWER,EQ,LEADER_SET_2ND,ev_init_leader_add
   
-  _BSUBWAY_TOOL( BSWAY_SUB_GET_ENEMY_OBJ, 0, SCWK_ANSWER )
+  _BSUBWAY_TOOL( BSWSUB_GET_ENEMY_OBJ, 0, SCWK_ANSWER )
   _LDWK( OBJCHRWORK1, SCWK_ANSWER )
   _FLAG_RESET( FV_C04R0110_TRAINER )
   _OBJ_ADD( C04R0110_TRAINER )
@@ -228,13 +228,13 @@ ev_train_rooms_sbtl_01:
   _ME_WAIT()
   
   //ステージカウント
-  _BSUBWAY_TOOL( BSWAY_SUB_COUNT_NEXT_STAGE,BSWAY_NULL,BSWAY_NULL )
+  _BSUBWAY_TOOL( BSWTOOL_INC_ROUND,BSWAY_NULL,BSWAY_NULL )
 
 ev_train_rooms_sbtl_02:
   //ただいま？連勝…対戦を続けますか
-  _BSUBWAY_TOOL( BSWAY_SUB_GET_RENSHOU_CNT,BSWAY_NULL,SCWK_ANSWER )
+  _BSUBWAY_TOOL( BSWTOOL_GET_RENSHOU_CNT,BSWAY_NULL,SCWK_ANSWER )
   _NUMBER( 0, SCWK_ANSWER, 3 )
-  _BSUBWAY_TOOL( BSWAY_SUB_GET_NEXT_CARNUM,BSWAY_NULL,SCWK_ANSWER )
+  _BSUBWAY_TOOL( BSWTOOL_GET_NEXT_ROUND,BSWAY_NULL,SCWK_ANSWER )
   _NUMBER( 1, SCWK_ANSWER, 1 )
   _SYSWIN_MSG_DOWN( msg_c04r0110_01 )
   
@@ -310,13 +310,13 @@ ev_train_rooms_common_sbtl_call:
 //  _CALL ev_train_rooms_comanm_enein
   
   //対戦前台詞
-  _BSUBWAY_TOOL( BSWAY_SUB_TRAINER_BEFORE_MSG, 0, BSWAY_NULL )
+  _BSUBWAY_TOOL( BSWSUB_TRAINER_BEFORE_MSG, 0, BSWAY_NULL )
   
   //互いに近づく
   _CALL ev_train_anime_battle_start
   
   //バトル呼び出し
-  _BSUBWAY_TOOL( BSWAY_SUB_LOCAL_BTL_CALL, BSWAY_NULL, BSWAY_NULL )
+  _BSUBWAY_TOOL( BSWSUB_LOCAL_BTL_CALL, BSWAY_NULL, BSWAY_NULL )
   _TRAINER_LOSE_CHECK( SCWK_ANSWER )
   
   _LDWK( SCWK_TEMP0, SCWK_ANSWER )
@@ -328,7 +328,7 @@ ev_train_rooms_common_sbtl_call:
 ev_train_rooms_common_lose:
   _CALL ev_playmode_init_lose
   //敗戦パラメータセット
-  _BSUBWAY_TOOL( BSWAY_SUB_SET_LOSE_SCORE, BSWAY_NULL, BSWAY_NULL )
+  _BSUBWAY_TOOL( BSWSUB_SET_LOSE_SCORE, BSWAY_NULL, BSWAY_NULL )
   _JUMP ev_train_rooms_common_exit
   _END
 
@@ -340,19 +340,19 @@ ev_train_rooms_common_clear_ret:
   _CALL ev_train_anime_player_clear
 
   //シングルならラウンドチェック
-  _BSUBWAY_TOOL( BSWAY_SUB_GET_RENSHOU_CNT,BSWAY_NULL,SCWK_ANSWER )
+  _BSUBWAY_TOOL( BSWTOOL_GET_RENSHOU_CNT,BSWAY_NULL,SCWK_ANSWER )
   _IFVAL_JUMP SCWK_ANSWER,EQ,LEADER_SET_1ST,ev_train_rooms_common_clear_ret1
   _IFVAL_JUMP SCWK_ANSWER,EQ,LEADER_SET_2ND,ev_train_rooms_common_clear_ret1
   _JUMP ev_train_rooms_common_clear_ret2
 
   //リーダークリア
 ev_train_rooms_common_clear_ret1:
-  _BSUBWAY_TOOL( BSWAY_SUB_SET_LEADER_CLEAR_FLAG, 1, BSWAY_NULL )
+  _BSUBWAY_TOOL( BSWSUB_SET_LEADER_CLEAR_FLAG, 1, BSWAY_NULL )
   
 ev_train_rooms_common_clear_ret2:
   _LDVAL( WK_OTHER_SCENE_C04R0111, 1 )
   //クリアパラメータセット
-  _BSUBWAY_TOOL( BSWAY_SUB_SET_CLEAR_SCORE,BSWAY_NULL,BSWAY_NULL )
+  _BSUBWAY_TOOL( BSWSUB_SET_CLEAR_SCORE,BSWAY_NULL,BSWAY_NULL )
   _JUMP ev_train_rooms_clear_exit
   _END
 
@@ -363,7 +363,7 @@ ev_train_rooms_common_rest:
   _CALL ev_playmode_init_rest
   
   //プレイデータセーブ
-  _BSUBWAY_TOOL( BSWAY_SUB_SAVE_REST_PLAY_DATA, BSWAY_NULL, BSWAY_NULL )
+  _BSUBWAY_TOOL( BSWSUB_SAVE_REST_PLAY_DATA, BSWAY_NULL, BSWAY_NULL )
   _BSUBWAY_WORK_RELEASE()
   
   //レポート
@@ -383,7 +383,7 @@ ev_train_rooms_common_rest:
 
 //_VANISH_DUMMY_OBJ_DEL
   //リセットコマンド
-  _BSUBWAY_TOOL( BSWAY_TOOL_SYSTEM_RESET, BSWAY_NULL, BSWAY_NULL )
+  _BSUBWAY_TOOL( BSWTOOL_SYSTEM_RESET, BSWAY_NULL, BSWAY_NULL )
   _END
   
 //--------------------------------------------------------------
@@ -393,7 +393,7 @@ ev_train_rooms_common_retire:
   _CALL ev_playmode_init_retire
 
   //敗戦パラメータセット
-  _BSUBWAY_TOOL( BSWAY_SUB_SET_LOSE_SCORE, BSWAY_NULL, BSWAY_NULL )
+  _BSUBWAY_TOOL( BSWSUB_SET_LOSE_SCORE, BSWAY_NULL, BSWAY_NULL )
   _JUMP ev_train_rooms_common_exit
   _END
   
@@ -402,9 +402,9 @@ ev_train_rooms_common_retire:
 //--------------------------------------------------------------
 ev_train_rooms_common_win_param:
   //ラウンド数更新
-  _BSUBWAY_TOOL( BSWAY_SUB_INC_ROUND,BSWAY_NULL,SCWK_ANSWER )
+  _BSUBWAY_TOOL( BSWTOOL_INC_ROUND,BSWAY_NULL,SCWK_ANSWER )
   //クリアしてるかチェック
-  _BSUBWAY_TOOL(  BSWAY_SUB_IS_CLEAR,BSWAY_NULL,SCWK_ANSWER )
+  _BSUBWAY_TOOL(  BSWSUB_IS_CLEAR,BSWAY_NULL,SCWK_ANSWER )
   _RET
 
 //=====================================================================
@@ -416,11 +416,11 @@ ev_train_rooms_common_win_param:
 //--------------------------------------------------------------
 ev_train_rooms_if_leader_battle:
   //シングルバトルモードかどうか？
-  _BSUBWAY_TOOL( BSWAY_SUB_GET_PLAY_MODE, BSWAY_NULL, SCWK_ANSWER )
+  _BSUBWAY_TOOL( BSWSUB_GET_PLAY_MODE, BSWAY_NULL, SCWK_ANSWER )
   _IFVAL_JUMP SCWK_ANSWER,NE,BSWAY_MODE_SINGLE,ev_train_rooms_sbtl_02
   
   //シングルならラウンドチェック
-  _BSUBWAY_TOOL( BSWAY_SUB_GET_RENSHOU_CNT,BSWAY_NULL,SCWK_ANSWER )
+  _BSUBWAY_TOOL( BSWTOOL_GET_RENSHOU_CNT,BSWAY_NULL,SCWK_ANSWER )
   _IFVAL_JUMP SCWK_ANSWER,EQ,LEADER_SET_1ST,ev_train_rooms_leader_comin
   _IFVAL_JUMP SCWK_ANSWER,EQ,LEADER_SET_2ND,ev_train_rooms_leader_comin
   _JUMP ev_train_rooms_sbtl_02
@@ -455,13 +455,13 @@ ev_train_rooms_leader_entry:
   _CALL ev_train_rooms_comanm_guide_out
   
   //リーダーデータセット
-  _BSUBWAY_TOOL( BSWAY_SUB_CHOICE_BTL_PARTNER, BSWAY_NULL, BSWAY_NULL )
+  _BSUBWAY_TOOL( BSWSUB_CHOICE_BTL_PARTNER, BSWAY_NULL, BSWAY_NULL )
   
   //リーダー入場
   _CALL ev_train_rooms_comanm_leader_in
   
   //リーダー対戦前台詞
-  _BSUBWAY_TOOL(  BSWAY_SUB_GET_RENSHOU_CNT, BSWAY_NULL, SCWK_ANSWER )
+  _BSUBWAY_TOOL(  BSWTOOL_GET_RENSHOU_CNT, BSWAY_NULL, SCWK_ANSWER )
   _IFVAL_JUMP SCWK_ANSWER,EQ,LEADER_SET_2ND,ev_train_rooms_leader_talk_01
   
 // _PLAYER_NAME( 0 )
@@ -477,7 +477,7 @@ ev_train_rooms_leader_talk01_end:
   _CALL ev_train_rooms_comanm_sbtl_start
   
   //バトル呼び出し
-  _BSUBWAY_TOOL( BSWAY_SUB_LOCAL_BTL_CALL, BSWAY_NULL, BSWAY_NULL )
+  _BSUBWAY_TOOL( BSWSUB_LOCAL_BTL_CALL, BSWAY_NULL, BSWAY_NULL )
   _TRAINER_LOSE_CHECK( SCWK_ANSWER )
   
   //勝ち負けチェック
@@ -489,12 +489,12 @@ ev_train_rooms_leader_talk01_end:
 #endif
   
   //リーダー負け台詞
-  _BSUBWAY_TOOL( BSWAY_SUB_GET_RENSHOU_CNT, BSWAY_NULL, SCWK_ANSWER )
+  _BSUBWAY_TOOL( BSWTOOL_GET_RENSHOU_CNT, BSWAY_NULL, SCWK_ANSWER )
   _IFVAL_JUMP SCWK_ANSWER,EQ,LEADER_SET_2ND,ev_train_rooms_leader_talk_02
   _SYSWIN_MSG_DOWN( msg_c04r0110_test01 )
   _AB_KEYWAIT()
   _SYSWIN_CLOSE()
-  _BSUBWAY_TOOL( BSWAY_SUB_SET_LEADER_CLEAR_FLAG, 1, BSWAY_NULL )
+  _BSUBWAY_TOOL( BSWSUB_SET_LEADER_CLEAR_FLAG, 1, BSWAY_NULL )
   
 ev_train_rooms_leader_talk02_end:
 //  _TALK_CLOSE
@@ -517,7 +517,7 @@ ev_train_rooms_leader_talk_01:
 //負け台詞 ２回目
 ev_train_rooms_leader_talk_02:
 //  _TALK_KEYWAIT  msg_tower_boss_05
-  _BSUBWAY_TOOL( BSWAY_SUB_SET_LEADER_CLEAR_FLAG, 2, BSWAY_NULL )
+  _BSUBWAY_TOOL( BSWSUB_SET_LEADER_CLEAR_FLAG, 2, BSWAY_NULL )
   _JUMP ev_train_rooms_leader_talk02_end
   _END
 */
@@ -535,9 +535,8 @@ ev_train_rooms_common_exit:
   _TIME_WAIT( 15 )
   
   //入ってきたゲート位置へ戻る
-  _BSUBWAY_TOOL( BSWAY_SUB_GET_PLAY_MODE,BSWAY_NULL,SCWK_ANSWER )
+  _BSUBWAY_TOOL( BSWSUB_GET_PLAY_MODE,BSWAY_NULL,SCWK_ANSWER )
   _IFVAL_JUMP SCWK_ANSWER,EQ,BSWAY_MODE_WIFI,ev_train_rooms_comexit_01
-  _IFVAL_JUMP SCWK_ANSWER,EQ,BSWAY_MODE_RETRY,ev_train_rooms_comexit_01
   
   _CALL ev_c04r0110_init_map_change_work
   _CALL ev_playmode_retmap
@@ -709,12 +708,12 @@ ev_train_anime_player_clear:
 //--------------------------------------------------------------
 ev_train_rooms_comanm_enein:
   //ボス戦闘の場合は事前に配置ずみ
-  _BSUBWAY_TOOL( BSWAY_SUB_GET_RENSHOU_CNT,BSWAY_NULL,SCWK_ANSWER )
+  _BSUBWAY_TOOL( BSWTOOL_GET_RENSHOU_CNT,BSWAY_NULL,SCWK_ANSWER )
   _IFVAL_JUMP SCWK_ANSWER,EQ,LEADER_SET_1ST,ev_train_room_comanm_enein_end
   _IFVAL_JUMP SCWK_ANSWER,EQ,LEADER_SET_2ND,ev_train_room_comanm_enein_end
   
   //キャラ指定
-  _BSUBWAY_TOOL( BSWAY_SUB_GET_ENEMY_OBJ, 0, SCWK_ANSWER )
+  _BSUBWAY_TOOL( BSWSUB_GET_ENEMY_OBJ, 0, SCWK_ANSWER )
   _LDWK( OBJCHRWORK1, SCWK_ANSWER )
   
   //バニッシュフラグOFF

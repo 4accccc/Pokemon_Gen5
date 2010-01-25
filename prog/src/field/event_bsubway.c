@@ -23,7 +23,7 @@
 #include "message.naix"
 
 #include "bsubway_scr.h"
-#include "bsubway_scr_common.h"
+#include "bsubway_scrwork.h"
 #include "scrcmd_bsubway.h"
 #include "bsubway_tr.h"
 
@@ -204,7 +204,7 @@ GMEVENT * BSUBWAY_EVENT_TrainerBattle(
   GMEVENT * event;
   BATTLE_SETUP_PARAM *bp;
   
-  bp = BtlTower_CreateBattleParam( bsw_scr, gsys );
+  bp = BSUBWAY_SCRWORK_CreateBattleParam( bsw_scr, gsys );
   event = EVENT_BSubwayTrainerBattle( gsys, fieldmap, bp );
   
   return( event );
