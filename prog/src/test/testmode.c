@@ -70,6 +70,7 @@ typedef enum
   TMI_CONTINUE_NET,
   TMI_DEBUG_START,
   TMI_DEBUG_START_NET,
+  TMI_DEBUG_START_NET_OFF,
   TMI_DEBUG_SELECT_NAME,
 
   TMI_MAX,
@@ -147,6 +148,7 @@ static void TESTMODE_COMMAND_StartGame( TESTMODE_WORK *work , TESTMODE_INITGAME_
 //メニュー決定時の関数群
 static BOOL TESTMODE_ITEM_SelectFuncDebugStart( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_SelectFuncDebugStartComm( TESTMODE_WORK *work , const int idx );
+static BOOL TESTMODE_ITEM_SelectFuncDebugStartCommOff( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_SelectFuncContinue( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_SelectFuncContinueComm( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_SelectFuncChangeSelectName( TESTMODE_WORK *work , const int idx );
@@ -216,6 +218,7 @@ static TESTMODE_MENU_LIST topMenu[] =
   //汎用
   {L"デバッグ開始(処理負荷：サーチ)"        ,TESTMODE_ITEM_SelectFuncDebugStart },
   {L"デバッグ開始(処理負荷：接続(要侵入)"  ,TESTMODE_ITEM_SelectFuncDebugStartComm },
+  {L"デバッグ開始(通信OFF)"  ,TESTMODE_ITEM_SelectFuncDebugStartCommOff },
   {L"続きから"            ,TESTMODE_ITEM_SelectFuncContinue },
   {L"続きから(通信)"      ,TESTMODE_ITEM_SelectFuncContinueComm },
   {L"名前を選んで開始(処理負荷：サーチ)"    ,TESTMODE_ITEM_SelectFuncChangeSelectName },
@@ -730,6 +733,9 @@ static GFL_PROC_RESULT TestModeProcEnd(GFL_PROC * proc, int * seq, void * pwk, v
       case TMI_DEBUG_START_NET:
         GameStart_DebugNet();
         break;
+      case TMI_DEBUG_START_NET_OFF:
+        GameStart_DebugNetOff();
+        break;
       case TMI_DEBUG_SELECT_NAME:
         GameStart_Debug_SelectName();
         break;
@@ -821,6 +827,12 @@ static BOOL TESTMODE_ITEM_SelectFuncDebugStart( TESTMODE_WORK *work , const int 
 static BOOL TESTMODE_ITEM_SelectFuncDebugStartComm( TESTMODE_WORK *work , const int idx )
 {
   TESTMODE_COMMAND_StartGame( work , TMI_DEBUG_START_NET );
+  return TRUE;
+}
+//デバッグスタート
+static BOOL TESTMODE_ITEM_SelectFuncDebugStartCommOff( TESTMODE_WORK *work , const int idx )
+{
+  TESTMODE_COMMAND_StartGame( work , TMI_DEBUG_START_NET_OFF );
   return TRUE;
 }
 

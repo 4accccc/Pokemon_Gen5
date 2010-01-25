@@ -95,6 +95,14 @@ static const GFL_PROC_DATA GameStart_DebugSelectNameProcData = {
   GameStart_DebugSelectNameProcEnd,
 };
 
+//==============================================================================
+//  定数定義
+//==============================================================================
+enum{
+  DEBUG_COMM_SEARCH_ONLY,
+  DEBUG_COMM_ON,
+  DEBUG_COMM_OFF,
+};
 
 //==============================================================================
 //
@@ -149,7 +157,7 @@ void GameStart_ContinueNet(void)
 void GameStart_Debug(void)
 {
 #ifdef PM_DEBUG
-  GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(title), &GameStart_DebugProcData, NULL);
+  GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(title), &GameStart_DebugProcData, (void*)DEBUG_COMM_SEARCH_ONLY);
 #endif
 }
 
@@ -161,7 +169,19 @@ void GameStart_Debug(void)
 void GameStart_DebugNet(void)
 {
 #ifdef PM_DEBUG
-  GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(title), &GameStart_DebugProcData, (void*)TRUE);
+  GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(title), &GameStart_DebugProcData, (void*)DEBUG_COMM_ON);
+#endif
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   「デバッグ開始(通信OFF)」を選択
+ */
+//--------------------------------------------------------------
+void GameStart_DebugNetOff(void)
+{
+#ifdef PM_DEBUG
+  GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(title), &GameStart_DebugProcData, (void*)DEBUG_COMM_OFF);
 #endif
 }
 
@@ -534,10 +554,10 @@ static GFL_PROC_RESULT GameStart_DebugProcEnd( GFL_PROC * proc, int * seq, void 
 #ifdef PM_DEBUG
   GAME_INIT_WORK * init_param;
   VecFx32 pos = {0,0,0};
-  BOOL always_net;
+  int always_net;
   int sex = 0;
   
-  always_net = (BOOL)pwk;   //TRUE:常時通信で「続きから」
+  always_net = (int)pwk;   //TRUE:常時通信で「続きから」
 
   SaveControl_ClearData(SaveControl_GetPointer());  //セーブデータクリア
   
@@ -581,8 +601,21 @@ static GFL_PROC_RESULT GameStart_DebugProcEnd( GFL_PROC * proc, int * seq, void 
     NETWORK_SEARCH_MODE mode;
 
     config  = SaveData_GetConfig( SaveControl_GetPointer() );
-    mode  = always_net? NETWORK_SEARCH_ON: NETWORK_SEARCH_OFF;
-    DebugScanOnly = (mode == NETWORK_SEARCH_ON) ? FALSE : TRUE;
+    switch(always_net){
+    case DEBUG_COMM_SEARCH_ONLY:
+      mode = NETWORK_SEARCH_OFF;
+      DebugScanOnly = TRUE;
+      break;
+    case DEBUG_COMM_ON:
+      mode = NETWORK_SEARCH_ON;
+      DebugScanOnly = FALSE;
+      break;
+    case DEBUG_COMM_OFF:
+    default:
+      mode = NETWORK_SEARCH_OFF;
+      DebugScanOnly = FALSE;
+      break;
+    }
     CONFIG_SetNetworkSearchMode( config, mode );
     //CGEARON
     CGEAR_SV_SetCGearONOFF(CGEAR_SV_GetCGearSaveData(SaveControl_GetPointer()),TRUE);

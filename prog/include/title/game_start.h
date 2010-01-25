@@ -18,6 +18,7 @@ extern void GameStart_ContinueNetOff(void);
 extern void GameStart_ContinueNet(void);
 extern void GameStart_Debug(void);
 extern void GameStart_DebugNet(void);
+extern void GameStart_DebugNetOff(void);
 extern void GameStart_Debug_SelectName(void);
 
 
