@@ -646,15 +646,18 @@ GFL_PROC_RESULT TrCardProc_End( GFL_PROC * proc, int * seq , void *pwk, void *my
   TR_CARD_WORK * wk  = mywk;
   TRCARD_CALL_PARAM *param = pwk;
 
-  //サイン圧縮
-  EncodeSignData( wk->TrSignData, wk->TrCardData->SignRawData);
-
-  {
-    u8 *SignBuf;
-    SAVE_CONTROL_WORK *sv = GAMEDATA_GetSaveControlWork(param->gameData);
-    // サイン書き出しバッファポインタ取得
-    SignBuf = (u8*)TRCSave_GetSignDataPtr(TRCSave_GetSaveDataPtr(sv));
-    MI_CpuCopyFast(  wk->TrCardData->SignRawData, SignBuf, SIGN_SIZE_X*SIGN_SIZE_Y*8);
+  // 自分のサインを見ている時はサインデータを反映させる
+  if(wk->TrCardData->SignDisenable==0){
+    //サイン圧縮
+    EncodeSignData( wk->TrSignData, wk->TrCardData->SignRawData);
+  
+    {
+      u8 *SignBuf;
+      SAVE_CONTROL_WORK *sv = GAMEDATA_GetSaveControlWork(param->gameData);
+      // サイン書き出しバッファポインタ取得
+      SignBuf = (u8*)TRCSave_GetSignDataPtr(TRCSave_GetSaveDataPtr(sv));
+      MI_CpuCopyFast(  wk->TrCardData->SignRawData, SignBuf, SIGN_SIZE_X*SIGN_SIZE_Y*8);
+    }
   }
 
   //使用した拡縮面を元に戻す
