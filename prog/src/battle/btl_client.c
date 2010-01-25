@@ -3454,10 +3454,13 @@ static BOOL scProc_OP_HpZero( BTL_CLIENT* wk, int* seq, const int* args )
   BPP_HpZero( pp );
   return TRUE;
 }
+/**
+ *  PP‰ñ•œ  args[0]:pokeID  args[1]:WazaIdx  args[2]:‰ñ•œPP’l
+ */
 static BOOL scProc_OP_PPPlus( BTL_CLIENT* wk, int* seq, const int* args )
 {
-  BTL_POKEPARAM* pp = BTL_POKECON_GetFrontPokeData( wk->pokeCon, args[0] );
-  BPP_PPPlus( pp, args[1], args[2] );
+  BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
+  BPP_PPPlus( bpp, args[1], args[2] );
   return TRUE;
 }
 static BOOL scProc_OP_RankUp( BTL_CLIENT* wk, int* seq, const int* args )

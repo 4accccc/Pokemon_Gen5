@@ -8220,7 +8220,6 @@ static void scPut_RecoverPP( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u8 wazaIdx
   if( itemID != ITEM_DUMMY_DATA )
   {
     WazaID waza = BPP_WAZA_GetID( bpp, wazaIdx );
-    TAYA_Printf("wazaIdx=%d, wazaID=%d, itemID=%d\n", wazaIdx, waza, itemID);
     SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_UseItem_RecoverPP, pokeID, itemID, waza );
   }
 }

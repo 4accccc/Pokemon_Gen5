@@ -212,9 +212,11 @@ static void handler_pos_MikadukiNoMai( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WO
 
     // ‘SƒƒUPP‘S‰ñ•œ
     {
-      u32 i;
+      u32 wazaCnt, i;
       u8 volume;
-      for(i=0; i<PTL_WAZA_MAX; ++i){
+      wazaCnt = BPP_WAZA_GetCount( bpp );
+      for(i=0; i<wazaCnt; ++i)
+      {
         volume = BPP_WAZA_GetPPShort( bpp, i );
         if( volume )
         {
