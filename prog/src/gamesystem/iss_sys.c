@@ -171,6 +171,7 @@ void ISS_SYS_ZoneChange( ISS_SYS* sys, u16 next_zone_id )
   // 各ISSシステムにゾーンチェンジを通知
 	ISS_CITY_SYS_ZoneChange( sys->issC, next_zone_id );    // 街ISS 
 	ISS_DUNGEON_SYS_ZoneChange( sys->issD, next_zone_id ); // ダンジョンISS 
+  ISS_SWITCH_SYS_ZoneChange( sys->issS, next_zone_id );    // スイッチISS
   ISS_ZONE_SYS_ZoneChange( sys->issZ, next_zone_id );    // ゾーンISS
 #endif
 }

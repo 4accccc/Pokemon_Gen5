@@ -390,7 +390,7 @@ static void fldmap_ZoneChange( FIELDMAP_WORK *fieldWork );
 
 static void zoneChange_SetMMdl( GAMEDATA *gdata,
 		MMDLSYS *fmmdlsys, EVENTDATA_SYSTEM *evdata, u32 zone_id );
-static void zoneChange_SetBGM( GAMEDATA *gdata, u32 prev_zone_id, u32 next_zone_id );
+static void zoneChange_SetBGM( FIELDMAP_WORK* fieldWork, u32 prev_zone_id, u32 next_zone_id );
 static void zoneChange_SetWeather( FIELDMAP_WORK *fieldWork, u32 zone_id );
 static void zoneChange_SetZoneFogLight( FIELDMAP_WORK *fieldWork, u32 zone_id );
 static void zoneChange_UpdatePlayerWork( GAMEDATA *gdata, u32 zone_id );
@@ -2494,7 +2494,7 @@ static void fldmap_ZoneChange( FIELDMAP_WORK *fieldWork )
 	
   SET_CHECK();
 	//BGM切り替え
-	zoneChange_SetBGM( gdata, old_zone_id, new_zone_id );
+	zoneChange_SetBGM( fieldWork, old_zone_id, new_zone_id );
 
   SET_CHECK();
 	// ZONEフォグライト設定
@@ -2570,15 +2570,19 @@ static void zoneChange_SetMMdl( GAMEDATA *gdata,
 //--------------------------------------------------------------
 /**
  * ゾーン切り替え時の処理　BGM切り替え
- * @param	gdata	GAMEDATA
+ * @param	fieldWork FIELDMAP_WORK*
  * @param prev_zone_id 前のゾーンID
  * @param	next_zone_id 次のゾーンID
  * @retval	nothing
  */
 //--------------------------------------------------------------
-static void zoneChange_SetBGM( GAMEDATA *gdata, u32 prev_zone_id, u32 next_zone_id )
+static void zoneChange_SetBGM( FIELDMAP_WORK* fieldWork, u32 prev_zone_id, u32 next_zone_id )
 {
-  FIELD_SOUND* fsnd = GAMEDATA_GetFieldSound( gdata );
+  GAMEDATA*    gdata = GAMESYSTEM_GetGameData( fieldWork->gsys );
+  ISS_SYS*     iss   = GAMESYSTEM_GetIssSystem( fieldWork->gsys );
+  FIELD_SOUND* fsnd  = GAMEDATA_GetFieldSound( gdata );
+
+  ISS_SYS_ZoneChange( iss, next_zone_id );
   FSND_ChangeBGM_byZoneChange( fsnd, gdata, prev_zone_id, next_zone_id );
 }
 

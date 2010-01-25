@@ -44,6 +44,33 @@ def CalcTrackBit( flag_state, flag_no )
   return track_bit
 end
 
+#---------------------------------------------------------------------------------- 
+# @brief ゾーン名から, ゾーンIDを取得する
+# @param str_zone_id ゾーンIDを表す文字列
+# @return 指定したゾーンIDの値
+#---------------------------------------------------------------------------------- 
+def GetZoneID( str_zone_id )
+
+	# ファイルを開く
+	file_def = File.open( "../../../prog/arc/fieldmap/zone_id.h" )
+
+	# 1行ずつ見ていく
+	file_def.each do |line|
+		if line.index(str_zone_id)!=nil then
+			i0 = line.index("(") + 1
+			i1 = line.index(")") - 1
+			def_val = line[i0..i1].to_i
+			return def_val
+		end
+	end
+	
+	# ファイルを閉じる
+	file_def.close
+
+  abort( "error: 指定されたゾーンID[# str_zone_id}]は定義されていません。" );
+end
+
+
 #----------------------------------------------------------------------------------
 # @brief main
 # @param ARGV[0] コンバート対象ファイル名(エクセルのタブ区切りデータ)
@@ -51,24 +78,25 @@ end
 #----------------------------------------------------------------------------------
 
 # データ・インデックス
-ROW_SEQ_LABEL    = 0   # シーケンスラベル
-ROW_FLAG_NO_TR01 = 1   # フラグ番号(トラック1)
-ROW_FLAG_NO_TR02 = 2   # フラグ番号(トラック2)
-ROW_FLAG_NO_TR03 = 3   # フラグ番号(トラック3)
-ROW_FLAG_NO_TR04 = 4   # フラグ番号(トラック4)
-ROW_FLAG_NO_TR05 = 5   # フラグ番号(トラック5)
-ROW_FLAG_NO_TR06 = 6   # フラグ番号(トラック6)
-ROW_FLAG_NO_TR07 = 7   # フラグ番号(トラック7)
-ROW_FLAG_NO_TR08 = 8   # フラグ番号(トラック8)
-ROW_FLAG_NO_TR09 = 9   # フラグ番号(トラック9)
-ROW_FLAG_NO_TR10 = 10  # フラグ番号(トラック10)
-ROW_FLAG_NO_TR11 = 11  # フラグ番号(トラック11)
-ROW_FLAG_NO_TR12 = 12  # フラグ番号(トラック12)
-ROW_FLAG_NO_TR13 = 13  # フラグ番号(トラック13)
-ROW_FLAG_NO_TR14 = 14  # フラグ番号(トラック14)
-ROW_FLAG_NO_TR15 = 15  # フラグ番号(トラック15)
-ROW_FLAG_NO_TR16 = 16  # フラグ番号(トラック16)
-ROW_FADE_FRAME   = 17  # フェード時間
+ROW_SEQ_LABEL     = 0   # シーケンスラベル
+ROW_FLAG_NO_TR01  = 1   # フラグ番号(トラック1)
+ROW_FLAG_NO_TR02  = 2   # フラグ番号(トラック2)
+ROW_FLAG_NO_TR03  = 3   # フラグ番号(トラック3)
+ROW_FLAG_NO_TR04  = 4   # フラグ番号(トラック4)
+ROW_FLAG_NO_TR05  = 5   # フラグ番号(トラック5)
+ROW_FLAG_NO_TR06  = 6   # フラグ番号(トラック6)
+ROW_FLAG_NO_TR07  = 7   # フラグ番号(トラック7)
+ROW_FLAG_NO_TR08  = 8   # フラグ番号(トラック8)
+ROW_FLAG_NO_TR09  = 9   # フラグ番号(トラック9)
+ROW_FLAG_NO_TR10  = 10  # フラグ番号(トラック10)
+ROW_FLAG_NO_TR11  = 11  # フラグ番号(トラック11)
+ROW_FLAG_NO_TR12  = 12  # フラグ番号(トラック12)
+ROW_FLAG_NO_TR13  = 13  # フラグ番号(トラック13)
+ROW_FLAG_NO_TR14  = 14  # フラグ番号(トラック14)
+ROW_FLAG_NO_TR15  = 15  # フラグ番号(トラック15)
+ROW_FLAG_NO_TR16  = 16  # フラグ番号(トラック16)
+ROW_FADE_FRAME    = 17  # フェード時間
+ROW_FIRST_ZONE_ID = 18  # 先頭ゾーンID
 
 # 出力ファイル名のリスト
 bin_file_list = Array.new
@@ -104,23 +132,25 @@ file.close
   flag_state << in_data[ROW_FLAG_NO_TR16].to_i
   # 出力データを作成
   out_data = Array.new
-  out_data << GetSeqNo(in_data[ROW_SEQ_LABEL])
-  out_data << 0  # padding
-  out_data << CalcTrackBit(flag_state, 0)
-  out_data << CalcTrackBit(flag_state, 1)
-  out_data << CalcTrackBit(flag_state, 2)
-  out_data << CalcTrackBit(flag_state, 3)
-  out_data << CalcTrackBit(flag_state, 4)
-  out_data << CalcTrackBit(flag_state, 5)
-  out_data << CalcTrackBit(flag_state, 6)
-  out_data << CalcTrackBit(flag_state, 7)
-  out_data << CalcTrackBit(flag_state, 8)
-  out_data << 0  # padding
-  out_data << in_data[ROW_FADE_FRAME].to_i
+  out_data << GetSeqNo(in_data[ROW_SEQ_LABEL])        # シーケンス番号
+  out_data << CalcTrackBit(flag_state, 0)             # スイッチ0の操作ビット
+  out_data << CalcTrackBit(flag_state, 1)             # スイッチ1の操作ビット
+  out_data << CalcTrackBit(flag_state, 2)             # スイッチ2の操作ビット
+  out_data << CalcTrackBit(flag_state, 3)             # スイッチ3の操作ビット
+  out_data << CalcTrackBit(flag_state, 4)             # スイッチ4の操作ビット
+  out_data << CalcTrackBit(flag_state, 5)             # スイッチ5の操作ビット
+  out_data << CalcTrackBit(flag_state, 6)             # スイッチ6の操作ビット
+  out_data << CalcTrackBit(flag_state, 7)             # スイッチ7の操作ビット
+  out_data << CalcTrackBit(flag_state, 8)             # スイッチ8の操作ビット
+  out_data << in_data[ROW_FADE_FRAME].to_i            # フェード フレーム数
+  out_data << in_data.size - ROW_FIRST_ZONE_ID        # 有効ゾーン数
+  ROW_FIRST_ZONE_ID.upto( in_data.size - 1 ) do |i|
+    out_data << GetZoneID( "ZONE_ID_" + in_data[i] )  # 有効ゾーン
+  end
   # バイナリデータを出力
   filename = ARGV[1] + "/iss_switch_data_" + in_data[ROW_SEQ_LABEL].downcase + ".bin"
   file = File.open( filename, "wb" )
-  file.write( out_data.pack("SSSSSSSSSSSSS") )
+  file.write( out_data.pack("IS*") )
   file.close
   # 出力ファイル名を記憶
   bin_file_list << filename
