@@ -1061,7 +1061,7 @@ static  void  ai_if( VMHANDLE* vmh, TR_AI_WORK* tr_ai_work, BranchCond cond )
   int value = ( int )VMGetU32( vmh );
   int adrs  = ( int )VMGetU32( vmh );
 
-  OS_TPrintf("ai_if:\nsrc:%d dst:%d cond:%d\n",tr_ai_work->calc_work,value,cond);
+  //OS_TPrintf("ai_if:\nsrc:%d dst:%d cond:%d\n",tr_ai_work->calc_work,value,cond);
 
   branch_act( vmh, cond, tr_ai_work->calc_work, value, adrs );
 }
@@ -1839,6 +1839,7 @@ static  VMCMD_RESULT  AI_CHECK_NEKODAMASI( VMHANDLE* vmh, void* context_work )
   int side  = ( int )VMGetU32( vmh );
   BtlPokePos  pos = get_poke_pos( tr_ai_work, side );
 
+  //@todo のちほど変更
   tr_ai_work->calc_work = ( BPP_GetTurnCount( get_bpp( tr_ai_work, pos ) ) == 0 );
 
   return tr_ai_work->vmcmd_result;
@@ -2701,7 +2702,7 @@ static  int get_tokusei( TR_AI_WORK* tr_ai_work, int side, BtlPokePos pos )
       {
         //特性の発現を見ていない場合はパーソナルで持ちうる特性から取得
         int monsno = BPP_GetMonsNo( bpp );
-        int formno = BPP_GetValue( bpp, BPP_FORM );
+        int formno = BPP_GetValue( bpp, BPP_TOKUSEI );
         int tokusei1;
         int tokusei2;
 
@@ -2731,7 +2732,7 @@ static  int get_tokusei( TR_AI_WORK* tr_ai_work, int side, BtlPokePos pos )
   }
   else
   {
-    have_tokusei = BPP_GetValue( bpp, BPP_FORM ); //自分自身の特性は知っているので、素直に取得
+    have_tokusei = BPP_GetValue( bpp, BPP_TOKUSEI ); //自分自身の特性は知っているので、素直に取得
   }
 
   return have_tokusei;
