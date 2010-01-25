@@ -3,7 +3,7 @@
 <itp version="1.6.0">
 
 <head>
-	<create user="fujiwara_maiko" host="W00194" date="2009-12-18T17:27:36" source="m_siten03_00_00.mb"/>
+	<create user="fujiwara_maiko" host="W00194" date="2010-01-25T14:46:43" source="m_siten03_00_00.mb"/>
 	<title>Texture Pattern Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
@@ -14,30 +14,58 @@
 	frame_size="649"
 	tool_start_frame="0"
 	tool_end_frame="648"
-	compress_material="on" material_size="2 2"
+	compress_material="on" material_size="5 5"
 />
 
-<tex_pattern_list_data image_size="2" palette_size="2">
+<tex_pattern_list_data image_size="5" palette_size="5">
 	<image_name index="0" name="c09_03kigo.1"/>
 	<image_name index="1" name="c09_03kigo.2"/>
+	<image_name index="2" name="c09_kemu.1"/>
+	<image_name index="3" name="c09_kemu.2"/>
+	<image_name index="4" name="c09_kemu.3"/>
 	<palette_name index="0" name="c09_03kigo.1_pl"/>
 	<palette_name index="1" name="c09_03kigo.2_pl"/>
+	<palette_name index="2" name="c09_kemu.1_pl"/>
+	<palette_name index="3" name="c09_kemu.2_pl"/>
+	<palette_name index="4" name="c09_kemu.3_pl"/>
 </tex_pattern_list_data>
 
 <tex_pattern_data>
-	<frame_idx size="4">
-		0 18 253 533
+	<frame_idx size="75">
+		0 5 16 25 36 45 56 65 76 85
+		96 105 116 125 136 145 156 165 176 185
+		196 205 216 225 236 245 256 265 276 285
+		296 305 316 325 336 345 356 365 376 385
+		396 405 416 425 436 445 456 465 476 485
+		496 505 516 525 536 545 556 565 576 585
+		596 605 616 625 636 645 0 84 86 93
+		99 228 230 237 244
 	</frame_idx>
-	<image_idx size="4">
-		0 1 0 1
+	<image_idx size="75">
+		0 1 0 1 0 1 0 1 0 1
+		0 1 0 1 0 1 0 1 0 1
+		0 1 0 1 0 1 0 1 0 1
+		0 1 0 1 0 1 0 1 0 1
+		0 1 0 1 0 1 0 1 0 1
+		0 1 0 1 0 1 0 1 0 1
+		0 1 0 1 0 1 2 3 4 3
+		2 3 4 3 2
 	</image_idx>
-	<palette_idx size="4">
-		0 1 0 1
+	<palette_idx size="75">
+		0 1 0 1 0 1 0 1 0 1
+		0 1 0 1 0 1 0 1 0 1
+		0 1 0 1 0 1 0 1 0 1
+		0 1 0 1 0 1 0 1 0 1
+		0 1 0 1 0 1 0 1 0 1
+		0 1 0 1 0 1 0 1 0 1
+		0 1 0 1 0 1 2 3 4 3
+		2 3 4 3 2
 	</palette_idx>
 </tex_pattern_data>
 
-<tex_pattern_anm_array size="1">
-	<tex_pattern_anm index="0" material_name="lambert6" data_size="4" data_head="0"/>
+<tex_pattern_anm_array size="2">
+	<tex_pattern_anm index="0" material_name="c09_03kigo_1" data_size="66" data_head="0"/>
+	<tex_pattern_anm index="1" material_name="kemo" data_size="9" data_head="66"/>
 </tex_pattern_anm_array>
 
 </body>
