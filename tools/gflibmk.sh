@@ -1,2 +1,2 @@
 #!/bin/sh
-cmd /c gflibmk.bat
+cmd /c gflibmk.bat $1
