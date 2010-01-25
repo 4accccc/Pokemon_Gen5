@@ -533,6 +533,7 @@ static void handler_Waruagaki( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
 static void handler_Waruagaki_WazaParam( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable*  ADD_Michidure( u32* numElems );
 static void handler_Michidure_Ready( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_Michidure_WazaSeqStart( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Michidure_WazaDamage( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Michidure_TurnCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable*  ADD_Onnen( u32* numElems );
@@ -7378,17 +7379,20 @@ static void handler_Waruagaki( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
 static const BtlEventHandlerTable*  ADD_Michidure( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_UNCATEGORIZE_WAZA,    handler_Michidure_Ready },       // 未分類ワザハンドラ
-    { BTL_EVENT_WAZA_DMG_REACTION,    handler_Michidure_WazaDamage },  // ワザダメージ処理後
-    { BTL_EVENT_TURNCHECK_BEGIN,      handler_Michidure_TurnCheck },   // ターンチェック開始ハンドラ
+    { BTL_EVENT_UNCATEGORIZE_WAZA,   handler_Michidure_Ready        },  // 未分類ワザハンドラ
+    { BTL_EVENT_WAZASEQ_START,       handler_Michidure_WazaSeqStart },  // ワザ処理開始ハンドラ
+    { BTL_EVENT_WAZA_DMG_REACTION,   handler_Michidure_WazaDamage   },  // ワザダメージ処理後
+//    { BTL_EVENT_TURNCHECK_BEGIN,     handler_Michidure_TurnCheck    },  // ターンチェック開始ハンドラ
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
 }
+// 未分類ワザハンドラ
 static void handler_Michidure_Ready( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
+    // 道連れ準備メッセージ表示＆ハンドラ貼り付き
     BTL_HANDEX_PARAM_MESSAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
     HANDEX_STR_Setup( &param->str, BTL_STRTYPE_SET, BTL_STRID_SET_MichidureReady );
     HANDEX_STR_AddArg( &param->str, pokeID );
@@ -7396,6 +7400,17 @@ static void handler_Michidure_Ready( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK
     work[ WORKIDX_STICK ] = 1;
   }
 }
+// ワザ処理開始ハンドラ
+static void handler_Michidure_WazaSeqStart( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  // 「みちづれ」以外のワザを出すなら、貼り付き解除
+  if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID)
+  &&  (BTL_EVENTVAR_GetValue(BTL_EVAR_WAZAID) != BTL_EVENT_FACTOR_GetSubID(myHandle))
+  ){
+      BTL_EVENT_FACTOR_Remove( myHandle );
+  }
+}
+// ワザダメージ処理後
 static void handler_Michidure_WazaDamage( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF)==pokeID )
@@ -7417,6 +7432,7 @@ static void handler_Michidure_WazaDamage( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW
     }
   }
 }
+// ターンチェック開始ハンドラ
 static void handler_Michidure_TurnCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID ){
@@ -7564,7 +7580,6 @@ static void handler_Haneyasume( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
     sick_param->sickID = WAZASICK_MIYABURU;
     sick_param->sickCont = BPP_SICKCONT_MakeTurnParam( 1, POKETYPE_HIKOU );
     BPP_SICKCONT_SetFlag( &sick_param->sickCont, TRUE );
-//    sick_param->
   }
 }
 //----------------------------------------------------------------------------------
