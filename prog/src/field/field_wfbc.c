@@ -1723,12 +1723,12 @@ static void DEBWIN_Update_WFBCBlockCheck( void* userWork , DEBUGWIN_ITEM* item )
   if( p_core->type == FIELD_WFBC_CORE_TYPE_BLACK_CITY )
   {
     min = LAND_DATA_PATCH_BC_BUILD_01;
-    max = LAND_DATA_PATCH_WF_TREE_01 - 1;
+    max = LAND_DATA_PATCH_WF_TREE_01;
   }
   else
   {
     min = LAND_DATA_PATCH_WF_TREE_01;
-    max = LAND_DATA_PATCH_MAX - 1;
+    max = LAND_DATA_PATCH_MAX;
   }
   
   if( GFL_UI_KEY_GetTrg() & (PAD_BUTTON_A) )
@@ -1743,6 +1743,11 @@ static void DEBWIN_Update_WFBCBlockCheck( void* userWork , DEBUGWIN_ITEM* item )
 
   if(DEBUG_FIELD_WFBC_MAKE_flag)
   {
+    if( (DEBUG_FIELD_WFBC_MAKE_score < min) || (DEBUG_FIELD_WFBC_MAKE_score > max) )
+    {
+      DEBUG_FIELD_WFBC_MAKE_score = min;
+    }
+    
     if( GFL_UI_KEY_GetTrg() & (PAD_KEY_LEFT) )
     {
       DEBUG_FIELD_WFBC_MAKE_score --;
