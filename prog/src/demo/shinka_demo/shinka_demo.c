@@ -60,6 +60,7 @@ FS_EXTERN_OVERLAY(poke_status);
 #define HEAP_SIZE              (0x80000)               ///< ヒープサイズ
 
 // BGフレーム
+#define BG_FRAME_M_BACK              (GFL_BG_FRAME2_M)        // プライオリティ2
 #define BG_FRAME_M_POKEMON           (GFL_BG_FRAME0_M)        // プライオリティ1
 #define BG_FRAME_M_STM_TEXT          (GFL_BG_FRAME1_M)        // プライオリティ0
 
@@ -71,15 +72,19 @@ FS_EXTERN_OVERLAY(poke_status);
 // 本数
 enum
 {
+  BG_PAL_NUM_M_BACKDROP          = 1,
   BG_PAL_NUM_M_STM_TEXT_FONT     = 1,
   BG_PAL_NUM_M_STM_TEXT_FRAME    = 1,
+  BG_PAL_NUM_M_BACK              = 1,
 };
 // 位置
 enum
 {
-  BG_PAL_POS_M_STM_TEXT_FONT     = 0,
-  BG_PAL_POS_M_STM_TEXT_FRAME    = BG_PAL_POS_M_STM_TEXT_FONT   + BG_PAL_NUM_M_STM_TEXT_FONT       , // 1
-  BG_PAL_POS_M_MAX               = BG_PAL_POS_M_STM_TEXT_FRAME  + BG_PAL_NUM_M_STM_TEXT_FRAME      , // 2  // ここから空き
+  BG_PAL_POS_M_BACKDROP          = 0,                                                                // 0
+  BG_PAL_POS_M_STM_TEXT_FONT     = BG_PAL_POS_M_BACKDROP        + BG_PAL_NUM_M_BACKDROP            , // 1
+  BG_PAL_POS_M_STM_TEXT_FRAME    = BG_PAL_POS_M_STM_TEXT_FONT   + BG_PAL_NUM_M_STM_TEXT_FONT       , // 2
+  BG_PAL_POS_M_BACK              = BG_PAL_POS_M_STM_TEXT_FRAME  + BG_PAL_NUM_M_STM_TEXT_FRAME      , // 3
+  BG_PAL_POS_M_MAX               = BG_PAL_POS_M_BACK            + BG_PAL_NUM_M_BACK                , // 4  // ここから空き
 };
 // 本数
 enum
@@ -139,12 +144,19 @@ enum
 // 
 #define TCBSYS_TASK_MAX        (8)
 
+// 白く飛ばす演出のためのパレットフェード
+#define PFADE_TCBSYS_TASK_MAX  (8)
+#define PFADE_WAIT_TO_WHITE    (0)
+#define PFADE_WAIT_FROM_WHITE  (2)
+
 // ステップ
 typedef enum
 {
   STEP_FADE_IN,                     // フェードイン
   STEP_EVO_BEFORE,                  // おや！？　ようすが……！
+  STEP_EVO_DEMO_BEFORE,             // デモ(BGMの再生が開始されていないとき)
   STEP_EVO_DEMO,                    // デモ
+  STEP_EVO_DEMO_AFTER,              // デモ(BGMをpushしているとき)
   STEP_EVO_CANCEL,                  // あれ……？　へんかが　とまった！
   STEP_EVO_AFTER,                   // おめでとう！　しんかした！
   STEP_WAZA_OBOE,                   // 技覚えチェック
@@ -184,6 +196,8 @@ typedef enum
   SOUND_STEP_WAIT,
   SOUND_STEP_PLAY_SHINKA,
   SOUND_STEP_PLAYING_SHINKA,
+  SOUND_STEP_PUSH_SHINKA,
+  SOUND_STEP_POP_SHINKA,
   SOUND_STEP_PLAY_CONGRATULATE,
   SOUND_STEP_PLAYING_CONGRATULATE,
   SOUND_STEP_PLAY_WAZAOBOE,
@@ -232,6 +246,9 @@ typedef struct
   SOUND_STEP                  sound_step;
   BOOL                        sound_none;
 
+  // VBlank中TCB
+  GFL_TCB*                    vblank_tcb;
+
   // STM_TEXT
   PRINT_STREAM*               stm_text_stream;
   GFL_TCBLSYS*                stm_text_tcblsys;
@@ -263,29 +280,25 @@ typedef struct
   PALETTE_FADE_PTR            pfd;  // パレットフェード
   u8                          cursor_flag;
   BPLIST_DATA                 bplist_data;
-  GFL_TCB*                    vblank_tcb;
 
   // フィールドステータス
   PSTATUS_DATA*               psData;
 
   // 進化デモの演出
   SHINKADEMO_VIEW_WORK*       view;
+
+  // 単一色、単一キャラのBG
+  GFL_ARCUTIL_TRANSINFO       sim_transinfo;  // ARCUTILは使用していないが、位置とサイズをひとまとめにしたかったので。
+  // 上下に黒帯を表示するためのwnd
+  u8                          wnd_up_y;    // wnd_up_y <= 見えるピクセル < wnd_down_y
+  u8                          wnd_down_y;  //        0 <= 見えるピクセル < 192
+  // 白く飛ばす演出のためのパレットフェード
+  GFL_TCBSYS*                 pfade_tcbsys;
+  void*                       pfade_tcbsys_work;
+  PALETTE_FADE_PTR            pfade_ptr;  // パレットフェード
+  s32                         pfade_step;
 }
 SHINKA_DEMO_WORK;
-
-//-------------------------------------
-/// PROC パラメータ
-//=====================================
-struct _SHINKA_DEMO_PARAM
-{
-  GAMEDATA*         gamedata;
-  const POKEPARTY*  ppt;
-  u16               after_mons_no;        //進化後のポケモンナンバー
-  u8                shinka_pos;           //進化するポケモンのPOKEPARTY内の位置
-  u8                shinka_cond;          //進化条件（ヌケニンチェックに使用）
-  BOOL              b_field;              // フィールドから呼び出すときはTRUE、バトル後に呼び出すときはFALSE
-  BOOL              b_enable_cancel;      // 進化キャンセルできるときはTRUE、できないときはFALSE
-};
 
 
 //=============================================================================
@@ -297,6 +310,22 @@ static void ShinkaDemo_Init( SHINKA_DEMO_PARAM* param, SHINKA_DEMO_WORK* work );
 static void ShinkaDemo_Exit( SHINKA_DEMO_PARAM* param, SHINKA_DEMO_WORK* work );
 
 static void ShinkaDemo_SoundMain( SHINKA_DEMO_PARAM* param, SHINKA_DEMO_WORK* work );
+
+static void ShinkaDemo_CreateSimpleBG( SHINKA_DEMO_PARAM* param, SHINKA_DEMO_WORK* work );
+static void ShinkaDemo_DeleteSimpleBG( SHINKA_DEMO_PARAM* param, SHINKA_DEMO_WORK* work );
+
+static void ShinkaDemo_InitWnd( SHINKA_DEMO_PARAM* param, SHINKA_DEMO_WORK* work );
+static void ShinkaDemo_ExitWnd( SHINKA_DEMO_PARAM* param, SHINKA_DEMO_WORK* work );
+static void ShinkaDemo_MainWnd( SHINKA_DEMO_PARAM* param, SHINKA_DEMO_WORK* work );
+
+static void ShinkaDemo_ZeroPFade( SHINKA_DEMO_PARAM* param, SHINKA_DEMO_WORK* work );
+static void ShinkaDemo_InitPFade( SHINKA_DEMO_PARAM* param, SHINKA_DEMO_WORK* work );  // パレットを書き換えるので、全パレットの用意が済んでから呼ぶこと
+static void ShinkaDemo_ExitPFade( SHINKA_DEMO_PARAM* param, SHINKA_DEMO_WORK* work );
+static void ShinkaDemo_MainPFade( SHINKA_DEMO_PARAM* param, SHINKA_DEMO_WORK* work );
+static void ShinkaDemo_ToWhitePFade( SHINKA_DEMO_PARAM* param, SHINKA_DEMO_WORK* work );
+static void ShinkaDemo_FromWhitePFade( SHINKA_DEMO_PARAM* param, SHINKA_DEMO_WORK* work );
+static BOOL ShinkaDemo_CheckPFade( SHINKA_DEMO_PARAM* param, SHINKA_DEMO_WORK* work );  // TRUE処理中、FALSE終了
+static void ShinkaDemo_ToFromWhitePFade( SHINKA_DEMO_PARAM* param, SHINKA_DEMO_WORK* work );
 
 static void ShinkaDemo_VBlankFunc( GFL_TCB* tcb, void* wk );
 
@@ -350,7 +379,7 @@ const GFL_PROC_DATA   ShinkaDemoProcData = {
  *  @param[in]   ppt           POKEPARTY構造体
  *  @param[in]   after_mons_no 進化後のポケモンナンバー
  *  @param[in]   pos           進化するポケモンのPOKEPARTY内のインデックス
- *  @param[in]   cond          進化条件
+ *  @param[in]   cond          進化条件（ヌケニンチェックに使用）
  *  @param[in]   b_field       フィールドから呼び出すときはTRUE、バトル後に呼び出すときはFALSE
  *
  *  @retval      SHINKA_DEMO_PARAM
@@ -360,13 +389,9 @@ SHINKA_DEMO_PARAM*  SHINKADEMO_AllocParam( HEAPID heapID, GAMEDATA* gamedata, co
 { 
   SHINKA_DEMO_PARAM*  sdp = GFL_HEAP_AllocMemory( heapID, sizeof( SHINKA_DEMO_PARAM ) );
 
-  sdp->gamedata = gamedata;
-  sdp->ppt = ppt;
-  sdp->after_mons_no = after_mons_no;
-  sdp->shinka_pos = pos;
-  sdp->shinka_cond = cond;
-  sdp->b_field = b_field;
-  sdp->b_enable_cancel = TRUE;
+  SHINKADEMO_InitParam( sdp,
+                        gamedata, ppt,
+                        after_mons_no, pos, cond, b_field, TRUE );
 
   return sdp;
 }
@@ -377,7 +402,7 @@ SHINKA_DEMO_PARAM*  SHINKADEMO_AllocParam( HEAPID heapID, GAMEDATA* gamedata, co
  *
  *  @param[in,out]   sdp           パラメータワーク構造体
  *
- *  @retval          SHINKA_DEMO_PARAM
+ *  @retval          
  */
 //------------------------------------------------------------------
 void  SHINKADEMO_FreeParam( SHINKA_DEMO_PARAM* sdp )
@@ -385,10 +410,39 @@ void  SHINKADEMO_FreeParam( SHINKA_DEMO_PARAM* sdp )
   GFL_HEAP_FreeMemory( sdp );
 }
 
+//------------------------------------------------------------------
+/**
+ *  @brief       進化デモ用パラメータを設定する
+ *
+ *  @param[in,out] param             SHINKA_DEMO_PARAM
+ *  @param[in]     gamedata          GAMEDATA
+ *  @param[in]     ppt               POKEPARTY構造体
+ *  @param[in]     after_mons_no     進化後のポケモンナンバー
+ *  @param[in]     pos               進化するポケモンのPOKEPARTY内のインデックス
+ *  @param[in]     cond              進化条件（ヌケニンチェックに使用）
+ *  @param[in]     b_field           フィールドから呼び出すときはTRUE、バトル後に呼び出すときはFALSE
+ *  @param[in]     b_enable_cancel   進化キャンセルできるときはTRUE、できないときはFALSE
+ *
+ *  @retval      
+ */
+//------------------------------------------------------------------
+void SHINKADEMO_InitParam( SHINKA_DEMO_PARAM* param,
+                           GAMEDATA* gamedata, const POKEPARTY* ppt,
+                           u16 after_mons_no, u8 pos, u8 cond, BOOL b_field, BOOL b_enable_cancel )
+{
+  param->gamedata          = gamedata;
+  param->ppt               = ppt;
+  param->after_mons_no     = after_mons_no;
+  param->shinka_pos        = pos;
+  param->shinka_cond       = cond;
+  param->b_field           = b_field;
+  param->b_enable_cancel   = b_enable_cancel;
+}
+
 
 //=============================================================================
 /**
-*  ローカル関数定義
+*  ローカル関数定義(PROC)
 */
 //=============================================================================
 //-------------------------------------
@@ -436,7 +490,6 @@ static GFL_PROC_RESULT ShinkaDemoProcInit( GFL_PROC * proc, int * seq, void * pw
     work->tcbsys           = NULL;
     work->tcbsys_work      = NULL;
     work->pfd              = NULL;
-    work->vblank_tcb       = NULL;
 
     work->cursor_flag      = 0;
  }
@@ -455,6 +508,11 @@ static GFL_PROC_RESULT ShinkaDemoProcInit( GFL_PROC * proc, int * seq, void * pw
   else
     PMSND_FadeOutBGM( 16 * FADE_IN_WAIT / 2 );
 
+  // VBlank中TCB
+  {
+    work->vblank_tcb = GFUser_VIntr_CreateTCB( ShinkaDemo_VBlankFunc, work, 1 );
+  }
+
   return GFL_PROC_RES_FINISH;
 }
 
@@ -465,6 +523,9 @@ static GFL_PROC_RESULT ShinkaDemoProcExit( GFL_PROC * proc, int * seq, void * pw
 {
   SHINKA_DEMO_PARAM*    param    = (SHINKA_DEMO_PARAM*)pwk;
   SHINKA_DEMO_WORK*     work     = (SHINKA_DEMO_WORK*)mywk;
+
+  // VBlank中TCB
+  GFL_TCB_DeleteTask( work->vblank_tcb );
 
   // サウンド
   PMSND_StopBGM();
@@ -488,7 +549,7 @@ static GFL_PROC_RESULT ShinkaDemoProcExit( GFL_PROC * proc, int * seq, void * pw
 
   // 終了処理
   ShinkaDemo_Exit( param, work );
-  
+ 
   // ヒープ
   {
     GFL_PROC_FreeWork( proc );
@@ -530,28 +591,57 @@ static GFL_PROC_RESULT ShinkaDemoProcMain( GFL_PROC * proc, int * seq, void * pw
       if( ShinkaDemo_WaitStmTextStream( work ) )
       {
         // 次へ
-        work->step = STEP_EVO_DEMO;
+        work->step = STEP_EVO_DEMO_BEFORE;
         
         work->evo_cancel = FALSE;
-        work->sound_step = SOUND_STEP_PLAY_SHINKA;
         SHINKADEMO_VIEW_StartShinka( work->view );
+      }
+    }
+    break;
+  case STEP_EVO_DEMO_BEFORE:
+    {
+      if( SHINKADEMO_VIEW_IsBGMPlay( work->view ) )
+      {
+        // 次へ
+        work->step = STEP_EVO_DEMO;
+        
+        work->sound_step = SOUND_STEP_PLAY_SHINKA;
       }
     }
     break;
   case STEP_EVO_DEMO:
     {
-      if( param->b_enable_cancel )
+      if( SHINKADEMO_VIEW_ToFromWhite( work->view ) )
       {
-        if( key_trg & PAD_BUTTON_B )
+        // 白く飛ばす演出のためのパレットフェード
+        ShinkaDemo_ToFromWhitePFade( param, work );
+      }
+
+      if( !SHINKADEMO_VIEW_IsBGMPlay( work->view ) )
+      {
+        // 次へ
+        work->step = STEP_EVO_DEMO_AFTER;
+
+        work->sound_step = SOUND_STEP_PUSH_SHINKA;
+      }
+      else
+      {
+        if( param->b_enable_cancel )
         {
-          BOOL success_cancel = SHINKADEMO_VIEW_CancelShinka( work->view );
-          if( success_cancel )
+          if( key_trg & PAD_BUTTON_B )
           {
-            work->evo_cancel = TRUE;
+            BOOL success_cancel = SHINKADEMO_VIEW_CancelShinka( work->view );
+            if( success_cancel )
+            {
+              work->evo_cancel = TRUE;
+            }
           }
         }
       }
-
+    }
+    break;
+  case STEP_EVO_DEMO_AFTER:
+    {
       if( SHINKADEMO_VIEW_IsEndShinka( work->view ) )
       {
         if( work->evo_cancel )
@@ -564,6 +654,9 @@ static GFL_PROC_RESULT ShinkaDemoProcMain( GFL_PROC * proc, int * seq, void * pw
             work->stm_text_msgdata_shinka, SHINKADEMO_ShinkaCancelMsg, NULL,
             TAG_REGIST_TYPE_POKE_NICK_NAME, work->pp,
             TAG_REGIST_TYPE_NONE, NULL );
+
+          // サウンド
+          work->sound_step = SOUND_STEP_POP_SHINKA;
         }
         else
         {
@@ -846,8 +939,6 @@ static GFL_PROC_RESULT ShinkaDemoProcMain( GFL_PROC * proc, int * seq, void * pw
         work->tcbsys_work = GFL_HEAP_AllocMemory( work->heap_id, GFL_TCB_CalcSystemWorkSize(TCBSYS_TASK_MAX) );
         GFL_STD_MemClear( work->tcbsys_work, GFL_TCB_CalcSystemWorkSize(TCBSYS_TASK_MAX) );
         work->tcbsys = GFL_TCB_Init( TCBSYS_TASK_MAX, work->tcbsys_work );
-
-        work->vblank_tcb = GFUser_VIntr_CreateTCB( ShinkaDemo_VBlankFunc, work, 1 );
  
         // パレットフェード
         work->pfd = PaletteFadeInit( work->heap_id );
@@ -910,16 +1001,13 @@ static GFL_PROC_RESULT ShinkaDemoProcMain( GFL_PROC * proc, int * seq, void * pw
         PaletteFadeFree( work->pfd );
 
         // バトルステータス用タスク
-        GFL_TCB_DeleteTask( work->vblank_tcb );
-
-        GFL_HEAP_FreeMemory( work->tcbsys_work );
         GFL_TCB_Exit( work->tcbsys );
+        GFL_HEAP_FreeMemory( work->tcbsys_work );
 
         // 初期化
         work->tcbsys           = NULL;
         work->tcbsys_work      = NULL;
         work->pfd              = NULL;
-        work->vblank_tcb       = NULL;
 
         // 下画面の生成
         SHINKADEMO_GRAPHIC_InitBGSub( work->graphic );
@@ -1153,6 +1241,9 @@ static GFL_PROC_RESULT ShinkaDemoProcMain( GFL_PROC * proc, int * seq, void * pw
   }
 
   ShinkaDemo_SoundMain( param, work );
+  
+  // 白く飛ばす演出のためのパレットフェード
+  ShinkaDemo_MainPFade( param, work );
 
   if(    work->step != STEP_WAZA_STATUS_FIELD
       && work->step != STEP_WAZA_STATUS_FIELD_OUT )
@@ -1269,8 +1360,15 @@ static void ShinkaDemo_Init( SHINKA_DEMO_PARAM* param, SHINKA_DEMO_WORK* work )
     work->yesno_menu_strbuf_no  = NULL;
   }
 
+  // 単一色、単一キャラのBGを生成する
+  ShinkaDemo_CreateSimpleBG( param, work );
+
+  // 上下に黒帯を表示するためのwnd
+  ShinkaDemo_InitWnd( param, work );
+
   // プライオリティ、表示、背景色など
   {
+    GFL_BG_SetPriority( BG_FRAME_M_BACK                  , 2 );
     GFL_BG_SetPriority( BG_FRAME_M_POKEMON               , 1 );
     GFL_BG_SetPriority( BG_FRAME_M_STM_TEXT              , 0 );  // 最前面
 
@@ -1278,6 +1376,7 @@ static void ShinkaDemo_Init( SHINKA_DEMO_PARAM* param, SHINKA_DEMO_WORK* work )
     //GFL_BG_SetPriority( BG_FRAME_S_BUTTON                , 1 );
     //GFL_BG_SetPriority( BG_FRAME_S_BTN_TEXT              , 0 );  // 最前面
 
+    GFL_BG_SetVisible( BG_FRAME_M_BACK                  , VISIBLE_ON );
     GFL_BG_SetVisible( BG_FRAME_M_POKEMON               , VISIBLE_ON );
     GFL_BG_SetVisible( BG_FRAME_M_STM_TEXT              , VISIBLE_ON );
   
@@ -1310,6 +1409,16 @@ static void ShinkaDemo_Init( SHINKA_DEMO_PARAM* param, SHINKA_DEMO_WORK* work )
                    );
     }
   }
+
+  // パーティクル対応
+  G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG0,
+                    GX_BLEND_PLANEMASK_BD | GX_BLEND_PLANEMASK_BG3 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG1,
+                    0, 0 );
+    // パーティクルのアルファをきれいに出すため
+    // ev1とev2は使われない  // TWLプログラミングマニュアル「2D面とのαブレンディング」参考
+
+  // 白く飛ばす演出のためのパレットフェード
+  ShinkaDemo_InitPFade( param, work );  // パレットを書き換えるので、全パレットの用意が済んでから呼ぶこと
 }
 
 //-------------------------------------
@@ -1317,6 +1426,15 @@ static void ShinkaDemo_Init( SHINKA_DEMO_PARAM* param, SHINKA_DEMO_WORK* work )
 //=====================================
 static void ShinkaDemo_Exit( SHINKA_DEMO_PARAM* param, SHINKA_DEMO_WORK* work )
 {
+  // 白く飛ばす演出のためのパレットフェード
+  ShinkaDemo_ExitPFade( param, work );
+
+  // 上下に黒帯を表示するためのwnd
+  ShinkaDemo_ExitWnd( param, work );
+
+  // 単一色、単一キャラのBGを破棄する
+  ShinkaDemo_DeleteSimpleBG( param, work );
+
   // 進化デモの演出
   {
     SHINKADEMO_VIEW_Exit( work->view );
@@ -1377,9 +1495,20 @@ static void ShinkaDemo_SoundMain( SHINKA_DEMO_PARAM* param, SHINKA_DEMO_WORK* wo
     {
     }
     break;
-  case SOUND_STEP_PLAY_CONGRATULATE:
+  case SOUND_STEP_PUSH_SHINKA:
     {
       PMSND_PushBGM();
+      work->sound_step = SOUND_STEP_PLAYING_SHINKA;
+    }
+    break;
+  case SOUND_STEP_POP_SHINKA:
+    {
+      PMSND_PopBGM();
+      work->sound_step = SOUND_STEP_PLAYING_SHINKA;
+    }
+    break;
+  case SOUND_STEP_PLAY_CONGRATULATE:
+    {
       PMSND_PlayBGM(SEQ_ME_SHINKAOME);
       work->sound_step = SOUND_STEP_PLAYING_CONGRATULATE;
     }
@@ -1438,6 +1567,230 @@ static void ShinkaDemo_SoundMain( SHINKA_DEMO_PARAM* param, SHINKA_DEMO_WORK* wo
 }
 
 //-------------------------------------
+/// 単一色、単一キャラのBGを生成する
+//=====================================
+static void ShinkaDemo_CreateSimpleBG( SHINKA_DEMO_PARAM* param, SHINKA_DEMO_WORK* work )
+{
+  // パレットの作成＆転送
+  {
+    u16* pal = GFL_HEAP_AllocClearMemory( work->heap_id, sizeof(u16) * 0x10 );
+    pal[0x00] = 0x0000;  // 透明
+    pal[0x01] = 0x0000;  // 黒
+    pal[0x02] = 0x7fff;  // 白
+    pal[0x03] = 0x2108;  // 灰
+
+    GFL_BG_LoadPalette( BG_FRAME_M_BACK, pal, 0x20, BG_PAL_POS_M_BACK*0x20 );
+    GFL_HEAP_FreeMemory( pal );
+  }
+
+  // キャラの作成＆転送
+  {
+    u32 sim_bmp_pos;
+    u32 sim_bmp_size;
+
+    GFL_BMP_DATA* sim_bmp = GFL_BMP_Create( 1, 1, GFL_BMP_16_COLOR, work->heap_id );
+    GFL_BMP_Fill( sim_bmp, 0, 0, 8, 8, 0x03 );
+
+    sim_bmp_size = GFL_BMP_GetBmpDataSize(sim_bmp);
+    sim_bmp_pos = GFL_BG_LoadCharacterAreaMan(
+                    BG_FRAME_M_BACK,
+                    GFL_BMP_GetCharacterAdrs(sim_bmp),
+                    sim_bmp_size );
+
+    GF_ASSERT_MSG( sim_bmp_pos != AREAMAN_POS_NOTFOUND, "SHINKADEMO : BGキャラ領域が足りませんでした。\n" );  // gflibのarc_util.cの
+    GF_ASSERT_MSG( sim_bmp_pos < 0xffff, "SHINKADEMO : BGキャラの位置がよくありません。\n" );                 // _TransVramBgCharacterAreaMan
+    GF_ASSERT_MSG( sim_bmp_size < 0xffff, "SHINKADEMO : BGキャラのサイズがよくありません。\n" );              // を参考にした。
+
+    work->sim_transinfo = GFL_ARCUTIL_TRANSINFO_Make( sim_bmp_pos, sim_bmp_size );
+    
+    GFL_BMP_Delete( sim_bmp );
+  }
+
+  // スクリーンの作成＆転送
+  {
+    u16* sim_scr = GFL_HEAP_AllocClearMemory( work->heap_id, sizeof(u16) * 32*24 );
+    u8 i, j;
+    u16 h = 0;
+    for(i=0; i<32; i++)
+    {
+      for(j=0; j<24; j++)
+      {
+        u16 chara_name = GFL_ARCUTIL_TRANSINFO_GetPos(work->sim_transinfo);
+        u16 flip_h     = 0;
+        u16 flip_v     = 0;
+        u16 pal        = BG_PAL_POS_M_BACK;
+        sim_scr[h] = ( pal << 12 ) | ( flip_v << 11 ) | ( flip_h << 10 ) | ( chara_name << 0 );
+        
+        h++;
+      }
+    }
+
+    GFL_BG_WriteScreen( BG_FRAME_M_BACK, sim_scr, 0, 0, 32, 24 );
+    GFL_BG_LoadScreenReq( BG_FRAME_M_BACK );
+
+    GFL_HEAP_FreeMemory( sim_scr );
+  }
+}
+
+//-------------------------------------
+/// 単一色、単一キャラのBGを破棄する
+//=====================================
+static void ShinkaDemo_DeleteSimpleBG( SHINKA_DEMO_PARAM* param, SHINKA_DEMO_WORK* work )
+{
+  GFL_BG_FreeCharacterArea( BG_FRAME_M_BACK,
+                            GFL_ARCUTIL_TRANSINFO_GetPos(work->sim_transinfo),
+                            GFL_ARCUTIL_TRANSINFO_GetSize(work->sim_transinfo) );
+}
+
+//-------------------------------------
+/// 上下に黒帯を表示するためのwnd
+//=====================================
+static void ShinkaDemo_InitWnd( SHINKA_DEMO_PARAM* param, SHINKA_DEMO_WORK* work )
+{
+  work->wnd_up_y     =  20;
+  work->wnd_down_y   = 130;
+
+  GX_SetVisibleWnd( GX_WNDMASK_W0 | GX_WNDMASK_W1 );
+
+  G2_SetWnd0Position(   0, work->wnd_up_y,      128, work->wnd_down_y );
+  G2_SetWnd1Position( 128, work->wnd_up_y, 0/*256*/, work->wnd_down_y );
+
+  G2_SetWnd0InsidePlane(
+    GX_WND_PLANEMASK_BG0 | GX_WND_PLANEMASK_BG1 | GX_WND_PLANEMASK_BG2 | GX_WND_PLANEMASK_BG3 | GX_WND_PLANEMASK_OBJ,
+    TRUE );
+  G2_SetWnd1InsidePlane(
+    GX_WND_PLANEMASK_BG0 | GX_WND_PLANEMASK_BG1 | GX_WND_PLANEMASK_BG2 | GX_WND_PLANEMASK_BG3 | GX_WND_PLANEMASK_OBJ,
+    TRUE );
+
+  G2_SetWndOutsidePlane(
+    GX_WND_PLANEMASK_BG1,
+    TRUE );
+}
+static void ShinkaDemo_ExitWnd( SHINKA_DEMO_PARAM* param, SHINKA_DEMO_WORK* work )
+{
+  GX_SetVisibleWnd( GX_WNDMASK_NONE );
+}
+static void ShinkaDemo_MainWnd( SHINKA_DEMO_PARAM* param, SHINKA_DEMO_WORK* work )
+{
+}
+
+//-------------------------------------
+/// 白く飛ばす演出のためのパレットフェード
+//=====================================
+static void ShinkaDemo_ZeroPFade( SHINKA_DEMO_PARAM* param, SHINKA_DEMO_WORK* work )
+{
+  work->pfade_tcbsys       = NULL;
+  work->pfade_tcbsys_work  = NULL;
+  work->pfade_ptr          = NULL;
+}
+
+static void ShinkaDemo_InitPFade( SHINKA_DEMO_PARAM* param, SHINKA_DEMO_WORK* work )  // パレットを書き換えるので、全パレットの用意が済んでから呼ぶこと
+{
+  ShinkaDemo_ZeroPFade( param, work );
+
+  // タスク
+  work->pfade_tcbsys_work = GFL_HEAP_AllocClearMemory( work->heap_id, GFL_TCB_CalcSystemWorkSize(PFADE_TCBSYS_TASK_MAX) );
+  work->pfade_tcbsys = GFL_TCB_Init( PFADE_TCBSYS_TASK_MAX, work->pfade_tcbsys_work );
+
+  // パレットフェード
+  work->pfade_ptr = PaletteFadeInit( work->heap_id );
+  PaletteTrans_AutoSet( work->pfade_ptr, TRUE );
+  PaletteFadeWorkAllocSet( work->pfade_ptr, FADE_MAIN_BG, 0x1e0, work->heap_id );
+  PaletteFadeWorkAllocSet( work->pfade_ptr, FADE_MAIN_OBJ, 0x1e0, work->heap_id );
+
+  // 現在VRAMにあるパレットを壊さないように、VRAMからパレット内容をコピーする
+  PaletteWorkSet_VramCopy( work->pfade_ptr, FADE_MAIN_BG, 0, 0x1e0 );
+  PaletteWorkSet_VramCopy( work->pfade_ptr, FADE_MAIN_OBJ, 0, 0x1e0 );
+
+  // ステップ
+  work->pfade_step = 0;
+}
+
+static void ShinkaDemo_ExitPFade( SHINKA_DEMO_PARAM* param, SHINKA_DEMO_WORK* work )
+{
+  // パレットフェード
+  PaletteFadeWorkAllocFree( work->pfade_ptr, FADE_MAIN_BG );
+  PaletteFadeWorkAllocFree( work->pfade_ptr, FADE_MAIN_OBJ );
+  PaletteFadeFree( work->pfade_ptr );
+
+  // タスク
+  GFL_TCB_Exit( work->pfade_tcbsys );
+  GFL_HEAP_FreeMemory( work->pfade_tcbsys_work );
+
+  ShinkaDemo_ZeroPFade( param, work );
+}
+
+static void ShinkaDemo_MainPFade( SHINKA_DEMO_PARAM* param, SHINKA_DEMO_WORK* work )
+{
+  // タスク
+  if( work->pfade_tcbsys ) GFL_TCB_Main( work->pfade_tcbsys );
+
+  // ステップ
+  switch( work->pfade_step )
+  {
+  case 0:
+    {
+    }
+    break;
+  case 1:
+    {
+      ShinkaDemo_ToWhitePFade( param, work );
+      work->pfade_step++;
+    }
+    break;
+  case 2:
+    {
+      if( !ShinkaDemo_CheckPFade( param, work ) )
+        work->pfade_step++;
+    }
+    break;
+  case 3:
+    {
+      ShinkaDemo_FromWhitePFade( param, work );
+      work->pfade_step++;
+    }
+    break;
+  case 4:
+    {
+      if( !ShinkaDemo_CheckPFade( param, work ) )
+        work->pfade_step = 0;
+    }
+    break;
+  }
+}
+
+static void ShinkaDemo_ToWhitePFade( SHINKA_DEMO_PARAM* param, SHINKA_DEMO_WORK* work )
+{
+  // 白く飛ばす
+  u16 req_bit = (1<<BG_PAL_POS_M_BACKDROP) | (1<<BG_PAL_POS_M_BACK);
+  PaletteFadeReq(
+    work->pfade_ptr, PF_BIT_MAIN_BG, req_bit, PFADE_WAIT_TO_WHITE, 0, 16, 0x7fff, work->pfade_tcbsys
+  );
+}
+
+static void ShinkaDemo_FromWhitePFade( SHINKA_DEMO_PARAM* param, SHINKA_DEMO_WORK* work )
+{
+  // 白から戻る
+  u16 req_bit = (1<<BG_PAL_POS_M_BACKDROP) | (1<<BG_PAL_POS_M_BACK);
+  PaletteFadeReq(
+    work->pfade_ptr, PF_BIT_MAIN_BG, req_bit, PFADE_WAIT_FROM_WHITE, 16, 0, 0x7fff, work->pfade_tcbsys
+  );
+}
+
+static BOOL ShinkaDemo_CheckPFade( SHINKA_DEMO_PARAM* param, SHINKA_DEMO_WORK* work )  // TRUE処理中、FALSE終了
+{
+  if( PaletteFadeCheck(work->pfade_ptr) == 0 )
+    return FALSE;
+  else
+    return TRUE;
+}
+
+static void ShinkaDemo_ToFromWhitePFade( SHINKA_DEMO_PARAM* param, SHINKA_DEMO_WORK* work )
+{
+  work->pfade_step = 1;
+}
+
+//-------------------------------------
 /// VBlank関数
 //=====================================
 static void ShinkaDemo_VBlankFunc( GFL_TCB* tcb, void* wk )
@@ -1448,6 +1801,12 @@ static void ShinkaDemo_VBlankFunc( GFL_TCB* tcb, void* wk )
   {
     // パレットフェード
     if( work->pfd ) PaletteFadeTrans( work->pfd );
+  }
+
+  // 白く飛ばす演出のためのパレットフェード
+  {
+    // パレットフェード
+    if( work->pfade_ptr ) PaletteFadeTrans( work->pfade_ptr );
   }
 }
 

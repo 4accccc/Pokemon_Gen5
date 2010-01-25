@@ -84,6 +84,16 @@ extern BOOL SHINKADEMO_VIEW_CancelShinka( SHINKADEMO_VIEW_WORK* work );
 extern void SHINKADEMO_VIEW_StartShinka( SHINKADEMO_VIEW_WORK* work );
 
 //-------------------------------------
+/// BGMを再生してもよいか
+//=====================================
+extern BOOL SHINKADEMO_VIEW_IsBGMPlay( SHINKADEMO_VIEW_WORK* work );
+
+//-------------------------------------
+/// 白く飛ばす演出のためのパレットフェードをして欲しいか(1フレームしかTRUEにならない)
+//=====================================
+extern BOOL SHINKADEMO_VIEW_ToFromWhite( SHINKADEMO_VIEW_WORK* work );
+
+//-------------------------------------
 /// 終了しているか
 //=====================================
 extern BOOL SHINKADEMO_VIEW_IsEndShinka( SHINKADEMO_VIEW_WORK* work );

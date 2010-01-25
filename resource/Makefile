@@ -137,7 +137,8 @@ SUBDIRS	=	wmi \
 			enceff_imd \
 			pl_boat \
 			enc_ci_face \
-			comm_btl_demo
+			comm_btl_demo \
+			shinka_demo
 
 include $(RESOURCE_MACRO)
 
