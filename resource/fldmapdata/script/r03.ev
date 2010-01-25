@@ -103,7 +103,7 @@ _ANIME_LABEL	 anm_babygirl1_stop_01
 //--------------------------------------------------------------
 
 _ANIME_LABEL	 anm_stoper_player_return01
-	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_WALK_R_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 /**************************************************************/
