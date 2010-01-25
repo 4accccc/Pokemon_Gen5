@@ -3939,6 +3939,25 @@
     .short  \pos
     .endm
 
+//--------------------------------------------------------------
+/**
+ * @def	_GET_BREEDER_JUDGE_RESULT
+ * @brief
+ * @param pos   指定するポケモンの位置
+ * @param	mode	(script_def.hのSCR_JUDGE_MODE_～を参照）
+ * @param	ret_wk		取得した値
+ */
+//--------------------------------------------------------------
+#define	_GET_BREEDER_JUDGE_RESULT( pos, mode, ret_wk ) \
+		_ASM_GET_BREEDER_JUDGE_RESULT pos, mode, ret_wk
+
+		.macro	_ASM_GET_BREEDER_JUDGE_RESULT pos, mode, ret_wk
+		.short	EV_SEQ_GET_BREEDER_JUDGE_RESULT
+		.short	\pos
+		.short	\mode
+		.short	\ret_wk
+		.endm
+
 //======================================================================
 //
 //    
