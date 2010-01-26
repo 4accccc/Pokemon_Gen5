@@ -1168,18 +1168,30 @@ static void update_dst( DMP_MAINWORK* wk )
     PP_Put( wk->dst, ID_PARA_spepow_exp, box_getvalue(wk, INPUTBOX_ID_SPWEXP) );
     PP_Put( wk->dst, ID_PARA_spedef_exp, box_getvalue(wk, INPUTBOX_ID_SDFEXP) );
   }
+
+  {
+    u8  seikaku = box_getvalue( wk, INPUTBOX_ID_SEIKAKU );
+    PP_Put( wk->dst, ID_PARA_seikaku, seikaku );
+  }
+
   PP_Renew( wk->dst );
   PP_Put( wk->dst, ID_PARA_hp, box_getvalue(wk, INPUTBOX_ID_HPEDIT) );
+  {
+    u8 rHP, rPow, rDef, rSat, rSde, rAgi;
+    rHP  = PP_Get( wk->dst, ID_PARA_hpmax, NULL );
+    rPow = PP_Get( wk->dst, ID_PARA_pow, NULL );
+    rDef = PP_Get( wk->dst, ID_PARA_def, NULL );
+    rSat = PP_Get( wk->dst, ID_PARA_spepow, NULL );
+    rSde = PP_Get( wk->dst, ID_PARA_spedef, NULL );
+    rAgi = PP_Get( wk->dst, ID_PARA_agi, NULL );
+    TAYA_Printf("[[ÅIƒpƒ‰]] HP:%3d  ATK:%3d  DEF:%3d  SAT:%3d  SDF:%3d  AGI:%3d\n",
+                 rHP, rPow, rDef, rSat, rSde, rAgi );
+  }
 
 
   {
     u32 item = box_getvalue( wk, INPUTBOX_ID_ITEM );
     PP_Put( wk->dst, ID_PARA_item, item );
-  }
-  {
-    u8  seikaku = box_getvalue( wk, INPUTBOX_ID_SEIKAKU );
-    PP_Put( wk->dst, ID_PARA_seikaku, seikaku );
-    OS_TPrintf("«Ši‘‚«‚±‚Ý : %d\n", seikaku);
   }
 }
 
@@ -1285,6 +1297,9 @@ static void box_setup( DMP_MAINWORK* wk, u32 boxID, const POKEMON_PARAM* pp )
     break;
   default:
     value = PP_Get( pp, p->paraID, NULL );
+    if( p->paraID == ID_PARA_agi ){
+      TAYA_Printf(" [setup] Agi = %d\n", value );
+    }
     break;
   }
 
