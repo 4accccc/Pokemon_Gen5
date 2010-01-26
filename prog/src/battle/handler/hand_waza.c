@@ -5488,9 +5488,15 @@ static void handler_Chouhatu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
     if( !BPP_CheckSick(target, WAZASICK_TYOUHATSU) )
     {
       BTL_HANDEX_PARAM_ADD_SICK* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_SICK, pokeID );
-   //   u8 turns = BTL_CALC_RandRange( 3, 5 );
+
+     // 現ターンに行動済みのポケモンには効果ターン数を+1する
+      u8 turns = BTL_TYOUHATSU_EFFECTIVE_TURN;
+      if( BPP_TURNFLAG_Get(target, BPP_TURNFLG_ACTION_DONE) ){
+        ++turns;
+      }
+
       param->sickID = WAZASICK_TYOUHATSU;
-      param->sickCont = BTL_CALC_MakeWazaSickCont_Turn( 3 );
+      param->sickCont = BTL_CALC_MakeWazaSickCont_Turn( turns );
       param->poke_cnt = 1;
       param->pokeID[0] = targetPokeID;
 
@@ -5570,9 +5576,15 @@ static void handler_Kanasibari( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
       {
         BTL_HANDEX_PARAM_ADD_SICK* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_SICK, pokeID );
 
+        // 現ターンに行動済みのポケモンには効果ターン数を+1する
+        u8 turns = BTL_KANASIBARI_EFFECTIVE_TURN;
+        if( BPP_TURNFLAG_Get(target, BPP_TURNFLG_ACTION_DONE) ){
+          ++turns;
+        }
+
         BTL_Printf("ふうじこめるワザは %d\n", prevWaza);
         param->sickID = WAZASICK_KANASIBARI;
-        param->sickCont = BPP_SICKCONT_MakeTurnParam( 4, prevWaza );
+        param->sickCont = BPP_SICKCONT_MakeTurnParam( turns, prevWaza );
         param->poke_cnt = 1;
         param->pokeID[0] = targetPokeID;
       }

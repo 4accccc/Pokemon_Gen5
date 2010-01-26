@@ -92,6 +92,7 @@ struct _BTLV_CORE {
 /*--------------------------------------------------------------------------*/
 static void* getGenericWork( BTLV_CORE* core, u32 size );
 static BOOL CmdProc_Setup( BTLV_CORE* core, int* seq, void* workBuffer );
+static BOOL CmdProc_SetupDemo( BTLV_CORE* core, int* seq, void* workBuffer );
 static BOOL CmdProc_SelectAction( BTLV_CORE* core, int* seq, void* workBufer );
 static BOOL CmdProc_SelectWaza( BTLV_CORE* core, int* seq, void* workBufer );
 static BOOL CmdProc_SelectTarget( BTLV_CORE* core, int* seq, void* workBufer );
@@ -209,6 +210,7 @@ void BTLV_StartCommand( BTLV_CORE* core, BtlvCmd cmd )
       pCmdProc  proc;
     }procTbl[] = {
       { BTLV_CMD_SETUP,           CmdProc_Setup },
+      { BTLV_CMD_SETUP_DEMO,      CmdProc_SetupDemo },
     };
 
     int i;
@@ -299,6 +301,46 @@ static BOOL CmdProc_Setup( BTLV_CORE* core, int* seq, void* workBuffer )
 
   return FALSE;
 }
+//----------------------------------------------------------------------------------
+/**
+ * ƒoƒgƒ‹‰æ–Ê\’z—pVRAMÝ’è`•ßŠlƒfƒ‚`
+ *
+ * @param   core
+ * @param   seq
+ * @param   workBuffer
+ *
+ * @retval  BOOL        I—¹ŽžTRUE
+ */
+//----------------------------------------------------------------------------------
+static BOOL CmdProc_SetupDemo( BTLV_CORE* core, int* seq, void* workBuffer )
+{
+  switch( *seq ){
+  case 0:
+    setup_core( core, core->heapID );
+    BTLV_EFFECT_Init( BTL_MAIN_GetRule( core->mainModule ), BTL_MAIN_GetFieldSituation( core->mainModule ),
+                      core->smallFontHandle, core->heapID );
+    BTLV_SCU_Setup( core->scrnU );
+    BTLV_SCD_Init( core->scrnD );
+    (*seq)++;
+    break;
+
+  case 1:
+    BTLV_SCU_StartBtlIn( core->scrnU );
+    (*seq)++;
+    break;
+
+  case 2:
+    if( BTLV_SCU_WaitBtlIn( core->scrnU ) )
+    {
+      return TRUE;
+    }
+    break;
+  }
+
+  return FALSE;
+}
+
+
 //-------------------------------------------
 
 static void setup_core( BTLV_CORE* wk, HEAPID heapID )

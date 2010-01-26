@@ -488,7 +488,11 @@ static BOOL SubProc_UI_Setup( BTL_CLIENT* wk, int* seq )
 {
   switch( *seq ){
   case 0:
-    BTLV_StartCommand( wk->viewCore, BTLV_CMD_SETUP );
+    if( BTL_MAIN_GetCompetitor(wk->mainModule) != BTL_COMPETITOR_DEMO_CAPTURE ){
+      BTLV_StartCommand( wk->viewCore, BTLV_CMD_SETUP );
+    }else{
+      BTLV_StartCommand( wk->viewCore, BTLV_CMD_SETUP_DEMO );
+    }
     (*seq)++;
     break;
   case 1:
