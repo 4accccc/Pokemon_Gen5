@@ -488,7 +488,11 @@ static BOOL SubProc_UI_Setup( BTL_CLIENT* wk, int* seq )
 {
   switch( *seq ){
   case 0:
-    BTLV_StartCommand( wk->viewCore, BTLV_CMD_SETUP );
+    if( BTL_MAIN_GetCompetitor(wk->mainModule) != BTL_COMPETITOR_DEMO_CAPTURE ){
+      BTLV_StartCommand( wk->viewCore, BTLV_CMD_SETUP );
+    }else{
+      BTLV_StartCommand( wk->viewCore, BTLV_CMD_SETUP_DEMO );
+    }
     (*seq)++;
     break;
   case 1:
@@ -1416,7 +1420,7 @@ static BtlCantEscapeCode isForbidEscape( BTL_CLIENT* wk, const BTL_POKEPARAM* pr
       }
     }
 
-    if( checkTokusei == BTL_CANTESC_ARIJIGOKU )
+    if( checkTokusei == POKETOKUSEI_ARIJIGOKU )
     {
       BTL_N_Printf( DBGSTR_CLIENT_ForbidEscape_Arijigoku_Chk, checkPokeID );
       if( checkForbitEscapeEffective_Arijigoku(wk, procPoke) ){
@@ -1427,7 +1431,7 @@ static BtlCantEscapeCode isForbidEscape( BTL_CLIENT* wk, const BTL_POKEPARAM* pr
       }
     }
 
-    if( checkTokusei == BTL_CANTESC_JIRYOKU )
+    if( checkTokusei == POKETOKUSEI_JIRYOKU )
     {
       BTL_N_Printf( DBGSTR_CLIENT_ForbidEscape_Jiryoku_Chk, checkPokeID );
       if( checkForbitEscapeEffective_Arijigoku(wk, procPoke) ){
@@ -3454,10 +3458,13 @@ static BOOL scProc_OP_HpZero( BTL_CLIENT* wk, int* seq, const int* args )
   BPP_HpZero( pp );
   return TRUE;
 }
+/**
+ *  PP‰ñ•œ  args[0]:pokeID  args[1]:WazaIdx  args[2]:‰ñ•œPP’l
+ */
 static BOOL scProc_OP_PPPlus( BTL_CLIENT* wk, int* seq, const int* args )
 {
-  BTL_POKEPARAM* pp = BTL_POKECON_GetFrontPokeData( wk->pokeCon, args[0] );
-  BPP_PPPlus( pp, args[1], args[2] );
+  BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
+  BPP_PPPlus( bpp, args[1], args[2] );
   return TRUE;
 }
 static BOOL scProc_OP_RankUp( BTL_CLIENT* wk, int* seq, const int* args )

@@ -38,6 +38,7 @@
 typedef enum {
 
   BTLV_CMD_SETUP,
+  BTLV_CMD_SETUP_DEMO,    ///< •ßŠlƒfƒ‚
   BTLV_CMD_SELECT_ACTION,
   BTLV_CMD_MSG,
 

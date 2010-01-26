@@ -52,6 +52,8 @@ enum {
   BTL_CONF_TURN_MAX = 5,
   BTL_CONF_TURN_RANGE = (BTL_CONF_TURN_MAX - BTL_CONF_TURN_MIN)+1,
 
+  BTL_KANASIBARI_EFFECTIVE_TURN = 4,  ///< 「かなしばり」の実効ターン数
+
   BTL_CALC_SICK_TURN_PERMANENT = 0xff,  ///< 継続ターン数を設定しない（永続する）場合の指定値
 
   // 天候関連
