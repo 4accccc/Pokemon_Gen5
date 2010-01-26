@@ -1920,7 +1920,9 @@ static void handler_Osyaberi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
     if( BPP_GetMonsNo(bpp) == MONSNO_PERAPPU )
     {
       PokeSick sick = WAZASICK_KONRAN;
-      BPP_SICK_CONT cont = BTL_CALC_MakeDefaultPokeSickCont( sick );
+      BPP_SICK_CONT cont;
+
+      BTL_CALC_MakeDefaultWazaSickCont( sick, bpp, &cont );
       const POKEMON_PARAM* pp = BPP_GetSrcData( bpp );
       u32 rnd = PP_Get( pp, ID_PARA_personal_rnd, NULL );
       u8 per = (rnd&1)? 10 : 30;
