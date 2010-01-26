@@ -881,7 +881,7 @@ void GYM_INSECT_Setup(FIELDMAP_WORK *fieldWork)
     status->trans = PolePos[i];
     //ƒJƒŠƒ“ƒO‚·‚é
     FLD_EXP_OBJ_SetCulling(ptr, GYM_INSECT_UNIT_IDX, idx, TRUE);
-    for (j=0;j<SW_ANM_NUM;j++)
+    for (j=0;j<PL_ANM_NUM;j++)
     {
       //1‰ñÄ¶Ý’è
       EXP_OBJ_ANM_CNT_PTR anm;
