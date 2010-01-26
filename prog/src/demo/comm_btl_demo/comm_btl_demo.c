@@ -149,13 +149,15 @@ typedef struct {
 //==============================================================
 typedef struct {
   // [IN]
-  u8 num;
-  u8 posid;
   u8 type;
-  u8 padding[1];
+  u8 posid;
+  u8 num;
+  u8 max;
   //[PRIVATE]
   GFL_CLWK* clwk[6];
   u32 timer;
+  u8 is_start;
+  u8 padding[3];
 } BALL_UNIT;
 
 //--------------------------------------------------------------
@@ -296,7 +298,7 @@ static void TRAINER_UNIT_Main( TRAINER_UNIT* unit );
 static void TRAINER_UNIT_Exit( TRAINER_UNIT* unit );
 
 static void OBJ_Init( COMM_BTL_DEMO_OBJ_WORK* wk, COMM_BTL_DEMO_GRAPHIC_WORK* graphic, HEAPID heapID );
-static void OBJ_End( COMM_BTL_DEMO_OBJ_WORK* wk );
+static void OBJ_Exit( COMM_BTL_DEMO_OBJ_WORK* wk );
 static GFL_CLWK* OBJ_CreateCLWK( COMM_BTL_DEMO_OBJ_WORK* wk, s16 px, s16 py, u16 anim );
 
 static void G3D_Init( COMM_BTL_DEMO_G3D_WORK* g3d, COMM_BTL_DEMO_GRAPHIC_WORK* graphic, HEAPID heapID );
@@ -499,7 +501,7 @@ static GFL_PROC_RESULT CommBtlDemoProc_Exit( GFL_PROC *proc, int *seq, void *pwk
 	GFL_FONT_Delete( wk->font );
   
   // OBJ開放
-  OBJ_End( &wk->wk_obj );
+  OBJ_Exit( &wk->wk_obj );
 
   // 3Dシステム開放
   G3D_End( &wk->wk_g3d );
@@ -725,15 +727,13 @@ static BOOL SceneNormalStart_Main( UI_SCENE_CNT_PTR cnt, void* work )
     }
     break;
   case 3:
-    if( wk->timer++ == 40 )
+    if( wk->timer++ == 120+30 )
     {
       // フェードアウト リクエスト
-      GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_WHITEOUT, 0, 16, 2 );
-      wk->timer = 0;
-      UI_SCENE_CNT_IncSubSeq( cnt );
+      GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_WHITEOUT, 0, 16, 4 );
     }
-    break;
-  case 4:
+    
+    // アニメ再生
     if( G3D_AnimeMain( &wk->wk_g3d ) == FALSE )
     {
       G3D_AnimeDel( &wk->wk_g3d );
@@ -771,6 +771,9 @@ static BOOL SceneNormalStart_End( UI_SCENE_CNT_PTR cnt, void* work )
 
   // PTCワーク開放
   G3D_PTC_Delete( &wk->wk_g3d );
+  
+  // 終了
+  UI_SCENE_CNT_SetNextScene( cnt, UI_SCENE_ID_END );
 
 // @TODO 保坂のみループ
 #ifdef DEBUG_ONLY_FOR_genya_hosaka
@@ -778,9 +781,6 @@ static BOOL SceneNormalStart_End( UI_SCENE_CNT_PTR cnt, void* work )
   {
     UI_SCENE_CNT_SetNextScene( cnt, CBD_SCENE_ID_NORMAL_START );
   }
-#else
-  // 終了
-  UI_SCENE_CNT_SetNextScene( cnt, UI_SCENE_ID_END );
 #endif
 
   return TRUE;
@@ -987,22 +987,20 @@ static void BALL_UNIT_Init( BALL_UNIT* unit, const POKEPARTY* party, u8 type, u8
 {
   int i;
   int is_normal = type_is_normal(type);
-  int max;
 
   GF_ASSERT(unit);
   GF_ASSERT(party);
   GF_ASSERT(obj);
 
   unit->num = PokeParty_GetPokeCount( party );
+  unit->max = PokeParty_GetPokeCountMax( party );
   unit->type = type;
   unit->posid = posid;
   unit->timer = 0;
 
-  max = PokeParty_GetPokeCountMax( party );
+  HOSAKA_Printf("max=%d pokenum=%d\n", unit->max, unit->num);
 
-  HOSAKA_Printf("max=%d pokenum=%d\n",max, unit->num);
-
-  for( i=0; i<max; i++ )
+  for( i=0; i<unit->max; i++ )
   {
     s16 px;
     s16 py;
@@ -1067,7 +1065,7 @@ static void BALL_UNIT_Exit( BALL_UNIT* unit )
 
   GF_ASSERT(unit);
 
-  for( i=0; i<unit->num; i++ )
+  for( i=0; i<unit->max; i++ )
   {
     GFL_CLACT_WK_Remove( unit->clwk[i] );
   }
@@ -1084,6 +1082,7 @@ static void BALL_UNIT_Exit( BALL_UNIT* unit )
 //-----------------------------------------------------------------------------
 static void BALL_UNIT_SetStart( BALL_UNIT* unit )
 {
+  unit->is_start = TRUE;
 }
 
 //-----------------------------------------------------------------------------
@@ -1204,7 +1203,7 @@ static void OBJ_Init( COMM_BTL_DEMO_OBJ_WORK* wk, COMM_BTL_DEMO_GRAPHIC_WORK* gr
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static void OBJ_End( COMM_BTL_DEMO_OBJ_WORK* wk )
+static void OBJ_Exit( COMM_BTL_DEMO_OBJ_WORK* wk )
 {
   GF_ASSERT( wk );
   GF_ASSERT( wk->graphic );
@@ -1352,7 +1351,7 @@ static void G3D_PTC_Setup( COMM_BTL_DEMO_G3D_WORK* g3d, int spa_idx )
     res = GFL_PTC_LoadArcResource( ARCID_COMM_BTL_DEMO_GRA, spa_idx, g3d->heapID );
     g3d->spa_num = GFL_PTC_GetResNum( res );
     HOSAKA_Printf("load spa_idx=%d num=%d \n", spa_idx, g3d->spa_num );
-    GFL_PTC_SetResourceEx( g3d->ptc, res, TRUE, NULL );
+    GFL_PTC_SetResource( g3d->ptc, res, TRUE, NULL );
   }
 
 }
