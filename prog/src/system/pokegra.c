@@ -292,8 +292,17 @@ static void PokeGra_GetFileOffset( int mons_no, int form_no, int sex, int rare, 
   file_offset	= (dir == POKEGRA_DIR_FRONT) ? POKEGRA_FRONT_M_NCGR: POKEGRA_BACK_M_NCGR;
   mf_ratio	= (dir == POKEGRA_DIR_FRONT) ? POKEGRA_FRONT_M_NCBR: POKEGRA_BACK_M_NCBR;
 
+  //タマゴチェック
+  if( egg )
+  { 
+    if( form_no > 2 )
+    { 
+      form_no = 0;
+    }
+    file_start = POKEGRA_FILE_MAX * ( MONSNO_TAMAGO + form_no );
+  }
   //別フォルム処理
-  if( form_no )
+  else if( form_no )
   { 
     int gra_index = POKETOOL_GetPersonalParam( mons_no, 0, POKEPER_ID_form_gra_index );
     int form_max = POKETOOL_GetPersonalParam( mons_no, 0, POKEPER_ID_form_max );
@@ -302,14 +311,6 @@ static void PokeGra_GetFileOffset( int mons_no, int form_no, int sex, int rare, 
       form_no = 0;
     }
     file_start = POKEGRA_FILE_MAX * ( MONSNO_MAX + 1 ) + POKEGRA_FILE_MAX * ( gra_index + form_no - 1 );
-  }
-  if( egg )
-  { 
-    if( form_no > 2 )
-    { 
-      form_no = 0;
-    }
-    file_start = POKEGRA_FILE_MAX * ( MONSNO_TAMAGO + form_no );
   }
 
   //性別のチェック
