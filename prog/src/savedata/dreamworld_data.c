@@ -79,9 +79,9 @@ void DREAMWORLD_SV_SetSleepPokemon(DREAMWORLD_SAVEDATA* pSV,POKEMON_PARAM* pp)
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief   ƒAƒJƒEƒ“ƒg“o˜^‚ðˆê‰ñ‚Å‚à‹N“®‚µ‚½‚©‚Ç‚¤‚©
+ * @brief   PDW“o˜^‚¸‚Ýƒtƒ‰ƒO‚ð“ü‚ê‚é
  * @param	  pSV		DREAMWORLD_SAVEDATA
- * @param	  Signin‚µ‚Ä‚¢‚½‚çTRUE
+ * @param	  PDW“o˜^‚¸‚Ý
  */
 //--------------------------------------------------------------------------------------------
 void DREAMWORLD_SV_SetSignin(DREAMWORLD_SAVEDATA* pSV,BOOL bFlg)
@@ -91,14 +91,38 @@ void DREAMWORLD_SV_SetSignin(DREAMWORLD_SAVEDATA* pSV,BOOL bFlg)
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief   ƒAƒJƒEƒ“ƒg“o˜^‚ðˆê‰ñ‚Å‚à‹N“®‚µ‚½‚©‚Ç‚¤‚©
+ * @brief   PDW“o˜^‚¸‚Ý‚©‚Ç‚¤‚©
  * @param	  pSV		DREAMWORLD_SAVEDATA
- * @return	ƒ|ƒPƒ‚ƒ“ƒZƒbƒgŽž‚ÍTRUE
+ * @return	PDW“o˜^‚¸‚ÝŽž‚ÍTRUE
  */
 //--------------------------------------------------------------------------------------------
 BOOL DREAMWORLD_SV_GetSignin(DREAMWORLD_SAVEDATA* pSV)
 {
   return pSV->signin;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief   ƒAƒJƒEƒ“ƒg“o˜^‚ðˆê‰ñ‚Å‚à‹N“®‚µ‚½‚©‚Ç‚¤‚©
+ * @param	  pSV		DREAMWORLD_SAVEDATA
+ * @param	  ƒAƒJƒEƒ“ƒg“o˜^‚µ‚Ä‚¢‚½‚çTRUE
+ */
+//--------------------------------------------------------------------------------------------
+void DREAMWORLD_SV_SetAccount(DREAMWORLD_SAVEDATA* pSV,BOOL bFlg)
+{
+  pSV->bAccount = bFlg;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief   ƒAƒJƒEƒ“ƒg“o˜^‚ðˆê‰ñ‚Å‚à‹N“®‚µ‚½‚©‚Ç‚¤‚©
+ * @param	  pSV		DREAMWORLD_SAVEDATA
+ * @return	ƒAƒJƒEƒ“ƒg“o˜^Žž‚ÍTRUE
+ */
+//--------------------------------------------------------------------------------------------
+BOOL DREAMWORLD_SV_GetAccount(DREAMWORLD_SAVEDATA* pSV)
+{
+  return pSV->bAccount;
 }
 
 //--------------------------------------------------------------------------------------------

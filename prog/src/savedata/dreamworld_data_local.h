@@ -30,6 +30,8 @@ struct _DREAMWORLD_SAVEDATA {
 	DREAM_WORLD_FURNITUREDATA furnitureID[DREAM_WORLD_DATA_MAX_FURNITURE];  //9	配信家具
   u8 pokemoStatus;        //8	送信したポケモン						1byte			送信したポケモンの状態を受け取る
   u8 pokemonIn;  ///ppにポケモンが入っているかどうか
-  u8 signin; //アカウントをすでに登録したかどうか
+  u8 signin; //PDW登録済み
+  u8 bAccount; //アカウント取得済み
+  u8 dummy;
 };
 

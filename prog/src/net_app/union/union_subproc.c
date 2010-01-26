@@ -437,15 +437,12 @@ static BOOL SubEvent_Trade(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys, FIELDMAP
     break;
   case _SEQ_EVOLUTION:
     GFL_OVERLAY_Load( FS_OVERLAY_ID(shinka_demo) );
-    pPTP->shinka_param = SHINKADEMO_AllocParam( HEAPID_PROC, pPTP->gamedata,
-                                               pPTP->pParty,
-                                               pPTP->after_mons_no,
-                                               0, pPTP->cond, TRUE );
+    SHINKADEMO_InitParam( pPTP->shinka_param, pPTP->gamedata,
+                          pPTP->pParty, pPTP->after_mons_no, 0, pPTP->cond, TRUE,FALSE );
     *child_event = EVENT_FieldSubProc( gsys, fieldWork, NO_OVERLAY_ID, &ShinkaDemoProcData, pPTP->shinka_param );
 		(*seq) ++;
     break;
   case _SEQ_EVOLUTIONEND:
-    SHINKADEMO_FreeParam( pPTP->shinka_param );
     GFL_OVERLAY_Unload( FS_OVERLAY_ID(shinka_demo) );
     pPTP->ret = POKEMONTRADE_MOVE_EVOLUTION;
     (*seq)=_SEQ_TRADE;

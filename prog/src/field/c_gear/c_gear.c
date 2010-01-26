@@ -14,20 +14,13 @@
 #include "savedata/save_tbl.h"
 #include "savedata/c_gear_picture.h"
 #include "system/main.h"  //HEAPID
-#include "message.naix"
-#include "print/printsys.h"
-#include "print/wordset.h"
-#include "print/global_font.h"
-#include "font/font.naix"
-#include "print/str_tool.h"
+
 #include "sound/pm_sndsys.h"
 #include "system/wipe.h"
 
 #include "c_gear.naix"
 #include "c_gear_obj_NANR_LBLDEFS.h"
 
-#include "msg/msg_c_gear.h"
-#include "msg/msg_invasion.h"
 #include "net/wih_dwc.h"
 
 #include "field/field_beacon_message.h"
@@ -172,7 +165,6 @@ struct _C_GEAR_WORK {
   TouchFunc* touch;
   int selectType;   // 接続タイプ
   HEAPID heapID;
-  GFL_BMPWIN* MyInfoWin; /// ウインドウ管理
   GFL_BUTTON_MAN* pButton;
   GFL_MSGDATA *pMsgData;  //
   WORDSET *pWordSet;								// メッセージ展開用ワークマネージャー
@@ -1037,7 +1029,7 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
 
     if(pWork->bPanelEdit)  ///< パネルタイプを変更
     {
-      if(_gearPanelTypeNum(pWork,type) > 0 && _isSetChip(xp,yp))
+      if(((_gearPanelTypeNum(pWork,type) > 1 ) || (type == CGEAR_PANELTYPE_BASE))&& _isSetChip(xp,yp))
       {
         type = (type+1) % CGEAR_PANELTYPE_MAX;
         CGEAR_SV_SetPanelType(pWork->pCGSV,xp,yp,type);
@@ -1324,32 +1316,12 @@ static void _modeInit(C_GEAR_WORK* pWork)
 
   pWork->IsIrc=FALSE;
 
-  //	GFL_NET_ReloadIcon();
-
   pWork->pButton = GFL_BMN_Create( bttndata, _BttnCallBack, pWork,  pWork->heapID );
-
-
-
-  pWork->pWordSet    = WORDSET_Create( pWork->heapID );
-  pWork->pMsgData = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_invasion_dat, pWork->heapID );
-  pWork->pFontHandle = GFL_FONT_Create( ARCID_FONT , NARC_font_large_gftr , GFL_FONT_LOADTYPE_FILE , FALSE , pWork->heapID );
-
-
-  pWork->MyInfoWin = GFL_BMPWIN_Create(GEAR_BUTTON_FRAME, 3, 0x15, 0x1a, 2,
-                                       _BUTTON_MSG_PAL,  GFL_BMP_CHRAREA_GET_B );
-
-  pWork->pStrBuf = GFL_STR_CreateBuffer( 128, pWork->heapID );
-  pWork->pStrBufOrg = GFL_STR_CreateBuffer( 128, pWork->heapID );
-
-  GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG,
-                                0x20*_BUTTON_MSG_PAL, 0x20, pWork->heapID);
-
 
 }
 
 static void _workEnd(C_GEAR_WORK* pWork)
 {
-  GFL_FONTSYS_SetDefaultColor();
 
   if(pWork->pButton){
     GFL_BMN_Delete(pWork->pButton);
@@ -1391,25 +1363,7 @@ static void _workEnd(C_GEAR_WORK* pWork)
   GFL_BG_FreeBGControl(GEAR_BMPWIN_FRAME);
   GFL_BG_FreeBGControl(GEAR_MAIN_FRAME);
 
-  if(pWork->MyInfoWin){
-    GFL_BMPWIN_Delete(pWork->MyInfoWin);
-  }
 
-  if(pWork->pWordSet){
-    WORDSET_Delete( pWork->pWordSet );
-  }
-  if(pWork->pMsgData)
-  {
-    GFL_MSG_Delete( pWork->pMsgData );
-  }
-  if(pWork->pFontHandle){
-    GFL_FONT_Delete(pWork->pFontHandle);
-  }
-  if(pWork->pStrBuf)
-  {
-    GFL_STR_DeleteBuffer(pWork->pStrBufOrg);
-    GFL_STR_DeleteBuffer(pWork->pStrBuf);
-  }
   GFL_BG_SetVisible( GEAR_BUTTON_FRAME, VISIBLE_OFF );
   GFL_BG_SetVisible( GEAR_BMPWIN_FRAME, VISIBLE_OFF );
   GFL_BG_SetVisible( GEAR_MAIN_FRAME, VISIBLE_OFF );
@@ -1562,52 +1516,6 @@ static void _modeSelectMenuWait(C_GEAR_WORK* pWork)
     u8 padding[2];
   }GAME_COMM_INFO_MESSAGE;
 #endif
-
-
-
-
-  //Cギアのメッセージ取得は
-
-  if(pWork->msgCountDown > 0){
-    pWork->msgCountDown--;
-  }
-
-  if(pWork->msgCountDown <= 0){
-    GAME_COMM_SYS_PTR pGC = GAMESYSTEM_GetGameCommSysPtr(pWork->pGameSys);
-    GAME_COMM_INFO_MESSAGE infomsg;
-
-    GFL_STD_MemClear(&infomsg, sizeof(GAME_COMM_INFO_MESSAGE));
-
-    if(GameCommInfo_GetMessage(pGC, &infomsg))
-    {
-      int k;
-      OS_TPrintf("infomsg->message_id %d \n",infomsg.message_id);
-
-      GFL_FONTSYS_SetColor( 0xf, 0xe, 0 );
-      GFL_MSG_GetString(  pWork->pMsgData, infomsg.message_id, pWork->pStrBufOrg );
-
-      for(k = 0 ; k < INFO_WORDSET_MAX; k++)
-      {
-        if(infomsg.name[k]!=NULL)
-        {
-          WORDSET_RegisterWord( pWork->pWordSet, infomsg.wordset_no[k], infomsg.name[k], PM_MALE,
-                                TRUE, PM_LANG);
-        }
-      }
-      WORDSET_ExpandStr(pWork->pWordSet, pWork->pStrBuf, pWork->pStrBufOrg);
-
-      GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->MyInfoWin), 0 );
-
-      PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->MyInfoWin), 1, 0, pWork->pStrBuf, pWork->pFontHandle);
-      GFL_BMPWIN_TransVramCharacter(pWork->MyInfoWin);
-      GFL_BMPWIN_MakeScreen(pWork->MyInfoWin);
-      GFL_BG_LoadScreenReq(GEAR_BUTTON_FRAME);
-      pWork->msgCountDown = MSG_COUNTDOWN_FRAMENUM;
-      GFL_FONTSYS_SetDefaultColor();
-
-    }
-  }
-
 
 }
 

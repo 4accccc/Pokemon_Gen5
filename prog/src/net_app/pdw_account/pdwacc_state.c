@@ -105,6 +105,7 @@ struct _PDWACC_WORK {
   APP_TASKMENU_WORK* pAppTask;
   BOX_MANAGER * pBox;
   SAVE_CONTROL_WORK* pSaveData;
+  GAMEDATA *pGameData;
   void* pTopAddr;
   s32 profileID;
   u16 trayno;
@@ -369,6 +370,10 @@ static void _ghttpInfoWait1(PDWACC_WORK* pWork)
           _CHANGE_STATE(_createAccount7);
         }
         else if(pEvent->ret_cd==DREAM_WORLD_SERVER_ERROR_NONE){  //アカウント作成完了
+          DREAMWORLD_SV_SetAccount(DREAMWORLD_SV_GetDreamWorldSaveData(pWork->pSaveData),TRUE);
+          {
+            SAVE_RESULT ret = GAMEDATA_Save(pWork->pGameData);
+          }
           _CHANGE_STATE(_createAccount7);
         }
         else{
@@ -480,6 +485,7 @@ static GFL_PROC_RESULT PDWACCProc_Init( GFL_PROC * proc, int * seq, void * pwk, 
 
   pWork->heapID = pParent->heapID;
   pWork->pSaveData = GAMEDATA_GetSaveControlWork(pParent->gameData);
+  pWork->pGameData = pParent->gameData;
   pWork->profileID = MyStatus_GetProfileID( GAMEDATA_GetMyStatus(pParent->gameData) );
   pWork->pNHTTPRap = NHTTP_RAP_Init(pParent->heapID, pWork->profileID);
 

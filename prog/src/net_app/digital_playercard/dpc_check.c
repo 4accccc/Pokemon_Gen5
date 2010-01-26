@@ -162,7 +162,6 @@ static void _wakeupAction_test3(DPC_CHECK_WORK* pWork)
   if(GFL_NET_IsInit()){
     if(NHTTP_RAP_ConectionCreate(NHTTPRAP_URL_BATTLE_UPLOAD, pWork->pNHTTPRap)){
       pWork->aDWSBattle.WifiMatchUpState=1;
-      pWork->aDWSBattle.padding=0;
       NHTTP_AddPostDataRaw(NHTTP_RAP_GetHandle(pWork->pNHTTPRap), &pWork->aDWSBattle, sizeof(DREAM_WORLD_SERVER_WORLDBATTLE_SET_DATA) );
 
       if(NHTTP_RAP_StartConnect(pWork->pNHTTPRap)){

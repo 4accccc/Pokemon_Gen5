@@ -273,6 +273,7 @@ typedef struct
 }_D2_PAL_FADE_WORK;
 
 
+
 /// @brief ポケモン座標移動
 typedef struct
 {
@@ -286,7 +287,8 @@ typedef struct
   u16 waveNum;
   VecFx32  start;      ///< 開始位置
   VecFx32  end;        ///< 終わり位置
-}_POKEMCSS_MOVE_WORK;
+  VecFx32* MoveTbl;  ///< テーブル移動の際の座標
+} _POKEMCSS_MOVE_WORK;
 
 
 typedef enum

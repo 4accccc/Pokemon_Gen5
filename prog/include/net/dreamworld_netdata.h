@@ -50,21 +50,30 @@ struct DREAM_WORLD_SERVER_CREATE_DATA{
 
 /// ダウンロードデータ構造体
 typedef struct {
-  u32 RomCodeBit;   ///< ROMコード	4byte			ROMのバージョン		pm_version.hのBIT管理 一致したら受け取る
-  u32 PassCode;     ///<  特殊イベント用起動キーコード（簡単に起動できないように暗号化）
-  u16 findPokemon;         ///< であったポケモンは必ず一種類
-  u16 findPokemonTecnique; ///< 覚えさせる技
-  u8 form;                ///< フォルム番号
-  u8 musicalNo;      ///< 変更があった場合NO なければ 0xff
-  u8 cgearNo;        ///< 変更があった場合NO なければ 0xff
-  u8 zukanNo;        ///< 変更があった場合NO なければ 0xff
-  u16 itemID[DREAM_WORLD_DATA_MAX_ITEMBOX];  ///持ち帰ったアイテム
-  u8 itemNum[DREAM_WORLD_DATA_MAX_ITEMBOX];
-  DREAM_WORLD_FURNITUREDATA Furniture[DREAM_WORLD_DATA_MAX_FURNITURE];  ///<	26*5=130  配信家具
-  u16 CountryBit;   ///<	国コード	2byte			言語バージョン		pm_version.hのBIT管理 一致したら受け取る
-  u8 OnceBit;       ///<  一回だけかどうか 特殊イベントを1回しか受け取れないよう設定するフラグ
-  u8 PokemonState;  ///< 寝ているポケモンの状態
+  u16 findPokemon;         ///< であったポケモン番号
+  u16 findPokemonTecnique; ///< であったポケモンに覚えさせる技
+  u8 findPokemonForm;      ///< であったポケモンのフォルム番号
+  u8 findPokemonSex;       ///< であったポケモン性別    0=MALE 1=FEMALE 2=NEUTER 3=RANDOM
+  u8 sleepPokemonState;  ///< 寝ているポケモンの状態
+  u8 musicalNo;      ///< webで選択した番号  無い場合 0xff
+  u8 cgearNo;        ///< webで選択した番号  無い場合 0xff
+  u8 zukanNo;        ///< webで選択した番号  無い場合 0xff
+  u8 signin;        ///<	大好きクラブで登録が終わったかどうか  登録済みなら 1
+  u8 bGet;          ///<	このデータをすでに受け取ったかどうか 
+  u16 itemID[DREAM_WORLD_DATA_MAX_ITEMBOX];  ///< 持ち帰ったアイテム
+  u8 itemNum[DREAM_WORLD_DATA_MAX_ITEMBOX];  ///< 持ち帰ったアイテムの個数
+  DREAM_WORLD_FURNITUREDATA Furniture[DREAM_WORLD_DATA_MAX_FURNITURE];  ///<	26*5=130  配信家具情報
+  u16 CRC;  /// このデータのCRC-16/CCITT
 } DREAM_WORLD_SERVER_DOWNLOAD_DATA;
+
+
+/// ダウンロード完了をPDWサーバに知らせる構造体
+typedef struct {
+  u8 bGet;          ///<	このデータをすでに受け取ったかどうか
+  u8 dummy;
+} DREAM_WORLD_SERVER_DOWNLOAD_FINISH_DATA;
+
+
 
 /// ポケモンリストデータ構造体
 typedef struct {
@@ -84,15 +93,15 @@ typedef enum{
 /// 世界対戦確認用データ構造体
 typedef struct {
   u32 WifiMatchUpID;   ///< 世界対戦の開催ID
-  u8 GPFEntryFlg;      ///< GPFからエントリーしたフラグ
+  u8 GPFEntryFlg;      ///< GPFから書き込んだら1 DSから書き込んだら２
   u8 WifiMatchUpState; ///< 世界対戦の進行状況
 } DREAM_WORLD_SERVER_WORLDBATTLE_STATE_DATA;
 
 
 /// 世界対戦書き込みデータ構造体
 typedef struct {
+  u8 GPFEntryFlg;    ///< GPFから書き込んだら1 DSから書き込んだら２
   u8 WifiMatchUpState; ///< 世界対戦の進行状況
-  u8 padding;
 } DREAM_WORLD_SERVER_WORLDBATTLE_SET_DATA;
 
 

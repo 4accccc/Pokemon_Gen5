@@ -16,6 +16,9 @@
 #define _POKEMON_CENTER_TIME   (42)  ///ポケモンが真ん中による時間
 
 
+#define _POKEMON_VOICE_TIME   (200)  ///ポケモンが声を出している時間
+
+
 //フェードに関する時間
 #define _POKEUP_WHITEOUT_START (266)       //絵コンテ６番モンスターボールが打ちあがった際のホワイトアウト
 #define _POKEUP_WHITEOUT_TIMER (20)       //絵コンテ６番モンスターボールが打ちあがった際のホワイトアウト時間 1/

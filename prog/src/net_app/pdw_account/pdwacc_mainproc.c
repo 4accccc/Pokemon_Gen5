@@ -61,7 +61,7 @@ static GFL_PROC_RESULT PDWACCProc_Init( GFL_PROC * proc, int * seq, void * pwk, 
   pWork->gameData = GAMEDATA_Create( HEAPID_PDWACC );
 
   {
-    BOOL bIn = DREAMWORLD_SV_GetSignin(DREAMWORLD_SV_GetDreamWorldSaveData(GAMEDATA_GetSaveControlWork(pWork->gameData)));
+    BOOL bIn = DREAMWORLD_SV_GetAccount(DREAMWORLD_SV_GetDreamWorldSaveData(GAMEDATA_GetSaveControlWork(pWork->gameData)));
 
     if(bIn){
       pWork->state = _WIFI_ACCOUNT;  //カード表示

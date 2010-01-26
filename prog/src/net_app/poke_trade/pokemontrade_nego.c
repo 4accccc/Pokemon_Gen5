@@ -29,10 +29,6 @@
 #include "pokeicon/pokeicon.h"
 
 
-#include "system/bmp_menuwork.h"
-#include "system/bmp_winframe.h"
-#include "system/bmp_menulist.h"
-#include "system/bmp_menu.h"
 #include "gamesystem\msgspeed.h"
 
 #include "msg/msg_poke_trade.h"

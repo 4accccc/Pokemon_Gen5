@@ -2473,17 +2473,10 @@ static int _checkUserDataMatchStatus(WIFIP2PMATCH_WORK* wk)
 
         wk->matchStatusBackup[i] = status;
         wk->matchVchatBackup[i] = WIFI_STATUS_GetVChatStatus(p_status);
-#if 0 //@todo 通信に移動しなければいけない
+#if 1
         {
-          const MYSTATUS* pMy = WIFI_STATUS_GetMyStatus(p_status);
-          // 通信取得分を入れる
-          NET_PRINT("通信取得分を入れる  %d %d\n", i, MyStatus_GetTrainerView(pMy));
-          WifiList_SetFriendInfo(wk->pList, i,
-                                 WIFILIST_FRIEND_UNION_GRA,
-                                 MyStatus_GetTrainerView(pMy));
-          WifiList_SetFriendInfo(wk->pList, i,
-                                 WIFILIST_FRIEND_SEX,
-                                 MyStatus_GetMySex(pMy));
+          WifiList_SetFriendInfo(wk->pList, i, WIFILIST_FRIEND_UNION_GRA, WIFI_STATUS_GetTrainerView(p_status));
+          WifiList_SetFriendInfo(wk->pList, i, WIFILIST_FRIEND_SEX, WIFI_STATUS_GetSex(p_status));
         }
 #endif
         num++;
@@ -4867,8 +4860,8 @@ static int _childModeMatchMenuWait( WIFIP2PMATCH_WORK *wk, int seq )
     break;
   default:
     Snd_SePlay(_SE_DESIDE);
-#if defined(SDK_TWL)
     gamemode = _WifiMyGameModeGet( wk, p_status );
+#if defined(SDK_TWL)
     if(gamemode == WIFI_GAME_TVT){
       if(OS_IsRunOnTwl() && OS_IsRestrictPhotoExchange()){   // ペアレンタルコントロール
         WifiP2PMatchMessagePrint(wk, msg_wifilobby_1012, FALSE);
