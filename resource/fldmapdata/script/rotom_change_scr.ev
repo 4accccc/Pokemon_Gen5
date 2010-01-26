@@ -19,8 +19,20 @@ _EVENT_DATA_END
 //----------------------------------------------------------------------
 // ローカルワーク
 //----------------------------------------------------------------------
+DEFINE_LOCAL FORM_NO            // フォルムナンバー
 DEFINE_LOCAL SEL_POS            // ポケモンリスト選択位置 or ロトムが見つかった位置
 DEFINE_LOCAL END_MSG            // 最後のメッセージＩＤ
+DEFINE_LOCAL DEL_SKILL_POS      //忘れさせる技の位置
+
+DEFINE_LOCAL NEW_SKILL      //覚える技
+//del_skill_msg内で使用するワーク
+DEFINE_LOCAL OLD_SKILL      //忘れる技
+
+
+//get_org_skill内で使用するワーク
+DEFINE_LOCAL TARGET_FORM_NO      //調べるフォルム
+DEFINE_LOCAL ORG_SKILL      //調べた結果の固有技
+
 
 EVENT_START ev_rotom_change
   //ローカルワーク定義
@@ -102,7 +114,6 @@ _RET
 //家電選択
 select_elec:
   //ローカルワーク定義
-  DEFINE_LOCAL FORM_NO            // フォルムナンバー
   DEFINE_LOCAL ELEC_TO_FORM_NO    // 家電から求めたフォルムナンバー
   DEFINE_LOCAL EXIT            // ループ脱出フラグ
   DEFINE_LOCAL LIST_SEL_RET     //リスト選択項目
@@ -119,7 +130,7 @@ select_elec:
     _BMPMENU_MAKE_LIST(msg_rotom_window_01, 1 )          //レンジ
     _BMPMENU_MAKE_LIST(msg_rotom_window_01, 2 )          //洗濯機
     _BMPMENU_MAKE_LIST(msg_rotom_window_01, 3 )          //扇風機
-    _BMPMENU_MAKE_LIST(msg_rotom_window_01, 4 )          //掃除機
+    _BMPMENU_MAKE_LIST(msg_rotom_window_01, 4 )          //冷蔵庫
     _BMPMENU_MAKE_LIST(msg_rotom_window_01, 5 )          //芝刈り機
     _BMPMENU_MAKE_LIST(msg_rotom_window_01, 0 )          //元に戻す(ノーマル)
     _BMPMENU_MAKE_LIST( msg_rotom_cancel, 6 )            //やめる
@@ -136,6 +147,10 @@ select_elec:
     
     //選んだ家電をフォルムナンバーに変換
     $ELEC_TO_FORM_NO = $LIST_SEL_RET
+    //選んだ家電ごとの固有技をセット
+    $TARGET_FORM_NO = $ELEC_TO_FORM_NO    //get_org_skillをコールする準備
+    _CALL get_org_skill
+    $NEW_SKILL = $ORG_SKILL               //get_org_skillコール結果を格納
 
     //変換したフォルムナンバーと選択したロトムのフォルムナンバーを比較
     IF $FORM_NO == $ELEC_TO_FORM_NO   THEN       //同じ
@@ -150,20 +165,115 @@ select_elec:
     ENDIF
   ENDWHILE
 
-  //忘れる技の選出
+  //忘れる技の選出(SCWK_ANSWER == FALSEでチェンジしない)
+  _CALL decide_del_skill
 
-  //フォルムチェンジ(図鑑登録含む)
-// _CHANGE_FORM_NO( SEL_POS, FORM_NO )
+  IF $SCWK_ANSWER == TRUE THEN
+    //フォルムチェンジ(図鑑登録含む)
+  ENDIF
 
-//  $END_MSG = $FORM_MSG
-//  _CALL end_msg
 _RET
 
-//忘れる技の場所を決定する
-//select_del_skill:
+/**
+ * TARGET_FORM_NO に格納されているフォルムナンバーの固有技を
+ * ORG_SKILL に格納する
+*/
+get_org_skill:
+  SWITCH $TARGET_FORM_NO
+  CASE 0 THEN
+    $ORG_SKILL = WAZANO_DENKISYOKKU
+  CASE 1 THEN
+    $ORG_SKILL = WAZANO_OOBAAHIITO
+  CASE 2 THEN
+    $ORG_SKILL = WAZANO_HUBUKI
+  CASE 3 THEN
+    $ORG_SKILL = WAZANO_HAIDOROPONPU
+  CASE 4 THEN
+    $ORG_SKILL = WAZANO_EASURASSYU
+  CASE 5 THEN
+    $ORG_SKILL = WAZANO_RIIHUSUTOOMU
+  ENDSWITCH
+_RET
 
+/**
+ * 忘れる技の場所を決定する
+ * DEL_SKILL_POS と SCWK_ANSWERを返す
+ * SCWK_ANSWER:フォルムチェンジするかどうか
+ * DEL_SKILL_POS:忘れる技の位置(ユーザーが選択した場合のみ有効)
+*/
+decide_del_skill:
+  DEFINE_LOCAL CHECK_SKILL
 
+  $TARGET_FORM_NO = $FORM_NO    //get_org_skillをコールする準備
+  _CALL get_org_skill
+  $CHECK_SKILL = $ORG_SKILL     //get_org_skillコール結果を格納
 
+  $DEL_SKILL_POS = 0
+  //フォルムごとの専用技を調べる
+  _CHECK_POKE_WAZA( SCWK_ANSWER, CHECK_SKILL, SEL_POS )
+  IF $SCWK_ANSWER == 1 THEN     //固有技覚えている
+    $OLD_SKILL = $CHECK_SKILL   //忘れる技セット del_skill_msgをコールする準備
+    _CALL del_skill_msg
+    $SCWK_ANSWER = TRUE                 //固有技を忘れられるので、チェンジ可
+  ELSE                          //固有技を発見できなかった場合
+    DEFINE_LOCAL SKILL_NUM      //習得技数
+    //取得している技の数を調べる
+    _GET_TEMOTI_WAZA_NUM( SKILL_NUM, SEL_POS )
+    IF $SKILL_NUM == 4 THEN
+      //４つ覚えている
+      _CALL select_del_skill
+    ELSE
+      $SCWK_ANSWER = TRUE               //技スロットに空きがあるので、チェンジ可
+      //「新固有技を覚えた」
+      _SYSWIN_MSG_DOWN( msg_rotom_waza_07 )
+      _SYSWIN_CLOSE()
+    ENDIF
+  ENDIF  
+_RET
 
+//技を忘れて、新固有技を覚えるメッセージを表示
+del_skill_msg:
+  _TEMOTI_NICK_NAME( 0, SEL_POS )
+  _WAZA_NAME( 1, OLD_SKILL )
+  _WAZA_NAME( 2, NEW_SKILL )
+  //「ポカン」
+  _SYSWIN_MSG_DOWN( msg_rotom_waza_05 )
+  _SYSWIN_CLOSE()
+  //「旧固有技を忘れて・・」
+  _SYSWIN_MSG_DOWN( msg_rotom_waza_06 )
+  _SYSWIN_CLOSE()
+  //「新固有技を覚えた」
+  _SYSWIN_MSG_DOWN( msg_rotom_waza_07 )
+  _SYSWIN_CLOSE()
+_RET
 
+//ユーザーに忘れる技を選択させる
+select_del_skill:
+  DEFINE_LOCAL DECIDE            // ループ脱出フラグ
+  $DECIDE = FALSE
+  WHILE $DECIDE == FALSE
+    _TEMOTI_NICK_NAME( 0, SEL_POS )
+    _WAZA_NAME( 1, NEW_SKILL )
+    //固有技を覚えたい。4つでいっぱい。技忘れる？
+    _SYSWIN_MSG_DOWN( msg_rotom_waza_01 )
+    _YES_NO_WIN( SCWK_ANSWER )
+    _SYSWIN_CLOSE()
 
+    IF $SCWK_ANSWER == 0 THEN   //忘れる
+      //技忘れアプリコール
+      $DEL_SKILL_POS = 0
+      $OLD_SKILL = 0             //忘れる技セット del_skill_msgをコールする準備 @todo
+      _CALL del_skill_msg
+      $SCWK_ANSWER = TRUE
+      $DECIDE = TRUE            //ループ終了
+    ELSE                        //忘れない
+      _SYSWIN_MSG_DOWN( msg_rotom_waza_02 )
+      _YES_NO_WIN( SCWK_ANSWER )
+      _SYSWIN_CLOSE()
+      IF $SCWK_ANSWER == 0 THEN   //あきらめる
+        $SCWK_ANSWER = FALSE
+        $DECIDE = TRUE          //ループ終了
+      ENDIF
+    ENDIF
+  ENDWHILE
+_RET
