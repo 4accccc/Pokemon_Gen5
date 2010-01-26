@@ -143,8 +143,8 @@ typedef struct{
 //選手証
 typedef struct {
   REGULATION regulation_buff;
-  STRCODE cupname[WIFI_PLAYER_TIX_CUPNAME_MOJINUM + EOM_SIZE];  //大会名（72文字＋EOM）
   u32 ver;//カセットバージョン：
+  STRCODE cupname[WIFI_PLAYER_TIX_CUPNAME_MOJINUM + EOM_SIZE];  //大会名（72文字＋EOM）
   short no;//大会No.
   char code;//国コード：
   char start_year;//開始年：00-99
