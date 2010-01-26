@@ -22,6 +22,8 @@
 #include "app_menu_common.naix"
 #include "field/fieldmap.h"
 #include "system/pms_draw.h"
+#include "sound/pm_sndsys.h"
+#include "union_snd_def.h"
 
 
 //==============================================================================
@@ -749,6 +751,7 @@ static void _UniSub_TouchUpdate(UNION_SUBDISP_PTR unisub)
       else{
         _UniSub_IconPalChange(unisub, i);
       }
+      PMSND_PlaySE(UNION_SE_APPEAL_ICON_TOUCH);
       return;
     }
   }
@@ -1255,6 +1258,7 @@ static BOOL _UniSub_ChatPlate_TouchCheck(UNION_SYSTEM_PTR unisys, UNION_SUBDISP_
         GFL_STD_MemCopy(chat->mac_address, unisys->my_situation.focus_mac_address, 6);
       }
     }
+    PMSND_PlaySE( UNION_SE_PANEL_TOUCH );
     return TRUE;
   }
   return FALSE;
