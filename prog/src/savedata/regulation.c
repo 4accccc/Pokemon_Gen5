@@ -604,6 +604,20 @@ void Regulation_SetCardParam(REGULATION_CARDDATA* pReg, REGULATION_CARD_PARAM_TY
   }
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  レギュレーションカードのCRCチェック
+ *
+ *	@param	const REGULATION* pReg  チェックするもの
+ *
+ *	@return TRUEで正常  FALSEで不正
+ */
+//-----------------------------------------------------------------------------
+BOOL Regulation_CheckCrc( const REGULATION_CARDDATA* pReg )
+{ 
+  return pReg->crc == GFL_STD_CrcCalc( pReg, sizeof(REGULATION_CARDDATA) - 2 );
+}
+
 //----------------------------------------------------------
 /**
  * @brief	レギュレーションデータへのポインタ取得

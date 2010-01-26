@@ -205,6 +205,7 @@ extern const STRCODE *Regulation_GetCardCupNamePointer( const REGULATION_CARDDAT
 extern int Regulation_GetCardParam(const REGULATION_CARDDATA* pReg, REGULATION_CARD_PARAM_TYPE type);
 extern void Regulation_SetCardParam(REGULATION_CARDDATA * pReg, REGULATION_CARD_PARAM_TYPE type, int param);
 
+extern BOOL Regulation_CheckCrc( const REGULATION_CARDDATA* pReg );
 
 
 //----------------------------------------------------------

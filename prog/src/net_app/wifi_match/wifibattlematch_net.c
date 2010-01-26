@@ -3277,7 +3277,15 @@ WIFIBATTLEMATCH_NET_DOWNLOAD_DIGCARD_RET WIFIBATTLEMATCH_NET_WaitDownloadDigCard
     break;
 
   case SEQ_END:
-    return WIFIBATTLEMATCH_NET_DOWNLOAD_DIGCARD_RET_SUCCESS;
+    //CRCチェック
+    if( Regulation_CheckCrc( &p_wk->temp_buffer ) )
+    { 
+      return WIFIBATTLEMATCH_NET_DOWNLOAD_DIGCARD_RET_SUCCESS;
+    }
+    else
+    { 
+      return WIFIBATTLEMATCH_NET_DOWNLOAD_DIGCARD_RET_EMPTY;
+    }
 
 //-------------------------------------
 ///	コールバック待ち処理  
