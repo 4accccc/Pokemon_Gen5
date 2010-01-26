@@ -24,12 +24,17 @@
 #include "beacon_status.naix"
 #include "wifi_unionobj.naix"
 #include "beacon_view_local.h"
+#include "beacon_view_sub.h"
 
 //////////////////////////////////////////////////////////////////
+
+static void draw_LogNumWindow( BEACON_VIEW_PTR wk );
+static void draw_MenuWindow( BEACON_VIEW_PTR wk, u8 msg_id );
 
 static void sub_PlttVramTrans( u16* p_data, u16 pos, u16 num );
 
 static void panel_VisibleSet( PANEL_WORK* pp, BOOL visible_f );
+static void panel_IconVisibleSet( PANEL_WORK* pp, BOOL visible_f );
 static void panel_Clear( PANEL_WORK* pp );
 static void panel_Entry( PANEL_WORK* pp, u8 data_ofs, u8 data_idx );
 static PANEL_WORK* panel_GetPanelFromDataIndex( BEACON_VIEW_PTR wk, u8 data_idx );
@@ -39,9 +44,25 @@ static void panel_ColorPlttSet( BEACON_VIEW_PTR wk, PANEL_WORK* pp, GAMEBEACON_I
 static void panel_MsgPrint( BEACON_VIEW_PTR wk, PANEL_WORK* pp, STRBUF* str );
 static void panel_Draw( BEACON_VIEW_PTR wk, PANEL_WORK* pp, GAMEBEACON_INFO* info );
 
+static void effReq_PanelScroll( BEACON_VIEW_PTR wk, u8 dir, PANEL_WORK* new_pp, PANEL_WORK* ignore_pp );
+static void effReq_PanelSlideIn( BEACON_VIEW_PTR wk, PANEL_WORK* pp );
+
 static BOOL list_IsView( BEACON_VIEW_PTR wk, u8 idx );
 
 //////////////////////////////////////////////////////////////////
+
+/*
+ *  @brief  初期描画
+ */
+void BeaconView_InitialDraw( BEACON_VIEW_PTR wk )
+{
+  //現在のログ数
+  draw_LogNumWindow( wk );
+  //現在のトータルすれ違い人数
+  draw_MenuWindow( wk, msg_sys_now_record );
+
+}
+
 /*
  *  @brief  スタックからログを一件取り出し
  */
@@ -60,9 +81,12 @@ BOOL BeaconView_CheckStack( BEACON_VIEW_PTR wk )
   idx = GAMEBEACON_InfoTblRing_Ofs2Idx( wk->infoLog, ofs );
 
   //登録数更新
-  wk->ctrl.max += new_f;
-  if( wk->ctrl.max <= PANEL_VIEW_MAX){
-    wk->ctrl.view_max = wk->ctrl.max;
+  if( wk->ctrl.max < BS_LOG_MAX ){
+    wk->ctrl.max += new_f;
+  
+    if( wk->ctrl.max <= PANEL_VIEW_MAX){
+      wk->ctrl.view_max = wk->ctrl.max;
+    }
   }
   //ポップアップリクエスト
 
@@ -88,16 +112,52 @@ BOOL BeaconView_CheckStack( BEACON_VIEW_PTR wk )
   }
   panel_Entry( pp, ofs, idx );  //パネル新規登録
   panel_Draw( wk, pp, wk->tmpInfo );   //パネル描画
+  panel_VisibleSet( pp, TRUE );   //パネル描画
   
   //スクロールパターン
   if( wk->ctrl.view_top == 0){  //スライドイン
-  
+    effReq_PanelSlideIn( wk, pp );
   }else{
-  
+    effReq_PanelScroll( wk, SCROLL_DOWN, pp, NULL );
   }
+  wk->ctrl.view_top = pp->data_ofs;
 
   //スクロールリクエスト
   return TRUE;
+}
+
+/*
+ *  @brief  文字列一括描画
+ */
+static void print_Allput( BEACON_VIEW_PTR wk, GFL_BMP_DATA* bmp, u8 msg_id, u8 x, u8 y, u8 clear, PRINTSYS_LSB color )
+{
+  GFL_BMP_Clear( bmp, clear );
+  
+  GFL_MSG_GetString( wk->mm_status, msg_id, wk->str_tmp);
+  WORDSET_ExpandStr( wk->wordset, wk->str_expand, wk->str_tmp );
+
+	PRINTSYS_PrintColor( bmp, x, y, wk->str_expand, wk->fontHandle, color );
+}
+
+/*
+ *  @brief  ログ人数表示
+ */
+static void draw_LogNumWindow( BEACON_VIEW_PTR wk )
+{
+  WORDSET_RegisterNumber( wk->wordset, 0, wk->ctrl.max, 2, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
+  print_Allput( wk, wk->foamLogNum.bmp, msg_sys_lognum, 0, 0, 0, FCOL_FNTOAM_W );
+	
+  BmpOam_ActorBmpTrans( wk->foamLogNum.oam );
+}
+
+/*
+ *  @brief  メニューウィンドウ表示
+ */
+static void draw_MenuWindow( BEACON_VIEW_PTR wk, u8 msg_id )
+{
+  WORDSET_RegisterNumber( wk->wordset, 0, wk->log_count, 5, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+  print_Allput( wk, wk->win[WIN_MENU].bmp, msg_id, 0, 4, 0, FCOL_WHITE_N );
+  GFL_BMPWIN_MakeTransWindow( wk->win[WIN_MENU].win );
 }
 
 /*
@@ -108,8 +168,10 @@ static void sub_PlttVramTrans( u16* p_data, u16 pos, u16 num )
   u32 adrs = pos*2;
   u32 siz = num*2;
 
+#if 0
   DC_FlushRange( p_data, siz );
   GXS_LoadOBJPltt( p_data, adrs, siz );
+#endif
 }
 
 /*
@@ -130,9 +192,16 @@ static void act_SetPosition( GFL_CLWK* act, s16 x, s16 y )
 static void panel_VisibleSet( PANEL_WORK* pp, BOOL visible_f )
 {
   BmpOam_ActorSetDrawEnable( pp->msgOam.oam, visible_f );
-  GFL_CLACT_WK_SetDrawEnable( pp->cIcon, visible_f );
   GFL_CLACT_WK_SetDrawEnable( pp->cUnion, visible_f );
   GFL_CLACT_WK_SetDrawEnable( pp->cPanel, visible_f );
+}
+
+/*
+ *  @brief  パネルアイコン 表示状態On/Off
+ */
+static void panel_IconVisibleSet( PANEL_WORK* pp, BOOL visible_f )
+{
+  GFL_CLACT_WK_SetDrawEnable( pp->cIcon, visible_f );
 }
 
 /*
@@ -141,6 +210,7 @@ static void panel_VisibleSet( PANEL_WORK* pp, BOOL visible_f )
 static void panel_Clear( PANEL_WORK* pp )
 {
   panel_VisibleSet( pp, FALSE );
+  panel_IconVisibleSet( pp, FALSE );
 
   GFL_BMP_Clear( pp->msgOam.bmp, 0 );
 	BmpOam_ActorBmpTrans( pp->msgOam.oam );
@@ -148,6 +218,8 @@ static void panel_Clear( PANEL_WORK* pp )
   GFL_STR_ClearBuffer( pp->str );
 
   pp->data_idx = PANEL_DATA_BLANK;
+  pp->data_ofs = 0;
+  pp->n_line = 0;
 }
 
 /*
@@ -201,7 +273,8 @@ static void panel_UnionObjUpdate( BEACON_VIEW_PTR wk, PANEL_WORK* pp, GAMEBEACON
   GFL_CLGRP_CGR_Replace(  wk->objResUnion.res[ OBJ_RES_CGR ].tbl[ pp->id ],
                           wk->resCharUnion[ char_no ].p_char );
   //パレット転送
-  sub_PlttVramTrans( wk->resPlttUnion.dat, (ACT_PAL_UNION+pp->id)*16, 16 );
+//  sub_PlttVramTrans( wk->resPlttUnion.dat, (ACT_PAL_UNION+pp->id)*16, 16 );
+  PaletteWorkSet( wk->pfd, wk->resPlttUnion.dat, FADE_SUB_OBJ, (ACT_PAL_UNION+pp->id)*16, 0x20 );
 }
 
 /*
@@ -238,7 +311,8 @@ static void panel_ColorPlttSet( BEACON_VIEW_PTR wk, PANEL_WORK* pp, GAMEBEACON_I
   col = panel_FrameColorGet( info );
   pal[1] = wk->resPlttPanel.dat[ col ];
   
-  sub_PlttVramTrans( pal, (ACT_PAL_PANEL+pp->id)*16+1, 2 );
+//  sub_PlttVramTrans( pal, (ACT_PAL_PANEL+pp->id)*16+1, 2 );
+  PaletteWorkSet( wk->pfd, pal, FADE_SUB_OBJ, (ACT_PAL_PANEL+pp->id)*16+1, 2*2 );
 }
 
 /*
@@ -275,6 +349,9 @@ static void panel_Draw( BEACON_VIEW_PTR wk, PANEL_WORK* pp, GAMEBEACON_INFO* inf
  */
 static void  panel_SetPos( PANEL_WORK* pp, s16 x, s16 y )
 {
+  pp->px = x;
+  pp->py = y;
+  act_SetPosition( pp->cPanel, x, y );
   act_SetPosition( pp->cUnion, x+ACT_UNION_OX, y+ACT_UNION_OY );
   act_SetPosition( pp->cIcon, x+ACT_ICON_OX, y+ACT_ICON_OY );
   BmpOam_ActorSetPos( pp->msgOam.oam, x+ACT_MSG_OX, y+ACT_MSG_OY);
@@ -313,17 +390,71 @@ typedef struct _TASKWK_PANEL_SCROLL{
   int seq;
   PANEL_WORK* pp;
   u8  dir;
-  u8  diff;
+  u8  deray;
   u8  frame;
   u8  ct;
   s16 epx,epy;
   fx32  x,y;
   fx32  ax,ay;
   
+  int* task_ct;
 }TASKWK_PANEL_SCROLL;
+
+static void taskAdd_PanelScroll( BEACON_VIEW_PTR wk, PANEL_WORK* pp, u8 dir, u8 wait, int* task_ct );
 static void tcb_PanelScroll( GFL_TCBL *tcb , void* work);
 
-static void taskAdd_PanelScroll( BEACON_VIEW_PTR wk, PANEL_WORK* pp, u8 dir )
+/*
+ *  @brief  パネルスクロールリクエスト
+ */
+static void effReq_PanelScroll( BEACON_VIEW_PTR wk, u8 dir, PANEL_WORK* new_pp, PANEL_WORK* egnore_pp )
+{
+  int i;
+  PANEL_WORK* pp;
+
+  if( new_pp != NULL ){
+    if( dir == SCROLL_UP ){
+      new_pp->n_line = PANEL_LINE_END;
+    }else{
+      new_pp->n_line = 0;
+    }
+    panel_SetPos( new_pp, new_pp->n_line*ACT_PANEL_OX+ACT_PANEL_PX,
+                          new_pp->n_line*ACT_PANEL_OY+ACT_PANEL_PY );
+    panel_VisibleSet( new_pp, TRUE );
+  }
+  for(i = 0;i < PANEL_MAX;i++){
+    pp = &wk->panel[i];
+
+    if( (pp->data_idx == PANEL_DATA_BLANK) ||
+        ((egnore_pp != NULL) && pp->id == egnore_pp->id)){
+      continue;
+    }
+    taskAdd_PanelScroll( wk, pp, dir, 0, &wk->eff_task_ct );
+  }
+}
+
+/*
+ *  @brief  パネルスライドインリクエスト
+ */
+static void effReq_PanelSlideIn( BEACON_VIEW_PTR wk, PANEL_WORK* pp )
+{
+  int i,deray = 0;
+  PANEL_WORK* panel;
+
+  pp->n_line = PANEL_VIEW_START;
+  panel_SetPos( pp, ACT_PANEL_SI_SX, ACT_PANEL_SI_SY );
+  panel_VisibleSet( pp, TRUE );
+  if( wk->ctrl.max > 0 ){
+    deray = 15;
+  }
+  taskAdd_PanelScroll( wk, pp, SCROLL_RIGHT, deray, &wk->eff_task_ct );
+
+  effReq_PanelScroll( wk, SCROLL_DOWN, NULL, pp );
+}
+
+/*
+ *  @brief  パネルスクロールタスク登録
+ */
+static void taskAdd_PanelScroll( BEACON_VIEW_PTR wk, PANEL_WORK* pp, u8 dir, u8 wait, int* task_ct )
 {
   GFL_TCBL* tcb;
   TASKWK_PANEL_SCROLL* twk;
@@ -335,25 +466,35 @@ static void taskAdd_PanelScroll( BEACON_VIEW_PTR wk, PANEL_WORK* pp, u8 dir )
 
   twk->dir = dir;
   if( twk->dir == SCROLL_UP ){
-    twk->diff = -1;
-  }else{
-    twk->diff = 1;
+    pp->n_line--;
+  }else if( twk->dir == SCROLL_DOWN ){
+    pp->n_line++;
   }
-  pp->n_line += twk->diff;
 
+  twk->pp = pp;
   twk->epx = pp->n_line*ACT_PANEL_OX+ACT_PANEL_PX; 
   twk->epy = pp->n_line*ACT_PANEL_OY+ACT_PANEL_PY; 
   twk->x = FX32_CONST(pp->px);
   twk->y = FX32_CONST(pp->py);
-  twk->frame = 30;
-  twk->ax = FX_Div( FX32_CONST(ACT_PANEL_OX*twk->diff), FX32_CONST(twk->frame));
-  twk->ay = FX_Div( FX32_CONST(ACT_PANEL_OY*twk->diff), FX32_CONST(twk->frame));
+  twk->frame = 15;
+  twk->deray = wait;
+  twk->ax = FX_Div( FX32_CONST( twk->epx - pp->px ), FX32_CONST(twk->frame));
+  twk->ay = FX_Div( FX32_CONST( twk->epy - pp->py ), FX32_CONST(twk->frame));
+
+  IWASAWA_Printf( "Scroll dir=%d, start(%d,%d), end(%d,%d) a(%d,%d)\n",
+      dir,pp->px,pp->py,twk->epx,twk->epy,(twk->epx-pp->px),(twk->epy-pp->py));
+  twk->task_ct = task_ct;
+  (*task_ct)++;
 }
 
 static void tcb_PanelScroll( GFL_TCBL *tcb , void* tcb_wk)
 {
   TASKWK_PANEL_SCROLL* twk = (TASKWK_PANEL_SCROLL*)tcb_wk;
 
+  if( twk->deray > 0 ){
+    twk->deray--;
+    return;
+  }
   if( ++twk->ct < twk->frame){
     twk->x += twk->ax;
     twk->y += twk->ay;
@@ -365,37 +506,8 @@ static void tcb_PanelScroll( GFL_TCBL *tcb , void* tcb_wk)
   if( twk->pp->n_line == 0 || twk->pp->n_line == PANEL_LINE_END){
     panel_Clear( twk->pp );  //パネル破棄
   }
+  --(*twk->task_ct);
   GFL_TCBL_Delete(tcb);
 }
 
-/////////////////////////////////////////////////////////////////////
-/*
- *  @brief  リストスクロール
- */
-/////////////////////////////////////////////////////////////////////
-typedef struct _TASKWK_LIST_SCROLL{
-  int seq;
-  u8  dir;
-}TASKWK_LIST_SCROLL;
-static void tcb_ListScroll( GFL_TCBL *tcb , void* work);
-
-static void taskAdd_ListScroll( BEACON_VIEW_PTR wk, u8 dir )
-{
-  GFL_TCBL* tcb;
-  
-  tcb = GFL_TCBL_Create( wk->pTcbSys, NULL, sizeof(TASKWK_LIST_SCROLL), 0 );
-
-}
-
-static void tcb_ListScroll( GFL_TCBL *tcb , void* tcb_wk)
-{
-  TASKWK_LIST_SCROLL* work = (TASKWK_LIST_SCROLL*)tcb_wk;
-
-  switch(work->seq){
-  case 0:
-    break;
-  default:
-    GFL_TCBL_Delete(tcb);
-  }
-}
 

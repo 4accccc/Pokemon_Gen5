@@ -11,39 +11,92 @@
 #include "gamesystem/game_beacon_types.h"
 #include "gamesystem/game_beacon_accessor.h"
 #include "gamesystem/beacon_status.h"
+#include "system/palanm.h"
+#include "system/gfl_use.h"
+#include "msg/msg_beacon_status.h"
 
 enum{
   SEQ_MAIN,
-
+  SEQ_VIEW_UPDATE,
 };
 
 /////////////////////////////////////
 //リテラル
-#define HEAPID_BVIEW_TMP      GFL_HEAP_LOWID( HEAPID_FIELDMAP )
-#define HEAPID_BEACON_VIEW    (HEAPID_FIELDMAP)
+#define FRM_MENUMSG ( GFL_BG_FRAME0_S )
+#define FRM_MENU   ( GFL_BG_FRAME1_S )
+#define FRM_POPUP  ( GFL_BG_FRAME2_S )
+#define FRM_BACK   ( GFL_BG_FRAME3_S )
 
 ///パレット展開位置
-#define FONT_PAL    (15)
+#define FONT_PAL    (14)
 #define ACT_PAL_FONT  (3)
 #define ACT_PAL_PANEL (4)
 #define ACT_PAL_UNION (9)
+#define ACT_PAL_WMI   (14)
 
-#define	FCOL_FNTOAM	( PRINTSYS_LSB_Make(1,2,0) )		// フォントカラー：OAMフォント黒抜
+///フォントカラー
+#define	FCOL_FNTOAM   ( PRINTSYS_LSB_Make(1,2,0) )	 ///<OAMフォント黒抜
+#define FCOL_FNTOAM_W ( PRINTSYS_LSB_Make(15,14,0))  ///<Oam白抜き
+#define FCOL_WHITE_N  ( PRINTSYS_LSB_Make(15,2,0) ) ///<BG白抜き
 
 ///表示するログ件数
 #define VIEW_LOG_MAX    (4)
 
 #define BS_LOG_MAX  (30)  //ログ管理数
 #define PANEL_MAX   (5)   //同時描画されるパネル数
+#define PANEL_VIEW_START  (1)
+#define PANEL_VIEW_END    (4)
 #define PANEL_VIEW_MAX    (4)   //画面内に描画されるパネル数
 #define PANEL_LINE_END    (5)
 
 #define PANEL_DATA_BLANK (0xFF)
 
+///ポップアップメッセージバッファ長
+#define BUFLEN_POPUP_MSG  (18*3*2+EOM_SIZE)
+#define BUFLEN_TMP_MSG    (BUFLEN_POPUP_MSG)
+
 ///パネル文字列バッファ長
 #define BUFLEN_PANEL_MSG  (10+EOM_SIZE)
 ///トレーナー名バッファ長
 #define BUFLEN_TR_NAME  (PERSON_NAME_SIZE+EOM_SIZE)
+
+///////////////////////////////////////////////////
+//BMP関連
+
+//パネルメッセージ表示oamウィンドウ
+#define BMP_PANEL_OAM_SX  (15)  //パネルOAM
+#define BMP_PANEL_OAM_SY  (2)
+
+//ログ数表示oamウィンドウ
+#define BMP_LOGNUM_OAM_PX (4)
+#define BMP_LOGNUM_OAM_PY (8*19)
+#define BMP_LOGNUM_OAM_SX (6)   //ログ数表示OAM
+#define BMP_LOGNUM_OAM_SY (2)
+#define BMP_LOGNUM_OAM_BGPRI  (3)
+#define BMP_LOGNUM_OAM_SPRI   (0)
+//ポップアップウィンドウ
+#define BMP_POPUP_PX (2)
+#define BMP_POPUP_PY (22)
+#define BMP_POPUP_SX  (28)
+#define BMP_POPUP_SY  (6)
+#define BMP_POPUP_CGX (768-(BMP_POPUP_SX*BMP_POPUP_SY))
+#define BMP_POPUP_FRM (FRM_POPUP)
+//メニューバーウィンドウ
+#define BMP_MENU_PX  (1)
+#define BMP_MENU_PY  (21)
+#define BMP_MENU_SX  (15)
+#define BMP_MENU_SY  (3)
+#define BMP_MENU_CGX (BMP_POPUP_CGX-(BMP_MENU_SX*BMP_MENU_SY))
+#define BMP_MENU_FRM (FRM_MENUMSG)
+
+enum{
+ WIN_POPUP,
+ WIN_MENU,
+ WIN_MAX,
+};
+
+////////////////////////////////////////////////////
+//アクター関連定義
 
 #define ACT_RENDER_ID (0)
 
@@ -57,11 +110,6 @@ enum{
 
 #define UNION_CHAR_MAX      (16)  ///<ユニオンキャラクターmax
 #define BEACON_VIEW_OBJ_MAX (5*8) ///<画面内に表示するOBJの登録max数
-
-
-#define FRM_POPUP  ( GFL_BG_FRAME1_S )
-#define FRM_PANEL  ( GFL_BG_FRAME2_S )
-#define FRM_BACK  ( GFL_BG_FRAME3_S )
 
 ///OBJ BGプライオリティ
 #define OBJ_BG_PRI (3)
@@ -83,6 +131,8 @@ enum{
 #define ACT_PANEL_OY  (5*8)
 #define ACT_PANEL_PX  (-ACT_PANEL_OX)
 #define ACT_PANEL_PY  (-ACT_PANEL_OY)
+#define ACT_PANEL_SI_SX (-26*8)  //スライドイン時のスタートポジション
+#define ACT_PANEL_SI_SY (0)
 
 #define ACT_UNION_OX  (4*8)
 #define ACT_UNION_OY  (3*8)
@@ -108,12 +158,13 @@ enum{
   ICON_MAX,
 };
 
-#define BMP_PANEL_OAM_SX  (15)
-#define BMP_PANEL_OAM_SY  (2)
-
 //スクロール方向定義
-#define SCROLL_UP   (0)
-#define SCROLL_DOWN (1)
+enum{
+  SCROLL_UP,
+  SCROLL_DOWN,
+  SCROLL_RIGHT,
+};
+
 //==============================================================================
 //  構造体定義
 //==============================================================================
@@ -147,6 +198,13 @@ typedef struct _RES2D_PLTT{
   void* buf;
 }RES2D_PLTT;
 
+// Bmpウィンドウ
+typedef struct{
+  GFL_BMPWIN *win;
+  GFL_BMP_DATA* bmp;
+  PRINT_UTIL putil;
+}BMP_WIN;
+
 // OAMフォントワーク
 typedef struct {
 	BMPOAM_ACT_PTR oam;
@@ -173,6 +231,9 @@ typedef struct _PANEL_WORK{
   struct _PANEL_WORK* prev;
 }PANEL_WORK;
 
+/*
+ *  @brief  ポップアップ制御
+ */
 typedef struct _LOG_CTRL{
   u8  max;  //ログ数
   u8  top;  //今描画されている先頭index
@@ -207,13 +268,18 @@ typedef struct _BEACON_VIEW{
   ARCHANDLE*  arc_handle;
 
   GFL_TCBLSYS*  pTcbSys;
+  GFL_TCB*      tcbVIntr;
+
+  int           eff_task_ct;
+
+  PALETTE_FADE_PTR pfd;
 
   GFL_FONT *fontHandle;
   PRINT_QUE *printQue;
   WORDSET *wordset;
   GFL_MSGDATA *mm_status;
-  STRBUF *strbuf_temp;
-  STRBUF *strbuf_expand;
+  STRBUF *str_tmp;
+  STRBUF *str_expand;
 
   BMPOAM_SYS_PTR bmpOam;
   GFL_CLUNIT* cellUnit;
@@ -222,9 +288,9 @@ typedef struct _BEACON_VIEW{
   OBJ_RES_TBL objResNormal;
   OBJ_RES_TBL objResUnion;
   OBJ_RES_TBL objResIcon;
-
-  GFL_BMPWIN *win[VIEW_LOG_MAX];
-  PRINT_UTIL print_util[VIEW_LOG_MAX];
+  
+  FONT_OAM   foamLogNum; //現在のログ数表示
+  BMP_WIN    win[ WIN_MAX ];
  
   PANEL_WORK  panel[PANEL_MAX];
   u32 log_count;
