@@ -20,6 +20,7 @@
 #include "net/dwc_rap.h"
 #include "system/net_err.h"
 
+
 //  セーブデータ
 #include "savedata/system_data.h"
 #include "savedata/wifilist.h"
@@ -39,14 +40,18 @@
 ///	デバッグ
 //=====================================
 #ifdef PM_DEBUG
-#define DEBUG_NET_PRINT_ON
+#define DEBUG_DEBUG_NET_Printf_ON
 #endif //PM_DEBUG
 
-#if defined(DEBUG_NET_PRINT_ON) && defined(DEBUG_ONLY_FOR_toru_nagihashi)
+#if defined(DEBUG_DEBUG_NET_Printf_ON) && defined(DEBUG_ONLY_FOR_toru_nagihashi)
 #define DEBUG_NET_Printf(...)  OS_FPrintf(3,__VA_ARGS__)
 #else
 #define DEBUG_NET_Printf(...)  /*  */
-#endif  //DEBUG_NET_PRINT_ON
+#endif  //DEBUG_DEBUG_NET_Printf_ON
+
+//-------------------------------------
+///	マクロスイッチ
+//=====================================
 
 //-------------------------------------
 ///	ネット定数
@@ -58,11 +63,13 @@
 #endif
 
 #define WIFIBATTLEMATCH_NET_TABLENAME "PlayerStats_v1" 
-#define WIFIBATTLEMATCH_NET_TABLENAME "PlayerStats_v1" 
 
-#define SAKE_STAT_INITIAL_PROFILE_ID  "INITIAL_PROFILE_ID"
-#define SAKE_STAT_NOW_PROFILE_ID      "NOW_PROFILE_ID"
-#define SAKE_STAT_LAST_LOGIN_DATETIME "LAST_LOGIN_DATETIME"
+//以下、ATLAS経由ではなく、SAKE直接アクセスの場合
+#define SAKE_STAT_RECORDID              "recordid"
+#define SAKE_STAT_INITIAL_PROFILE_ID    "INITIAL_PROFILE_ID"
+#define SAKE_STAT_NOW_PROFILE_ID        "NOW_PROFILE_ID"
+#define SAKE_STAT_LAST_LOGIN_DATETIME   "LAST_LOGIN_DATETIME"
+#define SAKE_STAT_WIFICUP_POKEMON_PARTY "WIFICUP_POKEMON_PARTY"
 
 //-------------------------------------
 ///	SCのシーケンス
@@ -126,8 +133,8 @@ typedef enum
 typedef enum
 {
   MATCHMAKE_KEY_WBM,    //Wifiバトルマッチを示す（必ず１）
-  MATCHMAKE_KEY_MODE,    //バトルモード
-  MATCHMAKE_KEY_RULE,    //バトルルール
+  MATCHMAKE_KEY_MODE,   //バトルモード
+  MATCHMAKE_KEY_RULE,   //バトルルール
   MATCHMAKE_KEY_DEBUG,  //デバッグ用
 
   MATCHMAKE_KEY_MAX,
@@ -150,9 +157,14 @@ typedef enum
 ///	アトリビュート
 //=====================================
 #define WIFI_FILE_ATTR1			"REGCARD"
-#define WIFI_FILE_ATTR2			""
+//#define WIFI_FILE_ATTR2		//ここに大会番号が入っている
 #define WIFI_FILE_ATTR3			""
-#define REGULATION_CARD_DATA_SIZE (342)
+#define REGULATION_CARD_DATA_SIZE (sizeof(REGULATION_CARDDATA))
+
+//-------------------------------------
+///	  不正文字チェック
+//=====================================
+#define WIFIBATTLEMATCH_BADWORD_STRL_MAX  (10)
 
 //=============================================================================
 /**
@@ -201,11 +213,10 @@ struct _WIFIBATTLEMATCH_NET_WORK
 
   u32 seq_matchmake;
   char filter[128];
-  char where[128];
-  char orderby[128];
   MATCHMAKE_KEY_WORK  key_wk[ MATCHMAKE_KEY_MAX ];
   HEAPID heapID;
 
+  u32   init_seq;
   u32   seq;
   u32   next_seq;
   BOOL  is_gdb_start;
@@ -219,12 +230,20 @@ struct _WIFIBATTLEMATCH_NET_WORK
   BOOL              is_recv[WIFIBATTLEMATCH_NET_RECVFLAG_MAX];
   DWCScResult       result;
 
+  //gdb
   void *p_get_wk;
+  DWCGdbGetRecordsCallback  gdb_get_record_callback;
   DWC_SC_WRITE_DATA report;
   DWCGdbField *p_field_buff;
+  const char **pp_table_name;
+  int table_name_num;
+  int sake_record_id;
+  DREAM_WORLD_SERVER_WORLDBATTLE_SET_DATA gdb_write_data;
+  u32   magic_num;
 
-  WIFIBATTLEMATCH_ENEMYDATA *p_enemy_data[2]; //0が送信バッファ  1が受信バッファ
-  BOOL is_recv_enemy_data;
+
+  //以下のバッファはフレキシブルなので、メモリ確保している
+  WIFIBATTLEMATCH_ENEMYDATA *p_enemy_data;
 
   u32 async_timeout;
   u32 cancel_select_timeout;   //CANCELSELECT_TIMEOUT
@@ -232,22 +251,30 @@ struct _WIFIBATTLEMATCH_NET_WORK
   BOOL is_auth;
 
   //マッチメイク
-   DWCEvalPlayerCallback matchmake_eval_callback;
+  DWCEvalPlayerCallback matchmake_eval_callback;
+
+  //GPFサーバーからの受信
+  NHTTP_RAP_WORK* p_nhttp;
+  DREAM_WORLD_SERVER_WORLDBATTLE_STATE_DATA gpf_data;
 
   //以下ダウンロード用
-  char temp_buffer[REGULATION_CARD_DATA_SIZE];
+  REGULATION_CARDDATA temp_buffer;
   DWCNdFileInfo fileInfo;
   u32               percent;
   u32               recived;
   u32               contentlen;
   int               server_filenum;
+  char              nd_attr2[10];
 
   //以下バックアップ用
   s32 init_profileID;
   s32 now_profileID;
-  int backup_recordID;
-  BOOL is_backup;
-  WIFIBATTLEMATCH_GDB_RND_SCORE_DATA  backup;
+
+  //以下不正文字チェック用
+  STRCODE   badword_str[ WIFIBATTLEMATCH_BADWORD_STRL_MAX ];
+  u16       *p_badword_arry[1];
+  char      badword_result[1];
+  int       badword_num;
 
   //以下デバッグ用データ
   BOOL is_debug;
@@ -268,18 +295,22 @@ static DWCNdError s_callback_result = 0;
  *					プロトタイプ宣言
 */
 //=============================================================================
+//-------------------------------------
+///	マッチング関係
+//=====================================
 static void MATCHMAKE_KEY_Set( WIFIBATTLEMATCH_NET_WORK *p_wk, MATCHMAKE_KEY key, int value );
 static int WIFIBATTLEMATCH_RND_FREE_Eval_Callback( int index, void* p_param_adrs );
 static int WIFIBATTLEMATCH_RND_RATE_Eval_Callback( int index, void* p_param_adrs );
 static int WIFIBATTLEMATCH_WIFI_Eval_Callback( int index, void* p_param_adrs );
 
 //-------------------------------------
-///	SGFL_NETコールバック
+///	GFL_NETコールバック
 //=====================================
 static void DwcRap_Sc_RecvPlayerData(const int netID, const int size, const void* cp_data_adrs, void* p_wk_adrs, GFL_NETHANDLE* p_net_handle);
 static void WifiBattleMatch_RecvEnemyData(const int netID, const int size, const void* cp_data_adrs, void* p_wk_adrs, GFL_NETHANDLE* p_net_handle);
 static u8* WifiBattleMatch_RecvEnemyDataBuffAddr(int netID, void* p_wk_adrs, int size);
 static void WifiBattleMatch_RecvMatchCancel(const int netID, const int size, const void* cp_data_adrs, void* p_wk_adrs, GFL_NETHANDLE* p_net_handle);
+
 //-------------------------------------
 ///	SC関係
 //=====================================
@@ -296,10 +327,12 @@ static DWCScResult DwcRap_Sc_CreateReportCore( DWC_SC_PLAYERDATA *p_my, const DW
 //-------------------------------------
 ///	GDB関係
 //=====================================
-static void DwcRap_Gdb_GetRecordsCallback(int record_num, DWCGdbField** records, void* user_param);
-static void DwcRap_Gdb_GetRecordsCallbackAndNew(int record_num, DWCGdbField** records, void* user_param);
-static void DwcRap_Gdb_GetRecordsProfileIDCallback(int record_num, DWCGdbField** records, void* user_param);
+static void DwcRap_Gdb_Rnd_GetRecordsCallback(int record_num, DWCGdbField** records, void* user_param);
+static void DwcRap_Gdb_Wifi_GetRecordsCallback(int record_num, DWCGdbField** records, void* user_param);
+static void DwcRap_Gdb_RecordID_GetRecordsCallback(int record_num, DWCGdbField** records, void* user_param);
 static void DwcRap_Gdb_Finalize( WIFIBATTLEMATCH_NET_WORK *p_wk );
+
+
 #ifdef PM_DEBUG
 static void print_field(DWCGdbField* field); // レコードをデバッグ出力する。
 #endif
@@ -328,51 +361,26 @@ static const int sc_field_type[]  =
   DWC_GDB_FIELD_TYPE_INT,//"CHEATS_COUNTER",
   DWC_GDB_FIELD_TYPE_INT,//"COMPLETE_MATCHES_COUNTER",
   DWC_GDB_FIELD_TYPE_INT,//"DISCONNECTS_COUNTER",
-  DWC_GDB_FIELD_TYPE_SHORT,//"NUM_DOUBLE_LOSE_COUNTER",
-  DWC_GDB_FIELD_TYPE_SHORT,//"NUM_DOUBLE_WIN_COUNTER",
-  DWC_GDB_FIELD_TYPE_SHORT,//"NUM_ROTATE_LOSE_COUNTER",
-  DWC_GDB_FIELD_TYPE_SHORT,//"NUM_ROTATE_WIN_COUNTER",
-  DWC_GDB_FIELD_TYPE_SHORT,//"NUM_SHOOTER_LOSE_COUNTER",
-  DWC_GDB_FIELD_TYPE_SHORT,//"NUM_SHOOTER_WIN_COUNTER",
-  DWC_GDB_FIELD_TYPE_SHORT,//"NUM_SINGLE_LOSE_COUNTER",
-  DWC_GDB_FIELD_TYPE_SHORT,//"NUM_SINGLE_WIN_COUNTER"  ,
-  DWC_GDB_FIELD_TYPE_SHORT,//"NUM_TRIPLE_LOSE_COUNTER",
-  DWC_GDB_FIELD_TYPE_SHORT,//"NUM_TRIPLE_WIN_COUNTER",
+  DWC_GDB_FIELD_TYPE_INT,//"NUM_DOUBLE_LOSE_COUNTER",
+  DWC_GDB_FIELD_TYPE_INT,//"NUM_DOUBLE_WIN_COUNTER",
+  DWC_GDB_FIELD_TYPE_INT,//"NUM_ROTATE_LOSE_COUNTER",
+  DWC_GDB_FIELD_TYPE_INT,//"NUM_ROTATE_WIN_COUNTER",
+  DWC_GDB_FIELD_TYPE_INT,//"NUM_SHOOTER_LOSE_COUNTER",
+  DWC_GDB_FIELD_TYPE_INT,//"NUM_SHOOTER_WIN_COUNTER",
+  DWC_GDB_FIELD_TYPE_INT,//"NUM_SINGLE_LOSE_COUNTER",
+  DWC_GDB_FIELD_TYPE_INT,//"NUM_SINGLE_WIN_COUNTER"  ,
+  DWC_GDB_FIELD_TYPE_INT,//"NUM_TRIPLE_LOSE_COUNTER",
+  DWC_GDB_FIELD_TYPE_INT,//"NUM_TRIPLE_WIN_COUNTER",
   DWC_GDB_FIELD_TYPE_INT,//"INITIAL_PROFILE_ID",
   DWC_GDB_FIELD_TYPE_INT,//"NOW_PROFILE_ID",
 };
-
-static const int sc_default_value[]  =
-{ 
-  1500,//"ARENA_ELO_RATING_1V1_DOUBLE",
-  1500,//"ARENA_ELO_RATING_1V1_ROTATE",
-  1500,//"ARENA_ELO_RATING_1V1_SHOOTER",
-  1500,//"ARENA_ELO_RATING_1V1_SINGLE",
-  1500,//"ARENA_ELO_RATING_1V1_TRIPLE",
-  0,//"CHEATS_COUNTER",
-  0,//"COMPLETE_MATCHES_COUNTER",
-  0,//"DISCONNECTS_COUNTER",
-  0,//"NUM_DOUBLE_LOSE_COUNTER",
-  0,//"NUM_DOUBLE_WIN_COUNTER",
-  0,//"NUM_ROTATE_LOSE_COUNTER",
-  0,//"NUM_ROTATE_WIN_COUNTER",
-  0,//"NUM_SHOOTER_LOSE_COUNTER",
-  0,//"NUM_SHOOTER_WIN_COUNTER",
-  0,//"NUM_SINGLE_LOSE_COUNTER",
-  0,//"NUM_SINGLE_WIN_COUNTER"  ,
-  0,//"NUM_TRIPLE_LOSE_COUNTER",
-  0,//"NUM_TRIPLE_WIN_COUNTER",
-  0,//"INITIAL_PROFILE_ID",
-  0,//"NOW_PROFILE_ID",
-};
-
 //-------------------------------------
 ///	マッチメイクキー文字列
 //    3文字固定
 //=====================================
 static const char *sc_matchmake_key_str[ MATCHMAKE_KEY_MAX ] =
 { 
-  "wbm"
+  "wbm",
   "mod",
   "rul",
   "deb",
@@ -387,7 +395,7 @@ enum
   WIFIBATTLEMATCH_NETCMD_SEND_CANCELMATCH,
   WIFIBATTLEMATCH_NETCMD_MAX,
 };
-static const NetRecvFuncTable sc_net_recv_tbl[WIFIBATTLEMATCH_NETCMD_MAX] = 
+static const NetRecvFuncTable sc_net_recv_tbl[] = 
 {
   {DwcRap_Sc_RecvPlayerData,   NULL},    ///_NETCMD_INFOSEND
   {WifiBattleMatch_RecvEnemyData, WifiBattleMatch_RecvEnemyDataBuffAddr },
@@ -412,21 +420,21 @@ static const NetRecvFuncTable sc_net_recv_tbl[WIFIBATTLEMATCH_NETCMD_MAX] =
 WIFIBATTLEMATCH_NET_WORK * WIFIBATTLEMATCH_NET_Init( const DWCUserData *cp_user_data, WIFI_LIST *p_wifilist, HEAPID heapID )
 { 
   WIFIBATTLEMATCH_NET_WORK *p_wk;
+
   p_wk  = GFL_HEAP_AllocMemory( heapID, sizeof(WIFIBATTLEMATCH_NET_WORK) );
   GFL_STD_MemClear( p_wk, sizeof(WIFIBATTLEMATCH_NET_WORK) );
   p_wk->cp_user_data  = cp_user_data;
   p_wk->p_wifilist    = p_wifilist;
 
+  p_wk->magic_num = 0x573;
 
-  p_wk->p_field_buff  = GFL_HEAP_AllocClearMemory( heapID, ATLAS_GetFieldNameNum() * sizeof(DWCGdbField) );
 
-  { 
-    p_wk->p_enemy_data[0]  = GFL_HEAP_AllocMemory( heapID, WIFIBATTLEMATCH_DATA_ENEMYDATA_SIZE );
-    GFL_STD_MemClear( p_wk->p_enemy_data[0], WIFIBATTLEMATCH_DATA_ENEMYDATA_SIZE );
-    p_wk->p_enemy_data[1]  = GFL_HEAP_AllocMemory( heapID, WIFIBATTLEMATCH_DATA_ENEMYDATA_SIZE );
-    GFL_STD_MemClear( p_wk->p_enemy_data[1], WIFIBATTLEMATCH_DATA_ENEMYDATA_SIZE );
+  p_wk->p_field_buff  = GFL_HEAP_AllocMemory( heapID, (ATLAS_RND_GetFieldNameNum() + ATLAS_WIFI_GetFieldNameNum()) * sizeof(DWCGdbField) );
+  GFL_STD_MemClear(p_wk->p_field_buff, (ATLAS_RND_GetFieldNameNum() + ATLAS_WIFI_GetFieldNameNum()) * sizeof(DWCGdbField) );
 
-  }
+  p_wk->p_enemy_data  = GFL_HEAP_AllocMemory( heapID, MATH_ROUNDUP32(WIFIBATTLEMATCH_DATA_ENEMYDATA_SIZE) );
+  GFL_STD_MemClear(p_wk->p_enemy_data, MATH_ROUNDUP32(WIFIBATTLEMATCH_DATA_ENEMYDATA_SIZE) );
+
   GFL_NET_DebugPrintOn();
 
   if(!GFL_NET_IsInit())
@@ -434,12 +442,23 @@ WIFIBATTLEMATCH_NET_WORK * WIFIBATTLEMATCH_NET_Init( const DWCUserData *cp_user_
     GF_ASSERT(0);
   }
 
+  GFL_NET_AddCommandTable( GFL_NET_CMD_WIFIMATCH, sc_net_recv_tbl, NELEMS(sc_net_recv_tbl), p_wk );
   GFL_NET_SetWifiBothNet(FALSE);
-  GFL_NET_AddCommandTable( GFL_NET_CMD_WIFIMATCH, sc_net_recv_tbl, WIFIBATTLEMATCH_NETCMD_MAX, p_wk );
 
+
+  NAGI_Printf( "Net Wk 0x%x buff 0x%x\n", p_wk, p_wk->p_enemy_data );
+  NAGI_Printf( "BufferAddr 0x%x\n", WifiBattleMatch_RecvEnemyDataBuffAddr );
 
   return p_wk;
 }
+
+#if 0
+wk 0x255d114 buff 0x0
+
+
+Net Wk 0x255d114 buff 0x255d73c
+BufferAddr 0x22231d1
+#endif
 
 //----------------------------------------------------------------------------
 /**
@@ -452,10 +471,8 @@ void WIFIBATTLEMATCH_NET_Exit( WIFIBATTLEMATCH_NET_WORK *p_wk )
 { 
   GFL_NET_DelCommandTable( GFL_NET_CMD_WIFIMATCH );
 
+  GFL_HEAP_FreeMemory( p_wk->p_enemy_data );
   GFL_HEAP_FreeMemory( p_wk->p_field_buff );
-  GFL_HEAP_FreeMemory( p_wk->p_enemy_data[1] );
-  GFL_HEAP_FreeMemory( p_wk->p_enemy_data[0] );
-
   GFL_HEAP_FreeMemory( p_wk );
 }
 
@@ -541,7 +558,7 @@ BOOL WIFIBATTLEMATCH_NET_CheckError( WIFIBATTLEMATCH_NET_WORK *p_wk )
 void WIFIBATTLEMATCH_NET_StartInitialize( WIFIBATTLEMATCH_NET_WORK *p_wk )
 { 
   p_wk->is_initialize = TRUE;
-  p_wk->seq = 0;
+  p_wk->init_seq  = 0;
 }
 //----------------------------------------------------------------------------
 /**
@@ -554,7 +571,7 @@ void WIFIBATTLEMATCH_NET_StartInitialize( WIFIBATTLEMATCH_NET_WORK *p_wk )
 //-----------------------------------------------------------------------------
 BOOL WIFIBATTLEMATCH_NET_IsInitialize( const WIFIBATTLEMATCH_NET_WORK *cp_wk )
 { 
-  return cp_wk->is_initialize && cp_wk->seq > 5;
+  return cp_wk->is_initialize;
 }
 //----------------------------------------------------------------------------
 /**
@@ -569,392 +586,50 @@ BOOL WIFIBATTLEMATCH_NET_WaitInitialize( WIFIBATTLEMATCH_NET_WORK *p_wk, SAVE_CO
 { 
   enum
   { 
-    SEQ_INIT,
-    SEQ_START,
-    SEQ_WAIT,
+    SEQ_START_GET_TABLE_ID,
+    SEQ_WAIT_GET_TABLE_ID,
+    SEQ_START_CREATE_RECORD,
+    SEQ_WAIT_CREATE_RECORD,
     SEQ_END,
-    SEQ_CHECK,
-    SEQ_SEARCH_START,
-    SEQ_SEARCH_WAIT,
-    SEQ_SEARCH_END,
-    SEQ_CREATE_START,
-    SEQ_CREATE_WAIT,
-    SEQ_CREATE_END,
-    SEQ_BACKUP_START,
-    SEQ_BACKUP_WAIT,
-    SEQ_BACKUP_END,
-    SEQ_EXIT,
   };
-  DWCGdbState state;
 
-  if( p_wk->is_initialize )
+  switch( p_wk->init_seq )
   { 
-	  *p_result = DWC_GDB_ERROR_NONE;
-	
-	  switch( p_wk->seq )
-	  { 
-	  case SEQ_INIT:
-	    *p_result = DWC_GdbInitialize( GAME_ID, p_wk->cp_user_data, WIFIBATTLEMATCH_NET_SSL_TYPE );
-	    if( *p_result != DWC_GDB_ERROR_NONE )
-	    { 
-        p_wk->is_initialize = FALSE;
-	      DwcRap_Gdb_Finalize( p_wk );
-	      return FALSE;
-	    }
-	    DEBUG_NET_Printf( "INIT:Init\n" );
-	    p_wk->seq = SEQ_START;
-	    break;
-	
-	  case SEQ_START:
-	    *p_result = DWC_GdbGetMyRecordsAsync( WIFIBATTLEMATCH_NET_TABLENAME, ATLAS_GetFieldName(), ATLAS_GetFieldNameNum(), DwcRap_Gdb_GetRecordsProfileIDCallback, p_wk );
-	    if( *p_result != DWC_GDB_ERROR_NONE )
-	    { 
-        p_wk->is_initialize = FALSE;
-	      DwcRap_Gdb_Finalize( p_wk );
-	      return FALSE;
-	    }
-	    DEBUG_NET_Printf( "INIT:GetMy init\n" );
-	    p_wk->async_timeout = 0;
-	    p_wk->seq= SEQ_WAIT;
-	    break;
-	
-	  case SEQ_WAIT:
-	    { 
-	      state = DWC_GdbGetState();
-	
-	      if( p_wk->async_timeout++ > ASYNC_TIMEOUT )
-	      { 
-	        GF_ASSERT(0);
-	      }
-	
-	      if( DWC_GDB_STATE_IN_ASYNC_PROCESS == state )
-	      { 
-	        DWC_GdbProcess();
-	      }
-	      else
-	      { 
-	        if( state != DWC_GDB_STATE_IDLE )
-	        { 
-	          GF_ASSERT(0);
-            p_wk->is_initialize = FALSE;
-	          DwcRap_Gdb_Finalize( p_wk );
-	          return FALSE;
-	        }
-	        else
-	        { 
-	          DEBUG_NET_Printf( "INIT:GetMy wait\n" );
-	          p_wk->seq = SEQ_END;
-	        }
-	      }
-	    }
-	    break;
-	
-	  case SEQ_END:
-	    { 
-	      DWCGdbAsyncResult ret;
-	      ret = DWC_GdbGetAsyncResult();
-	      if( ret != DWC_GDB_ASYNC_RESULT_SUCCESS )
-	      { 
-	        GF_ASSERT_MSG(0, "INIT:AsyncResult %d\n", ret);
-          p_wk->is_initialize = FALSE;
-	        DwcRap_Gdb_Finalize( p_wk );
-	        return FALSE;
-	      }
-	    }
-	    DEBUG_NET_Printf( "INIT:GetMy end\n" );
-	    p_wk->seq = SEQ_CHECK;
-	    break;
-	
-	  case SEQ_CHECK:
-	    if( p_wk->init_profileID == 0 )
-	    { 
-	      //始めてor新しいDSでランダムマッチを開始した
-	      //
-	      //自分のプロファイルIDでデータを検索し、
-	      //あったら、以前のデータを移行。
-	      //なかったら、通常の初期化をする
-	      p_wk->seq = SEQ_SEARCH_START;
-	    }
-	    else
-	    { 
-	      p_wk->seq = SEQ_EXIT;
-	    }
-	    break;
-	
-	  case SEQ_SEARCH_START:
-	    {
-	      DWCGdbSearchCond search_cond  =
-	      { 
-	        NULL, //WHERE     あとで入れる
-	        NULL, //ORDERBY   あとで入れる
-	        0,    //結果の何番目から取得するか
-	        10,
-	        NULL,
-	        0,
-	        NULL,
-	        0,
-	        TRUE
-	      };
-	
-	      SYSTEMDATA  *p_systemdata  = SaveData_GetSystemData( p_save );
-	
-	      const s32 init_profileID  = MyStatus_GetProfileID( SaveData_GetMyStatus(p_save) );
-	      const s32 now_profileID   = WifiList_GetMyGSID( p_wk->p_wifilist );
-        DEBUG_NET_Printf( "INITIAL_PROFILE_ID = %d And NOW_PROFILE_ID = %d", init_profileID, now_profileID );
-	
-	      STD_TSPrintf( p_wk->where, "INITIAL_PROFILE_ID = %d", init_profileID );
-	      STD_TSPrintf( p_wk->orderby, "LAST_LOGIN_DATETIME ASC" );
-	      search_cond.filter  = p_wk->where;
-	      search_cond.sort    = p_wk->orderby;
-        p_wk->is_backup = FALSE;
-	      *p_result = DWC_GdbSearchRecordsAsync( WIFIBATTLEMATCH_NET_TABLENAME,
-	                                      ATLAS_GetFieldName(), ATLAS_GetFieldNameNum(),
-	                                      &search_cond,
-	                                      DwcRap_Gdb_GetRecordsCallbackAndNew,
-	                                      p_wk );
-	    }
-	    if( *p_result != DWC_GDB_ERROR_NONE )
-	    { 
-        p_wk->is_initialize = FALSE;
-	      DwcRap_Gdb_Finalize( p_wk );
-	      return FALSE;
-	    }
-	    DEBUG_NET_Printf( "INIT:GetSearch start\n" );
-	    p_wk->async_timeout = 0;
-	    p_wk->seq= SEQ_SEARCH_WAIT;
-	    break;
-	
-	  case SEQ_SEARCH_WAIT:
-	    { 
-	      state = DWC_GdbGetState();
-	
-	      if( p_wk->async_timeout++ > ASYNC_TIMEOUT )
-	      { 
-	        GF_ASSERT(0);
-	      }
-	
-	      if( DWC_GDB_STATE_IN_ASYNC_PROCESS == state )
-	      { 
-	        DWC_GdbProcess();
-	      }
-	      else
-	      { 
-	        if( state != DWC_GDB_STATE_IDLE )
-	        { 
-	          GF_ASSERT(0);
-            p_wk->is_initialize = FALSE;
-	          DwcRap_Gdb_Finalize( p_wk );
-	          return FALSE;
-	        }
-	        else
-	        { 
-	          DEBUG_NET_Printf( "INIT:GetSearch wait\n" );
-	          p_wk->seq = SEQ_SEARCH_END;
-	        }
-	      }
-	    }
-	    break;
-	
-	  case SEQ_SEARCH_END:
-	    { 
-	      DWCGdbAsyncResult ret;
-	      ret = DWC_GdbGetAsyncResult();
-	      if( ret != DWC_GDB_ASYNC_RESULT_SUCCESS )
-	      { 
-	        GF_ASSERT_MSG(0, "INIT:GetSearch AsyncResult %d\n", ret);
-          p_wk->is_initialize = FALSE;
-	        DwcRap_Gdb_Finalize( p_wk );
-	        return FALSE;
-	      }
-	    }
-	    DEBUG_NET_Printf( "INIT:GetSearch end\n" );
-	    p_wk->seq = SEQ_CREATE_START;
-	    break;
-	
-	  case SEQ_CREATE_START:
+  case SEQ_START_GET_TABLE_ID:
+    WIFIBATTLEMATCH_GDB_Start( p_wk, WIFIBATTLEMATCH_GDB_GET_RECORDID, &p_wk->sake_record_id );
+    p_wk->init_seq  = SEQ_WAIT_GET_TABLE_ID;
+    break;
 
-      //DSが新しくなった場合、新規のテーブルに昔のDSで使ってたデータを移行
-      if( p_wk->is_backup )
+  case SEQ_WAIT_GET_TABLE_ID:
+    if( WIFIBATTLEMATCH_GDB_Process( p_wk, p_result ) )
+    { 
+      if( p_wk->sake_record_id != 0 )
       { 
-        int i;
-	      for( i = 0; i < ATLAS_GetFieldNameNum(); i++ )
-	      { 
-	        p_wk->p_field_buff[i].name  = (char*)ATLAS_GetFieldName()[i];
-	        p_wk->p_field_buff[i].type  = sc_field_type[i];
-	        p_wk->p_field_buff[i].value.int_s32 = p_wk->backup.arry[i];
-	      }
-
-        DEBUG_NET_Printf( "DS本体を交換しました\n" );
-
-	    }
+        p_wk->init_seq  = SEQ_END;
+      }
       else
       { 
-        //新規の場合、デフォルト値をいれる
-        int i;
-        SYSTEMDATA  *p_systemdata  = SaveData_GetSystemData( p_save );
-	      const s32 init_profileID  = MyStatus_GetProfileID( SaveData_GetMyStatus(p_save) );
-	      const s32 now_profileID   = WifiList_GetMyGSID( p_wk->p_wifilist );
-	      for( i = 0; i < ATLAS_GetFieldNameNum(); i++ )
-	      { 
-	        p_wk->p_field_buff[i].name          = (char*)ATLAS_GetFieldName()[i];
-	        p_wk->p_field_buff[i].type          = sc_field_type[i];
-
-          if( !GFL_STD_StrCmp( p_wk->p_field_buff[i].name, SAKE_STAT_INITIAL_PROFILE_ID ) )
-          { 
-            p_wk->p_field_buff[i].value.int_s32 = init_profileID;
-          }
-          else if( !GFL_STD_StrCmp( p_wk->p_field_buff[i].name, SAKE_STAT_NOW_PROFILE_ID ) )
-          { 
-            p_wk->p_field_buff[i].value.int_s32 = now_profileID;
-          }
-          else
-          { 
-            p_wk->p_field_buff[i].value.int_s32 = sc_default_value[i];
-          }
-        }
-        DEBUG_NET_Printf( "新規に開始しました\n" );
+        p_wk->init_seq  = SEQ_START_CREATE_RECORD;
       }
+    }
+    break;
 
-      //新規開始のときは、まっさらな状態で作成
-	    *p_result = DWC_GdbCreateRecordAsync( WIFIBATTLEMATCH_NET_TABLENAME,
-	                                      p_wk->p_field_buff, 
-	                                      ATLAS_GetFieldNameNum(), &p_wk->backup_recordID );
-	    if( *p_result != DWC_GDB_ERROR_NONE )
-	    { 
-        DEBUG_NET_Printf( "INIT:Create Start\n" );
-        p_wk->is_initialize = FALSE;
-	      DwcRap_Gdb_Finalize( p_wk );
-	      return FALSE;
-	    }
-	    p_wk->async_timeout = 0;
-	    p_wk->seq = SEQ_CREATE_WAIT;
-	    break;
-	
-	  case SEQ_CREATE_WAIT:
-	    { 
-	      state = DWC_GdbGetState();
-	
-	      if( p_wk->async_timeout++ > ASYNC_TIMEOUT )
-	      { 
-	        GF_ASSERT(0);
-	      }
-	
-	      if( DWC_GDB_STATE_IN_ASYNC_PROCESS == state )
-	      { 
-	        DWC_GdbProcess();
-	      }
-	      else
-	      { 
-	        if( state != DWC_GDB_STATE_IDLE )
-	        { 
-            DEBUG_NET_Printf( "INIT:Create Wait\n" );
-	          GF_ASSERT(0);
-            p_wk->is_initialize = FALSE;
-	          DwcRap_Gdb_Finalize( p_wk );
-	          return FALSE;
-	        }
-	        else
-	        { 
-            DEBUG_NET_Printf( "INIT:Create Wait\n" );
-	          p_wk->seq = SEQ_CREATE_END;
-	        }
-	      }
-	    }
-	
-	    break;
-	
-	  case SEQ_CREATE_END:
-	    { 
-	      DWCGdbAsyncResult ret;
-	      ret = DWC_GdbGetAsyncResult();
-	      if( ret != DWC_GDB_ASYNC_RESULT_SUCCESS )
-	      { 
-	        GF_ASSERT_MSG(0, "INIT:Create %d\n", ret);
-          p_wk->is_initialize = FALSE;
-	        DwcRap_Gdb_Finalize( p_wk );
-	        return FALSE;
-	      }
-	    }
-	    DEBUG_NET_Printf( "INIT:Create end\n" );
-	    //p_wk->seq   = SEQ_BACKUP_START;
-      p_wk->seq     = SEQ_EXIT;
-	    break;
-#if 0
-	  case SEQ_BACKUP_START:
-	    { 
-        int i;
-	      for( i = 0; i < ATLAS_GetFieldNameNum(); i++ )
-	      { 
-	        p_wk->p_field_buff[i].name  = (char*)ATLAS_GetFieldName()[i];
-	        p_wk->p_field_buff[i].type  = sc_field_type[i];
-	        p_wk->p_field_buff[i].value.int_s32 = p_wk->backup.arry[i];
-	      }
-	    }
-	
-	    *p_result = DWC_GdbUpdateRecordAsync( WIFIBATTLEMATCH_NET_TABLENAME, p_wk->backup_recordID, p_wk->p_field_buff, ATLAS_GetFieldNameNum() );
-	    if( *p_result != DWC_GDB_ERROR_NONE )
-	    { 
-        DEBUG_NET_Printf( "INIT:Backup end\n" );
-        p_wk->is_initialize = FALSE;
-	      DwcRap_Gdb_Finalize( p_wk );
-	      return FALSE;
-	    }
-	    p_wk->seq   = SEQ_BACKUP_WAIT;
-	    break;
-	
-	  case SEQ_BACKUP_WAIT:
-	     { 
-	      state = DWC_GdbGetState();
-	
-	      if( p_wk->async_timeout++ > ASYNC_TIMEOUT )
-	      { 
-	        GF_ASSERT(0);
-	      }
-	
-	      if( DWC_GDB_STATE_IN_ASYNC_PROCESS == state )
-	      { 
-	        DWC_GdbProcess();
-	      }
-	      else
-	      { 
-	        if( state != DWC_GDB_STATE_IDLE )
-	        { 
-	          GF_ASSERT(0);
-            p_wk->is_initialize = FALSE;
-	          DwcRap_Gdb_Finalize( p_wk );
-	          return FALSE;
-	        }
-	        else
-	        { 
-            DEBUG_NET_Printf( "INIT:Backup wait\n" );
-	          p_wk->seq   = SEQ_BACKUP_END;
-	        }
-	      }
-	    }
-	    break;
-	
-	  case SEQ_BACKUP_END:
-	    { 
-	      DWCGdbAsyncResult ret;
-	      ret = DWC_GdbGetAsyncResult();
-	      if( ret != DWC_GDB_ASYNC_RESULT_SUCCESS )
-	      { 
-	        GF_ASSERT_MSG(0, "INIT:Backup AsyncResult %d\n", ret);
-          p_wk->is_initialize = FALSE;
-	        DwcRap_Gdb_Finalize( p_wk );
-	        return FALSE;
-	      }
-	    }
-	    DEBUG_NET_Printf( "INIT:Backup end\n" );
-	    p_wk->seq   = SEQ_EXIT;
-	    break;
-#endif
-	  case SEQ_EXIT:
-      p_wk->is_initialize = FALSE;
-	    DwcRap_Gdb_Finalize( p_wk );
-	    DEBUG_NET_Printf( "ITNI:Back exit\n" );
-	    return TRUE;
-	  }
+  case SEQ_START_CREATE_RECORD:
+    WIFIBATTLEMATCH_GDB_StartCreateRecord( p_wk );
+    p_wk->init_seq  = SEQ_WAIT_CREATE_RECORD;
+    break;
+
+  case SEQ_WAIT_CREATE_RECORD:
+    if( WIFIBATTLEMATCH_GDB_ProcessCreateRecord( p_wk, p_result ) )
+    { 
+      p_wk->init_seq  = SEQ_END;
+    }
+    break;
+
+  case SEQ_END:
+    DEBUG_NET_Printf( "sake テーブルID %d\n", p_wk->sake_record_id );
+    p_wk->is_initialize = FALSE;
+    return TRUE;
   }
 
   return FALSE;
@@ -1226,12 +901,13 @@ static void MATCHMAKE_KEY_Set( WIFIBATTLEMATCH_NET_WORK *p_wk, MATCHMAKE_KEY key
   MATCHMAKE_KEY_WORK *p_key_wk = &p_wk->key_wk[ key ];
 
   p_key_wk->ivalue  = value;
-  GFL_STD_MemCopy( sc_matchmake_key_str[ key ], p_key_wk->keyStr, 4 );
+  GFL_STD_MemCopy( sc_matchmake_key_str[ key ], p_key_wk->keyStr, 3 );
+  p_key_wk->keyStr[3] = '\0';
   p_wk->key_wk[ key ].keyID  = DWC_AddMatchKeyInt( p_key_wk->keyID,
       p_key_wk->keyStr, &p_key_wk->ivalue );
   if( p_key_wk->keyID == 0 )
   {
-      NAGI_Printf("AddMatchKey failed key=%d.value=%d\n",key, value);
+      DEBUG_NET_Printf("AddMatchKey failed key=%d.value=%d\n",key, value);
   }
   
 }
@@ -1326,11 +1002,11 @@ void WIFIBATTLEMATCH_SC_Start( WIFIBATTLEMATCH_NET_WORK *p_wk, WIFIBATTLEMATCH_B
 { 
   if( GFL_NET_IsParentMachine() )
   { 
-    NAGI_Printf( "！親機 ルール%d 結果%d\n", rule, result );
+    DEBUG_NET_Printf( "！親機 ルール%d 結果%d\n", rule, result );
   }
   else
   { 
-    NAGI_Printf( "！子機 ルール%d 結果%d\n", rule, result );
+    DEBUG_NET_Printf( "！子機 ルール%d 結果%d\n", rule, result );
   }
 
   p_wk->is_sc_start = TRUE;
@@ -2495,12 +2171,14 @@ static u8* WifiBattleMatch_RecvEnemyDataBuffAddr(int netID, void* p_wk_adrs, int
 { 
   WIFIBATTLEMATCH_NET_WORK *p_wk  = p_wk_adrs;
 
+  GF_ASSERT_MSG( p_wk->p_enemy_data, "wk 0x%x buff 0x%x\n", p_wk, p_wk->p_enemy_data );
+
   if( netID == GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle()) )
   {
     GF_ASSERT( 0 );
     return NULL;//自分のは受け取らない
   }
-  return (u8 *)p_wk->p_enemy_data[1];
+  return (u8 *)(p_wk->p_enemy_data);
 }
 //----------------------------------------------------------------------------
 /**
@@ -2547,8 +2225,37 @@ static void WifiBattleMatch_RecvMatchCancel(const int netID, const int size, con
 void WIFIBATTLEMATCH_GDB_Start( WIFIBATTLEMATCH_NET_WORK *p_wk, WIFIBATTLEMATCH_GDB_GETTYPE type, void *p_wk_adrs )
 { 
   p_wk->is_gdb_start  = TRUE;
-  p_wk->seq       = 0;
-  p_wk->p_get_wk  = p_wk_adrs;
+  p_wk->seq           = 0;
+  p_wk->p_get_wk      = p_wk_adrs;
+
+
+  switch( type )
+  { 
+  case WIFIBATTLEMATCH_GDB_GET_RND_SCORE:
+    p_wk->pp_table_name  = ATLAS_RND_GetFieldName();
+    p_wk->table_name_num= ATLAS_RND_GetFieldNameNum();
+    p_wk->gdb_get_record_callback = DwcRap_Gdb_Rnd_GetRecordsCallback;
+    break;
+
+  case WIFIBATTLEMATCH_GDB_GET_WIFI_SCORE:
+    p_wk->pp_table_name  = ATLAS_WIFI_GetFieldName();
+    p_wk->table_name_num= ATLAS_WIFI_GetFieldNameNum();
+    p_wk->gdb_get_record_callback = DwcRap_Gdb_Wifi_GetRecordsCallback;
+    break;
+
+  case WIFIBATTLEMATCH_GDB_GET_RECORDID:
+    { 
+      static const char *sc_get_record_id_tbl[]  =
+      { 
+        SAKE_STAT_RECORDID
+      };
+
+      p_wk->pp_table_name  = sc_get_record_id_tbl;
+      p_wk->table_name_num= NELEMS( sc_get_record_id_tbl );
+      p_wk->gdb_get_record_callback = DwcRap_Gdb_RecordID_GetRecordsCallback;
+    }
+    break;
+  }
 }
 
 //----------------------------------------------------------------------------
@@ -2584,7 +2291,7 @@ BOOL WIFIBATTLEMATCH_GDB_Process( WIFIBATTLEMATCH_NET_WORK *p_wk, DWCGdbError *p
       break;
 
     case WIFIBATTLEMATCH_GDB_SEQ_GET_START:
-      *p_result = DWC_GdbGetMyRecordsAsync( WIFIBATTLEMATCH_NET_TABLENAME, ATLAS_GetFieldName(), ATLAS_GetFieldNameNum(), DwcRap_Gdb_GetRecordsCallback, p_wk->p_get_wk );
+      *p_result = DWC_GdbGetMyRecordsAsync( WIFIBATTLEMATCH_NET_TABLENAME, p_wk->pp_table_name, p_wk->table_name_num, p_wk->gdb_get_record_callback, p_wk->p_get_wk );
       if( *p_result != DWC_GDB_ERROR_NONE )
       { 
         p_wk->is_gdb_start  = FALSE;
@@ -2593,10 +2300,18 @@ BOOL WIFIBATTLEMATCH_GDB_Process( WIFIBATTLEMATCH_NET_WORK *p_wk, DWCGdbError *p
       }
       DEBUG_NET_Printf( "GDB:Get start\n" );
       p_wk->seq= WIFIBATTLEMATCH_GDB_SEQ_GET_WAIT;
+      p_wk->async_timeout = 0;
       break;
 
     case WIFIBATTLEMATCH_GDB_SEQ_GET_WAIT:
       { 
+        if( p_wk->async_timeout++ > ASYNC_TIMEOUT )
+        { 
+          GF_ASSERT(0);
+          DwcRap_Gdb_Finalize( p_wk );
+          return FALSE;
+        }
+
         state = DWC_GdbGetState();
         if( DWC_GDB_STATE_IN_ASYNC_PROCESS == state )
         { 
@@ -2664,33 +2379,14 @@ static void DwcRap_Gdb_Finalize( WIFIBATTLEMATCH_NET_WORK *p_wk )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  レコード取得コールバック  + 新規orバックアップフラグ
+ *	@brief  レコード取得コールバック  ランダムマッチ版
  *
  *	@param	record_num  レコード数
  *	@param	records     レコードのアドレス
  *	@param	user_param  自分で設定したワーク
  */
 //-----------------------------------------------------------------------------
-static void DwcRap_Gdb_GetRecordsCallbackAndNew(int record_num, DWCGdbField** records, void* user_param)
-{ 
-  WIFIBATTLEMATCH_NET_WORK *p_wk  = user_param;
-  if( record_num > 0 )
-  { 
-    p_wk->is_backup = TRUE;
-  }
-  DwcRap_Gdb_GetRecordsCallback(record_num, records, &p_wk->backup);
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  レコード取得コールバック
- *
- *	@param	record_num  レコード数
- *	@param	records     レコードのアドレス
- *	@param	user_param  自分で設定したワーク
- */
-//-----------------------------------------------------------------------------
-static void DwcRap_Gdb_GetRecordsCallback(int record_num, DWCGdbField** records, void* user_param)
+static void DwcRap_Gdb_Rnd_GetRecordsCallback(int record_num, DWCGdbField** records, void* user_param)
 {
     int i,j;
     WIFIBATTLEMATCH_GDB_RND_SCORE_DATA *p_data = user_param;
@@ -2699,77 +2395,77 @@ static void DwcRap_Gdb_GetRecordsCallback(int record_num, DWCGdbField** records,
     for (i = 0; i < record_num; i++)
     {
       DEBUG_NET_Printf("!!!=====gdb_Print:======\n");
-      for (j = 0; j < ATLAS_GetFieldNameNum(); j++)   // user_param -> field_num
+      for (j = 0; j < ATLAS_RND_GetFieldNameNum(); j++)   // user_param -> field_num
       {
         DWCGdbField* field  = &records[i][j];
 
         if( !GFL_STD_StrCmp( field->name, ATLAS_GET_STAT_NAME(NUM_SINGLE_WIN_COUNTER ) ) )
         { 
-          p_data->single_win  = field->value.int_s16;
+          p_data->single_win  = field->value.int_s32;
         }
         else if( !GFL_STD_StrCmp( field->name, ATLAS_GET_STAT_NAME(NUM_SINGLE_LOSE_COUNTER) ) )
         { 
-          p_data->single_lose  = field->value.int_s16;
+          p_data->single_lose  = field->value.int_s32;
         }
         else if( !GFL_STD_StrCmp( field->name, ATLAS_GET_STAT_NAME(NUM_DOUBLE_WIN_COUNTER ) ) )
         { 
-          p_data->double_win  = field->value.int_s16;
+          p_data->double_win  = field->value.int_s32;
         }
         else if( !GFL_STD_StrCmp( field->name, ATLAS_GET_STAT_NAME(NUM_DOUBLE_LOSE_COUNTER) ) )
         { 
-          p_data->double_lose  = field->value.int_s16;
+          p_data->double_lose  = field->value.int_s32;
         }
         else if( !GFL_STD_StrCmp( field->name, ATLAS_GET_STAT_NAME(NUM_ROTATE_WIN_COUNTER ) ) )
         { 
-          p_data->rot_win  = field->value.int_s16;
+          p_data->rot_win  = field->value.int_s32;
         }
         else if( !GFL_STD_StrCmp( field->name, ATLAS_GET_STAT_NAME(NUM_ROTATE_LOSE_COUNTER) ) )
         { 
-          p_data->rot_lose  = field->value.int_s16;
+          p_data->rot_lose  = field->value.int_s32;
         }
         else if( !GFL_STD_StrCmp( field->name, ATLAS_GET_STAT_NAME(NUM_TRIPLE_WIN_COUNTER ) ) )
         { 
-          p_data->triple_win  = field->value.int_s16;
+          p_data->triple_win  = field->value.int_s32;
         }
         else if( !GFL_STD_StrCmp( field->name, ATLAS_GET_STAT_NAME(NUM_TRIPLE_LOSE_COUNTER) ) )
         { 
-          p_data->triple_lose  = field->value.int_s16;
+          p_data->triple_lose  = field->value.int_s32;
         }
         else if( !GFL_STD_StrCmp( field->name, ATLAS_GET_STAT_NAME(NUM_SHOOTER_WIN_COUNTER ) ) )
         { 
-          p_data->shooter_win  = field->value.int_s16;
+          p_data->shooter_win  = field->value.int_s32;
         }
         else if( !GFL_STD_StrCmp( field->name, ATLAS_GET_STAT_NAME(NUM_SHOOTER_LOSE_COUNTER) ) )
         { 
-          p_data->shooter_lose  = field->value.int_s16;
+          p_data->shooter_lose  = field->value.int_s32;
         }
         else if( !GFL_STD_StrCmp( field->name, ATLAS_GET_STAT_NAME(ARENA_ELO_RATING_1V1_SINGLE ) ) )
         { 
-          p_data->single_rate  = field->value.int_s16;
+          p_data->single_rate  = field->value.int_s32;
         }
         else if( !GFL_STD_StrCmp( field->name, ATLAS_GET_STAT_NAME(ARENA_ELO_RATING_1V1_DOUBLE) ) )
         { 
-          p_data->double_rate  = field->value.int_s16;
+          p_data->double_rate  = field->value.int_s32;
         }
         else if( !GFL_STD_StrCmp( field->name, ATLAS_GET_STAT_NAME(ARENA_ELO_RATING_1V1_ROTATE) ) )
         { 
-          p_data->rot_rate  = field->value.int_s16;
+          p_data->rot_rate  = field->value.int_s32;
         }
         else if( !GFL_STD_StrCmp( field->name, ATLAS_GET_STAT_NAME(ARENA_ELO_RATING_1V1_TRIPLE) ) )
         { 
-          p_data->triple_rate  = field->value.int_s16;
+          p_data->triple_rate  = field->value.int_s32;
         }
         else if( !GFL_STD_StrCmp( field->name, ATLAS_GET_STAT_NAME(ARENA_ELO_RATING_1V1_SHOOTER) ) )
         { 
-          p_data->shooter_rate  = field->value.int_s16;
+          p_data->shooter_rate  = field->value.int_s32;
         }
-        else if( !GFL_STD_StrCmp( field->name, ATLAS_GET_STAT_NAME(COMPLETE_MATCHES_COUNTER) ) )
+        else if( !GFL_STD_StrCmp( field->name, ATLAS_GET_STAT_NAME(DISCONNECTS_COUNTER) ) )
         { 
-          p_data->disconnect  = field->value.int_s16;
+          p_data->disconnect  = field->value.int_s32;
         }
         else if( !GFL_STD_StrCmp( field->name, ATLAS_GET_STAT_NAME(CHEATS_COUNTER) ) )
         { 
-          p_data->cheat  = field->value.int_s16;
+          p_data->cheat  = field->value.int_s32;
         }
         else if( !GFL_STD_StrCmp( field->name, SAKE_STAT_INITIAL_PROFILE_ID ) )
         { 
@@ -2788,6 +2484,97 @@ static void DwcRap_Gdb_GetRecordsCallback(int record_num, DWCGdbField** records,
       DEBUG_NET_Printf("!!!====================\n");
     }
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  レコード取得コールバック  WiFI大会版
+ *
+ *	@param	record_num  レコード数
+ *	@param	records     レコードのアドレス
+ *	@param	user_param  自分で設定したワーク
+ */
+//-----------------------------------------------------------------------------
+static void DwcRap_Gdb_Wifi_GetRecordsCallback(int record_num, DWCGdbField** records, void* user_param)
+{
+    int i,j;
+    WIFIBATTLEMATCH_GDB_WIFI_SCORE_DATA *p_data = user_param;
+    GFL_STD_MemClear( p_data, sizeof(WIFIBATTLEMATCH_GDB_RND_SCORE_DATA) );
+
+    for (i = 0; i < record_num; i++)
+    {
+      DEBUG_NET_Printf("!!!=====gdb_Print:======\n");
+      for (j = 0; j < ATLAS_WIFI_GetFieldNameNum(); j++)   // user_param -> field_num
+      {
+        DWCGdbField* field  = &records[i][j];
+
+        if( !GFL_STD_StrCmp( field->name, ATLAS_GET_STAT_NAME(NUM_WIFICUP_WIN_COUNTER ) ) )
+        { 
+          p_data->win  = field->value.int_s32;
+        }
+        else if( !GFL_STD_StrCmp( field->name, ATLAS_GET_STAT_NAME(NUM_WIFICUP_LOSE_COUNTER) ) )
+        { 
+          p_data->lose  = field->value.int_s32;
+        }
+        else if( !GFL_STD_StrCmp( field->name, ATLAS_GET_STAT_NAME(ARENA_ELO_RATING_1V1_WIFICUP ) ) )
+        { 
+          p_data->rate  = field->value.int_s32;
+        }
+        else if( !GFL_STD_StrCmp( field->name, ATLAS_GET_STAT_NAME(DISCONNECTS_WIFICUP_COUNTER) ) )
+        { 
+          p_data->disconnect  = field->value.int_s32;
+        }
+        else if( !GFL_STD_StrCmp( field->name, ATLAS_GET_STAT_NAME(CHEATS_WIFICUP_COUNTER) ) )
+        { 
+          p_data->cheat  = field->value.int_s32;
+        }
+        else if( !GFL_STD_StrCmp( field->name, ATLAS_GET_STAT_NAME(CHEATS_WIFICUP_COUNTER) ) )
+        { 
+          p_data->cheat  = field->value.int_s32;
+        }
+        else if( !GFL_STD_StrCmp( field->name, SAKE_STAT_WIFICUP_POKEMON_PARTY ) )
+        { 
+          DWCGdbBinaryData  *p_binary = &field->value.binary_data;
+          GF_ASSERT_MSG( p_binary->size <= WIFIBATTLEMATCH_GDB_WIFI_POKEPARTY_SIZE, "not %d <= %d" , p_binary->size, WIFIBATTLEMATCH_GDB_WIFI_POKEPARTY_SIZE );
+          GFL_STD_MemCopy( p_binary->data, p_data->pokeparty, p_binary->size );
+        }
+        print_field( field );
+        DEBUG_NET_Printf(" ");
+      }
+      DEBUG_NET_Printf("!!!====================\n");
+    }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  レコード取得コールバック  レコードIDのみ
+ *
+ *	@param	record_num  レコード数
+ *	@param	records     レコードのアドレス
+ *	@param	user_param  自分で設定したワーク
+ */
+//-----------------------------------------------------------------------------
+static void DwcRap_Gdb_RecordID_GetRecordsCallback(int record_num, DWCGdbField** records, void* user_param)
+{ 
+    int i,j;
+    int *p_data = user_param;
+
+    for (i = 0; i < record_num; i++)
+    {
+      DEBUG_NET_Printf("!!!=====gdb_Print:======\n" );
+      for (j = 0; j < 1; j++)   // user_param -> field_num
+      {
+        DWCGdbField* field  = &records[i][j];
+
+        if( !GFL_STD_StrCmp( field->name, SAKE_STAT_RECORDID ) )
+        { 
+          *p_data  = field->value.int_s32;
+        }
+        print_field( field );
+        DEBUG_NET_Printf(" ");
+      }
+      DEBUG_NET_Printf("!!!====================\n");
+    }
+}
+
 
 #ifdef PM_DEBUG
 static void print_field(DWCGdbField* field) // レコードをデバッグ出力する。
@@ -2827,42 +2614,6 @@ static void print_field(DWCGdbField* field) // レコードをデバッグ出力する。
 #endif
 //----------------------------------------------------------------------------
 /**
- *	@brief  レコード取得コールバック  初期化チェック版
- *
- *	@param	record_num  レコード数
- *	@param	records     レコードのアドレス
- *	@param	user_param  自分で設定したワーク
- */
-//-----------------------------------------------------------------------------
-static void DwcRap_Gdb_GetRecordsProfileIDCallback(int record_num, DWCGdbField** records, void* user_param)
-{ 
-  int i,j;
-  WIFIBATTLEMATCH_NET_WORK *p_wk  = user_param;
-  p_wk->init_profileID  = 0;
-  p_wk->now_profileID = 0;
-
-
-  for (i = 0; i < record_num; i++)
-  {
-    DEBUG_NET_Printf( "自分のレコードを発見！\n" );
-    for (j = 0; j < ATLAS_GetFieldNameNum(); j++)   // user_param -> field_num
-    {
-      DWCGdbField* field  = &records[i][j];
-
-      if( !GFL_STD_StrCmp( field->name, SAKE_STAT_INITIAL_PROFILE_ID ) )
-      { 
-        p_wk->init_profileID  = field->value.int_s32;
-      }
-      else if( !GFL_STD_StrCmp( field->name, SAKE_STAT_NOW_PROFILE_ID ) )
-      { 
-        p_wk->now_profileID  = field->value.int_s32;
-      }
-    }
-  }
-}
-
-//----------------------------------------------------------------------------
-/**
  *	@brief  GDBへデータ書き込み
  *
  *	@param	WIFIBATTLEMATCH_NET_WORK *p_wk  ワーク
@@ -2870,26 +2621,60 @@ static void DwcRap_Gdb_GetRecordsProfileIDCallback(int record_num, DWCGdbField**
  *	@param	void *cp_wk_adrs                書き込むデータ
  */
 //-----------------------------------------------------------------------------
-void WIFIBATTLEMATCH_GDB_StartWrite( WIFIBATTLEMATCH_NET_WORK *p_wk, WIFIBATTLEMATCH_GDB_GETTYPE type, const void *cp_wk_adrs )
+void WIFIBATTLEMATCH_GDB_StartWrite( WIFIBATTLEMATCH_NET_WORK *p_wk, WIFIBATTLEMATCH_GDB_WRITETYPE type, const void *cp_wk_adrs )
 { 
+
   p_wk->is_gdb_w_start  = TRUE;
   p_wk->seq             = 0;
-
+  switch( type )
   { 
-
-
-    int i;
-    const WIFIBATTLEMATCH_GDB_RND_SCORE_DATA *cp_data  = cp_wk_adrs;
-
-    for( i = 0; i < ATLAS_GetFieldNameNum(); i++ )
+  case WIFIBATTLEMATCH_GDB_WRITE_DEBUGALL:
     { 
-      p_wk->p_field_buff[i].name  = (char*)ATLAS_GetFieldName()[i];
-      p_wk->p_field_buff[i].type  = sc_field_type[i];
-      p_wk->p_field_buff[i].value.int_s32 = cp_data->arry[i];
-    }
+      int i;
+      const WIFIBATTLEMATCH_GDB_RND_SCORE_DATA *cp_data  = cp_wk_adrs;
 
+      p_wk->table_name_num  = ATLAS_RND_GetFieldNameNum();
+      for( i = 0; i < p_wk->table_name_num; i++ )
+      { 
+        p_wk->p_field_buff[i].name  = (char*)ATLAS_RND_GetFieldName()[i];
+        p_wk->p_field_buff[i].type  = sc_field_type[i];
+        p_wk->p_field_buff[i].value.int_s32 = cp_data->arry[i];
+      }
+    }
+    break;
+
+  case WIFIBATTLEMATCH_GDB_WRITE_POKEPARTY:
+    p_wk->table_name_num  = 1;
+    p_wk->p_field_buff[0].name  = SAKE_STAT_WIFICUP_POKEMON_PARTY;
+    p_wk->p_field_buff[0].type  = DWC_GDB_FIELD_TYPE_BINARY_DATA;
+    p_wk->p_field_buff[0].value.binary_data.data = (u8*)cp_wk_adrs;
+    p_wk->p_field_buff[0].value.binary_data.size = WIFIBATTLEMATCH_GDB_WIFI_POKEPARTY_SIZE;
+    break;
+
+  case WIFIBATTLEMATCH_GDB_WRITE_WIFI_SCORE:
+    { 
+      const WIFIBATTLEMATCH_GDB_WIFI_SCORE_DATA *cp_data  = cp_wk_adrs;
+
+      p_wk->p_field_buff[0].name  = ATLAS_GET_KEY_NAME( ARENA_ELO_RATING_1V1_WIFICUP );
+      p_wk->p_field_buff[0].type  = DWC_GDB_FIELD_TYPE_INT;
+      p_wk->p_field_buff[0].value.int_s32 = cp_data->rate;
+      p_wk->p_field_buff[1].name  = ATLAS_GET_KEY_NAME( CHEATS_WIFICUP_COUNTER );
+      p_wk->p_field_buff[1].type  = DWC_GDB_FIELD_TYPE_INT;
+      p_wk->p_field_buff[1].value.int_s32 = cp_data->cheat;
+      p_wk->p_field_buff[2].name  = ATLAS_GET_KEY_NAME( DISCONNECTS_WIFICUP_COUNTER );
+      p_wk->p_field_buff[2].type  = DWC_GDB_FIELD_TYPE_INT;
+      p_wk->p_field_buff[2].value.int_s32 = cp_data->disconnect;
+      p_wk->p_field_buff[3].name  = ATLAS_GET_KEY_NAME( NUM_WIFICUP_LOSE_COUNTER );
+      p_wk->p_field_buff[3].type  = DWC_GDB_FIELD_TYPE_INT;
+      p_wk->p_field_buff[3].value.int_s32 = cp_data->lose;
+      p_wk->p_field_buff[4].name  = ATLAS_GET_KEY_NAME( NUM_WIFICUP_WIN_COUNTER );
+      p_wk->p_field_buff[4].type  = DWC_GDB_FIELD_TYPE_INT;
+      p_wk->p_field_buff[4].value.int_s32 = cp_data->win;
+
+      p_wk->table_name_num  = 5;
+    }
+    break;
   }
-  
 }
 
 //----------------------------------------------------------------------------
@@ -2929,19 +2714,19 @@ BOOL WIFIBATTLEMATCH_GDB_ProcessWrite( WIFIBATTLEMATCH_NET_WORK *p_wk, DWCGdbErr
       { 
         p_wk->is_gdb_w_start  = FALSE;
         DwcRap_Gdb_Finalize( p_wk );
-        return FALSE;
+        return TRUE;
       }
       DEBUG_NET_Printf( "GDB:Init\n" );
       p_wk->seq = SEQ_START;
       break;
 
     case SEQ_START:
-      *p_result = DWC_GdbUpdateRecordAsync( WIFIBATTLEMATCH_NET_TABLENAME, 0, p_wk->p_field_buff, ATLAS_GetFieldNameNum() );
+      *p_result = DWC_GdbUpdateRecordAsync( WIFIBATTLEMATCH_NET_TABLENAME, p_wk->sake_record_id, p_wk->p_field_buff, p_wk->table_name_num );
       if( *p_result != DWC_GDB_ERROR_NONE )
       { 
         p_wk->is_gdb_w_start  = FALSE;
         DwcRap_Gdb_Finalize( p_wk );
-        return FALSE;
+        return TRUE;
       }
       DEBUG_NET_Printf( "GDB:Get start\n" );
       p_wk->async_timeout = 0;
@@ -2950,10 +2735,11 @@ BOOL WIFIBATTLEMATCH_GDB_ProcessWrite( WIFIBATTLEMATCH_NET_WORK *p_wk, DWCGdbErr
 
     case SEQ_WAIT:
       { 
-
         if( p_wk->async_timeout++ > ASYNC_TIMEOUT )
         { 
           GF_ASSERT(0);
+          DwcRap_Gdb_Finalize( p_wk );
+          return TRUE;
         }
 
         state = DWC_GdbGetState();
@@ -2967,7 +2753,7 @@ BOOL WIFIBATTLEMATCH_GDB_ProcessWrite( WIFIBATTLEMATCH_NET_WORK *p_wk, DWCGdbErr
           { 
             GF_ASSERT(0);
             DwcRap_Gdb_Finalize( p_wk );
-            return FALSE;
+            return TRUE;
           }
           else
           { 
@@ -2987,7 +2773,7 @@ BOOL WIFIBATTLEMATCH_GDB_ProcessWrite( WIFIBATTLEMATCH_NET_WORK *p_wk, DWCGdbErr
           GF_ASSERT_MSG(0, "GDB:AsyncResult %d\n", ret);
           p_wk->is_gdb_w_start  = FALSE;
           DwcRap_Gdb_Finalize( p_wk );
-          return FALSE;
+          return TRUE;
         }
       }
       DEBUG_NET_Printf( "GDB:Get end\n" );
@@ -2997,6 +2783,7 @@ BOOL WIFIBATTLEMATCH_GDB_ProcessWrite( WIFIBATTLEMATCH_NET_WORK *p_wk, DWCGdbErr
     case SEQ_EXIT:
       DwcRap_Gdb_Finalize( p_wk );
       DEBUG_NET_Printf( "GDB:Get exit\n" );
+      DEBUG_NET_Printf( "sake テーブルID %d\n", p_wk->sake_record_id );
       return TRUE;
 
     }
@@ -3078,6 +2865,138 @@ WIFIBATTLEMATCH_NET_ERROR_REPAIR_TYPE WIFIBATTLEMATCH_GDB_GetErrorRepairType( DW
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief  レコードテーブルを作成
+ *
+ *	@param	WIFIBATTLEMATCH_NET_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+void WIFIBATTLEMATCH_GDB_StartCreateRecord( WIFIBATTLEMATCH_NET_WORK *p_wk )
+{ 
+  p_wk->is_gdb_start  = TRUE;
+  p_wk->seq           = 0;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  レコードテーブルを作成
+ *
+ *	@param	WIFIBATTLEMATCH_NET_WORK *p_wk  ワーク
+ *	@param	*p_result   エラー結果
+ *
+ *	@return TRUEで終了  FALSEで処理中
+ */
+//-----------------------------------------------------------------------------
+BOOL WIFIBATTLEMATCH_GDB_ProcessCreateRecord( WIFIBATTLEMATCH_NET_WORK *p_wk, DWCGdbError *p_result )
+{ 
+  enum
+  { 
+    SEQ_INIT,
+    SEQ_CREATE_START,
+    SEQ_CREATE_WAIT,
+    SEQ_CREATE_END,
+    SEQ_EXIT,
+  };
+  DWCGdbState state;
+
+  if( p_wk->is_gdb_start )  
+  { 
+    switch( p_wk->seq )
+    { 
+    case SEQ_INIT:
+	    *p_result = DWC_GdbInitialize( GAME_ID, p_wk->cp_user_data, WIFIBATTLEMATCH_NET_SSL_TYPE );
+      if( *p_result != DWC_GDB_ERROR_NONE )
+      { 
+        p_wk->is_gdb_start  = FALSE;
+        DwcRap_Gdb_Finalize( p_wk );
+        return TRUE;
+      }
+      DEBUG_NET_Printf( "INIT:Init\n" );
+      p_wk->seq = SEQ_CREATE_START;
+      break;
+
+
+	  case SEQ_CREATE_START:
+      //新規開始のときは、まっさらな状態で作成
+	    *p_result = DWC_GdbCreateRecordAsync( WIFIBATTLEMATCH_NET_TABLENAME,
+	                                      NULL, 
+	                                      0, &p_wk->sake_record_id );
+	    if( *p_result != DWC_GDB_ERROR_NONE )
+	    { 
+        DEBUG_NET_Printf( "INIT:Create Start\n" );
+        p_wk->is_gdb_start  = FALSE;
+        DwcRap_Gdb_Finalize( p_wk );
+        return TRUE;
+	    }
+	    p_wk->async_timeout = 0;
+	    p_wk->seq = SEQ_CREATE_WAIT;
+	    break;
+	
+	  case SEQ_CREATE_WAIT:
+	    { 
+	      state = DWC_GdbGetState();
+	
+	      if( p_wk->async_timeout++ > ASYNC_TIMEOUT )
+	      { 
+	        GF_ASSERT(0);
+
+          p_wk->is_gdb_start  = FALSE;
+          DwcRap_Gdb_Finalize( p_wk );
+          return TRUE;
+	      }
+	
+	      if( DWC_GDB_STATE_IN_ASYNC_PROCESS == state )
+	      { 
+	        DWC_GdbProcess();
+	      }
+	      else
+	      { 
+	        if( state != DWC_GDB_STATE_IDLE )
+	        { 
+            DEBUG_NET_Printf( "INIT:Create Wait\n" );
+	          GF_ASSERT(0);
+
+            p_wk->is_gdb_start  = FALSE;
+	          DwcRap_Gdb_Finalize( p_wk );
+	          return TRUE;
+	        }
+	        else
+	        { 
+            DEBUG_NET_Printf( "INIT:Create Wait\n" );
+	          p_wk->seq = SEQ_CREATE_END;
+	        }
+	      }
+	    }
+	
+	    break;
+	
+	  case SEQ_CREATE_END:
+	    { 
+	      DWCGdbAsyncResult ret;
+	      ret = DWC_GdbGetAsyncResult();
+	      if( ret != DWC_GDB_ASYNC_RESULT_SUCCESS )
+	      { 
+	        GF_ASSERT_MSG(0, "INIT:Create %d\n", ret);
+          p_wk->is_gdb_start  = FALSE;
+	        DwcRap_Gdb_Finalize( p_wk );
+	        return TRUE;
+	      }
+	    }
+	    DEBUG_NET_Printf( "INIT:Create end\n" );
+      p_wk->seq     = SEQ_EXIT;
+      break;
+
+    case SEQ_EXIT:
+      DwcRap_Gdb_Finalize( p_wk );
+      p_wk->is_gdb_start  = FALSE;
+	    DEBUG_NET_Printf( "ITNI:Back exit\n" );
+      DEBUG_NET_Printf( "作成! sake テーブルID %d\n", p_wk->sake_record_id );
+	    return TRUE;
+    }
+  }
+
+  return FALSE;
+}
+//----------------------------------------------------------------------------
+/**
  *	@brief  敵情報
  *
  *	@param	WIFIBATTLEMATCH_NET_WORK *p_wk ワーク
@@ -3105,7 +3024,7 @@ BOOL WIFIBATTLEMATCH_NET_StartEnemyData( WIFIBATTLEMATCH_NET_WORK *p_wk, const v
 //-----------------------------------------------------------------------------
 BOOL WIFIBATTLEMATCH_NET_WaitEnemyData( WIFIBATTLEMATCH_NET_WORK *p_wk, WIFIBATTLEMATCH_ENEMYDATA **pp_data )
 { 
-  *pp_data  = p_wk->p_enemy_data[1];
+  *pp_data  = p_wk->p_enemy_data;
   return p_wk->is_recv[WIFIBATTLEMATCH_NET_RECVFLAG_GAMEDATA];
 }
 
@@ -3117,19 +3036,21 @@ BOOL WIFIBATTLEMATCH_NET_WaitEnemyData( WIFIBATTLEMATCH_NET_WORK *p_wk, WIFIBATT
  *
  */
 //-----------------------------------------------------------------------------
-void WIFIBATTLEMATCH_NET_StartDownloadDigCard( WIFIBATTLEMATCH_NET_WORK *p_wk )
+extern void WIFIBATTLEMATCH_NET_StartDownloadDigCard( WIFIBATTLEMATCH_NET_WORK *p_wk, int cup_no )
 { 
   p_wk->is_nd_start = TRUE;
   p_wk->seq = 0;
+  GFL_STD_MemClear( p_wk->nd_attr2, 10 );
+  STD_TSPrintf( p_wk->nd_attr2, "%d", cup_no );
 }
 //----------------------------------------------------------------------------
 /**
  *	@brief  Wifiからダウンロード
  *  @param  p_wk    ワーク
- *  @retval TRUEシーケンス終了  FALSE処理中
+ *  @retval WIFIBATTLEMATCH_NET_DOWNLOAD_DIGCARD_RETを参照
  */
 //-----------------------------------------------------------------------------
-BOOL WIFIBATTLEMATCH_NET_WaitDownloadDigCard( WIFIBATTLEMATCH_NET_WORK *p_wk )
+WIFIBATTLEMATCH_NET_DOWNLOAD_DIGCARD_RET WIFIBATTLEMATCH_NET_WaitDownloadDigCard( WIFIBATTLEMATCH_NET_WORK *p_wk )
 { 
   enum
   { 
@@ -3149,7 +3070,7 @@ BOOL WIFIBATTLEMATCH_NET_WaitDownloadDigCard( WIFIBATTLEMATCH_NET_WORK *p_wk )
 
   if( !p_wk->is_nd_start )
   { 
-    return TRUE;
+    return WIFIBATTLEMATCH_NET_DOWNLOAD_DIGCARD_RET_SUCCESS;
   }
 
   switch( p_wk->seq )
@@ -3158,19 +3079,19 @@ BOOL WIFIBATTLEMATCH_NET_WaitDownloadDigCard( WIFIBATTLEMATCH_NET_WORK *p_wk )
     if( DWC_NdInitAsync( NdCallback, GF_DWC_ND_LOGIN, WIFI_ND_LOGIN_PASSWD ) == FALSE )
     {
       OS_TPrintf( "DWC_NdInitAsync: Failed\n" );
-      GF_ASSERT(0);//@todo
-      break;
+      //@todo
+      return WIFIBATTLEMATCH_NET_DOWNLOAD_DIGCARD_RET_ERROR;
     }
     DwcRap_Nd_WaitNdCallback( p_wk, SEQ_ATTR );
     break;
 
   case SEQ_ATTR:
     // ファイル属性の設定
-    if( DWC_NdSetAttr(WIFI_FILE_ATTR1, WIFI_FILE_ATTR2, WIFI_FILE_ATTR3) == FALSE )
+    if( DWC_NdSetAttr(WIFI_FILE_ATTR1, p_wk->nd_attr2, WIFI_FILE_ATTR3) == FALSE )
     {
       OS_TPrintf( "DWC_NdSetAttr: Failed\n." );
       GF_ASSERT(0);//@todo
-      break;
+      return WIFIBATTLEMATCH_NET_DOWNLOAD_DIGCARD_RET_ERROR;
     }
     p_wk->seq = SEQ_FILENUM;
     break;
@@ -3184,13 +3105,14 @@ BOOL WIFIBATTLEMATCH_NET_WaitDownloadDigCard( WIFIBATTLEMATCH_NET_WORK *p_wk )
     {
       OS_TPrintf( "DWC_NdGetFileListNumAsync: Failed.\n" );
       GF_ASSERT( 0 ); //@todo
-      break;
+      return WIFIBATTLEMATCH_NET_DOWNLOAD_DIGCARD_RET_ERROR;
     }
     DwcRap_Nd_WaitNdCallback( p_wk, SEQ_FILELIST );
     break;
 
   case SEQ_FILELIST:
     //ファイルがなかった場合
+    DEBUG_NET_Printf( "サーバーにレギュレーションがあった数 %d\n", p_wk->server_filenum );
     if( p_wk->server_filenum == 1 )
     { 
       //ファイルが１つだけの場合決定
@@ -3199,14 +3121,14 @@ BOOL WIFIBATTLEMATCH_NET_WaitDownloadDigCard( WIFIBATTLEMATCH_NET_WORK *p_wk )
       {
         OS_TPrintf( "DWC_NdGetFileListNumAsync: Failed.\n" );
         GF_ASSERT(0);
-        break;
+        return WIFIBATTLEMATCH_NET_DOWNLOAD_DIGCARD_RET_ERROR;
       }
       DwcRap_Nd_WaitNdCallback( p_wk, SEQ_GET_FILE );
     }
     else
     { 
-      //@todo
-      GF_ASSERT(0);
+      DEBUG_NET_Printf( "サーバーにレギュレーションがあった数 %d\n", p_wk->server_filenum );
+      return WIFIBATTLEMATCH_NET_DOWNLOAD_DIGCARD_RET_ERROR;
     }
     break;
 
@@ -3215,10 +3137,10 @@ BOOL WIFIBATTLEMATCH_NET_WaitDownloadDigCard( WIFIBATTLEMATCH_NET_WORK *p_wk )
 //=====================================
   case SEQ_GET_FILE:
     // ファイル読み込み開始
-    if(DWC_NdGetFileAsync( &p_wk->fileInfo, p_wk->temp_buffer, REGULATION_CARD_DATA_SIZE) == FALSE){
+    if(DWC_NdGetFileAsync( &p_wk->fileInfo, (char*)&p_wk->temp_buffer, REGULATION_CARD_DATA_SIZE) == FALSE){
       OS_TPrintf( "DWC_NdGetFileAsync: Failed.\n" );
       GF_ASSERT(0);
-      break;
+      return WIFIBATTLEMATCH_NET_DOWNLOAD_DIGCARD_RET_ERROR;
     }
     s_callback_flag   = FALSE;
     s_callback_result = DWC_ND_ERROR_NONE;
@@ -3242,15 +3164,16 @@ BOOL WIFIBATTLEMATCH_NET_WaitDownloadDigCard( WIFIBATTLEMATCH_NET_WORK *p_wk )
     }
     else if( s_callback_result != DWC_ND_ERROR_NONE)
     {
-      //エラー
       GF_ASSERT(0);
+      OS_Printf("DWC_NdGetProgressでエラー\n");
+      return WIFIBATTLEMATCH_NET_DOWNLOAD_DIGCARD_RET_ERROR;
     }
     else
     {
       // ファイル読み込み終了
       if( !DWC_NdCleanupAsync() ){  //FALSEの場合コールバックが呼ばれない
         OS_Printf("DWC_NdCleanupAsyncに失敗\n");
-        GF_ASSERT(0);
+        return WIFIBATTLEMATCH_NET_DOWNLOAD_DIGCARD_RET_ERROR;
       }
       DwcRap_Nd_WaitNdCallback( p_wk, SEQ_CANCEL );
     }
@@ -3267,16 +3190,21 @@ BOOL WIFIBATTLEMATCH_NET_WaitDownloadDigCard( WIFIBATTLEMATCH_NET_WORK *p_wk )
     else 
     {
       OS_Printf("download cancel\n");
-      GF_ASSERT(0);
+      return WIFIBATTLEMATCH_NET_DOWNLOAD_DIGCARD_RET_ERROR;
     }
     break;
 
   case SEQ_DOWNLOAD_COMPLETE:
+    DEBUG_NET_Printf( "●regulation card data\n" );
+    DEBUG_NET_Printf( "cup no %d\n", p_wk->temp_buffer.no );
+    DEBUG_NET_Printf( "status %d\n", p_wk->temp_buffer.status );
+
+
     p_wk->seq  = SEQ_END;
     break;
 
   case SEQ_END:
-    return TRUE;
+    return WIFIBATTLEMATCH_NET_DOWNLOAD_DIGCARD_RET_SUCCESS;
 
 //-------------------------------------
 ///	コールバック待ち処理  
@@ -3290,7 +3218,7 @@ BOOL WIFIBATTLEMATCH_NET_WaitDownloadDigCard( WIFIBATTLEMATCH_NET_WORK *p_wk )
       s_callback_flag = FALSE;
       if( s_callback_result != DWC_ND_ERROR_NONE)
       { 
-        GF_ASSERT(0); //@todo
+        return WIFIBATTLEMATCH_NET_DOWNLOAD_DIGCARD_RET_ERROR;
       }
       else
       { 
@@ -3300,9 +3228,21 @@ BOOL WIFIBATTLEMATCH_NET_WaitDownloadDigCard( WIFIBATTLEMATCH_NET_WORK *p_wk )
     break;
   }
 
-  return FALSE;
+  return WIFIBATTLEMATCH_NET_DOWNLOAD_DIGCARD_RET_DOWNLOADING;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  受信したデジタル選手証を取得
+ *
+ *	@param	WIFIBATTLEMATCH_NET_WORK *p_wk  ワーク
+ *	@param	*p_recv   取得バッファ
+ */
+//-----------------------------------------------------------------------------
+void WIFIBATTLEMATCH_NET_GetDownloadDigCard( const WIFIBATTLEMATCH_NET_WORK *cp_wk, REGULATION_CARDDATA *p_recv )
+{ 
+  GFL_STD_MemCopy( &cp_wk->temp_buffer, p_recv, sizeof(REGULATION_CARDDATA) );
+}
 //----------------------------------------------------------------------------
 /**
  *	@brief  コールバック待ち
@@ -3327,49 +3267,49 @@ static void DwcRap_Nd_WaitNdCallback( WIFIBATTLEMATCH_NET_WORK *p_wk, int next_s
  *-------------------------------------------------------------------------*/
 static void NdCallback(DWCNdCallbackReason reason, DWCNdError error, int servererror)
 {
-  NET_PRINT("NdCallback: Called\n");
+  DEBUG_NET_Printf("NdCallback: Called\n");
   switch(reason) {
   case DWC_ND_CBREASON_GETFILELISTNUM:
-    NET_PRINT("DWC_ND_CBREASON_GETFILELISTNUM\n");
+    DEBUG_NET_Printf("DWC_ND_CBREASON_GETFILELISTNUM\n");
     break;
   case DWC_ND_CBREASON_GETFILELIST:
-    NET_PRINT("DWC_ND_CBREASON_GETFILELIST\n");
+    DEBUG_NET_Printf("DWC_ND_CBREASON_GETFILELIST\n");
     break;
   case DWC_ND_CBREASON_GETFILE:
-    NET_PRINT("DWC_ND_CBREASON_GETFILE\n");
+    DEBUG_NET_Printf("DWC_ND_CBREASON_GETFILE\n");
     break;
   case DWC_ND_CBREASON_INITIALIZE:
-    NET_PRINT("DWC_ND_CBREASON_INITIALIZE\n");
+    DEBUG_NET_Printf("DWC_ND_CBREASON_INITIALIZE\n");
     break;
   }
 	
   switch(error) {
   case DWC_ND_ERROR_NONE:
-    NET_PRINT("DWC_ND_NOERR\n");
+    DEBUG_NET_Printf("DWC_ND_NOERR\n");
     break;
   case DWC_ND_ERROR_ALLOC:
-    NET_PRINT("DWC_ND_MEMERR\n");
+    DEBUG_NET_Printf("DWC_ND_MEMERR\n");
     break;
   case DWC_ND_ERROR_BUSY:
-    NET_PRINT("DWC_ND_BUSYERR\n");
+    DEBUG_NET_Printf("DWC_ND_BUSYERR\n");
     break;
   case DWC_ND_ERROR_HTTP:
-    NET_PRINT("DWC_ND_HTTPERR\n");
+    DEBUG_NET_Printf("DWC_ND_HTTPERR\n");
     // ファイル数の取得でＨＴＴＰエラーが発生した場合はダウンロードサーバに繋がっていない可能性が高い
     if( reason == DWC_ND_CBREASON_GETFILELISTNUM )
       {
-          NET_PRINT( "It is not possible to connect download server.\n." );
+          DEBUG_NET_Printf( "It is not possible to connect download server.\n." );
           ///	OS_Terminate();
       }
     break;
   case DWC_ND_ERROR_BUFFULL:
-    NET_PRINT("DWC_ND_BUFFULLERR\n");
+    DEBUG_NET_Printf("DWC_ND_BUFFULLERR\n");
     break;
   case DWC_ND_ERROR_DLSERVER:
-    NET_PRINT("DWC_ND_SERVERERR\n");
+    DEBUG_NET_Printf("DWC_ND_SERVERERR\n");
     break;
   case DWC_ND_ERROR_CANCELED:
-    NET_PRINT("DWC_ND_CANCELERR\n");
+    DEBUG_NET_Printf("DWC_ND_CANCELERR\n");
     break;
   }
   OS_Printf("errorcode = %d\n", servererror);
@@ -3377,4 +3317,278 @@ static void NdCallback(DWCNdCallbackReason reason, DWCNdError error, int servere
   s_callback_result = error;
 
   //NdCleanupCallback();
+}
+//=============================================================================
+/**
+ *    GPFサーバからの受信
+ */
+//=============================================================================
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  GPFサーバからの受信 スタート
+ *
+ *	@param	WIFIBATTLEMATCH_NET_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+void WIFIBATTLEMATCH_NET_StartRecvGpfData( WIFIBATTLEMATCH_NET_WORK *p_wk, MYSTATUS *p_mystatus, HEAPID heapID )
+{ 
+  GF_ASSERT( p_wk->p_nhttp == NULL );
+  p_wk->seq = 0;
+  p_wk->p_nhttp = NHTTP_RAP_Init( heapID, MyStatus_GetProfileID(p_mystatus));
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  GPFサーバーからの受信 メイン処理
+ *
+ *	@param	WIFIBATTLEMATCH_NET_WORK *p_wk ワーク
+ *
+ *	@return TRUEで受信  FALSEで処理中
+ */
+//-----------------------------------------------------------------------------
+WIFIBATTLEMATCH_RECV_GPFDATA_RET WIFIBATTLEMATCH_NET_WaitRecvGpfData( WIFIBATTLEMATCH_NET_WORK *p_wk, NHTTPError *p_error )
+{ 
+  enum
+  { 
+    SEQ_INIT,
+    SEQ_START_CONNECT,
+    SEQ_WAIT_CONNECT,
+
+    SEQ_END,
+  };
+
+  if( p_wk->p_nhttp == NULL )
+  { 
+    return WIFIBATTLEMATCH_NET_DOWNLOAD_DIGCARD_RET_SUCCESS;
+  }
+
+  switch( p_wk->seq )
+  { 
+  case SEQ_INIT:
+    if (NHTTP_RAP_ConectionCreate( NHTTPRAP_URL_BATTLE_DOWNLOAD, p_wk->p_nhttp ))
+    {
+      p_wk->seq  = SEQ_START_CONNECT;
+    }
+    break;
+
+  case SEQ_START_CONNECT:
+    if(NHTTP_RAP_StartConnect(p_wk->p_nhttp))
+    {
+      p_wk->seq  = SEQ_WAIT_CONNECT;
+    }
+    break;
+
+  case SEQ_WAIT_CONNECT:
+    *p_error  = NHTTP_RAP_Process(p_wk->p_nhttp);
+    if(NHTTP_ERROR_NONE == *p_error)
+    {
+      u8* pEvent = (u8*)NHTTP_RAP_GetRecvBuffer(p_wk->p_nhttp);
+      DREAM_WORLD_SERVER_WORLDBATTLE_STATE_DATA* pDream = (DREAM_WORLD_SERVER_WORLDBATTLE_STATE_DATA*)&pEvent[sizeof(gs_response)];
+
+
+      NHTTP_DEBUG_GPF_HEADER_PRINT((gs_response*)pEvent);
+      DEBUG_NET_Printf("ID %x\n",pDream->WifiMatchUpID);
+      DEBUG_NET_Printf("FLG %x\n",pDream->GPFEntryFlg);
+      DEBUG_NET_Printf("ST %d\n",pDream->WifiMatchUpState);
+
+      DEBUG_NET_Printf("終了\n");
+
+      p_wk->gpf_data  = *pDream;
+      p_wk->seq  = SEQ_END;
+    }
+    else if( NHTTP_ERROR_BUSY != *p_error )
+    { 
+      return WIFIBATTLEMATCH_RECV_GPFDATA_RET_ERROR;
+    }
+
+    break;
+
+
+  case SEQ_END :
+    if(p_wk->p_nhttp)
+    {
+      NHTTP_RAP_End(p_wk->p_nhttp);
+      p_wk->p_nhttp  = NULL;
+    }
+    return WIFIBATTLEMATCH_RECV_GPFDATA_RET_SUCCESS;
+  }
+
+  return WIFIBATTLEMATCH_RECV_GPFDATA_RET_UPDATE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  GPFサーバーからの受信 受信したデータを受け取り
+ *
+ *	@param	const WIFIBATTLEMATCH_NET_WORK *cp_wk ワーク
+ *	@param	*p_recv 受け取りバッファ
+ */
+//-----------------------------------------------------------------------------
+void WIFIBATTLEMATCH_NET_GetRecvGpfData( const WIFIBATTLEMATCH_NET_WORK *cp_wk, DREAM_WORLD_SERVER_WORLDBATTLE_STATE_DATA *p_recv )
+{ 
+  *p_recv = cp_wk->gpf_data;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  GPFサーバーへ書き込み 初期化
+ *
+ *	@param	WIFIBATTLEMATCH_NET_WORK *p_wk                        ワーク
+ *	@param	*p_mystatus                                           自分のステータス
+ *	@param	DREAM_WORLD_SERVER_WORLDBATTLE_STATE_DATA *cp_send    書き込みデータ
+ *	@param	heapID                                                ヒープID
+ */
+//-----------------------------------------------------------------------------
+void WIFIBATTLEMATCH_NET_StartSendGpfData( WIFIBATTLEMATCH_NET_WORK *p_wk, MYSTATUS *p_mystatus, const DREAM_WORLD_SERVER_WORLDBATTLE_SET_DATA *cp_send, HEAPID heapID )
+{ 
+  GF_ASSERT( p_wk->p_nhttp == NULL );
+  p_wk->p_nhttp = NHTTP_RAP_Init( heapID, MyStatus_GetProfileID(p_mystatus));
+  p_wk->gdb_write_data  = *cp_send;
+  p_wk->seq = 0;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  GPFサーバーへ書き込み メイン処理
+ *
+ *	@param	WIFIBATTLEMATCH_NET_WORK *p_wk  ワーク
+ *	@param	*p_error                        エラー値
+ *
+ *	@return 終了コード
+ */
+//-----------------------------------------------------------------------------
+WIFIBATTLEMATCH_SEND_GPFDATA_RET WIFIBATTLEMATCH_NET_WaitSendGpfData( WIFIBATTLEMATCH_NET_WORK *p_wk, NHTTPError *p_error )
+{ 
+  enum
+  { 
+    SEQ_INIT,
+    SEQ_START_CONNECT,
+    SEQ_WAIT_CONNECT,
+
+    SEQ_END,
+  };
+
+  if( p_wk->p_nhttp == NULL )
+  { 
+    return TRUE;
+  }
+
+  switch( p_wk->seq )
+  { 
+  case SEQ_INIT:
+    if (NHTTP_RAP_ConectionCreate( NHTTPRAP_URL_BATTLE_DOWNLOAD, p_wk->p_nhttp ))
+    {
+      NHTTP_AddPostDataRaw(NHTTP_RAP_GetHandle(p_wk->p_nhttp), &p_wk->gdb_write_data, sizeof(DREAM_WORLD_SERVER_WORLDBATTLE_SET_DATA) );
+      p_wk->seq  = SEQ_START_CONNECT;
+    }
+    break;
+
+  case SEQ_START_CONNECT:
+    if(NHTTP_RAP_StartConnect(p_wk->p_nhttp))
+    {
+      p_wk->seq  = SEQ_WAIT_CONNECT;
+    }
+    break;
+
+  case SEQ_WAIT_CONNECT:
+    *p_error  = NHTTP_RAP_Process(p_wk->p_nhttp);
+    if(NHTTP_ERROR_NONE == *p_error)
+    {
+      u8* pEvent = (u8*)NHTTP_RAP_GetRecvBuffer(p_wk->p_nhttp);
+      NHTTP_DEBUG_GPF_HEADER_PRINT((gs_response*)pEvent);
+      DEBUG_NET_Printf("終了\n");
+
+      p_wk->seq  = SEQ_END;
+    }
+    else if( NHTTP_ERROR_BUSY != *p_error )
+    { 
+      return WIFIBATTLEMATCH_SEND_GPFDATA_RET_ERROR;
+    }
+
+    break;
+
+
+  case SEQ_END :
+    if(p_wk->p_nhttp)
+    {
+      NHTTP_RAP_End(p_wk->p_nhttp);
+      p_wk->p_nhttp  = NULL;
+    }
+    return WIFIBATTLEMATCH_SEND_GPFDATA_RET_SUCCESS;
+  }
+
+  return WIFIBATTLEMATCH_SEND_GPFDATA_RET_UPDATE;
+}
+//=============================================================================
+/**
+ *    不正文字
+ */
+//=============================================================================
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  不正文字チェックをスタート
+ *
+ *	@param	WIFIBATTLEMATCH_NET_WORK *p_wk  ワーク
+ *	@param	STRCODE *cp_str                 チェックするSTRCODE
+ *	@param	str_len                         STRCODEの長さ
+ */
+//-----------------------------------------------------------------------------
+void WIFIBATTLEMATCH_NET_StartBadWord( WIFIBATTLEMATCH_NET_WORK *p_wk, const STRCODE *cp_str, u32 str_len )
+{ 
+  BOOL ret;
+/*
+  # 文字コードはUnicode（リトルエンディアンUTF16）を使用してください。
+  それ以外の文字コードを使用している場合は、Unicodeに変換してください。
+  # スクリーンネームにUnicode及びIPLフォントにない独自の文字を使用している場合は、スペースに置き換えてください。
+  # 終端は"\0\0"（u16で0x0000）である必要があります。
+  # 配列内の全ての文字列の合計が501文字まで（各文字列の終端を含む）にする必要があります。
+  # 配列内の文字列にNULLを指定することはできません。 
+  */
+  { 
+    int i;
+    GF_ASSERT( str_len < WIFIBATTLEMATCH_BADWORD_STRL_MAX );
+    for( i = 0; i < str_len; i++ )
+    { 
+      if( GFL_STR_GetEOMCode() == cp_str[i] )
+      {
+        p_wk->badword_str[i]  = 0x0000;
+      }
+      else
+      { 
+        p_wk->badword_str[i]  = cp_str[i];
+      }
+    }
+    p_wk->p_badword_arry[0] = p_wk->badword_str;
+  }
+  p_wk->badword_num = 0;
+
+
+  ret = DWC_CheckProfanityExAsync( (const u16 **)p_wk->p_badword_arry,
+                             1,
+                             NULL,
+                             0,
+                             p_wk->badword_result,
+                             &p_wk->badword_num,
+                             DWC_PROF_REGION_ALL );
+  GF_ASSERT( ret );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  不正文字チェックメイン
+ *
+ *	@param	WIFIBATTLEMATCH_NET_WORK *p_wk    ワーク
+ *	@param	*p_is_bad_word                    TRUEならば不正文字  FALSEならば正常文字
+ *
+ *	@return TRUE処理終了  FALSE処理中
+ */
+//-----------------------------------------------------------------------------
+BOOL WIFIBATTLEMATCH_NET_WaitBadWord( WIFIBATTLEMATCH_NET_WORK *p_wk, BOOL *p_is_bad_word )
+{ 
+  BOOL ret;
+  ret = DWC_CheckProfanityProcess() == DWC_PROF_STATE_SUCCESS;
+
+  if( ret == TRUE )
+  { 
+    *p_is_bad_word  = p_wk->badword_num;
+  }
+  return ret;
 }

@@ -19,6 +19,7 @@
 
 //module
 #include "system/bmp_menulist.h"
+#include "poke_tool/pokeparty.h"
 
 //archive
 #include "arc_def.h"
@@ -480,6 +481,8 @@ static GFL_PROC_RESULT DEBUG_PROC_NAGI_Init( GFL_PROC *p_proc, int *p_seq, void 
 	GFL_OVERLAY_Load( FS_OVERLAY_ID(namein) );
 	p_wk->p_namein_param	= NAMEIN_AllocParam( HEAPID_NAGI_DEBUG, NAMEIN_POKEMON, 1, 0, NAMEIN_BOX_LENGTH, NULL );
 	GFL_OVERLAY_Unload( FS_OVERLAY_ID(namein) );
+
+  NAGI_Printf( "pokeparty size=[%d]\n", PokeParty_GetWorkSize() );
 
 	return GFL_PROC_RES_FINISH;
 }

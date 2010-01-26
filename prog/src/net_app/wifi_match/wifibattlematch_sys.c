@@ -111,6 +111,10 @@ typedef struct
   //以下システム層に置いておくデータ
   WIFIBATTLEMATCH_ENEMYDATA   *p_player_data;
   WIFIBATTLEMATCH_ENEMYDATA   *p_enemy_data;
+#if 0
+  DREAM_WORLD_SERVER_WORLDBATTLE_STATE_DATA *p_gpf_data;
+  WIFIBATTLEMATCH_GDB_WIFI_SCORE_DATA   *p_sake_data;
+#endif
 
 
 } WIFIBATTLEMATCH_SYS;
@@ -676,28 +680,41 @@ static void *POKELIST_AllocParam( HEAPID heapID, void *p_wk_adrs )
 
   p_param	= GFL_HEAP_AllocMemory( heapID, sizeof(WIFIBATTLEMATCH_SUBPROC_PARAM) );
 	GFL_STD_MemClear( p_param, sizeof(WIFIBATTLEMATCH_SUBPROC_PARAM) );
-	
 
-  switch( p_wk->param.btl_rule  )
+  if( p_wk->param.mode == WIFIBATTLEMATCH_MODE_RANDOM )
   { 
-  case WIFIBATTLEMATCH_BTLRULE_SINGLE:
-    reg_no  = REG_RND_SINGLE;
-    break;
-  case WIFIBATTLEMATCH_BTLRULE_DOUBLE:
-    reg_no  = REG_RND_DOUBLE;
-    break;
-  case WIFIBATTLEMATCH_BTLRULE_TRIPLE:
-    reg_no  = REG_RND_TRIPLE;
-    break;
-  case WIFIBATTLEMATCH_BTLRULE_ROTATE:
-    reg_no  = REG_RND_ROTATION;
-    break;
-  case WIFIBATTLEMATCH_BTLRULE_SHOOTER:
-    reg_no  = REG_RND_TRIPLE_SHOOTER;
-    break;
+
+    switch( p_wk->param.btl_rule  )
+    { 
+    case WIFIBATTLEMATCH_BTLRULE_SINGLE:
+      reg_no  = REG_RND_SINGLE;
+      break;
+    case WIFIBATTLEMATCH_BTLRULE_DOUBLE:
+      reg_no  = REG_RND_DOUBLE;
+      break;
+    case WIFIBATTLEMATCH_BTLRULE_TRIPLE:
+      reg_no  = REG_RND_TRIPLE;
+      break;
+    case WIFIBATTLEMATCH_BTLRULE_ROTATE:
+      reg_no  = REG_RND_ROTATION;
+      break;
+    case WIFIBATTLEMATCH_BTLRULE_SHOOTER:
+      reg_no  = REG_RND_TRIPLE_SHOOTER;
+      break;
+    }
+
+    p_param->regulation = (REGULATION*)PokeRegulation_LoadDataAlloc( reg_no, heapID );
+  }
+  else if( p_wk->param.mode == WIFIBATTLEMATCH_MODE_WIFI )
+  { 
+    SAVE_CONTROL_WORK *p_sv   = GAMEDATA_GetSaveControlWork( p_wk->param.p_game_data );
+    p_param->regulation       = SaveData_GetRegulation( p_sv,0 );
+  }
+  else
+  { 
+    GF_ASSERT(0);
   }
 
-  p_param->regulation = (REGULATION*)PokeRegulation_LoadDataAlloc( reg_no, heapID );
   p_param->p_party    = p_wk->p_btl_party;
   p_param->gameData   = p_wk->param.p_game_data;
 
@@ -795,35 +812,74 @@ static void *BATTLE_AllocParam( HEAPID heapID, void *p_wk_adrs )
   p_param	= GFL_HEAP_AllocMemory( heapID, sizeof(BATTLE_SETUP_PARAM) );
 	GFL_STD_MemClear( p_param, sizeof(BATTLE_SETUP_PARAM) );
 		
-  switch( p_wk->param.btl_rule )
-  {
-  case WIFIBATTLEMATCH_BTLRULE_SINGLE:    ///< シングル
-    BTL_SETUP_Single_Comm( p_param, p_wk->param.p_game_data, 
-        GFL_NET_HANDLE_GetCurrentHandle() , BTL_COMM_DS, heapID );
-    break;
+  if( p_wk->param.mode == WIFIBATTLEMATCH_MODE_RANDOM )
+  { 
+    switch( p_wk->param.btl_rule )
+    {
+    case WIFIBATTLEMATCH_BTLRULE_SINGLE:    ///< シングル
+      BTL_SETUP_Single_Comm( p_param, p_wk->param.p_game_data, 
+          GFL_NET_HANDLE_GetCurrentHandle() , BTL_COMM_WIFI, heapID );
+      break;
 
-  case WIFIBATTLEMATCH_BTLRULE_DOUBLE:    ///< ダブル
-    BTL_SETUP_Double_Comm( p_param, p_wk->param.p_game_data, 
-        GFL_NET_HANDLE_GetCurrentHandle() , BTL_COMM_DS, heapID );
-    break;
+    case WIFIBATTLEMATCH_BTLRULE_DOUBLE:    ///< ダブル
+      BTL_SETUP_Double_Comm( p_param, p_wk->param.p_game_data, 
+          GFL_NET_HANDLE_GetCurrentHandle() , BTL_COMM_WIFI, heapID );
+      break;
 
-  case WIFIBATTLEMATCH_BTLRULE_TRIPLE:    ///< トリプル
-    BTL_SETUP_Triple_Comm( p_param, p_wk->param.p_game_data, 
-        GFL_NET_HANDLE_GetCurrentHandle() , BTL_COMM_DS, heapID );
-    break;
+    case WIFIBATTLEMATCH_BTLRULE_TRIPLE:    ///< トリプル
+      BTL_SETUP_Triple_Comm( p_param, p_wk->param.p_game_data, 
+          GFL_NET_HANDLE_GetCurrentHandle() , BTL_COMM_WIFI, heapID );
+      break;
 
-  case WIFIBATTLEMATCH_BTLRULE_ROTATE:  ///< ローテーション
-    BTL_SETUP_Rotation_Comm( p_param, p_wk->param.p_game_data, 
-        GFL_NET_HANDLE_GetCurrentHandle() , BTL_COMM_DS, heapID );
-    break;
-  case WIFIBATTLEMATCH_BTLRULE_SHOOTER:  ///< シューター
-    BTL_SETUP_Triple_Comm( p_param, p_wk->param.p_game_data, 
-        GFL_NET_HANDLE_GetCurrentHandle() , BTL_COMM_DS, heapID );
-    //@todo 
-    GF_ASSERT( 0 );
+    case WIFIBATTLEMATCH_BTLRULE_ROTATE:  ///< ローテーション
+      BTL_SETUP_Rotation_Comm( p_param, p_wk->param.p_game_data, 
+          GFL_NET_HANDLE_GetCurrentHandle() , BTL_COMM_WIFI, heapID );
+      break;
+    case WIFIBATTLEMATCH_BTLRULE_SHOOTER:  ///< シューター
+      BTL_SETUP_Triple_Comm( p_param, p_wk->param.p_game_data, 
+          GFL_NET_HANDLE_GetCurrentHandle() , BTL_COMM_WIFI, heapID );
+      //@todo 
+      GF_ASSERT( 0 );
 
-    break;
+      break;
+    }
   }
+  else if( p_wk->param.mode == WIFIBATTLEMATCH_MODE_WIFI )
+  { 
+    SAVE_CONTROL_WORK *p_sv   = GAMEDATA_GetSaveControlWork( p_wk->param.p_game_data );
+    REGULATION* p_reg         = SaveData_GetRegulation( p_sv,0 );
+
+    //@todo
+    switch( Regulation_GetParam( p_reg, REGULATION_BATTLETYPE ) )
+    {
+    default:
+      //@todo
+    case REGULATION_BATTLE_SINGLE:    ///< シングル
+      BTL_SETUP_Single_Comm( p_param, p_wk->param.p_game_data, 
+          GFL_NET_HANDLE_GetCurrentHandle() , BTL_COMM_WIFI, heapID );
+      break;
+
+    case REGULATION_BATTLE_DOUBLE:    ///< ダブル
+      BTL_SETUP_Double_Comm( p_param, p_wk->param.p_game_data, 
+          GFL_NET_HANDLE_GetCurrentHandle() , BTL_COMM_WIFI, heapID );
+      break;
+
+    case REGULATION_BATTLE_TRIPLE:    ///< トリプル
+      BTL_SETUP_Triple_Comm( p_param, p_wk->param.p_game_data, 
+          GFL_NET_HANDLE_GetCurrentHandle() , BTL_COMM_WIFI, heapID );
+      break;
+
+    case REGULATION_BATTLE_ROTATION:  ///< ローテーション
+      BTL_SETUP_Rotation_Comm( p_param, p_wk->param.p_game_data, 
+          GFL_NET_HANDLE_GetCurrentHandle() , BTL_COMM_WIFI, heapID );
+      break;
+    }
+  }
+  else
+  { 
+    GF_ASSERT(0);
+  }
+
 
   BATTLE_PARAM_SetPokeParty( p_param, p_wk->p_btl_party, BTL_CLIENT_PLAYER ); 
 
@@ -926,7 +982,17 @@ static BOOL LOGIN_FreeParam( void *p_param_adrs, void *p_wk_adrs )
 static void DATA_CreateBuffer( WIFIBATTLEMATCH_SYS *p_wk, HEAPID heapID )
 { 
   p_wk->p_player_data = GFL_HEAP_AllocMemory( heapID, WIFIBATTLEMATCH_DATA_ENEMYDATA_SIZE );
+  GFL_STD_MemClear( p_wk->p_player_data, WIFIBATTLEMATCH_DATA_ENEMYDATA_SIZE );
   p_wk->p_enemy_data  = GFL_HEAP_AllocMemory( heapID, WIFIBATTLEMATCH_DATA_ENEMYDATA_SIZE );
+  GFL_STD_MemClear( p_wk->p_enemy_data, WIFIBATTLEMATCH_DATA_ENEMYDATA_SIZE );
+
+#if 0
+  p_wk->p_gpf_data = GFL_HEAP_AllocMemory( heapID, sizeof( DREAM_WORLD_SERVER_WORLDBATTLE_STATE_DATA) );
+  GFL_STD_MemClear( p_wk->p_gpf_data, sizeof( DREAM_WORLD_SERVER_WORLDBATTLE_STATE_DATA) );
+
+  p_wk->p_sake_data = GFL_HEAP_AllocMemory( heapID, sizeof(WIFIBATTLEMATCH_GDB_WIFI_SCORE_DATA) );
+  GFL_STD_MemClear( p_wk->p_gpf_data, sizeof(WIFIBATTLEMATCH_GDB_WIFI_SCORE_DATA) );
+#endif
 }
 //----------------------------------------------------------------------------
 /**
@@ -937,6 +1003,10 @@ static void DATA_CreateBuffer( WIFIBATTLEMATCH_SYS *p_wk, HEAPID heapID )
 //-----------------------------------------------------------------------------
 static void DATA_DeleteBuffer( WIFIBATTLEMATCH_SYS *p_wk )
 { 
+#if 0
+  GFL_HEAP_FreeMemory( p_wk->p_sake_data );
+  GFL_HEAP_FreeMemory( p_wk->p_gpf_data );
+#endif
   GFL_HEAP_FreeMemory( p_wk->p_player_data );
   GFL_HEAP_FreeMemory( p_wk->p_enemy_data );
 }

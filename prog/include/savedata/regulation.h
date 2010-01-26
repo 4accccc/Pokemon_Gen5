@@ -101,17 +101,8 @@ typedef enum  {
   REGULATION_CARD_END_YEAR,    ///< 終了年：00-99
   REGULATION_CARD_END_MONTH,   ///< 終了月：01-12
   REGULATION_CARD_END_DAY,     ///< 終了日：01-31
-  REGULATION_CARD_STATUS,      ///< 大会状態：０未開催／１開催中／２終了REGULATION_CARD_STATUS_TYPEの値
+  REGULATION_CARD_STATUS,      ///< 大会状態：net/dreamworld_netdata.hのDREAM_WORLD_MATCHUP_TYPEの値
 } REGULATION_CARD_PARAM_TYPE;
-
-typedef enum  {
-  REGULATION_CARD_STATUS_TYPE_PRE     = 0,  ///< 未登録
-  REGULATION_CARD_STATUS_TYPE_ENTRY   = 1,  ///< エントリー中
-  REGULATION_CARD_STATUS_TYPE_JOIN    = 2,  ///< 参加中
-  REGULATION_CARD_STATUS_TYPE_END     = 3,  ///< 大会終了
-  REGULATION_CARD_STATUS_TYPE_GIVEUP  = 4,  ///< 棄権した
-} REGULATION_CARD_STATUS_TYPE;
-
 
 //----------------------------------------------------------
 /**
@@ -162,7 +153,7 @@ typedef struct {
   char end_year;//終了年：00-99
   char end_month;//終了月：01-12
   char end_day;//終了日：01-31
-  char status;  //大会状態： REGULATION_CARD_STATUS_TYPEの値
+  char status;  //大会状態： net/dreamworld_netdata.hのDREAM_WORLD_MATCHUP_TYPEの値
   u16 crc;  //整合性検査
  // short rating;//大会用レーティング
 //  short rd;//大会用RD

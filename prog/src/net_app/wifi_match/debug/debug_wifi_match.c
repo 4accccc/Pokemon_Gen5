@@ -684,7 +684,7 @@ static BOOL SAKE_Main( DEBUG_SAKE_WORK *p_wk )
       const u16 str[] = L"データ送信中";
       WBM_TEXT_PrintDebug( p_wk->p_text, str, NELEMS(str), p_wk->p_font );
     }
-    WIFIBATTLEMATCH_GDB_StartWrite( p_wk->p_net, WIFIBATTLEMATCH_GDB_GET_RND_SCORE, &p_wk->score );
+    WIFIBATTLEMATCH_GDB_StartWrite( p_wk->p_net, WIFIBATTLEMATCH_GDB_WRITE_DEBUGALL, &p_wk->score );
     p_wk->seq = SEQ_WAIT_SENDDATA;
     break;
 

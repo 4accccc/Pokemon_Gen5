@@ -907,12 +907,11 @@ static void WbmRndSeq_Rate_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
 
   case SEQ_WAIT_SENDDATA:
     {
-      WIFIBATTLEMATCH_ENEMYDATA *p_recv_data;
-      if( WIFIBATTLEMATCH_NET_WaitEnemyData( p_wk->p_net, &p_recv_data ) )
-      { 
-        //受信したデータをバッファにコピー
+      WIFIBATTLEMATCH_ENEMYDATA *p_recv;
+      if( WIFIBATTLEMATCH_NET_WaitEnemyData( p_wk->p_net, &p_recv ) )
+      {   
         WIFIBATTLEMATCH_ENEMYDATA *p_enemy_data = p_param->p_enemy_data;
-        GFL_STD_MemCopy( p_recv_data, p_enemy_data, WIFIBATTLEMATCH_DATA_ENEMYDATA_SIZE );
+        GFL_STD_MemCopy( p_recv, p_enemy_data, WIFIBATTLEMATCH_DATA_ENEMYDATA_SIZE );
         WIFIBATTLEMATCH_DATA_ModifiEnemyData( p_enemy_data, HEAPID_WIFIBATTLEMATCH_CORE );
 
         //対戦者情報表示
@@ -1424,12 +1423,11 @@ static void WbmRndSeq_Free_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
 
   case SEQ_WAIT_SENDDATA:
     {
-      WIFIBATTLEMATCH_ENEMYDATA *p_recv_data;
-      if( WIFIBATTLEMATCH_NET_WaitEnemyData( p_wk->p_net, &p_recv_data ) )
+      WIFIBATTLEMATCH_ENEMYDATA *p_recv;
+      if( WIFIBATTLEMATCH_NET_WaitEnemyData( p_wk->p_net, &p_recv ) )
       { 
         WIFIBATTLEMATCH_ENEMYDATA *p_enemy_data = p_param->p_enemy_data;
-        GFL_STD_MemCopy( p_recv_data, p_enemy_data, WIFIBATTLEMATCH_DATA_ENEMYDATA_SIZE );
-
+        GFL_STD_MemCopy( p_recv, p_enemy_data, WIFIBATTLEMATCH_DATA_ENEMYDATA_SIZE );
         Util_MatchInfo_Create( p_wk, p_param->p_enemy_data );
 
         WBM_WAITICON_SetDrawEnable( p_wk->p_wait, FALSE );

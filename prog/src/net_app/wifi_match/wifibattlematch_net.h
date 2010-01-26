@@ -15,6 +15,8 @@
 #include "wifibattlematch_data.h"
 #include "pm_define.h"
 #include "net_app/wifibattlematch.h"
+#include "savedata/regulation.h"
+#include "net/nhttp_rap.h"
 //=============================================================================
 /**
  *					定数宣言
@@ -116,29 +118,19 @@ typedef struct
 } WIFIBATTLEMATCH_GDB_RND_SCORE_DATA;
 
 //-------------------------------------
-///	PDFから落としてきたデータ
+///	SAKEからのデータ受け取り
 //=====================================
-typedef struct 
-{
-  char  status;
-  short no;
+#define WIFIBATTLEMATCH_GDB_WIFI_POKEPARTY_SIZE (1334)
+typedef struct
+{ 
+  s32 cheat;
+  s32 disconnect;
+  s32 win;
+  s32 lose;
+  s32 rate;
+  u8  pokeparty[ WIFIBATTLEMATCH_GDB_WIFI_POKEPARTY_SIZE ];
+} WIFIBATTLEMATCH_GDB_WIFI_SCORE_DATA;
 
-  //登録ポケモン？
-  //todo
-
-} WIFIBATTLEMATCH_PDF_DATA;
-
-
-//-------------------------------------
-///	エラー
-//=====================================
-/*typedef struct {
-  WIFIBATTLEMATCH_NET_ERRORTYPE type;
-  DWCGdbError                   gdb;
-  DWCScResult                   sc;
-  WIFIBATTLEMATCH_NET_RESULT    my;
-} WIFIBATTLEMATCH_NET_ERRORTYPE;
-*/
 //エラー解決タイプ
 typedef enum
 {
@@ -196,7 +188,7 @@ extern BOOL WIFIBATTLEMATCH_NET_SetDisConnect( WIFIBATTLEMATCH_NET_WORK *p_wk, B
 extern void WIFIBATTLEMATCH_NET_StopConnect( WIFIBATTLEMATCH_NET_WORK *p_wk, BOOL is_stop );
 
 //-------------------------------------
-///	統計・競争関係（SC）
+///	ATLAS統計・競争関係（SC）
 //=====================================
 extern void WIFIBATTLEMATCH_SC_Start( WIFIBATTLEMATCH_NET_WORK *p_wk, WIFIBATTLEMATCH_BTLRULE rule, BtlResult result );
 extern BOOL WIFIBATTLEMATCH_SC_Process( WIFIBATTLEMATCH_NET_WORK *p_wk, DWCScResult *p_result );
@@ -243,20 +235,36 @@ typedef struct
 extern void WIFIBATTLEMATCH_SC_StartDebug( WIFIBATTLEMATCH_NET_WORK *p_wk, WIFIBATTLEMATCH_SC_DEBUG_DATA * p_data, BOOL is_auth );
 
 //-------------------------------------
-///	データベース関係（GDB)
+///	SAKEデータベース関係（GDB)
 //=====================================
+//読み取り
 typedef enum
 { 
   WIFIBATTLEMATCH_GDB_GET_RND_SCORE,
+  WIFIBATTLEMATCH_GDB_GET_WIFI_SCORE,
+  WIFIBATTLEMATCH_GDB_GET_RECORDID,
 }WIFIBATTLEMATCH_GDB_GETTYPE;
 //WIFIBATTLEMATCH_GDB_GET_RND_SCORE
 extern void WIFIBATTLEMATCH_GDB_Start( WIFIBATTLEMATCH_NET_WORK *p_wk, WIFIBATTLEMATCH_GDB_GETTYPE type, void *p_wk_adrs );
 extern BOOL WIFIBATTLEMATCH_GDB_Process( WIFIBATTLEMATCH_NET_WORK *p_wk, DWCGdbError *p_result );
 
-extern void WIFIBATTLEMATCH_GDB_StartWrite( WIFIBATTLEMATCH_NET_WORK *p_wk, WIFIBATTLEMATCH_GDB_GETTYPE type, const void *cp_wk_adrs );
+//書き込み
+typedef enum
+{ 
+  WIFIBATTLEMATCH_GDB_WRITE_DEBUGALL,
+  WIFIBATTLEMATCH_GDB_WRITE_POKEPARTY,  //ポケモンのバッファは外側のものを使います
+  WIFIBATTLEMATCH_GDB_WRITE_WIFI_SCORE,
+}WIFIBATTLEMATCH_GDB_WRITETYPE;
+//WIFIBATTLEMATCH_GDB_GET_RND_SCORE
+extern void WIFIBATTLEMATCH_GDB_StartWrite( WIFIBATTLEMATCH_NET_WORK *p_wk, WIFIBATTLEMATCH_GDB_WRITETYPE type, const void *cp_wk_adrs );
 extern BOOL WIFIBATTLEMATCH_GDB_ProcessWrite( WIFIBATTLEMATCH_NET_WORK *p_wk, DWCGdbError *p_result );
 
 extern WIFIBATTLEMATCH_NET_ERROR_REPAIR_TYPE WIFIBATTLEMATCH_GDB_GetErrorRepairType( DWCGdbError error );
+
+//作成
+extern void WIFIBATTLEMATCH_GDB_StartCreateRecord( WIFIBATTLEMATCH_NET_WORK *p_wk );
+extern BOOL WIFIBATTLEMATCH_GDB_ProcessCreateRecord( WIFIBATTLEMATCH_NET_WORK *p_wk, DWCGdbError *p_result );
+
 
 //-------------------------------------
 ///	相手のデータ受信
@@ -266,7 +274,49 @@ extern BOOL WIFIBATTLEMATCH_NET_WaitEnemyData( WIFIBATTLEMATCH_NET_WORK *p_wk, W
 
 
 //-------------------------------------
-///	GPFサーバー　ダウンロード（SC)
+///	ダウンロードサーバー  (ND)
 //=====================================
-extern void WIFIBATTLEMATCH_NET_StartDownloadDigCard( WIFIBATTLEMATCH_NET_WORK *p_wk );
-extern BOOL WIFIBATTLEMATCH_NET_WaitDownloadDigCard( WIFIBATTLEMATCH_NET_WORK *p_wk );
+typedef enum
+{ 
+  WIFIBATTLEMATCH_NET_DOWNLOAD_DIGCARD_RET_DOWNLOADING, //取得中
+  WIFIBATTLEMATCH_NET_DOWNLOAD_DIGCARD_RET_SUCCESS, //受信成功
+  WIFIBATTLEMATCH_NET_DOWNLOAD_DIGCARD_RET_EMPTY,   //存在しなかった
+  WIFIBATTLEMATCH_NET_DOWNLOAD_DIGCARD_RET_ERROR,   //エラー
+}WIFIBATTLEMATCH_NET_DOWNLOAD_DIGCARD_RET;
+
+extern void WIFIBATTLEMATCH_NET_StartDownloadDigCard( WIFIBATTLEMATCH_NET_WORK *p_wk, int cup_no );
+extern WIFIBATTLEMATCH_NET_DOWNLOAD_DIGCARD_RET WIFIBATTLEMATCH_NET_WaitDownloadDigCard( WIFIBATTLEMATCH_NET_WORK *p_wk );
+extern void WIFIBATTLEMATCH_NET_GetDownloadDigCard( const WIFIBATTLEMATCH_NET_WORK *cp_wk, REGULATION_CARDDATA *p_recv );
+
+//-------------------------------------
+///	GPFサーバー            (HTTP)
+//=====================================
+//受信
+typedef enum
+{
+  WIFIBATTLEMATCH_RECV_GPFDATA_RET_UPDATE,
+  WIFIBATTLEMATCH_RECV_GPFDATA_RET_SUCCESS,
+  WIFIBATTLEMATCH_RECV_GPFDATA_RET_ERROR,
+} WIFIBATTLEMATCH_RECV_GPFDATA_RET;
+
+extern void WIFIBATTLEMATCH_NET_StartRecvGpfData( WIFIBATTLEMATCH_NET_WORK *p_wk, MYSTATUS *p_mystatus, HEAPID heapID );
+extern WIFIBATTLEMATCH_RECV_GPFDATA_RET WIFIBATTLEMATCH_NET_WaitRecvGpfData( WIFIBATTLEMATCH_NET_WORK *p_wk, NHTTPError *p_error );
+extern void WIFIBATTLEMATCH_NET_GetRecvGpfData( const WIFIBATTLEMATCH_NET_WORK *cp_wk, DREAM_WORLD_SERVER_WORLDBATTLE_STATE_DATA *p_recv );
+
+//書き込み
+typedef enum
+{
+  WIFIBATTLEMATCH_SEND_GPFDATA_RET_UPDATE,
+  WIFIBATTLEMATCH_SEND_GPFDATA_RET_SUCCESS,
+  WIFIBATTLEMATCH_SEND_GPFDATA_RET_ERROR,
+} WIFIBATTLEMATCH_SEND_GPFDATA_RET;
+
+extern void WIFIBATTLEMATCH_NET_StartSendGpfData( WIFIBATTLEMATCH_NET_WORK *p_wk, MYSTATUS *p_mystatus, const DREAM_WORLD_SERVER_WORLDBATTLE_SET_DATA *cp_send, HEAPID heapID );
+extern WIFIBATTLEMATCH_SEND_GPFDATA_RET WIFIBATTLEMATCH_NET_WaitSendGpfData( WIFIBATTLEMATCH_NET_WORK *p_wk, NHTTPError *p_error );
+
+
+//-------------------------------------
+///	不正文字チェック
+//=====================================
+extern void WIFIBATTLEMATCH_NET_StartBadWord( WIFIBATTLEMATCH_NET_WORK *p_wk, const STRCODE *cp_str, u32 str_len );
+extern BOOL WIFIBATTLEMATCH_NET_WaitBadWord( WIFIBATTLEMATCH_NET_WORK *p_wk, BOOL *p_is_bad_word );
