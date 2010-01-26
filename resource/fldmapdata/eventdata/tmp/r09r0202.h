@@ -9,5 +9,6 @@
 #ifndef ZONE_R09R0202_EVC_H
 #define ZONE_R09R0202_EVC_H
 
+#define R09R0202_CLEANINGM_01              0
 
 #endif //ZONE_R09R0202_EVC_H
