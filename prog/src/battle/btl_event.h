@@ -53,9 +53,10 @@ typedef enum {
   BTL_EVENT_WAZA_EXECUTE_CHECK_1ST, ///< ワザ実行チェック（ワザメッセージ前）
   BTL_EVENT_WAZA_EXECUTE_CHECK_2ND, ///< ワザ実行チェック（ワザメッセージ後）
   BTL_EVENT_WAZA_EXECUTE_FAIL,      ///< ワザ出し失敗
-  BTL_EVENT_WAZA_EXECUTE_FIX,       ///< ワザ出し成功確定
-  BTL_EVENT_WAZA_EXECUTE_NO_EFFECT, ///< ワザ出し成功したが効果なし
-  BTL_EVENT_WAZA_EXECUTE_DONE,      ///< ワザ出し処理終了
+  BTL_EVENT_WAZA_EXECUTE_DECIDE,    ///< ワザ出し成功確定
+  BTL_EVENT_WAZA_EXECUTE_EFFECTIVE, ///< ワザ出し成功（効果あり）
+  BTL_EVENT_WAZA_EXECUTE_NO_EFFECT, ///< ワザ出し成功（効果なし）
+  BTL_EVENT_WAZA_EXECUTE_DONE,      ///< ワザ出し終了
   BTL_EVENT_WAZA_PARAM,             ///< ワザパラメータチェック
   BTL_EVENT_DECIDE_TARGET,          ///< ワザ対象決定
   BTL_EVENT_NOEFFECT_CHECK_L1,      ///< ワザ無効化チェック（lv1 = 必中には負ける）ハンドラ

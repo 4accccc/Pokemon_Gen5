@@ -3576,7 +3576,7 @@ static void handler_NoGuard( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_NoGuard( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_EXECUTE_FIX,        handler_NoGuard },  // タイプによる無効化チェックハンドラ
+    { BTL_EVENT_WAZA_EXECUTE_DECIDE,        handler_NoGuard },  // タイプによる無効化チェックハンドラ
   };
   *numElems = NELEMS(HandlerTable);
   return HandlerTable;
