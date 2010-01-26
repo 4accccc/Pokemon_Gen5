@@ -1224,6 +1224,44 @@ VMCMD_RESULT EvCmdChgFormNo( VMHANDLE *core, void *wk )
 
 //--------------------------------------------------------------
 /**
+ * ロトムフォルムチェンジ
+ * @param	core		仮想マシン制御構造体へのポインタ
+ * @param wk      SCRCMD_WORKへのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdChgRotomFormNo( VMHANDLE *core, void *wk )
+{
+  int i;
+  SCRCMD_WORK*       work = (SCRCMD_WORK*)wk;
+  u16            poke_pos = SCRCMD_GetVMWorkValue( core, work );       //手持ち位置
+  u16            waza_pos = SCRCMD_GetVMWorkValue( core, work );       //技位置
+  u16            formno = SCRCMD_GetVMWorkValue( core, work );       //フォルムナンバー
+
+  SCRIPT_WORK*        scw = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK*      gsys = SCRCMD_WORK_GetGameSysWork( work );
+  FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  GAMEDATA*         gdata = GAMESYSTEM_GetGameData( gsys );
+  POKEPARTY*        party = GAMEDATA_GetMyPokemon( gdata );
+  
+  POKEMON_PARAM *pp = PokeParty_GetMemberPointer( party , poke_pos );
+  BOOL rc;
+
+  rc = PP_ChangeRotomFormNo( pp, formno, waza_pos );
+  GF_ASSERT(rc);
+  
+  //図鑑登録「見た」
+  {
+    ZUKAN_SAVEDATA *zw = GAMEDATA_GetZukanSave( gdata );
+    ZUKANSAVE_SetPokeSee(zw, pp);
+  }
+
+  return VMCMD_RESULT_CONTINUE;
+}
+
+
+//--------------------------------------------------------------
+/**
  * @brief 思い出し技の有無を取得する
  * @param	core		仮想マシン制御構造体へのポインタ
  * @param wk      SCRCMD_WORKへのポインタ

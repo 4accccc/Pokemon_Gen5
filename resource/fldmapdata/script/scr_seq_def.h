@@ -4528,6 +4528,25 @@
   .short  \formno
   .endm
   
+
+//--------------------------------------------------------------
+/**
+ * @def _CHANGE_ROTOM_FORM_NO
+ * @brief 手持ちポケモンのフォルムチェンジ
+ * @param poke_pos     チェックするポケモンの位置（０～５）
+ * @param waza_pos      技の位置（0～3）
+ * @param formno    フォルムナンバー
+ */
+//--------------------------------------------------------------
+#define _CHANGE_ROTOM_FORM_NO( poke_pos, waza_pos, formno ) _ASM_CHANGE_ROTOM_FORM_NO poke_pos, waza_pos, formno
+
+  .macro  _ASM_CHANGE_ROTOM_FORM_NO poke_pos, waza_pos, formno
+  .short  EV_SEQ_CHG_ROTOM_FORM_NO
+  .short  \poke_pos
+  .short  \waza_pos
+  .short  \formno
+  .endm
+  
 //--------------------------------------------------------------
 /**
  * @def _GET_PARTY_POS_BY_MONSNO

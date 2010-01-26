@@ -507,7 +507,7 @@
 
   DEF_CMD( EvCmdCheckPartyPokeGetPlace, EV_SEQ_CHECK_TEMOTI_GETPLACE )
   DEF_CMD( EvCmdGetPartyPokeGetDate, EV_SEQ_GET_TEMOTI_GETDATE )
-  NO_CMD()
+  DEF_CMD( EvCmdChgRotomFormNo, EV_SEQ_CHG_ROTOM_FORM_NO )
   NO_CMD()
 
   DEF_CMD( EvCmdGetPartyPokeType, EV_SEQ_GET_TEMOTI_POKE_TYPE )

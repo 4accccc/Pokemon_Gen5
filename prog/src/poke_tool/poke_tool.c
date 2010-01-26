@@ -70,7 +70,7 @@ static u8 Personal_GetTokuseiCount( POKEMON_PERSONAL_DATA* ppd );
 static void change_monsno_sub_tokusei( POKEMON_PASO_PARAM* ppp, u16 new_monsno, u16 old_monsno );
 static void change_monsno_sub_sex( POKEMON_PASO_PARAM* ppp, u16 new_monsno, u16 old_monsno );
 static  PokeType  get_type_from_item( u16 item );
-
+static void	PokeParaWazaDelPos(POKEMON_PARAM *pp,u32 pos);
 
 //============================================================================================
 /**
@@ -551,6 +551,127 @@ BOOL PPP_ChangeFormNo( POKEMON_PASO_PARAM* ppp, u16 next_formno )
   PPP_FastModeOff( ppp, fast_flag );
 
   return ret;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   ロトムをフォルムチェンジする
+ *
+ * @param   pp					セットするPOKEMON_PARAM構造体へのポインタ
+ * @param   new_form_no			新しいフォルム番号
+ * @param   del_waza_pos		対応技を覚えさせる為、技を削除する位置
+ * 								(対応技の削除が行われた場合、そこに新しい対応技を差し込む)
+ *
+ * @retval  TRUE:フォルムチェンジ成功
+ * @retval	FALSE:ロトムではない
+ */
+//--------------------------------------------------------------
+BOOL PP_ChangeRotomFormNo(POKEMON_PARAM *pp, int new_form_no, int del_waza_pos)
+{
+	int monsno;
+	
+	monsno = PP_Get(pp, ID_PARA_monsno, NULL);
+	if(monsno != MONSNO_ROTOMU){
+		return FALSE;
+	}
+	
+	{
+		int i, s, new_wazano, wazano;
+		const u16 rotom_waza_tbl[] = {
+			0,
+			WAZANO_OOBAAHIITO,
+			WAZANO_HAIDOROPONPU,
+			WAZANO_HUBUKI,
+			WAZANO_EASURASSYU,
+			WAZANO_RIIHUSUTOOMU,
+		};
+
+		new_wazano = rotom_waza_tbl[new_form_no];
+		
+		//対応技を全て忘れさせる
+		for(i = 0; i < 4; i++)
+    {
+			wazano = PP_Get(pp, ID_PARA_waza1 + i, NULL);
+			for(s = 1; s < NELEMS(rotom_waza_tbl); s++)
+      {
+				if(wazano != 0 && wazano == rotom_waza_tbl[s])
+        {
+					if(new_wazano != 0)
+          {
+						//新しいフォルムの技と入れ替える
+            PP_SetWazaPos( pp, new_wazano, i );
+						new_wazano = 0;
+						break;
+					}
+					else
+          {	//技忘れ
+						PokeParaWazaDelPos(pp, i);
+						i--;
+						break;
+					}
+				}
+			}
+		}
+		
+		//対応技を覚えていなかった場合はここで技入れ替え
+		if(new_wazano != 0)
+    {
+			for(i = 0; i < 4; i++)
+      {
+				if(PP_Get(pp, ID_PARA_waza1 + i, NULL) == 0)
+        {
+          PP_SetWazaPos( pp, new_wazano, i );
+					break;
+				}
+			}
+			if(i == 4)
+      {
+        PP_SetWazaPos( pp, new_wazano, del_waza_pos );
+			}
+		}
+		
+		//対応技を忘れさせた結果手持ちの技が0になっていたら電機ショックを覚えさせる
+		if(PP_Get(pp, ID_PARA_waza1, NULL) == 0)
+    {
+      PP_SetWazaPos( pp, WAZANO_DENKISYOKKU, 0 );
+		}
+	}
+
+  PP_ChangeFormNo( pp, new_form_no );
+	
+	return TRUE;
+}
+
+//============================================================================================
+/**
+ * 指定位置の技をクリアして、シフトする
+ *
+ * @param[in]	pp		クリアする構造体のポインタ
+ * @param[in]	pos		クリア位置
+ */
+//============================================================================================
+static void	PokeParaWazaDelPos(POKEMON_PARAM *pp,u32 pos)
+{
+	u32	i;
+	u16	waza_no;
+	u8	pp_now;
+	u8	pp_count;
+
+	for(i=pos;i<3;i++){
+		waza_no  = PP_Get(pp,ID_PARA_waza1+i+1,NULL);
+		pp_now   = PP_Get(pp,ID_PARA_pp1+i+1,NULL);
+		pp_count = PP_Get(pp,ID_PARA_pp_count1+i+1,NULL);
+		
+		PP_Put(pp,ID_PARA_waza1+i,waza_no);
+		PP_Put(pp,ID_PARA_pp1+i,pp_now);
+		PP_Put(pp,ID_PARA_pp_count1+i,pp_count);
+	}
+	waza_no  = 0;
+	pp_now   = 0;
+	pp_count = 0;
+	PP_Put(pp,ID_PARA_waza4,waza_no);
+	PP_Put(pp,ID_PARA_pp4,pp_now);
+	PP_Put(pp,ID_PARA_pp_count4,pp_count);
 }
 
 //----------------------------------------------------------------------------------
