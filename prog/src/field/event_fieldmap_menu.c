@@ -161,7 +161,12 @@ GMEVENT * EVENT_UnionMapMenu(
   event = EVENT_FieldMapMenu(gsys, fieldWork, heapID);
   
   mwk = GMEVENT_GetEventWork(event);
-  mwk->return_subscreen_mode = FIELD_SUBSCREEN_UNION;
+  if(ZONEDATA_IsColosseum(FIELDMAP_GetZoneID(fieldWork)) == TRUE){
+    mwk->return_subscreen_mode = FIELD_SUBSCREEN_NOGEAR;
+  }
+  else{
+    mwk->return_subscreen_mode = FIELD_SUBSCREEN_UNION;
+  }
 
   return event;
 }

@@ -256,7 +256,9 @@ BOOL UnionMain_CheckPlayerFreeMode(GAMESYS_WORK *gsys)
   if(unisys == NULL){
     return TRUE;
   }
-  if(unisys->my_situation.union_status == UNION_STATUS_NORMAL && unisys->player_pause == FALSE){
+  if((unisys->my_situation.union_status == UNION_STATUS_NORMAL
+      || unisys->my_situation.union_status == UNION_STATUS_COLOSSEUM_NORMAL)
+      && unisys->player_pause == FALSE){
     return TRUE;
   }
   return FALSE;

@@ -1712,9 +1712,11 @@ static void MAPCHG_setupMapTools( GAMESYS_WORK * gsys, const LOCATION * loc_req 
   //         変更もそのスクリプト内で行うようにする
   switch(loc_req->zone_id){
   case ZONE_ID_UNION:
+    GAMEDATA_SetSubScreenMode(gamedata, FIELD_SUBSCREEN_UNION);
+    break;
   case ZONE_ID_CLOSSEUM:
   case ZONE_ID_CLOSSEUM02:
-    GAMEDATA_SetSubScreenMode(gamedata, FIELD_SUBSCREEN_UNION);
+    GAMEDATA_SetSubScreenMode(gamedata, FIELD_SUBSCREEN_NOGEAR);
     break;
   default:
     GAMEDATA_SetSubScreenMode(gamedata, FIELD_SUBSCREEN_NORMAL);
