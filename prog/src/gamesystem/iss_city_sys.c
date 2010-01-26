@@ -296,7 +296,11 @@ static void UpdateVolume( ISS_CITY_SYS* sys )
   GF_ASSERT( sys->isActive );  
 
   // ユニットが配置されていない
-  if( sys->activeUnitNo == INVALID_UNIT_NO ){ return; }
+  if( sys->activeUnitNo == INVALID_UNIT_NO )
+  {
+    PMSND_ChangeBGMVolume( TRACKBIT, 0 );
+    return; 
+  }
 
   // ユニットと自機の位置からボリュームを算出
   pos        = PLAYERWORK_getPosition( sys->pPlayer );
