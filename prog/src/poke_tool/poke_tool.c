@@ -951,13 +951,20 @@ u8 POKETOOL_GetSex( u16 mons_no, u16 form_no, u32 personal_rnd )
   }
 
 // 個性乱数により性別が決まるケース
-  if( sex_param > ( personal_rnd & 0xff ) )
   {
-    return PTL_SEX_FEMALE;
-  }
-  else
-  {
-    return PTL_SEX_MALE;
+    u8 rnd_sex_bit = ( personal_rnd & 0xff );
+
+    OS_TPrintf( "[PTL] GetSex personal_sex_param=%02x, rnd_sex_bit=%02x\n",
+                        sex_param, rnd_sex_bit );
+
+    if( rnd_sex_bit >= sex_param )
+    {
+      return PTL_SEX_MALE;
+    }
+    else
+    {
+      return PTL_SEX_FEMALE;
+    }
   }
 }
 
@@ -1465,7 +1472,6 @@ u8  PP_GetSeikaku( const POKEMON_PARAM *pp )
 {
   return  PPP_GetSeikaku( &pp->ppp );
 }
-
 //============================================================================================
 /**
  *  ポケモンの性格を取得（引数がPOKEMON_PASO_PARAM)
@@ -1478,34 +1484,6 @@ u8  PP_GetSeikaku( const POKEMON_PARAM *pp )
 u8  PPP_GetSeikaku( const POKEMON_PASO_PARAM *ppp )
 {
   return PPP_Get( ppp, ID_PARA_seikaku, 0 );
-}
-
-//============================================================================================
-/**
- *  ポケモンの性格をセット（引数がPOKEMON_PARAM)
- *
- * @param[in] pp  セットしたいポケモンパラメータ構造体のポインタ
- * @param[in] chr セットする性格  
- */
-//============================================================================================
-void  PP_SetSeikaku( POKEMON_PARAM *pp, u8 chr )
-{
-  PPP_SetSeikaku( &pp->ppp, chr );
-  PP_Renew( pp );
-}
-
-//============================================================================================
-/**
- *  ポケモンの性格をセット（引数がPOKEMON_PASO_PARAM)
- *
- * @param[in] ppp セットしたいポケモンパラメータ構造体のポインタ
- * @param[in] chr セットする性格  
- *
- */
-//============================================================================================
-void  PPP_SetSeikaku( POKEMON_PASO_PARAM *ppp, u8 chr )
-{
-  PPP_Put( ppp, ID_PARA_seikaku, chr );
 }
 
 //=============================================================================================
@@ -1574,11 +1552,16 @@ u32  POKETOOL_CalcPersonalRand( u16 mons_no, u16 form_no, u8 sex )
   {
     POKEMON_PERSONAL_DATA* ppd = Personal_Load( mons_no, form_no );
     u8 sex_param = POKE_PERSONAL_GetParam( ppd, POKEPER_ID_sex );
-    if( PokePersonal_SexVecTypeGet( sex_param ) != POKEPER_SEXTYPE_FIX){
+    if( PokePersonal_SexVecTypeGet( sex_param ) != POKEPER_SEXTYPE_FIX)
+    {
       if( sex == PTL_SEX_MALE ){
-        rnd = sex_param+1;
-      }else{
         rnd = sex_param;
+      }else{
+        if( sex_param ){
+          rnd = sex_param - 1;
+        }else{
+          rnd = 0;  // ffffffffになってしまわないよう念のため
+        }
       }
     }
   }
@@ -2260,6 +2243,7 @@ static  u32 ppp_getAct( POKEMON_PASO_PARAM *ppp, int id, void *buf )
     case ID_PARA_sex:
       //必ずパラメータから計算して返すようする
       ret = POKETOOL_GetSex( ppp1->monsno, ppp2->form_no, ppp->personal_rnd );
+      OS_TPrintf("[PTL]  PPGet_Sex... result = %d, PersonalRand=%08x\n", ret, ppp->personal_rnd );
       //再計算したものを代入しておく
       ppp2->sex = ret;
       //チェックサムを再計算
@@ -2828,10 +2812,6 @@ static  void  ppp_putAct( POKEMON_PASO_PARAM *ppp, int paramID, u32 arg )
         ppp4->get_place = ID_TOOIBASYO;     //捕まえた場所
         ppp2->new_get_place = buf16[0];     //捕まえた場所
       }
-#else
-      //@todo とりあえず判定はせず代入だけ
-      ppp4->get_place = arg;       //捕まえた場所
-      ppp2->new_get_place = arg;   //捕まえた場所
 #endif
       break;
     case ID_PARA_birth_place:           //生まれた場所
