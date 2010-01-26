@@ -715,6 +715,17 @@ void SCRIPT_SetMsgWinPointer( SCRIPT_WORK *sc, void* msgWin )
 
 //--------------------------------------------------------------
 /**
+ * @brief 単語セット保持ポインタの取得
+ * @param	sc		    SCRIPT_WORKのポインタ
+ */
+//--------------------------------------------------------------
+WORDSET * SCRIPT_GetWordSet( SCRIPT_WORK * sc )
+{
+  return sc->wordset;
+}
+
+//--------------------------------------------------------------
+/**
  * @brief   開始時のスクリプトID取得
  * @param	sc		    SCRIPT_WORKのポインタ
  * @return  u16   スクリプトID
@@ -755,9 +766,6 @@ static void * SCRIPT_GetSubMemberWork( SCRIPT_WORK *sc, u32 id )
 	case ID_EVSCR_RETURN_SCRIPT_WK:
 		return &sc->ret_script_wk;
 	//仮想マシン(メイン)のポインタ
-	//サブプロセスとのやりとりワークへのポインタ
-	case ID_EVSCR_SUBPROC_WORK:
-		return &sc->subproc_work;
 	//ワークへの汎用ポインタ
 	case ID_EVSCR_PWORK:
 		return &sc->pWork;
@@ -766,18 +774,12 @@ static void * SCRIPT_GetSubMemberWork( SCRIPT_WORK *sc, u32 id )
 		return &sc->win_flag;
 
 
-	//HEAPID wb
-	case ID_EVSCR_WK_HEAPID:
-		return &sc->main_heapID;
   //TEMP_HEAPID wb
   case ID_EVSCR_WK_TEMP_HEAPID:
     return &sc->temp_heapID;
 	//ビットマップメニューワークのポインタ
 	case ID_EVSCR_MENUWORK:
 		return &sc->mw;
-	//単語セット
-	case ID_EVSCR_WORDSET:
-		return &sc->wordset;
 	//メッセージバッファのポインタ
 	case ID_EVSCR_MSGBUF:
 		return &sc->msg_buf;

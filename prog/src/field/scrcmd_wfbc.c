@@ -161,7 +161,7 @@ VMCMD_RESULT EvCmdWfbc_SetRirekiPlayerName( VMHANDLE *core, void *wk )
   FIELD_WFBC* p_wfbc = FLDMAPPER_GetWfbcWork( p_mapper );
   FIELD_PLAYER* p_player = FIELDMAP_GetFieldPlayer( fparam->fieldMap );
   const MMDLSYS * cp_mmdlsys = FIELDMAP_GetMMdlSys( fparam->fieldMap );
-  WORDSET** pp_wordset = SCRIPT_GetMemberWork( sc, ID_EVSCR_WORDSET );
+  WORDSET* pp_wordset = SCRIPT_GetWordSet( sc );
   s16 gx, gy, gz;
   MMDL* p_frontmmdl;
   u32 objid;
@@ -181,7 +181,7 @@ VMCMD_RESULT EvCmdWfbc_SetRirekiPlayerName( VMHANDLE *core, void *wk )
   objid = FIELD_WFBC_CORE_GetMMdlNpcID( p_frontmmdl );
 
   // ワードセットに設定
-  FIELD_WFBC_SetWordSetParentPlayer( p_wfbc, *pp_wordset, objid, idx, heapID );
+  FIELD_WFBC_SetWordSetParentPlayer( p_wfbc, pp_wordset, objid, idx, heapID );
 
 	return VMCMD_RESULT_CONTINUE;
 }

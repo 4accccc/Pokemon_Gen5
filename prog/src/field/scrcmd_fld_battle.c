@@ -75,13 +75,13 @@ VMCMD_RESULT EvCmdBtlUtilSetRegulationOutPokeName( VMHANDLE * core, void *wk )
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
   GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
-  WORDSET **wordset = SCRIPT_GetMemberWork( sc, ID_EVSCR_WORDSET );
+  WORDSET *wordset = SCRIPT_GetWordSet( sc );
 
   u16 regulation = SCRCMD_GetVMWorkValue(core,work);  //レギュレーションコード
   u16* ret_wk = SCRCMD_GetVMWork(core,work);  //タグ展開数を返すワーク
 
   *ret_wk = btlutil_SetTagRegulationOutPokeName( gdata,
-              *wordset, regulation, SCRCMD_WORK_GetHeapID( work ));
+              wordset, regulation, SCRCMD_WORK_GetHeapID( work ));
   return VMCMD_RESULT_CONTINUE;
 }
 

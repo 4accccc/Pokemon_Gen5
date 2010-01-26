@@ -102,7 +102,7 @@ VMCMD_RESULT EvCmdGetGymVictoryInfo( VMHANDLE * core, void *wk )
   GAMEDATA * gamedata = SCRCMD_WORK_GetGameData( wk );
   SCRCMD_WORK*       work = wk;
   SCRIPT_WORK*         sc = SCRCMD_WORK_GetScriptWork( work );
-  WORDSET**       wordset = SCRIPT_GetMemberWork( sc, ID_EVSCR_WORDSET );
+  WORDSET*        wordset = SCRIPT_GetWordSet( sc );
 
   int i, count;
   u16 badge_id = SCRCMD_GetVMWorkValue( core, wk );
@@ -114,7 +114,7 @@ VMCMD_RESULT EvCmdGetGymVictoryInfo( VMHANDLE * core, void *wk )
   {
     if (monsnos[i] != 0)
     {
-      WORDSET_RegisterPokeMonsNameNo( *wordset, i, monsnos[i] );
+      WORDSET_RegisterPokeMonsNameNo( wordset, i, monsnos[i] );
       count ++;
     }
   }

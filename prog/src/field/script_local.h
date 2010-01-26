@@ -53,12 +53,12 @@ enum{
 	ID_EVSCR_DUMMY_OBJ,				//透明ダミーのOBJのポインタ
 	ID_EVSCR_RETURN_SCRIPT_WK,		//イベント結果を代入するワークのポインタ
 
-	ID_EVSCR_WORDSET,				//単語セット
+	//ID_EVSCR_WORDSET,				//単語セット
 	ID_EVSCR_MSGBUF,				//メッセージバッファのポインタ
 	ID_EVSCR_TMPBUF,				//テンポラリバッファのポインタ
 	//ID_EVSCR_WAITICON,				///<待機アイコンのポインタ
 
-	ID_EVSCR_SUBPROC_WORK,			//サブプロセスのパラメータ
+	//ID_EVSCR_SUBPROC_WORK,			//サブプロセスのパラメータ
 	ID_EVSCR_PWORK,					//ワークへの汎用ポインタ
 	//ID_EVSCR_EOA,					//フィールドエフェクトへのポインタ
 	//ID_EVSCR_PLAYER_TCB,			//自機形態TCBのポインタ
@@ -181,6 +181,7 @@ extern GAMESYS_WORK * SCRIPT_GetGameSysWork( SCRIPT_WORK * sc );
 extern SCRIPT_FLDPARAM * SCRIPT_GetFieldParam( SCRIPT_WORK * sc );
 extern void * SCRIPT_GetMsgWinPointer( SCRIPT_WORK *sc );
 extern void SCRIPT_SetMsgWinPointer( SCRIPT_WORK *sc, void* msgWin );
+extern WORDSET * SCRIPT_GetWordSet( SCRIPT_WORK * sc );
 
 //======================================================================
 //	

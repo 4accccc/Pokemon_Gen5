@@ -156,11 +156,11 @@ VMCMD_RESULT EvCmdBmpMenuInit( VMHANDLE *core, void *wk )
   u8 cancel = VMGetU8(core);
   u16 wk_id = VMGetU16( core );
   u16 *ret = SCRIPT_GetEventWork( sc, gdata, wk_id );
-  WORDSET **wordset = SCRIPT_GetMemberWork( sc, ID_EVSCR_WORDSET );
+  WORDSET *wordset = SCRIPT_GetWordSet( sc );
   
   SCRCMD_WORK_InitMenuWork( work,
       x, y, cursor, cancel, ret,
-      *wordset, NULL );
+      wordset, NULL );
   
   return VMCMD_RESULT_SUSPEND;
 }
@@ -183,12 +183,12 @@ VMCMD_RESULT EvCmdBmpMenuInitEx( VMHANDLE *core, void *wk )
   u8 cancel = VMGetU8(core);
   u16 wk_id = VMGetU16( core );
   u16 *ret = SCRIPT_GetEventWork( sc, gdata, wk_id );
-  WORDSET **wordset = SCRIPT_GetMemberWork( sc, ID_EVSCR_WORDSET );
+  WORDSET *wordset = SCRIPT_GetWordSet( sc );
   GFL_MSGDATA *msgData = SCRCMD_WORK_GetMsgData( work );
 
   SCRCMD_WORK_InitMenuWork( work,
       x, y, cursor, cancel, ret,
-      *wordset, msgData );
+      wordset, msgData );
   return VMCMD_RESULT_SUSPEND;
 }
 
@@ -363,7 +363,7 @@ static VMCMD_RESULT EvCmdTalkMsg( VMHANDLE *core, void *wk )
   u16 dir;
   VecFx32 pos;
   const VecFx32 *pos_p;
-  WORDSET **wordset;
+  WORDSET *wordset;
   STRBUF **msgbuf;
   STRBUF **tmpbuf;
   MMDL *fmmdl;
@@ -397,12 +397,12 @@ static VMCMD_RESULT EvCmdTalkMsg( VMHANDLE *core, void *wk )
   pos_p = SCRCMD_WORK_GetTalkMsgWinTailPos( work );
   
   {
-    wordset = SCRIPT_GetMemberWork( sc, ID_EVSCR_WORDSET );
+    wordset = SCRIPT_GetWordSet( sc );
     msgbuf = SCRIPT_GetMemberWork( sc, ID_EVSCR_MSGBUF );
     tmpbuf = SCRIPT_GetMemberWork( sc, ID_EVSCR_TMPBUF );
     KAGAYA_Printf( "EvCmdTalkMsg MSG ID = %d\n", msg_id );
     GFL_MSG_GetString( msgData, msg_id, *tmpbuf );
-    WORDSET_ExpandStr( *wordset, *msgbuf, *tmpbuf );
+    WORDSET_ExpandStr( wordset, *msgbuf, *tmpbuf );
   }
   
   {
@@ -443,10 +443,10 @@ VMCMD_RESULT EvCmdSysWinMsgAllPut( VMHANDLE *core, void *wk )
   
   {
     GFL_MSGDATA *msgData = SCRCMD_WORK_GetMsgData( work );
-    WORDSET **wordset = SCRIPT_GetMemberWork( sc, ID_EVSCR_WORDSET );
+    WORDSET *wordset = SCRIPT_GetWordSet( sc );
     STRBUF **tmpbuf = SCRIPT_GetMemberWork( sc, ID_EVSCR_TMPBUF );
     GFL_MSG_GetString( msgData, msg_id, *tmpbuf );
-    WORDSET_ExpandStr( *wordset, *msgbuf, *tmpbuf );
+    WORDSET_ExpandStr( wordset, *msgbuf, *tmpbuf );
   }
   
   sysWin = (FLDSYSWIN_STREAM*)SCRCMD_WORK_GetMsgWinPtr( work );
@@ -509,7 +509,7 @@ VMCMD_RESULT EvCmdGoldWinOpen( VMHANDLE *core, void *wk )
   FLDMSGBG*        msg_bg = FIELDMAP_GetFldMsgBG( fieldmap );
   FLDMSGWIN*      msg_win = FIELDMAP_GetGoldMsgWin( fieldmap );
   SCRIPT_WORK*         sc = SCRCMD_WORK_GetScriptWork( work );
-  WORDSET**       wordset = SCRIPT_GetMemberWork( sc, ID_EVSCR_WORDSET );
+  WORDSET*        wordset = SCRIPT_GetWordSet( sc );
   STRBUF**        tempbuf = SCRIPT_GetMemberWork( sc, ID_EVSCR_TMPBUF );
   HEAPID          heap_id = FIELDMAP_GetHeapID( fieldmap );
   GFL_MSGDATA*   msg_data = GFL_MSG_Create( 
@@ -529,9 +529,9 @@ VMCMD_RESULT EvCmdGoldWinOpen( VMHANDLE *core, void *wk )
 
   // ï∂éöóÒÇçÏê¨
   WORDSET_RegisterNumber( 
-      *wordset, 2, gold, GOLD_WIN_KETA, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
+      wordset, 2, gold, GOLD_WIN_KETA, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
   GFL_MSG_GetString( msg_data, msg_yen_01, *tempbuf );
-  WORDSET_ExpandStr( *wordset, strbuf, *tempbuf );
+  WORDSET_ExpandStr( wordset, strbuf, *tempbuf );
   FLDMSGWIN_PrintStrBuf( msg_win, 0, 0, strbuf );
   GFL_STR_DeleteBuffer( strbuf );
   GFL_MSG_Delete( msg_data );
@@ -696,7 +696,7 @@ static BOOL balloonWin_Write( SCRCMD_WORK *work,
   msgbuf = SCRIPT_GetMemberWork( sc, ID_EVSCR_MSGBUF );
   
   {
-    WORDSET **wordset = SCRIPT_GetMemberWork( sc, ID_EVSCR_WORDSET );
+    WORDSET *wordset = SCRIPT_GetWordSet( sc );
     STRBUF **tmpbuf = SCRIPT_GetMemberWork( sc, ID_EVSCR_TMPBUF );
 
     if (arcID == 0x400){
@@ -708,7 +708,7 @@ static BOOL balloonWin_Write( SCRCMD_WORK *work,
       GFL_MSG_Delete( msgData );
     }
 
-    WORDSET_ExpandStr( *wordset, *msgbuf, *tmpbuf );
+    WORDSET_ExpandStr( wordset, *msgbuf, *tmpbuf );
   }
   
   if( idx == FLDTALKMSGWIN_IDX_AUTO ){
@@ -912,7 +912,7 @@ VMCMD_RESULT EvCmdTrainerMessageSet( VMHANDLE *core, void *wk )
   u16 tr_id = SCRCMD_GetVMWorkValue( core, work );
   u16 kind_id = SCRCMD_GetVMWorkValue( core, work );
   
-  WORDSET **wordset = SCRIPT_GetMemberWork( sc, ID_EVSCR_WORDSET );
+  WORDSET *wordset = SCRIPT_GetWordSet( sc );
   STRBUF **msgbuf = SCRIPT_GetMemberWork( sc, ID_EVSCR_MSGBUF );
   STRBUF **tmpbuf = SCRIPT_GetMemberWork( sc, ID_EVSCR_TMPBUF );
   GFL_MSGDATA *msgData = SCRCMD_WORK_GetMsgData( work );
@@ -1099,11 +1099,11 @@ VMCMD_RESULT EvCmdSubWinMsg( VMHANDLE *core, void *wk )
     STRBUF *msgBuf = GFL_STR_CreateBuffer( FLDMSGBG_STRLEN_SUBWIN, heapID );
     
     GFL_MSGDATA *msgData = SCRCMD_WORK_GetMsgData( work );
-    WORDSET **wordset = SCRIPT_GetMemberWork( sc, ID_EVSCR_WORDSET );
+    WORDSET *wordset = SCRIPT_GetWordSet( sc );
     STRBUF **tmpbuf = SCRIPT_GetMemberWork( sc, ID_EVSCR_TMPBUF );
     
     GFL_MSG_GetString( msgData, msg_id, *tmpbuf );
-    WORDSET_ExpandStr( *wordset, msgBuf, *tmpbuf );
+    WORDSET_ExpandStr( wordset, msgBuf, *tmpbuf );
     
     sx = GFL_STR_GetBufferLength( msgBuf );
     sx = sx * 12;
@@ -1261,10 +1261,10 @@ VMCMD_RESULT EvCmdBGWinMsg( VMHANDLE *core, void *wk )
     
     {
       STRBUF **msgbuf = SCRIPT_GetMemberWork( sc, ID_EVSCR_MSGBUF );
-      WORDSET **wordset = SCRIPT_GetMemberWork( sc, ID_EVSCR_WORDSET );
+      WORDSET *wordset = SCRIPT_GetWordSet( sc );
       STRBUF **tmpbuf = SCRIPT_GetMemberWork( sc, ID_EVSCR_TMPBUF );
       GFL_MSG_GetString( msgData, msg_id, *tmpbuf );
-      WORDSET_ExpandStr( *wordset, *msgbuf, *tmpbuf );
+      WORDSET_ExpandStr( wordset, *msgbuf, *tmpbuf );
       
       VMCMD_SetWait( core, BGWinMsgWait );
     }
@@ -1591,10 +1591,10 @@ static STRBUF * SetExpandWord( SCRCMD_WORK *work, SCRIPT_WORK *sc, u32 msg_id )
 {
   GFL_MSGDATA *msgData = SCRCMD_WORK_GetMsgData( work );
   STRBUF **msgbuf = SCRIPT_GetMemberWork( sc, ID_EVSCR_MSGBUF );
-  WORDSET **wordset = SCRIPT_GetMemberWork( sc, ID_EVSCR_WORDSET );
+  WORDSET *wordset = SCRIPT_GetWordSet( sc );
   STRBUF **tmpbuf = SCRIPT_GetMemberWork( sc, ID_EVSCR_TMPBUF );
   
   GFL_MSG_GetString( msgData, msg_id, *tmpbuf );
-  WORDSET_ExpandStr( *wordset, *msgbuf, *tmpbuf );
+  WORDSET_ExpandStr( wordset, *msgbuf, *tmpbuf );
   return( *msgbuf );
 }

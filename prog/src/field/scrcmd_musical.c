@@ -358,7 +358,7 @@ VMCMD_RESULT EvCmdMusicalWord( VMHANDLE *core, void *wk )
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
   HEAPID heapId = SCRCMD_WORK_GetHeapID( work );
-  WORDSET **wordset    = SCRIPT_GetMemberWork( sc, ID_EVSCR_WORDSET );
+  WORDSET *wordset    = SCRIPT_GetWordSet( sc );
 
   u8   type = VMGetU8(core);
   u8   idx  = VMGetU8(core);
@@ -377,7 +377,7 @@ VMCMD_RESULT EvCmdMusicalWord( VMHANDLE *core, void *wk )
       GFL_MSGDATA *msgHandle = GFL_MSG_Construct( msgData , heapId );
 
       tmpBuf = GFL_MSG_CreateString( msgHandle , 0 );
-      WORDSET_RegisterWord( *wordset, idx, tmpBuf, 0, TRUE, PM_LANG );
+      WORDSET_RegisterWord( wordset, idx, tmpBuf, 0, TRUE, PM_LANG );
 
       GFL_STR_DeleteBuffer( tmpBuf );
       GFL_MSG_Delete( msgHandle );
@@ -390,7 +390,7 @@ VMCMD_RESULT EvCmdMusicalWord( VMHANDLE *core, void *wk )
       GFL_MSGDATA *msgHandle = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL , ARCID_MESSAGE , NARC_message_mus_item_name_dat , heapId );
 
       tmpBuf = GFL_MSG_CreateString( msgHandle , ITEM_NAME_000+val );
-      WORDSET_RegisterWord( *wordset, idx, tmpBuf, 0, TRUE, PM_LANG );
+      WORDSET_RegisterWord( wordset, idx, tmpBuf, 0, TRUE, PM_LANG );
 
       GFL_STR_DeleteBuffer( tmpBuf );
       GFL_MSG_Delete( msgHandle );
@@ -400,7 +400,7 @@ VMCMD_RESULT EvCmdMusicalWord( VMHANDLE *core, void *wk )
     {
       MUSICAL_EVENT_WORK *evWork = SCRIPT_GetMemberWork( sc , ID_EVSCR_MUSICAL_EVENT_WORK );
       STRBUF * tmpBuf = MUSICAL_EVENT_CreateStr_ProgramTitle( evWork , heapId );
-      WORDSET_RegisterWord( *wordset, idx, tmpBuf, 0, TRUE, PM_LANG );
+      WORDSET_RegisterWord( wordset, idx, tmpBuf, 0, TRUE, PM_LANG );
       GFL_STR_DeleteBuffer( tmpBuf );
     }
     break;
@@ -410,7 +410,7 @@ VMCMD_RESULT EvCmdMusicalWord( VMHANDLE *core, void *wk )
       GFL_MSGDATA *msgHandle = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL , ARCID_MESSAGE , NARC_message_musical_common_dat , heapId );
 
       tmpBuf = GFL_MSG_CreateString( msgHandle , MUSICAL_AUDIENCE_TYPE_01+val );
-      WORDSET_RegisterWord( *wordset, idx, tmpBuf, 0, TRUE, PM_LANG );
+      WORDSET_RegisterWord( wordset, idx, tmpBuf, 0, TRUE, PM_LANG );
 
       GFL_STR_DeleteBuffer( tmpBuf );
       GFL_MSG_Delete( msgHandle );
@@ -422,7 +422,7 @@ VMCMD_RESULT EvCmdMusicalWord( VMHANDLE *core, void *wk )
       GFL_MSGDATA *msgHandle = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL , ARCID_MESSAGE , NARC_message_musical_common_dat , heapId );
 
       tmpBuf = GFL_MSG_CreateString( msgHandle , MUSICAL_AUDIENCE_CON_01+val );
-      WORDSET_RegisterWord( *wordset, idx, tmpBuf, 0, TRUE, PM_LANG );
+      WORDSET_RegisterWord( wordset, idx, tmpBuf, 0, TRUE, PM_LANG );
 
       GFL_STR_DeleteBuffer( tmpBuf );
       GFL_MSG_Delete( msgHandle );

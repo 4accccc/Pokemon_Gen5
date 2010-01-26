@@ -64,10 +64,10 @@ VMCMD_RESULT EvCmdPlayerName( VMHANDLE * core, void *wk )
   SCRIPT_FLDPARAM *fparam = SCRIPT_GetFieldParam( sc );
   GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
   MYSTATUS *mystatus = GAMEDATA_GetMyStatus( gdata );
-  WORDSET **wordset    = SCRIPT_GetMemberWork( sc, ID_EVSCR_WORDSET );
+  WORDSET *wordset    = SCRIPT_GetWordSet( sc );
   u8 idx = VMGetU8(core);
   
-  WORDSET_RegisterPlayerName( *wordset, idx, mystatus );
+  WORDSET_RegisterPlayerName( wordset, idx, mystatus );
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -82,11 +82,11 @@ VMCMD_RESULT EvCmdItemName( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-  WORDSET **wordset    = SCRIPT_GetMemberWork( sc, ID_EVSCR_WORDSET );
+  WORDSET *wordset    = SCRIPT_GetWordSet( sc );
  	u8 idx = VMGetU8( core );
 	u16 itemno = SCRCMD_GetVMWorkValue( core, work );
 
-  WORDSET_RegisterItemName( *wordset, idx, itemno );
+  WORDSET_RegisterItemName( wordset, idx, itemno );
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -101,12 +101,12 @@ VMCMD_RESULT EvCmdItemWazaName( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-  WORDSET **wordset    = SCRIPT_GetMemberWork( sc, ID_EVSCR_WORDSET );
+  WORDSET *wordset    = SCRIPT_GetWordSet( sc );
 	u8 idx = VMGetU8(core);
 	u16 itemno = SCRCMD_GetVMWorkValue( core, work );
   u16 wazano = ITEM_GetWazaNo( itemno );
 
-  WORDSET_RegisterWazaName( *wordset, idx, wazano );
+  WORDSET_RegisterWazaName( wordset, idx, wazano );
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -121,11 +121,11 @@ VMCMD_RESULT EvCmdWazaName( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-  WORDSET **wordset    = SCRIPT_GetMemberWork( sc, ID_EVSCR_WORDSET );
+  WORDSET *wordset    = SCRIPT_GetWordSet( sc );
 	u8 idx = VMGetU8(core);
 	u16 wazano = SCRCMD_GetVMWorkValue( core, work );
   
-  WORDSET_RegisterWazaName( *wordset, idx, wazano );
+  WORDSET_RegisterWazaName( wordset, idx, wazano );
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -140,11 +140,11 @@ VMCMD_RESULT EvCmdPokeTypeName( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-  WORDSET **wordset    = SCRIPT_GetMemberWork( sc, ID_EVSCR_WORDSET );
+  WORDSET *wordset    = SCRIPT_GetWordSet( sc );
 	u8 idx = VMGetU8(core);
 	u16 type_no = SCRCMD_GetVMWorkValue( core, work );
   
-  WORDSET_RegisterPokeTypeName( *wordset, idx, type_no );
+  WORDSET_RegisterPokeTypeName( wordset, idx, type_no );
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -159,7 +159,7 @@ VMCMD_RESULT EvCmdMonsName( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-  WORDSET **wordset    = SCRIPT_GetMemberWork( sc, ID_EVSCR_WORDSET );
+  WORDSET *wordset    = SCRIPT_GetWordSet( sc );
 	u8 idx = VMGetU8(core);
 	u16 monsno = SCRCMD_GetVMWorkValue( core, work );
   HEAPID heapID = SCRCMD_WORK_GetHeapID( work );
@@ -168,7 +168,7 @@ VMCMD_RESULT EvCmdMonsName( VMHANDLE *core, void *wk )
   tmpBuf = GFL_STR_CreateBuffer( WORDSET_DEFAULT_BUFLEN, heapID );
   GFL_MSG_GetString( GlobalMsg_PokeName, monsno, tmpBuf );
   //WORDSET, タグ位置、バッファ、性別、単複、言語コード
-  WORDSET_RegisterWord( *wordset, idx, tmpBuf, 0, TRUE, PM_LANG );
+  WORDSET_RegisterWord( wordset, idx, tmpBuf, 0, TRUE, PM_LANG );
   
   GFL_STR_DeleteBuffer( tmpBuf );
   return VMCMD_RESULT_CONTINUE;
@@ -187,11 +187,11 @@ VMCMD_RESULT EvCmdPocketName(VMHANDLE * core, void *wk )
 {
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-	WORDSET** wordset		= SCRIPT_GetMemberWork( sc, ID_EVSCR_WORDSET );
+	WORDSET* wordset		= SCRIPT_GetWordSet( sc );
 	u8 idx					= VMGetU8(core);
 	u16 pocket				= SCRCMD_GetVMWorkValue( core, work );
 
-  WORDSET_RegisterItemPocketName( *wordset, idx, pocket );		//アイコンなし
+  WORDSET_RegisterItemPocketName( wordset, idx, pocket );		//アイコンなし
 	//WORDSET_RegisterItemPocketWithIcon( *wordset, idx, pocket );	//アイコンあり
 
 	return VMCMD_RESULT_CONTINUE;
@@ -209,13 +209,13 @@ VMCMD_RESULT EvCmdPartyPokeMonsName(VMHANDLE * core, void *wk )
   SCRCMD_WORK*    work = wk;
   SCRIPT_WORK*      sc = SCRCMD_WORK_GetScriptWork( work );
   GAMEDATA*      gdata = SCRCMD_WORK_GetGameData( work );
-  WORDSET**    wordset = SCRIPT_GetMemberWork( sc, ID_EVSCR_WORDSET );
+  WORDSET*     wordset = SCRIPT_GetWordSet( sc );
  	u8               idx = VMGetU8( core );
   u16              pos = SCRCMD_GetVMWorkValue( core, work );
   POKEPARTY*     party = GAMEDATA_GetMyPokemon( gdata );
   POKEMON_PARAM* param = PokeParty_GetMemberPointer( party, pos );
 
-  WORDSET_RegisterPokeMonsName( *wordset, idx, param );
+  WORDSET_RegisterPokeMonsName( wordset, idx, param );
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -231,13 +231,13 @@ VMCMD_RESULT EvCmdPartyPokeNickName(VMHANDLE * core, void *wk )
   SCRCMD_WORK*    work = wk;
   SCRIPT_WORK*      sc = SCRCMD_WORK_GetScriptWork( work );
   GAMEDATA*      gdata = SCRCMD_WORK_GetGameData( work );
-  WORDSET**    wordset = SCRIPT_GetMemberWork( sc, ID_EVSCR_WORDSET );
+  WORDSET*     wordset = SCRIPT_GetWordSet( sc );
  	u8               idx = VMGetU8( core );
   u16              pos = SCRCMD_GetVMWorkValue( core, work );
   POKEPARTY*     party = GAMEDATA_GetMyPokemon( gdata );
   POKEMON_PARAM* param = PokeParty_GetMemberPointer( party, pos );
 
-  WORDSET_RegisterPokeNickName( *wordset, idx, param );
+  WORDSET_RegisterPokeNickName( wordset, idx, param );
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -252,7 +252,7 @@ VMCMD_RESULT EvCmdSodateyaPokeMonsName(VMHANDLE * core, void *wk )
 {
   SCRCMD_WORK*       work = wk;
   SCRIPT_WORK*         sc = SCRCMD_WORK_GetScriptWork( work );
-  WORDSET**       wordset = SCRIPT_GetMemberWork( sc, ID_EVSCR_WORDSET );
+  WORDSET*        wordset = SCRIPT_GetWordSet( sc );
  	u8                  idx = VMGetU8( core );
   u16                 pos = SCRCMD_GetVMWorkValue( core, work );
   GAMESYS_WORK*      gsys = SCRCMD_WORK_GetGameSysWork( work );
@@ -260,7 +260,7 @@ VMCMD_RESULT EvCmdSodateyaPokeMonsName(VMHANDLE * core, void *wk )
   SODATEYA*      sodateya = FIELDMAP_GetSodateya( fieldmap );
   const POKEMON_PARAM* pp = SODATEYA_GetPokemonParam( sodateya, pos );
 
-  WORDSET_RegisterPokeMonsName( *wordset, idx, pp );
+  WORDSET_RegisterPokeMonsName( wordset, idx, pp );
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -275,7 +275,7 @@ VMCMD_RESULT EvCmdSodateyaPokeNickName(VMHANDLE * core, void *wk )
 {
   SCRCMD_WORK*       work = wk;
   SCRIPT_WORK*         sc = SCRCMD_WORK_GetScriptWork( work );
-  WORDSET**       wordset = SCRIPT_GetMemberWork( sc, ID_EVSCR_WORDSET );
+  WORDSET*        wordset = SCRIPT_GetWordSet( sc );
  	u8                  idx = VMGetU8( core );
   u16                 pos = SCRCMD_GetVMWorkValue( core, work );
   GAMESYS_WORK*      gsys = SCRCMD_WORK_GetGameSysWork( work );
@@ -283,7 +283,7 @@ VMCMD_RESULT EvCmdSodateyaPokeNickName(VMHANDLE * core, void *wk )
   SODATEYA*      sodateya = FIELDMAP_GetSodateya( fieldmap );
   const POKEMON_PARAM* pp = SODATEYA_GetPokemonParam( sodateya, pos );
 
-  WORDSET_RegisterPokeNickName( *wordset, idx, pp );
+  WORDSET_RegisterPokeNickName( wordset, idx, pp );
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -298,12 +298,12 @@ VMCMD_RESULT EvCmdNumber(VMHANDLE * core, void *wk )
 {
   SCRCMD_WORK*    work = wk;
   SCRIPT_WORK*      sc = SCRCMD_WORK_GetScriptWork( work );
-  WORDSET**    wordset = SCRIPT_GetMemberWork( sc, ID_EVSCR_WORDSET );
+  WORDSET*     wordset = SCRIPT_GetWordSet( sc );
  	u8               idx = VMGetU8( core );
   u16              num = SCRCMD_GetVMWorkValue( core, work );
   u16             keta = SCRCMD_GetVMWorkValue( core, work );
 
-  WORDSET_RegisterNumber( *wordset, idx, num, keta, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
+  WORDSET_RegisterNumber( wordset, idx, num, keta, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
   return VMCMD_RESULT_CONTINUE;
 }
 //--------------------------------------------------------------
@@ -320,7 +320,7 @@ VMCMD_RESULT EvCmdNickName( VMHANDLE *core, void *wk )
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
   GAMEDATA *gamedata = SCRCMD_WORK_GetGameData( wk );
   POKEPARTY *party = GAMEDATA_GetMyPokemon( gamedata );
-	WORDSET **wordset = SCRIPT_GetMemberWork( sc, ID_EVSCR_WORDSET );
+	WORDSET *wordset = SCRIPT_GetWordSet( sc );
 	u8 idx = VMGetU8( core );
 	u16 pos = SCRCMD_GetVMWorkValue( core, work );
   
@@ -328,7 +328,7 @@ VMCMD_RESULT EvCmdNickName( VMHANDLE *core, void *wk )
   pp = PokeParty_GetMemberPointer( party, pos );
     
 	//POKEMON_PARAMからPOKEMON_PASO_PARAMに渡しているので注意！(田谷さんに確認済み)
-  WORDSET_RegisterPokeNickName( *wordset, idx, pp );
+  WORDSET_RegisterPokeNickName( wordset, idx, pp );
 	return VMCMD_RESULT_CONTINUE;
 }
 
@@ -343,10 +343,11 @@ VMCMD_RESULT EvCmdPlaceName( VMHANDLE *core, void *wk )
 { 
   SCRCMD_WORK* work = wk;
   SCRIPT_WORK*   sc = SCRCMD_WORK_GetScriptWork( work );
-	WORDSET** wordset = SCRIPT_GetMemberWork( sc, ID_EVSCR_WORDSET );
+	WORDSET*  wordset = SCRIPT_GetWordSet( sc );
 	u16           idx = SCRCMD_GetVMWorkValue( core, work );  // 第一引数
 	u16       zone_id = SCRCMD_GetVMWorkValue( core, work );  // 第二引数
 
-  WORDSET_RegisterPlaceName( *wordset, idx, zone_id );
+  WORDSET_RegisterPlaceName( wordset, idx, zone_id );
 	return VMCMD_RESULT_CONTINUE;
 }
+
