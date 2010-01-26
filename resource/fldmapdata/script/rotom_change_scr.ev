@@ -120,18 +120,19 @@ select_elec:
   $EXIT = FALSE
   //現在のフォルムを取得
   _GET_PARTY_POKE_FORMNO( FORM_NO, SEL_POS )
-
+  
+  _TEMOTI_NICK_NAME( 0, SEL_POS )
   WHILE $EXIT == FALSE
     //どの家電？
     _SYSWIN_MSG_DOWN(msg_rotom_07)
     //リスト作成
     _BMPMENU_INIT_EX( 1,1,0,1,LIST_SEL_RET ) 
     _BMPMENU_MAKE_LIST(msg_rotom_window_01, 1 )          //レンジ
-    _BMPMENU_MAKE_LIST(msg_rotom_window_01, 2 )          //洗濯機
-    _BMPMENU_MAKE_LIST(msg_rotom_window_01, 3 )          //扇風機
-    _BMPMENU_MAKE_LIST(msg_rotom_window_01, 4 )          //冷蔵庫
-    _BMPMENU_MAKE_LIST(msg_rotom_window_01, 5 )          //芝刈り機
-    _BMPMENU_MAKE_LIST(msg_rotom_window_01, 0 )          //元に戻す(ノーマル)
+    _BMPMENU_MAKE_LIST(msg_rotom_window_02, 2 )          //洗濯機
+    _BMPMENU_MAKE_LIST(msg_rotom_window_04, 3 )          //冷蔵庫
+    _BMPMENU_MAKE_LIST(msg_rotom_window_03, 4 )          //扇風機
+    _BMPMENU_MAKE_LIST(msg_rotom_window_05, 5 )          //芝刈り機
+    _BMPMENU_MAKE_LIST(msg_rotom_normal, 0 )          //元に戻す(ノーマル)
     _BMPMENU_MAKE_LIST( msg_rotom_cancel, 6 )            //やめる
     _BMPMENU_START()
     _SYSWIN_CLOSE()
@@ -164,11 +165,19 @@ select_elec:
     ENDIF
   ENDWHILE
 
-  //忘れる技の選出(SCWK_ANSWER == FALSEでチェンジしない)
-  _CALL decide_del_skill
+  //選んだのが「元に戻る」
+  IF $ELEC_TO_FORM_NO == 0 THEN
+    _SYSWIN_MSG_DOWN(msg_rotom_09)      //モーターからでてきた
+    _SYSWIN_CLOSE()
+  ELSE
+    //忘れる技の選出(SCWK_ANSWER == FALSEでチェンジしない)
+    $DEL_SKILL_POS = 0
+    _CALL decide_del_skill
+  ENDIF
 
   IF $SCWK_ANSWER == TRUE THEN
     //フォルムチェンジ(図鑑登録含む)
+    _CHANGE_ROTOM_FORM_NO( SEL_POS, DEL_SKILL_POS, ELEC_TO_FORM_NO )
   ENDIF
 
 _RET
@@ -184,9 +193,9 @@ get_org_skill:
   CASE 1 THEN
     $ORG_SKILL = WAZANO_OOBAAHIITO
   CASE 2 THEN
-    $ORG_SKILL = WAZANO_HUBUKI
-  CASE 3 THEN
     $ORG_SKILL = WAZANO_HAIDOROPONPU
+  CASE 3 THEN
+    $ORG_SKILL = WAZANO_HUBUKI
   CASE 4 THEN
     $ORG_SKILL = WAZANO_EASURASSYU
   CASE 5 THEN
@@ -207,7 +216,6 @@ decide_del_skill:
   _CALL get_org_skill
   $CHECK_SKILL = $ORG_SKILL     //get_org_skillコール結果を格納
 
-  $DEL_SKILL_POS = 0
   //フォルムごとの専用技を調べる
   _CHECK_POKE_WAZA( SCWK_ANSWER, CHECK_SKILL, SEL_POS )
   IF $SCWK_ANSWER == 1 THEN     //固有技覚えている
@@ -224,10 +232,12 @@ decide_del_skill:
     ELSE
       $SCWK_ANSWER = TRUE               //技スロットに空きがあるので、チェンジ可
       //「新固有技を覚えた」
+      _WAZA_NAME( 2, NEW_SKILL )
       _SYSWIN_MSG_DOWN( msg_rotom_waza_07 )
       _SYSWIN_CLOSE()
     ENDIF
-  ENDIF  
+  ENDIF
+
 _RET
 
 //技を忘れて、新固有技を覚えるメッセージを表示
@@ -242,8 +252,8 @@ del_skill_msg:
   _SYSWIN_MSG_DOWN( msg_rotom_waza_06 )
   _SYSWIN_CLOSE()
   //「新固有技を覚えた」
-  _SYSWIN_MSG_DOWN( msg_rotom_waza_07 )
-  _SYSWIN_CLOSE()
+  $END_MSG = msg_rotom_waza_07
+  _CALL end_msg
 _RET
 
 //ユーザーに忘れる技を選択させる
