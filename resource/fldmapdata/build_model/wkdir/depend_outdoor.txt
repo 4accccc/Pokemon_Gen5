@@ -254,4 +254,5 @@ DEP_OUTDOOR	=	\
 	$(RESDIR)/tt_train08.nsbmd \
 	$(RESDIR)/tt_train09.nsbmd \
 	$(RESDIR)/tt_train10.nsbmd \
+	$(RESDIR)/wf_house01.nsbmd \
 

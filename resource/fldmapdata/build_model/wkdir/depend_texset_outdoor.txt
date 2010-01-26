@@ -1687,7 +1687,8 @@ DEP_TEXSET_IMD_OUTDOOR048 = \
 	$(SRCDIR)/wf_ground_01.imd \
 	$(SRCDIR)/wf_ground_02.imd \
 	$(SRCDIR)/wf_lake_01.imd \
-	$(SRCDIR)/wf_lake_02.imd
+	$(SRCDIR)/wf_lake_02.imd \
+	$(SRCDIR)/wf_house01.imd
 
 texset/outdoor048.imd: $(DEP_TEXSET_IMD_OUTDOOR048) texset/tmp/outdoor048.list
 	$(TEXMAG) -q -n -o $@ -S texset/tmp/outdoor048.list
