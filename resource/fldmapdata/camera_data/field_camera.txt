@@ -1,7 +1,7 @@
 CameraNo,Length,Pitch,Yow,Roll,ViewType,depth,fovy,Near,Far,Player Link ○or×,○ OffsetX/ × TargetX,○ OffsetY/ × TargetY,○ OffsetZ/ × TargetZ,comment,
 0,ed,25d8,0,0,PER,ZBUF,e38,1,400,○,0,4000,0,通常,
 1,90,31a8,0,0,PER,WBUF,e38,13,a22,○,0,4000,0,H01,
-2,315,698,0,0,PER,WBUF,e38,64,680,○,0,0,0,C03,
+2,315,698,0,0,PER,WBUF,e38,64,860,○,0,0,0,C03,
 3,e5,1bd8,0,0,PER,WBUF,e38,1,400,○,0,18066,fffef197,ポケセン,
 4,255,01d8,0,0,PER,WBUF,281,1,5d0,○,0,269f2,ffffc28c,H01ゲート前,
 5,237,73e,0,0,PER,ZBUF,cb8,1,7b0,○,5000,69000,60000,ポケモンリーグ全景,
