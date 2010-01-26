@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2010-01-23T19:10:33"/>
+	<create user="matsumiya" host="W00207" date="2010-01-26T19:34:44"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="540"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="694"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -381,7 +381,7 @@
 	<row id="msg_c04_oldman_03" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
 ・メッセージ表示後、アイテム入手処理
-　ItemNo421「わざマシン「そらをとぶ」」入手処理（暫定）</comment>
+　ItemNo601「わざマシン「かいりき」」入手処理（暫定）</comment>
 		<attribute name="キャラ指定">OLDMAN
 育て屋じいさん</attribute>
 		<language name="JPN" width="256">じいさん『ありがとうよ！[BE:01:ページ切り替え（クリア）]
@@ -417,86 +417,443 @@
 	<row id="msg_c04_white_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・ゲートをでたところでメッセージ表示
-・続けて隣接してwhite_02</comment>
+・続けて隣接してwhite_02
+・0＝主人公名前</comment>
 		<attribute name="キャラ指定">友達♀
 サポート</attribute>
 		<language name="JPN" width="256">ホワイティ『おーい　[1:00:トレーナー名:0]！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ホワイティ『おーい　[1:00:トレーナー名:0]！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c04_white_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c04_white_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
-・アイテム入手処理
-　ItemNo435「アクセサリーいれ」</comment>
-		<attribute name="キャラ指定">友達♀
-サポート</attribute>
-		<language name="JPN" width="256">あたしさ　いいもの　もらったんだ！
-アナタにも　わけてあげるね！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">あたしさ　いいもの　もらったんだ！
-アナタにも　わけてあげるね！[BE:01:ページ切り替え（クリア）]</language>
-	</row>
-
-	<row id="msg_c04_white_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>♀
-・アイテム入手後、自動で表示
 ・表示後、その場で一回転アニメ
 ・続けてwhite_04</comment>
 		<attribute name="キャラ指定">友達♀
 サポート</attribute>
-		<language name="JPN" width="256">その　アクセサリーいれが　あれば
-ポケモンに　つけてあげる　グッズを[BE:00:ページ切り替え（行送り）]
-たっくさん　もちあるけるんだって！[BE:01:ページ切り替え（クリア）]
-あたし　ここにある
-ミュージカルに　いくつもりなの！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">その　アクセサリーいれが　あれば
-ポケモンに　つけてあげる　グッズを[BE:00:ページ切り替え（行送り）]
-たっくさん　持ち歩けるんだって！[BE:01:ページ切り替え（クリア）]
-あたし　ここにある
-ミュージカルに　行くつもりなの！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">ライモンシティって
+みどころ　いっぱい　なんでしょ！▼
+ゆうえんち　でしょ
+ビッグスタジアムに　リトルコート▼
+それに　バトルサブウェイ！▼</language>
+		<language name="JPN_KANJI" width="256">ライモンシティって
+見所　いっぱい　なんでしょ！▼
+遊園地　でしょ
+ビッグスタジアムに　リトルコート▼
+それに　バトルサブウェイ！▼</language>
 	</row>
 
-	<row id="msg_c04_white_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c04_white_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・表示後、画面上に移動
 ・画面外に消えると、主人公操作可能に</comment>
 		<attribute name="キャラ指定">友達♀
 サポート</attribute>
-		<language name="JPN" width="256">ライモンシティって
-みどころ　たっくさん　なんだって！[BE:01:ページ切り替え（クリア）]
-じゃあねー！！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ライモンシティって
-みどころ　たっくさん　なんだって！[BE:01:ページ切り替え（クリア）]
-じゃあねー！！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">あたしは　ミュージカルに
+いくつもりなの！　じゃあねえ！！▼</language>
+		<language name="JPN_KANJI" width="256">あたしは　ミュージカルに
+行くつもりなの！　じゃあねえ！！▼</language>
 	</row>
 
-	<row id="msg_c04_leader_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c04_white_04" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・グッズケースを持たずに
+　pos（GRIDX=390、GRIDZ=436～440）を踏んだとき
+・0＝主人公名前
+・msg_c04_white_07表示後は
+　このイベントは発生しない</comment>
+		<attribute name="キャラ指定">友達♀
+サポート</attribute>
+		<language name="JPN" width="256">ホワイティ『おーい　[1:00:トレーナー名:0]！▼</language>
+		<language name="JPN_KANJI" width="256">ホワイティ『おーい　[1:00:トレーナー名:0]！▼</language>
+	</row>
+
+	<row id="msg_c04_white_05" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・メッセージ表示後、連れ歩き状態で
+　ミュージカルホールに
+・0＝主人公名前</comment>
+		<attribute name="キャラ指定">友達♀
+サポート</attribute>
+		<language name="JPN" width="256">さっき　ミュージカルホールを
+のぞいたんだけど　すごいよー！？▼
+せっかくだからさー
+[1:00:トレーナー名:0]も　いこうよー！▼
+はい
+こっちこっちー！▼</language>
+		<language name="JPN_KANJI" width="256">さっき　ミュージカルホールを
+のぞいたんだけど　すごいよー！？▼
+せっかくだからさー
+[1:00:トレーナー名:0]も　行こうよー！▼
+はい
+こっちこっちー！▼</language>
+	</row>
+
+	<row id="msg_c04_white_06" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・ミュージカルホールの前に到達時に
+　このメッセージ表示
+・表示後、サポートと主人公、ミュージカルホール内へ</comment>
+		<attribute name="キャラ指定">友達♀
+サポート</attribute>
+		<language name="JPN" width="256">はい　とうちゃくー！
+じゃあ　はいろうっ！▼</language>
+		<language name="JPN_KANJI" width="256">はい　到着ー！
+じゃあ　入ろうっ！▼</language>
+	</row>
+
+	<row id="msg_c04_white_07" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff00,,,#ffff00,,#ffff00,#ffff00,,,,,,#ffff00,,,,,,">
+		<comment>♀
+・msg_c04_white_04イベント発生させずに
+　ミュージカルホールの前に到達したときは
+　このメッセージ表示
+・表示後、サポートと主人公、ミュージカルホール内へ
+・0＝主人公名前</comment>
+		<attribute name="キャラ指定">友達♀
+サポート</attribute>
+		<language name="JPN" width="256">ホワイティ『あっ　[1:00:トレーナー名:0]！▼
+ミュージカルが　きになる？
+じゃあ　いっしょに　はいろうっ！▼</language>
+		<language name="JPN_KANJI" width="256">ホワイティ『あっ　[1:00:トレーナー名:0]！▼
+ミュージカルが　気になる？
+じゃあ　一緒に　入ろうっ！▼</language>
+	</row>
+
+	<row id="msg_c04_white_08" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・GRIDX=433、GRIDZ=436に配置
+・主人公がミュージカルからでると
+　さらに一歩前進してイベント開始
+　続けてmiddleman1_01</comment>
+		<attribute name="キャラ指定">友達♀
+サポート</attribute>
+		<language name="JPN" width="256">ホワイティ『パパ！？
+どうしたの　こんなところで？▼</language>
+		<language name="JPN_KANJI" width="256">ホワイティ『パパ！？
+どうしたの　こんなところで？▼</language>
+	</row>
+
+	<row id="msg_c04_middleman1_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>♂
+・GRIDX=433、GRIDZ=438に配置
+・続けてwhite_09</comment>
+		<attribute name="キャラ指定">男性
+サポートの父親</attribute>
+		<language name="JPN" width="256">ホワイティのパパ『どうもこうも
+おまえを　つれもどしに　きたんだよ▼
+ここまで　たびを　したんだ
+もう　じゅうぶん　じゃないか▼</language>
+		<language name="JPN_KANJI" width="256">ホワイティのパパ『どうもこうも
+おまえを　連れ戻しに　来たんだよ▼
+ここまで　旅を　したんだ
+もう　充分じゃないか▼</language>
+	</row>
+
+	<row id="msg_c04_white_09" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・続けてmiddleman1_02
+・0＝主人公名前</comment>
+		<attribute name="キャラ指定">友達♀
+サポート</attribute>
+		<language name="JPN" width="256">ホワイティ『やだあ！！▼
+[1:00:トレーナー名:0]や　ともだちと
+いっしょに　たび　するんだもん！▼</language>
+		<language name="JPN_KANJI" width="256">ホワイティ『やだあ！！▼
+[1:00:トレーナー名:0]や　ともだちと
+一緒に　旅するんだもん！▼</language>
+	</row>
+
+	<row id="msg_c04_middleman1_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>♂
+・続けてwhite_10</comment>
+		<attribute name="キャラ指定">男性
+サポートの父親</attribute>
+		<language name="JPN" width="256">ホワイティのパパ『ダメだ！
+よそはよそ　うちはうち　だよ▼</language>
+		<language name="JPN_KANJI" width="256">ホワイティのパパ『ダメだ！
+他所は他所　うちはうち　だよ▼</language>
+	</row>
+
+	<row id="msg_c04_white_10" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・続けてleader_01</comment>
+		<attribute name="キャラ指定">友達♀
+サポート</attribute>
+		<language name="JPN" width="256">ホワイティ『だったら▼
+アタシは　アタシ！
+パパは　パパ　だもん！▼</language>
+		<language name="JPN_KANJI" width="256">ホワイティ『だったら▼
+アタシは　アタシ！
+パパは　パパ　だもん！▼</language>
+	</row>
+
+	<row id="msg_c04_leader_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♀
+・まずメッセージのみ
+　その後所定位置
+　GRIDX=434、GRIDZ=438に移動
+・続けてmiddleman1_03</comment>
+		<attribute name="キャラ指定">LEADER4
+カミツレ</attribute>
+		<language name="JPN" width="256">おじょうさん
+たびを　つづけなさいな▼</language>
+		<language name="JPN_KANJI" width="256">お嬢さん
+旅を　続けなさいな▼</language>
+	</row>
+
+	<row id="msg_c04_middleman1_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>♂
+・主人公たちの頭上に「？」表示
+・続けてleader_02</comment>
+		<attribute name="キャラ指定">男性
+サポートの父親</attribute>
+		<language name="JPN" width="256">ホワイティのパパ『ちょっと！
+どなたです？　おやこの　はなしに▼</language>
+		<language name="JPN_KANJI" width="256">ホワイティのパパ『ちょっと！
+どなたです？　親子の　話に▼</language>
+	</row>
+
+	<row id="msg_c04_leader_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♀
+・サポート父親と向き合って
+・表示後、サポートの隣に移動
+・続けてleader_03</comment>
+		<attribute name="キャラ指定">LEADER4
+カミツレ</attribute>
+		<language name="JPN" width="256">カミツレと　もうします▼
+この　まちの　ジムリーダーや
+モデルを　しています▼</language>
+		<language name="JPN_KANJI" width="256">カミツレと　申します▼
+この　街の　ジムリーダーや
+モデルを　しています▼</language>
+	</row>
+
+	<row id="msg_c04_leader_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♀
+・サポート父親を見ながらメッセージ表示
+・続けてmiddleman1_04</comment>
+		<attribute name="キャラ指定">LEADER4
+カミツレ</attribute>
+		<language name="JPN" width="256">もちろん　せかいには
+いろんな　ひとが　います▼
+じぶんとは　かんがえが
+まったく　ことなる　ひとも　いて▽
+ときには　きずつくことも　あるかも▼</language>
+		<language name="JPN_KANJI" width="256">もちろん　世界には
+いろんな　人が　います▼
+自分とは　考えが
+まったく　異なる　人もいて▽
+ときには　傷つくことも　あるかも▼</language>
+	</row>
+
+	<row id="msg_c04_middleman1_04" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>♂
+・続けてleader_03</comment>
+		<attribute name="キャラ指定">男性
+サポートの父親</attribute>
+		<language name="JPN" width="256">ホワイティのパパ『そうでしょうとも！▼
+そうなんです！
+わたしは　それが　しんぱいで……▼</language>
+		<language name="JPN_KANJI" width="256">ホワイティのパパ『そうでしょうとも！▼
+そうなんです！
+わたしは　それが　心配で……▼</language>
+	</row>
+
+	<row id="msg_c04_leader_04" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♀
+・続けてwhite_11</comment>
+		<attribute name="キャラ指定">LEADER4
+カミツレ</attribute>
+		<language name="JPN" width="256">カミツレ『ですが▼
+そうしたことを　くりかえし
+じぶんと　たにんは　ちがうことを▽
+そして　ちがっていて　とうぜんだと▽
+しっていくのが　だいじ　ですよね▼
+それに　しんぱい　しなくとも
+トレーナーの　そばには　いつも▽
+ポケモンが　いてくれます▼
+いつもは　かわいいのに
+いざとなれば　すごく　たよれる▽
+すてきな　ポケモン……▼</language>
+		<language name="JPN_KANJI" width="256">カミツレ『ですが▼
+そうしたことを　くりかえし
+自分と　他人は　違うことを▽
+そして　違っていて　当然だと▽
+知っていくのが　大事ですよね▼
+それに　心配しなくとも
+トレーナーの　そばには　いつも▽
+ポケモンが　いてくれます▼
+いつもは　かわいいのに
+いざとなれば　すごく　頼れる▽
+すてきな　ポケモン……▼</language>
+	</row>
+
+	<row id="msg_c04_white_11" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+（一歩前に出て）
+・続けてmiddleman1_05</comment>
+		<attribute name="キャラ指定">友達♀
+サポート</attribute>
+		<language name="JPN" width="256">ホワイティ『おねがい！▼
+ポケモンと　いっしょに
+あたしも　ちょっとは▽
+つよくなったんだよ！　だから！▼</language>
+		<language name="JPN_KANJI" width="256">ホワイティ『おねがい！▼
+ポケモンと　いっしょに
+あたしも　ちょっとは▽
+つよくなったんだよ！　だから！▼</language>
+	</row>
+
+	<row id="msg_c04_middleman1_05" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>♂
+・画面下を向いてメッセージ表示
+・続けて</comment>
+		<attribute name="キャラ指定">男性
+サポートの父親</attribute>
+		<language name="JPN" width="256">ホワイティのパパ『……むむっ▼
+……　……　……
+……　……　そうだよねえ▼
+たびを　つづけたいのが
+ホワイティの　ワガママと　いうなら▼
+たびを　やめさせたいのは
+わたしの　ワガママ　だ▼
+しかも　どう　かんがえても
+わたしの　ほうが　こどもっぽい▼</language>
+		<language name="JPN_KANJI" width="256">ホワイティのパパ『……むむっ▼
+……　……　……
+……　……　そうだよねえ▼
+旅を　続けたいのが
+ホワイティの　ワガママと　いうなら▼
+旅を　止めさせたいのは
+わたしの　ワガママ　だ▼
+しかも　どう　考えても
+わたしの　ほうが　子供っぽい▼</language>
+	</row>
+
+	<row id="msg_c04_middleman1_06" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>♂
+・画面上を向いてメッセージ表示
+　表示後、画面下に移動
+・画面外に動作モデルが消えると
+　続けてmiddleman1_06</comment>
+		<attribute name="キャラ指定">男性
+サポートの父親</attribute>
+		<language name="JPN" width="256">ジムリーダーさんに
+いわれて　きづいたよ▼
+そうだね　ホワイティ
+いまは　きみが　したいことを
+したほうが　いいんだよ　きっと▼
+パパは　きみの　たびが
+たのしいものであるよう　いのるさ▼
+[1:00:トレーナー名:0]
+ホワイティを　よろしく　たのむよ▼</language>
+		<language name="JPN_KANJI" width="256">ジムリーダーさんに
+いわれて　気づいたよ▼
+そうだね　ホワイティ
+今は　君が　したいことを
+したほうが　いいんだよ　きっと▼
+パパは　君の　旅が
+楽しいものであるよう　祈るさ▼
+[1:00:トレーナー名:0]
+ホワイティを　よろしく　頼むよ▼</language>
+	</row>
+
+	<row id="msg_c04_white_12" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+（一歩前に出て）
+・続けてleader_05</comment>
+		<attribute name="キャラ指定">友達♀
+サポート</attribute>
+		<language name="JPN" width="256">ホワイティ『パパ▼
+あたし　やりたいことを　みつけたら
+ちゃんと　いえに　かえるから！▼</language>
+		<language name="JPN_KANJI" width="256">ホワイティ『パパ▼
+あたし　やりたいことを　みつけたら
+ちゃんと　家に　帰るから！▼</language>
+	</row>
+
+	<row id="msg_c04_leader_05" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♀
+（位置調整が必要かも）
+・画面下を向いたままメッセージ
+・続けて画面上を見てleader_06</comment>
+		<attribute name="キャラ指定">LEADER4
+カミツレ</attribute>
+		<language name="JPN" width="256">カミツレ『あのひとも　きっと
+むかしは　トレーナーとして▽
+たびを　してたはず　なのに……▽
+おやって　たいへん　なのね▼</language>
+		<language name="JPN_KANJI" width="256">カミツレ『あの人も　きっと
+昔は　トレーナーとして▽
+旅を　してたはず　なのに……▽
+親って　大変なのね▼</language>
+	</row>
+
+	<row id="msg_c04_leader_06" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♀
+・メッセージ分岐
+　c04ジムバッジ入手前→leader_07
+　c04ジムバッジ入手後→leader_08</comment>
+		<attribute name="キャラ指定">LEADER4
+カミツレ</attribute>
+		<language name="JPN" width="256">おせっかい　だったかな？▼
+なんだか　こまっているように
+みえたから　こえを　かけちゃった▼</language>
+		<language name="JPN_KANJI" width="256">おせっかい　だったかな？▼
+なんだか　困っているように
+みえたから　声を　かけちゃった▼</language>
+	</row>
+
+	<row id="msg_c04_leader_07" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♀
+・c04ジムバッジ入手前
+・表示後、画面下に移動する
+　画面外に消えるとmsg_c04_white_13</comment>
+		<attribute name="キャラ指定">LEADER4
+カミツレ</attribute>
+		<language name="JPN" width="256">あなたたち　トレーナーなら
+ポケモンジムに　いらっしゃい▼
+わたしが　たびの　きびしさ
+おしえて　あげるから▼</language>
+		<language name="JPN_KANJI" width="256">あなたたち　トレーナーなら
+ポケモンジムに　いらっしゃい▼
+わたしが　旅の　厳しさ
+教えて　あげるから▼</language>
+	</row>
+
+	<row id="msg_c04_leader_08" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
 ・c04ジムバッジ入手後
-・pos（GRIDX=384、GRIDZ=437~439）を踏むと発動</comment>
+・表示後、r05方面に移動する
+　画面外に消えるとmsg_c04_white_13
+・0＝主人公名前</comment>
 		<attribute name="キャラ指定">LEADER4
 カミツレ</attribute>
-		<language name="JPN" width="256">カミツレ『おそくなって　ゴメン[BE:01:ページ切り替え（クリア）]
-ブラッカーって　トレーナーとの
-しょうぶが　ながびいちゃった……[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">カミツレ『遅くなって　ゴメン[BE:01:ページ切り替え（クリア）]
-ブラッカーって　トレーナーとの
-勝負が　長引いちゃった……[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">ごめんなさいね　[1:00:トレーナー名:0]
+５ばんどうろで　まっているから▼</language>
+		<language name="JPN_KANJI" width="256">ごめんなさいね　[1:00:トレーナー名:0]
+５番道路で　待っているから▼</language>
 	</row>
 
-	<row id="msg_c04_leader_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c04_white_13" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
-・メッセージ表示後、r05側のゲートに消えていく
-・動作モデルが消えると主人公操作可能</comment>
-		<attribute name="キャラ指定">LEADER4
-カミツレ</attribute>
-		<language name="JPN" width="256">さ　ホドモエシティに
-いけるように　してあげる[BE:01:ページ切り替え（クリア）]
-それじゃ　ワタシ
-５ばんどうろで　まってるね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">さ　ホドモエシティに
-行けるように　してあげる[BE:01:ページ切り替え（クリア）]
-ワタシ　５番道路の
-橋の前で　待ってるね[BE:01:ページ切り替え（クリア）]</language>
+・表示後、画面下に移動
+　画面外に消えると主人公操作可能に
+・0＝主人公名前</comment>
+		<attribute name="キャラ指定">友達♀
+サポート</attribute>
+		<language name="JPN" width="256">ホワイティ『かっこいい！▼
+あたし　カミツレさんの　ような
+ステキな　じょせいに　なりたい！▼
+というわけで
+あたしは　ポケモンジムに　いくね！▽
+じゃあね　[1:00:トレーナー名:0]！▼</language>
+		<language name="JPN_KANJI" width="256">ホワイティ『かっこいい！▼
+あたし　カミツレさんの　ような
+ステキな　女性に　なりたい！▼
+というわけで
+あたしは　ポケモンジムに　行くね！▽
+じゃあね　[1:00:トレーナー名:0]！▼</language>
 	</row>
 
 	<row id="msg_c04_footballm_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">

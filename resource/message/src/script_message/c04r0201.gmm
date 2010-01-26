@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2010-01-26T15:22:49"/>
+	<create user="matsumiya" host="W00207" date="2010-01-26T17:52:35"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,149 +292,280 @@
 	</lock>
 
 
-	<row id="msg_c04r0201_owner_01" back-color=",,,,,,#80ff80,,,,,,#80ff80,,,,,,">
-		<comment>♂
-・初回</comment>
-		<attribute name="キャラ指定">GENTLEMAN
-＝オーナー</attribute>
-		<language name="JPN" width="256">ようこそ　わが　ホールへ！▼
-よければ　あなたの　ポケモンを
-ドレスアップ　してあげて！！</language>
-		<language name="JPN_KANJI" width="256">ようこそ　わが　劇場へ！▼
-よければ　あなたの　ポケモンを
-ドレスアップ　してあげて！！</language>
+	<row id="msg_c04r0201_white_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・主人公と向き合って
+・続けてowner_demo_01</comment>
+		<attribute name="キャラ指定">友達♀
+サポート</attribute>
+		<language name="JPN" width="256">ホワイティ『ねっ！
+すっごいでしょ！？▼</language>
+		<language name="JPN_KANJI" width="256">ホワイティ『ねっ！
+すっごいでしょ！？▼</language>
 	</row>
 
-	<row id="msg_c04r0201_owner_02" back-color=",,,,,,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c04r0201_owner_demo_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・初期配置箇所から移動してくる
+・続けてowner_demo_02</comment>
+		<attribute name="キャラ指定">GENTLEMAN
+＝オーナー</attribute>
+		<language name="JPN" width="256">やあ　きみたち！
+はじめまして！▼
+わたしは　この　ミュージカルの
+オーナーです　よろしく！▼</language>
+		<language name="JPN_KANJI" width="256">やあ　きみたち！
+はじめまして！▼
+わたしは　この　ミュージカルの
+オーナーです　よろしく！▼</language>
+	</row>
+
+	<row id="msg_c04r0201_owner_demo_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・メッセージ表示後
+　グッズケース入手処理
+・続けてowner_demo_03</comment>
+		<attribute name="キャラ指定">GENTLEMAN
+＝オーナー</attribute>
+		<language name="JPN" width="256">ふーむ！　なんというか　きみたち
+いい　かんじの　トレーナーだねえ！▼
+ミュージカルでは
+ポケモンを　きかざってあげる▽
+ドレスアップと　いうものが　ある！▼
+きみたち！
+ぜひ　やってみたまえ▼
+ほら！　この
+グッズケースは　プレゼントだよ！▼</language>
+		<language name="JPN_KANJI" width="256">ふーむ！　なんというか　きみたち
+いい　感じの　トレーナーだねえ！▼
+ミュージカルでは
+ポケモンを　着飾ってあげる▽
+ドレスアップと　いうものが　ある！▼
+きみたち！
+ぜひ　やってみたまえ▼
+ほら！　この
+グッズケースは　プレゼントだよ！▼</language>
+	</row>
+
+	<row id="msg_c04r0201_owner_demo_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・メッセージ表示後
+　ドレスアップのみのアプリへ</comment>
+		<attribute name="キャラ指定">GENTLEMAN
+＝オーナー</attribute>
+		<language name="JPN" width="256">その　グッズケースの　なかに
+ポケモンに　つけてあげられる▽
+グッズが　はいっているんだよ！▼
+ではでは
+レッツ　ドレスアップ！▼</language>
+		<language name="JPN_KANJI" width="256">その　グッズケースの　中に
+ポケモンに　つけてあげられる▽
+グッズが　入っているんだよ！▼
+ではでは
+レッツ　ドレスアップ！▼</language>
+	</row>
+
+	<row id="msg_c04r0201_owner_demo_04" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・ドレスアップアプリが終わると
+　フィールド画面に復帰してこのメッセージ
+・続けてowner_demo_05</comment>
+		<attribute name="キャラ指定">GENTLEMAN
+＝オーナー</attribute>
+		<language name="JPN" width="256">おおお！　ふたりとも
+すばらしい　コーディネートだったね▽
+とても　キュート　ではないか！▼</language>
+		<language name="JPN_KANJI" width="256">おおお！　二人とも
+すばらしい　コーディネートだったね▽
+とても　キュート　ではないか！▼</language>
+	</row>
+
+	<row id="msg_c04r0201_owner_demo_05" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・表示後
+　初期配置箇所に戻る
+・続けてmsg_c04r0201_white_03
+・これ以降、オーナーにはなしかけると
+　msg_c04r0201_owner_01を表示</comment>
+		<attribute name="キャラ指定">GENTLEMAN
+＝オーナー</attribute>
+		<language name="JPN" width="256">わたしはね　ドレスアップした
+ポケモンが　さらに　かがやけるよう▽
+ミュージカルを　しているんだ！▼
+きみたちも　ミュージカルに
+ぜひ　さんか　してほしいね▼
+もし　さんかするなら　このさきで
+うけつけを　してくれたまえ▼
+では　ぶたいで　あえる　ひを
+たのしみに　しているよ▼</language>
+		<language name="JPN_KANJI" width="256">わたしはね　ドレスアップした
+ポケモンが　さらに　輝けるよう▽
+ミュージカルを　しているんだ！▼
+きみたちも　ミュージカルに
+ぜひ　参加して　ほしいね▼
+もし　参加するなら　この先で
+受付を　してくれたまえ▼
+では　舞台で　会える日を
+楽しみに　しているよ▼</language>
+	</row>
+
+	<row id="msg_c04r0201_white_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・メッセージ表示後
+　サポート、外に
+・画面外に消えると、主人公操作可能</comment>
+		<attribute name="キャラ指定">友達♀
+サポート</attribute>
+		<language name="JPN" width="256">うーん
+どうしようかなー？▼
+ミュージカルも　ステキだけど
+ほかにも　きになる　ところ　あるし▼
+きーめた！　さきに
+ライモンけんぶつ　しちゃお▼
+じゃあね　[1:00:トレーナー名:0]！▼</language>
+		<language name="JPN_KANJI" width="256">うーん
+どうしようかなー？▼
+ミュージカルも　ステキだけど
+ほかにも　きになる　ところ　あるし▼
+きーめた！　さきに
+ライモンけんぶつ　しちゃお▼
+じゃあね　[1:00:トレーナー名:0]！▼</language>
+	</row>
+
+	<row id="msg_c04r0201_owner_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・何も条件を満たしていない</comment>
 		<attribute name="キャラ指定">GENTLEMAN
 ＝オーナー</attribute>
-		<language name="JPN" width="256">グッズを　イヤがる
-ポケモンが　いても　ゆるしてあげてね▼
-だって　ポケモン　なんですもの</language>
-		<language name="JPN_KANJI" width="256">グッズを　嫌がる
-ポケモンが　いても　許してあげてね▼
-だって　ポケモン　なんですもの</language>
+		<language name="JPN" width="256">ぜひぜひ　ミュージカルに
+さんか　してくれたまえ！▼
+ただし！　グッズを　イヤがる
+ポケモンが　いても　ゆるしてほしいね▼
+だって　ポケモンだからね</language>
+		<language name="JPN_KANJI" width="256">ぜひぜひ　ミュージカルに
+さんか　してくれたまえ！▼
+ただし！　グッズを　イヤがる
+ポケモンが　いても　ゆるしてほしいね▼
+だって　ポケモンだからね</language>
 	</row>
 
-	<row id="msg_c04r0201_owner_03" back-color=",,,,,,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c04r0201_owner_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・はじめてワイヤレス通信の複数プレイに参加
 ・グッズ「ティアラ」入手処理</comment>
 		<attribute name="キャラ指定">GENTLEMAN
 ＝オーナー</attribute>
-		<language name="JPN" width="256">ちょっと！　あなた！▼
+		<language name="JPN" width="256">ちょっと！　きみ！▼
 おともだちと　いっしょに
-ミュージカルに　さんか　したのね！▼
+ミュージカルに　さんか　したんだね！▼
 ミュージカルの　あたらしい
-かのうせいを　かんじたわ！▼
-そんな　あなたに　プレゼントよ
-えんりょ　しないで　うけとって！▼</language>
-		<language name="JPN_KANJI" width="256">ちょっと！　あなた！▼
+かのうせいを　かんじたよ！▼
+そんな　きみに　プレゼントだ
+えんりょ　しないで　うけとりたまえ！▼</language>
+		<language name="JPN_KANJI" width="256">ちょっと！　きみ！▼
 おともだちと　いっしょに
-ミュージカルに　さんか　したのね！▼
+ミュージカルに　さんか　したんだね！▼
 ミュージカルの　あたらしい
-かのうせいを　かんじたわ！▼
-そんな　あなたに　プレゼントよ
-えんりょ　しないで　うけとって！▼</language>
+かのうせいを　かんじたよ！▼
+そんな　きみに　プレゼントだ
+えんりょ　しないで　うけとりたまえ！▼</language>
 	</row>
 
-	<row id="msg_c04r0201_owner_03_01" back-color=",,,,,,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c04r0201_owner_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・グッズ「ティアラ」入手処理後
 　自動で表示</comment>
 		<attribute name="キャラ指定">GENTLEMAN
 ＝オーナー</attribute>
 		<language name="JPN" width="256">では　ぶたいで　あえる　ひを
-たのしみに　しているわ！▼</language>
+たのしみに　しているよ！▼</language>
 		<language name="JPN_KANJI" width="256">では　ぶたいで　あえる　ひを
-たのしみに　しているわ！▼</language>
+たのしみに　しているよ！▼</language>
 	</row>
 
-	<row id="msg_c04r0201_owner_04" back-color=",,,,,,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c04r0201_owner_03_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・5回以上最高得点
 ・グッズ「クラウン」入手処理</comment>
 		<attribute name="キャラ指定">GENTLEMAN
 ＝オーナー</attribute>
 		<language name="JPN" width="256">いつも　さんか　してくれて
-オーナーとして　うれしいわ！▼
+オーナーとして　うれしいよ！▼
 きたいの　スタイリストとして
-かなり　ちゅうもく　されているわね▼
-もちろん　わたしも　あなたに
-ちゅうもく　しているのよ▼
-これは　そんな　わたしの　きもち
-えんりょ　しないで　うけとって！▼</language>
+かなり　ちゅうもく　されているね▼
+もちろん　わたしも　きみに
+ちゅうもく　しているのだよ▼
+これは　そんな　わたしの　きもちだ
+えんりょ　せず　うけとりたまえ！▼</language>
 		<language name="JPN_KANJI" width="256">いつも　さんか　してくれて
-オーナーとして　うれしいわ！▼
+オーナーとして　うれしいよ！▼
 きたいの　スタイリストとして
-かなり　ちゅうもく　されているわね▼
-もちろん　わたしも　あなたに
-ちゅうもく　しているのよ▼
-これは　そんな　わたしの　きもち
-えんりょ　しないで　うけとって！▼</language>
+かなり　ちゅうもく　されているね▼
+もちろん　わたしも　きみに
+ちゅうもく　しているのだよ▼
+これは　そんな　わたしの　きもちだ
+えんりょ　せず　うけとりたまえ！▼</language>
 	</row>
 
-	<row id="msg_c04r0201_owner_04_01" back-color=",,,,,,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c04r0201_owner_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・グッズ「クラウン」入手処理後
 　自動で表示</comment>
 		<attribute name="キャラ指定">GENTLEMAN
 ＝オーナー</attribute>
 		<language name="JPN" width="256">では　ぶたいで　あえる　ひを
-たのしみに　しているわ！▼
+たのしみに　しているよ！▼
 って　まえにも　おなじ　せりふを
-いったきが　するわね▼
-いいのよ
-わたし　オーナーだから</language>
+いった　きが　するね▼
+いいんだよ
+わたしは　オーナーだからね</language>
 		<language name="JPN_KANJI" width="256">では　ぶたいで　あえる　ひを
-たのしみに　しているわ！▼
+たのしみに　しているよ！▼
 って　まえにも　おなじ　せりふを
-いったきが　するわね▼
-いいのよ
-わたし　オーナーだから</language>
+いった　きが　するね▼
+いいんだよ
+わたしは　オーナーだからね</language>
 	</row>
 
-	<row id="msg_c04r0201_owner_05" back-color=",,,,,,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c04r0201_owner_04_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・10回以上最高得点
 ・グッズ「ゆうしょうベルト」入手処理</comment>
 		<attribute name="キャラ指定">GENTLEMAN
 ＝オーナー</attribute>
 		<language name="JPN" width="256">いつも　さんか　してくれて
-オーナーとして　うれしいわ！▼
-ちかごろでは　あなたのことを
+オーナーとして　うれしいかぎり！▼
+ちかごろでは　きみのことを
 トップスタイリスト　なんて　よぶ▽
-かんきゃくも　いるみたいなの▼
-もっとも……　あなたの　さいのうを
-みぬいた　わたしが　すごいのね▼
-これは　かんしゃの　きもち
-えんりょ　しないで　うけとって！▼</language>
+かんきゃくも　いるみたいだね▼
+もっとも……　きみの　さいのうを
+みぬいた　わたしが　すごいのだがね▼
+これは　かんしゃの　きもちだ
+えんりょ　せず　うけとりたまえ！▼</language>
 		<language name="JPN_KANJI" width="256">いつも　さんか　してくれて
-オーナーとして　うれしいわ！▼
-ちかごろでは　あなたのことを
+オーナーとして　うれしいかぎり！▼
+ちかごろでは　きみのことを
 トップスタイリスト　なんて　よぶ▽
-かんきゃくも　いるみたいなの▼
-もっとも……　あなたの　さいのうを
-みぬいた　わたしが　すごいのね▼
-これは　かんしゃの　きもち
-えんりょ　しないで　うけとって！▼</language>
+かんきゃくも　いるみたいだね▼
+もっとも……　きみの　さいのうを
+みぬいた　わたしが　すごいのだがね▼
+これは　かんしゃの　きもちだ
+えんりょ　せず　うけとりたまえ！▼</language>
 	</row>
 
-	<row id="msg_c04r0201_owner_05_01" back-color=",,,,,,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c04r0201_owner_05" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・グッズ「ゆうしょうベルト」入手後
 　自動で表示</comment>
 		<attribute name="キャラ指定">GENTLEMAN
 ＝オーナー</attribute>
 		<language name="JPN" width="256">これからも　ぜひぜひ
-ミュージカルを　たのしんでね！</language>
+ミュージカルを　たのしんでくれ！</language>
 		<language name="JPN_KANJI" width="256">これからも　ぜひぜひ
-ミュージカルを　たのしんでね！</language>
+ミュージカルを　たのしんでくれ！</language>
 	</row>
 
-	<row id="msg_c04r0201_owner_06" back-color=",,,,,,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c04r0201_owner_05_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・誕生日
 ・グッズ「ケーキのもけい」入手処理</comment>
@@ -442,26 +573,26 @@
 ＝オーナー</attribute>
 		<language name="JPN" width="256">ハッピー　バースデイ！！▼
 わたしからは　この　ハッピーな
-グッズを　あなたに　プレゼントよ！▼
+グッズを　きみに　プレゼントだ！▼
 オーナーの　わたしが
 わたすのは　ケーキ！▼
 もちろん　グッズだから
-ポケモンに　つけてあげられるわ！▼
-ちなみに　きょうが　あなたの
+ポケモンに　つけてあげられる！▼
+ちなみに　きょうが　きみの
 たんじょうび　じゃなくても▽
-わたし　あやまったりしないわ！▼
-だって　わたし　オーナーだもの！</language>
+わたしは　あやまったりしないぞ！▼
+だって　わたしは　オーナーだからな！</language>
 		<language name="JPN_KANJI" width="256">ハッピー　バースデイ！！▼
 わたしからは　この　ハッピーな
-グッズを　あなたに　プレゼントよ！▼
+グッズを　きみに　プレゼントだ！▼
 オーナーの　わたしが
 わたすのは　ケーキ！▼
 もちろん　グッズだから
-ポケモンに　つけてあげられるわ！▼
-ちなみに　きょうが　あなたの
+ポケモンに　つけてあげられる！▼
+ちなみに　きょうが　きみの
 たんじょうび　じゃなくても▽
-わたし　あやまったりしないわ！▼
-だって　わたし　オーナーだもの！</language>
+わたしは　あやまったりしないぞ！▼
+だって　わたしは　オーナーだからな！</language>
 	</row>
 
 	<row id="msg_c04r0201_man2_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">

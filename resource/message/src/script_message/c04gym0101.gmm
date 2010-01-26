@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2010-01-13T11:30:14"/>
+	<create user="matsumiya" host="W00207" date="2010-01-26T15:14:56"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -309,6 +309,7 @@
 	<row id="msg_c04gym0101_leader_02">
 		<comment>♀
 ・戦闘後メッセージ</comment>
+		<attribute name="キャラ指定">LEADER4</attribute>
 		<language name="JPN" width="256">ステキ……
 ホレボレするような　たたかいかた[BE:01:ページ切り替え（クリア）]
 アナタ　いい　トレーナーね
@@ -324,6 +325,7 @@
 	<row id="msg_c04gym0101_leader_03">
 		<comment>♀
 ・ファンファーレ＋バッジ入手処理</comment>
+		<attribute name="キャラ指定">LEADER4</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]は　カミツレから
 ボルトバッジを　もらった！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は　カミツレから
@@ -333,6 +335,7 @@
 	<row id="msg_c04gym0101_leader_04">
 		<comment>♀
 ・アイテム入手処理</comment>
+		<attribute name="キャラ指定">LEADER4</attribute>
 		<language name="JPN" width="256">ボルトバッジが　あれば
 レベル５０までの　ポケモンは[BE:00:ページ切り替え（行送り）]
 アナタに　したがってくれる[BE:01:ページ切り替え（クリア）]
@@ -350,6 +353,7 @@
 	<row id="msg_c04gym0101_leader_05">
 		<comment>♀
 ・アイテム入手処理後</comment>
+		<attribute name="キャラ指定">LEADER4</attribute>
 		<language name="JPN" width="256">その「ボルトチェンジ」はね……▼
 あいてに　こうげきを　したあと
 ボールに　もどって▽
@@ -370,6 +374,7 @@
 		<comment>♀
 ・msg_c04gym0101_leader_05
 表示後に再度会話</comment>
+		<attribute name="キャラ指定">LEADER4</attribute>
 		<language name="JPN" width="256">アナタ……
 ホドモエシティには　いった？[BE:01:ページ切り替え（クリア）]
 きっと　はしが　あがっていて
@@ -390,6 +395,7 @@
 		<comment>♀
 ・h02開通後
 ・仮メッセージ</comment>
+		<attribute name="キャラ指定">LEADER4</attribute>
 		<language name="JPN" width="256">じぶんの　したいこと……
 ポケモンの　したいこと……[BE:01:ページ切り替え（クリア）]
 それが　おなじとき　すごいことが
@@ -414,6 +420,8 @@ prince_01</attribute>
 	<row id="msg_c04gym0101_prince1_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・トレーナー戦闘前メッセージ</comment>
+		<attribute name="キャラ指定">トレーナー
+prince_01</attribute>
 		<language name="JPN" width="256">コースターに　のったときの
 めくるめく　スピード！[BE:01:ページ切り替え（クリア）]
 それにまけない　ポケモンしょうぶで
@@ -427,6 +435,8 @@ prince_01</attribute>
 	<row id="msg_c04gym0101_prince1_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・トレーナー戦闘後メッセージ</comment>
+		<attribute name="キャラ指定">トレーナー
+prince_01</attribute>
 		<language name="JPN" width="256">きみの　たたかいかた
 カミツレさまに　みおとり　しないな！[BE:00:ページ切り替え（行送り）]
 まさに　エレガントで　ゴージャスだ</language>
@@ -438,6 +448,8 @@ prince_01</attribute>
 	<row id="msg_c04gym0101_prince1_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・トレーナー再会話メッセージ</comment>
+		<attribute name="キャラ指定">トレーナー
+prince_01</attribute>
 		<language name="JPN" width="256">ポイントを　きりかえれば
 ジェットコースターの[BE:00:ページ切り替え（行送り）]
 すすむ　ルートも　かわるのさ</language>
@@ -464,6 +476,8 @@ princess_01</attribute>
 	<row id="msg_c04gym0101_princess1_02">
 		<comment>♀
 ・トレーナー戦闘前メッセージ</comment>
+		<attribute name="キャラ指定">トレーナー
+princess_01</attribute>
 		<language name="JPN" width="256">あたくしも　カミツレさまに
 きたえられた　ポケモントレーナー[BE:01:ページ切り替え（クリア）]
 このジムに　ふさわしい　つよさ
@@ -477,6 +491,8 @@ princess_01</attribute>
 	<row id="msg_c04gym0101_princess1_03">
 		<comment>♀
 ・トレーナー戦闘後メッセージ</comment>
+		<attribute name="キャラ指定">トレーナー
+princess_01</attribute>
 		<language name="JPN" width="256">アナタのような　けだかく　つよい
 トレーナーの　おあいてが　できて[BE:00:ページ切り替え（行送り）]
 あたくし　こうえい　ですわ！</language>
@@ -488,6 +504,8 @@ princess_01</attribute>
 	<row id="msg_c04gym0101_princess1_04">
 		<comment>♀
 ・トレーナー再会話メッセージ</comment>
+		<attribute name="キャラ指定">トレーナー
+princess_01</attribute>
 		<language name="JPN" width="256">ジムの　ギミックに　おどろかず
 いつもどおり　れいせいで　いれば[BE:01:ページ切り替え（クリア）]
 カミツレさま　だけでなく
@@ -519,8 +537,7 @@ princess_01</attribute>
 ・ジムに入ると
 　主人公に隣接してメッセージ表示
 ・No???「おいしいみず」入手</comment>
-		<attribute name="キャラ指定">GLASSES
-サングラス</attribute>
+		<attribute name="キャラ指定">ダンペイ</attribute>
 		<language name="JPN" width="256">どうっすか？
 おどろいたでしょう！？[BE:01:ページ切り替え（クリア）]
 このジムは　みてのとおり
@@ -539,6 +556,7 @@ princess_01</attribute>
 		<comment>♂
 ・ジムバッジ取得前＋アイテム入手後
 ・ジムバッジ取得まで繰り返し</comment>
+		<attribute name="キャラ指定">ダンペイ</attribute>
 		<language name="JPN" width="256">この　ジェットコースター　ジムは
 まず　コースターに　のる！[BE:01:ページ切り替え（クリア）]
 つぎに　プラットフォーム……
@@ -564,6 +582,7 @@ princess_01</attribute>
 ・ジムバッジ取得後
 ※ジェットコースタームービー
 　ローラーコースタームービー</comment>
+		<attribute name="キャラ指定">ダンペイ</attribute>
 		<language name="JPN" width="256">カミツレさんの　まぶしく
 かれいな　でんきこうげき！[BE:01:ページ切り替え（クリア）]
 それを　うわまわった　あんたと
@@ -591,6 +610,7 @@ princess_01</attribute>
 
 	<row id="msg_c04gym0101_statue_02" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>ジムバッジ取得後</comment>
+		<attribute name="キャラ指定">ポケモン像</attribute>
 		<language name="JPN" width="256">ライモン　ポケモンジム[BE:01:ページ切り替え（クリア）]
 ジムリーダー　カミツレ
 にんてい　トレーナー！[BE:00:ページ切り替え（行送り）]
@@ -603,6 +623,7 @@ princess_01</attribute>
 
 	<row id="msg_c04gym0101_statue_03" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>？？後</comment>
+		<attribute name="キャラ指定">ポケモン像</attribute>
 		<language name="JPN" width="256">ライモン　ポケモンジム[BE:01:ページ切り替え（クリア）]
 ジムリーダー　カミツレ
 にんてい　トレーナー！[BE:00:ページ切り替え（行送り）]
