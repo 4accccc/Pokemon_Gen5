@@ -28,7 +28,6 @@ DEFINE_LOCAL NEW_SKILL      //覚える技
 //del_skill_msg内で使用するワーク
 DEFINE_LOCAL OLD_SKILL      //忘れる技
 
-
 //get_org_skill内で使用するワーク
 DEFINE_LOCAL TARGET_FORM_NO      //調べるフォルム
 DEFINE_LOCAL ORG_SKILL      //調べた結果の固有技
@@ -258,22 +257,35 @@ select_del_skill:
     _SYSWIN_MSG_DOWN( msg_rotom_waza_01 )
     _YES_NO_WIN( SCWK_ANSWER )
     _SYSWIN_CLOSE()
-
     IF $SCWK_ANSWER == 0 THEN   //忘れる
-      //技忘れアプリコール
-      $DEL_SKILL_POS = 0
-      $OLD_SKILL = 0             //忘れる技セット del_skill_msgをコールする準備 @todo
-      _CALL del_skill_msg
-      $SCWK_ANSWER = TRUE
-      $DECIDE = TRUE            //ループ終了
+      //技忘れ
+      _SELECT_WAZA_TEMOTI_POKE( SCWK_ANSWER ,DEL_SKILL_POS ,SEL_POS ,0 )
+      IF $SCWK_ANSWER == FALSE THEN
+        _CALL stop_del_skill
+        IF $SCWK_ANSWER == 0 THEN
+          $SCWK_ANSWER = FALSE
+          $DECIDE = TRUE          //ループ終了
+        ENDIF  
+      ELSE
+        //忘れる技セット del_skill_msgをコールする準備
+        _GET_TEMOTI_WAZA_ID( OLD_SKILL ,SEL_POS ,DEL_SKILL_POS )
+        _CALL del_skill_msg
+        $SCWK_ANSWER = TRUE
+        $DECIDE = TRUE            //ループ終了
+      ENDIF
     ELSE                        //忘れない
-      _SYSWIN_MSG_DOWN( msg_rotom_waza_02 )
-      _YES_NO_WIN( SCWK_ANSWER )
-      _SYSWIN_CLOSE()
-      IF $SCWK_ANSWER == 0 THEN   //あきらめる
+      _CALL stop_del_skill
+      IF $SCWK_ANSWER == 0 THEN
         $SCWK_ANSWER = FALSE
         $DECIDE = TRUE          //ループ終了
       ENDIF
-    ENDIF
+    ENDIF    
   ENDWHILE
+_RET
+
+//技あきらめる
+stop_del_skill:
+  _SYSWIN_MSG_DOWN( msg_rotom_waza_02 )
+  _YES_NO_WIN( SCWK_ANSWER )
+  _SYSWIN_CLOSE()
 _RET
