@@ -38,7 +38,7 @@
 
 #include "event_pokecen_pc.h"  // for EVENT_PokecenPcOn, EVENT_PokecenPcOff
 
-#define BRIGHT_FADE_SPPED (2)
+#define BRIGHT_FADE_SPPED (1)
 
 typedef enum {
   FADE_IN,
