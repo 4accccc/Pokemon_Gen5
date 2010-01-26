@@ -62,7 +62,8 @@ enum
 ///	トレーナー毎のデータ
 //==============================================================
 typedef struct {
-  const POKEPARTY* party; ///< 所有ポケモンデータ
+  const POKEPARTY* party;       ///< 戦闘前の所有ポケモンデータ
+  const POKEPARTY* party_after; ///< 戦闘後の所有ポケモンデータ
   //@TODO STRCODEかSTRBUFか決める
   STRCODE trname[ PERSON_NAME_SIZE + EOM_SIZE ];  // 16
   STRBUF* str_trname;     ///< トレーナー名

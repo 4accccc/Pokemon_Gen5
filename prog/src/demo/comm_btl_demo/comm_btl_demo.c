@@ -60,7 +60,7 @@ FS_EXTERN_OVERLAY(ui_common);
 enum
 { 
   //@TODO デカめにとってある
-  COMM_BTL_DEMO_HEAP_SIZE = 0x90000,  ///< ヒープサイズ
+  COMM_BTL_DEMO_HEAP_SIZE = 0x70000,  ///< ヒープサイズ
 };
 
 //-------------------------------------
@@ -96,6 +96,73 @@ enum
  */
 //=============================================================================
 
+#if 0
+
+//--------------------------------------------------------------
+///	ボールOBJワーク
+//==============================================================
+typedef struct {
+  GFL_CLWK* clwk[6];
+  u8 num;
+  u8 is_right;
+  u8 posid;
+  u8 padding[1];
+  u32 timer;
+} BALL_UNIT;
+
+static void BALL_UNIT_Init( BALL_UNIT* unit, u8 num, u8 posid )
+{
+  unit->num = num;
+  unit->posid = posid;
+  unit->timer = 0;
+
+  unit->is_right = TRUE;
+
+}
+
+static void BALL_UNIT_SetStart( BALL_UNIT* unit, BOOL is_once )
+{
+
+}
+
+static void BALL_UNIT_SetStart( BALL_UNIT* unit, BOOL is_once )
+{
+
+}
+
+static void BALL_UNIT_Main( BALL_UNIT* unit )
+{
+
+}
+#endif
+
+//--------------------------------------------------------------
+///	
+//==============================================================
+typedef struct {
+  // @TODO
+  // BG名前表示
+  const COMM_BTL_DEMO_TRAINER_DATA* data;
+//  BALL_UNIT ball; // ボール管理ワーク
+} TRAINER_UNIT;
+
+#if 0
+// 表示されている場合もある
+static void TRAINER_UNIT_Init( TRAINER_UNIT* unit, u8 posid, const COMM_BTL_DEMO_TRAINER_DATA* data )
+{
+  u8 num;
+
+  unit->data = data;
+
+  num = PokeParty_GetPokeCount( data->party );
+
+  {
+    BALL_UNIT_Init( &unit->ball, num, 0 );
+  }
+}
+
+#endif
+
 //--------------------------------------------------------------
 ///	BG管理ワーク
 //==============================================================
@@ -119,6 +186,8 @@ typedef struct {
   GFL_PTC_PTR     ptc;
   u8              spa_work[ PARTICLE_LIB_HEAP_SIZE ];
   u8  spa_num;
+
+  TRAINER_UNIT    trainer_unit[ COMM_BTL_DEMO_TRDATA_MAX ];
 
 } COMM_BTL_DEMO_G3D_WORK;
 
@@ -633,7 +702,7 @@ static BOOL SceneNormalStart_Main( UI_SCENE_CNT_PTR cnt, void* work )
 
         for( i=0; i<wk->wk_g3d.spa_num; i++ )
         {
-//          G3D_PTC_CreateEmitter( &wk->wk_g3d, i, &pos );
+         G3D_PTC_CreateEmitter( &wk->wk_g3d, i, &pos );
         }
       }
 
@@ -908,7 +977,6 @@ static void G3D_AnimeSet( COMM_BTL_DEMO_G3D_WORK* g3d, u16 demo_id )
   g3d->anm_unit_idx = GFL_G3D_UTIL_AddUnit( g3d->g3d_util, &sc_setup[ demo_id ] );
   HOSAKA_Printf("demo_id=%d add unit idx=%d ",demo_id, g3d->anm_unit_idx );
   
-  // アニメーション有効化
   {
     GFL_G3D_OBJ* obj;
     int anime_count;
@@ -918,9 +986,23 @@ static void G3D_AnimeSet( COMM_BTL_DEMO_G3D_WORK* g3d, u16 demo_id )
 
     HOSAKA_Printf("anime_count=%d \n", anime_count);
 
+    // アニメーション有効化
     for( i=0; i<anime_count; i++ )
     {
       GFL_G3D_OBJECT_EnableAnime( obj, i );
+    }
+
+    //@TODO 男女からテクスチャのパレットを設定
+    {
+      GFL_G3D_RND* rnd = GFL_G3D_OBJECT_GetG3Drnd(obj);
+      GFL_G3D_RES* tex = GFL_G3D_RENDER_GetG3DresTex(rnd);
+
+//      GFL_G3D_TransVramTexturePlttOnly(
+
+  //    GFL_G3D_RENDER_SetTexture( rnd, 2, tex );
+
+//      GFL_G3D_RENDER_GetRenderObj();
+//BOOL GFL_G3D_RENDER_SetTexture( GFL_G3D_RND* g3Drnd, const int mdlidx, const GFL_G3D_RES* tex )
     }
   }
 }
@@ -1010,3 +1092,4 @@ static BOOL G3D_AnimeMain( COMM_BTL_DEMO_G3D_WORK* g3d )
 
   return is_loop;
 }
+
