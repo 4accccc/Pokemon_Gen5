@@ -1111,7 +1111,6 @@ static void update_dst( DMP_MAINWORK* wk )
   sex = box_getvalue( wk, INPUTBOX_ID_SEX );
   level = box_getvalue( wk, INPUTBOX_ID_LEVEL );
   personal_rnd = POKETOOL_CalcPersonalRand( mons_no, PTL_FORM_NONE, sex );
-  TAYA_Printf("ŒÂ«—”=%08x\n", personal_rnd);
 
   PP_Clear( wk->dst );
   {
@@ -1125,6 +1124,25 @@ static void update_dst( DMP_MAINWORK* wk )
     sdf = box_getvalue( wk, INPUTBOX_ID_SDFRND );
     pow_val = PTL_SETUP_POW_PACK( hp, pow, def, spw, sdf, agi );
     PP_SetupEx( wk->dst, mons_no, level, wk->pokeID, pow_val, personal_rnd );
+
+    TAYA_Printf("[[‘‚«ž‚Ý]] «•Ê=%d, ŒÂ«—”=%08x\n", sex, personal_rnd);
+    TAYA_Printf("             HP:%2d  ATK:%2d  DEF:%2d  SAT:%2d  SDF:%2d  AGI:%2d\n",
+                hp, pow, def, spw, sdf, agi );
+
+    {
+      u32 rndResult = PP_Get( wk->dst, ID_PARA_personal_rnd, NULL );
+      u8 sexResult = PP_Get( wk->dst, ID_PARA_sex, NULL );
+      u8 rHP, rPow, rDef, rSat, rSde, rAgi;
+      rHP  = PP_Get( wk->dst, ID_PARA_hp_rnd, NULL );
+      rPow = PP_Get( wk->dst, ID_PARA_pow_rnd, NULL );
+      rDef = PP_Get( wk->dst, ID_PARA_def_rnd, NULL );
+      rSat = PP_Get( wk->dst, ID_PARA_spepow_rnd, NULL );
+      rSde = PP_Get( wk->dst, ID_PARA_spedef_rnd, NULL );
+      rAgi = PP_Get( wk->dst, ID_PARA_agi_rnd, NULL );
+      TAYA_Printf("[[“Ç‚Ýž‚Ý]] «•Ê=%d, ŒÂ«—”=%08x\n", sexResult, rndResult);
+      TAYA_Printf("             HP:%2d  ATK:%2d  DEF:%2d  SAT:%2d  SDF:%2d  AGI:%2d\n",
+                   rHP, rPow, rDef, rSat, rSde, rAgi );
+    }
 
     exp = box_getvalue( wk, INPUTBOX_ID_EXP );
     PP_Put( wk->dst, ID_PARA_exp, exp );
