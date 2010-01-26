@@ -374,6 +374,26 @@ void GAMEBEACON_Reset_UpdateFlag(int log_no)
   GameBeaconSys->update_log &= 0xffffffff ^ (1 << log_no);
 }
 
+//==================================================================
+/**
+ * 受信バッファの中に同じ人のビーコン情報を検索し、見つかれば新着フラグをONにする
+ * @param   info		検索対象のプレイヤーのビーコン情報
+ * @retval  BOOL		TRUE:ONにした。　FALSE:見つからなかった
+ */
+//==================================================================
+BOOL GAMEBEACON_Set_SearchUpdateFlag(const GAMEBEACON_INFO *info)
+{
+  GAMEBEACON_SYSTEM *bsys = GameBeaconSys;
+  int i;
+  
+  for(i = 0; i < GAMEBEACON_SYSTEM_LOG_MAX; i++){
+    if(bsys->log[i].info.trainer_id == info->trainer_id){
+      bsys->update_log |= 1 << i;
+      return TRUE;
+    }
+  }
+  return FALSE;
+}
 
 
 

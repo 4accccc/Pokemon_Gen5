@@ -95,6 +95,28 @@ BOOL GAMEBEACON_Stack_GetInfo(GAMEBEACON_INFO_TBL *stack_infotbl, GAMEBEACON_INF
 
 //==================================================================
 /**
+ * スタックテーブルに残っている情報を通信バッファへ戻す
+ *
+ * @param   stack_infotbl		スタックテーブルへのポインタ
+ *
+ * スタックに残っている情報を対象に、GAMEBEACON_Get_UpdateLogNoで新着としてひっかかる状態にします
+ * ※スタックテーブルを破棄する時に使用するものです
+ */
+//==================================================================
+void GAMEBEACON_Stack_PutBack(const GAMEBEACON_INFO_TBL *stack_infotbl)
+{
+  int log_no;
+  
+  for(log_no = 0; log_no < GAMEBEACON_INFO_TBL_MAX; log_no++){
+    if(stack_infotbl->info[log_no].version_bit == 0){
+      return;
+    }
+    GAMEBEACON_Set_SearchUpdateFlag(&stack_infotbl->info[log_no]);
+  }
+}
+
+//==================================================================
+/**
  * ビーコンテーブルへ新しいビーコンを登録する
  *
  * @param   infotbl		  ビーコンテーブルへのポインタ

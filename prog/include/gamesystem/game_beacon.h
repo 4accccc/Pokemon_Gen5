@@ -84,6 +84,7 @@ extern const GAMEBEACON_INFO * GAMEBEACON_Get_BeaconLog(int log_no);
 extern u32 GAMEBEACON_Get_LogCount(void);
 extern int GAMEBEACON_Get_UpdateLogNo(int *start_log_no);
 extern void GAMEBEACON_Reset_UpdateFlag(int log_no);
+extern BOOL GAMEBEACON_Set_SearchUpdateFlag(const GAMEBEACON_INFO *info);
 
 //--------------------------------------------------------------
 //  ビーコンセット
