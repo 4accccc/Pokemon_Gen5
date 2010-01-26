@@ -4686,6 +4686,7 @@ $(DIR_OUTPUT)/m_dun0803_00_00.ngpack: $(DIR_TEMP)/m_dun0803_00_00.nsbmd $(DIR_RE
 $(DIR_TEMP)/m_dun0803_00_00.nsbmd: $(DIR_RES)/m_dun0803_00_00.imd
 	@echo create_nsbmd m_dun0803_00_00
 	@$(G3DCVTR) $(DIR_RES)/m_dun0803_00_00.imd -emdl -o $(DIR_TEMP)/m_dun0803_00_00.nsbmd
+	@$(CHECK_SIZE) $(DIR_TEMP)/m_dun0803_00_00.nsbmd
 
 #m_dun0803_00_01
 $(DIR_OUTPUT)/m_dun0803_00_01.3dppack: $(DIR_TEMP)/m_dun0803_00_01.nsbmd $(DIR_RES)/m_dun0803_00_01.bin $(DIR_RES)/m_dun0803_00_01.3dmd
@@ -4758,6 +4759,7 @@ $(DIR_OUTPUT)/m_dun0805_00_00.ngpack: $(DIR_TEMP)/m_dun0805_00_00.nsbmd $(DIR_RE
 $(DIR_TEMP)/m_dun0805_00_00.nsbmd: $(DIR_RES)/m_dun0805_00_00.imd
 	@echo create_nsbmd m_dun0805_00_00
 	@$(G3DCVTR) $(DIR_RES)/m_dun0805_00_00.imd -emdl -o $(DIR_TEMP)/m_dun0805_00_00.nsbmd
+	@$(CHECK_SIZE) $(DIR_TEMP)/m_dun0805_00_00.nsbmd
 
 #m_dun0805_00_01
 $(DIR_OUTPUT)/m_dun0805_00_01.3dppack: $(DIR_TEMP)/m_dun0805_00_01.nsbmd $(DIR_RES)/m_dun0805_00_01.bin $(DIR_RES)/m_dun0805_00_01.3dmd
@@ -5793,6 +5795,7 @@ $(DIR_OUTPUT)/m_gstation01_00_00.ngpack: $(DIR_TEMP)/m_gstation01_00_00.nsbmd $(
 $(DIR_TEMP)/m_gstation01_00_00.nsbmd: $(DIR_RES)/m_gstation01_00_00.imd
 	@echo create_nsbmd m_gstation01_00_00
 	@$(G3DCVTR) $(DIR_RES)/m_gstation01_00_00.imd -emdl -o $(DIR_TEMP)/m_gstation01_00_00.nsbmd
+	@$(CHECK_SIZE) $(DIR_TEMP)/m_gstation01_00_00.nsbmd
 
 #m_gstation02_00_00
 $(DIR_OUTPUT)/m_gstation02_00_00.3dppack: $(DIR_TEMP)/m_gstation02_00_00.nsbmd $(DIR_RES)/m_gstation02_00_00.bin $(DIR_RES)/m_gstation02_00_00.3dmd
@@ -6783,6 +6786,7 @@ $(DIR_OUTPUT)/C3_00_00.ngpack: $(DIR_TEMP)/C3_00_00.nsbmd $(DIR_RES)/C3_00_00.3d
 $(DIR_TEMP)/C3_00_00.nsbmd: $(DIR_RES)/C3_00_00.imd
 	@echo create_nsbmd C3_00_00
 	@$(G3DCVTR) $(DIR_RES)/C3_00_00.imd -emdl -o $(DIR_TEMP)/C3_00_00.nsbmd
+	@$(CHECK_SIZE) $(DIR_TEMP)/C3_00_00.nsbmd
 
 #C3_00_01
 $(DIR_OUTPUT)/C3_00_01.ngpack: $(DIR_TEMP)/C3_00_01.nsbmd $(DIR_RES)/C3_00_01.3dmd
@@ -6792,6 +6796,7 @@ $(DIR_OUTPUT)/C3_00_01.ngpack: $(DIR_TEMP)/C3_00_01.nsbmd $(DIR_RES)/C3_00_01.3d
 $(DIR_TEMP)/C3_00_01.nsbmd: $(DIR_RES)/C3_00_01.imd
 	@echo create_nsbmd C3_00_01
 	@$(G3DCVTR) $(DIR_RES)/C3_00_01.imd -emdl -o $(DIR_TEMP)/C3_00_01.nsbmd
+	@$(CHECK_SIZE) $(DIR_TEMP)/C3_00_01.nsbmd
 
 #C3_01_00
 $(DIR_OUTPUT)/C3_01_00.ngpack: $(DIR_TEMP)/C3_01_00.nsbmd $(DIR_RES)/C3_01_00.3dmd
@@ -6801,6 +6806,7 @@ $(DIR_OUTPUT)/C3_01_00.ngpack: $(DIR_TEMP)/C3_01_00.nsbmd $(DIR_RES)/C3_01_00.3d
 $(DIR_TEMP)/C3_01_00.nsbmd: $(DIR_RES)/C3_01_00.imd
 	@echo create_nsbmd C3_01_00
 	@$(G3DCVTR) $(DIR_RES)/C3_01_00.imd -emdl -o $(DIR_TEMP)/C3_01_00.nsbmd
+	@$(CHECK_SIZE) $(DIR_TEMP)/C3_01_00.nsbmd
 
 #C3_01_01
 $(DIR_OUTPUT)/C3_01_01.ngpack: $(DIR_TEMP)/C3_01_01.nsbmd $(DIR_RES)/C3_01_01.3dmd
@@ -6810,6 +6816,7 @@ $(DIR_OUTPUT)/C3_01_01.ngpack: $(DIR_TEMP)/C3_01_01.nsbmd $(DIR_RES)/C3_01_01.3d
 $(DIR_TEMP)/C3_01_01.nsbmd: $(DIR_RES)/C3_01_01.imd
 	@echo create_nsbmd C3_01_01
 	@$(G3DCVTR) $(DIR_RES)/C3_01_01.imd -emdl -o $(DIR_TEMP)/C3_01_01.nsbmd
+	@$(CHECK_SIZE) $(DIR_TEMP)/C3_01_01.nsbmd
 
 #h01a_00_00
 $(DIR_OUTPUT)/h01a_00_00.ngpack: $(DIR_TEMP)/h01a_00_00.nsbmd $(DIR_RES)/h01a_00_00.3dmd
@@ -6819,6 +6826,7 @@ $(DIR_OUTPUT)/h01a_00_00.ngpack: $(DIR_TEMP)/h01a_00_00.nsbmd $(DIR_RES)/h01a_00
 $(DIR_TEMP)/h01a_00_00.nsbmd: $(DIR_RES)/h01a_00_00.imd
 	@echo create_nsbmd h01a_00_00
 	@$(G3DCVTR) $(DIR_RES)/h01a_00_00.imd -emdl -o $(DIR_TEMP)/h01a_00_00.nsbmd
+	@$(CHECK_SIZE) $(DIR_TEMP)/h01a_00_00.nsbmd
 
 #h01a_00_01
 $(DIR_OUTPUT)/h01a_00_01.ngpack: $(DIR_TEMP)/h01a_00_01.nsbmd $(DIR_RES)/h01a_00_01.3dmd
@@ -6828,6 +6836,7 @@ $(DIR_OUTPUT)/h01a_00_01.ngpack: $(DIR_TEMP)/h01a_00_01.nsbmd $(DIR_RES)/h01a_00
 $(DIR_TEMP)/h01a_00_01.nsbmd: $(DIR_RES)/h01a_00_01.imd
 	@echo create_nsbmd h01a_00_01
 	@$(G3DCVTR) $(DIR_RES)/h01a_00_01.imd -emdl -o $(DIR_TEMP)/h01a_00_01.nsbmd
+	@$(CHECK_SIZE) $(DIR_TEMP)/h01a_00_01.nsbmd
 
 #h01a_00_02
 $(DIR_OUTPUT)/h01a_00_02.ngpack: $(DIR_TEMP)/h01a_00_02.nsbmd $(DIR_RES)/h01a_00_02.3dmd
@@ -6837,6 +6846,7 @@ $(DIR_OUTPUT)/h01a_00_02.ngpack: $(DIR_TEMP)/h01a_00_02.nsbmd $(DIR_RES)/h01a_00
 $(DIR_TEMP)/h01a_00_02.nsbmd: $(DIR_RES)/h01a_00_02.imd
 	@echo create_nsbmd h01a_00_02
 	@$(G3DCVTR) $(DIR_RES)/h01a_00_02.imd -emdl -o $(DIR_TEMP)/h01a_00_02.nsbmd
+	@$(CHECK_SIZE) $(DIR_TEMP)/h01a_00_02.nsbmd
 
 #h01a_01_00
 $(DIR_OUTPUT)/h01a_01_00.ngpack: $(DIR_TEMP)/h01a_01_00.nsbmd $(DIR_RES)/h01a_01_00.3dmd
@@ -6846,6 +6856,7 @@ $(DIR_OUTPUT)/h01a_01_00.ngpack: $(DIR_TEMP)/h01a_01_00.nsbmd $(DIR_RES)/h01a_01
 $(DIR_TEMP)/h01a_01_00.nsbmd: $(DIR_RES)/h01a_01_00.imd
 	@echo create_nsbmd h01a_01_00
 	@$(G3DCVTR) $(DIR_RES)/h01a_01_00.imd -emdl -o $(DIR_TEMP)/h01a_01_00.nsbmd
+	@$(CHECK_SIZE) $(DIR_TEMP)/h01a_01_00.nsbmd
 
 #h01a_01_01
 $(DIR_OUTPUT)/h01a_01_01.ngpack: $(DIR_TEMP)/h01a_01_01.nsbmd $(DIR_RES)/h01a_01_01.3dmd
@@ -6855,6 +6866,7 @@ $(DIR_OUTPUT)/h01a_01_01.ngpack: $(DIR_TEMP)/h01a_01_01.nsbmd $(DIR_RES)/h01a_01
 $(DIR_TEMP)/h01a_01_01.nsbmd: $(DIR_RES)/h01a_01_01.imd
 	@echo create_nsbmd h01a_01_01
 	@$(G3DCVTR) $(DIR_RES)/h01a_01_01.imd -emdl -o $(DIR_TEMP)/h01a_01_01.nsbmd
+	@$(CHECK_SIZE) $(DIR_TEMP)/h01a_01_01.nsbmd
 
 #h01a_01_02
 $(DIR_OUTPUT)/h01a_01_02.ngpack: $(DIR_TEMP)/h01a_01_02.nsbmd $(DIR_RES)/h01a_01_02.3dmd
@@ -6864,6 +6876,7 @@ $(DIR_OUTPUT)/h01a_01_02.ngpack: $(DIR_TEMP)/h01a_01_02.nsbmd $(DIR_RES)/h01a_01
 $(DIR_TEMP)/h01a_01_02.nsbmd: $(DIR_RES)/h01a_01_02.imd
 	@echo create_nsbmd h01a_01_02
 	@$(G3DCVTR) $(DIR_RES)/h01a_01_02.imd -emdl -o $(DIR_TEMP)/h01a_01_02.nsbmd
+	@$(CHECK_SIZE) $(DIR_TEMP)/h01a_01_02.nsbmd
 
 #m_test2_01_01
 $(DIR_OUTPUT)/m_test2_01_01.ngpack: $(DIR_TEMP)/m_test2_01_01.nsbmd $(DIR_RES)/m_test2_01_01.3dmd
@@ -6873,6 +6886,7 @@ $(DIR_OUTPUT)/m_test2_01_01.ngpack: $(DIR_TEMP)/m_test2_01_01.nsbmd $(DIR_RES)/m
 $(DIR_TEMP)/m_test2_01_01.nsbmd: $(DIR_RES)/m_test2_01_01.imd
 	@echo create_nsbmd m_test2_01_01
 	@$(G3DCVTR) $(DIR_RES)/m_test2_01_01.imd -emdl -o $(DIR_TEMP)/m_test2_01_01.nsbmd
+	@$(CHECK_SIZE) $(DIR_TEMP)/m_test2_01_01.nsbmd
 
 #m_test2_01_02
 $(DIR_OUTPUT)/m_test2_01_02.ngpack: $(DIR_TEMP)/m_test2_01_02.nsbmd $(DIR_RES)/m_test2_01_02.3dmd
@@ -6882,6 +6896,7 @@ $(DIR_OUTPUT)/m_test2_01_02.ngpack: $(DIR_TEMP)/m_test2_01_02.nsbmd $(DIR_RES)/m
 $(DIR_TEMP)/m_test2_01_02.nsbmd: $(DIR_RES)/m_test2_01_02.imd
 	@echo create_nsbmd m_test2_01_02
 	@$(G3DCVTR) $(DIR_RES)/m_test2_01_02.imd -emdl -o $(DIR_TEMP)/m_test2_01_02.nsbmd
+	@$(CHECK_SIZE) $(DIR_TEMP)/m_test2_01_02.nsbmd
 
 #m_test2_01_03
 $(DIR_OUTPUT)/m_test2_01_03.ngpack: $(DIR_TEMP)/m_test2_01_03.nsbmd $(DIR_RES)/m_test2_01_03.3dmd
@@ -6891,6 +6906,7 @@ $(DIR_OUTPUT)/m_test2_01_03.ngpack: $(DIR_TEMP)/m_test2_01_03.nsbmd $(DIR_RES)/m
 $(DIR_TEMP)/m_test2_01_03.nsbmd: $(DIR_RES)/m_test2_01_03.imd
 	@echo create_nsbmd m_test2_01_03
 	@$(G3DCVTR) $(DIR_RES)/m_test2_01_03.imd -emdl -o $(DIR_TEMP)/m_test2_01_03.nsbmd
+	@$(CHECK_SIZE) $(DIR_TEMP)/m_test2_01_03.nsbmd
 
 #m_test2_01_04
 $(DIR_OUTPUT)/m_test2_01_04.ngpack: $(DIR_TEMP)/m_test2_01_04.nsbmd $(DIR_RES)/m_test2_01_04.3dmd
@@ -6900,6 +6916,7 @@ $(DIR_OUTPUT)/m_test2_01_04.ngpack: $(DIR_TEMP)/m_test2_01_04.nsbmd $(DIR_RES)/m
 $(DIR_TEMP)/m_test2_01_04.nsbmd: $(DIR_RES)/m_test2_01_04.imd
 	@echo create_nsbmd m_test2_01_04
 	@$(G3DCVTR) $(DIR_RES)/m_test2_01_04.imd -emdl -o $(DIR_TEMP)/m_test2_01_04.nsbmd
+	@$(CHECK_SIZE) $(DIR_TEMP)/m_test2_01_04.nsbmd
 
 #m_test2_02_01
 $(DIR_OUTPUT)/m_test2_02_01.ngpack: $(DIR_TEMP)/m_test2_02_01.nsbmd $(DIR_RES)/m_test2_02_01.3dmd
@@ -6909,6 +6926,7 @@ $(DIR_OUTPUT)/m_test2_02_01.ngpack: $(DIR_TEMP)/m_test2_02_01.nsbmd $(DIR_RES)/m
 $(DIR_TEMP)/m_test2_02_01.nsbmd: $(DIR_RES)/m_test2_02_01.imd
 	@echo create_nsbmd m_test2_02_01
 	@$(G3DCVTR) $(DIR_RES)/m_test2_02_01.imd -emdl -o $(DIR_TEMP)/m_test2_02_01.nsbmd
+	@$(CHECK_SIZE) $(DIR_TEMP)/m_test2_02_01.nsbmd
 
 #m_test2_02_02
 $(DIR_OUTPUT)/m_test2_02_02.ngpack: $(DIR_TEMP)/m_test2_02_02.nsbmd $(DIR_RES)/m_test2_02_02.3dmd
@@ -6918,6 +6936,7 @@ $(DIR_OUTPUT)/m_test2_02_02.ngpack: $(DIR_TEMP)/m_test2_02_02.nsbmd $(DIR_RES)/m
 $(DIR_TEMP)/m_test2_02_02.nsbmd: $(DIR_RES)/m_test2_02_02.imd
 	@echo create_nsbmd m_test2_02_02
 	@$(G3DCVTR) $(DIR_RES)/m_test2_02_02.imd -emdl -o $(DIR_TEMP)/m_test2_02_02.nsbmd
+	@$(CHECK_SIZE) $(DIR_TEMP)/m_test2_02_02.nsbmd
 
 #m_test2_02_03
 $(DIR_OUTPUT)/m_test2_02_03.ngpack: $(DIR_TEMP)/m_test2_02_03.nsbmd $(DIR_RES)/m_test2_02_03.3dmd
@@ -6927,6 +6946,7 @@ $(DIR_OUTPUT)/m_test2_02_03.ngpack: $(DIR_TEMP)/m_test2_02_03.nsbmd $(DIR_RES)/m
 $(DIR_TEMP)/m_test2_02_03.nsbmd: $(DIR_RES)/m_test2_02_03.imd
 	@echo create_nsbmd m_test2_02_03
 	@$(G3DCVTR) $(DIR_RES)/m_test2_02_03.imd -emdl -o $(DIR_TEMP)/m_test2_02_03.nsbmd
+	@$(CHECK_SIZE) $(DIR_TEMP)/m_test2_02_03.nsbmd
 
 #m_test2_02_04
 $(DIR_OUTPUT)/m_test2_02_04.ngpack: $(DIR_TEMP)/m_test2_02_04.nsbmd $(DIR_RES)/m_test2_02_04.3dmd
@@ -6936,6 +6956,7 @@ $(DIR_OUTPUT)/m_test2_02_04.ngpack: $(DIR_TEMP)/m_test2_02_04.nsbmd $(DIR_RES)/m
 $(DIR_TEMP)/m_test2_02_04.nsbmd: $(DIR_RES)/m_test2_02_04.imd
 	@echo create_nsbmd m_test2_02_04
 	@$(G3DCVTR) $(DIR_RES)/m_test2_02_04.imd -emdl -o $(DIR_TEMP)/m_test2_02_04.nsbmd
+	@$(CHECK_SIZE) $(DIR_TEMP)/m_test2_02_04.nsbmd
 
 #m_test2_03_01
 $(DIR_OUTPUT)/m_test2_03_01.ngpack: $(DIR_TEMP)/m_test2_03_01.nsbmd $(DIR_RES)/m_test2_03_01.3dmd
@@ -6945,6 +6966,7 @@ $(DIR_OUTPUT)/m_test2_03_01.ngpack: $(DIR_TEMP)/m_test2_03_01.nsbmd $(DIR_RES)/m
 $(DIR_TEMP)/m_test2_03_01.nsbmd: $(DIR_RES)/m_test2_03_01.imd
 	@echo create_nsbmd m_test2_03_01
 	@$(G3DCVTR) $(DIR_RES)/m_test2_03_01.imd -emdl -o $(DIR_TEMP)/m_test2_03_01.nsbmd
+	@$(CHECK_SIZE) $(DIR_TEMP)/m_test2_03_01.nsbmd
 
 #m_test2_03_02
 $(DIR_OUTPUT)/m_test2_03_02.ngpack: $(DIR_TEMP)/m_test2_03_02.nsbmd $(DIR_RES)/m_test2_03_02.3dmd
@@ -6954,6 +6976,7 @@ $(DIR_OUTPUT)/m_test2_03_02.ngpack: $(DIR_TEMP)/m_test2_03_02.nsbmd $(DIR_RES)/m
 $(DIR_TEMP)/m_test2_03_02.nsbmd: $(DIR_RES)/m_test2_03_02.imd
 	@echo create_nsbmd m_test2_03_02
 	@$(G3DCVTR) $(DIR_RES)/m_test2_03_02.imd -emdl -o $(DIR_TEMP)/m_test2_03_02.nsbmd
+	@$(CHECK_SIZE) $(DIR_TEMP)/m_test2_03_02.nsbmd
 
 #m_test2_03_03
 $(DIR_OUTPUT)/m_test2_03_03.ngpack: $(DIR_TEMP)/m_test2_03_03.nsbmd $(DIR_RES)/m_test2_03_03.3dmd
@@ -6963,6 +6986,7 @@ $(DIR_OUTPUT)/m_test2_03_03.ngpack: $(DIR_TEMP)/m_test2_03_03.nsbmd $(DIR_RES)/m
 $(DIR_TEMP)/m_test2_03_03.nsbmd: $(DIR_RES)/m_test2_03_03.imd
 	@echo create_nsbmd m_test2_03_03
 	@$(G3DCVTR) $(DIR_RES)/m_test2_03_03.imd -emdl -o $(DIR_TEMP)/m_test2_03_03.nsbmd
+	@$(CHECK_SIZE) $(DIR_TEMP)/m_test2_03_03.nsbmd
 
 #m_test2_03_04
 $(DIR_OUTPUT)/m_test2_03_04.ngpack: $(DIR_TEMP)/m_test2_03_04.nsbmd $(DIR_RES)/m_test2_03_04.3dmd
@@ -6972,6 +6996,7 @@ $(DIR_OUTPUT)/m_test2_03_04.ngpack: $(DIR_TEMP)/m_test2_03_04.nsbmd $(DIR_RES)/m
 $(DIR_TEMP)/m_test2_03_04.nsbmd: $(DIR_RES)/m_test2_03_04.imd
 	@echo create_nsbmd m_test2_03_04
 	@$(G3DCVTR) $(DIR_RES)/m_test2_03_04.imd -emdl -o $(DIR_TEMP)/m_test2_03_04.nsbmd
+	@$(CHECK_SIZE) $(DIR_TEMP)/m_test2_03_04.nsbmd
 
 #m_test2_04_01
 $(DIR_OUTPUT)/m_test2_04_01.ngpack: $(DIR_TEMP)/m_test2_04_01.nsbmd $(DIR_RES)/m_test2_04_01.3dmd
@@ -6981,6 +7006,7 @@ $(DIR_OUTPUT)/m_test2_04_01.ngpack: $(DIR_TEMP)/m_test2_04_01.nsbmd $(DIR_RES)/m
 $(DIR_TEMP)/m_test2_04_01.nsbmd: $(DIR_RES)/m_test2_04_01.imd
 	@echo create_nsbmd m_test2_04_01
 	@$(G3DCVTR) $(DIR_RES)/m_test2_04_01.imd -emdl -o $(DIR_TEMP)/m_test2_04_01.nsbmd
+	@$(CHECK_SIZE) $(DIR_TEMP)/m_test2_04_01.nsbmd
 
 #m_test2_04_02
 $(DIR_OUTPUT)/m_test2_04_02.ngpack: $(DIR_TEMP)/m_test2_04_02.nsbmd $(DIR_RES)/m_test2_04_02.3dmd
@@ -6990,6 +7016,7 @@ $(DIR_OUTPUT)/m_test2_04_02.ngpack: $(DIR_TEMP)/m_test2_04_02.nsbmd $(DIR_RES)/m
 $(DIR_TEMP)/m_test2_04_02.nsbmd: $(DIR_RES)/m_test2_04_02.imd
 	@echo create_nsbmd m_test2_04_02
 	@$(G3DCVTR) $(DIR_RES)/m_test2_04_02.imd -emdl -o $(DIR_TEMP)/m_test2_04_02.nsbmd
+	@$(CHECK_SIZE) $(DIR_TEMP)/m_test2_04_02.nsbmd
 
 #m_test2_04_03
 $(DIR_OUTPUT)/m_test2_04_03.ngpack: $(DIR_TEMP)/m_test2_04_03.nsbmd $(DIR_RES)/m_test2_04_03.3dmd
@@ -6999,6 +7026,7 @@ $(DIR_OUTPUT)/m_test2_04_03.ngpack: $(DIR_TEMP)/m_test2_04_03.nsbmd $(DIR_RES)/m
 $(DIR_TEMP)/m_test2_04_03.nsbmd: $(DIR_RES)/m_test2_04_03.imd
 	@echo create_nsbmd m_test2_04_03
 	@$(G3DCVTR) $(DIR_RES)/m_test2_04_03.imd -emdl -o $(DIR_TEMP)/m_test2_04_03.nsbmd
+	@$(CHECK_SIZE) $(DIR_TEMP)/m_test2_04_03.nsbmd
 
 #m_test2_04_04
 $(DIR_OUTPUT)/m_test2_04_04.ngpack: $(DIR_TEMP)/m_test2_04_04.nsbmd $(DIR_RES)/m_test2_04_04.3dmd
@@ -7008,6 +7036,7 @@ $(DIR_OUTPUT)/m_test2_04_04.ngpack: $(DIR_TEMP)/m_test2_04_04.nsbmd $(DIR_RES)/m
 $(DIR_TEMP)/m_test2_04_04.nsbmd: $(DIR_RES)/m_test2_04_04.imd
 	@echo create_nsbmd m_test2_04_04
 	@$(G3DCVTR) $(DIR_RES)/m_test2_04_04.imd -emdl -o $(DIR_TEMP)/m_test2_04_04.nsbmd
+	@$(CHECK_SIZE) $(DIR_TEMP)/m_test2_04_04.nsbmd
 
 #m_test_01_01
 $(DIR_OUTPUT)/m_test_01_01.ngpack: $(DIR_TEMP)/m_test_01_01.nsbmd $(DIR_RES)/m_test_01_01.3dmd
@@ -7017,6 +7046,7 @@ $(DIR_OUTPUT)/m_test_01_01.ngpack: $(DIR_TEMP)/m_test_01_01.nsbmd $(DIR_RES)/m_t
 $(DIR_TEMP)/m_test_01_01.nsbmd: $(DIR_RES)/m_test_01_01.imd
 	@echo create_nsbmd m_test_01_01
 	@$(G3DCVTR) $(DIR_RES)/m_test_01_01.imd -emdl -o $(DIR_TEMP)/m_test_01_01.nsbmd
+	@$(CHECK_SIZE) $(DIR_TEMP)/m_test_01_01.nsbmd
 
 #m_test_01_02
 $(DIR_OUTPUT)/m_test_01_02.ngpack: $(DIR_TEMP)/m_test_01_02.nsbmd $(DIR_RES)/m_test_01_02.3dmd
@@ -7026,6 +7056,7 @@ $(DIR_OUTPUT)/m_test_01_02.ngpack: $(DIR_TEMP)/m_test_01_02.nsbmd $(DIR_RES)/m_t
 $(DIR_TEMP)/m_test_01_02.nsbmd: $(DIR_RES)/m_test_01_02.imd
 	@echo create_nsbmd m_test_01_02
 	@$(G3DCVTR) $(DIR_RES)/m_test_01_02.imd -emdl -o $(DIR_TEMP)/m_test_01_02.nsbmd
+	@$(CHECK_SIZE) $(DIR_TEMP)/m_test_01_02.nsbmd
 
 #m_test_01_03
 $(DIR_OUTPUT)/m_test_01_03.ngpack: $(DIR_TEMP)/m_test_01_03.nsbmd $(DIR_RES)/m_test_01_03.3dmd
@@ -7035,6 +7066,7 @@ $(DIR_OUTPUT)/m_test_01_03.ngpack: $(DIR_TEMP)/m_test_01_03.nsbmd $(DIR_RES)/m_t
 $(DIR_TEMP)/m_test_01_03.nsbmd: $(DIR_RES)/m_test_01_03.imd
 	@echo create_nsbmd m_test_01_03
 	@$(G3DCVTR) $(DIR_RES)/m_test_01_03.imd -emdl -o $(DIR_TEMP)/m_test_01_03.nsbmd
+	@$(CHECK_SIZE) $(DIR_TEMP)/m_test_01_03.nsbmd
 
 #m_test_01_04
 $(DIR_OUTPUT)/m_test_01_04.ngpack: $(DIR_TEMP)/m_test_01_04.nsbmd $(DIR_RES)/m_test_01_04.3dmd
@@ -7044,6 +7076,7 @@ $(DIR_OUTPUT)/m_test_01_04.ngpack: $(DIR_TEMP)/m_test_01_04.nsbmd $(DIR_RES)/m_t
 $(DIR_TEMP)/m_test_01_04.nsbmd: $(DIR_RES)/m_test_01_04.imd
 	@echo create_nsbmd m_test_01_04
 	@$(G3DCVTR) $(DIR_RES)/m_test_01_04.imd -emdl -o $(DIR_TEMP)/m_test_01_04.nsbmd
+	@$(CHECK_SIZE) $(DIR_TEMP)/m_test_01_04.nsbmd
 
 #m_test_01_05
 $(DIR_OUTPUT)/m_test_01_05.ngpack: $(DIR_TEMP)/m_test_01_05.nsbmd $(DIR_RES)/m_test_01_05.3dmd
@@ -7053,6 +7086,7 @@ $(DIR_OUTPUT)/m_test_01_05.ngpack: $(DIR_TEMP)/m_test_01_05.nsbmd $(DIR_RES)/m_t
 $(DIR_TEMP)/m_test_01_05.nsbmd: $(DIR_RES)/m_test_01_05.imd
 	@echo create_nsbmd m_test_01_05
 	@$(G3DCVTR) $(DIR_RES)/m_test_01_05.imd -emdl -o $(DIR_TEMP)/m_test_01_05.nsbmd
+	@$(CHECK_SIZE) $(DIR_TEMP)/m_test_01_05.nsbmd
 
 #m_test_01_06
 $(DIR_OUTPUT)/m_test_01_06.ngpack: $(DIR_TEMP)/m_test_01_06.nsbmd $(DIR_RES)/m_test_01_06.3dmd
@@ -7062,6 +7096,7 @@ $(DIR_OUTPUT)/m_test_01_06.ngpack: $(DIR_TEMP)/m_test_01_06.nsbmd $(DIR_RES)/m_t
 $(DIR_TEMP)/m_test_01_06.nsbmd: $(DIR_RES)/m_test_01_06.imd
 	@echo create_nsbmd m_test_01_06
 	@$(G3DCVTR) $(DIR_RES)/m_test_01_06.imd -emdl -o $(DIR_TEMP)/m_test_01_06.nsbmd
+	@$(CHECK_SIZE) $(DIR_TEMP)/m_test_01_06.nsbmd
 
 #m_test_02_01
 $(DIR_OUTPUT)/m_test_02_01.ngpack: $(DIR_TEMP)/m_test_02_01.nsbmd $(DIR_RES)/m_test_02_01.3dmd
@@ -7071,6 +7106,7 @@ $(DIR_OUTPUT)/m_test_02_01.ngpack: $(DIR_TEMP)/m_test_02_01.nsbmd $(DIR_RES)/m_t
 $(DIR_TEMP)/m_test_02_01.nsbmd: $(DIR_RES)/m_test_02_01.imd
 	@echo create_nsbmd m_test_02_01
 	@$(G3DCVTR) $(DIR_RES)/m_test_02_01.imd -emdl -o $(DIR_TEMP)/m_test_02_01.nsbmd
+	@$(CHECK_SIZE) $(DIR_TEMP)/m_test_02_01.nsbmd
 
 #m_test_02_02
 $(DIR_OUTPUT)/m_test_02_02.ngpack: $(DIR_TEMP)/m_test_02_02.nsbmd $(DIR_RES)/m_test_02_02.3dmd
@@ -7080,6 +7116,7 @@ $(DIR_OUTPUT)/m_test_02_02.ngpack: $(DIR_TEMP)/m_test_02_02.nsbmd $(DIR_RES)/m_t
 $(DIR_TEMP)/m_test_02_02.nsbmd: $(DIR_RES)/m_test_02_02.imd
 	@echo create_nsbmd m_test_02_02
 	@$(G3DCVTR) $(DIR_RES)/m_test_02_02.imd -emdl -o $(DIR_TEMP)/m_test_02_02.nsbmd
+	@$(CHECK_SIZE) $(DIR_TEMP)/m_test_02_02.nsbmd
 
 #m_test_02_03
 $(DIR_OUTPUT)/m_test_02_03.ngpack: $(DIR_TEMP)/m_test_02_03.nsbmd $(DIR_RES)/m_test_02_03.3dmd
@@ -7089,6 +7126,7 @@ $(DIR_OUTPUT)/m_test_02_03.ngpack: $(DIR_TEMP)/m_test_02_03.nsbmd $(DIR_RES)/m_t
 $(DIR_TEMP)/m_test_02_03.nsbmd: $(DIR_RES)/m_test_02_03.imd
 	@echo create_nsbmd m_test_02_03
 	@$(G3DCVTR) $(DIR_RES)/m_test_02_03.imd -emdl -o $(DIR_TEMP)/m_test_02_03.nsbmd
+	@$(CHECK_SIZE) $(DIR_TEMP)/m_test_02_03.nsbmd
 
 #m_test_02_04
 $(DIR_OUTPUT)/m_test_02_04.ngpack: $(DIR_TEMP)/m_test_02_04.nsbmd $(DIR_RES)/m_test_02_04.3dmd
@@ -7098,6 +7136,7 @@ $(DIR_OUTPUT)/m_test_02_04.ngpack: $(DIR_TEMP)/m_test_02_04.nsbmd $(DIR_RES)/m_t
 $(DIR_TEMP)/m_test_02_04.nsbmd: $(DIR_RES)/m_test_02_04.imd
 	@echo create_nsbmd m_test_02_04
 	@$(G3DCVTR) $(DIR_RES)/m_test_02_04.imd -emdl -o $(DIR_TEMP)/m_test_02_04.nsbmd
+	@$(CHECK_SIZE) $(DIR_TEMP)/m_test_02_04.nsbmd
 
 #m_test_02_05
 $(DIR_OUTPUT)/m_test_02_05.ngpack: $(DIR_TEMP)/m_test_02_05.nsbmd $(DIR_RES)/m_test_02_05.3dmd
@@ -7107,6 +7146,7 @@ $(DIR_OUTPUT)/m_test_02_05.ngpack: $(DIR_TEMP)/m_test_02_05.nsbmd $(DIR_RES)/m_t
 $(DIR_TEMP)/m_test_02_05.nsbmd: $(DIR_RES)/m_test_02_05.imd
 	@echo create_nsbmd m_test_02_05
 	@$(G3DCVTR) $(DIR_RES)/m_test_02_05.imd -emdl -o $(DIR_TEMP)/m_test_02_05.nsbmd
+	@$(CHECK_SIZE) $(DIR_TEMP)/m_test_02_05.nsbmd
 
 #m_test_02_06
 $(DIR_OUTPUT)/m_test_02_06.ngpack: $(DIR_TEMP)/m_test_02_06.nsbmd $(DIR_RES)/m_test_02_06.3dmd
@@ -7116,6 +7156,7 @@ $(DIR_OUTPUT)/m_test_02_06.ngpack: $(DIR_TEMP)/m_test_02_06.nsbmd $(DIR_RES)/m_t
 $(DIR_TEMP)/m_test_02_06.nsbmd: $(DIR_RES)/m_test_02_06.imd
 	@echo create_nsbmd m_test_02_06
 	@$(G3DCVTR) $(DIR_RES)/m_test_02_06.imd -emdl -o $(DIR_TEMP)/m_test_02_06.nsbmd
+	@$(CHECK_SIZE) $(DIR_TEMP)/m_test_02_06.nsbmd
 
 #champion_00_00
 $(DIR_OUTPUT)/champion_00_00.ngpack: $(DIR_TEMP)/champion_00_00.nsbmd $(DIR_RES)/champion_00_00.3dmd
@@ -7125,6 +7166,7 @@ $(DIR_OUTPUT)/champion_00_00.ngpack: $(DIR_TEMP)/champion_00_00.nsbmd $(DIR_RES)
 $(DIR_TEMP)/champion_00_00.nsbmd: $(DIR_RES)/champion_00_00.imd
 	@echo create_nsbmd champion_00_00
 	@$(G3DCVTR) $(DIR_RES)/champion_00_00.imd -emdl -o $(DIR_TEMP)/champion_00_00.nsbmd
+	@$(CHECK_SIZE) $(DIR_TEMP)/champion_00_00.nsbmd
 
 #champion_00_01
 $(DIR_OUTPUT)/champion_00_01.ngpack: $(DIR_TEMP)/champion_00_01.nsbmd $(DIR_RES)/champion_00_01.3dmd
@@ -7134,6 +7176,7 @@ $(DIR_OUTPUT)/champion_00_01.ngpack: $(DIR_TEMP)/champion_00_01.nsbmd $(DIR_RES)
 $(DIR_TEMP)/champion_00_01.nsbmd: $(DIR_RES)/champion_00_01.imd
 	@echo create_nsbmd champion_00_01
 	@$(G3DCVTR) $(DIR_RES)/champion_00_01.imd -emdl -o $(DIR_TEMP)/champion_00_01.nsbmd
+	@$(CHECK_SIZE) $(DIR_TEMP)/champion_00_01.nsbmd
 
 #champion_00_02
 $(DIR_OUTPUT)/champion_00_02.ngpack: $(DIR_TEMP)/champion_00_02.nsbmd $(DIR_RES)/champion_00_02.3dmd
@@ -7143,6 +7186,7 @@ $(DIR_OUTPUT)/champion_00_02.ngpack: $(DIR_TEMP)/champion_00_02.nsbmd $(DIR_RES)
 $(DIR_TEMP)/champion_00_02.nsbmd: $(DIR_RES)/champion_00_02.imd
 	@echo create_nsbmd champion_00_02
 	@$(G3DCVTR) $(DIR_RES)/champion_00_02.imd -emdl -o $(DIR_TEMP)/champion_00_02.nsbmd
+	@$(CHECK_SIZE) $(DIR_TEMP)/champion_00_02.nsbmd
 
 #champion_00_03
 $(DIR_OUTPUT)/champion_00_03.ngpack: $(DIR_TEMP)/champion_00_03.nsbmd $(DIR_RES)/champion_00_03.3dmd
@@ -7152,6 +7196,7 @@ $(DIR_OUTPUT)/champion_00_03.ngpack: $(DIR_TEMP)/champion_00_03.nsbmd $(DIR_RES)
 $(DIR_TEMP)/champion_00_03.nsbmd: $(DIR_RES)/champion_00_03.imd
 	@echo create_nsbmd champion_00_03
 	@$(G3DCVTR) $(DIR_RES)/champion_00_03.imd -emdl -o $(DIR_TEMP)/champion_00_03.nsbmd
+	@$(CHECK_SIZE) $(DIR_TEMP)/champion_00_03.nsbmd
 
 #champion_01_00
 $(DIR_OUTPUT)/champion_01_00.ngpack: $(DIR_TEMP)/champion_01_00.nsbmd $(DIR_RES)/champion_01_00.3dmd
@@ -7161,6 +7206,7 @@ $(DIR_OUTPUT)/champion_01_00.ngpack: $(DIR_TEMP)/champion_01_00.nsbmd $(DIR_RES)
 $(DIR_TEMP)/champion_01_00.nsbmd: $(DIR_RES)/champion_01_00.imd
 	@echo create_nsbmd champion_01_00
 	@$(G3DCVTR) $(DIR_RES)/champion_01_00.imd -emdl -o $(DIR_TEMP)/champion_01_00.nsbmd
+	@$(CHECK_SIZE) $(DIR_TEMP)/champion_01_00.nsbmd
 
 #champion_01_01
 $(DIR_OUTPUT)/champion_01_01.ngpack: $(DIR_TEMP)/champion_01_01.nsbmd $(DIR_RES)/champion_01_01.3dmd
@@ -7170,6 +7216,7 @@ $(DIR_OUTPUT)/champion_01_01.ngpack: $(DIR_TEMP)/champion_01_01.nsbmd $(DIR_RES)
 $(DIR_TEMP)/champion_01_01.nsbmd: $(DIR_RES)/champion_01_01.imd
 	@echo create_nsbmd champion_01_01
 	@$(G3DCVTR) $(DIR_RES)/champion_01_01.imd -emdl -o $(DIR_TEMP)/champion_01_01.nsbmd
+	@$(CHECK_SIZE) $(DIR_TEMP)/champion_01_01.nsbmd
 
 #champion_01_02
 $(DIR_OUTPUT)/champion_01_02.ngpack: $(DIR_TEMP)/champion_01_02.nsbmd $(DIR_RES)/champion_01_02.3dmd
@@ -7179,6 +7226,7 @@ $(DIR_OUTPUT)/champion_01_02.ngpack: $(DIR_TEMP)/champion_01_02.nsbmd $(DIR_RES)
 $(DIR_TEMP)/champion_01_02.nsbmd: $(DIR_RES)/champion_01_02.imd
 	@echo create_nsbmd champion_01_02
 	@$(G3DCVTR) $(DIR_RES)/champion_01_02.imd -emdl -o $(DIR_TEMP)/champion_01_02.nsbmd
+	@$(CHECK_SIZE) $(DIR_TEMP)/champion_01_02.nsbmd
 
 #champion_01_03
 $(DIR_OUTPUT)/champion_01_03.ngpack: $(DIR_TEMP)/champion_01_03.nsbmd $(DIR_RES)/champion_01_03.3dmd
@@ -7188,6 +7236,7 @@ $(DIR_OUTPUT)/champion_01_03.ngpack: $(DIR_TEMP)/champion_01_03.nsbmd $(DIR_RES)
 $(DIR_TEMP)/champion_01_03.nsbmd: $(DIR_RES)/champion_01_03.imd
 	@echo create_nsbmd champion_01_03
 	@$(G3DCVTR) $(DIR_RES)/champion_01_03.imd -emdl -o $(DIR_TEMP)/champion_01_03.nsbmd
+	@$(CHECK_SIZE) $(DIR_TEMP)/champion_01_03.nsbmd
 
 #champion_02_00
 $(DIR_OUTPUT)/champion_02_00.ngpack: $(DIR_TEMP)/champion_02_00.nsbmd $(DIR_RES)/champion_02_00.3dmd
@@ -7197,6 +7246,7 @@ $(DIR_OUTPUT)/champion_02_00.ngpack: $(DIR_TEMP)/champion_02_00.nsbmd $(DIR_RES)
 $(DIR_TEMP)/champion_02_00.nsbmd: $(DIR_RES)/champion_02_00.imd
 	@echo create_nsbmd champion_02_00
 	@$(G3DCVTR) $(DIR_RES)/champion_02_00.imd -emdl -o $(DIR_TEMP)/champion_02_00.nsbmd
+	@$(CHECK_SIZE) $(DIR_TEMP)/champion_02_00.nsbmd
 
 #champion_02_01
 $(DIR_OUTPUT)/champion_02_01.ngpack: $(DIR_TEMP)/champion_02_01.nsbmd $(DIR_RES)/champion_02_01.3dmd
@@ -7206,6 +7256,7 @@ $(DIR_OUTPUT)/champion_02_01.ngpack: $(DIR_TEMP)/champion_02_01.nsbmd $(DIR_RES)
 $(DIR_TEMP)/champion_02_01.nsbmd: $(DIR_RES)/champion_02_01.imd
 	@echo create_nsbmd champion_02_01
 	@$(G3DCVTR) $(DIR_RES)/champion_02_01.imd -emdl -o $(DIR_TEMP)/champion_02_01.nsbmd
+	@$(CHECK_SIZE) $(DIR_TEMP)/champion_02_01.nsbmd
 
 #champion_02_02
 $(DIR_OUTPUT)/champion_02_02.ngpack: $(DIR_TEMP)/champion_02_02.nsbmd $(DIR_RES)/champion_02_02.3dmd
@@ -7215,6 +7266,7 @@ $(DIR_OUTPUT)/champion_02_02.ngpack: $(DIR_TEMP)/champion_02_02.nsbmd $(DIR_RES)
 $(DIR_TEMP)/champion_02_02.nsbmd: $(DIR_RES)/champion_02_02.imd
 	@echo create_nsbmd champion_02_02
 	@$(G3DCVTR) $(DIR_RES)/champion_02_02.imd -emdl -o $(DIR_TEMP)/champion_02_02.nsbmd
+	@$(CHECK_SIZE) $(DIR_TEMP)/champion_02_02.nsbmd
 
 #champion_02_03
 $(DIR_OUTPUT)/champion_02_03.ngpack: $(DIR_TEMP)/champion_02_03.nsbmd $(DIR_RES)/champion_02_03.3dmd
@@ -7224,6 +7276,7 @@ $(DIR_OUTPUT)/champion_02_03.ngpack: $(DIR_TEMP)/champion_02_03.nsbmd $(DIR_RES)
 $(DIR_TEMP)/champion_02_03.nsbmd: $(DIR_RES)/champion_02_03.imd
 	@echo create_nsbmd champion_02_03
 	@$(G3DCVTR) $(DIR_RES)/champion_02_03.imd -emdl -o $(DIR_TEMP)/champion_02_03.nsbmd
+	@$(CHECK_SIZE) $(DIR_TEMP)/champion_02_03.nsbmd
 
 #champion_03_00
 $(DIR_OUTPUT)/champion_03_00.ngpack: $(DIR_TEMP)/champion_03_00.nsbmd $(DIR_RES)/champion_03_00.3dmd
@@ -7233,6 +7286,7 @@ $(DIR_OUTPUT)/champion_03_00.ngpack: $(DIR_TEMP)/champion_03_00.nsbmd $(DIR_RES)
 $(DIR_TEMP)/champion_03_00.nsbmd: $(DIR_RES)/champion_03_00.imd
 	@echo create_nsbmd champion_03_00
 	@$(G3DCVTR) $(DIR_RES)/champion_03_00.imd -emdl -o $(DIR_TEMP)/champion_03_00.nsbmd
+	@$(CHECK_SIZE) $(DIR_TEMP)/champion_03_00.nsbmd
 
 #champion_03_01
 $(DIR_OUTPUT)/champion_03_01.ngpack: $(DIR_TEMP)/champion_03_01.nsbmd $(DIR_RES)/champion_03_01.3dmd
@@ -7242,6 +7296,7 @@ $(DIR_OUTPUT)/champion_03_01.ngpack: $(DIR_TEMP)/champion_03_01.nsbmd $(DIR_RES)
 $(DIR_TEMP)/champion_03_01.nsbmd: $(DIR_RES)/champion_03_01.imd
 	@echo create_nsbmd champion_03_01
 	@$(G3DCVTR) $(DIR_RES)/champion_03_01.imd -emdl -o $(DIR_TEMP)/champion_03_01.nsbmd
+	@$(CHECK_SIZE) $(DIR_TEMP)/champion_03_01.nsbmd
 
 #champion_03_02
 $(DIR_OUTPUT)/champion_03_02.ngpack: $(DIR_TEMP)/champion_03_02.nsbmd $(DIR_RES)/champion_03_02.3dmd
@@ -7251,6 +7306,7 @@ $(DIR_OUTPUT)/champion_03_02.ngpack: $(DIR_TEMP)/champion_03_02.nsbmd $(DIR_RES)
 $(DIR_TEMP)/champion_03_02.nsbmd: $(DIR_RES)/champion_03_02.imd
 	@echo create_nsbmd champion_03_02
 	@$(G3DCVTR) $(DIR_RES)/champion_03_02.imd -emdl -o $(DIR_TEMP)/champion_03_02.nsbmd
+	@$(CHECK_SIZE) $(DIR_TEMP)/champion_03_02.nsbmd
 
 #champion_03_03
 $(DIR_OUTPUT)/champion_03_03.ngpack: $(DIR_TEMP)/champion_03_03.nsbmd $(DIR_RES)/champion_03_03.3dmd
@@ -7260,6 +7316,7 @@ $(DIR_OUTPUT)/champion_03_03.ngpack: $(DIR_TEMP)/champion_03_03.nsbmd $(DIR_RES)
 $(DIR_TEMP)/champion_03_03.nsbmd: $(DIR_RES)/champion_03_03.imd
 	@echo create_nsbmd champion_03_03
 	@$(G3DCVTR) $(DIR_RES)/champion_03_03.imd -emdl -o $(DIR_TEMP)/champion_03_03.nsbmd
+	@$(CHECK_SIZE) $(DIR_TEMP)/champion_03_03.nsbmd
 
 #champion_04_00
 $(DIR_OUTPUT)/champion_04_00.ngpack: $(DIR_TEMP)/champion_04_00.nsbmd $(DIR_RES)/champion_04_00.3dmd
@@ -7269,6 +7326,7 @@ $(DIR_OUTPUT)/champion_04_00.ngpack: $(DIR_TEMP)/champion_04_00.nsbmd $(DIR_RES)
 $(DIR_TEMP)/champion_04_00.nsbmd: $(DIR_RES)/champion_04_00.imd
 	@echo create_nsbmd champion_04_00
 	@$(G3DCVTR) $(DIR_RES)/champion_04_00.imd -emdl -o $(DIR_TEMP)/champion_04_00.nsbmd
+	@$(CHECK_SIZE) $(DIR_TEMP)/champion_04_00.nsbmd
 
 #champion_04_01
 $(DIR_OUTPUT)/champion_04_01.ngpack: $(DIR_TEMP)/champion_04_01.nsbmd $(DIR_RES)/champion_04_01.3dmd
@@ -7278,6 +7336,7 @@ $(DIR_OUTPUT)/champion_04_01.ngpack: $(DIR_TEMP)/champion_04_01.nsbmd $(DIR_RES)
 $(DIR_TEMP)/champion_04_01.nsbmd: $(DIR_RES)/champion_04_01.imd
 	@echo create_nsbmd champion_04_01
 	@$(G3DCVTR) $(DIR_RES)/champion_04_01.imd -emdl -o $(DIR_TEMP)/champion_04_01.nsbmd
+	@$(CHECK_SIZE) $(DIR_TEMP)/champion_04_01.nsbmd
 
 #champion_04_02
 $(DIR_OUTPUT)/champion_04_02.ngpack: $(DIR_TEMP)/champion_04_02.nsbmd $(DIR_RES)/champion_04_02.3dmd
@@ -7287,6 +7346,7 @@ $(DIR_OUTPUT)/champion_04_02.ngpack: $(DIR_TEMP)/champion_04_02.nsbmd $(DIR_RES)
 $(DIR_TEMP)/champion_04_02.nsbmd: $(DIR_RES)/champion_04_02.imd
 	@echo create_nsbmd champion_04_02
 	@$(G3DCVTR) $(DIR_RES)/champion_04_02.imd -emdl -o $(DIR_TEMP)/champion_04_02.nsbmd
+	@$(CHECK_SIZE) $(DIR_TEMP)/champion_04_02.nsbmd
 
 #champion_04_03
 $(DIR_OUTPUT)/champion_04_03.ngpack: $(DIR_TEMP)/champion_04_03.nsbmd $(DIR_RES)/champion_04_03.3dmd
@@ -7296,6 +7356,7 @@ $(DIR_OUTPUT)/champion_04_03.ngpack: $(DIR_TEMP)/champion_04_03.nsbmd $(DIR_RES)
 $(DIR_TEMP)/champion_04_03.nsbmd: $(DIR_RES)/champion_04_03.imd
 	@echo create_nsbmd champion_04_03
 	@$(G3DCVTR) $(DIR_RES)/champion_04_03.imd -emdl -o $(DIR_TEMP)/champion_04_03.nsbmd
+	@$(CHECK_SIZE) $(DIR_TEMP)/champion_04_03.nsbmd
 
 #champion_05_00
 $(DIR_OUTPUT)/champion_05_00.ngpack: $(DIR_TEMP)/champion_05_00.nsbmd $(DIR_RES)/champion_05_00.3dmd
@@ -7305,6 +7366,7 @@ $(DIR_OUTPUT)/champion_05_00.ngpack: $(DIR_TEMP)/champion_05_00.nsbmd $(DIR_RES)
 $(DIR_TEMP)/champion_05_00.nsbmd: $(DIR_RES)/champion_05_00.imd
 	@echo create_nsbmd champion_05_00
 	@$(G3DCVTR) $(DIR_RES)/champion_05_00.imd -emdl -o $(DIR_TEMP)/champion_05_00.nsbmd
+	@$(CHECK_SIZE) $(DIR_TEMP)/champion_05_00.nsbmd
 
 #champion_05_01
 $(DIR_OUTPUT)/champion_05_01.ngpack: $(DIR_TEMP)/champion_05_01.nsbmd $(DIR_RES)/champion_05_01.3dmd
@@ -7314,6 +7376,7 @@ $(DIR_OUTPUT)/champion_05_01.ngpack: $(DIR_TEMP)/champion_05_01.nsbmd $(DIR_RES)
 $(DIR_TEMP)/champion_05_01.nsbmd: $(DIR_RES)/champion_05_01.imd
 	@echo create_nsbmd champion_05_01
 	@$(G3DCVTR) $(DIR_RES)/champion_05_01.imd -emdl -o $(DIR_TEMP)/champion_05_01.nsbmd
+	@$(CHECK_SIZE) $(DIR_TEMP)/champion_05_01.nsbmd
 
 #champion_05_02
 $(DIR_OUTPUT)/champion_05_02.ngpack: $(DIR_TEMP)/champion_05_02.nsbmd $(DIR_RES)/champion_05_02.3dmd
@@ -7323,6 +7386,7 @@ $(DIR_OUTPUT)/champion_05_02.ngpack: $(DIR_TEMP)/champion_05_02.nsbmd $(DIR_RES)
 $(DIR_TEMP)/champion_05_02.nsbmd: $(DIR_RES)/champion_05_02.imd
 	@echo create_nsbmd champion_05_02
 	@$(G3DCVTR) $(DIR_RES)/champion_05_02.imd -emdl -o $(DIR_TEMP)/champion_05_02.nsbmd
+	@$(CHECK_SIZE) $(DIR_TEMP)/champion_05_02.nsbmd
 
 #champion_05_03
 $(DIR_OUTPUT)/champion_05_03.ngpack: $(DIR_TEMP)/champion_05_03.nsbmd $(DIR_RES)/champion_05_03.3dmd
@@ -7332,6 +7396,7 @@ $(DIR_OUTPUT)/champion_05_03.ngpack: $(DIR_TEMP)/champion_05_03.nsbmd $(DIR_RES)
 $(DIR_TEMP)/champion_05_03.nsbmd: $(DIR_RES)/champion_05_03.imd
 	@echo create_nsbmd champion_05_03
 	@$(G3DCVTR) $(DIR_RES)/champion_05_03.imd -emdl -o $(DIR_TEMP)/champion_05_03.nsbmd
+	@$(CHECK_SIZE) $(DIR_TEMP)/champion_05_03.nsbmd
 
 #m_dun0805_00_00
 $(DIR_OUTPUT)/m_dun0805_00_00.ngpack: $(DIR_TEMP)/m_dun0805_00_00.nsbmd $(DIR_RES)/m_dun0805_00_00.3dmd
@@ -7341,6 +7406,7 @@ $(DIR_OUTPUT)/m_dun0805_00_00.ngpack: $(DIR_TEMP)/m_dun0805_00_00.nsbmd $(DIR_RE
 $(DIR_TEMP)/m_dun0805_00_00.nsbmd: $(DIR_RES)/m_dun0805_00_00.imd
 	@echo create_nsbmd m_dun0805_00_00
 	@$(G3DCVTR) $(DIR_RES)/m_dun0805_00_00.imd -emdl -o $(DIR_TEMP)/m_dun0805_00_00.nsbmd
+	@$(CHECK_SIZE) $(DIR_TEMP)/m_dun0805_00_00.nsbmd
 
 #m_gstation01_00_00
 $(DIR_OUTPUT)/m_gstation01_00_00.ngpack: $(DIR_TEMP)/m_gstation01_00_00.nsbmd $(DIR_RES)/m_gstation01_00_00.3dmd
@@ -7350,4 +7416,5 @@ $(DIR_OUTPUT)/m_gstation01_00_00.ngpack: $(DIR_TEMP)/m_gstation01_00_00.nsbmd $(
 $(DIR_TEMP)/m_gstation01_00_00.nsbmd: $(DIR_RES)/m_gstation01_00_00.imd
 	@echo create_nsbmd m_gstation01_00_00
 	@$(G3DCVTR) $(DIR_RES)/m_gstation01_00_00.imd -emdl -o $(DIR_TEMP)/m_gstation01_00_00.nsbmd
+	@$(CHECK_SIZE) $(DIR_TEMP)/m_gstation01_00_00.nsbmd
 

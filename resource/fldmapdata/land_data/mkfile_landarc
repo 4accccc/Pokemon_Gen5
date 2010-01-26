@@ -29,6 +29,9 @@ G3DCVTR	= g3dcvtr.exe
 HEIGHTCNV =	$(PROJECT_ROOT)tools/heightcnv/imdcnv01
 HEIGHTRETFILE = $(PROJECT_ROOT)tools/heightcnv/return.txt
 
+#サイズチェック用スクリプト
+CHECK_SIZE  = ruby check_size.rb 0xf000
+
 include land_depend_list #LAND_DEPEND_LIST
 
 ifeq	($(CONVERTUSER),true) #CONVERTUSER

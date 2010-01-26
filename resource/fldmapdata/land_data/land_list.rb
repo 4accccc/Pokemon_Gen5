@@ -35,6 +35,7 @@ STR_BINLINKER = "$(BINLINKER)"
 STR_G3DCVTR = "$(G3DCVTR)"
 STR_HEIGHTCNV = "$(HEIGHTCNV)"
 STR_HEIGHTRETFILE = "$(HEIGHTRETFILE)"
+STR_CHECK_SIZE  = "$(CHECK_SIZE)"
 
 #ダミーファイル
 FNAME_DMYFILE_GRID_3DMD = "dmygmap.3dmd"
@@ -263,8 +264,11 @@ def file_write_nogrid( name,
   
   file_make_depend.printf( "\t@echo create_nsbmd %s\n", name )
    
-  file_make_depend.printf( "\t@%s %s/%s.imd -emdl -o %s/%s.nsbmd\n\n",
+  file_make_depend.printf( "\t@%s %s/%s.imd -emdl -o %s/%s.nsbmd\n",
     STR_G3DCVTR, DIRSTR_RES, name, DIRSTR_TEMP, name )
+
+  file_make_depend.printf( "\t@%s %s/%s.nsbmd\n\n",
+    STR_CHECK_SIZE, DIRSTR_TEMP, name )
 
 =begin
   #land_make_depend bhc
