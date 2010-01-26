@@ -95,35 +95,23 @@ SRCS  +=    $(SOUNDSRC) \
 				field/map_matrix.c \
         field/map_replace.c \
         field/field_location.c \
-        field/eventdata_system.c \
         field/field_status.c \
         field/event_gameover.c \
         field/event_gameclear.c \
         field/event_gamestart.c \
         field/event_fieldmap_control.c \
-        field/event_fieldmap_menu.c \
-				field/event_shortcut_menu.c \
-				field/event_field_proclink.c \
         field/event_battle.c \
         field/event_gsync.c \
         field/event_gtsnego.c \
         field/event_wifibattlematch.c \
         field/event_battlerecorder.c \
         field/event_debug_wifimatch.c \
-        field/event_fldmmdl_control.c \
         net_app/wificlub/wifi_p2pevent.c \
         field/event_wificlub.c \
         field/event_colosseum_battle.c \
         field/event_battle_call.c \
         field/event_bsubway.c \
-        field/field_comm/intrude_comm.c \
-        field/field_comm/intrude_comm_command.c \
-        field/field_comm/intrude_main.c \
-        field/field_comm/intrude_work.c \
-        field/field_comm/intrude_mission.c \
-        field/field_comm/intrude_battle.c \
         field/field_comm/bingo_system.c \
-        field/field_wfbc_data.c \
         net_app/union/comm_player.c \
         system/mcss.c \
         system/mcss_tool.c \
@@ -160,9 +148,6 @@ SRCS  +=    $(SOUNDSRC) \
         app/pms_input/pmsi_param.c \
         sound/snd_viewer_mcs.c \
         system/laster.c \
-        field/fldmmdl.c \
-        field/fldmmdl_move.c \
-				field/fldmmdl_railsetup.c \
         system/pms_data.c \
         system/pms_word.c \
         infowin/infowin.c \
@@ -233,7 +218,6 @@ SRCS  +=    $(SOUNDSRC) \
 				system/shortcut_data.c \
         app/bag/bag_param.c\
         field/event_poke_status.c \
-        field/field_flagcontrol.c \
         system/screentex.c \
         debug/debug_flg.c \
         debug/debug_hudson.c \
@@ -347,6 +331,22 @@ SRCS_OVERLAY_NOTWIFI = sound/snd_viewer.c \
         musical/stage/musical_stage_sys.c \
         musical/musical_program.c \
         field/event_cg_wireless.c \
+        field/event_fieldmap_menu.c \
+				field/event_shortcut_menu.c \
+				field/event_field_proclink.c \
+        field/event_fldmmdl_control.c \
+        field/field_comm/intrude_comm.c \
+        field/field_comm/intrude_comm_command.c \
+        field/field_comm/intrude_main.c \
+        field/field_comm/intrude_work.c \
+        field/field_comm/intrude_mission.c \
+        field/field_comm/intrude_battle.c \
+        field/field_wfbc_data.c \
+        field/eventdata_system.c \
+        field/fldmmdl.c \
+        field/fldmmdl_move.c \
+				field/fldmmdl_railsetup.c \
+        field/field_flagcontrol.c \
         field/itemuse_event.c
 
 
@@ -574,6 +574,7 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
 				field/event_comm_talk.c \
 				field/event_comm_talked.c \
 				field/fog_light_test.c \
+				field/field_crowd_people.c \
 				gamesystem/game_beacon_accessor.c \
 				net_app/comm_entry_menu.c \
 				net_app/comm_entry_menu_comm_command.c \
