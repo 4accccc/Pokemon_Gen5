@@ -72,9 +72,9 @@ class BMData
     else
       raise SymbolRedefineError, "ファイル#{sym}が多重定義されています"
     end
-    #if @@syms.length > 255 then
-    #  raise TooMuchSymbolError, "配置モデルの種類が制限値（255)を超えています！！"
-    #end
+    if @@syms.length > 300 then
+      raise TooMuchSymbolError, "配置モデルの種類が制限値（300)を超えています！！"
+    end
     @sym = sym
     @anime_id = getAnimeID( anime_id )
     @prog = getProgID( prog )
