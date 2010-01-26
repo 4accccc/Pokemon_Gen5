@@ -71,15 +71,15 @@
 //=====================================
 static const GFL_DISP_VRAM sc_vramSetTable =
 {
-	GX_VRAM_BG_128_A,						// メイン2DエンジンのBG
+	GX_VRAM_BG_64_E,						// メイン2DエンジンのBG
 	GX_VRAM_BGEXTPLTT_NONE,     // メイン2DエンジンのBG拡張パレット
 	GX_VRAM_SUB_BG_128_C,				// サブ2DエンジンのBG
 	GX_VRAM_SUB_BGEXTPLTT_NONE, // サブ2DエンジンのBG拡張パレット
-	GX_VRAM_OBJ_128_B,					// メイン2DエンジンのOBJ
+	GX_VRAM_OBJ_128_A,					// メイン2DエンジンのOBJ
 	GX_VRAM_OBJEXTPLTT_NONE,		// メイン2DエンジンのOBJ拡張パレット
 	GX_VRAM_SUB_OBJ_16_I,	      // サブ2DエンジンのOBJ
 	GX_VRAM_SUB_OBJEXTPLTT_NONE,// サブ2DエンジンのOBJ拡張パレット
-	GX_VRAM_TEX_0_D,						// テクスチャイメージスロット
+	GX_VRAM_TEX_01_BD,						// テクスチャイメージスロット
 	GX_VRAM_TEXPLTT_0_F,				// テクスチャパレットスロット
 	GX_OBJVRAMMODE_CHAR_1D_128K,// メイン画面OBJマッピングモード		
 	GX_OBJVRAMMODE_CHAR_1D_32K,// サブ画面OBJマッピングモード

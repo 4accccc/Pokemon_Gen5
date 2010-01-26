@@ -34,6 +34,7 @@ typedef enum {
   COMM_BTL_DEMO_RESULT_WIN = 0, ///< 勝ち
   COMM_BTL_DEMO_RESULT_LOSE,    ///< 負け
   COMM_BTL_DEMO_RESULT_DRAW,    ///< 引き分け
+  COMM_BTL_DEMO_RESULT_MAX,
 } COMM_BTL_DEMO_RESULT;
 
 //--------------------------------------------------------------
@@ -62,9 +63,11 @@ enum
 //==============================================================
 typedef struct {
   const POKEPARTY* party; ///< 所有ポケモンデータ
-  STRBUF* str_trname;  ///< トレイナー名
-  u8 trsex;                                        ///< トレイナーの性別:PM_MALE or PM_FEMALE
-  u8 server_version;                               ///< ROMのサーババージョン
+  //@TODO STRCODEかSTRBUFか決める
+  STRCODE trname[ PERSON_NAME_SIZE + EOM_SIZE ];  // 16
+  STRBUF* str_trname;     ///< トレーナー名
+  u8 trsex;               ///< トレーナーの性別:PM_MALE or PM_FEMALE
+  u8 server_version;      ///< ROMのサーババージョン
   u8 padding[2];
 } COMM_BTL_DEMO_TRAINER_DATA;
 

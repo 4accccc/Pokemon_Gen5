@@ -13,6 +13,8 @@
 #include "system/gfl_use.h"
 #include "system/main.h"
 
+#include "poke_tool/pokeparty.h" // for POKEPARTY
+
 // 簡易会話表示システム
 #include "system/pms_draw.h"
 
@@ -108,10 +110,16 @@ typedef struct
 typedef struct {
   //[IN]
   COMM_BTL_DEMO_GRAPHIC_WORK* graphic;
+  HEAPID  heapID;
   //[PRIVATE]
   GFL_G3D_UTIL*   g3d_util;
-  u16  anm_unit_idx; ///< アニメーションさせるUNITのIDX
-  u16  padding;  
+  u16 anm_unit_idx;   ///< アニメーションさせるUNITのIDX
+  u8  padding[2];
+  
+  GFL_PTC_PTR     ptc;
+  u8              spa_work[ PARTICLE_LIB_HEAP_SIZE ];
+  u8  spa_num;
+
 } COMM_BTL_DEMO_G3D_WORK;
 
 //--------------------------------------------------------------
@@ -235,10 +243,14 @@ static CBD_SCENE_ID calc_first_scene( COMM_BTL_DEMO_MAIN_WORK* wk )
  */
 //=============================================================================
 static void G3D_Init( COMM_BTL_DEMO_G3D_WORK* g3d, COMM_BTL_DEMO_GRAPHIC_WORK* graphic, HEAPID heapID );
+static void G3D_End( COMM_BTL_DEMO_G3D_WORK* g3d );
+static void G3D_Main( COMM_BTL_DEMO_G3D_WORK * g3d );
+static void G3D_PTC_Setup( COMM_BTL_DEMO_G3D_WORK* g3d, int spa_idx );
+static void G3D_PTC_Delete( COMM_BTL_DEMO_G3D_WORK* g3d );
+static void G3D_PTC_CreateEmitter( COMM_BTL_DEMO_G3D_WORK * g3d, u16 idx, const VecFx32* pos );
 static void G3D_AnimeSet( COMM_BTL_DEMO_G3D_WORK* g3d, u16 demo_id );
 static void G3D_AnimeDel( COMM_BTL_DEMO_G3D_WORK* g3d );
 static BOOL G3D_AnimeMain( COMM_BTL_DEMO_G3D_WORK* g3d );
-static void G3D_End( COMM_BTL_DEMO_G3D_WORK* g3d );
 
   //-------------------------------------
 ///	PROC
@@ -264,6 +276,56 @@ const GFL_PROC_DATA CommBtlDemoProcData =
 	CommBtlDemoProc_Exit,
 };
 
+//@TODO hosakaのみ
+#ifdef DEBUG_ONLY_FOR_genya_hosaka
+// ワーク生成
+static void debug_param( COMM_BTL_DEMO_PARAM* prm )
+{ 
+  int i;
+  int poke_cnt;
+  
+  prm->type = COMM_BTL_DEMO_TYPE_NORMAL_START;
+  prm->result = GFUser_GetPublicRand( COMM_BTL_DEMO_RESULT_MAX );
+
+  HOSAKA_Printf( "result = %d \n", prm->result );
+
+  for( i=0; i<COMM_BTL_DEMO_TRDATA_MAX; i++ )
+  {
+    prm->trainer_data[i].server_version = GFUser_GetPublicRand(2);
+//  prm->trainer_data[i].str_trname = 1;
+    prm->trainer_data[i].trsex = GFUser_GetPublicRand(2) ? PM_MALE : PM_FEMALE;
+    
+    // デバッグポケパーティー
+    {
+      POKEPARTY *party;
+
+      party = PokeParty_AllocPartyWork( HEAPID_COMM_BTL_DEMO );
+      Debug_PokeParty_MakeParty( party );
+
+      prm->trainer_data[i].party = party;
+    }
+
+    poke_cnt = PokeParty_GetPokeCount( prm->trainer_data[i].party );
+
+    HOSAKA_Printf("[%d] server_version=%d trsex=%d poke_cnt=%d \n",i, 
+        prm->trainer_data[i].server_version,
+        prm->trainer_data[i].trsex,
+        poke_cnt
+        );
+  }
+}
+// ワーク開放
+static void debug_param_del( COMM_BTL_DEMO_PARAM* prm )
+{
+  int i;
+
+  for( i=0; i<COMM_BTL_DEMO_TRDATA_MAX; i++ )
+  {
+    GFL_HEAP_FreeMemory( (POKEPARTY*)prm->trainer_data[i].party );
+  }
+}
+#endif
+
 //=============================================================================
 /**
  *								PROC
@@ -288,17 +350,21 @@ static GFL_PROC_RESULT CommBtlDemoProc_Init( GFL_PROC *proc, int *seq, void *pwk
 
 	//オーバーレイ読み込み
 	GFL_OVERLAY_Load( FS_OVERLAY_ID(ui_common));
-	
-	//引数取得
-	param	= pwk;
 
 	//ヒープ作成
-  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_UI_DEBUG, COMM_BTL_DEMO_HEAP_SIZE );
-  wk = GFL_PROC_AllocWork( proc, sizeof(COMM_BTL_DEMO_MAIN_WORK), HEAPID_UI_DEBUG );
+  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_COMM_BTL_DEMO, COMM_BTL_DEMO_HEAP_SIZE );
+  wk = GFL_PROC_AllocWork( proc, sizeof(COMM_BTL_DEMO_MAIN_WORK), HEAPID_COMM_BTL_DEMO );
   GFL_STD_MemClear( wk, sizeof(COMM_BTL_DEMO_MAIN_WORK) );
+	
+  //引数取得
+	param	= pwk;
+
+#ifdef DEBUG_ONLY_FOR_genya_hosaka
+  debug_param( pwk );
+#endif
 
   // 初期化
-  wk->heapID = HEAPID_UI_DEBUG;
+  wk->heapID = HEAPID_COMM_BTL_DEMO;
 	
 	//描画設定初期化
 	wk->graphic	= COMM_BTL_DEMO_GRAPHIC_Init( GX_DISP_SELECT_SUB_MAIN, wk->heapID );
@@ -314,7 +380,6 @@ static GFL_PROC_RESULT CommBtlDemoProc_Init( GFL_PROC *proc, int *seq, void *pwk
 	//PRINT_QUE作成
 	wk->print_que		= PRINTSYS_QUE_Create( wk->heapID );
   
-
   // シーンコントローラ作成
   wk->cntScene = UI_SCENE_CNT_Create( 
       wk->heapID, c_scene_func_tbl, CBD_SCENE_ID_MAX, 
@@ -323,6 +388,7 @@ static GFL_PROC_RESULT CommBtlDemoProc_Init( GFL_PROC *proc, int *seq, void *pwk
 	//BGリソース読み込み
 	CommBtlDemo_BG_LoadResource( &wk->wk_bg, wk->heapID );
 
+  // G3D関連初期化
   G3D_Init( &wk->wk_g3d, wk->graphic, wk->heapID );
 
   //@TODO とりあえずBGは非表示にしておく
@@ -350,6 +416,10 @@ static GFL_PROC_RESULT CommBtlDemoProc_Init( GFL_PROC *proc, int *seq, void *pwk
 static GFL_PROC_RESULT CommBtlDemoProc_Exit( GFL_PROC *proc, int *seq, void *pwk, void *mywk )
 { 
 	COMM_BTL_DEMO_MAIN_WORK* wk = mywk;
+
+#ifdef DEBUG_ONLY_FOR_genya_hosaka
+  debug_param_del( pwk );
+#endif
   
   // フェード中は処理しない
   if( GFL_FADE_CheckFade() == TRUE )
@@ -401,11 +471,17 @@ static GFL_PROC_RESULT CommBtlDemoProc_Main( GFL_PROC *proc, int *seq, void *pwk
 { 
 	COMM_BTL_DEMO_MAIN_WORK* wk = mywk;
 
+#if 0
   //@TODO カメラテスト
+#ifdef PM_DEBUG
   {
     GFL_G3D_CAMERA* p_camera = COMM_BTL_DEMO_GRAPHIC_GetCamera( wk->graphic );
     debug_camera_test( p_camera );
   }
+#endif
+#endif
+
+  G3D_Main( &wk->wk_g3d );
 
   // @TODO 汎用化
 #if 0
@@ -509,6 +585,11 @@ static void CommBtlDemo_BG_LoadResource( COMM_BTL_DEMO_BG_WORK* wk, HEAPID heapI
 //-----------------------------------------------------------------------------
 static BOOL SceneNormalStart_Init( UI_SCENE_CNT_PTR cnt, void* work )
 {
+  COMM_BTL_DEMO_MAIN_WORK* wk = work;
+
+  // PTCワーク生成
+  G3D_PTC_Setup( &wk->wk_g3d, NARC_comm_btl_demo_vs_demo01_spa );
+
   return TRUE;
 }
 
@@ -544,14 +625,25 @@ static BOOL SceneNormalStart_Main( UI_SCENE_CNT_PTR cnt, void* work )
     }
     break;
   case 2:
-    G3D_AnimeDel( &wk->wk_g3d );
+    {
+      // パーティクル表示
+      {
+        int i;
+        VecFx32 pos = {0,0,-100};
 
-    // 追加する
-    UI_SCENE_CNT_IncSubSeq( cnt );
+        for( i=0; i<wk->wk_g3d.spa_num; i++ )
+        {
+//          G3D_PTC_CreateEmitter( &wk->wk_g3d, i, &pos );
+        }
+      }
+
+      UI_SCENE_CNT_IncSubSeq( cnt );
+    }
     break;
   case 3:
     if( G3D_AnimeMain( &wk->wk_g3d ) == FALSE )
     {
+      G3D_AnimeDel( &wk->wk_g3d );
       return TRUE;
     }
     break;
@@ -573,9 +665,17 @@ static BOOL SceneNormalStart_Main( UI_SCENE_CNT_PTR cnt, void* work )
 //-----------------------------------------------------------------------------
 static BOOL SceneNormalStart_End( UI_SCENE_CNT_PTR cnt, void* work )
 { 
+  COMM_BTL_DEMO_MAIN_WORK* wk = work;
+
+  // PTCワーク開放
+  G3D_PTC_Delete( &wk->wk_g3d );
+
 // @TODO 保坂のみループ
 #ifdef DEBUG_ONLY_FOR_genya_hosaka
-  UI_SCENE_CNT_SetNextScene( cnt, CBD_SCENE_ID_NORMAL_START );
+  if( (GFL_UI_KEY_GetCont() & PAD_BUTTON_START) == FALSE )
+  {
+    UI_SCENE_CNT_SetNextScene( cnt, CBD_SCENE_ID_NORMAL_START );
+  }
 #else
   // 終了
   UI_SCENE_CNT_SetNextScene( cnt, UI_SCENE_ID_END );
@@ -645,13 +745,149 @@ static void G3D_Init( COMM_BTL_DEMO_G3D_WORK* g3d, COMM_BTL_DEMO_GRAPHIC_WORK* g
   GF_ASSERT( graphic );
 
   // ブレンド指定
-  G2_SetBlendAlpha( GX_PLANEMASK_BG0, GX_PLANEMASK_BG3|GX_PLANEMASK_BG0, 0, 0 );
+  G2_SetBlendAlpha( GX_PLANEMASK_BG0, GX_PLANEMASK_BG3|GX_PLANEMASK_BG0, 16, 0 );
 //  G2_SetBlendAlpha( GX_PLANEMASK_BG0, GX_PLANEMASK_BG3|GX_PLANEMASK_BG2|GX_PLANEMASK_BG1|GX_PLANEMASK_BG0, 0, 0 );
   
+  // メンバ初期化
   g3d->graphic = graphic;
+  g3d->heapID = heapID;
 
   // 3D管理ユーティリティーの生成
   g3d->g3d_util = GFL_G3D_UTIL_Create( 10, 16, heapID );
+
+  // PTC SYSTEM
+  GFL_PTC_Init( heapID );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  終了処理
+ *
+ *	@param	COMM_BTL_DEMO_G3D_WORK* g3d 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void G3D_End( COMM_BTL_DEMO_G3D_WORK* g3d )
+{ 
+  int i;
+
+  GF_ASSERT( g3d );
+  GF_ASSERT( g3d->g3d_util );
+  
+  // PTC開放
+  GFL_PTC_Exit();
+
+  // 3D管理ユーティリティーの破棄
+  GFL_G3D_UTIL_Delete( g3d->g3d_util );
+}
+
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  3D関連 主処理
+ *
+ *	@param	COMM_BTL_DEMO_G3D_WORK * g3d 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void G3D_Main( COMM_BTL_DEMO_G3D_WORK * g3d )
+{
+  GF_ASSERT( g3d );
+
+  if( g3d->ptc )
+  {
+    GFL_PTC_Main();
+  }
+}
+
+static VecFx32 sc_camera_eye = { 0, 0, FX32_CONST(70), };
+static VecFx32 sc_camera_up = { 0, FX32_ONE, 0 };
+static VecFx32 sc_camera_at = { 0, 0, -FX32_ONE };
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  PTCリソースロード
+ *
+ *	@param	COMM_BTL_DEMO_G3D_WORK* g3d
+ *	@param	spa_idx 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void G3D_PTC_Setup( COMM_BTL_DEMO_G3D_WORK* g3d, int spa_idx )
+{
+  GF_ASSERT( g3d->ptc == NULL );
+
+  // PTCワーク生成
+  g3d->ptc = GFL_PTC_Create( g3d->spa_work, sizeof(g3d->spa_work), TRUE, g3d->heapID );
+  
+  /* パーティクルのカメラを正射影に設定 */	
+  {
+    GFL_G3D_PROJECTION projection; 
+    projection.type = GFL_G3D_PRJORTH;
+    projection.param1 = FX32_CONST(4); 
+    projection.param2 = -FX32_CONST(4); 
+    projection.param3 = -FX32_CONST(3); 
+    projection.param4 = FX32_CONST(3);  
+    projection.near = FX32_ONE * 1;
+    projection.far  = FX32_CONST( 1024 );	// 正射影なので関係ないが、念のためクリップのfarを設定
+    projection.scaleW = FX32_ONE;//0
+    GFL_PTC_PersonalCameraDelete( g3d->ptc );
+    GFL_PTC_PersonalCameraCreate( g3d->ptc, &projection, DEFAULT_PERSP_WAY, &sc_camera_eye, &sc_camera_up, &sc_camera_at, g3d->heapID );
+  }
+
+  // リソース展開
+  {
+    void *res;
+
+    res = GFL_PTC_LoadArcResource( ARCID_COMM_BTL_DEMO_GRA, spa_idx, g3d->heapID );
+    g3d->spa_num = GFL_PTC_GetResNum( res );
+    HOSAKA_Printf("load spa_idx=%d num=%d \n", spa_idx, g3d->spa_num );
+    GFL_PTC_SetResourceEx( g3d->ptc, res, TRUE, NULL );
+  }
+
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  PTCワーク削除
+ *
+ *	@param	COMM_BTL_DEMO_G3D_WORK* g3d 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void G3D_PTC_Delete( COMM_BTL_DEMO_G3D_WORK* g3d )
+{
+  GF_ASSERT( g3d->ptc );
+
+  GFL_PTC_Delete( g3d->ptc );
+  g3d->ptc = NULL;
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  エミッタ生成
+ *
+ *	@param	COMM_BTL_DEMO_G3D_WORK * g3d
+ *	@param	idx
+ *	@param	VecFx32* pos 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void G3D_PTC_CreateEmitter( COMM_BTL_DEMO_G3D_WORK * g3d, u16 idx, const VecFx32* pos )
+{
+  GFL_EMIT_PTR emit;
+
+  GF_ASSERT(g3d);
+  GF_ASSERT(g3d->ptc);
+
+  emit = GFL_PTC_CreateEmitter( g3d->ptc, idx, pos );
+
+  HOSAKA_Printf("emit=%d \n", emit);
 }
 
 //-----------------------------------------------------------------------------
@@ -670,7 +906,7 @@ static void G3D_AnimeSet( COMM_BTL_DEMO_G3D_WORK* g3d, u16 demo_id )
   
   // ユニット生成
   g3d->anm_unit_idx = GFL_G3D_UTIL_AddUnit( g3d->g3d_util, &sc_setup[ demo_id ] );
-  HOSAKA_Printf("add unit idx=%d\n", g3d->anm_unit_idx );
+  HOSAKA_Printf("demo_id=%d add unit idx=%d ",demo_id, g3d->anm_unit_idx );
   
   // アニメーション有効化
   {
@@ -679,6 +915,8 @@ static void G3D_AnimeSet( COMM_BTL_DEMO_G3D_WORK* g3d, u16 demo_id )
     
     obj         = GFL_G3D_UTIL_GetObjHandle( g3d->g3d_util, g3d->anm_unit_idx );
     anime_count = GFL_G3D_OBJECT_GetAnimeCount( obj );
+
+    HOSAKA_Printf("anime_count=%d \n", anime_count);
 
     for( i=0; i<anime_count; i++ )
     {
@@ -772,24 +1010,3 @@ static BOOL G3D_AnimeMain( COMM_BTL_DEMO_G3D_WORK* g3d )
 
   return is_loop;
 }
-
-//-----------------------------------------------------------------------------
-/**
- *	@brief  終了処理
- *
- *	@param	COMM_BTL_DEMO_G3D_WORK* g3d 
- *
- *	@retval
- */
-//-----------------------------------------------------------------------------
-static void G3D_End( COMM_BTL_DEMO_G3D_WORK* g3d )
-{ 
-  int i;
-
-  GF_ASSERT( g3d );
-  GF_ASSERT( g3d->g3d_util );
-
-  // 3D管理ユーティリティーの破棄
-  GFL_G3D_UTIL_Delete( g3d->g3d_util );
-}
-
