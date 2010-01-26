@@ -86,6 +86,7 @@ typedef enum{
   DREAM_WORLD_MATCHUP_NONE,     // 登録していない状態
   DREAM_WORLD_MATCHUP_SIGNUP,	  // web登録した。DS->SAKEの接続はまだ
   DREAM_WORLD_MATCHUP_ENTRY,	  // 参加中
+  DREAM_WORLD_MATCHUP_END,	  // 大会終了
   DREAM_WORLD_MATCHUP_RETIRE,		 // 途中で解除
 } DREAM_WORLD_MATCHUP_TYPE;   /// 世界対戦の進行状況
 
