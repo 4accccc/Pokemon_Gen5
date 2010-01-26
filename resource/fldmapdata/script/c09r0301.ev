@@ -66,9 +66,9 @@ INIT_EVENT_START	ev_recover_c09r0301
 		
 	ENDIF
 
-	//頂上にいるならカメラ設定を変更。スポットライトを点灯状態に。
+	//頂上にいるならカメラ設定を変更。カート位置を終着点(頂上)に変更。
 	IF $LOCALWORK0 == 1 THEN
-	
+		
 		_FOURKINGS_SET_TOP_CAMERA( 3 )
 		_BMODEL_DIRECT_ANIME_SET_FINISHED( SCR_BMID_EVENT, 24, 16 )
 		
@@ -283,7 +283,7 @@ EVENT_END
 //主人公：上へ進む
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_ply_move_01
-	_ANIME_DATA	AC_WALK_U_8F,3
+	_ANIME_DATA	AC_WALK_U_8F,5
 	_ANIME_DATA	ACMD_END,0
 
 
