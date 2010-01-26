@@ -21,5 +21,7 @@
 #define SCRID_BG_C04_BOARD_04 (14)
 #define SCRID_BG_C04_BOARD_05 (15)
 #define SCRID_BG_C04_BOARD_06 (16)
+#define SCRID_RESERVE_C04_EXIT (17)
+#define SCRID_ZONE_C04 (18)
 
 #endif //_C04_DEF_H_

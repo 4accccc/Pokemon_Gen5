@@ -15,6 +15,12 @@
 //--------------------------------------------------------------
 //              特殊スクリプト
 //--------------------------------------------------------------
+_SCENE_CHANGE_LABEL		sp_c04r0101_tbl
 _SP_EVENT_DATA_END
+
+//テーブル定義
+sp_c04r0101_tbl:
+	_SCENE_CHANGE_DATA		WK_OTHER_STATION_CONNECT,0,SCRID_SCENE_C04R0101_ENTRY
+	_SCENE_CHANGE_END
 
 

@@ -10,6 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_c04.h"
+  .include  "c04r0101_def.h"
   .include  "c04.h"
 
 //--------------------------------------------------------------
@@ -35,7 +36,36 @@ _EVENT_DATA    ev_bg_c04_board_03
 _EVENT_DATA    ev_bg_c04_board_04
 _EVENT_DATA    ev_bg_c04_board_05
 _EVENT_DATA    ev_bg_c04_board_06
+_EVENT_DATA    ev_reserve_c04_exit			//ギアステーションから出てきた時のアニメ
+_EVENT_DATA    ev_zone_c04
 _EVENT_DATA_END
+
+
+/************************************************************/
+/*					ZONE_CHANGE_SCRIPT						*/
+/************************************************************/
+INIT_EVENT_START	ev_zone_c04
+	
+	//ギアステーション内階段降りる演出用にワークをリセット
+	$WK_OTHER_STATION_CONNECT = 0
+
+INIT_EVENT_END
+
+/************************************************************/
+/*	予約スクリプト：ギアステーションから出てくるアニメ		*/
+/************************************************************/
+EVENT_START	ev_reserve_c04_exit
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_exit_player_walk_out )
+	_OBJ_ANIME_WAIT()
+	
+EVENT_END
+
+//--------------------------------------------------------------------
+//主人公：一歩前へ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_exit_player_walk_out
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
 
 
 /************************************************************/

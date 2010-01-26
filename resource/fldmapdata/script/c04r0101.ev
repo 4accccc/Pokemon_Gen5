@@ -10,7 +10,8 @@
 
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_c04r0101.h"
-  //.include  "c04r0101.h"
+  .include  "c04_def.h"
+  .include  "c04r0101.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -22,7 +23,56 @@
 _EVENT_DATA    ev_c04r0101_railman_01
 _EVENT_DATA    ev_c04r0101_railman_02
 _EVENT_DATA    ev_c04r0101_fighterm_01
+_EVENT_DATA    ev_pos_c04r0101_connect_c04
+_EVENT_DATA    ev_scene_c04r0101_entry
 _EVENT_DATA_END
+
+
+/************************************************************/
+/*		予約スクリプト：入った時の主人公アニメ				*/
+/************************************************************/
+EVENT_START	ev_scene_c04r0101_entry
+	//主人公：階段を降りる
+	_TIME_WAIT( 16 )
+	
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_walk_in )
+	_OBJ_ANIME_WAIT()
+	
+	$WK_OTHER_STATION_CONNECT = 1
+	
+EVENT_END
+
+//--------------------------------------------------------------------
+//主人公：階段を登る
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_walk_in
+	_ANIME_DATA	AC_WALK_L_8F,8
+	_ANIME_DATA	ACMD_END,0
+
+
+/************************************************************/
+/*					POSイベント：C04に出る					*/
+/************************************************************/
+//スクリプトによる特殊な接続イベント
+EVENT_START	ev_pos_c04r0101_connect_c04
+	//主人公：階段を登る
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_walk_out )
+	_OBJ_ANIME_WAIT()
+	
+	//予約スクリプト：C04マップチェンジ後に主人公出てくるアニメを起動
+	_RESERVE_SCRIPT( SCRID_RESERVE_C04_EXIT )
+	
+	//C04にマップチェンジ
+	_MAP_CHANGE( ZONE_ID_C04, 422, 459, DIR_DOWN )
+	
+EVENT_END
+
+//--------------------------------------------------------------------
+//主人公：階段を登る
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_walk_out
+	_ANIME_DATA	AC_WALK_R_8F,8
+	_ANIME_DATA	ACMD_END,0
 
 
 /************************************************************/

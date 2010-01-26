@@ -179,7 +179,7 @@
 #define WK_OTHER_SCENE_C04R0111          16691 /* 0x4133 バトルサブウェイ、ホームシーン制御 */
 #define WK_OTHER_KASEKI_NUM              16692 /* 0x4134 化石復元イベント用ワーク */
 #define WK_OTHER_PASSENGERBOAT           16693 /* 0x4135 遊覧船イベント用ワーク */
-		/* not used 16694(0x4136) */
+#define WK_OTHER_STATION_CONNECT         16694 /* 0x4136 C04とギアステーションの接続イベント用ワーク */
 		/* not used 16695(0x4137) */
 		/* not used 16696(0x4138) */
 		/* not used 16697(0x4139) */
