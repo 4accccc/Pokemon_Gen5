@@ -971,27 +971,27 @@ $(DIR_TEMP)/map21_05.nsbmd: $(DIR_RES)/map21_05.imd
 	@$(G3DCVTR) $(DIR_RES)/map21_05.imd -o $(DIR_TEMP)/map21_05.nsbmd
 
 #map21_06
-$(DIR_OUTPUT)/map21_06.3dppack: $(DIR_TEMP)/map21_06.nsbmd $(DIR_RES)/map21_06.bin $(DIR_RES)/map21_06.3dmd
+$(DIR_OUTPUT)/map21_06.3dppack: $(DIR_TEMP)/map21_06.nsbmd $(DIR_RES)/map21_06.bin $(DIR_RES)/map21_06_ex.bin $(DIR_RES)/map21_06.3dmd
 	@echo create 3dppack map21_06
-	@$(BINLINKER) $(DIR_TEMP)/map21_06.nsbmd $(DIR_RES)/map21_06.bin $(DIR_RES)/map21_06.3dmd $(DIR_OUTPUT)/map21_06.3dppack WB
+	@$(BINLINKER) $(DIR_TEMP)/map21_06.nsbmd $(DIR_RES)/map21_06.bin $(DIR_RES)/map21_06_ex.bin $(DIR_RES)/map21_06.3dmd $(DIR_OUTPUT)/map21_06.3dppack GC
 
 $(DIR_TEMP)/map21_06.nsbmd: $(DIR_RES)/map21_06.imd
 	@echo create_nsbmd map21_06
 	@$(G3DCVTR) $(DIR_RES)/map21_06.imd -o $(DIR_TEMP)/map21_06.nsbmd
 
 #map21_07
-$(DIR_OUTPUT)/map21_07.3dppack: $(DIR_TEMP)/map21_07.nsbmd $(DIR_RES)/map21_07.bin $(DIR_RES)/map21_07.3dmd
+$(DIR_OUTPUT)/map21_07.3dppack: $(DIR_TEMP)/map21_07.nsbmd $(DIR_RES)/map21_07.bin $(DIR_RES)/map21_07_ex.bin $(DIR_RES)/map21_07.3dmd
 	@echo create 3dppack map21_07
-	@$(BINLINKER) $(DIR_TEMP)/map21_07.nsbmd $(DIR_RES)/map21_07.bin $(DIR_RES)/map21_07.3dmd $(DIR_OUTPUT)/map21_07.3dppack WB
+	@$(BINLINKER) $(DIR_TEMP)/map21_07.nsbmd $(DIR_RES)/map21_07.bin $(DIR_RES)/map21_07_ex.bin $(DIR_RES)/map21_07.3dmd $(DIR_OUTPUT)/map21_07.3dppack GC
 
 $(DIR_TEMP)/map21_07.nsbmd: $(DIR_RES)/map21_07.imd
 	@echo create_nsbmd map21_07
 	@$(G3DCVTR) $(DIR_RES)/map21_07.imd -o $(DIR_TEMP)/map21_07.nsbmd
 
 #map21_08
-$(DIR_OUTPUT)/map21_08.3dppack: $(DIR_TEMP)/map21_08.nsbmd $(DIR_RES)/map21_08.bin $(DIR_RES)/map21_08.3dmd
+$(DIR_OUTPUT)/map21_08.3dppack: $(DIR_TEMP)/map21_08.nsbmd $(DIR_RES)/map21_08.bin $(DIR_RES)/map21_08_ex.bin $(DIR_RES)/map21_08.3dmd
 	@echo create 3dppack map21_08
-	@$(BINLINKER) $(DIR_TEMP)/map21_08.nsbmd $(DIR_RES)/map21_08.bin $(DIR_RES)/map21_08.3dmd $(DIR_OUTPUT)/map21_08.3dppack WB
+	@$(BINLINKER) $(DIR_TEMP)/map21_08.nsbmd $(DIR_RES)/map21_08.bin $(DIR_RES)/map21_08_ex.bin $(DIR_RES)/map21_08.3dmd $(DIR_OUTPUT)/map21_08.3dppack GC
 
 $(DIR_TEMP)/map21_08.nsbmd: $(DIR_RES)/map21_08.imd
 	@echo create_nsbmd map21_08
@@ -1007,9 +1007,9 @@ $(DIR_TEMP)/map20_06.nsbmd: $(DIR_RES)/map20_06.imd
 	@$(G3DCVTR) $(DIR_RES)/map20_06.imd -o $(DIR_TEMP)/map20_06.nsbmd
 
 #map22_07
-$(DIR_OUTPUT)/map22_07.3dppack: $(DIR_TEMP)/map22_07.nsbmd $(DIR_RES)/map22_07.bin $(DIR_RES)/map22_07.3dmd
+$(DIR_OUTPUT)/map22_07.3dppack: $(DIR_TEMP)/map22_07.nsbmd $(DIR_RES)/map22_07.bin $(DIR_RES)/map22_07_ex.bin $(DIR_RES)/map22_07.3dmd
 	@echo create 3dppack map22_07
-	@$(BINLINKER) $(DIR_TEMP)/map22_07.nsbmd $(DIR_RES)/map22_07.bin $(DIR_RES)/map22_07.3dmd $(DIR_OUTPUT)/map22_07.3dppack WB
+	@$(BINLINKER) $(DIR_TEMP)/map22_07.nsbmd $(DIR_RES)/map22_07.bin $(DIR_RES)/map22_07_ex.bin $(DIR_RES)/map22_07.3dmd $(DIR_OUTPUT)/map22_07.3dppack GC
 
 $(DIR_TEMP)/map22_07.nsbmd: $(DIR_RES)/map22_07.imd
 	@echo create_nsbmd map22_07
