@@ -79,6 +79,7 @@
 
 #include "event_debug_season_display.h" // for DEBUG_EVENT_FLDMENU_SeasonDispSelect
 #include "event_debug_demo3d.h" // for DEBUG_EVENT_FLDMENU_Demo3DSelect
+#include "event_debug_menu_make_egg.h"  // for DEBUG_EVENT_FLDMENU_MakeEgg
 
 #include "debug/debug_str_conv.h" // for DEB_STR_CONV_SJIStoStrcode
 
@@ -191,6 +192,8 @@ static BOOL debugMenuCallProc_DebugMvPokemon( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL debugMenuCallProc_BBDColor( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL debugMenuCallProc_FogLightTest( DEBUG_MENU_EVENT_WORK *wk );
 
+static BOOL debugMenuCallProc_MakeEgg( DEBUG_MENU_EVENT_WORK *wk );
+
 static BOOL debugMenuCallProc_EncEffList( DEBUG_MENU_EVENT_WORK *wk );
 
 //======================================================================
@@ -256,6 +259,7 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
   { DEBUG_FIELD_STR62,   debugMenuCallProc_BBDColor }, 
   { DEBUG_FIELD_FOG_TEST,   debugMenuCallProc_FogLightTest },
   { DEBUG_FIELD_ENCEFF, debugMenuCallProc_EncEffList },
+  { DEBUG_FIELD_MAKE_EGG,   debugMenuCallProc_MakeEgg }, 
 };
 
 
@@ -524,6 +528,22 @@ static BOOL debugMenuCallProc_MapZoneSelect( DEBUG_MENU_EVENT_WORK *wk )
   GMEVENT_ChangeEvent( wk->gmEvent, DEBUG_EVENT_FLDMENU_JumpAllZone( wk->gmSys, wk->heapID ) );
   return TRUE;
 }
+
+//----------------------------------------------------------------------------
+/**
+ *  @brief タマゴさくせい
+ */
+//-----------------------------------------------------------------------------
+static BOOL debugMenuCallProc_MakeEgg( DEBUG_MENU_EVENT_WORK *wk )
+{
+  GMEVENT*      parentEvent = wk->gmEvent;
+  GAMESYS_WORK* gameSystem  = wk->gmSys;
+  HEAPID        heapID      = wk->heapID;
+
+  GMEVENT_ChangeEvent( parentEvent, DEBUG_EVENT_FLDMENU_MakeEgg( gameSystem, heapID ) );
+  return TRUE;
+}
+
 //--------------------------------------------------------------
 /**
  * デバッグメニュー呼び出し　通信デバッグ子メニュー

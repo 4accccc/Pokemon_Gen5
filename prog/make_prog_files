@@ -440,6 +440,7 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/event_debug_menu_jump.c \
         field/event_debug_menu_script.c \
         field/event_debug_menu_musical.c \
+        field/event_debug_menu_make_egg.c \
 				field/fieldmap_ctrl_grid.c \
 				field/field_player.c \
 				field/field_player_grid.c \
