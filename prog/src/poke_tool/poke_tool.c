@@ -954,9 +954,6 @@ u8 POKETOOL_GetSex( u16 mons_no, u16 form_no, u32 personal_rnd )
   {
     u8 rnd_sex_bit = ( personal_rnd & 0xff );
 
-    OS_TPrintf( "[PTL] GetSex personal_sex_param=%02x, rnd_sex_bit=%02x\n",
-                        sex_param, rnd_sex_bit );
-
     if( rnd_sex_bit >= sex_param )
     {
       return PTL_SEX_MALE;
@@ -2243,7 +2240,6 @@ static  u32 ppp_getAct( POKEMON_PASO_PARAM *ppp, int id, void *buf )
     case ID_PARA_sex:
       //必ずパラメータから計算して返すようする
       ret = POKETOOL_GetSex( ppp1->monsno, ppp2->form_no, ppp->personal_rnd );
-      OS_TPrintf("[PTL]  PPGet_Sex... result = %d, PersonalRand=%08x\n", ret, ppp->personal_rnd );
       //再計算したものを代入しておく
       ppp2->sex = ret;
       //チェックサムを再計算
