@@ -1194,6 +1194,19 @@ static BOOL is_action_unselectable( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, BT
     }
     return TRUE;
   }
+  // 溜めロック状態（記録ワザをそのまま使う）
+  if( BPP_CheckSick(bpp, WAZASICK_TAMELOCK) )
+  {
+    WazaID waza = BPP_GetPrevWazaID( bpp );
+    BtlPokePos pos = BPP_GetPrevTargetPos( bpp );
+    u8 waza_idx = BPP_WAZA_SearchIdx( bpp, waza );
+
+    // PP ゼロでも実行
+    if( action ){
+      BTL_ACTION_SetFightParam( action, waza, pos );
+    }
+    return TRUE;
+  }
 
   return FALSE;
 }
@@ -1371,6 +1384,21 @@ static BOOL is_unselectable_waza( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, Waza
         }
         return TRUE;
       }
+    }
+  }
+
+  // じゅうりょくチェック
+  if( BTL_FIELD_CheckEffect(BTL_FLDEFF_JURYOKU) )
+  {
+    if( WAZADATA_GetFlag(waza, WAZAFLAG_Flying) )
+    {
+      if( strParam != NULL )
+      {
+        BTLV_STRPARAM_Setup( strParam, BTL_STRTYPE_SET, BTL_STRID_SET_JyuryokuWazaFail );
+        BTLV_STRPARAM_AddArg( strParam, BPP_GetID(bpp) );
+        BTLV_STRPARAM_AddArg( strParam, waza );
+      }
+      return TRUE;
     }
   }
   return FALSE;

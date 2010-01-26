@@ -1197,8 +1197,9 @@ static const BtlEventHandlerTable*  ADD_Juryoku( u32* numElems )
 }
 static void handler_Juryoku( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
-  {
+  if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID)
+  &&  (BTL_FIELD_CheckEffect(BTL_FLDEFF_JURYOKU) == FALSE)
+  ){
     BTL_HANDEX_PARAM_ADD_FLDEFF* param;
     BTL_HANDEX_PARAM_MESSAGE*  msg_param;
 
