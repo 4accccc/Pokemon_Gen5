@@ -7659,13 +7659,13 @@
 		<language name="JPN" width="256">FLD-101</language>
 		<language name="JPN_KANJI" width="256">FLD-101</language>
 	</row>
-	<row id="msg_seq_se_dmy_161">
-		<language name="JPN" width="256">DMY-161</language>
-		<language name="JPN_KANJI" width="256">DMY-161</language>
+	<row id="msg_seq_se_w259_boso">
+		<language name="JPN" width="256">W259-BOSO</language>
+		<language name="JPN_KANJI" width="256">W259-BOSO</language>
 	</row>
-	<row id="msg_seq_se_dmy_162">
-		<language name="JPN" width="256">DMY-162</language>
-		<language name="JPN_KANJI" width="256">DMY-162</language>
+	<row id="msg_seq_se_w259_pakip">
+		<language name="JPN" width="256">W259-PAKIP</language>
+		<language name="JPN_KANJI" width="256">W259-PAKIP</language>
 	</row>
 	<row id="msg_seq_se_dmy_163">
 		<language name="JPN" width="256">DMY-163</language>
