@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-21T20:14:54"/>
+	<create user="matsumiya" host="W00207" date="2010-01-26T14:58:24"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -334,11 +334,11 @@
 		<language name="JPN" width="256">ホワイティのパパ『なんってこったい！？[BE:01:ページ切り替え（クリア）]
 うちの　むすめが
 ポケモンと　たびに　でるだなんて……[BE:00:ページ切り替え（行送り）]
-あんな　ドジな　むすめが！？</language>
+あんなに　せけんしらず　なのに！？</language>
 		<language name="JPN_KANJI" width="256">ホワイティのパパ『なんってこったい！？[BE:01:ページ切り替え（クリア）]
 うちの　娘が
 ポケモンと　旅に　でるだなんて……[BE:00:ページ切り替え（行送り）]
-あんな　ドジな　娘が！？</language>
+あんなに　世間知らず　なのに！？</language>
 	</row>
 
 	<row id="msg_t01r0201_middlewoman1_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
