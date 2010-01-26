@@ -144,6 +144,8 @@ typedef struct {
 
 } COMM_BTL_DEMO_G3D_WORK;
 
+#define BALL_CLWK_MAX ( 6 )
+
 //--------------------------------------------------------------
 ///	ボールUNITワーク
 //==============================================================
@@ -154,7 +156,7 @@ typedef struct {
   u8 num;
   u8 max;
   //[PRIVATE]
-  GFL_CLWK* clwk[6];
+  GFL_CLWK* clwk[ BALL_CLWK_MAX ];
   u32 timer;
   u8 is_start;
   u8 padding[3];
@@ -694,6 +696,15 @@ static BOOL SceneNormalStart_Main( UI_SCENE_CNT_PTR cnt, void* work )
   {
   case 0:
     G3D_AnimeSet( &wk->wk_g3d, DEMO_ID_01_A );
+    
+    // ボールアニメ開始
+    {
+      int i;
+      for( i=0; i<TRAINER_CNT_NORMAL; i++ )
+      {
+        BALL_UNIT_SetStart( &wk->trainer_unit[i].ball );
+      }
+    }
 
     UI_SCENE_CNT_IncSubSeq( cnt );
     break;
@@ -727,10 +738,11 @@ static BOOL SceneNormalStart_Main( UI_SCENE_CNT_PTR cnt, void* work )
     }
     break;
   case 3:
-    if( wk->timer++ == 120+30 )
+    //@TODO タイミング
+    if( wk->timer++ == 120+15 )
     {
       // フェードアウト リクエスト
-      GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_WHITEOUT, 0, 16, 4 );
+      GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_WHITEOUT, 0, 16, 2 );
     }
     
     // アニメ再生
@@ -1004,31 +1016,31 @@ static void BALL_UNIT_Init( BALL_UNIT* unit, const POKEPARTY* party, u8 type, u8
   {
     s16 px;
     s16 py;
+    int anm;
   
     if( type_is_normal(type) )
     {
       //@TODO 定数化
       // ノーマル
-      px = 128 + (i+1) * 16;
+      px = 128+8 + (i) * 16;
       py= (posid==0) ? 21*8 : 7*8 ;
 
-      if( posid == 1 ){ px *= -1; }
+      if( posid == 0 ){ px *= -1; }
     }
     else
     {
       // マルチ
       //@TODO posid による座標調整
-      px = 128 + (i+1) * 16;
+      px = 128+8 + (i) * 16;
       py= (posid==0) ? 21*8 : 7*8 ;
 
-      if( posid == 1 ){ px *= -1; }
+      if( posid == 0 ){ px *= -1; }
     }
 
     // 開始デモ
     if( type_is_start(type) )
     {
       // 状態取得
-      int anm;
       POKEMON_PARAM* pp = NULL;
       
       // ポケモンが存在する間はPOKEMON_PARAMを取得
@@ -1039,14 +1051,17 @@ static void BALL_UNIT_Init( BALL_UNIT* unit, const POKEPARTY* party, u8 type, u8
 
       anm = PokeParaToBallAnim( pp );
 
-      unit->clwk[i] = OBJ_CreateCLWK( obj, px, py, anm );
     }
     else
     // 終了デモ
     {
       // 全て通常状態で初期化
-      unit->clwk[i] = OBJ_CreateCLWK( obj, px, py, OBJ_ANM_ID_BALL_NORMAL );
+      anm = OBJ_ANM_ID_BALL_NORMAL;
     }
+      
+    // CLWK生成
+    unit->clwk[i] = OBJ_CreateCLWK( obj, px, py, anm );
+    GFL_CLACT_WK_SetDrawEnable( unit->clwk[i] , FALSE );
   }
 }
 
@@ -1087,7 +1102,7 @@ static void BALL_UNIT_SetStart( BALL_UNIT* unit )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief
+ *	@brief  ボール主処理
  *
  *	@param	BALL_UNIT* unit 
  *
@@ -1096,10 +1111,53 @@ static void BALL_UNIT_SetStart( BALL_UNIT* unit )
 //-----------------------------------------------------------------------------
 static void BALL_UNIT_Main( BALL_UNIT* unit )
 {
-  // マルチ
-  // シングル
-  // 開始
-  // 終了
+  const int OPEN_SYNC = 12;
+
+  if( unit->is_start == FALSE )
+  {
+    return;
+  }
+
+  switch( unit->type )
+  {
+  case COMM_BTL_DEMO_TYPE_NORMAL_START :
+    if( unit->timer >= OPEN_SYNC )
+    {
+      int id = unit->timer - OPEN_SYNC;
+
+      HOSAKA_Printf("unit->timer=%d ",unit->timer);
+      HOSAKA_Printf("ball open id=%d\n", id);
+
+      if( id < BALL_CLWK_MAX )
+      {
+        // 開く
+        GFL_CLACT_WK_SetDrawEnable( unit->clwk[id] , TRUE );
+      }
+      else
+      {
+        int i;
+
+        // プライオリティを下げておく
+        for( i=0; i<unit->max; i++ )
+        {
+          GFL_CLACT_WK_SetBgPri( unit->clwk[i], 1 );
+        }
+
+        unit->is_start = FALSE; // 終了
+      }
+    }
+    break;
+  case COMM_BTL_DEMO_TYPE_NORMAL_END :
+    break;
+  case COMM_BTL_DEMO_TYPE_MULTI_START :
+    //@TODO ノーマルと一緒でいける可能性がある
+    break;
+  case COMM_BTL_DEMO_TYPE_MULTI_END :
+    break;
+  default : GF_ASSERT(0);
+  }
+
+  unit->timer++;
 }
 
 //-----------------------------------------------------------------------------
@@ -1251,7 +1309,7 @@ static void G3D_Init( COMM_BTL_DEMO_G3D_WORK* g3d, COMM_BTL_DEMO_GRAPHIC_WORK* g
   GF_ASSERT( graphic );
 
   // ブレンド指定
-  G2_SetBlendAlpha( GX_PLANEMASK_BG0, GX_PLANEMASK_BG3|GX_PLANEMASK_BG0, 16, 0 );
+  G2_SetBlendAlpha( GX_PLANEMASK_BG0, GX_PLANEMASK_OBJ|GX_PLANEMASK_BG3|GX_PLANEMASK_BG0, 16, 0 );
 //  G2_SetBlendAlpha( GX_PLANEMASK_BG0, GX_PLANEMASK_BG3|GX_PLANEMASK_BG2|GX_PLANEMASK_BG1|GX_PLANEMASK_BG0, 0, 0 );
   
   // メンバ初期化
