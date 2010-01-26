@@ -9,5 +9,6 @@
 #ifndef ZONE_C08R0301_EVC_H
 #define ZONE_C08R0301_EVC_H
 
+#define C08R0301_GENTLEMAN_01              0
 
 #endif //ZONE_C08R0301_EVC_H
