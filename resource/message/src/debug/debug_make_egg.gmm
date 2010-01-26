@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="obata_toshihiro" host="W00209" date="2010-01-25T14:24:52"/>
+	<create user="obata_toshihiro" host="W00209" date="2010-01-26T10:48:43"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -275,9 +275,19 @@
 	</lock>
 
 
-	<row id="STR_TEMOTI">
-		<language name="JPN" font=" 1:font_system" width="60">てもちについか</language>
-		<language name="JPN_KANJI">手持ちに追加</language>
+	<row id="STR_NEWBORN">
+		<language name="JPN" font=" 1:font_system" width="60">うまれたて</language>
+		<language name="JPN_KANJI">産まれたて</language>
+	</row>
+
+	<row id="STR_OLDBORN">
+		<language name="JPN" font=" 1:font_system" width="60">もうすぐ　ふか</language>
+		<language name="JPN_KANJI">もうすぐ孵化</language>
+	</row>
+
+	<row id="STR_ILLEGAL_EGG">
+		<language name="JPN" font=" 1:font_system" width="60">だめタマゴ</language>
+		<language name="JPN_KANJI">駄目タマゴ</language>
 	</row>
 
 	<flowchart-group-list>

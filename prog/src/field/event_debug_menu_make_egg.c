@@ -39,7 +39,9 @@ const FLDMENUFUNC_HEADER menuHeader =
 //--------------------------------------------------------------
 const FLDMENUFUNC_LIST menuList[] = 
 {
-  {STR_TEMOTI, STR_TEMOTI},  // 手持ち
+  {STR_NEWBORN,     (void*)STR_NEWBORN},      // うまれたて
+  {STR_OLDBORN,     (void*)STR_OLDBORN},      // もうすぐ孵化
+  {STR_ILLEGAL_EGG, (void*)STR_ILLEGAL_EGG},  // だめタマゴ
 };
 
 //--------------------------------------------------------------
@@ -98,8 +100,8 @@ static GMEVENT_RESULT debugMenuMakeEggEvent( GMEVENT *event, int *seq, void *wk 
     // キャンセル
     if( work->select == FLDMENUFUNC_CANCEL ){ (*seq)++; }
 
-    //「手持ちに追加」
-    if( work->select == STR_TEMOTI )
+    //「うまれたて」
+    if( work->select == STR_NEWBORN )
     {
       POKEMON_PARAM* tamago;
       POKEPARTY* party = GAMEDATA_GetMyPokemon( work->gameData );
@@ -114,7 +116,85 @@ static GMEVENT_RESULT debugMenuMakeEggEvent( GMEVENT *event, int *seq, void *wk 
         GFL_STR_DeleteBuffer( name );
       } 
 
+      // 孵化歩数
+      {
+        u32 monsno, formno, birth;
+        POKEMON_PERSONAL_DATA* personal;
+
+        monsno   = PP_Get( tamago, ID_PARA_monsno, NULL );
+        formno   = PP_Get( tamago, ID_PARA_form_no, NULL );
+        personal = POKE_PERSONAL_OpenHandle( monsno, formno, work->heapID );
+        birth    = POKE_PERSONAL_GetParam( personal, POKEPER_ID_egg_birth );
+        POKE_PERSONAL_CloseHandle( personal );
+
+        // タマゴの間は, なつき度を孵化カウンタとして利用する
+        PP_Put( tamago, ID_PARA_friend, birth );
+      }
+
       PP_Put( tamago, ID_PARA_tamago_flag, TRUE );
+      PP_Renew( tamago );
+      PokeParty_Add( party, tamago );
+      GFL_HEAP_FreeMemory( tamago );
+      (*seq)++;
+    }
+    //「もうすぐ孵化」
+    if( work->select == STR_OLDBORN )
+    {
+      POKEMON_PARAM* tamago;
+      POKEPARTY* party = GAMEDATA_GetMyPokemon( work->gameData );
+
+      tamago = PP_Create( 1, 1, 1, work->heapID );
+
+      // 親の名前
+      {
+        MYSTATUS* mystatus = GAMEDATA_GetMyStatus( work->gameData );
+        STRBUF* name = MyStatus_CreateNameString( mystatus, work->heapID );
+        PP_Put( tamago, ID_PARA_oyaname, (u32)name );
+        GFL_STR_DeleteBuffer( name );
+      } 
+
+      // 孵化歩数
+      PP_Put( tamago, ID_PARA_friend, 10 );
+
+      PP_Put( tamago, ID_PARA_tamago_flag, TRUE );
+      PP_Renew( tamago );
+      PokeParty_Add( party, tamago );
+      GFL_HEAP_FreeMemory( tamago );
+      (*seq)++;
+    }
+    //「だめタマゴ」
+    if( work->select == STR_ILLEGAL_EGG )
+    {
+      POKEMON_PARAM* tamago;
+      POKEPARTY* party = GAMEDATA_GetMyPokemon( work->gameData );
+
+      tamago = PP_Create( 1, 1, 1, work->heapID );
+
+      // 親の名前
+      {
+        MYSTATUS* mystatus = GAMEDATA_GetMyStatus( work->gameData );
+        STRBUF* name = MyStatus_CreateNameString( mystatus, work->heapID );
+        PP_Put( tamago, ID_PARA_oyaname, (u32)name );
+        GFL_STR_DeleteBuffer( name );
+      } 
+
+      // 孵化歩数
+      {
+        u32 monsno, formno, birth;
+        POKEMON_PERSONAL_DATA* personal;
+
+        monsno   = PP_Get( tamago, ID_PARA_monsno, NULL );
+        formno   = PP_Get( tamago, ID_PARA_form_no, NULL );
+        personal = POKE_PERSONAL_OpenHandle( monsno, formno, work->heapID );
+        birth    = POKE_PERSONAL_GetParam( personal, POKEPER_ID_egg_birth );
+        POKE_PERSONAL_CloseHandle( personal );
+
+        // タマゴの間は, なつき度を孵化カウンタとして利用する
+        PP_Put( tamago, ID_PARA_friend, birth );
+      }
+
+      PP_Put( tamago, ID_PARA_tamago_flag, TRUE );
+      PP_Put( tamago, ID_PARA_fusei_tamago_flag, TRUE );
       PP_Renew( tamago );
       PokeParty_Add( party, tamago );
       GFL_HEAP_FreeMemory( tamago );
