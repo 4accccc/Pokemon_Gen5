@@ -136,7 +136,6 @@ static const FLDMENUFUNC_LIST MainMenuList[] =
   {msg_union_select_04, (void*)UNION_PLAY_CATEGORY_TRADE},   //交換
   {msg_union_select_03, (void*)UNION_MENU_NO_SEND_BATTLE},   //対戦
   {msg_union_select_06, (void*)UNION_PLAY_CATEGORY_GURUGURU}, //ぐるぐる交換
-  {msg_union_select_07, (void*)UNION_PLAY_CATEGORY_RECORD},   //レコードコーナー
   {msg_union_select_02, (void*)UNION_PLAY_CATEGORY_PICTURE},   //お絵かき
   {msg_union_select_05, (void*)UNION_MENU_SELECT_CANCEL},   //やめる
 };
@@ -144,8 +143,8 @@ static const FLDMENUFUNC_LIST MainMenuList[] =
 ///メニューヘッダー(メインメニュー用)
 static const FLDMENUFUNC_HEADER MenuHeader_MainMenu =
 {
-	7,		//リスト項目数
-	7,		//表示最大項目数
+	6,		//リスト項目数
+	6,		//表示最大項目数
 	0,		//ラベル表示Ｘ座標
 	13,		//項目表示Ｘ座標
 	0,		//カーソル表示Ｘ座標
@@ -161,7 +160,7 @@ static const FLDMENUFUNC_HEADER MenuHeader_MainMenu =
 	1,//32-14,		//表示座標X キャラ単位
 	1,		//表示座標Y キャラ単位
 	13,		//表示サイズX キャラ単位
-	14,		//表示サイズY キャラ単位
+	12,		//表示サイズY キャラ単位
 };
 //SDK_COMPILER_ASSERT(NELEMS(MainMenuList) == MenuHeader_MainMenu.line);
 

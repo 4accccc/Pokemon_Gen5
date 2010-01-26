@@ -1103,6 +1103,12 @@ static BOOL OneselfSeq_ConnectAnswerExit(UNION_SYSTEM_PTR unisys, UNION_MY_SITUA
 //--------------------------------------------------------------
 static BOOL OneselfSeq_TalkInit_Parent(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq)
 {
+  if(situ->before_union_status == UNION_STATUS_TALK_BATTLE_PARENT){
+    situ->work = 1; //対戦メニューからの戻りを表す
+    return TRUE;  //対戦メニューからの戻りなので初期化はしない
+  }
+  situ->work = 0;
+  
   switch(*seq){
   case 0:
     UnionMyComm_InitMenuParam(&situ->mycomm);
@@ -1150,7 +1156,10 @@ static BOOL OneselfSeq_TalkUpdate_Parent(UNION_SYSTEM_PTR unisys, UNION_MY_SITUA
 
   switch(*seq){
   case _LOCALSEQ_INIT:
-    if(situ->mycomm.first_talk == 0){
+    if(situ->work == 1){  //バトルメニューからの戻りなのでメッセージを出さない
+      situ->work = 0;
+    }
+    else if(situ->mycomm.first_talk == 0){
       UnionMsg_TalkStream_PrintPack(unisys, fieldWork, 
         UnionMsg_GetMsgID_ParentConnectStart(situ->mycomm.talk_pc->beacon.sex));
       situ->mycomm.first_talk++;
@@ -1627,10 +1636,8 @@ static BOOL OneselfSeq_Talk_Battle_Parent(UNION_SYSTEM_PTR unisys, UNION_MY_SITU
         (*seq)--;
       }
       else{
-        OS_TPrintf("メニューをキャンセルしました\n");
         UnionMsg_Menu_BattleMenuMultiTitleDel(unisys);
-        situ->mycomm.mainmenu_select = UNION_MENU_SELECT_CANCEL;
-        UnionOneself_ReqStatus(unisys, UNION_STATUS_TALK_LIST_SEND_PARENT);
+        UnionOneself_ReqStatus(unisys, UNION_STATUS_TALK_PARENT);
         return TRUE;
       }
     }
