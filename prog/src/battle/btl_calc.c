@@ -189,15 +189,19 @@ static const u8 TypeAffTbl[ POKETYPE_NUMS ][ POKETYPE_NUMS ] = {
 //--------------------------------------------------------------
 BtlTypeAff BTL_CALC_TypeAff( PokeType wazaType, PokeType pokeType )
 {
-  u8 result;
+  if( (wazaType == POKETYPE_NULL) || (pokeType == POKETYPE_NULL) ){
+    return BTL_TYPEAFF_100;
+  }
+  else
+  {
+    u8 affinity = TypeAffTbl[ wazaType ][ pokeType ];
 
-  result = TypeAffTbl[ wazaType ][ pokeType ];
-
-  switch( result ){
-  case x0:    return BTL_TYPEAFF_0;
-  case xH:    return BTL_TYPEAFF_50;
-  case x1:    return BTL_TYPEAFF_100;
-  case x2:    return BTL_TYPEAFF_200;
+    switch( affinity ){
+    case x0:    return BTL_TYPEAFF_0;
+    case xH:    return BTL_TYPEAFF_50;
+    case x1:    return BTL_TYPEAFF_100;
+    case x2:    return BTL_TYPEAFF_200;
+    }
   }
 
   GF_ASSERT(0);

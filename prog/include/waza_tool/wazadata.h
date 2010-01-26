@@ -95,6 +95,7 @@ typedef enum {
   WAZASICK_NEWOHARU,        ///< ねをはる
   WAZASICK_TOOSENBOU,       ///< にげる・いれかえが出来ない
   WAZASICK_ENCORE,          ///< 直前に使ったワザしか出せない
+  WAZASICK_HANEYASUME,      ///< はねやすめ（飛行タイプ->無属性化）
 
   WAZASICK_WAZALOCK,        ///< 直前に使ったワザしか出せない上、行動も選択できない
   WAZASICK_MUSTHIT,         ///< ワザ必中状態

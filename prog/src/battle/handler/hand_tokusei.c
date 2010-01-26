@@ -4577,8 +4577,13 @@ static void handler_NorowareBody( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
         {
           BTL_HANDEX_PARAM_ADD_SICK* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_SICK, pokeID );
 
+          // 現ターンに行動済みのポケモンには効果ターン数を+1する
+          u8 turns = BTL_KANASIBARI_EFFECTIVE_TURN;
+          if( BPP_TURNFLAG_Get(target, BPP_TURNFLG_ACTION_DONE) ){
+            ++turns;
+          }
           param->sickID = WAZASICK_KANASIBARI;
-          param->sickCont = BPP_SICKCONT_MakeTurnParam( 4, prevWaza );
+          param->sickCont = BPP_SICKCONT_MakeTurnParam( turns, prevWaza );
           param->poke_cnt = 1;
           param->pokeID[0] = targetPokeID;
           param->header.tokwin_flag = TRUE;

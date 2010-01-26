@@ -10230,9 +10230,9 @@ u32 BTL_SVFTOOL_SimulationDamage( BTL_SVFLOW_WORK* wk, u8 atkPokeID, u8 defPokeI
   const BTL_POKEPARAM* defender = BTL_POKECON_GetPokeParam( wk->pokeCon, defPokeID );
 
   BtlTypeAff  aff;
-  BOOL critical_flag;
-  SVFL_WAZAPARAM wazaParam;
-  u16 damage;
+  BOOL  critical_flag;
+  SVFL_WAZAPARAM  wazaParam;
+  u16  damage;
 
   //
   if( fAffinity ){
