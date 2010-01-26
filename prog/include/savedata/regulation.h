@@ -222,4 +222,5 @@ extern REGULATION_CARDDATA* SaveData_GetRegulationCardData(SAVE_CONTROL_WORK* pS
 //----------------------------------------------------------
 #ifdef PM_DEBUG
 extern void Regulation_SetDebugData( REGULATION_CARDDATA* pReg );
+extern void Regulation_PrintDebug( const REGULATION_CARDDATA* cpReg );
 #endif //PM_DEBUG

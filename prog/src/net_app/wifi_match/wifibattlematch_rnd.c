@@ -2,7 +2,7 @@
 /**
  *
  *	@file		wifibattlematch_core.c
- *	@brief	WIFIのバトルマッチコア画面
+ *	@brief	WIFIのバトルマッチコア画面  ランダムマッチシーケンス
  *	@author	Toru=Nagihashi
  *	@data		2009.11.02
  *
@@ -1059,7 +1059,7 @@ static void WbmRndSeq_Rate_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p
     WBM_SEQ_SetReservSeq( p_seqwk, SEQ_START_REPORT_ATLAS );
     break;
   case SEQ_START_REPORT_ATLAS:
-    WIFIBATTLEMATCH_SC_Start( p_wk->p_net, p_param->p_param->btl_rule, p_param->btl_result );
+    WIFIBATTLEMATCH_SC_Start( p_wk->p_net, p_param->p_param->mode, p_param->p_param->btl_rule, p_param->btl_result );
     *p_seq = SEQ_WAIT_REPORT_ATLAS;
     break;
   case SEQ_WAIT_REPORT_ATLAS:

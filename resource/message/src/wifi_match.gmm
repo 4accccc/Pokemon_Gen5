@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="toru_nagihashi" host="W00160" date="2010-01-23T19:12:40"/>
+	<create user="toru_nagihashi" host="W00160" date="2010-01-26T17:35:59"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -949,6 +949,14 @@ GPFの　ホームページで[BE:00:ページ切り替え（行送り）]
 成績が　反映されるまで
 １０～１５分ほど[BE:00:ページ切り替え（行送り）]
 時間が　かかります[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="WIFIMATCH_WIFI_STR_34">
+		<comment>WIFI大会</comment>
+		<language name="JPN" width="256">つうしん　たいきちゅう　です
+でんげんを　きらないで　ください</language>
+		<language name="JPN_KANJI" width="256">通信　待機中　です
+電源を　きらないで　ください</language>
 	</row>
 
 	<row id="WIFIMATCH_WIFI_POKE_00">

@@ -2,7 +2,7 @@
 /**
  *
  *	@file		wifibattlematch_core.c
- *	@brief	WIFIのバトルマッチコア画面
+ *	@brief	WIFIのバトルマッチコア画面  WIFIシーケンス
  *	@author	Toru=Nagihashi
  *	@data		2009.11.02
  *
@@ -111,6 +111,8 @@ typedef struct
 
 	//共通で使うフォント
 	GFL_FONT			            *p_font;
+
+  //ポケモンのレベル・性別マーク表示のみで使用しているフォント
 	GFL_FONT			            *p_small_font;
 
 	//共通で使うキュー
@@ -842,7 +844,6 @@ static void WbmWifiSeq_CheckDigCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
     ///	大会と自分の状態をチェック
     //=====================================
   case SEQ_CHECK_DATA:
-
     //大会NOチェック
     if( p_wk->gpf_data.WifiMatchUpID == Regulation_GetCardParam( cp_reg_card, REGULATION_CARD_CUPNO ) )
     { 
@@ -1137,6 +1138,7 @@ static void WbmWifiSeq_CheckDigCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
 
   case SEQ_START_BOX_REWRITE_CANCEL_YESNO:
     Util_List_Create( p_wk, UTIL_LIST_TYPE_YESNO );
+    *p_seq  = SEQ_SELECT_BOX_REWRITE_CANCEL_YESNO;
     break;
 
   case SEQ_SELECT_BOX_REWRITE_CANCEL_YESNO:
@@ -1197,6 +1199,7 @@ static void WbmWifiSeq_CheckDigCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
 
   case SEQ_START_BOX_LOCK_CANCEL_YESNO:
     Util_List_Create( p_wk, UTIL_LIST_TYPE_YESNO );
+    *p_seq  = SEQ_SELECT_BOX_LOCK_CANCEL_YESNO;
     break;
 
   case SEQ_SELECT_BOX_LOCK_CANCEL_YESNO:
@@ -1414,6 +1417,7 @@ static void WbmWifiSeq_Register( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
     SEQ_START_SAVE,
     SEQ_WAIT_SAVE,
     SEQ_SEND_GPF_CUPSTATUS,
+    SEQ_WAIT_GPF_CUPSTATUS,
     SEQ_START_OK_REGISTER_MSG,
 
     SEQ_NEXT,
@@ -1692,8 +1696,34 @@ static void WbmWifiSeq_Register( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
     break;
 
   case SEQ_SEND_GPF_CUPSTATUS:
-    //@todo GPFへ大会開催ワーク書き込み
-    *p_seq  = SEQ_START_OK_REGISTER_MSG;
+    { 
+      MYSTATUS    *p_my;
+      DREAM_WORLD_SERVER_WORLDBATTLE_SET_DATA data;
+      p_my  = GAMEDATA_GetMyStatus( p_wk->p_param->p_param->p_game_data); 
+      GFL_STD_MemClear( &data, sizeof(DREAM_WORLD_SERVER_WORLDBATTLE_SET_DATA) );
+      data.WifiMatchUpState = DREAM_WORLD_MATCHUP_ENTRY;
+      WIFIBATTLEMATCH_NET_StartSendGpfData( p_wk->p_net, p_my, &data, HEAPID_WIFIBATTLEMATCH_CORE );
+    }
+    *p_seq  = SEQ_WAIT_GPF_CUPSTATUS;
+    break;
+
+  case SEQ_WAIT_GPF_CUPSTATUS:
+    { 
+      WIFIBATTLEMATCH_SEND_GPFDATA_RET ret;
+      NHTTPError  error;
+      
+      ret = WIFIBATTLEMATCH_NET_WaitSendGpfData( p_wk->p_net, &error );
+      if( ret == WIFIBATTLEMATCH_SEND_GPFDATA_RET_SUCCESS )
+      { 
+        *p_seq  = SEQ_START_OK_REGISTER_MSG;
+      }
+      else if( ret == WIFIBATTLEMATCH_SEND_GPFDATA_RET_ERROR )
+      { 
+        //@todo
+        GF_ASSERT_MSG( 0, "error%d", error );
+        *p_seq  = SEQ_START_OK_REGISTER_MSG;
+      }
+    }
     break;
 
   case SEQ_START_OK_REGISTER_MSG:
@@ -2158,7 +2188,7 @@ static void WbmWifiSeq_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
 { 
   enum
   { 
-
+    SEQ_START_NET_MSG,
     SEQ_START_REPORT_ATLAS,
     SEQ_WAIT_REPORT_ATLAS,
     SEQ_WAIT_DISCONNECT,
@@ -2166,14 +2196,21 @@ static void WbmWifiSeq_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
     SEQ_START_REPORT_MSG,
     SEQ_START_RECVDATA_SAKE,
     SEQ_WAIT_RECVDATA_SAKE,
+    SEQ_START_RECVDATA_GPF,
+    SEQ_WAIT_RECVDATA_GPF,
     SEQ_START_SAVE,
     SEQ_WAIT_SAVE,
+    SEQ_START_CARDIN,
     SEQ_WAIT_CARDIN,
 
     //録画確認
     SEQ_START_SELECT_BTLREC_MSG,
     SEQ_START_SELECTBTLREC,
     SEQ_WAIT_SELECTBTLREC,
+
+    //大会期間チェック
+    SEQ_START_SUBSEQ_CUPDATE,
+    SEQ_WAIT_SUBSEQ_CUPDATE,
 
     //続行確認
     SEQ_START_SELECT_CONTINUE_MSG,
@@ -2189,8 +2226,13 @@ static void WbmWifiSeq_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
 
   switch( *p_seq )
   { 
+  case SEQ_START_NET_MSG:
+    WBM_TEXT_Print( p_wk->p_text, p_wk->p_msg, WIFIMATCH_WIFI_STR_34, WBM_TEXT_TYPE_STREAM );
+    *p_seq       = SEQ_WAIT_MSG;
+    WBM_SEQ_SetReservSeq( p_seqwk, SEQ_START_REPORT_ATLAS );
+    break;
   case SEQ_START_REPORT_ATLAS:
-    WIFIBATTLEMATCH_SC_Start( p_wk->p_net, p_param->p_param->btl_rule, p_param->btl_result );
+    WIFIBATTLEMATCH_SC_Start( p_wk->p_net, p_param->p_param->mode, p_param->p_param->btl_rule, p_param->btl_result );
     *p_seq = SEQ_WAIT_REPORT_ATLAS;
     break;
   case SEQ_WAIT_REPORT_ATLAS:
@@ -2218,14 +2260,46 @@ static void WbmWifiSeq_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
     break;
 
   case SEQ_START_RECVDATA_SAKE:
-    //@todo
+    WIFIBATTLEMATCH_GDB_Start( p_wk->p_net, WIFIBATTLEMATCH_GDB_GET_WIFI_SCORE, &p_wk->sake_data ); 
     *p_seq       = SEQ_WAIT_RECVDATA_SAKE;
     break;
 
   case SEQ_WAIT_RECVDATA_SAKE:
-    *p_seq        = SEQ_START_SAVE;
+    { 
+      DWCGdbError error;  //@todo　エラー処理
+      if( WIFIBATTLEMATCH_GDB_Process( p_wk->p_net, &error ) )
+      { 
+        *p_seq        = SEQ_START_RECVDATA_GPF;
+      }
+    }
     break;
 
+  case SEQ_START_RECVDATA_GPF:
+    { 
+      MYSTATUS    *p_my;
+      p_my  = GAMEDATA_GetMyStatus( p_wk->p_param->p_param->p_game_data); 
+      WIFIBATTLEMATCH_NET_StartRecvGpfData( p_wk->p_net, p_my, HEAPID_WIFIBATTLEMATCH_CORE );
+      *p_seq        = SEQ_WAIT_RECVDATA_GPF;
+    }
+    break;
+  case SEQ_WAIT_RECVDATA_GPF:
+    { 
+      WIFIBATTLEMATCH_RECV_GPFDATA_RET  ret;
+      NHTTPError  error;
+
+      ret = WIFIBATTLEMATCH_NET_WaitRecvGpfData( p_wk->p_net, &error );
+      if( ret == WIFIBATTLEMATCH_RECV_GPFDATA_RET_SUCCESS )
+      { 
+        WIFIBATTLEMATCH_NET_GetRecvGpfData( p_wk->p_net, &p_wk->gpf_data );
+        *p_seq        = SEQ_START_SAVE;
+      }
+      else if( ret == WIFIBATTLEMATCH_RECV_GPFDATA_RET_ERROR )
+      { 
+        GF_ASSERT_MSG(0, "%d", error); //@todo
+        *p_seq        = SEQ_START_SAVE;
+      }
+    }
+    break;
   case SEQ_START_SAVE:
     GAMEDATA_SaveAsyncStart(p_param->p_param->p_game_data);
     *p_seq  = SEQ_WAIT_SAVE;
@@ -2237,7 +2311,7 @@ static void WbmWifiSeq_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
       result = GAMEDATA_SaveAsyncMain(p_param->p_param->p_game_data);
       if( result == SAVE_RESULT_OK )
       { 
-        *p_seq  = SEQ_START_SELECT_BTLREC_MSG;
+        *p_seq  = SEQ_START_CARDIN;
       }
       else if(result == SAVE_RESULT_NG)
       {
@@ -2245,10 +2319,20 @@ static void WbmWifiSeq_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
       }
     }
     break;
-
-  case SEQ_WAIT_CARDIN:
+  case SEQ_START_CARDIN:
+    Util_PlayerInfo_Create( p_wk );
+    *p_seq  = SEQ_WAIT_CARDIN;
     break;
-
+  case SEQ_WAIT_CARDIN:
+    {
+      BOOL ret;
+      ret = Util_PlayerInfo_Move( p_wk );
+      if( ret )
+      { 
+        *p_seq  = SEQ_START_SELECT_BTLREC_MSG;
+      }
+    }
+    break;
     //-------------------------------------
     ///	録画確認
     //=====================================
@@ -2271,16 +2355,33 @@ static void WbmWifiSeq_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
         { 
         case 0:
           //@todo
-          *p_seq = SEQ_START_SELECT_CONTINUE_MSG;
+          *p_seq = SEQ_START_SUBSEQ_CUPDATE;
           break;
         case 1:
-          *p_seq = SEQ_START_SELECT_CONTINUE_MSG;
+          *p_seq = SEQ_START_SUBSEQ_CUPDATE;
           break;
         }
       }
     }
     break;
 
+  case SEQ_START_SUBSEQ_CUPDATE:
+    Util_SubSeq_Start( p_wk, WbmWifiSubSeq_CheckDate );
+    *p_seq  = SEQ_WAIT_SUBSEQ_CUPDATE;
+    break;
+  case SEQ_WAIT_SUBSEQ_CUPDATE:
+    { 
+      WBM_WIFI_SUBSEQ_RET ret = Util_SubSeq_Main( p_wk );
+      if( ret == WBM_WIFI_SUBSEQ_CUPDATE_RET_TIMESAFE )
+      { 
+        *p_seq = SEQ_START_SELECT_CONTINUE_MSG;
+      }
+      else if( ret == WBM_WIFI_SUBSEQ_CUPDATE_RET_TIMEOVER )
+      { 
+        WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_DisConnextEnd );
+      }
+    }
+    break;
     //-------------------------------------
     ///	続行確認
     //=====================================
@@ -2312,7 +2413,6 @@ static void WbmWifiSeq_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
     }
     break;
 
-    //
     //-------------------------------------
     ///	共通
     //=====================================
@@ -2950,11 +3050,10 @@ static void Util_PlayerInfo_Create( WIFIBATTLEMATCH_WIFI_WORK *p_wk )
 
     info_setup.trainerID  = MyStatus_GetTrainerView( p_my );
 
-    info_setup.rate = 0;  //@todo
-    info_setup.btl_cnt = 0;  //@todo
-    info_setup.btl_max = 0;  //@todo
+    info_setup.rate = p_wk->sake_data.rate;
+    info_setup.btl_cnt = p_wk->sake_data.win + p_wk->sake_data.lose;
 
-    p_wk->p_playerinfo	= PLAYERINFO_WIFI_Init( &info_setup, TRUE, p_my, p_unit, p_wk->p_res, p_wk->p_font, p_wk->p_que, p_wk->p_msg, p_wk->p_word, p_bbox_save, HEAPID_WIFIBATTLEMATCH_CORE );
+    p_wk->p_playerinfo	= PLAYERINFO_WIFI_Init( &info_setup, FALSE, p_my, p_unit, p_wk->p_res, p_wk->p_font, p_wk->p_que, p_wk->p_msg, p_wk->p_word, p_bbox_save, HEAPID_WIFIBATTLEMATCH_CORE );
   }
 }
 //----------------------------------------------------------------------------

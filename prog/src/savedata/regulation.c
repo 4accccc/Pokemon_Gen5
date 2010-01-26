@@ -711,4 +711,59 @@ void Regulation_SetDebugData( REGULATION_CARDDATA* pReg )
   pReg->status      = 0;
   pReg->status      = 0;
 }
+#include "debug/debug_str_conv.h"
+//----------------------------------------------------------------------------
+/**
+ *	@brief  デバッグプリント
+ *
+ *	@param	const REGULATION_CARDDATA* cpReg ワーク
+ */
+//-----------------------------------------------------------------------------
+void Regulation_PrintDebug( const REGULATION_CARDDATA* cpReg )
+{ 
+  const REGULATION  *cp_data = &cpReg->regulation_buff;
+
+  OS_TPrintf( "reg size =%d\n", sizeof(REGULATION));
+  OS_TPrintf( "card size=%d\n", sizeof(REGULATION_CARDDATA));
+  OS_TPrintf( "cupno    =%d\n", cp_data->cupNo);
+  OS_TPrintf( "rule_num =%d\n", cp_data->ruleNo); ///< 大会ルール番号
+  OS_TPrintf( "num_lo   =%d\n", cp_data->NUM_LO); ///<    #参加数下限
+  OS_TPrintf( "num_hi   =%d\n", cp_data->NUM_HI); ///<    #参加数上限
+  OS_TPrintf( "level    =%d\n", cp_data->LEVEL);  ///<    #参加レベル
+  OS_TPrintf( "lv_range =%d\n", cp_data->LEVEL_RANGE); ///<    #レベル範囲
+  OS_TPrintf( "lv_total =%d\n", cp_data->LEVEL_TOTAL); ///<    #レベル合計
+  OS_TPrintf( "both_poke=%d\n", cp_data->BOTH_POKE); ///<    #同じポケモン
+  OS_TPrintf( "both_item=%d\n", cp_data->BOTH_ITEM);  ///<    #同じどうぐ             60
+  OS_TPrintf( "veto_poke=0x%x\n", cp_data->VETO_POKE_BIT[REG_POKENUM_MAX_BYTE]);  ///<    #参加禁止ポケモン 142
+  OS_TPrintf( "veto_item=0x%d\n", cp_data->VETO_ITEM[REG_ITEMNUM_MAX_BYTE]); ///<    #持ち込み禁止道具 218
+  OS_TPrintf( "must_poke=%d\n", cp_data->MUST_POKE);   ///<    #必須ポケモン
+  OS_TPrintf( "must_form=%d\n", cp_data->MUST_POKE_FORM);   ///<    #必須ポケモンフォルム
+  OS_TPrintf( "shooter  =%d\n", cp_data->SHOOTER);    ///<    #シューター
+  OS_TPrintf( "time_vs  =%d\n", cp_data->TIME_VS);     ///<    #対戦時間
+  OS_TPrintf( "time_cmd =%d\n", cp_data->TIME_COMMAND); ///<    #入力時間
+  OS_TPrintf( "nick_view=%d\n", cp_data->NICKNAME); ///<    #ニックネーム表示
+  OS_TPrintf( "age_lo   =%d\n", cp_data->AGE_LO);  ///<    #年齢制限以上
+  OS_TPrintf( "age_hi   =%d\n", cp_data->AGE_HI);  ///<    #年齢制限以下
+  OS_TPrintf( "show_poke=%d\n", cp_data->SHOW_POKE);  ///<    #ポケモン見せ合い
+  OS_TPrintf( "show_time=%d\n", cp_data->SHOW_POKE_TIME);  ///<ポケモン見せ合い時間
+  OS_TPrintf( "btl_type =%d\n", cp_data->BATTLE_TYPE);    ///< バトルタイプ  230
+
+  { 
+    char str[WIFI_PLAYER_TIX_CUPNAME_MOJINUM + EOM_SIZE];
+    DEB_STR_CONV_StrcodeToSjis( cpReg->cupname, str, WIFI_PLAYER_TIX_CUPNAME_MOJINUM + EOM_SIZE ); 
+    OS_TPrintf( "cupname =[%s]\n", str );
+  }
+  OS_TPrintf( "rom_ver  =%d\n", cpReg->ver);//カセットバージョン：
+  OS_TPrintf( "cup_no   =%d\n", cpReg->no);//大会No.
+  OS_TPrintf( "countory =%d\n", cpReg->code);//国コード：
+  OS_TPrintf( "start y  =%d\n", cpReg->start_year);//開始年：00-99
+  OS_TPrintf( "start m  =%d\n", cpReg->start_month);//開始月：01-12
+  OS_TPrintf( "start d  =%d\n", cpReg->start_day);//開始日：01-31
+  OS_TPrintf( "end   y  =%d\n", cpReg->end_year);//終了年：00-99
+  OS_TPrintf( "end   m  =%d\n", cpReg->end_month);//終了月：01-12
+  OS_TPrintf( "endy  d  =%d\n", cpReg->end_day);//終了日：01-31
+  OS_TPrintf( "status   =%d\n", cpReg->status);  //大会状態： net/dreamworld_netdata.hのDREAM_WORLD_MATCHUP_TYPEの値
+  OS_TPrintf( "crc      =%d\n", cpReg->crc);  //整合性検査
+  
+}
 #endif //PM_DEBUG

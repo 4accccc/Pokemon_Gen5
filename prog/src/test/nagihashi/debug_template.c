@@ -369,6 +369,8 @@ static GFL_PROC_RESULT DEBUG_TEMPLATE_PROC_Init( GFL_PROC *p_proc, int *p_seq, v
     POKEMON_PASO_PARAM  *p_ppp;
 
     p_ppp = (POKEMON_PASO_PARAM *)PP_Create( 6, 0, 0, HEAPID_NAGI_DEBUG_SUB );
+    PPP_Put( p_ppp,ID_PARA_tamago_flag, TRUE );
+    PPP_Put( p_ppp,ID_PARA_sex, PTL_SEX_FEMALE );
 
     GFL_BG_FillCharacter( BG_FRAME_POKEMON_M, 0, 1,  0 );
 
