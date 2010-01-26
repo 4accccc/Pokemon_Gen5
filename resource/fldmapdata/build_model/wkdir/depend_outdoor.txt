@@ -247,4 +247,11 @@ DEP_OUTDOOR	=	\
 	$(RESDIR)/gate_01_2.nsbmd \
 	$(RESDIR)/d13_house_01.nsbmd \
 	$(RESDIR)/d22_ruins_01.nsbmd \
+	$(RESDIR)/tt_train04.nsbmd \
+	$(RESDIR)/tt_train05.nsbmd \
+	$(RESDIR)/tt_train06.nsbmd \
+	$(RESDIR)/tt_train07.nsbmd \
+	$(RESDIR)/tt_train08.nsbmd \
+	$(RESDIR)/tt_train09.nsbmd \
+	$(RESDIR)/tt_train10.nsbmd \
 

@@ -1214,7 +1214,14 @@ DEP_TEXSET_IMD_OUTDOOR034 = \
 	$(SRCDIR)/out_dust01.imd \
 	$(SRCDIR)/outwarp01.imd \
 	$(SRCDIR)/outwarp02.imd \
-	$(SRCDIR)/outwarp03.imd
+	$(SRCDIR)/outwarp03.imd \
+	$(SRCDIR)/tt_train04.imd \
+	$(SRCDIR)/tt_train05.imd \
+	$(SRCDIR)/tt_train06.imd \
+	$(SRCDIR)/tt_train07.imd \
+	$(SRCDIR)/tt_train08.imd \
+	$(SRCDIR)/tt_train09.imd \
+	$(SRCDIR)/tt_train10.imd
 
 texset/outdoor034.imd: $(DEP_TEXSET_IMD_OUTDOOR034) texset/tmp/outdoor034.list
 	$(TEXMAG) -q -n -o $@ -S texset/tmp/outdoor034.list
