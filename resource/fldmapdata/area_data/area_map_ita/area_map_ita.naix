@@ -18,10 +18,12 @@ enum {
 	NARC_area_map_ita_in31_08gym_nsbta = 4,
 	NARC_area_map_ita_m_tennis01_00_00_nsbta = 5,
 	NARC_area_map_ita_out04_h01_ita_nsbta = 6,
-	NARC_area_map_ita_out19_bc_ita_nsbta = 7,
-	NARC_area_map_ita_out21_h05_ita_nsbta = 8,
-	NARC_area_map_ita_out31_ita_nsbta = 9,
-	NARC_area_map_ita_out48_wf_ita_nsbta = 10
+	NARC_area_map_ita_out07_ita_nsbta = 7,
+	NARC_area_map_ita_out19_bc_ita_nsbta = 8,
+	NARC_area_map_ita_out21_h05_ita_nsbta = 9,
+	NARC_area_map_ita_out31_ita_nsbta = 10,
+	NARC_area_map_ita_out36_ita_nsbta = 11,
+	NARC_area_map_ita_out48_wf_ita_nsbta = 12
 };
 
 /* NARC_AREA_MAP_ITA_NAIX_ */
