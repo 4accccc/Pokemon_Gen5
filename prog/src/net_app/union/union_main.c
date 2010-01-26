@@ -240,3 +240,24 @@ void UnionMain_SetAppealNo(UNION_SYSTEM_PTR unisys, UNION_APPEAL appeal_no)
 {
   unisys->my_situation.appeal_no = appeal_no;
 }
+
+//==================================================================
+/**
+ * 自機が外部イベントを発動出来るフリーな状態か調べる
+ * @param   gsys		
+ * @retval  BOOL		TRUE:完全にフリー　FALSE:フリーではない
+ */
+//==================================================================
+BOOL UnionMain_CheckPlayerFreeMode(GAMESYS_WORK *gsys)
+{
+  GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
+  UNION_SYSTEM_PTR unisys = GameCommSys_GetAppWork(game_comm);
+  
+  if(unisys == NULL){
+    return TRUE;
+  }
+  if(unisys->my_situation.union_status == UNION_STATUS_NORMAL && unisys->player_pause == FALSE){
+    return TRUE;
+  }
+  return FALSE;
+}

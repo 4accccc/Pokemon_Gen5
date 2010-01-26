@@ -27,6 +27,7 @@
 #include "net_app/union/union_subdisp.h"
 #include "field/intrude_subdisp.h"
 #include "field/beacon_view.h"
+#include "net_app/union/union_main.h"
 
 //-----------------------------------------------------------------------------
 /**
@@ -854,7 +855,12 @@ static void exit_union_subscreen( FIELD_SUBSCREEN_WORK* pWork )
 //-----------------------------------------------------------------------------
 static void update_union_subscreen( FIELD_SUBSCREEN_WORK* pWork,BOOL bActive )
 {
-  UNION_SUBDISP_Update(pWork->unisubWork);
+  GAMESYS_WORK *gameSys = FIELDMAP_GetGameSysWork( pWork->fieldmap );
+
+  if(bActive == TRUE && UnionMain_CheckPlayerFreeMode(gameSys) == FALSE){
+    bActive = FALSE;
+  }
+  UNION_SUBDISP_Update(pWork->unisubWork, bActive);
 }
 
 //----------------------------------------------------------------------------
@@ -864,7 +870,12 @@ static void update_union_subscreen( FIELD_SUBSCREEN_WORK* pWork,BOOL bActive )
 //-----------------------------------------------------------------------------
 static void draw_union_subscreen( FIELD_SUBSCREEN_WORK* pWork,BOOL bActive )
 {
-  UNION_SUBDISP_Draw(pWork->unisubWork);
+  GAMESYS_WORK *gameSys = FIELDMAP_GetGameSysWork( pWork->fieldmap );
+
+  if(bActive == TRUE && UnionMain_CheckPlayerFreeMode(gameSys) == FALSE){
+    bActive = FALSE;
+  }
+  UNION_SUBDISP_Draw(pWork->unisubWork, bActive);
 }
 
 

@@ -82,4 +82,5 @@ extern void UnionMain_Callback_FieldDelete(void *pwk, void *app_work, FIELDMAP_W
 extern BOOL UnionMain_GetFinishReq(UNION_SYSTEM_PTR unisys);
 extern BOOL UnionMain_GetFinishExe(UNION_SYSTEM_PTR unisys);
 extern void UnionMain_SetAppealNo(UNION_SYSTEM_PTR unisys, UNION_APPEAL appeal_no);
+extern BOOL UnionMain_CheckPlayerFreeMode(GAMESYS_WORK *gsys);
 

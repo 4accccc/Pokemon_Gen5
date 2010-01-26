@@ -283,6 +283,14 @@ UNION_SUBDISP_PTR UNION_SUBDISP_Init(GAMESYS_WORK *gsys)
     }
   }
   
+  //OBJWINDOW(通信アイコン) の中だけBlendで輝度が落ちないようにする
+  GFL_NET_WirelessIconOBJWinON();
+  G2S_SetWndOBJInsidePlane(GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG1 |
+      GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG3 | GX_BLEND_PLANEMASK_OBJ, FALSE);
+  G2S_SetWndOutsidePlane(GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG1 |
+      GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG3 | GX_BLEND_PLANEMASK_OBJ, TRUE);
+	GXS_SetVisibleWnd(GX_WNDMASK_OW);
+  
   return unisub;
 }
 
@@ -304,6 +312,11 @@ void UNION_SUBDISP_Exit(UNION_SUBDISP_PTR unisub)
   _UniSub_SystemExit(unisub);
 
   GFL_HEAP_FreeMemory(unisub);
+  G2S_BlendNone();
+  
+  //OBJWINDOW(通信アイコン) の中だけBlendで輝度が落ちないようにする
+  GFL_NET_WirelessIconOBJWinOFF();
+	GXS_SetVisibleWnd(GX_WNDMASK_NONE);
 }
 
 //==================================================================
@@ -311,15 +324,25 @@ void UNION_SUBDISP_Exit(UNION_SUBDISP_PTR unisub)
  * ユニオン下画面：更新
  *
  * @param   unisub		
+ * @param   bActive   TRUE:下画面アクティブ状態
+ *                    FALSE:非アクティブ(他のイベント中：操作を受け付けてはいけない)
  */
 //==================================================================
-void UNION_SUBDISP_Update(UNION_SUBDISP_PTR unisub)
+void UNION_SUBDISP_Update(UNION_SUBDISP_PTR unisub, BOOL bActive)
 {
   GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(unisub->gsys);
   UNION_SYSTEM_PTR unisys = GameCommSys_GetAppWork(game_comm);
   int i;
   
-	G2S_BlendNone();  //※check　どこかで勝手にBLENDがかかるので暫定対処 2009.12.18(金)
+  GFL_NET_WirelessIconOBJWinON();
+	if(bActive == TRUE){
+  	G2S_BlendNone();
+  }
+  else{
+    G2S_SetBlendBrightness(GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG1 |
+      GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG3 | GX_BLEND_PLANEMASK_OBJ |
+      GX_BLEND_PLANEMASK_BD, -FIELD_NONE_ACTIVE_EVY);
+  }
 
 	PRINTSYS_QUE_Main(unisub->printQue);
   PMS_DRAW_Main(unisub->pmsdraw);
@@ -341,22 +364,26 @@ void UNION_SUBDISP_Update(UNION_SUBDISP_PTR unisub)
     _UniSub_PrintChatUpdate(unisub, &unisys->chat_log);
   }
   
-  _UniSub_TouchUpdate(unisub);
+  if(bActive == TRUE){
+    _UniSub_TouchUpdate(unisub);
 
-  unisub->scrollbar_touch = _UniSub_ScrollBar_TouchCheck(unisub);
-  if(unisub->scrollbar_touch == FALSE){
-    unisub->scrollbar_touch = _UniSub_ScrollArea_TouchCheck(unisub);
+    unisub->scrollbar_touch = _UniSub_ScrollBar_TouchCheck(unisub);
+    if(unisub->scrollbar_touch == FALSE){
+      unisub->scrollbar_touch = _UniSub_ScrollArea_TouchCheck(unisub);
+    }
   }
+  
   if(unisys != NULL){
     _UniSub_ScrollBar_Update(unisys, unisub);
-    _UniSub_ChatPlate_TouchCheck(unisys, unisub, &unisys->chat_log);
+    if(bActive == TRUE){
+      _UniSub_ChatPlate_TouchCheck(unisys, unisub, &unisys->chat_log);
+    }
     _UniSub_ChatPlate_Update(unisub, &unisys->chat_log);
   }
   
   if(GameCommSys_BootCheck(game_comm) == GAME_COMM_NO_UNION){
     if(unisys != NULL){
       UnionMain_SetAppealNo(unisys, unisub->appeal_no);
-      
     }
   }
 }
@@ -366,9 +393,11 @@ void UNION_SUBDISP_Update(UNION_SUBDISP_PTR unisub)
  * ユニオン下画面：描画
  *
  * @param   unisub		
+ * @param   bActive   TRUE:下画面アクティブ状態
+ *                    FALSE:非アクティブ(他のイベント中：操作を受け付けてはいけない)
  */
 //==================================================================
-void UNION_SUBDISP_Draw(UNION_SUBDISP_PTR unisub)
+void UNION_SUBDISP_Draw(UNION_SUBDISP_PTR unisub, BOOL bActive)
 {
 }
 

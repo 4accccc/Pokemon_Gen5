@@ -27,6 +27,9 @@ extern "C"{
 #define FIELD_SUBSCREEN_BGPLANE (GFL_BG_FRAME0_S)
 #define FIELD_SUBSCREEN_PALLET  (0xE)
 
+///下画面を非アクティブにした場合の基準となる輝度
+#define FIELD_NONE_ACTIVE_EVY   (8)
+
 ///下画面のモード指定（デバッグでしかつかわないはず）
 typedef enum {  
   FIELD_SUBSCREEN_NORMAL = 0,         // Cギア
