@@ -4,6 +4,17 @@ del *.NSCR
 del *.NCER
 del *.NANR
 
+g2dcvtr bdetail_bgu01.nsc -bg -pcm
+g2dcvtr bdetail_bgd01.nsc -bg -pcm
+g2dcvtr bdetail_bgd02.nsc -bg -pcm
+ntrcomp -lex -A4 -o bdetail_bgu_lz.NCGR bdetail_bgu.NCGR
+ntrcomp -lex -A4 -o bdetail_bgd_lz.NCGR bdetail_bgd.NCGR
+ntrcomp -lex -A4 -o bdetail_bgu01_lz.NSCR bdetail_bgu01.NSCR
+ntrcomp -lex -A4 -o bdetail_bgd01_lz.NSCR bdetail_bgd01.NSCR
+ntrcomp -lex -A4 -o bdetail_bgd02_lz.NSCR bdetail_bgd02.NSCR
+
+g2dcvtr bdetail_obj.nce -br
+
 g2dcvtr bstatus_bg01.nsc -bg -pcm
 g2dcvtr bstatus_bg02.nsc -bg -pcm
 g2dcvtr bstatus_bg03.nsc -bg -pcm
