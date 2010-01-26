@@ -1254,6 +1254,13 @@ static int _playerDirectEnd( WIFIP2PMATCH_WORK *wk, int seq )
 {
   _myStatusChange(wk, WIFI_STATUS_WAIT,WIFI_GAME_LOGIN_WAIT);
   GFL_NET_StateWifiMatchEnd(TRUE);
+
+  if(GFL_NET_IsParentMachine()){
+    WifiP2PMatchMessagePrint(wk, msg_wifilobby_1017, FALSE);
+  }
+  else{
+    WifiP2PMatchMessagePrint(wk, msg_wifilobby_1016, FALSE);
+  }
   _CHANGESTATE(wk,WIFIP2PMATCH_MODE_DISCONNECT);
   return seq;
 }
