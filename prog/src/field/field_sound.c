@@ -890,9 +890,18 @@ static u32 GetFieldBGM( GAMEDATA* gameData, u32 zoneID )
   // “ÁŽêBGM‚ª–³‚¢
   if( soundIdx == SPECIAL_BGM_NONE )
   {
-    if( playerForm == PLAYER_MOVE_FORM_SWIM ){ soundIdx = SEQ_BGM_NAMINORI; }      // ‚È‚Ý‚Ì‚è
-    else if( playerForm == PLAYER_MOVE_FORM_CYCLE ){ soundIdx = SEQ_BGM_BICYCLE; } // Ž©“]ŽÔ
-    else{ soundIdx = GetZoneBGM( gameData, zoneID ); }                             // •à‚«
+    if( playerForm == PLAYER_MOVE_FORM_SWIM )
+    { // ‚È‚Ý‚Ì‚è
+      soundIdx = SEQ_BGM_NAMINORI;
+    }      
+    else if( (playerForm == PLAYER_MOVE_FORM_CYCLE) && ZONEDATA_BicycleBGMEnable( zoneID ) )
+    { // Ž©“]ŽÔ
+      soundIdx = SEQ_BGM_BICYCLE; 
+    } 
+    else
+    { // •à‚«
+      soundIdx = GetZoneBGM( gameData, zoneID ); 
+    }                             
   } 
 
   return soundIdx;
