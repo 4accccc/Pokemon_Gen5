@@ -274,6 +274,7 @@ class RegulationBin
       ##ステータスは0
       num = 0
       outFH.write([num].pack("c"))
+      outFH.write([num].pack("s"))
       
     else
     end
