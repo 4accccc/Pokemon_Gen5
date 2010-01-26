@@ -6945,6 +6945,19 @@
  *
  *  @param data_type  取得したい情報のタイプ　prog/src/field/scrcmd_wfbc_define.h
  *  @param ret_val    戻り値  データ
+ *
+ *  data_type
+ *    WFBC_GET_PARAM_BATTLE_TRAINER_ID (0)    // バトルトレーナーID
+ *    WFBC_GET_PARAM_IS_TAKES_ID (1)          // 街にいきたがるか
+ *    WFBC_GET_PARAM_IS_RIREKI (2)            // 前にいたBCの街の履歴があるか
+ *    WFBC_GET_PARAM_PEOPLE_NUM (3)           // 人口の取得 **zone_chnageのタイミングで呼んでOK**
+ *    WFBC_GET_PARAM_BC_NPC_WIN_NUM (4)       // BC　NPC勝利数
+ *    WFBC_GET_PARAM_BC_NPC_WIN_TARGET (5)    // BC　NPC勝利目標数
+ *    WFBC_GET_PARAM_WF_IS_POKECATCH (6)      // WF　村長イベント　ポケモンはいるか？
+ *    WFBC_GET_PARAM_WF_ITEM  (7)             // WF 村長イベント　ご褒美アイテムの取得
+ *    WFBC_GET_PARAM_WF_POKE  (8)             // WF 村長イベント　探すポケモンナンバーの取得
+ *    WFBC_GET_PARAM_OBJ_ID  (9)              // 話し相手のOBJID　（0～29）
+ *    WFBC_GET_PARAM_BC_CHECK_BATTLE (10)     // BC　相手とバトル可能かチェック
  */
 //--------------------------------------------------------------
 #define _WFBC_GET_DATA( data_type, retVal ) \
@@ -7004,11 +7017,6 @@
   .short EV_SEQ_WFBC_ADD_BC_NPC_WIN_TARGET
   .endm
 
-//======================================================================
-//
-//  個別ギミック関連
-//
-//======================================================================
 //--------------------------------------------------------------
 /**
  *  _WFBC_PALACE_TALK
@@ -7021,6 +7029,31 @@
   .macro  _ASM_WFBC_PALACE_TALK
   .short EV_SEQ_WFBC_PALACE_TALK
   .endm
+
+
+//--------------------------------------------------------------
+/**
+ *  _WFBC_GET_AUTO_NPC_MESSAGE
+ *  @brief WFBC:自動配置人物のメッセージを取得する
+ *  
+ *  @param  ret     戻り値
+ *  @param  msg_idx メッセージのインデックス(1～4)
+ */
+//--------------------------------------------------------------
+#define _WFBC_GET_AUTO_NPC_MESSAGE( ret, msg_idx ) \
+    _ASM_WFBC_GET_AUTO_NPC_MESSAGE ret, msg_idx
+
+  .macro  _ASM_WFBC_GET_AUTO_NPC_MESSAGE ret, msg_idx
+  .short EV_SEQ_WFBC_GET_AUTO_NPC_MESSAGE
+  .short \ret
+  .short \msg_idx
+  .endm
+
+//======================================================================
+//
+//  個別ギミック関連
+//
+//======================================================================
 
 //--------------------------------------------------------------
 /**

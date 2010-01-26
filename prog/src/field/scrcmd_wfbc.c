@@ -41,6 +41,8 @@
 
 #include "msg/msg_place_name.h"  // for MAPNAME_xxxx
 #include "msg/script/msg_plc10.h"  
+#include "msg/script/msg_bc10.h"  
+#include "msg/script/msg_wc10.h"  
 
 //-----------------------------------------------------------------------------
 /**
@@ -286,7 +288,7 @@ VMCMD_RESULT EvCmdWfbc_GetData( VMHANDLE *core, void *wk )
     case WFBC_GET_PARAM_WF_POKE:
       (*ret_wk) = FIELD_WFBC_EVENT_GetWFPokeCatchEventMonsNo( p_event );
       break;
-    // 話し相手のOBJID（0～49）
+    // 話し相手のOBJID（0～29）
     case WFBC_GET_PARAM_OBJ_ID:
       (*ret_wk) = objid;
       break;
@@ -397,6 +399,60 @@ VMCMD_RESULT EvCmdWfbc_CheckWFTargetPokemon( VMHANDLE *core, void *wk )
 
 	return VMCMD_RESULT_CONTINUE;
 }
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  自動配置オブジェクト スクリプト用メッセージ取得
+ */
+//-----------------------------------------------------------------------------
+#define WFBC_SCRIPT_OBJ_MSG_NUM (4)
+VMCMD_RESULT EvCmdWfbc_GetAutoNpcMessage( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  SCRIPT_FLDPARAM *fparam = SCRIPT_GetFieldParam( sc );
+  FLDMAPPER * p_mapper = FIELDMAP_GetFieldG3Dmapper( fparam->fieldMap );
+  FIELD_WFBC* p_wfbc = FLDMAPPER_GetWfbcWork( p_mapper );
+  FIELD_PLAYER* p_player = FIELDMAP_GetFieldPlayer( fparam->fieldMap );
+  const MMDLSYS * cp_mmdlsys = FIELDMAP_GetMMdlSys( fparam->fieldMap );
+  WORDSET* pp_wordset = SCRIPT_GetWordSet( sc );
+  s16 gx, gy, gz;
+  MMDL* p_frontmmdl;
+  u32 objid;
+  const FIELD_WFBC_CORE_PEOPLE* cp_people_core;
+  const FIELD_WFBC_PEOPLE* cp_people;
+  u16 *ret = SCRCMD_GetVMWork( core, wk ); // 戻り値
+  u16 msg_idx = SCRCMD_GetVMWorkValue( core, wk ); // メッセージインデックス
+
+  // 目の前のグリッド取得
+  FIELD_PLAYER_GetFrontGridPos( p_player, &gx, &gy, &gz );
+
+
+  // 目の前にいる人物を検索
+  p_frontmmdl = MMDLSYS_SearchGridPos( cp_mmdlsys, gx, gz, FALSE );
+  GF_ASSERT( p_frontmmdl );
+
+  // OBJID
+  objid = FIELD_WFBC_CORE_GetMMdlNpcID( p_frontmmdl );
+
+  msg_idx -= 1;
+  GF_ASSERT( msg_idx < WFBC_SCRIPT_OBJ_MSG_NUM );
+
+  // メッセージIDの返す
+  if( FIELD_WFBC_GetType(p_wfbc) == FIELD_WFBC_CORE_TYPE_BLACK_CITY )
+  {
+    *ret = bc10_01_01 + (WFBC_SCRIPT_OBJ_MSG_NUM*objid) + msg_idx;
+  }
+  else
+  {
+    *ret = wc10_01_01 + (WFBC_SCRIPT_OBJ_MSG_NUM*objid) + msg_idx;
+  }
+
+
+	return VMCMD_RESULT_CONTINUE;
+}
+
 
 
 

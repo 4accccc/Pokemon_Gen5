@@ -787,7 +787,7 @@
   DEF_CMD( EvCmdWfbc_CheckWFTargetPokemon, EV_SEQ_WFBC_CHECK_WF_TARGETPOKE )
   DEF_CMD( EvCmdWfbc_AddBCNpcWinTarget, EV_SEQ_WFBC_ADD_BC_NPC_WIN_TARGET )
   DEF_CMD( EvCmdWfbc_StartPalaceTalk, EV_SEQ_WFBC_PALACE_TALK )
-  NO_CMD()
+  DEF_CMD( EvCmdWfbc_GetAutoNpcMessage, EV_SEQ_WFBC_GET_AUTO_NPC_MESSAGE )
 
   //バッジチェックゲート関連
   DEF_CMD( EvCmdJetBadgeGateGimmickInit, EV_SEQ_JET_BADGE_GATE_GIMMICK_INIT )

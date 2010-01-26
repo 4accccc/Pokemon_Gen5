@@ -34,6 +34,9 @@ extern VMCMD_RESULT EvCmdWfbc_AddBCNpcWinTarget( VMHANDLE *core, void *wk );
 // WF 目的ポケモンを持っているのかチェック
 extern VMCMD_RESULT EvCmdWfbc_CheckWFTargetPokemon( VMHANDLE *core, void *wk );
 
+// 自動配置オブジェクト スクリプト用メッセージ取得
+extern VMCMD_RESULT EvCmdWfbc_GetAutoNpcMessage( VMHANDLE *core, void *wk );
+
 
 // 進入
 // 通信イベント
