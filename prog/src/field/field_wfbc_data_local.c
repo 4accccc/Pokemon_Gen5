@@ -622,17 +622,17 @@ MMDL_HEADER* FIELD_WFBC_CORE_MMDLHeaderCreateHeapLo( const FIELD_WFBC_CORE* cp_w
       if( mapmode == MAPMODE_NORMAL )
       {
         if( cp_wk->type == FIELD_WFBC_CORE_TYPE_BLACK_CITY ){
-          p_buff[count].event_id    = cp_people_data->script_wf;
-        }else{
           p_buff[count].event_id    = cp_people_data->script_bc;
+        }else{
+          p_buff[count].event_id    = cp_people_data->script_wf;
         }
       }
       else
       {
         if( cp_wk->type == FIELD_WFBC_CORE_TYPE_BLACK_CITY ){
-          p_buff[count].event_id    = cp_people_data->script_plcw;
-        }else{
           p_buff[count].event_id    = cp_people_data->script_plc;
+        }else{
+          p_buff[count].event_id    = cp_people_data->script_plcw;
         }
       }
 
