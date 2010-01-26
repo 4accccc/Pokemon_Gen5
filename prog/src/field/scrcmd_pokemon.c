@@ -1046,6 +1046,8 @@ VMCMD_RESULT EvCmdSetPokemonWaza( VMHANDLE *core, void *wk )
       }
     }
     PP_Put( pp , ID_PARA_waza1+forgetPos , 0 );
+    PP_Put( pp , ID_PARA_pp_count1+forgetPos , 0 );
+    PP_Put( pp , ID_PARA_pp1+forgetPos , 0 );
   }
   else
   {
