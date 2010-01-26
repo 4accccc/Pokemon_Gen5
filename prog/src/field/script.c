@@ -69,6 +69,8 @@ enum {
   TEMP_WORK_START = SCWK_AREA_START,
   TEMP_WORK_END = USERWK_AREA_END,
   TEMP_WORK_SIZE = TEMP_WORK_END - TEMP_WORK_START,
+
+  USERWK_SIZE = USERWK_AREA_END - USERWK_AREA_START,
 };
 
 //============================================================================================
@@ -770,6 +772,71 @@ void * SCRIPT_GetTrainerEyeData( SCRIPT_WORK * sc, u32 tr_no )
   return &sc->eye_hitdata[tr_no];
 }
 
+//--------------------------------------------------------------
+/**
+ * スクリプト制御ワークのメンバーアドレス設定(ミュージカル
+ * @param	sc	  SCRIPT_WORK型のポインタ
+ */
+//--------------------------------------------------------------
+void SCRIPT_SetMemberWork_Musical( SCRIPT_WORK *sc, void *musEveWork )
+{
+	if( sc->magic_no != SCRIPT_MAGIC_NO ){
+		GF_ASSERT_MSG(0, "起動(確保)していないスクリプトのワークにアクセスしています！" );
+	}
+	sc->musicalEventWork = musEveWork;
+}
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+void * SCRIPT_GetMemberWork_Musical( SCRIPT_WORK * sc )
+{
+  GF_ASSERT_MSG( sc->musicalEventWork != NULL , "ミュージカルワークがNULL！" );
+  return sc->musicalEventWork;
+}
+
+
+//--------------------------------------------------------------
+/**
+ * サブプロセス用ワークのポインターアドレスを取得
+ * @param	sc SCRIPT_WORK
+ * @retval none
+ *
+ * 使い終わったら必ずNULLクリアすること！
+ */
+//--------------------------------------------------------------
+void** SCRIPT_SetSubProcWorkPointerAdrs( SCRIPT_WORK *sc )
+{
+  return &sc->subproc_work;
+}
+
+//--------------------------------------------------------------
+/**
+ * サブプロセス用ワークのポインターを取得
+ * @param	sc SCRIPT_WORK
+ * @retval none
+ *
+ * 使い終わったら必ずNULLクリアすること！
+ */
+//--------------------------------------------------------------
+void * SCRIPT_SetSubProcWorkPointer( SCRIPT_WORK *sc )
+{
+  return sc->subproc_work;
+}
+
+//--------------------------------------------------------------
+/**
+ * サブプロセス用ワーク領域の解放(ポインタがNULLでなければFree)
+ * @param	sc SCRIPT_WORK
+ * @retval none
+ */
+//--------------------------------------------------------------
+void SCRIPT_FreeSubProcWorkPointer( SCRIPT_WORK *sc )
+{
+  if(sc->subproc_work != NULL){
+    GFL_HEAP_FreeMemory(sc->subproc_work);
+    sc->subproc_work = NULL;
+  }
+}
+
 
 
 //============================================================================================
@@ -881,7 +948,7 @@ SCRIPT_WORK* SCRIPT_GetEventWorkToScriptWork( GMEVENT *event )
 }
 
 //============================================================================================
-//	イベントワーク
+//	スクリプトワーク・フラグ関連
 //============================================================================================
 //------------------------------------------------------------------
 //------------------------------------------------------------------
@@ -960,63 +1027,6 @@ BOOL SCRIPT_SetEventWorkValue(
 }
 //--------------------------------------------------------------
 /**
- * スクリプト制御ワークのメンバーアドレス設定(ミュージカル
- * @param	sc	  SCRIPT_WORK型のポインタ
- */
-//--------------------------------------------------------------
-void SCRIPT_SetMemberWork_Musical( SCRIPT_WORK *sc, void *musEveWork )
-{
-	if( sc->magic_no != SCRIPT_MAGIC_NO ){
-		GF_ASSERT_MSG(0, "起動(確保)していないスクリプトのワークにアクセスしています！" );
-	}
-	sc->musicalEventWork = musEveWork;
-}
-//--------------------------------------------------------------
-//--------------------------------------------------------------
-void * SCRIPT_GetMemberWork_Musical( SCRIPT_WORK * sc )
-{
-  GF_ASSERT_MSG( sc->musicalEventWork != NULL , "ミュージカルワークがNULL！" );
-  return sc->musicalEventWork;
-}
-
-
-//------------------------------------------------------------------
-/**
- * @brief	スクリプトから指定するOBJコードを取得
- * @param	fsys		FLDCOMMON_WORKへのポインタ
- * @param	no			0-15
- * @return	"OBJキャラコード"
- */
-//------------------------------------------------------------------
-#ifndef SCRIPT_PL_NULL
-u16 GetEvDefineObjCode( FLDCOMMON_WORK* fsys, u16 no )
-{
-	GF_ASSERT( (no < OBJCHR_WORK_MAX) && "引数が不正です！" );
-	return GetEventWorkValue( fsys, (OBJCHR_WORK_START+no) );
-}
-#endif
-
-//------------------------------------------------------------------
-/**
- * @brief	スクリプトから指定するOBJコードをセット
- *
- * @param	fsys		FLDCOMMON_WORKへのポインタ
- * @param	no			0-15
- * @param	obj_code	OBJコード
- *
- * @return	"TRUE=セット出来た、FALSE=セット出来なかった"
- */
-//------------------------------------------------------------------
-#ifndef SCRIPT_PL_NULL
-BOOL SetEvDefineObjCode( FLDCOMMON_WORK* fsys, u16 no, u16 obj_code )
-{
-	GF_ASSERT( (no < OBJCHR_WORK_MAX) && "引数が不正です！" );
-	return SetEventWorkValue( fsys, (OBJCHR_WORK_START+no), obj_code );
-}
-#endif
-
-//--------------------------------------------------------------
-/**
  * プログラムからスクリプトへの引数となるパラメータをセット
  * @param	sc SCRIPT_WORK
  * @param	prm0	パラメータ０（SCWK_PARAM0）
@@ -1035,47 +1045,24 @@ void SCRIPT_SetScriptWorkParam( SCRIPT_WORK *sc, u16 prm0, u16 prm1, u16 prm2, u
   SCRIPT_SetEventWorkValue( sc, SCWK_PARAM3, prm3 );
 }
 
-//--------------------------------------------------------------
+//------------------------------------------------------------------
 /**
- * サブプロセス用ワークのポインターアドレスを取得
- * @param	sc SCRIPT_WORK
- * @retval none
- *
- * 使い終わったら必ずNULLクリアすること！
  */
-//--------------------------------------------------------------
-void** SCRIPT_SetSubProcWorkPointerAdrs( SCRIPT_WORK *sc )
+//------------------------------------------------------------------
+void * SCRIPT_BackupUserWork( SCRIPT_WORK * sc )
 {
-  return &sc->subproc_work;
+  u16 * backup_work = GFL_HEAP_AllocClearMemory( sc->main_heapID, sizeof(u16) * USERWK_SIZE );
+  GFL_STD_MemCopy16( getTempWork( sc, USERWK_AREA_START ), backup_work, sizeof(u16) * USERWK_SIZE );
+  return backup_work;
 }
 
-//--------------------------------------------------------------
+//------------------------------------------------------------------
 /**
- * サブプロセス用ワークのポインターを取得
- * @param	sc SCRIPT_WORK
- * @retval none
- *
- * 使い終わったら必ずNULLクリアすること！
  */
-//--------------------------------------------------------------
-void * SCRIPT_SetSubProcWorkPointer( SCRIPT_WORK *sc )
+//------------------------------------------------------------------
+void SCRIPT_RestoreUserWork( SCRIPT_WORK * sc, void *backup_work )
 {
-  return sc->subproc_work;
-}
-
-//--------------------------------------------------------------
-/**
- * サブプロセス用ワーク領域の解放(ポインタがNULLでなければFree)
- * @param	sc SCRIPT_WORK
- * @retval none
- */
-//--------------------------------------------------------------
-void SCRIPT_FreeSubProcWorkPointer( SCRIPT_WORK *sc )
-{
-  if(sc->subproc_work != NULL){
-    GFL_HEAP_FreeMemory(sc->subproc_work);
-    sc->subproc_work = NULL;
-  }
+  GFL_STD_MemCopy16( backup_work, getTempWork( sc, USERWK_AREA_START ), sizeof(u16) * USERWK_SIZE );
 }
 
 //============================================================================================

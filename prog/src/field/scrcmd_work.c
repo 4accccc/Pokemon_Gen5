@@ -65,6 +65,8 @@ struct _TAG_SCRCMD_WORK
   
   SCRCMD_MENU_WORK menuWork;
   SCRCMD_BALLOONWIN_WORK balloonWinWork;
+
+  void * backup_work;
 };
 
 //======================================================================
@@ -631,4 +633,32 @@ static void	BmpMenu_CallbackFunc(BMPMENULIST_WORK * wk,u32 param,u8 mode)
   }
 }
 
+
+//--------------------------------------------------------------
+/**
+ * @brief 退避用ワーク:退避処理
+ *
+ * スクリプトファイルローカルな変数をバックアップする
+ */
+//--------------------------------------------------------------
+void SCRCMD_WORK_BackupUserWork( SCRCMD_WORK *work )
+{
+  GF_ASSERT( work->backup_work == NULL );
+  work->backup_work = SCRIPT_BackupUserWork( SCRCMD_WORK_GetScriptWork( work ) );
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief 退避用ワーク：復帰処理
+ *
+ * スクリプトファイルローカルな変数を復帰する
+ */
+//--------------------------------------------------------------
+void SCRCMD_WORK_RestoreUserWork( SCRCMD_WORK *work )
+{
+  void * backup_work = work->backup_work;
+  GF_ASSERT( backup_work != NULL );
+  SCRIPT_RestoreUserWork( SCRCMD_WORK_GetScriptWork( work ), work->backup_work );
+  work->backup_work = NULL;
+}
 

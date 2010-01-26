@@ -104,3 +104,8 @@ extern void SCRCMD_WORK_AddMenuList(
 extern void SCRCMD_WORK_StartMenu( SCRCMD_WORK *work );
 extern BOOL SCRCMD_WORK_ProcMenu( SCRCMD_WORK *work );
 extern BOOL SCRCMD_WORK_ProcMenu_Breakable( SCRCMD_WORK *work );
+
+//ëﬁîópÉèÅ[ÉNëÄçÏ
+extern void SCRCMD_WORK_BackupUserWork( SCRCMD_WORK *work );
+extern void SCRCMD_WORK_RestoreUserWork( SCRCMD_WORK *work );
+

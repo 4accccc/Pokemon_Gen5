@@ -826,6 +826,7 @@ static BOOL EvChangeCommonScrWait(VMHANDLE *core, void *wk )
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
 
   if ( SCRIPT_GetVMExists( sc, VMHANDLE_SUB1 ) != TRUE) {
+    SCRCMD_WORK_RestoreUserWork( wk );
     return TRUE;
   }
   return FALSE;
@@ -847,6 +848,7 @@ static VMCMD_RESULT EvCmdChangeCommonScr( VMHANDLE *core, void *wk )
 
   scr_id = VMGetU16(core);
 
+  SCRCMD_WORK_BackupUserWork( wk );
   //共通スクリプト以外にも切り替え可能になっている！
   //仮想マシン追加
   SCRIPT_AddVMachine( sc, getZoneID(work), scr_id, VMHANDLE_SUB1 );
