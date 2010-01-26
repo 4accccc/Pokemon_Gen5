@@ -29,6 +29,9 @@ _EVENT_DATA_END
 EVENT_START   ev_c08r0301_gentleman_01
 
 	_TALK_OBJ_START()
+	
+	//プレイヤーネームを格納
+	_PLAYER_NAME(1)
 
 	//今日既にイベントを終えたかチェック
 	IF FLAG_ON( TMFLG_C08R0301_GOODS ) THEN
@@ -60,10 +63,14 @@ EVENT_START   ev_c08r0301_gentleman_01
 				_BALLOONWIN_OBJMSG( msg_c08r0301_goods_02 , C08R0301_GENTLEMAN_01 )
 				_BALLOONWIN_CLOSE()
 				
+				//アイテム名を格納するワークを定義
+				DEFINE_LOCAL LCW_GOODS_NAME
+				
 				//アイテム入手処理
 				
 				IF $WK_SCENE_C08R0301 == 0 THEN
 					_ADD_MUSICAL_GOODS( MUSICAL_GOODS_PUREZENTOBAKO  )
+					_MUSICAL_WORD_GOODS_NAME(  0 , MUSICAL_GOODS_PUREZENTOBAKO  )
 					
 					//==================================//
 			
@@ -74,6 +81,7 @@ EVENT_START   ev_c08r0301_gentleman_01
 					
 				ELSIF $WK_SCENE_C08R0301 == 1 THEN
 					_ADD_MUSICAL_GOODS( MUSICAL_GOODS_FUSAFUSANOHIGE  )
+					_MUSICAL_WORD_GOODS_NAME(  0 , MUSICAL_GOODS_FUSAFUSANOHIGE  )
 					
 					//==================================//
 			
@@ -84,6 +92,7 @@ EVENT_START   ev_c08r0301_gentleman_01
 					
 				ELSIF $WK_SCENE_C08R0301 == 2 THEN
 					_ADD_MUSICAL_GOODS( MUSICAL_GOODS_AKAIBOUSI  )
+					_MUSICAL_WORD_GOODS_NAME(  0 , MUSICAL_GOODS_AKAIBOUSI  )
 					
 					//==================================//
 			
@@ -94,6 +103,7 @@ EVENT_START   ev_c08r0301_gentleman_01
 					
 				ELSIF $WK_SCENE_C08R0301 == 3 THEN
 					_ADD_MUSICAL_GOODS( MUSICAL_GOODS_OOKINAFUKURO  )
+					_MUSICAL_WORD_GOODS_NAME(  0 , MUSICAL_GOODS_OOKINAFUKURO  )
 					
 					//==================================//
 			
@@ -103,6 +113,13 @@ EVENT_START   ev_c08r0301_gentleman_01
 					//==================================//
 					
 				ENDIF
+				
+				//アイテム入手メッセージ
+				_ME_PLAY( SEQ_ME_ITEM )
+				_SYSWIN_MSG_ALLPUT_DOWN(msg_c08r0301_add_goods_01)
+				_ME_WAIT()
+				_LAST_KEYWAIT()
+				_SYSWIN_CLOSE()
 				
 				//==================================//
 			
