@@ -371,6 +371,8 @@ enum
 #define KAZAKAMI_WIND_SE_LOOP_TIME_DIF  (16)
 #define KAZAKAMI_WIND_SE_LOOP_TIME      (KAZAKAMI_WIND_SE_LOOP_TIME_MIN)
 
+#define KAZAKAMI_WIND_SE_LOOP_NEED_TIME (10)
+
 #define KAZAKAMI_WIND_SE_LOOP_VOLUME_MIN  ( 50 )
 #define KAZAKAMI_WIND_SE_LOOP_VOLUME_DIF  ( 100 - KAZAKAMI_WIND_SE_LOOP_VOLUME_MIN )
 
@@ -3017,6 +3019,12 @@ static void WEATHER_KAZAKAMI_WINDRAIN_SCENE_WindSePlay( WEATHER_KAZAKAMI_WORK* p
         
           PMSND_PlaySEVolume( WEATHER_SND_SE_KAZAKAMI_MIDDLE_HIGH_WIND, vol );
           WEATHER_KAZAKAMI_WINDRAIN_SCENE_InitWindSePlay( p_wk );
+        }
+        else
+        {
+          // 直ぐにSE再生すると、発音チャンネル数をオーバーするので、
+          // カウンタの値を調整
+          p_wk->wind_se_count = p_wk->wind_se_count_max - KAZAKAMI_WIND_SE_LOOP_NEED_TIME;
         }
       }
     }
