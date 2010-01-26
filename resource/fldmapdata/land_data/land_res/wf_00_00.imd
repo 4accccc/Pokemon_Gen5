@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fuchino" host="W00152" date="2010-01-22T22:02:12" source="wf_00_00.mb"/>
+	<create user="fuchino" host="W00152" date="2010-01-26T19:45:04" source="wf_00_00.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="fuchino" host="W00152" date="2010-01-22T22:02:12" source="wf_00_00.mb"/>
+<original_create user="fuchino" host="W00152" date="2010-01-26T19:45:04" source="wf_00_00.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -27,7 +27,7 @@
 	use_primitive_strip="on"
 />
 
-<box_test pos_scale="8" xyz="-2.250000 -0.046875 -2.462646" whd="6.143311 1.234375 6.485596"/>
+<box_test pos_scale="8" xyz="-2.250000 -0.171875 -2.462646" whd="6.143311 1.359375 6.485596"/>
 
 <tex_image_array size="7">
 	<tex_image index="0" name="bc_ha01"
@@ -758,9 +758,9 @@
 	<polygon index="0" name="polygon0"
 		vertex_size="32" polygon_size="8"
 		triangle_size="0" quad_size="8"
-		volume_min="-2.187500 -0.046875 -1.750000"
+		volume_min="-2.187500 -0.171875 -1.750000"
 		volume_max="1.000000 -0.031250 1.000000"
-		volume_r="2.763184"
+		volume_r="2.768066"
 		mtx_prim_size="1"
 		nrm_flag="on" clr_flag="off" tex_flag="on"
 	>
@@ -771,13 +771,13 @@
 					<mtx idx="0"/>
 					<tex st="-560.000000 320.000000"/>
 					<nrm xyz="0.000000 0.998047 0.000000"/>
-					<pos_s xyz="-2.187500 -0.046875 1.000000"/>
+					<pos_s xyz="-2.187500 -0.171875 1.000000"/>
 					<tex st="256.000000 320.000000"/>
-					<pos_xy xy="1.000000 -0.046875"/>
+					<pos_xy xy="1.000000 -0.171875"/>
 					<tex st="256.000000 -368.000000"/>
 					<pos_xz xz="1.000000 -1.687500"/>
 					<tex st="-560.000000 -368.000000"/>
-					<pos_xy xy="-2.187500 -0.046875"/>
+					<pos_xy xy="-2.187500 -0.171875"/>
 					<tex st="-512.000000 192.000000"/>
 					<pos_s xyz="-2.000000 -0.031250 0.500000"/>
 					<tex st="-128.000000 192.000000"/>
@@ -1633,7 +1633,7 @@
 		display_size="7"
 		vertex_size="364" polygon_size="91"
 		triangle_size="0" quad_size="91"
-		volume_min="-2.250000 -0.046875 -2.462646"
+		volume_min="-2.250000 -0.171875 -2.462646"
 		volume_max="3.893555 1.187500 4.022949"
 		volume_r="4.561035"
 	>

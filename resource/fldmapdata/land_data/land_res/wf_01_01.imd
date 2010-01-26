@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fuchino" host="W00152" date="2010-01-22T21:34:28" source="wf_01_01.mb"/>
+	<create user="fuchino" host="W00152" date="2010-01-26T19:46:33" source="wf_01_01.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="fuchino" host="W00152" date="2010-01-22T21:34:28" source="wf_01_01.mb"/>
+<original_create user="fuchino" host="W00152" date="2010-01-26T19:46:33" source="wf_01_01.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -27,7 +27,7 @@
 	use_primitive_strip="on"
 />
 
-<box_test pos_scale="7" xyz="-2.000000 -0.093750 -2.250000" whd="6.500000 0.882813 5.250000"/>
+<box_test pos_scale="7" xyz="-2.000000 -0.343750 -2.250000" whd="6.500000 1.132813 5.250000"/>
 
 <tex_image_array size="8">
 	<tex_image index="0" name="grass01ax"
@@ -688,7 +688,7 @@
 	<polygon index="0" name="polygon0"
 		vertex_size="54" polygon_size="14"
 		triangle_size="2" quad_size="12"
-		volume_min="-2.000000 -0.093750 -2.000000"
+		volume_min="-2.000000 -0.343750 -2.000000"
 		volume_max="4.375000 -0.062500 3.000000"
 		volume_r="5.000488"
 		mtx_prim_size="1"
@@ -725,13 +725,13 @@
 					<tex st="384.000000 320.000000"/>
 					<pos_xy xy="-1.000000 -0.062500"/>
 					<tex st="256.000000 880.000000"/>
-					<pos_s xyz="-2.000000 -0.093750 2.375000"/>
+					<pos_s xyz="-2.000000 -0.343750 2.375000"/>
 					<tex st="1072.000000 880.000000"/>
-					<pos_xy xy="4.375000 -0.093750"/>
+					<pos_xy xy="4.375000 -0.343750"/>
 					<tex st="1072.000000 320.000000"/>
 					<pos_xz xz="4.375000 -2.000000"/>
 					<tex st="256.000000 320.000000"/>
-					<pos_xy xy="-2.000000 -0.093750"/>
+					<pos_xy xy="-2.000000 -0.343750"/>
 					<tex st="512.000000 448.000000"/>
 					<pos_s xyz="0.000000 -0.062500 -1.000000"/>
 					<tex st="640.000000 448.000000"/>
@@ -1847,7 +1847,7 @@
 		display_size="8"
 		vertex_size="496" polygon_size="125"
 		triangle_size="4" quad_size="121"
-		volume_min="-2.000000 -0.093750 -2.250000"
+		volume_min="-2.000000 -0.343750 -2.250000"
 		volume_max="4.500000 0.789063 3.000000"
 		volume_r="5.312500"
 	>
