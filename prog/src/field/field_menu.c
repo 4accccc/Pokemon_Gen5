@@ -519,10 +519,10 @@ void FIELD_MENU_DrawMenu( FIELD_MENU_WORK* work )
 
 // メニューの項目数に対応してスクリーンを書き換える
 static const u32 menu_screen_table[] = {
- NARC_field_menu_menu_bg_NSCR,
- NARC_field_menu_menu_bg_NSCR,
- NARC_field_menu_menu_bg_4_NSCR,
- NARC_field_menu_menu_bg_5_NSCR,
+ NARC_field_menu_menu_bg_NSCR,      // 通常
+ NARC_field_menu_menu_bg_5_NSCR,    // ユニオン
+ NARC_field_menu_menu_bg_4_NSCR,    // ポケモン・図鑑両方無し
+ NARC_field_menu_menu_bg_5_NSCR,    // 図鑑無し
 };
 
 
@@ -763,8 +763,8 @@ static void FIELD_MENU_InitIcon(  FIELD_MENU_WORK* work , ARCHANDLE *arcHandle, 
       FMIT_ZUKAN,
       FMIT_ITEMMENU,
       FMIT_TRAINERCARD,
-      FMIT_REPORT,
       FMIT_CONFING,
+      FMIT_NONE,
       FMIT_EXIT,
     },
     { //ポケモン無し・図鑑無し
@@ -1108,7 +1108,10 @@ static void  FIELD_MENU_UpdateKey( FIELD_MENU_WORK* work )
   else
   if( trg & PAD_BUTTON_A )
   {
-    _cancel_func_set( work, FALSE );
+    // 項目無しで無いなら実行
+    if(work->icon[_get_nowcursor_pos(work->cursorPosX,work->cursorPosY)].type!=FMIT_NONE){
+      _cancel_func_set( work, FALSE );
+    }
 //    work->isCancel = FALSE;
 //    work->state = FMS_EXIT_INIT;
   }
