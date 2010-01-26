@@ -313,8 +313,6 @@ enum {
 
   LX_HANERU_BTN = LX_DEFAULT_BTN,
   LY_HANERU_BTN = LY_LV10,
-
-  ID_PARA_SEIKAKU = ID_PARA_end,
 };
 
 typedef enum {
@@ -454,7 +452,7 @@ static const INPUT_BOX_PARAM InputBoxParams[] = {
 
   { INPUTBOX_TYPE_STR,  DMPSTR_SEIKAKU,    LX_SEIKAKU_CAP,    LY_SEIKAKU_CAP,
     LX_SEIKAKU_BOX,    LY_SEIKAKU_BOX,    CALC_STRBOX_WIDTH(5),   LINE_HEIGHT,
-    ID_PARA_SEIKAKU,   NARC_message_chr_dat, 0 },
+    ID_PARA_seikaku,   NARC_message_chr_dat, 0 },
 
   { INPUTBOX_TYPE_STR,  DMPSTR_TOKUSEI,    LX_TOKUSEI_CAP,    LY_TOKUSEI_CAP,
     LX_TOKUSEI_BOX,    LY_TOKUSEI_BOX,    CALC_STRBOX_WIDTH(8),   LINE_HEIGHT,
@@ -1249,9 +1247,8 @@ static void box_setup( DMP_MAINWORK* wk, u32 boxID, const POKEMON_PARAM* pp )
   u32 value;
 
   switch( p->paraID ){
-  case ID_PARA_SEIKAKU:
+  case ID_PARA_seikaku:
     value = PP_GetSeikaku( pp );
-    OS_TPrintf("«Ši‚æ‚Ý‚±‚Ý : %d\n", value);
     break;
   case ID_PARA_pp_count1:
   case ID_PARA_pp_count2:
@@ -1297,9 +1294,6 @@ static void box_setup( DMP_MAINWORK* wk, u32 boxID, const POKEMON_PARAM* pp )
     break;
   default:
     value = PP_Get( pp, p->paraID, NULL );
-    if( p->paraID == ID_PARA_agi ){
-      TAYA_Printf(" [setup] Agi = %d\n", value );
-    }
     break;
   }
 
@@ -1473,6 +1467,11 @@ static void box_relation( DMP_MAINWORK* wk, u32 updateBoxID )
     break;
   case INPUTBOX_ID_SEIKAKU:
     {
+      const INPUT_BOX_PARAM* p = &InputBoxParams[ updateBoxID ];
+      u32 value = box_getvalue( wk, updateBoxID );
+      TAYA_Printf("‚¹‚¢‚©‚­‘‚«Š·‚¦‚é ID=%d, value=%d\n", p->paraID, value );
+      PP_Put( wk->dst, p->paraID, value );
+
       PP_Renew( wk->dst );
       box_setup( wk, INPUTBOX_ID_HPVAL, wk->dst );
       box_setup( wk, INPUTBOX_ID_HPEDIT, wk->dst );
