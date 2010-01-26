@@ -205,6 +205,8 @@ static u16 checkTalkAttrEvent( EV_REQUEST *req, FIELDMAP_WORK *fieldMap);
 
 static int checkPokeWazaGroup( GAMEDATA *gdata, u32 waza_no );
 
+static GMEVENT* checkSpecialEvent( EV_REQUEST * req );
+
 static GMEVENT* checkPosEvent( EV_REQUEST* req );
 static GMEVENT* checkPosEvent_core( EV_REQUEST * req, u16 dir );
 static GMEVENT* checkPosEvent_OnlyDirection( EV_REQUEST * req );
@@ -265,14 +267,9 @@ static GMEVENT * FIELD_EVENT_CheckNormal(
 	
 //☆☆☆特殊スクリプト起動チェックがここに入る
   if (DEBUG_FLG_GetFlg(DEBUG_FLG_DisableEvents) == FALSE) {
-    if (req.reserved_scr_id != SCRID_NULL)
+    event = checkSpecialEvent( &req );
+    if ( event )
     {
-      FIELD_STATUS_SetReserveScript( GAMEDATA_GetFieldStatus(req.gamedata), SCRID_NULL );
-      event = SCRIPT_SetEventScript( gsys, req.reserved_scr_id, NULL, req.heapID );
-      return event;
-    }
-    event = SCRIPT_SearchSceneScript( gsys, req.heapID );
-    if (event){
       *eff_delete_flag = TRUE;  //エフェクトエンカウント消去リクエスト
       return event;
     }
@@ -656,6 +653,8 @@ GMEVENT * FIELD_EVENT_CheckUnion( GAMESYS_WORK *gsys, void *work )
   }
 #endif //debug
   
+//☆☆☆特殊スクリプト起動チェックがここに入る
+
 //☆☆☆一歩移動チェックがここから
   //座標イベントチェック
   if( req.moveRequest )
@@ -771,7 +770,13 @@ static GMEVENT * eventCheckNoGrid( GAMESYS_WORK *gsys, void *work )
 #endif //debug
 
 //☆☆☆特殊スクリプト起動チェックがここに入る
-    /* 今はない */
+  if (DEBUG_FLG_GetFlg(DEBUG_FLG_DisableEvents) == FALSE) {
+    event = checkSpecialEvent( &req );
+    if ( event )
+    {
+      return event;
+    }
+  }
 
 
 #ifdef PM_DEBUG
@@ -1108,6 +1113,33 @@ static void setupRequest(EV_REQUEST * req, GAMESYS_WORK * gsys, FIELDMAP_WORK * 
   }
 }
 
+
+//======================================================================
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * @brief 特殊スクリプト起動チェック
+ *
+ * @param req EV_REQUEST
+ *
+ * @return 起動したPOSイベント
+ */
+//--------------------------------------------------------------
+static GMEVENT * checkSpecialEvent( EV_REQUEST * req )
+{
+  GMEVENT * event;
+  if (req->reserved_scr_id != SCRID_NULL)
+  {
+    FIELD_STATUS_SetReserveScript( GAMEDATA_GetFieldStatus(req->gamedata), SCRID_NULL );
+    event = SCRIPT_SetEventScript( req->gsys, req->reserved_scr_id, NULL, req->heapID );
+    return event;
+  }
+  event = SCRIPT_SearchSceneScript( req->gsys, req->heapID );
+  if (event){
+    return event;
+  }
+  return NULL;
+}
 
 //======================================================================
 //
