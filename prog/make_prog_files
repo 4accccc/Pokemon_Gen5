@@ -396,11 +396,8 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
 				field/field_g3d_mapper.c \
 				field/field_camera.c \
 				field/field_msgbg.c \
-				field/mapdatafunc/field_func_mapeditor_file.c \
-				field/mapdatafunc/field_func_pmcustom_file.c \
 				field/mapdatafunc/field_func_wbnormal_file.c \
 				field/mapdatafunc/field_func_wbcross_file.c \
-				field/mapdatafunc/field_func_bridge_file.c \
         field/mapdatafunc/field_func_nogrid_file.c \
 				field/mapdatafunc/field_func_random_generate.c \
 				field/field_wfbc.c \
