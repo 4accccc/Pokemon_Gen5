@@ -2688,10 +2688,18 @@ static void handler_Oiuti_Intr( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
 
   if( BTL_SVFTOOL_GetThisTurnAction(flowWk, pokeID, &action) )
   {
-    u8 targetPokeID = BTL_SVFTOOL_PokePosToPokeID( flowWk, action.fight.targetPos );
-    BTL_Printf("ワシ[%d]が今から狙うポケ=%d, 入れ替わろうとしてるポケ=%d（位置:%d)\n",
-      pokeID, targetPokeID, BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_TARGET1), action.fight.targetPos);
-    if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_TARGET1) == targetPokeID )
+    BOOL fIntr = FALSE;
+
+    // シングル戦の場合、ターゲット位置がNULLになっているので必ず有効にしてしまう
+    if( BTL_SVFTOOL_GetRule(flowWk) == BTL_RULE_SINGLE ){
+      fIntr = TRUE;
+    }else{
+      u8 targetPokeID = BTL_SVFTOOL_PokePosToPokeID( flowWk, action.fight.targetPos );
+      if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_TARGET1) == targetPokeID ){
+        fIntr = TRUE;
+      }
+    }
+    if( fIntr )
     {
       BTL_Printf("割り込みます\n");
       BTL_EVENTVAR_RewriteValue( BTL_EVAR_POKEID_ATK, pokeID );
