@@ -55,7 +55,7 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_CORE_PROC_Main
 //-------------------------------------
 ///	PROC
 //=====================================
-const GFL_PROC_DATA	WifiBattleMaptchCore_ProcData =
+const GFL_PROC_DATA	WifiBattleMatchCore_ProcData =
 {	
 	WIFIBATTLEMATCH_CORE_PROC_Init,
 	WIFIBATTLEMATCH_CORE_PROC_Main,
@@ -86,13 +86,13 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_CORE_PROC_Init( GFL_PROC *p_proc, int *p_
   switch( p_param->p_param->mode )
   { 
   case WIFIBATTLEMATCH_MODE_RANDOM:  //ランダム対戦
-    return WifiBattleMaptchRnd_ProcData.init_func( p_proc, p_seq, p_param_adrs, p_wk_adrs );
+    return WifiBattleMatchRnd_ProcData.init_func( p_proc, p_seq, p_param_adrs, p_wk_adrs );
 
   case WIFIBATTLEMATCH_MODE_WIFI:    //WIFI大会
-    return WifiBattleMaptchWifi_ProcData.init_func( p_proc, p_seq, p_param_adrs, p_wk_adrs );
+    return WifiBattleMatchWifi_ProcData.init_func( p_proc, p_seq, p_param_adrs, p_wk_adrs );
 
   case WIFIBATTLEMATCH_MODE_LIVE:    //ライブ大会
-    return WifiBattleMaptchRnd_ProcData.init_func( p_proc, p_seq, p_param_adrs, p_wk_adrs );
+    return WifiBattleMatchRnd_ProcData.init_func( p_proc, p_seq, p_param_adrs, p_wk_adrs );
 
   default:
     GF_ASSERT( 0 );
@@ -119,13 +119,13 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_CORE_PROC_Exit( GFL_PROC *p_proc, int *p_
   switch( p_param->p_param->mode )
   { 
   case WIFIBATTLEMATCH_MODE_RANDOM:  //ランダム対戦
-    return WifiBattleMaptchRnd_ProcData.end_func( p_proc, p_seq, p_param_adrs, p_wk_adrs );
+    return WifiBattleMatchRnd_ProcData.end_func( p_proc, p_seq, p_param_adrs, p_wk_adrs );
 
   case WIFIBATTLEMATCH_MODE_WIFI:    //WIFI大会
-    return WifiBattleMaptchWifi_ProcData.end_func( p_proc, p_seq, p_param_adrs, p_wk_adrs );
+    return WifiBattleMatchWifi_ProcData.end_func( p_proc, p_seq, p_param_adrs, p_wk_adrs );
 
   case WIFIBATTLEMATCH_MODE_LIVE:    //ライブ大会
-    return WifiBattleMaptchRnd_ProcData.end_func( p_proc, p_seq, p_param_adrs, p_wk_adrs );
+    return WifiBattleMatchRnd_ProcData.end_func( p_proc, p_seq, p_param_adrs, p_wk_adrs );
 
   default:
     GF_ASSERT( 0 );
@@ -152,13 +152,13 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_CORE_PROC_Main( GFL_PROC *p_proc, int *p_
   switch( p_param->p_param->mode )
   { 
   case WIFIBATTLEMATCH_MODE_RANDOM:  //ランダム対戦
-    return WifiBattleMaptchRnd_ProcData.main_func( p_proc, p_seq, p_param_adrs, p_wk_adrs );
+    return WifiBattleMatchRnd_ProcData.main_func( p_proc, p_seq, p_param_adrs, p_wk_adrs );
 
   case WIFIBATTLEMATCH_MODE_WIFI:    //WIFI大会
-    return WifiBattleMaptchWifi_ProcData.main_func( p_proc, p_seq, p_param_adrs, p_wk_adrs );
+    return WifiBattleMatchWifi_ProcData.main_func( p_proc, p_seq, p_param_adrs, p_wk_adrs );
 
   case WIFIBATTLEMATCH_MODE_LIVE:    //ライブ大会
-    return WifiBattleMaptchRnd_ProcData.main_func( p_proc, p_seq, p_param_adrs, p_wk_adrs );
+    return WifiBattleMatchRnd_ProcData.main_func( p_proc, p_seq, p_param_adrs, p_wk_adrs );
 
   default:
     GF_ASSERT( 0 );

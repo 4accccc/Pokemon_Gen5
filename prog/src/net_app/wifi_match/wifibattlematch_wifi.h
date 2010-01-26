@@ -1,8 +1,8 @@
 //[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
 /**
  *
- *	@file		wifibattlematch_core.h
- *	@brief	WIFIのバトルマッチコア画面
+ *	@file		wifibattlematch_wifi.h
+ *	@brief	WIFIのバトルマッチコア画面  WIFI版
  *	@author	Toru=Nagihashi
  *	@date		2009.11.02
  *
@@ -21,4 +21,4 @@
  *					外部参照
 */
 //=============================================================================
-extern const GFL_PROC_DATA	WifiBattleMaptchWifi_ProcData;
+extern const GFL_PROC_DATA	WifiBattleMatchWifi_ProcData;

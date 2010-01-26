@@ -1,7 +1,7 @@
 //[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
 /**
  *
- *	@file		wifibattlematch_core.c
+ *	@file		wifibattlematch_wifi.c
  *	@brief	WIFIのバトルマッチコア画面  WIFIシーケンス
  *	@author	Toru=Nagihashi
  *	@data		2009.11.02
@@ -244,7 +244,7 @@ static void Util_SetupMyData( WIFIBATTLEMATCH_ENEMYDATA *p_my_data, const WIFIBA
 //-------------------------------------
 ///	PROC
 //=====================================
-const GFL_PROC_DATA	WifiBattleMaptchWifi_ProcData =
+const GFL_PROC_DATA	WifiBattleMatchWifi_ProcData =
 {	
 	WIFIBATTLEMATCH_WIFI_PROC_Init,
 	WIFIBATTLEMATCH_WIFI_PROC_Main,

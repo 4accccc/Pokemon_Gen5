@@ -208,7 +208,7 @@ static void DEBUGWIN_ChangeWaitIcon( void* userWork , DEBUGWIN_ITEM* item );
 //-------------------------------------
 ///	PROC
 //=====================================
-const GFL_PROC_DATA	WifiBattleMaptchRnd_ProcData =
+const GFL_PROC_DATA	WifiBattleMatchRnd_ProcData =
 {	
 	WIFIBATTLEMATCH_RND_PROC_Init,
 	WIFIBATTLEMATCH_RND_PROC_Main,

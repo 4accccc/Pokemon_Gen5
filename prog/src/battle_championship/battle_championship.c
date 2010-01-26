@@ -285,7 +285,7 @@ static GFL_PROC_RESULT BATTLE_CHAMPIONSHIP_ProcTerm( GFL_PROC * proc, int * seq 
       GFL_STD_MemClear( p_param, sizeof(WIFIBATTLEMATCH_PARAM) );
       p_param->mode             = WIFIBATTLEMATCH_MODE_WIFI;
       p_param->is_auto_release  = TRUE;
-      GFL_PROC_SysSetNextProc( FS_OVERLAY_ID(wifibattlematch_sys), &WifiBattleMaptch_ProcData, p_param );
+      GFL_PROC_SysSetNextProc( FS_OVERLAY_ID(wifibattlematch_sys), &WifiBattleMatch_ProcData, p_param );
     }
     break;
   case BCNP_EVENT_BATTLE:

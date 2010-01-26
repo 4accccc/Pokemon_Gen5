@@ -172,7 +172,7 @@ static void DATA_DeleteBuffer( WIFIBATTLEMATCH_SYS *p_wk );
 //-------------------------------------
 ///	PROC
 //=====================================
-const GFL_PROC_DATA	WifiBattleMaptch_ProcData =
+const GFL_PROC_DATA	WifiBattleMatch_ProcData =
 {	
 	WIFIBATTLEMATCH_PROC_Init,
 	WIFIBATTLEMATCH_PROC_Main,
@@ -201,14 +201,14 @@ static const SUBPROC_DATA sc_subproc_data[SUBPROCID_MAX]	=
 	//SUBPROCID_CORE
 	{	
 		FS_OVERLAY_ID( wifibattlematch_core ),
-		&WifiBattleMaptchCore_ProcData,
+		&WifiBattleMatchCore_ProcData,
 		WBM_CORE_AllocParam,
 		WBM_CORE_FreeParam,
 	},
   //SUBPROCID_POKELIST,
   { 
 	  NO_OVERLAY_ID,
-    &WifiBattleMaptch_Sub_ProcData,
+    &WifiBattleMatch_Sub_ProcData,
     POKELIST_AllocParam,
     POKELIST_FreeParam,
   },

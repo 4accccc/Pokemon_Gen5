@@ -76,4 +76,4 @@ typedef struct
 */
 //=============================================================================
 FS_EXTERN_OVERLAY( wifibattlematch_core );
-extern const GFL_PROC_DATA	WifiBattleMaptchCore_ProcData;
+extern const GFL_PROC_DATA	WifiBattleMatchCore_ProcData;

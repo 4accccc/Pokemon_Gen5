@@ -21,4 +21,4 @@
  *					äOïîéQè∆
 */
 //=============================================================================
-extern const GFL_PROC_DATA	WifiBattleMaptchRnd_ProcData;
+extern const GFL_PROC_DATA	WifiBattleMatchRnd_ProcData;

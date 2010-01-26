@@ -123,7 +123,7 @@ static GMEVENT_RESULT EVENT_WifiBattleMatchMain(GMEVENT * event, int *  seq, voi
       p_param->p_game_data  = GAMESYSTEM_GetGameData(gsys);
       p_param->btl_rule     = dbw->btl_rule;
       p_param->poke         = dbw->poke;
-      GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(wifibattlematch_sys), &WifiBattleMaptch_ProcData, dbw->p_sub_wk );
+      GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(wifibattlematch_sys), &WifiBattleMatch_ProcData, dbw->p_sub_wk );
     }
     (*seq)++;
     break;

@@ -79,7 +79,7 @@ FS_EXTERN_OVERLAY(pokelist);
 FS_EXTERN_OVERLAY(poke_status);
 
 
-const GFL_PROC_DATA WifiBattleMaptch_Sub_ProcData =
+const GFL_PROC_DATA WifiBattleMatch_Sub_ProcData =
 { 
   WIFIBATTLEMATCH_SUB_PROC_Init,
   WIFIBATTLEMATCH_SUB_PROC_Main,

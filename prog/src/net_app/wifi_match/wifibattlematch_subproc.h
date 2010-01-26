@@ -60,4 +60,4 @@ typedef struct
 //--------------------------------------------------------------
 //	proc data
 //--------------------------------------------------------------
-extern const GFL_PROC_DATA WifiBattleMaptch_Sub_ProcData;
+extern const GFL_PROC_DATA WifiBattleMatch_Sub_ProcData;

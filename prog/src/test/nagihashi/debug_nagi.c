@@ -1280,7 +1280,7 @@ static void LISTDATA_CallWifiBattleMatch( DEBUG_NAGI_MAIN_WORK *p_wk )
 		p_wk->wifibattlematch_param.mode	= WIFIBATTLEMATCH_MODE_LIVE;
 	}
 
-	DEBUG_NAGI_COMMAND_CallProc( p_wk, FS_OVERLAY_ID(wifibattlematch_sys), &WifiBattleMaptch_ProcData, &p_wk->wifibattlematch_param );
+	DEBUG_NAGI_COMMAND_CallProc( p_wk, FS_OVERLAY_ID(wifibattlematch_sys), &WifiBattleMatch_ProcData, &p_wk->wifibattlematch_param );
 }
 
 //----------------------------------------------------------------------------
