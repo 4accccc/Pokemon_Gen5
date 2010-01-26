@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2010-01-25T15:35:25"/>
+	<create user="matsumiya" host="W00207" date="2010-01-26T15:22:49"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,10 +292,10 @@
 	</lock>
 
 
-	<row id="msg_c04r0201_owner_01">
-		<comment>♀
+	<row id="msg_c04r0201_owner_01" back-color=",,,,,,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
 ・初回</comment>
-		<attribute name="キャラ指定">VETERANW
+		<attribute name="キャラ指定">GENTLEMAN
 ＝オーナー</attribute>
 		<language name="JPN" width="256">ようこそ　わが　ホールへ！▼
 よければ　あなたの　ポケモンを
@@ -305,10 +305,10 @@
 ドレスアップ　してあげて！！</language>
 	</row>
 
-	<row id="msg_c04r0201_owner_02">
-		<comment>♀
+	<row id="msg_c04r0201_owner_02" back-color=",,,,,,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
 ・何も条件を満たしていない</comment>
-		<attribute name="キャラ指定">VETERANW
+		<attribute name="キャラ指定">GENTLEMAN
 ＝オーナー</attribute>
 		<language name="JPN" width="256">グッズを　イヤがる
 ポケモンが　いても　ゆるしてあげてね▼
@@ -318,11 +318,11 @@
 だって　ポケモン　なんですもの</language>
 	</row>
 
-	<row id="msg_c04r0201_owner_03">
-		<comment>♀
+	<row id="msg_c04r0201_owner_03" back-color=",,,,,,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
 ・はじめてワイヤレス通信の複数プレイに参加
 ・グッズ「ティアラ」入手処理</comment>
-		<attribute name="キャラ指定">VETERANW
+		<attribute name="キャラ指定">GENTLEMAN
 ＝オーナー</attribute>
 		<language name="JPN" width="256">ちょっと！　あなた！▼
 おともだちと　いっしょに
@@ -340,11 +340,11 @@
 えんりょ　しないで　うけとって！▼</language>
 	</row>
 
-	<row id="msg_c04r0201_owner_03_01">
-		<comment>♀
+	<row id="msg_c04r0201_owner_03_01" back-color=",,,,,,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
 ・グッズ「ティアラ」入手処理後
 　自動で表示</comment>
-		<attribute name="キャラ指定">VETERANW
+		<attribute name="キャラ指定">GENTLEMAN
 ＝オーナー</attribute>
 		<language name="JPN" width="256">では　ぶたいで　あえる　ひを
 たのしみに　しているわ！▼</language>
@@ -352,11 +352,11 @@
 たのしみに　しているわ！▼</language>
 	</row>
 
-	<row id="msg_c04r0201_owner_04">
-		<comment>♀
+	<row id="msg_c04r0201_owner_04" back-color=",,,,,,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
 ・5回以上最高得点
 ・グッズ「クラウン」入手処理</comment>
-		<attribute name="キャラ指定">VETERANW
+		<attribute name="キャラ指定">GENTLEMAN
 ＝オーナー</attribute>
 		<language name="JPN" width="256">いつも　さんか　してくれて
 オーナーとして　うれしいわ！▼
@@ -376,11 +376,11 @@
 えんりょ　しないで　うけとって！▼</language>
 	</row>
 
-	<row id="msg_c04r0201_owner_04_01">
-		<comment>♀
+	<row id="msg_c04r0201_owner_04_01" back-color=",,,,,,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
 ・グッズ「クラウン」入手処理後
 　自動で表示</comment>
-		<attribute name="キャラ指定">VETERANW
+		<attribute name="キャラ指定">GENTLEMAN
 ＝オーナー</attribute>
 		<language name="JPN" width="256">では　ぶたいで　あえる　ひを
 たのしみに　しているわ！▼
@@ -396,11 +396,11 @@
 わたし　オーナーだから</language>
 	</row>
 
-	<row id="msg_c04r0201_owner_05">
-		<comment>♀
+	<row id="msg_c04r0201_owner_05" back-color=",,,,,,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
 ・10回以上最高得点
 ・グッズ「ゆうしょうベルト」入手処理</comment>
-		<attribute name="キャラ指定">VETERANW
+		<attribute name="キャラ指定">GENTLEMAN
 ＝オーナー</attribute>
 		<language name="JPN" width="256">いつも　さんか　してくれて
 オーナーとして　うれしいわ！▼
@@ -422,11 +422,11 @@
 えんりょ　しないで　うけとって！▼</language>
 	</row>
 
-	<row id="msg_c04r0201_owner_05_01">
-		<comment>♀
+	<row id="msg_c04r0201_owner_05_01" back-color=",,,,,,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
 ・グッズ「ゆうしょうベルト」入手後
 　自動で表示</comment>
-		<attribute name="キャラ指定">VETERANW
+		<attribute name="キャラ指定">GENTLEMAN
 ＝オーナー</attribute>
 		<language name="JPN" width="256">これからも　ぜひぜひ
 ミュージカルを　たのしんでね！</language>
@@ -434,11 +434,11 @@
 ミュージカルを　たのしんでね！</language>
 	</row>
 
-	<row id="msg_c04r0201_owner_06">
-		<comment>♀
+	<row id="msg_c04r0201_owner_06" back-color=",,,,,,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
 ・誕生日
 ・グッズ「ケーキのもけい」入手処理</comment>
-		<attribute name="キャラ指定">VETERANW
+		<attribute name="キャラ指定">GENTLEMAN
 ＝オーナー</attribute>
 		<language name="JPN" width="256">ハッピー　バースデイ！！▼
 わたしからは　この　ハッピーな
@@ -854,10 +854,12 @@
 ・1＝プレイヤー名</comment>
 		<attribute name="キャラ指定">システム</attribute>
 		<language name="JPN" width="256">[1:0A:グッズ名:0]を　もらった！▼
-[1:00:トレーナー名:1]は　[1:0A:グッズ名:0]を
+[1:00:トレーナー名:1]は
+[1:0A:グッズ名:0]を▽
 グッズケースの　なかに　しまった！</language>
 		<language name="JPN_KANJI" width="256">[1:0A:グッズ名:0]を　もらった！▼
-[1:00:トレーナー名:1]は　[1:0A:グッズ名:0]を
+[1:00:トレーナー名:1]は
+[1:0A:グッズ名:0]を▽
 グッズケースの　なかに　しまった！</language>
 	</row>
 
