@@ -27,6 +27,7 @@
 #define MATTR_E_ROOM_01           (0x0d)		//屋内
 #define MATTR_SNOW_01             (0x0e)		//雪
 #define MATTR_SNOW_02             (0x0f)		//雪２
+#define MATTR_ICE_02              (0x10)		//氷上２
 #define MATTR_POOL_01             (0x14)		//水たまり（四季なし）
 #define MATTR_POOL_S01            (0x15)		//水たまり（四季あり）
 #define MATTR_SHOAL_01            (0x17)		//浅瀬
