@@ -1,5 +1,5 @@
 #event data
-#save date:2010/01/07 18:15:03
+#save date:2010/01/26 15:11:54
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r09.wms
 #SECTION START:OBJ_EVENT
@@ -340,7 +340,7 @@ DOOR_ID_R09R0201_R09_EXIT01
 #Door Direction
 EXIT_DIR_DOWN
 #Door Type
-EXIT_TYPE_MAT
+EXIT_TYPE_SP21
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
