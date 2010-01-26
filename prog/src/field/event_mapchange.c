@@ -1705,6 +1705,9 @@ static void MAPCHG_setupMapTools( GAMESYS_WORK * gsys, const LOCATION * loc_req 
     FIELD_STATUS_SetMapMode( GAMEDATA_GetFieldStatus( gamedata ), MAPMODE_INTRUDE );
     //GAMEDATA_SetMapMode(gamedata, MAPMODE_INTRUDE);
   }
+  else{
+    FIELD_STATUS_SetMapMode( GAMEDATA_GetFieldStatus( gamedata ), MAPMODE_NORMAL );
+  }
   //※check　ユニオンルームへの移動を受付スクリプトで制御するようになったらサブスクリーンモードの
   //         変更もそのスクリプト内で行うようにする
   switch(loc_req->zone_id){
