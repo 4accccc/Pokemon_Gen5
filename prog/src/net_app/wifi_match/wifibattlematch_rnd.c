@@ -2002,7 +2002,7 @@ static void Util_SaveScore( RNDMATCH_DATA *p_save, WIFIBATTLEMATCH_BTLRULE btl_r
 //-----------------------------------------------------------------------------
 static void Util_List_Create( WIFIBATTLEMATCH_RND_WORK *p_wk, UTIL_LIST_TYPE type )
 { 
-  if( p_wk->p_list != NULL )
+  if( p_wk->p_list == NULL )
   { 
     WBM_LIST_SETUP  setup;
     GFL_STD_MemClear( &setup, sizeof(WBM_LIST_SETUP) );
