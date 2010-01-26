@@ -606,3 +606,16 @@ u32 Union_App_GetMemberNetBit(UNION_APP_PTR uniapp)
   return uniapp->basic_status.member_bit;
 }
 
+//==================================================================
+/**
+ * Ú‘±l”‚ğæ“¾‚µ‚Ü‚·
+ *
+ * @param   uniapp		
+ *
+ * @retval  u8		Ú‘±l”
+ */
+//==================================================================
+u8 Union_App_GetMemberNum(UNION_APP_PTR uniapp)
+{
+  return MATH_CountPopulation((u32)(uniapp->basic_status.member_bit)); 
+}

@@ -196,3 +196,14 @@ extern const MYSTATUS * Union_App_GetMystatus(UNION_APP_PTR uniapp, NetID net_id
  */
 //==================================================================
 extern u32 Union_App_GetMemberNetBit(UNION_APP_PTR uniapp);
+
+//==================================================================
+/**
+ * Ú‘±l”‚ğæ“¾‚µ‚Ü‚·
+ *
+ * @param   uniapp		
+ *
+ * @retval  u8		Ú‘±l”
+ */
+//==================================================================
+extern u8 Union_App_GetMemberNum(UNION_APP_PTR uniapp);
