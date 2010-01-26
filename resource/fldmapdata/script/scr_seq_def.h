@@ -6941,13 +6941,16 @@
 /**
  *  _WFBC_SET_WORDSET_RIREKI_PLAYER_NAME
  *  @brief WFBC:履歴に入っている人の名前をワードセットに設定
+ *
+ *  @param idx  格納するワードセットのインデックス
  */
 //--------------------------------------------------------------
-#define _WFBC_SET_WORDSET_RIREKI_PLAYER_NAME() \
-    _ASM_WFBC_SET_WORDSET_RIREKI_PLAYER_NAME
+#define _WFBC_SET_WORDSET_RIREKI_PLAYER_NAME( idx ) \
+    _ASM_WFBC_SET_WORDSET_RIREKI_PLAYER_NAME idx
 
-  .macro  _ASM_WFBC_SET_WORDSET_RIREKI_PLAYER_NAME
+  .macro  _ASM_WFBC_SET_WORDSET_RIREKI_PLAYER_NAME idx
   .short EV_SEQ_WFBC_SET_WORDSET_RIREKI_PLAYER_NAME
+  .short \idx
   .endm
 
 //--------------------------------------------------------------
