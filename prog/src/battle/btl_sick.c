@@ -118,7 +118,7 @@ static void cont_HorobiNoUta( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, u8 po
 static void cont_Yadorigi( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, u8 pokeID )
 {
   BTL_HANDEX_PARAM_DAMAGE* dmg_param;
-  u16 damage = BTL_CALC_QuotMaxHP( bpp, 16 );
+  u16 damage = BTL_CALC_QuotMaxHP( bpp, 8 );
   BPP_SICK_CONT  cont = BPP_GetSickCont( bpp, WAZASICK_YADORIGI );
   BtlPokePos  pos_to = BPP_SICKCONT_GetParam( cont );
   u16 que_reserve_pos = BTL_SVFTOOL_ReserveQuePos( flowWk, SC_ACT_EFFECT_BYVECTOR );

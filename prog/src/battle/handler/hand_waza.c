@@ -7577,19 +7577,19 @@ static void handler_Haneyasume( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
-    BTL_HANDEX_PARAM_TURNFLAG* flag_param;
+//    BTL_HANDEX_PARAM_TURNFLAG* flag_param;
     BTL_HANDEX_PARAM_ADD_SICK* sick_param;
-
+/*
     flag_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RESET_TURNFLAG, pokeID );
     flag_param->pokeID = pokeID;
     flag_param->flag = BPP_TURNFLG_FLYING;
-
+*/
     //
     sick_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_SICK, pokeID );
     sick_param->poke_cnt = 1;
     sick_param->pokeID[0] = pokeID;
     sick_param->fStdMsgDisable = TRUE;
-    sick_param->sickID = WAZASICK_MIYABURU;
+    sick_param->sickID = WAZASICK_HANEYASUME;
     sick_param->sickCont = BPP_SICKCONT_MakeTurnParam( 1, POKETYPE_HIKOU );
     BPP_SICKCONT_SetFlag( &sick_param->sickCont, TRUE );
   }

@@ -123,7 +123,6 @@ struct _BTL_POKEPARAM {
   BPP_VARIABLE_PARAM  varyParam;
   BPP_WAZA            waza[ PTL_WAZA_MAX ];
 
-  PokeTypePair  type;
   u16  tokusei;
   u16  weight;
 
@@ -287,7 +286,6 @@ static void setupBySrcData( BTL_POKEPARAM* bpp, const POKEMON_PARAM* srcPP )
     bpp->waza[i].recoverNumber = bpp->waza[i].number;
   }
 
-  bpp->type = PokeTypePair_Make( bpp->baseParam.type1, bpp->baseParam.type2 );
   bpp->tokusei = PP_Get( srcPP, ID_PARA_speabino, 0 );
   bpp->formNo = PP_Get( srcPP, ID_PARA_form_no, 0 );
   bpp->coreParam.exp = PP_Get( srcPP, ID_PARA_exp, NULL );
@@ -455,15 +453,45 @@ u8 BPP_WAZA_GetPPShort( const BTL_POKEPARAM* bpp, u8 idx )
   return (bpp->waza[idx].ppMax - bpp->waza[idx].pp);
 }
 
-PokeTypePair BPP_GetPokeType( const BTL_POKEPARAM* pp )
+static void splitTypeCore( const BTL_POKEPARAM* bpp, PokeType* type1, PokeType* type2 )
 {
-  return pp->type;
+  BOOL fHaneYasume = BPP_CheckSick( bpp, WAZASICK_HANEYASUME );
+
+  if( (bpp->baseParam.type1 == POKETYPE_HIKOU) && (fHaneYasume) ){
+    *type1 = POKETYPE_NULL;
+  }else{
+    *type1 = bpp->baseParam.type1;
+  }
+
+  if( (bpp->baseParam.type2 == POKETYPE_HIKOU) && (fHaneYasume) ){
+    *type2 = POKETYPE_NULL;
+  }else{
+    *type2 = bpp->baseParam.type2;
+  }
 }
 
-BOOL BPP_IsMatchType( const BTL_POKEPARAM* pp, PokeType type )
+PokeTypePair BPP_GetPokeType( const BTL_POKEPARAM* bpp )
 {
-  PokeTypePair pair = PokeTypePair_Make( pp->baseParam.type1, pp->baseParam.type2 );
-  return PokeTypePair_IsMatch( pair, type );
+  PokeTypePair  typePair;
+  PokeType  type1, type2;
+
+  splitTypeCore( bpp, &type1, &type2 );
+  typePair = PokeTypePair_Make( type1, type2 );
+
+  return typePair;
+}
+
+BOOL BPP_IsMatchType( const BTL_POKEPARAM* bpp, PokeType type )
+{
+  if( type != POKETYPE_NULL )
+  {
+    PokeType  type1, type2;
+    splitTypeCore( bpp, &type1, &type2 );
+    if( (type1 == type) || (type2 == type) ){
+      return TRUE;
+    }
+  }
+  return FALSE;
 }
 
 const POKEMON_PARAM* BPP_GetSrcData( const BTL_POKEPARAM* bpp )
@@ -1909,9 +1937,10 @@ void BPP_BatonTouchParam( BTL_POKEPARAM* target, const BTL_POKEPARAM* user )
  * @param   type
  */
 //=============================================================================================
-void BPP_ChangePokeType( BTL_POKEPARAM* pp, PokeTypePair type )
+void BPP_ChangePokeType( BTL_POKEPARAM* bpp, PokeTypePair type )
 {
-  pp->type = type;
+  bpp->baseParam.type1 = PokeTypePair_GetType1( type );
+  bpp->baseParam.type2 = PokeTypePair_GetType2( type );
 }
 //=============================================================================================
 /**
