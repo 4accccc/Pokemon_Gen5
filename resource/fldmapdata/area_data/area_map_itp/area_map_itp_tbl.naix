@@ -13,8 +13,9 @@
 enum {
 	NARC_area_map_itp_tbl_area00_itp_itptbl = 0,
 	NARC_area_map_itp_tbl_out01_itp_itptbl = 1,
-	NARC_area_map_itp_tbl_out32_itp_itptbl = 2,
-	NARC_area_map_itp_tbl_out42_itp_itptbl = 3
+	NARC_area_map_itp_tbl_out31_itp_itptbl = 2,
+	NARC_area_map_itp_tbl_out32_itp_itptbl = 3,
+	NARC_area_map_itp_tbl_out42_itp_itptbl = 4
 };
 
 /* NARC_AREA_MAP_ITP_TBL_NAIX_ */

@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+
+<imd version="1.6.0">
+
+<head>
+	<create user="fuchino" host="W00152" date="2010-01-26T13:55:57" source="wstream3_01_01_00.mb"/>
+	<title>Model Data for NINTENDO NITRO-System</title>
+	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+</head>
+
+<body>
+
+<original_create user="fuchino" host="W00152" date="2010-01-26T13:55:57" source="wstream3_01_01_00.mb"/>
+<original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+
+<model_info
+	pos_scale="1"
+	scaling_rule="standard"
+	vertex_style="direct"
+	magnify="1.000000"
+	tool_start_frame="0"
+	tex_matrix_mode="maya"
+	compress_node="merge" node_size="1 1"
+	compress_material="on" material_size="1 1"
+	output_texture="used"
+	force_full_weight="off"
+	use_primitive_strip="on"
+/>
+
+<box_test pos_scale="2" xyz="-2.000000 -0.500000 -2.000000" whd="4.000000 1.250000 4.000000"/>
+
+<tex_image_array size="3">
+	<tex_image index="0" name="nagare_iwa.1"
+		width="32" height="32" original_width="32" original_height="32"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="nagare_iwa.1_pl"
+		path="C:/home/wb_data3d/field/out31/chip/tex/nagare_iwa.1.tga"
+	>
+		<bitmap size="256">
+			dbbb bddd dddb bbdd ccfb 899c 8777 3399
+			ddbb bddd dddb bddd cbfb 89cc 8778 3339
+			dddb bddd dddb bddd bbfb 99cc 8778 3339
+			dddd dddd dddb dddd bbfd 99ac 8789 4339
+			dddd dddd ddbb dddd aafd 99aa 9889 5433
+			dddd dddd ddbd dddd cbfd 99aa 9889 0533
+			dddd dddd bbad dddd cbfd 999c 9888 0533
+			dddd dddd aaab bbaa ccfb 899c 9788 0533
+			dddb bddd baaa cccb ccfb 8999 8778 5439
+			dbbb abdd caac ccbb 99fb 9999 8778 5339
+			bbbc caaa cacc bbbc 99fb 8999 8778 4399
+			bbcc cccc aacc bbcc 99fc 8999 8777 3399
+			cbbb cccc 99ac ccca 99fc 8899 8777 3399
+			cccc ccaa 999c caa9 99fc 7899 8777 3399
+			acac aa99 9999 aa99 99fc 7899 8777 4339
+			999a 9999 9999 9999 99fa 7888 9877 5433
+			9999 9999 9999 9999 99f9 7889 3987 5533
+			9999 9999 9999 9999 aaf9 8899 3987 0543
+			9999 9999 9999 9999 ccf9 8999 9878 0533
+			9999 9999 9999 9999 ccf9 999a 9878 0539
+			9999 9999 9999 9999 ccf9 99ac 8778 5498
+			aaaa a9aa abbb 999a ccf9 99ac 7778 5398
+			bbaa abaa bddd 99aa aaf9 999a 7778 4398
+			ddbb dbbb bdee 9aab 99f9 8999 7778 3398
+			eedd dddd deee abbd 99fa 8899 7777 6398
+			eeed eeee eeee bdde 99fb 7899 7777 6398
+			eeee ee6e 6e66 deee 99fd 7899 8877 6339
+			66ee 6636 3663 ee66 99fe 8899 9887 6639
+			366e 3333 3333 e633 9afe 8899 9988 363b
+			3336 4444 4444 6334 9af6 8889 9998 366b
+			4433 5554 4555 4444 8af4 8888 bb99 666d
+			2544 1222 2221 4522 8af4 9888 dbd9 666d
+		</bitmap>
+	</tex_image>
+	<tex_image index="1" name="nagare_iwa.2"
+		width="32" height="32" original_width="32" original_height="32"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="nagare_iwa.2_pl"
+		path="C:/home/wb_data3d/field/out31/chip/tex/nagare_iwa.2.tga"
+	>
+		<bitmap size="256">
+			dbbb bddd dddb bbdd ccfb 899c 8777 3399
+			ddbb bddd dddb bddd cbfb 89cc 8778 3339
+			dddb bddd dddb bddd bbfb 99cc 8778 3439
+			dddd dddd dddb dddd bbfd 99ac 8789 4443
+			dddd dddd ddbb dddd aafd 99aa 9889 5443
+			dddd dddd ddbd dddd cbfd 99aa 9889 5543
+			dddd dddd bbad dddd cbfd 999c 9888 0543
+			dddd dddd aaab bbaa ccfb 899c 9788 0543
+			dddb bddd baaa cccb ccfb 8999 8778 5439
+			dbbb abdd caac ccbb 99fb 9999 8778 5339
+			bbbc caaa cacc bbbc 99fb 8999 8778 4399
+			bbcc cccc aacc bbcc 99fc 8999 8777 3399
+			cbbb dccc 99ab ccca 99fc 8899 8777 3339
+			cccc dc9a 999d cab9 99fc 7899 8777 4433
+			9cac d999 999d abb9 99fc 7899 8777 4443
+			9d9a da99 999d 9db9 99fa 7888 9877 5443
+			dd99 ed99 999d 9dda 99f9 7889 9987 5543
+			dda9 ed99 a99d 9ddd aaf9 8899 9987 5443
+			dda9 ee9a d9ad 9bed ccf9 8999 9878 0433
+			eda9 eead dabd 9dee ccf9 999a 9878 0439
+			eda9 eede edbd 9ede ccf9 99ac 8778 0498
+			eeda eeee eeee bdde ccfb 99ac 7778 5398
+			eeed eeee eeee dbee aafd 999a 7778 4398
+			eeed 6eee e66e edee 99fe 8999 7778 3398
+			eeee 36e6 633e eeee 99fe 8899 7777 6339
+			6eee 3363 3336 eee3 99fe 7899 7777 6339
+			36ee 3333 6333 ee63 99fe 7899 8877 666b
+			33ee 3336 3333 ee33 99fe 8899 b987 6e6b
+			336e 5543 3455 e633 9afe 8899 b9b8 6e6e
+			4336 5555 5555 6345 9af6 8889 dbb9 6e6e
+			5543 2225 2222 4555 8af4 9888 ebdb eeee
+			2555 0012 2100 5522 8af5 b988 eedd eeee
+		</bitmap>
+	</tex_image>
+	<tex_image index="2" name="nagare_iwa.3"
+		width="32" height="32" original_width="32" original_height="32"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="nagare_iwa.3_pl"
+		path="C:/home/wb_data3d/field/out31/chip/tex/nagare_iwa.3.tga"
+	>
+		<bitmap size="256">
+			dbbb bddd dddb bbdd ccfb 899c 9877 4333
+			ddbb bddd dddb bddd cbfb 89cc 3778 5433
+			dddb bddd dddb bddd bbfb 99cc 8778 5543
+			dddd dddd dddb dddd bbfd 99ac 8789 0533
+			dddd dddd ddbb dddd aafd 99aa 9889 0543
+			dddd dddd ddbd dddd cbfd 99aa 3989 5553
+			dddd dddd bbad dddd cbfd 999c 3888 5543
+			dddd dddd aaab bbaa ccfb 899c 9788 5433
+			dddb bddd baaa cccb ccfb 8999 8778 4339
+			dbbb abdd caac ccbb 99fb 9999 8778 3339
+			bdbc daaa cacb bdbc 99fb 8999 8778 3399
+			becc eccc aacd bdbc 99fc 8999 8777 3339
+			debb eccc 99ae cdba 99fc 8899 8877 4333
+			eecc ec9a 99ae deda 99fc 7899 9877 5433
+			eeac e99a 99ae dedd 99fc 7899 3977 5543
+			eeba eaad a9de deed 99fd 7888 3977 0543
+			eeeb eddd ddee deee 99fd 7889 9987 0543
+			eeee eeee deee eeee aafe 8899 9987 5433
+			eeee eeee eeee eeee ccfe 8999 9878 5439
+			6eee 6eee 6eee eeee ccfe 999a 9878 5438
+			3eee 36ee 3eee eeee ccfe 99ac 8778 4338
+			36ee 33e6 36ee eeee ccfe 99ac 7778 3398
+			33e6 3363 33e6 e6e6 aafe 999a 7778 4399
+			6363 3633 3363 63e3 99f6 8999 8778 5339
+			3333 3633 4333 3363 99f3 8899 9877 5438
+			4363 4333 4343 3633 99f3 7899 b887 d439
+			4343 5334 4444 3333 99f3 7899 d998 dd3b
+			5443 5544 4555 3434 99f6 8899 ebb8 de3d
+			5443 5543 4542 4444 9af4 8899 ebd9 dede
+			5544 2255 5522 5445 9af5 8889 eddb deee
+			2544 1222 2221 5552 8af5 9888 33db deee
+			2255 0012 2100 5222 8af5 b988 443d d333
+		</bitmap>
+	</tex_image>
+</tex_image_array>
+
+<tex_palette_array size="3">
+	<tex_palette index="0" name="nagare_iwa.1_pl" color_size="16">
+		7c1f 61c4 6606 7734 72ce 6a69 7b99 420e
+		4a50 5292 5ad4 6336 5f15 6f99 7fff 0000
+	</tex_palette>
+	<tex_palette index="1" name="nagare_iwa.2_pl" color_size="16">
+		7c1f 61c4 6606 7734 72ce 6a69 7b99 420e
+		4a50 5292 5ad4 6336 5f15 6f99 7fff 0000
+	</tex_palette>
+	<tex_palette index="2" name="nagare_iwa.3_pl" color_size="16">
+		7c1f 61c4 6606 7734 72ce 6a69 7b99 420e
+		4a50 5292 5ad4 6336 5f15 6f99 7fff 0000
+	</tex_palette>
+</tex_palette_array>
+
+<material_array size="1">
+	<material index="0" name="nagare_iwa_1"
+		light0="on" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="31"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="0"
+		fog_flag="on"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="25 25 25"
+		ambient="31 31 31"
+		specular="0 0 0"
+		emission="0 0 0"
+		shininess_table_flag="off"
+		tex_image_idx="0" tex_palette_idx="0"
+		tex_tiling="clamp clamp"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
+	/>
+</material_array>
+
+<matrix_array size="1">
+	<matrix index="0" mtx_weight="1" node_idx="0"/>
+</matrix_array>
+
+<polygon_array size="1">
+	<polygon index="0" name="polygon0"
+		vertex_size="39" polygon_size="12"
+		triangle_size="9" quad_size="3"
+		volume_min="-4.000000 -1.000000 -4.000000"
+		volume_max="4.000000 1.500000 4.000000"
+		volume_r="5.744629"
+		mtx_prim_size="1"
+		nrm_flag="on" clr_flag="off" tex_flag="on"
+	>
+		<mtx_prim index="0">
+			<mtx_list size="1">0</mtx_list>
+			<primitive_array size="2">
+				<primitive index="0" type="quads" vertex_size="12">
+					<mtx idx="0"/>
+					<tex st="8.000000 32.000000"/>
+					<nrm xyz="-0.091797 0.931641 -0.349609"/>
+					<pos_s xyz="0.000000 -1.000000 -3.000000"/>
+					<tex st="8.000000 12.000000"/>
+					<pos_yz yz="0.223877 0.052246"/>
+					<tex st="16.000000 14.000000"/>
+					<pos_s xyz="3.000000 0.500000 0.000000"/>
+					<tex st="16.000000 32.000000"/>
+					<pos_s xyz="4.000000 -1.000000 -4.000000"/>
+					<tex st="19.000000 0.000000"/>
+					<nrm xyz="0.000000 0.371094 0.927734"/>
+					<pos_xyz xyz="-1.884033 1.500000 3.000000"/>
+					<tex st="32.000000 0.000000"/>
+					<pos_yz yz="-1.000000 4.000000"/>
+					<tex st="32.000000 14.000000"/>
+					<pos_xy xy="1.741211 -1.000000"/>
+					<tex st="19.000000 14.000000"/>
+					<pos_yz yz="1.500000 3.000000"/>
+					<tex st="0.000000 14.000000"/>
+					<nrm xyz="0.091797 0.933594 -0.345703"/>
+					<pos_s xyz="-3.000000 0.500000 0.000000"/>
+					<tex st="8.000000 12.000000"/>
+					<pos_xyz xyz="0.000000 0.223877 0.052246"/>
+					<tex st="8.000000 32.000000"/>
+					<pos_yz yz="-1.000000 -3.000000"/>
+					<tex st="0.000000 32.000000"/>
+					<pos_xz xz="-4.000000 -4.000000"/>
+				</primitive>
+				<primitive index="1" type="triangles" vertex_size="27">
+					<tex st="19.000000 14.000000"/>
+					<nrm xyz="0.634766 0.287109 0.716797"/>
+					<pos_xyz xyz="1.741211 1.500000 3.000000"/>
+					<tex st="32.000000 14.000000"/>
+					<pos_yz yz="-1.000000 4.000000"/>
+					<tex st="32.000000 20.000000"/>
+					<pos_xz xz="4.000000 2.000000"/>
+					<nrm xyz="-0.777344 0.625000 0.080078"/>
+					<pos_xy xy="-4.000000 -1.000000"/>
+					<tex st="19.000000 14.000000"/>
+					<pos_xyz xyz="-1.884033 1.500000 3.000000"/>
+					<tex st="19.000000 32.000000"/>
+					<pos_s xyz="-3.000000 0.500000 0.000000"/>
+					<tex st="8.000000 12.000000"/>
+					<nrm xyz="-0.091797 0.931641 -0.349609"/>
+					<pos_xyz xyz="0.000000 0.223877 0.052246"/>
+					<tex st="16.000000 0.000000"/>
+					<pos_xyz xyz="1.741211 1.500000 3.000000"/>
+					<tex st="16.000000 14.000000"/>
+					<pos_s xyz="3.000000 0.500000 0.000000"/>
+					<tex st="19.000000 14.000000"/>
+					<nrm xyz="0.757813 0.644531 0.103516"/>
+					<pos_xyz xyz="1.741211 1.500000 3.000000"/>
+					<tex st="32.000000 20.000000"/>
+					<pos_s xyz="4.000000 -1.000000 2.000000"/>
+					<tex st="19.000000 32.000000"/>
+					<pos_s xyz="3.000000 0.500000 0.000000"/>
+					<tex st="8.000000 12.000000"/>
+					<nrm xyz="0.000000 0.917969 -0.396484"/>
+					<pos_xyz xyz="0.000000 0.223877 0.052246"/>
+					<tex st="0.000000 0.000000"/>
+					<pos_xyz xyz="-1.884033 1.500000 3.000000"/>
+					<tex st="16.000000 0.000000"/>
+					<pos_xy xy="1.741211 1.500000"/>
+					<tex st="32.000000 32.000000"/>
+					<nrm xyz="-0.832031 0.554688 0.000000"/>
+					<pos_s xyz="-4.000000 -1.000000 -4.000000"/>
+					<tex st="32.000000 20.000000"/>
+					<pos_xz xz="-4.000000 2.000000"/>
+					<tex st="19.000000 32.000000"/>
+					<pos_s xyz="-3.000000 0.500000 0.000000"/>
+					<tex st="32.000000 20.000000"/>
+					<nrm xyz="0.832031 0.554688 0.000000"/>
+					<pos_s xyz="4.000000 -1.000000 2.000000"/>
+					<tex st="32.000000 32.000000"/>
+					<pos_xz xz="4.000000 -4.000000"/>
+					<tex st="19.000000 32.000000"/>
+					<pos_s xyz="3.000000 0.500000 0.000000"/>
+					<tex st="0.000000 14.000000"/>
+					<nrm xyz="0.091797 0.933594 -0.345703"/>
+					<pos_xy xy="-3.000000 0.500000"/>
+					<tex st="0.000000 0.000000"/>
+					<pos_xyz xyz="-1.884033 1.500000 3.000000"/>
+					<tex st="8.000000 12.000000"/>
+					<pos_xyz xyz="0.000000 0.223877 0.052246"/>
+					<tex st="32.000000 20.000000"/>
+					<nrm xyz="-0.660156 0.279297 0.697266"/>
+					<pos_s xyz="-4.000000 -1.000000 2.000000"/>
+					<tex st="32.000000 14.000000"/>
+					<pos_xz xz="-1.884033 4.000000"/>
+					<tex st="19.000000 14.000000"/>
+					<pos_yz yz="1.500000 3.000000"/>
+				</primitive>
+			</primitive_array>
+		</mtx_prim>
+	</polygon>
+</polygon_array>
+
+<node_array size="1">
+	<node index="0" name="polySurface1" kind="mesh"
+		parent="-1"
+		child="-1"
+		brother_next="-1"
+		brother_prev="-1"
+		draw_mtx="on"
+		billboard="off"
+		scale="1.000000 1.000000 1.000000"
+		rotate="0.000000 0.000000 0.000000"
+		translate="0.000000 0.000000 0.000000"
+		visibility="on"
+		display_size="1"
+		vertex_size="39" polygon_size="12"
+		triangle_size="9" quad_size="3"
+		volume_min="-4.000000 -1.000000 -4.000000"
+		volume_max="4.000000 1.500000 4.000000"
+		volume_r="5.744629"
+	>
+		<display index="0" material="0" polygon="0" priority="0"/>
+	</node>
+</node_array>
+
+<output_info vertex_size="39" polygon_size="12"
+	triangle_size="9" quad_size="3"/>
+
+</body>
+
+</imd>

@@ -3,7 +3,7 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fuchino" host="W00152" date="2010-01-25T22:49:19"/>
+	<create user="fuchino" host="W00152" date="2010-01-26T14:01:08"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="NNS_3DMaterialEditor" version="2.8.0.20050620"/>
 </head>
@@ -29,8 +29,50 @@
 
 <box_test pos_scale="4" xyz="-0.500000 0.000000 -5.500000" whd="7.000000 0.000000 6.000000"/>
 
-<tex_image_array size="6">
-	<tex_image index="0" name="sea_asase02"
+<tex_image_array size="7">
+	<tex_image index="0" name="nagare_iwa.1"
+		width="32" height="32" original_width="32" original_height="32"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="nagare_iwa.1_pl"
+		path="C:/home/wb_data3d/field/out31/chip/tex/nagare_iwa.1.tga"
+	>
+		<bitmap size="256">
+			dbbb bddd dddb bbdd ccfb 899c 8777 3399
+			ddbb bddd dddb bddd cbfb 89cc 8778 3339
+			dddb bddd dddb bddd bbfb 99cc 8778 3339
+			dddd dddd dddb dddd bbfd 99ac 8789 4339
+			dddd dddd ddbb dddd aafd 99aa 9889 5433
+			dddd dddd ddbd dddd cbfd 99aa 9889 0533
+			dddd dddd bbad dddd cbfd 999c 9888 0533
+			dddd dddd aaab bbaa ccfb 899c 9788 0533
+			dddb bddd baaa cccb ccfb 8999 8778 5439
+			dbbb abdd caac ccbb 99fb 9999 8778 5339
+			bbbc caaa cacc bbbc 99fb 8999 8778 4399
+			bbcc cccc aacc bbcc 99fc 8999 8777 3399
+			cbbb cccc 99ac ccca 99fc 8899 8777 3399
+			cccc ccaa 999c caa9 99fc 7899 8777 3399
+			acac aa99 9999 aa99 99fc 7899 8777 4339
+			999a 9999 9999 9999 99fa 7888 9877 5433
+			9999 9999 9999 9999 99f9 7889 3987 5533
+			9999 9999 9999 9999 aaf9 8899 3987 0543
+			9999 9999 9999 9999 ccf9 8999 9878 0533
+			9999 9999 9999 9999 ccf9 999a 9878 0539
+			9999 9999 9999 9999 ccf9 99ac 8778 5498
+			aaaa a9aa abbb 999a ccf9 99ac 7778 5398
+			bbaa abaa bddd 99aa aaf9 999a 7778 4398
+			ddbb dbbb bdee 9aab 99f9 8999 7778 3398
+			eedd dddd deee abbd 99fa 8899 7777 6398
+			eeed eeee eeee bdde 99fb 7899 7777 6398
+			eeee ee6e 6e66 deee 99fd 7899 8877 6339
+			66ee 6636 3663 ee66 99fe 8899 9887 6639
+			366e 3333 3333 e633 9afe 8899 9988 363b
+			3336 4444 4444 6334 9af6 8889 9998 366b
+			4433 5554 4555 4444 8af4 8888 bb99 666d
+			2544 1222 2221 4522 8af4 9888 dbd9 666d
+		</bitmap>
+	</tex_image>
+	<tex_image index="1" name="sea_asase02"
 		width="16" height="16" original_width="16" original_height="16"
 		format="palette4"
 		color0_mode="color"
@@ -44,7 +86,7 @@
 			6552 6029 6558 8a59 5950 2559 5662 0965
 		</bitmap>
 	</tex_image>
-	<tex_image index="1" name="sea_jimen"
+	<tex_image index="2" name="sea_jimen"
 		width="16" height="16" original_width="16" original_height="16"
 		format="palette16"
 		color0_mode="color"
@@ -62,7 +104,7 @@
 			0010 0000 0000 0000 0001 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="2" name="sea_nagare01"
+	<tex_image index="3" name="sea_nagare01"
 		width="16" height="16" original_width="16" original_height="16"
 		format="palette16"
 		color0_mode="color"
@@ -80,7 +122,7 @@
 			0000 3320 0233 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="3" name="sea_simi.1"
+	<tex_image index="4" name="sea_simi.1"
 		width="16" height="16" original_width="16" original_height="16"
 		format="palette16"
 		color0_mode="color"
@@ -98,7 +140,7 @@
 			1111 1111 1111 1111 1111 1111 1111 1111
 		</bitmap>
 	</tex_image>
-	<tex_image index="4" name="sea_zanami"
+	<tex_image index="5" name="sea_zanami"
 		width="16" height="64" original_width="16" original_height="64"
 		format="a3i5"
 		palette_name="sea_zanami_pl"
@@ -171,7 +213,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="5" name="sea_zanami2"
+	<tex_image index="6" name="sea_zanami2"
 		width="16" height="16" original_width="16" original_height="16"
 		format="palette16"
 		color0_mode="transparency"
@@ -191,25 +233,29 @@
 	</tex_image>
 </tex_image_array>
 
-<tex_palette_array size="6">
-	<tex_palette index="0" name="sea_asase02_pl" color_size="4">
+<tex_palette_array size="7">
+	<tex_palette index="0" name="nagare_iwa.1_pl" color_size="16">
+		7c1f 61c4 6606 7734 72ce 6a69 7b99 420e
+		4a50 5292 5ad4 6336 5f15 6f99 7fff 0000
+	</tex_palette>
+	<tex_palette index="1" name="sea_asase02_pl" color_size="4">
 		6ad0 5e8f 62b0 7fff
 	</tex_palette>
-	<tex_palette index="1" name="sea_jimen_pl" color_size="8">
+	<tex_palette index="2" name="sea_jimen_pl" color_size="8">
 		6bbf 77df 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="2" name="sea_nagare01_pl" color_size="16">
+	<tex_palette index="3" name="sea_nagare01_pl" color_size="16">
 		5d82 5d83 5da3 61c4 61e5 6606 6627 6a48
 		6a69 7fff 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="3" name="sea_simi.1_pl" color_size="8">
+	<tex_palette index="4" name="sea_simi.1_pl" color_size="8">
 		4b1c 4afb 575d 639e 5f7d 679f 6bbf 533c
 	</tex_palette>
-	<tex_palette index="4" name="sea_zanami2_pl" color_size="16">
+	<tex_palette index="5" name="sea_zanami2_pl" color_size="16">
 		7c1f 59a0 59a0 59c2 59e3 5a06 5a29 5e4b
 		5e6d 5e8f 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="5" name="sea_zanami_pl" color_size="16">
+	<tex_palette index="6" name="sea_zanami_pl" color_size="16">
 		59a0 59c2 59e3 5a06 5a29 5e4b 5e6d 5e8f
 		5eb1 62f4 6b59 6f9a 73bc 77de 7bff 7fff
 	</tex_palette>
@@ -233,7 +279,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="0" tex_palette_idx="0"
+		tex_image_idx="1" tex_palette_idx="1"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -257,7 +303,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="1" tex_palette_idx="1"
+		tex_image_idx="2" tex_palette_idx="2"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -281,7 +327,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="3" tex_palette_idx="3"
+		tex_image_idx="4" tex_palette_idx="4"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -305,7 +351,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="5" tex_palette_idx="4"
+		tex_image_idx="6" tex_palette_idx="5"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -329,7 +375,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="4" tex_palette_idx="5"
+		tex_image_idx="5" tex_palette_idx="6"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -606,21 +652,23 @@
 
 <ex_nns_3dme>
 	<ex_model_info scene_name="デフォルトシーン" disp_pos="0.000000 60.000000"/>
-	<ex_tex_image_array size="6">
-		<ex_tex_image index="0" disp_pos="240.000000 360.000000"/>
-		<ex_tex_image index="1" disp_pos="-240.000000 360.000000"/>
-		<ex_tex_image index="2" disp_pos="0.000000 0.000000"/>
-		<ex_tex_image index="3" disp_pos="-120.000000 360.000000"/>
-		<ex_tex_image index="4" disp_pos="0.000000 360.000000"/>
-		<ex_tex_image index="5" disp_pos="120.000000 360.000000"/>
+	<ex_tex_image_array size="7">
+		<ex_tex_image index="0" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="1" disp_pos="240.000000 360.000000"/>
+		<ex_tex_image index="2" disp_pos="-240.000000 360.000000"/>
+		<ex_tex_image index="3" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="4" disp_pos="-120.000000 360.000000"/>
+		<ex_tex_image index="5" disp_pos="0.000000 360.000000"/>
+		<ex_tex_image index="6" disp_pos="120.000000 360.000000"/>
 	</ex_tex_image_array>
-	<ex_tex_palette_array size="6">
-		<ex_tex_palette index="0" disp_pos="240.000000 420.000000"/>
-		<ex_tex_palette index="1" disp_pos="-240.000000 420.000000"/>
-		<ex_tex_palette index="2" disp_pos="0.000000 0.000000"/>
-		<ex_tex_palette index="3" disp_pos="-120.000000 420.000000"/>
-		<ex_tex_palette index="4" disp_pos="120.000000 420.000000"/>
-		<ex_tex_palette index="5" disp_pos="0.000000 420.000000"/>
+	<ex_tex_palette_array size="7">
+		<ex_tex_palette index="0" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="1" disp_pos="240.000000 420.000000"/>
+		<ex_tex_palette index="2" disp_pos="-240.000000 420.000000"/>
+		<ex_tex_palette index="3" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="4" disp_pos="-120.000000 420.000000"/>
+		<ex_tex_palette index="5" disp_pos="120.000000 420.000000"/>
+		<ex_tex_palette index="6" disp_pos="0.000000 420.000000"/>
 	</ex_tex_palette_array>
 	<ex_material_array size="5">
 		<ex_material index="0" disp_pos="240.000000 300.000000"/>
