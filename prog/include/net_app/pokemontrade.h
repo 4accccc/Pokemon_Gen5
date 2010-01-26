@@ -13,6 +13,7 @@
 #include "poke_tool/poke_tool.h"
 #include "gamesystem/game_data.h"
 #include "demo/shinka_demo.h"
+#include "app/mailbox.h"
 
 /// ポケモン交換のタイプ
 typedef enum{
@@ -42,6 +43,7 @@ typedef struct _POKEMONTRADE_DEMO_WORK POKEMONTRADE_DEMO_WORK;
 
 ///ポケモン交換呼び出し用パラメータ
 typedef struct{
+  MAILBOX_PARAM aMailBox;
   POKEMONTRADE_MOVE ret;
   int after_mons_no;
   int cond;

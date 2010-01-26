@@ -319,8 +319,8 @@ static void _wakeupAction6(G_SYNC_WORK* pWork)
 
         NHTTP_DEBUG_GPF_HEADER_PRINT((gs_response*)pEvent);
 
-        SymbolSave_Set(SymbolSave_GetSymbolData(pWork->pSaveData), pDream->findPokemon, 
-          1, PTL_SEX_MALE, 0);
+        SymbolSave_Set(SymbolSave_GetSymbolData(pWork->pSaveData), pDream->findPokemon,
+                       pDream->findPokemonTecnique, pDream->findPokemonSex, pDream->findPokemonForm);
 
       }
       _CHANGE_STATE(_wakeupAction_test1);

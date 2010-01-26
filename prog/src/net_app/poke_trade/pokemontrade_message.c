@@ -277,6 +277,8 @@ void POKETRADE_MESSAGE_HeapInit(POKEMON_TRADE_WORK* pWork)
   GFL_FONTSYS_SetColor(1, 2, 15);
   pWork->pMsgTcblSys = GFL_TCBL_Init( pWork->heapID , pWork->heapID , 2 , 0 );
 
+	pWork->pAppTaskRes	= APP_TASKMENU_RES_Create( GFL_BG_FRAME2_S, _SUBLIST_NORMAL_PAL,
+			pWork->pFontHandle, pWork->SysMsgQue, pWork->heapID );
 }
 
 //------------------------------------------------------------------------------
@@ -294,6 +296,12 @@ void POKETRADE_MESSAGE_HeapEnd(POKEMON_TRADE_WORK* pWork)
     return;
   }
   
+
+  if(pWork->pAppTaskRes){
+    APP_TASKMENU_RES_Delete( pWork->pAppTaskRes );
+    pWork->pAppTaskRes=NULL;
+  }
+
   if(pWork->MyInfoWin){
     GFL_BMPWIN_Delete(pWork->MyInfoWin);
     pWork->MyInfoWin=NULL;
@@ -776,7 +784,7 @@ void POKETRADE_MESSAGE_ChangePokemonStatusDisp(POKEMON_TRADE_WORK* pWork,POKEMON
                       1, 1, 31 , 24, _BUTTON_MSG_PAL, GFL_BMP_CHRAREA_GET_F);
 
   _pokeNickNameMsgDisp(pp,pWork->MyInfoWin, 16, 0,bEgg,pWork);//ニックネーム
-  _pokeLvMsgDisp(pp,pWork->MyInfoWin, 8*12 , 0,pWork);
+  _pokeLvMsgDisp(pp,pWork->MyInfoWin, 8*12 , 2,pWork);
   _pokeSexMsgDisp(pp, pWork->MyInfoWin, 10*8, 0, pWork);
 
   _pokeHPSPEEDMsgDisp(pp,pWork->MyInfoWin, 0 ,3*8,pWork);

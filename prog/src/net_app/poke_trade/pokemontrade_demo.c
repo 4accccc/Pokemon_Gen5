@@ -382,18 +382,7 @@ static void _changeDemo_ModelTrade1(POKEMON_TRADE_WORK* pWork)
 static void _changeDemo_ModelTrade2_1(POKEMON_TRADE_WORK* pWork)
 {
 
-  if(pWork->anmCount % 200 == 199)
-  {
-    VecFx32 apos;
-    MCSS_GetPosition(pWork->pokeMcss[0], &apos);
-    if(pWork->pMoveMcss[0]){
-      GFL_HEAP_FreeMemory(pWork->pMoveMcss[0]);
-      pWork->pMoveMcss[0]=NULL;
-    }
-    pWork->pMoveMcss[0] = _pokeTblMoveCreate(pWork->pokeMcss[0], 13*3, &apos, _triJumpTbl,  pWork->heapID);
-  }
-
-  if(pWork->anmCount>60000){
+  if(pWork->anmCount > _POKEMON_VOICE_TIME){
     if(pWork->pMoveMcss[0]){
       GFL_HEAP_FreeMemory(pWork->pMoveMcss[0]);
       pWork->pMoveMcss[0]=NULL;
@@ -999,10 +988,10 @@ static void _pokeMoveFunc(_POKEMCSS_MOVE_WORK* pMove)
   if(!pMove){
     return;
   }
+  pMove->nowcount++;
   if(pMove->time < pMove->nowcount){
     return;
   }
-  pMove->nowcount++;
   if(pMove->time != pMove->nowcount)
   {
     if(pMove->MoveTbl){

@@ -57,6 +57,7 @@ FS_EXTERN_OVERLAY(fieldmap);
 FS_EXTERN_OVERLAY(ircbattlematch);
 FS_EXTERN_OVERLAY(pokemon_trade);
 FS_EXTERN_OVERLAY(shinka_demo);
+FS_EXTERN_OVERLAY(app_mail);
 
 #define _LOCALMATCHNO (100)
 
@@ -79,6 +80,8 @@ enum _EVENT_IRCBATTLE {
   _WAIT_TRADE,
   _CALL_EVOLUTION,
   _WAIT_EVOLUTION,
+  _CALL_MAIL,
+  _WAIT_MAIL,
   _CALL_NET_END,
   _WAIT_NET_END,
   _FIELD_OPEN,
@@ -254,6 +257,9 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
       if(dbw->aPokeTr.ret == POKEMONTRADE_MOVE_EVOLUTION){
         (*seq) = _CALL_EVOLUTION;
       }
+      else if(dbw->aPokeTr.ret == POKEMONTRADE_MOVE_MAIL){
+        (*seq) = _CALL_MAIL;
+      }
       else{
         (*seq) = _CALL_NET_END;
       }
@@ -273,6 +279,16 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
       SHINKADEMO_FreeParam( dbw->aPokeTr.shinka_param );
       GFL_OVERLAY_Unload( FS_OVERLAY_ID(shinka_demo) );
       dbw->aPokeTr.ret = POKEMONTRADE_MOVE_EVOLUTION;
+      (*seq)=_CALL_TRADE;
+    }
+    break;
+  case _CALL_MAIL:
+    dbw->aPokeTr.aMailBox.gamedata = dbw->gamedata;
+    GAMESYSTEM_CallProc( gsys, FS_OVERLAY_ID(app_mail), &MailBoxProcData, &dbw->aPokeTr.aMailBox );
+    (*seq)++;
+    break;
+  case _WAIT_MAIL:
+    if (GAMESYSTEM_IsProcExists(gsys) == GFL_PROC_MAIN_NULL){
       (*seq)=_CALL_TRADE;
     }
     break;

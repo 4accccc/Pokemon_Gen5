@@ -153,9 +153,9 @@ BOOL POKEMONTRADEPROC_IsTriSelect(POKEMON_TRADE_WORK* pWork)
   
   switch(pWork->type){
   case POKEMONTRADE_TYPE_IRC:   ///< 赤外線
-  case POKEMONTRADE_TYPE_WIFICLUB: ///< WIFIクラブ
   case POKEMONTRADE_TYPE_EVENT:  ///< イベント用
     break;
+//  case POKEMONTRADE_TYPE_WIFICLUB: ///< WIFIクラブ
 //  case POKEMONTRADE_TYPE_UNION: ///< ユニオン
 //  case POKEMONTRADE_TYPE_GTSNEGO: ///< GTSネゴシエーション
 //  case POKEMONTRADE_TYPE_GTS: ///< GTS
@@ -493,6 +493,7 @@ static void _recvThreePokemon3(const int netID, const int size, const void* pDat
 static void _recvThreePokemonEnd(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle)
 {
   POKEMON_TRADE_WORK *pWork = pWk;
+  const u8* pRecvData = pData;
 
   if(pNetHandle != GFL_NET_HANDLE_GetCurrentHandle()){
     return; //自分のハンドルと一致しない場合、親としてのデータ受信なので無視する
@@ -500,8 +501,7 @@ static void _recvThreePokemonEnd(const int netID, const int size, const void* pD
   if(netID == GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle())){
     return;//自分のは今は受け取らない
   }
-  pWork->pokemonThreeSet=TRUE;
-  POKE_GTS_SelectStatusMessageDisp(pWork, 1, TRUE);
+  pWork->pokemonThreeSet = pRecvData[0];
 }
 
 
@@ -1282,6 +1282,7 @@ void IRC_POKMEONTRADE_ChangeFinish(POKEMON_TRADE_WORK* pWork)
   pWork->selectIndex = -1;
   pWork->pCatchCLWK = NULL;
   pWork->pSelectCLWK = NULL;
+  pWork->pokemonThreeSet = FALSE;
   IRCPOKETRADE_PokeDeleteMcss(pWork, 0);
   IRCPOKETRADE_PokeDeleteMcss(pWork, 1);
 
@@ -1870,7 +1871,6 @@ static void _touchState(POKEMON_TRADE_WORK* pWork)
 
   pWork->oldLine++;
   pWork->bgscrollRenew = TRUE;
-  pWork->pokemonThreeSet = FALSE;  //キャンセルされたときのみフラグをOFF
 
   _scrollMainFunc(pWork,FALSE,FALSE);
 
@@ -2495,6 +2495,10 @@ static GFL_PROC_RESULT PokemonTradeProcInit( GFL_PROC * proc, int * seq, void * 
     _CHANGE_STATE(pWork, POKMEONTRADE_SAVE_TimingStart);
     return GFL_PROC_RES_FINISH;
   }
+  if(POKEMONTRADE_MOVE_MAIL == pParentWork->ret){
+    _CHANGE_STATE(pWork, POKMEONTRADE_EVOLUTION_TimingStart);
+    return GFL_PROC_RES_FINISH;
+  }
   
   POKETRADE_MESSAGE_HeapInit(pWork);
   _dispInit(pWork);
@@ -2772,11 +2776,11 @@ const GFL_PROC_DATA PokemonTradeProcData = {
 
 //IR用
 const GFL_PROC_DATA PokemonTradeIrcProcData = {
-#if DEBUG_ONLY_FOR_ohno
-  PokemonTradeGTSNegoProcInit,
-#else
+//#if DEBUG_ONLY_FOR_ohno
+//  PokemonTradeGTSNegoProcInit,
+//#else
   PokemonTradeIrcProcInit,
-#endif
+//#endif
   PokemonTradeProcMain,
   PokemonTradeProcEnd,
 };

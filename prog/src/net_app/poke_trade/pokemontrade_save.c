@@ -122,7 +122,8 @@ void POKMEONTRADE_SAVE_Init(POKEMON_TRADE_WORK* pWork)
 
   GFL_BG_SetVisible( GFL_BG_FRAME2_S , TRUE );
 
-  
+
+
   _CHANGE_STATE(pWork,_changeDemo_ModelTrade21);
 
 }
@@ -178,16 +179,14 @@ static void _changeDemo_ModelTrade23(POKEMON_TRADE_WORK* pWork)
     _CHANGE_STATE(pWork,POKEMONTRADE_PROC_FadeoutStart);
     return;
   }
+  {   //ここからいつでもPROCCHANGEしても良いように親ワークに交換情報を格納
+    POKEMON_PARAM* pp = IRC_POKEMONTRADE_GetRecvPP(pWork, 1);
+    pWork->pParentWork->selectBoxno = pWork->selectBoxno;
+    pWork->pParentWork->selectIndex = pWork->selectIndex;
 
-  
-//  _pokemonCreateCLACTExit(pWork);
-//  POKEMONTRADE_DEMO_PTC_End(pWork->pPokemonTradeDemo,PTC_KIND_NUM_MAX);
-//  POKEMONTRADE_DEMO_ICA_Delete(pWork->pPokemonTradeDemo);
-//  GFL_HEAP_FreeMemory(pWork->pPokemonTradeDemo);
-//  pWork->pPokemonTradeDemo = NULL;
-
-  //@todo メールにとぶ必要がある
-
+    PokeParty_Init( pWork->pParentWork->pParty, TEMOTI_POKEMAX );
+    PokeParty_Add( pWork->pParentWork->pParty, pp );
+  }
 
   {
     int id = 1-GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
@@ -250,6 +249,46 @@ static void _saveStart(POKEMON_TRADE_WORK* pWork)
   }
 }
 
+
+
+//-------------------------------------------------
+/**
+ *	@brief         進化タイミングスタート  メール後の戻り部分
+ *	@param[inout]	 _POKEMCSS_MOVE_WORK ワーク
+ */
+//-------------------------------------------------
+
+void POKMEONTRADE_EVOLUTION_TimingStart(POKEMON_TRADE_WORK* pWork)
+{
+
+  POKETRADE_MESSAGE_HeapInit(pWork);
+  GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR_51, pWork->pMessageStrBuf );
+  pWork->bgchar = BmpWinFrame_GraphicSetAreaMan(GFL_BG_FRAME2_S, _BUTTON_WIN_PAL, MENU_TYPE_SYSTEM, pWork->heapID);
+  POKETRADE_MESSAGE_WindowOpen(pWork);
+  _setNextAnim(pWork, 0);
+
+  GFL_BG_SetVisible( GFL_BG_FRAME2_S , TRUE );
+  GFL_NET_WirelessIconEasy_HoldLCD(TRUE,pWork->heapID); //通信アイコン
+  GFL_NET_ReloadIcon();
+
+  {
+    POKEMON_PARAM* pp = PokeParty_GetMemberPointer( pWork->pParentWork->pParty, 0 );
+    GF_ASSERT(MAILDATA_NULLID != MailSys_MoveMailPoke2Paso(pWork->pMailBlock, pp, pWork->heapID));
+  }
+  
+  GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, _BRIGHTNESS_SYNC);
+
+  _CHANGE_STATE(pWork,_changeTimingSaveStart);
+}
+
+
+
+//-------------------------------------------------
+/**
+ *	@brief         セーブタイミングスタート  進化後の戻り部分
+ *	@param[inout]	 _POKEMCSS_MOVE_WORK ワーク
+ */
+//-------------------------------------------------
 
 void POKMEONTRADE_SAVE_TimingStart(POKEMON_TRADE_WORK* pWork)
 {
@@ -487,7 +526,8 @@ static void _mailPCArrangementYesOrNo(POKEMON_TRADE_WORK* pWork)
 
     switch(selectno){
     case 0:  //はい
-      //@todo PROC呼び出し
+      pWork->pParentWork->ret = POKEMONTRADE_MOVE_MAIL;
+      _CHANGE_STATE(pWork,POKEMONTRADE_PROC_FadeoutStart);   //交換デモに行く
       break;
     default: //いいえ
       GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR2_09, pWork->pMessageStrBuf );

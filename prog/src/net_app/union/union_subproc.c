@@ -25,6 +25,7 @@
 #include "field/event_colosseum_battle.h"
 #include "colosseum.h"
 #include "colosseum_tool.h"
+#include "app/mailbox.h"
 #include "app\pms_input.h"
 #include "app\pms_select.h"
 #include "net_app/pokemontrade.h"
@@ -66,6 +67,7 @@ FS_EXTERN_OVERLAY(union_app);
 FS_EXTERN_OVERLAY(pokelist);
 FS_EXTERN_OVERLAY(poke_status);
 FS_EXTERN_OVERLAY(pokemon_trade);
+FS_EXTERN_OVERLAY(app_mail);
 
 
 //==============================================================================
@@ -419,6 +421,8 @@ static BOOL SubEvent_Trade(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys, FIELDMAP
     _SEQ_CHECK,
     _SEQ_EVOLUTION,
     _SEQ_EVOLUTIONEND,
+    _SEQ_CALL_MAIL,
+    _SEQ_WAIT_MAIL,
     _SEQ_END,
   };
 	switch(*seq) {
@@ -445,6 +449,14 @@ static BOOL SubEvent_Trade(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys, FIELDMAP
   case _SEQ_EVOLUTIONEND:
     GFL_OVERLAY_Unload( FS_OVERLAY_ID(shinka_demo) );
     pPTP->ret = POKEMONTRADE_MOVE_EVOLUTION;
+    (*seq)=_SEQ_TRADE;
+    break;
+  case _SEQ_CALL_MAIL:
+    pPTP->aMailBox.gamedata = pPTP->gamedata;
+    *child_event = EVENT_FieldSubProc( gsys, fieldWork, FS_OVERLAY_ID(app_mail), &MailBoxProcData, &pPTP->aMailBox );
+    (*seq)++;
+    break;
+  case _SEQ_WAIT_MAIL:
     (*seq)=_SEQ_TRADE;
     break;
   default:

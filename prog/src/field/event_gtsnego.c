@@ -10,6 +10,7 @@
 
 #include <gflib.h>
 #include "net/network_define.h"
+#include "app/mailbox.h"
 
 #include "gamesystem/gamesystem.h"
 #include "gamesystem/game_init.h"
@@ -36,6 +37,7 @@
 //============================================================================================
 //============================================================================================
 FS_EXTERN_OVERLAY(pokemon_trade);
+FS_EXTERN_OVERLAY(app_mail);
 
 //----------------------------------------------------------------
 
@@ -51,6 +53,8 @@ enum _EVENT_GTSNEGO {
   _WAIT_TRADE,
   _SEQ_EVOLUTION,
   _SEQ_EVOLUTIONEND,
+  _CALL_MAIL,
+  _WAIT_MAIL,
   _WAIT_NET_END,
   _FIELD_OPEN,
   _FIELD_END
@@ -152,6 +156,16 @@ static GMEVENT_RESULT EVENT_GTSNegoMain(GMEVENT * event, int *  seq, void * work
       GFL_OVERLAY_Unload( FS_OVERLAY_ID(shinka_demo) );
       dbw->aPokeTr.ret = POKEMONTRADE_MOVE_EVOLUTION;
       (*seq) = _CALL_TRADE;
+    }
+    break;
+  case _CALL_MAIL:
+    dbw->aPokeTr.aMailBox.gamedata = gamedata;
+    GAMESYSTEM_CallProc( gsys, FS_OVERLAY_ID(app_mail), &MailBoxProcData, &dbw->aPokeTr.aMailBox );
+    (*seq)++;
+    break;
+  case _WAIT_MAIL:
+    if (GAMESYSTEM_IsProcExists(gsys) == GFL_PROC_MAIN_NULL){
+      (*seq)=_CALL_TRADE;
     }
     break;
   case _WAIT_NET_END:

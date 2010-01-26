@@ -289,10 +289,10 @@ void POKE_GTS_StatusMessageDisp(POKEMON_TRADE_WORK* pWork)
       GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR2_16, pWork->pExStrBuf );
       WORDSET_RegisterPlayerName( pWork->pWordSet, 0,  aStBuf[side]  );
       WORDSET_ExpandStr( pWork->pWordSet, pWork->pStrBuf, pWork->pExStrBuf  );
-      PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWin), sidex[side]*8, 16+8, pWork->pStrBuf, pWork->pFontHandle);
+      PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWin), sidex[side]*8, 16+8+2, pWork->pStrBuf, pWork->pFontHandle);
 
       GFL_MSG_GetString( pWork->pMsgData,POKETRADE_STR2_17 + pWork->GTStype[side], pWork->pStrBuf );
-      PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWin), sidex[side]*8, 48+8, pWork->pStrBuf, pWork->pFontHandle);
+      PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWin), sidex[side]*8, 48+8+2, pWork->pStrBuf, pWork->pFontHandle);
 
 //      GFL_MSG_GetString( pWork->pMsgData,POKETRADE_STR2_14 + pWork->bGTSSelect[side], pWork->pStrBuf );
   //    PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWin), sidex[side]*8, 128+8, pWork->pStrBuf, pWork->pFontHandle);
@@ -734,6 +734,7 @@ static void _Select6Init(POKEMON_TRADE_WORK* pWork)
 static void _send5Wait(POKEMON_TRADE_WORK* pWork)
 {
   if(pWork->pokemonThreeSet){   //‘ŠŽè‚©‚ç“Í‚¢‚½‚©‚Ç‚¤‚©‚¢‚Ü‚¾‚Æ‚¸‚Á‚Æ‚Ü‚Â
+    POKE_GTS_SelectStatusMessageDisp(pWork, 1, TRUE);
     _CHANGE_STATE(pWork,_Select6Init);
   }
 }
@@ -752,7 +753,8 @@ void POKE_GTS_Select6Init(POKEMON_TRADE_WORK* pWork)
   GFL_NETHANDLE* pNet = GFL_NET_HANDLE_GetCurrentHandle();
 
   if(POKEMONTRADEPROC_IsNetworkMode(pWork)){
-    if( GFL_NET_SendData(pNet,_NETCMD_THREE_SELECT_END,0,NULL)){
+    u8 flg = 1;
+    if( GFL_NET_SendData(pNet,_NETCMD_THREE_SELECT_END,1,&flg)){
       _CHANGE_STATE(pWork, _send5Wait);
     }
   }

@@ -256,8 +256,8 @@ void IRC_POKETRADE_GraphicInitSubDisp(POKEMON_TRADE_WORK* pWork)
   _PokeIconCgxLoad( pWork );
   IRC_POKETRADE_InitBoxIcon(pWork->pBox, pWork);
 
-	pWork->pAppTaskRes	= APP_TASKMENU_RES_Create( GFL_BG_FRAME2_S, _SUBLIST_NORMAL_PAL,
-			pWork->pFontHandle, pWork->SysMsgQue, pWork->heapID );
+//	pWork->pAppTaskRes	= APP_TASKMENU_RES_Create( GFL_BG_FRAME2_S, _SUBLIST_NORMAL_PAL,
+	//		pWork->pFontHandle, pWork->SysMsgQue, pWork->heapID );
 
 }
 
@@ -273,10 +273,6 @@ void IRC_POKETRADE_GraphicInitSubDisp(POKEMON_TRADE_WORK* pWork)
 
 void IRC_POKETRADE_SubGraphicExit(POKEMON_TRADE_WORK* pWork)
 {
-  if(pWork->pAppTaskRes){
-    APP_TASKMENU_RES_Delete( pWork->pAppTaskRes );
-    pWork->pAppTaskRes=NULL;
-  }
   IRC_POKETRADE_TrayExit(pWork);
   if(pWork->subchar1){
     GFL_BG_FreeCharacterArea(GFL_BG_FRAME1_S,GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar1),

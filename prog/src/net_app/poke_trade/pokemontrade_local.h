@@ -576,6 +576,7 @@ extern void IRC_POKMEONTRADE_STEP_ChangeDemo_PokeMove(POKEMON_TRADE_WORK* pWork)
 extern void POKMEONTRADE_IRCDEMO_ChangeDemo(POKEMON_TRADE_WORK* pWork);
 extern void POKMEONTRADE_SAVE_Init(POKEMON_TRADE_WORK* pWork);
 extern void POKMEONTRADE_SAVE_TimingStart(POKEMON_TRADE_WORK* pWork);
+extern void POKMEONTRADE_EVOLUTION_TimingStart(POKEMON_TRADE_WORK* pWork);
 
 extern void IRCPOKETRADE_PokeDeleteMcss( POKEMON_TRADE_WORK *pWork,int no  );
 extern void IRCPOKETRADE_PokeCreateMcss( POKEMON_TRADE_WORK *pWork ,int no, int bFront, const POKEMON_PARAM *pp );
