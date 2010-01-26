@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2010-01-23T16:57:09"/>
+	<create user="matsumiya" host="W00207" date="2010-01-23T21:05:34"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -229,7 +229,7 @@
 	</tag-table>
 
 	<columns>
-		<id position="0" width="195"/>
+		<id position="0" width="168"/>
 		<group default=" 0:デフォルト" position="-1" width="100">
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
@@ -318,23 +318,39 @@
 グッズ　欲しいかい？</language>
 	</row>
 
-	<row id="msg_c08r0301_goods_02">
+	<row id="msg_c08r0301_goods_02" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
 ・はい選択時
-・1日1種類のグッズがもらえる</comment>
+・1日1種類のグッズがもらえる
+　続けてadd_goods_01に</comment>
+		<attribute name="キャラ指定">GENTLEMAN</attribute>
 		<language name="JPN" width="256">うれしいねえ♪　キミも
 ミュージカル　だいすき　にんげん♪▼
 ポケモンに　いろいろ　グッズを
-つけてあげると　いいのさあ♪</language>
+つけてあげると　いいのさあ♪▼</language>
 		<language name="JPN_KANJI" width="256">うれしいねえ♪　キミも
 ミュージカル　大好き　人間♪▼
 ポケモンに　いろいろ　グッズを
-つけてあげると　いいのさあ♪</language>
+つけてあげると　いいのさあ♪▼</language>
+	</row>
+
+	<row id="msg_c08r0301_add_goods_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>システム
+・0＝グッズ名
+・1＝プレイヤー名</comment>
+		<attribute name="キャラ指定">システム</attribute>
+		<language name="JPN" width="256">[1:0A:グッズ名:0]を　もらった！▼
+[1:00:トレーナー名:1]は　[1:0A:グッズ名:0]を
+グッズケースの　なかに　しまった！</language>
+		<language name="JPN_KANJI" width="256">[1:0A:グッズ名:0]を　もらった！▼
+[1:00:トレーナー名:1]は　[1:0A:グッズ名:0]を
+グッズケースの　なかに　しまった！</language>
 	</row>
 
 	<row id="msg_c08r0301_goods_03">
 		<comment>♂
 ・いいえ選択時</comment>
+		<attribute name="キャラ指定">GENTLEMAN</attribute>
 		<language name="JPN" width="256">なんと　きみは！▼
 グッズを　つけた　ポケモンの
 キュートさを　ごぞんじ　ないのか！</language>
@@ -346,6 +362,7 @@
 	<row id="msg_c08r0301_goods_04">
 		<comment>♂
 ・グッズをもらった後（日が変わるまで）</comment>
+		<attribute name="キャラ指定">GENTLEMAN</attribute>
 		<language name="JPN" width="256">なんと　この　わたしはぁ
 ミュージカル　だいすき　おじさん♪▼
 また　あしたに　なれば
@@ -359,6 +376,7 @@
 	<row id="msg_c08r0301_goods_05">
 		<comment>♂
 ・カテゴリー内のグッズを全てもらったあと</comment>
+		<attribute name="キャラ指定">GENTLEMAN</attribute>
 		<language name="JPN" width="256">なんと　この　わたしはぁ
 ミュージカル　だいすき　おじさん♪▼
 せかいの　みんなに
@@ -369,7 +387,7 @@
 ミュージカルを　楽しんでほしいよ♪</language>
 	</row>
 
-	<row id="msg_c08r0301_middlewoman1_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c08r0301_middlewoman1_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀</comment>
 		<attribute name="キャラ指定">MIDDLEWOMAN1
 中年女性1</attribute>
