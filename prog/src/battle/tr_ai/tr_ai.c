@@ -74,6 +74,7 @@ typedef struct{
 
   HEAPID    heapID;
   ARCHANDLE*  handle;
+  ARCHANDLE*  waza_handle;
   VM_CODE*   sequence;
 
   const BTL_MAIN_MODULE*    wk;
@@ -457,6 +458,7 @@ VMHANDLE* TR_AI_Init( const BTL_MAIN_MODULE* wk, const BTL_POKE_CONTAINER* pokeC
   tr_ai_work->ai_bit_temp = ai_bit;
 
   tr_ai_work->handle = GFL_ARC_OpenDataHandle( ARCID_TR_AI, heapID );
+  tr_ai_work->waza_handle = WAZADATA_OpenDataHandle( heapID );
 
   tr_ai_work->wk = wk;
   tr_ai_work->pokeCon = pokeCon;
@@ -514,6 +516,7 @@ void  TR_AI_Exit( VMHANDLE* vmh )
   TR_AI_WORK* tr_ai_work = (TR_AI_WORK*)VM_GetContext( vmh );
 
   GFL_ARC_CloseDataHandle( tr_ai_work->handle );
+  GFL_ARC_CloseDataHandle( tr_ai_work->waza_handle );
 
   GFL_HEAP_FreeMemory ( tr_ai_work );
   VM_Delete( vmh );
@@ -1147,7 +1150,7 @@ static  VMCMD_RESULT  AI_IF_HAVE_DAMAGE_WAZA( VMHANDLE* vmh, void* context_work 
 
   for( i = 0 ; i < BPP_WAZA_GetCount( tr_ai_work->atk_bpp ) ; i++ )
   {
-    if( WAZADATA_IsDamage( BPP_WAZA_GetID( tr_ai_work->atk_bpp, i ) ) )
+    if( WAZADATA_HANDLE_GetParam( tr_ai_work->waza_handle, BPP_WAZA_GetID( tr_ai_work->atk_bpp, i ), WAZAPARAM_POWER) )
     {
       break;
     }
@@ -1168,7 +1171,7 @@ static  VMCMD_RESULT  AI_IFN_HAVE_DAMAGE_WAZA( VMHANDLE* vmh, void* context_work
 
   for( i = 0 ; i < BPP_WAZA_GetCount( tr_ai_work->atk_bpp ) ; i++ )
   {
-    if( WAZADATA_IsDamage( BPP_WAZA_GetID( tr_ai_work->atk_bpp, i ) ) )
+    if( WAZADATA_HANDLE_GetParam( tr_ai_work->waza_handle, BPP_WAZA_GetID( tr_ai_work->atk_bpp, i ), WAZAPARAM_POWER) )
     {
       break;
     }
@@ -1218,7 +1221,7 @@ static  VMCMD_RESULT  AI_CHECK_TYPE( VMHANDLE* vmh, void* context_work )
     tr_ai_work->calc_work = PokeTypePair_GetType2( def_type );
     break;
   case CHECK_WAZA:
-    tr_ai_work->calc_work = WAZADATA_GetType( tr_ai_work->waza_no );
+    tr_ai_work->calc_work = WAZADATA_HANDLE_GetParam( tr_ai_work->waza_handle, tr_ai_work->waza_no, WAZAPARAM_TYPE );
     break;
   case CHECK_ATTACK_FRIEND_TYPE1:
     {
@@ -1275,19 +1278,26 @@ static  VMCMD_RESULT  AI_COMP_POWER( VMHANDLE* vmh, void* context_work )
   //@todo 技のダメージを取得する関数を作る必要があります　とりあえず技の威力で判定
   {
     int i;
+    int src_pow = WAZADATA_HANDLE_GetParam( tr_ai_work->waza_handle, tr_ai_work->waza_no, WAZAPARAM_POWER );
 
-    tr_ai_work->calc_work = COMP_POWER_TOP;
+    if( src_pow == 0 )
+    { 
+      tr_ai_work->calc_work = COMP_POWER_NONE;
+    }
+    else
+    { 
+      tr_ai_work->calc_work = COMP_POWER_TOP;
 
-    for( i = 0 ; i < BPP_WAZA_GetCount( tr_ai_work->atk_bpp ) ; i++ )
-    {
-      int pow = WAZADATA_GetPower( BPP_WAZA_GetID( tr_ai_work->atk_bpp, i ) );
-      int src_pow = WAZADATA_GetPower( BPP_WAZA_GetID( tr_ai_work->atk_bpp, tr_ai_work->waza_pos ) );
-
-      if( i == tr_ai_work->waza_pos ) continue;
-      if( pow > src_pow )
+      for( i = 0 ; i < BPP_WAZA_GetCount( tr_ai_work->atk_bpp ) ; i++ )
       {
-        tr_ai_work->calc_work = COMP_POWER_NOTOP;
-        break;
+        int pow = WAZADATA_HANDLE_GetParam( tr_ai_work->waza_handle, BPP_WAZA_GetID( tr_ai_work->atk_bpp, i ), WAZAPARAM_POWER );
+
+        if( i == tr_ai_work->waza_pos ) continue;
+        if( pow > src_pow )
+        {
+          tr_ai_work->calc_work = COMP_POWER_NOTOP;
+          break;
+        }
       }
     }
   }
@@ -1371,7 +1381,7 @@ static  VMCMD_RESULT  AI_CHECK_WAZASEQNO( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* tr_ai_work = (TR_AI_WORK*)context_work;
 
-  tr_ai_work->calc_work = WAZADATA_GetParam( tr_ai_work->waza_no, WAZAPARAM_AI_SEQNO );
+  tr_ai_work->calc_work = WAZADATA_HANDLE_GetParam( tr_ai_work->waza_handle, tr_ai_work->waza_no, WAZAPARAM_AI_SEQNO );
 
   return tr_ai_work->vmcmd_result;
 }
@@ -1411,7 +1421,7 @@ static  VMCMD_RESULT  AI_CHECK_WAZA_AISYOU( VMHANDLE* vmh, void* context_work )
   BtlTypeAff  aisyou  = ( int )VMGetU32( vmh );
   int adrs  = ( int )VMGetU32( vmh );
   PokeTypePair  def_type = BPP_GetPokeType( tr_ai_work->def_bpp );
-  PokeType  waza_type = WAZADATA_GetType( tr_ai_work->waza_no );
+  PokeType  waza_type = WAZADATA_HANDLE_GetParam( tr_ai_work->waza_handle, tr_ai_work->waza_no, WAZAPARAM_TYPE );
   BtlTypeAff  aff1 = BTL_CALC_TypeAff( waza_type, PokeTypePair_GetType1( def_type ) );
   BtlTypeAff  aff2 = BTL_CALC_TypeAff( waza_type, PokeTypePair_GetType2( def_type ) );
   BtlTypeAff  aff = BTL_CALC_TypeAffMul( aff1, aff2 );
@@ -1509,7 +1519,7 @@ static  void  ai_if_waza_seq_no_jump( VMHANDLE* vmh, TR_AI_WORK* tr_ai_work, Bra
 {
   int seqno = ( int )VMGetU32( vmh );
   int adrs  = ( int )VMGetU32( vmh );
-  int data  = WAZADATA_GetParam( tr_ai_work->waza_no, WAZAPARAM_AI_SEQNO );
+  int data  = WAZADATA_HANDLE_GetParam( tr_ai_work->waza_handle, tr_ai_work->waza_no, WAZAPARAM_AI_SEQNO );
 
   branch_act( vmh, cond, data, seqno, adrs );
 }
@@ -1711,7 +1721,8 @@ static  void  ai_if_have_waza_seqno( VMHANDLE* vmh, TR_AI_WORK* tr_ai_work, Bran
   case CHECK_ATTACK:
     for( i = 0 ; i < BPP_WAZA_GetCount( tr_ai_work->atk_bpp ) ; i++ )
     {
-      int have_seqno = WAZADATA_GetParam( BPP_WAZA_GetID( tr_ai_work->atk_bpp, i ), WAZAPARAM_AI_SEQNO );
+      int have_seqno = WAZADATA_HANDLE_GetParam( tr_ai_work->waza_handle, BPP_WAZA_GetID( tr_ai_work->atk_bpp, i ),
+                                                 WAZAPARAM_AI_SEQNO );
       if( have_seqno == seqno )
       {
         ret = TRUE;
@@ -1722,7 +1733,8 @@ static  void  ai_if_have_waza_seqno( VMHANDLE* vmh, TR_AI_WORK* tr_ai_work, Bran
   case CHECK_DEFENCE:
     for( i = 0 ; i < PTL_WAZA_MAX ; i++ )
     {
-      int have_seqno = WAZADATA_GetParam( tr_ai_work->use_waza[ pos ][ i ], WAZAPARAM_AI_SEQNO );
+      int have_seqno = WAZADATA_HANDLE_GetParam( tr_ai_work->waza_handle, tr_ai_work->use_waza[ pos ][ i ],
+                                                 WAZAPARAM_AI_SEQNO );
       if( have_seqno == seqno )
       {
         ret = TRUE;
@@ -1918,7 +1930,7 @@ static  VMCMD_RESULT  AI_CHECK_WORKWAZA_POW( VMHANDLE* vmh, void* context_work )
 
   GF_ASSERT( tr_ai_work->calc_work < WAZANO_MAX );
 
-  tr_ai_work->calc_work = WAZADATA_GetPower( tr_ai_work->calc_work );
+  tr_ai_work->calc_work = WAZADATA_HANDLE_GetParam( tr_ai_work->waza_handle, tr_ai_work->calc_work, WAZAPARAM_POWER );
 
   return tr_ai_work->vmcmd_result;
 }
@@ -1930,7 +1942,7 @@ static  VMCMD_RESULT  AI_CHECK_WORKWAZA_SEQNO( VMHANDLE* vmh, void* context_work
 {
   TR_AI_WORK* tr_ai_work = (TR_AI_WORK*)context_work;
 
-  tr_ai_work->calc_work = WAZADATA_GetParam( tr_ai_work->calc_work, WAZAPARAM_AI_SEQNO );
+  tr_ai_work->calc_work = WAZADATA_HANDLE_GetParam( tr_ai_work->waza_handle, tr_ai_work->calc_work, WAZAPARAM_AI_SEQNO );
 
   return tr_ai_work->vmcmd_result;
 }
@@ -2290,7 +2302,7 @@ static  VMCMD_RESULT  AI_CHECK_WAZA_KIND( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* tr_ai_work = (TR_AI_WORK*)context_work;
 
-  tr_ai_work->calc_work = WAZADATA_GetDamageType( tr_ai_work->waza_no );
+  tr_ai_work->calc_work = WAZADATA_HANDLE_GetParam( tr_ai_work->waza_handle, tr_ai_work->waza_no, WAZAPARAM_DAMAGE_TYPE );
 
   return tr_ai_work->vmcmd_result;
 }
@@ -2302,7 +2314,8 @@ static  VMCMD_RESULT  AI_CHECK_LAST_WAZA_KIND( VMHANDLE* vmh, void* context_work
 {
   TR_AI_WORK* tr_ai_work = (TR_AI_WORK*)context_work;
 
-  tr_ai_work->calc_work = WAZADATA_GetDamageType( BPP_GetPrevWazaID( tr_ai_work->def_bpp ) );
+  tr_ai_work->calc_work = WAZADATA_HANDLE_GetParam( tr_ai_work->waza_handle, BPP_GetPrevWazaID( tr_ai_work->def_bpp ),
+                                                    WAZAPARAM_DAMAGE_TYPE );
 
   return tr_ai_work->vmcmd_result;
 }
