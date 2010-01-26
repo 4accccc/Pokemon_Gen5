@@ -95,9 +95,9 @@ static BOOL EvYesNoWinSelect( VMHANDLE *core, void *wk )
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
   GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
-  FLDMENUFUNC **mw = SCRIPT_GetMemberWork( sc, ID_EVSCR_MENUWORK );
+  FLDMENUFUNC *mw = SCRIPT_GetFLDMENUFUNC( sc );
   u16 *ret_wk = SCRIPT_GetEventWork( sc, gdata, core->vm_register[0] );
-  FLDMENUFUNC_YESNO ret = FLDMENUFUNC_ProcYesNoMenu( *mw );
+  FLDMENUFUNC_YESNO ret = FLDMENUFUNC_ProcYesNoMenu( mw );
   
   if( ret == FLDMENUFUNC_YESNO_NULL ){
     return FALSE;
@@ -109,7 +109,7 @@ static BOOL EvYesNoWinSelect( VMHANDLE *core, void *wk )
     *ret_wk = 1;
   }
   
-  FLDMENUFUNC_DeleteMenu( *mw );
+  FLDMENUFUNC_DeleteMenu( mw );
   return TRUE;
 }
 
@@ -125,10 +125,11 @@ VMCMD_RESULT EvCmdYesNoWin( VMHANDLE *core, void *wk )
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
   SCRIPT_FLDPARAM *fparam = SCRIPT_GetFieldParam( sc );
-  FLDMENUFUNC **mw  = SCRIPT_GetMemberWork( sc, ID_EVSCR_MENUWORK );
+  FLDMENUFUNC *mw;
   u16 wk_id      = VMGetU16( core );
   
-  *mw = FLDMENUFUNC_AddYesNoMenu( fparam->msgBG, 0 );
+  mw = FLDMENUFUNC_AddYesNoMenu( fparam->msgBG, 0 );
+  SCRIPT_SetFLDMENUFUNC( sc, mw );
   core->vm_register[0] = wk_id;
    
   VMCMD_SetWait( core, EvYesNoWinSelect );
@@ -206,9 +207,9 @@ VMCMD_RESULT EvCmdBmpMenuMakeList( VMHANDLE *core, void *wk )
 	u16 msg_id	= VMGetU16( core );
 	u16 ex_msg_id	= VMGetU16( core );
 	u16 param	= VMGetU16( core );
-  STRBUF **msgbuf = SCRIPT_GetMemberWork( sc, ID_EVSCR_MSGBUF );
-  STRBUF **tmpbuf = SCRIPT_GetMemberWork( sc, ID_EVSCR_TMPBUF );
-  SCRCMD_WORK_AddMenuList( work, msg_id, ex_msg_id, param, *msgbuf, *tmpbuf );
+  STRBUF *msgbuf  = SCRIPT_GetMsgBuffer( sc );
+  STRBUF *tmpbuf = SCRIPT_GetMsgTempBuffer( sc );
+  SCRCMD_WORK_AddMenuList( work, msg_id, ex_msg_id, param, msgbuf, tmpbuf );
 	return VMCMD_RESULT_CONTINUE;
 }
 
@@ -364,8 +365,8 @@ static VMCMD_RESULT EvCmdTalkMsg( VMHANDLE *core, void *wk )
   VecFx32 pos;
   const VecFx32 *pos_p;
   WORDSET *wordset;
-  STRBUF **msgbuf;
-  STRBUF **tmpbuf;
+  STRBUF *msgbuf;
+  STRBUF *tmpbuf;
   MMDL *fmmdl;
   FLDTALKMSGWIN *tmsg;
   SCRCMD_WORK *work = wk;
@@ -399,10 +400,10 @@ static VMCMD_RESULT EvCmdTalkMsg( VMHANDLE *core, void *wk )
   {
     wordset = SCRIPT_GetWordSet( sc );
     msgbuf = SCRIPT_GetMemberWork( sc, ID_EVSCR_MSGBUF );
-    tmpbuf = SCRIPT_GetMemberWork( sc, ID_EVSCR_TMPBUF );
+    tmpbuf = SCRIPT_GetMsgTempBuffer( sc );
     KAGAYA_Printf( "EvCmdTalkMsg MSG ID = %d\n", msg_id );
-    GFL_MSG_GetString( msgData, msg_id, *tmpbuf );
-    WORDSET_ExpandStr( wordset, *msgbuf, *tmpbuf );
+    GFL_MSG_GetString( msgData, msg_id, tmpbuf );
+    WORDSET_ExpandStr( wordset, msgbuf, tmpbuf );
   }
   
   {
@@ -412,7 +413,7 @@ static VMCMD_RESULT EvCmdTalkMsg( VMHANDLE *core, void *wk )
       idx = FLDTALKMSGWIN_IDX_UPPER;
     }
     
-    tmsg = FLDTALKMSGWIN_AddStrBuf( fparam->msgBG, idx, pos_p, *msgbuf );
+    tmsg = FLDTALKMSGWIN_AddStrBuf( fparam->msgBG, idx, pos_p, msgbuf );
   }
   
   SCRCMD_WORK_setBalloonWindow( work, (FLDSYSWIN_STREAM*)tmsg );
@@ -435,7 +436,7 @@ VMCMD_RESULT EvCmdSysWinMsgAllPut( VMHANDLE *core, void *wk )
   FLDSYSWIN_STREAM *sysWin;
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-  STRBUF **msgbuf = SCRIPT_GetMemberWork( sc, ID_EVSCR_MSGBUF );
+  STRBUF *msgbuf = SCRIPT_GetMsgBuffer( sc );
   u16 msg_id = SCRCMD_GetVMWorkValue( core, work );
   u16 up_down = VMGetU16( core );
   
@@ -444,14 +445,14 @@ VMCMD_RESULT EvCmdSysWinMsgAllPut( VMHANDLE *core, void *wk )
   {
     GFL_MSGDATA *msgData = SCRCMD_WORK_GetMsgData( work );
     WORDSET *wordset = SCRIPT_GetWordSet( sc );
-    STRBUF **tmpbuf = SCRIPT_GetMemberWork( sc, ID_EVSCR_TMPBUF );
-    GFL_MSG_GetString( msgData, msg_id, *tmpbuf );
-    WORDSET_ExpandStr( wordset, *msgbuf, *tmpbuf );
+    STRBUF *tmpbuf = SCRIPT_GetMsgTempBuffer( sc );
+    GFL_MSG_GetString( msgData, msg_id, tmpbuf );
+    WORDSET_ExpandStr( wordset, msgbuf, tmpbuf );
   }
   
   sysWin = (FLDSYSWIN_STREAM*)SCRCMD_WORK_GetMsgWinPtr( work );
   FLDSYSWIN_STREAM_ClearMessage( sysWin );
-  FLDSYSWIN_STREAM_AllPrintStrBuf( sysWin, 0, 0, *msgbuf );
+  FLDSYSWIN_STREAM_AllPrintStrBuf( sysWin, 0, 0, msgbuf );
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -510,7 +511,7 @@ VMCMD_RESULT EvCmdGoldWinOpen( VMHANDLE *core, void *wk )
   FLDMSGWIN*      msg_win = FIELDMAP_GetGoldMsgWin( fieldmap );
   SCRIPT_WORK*         sc = SCRCMD_WORK_GetScriptWork( work );
   WORDSET*        wordset = SCRIPT_GetWordSet( sc );
-  STRBUF**        tempbuf = SCRIPT_GetMemberWork( sc, ID_EVSCR_TMPBUF );
+  STRBUF*         tempbuf = SCRIPT_GetMsgTempBuffer( sc );
   HEAPID          heap_id = FIELDMAP_GetHeapID( fieldmap );
   GFL_MSGDATA*   msg_data = GFL_MSG_Create( 
       GFL_MSG_LOAD_NORMAL, ARCID_SCRIPT_MESSAGE, NARC_script_message_common_scr_dat, heap_id );
@@ -530,8 +531,8 @@ VMCMD_RESULT EvCmdGoldWinOpen( VMHANDLE *core, void *wk )
   // 文字列を作成
   WORDSET_RegisterNumber( 
       wordset, 2, gold, GOLD_WIN_KETA, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
-  GFL_MSG_GetString( msg_data, msg_yen_01, *tempbuf );
-  WORDSET_ExpandStr( wordset, strbuf, *tempbuf );
+  GFL_MSG_GetString( msg_data, msg_yen_01, tempbuf );
+  WORDSET_ExpandStr( wordset, strbuf, tempbuf );
   FLDMSGWIN_PrintStrBuf( msg_win, 0, 0, strbuf );
   GFL_STR_DeleteBuffer( strbuf );
   GFL_MSG_Delete( msg_data );
@@ -666,7 +667,7 @@ static BOOL balloonWin_Write( SCRCMD_WORK *work,
     u16 objID, u16 arcID, u16 msgID, FLDTALKMSGWIN_IDX idx,
     TALKMSGWIN_TYPE type )
 {
-  STRBUF **msgbuf;
+  STRBUF *msgbuf;
   SCRCMD_BALLOONWIN_WORK *bwin_work;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
   GFL_MSGDATA *msgData = SCRCMD_WORK_GetMsgData( work );
@@ -693,22 +694,22 @@ static BOOL balloonWin_Write( SCRCMD_WORK *work,
   bwin_work = SCRCMD_WORK_GetBalloonWinWork( work );
   bwin_work->obj_id = objID;
 
-  msgbuf = SCRIPT_GetMemberWork( sc, ID_EVSCR_MSGBUF );
+  msgbuf = SCRIPT_GetMsgBuffer( sc );
   
   {
     WORDSET *wordset = SCRIPT_GetWordSet( sc );
-    STRBUF **tmpbuf = SCRIPT_GetMemberWork( sc, ID_EVSCR_TMPBUF );
+    STRBUF *tmpbuf = SCRIPT_GetMsgTempBuffer( sc );
 
     if (arcID == 0x400){
-      GFL_MSG_GetString( msgData, msgID, *tmpbuf );
+      GFL_MSG_GetString( msgData, msgID, tmpbuf );
     }else{
       msgData = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_SCRIPT_MESSAGE,
           arcID, SCRCMD_WORK_GetHeapID( work ) );
-      GFL_MSG_GetString( msgData, msgID, *tmpbuf );
+      GFL_MSG_GetString( msgData, msgID, tmpbuf );
       GFL_MSG_Delete( msgData );
     }
 
-    WORDSET_ExpandStr( wordset, *msgbuf, *tmpbuf );
+    WORDSET_ExpandStr( wordset, msgbuf, tmpbuf );
   }
   
   if( idx == FLDTALKMSGWIN_IDX_AUTO ){
@@ -729,7 +730,7 @@ static BOOL balloonWin_Write( SCRCMD_WORK *work,
   balloonWin_UpdatePos( work );
   
   setBalloonWindow( work,
-      fparam->msgBG, idx, &bwin_work->tail_pos, *msgbuf, type );
+      fparam->msgBG, idx, &bwin_work->tail_pos, msgbuf, type );
   return( TRUE );
 }
 
@@ -792,19 +793,19 @@ VMCMD_RESULT EvCmdBalloonWinTalkWrite( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-  MMDL **mmdl = SCRIPT_GetMemberWork( sc, ID_EVSCR_TARGET_OBJ );
+  MMDL *mmdl = SCRIPT_GetTargetObj( sc );
   u16 arc_id = SCRCMD_GetVMWorkValue( core, work );
   u16 msg_id = SCRCMD_GetVMWorkValue( core, work );
   u16 win_idx = SCRCMD_GetVMWorkValue( core, work );
   TALKMSGWIN_TYPE type = SCRCMD_GetVMWorkValue( core, work );
 
-  if( *mmdl == NULL ){
+  if( mmdl == NULL ){
     OS_Printf( "スクリプトエラー 話し掛け対象のOBJが居ません\n" );
     return VMCMD_RESULT_SUSPEND;
   }
 
   {
-    u8 obj_id = MMDL_GetOBJID( *mmdl );
+    u8 obj_id = MMDL_GetOBJID( mmdl );
     
     if( balloonWin_Write(work,obj_id,arc_id,msg_id,win_idx,type) == TRUE ){
       VMCMD_SetWait( core, BallonWinMsgWait );
@@ -913,10 +914,9 @@ VMCMD_RESULT EvCmdTrainerMessageSet( VMHANDLE *core, void *wk )
   u16 kind_id = SCRCMD_GetVMWorkValue( core, work );
   
   WORDSET *wordset = SCRIPT_GetWordSet( sc );
-  STRBUF **msgbuf = SCRIPT_GetMemberWork( sc, ID_EVSCR_MSGBUF );
-  STRBUF **tmpbuf = SCRIPT_GetMemberWork( sc, ID_EVSCR_TMPBUF );
+  STRBUF *msgbuf = SCRIPT_GetMsgBuffer( sc );
+  STRBUF *tmpbuf = SCRIPT_GetMsgTempBuffer( sc );
   GFL_MSGDATA *msgData = SCRCMD_WORK_GetMsgData( work );
-  u8 *msg_index      = SCRIPT_GetMemberWork( sc, ID_EVSCR_MSGINDEX );
   
   KAGAYA_Printf( "TR ID =%d, KIND ID =%d\n", tr_id, kind_id );
 
@@ -932,7 +932,7 @@ VMCMD_RESULT EvCmdTrainerMessageSet( VMHANDLE *core, void *wk )
   }
   
   TT_TrainerMessageGet(
-      tr_id, kind_id, *msgbuf, SCRCMD_WORK_GetHeapID(work) );
+      tr_id, kind_id, msgbuf, SCRCMD_WORK_GetHeapID(work) );
   
   { //トレーナーOBJを探す
     u16 dir;
@@ -970,7 +970,7 @@ VMCMD_RESULT EvCmdTrainerMessageSet( VMHANDLE *core, void *wk )
       balloonWin_UpdatePos( work );
       
       setBalloonWindow( work, fparam->msgBG,
-          idx, &bwin_work->tail_pos, *msgbuf, TALKMSGWIN_TYPE_NORMAL );
+          idx, &bwin_work->tail_pos, msgbuf, TALKMSGWIN_TYPE_NORMAL );
       
       VMCMD_SetWait( core, BallonWinMsgWait );
       return VMCMD_RESULT_SUSPEND;
@@ -1100,10 +1100,10 @@ VMCMD_RESULT EvCmdSubWinMsg( VMHANDLE *core, void *wk )
     
     GFL_MSGDATA *msgData = SCRCMD_WORK_GetMsgData( work );
     WORDSET *wordset = SCRIPT_GetWordSet( sc );
-    STRBUF **tmpbuf = SCRIPT_GetMemberWork( sc, ID_EVSCR_TMPBUF );
+    STRBUF *tmpbuf = SCRIPT_GetMsgTempBuffer( sc );
     
-    GFL_MSG_GetString( msgData, msg_id, *tmpbuf );
-    WORDSET_ExpandStr( wordset, msgBuf, *tmpbuf );
+    GFL_MSG_GetString( msgData, msg_id, tmpbuf );
+    WORDSET_ExpandStr( wordset, msgBuf, tmpbuf );
     
     sx = GFL_STR_GetBufferLength( msgBuf );
     sx = sx * 12;
@@ -1203,12 +1203,12 @@ static BOOL BGWinMsgWait( VMHANDLE *core, void *wk )
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
   FLDBGWIN *bgWin;
-  STRBUF **msgBuf;
+  STRBUF *msgBuf;
   
-  msgBuf = SCRIPT_GetMemberWork( sc, ID_EVSCR_MSGBUF );
+  msgBuf = SCRIPT_GetMsgBuffer( sc );
   bgWin = (FLDBGWIN*)SCRCMD_WORK_GetMsgWinPtr( work );
   
-  if( FLDBGWIN_PrintStrBuf(bgWin,*msgBuf) == TRUE ){
+  if( FLDBGWIN_PrintStrBuf(bgWin,msgBuf) == TRUE ){
     return( 1 );
   }
   
@@ -1260,11 +1260,11 @@ VMCMD_RESULT EvCmdBGWinMsg( VMHANDLE *core, void *wk )
     SCRCMD_WORK_SetMsgWinPtr( work, bgWin );
     
     {
-      STRBUF **msgbuf = SCRIPT_GetMemberWork( sc, ID_EVSCR_MSGBUF );
+      STRBUF *msgbuf = SCRIPT_GetMsgBuffer( sc );
       WORDSET *wordset = SCRIPT_GetWordSet( sc );
-      STRBUF **tmpbuf = SCRIPT_GetMemberWork( sc, ID_EVSCR_TMPBUF );
-      GFL_MSG_GetString( msgData, msg_id, *tmpbuf );
-      WORDSET_ExpandStr( wordset, *msgbuf, *tmpbuf );
+      STRBUF *tmpbuf = SCRIPT_GetMsgTempBuffer( sc );
+      GFL_MSG_GetString( msgData, msg_id, tmpbuf );
+      WORDSET_ExpandStr( wordset, msgbuf, tmpbuf );
       
       VMCMD_SetWait( core, BGWinMsgWait );
     }
@@ -1590,11 +1590,11 @@ static void setBalloonWindow( SCRCMD_WORK *work,
 static STRBUF * SetExpandWord( SCRCMD_WORK *work, SCRIPT_WORK *sc, u32 msg_id )
 {
   GFL_MSGDATA *msgData = SCRCMD_WORK_GetMsgData( work );
-  STRBUF **msgbuf = SCRIPT_GetMemberWork( sc, ID_EVSCR_MSGBUF );
+  STRBUF *msgbuf = SCRIPT_GetMsgBuffer( sc );
   WORDSET *wordset = SCRIPT_GetWordSet( sc );
-  STRBUF **tmpbuf = SCRIPT_GetMemberWork( sc, ID_EVSCR_TMPBUF );
+  STRBUF *tmpbuf = SCRIPT_GetMsgTempBuffer( sc );
   
-  GFL_MSG_GetString( msgData, msg_id, *tmpbuf );
-  WORDSET_ExpandStr( wordset, *msgbuf, *tmpbuf );
-  return( *msgbuf );
+  GFL_MSG_GetString( msgData, msg_id, tmpbuf );
+  WORDSET_ExpandStr( wordset, msgbuf, tmpbuf );
+  return( msgbuf );
 }

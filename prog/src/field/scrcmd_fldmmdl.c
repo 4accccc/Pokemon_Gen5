@@ -99,7 +99,7 @@ static inline void ResetStepWatchBit(int mask)
 //--------------------------------------------------------------
 static MMDL * FieldObjPtrGetByObjId( SCRCMD_WORK *work, u16 obj_id )
 {
-  MMDL *dummy;
+  //MMDL *dummy;
   MMDL *fmmdl;
   MMDLSYS *fmmdlsys;
   
@@ -111,7 +111,7 @@ static MMDL * FieldObjPtrGetByObjId( SCRCMD_WORK *work, u16 obj_id )
   //透明ダミーOBJ判別IDが渡された時
   }else if( obj_id == SCR_OBJID_DUMMY ){
     SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-    dummy = SCRIPT_GetMemberWork( sc, ID_EVSCR_DUMMY_OBJ );
+    //dummy = SCRIPT_GetMemberWork( sc, ID_EVSCR_DUMMY_OBJ );
   //対象のフィールドOBJのポインタ取得
   }else{
     fmmdl = MMDLSYS_SearchOBJID( fmmdlsys, obj_id );
@@ -152,7 +152,7 @@ VMCMD_RESULT EvCmdObjAnime( VMHANDLE *core, void *wk )
   anm_tcb = MMDL_SetAcmdList( fmmdl, (MMDL_ACMD_LIST*)p );
   
   //アニメーションの数を足す
-  num = SCRIPT_GetMemberWork( sc, ID_EVSCR_ANMCOUNT );
+  num = SCRIPT_GetAnimeCount( sc );
   (*num)++;
   
   //TCBセット
@@ -437,7 +437,7 @@ static BOOL EvWaitTalkObj( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-  MMDL **fmmdl = SCRIPT_GetMemberWork( sc, ID_EVSCR_TARGET_OBJ );
+  MMDL *fmmdl = SCRIPT_GetTargetObj( sc );
   MMDL *player = scmd_GetMMdlPlayer( work );
   MMDLSYS *fmmdlsys = SCRCMD_WORK_GetMMdlSys( work );
 
@@ -450,8 +450,8 @@ static BOOL EvWaitTalkObj( VMHANDLE *core, void *wk )
   
   //話しかけ対象動作停止チェック
   if( CheckStepWatchBit(OTHER_BIT) &&
-    MMDL_CheckMoveBitMove(*fmmdl) == FALSE ){
-    MMDL_OnMoveBitMoveProcPause( *fmmdl );
+    MMDL_CheckMoveBitMove(fmmdl) == FALSE ){
+    MMDL_OnMoveBitMoveProcPause( fmmdl );
     ResetStepWatchBit(OTHER_BIT);
   }
   
@@ -497,7 +497,7 @@ VMCMD_RESULT EvCmdTalkObjPauseAll( VMHANDLE *core, void *wk )
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
   MMDLSYS *fmmdlsys = SCRCMD_WORK_GetMMdlSys( work );
-  MMDL **fmmdl = SCRIPT_GetMemberWork( sc, ID_EVSCR_TARGET_OBJ );
+  MMDL *fmmdl = SCRIPT_GetTargetObj( sc );
   MMDL *player = scmd_GetMMdlPlayer( work );
   MMDL *player_pair = MMDLSYS_SearchMoveCode( fmmdlsys, MV_PAIR );
   
@@ -515,10 +515,10 @@ VMCMD_RESULT EvCmdTalkObjPauseAll( VMHANDLE *core, void *wk )
     MMDL_OffMoveBitMoveProcPause( player );
   }
   
-  if( *fmmdl != NULL ){
-    if( MMDL_CheckMoveBitMove(*fmmdl) == TRUE ){
+  if( fmmdl != NULL ){
+    if( MMDL_CheckMoveBitMove(fmmdl) == TRUE ){
       SetStepWatchBit(OTHER_BIT);
-      MMDL_OffMoveBitMoveProcPause( *fmmdl );
+      MMDL_OffMoveBitMoveProcPause( fmmdl );
     }
   }
 
@@ -557,12 +557,12 @@ static VMCMD_RESULT EvCmdObjPauseAll( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc;
-  MMDL **fmmdl;
+  MMDL *fmmdl;
   
   sc = SCRCMD_WORK_GetScriptWork( work );
-  fmmdl = SCRIPT_GetMemberWork( sc, ID_EVSCR_TARGET_OBJ );
+  fmmdl = SCRIPT_GetTargetObj( sc );
   
-  if( (*fmmdl) == NULL ){
+  if( (fmmdl) == NULL ){
     MMDLSYS *fmmdlsys;
     fmmdlsys = SCRCMD_WORK_GetMMdlSys( work );
     MMDLSYS_PauseMoveProc( fmmdlsys );
@@ -607,12 +607,12 @@ static VMCMD_RESULT EvCmdObjPauseAll( VMHANDLE *core, void *wk )
 VMCMD_RESULT SCRCMD_SUB_ObjPauseAll( VMHANDLE *core, SCRCMD_WORK *work )
 {
   SCRIPT_WORK *sc;
-  MMDL **fmmdl;
+  MMDL *fmmdl;
   
   sc = SCRCMD_WORK_GetScriptWork( work );
-  fmmdl = SCRIPT_GetMemberWork( sc, ID_EVSCR_TARGET_OBJ );
+  fmmdl = SCRIPT_GetTargetObj( sc );
   
-  if( (*fmmdl) == NULL ){
+  if( (fmmdl) == NULL ){
     MMDLSYS *fmmdlsys;
     fmmdlsys = SCRCMD_WORK_GetMMdlSys( work );
     MMDLSYS_PauseMoveProc( fmmdlsys );
@@ -686,7 +686,7 @@ VMCMD_RESULT EvCmdObjTurn( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-  MMDL *jiki,**fmmdl;
+  MMDL *jiki,*fmmdl;
   u16 dir;
   
   jiki = scmd_GetMMdlPlayer( work );
@@ -694,14 +694,14 @@ VMCMD_RESULT EvCmdObjTurn( VMHANDLE *core, void *wk )
   dir = MMDL_GetDirDisp( jiki );
   
   dir = MMDL_TOOL_FlipDir( dir );
-  fmmdl = SCRIPT_GetMemberWork( sc, ID_EVSCR_TARGET_OBJ );
+  fmmdl = SCRIPT_GetTargetObj( sc );
   
-  if( (*fmmdl) == NULL ){
+  if( (fmmdl) == NULL ){
     return VMCMD_RESULT_CONTINUE;
   }
   
-  MMDL_SetDirDisp( *fmmdl, dir );
-  MMDL_SetDrawStatus( *fmmdl, DRAW_STA_STOP );
+  MMDL_SetDirDisp( fmmdl, dir );
+  MMDL_SetDrawStatus( fmmdl, DRAW_STA_STOP );
   return VMCMD_RESULT_CONTINUE;
 }
 //--------------------------------------------------------------

@@ -298,7 +298,7 @@ VMCMD_RESULT EvCmdCtrlBgmFlagSet( VMHANDLE *core, void *wk )
 static void SoundSeFlag_CheckSeStop( SCRIPT_WORK * sc )
 {
   int i;
-  u8* p_sound_se_flag = SCRIPT_GetMemberWork( sc, ID_EVSCR_SOUND_SE_FLAG );
+  u8* p_sound_se_flag = SCRIPT_GetSoundSeFlag( sc );
 
   // SE停止チェック
   for( i=0; i<SEPLAYER_MAX; i++ )
@@ -325,7 +325,7 @@ static void SoundSeFlag_CheckSeStop( SCRIPT_WORK * sc )
 //-----------------------------------------------------------------------------
 static void SoundSeFlag_SetPlay( SCRIPT_WORK * sc, u32 se_no )
 {
-  u8* p_sound_se_flag = SCRIPT_GetMemberWork( sc, ID_EVSCR_SOUND_SE_FLAG );
+  u8* p_sound_se_flag = SCRIPT_GetSoundSeFlag( sc );
   SEPLAYER_ID player_id = PMSND_GetSE_DefaultPlayerID( se_no );
 
   (*p_sound_se_flag) |= (1<<player_id);
@@ -344,7 +344,7 @@ static void SoundSeFlag_SetPlay( SCRIPT_WORK * sc, u32 se_no )
 static BOOL SoundSeFlag_IsSePlay( SCRIPT_WORK * sc )
 {
   int i;
-  u8* p_sound_se_flag = SCRIPT_GetMemberWork( sc, ID_EVSCR_SOUND_SE_FLAG );
+  u8* p_sound_se_flag = SCRIPT_GetSoundSeFlag( sc );
 
   // SE停止チェック
   for( i=0; i<SEPLAYER_MAX; i++ )
@@ -376,7 +376,7 @@ static BOOL SoundSeFlag_IsSePlay( SCRIPT_WORK * sc )
 static void SoundSeFlag_StopSe( SCRIPT_WORK * sc )
 {
   int i;
-  u8* p_sound_se_flag = SCRIPT_GetMemberWork( sc, ID_EVSCR_SOUND_SE_FLAG );
+  u8* p_sound_se_flag = SCRIPT_GetSoundSeFlag( sc );
 
   // SE停止チェック
   for( i=0; i<SEPLAYER_MAX; i++ )

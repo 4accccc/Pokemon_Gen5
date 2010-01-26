@@ -50,16 +50,14 @@
 //============================================================================================
 //  define
 //============================================================================================
-#define TRAINER_EYE_HITMAX (2) ///<トレーナー視線データ最大数
-
 enum
 {
-	WORDSET_SCRIPT_SETNUM = 32,		//デフォルトバッファ数
-	WORDSET_SCRIPT_BUFLEN = 64,		//デフォルトバッファ長（文字数）
+	WORDSET_SCRIPT_SETNUM = 32,		///<デフォルトバッファ数
+	WORDSET_SCRIPT_BUFLEN = 64,		///<デフォルトバッファ長（文字数）
+  SCR_MSG_BUF_SIZE	= (512),				///<メッセージバッファサイズ
+  //SCR_MSG_BUF_SIZE =	(1024)				//メッセージバッファサイズ
 };
 
-//#define SCR_MSG_BUF_SIZE	(1024)				//メッセージバッファサイズ
-#define SCR_MSG_BUF_SIZE	(512)				//メッセージバッファサイズ
 
 #define SCRIPT_MAGIC_NO		(0x3643f)
 
@@ -95,7 +93,11 @@ typedef struct {
 }SCRIPTSYS;
 
 //--------------------------------------------------------------
-//
+/**
+ * @brief スクリプトグローバルワーク定義
+ *
+ * 各仮想マシンをまたいで存在するスクリプト用ワーク
+ */
 //--------------------------------------------------------------
 struct _TAG_SCRIPT_WORK
 {
@@ -126,58 +128,28 @@ struct _TAG_SCRIPT_WORK
   //script.c内で使用しない、外部公開用メンバ
   //  public R/W
   //☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆
-  void *msgWin;           //メニュー系流用メッセージウィンドウ
-
 	WORDSET* wordset;				//単語セット
 	STRBUF* msg_buf;				//メッセージバッファポインタ
 	STRBUF* tmp_buf;				//テンポラリバッファポインタ
 
 
-	u8 MsgIndex;			//メッセージインデックス
-	u8 anm_count;			//アニメーションしている数
-	
-	u8 win_open_flag;		//会話ウィンドウ表示フラグ(0=非表示、1=表示)
+  void *msgWin;           //メニュー系流用メッセージウィンドウ
 
-  u8 sound_se_flag;   ///< サウンドSE再生チェックフラグ
-
-	BOOL win_flag;			///<戦闘結果保持用ワーク
-	
   void *mw;				//ビットマップメニューワーク
 
 	void * subproc_work; //サブプロセスとのやりとりに使用するワークへの*
-	void * pWork;					//ワークへの汎用ポインタ
 
-	MMDL *dummy_obj;
+	u8 anm_count;			//アニメーションしている数
+	
+  u8 sound_se_flag;   ///< サウンドSE再生チェックフラグ
 
 	//トレーナー視線情報
 	EV_TRAINER_EYE_HITDATA eye_hitdata[TRAINER_EYE_HITMAX];
 	
 	u16 scrTempWork[TEMP_WORK_SIZE];		//ワーク(ANSWORK,TMPWORKなどの代わり)
 
-
   MUSICAL_EVENT_WORK *musicalEventWork;
 
-  
-  /*
-   * 未使用・もしくはいらないワーク（前作から持ってきた
-#ifndef SCRIPT_PL_NULL
-	u8 common_scr_flag;		//ローカル、共通 切り替えフラグ(0=local、1=共通)
-	int player_dir;					//イベント起動時の主人公の向き
-	//イベントウィンドウ
-	EV_WIN_WORK* ev_win;			//イベントウィンドウワークへのポインタ
-	//会話ウィンドウ
-	GF_BGL_BMPWIN MsgWinDat;		//ビットマップウィンドウデータ
-	
-	TCB_PTR player_tcb;				//自機形態レポートTCB
-	
-	GF_BGL_BMPWIN CoinWinDat;		//ビットマップウィンドウデータ
-	GF_BGL_BMPWIN GoldWinDat;		//ビットマップウィンドウデータ
-	
-	REPORT_INFO * riw;				///<レポート情報用ウィンドウ制御ワーク
-	EOA_PTR eoa;		//主にフィールドエフェクトのポインタとして使う
-	void * waiticon;				///<待機アイコンのポインタ
-#endif
-   */
 };
 
 //--------------------------------------------------------------
@@ -723,7 +695,45 @@ WORDSET * SCRIPT_GetWordSet( SCRIPT_WORK * sc )
 {
   return sc->wordset;
 }
+//--------------------------------------------------------------
+/**
+ * @brief MSGバッファの取得
+ * @param	sc		    SCRIPT_WORKのポインタ
+ */
+//--------------------------------------------------------------
+STRBUF * SCRIPT_GetMsgBuffer( SCRIPT_WORK * sc )
+{
+  return sc->msg_buf;
+}
 
+//--------------------------------------------------------------
+/**
+ * @brief MSG展開用テンポラリバッファの取得
+ * @param	sc		    SCRIPT_WORKのポインタ
+ */
+//--------------------------------------------------------------
+STRBUF * SCRIPT_GetMsgTempBuffer( SCRIPT_WORK * sc )
+{
+  return sc->tmp_buf;
+}
+//--------------------------------------------------------------
+/**
+ * @brief SE制御用フラグの取得
+ */
+//--------------------------------------------------------------
+u8 * SCRIPT_GetSoundSeFlag( SCRIPT_WORK * sc )
+{
+  return &sc->sound_se_flag;
+}
+//--------------------------------------------------------------
+/**
+ * @brief スクリプト変数：アニメカウントの取得
+ */
+//--------------------------------------------------------------
+u8 * SCRIPT_GetAnimeCount( SCRIPT_WORK * sc )
+{
+  return &sc->anm_count;
+}
 //--------------------------------------------------------------
 /**
  * @brief   開始時のスクリプトID取得
@@ -735,94 +745,31 @@ u16 SCRIPT_GetStartScriptID( const SCRIPT_WORK * sc )
 {
   return sc->start_scr_id;
 }
-
 //--------------------------------------------------------------
-/**
- * スクリプト制御ワークのメンバーアドレス取得
- * @param	sc		SCRIPT型のポインタ
- * @param	id		取得するメンバID(script.h参照)
- * @return	"アドレス"
- */
 //--------------------------------------------------------------
-static void * SCRIPT_GetSubMemberWork( SCRIPT_WORK *sc, u32 id )
+void * SCRIPT_GetFLDMENUFUNC( SCRIPT_WORK * sc )
 {
-	switch( id ){
-	//会話ウィンドウメッセージインデックスのポインタ
-	case ID_EVSCR_MSGINDEX:
-		return &sc->MsgIndex;
-	//アニメーションの数のポインタ
-	case ID_EVSCR_ANMCOUNT:
-		return &sc->anm_count;
-	//会話ウィンドウを開いたかフラグのポインタ
-	case ID_EVSCR_WIN_OPEN_FLAG:
-		return &sc->win_open_flag;
-	//話しかけ対象のOBJのポインタ
-	case ID_EVSCR_TARGET_OBJ:
-		return &sc->target_obj;
-	//透明ダミーOBJのポインタ
-	case ID_EVSCR_DUMMY_OBJ:
-		return &sc->dummy_obj;
-	//結果を代入するワークのポインタ
-	case ID_EVSCR_RETURN_SCRIPT_WK:
-		return &sc->ret_script_wk;
-	//仮想マシン(メイン)のポインタ
-	//ワークへの汎用ポインタ
-	case ID_EVSCR_PWORK:
-		return &sc->pWork;
-	//戦闘結果フラグ
-	case ID_EVSCR_WIN_FLAG:
-		return &sc->win_flag;
-
-
-  //TEMP_HEAPID wb
-  case ID_EVSCR_WK_TEMP_HEAPID:
-    return &sc->temp_heapID;
-	//ビットマップメニューワークのポインタ
-	case ID_EVSCR_MENUWORK:
-		return &sc->mw;
-	//メッセージバッファのポインタ
-	case ID_EVSCR_MSGBUF:
-		return &sc->msg_buf;
-	//テンポラリバッファのポインタ
-	case ID_EVSCR_TMPBUF:
-		return &sc->tmp_buf;
-
-
-  case ID_EVSCR_TRAINER0:
-		return &sc->eye_hitdata[0];
-  case ID_EVSCR_TRAINER1:
-		return &sc->eye_hitdata[1];
-  
-  case ID_EVSCR_MUSICAL_EVENT_WORK:
-  	GF_ASSERT_MSG( sc->musicalEventWork != NULL , "ミュージカルワークがNULL！" );
-    return sc->musicalEventWork;
-
-  case ID_EVSCR_SOUND_SE_FLAG:
-    return &sc->sound_se_flag;
-      
-
-	};
-	
-	//エラー
-	GF_ASSERT( (0) && "メンバーIDが不正です！" );
-	return NULL;
+  return sc->mw;
+}
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+void SCRIPT_SetFLDMENUFUNC( SCRIPT_WORK * sc, void * mw )
+{
+  sc->mw = mw;
+}
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+MMDL * SCRIPT_GetTargetObj( SCRIPT_WORK * sc )
+{
+  return sc->target_obj;
+}
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+void * SCRIPT_GetTrainerEyeData( SCRIPT_WORK * sc, u32 tr_no )
+{
+  return &sc->eye_hitdata[tr_no];
 }
 
-//--------------------------------------------------------------
-/**
- * スクリプト制御ワークのメンバーアドレス取得
- * @param	fsys	FLDCOMMON_WORK型のポインタ
- * @param	id		取得するメンバID(script.h参照)
- * @return	"アドレス"
- */
-//--------------------------------------------------------------
-void * SCRIPT_GetMemberWork( SCRIPT_WORK *sc, u32 id )
-{
-	if( sc->magic_no != SCRIPT_MAGIC_NO ){
-		GF_ASSERT_MSG(0, "起動(確保)していないスクリプトのワークにアクセスしています！" );
-	}
-	return SCRIPT_GetSubMemberWork( sc, id );
-}
 
 
 //============================================================================================
@@ -1023,6 +970,13 @@ void SCRIPT_SetMemberWork_Musical( SCRIPT_WORK *sc, void *musEveWork )
 		GF_ASSERT_MSG(0, "起動(確保)していないスクリプトのワークにアクセスしています！" );
 	}
 	sc->musicalEventWork = musEveWork;
+}
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+void * SCRIPT_GetMemberWork_Musical( SCRIPT_WORK * sc )
+{
+  GF_ASSERT_MSG( sc->musicalEventWork != NULL , "ミュージカルワークがNULL！" );
+  return sc->musicalEventWork;
 }
 
 

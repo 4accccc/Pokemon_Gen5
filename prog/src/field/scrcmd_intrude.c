@@ -103,8 +103,8 @@ VMCMD_RESULT EvCmdIntrudeMissionStart( VMHANDLE *core, void *wk )
   SCRCMD_WORK*  work = (SCRCMD_WORK*)wk;
   SCRIPT_WORK*   scw = SCRCMD_WORK_GetScriptWork( work );
   GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
-  MMDL **mmdl = SCRIPT_GetMemberWork( scw, ID_EVSCR_TARGET_OBJ );  //話しかけ時のみ有効
-  u16 obj_code = MMDL_GetOBJCode( *mmdl );
+  MMDL *mmdl = SCRIPT_GetTargetObj( scw );  //話しかけ時のみ有効
+  u16 obj_code = MMDL_GetOBJCode( mmdl );
   ZONEID zone_id = SCRCMD_WORK_GetZoneID( work );
   u16 monolith_type;
   

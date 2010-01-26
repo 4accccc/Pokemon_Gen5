@@ -278,7 +278,7 @@ VMCMD_RESULT EvCmdGetMusicalWaitRoomValue( VMHANDLE *core, void *wk )
   u16  val   = SCRCMD_GetVMWorkValue( core, work );
   u16* ret_wk = SCRCMD_GetVMWork( core, work );
 
-  MUSICAL_EVENT_WORK *evWork = SCRIPT_GetMemberWork( sc , ID_EVSCR_MUSICAL_EVENT_WORK );
+  MUSICAL_EVENT_WORK *evWork = SCRIPT_GetMemberWork_Musical( sc );
 
   switch( type )
   {
@@ -398,7 +398,7 @@ VMCMD_RESULT EvCmdMusicalWord( VMHANDLE *core, void *wk )
     break;
   case MUSICAL_WORD_TITLE_LOCAL:  //Å¶åªç›ââñ⁄
     {
-      MUSICAL_EVENT_WORK *evWork = SCRIPT_GetMemberWork( sc , ID_EVSCR_MUSICAL_EVENT_WORK );
+      MUSICAL_EVENT_WORK *evWork = SCRIPT_GetMemberWork_Musical( sc );
       STRBUF * tmpBuf = MUSICAL_EVENT_CreateStr_ProgramTitle( evWork , heapId );
       WORDSET_RegisterWord( wordset, idx, tmpBuf, 0, TRUE, PM_LANG );
       GFL_STR_DeleteBuffer( tmpBuf );
