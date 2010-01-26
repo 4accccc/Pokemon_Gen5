@@ -1416,7 +1416,7 @@ static BtlCantEscapeCode isForbidEscape( BTL_CLIENT* wk, const BTL_POKEPARAM* pr
       }
     }
 
-    if( checkTokusei == BTL_CANTESC_ARIJIGOKU )
+    if( checkTokusei == POKETOKUSEI_ARIJIGOKU )
     {
       BTL_N_Printf( DBGSTR_CLIENT_ForbidEscape_Arijigoku_Chk, checkPokeID );
       if( checkForbitEscapeEffective_Arijigoku(wk, procPoke) ){
@@ -1427,7 +1427,7 @@ static BtlCantEscapeCode isForbidEscape( BTL_CLIENT* wk, const BTL_POKEPARAM* pr
       }
     }
 
-    if( checkTokusei == BTL_CANTESC_JIRYOKU )
+    if( checkTokusei == POKETOKUSEI_JIRYOKU )
     {
       BTL_N_Printf( DBGSTR_CLIENT_ForbidEscape_Jiryoku_Chk, checkPokeID );
       if( checkForbitEscapeEffective_Arijigoku(wk, procPoke) ){
