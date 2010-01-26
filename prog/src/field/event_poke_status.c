@@ -194,6 +194,7 @@ GMEVENT * EVENT_CreateWazaSelect(
   ps_data->page = PPT_SKILL;
   ps_data->waza = 0;
   ps_data->canExitButton = FALSE;
+  ps_data->game_data = gdata;
 
   // ÉCÉxÉìÉgê∂ê¨
   event = GMEVENT_Create(gsys, NULL, EVENT_FUNC_WazaSelect, sizeof(SELECT_WAZA_WORK));
