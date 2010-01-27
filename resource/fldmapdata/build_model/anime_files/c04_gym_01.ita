@@ -3,7 +3,7 @@
 <ita version="1.6.0">
 
 <head>
-	<create user="ibe_mana" host="W00191" date="2010-01-12T19:20:35" source="c04_gym_01c.mb"/>
+	<create user="ibe_mana" host="W00191" date="2010-01-27T18:34:29" source="c04_gym_01c.mb"/>
 	<title>Texture SRT Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
@@ -16,7 +16,7 @@
 	tool_end_frame="120"
 	interpolation="frame"
 	tex_matrix_mode="maya"
-	compress_material="on" material_size="5 5"
+	compress_material="on" material_size="6 6"
 	frame_step_mode="1"
 	tolerance_tex_scale="0.100000"
 	tolerance_tex_rotate="0.100000"
@@ -60,14 +60,14 @@
 </tex_translate_data>
 
 <tex_srt_anm_array size="2">
-	<tex_srt_anm index="0" material_name="c04gym_03_1">
+	<tex_srt_anm index="0" material_name="c04gym_03">
 		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
 		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
 		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
 		<tex_translate_s frame_step="1" data_size="1" data_head="0"/>
 		<tex_translate_t frame_step="1" data_size="120" data_head="1"/>
 	</tex_srt_anm>
-	<tex_srt_anm index="1" material_name="c04gym_02_1">
+	<tex_srt_anm index="1" material_name="c04gym_02">
 		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
 		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
 		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
