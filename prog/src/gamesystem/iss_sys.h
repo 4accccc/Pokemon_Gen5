@@ -10,6 +10,7 @@
 #include <gflib.h>
 #include "gamesystem/gamedata_def.h"  // for GAMEDATA
 #include "iss_switch_sys.h"           // for ISS_SWITCH_SYS
+#include "iss_3ds_sys.h"              // for ISS_3DS_SYS
 
 
 //===================================================================================
@@ -68,3 +69,14 @@ extern void ISS_SYS_ZoneChange( ISS_SYS* sys, u16 next_zone_id );
  */
 //------------------------------------------------------------------------------------
 extern ISS_SWITCH_SYS* ISS_SYS_GetIssSwitchSystem( const ISS_SYS* sys );
+
+//------------------------------------------------------------------------------------
+/**
+ * @brief 3D ISSシステムを取得する
+ *
+ * @param sys 取得対象システム
+ *
+ * @return 3D ISSシステム
+ */
+//------------------------------------------------------------------------------------
+extern ISS_3DS_SYS* ISS_SYS_GetIss3DSSystem( const ISS_SYS* sys );

@@ -37,13 +37,11 @@ CONVERTDATA = $(BIN)/wind_data.bin \
 							$(BIN)/trailer1_head_3dsu_data.bin \
 							$(BIN)/trailer1_head_wait_data.bin \
 							$(BIN)/trailer1_head_ica_data.bin \
-							$(BIN)/trailer1_tail_3dsu_data.bin \
 							$(BIN)/trailer1_tail_wait_data.bin \
 							$(BIN)/trailer1_tail_ica_data.bin \
 							$(BIN)/trailer2_head_3dsu_data.bin \
 							$(BIN)/trailer2_head_wait_data.bin \
 							$(BIN)/trailer2_head_ica_data.bin \
-							$(BIN)/trailer2_tail_3dsu_data.bin \
 							$(BIN)/trailer2_tail_wait_data.bin \
 							$(BIN)/trailer2_tail_ica_data.bin \
 							$(BIN)/ship_ica_data.bin \

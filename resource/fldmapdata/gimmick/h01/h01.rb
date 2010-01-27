@@ -44,11 +44,10 @@ file.close
 # 船(3DS)データ
 in_data = file_data[ROW_SHIP].split(/\s/)
 out_data = Array.new
-out_data << in_data[COLUMN_TRACK_NO].to_i
-out_data << in_data[COLUMN_3DS_RANGE].to_f
+out_data << in_data[COLUMN_3DS_RANGE].to_i
 out_data << in_data[COLUMN_3DS_VOLUME].to_i
 file = File.open( ARGV[1]+"/ship_3dsu_data.bin", "wb" )
-file.write( out_data.pack("ifi") )
+file.write( out_data.pack("II") )
 file.close 
 # 船(待ち)データ
 in_data = file_data[ROW_SHIP].split(/\s/)
@@ -61,11 +60,10 @@ file.close
 # 左前トレーラ(3DS)データ
 in_data = file_data[ROW_TRAILER_L_HEAD].split(/\s/)
 out_data = Array.new
-out_data << in_data[COLUMN_TRACK_NO].to_i
-out_data << in_data[COLUMN_3DS_RANGE].to_f
+out_data << in_data[COLUMN_3DS_RANGE].to_i
 out_data << in_data[COLUMN_3DS_VOLUME].to_i
 file = File.open( ARGV[1]+"/trailer1_head_3dsu_data.bin", "wb" )
-file.write( out_data.pack("ifi") )
+file.write( out_data.pack("II") )
 file.close
 # 左前トレーラ(待ち)データ
 in_data = file_data[ROW_TRAILER_L_HEAD].split(/\s/)
@@ -78,11 +76,10 @@ file.close
 # 右前トレーラ(3DS)データ
 in_data = file_data[ROW_TRAILER_R_HEAD].split(/\s/)
 out_data = Array.new
-out_data << in_data[COLUMN_TRACK_NO].to_i
-out_data << in_data[COLUMN_3DS_RANGE].to_f
+out_data << in_data[COLUMN_3DS_RANGE].to_i
 out_data << in_data[COLUMN_3DS_VOLUME].to_i
 file = File.open( ARGV[1]+"/trailer2_head_3dsu_data.bin", "wb" )
-file.write( out_data.pack("ifi") )
+file.write( out_data.pack("II") )
 file.close
 # 右前トレーラ(待ち)データ
 in_data = file_data[ROW_TRAILER_R_HEAD].split(/\s/)
@@ -92,15 +89,6 @@ out_data << in_data[COLUMN_MAX_WAIT].to_i
 file = File.open( ARGV[1]+"/trailer2_head_wait_data.bin", "wb" )
 file.write( out_data.pack("II") )
 file.close 
-# 左後トレーラ(3DS)データ
-in_data = file_data[ROW_TRAILER_L_TAIL].split(/\s/)
-out_data = Array.new
-out_data << in_data[COLUMN_TRACK_NO].to_i
-out_data << in_data[COLUMN_3DS_RANGE].to_f
-out_data << in_data[COLUMN_3DS_VOLUME].to_i
-file = File.open( ARGV[1]+"/trailer1_tail_3dsu_data.bin", "wb" )
-file.write( out_data.pack("ifi") )
-file.close
 # 左後トレーラ(待ち)データ
 in_data = file_data[ROW_TRAILER_L_TAIL].split(/\s/)
 out_data = Array.new
@@ -109,15 +97,6 @@ out_data << in_data[COLUMN_MAX_WAIT].to_i
 file = File.open( ARGV[1]+"/trailer1_tail_wait_data.bin", "wb" )
 file.write( out_data.pack("II") )
 file.close 
-# 右後トレーラ(3DS)データ
-in_data = file_data[ROW_TRAILER_R_TAIL].split(/\s/)
-out_data = Array.new
-out_data << in_data[COLUMN_TRACK_NO].to_i
-out_data << in_data[COLUMN_3DS_RANGE].to_f
-out_data << in_data[COLUMN_3DS_VOLUME].to_i
-file = File.open( ARGV[1]+"/trailer2_tail_3dsu_data.bin", "wb" )
-file.write( out_data.pack("ifi") )
-file.close
 # 右後トレーラ(待ち)データ
 in_data = file_data[ROW_TRAILER_R_TAIL].split(/\s/)
 out_data = Array.new

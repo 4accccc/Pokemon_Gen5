@@ -140,13 +140,6 @@ void H03_GIMMICK_End( FIELDMAP_WORK* fieldmap )
   u32*         gmk_save = (u32*)GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_H03 );
   H03WORK*         work = (H03WORK*)gmk_save[0]; // gmk_save[0]はギミック管理ワークのアドレス
 
-  // 電車のトラックを止める
-  for( i=0; i<SOBJ_NUM; i++ )
-  {
-    u16 track = SOUNDOBJ_GetTrackBit( work->sobj[i] );
-    PMSND_ChangeBGMVolume( track, 0 );
-  }
-
   // セーブ
   SaveGimmick( work, fieldmap );
 
@@ -155,9 +148,6 @@ void H03_GIMMICK_End( FIELDMAP_WORK* fieldmap )
   {
     SOUNDOBJ_Delete( work->sobj[i] );
   }
-
-  // 3Dサウンドシステムを破棄
-  ISS_3DS_SYS_Delete( work->iss3dsSys );
 
   // ギミック管理ワークを破棄
   GFL_HEAP_FreeMemory( work );
@@ -178,6 +168,19 @@ void H03_GIMMICK_Move( FIELDMAP_WORK* fieldmap )
   GIMMICKWORK*  gmkwork = GAMEDATA_GetGimmickWork(gdata);
   u32*         gmk_save = (u32*)GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_H03 );
   H03WORK*         work = (H03WORK*)gmk_save[0]; // gmk_save[0]はギミック管理ワークのアドレス
+
+  // 観測者の位置を設定
+  {
+    FIELD_CAMERA* fieldCamera;
+    const GFL_G3D_CAMERA* g3dCamera;
+    VecFx32 cameraPos, targetPos;
+
+    fieldCamera = FIELDMAP_GetFieldCamera( fieldmap );
+    g3dCamera   = FIELD_CAMERA_GetCameraPtr( fieldCamera );
+    GFL_G3D_CAMERA_GetPos( g3dCamera, &cameraPos );
+    GFL_G3D_CAMERA_GetTarget( g3dCamera, &targetPos );
+    ISS_3DS_SYS_SetObserverPos( work->iss3dsSys, &cameraPos, &targetPos );
+  }
 
   // すべての音源オブジェクトを動かす
   for( i=0; i<SOBJ_NUM; i++ )
@@ -201,9 +204,6 @@ void H03_GIMMICK_Move( FIELDMAP_WORK* fieldmap )
       }
     }
   }
-
-  // 3Dサウンドシステム動作
-  ISS_3DS_SYS_Main( work->iss3dsSys );
 }
 
 
@@ -222,38 +222,63 @@ void H03_GIMMICK_Move( FIELDMAP_WORK* fieldmap )
 static void InitWork( H03WORK* work, FIELDMAP_WORK* fieldmap )
 {
   int i;
-  HEAPID                heap_id = FIELDMAP_GetHeapID( fieldmap );
-  FLD_EXP_OBJ_CNT_PTR exobj_cnt = FIELDMAP_GetExpObjCntPtr( fieldmap );
+  HEAPID                heapID = FIELDMAP_GetHeapID( fieldmap );
+  FLD_EXP_OBJ_CNT_PTR exObjCnt = FIELDMAP_GetExpObjCntPtr( fieldmap );
 
   // ヒープIDを記憶
-  work->heapID = heap_id;
+  work->heapID = heapID;
 
-  // 3Dサウンドシステムを作成
+  // 3Dサウンドシステムを取得
   {
-    FIELD_CAMERA*   field_camera = FIELDMAP_GetFieldCamera( fieldmap );
-    const GFL_G3D_CAMERA* camera = FIELD_CAMERA_GetCameraPtr( field_camera );
-    work->iss3dsSys = ISS_3DS_SYS_Create( heap_id, ISS_3DS_UNIT_NUM, camera );
+    GAMESYS_WORK* gameSystem = FIELDMAP_GetGameSysWork( fieldmap );
+    ISS_SYS*      issSystem  = GAMESYSTEM_GetIssSystem( gameSystem );
+    work->iss3dsSys = ISS_SYS_GetIss3DSSystem( issSystem );
   }
 
   // 音源オブジェクトを作成
-  { // 電車1
-    GFL_G3D_OBJSTATUS* status = FLD_EXP_OBJ_GetUnitObjStatus( exobj_cnt, 0, OBJ_TRAIN_1 );
-    SOUNDOBJ* sobj = SOUNDOBJ_Create( fieldmap, work->iss3dsSys, status );
-    SOUNDOBJ_SetAnime( sobj, ARCID, NARC_h03_train1_ica_data_bin, ANIME_BUF_INTVL );
-    SOUNDOBJ_Set3DSUnitStatus( sobj, ARCID, NARC_h03_train1_3ds_unit_data_bin );
-    work->sobj[SOBJ_TRAIN_1] = sobj;
-  }
   {
+    // 電車1
+    { 
+      u32* data;
+      GFL_G3D_OBJSTATUS* status;
+      SOUNDOBJ* sobj;
+
+      // 設定データ取得
+      data = GFL_ARC_LoadDataAlloc( ARCID, NARC_h03_train1_3ds_unit_data_bin, heapID );
+      OBATA_Printf( "train1 data[0] = %d\n", data[0] );
+      OBATA_Printf( "train1 data[1] = %d\n", data[1] );
+
+      // 作成
+      status = FLD_EXP_OBJ_GetUnitObjStatus( exObjCnt, 0, OBJ_TRAIN_1 );
+      sobj = SOUNDOBJ_Create( fieldmap, status, ISS3DS_UNIT_TRACK09, data[0] << FX32_SHIFT, data[1] );
+      SOUNDOBJ_SetAnime( sobj, ARCID, NARC_h03_train1_ica_data_bin, ANIME_BUF_INTVL );
+      work->sobj[ SOBJ_TRAIN_1 ] = sobj;
+
+      GFL_HEAP_FreeMemory( data );
+    }
     // 電車2
-    GFL_G3D_OBJSTATUS* status = FLD_EXP_OBJ_GetUnitObjStatus( exobj_cnt, 0, OBJ_TRAIN_2 );
-    SOUNDOBJ* sobj = SOUNDOBJ_Create( fieldmap, work->iss3dsSys, status );
-    SOUNDOBJ_SetAnime( sobj, ARCID, NARC_h03_train2_ica_data_bin, ANIME_BUF_INTVL );
-    SOUNDOBJ_Set3DSUnitStatus( sobj, ARCID, NARC_h03_train2_3ds_unit_data_bin );
-    work->sobj[SOBJ_TRAIN_2] = sobj;
-  } 
+    {
+      u32* data;
+      GFL_G3D_OBJSTATUS* status;
+      SOUNDOBJ* sobj;
+
+      // 設定データ取得
+      data = GFL_ARC_LoadDataAlloc( ARCID, NARC_h03_train2_3ds_unit_data_bin, heapID );
+      OBATA_Printf( "train2 data[0] = %d\n", data[0] );
+      OBATA_Printf( "train2 data[1] = %d\n", data[1] );
+
+      // 作成
+      status = FLD_EXP_OBJ_GetUnitObjStatus( exObjCnt, 0, OBJ_TRAIN_2 );
+      sobj = SOUNDOBJ_Create( fieldmap, status, ISS3DS_UNIT_TRACK10, data[0] << FX32_SHIFT, data[1] );
+      SOUNDOBJ_SetAnime( sobj, ARCID, NARC_h03_train2_ica_data_bin, ANIME_BUF_INTVL );
+      work->sobj[ SOBJ_TRAIN_2 ] = sobj;
+
+      GFL_HEAP_FreeMemory( data );
+    } 
+  }
 
   // 動作待機カウンタ
-  for( i=0; i<SOBJ_NUM; i++ ) work->wait[i] = 0;
+  for( i=0; i<SOBJ_NUM; i++ ){ work->wait[i] = 0; }
 
   // 待機時間
   LoadWaitTime( work );

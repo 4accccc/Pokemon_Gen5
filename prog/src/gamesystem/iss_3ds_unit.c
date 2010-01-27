@@ -13,16 +13,14 @@
 
 
 //===============================================================================
-/**
- * @brief 1つの音源を扱う構造体
- */
+// ■1つの音源を扱う構造体
 //===============================================================================
 struct _ISS_3DS_UNIT
 { 
-  VecFx32   pos;  // 音源の位置
-  fx32    range;  // 音が届く距離
-  int maxVolume;  // 最大音量(0～127)
-  u16 trackBit;   // 操作トラックマスク
+  VecFx32 pos;             // 音源の位置
+  fx32    effectiveRange;  // 音が届く距離
+  int     maxVolume;       // 最大音量(0～127)
+  u16     trackBit;        // 操作トラックマスク
 };
 
 
@@ -34,15 +32,17 @@ struct _ISS_3DS_UNIT
 /**
  * @brief ユニットを作成する
  *
- * @param heap_id 使用するヒープID
+ * @param heapID 使用するヒープID
  *
  * @return 作成したユニット
  */
 //-------------------------------------------------------------------------------
-ISS_3DS_UNIT* ISS_3DS_UNIT_Create( HEAPID heap_id )
+ISS_3DS_UNIT* ISS_3DS_UNIT_Create( HEAPID heapID )
 {
   ISS_3DS_UNIT* unit;
-  unit = GFL_HEAP_AllocMemory( heap_id, sizeof( ISS_3DS_UNIT ) );
+
+  unit = GFL_HEAP_AllocMemory( heapID, sizeof(ISS_3DS_UNIT) );
+
   return unit;
 }
 
@@ -67,7 +67,7 @@ void ISS_3DS_UNIT_Delete( ISS_3DS_UNIT* unit )
 /**
  * @brief 位置を取得する
  *
- * @param unit 取得対象ユニット
+ * @param unit
  * @param dest 位置ベクトルの格納先
  */
 //-------------------------------------------------------------------------------
@@ -82,23 +82,23 @@ void ISS_3DS_UNIT_GetPos( const ISS_3DS_UNIT* unit, VecFx32* dest )
 /**
  * @brief 音の可聴距離を取得する
  *
- * @param unit 取得対象ユニット
+ * @param unit
  *
  * @return 音が届く距離
  */
 //-------------------------------------------------------------------------------
 fx32 ISS_3DS_UNIT_GetRange( const ISS_3DS_UNIT* unit )
 {
-  return unit->range; 
+  return unit->effectiveRange; 
 }
 
 //-------------------------------------------------------------------------------
 /**
  * @brief 最大音量を取得する
  *
- * @param unit 取得対象ユニット
+ * @param unit
  *
- * @return 最大音量(0～127)
+ * @return 最大音量 ( 0～127 )
  */
 //-------------------------------------------------------------------------------
 int ISS_3DS_UNIT_GetMaxVolume( const ISS_3DS_UNIT* unit )
@@ -110,9 +110,9 @@ int ISS_3DS_UNIT_GetMaxVolume( const ISS_3DS_UNIT* unit )
 /**
  * @brief 操作対象トラックのビットマスクを取得する
  *
- * @param unit 取得対象ユニット
+ * @param unit
  *
- * @return トラックマスク
+ * @return 操作トラックを表すビットマスク
  */
 //-------------------------------------------------------------------------------
 u16 ISS_3DS_UNIT_GetTrackBit( const ISS_3DS_UNIT* unit )
@@ -129,14 +129,13 @@ u16 ISS_3DS_UNIT_GetTrackBit( const ISS_3DS_UNIT* unit )
 /**
  * @brief 設定データを読み込む
  * 
- * @param unit    設定対象のユニット
- * @param arc_id  読み込むデータのアーカイブＩＤ
- * @param dat_id  アーカイブ内データＩＤ
- * @param heap_id 使用するヒープＩＤ
+ * @param unit   設定対象のユニット
+ * @param arcID  読み込むデータのアーカイブＩＤ
+ * @param datID  アーカイブ内データＩＤ
+ * @param heapID 使用するヒープＩＤ
  */
 //-------------------------------------------------------------------------------
-void ISS_3DS_UNIT_Load(  
-    ISS_3DS_UNIT* unit, ARCID arc_id, ARCDATID dat_id, HEAPID heap_id )
+void ISS_3DS_UNIT_Load( ISS_3DS_UNIT* unit, ARCID arcID, ARCDATID datID, HEAPID heapID )
 {
   void* data;
   int ofs = 0;
@@ -144,7 +143,7 @@ void ISS_3DS_UNIT_Load(
   float range;
 
   // アーカイブファイルデータを読み込む
-  data   = GFL_ARC_LoadDataAlloc( arc_id, dat_id, heap_id );
+  data   = GFL_ARC_LoadDataAlloc( arcID, datID, heapID );
   track  = *( (int*)((int)data + ofs) );   ofs += sizeof(int);
   range  = *( (float*)((int)data + ofs) ); ofs += sizeof(float);
   volume = *( (int*)((int)data + ofs) );   ofs += sizeof(int);
@@ -158,10 +157,9 @@ void ISS_3DS_UNIT_Load(
   else
   {
     unit->trackBit  = ( 1 << (track-1) );
-  }
-
-  unit->range     = FX_F32_TO_FX32( range );
-  unit->maxVolume = volume;
+  } 
+  unit->effectiveRange = FX_F32_TO_FX32( range );
+  unit->maxVolume      = volume;
 
   // DEBUG:
   OBATA_Printf( "ISS-3DS-UNIT: load data\n" );
@@ -195,7 +193,7 @@ void ISS_3DS_UNIT_SetPos( ISS_3DS_UNIT* unit, const VecFx32* pos )
 //-------------------------------------------------------------------------------
 void ISS_3DS_UNIT_SetRange( ISS_3DS_UNIT* unit, fx32 range )
 {
-  unit->range = range;
+  unit->effectiveRange = range;
 }
 
 //-------------------------------------------------------------------------------

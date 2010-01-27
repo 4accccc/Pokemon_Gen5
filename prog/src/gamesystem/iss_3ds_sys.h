@@ -9,7 +9,6 @@
  */
 /////////////////////////////////////////////////////////////////////////////////
 #pragma once 
-#include "iss_3ds_unit.h"
 
 
 //===============================================================================
@@ -19,76 +18,65 @@ typedef struct _ISS_3DS_SYS ISS_3DS_SYS;
 
 
 //===============================================================================
-// ■作成・破棄・動作
+// ■定数
 //===============================================================================
+// 3Dサウンドユニット インデックス
+typedef enum
+{
+  ISS3DS_UNIT_TRACK01,  // トラック 1を操作するユニット
+  ISS3DS_UNIT_TRACK02,  // トラック 2を操作するユニット
+  ISS3DS_UNIT_TRACK03,  // トラック 3を操作するユニット
+  ISS3DS_UNIT_TRACK04,  // トラック 4を操作するユニット
+  ISS3DS_UNIT_TRACK05,  // トラック 5を操作するユニット
+  ISS3DS_UNIT_TRACK06,  // トラック 6を操作するユニット
+  ISS3DS_UNIT_TRACK07,  // トラック 7を操作するユニット
+  ISS3DS_UNIT_TRACK08,  // トラック 8を操作するユニット
+  ISS3DS_UNIT_TRACK09,  // トラック 9を操作するユニット
+  ISS3DS_UNIT_TRACK10,  // トラック10を操作するユニット
+  ISS3DS_UNIT_TRACK11,  // トラック11を操作するユニット
+  ISS3DS_UNIT_TRACK12,  // トラック12を操作するユニット
+  ISS3DS_UNIT_TRACK13,  // トラック13を操作するユニット
+  ISS3DS_UNIT_TRACK14,  // トラック14を操作するユニット
+  ISS3DS_UNIT_TRACK15,  // トラック15を操作するユニット
+  ISS3DS_UNIT_TRACK16,  // トラック16を操作するユニット
+  ISS3DS_UNIT_NUM
+} ISS3DS_UNIT_INDEX;
 
-//-------------------------------------------------------------------------------
-/**
- * @brief システムを作成する
- *
- * @param heap_id      使用するヒープID
- * @param max_unit_num ユニット最大数
- * @param camera       使用するカメラ
- *
- * @return 作成したシステム
- */
-//-------------------------------------------------------------------------------
-extern ISS_3DS_SYS* ISS_3DS_SYS_Create( HEAPID heap_id, 
-                                        u8 max_unit_num, 
-                                        const GFL_G3D_CAMERA* camera );
 
-//-------------------------------------------------------------------------------
-/**
- * @brief システムを破棄する
- *
- * @param system 破棄するシステム
- */
-//-------------------------------------------------------------------------------
-extern void ISS_3DS_SYS_Delete( ISS_3DS_SYS* system );
+//===============================================================================
+// ■システム
+//===============================================================================
+// 作成 / 破棄
+extern ISS_3DS_SYS* ISS_3DS_SYS_Create( HEAPID heapID );
+extern void         ISS_3DS_SYS_Delete( ISS_3DS_SYS* system );
 
-//-------------------------------------------------------------------------------
-/**
- * @brief システムの動作処理
- *
- * @param system 動かすシステム
- */
-//-------------------------------------------------------------------------------
+// 動作 
 extern void ISS_3DS_SYS_Main( ISS_3DS_SYS* system );
 
+// 制御
+extern void ISS_3DS_SYS_On        ( ISS_3DS_SYS* system );
+extern void ISS_3DS_SYS_Off       ( ISS_3DS_SYS* system ); 
+extern void ISS_3DS_SYS_ZoneChange( ISS_3DS_SYS* system );
+
 
 //===============================================================================
-// ■ユニットの追加・削除・取り出し
+// ■ユニット
+//=============================================================================== 
+// 登録
+extern void ISS_3DS_SYS_RegisterUnit( ISS_3DS_SYS* system, ISS3DS_UNIT_INDEX unitIdx, 
+                                      fx32 effectiveRange, int maxVolume );
+
+// 登録済みかどうか
+extern BOOL ISS_3DS_SYS_IsUnitRegistered( const ISS_3DS_SYS* system, ISS3DS_UNIT_INDEX unitIdx );
+
+// 移動
+extern void ISS_3DS_SYS_SetUnitPos( ISS_3DS_SYS* system, 
+                                    ISS3DS_UNIT_INDEX unitIdx, const VecFx32* pos );
+
+
 //===============================================================================
-
-//-------------------------------------------------------------------------------
-/**
- * @brief ユニットを追加する
- * 
- * @param system     追加先システム
- *
- * @return 追加したユニットの管理インデックス
- */
-//-------------------------------------------------------------------------------
-extern u8 ISS_3DS_SYS_AddUnit( ISS_3DS_SYS* system );
-
-//-------------------------------------------------------------------------------
-/**
- * @brief ユニットを破棄する
- *
- * @param system ユニットが登録されているシステム
- * @param index  削除対象ユニットの管理インデックス
- */
-//-------------------------------------------------------------------------------
-extern void ISS_3DS_SYS_DeleteUnit( ISS_3DS_SYS* system, u8 index );
-
-//-------------------------------------------------------------------------------
-/**
- * @brief 指定ユニットを取り出す
- *
- * @param system ユニットが登録されているシステム
- * @param index  取り出し対象ユニットの管理インデックス
- *
- * @return 指定された管理番号のユニット
- */
-//-------------------------------------------------------------------------------
-extern ISS_3DS_UNIT* ISS_3DS_SYS_GetUnit( ISS_3DS_SYS* system, u8 index );
+// ■観測者
+//===============================================================================
+// 移動
+extern void ISS_3DS_SYS_SetObserverPos( ISS_3DS_SYS* system, 
+                                        const VecFx32* pos, const VecFx32* targetPos );

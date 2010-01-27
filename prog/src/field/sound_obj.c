@@ -11,23 +11,21 @@
 //=========================================================================================
 // ■非公開関数のプロトタイプ宣言
 //=========================================================================================
-static void AdjustPosition( SOUNDOBJ* sobj );
-static void AdjustDirection( SOUNDOBJ* sobj );
+static void AdjustPosition( SOUNDOBJ* soundObj );
+static void AdjustDirection( SOUNDOBJ* soundObj );
 
 
 //========================================================================================
-/**
- * @brief 音源オブジェクト
- */
+// 音源オブジェクト
 //========================================================================================
 struct _SOUNDOBJ
 {
-  HEAPID             heapID;  // 使用するヒープID
-  FIELDMAP_WORK*   fieldmap;  // フィールドマップ
-  ISS_3DS_SYS*    iss3dsSys;  // 登録先3Dサウンドシステム
-  u8          iss3dsUnitIdx;  // 自身の3Dサウンドユニットの管理インデックス
-  ICA_ANIME*       icaAnime;  // アニメーションデータ
-  GFL_G3D_OBJSTATUS* status;  // 操作対象ステータス
+  HEAPID             heapID;
+  FIELDMAP_WORK*     fieldmap;
+  ISS_3DS_SYS*       iss3dsSystem;
+  ISS3DS_UNIT_INDEX  iss3dsUnitIdx;  // 自身の3Dサウンドユニットの管理インデックス
+  ICA_ANIME*         icaAnime;       // アニメーションデータ
+  GFL_G3D_OBJSTATUS* g3dObjStatus;   // 操作対象ステータス
 };
 
 
@@ -39,50 +37,94 @@ struct _SOUNDOBJ
 /**
  * @brief 音源オブジェクトを作成する
  *
- * @param fieldmap 表示先フィールドマップ
- * @param iss_sys  登録先3Dサウンドシステム
- * @param status   操作対象ステータス
+ * @param fieldmap
+ * @param g3dObjStatus   操作対象3Dオブジェクトのステータス
+ * @param iss3dsUnitIdx  登録する3Dサウンドユニットを指定
+ * @param effectiveRange 音が届く距離
+ * @param maxVolume      最大ボリューム
  */
 //-----------------------------------------------------------------------------------------
-SOUNDOBJ* SOUNDOBJ_Create( 
-    FIELDMAP_WORK* fieldmap, ISS_3DS_SYS* iss_sys, GFL_G3D_OBJSTATUS* status )
+SOUNDOBJ* SOUNDOBJ_Create( FIELDMAP_WORK* fieldmap, GFL_G3D_OBJSTATUS* g3dObjStatus,
+                           ISS3DS_UNIT_INDEX iss3dsUnitIdx, fx32 effectiveRange, int maxVolume )
 {
-  SOUNDOBJ* sobj;
-  HEAPID heap_id = FIELDMAP_GetHeapID( fieldmap );
+  SOUNDOBJ* soundObj;
+  HEAPID heapID;
+  GAMESYS_WORK* gameSystem;
+  ISS_SYS* issSystem;
+  ISS_3DS_SYS* iss3dsSystem;
 
-  // インスタンス生成
-  sobj = (SOUNDOBJ*)GFL_HEAP_AllocMemory( heap_id, sizeof(SOUNDOBJ) );
+  heapID       = FIELDMAP_GetHeapID( fieldmap );
+  gameSystem   = FIELDMAP_GetGameSysWork( fieldmap );
+  issSystem    = GAMESYSTEM_GetIssSystem( gameSystem );
+  iss3dsSystem = ISS_SYS_GetIss3DSSystem( issSystem );
 
-  // インスタンス初期化
-  sobj->heapID        = heap_id;
-  sobj->fieldmap      = fieldmap;
-  sobj->iss3dsSys     = iss_sys;
-  sobj->iss3dsUnitIdx = ISS_3DS_SYS_AddUnit( iss_sys );
-  sobj->icaAnime      = NULL;
-  sobj->status        = status;
-  return sobj;
+  // 生成
+  soundObj = (SOUNDOBJ*)GFL_HEAP_AllocMemory( heapID, sizeof(SOUNDOBJ) );
+
+  // 初期化
+  soundObj->heapID        = heapID;
+  soundObj->fieldmap      = fieldmap;
+  soundObj->iss3dsSystem  = iss3dsSystem;
+  soundObj->iss3dsUnitIdx = iss3dsUnitIdx;
+  soundObj->icaAnime      = NULL;
+  soundObj->g3dObjStatus  = g3dObjStatus;
+
+  // 3Dサウンドユニット登録
+  if( ISS_3DS_SYS_IsUnitRegistered( iss3dsSystem, iss3dsUnitIdx ) == FALSE )
+  {
+    ISS_3DS_SYS_RegisterUnit( iss3dsSystem, iss3dsUnitIdx, effectiveRange, maxVolume );
+  }
+
+  return soundObj;
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief ダミー音源オブジェクトを作成する
+ *
+ * @param fieldmap
+ * @param g3dObjStatus 操作対象3Dオブジェクトのステータス
+ *
+ * ※BGMの操作を行わない音源オブジェクトを生成する。
+ */
+//-----------------------------------------------------------------------------------------
+SOUNDOBJ* SOUNDOBJ_CreateDummy( FIELDMAP_WORK* fieldmap, GFL_G3D_OBJSTATUS* g3dObjStatus )
+{
+  SOUNDOBJ* soundObj;
+  HEAPID heapID;
+
+  heapID = FIELDMAP_GetHeapID( fieldmap );
+
+  // 生成
+  soundObj = (SOUNDOBJ*)GFL_HEAP_AllocMemory( heapID, sizeof(SOUNDOBJ) );
+
+  // 初期化
+  soundObj->heapID       = heapID;
+  soundObj->fieldmap     = fieldmap;
+  soundObj->iss3dsSystem = NULL;
+  soundObj->icaAnime     = NULL;
+  soundObj->g3dObjStatus = g3dObjStatus;
+
+  return soundObj;
 }
 
 //-----------------------------------------------------------------------------------------
 /**
  * @brief 音源オブジェクトを破棄する
  *
- * @param sobj 破棄するオブジェクト
+ * @param soundObj
  */
 //-----------------------------------------------------------------------------------------
-void SOUNDOBJ_Delete( SOUNDOBJ* sobj )
+void SOUNDOBJ_Delete( SOUNDOBJ* soundObj )
 {
-  // 3Dサウンドユニットを破棄
-  ISS_3DS_SYS_DeleteUnit( sobj->iss3dsSys, sobj->iss3dsUnitIdx );
-
-  // アニメーションデータを破棄
-  if( sobj->icaAnime )
+  // アニメーションデータ破棄
+  if( soundObj->icaAnime )
   {
-    ICA_ANIME_Delete( sobj->icaAnime );
+    ICA_ANIME_Delete( soundObj->icaAnime );
   }
 
-  // インスタンスを破棄
-  GFL_HEAP_FreeMemory( sobj );
+  // 本体を破棄
+  GFL_HEAP_FreeMemory( soundObj );
 }
 
 
@@ -94,36 +136,21 @@ void SOUNDOBJ_Delete( SOUNDOBJ* sobj )
 /**
  * @brief アニメーションを登録する
  *
- * @param arc_id       設定するアニメーションデータのアーカイブID
- * @param dat_id       設定するアニメーションデータのアーカイブ内データID
- * @param buf_interval ストリーミング間隔
+ * @param arcID       設定するアニメーションデータのアーカイブID
+ * @param datID       設定するアニメーションデータのアーカイブ内データID
+ * @param bufInterval ストリーミング間隔
  */
 //-----------------------------------------------------------------------------------------
-void SOUNDOBJ_SetAnime( SOUNDOBJ* sobj, ARCID arc_id, ARCDATID dat_id, int buf_interval )
+void SOUNDOBJ_SetAnime( SOUNDOBJ* soundObj, ARCID arcID, ARCDATID datID, int bufInterval )
 {
   // 登録済みデータを破棄
-  if( sobj->icaAnime )
+  if( soundObj->icaAnime )
   {
-    ICA_ANIME_Delete( sobj->icaAnime );
+    ICA_ANIME_Delete( soundObj->icaAnime );
   }
 
   // アニメーション作成
-  sobj->icaAnime = ICA_ANIME_CreateStreamingAlloc( 
-                             sobj->heapID, arc_id, dat_id, buf_interval );
-}
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief 3Dサウンドユニットの設定をファイルからロードする
- *
- * @param arc_id       設定するデータのアーカイブID
- * @param dat_id       設定するデータのアーカイブ内データID
- */
-//-----------------------------------------------------------------------------------------
-void SOUNDOBJ_Set3DSUnitStatus( SOUNDOBJ* sobj, ARCID arc_id, ARCDATID dat_id )
-{
-  ISS_3DS_UNIT* unit = ISS_3DS_SYS_GetUnit( sobj->iss3dsSys, sobj->iss3dsUnitIdx );
-  ISS_3DS_UNIT_Load( unit, arc_id, dat_id, sobj->heapID );
+  soundObj->icaAnime = ICA_ANIME_CreateStreamingAlloc( soundObj->heapID, arcID, datID, bufInterval );
 }
 
 
@@ -135,28 +162,25 @@ void SOUNDOBJ_Set3DSUnitStatus( SOUNDOBJ* sobj, ARCID arc_id, ARCDATID dat_id )
 /**
  * @brief アニメーションを進める
  *
- * @param sobj  更新対象オブジェクト
- * @param frame 進めるフレーム数
+ * @param soundObj
+ * @param frame    進めるフレーム数
  *
  * @return ループしたら TRUE
  */
 //-----------------------------------------------------------------------------------------
-BOOL SOUNDOBJ_IncAnimeFrame( SOUNDOBJ* sobj, fx32 frame )
+BOOL SOUNDOBJ_IncAnimeFrame( SOUNDOBJ* soundObj, fx32 frame )
 {
   BOOL loop = FALSE;
 
-  // アニメーション未登録なら, 何もしない
-  if( sobj->icaAnime == NULL )
-  {
-    return FALSE;
-  }
+  // アニメーション未登録
+  if( soundObj->icaAnime == NULL ){ return FALSE; }
 
   // アニメーションを更新
-  loop = ICA_ANIME_IncAnimeFrame( sobj->icaAnime, frame );
+  loop = ICA_ANIME_IncAnimeFrame( soundObj->icaAnime, frame );
 
   // 位置を更新
-  AdjustPosition( sobj );
-  AdjustDirection( sobj );
+  AdjustPosition( soundObj );
+  AdjustDirection( soundObj );
 
   // ループしたかどうかを返す
   return loop;
@@ -166,114 +190,89 @@ BOOL SOUNDOBJ_IncAnimeFrame( SOUNDOBJ* sobj, fx32 frame )
 /**
  * @brief アニメーションフレーム数を設定する
  *
- * @param sobj  更新対象オブジェクト
- * @param frame フレーム数を指定
+ * @param soundObj
+ * @param frame    設定するフレーム数を指定
  */
 //-----------------------------------------------------------------------------------------
-void SOUNDOBJ_SetAnimeFrame( SOUNDOBJ* sobj, fx32 frame )
+void SOUNDOBJ_SetAnimeFrame( SOUNDOBJ* soundObj, fx32 frame )
 {
-  // アニメーション未登録なら, 何もしない
-  if( sobj->icaAnime == NULL )
-  {
-    return;
-  }
+  // アニメーション未登録
+  if( soundObj->icaAnime == NULL ){ return; }
 
   // アニメーションを更新
-  ICA_ANIME_SetAnimeFrame( sobj->icaAnime, frame );
+  ICA_ANIME_SetAnimeFrame( soundObj->icaAnime, frame );
 
   // 位置を更新
-  AdjustPosition( sobj );
+  AdjustPosition( soundObj );
 }
 
 //-----------------------------------------------------------------------------------------
 /**
  * @brief アニメーションフレーム数を取得する
  *
- * @param sobj 取得対象オブジェクト
+ * @param soundObj
  *
  * @return 現在のアニメーションフレーム数
  */
 //-----------------------------------------------------------------------------------------
-fx32 SOUNDOBJ_GetAnimeFrame( SOUNDOBJ* sobj ) 
+fx32 SOUNDOBJ_GetAnimeFrame( SOUNDOBJ* soundObj ) 
 {
-  // アニメーション未登録なら, 何もしない
-  if( sobj->icaAnime == NULL )
-  {
-    return 0;
-  }
+  // アニメーション未登録
+  if( soundObj->icaAnime == NULL ){ return 0; }
 
   // 現在のアニメーションフレーム数を返す
-  return ICA_ANIME_GetNowFrame( sobj->icaAnime );
+  return ICA_ANIME_GetNowFrame( soundObj->icaAnime );
 }
 
 
 //=========================================================================================
-// ■取得
-//=========================================================================================
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief ユニットが操作するトラックのビットマスクを取得する
- *
- * @param sobj 取得対象オブジェクト
- *
- * @return 指定ユニットが操作するトラックビットマスク
- */
-//-----------------------------------------------------------------------------------------
-u16 SOUNDOBJ_GetTrackBit( const SOUNDOBJ* sobj )
-{
-  ISS_3DS_UNIT* unit;
-  u16 track_bit;
-
-  // 3Dサウンドユニットを取得
-  unit = ISS_3DS_SYS_GetUnit( sobj->iss3dsSys, sobj->iss3dsUnitIdx );
-
-  // トラックマスクを取得
-  track_bit = ISS_3DS_UNIT_GetTrackBit( unit );
-  return track_bit;
-}
-
-
-//=========================================================================================
-// ■非公開関数の定義
+// ■非公開関数
 //=========================================================================================
 
 //-----------------------------------------------------------------------------------------
 /**
  * @brief 拡張オブジェ・音源オブジェの位置をアニメーションに合わせる
  *
- * @param sobj 更新するオブジェクト
+ * @param soundObj 更新するオブジェクト
  */
 //-----------------------------------------------------------------------------------------
-static void AdjustPosition( SOUNDOBJ* sobj )
+static void AdjustPosition( SOUNDOBJ* soundObj )
 {
   VecFx32 pos;
   ISS_3DS_UNIT* unit;
 
+  // アニメーション未登録
+  if( soundObj->icaAnime == NULL ){ return; }
+
   // 位置を取得
-  if( ICA_ANIME_GetTranslate( sobj->icaAnime, &pos ) != TRUE ) { return; }
+  if( ICA_ANIME_GetTranslate( soundObj->icaAnime, &pos ) != TRUE ) { return; }
 
   // 3Dステータスを設定
-  VEC_Set( &sobj->status->trans, pos.x, pos.y, pos.z );
+  VEC_Set( &soundObj->g3dObjStatus->trans, pos.x, pos.y, pos.z );
 
   // 音源位置を合わせる
-  unit = ISS_3DS_SYS_GetUnit( sobj->iss3dsSys, sobj->iss3dsUnitIdx );
-  ISS_3DS_UNIT_SetPos( unit, &pos );
+  if( soundObj->iss3dsSystem )
+  {
+    ISS_3DS_SYS_SetUnitPos( soundObj->iss3dsSystem, soundObj->iss3dsUnitIdx, &pos );
+  }
 }
 
 //-----------------------------------------------------------------------------------------
 /**
  * @brief 拡張オブジェの向きをアニメーションに合わせる
  *
- * @param sobj 更新するオブジェクト
+ * @param soundObj 更新するオブジェクト
  */
 //-----------------------------------------------------------------------------------------
-static void AdjustDirection( SOUNDOBJ* sobj )
+static void AdjustDirection( SOUNDOBJ* soundObj )
 {
   VecFx32 vec;
 
+  // アニメーション未登録
+  if( soundObj->icaAnime == NULL ){ return; }
+
   // 回転角度を取得
-  if( ICA_ANIME_GetRotate( sobj->icaAnime, &vec ) != TRUE ) { return; }
+  if( ICA_ANIME_GetRotate( soundObj->icaAnime, &vec ) != TRUE ) { return; }
 
   // 3Dステータスを設定
   {
@@ -288,7 +287,7 @@ static void AdjustDirection( SOUNDOBJ* sobj )
     rx = x / 360.0f * 0xffff;
     ry = y / 360.0f * 0xffff;
     rz = z / 360.0f * 0xffff; 
-    MTX_Identity33( &sobj->status->rotate );
-    GFL_CALC3D_MTX_CreateRot( rx, ry, rz, &sobj->status->rotate );
+    MTX_Identity33( &soundObj->g3dObjStatus->rotate );
+    GFL_CALC3D_MTX_CreateRot( rx, ry, rz, &soundObj->g3dObjStatus->rotate );
   }
 }

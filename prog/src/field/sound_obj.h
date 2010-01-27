@@ -23,21 +23,6 @@ typedef struct _SOUNDOBJ SOUNDOBJ;
 
 
 //=========================================================================================
-// ■関数一覧
-//=========================================================================================
-/*
-SOUNDOBJ* SOUNDOBJ_Create( 
-    FIELDMAP_WORK* fieldmap, ISS_3DS_SYS* iss_sys, GFL_G3D_OBJSTATUS* status ); 
-void SOUNDOBJ_Delete( SOUNDOBJ* sobj );
-void SOUNDOBJ_SetAnime( SOUNDOBJ* sobj, ARCID arc_id, ARCDATID dat_id, int buf_interval );
-void SOUNDOBJ_Set3DSUnitStatus( SOUNDOBJ* sobj, ARCID arc_id, ARCDATID dat_id );
-BOOL SOUNDOBJ_IncAnimeFrame( SOUNDOBJ* sobj, fx32 frame );
-void SOUNDOBJ_SetAnimeFrame( SOUNDOBJ* sobj, fx32 frame );
-fx32 SOUNDOBJ_GetAnimeFrame( SOUNDOBJ* sobj );
-*/
-
-
-//=========================================================================================
 // ■作成・破棄
 //=========================================================================================
 
@@ -45,22 +30,37 @@ fx32 SOUNDOBJ_GetAnimeFrame( SOUNDOBJ* sobj );
 /**
  * @brief 音源オブジェクトを作成する
  *
- * @param fieldmap 表示先フィールドマップ
- * @param iss_sys  登録先3Dサウンドシステム
- * @param status   操作対象ステータス
+ * @param fieldmap
+ * @param g3dObjStatus   操作対象3Dオブジェクトのステータス
+ * @param iss3dsUnitIdx  登録する3Dサウンドユニットを指定
+ * @param effectiveRange 音が届く距離
+ * @param maxVolume      最大ボリューム
  */
 //-----------------------------------------------------------------------------------------
-extern SOUNDOBJ* SOUNDOBJ_Create( 
-    FIELDMAP_WORK* fieldmap, ISS_3DS_SYS* iss_sys, GFL_G3D_OBJSTATUS* status );
+extern SOUNDOBJ* SOUNDOBJ_Create( FIELDMAP_WORK* fieldmap, GFL_G3D_OBJSTATUS* g3dObjStatus,
+                                  ISS3DS_UNIT_INDEX iss3dsUnitIdx, 
+                                  fx32 effectiveRange, int maxVolume );
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief ダミー音源オブジェクトを作成する
+ *
+ * @param fieldmap
+ * @param g3dObjStatus 操作対象3Dオブジェクトのステータス
+ *
+ * ※BGMの操作を行わない音源オブジェクトを生成する。
+ */
+//-----------------------------------------------------------------------------------------
+extern SOUNDOBJ* SOUNDOBJ_CreateDummy( FIELDMAP_WORK* fieldmap, GFL_G3D_OBJSTATUS* g3dObjStatus );
 
 //-----------------------------------------------------------------------------------------
 /**
  * @brief 音源オブジェクトを破棄する
  *
- * @param sobj 破棄するオブジェクト
+ * @param soundObj
  */
 //-----------------------------------------------------------------------------------------
-extern void SOUNDOBJ_Delete( SOUNDOBJ* sobj );
+extern void SOUNDOBJ_Delete( SOUNDOBJ* soundObj );
 
 
 //=========================================================================================
@@ -71,22 +71,12 @@ extern void SOUNDOBJ_Delete( SOUNDOBJ* sobj );
 /**
  * @brief アニメーションを登録する
  *
- * @param arc_id       設定するアニメーションデータのアーカイブID
- * @param dat_id       設定するアニメーションデータのアーカイブ内データID
- * @param buf_interval ストリーミング間隔
+ * @param arcID       設定するアニメーションデータのアーカイブID
+ * @param datID       設定するアニメーションデータのアーカイブ内データID
+ * @param bufInterval ストリーミング間隔
  */
 //-----------------------------------------------------------------------------------------
-extern void SOUNDOBJ_SetAnime( SOUNDOBJ* sobj, ARCID arc_id, ARCDATID dat_id, int buf_interval );
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief 3Dサウンドユニットの設定をファイルからロードする
- *
- * @param arc_id       設定するデータのアーカイブID
- * @param dat_id       設定するデータのアーカイブ内データID
- */
-//-----------------------------------------------------------------------------------------
-extern void SOUNDOBJ_Set3DSUnitStatus( SOUNDOBJ* sobj, ARCID arc_id, ARCDATID dat_id );
+extern void SOUNDOBJ_SetAnime( SOUNDOBJ* soundObj, ARCID arcID, ARCDATID datID, int bufInterval );
 
 
 //=========================================================================================
@@ -97,47 +87,31 @@ extern void SOUNDOBJ_Set3DSUnitStatus( SOUNDOBJ* sobj, ARCID arc_id, ARCDATID da
 /**
  * @brief アニメーションを進める
  *
- * @param sobj  更新対象オブジェクト
- * @param frame 進めるフレーム数
+ * @param soundObj
+ * @param frame    進めるフレーム数
  *
  * @return ループしたら TRUE
  */
 //-----------------------------------------------------------------------------------------
-extern BOOL SOUNDOBJ_IncAnimeFrame( SOUNDOBJ* sobj, fx32 frame );
+extern BOOL SOUNDOBJ_IncAnimeFrame( SOUNDOBJ* soundObj, fx32 frame );
 
 //-----------------------------------------------------------------------------------------
 /**
  * @brief アニメーションフレーム数を設定する
  *
- * @param sobj  更新対象オブジェクト
- * @param frame フレーム数を指定
+ * @param soundObj
+ * @param frame    設定するフレーム数を指定
  */
 //-----------------------------------------------------------------------------------------
-extern void SOUNDOBJ_SetAnimeFrame( SOUNDOBJ* sobj, fx32 frame );
+extern void SOUNDOBJ_SetAnimeFrame( SOUNDOBJ* soundObj, fx32 frame );
 
 //-----------------------------------------------------------------------------------------
 /**
  * @brief アニメーションフレーム数を取得する
  *
- * @param sobj 取得対象オブジェクト
+ * @param soundObj
  *
  * @return 現在のアニメーションフレーム数
  */
 //-----------------------------------------------------------------------------------------
-extern fx32 SOUNDOBJ_GetAnimeFrame( SOUNDOBJ* sobj );
-
-
-//=========================================================================================
-// ■取得
-//=========================================================================================
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief ユニットが操作するトラックのビットマスクを取得する
- *
- * @param sobj 取得対象オブジェクト
- *
- * @return 指定ユニットが操作するトラックビットマスク
- */
-//-----------------------------------------------------------------------------------------
-extern u16 SOUNDOBJ_GetTrackBit( const SOUNDOBJ* sobj );
+extern fx32 SOUNDOBJ_GetAnimeFrame( SOUNDOBJ* soundObj );

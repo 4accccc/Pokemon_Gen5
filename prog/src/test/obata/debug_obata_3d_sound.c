@@ -189,6 +189,7 @@ static void SetMode( PROC_WORK* work, TESTMODE next_mode );
 //============================================================================================
 static GFL_PROC_RESULT DEBUG_OBATA_3D_SOUND_MainProcFunc_Init( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
 {
+#if 0
 	PROC_WORK* work = NULL;
 
   // ヒープ作成
@@ -201,6 +202,7 @@ static GFL_PROC_RESULT DEBUG_OBATA_3D_SOUND_MainProcFunc_Init( GFL_PROC* proc, i
   DEBUG_OBATA_3D_SOUND_Init( HEAPID_OBATA_DEBUG );
   Initialize( work );
 
+#endif
 	return GFL_PROC_RES_FINISH;
 }
 
@@ -212,6 +214,7 @@ static GFL_PROC_RESULT DEBUG_OBATA_3D_SOUND_MainProcFunc_Init( GFL_PROC* proc, i
 //============================================================================================
 static GFL_PROC_RESULT DEBUG_OBATA_3D_SOUND_MainProcFunc_Main( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
 {
+#if 0
 	PROC_WORK* work = mywk;
   BOOL end = FALSE;
 
@@ -234,6 +237,7 @@ static GFL_PROC_RESULT DEBUG_OBATA_3D_SOUND_MainProcFunc_Main( GFL_PROC* proc, i
     return GFL_PROC_RES_FINISH;
   }
 
+#endif
   return GFL_PROC_RES_CONTINUE;
 }
 
@@ -245,6 +249,7 @@ static GFL_PROC_RESULT DEBUG_OBATA_3D_SOUND_MainProcFunc_Main( GFL_PROC* proc, i
 //============================================================================================
 static GFL_PROC_RESULT DEBUG_OBATA_3D_SOUND_MainProcFunc_End( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
 {
+#if 0
 	PROC_WORK* work = mywk;
 
   // 終了処理
@@ -258,6 +263,7 @@ static GFL_PROC_RESULT DEBUG_OBATA_3D_SOUND_MainProcFunc_End( GFL_PROC* proc, in
   // ヒープを破棄
   GFL_HEAP_DeleteHeap( HEAPID_OBATA_DEBUG );
 
+#endif
 	return GFL_PROC_RES_FINISH;
 } 
 
@@ -288,6 +294,7 @@ const GFL_PROC_DATA DebugObata3DSoundMainProcData =
 //-------------------------------------------------------------------------------------------- 
 static void Initialize( PROC_WORK* work )
 {
+#if 0
   // 3D管理ユーティリティーのセットアップ
   work->g3dUtil = GFL_G3D_UTIL_Create( 10, 10, HEAPID_OBATA_DEBUG );
 
@@ -320,7 +327,8 @@ static void Initialize( PROC_WORK* work )
   }
 
   // 3Dサウンドシステム作成
-  work->iss3dsSys = ISS_3DS_SYS_Create( HEAPID_OBATA_DEBUG, 10, work->camera );
+  work->iss3dsSys = ISS_3DS_SYS_Create( HEAPID_OBATA_DEBUG, 10 );
+  ISS_3DS_SYS_SetObserver( work->iss3dsSys, work->camera );
 
   // トレーラ作成
   InitSoundObj( work );
@@ -329,6 +337,7 @@ static void Initialize( PROC_WORK* work )
   SetMode( work, TESTMODE_ALL );
   VEC_Set( &work->playerPos, 0, 0, 0 );
   VEC_Set( &work->camPosOffset, FX32_ONE, 100*FX32_ONE, 300*FX32_ONE );
+#endif
 }
 
 //--------------------------------------------------------------------------------------------
@@ -338,7 +347,9 @@ static void Initialize( PROC_WORK* work )
 //-------------------------------------------------------------------------------------------- 
 static void Finalize( PROC_WORK* work )
 { 
+#if 0
   // 3Dサウンドシステム破棄
+  ISS_3DS_SYS_ClearObserver( work->iss3dsSys );
   ISS_3DS_SYS_Delete( work->iss3dsSys );
 
   // カメラ破棄
@@ -356,6 +367,7 @@ static void Finalize( PROC_WORK* work )
 
   // 3D管理ユーティリティーの破棄
   GFL_G3D_UTIL_Delete( work->g3dUtil );
+#endif
 }
 
 //--------------------------------------------------------------------------------------------
@@ -365,6 +377,7 @@ static void Finalize( PROC_WORK* work )
 //-------------------------------------------------------------------------------------------- 
 static BOOL Main( PROC_WORK* work )
 {
+#if 0
   int i;
   VecFx32 vel, pos;
   int trg = GFL_UI_KEY_GetTrg();
@@ -399,6 +412,7 @@ static BOOL Main( PROC_WORK* work )
   // セレクトで終了
   if( trg & PAD_BUTTON_SELECT ) return TRUE;
 
+#endif
   return FALSE;
 }
 
@@ -409,6 +423,7 @@ static BOOL Main( PROC_WORK* work )
 //-------------------------------------------------------------------------------------------- 
 static void Draw( PROC_WORK* work )
 {
+#if 0
   int i;
 
   // カメラ更新
@@ -432,6 +447,7 @@ static void Draw( PROC_WORK* work )
     GFL_G3D_DRAW_DrawObject( obj, &status );
   }
   GFL_G3D_DRAW_End(); 
+#endif
 }
 
 //--------------------------------------------------------------------------------------------
@@ -441,6 +457,7 @@ static void Draw( PROC_WORK* work )
 //--------------------------------------------------------------------------------------------
 static void InitSoundObj( PROC_WORK* work )
 {
+#if 0
   int index;
   SOUNDOBJ* sobj;
 
@@ -494,6 +511,7 @@ static void InitSoundObj( PROC_WORK* work )
   sobj->endFrame = 1000;
   VEC_Set( &sobj->startPos, -800*FX32_ONE, 0*FX32_ONE, 0*FX32_ONE );
   VEC_Set( &sobj->endPos,    800*FX32_ONE, 0*FX32_ONE, 0*FX32_ONE );
+#endif
 }
 
 //--------------------------------------------------------------------------------------------
@@ -503,11 +521,13 @@ static void InitSoundObj( PROC_WORK* work )
 //--------------------------------------------------------------------------------------------
 static void DrawSoundObj( SOUNDOBJ* sobj )
 {
+#if 0
   // 有効なオブジェのみを描画
   if( sobj->active )
   {
     GFL_G3D_DRAW_DrawObject( sobj->obj, &sobj->status );
   }
+#endif
 }
 
 //--------------------------------------------------------------------------------------------
@@ -517,6 +537,7 @@ static void DrawSoundObj( SOUNDOBJ* sobj )
 //--------------------------------------------------------------------------------------------
 static void MoveSoundObj( SOUNDOBJ* sobj )
 {
+#if 0
   // 有効なオブジェのみを動かす
   if( sobj->active )
   { 
@@ -536,6 +557,7 @@ static void MoveSoundObj( SOUNDOBJ* sobj )
     // 音源位置を合わせる
     ISS_3DS_UNIT_SetPos( sobj->iss3dsUnit, &sobj->status.trans );
   }
+#endif
 }
 
 //--------------------------------------------------------------------------------------------
@@ -545,8 +567,10 @@ static void MoveSoundObj( SOUNDOBJ* sobj )
 //--------------------------------------------------------------------------------------------
 static void SetActiveOn( SOUNDOBJ* sobj )
 { 
+#if 0
   sobj->active = TRUE;
   ISS_3DS_UNIT_SetMaxVolume( sobj->iss3dsUnit, 127 );
+#endif
 }
 
 //--------------------------------------------------------------------------------------------
@@ -556,8 +580,10 @@ static void SetActiveOn( SOUNDOBJ* sobj )
 //--------------------------------------------------------------------------------------------
 static void SetActiveOff( SOUNDOBJ* sobj )
 {
+#if 0
   sobj->active = FALSE;
   ISS_3DS_UNIT_SetMaxVolume( sobj->iss3dsUnit, 0 );
+#endif
 }
 
 //--------------------------------------------------------------------------------------------
@@ -567,6 +593,7 @@ static void SetActiveOff( SOUNDOBJ* sobj )
 //--------------------------------------------------------------------------------------------
 static void SetMode( PROC_WORK* work, TESTMODE next_mode )
 { 
+#if 0
   // モード変更
   work->mode = next_mode % TESTMODE_NUM;
 
@@ -599,4 +626,5 @@ static void SetMode( PROC_WORK* work, TESTMODE next_mode )
     SetActiveOn( &work->soundObj[SOUNDOBJ_SHIP] );
     break;
   }
+#endif
 }
