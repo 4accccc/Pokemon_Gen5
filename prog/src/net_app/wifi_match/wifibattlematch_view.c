@@ -100,12 +100,13 @@ struct _WIFIBATTLEMATCH_VIEW_RESOURCE
  *	@brief  リソース読み込み
  *
  *	@param	GFL_CLUNIT *p_unit  CLUNIT
+ *	@param  mode                読み込みモード
  *	@param	heapID              ヒープID 
  *
  *	@return ワーク
  */
 //-----------------------------------------------------------------------------
-WIFIBATTLEMATCH_VIEW_RESOURCE *WIFIBATTLEMATCH_VIEW_LoadResource( GFL_CLUNIT *p_unit, WIFIBATTLEMATCH_MODE mode, HEAPID heapID )
+WIFIBATTLEMATCH_VIEW_RESOURCE *WIFIBATTLEMATCH_VIEW_LoadResource( GFL_CLUNIT *p_unit, WIFIBATTLEMATCH_VIEW_RES_MODE mode, HEAPID heapID )
 { 
   WIFIBATTLEMATCH_VIEW_RESOURCE	*	p_wk;
 
@@ -142,14 +143,19 @@ WIFIBATTLEMATCH_VIEW_RESOURCE *WIFIBATTLEMATCH_VIEW_LoadResource( GFL_CLUNIT *p_
 
     switch( mode )
     { 
-    case WIFIBATTLEMATCH_MODE_RANDOM:
+    case WIFIBATTLEMATCH_VIEW_RES_MODE_RANDOM:
       GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_wifimatch_gra_random_card_NSCR,
 				BG_FRAME_S_CARD, 0, 0, FALSE, GFL_HEAP_LOWID( heapID ) );
       break;
 
-    case WIFIBATTLEMATCH_MODE_WIFI:
+    case WIFIBATTLEMATCH_VIEW_RES_MODE_DIGITALCARD:
+      GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_wifimatch_gra_wcs_card_NSCR,
+				BG_FRAME_M_CARD, 0, 0, FALSE, GFL_HEAP_LOWID( heapID ) );
+      break;
+
+    case WIFIBATTLEMATCH_VIEW_RES_MODE_WIFI:
       /* fallthr */
-    case WIFIBATTLEMATCH_MODE_LIVE:
+    case WIFIBATTLEMATCH_VIEW_RES_MODE_LIVE:
       GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_wifimatch_gra_wcs_card_NSCR,
 				BG_FRAME_S_CARD, 0, 0, FALSE, GFL_HEAP_LOWID( heapID ) );
       break;
@@ -1479,6 +1485,7 @@ static void PlayerInfo_POKEICON_Create( PLAYERINFO_WORK * p_wk, GFL_CLUNIT *p_un
 		GFL_STD_MemClear( &clwk_data, sizeof(GFL_CLWK_DATA) );
 		clwk_data.pos_y		= PLAYERINFO_POKEICON_Y;
 		clwk_data.anmseq	= POKEICON_ANM_HPMAX;
+    clwk_data.bgpri   = 1;
 		for( i = 0; i < p_wk->clwk_max; i++ )
 		{	
       p_pp  = PokeParty_GetMemberPointer( p_party, i );
@@ -1576,6 +1583,7 @@ static void PlayerInfo_TRAINER_Cleate( PLAYERINFO_WORK * p_wk, u32 trainerID, GF
 		GFL_STD_MemClear( &clwk_data, sizeof(GFL_CLWK_DATA) );
 		clwk_data.pos_y		= 0;
 		clwk_data.pos_x		= 0;
+    clwk_data.bgpri   = 1;
 		p_wk->p_clwk[PLAYERINFO_CLWK_TRAINER]	= GFL_CLACT_WK_Create( p_unit,
 				p_wk->res[ PLAYERINFO_RESID_TRAINER_CGR ],
 				p_wk->res[ PLAYERINFO_RESID_TRAINER_PLT ],
@@ -1628,6 +1636,7 @@ static void PlayerInfo_LOCK_Cleate( PLAYERINFO_WORK * p_wk, GFL_CLUNIT *p_unit, 
   clwk_data.pos_x		= WBM_CARD_LOCK_POS_X + WBM_CARD_INIT_POS_X;
   clwk_data.pos_y		= WBM_CARD_LOCK_POS_Y;
   clwk_data.anmseq	= 7;
+  clwk_data.bgpri   = 1;
 
   p_wk->p_clwk[PLAYERINFO_CLWK_LOCK]	= GFL_CLACT_WK_Create( p_unit,
       WIFIBATTLEMATCH_VIEW_GetResource( cp_res, WIFIBATTLEMATCH_VIEW_RES_TYPE_OBJ_CHR_M + p_wk->cl_draw_type ),

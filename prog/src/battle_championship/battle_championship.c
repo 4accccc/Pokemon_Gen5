@@ -33,6 +33,7 @@
 #include "title/title.h"
 #include "net_app/irc_battle.h"
 #include "net_app/wifibattlematch.h"
+#include "net_app/digitalcardcheck.h"
 
 #include "battle_championship/battle_championship.h"
 #include "battle_championship/battle_championship_def.h"
@@ -288,10 +289,12 @@ static GFL_PROC_RESULT BATTLE_CHAMPIONSHIP_ProcTerm( GFL_PROC * proc, int * seq 
       GFL_PROC_SysSetNextProc( FS_OVERLAY_ID(wifibattlematch_sys), &WifiBattleMatch_ProcData, p_param );
     }
     break;
+  case BCNP_DIGITAL_MEMBERSHIP:
+    GFL_PROC_SysSetNextProc( FS_OVERLAY_ID(wifibattlematch_core), &DigitalCard_ProcData, NULL );
+    break;
+
   case BCNP_EVENT_BATTLE:
     GFL_PROC_SysSetNextProc(NO_OVERLAY_ID, &IRC_BATTLE_ProcData, NULL);
-    break;
-  case BCNP_DIGITAL_MEMBERSHIP:
     break;
   }
 
@@ -384,7 +387,7 @@ static GFL_PROC_RESULT BATTLE_CHAMPIONSHIP_ProcMain( GFL_PROC * proc, int * seq 
     break;
 
   case BCS_FADEOUT:
-    WIPE_SYS_Start( WIPE_PATTERN_FSAM , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
+    WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
                     WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , work->heapId );
     work->state = BCS_FADEOUT_WAIT;
     break;

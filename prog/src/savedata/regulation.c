@@ -706,24 +706,24 @@ void Regulation_SetDebugData( REGULATION_CARDDATA* pReg )
     p_data->SHOW_POKE_TIME  = 99;
     p_data->BATTLE_TYPE = REGULATION_BATTLE_SINGLE;
   }
-  pReg->cupname[ 0] = 'デ';
-  pReg->cupname[ 1] = 'バ';
-  pReg->cupname[ 2] = 'ッ';
-  pReg->cupname[ 3] = 'ク';
-  pReg->cupname[ 4] = 'た';
-  pReg->cupname[ 5] = 'い';
-  pReg->cupname[ 6] = 'か';
-  pReg->cupname[ 7] = 'い';
+  GFL_STD_MemClear( pReg->cupname, sizeof(STRCODE)*(WIFI_PLAYER_TIX_CUPNAME_MOJINUM + EOM_SIZE) );
+  pReg->cupname[ 0] = L'デ';
+  pReg->cupname[ 1] = L'バ';
+  pReg->cupname[ 2] = L'ッ';
+  pReg->cupname[ 3] = L'ク';
+  pReg->cupname[ 4] = L'た';
+  pReg->cupname[ 5] = L'い';
+  pReg->cupname[ 6] = L'か';
+  pReg->cupname[ 7] = L'い';
   pReg->cupname[ 8] = 0xFFFF;
   pReg->ver         = PM_VERSION;
-  pReg->no          = 1234;
+  pReg->no          = 1;
   pReg->start_year  = 10;
   pReg->start_month = 1;
   pReg->start_day   = 22;
   pReg->end_year    = 10;
   pReg->end_month   = 12;
   pReg->end_day     = 24;
-  pReg->status      = 0;
   pReg->status      = 0;
 }
 #include "debug/debug_str_conv.h"

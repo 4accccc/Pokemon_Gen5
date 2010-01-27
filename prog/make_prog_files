@@ -1429,8 +1429,8 @@ SRCS_OVERLAY_WIFIBATTLEMATCH_CORE = net_app/wifi_match/wifibattlematch_core.c \
                 net_app/wifi_match/wifibattlematch_net.c \
                 net_app/wifi_match/atlas_syachi2ds_v1.c \
                 net_app/wifi_match/wifibattlematch_util.c \
-                net_app/wifi_match/debug/debug_wifi_match.c \
-								net_app/digital_playercard/dpc_check.c
+                net_app/wifi_match/digitalcardcheck.c \
+                net_app/wifi_match/debug/debug_wifi_match.c
 
 # コマンドデモ
 #===> SRCS_OVERLAY_DEV_WIFI

@@ -15,7 +15,6 @@
 #include "system/main.h"
 #include "system/gfl_use.h"
 #include "sound/pm_sndsys.h"
-#include "system/gf_date.h"
 #include "system/bmp_winframe.h"
 #include "pokeicon/pokeicon.h"
 #include "gamesystem/game_data.h"

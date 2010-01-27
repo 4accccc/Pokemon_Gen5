@@ -17,6 +17,7 @@
 #include "wifibattlematch_data.h"
 #include "savedata/regulation.h"
 #include "savedata/battle_box_save.h"
+#include "system/gf_date.h"
 //-------------------------------------
 ///	デバッグ
 //=====================================
@@ -96,6 +97,7 @@ enum
 //-------------------------------------
 ///	定数
 //=====================================
+//リソース取得タイプ
 typedef enum
 { 
   WIFIBATTLEMATCH_VIEW_RES_TYPE_OBJ_PLT_M,
@@ -106,6 +108,14 @@ typedef enum
   WIFIBATTLEMATCH_VIEW_RES_TYPE_OBJ_CEL_S,
   WIFIBATTLEMATCH_VIEW_RES_TYPE_OBJ_MAX,
 }WIFIBATTLEMATCH_VIEW_RES_TYPE;
+//読み込みタイプ
+typedef enum
+{
+	WIFIBATTLEMATCH_VIEW_RES_MODE_WIFI  = WIFIBATTLEMATCH_MODE_WIFI,    //WIFI大会
+	WIFIBATTLEMATCH_VIEW_RES_MODE_LIVE  = WIFIBATTLEMATCH_MODE_LIVE,    //ライブ大会
+	WIFIBATTLEMATCH_VIEW_RES_MODE_RANDOM  = WIFIBATTLEMATCH_MODE_RANDOM,  //ランダム対戦　（マッチメイクのときにRANDOM＋０がフリー＋１がレーティングにしている）
+	WIFIBATTLEMATCH_VIEW_RES_MODE_DIGITALCARD,
+} WIFIBATTLEMATCH_VIEW_RES_MODE;
 
 //-------------------------------------
 ///	リソース管理ワーク
@@ -115,7 +125,8 @@ typedef struct _WIFIBATTLEMATCH_VIEW_RESOURCE WIFIBATTLEMATCH_VIEW_RESOURCE;
 //-------------------------------------
 ///	パブリック
 //=====================================
-extern WIFIBATTLEMATCH_VIEW_RESOURCE *WIFIBATTLEMATCH_VIEW_LoadResource( GFL_CLUNIT *p_unit, WIFIBATTLEMATCH_MODE mode, HEAPID heapID );
+
+extern WIFIBATTLEMATCH_VIEW_RESOURCE *WIFIBATTLEMATCH_VIEW_LoadResource( GFL_CLUNIT *p_unit, WIFIBATTLEMATCH_VIEW_RES_MODE mode, HEAPID heapID );
 extern void WIFIBATTLEMATCH_VIEW_UnLoadResource( WIFIBATTLEMATCH_VIEW_RESOURCE *p_wk );
 
 extern u32 WIFIBATTLEMATCH_VIEW_GetResource( const WIFIBATTLEMATCH_VIEW_RESOURCE *cp_wk, WIFIBATTLEMATCH_VIEW_RES_TYPE type );
