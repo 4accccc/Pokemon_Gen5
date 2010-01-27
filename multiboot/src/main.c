@@ -150,19 +150,16 @@ static  void  SkeltonHBlankFunc(void)
 
 //------------------------------------------------------------------
 /**
- * brief  VBlankäÑÇËçûÇ›èàóù
+ * brief	VBlankäÑÇËçûÇ›èàóù
  */
 //------------------------------------------------------------------
-static  void  SkeltonVBlankFunc(void)
+static	void	SkeltonVBlankFunc(void)
 {
-  OS_SetIrqCheckFlag(OS_IE_V_BLANK);
+	GFLUser_VIntr();
 
-  MI_WaitDma(GX_DEFAULT_DMAID);
-
-  MachineSystem_VIntr();
-  GFLUser_VIntr();
+	OS_SetIrqCheckFlag(OS_IE_V_BLANK);
+	MI_WaitDma(GX_DEFAULT_DMAID);
 }
-
 
 //--------------------------------------------------------------
 /**
@@ -171,8 +168,9 @@ static  void  SkeltonVBlankFunc(void)
 //--------------------------------------------------------------
 static void GameVBlankFunc(void)
 {
-  MachineSystem_VIntr();
-  GFLUser_VIntr();
+
+	MachineSystem_VIntr();
+	GFLUser_VTiming();
 }
 
 #include "../prog/src/test/ohno/fatal_error.h"
