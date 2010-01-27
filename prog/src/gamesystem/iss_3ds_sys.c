@@ -878,7 +878,7 @@ static u8 AdjustByMasterVolume( const ISS_3DS_SYS* system, u8 volume )
   v = system->practicalMasterVolume * volume;
   v = v / MAX_VOLUME;
 
-  GF_ASSERT( MAX_VOLUME < v );
+  GF_ASSERT( v <= MAX_VOLUME );
 
   return v;
 }
