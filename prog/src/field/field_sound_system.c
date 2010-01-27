@@ -136,6 +136,7 @@ static void RequestQueueCheck( FIELD_SOUND* fieldSound );
 static const FSND_REQUEST_DATA* GetHeadRequest( const FIELD_SOUND* fieldSound );
 static const FSND_REQUEST_DATA* GetNextRequest( const FIELD_SOUND* fieldSound );
 static const FSND_REQUEST_DATA* GetTailRequest( const FIELD_SOUND* fieldSound );
+static BOOL QueueHaveRequest( const FIELD_SOUND* fieldSound );
 static void RegisterNewRequest( FIELD_SOUND* fieldSound, const FSND_REQUEST_DATA* requestData );
 static void RemoveHeadRequest( FIELD_SOUND* fieldSound );
 // キューにリクエストを登録できるかどうかの判定
@@ -546,9 +547,36 @@ const FSND_REQUEST_DATA* GetTailRequest( const FIELD_SOUND* fieldSound )
 {
   int pos;
 
-  pos = fieldSound->requestTailPos;
+  if( fieldSound->requestHeadPos == fieldSound->requestTailPos )
+  { // リクエストがない
+    pos = fieldSound->requestHeadPos;
+  }
+  else
+  {
+    // リクエストがある
+    pos = ( fieldSound->requestTailPos - 1 + REQUEST_QUEUE_SIZE ) % REQUEST_QUEUE_SIZE;
+  }
 
   return &fieldSound->requestData[ pos ];
+}
+
+//---------------------------------------------------------------------------------
+/**
+ * @brief キューにリクエストがあるかどうかを判定する
+ *
+ * @param fieldSound
+ * 
+ * @return キューにリクエストがある場合 TRUE
+ *         キューにリクエストがない場合 FALSE
+ */
+//---------------------------------------------------------------------------------
+static BOOL QueueHaveRequest( const FIELD_SOUND* fieldSound )
+{
+  FSND_REQUEST_DATA* headRequest;
+
+  headRequest = GetHeadRequest( fieldSound );
+
+  return ( headRequest->request != FSND_BGM_REQUEST_NONE );
 }
 
 //---------------------------------------------------------------------------------
@@ -568,7 +596,8 @@ void RegisterNewRequest( FIELD_SOUND* fieldSound, const FSND_REQUEST_DATA* reque
   // デッドロック
   if( CanRegisterRequest(fieldSound, requestData->request) == FALSE )
   {
-    OS_TFPrintf( PRINT_NO, "FIELD-SOUND-QUEUE: Can't register request\n" );
+    OS_TFPrintf( PRINT_NO, 
+                 "FIELD-SOUND-QUEUE: Can't register request(%d)\n", requestData->request );
     GF_ASSERT(0);
     return;
   }
