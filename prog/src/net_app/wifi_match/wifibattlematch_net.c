@@ -124,7 +124,7 @@ typedef enum
 #define TIMEOUT_MS   100  // HTTP通信のタイムアウト時間
 #define PLAYER_NUM   2          // プレイヤー数
 #define TEAM_NUM     0          // チーム数
-#define CANCELSELECT_TIMEOUT (60*30)     //キャンセルセレクトタイムアウト
+#define CANCELSELECT_TIMEOUT (60*60)     //キャンセルセレクトタイムアウト
 #define ASYNC_TIMEOUT (60*60)     //キャンセルセレクトタイムアウト
 
 //-------------------------------------
@@ -787,11 +787,9 @@ BOOL WIFIBATTLEMATCH_NET_WaitMatchMake( WIFIBATTLEMATCH_NET_WORK *p_wk )
       //タイムアウトしたら、切断して、マッチメイクしなおす
       if( p_wk->cancel_select_timeout++ > CANCELSELECT_TIMEOUT )
       { 
-        if( WIFIBATTLEMATCH_NET_SetDisConnect( p_wk, TRUE ) )
-        { 
-          DEBUG_NET_Printf( "ネゴシエーションタイムアウト\n" );
-          p_wk->seq_matchmake = WIFIBATTLEMATCH_NET_SEQ_CANCEL;
-        }
+        p_wk->cancel_select_timeout = 0;
+        DEBUG_NET_Printf( "マッチングネゴシエーションタイムアウト\n" );
+        p_wk->seq_matchmake = WIFIBATTLEMATCH_NET_SEQ_CANCEL;
       }
     }
     break;
@@ -818,11 +816,9 @@ BOOL WIFIBATTLEMATCH_NET_WaitMatchMake( WIFIBATTLEMATCH_NET_WORK *p_wk )
     //タイムアウトしたら、切断して、マッチメイクしなおす
     if( p_wk->cancel_select_timeout++ > CANCELSELECT_TIMEOUT )
     { 
-      if( WIFIBATTLEMATCH_NET_SetDisConnect( p_wk, TRUE ) )
-      { 
-        DEBUG_NET_Printf( "ネゴシエーションタイムアウト\n" );
-        p_wk->seq_matchmake = WIFIBATTLEMATCH_NET_SEQ_CANCEL;
-      }
+      p_wk->cancel_select_timeout = 0;
+      DEBUG_NET_Printf( "マッチングネゴシエーションタイムアウト\n" );
+      p_wk->seq_matchmake = WIFIBATTLEMATCH_NET_SEQ_CANCEL;
     }
 
     if(GFL_NET_HANDLE_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(),WIFIBATTLEMATCH_NET_TIMINGSYNC_CONNECT))
@@ -1906,12 +1902,12 @@ static DWCScResult DwcRap_Sc_CreateReportDebug( DWC_SC_PLAYERDATA *p_my, DWC_SC_
   { 
     return ret;
   }
-  ret = DWC_ScReportAddShortValue( p_my->mReport, KEY_NUM_SINGLE_WIN_COUNTER, cp_data->you_single_win );
+  ret = DWC_ScReportAddIntValue( p_my->mReport, KEY_NUM_SINGLE_WIN_COUNTER, cp_data->you_single_win );
   if( ret != DWC_SC_RESULT_NO_ERROR )
   { 
       return ret;
   }
-  ret = DWC_ScReportAddShortValue( p_my->mReport, KEY_NUM_SINGLE_LOSE_COUNTER, cp_data->you_single_lose );
+  ret = DWC_ScReportAddIntValue( p_my->mReport, KEY_NUM_SINGLE_LOSE_COUNTER, cp_data->you_single_lose );
   if( ret != DWC_SC_RESULT_NO_ERROR )
   { 
     return ret;
@@ -1922,12 +1918,12 @@ static DWCScResult DwcRap_Sc_CreateReportDebug( DWC_SC_PLAYERDATA *p_my, DWC_SC_
   { 
     return ret;
   }
-  ret = DWC_ScReportAddShortValue( p_my->mReport, KEY_NUM_DOUBLE_WIN_COUNTER, cp_data->you_double_win );
+  ret = DWC_ScReportAddIntValue( p_my->mReport, KEY_NUM_DOUBLE_WIN_COUNTER, cp_data->you_double_win );
   if( ret != DWC_SC_RESULT_NO_ERROR )
   { 
     return ret;
   }
-  ret = DWC_ScReportAddShortValue( p_my->mReport, KEY_NUM_DOUBLE_LOSE_COUNTER, cp_data->you_double_lose );
+  ret = DWC_ScReportAddIntValue( p_my->mReport, KEY_NUM_DOUBLE_LOSE_COUNTER, cp_data->you_double_lose );
   if( ret != DWC_SC_RESULT_NO_ERROR )
   { 
     return ret;
@@ -1938,12 +1934,12 @@ static DWCScResult DwcRap_Sc_CreateReportDebug( DWC_SC_PLAYERDATA *p_my, DWC_SC_
     { 
       return ret;
     }
-    ret = DWC_ScReportAddShortValue( p_my->mReport, KEY_NUM_TRIPLE_WIN_COUNTER, cp_data->you_triple_win );
+    ret = DWC_ScReportAddIntValue( p_my->mReport, KEY_NUM_TRIPLE_WIN_COUNTER, cp_data->you_triple_win );
     if( ret != DWC_SC_RESULT_NO_ERROR )
     { 
       return ret;
     }
-    ret = DWC_ScReportAddShortValue( p_my->mReport, KEY_NUM_TRIPLE_LOSE_COUNTER, cp_data->you_triple_lose );
+    ret = DWC_ScReportAddIntValue( p_my->mReport, KEY_NUM_TRIPLE_LOSE_COUNTER, cp_data->you_triple_lose );
     if( ret != DWC_SC_RESULT_NO_ERROR )
     { 
       return ret;
@@ -1954,12 +1950,12 @@ static DWCScResult DwcRap_Sc_CreateReportDebug( DWC_SC_PLAYERDATA *p_my, DWC_SC_
     { 
       return ret;
     }
-    ret = DWC_ScReportAddShortValue( p_my->mReport, KEY_NUM_ROTATE_WIN_COUNTER, cp_data->you_rot_win );
+    ret = DWC_ScReportAddIntValue( p_my->mReport, KEY_NUM_ROTATE_WIN_COUNTER, cp_data->you_rot_win );
     if( ret != DWC_SC_RESULT_NO_ERROR )
     { 
       return ret;
     }
-    ret = DWC_ScReportAddShortValue( p_my->mReport, KEY_NUM_ROTATE_LOSE_COUNTER, cp_data->you_rot_lose );
+    ret = DWC_ScReportAddIntValue( p_my->mReport, KEY_NUM_ROTATE_LOSE_COUNTER, cp_data->you_rot_lose );
     if( ret != DWC_SC_RESULT_NO_ERROR )
     { 
       return ret;
@@ -1971,12 +1967,12 @@ static DWCScResult DwcRap_Sc_CreateReportDebug( DWC_SC_PLAYERDATA *p_my, DWC_SC_
     { 
       return ret;
     }
-    ret = DWC_ScReportAddShortValue( p_my->mReport, KEY_NUM_SHOOTER_WIN_COUNTER, cp_data->you_shooter_win );
+    ret = DWC_ScReportAddIntValue( p_my->mReport, KEY_NUM_SHOOTER_WIN_COUNTER, cp_data->you_shooter_win );
     if( ret != DWC_SC_RESULT_NO_ERROR )
     { 
       return ret;
     }
-    ret = DWC_ScReportAddShortValue( p_my->mReport, KEY_NUM_SHOOTER_LOSE_COUNTER, cp_data->you_shooter_lose );
+    ret = DWC_ScReportAddIntValue( p_my->mReport, KEY_NUM_SHOOTER_LOSE_COUNTER, cp_data->you_shooter_lose );
     if( ret != DWC_SC_RESULT_NO_ERROR )
     { 
       return ret;
@@ -2041,12 +2037,12 @@ static DWCScResult DwcRap_Sc_CreateReportRndCore( DWC_SC_PLAYERDATA *p_my, const
     { 
       return ret;
     }
-    ret = DWC_ScReportAddShortValue( p_my->mReport, KEY_NUM_SINGLE_WIN_COUNTER, is_win );
+    ret = DWC_ScReportAddIntValue( p_my->mReport, KEY_NUM_SINGLE_WIN_COUNTER, is_win );
     if( ret != DWC_SC_RESULT_NO_ERROR )
     { 
       return ret;
     }
-    ret = DWC_ScReportAddShortValue( p_my->mReport, KEY_NUM_SINGLE_LOSE_COUNTER, !is_win );
+    ret = DWC_ScReportAddIntValue( p_my->mReport, KEY_NUM_SINGLE_LOSE_COUNTER, !is_win );
     if( ret != DWC_SC_RESULT_NO_ERROR )
     { 
       return ret;
@@ -2059,12 +2055,12 @@ static DWCScResult DwcRap_Sc_CreateReportRndCore( DWC_SC_PLAYERDATA *p_my, const
     { 
       return ret;
     }
-    ret = DWC_ScReportAddShortValue( p_my->mReport, KEY_NUM_DOUBLE_WIN_COUNTER, is_win );
+    ret = DWC_ScReportAddIntValue( p_my->mReport, KEY_NUM_DOUBLE_WIN_COUNTER, is_win );
     if( ret != DWC_SC_RESULT_NO_ERROR )
     { 
       return ret;
     }
-    ret = DWC_ScReportAddShortValue( p_my->mReport, KEY_NUM_DOUBLE_LOSE_COUNTER, !is_win );
+    ret = DWC_ScReportAddIntValue( p_my->mReport, KEY_NUM_DOUBLE_LOSE_COUNTER, !is_win );
     if( ret != DWC_SC_RESULT_NO_ERROR )
     { 
       return ret;
@@ -2077,12 +2073,12 @@ static DWCScResult DwcRap_Sc_CreateReportRndCore( DWC_SC_PLAYERDATA *p_my, const
     { 
       return ret;
     }
-    ret = DWC_ScReportAddShortValue( p_my->mReport, KEY_NUM_TRIPLE_WIN_COUNTER, is_win );
+    ret = DWC_ScReportAddIntValue( p_my->mReport, KEY_NUM_TRIPLE_WIN_COUNTER, is_win );
     if( ret != DWC_SC_RESULT_NO_ERROR )
     { 
       return ret;
     }
-    ret = DWC_ScReportAddShortValue( p_my->mReport, KEY_NUM_TRIPLE_LOSE_COUNTER, !is_win );
+    ret = DWC_ScReportAddIntValue( p_my->mReport, KEY_NUM_TRIPLE_LOSE_COUNTER, !is_win );
     if( ret != DWC_SC_RESULT_NO_ERROR )
     { 
       return ret;
@@ -2095,12 +2091,12 @@ static DWCScResult DwcRap_Sc_CreateReportRndCore( DWC_SC_PLAYERDATA *p_my, const
     { 
       return ret;
     }
-    ret = DWC_ScReportAddShortValue( p_my->mReport, KEY_NUM_ROTATE_WIN_COUNTER, is_win );
+    ret = DWC_ScReportAddIntValue( p_my->mReport, KEY_NUM_ROTATE_WIN_COUNTER, is_win );
     if( ret != DWC_SC_RESULT_NO_ERROR )
     { 
       return ret;
     }
-    ret = DWC_ScReportAddShortValue( p_my->mReport, KEY_NUM_ROTATE_LOSE_COUNTER, !is_win );
+    ret = DWC_ScReportAddIntValue( p_my->mReport, KEY_NUM_ROTATE_LOSE_COUNTER, !is_win );
     if( ret != DWC_SC_RESULT_NO_ERROR )
     { 
       return ret;
@@ -2149,12 +2145,12 @@ static DWCScResult DwcRap_Sc_CreateReportWifiCore( DWC_SC_PLAYERDATA *p_my, cons
   { 
     return ret;
   }
-  ret = DWC_ScReportAddShortValue( p_my->mReport, KEY_NUM_WIFICUP_WIN_COUNTER, is_win );
+  ret = DWC_ScReportAddIntValue( p_my->mReport, KEY_NUM_WIFICUP_WIN_COUNTER, is_win );
   if( ret != DWC_SC_RESULT_NO_ERROR )
   { 
     return ret;
   }
-  ret = DWC_ScReportAddShortValue( p_my->mReport, KEY_NUM_WIFICUP_LOSE_COUNTER, !is_win );
+  ret = DWC_ScReportAddIntValue( p_my->mReport, KEY_NUM_WIFICUP_LOSE_COUNTER, !is_win );
   if( ret != DWC_SC_RESULT_NO_ERROR )
   { 
     return ret;

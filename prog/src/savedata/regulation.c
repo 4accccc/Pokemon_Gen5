@@ -615,7 +615,7 @@ void Regulation_SetCardParam(REGULATION_CARDDATA* pReg, REGULATION_CARD_PARAM_TY
 //-----------------------------------------------------------------------------
 BOOL Regulation_CheckCrc( const REGULATION_CARDDATA* pReg )
 { 
-  OS_TPrintf( "CRCチェック buffer%d== calc%d\n", pReg->crc, GFL_STD_CrcCalc( pReg, sizeof(REGULATION_CARDDATA) - 2 ));
+  OS_TPrintf( "CRCチェック buffer[0x%x]== calc[0x%x]\n", pReg->crc, GFL_STD_CrcCalc( pReg, sizeof(REGULATION_CARDDATA) - 2 ));
   return pReg->crc == GFL_STD_CrcCalc( pReg, sizeof(REGULATION_CARDDATA) - 2 );
 }
 

@@ -75,7 +75,6 @@ typedef struct
 } SUBPROC_DATA;
 typedef struct {
 	GFL_PROCSYS			*p_procsys;
-	u32							seq;
 	void						*p_proc_param;
 	SUBPROC_DATA		*p_data;
 
@@ -83,8 +82,9 @@ typedef struct {
 	void						*p_wk_adrs;
 	const SUBPROC_DATA			*cp_procdata_tbl;
 
-	u32							next_procID;
-	u32							now_procID;
+	u8							next_procID;
+	u8							now_procID;
+	u16							seq;
 } SUBPROC_WORK;
 //-------------------------------------
 ///	システムワーク
@@ -103,7 +103,7 @@ typedef struct
   BtlResult                 btl_result;
   BtlRule                   btl_rule;
 
-  //バトル用に選んだパーティ
+  //バトル用に選んだパーティ  (ポケリスト前にALLOCされ、戦闘開始前にFREEされる)
   POKEPARTY                 *p_btl_party;
 
   u32 sub_seq;
@@ -115,7 +115,6 @@ typedef struct
   DREAM_WORLD_SERVER_WORLDBATTLE_STATE_DATA *p_gpf_data;
   WIFIBATTLEMATCH_GDB_WIFI_SCORE_DATA   *p_sake_data;
 #endif
-
 
 } WIFIBATTLEMATCH_SYS;
 
@@ -248,10 +247,28 @@ static const SUBPROC_DATA sc_subproc_data[SUBPROCID_MAX]	=
 static GFL_PROC_RESULT WIFIBATTLEMATCH_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_param_adrs, void *p_wk_adrs )
 {	
   WIFIBATTLEMATCH_SYS   *p_wk;
+  HEAPID  parentID;
 
+  { 
+    WIFIBATTLEMATCH_PARAM *p_param  = p_param_adrs;
+    if( p_param->mode == WIFIBATTLEMATCH_MODE_RANDOM )
+    { 
+      //ランダムマッチはポケセンWIFIカウンターから入り、
+      //ゲームシステム等でメモリを食っているので、HEAPID_PROCにシステムをおく
+      parentID  = HEAPID_PROC;
+    }
+    else
+    { 
+      //それ以外は、タイトル画面からくるためHEAPID_APPが潤沢にあるので、
+      //HEAPID_APPからもらう
+      parentID  = GFL_HEAPID_APP;
+    }
+  }
   
+  NAGI_Printf( "work %d + %d *2\n", sizeof(WIFIBATTLEMATCH_SYS), sizeof(WIFIBATTLEMATCH_ENEMYDATA) );
+
 	//ヒープ作成
-	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_WIFIBATTLEMATCH_SYS, 0x15000 );
+	GFL_HEAP_CreateHeap( parentID, HEAPID_WIFIBATTLEMATCH_SYS, 0xa000 );
 
 	//プロセスワーク作成
 	p_wk	= GFL_PROC_AllocWork( p_proc, sizeof(WIFIBATTLEMATCH_SYS), HEAPID_WIFIBATTLEMATCH_SYS );
@@ -267,12 +284,10 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_PROC_Init( GFL_PROC *p_proc, int *p_seq, 
 
   p_wk->core_mode = WIFIBATTLEMATCH_CORE_MODE_START;
 
-  p_wk->p_btl_party = PokeParty_AllocPartyWork( HEAPID_WIFIBATTLEMATCH_SYS );
-
   //データバッファ作成
   DATA_CreateBuffer( p_wk, HEAPID_WIFIBATTLEMATCH_SYS );
 
-  //自分のデータ設定( @todo レートはまだ )
+  //自分のデータ設定( レートはまだ )
   { 
     WIFIBATTLEMATCH_ENEMYDATA *p_player;
 
@@ -345,8 +360,11 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_PROC_Exit( GFL_PROC *p_proc, int *p_seq, 
   //データバッファ破棄
   DATA_DeleteBuffer( p_wk );
 
-  //ワーク破棄
-  GFL_HEAP_FreeMemory( p_wk->p_btl_party );
+  if( p_wk->p_btl_party )
+  { 
+    GFL_HEAP_FreeMemory( p_wk->p_btl_party );
+    p_wk->p_btl_party = NULL;
+  }
 
   if( p_wk->is_create_gamedata )
   { 
@@ -553,7 +571,7 @@ static BOOL SUBPROC_Main( SUBPROC_WORK *p_wk )
   case SEQ_NEXT:
 		//もし次のプロセスがあれば呼び出し
 		//なければ終了
-		if( p_wk->now_procID	!= p_wk->next_procID )
+		if( p_wk->now_procID != p_wk->next_procID )
 		{	
 			p_wk->seq	= SEQ_INIT;
 		}
@@ -715,6 +733,10 @@ static void *POKELIST_AllocParam( HEAPID heapID, void *p_wk_adrs )
     GF_ASSERT(0);
   }
 
+  if( p_wk->p_btl_party == NULL )
+  { 
+    p_wk->p_btl_party = PokeParty_AllocPartyWork( HEAPID_WIFIBATTLEMATCH_SYS );
+  }
   p_param->p_party    = p_wk->p_btl_party;
   p_param->gameData   = p_wk->param.p_game_data;
 
@@ -882,6 +904,12 @@ static void *BATTLE_AllocParam( HEAPID heapID, void *p_wk_adrs )
 
 
   BATTLE_PARAM_SetPokeParty( p_param, p_wk->p_btl_party, BTL_CLIENT_PLAYER ); 
+  //ワーク破棄
+  if( p_wk->p_btl_party )
+  { 
+    GFL_HEAP_FreeMemory( p_wk->p_btl_party );
+    p_wk->p_btl_party = NULL;
+  }
 
   GFL_NET_AddCommandTable(GFL_NET_CMD_BATTLE, BtlRecvFuncTable, BTL_NETFUNCTBL_ELEMS, NULL);
 	return p_param;

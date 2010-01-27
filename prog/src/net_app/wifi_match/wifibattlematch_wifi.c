@@ -2156,7 +2156,7 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
           WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_CupEnd );
           break;
         case 1: //‚¢‚¢‚¦
-          *p_seq  = SEQ_START_MATCH;
+          *p_seq  = SEQ_START_MATCH_MSG;
           break;
         }
       }
@@ -3053,7 +3053,7 @@ static void Util_PlayerInfo_Create( WIFIBATTLEMATCH_WIFI_WORK *p_wk )
     info_setup.rate = p_wk->sake_data.rate;
     info_setup.btl_cnt = p_wk->sake_data.win + p_wk->sake_data.lose;
 
-    p_wk->p_playerinfo	= PLAYERINFO_WIFI_Init( &info_setup, FALSE, p_my, p_unit, p_wk->p_res, p_wk->p_font, p_wk->p_que, p_wk->p_msg, p_wk->p_word, p_bbox_save, HEAPID_WIFIBATTLEMATCH_CORE );
+    p_wk->p_playerinfo	= PLAYERINFO_WIFI_Init( &info_setup, FALSE, p_my, p_unit, p_wk->p_res, p_wk->p_font, p_wk->p_que, p_wk->p_msg, p_wk->p_word, p_bbox_save, FALSE, HEAPID_WIFIBATTLEMATCH_CORE );
   }
 }
 //----------------------------------------------------------------------------
