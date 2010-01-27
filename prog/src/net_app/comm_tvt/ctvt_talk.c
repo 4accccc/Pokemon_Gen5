@@ -26,6 +26,7 @@
 #include "ctvt_comm.h"
 #include "ctvt_camera.h"
 #include "ctvt_mic.h"
+#include "ctvt_snd_def.h"
 #include "enc_adpcm.h"
 
 //======================================================================
@@ -641,11 +642,13 @@ static void CTVT_TALK_UpdateWait( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork
       if( GFL_UI_KEY_GetTrg() & CTVT_BUTTON_TALK )
       {
         talkWork->state = CTS_REQ_TALK;
+        PMSND_PlaySystemSE( CTVT_SND_TOUCH );
       }
       else
       if( GFL_UI_TP_HitTrg( CTVT_TALK_HitRecButton ) == 0 )
       {
         talkWork->state = CTS_REQ_TALK;
+        PMSND_PlaySystemSE( CTVT_SND_TOUCH );
       }
       
       talkWork->recButtonState = CRBT_NONE;
@@ -661,6 +664,7 @@ static void CTVT_TALK_UpdateWait( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork
     {
       talkWork->state = CTS_FADEOUT_BOTH;
       talkWork->subState = CTSS_GO_DRAW;
+      PMSND_PlaySystemSE( CTVT_SND_TOUCH );
     }
   }
   
@@ -682,12 +686,14 @@ static void CTVT_TALK_UpdateWait( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork
         GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
     {
       talkWork->state = CTS_END_CONFIRM_INIT;
+      PMSND_PlaySystemSE( CTVT_SND_CANCEL );
     }
     else
     if( ret == 1 ||
         GFL_UI_KEY_GetTrg() & CTVT_BUTTON_PAUSE )
     {
       COMM_TVT_FlipPause( work );
+      PMSND_PlaySystemSE( CTVT_SND_PAUSE );
       if( COMM_TVT_GetPause( work ) == TRUE )
       {
         GFL_CLACT_WK_SetAnmSeq( talkWork->clwkPause , CTOAS_PAUSE );
@@ -702,6 +708,7 @@ static void CTVT_TALK_UpdateWait( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork
       GFL_UI_KEY_GetTrg() & PAD_BUTTON_L )
   {
     COMM_TVT_FlipDoubleMode( work );
+    PMSND_PlaySystemSE( CTVT_SND_TOUCH );
   }
 
   CTVT_TALK_UpdateVoiceBar( work , talkWork );
@@ -902,6 +909,7 @@ static void CTVT_TALK_UpdateVoiceBar( COMM_TVT_WORK *work , CTVT_TALK_WORK *talk
     {
       talkWork->isHoldSlider = TRUE;
       GFL_CLACT_WK_SetAnmSeq( talkWork->clwkSlider , CTOAS_SLIDER_ACTIVE );
+      PMSND_PlaySystemSE( CTVT_SND_TOUCH );
     }
   }
   else

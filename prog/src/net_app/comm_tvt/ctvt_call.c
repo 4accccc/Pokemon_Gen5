@@ -31,6 +31,7 @@
 #include "ctvt_call.h"
 #include "ctvt_comm.h"
 #include "ctvt_camera.h"
+#include "ctvt_snd_def.h"
 
 //======================================================================
 //	define
@@ -665,6 +666,7 @@ static void CTVT_CALL_UpdateTP( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork )
               }
             }
           }
+          PMSND_PlaySystemSE( CTVT_SND_TOUCH );
         }
         
         //•¶Žš•\Ž¦‚ÌXV
@@ -762,6 +764,7 @@ static void CTVT_CALL_UpdateTP( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork )
     {
       callWork->isHoldScroll = TRUE;
       GFL_CLACT_WK_SetAnmSeq( callWork->clwkScrollBar , CTOAS_SCROLL_BAR_ACTIVE );
+      PMSND_PlaySystemSE( CTVT_SND_TOUCH );
     }
   }
   if( isHold == TRUE &&
@@ -807,6 +810,7 @@ static void CTVT_CALL_UpdateTP( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork )
     {
       APP_TASKMENU_WIN_SetDecide( callWork->barMenuWork , TRUE );
       callWork->state = CCS_WAIT_ANIME;
+      PMSND_PlaySystemSE( CTVT_SND_DECIDE );
     }
   }
   
@@ -826,6 +830,7 @@ static void CTVT_CALL_UpdateTP( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork )
       callWork->state = CCS_WAIT_ANIME;
       callWork->barState = CCBS_CANCEL;
       GFL_CLACT_WK_SetAnmSeq( callWork->clwkReturn , APP_COMMON_BARICON_RETURN_ON );
+      PMSND_PlaySystemSE( CTVT_SND_CANCEL );
     }
   }
 }

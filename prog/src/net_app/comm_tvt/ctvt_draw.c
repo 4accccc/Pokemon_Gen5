@@ -24,6 +24,7 @@
 #include "ctvt_draw.h"
 #include "ctvt_comm.h"
 #include "ctvt_camera.h"
+#include "ctvt_snd_def.h"
 
 //======================================================================
 //	define
@@ -447,16 +448,18 @@ static void CTVT_DRAW_UpdateDraw( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork
     drawWork->state = CDS_EDIT;
     drawWork->barScroll = 0;
     CTVT_DRAW_DrawInfoMsg( work , drawWork , TRUE );
-
+    PMSND_PlaySystemSE( CTVT_SND_TOUCH );
   }
   if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
   {
     drawWork->state = CDS_FADEOUT;
+    PMSND_PlaySystemSE( CTVT_SND_CANCEL );
   }
   if( GFL_UI_KEY_GetTrg() & CTVT_BUTTON_PAUSE )
   {
     COMM_TVT_FlipPause( work );
     CTVT_DRAW_UpdateEditButton( work , drawWork );
+    PMSND_PlaySystemSE( CTVT_SND_PAUSE );
   }
 }
 
@@ -498,6 +501,7 @@ static void CTVT_DRAW_UpdateEdit( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork
     drawWork->isTouch = TRUE;
     drawWork->isDispPenSize = TRUE;
     GFL_CLACT_WK_SetDrawEnable( drawWork->clwkPenSize , TRUE );
+    PMSND_PlaySystemSE( CTVT_SND_TOUCH );
     CTVT_TPrintf("PenMode\n");
   }
   if( ret == CDED_SPOITO )
@@ -505,6 +509,7 @@ static void CTVT_DRAW_UpdateEdit( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork
     drawWork->editMode = CDED_SPOITO;
     CTVT_DRAW_UpdateEditButton( work , drawWork );
     drawWork->isTouch = TRUE;
+    PMSND_PlaySystemSE( CTVT_SND_TOUCH );
     CTVT_TPrintf("SpoitoMode\n");
   }
   if( ret == CDED_KESHIGOMU )
@@ -512,6 +517,7 @@ static void CTVT_DRAW_UpdateEdit( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork
     drawWork->editMode = CDED_KESHIGOMU;
     CTVT_DRAW_UpdateEditButton( work , drawWork );
     drawWork->isTouch = TRUE;
+    PMSND_PlaySystemSE( CTVT_SND_TOUCH );
     CTVT_TPrintf("KeshigomuMode\n");
   }
   if( ret == CDED_PAUSE )
@@ -519,6 +525,7 @@ static void CTVT_DRAW_UpdateEdit( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork
     COMM_TVT_FlipPause( work );
     CTVT_DRAW_UpdateEditButton( work , drawWork );
     drawWork->isTouch = TRUE;
+    PMSND_PlaySystemSE( CTVT_SND_PAUSE );
     CTVT_TPrintf("Pause\n");
   }
   
@@ -550,6 +557,7 @@ static void CTVT_DRAW_UpdateEdit( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork
 
       drawWork->isDispPenSize = FALSE;
       GFL_CLACT_WK_SetDrawEnable( drawWork->clwkPenSize , FALSE );
+      PMSND_PlaySystemSE( CTVT_SND_TOUCH );
     }
   }
   
@@ -562,11 +570,13 @@ static void CTVT_DRAW_UpdateEdit( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork
     drawWork->isTouch = TRUE;
     CTVT_DRAW_DrawInfoMsg( work , drawWork , FALSE );
     GFL_CLACT_WK_SetDrawEnable( drawWork->clwkPenSize , FALSE );
+    PMSND_PlaySystemSE( CTVT_SND_CANCEL );
   }
   if( GFL_UI_KEY_GetTrg() & CTVT_BUTTON_PAUSE )
   {
     COMM_TVT_FlipPause( work );
     CTVT_DRAW_UpdateEditButton( work , drawWork );
+    PMSND_PlaySystemSE( CTVT_SND_PAUSE );
   }
 }
 
@@ -636,6 +646,7 @@ static void CTVT_DRAW_UpdateDrawing( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawW
       drawWork->editMode = CDED_PEN;
       CTVT_DRAW_UpdateEditButton( work , drawWork );
       CTVT_TPrintf("Spoit!![%x]\n",drawWork->penCol-0x8000);
+      PMSND_PlaySystemSE( CTVT_SND_SUPOITO );
     }
     else
     {

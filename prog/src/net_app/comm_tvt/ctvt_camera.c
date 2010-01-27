@@ -17,6 +17,7 @@
 #include "comm_tvt.naix"
 #include "ctvt_camera.h"
 #include "ctvt_comm.h"
+#include "ctvt_snd_def.h"
 
 //======================================================================
 //	define
@@ -40,6 +41,7 @@ typedef struct
 {
   BOOL isUpdate;
   BOOL isNew;
+  BOOL isFirst; //Œø‰Ê‰¹ˆ——p
   u16 dispPosX;
   u16 dispPosY;
   u16 dispSizeX;
@@ -130,6 +132,7 @@ CTVT_CAMERA_WORK* CTVT_CAMERA_Init( COMM_TVT_WORK *work , const HEAPID heapId )
     CTVT_CAMERA_SetMemberState_Target( &camWork->memWork[i] , 0 , 0 , 0 , 0 );
     camWork->memWork[i].isUpdate = FALSE;
     camWork->memWork[i].isNew = TRUE;
+    camWork->memWork[i].isFirst = TRUE;
   }
   return camWork;
 }
@@ -597,6 +600,12 @@ static const BOOL CTVT_CAMERA_UpdateMemberState( CTVT_CAMERA_WORK *camWork ,CTVT
       memWork->isUpdate = FALSE;
       memWork->isNew = FALSE;
     }
+    if( memWork->isFirst == TRUE )
+    {
+      memWork->isFirst = FALSE;
+      PMSND_PlaySystemSE( CTVT_SND_SLIDE_IN );
+    }
+
     return TRUE;
   }
   return FALSE;
@@ -666,6 +675,7 @@ static void CTVT_CAMERA_SetMemberState_TargetPos( COMM_TVT_WORK *work , CTVT_CAM
   }
   else
   {
+    camWork->memWork[tempIdx].isFirst = TRUE;
     switch( idx )
     {
       case 0:
@@ -748,6 +758,7 @@ static void CTVT_CAMERA_SetMemberState_TargetPos( COMM_TVT_WORK *work , CTVT_CAM
 void CTVT_CAMERA_SetNewMember( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork , const u8 idx )
 {
   camWork->memWork[idx].isNew = TRUE;
+  camWork->memWork[idx].isFirst = TRUE;
 }
 
 const BOOL CTVT_CAMERA_IsUpdateCameraAnime( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork , const u8 idx )
