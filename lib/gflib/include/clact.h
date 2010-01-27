@@ -120,6 +120,22 @@ typedef enum{
 	CLWK_PLTTOFFS_MODE_NUM
 } CLWK_PLTTOFFS_MODE;
 
+//-------------------------------------
+///	アニメーションコールバックタイプ
+//=====================================
+typedef enum{
+  CLWK_ANM_CALLBACK_TYPE_LAST_FRM,    // アニメーションシーケンスの最終フレーム終了時によびだす
+  CLWK_ANM_CALLBACK_TYPE_SPEC_FRM,    // 指定フレームの再生時に呼びだす
+  CLWK_ANM_CALLBACK_TYPE_EVER_FRM,    // 毎フレーム呼び出す
+
+  CLWK_ANM_CALLBACK_TYPE_MAX,    // システム内で使用
+} CLWK_ANM_CALLBACK_TYPE;
+
+//-------------------------------------
+///	アニメーションコールバック関数
+//=====================================
+typedef void (*CLWK_ANM_CALLBACK_FUNC)( u32 param, fx32 currentFrame );
+
 
 //-------------------------------------
 ///	設定サーフェース　絶対座標指定
@@ -284,6 +300,17 @@ typedef struct {
   s16   trans_y;          // 移動Y
 } GFL_CLWK_ANMELEMENT;
 
+
+//-------------------------------------
+///	アニメーション要素構造体
+//=====================================
+typedef struct {
+  u16 callback_type;  // CLWK_ANM_CALLBACK_TYPE
+  u16 frame_idx;      // CLWK_ANM_CALLBACK_TYPE_SPEC_FRM用フレームインデックス
+  u32 param;          // コールバックワーク
+  CLWK_ANM_CALLBACK_FUNC  p_func; // コールバック関数
+} GFL_CLWK_ANM_CALLBACK;
+   
 
 
 //-----------------------------------------------------------------------------
@@ -1611,6 +1638,27 @@ extern u32 GFL_CLACT_WK_GetUserAttrCell( const GFL_CLWK* cp_wk, u32 cellidx );
  */
 //-----------------------------------------------------------------------------
 extern void GFL_CLACT_WK_GetAnmElementNow( const GFL_CLWK* cp_wk, GFL_CLWK_ANMELEMENT* p_element );
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  アニメーションコールバックを設定
+ *
+ *	@param	p_wk         ワーク
+ *	@param  cp_data       コールバック情報
+ */
+//-----------------------------------------------------------------------------
+extern void GFL_CLACT_WK_StartAnmCallBack( GFL_CLWK* p_wk, const GFL_CLWK_ANM_CALLBACK* cp_data );
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  アニメーションコールバックをOFF
+ *
+ *	@param	p_wk         ワーク
+ */
+//-----------------------------------------------------------------------------
+extern void GFL_CLACT_WK_StopAnmCallBack( GFL_CLWK* p_wk );
+
 
 
 
