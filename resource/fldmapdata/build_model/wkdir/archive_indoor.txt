@@ -125,3 +125,4 @@
 "nsbmdfiles/c09_03_obj.nsbmd"
 "nsbmdfiles/c09_03_light.nsbmd"
 "nsbmdfiles/shelf06.nsbmd"
+"nsbmdfiles/globe01s.nsbmd"
