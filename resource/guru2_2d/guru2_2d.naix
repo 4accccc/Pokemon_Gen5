@@ -1,0 +1,34 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: guru2_2d.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_GURU2_2D_NAIX_
+#define NARC_GURU2_2D_NAIX_
+
+enum {
+	NARC_guru2_2d_cook_s_obj0_NCLR = 0,
+	NARC_guru2_2d_record_s_NCLR = 1,
+	NARC_guru2_2d_record_s_obj_NCLR = 2,
+	NARC_guru2_2d_union_chara_NCLR = 3,
+	NARC_guru2_2d_union_chara1_NCLR = 4,
+	NARC_guru2_2d_union_chara2_NCLR = 5,
+	NARC_guru2_2d_cook_s_obj0_NCGR = 6,
+	NARC_guru2_2d_record_s_NCGR = 7,
+	NARC_guru2_2d_record_s_obj_NCGR = 8,
+	NARC_guru2_2d_union_chara_NCGR = 9,
+	NARC_guru2_2d_cook_s_obj0_NCER = 10,
+	NARC_guru2_2d_record_human_NCER = 11,
+	NARC_guru2_2d_record_s_obj_NCER = 12,
+	NARC_guru2_2d_record_s_NSCR = 13,
+	NARC_guru2_2d_cook_s_obj0_NANR = 14,
+	NARC_guru2_2d_record_human_NANR = 15,
+	NARC_guru2_2d_record_s_obj_NANR = 16
+};
+
+/* NARC_GURU2_2D_NAIX_ */
+#endif
