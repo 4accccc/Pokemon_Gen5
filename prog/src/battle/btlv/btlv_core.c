@@ -654,7 +654,7 @@ void BTLV_UI_Restart( BTLV_CORE* core )
 }
 
 
-void BTLV_StartPokeSelect( BTLV_CORE* wk, const BTL_POKESELECT_PARAM* param, BOOL fCantEsc, BTL_POKESELECT_RESULT* result )
+void BTLV_StartPokeSelect( BTLV_CORE* wk, const BTL_POKESELECT_PARAM* param, int outMemberIndex, BOOL fCantEsc, BTL_POKESELECT_RESULT* result )
 {
   wk->plistData.pp = BTL_MAIN_GetPlayerPokeParty( wk->mainModule );
   wk->plistData.multi_pp = BTL_MAIN_GetMultiPlayerPokeParty( wk->mainModule );
@@ -664,7 +664,11 @@ void BTLV_StartPokeSelect( BTLV_CORE* wk, const BTL_POKESELECT_PARAM* param, BOO
   wk->plistData.heap = wk->heapID;
   wk->plistData.mode = param->bplMode;
   wk->plistData.end_flg = FALSE;
-  wk->plistData.sel_poke = 0;
+  if( outMemberIndex >= 0 ){
+    wk->plistData.sel_poke = outMemberIndex;
+  }else{
+    wk->plistData.sel_poke = 0;
+  }
   wk->plistData.chg_waza = 0;
   wk->plistData.rule = BTL_MAIN_GetRule( wk->mainModule );
   wk->plistData.cursor_flg = BTLV_SCD_GetCursorFlagPtr( wk->scrnD );
@@ -688,6 +692,7 @@ void BTLV_StartPokeSelect( BTLV_CORE* wk, const BTL_POKESELECT_PARAM* param, BOO
     }
   }
 
+  result->fCancel = TRUE;
   wk->pokeselResult = result;
   wk->selectItemSeq = 0;
 }
@@ -712,7 +717,6 @@ BOOL BTLV_WaitPokeSelect( BTLV_CORE* wk )
     if( wk->plistData.end_flg )
     {
       u32 i;
-      BOOL fSelected = FALSE;
 
       BTL_N_Printf( DBGSTR_VCORE_SelPokeEnd );
 
@@ -723,7 +727,7 @@ BOOL BTLV_WaitPokeSelect( BTLV_CORE* wk )
           {
             u8 storeCnt = BTL_POKESELECT_RESULT_GetCount( wk->pokeselResult );
             BTL_N_Printf( DBGSTR_VCORE_SelPokeEnd_Sel, i, storeCnt);
-            fSelected = TRUE;
+            wk->pokeselResult->fCancel = FALSE;
           }
         }
         else{

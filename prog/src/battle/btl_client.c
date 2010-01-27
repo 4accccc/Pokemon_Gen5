@@ -175,7 +175,7 @@ static void setupPokeSelParam( BTL_CLIENT* wk, u8 mode, u8 numSelect, BTL_POKESE
 static void store_pokesel_to_action( BTL_CLIENT* wk, const BTL_POKESELECT_RESULT* res );
 static u8 storeMyChangePokePos( BTL_CLIENT* wk, BtlPokePos* myCoverPos );
 static BOOL SubProc_UI_SelectChangeOrEscape( BTL_CLIENT* wk, int* seq );
-static BOOL SubProc_UI_SelectPokemon( BTL_CLIENT* wk, int* seq );
+static BOOL SubProc_UI_SelectPokemonForCover( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_UI_SelectPokemonForChange( BTL_CLIENT* wk, int* seq );
 static BOOL SelectPokemonUI_Core( BTL_CLIENT* wk, int* seq, u8 mode );
 static BOOL SubProc_AI_SelectPokemon( BTL_CLIENT* wk, int* seq );
@@ -436,7 +436,7 @@ static ClientSubProc getSubProc( BTL_CLIENT* wk, BtlAdapterCmd cmd )
     },
 
     { BTL_ACMD_SELECT_POKEMON_FOR_COVER,
-       { SubProc_UI_SelectPokemon, SubProc_AI_SelectPokemon,  SubProc_REC_SelectPokemon  }
+       { SubProc_UI_SelectPokemonForCover, SubProc_AI_SelectPokemon,  SubProc_REC_SelectPokemon  }
     },
 
     { BTL_ACMD_SELECT_POKEMON_FOR_CHANGE,
@@ -912,7 +912,7 @@ static BOOL selact_SelectChangePokemon( BTL_CLIENT* wk, int* seq )
         fCantEsc = TRUE;
       }
 //      setupPokeSelParam( wk, BPL_MODE_NORMAL, wk->numCoverPos, &wk->pokeSelParam, &wk->pokeSelResult  );
-      BTLV_StartPokeSelect( wk->viewCore, &wk->pokeSelParam, fCantEsc, &wk->pokeSelResult );
+      BTLV_StartPokeSelect( wk->viewCore, &wk->pokeSelParam, wk->procPokeIdx, fCantEsc, &wk->pokeSelResult );
       (*seq)++;
     }
     break;
@@ -920,12 +920,15 @@ static BOOL selact_SelectChangePokemon( BTL_CLIENT* wk, int* seq )
   case 1:
     if( BTLV_WaitPokeSelect(wk->viewCore) )
     {
-      u8 idx = BTL_POKESELECT_RESULT_GetLast( &wk->pokeSelResult );
-      if( idx < BTL_PARTY_MEMBER_MAX ){
-        BTL_N_Printf( DBGSTR_CLIENT_SelectChangePoke, idx);
-        BTL_ACTION_SetChangeParam( &wk->actionParam[wk->procPokeIdx], wk->procPokeIdx, idx );
-        SelActProc_Set( wk, selact_CheckFinish );
-        break;
+      if( !BTL_POKESELECT_IsCancel(&wk->pokeSelResult) )
+      {
+        u8 idx = BTL_POKESELECT_RESULT_GetLast( &wk->pokeSelResult );
+        if( idx < BTL_PARTY_MEMBER_MAX ){
+          BTL_N_Printf( DBGSTR_CLIENT_SelectChangePoke, idx);
+          BTL_ACTION_SetChangeParam( &wk->actionParam[wk->procPokeIdx], wk->procPokeIdx, idx );
+          SelActProc_Set( wk, selact_CheckFinish );
+          break;
+        }
       }
 
       BTL_N_Printf( DBGSTR_CLIENT_SelectChangePokeCancel );
@@ -1777,7 +1780,7 @@ static BOOL SubProc_UI_SelectChangeOrEscape( BTL_CLIENT* wk, int* seq )
  * @retval  BOOL
  */
 //----------------------------------------------------------------------------------
-static BOOL SubProc_UI_SelectPokemon( BTL_CLIENT* wk, int* seq )
+static BOOL SubProc_UI_SelectPokemonForCover( BTL_CLIENT* wk, int* seq )
 {
   return SelectPokemonUI_Core( wk, seq, BPL_MODE_CHG_DEAD );
 }
@@ -1820,7 +1823,7 @@ static BOOL SelectPokemonUI_Core( BTL_CLIENT* wk, int* seq, u8 mode )
         BTL_N_Printf( DBGSTR_CLIENT_ChangePokeCmdInfo, wk->myID, numSelect, mode );
         setupPokeSelParam( wk, mode, numSelect, &wk->pokeSelParam, &wk->pokeSelResult );
 
-        BTLV_StartPokeSelect( wk->viewCore, &wk->pokeSelParam, FALSE, &wk->pokeSelResult );
+        BTLV_StartPokeSelect( wk->viewCore, &wk->pokeSelParam, -1, FALSE, &wk->pokeSelResult );
         (*seq)++;
       }
       else
