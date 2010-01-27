@@ -548,7 +548,7 @@
   DEF_CMD( EvCmdBModelDirectAnimeSetLoop, EV_SEQ_BMODEL_DIRECT_ANIME_SET_LOOP )
 
   DEF_CMD( EvCmdC03Center_ControlPlayerWay, EV_SEQ_C03CENTER_PLAYERWAY )
-  NO_CMD()
+  DEF_CMD( EvCmdCrowdPeople, EV_SEQ_CROWD_PEOPLE_START )
   NO_CMD()
   NO_CMD()
 

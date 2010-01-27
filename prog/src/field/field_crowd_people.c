@@ -20,6 +20,8 @@
 #include "fieldmap.h"
 #include "field_crowd_people.h"
 
+#include "fieldmap/field_crowd_people.naix"
+
 //-----------------------------------------------------------------------------
 /**
  *					定数宣言
@@ -30,12 +32,12 @@
 enum
 {
   // 通常
-  FIELD_CROWD_PEOPLE_SEQ_NORMAL_WALKWAIT,// 動作完了待ち
+  FIELD_CROWD_PEOPLE_SEQ_NORMAL_WALKWAIT=0,// 動作完了待ち
   FIELD_CROWD_PEOPLE_SEQ_NORMAL_WALK,    // 判断＋指示
   FIELD_CROWD_PEOPLE_SEQ_NORMAL_END,     // 終了
 
   // 意地悪
-  FIELD_CROWD_PEOPLE_SEQ_NASTY_WALKWAIT,// 動作完了待ち
+  FIELD_CROWD_PEOPLE_SEQ_NASTY_WALKWAIT=0,// 動作完了待ち
   FIELD_CROWD_PEOPLE_SEQ_NASTY_WALK,    // 判断＋指示
   FIELD_CROWD_PEOPLE_SEQ_NASTY_END,     // 終了
 };
@@ -50,16 +52,16 @@ enum
 };
 
 // 人物最大数
-#define FIELD_CROWD_PEOPLE_MAX  (20)
+#define FIELD_CROWD_PEOPLE_MAX  (32)
 
 // 群集OBJ識別ID
-#define FIELD_CROWD_PEOPLE_ID (MMDL_ID_GIMMICK) // 仕掛けようOBJIDを使用させてもらう
+#define FIELD_CROWD_PEOPLE_ID (64) // 仕掛けようOBJIDを使用させてもらう
 
 // 人物基本値ヘッダー
-static const MMDL_HEADER sc_MMDL_HEADER = 
+static MMDL_HEADER s_MMDL_HEADER = 
 {
   FIELD_CROWD_PEOPLE_ID,  ///<識別ID
-  0,                      ///<表示するOBJコード
+  BOY1,                      ///<表示するOBJコード
   MV_DMY,                 ///<動作コード
   0,                      ///<イベントタイプ
   0,                      ///<イベントフラグ
@@ -73,6 +75,10 @@ static const MMDL_HEADER sc_MMDL_HEADER =
 	MMDL_HEADER_POSTYPE_GRID,///<ポジションタイプ
 };
 
+// オブセットを動かす数字
+#define FIELD_CROWD_PEOPLE_OFFSET_MOVE_MIN  ( -4 )
+#define FIELD_CROWD_PEOPLE_OFFSET_MOVE_RND  ( 8 )
+
 //-------------------------------------
 ///	通常動作　定数
 //=====================================
@@ -84,6 +90,8 @@ static const MMDL_HEADER sc_MMDL_HEADER =
 //=====================================
 #define FIELD_CROWD_PEOPLE_WK_PLAYER_HIT_NASTY_GRID (1) // 何歩前までチェックするのか？
 
+#define FIELD_CROWD_PEOPLE_PUT_PAR (1) // FIELD_CROWD_PEOPLE_PUT_PAR回に一回意地悪がでる
+
 
 
 //-------------------------------------
@@ -92,12 +100,36 @@ static const MMDL_HEADER sc_MMDL_HEADER =
 #define FIELD_CROWD_PEOPLE_BOOT_POINT_MAX (2)
 #define FIELD_CROWD_PEOPLE_OBJ_CODE_MAX (4)   // 表示OBJ_CODEの最大数
 
+#define FIELD_CROWD_PEOPLE_OBJ_WALK_FRAME (6) // 歩きのフレーム数
+
+
+#define FIELD_CROWD_PEOPLE_SCRIPT_MAX   (8) // OBJCODEのスクリプトの数
+#define FIELD_CROWD_PEOPLE_SCRIPT_NULL  (0xffff) // OBJCODEのスクリプトの不定値
+
+
+//-------------------------------------
+///	起動情報リストのデータ
+//=====================================
+typedef u32 BOOT_ZONEID_TYPE;
+
 
 //-----------------------------------------------------------------------------
 /**
  *					構造体宣言
 */
 //-----------------------------------------------------------------------------
+
+
+//-------------------------------------
+///	objcode スクリプトテーブル
+//=====================================
+typedef struct 
+{
+  u16 objcode;
+  u16 script_num;
+  u16 script[FIELD_CROWD_PEOPLE_SCRIPT_MAX];
+} FIELD_CROWD_PEOPLE_OBJSCRIPT;
+
 
 //-------------------------------------
 ///	起動点情報
@@ -139,6 +171,10 @@ typedef struct
 {
   FIELD_CROWD_PEOPLE_BOOT_DATA boot_data;
   s16 wait[ FIELD_CROWD_PEOPLE_BOOT_POINT_MAX ];
+
+
+  FIELD_CROWD_PEOPLE_OBJSCRIPT* p_objcode_script_tbl;
+  u32 objcode_num;
 } FIELD_CROWD_PEOPLE_BOOL_CONTROL;
 
 
@@ -172,39 +208,6 @@ typedef struct
 
 
 
-//-------------------------------------
-///	ダミー起動情報
-#include "arc/fieldmap/fldmmdl_objcode.h"
-//=====================================
-static const FIELD_CROWD_PEOPLE_BOOT_DATA sc_FIELD_CROWD_PEOPLE_BOOT_DATA = 
-{
-  30,
-  2,
-  3,
-  { BUSINESSMAN, OL, MAID },
-
-  {
-    {
-      // top bottom left right
-      0, 0, 16, 19,
-      // move_dir
-      DIR_DOWN,
-      // move_grid
-      63
-    },
-    {
-      // top bottom left right
-      63, 63, 16, 19,
-      // move_dir
-      DIR_UP,
-      // move_grid
-      63
-    },
-  },
-  
-};
-
-
 //-----------------------------------------------------------------------------
 /**
  *					プロトタイプ宣言
@@ -220,19 +223,27 @@ static void FIELD_CROWD_PEOPLE_TASK_Delete( FLDMAPFUNC_WORK* p_funcwk, FIELDMAP_
 static void FIELD_CROWD_PEOPLE_TASK_Update( FLDMAPFUNC_WORK* p_funcwk, FIELDMAP_WORK* p_fieldmap, void* p_work );
 
 
+
+// 
+static FIELD_CROWD_PEOPLE_WK* FIELD_CROWD_PEOPLE_GetClearWk( FIELD_CROWD_PEOPLE* p_sys );
+static const FIELD_CROWD_PEOPLE_WK* FIELD_CROWD_PEOPLE_Search( const FIELD_CROWD_PEOPLE* cp_sys, u16 gx, u16 gz, u16 move_dir, u16 type );
+
 //-------------------------------------
 ///	ワーク管理
 //=====================================
-static void FIELD_CROWD_PEOPLE_WK_Init( FIELD_CROWD_PEOPLE_WK* p_wk, MMDLSYS* p_fos, int zone_id );
+static void FIELD_CROWD_PEOPLE_WK_Init( FIELD_CROWD_PEOPLE_WK* p_wk, MMDLSYS* p_fos, int zone_id, const FIELD_CROWD_PEOPLE_BOOL_CONTROL* cp_data );
 static void FIELD_CROWD_PEOPLE_WK_Exit( FIELD_CROWD_PEOPLE_WK* p_wk );
 static void FIELD_CROWD_PEOPLE_WK_Main( FIELD_CROWD_PEOPLE_WK* p_wk, MMDLSYS* p_fos, const FIELD_PLAYER* cp_player );
-static void FIELD_CROWD_PEOPLE_WK_SetUp( FIELD_CROWD_PEOPLE_WK* p_wk, MMDLSYS* p_fos, const FIELD_PLAYER* cp_player, u16 obj_code, u16 type, u16 gx, u16 gz, u16 move_dir, u16 move_grid );
+static void FIELD_CROWD_PEOPLE_WK_SetUp( FIELD_CROWD_PEOPLE_WK* p_wk, MMDLSYS* p_fos, const FIELD_PLAYER* cp_player, u16 type, u16 gx, u16 gz, u16 move_dir, u16 move_grid );
 static void FIELD_CROWD_PEOPLE_WK_ClearMove( FIELD_CROWD_PEOPLE_WK* p_wk );
 
 
 // 起動管理
-static void FIELD_CROWD_PEOPLE_BOOT_CONTROL_Init( FIELD_CROWD_PEOPLE_BOOL_CONTROL* p_wk, int zone_id );
+static void FIELD_CROWD_PEOPLE_BOOT_CONTROL_Init( FIELD_CROWD_PEOPLE_BOOL_CONTROL* p_wk, int zone_id, HEAPID heapID );
 static void FIELD_CROWD_PEOPLE_BOOT_CONTROL_Exit( FIELD_CROWD_PEOPLE_BOOL_CONTROL* p_wk );
+static void FIELD_CROWD_PEOPLE_BOOT_CONTROL_Main( FIELD_CROWD_PEOPLE_BOOL_CONTROL* p_wk, FIELD_CROWD_PEOPLE* p_sysdata );
+static void FIELD_CROWD_PEOPLE_BOOT_CONTROL_SetUpPeople( const FIELD_CROWD_PEOPLE* cp_sysdata, const FIELD_CROWD_PEOPLE_BOOT_DATA* cp_data, const FIELD_CROWD_PEOPLE_BOOT_POINT* cp_point, FIELD_CROWD_PEOPLE_WK* p_people, u16 add_grid );
+static void FIELD_CROWD_PEOPLE_BOOT_CONTROL_StartUp( const FIELD_CROWD_PEOPLE_BOOL_CONTROL* cp_wk, FIELD_CROWD_PEOPLE* p_sysdata );
 
 // タイプごとの動き
 static void FIELD_CROWD_PEOPLE_WK_SetUpNormal( FIELD_CROWD_PEOPLE_WK* p_wk );
@@ -243,6 +254,7 @@ static void FIELD_CROWD_PEOPLE_WK_MainNasty( FIELD_CROWD_PEOPLE_WK* p_wk, MMDLSY
 
 // 引数歩前に自機がいないかチェック
 static BOOL FIELD_CROWD_PEOPLE_WK_IsFrontPlayer( const FIELD_CROWD_PEOPLE_WK* cp_wk, const FIELD_PLAYER* cp_player, u16 grid );
+static BOOL FIELD_CROWD_PEOPLE_WK_TOOL_IsGridHit( s16 mygx, s16 mygz, s16 pl_gx, s16 pl_gz, u16 grid, u16 move_dir );
 
 
 static const FLDMAPFUNC_DATA sc_FLDMAPFUNC_DATA = 
@@ -278,26 +290,28 @@ FLDMAPFUNC_WORK * FIELD_CROWD_PEOPLE_Create( FLDMAPFUNC_SYS * sys )
  *	@brief  群集ワーク生成
  */
 //-----------------------------------------------------------------------------
-static void FIELD_CROWD_PEOPLE_TASK_Create( FLDMAPFUNC_WORK* p_funcwk, FIELDMAP_WORK* p_fieldmap, void* p_work )
-{
+static void FIELD_CROWD_PEOPLE_TASK_Create( FLDMAPFUNC_WORK* p_funcwk, FIELDMAP_WORK* p_fieldmap, void* p_work ) {
   FIELD_CROWD_PEOPLE* p_wk = p_work;
   int i;
   int zone_id;
+  HEAPID heapID;
 
   // 管理システムワーク初期化
   p_wk->p_player  = FIELDMAP_GetFieldPlayer( p_fieldmap );
   p_wk->p_fos     = FIELDMAP_GetMMdlSys( p_fieldmap );
   zone_id = FIELDMAP_GetZoneID( p_fieldmap );
+  heapID = FIELDMAP_GetHeapID( p_fieldmap );
+
+  // ゾーンから起動情報を読み込み
+  FIELD_CROWD_PEOPLE_BOOT_CONTROL_Init( &p_wk->boot_control, zone_id, heapID );
 
   for( i=0; i<FIELD_CROWD_PEOPLE_MAX; i++ )
   {
-    FIELD_CROWD_PEOPLE_WK_Init( &p_wk->people_wk[i], p_wk->p_fos, zone_id ); 
+    FIELD_CROWD_PEOPLE_WK_Init( &p_wk->people_wk[i], p_wk->p_fos, zone_id, &p_wk->boot_control ); 
   }
 
-  // ゾーンから起動情報を読み込み
-  {
-    //GFL_STD_MemCopy( &sc_FIELD_CROWD_PEOPLE_BOOT_DATA, &p_wk->boot_data, sizeof(FIELD_CROWD_PEOPLE_BOOT_DATA) );
-  }
+  // 全員を配置
+  FIELD_CROWD_PEOPLE_BOOT_CONTROL_StartUp( &p_wk->boot_control, p_wk );
 }
 
 //----------------------------------------------------------------------------
@@ -316,6 +330,9 @@ static void FIELD_CROWD_PEOPLE_TASK_Delete( FLDMAPFUNC_WORK* p_funcwk, FIELDMAP_
     FIELD_CROWD_PEOPLE_WK_Exit( &p_wk->people_wk[i] ); 
   }
 
+  // ゾーンから起動情報を破棄
+  FIELD_CROWD_PEOPLE_BOOT_CONTROL_Exit( &p_wk->boot_control );
+
   p_wk->p_player  = NULL;
   p_wk->p_fos     = NULL;
 }
@@ -331,7 +348,7 @@ static void FIELD_CROWD_PEOPLE_TASK_Update( FLDMAPFUNC_WORK* p_funcwk, FIELDMAP_
   int i;
 
   // 起動チェック
-  
+  FIELD_CROWD_PEOPLE_BOOT_CONTROL_Main( &p_wk->boot_control, p_wk ); 
 
   
   // 管理システムワーク更新
@@ -346,6 +363,108 @@ static void FIELD_CROWD_PEOPLE_TASK_Update( FLDMAPFUNC_WORK* p_funcwk, FIELDMAP_
 
 
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  空いているワークを取得
+ *
+ *	@param	p_sys 
+ *
+ *	@return
+ */
+//-----------------------------------------------------------------------------
+static FIELD_CROWD_PEOPLE_WK* FIELD_CROWD_PEOPLE_GetClearWk( FIELD_CROWD_PEOPLE* p_sys )
+{
+  int i;
+
+  for( i=0; i<FIELD_CROWD_PEOPLE_MAX; i++ )
+  {
+    if( p_sys->people_wk[i].flag == FALSE )
+    {
+      return &p_sys->people_wk[i];
+    }
+  }
+
+  return NULL;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  gx gzからmove_dirの方向で　type動作しているオブジェを検索
+ *
+ *	@param	cp_sys       システムワーク
+ *	@param	gx          グリッドX
+ *	@param	gz          グリッドZ
+ *	@param	move_dir    動作方向
+ *	@param	type        タイプ 
+ *
+ *	@return 人物ワーク
+ */
+//-----------------------------------------------------------------------------
+static const FIELD_CROWD_PEOPLE_WK* FIELD_CROWD_PEOPLE_Search( const FIELD_CROWD_PEOPLE* cp_sys, u16 gx, u16 gz, u16 move_dir, u16 type )
+{
+  int i;
+  s16 move_x;
+  s16 move_z;
+  s16 dif_x;
+  s16 dif_z;
+  s16 mdl_gx, mdl_gz;
+
+
+
+  switch( move_dir )
+  {
+  case DIR_UP:
+    move_x = 0;
+    move_z = -1;
+    break;
+  case DIR_DOWN:
+    move_x = 0;
+    move_z = 1;
+    break;
+  case DIR_RIGHT:
+    move_x = 1;
+    move_z = 0;
+    break;
+  case DIR_LEFT:
+    move_x = -1;
+    move_z = 0;
+    break;
+  }
+  
+
+  for( i=0; i<FIELD_CROWD_PEOPLE_MAX; i++ )
+  {
+    if( cp_sys->people_wk[i].flag )
+    {
+      if(cp_sys->people_wk[i].type == FIELD_CROWD_PEOPLE_TYPE_NASTY)
+      {
+        // グリッド方向にいるか？
+        mdl_gx = MMDL_GetGridPosX( cp_sys->people_wk[i].p_mmdl );
+        mdl_gz = MMDL_GetGridPosZ( cp_sys->people_wk[i].p_mmdl );
+
+        dif_x = mdl_gx - gx;
+        dif_z = mdl_gz - gz;
+
+        if( dif_x != 0 ){
+          dif_x /= MATH_ABS( dif_x );
+        }
+        if( dif_z != 0 ){
+          dif_z /= MATH_ABS( dif_z );
+        }
+
+        // 移動方向が一致したら、OK
+        if( (dif_x == move_x) || (dif_z == move_z) )
+        {
+          return &cp_sys->people_wk[i];
+        }
+      }
+    }
+  }
+
+  return NULL;
+}
+
+
 
 //----------------------------------------------------------------------------
 /**
@@ -355,9 +474,29 @@ static void FIELD_CROWD_PEOPLE_TASK_Update( FLDMAPFUNC_WORK* p_funcwk, FIELDMAP_
  *	@param	p_fos     動作モデルシステム
  */
 //-----------------------------------------------------------------------------
-static void FIELD_CROWD_PEOPLE_WK_Init( FIELD_CROWD_PEOPLE_WK* p_wk, MMDLSYS* p_fos, int zone_id )
+static void FIELD_CROWD_PEOPLE_WK_Init( FIELD_CROWD_PEOPLE_WK* p_wk, MMDLSYS* p_fos, int zone_id, const FIELD_CROWD_PEOPLE_BOOL_CONTROL* cp_data )
 {
-  p_wk->p_mmdl    = MMDLSYS_AddMMdl( p_fos, &sc_MMDL_HEADER, zone_id ); 
+  u16 obj_code;
+  u32 rand = GFUser_GetPublicRand(0);
+  int i;
+
+
+  // 見た目決定
+  // テーブルからランダムで。
+  obj_code = cp_data->boot_data.obj_code_tbl[ rand % cp_data->boot_data.obj_code_num ];
+
+  s_MMDL_HEADER.obj_code = obj_code;
+/*
+  for( i=0; i<cp_data->objcode_num; i++ )
+  {
+    if( cp_data->p_objcode_script_tbl[i].objcode == obj_code )
+    {
+      s_MMDL_HEADER.event_id = cp_data->p_objcode_script_tbl[i].script[ rand % cp_data->p_objcode_script_tbl[i].script_num ];
+    }
+  }
+*/
+  
+  p_wk->p_mmdl    = MMDLSYS_AddMMdl( p_fos, &s_MMDL_HEADER, zone_id ); 
   p_wk->flag      = 0;
   p_wk->seq       = 0;
   p_wk->type      = 0;
@@ -371,7 +510,7 @@ static void FIELD_CROWD_PEOPLE_WK_Init( FIELD_CROWD_PEOPLE_WK* p_wk, MMDLSYS* p_
     VecFx32 offset = {0,0,0};
 
     // ハングリッド　＋　－
-    offset.x = -((FIELD_CONST_GRID_SIZE/2)<<FX32_SHIFT) + GFUser_GetPublicRand(FIELD_CONST_GRID_SIZE<<FX32_SHIFT);
+    offset.x = (FIELD_CROWD_PEOPLE_OFFSET_MOVE_MIN<<FX32_SHIFT) + GFUser_GetPublicRand(FIELD_CROWD_PEOPLE_OFFSET_MOVE_RND<<FX32_SHIFT);
     MMDL_SetVectorDrawOffsetPos( p_wk->p_mmdl, &offset );
   }
 }
@@ -415,6 +554,17 @@ static void FIELD_CROWD_PEOPLE_WK_Main( FIELD_CROWD_PEOPLE_WK* p_wk, MMDLSYS* p_
   
   // タイプごとの動き
   cpFunc[ p_wk->type ]( p_wk, p_fos, cp_player );
+
+  // 座標を表示
+#ifdef PM_DEBUG
+  /*
+  {
+    VecFx32 pos;
+    MMDL_GetVectorPos( p_wk->p_mmdl, &pos );
+    TOMOYA_Printf( "mdl pos x[%d] y[%d] z[%d]\n", FX_Whole(pos.x), FX_Whole(pos.y), FX_Whole(pos.z) );
+  }
+  */
+#endif
 }
 
 //----------------------------------------------------------------------------
@@ -424,7 +574,6 @@ static void FIELD_CROWD_PEOPLE_WK_Main( FIELD_CROWD_PEOPLE_WK* p_wk, MMDLSYS* p_
  *	@param	p_wk        ワーク
  *	@param	p_fos       動作モデルシステム
  *	@param	cp_player   主人公ワーク
- *	@param  obj_code    見た目
  *	@param  type        動作タイプ
  *	@param	gx          開始グリッド位置
  *	@param	gz          開始グリッド位置
@@ -432,7 +581,7 @@ static void FIELD_CROWD_PEOPLE_WK_Main( FIELD_CROWD_PEOPLE_WK* p_wk, MMDLSYS* p_
  *	@param  move_grid   動作グリッド距離
  */
 //-----------------------------------------------------------------------------
-static void FIELD_CROWD_PEOPLE_WK_SetUp( FIELD_CROWD_PEOPLE_WK* p_wk, MMDLSYS* p_fos, const FIELD_PLAYER* cp_player, u16 obj_code, u16 type, u16 gx, u16 gz, u16 move_dir, u16 move_grid )
+static void FIELD_CROWD_PEOPLE_WK_SetUp( FIELD_CROWD_PEOPLE_WK* p_wk, MMDLSYS* p_fos, const FIELD_PLAYER* cp_player, u16 type, u16 gx, u16 gz, u16 move_dir, u16 move_grid )
 {
   static void (* const cpFunc[FIELD_CROWD_PEOPLE_TYPE_MAX])( FIELD_CROWD_PEOPLE_WK* p_wk ) = 
   {
@@ -450,8 +599,8 @@ static void FIELD_CROWD_PEOPLE_WK_SetUp( FIELD_CROWD_PEOPLE_WK* p_wk, MMDLSYS* p
 
   // 人物の情報を大きく変更
   {
-    MMDL_HEADER header = sc_MMDL_HEADER;
-    header.obj_code = obj_code;
+    MMDL_HEADER header = s_MMDL_HEADER;
+    header.obj_code = 10;
     header.dir      = move_dir;
     MMDLHEADER_SetGridPos( &header, gx, gz, 0 );
     MMDL_ChangeMoveParam( p_wk->p_mmdl, &header );
@@ -490,8 +639,43 @@ static void FIELD_CROWD_PEOPLE_WK_ClearMove( FIELD_CROWD_PEOPLE_WK* p_wk )
  *	@param	zone_id     ゾーンID
  */
 //-----------------------------------------------------------------------------
-static void FIELD_CROWD_PEOPLE_BOOT_CONTROL_Init( FIELD_CROWD_PEOPLE_BOOL_CONTROL* p_wk, int zone_id )
+static void FIELD_CROWD_PEOPLE_BOOT_CONTROL_Init( FIELD_CROWD_PEOPLE_BOOL_CONTROL* p_wk, int zone_id, HEAPID heapID )
 {
+  int i;
+
+  {
+    BOOT_ZONEID_TYPE* p_list;
+    u32 list_num;
+    u32 list_idx;
+    u32 size;
+
+    // 起動IDXを求める
+    p_list = GFL_ARC_UTIL_LoadEx( ARCID_FIELD_CROWD_PEOPLE, NARC_field_crowd_people_list_data_dat, FALSE, GFL_HEAP_LOWID(heapID), &size );
+    list_num = size / sizeof(BOOT_ZONEID_TYPE);
+
+    for( i=0; i<list_num; i++ )
+    {
+      if( p_list[i] == zone_id )
+      {
+        break;
+      }
+    }
+    GF_ASSERT_MSG( i < list_num, "zoneに群集情報がありません。\n" );
+    list_idx = i;
+
+    TOMOYA_Printf( "crowd people list_idx %d\n", list_idx );
+    
+    // 起動ポイント情報を読み込み
+    GFL_ARC_LoadData( &p_wk->boot_data, ARCID_FIELD_CROWD_PEOPLE, list_idx );
+
+    GFL_HEAP_FreeMemory( p_list );
+  }
+
+  for( i=0; i<FIELD_CROWD_PEOPLE_BOOT_POINT_MAX; i++ )
+  {
+    p_wk->wait[i] = GFUser_GetPublicRand(p_wk->boot_data.wait); // 初期ウエイト値
+  }
+
 }
 
 //----------------------------------------------------------------------------
@@ -503,8 +687,138 @@ static void FIELD_CROWD_PEOPLE_BOOT_CONTROL_Init( FIELD_CROWD_PEOPLE_BOOL_CONTRO
 //-----------------------------------------------------------------------------
 static void FIELD_CROWD_PEOPLE_BOOT_CONTROL_Exit( FIELD_CROWD_PEOPLE_BOOL_CONTROL* p_wk )
 {
+  // なにもしない
 }
 
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  人物　起動　メイン処理
+ *
+ *	@param	p_wk        ワーク
+ *	@param	p_sysdata   システムデータ
+ */
+//-----------------------------------------------------------------------------
+static void FIELD_CROWD_PEOPLE_BOOT_CONTROL_Main( FIELD_CROWD_PEOPLE_BOOL_CONTROL* p_wk, FIELD_CROWD_PEOPLE* p_sysdata )
+{
+  int i;
+  
+  for( i=0; i<p_wk->boot_data.point_num; i++ )
+  {
+    // ウエイト時間がいったら、人を出す
+    if( p_wk->wait[i] >= p_wk->boot_data.wait )
+    {
+      FIELD_CROWD_PEOPLE_WK* p_people = FIELD_CROWD_PEOPLE_GetClearWk( p_sysdata );
+      if( p_people )
+      {
+        // そのポイントから人を出す。
+        FIELD_CROWD_PEOPLE_BOOT_CONTROL_SetUpPeople( p_sysdata, &p_wk->boot_data, &p_wk->boot_data.point[i], p_people, 0 ); 
+        p_wk->wait[i] = 0;
+      }
+      else
+      {
+        TOMOYA_Printf( "CROWD people people none\n" );
+      }
+    }
+    else
+    {
+      p_wk->wait[i] ++;
+    }
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  起動管理処理　人物情報のセットアップ
+ *
+ *	@param	cp_data       起動データ
+ *	@param	cp_point      起動ポイントデータ
+ *	@param	p_people      セットアップ人物
+ */
+//-----------------------------------------------------------------------------
+static void FIELD_CROWD_PEOPLE_BOOT_CONTROL_SetUpPeople( const FIELD_CROWD_PEOPLE* cp_sysdata, const FIELD_CROWD_PEOPLE_BOOT_DATA* cp_data, const FIELD_CROWD_PEOPLE_BOOT_POINT* cp_point, FIELD_CROWD_PEOPLE_WK* p_people, u16 add_grid )
+{
+  u16 gx, gz;
+  u16 type = FIELD_CROWD_PEOPLE_TYPE_NORMAL;
+  u32 rand = GFUser_GetPublicRand( 0 );
+  s32 move_grid;
+  
+  // 起動グリッド決定
+  if( (cp_point->move_dir == DIR_UP) || (cp_point->move_dir == DIR_DOWN) )
+  {
+    gx = cp_point->left + (rand % ((cp_point->right - cp_point->left)+1));
+    if(cp_point->move_dir == DIR_UP){
+      gz = cp_point->top - add_grid;
+    }else{
+      gz = cp_point->top + add_grid;
+    }
+  }
+  else
+  {
+    if(cp_point->move_dir == DIR_LEFT){
+      gx = cp_point->left - add_grid;
+    }else{
+      gx = cp_point->left + add_grid;
+    }
+    gz = cp_point->top + (rand % ((cp_point->bottom - cp_point->top)+1));
+  }
+
+  // 動作タイプ決定
+  // そのグリッド上に話せる人がいなければ、話せる意地悪な人を出す。
+  if( FIELD_CROWD_PEOPLE_Search( cp_sysdata, gx, gz, cp_point->move_dir, FIELD_CROWD_PEOPLE_TYPE_NASTY ) == NULL )
+  {
+    if( (rand % FIELD_CROWD_PEOPLE_PUT_PAR) == 0 )
+    {
+      type = FIELD_CROWD_PEOPLE_TYPE_NASTY;
+    }
+  }
+
+  move_grid = cp_point->move_grid - add_grid;
+  if( move_grid <= 0 ){
+    move_grid = 1;
+  }
+
+  // 設定
+  FIELD_CROWD_PEOPLE_WK_SetUp( p_people, cp_sysdata->p_fos, cp_sysdata->p_player, type, gx, gz, cp_point->move_dir, cp_point->move_grid - add_grid );
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  開始人物配置
+ *
+ *	@param	p_wk        ワーク
+ *	@param	p_sysdata   システムデータ
+ */
+//-----------------------------------------------------------------------------
+static void FIELD_CROWD_PEOPLE_BOOT_CONTROL_StartUp( const FIELD_CROWD_PEOPLE_BOOL_CONTROL* cp_wk, FIELD_CROWD_PEOPLE* p_sysdata )
+{
+  int i, j;
+  int total_time;
+  int total_people_num;
+  int time;
+
+  for( i=0; i<cp_wk->boot_data.point_num; i++ )
+  {
+    // 全部の位置を歩くために必要な全体タイム
+    total_time = cp_wk->boot_data.point[i].move_grid * FIELD_CROWD_PEOPLE_OBJ_WALK_FRAME;
+
+    // waitで割ると、何人分かチェック
+    total_people_num = total_time / cp_wk->boot_data.wait;
+
+    // その人数セットアップ
+    time = 0;
+    for( j=0; j<total_people_num; j++ )
+    {
+      FIELD_CROWD_PEOPLE_WK* p_people = FIELD_CROWD_PEOPLE_GetClearWk( p_sysdata );
+
+      if( p_people ){
+        FIELD_CROWD_PEOPLE_BOOT_CONTROL_SetUpPeople( p_sysdata, &cp_wk->boot_data, &cp_wk->boot_data.point[i], p_people, time / FIELD_CROWD_PEOPLE_OBJ_WALK_FRAME ); 
+        time += cp_wk->boot_data.wait;
+      }
+    }
+  }
+}
 
 
 
@@ -554,6 +868,10 @@ static void FIELD_CROWD_PEOPLE_WK_MainNormal( FIELD_CROWD_PEOPLE_WK* p_wk, MMDLS
     if( MMDL_CheckEndAcmd( p_wk->p_mmdl ) )
     {
       p_wk->seq ++;
+    }
+    else
+    {
+      break;
     }
   case FIELD_CROWD_PEOPLE_SEQ_NORMAL_WALK:    // 判断＋指示
 
@@ -632,6 +950,10 @@ static void FIELD_CROWD_PEOPLE_WK_MainNasty( FIELD_CROWD_PEOPLE_WK* p_wk, MMDLSY
     {
       p_wk->seq ++;
     }
+    else
+    {
+      break;
+    }
   case FIELD_CROWD_PEOPLE_SEQ_NASTY_WALK:    // 判断＋指示
 
     // 終了処理
@@ -687,7 +1009,6 @@ static BOOL FIELD_CROWD_PEOPLE_WK_IsFrontPlayer( const FIELD_CROWD_PEOPLE_WK* cp
 {
   s16 player_gx, player_gz;
   s16 my_gx, my_gz;
-  s32 grid_dif;
   const MMDL* cp_playermmdl = FIELD_PLAYER_GetMMdl( cp_player );
   
   player_gx = MMDL_GetGridPosX( cp_playermmdl );
@@ -695,19 +1016,53 @@ static BOOL FIELD_CROWD_PEOPLE_WK_IsFrontPlayer( const FIELD_CROWD_PEOPLE_WK* cp
   my_gx = MMDL_GetGridPosX( cp_wk->p_mmdl );
   my_gz = MMDL_GetGridPosZ( cp_wk->p_mmdl );
   
-  switch( cp_wk->move_dir )
+  if( FIELD_CROWD_PEOPLE_WK_TOOL_IsGridHit( my_gx, my_gz, player_gx, player_gz, grid, cp_wk->move_dir ) )
+  {
+    return TRUE;
+  }
+
+  player_gx = MMDL_GetOldGridPosX( cp_playermmdl );
+  player_gz = MMDL_GetOldGridPosZ( cp_playermmdl );
+  
+  return FIELD_CROWD_PEOPLE_WK_TOOL_IsGridHit( my_gx, my_gz, player_gx, player_gz, grid, cp_wk->move_dir );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  grid歩前にいるのかのグリッド単位のチェック
+ *
+ *	@param	mygx
+ *	@param	mygz
+ *	@param	pl_gx
+ *	@param	pl_gz
+ *	@param	grid 
+ *
+ *	@retval TRUE  いる
+ *	@retval FALSE いない
+ */
+//-----------------------------------------------------------------------------
+static BOOL FIELD_CROWD_PEOPLE_WK_TOOL_IsGridHit( s16 mygx, s16 mygz, s16 pl_gx, s16 pl_gz, u16 grid, u16 move_dir )
+{
+  s32 grid_dif;
+  s32 grid_dif_2;
+
+  switch( move_dir )
   {
   case DIR_UP:
-    grid_dif = my_gz - player_gz;
+    grid_dif = mygz - pl_gz;
+    grid_dif_2 = mygx - pl_gx;
     break;
   case DIR_DOWN:
-    grid_dif = player_gz - my_gz;
+    grid_dif = pl_gz - mygz;
+    grid_dif_2 = mygx - pl_gx;
     break;
   case DIR_LEFT:
-    grid_dif = my_gx - player_gx;
+    grid_dif = mygx - pl_gx;
+    grid_dif_2 = mygz - pl_gz;
     break;
   case DIR_RIGHT:
-    grid_dif = player_gx - my_gx;
+    grid_dif = pl_gx - mygx;
+    grid_dif_2 = mygz - pl_gz;
     break;
 
   default:
@@ -715,7 +1070,7 @@ static BOOL FIELD_CROWD_PEOPLE_WK_IsFrontPlayer( const FIELD_CROWD_PEOPLE_WK* cp
     break;
   }
 
-  if( grid_dif <= grid )
+  if( ((grid_dif <= grid) && (grid_dif >= 0)) && (grid_dif_2 == 0) )
   {
     return TRUE;
   }

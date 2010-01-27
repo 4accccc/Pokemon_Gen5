@@ -128,12 +128,14 @@
 
 #define DEBUG_FIELDMAP_ZONE_CHANGE_SYNC    // ゾーンチェンジに必要なシンク数を監視
 
+
 #endif
 
 // フィールドマップ描画にかかる処理時間を求める
 #ifdef DEBUG_FIELDMAP_DRAW_MICRO_SECOND_CHECK
 #define DEBUG_FIELDMAP_DRAW_MICRO_SECOND_CHECK_DRAW_KEY ( PAD_BUTTON_L )
 #endif //DEBUG_FIELDMAP_DRAW_MICRO_SECOND_CHECK
+
 
 #define FLD3DCUTIN_SIZE   (0xc000)   //フィールド3Ｄカットインのヒープサイズ
 
@@ -785,6 +787,7 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
   //3Ｄ描画モードは通常でセットアップ
   fieldWork->Draw3DMode = DRAW3DMODE_NORMAL;
 
+
   return MAINSEQ_RESULT_NEXTSEQ;
 }
 
@@ -860,6 +863,7 @@ static MAINSEQ_RESULT mainSeqFunc_ready(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
 static MAINSEQ_RESULT mainSeqFunc_update_top(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork )
 {
   if (fieldWork->MainHookFlg) return MAINSEQ_RESULT_CONTINUE;
+
 
 	//キーの分割取得カウンタをリセット
 	GFL_UI_ResetFrameRate();

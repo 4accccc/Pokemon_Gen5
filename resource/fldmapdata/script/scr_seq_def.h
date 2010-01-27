@@ -7086,6 +7086,20 @@
   .short EV_SEQ_C03CENTER_PLAYERWAY
   .short \frame
   .endm
+  
+
+//--------------------------------------------------------------
+/**
+ * @brief C03 群集表現開始
+ */
+//--------------------------------------------------------------
+#define _CROWD_PEOPLE_START() \
+    _ASM_CROWD_PEOPLE_START
+
+  .macro  _ASM_CROWD_PEOPLE_START
+  .short EV_SEQ_CROWD_PEOPLE_START
+  .endm
+
 
 //--------------------------------------------------------------
 /**

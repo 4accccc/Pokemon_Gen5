@@ -20,8 +20,26 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA    ev_c03p09
+_EVENT_DATA    ev_init_c03p09
+_EVENT_DATA    ev_recover_c03p09
 _EVENT_DATA_END
 
+
+
+/************************************************************/
+/*				フィールドイニットスクリプト				*/
+/************************************************************/
+INIT_EVENT_START	ev_init_c03p09
+	//群集の起動
+  _CROWD_PEOPLE_START()
+
+INIT_EVENT_END
+
+INIT_EVENT_START	ev_recover_c03p09
+	//群集の起動
+  _CROWD_PEOPLE_START()
+
+INIT_EVENT_END
 
 /**************************************************************/
 /*            FLAG_CHANGE_LABEL                               */

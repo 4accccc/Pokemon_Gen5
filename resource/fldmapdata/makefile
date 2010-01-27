@@ -32,6 +32,7 @@ SUBDIRS	=	zonetable/zoneindex \
 					entrance_camera \
 					pushrock \
 					eventdata/binary \
+					crowd_people \
 					zonetable/fieldskill_mapeffect \
 					zonetable
 					
