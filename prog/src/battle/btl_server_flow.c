@@ -4335,11 +4335,12 @@ static BOOL scproc_Fight_CheckConf( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker
 {
   if( BPP_CheckSick(attacker, WAZASICK_KONRAN) )
   {
-    scPut_ConfCheck( wk, attacker );
-    if( BTL_CALC_IsOccurPer(BTL_CONF_EXE_RATIO) )
-    {
-      return TRUE;
+    if( BPP_CheckKonranWakeUp(attacker) ){
+      scPut_CureSick( wk, attacker, WAZASICK_KONRAN, NULL );
+      return FALSE;
     }
+    scPut_ConfCheck( wk, attacker );
+    return BTL_CALC_IsOccurPer( BTL_CONF_EXE_RATIO );
   }
   return FALSE;
 }
