@@ -132,6 +132,7 @@ SUBDIRS	=	wmi \
 			regulation_card \
 			comm_tvt \
 			guru2 \
+			guru2_2d \
 			beacon_status \
 			tr_ai \
 			enceff_imd \
