@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2010-01-13T18:33:37"/>
+	<create user="matsumiya" host="W00207" date="2010-01-27T15:11:29"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -686,6 +686,21 @@ musician_01</attribute>
 		<language name="JPN_KANJI" width="256">勝負を　して　わかったよ▼
 オマエ　サイコーだぜ！
 これを　持っていけ！▼</language>
+	</row>
+
+	<row id="msg_r05_add_goods_01" text-color="#ff0000,,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+		<comment>システム
+・0＝グッズ名
+・1＝プレイヤー名</comment>
+		<attribute name="キャラ指定">システム</attribute>
+		<language name="JPN" width="256">[1:0A:グッズ名:0]を　もらった！▼
+[1:00:トレーナー名:1]は
+[1:0A:グッズ名:0]を▽
+グッズケースの　なかに　しまった！</language>
+		<language name="JPN_KANJI" width="256">[1:0A:グッズ名:0]を　もらった！▼
+[1:00:トレーナー名:1]は
+[1:0A:グッズ名:0]を▽
+グッズケースの　なかに　しまった！</language>
 	</row>
 
 	<row id="msg_r05_musician_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
