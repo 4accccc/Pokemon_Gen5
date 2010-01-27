@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="yoshida" host="W00151" date="2010-01-20T14:03:06" source="vs_demo_start.mb"/>
+	<create user="genya_hosaka" host="W00159" date="2010-01-27T19:35:38"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
-	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+	<generator name="NNS_3DMaterialEditor" version="2.8.0.20050620"/>
 </head>
 
 <body>
 
-<original_create user="yoshida" host="W00151" date="2010-01-20T14:03:06" source="vs_demo_start.mb"/>
+<original_create user="yoshida" host="W00151" date="2010-01-27T19:25:12" source="vs_demo_start.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -22,7 +22,7 @@
 	tex_matrix_mode="maya"
 	compress_node="merge" node_size="4 4"
 	compress_material="on" material_size="2 2"
-	output_texture="used"
+	output_texture="all"
 	force_full_weight="off"
 	use_primitive_strip="on"
 />
@@ -169,76 +169,139 @@
 	</tex_image>
 	<tex_image index="1" name="line_vs"
 		width="64" height="32" original_width="64" original_height="32"
-		format="palette16"
-		color0_mode="transparency"
+		format="a3i5"
 		palette_name="line_vs_pl"
 		path="C:/mayadata/line_vs.tga"
 	>
-		<bitmap size="512">
-			ffff ffff ffff ffff ddef ffed ffff ffff
-			eeee feed ffff ffff ffff ffff ffff ffff
-			ffff ffff ffff efff bbcd edcb ffff eeff
-			bbcd edcb ffff ffff ffff ffff ffff ffff
-			ffff ffff ffff efff 69ac dca8 fffe cdef
-			668a db66 fffe ffff ffff ffff ffff ffff
-			ffff ffff ffff deff 149b ca85 efee 9bcd
-			1146 cb31 fffe ffff ffff ffff ffff ffff
-			ffff ffff ffff cdef 1169 b973 deed 48ac
-			1112 db85 fffe ffff ffff ffff ffff ffff
-			ffff ffff ffff acef 1148 b972 cded 137a
-			4111 dca8 eeee ffff ffff ffff ffff ffff
-			ffff ffff ffff 9bde 1125 b972 acdd 1137
-			8511 ccba dccc ffed ffff ffff ffff ffff
-			ffff ffff ffff 8ace 1113 c972 8acd 1113
-			9841 9aaa a999 edcb ffff ffff ffff ffff
-			ffff ffff ffff 79cd 1112 ca82 59bc 1111
-			9971 6689 6665 cba8 ffed ffff ffff ffff
-			ffff ffff efff 69bd 1111 cb95 279b 1111
-			8884 1245 3211 a864 fedc ffff ffff ffff
-			ffff ffff efff 69bd 1111 aa96 1379 3111
-			3787 1111 1111 6411 edca ffff ffff ffff
-			ffff ffff efff 59bd 1111 9996 1126 7411
-			1368 1111 1122 2111 eca7 ffff ffff ffff
-			ffff ffff efff 59bd 1111 5785 1111 8741
-			1127 4211 2566 1111 eca6 ffff ffff ffff
-			ffff ffff efff 59bd 1111 1464 1111 8972
-			1116 8511 5899 1111 eca5 ffff ffff ffff
-			ffff ffff efff 59bd 1111 1132 1111 9995
-			1116 9711 8aba 4222 edb8 ffff ffff ffff
-			ffff ffff efff 69bd 1111 1111 3111 9aa8
-			1116 8611 9aaa 9777 edcb ffff ffff ffff
-			ffff ffff ffff 69cd 1111 1111 7411 abba
-			1117 5311 9986 cbaa feed ffff ffff ffff
-			ffff ffff ffff 6ace 1111 1111 a841 bcdc
-			1138 1111 6432 cba8 ffed ffff ffff ffff
-			ffff ffff ffff 9bde 1113 2111 ca85 cded
-			137a 1111 1111 b963 ffec ffff ffff ffff
-			ffff ffff ffff acdf 1116 7311 ecb9 defe
-			48ac 1122 1111 9521 fedb ffff ffff ffff
-			ffff ffff ffff bdef 1139 a841 fedb eeff
-			9acd 4567 1123 6111 edca ffff ffff ffff
-			ffff ffff ffff cdef 226a ca85 ffed ddee
-			bccc 89ab 1257 2111 edb8 ffff ffff ffff
-			ffff ffff ffff deff 779b dcba effe 9bcd
-			cba9 9bcc 1478 1111 eda7 ffff ffff ffff
-			ffff ffff ffff efff cccd fedc efff 38bd
-			a971 9abb 1368 1111 edb8 ffff ffff ffff
-			ffff ffff ffff ffff eeee ffee efff 16ac
-			7641 6888 1135 3111 edb9 ffff ffff ffff
-			ffff ffff ffff ffff ffff ffff efff 17ac
-			3111 3444 1111 8311 feca ffff ffff ffff
-			ffff ffff ffff ffff ffff ffff efff 59bd
-			1111 1111 1111 a852 fedc ffff ffff ffff
-			ffff ffff ffff ffff ffff ffff ffff 9bde
-			2136 1111 5321 cb97 ffee ffff ffff ffff
-			ffff ffff ffff ffff ffff ffff ffff bdef
-			789a 7777 9887 edcb ffff ffff ffff ffff
-			ffff ffff ffff ffff ffff ffff ffff deff
-			aabc 9999 cba9 feed ffff ffff ffff ffff
-			ffff ffff ffff ffff ffff ffff ffff ffff
-			cdee cccc eddc fffe ffff ffff ffff ffff
-			ffff ffff ffff ffff ffff ffff ffff ffff
-			efff eeee ffee ffff ffff ffff ffff ffff
+		<bitmap size="1024">
+			efef efef efef efef efef efef efef efef
+			eeef eded eeed efef efef efef efef efef
+			eeee eeee eeed efee efef efef efef efef
+			efef efef efef efef efef efef efef efef
+			efef efef efef efef efef efef efef eeef
+			eced ebeb eceb eeed efef efef efef eeee
+			eced ebeb eceb eeed efef efef efef efef
+			efef efef efef efef efef efef efef efef
+			efef efef efef efef efef efef efef eeef
+			eaec e6e9 eae8 edec efee efef eeef eced
+			e8ea e6e6 e6e6 edeb efee efef efef efef
+			efef efef efef efef efef efef efef efef
+			efef efef efef efef efef efef efef edee
+			e9eb e1e4 e8e5 ecea eeee eeef eced e9eb
+			e4e6 e1e1 e3e1 eceb efee efef efef efef
+			efef efef efef efef efef efef efef efef
+			efef efef efef efef efef efef eeef eced
+			e6e9 e1e1 e7e3 ebe9 eeed edee eaec e4e8
+			e1e2 e1e1 e8e5 edeb efee efef efef efef
+			efef efef efef efef efef efef efef efef
+			efef efef efef efef efef efef eeef eaec
+			e4e8 e1e1 e7e2 ebe9 eeed eced e7ea e1e3
+			e1e1 e4e1 eae8 edec eeee eeee efef efef
+			efef efef efef efef efef efef efef efef
+			efef efef efef efef efef efef edee e9eb
+			e2e5 e1e1 e7e2 ebe9 eded eaec e3e7 e1e1
+			e1e1 e8e5 ebea ecec ecec edec eeed efef
+			efef efef efef efef efef efef efef efef
+			efef efef efef efef efef efef ecee e8ea
+			e1e3 e1e1 e7e2 ece9 eced e8ea e1e3 e1e1
+			e4e1 e9e8 eaea e9ea e9e9 eae9 eceb eeed
+			efef efef efef efef efef efef efef efef
+			efef efef efef efef efef efef eced e7e9
+			e1e2 e1e1 e8e2 ecea ebec e5e9 e1e1 e1e1
+			e7e1 e9e9 e8e9 e6e6 e6e5 e6e6 eae8 eceb
+			eeed efef efef efef efef efef efef efef
+			efef efef efef efef efef eeef ebed e6e9
+			e1e1 e1e1 e9e5 eceb e9eb e2e7 e1e1 e1e1
+			e8e4 e8e8 e4e5 e1e2 e1e1 e3e2 e6e4 eae8
+			edec efee efef efef efef efef efef efef
+			efef efef efef efef efef eeef ebed e6e9
+			e1e1 e1e1 e9e6 eaea e7e9 e1e3 e1e1 e3e1
+			e8e7 e3e7 e1e1 e1e1 e1e1 e1e1 e1e1 e6e4
+			ecea eeed efef efef efef efef efef efef
+			efef efef efef efef efef eeef ebed e5e9
+			e1e1 e1e1 e9e6 e9e9 e2e6 e1e1 e1e1 e7e4
+			e6e8 e1e3 e1e1 e1e1 e2e2 e1e1 e1e1 e2e1
+			eae7 eeec efef efef efef efef efef efef
+			efef efef efef efef efef eeef ebed e5e9
+			e1e1 e1e1 e8e5 e5e7 e1e1 e1e1 e4e1 e8e7
+			e2e7 e1e1 e1e1 e4e2 e6e6 e2e5 e1e1 e1e1
+			eae6 eeec efef efef efef efef efef efef
+			efef efef efef efef efef eeef ebed e5e9
+			e1e1 e1e1 e6e4 e1e4 e1e1 e1e1 e7e2 e8e9
+			e1e6 e1e1 e1e1 e8e5 e9e9 e5e8 e1e1 e1e1
+			eae5 eeec efef efef efef efef efef efef
+			efef efef efef efef efef eeef ebed e5e9
+			e1e1 e1e1 e3e2 e1e1 e1e1 e1e1 e9e5 e9e9
+			e1e6 e1e1 e1e1 e9e7 ebea e8ea e2e2 e4e2
+			ebe8 eeed efef efef efef efef efef efef
+			efef efef efef efef efef eeef ebed e6e9
+			e1e1 e1e1 e1e1 e1e1 e1e1 e3e1 eae8 e9ea
+			e1e6 e1e1 e1e1 e8e6 eaea e9ea e7e7 e9e7
+			eceb eeed efef efef efef efef efef efef
+			efef efef efef efef efef efef eced e6e9
+			e1e1 e1e1 e1e1 e1e1 e1e1 e7e4 ebea eaeb
+			e1e7 e1e1 e1e1 e5e3 e8e6 e9e9 eaea eceb
+			eeed efee efef efef efef efef efef efef
+			efef efef efef efef efef efef ecee e6ea
+			e1e1 e1e1 e1e1 e1e1 e4e1 eae8 edec ebec
+			e3e8 e1e1 e1e1 e1e1 e3e2 e6e4 eae8 eceb
+			eeed efef efef efef efef efef efef efef
+			efef efef efef efef efef efef edee e9eb
+			e1e3 e1e1 e1e1 e2e1 e8e5 ecea eeed eced
+			e7ea e1e3 e1e1 e1e1 e1e1 e1e1 e6e3 ebe9
+			eeec efef efef efef efef efef efef efef
+			efef efef efef efef efef efef edef eaec
+			e1e6 e1e1 e1e1 e7e3 ebe9 eeec efee edee
+			eaec e4e8 e2e2 e1e1 e1e1 e1e1 e2e1 e9e5
+			edeb efee efef efef efef efef efef efef
+			efef efef efef efef efef efef eeef ebed
+			e3e9 e1e1 e4e1 eae8 edeb efee efef eeee
+			eced e9ea e6e7 e4e5 e2e3 e1e1 e1e1 e6e1
+			ecea eeed efef efef efef efef efef efef
+			efef efef efef efef efef efef eeef eced
+			e6ea e2e2 e8e5 ecea eeed efef eeee eded
+			ecec ebec eaeb e8e9 e5e7 e1e2 e1e1 e2e1
+			ebe8 eeed efef efef efef efef efef efef
+			efef efef efef efef efef efef efef edee
+			e9eb e7e7 ebea edec efee eeef eced e9eb
+			eae9 eceb ecec e9eb e7e8 e1e4 e1e1 e1e1
+			eae7 eeed efef efef efef efef efef efef
+			efef efef efef efef efef efef efef eeef
+			eced ecec edec efee efef eeef ebed e3e8
+			e7e1 eae9 ebeb e9ea e6e8 e1e3 e1e1 e1e1
+			ebe8 eeed efef efef efef efef efef efef
+			efef efef efef efef efef efef efef efef
+			eeee eeee eeee efef efef eeef eaec e1e6
+			e4e1 e7e6 e8e8 e6e8 e3e5 e1e1 e1e1 e3e1
+			ebe9 eeed efef efef efef efef efef efef
+			efef efef efef efef efef efef efef efef
+			efef efef efef efef efef eeef eaec e1e7
+			e1e1 e3e1 e4e4 e3e4 e1e1 e1e1 e1e1 e8e3
+			ecea efee efef efef efef efef efef efef
+			efef efef efef efef efef efef efef efef
+			efef efef efef efef efef eeef ebed e5e9
+			e1e1 e1e1 e1e1 e1e1 e1e1 e1e1 e5e2 eae8
+			edec efee efef efef efef efef efef efef
+			efef efef efef efef efef efef efef efef
+			efef efef efef efef efef efef edee e9eb
+			e3e6 e2e1 e1e1 e1e1 e2e1 e5e3 e9e7 eceb
+			eeee efef efef efef efef efef efef efef
+			efef efef efef efef efef efef efef efef
+			efef efef efef efef efef efef eeef ebed
+			e9ea e7e8 e7e7 e7e7 e8e7 e9e8 eceb eeed
+			efef efef efef efef efef efef efef efef
+			efef efef efef efef efef efef efef efef
+			efef efef efef efef efef efef efef edee
+			ebec eaea e9e9 e9e9 eae9 eceb eeed efee
+			efef efef efef efef efef efef efef efef
+			efef efef efef efef efef efef efef efef
+			efef efef efef efef efef efef efef efef
+			eeee eced ecec ecec edec eeed efee efef
+			efef efef efef efef efef efef efef efef
+			efef efef efef efef efef efef efef efef
+			efef efef efef efef efef efef efef efef
+			efef eeef eeee eeee eeee efef efef efef
+			efef efef efef efef efef efef efef efef
 		</bitmap>
 	</tex_image>
 </tex_image_array>
@@ -282,7 +345,7 @@
 	<material index="1" name="file3Material"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
-		alpha="0"
+		alpha="31"
 		wire_mode="off"
 		polygon_mode="modulate"
 		polygon_id="0"
@@ -490,6 +553,33 @@
 
 <output_info vertex_size="20" polygon_size="7"
 	triangle_size="0" quad_size="7"/>
+
+<ex_nns_3dme>
+	<ex_model_info scene_name="デフォルトシーン" disp_pos="0.000000 60.000000"/>
+	<ex_tex_image_array size="2">
+		<ex_tex_image index="0" disp_pos="-120.000000 360.000000"/>
+		<ex_tex_image index="1" disp_pos="0.000000 360.000000"/>
+	</ex_tex_image_array>
+	<ex_tex_palette_array size="2">
+		<ex_tex_palette index="0" disp_pos="-120.000000 420.000000"/>
+		<ex_tex_palette index="1" disp_pos="0.000000 420.000000"/>
+	</ex_tex_palette_array>
+	<ex_material_array size="2">
+		<ex_material index="0" disp_pos="-120.000000 300.000000"/>
+		<ex_material index="1" disp_pos="0.000000 300.000000"/>
+	</ex_material_array>
+	<ex_polygon_array size="3">
+		<ex_polygon index="0" disp_pos="-120.000000 240.000000"/>
+		<ex_polygon index="1" disp_pos="0.000000 240.000000"/>
+		<ex_polygon index="2" disp_pos="120.000000 240.000000"/>
+	</ex_polygon_array>
+	<ex_node_array size="4">
+		<ex_node index="0" disp_pos="0.000000 120.000000"/>
+		<ex_node index="1" disp_pos="-120.000000 180.000000"/>
+		<ex_node index="2" disp_pos="0.000000 180.000000"/>
+		<ex_node index="3" disp_pos="120.000000 180.000000"/>
+	</ex_node_array>
+</ex_nns_3dme>
 
 </body>
 
