@@ -303,6 +303,7 @@ PSTATUS_SKILL_WORK* PSTATUS_SKILL_Init( PSTATUS_WORK *work )
   skillWork->isChangeMode = FALSE;
   skillWork->isForgetConfirm = FALSE;
   skillWork->changeTarget = PSTATUS_SKILL_PLATE_NUM;
+  skillWork->cursorPos = 0xFF;
 
   if( work->psData->mode == PST_MODE_WAZAADD &&
       work->psData->waza != 0 )
