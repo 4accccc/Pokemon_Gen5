@@ -364,6 +364,9 @@ void UNION_SUBDISP_Update(UNION_SUBDISP_PTR unisub, BOOL bActive)
     }
   #endif
     _UniSub_PrintChatUpdate(unisub, &unisys->chat_log);
+    if(unisys->chat_log.chat_log_count >= UNION_CHAT_VIEW_LOG_NUM){
+      GFL_CLACT_WK_SetDrawEnable(unisub->act[UNISUB_ACTOR_APPEAL_SCROLL], TRUE);
+    }
   }
   
   if(bActive == TRUE){
@@ -690,6 +693,7 @@ static void _UniSub_ActorCreate(UNION_SUBDISP_PTR unisub, ARCHANDLE *handle)
   unisub->act[UNISUB_ACTOR_APPEAL_SCROLL] = GFL_CLACT_WK_Create(unisub->clunit, 
       unisub->index_cgr, unisub->index_pltt, unisub->index_cell, 
       &head, CLSYS_DEFREND_SUB, HEAPID_FIELDMAP);
+  GFL_CLACT_WK_SetDrawEnable(unisub->act[UNISUB_ACTOR_APPEAL_SCROLL], FALSE);
 }
 
 //--------------------------------------------------------------
