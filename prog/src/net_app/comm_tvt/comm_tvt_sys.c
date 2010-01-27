@@ -725,6 +725,7 @@ static void COMM_TVT_UpdateUpperName( COMM_TVT_WORK *work )
     //落書き中は更新しない
     return;
   }
+  /*
   if( COMM_TVT_GetConnectNum(work) < 2 )
   {
     //一人の時は参照場所が違う
@@ -740,6 +741,7 @@ static void COMM_TVT_UpdateUpperName( COMM_TVT_WORK *work )
     }
   }
   else
+  */
   {
     const COMM_TVT_DISP_MODE mode = COMM_TVT_GetDispMode( work );
     for( i=0;i<CTVT_MEMBER_NUM;i++ )

@@ -30,6 +30,7 @@
 
 #include "ctvt_call.h"
 #include "ctvt_comm.h"
+#include "ctvt_camera.h"
 
 //======================================================================
 //	define
@@ -317,6 +318,11 @@ void CTVT_CALL_InitMode( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork )
 
   CTVT_CALL_DispMessage( work , callWork , COMM_TVT_CALL_04 );
 
+  {
+    //1P‚ð•\Ž¦‚³‚¹‚é
+    //CTVT_CAMERA_WORK *cameraWork = COMM_TVT_GetCameraWork( work );
+    //CTVT_CAMERA_SetUpdateCameraAnime( work , cameraWork , 0 , TRUE );
+  }
 }
 
 //--------------------------------------------------------------
@@ -1278,7 +1284,7 @@ static const BOOL CTVT_CALL_CheckRegistFriendData( COMM_TVT_WORK *work , CTVT_CA
   const COMM_TVT_INIT_WORK *initWork = COMM_TVT_GetInitWork( work );
   WIFI_LIST *wifiList = GAMEDATA_GetWiFiList( initWork->gameData );
   
-#if DEBUG_ONLY_FOR_ariizumi_nobuhiko
+#if PM_DEBUG
   if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R )
   {
     return TRUE;
@@ -1287,23 +1293,26 @@ static const BOOL CTVT_CALL_CheckRegistFriendData( COMM_TVT_WORK *work , CTVT_CA
   
   for( i=0;i<WIFILIST_FRIEND_MAX;i++ )
   {
-    if( id == WifiList_GetFriendInfo( wifiList , i , WIFILIST_FRIEND_ID ) )
+    if( WifiList_IsFriendData( wifiList , i ) == TRUE )
     {
-      if( sex != WifiList_GetFriendInfo( wifiList , i , WIFILIST_FRIEND_SEX ) )
+      if( id == WifiList_GetFriendInfo( wifiList , i , WIFILIST_FRIEND_ID ) )
       {
-        const HEAPID heapId = COMM_TVT_GetHeapId( work );
-        STRBUF *str1 = GFL_STR_CreateBuffer( 32 , heapId );
-        STRBUF *str2 = GFL_STR_CreateBuffer( 32 , heapId );
-        GFL_STR_SetStringCode( str1 , name );
-        GFL_STR_SetStringCode( str2 , WifiList_GetFriendNamePtr(wifiList,i) );
-        if( GFL_STR_CompareBuffer(str1,str2) == TRUE )
+        if( sex == WifiList_GetFriendInfo( wifiList , i , WIFILIST_FRIEND_SEX ) )
         {
+          const HEAPID heapId = COMM_TVT_GetHeapId( work );
+          STRBUF *str1 = GFL_STR_CreateBuffer( 32 , heapId );
+          STRBUF *str2 = GFL_STR_CreateBuffer( 32 , heapId );
+          GFL_STR_SetStringCode( str1 , name );
+          GFL_STR_SetStringCode( str2 , WifiList_GetFriendNamePtr(wifiList,i) );
+          if( GFL_STR_CompareBuffer(str1,str2) == TRUE )
+          {
+            GFL_STR_DeleteBuffer( str1 );
+            GFL_STR_DeleteBuffer( str2 );
+            return TRUE;
+          }
           GFL_STR_DeleteBuffer( str1 );
           GFL_STR_DeleteBuffer( str2 );
-          return TRUE;
         }
-        GFL_STR_DeleteBuffer( str1 );
-        GFL_STR_DeleteBuffer( str2 );
       }
     }
   }

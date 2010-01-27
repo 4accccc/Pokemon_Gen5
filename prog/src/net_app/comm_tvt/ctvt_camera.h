@@ -49,3 +49,4 @@ extern const u32 CTVT_CAMERA_GetBufferSize( COMM_TVT_WORK *work , CTVT_CAMERA_WO
 
 extern void CTVT_CAMERA_SetNewMember( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork , const u8 idx );
 extern const BOOL CTVT_CAMERA_IsUpdateCameraAnime( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork , const u8 idx );
+extern void CTVT_CAMERA_SetUpdateCameraAnime( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork , const u8 idx , const u8 flg );

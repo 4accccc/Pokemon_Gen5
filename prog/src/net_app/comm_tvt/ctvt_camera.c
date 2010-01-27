@@ -283,6 +283,15 @@ void CTVT_CAMERA_VBlank( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork )
         }
       }
     }
+
+    if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L )
+    {
+      static u8 befBit = 0;
+      if( befBit != camWork->isUpdateBit )
+      {
+        OS_TFPrintf(2,"[%d]-?[%d]\n",befBit,camWork->isUpdateBit);
+      }
+    }
     
     for( i=0;i<CTVT_MEMBER_NUM;i++ )
     {
@@ -426,6 +435,11 @@ static void CTVT_CAMERA_CapCallBack( void *captureArea , void *userWork )
     u16 capPosY;
     u16 capSizeX;
     u16 capSizeY;
+    u8 tempIdx = idx;
+    if( mode == CTDM_DOUBLE && idx > 1 )
+    {
+      tempIdx = 1;
+    }
     //この段階でサイズは1/2サイズ
     if( isDouble == FALSE )
     {
@@ -445,7 +459,7 @@ static void CTVT_CAMERA_CapCallBack( void *captureArea , void *userWork )
     for( iy=0;iy<capSizeY;iy++ )
     {
       const u32 capTopAdr = (u32)camWork->tempBuf+ (capPosY+iy)*128*2 + capPosX*2;
-      const u32 bufTopAdr = (u32)camWork->scrBuf + capSizeX*capSizeY*2*idx + capSizeX*iy*2 ;
+      const u32 bufTopAdr = (u32)camWork->scrBuf + capSizeX*capSizeY*2*tempIdx + capSizeX*iy*2 ;
       GFL_STD_MemCopy32( (void*)capTopAdr , (void*)bufTopAdr , capSizeX*2 );
       
     }
@@ -739,4 +753,9 @@ void CTVT_CAMERA_SetNewMember( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork ,
 const BOOL CTVT_CAMERA_IsUpdateCameraAnime( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork , const u8 idx )
 {
   return camWork->memWork[idx].isUpdate;
+}
+void CTVT_CAMERA_SetUpdateCameraAnime( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork , const u8 idx , const u8 flg )
+{
+  camWork->memWork[idx].isUpdate = flg;
+  CTVT_CAMERA_SetMemberState_TargetPos( work , camWork , idx );
 }

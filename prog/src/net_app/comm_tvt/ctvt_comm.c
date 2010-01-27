@@ -292,7 +292,7 @@ CTVT_COMM_WORK* CTVT_COMM_InitSystem( COMM_TVT_WORK *work , const HEAPID heapId 
     
     MyStatus_Copy( myStatus , (MYSTATUS*)&commWork->selfData.myStatusBuff );
     
-    commWork->selfData.canUseCamera = commWork->beacon.canUseCamera;
+    commWork->selfData.canUseCamera = COMM_TVT_CanUseCamera();
     
     
   }
@@ -376,6 +376,10 @@ void CTVT_COMM_Main( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
         commWork->state = CCS_REQ_NEGOTIATION;
         break;
       case CCIM_CHILD:
+        if( commWork->mode == CCIM_SCAN )
+        {
+          CTVT_COMM_ClearMemberState( work , commWork , &commWork->member[0] );
+        }
         GFL_NET_InitClientAndConnectToParent( commWork->targetMacAddress );
         commWork->state = CCS_REQ_NEGOTIATION;
         break;
@@ -653,6 +657,27 @@ static void CTVT_COMM_UpdateComm( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork
 {
   const u8 selfId = GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
   //ステートの更新
+  if( commWork->mode == CCIM_SCAN )
+  {
+    if( commWork->member[0].isEnable == FALSE )
+    {
+      CTVT_CAMERA_WORK *camWork = COMM_TVT_GetCameraWork(work);
+      commWork->member[0].isEnable = TRUE;
+      commWork->member[0].isEnableData = TRUE;
+      commWork->member[0].isSelf = TRUE;
+      commWork->member[0].reqTalk = FALSE;
+      commWork->member[0].bufferNo = 0xFF;
+      commWork->member[0].state = CCSU_NONE;
+      
+      commWork->member[0].data = commWork->selfData;
+      
+      commWork->connectNum = 1;
+      commWork->beacon.connectNum = 1;
+      
+      CTVT_CAMERA_SetWaitAllRefreshFlg( work , camWork );
+    }
+  }
+  else
   {
     const u8 connectNum = GFL_NET_GetConnectNum();
     if( commWork->connectNum != connectNum )
@@ -930,15 +955,7 @@ static void CTVT_COMM_RefureshCommState( COMM_TVT_WORK *work , CTVT_COMM_WORK *c
   if( isUpdateState == TRUE )
   {
     COMM_TVT_SetConnectNum( work , connectNum );
-    if( connectNum == 2 && selfIdx >= 1 )
-    {
-      //2人モードになったらインデックスは０か１
-      COMM_TVT_SetSelfIdx( work , 1 );
-    }
-    else
-    {
-      COMM_TVT_SetSelfIdx( work , selfIdx );
-    }
+    COMM_TVT_SetSelfIdx( work , selfIdx );
   }
   {
     CTVT_CAMERA_WORK *camWork = COMM_TVT_GetCameraWork(work);
