@@ -3964,15 +3964,18 @@ static void flowsub_checkNotEffect( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* w
   }
 
   // まもるチェック
-  BTL_POKESET_SeekStart( targets );
-  while( (bpp = BTL_POKESET_SeekNext(targets)) != NULL )
+  if( WAZADATA_GetFlag(wazaParam->wazaID, WAZAFLAG_Mamoru) )
   {
-    if( BPP_TURNFLAG_Get(bpp, BPP_TURNFLG_MAMORU) )
+    BTL_POKESET_SeekStart( targets );
+    while( (bpp = BTL_POKESET_SeekNext(targets)) != NULL )
     {
-      // まもる無効化されなければターゲットから除外
-      if( !scEvent_CheckMamoruBreak(wk, attacker, bpp, wazaParam->wazaID) ){
-        BTL_POKESET_Remove( targets, bpp );
-        SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_Mamoru, BPP_GetID(bpp) );
+      if( BPP_TURNFLAG_Get(bpp, BPP_TURNFLG_MAMORU) )
+      {
+        // まもる無効化されなければターゲットから除外
+        if( !scEvent_CheckMamoruBreak(wk, attacker, bpp, wazaParam->wazaID) ){
+          BTL_POKESET_Remove( targets, bpp );
+          SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_Mamoru, BPP_GetID(bpp) );
+        }
       }
     }
   }

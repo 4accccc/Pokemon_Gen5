@@ -5243,8 +5243,11 @@ static void handler_TuboWoTuku( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
   {
     static const BppValueID rankType[] = {
       BPP_ATTACK, BPP_DEFENCE, BPP_AGILITY, BPP_SP_ATTACK, BPP_SP_DEFENCE,
+      BPP_HIT_RATIO, BPP_AVOID_RATIO,
     };
-    const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
+    u8  target_pokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_TARGET1 );
+
+    const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, target_pokeID );
     u8 valid_cnt, i;
 
     for(i=0, valid_cnt=0; i<NELEMS(rankType); ++i){
@@ -5263,7 +5266,7 @@ static void handler_TuboWoTuku( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
           if( idx == 0 )
           {
             BTL_HANDEX_PARAM_RANK_EFFECT* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RANK_EFFECT, pokeID );
-            param->pokeID[0] = pokeID;
+            param->pokeID[0] = target_pokeID;
             param->poke_cnt = 1;
             param->rankType = rankType[i];
             param->rankVolume = 2;
