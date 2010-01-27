@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="toru_nagihashi" host="W00160" date="2010-01-27T17:17:42"/>
+	<create user="toru_nagihashi" host="W00160" date="2010-01-27T18:39:48"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -471,10 +471,10 @@
 	</row>
 
 	<row id="WIFIMATCH_TEXT_002">
-		<language name="JPN" width="256">フリーモードを
-かいし　します</language>
-		<language name="JPN_KANJI" width="256">フリーモードを
-開始　します</language>
+		<language name="JPN" width="256">ランダムマッチ　フリーモードを
+かいし　します[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ランダムマッチ　フリーモードを
+開始　します[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="WIFIMATCH_TEXT_003">
@@ -564,6 +564,13 @@
 でんげんを　きらないで　ください</language>
 		<language name="JPN_KANJI" width="256">セーブを　しています……
 でんげんを　きらないで　ください</language>
+	</row>
+
+	<row id="WIFIMATCH_TEXT_018">
+		<language name="JPN" width="256">ランダムマッチ　レーティングモードを
+かいし　します[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ランダムマッチ　レーティングモードを
+開始　します[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="WIFIMATCH_DARTY_01">

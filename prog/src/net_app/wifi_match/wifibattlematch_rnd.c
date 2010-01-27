@@ -57,6 +57,7 @@ FS_EXTERN_OVERLAY(dpw_common);
 //=====================================
 #ifdef PM_DEBUG
 #define DEBUGWIN_USE
+#define DEBUG_GPF_PASS
 #endif //PM_DEBUG
 
 
@@ -69,6 +70,8 @@ FS_EXTERN_OVERLAY(dpw_common);
 ///	シンク
 //=====================================
 #define ENEMYDATA_WAIT_SYNC (180)
+#define MATCHING_MSG_WAIT_SYNC (120)
+
 
 //=============================================================================
 /**
@@ -599,6 +602,11 @@ static void WbmRndSeq_Start( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs 
     break;
 
   case SEQ_CHECK_GPF:
+#ifdef DEBUG_GPF_PASS
+    { 
+      *p_seq = SEQ_SELECT_MSG;
+    }
+#else
     { 
       SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( p_param->p_param->p_game_data );
       DREAMWORLD_SAVEDATA *p_dream = DREAMWORLD_SV_GetDreamWorldSaveData( p_sv );
@@ -615,6 +623,7 @@ static void WbmRndSeq_Start( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs 
         break;
       }
     }
+#endif
     break;
 
     //-------------------------------------
@@ -716,6 +725,7 @@ static void WbmRndSeq_Rate_Start( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
 { 
   enum
   { 
+    SEQ_START_RATE_MSG,
     SEQ_START_RECVRATE_SAKE,
     SEQ_WAIT_RECVRATE_SAKE,
     SEQ_WAIT_CARDIN,
@@ -731,6 +741,12 @@ static void WbmRndSeq_Rate_Start( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
 
   switch( *p_seq )
   { 
+  case SEQ_START_RATE_MSG:
+    WBM_TEXT_Print( p_wk->p_text, p_wk->p_msg, WIFIMATCH_TEXT_018, WBM_TEXT_TYPE_STREAM );
+    *p_seq       = SEQ_WAIT_MSG;
+    WBM_SEQ_SetReservSeq( p_seqwk, SEQ_START_RECVRATE_SAKE );
+    break;
+
     //-------------------------------------
     ///	レーティングデータ受信
     //=====================================
@@ -835,9 +851,11 @@ static void WbmRndSeq_Rate_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
     SEQ_START_SENDDATA,
     SEQ_WAIT_SENDDATA,
 
-    SEQ_WAIT_MATCH_CARDIN,
     SEQ_OK_MATCHING_MSG,
     SEQ_OK_MATCHING_WAIT,
+    SEQ_WAIT_MATCH_CARDIN,
+    SEQ_CARDIN_WAIT,
+
     SEQ_END_MATCHING_MSG,
     SEQ_END_MATCHING,
 
@@ -918,25 +936,32 @@ static void WbmRndSeq_Rate_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
         Util_MatchInfo_Create( p_wk, p_param->p_enemy_data );
 
         WBM_WAITICON_SetDrawEnable( p_wk->p_wait, FALSE );
-        *p_seq  = SEQ_WAIT_MATCH_CARDIN;
+        *p_seq  = SEQ_OK_MATCHING_MSG;
       }
     }
     break;
 
-  case SEQ_WAIT_MATCH_CARDIN:
-    if( Util_MatchInfo_Main( p_wk ) )
-    { 
-      *p_seq  = SEQ_OK_MATCHING_MSG;
-    }
-    break;
 
   case SEQ_OK_MATCHING_MSG:
     WBM_TEXT_Print( p_wk->p_text, p_wk->p_msg, WIFIMATCH_TEXT_010, WBM_TEXT_TYPE_STREAM );
     *p_seq       = SEQ_WAIT_MSG;
     WBM_SEQ_SetReservSeq( p_seqwk, SEQ_OK_MATCHING_WAIT );
     break;
-
   case SEQ_OK_MATCHING_WAIT:
+    if( p_wk->cnt++ > MATCHING_MSG_WAIT_SYNC )
+    { 
+      p_wk->cnt      = 0;
+      GFL_BG_SetVisible( BG_FRAME_M_TEXT, FALSE );
+      *p_seq      = SEQ_WAIT_MATCH_CARDIN;
+    }
+    break;
+  case SEQ_WAIT_MATCH_CARDIN:
+    if( Util_MatchInfo_Main( p_wk ) )
+    { 
+      *p_seq  = SEQ_CARDIN_WAIT;
+    }
+    break;
+  case SEQ_CARDIN_WAIT:
     if( p_wk->cnt++ > ENEMYDATA_WAIT_SYNC )
     { 
       p_wk->cnt      = 0;
@@ -945,6 +970,7 @@ static void WbmRndSeq_Rate_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
     break;
 
   case SEQ_END_MATCHING_MSG:
+    GFL_BG_SetVisible( BG_FRAME_M_TEXT, TRUE );
     WBM_TEXT_Print( p_wk->p_text, p_wk->p_msg, WIFIMATCH_TEXT_012, WBM_TEXT_TYPE_STREAM );
     *p_seq = SEQ_WAIT_MSG;
     WBM_SEQ_SetReservSeq( p_seqwk, SEQ_END_MATCHING );
@@ -1362,9 +1388,10 @@ static void WbmRndSeq_Free_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
     SEQ_WAIT_CHECK_CHEAT,
     SEQ_START_SENDDATA,
     SEQ_WAIT_SENDDATA,
-    SEQ_WAIT_MATCH_CARDIN,
     SEQ_OK_MATCHING_MSG,
     SEQ_OK_MATCHING_WAIT,
+    SEQ_WAIT_MATCH_CARDIN,
+    SEQ_CARDIN_WAIT,
     SEQ_END_MATCHING_MSG,
     SEQ_END_MATCHING,
 
@@ -1431,15 +1458,8 @@ static void WbmRndSeq_Free_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
         Util_MatchInfo_Create( p_wk, p_param->p_enemy_data );
 
         WBM_WAITICON_SetDrawEnable( p_wk->p_wait, FALSE );
-        *p_seq       = SEQ_WAIT_MATCH_CARDIN;
+        *p_seq       = SEQ_OK_MATCHING_MSG;
       }
-    }
-    break;
-
-  case SEQ_WAIT_MATCH_CARDIN:
-    if( Util_MatchInfo_Main( p_wk ) )
-    { 
-      *p_seq  = SEQ_OK_MATCHING_MSG;
     }
     break;
 
@@ -1450,6 +1470,22 @@ static void WbmRndSeq_Free_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
     break;
 
   case SEQ_OK_MATCHING_WAIT:
+    if( p_wk->cnt++ > MATCHING_MSG_WAIT_SYNC )
+    { 
+      p_wk->cnt      = 0;
+      GFL_BG_SetVisible( BG_FRAME_M_TEXT, FALSE );
+      *p_seq      = SEQ_WAIT_MATCH_CARDIN;
+    }
+    break;
+
+  case SEQ_WAIT_MATCH_CARDIN:
+    if( Util_MatchInfo_Main( p_wk ) )
+    { 
+      *p_seq  = SEQ_CARDIN_WAIT;
+    }
+    break;
+
+  case SEQ_CARDIN_WAIT:
     if( p_wk->cnt++ > ENEMYDATA_WAIT_SYNC )
     { 
       p_wk->cnt      = 0;
@@ -1458,6 +1494,7 @@ static void WbmRndSeq_Free_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
     break;
 
   case SEQ_END_MATCHING_MSG:
+    GFL_BG_SetVisible( BG_FRAME_M_TEXT, TRUE );
     WBM_TEXT_Print( p_wk->p_text, p_wk->p_msg, WIFIMATCH_TEXT_012, WBM_TEXT_TYPE_STREAM );
     *p_seq = SEQ_WAIT_MSG;
     WBM_SEQ_SetReservSeq( p_seqwk, SEQ_END_MATCHING );
