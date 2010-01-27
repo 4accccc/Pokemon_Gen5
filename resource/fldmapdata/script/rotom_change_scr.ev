@@ -147,10 +147,14 @@ select_elec:
     
     //選んだ家電をフォルムナンバーに変換
     $ELEC_TO_FORM_NO = $LIST_SEL_RET
-    //選んだ家電ごとの固有技をセット
+    //選んだ家電ごとの固有技をセット(元に戻るを選んだときは0がセットされる)
     $TARGET_FORM_NO = $ELEC_TO_FORM_NO    //get_org_skillをコールする準備
     _CALL get_org_skill
-    $NEW_SKILL = $ORG_SKILL               //get_org_skillコール結果を格納
+    IF $ORG_SKILL == 0 THEN
+      $NEW_SKILL = WAZANO_DENKISYOKKU       //安全のためでんきショックをセットしておく（参照されることはないはず）
+    ELSE
+      $NEW_SKILL = $ORG_SKILL               //get_org_skillコール結果を格納
+    ENDIF
 
     //変換したフォルムナンバーと選択したロトムのフォルムナンバーを比較
     IF $FORM_NO == $ELEC_TO_FORM_NO   THEN       //同じ
@@ -169,6 +173,7 @@ select_elec:
   IF $ELEC_TO_FORM_NO == 0 THEN
     _SYSWIN_MSG_DOWN(msg_rotom_09)      //モーターからでてきた
     _SYSWIN_CLOSE()
+    $SCWK_ANSWER = TRUE   //フォルムチェンジする
   ELSE
     //忘れる技の選出(SCWK_ANSWER == FALSEでチェンジしない)
     $DEL_SKILL_POS = 0
@@ -189,7 +194,7 @@ _RET
 get_org_skill:
   SWITCH $TARGET_FORM_NO
   CASE 0 THEN
-    $ORG_SKILL = WAZANO_DENKISYOKKU
+    $ORG_SKILL = 0
   CASE 1 THEN
     $ORG_SKILL = WAZANO_OOBAAHIITO
   CASE 2 THEN
@@ -216,8 +221,14 @@ decide_del_skill:
   _CALL get_org_skill
   $CHECK_SKILL = $ORG_SKILL     //get_org_skillコール結果を格納
 
-  //フォルムごとの専用技を調べる
-  _CHECK_POKE_WAZA( SCWK_ANSWER, CHECK_SKILL, SEL_POS )
+  IF $CHECK_SKILL != 0 THEN
+    //フォルムごとの専用技を調べる
+    _CHECK_POKE_WAZA( SCWK_ANSWER, CHECK_SKILL, SEL_POS )
+  ELSE
+    //ノーマルフォルムなので、固有技なし
+    $SCWK_ANSWER = 0
+  ENDIF
+
   IF $SCWK_ANSWER == 1 THEN     //固有技覚えている
     $OLD_SKILL = $CHECK_SKILL   //忘れる技セット del_skill_msgをコールする準備
     _CALL del_skill_msg
