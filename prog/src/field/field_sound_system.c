@@ -302,12 +302,8 @@ BOOL FIELD_SOUND_IsBGMFade( const FIELD_SOUND* fieldSound )
 //---------------------------------------------------------------------------------
 BOOL FIELD_SOUND_HaveRequest( const FIELD_SOUND* fieldSound )
 {
-  const FSND_REQUEST_DATA* headRequestData;
-
-  headRequestData = GetHeadRequest( fieldSound );
-
   // キューにリクエストがない and リクエスト処理中でない
-  if( (headRequestData->request == FSND_BGM_REQUEST_NONE) &&
+  if( (QueueHaveRequest(fieldSound) == FALSE) &&
       (fieldSound->request == FSND_BGM_REQUEST_NONE) )
   {
     return FALSE;
@@ -547,13 +543,12 @@ const FSND_REQUEST_DATA* GetTailRequest( const FIELD_SOUND* fieldSound )
 {
   int pos;
 
-  if( fieldSound->requestHeadPos == fieldSound->requestTailPos )
+  if( QueueHaveRequest( fieldSound ) == FALSE )
   { // リクエストがない
     pos = fieldSound->requestHeadPos;
   }
   else
-  {
-    // リクエストがある
+  { // リクエストがある
     pos = ( fieldSound->requestTailPos - 1 + REQUEST_QUEUE_SIZE ) % REQUEST_QUEUE_SIZE;
   }
 
@@ -572,7 +567,7 @@ const FSND_REQUEST_DATA* GetTailRequest( const FIELD_SOUND* fieldSound )
 //---------------------------------------------------------------------------------
 static BOOL QueueHaveRequest( const FIELD_SOUND* fieldSound )
 {
-  FSND_REQUEST_DATA* headRequest;
+  const FSND_REQUEST_DATA* headRequest;
 
   headRequest = GetHeadRequest( fieldSound );
 
