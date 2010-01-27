@@ -116,7 +116,7 @@ struct GURU2PROC_WORK
   u32 receipt_bit;    //受付ビット
   BOOL receipt_ret;
   
-  GURU2_PARAM param;
+  GURUGURU_PARENT_WORK param;
   GURU2COMM_WORK *g2c;
   GURU2MAIN_WORK *g2m;
   GURU2RC_WORK *g2r;

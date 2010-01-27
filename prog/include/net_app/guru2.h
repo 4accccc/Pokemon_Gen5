@@ -29,6 +29,7 @@ typedef struct GURU2PROC_WORK GURU2PROC_WORK;
 //--------------------------------------------------------------
 /// GURU2_PARAM
 //--------------------------------------------------------------
+#if 0 //GURUGURU_PARENT_WORK‚ðŽg—p‚µ‚Ä‚­‚¾‚³‚¢
 typedef struct
 {
   int max;
@@ -39,11 +40,12 @@ typedef struct
   GURUGURU_PARENT_WORK  *guru2union;
 //  FIELDSYS_WORK *fsys;
 }GURU2_PARAM;
+#endif
 
 //==============================================================================
 //  extern
 //==============================================================================
-extern GURU2PROC_WORK * Guru2_WorkInit( GURU2_PARAM *param, u32 heap_id );
+extern GURU2PROC_WORK * Guru2_WorkInit( GURUGURU_PARENT_WORK *param, u32 heap_id );
 extern void Guru2_WorkDelete( GURU2PROC_WORK *g2p );
 extern BOOL Guru2_ReceiptRetCheck( GURU2PROC_WORK *g2p );
 

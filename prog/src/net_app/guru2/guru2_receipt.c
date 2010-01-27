@@ -284,7 +284,7 @@ GFL_PROC_RESULT Guru2Receipt_Init( GFL_PROC * proc, int *seq, void *pwk, void *m
 
 static UNION_APP_PTR _get_unionwork(GURU2RC_WORK *wk)
 {
-  return wk->g2p->param.guru2union->uniapp;
+  return wk->g2p->param.uniapp;
 }
 
 //--------------------------------------------------------------

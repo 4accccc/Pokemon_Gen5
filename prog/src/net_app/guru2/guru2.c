@@ -46,7 +46,7 @@ struct _GURU2_CALL_WORK
 {
   int seq_no;
   int psel_pos;
-  GURU2_PARAM param;
+  GURUGURU_PARENT_WORK param;
   GURU2PROC_WORK *g2p;
   GAMEDATA      *gamedata;
   GAMESYS_WORK  *gsys;
@@ -106,12 +106,12 @@ GFL_PROC_RESULT Guru2Proc_End( GFL_PROC * proc, int *seq, void *pwk, void *mywk 
 //--------------------------------------------------------------
 /**
  * ぐるぐる交換　プロセス　初期化
- * @param param GURU2_PARAM
+ * @param param GURUGURU_PARENT_WORK
  * @param heap_id ヒープID
  * @retval  GURU2PROC_WORK  GURU2PROC_WORK
  */
 //--------------------------------------------------------------
-GURU2PROC_WORK * Guru2_WorkInit( GURU2_PARAM *param, u32 heap_id )
+GURU2PROC_WORK * Guru2_WorkInit( GURUGURU_PARENT_WORK *param, u32 heap_id )
 {
   GURU2PROC_WORK *g2p;
   

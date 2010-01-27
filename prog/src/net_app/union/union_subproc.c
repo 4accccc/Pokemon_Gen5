@@ -31,6 +31,7 @@
 #include "net_app/pokemontrade.h"
 #include "net_app/union_app.h"
 #include "union_comm_command.h"
+#include "net_app/guru2.h"
 
 
 //==============================================================================
@@ -68,6 +69,7 @@ FS_EXTERN_OVERLAY(pokelist);
 FS_EXTERN_OVERLAY(poke_status);
 FS_EXTERN_OVERLAY(pokemon_trade);
 FS_EXTERN_OVERLAY(app_mail);
+FS_EXTERN_OVERLAY(guru2);
 
 
 //==============================================================================
@@ -483,6 +485,7 @@ static BOOL SubEvent_Trade(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys, FIELDMAP
 static BOOL SubEvent_Minigame(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys, FIELDMAP_WORK *fieldWork, void *pwk, GMEVENT * parent_event, GMEVENT **child_event, u8 *seq)
 {
   UNION_MY_SITUATION *situ = &unisys->my_situation;
+	UNION_SUB_PROC *subproc = &unisys->subproc;
   enum{
     _SEQ_FADEOUT,
     _SEQ_FIELD_CLOSE,
@@ -606,7 +609,9 @@ static BOOL SubEvent_Minigame(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys, FIELD
   		//GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(pokelist), &PokeList_ProcData, plist);
   	}
   	else{ //UNION_PLAY_CATEGORY_GURUGURU
-  	  //GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(pokelist), &PokeList_ProcData, plist);
+  	  GURUGURU_PARENT_WORK *gurupwk = subproc->parent_work;
+  	  gurupwk->uniapp = unisys->alloc.uniapp;
+  	  //GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(guru2), &Guru2ProcData, gurupwk);
     }
 		(*seq) ++;
 		break;

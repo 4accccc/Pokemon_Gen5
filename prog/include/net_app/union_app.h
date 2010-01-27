@@ -11,6 +11,7 @@
 #include "gamesystem/gamedata_def.h"
 #include "savedata/mystatus.h"
 #include "net_app/union/union_types.h"
+#include "savedata/record.h"
 
 
 //==============================================================================
@@ -47,6 +48,10 @@ typedef struct{
   UNION_APP_PTR uniapp;
   GAMEDATA *gamedata;
   POKEPARTY *party;
+
+//  int max;
+  SAVE_CONTROL_WORK     *sv;
+  RECORD                *record;
 }GURUGURU_PARENT_WORK;
 
 

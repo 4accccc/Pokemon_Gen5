@@ -34,6 +34,7 @@
 #include "poke_tool/regulation_def.h"
 #include "poke_tool/poke_regulation.h"
 #include "savedata/battle_box_save.h"
+#include "net_app/union_app.h"
 
 //#include "field/event_ircbattle.h"
 #include "net_app\irc_compatible.h"
@@ -2507,7 +2508,15 @@ static BOOL OneselfSeq_MinigameUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATIO
         UnionSubProc_EventSet(unisys, UNION_SUBPROC_ID_PICTURE, NULL);
       }
       else{ //UNION_STATUS_GURUGURU
-        UnionSubProc_EventSet(unisys, UNION_SUBPROC_ID_GURUGURU, NULL);
+        GURUGURU_PARENT_WORK *gurupwk;
+        
+        gurupwk = GFL_HEAP_AllocClearMemory(HEAPID_UNION, sizeof(GURUGURU_PARENT_WORK));
+        gurupwk->gamedata = unisys->uniparent->game_data;
+        gurupwk->party = GAMEDATA_GetMyPokemon(unisys->uniparent->game_data);
+        gurupwk->sv = GAMEDATA_GetSaveControlWork(unisys->uniparent->game_data);
+        gurupwk->record = GAMEDATA_GetRecordPtr(unisys->uniparent->game_data);
+        unisys->parent_work = gurupwk;
+        UnionSubProc_EventSet(unisys, UNION_SUBPROC_ID_GURUGURU, gurupwk);
       }
       (*seq)++;
     }
@@ -2515,6 +2524,8 @@ static BOOL OneselfSeq_MinigameUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATIO
   case _SEQ_SUBPROC_WAIT:
     if(UnionSubProc_IsExits(unisys) == FALSE){
       OS_TPrintf("ƒTƒuPROCI—¹\n");
+      GFL_HEAP_FreeMemory(unisys->parent_work);
+      unisys->parent_work = NULL;
       UnionComm_Req_Restarts(unisys);
       (*seq)++;
     }
