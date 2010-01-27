@@ -53,6 +53,8 @@ typedef enum {
   BTL_COMPETITOR_SUBWAY,  ///< バトルサブウェイトレーナー
   BTL_COMPETITOR_COMM,    ///< 通信対戦
 
+  BTL_COMPETITOR_DEMO_CAPTURE,  ///< 捕獲デモ
+
   BTL_COMPETITOR_MAX,
 
 }BtlCompetitor;
