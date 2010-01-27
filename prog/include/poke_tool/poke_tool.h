@@ -706,6 +706,7 @@ extern  u8    POKETOOL_GetSex( u16 mons_no, u16 form_no, u32 personal_rnd );
 extern  BOOL  POKETOOL_CheckRare( u32 id, u32 personal_rnd );
 extern  u32   POKETOOL_GetPersonalParam( u16 mons_no, u16 form_no, PokePersonalParamID param );
 extern  u32   POKETOOL_CalcPersonalRand( u16 mons_no, u16 form_no, u8 sex );
+extern  u32		POKETOOL_CalcPersonalRandEx( u32 id, u16 mons_no, u16 form_no, u8 sex, u8 tokusei, BOOL rare_flag );
 
 // ÇﬂÇ¥ÇﬂÇÈÉpÉèÅ[åvéZ
 extern PokeType POKETOOL_GetMezaPa_Type( const POKEMON_PARAM* pp );
