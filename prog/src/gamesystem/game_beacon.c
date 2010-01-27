@@ -448,7 +448,7 @@ static void SendBeacon_Init(GAMEBEACON_SEND_MANAGER *send, GAMEDATA * gamedata)
   }
   
   //詳細情報
-  info->details.details_no = GAMEBEACON_DETAILS_NO_ROAD;
+  info->details.details_no = GAMEBEACON_DETAILS_NO_WALK;
   
   //行動パラメータ
   info->action.action_no = GAMEBEACON_ACTION_NULL;
@@ -777,7 +777,7 @@ void GAMEBEACON_Set_ZoneChange(ZONEID zone_id)
   GAMEBEACON_SEND_MANAGER *send = &GameBeaconSys->send;
   
   send->info.zone_id = zone_id;
-  send->info.details.details_no = GAMEBEACON_DETAILS_NO_ROAD;
+  send->info.details.details_no = GAMEBEACON_DETAILS_NO_WALK;
   SendBeacon_SetCommon(send);
 }
 

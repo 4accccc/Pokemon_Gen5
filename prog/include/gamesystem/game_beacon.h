@@ -29,11 +29,8 @@ typedef enum{
   GAMEBEACON_DETAILS_NO_BATTLE_BIGFOUR,         ///<四天王と対戦中
   GAMEBEACON_DETAILS_NO_BATTLE_CHAMPION,        ///<チャンピオンと対戦中
   GAMEBEACON_DETAILS_NO_BATTLE_POKEMON,         ///<野生ポケモンと対戦中
-  GAMEBEACON_DETAILS_NO_BATTLE_REGEND_POKEMON,  ///<伝説ポケモンと対戦中
-  GAMEBEACON_DETAILS_NO_BATTLE_VISION_POKEMON,  ///<幻ポケモンと対戦中
-  GAMEBEACON_DETAILS_NO_ROAD,                   ///<道路を移動中
-  GAMEBEACON_DETAILS_NO_TOWN,                   ///<街、ダンジョンを移動中
-  GAMEBEACON_DETAILS_NO_JIM,                    ///<ジムを移動中
+  GAMEBEACON_DETAILS_NO_BATTLE_SPECIAL_POKEMON, ///<特別なポケモンと対戦中
+  GAMEBEACON_DETAILS_NO_WALK,                   ///<移動中
   
   GAMEBEACON_DETAILS_NO_MAX,
 }GAMEBEACON_DETAILS_NO;

@@ -488,8 +488,7 @@ u16 GAMEBEACON_Get_Details_BattleMonsNo(const GAMEBEACON_INFO *info)
 {
   switch(info->details.details_no){
   case GAMEBEACON_DETAILS_NO_BATTLE_POKEMON:         ///<野生ポケモンと対戦中
-  case GAMEBEACON_DETAILS_NO_BATTLE_REGEND_POKEMON:  ///<伝説ポケモンと対戦中
-  case GAMEBEACON_DETAILS_NO_BATTLE_VISION_POKEMON:  ///<幻ポケモンと対戦中
+  case GAMEBEACON_DETAILS_NO_BATTLE_SPECIAL_POKEMON: ///<特別なポケモンと対戦中
     return info->details.battle_monsno;
   }
   GF_ASSERT(0);
