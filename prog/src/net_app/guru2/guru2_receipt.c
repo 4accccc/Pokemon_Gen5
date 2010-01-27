@@ -42,7 +42,7 @@
 #define MESFRAME_PAL_INDEX  ( 10 )  // ウインドウフレームのパレットの行
 #define MENUFRAME_PAL_INDEX ( 11 )
 
-#include "guru2_2d.naix" //専用2Dリソースアーカイブ追加
+#include "arc/guru2_2d.naix" //専用2Dリソースアーカイブ追加
 #include "c_gear.naix"
 
 //============================================================================================
@@ -655,7 +655,7 @@ static void InitWork( GURU2RC_WORK *wk, ARCHANDLE* p_handle )
   wk->palwork.sw       = 0;
   wk->palwork.wait     = 0;
   wk->palwork.seq      = 0;
-  wk->palwork.paldata  = GFL_ARCHDL_UTIL_LoadPalette( p_handle, NARC_guru2_2d_record_s_obj_nclr, &wk->palwork.palbuf, HEAPID_GURU2 );
+  wk->palwork.paldata  = GFL_ARCHDL_UTIL_LoadPalette( p_handle, NARC_guru2_2d_record_s_obj_NCLR, &wk->palwork.palbuf, HEAPID_GURU2 );
   wk->connectBackup    = 0;
   wk->YesNoMenuWork    = NULL;
   wk->g2c->shareNum    = 2;
@@ -726,7 +726,7 @@ static void BgExit( void )
 static void BgGraphicSet( GURU2RC_WORK * wk, ARCHANDLE* p_handle )
 {
   // 上下画面ＢＧパレット転送
-  GFL_ARCHDL_UTIL_TransVramPalette( p_handle,  NARC_guru2_2d_record_s_nclr, PALTYPE_MAIN_BG, 0, 16*16*2, HEAPID_GURU2 );
+  GFL_ARCHDL_UTIL_TransVramPalette( p_handle,  NARC_guru2_2d_record_s_NCLR, PALTYPE_MAIN_BG, 0, 16*16*2, HEAPID_GURU2 );
   GFL_ARC_UTIL_TransVramPalette( ARCID_C_GEAR, NARC_c_gear_c_gear_NCLR,  PALTYPE_SUB_BG,  0, 16*5,   HEAPID_GURU2 );
   
   // 会話フォントパレット転送
@@ -737,10 +737,10 @@ static void BgGraphicSet( GURU2RC_WORK * wk, ARCHANDLE* p_handle )
   GFL_ARC_UTIL_TransVramScreen(      ARCID_C_GEAR, NARC_c_gear_c_gear00_NSCR, GFL_BG_FRAME2_S, 0, 0, 0, HEAPID_GURU2);
 
   // メイン画面BG1キャラ転送
-  GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_guru2_2d_subbg_lz_ncgr,  GFL_BG_FRAME1_M, 0, 32*8*0x20, 1, HEAPID_GURU2);
+  GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_guru2_2d_record_s_NCGR,  GFL_BG_FRAME1_M, 0, 32*8*0x20, 1, HEAPID_GURU2);
 
   // メイン画面BG1スクリーン転送
-  GFL_ARCHDL_UTIL_TransVramScreen(   p_handle, NARC_guru2_2d_subbg_lz_nscr,  GFL_BG_FRAME1_M, 0, 32*24*2, 1, HEAPID_GURU2);
+  GFL_ARCHDL_UTIL_TransVramScreen(   p_handle, NARC_guru2_2d_record_s_NSCR,  GFL_BG_FRAME1_M, 0, 32*24*2, 1, HEAPID_GURU2);
 
   // メイン画面会話ウインドウグラフィック転送
   BmpWinFrame_GraphicSet(
@@ -784,18 +784,18 @@ static void InitCellActor(GURU2RC_WORK *wk, ARCHANDLE* p_handle)
   //---------上画面人物OBJ読み込み-------------------
 
   //chara読み込み
-  wk->resObjTbl[GURU2_CLACT_RES_CHR] = GFL_CLGRP_CGR_Register( p_handle, NARC_guru2_2d_obj_s_lz_ncgr, 1, 
+  wk->resObjTbl[GURU2_CLACT_RES_CHR] = GFL_CLGRP_CGR_Register( p_handle, NARC_guru2_2d_record_s_obj_NCGR, 1, 
                                                                CLSYS_DRAW_MAIN, HEAPID_GURU2 );
   //pal読み込み
-  wk->resObjTbl[GURU2_CLACT_RES_PLTT] = GFL_CLGRP_PLTT_Register( p_handle, NARC_guru2_2d_record_s_obj_nclr,
+  wk->resObjTbl[GURU2_CLACT_RES_PLTT] = GFL_CLGRP_PLTT_Register( p_handle, NARC_guru2_2d_record_s_obj_NCLR,
                                                                CLSYS_DRAW_MAIN, 0, HEAPID_GURU2 );
 //  CLACT_U_ResManagerResAddArcPltt_ArcHandle(wk->resMan[CLACT_U_PLTT_RES],
-//              p_handle, NARC_guru2_2d_record_s_obj_nclr, 0, 2, NNS_G2D_VRAM_TYPE_2DMAIN, 15, HEAPID_GURU2);
+//              p_handle, NARC_guru2_2d_record_s_obj_NCLR, 0, 2, NNS_G2D_VRAM_TYPE_2DMAIN, 15, HEAPID_GURU2);
 
   //cell読み込み
   wk->resObjTbl[GURU2_CLACT_RES_CELL] = GFL_CLGRP_CELLANIM_Register( p_handle, 
-                                            NARC_guru2_2d_obj_s_lz_ncer, 
-                                            NARC_guru2_2d_obj_s_lz_nanr, 
+                                            NARC_guru2_2d_record_s_obj_NCER, 
+                                            NARC_guru2_2d_record_s_obj_NANR, 
                                             HEAPID_GURU2 );
 
 //  CLACT_U_ResManagerResAddArcKindCell_ArcHandle(wk->resMan[CLACT_U_CELL_RES],
@@ -2713,11 +2713,11 @@ static void LoadFieldObjData( GURU2RC_WORK *wk, ARCHANDLE* p_handle )
 {
   // パレット読み込み
   wk->FieldObjPalBuf[0] = GFL_ARC_UTIL_LoadPalette(    ARCID_WORLDTRADE_GRA, NARC_worldtrade_hero_nclr, &(wk->FieldObjPalData[0]), HEAPID_GURU2 );
-  wk->FieldObjPalBuf[1] = GFL_ARCHDL_UTIL_LoadPalette( p_handle, NARC_guru2_2d_union_chara_nclr, &(wk->FieldObjPalData[1]), HEAPID_GURU2 );
+  wk->FieldObjPalBuf[1] = GFL_ARCHDL_UTIL_LoadPalette( p_handle, NARC_guru2_2d_union_chara_NCLR, &(wk->FieldObjPalData[1]), HEAPID_GURU2 );
 
   // 画像読み込み
   wk->FieldObjCharaBuf[0] = GFL_ARC_UTIL_LoadOBJCharacter( ARCID_WORLDTRADE_GRA, NARC_worldtrade_hero_lz_ncgr, 1, &(wk->FieldObjCharaData[0]), HEAPID_GURU2 );
-  wk->FieldObjCharaBuf[1] = GFL_ARCHDL_UTIL_LoadOBJCharacter( p_handle, NARC_guru2_2d_union_chara_lz_ncgr,  1, &(wk->FieldObjCharaData[1]), HEAPID_GURU2 );
+  wk->FieldObjCharaBuf[1] = GFL_ARCHDL_UTIL_LoadOBJCharacter( p_handle, NARC_guru2_2d_union_chara_NCGR,  1, &(wk->FieldObjCharaData[1]), HEAPID_GURU2 );
 
 }
 
