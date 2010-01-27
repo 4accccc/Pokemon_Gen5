@@ -2394,6 +2394,7 @@ static void MSGWND_Exit( MSGWND_WORK* p_wk )
   if( p_wk->p_stream )
   {
     PRINTSYS_PrintStreamDelete( p_wk->p_stream );
+    p_wk->p_stream  = NULL;
   }
 
   GFL_STR_DeleteBuffer( p_wk->p_strbuf );
@@ -2418,6 +2419,7 @@ static void MSGWND_Print( MSGWND_WORK* p_wk, u32 strID, int wait )
   if( p_wk->p_stream )
   {
     PRINTSYS_PrintStreamDelete( p_wk->p_stream );
+    p_wk->p_stream  = NULL;
   }
 
   //•¶Žš•`‰æ‚ªˆá‚¤
