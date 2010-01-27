@@ -7,3 +7,4 @@
 #define RE_LINE_4 (3)
 #define RE_LINE_JUNCTION (4)
 #define RE_LINE_STAIRS (5)
+#define div_6_RE_LINE_STAIRS (6)
