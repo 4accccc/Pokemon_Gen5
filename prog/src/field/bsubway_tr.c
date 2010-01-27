@@ -1,6 +1,6 @@
 //======================================================================
 /**
- * @file bsubway_scr.c
+ * @file bsubway_tr.c
  * @brief バトルサブウェイ　トレーナー関連
  * @author  Miyuki Iwasawa
  * @date  06.04.17

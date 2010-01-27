@@ -706,7 +706,8 @@ static void setupWindow(	TALKMSGWIN_SYS*		tmsgwinSys,
 	}
 #else
 	tmsgwin->writex = 2;
-	tmsgwin->writey = 2;
+//	tmsgwin->writey = 2; //縦サイズ32dot、１文字縦サイズ16で被ってしまう。
+	tmsgwin->writey = 0;
 #endif
   
 	tmsgwin->seq = WINSEQ_IDLING;

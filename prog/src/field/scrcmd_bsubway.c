@@ -153,6 +153,24 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
   }
   
   switch( com_id ){
+  //ゾーンID別プレイモード取得
+  case BSWTOOL_GET_ZONE_PLAY_MODE:
+    {
+      u16 zone_id = FIELDMAP_GetZoneID( fieldmap );
+      
+      switch( zone_id ){
+      case ZONE_ID_C04R0102:
+        *ret_wk = BSWAY_MODE_SINGLE;
+        break;
+      case ZONE_ID_C04R0104:
+        *ret_wk = BSWAY_MODE_DOUBLE;
+        break;
+      default:
+        GF_ASSERT( 0 );
+        *ret_wk = BSWAY_MODE_SINGLE;
+      }
+    }
+    break;
   //リセット
   case BSWTOOL_SYSTEM_RESET:
     OS_ResetSystem( 0 );

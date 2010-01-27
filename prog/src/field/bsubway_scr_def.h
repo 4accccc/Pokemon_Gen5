@@ -17,7 +17,6 @@
 #define BSWAY_NULL_POKE  (0xFF)
 #define BSWAY_NULL_TRAINER  (0xFFFF)
 #define BSWAY_NULL_PARAM  (0)
-#define BSWAY_NULL (0)
 
 ///バトルサブウェイ初期化モード
 #define BSWAY_PLAY_NEW    (0)
@@ -104,9 +103,28 @@
 #define BSWAY_SF_W50    (7)
 
 //--------------------------------------------------------------
+/// バトルサブウェイシーン制御
+//--------------------------------------------------------------
+//受付制御
+#define BSWAY_SCENE_RECEIPT_NON (0) //何も無し
+#define BSWAY_SCENE_RECEIPT_CONTINUE (1) //コンテニュー
+#define BSWAY_SCENE_RECEIPT_CANCEL (2) //キャンセル
+#define BSWAY_SCENE_RECEIPT_AFTER (3) //ゲームクリア
+#define BSWAY_SCENE_RECEIPT_ERROR (4) //エラー
+
+//列車内制御
+#define BSWAY_SCENE_TRAIN_NON (0) //何も無し
+#define BSWAY_SCENE_TRAIN_FIRST (1) //乗車初回
+#define BSWAY_SCENE_TRAIN_CONTINUE (2) //乗車中
+
+//ホーム制御
+#define BSWAY_SCENE_HOME_NON (0) //何も無し
+
+//--------------------------------------------------------------
 /// バトルサブウェイコマンドツールID
 /// ワーク依存無しコマンド
 //--------------------------------------------------------------
+#define BSWTOOL_GET_ZONE_PLAY_MODE (0)
 #define BSWTOOL_SYSTEM_RESET (1)
 #define BSWTOOL_CHK_ENTRY_POKE_NUM (2)
 #define BSWTOOL_CLEAR_PLAY_DATA (3)
@@ -160,6 +178,9 @@
 #define BSWSUB_SET_PLAY_MODE_LOCATION (BSWSUB_START+22)
 #define BSWSUB_LOAD_POKEMON_MEMBER (BSWSUB_START+23)
 #define BSWSUB_END (BSWSUB_START+24)
+
+//バトルサブウェイコマンド　引数NULL
+#define BSW_NULL (0)
 
 //--------------------------------------------------------------
 //  通信マルチ　同期コード
