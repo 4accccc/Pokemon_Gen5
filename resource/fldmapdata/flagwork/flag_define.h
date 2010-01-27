@@ -169,12 +169,12 @@
 #define FE_SODATEYAOLDMAN_OPEN             153 /* 0x0099 育て屋にじいさんが戻ってくる（２匹預けられるようになる） */
 #define FE_BC10R0401_BOSS                  154 /* 0x009a ブラックシティ：ボス初回会話チェック */
 #define FE_WC10R0101_OLDMAN                155 /* 0x009b ホワイトシティ：村長初回会話チェック */
-		/* not used   156(0x009c) */
-		/* not used   157(0x009d) */
-		/* not used   158(0x009e) */
-		/* not used   159(0x009f) */
-		/* not used   160(0x00a0) */
-		/* not used   161(0x00a1) */
+#define FE_POKEID_ITEM1                    156 /* 0x009c ポケモンIDイベント用フラグ：アイテム１を入手した */
+#define FE_POKEID_ITEM2                    157 /* 0x009d ポケモンIDイベント用フラグ：アイテム２を入手した */
+#define FE_POKEID_ITEM3                    158 /* 0x009e ポケモンIDイベント用フラグ：アイテム３を入手した */
+#define FE_POKEID_ITEM4                    159 /* 0x009f ポケモンIDイベント用フラグ：アイテム４を入手した */
+#define FE_POKEID_ITEM5                    160 /* 0x00a0 ポケモンIDイベント用フラグ：アイテム５を入手した */
+#define FE_POKEID_ITEM6                    161 /* 0x00a1 ポケモンIDイベント用フラグ：アイテム６を入手した */
 		/* not used   162(0x00a2) */
 		/* not used   163(0x00a3) */
 		/* not used   164(0x00a4) */
