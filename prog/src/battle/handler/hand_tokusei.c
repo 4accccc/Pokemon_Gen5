@@ -2253,7 +2253,7 @@ static void common_weather_recover( BTL_SVFLOW_WORK* flowWk, u8 pokeID, BtlWeath
     BTL_HANDEX_PARAM_RECOVER_HP* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RECOVER_HP, pokeID );
     param->header.tokwin_flag = TRUE;
     param->pokeID = pokeID;
-    param->recoverHP = BTL_CALC_QuotMaxHP( bpp, 8 );
+    param->recoverHP = BTL_CALC_QuotMaxHP( bpp, 16 );
 
     BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_FLAG, TRUE );
   }
