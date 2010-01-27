@@ -703,9 +703,11 @@ static int _get_menuType( EVENTWORK *ev, int zoneId )
 {
   int type=0;   // 通常
 
-  // ユニオンルームか？
-  if (ZONEDATA_IsUnionRoom(zoneId) || ZONEDATA_IsColosseum(zoneId) ){
-    type = 1; // ユニオンルーム
+  // ユニオンルーム・コロシアム・遊覧船か？
+  if (ZONEDATA_IsUnionRoom(zoneId) 
+  ||  ZONEDATA_IsColosseum(zoneId)
+  ||  ZONEDATA_IsPlBoat(zoneId) ){
+    type = 1; // ユニオンルームモード
   }
 
 
