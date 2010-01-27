@@ -192,7 +192,6 @@ SRCS  +=    $(SOUNDSRC) \
         gamesystem/iss_road_sys.c \
         gamesystem/iss_dungeon_sys.c \
         gamesystem/iss_sys.c \
-        gamesystem/iss_3ds_unit.c \
         gamesystem/iss_3ds_sys.c \
         gamesystem/iss_zone_sys.c \
         gamesystem/iss_switch_sys.c \

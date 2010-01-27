@@ -1,16 +1,15 @@
 #include <gflib.h>
-#include "fieldmap.h"
+#include "fieldmap.h" 
 #include "field_gimmick_h01.h"
-
-#include "gamesystem/iss_3ds_unit.h"
+#include "field_gimmick_def.h"
 #include "gamesystem/iss_3ds_sys.h"
+#include "savedata/gimmickwork.h"
+#include "sound/pm_sndsys.h"
+#include "system/gfl_use.h"
+#include "sound_obj.h" 
+
 #include "arc/arc_def.h"
 #include "arc/h01.naix"
-#include "sound_obj.h" 
-#include "savedata/gimmickwork.h"
-#include "field_gimmick_def.h"
-#include "system/gfl_use.h"
-#include "sound/pm_sndsys.h"
 
 
 //==========================================================================================

@@ -1,9 +1,7 @@
 #include <gflib.h>
 #include "fieldmap.h"
 #include "gamesystem/iss_3ds_sys.h"
-#include "sound_obj.h"
-
-#include "gamesystem/iss_3ds_unit.h"
+#include "sound_obj.h" 
 #include "system/ica_anime.h"
 #include "h03.naix"
 
@@ -239,7 +237,6 @@ fx32 SOUNDOBJ_GetAnimeFrame( SOUNDOBJ* soundObj )
 static void AdjustPosition( SOUNDOBJ* soundObj )
 {
   VecFx32 pos;
-  ISS_3DS_UNIT* unit;
 
   // ƒAƒjƒ[ƒVƒ‡ƒ“–¢“o˜^
   if( soundObj->icaAnime == NULL ){ return; }

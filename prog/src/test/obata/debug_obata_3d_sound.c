@@ -3,7 +3,6 @@
 #include "system/main.h"
 #include "arc/arc_def.h"
 #include "arc/debug_obata.naix"
-#include "gamesystem/iss_3ds_unit.h"
 #include "gamesystem/iss_3ds_sys.h"
 #include "sound/pm_sndsys.h"
 
@@ -122,7 +121,7 @@ typedef struct
   BOOL              active; // 表示フラグ
   GFL_G3D_OBJ*         obj; // 描画オブジェクト
   GFL_G3D_OBJSTATUS status; // ステータス
-  ISS_3DS_UNIT* iss3dsUnit; // 3Dサウンドユニット
+  //ISS_3DS_UNIT* iss3dsUnit; // 3Dサウンドユニット
   u16                frame; // 現在フレーム
   u16             endFrame; // 最終フレーム
   VecFx32         startPos; // 開始位置
