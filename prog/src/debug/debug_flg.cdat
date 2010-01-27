@@ -21,7 +21,7 @@ DEBUG_FLG_DEF( DisableReport , "Report Off")
 DEBUG_FLG_DEF( ReverseVersion , "Reverse Version")
 DEBUG_FLG_DEF( RestricPhoto , "Restric Photo")
 DEBUG_FLG_DEF( RestricUGC , "Restric UGC")
-DEBUG_FLG_DEF( TestFlg8 , "テスト8")
+DEBUG_FLG_DEF( ShortcutBtlIn , "Shortcut BtlIn")
 DEBUG_FLG_DEF( TestFlg9 , "テスト9")
 //Page2
 DEBUG_FLG_DEF( TestFlg10, "テスト10")
