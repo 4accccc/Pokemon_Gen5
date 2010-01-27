@@ -19,20 +19,210 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_h04
+_EVENT_DATA    ev_h04_whisle
+_EVENT_DATA    ev_h04_guiter
+_EVENT_DATA    ev_h04_voice
+_EVENT_DATA    ev_h04_leadersinger
 _EVENT_DATA_END
 
+//------------------------------注意--------------------------------//
+//																	//
+//	LOCALWORK10～13まで使用しました。同マップ内の使用を禁止します。	//
+//				LOCALWORK10⇒ホイッスル								//
+//				LOCALWORK11⇒ギター									//
+//				LOCALWORK12⇒ボイスパーカッション					//
+//				LOCALWORK13⇒メインボーカル							//
+//																	//
+//------------------------------------------------------------------//
 
-/**************************************************************/
-/*            FLAG_CHANGE_LABEL                               */
-/**************************************************************/
-//ev_h04_flag_change:
-//  _END
+/************************************************************/
+/*		ISS 草笛				*/
+/************************************************************/
+EVENT_START   ev_h04_whisle
+	//再生状態かチェック
+	_ISS_SWITCH_CHECK( SCWK_ANSWER,1 )
 
-/**************************************************************/
-/*                                                            */
-/**************************************************************/
-ev_h04:
-  //とりあえず最初のラベルだけ生成している
-  _END
+	//演奏していない
+	IF $SCWK_ANSWER == FALSE THEN
+	
+		//１回目
+		IF $LOCALWORK10 == 0 THEN
+		
+			//ISSスイッチをオンに
+			_ISS_SWITCH_ON( 1 )
+			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_h04_whistle_01 )
+		
+		//2回目以降
+		ELSE
+		
+			//ISSスイッチをオンに
+			_ISS_SWITCH_ON( 1 )
+			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_h04_whistle_03 )
+		
+		ENDIF
+	
+	//演奏している
+	ELSE
 
+		//１回目
+		IF $LOCALWORK10 == 0 THEN
+		
+			//ISSスイッチをオフに
+			_ISS_SWITCH_OFF( 1 )
+			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_h04_whistle_02 )
+		
+		//2回目以降
+		ELSE
+		
+			//ISSスイッチをオフに
+			_ISS_SWITCH_OFF( 1 )
+			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_h04_whistle_04 )
+		
+		ENDIF
+	
+	ENDIF
+EVENT_END
+
+/************************************************************/
+/*		ISS ギター											*/
+/************************************************************/
+EVENT_START   ev_h04_guiter
+	//再生状態かチェック
+	_ISS_SWITCH_CHECK( SCWK_ANSWER,2 )
+
+	//演奏していない
+	IF $SCWK_ANSWER == FALSE THEN
+	
+		//１回目
+		IF $LOCALWORK11 == 0 THEN
+		
+			//ISSスイッチをオンに
+			_ISS_SWITCH_ON( 2 )
+			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_h04_guitar_01 )
+		
+		//2回目以降
+		ELSE
+		
+			//ISSスイッチをオンに
+			_ISS_SWITCH_ON( 2 )
+			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_h04_guitar_03 )
+		
+		ENDIF
+	
+	//演奏している
+	ELSE
+
+		//１回目
+		IF $LOCALWORK11 == 0 THEN
+		
+			//ISSスイッチをオフに
+			_ISS_SWITCH_OFF( 2 )
+			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_h04_guitar_02 )
+		
+		//2回目以降
+		ELSE
+		
+			//ISSスイッチをオフに
+			_ISS_SWITCH_OFF( 2 )
+			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_h04_guitar_04 )
+		
+		ENDIF
+	
+	ENDIF
+EVENT_END
+
+/************************************************************/
+/*		ISS ボイスパーカッション							*/
+/************************************************************/
+EVENT_START   ev_h04_voice
+	//再生状態かチェック
+	_ISS_SWITCH_CHECK( SCWK_ANSWER,3 )
+
+	//演奏していない
+	IF $SCWK_ANSWER == FALSE THEN
+	
+		//１回目
+		IF $LOCALWORK12 == 0 THEN
+		
+			//ISSスイッチをオンに
+			_ISS_SWITCH_ON( 3 )
+			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_h04_voice_01 )
+		
+		//2回目以降
+		ELSE
+		
+			//ISSスイッチをオンに
+			_ISS_SWITCH_ON( 3 )
+			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_h04_voice_03 )
+		
+		ENDIF
+	
+	//演奏している
+	ELSE
+
+		//１回目
+		IF $LOCALWORK12 == 0 THEN
+		
+			//ISSスイッチをオフに
+			_ISS_SWITCH_OFF( 3 )
+			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_h04_voice_02 )
+		
+		//2回目以降
+		ELSE
+		
+			//ISSスイッチをオフに
+			_ISS_SWITCH_OFF( 3 )
+			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_h04_voice_04 )
+		
+		ENDIF
+	
+	ENDIF
+EVENT_END
+
+/************************************************************/
+/*		ISS メインボーカル									*/
+/************************************************************/
+EVENT_START   ev_h04_leadersinger
+	//再生状態かチェック
+	_ISS_SWITCH_CHECK( SCWK_ANSWER,4 )
+
+	//演奏していない
+	IF $SCWK_ANSWER == FALSE THEN
+	
+		//１回目
+		IF $LOCALWORK13 == 0 THEN
+		
+			//ISSスイッチをオンに
+			_ISS_SWITCH_ON( 4 )
+			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_h04_leadsinger_01 )
+		
+		//2回目以降
+		ELSE
+		
+			//ISSスイッチをオンに
+			_ISS_SWITCH_ON( 4 )
+			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_h04_leadsinger_03 )
+		
+		ENDIF
+	
+	//演奏している
+	ELSE
+
+		//１回目
+		IF $LOCALWORK13 == 0 THEN
+		
+			//ISSスイッチをオフに
+			_ISS_SWITCH_OFF( 4 )
+			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_h04_leadsinger_02 )
+		
+		//2回目以降
+		ELSE
+		
+			//ISSスイッチをオフに
+			_ISS_SWITCH_OFF( 4 )
+			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_h04_leadsinger_04 )
+		
+		ENDIF
+	
+	ENDIF
+EVENT_END
