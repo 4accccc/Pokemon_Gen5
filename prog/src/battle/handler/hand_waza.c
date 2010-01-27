@@ -216,7 +216,7 @@ static void handler_MetalBurst_Target( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WO
 static void handler_MetalBurst_CalcDamage( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void common_Counter_ExeCheck( BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work, WazaDamageType dmgType );
 static void common_Counter_SetTarget( BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work, WazaDamageType dmgType );
-static void common_Counter_CalcDamage( BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work, WazaDamageType dmgType );
+static void common_Counter_CalcDamage( BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work, WazaDamageType dmgType, fx32 ratio );
 static BOOL common_Counter_GetRec( const BTL_POKEPARAM* bpp, WazaDamageType dmgType, BPP_WAZADMG_REC* rec );
 static const BtlEventHandlerTable*  ADD_Totteoki( u32* numElems );
 static void handler_Totteoki( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
@@ -2379,7 +2379,7 @@ static void handler_Counter_Target( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK*
 }
 static void handler_Counter_CalcDamage( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  common_Counter_CalcDamage( flowWk, pokeID, work, WAZADATA_DMG_PHYSIC );
+  common_Counter_CalcDamage( flowWk, pokeID, work, WAZADATA_DMG_PHYSIC, FX32_CONST(2) );
 }
 //----------------------------------------------------------------------------------
 /**
@@ -2407,7 +2407,7 @@ static void handler_MilerCoat_Target( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WOR
 }
 static void handler_MilerCoat_CalcDamage( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  common_Counter_CalcDamage( flowWk, pokeID, work, WAZADATA_DMG_SPECIAL );
+  common_Counter_CalcDamage( flowWk, pokeID, work, WAZADATA_DMG_SPECIAL, FX32_CONST(2) );
 }
 //----------------------------------------------------------------------------------
 /**
@@ -2435,7 +2435,7 @@ static void handler_MetalBurst_Target( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WO
 }
 static void handler_MetalBurst_CalcDamage( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  common_Counter_CalcDamage( flowWk, pokeID, work, WAZADATA_DMG_NONE );
+  common_Counter_CalcDamage( flowWk, pokeID, work, WAZADATA_DMG_NONE, FX32_CONST(1.5f) );
 }
 
 //----------------------------------------------------------------------------------
@@ -2477,15 +2477,17 @@ static void common_Counter_SetTarget( BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* w
 // カウンター系共通：ダメージ計算
 //
 //----------------------------------------------------------------------------------
-static void common_Counter_CalcDamage( BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work, WazaDamageType dmgType )
+static void common_Counter_CalcDamage( BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work, WazaDamageType dmgType, fx32 ratio )
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
     BPP_WAZADMG_REC  rec;
 
-    if( common_Counter_GetRec(bpp, dmgType, &rec) ){
-      BTL_EVENTVAR_RewriteValue( BTL_EVAR_FIX_DAMAGE, rec.damage*2 );
+    if( common_Counter_GetRec(bpp, dmgType, &rec) )
+    {
+      u32 damage = BTL_CALC_MulRatio( rec.damage, ratio );
+      BTL_EVENTVAR_RewriteValue( BTL_EVAR_FIX_DAMAGE, damage );
     }
   }
 }
