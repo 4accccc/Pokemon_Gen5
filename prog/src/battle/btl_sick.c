@@ -358,11 +358,6 @@ void BTL_SICK_MakeDefaultMsg( WazaSick sickID, BPP_SICK_CONT cont, const BTL_POK
 }
 
 
-int BTL_SICK_GetDefaultSickCureStrID( WazaSick sickID, BOOL fUseItem )
-{
-  return getCureStrID( sickID, fUseItem );
-}
-
 static int getCureStrID( WazaSick sick, BOOL fUseItem )
 {
   static const struct {

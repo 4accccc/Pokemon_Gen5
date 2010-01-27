@@ -4337,6 +4337,7 @@ static BOOL scproc_Fight_CheckConf( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker
   {
     if( BPP_CheckKonranWakeUp(attacker) ){
       scPut_CureSick( wk, attacker, WAZASICK_KONRAN, NULL );
+      SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_KonranCure, BPP_GetID(attacker) );
       return FALSE;
     }
     scPut_ConfCheck( wk, attacker );
