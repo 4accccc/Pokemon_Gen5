@@ -200,6 +200,7 @@ static const pBBagFunc MainSeqFunc[] = {
  * @return  none
  */
 //--------------------------------------------------------------------------------------------
+/*
 static const u16 testItem[][2] =
 {
   { ITEM_MASUTAABOORU, 1 },   // マスターボール
@@ -232,6 +233,7 @@ static const u16 testItem[][2] =
   { ITEM_GENKINOKATAMARI, 99 }, // げんきのかたまり
   { 0, 0 },
 };
+*/
 
 void BattleBag_TaskAdd( BBAG_DATA * dat )
 {
@@ -295,6 +297,8 @@ void BattleBag_TaskAdd( BBAG_DATA * dat )
     wk->dat->mode = BBAG_MODE_GETDEMO;
   }
 */
+//	wk->dat->mode = BBAG_MODE_GETDEMO;
+
 
 /** デバッグ処理 **/
 //  wk->dat->myitem = MyItem_AllocWork( wk->dat->heap );
@@ -393,8 +397,8 @@ static int BBAG_SeqInit( BBAG_WORK * wk )
     BAPP_CursorMvWkSetFlag( wk->cmv_wk, 1 );
   }
 */
-  BattleBag_CursorMoveSet( wk, wk->page );
-  BBAG_GetDemoCursorSet( wk, wk->page );
+//  BattleBag_CursorMoveSet( wk, wk->page );
+//  BBAG_GetDemoCursorSet( wk, wk->page );
 
   GFL_NET_ReloadIcon();
   PaletteWorkSet_VramCopy( wk->pfd, FADE_SUB_OBJ, 14*16, 0x20 );
@@ -447,8 +451,8 @@ static int BBAG_SeqShooterInit( BBAG_WORK * wk )
     BAPP_CursorMvWkSetFlag( wk->cmv_wk, 1 );
   }
 */
-  BattleBag_CursorMoveSet( wk, wk->page );
-  BBAG_GetDemoCursorSet( wk, wk->page );
+//  BattleBag_CursorMoveSet( wk, wk->page );
+//  BBAG_GetDemoCursorSet( wk, wk->page );
 
   GFL_NET_ReloadIcon();
   PaletteWorkSet_VramCopy( wk->pfd, FADE_SUB_OBJ, 14*16, 0x20 );
@@ -1108,7 +1112,9 @@ static BOOL BBAG_SeqEnd( GFL_TCB * tcb, BBAG_WORK * wk )
 
 
 
-#define BBAG_GETDEMO_WAIT_COUNT   ( 60 )    // 捕獲デモウェイト
+//#define BBAG_GETDEMO_WAIT_COUNT   ( 44*3 )    // 捕獲デモウェイト
+//#define BBAG_GETDEMO_WAIT_COUNT   ( 3 )    // 捕獲デモウェイト
+
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1121,70 +1127,76 @@ static BOOL BBAG_SeqEnd( GFL_TCB * tcb, BBAG_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static int BBAG_SeqGetDemoMain( BBAG_WORK * wk )
 {
-/*
-  if( PaletteFadeCheck( wk->pfd ) != 0 ){ return SEQ_BBAG_GETDEMO; }
+//  if( PaletteFadeCheck( wk->pfd ) != 0 ){ return SEQ_BBAG_GETDEMO; }
 
   switch( wk->get_seq ){
-  case 0:   // wait 2 sec
-//    if( wk->get_cnt == BBAG_GETDEMO_WAIT_COUNT ){
-    if( FINGER_TouchAnimeCheck( wk->finger ) == TRUE ){
+  case 0:
+    if( wk->get_cnt == BBAGOBJ_GETDEMO_CURSOR_NORMAL_LOOP_COUNT ){
+			BBAG_ChangeGetDemoCursorAnm( wk, 1 );
+      wk->get_seq++;
+    }
+    break;
+
+	case 1:
+		if( wk->get_cnt == 1 ){
       PMSND_PlaySE( SEQ_SE_DECIDE2 );
       wk->poke_id = BBAG_POKE_BALL;
       wk->ret_seq = SEQ_BBAG_GETDEMO;
-      BattleBag_ButtonAnmInit( wk, BBAG_BTNANM_PAGE3, BBAG_BTNANM_MODE_END );
-//      BattleBag_GetDemoCursorPush( wk );
-//      wk->get_anm = 1;
-      wk->get_cnt = 0;
+      BBAGANM_ButtonAnmInit( wk, BBAG_BGWF_POCKET03 );
       wk->get_seq++;
       return SEQ_BBAG_BUTTON_WAIT;
-    }else{
-      wk->get_cnt++;
-    }
-    break;
-  case 1:   // page change
-//    wk->get_anm = 0;
+		}
+		break;
+
+  case 2:
     BBAG_SeqPage2Chg( wk );
     wk->get_seq++;
+		wk->ret_seq = SEQ_BBAG_GETDEMO;
+	  return SEQ_BBAG_PAGECHG_WAIT;
+
+  case 3:
+    if( wk->get_cnt == BBAGOBJ_GETDEMO_CURSOR_NORMAL_LOOP_COUNT ){
+			BBAG_ChangeGetDemoCursorAnm( wk, 1 );
+      wk->get_seq++;
+    }
     break;
 
-  case 2:   // wait 2 sec
-//    if( wk->get_cnt == BBAG_GETDEMO_WAIT_COUNT ){
-    if( FINGER_TouchAnimeCheck( wk->finger ) == TRUE ){
+	case 4:
+		if( wk->get_cnt == 1 ){
       PMSND_PlaySE( SEQ_SE_DECIDE2 );
       wk->dat->item_pos[wk->poke_id] = 0;
       wk->ret_seq = SEQ_BBAG_GETDEMO;
-      BattleBag_ButtonAnmInit( wk, BBAG_BTNANM_ITEM1, BBAG_BTNANM_MODE_END );
-//      BattleBag_GetDemoCursorPush( wk );
-//      wk->get_anm = 1;
-      wk->get_cnt = 0;
+      BBAGANM_ButtonAnmInit( wk, BBAG_BGWF_ITEM01 );
       wk->get_seq++;
       return SEQ_BBAG_BUTTON_WAIT;
-    }else{
-      wk->get_cnt++;
-    }
-    break;
-  case 3:   // page change
-//    wk->get_anm = 0;
+		}
+		break;
+
+  case 5:
     BBAG_SeqPage3Chg( wk );
     wk->get_seq++;
+		wk->ret_seq = SEQ_BBAG_GETDEMO;
+	  return SEQ_BBAG_PAGECHG_WAIT;
+
+  case 6:
+    if( wk->get_cnt == BBAGOBJ_GETDEMO_CURSOR_NORMAL_LOOP_COUNT ){
+			BBAG_ChangeGetDemoCursorAnm( wk, 1 );
+	    wk->get_seq++;
+    }
     break;
 
-  case 4:   // wait 2 sec
-//    if( wk->get_cnt == BBAG_GETDEMO_WAIT_COUNT ){
-    if( FINGER_TouchAnimeCheck( wk->finger ) == TRUE ){
+	case 7:
+		if( wk->get_cnt == 1 ){
       PMSND_PlaySE( SEQ_SE_DECIDE2 );
       wk->dat->ret_item = BattleBag_PosItemCheck( wk, wk->dat->item_pos[wk->poke_id] );
       wk->dat->ret_page = wk->poke_id;
-      BattleBag_ButtonAnmInit( wk, BBAG_BTNANM_USE, BBAG_BTNANM_MODE_END );
-//      BattleBag_GetDemoCursorPush( wk );
-//      wk->get_anm = 1;
+      wk->dat->ret_cost = 0;
+      BBAGANM_ButtonAnmInit( wk, BBAG_BGWF_USE );
       return BBAG_ItemUse( wk );
-    }else{
-      wk->get_cnt++;
-    }
-    break;
+		}
+		break;
   }
-*/
+
   return SEQ_BBAG_GETDEMO;
 }
 
@@ -1516,8 +1528,8 @@ static void BBAG_PageChange( BBAG_WORK * wk, u8 next_page )
 
   BBAGUI_ChangePage( wk, next_page, 0 );
 
-  BattleBag_CursorMoveSet( wk, next_page );
-  BBAG_GetDemoCursorSet( wk, next_page );
+//  BattleBag_CursorMoveSet( wk, next_page );
+//  BBAG_GetDemoCursorSet( wk, next_page );
 
 //  wk->page = next_page;
 

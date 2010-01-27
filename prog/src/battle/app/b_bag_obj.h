@@ -11,6 +11,15 @@
 
 
 //============================================================================================
+//	定数定義
+//============================================================================================
+// デモカーソル・上下アニメから押すアニメに移行するまでのループ回数
+#define	BBAGOBJ_GETDEMO_CURSOR_NORMAL_LOOP_COUNT				( 3 )
+// デモカーソル・押すアニメにボタンアニメを実行するフレームインデックス
+#define	BBAGOBJ_GETDEMO_CURSOR_PUSH_BUTTON_ANIME_FRAME	( 6 )
+
+
+//============================================================================================
 //	プロトタイプ宣言
 //============================================================================================
 
@@ -57,7 +66,7 @@ extern void BattleBag_PageObjSet( BBAG_WORK * wk, u32 page );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern void BBAG_P2CursorMvTblMake( BBAG_WORK * wk );
+//extern void BBAG_P2CursorMvTblMake( BBAG_WORK * wk );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -69,7 +78,7 @@ extern void BBAG_P2CursorMvTblMake( BBAG_WORK * wk );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern void BattleBag_CursorMoveSet( BBAG_WORK * wk, u8 page );
+//extern void BattleBag_CursorMoveSet( BBAG_WORK * wk, u8 page );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -80,7 +89,7 @@ extern void BattleBag_CursorMoveSet( BBAG_WORK * wk, u8 page );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern void BattleBag_CursorOff( BBAG_WORK * wk );
+//extern void BattleBag_CursorOff( BBAG_WORK * wk );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -92,7 +101,9 @@ extern void BattleBag_CursorOff( BBAG_WORK * wk );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern void BBAG_GetDemoCursorSet( BBAG_WORK * wk, u8 page );
+//extern void BBAG_GetDemoCursorSet( BBAG_WORK * wk, u8 page );
+
+extern void BBAG_ChangeGetDemoCursorAnm( BBAG_WORK * wk, u32 anm );
 
 
 #endif	// B_BAG_OBJ_H

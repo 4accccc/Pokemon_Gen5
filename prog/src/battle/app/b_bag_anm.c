@@ -425,6 +425,9 @@ void BBAGANM_PageButtonPut( BBAG_WORK * wk, u8 page )
 		break;
 
 	case BBAG_PAGE_ITEM:	// アイテム使用ページ
+		BGWINFRM_PaletteChange(
+			wk->bgwfrm, BBAG_BGWF_USE, 0, 0,
+			ButtonAddData[BBAG_BGWF_USE].sx, ButtonAddData[BBAG_BGWF_USE].sy, SYSBTN_PAL_NORMAL );
 		BGWINFRM_FramePut( wk->bgwfrm,BBAG_BGWF_RETURN, P3_RETURN_SCR_PX, P3_RETURN_SCR_PY );
 		BGWINFRM_FramePut( wk->bgwfrm,BBAG_BGWF_USE, P3_USE_SCR_PX, P3_USE_SCR_PY );
 		BGWINFRM_FrameOn( wk->bgwfrm, BBAG_BGWF_RETURN );
