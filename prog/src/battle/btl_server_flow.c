@@ -6545,6 +6545,7 @@ static BOOL scproc_PushOutCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BT
       }
       else
       {
+        OS_TPrintf("野生ルールならバトル終了\n");
         scproc_MemberOutCore( wk, target );
         wk->flowResult = SVFLOW_RESULT_BTL_QUIT;
       }
