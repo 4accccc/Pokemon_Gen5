@@ -859,7 +859,15 @@ SvflowResult BTL_SVFLOW_StartAfterPokeIn( BTL_SVFLOW_WORK* wk )
 
   {
     u8 numDeadPokeAfter = BTL_DEADREC_GetCount( &wk->deadRec, 0 );
-    return (numDeadPoke == numDeadPokeAfter)?  SVFLOW_RESULT_DEFAULT : SVFLOW_RESULT_POKE_COVER;
+    if( numDeadPoke == numDeadPokeAfter ){
+      return SVFLOW_RESULT_DEFAULT;
+    }else{
+      if( scproc_CheckShowdown(wk) == FALSE){
+        return SVFLOW_RESULT_POKE_COVER;
+      }else{
+        return SVFLOW_RESULT_BTL_SHOWDOWN;
+      }
+    }
   }
 }
 
@@ -2216,6 +2224,8 @@ static void scproc_AfterMemberIn( BTL_SVFLOW_WORK* wk )
     }
   }
   Hem_PopState( &wk->HEManager, hem_state );
+
+  scproc_CheckExpGet( wk );
 }
 //----------------------------------------------------------------------------------
 /**
