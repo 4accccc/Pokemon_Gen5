@@ -771,6 +771,9 @@ static GFL_PROC_RESULT IRC_MENU_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p
 	default:
 		GF_ASSERT( 0 );
 	}
+
+  //フィールド音停止
+  PMSND_StopBGM();
 		
 	//メニューシーンセット
 	COMPATIBLE_IRC_SetScene( p_wk->p_param->p_irc, COMPATIBLE_SCENE_MENU );
@@ -863,6 +866,7 @@ static GFL_PROC_RESULT IRC_MENU_PROC_Main( GFL_PROC *p_proc, int *p_seq, void *p
       GFL_CLWK *p_clwk  = GRAPHIC_GetClwk( &p_wk->grp, CLWKID_BUTTERFLY_SP );
       GFL_CLACT_WK_SetAutoAnmFlag( p_clwk, TRUE );
       BGMOVE_Start( &p_wk->bgmove );
+      PMSND_PlayBGM( SEQ_ME_AISHOU_KIDOU );
 			*p_seq	= SEQ_MAIN;
 		}
 		break;

@@ -2846,7 +2846,7 @@ static void PRINT_PrintNameCenter( GFL_BMPWIN *p_bmpwin, STRBUF *p_strbuf, const
   STRBUF *p_dst;
   WORDSET *p_word = WORDSET_Create( GFL_HEAP_LOWID(HEAPID_IRCRANKING) );
 
-  p_dst = GFL_STR_CreateCopyBuffer( p_strbuf, GFL_HEAP_LOWID(HEAPID_IRCRANKING ) );
+  p_dst = GFL_STR_CreateBuffer( 128, GFL_HEAP_LOWID(HEAPID_IRCRANKING) );
   WORDSET_RegisterPlayerName( p_word, 0, cp_status );
   WORDSET_ExpandStr( p_word, p_dst, p_strbuf );
 

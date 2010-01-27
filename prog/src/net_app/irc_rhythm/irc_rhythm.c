@@ -2190,6 +2190,7 @@ static void COUNTDOWN_Main( COUNTDOWN_WORK *p_wk )
   { 
     if( p_wk->cnt == 0 )
     { 
+      PMSND_PlaySE( SEQ_SE_SYS_43 );
       GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[0], TRUE );
       GFL_CLACT_WK_SetAnmSeq( p_wk->p_clwk[0], (4-p_wk->cnt_idx) );
     }
@@ -2202,6 +2203,7 @@ static void COUNTDOWN_Main( COUNTDOWN_WORK *p_wk )
 
     if( p_wk->cnt_idx == 3 )
     { 
+      PMSND_PlaySE( SEQ_SE_SYS_44 );
       p_wk->is_start = FALSE;
       p_wk->is_end    = TRUE;
       GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[0], FALSE );
