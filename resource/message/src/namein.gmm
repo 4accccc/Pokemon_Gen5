@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="toru_nagihashi" host="W00160" date="2009-10-15T22:25:41"/>
+	<create user="tetsuji_ohta" host="W00176" date="2010-01-27T19:22:52"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,14 +305,14 @@
 		</language>
 	</columns>
 
-	<dialog left="-947" top="334" right="-242" bottom="952" maximized="no" rayout="Vertical2">
+	<dialog left="6" top="112" right="711" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -364,6 +364,18 @@
 		<language name="JPN_KANJI" width="256">友達の　名前は？</language>
 	</row>
 
+	<row id="NAMEIN_MSG_INFO_005">
+		<comment>すれ違いで、「挨拶」を入力するとき</comment>
+		<language name="JPN" width="256">すれちがった　あいてへの　あいさつは？</language>
+		<language name="JPN_KANJI" width="256">すれ違った　相手への　あいさつは？</language>
+	</row>
+
+	<row id="NAMEIN_MSG_INFO_006">
+		<comment>すれ違いで、「お礼」を入力するとき</comment>
+		<language name="JPN" width="256">すれちがった　あいてへの　おれいは？</language>
+		<language name="JPN_KANJI" width="256">すれ違った　相手への　お礼は？</language>
+	</row>
+
 	<row id="NAMEIN_DEF_NAME_000">
 		<comment>主人公デフォルト名</comment>
 		<language name="JPN" width="256">ホワイト</language>
@@ -374,6 +386,18 @@
 		<comment>主人公デフォルト名</comment>
 		<language name="JPN" width="256">ブラック</language>
 		<language name="JPN_KANJI" width="256">ブラック</language>
+	</row>
+
+	<row id="NAMEIN_DEF_NAME_002">
+		<comment>すれ違い「挨拶」のデフォルト</comment>
+		<language name="JPN" width="256">よろしく！</language>
+		<language name="JPN_KANJI" width="256">よろしく！</language>
+	</row>
+
+	<row id="NAMEIN_DEF_NAME_003">
+		<comment>すれ違い「お礼」のデフォルト</comment>
+		<language name="JPN" width="256">ありがとう！</language>
+		<language name="JPN_KANJI" width="256">ありがとう！</language>
 	</row>
 
 	<flowchart-group-list>
