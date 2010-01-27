@@ -168,8 +168,8 @@ static const GFL_G3D_UTIL_OBJ obj_draw[] = {
 static const GFL_G3D_UTIL_SETUP sc_setup[ DEMO_ID_MAX ] = {
   { res_demo01a,  NELEMS(res_demo01a), obj_demo01a, NELEMS(obj_demo01a), },
   { res_demo01b,  NELEMS(res_demo01b), obj_demo01b, NELEMS(obj_demo01b), },
-  { res_demo01a,  NELEMS(res_demo02a), obj_demo02a, NELEMS(obj_demo02a), },
-  { res_demo01b,  NELEMS(res_demo02b), obj_demo02b, NELEMS(obj_demo02b), },
+  { res_demo02a,  NELEMS(res_demo02a), obj_demo02a, NELEMS(obj_demo02a), },
+  { res_demo02b,  NELEMS(res_demo02b), obj_demo02b, NELEMS(obj_demo02b), },
   { res_start,    NELEMS(res_start),  obj_start,  NELEMS(obj_start), },
   { res_draw,     NELEMS(res_draw),   obj_draw,   NELEMS(obj_draw), },
 };

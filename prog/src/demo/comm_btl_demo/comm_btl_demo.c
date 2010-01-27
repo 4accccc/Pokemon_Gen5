@@ -78,17 +78,59 @@ enum
   NORMAL_POSID0_BALL_PX_OFS = 16,
   NORMAL_POSID0_BALL_PY = 7*8,
   NORMAL_POSID1_BALL_PY = 21*8,
+
+  MULTI_POSID0_BALL_PX_BASE = 10*8,
+  MULTI_POSID1_BALL_PX_BASE = 18*8,
+  MULTI_POSID2_BALL_PX_BASE = 16*8,
+  MULTI_POSID3_BALL_PX_BASE = 23*8,
+
+  MULTI_POSID0_BALL_PY = 17*8,
+  MULTI_POSID1_BALL_PY = 22*8,
+  MULTI_POSID2_BALL_PY = 5*8,
+  MULTI_POSID3_BALL_PY = 11*8,
+
+  PTC_VS_WAIT_SYNC = 120+15, //「VS」表示開始からのウェイト
+
   // トレーナー名
   TRNAME_CSX = 10,
   TRNAME_CSY = 2,
+  TRNAME_OPEN_SYNC = 45, ///< 表示開始SYNC
+
   NORMAL_POSID0_TRNAME_CPX = 16,
   NORMAL_POSID0_TRNAME_CPY = 3,
+
   NORMAL_POSID1_TRNAME_CPX = 4,
   NORMAL_POSID1_TRNAME_CPY = 17,
-  NORMAL_POSID0_TRNAME_PTC_PX = 0x800,
-  NORMAL_POSID0_TRNAME_PTC_PY = 0x2800,
-  NORMAL_POSID1_TRNAME_PTC_PX = 0xffffe000, 
-  NORMAL_POSID1_TRNAME_PTC_PY = 0xffffe000,
+  
+  NORMAL_POSID0_TRNAME_PTC_PX = 0xffffd800, 
+  NORMAL_POSID0_TRNAME_PTC_PY = 0xffffe800,
+
+  NORMAL_POSID1_TRNAME_PTC_PX = 0x800,
+  NORMAL_POSID1_TRNAME_PTC_PY = 0x2000,
+
+  MULTI_POSID0_TRNAME_PTC_PX = 0xffffe000,
+  MULTI_POSID0_TRNAME_PTC_PY = 0xfffff800,
+
+  MULTI_POSID1_TRNAME_PTC_PX = 0x0,
+  MULTI_POSID1_TRNAME_PTC_PY = 0xffffe000,
+
+  MULTI_POSID2_TRNAME_PTC_PX = 0x400,
+  MULTI_POSID2_TRNAME_PTC_PY = 0x2000,
+
+  MULTI_POSID3_TRNAME_PTC_PX = 0x2400,
+  MULTI_POSID3_TRNAME_PTC_PY = 0x1000,
+
+  MULTI_POSID0_TRNAME_CPX = 5,
+  MULTI_POSID0_TRNAME_CPY = 13,
+
+  MULTI_POSID1_TRNAME_CPX = 5+8,
+  MULTI_POSID1_TRNAME_CPY = 19,
+
+  MULTI_POSID2_TRNAME_CPX = 15,
+  MULTI_POSID2_TRNAME_CPY = 1,
+
+  MULTI_POSID3_TRNAME_CPX = 15+8,
+  MULTI_POSID3_TRNAME_CPY = 7,
 };
 
 //-------------------------------------
@@ -348,7 +390,6 @@ const GFL_PROC_DATA CommBtlDemoProcData =
 	CommBtlDemoProc_Exit,
 };
 
-//@TODO hosakaのみ
 #ifdef PM_DEBUG
 // ワーク生成
 static void debug_param( COMM_BTL_DEMO_PARAM* prm )
@@ -357,7 +398,6 @@ static void debug_param( COMM_BTL_DEMO_PARAM* prm )
 
   HOSAKA_Printf("in param type = %d \n", prm->type);
   
-  //@TODO
   prm->result = GFUser_GetPublicRand( COMM_BTL_DEMO_RESULT_MAX );
 
   HOSAKA_Printf( "result = %d \n", prm->result );
@@ -365,7 +405,7 @@ static void debug_param( COMM_BTL_DEMO_PARAM* prm )
   for( i=0; i<COMM_BTL_DEMO_TRDATA_MAX; i++ )
   {
     prm->trainer_data[i].server_version = GFUser_GetPublicRand(2);
-    prm->trainer_data[i].trsex = (i!=0) ? PM_MALE : PM_FEMALE; //@TODO
+    prm->trainer_data[i].trsex = (i!=0) ? PM_MALE : PM_FEMALE; //@TODO とりあえず01は男固定
 
     // トレーナー名
     {
@@ -392,16 +432,15 @@ static void debug_param( COMM_BTL_DEMO_PARAM* prm )
       }
       else
       {
-        Debug_PokeParty_MakeParty( party );
-#if 0
-        POKEMON_PARAM* poke = Poke;
         PokeParty_Init(party, 3);
-        for (p = 0; p < 3; p++) {
-          PP_Clear(&poke);
-          PP_Setup( &poke, 392+p, 99, 0 );
-          PokeParty_Add(party, &poke);
+        for (p = 0; p < 3; p++) 
+        {
+          POKEMON_PARAM* pp = GFL_HEAP_AllocMemoryLo( HEAPID_COMM_BTL_DEMO , POKETOOL_GetWorkSize() );
+          PP_Clear(pp);
+          PP_Setup( pp, 392+p, 99, 0 );
+          PokeParty_Add(party, pp);
+          GFL_HEAP_FreeMemory(pp);
         }
-#endif
       }
       
       prm->trainer_data[i].party = party;
@@ -583,10 +622,10 @@ static GFL_PROC_RESULT CommBtlDemoProc_Main( GFL_PROC *proc, int *seq, void *pwk
 { 
 	COMM_BTL_DEMO_MAIN_WORK* wk = mywk;
 
-  //@TODO カメラテスト
 #ifdef PM_DEBUG
 #if 0
   {
+    // カメラテスト
     GFL_G3D_CAMERA* p_camera = COMM_BTL_DEMO_GRAPHIC_GetCamera( wk->graphic );
     debug_camera_test( p_camera );
   }
@@ -594,33 +633,6 @@ static GFL_PROC_RESULT CommBtlDemoProc_Main( GFL_PROC *proc, int *seq, void *pwk
 #endif
 
   G3D_Main( &wk->wk_g3d );
-
-  // @TODO 汎用化
-#if 0
-  // デバッグfovy
-  {
-    static fx32 fovy = 40;
-    
-    GFL_G3D_CAMERA* p_camera = COMM_BTL_DEMO_GRAPHIC_GetCamera( wk->graphic );
-
-    debug_camera_test( p_camera );
-
-    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
-    {
-      fovy += 1;
-      GFL_G3D_CAMERA_SetfovyCos( p_camera, FX_SinIdx( fovy/2 * PERSPWAY_COEFFICIENT ) );
-      GFL_G3D_CAMERA_SetfovySin( p_camera, FX_CosIdx( fovy/2 * PERSPWAY_COEFFICIENT ) );
-      HOSAKA_Printf("fovy = %d \n", fovy);
-    }
-    else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
-    {
-      fovy -= 1;
-      GFL_G3D_CAMERA_SetfovyCos( p_camera, FX_SinIdx( fovy/2 * PERSPWAY_COEFFICIENT ) );
-      GFL_G3D_CAMERA_SetfovySin( p_camera, FX_CosIdx( fovy/2 * PERSPWAY_COEFFICIENT ) );
-      HOSAKA_Printf("fovy = %d \n", fovy);
-    }
-  }
-#endif
   
   // フェード中は処理しない
   if( GFL_FADE_CheckFade() == TRUE )
@@ -782,8 +794,7 @@ static BOOL SceneStartDemo_Main( UI_SCENE_CNT_PTR cnt, void* work )
     }
     break;
   case 3:
-    //@TODO タイミング MN
-    if( wk->timer++ == 120+15 )
+    if( wk->timer++ == PTC_VS_WAIT_SYNC )
     {
       // フェードアウト リクエスト
       GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_WHITEOUT, 0, 16, 2 );
@@ -793,6 +804,8 @@ static BOOL SceneStartDemo_Main( UI_SCENE_CNT_PTR cnt, void* work )
     if( G3D_AnimeMain( &wk->wk_g3d ) == FALSE )
     {
       G3D_AnimeDel( &wk->wk_g3d );
+      // PTCワーク開放
+      G3D_PTC_Delete( &wk->wk_g3d );
       return TRUE;
     }
     break;
@@ -818,9 +831,6 @@ static BOOL SceneStartDemo_End( UI_SCENE_CNT_PTR cnt, void* work )
   
   // トレーナー開放
   TRAINER_UNIT_CNT_Exit( wk );
-
-  // PTCワーク開放
-  G3D_PTC_Delete( &wk->wk_g3d );
   
   // 終了
   UI_SCENE_CNT_SetNextScene( cnt, UI_SCENE_ID_END );
@@ -849,6 +859,15 @@ static BOOL SceneStartDemo_End( UI_SCENE_CNT_PTR cnt, void* work )
 static BOOL SceneEndDemo_Init( UI_SCENE_CNT_PTR cnt, void *work )
 {
   COMM_BTL_DEMO_MAIN_WORK* wk = work;
+  
+  // トレイナーユニット初期化
+  TRAINER_UNIT_CNT_Init( wk );
+
+#ifdef DEBUG_ONLY_FOR_genya_hosaka
+  GFL_BG_ClearScreen( BG_FRAME_TEXT_M ); // テキスト面を消去しておく
+    // フェードアウト リクエスト
+  GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_WHITEOUT, 16, 0, 1 );
+#endif
 
   return TRUE;
 }
@@ -883,6 +902,20 @@ static BOOL SceneEndDemo_Main( UI_SCENE_CNT_PTR cnt, void* work )
 static BOOL SceneEndDemo_End( UI_SCENE_CNT_PTR cnt, void* work )
 {
   COMM_BTL_DEMO_MAIN_WORK* wk = work;
+  
+  // トレーナー開放
+  TRAINER_UNIT_CNT_Exit( wk );
+  
+  // 終了
+  UI_SCENE_CNT_SetNextScene( cnt, UI_SCENE_ID_END );
+
+// @TODO 保坂のみループ
+#ifdef DEBUG_ONLY_FOR_genya_hosaka
+  if( (GFL_UI_KEY_GetCont() & PAD_BUTTON_START) == FALSE )
+  {
+    UI_SCENE_CNT_SetNextScene( cnt, CBD_SCENE_ID_NORMAL_START );
+  }
+#endif
 
   return TRUE;
 }
@@ -1055,19 +1088,33 @@ static void BALL_UNIT_Init( BALL_UNIT* unit, const POKEPARTY* party, u8 type, u8
     if( type_is_normal(type) )
     {
       // ノーマル
-      px = NORMAL_POSID0_BALL_PX_BASE + (i) * NORMAL_POSID0_BALL_PX_OFS;
-      py= (posid==0) ? NORMAL_POSID0_BALL_PY : NORMAL_POSID1_BALL_PY;
+      px = MULTI_POSID0_BALL_PX_BASE + (i) * NORMAL_POSID0_BALL_PX_OFS;
+      py = (posid==0) ? NORMAL_POSID0_BALL_PY : NORMAL_POSID1_BALL_PY;
 
       if( posid == 1 ){ px *= -1; }
     }
     else
     {
-      //@TODO posid による座標調整
       // マルチ
-      px = NORMAL_POSID0_BALL_PX_BASE + (i) * NORMAL_POSID0_BALL_PX_OFS;
-      py= (posid==0) ? NORMAL_POSID0_BALL_PY : NORMAL_POSID1_BALL_PY;
-
-      if( posid == 1 ){ px *= -1; }
+      switch( posid )
+      { 
+      case 0:
+        px = MULTI_POSID0_BALL_PX_BASE + (i) * NORMAL_POSID0_BALL_PX_OFS * -1;
+        py = MULTI_POSID0_BALL_PY;
+        break;
+      case 1:
+        px = MULTI_POSID1_BALL_PX_BASE + (i) * NORMAL_POSID0_BALL_PX_OFS * -1;
+        py = MULTI_POSID1_BALL_PY;
+        break;
+      case 2:
+        px = MULTI_POSID2_BALL_PX_BASE + (i) * NORMAL_POSID0_BALL_PX_OFS;
+        py = MULTI_POSID2_BALL_PY;
+        break;
+      case 3:
+        px = MULTI_POSID3_BALL_PX_BASE + (i) * NORMAL_POSID0_BALL_PX_OFS;
+        py = MULTI_POSID3_BALL_PY;
+        break;
+      }
     }
 
     // 開始デモ
@@ -1119,6 +1166,42 @@ static void BALL_UNIT_Exit( BALL_UNIT* unit )
   }
 }
 
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief
+ *
+ *	@param	BALL_UNIT* unit 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void _ball_open( BALL_UNIT* unit, int start_sync )
+{
+  int id = unit->timer - start_sync;
+
+  HOSAKA_Printf("unit->timer=%d ",unit->timer);
+  HOSAKA_Printf("ball open id=%d\n", id);
+
+  if( id < unit->max )
+  {
+    // 開く
+    GFL_CLACT_WK_SetDrawEnable( unit->clwk[id] , TRUE );
+  }
+  else
+  {
+    int i;
+
+    // プライオリティを下げておく
+    for( i=0; i<unit->max; i++ )
+    {
+      GFL_CLACT_WK_SetBgPri( unit->clwk[i], 1 );
+    }
+
+    unit->is_start = FALSE; // 終了
+  }
+}
+
 //-----------------------------------------------------------------------------
 /**
  *	@brief  ボール主処理
@@ -1130,7 +1213,11 @@ static void BALL_UNIT_Exit( BALL_UNIT* unit )
 //-----------------------------------------------------------------------------
 static void BALL_UNIT_Main( BALL_UNIT* unit )
 {
-  const int OPEN_SYNC = 12;
+  const int NORMAL_OPEN_SYNC = 12;
+  const int MULTI_OPEN_SYNC = 15; // マルチのとき
+  const int MULTI_OPEN_SYNC2 = 19; // マルチのときの後続
+  BOOL is_open = FALSE;
+  int start_sync;
 
   if( unit->is_start == FALSE )
   {
@@ -1140,36 +1227,36 @@ static void BALL_UNIT_Main( BALL_UNIT* unit )
   switch( unit->type )
   {
   case COMM_BTL_DEMO_TYPE_NORMAL_START :
-    if( unit->timer >= OPEN_SYNC )
+  case COMM_BTL_DEMO_TYPE_MULTI_START :
+    if( type_is_normal(unit->type) )
     {
-      int id = unit->timer - OPEN_SYNC;
-
-      HOSAKA_Printf("unit->timer=%d ",unit->timer);
-      HOSAKA_Printf("ball open id=%d\n", id);
-
-      if( id < BALL_CLWK_MAX )
+      if( unit->timer >= NORMAL_OPEN_SYNC )
       {
-        // 開く
-        GFL_CLACT_WK_SetDrawEnable( unit->clwk[id] , TRUE );
+        is_open = TRUE;
+        start_sync = NORMAL_OPEN_SYNC;
       }
-      else
+    }
+    else
+    {
+      if( (unit->posid==0 || unit->posid==2) && unit->timer >= MULTI_OPEN_SYNC )
       {
-        int i;
-
-        // プライオリティを下げておく
-        for( i=0; i<unit->max; i++ )
-        {
-          GFL_CLACT_WK_SetBgPri( unit->clwk[i], 1 );
-        }
-
-        unit->is_start = FALSE; // 終了
+        is_open = TRUE;
+        start_sync = MULTI_OPEN_SYNC;
       }
+      else if( (unit->posid==1 || unit->posid==3) && unit->timer >= MULTI_OPEN_SYNC2 )
+      {
+        is_open = TRUE;
+        start_sync = MULTI_OPEN_SYNC2;
+      }
+    }
+
+    if( is_open )
+    {
+      _ball_open( unit, start_sync );
     }
     break;
   case COMM_BTL_DEMO_TYPE_NORMAL_END :
     break;
-  case COMM_BTL_DEMO_TYPE_MULTI_START :
-    //@TODO ノーマルと一緒でいける可能性がある
     break;
   case COMM_BTL_DEMO_TYPE_MULTI_END :
     break;
@@ -1223,7 +1310,25 @@ static GFL_BMPWIN* TRAINERNAME_WIN_Create( u8 type, u8 posid )
   }
   else
   {
-    //@TODO マルチ
+    switch( posid )
+    {
+    case 0:
+      px = MULTI_POSID0_TRNAME_CPX;
+      py = MULTI_POSID0_TRNAME_CPY;
+      break;
+    case 1:
+      px = MULTI_POSID1_TRNAME_CPX;
+      py = MULTI_POSID1_TRNAME_CPY;
+      break;
+    case 2:
+      px = MULTI_POSID2_TRNAME_CPX;
+      py = MULTI_POSID2_TRNAME_CPY;
+      break;
+    case 3:
+      px = MULTI_POSID3_TRNAME_CPX;
+      py = MULTI_POSID3_TRNAME_CPY;
+      break;
+    }
   }
 
   win = GFL_BMPWIN_Create( 
@@ -1287,9 +1392,8 @@ static void TRAINER_UNIT_Main( TRAINER_UNIT* unit )
   // ボール主処理
   BALL_UNIT_Main( &unit->ball );
 
-  //@TODO タイミング：マジックナンバー
   // トレーナー名表示
-  if( unit->timer == 45 ) 
+  if( unit->timer == TRNAME_OPEN_SYNC ) 
   { 
     // トレーナー名表示
     TRAINER_UNIT_DrawTrainerName( unit, unit->font );
@@ -1314,7 +1418,25 @@ static void TRAINER_UNIT_Main( TRAINER_UNIT* unit )
       }
       else
       {
-        //@TODO マルチ
+        switch( unit->posid )
+        { 
+        case 0:
+          fx = MULTI_POSID0_TRNAME_PTC_PX;
+          fy = MULTI_POSID0_TRNAME_PTC_PY;
+          break;
+        case 1:
+          fx = MULTI_POSID1_TRNAME_PTC_PX;
+          fy = MULTI_POSID1_TRNAME_PTC_PY;
+          break;
+        case 2:
+          fx = MULTI_POSID2_TRNAME_PTC_PX;
+          fy = MULTI_POSID2_TRNAME_PTC_PY;
+          break;
+        case 3:
+          fx = MULTI_POSID3_TRNAME_PTC_PX;
+          fy = MULTI_POSID3_TRNAME_PTC_PY;
+          break;
+        };
       }
 
       for( p=0; p<unit->g3d->spa_num; p++ )
@@ -1438,7 +1560,8 @@ static void TRAINER_UNIT_CNT_Main( COMM_BTL_DEMO_MAIN_WORK* wk )
   int i;
   int max = (type_is_normal(wk->type) ? TRAINER_CNT_NORMAL : TRAINER_CNT_MULTI ); 
 
-#if 0
+#if DEBUG_ONLY_FOR_genya_hosaka
+  //@TODO 
   // パーティクル座標調整
   {
     static fx32 fx=0;
@@ -1642,9 +1765,9 @@ static void G3D_Main( COMM_BTL_DEMO_G3D_WORK * g3d )
   }
 }
 
-static VecFx32 sc_camera_eye = { 0, 0, FX32_CONST(70), };
+static VecFx32 sc_camera_eye = { 0, 0, FX32_CONST(128), };
 static VecFx32 sc_camera_up = { 0, FX32_ONE, 0 };
-static VecFx32 sc_camera_at = { 0, 0, -FX32_ONE };
+static VecFx32 sc_camera_at = { 0, 0, 0 };
 
 //-----------------------------------------------------------------------------
 /**
@@ -1667,13 +1790,19 @@ static void G3D_PTC_Setup( COMM_BTL_DEMO_G3D_WORK* g3d, int spa_idx )
   {
     GFL_G3D_PROJECTION projection; 
     projection.type = GFL_G3D_PRJORTH;
-    projection.param1 = FX32_CONST(4); 
-    projection.param2 = -FX32_CONST(4); 
-    projection.param3 = -FX32_CONST(3); 
-    projection.param4 = FX32_CONST(3);  
-    projection.near = FX32_ONE * 1;
+    projection.param1 = FX32_ONE*3.0f;
+    projection.param2 = -(FX32_ONE*3.0f);
+    projection.param3 = -(FX32_ONE*4.0f);
+    projection.param4 = FX32_ONE*4.0f;  
+#if 0
+    projection.param1 = FX32_ONE*48.0f;
+    projection.param2 = -(FX32_ONE*48.0f);
+    projection.param3 = -(FX32_ONE*64.0f);
+    projection.param4 = FX32_ONE*64.0f;  
+#endif
+    projection.near = FX32_CONST( 1 );
     projection.far  = FX32_CONST( 1024 );	// 正射影なので関係ないが、念のためクリップのfarを設定
-    projection.scaleW = FX32_ONE;//0
+    projection.scaleW = 0;
     GFL_PTC_PersonalCameraDelete( g3d->ptc );
     GFL_PTC_PersonalCameraCreate( g3d->ptc, &projection, DEFAULT_PERSP_WAY, &sc_camera_eye, &sc_camera_up, &sc_camera_at, g3d->heapID );
   }
@@ -1849,17 +1978,19 @@ static BOOL G3D_AnimeMain( COMM_BTL_DEMO_G3D_WORK* g3d )
     int i;
     GFL_G3D_OBJ* obj = GFL_G3D_UTIL_GetObjHandle( g3d->g3d_util, g3d->anm_unit_idx );
     int anime_count = GFL_G3D_OBJECT_GetAnimeCount( obj );
+    static BOOL speed = 1;  ///< スピード
+
+#ifdef DEBUG_ONLY_FOR_genya_hosaka
+    if( PAD_BUTTON_SELECT & GFL_UI_KEY_GetTrg() )
+    {
+      speed ^= 1;
+      HOSAKA_Printf("set anime speed=%d \n", speed );
+    }
+#endif
     
     // アニメーション更新
     for( i=0; i<anime_count; i++ )
     {
-      static int speed = 1;
-#ifdef DEBUG_ONLY_FOR_genya_hosaka
-      if( PAD_BUTTON_SELECT & GFL_UI_KEY_GetTrg() )
-      {
-        speed ^= 1;
-      }
-#endif
 //    GFL_G3D_OBJECT_SetAnimeFrame( obj, i, &frame );
       is_loop = GFL_G3D_OBJECT_LoopAnimeFrame( obj, i, speed * FX32_ONE );
     }
@@ -1875,4 +2006,31 @@ static BOOL G3D_AnimeMain( COMM_BTL_DEMO_G3D_WORK* g3d )
 
   return is_loop;
 }
+
+  // @TODO 汎用化
+#if 0
+  // デバッグfovy
+  {
+    static fx32 fovy = 40;
+    
+    GFL_G3D_CAMERA* p_camera = COMM_BTL_DEMO_GRAPHIC_GetCamera( wk->graphic );
+
+    debug_camera_test( p_camera );
+
+    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
+    {
+      fovy += 1;
+      GFL_G3D_CAMERA_SetfovyCos( p_camera, FX_SinIdx( fovy/2 * PERSPWAY_COEFFICIENT ) );
+      GFL_G3D_CAMERA_SetfovySin( p_camera, FX_CosIdx( fovy/2 * PERSPWAY_COEFFICIENT ) );
+      HOSAKA_Printf("fovy = %d \n", fovy);
+    }
+    else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
+    {
+      fovy -= 1;
+      GFL_G3D_CAMERA_SetfovyCos( p_camera, FX_SinIdx( fovy/2 * PERSPWAY_COEFFICIENT ) );
+      GFL_G3D_CAMERA_SetfovySin( p_camera, FX_CosIdx( fovy/2 * PERSPWAY_COEFFICIENT ) );
+      HOSAKA_Printf("fovy = %d \n", fovy);
+    }
+  }
+#endif
 
