@@ -41,6 +41,8 @@
 #include "enceffno_def.h"
 #include "enceffno.h"
 
+#include "debug/debug_flg.h"
+
 //======================================================================
 //  define
 //======================================================================
@@ -99,6 +101,7 @@ static void BEW_reflectBattleResult(BATTLE_EVENT_WORK * bew, GAMEDATA * gamedata
 static void BEW_Initialize(BATTLE_EVENT_WORK * bew, GAMESYS_WORK * gsys, BATTLE_SETUP_PARAM* bp);
 static void BEW_Destructor(BATTLE_EVENT_WORK * bew);
 
+
 //======================================================================
 //
 //
@@ -106,6 +109,15 @@ static void BEW_Destructor(BATTLE_EVENT_WORK * bew);
 //
 //
 //======================================================================
+#ifdef PM_DEBUG
+static void debug_FieldDebugFlagSet( BATTLE_SETUP_PARAM* bp )
+{
+  if( DEBUG_FLG_GetFlg( DEBUG_FLG_ShortcutBtlIn )){
+    BTL_SETUP_SetDebugFlag( bp, BTL_DEBUGFLAG_SKIP_BTLIN );
+  }
+}
+#endif  //PM_DEBUG
+
 //--------------------------------------------------------------
 /**
  * フィールド野生ポケモンバトルイベント作成
@@ -121,6 +133,10 @@ GMEVENT * EVENT_WildPokeBattle( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap, BAT
 
   event = GMEVENT_Create(
       gsys, NULL, fieldBattleEvent, sizeof(BATTLE_EVENT_WORK) );
+
+#ifdef PM_DEBUG
+  debug_FieldDebugFlagSet( bp );
+#endif
 
   bew = GMEVENT_GetEventWork(event);
   BEW_Initialize( bew, gsys, bp );
@@ -179,6 +195,10 @@ GMEVENT * EVENT_TrainerBattle(
 #endif
   }
 
+#ifdef PM_DEBUG
+  debug_FieldDebugFlagSet( bp );
+#endif
+
   BEW_Initialize( bew, gsys, bp );
   bew->is_sub_event = TRUE;   //スクリプトから呼ばれる＝トップレベルのイベントでない
   if ( (flags & SCR_BATTLE_MODE_NOLOSE) != 0 )
@@ -220,6 +240,10 @@ GMEVENT * EVENT_BSubwayTrainerBattle(
   event = GMEVENT_Create(
       gsys, NULL, fieldBattleEvent, sizeof(BATTLE_EVENT_WORK) );
   
+#ifdef PM_DEBUG
+  debug_FieldDebugFlagSet( bp );
+#endif
+
   bew = GMEVENT_GetEventWork(event);
   BEW_Initialize( bew, gsys, bp );
   bew->is_sub_event = TRUE; //サブイベント呼び出し
