@@ -7086,5 +7086,16 @@
   .short EV_SEQ_C03CENTER_PLAYERWAY
   .short \frame
   .endm
-  
 
+//--------------------------------------------------------------
+/**
+ * @brief ポケモンID検索　自分のIDと異なるIDの種類数を取得（最大50）
+ * @param ret       検索結果
+ */
+//--------------------------------------------------------------
+#define _SEARCH_POKEID_NUM( ret ) _ASM_SEARCH_POKEID_NUM ret
+
+  .macro  _ASM_SEARCH_POKEID_NUM ret
+  .short EV_SEQ_SEARCH_POKEID_NUM
+  .short \ret
+  .endm

@@ -578,7 +578,8 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
 				net_app/comm_entry_menu.c \
 				net_app/comm_entry_menu_comm_command.c \
         field/enceff.c \
-        field/enceffno.c
+        field/enceffno.c \
+        field/scrcmd_pokeid_search.c
 
 # フィールド天気
 #===> SRCS_OVERLAY_FIELDMAP

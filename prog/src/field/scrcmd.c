@@ -74,6 +74,7 @@
 #include "scrcmd_wfbc.h"
 #include "scrcmd_gimmick_st.h"
 #include "scrcmd_c03center.h"
+#include "scrcmd_pokeid_search.h"
 
 #include "../../../resource/fldmapdata/script/usescript.h"
 

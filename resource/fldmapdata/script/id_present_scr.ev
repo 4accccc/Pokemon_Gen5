@@ -69,7 +69,7 @@ search:
   _BALLOONWIN_TALKOBJ_MSG( msg_id_present_03a )
 
   //ŒŸõƒRƒ}ƒ“ƒh
-  $ResultNum = 0    //@todo
+  _SEARCH_POKEID_NUM( ResultNum )
 
   //ŒŸõSE’â~ @todo
 

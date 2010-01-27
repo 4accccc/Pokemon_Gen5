@@ -800,6 +800,12 @@
   NO_CMD()
   NO_CMD()
 
+  //ポケモンID数検索
+  DEF_CMD( EvCmdPokeID_SearchNum, EV_SEQ_SEARCH_POKEID_NUM )
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+
   END_CMD
   //スクリプトコマンドテーブル終了
 
