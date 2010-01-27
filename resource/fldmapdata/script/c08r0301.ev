@@ -21,6 +21,8 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA    ev_c08r0301_gentleman_01
+_EVENT_DATA    ev_c08r0301_middlewoman1_01
+_EVENT_DATA    ev_c08r0301_girl4_01
 _EVENT_DATA_END
 
 /**************************************************************/
@@ -116,7 +118,7 @@ EVENT_START   ev_c08r0301_gentleman_01
 				
 				//アイテム入手メッセージ
 				_ME_PLAY( SEQ_ME_ITEM )
-				_SYSWIN_MSG_ALLPUT_DOWN(msg_c08r0301_add_goods_01)
+				_SYSWIN_MSG_DOWN(msg_c08r0301_add_goods_01)
 				_ME_WAIT()
 				_LAST_KEYWAIT()
 				_SYSWIN_CLOSE()
@@ -140,4 +142,18 @@ EVENT_START   ev_c08r0301_gentleman_01
 	
 	ENDIF
 
+EVENT_END
+
+/**************************************************************/
+/* 人口B：middlewoman1_01                                      */
+/**************************************************************/
+EVENT_START   ev_c08r0301_middlewoman1_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c08r0301_middlewoman1_01 )
+EVENT_END
+
+/**************************************************************/
+/* 人口B：girl4_01                                             */
+/**************************************************************/
+EVENT_START   ev_c08r0301_girl4_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c08r0301_girl4_01 )
 EVENT_END
