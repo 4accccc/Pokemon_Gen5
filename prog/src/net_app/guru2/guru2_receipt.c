@@ -195,7 +195,7 @@ GFL_PROC_RESULT Guru2Receipt_Init( GFL_PROC * proc, int *seq, void *pwk, void *m
     //ヒープ作成
     GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_GURU2, GURU2_HEAPSIZE );
   
-    p_handle = GFL_ARC_OpenDataHandle( ARCID_GURU2, HEAPID_GURU2 );
+    p_handle = GFL_ARC_OpenDataHandle( ARCID_GURU2_2D, HEAPID_GURU2 );
     GF_ASSERT( p_handle );
     
     //受付用ワーク確保

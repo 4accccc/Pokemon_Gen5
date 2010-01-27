@@ -57,13 +57,52 @@ struct _GURU2_CALL_WORK
 //==============================================================================
 //  proto
 //==============================================================================
-static BOOL (* const DATA_Guru2ProcTbl[SEQNO_G2P_MAX])(GURU2_CALL_WORK*);
+static BOOL (* const DATA_SeqTbl[SEQNO_G2P_MAX])(GURU2_CALL_WORK*);
 static const GFL_PROC_DATA Guru2Receipt_Proc;
 static const GFL_PROC_DATA Guru2Main_Proc;
 
 //==============================================================================
 //  ぐるぐる交換
 //==============================================================================
+GFL_PROC_RESULT Guru2Proc_Init( GFL_PROC * proc, int *seq, void *pwk, void *mywk )
+{
+  GURU2_CALL_WORK *work;
+  GURUGURU_PARENT_WORK *param = (GURUGURU_PARENT_WORK*)pwk;
+  
+  work = GFL_HEAP_AllocMemory( HEAPID_PROC, sizeof(GURU2_CALL_WORK) );
+  GFL_STD_MemFill( work, 0, sizeof(GURU2_CALL_WORK) );
+  
+  work->gamedata     = param->gamedata;
+  work->param.sv     = GAMEDATA_GetSaveControlWork( param->gamedata );
+  work->param.record = GAMEDATA_GetRecordPtr( param->gamedata );
+
+  OS_Printf("ぐるぐるプロセス開始\n");
+
+  return GFL_PROC_RES_FINISH;
+}
+
+
+GFL_PROC_RESULT Guru2Proc_Main( GFL_PROC * proc, int *seq, void *pwk, void *mywk )
+{
+
+  GURU2_CALL_WORK *g2call = mywk;
+  
+  if( DATA_SeqTbl[g2call->seq_no](g2call) == TRUE ){
+    GFL_HEAP_FreeMemory( g2call );
+    return GFL_PROC_RES_FINISH;
+  }
+  OS_Printf("ぐるぐるプロセスメイン\n");
+
+  return GFL_PROC_RES_CONTINUE;
+}
+GFL_PROC_RESULT Guru2Proc_End( GFL_PROC * proc, int *seq, void *pwk, void *mywk )
+{
+  OS_Printf("ぐるぐるプロセス終了\n");
+
+  return GFL_PROC_RES_CONTINUE;
+}
+
+
 //--------------------------------------------------------------
 /**
  * ぐるぐる交換　プロセス　初期化
@@ -72,7 +111,7 @@ static const GFL_PROC_DATA Guru2Main_Proc;
  * @retval  GURU2PROC_WORK  GURU2PROC_WORK
  */
 //--------------------------------------------------------------
-GURU2PROC_WORK * Guru2_ProcInit( GURU2_PARAM *param, u32 heap_id )
+GURU2PROC_WORK * Guru2_WorkInit( GURU2_PARAM *param, u32 heap_id )
 {
   GURU2PROC_WORK *g2p;
   
@@ -95,7 +134,7 @@ GURU2PROC_WORK * Guru2_ProcInit( GURU2_PARAM *param, u32 heap_id )
  * @retval  nothing
  */
 //--------------------------------------------------------------
-void Guru2_ProcDelete( GURU2PROC_WORK *g2p )
+void Guru2_WorkDelete( GURU2PROC_WORK *g2p )
 {
   //ワーク反映
   
@@ -127,6 +166,7 @@ BOOL Guru2_ReceiptRetCheck( GURU2PROC_WORK *g2p )
 //==============================================================================
 //  イベント
 //==============================================================================
+#if 0
 //--------------------------------------------------------------
 /**
  * ぐるぐる交換処理用ワーク作成
@@ -141,8 +181,8 @@ void * EventCmd_Guru2ProcWorkAlloc( GAMEDATA *gamedata )
   work = GFL_HEAP_AllocMemory( HEAPID_PROC, sizeof(GURU2_CALL_WORK) );
   GFL_STD_MemFill( work, 0, sizeof(GURU2_CALL_WORK) );
   
-  work->gamedata = gamedata;
-  work->param.sv = GAMEDATA_GetSaveControlWork( gamedata );
+  work->gamedata     = gamedata;
+  work->param.sv     = GAMEDATA_GetSaveControlWork( gamedata );
   work->param.record = GAMEDATA_GetRecordPtr( gamedata );
   return( work );
 }
@@ -158,7 +198,7 @@ BOOL EventCmd_Guru2Proc( void *wk )
 {
   GURU2_CALL_WORK *g2call = wk;
   
-  if( DATA_Guru2ProcTbl[g2call->seq_no](g2call) == TRUE ){
+  if( DATA_SeqTbl[g2call->seq_no](g2call) == TRUE ){
     GFL_HEAP_FreeMemory( g2call );
     return( TRUE );
   }
@@ -166,6 +206,7 @@ BOOL EventCmd_Guru2Proc( void *wk )
   return( FALSE );
 }
 
+#endif
 //==============================================================================
 //  ぐるぐる交換　プロセス
 //==============================================================================
@@ -176,9 +217,9 @@ BOOL EventCmd_Guru2Proc( void *wk )
  * @retval  BOOL  TRUE=終了
  */
 //--------------------------------------------------------------
-static BOOL Guru2Proc_Init( GURU2_CALL_WORK *g2call )
+static BOOL _seq_Init( GURU2_CALL_WORK *g2call )
 {
-  g2call->g2p = Guru2_ProcInit( &g2call->param, HEAPID_PROC );
+  g2call->g2p = Guru2_WorkInit( &g2call->param, HEAPID_PROC );
   g2call->seq_no = SEQNO_G2P_RECEIPT;
 //  GameSystem_StartSubProc( g2call->fsys, &Guru2Receipt_Proc, g2call->g2p );
   GFL_PROC_SysCallProc( NO_OVERLAY_ID, &Guru2Receipt_Proc, g2call->g2p );
@@ -220,7 +261,7 @@ FS_EXTERN_OVERLAY(poke_status);
  * @retval  BOOL  TRUE=終了
  */
 //--------------------------------------------------------------
-static BOOL Guru2Proc_Receipt( GURU2_CALL_WORK *g2call )
+static BOOL _seq_Receipt( GURU2_CALL_WORK *g2call )
 {
     if( Guru2_ReceiptRetCheck(g2call->g2p) == FALSE ){
       g2call->seq_no = SEQNO_G2P_END;
@@ -244,7 +285,7 @@ static BOOL Guru2Proc_Receipt( GURU2_CALL_WORK *g2call )
  * @retval  BOOL  TRUE=終了
  */
 //--------------------------------------------------------------
-static BOOL Guru2Proc_PokeSelect( GURU2_CALL_WORK *g2call )
+static BOOL _seq_PokeSelect( GURU2_CALL_WORK *g2call )
 {
     int ret = g2call->plist->ret_sel;
     GFL_HEAP_FreeMemory( g2call->plist );
@@ -295,7 +336,7 @@ static BOOL Guru2Proc_PokeSelect( GURU2_CALL_WORK *g2call )
  * @retval  BOOL  TRUE=終了
  */
 //--------------------------------------------------------------
-static BOOL Guru2Proc_PokeStatus( GURU2_CALL_WORK *g2call )
+static BOOL _seq_PokeStatus( GURU2_CALL_WORK *g2call )
 {
     GFL_HEAP_FreeMemory( g2call->psd );
 //    g2call->plist =
@@ -315,7 +356,7 @@ static BOOL Guru2Proc_PokeStatus( GURU2_CALL_WORK *g2call )
  * @retval  BOOL  TRUE=終了
  */
 //--------------------------------------------------------------
-static BOOL Guru2Proc_Guru2Game( GURU2_CALL_WORK *g2call )
+static BOOL _seq_Guru2Game( GURU2_CALL_WORK *g2call )
 {
   g2call->seq_no = SEQNO_G2P_END;
   
@@ -329,23 +370,23 @@ static BOOL Guru2Proc_Guru2Game( GURU2_CALL_WORK *g2call )
  * @retval  BOOL  TRUE=終了
  */
 //--------------------------------------------------------------
-static BOOL Guru2Proc_End( GURU2_CALL_WORK *g2call )
+static BOOL _seq_End( GURU2_CALL_WORK *g2call )
 {
-  Guru2_ProcDelete( g2call->g2p );
+  Guru2_WorkDelete( g2call->g2p );
   return( TRUE );
 }
 
 //--------------------------------------------------------------
 /// ぐるぐる交換　プロセスまとめ
 //--------------------------------------------------------------
-static BOOL (* const DATA_Guru2ProcTbl[SEQNO_G2P_MAX])(GURU2_CALL_WORK*) =
+static BOOL (* const DATA_SeqTbl[SEQNO_G2P_MAX])(GURU2_CALL_WORK*) =
 {
-  Guru2Proc_Init,
-  Guru2Proc_Receipt,
-  Guru2Proc_PokeSelect,
-  Guru2Proc_PokeStatus,
-  Guru2Proc_Guru2Game,
-  Guru2Proc_End,
+  _seq_Init,
+  _seq_Receipt,
+  _seq_PokeSelect,
+  _seq_PokeStatus,
+  _seq_Guru2Game,
+  _seq_End,
 };
 
 //==============================================================================
@@ -375,3 +416,11 @@ static const GFL_PROC_DATA Guru2Main_Proc = {
 //  Guru2Main_End,
 };
 
+//--------------------------------------------------------------
+/// ぐるぐる交換プロックデータ
+//--------------------------------------------------------------
+const GFL_PROC_DATA Guru2ProcData = {
+  Guru2Proc_Init,
+  Guru2Proc_Main,
+  Guru2Proc_End,
+};

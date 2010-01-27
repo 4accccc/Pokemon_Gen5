@@ -43,8 +43,8 @@ typedef struct
 //==============================================================================
 //  extern
 //==============================================================================
-extern GURU2PROC_WORK * Guru2_ProcInit( GURU2_PARAM *param, u32 heap_id );
-extern void Guru2_ProcDelete( GURU2PROC_WORK *g2p );
+extern GURU2PROC_WORK * Guru2_WorkInit( GURU2_PARAM *param, u32 heap_id );
+extern void Guru2_WorkDelete( GURU2PROC_WORK *g2p );
 extern BOOL Guru2_ReceiptRetCheck( GURU2PROC_WORK *g2p );
 
 extern void * EventCmd_Guru2ProcWorkAlloc( GAMEDATA *gamedata );
@@ -57,5 +57,14 @@ extern GFL_PROC_RESULT Guru2Receipt_End( GFL_PROC * proc, int *seq, void *pwk, v
 extern GFL_PROC_RESULT Guru2Main_Init( GFL_PROC * proc, int *seq, void *pwk, void *mywk );
 extern GFL_PROC_RESULT Guru2Main_End( GFL_PROC * proc, int *seq, void *pwk, void *mywk );
 extern GFL_PROC_RESULT Guru2Main_Main( GFL_PROC * proc, int *seq, void *pwk, void *mywk );
+
+extern GFL_PROC_RESULT Guru2Proc_Init( GFL_PROC * proc, int *seq, void *pwk, void *mywk );
+extern GFL_PROC_RESULT Guru2Proc_Main( GFL_PROC * proc, int *seq, void *pwk, void *mywk );
+extern GFL_PROC_RESULT Guru2Proc_End( GFL_PROC * proc, int *seq, void *pwk, void *mywk );
+
+//--------------------------------------------------------------
+/// ぐるぐる交換プロックデータ
+//--------------------------------------------------------------
+extern const GFL_PROC_DATA Guru2ProcData;
 
 #endif //GURU2_H_FILE
