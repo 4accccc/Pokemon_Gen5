@@ -152,13 +152,13 @@ static void DEB_SD_PRINT_OpenFile(void)
 #if DEB_SD_PRINT_ENABLE_ASSERT
     GF_ASSERT_MSG( ret , "SDCard Error Create[%d]\n",FS_GetArchiveResultCode("sdmc:/"));
 #else
-    if( ret != 0 ){ sdPrintWork->isEnable = FALSE; return; }
+    if( ret == 0 ){ sdPrintWork->isEnable = FALSE; return; }
 #endif
     ret = FS_OpenFileEx( &sdPrintWork->writeFile , fileName , FS_FILEMODE_RW );
 #if DEB_SD_PRINT_ENABLE_ASSERT
     GF_ASSERT_MSG( ret , "SDCard Error Open[%d]\n",FS_GetResultCode(&sdPrintWork->writeFile));
 #else
-    if( ret != 0 ){ sdPrintWork->isEnable = FALSE; return; }
+    if( ret == 0 ){ sdPrintWork->isEnable = FALSE; return; }
 #endif
   }
   else
