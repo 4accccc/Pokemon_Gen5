@@ -236,7 +236,7 @@ void ISS_3DS_SYS_SetMasterVolume( ISS_3DS_SYS* system, u8 volume )
   if( MAX_VOLUME < volume ){ volume = MAX_VOLUME; }
 
   // Ý’è
-  system->masterVolume( volume );
+  system->masterVolume = volume;
 }
 
 
