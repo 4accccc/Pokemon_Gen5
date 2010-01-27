@@ -38,6 +38,8 @@ enum{
 #define	FCOL_FNTOAM   ( PRINTSYS_LSB_Make(1,2,0) )	 ///<OAMフォント黒抜
 #define FCOL_FNTOAM_W ( PRINTSYS_LSB_Make(15,14,0))  ///<Oam白抜き
 #define FCOL_WHITE_N  ( PRINTSYS_LSB_Make(15,2,0) ) ///<BG白抜き
+#define FCOL_POPUP_BASE (1)
+#define FCOL_POPUP      ( PRINTSYS_LSB_Make(15,2,FCOL_POPUP_BASE))  //BGポップアップ
 
 ///表示するログ件数
 #define VIEW_LOG_MAX    (4)
@@ -94,6 +96,12 @@ enum{
  WIN_MENU,
  WIN_MAX,
 };
+
+///ポップアップスクロール
+#define POPUP_HEIGHT  (8*8)
+#define POPUP_DIFF    (8)
+#define POPUP_COUNT   (POPUP_HEIGHT/POPUP_DIFF)
+#define POPUP_WAIT    (30*3)
 
 ////////////////////////////////////////////////////
 //アクター関連定義

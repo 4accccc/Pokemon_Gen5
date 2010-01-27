@@ -46,6 +46,7 @@ static void panel_Draw( BEACON_VIEW_PTR wk, PANEL_WORK* pp, GAMEBEACON_INFO* inf
 
 static void effReq_PanelScroll( BEACON_VIEW_PTR wk, u8 dir, PANEL_WORK* new_pp, PANEL_WORK* ignore_pp );
 static void effReq_PanelSlideIn( BEACON_VIEW_PTR wk, PANEL_WORK* pp );
+static void effReq_PopupMsgFromInfo( BEACON_VIEW_PTR wk, GAMEBEACON_INFO* info );
 
 static BOOL list_IsView( BEACON_VIEW_PTR wk, u8 idx );
 
@@ -56,6 +57,8 @@ static BOOL list_IsView( BEACON_VIEW_PTR wk, u8 idx );
  */
 void BeaconView_InitialDraw( BEACON_VIEW_PTR wk )
 {
+  PaletteTrans_AutoSet( wk->pfd, TRUE );
+
   //現在のログ数
   draw_LogNumWindow( wk );
   //現在のトータルすれ違い人数
@@ -89,6 +92,7 @@ BOOL BeaconView_CheckStack( BEACON_VIEW_PTR wk )
     }
   }
   //ポップアップリクエスト
+  effReq_PopupMsgFromInfo( wk, wk->tmpInfo);
 
   //新規でない時はスクロール無し
   if( !new_f ){
@@ -158,6 +162,17 @@ static void draw_MenuWindow( BEACON_VIEW_PTR wk, u8 msg_id )
   WORDSET_RegisterNumber( wk->wordset, 0, wk->log_count, 5, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
   print_Allput( wk, wk->win[WIN_MENU].bmp, msg_id, 0, 4, 0, FCOL_WHITE_N );
   GFL_BMPWIN_MakeTransWindow( wk->win[WIN_MENU].win );
+}
+
+/*
+ *  @brief  ポップアップウィンドウ文字列描画
+ */
+static void draw_PopupWindow( BEACON_VIEW_PTR wk, STRBUF* str )
+{
+  GFL_BMP_Clear( wk->win[WIN_POPUP].bmp, FCOL_POPUP_BASE );
+
+	PRINTSYS_PrintColor( wk->win[WIN_POPUP].bmp, 0, 0, str, wk->fontHandle, FCOL_POPUP );
+  GFL_BMPWIN_MakeTransWindow( wk->win[WIN_POPUP].win );
 }
 
 /*
@@ -509,5 +524,149 @@ static void tcb_PanelScroll( GFL_TCBL *tcb , void* tcb_wk)
   --(*twk->task_ct);
   GFL_TCBL_Delete(tcb);
 }
+
+/////////////////////////////////////////////////////////////////////
+/*
+ *  @brief  メッセージウィンドウ アップダウン 
+ */
+/////////////////////////////////////////////////////////////////////
+typedef struct _TASKWK_MSG_UPDOWN{
+  u8  dir;
+  u8  frame;
+  u8  ct;
+  s8  y;
+  s8  diff;
+
+  int* task_ct;
+}TASKWK_MSG_UPDOWN;
+
+static void taskAdd_MsgUpdown( BEACON_VIEW_PTR wk, u8 dir, int* task_ct );
+static void tcb_MsgUpdown( GFL_TCBL *tcb , void* work);
+
+/*
+ *  @brief  メッセージウィンドウ アップダウンタスク登録
+ */
+static void taskAdd_MsgUpdown( BEACON_VIEW_PTR wk, u8 dir, int* task_ct )
+{
+  GFL_TCBL* tcb;
+  TASKWK_MSG_UPDOWN* twk;
+
+  tcb = GFL_TCBL_Create( wk->pTcbSys, tcb_MsgUpdown, sizeof(TASKWK_MSG_UPDOWN), 0 );
+
+  twk = GFL_TCBL_GetWork(tcb);
+  MI_CpuClear8( twk, sizeof( TASKWK_MSG_UPDOWN ));
+
+  twk->dir = dir;
+  if( twk->dir == SCROLL_UP ){
+    twk->y = 0;
+    twk->diff = POPUP_DIFF;
+  }else{
+    twk->y = POPUP_HEIGHT;
+    twk->diff = -POPUP_DIFF;
+  }
+  twk->frame = POPUP_COUNT;
+
+  twk->task_ct = task_ct;
+  (*task_ct)++;
+}
+
+static void tcb_MsgUpdown( GFL_TCBL *tcb , void* tcb_wk)
+{
+  TASKWK_MSG_UPDOWN* twk = (TASKWK_MSG_UPDOWN*)tcb_wk;
+ 
+  if( twk->ct++ < twk->frame ){
+    twk->y += twk->diff;
+    GFL_BG_SetScroll( FRM_POPUP, GFL_BG_SCROLL_Y_SET, twk->y );
+    IWASAWA_Printf("Popup %d\n",twk->y);
+    return;
+  }
+
+  --(*twk->task_ct);
+  GFL_TCBL_Delete(tcb);
+}
+
+/////////////////////////////////////////////////////////////////////
+/*
+ *  @brief  メッセージウィンドウ ポップアップ 
+ */
+/////////////////////////////////////////////////////////////////////
+typedef struct _TASKWK_WIN_POPUP{
+  u8  seq;
+  u8  wait;
+  int child_task;
+  STRBUF* str;
+ 
+  BEACON_VIEW_PTR bvp;
+  int* task_ct;
+}TASKWK_WIN_POPUP;
+
+static void taskAdd_WinPopup( BEACON_VIEW_PTR wk, STRBUF* str, int* task_ct );
+static void tcb_WinPopup( GFL_TCBL *tcb , void* work);
+
+static void effReq_PopupMsgFromInfo( BEACON_VIEW_PTR wk, GAMEBEACON_INFO* info )
+{
+  GFL_MSG_GetString(wk->mm_status, GAMEBEACON_GetMsgID(info), wk->str_tmp);
+  GAMEBEACON_Wordset( info, wk->wordset, wk->tmpHeapID );
+  WORDSET_ExpandStr( wk->wordset, wk->str_expand, wk->str_tmp );
+  taskAdd_WinPopup( wk, wk->str_expand, &wk->eff_task_ct);
+}
+
+/*
+ *  @brief  メッセージウィンドウ ポップアップタスク登録
+ */
+static void taskAdd_WinPopup( BEACON_VIEW_PTR wk, STRBUF* str, int* task_ct )
+{
+  GFL_TCBL* tcb;
+  TASKWK_WIN_POPUP* twk;
+
+  tcb = GFL_TCBL_Create( wk->pTcbSys, tcb_WinPopup, sizeof(TASKWK_WIN_POPUP), 0 );
+
+  twk = GFL_TCBL_GetWork(tcb);
+  MI_CpuClear8( twk, sizeof( TASKWK_WIN_POPUP ));
+
+  twk->bvp = wk;
+  twk->str = GFL_STR_CreateCopyBuffer( str, GFL_HEAP_LOWID( wk->heapID ) );
+  twk->wait = POPUP_WAIT;
+
+  twk->task_ct = task_ct;
+  (*task_ct)++;
+}
+
+static void tcb_WinPopup( GFL_TCBL *tcb , void* tcb_wk)
+{
+  TASKWK_WIN_POPUP* twk = (TASKWK_WIN_POPUP*)tcb_wk;
+
+  switch( twk->seq ){
+  case 0:
+    draw_PopupWindow( twk->bvp, twk->str );
+    twk->seq++;
+    return;
+  case 1:
+    taskAdd_MsgUpdown( twk->bvp, SCROLL_UP, &twk->child_task );
+    twk->seq++;
+    return;
+  case 2:
+    if( twk->child_task ){
+      return;
+    }
+    twk->seq++;
+    return;
+  case 3:
+    if( twk->wait-- > 0 ){
+      return;
+    }
+    taskAdd_MsgUpdown( twk->bvp, SCROLL_DOWN, &twk->child_task );
+    twk->seq++;
+    return;
+  case 4:
+    if( twk->child_task ){
+      return;
+    }
+  }
+  --(*twk->task_ct);
+  GFL_STR_DeleteBuffer( twk->str );
+  GFL_TCBL_Delete(tcb);
+}
+
 
 
