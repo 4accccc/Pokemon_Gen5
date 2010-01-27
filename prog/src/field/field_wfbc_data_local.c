@@ -699,7 +699,7 @@ void FIELD_WFBC_CORE_PEOPLE_SetBattle( FIELD_WFBC_CORE_PEOPLE* p_wk )
 //-----------------------------------------------------------------------------
 BOOL FIELD_WFBC_CORE_PEOPLE_IsBattle( const FIELD_WFBC_CORE_PEOPLE* cp_wk )
 {
-  // OFF
+  // ON‚È‚çƒoƒgƒ‹‰Â”\
   if( FIELD_WFBC_ONEDAY_MSK_CHECK( cp_wk->one_day_msk, FIELD_WFBC_ONEDAY_MSK_BATTLE ) )
   {
     return TRUE;

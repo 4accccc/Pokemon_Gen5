@@ -142,7 +142,6 @@ VMCMD_RESULT EvCmdWfbc_TalkEnd( VMHANDLE *core, void *wk )
     
     // èüÇ¡ÇΩêîâ¡éZ
     FIELD_WFBC_EVENT_AddBCNpcWinCount( p_event );
-
   }
 
 	return VMCMD_RESULT_CONTINUE;
