@@ -948,7 +948,7 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
       _editMarkONOFF(pWork, pWork->bPanelEdit);
       break;
     case 2:
-      GAMEBEACON_Set_Congratulations();
+      //GAMEBEACON_Set_Congratulations();
       OS_TPrintf("t2\n");
       break;
     case 3:

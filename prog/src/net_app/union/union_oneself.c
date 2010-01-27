@@ -828,7 +828,7 @@ static BOOL OneselfSeq_Leave(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, 
 {
   switch(*seq){
   case 0:
-    GAMEBEACON_Set_UnionOut();
+//    GAMEBEACON_Set_UnionOut();
     unisys->finish = TRUE;
     (*seq)++;
     break;

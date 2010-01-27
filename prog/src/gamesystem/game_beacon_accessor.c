@@ -546,3 +546,14 @@ const STRCODE * GAMEBEACON_Get_Action_Nickname(const GAMEBEACON_INFO *info)
   return info->action.nickname;
 }
 
+//==================================================================
+/**
+ * 行動パラメータ取得：トレーナー番号
+ * @param   info		ビーコン情報へのポインタ
+ * @retval  u16 		トレーナー番号
+ */
+//==================================================================
+u16 GAMEBEACON_Get_Action_TrNo(const GAMEBEACON_INFO *info)
+{
+  return info->action.tr_no;
+}

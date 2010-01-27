@@ -58,7 +58,9 @@ typedef struct{
   //action_noによってセットされるものが変わる
   union{
     u8 work[24];
+    u16 tr_no;                              ///<トレーナー番号
     u16 itemno;                             ///<アイテム番号
+    u32 target_trainer_id;                  ///<対象相手のトレーナーID
     STRCODE nickname[BUFLEN_POKEMON_NAME];  ///<ポケモン名(ニックネーム)
     STRCODE thankyou_message[GAMEBEACON_THANKYOU_MESSAGE_LEN]; ///お礼メッセージ
   };
@@ -84,9 +86,9 @@ struct _GAMEBEACON_INFO{
   u32 sex:1;                               ///<性別
 
   u32 suretigai_count:17;                  ///<すれ違い人数
-  u32 language:5;
+  u32 language:5;                          ///<PM_LANG
   u32 trainer_view:3;                      ///<ユニオンルームでの見た目
-  u32           :7;                        ///<送信No(同じデータの無視判定に使用)
+  u32           :7;
 
   u32 favorite_color:15;                   ///<本体情報の色(GXRgb)
   u32 thanks_recv_count:17;                ///<お礼を受けた回数

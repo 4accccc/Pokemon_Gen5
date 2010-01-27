@@ -297,11 +297,11 @@ static void BEACON_VIEW_TouchUpdata(BEACON_VIEW_PTR wk)
   switch(tp_ret){
   case 0: //Gパワー
     OS_TPrintf("Gパワー ビーコンセット\n");
-    GAMEBEACON_Set_EncountDown();
+//    GAMEBEACON_Set_EncountDown();
     break;
   case 1: //おめでとう
     OS_TPrintf("おめでとう ビーコンセット\n");
-    GAMEBEACON_Set_Congratulations();
+//    GAMEBEACON_Set_Congratulations();
     break;
   case 2: //戻る
     FIELD_SUBSCREEN_SetAction( wk->subscreen , FIELD_SUBSCREEN_ACTION_CHANGE_SCREEN_CGEAR);

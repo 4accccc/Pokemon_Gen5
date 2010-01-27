@@ -41,16 +41,33 @@ typedef enum{
 
 ///行動番号
 typedef enum{
-  GAMEBEACON_ACTION_NULL,                 ///<データ無し
-  GAMEBEACON_ACTION_APPEAL,               ///<「ちかくにいます」
-  GAMEBEACON_ACTION_CONGRATULATIONS,      ///<「おめでとう！」
-  GAMEBEACON_ACTION_THANKYOU,             ///<「ありがとう！」
-  GAMEBEACON_ACTION_POKE_EVOLUTION,       ///<ポケモン進化
-  GAMEBEACON_ACTION_POKE_LVUP,            ///<ポケモンレベルアップ
-  GAMEBEACON_ACTION_POKE_GET,             ///<ポケモン捕獲
-  GAMEBEACON_ACTION_UNION_IN,             ///<ユニオンルーム入室
-  GAMEBEACON_ACTION_UNION_OUT,            ///<ユニオンルーム退室
-  GAMEBEACON_ACTION_ENCOUNT_DOWN,         ///<エンカウント率ダウン
+  GAMEBEACON_ACTION_NULL,                     ///<データ無し
+  
+  GAMEBEACON_ACTION_SEARCH,                   ///<「ｘｘｘさんをサーチしました！」
+  GAMEBEACON_ACTION_BATTLE_LEADER_START,      ///<ジムリーダーと対戦を開始しました！
+  GAMEBEACON_ACTION_BATTLE_LEADER_VICTORY,    ///<ジムリーダーに勝利しました！
+  GAMEBEACON_ACTION_BATTLE_BIGFOUR_START,     ///<四天王と対戦を開始しました！
+  GAMEBEACON_ACTION_BATTLE_BIGFOUR_VICTORY,   ///<四天王に勝利しました！
+  GAMEBEACON_ACTION_BATTLE_CHAMPION_START,    ///<チャンピオンと対戦を開始しました！
+  GAMEBEACON_ACTION_BATTLE_CHAMPION_VICTORY,  ///<チャンピオンに勝利しました！
+  GAMEBEACON_ACTION_POKE_GET,                 ///<ポケモン捕獲
+  GAMEBEACON_ACTION_SP_POKE_GET,              ///<特別なポケモン捕獲
+  GAMEBEACON_ACTION_POKE_LVUP,                ///<ポケモンレベルアップ
+  GAMEBEACON_ACTION_POKE_EVOLUTION,           ///<ポケモン進化
+  GAMEBEACON_ACTION_GPOWER,                   ///<Gパワー発動
+  GAMEBEACON_ACTION_SP_ITEM_GET,              ///<貴重品ゲット
+  GAMEBEACON_ACTION_PLAYTIME,                 ///<一定のプレイ時間を越えた
+  GAMEBEACON_ACTION_ZUKAN_COMPLETE,           ///<図鑑完成
+  GAMEBEACON_ACTION_THANKYOU_OVER,            ///<お礼を受けた回数が規定数を超えた
+  GAMEBEACON_ACTION_UNION_IN,                 ///<ユニオンルームに入った
+  GAMEBEACON_ACTION_DISTRIBUTION_POKE,        ///<ポケモン配布中
+  GAMEBEACON_ACTION_DISTRIBUTION_ITEM,        ///<アイテム配布中
+  GAMEBEACON_ACTION_DISTRIBUTION_ETC,         ///<その他配布中
+  GAMEBEACON_ACTION_THANKYOU,                 ///<「ありがとう！」
+  
+//  GAMEBEACON_ACTION_CONGRATULATIONS,      ///<「おめでとう！」
+//  GAMEBEACON_ACTION_UNION_OUT,            ///<ユニオンルーム退室
+//  GAMEBEACON_ACTION_ENCOUNT_DOWN,         ///<エンカウント率ダウン
   
   GAMEBEACON_ACTION_MAX,
 }GAMEBEACON_ACTION;
@@ -89,16 +106,23 @@ extern BOOL GAMEBEACON_Set_SearchUpdateFlag(const GAMEBEACON_INFO *info);
 //--------------------------------------------------------------
 //  ビーコンセット
 //--------------------------------------------------------------
-extern void GAMEBEACON_Set_Congratulations(void);
-extern void GAMEBEACON_Set_Thankyou(GAMEDATA *gamedata);
-extern void GAMEBEACON_Set_PokemonEvolution(const STRBUF *nickname);
-extern void GAMEBEACON_Set_PokemonLevelUp(const STRBUF *nickname);
+extern void GAMEBEACON_Set_BattleLeaderStart(u16 tr_no);
+extern void GAMEBEACON_Set_BattleLeaderVictory(u16 tr_no);
+extern void GAMEBEACON_Set_BattleBigFourStart(u16 tr_no);
+extern void GAMEBEACON_Set_BattleBigFourVictory(u16 tr_no);
+extern void GAMEBEACON_Set_BattleChampionStart(u16 tr_no);
+extern void GAMEBEACON_Set_BattleChampionVictory(u16 tr_no);
 extern void GAMEBEACON_Set_PokemonGet(const STRBUF *nickname);
+extern void GAMEBEACON_Set_SpecialPokemonGet(const STRBUF *nickname);
+extern void GAMEBEACON_Set_PokemonLevelUp(const STRBUF *nickname);
+extern void GAMEBEACON_Set_PokemonEvolution(const STRBUF *nickname);
+extern void GAMEBEACON_Set_GPower(GPOWER_ID g_power_id);
+extern void GAMEBEACON_Set_Thankyou(GAMEDATA *gamedata, u32 target_trainer_id);
 extern void GAMEBEACON_Set_UnionIn(void);
-extern void GAMEBEACON_Set_UnionOut(void);
+
+//=====詳細パラメータセット
 extern void GAMEBEACON_Set_EncountDown(void);
 extern void GAMEBEACON_Set_ZoneChange(ZONEID zone_id);
-extern void GAMEBEACON_Set_GPower(GPOWER_ID g_power_id);
 extern void GAMEBEACON_Set_ThanksRecvCount(u16 count);
 extern void GAMEBEACON_Set_SuretigaiCount(u16 count);
 extern void GAMEBEACON_Set_BattleTrainer(u16 trainer_code);
