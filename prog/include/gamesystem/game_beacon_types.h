@@ -18,9 +18,9 @@
 #define GAMEBEACON_SYSTEM_LOG_MAX       (30)
 
 ///お礼メッセージの文字数(EOM込み)
-#define GAMEBEACON_THANKYOU_MESSAGE_LEN   (11)
+#define GAMEBEACON_THANKYOU_MESSAGE_LEN   (9)
 ///自己紹介メッセージの文字数(!! EOM除く !!)
-#define GAMEBEACON_SELFINTRODUCTION_MESSAGE_LEN   (10)
+#define GAMEBEACON_SELFINTRODUCTION_MESSAGE_LEN   (8)
 
 
 //==============================================================================
