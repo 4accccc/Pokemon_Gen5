@@ -45,7 +45,7 @@ del p*.n*
 
 perl %PERL_DIR%nmc.pl %1.nmc ./
 perl %PERL_DIR%nce.pl %1.nce ./
-perl %PERL_DIR%ncgc.pl %1c_m.ncg ./
-perl %PERL_DIR%ncl.pl %2_n.ncl ./
-perl %PERL_DIR%ncl.pl %2_r.ncl ./
+perl %PERL_DIR%ncgc.pl %2.ncg ./
+perl %PERL_DIR%ncl.pl %3_n.ncl ./
+perl %PERL_DIR%ncl.pl %3_r.ncl ./
 
