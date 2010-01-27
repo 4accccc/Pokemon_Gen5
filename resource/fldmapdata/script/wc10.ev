@@ -38,15 +38,63 @@ _EVENT_DATA_END
 /*   【仮】WhiteForest                                        */
 /**************************************************************/
 ev_wf_npc:
-  // WFBC　会話前処理
-  _WFBC_TALKSTART()
+	// WFBC　会話前処理
+	_WFBC_TALKSTART()
+	_TALK_OBJ_START()
+	
+	//BCからの移民かどうかチェック
+	DEFINE_LOCAL LWK_EMIG
+	_WFBC_GET_DATA( WFBC_GET_PARAM_IS_RIREKI, LWK_EMIG )
+	
+	//OBJIDを取得
+	DEFINE_LOCAL LWK_OBJ_ID
+	_WFBC_GET_DATA( WFBC_GET_PARAM_MMDL_ID, LWK_OBJ_ID )
+	
+	//機嫌値を取得
+	DEFINE_LOCAL LWK_MOOD
+	_WFBC_GET_DATA( WFBC_GET_PARAM_BATTLE_TRAINER_ID, LWK_MOOD )
+	
+	//移民判別メッセージ定義
+	DEFINE_LOCAL LWK_EMIG_MSG
+	$LWK_EMIG_MSG = $LWK_OBJ_ID
+	
+	//機嫌判別メッセージ定義
+	DEFINE_LOCAL LWK_MOOD_MSG
+	
+	//移民ではない場合
+	IF FLAG_OFF( LWK_EMIG ) THEN
 
-	//ホワイトフォレストさいこう！
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_wc10_npc00 )
+		_WFBC_GET_AUTO_NPC_MESSAGE( LWK_EMIG_MSG , 2 )
+		_BALLOONWIN_OBJMSG( LWK_EMIG_MSG , LWK_OBJ_ID )
+		_BALLOONWIN_CLOSE()
+	
+	//移民である場合
+	ELSE
+		_WFBC_GET_AUTO_NPC_MESSAGE( LWK_EMIG_MSG , 1 )
+		_BALLOONWIN_OBJMSG( LWK_EMIG_MSG , LWK_OBJ_ID )
+		_BALLOONWIN_CLOSE()
+	
+	ENDIF
+	
+	//WFを気に入っている
+	IF FLAG_OFF( LWK_MOOD ) THEN
+		_WFBC_GET_AUTO_NPC_MESSAGE( LWK_MOOD_MSG , 4 )
+		_BALLOONWIN_OBJMSG( LWK_EMIG_MSG , LWK_OBJ_ID )
+		_LAST_KEYWAIT()
+		_BALLOONWIN_CLOSE()
+	
+	//BCに行きたがっている
+	ELSE
+		_WFBC_GET_AUTO_NPC_MESSAGE( LWK_MOOD_MSG , 3 )
+		_BALLOONWIN_OBJMSG( LWK_EMIG_MSG , LWK_OBJ_ID )
+		_LAST_KEYWAIT()
+		_BALLOONWIN_CLOSE()
+	
+	ENDIF
 
-  // WFBC　会話後処理
-  _WFBC_TALKEND()
-  _END
+	// WFBC　会話後処理
+	_WFBC_TALKEND()
+_END
 
 
 /**************************************************************/
