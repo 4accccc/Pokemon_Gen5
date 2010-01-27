@@ -84,6 +84,9 @@ judge_scr_def.h: judge_scr.ev
 rotom_change_scr_def.h: rotom_change_scr.ev
 	$(EV_DEF) rotom_change_scr.ev $(SCR_OFFS_ID_H)
 
+id_present_scr_def.h: id_present_scr.ev
+	$(EV_DEF) id_present_scr.ev $(SCR_OFFS_ID_H)
+
 debug_scr_def.h: debug_scr.ev
 	$(EV_DEF) debug_scr.ev $(SCR_OFFS_ID_H)
 
