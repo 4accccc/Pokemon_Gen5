@@ -25,6 +25,7 @@
 #include "field/zonedata.h"   //ZONEDATA_GetMessageArcID
 #include "savedata/mystatus.h"  //MyStatus_～
 #include "savedata/c_gear_data.h" //
+#include "savedata/config.h" // CONFIG
 
 #include "savedata/save_control.h"
 #include "savedata/zukan_savedata.h"
@@ -61,13 +62,19 @@ VMCMD_RESULT EvCmdGetRomVersion( VMHANDLE *core, void *wk )
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdChangeLangID( VMHANDLE *core, void *wk )
 {
-  u8 id = GFL_MSGSYS_GetLangID();
-  if( id == 0 ){ //ひらがな
-    id = 1;
-  }else if( id == 1 ){ //漢字
-    id = 0;
+  // 設定画面と食い違う現象が起きていたので、セーブデータを見るように
+  // 修正しました。名木橋
+  GAMEDATA *gdata = SCRCMD_WORK_GetGameData( wk );
+  SAVE_CONTROL_WORK * sv = GAMEDATA_GetSaveControlWork( gdata );
+  CONFIG *config  = SaveData_GetConfig( sv );
+
+  MOJIMODE id = CONFIG_GetMojiMode( config );
+  if( id == MOJIMODE_HIRAGANA ){ //ひらがな
+    id = MOJIMODE_KANJI;
+  }else if( id == MOJIMODE_KANJI ){ //漢字
+    id = MOJIMODE_HIRAGANA;
   }
-  GFL_MSGSYS_SetLangID( id );
+  CONFIG_SetMojiMode( config, id );
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -75,12 +82,19 @@ VMCMD_RESULT EvCmdChangeLangID( VMHANDLE *core, void *wk )
 /**
  * @brief メッセージ表示モード（漢字・かな）の取得
  * @retval  VMCMD_RESULT_CONTINUE
+ *
  */
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdGetLangID( VMHANDLE *core, void *wk )
 {
+  // 設定画面と食い違う現象が起きていたので、セーブデータを見るように
+  // 修正しました。名木橋
+  GAMEDATA *gdata = SCRCMD_WORK_GetGameData( wk );
+  SAVE_CONTROL_WORK * sv = GAMEDATA_GetSaveControlWork( gdata );
+  CONFIG *config  = SaveData_GetConfig( sv );
+
   u16 *ret_wk = SCRCMD_GetVMWork( core, wk );
-  *ret_wk = GFL_MSGSYS_GetLangID();
+  *ret_wk = CONFIG_GetMojiMode( config );
   return VMCMD_RESULT_CONTINUE;
 }
 
