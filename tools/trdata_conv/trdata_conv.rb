@@ -286,10 +286,10 @@ end
   gmm_name.open_gmm( ARGV[ ARGV_READ_GMM_FILE ] , "trname.gmm" )
   gmm_type.open_gmm( ARGV[ ARGV_READ_GMM_FILE ] , "trtype.gmm" )
 
-  gmm_name.make_row( "TR_NONE","ー" )
+  gmm_name.make_row_kanji( "TR_NONE","ー","ー" )
 
-  gmm_type.make_row( "MSG_TRTYPE_HERO", "ポケモントレーナー" )
-  gmm_type.make_row( "MSG_TRTYPE_HEROINE", "ポケモントレーナー" )
+  gmm_type.make_row_kanji( "MSG_TRTYPE_HERO", "ポケモントレーナー", "ポケモントレーナー" )
+  gmm_type.make_row_kanji( "MSG_TRTYPE_HEROINE", "ポケモントレーナー", "ポケモントレーナー" )
 
 	trno = 1
   trainer = []
@@ -529,7 +529,7 @@ end
 		fp_trno.printf( "#define	TRID_%s   ( %d ) \n", split_data[ PARA::TR_ID ].upcase, trno )
 
     #トレーナー名
-    gmm_name.make_row( split_data[ PARA::TR_ID ], split_data[ PARA::TR_NAME ] )
+    gmm_name.make_row_kanji( split_data[ PARA::TR_ID ], split_data[ PARA::TR_NAME ], split_data[ PARA::TR_NAME ] )
 
 		trno += 1
 	}
@@ -561,7 +561,7 @@ end
     fp_trfgra.printf( "\"trwb_%s.NCLR\"\n", trainer[ i ][ 3 ] )
 		fp_trtype.printf( "#define	%s    ( %d )    //%s\n", trainer[ i ][ 0 ].upcase, no, trainer[ i ][ 1 ] )
     str = "MSG_" + trainer[ i ][ 0 ]
-    gmm_type.make_row( str, trainer[ i ][ 1 ] )
+    gmm_type.make_row_kanji( str, trainer[ i ][ 1 ], trainer[ i ][ 1 ] )
 		fp_trtypesex.printf( "\t%s,\t\t//%s\n", trainer[ i ][ 2 ], trainer[ i ][ 1 ] )
     fp_hash.printf("\t\t\"%s\"=>%d,\n", trainer[ i ][ 1 ], no )
     no += 1
