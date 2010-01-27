@@ -496,7 +496,7 @@ static void SetPokemonParam( POKEMON_PARAM* pp, FLD_TRADE_POKEDATA* data,
   u32 personal_rnd;
 
   // 指定の性別になるような個性乱数を生成
-  personal_rnd = POKETOOL_CalcPersonalRand( data->monsno, data->formno, data->sex );
+  personal_rnd = POKETOOL_CalcPersonalRandEx( data->mons_id, data->monsno, data->formno, data->sex, 0, FALSE );
 	
 	// モンスターナンバー　レベル　固体乱数　ID設定
 	PP_SetupEx( pp, 
