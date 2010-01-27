@@ -8325,7 +8325,7 @@ static void handler_Katakiuti( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
       BTL_Printf("前ターンに死んだポケID=%d\n", deadPokeID);
       if( BTL_MAINUTIL_IsFriendPokeID( pokeID, deadPokeID ) )
       {
-        BTL_EVENTVAR_RewriteValue( BTL_EVAR_WAZA_POWER_RATIO, FX32_CONST(2) );
+        BTL_EVENTVAR_MulValue( BTL_EVAR_WAZA_POWER_RATIO, FX32_CONST(2) );
         break;
       }
     }

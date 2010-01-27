@@ -11300,7 +11300,6 @@ static u8 scproc_HandEx_cureSick( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HE
         cured_sick = scPut_CureSick( wk, pp_target, param->sickCode, &oldCont );
         if( cured_sick != WAZASICK_NULL )
         {
-
           if( !param->fStdMsgDisable )
           {
             if( BTL_SICK_MakeDefaultCureMsg(cured_sick, oldCont, pp_target, itemID, &wk->strParam) ){
