@@ -1764,6 +1764,9 @@ static void _scrollMainFunc(POKEMON_TRADE_WORK* pWork,BOOL bSE, BOOL bNetSend)
     GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(),GFL_NET_SENDID_ALLUSER,
                        _NETCMD_SCROLLBAR,2,&pWork->BoxScrollNum,FALSE,TRUE,TRUE);
   }
+  else{
+    pWork->FriendBoxScrollNum = pWork->BoxScrollNum;
+  }
 }
 
 //--------------------------------------------------------------------------------------------
@@ -2490,6 +2493,7 @@ static GFL_PROC_RESULT PokemonTradeProcInit( GFL_PROC * proc, int * seq, void * 
   pWork->selectIndex = -1;
   pWork->modelno = -1;
 
+  
   IRC_POKETRADEDEMO_Init(pWork);
   if(POKEMONTRADE_MOVE_EVOLUTION == pParentWork->ret){
     _CHANGE_STATE(pWork, POKMEONTRADE_SAVE_TimingStart);

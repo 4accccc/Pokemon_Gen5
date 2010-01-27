@@ -157,6 +157,7 @@ static void _changeStateDebug(SAVEADDR_WORK* pWork,StateFunc state, int line)
 #include	"poke_tool/pokeparty.h"
 #include "savedata/wifihistory.h"
 #include "savedata/wifihistory_local.h"
+#include "savedata/regulation.h"
 
 
 
@@ -170,6 +171,13 @@ static void _keyWait(SAVEADDR_WORK* pWork)
 
     OS_TPrintf("SAVESIZE ,%x\n", size);
 
+    {
+      u8 data[]="abcdefghijklmnop";
+      OS_TPrintf("CRC ,%x %d\n", GFL_STD_CrcCalc(data,16) , sizeof(REGULATION_CARDDATA));
+    }
+    
+
+    
 /*
     for(i=0;i<26;i++){
       REGULATION* pData = GFL_ARC_UTIL_Load(ARCID_REGULATION, i, FALSE, HEAPID_PROC );

@@ -131,8 +131,8 @@ typedef enum
 #define _MCSS_POS_Y(y) (y * FX32_ONE)
 #define _MCSS_POS_Z(z) (z * FX32_ONE)
 
-#define PSTATUS_MCSS_POS_X1 _MCSS_POS_X(-60)            //自分最初の位置X
-#define PSTATUS_MCSS_POS_X2 _MCSS_POS_X(60)             //相手最初の位置X
+#define PSTATUS_MCSS_POS_X1 _MCSS_POS_X(-55)            //自分最初の位置X
+#define PSTATUS_MCSS_POS_X2 _MCSS_POS_X(55)             //相手最初の位置X
 #define PSTATUS_MCSS_POS_Y  _MCSS_POS_Y(-28)            //最初の位置Yは共通
 
 
@@ -348,7 +348,8 @@ struct _POKEMON_TRADE_WORK{
   POKEMON_PARAM* recvPoke[2];  ///< 受け取ったポケモンを格納する場所
   StateFunc* state;      ///< ハンドルのプログラム状態
   HEAPID heapID;
-
+  void* pTexBoard[5];///< ボードテクスチャー
+  
   int BOX_TRAY_MAX;
   int TRADEBOX_LINEMAX;  ///< ボックスのマックスが決まらないので縦の列が変数
   int _SRCMAX;    ///< ボックスのマックスが決まらないのでスクリーンの数
@@ -738,4 +739,6 @@ extern void POKE_GTS_DirectAddPokemon(POKEMON_TRADE_WORK* pWork,int index,const 
 extern void POKE_GTS_DeletePokemonDirect(POKEMON_TRADE_WORK* pWork,int side,int index);
 extern void POKETRADE_2D_GTSPokemonIconResetAll(POKEMON_TRADE_WORK* pWork);
 extern void POKE_GTS_DeletePokemonState(POKEMON_TRADE_WORK* pWork);
+
+extern void POKETRADE_2D_ObjTrayDispInit(POKEMON_TRADE_WORK* pWork);
 

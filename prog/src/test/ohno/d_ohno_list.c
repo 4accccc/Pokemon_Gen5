@@ -96,6 +96,7 @@ typedef struct{
 static BOOL DebugOhno_ItemDebug(D_OHNO_WORK *wk);
 static void * _PokeTradeDemoWorkCreate(D_OHNO_WORK *wk);
 static void * _PokeTradeWorkCreate(D_OHNO_WORK *wk);
+static void * _PokeIrcTradeWorkCreate(D_OHNO_WORK *wk);
 
 
 //==============================================================================
@@ -141,22 +142,16 @@ static const D_MENULIST DebugMenuList[] = {
 		_PokeTradeDemoWorkCreate,
 		FS_OVERLAY_ID(pokemon_trade)
 	},
-	{//
-		DEBUG_OHNO_MSG0018,
-		&MidiTest_ProcData,	
-		NULL,
-		FS_OVERLAY_ID(ohno_debugapp)
-	},
   {//
 		DEBUG_OHNO_MSG0015, 
 		&PokemonTradeIrcProcData,	
-		NULL,
+		_PokeIrcTradeWorkCreate,
 		FS_OVERLAY_ID(pokemon_trade)
 	},
 	{//
 		DEBUG_OHNO_MSG0013, 
 		&PokemonTradeProcData,	
-		NULL,
+		_PokeIrcTradeWorkCreate,
 		FS_OVERLAY_ID(pokemon_trade)
 	},
 	{//
@@ -544,6 +539,16 @@ static void * _PokeTradeWorkCreate(D_OHNO_WORK *wk)
   return pWork;
 }
 
+static void * _PokeIrcTradeWorkCreate(D_OHNO_WORK *wk)
+{
+	POKEMONTRADE_PARAM *pWork;
+
+  
+	pWork = GFL_HEAP_AllocClearMemory(GFL_HEAPID_APP, sizeof(POKEMONTRADE_PARAM));
+  pWork->gamedata = GAMEDATA_Create(GFL_HEAPID_APP);
+  
+  return pWork;
+}
 
 
 

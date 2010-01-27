@@ -35,7 +35,7 @@
 
 
 
-
+#define _TRADE_BG_PALLETE_NUM (5)  //交換BGのパレットの本数
 
 
 static void IRC_POKETRADE_TrayInit(POKEMON_TRADE_WORK* pWork,int subchar);
@@ -136,12 +136,9 @@ void IRC_POKETRADE_GraphicInitMainDisp(POKEMON_TRADE_WORK* pWork)
 																		PALTYPE_MAIN_BG, 0, 0,  pWork->heapID);
 
 
-  // サブ画面BGキャラ転送
-//  if(pWork->subchar == 0){
-    pWork->subchar =
-      GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( p_handle, NARC_trade_wb_trade_bg01_NCGR,
-                                                   GFL_BG_FRAME2_M, 0, 0, pWork->heapID);
-  //}
+  pWork->subchar =
+    GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( p_handle, NARC_trade_wb_trade_bg01_NCGR,
+                                                 GFL_BG_FRAME2_M, 0, 0, pWork->heapID);
 
 	GFL_ARCHDL_UTIL_TransVramScreenCharOfs(p_handle,
 																				 NARC_trade_wb_trade_bg01_NSCR,
@@ -153,7 +150,8 @@ void IRC_POKETRADE_GraphicInitMainDisp(POKEMON_TRADE_WORK* pWork)
 																				 GFL_BG_FRAME2_M, 0,
                                          GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar), 0, 0,
                                          pWork->heapID);
-	GFL_ARC_CloseDataHandle( p_handle );
+
+  GFL_ARC_CloseDataHandle( p_handle );
 
 }
 
@@ -236,7 +234,7 @@ void IRC_POKETRADE_GraphicInitSubDisp(POKEMON_TRADE_WORK* pWork)
 	ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_POKETRADE, pWork->heapID );
 
 	GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_trade_wb_trade_bg_NCLR,
-																		PALTYPE_SUB_BG, 0, 0,  pWork->heapID);
+																		PALTYPE_SUB_BG, 0, 0x20*_TRADE_BG_PALLETE_NUM,  pWork->heapID);
 
 
 	// サブ画面BGキャラ転送
@@ -2270,3 +2268,5 @@ void POKETRADE_2D_GTSPokemonIconResetAll(POKEMON_TRADE_WORK* pWork)
     }
   }
 }
+
+

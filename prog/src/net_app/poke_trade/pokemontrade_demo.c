@@ -247,6 +247,8 @@ void IRC_POKMEONTRADE_STEP_ChangeDemo_PokeMove(POKEMON_TRADE_WORK* pWork)
   VecFx32 apos;
   int i;
 
+  PMSND_PlayBGM(  SEQ_BGM_KOUKAN );
+
 #if 0
 //  pWork->mcssStop[0] = FALSE;
 //  MCSS_SetAnimCtrlCallBack(pWork->pokeMcss[0], (u32)pWork, _McssAnmStop, NNS_G2D_ANMCALLBACKTYPE_LAST_FRM);

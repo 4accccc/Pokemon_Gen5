@@ -168,7 +168,8 @@ static const GFL_G3D_UTIL_OBJ obj_table_trade1[] =
 // セットアップデータ
 static const GFL_G3D_UTIL_SETUP setup[] =
 {
-  { res_table_reel, NELEMS(res_table_reel), obj_table_reel, NELEMS(obj_table_reel) },
+//  { res_table_reel, NELEMS(res_table_reel), obj_table_reel, NELEMS(obj_table_reel) },
+  { NULL, 0, NULL, 0},
   { res_table_trade1, NELEMS(res_table_trade1), obj_table_trade1, NELEMS(obj_table_trade1) },
   { res_table_trade_ir, NELEMS(res_table_trade_ir), obj_table_trade1, NELEMS(obj_table_trade1) },
 
@@ -304,12 +305,12 @@ static void _moveSetTrade01(POKEMON_TRADE_WORK* pWork,GFL_G3D_OBJSTATUS* pStatus
     fx32 far;;
     GFL_G3D_CAMERA_GetPos( pWork->camera , &pos );
     OS_TPrintf("pos %d %d %d\n",pos.x/FX32_ONE,pos.y/FX32_ONE,pos.z/FX32_ONE);
-  //  GFL_G3D_CAMERA_GetTarget( pWork->camera , &pos );
+    //  GFL_G3D_CAMERA_GetTarget( pWork->camera , &pos );
     ///OS_TPrintf("target %d %d %d\n",pos.x/FX32_ONE,pos.y/FX32_ONE,pos.z/FX32_ONE);
 
     GFL_G3D_CAMERA_GetFar(pWork->camera ,&far);
     OS_TPrintf("far %d \n",far/FX32_ONE);
-    
+
 
     pos.x = 0;
     pos.y = 200*FX32_ONE;
@@ -317,7 +318,7 @@ static void _moveSetTrade01(POKEMON_TRADE_WORK* pWork,GFL_G3D_OBJSTATUS* pStatus
     GFL_G3D_CAMERA_SetPos( pWork->camera , &pos );
   }
 #endif
-  
+
   GFL_G3D_CAMERA_Switching(pWork->camera );
 
 
@@ -574,6 +575,8 @@ void POKEMONTRADE_DEMO_IRPTC_Init( POKEMONTRADE_DEMO_WORK* pWork )
 
 }
 
+static void _panelLoad(POKEMON_TRADE_WORK* pWork,int boxnum);
+static void _panelRelease(POKEMON_TRADE_WORK *pWork);
 
 
 
@@ -614,9 +617,12 @@ void IRC_POKETRADEDEMO_Init( POKEMON_TRADE_WORK* pWork )
     pWork->camera   = GFL_G3D_CAMERA_CreateDefault( &pos, &target, pWork->heapID );
   }
   if(pWork->modelno!=-1){
-    modelset[pWork->modelno].setCamera(pWork);
+//    modelset[pWork->modelno].setCamera(pWork);
   }
 
+   _panelLoad(pWork,25);
+
+  
 }
 
 
@@ -648,6 +654,7 @@ void IRC_POKETRADEDEMO_End( POKEMON_TRADE_WORK* pWork )
   GFL_G3D_UTIL_Delete( pWork->g3dUtil );
 
   _demoExit();
+  _panelRelease(pWork);
 
 }
 
@@ -662,7 +669,7 @@ void IRC_POKETRADEDEMO_SetModel( POKEMON_TRADE_WORK* pWork, int modelno)
   //    return;
   //  }
 
-  
+
   Initialize( pWork, modelno);
 
   if( pWork->modelno != -1){
@@ -706,13 +713,18 @@ static void Initialize( POKEMON_TRADE_WORK* pWork, int modelno )
   // ユニット追加
   GF_ASSERT(modelno < elementof(setup));
   {
-    pWork->unitIndex = GFL_G3D_UTIL_AddUnit( pWork->g3dUtil, &setup[modelno] );
+    if(setup[modelno].objCount!=0){
+      pWork->unitIndex = GFL_G3D_UTIL_AddUnit( pWork->g3dUtil, &setup[modelno] );
+    }
+    else{
+      pWork->unitIndex = UNIT_NULL;
+    }
     //    pWork->objCount = setup[modelno].objCount;
   }
 
 
   // アニメーション有効化
-  {
+  if(pWork->unitIndex != UNIT_NULL){
     int i;
     {
       int j;
@@ -747,6 +759,7 @@ static void Finalize( POKEMON_TRADE_WORK* pWork )
 
 }
 
+static void _polygondraw( POKEMON_TRADE_WORK* pWork);
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -760,11 +773,16 @@ static void Draw( POKEMON_TRADE_WORK* pWork )
   static fx32 anime_speed = FX32_ONE;  // 1/60での動作の為
   GFL_G3D_OBJSTATUS status;
 
+  _polygondraw(pWork);
+
+  
   if(pWork->modelno==-1){
     return;
   }
 
-  modelset[pWork->modelno].setMove(pWork, &status);
+
+
+//  modelset[pWork->modelno].setMove(pWork, &status);
 
   // TEMP: カメラ設定
   //  {
@@ -774,7 +792,7 @@ static void Draw( POKEMON_TRADE_WORK* pWork )
 
 
 
-  {
+  if(UNIT_NULL!=pWork->unitIndex){
     int i;
     GFL_G3D_OBJ* obj = GFL_G3D_UTIL_GetObjHandle( pWork->g3dUtil, pWork->unitIndex );
     int anime_count = GFL_G3D_OBJECT_GetAnimeCount( obj );
@@ -783,24 +801,6 @@ static void Draw( POKEMON_TRADE_WORK* pWork )
       GFL_G3D_OBJECT_LoopAnimeFrame( obj, i, anime_speed );
     }
   }
-#if 0
-  // アニメーション更新
-  {
-    int i;
-    for( i=0; i<pWork->objCount; i++ )
-    {
-      {
-        int j;
-        GFL_G3D_OBJ* obj = GFL_G3D_UTIL_GetObjHandle( pWork->g3dUtil, pWork->unitIndex+i );
-        int anime_count = GFL_G3D_OBJECT_GetAnimeCount( obj );
-        for( j=0; j<anime_count; j++ )
-        {
-          GFL_G3D_OBJECT_LoopAnimeFrame( obj, j, anime_speed );
-        }
-      }
-    }
-  }
-#endif
   // 描画
   GFL_G3D_DRAW_Start();
   GFL_G3D_CAMERA_Switching( pWork->camera );
@@ -811,7 +811,7 @@ static void Draw( POKEMON_TRADE_WORK* pWork )
     GFL_PTC_CalcAll();	//パーティクル計算
   }
   {
-    {
+    if(UNIT_NULL!=pWork->unitIndex){
       GFL_G3D_OBJ* obj = GFL_G3D_UTIL_GetObjHandle( pWork->g3dUtil, pWork->unitIndex );
       GFL_G3D_DRAW_DrawObject( obj, &status );
     }
@@ -873,3 +873,303 @@ void IRCPOKETRADE_PokeDeleteMcss( POKEMON_TRADE_WORK *pWork,int no  )
   pWork->pokeMcss[no] = NULL;
 }
 
+#if 1
+
+static const u16 pal_16plett[] = {
+  GX_RGB(4,4,4), GX_RGB(31,0,0), GX_RGB(0,31,0), GX_RGB(0,0,31),
+  GX_RGB(31,31,0), GX_RGB(31,0,31), GX_RGB(0,31,31), GX_RGB(15,0,0),
+  GX_RGB(0,15,0), GX_RGB(0,0,15), GX_RGB(15,31,0), GX_RGB(31,15,0),
+  GX_RGB(0,31,15), GX_RGB(0,15,31), GX_RGB(31,0,15), GX_RGB(15,0,31),
+};
+
+
+
+
+static s16     gCubeGeometry[3 * 8] = {
+  FX16_ONE, FX16_ONE, FX16_ONE,
+  FX16_ONE, FX16_ONE, -FX16_ONE,
+  FX16_ONE, -FX16_ONE, FX16_ONE,
+  FX16_ONE, -FX16_ONE, -FX16_ONE,
+  -FX16_ONE, FX16_ONE, FX16_ONE,
+  -FX16_ONE, FX16_ONE, -FX16_ONE,
+  -FX16_ONE, -FX16_ONE, FX16_ONE,
+  -FX16_ONE, -FX16_ONE, -FX16_ONE
+  };
+
+static VecFx10 gCubeNormal[6] = {
+  GX_VECFX10(0, 0, FX32_ONE - 1),
+  GX_VECFX10(0, FX32_ONE - 1, 0),
+  GX_VECFX10(FX32_ONE - 1, 0, 0),
+  GX_VECFX10(0, 0, -FX32_ONE + 1),
+  GX_VECFX10(0, -FX32_ONE + 1, 0),
+  GX_VECFX10(-FX32_ONE + 1, 0, 0)
+  };
+
+static GXSt    gCubeTexCoord[] = {
+  GX_ST(0, 0),
+  GX_ST(0, 64 * FX32_ONE),
+  GX_ST(64 * FX32_ONE, 0),
+  GX_ST(64 * FX32_ONE, 64 * FX32_ONE)
+  };
+
+static void vtx(int idx)
+{
+  G3_Vtx(gCubeGeometry[idx * 3], gCubeGeometry[idx * 3 + 1], gCubeGeometry[idx * 3 + 2]);
+}
+
+static void normal(int idx)
+{
+  G3_Direct1(G3OP_NORMAL, gCubeNormal[idx]);
+  // use G3_Normal(x, y, z) if not packed yet
+}
+
+static void tex_coord(int idx)
+{
+  G3_Direct1(G3OP_TEXCOORD, gCubeTexCoord[idx]);
+  // use G3_TexCoord if not packed yet
+}
+
+
+static const  u32     myTexAddr = 0x03000;       // a texture image at 0x1000 of the texture image slots
+static const  u32     myTexPlttAddr = 0x02000;   // a texture palette at 0x1000 of the texture palette slots
+
+
+
+static void _printColorSquear(u8* tempBuff, int x, int y, int colno)
+{
+  int i,j;
+  int xstart = x*10+2;
+  int ystart = y*10+4;
+    
+  for(i = ystart ; i < (ystart + 8); i++){  //y座標
+    for(j = xstart; j < (xstart + 8); j++){  //x座標
+      int pos = j/2+i*32;
+
+      if((j % 2)==0){
+        tempBuff[pos] = (0xf0 & tempBuff[pos]) + colno;
+      }
+      else{
+        tempBuff[pos] = (0x0f & tempBuff[pos]) + (colno<<4);
+      }
+    }
+  }
+}
+
+
+
+static void _panelLoad(POKEMON_TRADE_WORK *pWork,int num)
+{
+  u8* tempBuff;
+  //---------------------------------------------------------------------------
+  // Download the texture images:
+  //
+  // Transfer the texture data on the main memory to the texture image slots.
+  //---------------------------------------------------------------------------
+  GX_BeginLoadTex();                 // map the texture image slots onto LCDC address space
+
+  tempBuff = GFL_HEAP_AllocClearMemory(pWork->heapID, 2048);
+  {
+    int i,num;
+    for(i=0;i<5;i++){
+      GFL_STD_MemFill(tempBuff, 0x0, 2048);
+
+      for( num=0;num<30;num++){
+        _printColorSquear(tempBuff, num%6, num/6, num&0xf);
+      }
+        
+      DC_FlushRange(tempBuff,2048);
+
+      GX_LoadTex((void *)tempBuff,        // a pointer to the texture data on the main memory(4 bytes aligned)
+                 myTexAddr+2048*i,          // an offset address in the texture image slots
+                 2048                // the size of the texture(s)(in bytes)
+                 );
+    }
+  }
+  GFL_HEAP_FreeMemory(tempBuff);
+  GX_EndLoadTex();                   // restore the texture image slots
+
+  //---------------------------------------------------------------------------
+  // Download the texture palettes:
+  //
+  // Transfer the texture palette data on the main memory to the texture palette slots.
+  //---------------------------------------------------------------------------
+
+  GX_BeginLoadTexPltt();             // map the texture palette slots onto LCDC address space
+  {
+    GX_LoadTexPltt((void *)&pal_16plett[0], // a pointer to the texture data on the main memory(4 bytes aligned)
+                   myTexPlttAddr,  // an offset address in the texture palette slots
+                   32);            // the size of the texture palette(s)(in bytes)
+  }
+  GX_EndLoadTexPltt();               // restore the texture palette slots
+
+}
+
+
+static void _panelRelease(POKEMON_TRADE_WORK *pWork)
+{
+
+ int i;
+  for(i=0;i<5;i++){
+//    GFL_HEAP_FreeMemory(pWork->pTexBoard[i]);
+  }
+}
+
+
+
+#define DEMO_INTENSITY_DF   23
+#define DEMO_INTENSITY_AM   8
+#define DEMO_INTENSITY_SP   31
+
+static const GXRgb DEMO_DIFFUSE_COL =
+GX_RGB(DEMO_INTENSITY_DF, DEMO_INTENSITY_DF, DEMO_INTENSITY_DF);
+static const GXRgb DEMO_AMBIENT_COL =
+GX_RGB(DEMO_INTENSITY_AM, DEMO_INTENSITY_AM, DEMO_INTENSITY_AM);
+static const GXRgb DEMO_SPECULAR_COL =
+GX_RGB(DEMO_INTENSITY_SP, DEMO_INTENSITY_SP, DEMO_INTENSITY_SP);
+static const GXRgb DEMO_EMISSION_COL = GX_RGB(0, 0, 0);
+
+static const u32 LIGHTING_L_DOT_S_SHIFT = 8;
+
+
+static void DEMO_Set3DDefaultMaterial(BOOL bUsediffuseAsVtxCol, BOOL bUseShininessTbl)
+{
+    G3_MaterialColorDiffAmb(DEMO_DIFFUSE_COL,   // diffuse
+                            DEMO_AMBIENT_COL,   // ambient
+                            bUsediffuseAsVtxCol // use diffuse as vtx color if TRUE
+        );
+
+    G3_MaterialColorSpecEmi(DEMO_SPECULAR_COL,  // specular
+                            DEMO_EMISSION_COL,  // emission
+                            bUseShininessTbl    // use shininess table if TRUE
+        );
+}
+
+
+
+static float posfx = -1;
+
+static void _createBoard(float pos, int index)
+{
+  u16     Rotate = 182*(360-70);                // for rotating cubes(0-65535)
+  fx32 height;
+  
+ G3_PushMtx();
+  {
+    fx16    s = FX_SinIdx(Rotate);
+    fx16    c = FX_CosIdx(Rotate);
+
+    G3_Scale(FX32_ONE*0.15,FX32_ONE*0.15,FX32_ONE*0.15);
+
+    G3_Translate(0, 0, -5.5 * FX32_ONE); //-5.5 * FX32_ONE);
+
+    G3_Translate(0, -4.3*FX32_ONE , 0);
+    G3_Translate(pos * FX32_ONE, 0, 0);
+
+    G3_RotX(s, c);
+
+  }
+
+  {
+    G3_MtxMode(GX_MTXMODE_TEXTURE);
+    G3_Identity();
+    // Use an identity matrix for the texture matrix for simplicity
+    G3_MtxMode(GX_MTXMODE_POSITION_VECTOR);
+  }
+
+  // Set the material color( diffuse, ambient , specular ) as basic white
+  DEMO_Set3DDefaultMaterial(TRUE, TRUE);
+  //DEMO_Set3DDefaultShininessTable();
+
+  G3_TexImageParam(GX_TEXFMT_PLTT16,      // use 16 colors palette texture
+                   GX_TEXGEN_TEXCOORD,    // use texcoord
+                   GX_TEXSIZE_S64,        // 64 pixels
+                   GX_TEXSIZE_T64,        // 64 pixels
+                   GX_TEXREPEAT_NONE,     // no repeat
+                   GX_TEXFLIP_NONE,       // no flip
+                   GX_TEXPLTTCOLOR0_USE,  // use color 0 of the palette
+                   myTexAddr+index*2048     // the offset of the texture image
+                   );
+
+  G3_TexPlttBase(myTexPlttAddr,  // the offset of the texture palette
+                 GX_TEXFMT_PLTT16 // 16 colors palette texture
+                 );
+
+  G3_PolygonAttr(GX_LIGHTMASK_0, // Light #0 is on
+                 GX_POLYGONMODE_MODULATE, // modulation mode
+                 GX_CULL_NONE,   // cull none
+                 0,              // polygon ID(0 - 63)
+                 31,             // alpha(0 - 31)
+                 0               // OR of GXPolygonAttrMisc's value
+                 );
+
+  G3_Begin(GX_BEGIN_QUADS);
+  {
+    tex_coord(1);
+    normal(0);
+    vtx(2);
+    tex_coord(0);
+    normal(0);
+    vtx(0);
+    tex_coord(2);
+    normal(0);
+    vtx(4);
+    tex_coord(3);
+    normal(0);
+    vtx(6);
+
+  }
+  G3_End();
+  G3_PopMtx(1);
+}
+
+
+
+static void _polygondraw(POKEMON_TRADE_WORK *pWork)
+{
+  u16     Rotate = 0;                // for rotating cubes(0-65535)
+
+//  return;
+  
+  G3X_Reset();
+
+  //---------------------------------------------------------------------------
+  // Set up a camera matrix
+  //---------------------------------------------------------------------------
+  {
+    VecFx32 Eye = { 0, 0, FX32_ONE };   // Eye position
+    VecFx32 at = { 0, 0, 0 };  // Viewpoint
+    VecFx32 vUp = { 0, FX32_ONE, 0 };   // Up
+
+    G3_LookAt(&Eye, &vUp, &at, NULL);
+  }
+
+  //---------------------------------------------------------------------------
+  // Set up light colors and direction.
+  // Notice that light vector is transformed by the current vector matrix
+  // immediately after LightVector command is issued.
+  //
+  // GX_LIGHTID_0: white, downward
+  //---------------------------------------------------------------------------
+  G3_LightVector(GX_LIGHTID_0, FX16_SQRT1_3, -FX16_SQRT1_3, -FX16_SQRT1_3);
+  G3_LightColor(GX_LIGHTID_0, GX_RGB(31, 31, 31));
+
+
+
+
+
+  {
+    int i;
+    float num = pWork->FriendBoxScrollNum;
+
+    num = num / 127;
+  
+    for(i=0;i<25;i++){
+      num = num - i;
+      _createBoard(  3.7 * num ,   i  );
+    }
+  }
+
+  
+}
+
+#endif
