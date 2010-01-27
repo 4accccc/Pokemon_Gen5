@@ -1080,7 +1080,7 @@
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="0.000000 0.000000 0.000000"
+		translate="128.000000 -40.000000 -1216.000000"
 		visibility="on"
 		display_size="6"
 		vertex_size="232" polygon_size="70"
