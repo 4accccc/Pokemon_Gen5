@@ -1,569 +1,61 @@
 //======================================================================
 //                c04r0104.ev
 //  スクリプトファイル：c04r0104用
-//  ギアステーションホーム　バトルサブウェイ　ダブルルトレイン受付
+//  ギアステーションホーム　バトルサブウェイ　ダブルトレイン受付
 //======================================================================
 
   .text
-
-  .include  "scr_seq_def.h"
-  .include  "../../message/dst/script/msg_c04r0104.h"
-  .include  "c04r0104.h"
+  .include "scr_seq_def.h"
+  .include "../../message/dst/script/msg_c04r0104.h"
+  .include "c04r0104.h"
   
+  .include "bsubway_scr_def.h
   .include "../../../prog/src/field/bsubway_scr_def.h"
 
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-//コンテニュー
-_EVENT_DATA    ev_c04r0104_game_continue
-//サロンからパートナーを選ばすに帰ったとき
-_EVENT_DATA    ev_c04r0104_game_cancel
-//レポートされていなかった場合
-_EVENT_DATA    ev_c04r0104_game_continue_error
-//ゲーム終了後
-_EVENT_DATA    ev_c04r0104_game_after
-//受付話し掛け
-_EVENT_DATA    ev_c04r0104_receipt_talk
+_EVENT_DATA ev_c04r0104_game_continue
+_EVENT_DATA ev_c04r0104_game_cancel 
+_EVENT_DATA ev_c04r0104_game_continue_error
+_EVENT_DATA ev_c04r0104_game_after
 _EVENT_DATA_END
 
 //======================================================================
-//  バトルサブウェイ受付　パーツ　ワーク初期化
+//  バトルサブウェイ受付
 //======================================================================
 //--------------------------------------------------------------
-//  ワーク初期化　新規
+//  バトルサブウェイ　受付　再開
 //--------------------------------------------------------------
-ev_bsubway_init_work_newgame:
-  _LDVAL( WK_OTHER_SCENE_C04R0104, 255 )
-  _LDVAL( WK_OTHER_SCENE_C04R0110, 1 )
-  _LDVAL( WK_OTHER_SCENE_C04R0111, 0 )
-  _FLAG_SET( FV_C04R0110_TRAINER )
-  _FLAG_SET( FV_C04R0110_PLAYER )
-  _RET
+EVENT_START ev_c04r0104_game_continue
+{
+  _CHG_COMMON_SCR SCRID_BSW_GAME_CONTINUE
+}
+EVENT_END
 
 //--------------------------------------------------------------
-//  ワーク初期化　コンテニュー
+//  バトルサブウェイ　受付　ゲームキャンセル
 //--------------------------------------------------------------
-ev_bsubway_init_work_continue:
-  _LDVAL( WK_OTHER_SCENE_C04R0104, 255 )
-  _LDVAL( WK_OTHER_SCENE_C04R0110, 2 )
-  _LDVAL( WK_OTHER_SCENE_C04R0111, 0 )
-  _FLAG_SET( FV_C04R0110_TRAINER )
-  _FLAG_SET( FV_C04R0110_PLAYER )
-  _RET
-  
-//--------------------------------------------------------------
-//  ワーク初期化　ゲーム終了
-//--------------------------------------------------------------
-ev_bsubway_init_work_endgame:
-  _BSUBWAY_TOOL( BSWTOOL_POP_NOW_LOCATION,BSWAY_NULL,BSWAY_NULL )
-  _BSUBWAY_TOOL( BSWTOOL_CLEAR_PLAY_DATA,BSWAY_NULL,BSWAY_NULL )
-  _RET
+EVENT_START ev_c04r0104_game_cancel
+{
+  _CHG_COMMON_SCR SCRID_BSW_GAME_CANCEL
+}
+EVENT_END
 
 //--------------------------------------------------------------
-//  ワーク初期化　ゲート出場
+//  バトルサブウェイ　受付　再開エラー
 //--------------------------------------------------------------
-ev_bsubway_init_work_exitgate:
-  _LDVAL( WK_OTHER_SCENE_C04R0104, 0 )
-  _LDVAL( WK_OTHER_SCENE_C04R0110, 0 )
-  _LDVAL( WK_OTHER_SCENE_C04R0111, 0 )
-  _FLAG_SET( FV_C04R0110_TRAINER )
-  _FLAG_SET( FV_C04R0110_PLAYER )
-  _RET
-  
-//--------------------------------------------------------------
-//  ワーク初期化　受け付けに戻ってきた直後
-//--------------------------------------------------------------
-ev_bsubway_init_work_return_gate:
-  _CALL ev_bsubway_init_work_exitgate
-  _BSUBWAY_TOOL( BSWTOOL_POP_NOW_LOCATION, BSWAY_NULL,BSWAY_NULL )
-  _RET
-
-//======================================================================
-//  バトルサブウェイ　パーツ　メニュー
-//======================================================================
-//--------------------------------------------------------------
-//  メニュー　挑戦しますか？
-//--------------------------------------------------------------
-ev_bsubway_menu_select_challenge:
-  _BMPMENU_INIT_EX( 1, 1, 0, 1, SCWK_ANSWER )
-  _BMPMENU_MAKE_LIST( msg_c04r0104_receipt_04, 0 ) //乗車する
-  _BMPMENU_MAKE_LIST( msg_c04r0104_receipt_05, 1 ) //説明を聞く
-  _BMPMENU_MAKE_LIST( msg_c04r0104_receipt_06, 2 ) //やめる
-  _BMPMENU_START()
-  _RET
-
-//======================================================================
-//  バトルサブウェイ　パーツ　レポート  
-//======================================================================
-//--------------------------------------------------------------
-//  強制レポート
-//--------------------------------------------------------------
-ev_bsubway_auto_save:
-//  _ADD_WAITICON
-//  _REPORT_SAVE  SCWK_ANSWER
-//  _DEL_WAITICON
-  _REPORT_CALL( SCWK_ANSWER )
-//  _SE_PLAY(      SEQ_SE_DP_SAVE )
-//  _SE_WAIT()
-  _RET
-
-//======================================================================
-//  バトルサブウェイ　パーツ　ポケモン選択
-//======================================================================
-//--------------------------------------------------------------
-//  ポケモン選択
-//--------------------------------------------------------------
-ev_bsubway_select_poke:
-  _BSUBWAY_TOOL( BSWSUB_SELECT_POKE, BSWAY_NULL, BSWAY_NULL )
-  _BSUBWAY_TOOL( BSWSUB_GET_ENTRY_POKE, BSWAY_NULL, SCWK_ANSWER )
-  _RET
-
-//======================================================================
-//  バトルサブウェイ　パーツ　バトルポイント
-//======================================================================
-//--------------------------------------------------------------
-//  勝った時のバトルポイント取得
-//--------------------------------------------------------------
-/*
-ev_bsubway_battle_point_get:
-  //おめでとうございます
-  _SYSWIN_MSG_DOWN( msg_c04r0104_receipt_21 )
-  _AB_KEYWAIT()
-  
-  //バトルポイントをプラス
-  _BSUBWAY_TOOL( BSWSUB_ADD_BATTLE_POINT,BSWAY_NULL,SCWK_ANSWER )
-  _LDWK( SCWK_TEMP0,SCWK_ANSWER )
-  _PLAYER_NAME( 0 )
-  _NUMBER( 1,SCWK_TEMP0, 3 )
-  
-  //ファンファーレ
-  _ME_PLAY( SEQ_ME_ITEM )
-  _ME_WAIT()
-  _RET
-*/
-
-//======================================================================
-//  バトルサブウェイ　シーケンス　レポートエラー、プレイ終了
-//======================================================================
-//--------------------------------------------------------------
-//  シーケンス　プレイ終了
-//--------------------------------------------------------------
-ev_bsubway_seq_exit_play:
-  _CALL ev_bsubway_init_work_endgame
-  
-//--------------------------------------------------------------
-//  シーケンス　やめるを選択した時
-//--------------------------------------------------------------
-ev_bsubway_seq_exit:
-  //またのご利用を
-  _SYSWIN_MSG_DOWN( msg_c04r0104_receipt_07 )
-  _LAST_KEYWAIT()
-  
-ev_bsubway_seq_exit_mclose:
-  _SYSWIN_CLOSE()
-
-ev_bsubway_seq_exit_direct:
-  _BSUBWAY_WORK_RELEASE()
-  _CALL ev_bsubway_init_work_exitgate
-  _END
-
-//======================================================================
-//  バトルサブウェイ　シーケンス　参加ポケモンエラー終了
-//======================================================================
-//--------------------------------------------------------------
-//  シーケンス　同じポケモンが選ばれた
-//--------------------------------------------------------------
-/*
-ev_bsubway_seq_error_same_poke:
-  _SYSWIN_MSG_DOWN( msg_c04r0104_receipt_28 )
-  _AB_KEYWAIT()
-  _SYSWIN_CLOSE()
-  _JUMP ev_bsubway_seq_exit
-  _END
-*/
+EVENT_START ev_c04r0104_game_continue_error
+{
+  _CHG_COMMON_SCR SCRID_BSW_REPORT_ERROR
+}
+EVENT_END
 
 //--------------------------------------------------------------
-//  シーケンス　同じアイテムがある
+//  バトルサブウェイ　受付　ゲーム終了
 //--------------------------------------------------------------
-/*
-ev_bsubway_seq_error_same_item:
-  _SYSWIN_MSG_DOWN( msg_c04r0104_receipt_29 )
-  _AB_KEYWAIT()
-  _SYSWIN_CLOSE()
-  _JUMP ev_bsubway_seq_exit
-  _END
-*/
-
-//======================================================================
-//  バトルサブウェイ　シーケンス　次のマップへ
-//======================================================================
-//--------------------------------------------------------------
-//  シーケンス　マップチェンジ
-//--------------------------------------------------------------
-ev_bsubway_seq_nextmap:
-  _MAP_FADE_BLACK_OUT()
-  _MAP_FADE_END_CHECK()
-  _OBJ_ANIME_WAIT()
-  _MAP_CHANGE_NO_FADE(ZONE_ID_C04R0110,10,0,4,DIR_UP)
-  _END
-
-//======================================================================
-//  バトルサブウェイ　シーケンス　シングルポケモンチェック
-//======================================================================
-//--------------------------------------------------------------
-//  シーケンス　シングルポケモンチェック
-//--------------------------------------------------------------
-
-//======================================================================
-//  バトルサブウェイ　受付話し掛け
-//======================================================================
-//--------------------------------------------------------------
-//  シーケンス　受付
-//--------------------------------------------------------------
-ev_c04r0104_receipt_talk:
-  _BSUBWAY_WORK_CLEAR()
-  _TALK_OBJ_START()
-  
-  //ようこそ
-  _SYSWIN_MSG_DOWN( msg_c04r0104_receipt_01 ) 
-  _AB_KEYWAIT()
-  
-  //連勝中チェック
-  _BSUBWAY_TOOL( BSWTOOL_GET_RENSHOU_CNT, BSWAY_MODE_DOUBLE, SCWK_ANSWER )
-  _IFVAL_JUMP SCWK_ANSWER,EQ,0,ev_c04r0104_receipt_talk_02
-  
-  //連勝中です
-  _PLAYER_NAME( 0 )
-  _NUMBER( 1, SCWK_ANSWER, 3 )
-  _SYSWIN_MSG_DOWN( msg_c04r0104_receipt_03 )
-  _AB_KEYWAIT()
-
-ev_c04r0104_receipt_talk_02:
-  _SYSWIN_MSG_DOWN( msg_c04r0104_receipt_13 )
-  
-  //メニュー
-  _CALL  ev_bsubway_menu_select_challenge
-  _IFVAL_JUMP SCWK_ANSWER,EQ,0,ev_c04r0104_receipt_talk03 //挑戦する
-  _IFVAL_JUMP SCWK_ANSWER,EQ,1,ev_bsubway_receipt_explain //説明を聞く
-  _JUMP ev_bsubway_seq_exit //やめる
-  _END
-  
-//--------------------------------------------------------------
-//  受付　挑戦する
-//--------------------------------------------------------------
-ev_c04r0104_receipt_talk03:
-  //ワーク確保&初期化
-  _BSUBWAY_WORK_CREATE( BSWAY_PLAY_NEW, BSWAY_MODE_DOUBLE )
-  
-  //手持ちポケモンチェック
-  _BSUBWAY_TOOL( BSWTOOL_CHK_ENTRY_POKE_NUM,BSWAY_NULL,SCWK_ANSWER )
-  _IFVAL_JUMP SCWK_ANSWER,EQ,0,_receipt_talk03_error
-  
-  _BSUBWAY_TOOL( BSWTOOL_CHK_REGULATION, BSWAY_MODE_DOUBLE, SCWK_ANSWER )
-  _IFVAL_JUMP SCWK_ANSWER,EQ,0,ev_bsubway_receipt_select_poke
-  
-_receipt_talk03_error:
-  //手持ちポケモンが足りない
-  _SYSWIN_MSG_DOWN( msg_c04r0104_receipt_08 )
-  _SYSWIN_MSG_DOWN( msg_c04r0104_receipt_08_02 )
-  _AB_KEYWAIT()
-  _JUMP ev_bsubway_seq_exit
-  _END
-  
-//--------------------------------------------------------------
-//  受付　シングル・ダブル説明
-//--------------------------------------------------------------
-ev_bsubway_receipt_explain:
-  _SYSWIN_MSG_DOWN( msg_c04r0104_receipt_02 )
-  _SYSWIN_MSG_DOWN( msg_c04r0104_receipt_02_02 )
-  _SYSWIN_MSG_DOWN( msg_c04r0104_receipt_02_03 )
-  _AB_KEYWAIT()
-  _JUMP ev_c04r0104_receipt_talk_02
-  _END
-  
-//--------------------------------------------------------------
-//  受付　ポケモン選択
-//--------------------------------------------------------------
-ev_bsubway_receipt_select_poke:
-  //それでは参加するポケモンを選んでください
-  _SYSWIN_MSG_DOWN( msg_c04r0104_receipt_09 )
-  _AB_KEYWAIT()
-  _SYSWIN_CLOSE()
-  _CALL ev_bsubway_select_poke
-  
-  //ポケモンを選んで帰ってきたかチェック
-  _IFVAL_JUMP SCWK_ANSWER,EQ,0,ev_bsubway_seq_exit
-  
-//--------------------------------------------------------------
-//  受付　レポート
-//--------------------------------------------------------------
-ev_bsubway_receipt_save:
-  _CALL ev_bsubway_init_work_newgame
-  
-  //現在位置Push
-  _BSUBWAY_TOOL( BSWTOOL_PUSH_NOW_LOCATION,BSWAY_NULL,BSWAY_NULL )
-  
-  //回復
-  _TEMOTI_POKEMON_KAIFUKU()
-  
-  //セーブ
-  _REPORT_EVENT_CALL( SCWK_ANSWER )
-  _IFVAL_JUMP SCWK_ANSWER,EQ,1,ev_bsubway_seq_exit_play
-  
-  //トレーナー抽選
-  _BSUBWAY_TOOL( BSWSUB_BTL_TRAINER_SET,BSWAY_NULL,BSWAY_NULL )
-  
-  //それではシングルトレインへ
-  _SYSWIN_MSG_DOWN( msg_c04r0104_receipt_10 )
-  _LAST_KEYWAIT()
-  _SYSWIN_CLOSE()
-  
-//--------------------------------------------------------------
-//  受付　列車案内
-//--------------------------------------------------------------
-ev_bsubway_receipt_entry:
-  //プレイモードによりアニメ分岐
-//  _BSUBWAY_TOOL( BSWSUB_GET_PLAY_MODE, BSWAY_NULL,SCWK_ANSWER )
-//  _IFVAL_JUMP SCWK_ANSWER,EQ,BSWAY_MODE_RETRY,ev_bsubway_c04r0104_anime02
-//  _JUMP ev_bsubway_c04r0104_anime01
-  //自機、受付奥へ
-  _CALL ev_bsubway_anime_exitgate
-
-//マップ遷移
-ev_bsubway_gate_local_in:
-  _JUMP ev_bsubway_seq_nextmap
-  _END
-  
-//--------------------------------------------------------------
-//  ダブルポケモンチェック
-//--------------------------------------------------------------
-/*
-ev_bsubway_gate_local_pchk_d:
-  //ワーク確保&初期化
-  _BSUBWAY_WORK_CREATE( BSWAY_PLAY_NEW,BSWAY_MODE_DOUBLE )
-  //手持ちポケモンチェック
-  _BSUBWAY_TOOL( BSWTOOL_CHK_ENTRY_POKE_NUM, BSWAY_NULL,SCWK_ANSWER )
-  _IFVAL_JUMP SCWK_ANSWER,EQ,1,ev_bsubway_receipt_select_poke
-  
-  //手持ちポケモンが足りない
-  _SYSWIN_MSG_DOWN( msg_c04r0104_receipt_08 )
-  _AB_KEYWAIT()
-  _JUMP ev_bsubway_seq_exit_mclose
-  _END
-*/
-
-//=====================================================================
-//  挑戦再開時
-//=====================================================================
-//--------------------------------------------------------------
-//  再開時コモン
-//--------------------------------------------------------------
-ev_c04r0104_game_continue:
-  //ステートクリア
-  _LDVAL( WK_OTHER_SCENE_C04R0104, 0 )
-  
-  //セーブデータが有効かチェック
-  _BSUBWAY_TOOL( BSWTOOL_IS_SAVE_DATA_ENABLE,BSWAY_NULL,SCWK_ANSWER )
-  _IFVAL_JUMP SCWK_ANSWER,EQ,0,ev_c04r0104_game_continue_error
-  
-  //有効だった(おまちしておりました！)
-  _SYSWIN_MSG_DOWN( msg_c04r0104_receipt_15 )
-  _YES_NO_WIN( SCWK_ANSWER )
-  _IFVAL_JUMP SCWK_ANSWER,EQ,SCR_YES,ev_c04r0104_game_continue_start
-  
-  //やめます
-  _SYSWIN_CLOSE()
-  _BLACK_OUT()
-  _DISP_FADE_END_CHECK()
-  _LDVAL( WK_OTHER_SCENE_C04R0104, 1 )
-  _BSUBWAY_TOOL( BSWTOOL_SYSTEM_RESET, BSWAY_NULL, BSWAY_NULL )
-  _END
-  
-ev_c04r0104_game_continue_start:
-  //ワーク確保&初期化
-  _BSUBWAY_WORK_CREATE( BSWAY_PLAY_CONTINUE, BSWAY_MODE_NULL )
-  //プレイモード取得
-  _BSUBWAY_TOOL( BSWSUB_GET_PLAY_MODE,BSWAY_NULL,SCWK_ANSWER )
-//_IFVAL_JUMP SCWK_ANSWER,EQ,BSWAY_MODE_MULTI,ev_bsubway_continue_aimulti_01
-  
-  //シングル/ダブル/Wifi シーンワークセット
-  _CALL ev_bsubway_init_work_continue
-
-  //現在位置セーブ
-  _BSUBWAY_TOOL( BSWTOOL_PUSH_NOW_LOCATION,BSWAY_NULL,BSWAY_NULL )
-  
-  //セーブ
-  _SYSWIN_MSG_ALLPUT_DOWN( msg_c04r0104_receipt_16 )
-  _CALL ev_bsubway_auto_save
-  
-  //それでは中断した所まで
-  _SYSWIN_MSG_DOWN( msg_c04r0104_receipt_17 )
-  _LAST_KEYWAIT()
-  _SYSWIN_CLOSE()
-  _JUMP ev_bsubway_receipt_entry
-  _END
-
-//=====================================================================
-//  レポートしていない場合
-//=====================================================================
-//--------------------------------------------------------------
-//  ゲーム再開時、レポート記録なし
-//--------------------------------------------------------------
-ev_c04r0104_game_continue_error:
-  //お客様！
-  _SYSWIN_MSG_DOWN( msg_c04r0104_receipt_14 )
-  _AB_KEYWAIT()
-  //不正終了時のパラメータ処理
-  _BSUBWAY_TOOL( BSWTOOL_SET_NG_SCORE, BSWAY_NULL, SCWK_ANSWER )
-  
-  _JUMP ev_bsubway_seq_exit_play
-  _END
-
-//=====================================================================
-//  受付　対戦終了後の戻り
-//=====================================================================
-//--------------------------------------------------------------
-//  チャレンジキャンセル後の戻り
-//--------------------------------------------------------------
-ev_c04r0104_game_cancel:
-  _CALL ev_bsubway_init_work_return_gate //ステートクリア
-  
-  _SYSWIN_MSG_DOWN( msg_c04r0104_receipt_19 ) //せいせきをレポートに
-  _CALL ev_bsubway_auto_save
-  _JUMP ev_bsubway_seq_exit_play
-  _END
-
-//--------------------------------------------------------------
-//  ゲーム終了後の戻り
-//--------------------------------------------------------------
-ev_c04r0104_game_after:
-  //ステートクリア
-  _LDVAL( WK_OTHER_SCENE_C04R0104, 0 )
-  
-  //おつかれさまでした
-  _SYSWIN_MSG_DOWN( msg_c04r0104_receipt_18 )
-  _AB_KEYWAIT()
-  
-  _JUMP ev_bsubway_seq_exit_play
-  _END
-
-//=====================================================================
-//  アニメーションデータ
-//=====================================================================
-//--------------------------------------------------------------------
-//  自機、受け付け嬢　ゲート奥へ移動
-//--------------------------------------------------------------------
-_ANIME_LABEL anm_c04r0201_pcwoman_exitgate
-  _ANIME_DATA AC_WALK_R_8F,4
-  _ANIME_DATA ACMD_END,0
-
-_ANIME_LABEL anm_c04r0201_jiki_exitgate
-  _ANIME_DATA AC_WALK_R_8F,4
-  _ANIME_DATA ACMD_END,0
- 
-ev_bsubway_anime_exitgate:
-  _OBJ_ANIME( MMDL_ID_PLAYER, anm_c04r0201_jiki_exitgate )
-  _OBJ_ANIME( C04R0104_RECEIPT, anm_c04r0201_pcwoman_exitgate )
-  _RET
-
-/*
-ev_bsubway_c04r0104_anime:
-  _OBJ_ANIME  LOCALWORK2,anm_d31r0201_pcwoman2_01
-  _OBJ_ANIME  FLDOBJ_ID_PLAYER,anm_d31r0201_player_01
-  _OBJ_ANIME_WAIT
-  //エレベータドアopen
-  _SET_UP_DOOR_ANIME  0,0,LOCALWORK3,2,77
-  _SEQ_OPEN_DOOR  77
-  _WAIT_3D_ANIME  77
-  _OBJ_ANIME  LOCALWORK2,anm_d31r0201_pcwoman2_01_01
-  _OBJ_ANIME  FLDOBJ_ID_PLAYER,anm_d31r0201_player_01_01
-  _OBJ_ANIME_WAIT
-  _SEQ_CLOSE_DOOR  77  //ドア閉める
-  _WAIT_3D_ANIME  77  //アニメ終了待ち
-  _FREE_3D_ANIME  77  //ドアアニメ解放
-  _RET
-*/
-
-/*
-ev_bsubway_c04r0104_anime01:
-  _LDVAL    LOCALWORK2,D31R0201_PCWOMAN2_01
-  _LDVAL    LOCALWORK3,11
-
-  _CALL    ev_bsubway_c04r0104_anime
-  _JUMP    ev_bsubway_gate_local_in
-  _END  
-*/
-
-/*
-ev_bsubway_c04r0104_anime02:
-  _LDVAL LOCALWORK2,D31R0201_PCWOMAN2_03
-  _LDVAL LOCALWORK3,15
-  _CALL    ev_bsubway_c04r0104_anime
-  _JUMP    ev_bsubway_gate_local_in
-  _END
-*/
-
-/*
-ev_bsubway_c04r0104_anime03:
-  _LDVAL    LOCALWORK2,D31R0201_PCWOMAN2_02
-  _LDVAL    LOCALWORK3,7
-  _CALL    ev_bsubway_c04r0104_anime
-  _JUMP    ev_bsubway_gate_local_aimulti_in
-  _END
-*/
-
-/*
-ev_bsubway_c04r0104_anime04:
-  _LDVAL    LOCALWORK2,D31R0201_PCWOMAN2_02
-  _LDVAL    LOCALWORK3,7
-  _CALL    ev_bsubway_c04r0104_anime
-  _JUMP    ev_bsubway_gate_local_comm_multi_in
-  _END
-*/
-
-/*
-ev_bsubway_gate_comanm_hero_right:
-  _OBJ_ANIME(  MMDL_ID_PLAYER,anm_d31r0201_player_dir_right )
-  _OBJ_ANIME_WAIT()
-  _RET
-*/
-
-//--------------------------------------------------------------------
-//  受け付け嬢　ゲート奥へ移動
-//--------------------------------------------------------------------
-/*
-_ANIME_LABEL  anm_d31r0201_pcwoman2_01
-  _ANIME_DATA  AC_WAIT_4F,1
-  _ANIME_DATA  AC_WALK_U_8F,2
-  _ANIME_DATA  ACMD_END,0
-
-_ANIME_LABEL  anm_d31r0201_pcwoman2_01_01
-  _ANIME_DATA  AC_WALK_U_8F,1
-  _ANIME_DATA  AC_VANISH_ON,1
-  _ANIME_DATA  ACMD_END,0
-*/
-
-//--------------------------------------------------------------------
-//自機　ゲート奥へ移動
-//--------------------------------------------------------------------
-/*
-_ANIME_LABEL  anm_d31r0201_player_01
-  _ANIME_DATA  AC_WAIT_4F,1
-  _ANIME_DATA  AC_WALK_U_8F,2
-  _ANIME_DATA  ACMD_END,0
-
-_ANIME_LABEL  anm_d31r0201_player_01_01
-  _ANIME_DATA  AC_WALK_U_8F,2
-  _ANIME_DATA  AC_VANISH_ON,1
-  _ANIME_DATA  ACMD_END,0
-*/
-
-//--------------------------------------------------------------------
-//自機 右振り向き　
-//--------------------------------------------------------------------
-/*
-_ANIME_LABEL  anm_d31r0201_player_dir_right
-  _ANIME_DATA  AC_DIR_R,1
-  _ANIME_DATA  ACMD_END,0
-*/
+EVENT_START ev_c04r0104_game_after
+{
+  _CHG_COMMON_SCR SCRID_BSW_REPORT_ERROR
+}
+EVENT_END

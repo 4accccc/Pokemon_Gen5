@@ -87,6 +87,9 @@ rotom_change_scr_def.h: rotom_change_scr.ev
 id_present_scr_def.h: id_present_scr.ev
 	$(EV_DEF) id_present_scr.ev $(SCR_OFFS_ID_H)
 
+bsubway_scr_def.h: bsubway_scr.ev
+	$(EV_DEF) bsubway_scr.ev $(SCR_OFFS_ID_H)
+
 debug_scr_def.h: debug_scr.ev
 	$(EV_DEF) debug_scr.ev $(SCR_OFFS_ID_H)
 

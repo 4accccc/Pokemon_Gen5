@@ -173,10 +173,10 @@
 
 #define WK_AREA_START                    16688 /* 0x4130  */
 
-#define WK_OTHER_SCENE_C04R0102          16688 /* 0x4130 バトルサブウェイ、シングル受付シーン制御 */
-#define WK_OTHER_SCENE_C04R0104          16689 /* 0x4131 バトルサブウェイ、ダブル受付シーン制御 */
-#define WK_OTHER_SCENE_C04R0110          16690 /* 0x4132 バトルサブウェイ、列車内シーン制御 */
-#define WK_OTHER_SCENE_C04R0111          16691 /* 0x4133 バトルサブウェイ、ホームシーン制御 */
+#define WK_OTHER_BSUBWAY_RECEIPT         16688 /* 0x4130 バトルサブウェイ、受付制御 */
+#define WK_OTHER_BSUBWAY_TEST            16689 /* 0x4131 バトルサブウェイ、テスト */
+#define WK_OTHER_BSUBWAY_TRAIN           16690 /* 0x4132 バトルサブウェイ、列車内制御 */
+#define WK_OTHER_BSUBWAY_HOME            16691 /* 0x4133 バトルサブウェイ、ホーム制御 */
 #define WK_OTHER_KASEKI_NUM              16692 /* 0x4134 化石復元イベント用ワーク */
 #define WK_OTHER_PASSENGERBOAT           16693 /* 0x4135 遊覧船イベント用ワーク */
 #define WK_OTHER_STATION_CONNECT         16694 /* 0x4136 C04とギアステーションの接続イベント用ワーク */

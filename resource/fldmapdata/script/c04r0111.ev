@@ -31,11 +31,11 @@ _EVENT_DATA_END
 //  ワーク初期化
 //--------------------------------------------------------------
 ev_bsubway_init_work_return_gate:
-  _LDVAL( WK_OTHER_SCENE_C04R0102,0 )
-  _LDVAL( WK_OTHER_SCENE_C04R0104,0 )
-  _LDVAL( WK_OTHER_SCENE_C04R0110,0 )
-  _LDVAL( WK_OTHER_SCENE_C04R0111,0 )
-  _BSUBWAY_TOOL( BSWTOOL_POP_NOW_LOCATION, BSWAY_NULL,BSWAY_NULL )
+  //_LDVAL( WK_OTHER_SCENE_C04R0102,0 )
+  //_LDVAL( WK_OTHER_SCENE_C04R0104,0 )
+  //_LDVAL( WK_OTHER_SCENE_C04R0110,0 )
+  //_LDVAL( WK_OTHER_SCENE_C04R0111,0 )
+  _BSUBWAY_TOOL( BSWTOOL_POP_NOW_LOCATION, BSW_NULL,BSW_NULL )
   _RET
 
 //======================================================================
@@ -45,19 +45,19 @@ ev_bsubway_init_work_return_gate:
 //  シーケンス　ライモンシティに戻る
 //--------------------------------------------------------------
 ev_bsubway_seq_map_change:
-  _LDVAL( WK_OTHER_SCENE_C04R0110,0 )
-  _LDVAL( WK_OTHER_SCENE_C04R0111,0 )
+  //_LDVAL( WK_OTHER_SCENE_C04R0110,0 )
+  //_LDVAL( WK_OTHER_SCENE_C04R0111,0 )
 
-  _BSUBWAY_TOOL( BSWTOOL_GET_PLAY_MODE, BSWAY_NULL, SCWK_ANSWER )
+  _BSUBWAY_TOOL( BSWTOOL_GET_PLAY_MODE, BSW_NULL, SCWK_ANSWER )
   _IFVAL_JUMP SCWK_ANSWER,EQ,BSWAY_MODE_DOUBLE,map_change_playmode_double
   
 map_change_playmode_single:
-  _LDVAL( WK_OTHER_SCENE_C04R0102,3 ) //c04r0102 after
+  //_LDVAL( WK_OTHER_SCENE_C04R0102,3 ) //c04r0102 after
   _MAP_CHANGE( ZONE_ID_C04R0102,13,13,DIR_RIGHT )
   _END
   
 map_change_playmode_double:
-  _LDVAL( WK_OTHER_SCENE_C04R0104,3 ) //c04r0104 after
+  //_LDVAL( WK_OTHER_SCENE_C04R0104,3 ) //c04r0104 after
   _MAP_CHANGE( ZONE_ID_C04R0104,13,13,DIR_RIGHT )
   _END
  
@@ -68,21 +68,21 @@ map_change_playmode_double:
 //  シーケンス　続けて挑戦
 //--------------------------------------------------------------
 ev_bsubway_seq_challenge:
-  _LDVAL( WK_OTHER_SCENE_C04R0110, 1 )
-  _LDVAL( WK_OTHER_SCENE_C04R0111, 0 )
+  //_LDVAL( WK_OTHER_SCENE_C04R0110, 1 )
+  //_LDVAL( WK_OTHER_SCENE_C04R0111, 0 )
 
   _SYSWIN_MSG_DOWN( msg_c04r0111_07 )
   _AB_KEYWAIT()
  
-  _BSUBWAY_TOOL( BSWTOOL_GET_PLAY_MODE, BSWAY_NULL, SCWK_ANSWER )
+  _BSUBWAY_TOOL( BSWTOOL_GET_PLAY_MODE, BSW_NULL, SCWK_ANSWER )
   _IFVAL_JUMP SCWK_ANSWER,EQ,BSWAY_MODE_DOUBLE,challenge_playmode_double
   
 challenge_playmode_single:
-  _LDVAL( WK_OTHER_SCENE_C04R0102, 255 ) //c04r0102 error
+  //_LDVAL( WK_OTHER_SCENE_C04R0102, 255 ) //c04r0102 error
   _BSUBWAY_WORK_CREATE( BSWAY_PLAY_NEW, BSWAY_MODE_SINGLE )
-  _BSUBWAY_TOOL( BSWSUB_BTL_TRAINER_SET,BSWAY_NULL,BSWAY_NULL )
-  _BSUBWAY_TOOL( BSWSUB_LOAD_POKEMON_MEMBER, BSWAY_NULL, BSWAY_NULL )
-  _BSUBWAY_TOOL( BSWSUB_SET_PLAY_MODE_LOCATION,BSWAY_NULL,BSWAY_NULL )
+  _BSUBWAY_TOOL( BSWSUB_BTL_TRAINER_SET,BSW_NULL,BSW_NULL )
+  _BSUBWAY_TOOL( BSWSUB_LOAD_POKEMON_MEMBER, BSW_NULL, BSW_NULL )
+  _BSUBWAY_TOOL( BSWSUB_SET_PLAY_MODE_LOCATION,BSW_NULL,BSW_NULL )
   _REPORT_EVENT_CALL( SCWK_ANSWER )
   _SYSWIN_CLOSE()
   _MAP_FADE_BLACK_OUT()
@@ -91,11 +91,11 @@ challenge_playmode_single:
   _END
   
 challenge_playmode_double:
-  _LDVAL( WK_OTHER_SCENE_C04R0104, 255 ) //c04r0102 error
+  //_LDVAL( WK_OTHER_SCENE_C04R0104, 255 ) //c04r0102 error
   _BSUBWAY_WORK_CREATE( BSWAY_PLAY_NEW, BSWAY_MODE_DOUBLE )
-  _BSUBWAY_TOOL( BSWSUB_BTL_TRAINER_SET,BSWAY_NULL,BSWAY_NULL )
-  _BSUBWAY_TOOL( BSWSUB_LOAD_POKEMON_MEMBER, BSWAY_NULL, BSWAY_NULL )
-  _BSUBWAY_TOOL( BSWSUB_SET_PLAY_MODE_LOCATION,BSWAY_NULL,BSWAY_NULL )
+  _BSUBWAY_TOOL( BSWSUB_BTL_TRAINER_SET,BSW_NULL,BSW_NULL )
+  _BSUBWAY_TOOL( BSWSUB_LOAD_POKEMON_MEMBER, BSW_NULL, BSW_NULL )
+  _BSUBWAY_TOOL( BSWSUB_SET_PLAY_MODE_LOCATION,BSW_NULL,BSW_NULL )
   _REPORT_EVENT_CALL( SCWK_ANSWER )
   _SYSWIN_CLOSE()
   _MAP_FADE_BLACK_OUT()
@@ -111,7 +111,7 @@ challenge_playmode_double:
 //--------------------------------------------------------------
 ev_c04r0111_receipt_talk:
   _TALK_OBJ_START()
-  _IFVAL_JUMP WK_OTHER_SCENE_C04R0111,EQ,2,ev_receipt_talk_boss_clear
+//  _IFVAL_JUMP WK_OTHER_SCENE_C04R0111,EQ,2,ev_receipt_talk_boss_clear
   
   //どうしますか
   _SYSWIN_MSG_DOWN( msg_c04r0111_02 )
@@ -170,12 +170,12 @@ ev_c04r0111_game_after_finish:
   _CALL ev_anime_player_train_out
   
   //クリアデータを反映
-  _BSUBWAY_TOOL( BSWSUB_SAVE_GAMECLEAR, BSWAY_NULL, BSWAY_NULL )
+  _BSUBWAY_TOOL( BSWSUB_SAVE_GAMECLEAR, BSW_NULL, BSW_NULL )
   
   //ノーマルチェック
   //スーパーチェック
 
-  _BSUBWAY_TOOL( BSWSUB_GET_LEADER_CLEAR_FLAG, BSWAY_NULL, SCWK_ANSWER )
+  _BSUBWAY_TOOL( BSWSUB_GET_LEADER_CLEAR_FLAG, BSW_NULL, SCWK_ANSWER )
   _IFVAL_JUMP SCWK_ANSWER,EQ,1,ev_normal_clear_boss
   
 //--------------------------------------------------------------
@@ -183,7 +183,7 @@ ev_c04r0111_game_after_finish:
 //--------------------------------------------------------------
 ev_normal_clear_7:
   //バトルポイントをプラス
-  _BSUBWAY_TOOL( BSWSUB_ADD_BATTLE_POINT,BSWAY_NULL,SCWK_ANSWER )
+  _BSUBWAY_TOOL( BSWSUB_ADD_BATTLE_POINT,BSW_NULL,SCWK_ANSWER )
   _LDWK( SCWK_TEMP0,SCWK_ANSWER )
   
   //メッセージタグセット
@@ -216,10 +216,10 @@ ev_normal_clear_7:
 //  ノーマル　ボス倒してクリア
 //--------------------------------------------------------------
 ev_normal_clear_boss:
-  _BSUBWAY_TOOL( BSWSUB_SET_LEADER_CLEAR_FLAG, 0, BSWAY_NULL )
+  _BSUBWAY_TOOL( BSWSUB_SET_LEADER_CLEAR_FLAG, 0, BSW_NULL )
 
   //バトルポイントをプラス
-  _BSUBWAY_TOOL( BSWSUB_ADD_BATTLE_POINT,BSWAY_NULL,SCWK_ANSWER )
+  _BSUBWAY_TOOL( BSWSUB_ADD_BATTLE_POINT,BSW_NULL,SCWK_ANSWER )
   _LDWK( SCWK_TEMP0,SCWK_ANSWER )
   
   //メッセージタグセット
@@ -249,7 +249,7 @@ ev_normal_clear_boss_first:
   
 ev_normal_clear_boss_save:
   //ライモン戻るのみの会話に
-  _LDVAL( WK_OTHER_SCENE_C04R0111, 2 )
+  //_LDVAL( WK_OTHER_SCENE_C04R0111, 2 )
   
   //レポート
   _SYSWIN_MSG_ALLPUT_DOWN( msg_c04r0111_12 )
@@ -267,7 +267,7 @@ ev_normal_clear_boss_save:
 //--------------------------------------------------------------
 ev_super_clear_boss:
   //バトルポイントをプラス
-  _BSUBWAY_TOOL( BSWSUB_ADD_BATTLE_POINT,BSWAY_NULL,SCWK_ANSWER )
+  _BSUBWAY_TOOL( BSWSUB_ADD_BATTLE_POINT,BSW_NULL,SCWK_ANSWER )
   _LDWK( SCWK_TEMP0,SCWK_ANSWER )
   
   //メッセージタグセット
