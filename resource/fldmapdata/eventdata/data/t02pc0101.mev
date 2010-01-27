@@ -1,5 +1,5 @@
 #event data
-#save date:2010/01/16 14:39:14
+#save date:2010/01/27 11:29:42
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\t02pc0101.wms
 #SECTION START:OBJ_EVENT
@@ -335,7 +335,7 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-2
+1
 #event number: 0
 #Door Event Label
 DOOR_ID_T02PC0101_T02_EXIT01
@@ -353,22 +353,5 @@ EVENTDATA_POSTYPE_GRID
 -152 0 -56
 #size
 3 1
-#event number: 1
-#Door Event Label
-DOOR_ID_T02PC0101_UNION_EXIT01
-#Next Zone ID Name
-ZONE_ID_UNION
-#Next Door ID Name
-DOOR_ID_UNION_T02PC0101_EXIT01
-#Door Direction
-EXIT_DIR_DOWN
-#Door Type
-EXIT_TYPE_NONE
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--200 48 200
-#size
-1 1
 #Map Event List Data End
 #SECTION End:DOOR_EVENT

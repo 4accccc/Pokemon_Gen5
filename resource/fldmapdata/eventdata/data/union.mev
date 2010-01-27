@@ -1,20 +1,51 @@
 #event data
-#save date:2009/07/23 19:14:29
+#save date:2010/01/27 11:29:03
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\union.wms
 #SECTION START:OBJ_EVENT
 #Map Event List data
-#save date:2009/07/23 19:14:29
+#save date:
 2
 #hold event type:
 1
 #hold event number:
+1
+#event number: 0
+#type
+1
+#ID name
+UNION_GUIDE_01
+#OBJ CODE Number
+PCWOMAN3
+#MOVE CODE Number
+MV_DOWN
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
 0
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-184 0 216
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
 #Map Event List data
-#save date:2009/07/23 19:14:29
+#save date:
 2
 #hold event type:
 1
@@ -24,60 +55,38 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\union.wms
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
 #Map Event List data
-#save date:2009/07/23 19:14:29
+#save date:
+2
+#hold event type:
+1
+#hold event number:
+1
+#event number: 0
+#Pos Event Label
+POS_UNION_EXIT_01
+#Pos Script Name
+SCRID_DUMMY
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+LOCALWORK0
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-72 0 8
+#size
+1 1
+#Map Event List Data End
+#SECTION End:POS_EVENT
+#SECTION START:DOOR_EVENT
+#Map Event List data
+#save date:
 2
 #hold event type:
 1
 #hold event number:
 0
-#Map Event List Data End
-#SECTION End:POS_EVENT
-#SECTION START:DOOR_EVENT
-#Map Event List data
-#save date:2009/07/23 19:14:29
-2
-#hold event type:
-1
-#hold event number:
-3
-#event number: 0
-#Door Event Label
-DOOR_ID_UNION_T02PC0101_EXIT01
-#Next Zone ID Name
-ZONE_ID_T02PC0101
-#Next Door ID Name
-DOOR_ID_T02PC0101_UNION_EXIT01
-#Door Direction
-EXIT_DIR_UP
-#Door Type
-EXIT_TYPE_NONE
-#position
--88 0 8
-#event number: 1
-#Door Event Label
-DOOR_ID_UNION_T02PC0101_EXIT02
-#Next Zone ID Name
-ZONE_ID_T02PC0101
-#Next Door ID Name
-DOOR_ID_T02PC0101_UNION_EXIT01
-#Door Direction
-EXIT_DIR_UP
-#Door Type
-EXIT_TYPE_NONE
-#position
--104 0 8
-#event number: 2
-#Door Event Label
-DOOR_ID_UNION_T02PC0101_EXIT03
-#Next Zone ID Name
-ZONE_ID_T02PC0101
-#Next Door ID Name
-DOOR_ID_T02PC0101_UNION_EXIT01
-#Door Direction
-EXIT_DIR_UP
-#Door Type
-EXIT_TYPE_NONE
-#position
--72 0 8
 #Map Event List Data End
 #SECTION End:DOOR_EVENT
