@@ -357,330 +357,412 @@
 
 	<row id="MSG_TRTYPE_HERO">
 		<language name="JPN" width="216">ポケモントレーナー</language>
+		<language name="JPN_KANJI" width="216">ポケモントレーナー</language>
 	</row>
 
 	<row id="MSG_TRTYPE_HEROINE">
 		<language name="JPN" width="216">ポケモントレーナー</language>
+		<language name="JPN_KANJI" width="216">ポケモントレーナー</language>
 	</row>
 
 	<row id="MSG_TRTYPE_TANPAN">
 		<language name="JPN" width="216">たんぱんこぞう</language>
+		<language name="JPN_KANJI" width="216">たんぱんこぞう</language>
 	</row>
 
 	<row id="MSG_TRTYPE_MINI">
 		<language name="JPN" width="216">ミニスカート</language>
+		<language name="JPN_KANJI" width="216">ミニスカート</language>
 	</row>
 
 	<row id="MSG_TRTYPE_SCHOOLB">
 		<language name="JPN" width="216">じゅくがえり</language>
+		<language name="JPN_KANJI" width="216">じゅくがえり</language>
 	</row>
 
 	<row id="MSG_TRTYPE_SCHOOLG">
 		<language name="JPN" width="216">じゅくがえり</language>
+		<language name="JPN_KANJI" width="216">じゅくがえり</language>
 	</row>
 
 	<row id="MSG_TRTYPE_TENNIS">
 		<language name="JPN" width="216">テニスプレイヤー</language>
+		<language name="JPN_KANJI" width="216">テニスプレイヤー</language>
 	</row>
 
 	<row id="MSG_TRTYPE_FOOTBALL">
 		<language name="JPN" width="216">フットボーラー</language>
+		<language name="JPN_KANJI" width="216">フットボーラー</language>
 	</row>
 
 	<row id="MSG_TRTYPE_WAITER">
 		<language name="JPN" width="216">ウエーター</language>
+		<language name="JPN_KANJI" width="216">ウエーター</language>
 	</row>
 
 	<row id="MSG_TRTYPE_WAITRESS">
 		<language name="JPN" width="216">ウエートレス</language>
+		<language name="JPN_KANJI" width="216">ウエートレス</language>
 	</row>
 
 	<row id="MSG_TRTYPE_LEADER1A">
 		<language name="JPN" width="216">ジムリーダー</language>
+		<language name="JPN_KANJI" width="216">ジムリーダー</language>
 	</row>
 
 	<row id="MSG_TRTYPE_LEADER1C">
 		<language name="JPN" width="216">ジムリーダー</language>
+		<language name="JPN_KANJI" width="216">ジムリーダー</language>
 	</row>
 
 	<row id="MSG_TRTYPE_LEADER1B">
 		<language name="JPN" width="216">ジムリーダー</language>
+		<language name="JPN_KANJI" width="216">ジムリーダー</language>
 	</row>
 
 	<row id="MSG_TRTYPE_CHILDCARE">
 		<language name="JPN" width="216">ほいくし</language>
+		<language name="JPN_KANJI" width="216">ほいくし</language>
 	</row>
 
 	<row id="MSG_TRTYPE_KINDERGARTENW">
 		<language name="JPN" width="216">ようちえん</language>
+		<language name="JPN_KANJI" width="216">ようちえん</language>
 	</row>
 
 	<row id="MSG_TRTYPE_KINDERGARTENM">
 		<language name="JPN" width="216">ようちえん</language>
+		<language name="JPN_KANJI" width="216">ようちえん</language>
 	</row>
 
 	<row id="MSG_TRTYPE_FUTAGO">
 		<language name="JPN" width="216">ふたごちゃん</language>
+		<language name="JPN_KANJI" width="216">ふたごちゃん</language>
 	</row>
 
 	<row id="MSG_TRTYPE_BREEDERM">
 		<language name="JPN" width="216">ポケモンブリーダー</language>
+		<language name="JPN_KANJI" width="216">ポケモンブリーダー</language>
 	</row>
 
 	<row id="MSG_TRTYPE_BREEDERW">
 		<language name="JPN" width="216">ポケモンブリーダー</language>
+		<language name="JPN_KANJI" width="216">ポケモンブリーダー</language>
 	</row>
 
 	<row id="MSG_TRTYPE_LEADER2">
 		<language name="JPN" width="216">ジムリーダー</language>
+		<language name="JPN_KANJI" width="216">ジムリーダー</language>
 	</row>
 
 	<row id="MSG_TRTYPE_LEADER3">
 		<language name="JPN" width="216">ジムリーダー</language>
+		<language name="JPN_KANJI" width="216">ジムリーダー</language>
 	</row>
 
 	<row id="MSG_TRTYPE_LEADER4">
 		<language name="JPN" width="216">ジムリーダー</language>
+		<language name="JPN_KANJI" width="216">ジムリーダー</language>
 	</row>
 
 	<row id="MSG_TRTYPE_LEADER5">
 		<language name="JPN" width="216">ジムリーダー</language>
+		<language name="JPN_KANJI" width="216">ジムリーダー</language>
 	</row>
 
 	<row id="MSG_TRTYPE_LEADER6">
 		<language name="JPN" width="216">ジムリーダー</language>
+		<language name="JPN_KANJI" width="216">ジムリーダー</language>
 	</row>
 
 	<row id="MSG_TRTYPE_RANGERM">
 		<language name="JPN" width="216">ポケモンレンジャー</language>
+		<language name="JPN_KANJI" width="216">ポケモンレンジャー</language>
 	</row>
 
 	<row id="MSG_TRTYPE_RANGERW">
 		<language name="JPN" width="216">ポケモンレンジャー</language>
+		<language name="JPN_KANJI" width="216">ポケモンレンジャー</language>
 	</row>
 
 	<row id="MSG_TRTYPE_WORKER2">
 		<language name="JPN" width="216">さぎょういん</language>
+		<language name="JPN_KANJI" width="216">さぎょういん</language>
 	</row>
 
 	<row id="MSG_TRTYPE_BACKPACKERM">
 		<language name="JPN" width="216">バックパッカー</language>
+		<language name="JPN_KANJI" width="216">バックパッカー</language>
 	</row>
 
 	<row id="MSG_TRTYPE_BACKPACKERW">
 		<language name="JPN" width="216">バックパッカー</language>
+		<language name="JPN_KANJI" width="216">バックパッカー</language>
 	</row>
 
 	<row id="MSG_TRTYPE_FISHING">
 		<language name="JPN" width="216">つりびと</language>
+		<language name="JPN_KANJI" width="216">つりびと</language>
 	</row>
 
 	<row id="MSG_TRTYPE_MUSICIAN">
 		<language name="JPN" width="216">ミュージシャン</language>
+		<language name="JPN_KANJI" width="216">ミュージシャン</language>
 	</row>
 
 	<row id="MSG_TRTYPE_DANCER">
 		<language name="JPN" width="216">ダンサー</language>
+		<language name="JPN_KANJI" width="216">ダンサー</language>
 	</row>
 
 	<row id="MSG_TRTYPE_JUGGLING">
 		<language name="JPN" width="216">クラウン</language>
+		<language name="JPN_KANJI" width="216">クラウン</language>
 	</row>
 
 	<row id="MSG_TRTYPE_ARTIST">
 		<language name="JPN" width="216">げいじゅつか</language>
+		<language name="JPN_KANJI" width="216">げいじゅつか</language>
 	</row>
 
 	<row id="MSG_TRTYPE_BAKER">
 		<language name="JPN" width="216">ベーカリー</language>
+		<language name="JPN_KANJI" width="216">ベーカリー</language>
 	</row>
 
 	<row id="MSG_TRTYPE_ESPM">
 		<language name="JPN" width="216">サイキッカー</language>
+		<language name="JPN_KANJI" width="216">サイキッカー</language>
 	</row>
 
 	<row id="MSG_TRTYPE_ESPW">
 		<language name="JPN" width="216">サイキッカー</language>
+		<language name="JPN_KANJI" width="216">サイキッカー</language>
 	</row>
 
 	<row id="MSG_TRTYPE_RIVAL">
 		<language name="JPN" width="216">ポケモントレーナー</language>
+		<language name="JPN_KANJI" width="216">ポケモントレーナー</language>
 	</row>
 
 	<row id="MSG_TRTYPE_SUPPORT">
 		<language name="JPN" width="216">ポケモントレーナー</language>
+		<language name="JPN_KANJI" width="216">ポケモントレーナー</language>
 	</row>
 
 	<row id="MSG_TRTYPE_HAKAIM1">
 		<language name="JPN" width="216">プラズマだん</language>
+		<language name="JPN_KANJI" width="216">プラズマだん</language>
 	</row>
 
 	<row id="MSG_TRTYPE_BOSS">
 		<language name="JPN" width="216">ポケモントレーナー</language>
+		<language name="JPN_KANJI" width="216">ポケモントレーナー</language>
 	</row>
 
 	<row id="MSG_TRTYPE_PRINCE">
 		<language name="JPN" width="216">おぼっちゃま</language>
+		<language name="JPN_KANJI" width="216">おぼっちゃま</language>
 	</row>
 
 	<row id="MSG_TRTYPE_PRINCESS">
 		<language name="JPN" width="216">おじょうさま</language>
+		<language name="JPN_KANJI" width="216">おじょうさま</language>
 	</row>
 
 	<row id="MSG_TRTYPE_PILOT">
 		<language name="JPN" width="216">パイロット</language>
+		<language name="JPN_KANJI" width="216">パイロット</language>
 	</row>
 
 	<row id="MSG_TRTYPE_WORKER1">
 		<language name="JPN" width="216">さぎょういん</language>
+		<language name="JPN_KANJI" width="216">さぎょういん</language>
 	</row>
 
 	<row id="MSG_TRTYPE_BASKET">
 		<language name="JPN" width="216">バスケせんしゅ</language>
+		<language name="JPN_KANJI" width="216">バスケせんしゅ</language>
 	</row>
 
 	<row id="MSG_TRTYPE_SCIENTISTW">
 		<language name="JPN" width="216">けんきゅういん</language>
+		<language name="JPN_KANJI" width="216">けんきゅういん</language>
 	</row>
 
 	<row id="MSG_TRTYPE_OL">
 		<language name="JPN" width="216">ＯＬ</language>
+		<language name="JPN_KANJI" width="216">ＯＬ</language>
 	</row>
 
 	<row id="MSG_TRTYPE_ELITEW">
 		<language name="JPN" width="216">エリートトレーナー</language>
+		<language name="JPN_KANJI" width="216">エリートトレーナー</language>
 	</row>
 
 	<row id="MSG_TRTYPE_ELITEM">
 		<language name="JPN" width="216">エリートトレーナー</language>
+		<language name="JPN_KANJI" width="216">エリートトレーナー</language>
 	</row>
 
 	<row id="MSG_TRTYPE_KARATE">
 		<language name="JPN" width="216">カラテおう</language>
+		<language name="JPN_KANJI" width="216">カラテおう</language>
 	</row>
 
 	<row id="MSG_TRTYPE_SCIENTISTM">
 		<language name="JPN" width="216">けんきゅういん</language>
+		<language name="JPN_KANJI" width="216">けんきゅういん</language>
 	</row>
 
 	<row id="MSG_TRTYPE_SOCCER">
 		<language name="JPN" width="216">サッカーせんしゅ</language>
+		<language name="JPN_KANJI" width="216">サッカーせんしゅ</language>
 	</row>
 
 	<row id="MSG_TRTYPE_LEADER7">
 		<language name="JPN" width="216">ジムリーダー</language>
+		<language name="JPN_KANJI" width="216">ジムリーダー</language>
 	</row>
 
 	<row id="MSG_TRTYPE_LEADER8A">
 		<language name="JPN" width="216">ジムリーダー</language>
+		<language name="JPN_KANJI" width="216">ジムリーダー</language>
 	</row>
 
 	<row id="MSG_TRTYPE_LEADER8B">
 		<language name="JPN" width="216">ジムリーダー</language>
+		<language name="JPN_KANJI" width="216">ジムリーダー</language>
 	</row>
 
 	<row id="MSG_TRTYPE_HEADS">
 		<language name="JPN" width="216">スキンヘッズ</language>
+		<language name="JPN_KANJI" width="216">スキンヘッズ</language>
 	</row>
 
 	<row id="MSG_TRTYPE_CLEANING">
 		<language name="JPN" width="216">せいそういん</language>
+		<language name="JPN_KANJI" width="216">せいそういん</language>
 	</row>
 
 	<row id="MSG_TRTYPE_DAISUKIM">
 		<language name="JPN" width="216">だいすきクラブ</language>
+		<language name="JPN_KANJI" width="216">だいすきクラブ</language>
 	</row>
 
 	<row id="MSG_TRTYPE_DAISUKIW">
 		<language name="JPN" width="216">だいすきクラブ</language>
+		<language name="JPN_KANJI" width="216">だいすきクラブ</language>
 	</row>
 
 	<row id="MSG_TRTYPE_DOCTOR">
 		<language name="JPN" width="216">ドクター</language>
+		<language name="JPN_KANJI" width="216">ドクター</language>
 	</row>
 
 	<row id="MSG_TRTYPE_NURSE">
 		<language name="JPN" width="216">ナース</language>
+		<language name="JPN_KANJI" width="216">ナース</language>
 	</row>
 
 	<row id="MSG_TRTYPE_BADTEAM">
 		<language name="JPN" width="216">バッドチーム</language>
+		<language name="JPN_KANJI" width="216">バッドチーム</language>
 	</row>
 
 	<row id="MSG_TRTYPE_BATTLEG">
 		<language name="JPN" width="216">バトルガール</language>
+		<language name="JPN_KANJI" width="216">バトルガール</language>
 	</row>
 
 	<row id="MSG_TRTYPE_PARASOL">
 		<language name="JPN" width="216">パラソルおねえさん</language>
+		<language name="JPN_KANJI" width="216">パラソルおねえさん</language>
 	</row>
 
 	<row id="MSG_TRTYPE_BUSINESS1">
 		<language name="JPN" width="216">ビジネスマン</language>
+		<language name="JPN_KANJI" width="216">ビジネスマン</language>
 	</row>
 
 	<row id="MSG_TRTYPE_BUSINESS2">
 		<language name="JPN" width="216">ビジネスマン</language>
+		<language name="JPN_KANJI" width="216">ビジネスマン</language>
 	</row>
 
 	<row id="MSG_TRTYPE_FANM">
 		<language name="JPN" width="216">ファンクラブ</language>
+		<language name="JPN_KANJI" width="216">ファンクラブ</language>
 	</row>
 
 	<row id="MSG_TRTYPE_FANW">
 		<language name="JPN" width="216">ファンクラブ</language>
+		<language name="JPN_KANJI" width="216">ファンクラブ</language>
 	</row>
 
 	<row id="MSG_TRTYPE_VETERANM">
 		<language name="JPN" width="216">ベテラントレーナー</language>
+		<language name="JPN_KANJI" width="216">ベテラントレーナー</language>
 	</row>
 
 	<row id="MSG_TRTYPE_VETERANW">
 		<language name="JPN" width="216">ベテラントレーナー</language>
+		<language name="JPN_KANJI" width="216">ベテラントレーナー</language>
 	</row>
 
 	<row id="MSG_TRTYPE_BADRIDER">
 		<language name="JPN" width="216">ぼうそうぞく</language>
+		<language name="JPN_KANJI" width="216">ぼうそうぞく</language>
 	</row>
 
 	<row id="MSG_TRTYPE_BASEBALL">
 		<language name="JPN" width="216">やきゅうせんしゅ</language>
+		<language name="JPN_KANJI" width="216">やきゅうせんしゅ</language>
 	</row>
 
 	<row id="MSG_TRTYPE_MOUNT">
 		<language name="JPN" width="216">やまおとこ</language>
+		<language name="JPN_KANJI" width="216">やまおとこ</language>
 	</row>
 
 	<row id="MSG_TRTYPE_MADAM">
 		<language name="JPN" width="216">マダム</language>
+		<language name="JPN_KANJI" width="216">マダム</language>
 	</row>
 
 	<row id="MSG_TRTYPE_GENTLE">
 		<language name="JPN" width="216">ジェントルマン</language>
+		<language name="JPN_KANJI" width="216">ジェントルマン</language>
 	</row>
 
 	<row id="MSG_TRTYPE_HAKAIW1">
 		<language name="JPN" width="216">プラズマだん</language>
+		<language name="JPN_KANJI" width="216">プラズマだん</language>
 	</row>
 
 	<row id="MSG_TRTYPE_BIGFOUR1">
 		<language name="JPN" width="216">してんのう</language>
+		<language name="JPN_KANJI" width="216">してんのう</language>
 	</row>
 
 	<row id="MSG_TRTYPE_BIGFOUR3">
 		<language name="JPN" width="216">してんのう</language>
+		<language name="JPN_KANJI" width="216">してんのう</language>
 	</row>
 
 	<row id="MSG_TRTYPE_BIGFOUR2">
 		<language name="JPN" width="216">してんのう</language>
+		<language name="JPN_KANJI" width="216">してんのう</language>
 	</row>
 
 	<row id="MSG_TRTYPE_BIGFOUR4">
 		<language name="JPN" width="216">してんのう</language>
+		<language name="JPN_KANJI" width="216">してんのう</language>
 	</row>
 
 	<row id="MSG_TRTYPE_SAGE1">
 		<language name="JPN" width="216">プラズマだん</language>
+		<language name="JPN_KANJI" width="216">プラズマだん</language>
 	</row>
 
 	<flowchart-group-list>
