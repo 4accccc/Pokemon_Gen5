@@ -23,7 +23,7 @@
 #define MB_CAP_OBJ_ANM_SPD (4)
 #define MB_CAP_OBJ_ANM_FRAME (4)
 
-#define MB_CAP_OBJ_STAR_SPD (FX32_CONST(0.5))
+#define MB_CAP_OBJ_STAR_SPD (FX32_CONST(0.33))
 #define MB_CAP_OBJ_STAR_ROT (0x400)
 #define MB_CAP_OBJ_STAR_HEIGHT (16)
 //======================================================================
@@ -51,6 +51,7 @@ struct _MB_CAP_OBJ
   s8  moveDir;
   u16 rad[3];
   fx32 height;
+  fx32 baseY;
 };
 
 //======================================================================
@@ -105,6 +106,7 @@ MB_CAP_OBJ* MB_CAP_OBJ_CreateObject( MB_CAPTURE_WORK *capWork , MB_CAP_OBJ_INIT_
     objWork->rad[0] = GFUser_GetPublicRand0(0x10000);
     objWork->rad[1] = GFUser_GetPublicRand0(0x10000);
     objWork->rad[2] = GFUser_GetPublicRand0(0x10000);
+    objWork->baseY = FX32_CONST( GFUser_GetPublicRand0(40)-20 );
   }
   
   return objWork;
@@ -166,13 +168,13 @@ void MB_CAP_OBJ_UpdateObject_Star( MB_CAPTURE_WORK *capWork , MB_CAP_OBJ *objWor
   pos.y -= FX_SinIdx( objWork->rad ) * MB_CAP_OBJ_STAR_HEIGHT;
   */
 
-  static const u16 addRad[3] = {5*0x10000/360,3*0x10000/360,1*0x10000/360};
-  static const u16 lenRate[3] = {16,24,32};
+  static const u16 addRad[3] = {2*0x10000/360,1*0x10000/360,1*0x10000/360};
+  static const u16 lenRate[3] = {12,24,0};
   objWork->height = FX32_CONST(8.0f);
   objWork->pos.x += MB_CAP_OBJ_STAR_SPD*objWork->moveDir;
   pos = objWork->pos;
   
-  for( i=0;i<3;i++ )
+  for( i=0;i<2;i++ )
   {
     if( objWork->rad[i] + addRad[i] < 0x10000 )
     {
@@ -184,7 +186,7 @@ void MB_CAP_OBJ_UpdateObject_Star( MB_CAPTURE_WORK *capWork , MB_CAP_OBJ *objWor
     }
     posY += FX_SinIdx(objWork->rad[i])*lenRate[i];
   }
-  objWork->pos.y = FX32_CONST(96)+(posY);
+  objWork->pos.y = FX32_CONST(96)+(posY)+objWork->baseY;
   pos.y = objWork->pos.y+objWork->height;
   
   
