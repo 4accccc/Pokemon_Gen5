@@ -54,22 +54,25 @@ static BOOL TESTMODE_ITEM_SelectIntro( TESTMODE_WORK *work , const int idx )
 #endif
   
 #include "demo/comm_btl_demo.h"
-static COMM_BTL_DEMO_PARAM g_CommBTlDemoParam = {0};
 
 static BOOL TESTMODE_ITEM_SelectCmmBtlDemoStart( TESTMODE_WORK* work, const int idx )
 { 
-  g_CommBTlDemoParam.type = COMM_BTL_DEMO_TYPE_NORMAL_START;
+  COMM_BTL_DEMO_PARAM* initParam = GFL_HEAP_AllocClearMemory( GFL_HEAPID_APP, sizeof(COMM_BTL_DEMO_PARAM) );
 
-	TESTMODE_COMMAND_ChangeProc(work,FS_OVERLAY_ID(comm_btl_demo), &CommBtlDemoProcData, &g_CommBTlDemoParam);
+  initParam->type = COMM_BTL_DEMO_TYPE_NORMAL_START;
+
+	TESTMODE_COMMAND_ChangeProc(work,FS_OVERLAY_ID(comm_btl_demo), &CommBtlDemoProcData, initParam);
 
   return TRUE;
 }
 
 static BOOL TESTMODE_ITEM_SelectCmmBtlDemoStartMulti( TESTMODE_WORK* work, const int idx )
 {
-  g_CommBTlDemoParam.type = COMM_BTL_DEMO_TYPE_MULTI_START;
+  COMM_BTL_DEMO_PARAM* initParam = GFL_HEAP_AllocClearMemory( GFL_HEAPID_APP, sizeof(COMM_BTL_DEMO_PARAM) );
 
-	TESTMODE_COMMAND_ChangeProc(work,FS_OVERLAY_ID(comm_btl_demo), &CommBtlDemoProcData, &g_CommBTlDemoParam);
+  initParam->type = COMM_BTL_DEMO_TYPE_MULTI_START;
+
+	TESTMODE_COMMAND_ChangeProc(work,FS_OVERLAY_ID(comm_btl_demo), &CommBtlDemoProcData, initParam);
 
   return TRUE;
 }

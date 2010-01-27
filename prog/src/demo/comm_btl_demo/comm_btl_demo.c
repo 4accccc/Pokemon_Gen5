@@ -228,6 +228,7 @@ typedef struct
   // シーンコントローラ
   UI_SCENE_CNT_PTR  cntScene;
 
+  u8 type;
   int timer;  ///< デモ起動時間カウンタ
 
 } COMM_BTL_DEMO_MAIN_WORK;
@@ -255,8 +256,8 @@ static BOOL SceneEndDemo_End( UI_SCENE_CNT_PTR cnt, void* work );
 //==============================================================
 typedef enum
 { 
-  CBD_SCENE_ID_START = 0,  ///< バトル開始デモ
-  CBD_SCENE_ID_END,        ///< バトル終了デモ
+  CBD_SCENE_ID_NORMAL_START = 0,  ///< バトル開始デモ
+  CBD_SCENE_ID_NORMAL_END,        ///< バトル終了デモ
 
   CBD_SCENE_ID_MAX,
 } CBD_SCENE_ID;
@@ -266,7 +267,7 @@ typedef enum
 //==============================================================
 static const UI_SCENE_FUNC_SET c_scene_func_tbl[ CBD_SCENE_ID_MAX ] = 
 {
-  // CBD_SCENE_ID_START
+  // CBD_SCENE_ID_NORMAL_START
   {
     SceneStartDemo_Init,
     NULL,
@@ -274,7 +275,7 @@ static const UI_SCENE_FUNC_SET c_scene_func_tbl[ CBD_SCENE_ID_MAX ] =
     NULL,
     SceneStartDemo_End,
   },
-  // CBD_SCENE_ID_END
+  // CBD_SCENE_ID_NORMAL_END
   {
     SceneEndDemo_Init,
     NULL,
@@ -348,13 +349,13 @@ const GFL_PROC_DATA CommBtlDemoProcData =
 };
 
 //@TODO hosakaのみ
-#ifdef DEBUG_ONLY_FOR_genya_hosaka
+#ifdef PM_DEBUG
 // ワーク生成
 static void debug_param( COMM_BTL_DEMO_PARAM* prm )
 { 
   int i;
 
-  prm->type = COMM_BTL_DEMO_TYPE_NORMAL_START;
+  HOSAKA_Printf("in param type = %d \n", prm->type);
   
   prm->result = GFUser_GetPublicRand( COMM_BTL_DEMO_RESULT_MAX );
 
@@ -448,13 +449,14 @@ static GFL_PROC_RESULT CommBtlDemoProc_Init( GFL_PROC *proc, int *seq, void *pwk
   wk = GFL_PROC_AllocWork( proc, sizeof(COMM_BTL_DEMO_MAIN_WORK), HEAPID_COMM_BTL_DEMO );
   GFL_STD_MemClear( wk, sizeof(COMM_BTL_DEMO_MAIN_WORK) );
 	
-#ifdef DEBUG_ONLY_FOR_genya_hosaka
+#ifdef PM_DEBUG
   debug_param( pwk );
 #endif
 
   // 初期化
   wk->heapID = HEAPID_COMM_BTL_DEMO;
   wk->pwk = pwk;
+  wk->type = wk->pwk->type;
 	
 	//描画設定初期化
 	wk->graphic	= COMM_BTL_DEMO_GRAPHIC_Init( GX_DISP_SELECT_SUB_MAIN, wk->heapID );
@@ -717,7 +719,15 @@ static BOOL SceneStartDemo_Main( UI_SCENE_CNT_PTR cnt, void* work )
   {
   case 0:
     G3D_PTC_Setup( &wk->wk_g3d, NARC_comm_btl_demo_vs_demo01_spa );
-    G3D_AnimeSet( &wk->wk_g3d, DEMO_ID_01_A );
+
+    if( type_is_normal(wk->type) )
+    {
+      G3D_AnimeSet( &wk->wk_g3d, DEMO_ID_01_A );
+    }
+    else
+    {
+      G3D_AnimeSet( &wk->wk_g3d, DEMO_ID_02_A );
+    }
     
     // ボールアニメ開始
     TRAINER_UNIT_CNT_BallSetStart( wk );
@@ -800,7 +810,7 @@ static BOOL SceneStartDemo_End( UI_SCENE_CNT_PTR cnt, void* work )
 #ifdef DEBUG_ONLY_FOR_genya_hosaka
   if( (GFL_UI_KEY_GetCont() & PAD_BUTTON_START) == FALSE )
   {
-    UI_SCENE_CNT_SetNextScene( cnt, CBD_SCENE_ID_START );
+    UI_SCENE_CNT_SetNextScene( cnt, CBD_SCENE_ID_NORMAL_START );
   }
 #endif
 
@@ -874,16 +884,16 @@ static CBD_SCENE_ID calc_first_scene( COMM_BTL_DEMO_PARAM* pwk )
   {
   case COMM_BTL_DEMO_TYPE_NORMAL_START:
   case COMM_BTL_DEMO_TYPE_MULTI_START:
-    return CBD_SCENE_ID_START;
+    return CBD_SCENE_ID_NORMAL_START;
 
   case COMM_BTL_DEMO_TYPE_NORMAL_END:
   case COMM_BTL_DEMO_TYPE_MULTI_END:
-    return CBD_SCENE_ID_END;
+    return CBD_SCENE_ID_NORMAL_END;
 
   default : GF_ASSERT_MSG( 0 , "demo type=%d ", pwk->type);
   }
 
-  return CBD_SCENE_ID_START;
+  return CBD_SCENE_ID_NORMAL_START;
 }
 
 //-----------------------------------------------------------------------------
@@ -1363,12 +1373,12 @@ static void TRAINER_UNIT_DrawTrainerName( TRAINER_UNIT* unit, GFL_FONT *font )
 static void TRAINER_UNIT_CNT_Init( COMM_BTL_DEMO_MAIN_WORK* wk )
 {
   int i;
-  int max = (type_is_normal(wk->pwk->type) ? TRAINER_CNT_NORMAL : TRAINER_CNT_MULTI ); 
+  int max = (type_is_normal(wk->type) ? TRAINER_CNT_NORMAL : TRAINER_CNT_MULTI ); 
 
   for( i=0; i<max; i++ )
   {
     TRAINER_UNIT_Init( &wk->trainer_unit[i],
-          wk->pwk->type, i,
+          wk->type, i,
           &wk->pwk->trainer_data[i], 
           &wk->wk_obj,
           &wk->wk_g3d,
@@ -1389,7 +1399,7 @@ static void TRAINER_UNIT_CNT_Init( COMM_BTL_DEMO_MAIN_WORK* wk )
 static void TRAINER_UNIT_CNT_Exit( COMM_BTL_DEMO_MAIN_WORK* wk )
 {
   int i;
-  int max = (type_is_normal(wk->pwk->type) ? TRAINER_CNT_NORMAL : TRAINER_CNT_MULTI ); 
+  int max = (type_is_normal(wk->type) ? TRAINER_CNT_NORMAL : TRAINER_CNT_MULTI ); 
 
   for( i=0; i<max; i++ )
   {
@@ -1409,7 +1419,7 @@ static void TRAINER_UNIT_CNT_Exit( COMM_BTL_DEMO_MAIN_WORK* wk )
 static void TRAINER_UNIT_CNT_Main( COMM_BTL_DEMO_MAIN_WORK* wk )
 {
   int i;
-  int max = (type_is_normal(wk->pwk->type) ? TRAINER_CNT_NORMAL : TRAINER_CNT_MULTI ); 
+  int max = (type_is_normal(wk->type) ? TRAINER_CNT_NORMAL : TRAINER_CNT_MULTI ); 
 
 #if 0
   // パーティクル座標調整
@@ -1455,7 +1465,7 @@ static void TRAINER_UNIT_CNT_Main( COMM_BTL_DEMO_MAIN_WORK* wk )
 static void TRAINER_UNIT_CNT_BallSetStart( COMM_BTL_DEMO_MAIN_WORK* wk )
 {
   int i;
-  int max = (type_is_normal(wk->pwk->type) ? TRAINER_CNT_NORMAL : TRAINER_CNT_MULTI ); 
+  int max = (type_is_normal(wk->type) ? TRAINER_CNT_NORMAL : TRAINER_CNT_MULTI ); 
 
   for( i=0; i<max; i++ )
   {
