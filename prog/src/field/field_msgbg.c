@@ -2824,7 +2824,7 @@ void FLDPLAINMSGWIN_ClearWindow( FLDPLAINMSGWIN *plnwin )
 
 //--------------------------------------------------------------
 /**
- * FLDPLAINMSGWIN ウィンドウクリア
+ * FLDPLAINMSGWIN ウィンドウ描画
  * @param tmsg FLDTALKMSGWIN
  * @retval nothing
  */
@@ -2956,7 +2956,7 @@ void FLDPLAINMSGWIN_PrintStreamStartStrBuf(
 
 //--------------------------------------------------------------
 /**
- * FLDPLAINMSGWIN プレーンウィンドウ 表示
+ * FLDPLAINMSGWIN プレーンウィンドウ メッセージストリーム表示
  * @param plnwin FLDTALKMSGWIN
  * @retval BOOL TRUE=表示終了,FALSE=表示中
  */
