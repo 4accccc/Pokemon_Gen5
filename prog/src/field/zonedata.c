@@ -623,7 +623,7 @@ BOOL ZONEDATA_IsColosseum(u16 zone_id)
 /**
  * @brief  遊覧船内マップかどうかのチェック
  * @param  zoneid ゾーン指定ID
- * @return BOOL ユニオンルームだったらTRUE
+ * @return BOOL 遊覧船内だったらTRUE
  */
 //------------------------------------------------------------------
 BOOL ZONEDATA_IsPlBoat(u16 zone_id)
