@@ -30,23 +30,23 @@
 typedef struct ARRAY_WORK_tag
 {
   int NowEntryNum;
-  int ID[ID_SEARCH_MAX];
+  u32 ID[ID_SEARCH_MAX];
 }ARRAY_WORK;
 
 typedef struct SEARCH_EVT_WORK_tag
 {
-  int MyID;
+  u32 MyID;
   int FinishBoxNum;
   u16 *RetWork;
   ARRAY_WORK Array;
 }SEARCH_EVT_WORK;
 
 static GMEVENT_RESULT SearchEvt( GMEVENT* event, int* seq, void* work );
-static int SearchMyParty(const int inMyID, GAMEDATA * gdata, ARRAY_WORK *ioArray);
-static int SearchBox(const int inMyID, GAMEDATA * gdata, const int inBoxIdx, ARRAY_WORK *ioArray);
-static int SearchBtlBox(const int inMyID, GAMEDATA * gdata, const int inBoxIdx, ARRAY_WORK *ioArray);
-static BOOL EntryID( const int inMyID, const int inID, ARRAY_WORK *ioArray );
-static BOOL EntryIDCore(const int inID, ARRAY_WORK *ioArray);
+static int SearchMyParty(const u32 inMyID, GAMEDATA * gdata, ARRAY_WORK *ioArray);
+static int SearchBox(const u32 inMyID, GAMEDATA * gdata, const int inBoxIdx, ARRAY_WORK *ioArray);
+static int SearchBtlBox(const u32 inMyID, GAMEDATA * gdata, const int inBoxIdx, ARRAY_WORK *ioArray);
+static BOOL EntryID( const u32 inMyID, const u32 inID, ARRAY_WORK *ioArray );
+static BOOL EntryIDCore(const u32 inID, ARRAY_WORK *ioArray);
 
 //--------------------------------------------------------------
 /**
@@ -77,6 +77,7 @@ VMCMD_RESULT EvCmdPokeID_SearchNum( VMHANDLE *core, void *wk )
     evt_work->Array.NowEntryNum = 0;
     evt_work->FinishBoxNum = 0;
     evt_work->RetWork = ret;
+    OS_Printf("MyID = %d\n",evt_work->MyID);
   }
 
   SCRIPT_CallEvent( sc, event ); 
@@ -110,10 +111,11 @@ static GMEVENT_RESULT SearchEvt( GMEVENT* event, int* seq, void* work )
     //ƒ{ƒbƒNƒX‚ð’²‚×‚é
     {
       int i;
+      int box_idx_base = evt_work->FinishBoxNum;
       for(i=0;i<ONCE_SEARCH_BOX_TRAY_NUM;i++)
       {
         int box_idx;
-        box_idx = evt_work->FinishBoxNum + i;
+        box_idx = box_idx_base + i;
         SearchBox(evt_work->MyID, gdata, box_idx, &evt_work->Array);
         evt_work->FinishBoxNum++;
         if (evt_work->FinishBoxNum >= BOX_MAX_TRAY)
@@ -144,6 +146,7 @@ static GMEVENT_RESULT SearchEvt( GMEVENT* event, int* seq, void* work )
   if ( finish )
   {
     *evt_work->RetWork = evt_work->Array.NowEntryNum;
+    OS_Printf("Entry:%d ret:%d\n",evt_work->Array.NowEntryNum, *evt_work->RetWork);
     return GMEVENT_RES_FINISH;
   }
 
@@ -159,7 +162,7 @@ static GMEVENT_RESULT SearchEvt( GMEVENT* event, int* seq, void* work )
  * @retval  int       Ši”[‚µ‚½ID‚Ì”
  */
 //--------------------------------------------------------------
-static int SearchMyParty(const int inMyID, GAMEDATA * gdata, ARRAY_WORK *ioArray)
+static int SearchMyParty(const u32 inMyID, GAMEDATA * gdata, ARRAY_WORK *ioArray)
 {
   int count;
   int i, num;
@@ -173,12 +176,13 @@ static int SearchMyParty(const int inMyID, GAMEDATA * gdata, ARRAY_WORK *ioArray
     //ƒ^ƒ}ƒS‚Í‘ÎÛŠO
     if ( !PP_Get( param, ID_PARA_tamago_flag, NULL ) )
     {
-      int id;
+      u32 id;
       //IDŽæ“¾
       id = PP_Get( param, ID_PARA_id_no, NULL );
       if ( EntryID( inMyID, id, ioArray ) ) count++;
     }
   }
+  OS_Printf("MyParty_DifID: %d\n",count);
   return count;
 }
 
@@ -192,7 +196,7 @@ static int SearchMyParty(const int inMyID, GAMEDATA * gdata, ARRAY_WORK *ioArray
  * @retval  int       Ši”[‚µ‚½ID‚Ì”
  */
 //--------------------------------------------------------------
-static int SearchBox(const int inMyID, GAMEDATA * gdata, const int inBoxIdx, ARRAY_WORK *ioArray)
+static int SearchBox(const u32 inMyID, GAMEDATA * gdata, const int inBoxIdx, ARRAY_WORK *ioArray)
 {
   int i;
   int count;
@@ -204,12 +208,12 @@ static int SearchBox(const int inMyID, GAMEDATA * gdata, const int inBoxIdx, ARR
   {
     if ( BOXDAT_PokeParaGet( box, inBoxIdx, i, ID_PARA_poke_exist, NULL ) )
     {
-      int id;
+      u32 id;
       id = BOXDAT_PokeParaGet( box, inBoxIdx, i, ID_PARA_id_no, NULL );
       if ( EntryID( inMyID, id, ioArray ) ) count++;
     }
   }
-
+  OS_Printf("Box_DifID: %d\n",count);
   return count;
 }
 
@@ -223,7 +227,7 @@ static int SearchBox(const int inMyID, GAMEDATA * gdata, const int inBoxIdx, ARR
  * @retval  int       Ši”[‚µ‚½ID‚Ì”
  */
 //--------------------------------------------------------------
-static int SearchBtlBox(const int inMyID, GAMEDATA * gdata, const int inBoxIdx, ARRAY_WORK *ioArray)
+static int SearchBtlBox(const u32 inMyID, GAMEDATA * gdata, const int inBoxIdx, ARRAY_WORK *ioArray)
 {
   int i;
   int count;
@@ -237,12 +241,12 @@ static int SearchBtlBox(const int inMyID, GAMEDATA * gdata, const int inBoxIdx, 
     POKEMON_PASO_PARAM* ppp = BATTLE_BOX_SAVE_GetPPP( btl_box , inBoxIdx, i );
     if ( PPP_Get( ppp, ID_PARA_poke_exist, NULL ) )
     {
-      int id;
+      u32 id;
       id = PPP_Get( ppp, ID_PARA_id_no, NULL );
       if ( EntryID( inMyID, id, ioArray ) ) count++;
     }
   }
-
+  OS_Printf("BtlBox_DifID: %d\n",count);
   return count;
 }
 
@@ -255,12 +259,11 @@ static int SearchBtlBox(const int inMyID, GAMEDATA * gdata, const int inBoxIdx, 
  * @retval  BOOL      TRUE‚Å“o˜^¬Œ÷
  */
 //--------------------------------------------------------------
-static BOOL EntryID( const int inMyID, const int inID, ARRAY_WORK *ioArray )
+static BOOL EntryID( const u32 inMyID, const u32 inID, ARRAY_WORK *ioArray )
 {
   BOOL rc = FALSE;
   if (inMyID != inID)   //Ž©•ª‚Æ“¯‚¶ID‚Ìê‡‚Íˆ—‚µ‚È‚¢
   {
-    BOOL rc;
     rc = EntryIDCore(inID, ioArray);
   }
   return rc;
@@ -274,7 +277,7 @@ static BOOL EntryID( const int inMyID, const int inID, ARRAY_WORK *ioArray )
  * @retval  BOOL      TRUE‚Å“o˜^¬Œ÷
  */
 //--------------------------------------------------------------
-static BOOL EntryIDCore(const int inID, ARRAY_WORK *ioArray)
+static BOOL EntryIDCore(const u32 inID, ARRAY_WORK *ioArray)
 {
   int i;
   //Šù‚ÉƒGƒ“ƒgƒŠ‚ª‚¢‚Á‚Ï‚¢‚Ìê‡‚Í“o˜^‚¹‚¸‚ÉI—¹
@@ -285,6 +288,7 @@ static BOOL EntryIDCore(const int inID, ARRAY_WORK *ioArray)
     if (ioArray->ID[i] == inID) return FALSE;   //Šù‚É‚ ‚é
   }
 
+  OS_Printf("entry_idx %d ID = %d\n", i, inID);
   ioArray->ID[i] = inID;
   ioArray->NowEntryNum++;
   return TRUE;

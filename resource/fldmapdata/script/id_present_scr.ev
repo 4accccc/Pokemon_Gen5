@@ -40,13 +40,12 @@ EVENT_START ev_id_present
   _BALLOONWIN_CLOSE()
 
   IF $SCWK_ANSWER == 0 THEN   //はい
-
+    _CALL search
   ELSE                        //いいえ
     //「交換してみて」
     $EndMsg = msg_id_present_04
     _CALL end_msg
   ENDIF
-
 EVENT_END
 
 end_msg:
@@ -58,51 +57,50 @@ _RET
 
 search:
   DEFINE_LOCAL ResultMsg
-  DEFINE_LOCAL ItemGetFlg
 
-  $ItemGetFlg = TRUE
   //「いいですね」
   _BALLOONWIN_TALKOBJ_MSG( msg_id_present_03 )
+  _BALLOONWIN_CLOSE()
   //検索SE開始 @todo
 
   //「検索中・・・」
   _BALLOONWIN_TALKOBJ_MSG( msg_id_present_03a )
-
   //検索コマンド
   _SEARCH_POKEID_NUM( ResultNum )
+  _BALLOONWIN_CLOSE()
 
   //検索SE停止 @todo
 
-  //結果5つ以下
-  IF $ResultNum < 5 THEN
+  //数字セット
+  _NUMBER( 0, ResultNum, 2 )
+
+  IF $ResultNum < 5 THEN          //結果5つ未満
     //「もっと交換して」
     $EndMsg = msg_id_present_05
     _CALL end_msg
-    $ItemGetFlg = FALSE
-  ELSIF $ResultNum >= 50 THEN
-    $ResultMsg = msg_id_present_11
-  ELSIF $ResultNum >= 40 THEN
-    $ResultMsg = msg_id_present_10
-  ELSIF $ResultNum >= 30 THEN
-    $ResultMsg = msg_id_present_09
-  ELSIF $ResultNum >= 20 THEN
-    $ResultMsg = msg_id_present_08
-  ELSIF $ResultNum >= 10 THEN
-    $ResultMsg = msg_id_present_07
-  ELSE
-    $ResultMsg = msg_id_present_06
-  ENDIF
-  
-  _BALLOONWIN_TALKOBJ_MSG( ResultMsg )
+  ELSE                            //結果5つ以上
+    IF $ResultNum >= 50 THEN
+      $ResultMsg = msg_id_present_11
+    ELSIF $ResultNum >= 40 THEN
+      $ResultMsg = msg_id_present_10
+    ELSIF $ResultNum >= 30 THEN
+      $ResultMsg = msg_id_present_09
+    ELSIF $ResultNum >= 20 THEN
+      $ResultMsg = msg_id_present_08
+    ELSIF $ResultNum >= 10 THEN
+      $ResultMsg = msg_id_present_07
+    ELSE
+      $ResultMsg = msg_id_present_06
+    ENDIF
+    _BALLOONWIN_TALKOBJ_MSG( ResultMsg )
+    _BALLOONWIN_CLOSE()
 
-  IF $ItemGetFlg == TRUE THEN
     _CALL get_item
+
+    //終了メッセージ
+    $EndMsg = msg_id_present_14
+    _CALL end_msg
   ENDIF
-
-  //終了メッセージ
-  $EndMsg = msg_id_present_14
-  _CALL end_msg
-
 _RET
 
 //アイテム取得（既に取得している場合も通る）
