@@ -3,7 +3,7 @@
  * @file  scr_offset_id.h
  * @bfief  スクリプトIDのオフセット定義
  * @author  tamada GAMEFREAK inc.
- * @date  2010 01/25 (Mon) 21:48
+ * @date  2010 01/27 (Wed) 15:46
  *
  * このファイルはコンバータにより自動生成されています
  */
@@ -99,6 +99,9 @@
 
 #define ID_ROTOM_CHANGE_SCR_OFFSET       (10315) //ロトムフォルムチェンジ
 #define ID_ROTOM_CHANGE_SCR_OFFSET_END   (10324)
+
+#define ID_ID_PRESENT_SCR_OFFSET         (10325) //ポケモンIDアイテムプレゼントスクリプト
+#define ID_ID_PRESENT_SCR_OFFSET_END     (10329)
 
 #define ID_DEBUG_SCR_OFFSET              (12000) //デバッグ用共通スクリプト（この下にはファイルを追加しない！！）
 #define ID_DEBUG_SCR_OFFSET_END          (12199)

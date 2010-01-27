@@ -3,7 +3,7 @@
  * @file  scr_offset.cdat
  * @bfief  スクリプトIDのオフセットとそれに対応するアーカイブの定義テーブル
  * @author  tamada GAMEFREAK inc.
- * @date  2010 01/25 (Mon) 21:48
+ * @date  2010 01/27 (Wed) 15:46
  *
  * このファイルはコンバータにより自動生成されています
  */
@@ -17,6 +17,12 @@ static const SCRIPT_ARC_TABLE ScriptArcTable[] = {
       ID_DEBUG_SCR_OFFSET_END,        //(12199),
       NARC_script_seq_debug_scr_bin,
       NARC_script_message_debug_scr_dat
+    },
+    {//ポケモンIDアイテムプレゼントスクリプト
+      ID_ID_PRESENT_SCR_OFFSET,       //(10325),
+      ID_ID_PRESENT_SCR_OFFSET_END,   //(10329),
+      NARC_script_seq_id_present_scr_bin,
+      NARC_script_message_id_present_scr_dat
     },
     {//ロトムフォルムチェンジ
       ID_ROTOM_CHANGE_SCR_OFFSET,     //(10315),

@@ -1,0 +1,174 @@
+//======================================================================
+//                id_present_scr.ev
+//
+//    スクリプトファイル：id_present_scr用
+//
+//======================================================================
+
+  .text
+
+  .include  "scr_seq_def.h"
+  .include  "../../message/dst/script/msg_id_present_scr.h"
+
+//----------------------------------------------------------------------
+//               スクリプトテーブル
+//----------------------------------------------------------------------
+_EVENT_DATA   ev_id_present
+_EVENT_DATA_END
+
+DEFINE_LOCAL EndMsg             //最後のメッセージＩＤ
+DEFINE_LOCAL ResultNum          //自分の所持しているID数
+
+//get_item～get_item_commonで使用
+DEFINE_LOCAL CheckFlg
+DEFINE_LOCAL CheckNum
+DEFINE_LOCAL ItemGet
+DEFINE_LOCAL ItemNo
+
+EVENT_START ev_id_present
+  //初回？
+  IF FLAG_OFF( FE_POKEID_FIRSTTALK ) THEN   //初回
+    //「交換してる?」
+    _BALLOONWIN_TALKOBJ_MSG( msg_id_present_01 )
+    //初回フラグON
+    _FLAG_SET( FE_POKEID_FIRSTTALK )
+  ELSE      //2回目以降
+    //「交換してる?」
+    _BALLOONWIN_TALKOBJ_MSG( msg_id_present_02 )
+  ENDIF
+  _YES_NO_WIN( SCWK_ANSWER )
+  _BALLOONWIN_CLOSE()
+
+  IF $SCWK_ANSWER == 0 THEN   //はい
+
+  ELSE                        //いいえ
+    //「交換してみて」
+    $EndMsg = msg_id_present_04
+    _CALL end_msg
+  ENDIF
+
+EVENT_END
+
+end_msg:
+  //最終メッセージ共通処理
+  _BALLOONWIN_TALKOBJ_MSG( EndMsg )
+  _LAST_KEYWAIT()
+  _BALLOONWIN_CLOSE()
+_RET
+
+search:
+  DEFINE_LOCAL ResultMsg
+  DEFINE_LOCAL ItemGetFlg
+
+  $ItemGetFlg = TRUE
+  //「いいですね」
+  _BALLOONWIN_TALKOBJ_MSG( msg_id_present_03 )
+  //検索SE開始 @todo
+
+  //「検索中・・・」
+  _BALLOONWIN_TALKOBJ_MSG( msg_id_present_03a )
+
+  //検索コマンド
+  $ResultNum = 0    //@todo
+
+  //検索SE停止 @todo
+
+  //結果5つ以下
+  IF $ResultNum < 5 THEN
+    //「もっと交換して」
+    $EndMsg = msg_id_present_05
+    _CALL end_msg
+    $ItemGetFlg = FALSE
+  ELSIF $ResultNum >= 50 THEN
+    $ResultMsg = msg_id_present_11
+  ELSIF $ResultNum >= 40 THEN
+    $ResultMsg = msg_id_present_10
+  ELSIF $ResultNum >= 30 THEN
+    $ResultMsg = msg_id_present_09
+  ELSIF $ResultNum >= 20 THEN
+    $ResultMsg = msg_id_present_08
+  ELSIF $ResultNum >= 10 THEN
+    $ResultMsg = msg_id_present_07
+  ELSE
+    $ResultMsg = msg_id_present_06
+  ENDIF
+  
+  _BALLOONWIN_TALKOBJ_MSG( ResultMsg )
+
+  IF $ItemGetFlg == TRUE THEN
+    _CALL get_item
+  ENDIF
+
+  //終了メッセージ
+  $EndMsg = msg_id_present_14
+  _CALL end_msg
+
+_RET
+
+//アイテム取得（既に取得している場合も通る）
+get_item:
+  //フラグ初期化
+  $ItemGet = FALSE
+
+  //アイテム1つ目
+  $CheckNum = 5
+  $CheckFlg = FE_POKEID_ITEM1
+  $ItemNo = ITEM_POINTOAPPU
+  _CALL get_item_common
+  //アイテム2つ目
+  $CheckNum = 10
+  $CheckFlg = FE_POKEID_ITEM2
+  $ItemNo = ITEM_HUSIGINAAME
+  _CALL get_item_common
+  //アイテム3つ目
+  $CheckNum = 20
+  $CheckFlg = FE_POKEID_ITEM3
+  $ItemNo = ITEM_OUZYANOSIRUSI
+  _CALL get_item_common
+  //アイテム4つ目
+  $CheckNum = 30
+  $CheckFlg = FE_POKEID_ITEM4
+  $ItemNo = ITEM_WAZAMASIN01
+  _CALL get_item_common
+  //アイテム5つ目
+  $CheckNum = 40
+  $CheckFlg = FE_POKEID_ITEM5
+  $ItemNo = ITEM_POINTOMAKKUSU
+  _CALL get_item_common
+  //アイテム6つ目
+  $CheckNum = 50
+  $CheckFlg = FE_POKEID_ITEM6
+  $ItemNo = ITEM_MASUTAABOORU
+  _CALL get_item_common
+_RET
+
+/**
+ *このラベルをコールする直前にセットしておく変数
+ * $CheckNum：調べるID数
+ * $CheckFlg:チェックするアイテムフラグ
+ * $ItemNo:もらえるアイテム
+ *このラベルコールよりも前に設定されているべき変数
+ * $ItemGet:1度でもアイテム取得したか？
+ *このラベル内部で変更される変数
+ * $ResultNum:自分の所持しているID数
+*/
+get_item_common:
+  DEFINE_LOCAL GetMsg
+  IF $ResultNum >= $CheckNum THEN
+    IF FLAG_OFF( CheckFlg ) THEN
+      IF $ItemGet == TRUE THEN
+        $GetMsg = msg_id_present_12
+      ELSE
+        $GetMsg = msg_id_present_13
+      ENDIF
+      //「プレゼント」
+      _BALLOONWIN_TALKOBJ_MSG( GetMsg )
+      _BALLOONWIN_CLOSE()
+      $ItemGet = TRUE
+      //アイテム取得
+      _ADD_ITEM(ItemNo, 1, SCWK_ANSWER)
+      //取得フラグON
+      _FLAG_SET( CheckFlg )
+    ENDIF
+  ENDIF
+_RET
