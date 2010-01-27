@@ -175,7 +175,7 @@
 #define FE_POKEID_ITEM4                    159 /* 0x009f ポケモンIDイベント用フラグ：アイテム４を入手した */
 #define FE_POKEID_ITEM5                    160 /* 0x00a0 ポケモンIDイベント用フラグ：アイテム５を入手した */
 #define FE_POKEID_ITEM6                    161 /* 0x00a1 ポケモンIDイベント用フラグ：アイテム６を入手した */
-		/* not used   162(0x00a2) */
+#define FE_POKEID_FIRSTTALK                162 /* 0x00a2 ポケモンIDイベント初回会話フラグ */
 		/* not used   163(0x00a3) */
 		/* not used   164(0x00a4) */
 		/* not used   165(0x00a5) */
