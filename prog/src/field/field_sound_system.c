@@ -664,7 +664,7 @@ void RemoveHeadRequest( FIELD_SOUND* fieldSound )
   delPos = fieldSound->requestHeadPos;
 
   // リクエストを持っていない
-  if( fieldSound->requestData[ delPos ].request == FSND_BGM_REQUEST_NONE )
+  if( QueueHaveRequest( fieldSound ) == FALSE )
   {
     OS_Printf( "FIELD-SOUND: Can't remove head request\n" );
     GF_ASSERT(0);
