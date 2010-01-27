@@ -236,7 +236,7 @@ static void handler_KiaiNoHachimaki_UseItem( BTL_EVENT_FACTOR* myHandle, BTL_SVF
 static const BtlEventHandlerTable* HAND_ADD_ITEM_TatsujinNoObi( u32* numElems );
 static void handler_TatsujinNoObi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable* HAND_ADD_ITEM_InochiNoTama( u32* numElems );
-static void handler_InochiNoTama_KickBack( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_InochiNoTama_Reaction( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_InochiNoTama_Damage( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable* HAND_ADD_ITEM_MetroNome( u32* numElems );
 static void handler_MetroNome( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
@@ -3058,19 +3058,22 @@ static void handler_TatsujinNoObi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
 static const BtlEventHandlerTable* HAND_ADD_ITEM_InochiNoTama( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_CALC_KICKBACK,  handler_InochiNoTama_KickBack },
-    { BTL_EVENT_WAZA_DMG_PROC2, handler_InochiNoTama_Damage },
+    { BTL_EVENT_WAZA_DMG_REACTION,  handler_InochiNoTama_Reaction },   // ダメージ反応ハンドラ
+    { BTL_EVENT_WAZA_DMG_PROC2,     handler_InochiNoTama_Damage   },
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
 }
-static void handler_InochiNoTama_KickBack( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+// ダメージ反応ハンドラ
+static void handler_InochiNoTama_Reaction( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
-    u8 ratio = BTL_EVENTVAR_GetValue( BTL_EVAR_RATIO_EX );
-    ratio += 10;
-    BTL_EVENTVAR_RewriteValue( BTL_EVAR_RATIO_EX, ratio );
+    const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
+    BTL_HANDEX_PARAM_DAMAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_DAMAGE, pokeID );
+
+    param->pokeID = pokeID;
+    param->damage = BTL_CALC_QuotMaxHP( bpp, 10 );
   }
 }
 static void handler_InochiNoTama_Damage( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )

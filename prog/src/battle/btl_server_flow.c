@@ -5475,7 +5475,7 @@ static BOOL scEvent_CalcDamage( BTL_SVFLOW_WORK* wk,
   return fFixDamage;
 }
 //---------------------------------------------------------------------------------------------
-// ワザダメージ処理後の反動処理
+// ワザダメージ処理後の反動処理（ダメージ×反動率）
 //---------------------------------------------------------------------------------------------
 static void scproc_Fight_Damage_Kickback( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza, u32 wazaDamage )
 {
@@ -9227,7 +9227,7 @@ static BOOL scEvent_CheckCritical( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* att
 }
 //----------------------------------------------------------------------------------
 /**
- * [Event] ワザによるダメージを与えた後の反動計算
+ * [Event] ワザによるダメージを与えた後の反動計算（ダメージ×反動率）
  *
  * @param   wk
  * @param   attacker
