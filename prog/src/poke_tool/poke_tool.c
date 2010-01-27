@@ -951,13 +951,16 @@ u8 POKETOOL_GetSex( u16 mons_no, u16 form_no, u32 personal_rnd )
   }
 
 // ŒÂ«—”‚É‚æ‚è«•Ê‚ªŒˆ‚Ü‚éƒP[ƒX
-  if( sex_param > ( personal_rnd & 0xff ) )
   {
-    return PTL_SEX_FEMALE;
-  }
-  else
-  {
-    return PTL_SEX_MALE;
+    u8 rnd_sex_bit = ( personal_rnd & 0xff );
+    if( rnd_sex_bit >= sex_param )
+    {
+      return PTL_SEX_MALE;
+    }
+    else
+    {
+      return PTL_SEX_FEMALE;
+    }
   }
 }
 
@@ -1545,11 +1548,16 @@ u32  POKETOOL_CalcPersonalRand( u16 mons_no, u16 form_no, u8 sex )
   {
     POKEMON_PERSONAL_DATA* ppd = Personal_Load( mons_no, form_no );
     u8 sex_param = POKE_PERSONAL_GetParam( ppd, POKEPER_ID_sex );
-    if( PokePersonal_SexVecTypeGet( sex_param ) != POKEPER_SEXTYPE_FIX){
+    if( PokePersonal_SexVecTypeGet( sex_param ) != POKEPER_SEXTYPE_FIX)
+    {
       if( sex == PTL_SEX_MALE ){
-        rnd = sex_param+1;
-      }else{
         rnd = sex_param;
+      }else{
+        if( sex_param ){
+          rnd = sex_param - 1;
+        }else{
+          rnd = 0;  // ffffffff‚É‚È‚Á‚Ä‚µ‚Ü‚í‚È‚¢‚æ‚¤”O‚Ì‚½‚ß
+        }
       }
     }
   }
@@ -2698,7 +2706,11 @@ static  void  ppp_putAct( POKEMON_PASO_PARAM *ppp, int paramID, u32 arg )
       ppp2->form_no = arg;
       break;
     case ID_PARA_seikaku:
-      ppp2->seikaku = arg;
+      {
+        u16 prev_seikaku = ppp2->seikaku;
+        ppp2->seikaku = arg;
+        OS_TPrintf("‚¹‚¢‚©‚­ %d->%d\n", prev_seikaku, arg);
+      }
       break;
     case ID_PARA_dummy_p2_2:
       ppp2->dummy_p2_2 = arg;
