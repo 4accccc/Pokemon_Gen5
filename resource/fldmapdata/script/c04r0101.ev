@@ -33,7 +33,7 @@ _EVENT_DATA_END
 /************************************************************/
 EVENT_START	ev_scene_c04r0101_entry
 	//主人公：階段を降りる
-	_TIME_WAIT( 16 )
+//	_TIME_WAIT( 8 )
 	
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_walk_in )
 	_OBJ_ANIME_WAIT()
@@ -43,10 +43,10 @@ EVENT_START	ev_scene_c04r0101_entry
 EVENT_END
 
 //--------------------------------------------------------------------
-//主人公：階段を登る
+//主人公：階段を降りる
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_player_walk_in
-	_ANIME_DATA	AC_WALK_L_8F,8
+	_ANIME_DATA	AC_WALK_L_8F,9
 	_ANIME_DATA	ACMD_END,0
 
 
