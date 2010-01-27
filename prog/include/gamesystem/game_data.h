@@ -33,6 +33,7 @@
 #include "savedata/wifilist.h"
 #include "savedata/misc.h"
 #include "savedata/wifi_negotiation.h"
+#include "savedata/record.h"
 #include "gamesystem/comm_player_support.h"
 
 #include "field/bsubway_scr_proc.h"
@@ -433,7 +434,7 @@ extern void GAMEDATA_SetIntrudeMyID(GAMEDATA *gamedata, int intrude_my_id);
 /**
  * 裏フィールド侵入フラグを取得
  *
- * @param   gamedata		GAMEDATAへのポインタ
+ * @param   gamedata    GAMEDATAへのポインタ
  *
  * @retval  u8  TRUE:裏フィールド浸入中　FALSE:表フィールド
  */
@@ -444,7 +445,7 @@ extern int GAMEDATA_GetIntrudeReverseArea(const GAMEDATA *gamedata);
 /**
  * 裏フィールド侵入フラグをセット
  *
- * @param   gamedata		GAMEDATAへのポインタ
+ * @param   gamedata    GAMEDATAへのポインタ
  * @param   reverse_flag  TRUE:裏フィールド侵入中
  */
 //==================================================================
@@ -568,6 +569,16 @@ extern MISC * GAMEDATA_GetMiscWork(GAMEDATA * gamedata);
  */
 //----------------------------------------------------------
 extern WIFI_NEGOTIATION_SAVEDATA * GAMEDATA_GetWifiNegotiation(GAMEDATA * gamedata);
+
+//----------------------------------------------------------
+/**
+ * @brief RECORDワークポインタ取得
+ * @param   gamedata    GAMEDATAへのポインタ
+ * @retval  RECORD *    
+ */
+//----------------------------------------------------------
+extern RECORD *GAMEDATA_GetRecordPtr(GAMEDATA * gamedata);
+
 
 //----------------------------------------------------------
 /**

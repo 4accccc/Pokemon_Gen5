@@ -1,9 +1,9 @@
 //=============================================================================
 /**
- * @file	game_data.c
- * @brief	ゲーム進行データ管理
- * @author	tamada
- * @date	2008.11.04
+ * @file  game_data.c
+ * @brief ゲーム進行データ管理
+ * @author  tamada
+ * @date  2008.11.04
  *
  * @note
  * 基本的にゲーム進行データはセーブデータとして存在するが、
@@ -29,7 +29,7 @@
 #include "savedata/mystatus.h"
 #include "savedata/situation.h"
 #include "savedata/player_data.h"
-#include "gamesystem/pm_season.h"		//季節定義参照
+#include "gamesystem/pm_season.h"   //季節定義参照
 #include "field/field_subscreen.h" //FIELD_SUBSCREEN_ACTION
 #include "field/rail_location.h"    //RAIL_LOCATION
 #include "sound/bgm_info.h"
@@ -40,7 +40,7 @@
 #include "field/field_wfbc_data.h"  // WF・BC
 #include "savedata/intrude_save.h"  //
 #include "savedata/randommap_save.h"  //WF・BC
-#include "savedata/shortcut.h"		//SHORTCUT_SetRegister
+#include "savedata/shortcut.h"    //SHORTCUT_SetRegister
 #include "savedata/wifilist.h"
 #include "gamesystem/comm_player_support.h"
 #include "net/wih_dwc.h"
@@ -54,11 +54,11 @@
 //============================================================================================
 //------------------------------------------------------------------
 /**
- * @brief	ゲームデータ内容定義
+ * @brief ゲームデータ内容定義
  */
 //------------------------------------------------------------------
 struct _GAMEDATA{
-  SAVE_CONTROL_WORK *sv_control_ptr;		///<セーブデータ管理ワークへのポインタ
+  SAVE_CONTROL_WORK *sv_control_ptr;    ///<セーブデータ管理ワークへのポインタ
   PLAYER_WORK playerWork[PLAYER_MAX];
   EVENTDATA_SYSTEM * evdata;
   LOCATION *start_loc;
@@ -67,12 +67,12 @@ struct _GAMEDATA{
   LOCATION *escape_loc;     ///<脱出先位置
 
   BAG_CURSOR* bagcursor;  ///< バッグカーソルの管理構造体ポインタ
-  MYITEM_PTR myitem;			///<手持ちアイテムセーブデータへのポインタ
-  POKEPARTY *my_pokeparty;	///<手持ちポケモンセーブデータへのポインタ
-	CONFIG		*config;				///<コンフィグセーブデータへのポインタ
+  MYITEM_PTR myitem;      ///<手持ちアイテムセーブデータへのポインタ
+  POKEPARTY *my_pokeparty;  ///<手持ちポケモンセーブデータへのポインタ
+  CONFIG    *config;        ///<コンフィグセーブデータへのポインタ
   BOX_MANAGER *boxMng;      ///<ボックス管理構造体へのポインタ
   WIFI_LIST* WiFiList;
-  BGM_INFO_SYS* bgm_info_sys;	// BGM情報取得システム
+  BGM_INFO_SYS* bgm_info_sys; // BGM情報取得システム
 
   MMDLSYS *mmdlsys;
   EVENTWORK *eventwork;
@@ -85,7 +85,7 @@ struct _GAMEDATA{
   u32 last_battle_result;   ///<最新のバトルの結果
 
   int fieldmap_walk_count; ///<フィールドマップ歩数カウント
-  u8 season_id;				///<季節指定ID
+  u8 season_id;       ///<季節指定ID
   u8 subscreen_mode; ///< フィールド下画面の状態
   u8 subscreen_type;
   u8 frameSpritcount;    ///< フレーム分割動作で動作する場合のカウント
@@ -102,7 +102,7 @@ struct _GAMEDATA{
   
   ENCOUNT_WORK* enc_work; ///<エンカウント関連データワーク
   
-	SHORTCUT_CURSOR	shortcut_cursor;	///<ショートカット画面のカーソル
+  SHORTCUT_CURSOR shortcut_cursor;  ///<ショートカット画面のカーソル
   
   GIMMICKWORK GimmickWork;      //ギミックワーク
   PL_BOAT_WORK_PTR PlBoatWorkPtr;   //遊覧船ワーク
@@ -115,7 +115,7 @@ struct _GAMEDATA{
 };
 
 //==============================================================================
-//	プロトタイプ宣言
+//  プロトタイプ宣言
 //==============================================================================
 static void GAMEDATA_SaveDataLoad(GAMEDATA *gamedata);
 static void GAMEDATA_SaveDataUpdate(GAMEDATA *gamedata);
@@ -124,7 +124,7 @@ static void GAMEDATA_SaveDataUpdate(GAMEDATA *gamedata);
 //============================================================================================
 //
 //
-//		GAMEDATA全体
+//    GAMEDATA全体
 //
 //
 //============================================================================================
@@ -192,8 +192,8 @@ GAMEDATA * GAMEDATA_Create(HEAPID heapID)
   gd->bagcursor = MYITEM_BagCursorAlloc( heapID );
   gd->myitem = SaveControl_DataPtrGet(gd->sv_control_ptr, GMDATA_ID_MYITEM);
   gd->my_pokeparty = SaveControl_DataPtrGet(gd->sv_control_ptr, GMDATA_ID_MYPOKE);
-	gd->config	= SaveData_GetConfig( gd->sv_control_ptr );
-  gd->boxMng	= BOX_DAT_InitManager( heapID , gd->sv_control_ptr );
+  gd->config  = SaveData_GetConfig( gd->sv_control_ptr );
+  gd->boxMng  = BOX_DAT_InitManager( heapID , gd->sv_control_ptr );
   //WifiList
   gd->WiFiList = WifiList_AllocWork(heapID);
 
@@ -219,10 +219,10 @@ GAMEDATA * GAMEDATA_Create(HEAPID heapID)
   //エンカウントワーク初期化
   gd->enc_work = ENCOUNT_WORK_Create( heapID );
 
-	//ショートカット用カーソル初期化
-	SHORTCUT_CURSOR_Init( &gd->shortcut_cursor );
+  //ショートカット用カーソル初期化
+  SHORTCUT_CURSOR_Init( &gd->shortcut_cursor );
 
-  GAMEDATA_SaveDataLoad(gd);	//セーブデータから必要なものをロードしてくる
+  GAMEDATA_SaveDataLoad(gd);  //セーブデータから必要なものをロードしてくる
 
   //遊覧船ポインタをＮＵＬＬ初期化
   gd->PlBoatWorkPtr = NULL;
@@ -247,7 +247,7 @@ void GAMEDATA_Delete(GAMEDATA * gamedata)
   COMM_PLAYER_SUPPORT_Free(gamedata->comm_player_support);
   ENCOUNT_WORK_Delete( gamedata->enc_work );
   FIELD_BEACON_MSG_DeleteData( gamedata->fbmData );
-	BGM_INFO_DeleteSystem(gamedata->bgm_info_sys);
+  BGM_INFO_DeleteSystem(gamedata->bgm_info_sys);
   GFL_HEAP_FreeMemory( gamedata->WiFiList );
   BOX_DAT_ExitManager( gamedata->boxMng );
   GFL_HEAP_FreeMemory(gamedata->bagcursor);
@@ -277,7 +277,7 @@ PLAYER_WORK * GAMEDATA_GetMyPlayerWork(GAMEDATA * gamedata)
 //--------------------------------------------------------------
 /**
  * @brief   OCCUPY_INFOへのポインタ取得(プレイヤーID指定)
- * @param   gamedata		GAMEDATAへのポインタ
+ * @param   gamedata    GAMEDATAへのポインタ
  * @param   player_id   プレイヤーID
  * @retval  OCCUPY_INFOへのポインタ
  */
@@ -291,7 +291,7 @@ OCCUPY_INFO * GAMEDATA_GetOccupyInfo(GAMEDATA * gamedata, u32 player_id)
 //--------------------------------------------------------------
 /**
  * @brief   OCCUPY_INFOへのポインタ取得
- * @param   gamedata		GAMEDATAへのポインタ
+ * @param   gamedata    GAMEDATAへのポインタ
  * @retval  OCCUPY_INFOへのポインタ
  */
 //--------------------------------------------------------------
@@ -303,11 +303,11 @@ OCCUPY_INFO * GAMEDATA_GetMyOccupyInfo(GAMEDATA * gamedata)
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  自分のWFBC街情報の取得
+ *  @brief  自分のWFBC街情報の取得
  *
- *	@param	gamedata  ゲームデータ
+ *  @param  gamedata  ゲームデータ
  *
- *	@return WFBC街情報のポインタ
+ *  @return WFBC街情報のポインタ
  */
 //-----------------------------------------------------------------------------
 FIELD_WFBC_CORE* GAMEDATA_GetMyWFBCCoreData( GAMEDATA * gamedata )
@@ -317,12 +317,12 @@ FIELD_WFBC_CORE* GAMEDATA_GetMyWFBCCoreData( GAMEDATA * gamedata )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  プレイヤーのWFBC街情報の取得
+ *  @brief  プレイヤーのWFBC街情報の取得
  *
- *	@param	gamedata      ゲームデータ
- *	@param	player_id     プレイヤーID
+ *  @param  gamedata      ゲームデータ
+ *  @param  player_id     プレイヤーID
  *
- *	@return WFBC街情報のポインタ
+ *  @return WFBC街情報のポインタ
  */
 //-----------------------------------------------------------------------------
 FIELD_WFBC_CORE* GAMEDATA_GetWFBCCoreData( GAMEDATA * gamedata, GAMEDATA_WFBC_ID id )
@@ -333,11 +333,11 @@ FIELD_WFBC_CORE* GAMEDATA_GetWFBCCoreData( GAMEDATA * gamedata, GAMEDATA_WFBC_ID
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  WFBCのアイテム配置情報を取得する
+ *  @brief  WFBCのアイテム配置情報を取得する
  *
- *	@param	gamedata  ゲームデータ
+ *  @param  gamedata  ゲームデータ
  *  
- *	@return アイテム
+ *  @return アイテム
  */
 //-----------------------------------------------------------------------------
 FIELD_WFBC_CORE_ITEM* GAMEDATA_GetWFBCItemData( GAMEDATA * gamedata )
@@ -348,11 +348,11 @@ FIELD_WFBC_CORE_ITEM* GAMEDATA_GetWFBCItemData( GAMEDATA * gamedata )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  WFBCのイベントデータを取得する
+ *  @brief  WFBCのイベントデータを取得する
  *
- *	@param	gamedata  ゲームデータ
+ *  @param  gamedata  ゲームデータ
  *
- *	@return イベント
+ *  @return イベント
  */
 //-----------------------------------------------------------------------------
 FIELD_WFBC_EVENT* GAMEDATA_GetWFBCEventData( GAMEDATA * gamedata )
@@ -364,10 +364,10 @@ FIELD_WFBC_EVENT* GAMEDATA_GetWFBCEventData( GAMEDATA * gamedata )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  Palaceのコア情報設定
+ *  @brief  Palaceのコア情報設定
  *
- *	@param	gamedata  ゲームデータ
- *	@param	cp_core   Palaceのコア情報
+ *  @param  gamedata  ゲームデータ
+ *  @param  cp_core   Palaceのコア情報
  */ 
 //-----------------------------------------------------------------------------
 void GAMEDATA_SetUpPalaceWFBCCoreData( GAMEDATA * gamedata, const FIELD_WFBC_CORE* cp_core )
@@ -382,9 +382,9 @@ void GAMEDATA_SetUpPalaceWFBCCoreData( GAMEDATA * gamedata, const FIELD_WFBC_COR
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  Palaceのコア情報を破棄
+ *  @brief  Palaceのコア情報を破棄
  *
- *	@param	gamedata ゲームデータ
+ *  @param  gamedata ゲームデータ
  */
 //-----------------------------------------------------------------------------
 void GAMEDATA_ClearPalaceWFBCCoreData( GAMEDATA * gamedata )
@@ -399,9 +399,9 @@ void GAMEDATA_ClearPalaceWFBCCoreData( GAMEDATA * gamedata )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  GAMEDATAからのWIFIListの取得
- *	@param	gamedata      ゲームデータ
- *	@return WIFIListのポインタ
+ *  @brief  GAMEDATAからのWIFIListの取得
+ *  @param  gamedata      ゲームデータ
+ *  @return WIFIListのポインタ
  */
 //-----------------------------------------------------------------------------
 WIFI_LIST * GAMEDATA_GetWiFiList(GAMEDATA * gamedata)
@@ -415,9 +415,9 @@ WIFI_LIST * GAMEDATA_GetWiFiList(GAMEDATA * gamedata)
 //============================================================================================
 //------------------------------------------------------------------
 /**
- * @brief	イベント起動データシステムへのポインタを取得する
- * @param	gamedata			GAMEDATAへのポインタ
- * @return	EVENTDATA_SYSTEM	イベント起動データシステムへのポインタ
+ * @brief イベント起動データシステムへのポインタを取得する
+ * @param gamedata      GAMEDATAへのポインタ
+ * @return  EVENTDATA_SYSTEM  イベント起動データシステムへのポインタ
  */
 //------------------------------------------------------------------
 EVENTDATA_SYSTEM * GAMEDATA_GetEventData(GAMEDATA * gamedata)
@@ -478,7 +478,7 @@ void GAMEDATA_SetEscapeLocation(GAMEDATA * gamedata, const LOCATION * loc)
 //--------------------------------------------------------------
 /**
  * @brief ワープ飛び先IDのセット
- * @param	gamedata	GAMEDATAへのポインタ
+ * @param gamedata  GAMEDATAへのポインタ
  * @param warp_id   ワープ飛び先ID指定
  */
 //--------------------------------------------------------------
@@ -491,7 +491,7 @@ void GAMEDATA_SetWarpID(GAMEDATA * gamedata, u16 warp_id)
 //--------------------------------------------------------------
 /**
  * @brief  ワープ飛び先IDの取得
- * @param	gamedata	GAMEDATAへのポインタ
+ * @param gamedata  GAMEDATAへのポインタ
  * @return  u16 ワープ飛び先ID
  */
 //--------------------------------------------------------------
@@ -504,7 +504,7 @@ u16 GAMEDATA_GetWarpID(GAMEDATA * gamedata)
 //--------------------------------------------------------------
 /**
  * @brief   バッグカーソルのポインタ取得
- * @param   gamedata		GAMEDATAへのポインタ
+ * @param   gamedata    GAMEDATAへのポインタ
  * @retval  バッグカーソルポインタ
  */
 //--------------------------------------------------------------
@@ -516,7 +516,7 @@ BAG_CURSOR* GAMEDATA_GetBagCursor(const GAMEDATA * gamedata)
 //--------------------------------------------------------------
 /**
  * @brief   手持ちアイテムへのポインタ取得
- * @param   gamedata		GAMEDATAへのポインタ
+ * @param   gamedata    GAMEDATAへのポインタ
  * @retval  手持ちアイテムへのポインタ
  */
 //--------------------------------------------------------------
@@ -528,7 +528,7 @@ MYITEM_PTR GAMEDATA_GetMyItem(const GAMEDATA * gamedata)
 //--------------------------------------------------------------
 /**
  * @brief   手持ちポケモンへのポインタ取得
- * @param   gamedata		GAMEDATAへのポインタ
+ * @param   gamedata    GAMEDATAへのポインタ
  * @retval  手持ちポケモンへのポインタ
  */
 //--------------------------------------------------------------
@@ -540,7 +540,7 @@ POKEPARTY * GAMEDATA_GetMyPokemon(const GAMEDATA * gamedata)
 //--------------------------------------------------------------
 /**
  * @brief   ボックス管理構造体のポインタ取得
- * @param   gamedata		GAMEDATAへのポインタ
+ * @param   gamedata    GAMEDATAへのポインタ
  * @retval  ボックス管理構造体へのポインタ
  */
 //--------------------------------------------------------------
@@ -552,7 +552,7 @@ BOX_MANAGER * GAMEDATA_GetBoxManager(const GAMEDATA * gamedata)
 //--------------------------------------------------------------
 /**
  * @brief   MYSTATUSへのポインタ取得
- * @param   gamedata		GAMEDATAへのポインタ
+ * @param   gamedata    GAMEDATAへのポインタ
  * @retval  MYSTATUSへのポインタ
  */
 //--------------------------------------------------------------
@@ -564,7 +564,7 @@ MYSTATUS * GAMEDATA_GetMyStatus(GAMEDATA * gamedata)
 //--------------------------------------------------------------
 /**
  * @brief   MYSTATUSへのポインタ取得(プレイヤーID指定)
- * @param   gamedata		GAMEDATAへのポインタ
+ * @param   gamedata    GAMEDATAへのポインタ
  * @param   player_id   プレイヤーID
  * @retval  MYSTATUSへのポインタ
  */
@@ -584,14 +584,14 @@ MYSTATUS * GAMEDATA_GetMyStatusPlayer(GAMEDATA * gamedata, u32 player_id)
 //--------------------------------------------------------------
 extern BGM_INFO_SYS * GAMEDATA_GetBGMInfoSys(GAMEDATA * gamedata)
 {
-	return gamedata->bgm_info_sys;
+  return gamedata->bgm_info_sys;
 }
 
 //--------------------------------------------------------------
 /**
- * @brief	MMDLSYSへのポインタ取得
- * @param	gamedata	GAMEDATAへのポインタ
- * @retval	MMDLSYSへのポインタ
+ * @brief MMDLSYSへのポインタ取得
+ * @param gamedata  GAMEDATAへのポインタ
+ * @retval  MMDLSYSへのポインタ
  */
 //--------------------------------------------------------------
 MMDLSYS * GAMEDATA_GetMMdlSys(GAMEDATA *gamedata)
@@ -601,9 +601,9 @@ MMDLSYS * GAMEDATA_GetMMdlSys(GAMEDATA *gamedata)
 
 //--------------------------------------------------------------
 /**
- * @brief	EVENTWORKへのポインタ取得
- * @param	gamedata	GAMEDATAへのポインタ
- * @retval	EVENTWORKへのポインタ
+ * @brief EVENTWORKへのポインタ取得
+ * @param gamedata  GAMEDATAへのポインタ
+ * @retval  EVENTWORKへのポインタ
  */
 //--------------------------------------------------------------
 EVENTWORK * GAMEDATA_GetEventWork(GAMEDATA *gamedata)
@@ -614,7 +614,7 @@ EVENTWORK * GAMEDATA_GetEventWork(GAMEDATA *gamedata)
 //--------------------------------------------------------------
 /**
  * @brief   MAP_MATRIXへのポインタ取得
- * @param	  gamedata	GAMEDATAへのポインタ
+ * @param   gamedata  GAMEDATAへのポインタ
  * @retval  MAP_MATRIXへのポインタ
  */
 //--------------------------------------------------------------
@@ -625,9 +625,9 @@ MAP_MATRIX * GAMEDATA_GetMapMatrix(GAMEDATA * gamedata)
 
 //--------------------------------------------------------------
 /**
- * @brief	季節の取得
- * @param   gamedata		GAMEDATAへのポインタ
- * @return	u8	季節ID（gamesystem/pm_season.h参照）
+ * @brief 季節の取得
+ * @param   gamedata    GAMEDATAへのポインタ
+ * @return  u8  季節ID（gamesystem/pm_season.h参照）
  */
 //--------------------------------------------------------------
 u8 GAMEDATA_GetSeasonID(const GAMEDATA *gamedata)
@@ -637,9 +637,9 @@ u8 GAMEDATA_GetSeasonID(const GAMEDATA *gamedata)
 
 //--------------------------------------------------------------
 /**
- * @brief	季節のセット
- * @param   gamedata	GAMEDATAへのポインタ
- * @param	season_id	季節ID（gamesystem/pm_season.h参照）
+ * @brief 季節のセット
+ * @param   gamedata  GAMEDATAへのポインタ
+ * @param season_id 季節ID（gamesystem/pm_season.h参照）
  *
  * 実際の機能として必要かどうかは疑問だがデバッグ用として追加
  */
@@ -652,9 +652,9 @@ void GAMEDATA_SetSeasonID(GAMEDATA *gamedata, u8 season_id)
 
 //--------------------------------------------------------------
 /**
- * @brief	  フィールド下画面の取得
- * @param   gamedata		GAMEDATAへのポインタ
- * @return	subscreen_mode
+ * @brief   フィールド下画面の取得
+ * @param   gamedata    GAMEDATAへのポインタ
+ * @return  subscreen_mode
  */
 //--------------------------------------------------------------
 u8 GAMEDATA_GetSubScreenMode(const GAMEDATA *gamedata)
@@ -664,9 +664,9 @@ u8 GAMEDATA_GetSubScreenMode(const GAMEDATA *gamedata)
 
 //--------------------------------------------------------------
 /**
- * @brief	  フィールド下画面の設定
- * @param   gamedata	GAMEDATAへのポインタ
- * @param	  subscreen_mode
+ * @brief   フィールド下画面の設定
+ * @param   gamedata  GAMEDATAへのポインタ
+ * @param   subscreen_mode
  */
 //--------------------------------------------------------------
 void GAMEDATA_SetSubScreenMode(GAMEDATA *gamedata, u8 subscreen_mode)
@@ -676,9 +676,9 @@ void GAMEDATA_SetSubScreenMode(GAMEDATA *gamedata, u8 subscreen_mode)
 }
 //--------------------------------------------------------------
 /**
- * @brief	  フィールド下画面タイプの取得
- * @param   gamedata		GAMEDATAへのポインタ
- * @return	subscreen_type
+ * @brief   フィールド下画面タイプの取得
+ * @param   gamedata    GAMEDATAへのポインタ
+ * @return  subscreen_type
  */
 //--------------------------------------------------------------
 const u8 GAMEDATA_GetSubScreenType(const GAMEDATA *gamedata)
@@ -688,9 +688,9 @@ const u8 GAMEDATA_GetSubScreenType(const GAMEDATA *gamedata)
 
 //--------------------------------------------------------------
 /**
- * @brief	  フィールド下画面種類の設定
- * @param   gamedata	GAMEDATAへのポインタ
- * @param	  subscreen_type
+ * @brief   フィールド下画面種類の設定
+ * @param   gamedata  GAMEDATAへのポインタ
+ * @param   subscreen_type
  */
 //--------------------------------------------------------------
 void GAMEDATA_SetSubScreenType(GAMEDATA *gamedata, const u8 subscreen_type)
@@ -700,9 +700,9 @@ void GAMEDATA_SetSubScreenType(GAMEDATA *gamedata, const u8 subscreen_type)
 
 //------------------------------------------------------------------
 /**
- * @brief	  フレーム分割動作で動作する場合の許可フラグ設定
- * @param   gamedata	GAMEDATAへのポインタ
- * @param	  bEnable 分割する場合TRUE
+ * @brief   フレーム分割動作で動作する場合の許可フラグ設定
+ * @param   gamedata  GAMEDATAへのポインタ
+ * @param   bEnable 分割する場合TRUE
  */
 //------------------------------------------------------------------
 void GAMEDATA_SetFrameSpritEnable(GAMEDATA *gamedata,BOOL bEnable)
@@ -715,8 +715,8 @@ void GAMEDATA_SetFrameSpritEnable(GAMEDATA *gamedata,BOOL bEnable)
 
 //------------------------------------------------------------------
 /**
- * @brief	  フレーム分割動作で動作する場合のカウンタリセット
- * @param   gamedata	GAMEDATAへのポインタ
+ * @brief   フレーム分割動作で動作する場合のカウンタリセット
+ * @param   gamedata  GAMEDATAへのポインタ
  */
 //------------------------------------------------------------------
 void GAMEDATA_ResetFrameSpritCount(GAMEDATA *gamedata)
@@ -726,8 +726,8 @@ void GAMEDATA_ResetFrameSpritCount(GAMEDATA *gamedata)
 
 //------------------------------------------------------------------
 /**
- * @brief	  フレーム分割動作で動作する場合のフレーム
- * @param   gamedata	GAMEDATAへのポインタ
+ * @brief   フレーム分割動作で動作する場合のフレーム
+ * @param   gamedata  GAMEDATAへのポインタ
  */
 //------------------------------------------------------------------
 u8 GAMEDATA_GetAndAddFrameSpritCount(GAMEDATA *gamedata)
@@ -742,8 +742,8 @@ u8 GAMEDATA_GetAndAddFrameSpritCount(GAMEDATA *gamedata)
 
 //------------------------------------------------------------------
 /**
- * @brief	  フレーム分割動作で動作しているかどうか
- * @param   gamedata	GAMEDATAへのポインタ
+ * @brief   フレーム分割動作で動作しているかどうか
+ * @param   gamedata  GAMEDATAへのポインタ
  * @return  動作している場合TRUE
  */
 //------------------------------------------------------------------
@@ -754,8 +754,8 @@ BOOL GAMEDATA_IsFrameSpritMode(GAMEDATA *gamedata)
 
 //------------------------------------------------------------------
 /**
- * @brief	  フィールドマップ歩数カウント取得
- * @param   gamedata	GAMEDATAへのポインタ
+ * @brief   フィールドマップ歩数カウント取得
+ * @param   gamedata  GAMEDATAへのポインタ
  * @return  int 歩数カウント
  */
 //------------------------------------------------------------------
@@ -766,8 +766,8 @@ int GAMEDATA_GetFieldMapWalkCount(GAMEDATA *gamedata)
 
 //------------------------------------------------------------------
 /**
- * @brief	  フィールドマップ歩数カウントセット
- * @param   gamedata	GAMEDATAへのポインタ
+ * @brief   フィールドマップ歩数カウントセット
+ * @param   gamedata  GAMEDATAへのポインタ
  * @param   count セットするカウント
  * @return  nothing
  */
@@ -780,7 +780,7 @@ void GAMEDATA_SetFieldMapWalkCount(GAMEDATA *gamedata,int count)
 //--------------------------------------------------------------
 /**
  * @brief FIELD_SOUND取得
- * @param   gamedata	GAMEDATAへのポインタ
+ * @param   gamedata  GAMEDATAへのポインタ
  * @return  FIELD_SOUND*
  */
 //--------------------------------------------------------------
@@ -792,7 +792,7 @@ FIELD_SOUND * GAMEDATA_GetFieldSound( GAMEDATA *gamedata )
 //--------------------------------------------------------------
 /**
  * @brief   ENCOUNT_WORK取得
- * @param   gamedata	GAMEDATAへのポインタ
+ * @param   gamedata  GAMEDATAへのポインタ
  * @return  ENCOUNT_WORK*
  */
 //--------------------------------------------------------------
@@ -803,7 +803,7 @@ ENCOUNT_WORK* GAMEDATA_GetEncountWork( GAMEDATA *gamedata )
 //--------------------------------------------------------------
 /**
  * @brief 最新の戦闘結果を取得
- * @param   gamedata	GAMEDATAへのポインタ
+ * @param   gamedata  GAMEDATAへのポインタ
  * @return  u32 最新の戦闘結果（include/battle/battle.hのBtlResult）
  */
 //--------------------------------------------------------------
@@ -815,7 +815,7 @@ u32 GAMEDATA_GetLastBattleResult( const GAMEDATA * gamedata )
 //--------------------------------------------------------------
 /**
  * @brief 最新の戦闘結果をセット
- * @param   gamedata	GAMEDATAへのポインタ
+ * @param   gamedata  GAMEDATAへのポインタ
  * @param btl_result  戦闘結果（include/battle/battle.hのBtlResult）
  */
 //--------------------------------------------------------------
@@ -827,7 +827,7 @@ void GAMEDATA_SetLastBattleResult( GAMEDATA * gamedata, u32 btl_result )
 //--------------------------------------------------------------
 /**
  * @brief ビーコンステータスワーク取得
- * @param   gamedata	GAMEDATAへのポインタ
+ * @param   gamedata  GAMEDATAへのポインタ
  * @param   BEACON_STATUS*
  */
 //--------------------------------------------------------------
@@ -839,14 +839,14 @@ BEACON_STATUS* GAMEDATA_GetBeaconStatus( GAMEDATA * gamedata )
 //============================================================================================
 //
 //
-//	PLAYER_WORK用関数
-//	※player_work.cを作成して移動させるかも
+//  PLAYER_WORK用関数
+//  ※player_work.cを作成して移動させるかも
 //
 //
 //============================================================================================
 //------------------------------------------------------------------
 /**
- * @brief	PLAYER_WORK初期化
+ * @brief PLAYER_WORK初期化
  */
 //------------------------------------------------------------------
 void PLAYERWORK_init(PLAYER_WORK * player)
@@ -940,9 +940,9 @@ u16 PLAYERWORK_getDirection(const PLAYER_WORK * player)
 
 //--------------------------------------------------------------
 /**
- * @brief	方向タイプで方向角度を設定する
- * @param	player		PLAYER_WORKへのポインタ
- * @param	dir_type	方向を指定する値(DIR_～)
+ * @brief 方向タイプで方向角度を設定する
+ * @param player    PLAYER_WORKへのポインタ
+ * @param dir_type  方向を指定する値(DIR_～)
  */
 //--------------------------------------------------------------
 void PLAYERWORK_setDirection_Type(PLAYER_WORK * player, u16 dir_type)
@@ -962,23 +962,23 @@ void PLAYERWORK_setDirection_Type(PLAYER_WORK * player, u16 dir_type)
 
 //--------------------------------------------------------------
 /**
- * @brief	方向角度の方向タイプを取得する
- * @param	player	PLAYER_WORKへのポインタ
- * @return	方向を指定する値(DIR_～)
+ * @brief 方向角度の方向タイプを取得する
+ * @param player  PLAYER_WORKへのポインタ
+ * @return  方向を指定する値(DIR_～)
  */
 //--------------------------------------------------------------
 u16 PLAYERWORK_getDirection_Type(const PLAYER_WORK * player)
 {
   u16 dir = DIR_UP;
   
-	if( (player->direction>0x2000) && (player->direction<0x6000) ){
-		dir = DIR_LEFT;
-	}else if( (player->direction >= 0x6000) && (player->direction <= 0xa000) ){
-		dir = DIR_DOWN;
-	}else if( (player->direction > 0xa000)&&(player->direction < 0xe000) ){
-		dir = DIR_RIGHT;
-	}
-	return( dir );
+  if( (player->direction>0x2000) && (player->direction<0x6000) ){
+    dir = DIR_LEFT;
+  }else if( (player->direction >= 0x6000) && (player->direction <= 0xa000) ){
+    dir = DIR_DOWN;
+  }else if( (player->direction > 0xa000)&&(player->direction < 0xe000) ){
+    dir = DIR_RIGHT;
+  }
+  return( dir );
 }
 
 //--------------------------------------------------------------
@@ -1028,7 +1028,7 @@ u16 PLAYERWORK_GetOBJCodeFix( const PLAYER_WORK *player )
 //==================================================================
 /**
  * @brief   FIELD_STATUSの取得
- * @param   gamedata		GAMEDATAへのポインタ
+ * @param   gamedata    GAMEDATAへのポインタ
  * @return  FIELD_STATUS
  */
 //==================================================================
@@ -1041,9 +1041,9 @@ FIELD_STATUS * GAMEDATA_GetFieldStatus(GAMEDATA * gamedata)
 /**
  * 侵入接続人数取得
  *
- * @param   gamedata		GAMEDATAへのポインタ
+ * @param   gamedata    GAMEDATAへのポインタ
  *
- * @retval  int		接続人数
+ * @retval  int   接続人数
  */
 //==================================================================
 int GAMEDATA_GetIntrudeNum(const GAMEDATA *gamedata)
@@ -1055,9 +1055,9 @@ int GAMEDATA_GetIntrudeNum(const GAMEDATA *gamedata)
 /**
  * 侵入時の自分のNetIDを取得
  *
- * @param   gamedata		GAMEDATAへのポインタ
+ * @param   gamedata    GAMEDATAへのポインタ
  *
- * @retval  int		自分のNetID
+ * @retval  int   自分のNetID
  */
 //==================================================================
 int GAMEDATA_GetIntrudeMyID(const GAMEDATA *gamedata)
@@ -1069,9 +1069,9 @@ int GAMEDATA_GetIntrudeMyID(const GAMEDATA *gamedata)
 /**
  * 侵入時の自分のNetIDをセット
  *
- * @param   gamedata		GAMEDATAへのポインタ
+ * @param   gamedata    GAMEDATAへのポインタ
  *
- * @retval  int		自分のNetID
+ * @retval  int   自分のNetID
  */
 //==================================================================
 void GAMEDATA_SetIntrudeMyID(GAMEDATA *gamedata, int intrude_my_id)
@@ -1084,7 +1084,7 @@ void GAMEDATA_SetIntrudeMyID(GAMEDATA *gamedata, int intrude_my_id)
 /**
  * 裏フィールド侵入フラグを取得
  *
- * @param   gamedata		GAMEDATAへのポインタ
+ * @param   gamedata    GAMEDATAへのポインタ
  *
  * @retval  u8  TRUE:裏フィールド浸入中　FALSE:表フィールド
  */
@@ -1098,7 +1098,7 @@ int GAMEDATA_GetIntrudeReverseArea(const GAMEDATA *gamedata)
 /**
  * 裏フィールド侵入フラグをセット
  *
- * @param   gamedata		GAMEDATAへのポインタ
+ * @param   gamedata    GAMEDATAへのポインタ
  * @param   reverse_flag  TRUE:裏フィールド侵入中
  */
 //==================================================================
@@ -1110,36 +1110,36 @@ void GAMEDATA_SetIntrudeReverseArea(GAMEDATA *gamedata, u8 reverse_flag)
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	常時通信モードフラグ取得
+ *  @brief  常時通信モードフラグ取得
  *
- *	@param	gamedata		GAMEDATAへのポインタ
- *	
- *	@return	TRUE常時通信モードON FALSE常時通信モードOFF
+ *  @param  gamedata    GAMEDATAへのポインタ
+ *  
+ *  @return TRUE常時通信モードON FALSE常時通信モードOFF
  */
 //-----------------------------------------------------------------------------
 BOOL GAMEDATA_GetAlwaysNetFlag( const GAMEDATA *gamedata )
-{	
-	return CONFIG_GetNetworkSearchMode( gamedata->config ) == NETWORK_SEARCH_ON;
+{ 
+  return CONFIG_GetNetworkSearchMode( gamedata->config ) == NETWORK_SEARCH_ON;
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief	常時通信モードフラグ設定
+ *  @brief  常時通信モードフラグ設定
  *
- *	@param	gamedata		GAMEDATAへのポインタ
- *	@param	is_on				TRUEならば常時通信モードON FALSEならば常時通信モードOFF
+ *  @param  gamedata    GAMEDATAへのポインタ
+ *  @param  is_on       TRUEならば常時通信モードON FALSEならば常時通信モードOFF
  */
 //-----------------------------------------------------------------------------
 void GAMEDATA_SetAlwaysNetFlag( GAMEDATA *gamedata, BOOL is_on )
-{	
-	NETWORK_SEARCH_MODE mode	= is_on? NETWORK_SEARCH_ON: NETWORK_SEARCH_OFF;
-	CONFIG_SetNetworkSearchMode( gamedata->config, mode );
+{ 
+  NETWORK_SEARCH_MODE mode  = is_on? NETWORK_SEARCH_ON: NETWORK_SEARCH_OFF;
+  CONFIG_SetNetworkSearchMode( gamedata->config, mode );
 }
 
 //==================================================================
 /**
  * フィールドビーコンメッセージデータ取得
  *
- * @param   gamedata		GAMEDATAへのポインタ
+ * @param   gamedata    GAMEDATAへのポインタ
  *
  * @retval  
  */
@@ -1151,69 +1151,69 @@ FIELD_BEACON_MSG_DATA* GAMEDATA_GetFieldBeaconMessageData( GAMEDATA *gamedata )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	Yボタン登録設定
+ *  @brief  Yボタン登録設定
  *
- *  @param  gamedata		GAMEDATAへのポインタ
- *  @param	shortcutID	Yボタン登録するID
- *  @param	is_on				TRUEならばYボタン登録	FALSEならば解除
+ *  @param  gamedata    GAMEDATAへのポインタ
+ *  @param  shortcutID  Yボタン登録するID
+ *  @param  is_on       TRUEならばYボタン登録 FALSEならば解除
  */
 //----------------------------------------------------------------------------
 void GAMEDATA_SetShortCut( GAMEDATA *gamedata, SHORTCUT_ID shortcutID, BOOL is_on )
-{	
-	SAVE_CONTROL_WORK*	p_sv	= GAMEDATA_GetSaveControlWork(gamedata);
+{ 
+  SAVE_CONTROL_WORK*  p_sv  = GAMEDATA_GetSaveControlWork(gamedata);
 
-	SHORTCUT *p_shortcut	=  SaveData_GetShortCut( p_sv );
+  SHORTCUT *p_shortcut  =  SaveData_GetShortCut( p_sv );
 
-	SHORTCUT_SetRegister( p_shortcut, shortcutID, is_on );	
+  SHORTCUT_SetRegister( p_shortcut, shortcutID, is_on );  
 }
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	Yボタン登録設定
+ *  @brief  Yボタン登録設定
  *
- *  @param  gamedata		GAMEDATAへのポインタ
- *  @param	shortcutID	Yボタン登録するID
- *  @retval	TRUEならばYBTNに登録してある	FALSEならば登録していない
+ *  @param  gamedata    GAMEDATAへのポインタ
+ *  @param  shortcutID  Yボタン登録するID
+ *  @retval TRUEならばYBTNに登録してある  FALSEならば登録していない
  */
 //----------------------------------------------------------------------------
 BOOL GAMEDATA_GetShortCut( const GAMEDATA *gamedata, SHORTCUT_ID shortcutID )
-{	
-	const SAVE_CONTROL_WORK*	cp_sv	= GAMEDATA_GetSaveControlWorkConst(gamedata);
+{ 
+  const SAVE_CONTROL_WORK*  cp_sv = GAMEDATA_GetSaveControlWorkConst(gamedata);
 
-	const SHORTCUT *cp_shortcut	=  SaveData_GetShortCutConst( cp_sv );
+  const SHORTCUT *cp_shortcut =  SaveData_GetShortCutConst( cp_sv );
 
-	return SHORTCUT_GetRegister( cp_shortcut, shortcutID );	
+  return SHORTCUT_GetRegister( cp_shortcut, shortcutID ); 
 }
 
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	Yボタン用メニューのカーソルセット
+ *  @brief  Yボタン用メニューのカーソルセット
  *
- *	@param	gamedata	ゲームデータ
- *	@param	cursor		カーソル
+ *  @param  gamedata  ゲームデータ
+ *  @param  cursor    カーソル
  */
 //-----------------------------------------------------------------------------
 void GAMEDATA_SetShortCutCursor( GAMEDATA *gamedata, SHORTCUT_CURSOR *cursor )
-{	
-	gamedata->shortcut_cursor	= *cursor;
+{ 
+  gamedata->shortcut_cursor = *cursor;
 }
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	Yボタン用メニューのカーソル取得
+ *  @brief  Yボタン用メニューのカーソル取得
  *
- *	@param	gamedata	ゲームデータ
- *	@retval	cursor		カーソル
+ *  @param  gamedata  ゲームデータ
+ *  @retval cursor    カーソル
  */
 //-----------------------------------------------------------------------------
 SHORTCUT_CURSOR * GAMEDATA_GetShortCutCursor( GAMEDATA *gamedata )
-{	
-	return &gamedata->shortcut_cursor;
+{ 
+  return &gamedata->shortcut_cursor;
 }
 
 //==============================================================================
-//	ゲームデータが持つ情報を元にセーブ
+//  ゲームデータが持つ情報を元にセーブ
 //==============================================================================
 ///この関数はここでしか使用してはいけないので直接定義
 extern WIFI_LIST* SaveData_GetWifiListData(SAVE_CONTROL_WORK* pSave);
@@ -1222,23 +1222,23 @@ extern WIFI_LIST* SaveData_GetWifiListData(SAVE_CONTROL_WORK* pSave);
 /**
  * @brief   セーブデータワークからゲームデータが持つ情報をロードする
  *
- * @param   gamedata		ゲームデータへのポインタ
+ * @param   gamedata    ゲームデータへのポインタ
  */
 //--------------------------------------------------------------
 static void GAMEDATA_SaveDataLoad(GAMEDATA *gamedata)
 {
   if(SaveControl_NewDataFlagGet(gamedata->sv_control_ptr) == TRUE){
-    return;	//セーブデータが無いので何も読み込まない
+    return; //セーブデータが無いので何も読み込まない
   }
 
-  {	//PLAYER_WORK
+  { //PLAYER_WORK
     PLAYER_WORK *pw;
     pw = GAMEDATA_GetMyPlayerWork(gamedata);
     SaveData_PlayerDataLoad(gamedata->sv_control_ptr, pw);
     SaveData_SituationDataLoad(gamedata->sv_control_ptr, pw);
   }
 
-  {	//MMDL
+  { //MMDL
     MMDLSYS *mmdlsys = GAMEDATA_GetMMdlSys(gamedata);
     MMDL_SAVEDATA *pw = SaveControl_DataPtrGet(gamedata->sv_control_ptr,GMDATA_ID_MMDL);
     MMDL_SAVEDATA_Load( mmdlsys, pw );
@@ -1275,20 +1275,20 @@ static void GAMEDATA_SaveDataLoad(GAMEDATA *gamedata)
 /**
  * @brief   ゲームデータが持つ情報を元にセーブデータのワークを更新する
  *
- * @param   gamedata		ゲームデータへのポインタ
+ * @param   gamedata    ゲームデータへのポインタ
  *
  * セーブするデータを、セーブワークから直接使用せずに、別ワークにコピーして使用しているものが対象
  */
 //--------------------------------------------------------------
 static void GAMEDATA_SaveDataUpdate(GAMEDATA *gamedata)
 {
-  {	//PLAYER_WORK
+  { //PLAYER_WORK
     PLAYER_WORK *pw = GAMEDATA_GetMyPlayerWork(gamedata);
     SaveData_PlayerDataUpdate(gamedata->sv_control_ptr, pw);
     SaveData_SituationDataUpdate(gamedata->sv_control_ptr, pw);
   }
 
-  {	//MMDL
+  { //MMDL
     MMDLSYS *mmdlsys = GAMEDATA_GetMMdlSys(gamedata);
     MMDL_SAVEDATA *pw = SaveControl_DataPtrGet(gamedata->sv_control_ptr,GMDATA_ID_MMDL);
     MMDL_SAVEDATA_Save( mmdlsys, pw );
@@ -1325,7 +1325,7 @@ static void GAMEDATA_SaveDataUpdate(GAMEDATA *gamedata)
 /**
  * @brief   ゲームデータが持つ情報を元にセーブを実行
  *
- * @param   gamedata		ゲームデータへのポインタ
+ * @param   gamedata    ゲームデータへのポインタ
  *
  * @retval  セーブ結果
  */
@@ -1353,7 +1353,7 @@ SAVE_RESULT GAMEDATA_Save(GAMEDATA *gamedata)
 /**
  * @brief   ゲームデータが持つ情報を元に分割セーブを開始
  *
- * @param   gamedata		ゲームデータへのポインタ
+ * @param   gamedata    ゲームデータへのポインタ
  *
  * @retval  none
  */
@@ -1375,7 +1375,7 @@ void GAMEDATA_SaveAsyncStart(GAMEDATA *gamedata)
 /**
  * @brief   ゲームデータが持つ情報を元に分割セーブを実行
  *
- * @param   gamedata		ゲームデータへのポインタ
+ * @param   gamedata    ゲームデータへのポインタ
  *
  * @retval  セーブ結果
  */
@@ -1396,9 +1396,9 @@ SAVE_RESULT GAMEDATA_SaveAsyncMain(GAMEDATA *gamedata)
 
 //--------------------------------------------------------------
 /**
- * @brief	  セーブコントロールワークを取得する
- * @param	  gamedata			GAMEDATAへのポインタ
- * @return	SAVE_CONTROL_WORK	のポインタ
+ * @brief   セーブコントロールワークを取得する
+ * @param   gamedata      GAMEDATAへのポインタ
+ * @return  SAVE_CONTROL_WORK のポインタ
  */
 //--------------------------------------------------------------
 
@@ -1409,9 +1409,9 @@ SAVE_CONTROL_WORK* GAMEDATA_GetSaveControlWork(GAMEDATA * gamedata)
 
 //--------------------------------------------------------------
 /**
- * @brief	  セーブコントロールワークを取得する
- * @param	  gamedata			GAMEDATAへのポインタ
- * @return	SAVE_CONTROL_WORK	のポインタ
+ * @brief   セーブコントロールワークを取得する
+ * @param   gamedata      GAMEDATAへのポインタ
+ * @return  SAVE_CONTROL_WORK のポインタ
  */
 //--------------------------------------------------------------
 const SAVE_CONTROL_WORK* GAMEDATA_GetSaveControlWorkConst(const GAMEDATA * gamedata)
@@ -1422,49 +1422,49 @@ const SAVE_CONTROL_WORK* GAMEDATA_GetSaveControlWorkConst(const GAMEDATA * gamed
 //----------------------------------------------------------
 /**
  * @brief   ギミックデータへのポインタ取得
- * @param	  gamedata			GAMEDATAへのポインタ
- * @return	ギミックデータへのポインタ
+ * @param   gamedata      GAMEDATAへのポインタ
+ * @return  ギミックデータへのポインタ
  */
 //----------------------------------------------------------
 GIMMICKWORK * GAMEDATA_GetGimmickWork(GAMEDATA * gamedata)
 {
-	return &gamedata->GimmickWork;
+  return &gamedata->GimmickWork;
 }
 
 //----------------------------------------------------------
 /**
  * @brief   遊覧船へのポインタ取得
- * @param	  gamedata			GAMEDATAへのポインタ
- * @return	遊覧船ワークへのポインタ
+ * @param   gamedata      GAMEDATAへのポインタ
+ * @return  遊覧船ワークへのポインタ
  */
 //----------------------------------------------------------
 PL_BOAT_WORK_PTR *GAMEDATA_GetPlBoatWorkPtr(GAMEDATA * gamedata)
 {
-	return &gamedata->PlBoatWorkPtr;
+  return &gamedata->PlBoatWorkPtr;
 }
 
 //----------------------------------------------------------
 /**
  * @brief   バトルサブウェイワーク取得
- * @param	  gamedata			GAMEDATAへのポインタ
- * @return	BSUBWAY_SCRWORK*
+ * @param   gamedata      GAMEDATAへのポインタ
+ * @return  BSUBWAY_SCRWORK*
  */
 //----------------------------------------------------------
 BSUBWAY_SCRWORK * GAMEDATA_GetBSubwayScrWork(GAMEDATA * gamedata)
 {
-	return gamedata->bsubway_scrwork;
+  return gamedata->bsubway_scrwork;
 }
 
 //----------------------------------------------------------
 /**
  * @brief   バトルサブウェイワークセット
- * @param	  gamedata			GAMEDATAへのポインタ
- * @return	nothing
+ * @param   gamedata      GAMEDATAへのポインタ
+ * @return  nothing
  */
 //----------------------------------------------------------
 void GAMEDATA_SetBSubwayScrWork(GAMEDATA * gamedata, BSUBWAY_SCRWORK *bsw_scr )
 {
-	gamedata->bsubway_scrwork = bsw_scr;
+  gamedata->bsubway_scrwork = bsw_scr;
 }
 
 //----------------------------------------------------------
@@ -1495,12 +1495,26 @@ WIFI_NEGOTIATION_SAVEDATA * GAMEDATA_GetWifiNegotiation(GAMEDATA * gamedata)
 /**
  * サポートデータへのポインタ取得
  *
- * @param   gamedata		
+ * @param   gamedata    
  *
- * @retval  COMM_PLAYER_SUPPORT *		
+ * @retval  COMM_PLAYER_SUPPORT *   
  */
 //==================================================================
 COMM_PLAYER_SUPPORT * GAMEDATA_GetCommPlayerSupportPtr(GAMEDATA * gamedata)
 {
   return gamedata->comm_player_support;
 }
+
+
+//=============================================================================================
+/**
+ * @brief RECORDワークポインタ取得
+ * @param   gamedata    GAMEDATAへのポインタ
+ * @retval  RECORD *    
+ */
+//=============================================================================================
+RECORD *GAMEDATA_GetRecordPtr(GAMEDATA * gamedata)
+{
+  return SaveControl_DataPtrGet( gamedata->sv_control_ptr, GMDATA_ID_RECORD);
+}
+
