@@ -2863,7 +2863,7 @@ static void handler_KodawariHachimaki_Pow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLO
     WazaID waza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
     if( WAZADATA_GetDamageType(waza) == WAZADATA_DMG_PHYSIC )
     {
-      BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, FX32_CONST(2) );
+      BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, FX32_CONST(1.5) );
     }
   }
 }
@@ -2892,7 +2892,7 @@ static void handler_KodawariMegane_Pow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_W
     WazaID waza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
     if( WAZADATA_GetDamageType(waza) == WAZADATA_DMG_SPECIAL )
     {
-      BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, FX32_CONST(2) );
+      BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, FX32_CONST(1.5) );
     }
   }
 }
