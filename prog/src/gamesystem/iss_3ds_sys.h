@@ -1,11 +1,9 @@
 /////////////////////////////////////////////////////////////////////////////////
 /**
- *
- * @brief 3Dサウンドシステム
- * @file iss_3d_sys.h
+ * @brief  橋ISSシステム ( 3Dサウンドシステム )
+ * @file   iss_3d_sys.h
  * @author obata
- * @date 2009.09.08
- * 
+ * @date   2009.09.08
  */
 /////////////////////////////////////////////////////////////////////////////////
 #pragma once 
@@ -54,9 +52,10 @@ extern void         ISS_3DS_SYS_Delete( ISS_3DS_SYS* system );
 extern void ISS_3DS_SYS_Main( ISS_3DS_SYS* system );
 
 // 制御
-extern void ISS_3DS_SYS_On        ( ISS_3DS_SYS* system );
-extern void ISS_3DS_SYS_Off       ( ISS_3DS_SYS* system ); 
-extern void ISS_3DS_SYS_ZoneChange( ISS_3DS_SYS* system );
+extern void ISS_3DS_SYS_On             ( ISS_3DS_SYS* system );
+extern void ISS_3DS_SYS_Off            ( ISS_3DS_SYS* system ); 
+extern void ISS_3DS_SYS_ZoneChange     ( ISS_3DS_SYS* system );
+extern void ISS_3DS_SYS_SetMasterVolume( ISS_3DS_SYS* system, u8 volume );
 
 
 //===============================================================================

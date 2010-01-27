@@ -1,6 +1,6 @@
 /////////////////////////////////////////////////////////////////////////////////
 /**
- * @brief  橋ISSシステム(3Dサウンドシステム)
+ * @brief  橋ISSシステム ( 3Dサウンドシステム )
  * @file   iss_3d_sys.c
  * @author obata
  * @date   2009.09.08
@@ -20,6 +20,18 @@
 
 // 参照中データインデックスの無効値
 #define CURRENT_DATA_NONE (0xff)
+
+// 操作対象トラックの初期化ボリューム
+#define INITIAL_VOLUME (0)
+
+// 最大ボリューム
+#define MAX_VOLUME (127)
+
+// マスターボリュームの変更速度
+#define MASTER_VOLUME_FADE_SPEED (2)
+
+// 絶対値取得マクロ
+#define ABS(n) (n>0 ? n : -n)
 
 
 //===============================================================================
@@ -55,6 +67,10 @@ struct _ISS_3DS_SYS
 {
   HEAPID heapID;
   BOOL   boot;    // 起動しているかどうか
+
+  u8 masterVolume;           // マスターボリューム ( 設定値 )
+  u8 practicalMasterVolume;  // マスターボリューム ( 実行値 )
+  u8 masterVolumeFadeSpeed;  // マスターボリュームの変更速度
 
   VecFx32 observerPos;        // 観測者の座標
   VecFx32 observerTargetPos;  // 観測者の注視点座標
@@ -95,6 +111,9 @@ static void UpdateTrackPan   ( const ISS_3DS_SYS* system, ISS3DS_UNIT_INDEX unit
 static int  CalcTrackVolume  ( const ISS_3DS_UNIT* unit, const VecFx32* observerPos );
 static int  CalcTrackPan     ( const ISS_3DS_UNIT* unit, const VecFx32* observerPos, 
                                const VecFx32* observerTargetPos );
+// マスターボリューム
+static void FadePracticalMasterVolume( ISS_3DS_SYS* system );
+static u8   AdjustByMasterVolume     ( const ISS_3DS_SYS* system, u8 volume );
 // デバッグ
 static void DebugPrint_unit( const ISS_3DS_UNIT* unit );
 static void DebugPrint_systemData( const ISS_3DS_SYS* system );
@@ -123,6 +142,9 @@ ISS_3DS_SYS* ISS_3DS_SYS_Create( HEAPID heapID )
   // 初期化
   system->heapID = heapID;
   system->boot   = FALSE;
+  system->masterVolume = MAX_VOLUME;
+  system->practicalMasterVolume = MAX_VOLUME;
+  system->masterVolumeFadeSpeed = MASTER_VOLUME_FADE_SPEED;
   VEC_Set( &(system->observerPos), 0, 0, 0 );
   VEC_Set( &(system->observerTargetPos), 0, 0, 0 );
   InitAllUnit( system );
@@ -198,6 +220,23 @@ void ISS_3DS_SYS_Off( ISS_3DS_SYS* system )
 void ISS_3DS_SYS_ZoneChange( ISS_3DS_SYS* system )
 {
   ZoneChange( system );
+}
+
+//-------------------------------------------------------------------------------
+/**
+ * @brief マスターボリュームを設定する
+ *
+ * @param system
+ * @param volume 設定するボリューム値 [0, 127]
+ */
+//-------------------------------------------------------------------------------
+void ISS_3DS_SYS_SetMasterVolume( ISS_3DS_SYS* system, u8 volume )
+{
+  // ボリュームを補正
+  if( MAX_VOLUME < volume ){ volume = MAX_VOLUME; }
+
+  // 設定
+  system->masterVolume( volume );
 }
 
 
@@ -422,7 +461,7 @@ static void InitAllUnit( ISS_3DS_SYS* system )
   for( unitIdx=ISS3DS_UNIT_TRACK01; unitIdx < ISS3DS_UNIT_NUM; unitIdx++ )
   {
     system->unit[ unitIdx ].active    = FALSE;
-    system->unit[ unitIdx ].maxVolume = 127;
+    system->unit[ unitIdx ].maxVolume = MAX_VOLUME;
     system->unit[ unitIdx ].trackBit  = ( 1 << unitIdx );
   }
 
@@ -572,6 +611,9 @@ static void SystemMain( ISS_3DS_SYS* system )
   // 起動していない
   if( system->boot == FALSE ){ return; }
 
+  // マスターボリューム更新
+  FadePracticalMasterVolume( system );
+
   // ボリュームとパンを更新
   for( unitIdx=ISS3DS_UNIT_TRACK01; unitIdx < ISS3DS_UNIT_NUM; unitIdx++ )
   {
@@ -612,7 +654,7 @@ static void InitTrackVolume( const ISS_3DS_SYS* system )
 
   // ボリューム初期化
   systemData = &( system->systemData[ system->currentSysDataIdx ] );
-  PMSND_ChangeBGMVolume( systemData->holdTrackBit, 0 );
+  PMSND_ChangeBGMVolume( systemData->holdTrackBit, INITIAL_VOLUME );
 }
 
 //-------------------------------------------------------------------------------
@@ -635,6 +677,7 @@ static void UpdateTrackVolume( const ISS_3DS_SYS* system, ISS3DS_UNIT_INDEX unit
 
   // ボリューム更新
   volume = CalcTrackVolume( unit, &(system->observerPos) ); 
+  volume = AdjustByMasterVolume( system, volume );
   PMSND_ChangeBGMVolume( unit->trackBit, volume );
 
   // DEBUG:
@@ -777,6 +820,68 @@ static int CalcTrackPan( const ISS_3DS_UNIT* unit, const VecFx32* observerPos, c
   
   return pan;
 } 
+
+//-------------------------------------------------------------------------------
+/**
+ * @brief マスターボリュームの実行値を更新する
+ *
+ * @param system
+ */
+//-------------------------------------------------------------------------------
+static void FadePracticalMasterVolume( ISS_3DS_SYS* system )
+{
+  int diff;
+  int add;
+
+  // 実行値 == 設定値
+  if( system->practicalMasterVolume == system->masterVolume ){ return; }
+
+  // 設定値までの差分
+  diff = system->masterVolume - system->practicalMasterVolume;
+
+  // 加算値を決定
+  if( ABS(diff) < system->masterVolumeFadeSpeed )
+  {
+    add = diff;
+  }
+  else if( diff < 0 )
+  {
+    add = -( system->masterVolumeFadeSpeed );
+  }
+  else
+  {
+    add = system->masterVolumeFadeSpeed;
+  }
+
+  // マスターボリューム ( 実行値 ) 更新
+  system->practicalMasterVolume += add;
+
+  // DEBUG:
+  OS_TFPrintf( PRINT_TARGET, 
+               "ISS-B: update master volume ==> %d\n", system->practicalMasterVolume );
+}
+
+//-------------------------------------------------------------------------------
+/**
+ * @brief マスターボリュームによる補正をかける
+ *
+ * @param system
+ * @param volume 補正をかける前の音量
+ *
+ * @return 補正をかけた後の音量
+ */
+//-------------------------------------------------------------------------------
+static u8 AdjustByMasterVolume( const ISS_3DS_SYS* system, u8 volume )
+{
+  u32 v;
+
+  v = system->practicalMasterVolume * volume;
+  v = v / MAX_VOLUME;
+
+  GF_ASSERT( MAX_VOLUME < v );
+
+  return v;
+}
 
 //-------------------------------------------------------------------------------
 /**
