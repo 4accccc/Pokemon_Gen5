@@ -31,6 +31,8 @@
 #include "font/font.naix"
 #include "fieldmap/fldmmdl_mdlres.naix" //フィールド人物OBJ
 #include "msg/msg_namein.h"
+#include "wifi_unionobj_plt.cdat" //ユニオンOBJのパレット位置
+#include "wifi_unionobj.naix"
 
 //  print
 #include "print/str_tool.h"
@@ -4586,21 +4588,28 @@ static void ICON_Init( ICON_WORK *p_wk, ICON_TYPE type, u32 param1, u32 param2, 
   { 
     ARCID     arcID;
     ARCDATID  plt, chr, cel, anm;
+    u8        plt_src_ofs = 0;
     BOOL      is_comp = FALSE;
     ARCHANDLE * p_handle;
 
     switch( type )
     { 
-    case ICON_TYPE_HERO:
-      /* fallthrough */
     case ICON_TYPE_RIVAL:
       /* fallthrough */
-    case ICON_TYPE_PERSON:
+    case ICON_TYPE_HERO:
       arcID = APP_COMMON_GetArcId();
       plt   = APP_COMMON_GetNull4x4PltArcIdx();
       chr   = APP_COMMON_GetNull4x4CharArcIdx();
       cel   = APP_COMMON_GetNull4x4CellArcIdx( APP_COMMON_MAPPING_128K );
       anm   = APP_COMMON_GetNull4x4AnimeArcIdx( APP_COMMON_MAPPING_128K );
+      break;
+    case ICON_TYPE_PERSON:
+      arcID = ARCID_WIFIUNIONCHAR;
+      plt   = NARC_wifi_unionobj_wf_match_top_trainer_NCLR;
+      plt_src_ofs = sc_wifi_unionobj_plt[param1];
+      chr   = NARC_wifi_unionobj_front00_NCGR+param1;
+      cel   = NARC_wifi_unionobj_front00_NCER;
+      anm   = NARC_wifi_unionobj_front00_NANR;
       break;
     case ICON_TYPE_POKE:
       arcID = ARCID_POKEICON;
@@ -4630,8 +4639,8 @@ static void ICON_Init( ICON_WORK *p_wk, ICON_TYPE type, u32 param1, u32 param2, 
     }
     else
     { 
-      p_wk->plt = GFL_CLGRP_PLTT_Register( p_handle, 
-          plt, CLSYS_DRAW_MAIN, PLT_OBJ_ICON_M*0x20, heapID );
+      p_wk->plt = GFL_CLGRP_PLTT_RegisterEx( p_handle, 
+          plt, CLSYS_DRAW_MAIN, PLT_OBJ_ICON_M*0x20, plt_src_ofs, 1, heapID );
     }
     p_wk->cel = GFL_CLGRP_CELLANIM_Register( p_handle,
         cel, anm, heapID );
@@ -4674,8 +4683,7 @@ static void ICON_Init( ICON_WORK *p_wk, ICON_TYPE type, u32 param1, u32 param2, 
       //@todoライバルのリソースとの下向き番号　主人公は３だが…。
       CLWK_TransNSBTX( p_wk->p_clwk, ARCID_MMDL_RES, NARC_fldmmdl_mdlres_hero_nsbtx, 3, NSBTX_DEF_SX, NSBTX_DEF_SY, 0, CLSYS_DEFREND_MAIN, heapID );
     case ICON_TYPE_PERSON:
-      //@todoトレーナーのリソースとの下向き番号　主人公は３だが…。
-      CLWK_TransNSBTX( p_wk->p_clwk, ARCID_MMDL_RES, NARC_fldmmdl_mdlres_hero_nsbtx, 3, NSBTX_DEF_SX, NSBTX_DEF_SY, 0, CLSYS_DEFREND_MAIN, heapID );
+      GFL_CLACT_WK_SetPlttOffs( p_wk->p_clwk, 0, CLWK_PLTTOFFS_MODE_PLTT_TOP );
       break;
     case ICON_TYPE_POKE:
       GFL_CLACT_WK_SetAnmSeq( p_wk->p_clwk, POKEICON_ANM_HPMAX );
