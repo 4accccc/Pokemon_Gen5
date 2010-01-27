@@ -618,6 +618,21 @@ BOOL ZONEDATA_IsColosseum(u16 zone_id)
     return FALSE;
   }
 }
+
+//------------------------------------------------------------------
+/**
+ * @brief  遊覧船内マップかどうかのチェック
+ * @param  zoneid ゾーン指定ID
+ * @return BOOL ユニオンルームだったらTRUE
+ */
+//------------------------------------------------------------------
+BOOL ZONEDATA_IsPlBoat(u16 zone_id)
+{
+  zone_id = ControlZoneID(zone_id);
+
+  return (zone_id == ZONE_ID_C03R0801);
+}
+
 //==================================================================
 /**
  * パレスマップかどうかのチェック
