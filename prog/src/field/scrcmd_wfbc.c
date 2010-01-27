@@ -223,6 +223,7 @@ VMCMD_RESULT EvCmdWfbc_GetData( VMHANDLE *core, void *wk )
     s16 gx, gy, gz;
     MMDL* p_frontmmdl;
     u32 objid;
+    u32 mmdlid;
     const FIELD_WFBC_CORE_PEOPLE* cp_people_core;
     const FIELD_WFBC_PEOPLE_DATA* cp_people_data;
     const FIELD_WFBC_PEOPLE* cp_people;
@@ -237,6 +238,7 @@ VMCMD_RESULT EvCmdWfbc_GetData( VMHANDLE *core, void *wk )
     if( p_frontmmdl )
     {
       objid = FIELD_WFBC_CORE_GetMMdlNpcID( p_frontmmdl );
+      mmdlid = MMDL_GetOBJID( p_frontmmdl );
 
       // 人物情報取得
       cp_people = FIELD_WFBC_GetPeople( p_wfbc, objid );
@@ -295,6 +297,10 @@ VMCMD_RESULT EvCmdWfbc_GetData( VMHANDLE *core, void *wk )
     // BC　相手とバトル可能かチェック
     case WFBC_GET_PARAM_BC_CHECK_BATTLE:
       (*ret_wk) = FIELD_WFBC_IsBattlePeople( p_wfbc, objid );
+      break;
+    // 話し相手のMMDL OBJID (フィールド上の動作モデルを識別するID)
+    case WFBC_GET_PARAM_MMDL_ID:
+      (*ret_wk) = mmdlid;
       break;
 
     default:

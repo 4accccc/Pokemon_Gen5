@@ -18,7 +18,8 @@
 #define WFBC_GET_PARAM_WF_IS_POKECATCH (6)  // WF　村長イベント　ポケモンはいるか？
 #define WFBC_GET_PARAM_WF_ITEM  (7)         // WF 村長イベント　ご褒美アイテムの取得
 #define WFBC_GET_PARAM_WF_POKE  (8)         // WF 村長イベント　探すポケモンナンバーの取得
-#define WFBC_GET_PARAM_OBJ_ID  (9)         // 話し相手のOBJID　（0～29）
+#define WFBC_GET_PARAM_OBJ_ID  (9)         // 話し相手のOBJID　（0～29）（WFBCで自動配置される30人の人を識別するID）
 #define WFBC_GET_PARAM_BC_CHECK_BATTLE (10)  // BC　相手とバトル可能かチェック
+#define WFBC_GET_PARAM_MMDL_ID  (11)         // 話し相手のMMDL OBJID (フィールド上の動作モデルを識別するID)
 
-#define WFBC_GET_PARAM_MAX  (11)         // 最大値
+#define WFBC_GET_PARAM_MAX  (12)         // 最大値

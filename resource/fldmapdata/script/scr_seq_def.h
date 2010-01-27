@@ -6947,17 +6947,18 @@
  *  @param ret_val    戻り値  データ
  *
  *  data_type
- *    WFBC_GET_PARAM_BATTLE_TRAINER_ID (0)    // バトルトレーナーID
- *    WFBC_GET_PARAM_IS_TAKES_ID (1)          // 街にいきたがるか
- *    WFBC_GET_PARAM_IS_RIREKI (2)            // 前にいたBCの街の履歴があるか
- *    WFBC_GET_PARAM_PEOPLE_NUM (3)           // 人口の取得 **zone_chnageのタイミングで呼んでOK**
- *    WFBC_GET_PARAM_BC_NPC_WIN_NUM (4)       // BC　NPC勝利数
- *    WFBC_GET_PARAM_BC_NPC_WIN_TARGET (5)    // BC　NPC勝利目標数
- *    WFBC_GET_PARAM_WF_IS_POKECATCH (6)      // WF　村長イベント　ポケモンはいるか？
- *    WFBC_GET_PARAM_WF_ITEM  (7)             // WF 村長イベント　ご褒美アイテムの取得
- *    WFBC_GET_PARAM_WF_POKE  (8)             // WF 村長イベント　探すポケモンナンバーの取得
- *    WFBC_GET_PARAM_OBJ_ID  (9)              // 話し相手のOBJID　（0～29）
- *    WFBC_GET_PARAM_BC_CHECK_BATTLE (10)     // BC　相手とバトル可能かチェック
+      WFBC_GET_PARAM_BATTLE_TRAINER_ID (0)    // バトルトレーナーID
+      WFBC_GET_PARAM_IS_TAKES_ID (1)          // 街にいきたがるか
+      WFBC_GET_PARAM_IS_RIREKI (2)          // 前にいたBCの街の履歴があるか
+      WFBC_GET_PARAM_PEOPLE_NUM (3)         // 人口の取得 **zone_chnageのタイミングで呼んでOK**
+      WFBC_GET_PARAM_BC_NPC_WIN_NUM (4)     // BC　NPC勝利数
+      WFBC_GET_PARAM_BC_NPC_WIN_TARGET (5)  // BC　NPC勝利目標数
+      WFBC_GET_PARAM_WF_IS_POKECATCH (6)  // WF　村長イベント　ポケモンはいるか？
+      WFBC_GET_PARAM_WF_ITEM  (7)         // WF 村長イベント　ご褒美アイテムの取得
+      WFBC_GET_PARAM_WF_POKE  (8)         // WF 村長イベント　探すポケモンナンバーの取得
+      WFBC_GET_PARAM_OBJ_ID  (9)         // 話し相手のOBJID　（0～29）（WFBCで自動配置される30人の人を識別するID）
+      WFBC_GET_PARAM_BC_CHECK_BATTLE (10)  // BC　相手とバトル可能かチェック
+      WFBC_GET_PARAM_MMDL_ID  (11)         // 話し相手のMMDL OBJID (フィールド上の動作モデルを識別するID)
  */
 //--------------------------------------------------------------
 #define _WFBC_GET_DATA( data_type, retVal ) \
