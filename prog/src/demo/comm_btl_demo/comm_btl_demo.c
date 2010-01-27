@@ -297,8 +297,8 @@ BOOL type_is_start( u8 type );
 
 static void BALL_UNIT_Init( BALL_UNIT* unit, const POKEPARTY* party, u8 type, u8 posid, COMM_BTL_DEMO_OBJ_WORK* obj );
 static void BALL_UNIT_Exit( BALL_UNIT* unit );
-static void BALL_UNIT_SetStart( BALL_UNIT* unit );
 static void BALL_UNIT_Main( BALL_UNIT* unit );
+static void BALL_UNIT_SetStart( BALL_UNIT* unit );
 
 static void TRAINER_UNIT_Init( TRAINER_UNIT* unit, u8 type, u8 posid, const COMM_BTL_DEMO_TRAINER_DATA* data, COMM_BTL_DEMO_OBJ_WORK* obj, COMM_BTL_DEMO_G3D_WORK* g3d, GFL_FONT* font );
 static void TRAINER_UNIT_Main( TRAINER_UNIT* unit );
@@ -357,6 +357,7 @@ static void debug_param( COMM_BTL_DEMO_PARAM* prm )
 
   HOSAKA_Printf("in param type = %d \n", prm->type);
   
+  //@TODO
   prm->result = GFUser_GetPublicRand( COMM_BTL_DEMO_RESULT_MAX );
 
   HOSAKA_Printf( "result = %d \n", prm->result );
@@ -384,10 +385,27 @@ static void debug_param( COMM_BTL_DEMO_PARAM* prm )
       int p;
 
       party = PokeParty_AllocPartyWork( HEAPID_COMM_BTL_DEMO );
-      Debug_PokeParty_MakeParty( party );
+
+      if( type_is_normal(prm->type) )
+      {
+        Debug_PokeParty_MakeParty( party );
+      }
+      else
+      {
+        Debug_PokeParty_MakeParty( party );
+#if 0
+        POKEMON_PARAM* poke = Poke;
+        PokeParty_Init(party, 3);
+        for (p = 0; p < 3; p++) {
+          PP_Clear(&poke);
+          PP_Setup( &poke, 392+p, 99, 0 );
+          PokeParty_Add(party, &poke);
+        }
+#endif
+      }
       
       prm->trainer_data[i].party = party;
-    
+
       poke_cnt = PokeParty_GetPokeCount( prm->trainer_data[i].party );
 
       for( p=0; p<poke_cnt; p++ )
@@ -718,7 +736,8 @@ static BOOL SceneStartDemo_Main( UI_SCENE_CNT_PTR cnt, void* work )
   switch( seq )
   {
   case 0:
-    G3D_PTC_Setup( &wk->wk_g3d, NARC_comm_btl_demo_vs_demo01_spa );
+    // 名前出現PTC
+    G3D_PTC_Setup( &wk->wk_g3d, NARC_comm_btl_demo_vs_demo03_spa );
 
     if( type_is_normal(wk->type) )
     {
@@ -738,7 +757,7 @@ static BOOL SceneStartDemo_Main( UI_SCENE_CNT_PTR cnt, void* work )
     if( G3D_AnimeMain( &wk->wk_g3d ) == FALSE )
     {
       G3D_AnimeDel( &wk->wk_g3d );
-      G3D_AnimeSet( &wk->wk_g3d, DEMO_ID_DRAW );
+      G3D_AnimeSet( &wk->wk_g3d, DEMO_ID_START ); // 開始エフェクト
 
       // ptcワーク生成「VS」
       G3D_PTC_Delete( &wk->wk_g3d );
@@ -763,7 +782,7 @@ static BOOL SceneStartDemo_Main( UI_SCENE_CNT_PTR cnt, void* work )
     }
     break;
   case 3:
-    //@TODO タイミング
+    //@TODO タイミング MN
     if( wk->timer++ == 120+15 )
     {
       // フェードアウト リクエスト
@@ -1014,7 +1033,6 @@ static u32 PokeParaToBallAnim( POKEMON_PARAM* pp )
 static void BALL_UNIT_Init( BALL_UNIT* unit, const POKEPARTY* party, u8 type, u8 posid, COMM_BTL_DEMO_OBJ_WORK* obj )
 {
   int i;
-  int is_normal = type_is_normal(type);
 
   GF_ASSERT(unit);
   GF_ASSERT(party);
@@ -1103,20 +1121,6 @@ static void BALL_UNIT_Exit( BALL_UNIT* unit )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  アニメ開始
- *
- *	@param	BALL_UNIT* unit 
- *
- *	@retval
- */
-//-----------------------------------------------------------------------------
-static void BALL_UNIT_SetStart( BALL_UNIT* unit )
-{
-  unit->is_start = TRUE;
-}
-
-//-----------------------------------------------------------------------------
-/**
  *	@brief  ボール主処理
  *
  *	@param	BALL_UNIT* unit 
@@ -1173,6 +1177,20 @@ static void BALL_UNIT_Main( BALL_UNIT* unit )
   }
 
   unit->timer++;
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  アニメ開始
+ *
+ *	@param	BALL_UNIT* unit 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void BALL_UNIT_SetStart( BALL_UNIT* unit )
+{
+  unit->is_start = TRUE;
 }
 
 //-----------------------------------------------------------------------------
@@ -1382,8 +1400,7 @@ static void TRAINER_UNIT_CNT_Init( COMM_BTL_DEMO_MAIN_WORK* wk )
           &wk->pwk->trainer_data[i], 
           &wk->wk_obj,
           &wk->wk_g3d,
-          wk->font
-          );
+          wk->font );
   }
 }
 
@@ -1568,7 +1585,7 @@ static void G3D_Init( COMM_BTL_DEMO_G3D_WORK* g3d, COMM_BTL_DEMO_GRAPHIC_WORK* g
   GF_ASSERT( graphic );
 
   // ブレンド指定
-  G2_SetBlendAlpha( GX_PLANEMASK_BG0, GX_PLANEMASK_OBJ|GX_PLANEMASK_BG1|GX_PLANEMASK_BG2|GX_PLANEMASK_BG3|GX_PLANEMASK_BG0, 16, 0 );
+  G2_SetBlendAlpha( GX_PLANEMASK_BG0, GX_PLANEMASK_OBJ|GX_PLANEMASK_BG1|GX_PLANEMASK_BG2|GX_PLANEMASK_BG3|GX_PLANEMASK_BG0, 0, 0 );
 //  G2_SetBlendAlpha( GX_PLANEMASK_BG0, GX_PLANEMASK_BG3|GX_PLANEMASK_BG2|GX_PLANEMASK_BG1|GX_PLANEMASK_BG0, 0, 0 );
   
   // メンバ初期化
@@ -1704,7 +1721,7 @@ static void G3D_PTC_Delete( COMM_BTL_DEMO_G3D_WORK* g3d )
 static void G3D_PTC_CreateEmitter( COMM_BTL_DEMO_G3D_WORK * g3d, u16 idx, const VecFx32* pos )
 {
   GFL_EMIT_PTR emit;
-
+  
   GF_ASSERT(g3d);
   GF_ASSERT(g3d->ptc);
 
@@ -1797,7 +1814,7 @@ static void G3D_AnimeDel( COMM_BTL_DEMO_G3D_WORK* g3d )
 static BOOL G3D_AnimeMain( COMM_BTL_DEMO_G3D_WORK* g3d )
 { 
   GFL_G3D_OBJSTATUS status;
-  BOOL is_loop;
+  BOOL is_loop = TRUE;
 
   GF_ASSERT( g3d );
   GF_ASSERT( g3d->g3d_util );
