@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2010-01-27T15:11:29"/>
+	<create user="matsumiya" host="W00207" date="2010-01-27T21:39:36"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -294,329 +294,427 @@
 
 	<row id="msg_r05_black_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
-・ｃ04付近にPOS設定
+・ｃ04付近にpos設定
 　踏むとゲートから出現し
 　主人公に隣接してメッセージ表示
 ・表示後、戦闘に</comment>
 		<attribute name="キャラ指定">ライバル
 友達♂</attribute>
-		<language name="JPN" width="256">ブラッカー『[1:00:トレーナー名:0]！
-オレも　ボルトバッジを　てにいれた[BE:01:ページ切り替え（クリア）]
-というわけで　どっちが　つよいか
-ポケモンしょうぶ　してもらうぜ！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ブラッカー『[1:00:トレーナー名:0]！
-オレも　ボルトバッジを　手に入れた[BE:01:ページ切り替え（クリア）]
-というわけで　どっちが　強いか
-ポケモン勝負　してもらうぜ！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">ブラッカー『まってよ　[1:00:トレーナー名:0]！
+ぼくも　ボルトバッジを　もっている▼
+どちらが　つよいのか
+ポケモンしょうぶを　してほしい▼</language>
+		<language name="JPN_KANJI" width="256">ブラッカー『待ってよ　[1:00:トレーナー名:0]！
+ぼくも　ボルトバッジを　持っている▼
+どちらが　強いのか
+ポケモン勝負を　してほしい▼</language>
 	</row>
 
 	<row id="msg_r05_black_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・戦闘後メッセージ
-・続いてカミツレ
+・続いてカミツレ、画面右から登場し
 　msg_r05_leader_01表示</comment>
-		<language name="JPN" width="256">ブラッカー『……こんどは
-かてると　おもったけど[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ブラッカー『今度は
-勝てると　思ったんだけ[BE:01:ページ切り替え（クリア）]</language>
+		<attribute name="キャラ指定">ライバル
+友達♂</attribute>
+		<language name="JPN" width="256">ブラッカー『……いつも
+いっぽ　およばないんだよね▼</language>
+		<language name="JPN_KANJI" width="256">ブラッカー『……いつも
+一歩　及ばないんだよね▼</language>
 	</row>
 
 	<row id="msg_r05_leader_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
-・仮メッセージ</comment>
+・続けてleader_02</comment>
 		<attribute name="キャラ指定">LEADER4
 カミツレ</attribute>
-		<language name="JPN" width="256">カミツレ『おそいから　みにくれば[BE:01:ページ切り替え（クリア）]
-アナタたち　ともだち　なの……？[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">カミツレ『遅いから　見に来れば[BE:01:ページ切り替え（クリア）]
-アナタたち　友達なの……？[BE:01:ページ切り替え（クリア）]</language>
-	</row>
-
-	<row id="msg_r05_black_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
-		<comment>♂
-・カミツレを見てメッセージ表示
-・続けて</comment>
-		<attribute name="キャラ指定">ライバル
-友達♂</attribute>
-		<language name="JPN" width="256">ブラッカー『そっ　そうです[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ブラッカー『そっ　そうです[BE:01:ページ切り替え（クリア）]</language>
-	</row>
-
-	<row id="msg_r05_black_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
-		<comment>♂
-・主人公と向き合ってメッセージ表示
-・続けて</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]！[BE:01:ページ切り替え（クリア）]
-カミツレさんを
-またせちゃ　ダメだろ[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]！[BE:01:ページ切り替え（クリア）]
-カミツレさんを
-待たせちゃ　ダメだろ[BE:01:ページ切り替え（クリア）]</language>
-	</row>
-
-	<row id="msg_r05_black_05" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
-		<comment>♂
-・カミツレと向き合い、メッセージ表示後
-　カミツレとライバル、c05側に移動
-・チャンピオンたちのそばに配置
-・画面外に消えると主人公、操作可能</comment>
-		<language name="JPN" width="256">カミツレさん！
-さあ　いきましょう[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">カミツレさん！
-さあ　行きましょう[BE:01:ページ切り替え（クリア）]</language>
-	</row>
-
-	<row id="msg_r05_black_06" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
-		<comment>♂
-・チャンピオンの動作モデル配置付近の
-　POSを踏むとメッセージ表示
-・このときカミツレと隣接</comment>
-		<attribute name="キャラ指定">ライバル
-友達♂</attribute>
-		<language name="JPN" width="256">ブラッカー『じいさんが
-こどもたちに　ポケモンを　おしえてる[BE:01:ページ切り替え（クリア）]
-あの　じいさん　つよいのかな[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ブラッカー『じいさんが
-子供たちに　ポケモンを　教えてる[BE:01:ページ切り替え（クリア）]
-あの　じいさん　強いのかな[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">カミツレ『おそいから　みにくれば
+あなたたち　しりあい　なのね▼
+そうして　たかめあっててるんだ
+なるほど　つよくなるわけね▼</language>
+		<language name="JPN_KANJI" width="256">カミツレ『遅いから　みにくれば
+あなたたち　知り合い　なのね▼
+そうして　高めあっているんだ
+なるほど　強くなるわけね▼</language>
 	</row>
 
 	<row id="msg_r05_leader_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
-・仮メッセージ</comment>
+・画面左を向いてメッセージ表示
+・表示後、画面左へ移動</comment>
 		<attribute name="キャラ指定">LEADER4
 カミツレ</attribute>
-		<language name="JPN" width="256">カミツレ『アデクさんの　こと？
-そうね　つよいんじゃない？[BE:01:ページ切り替え（クリア）]
-だって　チャンピオンだもの
-ただしくは　「もと」チャンピオンだけど[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">カミツレ『アデクさんの　こと？
-そうね　強いんじゃない？[BE:01:ページ切り替え（クリア）]
-だって　チャンピオンだもの
-ただしくは　「元」チャンピオンだけど[BE:01:ページ切り替え（クリア）]</language>
-	</row>
-
-	<row id="msg_r05_black_07" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
-		<comment>♂
-・</comment>
-		<attribute name="キャラ指定">ライバル
-友達♂</attribute>
-		<language name="JPN" width="256">ブラッカー『もと？[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ブラッカー『もと？[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">さ　いきましょう▼</language>
+		<language name="JPN_KANJI" width="256">さ　行きましょう▼</language>
 	</row>
 
 	<row id="msg_r05_champion_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
-・ｃ04でカミツレ～に
-　配置</comment>
-		<attribute name="キャラ指定">CHAMPION</attribute>
-		<language name="JPN" width="256">アデク『どうした
-そこの　しょうねん[BE:00:ページ切り替え（行送り）]
-なにを　さわぐ？[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">アデク『どうした
-そこの　少年　何を騒ぐ？[BE:01:ページ切り替え（クリア）]</language>
+・GRIDX=360、GRIDZ=435~439
+　チャンピオン、下を向いて（初期配置：？向き）
+・続けてblack_03</comment>
+		<attribute name="キャラ指定">チャンピオン</attribute>
+		<language name="JPN" width="256">？？？『おお！
+カミツレでは　ないか！▼
+フェスティバルは　いいのう
+じんせいは　たのしまねばな！▼</language>
+		<language name="JPN_KANJI" width="256">？？？『おお！
+カミツレでは　ないか！▼
+フェスティバルは　いいのう
+人生は　楽しまねばな！▼</language>
 	</row>
 
-	<row id="msg_r05_black_08" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_r05_black_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
-・元チャンピオンに近づき
-　メッセージ表示
+・カミツレを見ながら
+　（カミツレは？を向いたまま）
 ・続けて</comment>
 		<attribute name="キャラ指定">ライバル
 友達♂</attribute>
-		<language name="JPN" width="256">ブラッカー『なぜ？
-チャンピオンを　やめた？[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ブラッカー『なぜ？
-チャンピオンを　やめた？[BE:01:ページ切り替え（クリア）]</language>
-	</row>
-
-	<row id="msg_r05_champion_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>♂
-・ライバルとは目を合わせず
-　メッセージ表示
-・続けて</comment>
-		<attribute name="キャラ指定">CHAMPION</attribute>
-		<language name="JPN" width="256">アデク『シンオウや　ホウエンの
-チャンピオンのように[BE:00:ページ切り替え（行送り）]
-わかくて　かっこよくない……と[BE:00:ページ切り替え（行送り）]
-にんきが　でないからのう……[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">アデク『シンオウや　ホウエンの
-チャンピオンのように[BE:00:ページ切り替え（行送り）]
-わかくて　かっこよくない……と[BE:00:ページ切り替え（行送り）]
-人気が　でないからのう[BE:01:ページ切り替え（クリア）]</language>
-	</row>
-
-	<row id="msg_r05_black_09" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
-		<comment>♂
-・続けて</comment>
-		<attribute name="キャラ指定">ライバル
-友達♂</attribute>
-		<language name="JPN" width="256">ブラッカー『ふざけるなよ！
-オレは　チャンピオン　めざして……[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ブラッカー『ふざけるなよ！
-オレは　チャンピオン目指して……[BE:01:ページ切り替え（クリア）]</language>
-	</row>
-
-	<row id="msg_r05_champion_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>♂
-・続けて</comment>
-		<attribute name="キャラ指定">CHAMPION</attribute>
-		<language name="JPN" width="256">アデク『すまないが
-おおごえを　ださないでくれ[BE:00:ページ切り替え（行送り）]
-こどもたちが　おびえてしまう……[BE:01:ページ切り替え（クリア）]
-そうだな……　きみが　
-どういう　にんげんかも　しらずに[BE:00:ページ切り替え（行送り）]
-ちゃかしたのは　わるかった[BE:01:ページ切り替え（クリア）]
-このとおり　あやまる[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">アデク『すまないが
-大声を　出さないでくれ[BE:00:ページ切り替え（行送り）]
-子供たちが　おびえてしまう……[BE:01:ページ切り替え（クリア）]
-そうだな
-君が　どういう　人間かも知らずに[BE:00:ページ切り替え（行送り）]
-茶化したのは　悪かった[BE:01:ページ切り替え（クリア）]
-このとおり　謝る[BE:01:ページ切り替え（クリア）]</language>
-	</row>
-
-	<row id="msg_r05_black_10" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
-		<comment>♂
-・続けて</comment>
-		<attribute name="キャラ指定">ライバル
-友達♂</attribute>
-		<language name="JPN" width="256">ブラッカー『……いや
-こちらも　わるいけど……[BE:01:ページ切り替え（クリア）]
-……そうか　いま　ポケモンリーグに
-チャンピオン　いないのか……[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ブラッカー『……いや
-こちらも　悪いけど……[BE:01:ページ切り替え（クリア）]
-……そうか　今　ポケモンリーグに
-チャンピオン　いないのか……[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">ブラッカー『……どなた　ですか？▼</language>
+		<language name="JPN_KANJI" width="256">ブラッカー『……どなた　ですか？▼</language>
 	</row>
 
 	<row id="msg_r05_leader_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
-・仮メッセージ</comment>
+・ライバルと向き合って
+・続けてblack_04</comment>
 		<attribute name="キャラ指定">LEADER4
 カミツレ</attribute>
-		<language name="JPN" width="256">カミツレ『アタシ
-さきに　いくけれど……[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">カミツレ『アタシ
-先に　行くけれど……[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">カミツレ『アデクさん
+イッシュちほうの　チャンピオンよ▼</language>
+		<language name="JPN_KANJI" width="256">カミツレ『アデクさん
+イッシュ地方の　チャンピオンよ▼</language>
 	</row>
 
-	<row id="msg_r05_leader_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
-		<comment>♀
-・仮メッセージ</comment>
-		<attribute name="キャラ指定">LEADER4
-カミツレ</attribute>
-		<language name="JPN" width="256">カミツレ『じゃあね
-おじいちゃんも　おげんきで[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">カミツレ『じゃあね
-おじいちゃんも　お元気で[BE:01:ページ切り替え（クリア）]</language>
-	</row>
-
-	<row id="msg_r05_champion_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r05_black_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
-・仮メッセージ
-・msg_r05_leader_04から
-　再度話しかけたとき用
-・この動作モデルは
-　c05ジムバッジ取得で削除</comment>
-		<attribute name="キャラ指定">CHAMPION</attribute>
-		<language name="JPN" width="255">アデク『さあさ！[BE:01:ページ切り替え（クリア）]
-つよい　トレーナーになるには
-ポケモンと　なかよしに　なるのが[BE:00:ページ切り替え（行送り）]
-いちばんだよ　おまえたち！</language>
-		<language name="JPN_KANJI" width="256">アデク『さあさ！[BE:01:ページ切り替え（クリア）]
-強い　トレーナーになるには
-ポケモンと　仲良しになるのが[BE:00:ページ切り替え（行送り）]
-一番だよ　おまえたち！</language>
+・表示後、チャンピオンに駆け寄る
+　遅れてカミツレ、主人公も移動
+・続けてchampion_02</comment>
+		<attribute name="キャラ指定">ライバル
+友達♂</attribute>
+		<language name="JPN" width="256">ブラッカー『チャンピオン！？▼
+どうして　チャンピオンが
+こんなところで　あそんでいるのです？▼</language>
+		<language name="JPN_KANJI" width="256">ブラッカー『チャンピオン！？▼
+どうして　チャンピオンが
+こんなところで　遊んでいるのです？▼</language>
+	</row>
+
+	<row id="msg_r05_champion_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・続けてblack_05</comment>
+		<attribute name="キャラ指定">チャンピオン</attribute>
+		<language name="JPN" width="256">アデク『……きこえたが　なんとも
+てきびしい　わかもの　だな▼
+はじめまして
+ワタシの　なまえは　アデク▼
+イッシュ　ポケモンリーグの
+チャンピオン　だよ▼</language>
+		<language name="JPN_KANJI" width="256">アデク『……聞こえたが　なんとも
+手厳しい　若者だな▼
+はじめまして
+ワタシの　名前は　アデク▼
+イッシュ　ポケモンリーグの
+チャンピオン　だよ▼</language>
+	</row>
+
+	<row id="msg_r05_black_05" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・続けてchampion_03</comment>
+		<attribute name="キャラ指定">ライバル
+友達♂</attribute>
+		<language name="JPN" width="256">ブラッカー『はじめまして▼
+じぶんは　カノコタウン　しゅっしんの
+ブラッカーと　いいます▼
+トレーナーとしての　もくてきは
+チャンピオン　です▼</language>
+		<language name="JPN_KANJI" width="256">ブラッカー『はじめまして▼
+自分は　カノコタウン出身の
+ブラッカーと　いいます▼
+トレーナーとしての　目的は
+チャンピオン　です！▼</language>
+	</row>
+
+	<row id="msg_r05_champion_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・続けてblack_06</comment>
+		<attribute name="キャラ指定">チャンピオン</attribute>
+		<language name="JPN" width="256">アデク『もくてきを　もって
+たびすることは　すばらしいことだ▼
+それで　チャンピオンに　なって
+どうする　つもりかね？▼</language>
+		<language name="JPN_KANJI" width="256">アデク『目的を　もって
+旅することは　すばらしいことだ▼
+それで　チャンピオンに　なって
+どうする　つもりかね？▼</language>
+	</row>
+
+	<row id="msg_r05_black_06" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・「？」マーク表示してからメッセージ
+・続けてchampion_04</comment>
+		<attribute name="キャラ指定">ライバル
+友達♂</attribute>
+		<language name="JPN" width="256">ブラッカー『……つよさを　もとめる
+それいがいに　なにが　あるのですか？▼
+いちばん　つよい　トレーナー
+それが　チャンピオン　ですよね▼</language>
+		<language name="JPN_KANJI" width="256">ブラッカー『……強さを　求める
+それ以外に　なにか　あるのですか？▼
+一番　強い　トレーナー
+それが　チャンピオン　ですよね▼</language>
+	</row>
+
+	<row id="msg_r05_champion_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・続けてchampion_05</comment>
+		<attribute name="キャラ指定">チャンピオン</attribute>
+		<language name="JPN" width="256">アデク『ふむう　つよくなる……
+つよくなる　か……▽
+それだけが　もくてきで　いいのかね？▼
+いや　もちろん　きみたちを
+ひてい　している　わけではない▼</language>
+		<language name="JPN_KANJI" width="256">アデク『ふむう　強くなる……
+強くなる　か……▽
+それだけが　目的で　いいのかね？▼
+いや　もちろん　君たちを
+否定している　わけではない▼</language>
+	</row>
+
+	<row id="msg_r05_champion_05" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・メッセージ表示後
+　男の子、女の子、移動
+・続けてblack_07</comment>
+		<attribute name="キャラ指定">チャンピオン</attribute>
+		<language name="JPN" width="256">わたしは　いろんな　ひとたちに
+ポケモンを　すきに　なってもらう▼
+そのことも　だいじ　だと
+かんがえるように　なってな▼
+かのじょたちと　あそんでみれば
+すこしは　わかって　もらえるかもな▼
+どうかね
+マルチバトルを　してみないかね？▼</language>
+		<language name="JPN_KANJI" width="256">わたしは　いろんな　人たちに
+ポケモンを　好きに　なってもらう▼
+そのことも　大事だと
+考えるように　なってな▼
+彼女たちと　遊んでみれば
+少しは　わかって　もらえるかもな▼
+どうかね
+マルチバトルを　してみないかね？▼</language>
+	</row>
+
+	<row id="msg_r05_black_07" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・表示後、イベントバトルへ
+・0＝主人公名前</comment>
+		<attribute name="キャラ指定">ライバル
+友達♂</attribute>
+		<language name="JPN" width="256">ブラッカー『わかりました▼
+では　いくよ　[1:00:トレーナー名:0]▼</language>
+		<language name="JPN_KANJI" width="256">ブラッカー『わかりました▼
+では　いくよ　[1:00:トレーナー名:0]▼</language>
+	</row>
+
+	<row id="msg_r05_champion_06" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・戦闘後、フィールドに復帰すると
+　このメッセージ表示
+・続けてchampion_07</comment>
+		<attribute name="キャラ指定">チャンピオン</attribute>
+		<language name="JPN" width="256">アデク『おまえたち！　かてなかったが
+いい　しょうぶ　だったな！▽
+ポケモンも　うれしそうだったし▼</language>
+		<language name="JPN_KANJI" width="256">アデク『おまえたち！　勝てなかったが
+いい　勝負だったな！▽
+ポケモンも　うれしそうだったし▼</language>
+	</row>
+
+	<row id="msg_r05_champion_07" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・続けてleader_04</comment>
+		<attribute name="キャラ指定">チャンピオン</attribute>
+		<language name="JPN" width="256">さて　わかものよ▼
+きみのように
+つよさを　もとめる　ものがいれば▼
+かれらのように　ポケモンと
+いっしょに　いるだけで▽
+まんぞくする　ものも　いる▼
+いろんな　ひとが　いるのだ
+こたえも　いろいろ　ある▼
+きみと　わたしの　かんがえる
+チャンピオンが　ちがっていても▽
+そういうものだと　おもってほしい▼</language>
+		<language name="JPN_KANJI" width="256">さて　若者よ▼
+君のように
+強さを　求める者が　いれば▼
+彼らのように　ポケモンと
+いっしょに　いるだけで▽
+満足する者も　いる▼
+いろんな　人が　いるのだ
+答えも　いろいろ　ある▼
+きみと　わたしの　考える
+チャンピオンが　違っていても▽
+そういうものだと　思ってほしい▼</language>
+	</row>
+
+	<row id="msg_r05_champion_08" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・イベントバトル後
+・c05ジムバッジ取得で削除</comment>
+		<attribute name="キャラ指定">チャンピオン</attribute>
+		<language name="JPN" width="256">アデク『ひとと　ポケモンの　ように
+ぜんぜん　ちがう　そんざいが▽
+おたがいを　みとめあって▽
+いっしょに　いるのは　すばらしいよな</language>
+		<language name="JPN_KANJI" width="256">アデク『人と　ポケモンの　ように
+全然　違う　存在が▽
+お互いを　認め合って▽
+一緒に　いるのは　すばらしいよな</language>
 	</row>
 
 	<row id="msg_r05_boy3_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
-・仮メッセージ
-・この動作モデルは
-　c05ジムバッジ取得で削除</comment>
-		<attribute name="キャラ指定">子供その1</attribute>
+・イベントバトル後
+・c05ジムバッジ取得で削除</comment>
+		<attribute name="キャラ指定">BOY3</attribute>
 		<language name="JPN" width="256">おじいちゃんはね　とても　つよいんだ！
-それにね　ポケモンに　やさしいし！</language>
+それにね　ポケモンに　やさしいよ！</language>
 		<language name="JPN_KANJI" width="256">おじいちゃんはね　とても　強いんだ！
-それにね　ポケモンに　優しいし！</language>
+それにね　ポケモンに　優しいよ！</language>
 	</row>
 
 	<row id="msg_r05_girl2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♀
-・仮メッセージ
-・この動作モデルは
-　c05ジムバッジ取得で削除</comment>
-		<attribute name="キャラ指定">子供その2</attribute>
-		<language name="JPN" width="256">ポケモンって　こわいと　おもっていたけど
-やさしくて　あたたかいこと[BE:00:ページ切り替え（行送り）]
+・イベントバトル後
+・c05ジムバッジ取得で削除</comment>
+		<attribute name="キャラ指定">GIRL2</attribute>
+		<language name="JPN" width="256">あたし　ポケモンって
+こわいと　おもっていたけど▼
+やさしくて　あたたかいこと
 おじいちゃんが　おしえてくれたの</language>
-		<language name="JPN_KANJI" width="256">ポケモンって　こわいと　思っていたけど
-やさしくて　あたたかいこと[BE:00:ページ切り替え（行送り）]
+		<language name="JPN_KANJI" width="256">あたし　ポケモンって
+こわいと　思っていたけど▼
+やさしくて　あたたかいこと
 おじいちゃんが　教えてくれたの</language>
 	</row>
 
-	<row id="msg_r05_leader_05" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_r05_leader_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
-・仮メッセージ
-・メッセージ表示後、画面切り替え
-</comment>
+・メッセージ表示後、画面左に移動
+・続けてblack_09</comment>
 		<attribute name="キャラ指定">LEADER4
 カミツレ</attribute>
-		<language name="JPN" width="256">カミツレ『さてと　れんらく[BE:01:ページ切り替え（クリア）]
-（テレビトランシーバーの効果音）[BE:01:ページ切り替え（クリア）]
-アタシですけど
-はねばしを　おろしてもらえるかしら？[BE:01:ページ切り替え（クリア）]
-アナタに　ちょうせんしたい　って
-トレーナーが　いるのだけれど[BE:01:ページ切り替え（クリア）]
-はい
-よろしく[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">カミツレ『さてと　連絡[BE:01:ページ切り替え（クリア）]
-（テレビトランシーバーの効果音）[BE:01:ページ切り替え（クリア）]
-アタシですけど
-跳ね橋を　おろしてもらえるかしら？[BE:01:ページ切り替え（クリア）]
-アナタに挑戦したいって
-トレーナーがいるのだけれど[BE:01:ページ切り替え（クリア）]
-はい
-よろしく[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">カミツレ『……さ　いきましょ
+ホドモエの　はねばしは　もうすぐよ▼</language>
+		<language name="JPN_KANJI" width="256">カミツレ『……さ　行きましょ
+ホドモエの跳ね橋は　もうすぐよ▼</language>
 	</row>
 
-	<row id="msg_r05_leader_06" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
-		<comment>♀
-・仮メッセージ
-・h02デモ終了後、画面が戻ると
-　このメッセージ表示
-・表示後、カミツレ、c04に戻る
-　動作モデルが画面外に行くと
-　msg_r05_black_11</comment>
-		<language name="JPN" width="256">カミツレ『アタシ　テレビとか
-しごとがあるから　ここでかえるけど[BE:01:ページ切り替え（クリア）]
-アナタたち
-ホドモエにいっても　がんばってよ[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">カミツレ『アタシ　テレビとか
-仕事があるから　ここで帰るけど[BE:01:ページ切り替え（クリア）]
-アナタたち
-ホドモエに行っても　がんばってよ[BE:01:ページ切り替え（クリア）]</language>
-	</row>
-
-	<row id="msg_r05_black_11" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_r05_black_08" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
-・メッセージ表示後
-　先にc05に</comment>
+・カミツレが画面外に消えるとメッセージ表示
+・表示後、画面左に移動し
+　画面外に消えると、主人公操作可能に</comment>
 		<attribute name="キャラ指定">ライバル
 友達♂</attribute>
-		<language name="JPN" width="256">ブラッカー『いいや　きめた！[BE:01:ページ切り替え（クリア）]
-ぜんぶの　ジムバッジを　てにいれ
-そのまま　ポケモンリーグの[BE:00:ページ切り替え（行送り）]
-してんのう　ぜんいん　たおし[BE:00:ページ切り替え（行送り）]
-オレが　あたらしい　チャンピオンになる！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ブラッカー『いいや　決めた！[BE:01:ページ切り替え（クリア）]
-全部の　ジムバッジを手に入れ
-そのまま　ポケモンリーグの[BE:00:ページ切り替え（行送り）]
-四天王を　全員　倒し[BE:00:ページ切り替え（行送り）]
-オレが新しいチャンピオンになる！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">ブラッカー『チャンピオンは　つよい！
+それいがいの　こたえは　ないよ▼</language>
+		<language name="JPN_KANJI" width="256">ブラッカー『チャンピオンは　強い！
+それ以外の　答えは　ないよ▼</language>
+	</row>
+
+	<row id="msg_r05_leader_05" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀
+・GRIDX=338、GRIDZ=&quot;431~435到達したとき
+・メッセージ表示後、左に2歩移動
+・続けてテレビトランシーバーのSEを鳴らし
+　leader_06表示</comment>
+		<attribute name="キャラ指定">LEADER4
+カミツレ</attribute>
+		<language name="JPN" width="256">カミツレ『さてと　れんらく▼</language>
+		<language name="JPN_KANJI" width="256">カミツレ『さてと　連絡▼</language>
+	</row>
+
+	<row id="msg_r05_leader_06" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀
+・カミツレ、上を向いた状態でメッセージ表示後
+　主人公たちのほうを向いてleader_07</comment>
+		<attribute name="キャラ指定">LEADER4
+カミツレ</attribute>
+		<language name="JPN" width="256">アタシです
+はねばし　だけど　おろしてよ▼
+アナタに　ちょうせんしたい　って
+トレーナーが　いるの▼
+はい
+よろしく▼</language>
+		<language name="JPN_KANJI" width="256">アタシです
+跳ね橋だけど　おろしてよ▼
+アナタに　挑戦したいって
+トレーナーが　いるの▼
+はい
+よろしく▼</language>
+	</row>
+
+	<row id="msg_r05_leader_07" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀
+・主人公に隣接（暫定、向くだけで良いかも）して
+　メッセージ表示すると、h02橋の降りるデモ開始
+・デモ終了後、leader_08</comment>
+		<attribute name="キャラ指定">LEADER4
+カミツレ</attribute>
+		<language name="JPN" width="256">さ　みてて！▼</language>
+		<language name="JPN_KANJI" width="256">さ　みてて！▼</language>
+	</row>
+
+	<row id="msg_r05_leader_08" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀
+・デモ終了後、フィールド画面に戻るとメッセージ表示
+・表示後、画面右に移動する
+・続けてblack_10</comment>
+		<attribute name="キャラ指定">LEADER4
+カミツレ</attribute>
+		<language name="JPN" width="256">カミツレ『テレビのしごとが　あるから
+アタシ　ここで　かえるわね▼
+つぎの　まちの　ジムリーダーは
+クセのある　おっさん　だけど▽
+アナタたち　がんばって▼</language>
+		<language name="JPN_KANJI" width="256">カミツレ『テレビの仕事が　あるから
+アタシ　ここで　帰るわね▼
+次の　街の　ジムリーダーは
+クセのある　おっさん　だけど▽
+アナタたち　がんばって▼</language>
+	</row>
+
+	<row id="msg_r05_black_09" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・メッセージ表示後、画面左に
+・画面外に消えると、主人公操作可能に</comment>
+		<attribute name="キャラ指定">ライバル
+友達♂</attribute>
+		<language name="JPN" width="256">ブラッカー『……さあ　いこう
+もっと　つよくなるために▼</language>
+		<language name="JPN_KANJI" width="256">ブラッカー『……さあ　行こう
+もっと　強くなるために▼</language>
+	</row>
+
+	<row id="msg_r05_black_10" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除予定</comment>
+		<attribute name="キャラ指定">ライバル
+友達♂</attribute>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
+	</row>
+
+	<row id="msg_r05_black_11" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除予定</comment>
+		<attribute name="キャラ指定">ライバル
+友達♂</attribute>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_r05_cameraman_01" text-color=",,,,,#ff0000,,,,,,,,,,,,,">
