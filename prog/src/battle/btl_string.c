@@ -444,6 +444,7 @@ void BTL_STR_MakeStringSet( STRBUF* buf, BtlStrID_SET strID, const int* args )
     { BTL_STRID_SET_Tedasuke,             ms_set_default          },  // てだすけはポケモン名２体入り文字列だが標準（３セット）
     { BTL_STRID_SET_JikoAnji,             ms_set_default          },  // じこあんじも同様
     { BTL_STRID_SET_LockOn,               ms_set_default          },  // ロックオン・こころのめも同様
+    { BTL_STRID_SET_Narikiri,             ms_set_default          },  // なりきりも
   };
 
   int i;
