@@ -230,18 +230,18 @@
   ARCID_FOURKINGS_SCENE "fourkings_scene.narc"  # 四天王部屋　移動シーンデータ
   ARCID_SEASON_DISPLAY "season_display.narc"  # 季節表示データ
   ARCID_BATT_BG_TBL "batt_bg_tbl.narc"  # 戦闘背景テーブル
-  ARCID_GYM_ICE	"fieldmap/gym_ice.narc"	#氷ジム
-  ARCID_WFBC_PEOPLE	"field_wfbc_data.narc"	#WFBC人物情報
+  ARCID_GYM_ICE "fieldmap/gym_ice.narc" #氷ジム
+  ARCID_WFBC_PEOPLE "field_wfbc_data.narc"  #WFBC人物情報
   ARCID_MAIL_GRA  "mail_gra.narc" #メール画面
-  ARCID_LAND_DATA_PATCH	"fieldmap/field_landdata_patch.narc"	#land_dataの上書き情報
+  ARCID_LAND_DATA_PATCH "fieldmap/field_landdata_patch.narc"  #land_dataの上書き情報
   ARCID_LEAGUE_FRONT_GIMMICK "league_front.narc"  # ポケモンリーグ フロントギミック
-  ARCID_GRID_CAMERA_SCENE	"fieldmap/grid_camera_scene.narc"	#gridマップのカメラシーン
+  ARCID_GRID_CAMERA_SCENE "fieldmap/grid_camera_scene.narc" #gridマップのカメラシーン
   ARCID_ZUKAN_GRA "zukan_gra.narc"  # 図鑑グラフィック
   ARCID_DEMO3D_GRA "demo3d.narc" # 3Dデモ再生アプリ
-  ARCID_GYM_DRAGON	"fieldmap/gym_dragon.narc"	#ドラゴンジム
-  ARCID_SCR_CAM_PRM	"fieldmap/scr_cam_prm.narc"	#スクリプトカメラパラメータ
-  ARCID_TITLETEST		"title1.narc"  #タイトルサンプル
-  ARCID_CORP				"corp.narc"		#コーポレーション表記
+  ARCID_GYM_DRAGON  "fieldmap/gym_dragon.narc"  #ドラゴンジム
+  ARCID_SCR_CAM_PRM "fieldmap/scr_cam_prm.narc" #スクリプトカメラパラメータ
+  ARCID_TITLETEST   "title1.narc"  #タイトルサンプル
+  ARCID_CORP        "corp.narc"   #コーポレーション表記
   ARCID_FLD_TRADE_POKE "fld_trade_poke.narc"  #ゲーム内交換ポケモンデータ
   ARCID_ELBOARD_SPNEWS "spnews.narc"  # 電光掲示板 臨時ニュースデータ
   ARCID_POKEFOOT_GRA "pokefoot.narc"  # ポケモン足跡グラフィックデータ
@@ -263,4 +263,6 @@
   ARCID_ENC_CI_FACE "enc_ci_face.narc"  # エンカウントカットインバストアップ画像データ
   ARCID_COMM_BTL_DEMO_GRA "comm_btl_demo.narc" " 通信バトルデモ
   ARCID_SHINKA_DEMO "shinka_demo_particle.narc"  # 進化デモのデータ
+  ARCID_GURU2  "guru2.narc" #ぐるぐる交換
+  ARCID_GURU2_2D  "guru2_2d.narc" #ぐるぐる交換受付画面用
   ARCID_ISS_BRIDGE "iss_bridge.narc"  # 橋ISSデータ
