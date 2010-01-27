@@ -5552,13 +5552,6 @@ static void handler_Ichamon( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
       param->sickCont = BPP_SICKCONT_MakePermanent();
       param->poke_cnt = 1;
       param->pokeID[0] = targetPokeID;
-/*
-      param->fExMsg = TRUE;
-      param->exStr.type = BTL_STRTYPE_SET;
-      param->exStr.ID = BTL_STRID_SET_Ichamon;
-      param->exStr.argCnt = 1;
-      param->exStr.args[0] = targetPokeID;
-*/
     }
   }
 }

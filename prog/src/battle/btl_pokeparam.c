@@ -200,7 +200,7 @@ BTL_POKEPARAM*  BTL_POKEPARAM_Create( const POKEMON_PARAM* pp, u8 pokeID, HEAPID
   bpp->coreParam.hp = PP_Get( pp, ID_PARA_hp, 0 );
   bpp->coreParam.item = PP_Get( pp, ID_PARA_item, NULL );
   bpp->coreParam.usedItem = ITEM_DUMMY_DATA;
-  bpp->coreParam.fHensin = TRUE;
+  bpp->coreParam.fHensin = FALSE;
   bpp->coreParam.ppFake = NULL;
   bpp->coreParam.fFakeEnable = NULL;
 
@@ -2065,7 +2065,6 @@ u16 BPP_GetConsumedItem( const BTL_POKEPARAM* bpp )
 //=============================================================================================
 void BPP_UpdatePrevWazaID( BTL_POKEPARAM* pp, WazaID waza, BtlPokePos targetPos )
 {
-  // @@@ ‚Ü‚à‚éE‚Ý‚«‚è‚ÌŠÖŒW
   WazaID prev = pp->prevWazaID;
   if( prev != waza ){
     pp->prevWazaID = waza;

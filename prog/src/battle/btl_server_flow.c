@@ -12274,6 +12274,8 @@ static u8 scproc_HandEx_hensin( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEAD
   BTL_POKEPARAM* user = BTL_POKECON_GetPokeParam( wk->pokeCon,  param_header->userPokeID );
   BTL_POKEPARAM* target = BTL_POKECON_GetPokeParam( wk->pokeCon,  param->pokeID );
 
+  OS_TPrintf("‚Ö‚ñ‚µ‚ñŠJŽn..\n");
+
   if( BPP_HENSIN_Set(user, target) )
   {
     u8 usrPokeID = BPP_GetID( user );
@@ -12292,6 +12294,7 @@ static u8 scproc_HandEx_hensin( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEAD
     if( param_header->tokwin_flag ){
       scPut_TokWin_Out( wk, user );
     }
+    return 1;
   }
   return 0;
 }
