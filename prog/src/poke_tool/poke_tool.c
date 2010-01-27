@@ -1687,6 +1687,82 @@ u32  POKETOOL_CalcPersonalRand( u16 mons_no, u16 form_no, u8 sex )
   return rnd;
 }
 
+//============================================================================================
+/**
+ *	指定されたパラメータになるように個性乱数を計算する（特性、レア指定可能版）
+ *
+ * @param[in] id					トレーナーID
+ * @param[in] mons_no			個性乱数を計算するモンスターナンバー
+ * @param[in] form_no     フォルムーナンバー（不要なら PTR_FORM_NONE）
+ * @param[in] sex					性別
+ * @param[in] tokusei			特性（ 0 or 1 で指定 ）
+ * @param[in] rare_flag		レアにするかどうか( FALSE:レアではない　TRUE:レアにする ）
+ *
+ * @retval	計算した個性乱数
+ */
+//============================================================================================
+u32		POKETOOL_CalcPersonalRandEx( u32 id, u16 mons_no, u16 form_no, u8 sex, u8 tokusei, BOOL rare_flag )
+{	
+	u32	rnd;
+
+	//特性ナンバーではないので、2以上はアサートにする
+	GF_ASSERT( tokusei < 2 );
+	//性別にPTL_SEX_UNKNOWNは指定できないのでアサート
+	GF_ASSERT( sex != PTL_SEX_UNKNOWN );
+
+	if( rare_flag )
+	{	
+		u32	mask = ( ( ( id & 0xffff0000 ) >> 16 ) ^ ( id & 0x0000ffff ) );
+
+		rnd = POKETOOL_CalcPersonalRand( mons_no, form_no, sex );
+    if( ( rnd & 0x00000001 ) != tokusei )
+    { 
+			if( sex == PTL_SEX_MALE )
+      { 
+        rnd++;
+      }
+      else
+      { 
+        //乱数が０のときは、思ったような値にならないがあきらめてもらうしかない
+        if( rnd )
+        { 
+          rnd--;
+        }
+      }
+    }
+		rnd |= ( mask ^ ( rnd & 0x0000ffff ) ) << 16;
+	}
+	else
+	{	
+    POKEMON_PERSONAL_DATA* ppd = Personal_Load( mons_no, form_no );
+    u8 per_sex = POKE_PERSONAL_GetParam( ppd, POKEPER_ID_sex );
+
+		rnd = ( ( ( id & 0xffff0000 ) >> 16 ) ^ ( id & 0x0000ffff ) ) & 0xff00;
+		rnd = ( rnd ^ 0xff00 ) << 16;
+
+    if( PokePersonal_SexVecTypeGet( per_sex ) != POKEPER_SEXTYPE_FIX )
+		{	
+			rnd |= per_sex;
+			if( sex == PTL_SEX_MALE )
+			{	
+				if( ( rnd & 1 ) != tokusei )
+				{	
+          rnd++;
+				}
+			}
+			else
+			{	
+        rnd--;
+				if( ( rnd & 1 ) != tokusei )
+				{	
+					rnd--;
+				}
+			}
+		}
+	}
+	return rnd;
+}
+
 //=============================================================================================
 /**
  * ワザ「めざめるパワー」の実行時タイプ取得
