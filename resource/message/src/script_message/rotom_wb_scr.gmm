@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-11-24T17:02:19"/>
+	<create user="matsumiya" host="W00207" date="2010-01-27T18:48:12"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -599,6 +599,16 @@
 モーターに　はいっていません！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]は
 モーターに　はいっていません！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_rotom_11">
+		<comment>ロトム：フォルムチェンジ処理
+・msg_rotom_07表示後に
+　いいえ選択</comment>
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]は　モーターの　なかに
+はいるのを　あきらめた……</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]は　モーターの　中に
+はいるのを　あきらめた……</language>
 	</row>
 
 	<flowchart-group-list>
