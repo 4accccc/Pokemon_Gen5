@@ -221,6 +221,13 @@ enum NetworkCommandHeaderNo_e {
   
 };
 
+
+/// 通信送信基本サイズ 同じゲームが複数ある場合に統一した速度になるように指定してある
+/// ４人でのゲームの想定
+#define NET_SEND_SIZE_STANDARD (96)
+
+
+
 #include "net_irc.h"
 
 
