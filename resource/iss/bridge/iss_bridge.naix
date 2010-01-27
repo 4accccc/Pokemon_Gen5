@@ -1,0 +1,19 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: iss_bridge.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_ISS_BRIDGE_NAIX_
+#define NARC_ISS_BRIDGE_NAIX_
+
+enum {
+	NARC_iss_bridge_iss_bridge_data_seq_bgm_h_01_bin = 0,
+	NARC_iss_bridge_iss_bridge_data_seq_bgm_h_03_bin = 1
+};
+
+/* NARC_ISS_BRIDGE_NAIX_ */
+#endif
