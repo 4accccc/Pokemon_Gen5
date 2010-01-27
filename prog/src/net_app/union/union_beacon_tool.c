@@ -19,12 +19,10 @@
 
 #include "net_app/union/union_beacon_tool.h"
 #include "field/fldmmdl.h"
+#include "msg/msg_trtype.h"
+#include "tr_tool/trtype_def.h"
 
 #define UNION_VIEW_TYPE_NUM	( 16 )
-
-//GSの方も仮だったので仮で移植
-#define DUMMY_MSG_TYPE (0)
-#define DUMMY_GRA_TYPE (0)
 
 // ユニオンルームで表示するトレーナーのタイプ見た目＆名前＆トレーナーグラフィックテーブル
 static const struct{
@@ -32,43 +30,23 @@ static const struct{
   u8 msg_type;
   u8 tr_type;
 }UnionViewTable[] = {
-#if 0	//トレーナーデータ変更に伴いコメントアウト　saito	
-	{ BOY1,			MSG_TRTYPE_SCHOOLB, 	TRTYPE_SCHOOLB	  },	///< じゅくがえり
-	{ BOY3,			MSG_TRTYPE_MUSHI,		TRTYPE_MUSHI	  },	///< むしとりしょうねん
-	{ MAN3,			MSG_TRTYPE_ELITEM,		TRTYPE_ELITEM	  },	///< エリートトレーナー♂
-	{ BADMAN,		MSG_TRTYPE_HEADS,		TRTYPE_HEADS	  },	///< スキンヘッズ
-	{ EXPLORE,		MSG_TRTYPE_ISEKI,		TRTYPE_ISEKI	  },	///< いせきマニア
-	{ FIGHTER,		MSG_TRTYPE_KARATE,		TRTYPE_KARATE	  },	///< からておう
-	{ GORGGEOUSM,	MSG_TRTYPE_PRINCE,		TRTYPE_PRINCE	  },	///< おぼっちゃま
-	{ MYSTERY,		MSG_TRTYPE_ESPM,		TRTYPE_ESPM 	  },	///< サイキッカー
+	{ BOY2,		MSG_TRTYPE_TANPAN,		TRTYPE_TANPAN	},	///< たんパンこぞう
+	{ TRAINERM,		MSG_TRTYPE_ELITEM,		TRTYPE_ELITEM	},	///< エリートトレーナー
+	{ RANGERM,		MSG_TRTYPE_RANGERM,		TRTYPE_RANGERM	},	///< ポケモンレンジャー
+	{ BREEDERM,		MSG_TRTYPE_BREEDERM,		TRTYPE_BREEDERM	},	///< ポケモンブリーダー
+	{ ASSISTANTM,	MSG_TRTYPE_SCIENTISTM,		TRTYPE_SCIENTISTM	},	///< けんきゅういん
+	{ MOUNTMAN,	MSG_TRTYPE_MOUNT,		TRTYPE_MOUNT	},	///< やまおとこ
+	{ BADMAN,	MSG_TRTYPE_HEADS,		TRTYPE_HEADS	},	///< スキンヘッズ
+	{ BABYBOY1,	MSG_TRTYPE_KINDERGARTENM,		TRTYPE_KINDERGARTENM	},	///< ようちえん
 
-	{ GIRL1,		MSG_TRTYPE_MINI,  		TRTYPE_MINI 	  },	///< ミニスカート
-	{ GIRL2,		MSG_TRTYPE_BATTLEG, 	TRTYPE_BATTLEG	  },	///< バトルガール
-	{ WOMAN2,		MSG_TRTYPE_SISTER, 		TRTYPE_SISTER	  },	///< おとなのおねえさん
-	{ WOMAN3,		MSG_TRTYPE_ELITEW,		TRTYPE_ELITEW 	  },	///< エリートトレーナー♀
-	{ IDOL,			MSG_TRTYPE_IDOL,		TRTYPE_IDOL 	  },	///< アイドル
-	{ LADY,			MSG_TRTYPE_MADAM, 		TRTYPE_MADAM	  },	///< マダム
-	{ COWGIRL,		MSG_TRTYPE_COWGIRL, 	TRTYPE_COWGIRL	  },	///< カウガール
-	{ GORGGEOUSW,	MSG_TRTYPE_PRINCESS,	TRTYPE_PRINCESS   },	///< おじょうさま
-#else
-	{ BOY1,		DUMMY_MSG_TYPE,		DUMMY_GRA_TYPE	},	///< じゅくがえり
-	{ MAN1,		DUMMY_MSG_TYPE,		DUMMY_GRA_TYPE	},	///< むしとりしょうねん
-	{ MIDDLEMAN1,		DUMMY_MSG_TYPE,		DUMMY_GRA_TYPE	},	///< エリートトレーナー♂
-	{ OLDMAN1,		DUMMY_MSG_TYPE,		DUMMY_GRA_TYPE	},	///< スキンヘッズ
-	{ BABYBOY1,	DUMMY_MSG_TYPE,		DUMMY_GRA_TYPE	},	///< いせきマニア
-	{ BOY1,	DUMMY_MSG_TYPE,		DUMMY_GRA_TYPE	},	///< からておう
-	{ MAN1,	DUMMY_MSG_TYPE,		DUMMY_GRA_TYPE	},	///< おぼっちゃま
-	{ MIDDLEMAN1,	DUMMY_MSG_TYPE,		DUMMY_GRA_TYPE	},	///< サイキッカー
-
-	{ GIRL1,		DUMMY_MSG_TYPE,		DUMMY_GRA_TYPE	},	///< ミニスカート
-	{ WOMAN1,		DUMMY_MSG_TYPE,		DUMMY_GRA_TYPE	},	///< バトルガール
-	{ MIDDLEWOMAN1,		DUMMY_MSG_TYPE,		DUMMY_GRA_TYPE	},	///< おとなのおねえさん
-	{ OLDWOMAN1,		DUMMY_MSG_TYPE,		DUMMY_GRA_TYPE	},	///< エリートトレーナー♀
-	{ BABYGIRL1,		DUMMY_MSG_TYPE,		DUMMY_GRA_TYPE	},	///< アイドル
-	{ GIRL1,		DUMMY_MSG_TYPE,		DUMMY_GRA_TYPE	},	///< マダム
-	{ WOMAN1,	DUMMY_MSG_TYPE,		DUMMY_GRA_TYPE	},	///< カウガール
-	{ MIDDLEWOMAN1,	DUMMY_MSG_TYPE,		DUMMY_GRA_TYPE	},	///< おじょうさま
-#endif
+	{ GIRL2,		MSG_TRTYPE_MINI,		TRTYPE_MINI	},	///< ミニスカート
+	{ TRAINERW,		MSG_TRTYPE_ELITEW,		TRTYPE_ELITEW	},	///< エリートトレーナー
+	{ RANGERW,		MSG_TRTYPE_RANGERW,		TRTYPE_RANGERW	},	///< ポケモンレンジャー
+	{ BREEDERW,		MSG_TRTYPE_BREEDERW,		TRTYPE_BREEDERW	},	///< ポケモンブリーダー
+	{ ASSISTANTW,		MSG_TRTYPE_SCIENTISTW,		TRTYPE_SCIENTISTW	},	///< けんきゅういん
+	{ AMBRELLA,		MSG_TRTYPE_PARASOL,		TRTYPE_PARASOL	},	///< パラソルおねえさん
+	{ NURSE,	MSG_TRTYPE_NURSE,		TRTYPE_NURSE	},	///< ナース
+	{ BABYGIRL1,	MSG_TRTYPE_KINDERGARTENW,		TRTYPE_KINDERGARTENW	},	///< ようちえん
 };
 
 // 見た目変更おやじ用のテーブル（IDを８で割ったあまりに対応する）
@@ -109,7 +87,7 @@ void UnionView_SetUpTrainerTypeSelect( u32 id, int sex, WORDSET *wordset )
 
 	for(i=0; i<UNION_VIEW_SELECT_NUM; i++){
 		int patern = UnionViewNameTable[key][i] + UNION_VIEW_SELECT_TYPE * sex;
-//		WORDSET_RegisterTrTypeName( wordset, i, UnionViewTable[patern][1] );
+		WORDSET_RegisterTrTypeName( wordset, i, UnionViewTable[patern].msg_type );
 	}
 
 
@@ -200,7 +178,7 @@ int UnionView_GetObjCode(int view_index)
 {
   if(view_index >= NELEMS(UnionViewTable)){
     GF_ASSERT(0);
-    return BOY1;
+    return BOY2;
   }
   return UnionViewTable[view_index].objcode;
 }
