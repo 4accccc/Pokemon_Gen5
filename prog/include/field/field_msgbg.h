@@ -53,7 +53,6 @@ typedef enum
   FLDTALKMSGWIN_IDX_UPPER = 0, ///<画面上部に
   FLDTALKMSGWIN_IDX_LOWER, ///<画面下部に
   FLDTALKMSGWIN_IDX_AUTO, ///<吹き出し元の座標を考慮し自動で配置
-  FLDTALKMSGWIN_IDX_PLAIN, ///<プレーンウィンドウ
   FLDTALKMSGWIN_IDX_SUBWIN0, ///<サブウィンドウ
   FLDTALKMSGWIN_IDX_SUBWIN1, ///<サブウィンドウ
   FLDTALKMSGWIN_IDX_SUBWIN2, ///<サブウィンドウ
@@ -340,12 +339,25 @@ extern void FLDTALKMSGWIN_Delete( FLDTALKMSGWIN *tmsg );
 extern BOOL FLDTALKMSGWIN_Print( FLDTALKMSGWIN *tmsg );
 
 //プレーンウィンドウ
-extern FLDPLAINMSGWIN * FLDPLAINMSGWIN_Add( FLDMSGBG *fmb,
-    BOOL up_down, const GFL_MSGDATA *msgData, u32 msgID );
-extern FLDPLAINMSGWIN * FLDPLAINMSGWIN_AddStrBuf( FLDMSGBG *fmb,
-    BOOL up_down, STRBUF *strBuf );
+extern FLDPLAINMSGWIN * FLDPLAINMSGWIN_Add(
+    FLDMSGBG *fmb,  const GFL_MSGDATA *msgData,
+    u16 bmppos_x, u16 bmppos_y, u16 bmpsize_x, u16 bmpsize_y );
 extern void FLDPLAINMSGWIN_Delete( FLDPLAINMSGWIN *plnwin );
-extern BOOL FLDPLAINMSGWIN_Print( FLDPLAINMSGWIN *plnwin );
+extern void FLDPLAINMSGWIN_ClearMessage( FLDPLAINMSGWIN *plnwin );
+extern void FLDPLAINMSGWIN_ClearWindow( FLDPLAINMSGWIN *plnwin );
+extern void FLDPLAINMSGWIN_WriteWindow( FLDPLAINMSGWIN *plnwin );
+extern void FLDPLAINMSGWIN_Print(
+    FLDPLAINMSGWIN *plnwin, u16 x, u16 y, u32 strID );
+extern void FLDPLAINMSGWIN_PrintStrBuf(
+    FLDPLAINMSGWIN *plnwin, u16 x, u16 y, STRBUF *strBuf );
+extern void FLDPLAINMSGWIN_PrintStrBufColor(
+    FLDPLAINMSGWIN *plnwin, 
+    u16 x, u16 y, STRBUF *strBuf, PRINTSYS_LSB color );
+extern void FLDPLAINMSGWIN_PrintStreamStart(
+    FLDPLAINMSGWIN *plnwin, u16 x, u16 y, u32 strID );
+extern void FLDPLAINMSGWIN_PrintStreamStartStrBuf(
+    FLDPLAINMSGWIN *plnwin, u16 x, u16 y, const STRBUF *strBuf );
+extern BOOL FLDPLAINMSGWIN_PrintStream( FLDPLAINMSGWIN *plnwin );
 
 //サブウィンドウ
 extern void FLDSUBMSGWIN_Add( FLDMSGBG *fmb,

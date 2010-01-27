@@ -193,6 +193,8 @@ static void setBGAlpha( TALKMSGWIN_SYS* tmsgwinSys, TALKMSGWIN_SYS_SETUP* setup 
 static void initWindow( TMSGWIN* tmsgwin );
 static BOOL checkEmptyWindow( TMSGWIN* tmsgwin );
 static BOOL checkPrintOnWindow( TMSGWIN* tmsgwin );
+static GFL_BMPWIN * setupBmpWindow(TALKMSGWIN_SYS *tmsgwinSys,
+            u8 posx, u8 posy, u8 sizx, u8 sizy );
 static void setupWindow(	TALKMSGWIN_SYS*		tmsgwinSys,
 													TMSGWIN*					tmsgwin,
 													VecFx32*					pTarget,
@@ -211,7 +213,10 @@ static void	drawTail( TALKMSGWIN_SYS* tmsgwinSys, TMSGWIN* tmsgwin, BOOL tailOnl
 
 static void writeWindowAlone( TALKMSGWIN_SYS* tmsgwinSys, TMSGWIN* tmsgwin );
 static void writeWindow( TALKMSGWIN_SYS* tmsgwinSys, TMSGWIN* tmsgwin );
-static void clearWindow( TALKMSGWIN_SYS* tmsgwinSys, TMSGWIN* tmsgwin );
+static void clearBmpWindow( TALKMSGWIN_SYS* tmsgwinSys, GFL_BMPWIN *bmpwin );
+
+static void writeWindowSelect( TALKMSGWIN_SYS* tmsgwinSys,
+    GFL_BMPWIN *bmpwin, u8 winType, TAIL_SETPAT tailPat );
 
 	//動作確認用暫定
 static BOOL	debugOn;
@@ -354,7 +359,7 @@ void TALKMSGWIN_CreateWindowAlone(	TALKMSGWIN_SYS*		tmsgwinSys,
 	TALKMSGWIN_SETUP setup;
 
 	GF_ASSERT( (tmsgwinIdx>=0)&&(tmsgwinIdx<TALKMSGWIN_NUM) );
-
+  
 	setup.winPat = TALKWIN_SETPAT_FLOAT;
 	setup.winpx = winpx;
 	setup.winpy = winpy;
@@ -549,7 +554,49 @@ GFL_BMPWIN * TALKMSGWIN_GetBmpWin( TALKMSGWIN_SYS* tmsgwinSys, int tmsgwinIdx )
 }
 
 
+//------------------------------------------------------------------
+//  ビットマップウィンドウのみ
+//------------------------------------------------------------------
+GFL_BMPWIN * TALKMSGWIN_CreateBmpWindow( TALKMSGWIN_SYS *tmsgwinSys, 
+																			u8								winpx,			
+																			u8								winpy,			
+																			u8								winsx,
+																			u8								winsy,
+                                      TALKMSGWIN_TYPE   winType )
+{
+  GFL_BMPWIN *bmpwin;
+  
+  bmpwin = setupBmpWindow( tmsgwinSys, winpx, winpy, winsx, winsy );
+  writeWindowSelect( tmsgwinSys, bmpwin, winType, TAIL_SETPAT_NONE );
+  return( bmpwin );
+}
 
+void TALKMSGWIN_WriteBmpWindow(
+    TALKMSGWIN_SYS *tmsgwinSys, GFL_BMPWIN *bmpwin, TALKMSGWIN_TYPE winType )
+{
+  writeWindowSelect( tmsgwinSys, bmpwin, winType, TAIL_SETPAT_NONE );
+}
+
+void TALKMSGWIN_ClearBmpWindow(
+    TALKMSGWIN_SYS *tmsgwinSys, GFL_BMPWIN *bmpwin )
+{
+  clearBmpWindow( tmsgwinSys, bmpwin );
+	GFL_BG_LoadScreenReq( tmsgwinSys->setup.ini.frameID );
+}
+
+void TALKMSGWIN_CleanBmpWindow(
+    TALKMSGWIN_SYS *tmsgwinSys, GFL_BMPWIN *bmpwin )
+{
+  GFL_BMPWIN_ClearScreen( bmpwin );
+	GFL_BG_LoadScreenReq( tmsgwinSys->setup.ini.frameID );
+}
+
+void TALKMSGWIN_DeleteBmpWindow(
+    TALKMSGWIN_SYS *tmsgwinSys, GFL_BMPWIN *bmpwin )
+{
+  clearBmpWindow( tmsgwinSys, bmpwin );
+  GFL_BMPWIN_Delete(bmpwin);
+}
 
 //============================================================================================
 /**
@@ -585,6 +632,24 @@ static BOOL checkPrintOnWindow( TMSGWIN* tmsgwin )
 }
 
 //------------------------------------------------------------------
+static GFL_BMPWIN * setupBmpWindow(TALKMSGWIN_SYS *tmsgwinSys,
+            u8 posx, u8 posy, u8 sizx, u8 sizy )
+{
+  GFL_BMPWIN *bmpwin;
+  
+  bmpwin = GFL_BMPWIN_Create( tmsgwinSys->setup.ini.frameID,
+					            posx, posy, sizx, sizy,
+										  tmsgwinSys->setup.ini.fontPltID,
+											GFL_BG_CHRAREA_GET_B );
+
+  //ウインドウ生成
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(bmpwin), BACKGROUND_COLIDX );
+	GFL_BMPWIN_TransVramCharacter( bmpwin );
+  
+  return( bmpwin );
+}
+
+//------------------------------------------------------------------
 static void setupWindow(	TALKMSGWIN_SYS*		tmsgwinSys,
 													TMSGWIN*					tmsgwin,
 													VecFx32*					pTarget,
@@ -607,13 +672,8 @@ static void setupWindow(	TALKMSGWIN_SYS*		tmsgwinSys,
 		u8 px = ( setup->winpx + setup->winsx <= 32 )? setup->winpx : 32 - setup->winsx;
 		u8 py = ( setup->winpy + setup->winsy <= 24 )? setup->winpy : 24 - setup->winsy;
 
-		tmsgwin->bmpwin = GFL_BMPWIN_Create(tmsgwinSys->setup.ini.frameID,
-																				px, py, setup->winsx, setup->winsy,
-																				tmsgwinSys->setup.ini.fontPltID,
-																				GFL_BG_CHRAREA_GET_B );
-		//ウインドウ生成
-		GFL_BMP_Clear(GFL_BMPWIN_GetBmp(tmsgwin->bmpwin), BACKGROUND_COLIDX);
-		GFL_BMPWIN_TransVramCharacter(tmsgwin->bmpwin);
+		tmsgwin->bmpwin = setupBmpWindow( tmsgwinSys,
+								px, py, setup->winsx, setup->winsy );
 	}
 	//吹き出しエフェクトパラメータ計算
 	tmsgwin->tailData.tailPat = TAIL_SETPAT_NONE;
@@ -660,7 +720,7 @@ static void deleteWindow( TALKMSGWIN_SYS* tmsgwinSys, TMSGWIN* tmsgwin )
 			PRINTSYS_PrintStreamDelete(tmsgwin->printStream);
 			tmsgwin->printStream = NULL;
 		}
-		clearWindow(tmsgwinSys, tmsgwin);
+		clearBmpWindow(tmsgwinSys, tmsgwin->bmpwin);
 
 		GFL_BMPWIN_Delete(tmsgwin->bmpwin);
 	  
@@ -1630,12 +1690,12 @@ static void setBGAlpha( TALKMSGWIN_SYS* tmsgwinSys, TALKMSGWIN_SYS_SETUP* setup 
 #define CONNECT_CHR_GIZA (CHR_COUNT+2)
 
 static void writeWindow_Normal(
-    TALKMSGWIN_SYS* tmsgwinSys, TMSGWIN* tmsgwin, TAIL_SETPAT tailPat )
+    TALKMSGWIN_SYS* tmsgwinSys, GFL_BMPWIN *bmpwin, TAIL_SETPAT tailPat )
 {
-	u16	px = GFL_BMPWIN_GetPosX(tmsgwin->bmpwin);
-	u16	py = GFL_BMPWIN_GetPosY(tmsgwin->bmpwin);
-	u16	sx = GFL_BMPWIN_GetScreenSizeX(tmsgwin->bmpwin);
-	u16	sy = GFL_BMPWIN_GetScreenSizeY(tmsgwin->bmpwin);
+	u16	px = GFL_BMPWIN_GetPosX(bmpwin);
+	u16	py = GFL_BMPWIN_GetPosY(bmpwin);
+	u16	sx = GFL_BMPWIN_GetScreenSizeX(bmpwin);
+	u16	sy = GFL_BMPWIN_GetScreenSizeY(bmpwin);
 	BOOL overU = FALSE;
 	BOOL overD = FALSE;
 	BOOL overL = FALSE;
@@ -1650,7 +1710,7 @@ static void writeWindow_Normal(
 	if((py + sy) == 24){ overD = TRUE; }
 
 	//文字描画領域
-	GFL_BMPWIN_MakeScreen(tmsgwin->bmpwin);
+	GFL_BMPWIN_MakeScreen(bmpwin);
 
 	//枠領域
 	if(overU == FALSE){
@@ -1776,12 +1836,12 @@ static void writeWindow_Normal(
 }
 
 static void writeWindow_Giza(
-    TALKMSGWIN_SYS* tmsgwinSys, TMSGWIN* tmsgwin, TAIL_SETPAT tailPat )
+    TALKMSGWIN_SYS* tmsgwinSys, GFL_BMPWIN *bmpwin, TAIL_SETPAT tailPat )
 {
-	u16	px = GFL_BMPWIN_GetPosX(tmsgwin->bmpwin);
-	u16	py = GFL_BMPWIN_GetPosY(tmsgwin->bmpwin);
-	u16	sx = GFL_BMPWIN_GetScreenSizeX(tmsgwin->bmpwin);
-	u16	sy = GFL_BMPWIN_GetScreenSizeY(tmsgwin->bmpwin);
+	u16	px = GFL_BMPWIN_GetPosX(bmpwin);
+	u16	py = GFL_BMPWIN_GetPosY(bmpwin);
+	u16	sx = GFL_BMPWIN_GetScreenSizeX(bmpwin);
+	u16	sy = GFL_BMPWIN_GetScreenSizeY(bmpwin);
 	BOOL overU = FALSE;
 	BOOL overD = FALSE;
 	BOOL overL = FALSE;
@@ -1796,7 +1856,7 @@ static void writeWindow_Giza(
 	if((py + sy) == 24){ overD = TRUE; }
 
 	//文字描画領域
-	GFL_BMPWIN_MakeScreen(tmsgwin->bmpwin);
+	GFL_BMPWIN_MakeScreen(bmpwin);
 
 	//枠領域
 	if(overU == FALSE){
@@ -1965,49 +2025,51 @@ static void writeWindow_Giza(
 	GFL_BG_LoadScreenReq(frameID);
 }
 
-static void writeWindowSelect(
-    TALKMSGWIN_SYS* tmsgwinSys, TMSGWIN* tmsgwin, TAIL_SETPAT tailPat )
+static void writeWindowSelect( TALKMSGWIN_SYS* tmsgwinSys,
+    GFL_BMPWIN *bmpwin, u8 winType, TAIL_SETPAT tailPat )
 {
-  switch( tmsgwin->winType ){
+  switch( winType ){
   case TALKMSGWIN_TYPE_NORMAL:
-    writeWindow_Normal( tmsgwinSys, tmsgwin, tailPat );
+    writeWindow_Normal( tmsgwinSys, bmpwin, tailPat );
     break;
   case TALKMSGWIN_TYPE_GIZA:
-    writeWindow_Giza( tmsgwinSys, tmsgwin, tailPat );
+    writeWindow_Giza( tmsgwinSys, bmpwin, tailPat );
     break;
   }
 }
 
 static void writeWindowAlone( TALKMSGWIN_SYS* tmsgwinSys, TMSGWIN* tmsgwin )
 {
-  writeWindowSelect( tmsgwinSys, tmsgwin, TAIL_SETPAT_NONE );
+  writeWindowSelect( tmsgwinSys,
+      tmsgwin->bmpwin, tmsgwin->winType, TAIL_SETPAT_NONE );
 }
 
 static void writeWindow( TALKMSGWIN_SYS* tmsgwinSys, TMSGWIN* tmsgwin )
 {
-  writeWindowSelect( tmsgwinSys, tmsgwin, tmsgwin->tailData.tailPat );
+  writeWindowSelect( tmsgwinSys,
+      tmsgwin->bmpwin, tmsgwin->winType, tmsgwin->tailData.tailPat );
 }
 
 //------------------------------------------------------------------
-static void clearWindow( TALKMSGWIN_SYS* tmsgwinSys, TMSGWIN* tmsgwin )
+static void clearBmpWindow( TALKMSGWIN_SYS* tmsgwinSys, GFL_BMPWIN *bmpwin )
 {
-	u16	px = GFL_BMPWIN_GetPosX(tmsgwin->bmpwin);
-	u16	py = GFL_BMPWIN_GetPosY(tmsgwin->bmpwin);
-	u16	sx = GFL_BMPWIN_GetScreenSizeX(tmsgwin->bmpwin);
-	u16	sy = GFL_BMPWIN_GetScreenSizeY(tmsgwin->bmpwin);
+	u16	px = GFL_BMPWIN_GetPosX(bmpwin);
+	u16	py = GFL_BMPWIN_GetPosY(bmpwin);
+	u16	sx = GFL_BMPWIN_GetScreenSizeX(bmpwin);
+	u16	sy = GFL_BMPWIN_GetScreenSizeY(bmpwin);
 	BOOL overU = FALSE;
 	BOOL overD = FALSE;
 	BOOL overL = FALSE;
 	BOOL overR = FALSE;
 	u8	frameID = tmsgwinSys->setup.ini.frameID;
-
-	GFL_BMPWIN_ClearScreen(tmsgwin->bmpwin);
-
+  
+	GFL_BMPWIN_ClearScreen(bmpwin);
+  
 	if(px == 0){ overL = TRUE; }
 	if((px + sx) == 32){ overR = TRUE; }
 	if(py == 0){ overU = TRUE; }
 	if((py + sy) == 24){ overD = TRUE; }
-
+  
 	if(overU == FALSE){
 		if(overL == FALSE){
 			GFL_BG_FillScreen(frameID, 0, px - 1, py - 1, 1, 1, GFL_BG_SCRWRT_PALIN);

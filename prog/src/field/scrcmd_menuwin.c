@@ -1012,7 +1012,7 @@ static BOOL PlainWinMsgWait( VMHANDLE *core, void *wk )
   FLDPLAINMSGWIN *plnWin;
   plnWin = (FLDPLAINMSGWIN*)SCRCMD_WORK_GetMsgWinPtr( work );
   
-  if( FLDPLAINMSGWIN_Print(plnWin) == TRUE ){
+  if( FLDPLAINMSGWIN_PrintStream(plnWin) == TRUE ){
     return( 1 );
   }
   
@@ -1035,10 +1035,21 @@ VMCMD_RESULT EvCmdPlainWinMsg( VMHANDLE *core, void *wk )
   SCRIPT_FLDPARAM *fparam = SCRIPT_GetFieldParam( sc );
   u16 msg_id = VMGetU16( core );
   u8 up_down = VMGetU8( core );
+  u16 x = 1;
+  u16 y = 1;
+  u16 sx = 30;
+  u16 sy = 4;
   
   msgbuf = SetExpandWord( work, sc, msg_id );
-  win = FLDPLAINMSGWIN_AddStrBuf( fparam->msgBG, up_down, msgbuf );
+  
+  if( up_down != 0 ){ //down
+    y = 19;
+  }
+  
+  win = FLDPLAINMSGWIN_Add( fparam->msgBG, NULL, x, y, sx, sy );
   SCRCMD_WORK_SetMsgWinPtr( work, win );
+  
+  FLDPLAINMSGWIN_PrintStreamStartStrBuf( win, 2, 2, msgbuf );
   
   SCREND_CHK_SetBitOn(SCREND_CHK_PLAINWIN_OPEN);
   VMCMD_SetWait( core, PlainWinMsgWait );

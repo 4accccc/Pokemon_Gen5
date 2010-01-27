@@ -125,3 +125,18 @@ extern BOOL						TALKMSGWIN_CheckPrintOn( TALKMSGWIN_SYS* tmsgwinSys, int tmsgwi
 extern PRINT_STREAM*	TALKMSGWIN_GetPrintStream( TALKMSGWIN_SYS* tmsgwinSys, int tmsgwinIdx );	
 extern GFL_BMPWIN * TALKMSGWIN_GetBmpWin( TALKMSGWIN_SYS* tmsgwinSys, int tmsgwinIdx );
 extern void TALKMSGWIN_ReTransWindowBG( TALKMSGWIN_SYS* tmsgwinSys );
+
+extern GFL_BMPWIN * TALKMSGWIN_CreateBmpWindow( TALKMSGWIN_SYS *tmsgwinSys, 
+																			u8								winpx,			
+																			u8								winpy,			
+																			u8								winsx,
+																			u8								winsy,
+                                      TALKMSGWIN_TYPE   winType );
+extern void TALKMSGWIN_WriteBmpWindow(
+    TALKMSGWIN_SYS *tmsgwinSys, GFL_BMPWIN *bmpwin, TALKMSGWIN_TYPE winType );
+extern void TALKMSGWIN_ClearBmpWindow(
+    TALKMSGWIN_SYS *tmsgwinSys, GFL_BMPWIN *bmpwin );
+extern void TALKMSGWIN_CleanBmpWindow(
+    TALKMSGWIN_SYS *tmsgwinSys, GFL_BMPWIN *bmpwin );
+extern void TALKMSGWIN_DeleteBmpWindow(
+    TALKMSGWIN_SYS *tmsgwinSys, GFL_BMPWIN *bmpwin );
