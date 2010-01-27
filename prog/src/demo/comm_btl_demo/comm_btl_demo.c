@@ -71,13 +71,29 @@ enum
   OBJ_ANM_ID_BALL_NULL = 13,    ///< ボール：空
 };
 
+enum
+{ 
+  // ボール
+  NORMAL_POSID0_BALL_PX_BASE = 128+8,
+  NORMAL_POSID0_BALL_PX_OFS = 16,
+  NORMAL_POSID0_BALL_PY = 7*8,
+  NORMAL_POSID1_BALL_PY = 21*8,
+  // トレーナー名
+  TRNAME_CSX = 10,
+  TRNAME_CSY = 2,
+  NORMAL_POSID0_TRNAME_CPX = 16,
+  NORMAL_POSID0_TRNAME_CPY = 3,
+  NORMAL_POSID1_TRNAME_CPX = 4,
+  NORMAL_POSID1_TRNAME_CPY = 17,
+};
+
 //-------------------------------------
 ///	フレーム
 //=====================================
 enum
 {	
-	BG_FRAME_BAR_M	= GFL_BG_FRAME1_M,
-	BG_FRAME_POKE_M	= GFL_BG_FRAME2_M,
+	BG_FRAME_TEXT_M	= GFL_BG_FRAME1_M,
+	BG_FRAME_BAR_M	= GFL_BG_FRAME2_M,
 	BG_FRAME_BACK_M	= GFL_BG_FRAME3_M,
 	BG_FRAME_BACK_S	= GFL_BG_FRAME2_S,
   BG_FRAME_TEXT_S = GFL_BG_FRAME0_S, 
@@ -90,7 +106,7 @@ enum
 {	
 	//メインBG
 	PLTID_BG_BACK_M				= 0,
-	PLTID_BG_POKE_M				= 1,
+	PLTID_BG_TEXT_M				= 10,
 	PLTID_BG_TASKMENU_M		= 11,
 	PLTID_BG_TOUCHBAR_M		= 13,
 	PLTID_BG_INFOWIN_M		= 15,
@@ -169,9 +185,13 @@ typedef struct {
   // [IN]
   const COMM_BTL_DEMO_TRAINER_DATA* data;
   COMM_BTL_DEMO_OBJ_WORK* obj;
+  GFL_FONT* font;
+  u8 type;
+  u8 padding[3];
   // [PRIVATE]
-  // @TODO BG名前表示
+  GFL_BMPWIN* win_name;
   BALL_UNIT ball; // ボール管理ワーク
+  int timer;
 } TRAINER_UNIT;
 
 //--------------------------------------------------------------
@@ -295,9 +315,15 @@ static void BALL_UNIT_Exit( BALL_UNIT* unit );
 static void BALL_UNIT_SetStart( BALL_UNIT* unit );
 static void BALL_UNIT_Main( BALL_UNIT* unit );
 
-static void TRAINER_UNIT_Init( TRAINER_UNIT* unit, u8 type, u8 posid, const COMM_BTL_DEMO_TRAINER_DATA* data, COMM_BTL_DEMO_OBJ_WORK* obj );
+static void TRAINER_UNIT_Init( TRAINER_UNIT* unit, u8 type, u8 posid, const COMM_BTL_DEMO_TRAINER_DATA* data, COMM_BTL_DEMO_OBJ_WORK* obj, GFL_FONT* font );
 static void TRAINER_UNIT_Main( TRAINER_UNIT* unit );
 static void TRAINER_UNIT_Exit( TRAINER_UNIT* unit );
+static void TRAINER_UNIT_DrawTrainerName( TRAINER_UNIT* unit, GFL_FONT *font );
+
+static void TRAINER_UNIT_CNT_Init( COMM_BTL_DEMO_MAIN_WORK* wk );
+static void TRAINER_UNIT_CNT_Exit( COMM_BTL_DEMO_MAIN_WORK* wk );
+static void TRAINER_UNIT_CNT_Main( COMM_BTL_DEMO_MAIN_WORK* wk );
+static void TRAINER_UNIT_CNT_BallSetStart( COMM_BTL_DEMO_MAIN_WORK* wk );
 
 static void OBJ_Init( COMM_BTL_DEMO_OBJ_WORK* wk, COMM_BTL_DEMO_GRAPHIC_WORK* graphic, HEAPID heapID );
 static void OBJ_Exit( COMM_BTL_DEMO_OBJ_WORK* wk );
@@ -343,8 +369,9 @@ const GFL_PROC_DATA CommBtlDemoProcData =
 static void debug_param( COMM_BTL_DEMO_PARAM* prm )
 { 
   int i;
-  
+
   prm->type = COMM_BTL_DEMO_TYPE_NORMAL_START;
+  
   prm->result = GFUser_GetPublicRand( COMM_BTL_DEMO_RESULT_MAX );
 
   HOSAKA_Printf( "result = %d \n", prm->result );
@@ -352,8 +379,18 @@ static void debug_param( COMM_BTL_DEMO_PARAM* prm )
   for( i=0; i<COMM_BTL_DEMO_TRDATA_MAX; i++ )
   {
     prm->trainer_data[i].server_version = GFUser_GetPublicRand(2);
-    prm->trainer_data[i].trsex = GFUser_GetPublicRand(2) ? PM_MALE : PM_FEMALE;
-//  prm->trainer_data[i].str_trname = 1;
+    prm->trainer_data[i].trsex = (i!=0) ? PM_MALE : PM_FEMALE; //@TODO
+
+    // トレーナー名
+    {
+      //終端コードを追加してからSTRBUFに変換
+      STRCODE debugname[32] = L"とうふ";
+      
+      debugname[3] = GFL_STR_GetEOMCode();
+
+      prm->trainer_data[i].str_trname = GFL_STR_CreateBuffer( sizeof(STRCODE)*10, HEAPID_COMM_BTL_DEMO );
+      GFL_STR_SetStringCode( prm->trainer_data[i].str_trname, debugname );
+    }
     
     // デバッグポケパーティー
     {
@@ -371,6 +408,10 @@ static void debug_param( COMM_BTL_DEMO_PARAM* prm )
       for( p=0; p<poke_cnt; p++ )
       {
         POKEMON_PARAM* pp = PokeParty_GetMemberPointer( party, p );
+        if( GFUser_GetPublicRand(2) == 0 )
+        {
+          PP_SetSick( pp, POKESICK_DOKU );
+        }
         HOSAKA_Printf("poke [%d] condition=%d \n",p, PP_Get( pp, ID_PARA_condition, NULL ) );
       }
 
@@ -388,6 +429,7 @@ static void debug_param_del( COMM_BTL_DEMO_PARAM* prm )
 
   for( i=0; i<COMM_BTL_DEMO_TRDATA_MAX; i++ )
   {
+    GFL_STR_DeleteBuffer( prm->trainer_data[i].str_trname );
     GFL_HEAP_FreeMemory( (POKEPARTY*)prm->trainer_data[i].party );
   }
 }
@@ -538,7 +580,7 @@ static GFL_PROC_RESULT CommBtlDemoProc_Main( GFL_PROC *proc, int *seq, void *pwk
 	COMM_BTL_DEMO_MAIN_WORK* wk = mywk;
 
   //@TODO カメラテスト
-#if 0
+#if 1
 #ifdef PM_DEBUG
   {
     GFL_G3D_CAMERA* p_camera = COMM_BTL_DEMO_GRAPHIC_GetCamera( wk->graphic );
@@ -621,6 +663,13 @@ static void CommBtlDemo_BG_LoadResource( COMM_BTL_DEMO_BG_WORK* wk, HEAPID heapI
 	// 上下画面ＢＧパレット転送
 	GFL_ARCHDL_UTIL_TransVramPalette( handle, NARC_comm_btl_demo_bg_base_u_NCLR, PALTYPE_MAIN_BG, PLTID_BG_BACK_M, 0x0, heapID );
 	GFL_ARCHDL_UTIL_TransVramPalette( handle, NARC_comm_btl_demo_bg_base_d_NCLR, PALTYPE_SUB_BG, PLTID_BG_BACK_S, 0x0, heapID );
+  
+  // 会話フォントパレット転送
+	GFL_ARC_UTIL_TransVramPalette( ARCID_FONT,
+      NARC_font_default_nclr,
+      PALTYPE_MAIN_BG,
+      0x20*PLTID_BG_TEXT_M, 0x20, heapID );
+	
 	
   //	----- 下画面 -----
 	GFL_ARCHDL_UTIL_TransVramBgCharacter(	handle, NARC_comm_btl_demo_bg_base_d_NCGR,
@@ -651,16 +700,11 @@ static BOOL SceneNormalStart_Init( UI_SCENE_CNT_PTR cnt, void* work )
 {
   COMM_BTL_DEMO_MAIN_WORK* wk = work;
   
-  // トレーナー初期化
-  {
-    int i;
-    for( i=0; i<TRAINER_CNT_NORMAL; i++ )
-    {
-      TRAINER_UNIT_Init( &wk->trainer_unit[i], wk->pwk->type, i, &wk->pwk->trainer_data[i], &wk->wk_obj );
-    }
-  }
+  // トレイナーユニット初期化
+  TRAINER_UNIT_CNT_Init( wk );
 
 #ifdef DEBUG_ONLY_FOR_genya_hosaka
+  GFL_BG_ClearScreen( BG_FRAME_TEXT_M ); // テキスト面を消去しておく
     // フェードアウト リクエスト
   GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_WHITEOUT, 16, 0, 1 );
 #endif
@@ -682,15 +726,8 @@ static BOOL SceneNormalStart_Main( UI_SCENE_CNT_PTR cnt, void* work )
 { 
   COMM_BTL_DEMO_MAIN_WORK* wk = work;
   u8 seq = UI_SCENE_CNT_GetSubSeq( cnt );
-  
-  // トレーナー主処理
-  {
-    int i;
-    for( i=0; i<TRAINER_CNT_NORMAL; i++ )
-    {
-      TRAINER_UNIT_Main( &wk->trainer_unit[i] );
-    }
-  }
+
+  TRAINER_UNIT_CNT_Main( wk );
 
   switch( seq )
   {
@@ -698,13 +735,7 @@ static BOOL SceneNormalStart_Main( UI_SCENE_CNT_PTR cnt, void* work )
     G3D_AnimeSet( &wk->wk_g3d, DEMO_ID_01_A );
     
     // ボールアニメ開始
-    {
-      int i;
-      for( i=0; i<TRAINER_CNT_NORMAL; i++ )
-      {
-        BALL_UNIT_SetStart( &wk->trainer_unit[i].ball );
-      }
-    }
+    TRAINER_UNIT_CNT_BallSetStart( wk );
 
     UI_SCENE_CNT_IncSubSeq( cnt );
     break;
@@ -714,7 +745,7 @@ static BOOL SceneNormalStart_Main( UI_SCENE_CNT_PTR cnt, void* work )
       G3D_AnimeDel( &wk->wk_g3d );
       G3D_AnimeSet( &wk->wk_g3d, DEMO_ID_DRAW );
 
-      // ptcワーク生成( vs )
+      // ptcワーク生成「VS」
       G3D_PTC_Setup( &wk->wk_g3d, NARC_comm_btl_demo_vs_demo02_spa );
 
       UI_SCENE_CNT_IncSubSeq( cnt );
@@ -722,14 +753,12 @@ static BOOL SceneNormalStart_Main( UI_SCENE_CNT_PTR cnt, void* work )
     break;
   case 2:
     {
-      // パーティクル表示
+      // 「VS」パーティクル表示
       {
         int i;
-        VecFx32 pos = {0,0,-100};
-
         for( i=0; i<wk->wk_g3d.spa_num; i++ )
         {
-          G3D_PTC_CreateEmitter( &wk->wk_g3d, i, &pos );
+          G3D_PTC_CreateEmitter( &wk->wk_g3d, i, &(VecFx32){0,0,-100} );
         }
       }
 
@@ -773,13 +802,7 @@ static BOOL SceneNormalStart_End( UI_SCENE_CNT_PTR cnt, void* work )
   COMM_BTL_DEMO_MAIN_WORK* wk = work;
   
   // トレーナー開放
-  {
-    int i;
-    for( i=0; i<TRAINER_CNT_NORMAL; i++ )
-    {
-      TRAINER_UNIT_Exit( &wk->trainer_unit[i] );
-    }
-  }
+  TRAINER_UNIT_CNT_Exit( wk );
 
   // PTCワーク開放
   G3D_PTC_Delete( &wk->wk_g3d );
@@ -874,7 +897,7 @@ static CBD_SCENE_ID calc_first_scene( COMM_BTL_DEMO_PARAM* pwk )
   case COMM_BTL_DEMO_TYPE_MULTI_END:
     return CBD_SCENE_ID_MULTI_END;
 
-  default : GF_ASSERT(0);
+  default : GF_ASSERT_MSG( 0 , "demo type=%d ", pwk->type);
   }
 
   return CBD_SCENE_ID_NORMAL_START;
@@ -1022,19 +1045,19 @@ static void BALL_UNIT_Init( BALL_UNIT* unit, const POKEPARTY* party, u8 type, u8
     {
       //@TODO 定数化
       // ノーマル
-      px = 128+8 + (i) * 16;
-      py= (posid==0) ? 21*8 : 7*8 ;
+      px = NORMAL_POSID0_BALL_PX_BASE + (i) * NORMAL_POSID0_BALL_PX_OFS;
+      py= (posid==0) ? NORMAL_POSID0_BALL_PY : NORMAL_POSID1_BALL_PY;
 
-      if( posid == 0 ){ px *= -1; }
+      if( posid == 1 ){ px *= -1; }
     }
     else
     {
-      // マルチ
       //@TODO posid による座標調整
-      px = 128+8 + (i) * 16;
-      py= (posid==0) ? 21*8 : 7*8 ;
+      // マルチ
+      px = NORMAL_POSID0_BALL_PX_BASE + (i) * NORMAL_POSID0_BALL_PX_OFS;
+      py= (posid==0) ? NORMAL_POSID0_BALL_PY : NORMAL_POSID1_BALL_PY;
 
-      if( posid == 0 ){ px *= -1; }
+      if( posid == 1 ){ px *= -1; }
     }
 
     // 開始デモ
@@ -1160,6 +1183,40 @@ static void BALL_UNIT_Main( BALL_UNIT* unit )
   unit->timer++;
 }
 
+static GFL_BMPWIN* TRAINERNAME_WIN_Create( u8 type, u8 posid )
+{
+  GFL_BMPWIN* win;
+  s16 px, py;
+
+  if( type_is_normal(type) )
+  {
+    if( posid == 0 )
+    {
+      px = NORMAL_POSID0_TRNAME_CPX;
+      py = NORMAL_POSID0_TRNAME_CPY;
+    }
+    else
+    {
+      px = NORMAL_POSID1_TRNAME_CPX;
+      py = NORMAL_POSID1_TRNAME_CPY;
+    }
+  }
+  else
+  {
+    //@TODO マルチ
+  }
+
+  win = GFL_BMPWIN_Create( 
+      BG_FRAME_TEXT_M,        // BGフレーム
+      px, py,                 // 表示座標 
+      TRNAME_CSX, TRNAME_CSY, // 表示サイズ
+      PLTID_BG_TEXT_M,        // パレット
+      GFL_BMP_CHRAREA_GET_B   // キャラ取得方向
+      );
+
+  return win;
+}
+
 //-----------------------------------------------------------------------------
 /**
  *	@brief  トレーナーユニット 初期化
@@ -1172,7 +1229,7 @@ static void BALL_UNIT_Main( BALL_UNIT* unit )
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static void TRAINER_UNIT_Init( TRAINER_UNIT* unit, u8 type, u8 posid, const COMM_BTL_DEMO_TRAINER_DATA* data, COMM_BTL_DEMO_OBJ_WORK* obj )
+static void TRAINER_UNIT_Init( TRAINER_UNIT* unit, u8 type, u8 posid, const COMM_BTL_DEMO_TRAINER_DATA* data, COMM_BTL_DEMO_OBJ_WORK* obj, GFL_FONT* font )
 {
   u8 num;
 
@@ -1181,9 +1238,15 @@ static void TRAINER_UNIT_Init( TRAINER_UNIT* unit, u8 type, u8 posid, const COMM
   // メンバ初期化
   unit->data = data;
   unit->obj = obj;
+  unit->type = type;
+  unit->font = font;
+  unit->timer = 0;
 
   // ボール初期化
   BALL_UNIT_Init( &unit->ball, data->party, type, posid, unit->obj );
+
+  // トレーナー名初期化
+  unit->win_name = TRAINERNAME_WIN_Create( type, posid );
 }
 
 //-----------------------------------------------------------------------------
@@ -1198,6 +1261,17 @@ static void TRAINER_UNIT_Init( TRAINER_UNIT* unit, u8 type, u8 posid, const COMM
 static void TRAINER_UNIT_Main( TRAINER_UNIT* unit )
 {
   BALL_UNIT_Main( &unit->ball );
+
+  //@TODO タイミング
+  if( unit->timer > 45 ) 
+  { 
+    // トレーナー名も表示
+    TRAINER_UNIT_DrawTrainerName( unit, unit->font );
+  }
+
+  HOSAKA_Printf("unit timer=%d \n", unit->timer);
+
+  unit->timer++;
 }
 
 //-----------------------------------------------------------------------------
@@ -1211,7 +1285,141 @@ static void TRAINER_UNIT_Main( TRAINER_UNIT* unit )
 //-----------------------------------------------------------------------------
 static void TRAINER_UNIT_Exit( TRAINER_UNIT* unit )
 {
+  // ボール開放
   BALL_UNIT_Exit( &unit->ball );
+  // トレーナー名BMPWIN解放
+  GFL_BMPWIN_Delete( unit->win_name );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  トレーナーユニット トレーナー名生成、表示
+ *
+ *	@param	TRAINER_UNIT* unit 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void TRAINER_UNIT_DrawTrainerName( TRAINER_UNIT* unit, GFL_FONT *font )
+{
+  // 生成＆転送
+
+  GFL_FONTSYS_SetColor( 0xf, 0x1, 0x2 );
+
+#if 0
+  if( unit->data->trsex == PM_MALE )
+  {
+    // 男処理
+    GFL_FONTSYS_SetColor( 0xf, 0x5, 0x6 );
+  }
+  else
+  {
+    // 女処理
+    GFL_FONTSYS_SetColor( 0xf, 0x3, 0x4 );
+  }
+#endif
+
+  PRINTSYS_Print( GFL_BMPWIN_GetBmp(unit->win_name), 0, 0, unit->data->str_trname, font );
+  GFL_BMPWIN_MakeTransWindow_VBlank( unit->win_name );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  トレーナーユニット 初期化コントローラー
+ *
+ *	@param	COMM_BTL_DEMO_MAIN_WORK* wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void TRAINER_UNIT_CNT_Init( COMM_BTL_DEMO_MAIN_WORK* wk )
+{
+  int i;
+  int max = (type_is_normal(wk->pwk->type) ? TRAINER_CNT_NORMAL : TRAINER_CNT_MULTI ); 
+
+  for( i=0; i<max; i++ )
+  {
+    TRAINER_UNIT_Init( &wk->trainer_unit[i],
+          wk->pwk->type, i,
+          &wk->pwk->trainer_data[i], 
+          &wk->wk_obj,
+          wk->font
+          );
+  }
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  トレーナーユニット 後処理コントローラー
+ *
+ *	@param	COMM_BTL_DEMO_MAIN_WORK* wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void TRAINER_UNIT_CNT_Exit( COMM_BTL_DEMO_MAIN_WORK* wk )
+{
+  int i;
+  int max = (type_is_normal(wk->pwk->type) ? TRAINER_CNT_NORMAL : TRAINER_CNT_MULTI ); 
+
+  for( i=0; i<max; i++ )
+  {
+    TRAINER_UNIT_Exit( &wk->trainer_unit[i] );
+  }
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  トレーナーユニット 主処理コントローラー
+ *
+ *	@param	COMM_BTL_DEMO_MAIN_WORK* wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void TRAINER_UNIT_CNT_Main( COMM_BTL_DEMO_MAIN_WORK* wk )
+{
+  int i;
+  int max = (type_is_normal(wk->pwk->type) ? TRAINER_CNT_NORMAL : TRAINER_CNT_MULTI ); 
+
+  {
+    static fx32 fx=0;
+    static fx32 fy=0;
+    //@TODO
+    if( GFL_UI_KEY_GetTrg() & PAD_KEY_UP )  { fy+=FX32_ONE; }else
+    if( GFL_UI_KEY_GetTrg() & PAD_KEY_DOWN ){ fy-=FX32_ONE; }else
+    if( GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT ){ fx-=FX32_ONE; }else
+    if( GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT ){ fx+=FX32_ONE; }else
+    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
+    {
+      G3D_PTC_CreateEmitter( &wk->wk_g3d, i, &(VecFx32){fx,fy,-100} );
+    }
+  }
+
+  for( i=0; i<max; i++ )
+  {
+    TRAINER_UNIT_Main( &wk->trainer_unit[i] );
+  }
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  トレーナーユニット ボール開始コントローラー
+ *
+ *	@param	COMM_BTL_DEMO_MAIN_WORK* wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void TRAINER_UNIT_CNT_BallSetStart( COMM_BTL_DEMO_MAIN_WORK* wk )
+{
+  int i;
+  int max = (type_is_normal(wk->pwk->type) ? TRAINER_CNT_NORMAL : TRAINER_CNT_MULTI ); 
+
+  for( i=0; i<max; i++ )
+  {
+    BALL_UNIT_SetStart( &wk->trainer_unit[i].ball );
+  }
 }
 
 //-----------------------------------------------------------------------------
@@ -1309,7 +1517,7 @@ static void G3D_Init( COMM_BTL_DEMO_G3D_WORK* g3d, COMM_BTL_DEMO_GRAPHIC_WORK* g
   GF_ASSERT( graphic );
 
   // ブレンド指定
-  G2_SetBlendAlpha( GX_PLANEMASK_BG0, GX_PLANEMASK_OBJ|GX_PLANEMASK_BG3|GX_PLANEMASK_BG0, 16, 0 );
+  G2_SetBlendAlpha( GX_PLANEMASK_BG0, GX_PLANEMASK_OBJ|GX_PLANEMASK_BG1|GX_PLANEMASK_BG2|GX_PLANEMASK_BG3|GX_PLANEMASK_BG0, 16, 0 );
 //  G2_SetBlendAlpha( GX_PLANEMASK_BG0, GX_PLANEMASK_BG3|GX_PLANEMASK_BG2|GX_PLANEMASK_BG1|GX_PLANEMASK_BG0, 0, 0 );
   
   // メンバ初期化

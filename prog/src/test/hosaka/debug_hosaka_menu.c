@@ -15,7 +15,8 @@
  */
 //=============================================================================
 //static BOOL TESTMODE_ITEM_SelectIntro( TESTMODE_WORK *work , const int idx );
-static BOOL TESTMODE_ITEM_SelectCmmBtlDemo( TESTMODE_WORK* work, const int idx );
+static BOOL TESTMODE_ITEM_SelectCmmBtlDemoStart( TESTMODE_WORK* work, const int idx );
+static BOOL TESTMODE_ITEM_SelectCmmBtlDemoStartMulti( TESTMODE_WORK* work, const int idx );
 static BOOL TESTMODE_ITEM_SelectPmsSelect( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_SelectMicTest( TESTMODE_WORK *work , const int idx );
 
@@ -23,7 +24,8 @@ static BOOL TESTMODE_ITEM_SelectMicTest( TESTMODE_WORK *work , const int idx );
 static TESTMODE_MENU_LIST menuHosaka[] = 
 {
 //	{L"イントロデモ",TESTMODE_ITEM_SelectIntro },
-  {L"通信バトルデモ",TESTMODE_ITEM_SelectCmmBtlDemo},
+  {L"通信バトル前デモ",TESTMODE_ITEM_SelectCmmBtlDemoStart},
+  {L"通信バトル前マルチ",TESTMODE_ITEM_SelectCmmBtlDemoStartMulti},
 	{L"かんい会話選択",TESTMODE_ITEM_SelectPmsSelect },
 	{L"マイクテスト",TESTMODE_ITEM_SelectMicTest },
 	
@@ -52,11 +54,20 @@ static BOOL TESTMODE_ITEM_SelectIntro( TESTMODE_WORK *work , const int idx )
 #endif
   
 #include "demo/comm_btl_demo.h"
-static COMM_BTL_DEMO_PARAM g_CommBTlDemoParam;
+static COMM_BTL_DEMO_PARAM g_CommBTlDemoParam = {0};
 
-static BOOL TESTMODE_ITEM_SelectCmmBtlDemo( TESTMODE_WORK* work, const int idx )
-{
+static BOOL TESTMODE_ITEM_SelectCmmBtlDemoStart( TESTMODE_WORK* work, const int idx )
+{ 
   g_CommBTlDemoParam.type = COMM_BTL_DEMO_TYPE_NORMAL_START;
+
+	TESTMODE_COMMAND_ChangeProc(work,FS_OVERLAY_ID(comm_btl_demo), &CommBtlDemoProcData, &g_CommBTlDemoParam);
+
+  return TRUE;
+}
+
+static BOOL TESTMODE_ITEM_SelectCmmBtlDemoStartMulti( TESTMODE_WORK* work, const int idx )
+{
+  g_CommBTlDemoParam.type = COMM_BTL_DEMO_TYPE_MULTI_START;
 
 	TESTMODE_COMMAND_ChangeProc(work,FS_OVERLAY_ID(comm_btl_demo), &CommBtlDemoProcData, &g_CommBTlDemoParam);
 

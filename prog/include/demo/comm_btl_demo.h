@@ -21,10 +21,10 @@
 //==============================================================
 typedef enum
 { 
-  COMM_BTL_DEMO_TYPE_NORMAL_START,  ///< ノーマル開始
-  COMM_BTL_DEMO_TYPE_NORMAL_END,    ///< ノーマル終了
-  COMM_BTL_DEMO_TYPE_MULTI_START,   ///< マルチバトル開始
-  COMM_BTL_DEMO_TYPE_MULTI_END,     ///< マルチバトル終了
+  COMM_BTL_DEMO_TYPE_NORMAL_START = 0,  ///< ノーマル開始
+  COMM_BTL_DEMO_TYPE_NORMAL_END,        ///< ノーマル終了
+  COMM_BTL_DEMO_TYPE_MULTI_START,       ///< マルチバトル開始
+  COMM_BTL_DEMO_TYPE_MULTI_END,         ///< マルチバトル終了
 } COMM_BTL_DEMO_TYPE;
 
 //--------------------------------------------------------------
@@ -64,8 +64,6 @@ enum
 typedef struct {
   const POKEPARTY* party;       ///< 戦闘前の所有ポケモンデータ
   const POKEPARTY* party_after; ///< 戦闘後の所有ポケモンデータ
-  //@TODO STRCODEかSTRBUFか決める
-  STRCODE trname[ PERSON_NAME_SIZE + EOM_SIZE ];  // 16
   STRBUF* str_trname;     ///< トレーナー名
   u8 trsex;               ///< トレーナーの性別:PM_MALE or PM_FEMALE
   u8 server_version;      ///< ROMのサーババージョン
