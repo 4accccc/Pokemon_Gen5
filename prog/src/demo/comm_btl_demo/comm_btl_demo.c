@@ -99,7 +99,7 @@ enum
 
   START_DEMO_VS_OPEN_SYNC = 15, // VS出現時のウェイト
   START_DEMO_VS_OPEN_WAIT_SYNC = START_DEMO_VS_OPEN_SYNC+10, // VS出現時のウェイト
-  START_DEMO_FADEOUT_SYNC = 150, //「VS」表示開始からのウェイト
+  START_DEMO_FADEOUT_SYNC = 160, //「VS」表示開始からのウェイト
   START_DEMO_FINISH_SYNC = START_DEMO_FADEOUT_SYNC + 8,
 
   PTC_WIN_WAIT_SYNC = 120,
@@ -848,7 +848,7 @@ static BOOL SceneStartDemo_Init( UI_SCENE_CNT_PTR cnt, void* work )
 #ifdef DEBUG_ONLY_FOR_genya_hosaka
   GFL_BG_ClearScreen( BG_FRAME_TEXT_M ); // テキスト面を消去しておく
     // フェードアウト リクエスト
-  GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_WHITEOUT, 16, 0, 1 );
+  GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_WHITEOUT, 16, 0, -8 );
 #endif
 
   return TRUE;
@@ -991,7 +991,7 @@ static BOOL SceneEndDemo_Init( UI_SCENE_CNT_PTR cnt, void *work )
 
 #ifdef DEBUG_ONLY_FOR_genya_hosaka
     // フェードアウト リクエスト
-  GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 1 );
+  GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, -8 );
 #endif
 
   return TRUE;
