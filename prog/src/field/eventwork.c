@@ -22,6 +22,7 @@ static u8 * EVENTWORK_GetEventFlagAdrs( EVENTWORK * ev, u16 flag_no );
 struct _EVENTWORK {
 	u16 work[EVENT_WORK_AREA_MAX];	//ワーク
 	u8	flag[EVENT_FLAG_AREA_MAX];	//フラグ
+  u8  time_request;
 };
 
 //------------------------------------------------------------------
@@ -180,6 +181,8 @@ static u8 * EVENTWORK_GetEventFlagAdrs( EVENTWORK * ev, u16 flag_no )
 //======================================================================
 //
 //
+//    ワーク操作関連
+//
 //
 //======================================================================
 //--------------------------------------------------------------
@@ -225,5 +228,27 @@ void EVENTWORK_ClearEventWorks( EVENTWORK * ev, u16 start_no, u16 end_no )
 
 
 
-
+//======================================================================
+//
+//
+//
+//======================================================================
+//--------------------------------------------------------------
+///    時間フラグのクリア
+//--------------------------------------------------------------
+void EVENTWORK_ClearTimeFlags( EVENTWORK * ev )
+{
+  EVENTWORK_ClearEventFlags( ev, TMFLG_AREA_START, TMFLG_AREA_END );
+  ev->time_request = TRUE;
+}
+//--------------------------------------------------------------
+///    時間更新処理リクエストの取り出し
+//    ※現状、隠しアイテム復活用
+//--------------------------------------------------------------
+BOOL EVENTWORK_PopTimeRequest( EVENTWORK * ev )
+{
+  BOOL result = ev->time_request;
+  ev->time_request = FALSE;
+  return result;
+}
 

@@ -35,6 +35,7 @@
 #include "savedata/encount_sv.h"
 
 #include "poke_tool/pokerus.h"
+#include "eventwork.h"
 
 //============================================================================================
 //============================================================================================
@@ -147,6 +148,7 @@ static void UpdateDayEvent(GAMEDATA * gdata, s32 diff_days)
 	BOOL is_penalty = EVTIME_IsPenaltyMode(gdata);
   SAVE_CONTROL_WORK* save = GAMEDATA_GetSaveControlWork( (GAMEDATA*)gdata );
 
+  TAMADA_Printf("Update Day Event\n");
 	//下記のような感じで時間関連イベント更新処理を追加する
 	//
 	//TVData_Update(gdata, diff_days);
@@ -154,6 +156,7 @@ static void UpdateDayEvent(GAMEDATA * gdata, s32 diff_days)
 	//…
 
 	//1日毎にクリアするフラグ
+  EVENTWORK_ClearTimeFlags( GAMEDATA_GetEventWork( gdata ) );
 //	TimeEventFlagClear(gdata);
 
 	// 乱数の種グループ更新

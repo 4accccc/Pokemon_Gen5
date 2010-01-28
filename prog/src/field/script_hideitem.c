@@ -92,7 +92,20 @@ u16 HIDEITEM_GetFlagNoByScriptID( u16 scr_id )
   return FLAG_HIDEITEM_AREA_START + data->index;
 }
 
-
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+void HIDEITEM_Revival( EVENTWORK * ev )
+{
+  int i;
+  if ( EVENTWORK_PopTimeRequest( ev ) == FALSE ) return;
+  for ( i = 0; i < NELEMS(hide_item_data); i++ )
+  {
+    const HIDE_ITEM_DATA * data = &hide_item_data[i];
+    if ( data->revival_flag == 0 ) continue;
+    if ( GFUser_GetPublicRand( 100 ) >= 20 ) continue;
+    EVENTWORK_SetEventFlag( ev, FLAG_HIDEITEM_AREA_START + data->index );
+  }
+}
 
 
 //============================================================================================

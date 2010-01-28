@@ -65,6 +65,17 @@ extern u16 * EVENTWORK_GetEventWorkAdrs( EVENTWORK * ev, u16 work_no );
 extern void EVENTWORK_ClearEventWorks( EVENTWORK * ev, u16 start_no, u16 end_no );
 
 //----------------------------------------------------------
+//    時間フラグのクリア
+//----------------------------------------------------------
+extern void EVENTWORK_ClearTimeFlags( EVENTWORK * ev );
+
+//----------------------------------------------------------
+//    時間更新処理リクエストの取り出し
+//    ※現状、隠しアイテム復活用
+//----------------------------------------------------------
+extern BOOL EVENTWORK_PopTimeRequest( EVENTWORK * ev );
+
+//----------------------------------------------------------
 //	セーブデータ取得のための関数
 //----------------------------------------------------------
 //extern EVENTWORK * SaveData_GetEventWork(SAVEDATA * sv);

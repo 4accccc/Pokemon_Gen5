@@ -19,6 +19,7 @@
 #include "move_pokemon.h"
 #include "effect_encount.h"
 #include "field_flagcontrol.h"
+#include "script_hideitem.h"
 
 #include "../../../resource/fldmapdata/flagwork/flag_define.h"
 
@@ -116,6 +117,9 @@ void FIELD_FLAGCONT_INIT_MapJump(GAMEDATA * gdata, u16 zone_id)
   { //イベントフラグ
     EVENTWORK *eventwork = GAMEDATA_GetEventWork( gdata );
     EVENTWORK_ResetEventFlag( eventwork, SYS_FLAG_KAIRIKI );
+
+    //隠しアイテム復活処理
+    HIDEITEM_Revival( eventwork );
   }
 
 
