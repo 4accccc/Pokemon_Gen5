@@ -39,6 +39,8 @@
 #define MB_CAP_POKE_FALL_SPEED (FX32_HALF)
 #define MB_CAP_POKE_DOWN_EFF_OFS (FX32_CONST(16))
 
+#define MB_CAP_POKE_ESCAPE_TIME (600)   //画面外に逃げている時間
+
 //======================================================================
 //	enum
 //======================================================================
@@ -54,7 +56,7 @@ struct _MB_CAP_POKE
 {
   MB_CAP_POKE_STATE state;
   MB_CAP_POKE_STATE_FUNC stateFunc;
-  u16 cnt;
+  u16 cnt;  //各ステート内で使いまわせるカウンタ
 
   u16 anmFrame;
   u16 anmIdx;
@@ -249,6 +251,17 @@ void MB_CAP_POKE_SetRun( MB_CAPTURE_WORK *capWork , MB_CAP_POKE *pokeWork )
     pokeWork->startPos.z -= FX32_CONST( MB_CAP_OBJ_BASE_Z-MB_CAP_POKE_BASE_Z );
   }
   else
+  if( pokeWork->state == MCPS_ESCAPE )
+  {
+    //画面外逃げた状態からの復帰
+    pokeWork->cnt = 0;
+    pokeWork->stateFunc = MB_CAP_POKE_StateRun;
+    //草からの基準位置
+    MB_CAPTURE_GetGrassObjectPos( pokeWork->posXidx , pokeWork->posYidx , &pokeWork->startPos );
+    pokeWork->startPos.y -= FX32_CONST( MB_CAP_POKE_MOVE_OFS_Y );
+    pokeWork->startPos.z -= FX32_CONST( MB_CAP_OBJ_BASE_Z-MB_CAP_POKE_BASE_Z );
+  }
+  else
   {
     //隠れている時はすぐ移動を始める
     pokeWork->cnt = 0;
@@ -327,14 +340,42 @@ static void MB_CAP_POKE_SetEscape( MB_CAPTURE_WORK *capWork , MB_CAP_POKE *pokeW
 {
   pokeWork->state = MCPS_ESCAPE;
   pokeWork->stateFunc = MB_CAP_POKE_StateNone;
+  pokeWork->cnt = MB_CAP_POKE_ESCAPE_TIME;
 }
 
 #pragma mark [>state func
 //--------------------------------------------------------------
-//	ステート：無し
+//	ステート：無し・逃げている
 //--------------------------------------------------------------
 static void MB_CAP_POKE_StateNone(MB_CAPTURE_WORK *capWork , MB_CAP_POKE *pokeWork )
 {
+  if( pokeWork->state == MCPS_ESCAPE )
+  {
+    if( pokeWork->cnt > 0 )
+    {
+      pokeWork->cnt--;
+      if( GFL_UI_KEY_GetCont() & PAD_BUTTON_A )
+      {
+        pokeWork->cnt = 0;
+      }
+    }
+    else
+    {
+      if( GFUser_GetPublicRand0(2) == 0 )
+      {
+        pokeWork->posXidx = -1;
+        pokeWork->dir = MCPD_RIGHT;
+      }
+      else
+      {
+        pokeWork->posXidx = MB_CAP_OBJ_X_NUM;
+        pokeWork->dir = MCPD_LEFT;
+      }
+      pokeWork->posYidx = GFUser_GetPublicRand0(MB_CAP_OBJ_Y_NUM);
+      MB_CAP_POKE_SetRun( capWork , pokeWork );
+      MB_TPrintf("ReturnPoke!\n");
+    }
+  }
 }
 
 //--------------------------------------------------------------
@@ -522,7 +563,10 @@ static void MB_CAP_POKE_StateRun(MB_CAPTURE_WORK *capWork , MB_CAP_POKE *pokeWor
         objIdx = pokeWork->posXidx + pokeWork->posYidx*MB_CAP_OBJ_X_NUM;
       }
       objWork = MB_CAPTURE_GetObjWork( capWork , objIdx );
-      MB_CAP_OBJ_StartAnime( objWork );
+      if( objWork != NULL )
+      {
+        MB_CAP_OBJ_StartAnime( objWork );
+      }
       
     }
     
@@ -553,10 +597,10 @@ static void MB_CAP_POKE_StateRun(MB_CAPTURE_WORK *capWork , MB_CAP_POKE *pokeWor
     {
       pokeWork->state = MCPS_RUN_HIDE;
       
-      if( pokeWork->posXidx == -1 ||
-          pokeWork->posXidx == MB_CAP_OBJ_X_NUM ||
-          pokeWork->posYidx == -1 ||
-          pokeWork->posYidx == MB_CAP_OBJ_Y_NUM )
+      if( pokeWork->posXidx <= -1 ||
+          pokeWork->posXidx >= MB_CAP_OBJ_X_NUM ||
+          pokeWork->posYidx <= -1 ||
+          pokeWork->posYidx >= MB_CAP_OBJ_Y_NUM )
       {
         MB_CAP_POKE_SetEscape( capWork , pokeWork );
       }

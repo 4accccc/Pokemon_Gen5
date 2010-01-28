@@ -962,19 +962,19 @@ static void MB_CAPTURE_UpdateUpper( MB_CAPTURE_WORK *work )
     }
   }
   
-
   for( i=0;i<MB_CAP_POKE_NUM;i++ )
   {
     MB_CAP_POKE_UpdateObject( work , work->pokeWork[i] );
   }
-
   
-  //’e‚Ì•â[
-  if( (activeBallNum == 0 || work->bonusTime > 0 )&&
+  //’e‚Ì•â[(ƒ{[ƒiƒXƒ‚[ƒhOFF
+  //if( (activeBallNum == 0 || work->bonusTime > 0 )&&
+  if( activeBallNum == 0 &&
       downState == MCDS_SHOT_WAIT &&
       work->isShotBall == TRUE )
   {
-    MB_CAP_DOWN_ReloadBall( work->downWork , MB_CAPTURE_IsBonusTime(work) );
+    //MB_CAP_DOWN_ReloadBall( work->downWork , MB_CAPTURE_IsBonusTime(work) );
+    MB_CAP_DOWN_ReloadBall( work->downWork , FALSE );
     work->isShotBall = FALSE;
     work->randLen = MB_CAP_TARGET_RAND_MAX;
   }
@@ -1314,6 +1314,10 @@ const int MB_CAPTURE_GetBbdResIdx( const MB_CAPTURE_WORK *work , const MB_CAP_BB
 }
 MB_CAP_OBJ* MB_CAPTURE_GetObjWork( MB_CAPTURE_WORK *work , const u8 idx )
 {
+  if( idx >= MB_CAP_OBJ_NUM )
+  {
+    return NULL;
+  }
   return work->objWork[idx];
 }
 MB_CAP_OBJ* MB_CAPTURE_GetStarWork( MB_CAPTURE_WORK *work )

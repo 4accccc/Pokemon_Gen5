@@ -72,7 +72,7 @@ struct _MB_CAP_BALL
 //	proto
 //======================================================================
 #pragma mark [> proto
-static void MB_CAP_BALL_CheckHitObj_ShotFinish( MB_CAPTURE_WORK *capWork , MB_CAP_BALL *ballWork );
+static const BOOL MB_CAP_BALL_CheckHitObj_ShotFinish( MB_CAPTURE_WORK *capWork , MB_CAP_BALL *ballWork );
 static void MB_CAP_BALL_CheckHitObj_CheckSide( MB_CAPTURE_WORK *capWork , MB_CAP_BALL *ballWork , 
                 const s8 idxX , const s8 idxY , const s8 ofsX , const s8 ofsY );
 static void MB_CAP_BALL_CheckHitPoke_Shooting( MB_CAPTURE_WORK *capWork , MB_CAP_BALL *ballWork );
@@ -80,6 +80,7 @@ static void MB_CAP_BALL_CheckHitBonus_Shooting( MB_CAPTURE_WORK *capWork , MB_CA
 
 static void MB_CAP_BALL_StateShot(MB_CAPTURE_WORK *capWork , MB_CAP_BALL *ballWork );
 static void MB_CAP_BALL_StateCaptureAnime(MB_CAPTURE_WORK *capWork , MB_CAP_BALL *ballWork );
+static void MB_CAP_BALL_StateFlying(MB_CAPTURE_WORK *capWork , MB_CAP_BALL *ballWork );
 
 //--------------------------------------------------------------
 //	オブジェクト作成
@@ -178,10 +179,11 @@ void MB_CAP_BALL_UpdateObject( MB_CAPTURE_WORK *capWork , MB_CAP_BALL *ballWork 
 //--------------------------------------------------------------
 //	ボールとOBJの当たり判定(ショット終了時処理
 //--------------------------------------------------------------
-static void MB_CAP_BALL_CheckHitObj_ShotFinish( MB_CAPTURE_WORK *capWork , MB_CAP_BALL *ballWork )
+static const BOOL MB_CAP_BALL_CheckHitObj_ShotFinish( MB_CAPTURE_WORK *capWork , MB_CAP_BALL *ballWork )
 {
   int i;
   BOOL isHitAny = FALSE;
+  BOOL isHitAnyPoke = FALSE;
   MB_CAP_HIT_WORK ballHit;
   
   //オブジェとの当たり判定
@@ -202,7 +204,6 @@ static void MB_CAP_BALL_CheckHitObj_ShotFinish( MB_CAPTURE_WORK *capWork , MB_CA
       if( i < MB_CAP_OBJ_MAIN_NUM )
       {
         int j;
-        BOOL isHitAnyPoke = FALSE;
         for( j=0;j<MB_CAP_POKE_NUM;j++ )
         {
           MB_CAP_POKE *pokeWork = MB_CAPTURE_GetPokeWork( capWork , j );
@@ -308,6 +309,7 @@ static void MB_CAP_BALL_CheckHitObj_ShotFinish( MB_CAPTURE_WORK *capWork , MB_CA
     MB_CAPTURE_CreateEffect( capWork , &effPos , MCET_HIT );
     PMSND_PlaySE( MB_SND_BALL_NO_HIT );
   }
+  return isHitAnyPoke;
 }
 
 //--------------------------------------------------------------
@@ -503,8 +505,31 @@ static void MB_CAP_BALL_StateShot(MB_CAPTURE_WORK *capWork , MB_CAP_BALL *ballWo
   ballWork->cnt++;
   if( ballWork->cnt > ballWork->shotCnt )
   {
-    MB_CAP_BALL_CheckHitObj_ShotFinish( capWork , ballWork );
-    ballWork->isFinish = TRUE;
+    const BOOL hitPoke = MB_CAP_BALL_CheckHitObj_ShotFinish( capWork , ballWork );
+    
+    if( hitPoke == FALSE )
+    {
+      //ぶっ飛ぶ処理へ
+      if( GFUser_GetPublicRand0(2) == 0 )
+      {
+        ballWork->spd.x = FX32_CONST(4) + GFUser_GetPublicRand0( FX32_CONST(4) );
+      }
+      else
+      {
+        ballWork->spd.x = FX32_CONST(-4) - GFUser_GetPublicRand0( FX32_CONST(4) );
+      }
+      
+      ballWork->spd.y = GFUser_GetPublicRand0( FX32_CONST(1) ) - FX32_HALF;
+      ballWork->spd.z = FX32_CONST(4) + GFUser_GetPublicRand0( FX32_CONST(2) );
+      
+      ballWork->anmIdx = 0;
+      GFL_BBD_SetObjectCelIdx( bbdSys , ballWork->objIdx , &ballWork->anmIdx );
+      ballWork->stateFunc = MB_CAP_BALL_StateFlying;
+    }
+    else
+    {
+      ballWork->isFinish = FALSE;
+    }
   }
   else
   {
@@ -577,7 +602,71 @@ static void MB_CAP_BALL_StateCaptureAnime(MB_CAPTURE_WORK *capWork , MB_CAP_BALL
     }
     break;
   }
+}
 
+static void MB_CAP_BALL_StateFlying(MB_CAPTURE_WORK *capWork , MB_CAP_BALL *ballWork )
+{
+  GFL_BBD_SYS *bbdSys = MB_CAPTURE_GetBbdSys( capWork );
+  VecFx32 pos;
+  
+  //位置
+  ballWork->pos.x += ballWork->spd.x;
+  ballWork->pos.y += ballWork->spd.y;
+  GFL_BBD_SetObjectTrans( bbdSys , ballWork->objShadowIdx , &ballWork->pos );
+
+  //高さ
+  ballWork->spd.z -= FX32_CONST(0.25);
+  if( ballWork->height + ballWork->spd.z < 0 )
+  {
+    ballWork->spd.z *= -1;
+    ballWork->spd.z = ballWork->spd.z*3/4;
+    ballWork->height = ballWork->spd.z;
+  }
+  else
+  {
+    ballWork->height += ballWork->spd.z;
+  }
+  
+  pos.x = ballWork->pos.x;
+  pos.y = ballWork->pos.y - ballWork->height;
+  pos.z = ballWork->pos.z + FX32_ONE;
+  GFL_BBD_SetObjectTrans( bbdSys , ballWork->objIdx , &pos );
+
+  //回る
+  {
+    u16 rot;
+    const u16 rotVal = 0x400;
+    GFL_BBD_GetObjectRotate( bbdSys , ballWork->objIdx , &rot );
+    if( pos.x > 0 )
+    {
+      if( rot + rotVal > 0xFFFF )
+      {
+        rot = rot + rotVal - 0x10000;
+      }
+      else
+      {
+        rot += rotVal;
+      }
+    }
+    else
+    {
+      if( rot - rotVal < 0 )
+      {
+        rot = rot - rotVal + 0x10000;
+      }
+      else
+      {
+        rot -= rotVal;
+      }
+    }
+    GFL_BBD_SetObjectRotate( bbdSys , ballWork->objIdx , &rot );
+  }
+
+  if( ballWork->pos.x <= FX32_CONST(-32)    ||
+      ballWork->pos.x >= FX32_CONST(256+32) )
+  {
+    ballWork->isFinish = TRUE;
+  }
 }
 
 #pragma mark [>outer func
