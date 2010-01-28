@@ -30,6 +30,9 @@ enum
   EVENT_BATTLE_ADD_CMD_TBL_TIMING = 1192, ///< “¯ŠúNO
 };
 
+// PROC
+extern const GFL_PROC_DATA CommBattleCommProcData;
+
 //=============================================================================
 /**
  *								\‘¢‘Ì’è‹`

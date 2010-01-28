@@ -62,7 +62,7 @@ enum
 ///	トレーナー毎のデータ
 //==============================================================
 typedef struct {
-  const POKEPARTY* party;       ///< 戦闘前の所有ポケモンデータ
+  const POKEPARTY* party; ///< 戦所時の所有ポケモンデータ(結果も受け取りたいので、BATTLE_SETUP_PARAM内のpartyと同じものである必要がある。)
   STRBUF* str_trname;     ///< トレーナー名
   u8 trsex;               ///< トレーナーの性別:PM_MALE or PM_FEMALE
   u8 server_version;      ///< ROMのサーババージョン
@@ -86,3 +86,4 @@ typedef struct {
 
 FS_EXTERN_OVERLAY(comm_btl_demo);
 extern const GFL_PROC_DATA CommBtlDemoProcData;
+
