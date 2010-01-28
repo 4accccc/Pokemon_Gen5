@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2010-01-28T12:25:13"/>
+	<create user="matsumiya" host="W00207" date="2010-01-28T12:28:15"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -425,6 +425,34 @@
 ざんねん……</language>
 		<language name="JPN_KANJI" width="256">あれ？　教えてくれないの？
 残念……</language>
+	</row>
+
+	<row id="msg_touroku__win_01" back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+		<comment>選択肢</comment>
+		<attribute name="キャラ指定">選択肢</attribute>
+		<language name="JPN" width="256">じこしょうかい</language>
+		<language name="JPN_KANJI" width="256">自己紹介</language>
+	</row>
+
+	<row id="msg_touroku__win_02" back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+		<comment>選択肢</comment>
+		<attribute name="キャラ指定">選択肢</attribute>
+		<language name="JPN" width="256">かったとき</language>
+		<language name="JPN_KANJI" width="256">勝ったとき</language>
+	</row>
+
+	<row id="msg_touroku__win_03" back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+		<comment>選択肢</comment>
+		<attribute name="キャラ指定">選択肢</attribute>
+		<language name="JPN" width="256">まけたとき</language>
+		<language name="JPN_KANJI" width="256">負けたとき</language>
+	</row>
+
+	<row id="msg_touroku__win_04" back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+		<comment>選択肢</comment>
+		<attribute name="キャラ指定">選択肢</attribute>
+		<language name="JPN" width="256">おしえない</language>
+		<language name="JPN_KANJI" width="256">教えない</language>
 	</row>
 
 	<flowchart-group-list>
