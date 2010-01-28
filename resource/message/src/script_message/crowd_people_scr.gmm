@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tomoya_takahashi" host="W00148" date="2010-01-28T13:51:37"/>
+	<create user="tomoya_takahashi" host="W00148" date="2010-01-28T18:32:25"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -529,13 +529,13 @@ JPN_KANJI　の列を消すこともできます。
 	</row>
 
 	<row id="CROWD_NOISE_02">
-		<language name="JPN" width="256">たすけてー</language>
-		<language name="JPN_KANJI" width="256">たすけてー</language>
+		<language name="JPN" width="256">そうですか</language>
+		<language name="JPN_KANJI" width="256">そうですか</language>
 	</row>
 
 	<row id="CROWD_NOISE_03">
-		<language name="JPN" width="256">キャー</language>
-		<language name="JPN_KANJI" width="256">キャー</language>
+		<language name="JPN" width="256">そうなんです</language>
+		<language name="JPN_KANJI" width="256">そうなんです</language>
 	</row>
 
 	<row id="CROWD_NOISE_04">
@@ -554,8 +554,8 @@ JPN_KANJI　の列を消すこともできます。
 	</row>
 
 	<row id="CROWD_NOISE_07">
-		<language name="JPN" width="256">よいではないか</language>
-		<language name="JPN_KANJI" width="256">よいではないか</language>
+		<language name="JPN" width="256">すみません</language>
+		<language name="JPN_KANJI" width="256">すみません</language>
 	</row>
 
 	<row id="CROWD_NOISE_08">
@@ -589,8 +589,8 @@ JPN_KANJI　の列を消すこともできます。
 	</row>
 
 	<row id="CROWD_NOISE_14">
-		<language name="JPN" width="256">くるしいー</language>
-		<language name="JPN_KANJI" width="256">くるしいー</language>
+		<language name="JPN" width="256">あのさー</language>
+		<language name="JPN_KANJI" width="256">あのさー</language>
 	</row>
 
 	<row id="CROWD_NOISE_15">
@@ -604,8 +604,8 @@ JPN_KANJI　の列を消すこともできます。
 	</row>
 
 	<row id="CROWD_NOISE_17">
-		<language name="JPN" width="256">なにくそー</language>
-		<language name="JPN_KANJI" width="256">なにくそー</language>
+		<language name="JPN" width="256">ほんと</language>
+		<language name="JPN_KANJI" width="256">ほんと</language>
 	</row>
 
 	<row id="CROWD_NOISE_18">
