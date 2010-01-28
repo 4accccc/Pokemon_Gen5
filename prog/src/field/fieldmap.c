@@ -111,8 +111,10 @@
 #include "field_task_manager.h"
 #include "ev_time.h"  //EVTIME_Update
 #include "field_bbd_color.h"
+#include "field_season_time.h"
 
 #include "net_app/union_eff.h"
+
 
 #ifdef PM_DEBUG
 #include "pleasure_boat.h"    //for PL_BOAT_
@@ -335,6 +337,9 @@ struct _FIELDMAP_WORK
   ENCEFF_CNT_PTR EncEffCntPtr;
 
   BOOL MainHookFlg;
+
+
+  FLD_SEASON_TIME* fieldSeasonTime;
 };
 
 //--------------------------------------------------------------
@@ -622,6 +627,10 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
   fieldWork->sceneArea        = FLD_SCENEAREA_Create( fieldWork->heapID, fieldWork->camera_control );
   fieldWork->sceneAreaLoader  = FLD_SCENEAREA_LOADER_Create( fieldWork->heapID );
 
+
+  // 季節の時間帯生成
+  fieldWork->fieldSeasonTime = FLD_SEASON_TIME_Create( GAMEDATA_GetSeasonID(gdata), fieldWork->heapID );
+
   // NOGRIDマッパー生成
   fieldWork->nogridMapper = FLDNOGRID_MAPPER_Create( fieldWork->heapID, fieldWork->camera_control, fieldWork->sceneArea, fieldWork->sceneAreaLoader );
 
@@ -644,6 +653,7 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
 
   LOCATION_Set( &fieldWork->location, fieldWork->map_id, 0, 0, LOCATION_DEFAULT_EXIT_OFS,
       fieldWork->now_pos.x, fieldWork->now_pos.y, fieldWork->now_pos.z );
+
   
   //マップデータ登録
   FLDMAPPER_ResistData( fieldWork->g3Dmapper, &fieldWork->map_res );
@@ -783,6 +793,7 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
   {
     zoneChangeScene( fieldWork, fieldWork->map_id );
   }
+  
 
   //3Ｄ描画モードは通常でセットアップ
   fieldWork->Draw3DMode = DRAW3DMODE_NORMAL;
@@ -1085,6 +1096,9 @@ static MAINSEQ_RESULT mainSeqFunc_free(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldW
 
   // NOGRIDマッパー破棄
   FLDNOGRID_MAPPER_Delete( fieldWork->nogridMapper );
+
+  // 季節の時間帯破棄
+  FLD_SEASON_TIME_Delete( fieldWork->fieldSeasonTime );
 
   // シーンエリア破棄
   FLD_SCENEAREA_LOADER_Delete( fieldWork->sceneAreaLoader );
@@ -3299,6 +3313,21 @@ BOOL FIELDMAP_CheckDoEvent( const FIELDMAP_WORK* fieldWork )
   }
   return TRUE;
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  季節ごとの時間帯を取得
+ *
+ *	@param	fieldWork     フィールドワーク
+ *
+ *	@return 時間帯
+ */
+//-----------------------------------------------------------------------------
+u32 FIELDMAP_GetSeasonTimeZone( const FIELDMAP_WORK * fieldWork )
+{
+  return FLD_SEASON_TIME_GetTimeZone( fieldWork->fieldSeasonTime );
+}
+
 
 //==================================================================
 /**
