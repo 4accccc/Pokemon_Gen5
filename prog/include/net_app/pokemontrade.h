@@ -14,6 +14,7 @@
 #include "gamesystem/game_data.h"
 #include "demo/shinka_demo.h"
 #include "app/mailbox.h"
+#include "net_app/gtsnego.h"
 
 /// ポケモン交換のタイプ
 typedef enum{
@@ -48,7 +49,7 @@ typedef struct{
   int after_mons_no;
   int cond;
   GAMEDATA* gamedata;
-  void* pNego;
+  EVENT_GTSNEGO_WORK* pNego;
   POKEPARTY* pParty;
   u16 selectBoxno;
   u16 selectIndex;

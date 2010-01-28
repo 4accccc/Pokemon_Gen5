@@ -97,6 +97,7 @@ static BOOL DebugOhno_ItemDebug(D_OHNO_WORK *wk);
 static void * _PokeTradeDemoWorkCreate(D_OHNO_WORK *wk);
 static void * _PokeTradeWorkCreate(D_OHNO_WORK *wk);
 static void * _PokeIrcTradeWorkCreate(D_OHNO_WORK *wk);
+static void * _PokeTradeGtsNegoCreate(D_OHNO_WORK *wk);
 
 
 //==============================================================================
@@ -135,6 +136,12 @@ static const D_MENULIST DebugMenuList[] = {
 		&PokemonTradeWiFiProcData,	
 		_PokeTradeWorkCreate,
 		FS_OVERLAY_ID(pokemon_trade)
+	},
+	{//
+		DEBUG_OHNO_MSG0018, 
+		&GtsNego_ProcData,	
+		_PokeTradeGtsNegoCreate,
+		FS_OVERLAY_ID(gts_negotiate)
 	},
 	{//
 		DEBUG_OHNO_MSG0019, 
@@ -519,7 +526,9 @@ static void * _PokeTradeDemoWorkCreate(D_OHNO_WORK *wk)
 }
 
 
-static void * _PokeTradeWorkCreate(D_OHNO_WORK *wk)
+
+
+static void * _PokeTradeGtsNegoCreate(D_OHNO_WORK *wk)
 {
 	EVENT_GTSNEGO_WORK *pWork;
 
@@ -537,6 +546,30 @@ static void * _PokeTradeWorkCreate(D_OHNO_WORK *wk)
   
   
   return pWork;
+}
+
+
+static void * _PokeTradeWorkCreate(D_OHNO_WORK *wk)
+{
+	POKEMONTRADE_PARAM *pWork2;
+	EVENT_GTSNEGO_WORK *pWork;
+
+	pWork2 = GFL_HEAP_AllocClearMemory(GFL_HEAPID_APP, sizeof(POKEMONTRADE_PARAM));
+  
+	pWork2->pNego = GFL_HEAP_AllocClearMemory(GFL_HEAPID_APP, sizeof(EVENT_GTSNEGO_WORK));
+  pWork = pWork2->pNego;
+
+  pWork->aUser[0].selectType=0;
+  pWork->aUser[1].selectType=0;
+  pWork->aUser[0].selectLV=0;
+  pWork->aUser[1].selectLV=0;
+    
+  pWork->gamedata = GAMEDATA_Create(GFL_HEAPID_APP);
+  pWork->pStatus[0] = MyStatus_AllocWork(GFL_HEAPID_APP);
+  pWork->pStatus[1] = MyStatus_AllocWork(GFL_HEAPID_APP);
+  
+  
+  return pWork2;
 }
 
 static void * _PokeIrcTradeWorkCreate(D_OHNO_WORK *wk)

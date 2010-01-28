@@ -200,17 +200,21 @@ static void _vectorUpMath(POKEMON_TRADE_WORK *pWork)
 
   {
     if(GFL_UI_TP_GetPointCont(&x,&y)){   //ベクトルを監視  // 上向き判定
+      if(!pWork->pCatchCLWK){  //ペンにポケモンがくっついている時
+        pWork->bUpVec = FALSE;
+      }
       if(pWork->pCatchCLWK){  //ペンにポケモンがくっついている時
         if(pWork->y > (y+2)){   // 上に移動した場合跳ね上げる処理
-          if(pWork->aPanWork.bAreaOver){
-            pWork->bUpVec = TRUE;
-          }
+//          if(pWork->aPanWork.bAreaOver){
+//            pWork->bUpVec = TRUE;
+//          }
         }
         else{
-          pWork->bUpVec = FALSE;
+//          pWork->bUpVec = FALSE;
         }
         if(GFL_STD_Abs(pWork->aCatchOldPos.x - x)+GFL_STD_Abs(pWork->aCatchOldPos.y - y) > 10){
-          pWork->aPanWork.bAreaOver = TRUE;
+          pWork->bUpVec = TRUE;
+          //pWork->aPanWork.bAreaOver = TRUE;
         }
         if(GFL_STD_Abs(pWork->aCatchOldPos.x - x) > 6  && GFL_STD_Abs(pWork->aCatchOldPos.y - y) > 6){
           pWork->bStatusDisp = FALSE;
@@ -2589,32 +2593,21 @@ static GFL_PROC_RESULT PokemonTradeGTSNegoProcInit( GFL_PROC * proc, int * seq, 
   POKEMON_TRADE_WORK *pWork;
   int i;
 
-  if(pParent){
-    pGTS=pParent->pNego;  
-  }
+  pGTS = pParent->pNego;
   GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_IRCBATTLE, HEAPSIZE_POKETRADE );
   pWork = GFL_PROC_AllocWork( proc, sizeof( POKEMON_TRADE_WORK ), HEAPID_IRCBATTLE );
   GFL_STD_MemClear(pWork, sizeof(POKEMON_TRADE_WORK));
 
 
-  if(pParent && pGTS){
-    for(i=0;i<2;i++){
-      pWork->GTStype[i]=pGTS->aUser[i].selectType;  //
-      pWork->GTSlv[i]=pGTS->aUser[i].selectLV;  //
-    }
-    pWork->pFriend=pGTS->pStatus[1];
+  for(i=0;i<2;i++){
+    pWork->GTStype[i]=pGTS->aUser[i].selectType;  //
+    pWork->GTSlv[i]=pGTS->aUser[i].selectLV;  //
+    NET_PRINT("GTStype %d %d\n",pGTS->aUser[i].selectType ,pGTS->aUser[i].selectLV);
+    NET_PRINT("GTStype %d %d\n",pWork->GTStype[i],pWork->GTSlv[i]);
   }
-#if PM_DEBUG
-  else{
-    for(i=0;i<2;i++){
-      pWork->GTStype[i] = 0;  //
-      pWork->GTSlv[i] = 1;  //
-    }
-    pWork->pFriend = MyStatus_AllocWork(pWork->heapID);
-  }
-#endif
+  pWork->pFriend=pGTS->pStatus[1];
 
-  return PokemonTradeProcInit(proc,seq,pParent ,pWork,POKEMONTRADE_TYPE_GTSNEGO);
+  return PokemonTradeProcInit(proc,seq, pParent ,pWork, POKEMONTRADE_TYPE_GTSNEGO);
 }
 
 //IRデモのみ表示

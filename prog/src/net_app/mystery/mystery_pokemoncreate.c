@@ -26,15 +26,15 @@ POKEMON_PARAM* MYSTERY_PokemonCreate(const GIFT_PRESENT_POKEMON* pGift, HEAPID h
   POKEMON_PARAM* pp;
   u16 level=pGift->level;
   u32 id = pGift->id_no;
+  u32 monsno = pGift->mons_no;
   PtlSetupPow pow=0;
   u64 rand;
   u32 buff;
+  u8 tokusei = pGift->speabino & 0x7f;
+  BOOL tokuseiBit = (pGift->speabino & 0x80) ? TRUE : FALSE;
 
   
   if(pGift->mons_no > MONSNO_END){  //モンスター番号が存在しない物は作らない
-    return NULL;
-  }
-  if(pGift->mons_no == 0){  //モンスター番号が存在しない物は作らない
     return NULL;
   }
   if(pGift->mons_no == 0){  //モンスター番号が存在しない物は作らない
@@ -58,11 +58,15 @@ POKEMON_PARAM* MYSTERY_PokemonCreate(const GIFT_PRESENT_POKEMON* pGift, HEAPID h
 
 
 
-  pp = PP_Create( pGift->mons_no, level, id, heapID );
+  pp = PP_Create( monsno, level, id, heapID );
 
   pow = PTL_SETUP_POW_PACK(pGift->hp_rnd,pGift->pow_rnd,
                            pGift->def_rnd,
                            pGift->spepow_rnd,pGift->spedef_rnd,pGift->agi_rnd);
+
+
+  PP_Put(pp, ID_PARA_speabino, pGift->speabino);  
+
   if(pow==0){
     pow = PTL_SETUP_POW_AUTO;
   }
@@ -70,18 +74,14 @@ POKEMON_PARAM* MYSTERY_PokemonCreate(const GIFT_PRESENT_POKEMON* pGift, HEAPID h
     rand = pGift->rnd;
   }
   else if(pGift->rare == 0){
-    rand = PTL_SETUP_ID_NOT_RARE;
+    rand = POKETOOL_CalcPersonalRandEx( id, monsno, pGift->form_no, pGift->sex, tokuseiBit, FALSE);
   }
   else if(pGift->rare == 1){
     rand = PTL_SETUP_ID_AUTO;
   }
   else if(pGift->rare == 2){
-    rand = PTL_SETUP_RND_RARE;
+    rand = POKETOOL_CalcPersonalRandEx( id, monsno, pGift->form_no, pGift->sex, tokuseiBit, TRUE);
   }
-
-  //POKETOOL_CalcPersonalRand( data->monsno, data->formno, data->sex );
-  // @todo  性別設定がわからない
-//  u8 sex;              //性別
 
   PP_SetupEx( pp, pGift->mons_no, level, id, pow, rand );
 
@@ -105,7 +105,7 @@ POKEMON_PARAM* MYSTERY_PokemonCreate(const GIFT_PRESENT_POKEMON* pGift, HEAPID h
     PP_Put(pp, ID_PARA_get_ball, pGift->get_ball);
   }
   if(pGift->get_level!=0){
-    PP_Put(pp, ID_PARA_get_ball, pGift->get_level);  
+    PP_Put(pp, ID_PARA_get_level, pGift->get_level);  
   }
 
   PP_Put(pp, ID_PARA_style, pGift->style);  
@@ -129,7 +129,6 @@ POKEMON_PARAM* MYSTERY_PokemonCreate(const GIFT_PRESENT_POKEMON* pGift, HEAPID h
   
 
   PP_Put(pp, ID_PARA_seikaku, pGift->seikaku);  
-  PP_Put(pp, ID_PARA_speabino, pGift->speabino);  
   PP_Put(pp, ID_PARA_get_place, pGift->get_place);  
   PP_Put(pp, ID_PARA_birth_place, pGift->birth_place);  
 
@@ -139,9 +138,9 @@ POKEMON_PARAM* MYSTERY_PokemonCreate(const GIFT_PRESENT_POKEMON* pGift, HEAPID h
   if(pGift->oyasex <= PM_NEUTRAL){
     PP_Put(pp, ID_PARA_oyasex, pGift->oyasex);
   }
-//  else{
-//    PP_Put(pp, ID_PARA_oyasex, MyStatus_GetMySex(GAMEDATA_GetMyStatus(pGameData)));
-//  }
+  else{
+    PP_Put(pp, ID_PARA_oyasex, MyStatus_GetMySex(GAMEDATA_GetMyStatus(pGameData)));
+  }
 
   if(pGift->egg){       //タマゴかどうか TRUE＝たまご
     PP_Put(pp, ID_PARA_tamago_flag, TRUE);

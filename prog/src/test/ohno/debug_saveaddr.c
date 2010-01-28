@@ -158,6 +158,7 @@ static void _changeStateDebug(SAVEADDR_WORK* pWork,StateFunc state, int line)
 #include "savedata/wifihistory.h"
 #include "savedata/wifihistory_local.h"
 #include "savedata/regulation.h"
+#include "net/dreamworld_netdata.h"
 
 
 
@@ -172,8 +173,20 @@ static void _keyWait(SAVEADDR_WORK* pWork)
     OS_TPrintf("SAVESIZE ,%x\n", size);
 
     {
-      u8 data[]="abcdefghijklmnop";
-      OS_TPrintf("CRC ,%x %d\n", GFL_STD_CrcCalc(data,16) , sizeof(REGULATION_CARDDATA));
+      u8 data[]="abcdefg";
+      OS_TPrintf("CRC ,%x %d\n", GFL_STD_CrcCalc(data,7) , sizeof(REGULATION_CARDDATA));
+    }
+    {
+      DREAM_WORLD_SERVER_DOWNLOAD_DATA buff;
+
+      GFL_STD_MemFill(&buff, 0, sizeof(buff));
+
+      // buff Ç…ílÇê›íË
+      buff.findPokemon = 100;
+      buff.findPokemon = 50;
+      buff.findPokemonForm = 1;
+      
+      OS_TPrintf("CRC ,%x %d\n", GFL_STD_CrcCalc(&buff,sizeof(buff)-2) , sizeof(buff));
     }
     
 

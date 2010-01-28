@@ -328,6 +328,7 @@ SRCS_OVERLAY_NOTWIFI = sound/snd_viewer.c \
         musical/dressup/musical_dressup_sys.c \
         musical/stage/musical_stage_sys.c \
         musical/musical_program.c \
+				net_app/mystery/mystery_pokemoncreate.c \
         field/event_cg_wireless.c \
         field/event_fieldmap_menu.c \
 				field/event_shortcut_menu.c \

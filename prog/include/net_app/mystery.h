@@ -10,6 +10,10 @@
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 #pragma once
 
+#include <gflib.h>
+#include "gamesystem/game_data.h"
+#include "savedata/mystery_data.h"
+
 //=============================================================================
 /**
  *					íËêîêÈåæ
@@ -34,4 +38,5 @@ typedef struct
 //=============================================================================
 extern const GFL_PROC_DATA MysteryGiftProcData;
 
+extern POKEMON_PARAM* MYSTERY_PokemonCreate(const GIFT_PRESENT_POKEMON* pGift, HEAPID heapID, GAMEDATA* pGameData);
 

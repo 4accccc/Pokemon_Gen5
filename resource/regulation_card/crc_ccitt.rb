@@ -59,7 +59,7 @@ begin
   crcReg = 0xffff
   
   fpr = File.new(ARGV[0],"rb")
-#  fpw = File.new(ARGV[1],"wb")
+  fpw = File.new(ARGV[1],"wb")
   
   
   crctable = []
@@ -82,7 +82,7 @@ begin
   
   fpr.each_byte{| data |
     inData = data
-#    fpw.write([data].pack("c"))
+    fpw.write([data].pack("c"))
     
       
     x = (crcReg >> 8)
@@ -96,10 +96,10 @@ begin
   }
   fpr.close
   
-  p crcReg.to_s(16)
+ # p crcReg.to_s(16)
   
-#  fpw.write([crcReg].pack("s"))
-#  fpw.close
+  fpw.write([crcReg].pack("s"))
+  fpw.close
   
 end
 
