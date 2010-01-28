@@ -87,7 +87,18 @@ enum
 
 enum
 { 
+  RESULT_PTC_SYNC = 50, // WIN側にパーティクルを出す間隔
+
   DRAW_OPEN_SYNC = 30, //DRAW用アニメ再生から「DRAW」を表示するまでのSYNC
+
+  WIN_OPEN_SYNC   = 15,
+  LOSE_OPEN_SYNC  = WIN_OPEN_SYNC+30,
+
+  VS_OPEN_SYNC = 30, // VS出現時のウェイト
+  VS_OPEN_WAIT_SYNC = VS_OPEN_SYNC+10, // VS出現時のウェイト
+
+  END_DEMO_FADEOUT_SYNC = 120,
+  END_DEMO_END_SYNC = END_DEMO_FADEOUT_SYNC + 8,
 
   // 残りポケモン数を表示するSYNC
   NORMAL_POKENUM_OPEN_SYNC = 30,  ///<
@@ -311,6 +322,7 @@ typedef struct
   UI_SCENE_CNT_PTR  cntScene;
 
   u8 type;
+  COMM_BTL_DEMO_RESULT result;
   int timer;  ///< デモ起動時間カウンタ
 
 } COMM_BTL_DEMO_MAIN_WORK;
@@ -458,7 +470,7 @@ static void debug_param( COMM_BTL_DEMO_PARAM* prm )
 
   HOSAKA_Printf("in param type = %d \n", prm->type);
   
-  prm->result = COMM_BTL_DEMO_RESULT_DRAW;//GFUser_GetPublicRand( COMM_BTL_DEMO_RESULT_MAX );
+  prm->result = GFUser_GetPublicRand( COMM_BTL_DEMO_RESULT_MAX );
 
   HOSAKA_Printf( "result = %d \n", prm->result );
 
@@ -481,40 +493,47 @@ static void debug_param( COMM_BTL_DEMO_PARAM* prm )
     // デバッグポケパーティー
     {
       POKEPARTY *party;
+      POKEPARTY *party2;
       int poke_cnt;
       int p;
 
       party = PokeParty_AllocPartyWork( HEAPID_COMM_BTL_DEMO );
+      party2 = PokeParty_AllocPartyWork( HEAPID_COMM_BTL_DEMO );
 
       if( type_is_normal(prm->type) )
       {
         Debug_PokeParty_MakeParty( party );
+        Debug_PokeParty_MakeParty( party2 );
       }
       else
       {
         static const int pokemax=3;
         PokeParty_Init(party, pokemax);
+        PokeParty_Init(party2, pokemax);
         for (p = 0; p < pokemax; p++) 
         {
           POKEMON_PARAM* pp = GFL_HEAP_AllocMemoryLo( HEAPID_COMM_BTL_DEMO , POKETOOL_GetWorkSize() );
           PP_Clear(pp);
           PP_Setup( pp, 392+p, 99, 0 );
           PokeParty_Add(party, pp);
+          PokeParty_Add(party2, pp);
           GFL_HEAP_FreeMemory(pp);
         }
       }
       
       prm->trainer_data[i].party = party;
-      prm->trainer_data[i].party_after = party;
+      prm->trainer_data[i].party_after = party2;
 
       poke_cnt = PokeParty_GetPokeCount( prm->trainer_data[i].party );
 
+      // 対戦後のポケモンの状態異常
       for( p=0; p<poke_cnt; p++ )
       {
-        POKEMON_PARAM* pp = PokeParty_GetMemberPointer( party, p );
-        if( GFUser_GetPublicRand(2) == 0 )
+        POKEMON_PARAM* pp = PokeParty_GetMemberPointer( party2, p );
+        switch( GFUser_GetPublicRand(3) )
         {
-          PP_SetSick( pp, POKESICK_DOKU );
+        case 0: PP_SetSick( pp, POKESICK_DOKU ); break; // 毒
+        case 1: PP_Put(pp, ID_PARA_hp, 0 ); break; // 瀕死
         }
         HOSAKA_Printf("poke [%d] condition=%d \n",p, PP_Get( pp, ID_PARA_condition, NULL ) );
       }
@@ -576,6 +595,7 @@ static GFL_PROC_RESULT CommBtlDemoProc_Init( GFL_PROC *proc, int *seq, void *pwk
   wk->heapID = HEAPID_COMM_BTL_DEMO;
   wk->pwk = pwk;
   wk->type = wk->pwk->type;
+  wk->result = wk->pwk->result;
 	
 	//描画設定初期化
 	wk->graphic	= COMM_BTL_DEMO_GRAPHIC_Init( GX_DISP_SELECT_SUB_MAIN, wk->heapID );
@@ -789,6 +809,7 @@ static void _SceneEndDemoEnd( UI_SCENE_CNT_PTR cnt, COMM_BTL_DEMO_MAIN_WORK* wk 
 #ifdef DEBUG_ONLY_FOR_genya_hosaka
   if( (GFL_UI_KEY_GetCont() & PAD_BUTTON_START) == FALSE )
   {
+    wk->result = GFUser_GetPublicRand(3); // 勝敗を変更
     UI_SCENE_CNT_SetNextScene( cnt, CBD_SCENE_ID_END_DEMO );
   }
 #endif
@@ -841,8 +862,8 @@ static BOOL SceneStartDemo_Main( UI_SCENE_CNT_PTR cnt, void* work )
   switch( seq )
   {
   case 0:
-    // 名前出現PTC
-    G3D_PTC_Setup( &wk->wk_g3d, NARC_comm_btl_demo_vs_demo03_spa );
+    //「VS」用PTCロード
+    G3D_PTC_Setup( &wk->wk_g3d, NARC_comm_btl_demo_vs_demo01_spa );
 
     // 開始リソース選択
     if( type_is_normal(wk->type) )
@@ -866,21 +887,29 @@ static BOOL SceneStartDemo_Main( UI_SCENE_CNT_PTR cnt, void* work )
       G3D_AnimeDel( &wk->wk_g3d );
       // 3D開始アニメ
       G3D_AnimeSet( &wk->wk_g3d, DEMO_ID_START );
-
-      // ptcワーク生成「VS」
-      G3D_PTC_Setup( &wk->wk_g3d, NARC_comm_btl_demo_vs_demo02_spa );
+      
+      wk->timer = 0;
 
       UI_SCENE_CNT_IncSubSeq( cnt );
     }
     break;
   case 2:
+    if( wk->timer == VS_OPEN_SYNC )
+    {
+      // 「VS」出現パーティクル
+      G3D_PTC_CreateEmitter( &wk->wk_g3d, 0, &(VecFx32){0,0,-100} );
+      G3D_PTC_CreateEmitter( &wk->wk_g3d, 1, &(VecFx32){0,0,-100} );
+      G3D_PTC_CreateEmitter( &wk->wk_g3d, 2, &(VecFx32){0,0,-100} );
+    }
+    else if( wk->timer == VS_OPEN_WAIT_SYNC )
     {
       // 「VS」パーティクル表示
-      G3D_PTC_CreateEmitterAll( &wk->wk_g3d, &(VecFx32){0,0,-100} );
+      G3D_PTC_CreateEmitter( &wk->wk_g3d, 3, &(VecFx32){0,0,-100} );
       
       wk->timer = 0;
       UI_SCENE_CNT_IncSubSeq( cnt );
     }
+    wk->timer++;
     break;
   case 3:
     if( wk->timer++ == PTC_VS_WAIT_SYNC )
@@ -982,9 +1011,6 @@ static BOOL SceneEndDemo_Main( UI_SCENE_CNT_PTR cnt, void* work )
   switch( seq )
   {
   case 0:
-    // PTC「WIN」ロード
-    G3D_PTC_Setup( &wk->wk_g3d, NARC_comm_btl_demo_vs_demo01_spa );
-    
     // 開始リソース選択
     if( type_is_normal(wk->type) )
     {
@@ -994,6 +1020,9 @@ static BOOL SceneEndDemo_Main( UI_SCENE_CNT_PTR cnt, void* work )
     {
       G3D_AnimeSet( &wk->wk_g3d, DEMO_ID_02_B );
     }
+    
+    //「WIN」用PTCロード
+    G3D_PTC_Setup( &wk->wk_g3d, NARC_comm_btl_demo_vs_demo03_spa );
     
     // ボールアニメ開始
     TRAINER_UNIT_CNT_BallSetStart( wk );
@@ -1007,32 +1036,70 @@ static BOOL SceneEndDemo_Main( UI_SCENE_CNT_PTR cnt, void* work )
       G3D_AnimeDel( &wk->wk_g3d );
 
       // 引き分けは別シーケンスへ
-      if( wk->pwk->result == COMM_BTL_DEMO_RESULT_DRAW )
+      if( wk->result == COMM_BTL_DEMO_RESULT_DRAW )
       {
         return TRUE;
       }
-
-      //@TODO WIN/LOSE OBJ表示開始リクエスト
-//    RESULT_UNIT_SetOpen
+    
+      wk->timer = 0;
 
       UI_SCENE_CNT_IncSubSeq( cnt );
     }
     break;
   case 2:
-    //「WIN」パーティクル表示
-    //@TODO 勝った方にPOS調整
-    G3D_PTC_CreateEmitterAll( &wk->wk_g3d, &(VecFx32){0,0,-100} );
-
-    wk->timer = 0;
-  
-    UI_SCENE_CNT_IncSubSeq( cnt );
-    break;
-  case 3:
-    if( wk->timer++ == PTC_WIN_WAIT_SYNC )
     {
-      // フェードアウト リクエスト
-      GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, 2 );
-      return TRUE;
+      // WIN表示
+      if( wk->timer == WIN_OPEN_SYNC )
+      {
+        int pos;
+        if( wk->result == COMM_BTL_DEMO_RESULT_WIN )
+        {
+          pos = RESULT_POS_ME;
+        }
+        else
+        {
+          pos = RESULT_POS_YOU;
+        }
+
+        RESULT_UNIT_SetOpen( &wk->result_unit, pos, COMM_BTL_DEMO_RESULT_WIN );
+      }
+      // LOSE表示
+      else if( wk->timer == LOSE_OPEN_SYNC )
+      {
+        int pos;
+        if( wk->result == COMM_BTL_DEMO_RESULT_LOSE )
+        {
+          pos = RESULT_POS_ME;
+        }
+        else
+        {
+          pos = RESULT_POS_YOU;
+        }
+
+        RESULT_UNIT_SetOpen( &wk->result_unit, pos, COMM_BTL_DEMO_RESULT_LOSE );
+      }
+      else if( wk->timer == END_DEMO_FADEOUT_SYNC )
+      {
+        // フェードアウト リクエスト
+        GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, 2 );
+      }
+      else if( wk->timer == END_DEMO_END_SYNC )
+      {
+        return TRUE;
+      }
+
+      // パーティクルを定期的に表示
+      if( wk->timer % RESULT_PTC_SYNC == 0 ) 
+      {
+        //「WIN」パーティクル表示
+        //@TODO 勝った方にPOS調整
+        G3D_PTC_CreateEmitter( &wk->wk_g3d, 0, &(VecFx32){0,0,-100} );
+        G3D_PTC_CreateEmitter( &wk->wk_g3d, 1, &(VecFx32){0,0,-100} );
+        G3D_PTC_CreateEmitter( &wk->wk_g3d, 2, &(VecFx32){0,0,-100} );
+        G3D_PTC_CreateEmitter( &wk->wk_g3d, 3, &(VecFx32){0,0,-100} );
+      }
+    
+      wk->timer++;
     }
     break;
 
@@ -1057,7 +1124,7 @@ static BOOL SceneEndDemo_End( UI_SCENE_CNT_PTR cnt, void* work )
   COMM_BTL_DEMO_MAIN_WORK* wk = work;
       
   // 引き分けは開放せずに別シーケンスへ
-  if( wk->pwk->result == COMM_BTL_DEMO_RESULT_DRAW )
+  if( wk->result == COMM_BTL_DEMO_RESULT_DRAW )
   {
     UI_SCENE_CNT_SetNextScene( cnt, CBD_SCENE_ID_END_DEMO_DRAW );
     return TRUE;
@@ -1336,33 +1403,31 @@ static void BALL_UNIT_Init( BALL_UNIT* unit, const POKEPARTY* party, const POKEP
       }
     }
 
-    // 開始デモ
     if( type_is_start(type) )
     {
-      // 状態取得
-      POKEMON_PARAM* pp = NULL;
-      
-      // ポケモンが存在する間はPOKEMON_PARAMを取得
-      if( i < unit->num )
-      {
-        pp  = PokeParty_GetMemberPointer( party, i );
-      }
-
-      anm = PokeParaToBallAnim( pp );
-
       clwk_id = i;
     }
     else
     // 終了デモ
     {
-      // 全て通常状態で初期化
-      anm = OBJ_ANM_ID_BALL_NORMAL;
-
       // 順番反転
       clwk_id = (unit->max-1) - i;
     }
 
     GF_ASSERT( clwk_id < unit->max );
+    
+    {
+      // 状態取得
+      POKEMON_PARAM* pp = NULL;
+      
+      // ポケモンが存在する間はPOKEMON_PARAMを取得
+      if( clwk_id < unit->num )
+      {
+        pp  = PokeParty_GetMemberPointer( party, clwk_id );
+      }
+
+      anm = PokeParaToBallAnim( pp );
+    }
       
     // CLWK生成
     unit->clwk[clwk_id] = OBJ_CreateCLWK( obj, px, py, anm );
@@ -1685,6 +1750,7 @@ static void _trainer_unit_main_start( TRAINER_UNIT* unit )
     // トレーナー名表示
     TRAINER_UNIT_DrawTrainerName( unit, unit->font );
 
+#if 0
     // パーティクル表示
     {
       fx32 fx, fy;
@@ -1728,6 +1794,7 @@ static void _trainer_unit_main_start( TRAINER_UNIT* unit )
       // 名前表示
       G3D_PTC_CreateEmitterAll( unit->g3d, &(VecFx32){fx,fy,-100} );
     }
+#endif
   }  
 }
 
@@ -1886,7 +1953,7 @@ static void TRAINER_UNIT_CreatePokeNum( TRAINER_UNIT* unit )
     else
     {
       px = GX_LCD_SIZE_X - 50;
-      py = NORMAL_POSID1_BALL_PY;
+      py = NORMAL_POSID1_BALL_PY-16;
     }
   }
   else
