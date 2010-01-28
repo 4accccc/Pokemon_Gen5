@@ -49,6 +49,9 @@
 
 FS_EXTERN_OVERLAY(ui_common);
 
+// アプリ内でデバッグ用のパラメータをセット
+//#define DEBUG_SET_PARAM
+
 //=============================================================================
 /**
  *								定数定義
@@ -94,8 +97,12 @@ enum
   WIN_OPEN_SYNC   = 15,
   LOSE_OPEN_SYNC  = WIN_OPEN_SYNC+30,
 
-  VS_OPEN_SYNC = 30, // VS出現時のウェイト
-  VS_OPEN_WAIT_SYNC = VS_OPEN_SYNC+10, // VS出現時のウェイト
+  START_DEMO_VS_OPEN_SYNC = 15, // VS出現時のウェイト
+  START_DEMO_VS_OPEN_WAIT_SYNC = START_DEMO_VS_OPEN_SYNC+10, // VS出現時のウェイト
+  START_DEMO_FADEOUT_SYNC = 150, //「VS」表示開始からのウェイト
+  START_DEMO_FINISH_SYNC = START_DEMO_FADEOUT_SYNC + 8,
+
+  PTC_WIN_WAIT_SYNC = 120,
 
   END_DEMO_FADEOUT_SYNC = 120,
   END_DEMO_END_SYNC = END_DEMO_FADEOUT_SYNC + 8,
@@ -121,9 +128,6 @@ enum
   MULTI_POSID1_BALL_PY = 22*8,
   MULTI_POSID2_BALL_PY = 5*8,
   MULTI_POSID3_BALL_PY = 11*8,
-
-  PTC_VS_WAIT_SYNC = 120+15, //「VS」表示開始からのウェイト
-  PTC_WIN_WAIT_SYNC = 120,
 
   // トレーナー名
   TRNAME_CSX = 10,
@@ -232,7 +236,8 @@ typedef struct {
   //[PRIVATE]
   GFL_G3D_UTIL*   g3d_util;
   u16 anm_unit_idx;   ///< アニメーションさせるUNITのIDX
-  u8 padding[2];
+  u8 is_end;
+  u8 is_add;
   
   GFL_PTC_PTR     ptc;
   u8              spa_work[ PARTICLE_LIB_HEAP_SIZE ];
@@ -436,6 +441,7 @@ static void G3D_PTC_CreateEmitter( COMM_BTL_DEMO_G3D_WORK * g3d, u16 idx, const 
 static void G3D_PTC_CreateEmitterAll( COMM_BTL_DEMO_G3D_WORK* g3d, const VecFx32* pos );
 static void G3D_AnimeSet( COMM_BTL_DEMO_G3D_WORK* g3d, u16 demo_id );
 static void G3D_AnimeDel( COMM_BTL_DEMO_G3D_WORK* g3d );
+static void G3D_AnimeExit( COMM_BTL_DEMO_G3D_WORK* g3d );
 static BOOL G3D_AnimeMain( COMM_BTL_DEMO_G3D_WORK* g3d );
 
   //-------------------------------------
@@ -462,7 +468,7 @@ const GFL_PROC_DATA CommBtlDemoProcData =
 	CommBtlDemoProc_Exit,
 };
 
-#ifdef PM_DEBUG
+#ifdef DEBUG_SET_PARAM
 // ワーク生成
 static void debug_param( COMM_BTL_DEMO_PARAM* prm )
 { 
@@ -578,6 +584,14 @@ static void debug_param_del( COMM_BTL_DEMO_PARAM* prm )
 static GFL_PROC_RESULT CommBtlDemoProc_Init( GFL_PROC *proc, int *seq, void *pwk, void *mywk )
 {
 	COMM_BTL_DEMO_MAIN_WORK *wk;
+  
+  // フェード待ち
+  if( (*seq) == 1 && GFL_FADE_CheckFade() == TRUE )
+  {
+    return GFL_PROC_RES_FINISH;
+  }
+
+  GF_ASSERT( (*seq) == 0 );
 
 	//オーバーレイ読み込み
 	GFL_OVERLAY_Load( FS_OVERLAY_ID(ui_common));
@@ -587,7 +601,7 @@ static GFL_PROC_RESULT CommBtlDemoProc_Init( GFL_PROC *proc, int *seq, void *pwk
   wk = GFL_PROC_AllocWork( proc, sizeof(COMM_BTL_DEMO_MAIN_WORK), HEAPID_COMM_BTL_DEMO );
   GFL_STD_MemClear( wk, sizeof(COMM_BTL_DEMO_MAIN_WORK) );
 	
-#ifdef PM_DEBUG
+#ifdef DEBUG_SET_PARAM
   debug_param( pwk );
 #endif
 
@@ -628,7 +642,10 @@ static GFL_PROC_RESULT CommBtlDemoProc_Init( GFL_PROC *proc, int *seq, void *pwk
   // フェードイン リクエスト
   GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 2 );
 
-  return GFL_PROC_RES_FINISH;
+  (*seq) = 1; // フェードSEQへ
+    
+  return GFL_PROC_RES_CONTINUE;
+
 }
 
 //-----------------------------------------------------------------------------
@@ -647,7 +664,7 @@ static GFL_PROC_RESULT CommBtlDemoProc_Exit( GFL_PROC *proc, int *seq, void *pwk
 { 
 	COMM_BTL_DEMO_MAIN_WORK* wk = mywk;
 
-#ifdef DEBUG_ONLY_FOR_genya_hosaka
+#ifdef DEBUG_SET_PARAM
   debug_param_del( pwk );
 #endif
   
@@ -715,12 +732,6 @@ static GFL_PROC_RESULT CommBtlDemoProc_Main( GFL_PROC *proc, int *seq, void *pwk
 #endif
 
   G3D_Main( &wk->wk_g3d );
-  
-  // フェード中は処理しない
-  if( GFL_FADE_CheckFade() == TRUE )
-  {
-    return GFL_PROC_RES_CONTINUE;
-  }
 	
   // SCENE
   if( UI_SCENE_CNT_Main( wk->cntScene ) )
@@ -736,6 +747,7 @@ static GFL_PROC_RESULT CommBtlDemoProc_Main( GFL_PROC *proc, int *seq, void *pwk
 
   return GFL_PROC_RES_CONTINUE;
 }
+
 //=============================================================================
 /**
  *								static関数
@@ -883,8 +895,6 @@ static BOOL SceneStartDemo_Main( UI_SCENE_CNT_PTR cnt, void* work )
   case 1:
     if( G3D_AnimeMain( &wk->wk_g3d ) == FALSE )
     {
-      // 3Dアニメーション開放
-      G3D_AnimeDel( &wk->wk_g3d );
       // 3D開始アニメ
       G3D_AnimeSet( &wk->wk_g3d, DEMO_ID_START );
       
@@ -894,38 +904,34 @@ static BOOL SceneStartDemo_Main( UI_SCENE_CNT_PTR cnt, void* work )
     }
     break;
   case 2:
-    if( wk->timer == VS_OPEN_SYNC )
+    // アニメ再生
+    G3D_AnimeMain( &wk->wk_g3d );
+
+    if( wk->timer == START_DEMO_VS_OPEN_SYNC )
     {
       // 「VS」出現パーティクル
       G3D_PTC_CreateEmitter( &wk->wk_g3d, 0, &(VecFx32){0,0,-100} );
       G3D_PTC_CreateEmitter( &wk->wk_g3d, 1, &(VecFx32){0,0,-100} );
       G3D_PTC_CreateEmitter( &wk->wk_g3d, 2, &(VecFx32){0,0,-100} );
     }
-    else if( wk->timer == VS_OPEN_WAIT_SYNC )
+    else if( wk->timer == START_DEMO_VS_OPEN_WAIT_SYNC )
     {
       // 「VS」パーティクル表示
       G3D_PTC_CreateEmitter( &wk->wk_g3d, 3, &(VecFx32){0,0,-100} );
-      
-      wk->timer = 0;
-      UI_SCENE_CNT_IncSubSeq( cnt );
+    }
+    else if( wk->timer == START_DEMO_FADEOUT_SYNC )
+    {
+      // フェードアウト リクエスト
+      GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_WHITEOUT, 0, 16, -3 );
+    }
+    else if( wk->timer == START_DEMO_FINISH_SYNC )
+    {
+      // 終了
+      return TRUE;
     }
     wk->timer++;
     break;
-  case 3:
-    if( wk->timer++ == PTC_VS_WAIT_SYNC )
-    {
-      // フェードアウト リクエスト
-      GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_WHITEOUT, 0, 16, 2 );
-    }
     
-    // アニメ再生
-    if( G3D_AnimeMain( &wk->wk_g3d ) == FALSE )
-    {
-      // 3Dアニメーション開放
-      G3D_AnimeDel( &wk->wk_g3d );
-      return TRUE;
-    }
-    break;
   default : GF_ASSERT(0);
   }
 
@@ -945,7 +951,7 @@ static BOOL SceneStartDemo_Main( UI_SCENE_CNT_PTR cnt, void* work )
 static BOOL SceneStartDemo_End( UI_SCENE_CNT_PTR cnt, void* work )
 { 
   COMM_BTL_DEMO_MAIN_WORK* wk = work;
-  
+      
   // トレーナー開放
   TRAINER_UNIT_CNT_Exit( wk );
   
@@ -1032,9 +1038,6 @@ static BOOL SceneEndDemo_Main( UI_SCENE_CNT_PTR cnt, void* work )
   case 1:
     if( G3D_AnimeMain( &wk->wk_g3d ) == FALSE )
     {
-      // 3Dアニメーション開放
-      G3D_AnimeDel( &wk->wk_g3d );
-
       // 引き分けは別シーケンスへ
       if( wk->result == COMM_BTL_DEMO_RESULT_DRAW )
       {
@@ -1152,11 +1155,6 @@ static BOOL SceneEndDemoDraw_Main( UI_SCENE_CNT_PTR cnt, void* work )
 
   TRAINER_UNIT_CNT_Main( wk );
     
-  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
-  {
-    return TRUE;
-  }
-
   switch( seq )
   {
   case 0:
@@ -1174,8 +1172,6 @@ static BOOL SceneEndDemoDraw_Main( UI_SCENE_CNT_PTR cnt, void* work )
 
     if( G3D_AnimeMain( &wk->wk_g3d ) == FALSE )
     {
-      G3D_AnimeDel( &wk->wk_g3d );
-
       return TRUE;
     }
     break;
@@ -2327,6 +2323,9 @@ static void G3D_End( COMM_BTL_DEMO_G3D_WORK* g3d )
 
   GF_ASSERT( g3d );
   GF_ASSERT( g3d->g3d_util );
+
+  // アニメ開放
+  G3D_AnimeExit( g3d );
   
   // PTC開放
   G3D_PTC_Exit( g3d );
@@ -2505,9 +2504,16 @@ static void G3D_PTC_CreateEmitterAll( COMM_BTL_DEMO_G3D_WORK* g3d, const VecFx32
 static void G3D_AnimeSet( COMM_BTL_DEMO_G3D_WORK* g3d, u16 demo_id )
 {
   int i;
+
+  // 削除されていなければ消す
+  if( g3d->is_add )
+  {
+    G3D_AnimeDel( g3d );
+  }
   
   // ユニット生成
   g3d->anm_unit_idx = GFL_G3D_UTIL_AddUnit( g3d->g3d_util, &sc_setup[ demo_id ] );
+  g3d->is_add = TRUE;
   HOSAKA_Printf("demo_id=%d add unit idx=%d ",demo_id, g3d->anm_unit_idx );
   
   {
@@ -2562,6 +2568,27 @@ static void G3D_AnimeDel( COMM_BTL_DEMO_G3D_WORK* g3d )
 
   // ユニット削除
   GFL_G3D_UTIL_DelUnit( g3d->g3d_util, g3d->anm_unit_idx );
+
+  g3d->is_add = FALSE;
+  g3d->is_end = FALSE;
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  アニメーションシステム終了
+ *
+ *	@param	COMM_BTL_DEMO_G3D_WORK* g3d 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void G3D_AnimeExit( COMM_BTL_DEMO_G3D_WORK* g3d )
+{
+  // 追加されたままなら消す
+  if( g3d->is_add )
+  {
+    G3D_AnimeDel( g3d );
+  }
 }
 
 //-----------------------------------------------------------------------------
@@ -2580,6 +2607,13 @@ static BOOL G3D_AnimeMain( COMM_BTL_DEMO_G3D_WORK* g3d )
 
   GF_ASSERT( g3d );
   GF_ASSERT( g3d->g3d_util );
+  GF_ASSERT( g3d->is_add == TRUE );
+
+  // 再生終了後はなにもせずRETURN
+  if( g3d->is_end )
+  {
+    return FALSE;
+  }
   
   // ステータス初期化
   VEC_Set( &status.trans, 0, 0, 0 );
@@ -2626,6 +2660,11 @@ static BOOL G3D_AnimeMain( COMM_BTL_DEMO_G3D_WORK* g3d )
     {
 //    GFL_G3D_OBJECT_SetAnimeFrame( obj, i, &frame );
       is_loop = GFL_G3D_OBJECT_LoopAnimeFrame( obj, i, speed * FX32_ONE );
+
+      if( is_loop == FALSE )
+      {
+        g3d->is_end = TRUE;
+      }
     }
 
     //3D描画

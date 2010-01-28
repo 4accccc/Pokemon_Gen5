@@ -74,10 +74,9 @@ typedef struct {
 ///	初期化パラメータ
 //==============================================================
 typedef struct {
-  // [IN]
-  COMM_BTL_DEMO_TYPE type;      ///< 通信バトルデモ 起動タイプ
-  COMM_BTL_DEMO_RESULT result;  ///< バトルの勝敗
-  COMM_BTL_DEMO_TRAINER_DATA trainer_data[ COMM_BTL_DEMO_TRDATA_MAX ];  ///< トレーナー毎のデータ
+  COMM_BTL_DEMO_RESULT result;  ///< [IN] バトルの勝敗
+  COMM_BTL_DEMO_TRAINER_DATA trainer_data[ COMM_BTL_DEMO_TRDATA_MAX ];  ///< [IN] トレーナー毎のデータ
+  COMM_BTL_DEMO_TYPE type;    ///< [PRIVATE] 通信バトルデモ 起動タイプ(※このパラメータのみevent_battle_call.c内で設定します。)
 } COMM_BTL_DEMO_PARAM;
 
 //=============================================================================
