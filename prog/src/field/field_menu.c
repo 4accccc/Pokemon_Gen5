@@ -353,6 +353,7 @@ void FIELD_MENU_UpdateMenu( FIELD_MENU_WORK* work )
 {
   switch( work->state )
   {
+  // 初期化
   case FMS_WAIT_INIT:
     if( PRINTSYS_QUE_IsFinished( work->printQue ) == TRUE )
     {
@@ -369,19 +370,20 @@ void FIELD_MENU_UpdateMenu( FIELD_MENU_WORK* work )
       else
       {
         work->state = FMS_LOOP;
-//        GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG0, VISIBLE_ON );
         GFL_BG_SetVisible( FIELD_MENU_INFOBAR, VISIBLE_ON );
       }
     }
     break;
-    
+  // スクロールしてくるとき
   case FMS_WAIT_MOVEIN:
     if( work->scrollOffset < FIELD_MENU_SCROLL_SPD )
     {
       work->scrollOffset = 0;
       work->state = FMS_LOOP;
-//      GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG0, VISIBLE_ON );
       GFL_BG_SetVisible( FIELD_MENU_INFOBAR, VISIBLE_ON );
+      GFL_BG_SetVisible( FIELD_MENU_BG_BUTTON, VISIBLE_ON );
+      GFL_BG_SetVisible( FIELD_MENU_BG_NAME  , VISIBLE_ON );
+      GFL_BG_SetVisible( FIELD_MENU_BG_BACK  , VISIBLE_ON );
 
     }
     else
@@ -391,20 +393,23 @@ void FIELD_MENU_UpdateMenu( FIELD_MENU_WORK* work )
     work->isUpdateScroll = TRUE;
     break;
 
+  // 通常時
   case FMS_LOOP:
     FIELD_MENU_UpdateKey( work );
     FIELD_MENU_UpdateTP( work );
     FIELD_MENU_UpdateCursor( work );
     break;
    
+  // 終了スクロールアニメ待ちの時
   case FMS_EXIT_ANIME_WAIT:
     if(GFL_CLACT_WK_CheckAnmActive( work->cellEndButton )==FALSE){
       work->state = FMS_EXIT_INIT;
       // インフォバー・タッチバーの面をON
-//      GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG0, VISIBLE_ON );
       GFL_BG_SetVisible( FIELD_MENU_INFOBAR, VISIBLE_ON );
     }
     break;
+
+  // 終了処理
   case FMS_EXIT_INIT:
     if( work->isCancel == TRUE ||
         work->cursorPosY == 3 )
@@ -413,8 +418,8 @@ void FIELD_MENU_UpdateMenu( FIELD_MENU_WORK* work )
       work->state = FMS_WAIT_MOVEOUT;
       PMSND_PlaySystemSE( SEQ_SE_CLOSE1 );
       // インフォバー・タッチバーの面をOFF
-//      GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG0, VISIBLE_OFF );
-        GFL_BG_SetVisible( FIELD_MENU_INFOBAR, VISIBLE_OFF );
+      GFL_BG_SetVisible( FIELD_MENU_INFOBAR, VISIBLE_OFF );
+      GFL_CLACT_WK_SetDrawEnable( work->cellEndButton, FALSE );
 
     }
     else
