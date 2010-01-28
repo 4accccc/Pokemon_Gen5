@@ -674,7 +674,6 @@ static BOOL selact_Start( BTL_CLIENT* wk, int* seq )
     for(i=0; i<wk->numCoverPos; ++i)
     {
       bpp = BTL_POKECON_GetClientPokeData( wk->pokeCon, wk->myID, i );
-      OS_TPrintf("Client_%d, %d番目のポケ=%p\n", wk->myID, i, bpp );
       if( !is_action_unselectable(wk, bpp,  NULL) ){
         wk->firstPokeIdx = i;
         break;
@@ -1176,27 +1175,24 @@ static BOOL is_action_unselectable( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, BT
     }
     return TRUE;
   }
-  // ワザロック状態（前回ワザをそのまま使う）は勝手にワザ選択処理してスキップ
+  // ワザロック状態（記録ワザをそのまま使う）
   if( BPP_CheckSick(bpp, WAZASICK_WAZALOCK) )
   {
-    WazaID waza = BPP_GetPrevWazaID( bpp );
+    BPP_SICK_CONT  cont = BPP_GetSickCont( bpp, WAZASICK_WAZALOCK );
+    WazaID waza = BPP_SICKCONT_GetParam( cont );
     BtlPokePos pos = BPP_GetPrevTargetPos( bpp );
-    u8 waza_idx = BPP_WAZA_SearchIdx( bpp, waza );
 
-    BTL_N_PrintfEx( PRINT_FLG, DBGSTR_CLIENT_WazaLockInfo, wk->myID, waza, waza_idx, pos);
+    GF_ASSERT(waza!=WAZANO_NULL);
+    GF_ASSERT(waza<WAZANO_MAX);
 
-    if( BPP_WAZA_GetPP(bpp, waza_idx) ){
-      if( action ){
-        BTL_ACTION_SetFightParam( action, waza, pos );
-      }
-    }else{
-      // PPゼロならわるあがき
-      if( action ){
-        setWaruagakiAction( action, wk, bpp );
-      }
+    BTL_N_PrintfEx( PRINT_FLG, DBGSTR_CLIENT_WazaLockInfo, wk->myID, waza, pos);
+
+    if( action ){
+      BTL_ACTION_SetFightParam( action, waza, pos );
     }
     return TRUE;
   }
+
   // 溜めロック状態（記録ワザをそのまま使う）
   if( BPP_CheckSick(bpp, WAZASICK_TAMELOCK) )
   {
@@ -1289,22 +1285,29 @@ static BOOL is_unselectable_waza( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, Waza
   // こだわりアイテム効果（最初に使ったワザしか選べない／ただしマジックルーム非発動時のみ）
   if( !BTL_CALC_BITFLG_Check(wk->fieldEffectFlag, BTL_FLDEFF_MAGICROOM) )
   {
-    if( BPP_CONTFLAG_Get(bpp, BPP_CONTFLG_KODAWARI_LOCK) )
+    if( BPP_CheckSick(bpp, WAZASICK_KODAWARI) )
     {
-      WazaID prevWazaID = BPP_GetPrevWazaID( bpp );
-      if( waza != prevWazaID ){
+      BPP_SICK_CONT  cont = BPP_GetSickCont( bpp, WAZASICK_KODAWARI );
+      WazaID  kodawariWaza = BPP_SICKCONT_GetParam( cont );
+
+      // こだわり対象のワザを覚えていて、それ以外のワザを使おうとしたらダメ
+      if( (BPP_WAZA_IsUsable(bpp, kodawariWaza))
+      &&  (kodawariWaza != waza )
+      ){
+        GF_ASSERT(kodawariWaza != WAZANO_NULL);
+        GF_ASSERT(kodawariWaza < WAZANO_MAX);
         if( strParam != NULL )
         {
           BTLV_STRPARAM_Setup( strParam, BTL_STRTYPE_STD, BTL_STRID_STD_KodawariLock );
           BTLV_STRPARAM_AddArg( strParam, BPP_GetItem(bpp) );
-          BTLV_STRPARAM_AddArg( strParam, prevWazaID );
+          BTLV_STRPARAM_AddArg( strParam, kodawariWaza );
         }
         return TRUE;
       }
     }
   }
 
-  // ワザロック効果（前回と同じワザしか出せない）
+  // アンコール効果（前回と同じワザしか出せない）
   if( BPP_CheckSick(bpp, WAZASICK_ENCORE) )
   {
     WazaID prevWaza = BPP_GetPrevWazaID( bpp );
@@ -2848,7 +2851,6 @@ static BOOL scProc_ACT_Exp( BTL_CLIENT* wk, int* seq, const int* args )
   switch( *seq ){
   case SEQ_INIT:
       addExp = args[1];
-      OS_TPrintf("加算経験値=%d\n", addExp);
       subSeq = 0;
       (*seq) = SEQ_ADD_ROOT;
       /* fallthru */
@@ -2873,7 +2875,6 @@ static BOOL scProc_ACT_Exp( BTL_CLIENT* wk, int* seq, const int* args )
         }
         expRest = 0;
       }
-      OS_TPrintf("残Exp=%d\n", expRest);
       addExp = expRest;
     }
     else

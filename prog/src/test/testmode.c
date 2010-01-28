@@ -415,6 +415,7 @@ static BOOL TESTMODE_UpdateMenu( TESTMODE_WORK *work )
     #ifdef QuickSelectFunc
     if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_START )
     {
+      OS_TPrintf("Press Start\n");
       return QuickSelectFunc( work, 0 );
     }
     #endif

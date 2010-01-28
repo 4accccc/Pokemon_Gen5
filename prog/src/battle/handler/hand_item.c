@@ -2846,9 +2846,9 @@ static void handler_FutoiHone( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
 static const BtlEventHandlerTable* HAND_ADD_ITEM_KodawariHachimaki( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_EXECUTE_DECIDE,  handler_Kodawari_Common_WazaExe    }, // ワザ出し確定ハンドラ
-    { BTL_EVENT_ITEMSET_DECIDE,       handler_Kodawari_Common_ItemChange }, // アイテム変更確定ハンドラ
-    { BTL_EVENT_ATTACKER_POWER,       handler_KodawariHachimaki_Pow      }, // 攻撃力決定ハンドラ
+    { BTL_EVENT_WAZA_EXE_DECIDE,    handler_Kodawari_Common_WazaExe    }, // ワザ出し確定ハンドラ
+    { BTL_EVENT_ITEMSET_DECIDE,     handler_Kodawari_Common_ItemChange }, // アイテム変更確定ハンドラ
+    { BTL_EVENT_ATTACKER_POWER,     handler_KodawariHachimaki_Pow      }, // 攻撃力決定ハンドラ
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -2875,7 +2875,7 @@ static void handler_KodawariHachimaki_Pow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLO
 static const BtlEventHandlerTable* HAND_ADD_ITEM_KodawariMegane( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_EXECUTE_DECIDE, handler_Kodawari_Common_WazaExe    }, // ワザ出し確定ハンドラ
+    { BTL_EVENT_WAZA_EXE_DECIDE,     handler_Kodawari_Common_WazaExe    }, // ワザ出し確定ハンドラ
     { BTL_EVENT_ITEMSET_DECIDE,      handler_Kodawari_Common_ItemChange }, // アイテム変更確定ハンドラ
     { BTL_EVENT_ATTACKER_POWER,      handler_KodawariMegane_Pow         }, // 攻撃力決定ハンドラ
   };
@@ -2904,7 +2904,7 @@ static void handler_KodawariMegane_Pow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_W
 static const BtlEventHandlerTable* HAND_ADD_ITEM_KodawariScarf( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_EXECUTE_DECIDE, handler_Kodawari_Common_WazaExe      }, // ワザ出し確定ハンドラ
+    { BTL_EVENT_WAZA_EXE_DECIDE,     handler_Kodawari_Common_WazaExe      }, // ワザ出し確定ハンドラ
     { BTL_EVENT_ITEMSET_DECIDE,      handler_Kodawari_Common_ItemChange   }, // アイテム変更確定ハンドラ
     { BTL_EVENT_CALC_AGILITY,        handler_KodawariScarf                }, // 素早さ計算ハンドラ
   };
@@ -2923,11 +2923,23 @@ static void handler_KodawariScarf( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
 // ワザ出し確定ハンドラ（こだわり系共通）
 static void handler_Kodawari_Common_WazaExe( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
+  enum {
+    KODAWARI_SICKID = WAZASICK_KODAWARI,
+  };
+  // こだわり状態になっていないなら、自分をこだわり状態にする
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
-    BTL_HANDEX_PARAM_SET_CONTFLAG* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_SET_CONTFLAG, pokeID );
-    param->pokeID = pokeID;
-    param->flag = BPP_CONTFLG_KODAWARI_LOCK;
+    const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
+    if( BPP_CheckSick(bpp, KODAWARI_SICKID) )
+    {
+      BTL_HANDEX_PARAM_ADD_SICK* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_SICK, pokeID );
+      WazaID  waza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
+
+      param->poke_cnt = 1;
+      param->pokeID[0] = pokeID;
+      param->sickID = KODAWARI_SICKID;
+      param->sickCont = BPP_SICKCONT_MakePermanentParam( waza );
+    }
   }
 }
 // ワザ出し確定ハンドラ（アイテム変更確定ハンドラ）

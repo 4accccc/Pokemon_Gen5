@@ -685,7 +685,6 @@ void BTLV_StartPokeSelect( BTLV_CORE* wk, const BTL_POKESELECT_PARAM* param, int
     {
       if( i >= NELEMS(wk->plistData.change_sel) ){ break; }
       wk->plistData.change_sel[i] = BTL_POKESELECT_RESULT_Get( result, i );
-      OS_TPrintf("  Šù‚É‘I‘ð‚³‚ê‚½ƒ|ƒP%d‘Ì–Ú ... Index=%d\n", i, wk->plistData.change_sel[i]);
     }
     for( ; i<NELEMS(wk->plistData.change_sel); ++i){
       wk->plistData.change_sel[i] = BPL_CHANGE_SEL_NONE;

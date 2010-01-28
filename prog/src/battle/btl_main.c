@@ -238,7 +238,8 @@ static GFL_PROC_RESULT BTL_PROC_Init( GFL_PROC* proc, int* seq, void* pwk, void*
       }else{
         wk->randomContext = setup_param->recRandContext;
       }
-      BTL_CALC_InitRandSys( &wk->randomContext );
+
+      BTL_CALC_InitSys( &wk->randomContext, wk->heapID );
 
       wk->escapeClientID = BTL_CLIENTID_NULL;
       wk->fWazaEffectEnable = (CONFIG_GetWazaEffectMode(setup_param->configData) == WAZAEFF_MODE_ON);
@@ -320,6 +321,7 @@ static GFL_PROC_RESULT BTL_PROC_Quit( GFL_PROC* proc, int* seq, void* pwk, void*
     break;
   case 2:
     BTL_Printf("クリーンアッププロセス１\n");
+    BTL_CALC_QuitSys();
     srcParty_Quit( wk );
     trainerParam_Clear( wk );
     setSubProcForClanup( &wk->subProc, wk, wk->setupParam );

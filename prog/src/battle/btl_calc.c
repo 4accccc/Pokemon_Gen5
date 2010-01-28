@@ -20,18 +20,34 @@
  */
 //--------------------------------------------------------------
 static GFL_STD_RandContext gRandContext = {0};
+static u16* gWazaStoreWork = NULL;
 
 //=============================================================================================
 /**
- * 乱数システム初期化
+ * システム初期化
  *
- * @param   randContext
+ * @param   randContext   [in] 乱数コンテキスト
+ * @param   heapID        [in] ヒープID
  */
 //=============================================================================================
-void BTL_CALC_InitRandSys( const GFL_STD_RandContext* randContext )
+void BTL_CALC_InitSys( const GFL_STD_RandContext* randContext, HEAPID heapID )
 {
   gRandContext = *randContext;
+  gWazaStoreWork = GFL_HEAP_AllocMemory( heapID, WAZANO_MAX * sizeof(u16) );
 }
+//=============================================================================================
+/**
+ * システム終了
+ */
+//=============================================================================================
+void BTL_CALC_QuitSys( void )
+{
+  if( gWazaStoreWork ){
+    GFL_HEAP_FreeMemory( gWazaStoreWork );
+    gWazaStoreWork = NULL;
+  }
+}
+
 //=============================================================================================
 /**
  * 乱数値を返す
@@ -634,31 +650,42 @@ WazaID  BTL_CALC_SideEffectIDtoWazaID( BtlSideEffect sideEffect )
 // ランダム技選択
 //=============================================================================================
 
+static BOOL is_include( const u16* tbl, u32 tblElems, u16 wazaID )
+{
+  u32 i;
+  for(i=0; i<tblElems; ++i){
+    if( tbl[i] == wazaID ){
+      return TRUE;
+    }
+  }
+  return FALSE;
+}
+
 //=============================================================================================
 /**
  * 特定のワザを除外した中からランダムでワザを決定（ゆびをふる専用？）
  *
- * @param   excludeWazaTbl    除外するワザIDテーブル（※昇順にソートされている必要がある）
+ * @param   excludeWazaTbl    除外するワザIDテーブル
  * @param   tblElems          除外するワザIDテーブルの要素数
  *
  * @retval  WazaID    決定したワザID
  */
 //=============================================================================================
-WazaID BTL_CALC_RandWaza( const u16* excludeWazaTbl, u16 tblElems )
+WazaID BTL_CALC_RandWaza( const u16* wazaTbl, u16 tblElems )
 {
-  u16 waza = 1 + BTL_CALC_GetRand( WAZANO_MAX - tblElems );
-  u16 i;
+  u16 waza, cnt, i;
 
-  for(i=0; i<tblElems; ++i)
+  for(cnt=0, waza=1; waza<WAZANO_MAX; ++waza)
   {
-    if( excludeWazaTbl[i] <= waza ){
-      ++waza;
-    }else{
-      break;
+    if( !is_include(wazaTbl, tblElems, waza) ){
+      gWazaStoreWork[ cnt++ ] = waza;
     }
   }
-  return waza;
+
+  i = BTL_CALC_GetRand( cnt );
+  return gWazaStoreWork[ i ];
 }
+
 
 //=============================================================================================
 /**

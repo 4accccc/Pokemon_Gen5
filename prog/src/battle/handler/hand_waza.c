@@ -1091,7 +1091,6 @@ static void handler_Texture( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
       BTL_HANDEX_PARAM_CHANGE_TYPE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CHANGE_TYPE, pokeID );
       param->next_type = next_type;
       param->pokeID = pokeID;
-      OS_TPrintf("テクスチャによるタイプへんこう : %04x / %04x\n", param->next_type, next_type);
     }
   }
 }
@@ -2732,7 +2731,7 @@ static const BtlEventHandlerTable*  ADD_Daibakuhatsu( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_DEFENDER_GUARD,      handler_Daibakuhatsu },         // 防御力チェックハンドラ
-    { BTL_EVENT_WAZA_EXECUTE_DECIDE, handler_Daibakuhatsu_ExeFix },  // わざ出し確定ハンドラ
+    { BTL_EVENT_WAZA_EXE_START, handler_Daibakuhatsu_ExeFix },  // わざ出し確定ハンドラ
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -2799,7 +2798,7 @@ static void handler_Kiaidame( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
 static const BtlEventHandlerTable*  ADD_Juden( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_EXECUTE_DECIDE, handler_Juden_Exe },    // ワザ出し確定ハンドラ
+    { BTL_EVENT_WAZA_EXE_START, handler_Juden_Exe },    // ワザ出し確定ハンドラ
     { BTL_EVENT_WAZA_POWER,          handler_Juden_Pow },    // ワザ威力計算ハンドラ
   };
   *numElems = NELEMS( HandlerTable );
@@ -2842,7 +2841,7 @@ static void handler_Juden_Pow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
 static const BtlEventHandlerTable*  ADD_HorobiNoUta( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_EXECUTE_DECIDE, handler_HorobiNoUta_Exe },    // ワザ出し確定ハンドラ
+    { BTL_EVENT_WAZA_EXE_START, handler_HorobiNoUta_Exe },    // ワザ出し確定ハンドラ
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -2939,7 +2938,7 @@ static void handler_NekoNiKoban( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
 static const BtlEventHandlerTable*  ADD_Ikari( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_EXECUTE_DECIDE,  handler_Ikari_Exe },    // ワザ出し確定ハンドラ
+    { BTL_EVENT_WAZA_EXE_START,  handler_Ikari_Exe },    // ワザ出し確定ハンドラ
     { BTL_EVENT_WAZA_DMG_REACTION,    handler_Ikari_React },  // ダメージ反応ハンドラ
   };
   *numElems = NELEMS( HandlerTable );
@@ -3039,7 +3038,7 @@ static void handler_AquaRing_turnCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_W
 static const BtlEventHandlerTable*  ADD_Abareru( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_EXECUTE_DECIDE, handler_Abareru },            // ワザ出し確定ハンドラ
+    { BTL_EVENT_WAZA_EXE_START, handler_Abareru },            // ワザ出し確定ハンドラ
     { BTL_EVENT_TURNCHECK_END,       handler_Abareru_turnCheck },  // ターンチェック終了ハンドラ
   };
   *numElems = NELEMS( HandlerTable );
@@ -3062,7 +3061,7 @@ static void handler_Abareru( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
 
       param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_SICK, pokeID );
       param->sickID = WAZASICK_WAZALOCK;
-      param->sickCont = BPP_SICKCONT_MakeTurn( turns );
+      param->sickCont = BPP_SICKCONT_MakeTurnParam( turns, BTL_EVENT_FACTOR_GetSubID(myHandle) );
       param->fAlmost = FALSE;
       param->poke_cnt = 1;
       param->pokeID[0] = pokeID;
@@ -3103,7 +3102,7 @@ static void handler_Abareru_turnCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WO
 static const BtlEventHandlerTable*  ADD_Sawagu( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_EXECUTE_DECIDE,  handler_Sawagu },               // ワザ出し確定ハンドラ
+    { BTL_EVENT_WAZA_EXE_START,  handler_Sawagu },               // ワザ出し確定ハンドラ
     { BTL_EVENT_TURNCHECK_END,        handler_Sawagu_turnCheck },     // ターンチェック終了ハンドラ
     { BTL_EVENT_ADDSICK_CHECKFAIL,    handler_Sawagu_CheckSickFail }, // 状態異常失敗チェック
   };
@@ -3127,7 +3126,7 @@ static void handler_Sawagu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk,
       turns = BTL_CALC_RandRange( 2, 5 );
       param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_SICK, pokeID );
       param->sickID = WAZASICK_WAZALOCK;
-      param->sickCont = BPP_SICKCONT_MakeTurn( turns );
+      param->sickCont = BPP_SICKCONT_MakeTurnParam( turns, BTL_EVENT_FACTOR_GetSubID(myHandle) );
       param->fAlmost = FALSE;
       param->poke_cnt = 1;
       param->pokeID[0] = pokeID;
@@ -3204,7 +3203,7 @@ static void handler_Sawagu_CheckSickFail( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW
 static const BtlEventHandlerTable*  ADD_Korogaru( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_EXECUTE_DECIDE,     handler_Korogaru_ExeFix    },  // ワザ出し確定ハンドラ
+    { BTL_EVENT_WAZA_EXE_START,     handler_Korogaru_ExeFix    },  // ワザ出し確定ハンドラ
     { BTL_EVENT_WAZA_EXECUTE_FAIL,       handler_Korogaru_NoEffect  },  // ワザ出し失敗確定ハンドラ
     { BTL_EVENT_WAZA_AVOID,              handler_Korugaru_Avoid     },  // ワザはずれたハンドラ
     { BTL_EVENT_WAZA_EXECUTE_NO_EFFECT,  handler_Korogaru_NoEffect  },   // ワザ無効ハンドラ
@@ -3230,7 +3229,7 @@ static void handler_Korogaru_ExeFix( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK
 
       param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_SICK, pokeID );
       param->sickID = WAZASICK_WAZALOCK;
-      param->sickCont = BPP_SICKCONT_MakeTurn( KOROGARU_TURNS );
+      param->sickCont = BPP_SICKCONT_MakeTurnParam( KOROGARU_TURNS, BTL_EVENT_FACTOR_GetSubID(myHandle) );
       param->fAlmost = FALSE;
       param->poke_cnt = 1;
       param->pokeID[0] = pokeID;
@@ -4543,7 +4542,7 @@ static const BtlEventHandlerTable*  ADD_Magnitude( u32* numElems )
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_CHECK_POKE_HIDE,     handler_Jisin_checkHide },  // 消えポケヒットチェック
     { BTL_EVENT_WAZA_DMG_PROC2,      handler_Jisin_damage    },  // ダメージ最終チェック
-    { BTL_EVENT_WAZA_EXECUTE_DECIDE, handler_Magnitude_effect},  // ワザ出し確定
+    { BTL_EVENT_WAZA_EXE_START, handler_Magnitude_effect},  // ワザ出し確定
     { BTL_EVENT_WAZA_POWER,          handler_Magnitude_pow   },  // ワザ威力計算
   };
   *numElems = NELEMS( HandlerTable );
@@ -4848,13 +4847,13 @@ enum {
 static const BtlEventHandlerTable*  ADD_Gaman( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_EXECUTE_DECIDE,       handler_Gaman          }, //
+    { BTL_EVENT_WAZA_EXE_START,            handler_Gaman          }, //
     { BTL_EVENT_REQWAZA_MSG,               handler_Gaman_WazaMsg  },
     { BTL_EVENT_WAZA_EXECUTE_CHECK_2ND,    handler_Gamen_ExeCheck },
     { BTL_EVENT_DECIDE_TARGET,             handler_Gaman_Target   },
     { BTL_EVENT_WAZA_DMG_PROC1,            handler_Gaman_Damage   },
     { BTL_EVENT_WAZA_EXECUTE_FAIL,         handler_Gaman_Fail     },
-//    { BTL_EVENT_WAZA_DMG_DETERMINE,      handler_Gaman_DamageDetermine }
+//  { BTL_EVENT_WAZA_DMG_DETERMINE,        handler_Gaman_DamageDetermine }
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -4869,7 +4868,7 @@ static void handler_Gaman( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, 
       {
         BTL_HANDEX_PARAM_ADD_SICK* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_SICK, pokeID );
         param->sickID = WAZASICK_WAZALOCK;
-        param->sickCont = BPP_SICKCONT_MakePermanent();
+        param->sickCont = BPP_SICKCONT_MakePermanentParam( BTL_EVENT_FACTOR_GetSubID(myHandle) );
         param->poke_cnt = 1;
         param->pokeID[0] = pokeID;
         BTL_EVENTVAR_RewriteValue( BTL_EVAR_GEN_FLAG, TRUE );
@@ -4971,7 +4970,6 @@ static void gaman_ReleaseStick( BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   if( work[WORKIDX_STICK] ){
     BTL_HANDEX_PARAM_CURE_SICK* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CURE_SICK, pokeID );
-    OS_TPrintf("ポケ[%d]のがまんハンドラ削除\n", pokeID);
     param->sickCode = WAZASICK_WAZALOCK;
     param->poke_cnt = 1;
     param->pokeID[0] = pokeID;
@@ -5761,7 +5759,6 @@ static void handler_Urami( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, 
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, targetPokeID );
     WazaID prev_waza = BPP_GetPrevWazaID( bpp );
     u8 wazaIdx = BPP_WAZA_SearchIdx( bpp, prev_waza );
-    OS_TPrintf("Urami : PrevWazaID=%d, idx=%d\n", prev_waza, wazaIdx);
 
     if( wazaIdx != PTL_WAZA_MAX )
     {
@@ -6753,7 +6750,7 @@ static const BtlEventHandlerTable*  ADD_Nagetukeru( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_WAZA_EXECUTE_CHECK_2ND, handler_Nagetukeru_ExeCheck },
-    { BTL_EVENT_WAZA_EXECUTE_DECIDE,    handler_Nagetukeru_ExeFix   },
+    { BTL_EVENT_WAZA_EXE_START,    handler_Nagetukeru_ExeFix   },
     { BTL_EVENT_WAZA_POWER,             handler_Nagetukeru_WazaPower},
     { BTL_EVENT_WAZA_DMG_REACTION,      handler_Nagetukeru_DmgAfter },
   };
@@ -7532,7 +7529,7 @@ static void handler_Onnen_TurnCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK
 static const BtlEventHandlerTable*  ADD_Tiisakunaru( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_EXECUTE_DECIDE,  handler_Tiisakunaru   },  // ワザ出し確定決定
+    { BTL_EVENT_WAZA_EXE_START,  handler_Tiisakunaru   },  // ワザ出し確定決定
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -7555,7 +7552,7 @@ static void handler_Tiisakunaru( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
 static const BtlEventHandlerTable*  ADD_Marukunaru( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_EXECUTE_DECIDE,  handler_Marukunaru   },  // ワザ威力決定
+    { BTL_EVENT_WAZA_EXE_START,  handler_Marukunaru   },  // ワザ威力決定
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -7668,7 +7665,8 @@ static BOOL isReqWazaExclude( WazaID waza )
 static const BtlEventHandlerTable*  ADD_YubiWoFuru( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_REQWAZA_FOR_ACT_ORDER,  handler_YubiWoFuru     },  // 他ワザ呼び出し（順序計算前から）
+//    { BTL_EVENT_REQWAZA_FOR_ACT_ORDER,  handler_YubiWoFuru     },  // 他ワザ呼び出し（順序計算前から）
+    { BTL_EVENT_REQWAZA_PARAM,          handler_YubiWoFuru     },  // 他ワザパラメータチェック
     { BTL_EVENT_REQWAZA_MSG,            handler_YubiWoFuru_Msg },  // 他ワザ実行時メッセージ
   };
   *numElems = NELEMS( HandlerTable );
@@ -9017,7 +9015,7 @@ static void handler_Sakiokuri( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
 static const BtlEventHandlerTable*  ADD_Rinsyou( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_EXECUTE_DECIDE, handler_Rinsyou  },     // ワザだし確定
+    { BTL_EVENT_WAZA_EXE_START, handler_Rinsyou  },     // ワザだし確定
     { BTL_EVENT_WAZA_POWER,          handler_Rinsyou_Pow },  // 威力計算
   };
   *numElems = NELEMS( HandlerTable );

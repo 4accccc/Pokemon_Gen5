@@ -76,7 +76,8 @@ static inline BtlTypeAffAbout BTL_CALC_TypeAffAbout( BtlTypeAff aff )
 /*--------------------------------------------------------------------------*/
 /* Prototypes                                                               */
 /*--------------------------------------------------------------------------*/
-extern void BTL_CALC_InitRandSys( const GFL_STD_RandContext* randContext );
+extern void BTL_CALC_InitSys( const GFL_STD_RandContext* randContext, HEAPID heapID );
+extern void BTL_CALC_QuitSys( void );
 extern u32 BTL_CALC_GetRand( u32 range );
 
 extern u16 BTL_CALC_StatusRank( u16 defaultVal, u8 rank );

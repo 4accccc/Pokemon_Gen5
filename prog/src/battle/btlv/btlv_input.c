@@ -930,7 +930,13 @@ void BTLV_INPUT_SetFadeIn( BTLV_INPUT_WORK* biw )
 
   BTLV_INPUT_InitBG( biw );
   //PaletteFadeReq( BTLV_EFFECT_GetPfd(), PF_BIT_SUB_ALL, 0xffff, 1, 16, 0, 0, biw->tcbsys );
-  GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB, 16, 0, 0 );
+
+  if( GXS_GetMasterBrightness() <= 0 ){
+    GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB, 16, 0, 0 );
+  }else{
+    GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_WHITEOUT_SUB, 16, 0, 0 );
+  }
+
   biw->fade_flag = BTLV_INPUT_FADE_IN;
 
   tfa->biw           = biw;
@@ -1762,11 +1768,11 @@ static  void  TCB_ScaleChange( GFL_TCB* tcb, void* work )
 
   tsu->start_scale += tsu->scale_speed;
   if( tsu->scale_speed > 0 )
-  { 
+  {
     tsu->pos_y -= 2;
   }
   else
-  { 
+  {
     tsu->pos_y += 2;
   }
 
@@ -2807,7 +2813,7 @@ static  void  BTLV_INPUT_CreatePokeIcon( BTLV_INPUT_WORK* biw, BTLV_INPUT_COMMAN
 
     //シングルでは出さないように仕様変更（後でまた出すことになると困るので、処理自体は残しておく）
     if( biw->type == BTLV_INPUT_TYPE_SINGLE )
-    { 
+    {
       return;
     }
 
@@ -3312,7 +3318,7 @@ static  inline  void  SePlaySelect( void )
 //  ローテーション選択音
 //=============================================================================================
 static  inline  void  SePlayRotateSelect( void )
-{ 
+{
   PMSND_PlaySE( SEQ_SE_ROTATION_S );
 }
 
@@ -3320,7 +3326,7 @@ static  inline  void  SePlayRotateSelect( void )
 //  ローテーション決定音
 //=============================================================================================
 static  inline  void  SePlayRotateDecide( void )
-{ 
+{
   PMSND_PlaySE( SEQ_SE_DECIDE2 );
 }
 
@@ -3328,6 +3334,6 @@ static  inline  void  SePlayRotateDecide( void )
 //  ローテーション音
 //=============================================================================================
 static  inline  void  SePlayRotation( void )
-{ 
+{
   PMSND_PlaySE( SEQ_SE_ROTATION_B );
 }

@@ -3578,7 +3578,7 @@ static void handler_NoGuard( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_NoGuard( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_EXECUTE_DECIDE,        handler_NoGuard },  // タイプによる無効化チェックハンドラ
+    { BTL_EVENT_WAZA_EXE_START,        handler_NoGuard },  // タイプによる無効化チェックハンドラ
   };
   *numElems = NELEMS(HandlerTable);
   return HandlerTable;
@@ -4167,8 +4167,6 @@ static void handler_Hiraisin_DmgToRecvFix( BTL_EVENT_FACTOR* myHandle, BTL_SVFLO
   {
     BTL_HANDEX_PARAM_RANK_EFFECT* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RANK_EFFECT, pokeID );
 
-    OS_TPrintf("電気ワザ自分(%d)が喰らったのでパラメータアップ\n", pokeID );
-
     param->poke_cnt = 1;
     param->pokeID[0] = pokeID;
     param->fAlmost = TRUE;
@@ -4195,9 +4193,9 @@ static void common_WazaTargetChangeToMe( BTL_SVFLOW_WORK* flowWk, u8 pokeID, Pok
     if( BTL_EVENTVAR_GetValue(BTL_EVAR_WAZA_TYPE) == wazaType )
     {
       if( BTL_EVENTVAR_RewriteValue(BTL_EVAR_POKEID_DEF, pokeID) ){
-        OS_TPrintf("『ひらいしん』ターゲットを自分(%d) に書き換え\n", pokeID );
+//        OS_TPrintf("『ひらいしん』ターゲットを自分(%d) に書き換え\n", pokeID );
       }else{
-        OS_TPrintf("『ひらいしん』だがターゲットを書き換えられず（%d)\n", pokeID );
+//        OS_TPrintf("『ひらいしん』だがターゲットを書き換えられず（%d)\n", pokeID );
       }
     }
   }

@@ -1412,7 +1412,6 @@ void BPP_SetWazaSick( BTL_POKEPARAM* bpp, WazaSick sick, BPP_SICK_CONT contParam
   bpp->sickCont[ sick ] = contParam;
   bpp->wazaSickCounter[sick] = 0;
   if( sick == WAZASICK_NEMURI ){
-    OS_TPrintf("ねむりカウンタ [%p].. %d\n", &(bpp->wazaSickCounter[sick]), bpp->wazaSickCounter[sick]);
   }
 
   // 「どくどく」になる時は同時に「どく」にもかける
@@ -1437,6 +1436,7 @@ void BPP_WazaSick_TurnCheck( BTL_POKEPARAM* bpp, BtlSickTurnCheckFunc callbackFu
 {
   WazaSick  sick;
 
+
   for(sick=0; sick<NELEMS(bpp->sickCont); ++sick)
   {
     // ねむり・こんらんはアクション開始のタイミングで独自のカウンタデクリメント処理
@@ -1450,6 +1450,18 @@ void BPP_WazaSick_TurnCheck( BTL_POKEPARAM* bpp, BtlSickTurnCheckFunc callbackFu
       BPP_SICK_CONT oldCont;
 
       oldCont = bpp->sickCont[ sick ];
+
+      // こだわりロックは、該当するワザを持っていないなら直る
+      if( sick == WAZASICK_KODAWARI )
+      {
+        WazaID  waza = BPP_SICKCONT_GetParam( oldCont );
+        if( !BPP_WAZA_IsUsable(bpp, waza) )
+        {
+          bpp->sickCont[sick] = BPP_SICKCONT_MakeNull();;
+          bpp->wazaSickCounter[sick] = 0;
+          fCure = TRUE;
+        }
+      }
 
       // 継続ターン経過チェック
       if( turnMax )
