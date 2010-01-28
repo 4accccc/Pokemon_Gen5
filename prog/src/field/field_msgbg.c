@@ -2805,8 +2805,9 @@ void FLDPLAINMSGWIN_Delete( FLDPLAINMSGWIN *plnwin )
 //--------------------------------------------------------------
 void FLDPLAINMSGWIN_ClearMessage( FLDPLAINMSGWIN *plnwin )
 {
-  TALKMSGWIN_CleanBmpWindow(
-    plnwin->talkMsgWinSys, plnwin->bmpwin );
+  GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( plnwin->bmpwin );
+  GFL_BMP_Clear( bmp, 0xff);
+	GFL_BG_LoadScreenReq( plnwin->fmb->bgFrame );
 }
 
 //--------------------------------------------------------------
