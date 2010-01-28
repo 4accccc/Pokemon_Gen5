@@ -754,7 +754,7 @@ void FSND_ChangeBGM_byPlayerFormChange( FIELD_SOUND* fieldSound,
  * @parma iss
  */
 //---------------------------------------------------------------------------------
-void FSND_HoldBGMVolume( FIELD_SOUND* fieldSound, ISS_SYS* iss )
+void FSND_HoldBGMVolume_forApp( FIELD_SOUND* fieldSound, ISS_SYS* iss )
 {
   ISS_3DS_SYS* iss3DSSystem;
 
@@ -772,7 +772,7 @@ void FSND_HoldBGMVolume( FIELD_SOUND* fieldSound, ISS_SYS* iss )
  * @parma iss
  */
 //---------------------------------------------------------------------------------
-void FSND_ReleaseBGMVolume( FIELD_SOUND* fieldSound, ISS_SYS* iss )
+void FSND_ReleaseBGMVolume_forApp( FIELD_SOUND* fieldSound, ISS_SYS* iss )
 {
   ISS_3DS_SYS* iss3DSSystem;
 
@@ -789,7 +789,7 @@ void FSND_ReleaseBGMVolume( FIELD_SOUND* fieldSound, ISS_SYS* iss )
  * @param fieldSound
  */
 //---------------------------------------------------------------------------------
-void FSND_HoldPlayerVolume( FIELD_SOUND* fieldSound )
+void FSND_HoldBGMVolume_inApp( FIELD_SOUND* fieldSound )
 {
   // プレイヤーボリュームを即時設定
   FIELD_SOUND_ChangePlayerVolume( fieldSound, 100, 0 );  
@@ -802,7 +802,7 @@ void FSND_HoldPlayerVolume( FIELD_SOUND* fieldSound )
  * @param fieldSound
  */
 //---------------------------------------------------------------------------------
-void FSND_ReleasePlayerVolume( FIELD_SOUND* fieldSound )
+void FSND_ReleaseBGMVolume_inApp( FIELD_SOUND* fieldSound )
 {
   // プレイヤーボリュームを即時設定
   FIELD_SOUND_ChangePlayerVolume( fieldSound, 127, 0 );  

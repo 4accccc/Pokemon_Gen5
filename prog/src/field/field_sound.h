@@ -65,18 +65,19 @@ extern void FSND_PlayStartBGM( FIELD_SOUND* fieldSound );
 extern void FSND_ChangeBGM_byPlayerFormChange( FIELD_SOUND* fieldSound, 
                                                GAMEDATA* gameData, u16 zoneID ); 
 
+
 //=================================================================================
 // ■BGMボリューム操作
 //=================================================================================
 // フィールド ⇔ アプリ 遷移時
 // ※ISSとプレイヤーボリュームを操作します。
-extern void FSND_HoldBGMVolume   ( FIELD_SOUND* fieldSound, ISS_SYS* iss );
-extern void FSND_ReleaseBGMVolume( FIELD_SOUND* fieldSound, ISS_SYS* iss );
+extern void FSND_HoldBGMVolume_forApp   ( FIELD_SOUND* fieldSound, ISS_SYS* iss );
+extern void FSND_ReleaseBGMVolume_forApp( FIELD_SOUND* fieldSound, ISS_SYS* iss );
 
 // アプリ内での操作
 // ※プレイヤーボリュームのみを操作します。
-extern void FSND_HoldPlayerVolume   ( FIELD_SOUND* fieldSound );
-extern void FSND_ReleasePlayerVolume( FIELD_SOUND* fieldSound );
+extern void FSND_HoldBGMVolume_inApp   ( FIELD_SOUND* fieldSound );
+extern void FSND_ReleaseBGMVolume_inApp( FIELD_SOUND* fieldSound );
 
 
 //=================================================================================
