@@ -7,7 +7,7 @@
 #------------------------------------------------------------------------------
 #※コンバートを行う人のユーザーIDをここに書く
 #------------------------------------------------------------------------------
-USERS	= tomoya_takahashi iwao_kazumasa
+USERS	= tomoya_takahashi iwao_kazumasa masafumi_saitou
 
 #------------------------------------------------------------------------------
 #※ここに作成するnarc名を書く
@@ -89,7 +89,7 @@ ifeq	($(CONVERTUSER),true)
 # コピー先のnarcが古い場合実行する
 $(targetname).narc: $(FILE_BIN)
 	
-	echo *.dat > $(LIST_FILE)
+	-ls *.dat > $(LIST_FILE)
 	$(ARCLIST_MAKE) $(LIST_FILE)
 
 	nnsarc -c -l -n -i $(targetname) -S $(LIST_FILE)
