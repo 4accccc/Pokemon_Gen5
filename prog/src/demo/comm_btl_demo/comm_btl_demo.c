@@ -90,7 +90,7 @@ enum
 
 enum
 { 
-  RESULT_PTC_SYNC = 50, // WIN側にパーティクルを出す間隔
+  RESULT_PTC_SYNC = 180, // WIN側にパーティクルを出す間隔
 
   DRAW_OPEN_SYNC = 30, //DRAW用アニメ再生から「DRAW」を表示するまでのSYNC
 
@@ -637,7 +637,7 @@ static GFL_PROC_RESULT CommBtlDemoProc_Init( GFL_PROC *proc, int *seq, void *pwk
   OBJ_Init( &wk->wk_obj, wk->graphic, wk->heapID );
 
   // フェードイン リクエスト
-  GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 2 );
+  GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 1 );
 
   (*seq) = 1; // フェードSEQへ
     
@@ -1081,7 +1081,7 @@ static BOOL SceneEndDemo_Main( UI_SCENE_CNT_PTR cnt, void* work )
       else if( wk->timer == END_DEMO_FADEOUT_SYNC )
       {
         // フェードアウト リクエスト
-        GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, 2 );
+        GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, -3 );
       }
       else if( wk->timer == END_DEMO_END_SYNC )
       {
@@ -1091,12 +1091,26 @@ static BOOL SceneEndDemo_Main( UI_SCENE_CNT_PTR cnt, void* work )
       // パーティクルを定期的に表示
       if( wk->timer % RESULT_PTC_SYNC == 0 ) 
       {
+        int pos;
+        s16 px, py;
+
+        // 勝った方にPOS調整
+        if( wk->result == COMM_BTL_DEMO_RESULT_LOSE )
+        {
+          px = 0xffffd800;
+          py = 0x2000;
+        }
+        else 
+        {
+          px = 0x2800;
+          py = 0xffffe800;
+        }
+
         //「WIN」パーティクル表示
-        //@TODO 勝った方にPOS調整
-        G3D_PTC_CreateEmitter( &wk->wk_g3d, 0, &(VecFx32){0,0,-100} );
-        G3D_PTC_CreateEmitter( &wk->wk_g3d, 1, &(VecFx32){0,0,-100} );
-        G3D_PTC_CreateEmitter( &wk->wk_g3d, 2, &(VecFx32){0,0,-100} );
-        G3D_PTC_CreateEmitter( &wk->wk_g3d, 3, &(VecFx32){0,0,-100} );
+        G3D_PTC_CreateEmitter( &wk->wk_g3d, 0, &(VecFx32){px,py,-100} );
+        G3D_PTC_CreateEmitter( &wk->wk_g3d, 1, &(VecFx32){px,py,-100} );
+        G3D_PTC_CreateEmitter( &wk->wk_g3d, 2, &(VecFx32){px,py,-100} );
+        G3D_PTC_CreateEmitter( &wk->wk_g3d, 3, &(VecFx32){px,py,-100} );
       }
     
       wk->timer++;
@@ -2352,10 +2366,31 @@ static void G3D_Main( COMM_BTL_DEMO_G3D_WORK * g3d )
 {
   GF_ASSERT( g3d );
 
+  //3D描画
+  COMM_BTL_DEMO_GRAPHIC_3D_StartDraw( g3d->graphic );
+
   if( g3d->ptc )
   {
     GFL_PTC_Main();
   }
+  
+  // アニメがある場合は描画
+  if( g3d->is_add )
+  {
+    GFL_G3D_OBJSTATUS status;
+    GFL_G3D_OBJ* obj;
+    
+    // ステータス初期化
+    VEC_Set( &status.trans, 0, 0, 0 );
+    VEC_Set( &status.scale, FX32_ONE, FX32_ONE, FX32_ONE );
+    MTX_Identity33( &status.rotate );
+    
+    obj = GFL_G3D_UTIL_GetObjHandle( g3d->g3d_util, g3d->anm_unit_idx );
+    
+    GFL_G3D_DRAW_DrawObject( obj, &status );
+  }
+  
+  COMM_BTL_DEMO_GRAPHIC_3D_EndDraw( g3d->graphic );
 }
 
 static VecFx32 sc_camera_eye = { 0, 0, FX32_CONST(128), };
@@ -2606,7 +2641,6 @@ static void G3D_AnimeExit( COMM_BTL_DEMO_G3D_WORK* g3d )
 //-----------------------------------------------------------------------------
 static BOOL G3D_AnimeMain( COMM_BTL_DEMO_G3D_WORK* g3d )
 { 
-  GFL_G3D_OBJSTATUS status;
   BOOL is_loop = TRUE;
 
   GF_ASSERT( g3d );
@@ -2618,11 +2652,6 @@ static BOOL G3D_AnimeMain( COMM_BTL_DEMO_G3D_WORK* g3d )
   {
     return FALSE;
   }
-  
-  // ステータス初期化
-  VEC_Set( &status.trans, 0, 0, 0 );
-  VEC_Set( &status.scale, FX32_ONE, FX32_ONE, FX32_ONE );
-  MTX_Identity33( &status.rotate );
 
 #if 0
     {
@@ -2670,14 +2699,6 @@ static BOOL G3D_AnimeMain( COMM_BTL_DEMO_G3D_WORK* g3d )
         g3d->is_end = TRUE;
       }
     }
-
-    //3D描画
-    COMM_BTL_DEMO_GRAPHIC_3D_StartDraw( g3d->graphic );
-    
-    // 描画
-    GFL_G3D_DRAW_DrawObject( obj, &status );
-    
-    COMM_BTL_DEMO_GRAPHIC_3D_EndDraw( g3d->graphic );
   }
 
   return is_loop;
