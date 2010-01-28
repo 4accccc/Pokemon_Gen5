@@ -21,6 +21,9 @@
 // ■定数
 //================================================================================= 
 #define SPECIAL_BGM_NONE (0xffffffff)  // 特殊BGMなし
+#define MAX_VOLUME       (127)         // 最大ボリューム
+#define APP_HOLD_VOLUME  (100)         // アプリ時のボリューム
+#define APP_FADE_FRAME   (60)          // アプリ時のフェード フレーム数
 
 
 //================================================================================= 
@@ -29,9 +32,9 @@
 // 自機フォームの取得
 static PLAYER_MOVE_FORM GetPlayerMoveForm( GAMEDATA* gameData );
 // BGM 番号取得
-static u32 GetZoneBGM( GAMEDATA* gameData, u32 zoneID );
+static u32 GetZoneBGM   ( GAMEDATA* gameData, u32 zoneID );
 static u32 GetSpecialBGM( GAMEDATA* gameData, u32 zoneID );
-static u32 GetFieldBGM( GAMEDATA* gameData, u32 zoneID );
+static u32 GetFieldBGM  ( GAMEDATA* gameData, u32 zoneID );
 
 
 //=================================================================================
@@ -760,8 +763,11 @@ void FSND_HoldBGMVolume_forApp( FIELD_SOUND* fieldSound, ISS_SYS* iss )
 
   iss3DSSystem = ISS_SYS_GetIss3DSSystem( iss );
 
-  ISS_3DS_SYS_SetMasterVolume( iss3DSSystem, 0 );        // 橋ISSを無効化
-  FIELD_SOUND_ChangePlayerVolume( fieldSound, 100, 60 );  // プレイヤーボリュームをフェードアウト
+  // 橋ISSを無効化
+  ISS_3DS_SYS_SetMasterVolume( iss3DSSystem, 0 );
+
+  // プレイヤーボリュームをフェードアウト
+  FIELD_SOUND_ChangePlayerVolume( fieldSound, APP_HOLD_VOLUME, APP_FADE_FRAME );  
 }
 
 //---------------------------------------------------------------------------------
@@ -772,14 +778,17 @@ void FSND_HoldBGMVolume_forApp( FIELD_SOUND* fieldSound, ISS_SYS* iss )
  * @parma iss
  */
 //---------------------------------------------------------------------------------
-void FSND_ReleaseBGMVolume_forApp( FIELD_SOUND* fieldSound, ISS_SYS* iss )
+void FSND_ReleaseBGMVolume_fromApp( FIELD_SOUND* fieldSound, ISS_SYS* iss )
 {
   ISS_3DS_SYS* iss3DSSystem;
 
   iss3DSSystem = ISS_SYS_GetIss3DSSystem( iss );
 
-  ISS_3DS_SYS_SetMasterVolume( iss3DSSystem, 127 );       // 橋ISSを復帰
-  FIELD_SOUND_ChangePlayerVolume( fieldSound, 127, 60 );  // プレイヤーボリュームをフェードイン
+  // 橋ISSを無効化
+  ISS_3DS_SYS_SetMasterVolume( iss3DSSystem, MAX_VOLUME );
+
+  // プレイヤーボリュームをフェードイン
+  FIELD_SOUND_ChangePlayerVolume( fieldSound, MAX_VOLUME, APP_FADE_FRAME );
 }
 
 //---------------------------------------------------------------------------------
@@ -792,7 +801,7 @@ void FSND_ReleaseBGMVolume_forApp( FIELD_SOUND* fieldSound, ISS_SYS* iss )
 void FSND_HoldBGMVolume_inApp( FIELD_SOUND* fieldSound )
 {
   // プレイヤーボリュームを即時設定
-  FIELD_SOUND_ChangePlayerVolume( fieldSound, 100, 0 );  
+  FIELD_SOUND_ChangePlayerVolume( fieldSound, APP_HOLD_VOLUME, 0 );  
 }
 
 //---------------------------------------------------------------------------------
@@ -805,7 +814,7 @@ void FSND_HoldBGMVolume_inApp( FIELD_SOUND* fieldSound )
 void FSND_ReleaseBGMVolume_inApp( FIELD_SOUND* fieldSound )
 {
   // プレイヤーボリュームを即時設定
-  FIELD_SOUND_ChangePlayerVolume( fieldSound, 127, 0 );  
+  FIELD_SOUND_ChangePlayerVolume( fieldSound, MAX_VOLUME, 0 );  
 }
 
 

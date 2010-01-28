@@ -72,7 +72,7 @@ extern void FSND_ChangeBGM_byPlayerFormChange( FIELD_SOUND* fieldSound,
 // フィールド ⇔ アプリ 遷移時
 // ※ISSとプレイヤーボリュームを操作します。
 extern void FSND_HoldBGMVolume_forApp   ( FIELD_SOUND* fieldSound, ISS_SYS* iss );
-extern void FSND_ReleaseBGMVolume_forApp( FIELD_SOUND* fieldSound, ISS_SYS* iss );
+extern void FSND_ReleaseBGMVolume_fromApp( FIELD_SOUND* fieldSound, ISS_SYS* iss );
 
 // アプリ内での操作
 // ※プレイヤーボリュームのみを操作します。
