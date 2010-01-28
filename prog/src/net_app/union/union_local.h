@@ -44,11 +44,11 @@ typedef struct _UNION_SYSTEM{
   
   WORDSET *wordset;
   GFL_MSGDATA *msgdata;
-  FLDMSGWIN_STREAM *fld_msgwin_stream;
+  FLDPLAINMSGWIN *fld_msgwin_stream;
   FLDMENUFUNC *fldmenu_func;
   FLDMENUFUNC *fldmenu_yesno_func;
 
-  FLDMSGWIN *fldmsgwin;
+  FLDPLAINMSGWIN *fldmsgwin;
   FLDMSGPRINT *fldmsgprint;
   STRBUF *strbuf_temp;
   STRBUF *strbuf_talk_expand;

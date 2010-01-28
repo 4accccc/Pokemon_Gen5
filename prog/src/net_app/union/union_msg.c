@@ -1342,10 +1342,11 @@ void UnionMsg_TalkStream_WindowSetup(UNION_SYSTEM_PTR unisys, FIELDMAP_WORK *fie
     unisys->strbuf_temp = GFL_STR_CreateBuffer(256, HEAPID_UNION);
     unisys->strbuf_talk_expand = GFL_STR_CreateBuffer(256, HEAPID_UNION);
     _WordsetCreate(unisys);
-    unisys->fld_msgwin_stream = FLDMSGWIN_STREAM_AddTalkWin(fldmsg_bg, unisys->msgdata);
+    unisys->fld_msgwin_stream = FLDPLAINMSGWIN_Add(fldmsg_bg, unisys->msgdata,
+      1, 19, 30, 4);
   }
   else{ //既にウィンドウが表示されている場合はメッセージエリアのクリアを行う
-    FLDMSGWIN_STREAM_ClearMessage(unisys->fld_msgwin_stream);
+    FLDPLAINMSGWIN_ClearMessage(unisys->fld_msgwin_stream);
   }
 }
 
@@ -1359,8 +1360,8 @@ void UnionMsg_TalkStream_WindowSetup(UNION_SYSTEM_PTR unisys, FIELDMAP_WORK *fie
 void UnionMsg_TalkStream_WindowDel(UNION_SYSTEM_PTR unisys)
 {
   if(unisys->fld_msgwin_stream != NULL){
-    FLDMSGWIN_STREAM_ClearWindow(unisys->fld_msgwin_stream);
-    FLDMSGWIN_STREAM_Delete(unisys->fld_msgwin_stream);
+    FLDPLAINMSGWIN_ClearWindow(unisys->fld_msgwin_stream);
+    FLDPLAINMSGWIN_Delete(unisys->fld_msgwin_stream);
     unisys->fld_msgwin_stream = NULL;
     unisys->fld_msgwin_stream_print_on = FALSE;
     
@@ -1391,7 +1392,8 @@ void UnionMsg_TalkStream_Print(UNION_SYSTEM_PTR unisys, u32 str_id)
 
   GFL_MSG_GetString(unisys->msgdata, str_id, unisys->strbuf_temp);
   WORDSET_ExpandStr(unisys->wordset, unisys->strbuf_talk_expand, unisys->strbuf_temp);
-  FLDMSGWIN_STREAM_PrintStrBufStart(unisys->fld_msgwin_stream, 0, 0, unisys->strbuf_talk_expand);
+  FLDPLAINMSGWIN_PrintStreamStartStrBuf(
+    unisys->fld_msgwin_stream, 0, 0, unisys->strbuf_talk_expand);
 
   unisys->fld_msgwin_stream_print_on = TRUE;
 }
@@ -1410,7 +1412,7 @@ BOOL UnionMsg_TalkStream_Check(UNION_SYSTEM_PTR unisys)
   if(unisys->fld_msgwin_stream == NULL || unisys->fld_msgwin_stream_print_on == FALSE){
     return TRUE;
   }
-  return FLDMSGWIN_STREAM_Print(unisys->fld_msgwin_stream);
+  return FLDPLAINMSGWIN_PrintStream(unisys->fld_msgwin_stream);
 }
 
 //==================================================================
@@ -1509,7 +1511,8 @@ static void UnionMsg_Menu_WindowSetup(UNION_SYSTEM_PTR unisys, FIELDMAP_WORK *fi
   if(unisys->fldmenu_func == NULL){
     fldmenu_listdata = FLDMENUFUNC_CreateMakeListData(
       menulist, list_max, unisys->msgdata, HEAPID_UNION);
-    unisys->fldmenu_func = FLDMENUFUNC_AddMenu(fldmsg_bg, menuhead, fldmenu_listdata);
+    unisys->fldmenu_func = FLDMENUFUNC_AddEventMenuList( fldmsg_bg, menuhead, fldmenu_listdata,
+      NULL, NULL, 0, 0, TRUE);
   }
 }
 
@@ -1761,8 +1764,8 @@ void UnionMsg_Menu_BattleMenuMultiTitleSetup(UNION_SYSTEM_PTR unisys, FIELDMAP_W
 {
   if(unisys->fldmsgwin == NULL){
     FLDMSGBG *fldmsg_bg = FIELDMAP_GetFldMsgBG(fieldWork);
-    unisys->fldmsgwin = FLDMSGWIN_Add(fldmsg_bg, unisys->msgdata, 1, 1, 30, 2);
-    FLDMSGWIN_Print( unisys->fldmsgwin, 0, 0, msg_union_battle_01_12_05 );
+    unisys->fldmsgwin = FLDPLAINMSGWIN_Add(fldmsg_bg, unisys->msgdata, 1, 1, 30, 2);
+    FLDPLAINMSGWIN_Print( unisys->fldmsgwin, 0, 0, msg_union_battle_01_12_05 );
   }
 }
 
@@ -1776,7 +1779,7 @@ void UnionMsg_Menu_BattleMenuMultiTitleSetup(UNION_SYSTEM_PTR unisys, FIELDMAP_W
 void UnionMsg_Menu_BattleMenuMultiTitleDel(UNION_SYSTEM_PTR unisys)
 {
   if(unisys->fldmsgwin != NULL){
-    FLDMSGWIN_Delete(unisys->fldmsgwin);
+    FLDPLAINMSGWIN_Delete(unisys->fldmsgwin);
     unisys->fldmsgwin = NULL;
   }
 }
@@ -1851,7 +1854,7 @@ void UnionMsg_Menu_RegulationSetup(UNION_SYSTEM_PTR unisys, FIELDMAP_WORK *field
   }
   
 //  _WordsetCreate(unisys);
-  unisys->fldmsgwin = FLDMSGWIN_Add(fldmsg_bg, unisys->msgdata, 
+  unisys->fldmsgwin = FLDPLAINMSGWIN_Add(fldmsg_bg, unisys->msgdata, 
     1, 1, 26, (REGULATION_CATEGORY_MAX+2)*2);
   unisys->alloc.rpm = PokeRegulation_CreatePrintMsg(unisys->alloc.regulation,
     unisys->wordset, HEAPID_UNION, shooter_type);
@@ -1859,7 +1862,7 @@ void UnionMsg_Menu_RegulationSetup(UNION_SYSTEM_PTR unisys, FIELDMAP_WORK *field
   
   if(regwin_type == REGWIN_TYPE_RULE){
     STRBUF* cupname = Regulation_CreateCupName(unisys->alloc.regulation, HEAPID_UNION);
-    FLDMSGWIN_PrintStrBuf( unisys->fldmsgwin, 0, 0, cupname );
+    FLDPLAINMSGWIN_PrintStrBuf( unisys->fldmsgwin, 0, 0, cupname );
     GFL_STR_DeleteBuffer(cupname);
   }
   else{
@@ -1869,7 +1872,7 @@ void UnionMsg_Menu_RegulationSetup(UNION_SYSTEM_PTR unisys, FIELDMAP_WORK *field
     else{
       title_msgid = msg_union_ng_bbox;
     }
-    FLDMSGWIN_Print( unisys->fldmsgwin, 0, 0, title_msgid );
+    FLDPLAINMSGWIN_Print( unisys->fldmsgwin, 0, 0, title_msgid );
   }
   
   for(category = 0; category < REGULATION_CATEGORY_MAX; category++){
@@ -1879,9 +1882,9 @@ void UnionMsg_Menu_RegulationSetup(UNION_SYSTEM_PTR unisys, FIELDMAP_WORK *field
     else{
       color = REG_NORMAL_COLOR;
     }
-    FLDMSGWIN_PrintStrBufColor( unisys->fldmsgwin, 0, (4 + 2*category)*8, 
+    FLDPLAINMSGWIN_PrintStrBufColor( unisys->fldmsgwin, 0, (4 + 2*category)*8, 
       unisys->alloc.rpm->category[category], color );
-    FLDMSGWIN_PrintStrBufColor( unisys->fldmsgwin, 14*8, (4 + 2*category)*8, 
+    FLDPLAINMSGWIN_PrintStrBufColor( unisys->fldmsgwin, 14*8, (4 + 2*category)*8, 
       unisys->alloc.rpm->prerequisite[category], color );
   }
 }
@@ -1923,7 +1926,7 @@ void UnionMsg_Menu_RegulationDel(UNION_SYSTEM_PTR unisys)
   
 //  _WordsetDelete(unisys);
   
-  FLDMSGWIN_Delete(unisys->fldmsgwin);
+  FLDPLAINMSGWIN_Delete(unisys->fldmsgwin);
   unisys->fldmsgwin = NULL;
 
   PokeRegulation_DeletePrintMsg(unisys->alloc.rpm);
