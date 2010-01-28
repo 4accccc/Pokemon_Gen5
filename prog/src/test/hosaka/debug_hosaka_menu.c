@@ -15,6 +15,8 @@
  */
 //=============================================================================
 //static BOOL TESTMODE_ITEM_SelectIntro( TESTMODE_WORK *work , const int idx );
+static BOOL TESTMODE_ITEM_SelectCmmBtlDemoEnd( TESTMODE_WORK* work, const int idx );
+static BOOL TESTMODE_ITEM_SelectCmmBtlDemoEndMulti( TESTMODE_WORK* work, const int idx );
 static BOOL TESTMODE_ITEM_SelectCmmBtlDemoStart( TESTMODE_WORK* work, const int idx );
 static BOOL TESTMODE_ITEM_SelectCmmBtlDemoStartMulti( TESTMODE_WORK* work, const int idx );
 static BOOL TESTMODE_ITEM_SelectPmsSelect( TESTMODE_WORK *work , const int idx );
@@ -24,6 +26,8 @@ static BOOL TESTMODE_ITEM_SelectMicTest( TESTMODE_WORK *work , const int idx );
 static TESTMODE_MENU_LIST menuHosaka[] = 
 {
 //	{L"イントロデモ",TESTMODE_ITEM_SelectIntro },
+  {L"通信バトル後デモ",TESTMODE_ITEM_SelectCmmBtlDemoEnd},
+  {L"通信バトル後マルチ",TESTMODE_ITEM_SelectCmmBtlDemoEndMulti},
   {L"通信バトル前デモ",TESTMODE_ITEM_SelectCmmBtlDemoStart},
   {L"通信バトル前マルチ",TESTMODE_ITEM_SelectCmmBtlDemoStartMulti},
 	{L"かんい会話選択",TESTMODE_ITEM_SelectPmsSelect },
@@ -54,6 +58,28 @@ static BOOL TESTMODE_ITEM_SelectIntro( TESTMODE_WORK *work , const int idx )
 #endif
   
 #include "demo/comm_btl_demo.h"
+
+static BOOL TESTMODE_ITEM_SelectCmmBtlDemoEnd( TESTMODE_WORK* work, const int idx )
+{
+  COMM_BTL_DEMO_PARAM* initParam = GFL_HEAP_AllocClearMemory( GFL_HEAPID_APP, sizeof(COMM_BTL_DEMO_PARAM) );
+
+  initParam->type = COMM_BTL_DEMO_TYPE_NORMAL_END;
+
+	TESTMODE_COMMAND_ChangeProc(work,FS_OVERLAY_ID(comm_btl_demo), &CommBtlDemoProcData, initParam);
+
+  return TRUE;
+}
+
+static BOOL TESTMODE_ITEM_SelectCmmBtlDemoEndMulti( TESTMODE_WORK* work, const int idx )
+{
+  COMM_BTL_DEMO_PARAM* initParam = GFL_HEAP_AllocClearMemory( GFL_HEAPID_APP, sizeof(COMM_BTL_DEMO_PARAM) );
+
+  initParam->type = COMM_BTL_DEMO_TYPE_MULTI_END;
+
+	TESTMODE_COMMAND_ChangeProc(work,FS_OVERLAY_ID(comm_btl_demo), &CommBtlDemoProcData, initParam);
+
+  return TRUE;
+}
 
 static BOOL TESTMODE_ITEM_SelectCmmBtlDemoStart( TESTMODE_WORK* work, const int idx )
 { 
