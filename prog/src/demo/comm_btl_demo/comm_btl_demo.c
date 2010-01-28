@@ -63,8 +63,22 @@ enum
   TRAINER_CNT_MULTI = 4,
 };
 
+//--------------------------------------------------------------
+///	リザルト表示位置
+//==============================================================
+typedef enum
+{ 
+  RESULT_POS_ME = 0,
+  RESULT_POS_YOU,
+  RESULT_POS_DRAW,
+  RESULT_POS_MAX,
+} RESULT_POS;
+
 enum
 { 
+  OBJ_ANM_ID_RSLT_WIN   = 7,    ///< 勝敗OBJ：WIN
+  OBJ_ANM_ID_RSLT_LOSE  = 8,    ///< 勝敗OBJ：LOSE
+  OBJ_ANM_ID_RSLT_DRAW  = 9,    ///< 勝敗OBJ：DRAW
   OBJ_ANM_ID_BALL_NORMAL = 10,  ///< ボール：通常
   OBJ_ANM_ID_BALL_SICK = 11,    ///< ボール：状態異常
   OBJ_ANM_ID_BALL_DOWN = 12,    ///< ボール：瀕死
@@ -73,6 +87,13 @@ enum
 
 enum
 { 
+  DRAW_OPEN_SYNC = 30, //DRAW用アニメ再生から「DRAW」を表示するまでのSYNC
+
+  // 残りポケモン数を表示するSYNC
+  NORMAL_POKENUM_OPEN_SYNC = 30,  ///<
+  MULTI_POKENUM_OPEN_SYNC  = 30,  ///< 
+  MULTI_POKENUM_OPEN_SYNC2 = 40,  ///<
+
   // ボール
   BALL_PX_OFS = 16,
   NORMAL_BALL_PX_BASE = 128+8,
@@ -247,6 +268,19 @@ typedef struct {
 } TRAINER_UNIT;
 
 //--------------------------------------------------------------
+///	勝敗ユニット
+//==============================================================
+typedef struct {
+  // [IN]
+  COMM_BTL_DEMO_RESULT result;
+  COMM_BTL_DEMO_OBJ_WORK* obj;
+  COMM_BTL_DEMO_G3D_WORK* g3d;
+  // [PRIVATE]
+  GFL_CLWK* clwk[ RESULT_POS_MAX ];
+} RESULT_UNIT;
+
+
+//--------------------------------------------------------------
 ///	メインワーク
 //==============================================================
 typedef struct 
@@ -260,6 +294,8 @@ typedef struct
 
   // トレーナーユニット
   TRAINER_UNIT  trainer_unit[ COMM_BTL_DEMO_TRDATA_MAX ];
+
+  RESULT_UNIT result_unit;
 
 	//描画設定
 	COMM_BTL_DEMO_GRAPHIC_WORK	*graphic;
@@ -286,15 +322,19 @@ typedef struct
  */
 //=============================================================================
 
-// ノーマル開始
+// 開始デモ
 static BOOL SceneStartDemo_Init( UI_SCENE_CNT_PTR cnt, void* work );
 static BOOL SceneStartDemo_Main( UI_SCENE_CNT_PTR cnt, void* work );
 static BOOL SceneStartDemo_End( UI_SCENE_CNT_PTR cnt, void* work );
 
-// ノーマル終了
+// 終了デモ
 static BOOL SceneEndDemo_Init( UI_SCENE_CNT_PTR cnt, void* work );
 static BOOL SceneEndDemo_Main( UI_SCENE_CNT_PTR cnt, void* work );
 static BOOL SceneEndDemo_End( UI_SCENE_CNT_PTR cnt, void* work );
+
+// 終了引き分けデモ（終了デモから分岐）
+static BOOL SceneEndDemoDraw_Main( UI_SCENE_CNT_PTR cnt, void* work );
+static BOOL SceneEndDemoDraw_End( UI_SCENE_CNT_PTR cnt, void* work );
 
 //--------------------------------------------------------------
 ///	SceneID
@@ -303,6 +343,7 @@ typedef enum
 { 
   CBD_SCENE_ID_START_DEMO = 0,  ///< バトル開始デモ
   CBD_SCENE_ID_END_DEMO,        ///< バトル終了デモ
+  CBD_SCENE_ID_END_DEMO_DRAW,   ///< バトル終了デモ 引き分け
 
   CBD_SCENE_ID_MAX,
 } CBD_SCENE_ID;
@@ -328,6 +369,14 @@ static const UI_SCENE_FUNC_SET c_scene_func_tbl[ CBD_SCENE_ID_MAX ] =
     NULL,
     SceneEndDemo_End,
   },
+  // CBD_SCENE_ID_END_DEMO_DRAW
+  {
+    NULL,
+    NULL,
+    SceneEndDemoDraw_Main,
+    NULL,
+    SceneEndDemoDraw_End,
+  },
 };
 
 
@@ -347,8 +396,8 @@ static void BALL_UNIT_SetStart( BALL_UNIT* unit );
 static void BALL_UNIT_SetPartyCondition( BALL_UNIT* unit, const POKEPARTY* party, int id );
 
 static void TRAINER_UNIT_Init( TRAINER_UNIT* unit, u8 type, u8 posid, const COMM_BTL_DEMO_TRAINER_DATA* data, COMM_BTL_DEMO_OBJ_WORK* obj, COMM_BTL_DEMO_G3D_WORK* g3d, GFL_FONT* font );
-static void TRAINER_UNIT_Main( TRAINER_UNIT* unit );
 static void TRAINER_UNIT_Exit( TRAINER_UNIT* unit );
+static void TRAINER_UNIT_Main( TRAINER_UNIT* unit );
 static void TRAINER_UNIT_DrawTrainerName( TRAINER_UNIT* unit, GFL_FONT *font );
 static void TRAINER_UNIT_CreatePokeNum( TRAINER_UNIT* unit );
 
@@ -356,6 +405,10 @@ static void TRAINER_UNIT_CNT_Init( COMM_BTL_DEMO_MAIN_WORK* wk );
 static void TRAINER_UNIT_CNT_Exit( COMM_BTL_DEMO_MAIN_WORK* wk );
 static void TRAINER_UNIT_CNT_Main( COMM_BTL_DEMO_MAIN_WORK* wk );
 static void TRAINER_UNIT_CNT_BallSetStart( COMM_BTL_DEMO_MAIN_WORK* wk );
+
+static void RESULT_UNIT_Init( RESULT_UNIT* unit, COMM_BTL_DEMO_OBJ_WORK* obj, COMM_BTL_DEMO_G3D_WORK* g3d );
+static void RESULT_UNIT_Exit( RESULT_UNIT* unit );
+static void RESULT_UNIT_SetOpen( RESULT_UNIT* unit, RESULT_POS pos, COMM_BTL_DEMO_RESULT result );
 
 static void OBJ_Init( COMM_BTL_DEMO_OBJ_WORK* wk, COMM_BTL_DEMO_GRAPHIC_WORK* graphic, HEAPID heapID );
 static void OBJ_Exit( COMM_BTL_DEMO_OBJ_WORK* wk );
@@ -366,6 +419,7 @@ static void G3D_End( COMM_BTL_DEMO_G3D_WORK* g3d );
 static void G3D_Main( COMM_BTL_DEMO_G3D_WORK * g3d );
 static void G3D_PTC_Setup( COMM_BTL_DEMO_G3D_WORK* g3d, int spa_idx );
 static void G3D_PTC_Delete( COMM_BTL_DEMO_G3D_WORK* g3d );
+static void G3D_PTC_Exit( COMM_BTL_DEMO_G3D_WORK* g3d );
 static void G3D_PTC_CreateEmitter( COMM_BTL_DEMO_G3D_WORK * g3d, u16 idx, const VecFx32* pos );
 static void G3D_PTC_CreateEmitterAll( COMM_BTL_DEMO_G3D_WORK* g3d, const VecFx32* pos );
 static void G3D_AnimeSet( COMM_BTL_DEMO_G3D_WORK* g3d, u16 demo_id );
@@ -404,7 +458,7 @@ static void debug_param( COMM_BTL_DEMO_PARAM* prm )
 
   HOSAKA_Printf("in param type = %d \n", prm->type);
   
-  prm->result = GFUser_GetPublicRand( COMM_BTL_DEMO_RESULT_MAX );
+  prm->result = COMM_BTL_DEMO_RESULT_DRAW;//GFUser_GetPublicRand( COMM_BTL_DEMO_RESULT_MAX );
 
   HOSAKA_Printf( "result = %d \n", prm->result );
 
@@ -712,6 +766,37 @@ static void CommBtlDemo_BG_LoadResource( COMM_BTL_DEMO_BG_WORK* wk, HEAPID heapI
 
 //-----------------------------------------------------------------------------
 /**
+ *	@brief  共通開放処理
+ *
+ *	@param	UI_SCENE_CNT_PTR cnt
+ *	@param	wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void _SceneEndDemoEnd( UI_SCENE_CNT_PTR cnt, COMM_BTL_DEMO_MAIN_WORK* wk )
+{
+  // トレーナー開放
+  TRAINER_UNIT_CNT_Exit( wk );
+
+  // 勝敗ユニット開放
+  RESULT_UNIT_Exit( &wk->result_unit );
+  
+  // 終了
+  UI_SCENE_CNT_SetNextScene( cnt, UI_SCENE_ID_END );
+
+// @TODO 保坂のみループ
+#ifdef DEBUG_ONLY_FOR_genya_hosaka
+  if( (GFL_UI_KEY_GetCont() & PAD_BUTTON_START) == FALSE )
+  {
+    UI_SCENE_CNT_SetNextScene( cnt, CBD_SCENE_ID_END_DEMO );
+  }
+#endif
+
+}
+
+//-----------------------------------------------------------------------------
+/**
  *	@brief  バトル前デモ 初期化処理
  *
  *	@param	UI_SCENE_CNT_PTR cnt
@@ -783,7 +868,6 @@ static BOOL SceneStartDemo_Main( UI_SCENE_CNT_PTR cnt, void* work )
       G3D_AnimeSet( &wk->wk_g3d, DEMO_ID_START );
 
       // ptcワーク生成「VS」
-      G3D_PTC_Delete( &wk->wk_g3d );
       G3D_PTC_Setup( &wk->wk_g3d, NARC_comm_btl_demo_vs_demo02_spa );
 
       UI_SCENE_CNT_IncSubSeq( cnt );
@@ -810,8 +894,6 @@ static BOOL SceneStartDemo_Main( UI_SCENE_CNT_PTR cnt, void* work )
     {
       // 3Dアニメーション開放
       G3D_AnimeDel( &wk->wk_g3d );
-      // PTCワーク開放
-      G3D_PTC_Delete( &wk->wk_g3d );
       return TRUE;
     }
     break;
@@ -869,6 +951,9 @@ static BOOL SceneEndDemo_Init( UI_SCENE_CNT_PTR cnt, void *work )
   // トレーナーユニット初期化
   TRAINER_UNIT_CNT_Init( wk );
 
+  // 勝敗ユニット生成
+  RESULT_UNIT_Init( &wk->result_unit, &wk->wk_obj, &wk->wk_g3d );
+
 #ifdef DEBUG_ONLY_FOR_genya_hosaka
     // フェードアウト リクエスト
   GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 1 );
@@ -921,16 +1006,22 @@ static BOOL SceneEndDemo_Main( UI_SCENE_CNT_PTR cnt, void* work )
       // 3Dアニメーション開放
       G3D_AnimeDel( &wk->wk_g3d );
 
+      // 引き分けは別シーケンスへ
+      if( wk->pwk->result == COMM_BTL_DEMO_RESULT_DRAW )
+      {
+        return TRUE;
+      }
+
       //@TODO WIN/LOSE OBJ表示開始リクエスト
-      
+//    RESULT_UNIT_SetOpen
+
       UI_SCENE_CNT_IncSubSeq( cnt );
     }
     break;
   case 2:
     //「WIN」パーティクル表示
-
     //@TODO 勝った方にPOS調整
-    G3D_PTC_CreateEmitterAll( &wk->wk_g3d, &(VecFx32){0,0,FX32_ONE*100} );
+    G3D_PTC_CreateEmitterAll( &wk->wk_g3d, &(VecFx32){0,0,-100} );
 
     wk->timer = 0;
   
@@ -941,9 +1032,6 @@ static BOOL SceneEndDemo_Main( UI_SCENE_CNT_PTR cnt, void* work )
     {
       // フェードアウト リクエスト
       GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, 2 );
-      
-      //@TODO
-      G3D_PTC_Delete( &wk->wk_g3d );
       return TRUE;
     }
     break;
@@ -967,24 +1055,88 @@ static BOOL SceneEndDemo_Main( UI_SCENE_CNT_PTR cnt, void* work )
 static BOOL SceneEndDemo_End( UI_SCENE_CNT_PTR cnt, void* work )
 {
   COMM_BTL_DEMO_MAIN_WORK* wk = work;
-  
-  // トレーナー開放
-  TRAINER_UNIT_CNT_Exit( wk );
-  
-  // 終了
-  UI_SCENE_CNT_SetNextScene( cnt, UI_SCENE_ID_END );
-
-// @TODO 保坂のみループ
-#ifdef DEBUG_ONLY_FOR_genya_hosaka
-  if( (GFL_UI_KEY_GetCont() & PAD_BUTTON_START) == FALSE )
+      
+  // 引き分けは開放せずに別シーケンスへ
+  if( wk->pwk->result == COMM_BTL_DEMO_RESULT_DRAW )
   {
-    UI_SCENE_CNT_SetNextScene( cnt, CBD_SCENE_ID_END_DEMO );
+    UI_SCENE_CNT_SetNextScene( cnt, CBD_SCENE_ID_END_DEMO_DRAW );
+    return TRUE;
   }
-#endif
+  
+  _SceneEndDemoEnd( cnt, wk );
 
   return TRUE;
 }
 
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  バトル後デモ 引き分け 主処理
+ *
+ *	@param	UI_SCENE_CNT_PTR cnt
+ *	@param	work 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static BOOL SceneEndDemoDraw_Main( UI_SCENE_CNT_PTR cnt, void* work )
+{
+  COMM_BTL_DEMO_MAIN_WORK* wk = work;
+  u8 seq = UI_SCENE_CNT_GetSubSeq( cnt );
+
+  TRAINER_UNIT_CNT_Main( wk );
+    
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
+  {
+    return TRUE;
+  }
+
+  switch( seq )
+  {
+  case 0:
+    G3D_AnimeSet( &wk->wk_g3d, DEMO_ID_DRAW );
+    wk->timer=0;
+    UI_SCENE_CNT_IncSubSeq( cnt );
+    break;
+  case 1:
+    
+    // DRAW文字表示
+    if( wk->timer++ == DRAW_OPEN_SYNC )
+    {
+      RESULT_UNIT_SetOpen( &wk->result_unit, RESULT_POS_DRAW, COMM_BTL_DEMO_RESULT_DRAW );
+    }
+
+    if( G3D_AnimeMain( &wk->wk_g3d ) == FALSE )
+    {
+      G3D_AnimeDel( &wk->wk_g3d );
+
+      return TRUE;
+    }
+    break;
+  case 2:
+    break;
+  }
+
+  return FALSE;
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  バトル後デモ 引き分け 主処理
+ *
+ *	@param	UI_SCENE_CNT_PTR cnt
+ *	@param	work 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static BOOL SceneEndDemoDraw_End( UI_SCENE_CNT_PTR cnt, void* work )
+{
+  COMM_BTL_DEMO_MAIN_WORK* wk = work;
+
+  _SceneEndDemoEnd( cnt, wk );
+
+  return TRUE;
+}
 
 //-----------------------------------------------------------------------------
 /**
@@ -1204,7 +1356,7 @@ static void BALL_UNIT_Init( BALL_UNIT* unit, const POKEPARTY* party, const POKEP
     // 終了デモ
     {
       // 全て通常状態で初期化
-      anm = OBJ_ANM_ID_BALL_NULL;
+      anm = OBJ_ANM_ID_BALL_NORMAL;
 
       // 順番反転
       clwk_id = (unit->max-1) - i;
@@ -1215,10 +1367,12 @@ static void BALL_UNIT_Init( BALL_UNIT* unit, const POKEPARTY* party, const POKEP
     // CLWK生成
     unit->clwk[clwk_id] = OBJ_CreateCLWK( obj, px, py, anm );
     
+    // 開始デモ 非表示にしておく
     if( type_is_start(type) )
     {
       GFL_CLACT_WK_SetDrawEnable( unit->clwk[clwk_id] , FALSE );
     }
+    // 終了デモ
     else
     {
       // 終了デモは最初から表示
@@ -1516,22 +1670,17 @@ static void TRAINER_UNIT_Init( TRAINER_UNIT* unit, u8 type, u8 posid, const COMM
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  トレーナーユニット 主処理
+ *	@brief
  *
  *	@param	TRAINER_UNIT* unit 
  *
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static void TRAINER_UNIT_Main( TRAINER_UNIT* unit )
+static void _trainer_unit_main_start( TRAINER_UNIT* unit )
 {
-  GF_ASSERT( unit->g3d );
-
-  // ボール主処理
-  BALL_UNIT_Main( &unit->ball );
-
   // トレーナー名表示
-  if( type_is_start(unit->type) && unit->timer == TRNAME_OPEN_SYNC ) 
+  if( unit->timer == TRNAME_OPEN_SYNC ) 
   { 
     // トレーナー名表示
     TRAINER_UNIT_DrawTrainerName( unit, unit->font );
@@ -1579,12 +1728,44 @@ static void TRAINER_UNIT_Main( TRAINER_UNIT* unit )
       // 名前表示
       G3D_PTC_CreateEmitterAll( unit->g3d, &(VecFx32){fx,fy,-100} );
     }
-  
   }  
+}
 
-//  HOSAKA_Printf("unit timer=%d \n", unit->timer);
+//-----------------------------------------------------------------------------
+/**
+ *	@brief
+ *
+ *	@param	TRAINER_UNIT* unit 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void _trainer_unit_main_end( TRAINER_UNIT* unit )
+{
+  int sync;
 
-  unit->timer++;
+  if( type_is_normal(unit->type) )
+  {
+    sync = NORMAL_POKENUM_OPEN_SYNC;
+  }
+  else
+  {
+    if( unit->posid == 0 || unit->posid == 2 )
+    {
+      sync = MULTI_POKENUM_OPEN_SYNC;
+    }
+    else
+    {
+      sync = MULTI_POKENUM_OPEN_SYNC2;
+    }
+  }
+
+  if( unit->timer == sync )
+  {
+    GFL_CLACT_WK_SetDrawEnable( unit->clwk_pokenum , TRUE );
+    GFL_CLACT_WK_SetAutoAnmFlag( unit->clwk_pokenum , TRUE );
+  }
+
 }
 
 //-----------------------------------------------------------------------------
@@ -1602,6 +1783,44 @@ static void TRAINER_UNIT_Exit( TRAINER_UNIT* unit )
   BALL_UNIT_Exit( &unit->ball );
   // トレーナー名BMPWIN解放
   GFL_BMPWIN_Delete( unit->win_name );
+
+
+  if( type_is_start(unit->type) == FALSE )
+  {
+    GFL_CLACT_WK_Remove( unit->clwk_pokenum );
+  }
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  トレーナーユニット 主処理
+ *
+ *	@param	TRAINER_UNIT* unit 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void TRAINER_UNIT_Main( TRAINER_UNIT* unit )
+{
+  GF_ASSERT( unit->g3d );
+
+  // ボール主処理
+  BALL_UNIT_Main( &unit->ball );
+
+  if( type_is_start(unit->type) )
+  {
+    // 開始デモ
+    _trainer_unit_main_start( unit );
+  }
+  else
+  {
+    // 終了デモ
+    _trainer_unit_main_end( unit );
+  }
+
+//  HOSAKA_Printf("unit timer=%d \n", unit->timer);
+
+  unit->timer++;
 }
 
 //-----------------------------------------------------------------------------
@@ -1638,7 +1857,7 @@ static void TRAINER_UNIT_DrawTrainerName( TRAINER_UNIT* unit, GFL_FONT *font )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief
+ *	@brief  残りポケモン数OBJを生成
  *
  *	@param	TRAINER_UNIT* unit 
  *
@@ -1662,7 +1881,7 @@ static void TRAINER_UNIT_CreatePokeNum( TRAINER_UNIT* unit )
     if( posid == 0 )
     {
       px = 50;
-      py = NORMAL_POSID0_BALL_PY;
+      py = NORMAL_POSID0_BALL_PY-16;
     }
     else
     {
@@ -1676,19 +1895,19 @@ static void TRAINER_UNIT_CreatePokeNum( TRAINER_UNIT* unit )
     {
     case 0:
       px = GX_LCD_SIZE_X-50;
-      py = MULTI_POSID0_BALL_PY;
+      py = MULTI_POSID0_BALL_PY-16;
       break;
     case 1:
       px = GX_LCD_SIZE_X-50+20;
-      py = MULTI_POSID1_BALL_PY;
+      py = MULTI_POSID1_BALL_PY-16;
       break;
     case 2:
       px = 50;
-      py = MULTI_POSID2_BALL_PY;
+      py = MULTI_POSID2_BALL_PY-16;
       break;
     case 3:
       px = 50+20;
-      py = MULTI_POSID3_BALL_PY;
+      py = MULTI_POSID3_BALL_PY-16;
       break;
     default : GF_ASSERT(0);
     }
@@ -1702,6 +1921,7 @@ static void TRAINER_UNIT_CreatePokeNum( TRAINER_UNIT* unit )
 
   unit->clwk_pokenum = OBJ_CreateCLWK( unit->obj, px, py, anm );
   GFL_CLACT_WK_SetDrawEnable( unit->clwk_pokenum , FALSE );
+  GFL_CLACT_WK_SetSoftPri( unit->clwk_pokenum, 1 ); ///< 一段階下げておく
 }
 
 //-----------------------------------------------------------------------------
@@ -1809,6 +2029,111 @@ static void TRAINER_UNIT_CNT_BallSetStart( COMM_BTL_DEMO_MAIN_WORK* wk )
   {
     BALL_UNIT_SetStart( &wk->trainer_unit[i].ball );
   }
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  勝敗ユニット生成
+ *
+ *	@param	RESULT_UNIT* unit
+ *	@param	obj
+ *	@param	g3d 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void RESULT_UNIT_Init( RESULT_UNIT* unit, COMM_BTL_DEMO_OBJ_WORK* obj, COMM_BTL_DEMO_G3D_WORK* g3d )
+{
+  int i;
+
+  // メンバ初期化
+  unit->obj = obj;
+  unit->g3d = g3d;
+
+  //@TODO MN
+  
+  for( i=0; i<COMM_BTL_DEMO_RESULT_MAX; i++ )
+  {
+    s16 px, py;
+
+    switch( i )
+    {
+    case RESULT_POS_ME : 
+      px = GX_LCD_SIZE_X-50;
+      py = 19*8;
+      break;
+    case RESULT_POS_YOU : 
+      px = 50;
+      py = 8*5;
+      break;
+    case RESULT_POS_DRAW : 
+      px = GX_LCD_SIZE_X/2;
+      py = GX_LCD_SIZE_Y/2;
+      break;
+    default : GF_ASSERT(0);
+    }
+  
+    unit->clwk[i]= OBJ_CreateCLWK( obj, px, py, OBJ_ANM_ID_RSLT_WIN );
+    GFL_CLACT_WK_SetDrawEnable( unit->clwk[i], FALSE );
+  }
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  勝敗ユニット 開放
+ *
+ *	@param	RESULT_UNIT* unit 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void RESULT_UNIT_Exit( RESULT_UNIT* unit )
+{
+  int i;
+
+  GF_ASSERT( unit );
+  GF_ASSERT( unit->clwk );
+
+  for( i=0; i<COMM_BTL_DEMO_RESULT_MAX; i++ )
+  {
+    GFL_CLACT_WK_Remove( unit->clwk[i] );
+  }
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  リザルトアニメ開始
+ *
+ *	@param	RESULT_UNIT* unit
+ *	@param	pos
+ *	@param	result 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void RESULT_UNIT_SetOpen( RESULT_UNIT* unit, RESULT_POS pos, COMM_BTL_DEMO_RESULT result )
+{
+  int anm;
+  
+  GF_ASSERT( pos < RESULT_POS_MAX );
+
+  switch( result )
+  {
+  case COMM_BTL_DEMO_RESULT_WIN :
+    anm = OBJ_ANM_ID_RSLT_WIN;
+    break;
+  case COMM_BTL_DEMO_RESULT_LOSE :
+    anm = OBJ_ANM_ID_RSLT_LOSE;
+    break;
+  case COMM_BTL_DEMO_RESULT_DRAW:
+    anm = OBJ_ANM_ID_RSLT_DRAW;
+    break;
+  default : GF_ASSERT(0);
+  }
+
+  GFL_CLACT_WK_SetDrawEnable( unit->clwk[pos], TRUE );
+  GFL_CLACT_WK_SetAutoAnmFlag( unit->clwk[pos], TRUE );
+  GFL_CLACT_WK_SetAnmSeqDiff( unit->clwk[pos], anm );
 }
 
 //-----------------------------------------------------------------------------
@@ -1937,7 +2262,7 @@ static void G3D_End( COMM_BTL_DEMO_G3D_WORK* g3d )
   GF_ASSERT( g3d->g3d_util );
   
   // PTC開放
-  GFL_PTC_Exit();
+  G3D_PTC_Exit( g3d );
 
   // 3D管理ユーティリティーの破棄
   GFL_G3D_UTIL_Delete( g3d->g3d_util );
@@ -1979,7 +2304,10 @@ static VecFx32 sc_camera_at = { 0, 0, 0 };
 //-----------------------------------------------------------------------------
 static void G3D_PTC_Setup( COMM_BTL_DEMO_G3D_WORK* g3d, int spa_idx )
 {
-  GF_ASSERT( g3d->ptc == NULL );
+  if( g3d->ptc )
+  {
+    G3D_PTC_Delete( g3d );
+  }
 
   // PTCワーク生成
   g3d->ptc = GFL_PTC_Create( g3d->spa_work, sizeof(g3d->spa_work), TRUE, g3d->heapID );
@@ -2033,6 +2361,25 @@ static void G3D_PTC_Delete( COMM_BTL_DEMO_G3D_WORK* g3d )
   GFL_PTC_DeleteEmitterAll( g3d->ptc );
   GFL_PTC_Delete( g3d->ptc );
   g3d->ptc = NULL;
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  PTCシステム終了
+ *
+ *	@param	COMM_BTL_DEMO_G3D_WORK* g3d 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void G3D_PTC_Exit( COMM_BTL_DEMO_G3D_WORK* g3d )
+{
+  if( g3d->ptc )
+  {
+    GFL_PTC_Delete( g3d->ptc );
+  }
+
+  GFL_PTC_Exit();
 }
 
 //-----------------------------------------------------------------------------
