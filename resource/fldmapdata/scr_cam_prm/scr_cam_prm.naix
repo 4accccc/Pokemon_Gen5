@@ -4,7 +4,7 @@
 
 	This file was created by NINTENDO TWL-System Archiver.
 
-	Update:2009-12-14T14:58:47
+	Update:2010-01-28T19:22:07
  *****************************************************************************/
 
 #ifndef NARC_SCR_CAM_PRM_NAIX_
@@ -16,7 +16,8 @@ enum {
 	NARC_scr_cam_prm_c3_cam_02_bin = 2,
 	NARC_scr_cam_prm_c3_cam_03_bin = 3,
 	NARC_scr_cam_prm_c3_cam_04_bin = 4,
-	NARC_scr_cam_prm_c3_cam_05_bin = 5
+	NARC_scr_cam_prm_c3_cam_05_bin = 5,
+	NARC_scr_cam_prm_badgegate_cam_01_bin = 6
 };
 
 /* NARC_SCR_CAM_PRM_NAIX_ */

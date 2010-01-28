@@ -16,3 +16,4 @@
 #define C3_CAM_03 (3)
 #define C3_CAM_04 (4)
 #define C3_CAM_05 (5)
+#define BADGEGATE_CAM_01 (6)
