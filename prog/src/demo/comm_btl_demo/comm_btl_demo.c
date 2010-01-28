@@ -252,7 +252,7 @@ typedef struct {
 //==============================================================
 typedef struct {
   // [IN]
-  const POKEPARTY* party_after;
+  const POKEPARTY* party;
   u8 type;
   u8 posid;
   u8 num;
@@ -406,7 +406,7 @@ static CBD_SCENE_ID calc_first_scene( COMM_BTL_DEMO_PARAM* pwk );
 BOOL type_is_normal( u8 type );
 BOOL type_is_start( u8 type );
 
-static void BALL_UNIT_Init( BALL_UNIT* unit, const POKEPARTY* party, const POKEPARTY* party_after, u8 type, u8 posid, COMM_BTL_DEMO_OBJ_WORK* obj );
+static void BALL_UNIT_Init( BALL_UNIT* unit, const POKEPARTY* party, u8 type, u8 posid, COMM_BTL_DEMO_OBJ_WORK* obj );
 static void BALL_UNIT_Exit( BALL_UNIT* unit );
 static void BALL_UNIT_Main( BALL_UNIT* unit );
 static void BALL_UNIT_SetStart( BALL_UNIT* unit );
@@ -499,49 +499,46 @@ static void debug_param( COMM_BTL_DEMO_PARAM* prm )
     // デバッグポケパーティー
     {
       POKEPARTY *party;
-      POKEPARTY *party2;
       int poke_cnt;
       int p;
 
       party = PokeParty_AllocPartyWork( HEAPID_COMM_BTL_DEMO );
-      party2 = PokeParty_AllocPartyWork( HEAPID_COMM_BTL_DEMO );
 
       if( type_is_normal(prm->type) )
       {
         Debug_PokeParty_MakeParty( party );
-        Debug_PokeParty_MakeParty( party2 );
       }
       else
       {
         static const int pokemax=3;
         PokeParty_Init(party, pokemax);
-        PokeParty_Init(party2, pokemax);
         for (p = 0; p < pokemax; p++) 
         {
           POKEMON_PARAM* pp = GFL_HEAP_AllocMemoryLo( HEAPID_COMM_BTL_DEMO , POKETOOL_GetWorkSize() );
           PP_Clear(pp);
           PP_Setup( pp, 392+p, 99, 0 );
           PokeParty_Add(party, pp);
-          PokeParty_Add(party2, pp);
           GFL_HEAP_FreeMemory(pp);
         }
       }
       
       prm->trainer_data[i].party = party;
-      prm->trainer_data[i].party_after = party2;
 
       poke_cnt = PokeParty_GetPokeCount( prm->trainer_data[i].party );
 
-      // 対戦後のポケモンの状態異常
-      for( p=0; p<poke_cnt; p++ )
+      if( prm->type == COMM_BTL_DEMO_TYPE_NORMAL_END || prm->type == COMM_BTL_DEMO_TYPE_MULTI_END )
       {
-        POKEMON_PARAM* pp = PokeParty_GetMemberPointer( party2, p );
-        switch( GFUser_GetPublicRand(3) )
+        // 対戦後のポケモンの状態異常
+        for( p=0; p<poke_cnt; p++ )
         {
-        case 0: PP_SetSick( pp, POKESICK_DOKU ); break; // 毒
-        case 1: PP_Put(pp, ID_PARA_hp, 0 ); break; // 瀕死
+          POKEMON_PARAM* pp = PokeParty_GetMemberPointer( party, p );
+          switch( GFUser_GetPublicRand(3) )
+          {
+          case 0: PP_SetSick( pp, POKESICK_DOKU ); break; // 毒
+          case 1: PP_Put(pp, ID_PARA_hp, 0 ); break; // 瀕死
+          }
+          HOSAKA_Printf("poke [%d] condition=%d \n",p, PP_Get( pp, ID_PARA_condition, NULL ) );
         }
-        HOSAKA_Printf("poke [%d] condition=%d \n",p, PP_Get( pp, ID_PARA_condition, NULL ) );
       }
 
       HOSAKA_Printf("[%d] server_version=%d trsex=%d poke_cnt=%d \n",i, 
@@ -1343,7 +1340,7 @@ static u32 PokeParaToBallAnim( POKEMON_PARAM* pp )
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static void BALL_UNIT_Init( BALL_UNIT* unit, const POKEPARTY* party, const POKEPARTY* party_after, u8 type, u8 posid, COMM_BTL_DEMO_OBJ_WORK* obj )
+static void BALL_UNIT_Init( BALL_UNIT* unit, const POKEPARTY* party, u8 type, u8 posid, COMM_BTL_DEMO_OBJ_WORK* obj )
 {
   int i;
   int clwk_id;
@@ -1354,9 +1351,9 @@ static void BALL_UNIT_Init( BALL_UNIT* unit, const POKEPARTY* party, const POKEP
 
   unit->type = type;
   unit->posid = posid;
-  unit->party_after = party_after;
+  unit->party = party;
   unit->num = PokeParty_GetPokeCount( party );
-  unit->max = PokeParty_GetPokeCountMax( party );
+  unit->max = ( type_is_normal(type) ? 6 : 3 );
   unit->timer = 0;
 
   HOSAKA_Printf("max=%d pokenum=%d\n", unit->max, unit->num);
@@ -1423,6 +1420,15 @@ static void BALL_UNIT_Init( BALL_UNIT* unit, const POKEPARTY* party, const POKEP
       }
 
       anm = PokeParaToBallAnim( pp );
+
+      // 終了デモは空以外通常状態で上書き
+      if( type_is_start(type) == FALSE )
+      {
+        if( anm != OBJ_ANM_ID_BALL_NULL )
+        {
+          anm = OBJ_ANM_ID_BALL_NORMAL;
+        }
+      }
     }
       
     // CLWK生成
@@ -1491,7 +1497,7 @@ static void _ball_open( BALL_UNIT* unit, int start_sync )
     else
     {
       // バトル後の状態を反映
-      BALL_UNIT_SetPartyCondition( unit, unit->party_after, id );
+      BALL_UNIT_SetPartyCondition( unit, unit->party, id );
     }
   }
   else
@@ -1602,21 +1608,19 @@ static void BALL_UNIT_SetStart( BALL_UNIT* unit )
 //-----------------------------------------------------------------------------
 static void BALL_UNIT_SetPartyCondition( BALL_UNIT* unit, const POKEPARTY* party, int id )
 {
-  int max;
   int num;
   int anm;
 
   POKEMON_PARAM* pp = NULL;
 
   num = PokeParty_GetPokeCount( party );
-  max = PokeParty_GetPokeCountMax( party );
 
-  GF_ASSERT( id <= max && id >= 0 );
+  GF_ASSERT( id <= unit->max && id >= 0 );
 
   // ポケモンが存在する間はPOKEMON_PARAMを取得
   if( id < num )
   {
-    pp  = PokeParty_GetMemberPointer( unit->party_after, id );
+    pp  = PokeParty_GetMemberPointer( unit->party, id );
   }
 
   anm = PokeParaToBallAnim( pp );
@@ -1714,7 +1718,7 @@ static void TRAINER_UNIT_Init( TRAINER_UNIT* unit, u8 type, u8 posid, const COMM
   unit->timer = 0;
 
   // ボール初期化
-  BALL_UNIT_Init( &unit->ball, data->party, data->party_after, type, posid, unit->obj );
+  BALL_UNIT_Init( &unit->ball, data->party, type, posid, unit->obj );
 
   // トレーナー名初期化
   unit->win_name = TRAINERNAME_WIN_Create( type, posid );
@@ -1978,7 +1982,7 @@ static void TRAINER_UNIT_CreatePokeNum( TRAINER_UNIT* unit )
   }
 
   // 戦えるポケモン数を取得
-  anm = PokeParty_GetPokeCountBattleEnable( unit->data->party_after );
+  anm = PokeParty_GetPokeCountBattleEnable( unit->data->party );
 
   HOSAKA_Printf("afuter pokenum = %d\n", anm);
 

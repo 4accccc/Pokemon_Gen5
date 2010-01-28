@@ -112,6 +112,15 @@ GMEVENT_RESULT EVENT_CommBattleMain(GMEVENT * event, int *  seq, void * work)
   case SEQ_CALL_START_DEMO:
     // 通信バトル前デモ呼び出し
     {
+      // マルチバトル判定
+      if( bcw->btl_setup_prm->multiMode == 0 )
+      {
+        bcw->demo_prm->type = COMM_BTL_DEMO_TYPE_NORMAL_START;
+      }
+      else
+      {
+        bcw->demo_prm->type = COMM_BTL_DEMO_TYPE_MULTI_START;
+      }
       GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID( comm_btl_demo ), &CommBtlDemoProcData, &bcw->demo_prm);
     }
     (*seq)++;
@@ -151,13 +160,44 @@ GMEVENT_RESULT EVENT_CommBattleMain(GMEVENT * event, int *  seq, void * work)
   case SEQ_CALL_END_DEMO:
     // 通信バトル後デモ呼び出し
     {
-      //@TODO
+      // マルチバトル判定
+      if( bcw->btl_setup_prm->multiMode == 0 )
+      {
+        bcw->demo_prm->type = COMM_BTL_DEMO_TYPE_NORMAL_START;
+      }
+      else
+      {
+        bcw->demo_prm->type = COMM_BTL_DEMO_TYPE_MULTI_START;
+      }
+
+      // 勝敗設定
+      switch( bcw->btl_setup_prm->result )
+      {
+        case BTL_RESULT_WIN :
+          bcw->demo_prm->result = COMM_BTL_DEMO_RESULT_WIN;
+          break;
+        case BTL_RESULT_LOSE :
+          bcw->demo_prm->result = COMM_BTL_DEMO_RESULT_LOSE;
+          break;
+        case BTL_RESULT_DRAW :
+          bcw->demo_prm->result = COMM_BTL_DEMO_RESULT_DRAW;
+          break;
+        default : GF_ASSERT(0);
+      }
+
+      GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID( comm_btl_demo ), &CommBtlDemoProcData, &bcw->demo_prm);
       (*seq)++;
     }
     break;
   case SEQ_BGM_POP:
-    GMEVENT_CallEvent(event, EVENT_FSND_PopBGM(gsys, FSND_FADE_SHORT, FSND_FADE_NORMAL));
-    (*seq) ++;
+    if (GAMESYSTEM_IsProcExists(gsys) != GFL_PROC_MAIN_NULL){
+      break;
+    }
+    {
+      // BGM復帰
+      GMEVENT_CallEvent(event, EVENT_FSND_PopBGM(gsys, FSND_FADE_SHORT, FSND_FADE_NORMAL));
+      (*seq) ++;
+    }
     break;
   case SEQ_END:
     return GMEVENT_RES_FINISH;

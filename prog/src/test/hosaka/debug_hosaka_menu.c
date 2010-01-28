@@ -61,6 +61,7 @@ static BOOL TESTMODE_ITEM_SelectIntro( TESTMODE_WORK *work , const int idx )
 
 // デバッグ用のパラメータ設定
 //@TODO ALLOCしっぱなし
+// ワーク生成
 static void debug_param( COMM_BTL_DEMO_PARAM* prm )
 { 
   int i;
@@ -90,49 +91,46 @@ static void debug_param( COMM_BTL_DEMO_PARAM* prm )
     // デバッグポケパーティー
     {
       POKEPARTY *party;
-      POKEPARTY *party2;
       int poke_cnt;
       int p;
 
       party = PokeParty_AllocPartyWork( GFL_HEAPID_APP );
-      party2 = PokeParty_AllocPartyWork( GFL_HEAPID_APP );
 
       if( prm->type == COMM_BTL_DEMO_TYPE_NORMAL_END || prm->type == COMM_BTL_DEMO_TYPE_NORMAL_START )
       {
         Debug_PokeParty_MakeParty( party );
-        Debug_PokeParty_MakeParty( party2 );
       }
       else
       {
         static const int pokemax=3;
         PokeParty_Init(party, pokemax);
-        PokeParty_Init(party2, pokemax);
         for (p = 0; p < pokemax; p++) 
         {
           POKEMON_PARAM* pp = GFL_HEAP_AllocMemoryLo( GFL_HEAPID_APP , POKETOOL_GetWorkSize() );
           PP_Clear(pp);
           PP_Setup( pp, 392+p, 99, 0 );
           PokeParty_Add(party, pp);
-          PokeParty_Add(party2, pp);
           GFL_HEAP_FreeMemory(pp);
         }
       }
       
       prm->trainer_data[i].party = party;
-      prm->trainer_data[i].party_after = party2;
 
       poke_cnt = PokeParty_GetPokeCount( prm->trainer_data[i].party );
 
-      // 対戦後のポケモンの状態異常
-      for( p=0; p<poke_cnt; p++ )
+      if( prm->type == COMM_BTL_DEMO_TYPE_NORMAL_END || prm->type == COMM_BTL_DEMO_TYPE_MULTI_END )
       {
-        POKEMON_PARAM* pp = PokeParty_GetMemberPointer( party2, p );
-        switch( GFUser_GetPublicRand(3) )
+        // 対戦後のポケモンの状態異常
+        for( p=0; p<poke_cnt; p++ )
         {
-        case 0: PP_SetSick( pp, POKESICK_DOKU ); break; // 毒
-        case 1: PP_Put(pp, ID_PARA_hp, 0 ); break; // 瀕死
+          POKEMON_PARAM* pp = PokeParty_GetMemberPointer( party, p );
+          switch( GFUser_GetPublicRand(3) )
+          {
+          case 0: PP_SetSick( pp, POKESICK_DOKU ); break; // 毒
+          case 1: PP_Put(pp, ID_PARA_hp, 0 ); break; // 瀕死
+          }
+          HOSAKA_Printf("poke [%d] condition=%d \n",p, PP_Get( pp, ID_PARA_condition, NULL ) );
         }
-        HOSAKA_Printf("poke [%d] condition=%d \n",p, PP_Get( pp, ID_PARA_condition, NULL ) );
       }
 
       HOSAKA_Printf("[%d] server_version=%d trsex=%d poke_cnt=%d \n",i, 
@@ -142,6 +140,7 @@ static void debug_param( COMM_BTL_DEMO_PARAM* prm )
     }
   }
 }
+
 
 static BOOL TESTMODE_ITEM_SelectCmmBtlDemoEnd( TESTMODE_WORK* work, const int idx )
 {

@@ -63,7 +63,6 @@ enum
 //==============================================================
 typedef struct {
   const POKEPARTY* party;       ///< 戦闘前の所有ポケモンデータ
-  const POKEPARTY* party_after; ///< 戦闘後の所有ポケモンデータ
   STRBUF* str_trname;     ///< トレーナー名
   u8 trsex;               ///< トレーナーの性別:PM_MALE or PM_FEMALE
   u8 server_version;      ///< ROMのサーババージョン
@@ -74,9 +73,9 @@ typedef struct {
 ///	初期化パラメータ
 //==============================================================
 typedef struct {
-  COMM_BTL_DEMO_RESULT result;  ///< [IN] バトルの勝敗
   COMM_BTL_DEMO_TRAINER_DATA trainer_data[ COMM_BTL_DEMO_TRDATA_MAX ];  ///< [IN] トレーナー毎のデータ
-  COMM_BTL_DEMO_TYPE type;    ///< [PRIVATE] 通信バトルデモ 起動タイプ(※このパラメータのみevent_battle_call.c内で設定します。)
+  COMM_BTL_DEMO_RESULT result;  ///< [IN] バトルの勝敗 (※このパラメータはevent_battle_call.c内で設定します。)
+  COMM_BTL_DEMO_TYPE type;    ///< [IN] 通信バトルデモ 起動タイプ(※このパラメータはevent_battle_call.c内で設定します。)
 } COMM_BTL_DEMO_PARAM;
 
 //=============================================================================
