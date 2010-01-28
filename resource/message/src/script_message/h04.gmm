@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2010-01-20T22:50:20"/>
+	<create user="matsumiya" host="W00207" date="2010-01-28T21:03:42"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -298,9 +298,9 @@
 ・話しかけた時点でISS起動</comment>
 		<attribute name="キャラ指定">T
 草笛</attribute>
-		<language name="JPN" width="256">たかし『ピー　ピー
+		<language name="JPN" width="256">タンボ『ピー　ピィー
 ピピピの　ピー……</language>
-		<language name="JPN_KANJI" width="256">たかし『ピー　ピィー
+		<language name="JPN_KANJI" width="256">タンボ『ピー　ピィー
 ピピピの　ピー……</language>
 	</row>
 
@@ -310,11 +310,11 @@
 ・話しかけた時点でISS停止</comment>
 		<attribute name="キャラ指定">T
 草笛</attribute>
-		<language name="JPN" width="256">たかし『こころに　しみいるは
+		<language name="JPN" width="256">タンボ『こころに　しみいるは
 くさぶえの　ねいろ▼
 フトコロに　しみるは
 つめてぇ　よかぜ　ってね</language>
-		<language name="JPN_KANJI" width="256">たかし『心に　しみ入るは
+		<language name="JPN_KANJI" width="256">タンボ『心に　しみ入るは
 草笛の　音色▼
 フトコロに　しみるは
 冷てぇ　夜風　ってね</language>
@@ -328,9 +328,9 @@
 ・話しかけた時点でISS起動</comment>
 		<attribute name="キャラ指定">T
 草笛</attribute>
-		<language name="JPN" width="256">たかし『ピ……　ピ……
+		<language name="JPN" width="256">タンボ『ピ……　ピ……
 プィー　プィイイーー</language>
-		<language name="JPN_KANJI" width="256">たかし『ピ……　ピ……
+		<language name="JPN_KANJI" width="256">タンボ『ピ……　ピ……
 プィー　プィイイーー</language>
 	</row>
 
@@ -342,13 +342,13 @@
 ・話しかけた時点でISS停止</comment>
 		<attribute name="キャラ指定">T
 草笛</attribute>
-		<language name="JPN" width="256">たかし『くちに　するのは
+		<language name="JPN" width="256">タンボ『くちに　するのは
 この　くさぶえと▽
 うまく　いかねえ　まいにちへの▽
 ぐち　ばかり　ってね▼
 そんな　やつらの　ふきだまりが
 この　はしさ</language>
-		<language name="JPN_KANJI" width="256">たかし『口に　するのは
+		<language name="JPN_KANJI" width="256">タンボ『口に　するのは
 この　草笛と▽
 うまく　いかねえ　毎日への▽
 ぐち　ばかり　ってね▼
@@ -422,7 +422,7 @@
 		<language name="JPN_KANJI" width="256">ソン『君……
 いい　光（め）を　もってる▼
 おれたちの　希望（ゆめ）を
-代わりに　叶えて　くれるかい▼
+代わりに　かなえて　くれるかい▼
 つかめよ！　栄光（せかい）を！</language>
 	</row>
 
@@ -432,18 +432,8 @@
 ・話しかけた時点でISS起動</comment>
 		<attribute name="キャラ指定">G
 ボイスパーカス</attribute>
-		<language name="JPN" width="256">ガリクソン『ドッ　ツッ
-プス　ドッツッ　ドドッ▼
-ボッ……　ボァっ　ボァっ！
-ドス　プフ　ドス　プフ▽
-ドス　プフ　プス　プス▽
-シャアァァーン！！！</language>
-		<language name="JPN_KANJI" width="256">ガリクソン『ドッ　ツッ
-プス　ドッツッ　ドドッ▼
-ボッ……　ボァっ　ボァっ！
-ドス　プフ　ドス　プフ▽
-ドス　プフ　プス　プス▽
-シャアァァーン！！！</language>
+		<language name="JPN" width="256">ガッチー『ドッ　ツッ　ドッ　プス</language>
+		<language name="JPN_KANJI" width="256">ガッチー『ドッ　ツッ　ドッ　プス</language>
 	</row>
 
 	<row id="msg_h04_voice_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -452,12 +442,12 @@
 ・話しかけた時点でISS停止</comment>
 		<attribute name="キャラ指定">G
 ボイスパーカス</attribute>
-		<language name="JPN" width="256">ガリクソン『ぺっ　ぺっ！
+		<language name="JPN" width="256">ガッチー『ぺっ　ぺっ！
 きょうは　ちょうし　わりいだ▽
 マイクが　こわれてんだべー▼
 おらの　ボイパ
 こんなもんじゃ　ねんだけどなー</language>
-		<language name="JPN_KANJI" width="256">ガリクソン『ぺっ　ぺっ！
+		<language name="JPN_KANJI" width="256">ガッチー『ぺっ　ぺっ！
 今日は　調子　わりいだ▽
 マイクが　こわれてんだべー▼
 おらの　ボイパ
@@ -472,16 +462,8 @@
 ・話しかけた時点でISS起動</comment>
 		<attribute name="キャラ指定">G
 ボイスパーカス</attribute>
-		<language name="JPN" width="256">ガリクソン『べっ　べっ
-べべべべ▼
-べぼッ　べぼッ　ツス
-べぼべぼッ　プス　プス▽
-だべっ　だべっ　ピシャー！！！</language>
-		<language name="JPN_KANJI" width="256">ガリクソン『べっ　べっ
-べべべべ▼
-べぼッ　べぼッ　ツス
-べぼべぼッ　プス　プス▽
-だべっ　だべっ　ピシャー！！！</language>
+		<language name="JPN" width="256">ガッチー『だべっ　だべっ</language>
+		<language name="JPN_KANJI" width="256">ガッチー『だべっ　だべっ</language>
 	</row>
 
 	<row id="msg_h04_voice_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -492,13 +474,13 @@
 ・話しかけた時点でISS停止</comment>
 		<attribute name="キャラ指定">G
 ボイスパーカス</attribute>
-		<language name="JPN" width="256">ガリクソン『こったら　たのしそうに
-きーで　くれたのは……▼
+		<language name="JPN" width="256">ガッチー『こったら　たのしそうに
+きーで　くれたのは▼
 なんがい　ボイパじんせいで
 おまえさんが　はずめてだべー▽
 ありがとよ……</language>
-		<language name="JPN_KANJI" width="256">ガリクソン『こったら　楽しそうに
-きーで　くれたのは……▼
+		<language name="JPN_KANJI" width="256">ガッチー『こったら　楽しそうに
+きーで　くれたのは▼
 なんがい　ボイパ人生で
 おまえさんが　はずめてだべー▽
 ありがとよ……</language>
@@ -507,21 +489,17 @@
 	<row id="msg_h04_leadsinger_01">
 		<comment>♂：ボーカル担当
 ・弾いていないとき
-・話しかけた時点でISS起動</comment>
+・メッセージを読んで、ウィンドウが閉じた時点でISS起動</comment>
 		<attribute name="キャラ指定">R
 ボーカル</attribute>
-		<language name="JPN" width="256">レイモンド『は～♪
-たーそがれてー　ながされーて▽
-このまち　きたけれどお▼
-わかって　くれるのは
-おてんとさま　だけや～▽
-ひがくれたら　ハイ　さよならよ</language>
-		<language name="JPN_KANJI" width="256">レイモンド『は～♪
-たーそがれてー　ながされーて▽
-このまち　きたけれどお▼
-わかって　くれるのは
-おてんとさま　だけや～▽
-ひがくれたら　ハイ　さよならよ</language>
+		<language name="JPN" width="256">れいぞう『おじさん……
+うたが　いきがい　なのよね▼
+おじさんの　たましい
+きいて　くれる？</language>
+		<language name="JPN_KANJI" width="256">れいぞう『おじさん……
+歌が　生きがい　なのよね▼
+おじさんの　たましい
+きいて　くれる？</language>
 	</row>
 
 	<row id="msg_h04_leadsinger_02">
@@ -530,18 +508,12 @@
 ・話しかけた時点でISS停止</comment>
 		<attribute name="キャラ指定">R
 ボーカル</attribute>
-		<language name="JPN" width="256">レイモンド『どないや
-わしの　うた……▼
-これでも　わかいころは
-すーぱーすたー　なれる　ゆうて▽
-みんなからも▽
-きたい　されとったんやけどな</language>
-		<language name="JPN_KANJI" width="256">レイモンド『どないや
-わしの　歌……▼
-これでも　若いころは
-すーぱーすたー　なれる　ゆうて▽
-みんなからも▽
-期待　されとったんやけどな</language>
+		<language name="JPN" width="256">れいぞう『ハれ？　もういくの？▼
+おじさんは　いつでも
+ここに　いるからね</language>
+		<language name="JPN_KANJI" width="256">れいぞう『ハれ？　もう行くの？▼
+おじさんは　いつでも
+ここに　いるからね</language>
 	</row>
 
 	<row id="msg_h04_leadsinger_03">
@@ -549,17 +521,13 @@
 ・そのマップ内から出ずに
 　再度（２度目以降）話しかけた時
 ・弾いていないとき
-・話しかけた時点でISS起動</comment>
+・メッセージを読んで、ウィンドウが閉じた時点でISS起動</comment>
 		<attribute name="キャラ指定">R
 ボーカル</attribute>
-		<language name="JPN" width="256">レイモンド『は♪　わ～しの
-じんせいも　ゆうぐれよ♪▼
-まいにち　しずんで
-ハイ　さよならよぉぉ～……</language>
-		<language name="JPN_KANJI" width="256">レイモンド『は♪　わ～しの
-じんせいも　ゆうぐれよ♪▼
-まいにち　しずんで
-ハイ　さよならよぉぉ～……</language>
+		<language name="JPN" width="256">れいぞう『やっぱり　おじさんの
+うたが　ききたいのか！　そうか！</language>
+		<language name="JPN_KANJI" width="256">れいぞう『やっぱり　おじさんの
+歌が　ききたいのか！　そうか！</language>
 	</row>
 
 	<row id="msg_h04_leadsinger_04">
@@ -570,14 +538,10 @@
 ・話しかけた時点でISS停止</comment>
 		<attribute name="キャラ指定">R
 ボーカル</attribute>
-		<language name="JPN" width="256">レイモンド『まあ
-かんしょうに　ひたって▽
-じぶんのために　うたう　ってのも▽
-わるくは　ないんやけどな</language>
-		<language name="JPN_KANJI" width="256">レイモンド『まあ
-感傷に　ひたって▽
-自分のために　歌う　ってのも▽
-悪くは　ないんやけどな</language>
+		<language name="JPN" width="256">れいぞう『おじさんの　うたは……▼
+きらい　かい？</language>
+		<language name="JPN_KANJI" width="256">れいぞう『おじさんの　歌は……▼
+きらい　かい？</language>
 	</row>
 
 	<flowchart-group-list>
