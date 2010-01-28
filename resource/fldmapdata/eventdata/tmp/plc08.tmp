@@ -1,5 +1,5 @@
 #../data/plc08.mev
-../tmp/plc08.bin:../data/plc08.mev $(UNIQ_SCRIPTHEADER) ../tmp/plc08.h ../../zonetable/zone_id.h ../tmp/plr09.h ../../../../prog/include/field/field_dir.h ../../../../prog/include/field/eventdata_type.h ../tmp/plr11.h 
+../tmp/plc08.bin:../data/plc08.mev $(UNIQ_SCRIPTHEADER) ../tmp/plc08.h ../../zonetable/zone_id.h ../tmp/plr09.h ../../../../prog/include/field/field_dir.h ../../../../prog/include/field/eventdata_type.h ../tmp/plr11.h ../../../../prog/arc/fieldmap/fldmmdl_objcode.h ../../../../prog/src/field/fldmmdl_code.h ../../../../prog/src/field/fldmmdl.h ../../flagwork/flag_define.h ../../script/PLC08_def.h 
 	@echo ../data/plc08.mev
-	@ruby make_binary.rb $< $(UNIQ_SCRIPTHEADER) ../tmp/plc08.h ../../zonetable/zone_id.h ../tmp/plr09.h ../../../../prog/include/field/field_dir.h ../../../../prog/include/field/eventdata_type.h ../tmp/plr11.h 
+	@ruby make_binary.rb $< $(UNIQ_SCRIPTHEADER) ../tmp/plc08.h ../../zonetable/zone_id.h ../tmp/plr09.h ../../../../prog/include/field/field_dir.h ../../../../prog/include/field/eventdata_type.h ../tmp/plr11.h ../../../../prog/arc/fieldmap/fldmmdl_objcode.h ../../../../prog/src/field/fldmmdl_code.h ../../../../prog/src/field/fldmmdl.h ../../flagwork/flag_define.h ../../script/PLC08_def.h 
 

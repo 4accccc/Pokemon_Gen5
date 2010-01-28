@@ -10,5 +10,9 @@
 #ifndef ZONE_PLC04_EVC_H
 #define ZONE_PLC04_EVC_H
 
+#define PLC04_MAN01_01                     0
+#define PLC04_MAN02_01                     1
+#define PLC04_MAN03_01                     2
+#define PLC04_MAN04_01                     3
 
 #endif //ZONE_PLC04_EVC_H

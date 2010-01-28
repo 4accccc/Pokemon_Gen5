@@ -1,5 +1,5 @@
 #event data
-#save date:2010/01/21 12:12:38
+#save date:2010/01/28 15:25:18
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\plc06.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,131 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\plc06.wms
 #hold event type:
 1
 #hold event number:
+4
+#event number: 0
+#type
+1
+#ID name
+PLC06_MAN01_01
+#OBJ CODE Number
+BABYGIRL1
+#MOVE CODE Number
+MV_RND
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
 0
+#Event Script Name
+SCRID_PLC06_MAN01_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+3
+#Move Limit Z Number
+3
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+456 0 -536
+#event number: 1
+#type
+1
+#ID name
+PLC06_MAN02_01
+#OBJ CODE Number
+ESPM
+#MOVE CODE Number
+MV_RND
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_PLC06_MAN02_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+3
+#Move Limit Z Number
+3
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+312 0 -392
+#event number: 2
+#type
+1
+#ID name
+PLC06_MAN03_01
+#OBJ CODE Number
+LADY
+#MOVE CODE Number
+MV_RND
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_PLC06_MAN03_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+3
+#Move Limit Z Number
+3
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+584 0 -312
+#event number: 3
+#type
+1
+#ID name
+PLC06_MAN04_01
+#OBJ CODE Number
+MIDDLEMAN1
+#MOVE CODE Number
+MV_RND
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_PLC06_MAN04_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+3
+#Move Limit Z Number
+3
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+72 0 -56
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT

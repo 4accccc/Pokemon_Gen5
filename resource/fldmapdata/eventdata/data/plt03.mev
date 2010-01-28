@@ -1,5 +1,5 @@
 #event data
-#save date:2010/01/21 12:54:48
+#save date:2010/01/28 15:26:52
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\plt03.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,131 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\plt03.wms
 #hold event type:
 1
 #hold event number:
+4
+#event number: 0
+#type
+1
+#ID name
+PLT03_MAN01_01
+#OBJ CODE Number
+AMBRELLA
+#MOVE CODE Number
+MV_RND
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
 0
+#Event Script Name
+SCRID_PLT03_MAN01_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+3
+#Move Limit Z Number
+3
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-216 80 8
+#event number: 1
+#type
+1
+#ID name
+PLT03_MAN02_01
+#OBJ CODE Number
+BABYBOY2
+#MOVE CODE Number
+MV_RND
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_PLT03_MAN02_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+3
+#Move Limit Z Number
+3
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+40 80 8
+#event number: 2
+#type
+1
+#ID name
+PLT03_MAN03_01
+#OBJ CODE Number
+BUSINESSMAN
+#MOVE CODE Number
+MV_RND
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_PLT03_MAN03_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+3
+#Move Limit Z Number
+3
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-104 0 -168
+#event number: 3
+#type
+1
+#ID name
+PLT03_MAN04_01
+#OBJ CODE Number
+CLOWN
+#MOVE CODE Number
+MV_RND
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_PLT03_MAN04_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+3
+#Move Limit Z Number
+3
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+24 0 -216
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT

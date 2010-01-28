@@ -9,5 +9,9 @@
 #ifndef ZONE_PLC07_EVC_H
 #define ZONE_PLC07_EVC_H
 
+#define PLC07_MAN03_01                     0
+#define PLC07_MAN04_01                     1
+#define PLC07_MAN02_01                     2
+#define PLC07_MAN01_01                     3
 
 #endif //ZONE_PLC07_EVC_H
