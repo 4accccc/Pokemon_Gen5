@@ -49,15 +49,15 @@ EVENT_START   ev_h04_whisle
 		IF $LOCALWORK10 == 0 THEN
 		
 			//ISSスイッチをオンに
-			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_h04_whistle_01 )
 			_ISS_SWITCH_ON( 1 )
+			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_h04_whistle_01 )
 		
 		//2回目以降
 		ELSE
 		
 			//ISSスイッチをオンに
-			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_h04_whistle_03 )
 			_ISS_SWITCH_ON( 1 )
+			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_h04_whistle_03 )
 		
 		ENDIF
 	
@@ -98,15 +98,15 @@ EVENT_START   ev_h04_guiter
 		IF $LOCALWORK11 == 0 THEN
 		
 			//ISSスイッチをオンに
-			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_h04_guitar_01 )
 			_ISS_SWITCH_ON( 3 )
+			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_h04_guitar_01 )
 		
 		//2回目以降
 		ELSE
 		
 			//ISSスイッチをオンに
-			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_h04_guitar_03 )
 			_ISS_SWITCH_ON( 3 )
+			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_h04_guitar_03 )
 		
 		ENDIF
 	
@@ -147,15 +147,15 @@ EVENT_START   ev_h04_voice
 		IF $LOCALWORK12 == 0 THEN
 		
 			//ISSスイッチをオンに
-			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_h04_voice_01 )
 			_ISS_SWITCH_ON( 2 )
+			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_h04_voice_01 )
 		
 		//2回目以降
 		ELSE
 		
 			//ISSスイッチをオンに
-			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_h04_voice_03 )
 			_ISS_SWITCH_ON( 2 )
+			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_h04_voice_03 )
 		
 		ENDIF
 	
@@ -196,15 +196,15 @@ EVENT_START   ev_h04_leadersinger
 		IF $LOCALWORK13 == 0 THEN
 		
 			//ISSスイッチをオンに
-			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_h04_leadsinger_01 )
 			_ISS_SWITCH_ON( 4 )
+			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_h04_leadsinger_01 )
 		
 		//2回目以降
 		ELSE
 		
 			//ISSスイッチをオンに
-			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_h04_leadsinger_03 )
 			_ISS_SWITCH_ON( 4 )
+			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_h04_leadsinger_03 )
 		
 		ENDIF
 	
