@@ -9,6 +9,7 @@
 //=============================================================================================
 
 #include "btl_pokeset.h"
+#include "btl_calc.h"
 
 /**
  *  指定ポケモンと同陣営のデータのみをコピー
@@ -92,7 +93,7 @@ void BTL_POKESET_SortByAgility( BTL_POKESET* set, BTL_SVFLOW_WORK* flowWk )
     for(j=i+1; j<set->count; ++j)
     {
       if( (set->sortWork[j] > set->sortWork[i])
-      ||  ((set->sortWork[j] == set->sortWork[i]) && BTL_SVFTOOL_GetRand(flowWk, 2)) // 素早さ一致ならランダム
+      ||  ((set->sortWork[j] == set->sortWork[i]) && BTL_CALC_GetRand(2)) // 素早さ一致ならランダム
       ){
         BTL_POKEPARAM* tmpBpp;
         u16            tmpDmg;
