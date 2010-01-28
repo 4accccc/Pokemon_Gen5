@@ -4,6 +4,10 @@
  * @brief 図鑑セーブデータアクセス処理群ヘッダ
  * @author  mori / tamada GAME FREAK inc.
  * @date  2009.10.26
+ *
+ * ジョウト→イッシュ→？とその度に名前を書き換えるのもなんなので、
+ * これからは全国は「ZENKOKU」、地方図鑑の事は「LOCAL」と記述する事にします。
+ *
  */
 //============================================================================================
 #ifndef __ZUKAN_SAVEDATA_H__
@@ -32,17 +36,17 @@ enum{
   // 全国図鑑最大
   ZUKANSAVE_ZENKOKU_MONSMAX   = MONSNO_END,
 
-  // ジョウト図鑑最大数
-  ZUKANSAVE_JOHTO_MONSMAX = ISSHU_MAX,
+  // イッシュ図鑑最大数
+  ZUKANSAVE_LOCAL_MONSMAX = ISSHU_MAX,
 
   // 全国図鑑は捕まえた条件なのでマナフィーのチェックは必要になる(08.06.20)
   // ゼンコク図鑑完成に必要なポケモンの数
   ZUKANSAVE_ZENKOKU_COMP_NOPOKE_NUM = 9,  // 不必要なポケモン数
   ZUKANSAVE_ZENKOKU_COMP_NUM  = ZUKANSAVE_ZENKOKU_MONSMAX - ZUKANSAVE_ZENKOKU_COMP_NOPOKE_NUM,
 
-  // ジョウト図鑑完成に必要なポケモンの数
-  ZUKANSAVE_JOHTO_COMP_NOPOKE_NUM = 2,  // 不必要なポケモン数
-  ZUKANSAVE_JOHTO_COMP_NUM  = ZUKANSAVE_JOHTO_MONSMAX - ZUKANSAVE_JOHTO_COMP_NOPOKE_NUM,
+  // イッシュ図鑑完成に必要なポケモンの数
+  ZUKANSAVE_LOCAL_COMP_NOPOKE_NUM = 2,  // 不必要なポケモン数
+  ZUKANSAVE_LOCAL_COMP_NUM  = ZUKANSAVE_LOCAL_MONSMAX - ZUKANSAVE_LOCAL_COMP_NOPOKE_NUM,
 
 
 
@@ -92,26 +96,26 @@ extern void ZUKANSAVE_Init(ZUKAN_SAVEDATA * zs);
 extern u16 ZUKANSAVE_GetPokeGetCount(const ZUKAN_SAVEDATA * zs);
 extern u16 ZUKANSAVE_GetPokeSeeCount(const ZUKAN_SAVEDATA * zs);
 
-extern u16 ZUKANSAVE_GetJohtoPokeGetCount(const ZUKAN_SAVEDATA * zs);
-extern u16 ZUKANSAVE_GetJohtoPokeSeeCount(const ZUKAN_SAVEDATA * zs);
+extern u16 ZUKANSAVE_GetLocalPokeGetCount(const ZUKAN_SAVEDATA * zs);
+extern u16 ZUKANSAVE_GetLocalPokeSeeCount(const ZUKAN_SAVEDATA * zs);
 
 // ポケモン見た登録・ポケモン捕まえた登録
 extern void ZUKANSAVE_SetPokeSee(ZUKAN_SAVEDATA * zs, const POKEMON_PARAM * pp);
 extern void ZUKANSAVE_SetPokeGet(ZUKAN_SAVEDATA * zs, const POKEMON_PARAM * pp);
 
 // ゼンコク図鑑持っているときー＞全国用の各数字を返す
-// ジョウト図鑑しかもっていないときー＞ジョウト図鑑用の各数字を返す
+// イッシュ図鑑しかもっていないときー＞イッシュ図鑑用の各数字を返す
 extern u16 ZUKANSAVE_GetZukanPokeGetCount(const ZUKAN_SAVEDATA * zs);
 extern u16 ZUKANSAVE_GetZukanPokeSeeCount(const ZUKAN_SAVEDATA * zs);
 
 
-// ゼンコク図鑑　ジョウト図鑑
+// ゼンコク図鑑　イッシュ図鑑
 // 完成に必要なポケモンだけでカウントした値を取得
 extern u16 ZUKANSAVE_GetZenkokuGetCompCount(const ZUKAN_SAVEDATA * zs);
-extern u16 ZUKANSAVE_GetJohtoGetCompCount(const ZUKAN_SAVEDATA * zs);
+extern u16 ZUKANSAVE_GetLocalGetCompCount(const ZUKAN_SAVEDATA * zs);
 
 extern BOOL ZUKANSAVE_CheckZenkokuComp(const ZUKAN_SAVEDATA * zs);
-extern BOOL ZUKANSAVE_CheckJohtoComp(const ZUKAN_SAVEDATA * zs);
+extern BOOL ZUKANSAVE_CheckLocalComp(const ZUKAN_SAVEDATA * zs);
 
 extern BOOL ZUKANSAVE_GetPokeGetFlag(const ZUKAN_SAVEDATA * zs, u16 monsno);
 extern BOOL ZUKANSAVE_GetPokeSeeFlag(const ZUKAN_SAVEDATA * zs, u16 monsno);

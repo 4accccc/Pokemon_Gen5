@@ -4,6 +4,11 @@
  * @brief 図鑑セーブデータアクセス処理群ソース
  * @author  mori / tamada GAME FREAK inc.
  * @date  2009.10.26
+ *
+ * ジョウト→イッシュ→？とその度に名前を書き換えるのもなんなので、
+ * 全国は「ZENKOKU」、地方図鑑の事は「LOCAL」と記述する事にします。
+ * コメントでも「全国図鑑」「地方図鑑」と記述します。
+ *
  */
 //============================================================================================
 
@@ -1250,21 +1255,21 @@ static BOOL check_ZenkokuCompMonsno( u16 monsno )
 
 //----------------------------------------------------------------------------
 /**
- *  @brief  ジョウト図鑑完成に必要なポケモンかチェック
+ *  @brief  地方図鑑完成に必要なポケモンかチェック
  */
 //-----------------------------------------------------------------------------
-static BOOL check_JohtoCompMonsno( u16 monsno )
+static BOOL check_LocalCompMonsno( u16 monsno )
 {
   int i;
   BOOL cut_check;
-  static const u16 cut_check_monsno[ZUKANSAVE_JOHTO_COMP_NOPOKE_NUM] = {
+  static const u16 cut_check_monsno[ZUKANSAVE_LOCAL_COMP_NOPOKE_NUM] = {
     MONSNO_MYUU,
     MONSNO_SEREBHI,
   };
 
   // チェック除外ポケモンチェック
   cut_check = TRUE;
-  for( i=0; i<ZUKANSAVE_JOHTO_COMP_NOPOKE_NUM; i++ ){
+  for( i=0; i<ZUKANSAVE_LOCAL_COMP_NOPOKE_NUM; i++ ){
     if( cut_check_monsno[ i ] == monsno ){
       cut_check = FALSE;
     }
@@ -1369,7 +1374,7 @@ u16 ZUKANSAVE_GetZukanPokeGetCount(const ZUKAN_SAVEDATA * zw)
   if( ZUKANSAVE_GetZenkokuZukanFlag( zw ) ){
     return ZUKANSAVE_GetPokeGetCount( zw );
   }
-  return ZUKANSAVE_GetJohtoPokeGetCount( zw );
+  return ZUKANSAVE_GetLocalPokeGetCount( zw );
 }
 
 //----------------------------------------------------------------------------
@@ -1384,18 +1389,18 @@ u16 ZUKANSAVE_GetZukanPokeSeeCount(const ZUKAN_SAVEDATA * zw)
   if( ZUKANSAVE_GetZenkokuZukanFlag( zw ) ){
     return ZUKANSAVE_GetPokeSeeCount( zw );
   }
-  return ZUKANSAVE_GetJohtoPokeSeeCount( zw );
+  return ZUKANSAVE_GetLocalPokeSeeCount( zw );
 }
 
 //----------------------------------------------------------
 /**
- * 【ジョウト】
+ * 【地方】
  * @brief ポケモンをつかまえた数の取得
  * @param zw    ずかんワークへのポインタ
  * @return  u16   捕まえた数
  */
 //----------------------------------------------------------
-u16 ZUKANSAVE_GetJohtoPokeGetCount(const ZUKAN_SAVEDATA * zw)
+u16 ZUKANSAVE_GetLocalPokeGetCount(const ZUKAN_SAVEDATA * zw)
 {
   u16 * buf;
   u16 i;
@@ -1411,12 +1416,12 @@ u16 ZUKANSAVE_GetJohtoPokeGetCount(const ZUKAN_SAVEDATA * zw)
     }
   }
 #else
-  buf = PokeZukanNo2JohtoNoTblLoad();   // @TODO 図鑑NOテーブルがまだ存在しない
+  buf = PokeZukanNo2LocalNoTblLoad();   // @TODO 図鑑NOテーブルがまだ存在しない
   num = 0;
 
   for( i=1; i<=MONSNO_END; i++ ){
     if( ZUKANSAVE_GetPokeGetFlag( zw, i ) == TRUE ){
-      // ジョウト図鑑にいるかチェック
+      // 地方図鑑にいるかチェック
       if( buf[i] != 0 ){
         num++;
       }
@@ -1432,13 +1437,13 @@ u16 ZUKANSAVE_GetJohtoPokeGetCount(const ZUKAN_SAVEDATA * zw)
 
 //----------------------------------------------------------
 /**
- * 【ジョウト】
+ * 【地方】
  * @brief ポケモンを見つけた数の取得
  * @param zw    ずかんワークへのポインタ
  * @return  u16   見つけた数
  */
 //----------------------------------------------------------
-u16 ZUKANSAVE_GetJohtoPokeSeeCount(const ZUKAN_SAVEDATA * zw)
+u16 ZUKANSAVE_GetLocalPokeSeeCount(const ZUKAN_SAVEDATA * zw)
 {
   u16 * buf;
   u16 i;
@@ -1454,12 +1459,12 @@ u16 ZUKANSAVE_GetJohtoPokeSeeCount(const ZUKAN_SAVEDATA * zw)
     }
   }
 #else
-  buf = PokeZukanNo2JohtoNoTblLoad();
+  buf = PokeZukanNo2LocalNoTblLoad();
   num = 0;
 
   for( i=1; i<=MONSNO_END; i++ ){
     if( ZUKANSAVE_GetPokeSeeFlag( zw, i ) == TRUE ){
-      // ジョウト図鑑にいるかチェック
+      // 地方図鑑にいるかチェック
       if( buf[i] != 0 ){
         num++;
       }
@@ -1496,7 +1501,7 @@ BOOL ZUKANSAVE_CheckZenkokuComp(const ZUKAN_SAVEDATA * zw)
 
 //----------------------------------------------------------------------------
 /**
- *  @brief  ジョウト図鑑が完成したかチェックする
+ *  @brief  地方図鑑が完成したかチェックする
  *
  *  @param  zw  図鑑ワーク
  *
@@ -1504,14 +1509,14 @@ BOOL ZUKANSAVE_CheckZenkokuComp(const ZUKAN_SAVEDATA * zw)
  *  @retval FALSE 未完成
  */
 //-----------------------------------------------------------------------------
-BOOL ZUKANSAVE_CheckJohtoComp(const ZUKAN_SAVEDATA * zw)
+BOOL ZUKANSAVE_CheckLocalComp(const ZUKAN_SAVEDATA * zw)
 {
   u16 num;
 
-  // ジョウト図鑑完成に必要なポケモンを何匹捕まえたか
-  num = ZUKANSAVE_GetJohtoGetCompCount( zw );
+  // 地方図鑑完成に必要なポケモンを何匹捕まえたか
+  num = ZUKANSAVE_GetLocalGetCompCount( zw );
 
-  if( num >= ZUKANSAVE_JOHTO_COMP_NUM ){
+  if( num >= ZUKANSAVE_LOCAL_COMP_NUM ){
     return TRUE;
   }
   return FALSE;
@@ -1544,13 +1549,13 @@ u16 ZUKANSAVE_GetZenkokuGetCompCount(const ZUKAN_SAVEDATA * zw)
 
 //----------------------------------------------------------------------------
 /**
- *  @brief  ジョウト図鑑　完成に必要なポケモンを捕まえた数
+ *  @brief  地方図鑑　完成に必要なポケモンを捕まえた数
  *
  *  @param  zw    図鑑ワーク
  *  @return 完成に必要なポケモンを見つけた数
  */
 //-----------------------------------------------------------------------------
-u16 ZUKANSAVE_GetJohtoGetCompCount(const ZUKAN_SAVEDATA * zw)
+u16 ZUKANSAVE_GetLocalGetCompCount(const ZUKAN_SAVEDATA * zw)
 {
   u16 * buf;
   u16 i;
@@ -1567,19 +1572,19 @@ u16 ZUKANSAVE_GetJohtoGetCompCount(const ZUKAN_SAVEDATA * zw)
 
 #else
 
-  buf = PokeZukanNo2JohtoNoTblLoad();
+  buf = PokeZukanNo2LocalNoTblLoad();
   // ミュウとセレビィ
   // 以外を捕まえていたらOK
   for( i=1; i<=ZUKANSAVE_ZENKOKU_MONSMAX; i++ ){
     if( ZUKANSAVE_GetPokeGetFlag( zw, i ) == TRUE ){
       if( buf[i] != 0 ){
-        if( check_JohtoCompMonsno( i ) == TRUE ){
+        if( check_LocalCompMonsno( i ) == TRUE ){
           num++;
         }
       }
     }
   }
-  OS_Printf("ジョウトコンプリートチェック num = %d\n",num);
+  OS_Printf("地方コンプリートチェック num = %d\n",num);
   GFL_HEAP_FreeMemory( buf );
 
 #endif
@@ -2033,7 +2038,7 @@ void ZUKANSAVE_SetZenkokuZukanFlag(ZUKAN_SAVEDATA * zw)
  * @brief 全国ずかんモードかどうか？の問い合わせ
  * @param zw    ずかんワークへのポインタ
  * @retval  TRUE  全国ずかんモードオープン
- * @retval  FALSE ジョウトずかんモード
+ * @retval  FALSE 地方ずかんモード
  */
 //----------------------------------------------------------
 BOOL ZUKANSAVE_GetZenkokuZukanFlag(const ZUKAN_SAVEDATA * zw)
