@@ -1088,18 +1088,18 @@ $(DIR_TEMP)/map22_11.nsbmd: $(DIR_RES)/map22_11.imd
 	@$(G3DCVTR) $(DIR_RES)/map22_11.imd -o $(DIR_TEMP)/map22_11.nsbmd
 
 #map19_13
-$(DIR_OUTPUT)/map19_13.3dppack: $(DIR_TEMP)/map19_13.nsbmd $(DIR_RES)/map19_13.bin $(DIR_RES)/map19_13.3dmd
+$(DIR_OUTPUT)/map19_13.3dppack: $(DIR_TEMP)/map19_13.nsbmd $(DIR_RES)/map19_13.bin $(DIR_RES)/map19_13_ex.bin $(DIR_RES)/map19_13.3dmd
 	@echo create 3dppack map19_13
-	@$(BINLINKER) $(DIR_TEMP)/map19_13.nsbmd $(DIR_RES)/map19_13.bin $(DIR_RES)/map19_13.3dmd $(DIR_OUTPUT)/map19_13.3dppack WB
+	@$(BINLINKER) $(DIR_TEMP)/map19_13.nsbmd $(DIR_RES)/map19_13.bin $(DIR_RES)/map19_13_ex.bin $(DIR_RES)/map19_13.3dmd $(DIR_OUTPUT)/map19_13.3dppack GC
 
 $(DIR_TEMP)/map19_13.nsbmd: $(DIR_RES)/map19_13.imd
 	@echo create_nsbmd map19_13
 	@$(G3DCVTR) $(DIR_RES)/map19_13.imd -o $(DIR_TEMP)/map19_13.nsbmd
 
 #map18_13
-$(DIR_OUTPUT)/map18_13.3dppack: $(DIR_TEMP)/map18_13.nsbmd $(DIR_RES)/map18_13.bin $(DIR_RES)/map18_13.3dmd
+$(DIR_OUTPUT)/map18_13.3dppack: $(DIR_TEMP)/map18_13.nsbmd $(DIR_RES)/map18_13.bin $(DIR_RES)/map18_13_ex.bin $(DIR_RES)/map18_13.3dmd
 	@echo create 3dppack map18_13
-	@$(BINLINKER) $(DIR_TEMP)/map18_13.nsbmd $(DIR_RES)/map18_13.bin $(DIR_RES)/map18_13.3dmd $(DIR_OUTPUT)/map18_13.3dppack WB
+	@$(BINLINKER) $(DIR_TEMP)/map18_13.nsbmd $(DIR_RES)/map18_13.bin $(DIR_RES)/map18_13_ex.bin $(DIR_RES)/map18_13.3dmd $(DIR_OUTPUT)/map18_13.3dppack GC
 
 $(DIR_TEMP)/map18_13.nsbmd: $(DIR_RES)/map18_13.imd
 	@echo create_nsbmd map18_13
@@ -3129,6 +3129,15 @@ $(DIR_OUTPUT)/map14_02.3dppack: $(DIR_TEMP)/map14_02.nsbmd $(DIR_RES)/map14_02.b
 $(DIR_TEMP)/map14_02.nsbmd: $(DIR_RES)/map14_02.imd
 	@echo create_nsbmd map14_02
 	@$(G3DCVTR) $(DIR_RES)/map14_02.imd -o $(DIR_TEMP)/map14_02.nsbmd
+
+#map08_05
+$(DIR_OUTPUT)/map08_05.3dppack: $(DIR_TEMP)/map08_05.nsbmd $(DIR_RES)/map08_05.bin $(DIR_RES)/map08_05.3dmd
+	@echo create 3dppack map08_05
+	@$(BINLINKER) $(DIR_TEMP)/map08_05.nsbmd $(DIR_RES)/map08_05.bin $(DIR_RES)/map08_05.3dmd $(DIR_OUTPUT)/map08_05.3dppack WB
+
+$(DIR_TEMP)/map08_05.nsbmd: $(DIR_RES)/map08_05.imd
+	@echo create_nsbmd map08_05
+	@$(G3DCVTR) $(DIR_RES)/map08_05.imd -o $(DIR_TEMP)/map08_05.nsbmd
 
 #map10_04
 $(DIR_OUTPUT)/map10_04.3dppack: $(DIR_TEMP)/map10_04.nsbmd $(DIR_RES)/map10_04.bin $(DIR_RES)/map10_04.3dmd
