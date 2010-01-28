@@ -154,7 +154,7 @@ get_item_common:
   DEFINE_LOCAL GetMsg
   IF $ResultNum >= $CheckNum THEN
     IF FLAG_OFF( CheckFlg ) THEN
-      IF $ItemGet == TRUE THEN
+      IF $ItemGet == FALSE THEN
         $GetMsg = msg_id_present_12
       ELSE
         $GetMsg = msg_id_present_13
