@@ -174,11 +174,11 @@ extern void WIFIBATTLEMATCH_VIEW_Main( WIFIBATTLEMATCH_VIEW_RESOURCE *p_wk );
 #define PLAYERINFO_STR_COLOR_BLACK    (PRINTSYS_LSB_Make( 1,2,0 ))
 #define PLAYERINFO_STR_COLOR_WHITE    (PRINTSYS_LSB_Make( 0xF,2,0 ))
 
-#define WBM_CARD_WIN_BLACK  (500)
-#define WBM_CARD_WIN_GOLD   (100)
-#define WBM_CARD_WIN_SILVER (50)
-#define WBM_CARD_WIN_BRONZE (20)
-#define WBM_CARD_WIN_COPPER (10)
+#define WBM_CARD_WIN_BLACK  (10000)
+#define WBM_CARD_WIN_GOLD   (1000)
+#define WBM_CARD_WIN_SILVER (500)
+#define WBM_CARD_WIN_BRONZE (100)
+#define WBM_CARD_WIN_COPPER (500)
 #define WBM_CARD_WIN_NORMAL (0)
 
 //=============================================================================

@@ -1974,8 +1974,16 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
     WBM_SEQ_SetReservSeq( p_seqwk, SEQ_START_MATCH );
     break;
   case SEQ_START_MATCH:
-    WIFIBATTLEMATCH_NET_StartMatchMake( p_wk->p_net, p_param->p_param->mode, FALSE, p_param->p_param->btl_rule ); 
-    *p_seq  = SEQ_WAIT_MATCHING;
+    {
+      const REGULATION_CARDDATA *cp_reg_card  = SaveData_GetRegulationCardData(GAMEDATA_GetSaveControlWork( p_wk->p_param->p_param->p_game_data ));
+      WIFIBATTLEMATCH_MATCH_KEY_DATA  data;
+      GFL_STD_MemClear( &data, sizeof(WIFIBATTLEMATCH_MATCH_KEY_DATA) );
+      data.rate = p_wk->sake_data.rate;
+      data.disconnect = p_wk->sake_data.disconnect;
+      data.cup_no = Regulation_GetCardParam( cp_reg_card, REGULATION_CARD_CUPNO );
+      WIFIBATTLEMATCH_NET_StartMatchMake( p_wk->p_net, p_param->p_param->mode, FALSE, p_param->p_param->btl_rule, &data ); 
+      *p_seq  = SEQ_WAIT_MATCHING;
+    }
     break;
   case SEQ_WAIT_MATCHING:
     if( WIFIBATTLEMATCH_NET_GetSeqMatchMake( p_wk->p_net ) < WIFIBATTLEMATCH_NET_SEQ_CONNECT_START )

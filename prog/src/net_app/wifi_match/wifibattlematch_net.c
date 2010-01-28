@@ -128,19 +128,25 @@ typedef enum
 #define ASYNC_TIMEOUT (60*60)     //キャンセルセレクトタイムアウト
 
 //-------------------------------------
-///	マッチメイクキー
+///	マッチメイク
 //=====================================
+//マッチメイクキー
 typedef enum
 {
-  MATCHMAKE_KEY_WBM,    //Wifiバトルマッチを示す（必ず１）
-  MATCHMAKE_KEY_MODE,   //バトルモード
-  MATCHMAKE_KEY_RULE,   //バトルルール
-  MATCHMAKE_KEY_DEBUG,  //デバッグ用
+  MATCHMAKE_KEY_RATE,
+  MATCHMAKE_KEY_CUPNO,
+  MATCHMAKE_KEY_DISCONNECT,
 
   MATCHMAKE_KEY_MAX,
 } MATCHMAKE_KEY;
 
+//マッチメイクタイミングシンク
 #define WIFIBATTLEMATCH_NET_TIMINGSYNC_CONNECT  15
+
+//マッチメイク評価計算式の定数
+#define MATCHMAKE_EVAL_CALC_RATE_STANDARD       (1000)
+#define MATCHMAKE_EVAL_CALC_WEIGHT              (1)
+#define MATCHMAKE_EVAL_CALC_DISCONNECT_WEIGHT   (32)
 
 //-------------------------------------
 ///	受信フラグ
@@ -390,10 +396,9 @@ static const int sc_field_type[]  =
 //=====================================
 static const char *sc_matchmake_key_str[ MATCHMAKE_KEY_MAX ] =
 { 
-  "wbm",
-  "mod",
-  "rul",
-  "deb",
+  "rat",
+  "cup",
+  "dis",
 };
 //-------------------------------------
 ///	通信コマンド
@@ -653,7 +658,7 @@ BOOL WIFIBATTLEMATCH_NET_WaitInitialize( WIFIBATTLEMATCH_NET_WORK *p_wk, SAVE_CO
  *	@param	WIFIBATTLEMATCH_NET_WORK *p_wk ワーク
  */
 //-----------------------------------------------------------------------------
-void WIFIBATTLEMATCH_NET_StartMatchMake( WIFIBATTLEMATCH_NET_WORK *p_wk, WIFIBATTLEMATCH_MODE mode, BOOL is_rnd_rate, WIFIBATTLEMATCH_BTLRULE btl_rule )
+void WIFIBATTLEMATCH_NET_StartMatchMake( WIFIBATTLEMATCH_NET_WORK *p_wk, WIFIBATTLEMATCH_MODE mode, BOOL is_rnd_rate, WIFIBATTLEMATCH_BTLRULE btl_rule, const WIFIBATTLEMATCH_MATCH_KEY_DATA *cp_data )
 { 
   u32 btl_mode  = mode;
   if( mode == WIFIBATTLEMATCH_MODE_RANDOM )
@@ -661,10 +666,9 @@ void WIFIBATTLEMATCH_NET_StartMatchMake( WIFIBATTLEMATCH_NET_WORK *p_wk, WIFIBAT
     btl_mode  += is_rnd_rate;
   }
 
-  MATCHMAKE_KEY_Set( p_wk, MATCHMAKE_KEY_WBM, TRUE );
-  MATCHMAKE_KEY_Set( p_wk, MATCHMAKE_KEY_MODE, btl_mode );
-  MATCHMAKE_KEY_Set( p_wk, MATCHMAKE_KEY_RULE, btl_rule );
-  MATCHMAKE_KEY_Set( p_wk, MATCHMAKE_KEY_DEBUG, MATCHINGKEY );
+  MATCHMAKE_KEY_Set( p_wk, MATCHMAKE_KEY_RATE, cp_data->rate );
+  MATCHMAKE_KEY_Set( p_wk, MATCHMAKE_KEY_DISCONNECT, cp_data->disconnect );
+  MATCHMAKE_KEY_Set( p_wk, MATCHMAKE_KEY_CUPNO, cp_data->cup_no );
   STD_TSPrintf( p_wk->filter, "wbm=%d And mod=%d And rul=%d And deb=%d", TRUE, btl_mode, btl_rule, MATCHINGKEY );
   p_wk->seq_matchmake = WIFIBATTLEMATCH_NET_SEQ_MATCH_START;
 
@@ -699,10 +703,6 @@ void WIFIBATTLEMATCH_NET_StartMatchMake( WIFIBATTLEMATCH_NET_WORK *p_wk, WIFIBAT
 //-----------------------------------------------------------------------------
 void WIFIBATTLEMATCH_NET_StartMatchMakeDebug( WIFIBATTLEMATCH_NET_WORK *p_wk )
 { 
-  MATCHMAKE_KEY_Set( p_wk, MATCHMAKE_KEY_WBM, 0 );
-  MATCHMAKE_KEY_Set( p_wk, MATCHMAKE_KEY_MODE, 0 );
-  MATCHMAKE_KEY_Set( p_wk, MATCHMAKE_KEY_RULE, 0 );
-  MATCHMAKE_KEY_Set( p_wk, MATCHMAKE_KEY_DEBUG, 0xF );
   STD_TSPrintf( p_wk->filter, "wbm=%d And mod=%d And rul=%d And deb=%d", 0, 0, 0, 0xF );
   p_wk->seq_matchmake = WIFIBATTLEMATCH_NET_SEQ_MATCH_START;
 
@@ -909,7 +909,7 @@ static void MATCHMAKE_KEY_Set( WIFIBATTLEMATCH_NET_WORK *p_wk, MATCHMAKE_KEY key
   p_key_wk->ivalue  = value;
   GFL_STD_MemCopy( sc_matchmake_key_str[ key ], p_key_wk->keyStr, 3 );
   p_key_wk->keyStr[3] = '\0';
-  p_wk->key_wk[ key ].keyID  = DWC_AddMatchKeyInt( p_key_wk->keyID,
+  p_key_wk->keyID  = DWC_AddMatchKeyInt( p_key_wk->keyID,
       p_key_wk->keyStr, &p_key_wk->ivalue );
   if( p_key_wk->keyID == 0 )
   {
@@ -932,41 +932,14 @@ static void MATCHMAKE_KEY_Set( WIFIBATTLEMATCH_NET_WORK *p_wk, MATCHMAKE_KEY key
 //-----------------------------------------------------------------------------
 static int WIFIBATTLEMATCH_RND_RATE_Eval_Callback( int index, void* p_param_adrs )
 { 
-  WIFIBATTLEMATCH_NET_WORK *p_wk  = p_param_adrs;
-
-  int value=0;
-/*
-  targetlv = DWC_GetMatchIntValue(index,pWork->aMatchKey[_MATCHKEY_LEVEL].keyStr,-1);
-  targetfriend = DWC_GetMatchIntValue(index,pWork->aMatchKey[_MATCHKEY_IMAGE_FRIEND].keyStr,-1);
-  targetmy = DWC_GetMatchIntValue(index,pWork->aMatchKey[_MATCHKEY_IMAGE_MY].keyStr,-1);
-*/
- 
-  //@todo   ここに評価条件を書く
-  value = 100;
-
-
-  OS_TPrintf("評価コールバック %d \n",value );
-  return value;
-
+  //今のところランダムマッチレーティングとWIFI大会は同じ評価計算
+  return WIFIBATTLEMATCH_WIFI_Eval_Callback( index, p_param_adrs );
 }
 //フリーモード用
 static int WIFIBATTLEMATCH_RND_FREE_Eval_Callback( int index, void* p_param_adrs )
 { 
-  WIFIBATTLEMATCH_NET_WORK *p_wk  = p_param_adrs;
-
-  int value=0;
-/*
-  targetlv = DWC_GetMatchIntValue(index,pWork->aMatchKey[_MATCHKEY_LEVEL].keyStr,-1);
-  targetfriend = DWC_GetMatchIntValue(index,pWork->aMatchKey[_MATCHKEY_IMAGE_FRIEND].keyStr,-1);
-  targetmy = DWC_GetMatchIntValue(index,pWork->aMatchKey[_MATCHKEY_IMAGE_MY].keyStr,-1);
-*/
- 
-  //@todo   ここに評価条件を書く
-  value = 100;
-
-
-  OS_TPrintf("評価コールバック %d \n",value );
-  return value;
+  //フリーモードは誰とでも同程度繋がる
+  return 1000;
 
 }
 //WIFI大会用
@@ -975,17 +948,32 @@ static int WIFIBATTLEMATCH_WIFI_Eval_Callback( int index, void* p_param_adrs )
   WIFIBATTLEMATCH_NET_WORK *p_wk  = p_param_adrs;
 
   int value=0;
-/*
-  targetlv = DWC_GetMatchIntValue(index,pWork->aMatchKey[_MATCHKEY_LEVEL].keyStr,-1);
-  targetfriend = DWC_GetMatchIntValue(index,pWork->aMatchKey[_MATCHKEY_IMAGE_FRIEND].keyStr,-1);
-  targetmy = DWC_GetMatchIntValue(index,pWork->aMatchKey[_MATCHKEY_IMAGE_MY].keyStr,-1);
-*/
- 
-  //@todo   ここに評価条件を書く
-  value = 100;
+  int rate, disconnect, cup;
+  rate      = DWC_GetMatchIntValue( index, p_wk->key_wk[MATCHMAKE_KEY_RATE].keyStr, 0 );
+  disconnect= DWC_GetMatchIntValue(index, p_wk->key_wk[MATCHMAKE_KEY_DISCONNECT].keyStr, 0 );
+  cup       = DWC_GetMatchIntValue( index, p_wk->key_wk[MATCHMAKE_KEY_CUPNO].keyStr, 0 );
 
+  if( cup == p_wk->key_wk[MATCHMAKE_KEY_CUPNO].ivalue )
+  {
+    //差を求める
+    rate        -= p_wk->key_wk[MATCHMAKE_KEY_RATE].ivalue;
+    rate        = MATH_ABS( rate );
+    disconnect  -= p_wk->key_wk[MATCHMAKE_KEY_DISCONNECT].ivalue;
+    disconnect  = MATH_ABS( disconnect );
 
-  OS_TPrintf("評価コールバック %d \n",value );
+    //評価計算式
+    //マッチング評価値  ＝　（定数A - レーティング差） ＊ 定数B　ー　切断数差 ＊ 定数C
+    value = (MATCHMAKE_EVAL_CALC_RATE_STANDARD - rate) * MATCHMAKE_EVAL_CALC_WEIGHT
+      - disconnect * MATCHMAKE_EVAL_CALC_DISCONNECT_WEIGHT;
+
+    value = MATH_IMax( value, 0 );
+  }
+  else
+  { 
+    value = 0;
+  }
+
+  OS_TPrintf( "評価コールバック %d \n", value );
   return value;
 
 }

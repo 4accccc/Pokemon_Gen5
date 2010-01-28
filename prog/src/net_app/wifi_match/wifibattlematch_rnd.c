@@ -193,6 +193,8 @@ static void Util_List_Create( WIFIBATTLEMATCH_RND_WORK *p_wk, UTIL_LIST_TYPE typ
 static void Util_List_Delete( WIFIBATTLEMATCH_RND_WORK *p_wk );
 static u32 Util_List_Main( WIFIBATTLEMATCH_RND_WORK *p_wk );
 
+static void Util_Matchkey_SetData( WIFIBATTLEMATCH_MATCH_KEY_DATA *p_data, const WIFIBATTLEMATCH_RND_WORK *cp_wk );
+
 //-------------------------------------
 ///	デバッグ
 //=====================================
@@ -875,9 +877,13 @@ static void WbmRndSeq_Rate_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
     ///	マッチング開始
     //=====================================
   case SEQ_START_MATCHING:
-    WBM_WAITICON_SetDrawEnable( p_wk->p_wait, TRUE );
-    WIFIBATTLEMATCH_NET_StartMatchMake( p_wk->p_net, p_param->p_param->mode, TRUE, p_param->p_param->btl_rule ); 
-    *p_seq = SEQ_START_MATCHING_MSG;
+    { 
+      WIFIBATTLEMATCH_MATCH_KEY_DATA  data;
+      Util_Matchkey_SetData( &data, p_wk );
+      WBM_WAITICON_SetDrawEnable( p_wk->p_wait, TRUE );
+      WIFIBATTLEMATCH_NET_StartMatchMake( p_wk->p_net, p_param->p_param->mode, TRUE, p_param->p_param->btl_rule, &data );
+      *p_seq = SEQ_START_MATCHING_MSG;
+    }
     break;
 
   case SEQ_START_MATCHING_MSG:
@@ -1410,9 +1416,13 @@ static void WbmRndSeq_Free_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
     ///	マッチング開始
     //=====================================
   case SEQ_START_MATCHING:
-    WBM_WAITICON_SetDrawEnable( p_wk->p_wait, TRUE );
-    WIFIBATTLEMATCH_NET_StartMatchMake( p_wk->p_net, p_param->p_param->mode, FALSE, p_param->p_param->btl_rule ); 
-    *p_seq = SEQ_START_MATCHING_MSG;
+    { 
+      WIFIBATTLEMATCH_MATCH_KEY_DATA  data;
+      Util_Matchkey_SetData( &data, p_wk );
+      WBM_WAITICON_SetDrawEnable( p_wk->p_wait, TRUE );
+      WIFIBATTLEMATCH_NET_StartMatchMake( p_wk->p_net, p_param->p_param->mode, FALSE, p_param->p_param->btl_rule, &data ); 
+      *p_seq = SEQ_START_MATCHING_MSG;
+    }
     break;
 
   case SEQ_START_MATCHING_MSG:
@@ -2108,6 +2118,45 @@ static u32 Util_List_Main( WIFIBATTLEMATCH_RND_WORK *p_wk )
   }
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  マッチング用データ設定
+ *
+ *	@param	WIFIBATTLEMATCH_MATCH_KEY_DATA *p_data  データ
+ *	@param	WIFIBATTLEMATCH_RND_WORK *cp_wk         ワーク
+ */
+//-----------------------------------------------------------------------------
+static void Util_Matchkey_SetData( WIFIBATTLEMATCH_MATCH_KEY_DATA *p_data, const WIFIBATTLEMATCH_RND_WORK *cp_wk )
+{ 
+  GFL_STD_MemClear( p_data, sizeof(WIFIBATTLEMATCH_MATCH_KEY_DATA) );
+
+  p_data->disconnect = cp_wk->rnd_score.disconnect;
+  p_data->cup_no = 1;
+
+  switch( cp_wk->p_param->p_param->btl_rule )
+  { 
+  case WIFIBATTLEMATCH_BTLRULE_SINGLE:  
+    p_data->rate    = cp_wk->rnd_score.single_rate;
+    break;
+
+  case WIFIBATTLEMATCH_BTLRULE_DOUBLE:
+    p_data->rate     = cp_wk->rnd_score.double_rate;
+    break;
+
+  case WIFIBATTLEMATCH_BTLRULE_TRIPLE:
+    p_data->rate     = cp_wk->rnd_score.triple_rate;
+    break;
+
+  case WIFIBATTLEMATCH_BTLRULE_ROTATE:
+    p_data->rate     = cp_wk->rnd_score.rot_rate;
+    break;
+
+  case WIFIBATTLEMATCH_BTLRULE_SHOOTER:
+    p_data->rate     = cp_wk->rnd_score.shooter_rate;
+    break;
+  } 
+
+}
 //=============================================================================
 /**
  *    DEBUG
