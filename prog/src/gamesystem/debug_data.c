@@ -40,7 +40,7 @@ void DEBUG_MyPokeAdd(GAMEDATA * gamedata, HEAPID heapID)
   myStatus = GAMEDATA_GetMyStatus(gamedata);
   name = MyStatus_GetMyName( myStatus );
   
-	pp = PP_Create(MONSNO_ONOKKUSU, 100, 123456, heapID);
+	pp = PP_Create(MONSNO_MOGURYUU, 100, 123456, heapID);
 
 #ifdef DEBUG_ONLY_for_tamada
 	PP_Setup(pp, MONSNO_MUSYAANA, 2, 123456);
