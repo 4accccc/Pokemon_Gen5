@@ -1008,7 +1008,6 @@ static void BoxGraResLoad( BOX2_APP_WORK * appwk )
 static void TouchBarGraResLoad( BOX2_APP_WORK * appwk )
 {
   ARCHANDLE * ah;
-	u32	i;
 
 	ah = GFL_ARC_OpenDataHandle( APP_COMMON_GetArcId(), HEAPID_BOX_APP );
 
