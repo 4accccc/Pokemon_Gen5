@@ -483,7 +483,7 @@ static void debug_param( COMM_BTL_DEMO_PARAM* prm )
   for( i=0; i<COMM_BTL_DEMO_TRDATA_MAX; i++ )
   {
     prm->trainer_data[i].server_version = GFUser_GetPublicRand(2);
-    prm->trainer_data[i].trsex = (i!=0) ? PM_MALE : PM_FEMALE; //@TODO とりあえず01は男固定
+    prm->trainer_data[i].trsex = (i!=0) ? PM_MALE : PM_FEMALE; 
 
     // トレーナー名
     {
@@ -1917,20 +1917,39 @@ static void TRAINER_UNIT_DrawTrainerName( TRAINER_UNIT* unit, GFL_FONT *font )
 {
   // 生成＆転送
 
-  GFL_FONTSYS_SetColor( 0xf, 0x1, 0x2 );
-
-#if 0
   if( unit->data->trsex == PM_MALE )
   {
     // 男処理
-    GFL_FONTSYS_SetColor( 0xf, 0x5, 0x6 );
+    GFL_FONTSYS_SetColor( 0x6, 0x6, 0x6 );
   }
   else
   {
     // 女処理
-    GFL_FONTSYS_SetColor( 0xf, 0x3, 0x4 );
+    GFL_FONTSYS_SetColor( 0x4, 0x4, 0x4 );
   }
-#endif
+
+  PRINTSYS_Print( GFL_BMPWIN_GetBmp(unit->win_name), -1, -1, unit->data->str_trname, font );
+  PRINTSYS_Print( GFL_BMPWIN_GetBmp(unit->win_name), 1, -1, unit->data->str_trname, font );
+  PRINTSYS_Print( GFL_BMPWIN_GetBmp(unit->win_name), 1, 1, unit->data->str_trname, font );
+  PRINTSYS_Print( GFL_BMPWIN_GetBmp(unit->win_name), -1, 1, unit->data->str_trname, font );
+
+  PRINTSYS_Print( GFL_BMPWIN_GetBmp(unit->win_name), 0, 1, unit->data->str_trname, font );
+  PRINTSYS_Print( GFL_BMPWIN_GetBmp(unit->win_name), 0, -1, unit->data->str_trname, font );
+  PRINTSYS_Print( GFL_BMPWIN_GetBmp(unit->win_name), 1, 0, unit->data->str_trname, font );
+  PRINTSYS_Print( GFL_BMPWIN_GetBmp(unit->win_name), -1, 0, unit->data->str_trname, font );
+  
+  if( unit->data->trsex == PM_MALE )
+  {
+    // 男処理
+    GFL_FONTSYS_SetColor( 0xf, 0x6, 0x5 );
+  }
+  else
+  {
+    // 女処理
+    GFL_FONTSYS_SetColor( 0xf, 0x4, 0x3 );
+  }
+
+//  GFL_FONTSYS_SetColor( 0xf, 0x4, 0x5 );
 
   PRINTSYS_Print( GFL_BMPWIN_GetBmp(unit->win_name), 0, 0, unit->data->str_trname, font );
   GFL_BMPWIN_MakeTransWindow_VBlank( unit->win_name );
@@ -2579,11 +2598,11 @@ static void G3D_AnimeSet( COMM_BTL_DEMO_G3D_WORK* g3d, u16 demo_id )
     //@TODO 男女からテクスチャのパレットを設定
     {
       GFL_G3D_RND* rnd = GFL_G3D_OBJECT_GetG3Drnd(obj);
-//    NNSG3dRenderObj* renderobj = GFL_G3D_RENDER_GetRenderObj( GFL_G3D_OBJECT_GetG3Drnd(g3Dobj) );
-//    GFL_G3D_RES* tex = GFL_G3D_RENDER_GetG3DresTex(rnd);
-//    GFL_G3D_RES* mdl = GFL_G3D_RENDER_GetG3DresMdl(rnd);
+      GFL_G3D_RES* tex = GFL_G3D_RENDER_GetG3DresTex(rnd);
+      GFL_G3D_RES* mdl = GFL_G3D_RENDER_GetG3DresMdl(rnd);
 
-//    GFL_G3D_UTIL_SetObjAnotherUnitAnime
+//    NNSG3dRenderObj* renderobj = GFL_G3D_RENDER_GetRenderObj( GFL_G3D_OBJECT_GetG3Drnd(g3Dobj) );
+
 
 //BOOL GFL_G3D_RENDER_SetTexture( GFL_G3D_RND* g3Drnd, const int mdlidx, const GFL_G3D_RES* tex )
     }
