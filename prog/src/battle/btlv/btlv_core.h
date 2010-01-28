@@ -184,13 +184,14 @@ extern BOOL BTLV_WaitMemberChangeAct( BTLV_CORE* wk );
 /**
  * ポケモン選択処理を開始
  *
- * @param   core      [in]  描画メインモジュールハンドラ
- * @param   param     [in]  選択処理パラメータポインタ
- * @param   fCantEsc  [in]
- * @param   result    [out] 選択結果格納構造体ポインタ
+ * @param   core            [in]  描画メインモジュールハンドラ
+ * @param   param           [in]  選択処理パラメータポインタ
+ * @param   outMemberIndex  [in]  「ポケモン」メニューからのメンバー交替時、退出するメンバーのIndex / それ以外-1
+ * @param   fCantEsc        [in]
+ * @param   result          [out] 選択結果格納構造体ポインタ
  */
 //=============================================================================================
-extern void BTLV_StartPokeSelect( BTLV_CORE* core, const BTL_POKESELECT_PARAM* param, BOOL fCantEsc, BTL_POKESELECT_RESULT* result );
+extern void BTLV_StartPokeSelect( BTLV_CORE* core, const BTL_POKESELECT_PARAM* param, int outMemberIndex, BOOL fCantEsc, BTL_POKESELECT_RESULT* result );
 
 //=============================================================================================
 /**

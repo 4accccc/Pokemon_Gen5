@@ -118,7 +118,7 @@ static void cont_HorobiNoUta( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, u8 po
 static void cont_Yadorigi( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, u8 pokeID )
 {
   BTL_HANDEX_PARAM_DAMAGE* dmg_param;
-  u16 damage = BTL_CALC_QuotMaxHP( bpp, 16 );
+  u16 damage = BTL_CALC_QuotMaxHP( bpp, 8 );
   BPP_SICK_CONT  cont = BPP_GetSickCont( bpp, WAZASICK_YADORIGI );
   BtlPokePos  pos_to = BPP_SICKCONT_GetParam( cont );
   u16 que_reserve_pos = BTL_SVFTOOL_ReserveQuePos( flowWk, SC_ACT_EFFECT_BYVECTOR );
@@ -358,11 +358,6 @@ void BTL_SICK_MakeDefaultMsg( WazaSick sickID, BPP_SICK_CONT cont, const BTL_POK
 }
 
 
-int BTL_SICK_GetDefaultSickCureStrID( WazaSick sickID, BOOL fUseItem )
-{
-  return getCureStrID( sickID, fUseItem );
-}
-
 static int getCureStrID( WazaSick sick, BOOL fUseItem )
 {
   static const struct {
@@ -382,7 +377,7 @@ static int getCureStrID( WazaSick sick, BOOL fUseItem )
     { WAZASICK_YADORIGI,      BTL_STRID_SET_BindCure,         BTL_STRID_SET_BindCure            },
     { WAZASICK_TELEKINESIS,   BTL_STRID_SET_Telekinesis_End,  -1                                },
 
-    { WAZASICK_KONRAN,        -1,                             BTL_STRID_SET_UseItem_CureKonran  },
+    { WAZASICK_KONRAN,        BTL_STRID_SET_KonranCure,       BTL_STRID_SET_UseItem_CureKonran  },
     { WAZASICK_MEROMERO,      -1,                             BTL_STRID_SET_UseItem_CureMero    },
   };
 

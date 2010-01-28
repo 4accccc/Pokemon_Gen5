@@ -53,6 +53,7 @@ typedef struct {
   u8      selIdx[ BTL_POSIDX_MAX ]; ///< 選択したポケモンの並び順（現在の並び順で先頭を0と数える）
   u8      cnt;                      ///< 選択した数
   u8      max;                      ///< 選択する数
+  u8      fCancel;                  ///< キャンセルフラグ
 
 }BTL_POKESELECT_RESULT;
 
@@ -67,6 +68,7 @@ extern void BTL_POKESELECT_RESULT_Init( BTL_POKESELECT_RESULT *result, const BTL
 extern void BTL_POKESELECT_RESULT_Push( BTL_POKESELECT_RESULT *result, u8 idx );
 extern void BTL_POKESELECT_RESULT_Pop( BTL_POKESELECT_RESULT *result );
 
+extern BOOL BTL_POKESELECT_IsCancel( const BTL_POKESELECT_RESULT* result );
 extern BOOL BTL_POKESELECT_IsDone( const BTL_POKESELECT_RESULT* result );
 extern u8 BTL_POKESELECT_RESULT_GetCount( const BTL_POKESELECT_RESULT* result );
 extern u8 BTL_POKESELECT_RESULT_GetLast( const BTL_POKESELECT_RESULT* result );

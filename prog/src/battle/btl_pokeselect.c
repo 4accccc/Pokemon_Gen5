@@ -96,7 +96,6 @@ void BTL_POKESELECT_RESULT_Init( BTL_POKESELECT_RESULT *result, const BTL_POKESE
 {
   result->cnt = 0;
   result->max = param->numSelect;
-  OS_TPrintf("選択できるポケモン数=%d\n", result->max);
 }
 //=============================================================================================
 /**
@@ -134,6 +133,19 @@ void BTL_POKESELECT_RESULT_Pop( BTL_POKESELECT_RESULT* result )
     result->cnt--;
     OS_TPrintf( "入れ替え対象 1 件削除  計 %d 件\n", result->cnt );
   }
+}
+//=============================================================================================
+/**
+ * キャンセルされたか判定
+ *
+ * @param   result
+ *
+ * @retval  BOOL
+ */
+//=============================================================================================
+BOOL BTL_POKESELECT_IsCancel( const BTL_POKESELECT_RESULT* result )
+{
+  return result->fCancel;
 }
 //=============================================================================================
 /**

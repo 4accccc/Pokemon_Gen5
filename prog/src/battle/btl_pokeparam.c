@@ -200,7 +200,7 @@ BTL_POKEPARAM*  BTL_POKEPARAM_Create( const POKEMON_PARAM* pp, u8 pokeID, HEAPID
   bpp->coreParam.hp = PP_Get( pp, ID_PARA_hp, 0 );
   bpp->coreParam.item = PP_Get( pp, ID_PARA_item, NULL );
   bpp->coreParam.usedItem = ITEM_DUMMY_DATA;
-  bpp->coreParam.fHensin = TRUE;
+  bpp->coreParam.fHensin = FALSE;
   bpp->coreParam.ppFake = NULL;
   bpp->coreParam.fFakeEnable = NULL;
 
@@ -1426,7 +1426,7 @@ void BPP_SetWazaSick( BTL_POKEPARAM* bpp, WazaSick sick, BPP_SICK_CONT contParam
 
 //=============================================================================================
 /**
- * 全状態異常のターンチェック処理
+ * 状態異常のターンチェック処理
  *
  * @param   bpp
  * @param   callbackFunc    かかっている状態異常ごとに呼び出されるコールバック関数
@@ -1439,8 +1439,8 @@ void BPP_WazaSick_TurnCheck( BTL_POKEPARAM* bpp, BtlSickTurnCheckFunc callbackFu
 
   for(sick=0; sick<NELEMS(bpp->sickCont); ++sick)
   {
-    // ねむりはアクション開始のタイミングで独自のカウンタデクリメント処理
-    if( sick == WAZASICK_NEMURI ){
+    // ねむり・こんらんはアクション開始のタイミングで独自のカウンタデクリメント処理
+    if( (sick == WAZASICK_NEMURI) || (sick == WAZASICK_KONRAN) ){
       continue;
     }
     if( bpp->sickCont[sick].type != WAZASICK_CONT_NONE )
@@ -1508,10 +1508,43 @@ BOOL BPP_CheckNemuriWakeUp( BTL_POKEPARAM* bpp )
 
       bpp->wazaSickCounter[ WAZASICK_NEMURI ] += incValue;
       BTL_N_Printf( DBGSTR_BPP_NemuriWakeCheck, bpp->coreParam.myID, turnMax, bpp->wazaSickCounter[ WAZASICK_NEMURI ] );
-      if( bpp->wazaSickCounter[ WAZASICK_NEMURI ] > turnMax )
+      if( bpp->wazaSickCounter[ WAZASICK_NEMURI ] >= turnMax )
       {
         *cont = BPP_SICKCONT_MakeNull();;
         BPP_CureWazaSick( bpp, WAZASICK_NEMURI );
+        return TRUE;
+      }
+    }
+  }
+  return FALSE;
+}
+//=============================================================================================
+/**
+ * 「こんらん」独自のターンチェック処理
+ * 状態異常カウンタをインクリメントし、さめる／さめないのチェックを行う
+ *
+ * @param   bpp
+ *
+ * @retval  BOOL    今回の呼び出しによって覚めた場合はTRUE／それ以外はFALSE
+ */
+//=============================================================================================
+BOOL BPP_CheckKonranWakeUp( BTL_POKEPARAM* bpp )
+{
+  enum {
+    SICK_ID = WAZASICK_KONRAN,
+  };
+  BPP_SICK_CONT* cont = &(bpp->sickCont[ SICK_ID ]);
+
+  if( cont->type != WAZASICK_CONT_NONE )
+  {
+    u32 turnMax = BPP_SICCONT_GetTurnMax( *cont );
+    if( turnMax )
+    {
+      bpp->wazaSickCounter[ SICK_ID ]++;
+      if( bpp->wazaSickCounter[ SICK_ID ] >= turnMax )
+      {
+        *cont = BPP_SICKCONT_MakeNull();;
+        BPP_CureWazaSick( bpp, SICK_ID );
         return TRUE;
       }
     }
@@ -2032,7 +2065,6 @@ u16 BPP_GetConsumedItem( const BTL_POKEPARAM* bpp )
 //=============================================================================================
 void BPP_UpdatePrevWazaID( BTL_POKEPARAM* pp, WazaID waza, BtlPokePos targetPos )
 {
-  // @@@ まもる・みきりの関係
   WazaID prev = pp->prevWazaID;
   if( prev != waza ){
     pp->prevWazaID = waza;

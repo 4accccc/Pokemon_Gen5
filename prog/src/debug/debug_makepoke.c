@@ -37,7 +37,7 @@ enum {
   STRBUF_LEN = 64,
   NUMINPUT_KETA_MAX = 10,
 
-  NUMBOX_MARGIN = 4,
+  NUMBOX_MARGIN = 3,
   NUMBOX_CHAR_WIDTH = 8,
 
 
@@ -145,7 +145,7 @@ enum {
   //-------------------------------------------------------------
   // PP欄レイアウト
   //-------------------------------------------------------------
-  LX_PP_UPCNT_CAP = 104,
+  LX_PP_UPCNT_CAP = 100,
   LX_PP_UPCNT_BOX = LX_PP_UPCNT_CAP + CALC_CAP_BOX_MARGIN_HALF(6),
   LX_PP_EDIT_BOX = LX_PP_UPCNT_BOX + CALC_CAP_BOX_MARGIN_HALF(4),
   LX_PP_MAX_CAP = LX_PP_EDIT_BOX + CALC_CAP_BOX_MARGIN_HALF(5),
@@ -174,7 +174,7 @@ enum {
 
   LX_PPMAX1_CAP = LX_PP_MAX_CAP,
   LY_PPMAX1_CAP = LY_LV4,
-  LX_PPMAX1_BOX = LX_PP_MAX_BOX,
+  LX_PPMAX1_BOX =LX_PP_MAX_BOX,
   LY_PPMAX1_BOX = LY_PPMAX1_CAP,
 
   LX_PPMAX2_CAP = LX_PP_MAX_CAP,
@@ -308,11 +308,18 @@ enum {
   LX_TYPE_BOX = LX_TYPE_CAP + CALC_CAP_BOX_MARGIN(3),
   LY_TYPE_BOX = LY_TYPE_CAP,
 
-  LX_DEFAULT_BTN = LX_HPVAL_BOX+CALC_NUMBOX_WIDTH(3)+4,
-  LY_DEFAULT_BTN = LY_LV8,
+  LX_DEFAULT_BTN = LX_PP_MAX_BOX + CALC_NUMBOX_WIDTH(2) + 2,
+  LY_DEFAULT_BTN = LY_LV4,
 
   LX_HANERU_BTN = LX_DEFAULT_BTN,
-  LY_HANERU_BTN = LY_LV10,
+  LY_HANERU_BTN = LY_LV5+8,
+
+
+  LX_TAMAGO_CAP = 192,
+  LY_TAMAGO_CAP = LY_LV12,
+  LX_TAMAGO_BOX = LX_TAMAGO_CAP + CALC_STRBOX_WIDTH(3),
+  LY_TAMAGO_BOX = LY_TAMAGO_CAP,
+
 };
 
 typedef enum {
@@ -382,6 +389,8 @@ typedef enum {
   INPUTBOX_ID_TYPE2,
   INPUTBOX_ID_DEF_BUTTON,
   INPUTBOX_ID_HANERU_BUTTON,
+
+  INPUTBOX_ID_TAMAGO,
 
   INPUTBOX_ID_MAX,
 
@@ -617,12 +626,17 @@ static const INPUT_BOX_PARAM InputBoxParams[] = {
     ID_PARA_type2,  NARC_message_typename_dat,  0 },
 
   { INPUTBOX_TYPE_BTN,  DMPSTR_NULL,      LX_TYPE_CAP,   LY_TYPE_CAP,
-    LX_DEFAULT_BTN, LY_DEFAULT_BTN,    CALC_STRBOX_WIDTH(6), LINE_HEIGHT,
+    LX_DEFAULT_BTN, LY_DEFAULT_BTN,    CALC_STRBOX_WIDTH(5), LINE_HEIGHT,
     ID_PARA_type2,  NARC_message_debug_makepoke_dat,  DMPSTR_DEFWAZA },
 
   { INPUTBOX_TYPE_BTN,  DMPSTR_NULL,      LX_TYPE_CAP,   LY_TYPE_CAP,
-    LX_HANERU_BTN,  LY_HANERU_BTN,    CALC_STRBOX_WIDTH(6), LINE_HEIGHT,
+    LX_HANERU_BTN,  LY_HANERU_BTN,    CALC_STRBOX_WIDTH(5), LINE_HEIGHT,
     ID_PARA_type2,  NARC_message_debug_makepoke_dat,  DMPSTR_HANERUDAKE },
+
+  { INPUTBOX_TYPE_SWITCH,  DMPSTR_TAMAGO, LX_TAMAGO_CAP,  LY_TAMAGO_CAP,
+    LX_TAMAGO_BOX,       LY_TAMAGO_BOX,  CALC_NUMBOX_WIDTH(1), LINE_HEIGHT,
+    ID_PARA_tamago_flag, DMPSTR_TAMAGO_OFF, SWITCH_STR_DEFAULT
+  },
 
 };
 
@@ -1187,9 +1201,16 @@ static void update_dst( DMP_MAINWORK* wk )
   }
 
 
+  // アイテム
   {
     u32 item = box_getvalue( wk, INPUTBOX_ID_ITEM );
     PP_Put( wk->dst, ID_PARA_item, item );
+  }
+
+  // たまごフラグ
+  {
+    u8 tamago_flg = box_getvalue( wk, INPUTBOX_ID_TAMAGO );
+    PP_Put( wk->dst, ID_PARA_tamago_flag, tamago_flg );
   }
 }
 

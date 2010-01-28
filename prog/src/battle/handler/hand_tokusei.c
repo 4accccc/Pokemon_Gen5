@@ -222,7 +222,7 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_Tennen( u32* numElems );
 static void handler_Tainetsu_WazaPow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Tainetsu_SickDmg( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Tainetu( u32* numElems );
-static void common_DmgToRecover_Check( BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work, PokeType matchType );
+static BOOL common_DmgToRecover_Check( BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work, PokeType matchType );
 static void common_DmgToRecover_Fix( BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work, u8 denomHP );
 static void handler_Kansouhada_Weather( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Kansouhada_DmgRecover( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
@@ -2253,7 +2253,7 @@ static void common_weather_recover( BTL_SVFLOW_WORK* flowWk, u8 pokeID, BtlWeath
     BTL_HANDEX_PARAM_RECOVER_HP* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RECOVER_HP, pokeID );
     param->header.tokwin_flag = TRUE;
     param->pokeID = pokeID;
-    param->recoverHP = BTL_CALC_QuotMaxHP( bpp, 8 );
+    param->recoverHP = BTL_CALC_QuotMaxHP( bpp, 16 );
 
     BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_FLAG, TRUE );
   }
@@ -3358,13 +3358,15 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_Tainetu( u32* numElems )
 /**
  *  ダメージ回復化処理共通：回復化チェック
  */
-static void common_DmgToRecover_Check( BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work, PokeType matchType )
+static BOOL common_DmgToRecover_Check( BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work, PokeType matchType )
 {
   if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) == pokeID)
   &&  (BTL_EVENTVAR_GetValue(BTL_EVAR_WAZA_TYPE) == matchType)
   ){
-    work[0] = BTL_EVENTVAR_RewriteValue( BTL_EVAR_GEN_FLAG, TRUE );;
+    work[0] = BTL_EVENTVAR_RewriteValue( BTL_EVAR_GEN_FLAG, TRUE );
+    return work[0];
   }
+  return FALSE;
 }
 /**
  *  ダメージ回復化処理共通：回復化の確定後
@@ -3576,7 +3578,7 @@ static void handler_NoGuard( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_NoGuard( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_EXECUTE_FIX,        handler_NoGuard },  // タイプによる無効化チェックハンドラ
+    { BTL_EVENT_WAZA_EXECUTE_DECIDE,        handler_NoGuard },  // タイプによる無効化チェックハンドラ
   };
   *numElems = NELEMS(HandlerTable);
   return HandlerTable;

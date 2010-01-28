@@ -35,7 +35,8 @@ static void handler_fld_Weather( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
 static const BtlEventHandlerTable* ADD_Fld_TrickRoom( u32* numElems );
 static void handler_fld_TrickRoom( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 subParam, int* work );
 static const BtlEventHandlerTable* ADD_Fld_Juryoku( u32* numElems );
-static void handler_fld_Jyuryoku( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 subParam, int* work );
+static void handler_fld_Jyuryoku_AdjustDmg( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 subParam, int* work );
+static void handler_fld_Jyuryoku_CheckAff( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 subParam, int* work );
 static const BtlEventHandlerTable* ADD_Fld_Sawagu( u32* numElems );
 static const BtlEventHandlerTable* ADD_Fld_MizuAsobi( u32* numElems );
 static void handler_fld_MizuAsobi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 subParam, int* work );
@@ -150,15 +151,27 @@ static void handler_fld_TrickRoom( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
 static const BtlEventHandlerTable* ADD_Fld_Juryoku( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_HIT_RATIO,  handler_fld_Jyuryoku   },  // ダメージ補正
+    { BTL_EVENT_WAZA_HIT_RATIO,  handler_fld_Jyuryoku_AdjustDmg   },  // ダメージ補正ハンドラ
+    { BTL_EVENT_CHECK_AFFINITY,  handler_fld_Jyuryoku_CheckAff    },  // 相性チェックハンドラ
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
 }
-static void handler_fld_Jyuryoku( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 subParam, int* work )
+// ダメージ補正ハンドラ
+static void handler_fld_Jyuryoku_AdjustDmg( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 subParam, int* work )
 {
   BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, FX32_CONST(1.67) );
 }
+// 相性チェックハンドラ
+static void handler_fld_Jyuryoku_CheckAff( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 subParam, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_WAZA_TYPE) == POKETYPE_JIMEN )
+  {
+    BTL_EVENTVAR_RewriteValue( BTL_EVAR_FLAT_FLAG, TRUE );
+  }
+}
+
+
 //--------------------------------------------------------------------------------------
 /**
  *  さわぐ

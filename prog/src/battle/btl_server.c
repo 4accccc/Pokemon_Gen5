@@ -669,6 +669,9 @@ static BOOL ServerMain_SelectPokemonIn( BTL_SERVER* server, int* seq )
       case SVFLOW_RESULT_BTL_SHOWDOWN:
         setMainProc( server, ServerMain_ExitBattle );
         break;
+      case SVFLOW_RESULT_BTL_QUIT:
+        BTL_N_Printf( DBGSTR_SVFL_GotoQuit );
+        return TRUE;
       default:
         setMainProc_Root( server );
         break;
@@ -745,6 +748,9 @@ static BOOL ServerMain_SelectPokemonChange( BTL_SERVER* server, int* seq )
       case SVFLOW_RESULT_BTL_SHOWDOWN:
         setMainProc( server, ServerMain_ExitBattle );
         break;
+      case SVFLOW_RESULT_BTL_QUIT:
+        BTL_N_Printf( DBGSTR_SVFL_GotoQuit );
+        return TRUE;
       default:
         setMainProc_Root( server );
         break;
