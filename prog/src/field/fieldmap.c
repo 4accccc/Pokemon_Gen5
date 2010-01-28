@@ -3282,6 +3282,24 @@ BOOL FIELDMAP_CheckCanSoundPlay( const FIELDMAP_WORK* fieldWork )
   return PMSND_IsLoading();
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  イベント動作中かチェック
+ *
+ *	@param	fieldWork   ワーク
+ *
+ *	@retval TRUE    動作中
+ *	@retval FALSE   動作してない（fieldmap_ctrlの更新が行われている）
+ */
+//-----------------------------------------------------------------------------
+BOOL FIELDMAP_CheckDoEvent( const FIELDMAP_WORK* fieldWork )
+{
+  if( GAMESYSTEM_GetEvent(fieldWork->gsys) == NULL) {
+    return FALSE;
+  }
+  return TRUE;
+}
+
 //==================================================================
 /**
  * 更新処理フックフラグセット関数

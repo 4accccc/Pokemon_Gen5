@@ -13,7 +13,8 @@
 enum {
 	NARC_field_crowd_people_zone_id_c03p09_bin = 0,
 	NARC_field_crowd_people_zone_id_c03p11_bin = 1,
-	NARC_field_crowd_people_list_data_dat = 2
+	NARC_field_crowd_people_list_data_dat = 2,
+	NARC_field_crowd_people_script_dat = 3
 };
 
 /* NARC_FIELD_CROWD_PEOPLE_NAIX_ */

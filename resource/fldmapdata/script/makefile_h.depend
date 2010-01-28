@@ -90,6 +90,9 @@ id_present_scr_def.h: id_present_scr.ev
 bsubway_scr_def.h: bsubway_scr.ev
 	$(EV_DEF) bsubway_scr.ev $(SCR_OFFS_ID_H)
 
+crowd_people_scr_def.h: crowd_people_scr.ev
+	$(EV_DEF) crowd_people_scr.ev $(SCR_OFFS_ID_H)
+
 debug_scr_def.h: debug_scr.ev
 	$(EV_DEF) debug_scr.ev $(SCR_OFFS_ID_H)
 

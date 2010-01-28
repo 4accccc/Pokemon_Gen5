@@ -1,13 +1,13 @@
 ##########################################################
 #
-#   conv.pl   xcel_tab  objcode dir zone_id output_list output_arc
+#   conv.pl   xcel_tab  objcode dir zone_id output_list output_arc script_h output_script
 #
 ##########################################################
 
 
-if( @ARGV < 6 )
+if( @ARGV < 8 )
 {
-  print( "conv.pl   xcel_tab  objcode dir zone_id output_list output_arc\n" );
+  print( "conv.pl   xcel_tab  objcode dir zone_id output_list output_arc script_h output_script\n" );
   exit(1);
 }
 
@@ -27,6 +27,10 @@ close( FILEIN );
 
 open( FILEIN, $ARGV[3] );
 @ZONE_ID = <FILEIN>;
+close( FILEIN );
+
+open( FILEIN, $ARGV[6] );
+@SCRIPT_H = <FILEIN>;
 close( FILEIN );
 
 
@@ -53,6 +57,16 @@ $DATA_NUM = 0;
 @DATA_POINT01_GRID_NUM = undef;
 
 
+@SCRIPT_DATA = undef;
+$SCRIPT_DATA_NUM = 0;
+$SCRIPT_DATA_IDX_OBJCODE = 0;
+$SCRIPT_DATA_IDX_SCRIPT00 = 1;
+$SCRIPT_DATA_IDX_SCRIPT01 = 2;
+$SCRIPT_DATA_IDX_SCRIPT02 = 3;
+$SCRIPT_DATA_IDX_SCRIPT03 = 4;
+$SCRIPT_DATA_IDX_NUM = 5;
+
+
 
 #情報を収集
 $data_in = 0;
@@ -77,8 +91,13 @@ foreach $one ( @EXCEL_FILE )
         $DATA_NUM ++;
       }
     }
+    elsif( "".$line[0] eq "#STARTOBJCODE" )
+    {
+      $data_in = 2;
+      $SCRIPT_DATA_NUM = 0;
+    }
   }
-  else
+  elsif ( $data_in == 1 )
   {
     if( "".$line[0] eq "#END" )
     {
@@ -230,6 +249,23 @@ foreach $one ( @EXCEL_FILE )
       $data_count ++;
     }
   }
+  # OBJCODEのスクリプト
+  elsif ( $data_in == 2 )
+  {
+    if( "".$line[0] eq "#END" )
+    {
+      $data_in = 0;
+    }
+    else
+    {
+      for( $i = 0; $i <$SCRIPT_DATA_IDX_NUM; $i ++ )
+      {
+        $SCRIPT_DATA[ ($SCRIPT_DATA_NUM*$SCRIPT_DATA_IDX_NUM)+$i ] = $line[$i];
+      }
+
+      $SCRIPT_DATA_NUM ++;
+    }
+  }
 }
 
 
@@ -282,6 +318,27 @@ for( $i=0; $i<$DATA_NUM; $i++ )
 
 close( FILEOUT );
 
+
+
+
+
+####
+#   OBJCODEのスクリプトテーブルを出力
+####
+open( FILEOUT, ">".$ARGV[7] );
+binmode( FILEOUT );
+
+print( OUTLIST "\"".$ARGV[7]."\"\n" );
+
+for( $i=0; $i<$SCRIPT_DATA_NUM; $i++ )
+{
+  print( FILEOUT pack( "I", &getOBJCODE($SCRIPT_DATA[ ($i*$SCRIPT_DATA_IDX_NUM) + $SCRIPT_DATA_IDX_OBJCODE ]) ) );
+  print( FILEOUT pack( "S", &getSCRIPT_H($SCRIPT_DATA[ ($i*$SCRIPT_DATA_IDX_NUM) + $SCRIPT_DATA_IDX_SCRIPT00 ]) ) );
+  print( FILEOUT pack( "S", &getSCRIPT_H($SCRIPT_DATA[ ($i*$SCRIPT_DATA_IDX_NUM) + $SCRIPT_DATA_IDX_SCRIPT01 ]) ) );
+  print( FILEOUT pack( "S", &getSCRIPT_H($SCRIPT_DATA[ ($i*$SCRIPT_DATA_IDX_NUM) + $SCRIPT_DATA_IDX_SCRIPT02 ]) ) );
+  print( FILEOUT pack( "S", &getSCRIPT_H($SCRIPT_DATA[ ($i*$SCRIPT_DATA_IDX_NUM) + $SCRIPT_DATA_IDX_SCRIPT03 ]) ) );
+}
+close( FILEOUT );
 
 
 
@@ -376,3 +433,32 @@ sub getDIR
   print( "$data が見つかりません。\n" );
   exit(1);
 }
+
+
+sub getSCRIPT_H
+{
+  my( $data ) = @_;
+  my( $script_h, @line );
+
+  foreach $script_h ( @SCRIPT_H )
+  {
+    $script_h =~ s/ +/ /g;
+    $script_h =~ s/\t+/ /g;
+    $script_h =~ s/\(//g;
+    $script_h =~ s/\)//g;
+    $script_h =~ s/\r\n//g;
+    $script_h =~ s/\n//g;
+    
+    @line = split( /\s/, $script_h );
+    
+    if( "".$line[1] eq "".$data )
+    {
+      return $line[2];
+    }
+  }
+
+  print( "$data が見つかりません。\n" );
+  exit(1);
+}
+
+

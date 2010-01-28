@@ -15,12 +15,19 @@
 
 #include <gflib.h>
 
+#include "arc/arc_def.h"
+#include "arc/script_message.naix"
+
 #include "field/field_const.h"
+#include "field/field_msgbg.h"
 
 #include "fieldmap.h"
 #include "field_crowd_people.h"
 
+
 #include "fieldmap/field_crowd_people.naix"
+
+#include "msg/script/msg_crowd_people_scr.h"
 
 //-----------------------------------------------------------------------------
 /**
@@ -55,7 +62,7 @@ enum
 #define FIELD_CROWD_PEOPLE_MAX  (32)
 
 // 群集OBJ識別ID
-#define FIELD_CROWD_PEOPLE_ID (64) // 仕掛けようOBJIDを使用させてもらう
+#define FIELD_CROWD_PEOPLE_ID (48) // 仕掛けようOBJIDを使用させてもらう
 
 // 人物基本値ヘッダー
 static MMDL_HEADER s_MMDL_HEADER = 
@@ -103,14 +110,65 @@ static MMDL_HEADER s_MMDL_HEADER =
 #define FIELD_CROWD_PEOPLE_OBJ_WALK_FRAME (6) // 歩きのフレーム数
 
 
-#define FIELD_CROWD_PEOPLE_SCRIPT_MAX   (8) // OBJCODEのスクリプトの数
-#define FIELD_CROWD_PEOPLE_SCRIPT_NULL  (0xffff) // OBJCODEのスクリプトの不定値
+#define FIELD_CROWD_PEOPLE_SCRIPT_MAX   (4) // OBJCODEのスクリプトの数
 
 
 //-------------------------------------
 ///	起動情報リストのデータ
 //=====================================
 typedef u32 BOOT_ZONEID_TYPE;
+
+
+//-------------------------------------
+///	騒音　定数
+//=====================================
+#define NOISE_TIME_MIN  ( 16)
+#define NOISE_TIME_WAIT_NUM  ( 1 )
+#define NOISE_MSG_MAX  ( 20 )
+#define NOISE_SIZX  ( 8 )
+#define NOISE_SIZY  ( 2 )
+#define NOISE_WK_WAIT  ( 48)
+
+#define NOISE_WK_MAX  ( 16 )
+
+static const u8 sc_NOISE_X[ NOISE_WK_MAX ] = 
+{
+  1,
+  22,
+  2,
+  20,
+  4,
+  21,
+  3,
+  19,
+  1,
+  19,
+  2,
+  22,
+  3,
+  20,
+  4,
+  21,
+};
+static const u8 sc_NOISE_Y[ NOISE_WK_MAX ] = 
+{
+  6,
+  2,
+  17,
+  14,
+  17,
+  10,
+  14,
+  2,
+  10,
+  17,
+  10,
+  6,
+  2,
+  6,
+  14,
+  6,
+};
 
 
 //-----------------------------------------------------------------------------
@@ -125,8 +183,7 @@ typedef u32 BOOT_ZONEID_TYPE;
 //=====================================
 typedef struct 
 {
-  u16 objcode;
-  u16 script_num;
+  u32 objcode;
   u16 script[FIELD_CROWD_PEOPLE_SCRIPT_MAX];
 } FIELD_CROWD_PEOPLE_OBJSCRIPT;
 
@@ -178,6 +235,33 @@ typedef struct
 } FIELD_CROWD_PEOPLE_BOOL_CONTROL;
 
 
+//-------------------------------------
+///	騒音ワーク
+//=====================================
+typedef struct {
+  u16 flag;
+  u8 x;
+  u8 y;
+  u16 id;
+  s16 wait;
+} FIELD_CROWD_PEOPLE_NOISE_WK;
+
+
+
+//-------------------------------------
+///	サブウィンドウ　騒音システム
+//=====================================
+typedef struct 
+{
+  s16 wait;
+  s16 wait_max;
+  u32 add_idx;
+  GFL_MSGDATA * p_msgdata;
+  FLDMSGBG* p_fmb;
+
+  FIELD_CROWD_PEOPLE_NOISE_WK wk[NOISE_WK_MAX];
+} FIELD_CROWD_PEOPLE_NOISE;
+
 
 //-------------------------------------
 ///	管理１オブジェ
@@ -203,6 +287,8 @@ typedef struct
   FIELD_CROWD_PEOPLE_WK people_wk[FIELD_CROWD_PEOPLE_MAX];
 
   FIELD_CROWD_PEOPLE_BOOL_CONTROL boot_control;
+
+  FIELD_CROWD_PEOPLE_NOISE noise;
 } FIELD_CROWD_PEOPLE;
 
 
@@ -231,7 +317,7 @@ static const FIELD_CROWD_PEOPLE_WK* FIELD_CROWD_PEOPLE_Search( const FIELD_CROWD
 //-------------------------------------
 ///	ワーク管理
 //=====================================
-static void FIELD_CROWD_PEOPLE_WK_Init( FIELD_CROWD_PEOPLE_WK* p_wk, MMDLSYS* p_fos, int zone_id, const FIELD_CROWD_PEOPLE_BOOL_CONTROL* cp_data );
+static void FIELD_CROWD_PEOPLE_WK_Init( FIELD_CROWD_PEOPLE_WK* p_wk, MMDLSYS* p_fos, int zone_id, const FIELD_CROWD_PEOPLE_BOOL_CONTROL* cp_data, u32 idx );
 static void FIELD_CROWD_PEOPLE_WK_Exit( FIELD_CROWD_PEOPLE_WK* p_wk );
 static void FIELD_CROWD_PEOPLE_WK_Main( FIELD_CROWD_PEOPLE_WK* p_wk, MMDLSYS* p_fos, const FIELD_PLAYER* cp_player );
 static void FIELD_CROWD_PEOPLE_WK_SetUp( FIELD_CROWD_PEOPLE_WK* p_wk, MMDLSYS* p_fos, const FIELD_PLAYER* cp_player, u16 type, u16 gx, u16 gz, u16 move_dir, u16 move_grid );
@@ -255,6 +341,20 @@ static void FIELD_CROWD_PEOPLE_WK_MainNasty( FIELD_CROWD_PEOPLE_WK* p_wk, MMDLSY
 // 引数歩前に自機がいないかチェック
 static BOOL FIELD_CROWD_PEOPLE_WK_IsFrontPlayer( const FIELD_CROWD_PEOPLE_WK* cp_wk, const FIELD_PLAYER* cp_player, u16 grid );
 static BOOL FIELD_CROWD_PEOPLE_WK_TOOL_IsGridHit( s16 mygx, s16 mygz, s16 pl_gx, s16 pl_gz, u16 grid, u16 move_dir );
+
+
+
+// NOISE管理
+static void FIELD_CROWD_PEOPLE_NOISE_Init( FIELD_CROWD_PEOPLE_NOISE* p_wk, FLDMSGBG* p_fmb, const FIELD_CROWD_PEOPLE_BOOL_CONTROL* cp_boot, HEAPID heapID );
+static void FIELD_CROWD_PEOPLE_NOISE_Exit( FIELD_CROWD_PEOPLE_NOISE* p_wk );
+static void FIELD_CROWD_PEOPLE_NOISE_Main( FIELD_CROWD_PEOPLE_NOISE* p_wk, const FIELD_CROWD_PEOPLE_BOOL_CONTROL* cp_boot, const FIELDMAP_WORK* cp_fieldmap );
+
+static void FIELD_CROWD_PEOPLE_NOISEWK_Init( FIELD_CROWD_PEOPLE_NOISE_WK* p_wk, u16 id );
+static void FIELD_CROWD_PEOPLE_NOISEWK_Start( FIELD_CROWD_PEOPLE_NOISE_WK* p_wk, FLDMSGBG* p_fmb, GFL_MSGDATA* p_msgdata );
+static void FIELD_CROWD_PEOPLE_NOISEWK_Main( FIELD_CROWD_PEOPLE_NOISE_WK* p_wk, FLDMSGBG* p_fmb );
+static void FIELD_CROWD_PEOPLE_NOISEWK_Clear( FIELD_CROWD_PEOPLE_NOISE_WK* p_wk );
+static void FIELD_CROWD_PEOPLE_NOISEWK_Off( FIELD_CROWD_PEOPLE_NOISE_WK* p_wk, FLDMSGBG* p_fmb );
+
 
 
 static const FLDMAPFUNC_DATA sc_FLDMAPFUNC_DATA = 
@@ -295,6 +395,7 @@ static void FIELD_CROWD_PEOPLE_TASK_Create( FLDMAPFUNC_WORK* p_funcwk, FIELDMAP_
   int i;
   int zone_id;
   HEAPID heapID;
+  FLDMSGBG* p_fmb = FIELDMAP_GetFldMsgBG( p_fieldmap );
 
   // 管理システムワーク初期化
   p_wk->p_player  = FIELDMAP_GetFieldPlayer( p_fieldmap );
@@ -307,11 +408,15 @@ static void FIELD_CROWD_PEOPLE_TASK_Create( FLDMAPFUNC_WORK* p_funcwk, FIELDMAP_
 
   for( i=0; i<FIELD_CROWD_PEOPLE_MAX; i++ )
   {
-    FIELD_CROWD_PEOPLE_WK_Init( &p_wk->people_wk[i], p_wk->p_fos, zone_id, &p_wk->boot_control ); 
+    FIELD_CROWD_PEOPLE_WK_Init( &p_wk->people_wk[i], p_wk->p_fos, zone_id, &p_wk->boot_control, i ); 
   }
 
   // 全員を配置
   FIELD_CROWD_PEOPLE_BOOT_CONTROL_StartUp( &p_wk->boot_control, p_wk );
+
+
+  // 騒音システム初期化
+  FIELD_CROWD_PEOPLE_NOISE_Init( &p_wk->noise, p_fmb, &p_wk->boot_control, heapID );
 }
 
 //----------------------------------------------------------------------------
@@ -332,6 +437,9 @@ static void FIELD_CROWD_PEOPLE_TASK_Delete( FLDMAPFUNC_WORK* p_funcwk, FIELDMAP_
 
   // ゾーンから起動情報を破棄
   FIELD_CROWD_PEOPLE_BOOT_CONTROL_Exit( &p_wk->boot_control );
+
+  // 騒音システム破棄
+  FIELD_CROWD_PEOPLE_NOISE_Exit( &p_wk->noise );
 
   p_wk->p_player  = NULL;
   p_wk->p_fos     = NULL;
@@ -356,6 +464,9 @@ static void FIELD_CROWD_PEOPLE_TASK_Update( FLDMAPFUNC_WORK* p_funcwk, FIELDMAP_
   {
     FIELD_CROWD_PEOPLE_WK_Main( &p_wk->people_wk[i], p_wk->p_fos, p_wk->p_player ); 
   }
+
+  // 騒音システム更新
+  FIELD_CROWD_PEOPLE_NOISE_Main( &p_wk->noise, &p_wk->boot_control, p_fieldmap );
 }
 
 
@@ -474,7 +585,7 @@ static const FIELD_CROWD_PEOPLE_WK* FIELD_CROWD_PEOPLE_Search( const FIELD_CROWD
  *	@param	p_fos     動作モデルシステム
  */
 //-----------------------------------------------------------------------------
-static void FIELD_CROWD_PEOPLE_WK_Init( FIELD_CROWD_PEOPLE_WK* p_wk, MMDLSYS* p_fos, int zone_id, const FIELD_CROWD_PEOPLE_BOOL_CONTROL* cp_data )
+static void FIELD_CROWD_PEOPLE_WK_Init( FIELD_CROWD_PEOPLE_WK* p_wk, MMDLSYS* p_fos, int zone_id, const FIELD_CROWD_PEOPLE_BOOL_CONTROL* cp_data, u32 idx )
 {
   u16 obj_code;
   u32 rand = GFUser_GetPublicRand(0);
@@ -486,15 +597,18 @@ static void FIELD_CROWD_PEOPLE_WK_Init( FIELD_CROWD_PEOPLE_WK* p_wk, MMDLSYS* p_
   obj_code = cp_data->boot_data.obj_code_tbl[ rand % cp_data->boot_data.obj_code_num ];
 
   s_MMDL_HEADER.obj_code = obj_code;
-/*
+  s_MMDL_HEADER.id = FIELD_CROWD_PEOPLE_ID + idx;
+
   for( i=0; i<cp_data->objcode_num; i++ )
   {
     if( cp_data->p_objcode_script_tbl[i].objcode == obj_code )
     {
-      s_MMDL_HEADER.event_id = cp_data->p_objcode_script_tbl[i].script[ rand % cp_data->p_objcode_script_tbl[i].script_num ];
+      s_MMDL_HEADER.event_id = cp_data->p_objcode_script_tbl[i].script[ rand % FIELD_CROWD_PEOPLE_SCRIPT_MAX ];
+      break;
     }
   }
-*/
+  // OBJCODEのスクリプトを設定したかチェック
+  GF_ASSERT( i < cp_data->objcode_num );
   
   p_wk->p_mmdl    = MMDLSYS_AddMMdl( p_fos, &s_MMDL_HEADER, zone_id ); 
   p_wk->flag      = 0;
@@ -642,6 +756,7 @@ static void FIELD_CROWD_PEOPLE_WK_ClearMove( FIELD_CROWD_PEOPLE_WK* p_wk )
 static void FIELD_CROWD_PEOPLE_BOOT_CONTROL_Init( FIELD_CROWD_PEOPLE_BOOL_CONTROL* p_wk, int zone_id, HEAPID heapID )
 {
   int i;
+  ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_FIELD_CROWD_PEOPLE, GFL_HEAP_LOWID(heapID) );
 
   {
     BOOT_ZONEID_TYPE* p_list;
@@ -650,7 +765,8 @@ static void FIELD_CROWD_PEOPLE_BOOT_CONTROL_Init( FIELD_CROWD_PEOPLE_BOOL_CONTRO
     u32 size;
 
     // 起動IDXを求める
-    p_list = GFL_ARC_UTIL_LoadEx( ARCID_FIELD_CROWD_PEOPLE, NARC_field_crowd_people_list_data_dat, FALSE, GFL_HEAP_LOWID(heapID), &size );
+    p_list = GFL_ARC_LoadDataAllocByHandle( p_handle, NARC_field_crowd_people_list_data_dat, GFL_HEAP_LOWID(heapID) );
+    size = GFL_ARC_GetDataSizeByHandle( p_handle, NARC_field_crowd_people_list_data_dat );
     list_num = size / sizeof(BOOT_ZONEID_TYPE);
 
     for( i=0; i<list_num; i++ )
@@ -666,10 +782,22 @@ static void FIELD_CROWD_PEOPLE_BOOT_CONTROL_Init( FIELD_CROWD_PEOPLE_BOOL_CONTRO
     TOMOYA_Printf( "crowd people list_idx %d\n", list_idx );
     
     // 起動ポイント情報を読み込み
-    GFL_ARC_LoadData( &p_wk->boot_data, ARCID_FIELD_CROWD_PEOPLE, list_idx );
+    GFL_ARC_LoadDataOfsByHandle( p_handle, list_idx, 0, sizeof(FIELD_CROWD_PEOPLE_BOOT_DATA), &p_wk->boot_data );
 
     GFL_HEAP_FreeMemory( p_list );
   }
+
+  // スクリプト情報読み込み
+  {
+    u32 size;
+    size = GFL_ARC_GetDataSizeByHandle( p_handle, NARC_field_crowd_people_script_dat );
+
+
+    p_wk->p_objcode_script_tbl = GFL_ARC_LoadDataAllocByHandle( p_handle, NARC_field_crowd_people_script_dat, heapID );
+    p_wk->objcode_num = size / sizeof(FIELD_CROWD_PEOPLE_OBJSCRIPT);
+  }
+
+  GFL_ARC_CloseDataHandle( p_handle );
 
   for( i=0; i<FIELD_CROWD_PEOPLE_BOOT_POINT_MAX; i++ )
   {
@@ -687,7 +815,8 @@ static void FIELD_CROWD_PEOPLE_BOOT_CONTROL_Init( FIELD_CROWD_PEOPLE_BOOL_CONTRO
 //-----------------------------------------------------------------------------
 static void FIELD_CROWD_PEOPLE_BOOT_CONTROL_Exit( FIELD_CROWD_PEOPLE_BOOL_CONTROL* p_wk )
 {
-  // なにもしない
+  GFL_HEAP_FreeMemory( p_wk->p_objcode_script_tbl );
+  p_wk->p_objcode_script_tbl = NULL;
 }
 
 
@@ -1075,6 +1204,194 @@ static BOOL FIELD_CROWD_PEOPLE_WK_TOOL_IsGridHit( s16 mygx, s16 mygz, s16 pl_gx,
     return TRUE;
   }
   return FALSE;
+}
+
+
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  騒音システム  初期化
+ *
+ *	@param	p_wk      ワーク
+ *	@param	heapID    ヒープID
+ */
+//-----------------------------------------------------------------------------
+static void FIELD_CROWD_PEOPLE_NOISE_Init( FIELD_CROWD_PEOPLE_NOISE* p_wk, FLDMSGBG* p_fmb, const FIELD_CROWD_PEOPLE_BOOL_CONTROL* cp_boot, HEAPID heapID )
+{
+  int i;
+  u32 rand = GFUser_GetPublicRand(0);
+  
+  p_wk->wait = 0;
+  p_wk->wait_max = NOISE_TIME_MIN + ( rand % (cp_boot->boot_data.wait*NOISE_TIME_WAIT_NUM) );
+  p_wk->p_msgdata = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_SCRIPT_MESSAGE, NARC_script_message_crowd_people_scr_dat, heapID );
+  p_wk->p_fmb = p_fmb;
+
+  p_wk->add_idx = rand % NOISE_WK_MAX;
+
+  for( i=0; i<NOISE_WK_MAX; i++ )
+  {
+    FIELD_CROWD_PEOPLE_NOISEWK_Init( &p_wk->wk[i], i );
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  騒音システム　破棄
+ *
+ *	@param	p_wk  ワーク
+ */
+//-----------------------------------------------------------------------------
+static void FIELD_CROWD_PEOPLE_NOISE_Exit( FIELD_CROWD_PEOPLE_NOISE* p_wk )
+{
+  int i;
+  // 全OFF
+  for( i=0; i<NOISE_WK_MAX; i++ )
+  {
+    FIELD_CROWD_PEOPLE_NOISEWK_Off( &p_wk->wk[i], p_wk->p_fmb );
+  }
+  p_wk->p_fmb = NULL;
+  
+  GFL_MSG_Delete( p_wk->p_msgdata );
+  p_wk->p_msgdata = NULL;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  騒音システム　メイン
+ *
+ *	@param	p_wk  ワーク
+ */
+//-----------------------------------------------------------------------------
+static void FIELD_CROWD_PEOPLE_NOISE_Main( FIELD_CROWD_PEOPLE_NOISE* p_wk, const FIELD_CROWD_PEOPLE_BOOL_CONTROL* cp_boot, const FIELDMAP_WORK* cp_fieldmap )
+{
+  int i;
+  u32 rand = GFUser_GetPublicRand(0);
+
+  if( FIELDMAP_CheckDoEvent( cp_fieldmap ) == FALSE )
+  {
+    p_wk->wait ++;
+
+    // ウエイトたったら、ランダムメッセージ表示
+    if( p_wk->wait >= p_wk->wait_max )
+    {
+      // 表示
+      FIELD_CROWD_PEOPLE_NOISEWK_Start( &p_wk->wk[ p_wk->add_idx ], p_wk->p_fmb, p_wk->p_msgdata );
+      p_wk->add_idx = (p_wk->add_idx + 1) % NOISE_WK_MAX;
+
+      // ウエイト初期化
+      p_wk->wait = 0;
+      p_wk->wait_max = NOISE_TIME_MIN + (rand%(cp_boot->boot_data.wait*NOISE_TIME_WAIT_NUM));
+    }
+
+    // メッセージ表示
+    for( i=0; i<NOISE_WK_MAX; i++ )
+    {
+      FIELD_CROWD_PEOPLE_NOISEWK_Main( &p_wk->wk[i], p_wk->p_fmb );
+    }
+  }
+  else
+  {
+    // 全OFF
+    for( i=0; i<NOISE_WK_MAX; i++ )
+    {
+      FIELD_CROWD_PEOPLE_NOISEWK_Off( &p_wk->wk[i], p_wk->p_fmb );
+    }
+  }
+
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ワークの初期化
+ *
+ *	@param	p_wk  ワーク
+ *	@param	id    ID
+ */
+//-----------------------------------------------------------------------------
+static void FIELD_CROWD_PEOPLE_NOISEWK_Init( FIELD_CROWD_PEOPLE_NOISE_WK* p_wk, u16 id )
+{
+  p_wk->flag = FALSE;
+
+  // 各種情報は今決る
+  p_wk->x     = sc_NOISE_X[id];
+  p_wk->y     = sc_NOISE_Y[id];
+  p_wk->id    = id;
+  p_wk->wait  = 0;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  メッセージ開始
+ *
+ *	@param	p_wk
+ *	@param	p_fmb 
+ */
+//-----------------------------------------------------------------------------
+static void FIELD_CROWD_PEOPLE_NOISEWK_Start( FIELD_CROWD_PEOPLE_NOISE_WK* p_wk, FLDMSGBG* p_fmb, GFL_MSGDATA* p_msgdata )
+{
+  u32 rand = GFUser_GetPublicRand( 0 );
+  p_wk->flag = TRUE;
+  p_wk->wait = 0;
+  
+  FLDSUBMSGWIN_Add( p_fmb, p_msgdata, 
+      CROWD_NOISE_01 + (rand%NOISE_MSG_MAX), p_wk->id,
+      p_wk->x, p_wk->y, NOISE_SIZX, NOISE_SIZY );
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  メイン処理
+ */
+//-----------------------------------------------------------------------------
+static void FIELD_CROWD_PEOPLE_NOISEWK_Main( FIELD_CROWD_PEOPLE_NOISE_WK* p_wk, FLDMSGBG* p_fmb )
+{
+  if( p_wk->flag == FALSE )
+  {
+    return ;
+  }
+  
+  // waitまって消える
+  p_wk->wait ++;
+  if( p_wk->wait >= NOISE_WK_MAX )
+  {
+    FLDSUBMSGWIN_Delete( p_fmb, p_wk->id );
+    FIELD_CROWD_PEOPLE_NOISEWK_Clear( p_wk );
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ワークOFF処理
+ */ 
+//-----------------------------------------------------------------------------
+static void FIELD_CROWD_PEOPLE_NOISEWK_Clear( FIELD_CROWD_PEOPLE_NOISE_WK* p_wk )
+{
+  p_wk->wait = 0;
+  p_wk->flag = FALSE;
+
+  //その他のデータは次も使います
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  OFFにする
+ *
+ *	@param	p_wk
+ *	@param	p_fmb 
+ */
+//-----------------------------------------------------------------------------
+static void FIELD_CROWD_PEOPLE_NOISEWK_Off( FIELD_CROWD_PEOPLE_NOISE_WK* p_wk, FLDMSGBG* p_fmb )
+{
+  if( p_wk->flag == FALSE )
+  {
+    return ;
+  }
+  
+  FLDSUBMSGWIN_Delete( p_fmb, p_wk->id );
+  FIELD_CROWD_PEOPLE_NOISEWK_Clear( p_wk );
 }
 
 

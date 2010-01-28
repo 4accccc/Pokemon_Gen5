@@ -3,7 +3,7 @@
 # @file  uniq_script.list
 # @bfief 非マップ依存のスクリプトリスト
 # @author  tamada GAMEFREAK inc.
-# @date  2010 01/27 (Wed) 18:28
+# @date  2010 01/28 (Thu) 13:15
 #
 #  このファイルはコンバータにより自動生成されています
 #
@@ -40,6 +40,7 @@ UNIQ_SCRIPTFILES = \
 	rotom_change_scr.ev \
 	id_present_scr.ev \
 	bsubway_scr.ev \
+	crowd_people_scr.ev \
 	debug_scr.ev 
 
 #イベントデータで指定され直接呼ばれるスクリプトファイル
@@ -66,7 +67,8 @@ UNIQ_TOP_EVENT_SCRFILES = \
 	judge_scr.ev \
 	rotom_change_scr.ev \
 	id_present_scr.ev \
-	bsubway_scr.ev 
+	bsubway_scr.ev \
+	crowd_people_scr.ev 
 
 #プログラムやスクリプトから呼ばれるスクリプトファイル
 UNIQ_SUB_EVENT_SCRFILES = \
