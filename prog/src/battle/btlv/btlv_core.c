@@ -1021,15 +1021,19 @@ static BOOL subprocDamageEffect( int* seq, void* wk_adrs )
     {
       BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_AffBad, 0 );
       BTLV_SCU_StartMsg( wk->scrnU, wk->strBuf, BTLV_MSGWAIT_STD );
+      OS_TPrintf(" ********************************          ’á‚¢Œø‰Ê‚ÌSE\n");
+
       PMSND_PlaySE( SEQ_SE_KOUKA_L );
     }
     else if ( subwk->affinity > BTL_TYPEAFF_100 )
     {
       BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_AffGood, 0 );
       BTLV_SCU_StartMsg( wk->scrnU, wk->strBuf, BTLV_MSGWAIT_STD );
+      OS_TPrintf(" ********************************          ‚‚¢Œø‰Ê‚ÌSE\n");
       PMSND_PlaySE( SEQ_SE_KOUKA_H );
     }
     else{
+      OS_TPrintf(" ********************************          •À‚ÌŒø‰Ê‚ÌSE\n");
       PMSND_PlaySE( SEQ_SE_KOUKA_M );
     }
     (*seq)++;
@@ -1092,11 +1096,15 @@ BOOL BTLV_ACT_DamageEffectPlural_Wait( BTLV_CORE* wk )
       case BTL_TYPEAFF_ABOUT_ADVANTAGE:
         BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_AffGood, 0 );
         BTLV_SCU_StartMsg( wk->scrnU, wk->strBuf, BTLV_MSGWAIT_STD );
+        PMSND_PlaySE( SEQ_SE_KOUKA_H );
         break;
       case BTL_TYPEAFF_ABOUT_DISADVANTAGE:
         BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_AffBad, 0 );
         BTLV_SCU_StartMsg( wk->scrnU, wk->strBuf, BTLV_MSGWAIT_STD );
+        PMSND_PlaySE( SEQ_SE_KOUKA_L );
         break;
+      default:
+        PMSND_PlaySE( SEQ_SE_KOUKA_M );
       }
       subwk->seq++;
     }

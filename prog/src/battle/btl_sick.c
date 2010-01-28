@@ -217,7 +217,6 @@ static void turncheck_cureProc( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, u8 
 static void cure_Akubi( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp )
 {
   int turns = BTL_CALC_RandRange( BTL_NEMURI_TURN_MIN, BTL_NEMURI_TURN_MAX );
-  turns--;  // ターンチェック処理中のため、１ターン分あらかじめ短くしておく
   if( turns > 0 )
   {
     u8 pokeID = BPP_GetID( bpp );
