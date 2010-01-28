@@ -99,7 +99,7 @@ static const GFLNetInitializeStruct aGFLNetInit = {
 	HEAPID_NETWORK + HEAPDIR_MASK,		//
 	GFL_WICON_POSX,GFL_WICON_POSY,	// 通信アイコンXY位置
 	UNION_CONNECT_PLAYER_NUM,      //_MAXNUM,	//最大接続人数
-	48,     //_MAXSIZE,	//最大送信バイト数
+	90, //NET_SEND_SIZE_STANDARD,     //_MAXSIZE,	//最大送信バイト数
 	UNION_RECEIVE_BEACON_MAX,  // 最大ビーコン収集数
 	TRUE,		// CRC計算
 	FALSE,		// MP通信＝親子型通信モードかどうか
