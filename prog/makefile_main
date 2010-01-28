@@ -421,8 +421,8 @@ warning:
 	ruby ../tools/warning/filter.rb result.txt > fresult.txt
 
 #----------------------------------------------------------------------------
+#	rmdepend.batで必要な出力をえるためのダミーターゲット
 #----------------------------------------------------------------------------
 echo_buildtype:
 	@echo $(TWL_BUILDTYPE)
-	@echo $(TARGET_BIN)
 

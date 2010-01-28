@@ -20,8 +20,8 @@ end
 
 #指定ファイル名を含む依存ファイルをリストアップする
 def search_depend_files( search_name )
-  build_type = `cd #{PROGDIR}; make echo_buildtype`.chomp
-  #DebugPut "result:#{build_type}"
+  build_type = `cd #{PROGDIR}; make -f makefile_main echo_buildtype`.chomp
+  DebugPut "result:#{build_type}"
   depend_path = "#{PROGDIR}depend/#{build_type}/*.d"
   command = "grep #{search_name} #{depend_path}"
   DebugPut "command:#{command}"
