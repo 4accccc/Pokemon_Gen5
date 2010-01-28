@@ -65,6 +65,9 @@ EVENT_START ev_rotom_change
           _SELECT_TEMOTI_POKE( SCWK_ANSWER , SEL_POS , 0 )
           IF $SCWK_ANSWER == TRUE THEN
             _CALL check_poke
+            IF $SCWK_ANSWER == TRUE THEN
+              _CALL select_elec
+            ENDIF
           ELSE        //選択しなかった
             //あきらめた
             $END_MSG = msg_rotom_03
@@ -89,6 +92,8 @@ _RET
 //ポケモンのチェック⇒フォルム変更
 check_poke:
   DEFINE_LOCAL SEL_MONS_NO            //選択したポケモンのモンスターナンバー
+  //リターン値を初期化(SCWK_ANSWERにFALSEをセット)
+  $SCWK_ANSWER = FALSE
   //タマゴチェックする
   _CHECK_TEMOTI_EGG( SCWK_ANSWER, SEL_POS )
   IF $SCWK_ANSWER == TRUE THEN
@@ -99,8 +104,8 @@ check_poke:
     _GET_PARTY_POKE_MONSNO( SEL_MONS_NO, SEL_POS )
     //選んだのはロトム？
     IF $SEL_MONS_NO == MONSNO_ROTOMU THEN
-      //家電選択シーケンスコール
-      _CALL select_elec
+      //家電選択シーケンスコールするためにSCWK_ANSWERにTRUEをセット
+      $SCWK_ANSWER = TRUE
     ELSE
       //「ロトムではない」
       $END_MSG = msg_rotom_05
@@ -121,6 +126,7 @@ select_elec:
   //現在のフォルムを取得
   _GET_PARTY_POKE_FORMNO( FORM_NO, SEL_POS )
   
+  //ニックネームを0に格納
   _TEMOTI_NICK_NAME( 0, SEL_POS )
   WHILE $EXIT == FALSE
     //どの家電？
@@ -140,7 +146,7 @@ select_elec:
     //やめるを選んだ?
     IF $LIST_SEL_RET == 6 THEN       //やめるを選んだ
       //あきらめた
-      $END_MSG = msg_rotom_03
+      $END_MSG = msg_rotom_11
       _CALL end_msg
       _RET
     ENDIF
@@ -150,11 +156,7 @@ select_elec:
     //選んだ家電ごとの固有技をセット(元に戻るを選んだときは0がセットされる)
     $TARGET_FORM_NO = $ELEC_TO_FORM_NO    //get_org_skillをコールする準備
     _CALL get_org_skill
-    IF $ORG_SKILL == 0 THEN
-      $NEW_SKILL = WAZANO_DENKISYOKKU       //安全のためでんきショックをセットしておく（参照されることはないはず）
-    ELSE
-      $NEW_SKILL = $ORG_SKILL               //get_org_skillコール結果を格納
-    ENDIF
+    $NEW_SKILL = $ORG_SKILL               //get_org_skillコール結果を格納
 
     //変換したフォルムナンバーと選択したロトムのフォルムナンバーを比較
     IF $FORM_NO == $ELEC_TO_FORM_NO   THEN       //同じ
@@ -171,9 +173,10 @@ select_elec:
 
   //選んだのが「元に戻る」
   IF $ELEC_TO_FORM_NO == 0 THEN
+    _CALL decide_del_skill_norm
     _SYSWIN_MSG_DOWN(msg_rotom_09)      //モーターからでてきた
     _SYSWIN_CLOSE()
-    $SCWK_ANSWER = TRUE   //フォルムチェンジする
+    $SCWK_ANSWER = TRUE   //ノーマルフォルムへはいつでも戻れるのでチェンジ可
   ELSE
     //忘れる技の選出(SCWK_ANSWER == FALSEでチェンジしない)
     $DEL_SKILL_POS = 0
@@ -183,8 +186,15 @@ select_elec:
   IF $SCWK_ANSWER == TRUE THEN
     //フォルムチェンジ(図鑑登録含む)
     _CHANGE_ROTOM_FORM_NO( SEL_POS, DEL_SKILL_POS, ELEC_TO_FORM_NO )
+  ELSE
+    //ニックネームを0にセット
+    _TEMOTI_NICK_NAME( 0, SEL_POS )
+    //固有技を1にセット
+    _WAZA_NAME( 1, NEW_SKILL )
+    //「固有技を覚えずに終わった」
+    $END_MSG = msg_rotom_waza_03
+    _CALL end_msg
   ENDIF
-
 _RET
 
 /**
@@ -194,7 +204,7 @@ _RET
 get_org_skill:
   SWITCH $TARGET_FORM_NO
   CASE 0 THEN
-    $ORG_SKILL = 0
+    $ORG_SKILL = WAZANO_DENKISYOKKU
   CASE 1 THEN
     $ORG_SKILL = WAZANO_OOBAAHIITO
   CASE 2 THEN
@@ -206,6 +216,39 @@ get_org_skill:
   CASE 5 THEN
     $ORG_SKILL = WAZANO_RIIHUSUTOOMU
   ENDSWITCH
+_RET
+
+/**
+ * ノーマルフォルムになるときのメッセージ
+*/
+decide_del_skill_norm:
+  DEFINE_LOCAL NORM_CHECK_SKILL
+  DEFINE_LOCAL NORM_SKILL_NUM
+
+  $TARGET_FORM_NO = $FORM_NO    //get_org_skillをコールする準備
+  _CALL get_org_skill
+  $NORM_CHECK_SKILL = $ORG_SKILL     //get_org_skillコール結果を格納
+  //フォルムごとの専用技を調べる
+  _CHECK_POKE_WAZA( SCWK_ANSWER, NORM_CHECK_SKILL, SEL_POS )
+  //取得している技の数を調べる
+  _GET_TEMOTI_WAZA_NUM( NORM_SKILL_NUM, SEL_POS )
+
+  IF $SCWK_ANSWER == 1 THEN     //固有技覚えている
+    IF $NORM_SKILL_NUM == 1 THEN    //技1つしかない
+      //「固有技をわすれて、電気ショックを覚えた」
+      $OLD_SKILL = $NORM_CHECK_SKILL   //忘れる技セット del_skill_msgをコールする準備
+      _CALL del_skill_msg
+    ELSE                            //2つ以上技ある
+      _TEMOTI_NICK_NAME( 0, SEL_POS )
+      _WAZA_NAME( 2, NORM_CHECK_SKILL )
+      //「ポカン」
+      _SYSWIN_MSG_DOWN( msg_rotom_waza_05 )
+      _SYSWIN_CLOSE()
+      //「旧固有技を忘れた・・」
+      _SYSWIN_MSG_DOWN( msg_rotom_waza_08 )
+      _SYSWIN_CLOSE()
+    ENDIF
+  ENDIF
 _RET
 
 /**
@@ -221,10 +264,10 @@ decide_del_skill:
   _CALL get_org_skill
   $CHECK_SKILL = $ORG_SKILL     //get_org_skillコール結果を格納
 
-  IF $CHECK_SKILL != 0 THEN
+  IF $FORM_NO != 0 THEN     //今自分がノーマルフォルムではないとき
     //フォルムごとの専用技を調べる
     _CHECK_POKE_WAZA( SCWK_ANSWER, CHECK_SKILL, SEL_POS )
-  ELSE
+  ELSE                      //今自分がノーマルフォルムのとき
     //ノーマルフォルムなので、固有技なし
     $SCWK_ANSWER = 0
   ENDIF
@@ -272,6 +315,7 @@ select_del_skill:
   DEFINE_LOCAL DECIDE            // ループ脱出フラグ
   $DECIDE = FALSE
   WHILE $DECIDE == FALSE
+    //ニックネームを0にセット
     _TEMOTI_NICK_NAME( 0, SEL_POS )
     _WAZA_NAME( 1, NEW_SKILL )
     //固有技を覚えたい。4つでいっぱい。技忘れる？
@@ -281,18 +325,30 @@ select_del_skill:
     IF $SCWK_ANSWER == 0 THEN   //忘れる
       //技忘れ
       _SELECT_WAZA_TEMOTI_POKE( SCWK_ANSWER ,DEL_SKILL_POS ,SEL_POS ,0 )
-      IF $SCWK_ANSWER == FALSE THEN
+      IF $SCWK_ANSWER == FALSE THEN     //忘れる技を選択しなかった
         _CALL stop_del_skill
         IF $SCWK_ANSWER == 0 THEN
           $SCWK_ANSWER = FALSE
           $DECIDE = TRUE          //ループ終了
-        ENDIF  
-      ELSE
+        ENDIF
+      ELSE                              //忘れる技を選択した
         //忘れる技セット del_skill_msgをコールする準備
         _GET_TEMOTI_WAZA_ID( OLD_SKILL ,SEL_POS ,DEL_SKILL_POS )
-        _CALL del_skill_msg
-        $SCWK_ANSWER = TRUE
-        $DECIDE = TRUE            //ループ終了
+        //「選択した技を忘れていい？」
+        _SYSWIN_MSG_DOWN( msg_rotom_waza_04 )
+        _YES_NO_WIN( SCWK_ANSWER )
+        _SYSWIN_CLOSE()
+        IF $SCWK_ANSWER == 0 THEN     //忘れてOK
+          _CALL del_skill_msg
+          $SCWK_ANSWER = TRUE
+          $DECIDE = TRUE            //ループ終了
+        ELSE                          //忘れてはNG
+          _CALL stop_del_skill
+          IF $SCWK_ANSWER == 0 THEN
+            $SCWK_ANSWER = FALSE
+            $DECIDE = TRUE          //ループ終了
+          ENDIF
+        ENDIF
       ENDIF
     ELSE                        //忘れない
       _CALL stop_del_skill
@@ -304,7 +360,7 @@ select_del_skill:
   ENDWHILE
 _RET
 
-//技あきらめる
+//技あきらめる？
 stop_del_skill:
   _SYSWIN_MSG_DOWN( msg_rotom_waza_02 )
   _YES_NO_WIN( SCWK_ANSWER )
