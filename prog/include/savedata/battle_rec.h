@@ -233,6 +233,10 @@ extern BATTLE_REC_HEADER_PTR BattleRec_HeaderPtrGet(void);
 extern BTLREC_OPERATION_BUFFER* BattleRec_GetOperationBufferPtr( void );
 extern BTLREC_SETUP_SUBSET*     BattleRec_GetSetupSubsetPtr( void );
 
+extern void BattleRec_ExitWork(BATTLE_REC_SAVEDATA *wk_brs);
+extern BATTLE_REC_SAVEDATA * BattleRec_LoadAlloc( SAVE_CONTROL_WORK *sv, HEAPID heapID, LOAD_RESULT *result, int num );
+extern BATTLE_REC_HEADER_PTR BattleRec_HeaderPtrGetWork(BATTLE_REC_SAVEDATA *wk_brs);
+
 extern void BattleRec_DataSet(GDS_PROFILE_PTR gpp, BATTLE_REC_HEADER_PTR head, BATTLE_REC_WORK_PTR rec, BATTLE_PARAM *bp, SAVE_CONTROL_WORK *sv);
 extern u64 RecHeader_ParamGet(BATTLE_REC_HEADER_PTR head, int index, int param);
 extern BATTLE_REC_HEADER_PTR BattleRec_Header_AllocMemory(HEAPID heap_id);

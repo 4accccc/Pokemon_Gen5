@@ -58,6 +58,24 @@ static BOOL restore_SetupSubset( BATTLE_SETUP_PARAM* setup, const BATTLE_REC_WOR
 
 
 
+//--------------------------------------------------------------
+/**
+ * 対戦録画データ用ワークをAllocする
+ *
+ * @param   heapID		
+ *
+ * @retval  BATTLE_REC_SAVEDATA *		
+ */
+//--------------------------------------------------------------
+static BATTLE_REC_SAVEDATA * _BattleRecSaveAlloc(HEAPID heapID)
+{
+  BATTLE_REC_SAVEDATA *new_brs;
+  
+  new_brs = GFL_HEAP_AllocClearMemory(heapID, SAVESIZE_EXTRA_BATTLE_REC);//sizeof(BATTLE_REC_SAVEDATA));
+  BattleRec_WorkInit(new_brs);
+  return new_brs;
+}
+
 //------------------------------------------------------------------
 /**
  * 対戦録画データを作成する
@@ -77,8 +95,7 @@ void BattleRec_Init(HEAPID heapID)
     brs = NULL;
   }
 
-  brs = GFL_HEAP_AllocClearMemory(heapID,SAVESIZE_EXTRA_BATTLE_REC);//sizeof(BATTLE_REC_SAVEDATA));
-  BattleRec_WorkInit(brs);
+  brs = _BattleRecSaveAlloc(heapID);
 }
 //------------------------------------------------------------------
 /**
@@ -90,6 +107,17 @@ void BattleRec_Exit(void)
   GF_ASSERT(brs);
   GFL_HEAP_FreeMemory(brs);
   brs = NULL;
+}
+//------------------------------------------------------------------
+/**
+ * 対戦録画データの破棄(ワーク指定)
+ *
+ * BattleRec_LoadAllocで確保したワークの解放用
+ */
+//------------------------------------------------------------------
+void BattleRec_ExitWork(BATTLE_REC_SAVEDATA *wk_brs)
+{
+  GFL_HEAP_FreeMemory(wk_brs);
 }
 
 //------------------------------------------------------------------
@@ -148,37 +176,29 @@ void * BattleRec_RecWorkAdrsGet( void )
   return &work[sizeof(EX_CERTIFY_SAVE_KEY)];
 }
 
-//------------------------------------------------------------------
+//--------------------------------------------------------------
 /**
  * 対戦録画データのロード
  *
- * @param sv    セーブデータ構造体へのポインタ
- * @param heapID  データをロードするメモリを確保するためのヒープID
- * @param result  ロード結果を格納するワークRECLOAD_RESULT_NULL,OK,NG,ERROR
+ * @param wk_brs    録画データ展開先
+ * @param heapID    データをロードするメモリを確保するためのヒープID
+ * @param result    ロード結果を格納するワークRECLOAD_RESULT_NULL,OK,NG,ERROR
  * @param bp    ロードしたデータから生成するBATTLE_PARAM構造体へのポインタ
- * @param num   ロードするデータナンバー（LOADDATA_MYREC、LOADDATA_DOWNLOAD0、LOADDATA_DOWNLOAD1…）
+ * @param num   ロードするデータナンバー(LOADDATA_MYREC、LOADDATA_DOWNLOAD0、LOADDATA_DOWNLOAD1…)
  *
  * @retval  TRUE
  */
-//------------------------------------------------------------------
-BOOL BattleRec_Load( SAVE_CONTROL_WORK *sv, HEAPID heapID, LOAD_RESULT *result, int num )
+//--------------------------------------------------------------
+static BOOL _BattleRec_LoadCommon(SAVE_CONTROL_WORK *sv, BATTLE_REC_SAVEDATA *wk_brs, HEAPID heapID, LOAD_RESULT *result, int num)
 {
   BATTLE_REC_WORK *rec;
   BATTLE_REC_HEADER *head;
 
-  //すでに読み込まれているデータがあるなら、破棄する
-  if(brs){
-    BattleRec_WorkInit(brs);
-  }
-  else{
-    BattleRec_Init(heapID);
-  }
-
-  //データをbrsにロード
+  //データをwk_brsにロード
   *result = SaveControl_Extra_LoadWork(
-    sv, SAVE_EXTRA_ID_REC_MINE + num, heapID, brs, sizeof(BATTLE_REC_SAVEDATA));
+    sv, SAVE_EXTRA_ID_REC_MINE + num, heapID, wk_brs, sizeof(BATTLE_REC_SAVEDATA));
 
-  //brsに展開されたのでセーブシステムは破棄
+  //wk_brsに展開されたのでセーブシステムは破棄
   SaveControl_Extra_Unload(sv, SAVE_EXTRA_ID_REC_MINE + num);
 
   if(*result != LOAD_RESULT_OK){
@@ -186,8 +206,8 @@ BOOL BattleRec_Load( SAVE_CONTROL_WORK *sv, HEAPID heapID, LOAD_RESULT *result, 
     return TRUE;
   }
 
-  rec = &brs->rec;
-  head = &brs->head;
+  rec = &wk_brs->rec;
+  head = &wk_brs->head;
 
   //復号
   BattleRec_Decoded(rec, sizeof(BATTLE_REC_WORK) - GDS_CRC_SIZE,
@@ -195,14 +215,14 @@ BOOL BattleRec_Load( SAVE_CONTROL_WORK *sv, HEAPID heapID, LOAD_RESULT *result, 
 
   //読み出したデータに録画データが入っているかチェック
   #if 1
-  if(BattleRec_DataInitializeCheck(sv, brs) == TRUE){
+  if(BattleRec_DataInitializeCheck(sv, wk_brs) == TRUE){
     OS_TPrintf("録画データが初期状態のものです\n");
     *result = RECLOAD_RESULT_NULL;  //初期化データの為、データなし
     return TRUE;
   }
 
   //データの整合性チェック
-  if(BattleRecordCheckData(sv, brs) == FALSE){
+  if(BattleRecordCheckData(sv, wk_brs) == FALSE){
   #ifdef OSP_REC_ON
     OS_TPrintf("不正な録画データ\n");
   #endif
@@ -220,6 +240,55 @@ BOOL BattleRec_Load( SAVE_CONTROL_WORK *sv, HEAPID heapID, LOAD_RESULT *result, 
 
   *result = RECLOAD_RESULT_OK;
   return TRUE;
+}
+
+//------------------------------------------------------------------
+/**
+ * 対戦録画データのロード
+ *
+ * @param sv    セーブデータ構造体へのポインタ
+ * @param heapID  データをロードするメモリを確保するためのヒープID
+ * @param result  ロード結果を格納するワークRECLOAD_RESULT_NULL,OK,NG,ERROR
+ * @param bp    ロードしたデータから生成するBATTLE_PARAM構造体へのポインタ
+ * @param num   ロードするデータナンバー(LOADDATA_MYREC、LOADDATA_DOWNLOAD0、LOADDATA_DOWNLOAD1…)
+ *
+ * @retval  TRUE
+ */
+//------------------------------------------------------------------
+BOOL BattleRec_Load( SAVE_CONTROL_WORK *sv, HEAPID heapID, LOAD_RESULT *result, int num )
+{
+  //すでに読み込まれているデータがあるなら、破棄する
+  if(brs){
+    BattleRec_WorkInit(brs);
+  }
+  else{
+    BattleRec_Init(heapID);
+  }
+
+  return _BattleRec_LoadCommon(sv, brs, heapID, result, num);
+}
+
+//------------------------------------------------------------------
+/**
+ * 対戦録画データのロード(読み込み用のワークをAllocしてロード。　多重読み込み用)
+ *
+ * @param sv    セーブデータ構造体へのポインタ
+ * @param heapID  データをロードするメモリを確保するためのヒープID
+ * @param result  ロード結果を格納するワークRECLOAD_RESULT_NULL,OK,NG,ERROR
+ * @param bp    ロードしたデータから生成するBATTLE_PARAM構造体へのポインタ
+ * @param num   ロードするデータナンバー(LOADDATA_MYREC、LOADDATA_DOWNLOAD0、LOADDATA_DOWNLOAD1…)
+ *
+ * @retval  録画データワーク(ロードに失敗してもワークはAllocしています。
+ *                           必ずBattleRec_ExitWorkを使用して解放してください)
+ */
+//------------------------------------------------------------------
+BATTLE_REC_SAVEDATA * BattleRec_LoadAlloc( SAVE_CONTROL_WORK *sv, HEAPID heapID, LOAD_RESULT *result, int num )
+{
+  BATTLE_REC_SAVEDATA *new_brs;
+
+  new_brs = _BattleRecSaveAlloc(heapID);
+  _BattleRec_LoadCommon(sv, new_brs, heapID, result, num);
+  return new_brs;
 }
 
 //------------------------------------------------------------------
@@ -1009,6 +1078,20 @@ BATTLE_REC_HEADER_PTR BattleRec_HeaderPtrGet(void)
 {
   GF_ASSERT(brs != NULL);
   return &brs->head;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   録画ヘッダのポインタ取得(ワーク指定)
+ *
+ * @retval  録画ヘッダのポインタ
+ *
+ * BattleRec_LoadAllocを使用したワークのヘッダ取得用です
+ */
+//--------------------------------------------------------------
+BATTLE_REC_HEADER_PTR BattleRec_HeaderPtrGetWork(BATTLE_REC_SAVEDATA *wk_brs)
+{
+  return &wk_brs->head;
 }
 
 //--------------------------------------------------------------
