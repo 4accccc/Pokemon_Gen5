@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2010-01-23T19:51:20"/>
+	<create user="matsumiya" host="W00207" date="2010-01-28T12:25:13"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="212"/>
+		<comment position="4" width="314"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -344,6 +344,87 @@
 		<language name="JPN_KANJI" width="256">バトルサブウェイは　全７路線！[BE:01:ページ切り替え（クリア）]
 このホームから　遠くなるにつれて
 手ごわい　トレーナーが　乗っている</language>
+	</row>
+
+	<row id="msg_touroku_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>■メッセージ登録少年（ギアステーション内に配置）
+・選択肢表示
+　「じこしょうかい」→msg_touroku_02
+　「かったとき」→msg_touroku_03
+　「まけたとき」→msg_touroku_04
+　「おしえない」→msg_touroku_06</comment>
+		<attribute name="キャラ指定">BOY1
+少年</attribute>
+		<language name="JPN" width="256">ねえねえ！▼
+しょうぶの　まえの　じこしょうかい
+とか　かったり　まけたり　したときの▽
+きもちを　おしえて　くれない？</language>
+		<language name="JPN_KANJI" width="256">ねえねえ！▼
+勝負の　前の　自己紹介とか
+勝ったり　負けたりしたときの▽
+気持ちを　教えてくれない？</language>
+	</row>
+
+	<row id="msg_touroku_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>■メッセージ登録少年（ギアステーション内に配置）
+・メッセージ終了後簡易会話入力へ
+・キャンセルした場合→msg_touroku_05
+　入力した場合→msg_touroku_06</comment>
+		<attribute name="キャラ指定">BOY1
+少年</attribute>
+		<language name="JPN" width="256">じゃあ　しょうぶの　まえの
+じこしょうかいを　ひとつ　ヨロシク！</language>
+		<language name="JPN_KANJI" width="256">じゃあ　勝負の　前の
+自己紹介を　ひとつ　ヨロシク！</language>
+	</row>
+
+	<row id="msg_touroku_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>■メッセージ登録少年（ギアステーション内に配置）
+・メッセージ終了後簡易会話入力へ
+・キャンセルした場合→msg_touroku_05
+　入力した場合→msg_touroku_06</comment>
+		<attribute name="キャラ指定">BOY1
+少年</attribute>
+		<language name="JPN" width="256">じゃあ　しょうぶに　まけたときの
+きもちを　ひとつ　ヨロシク！</language>
+		<language name="JPN_KANJI" width="256">じゃあ　勝負に　負けたときの
+気持ちを　ひとつ　ヨロシク！</language>
+	</row>
+
+	<row id="msg_touroku_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>■メッセージ登録少年（ギアステーション内に配置）
+・メッセージ終了後簡易会話入力へ
+・キャンセルした場合→msg_touroku_05
+　入力した場合→msg_touroku_06</comment>
+		<attribute name="キャラ指定">BOY1
+少年</attribute>
+		<language name="JPN" width="256">じゃあ　しょうぶに　かったときの
+きもちを　ひとつ　ヨロシク！</language>
+		<language name="JPN_KANJI" width="256">じゃあ　勝負に　勝ったときの
+気持ちを　ひとつ　ヨロシク！</language>
+	</row>
+
+	<row id="msg_touroku_05" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>■メッセージ登録少年（ギアステーション内に配置）
+・メッセージ表示後イベント終了
+・0＝簡易会話単語</comment>
+		<attribute name="キャラ指定">BOY1
+少年</attribute>
+		<language name="JPN" width="256">おしえてくれて　ありがとう！
+そうか　[1:1C:簡易会話単語:0]　か……</language>
+		<language name="JPN_KANJI" width="256">教えてくれて　ありがとう！
+そうか　[1:1C:簡易会話単語:0]　か……</language>
+	</row>
+
+	<row id="msg_touroku_06" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>■メッセージ登録少年（ギアステーション内に配置）
+・メッセージ表示後イベント終了</comment>
+		<attribute name="キャラ指定">BOY1
+少年</attribute>
+		<language name="JPN" width="256">あれ？　おしえて　くれないの？
+ざんねん……</language>
+		<language name="JPN_KANJI" width="256">あれ？　教えてくれないの？
+残念……</language>
 	</row>
 
 	<flowchart-group-list>
