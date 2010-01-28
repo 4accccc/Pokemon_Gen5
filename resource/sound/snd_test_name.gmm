@@ -7751,13 +7751,13 @@
 		<language name="JPN" width="256">FLD-103</language>
 		<language name="JPN_KANJI" width="256">FLD-103</language>
 	</row>
-	<row id="msg_seq_se_dmy_184">
-		<language name="JPN" width="256">DMY-184</language>
-		<language name="JPN_KANJI" width="256">DMY-184</language>
+	<row id="msg_seq_se_w255_bu">
+		<language name="JPN" width="256">W255-BU</language>
+		<language name="JPN_KANJI" width="256">W255-BU</language>
 	</row>
-	<row id="msg_seq_se_dmy_185">
-		<language name="JPN" width="256">DMY-185</language>
-		<language name="JPN_KANJI" width="256">DMY-185</language>
+	<row id="msg_seq_se_w288_doro">
+		<language name="JPN" width="256">W288-DORO</language>
+		<language name="JPN_KANJI" width="256">W288-DORO</language>
 	</row>
 	<row id="msg_seq_se_dmy_186">
 		<language name="JPN" width="256">DMY-186</language>
