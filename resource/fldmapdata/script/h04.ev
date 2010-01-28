@@ -70,6 +70,7 @@ EVENT_START   ev_h04_whisle
 			//ISSスイッチをオフに
 			_ISS_SWITCH_OFF( 1 )
 			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_h04_whistle_02 )
+			$LOCALWORK10 = 1
 		
 		//2回目以降
 		ELSE
@@ -88,7 +89,7 @@ EVENT_END
 /************************************************************/
 EVENT_START   ev_h04_guiter
 	//再生状態かチェック
-	_ISS_SWITCH_CHECK( SCWK_ANSWER,2 )
+	_ISS_SWITCH_CHECK( SCWK_ANSWER,3 )
 
 	//演奏していない
 	IF $SCWK_ANSWER == FALSE THEN
@@ -97,14 +98,14 @@ EVENT_START   ev_h04_guiter
 		IF $LOCALWORK11 == 0 THEN
 		
 			//ISSスイッチをオンに
-			_ISS_SWITCH_ON( 2 )
+			_ISS_SWITCH_ON( 3 )
 			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_h04_guitar_01 )
 		
 		//2回目以降
 		ELSE
 		
 			//ISSスイッチをオンに
-			_ISS_SWITCH_ON( 2 )
+			_ISS_SWITCH_ON( 3 )
 			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_h04_guitar_03 )
 		
 		ENDIF
@@ -116,14 +117,15 @@ EVENT_START   ev_h04_guiter
 		IF $LOCALWORK11 == 0 THEN
 		
 			//ISSスイッチをオフに
-			_ISS_SWITCH_OFF( 2 )
+			_ISS_SWITCH_OFF( 3 )
 			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_h04_guitar_02 )
+			$LOCALWORK11 = 1
 		
 		//2回目以降
 		ELSE
 		
 			//ISSスイッチをオフに
-			_ISS_SWITCH_OFF( 2 )
+			_ISS_SWITCH_OFF( 3 )
 			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_h04_guitar_04 )
 		
 		ENDIF
@@ -136,7 +138,7 @@ EVENT_END
 /************************************************************/
 EVENT_START   ev_h04_voice
 	//再生状態かチェック
-	_ISS_SWITCH_CHECK( SCWK_ANSWER,3 )
+	_ISS_SWITCH_CHECK( SCWK_ANSWER,2 )
 
 	//演奏していない
 	IF $SCWK_ANSWER == FALSE THEN
@@ -145,14 +147,14 @@ EVENT_START   ev_h04_voice
 		IF $LOCALWORK12 == 0 THEN
 		
 			//ISSスイッチをオンに
-			_ISS_SWITCH_ON( 3 )
+			_ISS_SWITCH_ON( 2 )
 			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_h04_voice_01 )
 		
 		//2回目以降
 		ELSE
 		
 			//ISSスイッチをオンに
-			_ISS_SWITCH_ON( 3 )
+			_ISS_SWITCH_ON( 2 )
 			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_h04_voice_03 )
 		
 		ENDIF
@@ -164,14 +166,15 @@ EVENT_START   ev_h04_voice
 		IF $LOCALWORK12 == 0 THEN
 		
 			//ISSスイッチをオフに
-			_ISS_SWITCH_OFF( 3 )
+			_ISS_SWITCH_OFF( 2 )
 			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_h04_voice_02 )
+			$LOCALWORK12 = 1
 		
 		//2回目以降
 		ELSE
 		
 			//ISSスイッチをオフに
-			_ISS_SWITCH_OFF( 3 )
+			_ISS_SWITCH_OFF( 2 )
 			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_h04_voice_04 )
 		
 		ENDIF
@@ -214,6 +217,7 @@ EVENT_START   ev_h04_leadersinger
 			//ISSスイッチをオフに
 			_ISS_SWITCH_OFF( 4 )
 			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_h04_leadsinger_02 )
+			$LOCALWORK13 = 1
 		
 		//2回目以降
 		ELSE
