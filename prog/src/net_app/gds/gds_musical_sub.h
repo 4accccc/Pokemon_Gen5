@@ -81,11 +81,12 @@ typedef struct
   u32 month  :5;  //月  これが０だったら無効データとみなす
   u32 day    :6;  //日
   u32 player :2;  //自分の番号
-  u32 pad    :3;
+  u32 musVer :3;  //ミュージカルバージョン
 
   MUSICAL_SHOT_POKE shotPoke[MUSICAL_POKE_MAX]; //ポケモンデータ(４体
   STRCODE title[MUSICAL_PROGRAM_NAME_MAX];  //ミュージカルタイトル(日本18・海外36＋EOM
-  u16 pad2;
+  u8 pmVersion;
+  u8 pmLang;
 }MUSICAL_SHOT_DATA;
 
 #endif  //__GT_GDS_MUSICAL_SUB_H__

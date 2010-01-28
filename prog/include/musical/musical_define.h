@@ -14,6 +14,8 @@
 //======================================================================
 //	define
 //======================================================================
+#define MUSICAL_VERSION (0) //ショットに入るバージョン(0～7)
+
 //ミュージカルの装備アイテムの最大個数(最大255で考えておく
 #define MUSICAL_ITEM_MAX (250)
 #define MUSICAL_ITEM_MAX_REAL (100) //実装数
@@ -162,11 +164,12 @@ typedef struct
   u32 month  :5;  //月  これが０だったら無効データとみなす
   u32 day    :6;  //日
   u32 player :2;  //自分の番号
-  u32 pad    :3;
+  u32 musVer :3;  //ミュージカルバージョン
 
   MUSICAL_SHOT_POKE shotPoke[MUSICAL_POKE_MAX]; //ポケモンデータ(４体
   STRCODE title[MUSICAL_PROGRAM_NAME_MAX];  //ミュージカルタイトル(日本18・海外36＋EOM
-  u16 pad2;
+  u8 pmVersion;
+  u8 pmLang;
   
 }MUSICAL_SHOT_DATA;
 

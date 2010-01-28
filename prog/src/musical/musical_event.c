@@ -522,6 +522,10 @@ static void MUSICAL_EVENT_InitMusicalShot( MUSICAL_EVENT_WORK *evWork )
     shotData->title[11] = L'リ';
     shotData->title[12] = GFL_STR_GetEOMCode();
     
+    //@TODO
+    shotData->musVer = MUSICAL_VERSION;
+    shotData->pmVersion = VERSION_BLACK;
+    shotData->pmLang = LANG_JAPAN;
     
     //スポットライトの計算
     {
