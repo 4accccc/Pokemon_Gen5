@@ -3,7 +3,7 @@
  * @file  scr_offset_id.h
  * @bfief  スクリプトIDのオフセット定義
  * @author  tamada GAMEFREAK inc.
- * @date  2010 01/28 (Thu) 13:15
+ * @date  2010 01/28 (Thu) 23:49
  *
  * このファイルはコンバータにより自動生成されています
  */
@@ -107,7 +107,10 @@
 #define ID_BSUBWAY_SCR_OFFSET_END        (10339)
 
 #define ID_CROWD_PEOPLE_SCR_OFFSET       (10340) //群集用スクリプト
-#define ID_CROWD_PEOPLE_SCR_OFFSET_END   (10359)
+#define ID_CROWD_PEOPLE_SCR_OFFSET_END   (10369)
+
+#define ID_HYOUKA_SCR_OFFSET             (10370) //ずかん評価スクリプト
+#define ID_HYOUKA_SCR_OFFSET_END         (10379)
 
 #define ID_DEBUG_SCR_OFFSET              (12000) //デバッグ用共通スクリプト（この下にはファイルを追加しない！！）
 #define ID_DEBUG_SCR_OFFSET_END          (12199)
