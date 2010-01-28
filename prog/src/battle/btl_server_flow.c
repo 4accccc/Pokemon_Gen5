@@ -848,8 +848,6 @@ SvflowResult BTL_SVFLOW_StartAfterPokeIn( BTL_SVFLOW_WORK* wk )
 
   BTL_Printf("空き位置にポケモン投入後のサーバーコマンド生成\n");
 
-  BTL_SERVER_InitChangePokemonReq( wk->server );
-
   numDeadPoke = BTL_DEADREC_GetCount( &wk->deadRec, 0 );
   wk->flowResult =  SVFLOW_RESULT_DEFAULT;
 
@@ -866,6 +864,7 @@ SvflowResult BTL_SVFLOW_StartAfterPokeIn( BTL_SVFLOW_WORK* wk )
     scproc_MemberInForChange( wk, wk->actOrder[i].clientID, action->change.posIdx, action->change.memberIdx, TRUE );
   }
   scproc_AfterMemberIn( wk );
+  reqChangePokeForServer( wk );
 
   {
     u8 numDeadPokeAfter = BTL_DEADREC_GetCount( &wk->deadRec, 0 );
