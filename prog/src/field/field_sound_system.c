@@ -8,6 +8,7 @@
 ///////////////////////////////////////////////////////////////////////////////////
 #include "field_sound_system.h"
 #include "sound/pm_sndsys.h"
+#include "player_volume_fader.h"
 
 
 //================================================================================= 
@@ -121,6 +122,9 @@ struct _FIELD_SOUND
   FSND_REQUEST_DATA requestData[ REQUEST_QUEUE_SIZE ];  // リクエスト配列
   u8                requestHeadPos;  // キューの先頭位置( 先頭リクエストの位置 )
   u8                requestTailPos;  // キューの末尾位置( 新規リクエストの追加位置 )
+
+  // プレイヤーボリューム管理
+  PLAYER_VOLUME_FADER* playerVolumeFader;
 };
 
 
@@ -228,6 +232,7 @@ FIELD_SOUND* FIELD_SOUND_Create( HEAPID heapID )
 
   // 初期化
   InitFieldSoundSystem( fieldSound );
+  fieldSound->playerVolumeFader = PLAYER_VOLUME_FADER_Create( heapID, PLAYER_BGM );
 
   return fieldSound;
 }
@@ -241,6 +246,7 @@ FIELD_SOUND* FIELD_SOUND_Create( HEAPID heapID )
 //---------------------------------------------------------------------------------
 void FIELD_SOUND_Delete( FIELD_SOUND* fieldSound )
 {
+  PLAYER_VOLUME_FADER_Delete( fieldSound->playerVolumeFader );
   GFL_HEAP_FreeMemory( fieldSound );
 }
 
@@ -403,6 +409,9 @@ void FIELD_SOUND_Main( FIELD_SOUND* fieldSound )
   case FSND_STATE_STAND_BY_load:     Main_STAND_BY_load(fieldSound);     break;
   default: GF_ASSERT(0);
   }
+
+  // プレイヤーボリューム フェード処理
+  PLAYER_VOLUME_FADER_Main( fieldSound->playerVolumeFader );
 } 
 
 //---------------------------------------------------------------------------------
@@ -415,6 +424,25 @@ void FIELD_SOUND_Main( FIELD_SOUND* fieldSound )
 void FIELD_SOUND_Reset( FIELD_SOUND* fieldSound )
 {
   ResetFieldSoundSystem( fieldSound );
+}
+
+
+//=================================================================================
+// ■プレイヤーボリューム制御
+//=================================================================================
+
+//---------------------------------------------------------------------------------
+/**
+ * @brief プレイヤーボリュームを変更する
+ *
+ * @param fieldSound
+ * @param volume     設定するボリューム[0, 127]
+ * @param fadeFrame  フェード フレーム数
+ */
+//---------------------------------------------------------------------------------
+void FIELD_SOUND_ChangePlayerVolume( FIELD_SOUND* fieldSound, u8 volume, u8 fadeFrame )
+{
+  PLAYER_VOLUME_FADER_SetVolume( fieldSound->playerVolumeFader, volume, fadeFrame );
 }
 
 

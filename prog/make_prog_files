@@ -184,6 +184,7 @@ SRCS  +=    $(SOUNDSRC) \
         app/app_taskmenu.c \
         app/app_keycursor.c \
         app/bag/itemuse.c \
+        field/player_volume_fader.c \
         field/field_sound_system.c \
         field/field_sound.c \
         tr_tool/tr_tool.c \

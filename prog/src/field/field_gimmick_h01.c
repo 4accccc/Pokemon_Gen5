@@ -170,6 +170,9 @@ void H01_GIMMICK_End( FIELDMAP_WORK* fieldmap )
   u32*         gmk_save = (u32*)GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_H01 );
   H01WORK*         work = (H01WORK*)gmk_save[0]; // gmk_save[0]はギミック管理ワークのアドレス
 
+  // 風を止める
+  PMSND_ChangeBGMVolume( work->wind_data.trackBit, 0 );
+
   // セーブ
   SaveGimmick( work, fieldmap );
 

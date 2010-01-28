@@ -51,6 +51,9 @@ extern BOOL FIELD_SOUND_HaveRequest( const FIELD_SOUND* fieldSound );
 
 //=================================================================================
 // ■リクエスト
+//
+// ※基本的に使用しないでください。
+// 　field_sound.h に宣言されている関数を使ってBGMの操作を行ってください。
 //=================================================================================
 // 登録
 extern void FIELD_SOUND_RegisterRequest( FIELD_SOUND* fieldSound, 
@@ -84,5 +87,14 @@ extern void FIELD_SOUND_RegisterRequest( FIELD_SOUND* fieldSound,
 //=================================================================================
 // ■システム動作
 //=================================================================================
-extern void FIELD_SOUND_Main( FIELD_SOUND* fieldSound );
+extern void FIELD_SOUND_Main ( FIELD_SOUND* fieldSound );
 extern void FIELD_SOUND_Reset( FIELD_SOUND* fieldSound );
+
+
+//=================================================================================
+// ■プレイヤーボリューム制御
+//
+// ※基本的に使用しないでください。
+// 　field_sound.h に宣言されている関数を使ってください。
+//=================================================================================
+extern void FIELD_SOUND_ChangePlayerVolume( FIELD_SOUND* fieldSound, u8 volume, u8 fadeFrame );

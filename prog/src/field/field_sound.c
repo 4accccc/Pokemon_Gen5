@@ -743,6 +743,73 @@ void FSND_ChangeBGM_byPlayerFormChange( FIELD_SOUND* fieldSound,
 
 
 //=================================================================================
+// ■BGMボリューム操作
+//=================================================================================
+
+//---------------------------------------------------------------------------------
+/**
+ * @brief フィールド → アプリ 遷移時の BGMボリューム抑制処理
+ *
+ * @param fieldSound
+ * @parma iss
+ */
+//---------------------------------------------------------------------------------
+void FSND_HoldBGMVolume( FIELD_SOUND* fieldSound, ISS_SYS* iss )
+{
+  ISS_3DS_SYS* iss3DSSystem;
+
+  iss3DSSystem = ISS_SYS_GetIss3DSSystem( iss );
+
+  ISS_3DS_SYS_SetMasterVolume( iss3DSSystem, 0 );        // 橋ISSを無効化
+  FIELD_SOUND_ChangePlayerVolume( fieldSound, 100, 60 );  // プレイヤーボリュームをフェードアウト
+}
+
+//---------------------------------------------------------------------------------
+/**
+ * @brief フィールド ← アプリ 遷移時の BGMボリューム解放処理
+ *
+ * @param fieldSound
+ * @parma iss
+ */
+//---------------------------------------------------------------------------------
+void FSND_ReleaseBGMVolume( FIELD_SOUND* fieldSound, ISS_SYS* iss )
+{
+  ISS_3DS_SYS* iss3DSSystem;
+
+  iss3DSSystem = ISS_SYS_GetIss3DSSystem( iss );
+
+  ISS_3DS_SYS_SetMasterVolume( iss3DSSystem, 127 );       // 橋ISSを復帰
+  FIELD_SOUND_ChangePlayerVolume( fieldSound, 127, 60 );  // プレイヤーボリュームをフェードイン
+}
+
+//---------------------------------------------------------------------------------
+/**
+ * @brief アプリ内における BGMボリューム操作 ( 下げる場合 )
+ *
+ * @param fieldSound
+ */
+//---------------------------------------------------------------------------------
+void FSND_HoldPlayerVolume( FIELD_SOUND* fieldSound )
+{
+  // プレイヤーボリュームを即時設定
+  FIELD_SOUND_ChangePlayerVolume( fieldSound, 100, 0 );  
+}
+
+//---------------------------------------------------------------------------------
+/**
+ * @brief アプリ内における BGMボリューム操作 ( 上げる場合 )
+ *
+ * @param fieldSound
+ */
+//---------------------------------------------------------------------------------
+void FSND_ReleasePlayerVolume( FIELD_SOUND* fieldSound )
+{
+  // プレイヤーボリュームを即時設定
+  FIELD_SOUND_ChangePlayerVolume( fieldSound, 127, 0 );  
+}
+
+
+//=================================================================================
 // ■BGM No.取得
 //=================================================================================
 

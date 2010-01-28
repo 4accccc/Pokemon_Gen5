@@ -8,10 +8,11 @@
 ///////////////////////////////////////////////////////////////////////////////////
 #pragma once
 #include "gflib.h"
-#include "gamesystem/gamesystem.h"  // for GAMESYS_WORK
+#include "gamesystem/gamesystem.h"    // for GAMESYS_WORK
 #include "gamesystem/gamedata_def.h"  // for GAMEDATA
-#include "gamesystem/game_event.h"  // for GMEVENT
-#include "field_sound_proc.h"
+#include "gamesystem/game_event.h"    // for GMEVENT
+#include "gamesystem/iss_sys.h"       // for ISS_SYS
+#include "field_sound_proc.h"         // for FIELD_SOUND
 
 
 //=================================================================================
@@ -63,6 +64,19 @@ extern void FSND_PlayStartBGM( FIELD_SOUND* fieldSound );
 // 自機移動フォーム変更
 extern void FSND_ChangeBGM_byPlayerFormChange( FIELD_SOUND* fieldSound, 
                                                GAMEDATA* gameData, u16 zoneID ); 
+
+//=================================================================================
+// ■BGMボリューム操作
+//=================================================================================
+// フィールド ⇔ アプリ 遷移時
+// ※ISSとプレイヤーボリュームを操作します。
+extern void FSND_HoldBGMVolume   ( FIELD_SOUND* fieldSound, ISS_SYS* iss );
+extern void FSND_ReleaseBGMVolume( FIELD_SOUND* fieldSound, ISS_SYS* iss );
+
+// アプリ内での操作
+// ※プレイヤーボリュームのみを操作します。
+extern void FSND_HoldPlayerVolume   ( FIELD_SOUND* fieldSound );
+extern void FSND_ReleasePlayerVolume( FIELD_SOUND* fieldSound );
 
 
 //=================================================================================
