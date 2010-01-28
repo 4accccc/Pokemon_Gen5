@@ -164,6 +164,7 @@ void PL_BOAT_AddTimeEvt(PL_BOAT_WORK_PTR work, const int inAddSec, const int inW
     {
       //‹D“J‚ª–Â‚Á‚½’¼Œã‚Ü‚ÅŽžŠÔ‚ðis
       work->Time = (work->WhistleCount+1)*(WHISTLE_MARGINE*30);
+      work->WhistleCount++;
     }
   }
   else
