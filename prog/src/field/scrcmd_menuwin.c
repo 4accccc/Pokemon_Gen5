@@ -186,6 +186,9 @@ VMCMD_RESULT EvCmdBmpMenuInitEx( VMHANDLE *core, void *wk )
   u16 *ret = SCRIPT_GetEventWork( sc, gdata, wk_id );
   WORDSET *wordset = SCRIPT_GetWordSet( sc );
   GFL_MSGDATA *msgData = SCRCMD_WORK_GetMsgData( work );
+  
+  GF_ASSERT( wordset != NULL );
+  GF_ASSERT( msgData != NULL );
 
   SCRCMD_WORK_InitMenuWork( work,
       x, y, cursor, cancel, ret,

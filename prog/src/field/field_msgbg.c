@@ -1404,6 +1404,11 @@ FLDMENUFUNC * FLDMENUFUNC_AddEventMenuList( FLDMSGBG *fmb,
   u16 list_pos, u16 cursor_pos, BOOL cancel )
 {
 	FLDMENUFUNC *menuFunc;
+  
+  GF_ASSERT( fmb != NULL );
+  GF_ASSERT( pMenuHead != NULL );
+  GF_ASSERT( pMenuListData != NULL );
+  
   menuFunc = fldmenufunc_AddMenuList( fmb, pMenuHead, pMenuListData,
     list_pos, cursor_pos, fmb->deriveWin_plttNo, callback, NULL, cb_work );
   

@@ -490,11 +490,14 @@ void SCRCMD_WORK_StartMenu( SCRCMD_WORK *work )
   count = FLDMENUFUNC_GetListMax( menuWork->listData );
   FLDMENUFUNC_InputHeaderListSize(
       &menuH, count, menuWork->x, menuWork->y, sx, sy );
-
-	menuWork->menuFunc = FLDMENUFUNC_AddEventMenuList(
-      work->head.fldMsgBG, &menuH, menuWork->listData,
+  
+  {
+    FLDMSGBG *fmb = SCRCMD_WORK_GetFldMsgBG( work );
+	  menuWork->menuFunc = FLDMENUFUNC_AddEventMenuList(
+      fmb, &menuH, menuWork->listData,
       BmpMenu_CallbackFunc, work,
       0, 0, menuWork->cancel );
+  }
 }
 
 //--------------------------------------------------------------
