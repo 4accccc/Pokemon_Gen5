@@ -2948,6 +2948,7 @@ static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, REQWAZA_
       actTargetPos = reqWaza->targetPos;
       BTL_Printf("他ワザ実行で [%d] -> [%d] が出る ... targetPos=%d\n", orgWaza, actWaza, actTargetPos);
       scproc_WazaExe_Decide( wk, attacker, orgWaza );
+
     }else{
       actWaza = orgWaza;
       actTargetPos = orgTargetPos;
@@ -3048,8 +3049,6 @@ static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, REQWAZA_
         scproc_Fight_WazaExe( wk, attacker, actWaza, &wk->pokesetTarget );
       }
 
-      BPP_UpdatePrevWazaID( attacker, actWaza, actTargetPos );
-      SCQUE_PUT_OP_UpdateUseWaza( wk->que, BPP_GetID(attacker), actTargetPos, actWaza );
       wk->prevExeWaza = actWaza;
       waza_exe_flag = TRUE;
     }
@@ -3058,6 +3057,9 @@ static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, REQWAZA_
 
   // ワザプロセス修了した
   BPP_TURNFLAG_Set( attacker, BPP_TURNFLG_WAZAPROC_DONE );
+
+  BPP_UpdatePrevWazaID( attacker, actWaza, actTargetPos );
+  SCQUE_PUT_OP_UpdateUseWaza( wk->que, BPP_GetID(attacker), actTargetPos, actWaza );
 
   // 使ったワザのPP減らす（前ターンからロックされている場合は減らさない）
   if( !waza_lock_flag && waza_exe_flag ){
@@ -3343,8 +3345,6 @@ static void scPut_ReqWazaEffect( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, WazaID
   atkPos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, pokeID );
 
   SCQUE_PUT_ACT_WazaEffect( wk->que, atkPos, targetPos, waza );
-  BPP_UpdatePrevWazaID( bpp, waza, targetPos );
-  SCQUE_PUT_OP_UpdateUseWaza( wk->que, pokeID, targetPos, waza );
 }
 //--------------------------------------------------------------------------
 /**

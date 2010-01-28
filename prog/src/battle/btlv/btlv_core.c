@@ -1021,7 +1021,6 @@ static BOOL subprocDamageEffect( int* seq, void* wk_adrs )
     {
       BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_AffBad, 0 );
       BTLV_SCU_StartMsg( wk->scrnU, wk->strBuf, BTLV_MSGWAIT_STD );
-      OS_TPrintf(" ********************************          í·Ç¢å¯â ÇÃSE\n");
 
       PMSND_PlaySE( SEQ_SE_KOUKA_L );
     }
@@ -1029,11 +1028,9 @@ static BOOL subprocDamageEffect( int* seq, void* wk_adrs )
     {
       BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_AffGood, 0 );
       BTLV_SCU_StartMsg( wk->scrnU, wk->strBuf, BTLV_MSGWAIT_STD );
-      OS_TPrintf(" ********************************          çÇÇ¢å¯â ÇÃSE\n");
       PMSND_PlaySE( SEQ_SE_KOUKA_H );
     }
     else{
-      OS_TPrintf(" ********************************          ï¿ÇÃå¯â ÇÃSE\n");
       PMSND_PlaySE( SEQ_SE_KOUKA_M );
     }
     (*seq)++;

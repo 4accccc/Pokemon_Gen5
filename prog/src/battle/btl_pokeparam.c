@@ -307,6 +307,9 @@ static void clearUsedWazaFlag( BTL_POKEPARAM* bpp )
   for(i=0; i<NELEMS(bpp->waza); ++i){
     bpp->waza[i].usedFlag = FALSE;
   }
+
+  bpp->prevWazaID = WAZANO_NULL;
+  bpp->sameWazaCounter = 0;
 }
 //----------------------------------------------------------------------------------
 /**
