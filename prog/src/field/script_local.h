@@ -34,7 +34,7 @@ typedef struct
 }SCREND_CHECK;
 
 //--------------------------------------------------------------
-// SCRIPTのメンバーID定義
+// トレーナーデータ管理用
 //--------------------------------------------------------------
 enum{
   TRAINER_EYE_HIT0 = 0,
@@ -50,6 +50,25 @@ typedef enum{
 	VMHANDLE_SUB1,			//サブ
 	VMHANDLE_MAX,			//最大数
 }VMHANDLE_ID;
+
+//======================================================================
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * @brief スクリプト用グローバルワークの生成
+ * @param main_heapID
+ * @param gsys
+ * @param event
+ * @param	scr_id		スクリプトID
+ * @param	ret_wk		スクリプト結果を代入するワークのポインタ
+ * @return	SCRIPT_WORK			SCRIPT型のポインタ
+ *
+ * スクリプトコマンド全般からグローバルアクセス可能なデータを保持する
+ */
+//--------------------------------------------------------------
+extern SCRIPT_WORK * SCRIPTWORK_Create( HEAPID main_heapID,
+    GAMESYS_WORK * gsys, GMEVENT * event, u16 scr_id, void* ret_wk);
+extern void SCRIPTWORK_Delete( SCRIPT_WORK * sc );
 
 //======================================================================
 //
@@ -125,8 +144,7 @@ extern u8 * SCRIPT_GetAnimeCount( SCRIPT_WORK * sc );
 extern void SCRIPT_SetFLDMENUFUNC( SCRIPT_WORK * sc, void * mw );
 extern void * SCRIPT_GetFLDMENUFUNC( SCRIPT_WORK * sc );
 extern MMDL * SCRIPT_GetTargetObj( SCRIPT_WORK * sc );
-
-extern void * SCRIPT_GetTrainerEyeData( SCRIPT_WORK * sc, u32 tr_no );
+extern void SCRIPT_SetTargetObj( SCRIPT_WORK * sc, MMDL * obj );
 
 //======================================================================
 //	

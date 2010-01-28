@@ -40,7 +40,18 @@ enum {
 //--------------------------------------------------------------
 //	スクリプト制御ワークへの不完全型ポインタ
 //--------------------------------------------------------------
+typedef struct _SCRIPTSYS SCRIPTSYS;
+
 typedef	struct _TAG_SCRIPT_WORK SCRIPT_WORK;
+
+//--------------------------------------------------------------
+//	スクリプトイベント用ワーク
+//--------------------------------------------------------------
+typedef struct
+{
+	SCRIPT_WORK *sc; //スクリプト用ワーク
+  SCRIPTSYS * scrsys; //制御ワーク
+}EVENT_SCRIPT_WORK;
 
 //======================================================================
 //	proto
@@ -82,6 +93,20 @@ extern SCRIPT_WORK * SCRIPT_CallScript( GMEVENT *event,
 //--------------------------------------------------------------
 extern SCRIPT_WORK * SCRIPT_ChangeScript( GMEVENT *event,
 		u16 scr_id, MMDL *obj, HEAPID temp_heapID );
+
+//--------------------------------------------------------------
+/**
+ * スクリプトイベントからスクリプトワークを取得
+ * @param	GMEVENT *event
+ * @retval  SCRIPT_WORK*
+ */
+//--------------------------------------------------------------
+extern SCRIPT_WORK* SCRIPT_GetScriptWorkFromEvent( GMEVENT *event );
+
+//--------------------------------------------------------------
+/// スクリプトイベントからスクリプト制御ワークを取得
+//--------------------------------------------------------------
+extern SCRIPTSYS * SCRIPT_GetScriptSysFromEvent( GMEVENT *event );
 
 
 //------------------------------------------------------------------
@@ -178,35 +203,54 @@ extern BOOL SCRIPT_CallFieldRecoverScript( GAMESYS_WORK * gsys, HEAPID heapID );
 extern GMEVENT * SCRIPT_SearchSceneScript( GAMESYS_WORK * gsys, HEAPID heapID);
 
 
-//======================================================================
-//
-//	フラグ関連
-//
-//======================================================================
-//------------------------------------------------------------------
+//--------------------------------------------------------------
 /**
- * @brief	マップ内限定のセーブフラグをクリアする
- *
- *
- * @return	none
+ * プログラムからスクリプトへの引数となるパラメータをセット
+ * @param	sc SCRIPT_WORK
+ * @param	prm0	パラメータ０（SCWK_PARAM0）
+ * @param	prm1	パラメータ１（SCWK_PARAM1）
+ * @param	prm2	パラメータ２（SCWK_PARAM2）
+ * @param	prm3	パラメータ３（SCWK_PARAM3）
+ * @retval none
  */
-//------------------------------------------------------------------
-extern void LocalEventFlagClear( EVENTWORK * eventwork );
+//--------------------------------------------------------------
+extern void SCRIPT_SetScriptWorkParam( SCRIPT_WORK *sc, u16 prm0, u16 prm1, u16 prm2, u16 prm3 );
 
-//------------------------------------------------------------------
+//--------------------------------------------------------------
 /**
- * @brief	1日経過ごとにクリアされるフラグをクリアする
+ * サブプロセス用ワークのポインターアドレスを取得
+ * @param	sc SCRIPT_WORK
+ * @retval none
  *
- *
- * @return	none
+ * 使い終わったら必ずNULLクリアすること！
  */
-//------------------------------------------------------------------
-extern void TimeEventFlagClear( EVENTWORK * eventwork );
+//--------------------------------------------------------------
+extern void** SCRIPT_SetSubProcWorkPointerAdrs( SCRIPT_WORK *sc );
+
+//--------------------------------------------------------------
+/**
+ * サブプロセス用ワークのポインターを取得
+ * @param	sc SCRIPT_WORK
+ * @retval none
+ *
+ * 使い終わったら必ずNULLクリアすること！
+ */
+//--------------------------------------------------------------
+extern void* SCRIPT_SetSubProcWorkPointer( SCRIPT_WORK *sc );
+
+//--------------------------------------------------------------
+/**
+ * サブプロセス用ワーク領域の解放(ポインタがNULLでなければFree)
+ * @param	sc SCRIPT_WORK
+ * @retval none
+ */
+//--------------------------------------------------------------
+extern void SCRIPT_FreeSubProcWorkPointer( SCRIPT_WORK *sc );
 
 
 //======================================================================
 //
-//	トレーナーフラグ関連
+//	トレーナー関連
 //
 //	・スクリプトIDから、トレーナーIDを取得して、フラグチェック
 //	BOOL CheckEventFlagTrainer( fsys, GetTrainerIdByScriptId(scr_id) );
@@ -284,57 +328,7 @@ extern void SCRIPT_ResetEventFlagTrainer( EVENTWORK *ev, u16 tr_id );
 extern void SCRIPT_SetTrainerEyeData( GMEVENT *event, MMDL *mmdl,
     s16 range, u16 dir, u16 scr_id, u16 tr_id, int tr_type, int tr_no );
 
-//--------------------------------------------------------------
-/**
- * プログラムからスクリプトへの引数となるパラメータをセット
- * @param	sc SCRIPT_WORK
- * @param	prm0	パラメータ０（SCWK_PARAM0）
- * @param	prm1	パラメータ１（SCWK_PARAM1）
- * @param	prm2	パラメータ２（SCWK_PARAM2）
- * @param	prm3	パラメータ３（SCWK_PARAM3）
- * @retval none
- */
-//--------------------------------------------------------------
-extern void SCRIPT_SetScriptWorkParam( SCRIPT_WORK *sc, u16 prm0, u16 prm1, u16 prm2, u16 prm3 );
+extern void * SCRIPT_GetTrainerEyeData( SCRIPT_WORK * sc, u32 tr_no );
 
-//--------------------------------------------------------------
-/**
- * サブプロセス用ワークのポインターアドレスを取得
- * @param	sc SCRIPT_WORK
- * @retval none
- *
- * 使い終わったら必ずNULLクリアすること！
- */
-//--------------------------------------------------------------
-extern void** SCRIPT_SetSubProcWorkPointerAdrs( SCRIPT_WORK *sc );
-
-//--------------------------------------------------------------
-/**
- * サブプロセス用ワークのポインターを取得
- * @param	sc SCRIPT_WORK
- * @retval none
- *
- * 使い終わったら必ずNULLクリアすること！
- */
-//--------------------------------------------------------------
-extern void* SCRIPT_SetSubProcWorkPointer( SCRIPT_WORK *sc );
-
-//--------------------------------------------------------------
-/**
- * サブプロセス用ワーク領域の解放(ポインタがNULLでなければFree)
- * @param	sc SCRIPT_WORK
- * @retval none
- */
-//--------------------------------------------------------------
-extern void SCRIPT_FreeSubProcWorkPointer( SCRIPT_WORK *sc );
-
-//--------------------------------------------------------------
-/**
- * スクリプトイベントからスクリプトワークを取得
- * @param	GMEVENT *event
- * @retval  SCRIPT_WORK*
- */
-//--------------------------------------------------------------
-extern SCRIPT_WORK* SCRIPT_GetEventWorkToScriptWork( GMEVENT *event );
 
 #endif	/* SCRIPT_H */

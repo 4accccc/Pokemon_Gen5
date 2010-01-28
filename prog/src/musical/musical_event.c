@@ -846,7 +846,7 @@ static const void MUSICAL_EVENT_RunScript( GMEVENT *event, MUSICAL_EVENT_WORK *e
     SCRIPT_WORK *scWork;
 
     newEvent = SCRIPT_SetEventScript( evWork->gsys, scriptId , NULL , HEAPID_FIELDMAP );
-    scWork = SCRIPT_GetEventWorkToScriptWork( newEvent );
+    scWork = SCRIPT_GetScriptWorkFromEvent( newEvent );
     
     SCRIPT_SetMemberWork_Musical( scWork , evWork );
     GMEVENT_CallEvent(event, newEvent);

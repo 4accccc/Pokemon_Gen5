@@ -255,6 +255,8 @@ VMCMD_RESULT EvCmdCamera_MoveByID( VMHANDLE *core, void *wk )
     param.Chk = cam_param.Chk;
 
     NOZOMU_Printf("cam_prm = %d,%d,%d\n",cam_param.Pitch, cam_param.Yaw, cam_param.Dist);
+    TAMADA_Printf("cam_prm = %d,%d,%d\n",cam_param.Pitch, cam_param.Yaw, cam_param.Dist);
+    TAMADA_Printf("cam_prm = %d,%d,%d\n",cam_param.Pos.x, cam_param.Pos.y, cam_param.Pos.z);
 
     FIELD_CAMERA_SetLinerParam(camera, &param, frame);
   }

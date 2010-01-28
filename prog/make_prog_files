@@ -154,7 +154,8 @@ SRCS  +=    $(SOUNDSRC) \
         system/actor_tool.c \
         system/bmp_oam.c \
         net_app/wifi_earth/wifi_country.c \
-        field/script.c \
+        field/script_sys.c \
+        field/script_work.c \
         field/script_hideitem.c \
         field/scrcmd.c \
         field/eventwork.c \

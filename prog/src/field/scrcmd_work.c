@@ -55,7 +55,6 @@ typedef struct
 struct _TAG_SCRCMD_WORK
 {
 	HEAPID heapID;
-  HEAPID temp_heapID;
 	SCRCMD_WORK_HEADER head;
 	
 	GFL_MSGDATA *msgData;
@@ -86,12 +85,11 @@ static void	BmpMenu_CallbackFunc(BMPMENULIST_WORK * wk,u32 param,u8 mode);
  */
 //--------------------------------------------------------------
 SCRCMD_WORK * SCRCMD_WORK_Create(
-	const SCRCMD_WORK_HEADER *head, HEAPID heapID, HEAPID temp_heapID )
+	const SCRCMD_WORK_HEADER *head, HEAPID heapID )
 {
 	SCRCMD_WORK *work;
 	work = GFL_HEAP_AllocClearMemoryLo( heapID, sizeof(SCRCMD_WORK) );
 	work->heapID = heapID;
-  work->temp_heapID = temp_heapID;
 	work->head = *head;
 	return( work );
 }
@@ -127,19 +125,6 @@ HEAPID SCRCMD_WORK_GetHeapID( SCRCMD_WORK *work )
 	return( work->heapID );
 }
 
-#if 0
-//--------------------------------------------------------------
-/**
- * SCRCMD_WORK テンポラリ用HEAPID取得
- * @param
- * @retval
- */
-//--------------------------------------------------------------
-HEAPID SCRCMD_WORK_GetTempHeapID( SCRCMD_WORK *work )
-{
-  return( work->temp_heapID );
-}
-#endif
 
 //--------------------------------------------------------------
 //--------------------------------------------------------------
@@ -199,7 +184,7 @@ MMDLSYS * SCRCMD_WORK_GetMMdlSys( SCRCMD_WORK *work )
 //--------------------------------------------------------------
 SCRIPT_WORK * SCRCMD_WORK_GetScriptWork( SCRCMD_WORK *work )
 {
-	return( work->head.script );
+	return( work->head.script_work );
 }
 
 //--------------------------------------------------------------
@@ -211,7 +196,10 @@ SCRIPT_WORK * SCRCMD_WORK_GetScriptWork( SCRCMD_WORK *work )
 //--------------------------------------------------------------
 FLDMSGBG * SCRCMD_WORK_GetFldMsgBG( SCRCMD_WORK *work )
 {
-	return( work->head.fldMsgBG );
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  SCRIPT_FLDPARAM * fld_param = SCRIPT_GetFieldParam( sc );
+  return fld_param->msgBG;
+	//return( work->head.fldMsgBG );
 }
 
 //--------------------------------------------------------------
@@ -372,13 +360,8 @@ BOOL SCRCMD_WORK_CheckMMdlAnmTCB( SCRCMD_WORK *work )
 //--------------------------------------------------------------
 void SCRCMD_WORK_CreateMsgData( SCRCMD_WORK *work, u32 datID )
 {
-#if 1
 	GFL_MSGDATA *msgData = GFL_MSG_Create(
 		GFL_MSG_LOAD_NORMAL, ARCID_SCRIPT_MESSAGE, datID, work->heapID );
-#else //テンポラリ用HEAPIDに変更。
-	GFL_MSGDATA *msgData = GFL_MSG_Create(
-		GFL_MSG_LOAD_NORMAL, ARCID_SCRIPT_MESSAGE, datID, work->temp_heapID );
-#endif
 	SCRCMD_WORK_SetMsgData( work, msgData );
 }
 

@@ -39,7 +39,7 @@ typedef struct
 {
   u16 zone_id;
   u16 script_id;
-	SCRIPT_WORK *script;
+	SCRIPT_WORK *script_work;
 	GAMESYS_WORK *gsys;
 	GAMEDATA *gdata;
 	MMDLSYS *mmdlsys;
@@ -63,7 +63,7 @@ typedef struct
 //======================================================================
 //èâä˙âªÅAçÌèú
 extern SCRCMD_WORK * SCRCMD_WORK_Create(
-	const SCRCMD_WORK_HEADER *head, HEAPID heapID, HEAPID temp_heapID );
+	const SCRCMD_WORK_HEADER *head, HEAPID heapID );
 extern void SCRCMD_WORK_Delete( SCRCMD_WORK *work );
 
 //éQè∆ÅAéÊìæ

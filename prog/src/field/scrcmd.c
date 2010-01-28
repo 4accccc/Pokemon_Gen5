@@ -827,7 +827,8 @@ static BOOL EvChangeCommonScrWait(VMHANDLE *core, void *wk )
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
 
-  if ( SCRIPT_GetVMExists( sc, VMHANDLE_SUB1 ) != TRUE) {
+  if ( SCRIPT_GetVMExists( sc, VMHANDLE_SUB1 ) == FALSE )
+  {
     SCRCMD_WORK_RestoreUserWork( wk );
     return TRUE;
   }
