@@ -921,9 +921,12 @@ u32 ZONEDATA_GetSceneAreaID(u16 zone_id)
 {
   zone_id = ControlZoneID(zone_id);
 
-  if( zone_id == ZONE_ID_C04 )
+  switch( zone_id )
   {
+  case ZONE_ID_C04:
     return NARC_grid_camera_scene_camera_scene_C04_dat;
+  case ZONE_ID_T05:
+    return NARC_grid_camera_scene_camera_scene_T05_dat;
   }
   return ZONEDATA_NO_SCENEAREA_ID;
 }
