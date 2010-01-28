@@ -241,9 +241,6 @@ decide_del_skill_norm:
     ELSE                            //2つ以上技ある
       _TEMOTI_NICK_NAME( 0, SEL_POS )
       _WAZA_NAME( 2, NORM_CHECK_SKILL )
-      //「ポカン」
-      _SYSWIN_MSG_DOWN( msg_rotom_waza_05 )
-      _SYSWIN_CLOSE()
       //「旧固有技を忘れた・・」
       _SYSWIN_MSG_DOWN( msg_rotom_waza_08 )
       _SYSWIN_CLOSE()
@@ -299,9 +296,6 @@ del_skill_msg:
   _TEMOTI_NICK_NAME( 0, SEL_POS )
   _WAZA_NAME( 1, OLD_SKILL )
   _WAZA_NAME( 2, NEW_SKILL )
-  //「ポカン」
-  _SYSWIN_MSG_DOWN( msg_rotom_waza_05 )
-  _SYSWIN_CLOSE()
   //「旧固有技を忘れて・・」
   _SYSWIN_MSG_DOWN( msg_rotom_waza_06 )
   _SYSWIN_CLOSE()
@@ -339,6 +333,9 @@ select_del_skill:
         _YES_NO_WIN( SCWK_ANSWER )
         _SYSWIN_CLOSE()
         IF $SCWK_ANSWER == 0 THEN     //忘れてOK
+          //「ポカン」
+          _SYSWIN_MSG_DOWN( msg_rotom_waza_05 )
+          _SYSWIN_CLOSE()
           _CALL del_skill_msg
           $SCWK_ANSWER = TRUE
           $DECIDE = TRUE            //ループ終了
