@@ -378,7 +378,7 @@ static const LISTDATA_FUNCTION	sc_list_funciton[]	=
 //=====================================
 static const LIST_SETUP_TBL sc_list_data_home[]	=
 {	
-#if 1
+#if 0
 	{	
 		L"バトルレコーダー", LISTDATA_SEQ_PROC_BTLRECORDER,
 	},
@@ -485,21 +485,10 @@ static GFL_PROC_RESULT DEBUG_PROC_NAGI_Init( GFL_PROC *p_proc, int *p_seq, void 
 
 	CreateTemporaryModules( p_wk, HEAPID_NAGI_DEBUG );
 	GFL_OVERLAY_Load( FS_OVERLAY_ID(namein) );
-	p_wk->p_namein_param	= NAMEIN_AllocParam( HEAPID_NAGI_DEBUG, NAMEIN_POKEMON, 1, 0, NAMEIN_BOX_LENGTH, NULL );
+	p_wk->p_namein_param	= NAMEIN_AllocParam( HEAPID_NAGI_DEBUG, NAMEIN_GREETING_WORD, 1, 0, NAMEIN_GREETING_WORD_LENGTH, NULL );
 	GFL_OVERLAY_Unload( FS_OVERLAY_ID(namein) );
 
   NAGI_Printf( "pokeparty size=[%d]\n", PokeParty_GetWorkSize() );
-
-
-  {
-    static const char sc_test_str[] =
-    { 
-      "abcdefghijklmnop"
-    };
-    //0x154;
-    NAGI_Printf( "CRC=[0x%x] %d\n", GFL_STD_CrcCalc(sc_testdata, sizeof(sc_testdata)), sizeof(sc_testdata) );
-    NAGI_Printf( "CRC=[0x%x] %d\n", GFL_STD_CrcCalc(sc_testdata, RegulationData_GetWorkSize()-2), RegulationData_GetWorkSize() );
-  }
 
 
 	return GFL_PROC_RES_FINISH;
@@ -1006,7 +995,7 @@ static void LISTDATA_CallProcPoke2DCheck( DEBUG_NAGI_MAIN_WORK *p_wk )
 //-----------------------------------------------------------------------------
 static void LISTDATA_CallProcNamin( DEBUG_NAGI_MAIN_WORK *p_wk )
 {	
-	DEBUG_NAGI_COMMAND_CallProc( p_wk, FS_OVERLAY_ID(namein), &NameInputProcData, p_wk->p_namein_param );
+  DEBUG_NAGI_COMMAND_CallProc( p_wk, FS_OVERLAY_ID(namein), &NameInputProcData, p_wk->p_namein_param );
 }
 
 #include "system/rtc_tool.h"

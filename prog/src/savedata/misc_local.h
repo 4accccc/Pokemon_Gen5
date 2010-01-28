@@ -26,7 +26,7 @@ struct _MISC
   u16 favorite_monsno;		//お気に入りポケモン
 	u8  favorite_form_no:7;		//お気に入りポケモンのフォルム番号
 	u8  favorite_egg_flag:1;	//お気に入りポケモンのタマゴフラグ
-	u8	namein_mode[NAMEIN_MAX];	//5つ
+	u8	namein_mode[NAMEIN_MAX];	//7つ
 
 	//パルパーク
 	u32 palpark_highscore:28;

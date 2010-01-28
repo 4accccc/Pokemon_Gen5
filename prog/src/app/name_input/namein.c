@@ -338,11 +338,11 @@ typedef enum
 //アイコンの種類
 typedef enum
 {
-  ICON_TYPE_HERO    = NAMEIN_MYNAME,
-  ICON_TYPE_RIVAL   = NAMEIN_RIVALNAME,
-  ICON_TYPE_PERSON  = NAMEIN_FRIENDNAME,
-  ICON_TYPE_POKE    = NAMEIN_POKEMON,
-  ICON_TYPE_BOX     = NAMEIN_BOX,
+  ICON_TYPE_HERO,
+  ICON_TYPE_RIVAL,
+  ICON_TYPE_PERSON,
+  ICON_TYPE_POKE,
+  ICON_TYPE_BOX,
 } ICON_TYPE;
 
 //-------------------------------------
@@ -701,6 +701,8 @@ static void ICON_Main( ICON_WORK *p_wk );
 static BOOL ICON_IsTrg( const ICON_WORK *cp_wk );
 static void Icon_StartMove( ICON_WORK *p_wk );
 static BOOL Icon_MainMove( ICON_WORK *p_wk );
+
+static ICON_TYPE ICON_GetModoToType( NAMEIN_MODE mode );
 //-------------------------------------
 /// その他
 //=====================================
@@ -997,7 +999,7 @@ static GFL_PROC_RESULT NAMEIN_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_p
   { 
     GFL_CLUNIT  *p_clunit = NAMEIN_GRAPHIC_GetClunit( p_wk->p_graphic );
     OBJ_Init( &p_wk->obj, p_clunit, HEAPID_NAME_INPUT );
-    ICON_Init( &p_wk->icon, p_param->mode, p_param->param1, p_param->param2, p_clunit, HEAPID_NAME_INPUT );
+    ICON_Init( &p_wk->icon, ICON_GetModoToType(p_param->mode), p_param->param1, p_param->param2, p_clunit, HEAPID_NAME_INPUT );
   }
   p_wk->p_keymap_handle = NAMEIN_KEYMAP_HANDLE_Alloc( HEAPID_NAME_INPUT );
 
@@ -4839,6 +4841,44 @@ static BOOL Icon_MainMove( ICON_WORK *p_wk )
 
   return TRUE;
 }
+//----------------------------------------------------------------------------
+/**
+ *	@brief  モードからタイプへの　変換
+ *
+ *	@param	NAMEIN_MODE mode  モード
+ *
+ *	@return タイプ
+ */
+//-----------------------------------------------------------------------------
+static ICON_TYPE ICON_GetModoToType( NAMEIN_MODE mode )
+{ 
+  switch( mode )
+  { 
+  case NAMEIN_GREETING_WORD:
+    /* fallthrough */
+  case NAMEIN_THANKS_WORD:
+    /* fallthrough */
+	case NAMEIN_MYNAME:
+    return ICON_TYPE_HERO;
+
+	case NAMEIN_POKEMON:
+    return ICON_TYPE_POKE;
+    
+	case NAMEIN_BOX:
+    return ICON_TYPE_BOX;
+
+	case NAMEIN_RIVALNAME:
+    return ICON_TYPE_RIVAL;
+
+	case NAMEIN_FRIENDNAME:
+    return ICON_TYPE_PERSON;
+
+  default:
+    GF_ASSERT( 0 );
+    return 0;
+  }
+
+}
 //=============================================================================
 /**
  *    その他
@@ -4886,6 +4926,12 @@ static STRBUF* DEFAULTNAME_CreateStr( const NAMEIN_WORK *cp_wk, NAMEIN_MODE mode
   case NAMEIN_RIVALNAME:
     //@todoライバル名
     return GFL_MSG_CreateString( cp_wk->p_msg, NAMEIN_DEF_NAME_000 + GFUser_GetPublicRand( NAMEIN_DEFAULT_NAME_MAX ) );
+
+  case NAMEIN_GREETING_WORD:
+    return GFL_MSG_CreateString( cp_wk->p_msg, NAMEIN_DEF_NAME_002 );
+    
+  case NAMEIN_THANKS_WORD:
+    return GFL_MSG_CreateString( cp_wk->p_msg, NAMEIN_DEF_NAME_003 );
   }
 
   return NULL;
