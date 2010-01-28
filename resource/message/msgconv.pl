@@ -64,7 +64,6 @@ use constant SEQ_FINISH		=> 4;	# シーケンス：指定言語メッセージ�
 use constant SEQ_DEFAULT_LANG_START => 5;
 use constant SEQ_DEFAULT_LANG_READING => 6;
 
-use constant LETTER_ORDER_FILE => "friends.xlor";	# 文字オーダーファイル
 
 #===================================================
 # Globals
@@ -380,33 +379,3 @@ sub FwdSeq {
 
 
 
-#===============================================================================================
-# ↓むかし使ってた。今は使ってない。
-#===============================================================================================
-
-#===============================================================
-# 日付チェック
-# input 1: ファイル１
-#       2: ファイル２
-# return   ファイル１が存在しないorファイル１の方が古い場合は１
-#          それ以外は０
-#===============================================================
-sub update_time_check {
-	my $target = shift;
-	my $source = shift;
-
-	unless( -e $target ){ return 1; }
-	unless( -e $source ){ return 0; }
-
-	my @filestatus = stat($target);
-	my $target_time = $filestatus[9];
-	@filestatus = stat($source);
-	my $source_time = $filestatus[9];
-
-	if( $target_time < $source_time )
-	{
-		return 1;
-	}
-
-	return 0;
-}

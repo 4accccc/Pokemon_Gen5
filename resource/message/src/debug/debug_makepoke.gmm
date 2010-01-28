@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2010-01-20T17:35:40"/>
+	<create user="taya" host="W00146" date="2010-01-28T12:52:20"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -374,6 +374,10 @@
 		<language name="JPN" width="256">フォルム</language>
 	</row>
 
+	<row id="DMPSTR_TAMAGO">
+		<language name="JPN" width="256">たまご</language>
+	</row>
+
 	<row id="DMPSTR_HP_RND">
 		<language name="JPN" width="256">rnd</language>
 	</row>
@@ -528,6 +532,14 @@
 
 	<row id="DMPSTR_SICK_DOKU">
 		<language name="JPN" width="256">どく</language>
+	</row>
+
+	<row id="DMPSTR_TAMAGO_OFF">
+		<language name="JPN" width="256">　</language>
+	</row>
+
+	<row id="DMPSTR_TAMAGO_ON">
+		<language name="JPN" width="256">○</language>
 	</row>
 
 	<flowchart-group-list>
