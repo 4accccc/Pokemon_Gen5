@@ -137,7 +137,8 @@ ev_sub_gate_open_demo:
     _CAMERA_START()
 
     _CAMERA_PURGE() //対象物とカメラのバインドを解く（この場面で対象物＝自機）
-    _CAMERA_MOVE(5720,0,970752,1015808,135168,360448, 60 ) 
+    _CAMERA_MOVE_BY_ID( BADGEGATE_CAM_01 , 30 )
+    //_CAMERA_MOVE(5720,0,970752,1015808,135168,360448, 60 ) 
     _CAMERA_WAIT_MOVE()
 
     {
