@@ -48,6 +48,14 @@ typedef struct{
 //#include "../fielddata/script/hide_item.dat"	//隠しアイテムデータ
 #endif
 
+typedef struct {
+  u16 index;
+  u8 world_flag;
+  u8 revival_flag;
+  u16 zone_id;
+  u16 x, z;
+}HIDE_ITEM_DATA;
+
 //static const u16 hide_item_data[];
 #include "../../../resource/fldmapdata/script/scr_hideitem/hide_item.cdat"
 
@@ -79,7 +87,9 @@ u16 HIDEITEM_GetIDByScriptID( u16 scr_id )
 //--------------------------------------------------------------
 u16 HIDEITEM_GetFlagNoByScriptID( u16 scr_id )
 {
-  return FLAG_HIDEITEM_AREA_START + hide_item_data[ HIDEITEM_GetIDByScriptID( scr_id ) ];
+  u16 item_id = HIDEITEM_GetIDByScriptID( scr_id );
+  const HIDE_ITEM_DATA * data = &hide_item_data[ item_id ];
+  return FLAG_HIDEITEM_AREA_START + data->index;
 }
 
 

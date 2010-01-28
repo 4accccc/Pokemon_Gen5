@@ -11,9 +11,12 @@ COL_POSX  = 2
 COL_POSZ  = 3
 COL_ITEM  = 4
 COL_NUM   = 5
-COL_RESPONSE = 6
-COL_SPECIAL = 7
+COL_WORLDMAP = 6
+COL_REVIVAL = 7
 COL_ID = 8
+COL_THROUGH_NUMBER = 9
+
+COL_MAX = 10
 
 #C形式ヘッダ読み込みのため
 require "#{ENV["PROJECT_ROOT"]}tools/headerdata.rb"
@@ -50,19 +53,19 @@ end
 #------------------------------------------------------------
 #------------------------------------------------------------
 class HideItem
-  attr_reader  :mapname, :mapid, :posx, :posz, :itemno, :num, :response, :special, :id
+  attr_reader  :mapname, :mapid, :posx, :posz, :itemno, :num, :world_flag, :revival_flag, :id
 
   attr_reader :itemname, :mapid_name
 
-  def initialize(mapname, mapid, x, z, itemname, num, response, special, id)
+  def initialize(mapname, mapid, x, z, itemname, num, world_flag, revival_flag, id)
     @mapname = mapname
-    @mapid = Dict.checkZoneID( mapid )
+    @mapid = Dict.checkZoneID( "ZONE_ID_" + mapid.upcase )
     @posx = x
     @posz = z
     @itemno = Dict.getItemSymbol( itemname )
     @num = num
-    @response = response
-    @special = special
+    @world_flag = world_flag
+    @revival_flag = revival_flag
     @id = id
 
     @mapid_name = mapid
@@ -75,10 +78,11 @@ def readItemData( filename )
   items = Array.new
 
   lines = File.open(filename).readlines
-  # read header
+
+  #ヘッダ部分読み飛ばし
   while line = lines.shift
     column = line.split(",")
-    if column.length >= 10 then break end
+    if column.length >= COL_MAX then break end
     debug_puts("search title:#{line}")
 =begin
     if column[0 .. 6] == [
@@ -89,14 +93,16 @@ def readItemData( filename )
 =end
   end
 
+  #データ部分読み込み
   while line = lines.shift
     column = line.split(",")
-    if column.length < 10 then
+    if column.length < COL_MAX then
       break
     end
-    items << HideItem.new( column[COL_MAPNAME], column[COL_MAPID], column[COL_POSX], column[COL_POSZ],
-                          column[COL_ITEM], column[COL_NUM], column[COL_RESPONSE],
-                          column[COL_SPECIAL], column[COL_ID] )
+    items << HideItem.new( column[COL_MAPNAME], column[COL_MAPID],
+                          column[COL_POSX], column[COL_POSZ],
+                          column[COL_ITEM], column[COL_NUM], column[COL_WORLDMAP],
+                          column[COL_REVIVAL], column[COL_ID] )
   end
   return items
 end
@@ -108,11 +114,23 @@ end
 #------------------------------------------------------------
 def getCDAT( items )
   output = ""
-  output += sprintf("static const u16 hide_item_data[%d] = {\n", items.length)
+  #output += sprintf("static const u16 hide_item_data[%d] = {\n", items.length)
+  output += sprintf("static const HIDE_ITEM_DATA hide_item_data[%d] = {\n", items.length)
   output += sprintf("\n")
   items.each{|item|
-    output += sprintf("\t %3d, // %s (%d,%d)\n",
-                      item.id, item.mapname, item.posx, item.posz )
+    output += sprintf("\t{ // %s\n", item.itemname )
+    output += sprintf("\t\t%3d, \n", item.id )
+    output += sprintf("\t\t%d,%d, // flags\n", item.world_flag, item.revival_flag )
+    output += sprintf("\t\t%3d, // %s %s\n", item.mapid, item.mapid_name, item.mapname )
+    output += sprintf("\t\t%3d,%3d, // x, y\n", item.posx, item.posz )
+    output += sprintf("\t},\n")
+
+=begin
+    output += sprintf("\t %3d, // %d %d %3d(%d,%d) %s %s\n",
+                      item.id,
+                      item.world_flag, item.revival_flag, 
+                      item.mapid, item.posx, item.posz, item.mapid_name, item.mapname )
+=end
   }
   output += sprintf( "}; // end of hide_item_data\n" )
   return output
