@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tomoya_takahashi" host="W00148" date="2010-01-28T18:32:25"/>
+	<create user="matsumiya" host="W00207" date="2010-01-29T14:50:01"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -327,14 +327,14 @@
 		</language>
 	</columns>
 
-	<dialog left="503" top="75" right="1208" bottom="695" maximized="no" rayout="Vertical2">
+	<dialog left="76" top="61" right="778" bottom="681" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="0" style="0000" width="530"/>
+		<band id="0" index="0" style="0000" width="527"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="697"/>
-		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<band id="2" index="2" style="0000" width="694"/>
+		<band id="3" index="3" style="0000" width="694"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -357,170 +357,194 @@
 
 	<row id="CROWD_MSG01">
 		<comment>群集用</comment>
-		<language name="JPN" width="256">しんきさくせいようのテンプレートです。</language>
-		<language name="JPN_KANJI" width="256">新規作成用のテンプレートです。</language>
+		<language name="JPN" width="256">やあ！　トレーナー！
+きみの　ポケモン　げんきかい？</language>
+		<language name="JPN_KANJI" width="256">やあ！　トレーナー！
+きみの　ポケモン　元気かい？</language>
 	</row>
 
 	<row id="CROWD_MSG02">
 		<comment>群集用</comment>
-		<language name="JPN" width="256">このファイルをリネームしてつかってください。</language>
-		<language name="JPN_KANJI" width="256">このファイルをリネームして使ってください。</language>
+		<language name="JPN" width="256">きょうこそ　はやく　かえって
+こどもたちと　ポケモンしょうぶ！</language>
+		<language name="JPN_KANJI" width="256">今日こそ　早く　帰って
+子供たちと　ポケモン勝負！</language>
 	</row>
 
 	<row id="CROWD_MSG03">
 		<comment>群集用</comment>
-		<language name="JPN" width="256">もじれつ　を　へんしゅう　した　あとで
-「てきよう」を　おすと、つかえない　もじが
-ふくまれていた　ばあいに　けいこくが　でます。</language>
-		<language name="JPN_KANJI" width="256">文字列を編集した後で
-「適用」をおすと、使えない文字が
-ふくまれていた場合に、警告が出ます。</language>
+		<language name="JPN" width="256">こんにちは！
+あいさつは　だいじ　だよな</language>
+		<language name="JPN_KANJI" width="256">こんにちは！
+あいさつは　大事だよな</language>
 	</row>
 
 	<row id="CROWD_MSG04">
 		<comment>群集用</comment>
-		<language name="JPN" width="256">とくに　「かんじ」は、しょうがっこうで　ならう
-１００６もじ　しか　つかえません。</language>
-		<language name="JPN_KANJI" width="256">特に漢字は、小学校で習う
-１００６文字しか使えません。</language>
+		<language name="JPN" width="256">タイム　イズ　マネー
+じかんは　とりもどせません</language>
+		<language name="JPN_KANJI" width="256">タイム　イズ　マネー
+時間は　取り戻せません</language>
 	</row>
 
 	<row id="CROWD_MSG05">
 		<comment>群集用</comment>
-		<language name="JPN" width="256">この「かんじ」は　つかえるのかな？　ということを
-わざわざ　しらべなくても
-へんしゅうしながら　たしかめられます。
-</language>
-		<language name="JPN_KANJI" width="256">この漢字は使えるのかな？　ということを、
-わざわざ調べなくても、
-編集しながら確かめられます。
-</language>
+		<language name="JPN" width="256">あいかわらず　ひとが　おおい……</language>
+		<language name="JPN_KANJI" width="256">あいかわらず　人が　多い……</language>
 	</row>
 
 	<row id="CROWD_MSG06">
 		<comment>群集用</comment>
-		<language name="JPN" width="256">「かんじ」を　つかう　ひつようが　ない　ばあいは
-JPN_KANJI　の　れつ　を　けすことも　できます。
-</language>
-		<language name="JPN_KANJI" width="256">漢字を使う必要がない場合は、
-JPN_KANJI　の列を消すこともできます。
-</language>
+		<language name="JPN" width="256">……どこで　さぼろうかな▼
+いやいや　さばるじゃないな
+ちょっと　きゅうけい　だよ</language>
+		<language name="JPN_KANJI" width="256">……どこで　さぼろうかな▼
+いやいや　さばるじゃないな
+ちょっと　休憩だよ</language>
 	</row>
 
 	<row id="CROWD_MSG07">
 		<comment>群集用</comment>
-		<language name="JPN" width="256">メニューバーから
-プロジェクト
-→こうもくせってい
-→げんごのついか／さくじょ
-です。</language>
-		<language name="JPN_KANJI" width="256">メニューバーから
-プロジェクト
-→項目設定
-→言語の追加／削除
-です。</language>
+		<language name="JPN" width="256">この　まちは
+ねむらない　まち……</language>
+		<language name="JPN_KANJI" width="256">この　街は
+眠らない　街……</language>
 	</row>
 
 	<row id="CROWD_MSG08">
 		<comment>群集用</comment>
-		<language name="JPN" width="256">よろしくおねがいします。</language>
-		<language name="JPN_KANJI" width="256">よろしくお願いします。</language>
+		<language name="JPN" width="256">あしたも　この　みちを　あるくだろう
+あさっても　しあさっても……</language>
+		<language name="JPN_KANJI" width="256">明日も　この道を　歩くだろう
+明後日も　明明後日も……</language>
 	</row>
 
 	<row id="CROWD_MSG09">
 		<comment>群集用</comment>
-		<language name="JPN" width="256">test</language>
-		<language name="JPN_KANJI" width="256">test</language>
+		<language name="JPN" width="256">おとくいさま
+まっているだろうなあ……</language>
+		<language name="JPN_KANJI" width="256">お得意様
+待っているだろうなあ……</language>
 	</row>
 
 	<row id="CROWD_MSG10">
 		<comment>群集用</comment>
-		<language name="JPN" width="256">test</language>
-		<language name="JPN_KANJI" width="256">test</language>
+		<language name="JPN" width="256">わたしは　たたかう　ビジネスマン</language>
+		<language name="JPN_KANJI" width="256">私は　闘う　ビジネスマン</language>
 	</row>
 
 	<row id="CROWD_MSG11">
 		<comment>群集用</comment>
-		<language name="JPN" width="256">test</language>
-		<language name="JPN_KANJI" width="256">test</language>
+		<language name="JPN" width="256">がんばれ！　おれ！！</language>
+		<language name="JPN_KANJI" width="256">がんばれ！　おれ！！</language>
 	</row>
 
 	<row id="CROWD_MSG12">
 		<comment>群集用</comment>
-		<language name="JPN" width="256">test</language>
-		<language name="JPN_KANJI" width="256">test</language>
+		<language name="JPN" width="256">こんど　やすんで
+ベースボールかんせん　したいな</language>
+		<language name="JPN_KANJI" width="256">今度　休んで
+ベースボール観戦　したいな</language>
 	</row>
 
 	<row id="CROWD_MSG13">
 		<comment>群集用</comment>
-		<language name="JPN" width="256">tes</language>
-		<language name="JPN_KANJI" width="256">tes</language>
+		<language name="JPN" width="256">わたしは　しごと　という
+しょうぶを　しているのだ！▼
+こいつは　なかなか　てごわくて
+だからこそ　たのしいんだぜ！</language>
+		<language name="JPN_KANJI" width="256">わたしは　仕事という
+勝負を　しているのだ！▼
+こいつは　なかなか　手ごわくて
+だからこそ　楽しいんだぜ！</language>
 	</row>
 
 	<row id="CROWD_MSG14">
 		<comment>群集用</comment>
-		<language name="JPN" width="256">test</language>
-		<language name="JPN_KANJI" width="256">test</language>
+		<language name="JPN" width="256">うーむ……　きみの　ポケモン
+ドレスアップを　すると　いいかも</language>
+		<language name="JPN_KANJI" width="256">うーむ……　きみの　ポケモン
+ドレスアップを　すると　いいかも</language>
 	</row>
 
 	<row id="CROWD_MSG15">
 		<comment>群集用</comment>
-		<language name="JPN" width="256">test</language>
-		<language name="JPN_KANJI" width="256">test</language>
+		<language name="JPN" width="256">ジムリーダーの　アーティさんと
+ポケモンしょうぶ　したかい？▼
+あのひと　つかみどころが　ないが
+ポケモンのこと　だいすき　だよね</language>
+		<language name="JPN_KANJI" width="256">ジムリーダーの　アーティさんと
+ポケモン勝負　したかい？▼
+あのひと　つかみどころが　ないが
+ポケモンのこと　大好き　だよね</language>
 	</row>
 
 	<row id="CROWD_MSG16">
 		<comment>群集用</comment>
-		<language name="JPN" width="256">tser</language>
-		<language name="JPN_KANJI" width="256">tser</language>
+		<language name="JPN" width="256">ひさびさに　ポケモンと
+たびを　したいなあ……</language>
+		<language name="JPN_KANJI" width="256">久々に　ポケモンと
+旅を　したいなあ……</language>
 	</row>
 
 	<row id="CROWD_MSG17">
 		<comment>群集用</comment>
-		<language name="JPN" width="256">test</language>
-		<language name="JPN_KANJI" width="256">test</language>
+		<language name="JPN" width="256">こんど　しゅっちょうで
+カントーちほうに　いくんだよ</language>
+		<language name="JPN_KANJI" width="256">今度　出張で
+カントー地方に　行くんだよ</language>
 	</row>
 
 	<row id="CROWD_MSG18">
 		<comment>群集用</comment>
-		<language name="JPN" width="256">test</language>
-		<language name="JPN_KANJI" width="256">test</language>
+		<language name="JPN" width="256">いろんな　くにの　ひとびとが
+この　ヒウンに　あつまってるんだ</language>
+		<language name="JPN_KANJI" width="256">いろんな　国の　人々が
+この　ヒウンに　集ってるんだ</language>
 	</row>
 
 	<row id="CROWD_MSG19">
 		<comment>群集用</comment>
-		<language name="JPN" width="256">tes</language>
-		<language name="JPN_KANJI" width="256">tes</language>
+		<language name="JPN" width="256">みんな　ウォーキングの　プロ！</language>
+		<language name="JPN_KANJI" width="256">みんな　ウォーキングの　プロ！</language>
 	</row>
 
 	<row id="CROWD_MSG20">
 		<comment>群集用</comment>
-		<language name="JPN" width="256">test</language>
-		<language name="JPN_KANJI" width="256">test</language>
+		<language name="JPN" width="256">こんなにも　たくさんの　ひとがいるが
+じぶんを　みうしなわないでよ</language>
+		<language name="JPN_KANJI" width="256">こんなにも　たくさんの　人がいるが
+自分を　見失わないでよ</language>
 	</row>
 
 	<row id="CROWD_MSG21">
 		<comment>群集用</comment>
-		<language name="JPN" width="256">test</language>
-		<language name="JPN_KANJI" width="256">test</language>
+		<language name="JPN" width="256">おおどおり　いつもどおりの　ひとどおり</language>
+		<language name="JPN_KANJI" width="256">大通り　いつもどおりの　人通り</language>
 	</row>
 
 	<row id="CROWD_MSG22">
 		<comment>群集用</comment>
-		<language name="JPN" width="256">test</language>
-		<language name="JPN_KANJI" width="256">test</language>
+		<language name="JPN" width="256">ぼくは　じぶんの　めいしに　すきな
+ポケモンの　イラストを　いれているよ</language>
+		<language name="JPN_KANJI" width="256">ぼくは　自分の　名詞に　好きな
+ポケモンの　イラストを　いれているよ</language>
 	</row>
 
 	<row id="CROWD_MSG23">
 		<comment>群集用</comment>
-		<language name="JPN" width="256">test</language>
-		<language name="JPN_KANJI" width="256">test</language>
+		<language name="JPN" width="256">いつも　ここを　あるいているからね
+ひとを　かわすのは　うまいよ</language>
+		<language name="JPN_KANJI" width="256">いつも　ここを　歩いているからね
+人を　交わすのは　うまいよ</language>
 	</row>
 
 	<row id="CROWD_MSG24">
 		<comment>群集用</comment>
-		<language name="JPN" width="256">てｓｔ</language>
-		<language name="JPN_KANJI" width="256">てｓｔ</language>
+		<language name="JPN" width="256">ああ！　いま　あるいている
+ひとのかずを　カウントしてたのに！！</language>
+		<language name="JPN_KANJI" width="256">ああ！　今　歩いている
+人の数を　カウントしてたのに！！</language>
 	</row>
 
 	<row id="CROWD_NOISE_01">
@@ -539,13 +563,13 @@ JPN_KANJI　の列を消すこともできます。
 	</row>
 
 	<row id="CROWD_NOISE_04">
-		<language name="JPN" width="256">なんだ？</language>
-		<language name="JPN_KANJI" width="256">なんだ？</language>
+		<language name="JPN" width="256">あれ？</language>
+		<language name="JPN_KANJI" width="256">あれ？</language>
 	</row>
 
 	<row id="CROWD_NOISE_05">
-		<language name="JPN" width="256">たいへんだー</language>
-		<language name="JPN_KANJI" width="256">たいへんだー</language>
+		<language name="JPN" width="256">たいへんだあ</language>
+		<language name="JPN_KANJI" width="256">大変だあ</language>
 	</row>
 
 	<row id="CROWD_NOISE_06">
@@ -559,23 +583,23 @@ JPN_KANJI　の列を消すこともできます。
 	</row>
 
 	<row id="CROWD_NOISE_08">
-		<language name="JPN" width="256">さようなら</language>
-		<language name="JPN_KANJI" width="256">さようなら</language>
+		<language name="JPN" width="256">バイバイ！</language>
+		<language name="JPN_KANJI" width="256">バイバイ！</language>
 	</row>
 
 	<row id="CROWD_NOISE_09">
-		<language name="JPN" width="256">またこんど</language>
-		<language name="JPN_KANJI" width="256">またこんど</language>
+		<language name="JPN" width="256">じみ　だな</language>
+		<language name="JPN_KANJI" width="256">地味だな</language>
 	</row>
 
 	<row id="CROWD_NOISE_10">
-		<language name="JPN" width="256">ほほほほほ</language>
-		<language name="JPN_KANJI" width="256">ほほほほほ</language>
+		<language name="JPN" width="256">まいった……</language>
+		<language name="JPN_KANJI" width="256">まいった……</language>
 	</row>
 
 	<row id="CROWD_NOISE_11">
-		<language name="JPN" width="256">こんどは</language>
-		<language name="JPN_KANJI" width="256">こんどは</language>
+		<language name="JPN" width="256">なるほど！</language>
+		<language name="JPN_KANJI" width="256">なるほど！</language>
 	</row>
 
 	<row id="CROWD_NOISE_12">
@@ -584,43 +608,43 @@ JPN_KANJI　の列を消すこともできます。
 	</row>
 
 	<row id="CROWD_NOISE_13">
-		<language name="JPN" width="256">まじかよ</language>
-		<language name="JPN_KANJI" width="256">まじかよ</language>
+		<language name="JPN" width="256">ひさしぶり</language>
+		<language name="JPN_KANJI" width="256">ひさしぶり</language>
 	</row>
 
 	<row id="CROWD_NOISE_14">
-		<language name="JPN" width="256">あのさー</language>
-		<language name="JPN_KANJI" width="256">あのさー</language>
+		<language name="JPN" width="256">……？</language>
+		<language name="JPN_KANJI" width="256">……？</language>
 	</row>
 
 	<row id="CROWD_NOISE_15">
-		<language name="JPN" width="256">ちかよらないで</language>
-		<language name="JPN_KANJI" width="256">ちかよらないで</language>
+		<language name="JPN" width="256">アイタタ……</language>
+		<language name="JPN_KANJI" width="256">アイタタ……</language>
 	</row>
 
 	<row id="CROWD_NOISE_16">
-		<language name="JPN" width="256">ちょっとちょっと</language>
-		<language name="JPN_KANJI" width="256">ちょっとちょっと</language>
+		<language name="JPN" width="256">さいきん　どう？</language>
+		<language name="JPN_KANJI" width="256">最近　どう？</language>
 	</row>
 
 	<row id="CROWD_NOISE_17">
-		<language name="JPN" width="256">ほんと</language>
-		<language name="JPN_KANJI" width="256">ほんと</language>
+		<language name="JPN" width="256">ひらめいた！</language>
+		<language name="JPN_KANJI" width="256">ひらめいた！</language>
 	</row>
 
 	<row id="CROWD_NOISE_18">
-		<language name="JPN" width="256">ほしがき</language>
-		<language name="JPN_KANJI" width="256">ほしがき</language>
+		<language name="JPN" width="256">なにたべよ？</language>
+		<language name="JPN_KANJI" width="256">何食べよ？</language>
 	</row>
 
 	<row id="CROWD_NOISE_19">
-		<language name="JPN" width="256">たらこスパゲッティ</language>
-		<language name="JPN_KANJI" width="256">たらこスパゲッティ</language>
+		<language name="JPN" width="256">１・２！　１・２！</language>
+		<language name="JPN_KANJI" width="256">１・２！　１・２！</language>
 	</row>
 
 	<row id="CROWD_NOISE_20">
-		<language name="JPN" width="256">あしたは</language>
-		<language name="JPN_KANJI" width="256">あしたは</language>
+		<language name="JPN" width="256">あれ　いまの？</language>
+		<language name="JPN_KANJI" width="256">あれ　今の？</language>
 	</row>
 
 	<flowchart-group-list>
