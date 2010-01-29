@@ -192,7 +192,7 @@ enum
 {	
 	//メインBG
 	PLTID_BG_BACK_M				= 0,
-	PLTID_BG_TEXT_M				= 10,
+	PLTID_BG_TEXT_M				= 1,
 	PLTID_BG_TASKMENU_M		= 11,
 	PLTID_BG_TOUCHBAR_M		= 13,
 	PLTID_BG_INFOWIN_M		= 15,
@@ -487,7 +487,6 @@ static void debug_param( COMM_BTL_DEMO_PARAM* prm )
   for( i=0; i<COMM_BTL_DEMO_TRDATA_MAX; i++ )
   {
     prm->trainer_data[i].server_version = GFUser_GetPublicRand(2);
-
     prm->trainer_data[i].mystatus = SaveData_GetMyStatus( SaveControl_GetPointer() );
 
 #if 0
@@ -768,27 +767,28 @@ static void CommBtlDemo_BG_LoadResource( COMM_BTL_DEMO_BG_WORK* wk, HEAPID heapI
 	handle	= GFL_ARC_OpenDataHandle( ARCID_COMM_BTL_DEMO_GRA, heapID );
 
 	// 上下画面ＢＧパレット転送
-	GFL_ARCHDL_UTIL_TransVramPalette( handle, NARC_comm_btl_demo_bg_base_u_NCLR, PALTYPE_MAIN_BG, PLTID_BG_BACK_M, 0x0, heapID );
-	GFL_ARCHDL_UTIL_TransVramPalette( handle, NARC_comm_btl_demo_bg_base_d_NCLR, PALTYPE_SUB_BG, PLTID_BG_BACK_S, 0x0, heapID );
+	GFL_ARCHDL_UTIL_TransVramPalette( handle, NARC_comm_btl_demo_bg_base_u_NCLR, PALTYPE_SUB_BG, PLTID_BG_BACK_S, 0x0, heapID );
+	GFL_ARCHDL_UTIL_TransVramPalette( handle, NARC_comm_btl_demo_bg_base_d_NCLR, PALTYPE_MAIN_BG, PLTID_BG_BACK_M, 0x0, heapID );
   
+#if 0 
   // 会話フォントパレット転送
 	GFL_ARC_UTIL_TransVramPalette( ARCID_FONT,
       NARC_font_default_nclr,
       PALTYPE_MAIN_BG,
       0x20*PLTID_BG_TEXT_M, 0x20, heapID );
-	
+#endif
 	
   //	----- 下画面 -----
 	GFL_ARCHDL_UTIL_TransVramBgCharacter(	handle, NARC_comm_btl_demo_bg_base_d_NCGR,
-						BG_FRAME_BACK_S, 0, 0, 0, heapID );
+						BG_FRAME_BACK_M, 0, 0, 0, heapID );
 	GFL_ARCHDL_UTIL_TransVramScreen(	handle, NARC_comm_btl_demo_bg_base_d_NSCR,
-						BG_FRAME_BACK_S, 0, 0, 0, heapID );	
+						BG_FRAME_BACK_M, 0, 0, 0, heapID );	
 
 	//	----- 上画面 -----
 	GFL_ARCHDL_UTIL_TransVramBgCharacter(	handle, NARC_comm_btl_demo_bg_base_u_NCGR,
-						BG_FRAME_BACK_M, 0, 0, 0, heapID );
+						BG_FRAME_BACK_S, 0, 0, 0, heapID );
 	GFL_ARCHDL_UTIL_TransVramScreen(	handle, NARC_comm_btl_demo_bg_base_u_NSCR,
-						BG_FRAME_BACK_M, 0, 0, 0, heapID );		
+						BG_FRAME_BACK_S, 0, 0, 0, heapID );		
 
 	GFL_ARC_CloseDataHandle( handle );
 }
@@ -1961,15 +1961,15 @@ static void TRAINER_UNIT_DrawTrainerName( TRAINER_UNIT* unit, GFL_FONT *font )
   if( unit->trsex == PM_MALE )
   {
     // 男処理
-    GFL_FONTSYS_SetColor( 0xf, 0x6, 0x5 );
+    GFL_FONTSYS_SetColor( 0x7, 0x6, 0x5 );
   }
   else
   {
     // 女処理
-    GFL_FONTSYS_SetColor( 0xf, 0x4, 0x3 );
+    GFL_FONTSYS_SetColor( 0x7, 0x4, 0x3 );
   }
 
-//  GFL_FONTSYS_SetColor( 0xf, 0x4, 0x5 );
+//  GFL_FONTSYS_SetColor( 0x7, 0x4, 0x5 );
 
   PRINTSYS_Print( GFL_BMPWIN_GetBmp(unit->win_name), 0, 0, unit->str_trname, font );
   GFL_BMPWIN_MakeTransWindow_VBlank( unit->win_name );
