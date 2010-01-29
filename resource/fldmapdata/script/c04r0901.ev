@@ -19,14 +19,29 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_c04r0901_gentleman_01
+_EVENT_DATA    ev_c04r0901_veteranm_01
 _EVENT_DATA_END
 
 
 /************************************************************/
 /*							紳士							*/
 /************************************************************/
-EVENT_START	ev_c04r0901_gentleman_01
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_mapscript_dummy )
+EVENT_START	ev_c04r0901_veteranm_01
+	_TALK_OBJ_START()
+	
+	//ゲームクリア前後で分岐
+	IF FLAG_OFF( SYS_FLAG_GAME_CLEAR ) THEN
+		//クリア前
+		_BALLOONWIN_TALKOBJ_MSG( msg_c04r0901_veteranm_01 )
+		
+	ELSE
+		//クリア後
+		_BALLOONWIN_TALKOBJ_MSG( msg_c04r0901_veteranm_02 )
+		
+	ENDIF
+	
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+	
 EVENT_END
 
