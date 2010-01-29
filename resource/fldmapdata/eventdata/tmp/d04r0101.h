@@ -15,6 +15,6 @@
 #define TR_ESPM_01                         1
 #define D04R0101_CORN_01                   2
 #define D04R0101_CORN_02                   3
-#define D04R0101_SUNGLASSES_01             4
+#define D04R0101_BACKPACKERW_01            4
 
 #endif //ZONE_D04R0101_EVC_H

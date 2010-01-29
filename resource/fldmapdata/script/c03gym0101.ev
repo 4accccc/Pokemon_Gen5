@@ -256,8 +256,11 @@ ev_leader3_btl:
 	_TRAINER_FLAG_SET( TRID_JUGGLING_05 )
 	_TRAINER_FLAG_SET( TRID_JUGGLING_06 )
 	
-	//R04ストッパーの解除
+	//R04ライバルイベント開始
 	$WK_SCENE_R04 = 1
+	
+	//【仮】C03R0601
+	$WK_SCENE_C03R0601 = 1
 
 	//================================================//
 

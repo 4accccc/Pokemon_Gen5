@@ -1,5 +1,5 @@
 #event data
-#save date:2010/01/21 17:03:31
+#save date:2010/01/29 13:17:02
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r04.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r04.wms
 #hold event type:
 1
 #hold event number:
-14
+15
 #event number: 0
 #type
 1
@@ -173,7 +173,7 @@ TR_WORKER2_02
 #OBJ CODE Number
 WORKMAN
 #MOVE CODE Number
-MV_RND_H
+MV_RND_UR
 #EVENT TYPE Number
 EV_TYPE_TRAINER
 #Flag Name
@@ -181,7 +181,7 @@ EV_TYPE_TRAINER
 #Event Script Name
 SCRID_TRID_WORKER2_02
 #Direction Type Number
-DIR_LEFT
+DIR_RIGHT
 #Parameter 0 Number
 3
 #Parameter 1 Number
@@ -195,7 +195,7 @@ DIR_LEFT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-184 -16 -936
+168 -16 -920
 #event number: 6
 #type
 1
@@ -288,7 +288,7 @@ DIR_RIGHT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-488 0 -1160
+504 0 -952
 #event number: 9
 #type
 1
@@ -367,7 +367,7 @@ EV_TYPE_NORMAL
 #Event Script Name
 SCRID_R04_STOP_01
 #Direction Type Number
-DIR_RIGHT
+DIR_DOWN
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -381,7 +381,7 @@ DIR_RIGHT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-440 0 -1416
+504 0 -1096
 #event number: 12
 #type
 1
@@ -444,6 +444,37 @@ DIR_UP
 EVENTDATA_POSTYPE_GRID
 #position
 456 0 -504
+#event number: 14
+#type
+1
+#ID name
+R04_RIVAL_01
+#OBJ CODE Number
+RIVEL
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_R04_RIVAL_01
+#Event Script Name
+SCRID_R04_RIVAL_01
+#Direction Type Number
+DIR_UP
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+488 0 -1416
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
@@ -463,7 +494,7 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-1
+2
 #event number: 0
 #Pos Event Label
 POSID_R04_STOP_01
@@ -478,9 +509,26 @@ WK_SCENE_R04
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-456 0 -1416
+488 0 -1096
 #size
-6 1
+3 1
+#event number: 1
+#Pos Event Label
+POSID_R04_RIVAL_01
+#Pos Script Name
+SCRID_POS_R04_RIVAL_01
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+WK_SCENE_R04
+#Event Trigger Work Value
+1
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+440 0 -1432
+#size
+7 1
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
@@ -535,11 +583,11 @@ DOOR_ID_R04R0101_R04_EXIT02
 #Door Direction
 EXIT_DIR_DOWN
 #Door Type
-EXIT_TYPE_MAT
+EXIT_TYPE_DOOR
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--88 0 -616
+-56 0 -840
 #size
 1 1
 #event number: 3
@@ -552,11 +600,11 @@ DOOR_ID_R04R0201_R04_EXIT02
 #Door Direction
 EXIT_DIR_DOWN
 #Door Type
-EXIT_TYPE_MAT
+EXIT_TYPE_DOOR
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--56 0 -840
+-88 0 -616
 #size
 1 1
 #Map Event List Data End

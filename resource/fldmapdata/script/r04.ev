@@ -23,6 +23,8 @@ _EVENT_DATA		ev_r04_stop_01
 _EVENT_DATA		ev_pos_r04_stop_01
 _EVENT_DATA		ev_r04_man2_01
 _EVENT_DATA		ev_r04_woman2_01
+_EVENT_DATA		ev_r04_rival_01
+_EVENT_DATA		ev_pos_r04_rival_01
 _EVENT_DATA_END
 
 
@@ -56,24 +58,6 @@ EVENT_START		ev_r04_stop_01
 		_LAST_KEYWAIT()
 		_BALLOONWIN_CLOSE()
 
-		/*//トランシーバーを取得している場合
-		IF FLAG_ON( FH_01) THEN
-			
-			//ポケモンしょうぶを　いどんでくる……　そんな　さぎょういんも　いるぞ！
-			_BALLOONWIN_TALKOBJ_MSG( msg_r04_stop_03 )
-			_LAST_KEYWAIT()
-			_BALLOONWIN_CLOSE()
-		
-		//トランシーバーを取得していない場合
-		ELSE
-		
-			//なんだ？　ヒウンシティの　バトルカンパニーに　いっていない　やつに
-			_BALLOONWIN_TALKOBJ_MSG( msg_r04_stop_02 )
-			_LAST_KEYWAIT()
-			_BALLOONWIN_CLOSE()
-		
-		ENDIF
-		*/
 	ENDIF
 
 EVENT_END
@@ -90,28 +74,8 @@ EVENT_START		ev_pos_r04_stop_01
 	//自機の位置取得
 	_PLAYER_POS_GET( LWK_HERO_X,LWK_HERO_Z )
 	
-	//X軸が429の場合
-	IF $LWK_HERO_X == 429 THEN
-	
-		//作業員：びっくりマークを出し、自機に近づく
-		_OBJ_ANIME( R04_STOP_01, anm_stop_429come )
-		_OBJ_ANIME_WAIT()
-		
-		//分岐会話
-		_CALL r04_stop_talk
-
-		//作業員：ゆっくり自機を押す
-		//自機：ゆっくり１歩下がる
-		_OBJ_ANIME( R04_STOP_01, anm_stop_push )
-		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_back )
-		_OBJ_ANIME_WAIT()
-		
-		//作業員：持ち場に戻る
-		_OBJ_ANIME( R04_STOP_01, anm_stop_429return )
-		_OBJ_ANIME_WAIT()
-
 	//X軸が430の場合
-	ELSIF $LWK_HERO_X == 430 THEN
+	IF $LWK_HERO_X == 430 THEN
 	
 		//作業員：びっくりマークを出し、自機に近づく
 		_OBJ_ANIME( R04_STOP_01, anm_stop_430come )
@@ -120,34 +84,12 @@ EVENT_START		ev_pos_r04_stop_01
 		//分岐会話
 		_CALL r04_stop_talk
 
-		//作業員：ゆっくり自機を押す
 		//自機：ゆっくり１歩下がる
-		_OBJ_ANIME( R04_STOP_01, anm_stop_push )
 		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_back )
 		_OBJ_ANIME_WAIT()
 		
 		//作業員：持ち場に戻る
 		_OBJ_ANIME( R04_STOP_01, anm_stop_430return )
-		_OBJ_ANIME_WAIT()
-	
-	//X軸が431の場合
-	ELSIF $LWK_HERO_X == 431 THEN
-
-		//作業員：びっくりマークを出し、自機に近づく
-		_OBJ_ANIME( R04_STOP_01, anm_stop_431come )
-		_OBJ_ANIME_WAIT()
-		
-		//分岐会話
-		_CALL r04_stop_talk
-
-		//作業員：ゆっくり自機を押す
-		//自機：ゆっくり１歩下がる
-		_OBJ_ANIME( R04_STOP_01, anm_stop_push )
-		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_back )
-		_OBJ_ANIME_WAIT()
-		
-		//作業員：持ち場に戻る
-		_OBJ_ANIME( R04_STOP_01, anm_stop_431return )
 		_OBJ_ANIME_WAIT()
 	
 	//X軸が432の場合
@@ -160,9 +102,7 @@ EVENT_START		ev_pos_r04_stop_01
 		//分岐会話
 		_CALL r04_stop_talk
 
-		//作業員：ゆっくり自機を押す
 		//自機：ゆっくり１歩下がる
-		_OBJ_ANIME( R04_STOP_01, anm_stop_push )
 		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_back )
 		_OBJ_ANIME_WAIT()
 		
@@ -177,35 +117,25 @@ EVENT_END
 //共通：作業員分岐会話内容
 r04_stop_talk:
 
+//分岐：ジムバッジを取得しているか？
+_GET_BADGE_FLAG( SCWK_TEMP0, BADGE_ID_03 )
+
 //ジムバッジを取得していない場合
 IF $SCWK_TEMP0 == 0 THEN
 	
 	//なんだ？　ヒウンジムの　ジムバッジも　もってない　やつに
-	_BALLOONWIN_OBJMSG( msg_r04_stop_01 , R04_STOP_01 )
+	_BALLOONWIN_OBJMSG( msg_r04_stop_02 , R04_STOP_01 )
 	_LAST_KEYWAIT()
 	_BALLOONWIN_CLOSE()
 		
 //ジムバッジを取得している場合
 ELSE
-
-	/*//トランシーバーを取得している場合
-	IF FLAG_ON( FH_01) THEN*/
 			
 	//ポケモンしょうぶを　いどんでくる……　そんな　さぎょういんも　いるぞ！
 		_BALLOONWIN_OBJMSG( msg_r04_stop_03 , R04_STOP_01 )
 		_LAST_KEYWAIT()
 		_BALLOONWIN_CLOSE()
 		
-	/*//トランシーバーを取得していない場合
-	ELSE
-		
-		//なんだ？　ヒウンシティの　バトルカンパニーに　いっていない　やつに
-		_BALLOONWIN_OBJMSG( msg_r04_stop_02 , R04_STOP_01 )
-		_LAST_KEYWAIT()
-		_BALLOONWIN_CLOSE()
-		
-	ENDIF
-	*/
 ENDIF
 
 _RET
@@ -213,43 +143,16 @@ _RET
 //--------------------------------------------------------------------
 //作業員：びっくりマーク後、自機に近づく
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_stop_429come
-	_ANIME_DATA	AC_MARK_GYOE,1
-	_ANIME_DATA	AC_WALK_U_8F,1
-	_ANIME_DATA	AC_WALK_R_8F,1
-	_ANIME_DATA	AC_DIR_D,1
-	_ANIME_DATA	AC_STAY_WALK_D_8F,1
-	_ANIME_DATA	ACMD_END,0
-
 _ANIME_LABEL	anm_stop_430come
+	_ANIME_DATA	AC_DIR_L,1
 	_ANIME_DATA	AC_MARK_GYOE,1
-	_ANIME_DATA	AC_WALK_U_8F,1
-	_ANIME_DATA	AC_WALK_R_8F,2
-	_ANIME_DATA	AC_DIR_D,1
-	_ANIME_DATA	AC_STAY_WALK_D_8F,1
-	_ANIME_DATA	ACMD_END,0
-
-_ANIME_LABEL	anm_stop_431come
-	_ANIME_DATA	AC_MARK_GYOE,1
-	_ANIME_DATA	AC_WALK_U_8F,1
-	_ANIME_DATA	AC_WALK_R_8F,3
-	_ANIME_DATA	AC_DIR_D,1
-	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_stop_432come
+	_ANIME_DATA	AC_DIR_R,1
 	_ANIME_DATA	AC_MARK_GYOE,1
-	_ANIME_DATA	AC_WALK_U_8F,1
-	_ANIME_DATA	AC_WALK_R_8F,4
-	_ANIME_DATA	AC_DIR_D,1
-	_ANIME_DATA	AC_STAY_WALK_D_8F,1
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------------
-//作業員：ゆっくり自機を押す
-//--------------------------------------------------------------------
-_ANIME_LABEL	anm_stop_push
-	_ANIME_DATA	AC_WALK_D_16F,1
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
@@ -265,24 +168,12 @@ _ANIME_LABEL	anm_player_back
 //--------------------------------------------------------------------
 //作業員：持ち場に戻る
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_stop_429return
-	_ANIME_DATA	AC_WALK_L_8F,1
-	_ANIME_DATA	AC_DIR_R,1
-	_ANIME_DATA	ACMD_END,0
-
 _ANIME_LABEL	anm_stop_430return
-	_ANIME_DATA	AC_WALK_L_8F,2
-	_ANIME_DATA	AC_DIR_R,1
-	_ANIME_DATA	ACMD_END,0
-
-_ANIME_LABEL	anm_stop_431return
-	_ANIME_DATA	AC_WALK_L_8F,3
-	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_DIR_D,1
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_stop_432return
-	_ANIME_DATA	AC_WALK_L_8F,4
-	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_DIR_D,1
 	_ANIME_DATA	ACMD_END,0
 
 /**************************************************************/
@@ -299,3 +190,188 @@ EVENT_START		ev_r04_woman2_01
 	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_r04_woman2_01 )
 EVENT_END
 
+/**************************************************************/
+/*			R04 RIVAL	会話用イベントスクリプト		 	  */
+/**************************************************************/
+EVENT_START		ev_r04_rival_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_r04_black_01 )
+EVENT_END
+
+/**************************************************************/
+/*			R04 RIVAL	POSイベントスクリプト		 		  */
+/**************************************************************/
+EVENT_START		ev_pos_r04_rival_01
+	
+	DEFINE_LOCAL  LWK_POSX
+	DEFINE_LOCAL  LWK_POSZ
+	
+	_PLAYER_POS_GET( LWK_POSX,LWK_POSZ )
+	
+	//座標による分岐
+	
+	SWITCH $LWK_POSX
+	CASE 427 THEN
+		_OBJ_ANIME( R04_RIVAL_01, anm_rival_come427 )
+		_OBJ_ANIME_WAIT()
+	CASE 428 THEN
+		_OBJ_ANIME( R04_RIVAL_01, anm_rival_come428 )
+		_OBJ_ANIME_WAIT()
+	CASE 429 THEN
+		_OBJ_ANIME( R04_RIVAL_01, anm_rival_come429 )
+		_OBJ_ANIME_WAIT()
+	CASE 430 THEN
+		_OBJ_ANIME( R04_RIVAL_01, anm_rival_come430 )
+		_OBJ_ANIME_WAIT()
+	CASE 431 THEN
+		_OBJ_ANIME( R04_RIVAL_01, anm_rival_come431 )
+		_OBJ_ANIME_WAIT()
+	CASE 432 THEN
+		_OBJ_ANIME( R04_RIVAL_01, anm_rival_come432 )
+		_OBJ_ANIME_WAIT()
+	CASE 433 THEN
+		_OBJ_ANIME( R04_RIVAL_01, anm_rival_come433 )
+		_OBJ_ANIME_WAIT()
+	ENDSWITCH
+	
+	//やあ　ジムバッジを　てにいれたんだね
+	_PLAYER_NAME(0)
+	_BALLOONWIN_OBJMSG( msg_r04_black_02 , R04_RIVAL_01 )
+	_MSGWIN_CLOSE()
+	
+	//【仮】ライバルと戦闘
+	
+	//ありがとう！　なんとなく　わかったことがある
+	_BALLOONWIN_OBJMSG( msg_r04_black_03 , R04_RIVAL_01 )
+	_MSGWIN_CLOSE()
+
+	SWITCH $LWK_POSX
+	CASE 427 THEN
+		_OBJ_ANIME( R04_RIVAL_01, anm_rival_leave427 )
+		_OBJ_ANIME_WAIT()
+	CASE 428 THEN
+		_OBJ_ANIME( R04_RIVAL_01, anm_rival_leave428 )
+		_OBJ_ANIME_WAIT()
+	CASE 429 THEN
+		_OBJ_ANIME( R04_RIVAL_01, anm_rival_leave429 )
+		_OBJ_ANIME_WAIT()
+	CASE 430 THEN
+		_OBJ_ANIME( R04_RIVAL_01, anm_rival_leave430 )
+		_OBJ_ANIME_WAIT()
+	CASE 431 THEN
+		_OBJ_ANIME( R04_RIVAL_01, anm_rival_leave431 )
+		_OBJ_ANIME_WAIT()
+	CASE 432 THEN
+		_OBJ_ANIME( R04_RIVAL_01, anm_rival_leave432 )
+		_OBJ_ANIME_WAIT()
+	CASE 433 THEN
+		_OBJ_ANIME( R04_RIVAL_01, anm_rival_leave433 )
+		_OBJ_ANIME_WAIT()
+	ENDSWITCH
+
+	//ライバルのOBJ削除
+	_OBJ_DEL( R04_RIVAL_01 )
+	
+	//===================================//
+	
+	//【仮】ライバルのバニシュフラグオン
+	_FLAG_SET( FV_R04_RIVAL_01 )
+	
+	//ライバルイベント終了
+	$WK_SCENE_R04 = 2
+	
+	//===================================//
+	
+	//アララギ博士からの連絡
+	_PLAINWIN_MSG_DOWN( msg_r04_tvt_01 )
+	_PLAINWIN_CLOSE()
+	
+EVENT_END
+
+//--------------------------------------------------------------------
+//	ライバル：自機に近寄る
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_rival_come427
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	AC_WALK_L_8F,3
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_rival_come428
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	AC_WALK_L_8F,2
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_rival_come429
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_rival_come430
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_rival_come431
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_rival_come432
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	AC_WALK_R_8F,2
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_rival_come433
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	AC_WALK_R_8F,3
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	ライバル：退場
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_rival_leave427
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,8
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_rival_leave428
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,8
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_rival_leave429
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,8
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_rival_leave430
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,8
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_rival_leave431
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,8
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_rival_leave432
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,8
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_rival_leave433
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,8
+	_ANIME_DATA	ACMD_END,0

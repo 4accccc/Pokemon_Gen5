@@ -21,6 +21,7 @@
 //--------------------------------------------------------------
 _EVENT_DATA		ev_d03_boy3_01
 _EVENT_DATA		ev_bg_d03_sign1_01
+_EVENT_DATA		ev_d03_middleman1_01
 _EVENT_DATA_END
 
 
@@ -42,5 +43,12 @@ EVENT_END
 /**************************************************************/
 EVENT_START		ev_bg_d03_sign1_01
 	_EASY_BGWIN_MSG( msg_d03_sign1_01,TYPE_ROAD )
+EVENT_END
+
+/**************************************************************/
+/*			D03	MIDDLEMAN1	会話用イベントスクリプト		  */
+/**************************************************************/
+EVENT_START		ev_d03_middleman1_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d03_middleman1_01 )
 EVENT_END
 
