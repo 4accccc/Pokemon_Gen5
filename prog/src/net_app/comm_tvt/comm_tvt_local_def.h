@@ -45,14 +45,14 @@
 #define CTVT_PAL_BG_MAIN_BG    (1) //1本
 #define CTVT_PAL_BG_MAIN_FONT   (10) //1本
 
-#define CTVT_PAL_BG_SUB_BG    (0) //5本
+#define CTVT_PAL_BG_SUB_BG    (0) //6本
 #define CTVT_PAL_BG_BUTTON_NONE (1)
 #define CTVT_PAL_BG_BUTTON_ACTIVE (3)
 #define CTVT_PAL_BG_BUTTON_DISABLE (4)
 
-#define CTVT_PAL_BG_SUB_BAR   (5) //1本
-#define CTVT_PAL_BG_SUB_TASKMENU   (6) //2本
-#define CTVT_PAL_BG_SUB_WINFRAME   (8) //1本
+#define CTVT_PAL_BG_SUB_BAR   (6) //1本
+#define CTVT_PAL_BG_SUB_TASKMENU   (7) //2本
+#define CTVT_PAL_BG_SUB_WINFRAME   (9) //1本
 #define CTVT_PAL_BG_SUB_FONT   (10) //1本
 
 #define CTVT_PAL_OBJ_MAIN_COMMON (0) //5本
@@ -79,7 +79,7 @@
 #define CTVT_BUFFER_SCR_SIZE (256*192*2)  //0x18000
 
 //音声再生速度の上限・下限
-#define CTVT_TALK_SLIDER_MOVE_Y (40)  //上にも下にも40
+#define CTVT_TALK_SLIDER_MOVE_Y (32)  //上にも下にも32
 
 //======================================================================
 //	enum

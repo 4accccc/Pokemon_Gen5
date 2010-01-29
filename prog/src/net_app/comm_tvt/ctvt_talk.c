@@ -33,7 +33,7 @@
 //	define
 //======================================================================
 #pragma mark [> define
-#define CTVT_TALK_SLIDER_X (8)
+#define CTVT_TALK_SLIDER_X (5)
 #define CTVT_TALK_SLIDER_Y (116)
 //#define CTVT_TALK_SLIDER_MOVE_Y (40)  //上にも下にも40  //外に出した
 #define CTVT_TALK_SLIDER_WIDTH_H  (12)    //HALF
@@ -44,10 +44,15 @@
 #define CTVT_TALK_PAUSE_X (192)
 #define CTVT_TALK_RETURN_X (224)
 
+//形が矩形で括れないので
 #define CTVT_TALK_REC_BUTTON_LEFT (4)
 #define CTVT_TALK_REC_BUTTON_TOP (1)
-#define CTVT_TALK_REC_BUTTON_WIDTH (23)
-#define CTVT_TALK_REC_BUTTON_HEIGHT (13)
+#define CTVT_TALK_REC_BUTTON_WIDTH (24)
+#define CTVT_TALK_REC_BUTTON_HEIGHT (10)
+#define CTVT_TALK_REC_BUTTON_LEFT2 (5)
+#define CTVT_TALK_REC_BUTTON_TOP2  (11)
+#define CTVT_TALK_REC_BUTTON_WIDTH2 (22)
+#define CTVT_TALK_REC_BUTTON_HEIGHT2 (3)
 
 #define CTVT_TALK_DRAW_BUTTON_LEFT   (4)
 #define CTVT_TALK_DRAW_BUTTON_TOP    (15)
@@ -144,6 +149,11 @@ struct _CTVT_TALK_WORK
   u8  wavePosX;
   u8  wavePosY;
 
+  BOOL blinkButtonReq;
+  u8   blinkButtonCnt;
+  u16  blinkButtonCol[16];
+  u16  blinkButtonBuf[16];
+
   GFL_BMPWIN *msgWin;
   APP_TASKMENU_WORK *yesNoWork;
   
@@ -207,6 +217,15 @@ CTVT_TALK_WORK* CTVT_TALK_InitSystem( COMM_TVT_WORK *work , const HEAPID heapId 
   talkWork->sendWaveData = talkWork->sendWaveBuf;
   talkWork->sendWaveBufTop = (void*)((u32)talkWork->sendWaveBuf+sizeof(CTVT_COMM_WAVE_HEADER));
   talkWork->sliderPos = 0;
+  
+  //アニメ用に、パレットを退避
+  GFL_STD_MemCopy16( (void*)(HW_DB_BG_PLTT+CTVT_PAL_BG_BUTTON_NONE*32) , talkWork->blinkButtonBuf , 16*2 );
+  
+  for( i=0;i<16;i++ )
+  {
+    talkWork->blinkButtonCol[i] = 0x7FFF;
+  }
+  
   return talkWork;
 }
 
@@ -327,7 +346,7 @@ void CTVT_TALK_InitMode( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork )
                                         GFL_BMP_CHRAREA_GET_B );
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp( talkWork->recWin ) , 0x0 );
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp( talkWork->drawWin) , 0x0 );
-  GFL_BMP_Clear( GFL_BMPWIN_GetBmp( talkWork->waveWin) , 0xF );
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp( talkWork->waveWin) , 0x0 );
   GFL_BMPWIN_MakeScreen( talkWork->recWin );
   GFL_BMPWIN_MakeScreen( talkWork->drawWin );
   GFL_BMPWIN_MakeScreen( talkWork->waveWin );
@@ -357,6 +376,9 @@ void CTVT_TALK_InitMode( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork )
   talkWork->isUpdateMsgDraw = TRUE;
   talkWork->isUpdateMsgWin = FALSE;
   GFL_BG_LoadScreenReq(CTVT_FRAME_SUB_MSG);
+
+  talkWork->blinkButtonReq = FALSE;
+  talkWork->blinkButtonCnt = 0;
 
 }
 
@@ -553,7 +575,8 @@ const COMM_TVT_MODE CTVT_TALK_Main( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWo
     }
     break;
   case CTS_END_PARENT_REQ:
-    if( GFL_UI_TP_GetTrg() == TRUE )
+    if( GFL_UI_TP_GetTrg() == TRUE ||
+        GFL_UI_KEY_GetTrg() & (PAD_BUTTON_A|PAD_BUTTON_B) )
     {
       talkWork->subState = CTSS_GO_END;
       talkWork->state = CTS_FADEOUT_BOTH;
@@ -593,6 +616,37 @@ const COMM_TVT_MODE CTVT_TALK_Main( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWo
       GFL_BG_LoadScreenReq(CTVT_FRAME_SUB_MSG);
       talkWork->isUpdateMsgWin = FALSE;
     }
+  }
+
+  if( talkWork->blinkButtonReq == TRUE )
+  {
+    static const u8 blinkTime = 6;
+    static const u8 blinkNum = 1;
+
+    talkWork->blinkButtonCnt++;
+    if( talkWork->blinkButtonCnt > blinkTime*blinkNum )
+    {
+      talkWork->blinkButtonReq = FALSE;
+      NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_2D_BG_PLTT_SUB ,
+                                          CTVT_PAL_BG_BUTTON_NONE * 32,
+                                          talkWork->blinkButtonBuf , 32 );
+    }
+    else
+    {
+      if( ( talkWork->blinkButtonCnt%(blinkTime*2) ) < blinkTime )
+      {
+        NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_2D_BG_PLTT_SUB ,
+                                            CTVT_PAL_BG_BUTTON_NONE * 32,
+                                            talkWork->blinkButtonCol , 32 );
+      }
+      else
+      {
+        NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_2D_BG_PLTT_SUB ,
+                                            CTVT_PAL_BG_BUTTON_NONE * 32,
+                                            talkWork->blinkButtonBuf , 32 );
+      }
+    }
+
   }
   
   return CTM_TALK;
@@ -639,16 +693,14 @@ static void CTVT_TALK_UpdateWait( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork
     }
     else
     {
-      if( GFL_UI_KEY_GetTrg() & CTVT_BUTTON_TALK )
+      if( GFL_UI_KEY_GetTrg() & CTVT_BUTTON_TALK ||
+          GFL_UI_TP_HitTrg( CTVT_TALK_HitRecButton ) == 0 )
       {
         talkWork->state = CTS_REQ_TALK;
         PMSND_PlaySystemSE( CTVT_SND_TOUCH );
-      }
-      else
-      if( GFL_UI_TP_HitTrg( CTVT_TALK_HitRecButton ) == 0 )
-      {
-        talkWork->state = CTS_REQ_TALK;
-        PMSND_PlaySystemSE( CTVT_SND_TOUCH );
+
+        talkWork->blinkButtonReq = TRUE;
+        talkWork->blinkButtonCnt = 0;
       }
       
       talkWork->recButtonState = CRBT_NONE;
@@ -741,7 +793,7 @@ static void CTVT_TALK_UpdateTalk( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork
 
         talkWork->wavePosX = 0;
         talkWork->wavePosY = CTVT_TALK_WAVE_DRAW_HEIGHT*8/2;
-        GFL_BMP_Clear( GFL_BMPWIN_GetBmp( talkWork->waveWin) , 0xF );
+        GFL_BMP_Clear( GFL_BMPWIN_GetBmp( talkWork->waveWin) , 0x0 );
       }
     }
     break;
@@ -846,6 +898,8 @@ static void CTVT_TALK_UpdateTalk( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork
         if( ret == TRUE )
         {
           talkWork->state = CTS_WAIT;
+          GFL_BMP_Clear( GFL_BMPWIN_GetBmp( talkWork->waveWin) , 0x0 );
+          GFL_BMPWIN_TransVramCharacter( talkWork->waveWin );
         }
       }
     }
@@ -881,6 +935,12 @@ static void CTVT_TALK_UpdateButton( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWo
                                 CTVT_TALK_REC_BUTTON_TOP , 
                                 CTVT_TALK_REC_BUTTON_WIDTH , 
                                 CTVT_TALK_REC_BUTTON_HEIGHT , 
+                                palNo );
+    GFL_BG_ChangeScreenPalette( CTVT_FRAME_SUB_MISC ,
+                                CTVT_TALK_REC_BUTTON_LEFT2 , 
+                                CTVT_TALK_REC_BUTTON_TOP2 , 
+                                CTVT_TALK_REC_BUTTON_WIDTH2 , 
+                                CTVT_TALK_REC_BUTTON_HEIGHT2 , 
                                 palNo );
     GFL_BG_LoadScreenV_Req( CTVT_FRAME_SUB_MISC );
     talkWork->befRecButtonState = talkWork->recButtonState;
@@ -978,7 +1038,8 @@ static void CTVT_TALK_DrawLine( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork ,
 }
 static void CTVT_TALK_DrawDot( u8 *charBuf , u8 x , u8 y )
 {
-  const u8 drawCol = 0xA;
+  //Fontパレット
+  const u8 drawCol = 0x9;
 
   const int charX = x/8;
   const int charY = y/8;

@@ -40,7 +40,7 @@
 #define COMM_TVT_PAL_ANM_G (1)
 #define COMM_TVT_PAL_ANM_SB (3)
 #define COMM_TVT_PAL_ANM_EB (20)
-#define COMM_TVT_PAL_ANM_SPD (0x80)
+#define COMM_TVT_PAL_ANM_SPD (0x100)
 
 #define COMM_TVT_NAME_WIDTH (12)
 //======================================================================
@@ -517,7 +517,7 @@ static void COMM_TVT_LoadResource( COMM_TVT_WORK *work )
   work->arcHandle = GFL_ARC_OpenDataHandle( ARCID_COMM_TVT_GRA , work->heapId );
   //‰º‰æ–Ê
   GFL_ARCHDL_UTIL_TransVramPalette( work->arcHandle , NARC_comm_tvt_tv_t_tuuwa_bg_NCLR , 
-                    PALTYPE_SUB_BG , CTVT_PAL_BG_SUB_BG*32 , 32*5 , work->heapId );
+                    PALTYPE_SUB_BG , CTVT_PAL_BG_SUB_BG*32 , 32*6 , work->heapId );
   GFL_ARCHDL_UTIL_TransVramBgCharacter( work->arcHandle , NARC_comm_tvt_tv_t_common_bg_NCGR ,
                     CTVT_FRAME_SUB_BG , 0 , 0, FALSE , work->heapId );
   GFL_ARCHDL_UTIL_TransVramScreen( work->arcHandle , NARC_comm_tvt_tv_t_common_bg_NSCR , 

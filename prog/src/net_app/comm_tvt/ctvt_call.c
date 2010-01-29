@@ -64,9 +64,9 @@
 
 #define CTVT_CALL_RETURN_X (224)
 
-#define CTVT_CALL_SCROLL_X (242)
-#define CTVT_CALL_SCROLL_Y (23)
-#define CTVT_CALL_SCROLLBAR_LEN (122)
+#define CTVT_CALL_SCROLL_X (256-8)
+#define CTVT_CALL_SCROLL_Y (24)
+#define CTVT_CALL_SCROLLBAR_LEN (120)
 
 #define CTVT_CALL_SCROLL_HIT_WIDTH  (12)
 #define CTVT_CALL_SCROLL_HIT_HEIGHT (12)
@@ -318,12 +318,6 @@ void CTVT_CALL_InitMode( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork )
   GFL_BG_SetScrollReq( CTVT_FRAME_SUB_MISC , GFL_BG_SCROLL_Y_SET , 0 );
 
   CTVT_CALL_DispMessage( work , callWork , COMM_TVT_CALL_04 );
-
-  {
-    //1P‚ğ•\¦‚³‚¹‚é
-    //CTVT_CAMERA_WORK *cameraWork = COMM_TVT_GetCameraWork( work );
-    //CTVT_CAMERA_SetUpdateCameraAnime( work , cameraWork , 0 , TRUE );
-  }
 }
 
 //--------------------------------------------------------------
@@ -371,16 +365,6 @@ void CTVT_CALL_TermMode( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork )
 const COMM_TVT_MODE CTVT_CALL_Main( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork )
 {
   const HEAPID heapId = COMM_TVT_GetHeapId( work );
-  /*
-  if( MI_GetMainMemoryPriority() == MI_PROCESSOR_ARM9 )
-  {
-    OS_TPrintf("ARM9!\n");
-  }
-  else
-  {
-    OS_TPrintf("ARM7!\n");
-  }
-  */
   
   switch( callWork->state )
   {
