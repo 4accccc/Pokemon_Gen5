@@ -50,6 +50,7 @@ typedef enum {
   DBGSTR_CLIENT_ForbidEscape_Arijigoku_Enable,
   DBGSTR_CLIENT_ForbidEscape_Jiryoku_Chk,
   DBGSTR_CLIENT_ForbidEscape_Jiryoku_Enable,
+  DBGSTR_CLIENT_UpdateWazaProcResult,
 
   DBGSTR_BPP_NemuriWakeCheck,
 

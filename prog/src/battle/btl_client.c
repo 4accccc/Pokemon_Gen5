@@ -238,7 +238,6 @@ static BOOL scProc_OP_ChangePokeForm( BTL_CLIENT* wk, int* seq, const int* args 
 static BOOL scProc_OP_WSTurnCheck( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_ConsumeItem( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_UpdateUseWaza( BTL_CLIENT* wk, int* seq, const int* args );
-static BOOL scProc_OP_ResetUsedWaza( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_SetContFlag( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_ResetContFlag( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_SetTurnFlag( BTL_CLIENT* wk, int* seq, const int* args );
@@ -1340,7 +1339,7 @@ static BOOL is_unselectable_waza( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, Waza
   // いちゃもん状態（２ターン続けて同じワザを選べない）
   if( BPP_CheckSick(bpp, WAZASICK_ICHAMON) )
   {
-    if( BPP_GetPrevWazaID(bpp) == waza )
+    if( BPP_GetPrevOrgWazaID(bpp) == waza )
     {
       if( strParam != NULL )
       {
@@ -2033,7 +2032,6 @@ static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq )
     { SC_OP_WAZASICK_TURNCHECK, scProc_OP_WSTurnCheck     },
     { SC_OP_CONSUME_ITEM,       scProc_OP_ConsumeItem      },
     { SC_OP_UPDATE_USE_WAZA,    scProc_OP_UpdateUseWaza   },
-    { SC_OP_RESET_USED_WAZA,    scProc_OP_ResetUsedWaza   },
     { SC_OP_SET_CONTFLAG,       scProc_OP_SetContFlag     },
     { SC_OP_RESET_CONTFLAG,     scProc_OP_ResetContFlag   },
     { SC_OP_SET_TURNFLAG,       scProc_OP_SetTurnFlag     },
@@ -3603,17 +3601,16 @@ static BOOL scProc_OP_ConsumeItem( BTL_CLIENT* wk, int* seq, const int* args )
 }
 static BOOL scProc_OP_UpdateUseWaza( BTL_CLIENT* wk, int* seq, const int* args )
 {
-  BTL_POKEPARAM* pp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
+  BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
 
-  BPP_UpdatePrevWazaID( pp, args[2], args[1] );
+  {
+    BTL_N_Printf( DBGSTR_CLIENT_UpdateWazaProcResult, args[0], args[4], args[1], args[2], args[3] );
+  }
+
+  BPP_UpdateWazaProcResult( bpp, args[1], args[2], args[3], args[4] );
   return TRUE;
 }
-static BOOL scProc_OP_ResetUsedWaza( BTL_CLIENT* wk, int* seq, const int* args )
-{
-  BTL_POKEPARAM* pp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
-  BPP_ResetWazaContConter( pp );
-  return TRUE;
-}
+
 static BOOL scProc_OP_SetContFlag( BTL_CLIENT* wk, int* seq, const int* args )
 {
   BTL_POKEPARAM* pp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );

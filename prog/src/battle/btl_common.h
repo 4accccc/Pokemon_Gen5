@@ -52,7 +52,9 @@ typedef enum {
 
   BTL_SIDE_MAX,
 
-}BtlSide;
+}BtlSide_tag;
+
+typedef u8 BtlSide;
 
 //--------------------------------------------------------------
 /**
@@ -71,7 +73,9 @@ typedef enum {
   BTL_POS_MAX,
   BTL_POS_NULL = BTL_POS_MAX,
 
-}BtlPokePos;
+}BtlPokePos_tag;
+
+typedef u8  BtlPokePos;
 
 //--------------------------------------------------------------
 /**
@@ -87,7 +91,9 @@ typedef enum {
   BTL_CLIENT_TYPE_MAX,
   BTL_CLIENT_TYPE_NONE = BTL_CLIENT_TYPE_MAX,
 
-}BtlClientType;
+}BtlClientType_tag;
+
+typedef  u8  BtlClientType;
 
 //--------------------------------------------------------------
 /**
@@ -126,7 +132,9 @@ typedef enum {
   BTL_ROTATEDIR_STAY,
   BTL_ROTATEDIR_R,
   BTL_ROTATEDIR_L,
-}BtlRotateDir;
+}BtlRotateDir_tag;
+
+typedef u8 BtlRotateDir;
 
 //--------------------------------------------------------------
 /**
