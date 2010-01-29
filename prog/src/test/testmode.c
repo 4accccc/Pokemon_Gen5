@@ -184,7 +184,7 @@ static BOOL TESTMODE_ITEM_DebugFight( TESTMODE_WORK *work , const int idx );
  */
 //------------------------------------------------------------------------
 #if defined DEBUG_ONLY_FOR_taya
-  #define QuickSelectFunc   TESTMODE_ITEM_SelectFuncTaya
+  #define QuickSelectFunc   TESTMODE_ITEM_DebugFight
 #elif defined DEBUG_ONLY_FOR_watanabe
   #define QuickSelectFunc   TESTMODE_ITEM_SelectFuncWatanabe
 #elif defined DEBUG_ONLY_FOR_tamada
