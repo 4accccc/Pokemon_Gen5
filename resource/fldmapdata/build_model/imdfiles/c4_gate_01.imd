@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ibe_mana" host="W00191" date="2010-01-20T20:03:50" source="c4_gate_01c.mb"/>
+	<create user="ibe_mana" host="W00191" date="2010-01-29T14:22:10" source="c4_gate_01c.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="ibe_mana" host="W00191" date="2010-01-20T20:03:50" source="c4_gate_01c.mb"/>
+<original_create user="ibe_mana" host="W00191" date="2010-01-29T14:22:10" source="c4_gate_01c.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -27,7 +27,7 @@
 	use_primitive_strip="on"
 />
 
-<box_test pos_scale="5" xyz="-2.343750 0.062500 -0.500000" whd="4.187500 3.500000 1.000000"/>
+<box_test pos_scale="4" xyz="-4.500000 0.125000 -0.750000" whd="7.937500 7.000000 1.500000"/>
 
 <tex_image_array size="3">
 	<tex_image index="0" name="c4gate_001"
@@ -104,7 +104,7 @@
 </tex_palette_array>
 
 <material_array size="3">
-	<material index="0" name="c4gate_001_1"
+	<material index="0" name="c4gate_001"
 		light0="on" light1="off" light2="off" light3="off"
 		face="both"
 		alpha="31"
@@ -128,31 +128,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="1" name="lambert1"
-		light0="on" light1="off" light2="off" light3="off"
-		face="front"
-		alpha="31"
-		wire_mode="off"
-		polygon_mode="modulate"
-		polygon_id="0"
-		fog_flag="off"
-		depth_test_decal="off"
-		translucent_update_depth="off"
-		render_1_pixel="off"
-		far_clipping="off"
-		diffuse="25 25 25"
-		ambient="0 0 0"
-		specular="0 0 0"
-		emission="0 0 0"
-		shininess_table_flag="off"
-		tex_image_idx="2" tex_palette_idx="2"
-		tex_tiling="repeat repeat"
-		tex_scale="1.000000 1.000000"
-		tex_rotate="0.000000"
-		tex_translate="0.000000 0.000000"
-		tex_gen_mode="none"
-	/>
-	<material index="2" name="lambert2"
+	<material index="1" name="c4gate_002"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -176,6 +152,30 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
+	<material index="2" name="lambert1"
+		light0="on" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="31"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="0"
+		fog_flag="off"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="25 25 25"
+		ambient="0 0 0"
+		specular="0 0 0"
+		emission="0 0 0"
+		shininess_table_flag="off"
+		tex_image_idx="2" tex_palette_idx="2"
+		tex_tiling="repeat repeat"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
+	/>
 </material_array>
 
 <matrix_array size="1">
@@ -186,9 +186,9 @@
 	<polygon index="0" name="polygon0"
 		vertex_size="20" polygon_size="8"
 		triangle_size="0" quad_size="8"
-		volume_min="-4.687500 0.125000 -1.000000"
-		volume_max="3.687500 0.125000 1.000000"
-		volume_r="4.689209"
+		volume_min="-4.500000 0.125000 -0.750000"
+		volume_max="3.437500 0.125000 0.750000"
+		volume_r="4.501709"
 		mtx_prim_size="1"
 		nrm_flag="on" clr_flag="off" tex_flag="on"
 	>
@@ -199,41 +199,41 @@
 					<mtx idx="0"/>
 					<tex st="5.000000 2.500000"/>
 					<nrm xyz="0.000000 0.998047 0.000000"/>
-					<pos_s xyz="-4.312500 0.125000 0.000000"/>
-					<tex st="5.000000 1.000000"/>
-					<pos_xy xy="-4.687500 0.125000"/>
+					<pos_s xyz="-4.187500 0.125000 0.000000"/>
+					<tex st="5.000000 1.500000"/>
+					<pos_xy xy="-4.500000 0.125000"/>
 					<tex st="5.000000 2.500000"/>
-					<pos_xz xz="-3.937500 0.750000"/>
-					<tex st="5.000000 1.000000"/>
-					<pos_xz xz="-4.187500 1.000000"/>
+					<pos_xz xz="-3.937500 0.562500"/>
+					<tex st="5.000000 1.500000"/>
+					<pos_xz xz="-4.187500 0.750000"/>
 					<tex st="5.000000 2.500000"/>
-					<pos_xz xz="2.812500 0.750000"/>
-					<tex st="5.000000 1.000000"/>
-					<pos_xz xz="3.062500 1.000000"/>
+					<pos_xz xz="2.812500 0.562500"/>
+					<tex st="5.000000 1.500000"/>
+					<pos_xz xz="3.062500 0.750000"/>
 					<tex st="5.000000 2.500000"/>
-					<pos_xz xz="3.312500 0.000000"/>
-					<tex st="5.000000 1.000000"/>
-					<pos_xy xy="3.687500 0.125000"/>
+					<pos_xz xz="3.125000 0.000000"/>
+					<tex st="5.000000 1.500000"/>
+					<pos_xy xy="3.437500 0.125000"/>
 					<tex st="5.000000 2.500000"/>
-					<pos_xz xz="2.812500 -0.750000"/>
-					<tex st="5.000000 1.000000"/>
-					<pos_xz xz="3.062500 -1.000000"/>
+					<pos_xz xz="2.812500 -0.562500"/>
+					<tex st="5.000000 1.500000"/>
+					<pos_xz xz="3.062500 -0.750000"/>
 					<tex st="5.000000 2.500000"/>
-					<pos_xz xz="-3.937500 -0.750000"/>
-					<tex st="5.000000 1.000000"/>
-					<pos_xz xz="-4.187500 -1.000000"/>
+					<pos_xz xz="-3.937500 -0.562500"/>
+					<tex st="5.000000 1.500000"/>
+					<pos_xz xz="-4.187500 -0.750000"/>
 					<tex st="5.000000 2.500000"/>
-					<pos_xz xz="-4.312500 0.000000"/>
-					<tex st="5.000000 1.000000"/>
-					<pos_xy xy="-4.687500 0.125000"/>
+					<pos_xz xz="-4.187500 0.000000"/>
+					<tex st="5.000000 1.500000"/>
+					<pos_xy xy="-4.500000 0.125000"/>
 				</primitive>
 				<primitive index="1" type="quad_strip" vertex_size="6">
 					<tex st="5.000000 7.000000"/>
-					<pos_xz xz="2.812500 -0.750000"/>
+					<pos_xz xz="2.812500 -0.562500"/>
 					<pos_xy xy="-3.937500 0.125000"/>
-					<pos_xz xz="3.312500 0.000000"/>
-					<pos_xy xy="-4.312500 0.125000"/>
-					<pos_xz xz="2.812500 0.750000"/>
+					<pos_xz xz="3.125000 0.000000"/>
+					<pos_xy xy="-4.187500 0.125000"/>
+					<pos_xz xz="2.812500 0.562500"/>
 					<pos_xy xy="-3.937500 0.125000"/>
 				</primitive>
 			</primitive_array>
@@ -1059,7 +1059,7 @@
 </polygon_array>
 
 <node_array size="1">
-	<node index="0" name="polySurface5" kind="mesh"
+	<node index="0" name="polySurface1" kind="mesh"
 		parent="-1"
 		child="-1"
 		brother_next="-1"
@@ -1073,13 +1073,13 @@
 		display_size="3"
 		vertex_size="370" polygon_size="116"
 		triangle_size="52" quad_size="64"
-		volume_min="-4.687500 0.125000 -1.000000"
-		volume_max="3.687500 7.125000 1.000000"
+		volume_min="-4.500000 0.125000 -0.750000"
+		volume_max="3.437500 7.125000 0.750000"
 		volume_r="7.210449"
 	>
 		<display index="0" material="0" polygon="1" priority="0"/>
-		<display index="1" material="1" polygon="0" priority="0"/>
-		<display index="2" material="2" polygon="2" priority="0"/>
+		<display index="1" material="1" polygon="2" priority="0"/>
+		<display index="2" material="2" polygon="0" priority="0"/>
 	</node>
 </node_array>
 
