@@ -91,12 +91,6 @@ extern BOOL FIELD_LIGHT_GetReflect( const FIELD_LIGHT* cp_sys );
 
 
 //-------------------------------------
-///	èÛë‘ÇÃéÊìæ
-//=====================================
-extern BOOL FIELD_LIGHT_GetNight( const FIELD_LIGHT* cp_sys );
-
-
-//-------------------------------------
 ///	êFÇÃéÊìæ
 //=====================================
 extern GXRgb FIELD_LIGHT_GetLightColor( const FIELD_LIGHT* cp_sys, u32 index );

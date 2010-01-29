@@ -647,24 +647,6 @@ BOOL FIELD_LIGHT_GetReflect( const FIELD_LIGHT* cp_sys )
 
 //----------------------------------------------------------------------------
 /**
- *  @brief  今が夜か取得
- *
- *  @param  cp_sys    システムワーク
- *
- *  @retval TRUE  夜
- *  @retval FALSE それ以外
- */
-//-----------------------------------------------------------------------------
-BOOL FIELD_LIGHT_GetNight( const FIELD_LIGHT* cp_sys )
-{
-  if( (cp_sys->time_second >= 34200) || (cp_sys->time_second < 7200) ){
-    return TRUE;
-  }
-  return FALSE;
-}
-
-//----------------------------------------------------------------------------
-/**
  *	@brief  ライトカラーの取得
  *
  *	@param	cp_sys
