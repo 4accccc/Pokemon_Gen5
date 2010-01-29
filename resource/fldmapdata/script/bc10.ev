@@ -41,7 +41,7 @@ ev_bc10:
 /**************************************************************/
 /*   BlackCyty                                                */
 /**************************************************************/
-ev_bc_npc:
+EVENT_START ev_bc_npc
 	// WFBC 会話前処理
 	_WFBC_TALKSTART()
 	_TALK_OBJ_START()
@@ -112,5 +112,5 @@ ev_bc_npc:
 	
 	// WFBC　会話後処理
 	_WFBC_TALKEND()
-	_END
+EVENT_END
 
