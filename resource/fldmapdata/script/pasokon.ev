@@ -9,6 +9,7 @@
   .include  "msg_pasokon.h"
   //.include  "pasokon.h"
 
+  .include  "hyouka_scr_def.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -212,6 +213,7 @@ pc_zukan_check:
   _SYSWIN_MSG_DOWN( msg_pc_zukan_check_01 ) 
   _AB_KEYWAIT()
   _SYSWIN_CLOSE()
+  _CHG_COMMON_SCR SCRID_ZUKAN_MACHINE
 
   // @todo 図鑑評価メッセージを表示
 }

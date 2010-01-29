@@ -33,8 +33,15 @@ EVENT_START ev_zukan_father
 EVENT_END
 
 /**************************************************************/
+/*    図鑑評価：パソコンから                                  */
 /**************************************************************/
 EVENT_START ev_zukan_machine
-  //なにもしない//
+
+  _GET_ZUKAN_HYOUKA_MSGID( SCR_ZUKAN_HYOUKA_MODE_AUTO, SCWK_ANSWER )
+  _PLAINWIN_MSG_UP( SCWK_ANSWER )
+  _AB_KEYWAIT()
+  _PLAINWIN_CLOSE()
+  _CHG_LOCAL_SCR()
+
 EVENT_END
 

@@ -3942,7 +3942,7 @@
 //--------------------------------------------------------------
 /**
  * @def	_GET_BREEDER_JUDGE_RESULT
- * @brief
+ * @brief ポケモン個体値の評価パラメータ取得
  * @param pos   指定するポケモンの位置
  * @param	mode	(script_def.hのSCR_JUDGE_MODE_～を参照）
  * @param	ret_wk		取得した値
@@ -3957,6 +3957,23 @@
 		.short	\mode
 		.short	\ret_wk
 		.endm
+
+//--------------------------------------------------------------
+/**
+ * @def _GET_ZUKAN_HYOUKA_MSGID
+ * @brief ずかん評価用メッセージID取得
+ * @param mode      ずかん評価モード（script_def.hのSCR_ZUKAN_HYOUKA_MODE_～を参照）
+ * @param	ret_wk		取得したMSGID
+ */
+//--------------------------------------------------------------
+#define _GET_ZUKAN_HYOUKA_MSGID( mode, ret_wk ) \
+    _ASM_GET_ZUKAN_HYOUKA_MSGID mode, ret_wk
+
+    .macro  _ASM_GET_ZUKAN_HYOUKA_MSGID mode, ret_wk
+    .short  EV_SEQ_GET_ZUKAN_HYOUKA_MSGID
+    .short  \mode
+    .short  \ret_wk
+    .endm
 
 //======================================================================
 //
