@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohno" host="W00141" date="2010-01-26T11:08:35"/>
+	<create user="tetsuji_ohta" host="W00176" date="2010-01-29T13:36:16"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -279,7 +279,7 @@
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="1" width="100"/>
+		<comment position="1" width="243"/>
 		<erase position="-1" width="100"/>
 		<language japanese="JPN" english="JPN">
 			<message position="2" width="274"/>
@@ -995,8 +995,8 @@ TVトランシーバーちゅう　です</language>
 	</row>
 
 	<row id="msg_wifilobby_082" back-color=",,,,,,#808080,#808080,,#808080,#808080,,,,,,,">
-		<comment>自分が待機中に
-友達が話しかけてきた</comment>
+		<comment>待機中の自分に
+友達が話しかけてきたときのメッセージ</comment>
 		<language name="JPN" width="216">[1:00:トレーナー名:0]さんが
 はなしかけて　きました！</language>
 		<language name="JPN_KANJI" width="216">[1:00:トレーナー名:0]さんが
@@ -1215,6 +1215,15 @@ TVトランシーバをしますか？</language>
 	<row id="msg_wifilobby_1017" back-color=",,,,,,#808080,#808080,,#808080,#808080,,,,,,,">
 		<language name="JPN" width="216">かいわを　しゅうりょうしました</language>
 		<language name="JPN_KANJI" width="216"></language>
+	</row>
+
+	<row id="msg_wifilobby_1018" back-color=",,,,,,#808080,#808080,,#808080,#808080,,,,,,,">
+		<comment>待機中の友達に
+話しかけたときのメッセージ</comment>
+		<language name="JPN" width="216">[1:00:トレーナー名:0]さんに
+はなしかけて　います！</language>
+		<language name="JPN_KANJI" width="216">[1:00:トレーナー名:0]さんに
+はなしかけて　います！</language>
 	</row>
 
 	<flowchart-group-list>
