@@ -345,7 +345,11 @@ void FIELD_WFBC_GetCore( const FIELD_WFBC* cp_wk, FIELD_WFBC_CORE* p_buff )
 //-----------------------------------------------------------------------------
 const FIELD_WFBC_PEOPLE* FIELD_WFBC_GetPeople( const FIELD_WFBC* cp_wk, u32 npc_id )
 {
-  return WFBC_GetConstPeople( cp_wk, npc_id );
+  if( npc_id < FIELD_WFBC_NPCID_MAX )
+  {
+    return WFBC_GetConstPeople( cp_wk, npc_id );
+  }
+  return NULL;
 }
 
 //----------------------------------------------------------------------------
