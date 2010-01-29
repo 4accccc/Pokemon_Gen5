@@ -11,9 +11,8 @@
 #define NARC_CALENDER_NAIX_
 
 enum {
-	NARC_calender_encount_bin = 0,
-	NARC_calender_hatch_bin = 1,
-	NARC_calender_weather_bin = 2
+	NARC_calender_weather_data_bin = 0,
+	NARC_calender_weather_index_bin = 1
 };
 
 /* NARC_CALENDER_NAIX_ */

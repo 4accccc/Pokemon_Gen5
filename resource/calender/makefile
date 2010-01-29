@@ -29,7 +29,10 @@ SUBDIRS	=
 include	$(PROJECT_RSCDIR)\macro_define
 
 
-CONVERTDATA = encount.bin hatch.bin weather.bin
+XLSCONV     = ../../tools/exceltool/xls2xml/tab_out.rb
+BIN         = ./bin
+CONVERTDATA = $(BIN)/*.bin
+DEBUGDATA   = ./debug/*.txt
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 # サフィックスルールを定義することで 依存関係を自動で判断してくれる
@@ -54,38 +57,12 @@ $(TARGETDIR)/$(targetname).narc: $(targetname).narc
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 # コピー先のnarcが古い場合実行する
-$(targetname).narc: $(CONVERTDATA)
-	nnsarc -r -l -n -i $(targetname) $^
+$(targetname).narc: weather_wb.xls
+	rm -f $(CONVERTDATA)
+	$(PROJECT_ROOT)tools/exceltool/exceltabconv weather_wb.xls
+	ruby weather_wb.rb weather_wb.txt
+	nnsarc -r -l -n -i $(targetname) $(CONVERTDATA)
 	$(NAIXCUT) $(targetname).naix
-
-# 不要な中間ファイルを削除
-	rm -f encount.txt
-	rm -f hatch.txt
-	rm -f weather.txt
-	rm -f encount.bin
-	rm -f hatch.bin
-	rm -f weather.bin
-
-
-encount.txt: encount.xls
-	$(PROJECT_ROOT)tools/exceltool/exceltabconv encount.xls
-
-hatch.txt: hatch.xls
-	$(PROJECT_ROOT)tools/exceltool/exceltabconv hatch.xls
-
-weather.txt: weather.xls
-	$(PROJECT_ROOT)tools/exceltool/exceltabconv weather.xls
-
-encount.bin: encount.txt
-	ruby encount.rb 
-
-hatch.bin: hatch.txt
-	ruby hatch.rb 
-
-weather.bin: weather.txt
-	ruby weather.rb 
-
-
 endif
 
 #------------------------------------------------------------------------------
@@ -96,11 +73,9 @@ clean:
 	@$(MAKE_SUBDIR)
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
 	rm -f $(CONVERTDATA)
+	rm -f $(DEBUGDATA)
 	rm -f $(targetname).narc
 	rm -f $(targetname).naix
-	rm -f encount.txt
-	rm -f hatch.txt
-	rm -f weather.txt
 endif
 	rm -f $(TARGETDIR)/$(targetname).narc
 	rm -f $(TARGETDIR)/$(targetname).naix
