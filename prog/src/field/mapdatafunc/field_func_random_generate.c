@@ -120,11 +120,7 @@ BOOL FieldLoadMapData_RandomGenerate( GFL_G3D_MAP* g3Dmap, void * exWork )
 				int i;
         FIELD_BMODEL_MAN * bm = FLD_G3D_MAP_EXWORK_GetBModelMan(p_exwork);
 
-        buildmodel_count = layout->count;
-
-				for( i=0; i<buildmodel_count; i++ ){
-          FIELD_BMODEL_MAN_ResistMapObject(bm, g3Dmap, &objStatus[i], i);
-				}
+        buildmodel_count = FIELD_BMODEL_MAN_ResistAllMapObjects(bm, g3Dmap, objStatus, layout->count);
 			}
 
       {

@@ -73,7 +73,7 @@ extern HEAPID FIELD_BMODEL_MAN_GetHeapID(const FIELD_BMODEL_MAN * man);
 //------------------------------------------------------------------
 extern GFL_G3D_MAP_GLOBALOBJ * FIELD_BMODEL_MAN_GetGlobalObjects(FIELD_BMODEL_MAN * man);
 
-extern void FIELD_BMODEL_MAN_ResistAllMapObjects
+extern int FIELD_BMODEL_MAN_ResistAllMapObjects
 (FIELD_BMODEL_MAN * man, GFL_G3D_MAP * g3Dmap, const PositionSt* objStatus, u32 objCount);
 
 extern void FIELD_BMODEL_MAN_ReleaseAllMapObjects

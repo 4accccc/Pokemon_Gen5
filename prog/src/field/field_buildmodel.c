@@ -615,7 +615,7 @@ HEAPID FIELD_BMODEL_MAN_GetHeapID(const FIELD_BMODEL_MAN * man)
 //============================================================================================
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-void FIELD_BMODEL_MAN_ResistAllMapObjects
+int FIELD_BMODEL_MAN_ResistAllMapObjects
 (FIELD_BMODEL_MAN * man, GFL_G3D_MAP * g3Dmap, const PositionSt* objStatus, u32 objCount)
 {
   GFL_G3D_MAP_GLOBALOBJ_ST status;
@@ -645,6 +645,9 @@ void FIELD_BMODEL_MAN_ResistAllMapObjects
     }
 
   }
+
+  // é¿ç€ÇÃìoò^êîÇï‘Ç∑
+  return resistCount;
 }
 
 //------------------------------------------------------------------
