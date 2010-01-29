@@ -86,6 +86,8 @@ typedef enum {
   BTLTYPE_ROTATION_TRAINER,
   BTLTYPE_ROTATION_COMM,
 
+  BTLTYPE_DEMO_CAPTURE,
+
   BTLTYPE_MAX,
 }BtlType;
 
@@ -468,6 +470,7 @@ static const struct {
   { 1, 0, 0, 0, BTL_RULE_TRIPLE   },   // BTLTYPE_TRIPLE_COMM
   { 0, 0, 0, 3, BTL_RULE_ROTATION },   // BTLTYPE_ROTATION_TRAINER
   { 1, 0, 0, 0, BTL_RULE_ROTATION },   // BTLTYPE_ROTATION_COMM
+  { 0, 1, 0, 1, BTL_RULE_SINGLE   },   // BTLTYPE_DEMO_CAPTURE
 };
 
 /*--------------------------------------------------------------------------*/
@@ -1841,8 +1844,17 @@ FS_EXTERN_OVERLAY(battle);
 
     setupFieldSituation( &wk->fieldSit, &wk->saveData );
 
+    // •ßŠlƒfƒ‚
+    if( wk->saveData.btlType == BTLTYPE_DEMO_CAPTURE )
+    {
+      BtlRule rule = btltype_GetRule( wk->saveData.btlType );
+
+      BTL_SETUP_Wild( &wk->setupParam, wk->gameData, wk->partyEnemy1, &wk->fieldSit, rule, HEAPID_BTL_DEBUG_SYS );
+      wk->setupParam.competitor = BTL_COMPETITOR_DEMO_CAPTURE;
+
+    }
     // –ì¶
-    if( btltype_IsWild(wk->saveData.btlType) )
+    else if( btltype_IsWild(wk->saveData.btlType) )
     {
       BtlRule rule = btltype_GetRule( wk->saveData.btlType );
 
