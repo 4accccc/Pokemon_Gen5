@@ -80,6 +80,7 @@ struct _BTLV_MCSS_WORK
 
   u32             mcss_tcb_blink_execute;
   u32             mcss_tcb_alpha_execute;
+  u32             mcss_tcb_mosaic_execute;
 
   HEAPID          heapID;
 };
@@ -88,6 +89,7 @@ typedef struct
 {
   BTLV_MCSS_WORK*   bmw;
   int               position;
+  VecFx32           now_value;
   EFFTOOL_MOVE_WORK emw;
 }BTLV_MCSS_TCB_WORK;
 
@@ -116,6 +118,7 @@ static  void  TCB_BTLV_MCSS_Rotate( GFL_TCB *tcb, void *work );
 static  void  TCB_BTLV_MCSS_Blink( GFL_TCB *tcb, void *work );
 static  void  TCB_BTLV_MCSS_Alpha( GFL_TCB *tcb, void *work );
 static  void  TCB_BTLV_MCSS_MoveCircle( GFL_TCB *tcb, void *work );
+static  void  TCB_BTLV_MCSS_Mosaic( GFL_TCB *tcb, void *work );
 static  void  TCB_BTLV_MCSS_StopAnime( GFL_TCB *tcb, void *work );
 
 static  void  BTLV_MCSS_CallBackFunctorFrame( u32 data, fx32 currentFrame );
@@ -769,10 +772,10 @@ void  BTLV_MCSS_MoveAlpha( BTLV_MCSS_WORK *bmw, int position, int type, int alph
   VecFx32 start;
   VecFx32 end;
 
-  start.x = MCSS_GetAlpha( bmw->btlv_mcss[ position ].mcss );
+  start.x = FX32_CONST( MCSS_GetAlpha( bmw->btlv_mcss[ position ].mcss ) );
   start.y = 0;
   start.z = 0;
-  end.x = alpha;
+  end.x = FX32_CONST( alpha );
   end.y = 0;
   end.z = 0;
   BTLV_MCSS_TCBInitialize( bmw, position, type, &start, &end, frame, wait, count, TCB_BTLV_MCSS_Alpha, REVERSE_FLAG_OFF );
@@ -834,6 +837,36 @@ void  BTLV_MCSS_MoveCircle( BTLV_MCSS_WORK *bmw, BTLV_MCSS_MOVE_CIRCLE_PARAM* bm
 
 //============================================================================================
 /**
+ * @brief ポケモンモザイク
+ *
+ * @param[in] bmw       BTLV_MCSS管理ワークへのポインタ
+ * @param[in] position  モザイクするポケモンの立ち位置
+ * @param[in] type      モザイクタイプ
+ * @param[in] alpha     モザイクタイプにより意味が変化
+ *                      EFFTOOL_CALCTYPE_DIRECT EFFTOOL_CALCTYPE_INTERPOLATION  最終的なモザイク値
+ *                      EFFTOOL_CALCTYPE_ROUNDTRIP　往復の長さ
+ * @param[in] frame     フレーム数（設定したモザイク値まで何フレームで到達するか）
+ * @param[in] wait      ウエイト
+ * @param[in] count     往復カウント（EFFTOOL_CALCTYPE_ROUNDTRIPでしか意味のないパラメータ）
+ */
+//============================================================================================
+void  BTLV_MCSS_MoveMosaic( BTLV_MCSS_WORK *bmw, int position, int type, int mosaic, int frame, int wait, int count )
+{
+  VecFx32 start;
+  VecFx32 end;
+
+  start.x = FX32_CONST( MCSS_GetMosaic( bmw->btlv_mcss[ position ].mcss ) );
+  start.y = 0;
+  start.z = 0;
+  end.x = FX32_CONST( mosaic );
+  end.y = 0;
+  end.z = 0;
+  BTLV_MCSS_TCBInitialize( bmw, position, type, &start, &end, frame, wait, count, TCB_BTLV_MCSS_Mosaic, REVERSE_FLAG_OFF );
+  bmw->mcss_tcb_mosaic_execute |= BTLV_EFFTOOL_Pos2Bit( position );
+}
+
+//============================================================================================
+/**
  * @brief タスクが起動中かチェック
  *
  * @param[in] bmw     BTLV_MCSS管理ワークへのポインタ
@@ -856,6 +889,7 @@ BOOL  BTLV_MCSS_CheckTCBExecute( BTLV_MCSS_WORK *bmw, int position )
        ( bmw->mcss_tcb_rotate_execute & BTLV_EFFTOOL_Pos2Bit( position ) ) ||
        ( bmw->mcss_tcb_blink_execute & BTLV_EFFTOOL_Pos2Bit( position ) ) ||
        ( bmw->mcss_tcb_alpha_execute & BTLV_EFFTOOL_Pos2Bit( position ) ) ||
+       ( bmw->mcss_tcb_mosaic_execute & BTLV_EFFTOOL_Pos2Bit( position ) ) ||
        ( pal_fade_flag ) );
 }
 
@@ -968,6 +1002,55 @@ void  BTLV_MCSS_SetMigawari( BTLV_MCSS_WORK* bmw, int position, int sw, BOOL fla
 
 //============================================================================================
 /**
+ * @brief モザイク
+ *
+ * @param[in] bmw       BTLV_MCSS管理ワークへのポインタ
+ * @param[in] position  セットするMCSSの立ち位置
+ * @param[in] speed     セットするスピード
+ */
+//============================================================================================
+void  BTLV_MCSS_SetMosaic( BTLV_MCSS_WORK *bmw, int position, int mosaic )
+{
+  MCSS_SetMosaic( bmw->mcss_sys, bmw->btlv_mcss[ position ].mcss, mosaic );
+}
+
+//============================================================================================
+/**
+ * @brief MAW構造体をコピーしてリソースをリロード
+ *
+ * @param[in] bmw BTLV_MCSS管理ワークへのポインタ
+ * @param[in] src コピー元MCSSの立ち位置
+ * @param[in] dst コピー先MCSSの立ち位置
+ */
+//============================================================================================
+void  BTLV_MCSS_CopyMAW( BTLV_MCSS_WORK *bmw, int src, int dst )
+{
+  bmw->btlv_mcss[ dst ].maw.arcID = bmw->btlv_mcss[ src ].maw.arcID;
+  bmw->btlv_mcss[ dst ].maw.nclr = bmw->btlv_mcss[ src ].maw.nclr;
+  //正面→背面
+  if( src & 1 )
+  { 
+    bmw->btlv_mcss[ dst ].maw.ncbr = bmw->btlv_mcss[ src ].maw.ncbr + POKEGRA_MAX;
+    bmw->btlv_mcss[ dst ].maw.ncer = bmw->btlv_mcss[ src ].maw.ncer + POKEGRA_MAX;
+    bmw->btlv_mcss[ dst ].maw.nanr = bmw->btlv_mcss[ src ].maw.nanr + POKEGRA_MAX;
+    bmw->btlv_mcss[ dst ].maw.nmcr = bmw->btlv_mcss[ src ].maw.nmcr + POKEGRA_MAX;
+    bmw->btlv_mcss[ dst ].maw.nmar = bmw->btlv_mcss[ src ].maw.nmar + POKEGRA_MAX;
+  }
+  //背面→正面
+  else
+  { 
+    bmw->btlv_mcss[ dst ].maw.ncbr = bmw->btlv_mcss[ src ].maw.ncbr - POKEGRA_MAX;
+    bmw->btlv_mcss[ dst ].maw.ncer = bmw->btlv_mcss[ src ].maw.ncer - POKEGRA_MAX;
+    bmw->btlv_mcss[ dst ].maw.nanr = bmw->btlv_mcss[ src ].maw.nanr - POKEGRA_MAX;
+    bmw->btlv_mcss[ dst ].maw.nmcr = bmw->btlv_mcss[ src ].maw.nmcr - POKEGRA_MAX;
+    bmw->btlv_mcss[ dst ].maw.nmar = bmw->btlv_mcss[ src ].maw.nmar - POKEGRA_MAX;
+  }
+  bmw->btlv_mcss[ dst ].personal_rnd = bmw->btlv_mcss[ src ].personal_rnd;
+  MCSS_ReloadResource( bmw->mcss_sys, bmw->btlv_mcss[ dst ].mcss, &bmw->btlv_mcss[ dst ].maw );
+}
+
+//============================================================================================
+/**
  * @brief POKEMON_PARAMからMCSS_ADD_WORKを生成する
  *
  * @param[in]   pp        POKEMON_PARAM構造体へのポインタ
@@ -1048,6 +1131,9 @@ static  void  BTLV_MCSS_TCBInitialize( BTLV_MCSS_WORK *bmw, int position, int ty
   pmtw->emw.end_value.x   = end->x;
   pmtw->emw.end_value.y   = end->y;
   pmtw->emw.end_value.z   = end->z;
+  pmtw->now_value.x       = start->x;
+  pmtw->now_value.y       = start->y;
+  pmtw->now_value.z       = start->z;
 
   switch( type ){
   case EFFTOOL_CALCTYPE_DIRECT:         //直接ポジションに移動
@@ -1180,14 +1266,10 @@ static  void  TCB_BTLV_MCSS_Alpha( GFL_TCB *tcb, void *work )
 {
   BTLV_MCSS_TCB_WORK  *pmtw = ( BTLV_MCSS_TCB_WORK * )work;
   BTLV_MCSS_WORK *bmw = pmtw->bmw;
-  VecFx32 now_alpha;
   BOOL  ret;
 
-  now_alpha.x = MCSS_GetAlpha( bmw->btlv_mcss[ pmtw->position ].mcss );
-  now_alpha.y = 0;
-  now_alpha.z = 0;
-  ret = BTLV_EFFTOOL_CalcParam( &pmtw->emw, &now_alpha );
-  MCSS_SetAlpha( bmw->btlv_mcss[ pmtw->position ].mcss, now_alpha.x );
+  ret = BTLV_EFFTOOL_CalcParam( &pmtw->emw, &pmtw->now_value );
+  MCSS_SetAlpha( bmw->btlv_mcss[ pmtw->position ].mcss, pmtw->now_value.x >> FX32_SHIFT );
   if( ret == TRUE ){
     bmw->mcss_tcb_alpha_execute &= ( BTLV_EFFTOOL_Pos2Bit( pmtw->position ) ^ BTLV_EFFTOOL_POS2BIT_XOR );
     GFL_HEAP_FreeMemory( work );
@@ -1281,6 +1363,27 @@ static  void  TCB_BTLV_MCSS_MoveCircle( GFL_TCB *tcb, void *work )
     GFL_TCB_DeleteTask( tcb );
   }
 }
+
+//============================================================================================
+/**
+ * @brief ポケモンモザイクタスク
+ */
+//============================================================================================
+static  void  TCB_BTLV_MCSS_Mosaic( GFL_TCB *tcb, void *work )
+{
+  BTLV_MCSS_TCB_WORK  *pmtw = ( BTLV_MCSS_TCB_WORK * )work;
+  BTLV_MCSS_WORK *bmw = pmtw->bmw;
+  BOOL  ret;
+
+  ret = BTLV_EFFTOOL_CalcParam( &pmtw->emw, &pmtw->now_value );
+  MCSS_SetMosaic( bmw->mcss_sys, bmw->btlv_mcss[ pmtw->position ].mcss, pmtw->now_value.x >> FX32_SHIFT );
+  if( ret == TRUE ){
+    bmw->mcss_tcb_mosaic_execute &= ( BTLV_EFFTOOL_Pos2Bit( pmtw->position ) ^ BTLV_EFFTOOL_POS2BIT_XOR );
+    GFL_HEAP_FreeMemory( work );
+    GFL_TCB_DeleteTask( tcb );
+  }
+}
+
 
 //============================================================================================
 /**

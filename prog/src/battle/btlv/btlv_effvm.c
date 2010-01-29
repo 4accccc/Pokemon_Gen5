@@ -202,6 +202,7 @@ static VMCMD_RESULT VMEC_POKEMON_CIRCLE_MOVE( VMHANDLE *vmh, void *context_work 
 static VMCMD_RESULT VMEC_POKEMON_SCALE( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_POKEMON_ROTATE( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_POKEMON_ALPHA( VMHANDLE *vmh, void *context_work );
+static VMCMD_RESULT VMEC_POKEMON_MOSAIC( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_POKEMON_SET_MEPACHI_FLAG( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_POKEMON_SET_ANM_FLAG( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_POKEMON_PAL_FADE( VMHANDLE *vmh, void *context_work );
@@ -236,6 +237,7 @@ static VMCMD_RESULT VMEC_IF( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_MCSS_POS_CHECK( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_SET_WORK( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_MIGAWARI( VMHANDLE *vmh, void *context_work );
+static VMCMD_RESULT VMEC_HENSHIN( VMHANDLE *vmh, void *context_work );
 
 static VMCMD_RESULT VMEC_SEQ_END( VMHANDLE *vmh, void *context_work );
 
@@ -336,6 +338,7 @@ static const VMCMD_FUNC btlv_effect_command_table[]={
   VMEC_POKEMON_SCALE,
   VMEC_POKEMON_ROTATE,
   VMEC_POKEMON_ALPHA,
+  VMEC_POKEMON_MOSAIC,
   VMEC_POKEMON_SET_MEPACHI_FLAG,
   VMEC_POKEMON_SET_ANM_FLAG,
   VMEC_POKEMON_PAL_FADE,
@@ -370,6 +373,7 @@ static const VMCMD_FUNC btlv_effect_command_table[]={
   VMEC_MCSS_POS_CHECK,
   VMEC_SET_WORK,
   VMEC_MIGAWARI,
+  VMEC_HENSHIN,
 
   VMEC_SEQ_END,
 };
@@ -921,6 +925,7 @@ static VMCMD_RESULT VMEC_PARTICLE_PLAY( VMHANDLE *vmh, void *context_work )
   ARCDATID  datID   = ( ARCDATID )VMGetU32( vmh );
   int       ptc_no  = EFFVM_GetPtcNo( bevw, datID );
   int       index   = ( int )VMGetU32( vmh );
+  int       dummy;
 
 #ifdef DEBUG_OS_PRINT
   OS_TPrintf("VMEC_PARTICLE_PLAY\n");
@@ -934,7 +939,7 @@ static VMCMD_RESULT VMEC_PARTICLE_PLAY( VMHANDLE *vmh, void *context_work )
   beeiw->ofs.z  = 0;
   beeiw->angle  = ( fx32 )VMGetU32( vmh );
   //ダミーデータがあるので空読み；
-  ( fx32 )VMGetU32( vmh );
+  dummy = VMGetU32( vmh );
   beeiw->radius = ( fx32 )VMGetU32( vmh );
   beeiw->life   = ( fx32 )VMGetU32( vmh );
   beeiw->scale  = ( fx32 )VMGetU32( vmh );
@@ -945,7 +950,10 @@ static VMCMD_RESULT VMEC_PARTICLE_PLAY( VMHANDLE *vmh, void *context_work )
     beeiw->dst = beeiw->src;
   }
 
-  GFL_PTC_CreateEmitterCallback( bevw->ptc[ ptc_no ], index, &EFFVM_InitEmitterPos, beeiw );
+  if( GFL_PTC_CreateEmitterCallback( bevw->ptc[ ptc_no ], index, &EFFVM_InitEmitterPos, beeiw ) == PTC_NON_CREATE_EMITTER )
+  { 
+    GFL_HEAP_FreeMemory( beeiw );
+  }
 
   return bevw->control_mode;
 }
@@ -965,6 +973,7 @@ static VMCMD_RESULT VMEC_PARTICLE_PLAY_COORDINATE( VMHANDLE *vmh, void *context_
   ARCDATID  datID   = ( ARCDATID )VMGetU32( vmh );
   int       ptc_no  = EFFVM_GetPtcNo( bevw, datID );
   int       index   = ( int )VMGetU32( vmh );
+  int       dummy;
 
 #ifdef DEBUG_OS_PRINT
   OS_TPrintf("VMEC_PARTICLE_PLAY_COORDINATE\n");
@@ -984,13 +993,16 @@ static VMCMD_RESULT VMEC_PARTICLE_PLAY_COORDINATE( VMHANDLE *vmh, void *context_
   beeiw->ofs.z      = 0;
   beeiw->angle      = ( fx32 )VMGetU32( vmh );
   //ダミーデータがあるので空読み；
-  ( fx32 )VMGetU32( vmh );
+  dummy = VMGetU32( vmh );
   beeiw->radius     = ( fx32 )VMGetU32( vmh );
   beeiw->life       = ( fx32 )VMGetU32( vmh );
   beeiw->scale      = ( fx32 )VMGetU32( vmh );
   beeiw->speed      = ( fx32 )VMGetU32( vmh );
 
-  GFL_PTC_CreateEmitterCallback( bevw->ptc[ ptc_no ], index, &EFFVM_InitEmitterPos, beeiw );
+  if( GFL_PTC_CreateEmitterCallback( bevw->ptc[ ptc_no ], index, &EFFVM_InitEmitterPos, beeiw ) == PTC_NON_CREATE_EMITTER )
+  { 
+    GFL_HEAP_FreeMemory( beeiw );
+  }
 
   return bevw->control_mode;
 }
@@ -1053,7 +1065,10 @@ static VMCMD_RESULT VMEC_PARTICLE_PLAY_ORTHO( VMHANDLE *vmh, void *context_work 
     beeiw->dst = beeiw->src;
   }
 
-  GFL_PTC_CreateEmitterCallback( bevw->ptc[ ptc_no ], index, &EFFVM_InitEmitterPos, beeiw );
+  if( GFL_PTC_CreateEmitterCallback( bevw->ptc[ ptc_no ], index, &EFFVM_InitEmitterPos, beeiw ) == PTC_NON_CREATE_EMITTER )
+  { 
+    GFL_HEAP_FreeMemory( beeiw );
+  }
 
   return bevw->control_mode;
 }
@@ -1078,6 +1093,7 @@ static VMCMD_RESULT VMEC_PARTICLE_DELETE( VMHANDLE *vmh, void *context_work )
 
   EFFVM_DeleteEmitter( bevw->ptc[ ptc_no ] );
   bevw->ptc[ ptc_no ] = NULL;
+  bevw->ptc_no[ ptc_no ] = EFFVM_PTCNO_NONE;
 
   return bevw->control_mode;
 }
@@ -1097,6 +1113,7 @@ static VMCMD_RESULT VMEC_EMITTER_MOVE( VMHANDLE *vmh, void *context_work )
   ARCDATID  datID   = ( ARCDATID )VMGetU32( vmh );
   int       ptc_no  = EFFVM_GetPtcNo( bevw, datID );
   int       index   = ( int )VMGetU32( vmh );
+  int       dummy;
 
 #ifdef DEBUG_OS_PRINT
   OS_TPrintf("VMEC_EMITTER_MOVE\n");
@@ -1116,12 +1133,15 @@ static VMCMD_RESULT VMEC_EMITTER_MOVE( VMHANDLE *vmh, void *context_work )
   beeiw->scale      = FX32_ONE;
   beeiw->speed      = ( fx32 )VMGetU32( vmh );
   //ダミーデータがあるので空読み；
-  ( fx32 )VMGetU32( vmh );
+  dummy = VMGetU32( vmh );
 
   //移動元と移動先が同一のときは、アサートで止める
   GF_ASSERT( beeiw->dst != beeiw->src );
 
-  GFL_PTC_CreateEmitterCallback( bevw->ptc[ ptc_no ], index, &EFFVM_InitEmitterPos, beeiw );
+  if( GFL_PTC_CreateEmitterCallback( bevw->ptc[ ptc_no ], index, &EFFVM_InitEmitterPos, beeiw ) == PTC_NON_CREATE_EMITTER )
+  { 
+    GFL_HEAP_FreeMemory( beeiw );
+  }
 
   return bevw->control_mode;
 }
@@ -1141,6 +1161,7 @@ static VMCMD_RESULT VMEC_EMITTER_MOVE_COORDINATE( VMHANDLE *vmh, void *context_w
   ARCDATID  datID   = ( ARCDATID )VMGetU32( vmh );
   int       ptc_no  = EFFVM_GetPtcNo( bevw, datID );
   int       index   = ( int )VMGetU32( vmh );
+  int       dummy;
 
 #ifdef DEBUG_OS_PRINT
   OS_TPrintf("VMEC_EMITTER_MOVE_COORDINATE\n");
@@ -1163,12 +1184,15 @@ static VMCMD_RESULT VMEC_EMITTER_MOVE_COORDINATE( VMHANDLE *vmh, void *context_w
   beeiw->scale      = FX32_ONE;
   beeiw->speed      = ( fx32 )VMGetU32( vmh );
   //ダミーデータがあるので空読み；
-  ( fx32 )VMGetU32( vmh );
+  dummy = VMGetU32( vmh );
 
   //移動元と移動先が同一のときは、アサートで止める
   GF_ASSERT( beeiw->dst != beeiw->src );
 
-  GFL_PTC_CreateEmitterCallback( bevw->ptc[ ptc_no ], index, &EFFVM_InitEmitterPos, beeiw );
+  if( GFL_PTC_CreateEmitterCallback( bevw->ptc[ ptc_no ], index, &EFFVM_InitEmitterPos, beeiw ) == PTC_NON_CREATE_EMITTER )
+  { 
+    GFL_HEAP_FreeMemory( beeiw );
+  }
 
   return bevw->control_mode;
 }
@@ -1417,6 +1441,49 @@ static VMCMD_RESULT VMEC_POKEMON_ALPHA( VMHANDLE *vmh, void *context_work )
     for( i = 0 ; i < pos_cnt ; i++ )
     { 
       BTLV_MCSS_MoveAlpha( BTLV_EFFECT_GetMcssWork(), pos[ i ], type, alpha, frame, wait, count );
+    }
+  }
+
+  return bevw->control_mode;
+}
+
+//============================================================================================
+/**
+ * @brief ポケモンモザイク
+ *
+ * @param[in] vmh       仮想マシン制御構造体へのポインタ
+ * @param[in] context_work  コンテキストワークへのポインタ
+ */
+//============================================================================================
+static VMCMD_RESULT VMEC_POKEMON_MOSAIC( VMHANDLE *vmh, void *context_work )
+{
+  BTLV_EFFVM_WORK *bevw = ( BTLV_EFFVM_WORK* )context_work;
+  BtlvMcssPos pos[ BTLV_MCSS_POS_MAX ];
+  int pos_cnt = EFFVM_GetPokePosition( vmh, ( int )VMGetU32( vmh ), pos );
+  int type;
+  int mosaic;
+  int frame;
+  int wait;
+  int count;
+
+#ifdef DEBUG_OS_PRINT
+  OS_TPrintf("VMEC_POKEMON_MOSAIC\n");
+#endif DEBUG_OS_PRINT
+
+  type    = ( int )VMGetU32( vmh );
+  mosaic  = ( int )VMGetU32( vmh );
+  frame   = ( int )VMGetU32( vmh );
+  wait    = ( int )VMGetU32( vmh );
+  count   = ( int )VMGetU32( vmh );
+
+  //立ち位置情報がないときは、コマンド実行しない
+  if( pos_cnt )
+  {
+    int i;
+
+    for( i = 0 ; i < pos_cnt ; i++ )
+    { 
+      BTLV_MCSS_MoveMosaic( BTLV_EFFECT_GetMcssWork(), pos[ i ], type, mosaic, frame, wait, count );
     }
   }
 
@@ -2596,6 +2663,27 @@ static VMCMD_RESULT VMEC_MIGAWARI( VMHANDLE *vmh, void *context_work )
 
 //============================================================================================
 /**
+ * @brief	へんしん処理
+ *
+ * @param[in] vmh       仮想マシン制御構造体へのポインタ
+ * @param[in] context_work  コンテキストワークへのポインタ
+ */
+//============================================================================================
+static VMCMD_RESULT VMEC_HENSHIN( VMHANDLE *vmh, void *context_work )
+{ 
+  BTLV_EFFVM_WORK *bevw = ( BTLV_EFFVM_WORK* )context_work;
+
+#ifdef DEBUG_OS_PRINT
+  OS_TPrintf("VMEC_HENSHIN:\nsw:%d\n",sw);
+#endif DEBUG_OS_PRINT
+
+  BTLV_MCSS_CopyMAW( BTLV_EFFECT_GetMcssWork(), bevw->defence_pos, bevw->attack_pos );
+
+  return bevw->control_mode;
+}
+
+//============================================================================================
+/**
  * @brief エフェクトシーケンス終了
  *
  * @param[in] vmh       仮想マシン制御構造体へのポインタ
@@ -3287,6 +3375,9 @@ static  int EFFVM_GetPtcNo( BTLV_EFFVM_WORK *bevw, ARCDATID datID )
  * @param[in] emit  エミッタワーク構造体へのポインタ
  */
 //============================================================================================
+#ifdef PM_DEBUG
+vu32  emit_init = 0;
+#endif
 static  void  EFFVM_InitEmitterPos( GFL_EMIT_PTR emit )
 {
   BTLV_EFFVM_EMIT_INIT_WORK *beeiw = ( BTLV_EFFVM_EMIT_INIT_WORK* )GFL_PTC_GetTempPtr();
@@ -3525,6 +3616,9 @@ static  void  EFFVM_InitEmitterPos( GFL_EMIT_PTR emit )
   GFL_PTC_SetEmitterPosition( emit, &src );
 
   GFL_HEAP_FreeMemory( beeiw );
+#ifdef PM_DEBUG
+  emit_init = 0;
+#endif
 }
 
 //============================================================================================
@@ -3895,7 +3989,10 @@ static VMCMD_RESULT EFFVM_INIT_EMITTER_CIRCLE_MOVE( VMHANDLE *vmh, void *context
 
   beecmw->center_pos.y += offset_y;
 
-  GFL_PTC_CreateEmitterCallback( bevw->ptc[ ptc_no ], index, &EFFVM_InitEmitterCircleMove, beecmw );
+  if( GFL_PTC_CreateEmitterCallback( bevw->ptc[ ptc_no ], index, &EFFVM_InitEmitterPos, beecmw ) == PTC_NON_CREATE_EMITTER )
+  { 
+    GFL_HEAP_FreeMemory( beecmw );
+  }
 
   return bevw->control_mode;
 }
@@ -4215,7 +4312,10 @@ void  BTLV_EFFVM_DebugParticlePlay( VMHANDLE *vmh, GFL_PTC_PTR ptc, int index, i
   beeiw->ofs.z = 0;
   beeiw->angle = angle;
 
-  GFL_PTC_CreateEmitterCallback( ptc, index, &EFFVM_InitEmitterPos, beeiw );
+  if( GFL_PTC_CreateEmitterCallback( ptc, index, &EFFVM_InitEmitterPos, beeiw ) == PTC_NON_CREATE_EMITTER )
+  { 
+    GFL_HEAP_FreeMemory( beeiw );
+  }
 }
 
 //============================================================================================

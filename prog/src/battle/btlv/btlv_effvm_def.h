@@ -379,43 +379,45 @@ ex)
 #define	EC_POKEMON_SCALE						  ( 16 )
 #define	EC_POKEMON_ROTATE						  ( 17 )
 #define	EC_POKEMON_ALPHA						  ( 18 )
-#define	EC_POKEMON_SET_MEPACHI_FLAG	  ( 19 )
-#define	EC_POKEMON_SET_ANM_FLAG			  ( 20 )
-#define	EC_POKEMON_PAL_FADE					  ( 21 )
-#define	EC_POKEMON_VANISH					    ( 22 )
-#define	EC_POKEMON_SHADOW_VANISH	    ( 23 )
-#define	EC_POKEMON_DEL	              ( 24 )
-#define	EC_TRAINER_SET							  ( 25 )
-#define	EC_TRAINER_MOVE							  ( 26 )
-#define	EC_TRAINER_ANIME_SET				  ( 27 )
-#define	EC_TRAINER_DEL							  ( 28 )
-#define	EC_BG_LOAD	   				        ( 29 )
-#define	EC_BG_SCROLL		   				    ( 30 )
-#define	EC_BG_RASTER_SCROLL		   	    ( 31 )
-#define	EC_BG_PAL_ANM		   				    ( 32 )
-#define	EC_BG_PRIORITY		   				  ( 33 )
-#define	EC_BG_ALPHA		   				      ( 34 )
-#define	EC_BG_PAL_FADE		   				  ( 35 )
-#define	EC_BG_VANISH								  ( 36 )
-#define	EC_OBJ_SET	   				        ( 37 )
-#define	EC_OBJ_MOVE	   				        ( 38 )
-#define	EC_OBJ_SCALE	   				      ( 39 )
-#define	EC_OBJ_ANIME_SET	   				  ( 40 )
-#define	EC_OBJ_DEL	   				        ( 41 )
-#define	EC_SE_PLAY									  ( 42 )
-#define	EC_SE_STOP									  ( 43 )
-#define	EC_SE_PAN								      ( 44 )
-#define	EC_SE_EFFECT								  ( 45 )
-#define	EC_EFFECT_END_WAIT					  ( 46 )
-#define	EC_WAIT											  ( 47 )
-#define	EC_CONTROL_MODE							  ( 48 )
-#define	EC_IF						              ( 49 )
-#define	EC_MCSS_POS_CHECK						  ( 50 )
-#define	EC_SET_WORK						        ( 51 )
-#define	EC_MIGAWARI						        ( 52 )
+#define	EC_POKEMON_MOSAIC						  ( 19 )
+#define	EC_POKEMON_SET_MEPACHI_FLAG	  ( 20 )
+#define	EC_POKEMON_SET_ANM_FLAG			  ( 21 )
+#define	EC_POKEMON_PAL_FADE					  ( 22 )
+#define	EC_POKEMON_VANISH					    ( 23 )
+#define	EC_POKEMON_SHADOW_VANISH	    ( 24 )
+#define	EC_POKEMON_DEL	              ( 25 )
+#define	EC_TRAINER_SET							  ( 26 )
+#define	EC_TRAINER_MOVE							  ( 27 )
+#define	EC_TRAINER_ANIME_SET				  ( 28 )
+#define	EC_TRAINER_DEL							  ( 29 )
+#define	EC_BG_LOAD	   				        ( 30 )
+#define	EC_BG_SCROLL		   				    ( 31 )
+#define	EC_BG_RASTER_SCROLL		   	    ( 32 )
+#define	EC_BG_PAL_ANM		   				    ( 33 )
+#define	EC_BG_PRIORITY		   				  ( 34 )
+#define	EC_BG_ALPHA		   				      ( 35 )
+#define	EC_BG_PAL_FADE		   				  ( 36 )
+#define	EC_BG_VANISH								  ( 37 )
+#define	EC_OBJ_SET	   				        ( 38 )
+#define	EC_OBJ_MOVE	   				        ( 39 )
+#define	EC_OBJ_SCALE	   				      ( 40 )
+#define	EC_OBJ_ANIME_SET	   				  ( 41 )
+#define	EC_OBJ_DEL	   				        ( 42 )
+#define	EC_SE_PLAY									  ( 43 )
+#define	EC_SE_STOP									  ( 44 )
+#define	EC_SE_PAN								      ( 45 )
+#define	EC_SE_EFFECT								  ( 46 )
+#define	EC_EFFECT_END_WAIT					  ( 47 )
+#define	EC_WAIT											  ( 48 )
+#define	EC_CONTROL_MODE							  ( 49 )
+#define	EC_IF						              ( 50 )
+#define	EC_MCSS_POS_CHECK						  ( 51 )
+#define	EC_SET_WORK						        ( 52 )
+#define	EC_MIGAWARI						        ( 53 )
+#define	EC_HENSHIN						        ( 54 )
 
 //終了コマンドは必ず一番下になるようにする
-#define	EC_SEQ_END									  ( 53 )
+#define	EC_SEQ_END									  ( 55 )
 
 #ifndef __C_NO_DEF_
 
@@ -1040,6 +1042,39 @@ ex)
 	.long		\pos
 	.long		\type
 	.long		\alpha
+	.long		\frame
+	.long		\wait
+	.long		\count
+	.endm
+
+//======================================================================
+/**
+ * @brief	ポケモンモザイク
+ *
+ * #param_num	6
+ * @param	pos			モザイクするポケモンの立ち位置
+ * @param	type		モザイクタイプ
+ * @param	alpha	  モザイク値
+ * @param	frame		フレーム数（設定したモザイク値まで何フレームで到達するか）
+ * @param	wait		ウエイト
+ * @param	count		往復カウント（モザイクタイプが往復のときだけ有効）
+ *
+ * #param	COMBOBOX_TEXT	攻撃側	攻撃側ペア	防御側	防御側ペア	POS_AA	POS_BB	POS_A POS_B POS_C POS_D POS_E POS_F POS_TR_AA POS_TR_BB POS_TR_A  POS_TR_B  POS_TR_C  POS_TR_D 
+ * #param	COMBOBOX_VALUE	BTLEFF_POKEMON_SIDE_ATTACK  BTLEFF_POKEMON_SIDE_ATTACK_PAIR BTLEFF_POKEMON_SIDE_DEFENCE BTLEFF_POKEMON_SIDE_DEFENCE_PAIR  BTLEFF_POKEMON_POS_AA BTLEFF_POKEMON_POS_BB BTLEFF_POKEMON_POS_A  BTLEFF_POKEMON_POS_B  BTLEFF_POKEMON_POS_C  BTLEFF_POKEMON_POS_D  BTLEFF_POKEMON_POS_E  BTLEFF_POKEMON_POS_F  BTLEFF_TRAINER_POS_AA BTLEFF_TRAINER_POS_BB BTLEFF_TRAINER_POS_A  BTLEFF_TRAINER_POS_B  BTLEFF_TRAINER_POS_C  BTLEFF_TRAINER_POS_D
+ * #param	COMBOBOX_TEXT	ダイレクト	追従	往復	往復ロング
+ * #param	COMBOBOX_VALUE	BTLEFF_POKEMON_ALPHA_DIRECT	BTLEFF_POKEMON_ALPHA_INTERPOLATION	BTLEFF_POKEMON_ALPHA_ROUNDTRIP	BTLEFF_POKEMON_ALPHA_ROUNDTRIP_LONG
+ * #param	VALUE_INT	  モザイク値
+ * #param	VALUE_INT		フレーム数（設定したモザイク値まで何フレームで到達するか）
+ * #param	VALUE_INT		ウエイト
+ * #param VALUE_INIT  1
+ * #param	VALUE_INT		往復カウント（往復時有効）
+ */
+//======================================================================
+	.macro	POKEMON_MOSAIC	pos, type, mosaic, frame, wait, count
+	.short	EC_POKEMON_MOSAIC
+	.long		\pos
+	.long		\type
+	.long		\mosaic
 	.long		\frame
 	.long		\wait
 	.long		\count
@@ -1860,6 +1895,18 @@ ex)
 	.long		\pos
 	.long		\flag
 	.endm
+
+//======================================================================
+/**
+ * @brief	へんしん処理
+ *
+ * #param_num	0
+ */
+//======================================================================
+	.macro	HENSHIN
+  .short  EC_HENSHIN
+	.endm
+
 
 //======================================================================
 /**

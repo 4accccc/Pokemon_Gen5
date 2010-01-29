@@ -127,6 +127,8 @@ extern  void            BTLV_MCSS_MoveBlink( BTLV_MCSS_WORK *bmw, int position, 
 extern  void            BTLV_MCSS_MoveAlpha( BTLV_MCSS_WORK *bmw, int position, int type,
                                              int alpha, int frame, int wait, int count );
 extern  void            BTLV_MCSS_MoveCircle( BTLV_MCSS_WORK *bmw, BTLV_MCSS_MOVE_CIRCLE_PARAM* bmmcp );
+extern  void            BTLV_MCSS_MoveMosaic( BTLV_MCSS_WORK *bmw, int position, int type,
+                                              int mosaic, int frame, int wait, int count );
 extern  BOOL            BTLV_MCSS_CheckTCBExecute( BTLV_MCSS_WORK *bmw, int position );
 extern  BOOL            BTLV_MCSS_CheckExist( BTLV_MCSS_WORK *bmw, int position );
 extern  void            BTLV_MCSS_SetPaletteFade( BTLV_MCSS_WORK *bmw, int position,
@@ -134,6 +136,8 @@ extern  void            BTLV_MCSS_SetPaletteFade( BTLV_MCSS_WORK *bmw, int posit
 extern  u16             BTLV_MCSS_GetWeight( BTLV_MCSS_WORK *bmw, int position );
 extern  u32             BTLV_MCSS_GetStatusFlag( BTLV_MCSS_WORK *bmw, int position );
 extern  void            BTLV_MCSS_SetMigawari( BTLV_MCSS_WORK *bmw, int position, int sw, BOOL flag );
+extern  void            BTLV_MCSS_SetMosaic( BTLV_MCSS_WORK *bmw, int position, int mosaic );
+extern  void            BTLV_MCSS_CopyMAW( BTLV_MCSS_WORK *bmw, int src, int dst );
 
 #ifdef PM_DEBUG
 extern  void            BTLV_MCSS_AddDebug( BTLV_MCSS_WORK *bmw, const MCSS_ADD_DEBUG_WORK *madw, int position );
