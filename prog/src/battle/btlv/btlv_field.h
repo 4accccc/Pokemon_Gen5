@@ -10,6 +10,8 @@
 
 #pragma once
 
+#include "battle/battle.h"
+
 typedef enum
 { 
   BTLV_FIELD_VANISH_OFF = 0,
@@ -18,7 +20,7 @@ typedef enum
 
 typedef struct _BTLV_FIELD_WORK BTLV_FIELD_WORK;
 
-extern  BTLV_FIELD_WORK*  BTLV_FIELD_Init( int index, u8 season, HEAPID heapID );
+extern  BTLV_FIELD_WORK*  BTLV_FIELD_Init( BtlRule rule, int index, u8 season, HEAPID heapID );
 extern	void              BTLV_FIELD_Exit( BTLV_FIELD_WORK *bsw );
 extern	void              BTLV_FIELD_Main( BTLV_FIELD_WORK *bsw );
 extern	void              BTLV_FIELD_Draw( BTLV_FIELD_WORK *bsw );

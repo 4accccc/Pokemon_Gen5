@@ -31,20 +31,35 @@
 #define	BTLV_STAGE_ANM_NO         ( 0 )         //お盆のアニメーションナンバー
 #define	BTLV_STAGE_ANM_WAIT       ( FX32_ONE )  //お盆のアニメーションウェイト
 
+typedef enum
+{ 
+  BTLV_STAGE_ANM_TYPE_LOOP = 0,   //アニメーションタイプ：ループ
+  BTLV_STAGE_ANM_TYPE_REQ,        //アニメーションタイプ：リクエスト
+}BTLV_STAGE_ANM_TYPE;
+
 //============================================================================================
 /**
  *	構造体宣言
  */
 //============================================================================================
 
+typedef struct
+{ 
+  BTLV_STAGE_ANM_TYPE anm_type;
+  BOOL                anm_req_flag;
+  fx32                anm_speed;
+  fx32                anm_distance;
+}BTLV_STAGE_ANM_WORK;
+
 struct _BTLV_STAGE_WORK
 {
 	GFL_G3D_RES*            stage_resource;
   int                     anm_count;
+  BTLV_STAGE_ANM_WORK*    stage_anm_work[ BTLV_STAGE_MAX ];
 	GFL_G3D_RES**           stage_anm_resource;
-	GFL_G3D_ANM**           stage_anm;
-	GFL_G3D_RND*            stage_render;
-	GFL_G3D_OBJ*            stage_obj;
+	GFL_G3D_ANM**           stage_anm[ BTLV_STAGE_MAX ];
+	GFL_G3D_RND*            stage_render[ BTLV_STAGE_MAX ];
+	GFL_G3D_OBJ*            stage_obj[ BTLV_STAGE_MAX ];
 	GFL_G3D_OBJSTATUS       stage_status[ BTLV_STAGE_MAX ];
   EFFTOOL_PAL_FADE_WORK   epfw;
   u32                     vanish_flag :1;
@@ -75,12 +90,13 @@ static  void  BTLV_STAGE_CalcPaletteFade( BTLV_STAGE_WORK* bsw );
 /**
  *	システム初期化
  *
+ * @param[in]	rule    戦闘ルール
  * @param[in]	index   読み込むリソースのINDEX
  * @param[in]	season	季節INDEX
  * @param[in]	heapID	ヒープID
  */
 //============================================================================================
-BTLV_STAGE_WORK	*BTLV_STAGE_Init( int index, u8 season, HEAPID heapID )
+BTLV_STAGE_WORK	*BTLV_STAGE_Init( BtlRule rule, int index, u8 season, HEAPID heapID )
 {
 	BTLV_STAGE_WORK *bsw = GFL_HEAP_AllocClearMemory( heapID, sizeof( BTLV_STAGE_WORK ) );
 	BOOL	ret;
@@ -89,7 +105,12 @@ BTLV_STAGE_WORK	*BTLV_STAGE_Init( int index, u8 season, HEAPID heapID )
 	bsw->heapID = heapID;
 
 	//リソース読み込み
-	if( bbtst[ index ].file[ BATT_BG_TBL_FILE_NSBMD ][ season ] != BATT_BG_TBL_NO_FILE )
+  if( rule == BTL_RULE_ROTATION )
+  { 
+    //ローテーションバトルは専用地面
+	  bsw->stage_resource = GFL_G3D_CreateResourceArc( ARCID_BATTGRA, NARC_battgra_wb_batt_st_vs3_nsbmd );
+  }
+	else if( bbtst[ index ].file[ BATT_BG_TBL_FILE_NSBMD ][ season ] != BATT_BG_TBL_NO_FILE )
   { 
 	  bsw->stage_resource = GFL_G3D_CreateResourceArc( ARCID_BATTGRA, bbtst[ index ].file[ BATT_BG_TBL_FILE_NSBMD ][ season ] );
   }
@@ -114,14 +135,43 @@ BTLV_STAGE_WORK	*BTLV_STAGE_Init( int index, u8 season, HEAPID heapID )
   }
 
 	//RENDER生成
-	bsw->stage_render = GFL_G3D_RENDER_Create( bsw->stage_resource, 0, bsw->stage_resource );
+	bsw->stage_render[ BTLV_STAGE_MINE ] = GFL_G3D_RENDER_Create( bsw->stage_resource, 0, bsw->stage_resource );
+	bsw->stage_render[ BTLV_STAGE_ENEMY ] = GFL_G3D_RENDER_Create( bsw->stage_resource, 0, bsw->stage_resource );
 
-  if( bsw->anm_count )
+  //ローテーションは専用アニメ
+  if( rule == BTL_RULE_ROTATION )
   { 
-    int i, cnt;
+    int i;
 
-    bsw->stage_anm_resource = GFL_HEAP_AllocMemory( bsw->heapID, 4 * bsw->anm_count );
-    bsw->stage_anm = GFL_HEAP_AllocMemory( bsw->heapID, 4 * bsw->anm_count );
+    bsw->anm_count = 1;
+
+    bsw->stage_anm_resource = GFL_HEAP_AllocMemory( bsw->heapID, 4 );
+    bsw->stage_anm_resource[ 0 ] = GFL_G3D_CreateResourceArc( ARCID_BATTGRA, NARC_battgra_wb_batt_st_vs3_nsbca );
+
+    for( i = 0 ; i < BTLV_STAGE_MAX ; i++ )
+    { 
+      bsw->stage_anm[ i ] = GFL_HEAP_AllocMemory( bsw->heapID, 4 );
+      bsw->stage_anm_work[ i ] = GFL_HEAP_AllocClearMemory( bsw->heapID, sizeof( BTLV_STAGE_ANM_WORK ) );
+
+      bsw->stage_anm[ i ][ 0 ] = GFL_G3D_ANIME_Create( bsw->stage_render[ i ], bsw->stage_anm_resource[ 0 ], BTLV_STAGE_ANM_MAX ); 
+
+      bsw->stage_anm_work[ i ][ 0 ].anm_type = BTLV_STAGE_ANM_TYPE_REQ;
+		  bsw->stage_obj[ i ] = GFL_G3D_OBJECT_Create( bsw->stage_render[ i ], bsw->stage_anm[ i ], bsw->anm_count );
+		  GFL_G3D_OBJECT_EnableAnime( bsw->stage_obj[ i ], 0 );
+    }
+
+  }
+  else if( bsw->anm_count )
+  { 
+    int i, j, cnt;
+
+    bsw->stage_anm_resource  = GFL_HEAP_AllocMemory( bsw->heapID, 4 * bsw->anm_count );
+
+    for( i = 0 ; i < BTLV_STAGE_MAX ; i++ )
+    { 
+      bsw->stage_anm[ i ]           = GFL_HEAP_AllocMemory( bsw->heapID, 4 * bsw->anm_count );
+      bsw->stage_anm_work[ i ]      = GFL_HEAP_AllocClearMemory( bsw->heapID, sizeof( BTLV_STAGE_ANM_WORK ) * bsw->anm_count );
+    }
 
     cnt = 0;
 
@@ -129,23 +179,32 @@ BTLV_STAGE_WORK	*BTLV_STAGE_Init( int index, u8 season, HEAPID heapID )
     { 
 	    if( bbtst[ index ].file[ i ][ season ] != BATT_BG_TBL_NO_FILE )
       { 
-		    //ANIME生成
 	      bsw->stage_anm_resource[ cnt ] = GFL_G3D_CreateResourceArc( ARCID_BATTGRA, bbtst[ index ].file[ i ][ season ] );
-		    bsw->stage_anm[ cnt ] = GFL_G3D_ANIME_Create( bsw->stage_render, bsw->stage_anm_resource[ cnt ], BTLV_STAGE_ANM_MAX ); 
+        for( j = 0 ; j < BTLV_STAGE_MAX ; j++ )
+        { 
+		      //ANIME生成
+		      bsw->stage_anm[ j ][ cnt ] = GFL_G3D_ANIME_Create( bsw->stage_render[ j ], bsw->stage_anm_resource[ cnt ], BTLV_STAGE_ANM_MAX ); 
+          bsw->stage_anm_work[ j ][ cnt ].anm_type = BTLV_STAGE_ANM_TYPE_LOOP;
+        }
         cnt++;
       }
     }
-		//OBJ生成
-		bsw->stage_obj = GFL_G3D_OBJECT_Create( bsw->stage_render, bsw->stage_anm, bsw->anm_count );
-    //ANIME起動
-    for( i = 0 ; i < bsw->anm_count ; i++ )
+
+    for( j = 0 ; j < BTLV_STAGE_MAX ; j++ )
     { 
-		  GFL_G3D_OBJECT_EnableAnime( bsw->stage_obj, i );
+		  //OBJ生成
+		  bsw->stage_obj[ j ] = GFL_G3D_OBJECT_Create( bsw->stage_render[ j ], bsw->stage_anm[ j ], bsw->anm_count );
+      //ANIME起動
+      for( i = 0 ; i < bsw->anm_count ; i++ )
+      { 
+		    GFL_G3D_OBJECT_EnableAnime( bsw->stage_obj[ j ], i );
+      }
     }
   }
   else
   { 
-		bsw->stage_obj = GFL_G3D_OBJECT_Create( bsw->stage_render, NULL, 0 );
+		bsw->stage_obj[ BTLV_STAGE_MINE ] = GFL_G3D_OBJECT_Create( bsw->stage_render[ BTLV_STAGE_MINE ], NULL, 0 );
+		bsw->stage_obj[ BTLV_STAGE_ENEMY ] = GFL_G3D_OBJECT_Create( bsw->stage_render[ BTLV_STAGE_ENEMY ], NULL, 0 );
   }
   //パレットフェード用ワーク生成
   { 
@@ -180,6 +239,12 @@ BTLV_STAGE_WORK	*BTLV_STAGE_Init( int index, u8 season, HEAPID heapID )
 	bsw->stage_status[ BTLV_STAGE_ENEMY ].scale.z = BTLV_STAGE_DEFAULT_SCALE;
 	MTX_Identity33( &bsw->stage_status[ BTLV_STAGE_ENEMY ].rotate );
 
+  if( rule == BTL_RULE_ROTATION )
+  { 
+	  bsw->stage_status[ BTLV_STAGE_MINE ].trans.z = FX32_ONE * 10;
+	  bsw->stage_status[ BTLV_STAGE_ENEMY ].trans.z = FX32_ONE * -15;
+  }
+
 	//エッジマーキングカラーセット
 	G3X_SetEdgeColorTable( &bbtst[ index ].edge_color );
   
@@ -197,22 +262,33 @@ BTLV_STAGE_WORK	*BTLV_STAGE_Init( int index, u8 season, HEAPID heapID )
 //============================================================================================
 void	BTLV_STAGE_Exit( BTLV_STAGE_WORK* bsw )
 {
-	GFL_G3D_OBJECT_Delete( bsw->stage_obj );
+  int i, j;
 
   if( bsw->anm_count )
   { 
-    int i;
 
     for( i = 0 ; i < bsw->anm_count ; i++ )
     { 
-		  GFL_G3D_ANIME_Delete( bsw->stage_anm[ i ] );
-		  GFL_G3D_DeleteResource( bsw->stage_anm_resource[ i ] );
+      for( j = 0 ; j < BTLV_STAGE_MAX ; j++ )
+      { 
+		    GFL_G3D_ANIME_Delete( bsw->stage_anm[ j ][ i ] );
+		    GFL_G3D_DeleteResource( bsw->stage_anm_resource[ i ] );
+      }
     }
-		GFL_HEAP_FreeMemory( bsw->stage_anm );
-		GFL_HEAP_FreeMemory( bsw->stage_anm_resource );
+    for( i = 0 ; i < BTLV_STAGE_MAX ; i++ )
+    { 
+		  GFL_HEAP_FreeMemory( bsw->stage_anm[ i ] );
+		  GFL_HEAP_FreeMemory( bsw->stage_anm_work[ i ] );
+    }
+	  GFL_HEAP_FreeMemory( bsw->stage_anm_resource );
   }
 
-	GFL_G3D_RENDER_Delete( bsw->stage_render );
+  for( i = 0 ; i < BTLV_STAGE_MAX ; i++ )
+  { 
+	  GFL_G3D_OBJECT_Delete( bsw->stage_obj[ i ] );
+	  GFL_G3D_RENDER_Delete( bsw->stage_render[ i ] );
+  }
+
 	GFL_G3D_DeleteResource( bsw->stage_resource );
 
   GFL_HEAP_FreeMemory( bsw->epfw.pData_dst[ 0 ] );
@@ -233,10 +309,32 @@ void	BTLV_STAGE_Main( BTLV_STAGE_WORK* bsw )
 {
   //アニメーション
 	if(	bsw->anm_count ){
-    int i;
+    int i, j;
     for( i = 0 ; i < bsw->anm_count ; i++ )
     { 
-		  GFL_G3D_OBJECT_LoopAnimeFrame( bsw->stage_obj, i, BTLV_STAGE_ANM_WAIT ); 
+      for( j = 0 ; j < BTLV_STAGE_MAX ; j++ )
+      { 
+        fx32 speed = 0;
+        switch( bsw->stage_anm_work[ j ][ i ].anm_type ){ 
+        case BTLV_STAGE_ANM_TYPE_LOOP:
+          speed = BTLV_STAGE_ANM_WAIT; 
+          break;
+        case BTLV_STAGE_ANM_TYPE_REQ:
+          if( bsw->stage_anm_work[ j ][ i ].anm_req_flag == TRUE )
+          { 
+            speed = bsw->stage_anm_work[ j ][ i ].anm_speed;
+            if( --bsw->stage_anm_work[ j ][ i ].anm_distance == 0 )
+            { 
+              bsw->stage_anm_work[ j ][ i ].anm_req_flag = FALSE;
+            }
+          }
+          break;
+        }
+        if( speed )
+        { 
+		      GFL_G3D_OBJECT_LoopAnimeFrame( bsw->stage_obj[ j ], i, speed ); 
+        }
+      }
     }
 	}
   //パレットフェード
@@ -260,7 +358,7 @@ void	BTLV_STAGE_Draw( BTLV_STAGE_WORK* bsw )
   }
 
 	for( i = 0 ; i < BTLV_STAGE_MAX ; i++ ){
-		GFL_G3D_DRAW_DrawObject( bsw->stage_obj, &bsw->stage_status[ i ] );
+		GFL_G3D_DRAW_DrawObject( bsw->stage_obj[ i ], &bsw->stage_status[ i ] );
 	}
 }
 
@@ -313,3 +411,27 @@ void	BTLV_STAGE_SetVanishFlag( BTLV_STAGE_WORK* bsw, BTLV_STAGE_VANISH flag )
 { 
   bsw->vanish_flag = flag;
 }
+
+//============================================================================================
+/**
+ *	アニメリクエスト
+ *
+ * @param[in]	bsw       BTLV_STAGE管理ワークへのポインタ
+ * @param[in]	side      セットするステージの側
+ * @param[in]	index     セットするアニメインデックス
+ * @param[in]	speed     アニメスピード
+ * @param[in]	distance  アニメフレーム数
+ */
+//============================================================================================
+void	BTLV_STAGE_SetAnmReq( BTLV_STAGE_WORK* bsw, int side, int index, fx32 speed, int distance )
+{ 
+  GF_ASSERT( side < BTLV_STAGE_MAX );
+  GF_ASSERT( bsw->stage_anm_work[ side ] );
+  if( bsw->stage_anm_work[ side ][ index ].anm_type == BTLV_STAGE_ANM_TYPE_REQ )
+  { 
+    bsw->stage_anm_work[ side ][ index ].anm_req_flag = TRUE;
+    bsw->stage_anm_work[ side ][ index ].anm_speed = speed;
+    bsw->stage_anm_work[ side ][ index ].anm_distance = distance;
+  }
+}
+
