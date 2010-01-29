@@ -349,7 +349,8 @@ SRCS_OVERLAY_NOTWIFI = sound/snd_viewer.c \
         field/field_flagcontrol.c \
         field/itemuse_event.c \
         field/script_hideitem.c \
-        field/scrcmd_gimmick_st.c
+        field/scrcmd_gimmick_st.c \
+        field/calender.c
 
 
 
@@ -501,7 +502,6 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/fldeff_footmark.c \
         field/fldeff_reflect.c \
         field/field_place_name.c \
-        field/calender.c \
         field/event_camera_act.c \
         field/event_entrance_in.c \
         field/event_entrance_out.c \

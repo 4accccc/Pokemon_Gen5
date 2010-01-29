@@ -341,8 +341,6 @@ struct _FIELDMAP_WORK
 
   FLD_SEASON_TIME* fieldSeasonTime;
 
-  CALENDER* calender;  // カレンダー
-
   FACEUP_WK_PTR FaceUpWkPtr;
 };
 
@@ -589,9 +587,6 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
 
   //フラグ操作：フィールドマップ生成タイミング
   FIELD_FLAGCONT_INIT_FieldIn( gdata, fieldWork->map_id );
-
-  // カレンダー
-  fieldWork->calender = CALENDER_Create( gdata, fieldWork->heapID );
 
   //フィールド3Ｄカットインヒープ確保
   GFL_HEAP_CreateHeap( HEAPID_FIELDMAP, HEAPID_FLD3DCUTIN, FLD3DCUTIN_SIZE );
@@ -1150,9 +1145,6 @@ static MAINSEQ_RESULT mainSeqFunc_free(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldW
   //フィールド3Ｄカットインヒープ解放
   GFL_HEAP_DeleteHeap( HEAPID_FLD3DCUTIN );
 
-  // カレンダー
-  CALENDER_Delete( fieldWork->calender );
-
   return MAINSEQ_RESULT_NEXTSEQ;
 }
 
@@ -1456,15 +1448,17 @@ FIELD_WEATHER * FIELDMAP_GetFieldWeather( FIELDMAP_WORK *fieldWork )
 //--------------------------------------------------------------
 u16 FIELDMAP_GetZoneWeatherID( FIELDMAP_WORK *fieldWork, u16 zone_id )
 {
-  u16 weather = MP_CheckMovePokeWeather( fieldWork->gamedata, zone_id );
+  CALENDER* calender = GAMEDATA_GetCalender( fieldWork->gamedata );
+  u16       weather  = MP_CheckMovePokeWeather( fieldWork->gamedata, zone_id );
 
-  if(weather != WEATHER_NO_NONE){
+  if( weather != WEATHER_NO_NONE )
+  {
     return weather;
   }
 
   // カレンダーを参照して天気を取得する.
   // (カレンダーに登録されていないゾーンの天気は, ゾーンテーブルに従う.)
-	return CALENDER_GetWeather_today( fieldWork->calender, zone_id );
+	return CALENDER_GetWeather_today( calender, zone_id );
 }
 
 

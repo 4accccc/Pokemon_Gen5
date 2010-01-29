@@ -112,6 +112,8 @@ struct _GAMEDATA{
   BSUBWAY_SCRWORK *bsubway_scrwork; //バトルサブウェイワーク
 
   BEACON_STATUS* beacon_status; ///<ビーコン関連ログ他
+
+  CALENDER* calender;  // カレンダー
 };
 
 //==============================================================================
@@ -236,6 +238,9 @@ GAMEDATA * GAMEDATA_Create(HEAPID heapID)
   //ビーコンステータスワーク生成
   gd->beacon_status = BEACON_STATUS_Create( heapID );
 
+  // カレンダー生成
+  gd->calender = CALENDER_Create( gd, heapID );
+
   return gd;
 }
 
@@ -243,6 +248,7 @@ GAMEDATA * GAMEDATA_Create(HEAPID heapID)
 //------------------------------------------------------------------
 void GAMEDATA_Delete(GAMEDATA * gamedata)
 {
+  CALENDER_Delete( gamedata->calender );
   BEACON_STATUS_Delete( gamedata->beacon_status );
   COMM_PLAYER_SUPPORT_Free(gamedata->comm_player_support);
   ENCOUNT_WORK_Delete( gamedata->enc_work );
@@ -621,6 +627,19 @@ EVENTWORK * GAMEDATA_GetEventWork(GAMEDATA *gamedata)
 MAP_MATRIX * GAMEDATA_GetMapMatrix(GAMEDATA * gamedata)
 {
   return gamedata->mapMatrix;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief カレンダーの取得
+ *
+ * @param  gamedata GAMEDATAへのポインタ
+ * @return CALENDER
+ */
+//--------------------------------------------------------------
+CALENDER* GAMEDATA_GetCalender( GAMEDATA * gamedata )
+{
+  return gamedata->calender;
 }
 
 //--------------------------------------------------------------

@@ -38,6 +38,8 @@
 
 #include "field/bsubway_scr_proc.h"
 
+#include "field/calender.h"
+
 //============================================================================================
 //============================================================================================
 
@@ -251,6 +253,16 @@ extern MYSTATUS * GAMEDATA_GetMyStatus(GAMEDATA * gamedata);
  */
 //--------------------------------------------------------------
 extern MYSTATUS * GAMEDATA_GetMyStatusPlayer(GAMEDATA * gamedata, u32 player_id);
+
+//--------------------------------------------------------------
+/**
+ * @brief カレンダーの取得
+ *
+ * @param  gamedata GAMEDATAへのポインタ
+ * @return CALENDER
+ */
+//--------------------------------------------------------------
+extern CALENDER* GAMEDATA_GetCalender( GAMEDATA * gamedata );
 
 //--------------------------------------------------------------
 /**
