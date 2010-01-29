@@ -225,6 +225,9 @@ typedef struct{
   
   u16 zone_id;                ///<ミッション起動に使用したミニモノリスがあったゾーンID
   u8 padding[2];
+  
+  u16 ready_timer;            ///<開始前のエントリー待ちの残り時間(秒)
+  u16 mission_timer;          ///<ミッション残り時間(秒)
 }MISSION_DATA;
 #endif
 
@@ -263,7 +266,8 @@ typedef struct{
   u8 result_mission_achieve[FIELD_COMM_MEMBER_MAX];  ///<ミッション達成宣言の返事(MISSION_ACHIEVE_)
   u8 data_send_req;           ///<TRUE:ミッションデータの送信を行う
   u8 result_send_req;         ///<TRUE:ミッションデータの送信を行う
-  u8 padding[2];
+  u8 send_mission_start;      ///<準備期間終了。ミッション開始を送信(_SEND_MISSION_START_xxx)
+  u8 padding;
 
   //子が持つデータ
   u8 parent_data_recv;        ///<TRUE:親からミッションデータを受信

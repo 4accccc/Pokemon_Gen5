@@ -19,6 +19,18 @@
 #include "mission.naix"
 
 
+//==============================================================================
+//  定数定義
+//==============================================================================
+///ミッション開始までの準備時間
+#define _MISSION_READY_TIMER      (10)  //秒
+
+enum{
+  _SEND_MISSION_START_NULL,         //リクエストなし
+  _SEND_MISSION_START_SEND_REQ,     //送信リクエスト
+  _SEND_MISSION_START_SENDED,       //送信した
+};
+
 
 //==============================================================================
 //  プロトタイプ宣言
@@ -92,9 +104,17 @@ void MISSION_Update(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *mission)
   if(GFL_NET_IsParentMachine() == TRUE 
       && MISSION_RecvCheck(mission) == TRUE 
       && mission->result.mission_data.accept_netid == INTRUDE_NETID_NULL){
-    if(_GetMissionTime(mission) > mission->data.cdata.time){
-      GAMEDATA *gamedata = GameCommSys_GetGameData(intcomm->game_comm);
-      MISSION_SetMissionFail(mission, GAMEDATA_GetIntrudeMyID(gamedata));
+    if(mission->data.ready_timer > 0){
+      if(mission->send_mission_start == _SEND_MISSION_START_NULL 
+          && _GetMissionTime(mission) > mission->data.ready_timer){
+        mission->send_mission_start = _SEND_MISSION_START_SEND_REQ;
+      }
+    }
+    else{
+      if(_GetMissionTime(mission) > mission->data.cdata.time){
+        GAMEDATA *gamedata = GameCommSys_GetGameData(intcomm->game_comm);
+        MISSION_SetMissionFail(mission, GAMEDATA_GetIntrudeMyID(gamedata));
+      }
     }
   }
   
@@ -138,7 +158,12 @@ s32 MISSION_GetMissionTimer(MISSION_SYSTEM *mission)
   
   if(MISSION_RecvCheck(mission) == TRUE 
       && mission->result.mission_data.accept_netid == INTRUDE_NETID_NULL){
-    ret_timer = mission->data.cdata.time;
+    if(mission->data.ready_timer > 0){
+      ret_timer = mission->data.ready_timer;
+    }
+    else{
+      ret_timer = mission->data.cdata.time;
+    }
     ret_timer -= _GetMissionTime(mission);
     if(ret_timer < 0){
       return 0;
@@ -185,6 +210,7 @@ void MISSION_Set_DataSendReq(MISSION_SYSTEM *mission)
 //==================================================================
 BOOL MISSION_SetEntry(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *mission, const MISSION_REQ *req, int accept_netid)
 {
+#if 0 //削除予定 2010.01.29(金)
   MISSION_DATA *mdata = &mission->data;
   
   if(mdata->accept_netid != INTRUDE_NETID_NULL){
@@ -196,6 +222,10 @@ BOOL MISSION_SetEntry(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *mission, con
   mdata->target_netid = _TragetNetID_Choice(intcomm, accept_netid);
   
   return TRUE;
+#else
+  GF_ASSERT(0);
+  return FALSE;
+#endif
 }
 
 //--------------------------------------------------------------
@@ -291,6 +321,22 @@ BOOL MISSION_SetMissionData(MISSION_SYSTEM *mission, const MISSION_DATA *src)
 
 //==================================================================
 /**
+ * ミッション開始受信
+ *
+ * @param   mission		
+ */
+//==================================================================
+void MISSION_RecvMissionStart(MISSION_SYSTEM *mission)
+{
+  MISSION_DATA *md = MISSION_GetRecvData(mission);
+  if(md != NULL){
+    md->ready_timer = 0;
+    mission->start_timer = GFL_RTC_GetTimeBySecond();
+  }
+}
+
+//==================================================================
+/**
  * ミッションデータ送信リクエストが発生していれば送信を行う
  *
  * @param   intcomm		
@@ -318,6 +364,12 @@ static void MISSION_SendUpdate(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *mis
   if(mission->result_send_req == TRUE){
     if(IntrudeSend_MissionResult(intcomm, mission) == TRUE){
       mission->result_send_req = FALSE;
+    }
+  }
+  
+  if(mission->send_mission_start == _SEND_MISSION_START_SEND_REQ){
+    if(IntrudeSend_MissionStart(intcomm, mission) == TRUE){
+      mission->send_mission_start = _SEND_MISSION_START_SENDED;
     }
   }
 }
@@ -552,6 +604,7 @@ static void MISSION_SetMissionFail(MISSION_SYSTEM *mission, int fail_netid)
   result->mission_data = *mdata;
   result->mission_fail = TRUE;
   mission->result_send_req = TRUE;
+  mission->send_mission_start = _SEND_MISSION_START_NULL;
   OS_TPrintf("ミッション失敗をセット\n");
 }
 
@@ -988,13 +1041,16 @@ BOOL MISSION_SetEntryNew(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *mission, 
   //実行するミッションとして登録
   *exe_mdata = *mdata;
   exe_mdata->accept_netid = net_id;
-
+  exe_mdata->ready_timer = _MISSION_READY_TIMER;
+  
   //返事セット
   mission->entry_answer[net_id].mdata = *exe_mdata;
   mission->entry_answer[net_id].result = MISSION_ENTRY_RESULT_OK;
   
   //全員に実行されるミッションデータを送信する
   MISSION_Set_DataSendReq(mission);
+
+  mission->send_mission_start = _SEND_MISSION_START_NULL;
   
   return TRUE;
 }

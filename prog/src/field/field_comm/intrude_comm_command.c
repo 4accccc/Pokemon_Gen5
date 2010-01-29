@@ -41,6 +41,7 @@ static void _IntrudeRecv_MissionReq(const int netID, const int size, const void*
 static void _IntrudeRecv_MissionEntryAnswer(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _MissionOrderConfirm(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _IntrudeRecv_MissionData(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
+static void _IntrudeRecv_MissionStart(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _IntrudeRecv_MissionAchieve(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _IntrudeRecv_MissionAchieveAnswer(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _IntrudeRecv_MissionResult(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
@@ -72,11 +73,12 @@ const NetRecvFuncTable Intrude_CommPacketTbl[] = {
   {_IntrudeRecv_ReqBingoIntrusionParam, NULL}, //INTRUDE_CMD_REQ_BINGO_INTRUSION_PARAM
   {_IntrudeRecv_BingoIntrusionParam, NULL},    //INTRUDE_CMD_BINGO_INTRUSION_PARAM
   {_IntrudeRecv_MissionListReq, NULL},         //INTRUDE_CMD_MISSION_LIST_REQ
-  {_IntrudeRecv_MissionList, NULL},            //INTRUDE_CMD_MISSION_LIST
+  {_IntrudeRecv_MissionList, _RecvHugeBuffer}, //INTRUDE_CMD_MISSION_LIST
   {_MissionOrderConfirm, NULL},                //INTRUDE_CMD_MISSION_ORDER_CONFIRM
   {_IntrudeRecv_MissionEntryAnswer, NULL},     //INTRUDE_CMD_MISSION_ENTRY_ANSWER
   {_IntrudeRecv_MissionReq, NULL},             //INTRUDE_CMD_MISSION_REQ
   {_IntrudeRecv_MissionData, NULL},            //INTRUDE_CMD_MISSION_DATA
+  {_IntrudeRecv_MissionStart, NULL},           //INTRUDE_CMD_MISSION_START
   {_IntrudeRecv_MissionAchieve, NULL},         //INTRUDE_CMD_MISSION_ACHIEVE
   {_IntrudeRecv_MissionAchieveAnswer, NULL},   //INTRUDE_CMD_MISSION_ACHIEVE_ANSWER
   {_IntrudeRecv_MissionResult, NULL},          //INTRUDE_CMD_MISSION_RESULT
@@ -110,14 +112,11 @@ SDK_COMPILER_ASSERT(NELEMS(Intrude_CommPacketTbl) == INTRUDE_CMD_NUM);
 //--------------------------------------------------------------
 static u8 * _RecvHugeBuffer(int netID, void* pWork, int size)
 {
-#if 0 //※check　まだ巨大データ用意していない
   INTRUDE_COMM_SYS_PTR intcomm = pWork;
-  GF_ASSERT_MSG(size <= UNION_HUGE_RECEIVE_BUF_SIZE, "size=%x, recv_size=%x\n", size, UNION_HUGE_RECEIVE_BUF_SIZE);
-	return intcomm->huge_receive_buf[netID];
-#else
-  GF_ASSERT(0);
-  return NULL;
-#endif
+  GF_ASSERT(netID == 0);  //親分のHugeBufferしか用意していないため、巨大データ送信は親限定
+  GF_ASSERT_MSG(size <= INTRUDE_HUGE_RECEIVE_BUF_SIZE, "size=%x, recv_size=%x\n", 
+    size, INTRUDE_HUGE_RECEIVE_BUF_SIZE);
+	return intcomm->huge_receive_buf;
 }
 
 //--------------------------------------------------------------
@@ -823,10 +822,12 @@ BOOL IntrudeSend_MissionList(INTRUDE_COMM_SYS_PTR intcomm, const MISSION_SYSTEM 
     return FALSE;
   }
   
-  ret = GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), 
-    INTRUDE_CMD_MISSION_LIST, sizeof(MISSION_CHOICE_LIST), &mission->list[palace_area]);
+  ret = GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(), GFL_NET_SENDID_ALLUSER,
+    INTRUDE_CMD_MISSION_LIST, sizeof(MISSION_CHOICE_LIST), &mission->list[palace_area],
+    FALSE, FALSE, TRUE);
   if(ret == TRUE){
-    OS_TPrintf("SEND：ミッションリスト palace_area=%d\n", palace_area);
+    OS_TPrintf("SEND：ミッションリスト palace_area=%d, size=%d\n", 
+      palace_area, sizeof(MISSION_CHOICE_LIST));
   }
   return ret;
 }
@@ -1041,6 +1042,65 @@ BOOL IntrudeSend_MissionData(INTRUDE_COMM_SYS_PTR intcomm, const MISSION_SYSTEM 
     INTRUDE_CMD_MISSION_DATA, sizeof(MISSION_DATA), &mission->data);
   if(ret == TRUE){
     OS_TPrintf("送信：ミッションデータ \n");
+  }
+  return ret;
+}
+
+//==============================================================================
+//  
+//==============================================================================
+//--------------------------------------------------------------
+/**
+ * @brief   コマンド受信：ミッション開始
+ * @param   netID      送ってきたID
+ * @param   size       パケットサイズ
+ * @param   pData      データ
+ * @param   pWork      ワークエリア
+ * @param   pHandle    受け取る側の通信ハンドル
+ * @retval  none  
+ */
+//--------------------------------------------------------------
+static void _IntrudeRecv_MissionStart(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
+{
+  INTRUDE_COMM_SYS_PTR intcomm = pWork;
+  const MISSION_DATA *mdata = pData;
+  const MISSION_DATA *my_recv_data = MISSION_GetRecvData(&intcomm->mission);
+  
+  if(my_recv_data == NULL){
+    OS_TPrintf("RECV:ミッション開始：ミッション未受信の為無視\n");
+    return;
+  }
+  if(GFL_STD_MemComp(my_recv_data, mdata, sizeof(MISSION_DATA)) != 0){
+    OS_TPrintf("RECV:ミッション開始：所持しているミッションデータと違うので無視\n");
+    return;
+  }
+  
+  MISSION_RecvMissionStart(&intcomm->mission);
+  OS_TPrintf("RECV:ミッション開始\n");
+}
+
+//==================================================================
+/**
+ * データ送信：ミッション開始
+ *
+ * @param   intcomm         
+ * @param   mission         ミッションデータ
+ *
+ * @retval  BOOL		TRUE:送信成功。　FALSE:失敗
+ */
+//==================================================================
+BOOL IntrudeSend_MissionStart(INTRUDE_COMM_SYS_PTR intcomm, const MISSION_SYSTEM *mission)
+{
+  BOOL ret;
+
+  if(_OtherPlayerExistence() == FALSE){
+    return FALSE;
+  }
+  
+  ret = GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), 
+    INTRUDE_CMD_MISSION_START, sizeof(MISSION_DATA), &mission->data);
+  if(ret == TRUE){
+    OS_TPrintf("送信：ミッション開始 \n");
   }
   return ret;
 }

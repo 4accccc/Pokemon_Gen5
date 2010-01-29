@@ -81,6 +81,9 @@ enum{
 ///ミッションが発動していない時のミッション番号
 #define MISSION_NO_NULL     (0xff)
 
+///巨大データ受信バッファサイズ
+#define INTRUDE_HUGE_RECEIVE_BUF_SIZE   (600)
+
 
 //==============================================================================
 //  型定義
@@ -130,6 +133,8 @@ typedef struct _INTRUDE_COMM_SYS{
   GAME_COMM_SYS_PTR game_comm;
   COMM_PLAYER_SYS_PTR cps;                          ///<通信プレイヤー制御ワークへのポインタ
   
+  u8 huge_receive_buf[INTRUDE_HUGE_RECEIVE_BUF_SIZE];  ///<巨大データ受信バッファ
+
   GBS_BEACON send_beacon;
   INTRUDE_STATUS intrude_status_mine;               ///<自分の現在情報
   INTRUDE_STATUS intrude_status[FIELD_COMM_MEMBER_MAX]; ///<全員の現在情報

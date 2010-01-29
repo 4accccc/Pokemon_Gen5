@@ -21,6 +21,7 @@ extern void MISSION_Set_ListSendReq(MISSION_SYSTEM *mission, int palace_area);
 extern void MISSION_Set_DataSendReq(MISSION_SYSTEM *mission);
 extern BOOL MISSION_SetEntry(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *mission, const MISSION_REQ *req, int accept_netid);
 extern BOOL MISSION_SetMissionData(MISSION_SYSTEM *mission, const MISSION_DATA *src);
+extern void MISSION_RecvMissionStart(MISSION_SYSTEM *mission);
 extern BOOL MISSION_RecvCheck(const MISSION_SYSTEM *mission);
 extern MISSION_DATA * MISSION_GetRecvData(MISSION_SYSTEM *mission);
 extern u16 MISSION_GetMissionMsgID(const MISSION_SYSTEM *mission);

@@ -41,6 +41,7 @@ enum INTRUDE_CMD{
   INTRUDE_CMD_MISSION_ENTRY_ANSWER,           ///<「ミッション受注します」の返事
   INTRUDE_CMD_MISSION_REQ,                    ///<ミッション要求リクエスト
   INTRUDE_CMD_MISSION_DATA,                   ///<ミッションデータ
+  INTRUDE_CMD_MISSION_START,                  ///<ミッション開始
   INTRUDE_CMD_MISSION_ACHIEVE,                ///<ミッション達成報告
   INTRUDE_CMD_MISSION_ACHIEVE_ANSWER,         ///<ミッション達成報告の返事
   INTRUDE_CMD_MISSION_RESULT,                 ///<ミッション結果
@@ -85,6 +86,7 @@ extern BOOL IntrudeSend_MissionOrderConfirm(INTRUDE_COMM_SYS_PTR intcomm, const 
 extern BOOL IntrudeSend_MissionEntryAnswer(INTRUDE_COMM_SYS_PTR intcomm, const MISSION_ENTRY_ANSWER *entry_answer, int send_netid);
 extern BOOL IntrudeSend_MissionReq(INTRUDE_COMM_SYS_PTR intcomm, int monolith_type, u16 zone_id);
 extern BOOL IntrudeSend_MissionData(INTRUDE_COMM_SYS_PTR intcomm, const MISSION_SYSTEM *mission);
+extern BOOL IntrudeSend_MissionStart(INTRUDE_COMM_SYS_PTR intcomm, const MISSION_SYSTEM *mission);
 extern BOOL IntrudeSend_MissionAchieve(
   INTRUDE_COMM_SYS_PTR intcomm, const MISSION_SYSTEM *mission);
 extern BOOL IntrudeSend_MissionAchieveAnswer(INTRUDE_COMM_SYS_PTR intcomm, 
