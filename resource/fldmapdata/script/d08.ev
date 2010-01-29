@@ -161,7 +161,7 @@ EVENT_START	ev_reserve_d08_hakase1_01
 	_FLAG_RESET( FV_C07GYM0101_READER7_01 )
 	
 	//リゾートデザートのライバルイベント開始
-	$WK_SCENE_D03R0101 = 1
+	$WK_SCENE_D03R0101 = 2
 
 	//リゾートデザートのライバル出現
 	_FLAG_RESET( FV_D03R0101_RIVAL_01 )
