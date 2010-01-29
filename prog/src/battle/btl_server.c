@@ -350,7 +350,7 @@ static BOOL ServerMain_WaitReady( BTL_SERVER* server, int* seq )
       ResetAdapterCmd( server );
 
       // 入場演出処理後、捕獲デモ以外の処理
-      if( BTL_MAIN_GetRule(server->mainModule) != BTL_COMPETITOR_DEMO_CAPTURE )
+      if( BTL_MAIN_GetCompetitor(server->mainModule) != BTL_COMPETITOR_DEMO_CAPTURE )
       {
         BTL_SVFLOW_Start_AfterPokemonIn( server->flowWork );
         if( server->que->writePtr )
