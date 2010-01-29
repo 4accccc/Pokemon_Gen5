@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00176" date="2010-01-29T15:33:17"/>
+	<create user="tetsuji_ohta" host="W00176" date="2010-01-29T18:57:16"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1248,6 +1248,54 @@ TVトランシーバをしますか？</language>
 		<comment>ＴＶトランシーバー中の状態表示項目</comment>
 		<language name="JPN" width="216">ＴＶトランシーバーちゅう</language>
 		<language name="JPN_KANJI" width="216">ＴＶトランシーバーちゅう</language>
+	</row>
+
+	<row id="msg_wifilobby_1023" back-color=",,,,,,#808080,#808080,,#808080,#808080,,,,,,,">
+		<comment>シングルを選んだときの表題</comment>
+		<language name="JPN" width="216">たいせんけいしき：[FF:00:色:2]シングルバトル</language>
+		<language name="JPN_KANJI" width="216">たいせんけいしき：[FF:00:色:2]シングルバトル</language>
+	</row>
+
+	<row id="msg_wifilobby_1024" back-color=",,,,,,#808080,#808080,,#808080,#808080,,,,,,,">
+		<comment>ダブルを選んだときの表題</comment>
+		<language name="JPN" width="216">たいせんけいしき：[FF:00:色:2]ダブルバトル</language>
+		<language name="JPN_KANJI" width="216">たいせんけいしき：[FF:00:色:2]ダブルバトル</language>
+	</row>
+
+	<row id="msg_wifilobby_1025" back-color=",,,,,,#808080,#808080,,#808080,#808080,,,,,,,">
+		<comment>トリプルを選んだときの表題</comment>
+		<language name="JPN" width="216">たいせんけいしき：[FF:00:色:2]トリプルバトル</language>
+		<language name="JPN_KANJI" width="216">たいせんけいしき：[FF:00:色:2]トリプルバトル</language>
+	</row>
+
+	<row id="msg_wifilobby_1026" back-color=",,,,,,#808080,#808080,,#808080,#808080,,,,,,,">
+		<comment>ローテーションを選んだときの表題</comment>
+		<language name="JPN" width="216">たいせんけいしき：[FF:00:色:2]ローテーションバトル</language>
+		<language name="JPN_KANJI" width="216">たいせんけいしき：[FF:00:色:2]ローテーションバトル</language>
+	</row>
+
+	<row id="msg_wifilobby_1028" back-color=",,,,,,#808080,#808080,,#808080,#808080,,,,,,,">
+		<comment>「制限無し」を選んだときの表題</comment>
+		<language name="JPN" width="216">たいせんルール：[FF:00:色:2]せいげんなし</language>
+		<language name="JPN_KANJI" width="216">たいせんルール：[FF:00:色:2]せいげんなし</language>
+	</row>
+
+	<row id="msg_wifilobby_1029" back-color=",,,,,,#808080,#808080,,#808080,#808080,,,,,,,">
+		<comment>「フラット」を選んだときの表題</comment>
+		<language name="JPN" width="216">たいせんルール：[FF:00:色:2]フラットルール</language>
+		<language name="JPN_KANJI" width="216">たいせんルール：[FF:00:色:2]フラットルール</language>
+	</row>
+
+	<row id="msg_wifilobby_1030" back-color=",,,,,,#808080,#808080,,#808080,#808080,,,,,,,">
+		<comment>「サポートシューター有」を選んだときの表題</comment>
+		<language name="JPN" width="216">サポートシューター：[FF:00:色:2]あり</language>
+		<language name="JPN_KANJI" width="216">サポートシューター：[FF:00:色:2]あり</language>
+	</row>
+
+	<row id="msg_wifilobby_1031" back-color=",,,,,,#808080,#808080,,#808080,#808080,,,,,,,">
+		<comment>「サポートシューター無」を選んだときの表題</comment>
+		<language name="JPN" width="216">サポートシューター：[FF:00:色:2]なし</language>
+		<language name="JPN_KANJI" width="216">サポートシューター：[FF:00:色:2]なし</language>
 	</row>
 
 	<flowchart-group-list>
