@@ -210,6 +210,38 @@ VMCMD_RESULT EvCmdBgmNowMapPlay( VMHANDLE *core, void *wk )
   return VMCMD_RESULT_SUSPEND;
 }
 
+//--------------------------------------------------------------
+/**
+ * 現在のBGMを退避し, イベントBGMを再生する
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT
+ * @note 再生中のBGMを破棄し, フィールドのBGMを再生する
+ *
+ * ※通常のイベントBGMはフィールドBGMの退避を行わないで再生する。
+ * 　イベントBGM ⇒ バトル ⇒ フィールドBGM の流れが必要な場面で使用する。
+ */
+//-------------------------------------------------------------- 
+VMCMD_RESULT EvCmdPlayTempEventBGM( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK*       work = wk;
+  GAMESYS_WORK*      gsys = SCRCMD_WORK_GetGameSysWork( work );
+  GAMEDATA*         gdata = GAMESYSTEM_GetGameData( gsys );
+  FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  SCRIPT_WORK*         sc = SCRCMD_WORK_GetScriptWork( work );
+
+  {
+    GMEVENT* event;
+    u16 zoneID;
+    u32 soundIdx;
+
+    zoneID   = FIELDMAP_GetZoneID( fieldmap );
+    soundIdx = FSND_GetFieldBGM( gdata, zoneID );
+    event    = EVENT_FSND_PushPlayNextBGM( gsys, soundIdx, FSND_FADE_SHORT, FSND_FADE_NONE );
+    SCRIPT_CallEvent( sc, event );
+  }
+  return VMCMD_RESULT_SUSPEND;
+}
+
 
 #if 0
 //--------------------------------------------------------------

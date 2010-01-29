@@ -2524,6 +2524,25 @@
   .short  EV_SEQ_BGM_NOW_MAP_RECOVER
   .endm
 
+//--------------------------------------------------------------
+/**
+  * _START_TEMP_EVENT_BGM 一時的なイベントBGMを再生する
+  * @param no BGM Number
+  *
+  * フィールドBGMを退避し、イベントBGMを再生します。
+  * この状態でバトルから復帰すると、フィールドBGMが再生されます。
+  *
+  * フィールドBGM ⇒ イベントBGM ⇒ バトル ⇒ フィールドBGM
+  * の流れが必要な場面でのみ使用してください。
+ */
+//--------------------------------------------------------------
+#define _START_TEMP_EVENT_BGM( no )  _ASM_START_TEMP_EVENT_BGM
+
+  .macro  _ASM_START_TEMP_EVENT_BGM
+  .short  EV_SEQ_START_TEMP_EVENT_BGM
+  .short  \no
+  .endm
+
 
 //--------------------------------------------------------------
 /**
