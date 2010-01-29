@@ -28,7 +28,7 @@
 //=============================================================================
 enum
 { 
-  EVENT_BATTLE_ADD_CMD_TBL_TIMING = 1192, ///< “¯ŠúNO
+  EVENT_BATTLE_ADD_CMD_TBL_TIMING = 200, ///< “¯ŠúNO
 };
 
 // PROC

@@ -62,9 +62,10 @@ enum
 ///	トレーナー毎のデータ
 //==============================================================
 typedef struct {
-  const POKEPARTY* party; ///< 戦所時の所有ポケモンデータ(結果も受け取りたいので、BATTLE_SETUP_PARAM内のpartyと同じものである必要がある。)
-  STRBUF* str_trname;     ///< トレーナー名
-  u8 trsex;               ///< トレーナーの性別:PM_MALE or PM_FEMALE
+  const POKEPARTY* party; ///< 戦所時の所有ポケモンデータ(結果も受け取りたいので、BATTLE_SETUP_PARAM内のpartyと同じものである必要がある)
+  const MYSTATUS* mystatus; ///< トレーナー名、性別を取得する
+  STRBUF* str_trname;     ///< トレーナー名(MYSTATUSに置き換わるので廃止予定)
+  u8 trsex;               ///< トレーナーの性別:PM_MALE or PM_FEMALE(MYSTATUSに置き換わるので廃止予定)
   u8 server_version;      ///< ROMのサーババージョン
   u8 padding[2];
 } COMM_BTL_DEMO_TRAINER_DATA;

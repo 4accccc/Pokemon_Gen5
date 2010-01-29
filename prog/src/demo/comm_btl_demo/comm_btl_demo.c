@@ -47,10 +47,12 @@
 
 #include "comm_btl_demo_res.cdat"
 
+#define STR_TRNAME_SIZE (16)
+
 FS_EXTERN_OVERLAY(ui_common);
 
 // アプリ内でデバッグ用のパラメータをセット
-//#define DEBUG_SET_PARAM
+#define DEBUG_SET_PARAM
 
 //=============================================================================
 /**
@@ -277,9 +279,11 @@ typedef struct {
   u8 posid;
   u8 padding[2];
   // [PRIVATE]
+  int trsex; // PM_MALE or PM_FEMALE
+  STRBUF* str_trname;
   GFL_BMPWIN* win_name;   // トレーナー名
-  BALL_UNIT ball;         // ボール管理ワーク
   GFL_CLWK* clwk_pokenum; // ポケモン数表示（後デモ用）
+  BALL_UNIT ball;         // ボール管理ワーク
   u32 timer;
 } TRAINER_UNIT;
 
@@ -483,8 +487,11 @@ static void debug_param( COMM_BTL_DEMO_PARAM* prm )
   for( i=0; i<COMM_BTL_DEMO_TRDATA_MAX; i++ )
   {
     prm->trainer_data[i].server_version = GFUser_GetPublicRand(2);
-    prm->trainer_data[i].trsex = (i!=0) ? PM_MALE : PM_FEMALE; 
 
+    prm->trainer_data[i].mystatus = SaveData_GetMyStatus( SaveControl_GetPointer() );
+
+#if 0
+    prm->trainer_data[i].trsex = (i!=0) ? PM_MALE : PM_FEMALE; 
     // トレーナー名
     {
       //終端コードを追加してからSTRBUFに変換
@@ -495,6 +502,7 @@ static void debug_param( COMM_BTL_DEMO_PARAM* prm )
       prm->trainer_data[i].str_trname = GFL_STR_CreateBuffer( sizeof(STRCODE)*10, HEAPID_COMM_BTL_DEMO );
       GFL_STR_SetStringCode( prm->trainer_data[i].str_trname, debugname );
     }
+#endif
     
     // デバッグポケパーティー
     {
@@ -541,9 +549,8 @@ static void debug_param( COMM_BTL_DEMO_PARAM* prm )
         }
       }
 
-      HOSAKA_Printf("[%d] server_version=%d trsex=%d poke_cnt=%d \n",i, 
+      HOSAKA_Printf("[%d] server_version=%d poke_cnt=%d \n",i, 
           prm->trainer_data[i].server_version,
-          prm->trainer_data[i].trsex,
           poke_cnt );
     }
   }
@@ -555,7 +562,6 @@ static void debug_param_del( COMM_BTL_DEMO_PARAM* prm )
 
   for( i=0; i<COMM_BTL_DEMO_TRDATA_MAX; i++ )
   {
-    GFL_STR_DeleteBuffer( prm->trainer_data[i].str_trname );
     GFL_HEAP_FreeMemory( (POKEPARTY*)prm->trainer_data[i].party );
   }
 }
@@ -664,12 +670,6 @@ static GFL_PROC_RESULT CommBtlDemoProc_Exit( GFL_PROC *proc, int *seq, void *pwk
 #ifdef DEBUG_SET_PARAM
   debug_param_del( pwk );
 #endif
-  
-  // フェード中は処理しない
-  if( GFL_FADE_CheckFade() == TRUE )
-  {
-    return GFL_PROC_RES_CONTINUE;
-  }
   
   // シーンコントーラ削除
   UI_SCENE_CNT_Delete( wk->cntScene );
@@ -1183,6 +1183,8 @@ static BOOL SceneEndDemoDraw_Main( UI_SCENE_CNT_PTR cnt, void* work )
 
     if( G3D_AnimeMain( &wk->wk_g3d ) == FALSE )
     {
+      // フェードアウト リクエスト
+      GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, -3 );
       return TRUE;
     }
     break;
@@ -1206,6 +1208,12 @@ static BOOL SceneEndDemoDraw_Main( UI_SCENE_CNT_PTR cnt, void* work )
 static BOOL SceneEndDemoDraw_End( UI_SCENE_CNT_PTR cnt, void* work )
 {
   COMM_BTL_DEMO_MAIN_WORK* wk = work;
+
+  // フェード待ち
+  if( GFL_FADE_CheckFade() == TRUE )
+  {
+    return FALSE;
+  }
 
   _SceneEndDemoEnd( cnt, wk );
 
@@ -1734,8 +1742,16 @@ static void TRAINER_UNIT_Init( TRAINER_UNIT* unit, u8 type, u8 posid, const COMM
   // ボール初期化
   BALL_UNIT_Init( &unit->ball, data->party, type, posid, unit->obj );
 
-  // トレーナー名初期化
+  // トレーナー名 生成
+  unit->str_trname = GFL_STR_CreateBuffer( STR_TRNAME_SIZE, HEAPID_COMM_BTL_DEMO );
+  MyStatus_CopyNameString( unit->data->mystatus, unit->str_trname );
+  
+  // トレーナー性別取得
+  unit->trsex = MyStatus_GetMySex( unit->data->mystatus );
+  
+    // トレーナー名BMPWIN初期化
   unit->win_name = TRAINERNAME_WIN_Create( type, posid );
+
 
   // 終了デモの初期化
   if( type_is_start(unit->type) == FALSE )
@@ -1860,11 +1876,14 @@ static void _trainer_unit_main_end( TRAINER_UNIT* unit )
 //-----------------------------------------------------------------------------
 static void TRAINER_UNIT_Exit( TRAINER_UNIT* unit )
 {
+  // トレーナー名 削除
+  GFL_STR_DeleteBuffer( unit->str_trname );
+
   // ボール開放
   BALL_UNIT_Exit( &unit->ball );
+
   // トレーナー名BMPWIN解放
   GFL_BMPWIN_Delete( unit->win_name );
-
 
   if( type_is_start(unit->type) == FALSE )
   {
@@ -1915,9 +1934,10 @@ static void TRAINER_UNIT_Main( TRAINER_UNIT* unit )
 //-----------------------------------------------------------------------------
 static void TRAINER_UNIT_DrawTrainerName( TRAINER_UNIT* unit, GFL_FONT *font )
 {
-  // 生成＆転送
+  GF_ASSERT( unit );
+  GF_ASSERT( unit->str_trname );
 
-  if( unit->data->trsex == PM_MALE )
+  if( unit->trsex == PM_MALE )
   {
     // 男処理
     GFL_FONTSYS_SetColor( 0x6, 0x6, 0x6 );
@@ -1928,17 +1948,17 @@ static void TRAINER_UNIT_DrawTrainerName( TRAINER_UNIT* unit, GFL_FONT *font )
     GFL_FONTSYS_SetColor( 0x4, 0x4, 0x4 );
   }
 
-  PRINTSYS_Print( GFL_BMPWIN_GetBmp(unit->win_name), -1, -1, unit->data->str_trname, font );
-  PRINTSYS_Print( GFL_BMPWIN_GetBmp(unit->win_name), 1, -1, unit->data->str_trname, font );
-  PRINTSYS_Print( GFL_BMPWIN_GetBmp(unit->win_name), 1, 1, unit->data->str_trname, font );
-  PRINTSYS_Print( GFL_BMPWIN_GetBmp(unit->win_name), -1, 1, unit->data->str_trname, font );
+  PRINTSYS_Print( GFL_BMPWIN_GetBmp(unit->win_name), -1, -1, unit->str_trname, font );
+  PRINTSYS_Print( GFL_BMPWIN_GetBmp(unit->win_name), 1, -1, unit->str_trname, font );
+  PRINTSYS_Print( GFL_BMPWIN_GetBmp(unit->win_name), 1, 1, unit->str_trname, font );
+  PRINTSYS_Print( GFL_BMPWIN_GetBmp(unit->win_name), -1, 1, unit->str_trname, font );
 
-  PRINTSYS_Print( GFL_BMPWIN_GetBmp(unit->win_name), 0, 1, unit->data->str_trname, font );
-  PRINTSYS_Print( GFL_BMPWIN_GetBmp(unit->win_name), 0, -1, unit->data->str_trname, font );
-  PRINTSYS_Print( GFL_BMPWIN_GetBmp(unit->win_name), 1, 0, unit->data->str_trname, font );
-  PRINTSYS_Print( GFL_BMPWIN_GetBmp(unit->win_name), -1, 0, unit->data->str_trname, font );
+  PRINTSYS_Print( GFL_BMPWIN_GetBmp(unit->win_name), 0, 1, unit->str_trname, font );
+  PRINTSYS_Print( GFL_BMPWIN_GetBmp(unit->win_name), 0, -1, unit->str_trname, font );
+  PRINTSYS_Print( GFL_BMPWIN_GetBmp(unit->win_name), 1, 0, unit->str_trname, font );
+  PRINTSYS_Print( GFL_BMPWIN_GetBmp(unit->win_name), -1, 0, unit->str_trname, font );
   
-  if( unit->data->trsex == PM_MALE )
+  if( unit->trsex == PM_MALE )
   {
     // 男処理
     GFL_FONTSYS_SetColor( 0xf, 0x6, 0x5 );
@@ -1951,7 +1971,7 @@ static void TRAINER_UNIT_DrawTrainerName( TRAINER_UNIT* unit, GFL_FONT *font )
 
 //  GFL_FONTSYS_SetColor( 0xf, 0x4, 0x5 );
 
-  PRINTSYS_Print( GFL_BMPWIN_GetBmp(unit->win_name), 0, 0, unit->data->str_trname, font );
+  PRINTSYS_Print( GFL_BMPWIN_GetBmp(unit->win_name), 0, 0, unit->str_trname, font );
   GFL_BMPWIN_MakeTransWindow_VBlank( unit->win_name );
 }
 
@@ -2600,6 +2620,8 @@ static void G3D_AnimeSet( COMM_BTL_DEMO_G3D_WORK* g3d, u16 demo_id )
       GFL_G3D_RND* rnd = GFL_G3D_OBJECT_GetG3Drnd(obj);
       GFL_G3D_RES* tex = GFL_G3D_RENDER_GetG3DresTex(rnd);
       GFL_G3D_RES* mdl = GFL_G3D_RENDER_GetG3DresMdl(rnd);
+
+//      GFL_G3D_GetTexturePlttKey();
 
 //    NNSG3dRenderObj* renderobj = GFL_G3D_RENDER_GetRenderObj( GFL_G3D_OBJECT_GetG3Drnd(g3Dobj) );
 

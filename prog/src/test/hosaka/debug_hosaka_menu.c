@@ -75,8 +75,10 @@ static void debug_param( COMM_BTL_DEMO_PARAM* prm )
   for( i=0; i<COMM_BTL_DEMO_TRDATA_MAX; i++ )
   {
     prm->trainer_data[i].server_version = GFUser_GetPublicRand(2);
-    prm->trainer_data[i].trsex = (i!=0) ? PM_MALE : PM_FEMALE; //@TODO とりあえず01は男固定
+    prm->trainer_data[i].mystatus = SaveData_GetMyStatus( SaveControl_GetPointer() );
 
+#if 0
+    prm->trainer_data[i].trsex = (i!=0) ? PM_MALE : PM_FEMALE; //@TODO とりあえず01は男固定
     // トレーナー名
     {
       //終端コードを追加してからSTRBUFに変換
@@ -87,6 +89,7 @@ static void debug_param( COMM_BTL_DEMO_PARAM* prm )
       prm->trainer_data[i].str_trname = GFL_STR_CreateBuffer( sizeof(STRCODE)*10, GFL_HEAPID_APP );
       GFL_STR_SetStringCode( prm->trainer_data[i].str_trname, debugname );
     }
+#endif
     
     // デバッグポケパーティー
     {
