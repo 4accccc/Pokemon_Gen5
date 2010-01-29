@@ -48,6 +48,8 @@
 #include "field_task.h"
 #include "field_task_manager.h"
 
+#include "fld_faceup.h"
+
 //======================================================================
 //	define
 //======================================================================
@@ -149,5 +151,5 @@ extern u32 FIELDMAP_GetSeasonTimeZone( const FIELDMAP_WORK * fieldWork );
 extern void FIELDMAP_InitBGMode( void );
 extern void FIELDMAP_InitBG( FIELDMAP_WORK* fieldWork );
 
-extern void SetMainFuncHookFlg(FIELDMAP_WORK * fieldWork, const BOOLinFlg);
-
+extern void FIELDMAP_SetMainFuncHookFlg(FIELDMAP_WORK * fieldWork, const BOOLinFlg);
+extern FACEUP_WK_PTR *FIELDMAP_GetFaceupWkPtrAdr(FIELDMAP_WORK *fieldWork);

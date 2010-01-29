@@ -115,7 +115,6 @@
 
 #include "net_app/union_eff.h"
 
-
 #ifdef PM_DEBUG
 #include "pleasure_boat.h"    //for PL_BOAT_
 #endif
@@ -340,6 +339,8 @@ struct _FIELDMAP_WORK
 
 
   FLD_SEASON_TIME* fieldSeasonTime;
+
+  FACEUP_WK_PTR FaceUpWkPtr;
 };
 
 //--------------------------------------------------------------
@@ -3119,10 +3120,13 @@ static void Draw3DNormalMode( FIELDMAP_WORK * fieldWork )
           fieldWork->gsys, fieldWork->Fld3dCiPtr, fieldWork->camera_control,
           FIELDMAP_GetFieldPlayer(fieldWork),
           FIELDMAP_GetFldNoGridMapper( fieldWork ) );
+    }
+    if (GFL_UI_KEY_GetTrg() & PAD_BUTTON_A){
+      FLD_FACEUP_Start(0, fieldWork);
     }else if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_B){
-      GAMEDATA *gamedata = GAMESYSTEM_GetGameData( FIELDMAP_GetGameSysWork( fieldWork ) );
-      PL_BOAT_WORK_PTR *ptr = GAMEDATA_GetPlBoatWorkPtr(gamedata);
-      if ( *ptr == NULL ) *ptr = PL_BOAT_Init();
+      FLD_FACEUP_End(fieldWork);
+    }else if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y){
+      FLD_FACEUP_Change();
     }
   }
 #endif  //PM_DEBUG  
@@ -3339,7 +3343,22 @@ u32 FIELDMAP_GetSeasonTimeZone( const FIELDMAP_WORK * fieldWork )
  * @return none
  */
 //==================================================================
-void SetMainFuncHookFlg(FIELDMAP_WORK * fieldWork, const BOOL inFlg)
+void FIELDMAP_SetMainFuncHookFlg(FIELDMAP_WORK * fieldWork, const BOOL inFlg)
 {
   fieldWork->MainHookFlg = inFlg;
 }
+
+//==================================================================
+/**
+ * 顔アップワークポインタへのポインタ取得
+ *
+ * @param   fieldWork   フィールドワークポインタ
+ *
+ * @return  ENCEFF_CNT_PTR    エンカウントエフェクト管理ポインタ
+ */
+//==================================================================
+FACEUP_WK_PTR *FIELDMAP_GetFaceupWkPtrAdr(FIELDMAP_WORK *fieldWork)
+{
+  return &fieldWork->FaceUpWkPtr;
+}
+

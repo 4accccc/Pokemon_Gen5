@@ -618,7 +618,7 @@ static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work )
       //メイン処理フック
       if ( evt_work->MainHook )
       {
-        SetMainFuncHookFlg(fieldmap, TRUE);
+        FIELDMAP_SetMainFuncHookFlg(fieldmap, TRUE);
       }
       //キャプチャリクエスト
       ReqCapture(ptr);
@@ -767,7 +767,7 @@ static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work )
     //メインフック解除
     if ( evt_work->MainHook )
     {
-      SetMainFuncHookFlg(fieldmap, FALSE);
+      FIELDMAP_SetMainFuncHookFlg(fieldmap, FALSE);
     }
     //ＯＢＪのポーズ解除
     if (evt_work->ObjPause)
