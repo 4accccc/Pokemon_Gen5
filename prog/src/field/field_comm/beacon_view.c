@@ -56,8 +56,10 @@ static void _sub_BmpWinDelete(BEACON_VIEW_PTR view);
 
 static void obj_ObjResInit( BEACON_VIEW_PTR wk, OBJ_RES_TBL* res, const OBJ_RES_SRC* srcTbl, ARCHANDLE* p_handle );
 static void obj_ObjResRelease( BEACON_VIEW_PTR wk, OBJ_RES_TBL* res );
-static void panel_PanelObjAdd( BEACON_VIEW_PTR wk, u8 idx );
-static void panel_PanelObjDel( BEACON_VIEW_PTR wk, u8 idx );
+static void act_NormalObjAdd( BEACON_VIEW_PTR wk ) ;
+static void act_NormalObjDel( BEACON_VIEW_PTR wk ) ;
+static void act_PanelObjAdd( BEACON_VIEW_PTR wk, u8 idx );
+static void act_PanelObjDel( BEACON_VIEW_PTR wk, u8 idx );
 
 //==============================================================================
 //  データ
@@ -709,11 +711,13 @@ static void _sub_ActorCreate( BEACON_VIEW_PTR wk, ARCHANDLE *handle )
   //サブサーフェスの位置を設定
 //  GFL_CLACT_USERREND_GetSurfacePos( , ACT_RENDER_ID, &wk->cellSurfacePos );
 
-  //FontOAMシステムの作成
+  //FontOAMシステAdd成
   wk->bmpOam = BmpOam_Init( wk->heapID, wk->cellUnit );
+  
+  act_NormalObjAdd( wk );
 
   for(i = 0; i < PANEL_MAX;i++){
-    panel_PanelObjAdd( wk, i );
+    act_PanelObjAdd( wk, i );
   }
 
   GFL_DISP_GXS_SetVisibleControl(GX_PLANEMASK_OBJ,VISIBLE_ON);
@@ -731,10 +735,12 @@ static void _sub_ActorDelete( BEACON_VIEW_PTR wk )
   int i;
 
   GFL_DISP_GXS_SetVisibleControl(GX_PLANEMASK_OBJ,VISIBLE_OFF);
-  
+ 
   for(i = 0; i < PANEL_MAX;i++){
-    panel_PanelObjDel( wk, i );
+    act_PanelObjDel( wk, i );
   }
+  act_NormalObjDel( wk );
+
   BmpOam_Exit( wk->bmpOam );
 
   GFL_CLACT_USERREND_Delete( wk->cellRender );
@@ -900,10 +906,50 @@ static GFL_CLWK* obj_ObjAdd(
   return obj;
 }
 
+/*
+ *  @brief  ノーマルオブジェ生成
+ */
+static void act_NormalObjAdd( BEACON_VIEW_PTR wk ) 
+{
+  int i;
+  static const u16 pos[ACT_MAX][2] = {
+   { ACT_MENU_PX+ACT_MENU_OX*0 ,ACT_MENU_PY },
+   { ACT_MENU_PX+ACT_MENU_OX*1 ,ACT_MENU_PY },
+   { ACT_MENU_PX+ACT_MENU_OX*2 ,ACT_MENU_PY },
+   { ACT_UP_PX ,ACT_UP_PY },
+   { ACT_DOWN_PX ,ACT_DOWN_PY },
+  };
+
+  for(i = 0;i < ACT_MAX;i++){
+    wk->pAct[ACT_POWER+i] = obj_ObjAdd( wk,
+      wk->objResNormal.res[OBJ_RES_CGR].tbl[0],
+      wk->objResNormal.res[OBJ_RES_PLTT].tbl[0],
+      wk->objResNormal.res[OBJ_RES_CELLANIM].tbl[0],
+      pos[i][0], pos[i][1],
+      ACTANM_POWER_ON+(ACT_ANM_SET*i), OBJ_MENU_BG_PRI, OBJ_SPRI_MENU);
+  
+    GFL_CLACT_WK_SetDrawEnable( wk->pAct[ACT_POWER+i], TRUE );
+  }
+}
+
+/*
+ *  @brief  ノーマルオブジェ破棄
+ */
+static void act_NormalObjDel( BEACON_VIEW_PTR wk )
+{
+  int i;
+
+  for(i = 0;i < ACT_MAX;i++){
+    GFL_CLACT_WK_SetDrawEnable( wk->pAct[ACT_POWER+i], FALSE );
+    GFL_CLACT_WK_Remove( wk->pAct[ACT_POWER+i]);
+  }
+}
+
+
 /**
  *  @brief  パネル生成
  */
-static void panel_PanelObjAdd( BEACON_VIEW_PTR wk, u8 idx )
+static void act_PanelObjAdd( BEACON_VIEW_PTR wk, u8 idx )
 {
 	BMPOAM_ACT_DATA	finit;
   PANEL_WORK* pp = &(wk->panel[idx]);
@@ -925,6 +971,13 @@ static void panel_PanelObjAdd( BEACON_VIEW_PTR wk, u8 idx )
     wk->objResNormal.res[OBJ_RES_CELLANIM].tbl[0],
     pp->px, pp->py, ACTANM_PANEL, OBJ_BG_PRI, OBJ_SPRI_PANEL+idx);
   GFL_CLACT_WK_SetPlttOffs( pp->cPanel, idx, CLWK_PLTTOFFS_MODE_OAM_COLOR );
+  
+  //ランクアクター
+  pp->cRank = obj_ObjAdd( wk,
+    wk->objResNormal.res[OBJ_RES_CGR].tbl[0],
+    wk->objResNormal.res[OBJ_RES_PLTT].tbl[0],
+    wk->objResNormal.res[OBJ_RES_CELLANIM].tbl[0],
+    pp->px+ACT_RANK_OX, pp->py+ACT_RANK_OY, ACTANM_RANK, OBJ_BG_PRI, OBJ_SPRI_RANK+idx);
 
   //Unionオブジェアクター
   pp->cUnion = obj_ObjAdd( wk,
@@ -965,6 +1018,7 @@ static void panel_PanelObjAdd( BEACON_VIEW_PTR wk, u8 idx )
 
 	BmpOam_ActorSetDrawEnable( pp->msgOam.oam, FALSE );
   GFL_CLACT_WK_SetDrawEnable( pp->cPanel, FALSE );
+  GFL_CLACT_WK_SetDrawEnable( pp->cRank, FALSE );
   GFL_CLACT_WK_SetDrawEnable( pp->cUnion, FALSE );
   GFL_CLACT_WK_SetDrawEnable( pp->cIcon, FALSE );
 }
@@ -972,7 +1026,7 @@ static void panel_PanelObjAdd( BEACON_VIEW_PTR wk, u8 idx )
 /**
  *  @brief  パネル削除
  */
-static void panel_PanelObjDel( BEACON_VIEW_PTR wk, u8 idx )
+static void act_PanelObjDel( BEACON_VIEW_PTR wk, u8 idx )
 {
   PANEL_WORK* pp = &(wk->panel[idx]);
 
@@ -987,6 +1041,8 @@ static void panel_PanelObjDel( BEACON_VIEW_PTR wk, u8 idx )
   GFL_CLACT_WK_Remove( pp->cIcon );
   GFL_CLACT_WK_SetDrawEnable( pp->cUnion, FALSE );
   GFL_CLACT_WK_Remove( pp->cUnion );
+  GFL_CLACT_WK_SetDrawEnable( pp->cRank, FALSE );
+  GFL_CLACT_WK_Remove( pp->cRank );
   GFL_CLACT_WK_SetDrawEnable( pp->cPanel, FALSE );
   GFL_CLACT_WK_Remove( pp->cPanel );
  

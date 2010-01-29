@@ -155,22 +155,25 @@ enum{
 };
 
 #define UNION_CHAR_MAX      (16)  ///<ユニオンキャラクターmax
-#define BEACON_VIEW_OBJ_MAX (5*8) ///<画面内に表示するOBJの登録max数
+#define BEACON_VIEW_OBJ_MAX (128) ///<画面内に表示するOBJの登録max数
 
 ///OBJ BGプライオリティ
 #define OBJ_BG_PRI (3)
+#define OBJ_MENU_BG_PRI (1)
 
 ///OBJソフトウェアプライオリティ
 enum{
  OBJ_SPRI_MSG = 0,
+ OBJ_SPRI_MENU = 1,
  OBJ_SPRI_ICON = OBJ_SPRI_MSG + PANEL_MAX,
  OBJ_SPRI_UNION = OBJ_SPRI_ICON + PANEL_MAX,
- OBJ_SPRI_PANEL = OBJ_SPRI_UNION + PANEL_MAX,
+ OBJ_SPRI_RANK = OBJ_SPRI_UNION + PANEL_MAX,
+ OBJ_SPRI_PANEL = OBJ_SPRI_RANK + PANEL_MAX,
 };
 
 ///アクターID
 enum{
- ACT_GPWR,
+ ACT_POWER,
  ACT_THANKS,
  ACT_RETURN,
  ACT_UP,
@@ -181,8 +184,24 @@ enum{
 ///ノーマルOBJ アニメID
 enum{
  ACTANM_PANEL,
+ ACTANM_RANK,
+ ACTANM_POWER_ON,
+ ACTANM_POWER_ANM,
+ ACTANM_POWER_OFF,
+ ACTANM_THANKS_ON,
+ ACTANM_THANKS_ANM,
+ ACTANM_THANKS_OFF,
+ ACTANM_RETURN_ON,
+ ACTANM_RETURN_ANM,
+ ACTANM_RETURN_OFF,
+ ACTANM_UP_ON,
+ ACTANM_UP_ANM,
+ ACTANM_UP_OFF,
+ ACTANM_DOWN_ON,
+ ACTANM_DOWN_ANM,
+ ACTANM_DOWN_OFF,
 };
-
+#define ACT_ANM_SET (3)
 
 #define ACT_PANEL_OX  (13)
 #define ACT_PANEL_OY  (5*8)
@@ -197,8 +216,20 @@ enum{
 #define ACT_ICON_OY   (ACT_UNION_OY)
 #define ACT_MSG_OX    (9*8)
 #define ACT_MSG_OY    (2*8)
-#define ACT_RANK_OX   ()
-#define ACT_RANK_OY   ()
+#define ACT_RANK_OX   (19*8)
+#define ACT_RANK_OY   (4*8)
+
+#define ACT_MENU_PX (20*8)
+#define ACT_MENU_PY (21*8)
+#define ACT_MENU_OX (4*8)
+#define ACT_MENU_OY (0)
+#define ACT_MENU_NUM  (3)
+
+#define ACT_UP_PX (26*8)
+#define ACT_UP_PY (1*8)
+#define ACT_DOWN_PX (27*8)
+#define ACT_DOWN_PY (5*8)
+
 
 ///アイコンパターン数
 enum{
@@ -283,11 +314,13 @@ typedef struct _PANEL_WORK{
   u8  data_idx; //データ配列参照実index
 
   u8  n_line; //現在のライン
+  u8  rank; //ランク
   s16 px;
   s16 py;
   GFL_CLWK* cPanel;
   GFL_CLWK* cUnion;
   GFL_CLWK* cIcon;
+  GFL_CLWK* cRank;
   FONT_OAM  msgOam;
 	STRBUF* str;
 	STRBUF* name;
@@ -365,6 +398,7 @@ typedef struct _BEACON_VIEW{
   BMP_WIN    win[ WIN_MAX ];
  
   PANEL_WORK  panel[PANEL_MAX];
+  GFL_CLWK*   pAct[ACT_MAX];
   u32 log_count;
 
 

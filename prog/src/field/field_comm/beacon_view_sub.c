@@ -28,12 +28,28 @@
 
 #include "arc/wifi_unionobj_plt.cdat"
 
+typedef struct _POINT{
+  s16 x,y;
+}POINT;
+
+typedef struct _TRIANGLE{
+  POINT p[3];
+}TRIANGLE;
+
 //////////////////////////////////////////////////////////////////
+static int calc_Cross( POINT* a, POINT* b ) ;
+static void calc_PointMinus( POINT* a, POINT* b, POINT* out );
+static BOOL calc_PointInTriangle( POINT* p, TRIANGLE* tri );
 
 static void draw_LogNumWindow( BEACON_VIEW_PTR wk );
 static void draw_MenuWindow( BEACON_VIEW_PTR wk, u8 msg_id );
 
 static void sub_PlttVramTrans( u16* p_data, u16 pos, u16 num );
+
+static void act_SetPosition( GFL_CLWK* act, s16 x, s16 y );
+static void act_AnmStart( GFL_CLWK* act, u8 anm_no );
+static void obj_UpDownViewSet( BEACON_VIEW_PTR wk );
+static void obj_ThanksViewSet( BEACON_VIEW_PTR wk );
 
 static void panel_VisibleSet( PANEL_WORK* pp, BOOL visible_f );
 static void panel_IconVisibleSet( PANEL_WORK* pp, BOOL visible_f );
@@ -83,6 +99,9 @@ void BeaconView_InitialDraw( BEACON_VIEW_PTR wk )
     panel_Draw( wk, pp, wk->tmpInfo );   //パネル描画
     panel_VisibleSet( pp, TRUE );   //パネル描画
   }
+  //矢印の見た目セット
+  obj_UpDownViewSet( wk );
+  obj_ThanksViewSet( wk );
 }
 
 /*
@@ -128,7 +147,8 @@ BOOL BeaconView_CheckStack( BEACON_VIEW_PTR wk )
   if( pp == NULL){
     return TRUE;  //万一のためのチェック(正しい挙動ならNULLはない)
   }
-  
+  obj_ThanksViewSet( wk );
+
   if( wk->ctrl.view_top > 0){ //描画リストがトップでない時はスクロールのみ
     ofs = wk->ctrl.view_top-1;
     GAMEBEACON_InfoTblRing_GetBeacon( wk->infoLog, wk->tmpInfo, &wk->tmpTime, ofs );
@@ -147,6 +167,47 @@ BOOL BeaconView_CheckStack( BEACON_VIEW_PTR wk )
   wk->ctrl.view_top = pp->data_ofs;
 
   //スクロールリクエスト
+  return TRUE;
+}
+
+
+/*
+ *  @brief  外積計算
+ */
+static int calc_Cross( POINT* a, POINT* b ) 
+{
+  return ((int)a->x*b->y - (int)a->y*b->x);
+}
+
+/*
+ *  @brief  POINTの減算
+ */
+static void calc_PointMinus( POINT* a, POINT* b, POINT* out )
+{
+  out->x = a->x-b->x;
+  out->y = a->y-b->y;
+}
+
+/*
+ *  @brief  三角形あたり判定
+ *
+ *  三角形は反時計回り
+ * 1-0 p-a, b-a
+ * 2-1 p-b, c-b
+ * 0-2 p-c, a-c
+ */
+static BOOL calc_PointInTriangle( POINT* p, TRIANGLE* tri )
+{
+  int i;
+  POINT d1,d2;
+
+  for( i = 0;i < 3;i++ ){
+    calc_PointMinus( p, &tri->p[i], &d1 );
+    calc_PointMinus( &tri->p[(1+i)%3], &tri->p[i], &d2 );
+    if( calc_Cross( &d1, &d2 ) < 0 ){
+      return FALSE;
+    }
+  }
   return TRUE;
 }
 
@@ -336,13 +397,56 @@ static void act_SetPosition( GFL_CLWK* act, s16 x, s16 y )
 }
 
 /*
+ *  @brief  アクター アニメスタート
+ */
+static void act_AnmStart( GFL_CLWK* act, u8 anm_no )
+{
+  GFL_CLACT_WK_SetAnmSeq( act, anm_no );
+  GFL_CLACT_WK_ResetAnm( act );
+}
+
+/*
+ *  @brief  UpDownアクター Viewセット
+ */
+static void obj_UpDownViewSet( BEACON_VIEW_PTR wk )
+{
+  if(wk->ctrl.view_top == 0){
+    GFL_CLACT_WK_SetAnmSeq( wk->pAct[ACT_UP], ACTANM_UP_OFF );  
+  }else{
+    GFL_CLACT_WK_SetAnmSeq( wk->pAct[ACT_UP], ACTANM_UP_ON );  
+  }
+  if((wk->ctrl.view_top+wk->ctrl.view_max) < (wk->ctrl.max)){
+    GFL_CLACT_WK_SetAnmSeq( wk->pAct[ACT_DOWN], ACTANM_DOWN_ON );  
+  }else{
+    GFL_CLACT_WK_SetAnmSeq( wk->pAct[ACT_DOWN], ACTANM_DOWN_OFF );  
+  }
+}
+
+/*
+ *  @brief  御礼アクター Viewセット
+ */
+static void obj_ThanksViewSet( BEACON_VIEW_PTR wk )
+{
+  if( wk->ctrl.max == 0){
+    GFL_CLACT_WK_SetAnmSeq( wk->pAct[ACT_THANKS], ACTANM_THANKS_OFF );  
+  }else{
+    GFL_CLACT_WK_SetAnmSeq( wk->pAct[ACT_THANKS], ACTANM_THANKS_ON );  
+  }
+}
+
+/*
  *  @brief  パネル 表示状態On/Off
  */
 static void panel_VisibleSet( PANEL_WORK* pp, BOOL visible_f )
 {
   BmpOam_ActorSetDrawEnable( pp->msgOam.oam, visible_f );
   GFL_CLACT_WK_SetDrawEnable( pp->cUnion, visible_f );
+  GFL_CLACT_WK_SetDrawEnable( pp->cRank, visible_f );
   GFL_CLACT_WK_SetDrawEnable( pp->cPanel, visible_f );
+
+  if(pp->rank > 0){
+    GFL_CLACT_WK_SetDrawEnable( pp->cRank, visible_f );
+  }
 }
 
 /*
@@ -477,6 +581,20 @@ static void panel_MsgPrint( BEACON_VIEW_PTR wk, PANEL_WORK* pp, STRBUF* str )
 }
 
 /*
+ *  @brief  パネル　ランク描画
+ */
+static void panel_RankSet( BEACON_VIEW_PTR wk, PANEL_WORK* pp, GAMEBEACON_INFO* info )
+{
+  pp->rank = 6;
+
+  if(pp->rank == 0){
+    GFL_CLACT_WK_SetAnmFrame( pp->cRank, 0);
+  }else{
+    GFL_CLACT_WK_SetAnmFrame( pp->cRank, FX32_CONST(pp->rank-1));
+  }
+}
+
+/*
  *  @brief  パネル描画
  */
 static void panel_Draw( BEACON_VIEW_PTR wk, PANEL_WORK* pp, GAMEBEACON_INFO* info )
@@ -487,6 +605,8 @@ static void panel_Draw( BEACON_VIEW_PTR wk, PANEL_WORK* pp, GAMEBEACON_INFO* inf
   GFL_STR_ClearBuffer( pp->str );
   //プレイヤー名転送
   panel_MsgPrint( wk, pp, pp->name );
+  //ランクセット
+  panel_RankSet( wk, pp, info);
 
   //UnionOBJリソース更新
   panel_UnionObjUpdate( wk, pp, info);
@@ -503,6 +623,7 @@ static void  panel_SetPos( PANEL_WORK* pp, s16 x, s16 y )
   pp->px = x;
   pp->py = y;
   act_SetPosition( pp->cPanel, x, y );
+  act_SetPosition( pp->cRank, x+ACT_RANK_OX, y+ACT_RANK_OY );
   act_SetPosition( pp->cUnion, x+ACT_UNION_OX, y+ACT_UNION_OY );
   act_SetPosition( pp->cIcon, x+ACT_ICON_OX, y+ACT_ICON_OY );
   BmpOam_ActorSetPos( pp->msgOam.oam, x+ACT_MSG_OX, y+ACT_MSG_OY);
@@ -539,6 +660,7 @@ static int list_GetScrollLineNum( BEACON_VIEW_PTR wk, BOOL new_f )
 /////////////////////////////////////////////////////////////////////
 typedef struct _TASKWK_PANEL_SCROLL{
   int seq;
+  BEACON_VIEW_PTR bvp;
   PANEL_WORK* pp;
   u8  dir;
   u8  deray;
@@ -622,6 +744,7 @@ static void taskAdd_PanelScroll( BEACON_VIEW_PTR wk, PANEL_WORK* pp, u8 dir, u8 
     pp->n_line++;
   }
 
+  twk->bvp = wk;
   twk->pp = pp;
   twk->epx = pp->n_line*ACT_PANEL_OX+ACT_PANEL_PX; 
   twk->epy = pp->n_line*ACT_PANEL_OY+ACT_PANEL_PY; 
@@ -657,6 +780,7 @@ static void tcb_PanelScroll( GFL_TCBL *tcb , void* tcb_wk)
   if( twk->pp->n_line == 0 || twk->pp->n_line == PANEL_LINE_END){
     panel_Clear( twk->pp );  //パネル破棄
   }
+  obj_UpDownViewSet( twk->bvp );
   --(*twk->task_ct);
   GFL_TCBL_Delete(tcb);
 }
