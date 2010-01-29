@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2010-01-28T12:52:20"/>
+	<create user="taya" host="W00146" date="2010-01-28T13:25:59"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -500,6 +500,10 @@
 
 	<row id="DMPSTR_DEFWAZA">
 		<language name="JPN" width="256">デフォわざ</language>
+	</row>
+
+	<row id="DMPSTR_HATAKUDAKE">
+		<language name="JPN" width="256">はたくだけ</language>
 	</row>
 
 	<row id="DMPSTR_HANERUDAKE">
