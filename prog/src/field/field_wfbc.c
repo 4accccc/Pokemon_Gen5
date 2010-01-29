@@ -456,7 +456,7 @@ int FIELD_WFBC_SetUpBlock( FIELD_WFBC* p_wk, NormalVtxFormat* p_attr, FIELD_BMOD
 //-----------------------------------------------------------------------------
 void FILED_WFBC_EventDataOverwrite( const FIELD_WFBC* cp_wk, EVENTDATA_SYSTEM* p_evdata, MAPMODE mapmode, HEAPID heapID )
 {
-  int i;
+  int i, j;
   FIELD_WFBC_EVENT_IF* p_event_if;
   u32 load_size;
   const CONNECT_DATA* cp_connect;
@@ -466,6 +466,8 @@ void FILED_WFBC_EventDataOverwrite( const FIELD_WFBC* cp_wk, EVENTDATA_SYSTEM* p
     NARC_field_wfbc_data_wf_block_event_evp,
   };
   u32 add_connect_num;
+  u32* p_ok_connect_idx_tbl;
+  u32 ok_connect_idx_num;
 
   // 裏世界ではなにもしない
   if( mapmode != MAPMODE_NORMAL )
@@ -480,19 +482,50 @@ void FILED_WFBC_EventDataOverwrite( const FIELD_WFBC* cp_wk, EVENTDATA_SYSTEM* p
   // データサイズから、管理接続ポイントの数をチェック
   add_connect_num = load_size / sizeof(FIELD_WFBC_EVENT_IF);
 
+  // OK CONNECT IDX テーブル作成
+  p_ok_connect_idx_tbl = GFL_HEAP_AllocClearMemory( GFL_HEAP_LOWID(heapID), sizeof(u32)*add_connect_num );
+  ok_connect_idx_num = 0;
+
   // 足しこむ
   for( i=0; i<add_connect_num; i++ )
   {
     TOMOYA_Printf( "Event Check blockTag=%d  blockID=%d\n", p_event_if[i].block_tag, p_event_if[i].block_id );
-    if( !WFBC_NOW_MAPDATA_IsDataIn( &cp_wk->map_data, p_event_if[i].block_tag, p_event_if[i].block_id ) )
+    if( WFBC_NOW_MAPDATA_IsDataIn( &cp_wk->map_data, p_event_if[i].block_tag, p_event_if[i].block_id ) )
     {
-      
-      TOMOYA_Printf( "Event Check EventDel\n" );
-      // 削除
-      EVENTDATA_SYS_DelConnectEventIdx( p_evdata, p_event_if[i].connect_idx );
+      // OK CONNECT_IDXに追加
+      p_ok_connect_idx_tbl[ ok_connect_idx_num ] = p_event_if[i].connect_idx;
+      ok_connect_idx_num ++;
+    }
+    else
+    {
+      // OKがいなくて、最後のconnect_idxなら本当に破棄チェック
+      for( j=0; j<ok_connect_idx_num; j++ )
+      {
+        if( p_ok_connect_idx_tbl[j] == p_event_if[i].connect_idx )
+        {
+          break;
+        }
+      }
+      if( j>=ok_connect_idx_num )
+      {
+        for( j=i+1; j<add_connect_num; j++ )
+        {
+          if( p_event_if[i].connect_idx == p_event_if[j].connect_idx )
+          {
+            break;
+          }
+        }
+        // 最後のconnect_idxなら本当に破棄
+        if( j>=add_connect_num ){
+          TOMOYA_Printf( "Event Check EventDel %d\n", p_event_if[i].connect_idx );
+          // 削除
+          EVENTDATA_SYS_DelConnectEventIdx( p_evdata, p_event_if[i].connect_idx );
+        }
+      }
     }
   }
 
+  GFL_HEAP_FreeMemory( p_ok_connect_idx_tbl );
   GFL_HEAP_FreeMemory( p_event_if );
 }
 
