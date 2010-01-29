@@ -43,7 +43,7 @@ g2dcvtr bstatus_icon13.nce -br
 g2dcvtr bstatus_panel.ncl
 
 echo narcì¬
-nnsarc -c -l -n -i beacon_status -S arc_list.txt
+nnsarc -c -l -n -i beacon_status -S arc_list.txt >arc_result.txt
 
 del *.NCLR
 del *.NCGR
