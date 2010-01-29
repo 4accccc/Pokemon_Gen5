@@ -2620,8 +2620,7 @@ static void zoneChange_SetWeather( FIELDMAP_WORK *fieldWork, u32 zone_id )
 	u16 w_no =  FIELDMAP_GetZoneWeatherID( fieldWork, zone_id );
 	FIELD_WEATHER *we = FIELDMAP_GetFieldWeather( fieldWork );
 
-	//if( w_no != WEATHER_NO_NUM && w_no != FIELD_WEATHER_GetWeatherNo(we) ){
-	if( w_no != WEATHER_NO_NUM ){ // 天気Noが一致していても、フェードアウトのタイミングの可能性もあるので、正しい天気ナンバーなら関数に渡す。
+	if( w_no != WEATHER_NO_NUM ){
 		FIELD_WEATHER_Change( we, w_no );
 	}
 }

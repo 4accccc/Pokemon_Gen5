@@ -99,8 +99,8 @@ void FIELD_FLAGCONT_INIT_MapJump(GAMEDATA * gdata, u16 zone_id)
 {
   FIELD_STATUS * fldstatus = GAMEDATA_GetFieldStatus( gdata );
 
-	//ダンジョンでない場合、フラッシュ状態フラグと霧払い状態フラグをクリア
-	if (!ZONEDATA_IsDungeon(zone_id)) 
+	//フラッシュを引き継ぐかチェック
+	if ( !(ZONEDATA_GetFieldSkillMapEffMsk(zone_id) & (FIELDSKILL_MAPEFF_MSK_FLASH_NEAR|FIELDSKILL_MAPEFF_MSK_FLASH_FAR)) ) 
   {
     // フラッシュOFF
 		FIELD_STATUS_SetFieldSkillFlash(fldstatus, FALSE);

@@ -758,23 +758,6 @@ static u16 getMapType(u16 zone_id)
 
 //------------------------------------------------------------------
 /**
- * @brief  指定ゾーンがダンジョンかどうかを判定
- * @param  zone_id 判定するゾーンのID
- * @return ダンジョンならTRUE
- */
-//------------------------------------------------------------------
-BOOL ZONEDATA_IsDungeon(u16 zone_id)
-{
-  u16 maptype = getMapType( zone_id );
-  if( maptype == MAPTYPE_DUNGEON )
-  {
-    return TRUE;
-  }
-  return FALSE;
-}
-
-//------------------------------------------------------------------
-/**
  * @brief 指定ゾーンがフィールドマップのマトリックス指定かどうかを判定
  * @param  zone_id 判定するゾーンのID
  * @return  BOOL TRUEのとき、フィールドマップのマトリックス指定

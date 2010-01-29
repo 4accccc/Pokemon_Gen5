@@ -207,8 +207,7 @@ static BOOL itemcheck_Ananukenohimo( GAMEDATA* gdata, FIELDMAP_WORK* field_wk, P
 //  PLAYER_WORK *playerWork = GAMEDATA_GetMyPlayerWork( gdata );
   u16 zone_id = PLAYERWORK_getZoneID( playerWork );
 
-  if( !ZONEDATA_IsDungeon(zone_id) ||
-      !ZONEDATA_EscapeEnable( zone_id )){
+  if(!ZONEDATA_EscapeEnable( zone_id )){
     return FALSE;
   }
   return TRUE;
