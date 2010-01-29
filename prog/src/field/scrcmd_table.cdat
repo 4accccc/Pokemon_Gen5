@@ -806,6 +806,18 @@
   NO_CMD()
   NO_CMD()
 
+  //PDW家具屋用
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+
+  //図鑑評価
+  DEF_CMD( EvCmdGetZukanHyoukaMsgID, EV_SEQ_GET_ZUKAN_HYOUKA_MSGID )
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+
   END_CMD
   //スクリプトコマンドテーブル終了
 

@@ -1036,7 +1036,7 @@ VMCMD_RESULT EvCmdPlainWinMsg( VMHANDLE *core, void *wk )
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
   SCRIPT_FLDPARAM *fparam = SCRIPT_GetFieldParam( sc );
-  u16 msg_id = VMGetU16( core );
+  u16 msg_id = SCRCMD_GetVMWorkValue( core, work );
   u8 up_down = VMGetU8( core );
   u16 x = 1;
   u16 y = 1;

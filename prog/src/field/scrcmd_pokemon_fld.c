@@ -195,3 +195,159 @@ VMCMD_RESULT EvCmdGetBreederJudgeResult( VMHANDLE * core, void *wk )
   return VMCMD_RESULT_CONTINUE;
 }
 
+//======================================================================
+//
+//
+//
+//======================================================================
+#include "msg/script/msg_hyouka_scr.h"
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+typedef struct{
+  u16 range;
+  u16 msg_id;
+} ZUKAN_HYOUKA_TABLE;
+
+static const ZUKAN_HYOUKA_TABLE LocalSeeTable[] = {
+  {  14, msg_hyouka_i00 },
+  {  24, msg_hyouka_i01 },
+  {  39, msg_hyouka_i02 },
+  {  59, msg_hyouka_i03 },
+  {  89, msg_hyouka_i04 },
+  { 114, msg_hyouka_i05 },
+  { 134, msg_hyouka_i06 },
+  { 144, msg_hyouka_i07 },
+  { 149, msg_hyouka_i08 },
+  { 150, msg_hyouka_i09 },
+  {   0, msg_hyouka_i00 },  //Sentinel
+};
+
+static const ZUKAN_HYOUKA_TABLE LocalGetTable[] = {
+  {  29, msg_hyouka_i10 },
+  {  49, msg_hyouka_i11 },
+  {  69, msg_hyouka_i12 },
+  {  89, msg_hyouka_i13 },
+  { 104, msg_hyouka_i14 },
+  { 119, msg_hyouka_i15 },
+  { 134, msg_hyouka_i16 },
+  { 144, msg_hyouka_i17 },
+  { 149, msg_hyouka_i18 },
+  { 150, msg_hyouka_i19 },
+  {   0, msg_hyouka_i10 },  //Sentinel
+};
+
+static const ZUKAN_HYOUKA_TABLE GlobalGetTable[] = {
+  {  39, msg_hyouka_z01 },
+  {  79, msg_hyouka_z02 },
+  { 119, msg_hyouka_z03 },
+  { 159, msg_hyouka_z04 },
+  { 199, msg_hyouka_z05 },
+  { 249, msg_hyouka_z06 },
+  { 299, msg_hyouka_z07 },
+  { 349, msg_hyouka_z08 },
+  { 399, msg_hyouka_z09 },
+  { 449, msg_hyouka_z10 },
+  { 499, msg_hyouka_z11 },
+  { 549, msg_hyouka_z12 },
+  { 599, msg_hyouka_z13 },
+  { 614, msg_hyouka_z14 },
+  { 629, msg_hyouka_z15 },
+  { 633, msg_hyouka_z16 },
+  { 634, msg_hyouka_z17 },
+  {   0, msg_hyouka_z01 },  //Sentinel
+};
+
+//--------------------------------------------------------------
+/**
+ * @brief ずかん評価
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdGetZukanHyoukaMsgID( VMHANDLE * core, void *wk )
+{
+  u16     mode = SCRCMD_GetVMWorkValue( core, wk );
+  u16 * ret_wk = SCRCMD_GetVMWork( core, wk );
+
+  GAMEDATA *gamedata = SCRCMD_WORK_GetGameData( wk );
+  ZUKAN_SAVEDATA * zw = GAMEDATA_GetZukanSave( gamedata );
+  BOOL zenkoku_flag = ZUKANSAVE_GetZenkokuZukanFlag( zw );
+  u32 count = 0;
+  int i;
+  const ZUKAN_HYOUKA_TABLE * tbl;
+
+  *ret_wk = msg_hyouka_i01; //念のため
+  switch ( mode )
+  {
+  case SCR_ZUKAN_HYOUKA_MODE_AUTO:  //パソコン
+    if ( zenkoku_flag == FALSE )
+    {
+      //ちほうずかん（全国モード前）は「見た数」
+      count = ZUKANSAVE_GetLocalPokeSeeCount( zw );
+      tbl = LocalSeeTable;
+    }
+    else
+    {
+      //ぜんこくずかんは「捕まえた数」
+      count = ZUKANSAVE_GetZukanPokeGetCount( zw );
+      tbl = GlobalGetTable;
+    }
+    break;
+
+  case SCR_ZUKAN_HYOUKA_MODE_LOCAL: //博士（娘）
+    if ( zenkoku_flag == TRUE )
+    {
+      //ちほうずかん（全国モード後）は「捕まえた数」
+      count = ZUKANSAVE_GetLocalPokeGetCount( zw );
+      tbl = LocalGetTable;
+    }
+    else
+    {
+      //ちほうずかん（全国モード前）は「見た数」
+      count = ZUKANSAVE_GetLocalPokeSeeCount( zw );
+      tbl = LocalSeeTable;
+    }
+    break;
+
+  case SCR_ZUKAN_HYOUKA_MODE_GLOBAL:  //博士（父）
+    if ( zenkoku_flag == TRUE )
+    {
+      //ぜんこくずかんは「捕まえた数」
+      count = ZUKANSAVE_GetZukanPokeGetCount( zw );
+      tbl = GlobalGetTable;
+    }
+    else
+    {
+      GF_ASSERT( 0 );
+      return VMCMD_RESULT_CONTINUE;
+    }
+    break;
+
+  default:
+    GF_ASSERT( 0 );
+    return VMCMD_RESULT_CONTINUE;
+  }
+
+  for ( i = 0; ; i ++ )
+  {
+    if ( tbl[i].range == 0 )
+    { //番兵：万が一テーブルにない値が来た場合
+      *ret_wk = tbl[i].msg_id;
+      break;
+    }
+    if ( count <= tbl[i].range )
+    { //範囲以下の場合、その対応メッセージIDを返す
+      *ret_wk = tbl[i].msg_id;
+      break;
+    }
+  }
+  
+  return VMCMD_RESULT_CONTINUE;
+}
+
+
+
+
+
+
+
+
