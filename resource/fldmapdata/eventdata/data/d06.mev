@@ -1,5 +1,5 @@
 #event data
-#save date:2010/01/29 1:09:08
+#save date:2010/01/29 15:10:54
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d06.wms
 #SECTION START:OBJ_EVENT
@@ -40,7 +40,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--72 16 -120
+-72 16 -72
 #event number: 1
 #type
 1
@@ -106,9 +106,9 @@ WK_SCENE_D06
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--120 16 -152
+-104 16 -104
 #size
-7 1
+4 1
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT

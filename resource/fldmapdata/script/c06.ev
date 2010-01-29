@@ -44,20 +44,23 @@ EVENT_START    ev_pos_c06_hakase1_01
 	DEFINE_LOCAL	LWK_YES
 	
 	$LWK_YES = 1
-	
+
 	//ギアンを捕まえているかのチェック
 	//511はギアンのポケモンナンバー
 	_GET_ZUKAN_FLAG( ZUKANCTRL_MODE_GET, 511, LWK_GIAN_CHECK )
 	
 	//捕まえたポケモンの数をカウント
 	_GET_ZUKAN_COUNT( ZUKANCTRL_MODE_GET, LWK_HOKAKU_COUNT )
+
+	//主人公が博士とジムリーダーに気づく
+	_OBJ_ANIME( MMDL_ID_PLAYER,anm_hakase1_gyoe)
+	_OBJ_ANIME_WAIT()
 	
 	//博士とジムリーダーが歩いてくる
-	_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_kuru_01)
 	_OBJ_ANIME( C06_LEADER6_01,anm_leader06_kuru_01)
 	_OBJ_ANIME( C06_HAKASE1_01,anm_hakase1_kuru_01)
 	_OBJ_ANIME_WAIT()
-	
+
 	//博士とジムリーダーが主人公に気づく
 	_OBJ_ANIME( C06_HAKASE1_01,anm_hakase1_gyoe)
 	_OBJ_ANIME_WAIT()
@@ -235,13 +238,6 @@ _ANIME_LABEL	anm_player_gyoe
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
-//主人公:近づく                     
-//--------------------------------------------------------------------
-_ANIME_LABEL	anm_player_kuru_01
-	_ANIME_DATA AC_WALK_L_16F,5
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------------
 //主人公:振り向く１（右）                    
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_player_muku_01
@@ -260,16 +256,14 @@ _ANIME_LABEL	anm_player_muku_02
 //フウロ:主人公に近づく１                     
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_leader06_kuru_01
-	_ANIME_DATA AC_WALK_D_8F,10
-	_ANIME_DATA AC_WALK_R_8F,4
+	_ANIME_DATA AC_WALK_R_8F,7
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
 //博士:主人公に近づく１                        
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_hakase1_kuru_01
-	_ANIME_DATA AC_WALK_D_8F,10
-	_ANIME_DATA AC_WALK_R_8F,4
+	_ANIME_DATA AC_WALK_R_8F,7
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
@@ -336,14 +330,41 @@ _ANIME_LABEL	anm_leader06_saru_01
 	_ANIME_DATA AC_WALK_L_8F,5
 	_ANIME_DATA AC_WALK_U_8F,12
 	_ANIME_DATA	ACMD_END,0
-	
+
 //--------------------------------------------------------------------
 //博士:立ち去る                      
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_hakase1_saru_01
 	_ANIME_DATA AC_WALK_R_8F,12
 	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//共通：ターン右                 
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_r
+	_ANIME_DATA AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
 
+//--------------------------------------------------------------------
+//共通：ターン左                        
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_l
+	_ANIME_DATA AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//共通：ターン上                        
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_u
+	_ANIME_DATA AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+//--------------------------------------------------------------------
+//共通：ターン下                         
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_d
+	_ANIME_DATA AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+	
 /**************************************************************/
 /*  C06 BOY3の会話用イベントスクリプト                      */
 /**************************************************************/

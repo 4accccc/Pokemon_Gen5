@@ -19,11 +19,6 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_c06r0101_veteranw_01
-_EVENT_DATA    ev_c06r0101_poke2_01
-_EVENT_DATA    ev_c06r0101_informationw_01
-_EVENT_DATA    ev_c06r0101_middleman2_01
-_EVENT_DATA    ev_c06r0101_pilot_01
 _EVENT_DATA_END
 
 
@@ -33,50 +28,4 @@ _EVENT_DATA_END
 //ev_c06r0101_flag_change:
 //  _END
 
-/**************************************************************/
-/*  c06r0101_veteranw_01　アイテム入手イベント*/
-/**************************************************************/
-EVENT_START   ev_c06r0101_veteranw_01
-	
-	//【仮】入手わざマシンについて仮
-	_EASY_TALK_ITEM_EVENT( ITEM_WAZAMASIN01, 1, FE_C06R0101_ITEMGET_01, msg_c06r0101_veteranw_01, msg_c06r0101_veteranw_02, msg_c06r0101_veteranw_02)
-	
-EVENT_END
-
-/**************************************************************/
-/*  c06r0101_poke2_01　一言メッセージ*/
-/**************************************************************/
-EVENT_START   ev_c06r0101_poke2_01
-	
-	//【仮】ポケモンの種類については仮
-	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_c06r0101_poke_01) 
-	
-EVENT_END
-
-/**************************************************************/
-/*  c06r0101_informationw_01　一言メッセージ*/
-/**************************************************************/
-EVENT_START   ev_c06r0101_informationw_01
-
-	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_c06r0101_infomationw_01) 
-	
-EVENT_END
-
-/**************************************************************/
-/*  c06r0101_middleman2_01　一言メッセージ*/
-/**************************************************************/
-EVENT_START   ev_c06r0101_middleman2_01
-
-	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_c06r0101_middleman2_01) 
-	
-EVENT_END
-
-/**************************************************************/
-/*  c06r0101_pilot_01　一言メッセージ*/
-/**************************************************************/
-EVENT_START   ev_c06r0101_pilot_01
-
-	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_c06r0101_pilot_01) 
-	
-EVENT_END
 

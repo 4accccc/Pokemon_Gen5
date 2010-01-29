@@ -193,7 +193,7 @@ _ANIME_LABEL	anm_leader5_muku_02
 // ÉÑÅ[ÉRÉì: Ç‚Ç¡ÇƒÇ≠ÇÈ                   
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_leader5_kuru_01
-	_ANIME_DATA AC_WALK_U_8F,6
+	_ANIME_DATA AC_WALK_U_8F,8
 	_ANIME_DATA AC_WALK_R_8F,3
 	_ANIME_DATA	ACMD_END,0
 

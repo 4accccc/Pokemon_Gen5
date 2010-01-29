@@ -11,10 +11,5 @@
 #ifndef ZONE_C06R0101_EVC_H
 #define ZONE_C06R0101_EVC_H
 
-#define C06R0101_INFORMATIONW_01           0
-#define C06R0101_POKE2_01                  1
-#define C06R0101_PILOT_01                  2
-#define C06R0101_VETERANW_01               3
-#define C06R0101_MIDDLEMAN2_01             4
 
 #endif //ZONE_C06R0101_EVC_H

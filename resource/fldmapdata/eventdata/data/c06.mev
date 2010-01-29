@@ -1,5 +1,5 @@
 #event data
-#save date:2010/01/26 13:03:47
+#save date:2010/01/29 14:51:48
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\C06.wms
 #SECTION START:OBJ_EVENT
@@ -57,7 +57,7 @@ EV_TYPE_NORMAL
 #Event Script Name
 SCRID_C06_BOY3_01
 #Direction Type Number
-DIR_LEFT
+DIR_UP
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -127,13 +127,13 @@ DIR_DOWN
 #Parameter 2 Number
 0
 #Move Limit X Number
-1
-#Move Limit Z Number
 2
+#Move Limit Z Number
+3
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--8 0 -664
+24 0 -520
 #event number: 4
 #type
 1
@@ -191,11 +191,11 @@ DIR_DOWN
 #Move Limit X Number
 3
 #Move Limit Z Number
-0
+3
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-88 0 -200
+-120 0 -232
 #event number: 6
 #type
 1
@@ -226,7 +226,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-24 0 -232
+-40 0 -392
 #event number: 7
 #type
 1
@@ -257,7 +257,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-24 0 -264
+-40 0 -424
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
@@ -305,9 +305,9 @@ WK_SCENE_C06
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-232 0 -376
+136 0 -392
 #size
-1 4
+1 3
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT

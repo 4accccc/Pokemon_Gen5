@@ -38,9 +38,8 @@ _EVENT_DATA_END
 /**************************************************************/
 EVENT_START  ev_r06_mountain_01
 	
+	//地面バッジを持っているかで分岐
 	_GET_BADGE_FLAG( SCWK_TEMP0, BADGE_ID_05 )
-	
-	//【仮】バッジを持っているかの変数を、デファインしたい。user_definにしていいか確認
 	IF $SCWK_TEMP0 == 0 THEN	
 		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_r06_mountain_01 )
 
@@ -80,11 +79,6 @@ EVENT_END
 /**************************************************************/
 EVENT_START   ev_bg_r06_sign4_01
 	
-//【仮】季節研究所の前が、お得な掲示板でいいのかな？
-/*
-	_SYSWIN_MSG_DOWN   ( msg_r06_sign3_01)
-    _SYSWIN_CLOSE()
-*/  
   	_SYSWIN_MSG_DOWN   ( msg_r06_sign3_02)
     _LAST_KEYWAIT()
     _SYSWIN_CLOSE()

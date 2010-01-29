@@ -1,5 +1,5 @@
 #event data
-#save date:2010/01/14 0:12:33
+#save date:2010/01/29 13:21:37
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c06r0201.wms
 #SECTION START:OBJ_EVENT
@@ -36,11 +36,11 @@ DIR_DOWN
 #Move Limit X Number
 1
 #Move Limit Z Number
-0
+1
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--72 0 -88
+24 0 -72
 #event number: 1
 #type
 1
@@ -71,7 +71,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--56 0 -72
+120 0 -24
 #event number: 2
 #type
 1
@@ -80,7 +80,7 @@ C06R0201_WORKMAN_02
 #OBJ CODE Number
 WORKMAN
 #MOVE CODE Number
-MV_RND
+MV_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
@@ -96,13 +96,13 @@ DIR_RIGHT
 #Parameter 2 Number
 0
 #Move Limit X Number
-1
+0
 #Move Limit Z Number
-1
+0
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-104 0 -56
+-200 0 -72
 #event number: 3
 #type
 1
@@ -164,7 +164,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-24 0 -88
+104 0 56
 #event number: 5
 #type
 1
@@ -195,7 +195,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-8 0 -72
+-72 0 -72
 #event number: 6
 #type
 1
@@ -212,7 +212,7 @@ EV_TYPE_NORMAL
 #Event Script Name
 SCRID_C06R0201_PILOT_01
 #Direction Type Number
-DIR_RIGHT
+DIR_DOWN
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -226,7 +226,7 @@ DIR_RIGHT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--200 0 -72
+-24 0 -24
 #event number: 7
 #type
 1
