@@ -141,6 +141,8 @@ extern  BOOL            MCSS_CheckExecutePaletteFade( MCSS_WORK*  mcss );
 extern  void            MCSS_SetTextureTransAdrs( MCSS_SYS_WORK* mcss_sys, u32 adrs );
 extern  void            MCSS_SetTexPaletteTransAdrs( MCSS_SYS_WORK* mcss_sys, u32 adrs );
 extern  void	          MCSS_SetAnimeIndex( MCSS_WORK* mcss, int index );
+extern  u8	            MCSS_GetMosaic( MCSS_WORK* mcss );
+extern  void	          MCSS_SetMosaic( MCSS_SYS_WORK *mcss_sys, MCSS_WORK* mcss, int mosaic );
 
 #ifdef PM_DEBUG
 extern	MCSS_WORK*			MCSS_AddDebug( MCSS_SYS_WORK *mcss_sys, fx32	pos_x, fx32	pos_y, fx32	pos_z, const MCSS_ADD_DEBUG_WORK *madw );
