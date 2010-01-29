@@ -92,6 +92,7 @@ extern BOOL FIELD_LIGHT_GetReflect( const FIELD_LIGHT* cp_sys );
 
 //-------------------------------------
 ///	色の取得
+// (読み込んでいるライトデータ（エクセルデータ）を反映するため、フェード途中のカラーなどではない)
 //=====================================
 extern GXRgb FIELD_LIGHT_GetLightColor( const FIELD_LIGHT* cp_sys, u32 index );
 extern GXRgb FIELD_LIGHT_GetDiffuseColor( const FIELD_LIGHT* cp_sys );

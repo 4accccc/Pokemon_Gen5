@@ -653,13 +653,14 @@ BOOL FIELD_LIGHT_GetReflect( const FIELD_LIGHT* cp_sys )
  *	@param	index     ライトインデックス  （0～3）
  *
  *	@return ライトカラー
+// (読み込んでいるライトデータ（エクセルデータ）を反映するため、フェード途中のカラーなどではない)
  */
 //-----------------------------------------------------------------------------
 GXRgb FIELD_LIGHT_GetLightColor( const FIELD_LIGHT* cp_sys, u32 index )
 {
   GF_ASSERT( cp_sys );
   GF_ASSERT( index < 4 );
-  return cp_sys->reflect_data.light_color[index];
+  return cp_sys->data[cp_sys->now_index].light_color[index];
 }
 
 //----------------------------------------------------------------------------
@@ -669,12 +670,13 @@ GXRgb FIELD_LIGHT_GetLightColor( const FIELD_LIGHT* cp_sys, u32 index )
  *	@param	cp_sys
  *
  *	@return カラー
+// (読み込んでいるライトデータ（エクセルデータ）を反映するため、フェード途中のカラーなどではない)
  */
 //-----------------------------------------------------------------------------
 GXRgb FIELD_LIGHT_GetDiffuseColor( const FIELD_LIGHT* cp_sys )
 {
   GF_ASSERT( cp_sys );
-  return cp_sys->reflect_data.diffuse;
+  return cp_sys->data[cp_sys->now_index].diffuse;
 }
 
 //----------------------------------------------------------------------------
@@ -684,12 +686,13 @@ GXRgb FIELD_LIGHT_GetDiffuseColor( const FIELD_LIGHT* cp_sys )
  *	@param	cp_sys  
  *
  *	@return カラー
+// (読み込んでいるライトデータ（エクセルデータ）を反映するため、フェード途中のカラーなどではない)
  */
 //-----------------------------------------------------------------------------
 GXRgb FIELD_LIGHT_GetAmbientColor( const FIELD_LIGHT* cp_sys )
 {
   GF_ASSERT( cp_sys );
-  return cp_sys->reflect_data.ambient;
+  return cp_sys->data[cp_sys->now_index].ambient;
 }
 
 //----------------------------------------------------------------------------
@@ -699,12 +702,13 @@ GXRgb FIELD_LIGHT_GetAmbientColor( const FIELD_LIGHT* cp_sys )
  *	@param	cp_sys 
  *
  *	@return カラー
+// (読み込んでいるライトデータ（エクセルデータ）を反映するため、フェード途中のカラーなどではない)
  */
 //-----------------------------------------------------------------------------
 GXRgb FIELD_LIGHT_GetSpecularColor( const FIELD_LIGHT* cp_sys )
 {
   GF_ASSERT( cp_sys );
-  return cp_sys->reflect_data.specular;
+  return cp_sys->data[cp_sys->now_index].specular;
 }
 
 //----------------------------------------------------------------------------
@@ -714,12 +718,13 @@ GXRgb FIELD_LIGHT_GetSpecularColor( const FIELD_LIGHT* cp_sys )
  *	@param	cp_sys 
  *
  *	@return カラー
+// (読み込んでいるライトデータ（エクセルデータ）を反映するため、フェード途中のカラーなどではない)
  */
 //-----------------------------------------------------------------------------
 GXRgb FIELD_LIGHT_GetEmissionColor( const FIELD_LIGHT* cp_sys )
 {
   GF_ASSERT( cp_sys );
-  return cp_sys->reflect_data.emission;
+  return cp_sys->data[cp_sys->now_index].emission;
 }
 
 
