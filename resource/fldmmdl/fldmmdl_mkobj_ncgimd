@@ -273,6 +273,11 @@
 	@echo convert ncg_imd dancer
 	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/dancer.ncg ./mmdl_res ./mmdl_res/ncg4x4flip.imd 4 4 7
 
+#musician.imd
+./mmdl_res/musician.imd: ./mmdl_nchara/musician.ncg ./mmdl_nchara/musician.ncl
+	@echo convert ncg_imd musician
+	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/musician.ncg ./mmdl_res ./mmdl_res/ncg4x4nflip.imd 4 4 12
+
 #baseballm.imd
 ./mmdl_res/baseballm.imd: ./mmdl_nchara/baseballm.ncg ./mmdl_nchara/baseballm.ncl
 	@echo convert ncg_imd baseballm
@@ -448,6 +453,11 @@
 	@echo convert ncg_imd boss
 	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/boss.ncg ./mmdl_res ./mmdl_res/ncg4x4nflip.imd 4 4 12
 
+#hakase1.imd
+./mmdl_res/hakase1.imd: ./mmdl_nchara/hakase1.ncg ./mmdl_nchara/hakase1.ncl
+	@echo convert ncg_imd hakase1
+	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/hakase1.ncg ./mmdl_res ./mmdl_res/ncg4x4nflip.imd 4 4 12
+
 #hakase2.imd
 ./mmdl_res/hakase2.imd: ./mmdl_nchara/hakase2.ncg ./mmdl_nchara/hakase2.ncl
 	@echo convert ncg_imd hakase2
@@ -503,10 +513,25 @@
 	@echo convert ncg_imd poke6
 	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/poke6.ncg ./mmdl_res ./mmdl_res/ncg4x4flip.imd 4 4 7
 
+#poke7.imd
+./mmdl_res/poke7.imd: ./mmdl_nchara/poke7.ncg ./mmdl_nchara/poke7.ncl
+	@echo convert ncg_imd poke7
+	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/poke7.ncg ./mmdl_res ./mmdl_res/ncg8x8pokeflip.imd 8 8 6
+
+#poke8.imd
+./mmdl_res/poke8.imd: ./mmdl_nchara/poke8.ncg ./mmdl_nchara/poke8.ncl
+	@echo convert ncg_imd poke8
+	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/poke8.ncg ./mmdl_res ./mmdl_res/ncg8x8pokeflip.imd 8 8 6
+
 #poke9.imd
 ./mmdl_res/poke9.imd: ./mmdl_nchara/poke9.ncg ./mmdl_nchara/poke9.ncl
 	@echo convert ncg_imd poke9
 	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/poke9.ncg ./mmdl_res ./mmdl_res/ncg4x4flip.imd 4 4 7
+
+#poke10.imd
+./mmdl_res/poke10.imd: ./mmdl_nchara/poke10.ncg ./mmdl_nchara/poke10.ncl
+	@echo convert ncg_imd poke10
+	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/poke10.ncg ./mmdl_res ./mmdl_res/ncg8x8pokeflip.imd 8 8 6
 
 #poke11.imd
 ./mmdl_res/poke11.imd: ./mmdl_nchara/poke11.ncg ./mmdl_nchara/poke11.ncl
@@ -638,6 +663,16 @@
 	@echo convert ncg_imd spider
 	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/spider.ncg ./mmdl_res ./mmdl_res/ncg4x4ocell.imd 4 4 1
 
+#grasssound.imd
+./mmdl_res/grasssound.imd: ./mmdl_nchara/grasssound.ncg ./mmdl_nchara/grasssound.ncl
+	@echo convert ncg_imd grasssound
+	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/grasssound.ncg ./mmdl_res ./mmdl_res/ncg4x4nflip.imd 4 4 12
+
+#fiddle.imd
+./mmdl_res/fiddle.imd: ./mmdl_nchara/fiddle.ncg ./mmdl_nchara/fiddle.ncl
+	@echo convert ncg_imd fiddle
+	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/fiddle.ncg ./mmdl_res ./mmdl_res/ncg4x4nflip.imd 4 4 12
+
 #babyboy2.imd
 ./mmdl_res/babyboy2.imd: ./mmdl_nchara/babyboy2.ncg ./mmdl_nchara/babyboy2.ncl
 	@echo convert ncg_imd babyboy2
@@ -762,6 +797,31 @@
 ./mmdl_res/poke23.imd: ./mmdl_nchara/poke23.ncg ./mmdl_nchara/poke23.ncl
 	@echo convert ncg_imd poke23
 	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/poke23.ncg ./mmdl_res ./mmdl_res/ncg4x4nflip.imd 4 4 12
+
+#trophy1.imd
+./mmdl_res/trophy1.imd: ./mmdl_nchara/trophy1.ncg ./mmdl_nchara/trophy1.ncl
+	@echo convert ncg_imd trophy1
+	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/trophy1.ncg ./mmdl_res ./mmdl_res/ncg4x4ocell.imd 4 4 1
+
+#trophy2.imd
+./mmdl_res/trophy2.imd: ./mmdl_nchara/trophy2.ncg ./mmdl_nchara/trophy2.ncl
+	@echo convert ncg_imd trophy2
+	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/trophy2.ncg ./mmdl_res ./mmdl_res/ncg4x4ocell.imd 4 4 1
+
+#trophy3.imd
+./mmdl_res/trophy3.imd: ./mmdl_nchara/trophy3.ncg ./mmdl_nchara/trophy3.ncl
+	@echo convert ncg_imd trophy3
+	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/trophy3.ncg ./mmdl_res ./mmdl_res/ncg4x4ocell.imd 4 4 1
+
+#prize1.imd
+./mmdl_res/prize1.imd: ./mmdl_nchara/prize1.ncg ./mmdl_nchara/prize1.ncl
+	@echo convert ncg_imd prize1
+	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/prize1.ncg ./mmdl_res ./mmdl_res/ncg4x4ocell.imd 4 4 1
+
+#prize2.imd
+./mmdl_res/prize2.imd: ./mmdl_nchara/prize2.ncg ./mmdl_nchara/prize2.ncl
+	@echo convert ncg_imd prize2
+	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/prize2.ncg ./mmdl_res ./mmdl_res/ncg4x4ocell.imd 4 4 1
 
 #tsure_001.imd
 ./mmdl_res/tsure_001.imd: ./mmdl_nchara/pokemon//tsure_001.ncg ./mmdl_nchara/pokemon//tsure_001.ncl

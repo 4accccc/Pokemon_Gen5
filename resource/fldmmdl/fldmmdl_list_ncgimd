@@ -54,6 +54,7 @@ FMMDL_RESLIST_NCGIMD = \
 	ol.imd \
 	clown.imd \
 	dancer.imd \
+	musician.imd \
 	baseballm.imd \
 	soccerm.imd \
 	footballm.imd \
@@ -89,6 +90,7 @@ FMMDL_RESLIST_NCGIMD = \
 	sage2.imd \
 	goddess1.imd \
 	boss.imd \
+	hakase1.imd \
 	hakase2.imd \
 	icpo.imd \
 	tree.imd \
@@ -100,7 +102,10 @@ FMMDL_RESLIST_NCGIMD = \
 	poke4.imd \
 	poke5.imd \
 	poke6.imd \
+	poke7.imd \
+	poke8.imd \
 	poke9.imd \
+	poke10.imd \
 	poke11.imd \
 	poke12.imd \
 	poke13.imd \
@@ -127,6 +132,8 @@ FMMDL_RESLIST_NCGIMD = \
 	whitemonolith.imd \
 	mama.imd \
 	spider.imd \
+	grasssound.imd \
+	fiddle.imd \
 	babyboy2.imd \
 	babygirl2.imd \
 	workman2.imd \
@@ -152,6 +159,11 @@ FMMDL_RESLIST_NCGIMD = \
 	goddess2.imd \
 	poke22.imd \
 	poke23.imd \
+	trophy1.imd \
+	trophy2.imd \
+	trophy3.imd \
+	prize1.imd \
+	prize2.imd \
 	tsure_001.imd \
 	tsure_002.imd \
 	tsure_003.imd \

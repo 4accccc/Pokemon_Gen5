@@ -1,284 +1,441 @@
 <?xml version='1.0' encoding='SHIFT_JIS'?><imd version='1.6.0'>
 
 <head>
-	<create date='2009-08-07T20:01:31' host='W00154A' user='lee_hyunjung' source='woman1.mb'/>
+	<create date='2007-02-07T20:40:36' host='W00113' user='emi_yoshida' source='tsure_s64_3443-itp30.mb'/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name='Maya 6.5 NNS_Export' version='1.6.0.20060417'/>
 </head>
 
 <body>
 
-<original_create date='2009-08-07T20:01:31' host='W00154A' user='lee_hyunjung' source='woman1.mb'/>
+<original_create date='2007-02-07T20:40:36' host='W00113' user='emi_yoshida' source='tsure_s64_3443-itp30.mb'/>
 <original_generator name='Maya 6.5 NNS_Export' version='1.6.0.20060417'/>
 
-<model_info tool_start_frame='0' force_full_weight='off' magnify='1.000000' scaling_rule='standard' compress_node='none' material_size='1 1' vertex_style='direct' compress_material='off' output_texture='used' node_size='1 1' pos_scale='3' tex_matrix_mode='maya' use_primitive_strip='on'/>
+<model_info tool_start_frame='0' force_full_weight='off' magnify='1.000000' scaling_rule='standard' compress_node='none' material_size='1 1' vertex_style='direct' compress_material='off' output_texture='used' node_size='1 1' pos_scale='4' tex_matrix_mode='maya' use_primitive_strip='on'/>
 
-<box_test xyz='-2.000000 0.000000 0.000000' whd='4.000000 4.000000 0.000000' pos_scale='3'/>
+<box_test xyz='-2.000000 0.000000 0.000000' whd='4.000000 4.000000 0.000000' pos_scale='4'/>
 
-<tex_image_array size='7'>
-	<tex_image name='woman1.1' format='palette16' original_width='32' original_height='32' index='0' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/woman1/woman1.1.tga' palette_name='woman1' width='32' color0_mode='transparency'>
-		<bitmap size='256'>
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 c000 
-			bb00 bbbb 0000 00bb 0000 0000 0000 c000 
-			b000 cccc bbbb bbcc 0000 0000 0000 dc00 
-			0000 cccb bccc cccc 000b 0000 0000 dc00 
-			bccb cccb cccc bccc 00bb 0000 0000 ddc0 
-			cbb0 cccc cccc bccc 0bcc 0000 0000 ddc0 
-			b000 cccc cbbc bbcc bccc 0000 0000 da00 
-			ccb0 cccc bcbc cbbb cccc 000b 0000 da00 
-			bb00 cccb cbcc cbcc cccc 00bc 0000 a6b0 
-			0000 cbb0 cbcc bccc cccc 0acc 0000 b6b0 
-			b000 cccb bccc cccc bccb 0abb 0000 666b 
-			0000 cbb0 bccc cccc bbcb accc 0000 666b 
-			0000 b000 bbcb cccb cbbb accc b000 a666 
-			0000 0000 cbb0 bbbc cccc cccc b00a abb6 
-			0000 0000 b000 bccc cccc accc bb0a dabb 
-			0000 0000 0000 cbcb cccc 0acc bb00 ddab 
-			0000 0000 0000 cbb0 cccc 00ac 6bb0 ddca 
-			0000 0000 0000 cb00 cccc 00ac aa6b ddcb 
+<tex_image_array size='6'>
+	<tex_image name='tsure_poke.1' format='palette16' original_width='64' original_height='64' index='0' height='64' path='auto_make1.tga' palette_name='tsure_poke0' width='64' color0_mode='transparency'>
+		<bitmap size='1024'>
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 cc00 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 cc00 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 c000 0000 0000 0000 0000 0000 0000 0000 0000 
+			bb00 bbbb 0000 00bb 0000 0000 0000 c000 0000 0000 0000 0000 0bb0 b000 bbbb 000b 
+			b000 cccc bbbb bbcc 0000 0000 0000 dc00 0000 0000 0000 b000 bccb cbbb bccc 0000 
+			0000 cccb bccc cccc 000b 0000 0000 dc00 0000 0000 0000 cb00 bccc cccc 0bcc 0000 
+			bccb cccb cccc bccc 00bb 0000 0000 ddc0 000c 0000 0000 bbb0 cccc cccc bbcc 0bcc 
+			cbb0 cccc cccc bccc 0bcc 0000 0000 ddc0 000c 0000 0000 bccb cccc cccc cccc 00bb 
+			b000 cccc cbbc bbcc bccc 0000 0000 da00 000c 0000 b000 bccc cccb ccbb bccc 0000 
+			ccb0 cccc bcbc cbbb cccc 000b 0000 da00 00cd 0000 cb00 cccc bbbb ccbc cccc 00bc 
+			bb00 cccb cbcc cbcc cccc 00bc 0000 a6b0 0cdd 0000 ccb0 cccc cccb cccb bbcc 000b 
+			0000 cbb0 cbcc bccc cccc 0acc 0000 b6b0 0cda 0000 ccca bccc cccc cccb 00bb 0000 
+			b000 cccb bccc cccc bccb 0abb 0000 666b bdda 0000 bbba cbcc bccc cccc bbcc 0000 
+			0000 cbb0 bccc cccc bbcb accc 0000 666b bdda a000 bccc cbcb bccc cccc 00bb 0000 
+			0000 b000 bbcb cccb cbbb accc b000 a666 addd a000 cccc cbbb bbcc bbcb 0000 0000 
+			0000 0000 cbb0 bbbc cccc cccc b00a abb6 acdd ca00 cccc bccc ccbb 00bb 0000 0000 
+			0000 0000 b000 bccc cccc accc bb0a dabb badd aa0b cccc bccc bccc 0000 0000 0000 
+			0000 0000 0000 cbcb cccc 0acc bb00 ddab badd 000b ccca cccc 0bcb 0000 0000 0000 
+			0000 0000 0000 cbb0 cccc 00ac 6bb0 ddca 6acd 00bb cca0 cccc 00bb 0000 0000 0000 
+			0000 0000 0000 cb00 cccc 00ac aa6b ddcb abcd 0b6a cca0 cccc 000b 0000 0000 0000 
+			0000 0000 0000 cb00 cccc b0ac a8a6 dddc acdd b6a8 cca0 cccc 000b 0000 0000 0000 
+			0000 0000 0000 b000 cccc aa6c 78ab dddc 7cdd aba8 cc6a bccc 0000 0000 0000 0000 
+			0000 0000 0000 b000 cccc 777c 87aa dddc 8cdd 7aa7 cc77 bccc 0000 0000 0000 0000 
+			0000 0000 0000 0000 cccb b7cc 8bcc cdc7 8dcd bccb ccc7 0bcc 0000 0000 0000 0000 
+			0000 0000 0000 0000 cccb cbcc dbc7 dcc8 d8cc c7cb cccb 0bcc 0000 0000 0000 0000 
+			0000 0000 0000 0000 aab0 7cbc 1db7 ddc8 18cd 77bd acbc 00ba 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 77ba edbc dddb ebdd 7cbd 0ab7 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 b000 77ab d8bc dd71 d17d 7cb8 bba7 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 baa0 ccab d8bc dc8d dd8c ccb8 bbac 00aa 0000 0000 0000 0000 
+			0000 0000 0000 0000 bacb bcca 7bcb d8dd 7dd8 bbcb bacc 0bca 0000 0000 0000 0000 
+			0000 0000 0000 b000 aacc ccca bccb 7d7c bc7d cbcc aacc bcca 0000 0000 0000 0000 
+			0000 0000 0000 cb00 acbc accc ccba ccbb cbbc aabc accc ccbc 000b 0000 0000 0000 
+			0000 0000 0000 ccb0 bccb bacc 7cba bbcc 7ccb babc bcca cbcc 00bc 0000 0000 0000 
+			0000 0000 0000 bcb0 cbcc bbaa caab cc77 c77c bbaa caab bccb 00bc 0000 0000 0000 
+			0000 0000 0000 cbcb ccbc bbba caab c7cc ccc7 bbaa cabb ccbc 0bcb 0000 0000 0000 
+			0000 0000 0000 cbcb bccb bbba abba 666b ab66 babb babb cbcc 0bcb 0000 0000 0000 
+			0000 0000 b000 ccbc cbcb bbba abba 6bcb abcb babb cabb cbcb bcbc 0000 0000 0000 
+			0000 0000 b000 bcbc bcbc bba0 caab 6ccc cccc bbaa b0ab bcbc bcbc 0000 0000 0000 
+			0000 0000 b000 bcc7 bcbc ba00 cbaa cccc cccc baab b00a bcbc b7cc 0000 0000 0000 
+			0000 0000 0000 bc7b b8bc aa00 bccb bbcc bccb abcc b00a bcb8 0b7c 0000 0000 0000 
+			0000 0000 0000 7b8b 0bbb ccaa ccbb 99bb cbb9 cbbc 0aac 7bbb 0b8b 0000 0000 0000 
+			0000 0000 0000 8bb0 a00b cccc ccbc 9eeb cbee ccbc accc 8b00 00bb 0000 0000 0000 
+			0000 0000 0000 b000 ca00 bbbc bbcc e99c bc99 bccb ccbb b00a 0000 0000 0000 0000 
+			0000 0000 0000 0000 ca00 cccb accb eeca aace cbcc cbcc 000a 0000 0000 0000 0000 
+			0000 0000 0000 0000 ca00 cccb 0acb bbb0 00bb cbca cbcc 000a 0000 0000 0000 0000 
+			0000 0000 0000 0000 bc00 bcbc 0acc 0000 0000 bcca bcbc 000c 0000 0000 0000 0000 
+			0000 0000 0000 0000 bb00 cbcc 00bb 0000 0000 cbb0 bccb 000b 0000 0000 0000 0000 
+			0000 0000 0000 0000 cca0 bbbb 0bcc 0000 0000 bccb cbbb 00ac 0000 0000 0000 0000 
+			0000 0000 0000 0000 77a0 cccc 0a76 0000 0000 c67a 7ccc 00a7 0000 0000 0000 0000 
+			0000 0000 0000 0000 aa00 c77c 00aa 0000 0000 caa0 ac77 000a 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 aaaa 0000 0000 0000 a000 0aaa 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='woman1.2' format='palette16' original_width='32' original_height='32' index='1' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/woman1/woman1.2.tga' palette_name='woman1' width='32' color0_mode='transparency'>
-		<bitmap size='256'>
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 cc00 0000 
-			0000 0000 0000 0000 0000 0000 cc00 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0bb0 b000 bbbb 000b 
-			0000 0000 0000 b000 bccb cbbb bccc 0000 
-			0000 0000 0000 cb00 bccc cccc 0bcc 0000 
-			000c 0000 0000 bbb0 cccc cccc bbcc 0bcc 
-			000c 0000 0000 bccb cccc cccc cccc 00bb 
-			000c 0000 b000 bccc cccb ccbb bccc 0000 
-			00cd 0000 cb00 cccc bbbb ccbc cccc 00bc 
-			0cdd 0000 ccb0 cccc cccb cccb bbcc 000b 
-			0cda 0000 ccca bccc cccc cccb 00bb 0000 
-			bdda 0000 bbba cbcc bccc cccc bbcc 0000 
-			bdda a000 bccc cbcb bccc cccc 00bb 0000 
-			addd a000 cccc cbbb bbcc bbcb 0000 0000 
-			acdd ca00 cccc bccc ccbb 00bb 0000 0000 
-			badd aa0b cccc bccc bccc 0000 0000 0000 
-			badd 000b ccca cccc 0bcb 0000 0000 0000 
-			6acd 00bb cca0 cccc 00bb 0000 0000 0000 
-			abcd 0b6a cca0 cccc 000b 0000 0000 0000 
+	<tex_image name='tsure_poke.2' format='palette16' original_width='64' original_height='64' index='1' height='64' path='auto_make2.tga' palette_name='tsure_poke0' width='64' color0_mode='transparency'>
+		<bitmap size='1024'>
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 00cc 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 00cc 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 c000 0000 0000 0000 0000 0000 0000 0000 0000 
+			bb00 bbbb 0000 00bb 0000 0000 0000 c000 0000 0000 0000 0000 0bb0 b000 bbbb 000b 
+			b000 cccc bbbb bbcc 0000 0000 0000 dc00 0000 0000 0000 b000 bccb cbbb bccc 0000 
+			0000 cccb bccc cccc 000b 0000 0000 dc00 0000 0000 0000 cb00 bccc cccc 0bcc 0000 
+			bccb cccb cccc bccc 00bb 0000 0000 ddc0 000c 0000 0000 bbb0 cccc cccc bbcc 0bcc 
+			cbb0 cccc cccc bccc 0bcc 0000 0000 ddc0 000c 0000 0000 bccb cccc cccc cccc 00bb 
+			b000 cccc cbbc bbcc bccc 0000 0000 da00 000c 0000 b000 bccc cccb ccbb bccc 0000 
+			ccb0 cccc bcbc cbbb cccc 000b 0000 da00 00cd 0000 cb00 cccc bbbb ccbc cccc 00bc 
+			bb00 cccb cbcc cbcc cccc 00bc 0000 a6b0 0cdd 0000 ccb0 cccc cccb cccb bbcc 000b 
+			0000 cbb0 cbcc bccc cccc 0acc 0000 b6b0 0cda 0000 ccca bccc cccc cccb 00bb 0000 
+			b000 cccb bccc cccc bccb 0abb 0000 666b bdda 0000 bbba cbcc bccc cccc bbcc 0000 
+			0000 cbb0 bccc cccc bbcb accc 0000 666b bdda a000 bccc cbcb bccc cccc 00bb 0000 
+			0000 b000 bbcb cccb cbbb accc b000 a666 addd a000 cccc cbbb bbcc bbcb 0000 0000 
+			0000 0000 cbb0 bbbc cccc cccc b00a abb6 acdd ca00 cccc bccc ccbb 00bb 0000 0000 
+			0000 0000 b000 bccc cccc accc bb0a dabb badd aa0b cccc bccc bccc 0000 0000 0000 
+			0000 0000 0000 cbcb cccc 0acc bb00 ddab badd 000b ccca cccc 0bcb 0000 0000 0000 
+			0000 0000 0000 cbb0 cccc 00ac 6bb0 ddca 6acd 00bb cca0 cccc 00bb 0000 0000 0000 
+			0000 0000 0000 cb00 cccc 00ac aa6b ddcb abcd 0b6a cca0 cccc 000b 0000 0000 0000 
+			0000 0000 0000 cb00 cccc b0ac a8a6 dddc acdd b6a8 cca0 cccc 000b 0000 0000 0000 
+			0000 0000 0000 b000 cccc aa6c 78ab dddc 7cdd aba8 cc6a bccc 0000 0000 0000 0000 
+			0000 0000 0000 b000 cccc 777c 87aa dddc 8cdd 7aa7 cc77 bccc 0000 0000 0000 0000 
+			0000 0000 0000 0000 cccb b7cc 8bcc cdc7 8dcd bccb ccc7 0bcc 0000 0000 0000 0000 
+			0000 0000 0000 0000 cccb cbcc dbc7 dcc8 d8cc c7cb cccb 0bcc 0000 0000 0000 0000 
+			0000 0000 0000 0000 aab0 7cbc 1db7 ddc8 18cd 77bd acbc 00ba 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 77ba edbc dddb ebdd 7cbd 0ab7 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 b000 77ab d8bc dd71 d17d 7cb8 bba7 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 baa0 ccab d8bc dc8d dd8c ccb8 bbac 00aa 0000 0000 0000 0000 
+			0000 0000 0000 0000 bacb bcca 7bcb d8dd 7dd8 bbcb bacc 0bca 0000 0000 0000 0000 
+			0000 0000 0000 b000 aacc ccca bccb 7d7c bc7d cbcc aacc bcca 0000 0000 0000 0000 
+			0000 0000 0000 cb00 acbc accc ccba ccbb cbbc aabc accc ccbc 000b 0000 0000 0000 
+			0000 0000 0000 ccb0 bccb bacc 7cba bbcc 7ccb babc bcca cbcc 00bc 0000 0000 0000 
+			0000 0000 0000 bcb0 cbcc bbaa caab cc77 c77c bbaa caab bccb 00bc 0000 0000 0000 
+			0000 0000 0000 cbcb ccbc bbba caab c7cc ccc7 bbaa cabb ccbc 0bcb 0000 0000 0000 
+			0000 0000 0000 cbcb bccb bbba abba 666b ab66 babb babb cbcc 0bcb 0000 0000 0000 
+			0000 0000 b000 ccbc cbcb bbba abba 6bcb abcb babb cabb cbcb bcbc 0000 0000 0000 
+			0000 0000 b000 bcbc bcbc bba0 caab 6ccc cccc bbaa b0ab bcbc bcbc 0000 0000 0000 
+			0000 0000 b000 bcc7 bcbc ba00 cbaa cccc cccc baab b00a bcbc b7cc 0000 0000 0000 
+			0000 0000 0000 bc7b b8bc aa00 bccb bbcc bccb abcc b00a bcb8 0b7c 0000 0000 0000 
+			0000 0000 0000 7b8b 0bbb ccaa ccbb 99bb cbb9 cbbc 0aac 7bbb 0b8b 0000 0000 0000 
+			0000 0000 0000 8bb0 a00b cccc ccbc 9eeb cbee ccbc accc 8b00 00bb 0000 0000 0000 
+			0000 0000 0000 b000 ca00 bbbc bbcc e99c bc99 bccb ccbb b00a 0000 0000 0000 0000 
+			0000 0000 0000 0000 ca00 cccb accb eeca aace cbcc cbcc 000a 0000 0000 0000 0000 
+			0000 0000 0000 0000 ca00 cccb 0acb bbb0 00bb cbca cbcc 000a 0000 0000 0000 0000 
+			0000 0000 0000 0000 bc00 bcbc 0acc 0000 0000 bcca bcbc 000c 0000 0000 0000 0000 
+			0000 0000 0000 0000 bb00 cbcc 00bb 0000 0000 cbb0 bccb 000b 0000 0000 0000 0000 
+			0000 0000 0000 0000 cca0 bbbb 0bcc 0000 0000 bccb cbbb 00ac 0000 0000 0000 0000 
+			0000 0000 0000 0000 77a0 cccc 0a76 0000 0000 c67a 7ccc 00a7 0000 0000 0000 0000 
+			0000 0000 0000 0000 aa00 c77c 00aa 0000 0000 caa0 ac77 000a 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 aaaa 0000 0000 0000 a000 0aaa 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='woman1.3' format='palette16' original_width='32' original_height='32' index='2' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/woman1/woman1.3.tga' palette_name='woman1' width='32' color0_mode='transparency'>
-		<bitmap size='256'>
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 c000 
-			bb00 bbbb 0000 00bb 0000 0000 0000 c000 
-			b000 cccc bbbb bbcc 0000 0000 0000 dc00 
-			0000 cccb bccc cccc 000b 0000 0000 dc00 
-			bccb cccb cccc bccc 00bb 0000 0000 ddc0 
-			cbb0 cccc cccc bccc 0bcc 0000 0000 ddc0 
-			b000 cccc cbbc bbcc bccc 0000 0000 da00 
-			ccb0 cccc bcbc cbbb cccc 000b 0000 da00 
-			bb00 cccb cbcc cbcc cccc 00bc 0000 a6b0 
-			0000 cbb0 cbcc bccc cccc 0acc 0000 b6b0 
-			b000 cccb bccc cccc bccb 0abb 0000 666b 
-			0000 cbb0 bccc cccc bbcb accc 0000 666b 
-			0000 b000 bbcb cccb cbbb accc b000 a666 
-			0000 0000 cbb0 bbbc cccc cccc b00a abb6 
-			0000 0000 b000 bccc cccc accc bb0a dabb 
-			0000 0000 0000 cbcb cccc 0acc bb00 ddab 
-			0000 0000 0000 cbb0 cccc 00ac 6bb0 ddca 
-			0000 0000 0000 cb00 cccc 00ac aa6b ddcb 
+	<tex_image name='tsure_poke.3' format='palette16' original_width='64' original_height='64' index='2' height='64' path='auto_make3.tga' palette_name='tsure_poke0' width='64' color0_mode='transparency'>
+		<bitmap size='1024'>
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 00cc 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 00cc 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 c000 0000 0000 0000 0000 0000 0000 0000 0000 
+			bb00 bbbb 0000 00bb 0000 0000 0000 c000 0000 0000 0000 0000 0bb0 b000 bbbb 000b 
+			b000 cccc bbbb bbcc 0000 0000 0000 dc00 0000 0000 0000 b000 bccb cbbb bccc 0000 
+			0000 cccb bccc cccc 000b 0000 0000 dc00 0000 0000 0000 cb00 bccc cccc 0bcc 0000 
+			bccb cccb cccc bccc 00bb 0000 0000 ddc0 000c 0000 0000 bbb0 cccc cccc bbcc 0bcc 
+			cbb0 cccc cccc bccc 0bcc 0000 0000 ddc0 000c 0000 0000 bccb cccc cccc cccc 00bb 
+			b000 cccc cbbc bbcc bccc 0000 0000 da00 000c 0000 b000 bccc cccb ccbb bccc 0000 
+			ccb0 cccc bcbc cbbb cccc 000b 0000 da00 00cd 0000 cb00 cccc bbbb ccbc cccc 00bc 
+			bb00 cccb cbcc cbcc cccc 00bc 0000 a6b0 0cdd 0000 ccb0 cccc cccb cccb bbcc 000b 
+			0000 cbb0 cbcc bccc cccc 0acc 0000 b6b0 0cda 0000 ccca bccc cccc cccb 00bb 0000 
+			b000 cccb bccc cccc bccb 0abb 0000 666b bdda 0000 bbba cbcc bccc cccc bbcc 0000 
+			0000 cbb0 bccc cccc bbcb accc 0000 666b bdda a000 bccc cbcb bccc cccc 00bb 0000 
+			0000 b000 bbcb cccb cbbb accc b000 a666 addd a000 cccc cbbb bbcc bbcb 0000 0000 
+			0000 0000 cbb0 bbbc cccc cccc b00a abb6 acdd ca00 cccc bccc ccbb 00bb 0000 0000 
+			0000 0000 b000 bccc cccc accc bb0a dabb badd aa0b cccc bccc bccc 0000 0000 0000 
+			0000 0000 0000 cbcb cccc 0acc bb00 ddab badd 000b ccca cccc 0bcb 0000 0000 0000 
+			0000 0000 0000 cbb0 cccc 00ac 6bb0 ddca 6acd 00bb cca0 cccc 00bb 0000 0000 0000 
+			0000 0000 0000 cb00 cccc 00ac aa6b ddcb abcd 0b6a cca0 cccc 000b 0000 0000 0000 
+			0000 0000 0000 cb00 cccc b0ac a8a6 dddc acdd b6a8 cca0 cccc 000b 0000 0000 0000 
+			0000 0000 0000 b000 cccc aa6c 78ab dddc 7cdd aba8 cc6a bccc 0000 0000 0000 0000 
+			0000 0000 0000 b000 cccc 777c 87aa dddc 8cdd 7aa7 cc77 bccc 0000 0000 0000 0000 
+			0000 0000 0000 0000 cccb b7cc 8bcc cdc7 8dcd bccb ccc7 0bcc 0000 0000 0000 0000 
+			0000 0000 0000 0000 cccb cbcc dbc7 dcc8 d8cc c7cb cccb 0bcc 0000 0000 0000 0000 
+			0000 0000 0000 0000 aab0 7cbc 1db7 ddc8 18cd 77bd acbc 00ba 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 77ba edbc dddb ebdd 7cbd 0ab7 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 b000 77ab d8bc dd71 d17d 7cb8 bba7 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 baa0 ccab d8bc dc8d dd8c ccb8 bbac 00aa 0000 0000 0000 0000 
+			0000 0000 0000 0000 bacb bcca 7bcb d8dd 7dd8 bbcb bacc 0bca 0000 0000 0000 0000 
+			0000 0000 0000 b000 aacc ccca bccb 7d7c bc7d cbcc aacc bcca 0000 0000 0000 0000 
+			0000 0000 0000 cb00 acbc accc ccba ccbb cbbc aabc accc ccbc 000b 0000 0000 0000 
+			0000 0000 0000 ccb0 bccb bacc 7cba bbcc 7ccb babc bcca cbcc 00bc 0000 0000 0000 
+			0000 0000 0000 bcb0 cbcc bbaa caab cc77 c77c bbaa caab bccb 00bc 0000 0000 0000 
+			0000 0000 0000 cbcb ccbc bbba caab c7cc ccc7 bbaa cabb ccbc 0bcb 0000 0000 0000 
+			0000 0000 0000 cbcb bccb bbba abba 666b ab66 babb babb cbcc 0bcb 0000 0000 0000 
+			0000 0000 b000 ccbc cbcb bbba abba 6bcb abcb babb cabb cbcb bcbc 0000 0000 0000 
+			0000 0000 b000 bcbc bcbc bba0 caab 6ccc cccc bbaa b0ab bcbc bcbc 0000 0000 0000 
+			0000 0000 b000 bcc7 bcbc ba00 cbaa cccc cccc baab b00a bcbc b7cc 0000 0000 0000 
+			0000 0000 0000 bc7b b8bc aa00 bccb bbcc bccb abcc b00a bcb8 0b7c 0000 0000 0000 
+			0000 0000 0000 7b8b 0bbb ccaa ccbb 99bb cbb9 cbbc 0aac 7bbb 0b8b 0000 0000 0000 
+			0000 0000 0000 8bb0 a00b cccc ccbc 9eeb cbee ccbc accc 8b00 00bb 0000 0000 0000 
+			0000 0000 0000 b000 ca00 bbbc bbcc e99c bc99 bccb ccbb b00a 0000 0000 0000 0000 
+			0000 0000 0000 0000 ca00 cccb accb eeca aace cbcc cbcc 000a 0000 0000 0000 0000 
+			0000 0000 0000 0000 ca00 cccb 0acb bbb0 00bb cbca cbcc 000a 0000 0000 0000 0000 
+			0000 0000 0000 0000 bc00 bcbc 0acc 0000 0000 bcca bcbc 000c 0000 0000 0000 0000 
+			0000 0000 0000 0000 bb00 cbcc 00bb 0000 0000 cbb0 bccb 000b 0000 0000 0000 0000 
+			0000 0000 0000 0000 cca0 bbbb 0bcc 0000 0000 bccb cbbb 00ac 0000 0000 0000 0000 
+			0000 0000 0000 0000 77a0 cccc 0a76 0000 0000 c67a 7ccc 00a7 0000 0000 0000 0000 
+			0000 0000 0000 0000 aa00 c77c 00aa 0000 0000 caa0 ac77 000a 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 aaaa 0000 0000 0000 a000 0aaa 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='woman1.4' format='palette16' original_width='32' original_height='32' index='3' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/woman1/woman1.4.tga' palette_name='woman1' width='32' color0_mode='transparency'>
-		<bitmap size='256'>
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 00cc 
-			0000 0000 0000 0000 0000 0000 0000 00cc 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0bb0 b000 bbbb 000b 
-			0000 0000 0000 b000 bccb cbbb bccc 0000 
-			0000 0000 0000 cb00 bccc cccc 0bcc 0000 
-			000c 0000 0000 bbb0 cccc cccc bbcc 0bcc 
-			000c 0000 0000 bccb cccc cccc cccc 00bb 
-			000c 0000 b000 bccc cccb ccbb bccc 0000 
-			00cd 0000 cb00 cccc bbbb ccbc cccc 00bc 
-			0cdd 0000 ccb0 cccc cccb cccb bbcc 000b 
-			0cda 0000 ccca bccc cccc cccb 00bb 0000 
-			bdda 0000 bbba cbcc bccc cccc bbcc 0000 
-			bdda a000 bccc cbcb bccc cccc 00bb 0000 
-			addd a000 cccc cbbb bbcc bbcb 0000 0000 
-			acdd ca00 cccc bccc ccbb 00bb 0000 0000 
-			badd aa0b cccc bccc bccc 0000 0000 0000 
-			badd 000b ccca cccc 0bcb 0000 0000 0000 
-			6acd 00bb cca0 cccc 00bb 0000 0000 0000 
-			abcd 0b6a cca0 cccc 000b 0000 0000 0000 
+	<tex_image name='tsure_poke.4' format='palette16' original_width='64' original_height='64' index='3' height='64' path='auto_make4.tga' palette_name='tsure_poke0' width='64' color0_mode='transparency'>
+		<bitmap size='1024'>
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 cc00 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 cc00 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 c000 0000 0000 0000 0000 0000 0000 0000 0000 
+			bb00 bbbb 0000 00bb 0000 0000 0000 c000 0000 0000 0000 0000 0bb0 b000 bbbb 000b 
+			b000 cccc bbbb bbcc 0000 0000 0000 dc00 0000 0000 0000 b000 bccb cbbb bccc 0000 
+			0000 cccb bccc cccc 000b 0000 0000 dc00 0000 0000 0000 cb00 bccc cccc 0bcc 0000 
+			bccb cccb cccc bccc 00bb 0000 0000 ddc0 000c 0000 0000 bbb0 cccc cccc bbcc 0bcc 
+			cbb0 cccc cccc bccc 0bcc 0000 0000 ddc0 000c 0000 0000 bccb cccc cccc cccc 00bb 
+			b000 cccc cbbc bbcc bccc 0000 0000 da00 000c 0000 b000 bccc cccb ccbb bccc 0000 
+			ccb0 cccc bcbc cbbb cccc 000b 0000 da00 00cd 0000 cb00 cccc bbbb ccbc cccc 00bc 
+			bb00 cccb cbcc cbcc cccc 00bc 0000 a6b0 0cdd 0000 ccb0 cccc cccb cccb bbcc 000b 
+			0000 cbb0 cbcc bccc cccc 0acc 0000 b6b0 0cda 0000 ccca bccc cccc cccb 00bb 0000 
+			b000 cccb bccc cccc bccb 0abb 0000 666b bdda 0000 bbba cbcc bccc cccc bbcc 0000 
+			0000 cbb0 bccc cccc bbcb accc 0000 666b bdda a000 bccc cbcb bccc cccc 00bb 0000 
+			0000 b000 bbcb cccb cbbb accc b000 a666 addd a000 cccc cbbb bbcc bbcb 0000 0000 
+			0000 0000 cbb0 bbbc cccc cccc b00a abb6 acdd ca00 cccc bccc ccbb 00bb 0000 0000 
+			0000 0000 b000 bccc cccc accc bb0a dabb badd aa0b cccc bccc bccc 0000 0000 0000 
+			0000 0000 0000 cbcb cccc 0acc bb00 ddab badd 000b ccca cccc 0bcb 0000 0000 0000 
+			0000 0000 0000 cbb0 cccc 00ac 6bb0 ddca 6acd 00bb cca0 cccc 00bb 0000 0000 0000 
+			0000 0000 0000 cb00 cccc 00ac aa6b ddcb abcd 0b6a cca0 cccc 000b 0000 0000 0000 
+			0000 0000 0000 cb00 cccc b0ac a8a6 dddc acdd b6a8 cca0 cccc 000b 0000 0000 0000 
+			0000 0000 0000 b000 cccc aa6c 78ab dddc 7cdd aba8 cc6a bccc 0000 0000 0000 0000 
+			0000 0000 0000 b000 cccc 777c 87aa dddc 8cdd 7aa7 cc77 bccc 0000 0000 0000 0000 
+			0000 0000 0000 0000 cccb b7cc 8bcc cdc7 8dcd bccb ccc7 0bcc 0000 0000 0000 0000 
+			0000 0000 0000 0000 cccb cbcc dbc7 dcc8 d8cc c7cb cccb 0bcc 0000 0000 0000 0000 
+			0000 0000 0000 0000 aab0 7cbc 1db7 ddc8 18cd 77bd acbc 00ba 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 77ba edbc dddb ebdd 7cbd 0ab7 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 b000 77ab d8bc dd71 d17d 7cb8 bba7 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 baa0 ccab d8bc dc8d dd8c ccb8 bbac 00aa 0000 0000 0000 0000 
+			0000 0000 0000 0000 bacb bcca 7bcb d8dd 7dd8 bbcb bacc 0bca 0000 0000 0000 0000 
+			0000 0000 0000 b000 aacc ccca bccb 7d7c bc7d cbcc aacc bcca 0000 0000 0000 0000 
+			0000 0000 0000 cb00 acbc accc ccba ccbb cbbc aabc accc ccbc 000b 0000 0000 0000 
+			0000 0000 0000 ccb0 bccb bacc 7cba bbcc 7ccb babc bcca cbcc 00bc 0000 0000 0000 
+			0000 0000 0000 bcb0 cbcc bbaa caab cc77 c77c bbaa caab bccb 00bc 0000 0000 0000 
+			0000 0000 0000 cbcb ccbc bbba caab c7cc ccc7 bbaa cabb ccbc 0bcb 0000 0000 0000 
+			0000 0000 0000 cbcb bccb bbba abba 666b ab66 babb babb cbcc 0bcb 0000 0000 0000 
+			0000 0000 b000 ccbc cbcb bbba abba 6bcb abcb babb cabb cbcb bcbc 0000 0000 0000 
+			0000 0000 b000 bcbc bcbc bba0 caab 6ccc cccc bbaa b0ab bcbc bcbc 0000 0000 0000 
+			0000 0000 b000 bcc7 bcbc ba00 cbaa cccc cccc baab b00a bcbc b7cc 0000 0000 0000 
+			0000 0000 0000 bc7b b8bc aa00 bccb bbcc bccb abcc b00a bcb8 0b7c 0000 0000 0000 
+			0000 0000 0000 7b8b 0bbb ccaa ccbb 99bb cbb9 cbbc 0aac 7bbb 0b8b 0000 0000 0000 
+			0000 0000 0000 8bb0 a00b cccc ccbc 9eeb cbee ccbc accc 8b00 00bb 0000 0000 0000 
+			0000 0000 0000 b000 ca00 bbbc bbcc e99c bc99 bccb ccbb b00a 0000 0000 0000 0000 
+			0000 0000 0000 0000 ca00 cccb accb eeca aace cbcc cbcc 000a 0000 0000 0000 0000 
+			0000 0000 0000 0000 ca00 cccb 0acb bbb0 00bb cbca cbcc 000a 0000 0000 0000 0000 
+			0000 0000 0000 0000 bc00 bcbc 0acc 0000 0000 bcca bcbc 000c 0000 0000 0000 0000 
+			0000 0000 0000 0000 bb00 cbcc 00bb 0000 0000 cbb0 bccb 000b 0000 0000 0000 0000 
+			0000 0000 0000 0000 cca0 bbbb 0bcc 0000 0000 bccb cbbb 00ac 0000 0000 0000 0000 
+			0000 0000 0000 0000 77a0 cccc 0a76 0000 0000 c67a 7ccc 00a7 0000 0000 0000 0000 
+			0000 0000 0000 0000 aa00 c77c 00aa 0000 0000 caa0 ac77 000a 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 aaaa 0000 0000 0000 a000 0aaa 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='woman1.5' format='palette16' original_width='32' original_height='32' index='4' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/woman1/woman1.5.tga' palette_name='woman1' width='32' color0_mode='transparency'>
-		<bitmap size='256'>
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 c000 
-			bb00 bbbb 0000 00bb 0000 0000 0000 c000 
-			b000 cccc bbbb bbcc 0000 0000 0000 dc00 
-			0000 cccb bccc cccc 000b 0000 0000 dc00 
-			bccb cccb cccc bccc 00bb 0000 0000 ddc0 
-			cbb0 cccc cccc bccc 0bcc 0000 0000 ddc0 
-			b000 cccc cbbc bbcc bccc 0000 0000 da00 
-			ccb0 cccc bcbc cbbb cccc 000b 0000 da00 
-			bb00 cccb cbcc cbcc cccc 00bc 0000 a6b0 
-			0000 cbb0 cbcc bccc cccc 0acc 0000 b6b0 
-			b000 cccb bccc cccc bccb 0abb 0000 666b 
-			0000 cbb0 bccc cccc bbcb accc 0000 666b 
-			0000 b000 bbcb cccb cbbb accc b000 a666 
-			0000 0000 cbb0 bbbc cccc cccc b00a abb6 
-			0000 0000 b000 bccc cccc accc bb0a dabb 
-			0000 0000 0000 cbcb cccc 0acc bb00 ddab 
-			0000 0000 0000 cbb0 cccc 00ac 6bb0 ddca 
-			0000 0000 0000 cb00 cccc 00ac aa6b ddcb 
+	<tex_image name='tsure_poke.5' format='palette16' original_width='64' original_height='64' index='4' height='64' path='auto_make5.tga' palette_name='tsure_poke0' width='64' color0_mode='transparency'>
+		<bitmap size='1024'>
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 00cc 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 00cc 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 c000 0000 0000 0000 0000 0000 0000 0000 0000 
+			bb00 bbbb 0000 00bb 0000 0000 0000 c000 0000 0000 0000 0000 0bb0 b000 bbbb 000b 
+			b000 cccc bbbb bbcc 0000 0000 0000 dc00 0000 0000 0000 b000 bccb cbbb bccc 0000 
+			0000 cccb bccc cccc 000b 0000 0000 dc00 0000 0000 0000 cb00 bccc cccc 0bcc 0000 
+			bccb cccb cccc bccc 00bb 0000 0000 ddc0 000c 0000 0000 bbb0 cccc cccc bbcc 0bcc 
+			cbb0 cccc cccc bccc 0bcc 0000 0000 ddc0 000c 0000 0000 bccb cccc cccc cccc 00bb 
+			b000 cccc cbbc bbcc bccc 0000 0000 da00 000c 0000 b000 bccc cccb ccbb bccc 0000 
+			ccb0 cccc bcbc cbbb cccc 000b 0000 da00 00cd 0000 cb00 cccc bbbb ccbc cccc 00bc 
+			bb00 cccb cbcc cbcc cccc 00bc 0000 a6b0 0cdd 0000 ccb0 cccc cccb cccb bbcc 000b 
+			0000 cbb0 cbcc bccc cccc 0acc 0000 b6b0 0cda 0000 ccca bccc cccc cccb 00bb 0000 
+			b000 cccb bccc cccc bccb 0abb 0000 666b bdda 0000 bbba cbcc bccc cccc bbcc 0000 
+			0000 cbb0 bccc cccc bbcb accc 0000 666b bdda a000 bccc cbcb bccc cccc 00bb 0000 
+			0000 b000 bbcb cccb cbbb accc b000 a666 addd a000 cccc cbbb bbcc bbcb 0000 0000 
+			0000 0000 cbb0 bbbc cccc cccc b00a abb6 acdd ca00 cccc bccc ccbb 00bb 0000 0000 
+			0000 0000 b000 bccc cccc accc bb0a dabb badd aa0b cccc bccc bccc 0000 0000 0000 
+			0000 0000 0000 cbcb cccc 0acc bb00 ddab badd 000b ccca cccc 0bcb 0000 0000 0000 
+			0000 0000 0000 cbb0 cccc 00ac 6bb0 ddca 6acd 00bb cca0 cccc 00bb 0000 0000 0000 
+			0000 0000 0000 cb00 cccc 00ac aa6b ddcb abcd 0b6a cca0 cccc 000b 0000 0000 0000 
+			0000 0000 0000 cb00 cccc b0ac a8a6 dddc acdd b6a8 cca0 cccc 000b 0000 0000 0000 
+			0000 0000 0000 b000 cccc aa6c 78ab dddc 7cdd aba8 cc6a bccc 0000 0000 0000 0000 
+			0000 0000 0000 b000 cccc 777c 87aa dddc 8cdd 7aa7 cc77 bccc 0000 0000 0000 0000 
+			0000 0000 0000 0000 cccb b7cc 8bcc cdc7 8dcd bccb ccc7 0bcc 0000 0000 0000 0000 
+			0000 0000 0000 0000 cccb cbcc dbc7 dcc8 d8cc c7cb cccb 0bcc 0000 0000 0000 0000 
+			0000 0000 0000 0000 aab0 7cbc 1db7 ddc8 18cd 77bd acbc 00ba 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 77ba edbc dddb ebdd 7cbd 0ab7 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 b000 77ab d8bc dd71 d17d 7cb8 bba7 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 baa0 ccab d8bc dc8d dd8c ccb8 bbac 00aa 0000 0000 0000 0000 
+			0000 0000 0000 0000 bacb bcca 7bcb d8dd 7dd8 bbcb bacc 0bca 0000 0000 0000 0000 
+			0000 0000 0000 b000 aacc ccca bccb 7d7c bc7d cbcc aacc bcca 0000 0000 0000 0000 
+			0000 0000 0000 cb00 acbc accc ccba ccbb cbbc aabc accc ccbc 000b 0000 0000 0000 
+			0000 0000 0000 ccb0 bccb bacc 7cba bbcc 7ccb babc bcca cbcc 00bc 0000 0000 0000 
+			0000 0000 0000 bcb0 cbcc bbaa caab cc77 c77c bbaa caab bccb 00bc 0000 0000 0000 
+			0000 0000 0000 cbcb ccbc bbba caab c7cc ccc7 bbaa cabb ccbc 0bcb 0000 0000 0000 
+			0000 0000 0000 cbcb bccb bbba abba 666b ab66 babb babb cbcc 0bcb 0000 0000 0000 
+			0000 0000 b000 ccbc cbcb bbba abba 6bcb abcb babb cabb cbcb bcbc 0000 0000 0000 
+			0000 0000 b000 bcbc bcbc bba0 caab 6ccc cccc bbaa b0ab bcbc bcbc 0000 0000 0000 
+			0000 0000 b000 bcc7 bcbc ba00 cbaa cccc cccc baab b00a bcbc b7cc 0000 0000 0000 
+			0000 0000 0000 bc7b b8bc aa00 bccb bbcc bccb abcc b00a bcb8 0b7c 0000 0000 0000 
+			0000 0000 0000 7b8b 0bbb ccaa ccbb 99bb cbb9 cbbc 0aac 7bbb 0b8b 0000 0000 0000 
+			0000 0000 0000 8bb0 a00b cccc ccbc 9eeb cbee ccbc accc 8b00 00bb 0000 0000 0000 
+			0000 0000 0000 b000 ca00 bbbc bbcc e99c bc99 bccb ccbb b00a 0000 0000 0000 0000 
+			0000 0000 0000 0000 ca00 cccb accb eeca aace cbcc cbcc 000a 0000 0000 0000 0000 
+			0000 0000 0000 0000 ca00 cccb 0acb bbb0 00bb cbca cbcc 000a 0000 0000 0000 0000 
+			0000 0000 0000 0000 bc00 bcbc 0acc 0000 0000 bcca bcbc 000c 0000 0000 0000 0000 
+			0000 0000 0000 0000 bb00 cbcc 00bb 0000 0000 cbb0 bccb 000b 0000 0000 0000 0000 
+			0000 0000 0000 0000 cca0 bbbb 0bcc 0000 0000 bccb cbbb 00ac 0000 0000 0000 0000 
+			0000 0000 0000 0000 77a0 cccc 0a76 0000 0000 c67a 7ccc 00a7 0000 0000 0000 0000 
+			0000 0000 0000 0000 aa00 c77c 00aa 0000 0000 caa0 ac77 000a 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 aaaa 0000 0000 0000 a000 0aaa 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='woman1.6' format='palette16' original_width='32' original_height='32' index='5' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/woman1/woman1.6.tga' palette_name='woman1' width='32' color0_mode='transparency'>
-		<bitmap size='256'>
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 00cc 
-			0000 0000 0000 0000 0000 0000 0000 00cc 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0bb0 b000 bbbb 000b 
-			0000 0000 0000 b000 bccb cbbb bccc 0000 
-			0000 0000 0000 cb00 bccc cccc 0bcc 0000 
-			000c 0000 0000 bbb0 cccc cccc bbcc 0bcc 
-			000c 0000 0000 bccb cccc cccc cccc 00bb 
-			000c 0000 b000 bccc cccb ccbb bccc 0000 
-			00cd 0000 cb00 cccc bbbb ccbc cccc 00bc 
-			0cdd 0000 ccb0 cccc cccb cccb bbcc 000b 
-			0cda 0000 ccca bccc cccc cccb 00bb 0000 
-			bdda 0000 bbba cbcc bccc cccc bbcc 0000 
-			bdda a000 bccc cbcb bccc cccc 00bb 0000 
-			addd a000 cccc cbbb bbcc bbcb 0000 0000 
-			acdd ca00 cccc bccc ccbb 00bb 0000 0000 
-			badd aa0b cccc bccc bccc 0000 0000 0000 
-			badd 000b ccca cccc 0bcb 0000 0000 0000 
-			6acd 00bb cca0 cccc 00bb 0000 0000 0000 
-			abcd 0b6a cca0 cccc 000b 0000 0000 0000 
-		</bitmap>
-	</tex_image>
-	<tex_image name='woman1.7' format='palette16' original_width='32' original_height='32' index='6' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/woman1/woman1.7.tga' palette_name='woman1' width='32' color0_mode='transparency'>
-		<bitmap size='256'>
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 c000 
-			bb00 bbbb 0000 00bb 0000 0000 0000 c000 
-			b000 cccc bbbb bbcc 0000 0000 0000 dc00 
-			0000 cccb bccc cccc 000b 0000 0000 dc00 
-			bccb cccb cccc bccc 00bb 0000 0000 ddc0 
-			cbb0 cccc cccc bccc 0bcc 0000 0000 ddc0 
-			b000 cccc cbbc bbcc bccc 0000 0000 da00 
-			ccb0 cccc bcbc cbbb cccc 000b 0000 da00 
-			bb00 cccb cbcc cbcc cccc 00bc 0000 a6b0 
-			0000 cbb0 cbcc bccc cccc 0acc 0000 b6b0 
-			b000 cccb bccc cccc bccb 0abb 0000 666b 
-			0000 cbb0 bccc cccc bbcb accc 0000 666b 
-			0000 b000 bbcb cccb cbbb accc b000 a666 
-			0000 0000 cbb0 bbbc cccc cccc b00a abb6 
-			0000 0000 b000 bccc cccc accc bb0a dabb 
-			0000 0000 0000 cbcb cccc 0acc bb00 ddab 
-			0000 0000 0000 cbb0 cccc 00ac 6bb0 ddca 
-			0000 0000 0000 cb00 cccc 00ac aa6b ddcb 
+	<tex_image name='tsure_poke.6' format='palette16' original_width='64' original_height='64' index='5' height='64' path='auto_make6.tga' palette_name='tsure_poke0' width='64' color0_mode='transparency'>
+		<bitmap size='1024'>
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			cc00 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			cc00 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 c000 0000 0000 0000 0000 0000 0000 0000 0000 
+			bb00 bbbb 0000 00bb 0000 0000 0000 c000 0000 0000 0000 0000 0bb0 b000 bbbb 000b 
+			b000 cccc bbbb bbcc 0000 0000 0000 dc00 0000 0000 0000 b000 bccb cbbb bccc 0000 
+			0000 cccb bccc cccc 000b 0000 0000 dc00 0000 0000 0000 cb00 bccc cccc 0bcc 0000 
+			bccb cccb cccc bccc 00bb 0000 0000 ddc0 000c 0000 0000 bbb0 cccc cccc bbcc 0bcc 
+			cbb0 cccc cccc bccc 0bcc 0000 0000 ddc0 000c 0000 0000 bccb cccc cccc cccc 00bb 
+			b000 cccc cbbc bbcc bccc 0000 0000 da00 000c 0000 b000 bccc cccb ccbb bccc 0000 
+			ccb0 cccc bcbc cbbb cccc 000b 0000 da00 00cd 0000 cb00 cccc bbbb ccbc cccc 00bc 
+			bb00 cccb cbcc cbcc cccc 00bc 0000 a6b0 0cdd 0000 ccb0 cccc cccb cccb bbcc 000b 
+			0000 cbb0 cbcc bccc cccc 0acc 0000 b6b0 0cda 0000 ccca bccc cccc cccb 00bb 0000 
+			b000 cccb bccc cccc bccb 0abb 0000 666b bdda 0000 bbba cbcc bccc cccc bbcc 0000 
+			0000 cbb0 bccc cccc bbcb accc 0000 666b bdda a000 bccc cbcb bccc cccc 00bb 0000 
+			0000 b000 bbcb cccb cbbb accc b000 a666 addd a000 cccc cbbb bbcc bbcb 0000 0000 
+			0000 0000 cbb0 bbbc cccc cccc b00a abb6 acdd ca00 cccc bccc ccbb 00bb 0000 0000 
+			0000 0000 b000 bccc cccc accc bb0a dabb badd aa0b cccc bccc bccc 0000 0000 0000 
+			0000 0000 0000 cbcb cccc 0acc bb00 ddab badd 000b ccca cccc 0bcb 0000 0000 0000 
+			0000 0000 0000 cbb0 cccc 00ac 6bb0 ddca 6acd 00bb cca0 cccc 00bb 0000 0000 0000 
+			0000 0000 0000 cb00 cccc 00ac aa6b ddcb abcd 0b6a cca0 cccc 000b 0000 0000 0000 
+			0000 0000 0000 cb00 cccc b0ac a8a6 dddc acdd b6a8 cca0 cccc 000b 0000 0000 0000 
+			0000 0000 0000 b000 cccc aa6c 78ab dddc 7cdd aba8 cc6a bccc 0000 0000 0000 0000 
+			0000 0000 0000 b000 cccc 777c 87aa dddc 8cdd 7aa7 cc77 bccc 0000 0000 0000 0000 
+			0000 0000 0000 0000 cccb b7cc 8bcc cdc7 8dcd bccb ccc7 0bcc 0000 0000 0000 0000 
+			0000 0000 0000 0000 cccb cbcc dbc7 dcc8 d8cc c7cb cccb 0bcc 0000 0000 0000 0000 
+			0000 0000 0000 0000 aab0 7cbc 1db7 ddc8 18cd 77bd acbc 00ba 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 77ba edbc dddb ebdd 7cbd 0ab7 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 b000 77ab d8bc dd71 d17d 7cb8 bba7 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 baa0 ccab d8bc dc8d dd8c ccb8 bbac 00aa 0000 0000 0000 0000 
+			0000 0000 0000 0000 bacb bcca 7bcb d8dd 7dd8 bbcb bacc 0bca 0000 0000 0000 0000 
+			0000 0000 0000 b000 aacc ccca bccb 7d7c bc7d cbcc aacc bcca 0000 0000 0000 0000 
+			0000 0000 0000 cb00 acbc accc ccba ccbb cbbc aabc accc ccbc 000b 0000 0000 0000 
+			0000 0000 0000 ccb0 bccb bacc 7cba bbcc 7ccb babc bcca cbcc 00bc 0000 0000 0000 
+			0000 0000 0000 bcb0 cbcc bbaa caab cc77 c77c bbaa caab bccb 00bc 0000 0000 0000 
+			0000 0000 0000 cbcb ccbc bbba caab c7cc ccc7 bbaa cabb ccbc 0bcb 0000 0000 0000 
+			0000 0000 0000 cbcb bccb bbba abba 666b ab66 babb babb cbcc 0bcb 0000 0000 0000 
+			0000 0000 b000 ccbc cbcb bbba abba 6bcb abcb babb cabb cbcb bcbc 0000 0000 0000 
+			0000 0000 b000 bcbc bcbc bba0 caab 6ccc cccc bbaa b0ab bcbc bcbc 0000 0000 0000 
+			0000 0000 b000 bcc7 bcbc ba00 cbaa cccc cccc baab b00a bcbc b7cc 0000 0000 0000 
+			0000 0000 0000 bc7b b8bc aa00 bccb bbcc bccb abcc b00a bcb8 0b7c 0000 0000 0000 
+			0000 0000 0000 7b8b 0bbb ccaa ccbb 99bb cbb9 cbbc 0aac 7bbb 0b8b 0000 0000 0000 
+			0000 0000 0000 8bb0 a00b cccc ccbc 9eeb cbee ccbc accc 8b00 00bb 0000 0000 0000 
+			0000 0000 0000 b000 ca00 bbbc bbcc e99c bc99 bccb ccbb b00a 0000 0000 0000 0000 
+			0000 0000 0000 0000 ca00 cccb accb eeca aace cbcc cbcc 000a 0000 0000 0000 0000 
+			0000 0000 0000 0000 ca00 cccb 0acb bbb0 00bb cbca cbcc 000a 0000 0000 0000 0000 
+			0000 0000 0000 0000 bc00 bcbc 0acc 0000 0000 bcca bcbc 000c 0000 0000 0000 0000 
+			0000 0000 0000 0000 bb00 cbcc 00bb 0000 0000 cbb0 bccb 000b 0000 0000 0000 0000 
+			0000 0000 0000 0000 cca0 bbbb 0bcc 0000 0000 bccb cbbb 00ac 0000 0000 0000 0000 
+			0000 0000 0000 0000 77a0 cccc 0a76 0000 0000 c67a 7ccc 00a7 0000 0000 0000 0000 
+			0000 0000 0000 0000 aa00 c77c 00aa 0000 0000 caa0 ac77 000a 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 aaaa 0000 0000 0000 a000 0aaa 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
 </tex_image_array>
 
-<tex_palette_array size='1'>
-	<tex_palette name='woman1' color_size='16' index='0'>
+<tex_palette_array size='2'>
+	<tex_palette name='tsure_poke0' color_size='16' index='0'>
 		42d4 45fc 24f8 7c3f 1e57 39ce 2124 4207 
 		5ae7 6731 0842 14a5 2529 39ce 6f39 7fbd 
 	</tex_palette>
+	<tex_palette name='tsure_poke1' color_size='16' index='1'/>
 </tex_palette_array>
 
 <material_array size='1'>
-	<material name='obj' tex_translate='0.000000 0.000000' tex_image_idx='0' tex_gen_mode='none' polygon_id='0' tex_palette_idx='0' light0='on' fog_flag='off' render_1_pixel='off' diffuse='0 0 0' shininess_table_flag='off' light1='off' specular='0 0 0' tex_tiling='clamp clamp' light2='off' ambient='31 31 31' index='0' light3='off' emission='0 0 0' polygon_mode='modulate' depth_test_decal='off' tex_rotate='0.000000' face='front' wire_mode='off' tex_scale='1.000000 1.000000' alpha='31' translucent_update_depth='off' far_clipping='off'/>
+	<material name='lambert2' tex_translate='0.000000 0.000000' tex_image_idx='0' tex_gen_mode='none' polygon_id='0' tex_palette_idx='0' light0='on' fog_flag='off' render_1_pixel='off' diffuse='25 25 25' shininess_table_flag='off' light1='off' specular='0 0 0' tex_tiling='clamp clamp' light2='off' ambient='0 0 0' index='0' light3='off' emission='0 0 0' polygon_mode='modulate' depth_test_decal='off' tex_rotate='0.000000' face='front' wire_mode='off' tex_scale='1.000000 1.000000' alpha='31' translucent_update_depth='off' far_clipping='off'/>
 </material_array>
 
 <matrix_array size='1'>
@@ -292,12 +449,12 @@
 			<primitive_array size='1'>
 				<primitive type='quads' index='0' vertex_size='4'>
 					<mtx idx='0'/>
-					<tex st='0.000000 32.000000'/>
+					<tex st='0.000000 64.000000'/>
 					<nrm xyz='0.000000 0.000000 0.998047'/>
 					<pos_s xyz='-2.000000 0.000000 0.000000'/>
-					<tex st='32.000000 32.000000'/>
+					<tex st='64.000000 64.000000'/>
 					<pos_xy xy='2.000000 0.000000'/>
-					<tex st='32.000000 0.000000'/>
+					<tex st='64.000000 0.000000'/>
 					<pos_xy xy='2.000000 4.000000'/>
 					<tex st='0.000000 0.000000'/>
 					<pos_xy xy='-2.000000 4.000000'/>

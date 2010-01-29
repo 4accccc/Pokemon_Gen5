@@ -18,46 +18,46 @@
 <tex_image_array size='1'>
 	<tex_image name='monsterball' format='palette16' original_width='32' original_height='32' index='0' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/monsterball/monsterball.tga' palette_name='monsterball' width='32' color0_mode='transparency'>
 		<bitmap size='256'>
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 fff0 0fff 0000 0000 0000 
-			0000 0000 f000 334f f433 000f 0000 0000 
-			0000 0000 4f00 5563 3655 00f4 0000 0000 
-			0000 0000 34f0 3556 6553 0f43 0000 0000 
-			0000 0000 34f0 3356 6533 0f43 0000 0000 
-			0000 0000 347f 3556 6553 f743 0000 0000 
-			0000 0000 344f 5563 3655 f443 0000 0000 
-			0000 f000 444b 5333 3335 b444 000f 0000 
-			0000 f000 444b 3334 4333 b444 000f 0000 
-			0000 f000 447b 4444 4444 b744 000f 0000 
-			0000 0000 447f 4444 4444 f744 0000 0000 
-			0000 0000 47f0 4444 4444 0f74 0000 0000 
-			0000 0000 7f00 4444 4444 00f7 0000 0000 
-			0000 0000 f000 4447 7444 000f 0000 0000 
-			0000 0000 f000 777f f777 000f 0000 0000 
-			0000 0000 9f00 9999 9999 00f9 0000 0000 
-			0000 0000 9af0 999a a999 0fa9 0000 0000 
-			0000 0000 abf0 aaa7 7aaa 0fba 0000 0000 
-			0000 0000 fbbf aaaf faaa fbbf 0000 0000 
-			0000 0000 0fbf aaaf faaa fbf0 0000 0000 
-			0000 f000 0fbc aaaf faaa cbf0 000f 0000 
-			0000 f000 ffcc aaaa aaaa ccff 000f 0000 
-			0000 0000 f0ff aaa1 1aaa ff0f 0000 0000 
-			0000 0000 f000 2221 1222 000f 0000 0000 
-			0000 0000 f000 f121 121f 000f 0000 0000 
-			0000 0000 f000 0f11 11f0 000f 0000 0000 
-			0000 0000 f000 0f33 33f0 000f 0000 0000 
-			0000 0000 0000 00ff ff00 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
+			bef0 000f 0000 ffff ffff 0fff 0000 eef0 
+			ef00 fffb ffff eeeb eeee feeb 0000 bebf 
+			f000 ebbe eeee ffff ffff effe 000f fbeb 
+			ef00 fbef ffff 0000 f000 f0fe f0fe 0fbe 
+			ef00 feff 0000 fff0 efff 000f efef 00fb 
+			fef0 ef00 ffff ebff eeee 00fb beff 000f 
+			fef0 bf00 eebe ffee feff 0fef efef 000f 
+			fef0 fef0 ffef 00ff fef0 fef0 f0fe 00fe 
+			0fef fef0 fef0 ff00 0fef eff0 f00f 00fe 
+			0fef 0fef ef00 eeff 0fbe eeef f00f f0fe 
+			00fe 0fef feff ffbe f0fe ebfe 000f efef 
+			f0fe f0fe 0fee fbef efee ef0f ff0f eebf 
+			ffbe effe 00ff bef0 feeb eff0 eefb eeee 
+			eeee eeeb fffe 0fef fef0 eeef ffee bfef 
+			ffbe ffee eeee 0fee eef0 fffe 00fe 0fef 
+			f0fe f0fe fffe feef feef f00f 00fe 0fef 
+			0fef ffef f0fe eefe efee f00f 00fe 0fef 
+			0fef 0fef efef feff f0fe fffe 0fbe 0fef 
+			0fef fef0 fef0 0fef 0fef beef 0feb 0fef 
+			fef0 fef0 efef ffef ffef effe 0feb 0fef 
+			fef0 bf00 f0fe eeee eeee f00f 0fee 0fef 
+			fef0 ef00 000f ffef feff 0000 0fef 0fef 
+			ef00 beff f0ff 00fe ef00 000f fef0 0fef 
+			ef00 ffef ffee 00fe ef00 000f ebef 0fef 
+			ef00 00fe eeff ffff f000 f0fe effe 0fbe 
+			ef00 000f bf00 beee ffff effe f00f 0fbe 
+			fef0 00fe fef0 ffff eeee fbeb f000 0fee 
+			0fef ffef 0fef 0000 ffff 0fef ef00 fbeb 
+			00fe fbf0 ffbe 000f 0000 fef0 fef0 beff 
+			000f bf00 eeee fffe 00ff fef0 fef0 ef00 
+			0000 ef00 fffe eeff ffee beff 0fef f000 
+			0000 eef0 000f ff00 eeff eeee 00fb 0000 
 		</bitmap>
 	</tex_image>
 </tex_image_array>
 
 <tex_palette_array size='1'>
 	<tex_palette name='monsterball' color_size='16' index='0'>
-		5d97 20c3 2d25 3968 0546 16ae 2b52 0d09 
-		158f 21f3 192f 3a7a 5f5f 7fff 7336 0000 
+		2e47 454e 5dd3 3126 20c4 45a9 45e9 1463 
+		1953 3cf8 34d1 2108 7fff 56b5 2d6b 18c6 
 	</tex_palette>
 </tex_palette_array>
 
