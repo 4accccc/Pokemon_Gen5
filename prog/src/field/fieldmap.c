@@ -590,6 +590,9 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
   //フラグ操作：フィールドマップ生成タイミング
   FIELD_FLAGCONT_INIT_FieldIn( gdata, fieldWork->map_id );
 
+  // カレンダー
+  fieldWork->calender = CALENDER_Create( gdata, fieldWork->heapID );
+
   //フィールド3Ｄカットインヒープ確保
   GFL_HEAP_CreateHeap( HEAPID_FIELDMAP, HEAPID_FLD3DCUTIN, FLD3DCUTIN_SIZE );
 
@@ -800,9 +803,6 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
   
   //3Ｄ描画モードは通常でセットアップ
   fieldWork->Draw3DMode = DRAW3DMODE_NORMAL;
-
-  // カレンダー
-  fieldWork->calender = CALENDER_Create( gdata, fieldWork->heapID );
 
 
   return MAINSEQ_RESULT_NEXTSEQ;
