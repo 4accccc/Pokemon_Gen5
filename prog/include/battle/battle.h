@@ -16,6 +16,7 @@
 
 #include "system/timezone.h"
 #include "system/pms_data.h"
+#include "field/field_light_status.h"
 #include "poke_tool/pokeparty.h"
 #include "tr_tool/trno_def.h"
 #include "savedata/zukan_savedata.h"
@@ -127,8 +128,7 @@ typedef struct {
   BtlBgType   bgType;
   BtlBgAttr   bgAttr;
   BtlWeather  weather;
-
-  TIMEZONE    timeZone;
+  TIMEZONE              timeZone;
   u8          season;
 }BTL_FIELD_SITUATION;
 
