@@ -15,8 +15,8 @@
 #include "system/cursor_move.h"
 #include "savedata/myitem_savedata.h"
 #include "item/item.h"
-//#include "itemtool/myitem.h"
-//#include "finger_cursor.h"
+#include "../btlv/btlv_finger_cursor.h"
+
 
 //============================================================================================
 //	定数定義
@@ -164,7 +164,7 @@ enum {
 	BBAG_CA_ENERGIE_G6,
 	BBAG_CA_ENERGIE_G7,
 
-	BBAG_CA_GETDEMO,
+//	BBAG_CA_GETDEMO,
 
 	BBAG_CA_MAX
 };
@@ -208,7 +208,7 @@ enum {
 	BBAG_CHRRES_ITEM7,
 	BBAG_CHRRES_COST,
 	BBAG_CHRRES_CURSOR,
-	BBAG_CHRRES_DEMO,
+//	BBAG_CHRRES_DEMO,
 	BBAG_CHRRES_MAX,
 
 	// パレット
@@ -220,15 +220,15 @@ enum {
 	BBAG_PALRES_ITEM6,
 	BBAG_PALRES_ITEM7,
 	BBAG_PALRES_COST,
-	BBAG_PALRES_CURSOR,
-	BBAG_PALRES_DEMO,
+	BBAG_PALRES_CURSOR,			// ※この次に捕獲デモカーソルを読み込んでいます！
+//	BBAG_PALRES_DEMO,
 	BBAG_PALRES_MAX,
 
 	// セル・アニメ
 	BBAG_CELRES_ITEM = 0,
 	BBAG_CELRES_COST,
 	BBAG_CELRES_CURSOR,
-	BBAG_CELRES_DEMO,
+//	BBAG_CELRES_DEMO,
 	BBAG_CELRES_MAX,
 };
 
@@ -262,6 +262,7 @@ typedef struct {
 	BAPP_CURSOR_PUT_WORK * cpwk;		// カーソル表示
 
 //	FINGER_PTR	finger;			// 捕獲デモ用指カーソル
+	BTLV_FINGER_CURSOR_WORK * getdemoCursor;
 
 	ITEM_ST	pocket[5][BBAG_POCKET_IN_MAX];	// ポケットデータ
 

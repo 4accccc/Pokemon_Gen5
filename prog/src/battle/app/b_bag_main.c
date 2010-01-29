@@ -1130,15 +1130,8 @@ static int BBAG_SeqGetDemoMain( BBAG_WORK * wk )
 //  if( PaletteFadeCheck( wk->pfd ) != 0 ){ return SEQ_BBAG_GETDEMO; }
 
   switch( wk->get_seq ){
-  case 0:
-    if( wk->get_cnt == BBAGOBJ_GETDEMO_CURSOR_NORMAL_LOOP_COUNT ){
-			BBAG_ChangeGetDemoCursorAnm( wk, 1 );
-      wk->get_seq++;
-    }
-    break;
-
-	case 1:
-		if( wk->get_cnt == 1 ){
+	case 0:
+		if( BTLV_FINGER_CURSOR_CheckExecute( wk->getdemoCursor ) == TRUE ){
       PMSND_PlaySE( SEQ_SE_DECIDE2 );
       wk->poke_id = BBAG_POKE_BALL;
       wk->ret_seq = SEQ_BBAG_GETDEMO;
@@ -1148,21 +1141,17 @@ static int BBAG_SeqGetDemoMain( BBAG_WORK * wk )
 		}
 		break;
 
-  case 2:
-    BBAG_SeqPage2Chg( wk );
-    wk->get_seq++;
-		wk->ret_seq = SEQ_BBAG_GETDEMO;
-	  return SEQ_BBAG_PAGECHG_WAIT;
+  case 1:
+		if( BTLV_FINGER_CURSOR_CheckExecute( wk->getdemoCursor ) == FALSE ){
+	    BBAG_SeqPage2Chg( wk );
+	    wk->get_seq++;
+			wk->ret_seq = SEQ_BBAG_GETDEMO;
+		  return SEQ_BBAG_PAGECHG_WAIT;
+		}
+		break;
 
-  case 3:
-    if( wk->get_cnt == BBAGOBJ_GETDEMO_CURSOR_NORMAL_LOOP_COUNT ){
-			BBAG_ChangeGetDemoCursorAnm( wk, 1 );
-      wk->get_seq++;
-    }
-    break;
-
-	case 4:
-		if( wk->get_cnt == 1 ){
+	case 2:
+		if( BTLV_FINGER_CURSOR_CheckExecute( wk->getdemoCursor ) == TRUE ){
       PMSND_PlaySE( SEQ_SE_DECIDE2 );
       wk->dat->item_pos[wk->poke_id] = 0;
       wk->ret_seq = SEQ_BBAG_GETDEMO;
@@ -1172,29 +1161,30 @@ static int BBAG_SeqGetDemoMain( BBAG_WORK * wk )
 		}
 		break;
 
-  case 5:
-    BBAG_SeqPage3Chg( wk );
-    wk->get_seq++;
-		wk->ret_seq = SEQ_BBAG_GETDEMO;
-	  return SEQ_BBAG_PAGECHG_WAIT;
-
-  case 6:
-    if( wk->get_cnt == BBAGOBJ_GETDEMO_CURSOR_NORMAL_LOOP_COUNT ){
-			BBAG_ChangeGetDemoCursorAnm( wk, 1 );
+  case 3:
+		if( BTLV_FINGER_CURSOR_CheckExecute( wk->getdemoCursor ) == FALSE ){
+	    BBAG_SeqPage3Chg( wk );
 	    wk->get_seq++;
-    }
-    break;
+			wk->ret_seq = SEQ_BBAG_GETDEMO;
+		  return SEQ_BBAG_PAGECHG_WAIT;
+		}
+		break;
 
-	case 7:
-		if( wk->get_cnt == 1 ){
+	case 4:
+		if( BTLV_FINGER_CURSOR_CheckExecute( wk->getdemoCursor ) == TRUE ){
       PMSND_PlaySE( SEQ_SE_DECIDE2 );
       wk->dat->ret_item = BattleBag_PosItemCheck( wk, wk->dat->item_pos[wk->poke_id] );
       wk->dat->ret_page = wk->poke_id;
       wk->dat->ret_cost = 0;
       BBAGANM_ButtonAnmInit( wk, BBAG_BGWF_USE );
-      return BBAG_ItemUse( wk );
+	    wk->get_seq++;
 		}
 		break;
+
+	case 5:
+		if( BTLV_FINGER_CURSOR_CheckExecute( wk->getdemoCursor ) == FALSE ){
+      return BBAG_ItemUse( wk );
+		}
   }
 
   return SEQ_BBAG_GETDEMO;

@@ -96,7 +96,7 @@ static void BBAG_ClactResManInit( BBAG_WORK * wk );
 static void BBAG_ClactItemLoad( BBAG_WORK * wk );
 static void BBAG_ItemIconCharChg( BBAG_WORK * wk, u16 item, u32 chrResID, u32 palResID );
 static void BBAG_ItemIconPlttChg( BBAG_WORK * wk, u16 item, u32 palResID );
-static void BBAG_ClactGetDemoLoad( BBAG_WORK * wk );
+//static void BBAG_ClactGetDemoLoad( BBAG_WORK * wk );
 static void BBAG_ClactAddAll( BBAG_WORK * wk );
 static void BBAG_Page1ObjSet( BBAG_WORK * wk );
 static void BBAG_Page2ObjSet( BBAG_WORK * wk );
@@ -108,7 +108,12 @@ static void BBAG_CursorDel( BBAG_WORK * wk );
 static void CostResLoad( BBAG_WORK * wk );
 static void CursorResLoad( BBAG_WORK * wk );
 
-static void SetGetDemoCursorCallBack( BBAG_WORK * wk, u32 anm );
+//static void SetGetDemoCursorCallBack( BBAG_WORK * wk, u32 anm );
+static void InitGetDemoCursor( BBAG_WORK * wk );
+static void ExitGetDemoCursor( BBAG_WORK * wk );
+static void SetGetDemoCursor( BBAG_WORK * wk, int px, int py );
+static void DelGetDemoCursor( BBAG_WORK * wk );
+
 
 static void CostObjPut( BBAG_WORK * wk, u16 idx, u8 ene, u8 res_ene, const GFL_CLACTPOS * pos );
 
@@ -217,7 +222,7 @@ static const u32 ClactDat[][3] =
 	{ BBAG_CHRRES_COST, BBAG_PALRES_COST, BBAG_CELRES_COST },
 	{ BBAG_CHRRES_COST, BBAG_PALRES_COST, BBAG_CELRES_COST },
 
-	{ BBAG_CHRRES_DEMO, BBAG_PALRES_DEMO, BBAG_CELRES_DEMO },
+//	{ BBAG_CHRRES_DEMO, BBAG_PALRES_DEMO, BBAG_CELRES_DEMO },
 };
 
 
@@ -235,13 +240,15 @@ void BattleBag_ObjInit( BBAG_WORK * wk )
 {
 	BBAG_ClactResManInit( wk );
 	BBAG_ClactItemLoad( wk );
-	BBAG_ClactGetDemoLoad( wk );
+//	BBAG_ClactGetDemoLoad( wk );
 	CostResLoad( wk );
 	CursorResLoad( wk );
 
 	BBAG_ClactAddAll( wk );
 	BBAG_ClactCursorAdd( wk );
 //	BBAG_ClactGetDemoCursorAdd( wk );
+
+	InitGetDemoCursor( wk );
 
 	GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
 /*↑[GS_CONVERT_TAG]*/
@@ -473,6 +480,7 @@ static void CursorResLoad( BBAG_WORK * wk )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
+/*
 static void BBAG_ClactGetDemoLoad( BBAG_WORK * wk )
 {
   ARCHANDLE * ah = GFL_ARC_OpenDataHandle( ARCID_BATTGRA, wk->dat->heap );
@@ -481,12 +489,7 @@ static void BBAG_ClactGetDemoLoad( BBAG_WORK * wk )
 	wk->chrRes[BBAG_CHRRES_DEMO] = GFL_CLGRP_CGR_Register(
 																	ah, NARC_battgra_wb_finger_cursor_NCGR,
 																	FALSE, CLSYS_DRAW_SUB, wk->dat->heap );
-/*
 	// パレット
-  wk->palRes[BBAG_PALRES_DEMO] = GFL_CLGRP_PLTT_RegisterEx(
-																		ah, NARC_battgra_wb_finger_cursor_NCLR,
-																		CLSYS_DRAW_SUB, BBAG_PALRES_DEMO*0x20, 0, 1, wk->dat->heap );
-*/
   wk->palRes[BBAG_PALRES_DEMO] = GFL_CLGRP_PLTT_Register(
 																		ah, NARC_battgra_wb_finger_cursor_NCLR,
 																		CLSYS_DRAW_SUB, BBAG_PALRES_DEMO*0x20, wk->dat->heap );
@@ -511,6 +514,7 @@ static void BBAG_ClactGetDemoLoad( BBAG_WORK * wk )
 
   GFL_ARC_CloseDataHandle( ah );
 }
+*/
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -593,20 +597,9 @@ static GFL_CLWK * BBAG_ClactAdd( BBAG_WORK * wk, const u32 * res )
 */
 }
 
+/*
 static GFL_CLWK * BBAG_ClactAddDemoCursor( BBAG_WORK * wk, const u32 * res )
 {
-/*
-typedef struct {
-	GFL_CLWK_DATA clwkdata;		// 基本データ
-	
-	s16	affinepos_x;		// アフィンｘ座標
-	s16 affinepos_y;		// アフィンｙ座標
-	fx32 scale_x;			// 拡大ｘ値
-	fx32 scale_y;			// 拡大ｙ値
-	u16	rotation;			// 回転角度(0～0xffff 0xffffが360度)
-	u16	affine_type;		// 上書きアフィンタイプ（CLSYS_AFFINETYPE）
-} GFL_CLWK_AFFINEDATA;
-*/
 	GFL_CLWK * clwk;
 	GFL_CLWK_AFFINEDATA	dat;
 
@@ -636,7 +629,7 @@ typedef struct {
 
 	return clwk;
 }
-
+*/
 
 
 //--------------------------------------------------------------------------------------------
@@ -655,12 +648,13 @@ static void BBAG_ClactAddAll( BBAG_WORK * wk )
 	wk->clunit = GFL_CLACT_UNIT_Create( BBAG_CA_MAX+BAPPTOOL_CURSOR_MAX, 0, wk->dat->heap );
 //	wk->clunit = GFL_CLACT_UNIT_Create( BBAG_CA_MAX, 0, wk->dat->heap );
 
-	for( i=0; i<BBAG_CA_GETDEMO; i++ ){
+//	for( i=0; i<BBAG_CA_GETDEMO; i++ ){
+	for( i=0; i<BBAG_CA_MAX; i++ ){
 		wk->clwk[i] = BBAG_ClactAdd( wk, ClactDat[i] );
 	}
 
 	// 捕獲デモカーソル
-	wk->clwk[BBAG_CA_GETDEMO] = BBAG_ClactAddDemoCursor( wk, ClactDat[BBAG_CA_GETDEMO] );
+//	wk->clwk[BBAG_CA_GETDEMO] = BBAG_ClactAddDemoCursor( wk, ClactDat[BBAG_CA_GETDEMO] );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -675,6 +669,8 @@ static void BBAG_ClactAddAll( BBAG_WORK * wk )
 void BattleBag_ObjFree( BBAG_WORK * wk )
 {
 	u32	i;
+
+	ExitGetDemoCursor( wk );
 
 	for( i=0; i<BBAG_CA_MAX; i++ ){
 		GFL_CLACT_WK_Remove( wk->clwk[i] );
@@ -749,6 +745,8 @@ void BattleBag_PageObjSet( BBAG_WORK * wk, u32 page )
 		GFL_CLACT_WK_SetDrawEnable( wk->clwk[i], FALSE );
 	}
 
+	DelGetDemoCursor( wk );
+
 	switch( page ){
 	case BBAG_PAGE_POCKET:		// ポケット選択ページ
 		BBAG_Page1ObjSet( wk );
@@ -794,8 +792,9 @@ static void BBAG_Page1ObjSet( BBAG_WORK * wk )
 	}
 
 	if( wk->dat->mode == BBAG_MODE_GETDEMO ){
-		BBAG_ClactOn( wk->clwk[BBAG_CA_GETDEMO], &P1_DemoCursorPos );
-		BBAG_ChangeGetDemoCursorAnm( wk, 0 );
+		SetGetDemoCursor( wk, P1_GETDEMO_CURSOR_X, P1_GETDEMO_CURSOR_Y );
+//		BBAG_ClactOn( wk->clwk[BBAG_CA_GETDEMO], &P1_DemoCursorPos );
+//		BBAG_ChangeGetDemoCursorAnm( wk, 0 );
 	}
 }
 
@@ -834,8 +833,9 @@ static void BBAG_Page2ObjSet( BBAG_WORK * wk )
 	}
 
 	if( wk->dat->mode == BBAG_MODE_GETDEMO ){
-		BBAG_ClactOn( wk->clwk[BBAG_CA_GETDEMO], &P2_DemoCursorPos );
-		BBAG_ChangeGetDemoCursorAnm( wk, 0 );
+		SetGetDemoCursor( wk, P2_GETDEMO_CURSOR_X, P2_GETDEMO_CURSOR_Y );
+//		BBAG_ClactOn( wk->clwk[BBAG_CA_GETDEMO], &P2_DemoCursorPos );
+//		BBAG_ChangeGetDemoCursorAnm( wk, 0 );
 	}
 }
 
@@ -864,8 +864,9 @@ static void BBAG_Page3ObjSet( BBAG_WORK * wk )
 	}
 
 	if( wk->dat->mode == BBAG_MODE_GETDEMO ){
-		BBAG_ClactOn( wk->clwk[BBAG_CA_GETDEMO], &P3_DemoCursorPos );
-		BBAG_ChangeGetDemoCursorAnm( wk, 0 );
+		SetGetDemoCursor( wk, P3_GETDEMO_CURSOR_X, P3_GETDEMO_CURSOR_Y );
+//		BBAG_ClactOn( wk->clwk[BBAG_CA_GETDEMO], &P3_DemoCursorPos );
+//		BBAG_ChangeGetDemoCursorAnm( wk, 0 );
 	}
 }
 
@@ -1090,7 +1091,29 @@ void BattleBag_GetDemoCursorPush( BBAG_WORK * wk )
 }
 */
 
+#define	GETDEMO_DURSOR_PAL	( BBAG_PALRES_CURSOR + 1 )
 
+static void InitGetDemoCursor( BBAG_WORK * wk )
+{
+	wk->getdemoCursor = BTLV_FINGER_CURSOR_Init( GETDEMO_DURSOR_PAL, wk->dat->heap );
+}
+
+static void ExitGetDemoCursor( BBAG_WORK * wk )
+{
+	BTLV_FINGER_CURSOR_Exit( wk->getdemoCursor );
+}
+
+static void SetGetDemoCursor( BBAG_WORK * wk, int px, int py )
+{
+	BTLV_FINGER_CURSOR_Create( wk->getdemoCursor, px, py, 3, 6, 20 );
+}
+
+static void DelGetDemoCursor( BBAG_WORK * wk )
+{
+	BTLV_FINGER_CURSOR_Delete( wk->getdemoCursor );
+}
+
+/*
 static void GetDemoCursorCallBack_Normal( u32 param, fx32 currentFrame )
 {
 	BBAG_WORK * wk = (BBAG_WORK *)param;
@@ -1132,7 +1155,7 @@ void BBAG_ChangeGetDemoCursorAnm( BBAG_WORK * wk, u32 anm )
 
 	SetGetDemoCursorCallBack( wk, anm );
 }
-
+*/
 
 //--------------------------------------------------------------------------------------------
 /**
