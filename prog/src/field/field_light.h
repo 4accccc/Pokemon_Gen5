@@ -96,6 +96,15 @@ extern BOOL FIELD_LIGHT_GetReflect( const FIELD_LIGHT* cp_sys );
 extern BOOL FIELD_LIGHT_GetNight( const FIELD_LIGHT* cp_sys );
 
 
+//-------------------------------------
+///	êFÇÃéÊìæ
+//=====================================
+extern GXRgb FIELD_LIGHT_GetLightColor( const FIELD_LIGHT* cp_sys, u32 index );
+extern GXRgb FIELD_LIGHT_GetDiffuseColor( const FIELD_LIGHT* cp_sys );
+extern GXRgb FIELD_LIGHT_GetAmbientColor( const FIELD_LIGHT* cp_sys );
+extern GXRgb FIELD_LIGHT_GetSpecularColor( const FIELD_LIGHT* cp_sys );
+extern GXRgb FIELD_LIGHT_GetEmissionColor( const FIELD_LIGHT* cp_sys );
+
 
 #ifdef DEBUG_FIELD_LIGHT
 

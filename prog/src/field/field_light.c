@@ -663,6 +663,84 @@ BOOL FIELD_LIGHT_GetNight( const FIELD_LIGHT* cp_sys )
   return FALSE;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ライトカラーの取得
+ *
+ *	@param	cp_sys
+ *	@param	index     ライトインデックス  （0～3）
+ *
+ *	@return ライトカラー
+ */
+//-----------------------------------------------------------------------------
+GXRgb FIELD_LIGHT_GetLightColor( const FIELD_LIGHT* cp_sys, u32 index )
+{
+  GF_ASSERT( cp_sys );
+  GF_ASSERT( index < 4 );
+  return cp_sys->reflect_data.light_color[index];
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ディフューズカラーの取得
+ *
+ *	@param	cp_sys
+ *
+ *	@return カラー
+ */
+//-----------------------------------------------------------------------------
+GXRgb FIELD_LIGHT_GetDiffuseColor( const FIELD_LIGHT* cp_sys )
+{
+  GF_ASSERT( cp_sys );
+  return cp_sys->reflect_data.diffuse;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  アンビエントカラーの取得
+ *
+ *	@param	cp_sys  
+ *
+ *	@return カラー
+ */
+//-----------------------------------------------------------------------------
+GXRgb FIELD_LIGHT_GetAmbientColor( const FIELD_LIGHT* cp_sys )
+{
+  GF_ASSERT( cp_sys );
+  return cp_sys->reflect_data.ambient;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  スペキュラーカラーの取得
+ *
+ *	@param	cp_sys 
+ *
+ *	@return カラー
+ */
+//-----------------------------------------------------------------------------
+GXRgb FIELD_LIGHT_GetSpecularColor( const FIELD_LIGHT* cp_sys )
+{
+  GF_ASSERT( cp_sys );
+  return cp_sys->reflect_data.specular;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  エミッションカラーの取得
+ *
+ *	@param	cp_sys 
+ *
+ *	@return カラー
+ */
+//-----------------------------------------------------------------------------
+GXRgb FIELD_LIGHT_GetEmissionColor( const FIELD_LIGHT* cp_sys )
+{
+  GF_ASSERT( cp_sys );
+  return cp_sys->reflect_data.emission;
+}
+
+
 
 #ifdef DEBUG_FIELD_LIGHT
 //----------------------------------------------------------------------------
