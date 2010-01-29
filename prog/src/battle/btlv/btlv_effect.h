@@ -122,6 +122,12 @@ typedef struct {
   u8           continue_count;  ///< 連続して出すとエフェクトが異なる場合の連続カウンタ（ex. ころがる）
 }BTLV_WAZAEFFECT_PARAM;
 
+
+typedef enum{
+  BTLV_EFFECT_ROTATE_DIR_LEFT = 0,
+  BTLV_EFFECT_ROTATE_DIR_RIGHT,
+}BTLV_EFFECT_ROTATE_DIR;
+
 extern  void              BTLV_EFFECT_Init( BtlRule rule, const BTL_FIELD_SITUATION *bfs, GFL_FONT* fontHandle, HEAPID heapID );
 extern  void              BTLV_EFFECT_Exit( void );
 extern  void              BTLV_EFFECT_Main( void );
@@ -155,6 +161,7 @@ extern  BOOL              BTLV_EFFECT_CheckExecuteBallGauge( BTLV_BALL_GAUGE_TYP
 extern  void              BTLV_EFFECT_SetPaletteFade( int model, u8 start_evy, u8 end_evy, u8 wait, u16 rgb );
 extern  BOOL              BTLV_EFFECT_CheckExecutePaletteFade( int model );
 extern  void              BTLV_EFFECT_SetVanishFlag( int model, int flag );
+extern  void              BTLV_EFFECT_SetRotateEffect( BTLV_EFFECT_ROTATE_DIR dir, int side );
 extern  int               BTLV_EFFECT_GetTrainerIndex( int position );
 extern  BTLV_CAMERA_WORK* BTLV_EFFECT_GetCameraWork( void );
 extern  BTLV_MCSS_WORK*   BTLV_EFFECT_GetMcssWork( void );
@@ -163,6 +170,7 @@ extern  GFL_TCBSYS*       BTLV_EFFECT_GetTCBSYS( void );
 extern  PALETTE_FADE_PTR  BTLV_EFFECT_GetPfd( void );
 extern  BTLV_CLACT_WORK*  BTLV_EFFECT_GetCLWK( void );
 extern  BTLV_BG_WORK*     BTLV_EFFECT_GetBGWork( void );
+extern  BTLV_TIMER_WORK*  BTLV_EFFECT_GetTimerWork( void );
 
 #ifdef PM_DEBUG
 extern  void        BTLV_EFFECT_SetPokemonDebug( const MCSS_ADD_DEBUG_WORK *madw, int position );

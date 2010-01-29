@@ -96,6 +96,7 @@ void  BTLV_EFFECT_SetPokemonDebug( const MCSS_ADD_DEBUG_WORK *madw, int position
 /**
  * @brief システム初期化
  *
+ * @param[in]	rule    戦闘ルール
  * @param[in] bsp         戦闘セットアップパラメータ
  * @param[in] fontHandle  フォントハンドル
  * @param[in] heapID      ヒープID
@@ -133,8 +134,8 @@ void  BTLV_EFFECT_Init( BtlRule rule, const BTL_FIELD_SITUATION *bfs, GFL_FONT* 
     { 
       season = bfs->season;
     }
-    bew->bsw  = BTLV_STAGE_Init( bbtzst[ bfs->bgType ].stage_file[ bfs->bgAttr ], season, heapID );
-    bew->bfw  = BTLV_FIELD_Init( bbtzst[ bfs->bgType ].bg_file[ bfs->bgAttr ], season, heapID );
+    bew->bsw  = BTLV_STAGE_Init( rule, bbtzst[ bfs->bgType ].stage_file[ bfs->bgAttr ], season, heapID );
+    bew->bfw  = BTLV_FIELD_Init( rule, bbtzst[ bfs->bgType ].bg_file[ bfs->bgAttr ], season, heapID );
     GFL_HEAP_FreeMemory( bbtzst );
   }
 
@@ -143,7 +144,11 @@ void  BTLV_EFFECT_Init( BtlRule rule, const BTL_FIELD_SITUATION *bfs, GFL_FONT* 
   bew->bgw  = BTLV_GAUGE_Init( fontHandle, heapID );
   bew->btw  = BTLV_TIMER_Init( heapID );
   bew->bbw  = BTLV_BG_Init( bew->tcb_sys, heapID );
-  //BTLV_TIMER_Create( bew->btw, 30, 1 );
+
+//  { 
+//    int timer[ 4 ] = { 60, 90, 120, 60 };
+//    BTLV_TIMER_Create( bew->btw, 1800, timer[ rule ] );
+//  }
 
 
   BTLV_MCSS_SetOrthoMode( bew->bmw );
@@ -217,8 +222,9 @@ void  BTLV_EFFECT_Main( void )
   BTLV_STAGE_Main( bew->bsw );
   BTLV_FIELD_Main( bew->bfw );
   BTLV_CAMERA_Main( bew->bcw );
-  BTLV_CLACT_Main( bew->bclw );
   BTLV_GAUGE_Main( bew->bgw );
+
+  BTLV_CLACT_Main( bew->bclw );
 
   //3D描画
   {
@@ -726,6 +732,19 @@ void  BTLV_EFFECT_SetVanishFlag( int model, int flag )
 
 //============================================================================================
 /**
+ * @brief  ローテーションアニメセット
+ *
+ * @param[in] dir   ローテーションの向き
+ * @param[in] side  自分側か相手側か
+ */
+//============================================================================================
+void  BTLV_EFFECT_SetRotateEffect( BTLV_EFFECT_ROTATE_DIR dir, int side )
+{ 
+  BTLV_STAGE_SetAnmReq( bew->bsw, side, 0, ( ( dir == BTLV_EFFECT_ROTATE_DIR_LEFT ) ? -FX32_ONE : FX32_ONE ), 100 );
+}
+
+//============================================================================================
+/**
  * @brief  指定された立ち位置のトレーナーインデックスを取得
  *
  * @param[in] position  取得するトレーナーの立ち位置
@@ -822,6 +841,18 @@ BTLV_CLACT_WORK *BTLV_EFFECT_GetCLWK( void )
 BTLV_BG_WORK *BTLV_EFFECT_GetBGWork( void )
 {
   return bew->bbw;
+}
+
+//============================================================================================
+/**
+ * @brief  エフェクトで使用されている時間制限管理構造体のポインタを取得
+ *
+ * @retval bbw BTLV_TIMER_WORK管理構造体
+ */
+//============================================================================================
+BTLV_TIMER_WORK*  BTLV_EFFECT_GetTimerWork( void )
+{ 
+  return bew->btw;
 }
 
 //============================================================================================
