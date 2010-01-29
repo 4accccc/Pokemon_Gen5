@@ -279,6 +279,23 @@ void  BTLV_TIMER_SetDrawEnable( BTLV_TIMER_WORK* btw, BTLV_TIMER_TYPE type, BOOL
 
 //============================================================================================
 /**
+ *  @brief  タイマーゼロチェック
+ *
+ *  @param[in]  btw     システム管理構造体のポインタ
+ *  @param[in]  type    タイマータイプ
+ *
+ *  @retval FALSE:0じゃない TRUE:0です
+ */
+//============================================================================================
+BOOL  BTLV_TIMER_IsZero( BTLV_TIMER_WORK* btw, BTLV_TIMER_TYPE type )
+{ 
+  int timer = btw->second[ type ] - OS_TicksToSeconds( OS_GetTick() - btw->tick[ type ] );
+
+  return ( timer <= 0 );
+}
+
+//============================================================================================
+/**
  *  @brief  タイマー描画
  *
  *  @param[in]  btw   システム管理構造体のポインタ

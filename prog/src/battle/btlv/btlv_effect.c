@@ -145,11 +145,6 @@ void  BTLV_EFFECT_Init( BtlRule rule, const BTL_FIELD_SITUATION *bfs, GFL_FONT* 
   bew->btw  = BTLV_TIMER_Init( heapID );
   bew->bbw  = BTLV_BG_Init( bew->tcb_sys, heapID );
 
-//  { 
-//    int timer[ 4 ] = { 60, 90, 120, 60 };
-//    BTLV_TIMER_Create( bew->btw, 1800, timer[ rule ] );
-//  }
-
 
   BTLV_MCSS_SetOrthoMode( bew->bmw );
 
@@ -757,6 +752,47 @@ int BTLV_EFFECT_GetTrainerIndex( int position )
   GF_ASSERT( bew->trainer_index[ position - BTLV_MCSS_POS_MAX ] != BTLV_EFFECT_TRAINER_INDEX_NONE );
 
   return bew->trainer_index[ position - BTLV_MCSS_POS_MAX ];
+}
+
+//============================================================================================
+/**
+ * @brief  時間制限タイマークリエイト
+ *
+ * @param[in] game_time     ゲーム時間（秒）
+ * @param[in] command_time  コマンド時間（秒）
+ */
+//============================================================================================
+void  BTLV_EFFECT_CreateTimer( int game_time, int command_time )
+{ 
+  BTLV_TIMER_Create( bew->btw, game_time, command_time );
+}
+
+//============================================================================================
+/**
+ *  @brief  タイマー描画許可
+ *
+ *  @param[in]  type    タイマータイプ
+ *  @param[in]  enable  TRUE:描画　FALSE:非描画
+ *  @param[in]  init    TRUE:カウンタを初期化して描画　FALSE:初期化せず描画（enableがTRUEのときにしか意味がありません）
+ *
+ */
+//============================================================================================
+void  BTLV_EFFECT_DrawEnableTimer( BTLV_TIMER_TYPE type, BOOL enable, BOOL init )
+{ 
+  BTLV_TIMER_SetDrawEnable( bew->btw, type, enable, init );
+}
+
+//============================================================================================
+/**
+ *  @brief  タイマーゼロチェック
+ *
+ *  @param[in]  type    タイマータイプ
+ *
+ */
+//============================================================================================
+BOOL  BTLV_EFFECT_IsZero( BTLV_TIMER_TYPE type )
+{ 
+  return BTLV_TIMER_IsZero( bew->btw, type );
 }
 
 //============================================================================================
