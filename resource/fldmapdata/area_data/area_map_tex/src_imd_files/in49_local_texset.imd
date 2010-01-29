@@ -3,7 +3,7 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="unno" host="W00199" date="2010-01-29T18:14:02"/>
+	<create user="unno" host="W00199" date="2010-01-29T18:48:05"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="NNS_3DMaterialEditor" version="2.8.0.20050620"/>
 </head>
@@ -399,7 +399,7 @@
 		format="palette4"
 		color0_mode="color"
 		palette_name="lb_body_a_pl"
-		path="C:/home/wb_data3d/gimmick/battle_subway/train/tex/lb_body_a.tga"
+		path="C:/0_WB/battle_subway/train/tex/lb_body_a.tga"
 	>
 		<bitmap size="128">
 			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
@@ -425,7 +425,7 @@
 		format="palette4"
 		color0_mode="color"
 		palette_name="lb_body_b_pl"
-		path="C:/home/wb_data3d/gimmick/battle_subway/train/tex/lb_body_b.tga"
+		path="C:/0_WB/battle_subway/train/tex/lb_body_b.tga"
 	>
 		<bitmap size="64">
 			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
@@ -443,7 +443,7 @@
 		format="palette4"
 		color0_mode="color"
 		palette_name="lb_body_c_pl"
-		path="C:/home/wb_data3d/gimmick/battle_subway/train/tex/lb_body_c.tga"
+		path="C:/0_WB/battle_subway/train/tex/lb_body_c.tga"
 	>
 		<bitmap size="128">
 			aaa1 aaaa aaaa aaaa aaa1 aaaa aaaa aaaa
@@ -469,7 +469,7 @@
 		format="palette4"
 		color0_mode="color"
 		palette_name="lb_body_d_pl"
-		path="C:/mayadata_gs/demo/linear_demo/linear_body/tex/lb_body_d.tga"
+		path="C:/0_WB/battle_subway/train/tex/lb_body_d.tga"
 	>
 		<bitmap size="128">
 			ffff ffff ffff ffff 15af 0000 0000 fe95
@@ -539,7 +539,7 @@
 		format="palette4"
 		color0_mode="color"
 		palette_name="lb_body_f_pl"
-		path="C:/home/wb_data3d/gimmick/battle_subway/train/tex/lb_body_f.tga"
+		path="C:/0_WB/battle_subway/train/tex/lb_body_f.tga"
 	>
 		<bitmap size="8">
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -550,7 +550,7 @@
 		format="palette4"
 		color0_mode="color"
 		palette_name="lb_body_g_pl"
-		path="C:/home/wb_data3d/gimmick/battle_subway/train/tex/lb_body_g.tga"
+		path="C:/0_WB/battle_subway/train/tex/lb_body_g.tga"
 	>
 		<bitmap size="16">
 			1694 1694 1694 1694 1694 1694 1694 1694
@@ -562,7 +562,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="lb_door_a_pl"
-		path="C:/home/wb_data3d/gimmick/battle_subway/train/tex/lb_door_a.tga"
+		path="C:/0_WB/battle_subway/train/tex/lb_door_a.tga"
 	>
 		<bitmap size="256">
 			4444 4444 4444 4444 4444 4444 4444 4444
@@ -604,7 +604,7 @@
 		format="palette4"
 		color0_mode="color"
 		palette_name="lb_ent_a.1_pl"
-		path="C:/home/wb_data3d/gimmick/battle_subway/train/tex/lb_ent_a.1.tga"
+		path="C:/0_WB/battle_subway/train/tex/lb_ent_a.1.tga"
 	>
 		<bitmap size="32">
 			05af 0000 05af 0000 05af 0000 05af 0000
@@ -812,7 +812,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="lb_win_c.1_pl"
-		path="C:/home/wb_data3d/gimmick/battle_subway/train/tex/lb_win_c.1.tga"
+		path="C:/0_WB/battle_subway/train/tex/lb_win_c.1.tga"
 	>
 		<bitmap size="128">
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -1205,7 +1205,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="10" tex_palette_idx="9"
+		tex_image_idx="9" tex_palette_idx="10"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -9631,7 +9631,7 @@
 		<ex_tex_image index="6" disp_pos="0.000000 0.000000"/>
 		<ex_tex_image index="7" disp_pos="0.000000 0.000000"/>
 		<ex_tex_image index="8" disp_pos="0.000000 0.000000"/>
-		<ex_tex_image index="9" disp_pos="480.000000 300.000000"/>
+		<ex_tex_image index="9" disp_pos="0.000000 0.000000"/>
 		<ex_tex_image index="10" disp_pos="0.000000 0.000000"/>
 		<ex_tex_image index="11" disp_pos="960.000000 300.000000"/>
 		<ex_tex_image index="12" disp_pos="0.000000 0.000000"/>
@@ -9656,7 +9656,7 @@
 		<ex_tex_palette index="7" disp_pos="0.000000 0.000000"/>
 		<ex_tex_palette index="8" disp_pos="0.000000 0.000000"/>
 		<ex_tex_palette index="9" disp_pos="0.000000 0.000000"/>
-		<ex_tex_palette index="10" disp_pos="480.000000 360.000000"/>
+		<ex_tex_palette index="10" disp_pos="0.000000 0.000000"/>
 		<ex_tex_palette index="11" disp_pos="960.000000 360.000000"/>
 		<ex_tex_palette index="12" disp_pos="0.000000 0.000000"/>
 		<ex_tex_palette index="13" disp_pos="0.000000 0.000000"/>
