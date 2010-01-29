@@ -598,11 +598,7 @@ static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work )
       MMDLSYS *mmdlsys = FIELDMAP_GetMMdlSys( fieldmap );
       MMDLSYS_PauseMoveProc(mmdlsys);
     }
-    //メイン処理フック
-    if ( evt_work->MainHook )
-    {
-      SetMainFuncHookFlg(fieldmap, TRUE);
-    }
+    
     //プライオリティの保存
     PushPriority(ptr);
     //表示状態の保存
@@ -619,6 +615,11 @@ static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work )
     break;
   case 1:
     {
+      //メイン処理フック
+      if ( evt_work->MainHook )
+      {
+        SetMainFuncHookFlg(fieldmap, TRUE);
+      }
       //キャプチャリクエスト
       ReqCapture(ptr);
       (*seq)++;
@@ -687,8 +688,12 @@ static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work )
       ptr->MdlAnm1End = rc2;
       ptr->MdlAnm2End = rc3;
 
+      main_rc = FALSE;
       if (ptr->MainSeqFunc != NULL) main_rc = ptr->MainSeqFunc(event, ptr);
-      else main_rc = TRUE;
+      else
+      {
+        if (ptr->PtclEnd&&ptr->MdlAnm1End&&ptr->MdlAnm2End) main_rc = TRUE;
+      }
 
       if ( main_rc ) (*seq)++;
     }
