@@ -18,7 +18,11 @@ enum {
 	NARC_trbgra_tbwb_heroine_NCGR = 4,
 	NARC_trbgra_tbwb_heroine_NCLR = 5,
 	NARC_trbgra_tbwb_heroine_NCER = 6,
-	NARC_trbgra_tbwb_heroine_NANR = 7
+	NARC_trbgra_tbwb_heroine_NANR = 7,
+	NARC_trbgra_tbwb_araragi_NCGR = 8,
+	NARC_trbgra_tbwb_araragi_NCLR = 9,
+	NARC_trbgra_tbwb_araragi_NCER = 10,
+	NARC_trbgra_tbwb_araragi_NANR = 11
 };
 
 /* NARC_TRBGRA_NAIX_ */
