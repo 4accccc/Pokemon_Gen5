@@ -165,6 +165,7 @@ SRCS  +=    $(SOUNDSRC) \
         field/scrcmd_player.c \
         field/scrcmd_proc.c \
         field/scrcmd_wifi_st.c \
+        field/fldmmdl.c \
         test/matsuda/wflby_debug.c \
         test/ariizumi/debug_pause.c \
         system/wazatype_icon.c \
@@ -343,7 +344,6 @@ SRCS_OVERLAY_NOTWIFI = sound/snd_viewer.c \
         field/field_comm/intrude_battle.c \
         field/field_wfbc_data.c \
         field/eventdata_system.c \
-        field/fldmmdl.c \
         field/fldmmdl_move.c \
 				field/fldmmdl_railsetup.c \
         field/field_flagcontrol.c \
