@@ -1555,6 +1555,9 @@ static BOOL VoiceMain(GMEVENT* event, FLD3D_CI_PTR ptr)
       call_event = GMEVENT_Create(gsys, event, VoiceFadeOutEvt, 0);
       GMEVENT_CallEvent(event, call_event);
       return TRUE;
+    }else //–Â‚«º‚ª–Â‚Á‚Ä‚¢‚È‚¯‚ê‚ÎAI—¹
+    {
+      return TRUE;
     }
   }
 
