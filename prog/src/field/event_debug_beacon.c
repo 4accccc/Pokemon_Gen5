@@ -67,6 +67,7 @@ typedef struct
 	GameServiceID	gsID;
 	STRCODE		playername[ PERSON_NAME_SIZE + EOM_SIZE ];
 	u32				sex;
+  u32       trainer_view;
 	u64				friendcode;
 } BEACON_DATA;
 
@@ -589,9 +590,10 @@ static void BEACON_DATA_Init( BEACON_DATA *p_wk, GAMEDATA *p_gamedata )
 	//自分の名前取得
 	{
 		MYSTATUS * p_status;
-		p_status	=  GAMEDATA_GetMyStatus( p_gamedata );
+		p_status	          = GAMEDATA_GetMyStatus( p_gamedata );
 		MyStatus_CopyNameStrCode( p_status, p_wk->playername, PERSON_NAME_SIZE + EOM_SIZE );
-		p_wk->sex	= MyStatus_GetMySex( p_status );
+		p_wk->sex	          = MyStatus_GetMySex( p_status );
+    p_wk->trainer_view  = MyStatus_GetTrainerView( p_status );
 	}
 
 	//自分の友達コード取得
@@ -666,6 +668,7 @@ static BEACON_REGISTER_RESULT BEACON_DATA_Register( const BEACON_DATA *cp_data, 
 					DWC_CreateFriendKeyToken( p_dwc_list, cp_data->friendcode );
 					WifiList_SetFriendName( p_list, i, p_name );
 					WifiList_SetFriendInfo( p_list, i, WIFILIST_FRIEND_SEX, cp_data->sex );
+					WifiList_SetFriendInfo( p_list, i, WIFILIST_FRIEND_UNION_GRA, cp_data->trainer_view );
 
 					GFL_STR_DeleteBuffer( p_name );
 
