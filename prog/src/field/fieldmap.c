@@ -115,6 +115,8 @@
 
 #include "net_app/union_eff.h"
 
+#include "calender.h"
+
 #ifdef PM_DEBUG
 #include "pleasure_boat.h"    //for PL_BOAT_
 #endif
@@ -337,8 +339,9 @@ struct _FIELDMAP_WORK
 
   BOOL MainHookFlg;
 
-
   FLD_SEASON_TIME* fieldSeasonTime;
+
+  CALENDER* calender;  // カレンダー
 
   FACEUP_WK_PTR FaceUpWkPtr;
 };
@@ -795,9 +798,11 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
     zoneChangeScene( fieldWork, fieldWork->map_id );
   }
   
-
   //3Ｄ描画モードは通常でセットアップ
   fieldWork->Draw3DMode = DRAW3DMODE_NORMAL;
+
+  // カレンダー
+  fieldWork->calender = CALENDER_Create( gdata, fieldWork->heapID );
 
 
   return MAINSEQ_RESULT_NEXTSEQ;
@@ -1145,6 +1150,9 @@ static MAINSEQ_RESULT mainSeqFunc_free(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldW
   //フィールド3Ｄカットインヒープ解放
   GFL_HEAP_DeleteHeap( HEAPID_FLD3DCUTIN );
 
+  // カレンダー
+  CALENDER_Delete( fieldWork->calender );
+
   return MAINSEQ_RESULT_NEXTSEQ;
 }
 
@@ -1453,7 +1461,10 @@ u16 FIELDMAP_GetZoneWeatherID( FIELDMAP_WORK *fieldWork, u16 zone_id )
   if(weather != WEATHER_NO_NONE){
     return weather;
   }
-	return ZONEDATA_GetWeatherID( zone_id );
+
+  // カレンダーを参照して天気を取得する.
+  // (カレンダーに登録されていないゾーンの天気は, ゾーンテーブルに従う.)
+	return CALENDER_GetWeather_today( fieldWork->calender, zone_id );
 }
 
 
@@ -2433,7 +2444,7 @@ static BOOL fldmap_CheckMoveZoneChange( FIELDMAP_WORK *fieldWork )
 }
 
 #ifdef DEBUG_FIELDMAP_ZONE_CHANGE_SYNC
-static u64 checks[10];
+static u64 checks[20];
 static u32 check_count;
 static void init_checks(void){check_count = 0;}
 static void SET_CHECK(void){
@@ -2484,7 +2495,6 @@ static void fldmap_ZoneChange( FIELDMAP_WORK *fieldWork )
   SET_CHECK();
 #endif
 
-
   //エフェクトエンカウント破棄
   EFFECT_ENC_EffectDelete( fieldWork->encount );
 
@@ -2497,6 +2507,8 @@ static void fldmap_ZoneChange( FIELDMAP_WORK *fieldWork )
 	GF_ASSERT( new_zone_id != MAP_MATRIX_ZONE_ID_NON );
 
   TOMOYA_Printf( "zone change start %d\n", new_zone_id );
+
+  SET_CHECK();
 	
 	//旧ゾーン配置動作モデル削除
 	MMDLSYS_DeleteZoneUpdateMMdl( fmmdlsys );
