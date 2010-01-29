@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="kagaya" host="W00143" date="2009-12-22T11:20:13"/>
+	<create user="morimoto" host="W00180" date="2010-01-29T21:29:37"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -229,7 +229,7 @@
 	</tag-table>
 
 	<columns>
-		<id position="0" width="152"/>
+		<id position="0" width="164"/>
 		<group default=" 0:デフォルト" position="-1" width="100">
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
@@ -265,11 +265,11 @@
 
 	<dialog left="258" top="180" right="953" bottom="796" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
+		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="520"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="538"/>
-		<band id="3" index="4" style="0000" width="147"/>
+		<band id="2" index="3" style="0000" width="533"/>
+		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="687"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
@@ -445,6 +445,726 @@
 	<row id="msg_c04r0111_19">
 		<language name="JPN" width="256"></language>
 		<language name="JPN_KANJI" width="256"></language>
+	</row>
+
+	<row id="msg_c04r0111_boy2_1">
+		<attribute name="キャラ指定">boy2
+たんぱんこぞう</attribute>
+		<language name="JPN" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+		<language name="JPN_KANJI" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+	</row>
+
+	<row id="msg_c04r0111_boy2_2">
+		<attribute name="キャラ指定">boy2
+たんぱんこぞう</attribute>
+		<language name="JPN" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+		<language name="JPN_KANJI" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+	</row>
+
+	<row id="msg_c04r0111_girl2_1">
+		<attribute name="キャラ指定">girl2
+ミニスカート</attribute>
+		<language name="JPN" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+		<language name="JPN_KANJI" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+	</row>
+
+	<row id="msg_c04r0111_girl2_2">
+		<attribute name="キャラ指定">girl2
+ミニスカート</attribute>
+		<language name="JPN" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+		<language name="JPN_KANJI" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+	</row>
+
+	<row id="msg_c04r0111_boy3_1">
+		<attribute name="キャラ指定">boy3
+じゅくがえり♂</attribute>
+		<language name="JPN" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+		<language name="JPN_KANJI" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+	</row>
+
+	<row id="msg_c04r0111_boy3_2">
+		<attribute name="キャラ指定">boy3
+じゅくがえり♂</attribute>
+		<language name="JPN" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+		<language name="JPN_KANJI" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+	</row>
+
+	<row id="msg_c04r0111_girl3_1">
+		<attribute name="キャラ指定">girl3
+じゅくがえり♀</attribute>
+		<language name="JPN" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+		<language name="JPN_KANJI" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+	</row>
+
+	<row id="msg_c04r0111_girl3_2">
+		<attribute name="キャラ指定">girl3
+じゅくがえり♀</attribute>
+		<language name="JPN" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+		<language name="JPN_KANJI" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+	</row>
+
+	<row id="msg_c04r0111_backpackerm_1">
+		<attribute name="キャラ指定">backpackerm
+バックパッカー♂</attribute>
+		<language name="JPN" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+		<language name="JPN_KANJI" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+	</row>
+
+	<row id="msg_c04r0111_backpackerm_2">
+		<attribute name="キャラ指定">backpackerm
+バックパッカー♂</attribute>
+		<language name="JPN" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+		<language name="JPN_KANJI" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+	</row>
+
+	<row id="msg_c04r0111_backpackerm_3">
+		<attribute name="キャラ指定">backpackerm
+バックパッカー♂</attribute>
+		<language name="JPN" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+		<language name="JPN_KANJI" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+	</row>
+
+	<row id="msg_c04r0111_backpackerm_4">
+		<attribute name="キャラ指定">backpackerm
+バックパッカー♂</attribute>
+		<language name="JPN" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+		<language name="JPN_KANJI" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+	</row>
+
+	<row id="msg_c04r0111_backpackerm_5">
+		<attribute name="キャラ指定">backpackerm
+バックパッカー♂</attribute>
+		<language name="JPN" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+		<language name="JPN_KANJI" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+	</row>
+
+	<row id="msg_c04r0111_backpackerw_1">
+		<attribute name="キャラ指定">backpackerw
+バックパッカー♀</attribute>
+		<language name="JPN" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+		<language name="JPN_KANJI" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+	</row>
+
+	<row id="msg_c04r0111_backpackerw_2">
+		<attribute name="キャラ指定">backpackerw
+バックパッカー♀</attribute>
+		<language name="JPN" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+		<language name="JPN_KANJI" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+	</row>
+
+	<row id="msg_c04r0111_backpackerw_3">
+		<attribute name="キャラ指定">backpackerw
+バックパッカー♀</attribute>
+		<language name="JPN" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+		<language name="JPN_KANJI" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+	</row>
+
+	<row id="msg_c04r0111_backpackerw_4">
+		<attribute name="キャラ指定">backpackerw
+バックパッカー♀</attribute>
+		<language name="JPN" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+		<language name="JPN_KANJI" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+	</row>
+
+	<row id="msg_c04r0111_policeman_1">
+		<attribute name="キャラ指定">policeman
+おまわりさん</attribute>
+		<language name="JPN" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+		<language name="JPN_KANJI" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+	</row>
+
+	<row id="msg_c04r0111_policeman_2">
+		<attribute name="キャラ指定">policeman
+おまわりさん</attribute>
+		<language name="JPN" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+		<language name="JPN_KANJI" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+	</row>
+
+	<row id="msg_c04r0111_policeman_3">
+		<attribute name="キャラ指定">policeman
+おまわりさん</attribute>
+		<language name="JPN" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+		<language name="JPN_KANJI" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+	</row>
+
+	<row id="msg_c04r0111_policeman_4">
+		<attribute name="キャラ指定">policeman
+おまわりさん</attribute>
+		<language name="JPN" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+		<language name="JPN_KANJI" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+	</row>
+
+	<row id="msg_c04r0111_oldman1_1">
+		<attribute name="キャラ指定">oldman1
+げいじゅつか</attribute>
+		<language name="JPN" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+		<language name="JPN_KANJI" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+	</row>
+
+	<row id="msg_c04r0111_oldman1_2">
+		<attribute name="キャラ指定">oldman1
+げいじゅつか</attribute>
+		<language name="JPN" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+		<language name="JPN_KANJI" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+	</row>
+
+	<row id="msg_c04r0111_oldman1_3">
+		<attribute name="キャラ指定">oldman1
+げいじゅつか</attribute>
+		<language name="JPN" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+		<language name="JPN_KANJI" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+	</row>
+
+	<row id="msg_c04r0111_oldman1_4">
+		<attribute name="キャラ指定">oldman1
+げいじゅつか</attribute>
+		<language name="JPN" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+		<language name="JPN_KANJI" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+	</row>
+
+	<row id="msg_c04r0111_oldman1_5">
+		<attribute name="キャラ指定">oldman1
+げいじゅつか</attribute>
+		<language name="JPN" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+		<language name="JPN_KANJI" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+	</row>
+
+	<row id="msg_c04r0111_oldman1_6">
+		<attribute name="キャラ指定">oldman1
+げいじゅつか</attribute>
+		<language name="JPN" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+		<language name="JPN_KANJI" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+	</row>
+
+	<row id="msg_c04r0111_oldman1_7">
+		<attribute name="キャラ指定">oldman1
+げいじゅつか</attribute>
+		<language name="JPN" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+		<language name="JPN_KANJI" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+	</row>
+
+	<row id="msg_c04r0111_ol_1">
+		<attribute name="キャラ指定">ol
+ＯＬ</attribute>
+		<language name="JPN" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+		<language name="JPN_KANJI" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+	</row>
+
+	<row id="msg_c04r0111_ol_2">
+		<attribute name="キャラ指定">ol
+ＯＬ</attribute>
+		<language name="JPN" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+		<language name="JPN_KANJI" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+	</row>
+
+	<row id="msg_c04r0111_ol_3">
+		<attribute name="キャラ指定">ol
+ＯＬ</attribute>
+		<language name="JPN" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+		<language name="JPN_KANJI" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+	</row>
+
+	<row id="msg_c04r0111_ol_4">
+		<attribute name="キャラ指定">ol
+ＯＬ</attribute>
+		<language name="JPN" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+		<language name="JPN_KANJI" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+	</row>
+
+	<row id="msg_c04r0111_railman_1">
+		<attribute name="キャラ指定">railman
+てつどういん</attribute>
+		<language name="JPN" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+		<language name="JPN_KANJI" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+	</row>
+
+	<row id="msg_c04r0111_railman_2">
+		<attribute name="キャラ指定">railman
+てつどういん</attribute>
+		<language name="JPN" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+		<language name="JPN_KANJI" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+	</row>
+
+	<row id="msg_c04r0111_railman_3">
+		<attribute name="キャラ指定">railman
+てつどういん</attribute>
+		<language name="JPN" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+		<language name="JPN_KANJI" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+	</row>
+
+	<row id="msg_c04r0111_railman_4">
+		<attribute name="キャラ指定">railman
+てつどういん</attribute>
+		<language name="JPN" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+		<language name="JPN_KANJI" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+	</row>
+
+	<row id="msg_c04r0111_railman_5">
+		<attribute name="キャラ指定">railman
+てつどういん</attribute>
+		<language name="JPN" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+		<language name="JPN_KANJI" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+	</row>
+
+	<row id="msg_c04r0111_railman_6">
+		<attribute name="キャラ指定">railman
+てつどういん</attribute>
+		<language name="JPN" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+		<language name="JPN_KANJI" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+	</row>
+
+	<row id="msg_c04r0111_railman_7">
+		<attribute name="キャラ指定">railman
+てつどういん</attribute>
+		<language name="JPN" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+		<language name="JPN_KANJI" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+	</row>
+
+	<row id="msg_c04r0111_boy4_1">
+		<attribute name="キャラ指定">boy4
+おぼっちゃま</attribute>
+		<language name="JPN" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+		<language name="JPN_KANJI" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+	</row>
+
+	<row id="msg_c04r0111_girl4_1">
+		<attribute name="キャラ指定">girl4
+おじょうさま</attribute>
+		<language name="JPN" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+		<language name="JPN_KANJI" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+	</row>
+
+	<row id="msg_c04r0111_pilot_1">
+		<attribute name="キャラ指定">pilot
+パイロット</attribute>
+		<language name="JPN" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+		<language name="JPN_KANJI" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+	</row>
+
+	<row id="msg_c04r0111_trainerm_1">
+		<attribute name="キャラ指定">trainerm
+エリートトレーナー♂</attribute>
+		<language name="JPN" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+		<language name="JPN_KANJI" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+	</row>
+
+	<row id="msg_c04r0111_trainerm_2">
+		<attribute name="キャラ指定">trainerm
+エリートトレーナー♂</attribute>
+		<language name="JPN" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+		<language name="JPN_KANJI" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+	</row>
+
+	<row id="msg_c04r0111_trainerm_3">
+		<attribute name="キャラ指定">trainerm
+エリートトレーナー♂</attribute>
+		<language name="JPN" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+		<language name="JPN_KANJI" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+	</row>
+
+	<row id="msg_c04r0111_trainerm_4">
+		<attribute name="キャラ指定">trainerm
+エリートトレーナー♂</attribute>
+		<language name="JPN" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+		<language name="JPN_KANJI" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+	</row>
+
+	<row id="msg_c04r0111_trainerm_5">
+		<attribute name="キャラ指定">trainerm
+エリートトレーナー♂</attribute>
+		<language name="JPN" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+		<language name="JPN_KANJI" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+	</row>
+
+	<row id="msg_c04r0111_trainerw_1">
+		<attribute name="キャラ指定">trainerw
+エリートトレーナー♀</attribute>
+		<language name="JPN" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+		<language name="JPN_KANJI" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+	</row>
+
+	<row id="msg_c04r0111_trainerw_2">
+		<attribute name="キャラ指定">trainerw
+エリートトレーナー♀</attribute>
+		<language name="JPN" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+		<language name="JPN_KANJI" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+	</row>
+
+	<row id="msg_c04r0111_trainerw_3">
+		<attribute name="キャラ指定">trainerw
+エリートトレーナー♀</attribute>
+		<language name="JPN" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+		<language name="JPN_KANJI" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+	</row>
+
+	<row id="msg_c04r0111_trainerw_4">
+		<attribute name="キャラ指定">trainerw
+エリートトレーナー♀</attribute>
+		<language name="JPN" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+		<language name="JPN_KANJI" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+	</row>
+
+	<row id="msg_c04r0111_trainerw_5">
+		<attribute name="キャラ指定">trainerw
+エリートトレーナー♀</attribute>
+		<language name="JPN" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+		<language name="JPN_KANJI" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+	</row>
+
+	<row id="msg_c04r0111_badman_1">
+		<attribute name="キャラ指定">badman
+スキンヘッズ</attribute>
+		<language name="JPN" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+		<language name="JPN_KANJI" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+	</row>
+
+	<row id="msg_c04r0111_badman_2">
+		<attribute name="キャラ指定">badman
+スキンヘッズ</attribute>
+		<language name="JPN" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+		<language name="JPN_KANJI" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+	</row>
+
+	<row id="msg_c04r0111_badman_3">
+		<attribute name="キャラ指定">badman
+スキンヘッズ</attribute>
+		<language name="JPN" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+		<language name="JPN_KANJI" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+	</row>
+
+	<row id="msg_c04r0111_cleaningm_1">
+		<attribute name="キャラ指定">cleaningm
+せいそういん</attribute>
+		<language name="JPN" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+		<language name="JPN_KANJI" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+	</row>
+
+	<row id="msg_c04r0111_cleaningm_2">
+		<attribute name="キャラ指定">cleaningm
+せいそういん</attribute>
+		<language name="JPN" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+		<language name="JPN_KANJI" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+	</row>
+
+	<row id="msg_c04r0111_cleaningm_3">
+		<attribute name="キャラ指定">cleaningm
+せいそういん</attribute>
+		<language name="JPN" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+		<language name="JPN_KANJI" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+	</row>
+
+	<row id="msg_c04r0111_cleaningm_4">
+		<attribute name="キャラ指定">cleaningm
+せいそういん</attribute>
+		<language name="JPN" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+		<language name="JPN_KANJI" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+	</row>
+
+	<row id="msg_c04r0111_veteranm_1">
+		<attribute name="キャラ指定">veteranm
+ベテラントレーナー♂</attribute>
+		<language name="JPN" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+		<language name="JPN_KANJI" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+	</row>
+
+	<row id="msg_c04r0111_veteranm_2">
+		<attribute name="キャラ指定">veteranm
+ベテラントレーナー♂</attribute>
+		<language name="JPN" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+		<language name="JPN_KANJI" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+	</row>
+
+	<row id="msg_c04r0111_veteranm_3">
+		<attribute name="キャラ指定">veteranm
+ベテラントレーナー♂</attribute>
+		<language name="JPN" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+		<language name="JPN_KANJI" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+	</row>
+
+	<row id="msg_c04r0111_veteranm_4">
+		<attribute name="キャラ指定">veteranm
+ベテラントレーナー♂</attribute>
+		<language name="JPN" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+		<language name="JPN_KANJI" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+	</row>
+
+	<row id="msg_c04r0111_veteranm_5">
+		<attribute name="キャラ指定">veteranm
+ベテラントレーナー♂</attribute>
+		<language name="JPN" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+		<language name="JPN_KANJI" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+	</row>
+
+	<row id="msg_c04r0111_veteranw_1">
+		<attribute name="キャラ指定">veteranw
+ベテラントレーナー♀</attribute>
+		<language name="JPN" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+		<language name="JPN_KANJI" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+	</row>
+
+	<row id="msg_c04r0111_veteranw_2">
+		<attribute name="キャラ指定">veteranw
+ベテラントレーナー♀</attribute>
+		<language name="JPN" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+		<language name="JPN_KANJI" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+	</row>
+
+	<row id="msg_c04r0111_veteranw_3">
+		<attribute name="キャラ指定">veteranw
+ベテラントレーナー♀</attribute>
+		<language name="JPN" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+		<language name="JPN_KANJI" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+	</row>
+
+	<row id="msg_c04r0111_veteranw_4">
+		<attribute name="キャラ指定">veteranw
+ベテラントレーナー♀</attribute>
+		<language name="JPN" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+		<language name="JPN_KANJI" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+	</row>
+
+	<row id="msg_c04r0111_veteranw_5">
+		<attribute name="キャラ指定">veteranw
+ベテラントレーナー♀</attribute>
+		<language name="JPN" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+		<language name="JPN_KANJI" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+	</row>
+
+	<row id="msg_c04r0111_lady_1">
+		<attribute name="キャラ指定">lady
+マダム</attribute>
+		<language name="JPN" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+		<language name="JPN_KANJI" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+	</row>
+
+	<row id="msg_c04r0111_lady_2">
+		<attribute name="キャラ指定">lady
+マダム</attribute>
+		<language name="JPN" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+		<language name="JPN_KANJI" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+	</row>
+
+	<row id="msg_c04r0111_lady_3">
+		<attribute name="キャラ指定">lady
+マダム</attribute>
+		<language name="JPN" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+		<language name="JPN_KANJI" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+	</row>
+
+	<row id="msg_c04r0111_gentleman_1">
+		<attribute name="キャラ指定">gentleman
+ジェントルマン</attribute>
+		<language name="JPN" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+		<language name="JPN_KANJI" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+	</row>
+
+	<row id="msg_c04r0111_gentleman_2">
+		<attribute name="キャラ指定">gentleman
+ジェントルマン</attribute>
+		<language name="JPN" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+		<language name="JPN_KANJI" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+	</row>
+
+	<row id="msg_c04r0111_gentleman_3">
+		<attribute name="キャラ指定">gentleman
+ジェントルマン</attribute>
+		<language name="JPN" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+		<language name="JPN_KANJI" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+	</row>
+
+	<row id="msg_c04r0111_gentleman_4">
+		<attribute name="キャラ指定">gentleman
+ジェントルマン</attribute>
+		<language name="JPN" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+		<language name="JPN_KANJI" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+	</row>
+
+	<row id="msg_c04r0111_businessman_1">
+		<attribute name="キャラ指定">businessman
+ビジネスマン</attribute>
+		<language name="JPN" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+		<language name="JPN_KANJI" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+	</row>
+
+	<row id="msg_c04r0111_businessman_2">
+		<attribute name="キャラ指定">businessman
+ビジネスマン</attribute>
+		<language name="JPN" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+		<language name="JPN_KANJI" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+	</row>
+
+	<row id="msg_c04r0111_businessman_3">
+		<attribute name="キャラ指定">businessman
+ビジネスマン</attribute>
+		<language name="JPN" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+		<language name="JPN_KANJI" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+	</row>
+
+	<row id="msg_c04r0111_businessman_4">
+		<attribute name="キャラ指定">businessman
+ビジネスマン</attribute>
+		<language name="JPN" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
+		<language name="JPN_KANJI" width="256">バトルサブウェイの
+かりメッセージ　ですよ</language>
 	</row>
 
 	<flowchart-group-list>
