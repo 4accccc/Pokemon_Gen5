@@ -197,6 +197,7 @@ typedef enum
   MCBR_EFF_BONUS,
   MCBR_EFF_ZZZ,
 
+  //‚»‚Ì‘¼
   MCBR_MAX,
 }MB_CAP_BBD_RES;
 

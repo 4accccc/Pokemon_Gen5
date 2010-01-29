@@ -80,6 +80,8 @@ struct _MB_CAPTURE_WORK
   GFL_G3D_CAMERA    *camera;
   GFL_BBD_SYS     *bbdSys;
   int             bbdRes[MCBR_MAX];
+  int             bbdResBgMask;
+  int             bbdObjBgMask[2];  //128が限界なので2つ.
   
   u16 score;
   
@@ -264,6 +266,7 @@ static void MB_CAPTURE_Term( MB_CAPTURE_WORK *work )
 
   GFL_TCB_DeleteTask( work->vBlankTcb );
 
+  GFL_BBD_RemoveResource( work->bbdSys , work->bbdResBgMask );
   for( i=0;i<MCBR_MAX;i++ )
   {
     GFL_BBD_RemoveResource( work->bbdSys , work->bbdRes[i] );
@@ -496,7 +499,7 @@ static void MB_CAPTURE_InitGraphic( MB_CAPTURE_WORK *work )
       GX_RGB(0,0,0),
       GX_RGB(0,0,0),
       GX_RGB(0,0,0),
-      0,
+      63,
       GFL_BBD_ORIGIN_CENTER,
     };
     //ビルボードシステム構築
@@ -607,6 +610,15 @@ static void MB_CAPTURE_LoadResource( MB_CAPTURE_WORK *work )
       GFL_BBD_CutResourceData( work->bbdSys , work->bbdRes[i] );
     }
   }
+  {
+    GFL_G3D_RES* res = GFL_G3D_CreateResourceHandle( work->initWork->arcHandle , NARC_mb_capture_gra_cap_bg_mask_nsbtx );
+    GFL_G3D_TransVramTexture( res );
+    work->bbdResBgMask = GFL_BBD_AddResource( work->bbdSys , 
+                                         res , 
+                                         GFL_BBD_TEXFMT_PAL16 ,
+                                         GFL_BBD_TEXSIZDEF_256x32 ,
+                                         128 , 32 );
+  }
 }
 
 //--------------------------------------------------------------
@@ -630,6 +642,7 @@ static void MB_CAPTURE_InitObject( MB_CAPTURE_WORK *work )
     initWork.type = MCOT_WOOD;
     MB_CAPTURE_GetGrassObjectPos( idx , -1 , &initWork.pos );
     initWork.pos.y = FX32_CONST( MB_CAP_OBJ_SUB_U_TOP );
+    initWork.pos.z -= FX32_CONST(MB_CAP_OBJ_LINEOFS_Z);
     work->objWork[i] = MB_CAP_OBJ_CreateObject( work , &initWork );
   }
   for( i=MB_CAP_OBJ_SUB_D_START;i<MB_CAP_OBJ_SUB_R_START;i++ )
@@ -662,6 +675,32 @@ static void MB_CAPTURE_InitObject( MB_CAPTURE_WORK *work )
   initWork.pos.y = FX32_CONST( 64 );
   work->starWork = MB_CAP_OBJ_CreateObject( work , &initWork );
   MB_CAP_OBJ_SetEnable( work , work->starWork , FALSE );
+  
+  //BGマスク
+  {
+    BOOL flg = TRUE;
+    VecFx32 pos = {FX32_CONST(64.0),FX32_CONST(72.0),FX32_CONST(MB_CAP_OBJ_BASE_Z- MB_CAP_OBJ_LINEOFS_Z)};
+    work->bbdObjBgMask[0] = GFL_BBD_AddObject( work->bbdSys , 
+                                       work->bbdResBgMask ,
+                                       FX32_ONE*4 , 
+                                       FX32_ONE , 
+                                       &pos ,
+                                       31 ,
+                                       GFL_BBD_LIGHT_NONE );
+    pos.x = FX32_CONST(192.0);
+    work->bbdObjBgMask[1] = GFL_BBD_AddObject( work->bbdSys , 
+                                       work->bbdResBgMask ,
+                                       FX32_ONE*4 , 
+                                       FX32_ONE , 
+                                       &pos ,
+                                       31 ,
+                                       GFL_BBD_LIGHT_NONE );
+    GFL_BBD_SetObjectDrawEnable( work->bbdSys , work->bbdObjBgMask[0] , &flg );
+    GFL_BBD_SetObjectDrawEnable( work->bbdSys , work->bbdObjBgMask[1] , &flg );
+    //3D設定の関係で反転させる・・・
+    GFL_BBD_SetObjectFlipT( work->bbdSys , work->bbdObjBgMask[0] , &flg );
+    GFL_BBD_SetObjectFlipT( work->bbdSys , work->bbdObjBgMask[1] , &flg );
+  }
 }
 
 //--------------------------------------------------------------
@@ -670,6 +709,8 @@ static void MB_CAPTURE_InitObject( MB_CAPTURE_WORK *work )
 static void MB_CAPTURE_TermObject( MB_CAPTURE_WORK *work )
 {
   int i;
+  GFL_BBD_RemoveObject( work->bbdSys , work->bbdObjBgMask[0] );
+  GFL_BBD_RemoveObject( work->bbdSys , work->bbdObjBgMask[1] );
   MB_CAP_OBJ_DeleteObject( work , work->starWork );
   for( i=0;i<MB_CAP_OBJ_NUM;i++ )
   {

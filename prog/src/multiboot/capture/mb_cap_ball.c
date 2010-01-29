@@ -184,6 +184,7 @@ static const BOOL MB_CAP_BALL_CheckHitObj_ShotFinish( MB_CAPTURE_WORK *capWork ,
   int i;
   BOOL isHitAny = FALSE;
   BOOL isHitAnyPoke = FALSE;
+  BOOL isBlockAnyPoke = FALSE;
   MB_CAP_HIT_WORK ballHit;
   
   //オブジェとの当たり判定
@@ -225,6 +226,7 @@ static const BOOL MB_CAP_BALL_CheckHitObj_ShotFinish( MB_CAPTURE_WORK *capWork ,
           {
             PMSND_PlaySE( MB_SND_BALL_BOUND );
             isHitAnyPoke = TRUE;
+            isBlockAnyPoke = TRUE;
           }
         }
         if( isHitAnyPoke == FALSE )
@@ -309,7 +311,7 @@ static const BOOL MB_CAP_BALL_CheckHitObj_ShotFinish( MB_CAPTURE_WORK *capWork ,
     MB_CAPTURE_CreateEffect( capWork , &effPos , MCET_HIT );
     PMSND_PlaySE( MB_SND_BALL_NO_HIT );
   }
-  return isHitAnyPoke;
+  return isBlockAnyPoke;
 }
 
 //--------------------------------------------------------------
@@ -505,9 +507,9 @@ static void MB_CAP_BALL_StateShot(MB_CAPTURE_WORK *capWork , MB_CAP_BALL *ballWo
   ballWork->cnt++;
   if( ballWork->cnt > ballWork->shotCnt )
   {
-    const BOOL hitPoke = MB_CAP_BALL_CheckHitObj_ShotFinish( capWork , ballWork );
+    const BOOL blockPoke = MB_CAP_BALL_CheckHitObj_ShotFinish( capWork , ballWork );
     
-    if( hitPoke == FALSE )
+    if( blockPoke == TRUE )
     {
       //ぶっ飛ぶ処理へ
       if( GFUser_GetPublicRand0(2) == 0 )
@@ -528,7 +530,7 @@ static void MB_CAP_BALL_StateShot(MB_CAPTURE_WORK *capWork , MB_CAP_BALL *ballWo
     }
     else
     {
-      ballWork->isFinish = FALSE;
+      ballWork->isFinish = TRUE;
     }
   }
   else

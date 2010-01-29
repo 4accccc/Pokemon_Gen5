@@ -480,10 +480,25 @@ static void MB_CAP_POKE_StateRun(MB_CAPTURE_WORK *capWork , MB_CAP_POKE *pokeWor
         break;
       case MCPD_UP:
         MB_CAPTURE_GetGrassObjectPos( pokeWork->posXidx , pokeWork->posYidx-1 , &nextPos );
+        if( pokeWork->posYidx <= 0 )
+        {
+          //最上段補正！！！
+          nextPos.y = FX32_CONST(MB_CAP_OBJ_MAIN_TOP-8);
+        }
         ofs = (nextPos.y - FX32_CONST( MB_CAP_POKE_MOVE_OFS_Y )) - pokeWork->startPos.y;
         pokeWork->pos.x = pokeWork->startPos.x;
         pokeWork->pos.y = pokeWork->startPos.y + ofs*pokeWork->cnt/MB_CAP_POKE_RUN_LOOK_TIME;
-        pokeWork->pos.z = pokeWork->startPos.z;
+
+        if( pokeWork->posYidx <= 0 &&
+            pokeWork->cnt > MB_CAP_POKE_RUN_LOOK_TIME/2 )
+        {
+          //最上段補正！！！
+          pokeWork->pos.z = FX32_CONST(MB_CAP_OBJ_BASE_Z - MB_CAP_OBJ_LINEOFS_Z - MB_CAP_OBJ_LINEOFS_Z/2);
+        }
+        else
+        {
+          pokeWork->pos.z = pokeWork->startPos.z;
+        }
         flipFlg = TRUE;
         break;
       case MCPD_DOWN:
@@ -567,9 +582,8 @@ static void MB_CAP_POKE_StateRun(MB_CAPTURE_WORK *capWork , MB_CAP_POKE *pokeWor
       {
         MB_CAP_OBJ_StartAnime( objWork );
       }
-      
     }
-    
+  
     
     //逃げ先にポケがいるかチェック
     {
@@ -632,7 +646,6 @@ static void MB_CAP_POKE_StateRun(MB_CAPTURE_WORK *capWork , MB_CAP_POKE *pokeWor
     pokeWork->startPos.z -= FX32_CONST( MB_CAP_OBJ_BASE_Z-MB_CAP_POKE_BASE_Z );
 
     PMSND_PlaySE_byPlayerID( MB_SND_GRASS_SHAKE , SEPLAYER_SE2 );
-
   }
   else
   if( pokeWork->cnt >= MB_CAP_POKE_RUN_LOOK_TIME+MB_CAP_POKE_RUN_HIDE_TIME )
