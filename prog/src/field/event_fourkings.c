@@ -1135,12 +1135,14 @@ static void EV_HERO_Switch( EV_CIRCLEWALK_HERO* p_wk, BOOL sw )
       p_wk->p_player_core, 
       p_wk->end_gridpos.x, p_wk->end_gridpos.y, p_wk->end_gridpos.z, 
       p_wk->end_dir );
+
     MMDL_UpdateCurrentHeight( p_wk->p_player_core );
-    MMDL_UpdateCurrentMapAttr( p_wk->p_player_core );
 
     MMDL_GetVectorPos( p_wk->p_player_core, &vecpos );
     FIELD_PLAYER_SetPos( p_wk->p_player, &vecpos );
 
+    // ŽÊ‚è‚±‚ÝOFF
+    MMDL_SetMoveBitReflect( p_wk->p_player_core, FALSE );
   }
 }
 
