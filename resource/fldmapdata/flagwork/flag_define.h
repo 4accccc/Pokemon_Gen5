@@ -582,7 +582,7 @@
 #define FV_D05_RIVAL_01                    558 /* 0x022e D05：ライバル */
 #define FV_D05_WORKMAN_01                  559 /* 0x022f D05：workman */
 #define FV_C05_BUSINESSMAN_01              560 /* 0x0230 C05：ジム前ストッパー */
-		/* not used   561(0x0231) */
+#define FV_C04_SUPPORT_01                  561 /* 0x0231 ライモンシティ：ミュージカル前のサポート */
 #define FV_C02_LEADER2                     562 /* 0x0232 C02フィールド：ジムリーダー（アロエ） */
 #define FV_C02_POSEVENT_01                 563 /* 0x0233 C02フィールド：友達とジムリーダー（アーティ）のバニッシュフラグ */
 #define FV_C02GYM0202_LEADER2              564 /* 0x0234 C02ジム：ジムリーダー（アロエ） */
@@ -660,8 +660,8 @@
 #define FV_D02R0101_SAGE5                  636 /* 0x027c ヤグルマの森：盗難イベントに出てくる七賢者（５） */
 #define FV_T02_SPEECH_BEFORE               637 /* 0x027d カラクサタウン：演説誘導イベント前に表示されている群集 */
 #define FV_T02_SPEECH_AFTER                638 /* 0x027e カラクサタウン：演説誘導イベント後に表示されている群集 */
-		/* not used   639(0x027f) */
-		/* not used   640(0x0280) */
+#define FV_C04_SUPPORTPAPA_01              639 /* 0x027f ライモンシティ：サポートのパパ */
+#define FV_R04_RIVAL_01                    640 /* 0x0280 ４番道路：ライバル */
 		/* not used   641(0x0281) */
 		/* not used   642(0x0282) */
 		/* not used   643(0x0283) */
