@@ -271,7 +271,7 @@ static GFL_PROC_RESULT DebugBattleTestProcInit( GFL_PROC * proc, int * seq, void
 
   GFL_BG_SetBackGroundColor( GFL_BG_FRAME0_M, 0x0000 );
 
-  wk->biw = BTLV_INPUT_Init( BTLV_INPUT_TYPE_SINGLE, NULL, wk->font, &wk->cursor_flag, wk->heapID );
+  wk->biw = BTLV_INPUT_Init( BTLV_INPUT_TYPE_SINGLE, BTL_COMPETITOR_WILD, NULL, wk->font, &wk->cursor_flag, wk->heapID );
 
   //フェードイン
   GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN, 16, 0, 2 );
