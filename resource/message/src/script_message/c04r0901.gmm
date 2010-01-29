@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2010-01-23T19:09:49"/>
+	<create user="masafumi_saitou" host="W00178" date="2010-01-29T18:28:24"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -324,18 +324,6 @@
 その　うでまえを　きそうところだ▼
 なかに　はいって
 おのれの　じつりょく　ためすがいい</language>
-	</row>
-
-	<row id="msg_mapscript_dummy" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>削除予定</comment>
-		<attribute name="キャラ指定">GENTLEMAN
-紳士</attribute>
-		<language name="JPN" width="256">フットボールとは！
-まえに　すすむ　スポーツ！[BE:01:ページ切り替え（クリア）]
-そういう　いみで
-じんせいと　おなじなのだ！</language>
-		<language name="JPN_KANJI" width="256">フットボールとは　前に進む　スポーツ！
-その点において　人生と　同じなのだ！</language>
 	</row>
 
 	<flowchart-group-list>
