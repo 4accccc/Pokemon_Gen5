@@ -17,19 +17,74 @@ _EVENT_DATA_END //èIóπ
 
 //--------------------------------------------------------------------
 //--------------------------------------------------------------------
+
 //====================================================================
+//
 //====================================================================
+  DEFINE_LOCAL    HYOUKA_MSGID
+  DEFINE_LOCAL    HYOUKA_COUNT
 
 /**************************************************************/
+/*    ê}ä”ï]âøÅFÉAÉâÉâÉMîéémÅiñ∫Åj                            */
 /**************************************************************/
 EVENT_START ev_zukan_daughter
-  //Ç»Ç…Ç‡ÇµÇ»Ç¢//
+
+  _PLAYER_NAME( 0 )
+  _BALLOONWIN_TALKOBJ_MSG( msg_hyouka_hakase2_01 )
+  _YES_NO_WIN( SCWK_ANSWER )
+  _BALLOONWIN_CLOSE()
+
+  IF $SCWK_ANSWER == SCR_YES THEN
+      _GET_ZUKAN_HYOUKA( SCR_ZUKAN_HYOUKA_MODE_LOCAL, HYOUKA_MSGID, HYOUKA_COUNT )
+
+      _NUMBER( 0, HYOUKA_COUNT, 3 )
+      _BALLOONWIN_TALKOBJ_MSG( msg_hyouka_hakase2_02 )
+      _AB_KEYWAIT()
+      _BALLOONWIN_CLOSE()
+
+      _BALLOONWIN_TALKOBJ_MSG( HYOUKA_MSGID )
+      _LAST_KEYWAIT()
+      _BALLOONWIN_CLOSE()
+  ELSE
+      _BALLOONWIN_TALKOBJ_MSG( msg_hyouka_hakase2_03 )
+      _LAST_KEYWAIT()
+      _BALLOONWIN_CLOSE()
+  ENDIF
+
+  _CHG_LOCAL_SCR
 EVENT_END
 
+
 /**************************************************************/
+/*    ê}ä”ï]âøÅFÉAÉâÉâÉMîéémÅiïÉÅj                            */
 /**************************************************************/
 EVENT_START ev_zukan_father
-  //Ç»Ç…Ç‡ÇµÇ»Ç¢//
+
+  _PLAYER_NAME( 0 )
+  _BALLOONWIN_TALKOBJ_MSG( msg_hyouka_hakase_01 )
+  _YES_NO_WIN( SCWK_ANSWER )
+  _BALLOONWIN_CLOSE()
+
+  IF $SCWK_ANSWER == SCR_YES THEN
+
+      _GET_ZUKAN_HYOUKA( SCR_ZUKAN_HYOUKA_MODE_GLOBAL, HYOUKA_MSGID, HYOUKA_COUNT )
+
+      _NUMBER( 0, HYOUKA_COUNT, 3 )
+      _BALLOONWIN_TALKOBJ_MSG( msg_hyouka_hakase_02 )
+      _LAST_KEYWAIT()
+      _BALLOONWIN_CLOSE()
+
+      _BALLOONWIN_TALKOBJ_MSG( HYOUKA_MSGID )
+      _LAST_KEYWAIT()
+      _BALLOONWIN_CLOSE()
+
+  ELSE
+      _BALLOONWIN_TALKOBJ_MSG( msg_hyouka_hakase_03 )
+      _LAST_KEYWAIT()
+      _BALLOONWIN_CLOSE()
+  ENDIF
+
+  _CHG_LOCAL_SCR
 EVENT_END
 
 /**************************************************************/
@@ -37,11 +92,11 @@ EVENT_END
 /**************************************************************/
 EVENT_START ev_zukan_machine
 
-  _GET_ZUKAN_HYOUKA_MSGID( SCR_ZUKAN_HYOUKA_MODE_AUTO, SCWK_ANSWER )
-  _PLAINWIN_MSG_UP( SCWK_ANSWER )
+  _GET_ZUKAN_HYOUKA( SCR_ZUKAN_HYOUKA_MODE_AUTO, HYOUKA_MSGID, HYOUKA_COUNT )
+  _PLAINWIN_MSG_UP( HYOUKA_MSGID )
   _AB_KEYWAIT()
   _PLAINWIN_CLOSE()
-  _CHG_LOCAL_SCR()
+  _CHG_LOCAL_SCR
 
 EVENT_END
 

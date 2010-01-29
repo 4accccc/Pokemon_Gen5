@@ -263,10 +263,11 @@ static const ZUKAN_HYOUKA_TABLE GlobalGetTable[] = {
  * @brief ずかん評価
  */
 //--------------------------------------------------------------
-VMCMD_RESULT EvCmdGetZukanHyoukaMsgID( VMHANDLE * core, void *wk )
+VMCMD_RESULT EvCmdGetZukanHyouka( VMHANDLE * core, void *wk )
 {
   u16     mode = SCRCMD_GetVMWorkValue( core, wk );
-  u16 * ret_wk = SCRCMD_GetVMWork( core, wk );
+  u16 * ret_msgid = SCRCMD_GetVMWork( core, wk );
+  u16 * ret_count = SCRCMD_GetVMWork( core, wk );
 
   GAMEDATA *gamedata = SCRCMD_WORK_GetGameData( wk );
   ZUKAN_SAVEDATA * zw = GAMEDATA_GetZukanSave( gamedata );
@@ -275,7 +276,8 @@ VMCMD_RESULT EvCmdGetZukanHyoukaMsgID( VMHANDLE * core, void *wk )
   int i;
   const ZUKAN_HYOUKA_TABLE * tbl;
 
-  *ret_wk = msg_hyouka_i01; //念のため
+  *ret_msgid = msg_hyouka_i01; //念のため
+  *ret_count = 0;              //念のため
   switch ( mode )
   {
   case SCR_ZUKAN_HYOUKA_MODE_AUTO:  //パソコン
@@ -327,16 +329,18 @@ VMCMD_RESULT EvCmdGetZukanHyoukaMsgID( VMHANDLE * core, void *wk )
     return VMCMD_RESULT_CONTINUE;
   }
 
+  *ret_count = count;
+
   for ( i = 0; ; i ++ )
   {
     if ( tbl[i].range == 0 )
     { //番兵：万が一テーブルにない値が来た場合
-      *ret_wk = tbl[i].msg_id;
+      *ret_msgid = tbl[i].msg_id;
       break;
     }
     if ( count <= tbl[i].range )
     { //範囲以下の場合、その対応メッセージIDを返す
-      *ret_wk = tbl[i].msg_id;
+      *ret_msgid = tbl[i].msg_id;
       break;
     }
   }

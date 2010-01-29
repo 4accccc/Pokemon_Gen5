@@ -3979,19 +3979,21 @@
 
 //--------------------------------------------------------------
 /**
- * @def _GET_ZUKAN_HYOUKA_MSGID
+ * @def _GET_ZUKAN_HYOUKA
  * @brief ずかん評価用メッセージID取得
  * @param mode      ずかん評価モード（script_def.hのSCR_ZUKAN_HYOUKA_MODE_～を参照）
- * @param	ret_wk		取得したMSGID
+ * @param	ret_msgid		取得したMSGID
+ * @param ret_count   ポケモン数
  */
 //--------------------------------------------------------------
-#define _GET_ZUKAN_HYOUKA_MSGID( mode, ret_wk ) \
-    _ASM_GET_ZUKAN_HYOUKA_MSGID mode, ret_wk
+#define _GET_ZUKAN_HYOUKA( mode, ret_msgid, ret_count ) \
+    _ASM_GET_ZUKAN_HYOUKA mode, ret_msgid, ret_count
 
-    .macro  _ASM_GET_ZUKAN_HYOUKA_MSGID mode, ret_wk
-    .short  EV_SEQ_GET_ZUKAN_HYOUKA_MSGID
+    .macro  _ASM_GET_ZUKAN_HYOUKA mode, ret_msgid, ret_count
+    .short  EV_SEQ_GET_ZUKAN_HYOUKA
     .short  \mode
-    .short  \ret_wk
+    .short  \ret_msgid
+    .short  \ret_count
     .endm
 
 //======================================================================

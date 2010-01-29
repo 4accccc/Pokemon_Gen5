@@ -813,7 +813,7 @@
   NO_CMD()
 
   //ê}ä”ï]âø
-  DEF_CMD( EvCmdGetZukanHyoukaMsgID, EV_SEQ_GET_ZUKAN_HYOUKA_MSGID )
+  DEF_CMD( EvCmdGetZukanHyouka, EV_SEQ_GET_ZUKAN_HYOUKA )
   NO_CMD()
   NO_CMD()
   NO_CMD()
