@@ -1600,3 +1600,8 @@ SRCS_OVERLAY_ZUKAN = app/zukan/zukan.c \
 SRCS_OVERLAY_COMM_BTL_DEMO = demo/comm_btl_demo/comm_btl_demo.c \
                              demo/comm_btl_demo/comm_btl_demo_graphic.c
 
+# ’ÊM‘ÎíŒã‚Ì˜^‰æ‘I‘ð‰æ–Ê
+#===> SRCS_OVERLAY_UI_COMMON
+SRCS_OVERLAY_BTL_REC_SEL = net_app/btl_rec_sel/btl_rec_sel.c \
+                           net_app/btl_rec_sel/btl_rec_sel_graphic.c
+

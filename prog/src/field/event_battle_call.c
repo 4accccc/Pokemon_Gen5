@@ -70,6 +70,7 @@ static GFL_PROC_RESULT CommBattleCallProc(  GFL_PROC *proc, int *seq, void* pwk,
     SEQ_BATTLE_INIT,
     SEQ_BATTLE_END,
     SEQ_CALL_END_DEMO,        ///< バトル後デモ呼び出し
+    SEQ_CALL_BTL_REC_SEL,     ///< 通信対戦後の録画選択画面
     SEQ_BGM_POP,
     SEQ_END
   };
@@ -155,6 +156,32 @@ static GFL_PROC_RESULT CommBattleCallProc(  GFL_PROC *proc, int *seq, void* pwk,
       }
 
       GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID( comm_btl_demo ), &CommBtlDemoProcData, &bcw->demo_prm);
+      (*seq)++;
+    }
+    break;
+  case SEQ_CALL_BTL_REC_SEL:
+    {
+      // 通信相手と自分のROMのサーバーバージョンを比較する
+      BOOL b_rec = TRUE;  // TRUEのとき、「通信相手 <= 自分」となり録画選択画面へ行く
+      u8 trainer_num = ( bcw->btl_setup_prm->multiMode == 0 ) ? (2) : (4);
+      u8 my_version = bcw->demo_prm->trainer_data[COMM_BTL_DEMO_TRDATA_A].server_version;
+      int i; 
+      for( i=COMM_BTL_DEMO_TRDATA_B; i<trainer_num; i++ )
+      {
+        u8 other_version = bcw->demo_prm->trainer_data[i].server_version;
+        if( other_version > my_version )
+        {
+          b_rec = FALSE;
+          break;
+        }
+      }
+
+      if( b_rec )
+      {
+        // 通信対戦後の録画選択画面へ
+        bcw->btl_rec_sel_param.gamedata = GAMESYSTEM_GetGameData( gsys );
+        GAMESYSTEM_CallProc( gsys, FS_OVERLAY_ID( btl_rec_sel ), &BTL_REC_SEL_ProcData, &bcw->btl_rec_sel_param );
+      }
       (*seq)++;
     }
     break;

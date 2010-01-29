@@ -19,6 +19,7 @@
 
 #include "battle/battle.h"
 #include "demo/comm_btl_demo.h"
+#include "net_app/btl_rec_sel.h"
 
 //=============================================================================
 /**
@@ -45,6 +46,7 @@ typedef struct{
   GAMESYS_WORK * gsys;
   BATTLE_SETUP_PARAM  *btl_setup_prm;
   COMM_BTL_DEMO_PARAM *demo_prm;
+  BTL_REC_SEL_PARAM  btl_rec_sel_param;
 }EVENT_BATTLE_CALL_WORK;
 
 //=============================================================================
