@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2010-01-26T19:34:44"/>
+	<create user="matsumiya" host="W00207" date="2010-01-29T18:36:16"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -730,7 +730,7 @@
 わたしの　ほうが　子供っぽい▼</language>
 	</row>
 
-	<row id="msg_c04_middleman1_06" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_c04_middleman1_06" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
 		<comment>♂
 ・画面上を向いてメッセージ表示
 　表示後、画面下に移動
@@ -741,7 +741,7 @@
 		<language name="JPN" width="256">ジムリーダーさんに
 いわれて　きづいたよ▼
 そうだね　ホワイティ
-いまは　きみが　したいことを
+いまは　きみが　したいことを▽
 したほうが　いいんだよ　きっと▼
 パパは　きみの　たびが
 たのしいものであるよう　いのるさ▼
@@ -750,7 +750,7 @@
 		<language name="JPN_KANJI" width="256">ジムリーダーさんに
 いわれて　気づいたよ▼
 そうだね　ホワイティ
-今は　君が　したいことを
+今は　君が　したいことを▽
 したほうが　いいんだよ　きっと▼
 パパは　君の　旅が
 楽しいものであるよう　祈るさ▼
