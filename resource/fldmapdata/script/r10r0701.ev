@@ -80,7 +80,9 @@ EVENT_END
 /* POSイベント・バッジチェックゲート                          */
 /**************************************************************/
 EVENT_START     ev_pos_r10r0701_limitter_01
-  _TURN_HERO_SITE()
+  _OBJ_ANIME( R10R0701_VETERANM, anm_turn_to_hero )
+  _OBJ_ANIME_WAIT()
+  //_TURN_HERO_SITE()
 
     //待てい！
   _BALLOONWIN_OBJMSG( msg_r10r0701_badge_05, R10R0701_VETERANM )
@@ -220,3 +222,6 @@ _ANIME_LABEL  anm_walkout_hero_other
   _ANIME_DATA AC_WALK_U_8F,3
 	_ANIME_DATA	ACMD_END,0
 
+_ANIME_LABEL  anm_turn_to_hero
+  _ANIME_DATA AC_DIR_L, 1
+  _ANIME_DATA ACMD_END, 0
