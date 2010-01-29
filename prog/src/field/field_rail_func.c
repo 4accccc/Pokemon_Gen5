@@ -246,6 +246,7 @@ void FIELD_RAIL_POSFUNC_StraitLine(const FIELD_RAIL_WORK * work, VecFx32 * pos)
     VEC_Normalize(&width, &width);
     VEC_MultAdd(w_ofs, &width, pos, pos);
 
+#ifdef DEBUG_PRINT_ON
 		if (GFL_UI_KEY_GetTrg() & PAD_BUTTON_B)
 		{
 			debugPrintWholeVector("start ", p0, "\n");
@@ -257,6 +258,7 @@ void FIELD_RAIL_POSFUNC_StraitLine(const FIELD_RAIL_WORK * work, VecFx32 * pos)
 			TOMOYA_Printf( "w_ofs = 0x%x\n", w_ofs );
 			debugPrintHexVector(&width);
 		}
+#endif
   }
 
 }
@@ -331,6 +333,7 @@ void FIELD_RAIL_POSFUNC_CurveLine(const FIELD_RAIL_WORK * work, VecFx32 * pos)
     }
 	}
 
+#ifdef DEBUG_PRINT_ON
   if (GFL_UI_KEY_GetTrg() & PAD_BUTTON_B)
   {
     debugPrintWholeVector("Center:", &center, "\n");
@@ -345,6 +348,7 @@ void FIELD_RAIL_POSFUNC_CurveLine(const FIELD_RAIL_WORK * work, VecFx32 * pos)
     OS_TPrintf("v_i:len=%08x\n",VEC_Mag(&vec_i));
     debugPrintWholeVector("pos:   ", pos, "\n");
   }
+#endif
 }
 
 //----------------------------------------------------------------------------
@@ -418,6 +422,7 @@ void FIELD_RAIL_POSFUNC_YCurveLine(const FIELD_RAIL_WORK * work, VecFx32 * pos)
     }
 	}
 
+#ifdef DEBUG_PRINT_ON
   if (GFL_UI_KEY_GetTrg() & PAD_BUTTON_B)
   {
     debugPrintWholeVector("Center:", &center, "\n");
@@ -432,6 +437,7 @@ void FIELD_RAIL_POSFUNC_YCurveLine(const FIELD_RAIL_WORK * work, VecFx32 * pos)
     OS_TPrintf("v_i:len=%08x\n",VEC_Mag(&vec_i));
     debugPrintWholeVector("pos:   ", pos, "\n");
   }
+#endif
 }
 
 
