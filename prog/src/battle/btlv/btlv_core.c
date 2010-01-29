@@ -32,10 +32,12 @@
 #include "btlv_core.h"
 
 
-//バトルバッグとバトルポケモンリストをオーバーレイ化
+//バトル描画とバトルバッグとバトルポケモンリストをオーバーレイ化
+//FS_EXTERN_OVERLAY(battle_view);
 FS_EXTERN_OVERLAY(battle_b_app);
 FS_EXTERN_OVERLAY(battle_bag);
 FS_EXTERN_OVERLAY(battle_plist);
+FS_EXTERN_OVERLAY(vram_h);
 
 /*--------------------------------------------------------------------------*/
 /* Consts                                                                   */
@@ -105,7 +107,7 @@ static void cleanup_core( BTLV_CORE* wk );
 static BOOL subprocMoveMember( int* seq, void* wk_adrs );
 static BOOL subprocRotateMember( int* seq, void* wk_adrs );
 
-
+static  const BTL_POKEPARAM*  get_btl_pokeparam( BTLV_CORE* core, BtlvMcssPos pos );
 
 //=============================================================================================
 /**
@@ -150,6 +152,9 @@ BTLV_CORE*  BTLV_Create( BTL_MAIN_MODULE* mainModule, const BTL_CLIENT* client, 
 
   BTL_STR_InitSystem( mainModule, client, pokeCon, heapID );
 
+  //描画系オーバーレイロード
+//  GFL_OVERLAY_Load( FS_OVERLAY_ID( battle_view ) );
+
   return core;
 }
 
@@ -173,6 +178,10 @@ void BTLV_Delete( BTLV_CORE* core )
   GFL_STR_DeleteBuffer( core->strBuf );
   GFL_FONT_Delete( core->largeFontHandle );
   GFL_HEAP_FreeMemory( core );
+
+  //描画系オーバーレイアンロード
+//  GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle_view ) );
+  GFL_OVERLAY_Unload( FS_OVERLAY_ID( vram_h ) );
 }
 
 //=============================================================================================
@@ -301,6 +310,25 @@ static BOOL CmdProc_Setup( BTLV_CORE* core, int* seq, void* workBuffer )
 
   return FALSE;
 }
+
+//----------------------------------------------------------------------------------
+/**
+ * 捕獲デモ
+ */
+//----------------------------------------------------------------------------------
+#include "message.naix"
+#include "msg/msg_capturedemo.h"
+typedef struct
+{ 
+  GFL_MSGDATA*  msg;
+  int           wait;
+}CAPTURE_DEMO_WORK;
+
+enum
+{ 
+  CAPTURE_DEMO_MSG_WAIT = 60,
+};
+
 //----------------------------------------------------------------------------------
 /**
  * バトル画面構築用VRAM設定～捕獲デモ～
@@ -314,6 +342,7 @@ static BOOL CmdProc_Setup( BTLV_CORE* core, int* seq, void* workBuffer )
 //----------------------------------------------------------------------------------
 static BOOL CmdProc_SetupDemo( BTLV_CORE* core, int* seq, void* workBuffer )
 {
+  CAPTURE_DEMO_WORK*  cdw = ( CAPTURE_DEMO_WORK* )workBuffer; 
   switch( *seq ){
   case 0:
     setup_core( core, core->heapID );
@@ -321,6 +350,8 @@ static BOOL CmdProc_SetupDemo( BTLV_CORE* core, int* seq, void* workBuffer )
                       core->smallFontHandle, core->heapID );
     BTLV_SCU_Setup( core->scrnU );
     BTLV_SCD_Init( core->scrnD );
+    cdw->msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_capturedemo_dat, core->heapID );
+    cdw->wait = 0;
     (*seq)++;
     break;
 
@@ -332,14 +363,185 @@ static BOOL CmdProc_SetupDemo( BTLV_CORE* core, int* seq, void* workBuffer )
   case 2:
     if( BTLV_SCU_WaitBtlIn( core->scrnU ) )
     {
-      return TRUE;
+      BTLV_STRPARAM sp;
+      const BTL_POKEPARAM*  pp  = get_btl_pokeparam( core, BTLV_MCSS_POS_AA );
+      // 「○○はどうする？」表示
+      BTLV_STRPARAM_Setup( &sp, BTL_STRTYPE_STD, BTL_STRID_STD_SelectAction );
+      BTLV_STRPARAM_AddArg( &sp, BPP_GetID( pp ) );
+      BTLV_STRPARAM_SetWait( &sp, 0 );
+      BTLV_StartMsg( core, &sp );
+      (*seq)++;
     }
+    break;
+  case 3:
+    if( BTLV_WaitMsg( core ) )
+    {
+      core->procPokeParam = get_btl_pokeparam( core, BTLV_MCSS_POS_AA );
+      core->procPokeID = BPP_GetID( core->procPokeParam );
+      core->actionParam = NULL;
+      core->playerAction = BTL_ACTION_NULL;
+      core->fActionPrevButton = FALSE;
+      BTLV_SCD_StartActionSelectDemoCapture( core->scrnD, core->procPokeParam, core->fActionPrevButton, core->actionParam );
+      (*seq)++;
+    }
+    break;
+  case 4:
+    //下画面演出終了待ち
+    if( BTLV_SCD_WaitActionSelect( core->scrnD ) != BTL_ACTION_NULL )
+    { 
+      BTLV_SCD_StartWazaSelectDemoCapture( core->scrnD, core->procPokeParam, core->actionParam );
+      (*seq)++;
+    }
+    break;
+  case 5:
+    //下画面演出終了待ち
+    if( BTLV_SCD_WaitActionSelect( core->scrnD ) != BTL_ACTION_NULL )
+    {
+      const BTL_POKEPARAM*  pp  = get_btl_pokeparam( core, BTLV_MCSS_POS_AA );
+      BTLV_StartMsgWaza( core, BPP_GetID( pp ), WAZANO_HATAKU );
+      BTLV_SCD_RestartUI( core->scrnD );
+      (*seq)++;
+    }
+    break;
+  case 6:
+    if( BTLV_WaitMsg( core ) )
+    {
+      BTLV_SCU_StartWazaEffect( core->scrnU, BTLV_MCSS_POS_AA, BTLV_MCSS_POS_BB, WAZANO_HATAKU, BTLV_WAZAEFF_TURN_DEFAULT, 0 );
+      (*seq)++;
+    }
+    break;
+  case 7:
+    if( BTLV_SCU_WaitWazaEffect( core->scrnU ) )
+    { 
+      const BTL_POKEPARAM*  pp  = get_btl_pokeparam( core, BTLV_MCSS_POS_BB );
+      int value = BPP_GetValue( pp, BPP_HP ) - 5;
+
+      BTLV_EFFECT_CalcGaugeHP( BTLV_MCSS_POS_BB, value );
+      BTLV_EFFECT_Damage( BTLV_MCSS_POS_BB, WAZANO_HATAKU );
+      PMSND_PlaySE( SEQ_SE_KOUKA_M );
+      (*seq)++;
+    }
+    break;
+  case 8:
+    if( BTLV_SCU_WaitWazaDamageAct( core->scrnU ) )
+    { 
+      const BTL_POKEPARAM*  pp  = get_btl_pokeparam( core, BTLV_MCSS_POS_BB );
+      BTLV_StartMsgWaza( core, BPP_GetID( pp ), WAZANO_NIRAMITUKERU );
+      (*seq)++;
+    }
+    break;
+  case 9:
+    if( BTLV_WaitMsg( core ) )
+    { 
+      BTLV_SCU_StartWazaEffect( core->scrnU, BTLV_MCSS_POS_BB, BTLV_MCSS_POS_AA, WAZANO_NIRAMITUKERU,
+                                BTLV_WAZAEFF_TURN_DEFAULT, 0 );
+      (*seq)++;
+    }
+    break;
+  case 10:
+    if( BTLV_SCU_WaitWazaEffect( core->scrnU ) )
+    { 
+      BTLV_StartRankDownEffect( core, BTLV_MCSS_POS_AA );
+      (*seq)++;
+    }
+    break;
+  case 11:
+    if( BTLV_WaitRankEffect( core, BTLV_MCSS_POS_AA ) )
+    {
+      BTLV_STRPARAM sp;
+      const BTL_POKEPARAM*  pp  = get_btl_pokeparam( core, BTLV_MCSS_POS_AA );
+      BTLV_STRPARAM_Setup( &sp, BTL_STRTYPE_SET, BTL_STRID_SET_Rankdown_DEF );
+      BTLV_STRPARAM_AddArg( &sp, BPP_GetID( pp ) );
+      BTLV_STRPARAM_SetWait( &sp, 0 );
+      BTLV_StartMsg( core, &sp );
+      (*seq)++;
+    }
+    break;
+  case 12:
+    if( BTLV_WaitMsg( core ) )
+    { 
+      //たいりょくがへったでしょメッセージ
+      GFL_MSG_GetString( cdw->msg, msg_cappture_demo_01, core->strBuf );
+      BTLV_SCU_StartMsg( core->scrnU, core->strBuf, 0 );
+      cdw->wait = CAPTURE_DEMO_MSG_WAIT;
+      (*seq)++;
+    }
+    break;
+  case 13:
+    if( BTLV_WaitMsg( core ) )
+    { 
+      if( --cdw->wait == 0 )
+      { 
+        BTLV_SCD_StartActionSelectDemoCapture( core->scrnD, core->procPokeParam, core->fActionPrevButton, core->actionParam );
+        (*seq)++;
+      }
+    }
+    break;
+  case 14:
+    //下画面演出終了待ち
+    if( BTLV_SCD_WaitActionSelect( core->scrnD ) != BTL_ACTION_NULL )
+    { 
+      BTLV_ITEMSELECT_Start( core, BBAG_MODE_GETDEMO, 0, 0 );
+      (*seq)++;
+    }
+    break;
+  case 15:
+    if( BTLV_ITEMSELECT_Wait( core ) )
+    { 
+      //ボールなげメッセージ
+      GFL_MSG_GetString( cdw->msg, msg_cappture_demo_02, core->strBuf );
+      BTLV_SCU_StartMsg( core->scrnU, core->strBuf, 0 );
+      (*seq)++;
+    }
+    break;
+  case 16:
+    if( BTLV_WaitMsg( core ) )
+    { 
+      BTLV_EFFECT_BallThrow( BTLV_MCSS_POS_BB, ITEM_MONSUTAABOORU, 3, TRUE );
+      (*seq)++;
+    }
+    break;
+  case 17:
+    if( !BTLV_EFFECT_CheckExecute() )
+    {
+      BTLV_STRPARAM sp;
+      const BTL_POKEPARAM*  pp  = get_btl_pokeparam( core, BTLV_MCSS_POS_BB );
+      BTLV_STRPARAM_Setup( &sp, BTL_STRTYPE_STD, BTL_STRID_STD_BallThrowS );
+      BTLV_STRPARAM_AddArg( &sp, BPP_GetID( pp ) );
+      BTLV_StartMsg( core, &sp );
+      (*seq)++;
+    }
+    break;
+  case 18:
+    if( BTLV_IsJustDoneMsg( core ) )
+    {
+      PMSND_PlayBGM( SEQ_ME_POKEGET );
+    }
+    if( BTLV_WaitMsg( core ) )
+    {
+      (*seq)++;
+    }
+    break;
+  case 19:
+    if( !PMSND_CheckPlayBGM() )
+    { 
+      GFL_MSG_Delete( cdw->msg );
+      (*seq)++;
+    }
+    /*fall thru*/
+  case 20:
+    return TRUE;
     break;
   }
 
   return FALSE;
 }
 
+static  const BTL_POKEPARAM*  get_btl_pokeparam( BTLV_CORE* core, BtlvMcssPos pos )
+{ 
+  BtlPokePos  pokePos = BTL_MAIN_ViewPosToBtlPos( core->mainModule, pos );
+  return  BTL_POKECON_GetFrontPokeDataConst( core->pokeCon, pokePos );
+}
 
 //-------------------------------------------
 
@@ -429,6 +631,9 @@ static void setup_core( BTLV_CORE* wk, HEAPID heapID )
 
 //  GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 16, 0 );
 
+
+  GX_SetBankForLCDC( GX_VRAM_LCDC_H );
+  GFL_OVERLAY_Load( FS_OVERLAY_ID( vram_h ) );
 }
 static void cleanup_core( BTLV_CORE* wk )
 {

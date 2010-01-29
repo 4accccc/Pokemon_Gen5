@@ -66,10 +66,12 @@ extern void BTLV_SCD_Setup( BTLV_SCD* wk );
 extern void BTLV_SCD_RestartUI( BTLV_SCD* wk );
 
 extern void BTLV_SCD_StartActionSelect( BTLV_SCD* wk, const BTL_POKEPARAM* bpp, BOOL fPrevButton, BTL_ACTION_PARAM* dest );
+extern void BTLV_SCD_StartActionSelectDemoCapture( BTLV_SCD* wk, const BTL_POKEPARAM* bpp, BOOL fPrevButton, BTL_ACTION_PARAM* dest );
 extern BtlAction BTLV_SCD_WaitActionSelect( BTLV_SCD* wk );
 extern void BTLV_SCD_RestartActionSelect( BTLV_SCD* wk );
 
 extern void BTLV_SCD_StartWazaSelect( BTLV_SCD* wk, const BTL_POKEPARAM* bpp, BTL_ACTION_PARAM* dest );
+extern void BTLV_SCD_StartWazaSelectDemoCapture( BTLV_SCD* wk, const BTL_POKEPARAM* bpp, BTL_ACTION_PARAM* dest );
 extern BOOL BTLV_SCD_WaitWazaSelect( BTLV_SCD* wk );
 
 extern void BTLV_SCD_StartTargetSelect( BTLV_SCD* wk, const BTL_POKEPARAM* bpp, BTL_ACTION_PARAM* dest );

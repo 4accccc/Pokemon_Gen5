@@ -141,6 +141,7 @@ static void spstack_push( BTLV_SCD* wk, BPFunc initFunc, BPFunc loopFunc );
 static BOOL spstack_call( BTLV_SCD* wk );
 static BOOL selectAction_init( int* seq, void* wk_adrs );
 static BOOL selectActionRoot_loop( int* seq, void* wk_adrs );
+static BOOL selectDemoRoot_loop( int* seq, void* wk_adrs );
 static BOOL selectWaza_init( int* seq, void* wk_adrs );
 static BOOL selectWaza_loop( int* seq, void* wk_adrs );
 static void stw_init( SEL_TARGET_WORK* stw );
@@ -159,8 +160,8 @@ static void seltgt_init_setup_work( SEL_TARGET_WORK* stw, BTLV_SCD* wk );
 static BOOL selectPokemon_init( int* seq, void* wk_adrs );
 static BOOL selectPokemon_loop( int* seq, void* wk_adrs );
 static void printCommWait( BTLV_SCD* wk );
-static  inline  void  SePlayDecide( void );
-static  inline  void  SePlayCancel( void );
+static  inline  void  SePlayDecide( BTLV_SCD* wk );
+static  inline  void  SePlayCancel( BTLV_SCD* wk );
 
 BTLV_SCD*  BTLV_SCD_Create( const BTLV_CORE* vcore, const BTL_MAIN_MODULE* mainModule,
         const BTL_POKE_CONTAINER* pokeCon, GFL_TCBLSYS* tcbl, GFL_FONT* font, const BTL_CLIENT* client, HEAPID heapID )
@@ -188,7 +189,7 @@ BTLV_SCD*  BTLV_SCD_Create( const BTLV_CORE* vcore, const BTL_MAIN_MODULE* mainM
 
 void BTLV_SCD_Init( BTLV_SCD* wk )
 {
-  wk->biw = BTLV_INPUT_Init( BTL_MAIN_GetRule(wk->mainModule), wk->clientWork, wk->font, &wk->cursor_flag, wk->heapID );
+  wk->biw = BTLV_INPUT_Init( BTL_MAIN_GetRule(wk->mainModule), BTL_MAIN_GetCompetitor(wk->mainModule), wk->clientWork, wk->font, &wk->cursor_flag, wk->heapID );
 
   ///<obj
   GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
@@ -336,6 +337,15 @@ void BTLV_SCD_RestartActionSelect( BTLV_SCD* wk )
 {
   wk->selActionResult = BTL_ACTION_NULL;
 }
+void BTLV_SCD_StartActionSelectDemoCapture( BTLV_SCD* wk, const BTL_POKEPARAM* bpp, BOOL fPrevButton, BTL_ACTION_PARAM* dest )
+{
+  wk->bpp = bpp;
+  wk->destActionParam = dest;
+  wk->selActionResult = BTL_ACTION_NULL;
+  wk->fActionPrevButton = fPrevButton;
+
+  spstack_push( wk, selectAction_init, selectDemoRoot_loop );
+}
 BtlAction BTLV_SCD_WaitActionSelect( BTLV_SCD* wk )
 {
   if( spstack_call( wk ) ){
@@ -357,6 +367,14 @@ void BTLV_SCD_StartWazaSelect( BTLV_SCD* wk, const BTL_POKEPARAM* bpp, BTL_ACTIO
 BOOL BTLV_SCD_WaitWazaSelect( BTLV_SCD* wk )
 {
   return spstack_call( wk );
+}
+void BTLV_SCD_StartWazaSelectDemoCapture( BTLV_SCD* wk, const BTL_POKEPARAM* bpp, BTL_ACTION_PARAM* dest )
+{
+  wk->bpp = bpp;
+  wk->destActionParam = dest;
+  wk->selActionResult = BTL_ACTION_NULL;
+
+  spstack_push( wk, selectWaza_init, selectDemoRoot_loop );
 }
 
 void BTLV_SCD_StartTargetSelect( BTLV_SCD* wk, const BTL_POKEPARAM* bpp, BTL_ACTION_PARAM* dest )
@@ -510,11 +528,30 @@ static BOOL selectActionRoot_loop( int* seq, void* wk_adrs )
       break;
     }
 
-    SePlayDecide();
+    SePlayDecide( wk );
     return TRUE;
   }
 
   return FALSE;
+}
+
+static BOOL selectDemoRoot_loop( int* seq, void* wk_adrs )
+{
+  BTLV_SCD* wk = wk_adrs;
+  BOOL ret = FALSE;
+
+  //カメラワークエフェクト（捕獲デモはしなくていいよね？）
+  //if( !BTLV_EFFECT_CheckExecute() ){
+  //  BTLV_EFFECT_Add( BTLEFF_CAMERA_WORK );
+  //}
+
+  if( ( ret = BTLV_INPUT_CheckInputDemo( wk->biw ) ) == TRUE )
+  {
+    wk->selActionResult = BTL_ACTION_FIGHT;
+    SePlayDecide( wk );
+  }
+
+  return ret;
 }
 
 
@@ -575,7 +612,7 @@ static BOOL selectWaza_loop( int* seq, void* wk_adrs )
     //キャンセルが押された
     if( hit == 4 )
     {
-      SePlayCancel();
+      SePlayCancel( wk );
       BTL_ACTION_SetNULL( wk->destActionParam );
       return TRUE;
     }
@@ -586,13 +623,13 @@ static BOOL selectWaza_loop( int* seq, void* wk_adrs )
       waza = BPP_WAZA_GetID( wk->bpp, hit );
       BTL_ACTION_SetFightParam( wk->destActionParam, waza, BTL_POS_NULL );
 
-      SePlayDecide();
+      SePlayDecide( wk );
       return TRUE;
     }
     else if( ( BTL_MAIN_GetRule(wk->mainModule) == BTL_RULE_TRIPLE ) && ( hit == 5 ) )
     {
       BTL_ACTION_SetMoveParam( wk->destActionParam );
-      SePlayDecide();
+      SePlayDecide( wk );
       return TRUE;
     }
   }
@@ -908,7 +945,7 @@ static BOOL selectTarget_loop( int* seq, void* wk_adrs )
         {
           BtlPokePos targetPos;
 
-          SePlayDecide();
+          SePlayDecide( wk );
           if( stw_is_enable_hitpos( &wk->selTargetWork, hit, wk->mainModule, &targetPos ) )
           {
             BTL_Printf("ターゲット決定 ... hitBtn=%d, hitPos=%d, targetPos=%d\n", hit, wk->selTargetWork.pos[hit], targetPos);
@@ -919,7 +956,7 @@ static BOOL selectTarget_loop( int* seq, void* wk_adrs )
         }
         else
         {
-          SePlayCancel();
+          SePlayCancel( wk );
           wk->selTargetDone = FALSE;
           return TRUE;
         }
@@ -1022,7 +1059,7 @@ BOOL BTLV_SCD_SelectYesNo_Wait( BTLV_SCD* wk, BtlYesNo* result )
   int input = BTLV_INPUT_CheckInput( wk->biw, YesNoTouchData, YesNoKeyData );
   if( input != GFL_UI_TP_HIT_NONE )
   {
-    SePlayDecide();
+    SePlayDecide( wk );
     *result = input;
     BTLV_INPUT_CreateScreen( wk->biw, BTLV_INPUT_SCRTYPE_STANDBY, NULL );
     return TRUE;
@@ -1043,16 +1080,22 @@ u8* BTLV_SCD_GetCursorFlagPtr( BTLV_SCD* wk )
 //=============================================================================================
 //  決定音再生
 //=============================================================================================
-static  inline  void  SePlayDecide( void )
+static  inline  void  SePlayDecide( BTLV_SCD* wk )
 {
-  PMSND_PlaySE( SEQ_SE_DECIDE2 );
+  if( BTL_MAIN_GetCompetitor( wk->mainModule ) != BTL_COMPETITOR_COMM )
+  { 
+    PMSND_PlaySE( SEQ_SE_DECIDE2 );
+  }
 }
 
 //=============================================================================================
 //  キャンセル音再生
 //=============================================================================================
-static  inline  void  SePlayCancel( void )
+static  inline  void  SePlayCancel( BTLV_SCD* wk )
 {
-  PMSND_PlaySE( SEQ_SE_CANCEL2 );
+  if( BTL_MAIN_GetCompetitor( wk->mainModule ) != BTL_COMPETITOR_COMM )
+  { 
+    PMSND_PlaySE( SEQ_SE_CANCEL2 );
+  }
 }
 

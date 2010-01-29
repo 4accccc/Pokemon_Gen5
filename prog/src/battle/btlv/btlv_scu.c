@@ -417,7 +417,8 @@ void BTLV_SCU_StartBtlIn( BTLV_SCU* wk )
   switch( BTL_MAIN_GetRule(wk->mainModule) ){
   case BTL_RULE_SINGLE:
     switch( competitor ){
-    case BTL_COMPETITOR_WILD:     // –ì¶
+    case BTL_COMPETITOR_WILD:         // –ì¶
+    case BTL_COMPETITOR_DEMO_CAPTURE: // •ßŠlƒfƒ‚
     default:
       BTL_UTIL_SetupProc( &wk->proc, wk, NULL, btlin_wild_single );
       break;
@@ -649,8 +650,12 @@ static BOOL btlin_wild_single( int* seq, void* wk_adrs )
   case 4:
     if( msgWinVisible_Update(&wk->msgwinVisibleWork) )
     {
+      BtlCompetitor  competitor = BTL_MAIN_GetCompetitor( wk->mainModule );
       const MYSTATUS* status = BTL_MAIN_GetPlayerStatus( wk->mainModule );
-      if( MyStatus_GetMySex(status) == PM_MALE ){
+      if( competitor == BTL_COMPETITOR_DEMO_CAPTURE ){ 
+        BTLV_EFFECT_Add( BTLEFF_SINGLE_ENCOUNT_2_FEMALE );
+      }
+      else if( MyStatus_GetMySex(status) == PM_MALE ){
         BTLV_EFFECT_Add( BTLEFF_SINGLE_ENCOUNT_2_MALE );
       }else{
         BTLV_EFFECT_Add( BTLEFF_SINGLE_ENCOUNT_2_FEMALE );
