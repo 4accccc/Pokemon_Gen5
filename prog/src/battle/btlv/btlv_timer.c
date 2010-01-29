@@ -37,6 +37,8 @@ enum
   BTLV_TIMER_EIGHT,
   BTLV_TIMER_NINE,
 
+  BTLV_TIMER_ALERT,
+
   BTLV_TIMER_GAME_TIME_Y    = 128,
   BTLV_TIMER_COMMAND_TIME_Y = 136,
 
@@ -56,6 +58,8 @@ enum
   BTLV_TIMER_CLWK_MAX,
 
   BTLV_TIMER_1SEC_FRAME = 60,
+
+  BTLV_TIMER_MAX = 99 * 60 + 59,
 };
 
 //============================================================================================
@@ -79,12 +83,11 @@ struct  _BTLV_TIMER_WORK
   u32             cellID;
   u32             plttID;
 
-  int             minute[ BTLV_TIMER_TYPE_MAX ];
-  int             minute_temp[ BTLV_TIMER_TYPE_MAX ];
   int             second[ BTLV_TIMER_TYPE_MAX ];
+  OSTick          tick[ BTLV_TIMER_TYPE_MAX ];
 
-  int             frame[ BTLV_TIMER_TYPE_MAX ];
-
+  int             alert[ BTLV_TIMER_TYPE_MAX ];
+  
   GFL_TCB*        draw;
   GFL_TCB*        count_down;
 
@@ -98,7 +101,6 @@ struct  _BTLV_TIMER_WORK
 //============================================================================================
 static  void  BTLV_TIMER_Draw( BTLV_TIMER_WORK* btw, BTLV_TIMER_TYPE type );
 static  void  TCB_BTLV_TIMER_Draw( GFL_TCB *tcb, void *work );
-static  void	TCB_BTLV_TIMER_CountDown( GFL_TCB *tcb, void *work );
 
 //============================================================================================
 /**
@@ -127,6 +129,8 @@ BTLV_TIMER_WORK*  BTLV_TIMER_Init( HEAPID heapID )
 
   GFL_ARC_CloseDataHandle( handle );
 
+  OS_SetTick( 0 );
+
   return btw;
 }
 
@@ -154,8 +158,8 @@ void  BTLV_TIMER_Exit( BTLV_TIMER_WORK* btw )
  *  @brief  タイマー生成
  *
  *  @param[in]  btw           システム管理構造体のポインタ
- *  @param[in]  game_time     初期タイマー値（分）
- *  @param[in]  command_time  初期タイマー値（分）
+ *  @param[in]  game_time     初期タイマー値（秒）
+ *  @param[in]  command_time  初期タイマー値（秒）
  */
 //============================================================================================
 void  BTLV_TIMER_Create( BTLV_TIMER_WORK* btw, int game_time, int command_time )
@@ -194,16 +198,26 @@ void  BTLV_TIMER_Create( BTLV_TIMER_WORK* btw, int game_time, int command_time )
       GFL_CLACT_WK_SetAutoAnmFlag( btw->btcl[ i ].clwk[ j ], TRUE );
     }
   }
-  btw->minute[ BTLV_TIMER_TYPE_GAME_TIME ]         = game_time;
-  btw->minute_temp[ BTLV_TIMER_TYPE_GAME_TIME ]    = game_time;
-  btw->minute[ BTLV_TIMER_TYPE_COMMAND_TIME ]      = command_time;
-  btw->minute_temp[ BTLV_TIMER_TYPE_COMMAND_TIME ] = command_time;
 
-  BTLV_TIMER_Draw( btw, BTLV_TIMER_TYPE_GAME_TIME );
-  BTLV_TIMER_Draw( btw, BTLV_TIMER_TYPE_COMMAND_TIME );
+  if( game_time > BTLV_TIMER_MAX )
+  { 
+    game_time = BTLV_TIMER_MAX;
+  }
+  if( command_time > BTLV_TIMER_MAX )
+  { 
+    command_time = BTLV_TIMER_MAX;
+  }
+
+  btw->second[ BTLV_TIMER_TYPE_GAME_TIME ]         = game_time;
+  btw->second[ BTLV_TIMER_TYPE_COMMAND_TIME ]      = command_time;
+  btw->tick[ BTLV_TIMER_TYPE_GAME_TIME ] = btw->tick[ BTLV_TIMER_TYPE_COMMAND_TIME ] = OS_GetTick();
+
+//  BTLV_TIMER_Draw( btw, BTLV_TIMER_TYPE_GAME_TIME );
+//  BTLV_TIMER_Draw( btw, BTLV_TIMER_TYPE_COMMAND_TIME );
+  BTLV_TIMER_SetDrawEnable( btw, BTLV_TIMER_TYPE_GAME_TIME, FALSE, FALSE );
+  BTLV_TIMER_SetDrawEnable( btw, BTLV_TIMER_TYPE_COMMAND_TIME, FALSE, FALSE );
 
   btw->draw       = GFL_TCB_AddTask( BTLV_EFFECT_GetTCBSYS(), TCB_BTLV_TIMER_Draw, btw, 0 );
-	btw->count_down = GFUser_VIntr_CreateTCB( TCB_BTLV_TIMER_CountDown, btw, 0 );
 }
 
 //============================================================================================
@@ -255,9 +269,8 @@ void  BTLV_TIMER_SetDrawEnable( BTLV_TIMER_WORK* btw, BTLV_TIMER_TYPE type, BOOL
 { 
   if( ( enable == TRUE ) && ( init == TRUE ))
   { 
-    btw->minute[ type ] = btw->minute_temp[ type ];
-    btw->second[ type ] = 0;
-    btw->frame[ type ] = 0;
+    btw->tick[ type ] = OS_GetTick();
+    btw->alert[ type ] = 0;
     BTLV_TIMER_Draw( btw, type );
   }
 
@@ -274,10 +287,34 @@ void  BTLV_TIMER_SetDrawEnable( BTLV_TIMER_WORK* btw, BTLV_TIMER_TYPE type, BOOL
 //============================================================================================
 static  void  BTLV_TIMER_Draw( BTLV_TIMER_WORK* btw, BTLV_TIMER_TYPE type )
 { 
-  int minute_10 = btw->minute[ type ] / 10;
-  int minute_01 = btw->minute[ type ] % 10;
-  int second_10 = btw->second[ type ] / 10;
-  int second_01 = btw->second[ type ] % 10;
+  int alert[ BTLV_TIMER_TYPE_MAX ] = { 300, 15 };
+  int label_anm = ( type == BTLV_TIMER_TYPE_GAME_TIME ) ? BTLV_TIMER_GAME_TIME : BTLV_TIMER_COMMAND_TIME;
+  int timer = btw->second[ type ] - OS_TicksToSeconds( OS_GetTick() - btw->tick[ type ] );
+  int minute;
+  int second;
+  int minute_10;
+  int minute_01;
+  int second_10;
+  int second_01;
+
+  if( timer < 0 )
+  { 
+    timer = 0;
+  }
+
+  minute = timer / 60;
+  second = timer % 60; 
+  minute_10 = minute / 10;
+  minute_01 = minute % 10;
+  second_10 = second / 10;
+  second_01 = second % 10;
+
+  if( timer == alert[ type ] )
+  { 
+    btw->alert[ type ] = BTLV_TIMER_ALERT;
+  }
+
+  GFL_CLACT_WK_SetAnmSeq( btw->btcl[ type ].clwk[ BTLV_TIMER_LABEL ], label_anm + btw->alert[ type ] );
 
   if( minute_10 == 0 )
   { 
@@ -285,7 +322,8 @@ static  void  BTLV_TIMER_Draw( BTLV_TIMER_WORK* btw, BTLV_TIMER_TYPE type )
   }
   else
   { 
-    GFL_CLACT_WK_SetAnmSeq( btw->btcl[ type ].clwk[ BTLV_TIMER_MINUTE_10 ], BTLV_TIMER_ZERO + minute_10 );
+    GFL_CLACT_WK_SetDrawEnable( btw->btcl[ type ].clwk[ BTLV_TIMER_MINUTE_10 ], TRUE );
+    GFL_CLACT_WK_SetAnmSeq( btw->btcl[ type ].clwk[ BTLV_TIMER_MINUTE_10 ], BTLV_TIMER_ZERO + minute_10 + btw->alert[ type ] );
   }
 
   if( ( minute_10 == 0 ) && ( minute_01 == 0 ) )
@@ -295,7 +333,9 @@ static  void  BTLV_TIMER_Draw( BTLV_TIMER_WORK* btw, BTLV_TIMER_TYPE type )
   }
   else
   { 
-    GFL_CLACT_WK_SetAnmSeq( btw->btcl[ type ].clwk[ BTLV_TIMER_MINUTE_01 ], BTLV_TIMER_ZERO + minute_01 );
+    GFL_CLACT_WK_SetDrawEnable( btw->btcl[ type ].clwk[ BTLV_TIMER_MINUTE_01 ], TRUE );
+    GFL_CLACT_WK_SetDrawEnable( btw->btcl[ type ].clwk[ BTLV_TIMER_SEPATATES ], TRUE );
+    GFL_CLACT_WK_SetAnmSeq( btw->btcl[ type ].clwk[ BTLV_TIMER_MINUTE_01 ], BTLV_TIMER_ZERO + minute_01 + btw->alert[ type ] );
   }
 
   if( ( minute_10 == 0 ) && ( minute_01 == 0 ) && ( second_10 == 0 ) )
@@ -304,10 +344,11 @@ static  void  BTLV_TIMER_Draw( BTLV_TIMER_WORK* btw, BTLV_TIMER_TYPE type )
   }
   else
   { 
-    GFL_CLACT_WK_SetAnmSeq( btw->btcl[ type ].clwk[ BTLV_TIMER_SECOND_10 ], BTLV_TIMER_ZERO + second_10 );
+    GFL_CLACT_WK_SetDrawEnable( btw->btcl[ type ].clwk[ BTLV_TIMER_SECOND_10 ], TRUE );
+    GFL_CLACT_WK_SetAnmSeq( btw->btcl[ type ].clwk[ BTLV_TIMER_SECOND_10 ], BTLV_TIMER_ZERO + second_10 + btw->alert[ type ] );
   }
 
-  GFL_CLACT_WK_SetAnmSeq( btw->btcl[ type ].clwk[ BTLV_TIMER_SECOND_01 ], BTLV_TIMER_ZERO + second_01 );
+  GFL_CLACT_WK_SetAnmSeq( btw->btcl[ type ].clwk[ BTLV_TIMER_SECOND_01 ], BTLV_TIMER_ZERO + second_01 + btw->alert[ type ] );
 }
 
 //============================================================================================
@@ -321,38 +362,5 @@ static  void  TCB_BTLV_TIMER_Draw( GFL_TCB *tcb, void *work )
 
   BTLV_TIMER_Draw( btw, BTLV_TIMER_TYPE_GAME_TIME );
   BTLV_TIMER_Draw( btw, BTLV_TIMER_TYPE_COMMAND_TIME );
-}
-
-//============================================================================================
-/**
- *  @brief  タイマーカウントダウンタスク
- */
-//============================================================================================
-static  void	TCB_BTLV_TIMER_CountDown( GFL_TCB *tcb, void *work )
-{ 
-  BTLV_TIMER_WORK *btw = ( BTLV_TIMER_WORK* )work;
-  int i;
-
-  for( i = 0 ; i < BTLV_TIMER_TYPE_MAX ; i++ )
-  { 
-    btw->frame[ i ]++;
-    if( btw->frame[ i ] >= BTLV_TIMER_1SEC_FRAME )
-    { 
-      btw->frame[ i ] = 0;
-      
-      if( btw->second[ i ] == 0 )
-      { 
-        if( btw->minute[ i ] )
-        { 
-          btw->second[ i ] = 59;
-          btw->minute[ i ]--;
-        }
-      }
-      else
-      { 
-        btw->second[ i ]--;
-      }
-    }
-  }
 }
 
