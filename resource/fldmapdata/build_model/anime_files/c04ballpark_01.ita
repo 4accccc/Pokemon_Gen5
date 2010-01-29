@@ -3,7 +3,7 @@
 <ita version="1.6.0">
 
 <head>
-	<create user="ibe_mana" host="W00191" date="2010-01-27T20:06:25" source="c04ballpark_01c.mb"/>
+	<create user="ibe_mana" host="W00191" date="2010-01-29T17:27:46" source="c04ballpark_01c.mb"/>
 	<title>Texture SRT Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
@@ -44,7 +44,7 @@
 </tex_translate_data>
 
 <tex_srt_anm_array size="1">
-	<tex_srt_anm index="0" material_name="c4_bp03_1">
+	<tex_srt_anm index="0" material_name="c4_bp03">
 		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
 		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
 		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
