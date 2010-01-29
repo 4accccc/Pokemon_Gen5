@@ -93,6 +93,9 @@ bsubway_scr_def.h: bsubway_scr.ev
 crowd_people_scr_def.h: crowd_people_scr.ev
 	$(EV_DEF) crowd_people_scr.ev $(SCR_OFFS_ID_H)
 
+hyouka_scr_def.h: hyouka_scr.ev
+	$(EV_DEF) hyouka_scr.ev $(SCR_OFFS_ID_H)
+
 debug_scr_def.h: debug_scr.ev
 	$(EV_DEF) debug_scr.ev $(SCR_OFFS_ID_H)
 
