@@ -348,15 +348,25 @@ static BOOL ServerMain_WaitReady( BTL_SERVER* server, int* seq )
     if( WaitAdapterCmd(server) )
     {
       ResetAdapterCmd( server );
-      BTL_SVFLOW_Start_AfterPokemonIn( server->flowWork );
-      if( server->que->writePtr )
+
+      // 入場演出処理後、捕獲デモ以外の処理
+      if( BTL_MAIN_GetRule(server->mainModule) != BTL_COMPETITOR_DEMO_CAPTURE )
       {
-        SetAdapterCmdEx( server, BTL_ACMD_SERVER_CMD, server->que->buffer, server->que->writePtr );
-        (*seq)++;
+        BTL_SVFLOW_Start_AfterPokemonIn( server->flowWork );
+        if( server->que->writePtr )
+        {
+          SetAdapterCmdEx( server, BTL_ACMD_SERVER_CMD, server->que->buffer, server->que->writePtr );
+          (*seq)++;
+        }
+        else
+        {
+          (*seq)+=2;
+        }
       }
+      // 捕獲デモなら
       else
       {
-        (*seq)+=2;
+        setMainProc( server, ServerMain_ExitBattle );
       }
     }
     break;
