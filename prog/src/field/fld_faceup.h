@@ -10,9 +10,10 @@
 
 #include <gflib.h>
 #include "field/fieldmap_proc.h"
+#include "gamesystem/gamesystem.h"
 
 typedef struct FACEUP_WORK_tag * FACEUP_WK_PTR;
 
-extern void FLD_FACEUP_Start(const int inTypeNo, FIELDMAP_WORK * fieldmap);
-extern void FLD_FACEUP_End(FIELDMAP_WORK * fieldmap);
+extern GMEVENT *FLD_FACEUP_Start(const int inTypeNo, GAMESYS_WORK *gsys);
+extern GMEVENT *FLD_FACEUP_End(GAMESYS_WORK *gsys);
 extern void FLD_FACEUP_Change(void);

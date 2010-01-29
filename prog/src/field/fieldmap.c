@@ -3121,13 +3121,6 @@ static void Draw3DNormalMode( FIELDMAP_WORK * fieldWork )
           FIELDMAP_GetFieldPlayer(fieldWork),
           FIELDMAP_GetFldNoGridMapper( fieldWork ) );
     }
-    if (GFL_UI_KEY_GetTrg() & PAD_BUTTON_A){
-      FLD_FACEUP_Start(0, fieldWork);
-    }else if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_B){
-      FLD_FACEUP_End(fieldWork);
-    }else if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y){
-      FLD_FACEUP_Change();
-    }
   }
 #endif  //PM_DEBUG  
 

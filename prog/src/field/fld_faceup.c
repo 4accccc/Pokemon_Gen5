@@ -21,6 +21,7 @@
 
 typedef struct FACEUP_WORK_tag
 {
+  HEAPID HeapID;
   u8 BgPriority[4];
   GXPlaneMask Mask;
   GXBg23ControlText CntText;
@@ -30,21 +31,91 @@ typedef struct FACEUP_WORK_tag
 }FACEUP_WORK;
 
 
-//static FACEUP_WK_PTR TestPtr;
+static GMEVENT_RESULT SetupEvt( GMEVENT* event, int* seq, void* work );
+static void Setup(FACEUP_WK_PTR ptr);
+static GMEVENT_RESULT ReleaseEvt( GMEVENT* event, int* seq, void* work );
+static void Release(FIELDMAP_WORK * fieldmap, FACEUP_WK_PTR ptr);
 
 static void PushPriority(FACEUP_WK_PTR ptr);
 static void PushDisp(FACEUP_WK_PTR ptr);
 static void PopPriority(FACEUP_WK_PTR ptr);
 static void PopDisp(FACEUP_WK_PTR ptr);
 
-void FLD_FACEUP_Start(const int inTypeNo, FIELDMAP_WORK * fieldmap)
+GMEVENT *FLD_FACEUP_Start(const int inTypeNo, GAMESYS_WORK *gsys)
 {
+  GMEVENT * event;
   HEAPID heapID;
   FACEUP_WK_PTR ptr;
+
+  FIELDMAP_WORK *fieldmap = GAMESYSTEM_GetFieldMapWork(gsys);
 
   heapID = HEAPID_FLD3DCUTIN;
   //ワークをアロケーションして、フェイスアップデータポインタにセット
   ptr = GFL_HEAP_AllocClearMemory(heapID, sizeof(FACEUP_WORK));   //カットインヒープからアロケート
+
+  if ( *FIELDMAP_GetFaceupWkPtrAdr(fieldmap) != NULL )
+  {
+    GF_ASSERT(0);
+    return NULL;
+  }
+
+  *FIELDMAP_GetFaceupWkPtrAdr(fieldmap) = ptr;
+  ptr->HeapID = heapID;
+
+  //イベント作成
+  event = GMEVENT_Create( gsys, NULL, SetupEvt, 0 );
+  return event;
+}
+
+//--------------------------------------------------------------
+/**
+ * セットアップイベント
+ * @param     event	            イベントポインタ
+ * @param     seq               シーケンサ
+ * @param     work              ワークポインタ
+ * @return    GMEVENT_RESULT   イベント結果
+ */
+//--------------------------------------------------------------
+static GMEVENT_RESULT SetupEvt( GMEVENT* event, int* seq, void* work )
+{
+  FACEUP_WK_PTR ptr;
+  GAMESYS_WORK *gsys = GMEVENT_GetGameSysWork(event);
+  FIELDMAP_WORK *fieldmap = GAMESYSTEM_GetFieldMapWork(gsys);
+
+  ptr = *FIELDMAP_GetFaceupWkPtrAdr(fieldmap);
+
+  switch(*seq){
+  case 0:
+    //ブラックアウト開始
+    ;
+    (*seq)++;
+    break;
+  case 1:
+    //ブラックアウト待ち
+    if (0) break;
+    //セットアップ
+    Setup(ptr);
+    //ブラックイン開始
+    ;
+    (*seq)++;
+    break;
+  case 2:
+    if (1){
+      return GMEVENT_RES_FINISH;
+    }
+  }
+  return GMEVENT_RES_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * セットアップ
+ * @param     ptr	            ワークポインタ
+ * @return    none
+ */
+//--------------------------------------------------------------
+static void Setup(FACEUP_WK_PTR ptr)
+{
   //プライオリティ保存
   PushPriority(ptr);
   //表示状態の保存
@@ -66,7 +137,7 @@ void FLD_FACEUP_Start(const int inTypeNo, FIELDMAP_WORK * fieldmap)
     //キャラ
     {
       NNSG2dCharacterData *chr;
-		  buf = GFL_ARC_LoadDataAlloc( ARCID_FLD_FACEUP, NARC_fld_faceup_test_ncgr, heapID );
+		  buf = GFL_ARC_LoadDataAlloc( ARCID_FLD_FACEUP, NARC_fld_faceup_test_ncgr, ptr->HeapID );
 		  GF_ASSERT( buf != NULL );
       if( NNS_G2dGetUnpackedBGCharacterData(buf,&chr) == FALSE ){
         GF_ASSERT( 0 );
@@ -77,7 +148,7 @@ void FLD_FACEUP_Start(const int inTypeNo, FIELDMAP_WORK * fieldmap)
     //スクリーン
     {
       NNSG2dScreenData *scr;
-      buf = GFL_ARC_LoadDataAlloc( ARCID_FLD_FACEUP, NARC_fld_faceup_test_nscr, heapID );
+      buf = GFL_ARC_LoadDataAlloc( ARCID_FLD_FACEUP, NARC_fld_faceup_test_nscr, ptr->HeapID );
       GF_ASSERT( buf != NULL );
       if( NNS_G2dGetUnpackedScreenData(buf,&scr) == FALSE ){
         GF_ASSERT( 0 );
@@ -88,7 +159,7 @@ void FLD_FACEUP_Start(const int inTypeNo, FIELDMAP_WORK * fieldmap)
     //パレット
     {
       NNSG2dPaletteData *pal;
-      buf = GFL_ARC_LoadDataAlloc( ARCID_FLD_FACEUP, NARC_fld_faceup_test_nclr, heapID );
+      buf = GFL_ARC_LoadDataAlloc( ARCID_FLD_FACEUP, NARC_fld_faceup_test_nclr, ptr->HeapID );
       GF_ASSERT( buf != NULL );
       if( NNS_G2dGetUnpackedPaletteData(buf,&pal) == FALSE ){
         GF_ASSERT( 0 );
@@ -101,7 +172,7 @@ void FLD_FACEUP_Start(const int inTypeNo, FIELDMAP_WORK * fieldmap)
     //キャラ
     {
       NNSG2dCharacterData *chr;
-      buf = GFL_ARC_LoadDataAlloc( ARCID_FLD_FACEUP, NARC_fld_faceup_face_test_ncgr, heapID );
+      buf = GFL_ARC_LoadDataAlloc( ARCID_FLD_FACEUP, NARC_fld_faceup_face_test_ncgr, ptr->HeapID );
 		  GF_ASSERT( buf != NULL );
       if( NNS_G2dGetUnpackedBGCharacterData(buf,&chr) == FALSE ){
         GF_ASSERT( 0 );
@@ -112,7 +183,7 @@ void FLD_FACEUP_Start(const int inTypeNo, FIELDMAP_WORK * fieldmap)
     //スクリーン
     {
       NNSG2dScreenData *scr;
-      buf = GFL_ARC_LoadDataAlloc( ARCID_FLD_FACEUP, NARC_fld_faceup_face_test_nscr, heapID );
+      buf = GFL_ARC_LoadDataAlloc( ARCID_FLD_FACEUP, NARC_fld_faceup_face_test_nscr, ptr->HeapID );
       GF_ASSERT( buf != NULL );
       if( NNS_G2dGetUnpackedScreenData(buf,&scr) == FALSE ){
         GF_ASSERT( 0 );
@@ -123,7 +194,7 @@ void FLD_FACEUP_Start(const int inTypeNo, FIELDMAP_WORK * fieldmap)
     //パレット
     {
       NNSG2dPaletteData *pal;
-      buf = GFL_ARC_LoadDataAlloc( ARCID_FLD_FACEUP, NARC_fld_faceup_face_test_nclr, heapID );
+      buf = GFL_ARC_LoadDataAlloc( ARCID_FLD_FACEUP, NARC_fld_faceup_face_test_nclr, ptr->HeapID );
       GF_ASSERT( buf != NULL );
       if( NNS_G2dGetUnpackedPaletteData(buf,&pal) == FALSE ){
         GF_ASSERT( 0 );
@@ -136,17 +207,76 @@ void FLD_FACEUP_Start(const int inTypeNo, FIELDMAP_WORK * fieldmap)
   //表示
   GFL_BG_SetVisible( GFL_BG_FRAME2_M, VISIBLE_ON );
   GFL_BG_SetVisible( GFL_BG_FRAME3_M, VISIBLE_ON );
-
-  *FIELDMAP_GetFaceupWkPtrAdr(fieldmap) = ptr;
 }
 
-void FLD_FACEUP_End(FIELDMAP_WORK * fieldmap)
+GMEVENT *FLD_FACEUP_End(GAMESYS_WORK *gsys)
+{
+  GMEVENT * event;
+  FIELDMAP_WORK *fieldmap = GAMESYSTEM_GetFieldMapWork(gsys);
+  if ( *FIELDMAP_GetFaceupWkPtrAdr(fieldmap) == NULL )
+  {
+    GF_ASSERT(0);
+    return NULL;
+  }
+
+  //イベント作成
+  event = GMEVENT_Create( gsys, NULL, ReleaseEvt, 0 );
+  return event;
+}
+
+//--------------------------------------------------------------
+/**
+ * リリースイベント
+ * @param     event	            イベントポインタ
+ * @param     seq               シーケンサ
+ * @param     work              ワークポインタ
+ * @return    GMEVENT_RESULT   イベント結果
+ */
+//--------------------------------------------------------------
+static GMEVENT_RESULT ReleaseEvt( GMEVENT* event, int* seq, void* work )
 {
   FACEUP_WK_PTR ptr;
-  FIELD_PLACE_NAME *place_name_sys = FIELDMAP_GetPlaceNameSys( fieldmap );
-  FIELD_DEBUG_WORK *debug = FIELDMAP_GetDebugWork( fieldmap );
+  GAMESYS_WORK *gsys = GMEVENT_GetGameSysWork(event);
+  FIELDMAP_WORK *fieldmap = GAMESYSTEM_GetFieldMapWork(gsys);
 
   ptr = *FIELDMAP_GetFaceupWkPtrAdr(fieldmap);
+
+  switch(*seq){
+  case 0:
+    //ブラックアウト開始
+    ;
+    (*seq)++;
+    break;
+  case 1:
+    //ブラックアウト待ち
+    if (0) break;
+    //リリース
+    Release(fieldmap, ptr);
+    //ブラックイン開始
+    ;
+    (*seq)++;
+    break;
+  case 2:
+    if (1){
+      return GMEVENT_RES_FINISH;
+    }
+  }
+  return GMEVENT_RES_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * リリース
+ * @param     event	            イベントポインタ
+ * @param     seq               シーケンサ
+ * @param     work              ワークポインタ
+ * @return    GMEVENT_RESULT   イベント結果
+ */
+//--------------------------------------------------------------
+static void Release(FIELDMAP_WORK * fieldmap, FACEUP_WK_PTR ptr)
+{
+  FIELD_PLACE_NAME *place_name_sys = FIELDMAP_GetPlaceNameSys( fieldmap );
+  FIELD_DEBUG_WORK *debug = FIELDMAP_GetDebugWork( fieldmap );
 
   GFL_BG_ClearFrame( GFL_BG_FRAME2_M );
 
@@ -166,6 +296,7 @@ void FLD_FACEUP_End(FIELDMAP_WORK * fieldmap)
   PopDisp(ptr);
   //ワーク解放
   GFL_HEAP_FreeMemory( ptr );
+  *FIELDMAP_GetFaceupWkPtrAdr(fieldmap) = NULL;
 }
 
 //キャラ変更
