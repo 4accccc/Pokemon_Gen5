@@ -1,0 +1,25 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: fld_faceup.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+	Update:2010-01-29T11:50:32
+ *****************************************************************************/
+
+#ifndef NARC_FLD_FACEUP_NAIX_
+#define NARC_FLD_FACEUP_NAIX_
+
+enum {
+	NARC_fld_faceup_test_nclr = 0,
+	NARC_fld_faceup_face_test_nclr = 1,
+	NARC_fld_faceup_face2_test_nclr = 2,
+	NARC_fld_faceup_test_ncgr = 3,
+	NARC_fld_faceup_face_test_ncgr = 4,
+	NARC_fld_faceup_face2_test_ncgr = 5,
+	NARC_fld_faceup_test_nscr = 6,
+	NARC_fld_faceup_face_test_nscr = 7
+};
+
+/* NARC_FLD_FACEUP_NAIX_ */
+#endif

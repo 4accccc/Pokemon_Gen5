@@ -1,0 +1,8 @@
+"data/test.nclr"
+"data/face_test.nclr"
+"data/face2_test.nclr"
+"data/test.ncgr"
+"data/face_test.ncgr"
+"data/face2_test.ncgr"
+"data/test.nscr"
+"data/face_test.nscr"
