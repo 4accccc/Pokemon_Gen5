@@ -87,20 +87,22 @@ static GMEVENT_RESULT SetupEvt( GMEVENT* event, int* seq, void* work )
   switch(*seq){
   case 0:
     //ブラックアウト開始
-    ;
+    GFL_FADE_SetMasterBrightReq(
+          GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN, 0, 16, -1 );
     (*seq)++;
     break;
   case 1:
     //ブラックアウト待ち
-    if (0) break;
+    if ( GFL_FADE_CheckFade() ) break;
     //セットアップ
     Setup(ptr);
     //ブラックイン開始
-    ;
+    GFL_FADE_SetMasterBrightReq(
+          GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN, 16, 0, -1 );
     (*seq)++;
     break;
   case 2:
-    if (1){
+    if ( GFL_FADE_CheckFade() == FALSE ){
       return GMEVENT_RES_FINISH;
     }
   }
@@ -251,20 +253,22 @@ static GMEVENT_RESULT ReleaseEvt( GMEVENT* event, int* seq, void* work )
   switch(*seq){
   case 0:
     //ブラックアウト開始
-    ;
+    GFL_FADE_SetMasterBrightReq(
+          GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN, 0, 16, -1 );
     (*seq)++;
     break;
   case 1:
     //ブラックアウト待ち
-    if (0) break;
+    if ( GFL_FADE_CheckFade() ) break;
     //リリース
     Release(fieldmap, ptr);
     //ブラックイン開始
-    ;
+    GFL_FADE_SetMasterBrightReq(
+          GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN, 16, 0, -1 );
     (*seq)++;
     break;
   case 2:
-    if (1){
+    if ( GFL_FADE_CheckFade() == FALSE ){
       return GMEVENT_RES_FINISH;
     }
   }

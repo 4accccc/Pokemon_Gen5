@@ -82,6 +82,8 @@ VMCMD_RESULT EvCmdFaceup_End( VMHANDLE *core, void *wk )
   }
 
   SCRIPT_CallEvent( sc, call_event );
+
+  SCREND_CHK_SetBitOff(SCREND_CHK_FACEUP);
   
   //イベントコールするので、一度制御を返す
   return VMCMD_RESULT_SUSPEND;
