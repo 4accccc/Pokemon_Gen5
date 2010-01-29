@@ -42,6 +42,10 @@ typedef struct
   // アーカイブハンドル
   ARCHANDLE* handle;
 
+  // ゾーンデータ
+  ZONEDATA zoneData;    // 読み込んだゾーンデータ
+  u16      zoneDataID;  // どのゾーンのデータを読み込んだか
+
   // ゾーンフォグ　ライト　リスト
   ZONE_FOG_DATA* zonefoglist;
   ZONE_LIGHT_DATA* zonelightlist;
@@ -111,6 +115,9 @@ void ZONEDATA_Open( HEAPID heap_id )
       data_handle->fieldskill_mapeff_list = GFL_ARC_UTIL_LoadEx( ARCID_FLDSKILL_MAPEFF, NARC_fieldskill_mapeff_fieldskill_mapeffect_bin, FALSE, heap_id, &size );
       data_handle->fieldskill_mapeff_list_max = size / sizeof(FIELDSKILL_MAPEFF_DATA);
     }
+
+    // ゾーンデータ
+    data_handle->zoneDataID = ZONE_ID_MAX;
   }
 }
 
@@ -232,18 +239,25 @@ u16 ZONEDATA_GetZoneIDMax(void)
 }
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-static ZONEDATA * loadZoneData(HEAPID heapID)
+static ZONEDATA * loadZoneData( u16 zoneID )
 {
-  ZONEDATA * buffer;
-  if( data_handle != NULL )
+  // ハンドルがオープンされていない
+  if( data_handle == NULL )
   {
-    buffer = GFL_ARC_LoadDataAllocByHandle(data_handle->handle, NARC_zonedata_zonetable_bin, heapID);
+    GF_ASSERT( 0 && "アーカイブハンドルがオープンさせていません。" );
+    return NULL;
   }
-  else
-  {
-    buffer = GFL_ARC_LoadDataAlloc(ARCID_ZONEDATA, NARC_zonedata_zonetable_bin, heapID);
-  }
-  return buffer;
+
+  // 読み込み済み
+  if( zoneID == data_handle->zoneDataID ){ return &( data_handle->zoneData ); }  
+
+  GFL_ARC_LoadDataOfsByHandle( data_handle->handle,
+      NARC_zonedata_zonetable_bin,
+      sizeof(ZONEDATA) * zoneID, sizeof(ZONEDATA), &( data_handle->zoneData ) );
+
+  data_handle->zoneDataID = zoneID;
+
+  return &( data_handle->zoneData );
 }
 
 //------------------------------------------------------------------
@@ -287,9 +301,9 @@ static ZONEDATA * getZoneData(ZONEDATA * zdbuf, u16 zone_id)
 //------------------------------------------------------------------
 u16 ZONEDATA_GetAreaID(u16 zone_id)
 {
-  ZONEDATA zdbuf;
-  getZoneData(&zdbuf, zone_id);
-  return zdbuf.area_id;
+  ZONEDATA* zoneData;
+  zoneData = loadZoneData( zone_id );
+  return zoneData->area_id;
 }
 //------------------------------------------------------------------
 /**
@@ -300,9 +314,9 @@ u16 ZONEDATA_GetAreaID(u16 zone_id)
 //------------------------------------------------------------------
 u16 ZONEDATA_GetMatrixID(u16 zone_id)
 {
-  ZONEDATA zdbuf;
-  getZoneData(&zdbuf, zone_id);
-  return zdbuf.matrix_id;
+  ZONEDATA* zoneData;
+  zoneData = loadZoneData( zone_id );
+  return zoneData->matrix_id;
 }
 //------------------------------------------------------------------
 /**
@@ -313,9 +327,9 @@ u16 ZONEDATA_GetMatrixID(u16 zone_id)
 //------------------------------------------------------------------
 u16 ZONEDATA_GetMapRscID(u16 zone_id)
 {
-  ZONEDATA zdbuf;
-  getZoneData(&zdbuf, zone_id);
-  return zdbuf.maprsc_id;
+  ZONEDATA* zoneData;
+  zoneData = loadZoneData( zone_id );
+  return zoneData->maprsc_id;
 }
 
 //------------------------------------------------------------------
@@ -327,9 +341,9 @@ u16 ZONEDATA_GetMapRscID(u16 zone_id)
 //------------------------------------------------------------------
 u16 ZONEDATA_GetScriptArcID(u16 zone_id)
 {
-  ZONEDATA zdbuf;
-  getZoneData(&zdbuf, zone_id);
-  return zdbuf.script_id;
+  ZONEDATA* zoneData;
+  zoneData = loadZoneData( zone_id );
+  return zoneData->script_id;
 }
 
 //------------------------------------------------------------------
@@ -341,9 +355,9 @@ u16 ZONEDATA_GetScriptArcID(u16 zone_id)
 //------------------------------------------------------------------
 u16 ZONEDATA_GetSpScriptArcID(u16 zone_id)
 {
-  ZONEDATA zdbuf;
-  getZoneData(&zdbuf, zone_id);
-  return zdbuf.sp_script_id;
+  ZONEDATA* zoneData;
+  zoneData = loadZoneData( zone_id );
+  return zoneData->sp_script_id;
 }
 
 //------------------------------------------------------------------
@@ -355,9 +369,9 @@ u16 ZONEDATA_GetSpScriptArcID(u16 zone_id)
 //------------------------------------------------------------------
 u16 ZONEDATA_GetMessageArcID(u16 zone_id)
 {
-  ZONEDATA zdbuf;
-  getZoneData(&zdbuf, zone_id);
-  return zdbuf.msg_id;
+  ZONEDATA* zoneData;
+  zoneData = loadZoneData( zone_id );
+  return zoneData->msg_id;
 }
 
 //------------------------------------------------------------------
@@ -369,11 +383,11 @@ u16 ZONEDATA_GetMessageArcID(u16 zone_id)
 //------------------------------------------------------------------
 void ZONEDATA_GetStartPos(u16 zone_id, VecFx32 * pos)
 {
-  ZONEDATA zdbuf;
-  getZoneData(&zdbuf, zone_id);
-  pos->x = zdbuf.sx * FX32_ONE * FIELD_CONST_GRID_SIZE;
-  pos->y = zdbuf.sy * FX32_ONE * FIELD_CONST_GRID_SIZE;
-  pos->z = zdbuf.sz * FX32_ONE * FIELD_CONST_GRID_SIZE;
+  ZONEDATA* zoneData;
+  zoneData = loadZoneData( zone_id );
+  pos->x = zoneData->sx * FX32_ONE * FIELD_CONST_GRID_SIZE;
+  pos->y = zoneData->sy * FX32_ONE * FIELD_CONST_GRID_SIZE;
+  pos->z = zoneData->sz * FX32_ONE * FIELD_CONST_GRID_SIZE;
   TAMADA_Printf("%s x,y,z=%d,%d,%d\n",__FILE__,pos->x, pos->y, pos->z);
 }
 
@@ -387,11 +401,11 @@ void ZONEDATA_GetStartPos(u16 zone_id, VecFx32 * pos)
 //-----------------------------------------------------------------------------
 void ZONEDATA_GetStartRailPos(u16 zone_id, VecFx32 * pos)
 {
-  ZONEDATA zdbuf;
-  getZoneData(&zdbuf, zone_id);
-  pos->x = zdbuf.sx;
-  pos->y = zdbuf.sy;
-  pos->z = zdbuf.sz;
+  ZONEDATA* zoneData;
+  zoneData = loadZoneData( zone_id );
+  pos->x = zoneData->sx;
+  pos->y = zoneData->sy;
+  pos->z = zoneData->sz;
 }
 
 //------------------------------------------------------------------
@@ -403,9 +417,9 @@ void ZONEDATA_GetStartRailPos(u16 zone_id, VecFx32 * pos)
 //------------------------------------------------------------------
 u8 ZONEDATA_GetCameraID(u16 zone_id)
 {
-  ZONEDATA zdbuf;
-  getZoneData(&zdbuf, zone_id);
-  return zdbuf.camera_id;
+  ZONEDATA* zoneData;
+  zoneData = loadZoneData( zone_id );
+  return zoneData->camera_id;
 }
 
 //----------------------------------------------------------------------------
@@ -417,9 +431,9 @@ u8 ZONEDATA_GetCameraID(u16 zone_id)
 //-----------------------------------------------------------------------------
 u16 ZONEDATA_GetCameraAreaID(u16 zone_id)
 {
-  ZONEDATA zdbuf;
-  getZoneData(&zdbuf, zone_id);
-  return zdbuf.camera_area;
+  ZONEDATA* zoneData;
+  zoneData = loadZoneData( zone_id );
+  return zoneData->camera_area;
 }
 
 //------------------------------------------------------------------
@@ -433,20 +447,21 @@ u16 ZONEDATA_GetCameraAreaID(u16 zone_id)
 u16 ZONEDATA_GetBGMID(u16 zone_id, u8 season_id)
 {
   u16 bgm_id = 0;
-  ZONEDATA zdbuf;
-  getZoneData(&zdbuf, zone_id);
+  ZONEDATA* zoneData;
+  zoneData = loadZoneData( zone_id );
+
   switch (season_id) {
   case PMSEASON_SPRING:
-    bgm_id = zdbuf.bgm_spring_id;
+    bgm_id = zoneData->bgm_spring_id;
     break;
   case PMSEASON_SUMMER:
-    bgm_id = zdbuf.bgm_summer_id;
+    bgm_id = zoneData->bgm_summer_id;
     break;
   case PMSEASON_AUTUMN:
-    bgm_id = zdbuf.bgm_autumn_id;
+    bgm_id = zoneData->bgm_autumn_id;
     break;
   case PMSEASON_WINTER:
-    bgm_id = zdbuf.bgm_winter_id;
+    bgm_id = zoneData->bgm_winter_id;
     break;
   default:
     GF_ASSERT(season_id < PMSEASON_TOTAL);
@@ -467,9 +482,9 @@ u16 ZONEDATA_GetBGMID(u16 zone_id, u8 season_id)
 //------------------------------------------------------------------
 u16 ZONEDATA_GetWeatherID(u16 zone_id)
 {
-  ZONEDATA zdbuf;
-  getZoneData(&zdbuf, zone_id);
-  return zdbuf.weather_id;
+  ZONEDATA* zoneData;
+  zoneData = loadZoneData( zone_id );
+  return zoneData->weather_id;
 }
 
 //------------------------------------------------------------------
@@ -477,9 +492,9 @@ u16 ZONEDATA_GetWeatherID(u16 zone_id)
 //------------------------------------------------------------------
 BOOL ZONEDATA_BicycleEnable( u16 zone_id )
 {
-  ZONEDATA zdbuf;
-  getZoneData(&zdbuf, zone_id);
-  return zdbuf.bicycle_flag;
+  ZONEDATA* zoneData;
+  zoneData = loadZoneData( zone_id );
+  return zoneData->bicycle_flag;
 }
 
 //------------------------------------------------------------------
@@ -496,27 +511,27 @@ BOOL ZONEDATA_BicycleBGMEnable( u16 zone_id )
 //------------------------------------------------------------------
 BOOL ZONEDATA_DashEnable( u16 zone_id )
 {
-  ZONEDATA zdbuf;
-  getZoneData(&zdbuf, zone_id);
-  return zdbuf.dash_flag;
+  ZONEDATA* zoneData;
+  zoneData = loadZoneData( zone_id );
+  return zoneData->dash_flag;
 }
 //------------------------------------------------------------------
 /// 「そらをとぶ」等が使えるマップかどうか
 //------------------------------------------------------------------
 BOOL ZONEDATA_FlyEnable( u16 zone_id )
 {
-  ZONEDATA zdbuf;
-  getZoneData(&zdbuf, zone_id);
-  return zdbuf.fly_flag;
+  ZONEDATA* zoneData;
+  zoneData = loadZoneData( zone_id );
+  return zoneData->fly_flag;
 }
 //------------------------------------------------------------------
 /// 「あなぬけ」による脱出を使えるマップかどうか
 //------------------------------------------------------------------
 BOOL ZONEDATA_EscapeEnable( u16 zone_id )
 {
-  ZONEDATA zdbuf;
-  getZoneData(&zdbuf, zone_id);
-  return zdbuf.escape_flag;
+  ZONEDATA* zoneData;
+  zoneData = loadZoneData( zone_id );
+  return zoneData->escape_flag;
 }
 
 //------------------------------------------------------------------
@@ -528,9 +543,9 @@ BOOL ZONEDATA_EscapeEnable( u16 zone_id )
 //------------------------------------------------------------------
 BOOL ZONEDATA_DEBUG_IsSampleObjUse(u16 zone_id)
 {
-  ZONEDATA zdbuf;
-  getZoneData(&zdbuf, zone_id);
-  return zdbuf.movemodel_id != 0;
+  ZONEDATA* zoneData;
+  zoneData = loadZoneData( zone_id );
+  return zoneData->movemodel_id != 0;
 }
 
 //------------------------------------------------------------------
@@ -710,9 +725,9 @@ BOOL ZONEDATA_IsMusicalWaitingRoom(u16 zone_id)
 //------------------------------------------------------------------
 u16 ZONEDATA_GetPlaceNameID(u16 zone_id)
 {
-  ZONEDATA zdbuf;
-  getZoneData( &zdbuf, zone_id );
-  return zdbuf.placename_id;
+  ZONEDATA* zoneData;
+  zoneData = loadZoneData( zone_id );
+  return zoneData->placename_id;
 }
 
 //------------------------------------------------------------------
@@ -724,9 +739,9 @@ u16 ZONEDATA_GetPlaceNameID(u16 zone_id)
 //------------------------------------------------------------------
 BOOL ZONEDATA_GetPlaceNameFlag(u16 zone_id)
 {
-  ZONEDATA zdbuf;
-  getZoneData( &zdbuf, zone_id );
-  return zdbuf.placename_flag;
+  ZONEDATA* zoneData;
+  zoneData = loadZoneData( zone_id );
+  return zoneData->placename_flag;
 }
 
 //------------------------------------------------------------------
@@ -736,9 +751,9 @@ BOOL ZONEDATA_GetPlaceNameFlag(u16 zone_id)
 //------------------------------------------------------------------
 static u16 getMapType(u16 zone_id)
 {
-  ZONEDATA zdbuf;
-  getZoneData( &zdbuf, zone_id );
-  return zdbuf.maptype;
+  ZONEDATA* zoneData;
+  zoneData = loadZoneData( zone_id );
+  return zoneData->maptype;
 }
 
 //------------------------------------------------------------------
@@ -767,9 +782,9 @@ BOOL ZONEDATA_IsDungeon(u16 zone_id)
 //------------------------------------------------------------------
 BOOL ZONEDATA_IsFieldMatrixID(u16 zone_id)
 {
-  ZONEDATA zdbuf;
-  getZoneData(&zdbuf, zone_id);
-  return (zdbuf.matrix_id == NARC_map_matrix_wb_mat_bin);
+  ZONEDATA* zoneData;
+  zoneData = loadZoneData( zone_id );
+  return (zoneData->matrix_id == NARC_map_matrix_wb_mat_bin);
 }
 
 //------------------------------------------------------------------
@@ -781,9 +796,9 @@ BOOL ZONEDATA_IsFieldMatrixID(u16 zone_id)
 //------------------------------------------------------------------
 u16 ZONEDATA_GetEncountDataID(u16 zone_id)
 {
-  ZONEDATA zdbuf;
-  getZoneData(&zdbuf, zone_id);
-  return (zdbuf.enc_data_id);
+  ZONEDATA* zoneData;
+  zoneData = loadZoneData( zone_id );
+  return (zoneData->enc_data_id);
 }
 
 //------------------------------------------------------------------
@@ -795,9 +810,9 @@ u16 ZONEDATA_GetEncountDataID(u16 zone_id)
 //------------------------------------------------------------------
 u16 ZONEDATA_GetEventDataArcID(u16 zone_id)
 {
-  ZONEDATA zdbuf;
-  getZoneData(&zdbuf, zone_id);
-  return (zdbuf.event_data_id);
+  ZONEDATA* zoneData;
+  zoneData = loadZoneData( zone_id );
+  return (zoneData->event_data_id);
 }
 
 //------------------------------------------------------------------
@@ -809,9 +824,9 @@ u16 ZONEDATA_GetEventDataArcID(u16 zone_id)
 //------------------------------------------------------------------
 u8 ZONEDATA_GetBattleBGType(u16 zone_id)
 {
-  ZONEDATA zdbuf;
-  getZoneData(&zdbuf, zone_id);
-  return (zdbuf.battle_bg_type);
+  ZONEDATA* zoneData;
+  zoneData = loadZoneData( zone_id );
+  return (zoneData->battle_bg_type);
 }
 
 
