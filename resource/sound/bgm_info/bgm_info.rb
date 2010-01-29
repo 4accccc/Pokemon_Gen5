@@ -59,7 +59,7 @@ def GetSeqIndex( seq_name, file )
 	end
 
 	# 見つからなかった場合
-	return -1
+	abort( "シーケンスラベル#{seq_name}は定義されていません。" )
 end
 
 
@@ -89,13 +89,8 @@ def GetISSType( iss_type, file )
 		end
 	end
 
-	# "通常"が見つからなかった場合 ==> iss_type.def に誤りがある!! ==> 負数を返す
-	if( iss_type == "通常" ) then
-		return -1
-	end
-
-	# "通常"以外が見つからなかった場合, デフォルトの "通常" を返す
-	return GetISSType( "通常", file );
+  # 見つからず
+  abort( "ISSタイプ#{iss_type}は定義されていません。" )
 end
 
 
