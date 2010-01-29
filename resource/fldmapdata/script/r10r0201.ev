@@ -64,6 +64,7 @@ EVENT_START     ev_r10r0201_veteranm_01
   _TALK_OBJ_START()
 
   IF FLAG_ON( FE_BADGEGATE02_OPEN ) THEN
+    //「～バッジをもつものよ！さきにすすみゆうきをしめせ！」
     _BALLOONWIN_OBJMSG( msg_r10r0201_badge_03, R10R0201_VETERANM )
     _LAST_KEYWAIT()
     _BALLOONWIN_CLOSE()
@@ -108,9 +109,9 @@ ev_sub_gate_event:
   IF $SCWK_ANSWER == TRUE THEN
 
     _FLAG_SET( FE_BADGEGATE02_OPEN )
-    //バッジもってる→「うむ！よろしい！」
-    _BALLOONWIN_OBJMSG( msg_r10r0201_badge_02, R10R0201_VETERANM )
-    _BALLOONWIN_CLOSE()
+    //バッジもってる→「うむ！よろしい！」2010.01.29 テンポを良くするためカット
+    //_BALLOONWIN_OBJMSG( msg_r10r0201_badge_02, R10R0201_VETERANM )
+    //_BALLOONWIN_CLOSE()
 
     _CALL ev_sub_gate_open_demo
 
