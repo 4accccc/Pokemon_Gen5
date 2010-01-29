@@ -312,6 +312,12 @@ extern BOOL BTLV_WAZAWASURE_Wait( BTLV_CORE* wk, u8* result );
 extern void BTLV_StartSelectChangeOrEscape( BTLV_CORE* wk );
 extern BOOL BTLV_WaitSelectChangeOrEscape( BTLV_CORE* wk, u8* fSelect );
 
+//=============================================================================================
+//  時間制限によるアクション選択の強制終了対応
+//=============================================================================================
+extern void BTLV_ForceQuitInput_Notify( BTLV_CORE* wk );
+extern BOOL BTLV_ForceQuitInput_Wait( BTLV_CORE* wk );
+
 //-----------------------------------------------------------
 // 各種下請けから呼び出される関数
 

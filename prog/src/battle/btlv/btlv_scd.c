@@ -1083,7 +1083,7 @@ u8* BTLV_SCD_GetCursorFlagPtr( BTLV_SCD* wk )
 static  inline  void  SePlayDecide( BTLV_SCD* wk )
 {
   if( BTL_MAIN_GetCompetitor( wk->mainModule ) != BTL_COMPETITOR_COMM )
-  { 
+  {
     PMSND_PlaySE( SEQ_SE_DECIDE2 );
   }
 }
@@ -1094,8 +1094,22 @@ static  inline  void  SePlayDecide( BTLV_SCD* wk )
 static  inline  void  SePlayCancel( BTLV_SCD* wk )
 {
   if( BTL_MAIN_GetCompetitor( wk->mainModule ) != BTL_COMPETITOR_COMM )
-  { 
+  {
     PMSND_PlaySE( SEQ_SE_CANCEL2 );
   }
+}
+
+//=============================================================================================
+//  時間制限によるアクション選択の強制終了対応
+//=============================================================================================
+void   BTLV_SCD_ForceQuitInput_Notify( BTLV_SCD* wk )
+{
+  BTLV_INPUT_CreateScreen( wk->biw, BTLV_INPUT_SCRTYPE_STANDBY, NULL );
+}
+
+
+BOOL BTLV_SCD_ForceQuitInput_Wait( BTLV_SCD* wk )
+{
+  return TRUE;
 }
 

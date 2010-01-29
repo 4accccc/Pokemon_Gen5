@@ -194,8 +194,8 @@ static inline u8 EXPOS_GET_BASEPOS( BtlExPos exPos )
   return exPos & 0xff;
 }
 
-extern u8 BTL_MAIN_ExpandExistPokeParam( const BTL_MAIN_MODULE* wk, BTL_POKE_CONTAINER* pokeCon, BtlExPos exPos,
-    BTL_POKEPARAM** bppAry );
+extern u8 BTL_MAIN_ExpandExistPokeID( const BTL_MAIN_MODULE* wk, BTL_POKE_CONTAINER* pokeCon, BtlExPos exPos,
+     u8* pokeIDAry );
 
 //-------------------------------------------------------------------------------
 /**
@@ -253,6 +253,14 @@ extern u8 BTL_MAIN_ExpandBtlPos( const BTL_MAIN_MODULE* wk, BtlExPos exPos, u8* 
 extern u32 BTL_MAIN_GetClientTrainerID( const BTL_MAIN_MODULE* wk, u8 clientID );
 extern const MYSTATUS* BTL_MAIN_GetClientPlayerData( const BTL_MAIN_MODULE* wk, u8 clientID );
 
+
+//----------------------------------------------------------------------------------------------
+/*
+ *  êßå¿éûä‘ä÷òA
+ */
+//----------------------------------------------------------------------------------------------
+extern u32 BTL_MAIN_GetCommandLimitTime( const BTL_MAIN_MODULE* wk );
+extern u32 BTL_MAIN_GetGameLimitTime( const BTL_MAIN_MODULE * wk );
 
 
 #endif

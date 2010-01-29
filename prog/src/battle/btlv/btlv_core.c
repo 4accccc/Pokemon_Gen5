@@ -319,13 +319,13 @@ static BOOL CmdProc_Setup( BTLV_CORE* core, int* seq, void* workBuffer )
 #include "message.naix"
 #include "msg/msg_capturedemo.h"
 typedef struct
-{ 
+{
   GFL_MSGDATA*  msg;
   int           wait;
 }CAPTURE_DEMO_WORK;
 
 enum
-{ 
+{
   CAPTURE_DEMO_MSG_WAIT = 60,
 };
 
@@ -342,7 +342,7 @@ enum
 //----------------------------------------------------------------------------------
 static BOOL CmdProc_SetupDemo( BTLV_CORE* core, int* seq, void* workBuffer )
 {
-  CAPTURE_DEMO_WORK*  cdw = ( CAPTURE_DEMO_WORK* )workBuffer; 
+  CAPTURE_DEMO_WORK*  cdw = ( CAPTURE_DEMO_WORK* )workBuffer;
   switch( *seq ){
   case 0:
     setup_core( core, core->heapID );
@@ -388,7 +388,7 @@ static BOOL CmdProc_SetupDemo( BTLV_CORE* core, int* seq, void* workBuffer )
   case 4:
     //下画面演出終了待ち
     if( BTLV_SCD_WaitActionSelect( core->scrnD ) != BTL_ACTION_NULL )
-    { 
+    {
       BTLV_SCD_StartWazaSelectDemoCapture( core->scrnD, core->procPokeParam, core->actionParam );
       (*seq)++;
     }
@@ -412,7 +412,7 @@ static BOOL CmdProc_SetupDemo( BTLV_CORE* core, int* seq, void* workBuffer )
     break;
   case 7:
     if( BTLV_SCU_WaitWazaEffect( core->scrnU ) )
-    { 
+    {
       const BTL_POKEPARAM*  pp  = get_btl_pokeparam( core, BTLV_MCSS_POS_BB );
       int value = BPP_GetValue( pp, BPP_HP ) - 5;
 
@@ -424,7 +424,7 @@ static BOOL CmdProc_SetupDemo( BTLV_CORE* core, int* seq, void* workBuffer )
     break;
   case 8:
     if( BTLV_SCU_WaitWazaDamageAct( core->scrnU ) )
-    { 
+    {
       const BTL_POKEPARAM*  pp  = get_btl_pokeparam( core, BTLV_MCSS_POS_BB );
       BTLV_StartMsgWaza( core, BPP_GetID( pp ), WAZANO_NIRAMITUKERU );
       (*seq)++;
@@ -432,7 +432,7 @@ static BOOL CmdProc_SetupDemo( BTLV_CORE* core, int* seq, void* workBuffer )
     break;
   case 9:
     if( BTLV_WaitMsg( core ) )
-    { 
+    {
       BTLV_SCU_StartWazaEffect( core->scrnU, BTLV_MCSS_POS_BB, BTLV_MCSS_POS_AA, WAZANO_NIRAMITUKERU,
                                 BTLV_WAZAEFF_TURN_DEFAULT, 0 );
       (*seq)++;
@@ -440,7 +440,7 @@ static BOOL CmdProc_SetupDemo( BTLV_CORE* core, int* seq, void* workBuffer )
     break;
   case 10:
     if( BTLV_SCU_WaitWazaEffect( core->scrnU ) )
-    { 
+    {
       BTLV_StartRankDownEffect( core, BTLV_MCSS_POS_AA );
       (*seq)++;
     }
@@ -459,7 +459,7 @@ static BOOL CmdProc_SetupDemo( BTLV_CORE* core, int* seq, void* workBuffer )
     break;
   case 12:
     if( BTLV_WaitMsg( core ) )
-    { 
+    {
       //たいりょくがへったでしょメッセージ
       GFL_MSG_GetString( cdw->msg, msg_cappture_demo_01, core->strBuf );
       BTLV_SCU_StartMsg( core->scrnU, core->strBuf, 0 );
@@ -469,9 +469,9 @@ static BOOL CmdProc_SetupDemo( BTLV_CORE* core, int* seq, void* workBuffer )
     break;
   case 13:
     if( BTLV_WaitMsg( core ) )
-    { 
+    {
       if( --cdw->wait == 0 )
-      { 
+      {
         BTLV_SCD_StartActionSelectDemoCapture( core->scrnD, core->procPokeParam, core->fActionPrevButton, core->actionParam );
         (*seq)++;
       }
@@ -480,14 +480,14 @@ static BOOL CmdProc_SetupDemo( BTLV_CORE* core, int* seq, void* workBuffer )
   case 14:
     //下画面演出終了待ち
     if( BTLV_SCD_WaitActionSelect( core->scrnD ) != BTL_ACTION_NULL )
-    { 
+    {
       BTLV_ITEMSELECT_Start( core, BBAG_MODE_GETDEMO, 0, 0 );
       (*seq)++;
     }
     break;
   case 15:
     if( BTLV_ITEMSELECT_Wait( core ) )
-    { 
+    {
       //ボールなげメッセージ
       GFL_MSG_GetString( cdw->msg, msg_cappture_demo_02, core->strBuf );
       BTLV_SCU_StartMsg( core->scrnU, core->strBuf, 0 );
@@ -496,7 +496,7 @@ static BOOL CmdProc_SetupDemo( BTLV_CORE* core, int* seq, void* workBuffer )
     break;
   case 16:
     if( BTLV_WaitMsg( core ) )
-    { 
+    {
       BTLV_EFFECT_BallThrow( BTLV_MCSS_POS_BB, ITEM_MONSUTAABOORU, 3, TRUE );
       (*seq)++;
     }
@@ -524,7 +524,7 @@ static BOOL CmdProc_SetupDemo( BTLV_CORE* core, int* seq, void* workBuffer )
     break;
   case 19:
     if( !PMSND_CheckPlayBGM() )
-    { 
+    {
       GFL_MSG_Delete( cdw->msg );
       (*seq)++;
     }
@@ -538,7 +538,7 @@ static BOOL CmdProc_SetupDemo( BTLV_CORE* core, int* seq, void* workBuffer )
 }
 
 static  const BTL_POKEPARAM*  get_btl_pokeparam( BTLV_CORE* core, BtlvMcssPos pos )
-{ 
+{
   BtlPokePos  pokePos = BTL_MAIN_ViewPosToBtlPos( core->mainModule, pos );
   return  BTL_POKECON_GetFrontPokeDataConst( core->pokeCon, pokePos );
 }
@@ -2126,6 +2126,18 @@ BOOL BTLV_WAZAWASURE_Wait( BTLV_CORE* wk, u8* result )
     return TRUE;
   }
   return FALSE;
+}
+//=============================================================================================
+//  時間制限によるアクション選択の強制終了対応
+//=============================================================================================
+void BTLV_ForceQuitInput_Notify( BTLV_CORE* wk )
+{
+  BTLV_SCD_ForceQuitInput_Notify( wk->scrnD );
+}
+
+BOOL BTLV_ForceQuitInput_Wait( BTLV_CORE* wk )
+{
+  return BTLV_SCD_ForceQuitInput_Wait( wk->scrnD );
 }
 
 /*--------------------------------------------------------------------------------------------------*/

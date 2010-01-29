@@ -2364,7 +2364,7 @@ static u8 PokeID_to_ClientID( u8 pokeID )
  * @retval  u8
  */
 //=============================================================================================
-u8 BTL_MAIN_ExpandExistPokeParam( const BTL_MAIN_MODULE* wk, BTL_POKE_CONTAINER* pokeCon, BtlExPos exPos, BTL_POKEPARAM** bppAry )
+u8 BTL_MAIN_ExpandExistPokeID( const BTL_MAIN_MODULE* wk, BTL_POKE_CONTAINER* pokeCon, BtlExPos exPos, u8* pokeIDAry )
 {
   BTL_POKEPARAM* bpp;
   u8 pokePos[ BTL_POS_MAX ];
@@ -2376,7 +2376,7 @@ u8 BTL_MAIN_ExpandExistPokeParam( const BTL_MAIN_MODULE* wk, BTL_POKE_CONTAINER*
     bpp = BTL_POKECON_GetFrontPokeData( pokeCon, pokePos[i] );
     if( (bpp != NULL) && !BPP_IsDead(bpp) )
     {
-      bppAry[ existCnt++ ] = bpp;
+      pokeIDAry[ existCnt++ ] = BPP_GetID( bpp );
     }
   }
   return existCnt;
@@ -3717,6 +3717,21 @@ static BtlResult checkWinner( BTL_MAIN_MODULE* wk )
   wk->setupParam->result = result;
   return result;
 }
+//----------------------------------------------------------------------------------------------
+// 制限時間関連
+//----------------------------------------------------------------------------------------------
+
+u32 BTL_MAIN_GetCommandLimitTime( const BTL_MAIN_MODULE* wk )
+{
+//  return 8;
+  return 0;
+}
+
+u32 BTL_MAIN_GetGameLimitTime( const BTL_MAIN_MODULE * wk )
+{
+  return 30*60*60;
+}
+
 
 //----------------------------------------------------------------------------------------------
 // バトルパラメータへ書き戻し

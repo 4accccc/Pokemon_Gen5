@@ -25,6 +25,8 @@
 #include "app\b_bag.h"
 #include "app\b_plist.h"
 #include "btlv\btlv_core.h"
+#include "btlv\btlv_effect.h"
+#include "btlv\btlv_timer.h"
 
 #include "btl_client.h"
 
@@ -92,6 +94,7 @@ struct _BTL_CLIENT {
   const void*    returnDataPtr;
   u32            returnDataSize;
   u32            dummyReturnData;
+  u32            cmdLimitTime;
 
   const BTL_PARTY*  myParty;
   u8                numCoverPos;    ///< 担当する戦闘ポケモン数
@@ -112,8 +115,6 @@ struct _BTL_CLIENT {
   BTL_POKESELECT_PARAM    pokeSelParam;
   BTL_POKESELECT_RESULT   pokeSelResult;
   CANT_ESC_CONTROL        cantEscCtrl;
-  BTL_POKEPARAM           *bppToEscCheck[ BTL_POS_MAX ];
-
 
 
   HEAPID heapID;
@@ -125,6 +126,7 @@ struct _BTL_CLIENT {
   u8  shooterEnergy;
   u8  escapeClientID;
   u8  change_escape_code;
+  u8  fForceQuitSelAct;
 
   u8          myChangePokeCnt;
   u8          myPuttablePokeCnt;
@@ -150,6 +152,8 @@ static BOOL SubProc_UI_SelectAction( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_REC_SelectAction( BTL_CLIENT* wk, int* seq );
 static BOOL selact_Start( BTL_CLIENT* wk, int* seq );
 static void selact_startMsg( BTL_CLIENT* wk, const BTLV_STRPARAM* strParam );
+static BOOL CheckSelactForceQuit( BTL_CLIENT* wk );
+static BOOL selact_ForceQuit( BTL_CLIENT* wk, int* seq );
 static BOOL selact_Root( BTL_CLIENT* wk, int* seq );
 static BOOL selact_Fight( BTL_CLIENT* wk, int* seq );
 static BOOL selact_SelectChangePokemon( BTL_CLIENT* wk, int* seq );
@@ -165,6 +169,7 @@ static BOOL is_action_unselectable( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, BT
 static BOOL is_waza_unselectable( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, BTL_ACTION_PARAM* action );
 static void setWaruagakiAction( BTL_ACTION_PARAM* dst, BTL_CLIENT* wk, const BTL_POKEPARAM* bpp );
 static BOOL is_unselectable_waza( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, WazaID waza, BTLV_STRPARAM* strParam );
+static u8 StoreSelectableWazaFlag( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, u8* dst );
 static BtlCantEscapeCode isForbidEscape( BTL_CLIENT* wk, const BTL_POKEPARAM* procPoke, u8* pokeID, u16* tokuseiID );
 static BOOL checkForbitEscapeEffective_Kagefumi( BTL_CLIENT* wk, const BTL_POKEPARAM* procPoke );
 static BOOL checkForbitEscapeEffective_Arijigoku( BTL_CLIENT* wk, const BTL_POKEPARAM* procPoke );
@@ -295,6 +300,7 @@ BTL_CLIENT* BTL_CLIENT_Create(
   wk->myState = 0;
   wk->commWaitInfoOn = FALSE;
   wk->shooterEnergy = 0;
+  wk->cmdLimitTime = 0;
   // @todo デバッグ用一時措置（シューターフル充電）
 //  wk->shooterEnergy = BTL_SHOOTER_ENERGY_MAX;
 
@@ -497,6 +503,13 @@ static BOOL SubProc_UI_Setup( BTL_CLIENT* wk, int* seq )
   case 1:
     if( BTLV_WaitCommand(wk->viewCore) )
     {
+      u32 gameTime = BTL_MAIN_GetGameLimitTime( wk->mainModule );
+      u32 cmdTime = BTL_MAIN_GetCommandLimitTime( wk->mainModule );
+      if( gameTime && cmdTime )
+      {
+        BTLV_EFFECT_CreateTimer( gameTime, cmdTime );
+        wk->cmdLimitTime = cmdTime;
+      }
       return TRUE;
     }
     break;
@@ -610,11 +623,15 @@ static BOOL SubProc_UI_SelectAction( BTL_CLIENT* wk, int* seq )
 {
   switch( *seq ){
   case 0:
+    wk->fForceQuitSelAct = FALSE;
     SelActProc_Set( wk, selact_Start );
     (*seq)++;
     break;
 
   case 1:
+    if( BTLV_EFFECT_IsZero(BTLV_TIMER_TYPE_COMMAND_TIME) ){
+      wk->fForceQuitSelAct = TRUE;
+    }
     if( SelActProc_Call(wk) ){
       return TRUE;
     }
@@ -645,6 +662,8 @@ static BOOL SubProc_REC_SelectAction( BTL_CLIENT* wk, int* seq )
 
   return TRUE;
 }
+
+
 
 //----------------------------------------------------------------------
 /**
@@ -681,7 +700,9 @@ static BOOL selact_Start( BTL_CLIENT* wk, int* seq )
 
   }
 
+  BTLV_EFFECT_DrawEnableTimer( BTLV_TIMER_TYPE_COMMAND_TIME, TRUE, TRUE );
   SelActProc_Set( wk, selact_Root );
+
   return FALSE;
 }
 /**
@@ -692,6 +713,68 @@ static void selact_startMsg( BTL_CLIENT* wk, const BTLV_STRPARAM* strParam )
   BTLV_StartMsg( wk->viewCore, strParam );
   wk->fStdMsgChanged = TRUE; // 「○○はどうする？」メッセージを書き換えたフラグON
 }
+/**
+ *  時間制限による強制終了があれば、メインプロセスを切り替えてTRUEを返す
+ */
+static BOOL CheckSelactForceQuit( BTL_CLIENT* wk )
+{
+  if( wk->cmdLimitTime )
+  {
+    if( wk->fForceQuitSelAct )
+    {
+      SelActProc_Set( wk, selact_ForceQuit );
+      return TRUE;
+    }
+  }
+  return FALSE;
+}
+//----------------------------------------------------------------------
+/**
+ *  アクション選択の強制終了
+ */
+//----------------------------------------------------------------------
+static BOOL selact_ForceQuit( BTL_CLIENT* wk, int* seq )
+{
+  switch( *seq ){
+  case 0:
+    BTLV_ForceQuitInput_Notify( wk->viewCore );
+    (*seq)++;
+    break;
+  case 1:
+    if( BTLV_ForceQuitInput_Wait(wk->viewCore) )
+    {
+      while( wk->procPokeIdx < wk->numCoverPos )
+      {
+        wk->procPoke = BTL_POKECON_GetClientPokeData( wk->pokeCon, wk->myID, wk->procPokeIdx );
+        wk->procAction = &wk->actionParam[ wk->procPokeIdx ];
+        BTL_ACTION_SetNULL( wk->procAction );
+        if( !is_action_unselectable(wk, wk->procPoke,  wk->procAction) )
+        {
+          u8 usableWazaFlag[ PTL_WAZA_MAX ];
+          u8 wazaIdx = StoreSelectableWazaFlag( wk, wk->procPoke, usableWazaFlag );
+          if( wazaIdx < PTL_WAZA_MAX )
+          {
+            WazaID waza = BPP_WAZA_GetID( wk->procPoke, wazaIdx );
+            BtlPokePos  targetPos = BTL_CALC_DecideWazaTargetAuto( wk->mainModule, wk->pokeCon, wk->procPoke, waza );
+            BTL_ACTION_SetFightParam( wk->procAction, waza, targetPos );
+          }else{
+            setWaruagakiAction( wk->procAction, wk, wk->procPoke );
+          }
+        }
+        wk->procPokeIdx++;
+      }
+      (*seq)++;
+    }
+    break;
+  case 2:
+    wk->returnDataPtr = &(wk->actionParam[0]);
+    wk->returnDataSize = sizeof(wk->actionParam[0]) * wk->numCoverPos;
+    SelActProc_Set( wk, selact_Finish );
+    break;
+  }
+  return FALSE;
+}
+
 //----------------------------------------------------------------------
 /**
  *  アクション選択ルート
@@ -746,6 +829,10 @@ static BOOL selact_Root( BTL_CLIENT* wk, int* seq )
     break;
 
   case 4:
+    if( CheckSelactForceQuit(wk) ){
+      return FALSE;
+    }
+
     switch( BTLV_UI_SelectAction_Wait(wk->viewCore) ){
 
     // 入れ替えポケモン選択の場合はまだアクションパラメータが不十分->ポケモン選択へ
@@ -1267,6 +1354,7 @@ static void setWaruagakiAction( BTL_ACTION_PARAM* dst, BTL_CLIENT* wk, const BTL
   BtlPokePos myPos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, BPP_GetID(bpp) );
   BTL_ACTION_SetFightParam( dst, WAZANO_WARUAGAKI, myPos );
 }
+
 //----------------------------------------------------------------------------------
 /**
  * 使用できないワザが選ばれたかどうか判定
@@ -1408,6 +1496,42 @@ static BOOL is_unselectable_waza( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, Waza
   }
   return FALSE;
 }
+//----------------------------------------------------------------------------------
+/**
+ * 選択できるワザのIndexを全て列挙
+ *
+ * @param   wk
+ * @param   bpp
+ * @param   dst   [out] u8 x 4 の配列。選択できるワザなら対応Indexが1, それ以外は0になる
+ *
+ * @retval  u8    選択できる最初のワザIndex。選択できるワザがない場合、PTL_WAZA_MAX
+ */
+//----------------------------------------------------------------------------------
+static u8 StoreSelectableWazaFlag( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, u8* dst )
+{
+  u8 wazaCount = BPP_WAZA_GetCount( bpp );
+  u8 firstIdx = PTL_WAZA_MAX;
+  u8 i;
+
+  for(i=0; i<wazaCount; ++i )
+  {
+    if( BPP_WAZA_GetPP(bpp, i) )
+    {
+      WazaID  waza = BPP_WAZA_GetID( bpp, i );
+      dst[i] = !is_unselectable_waza( wk, bpp, waza, NULL );
+      if( (firstIdx==PTL_WAZA_MAX) && (dst[i]) ){
+        firstIdx = i;
+      }
+    }
+    else{
+      dst[i] = 0;
+    }
+  }
+  for( ; i<PTL_WAZA_MAX; ++i ){
+    dst[i] = 0;
+  }
+  return firstIdx;
+}
 
 
 //----------------------------------------------------------------------------------
@@ -1424,11 +1548,14 @@ static BOOL is_unselectable_waza( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, Waza
 //----------------------------------------------------------------------------------
 static BtlCantEscapeCode isForbidEscape( BTL_CLIENT* wk, const BTL_POKEPARAM* procPoke, u8* pokeID, u16* tokuseiID )
 {
-  BtlPokePos  myPos;
   BtlExPos    exPos;
   u16 checkTokusei;
+  BtlPokePos  myPos;
   u8 procPokeID;
   u8 checkPokeCnt, checkPokeID, i;
+  const BTL_POKEPARAM* bpp;
+
+  u8 pokeIDAry[ BTL_POS_MAX ];
 
   *tokuseiID = POKETOKUSEI_NULL;
   *pokeID = BTL_POKEID_NULL;
@@ -1437,17 +1564,18 @@ static BtlCantEscapeCode isForbidEscape( BTL_CLIENT* wk, const BTL_POKEPARAM* pr
   myPos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, procPokeID );
   exPos = EXPOS_MAKE( BTL_EXPOS_AREA_ENEMY, myPos );
 
-  checkPokeCnt = BTL_MAIN_ExpandExistPokeParam( wk->mainModule, wk->pokeCon, exPos, wk->bppToEscCheck );
+  checkPokeCnt = BTL_MAIN_ExpandExistPokeID( wk->mainModule, wk->pokeCon, exPos, pokeIDAry );
   for(i=0; i<checkPokeCnt; ++i)
   {
-    checkTokusei = BPP_GetValue( wk->bppToEscCheck[i], BPP_TOKUSEI_EFFECTIVE );
-    checkPokeID = BPP_GetID( wk->bppToEscCheck[i] );
+    bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, pokeIDAry[i] );
+    checkTokusei = BPP_GetValue( bpp, BPP_TOKUSEI_EFFECTIVE );
+    checkPokeID = BPP_GetID( bpp );
     if( checkTokusei == POKETOKUSEI_KAGEFUMI )
     {
       BTL_N_Printf( DBGSTR_CLIENT_ForbidEscape_Kagefumi_Chk, checkPokeID );
       if( checkForbitEscapeEffective_Kagefumi(wk, procPoke) ){
         BTL_N_Printf( DBGSTR_CLIENT_ForbidEscape_Kagefumi_Enable );
-        *pokeID = BPP_GetID( wk->bppToEscCheck[i] );
+        *pokeID = BPP_GetID( bpp );
         *tokuseiID = checkTokusei;
         return BTL_CANTESC_KAGEFUMI;
       }
@@ -1458,7 +1586,7 @@ static BtlCantEscapeCode isForbidEscape( BTL_CLIENT* wk, const BTL_POKEPARAM* pr
       BTL_N_Printf( DBGSTR_CLIENT_ForbidEscape_Arijigoku_Chk, checkPokeID );
       if( checkForbitEscapeEffective_Arijigoku(wk, procPoke) ){
         BTL_N_Printf( DBGSTR_CLIENT_ForbidEscape_Arijigoku_Enable );
-        *pokeID = BPP_GetID( wk->bppToEscCheck[i] );
+        *pokeID = BPP_GetID( bpp );
         *tokuseiID = checkTokusei;
         return BTL_CANTESC_KAGEFUMI;
       }
@@ -1469,7 +1597,7 @@ static BtlCantEscapeCode isForbidEscape( BTL_CLIENT* wk, const BTL_POKEPARAM* pr
       BTL_N_Printf( DBGSTR_CLIENT_ForbidEscape_Jiryoku_Chk, checkPokeID );
       if( checkForbitEscapeEffective_Arijigoku(wk, procPoke) ){
         BTL_N_Printf( DBGSTR_CLIENT_ForbidEscape_Jiryoku_Enable );
-        *pokeID = BPP_GetID( wk->bppToEscCheck[i] );
+        *pokeID = BPP_GetID( bpp );
         *tokuseiID = checkTokusei;
         return BTL_CANTESC_KAGEFUMI;
       }
@@ -1582,29 +1710,14 @@ static BOOL SubProc_AI_SelectAction( BTL_CLIENT* wk, int* seq )
 
       wazaCount = BPP_WAZA_GetCount( pp );
       {
-        u8 usableWazaIdx[ PTL_WAZA_MAX ];
-        WazaID waza;
-        u8 j, cnt=0;
-        for(j=0, cnt=0; j<PTL_WAZA_MAX; ++j)
-        {
-          usableWazaIdx[ j ] = 0;
-          if( j >= wazaCount ) continue;
-          if( BPP_WAZA_GetPP(pp, j) )
-          {
-            waza = BPP_WAZA_GetID( pp, j );
-            if( !is_unselectable_waza(wk, pp, waza, NULL) ){
-              usableWazaIdx[ j ] = waza;
-              cnt++;
-            }
-          }
-        }
+        u8 usableWazaFlag[ PTL_WAZA_MAX ];
 
-        if( cnt )
+        if( StoreSelectableWazaFlag(wk, pp, usableWazaFlag) != PTL_WAZA_MAX )
         {
           WazaID waza;
           u8  mypos = BTL_MAIN_GetClientPokePos( wk->mainModule, wk->myID, i );
 
-          TR_AI_Start( vmh, usableWazaIdx, mypos );
+          TR_AI_Start( vmh, usableWazaFlag, mypos );
           TR_AI_Main( vmh );
           wazaIdx = TR_AI_GetSelectWazaPos( vmh );
           targetPos = TR_AI_GetSelectWazaDir( vmh );

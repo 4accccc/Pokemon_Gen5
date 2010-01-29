@@ -793,3 +793,87 @@ s32 BTL_CALC_ITEM_GetParam( u16 item, u16 paramID )
 }
 
 
+
+
+//=============================================================================================
+/**
+ * ワザターゲットをランダムで自動決定
+ *
+ * @param   mainModule
+ * @param   bpp
+ * @param   waza
+ *
+ * @retval  BtlTargetPos
+ */
+//=============================================================================================
+BtlPokePos BTL_CALC_DecideWazaTargetAuto( const BTL_MAIN_MODULE* mainModule, BTL_POKE_CONTAINER* pokeCon, const BTL_POKEPARAM* bpp, WazaID waza )
+{
+  BtlRule rule = BTL_MAIN_GetRule( mainModule );
+  BtlPokePos targetPos = BTL_POS_NULL;
+  BtlPokePos myPos = BTL_MAIN_PokeIDtoPokePos( mainModule, pokeCon, BPP_GetID(bpp) );
+  WazaTarget  targetType = WAZADATA_GetParam( waza, WAZAPARAM_TARGET );
+
+  // シングル
+  if( rule == BTL_RULE_SINGLE )
+  {
+    switch( targetType ){
+    case WAZA_TARGET_OTHER_SELECT:  ///< 自分以外の１体（選択）
+    case WAZA_TARGET_ENEMY_SELECT:  ///< 敵１体（選択）
+    case WAZA_TARGET_ENEMY_RANDOM:  ///< 敵ランダム
+    case WAZA_TARGET_ENEMY_ALL:     ///< 敵側２体
+    case WAZA_TARGET_OTHER_ALL:     ///< 自分以外全部
+      targetPos = BTL_MAIN_GetOpponentPokePos( mainModule, myPos, 0 );
+      return targetPos;
+
+    case WAZA_TARGET_USER:                ///< 自分１体のみ
+    case WAZA_TARGET_FRIEND_USER_SELECT:  ///< 自分を含む味方１体
+      targetPos = myPos;
+      return targetPos;
+
+    case WAZA_TARGET_ALL:
+    case WAZA_TARGET_UNKNOWN:
+    default:
+      break;
+    }
+    return BTL_POS_NULL;
+  }
+  // ダブル、トリプル、ローテ共通
+  else
+  {
+    BtlExPos exPos;
+    u8 pokeID[ BTL_POSIDX_MAX ];
+    u8 pokeCnt = 0;
+
+    switch( targetType ){
+    case WAZA_TARGET_OTHER_SELECT:       ///< 通常ポケ（１体選択）
+    case WAZA_TARGET_ENEMY_SELECT:       ///< 相手側ポケ（１体選択）
+    case WAZA_TARGET_ENEMY_RANDOM:       ///< 相手ポケ１体ランダム
+      exPos = EXPOS_MAKE( BTL_EXPOS_AREA_ENEMY, myPos );
+      break;
+
+    case WAZA_TARGET_FRIEND_USER_SELECT: ///< 自分を含む味方ポケ（１体選択）
+      exPos = EXPOS_MAKE( BTL_EXPOS_AREA_MYTEAM, myPos );
+      break;
+
+    case WAZA_TARGET_FRIEND_SELECT:      ///< 自分以外の味方ポケ（１体選択）
+      exPos = EXPOS_MAKE( BTL_EXPOS_AREA_FRIENDS, myPos );
+      break;
+
+    case WAZA_TARGET_USER:               ///< 自分のみ
+      return myPos;
+
+    default:
+      return BTL_POS_NULL;
+    }
+
+    pokeCnt = BTL_MAIN_ExpandExistPokeID( mainModule, pokeCon, exPos, pokeID );
+    if( pokeCnt )
+    {
+      u8 rnd = BTL_CALC_GetRand( pokeCnt );
+      return BTL_MAIN_PokeIDtoPokePos( mainModule, pokeCon, pokeID[rnd] );
+    }
+
+    return BTL_POS_NULL;
+  }
+}
+

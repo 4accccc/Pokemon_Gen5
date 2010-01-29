@@ -90,4 +90,10 @@ extern BOOL BTLV_SCD_SelectRotate_Wait( BTLV_SCD* wk, BtlRotateDir* result );
 extern void BTLV_SCD_SelectYesNo_Start( BTLV_SCD* wk, BTLV_INPUT_YESNO_PARAM* param );
 extern BOOL BTLV_SCD_SelectYesNo_Wait( BTLV_SCD* wk, BtlYesNo* result );
 
+//=============================================================================================
+//  時間制限によるアクション選択の強制終了対応
+//=============================================================================================
+extern void   BTLV_SCD_ForceQuitInput_Notify( BTLV_SCD* wk );
+extern BOOL BTLV_SCD_ForceQuitInput_Wait( BTLV_SCD* wk );
+
 #endif

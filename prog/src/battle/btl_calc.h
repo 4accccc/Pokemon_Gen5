@@ -6,6 +6,7 @@
 #include "waza_tool\wazano_def.h"
 
 #include "battle\battle.h"
+#include "btl_main.h"
 #include "btl_util.h"
 #include "btl_pokeparam.h"
 #include "btl_sideeff.h"
@@ -144,6 +145,12 @@ extern u8 BTL_RULE_GetNumFrontPos( BtlRule rule );
 extern BOOL BTL_RULE_IsNeedSelectTarget( BtlRule rule );
 extern u8 BTL_RULE_HandPokeIndex( BtlRule rule, u8 numCoverPos );
 
+//=============================================================================================
+/**
+ * ワザターゲットの自動決定（ランダム）
+ */
+//=============================================================================================
+extern BtlPokePos BTL_CALC_DecideWazaTargetAuto( const BTL_MAIN_MODULE* mainModule, BTL_POKE_CONTAINER* pokeCon, const BTL_POKEPARAM* bpp, WazaID waza );
 
 
 static inline u32 BTL_CALC_MulRatio( u32 value, fx32 ratio )
