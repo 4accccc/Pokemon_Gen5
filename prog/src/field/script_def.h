@@ -238,6 +238,7 @@
 #define SCR_BOX_END_MODE_C_GEAR (1)  // C-gearまで戻る
 
 //--------------------------------------------------------------
+//  ジャッジの判定で取得する項目
 //--------------------------------------------------------------
 #define SCR_JUDGE_MODE_TOTAL      (0)
 #define SCR_JUDGE_MODE_HIGH_VALUE (1)
@@ -249,16 +250,19 @@
 #define SCR_JUDGE_MODE_SPDEF      (7)
 
 //--------------------------------------------------------------
+//  ずかん評価のモード指定
+//--------------------------------------------------------------
+#define SCR_ZUKAN_HYOUKA_MODE_AUTO    (0)   ///<自動判別（パソコン）
+#define SCR_ZUKAN_HYOUKA_MODE_LOCAL   (1)   ///<常に地方ずかん（博士・娘）
+#define SCR_ZUKAN_HYOUKA_MODE_GLOBAL  (2)   ///<常に全国ずかん（博士・父）
+
+//--------------------------------------------------------------
 //--------------------------------------------------------------
 /*
 //フラグ操作関数のモード指定用
 #define	FLAG_MODE_RESET				(0)
 #define	FLAG_MODE_SET				(1)
 #define	FLAG_MODE_GET				(2)
-
-//図鑑モード
-#define SCR_SHINOU_ZUKAN_MODE	0
-#define SCR_ZENKOKU_ZUKAN_MODE	1
 
 //パソコンアニメ管理ナンバー
 #define SCR_PASO_ANM_NO		90
