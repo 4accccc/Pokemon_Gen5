@@ -1250,6 +1250,7 @@ SRCS_OVERLAY_GDS_COMM =	net_app/gds/gds_data_conv.c \
 # WIFI2DMAP
 #####===> SRCS_OVERLAY_WIFILOBBY_ROOM
 #===> SRCS_OVERLAY_WIFICLUB
+#===> SRCS_OVERLAY_UI_COMMON
 SRCS_OVERLAY_WIFI2DMAP  = net_app/wifi2dmap/wifi_2dchar.c \
               net_app/wifi2dmap/wf2dmap_map.c \
               net_app/wifi2dmap/wf2dmap_obj.c \
