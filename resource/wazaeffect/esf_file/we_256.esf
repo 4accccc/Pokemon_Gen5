@@ -6,7 +6,6 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\w_256.spa
 カメラ移動	追従	攻撃側	16	0	8
 エフェクト終了待ち	すべて
 制御モード変更	継続
-SE再生	SEQ_SE_W051_01	SE2	0	0	0	0	0
 SE再生	SEQ_SE_W254_04	SE1	0	0	127	0	0
 SE再生	SEQ_SE_W307_03	SE1	80	0	110	0	0
 SE再生	SEQ_SE_W113_02	SE2	90	0	40	0	0

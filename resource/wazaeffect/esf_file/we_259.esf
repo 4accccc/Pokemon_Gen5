@@ -7,10 +7,10 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\w_259.spa
 カメラ移動	追従	攻撃側	16	0	12
 ポケモンアニメ	攻撃側	アニメストップ
 制御モード変更	継続
-SE再生	SEQ_SE_W259_BOSO	SE2	0	-300	120	0	0
-SE再生	SEQ_SE_W259_BOSO	SE2	45	-300	120	0	0
-SE再生	SEQ_SE_W259_BOSO	SE2	90	-300	120	0	0
-SE再生	SEQ_SE_W259_BOSO	SE2	130	-300	120	0	0
+SE再生	SEQ_SE_W259_BOSO	SE2	0	-1000	50	0	0
+SE再生	SEQ_SE_W259_BOSO	SE2	45	-1000	50	0	0
+SE再生	SEQ_SE_W259_BOSO	SE2	90	-1000	50	0	0
+SE再生	SEQ_SE_W259_BOSO	SE2	130	-1000	50	0	0
 SEパン	SE2	追従	攻撃側	攻撃側	0	140:0:0
 制御モード変更	逐次
 パーティクルデータロード	w_259
