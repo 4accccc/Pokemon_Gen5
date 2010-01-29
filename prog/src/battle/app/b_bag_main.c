@@ -252,12 +252,12 @@ void BattleBag_TaskAdd( BBAG_DATA * dat )
   wk->dat = dat;
   wk->pfd = BTLV_EFFECT_GetPfd();
 
-  if( wk->dat->mode == BBAG_MODE_NORMAL ){
-    wk->page = BBAG_PAGE_POCKET;
-    wk->seq  = SEQ_BBAG_INIT;
-  }else{
+  if( wk->dat->mode == BBAG_MODE_SHOOTER ){
     wk->page = BBAG_PAGE_MAIN;
     wk->seq  = SEQ_BBAG_SHOOTER_INIT;
+  }else{
+    wk->page = BBAG_PAGE_POCKET;
+    wk->seq  = SEQ_BBAG_INIT;
   }
 
 //  ƒeƒXƒgˆ—
