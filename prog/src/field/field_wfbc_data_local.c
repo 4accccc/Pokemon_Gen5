@@ -82,9 +82,11 @@ static const MMDL_HEADER sc_DEFAULT_ITEM_HEADER =
 */
 //-----------------------------------------------------------------------------
 
+static const FIELD_WFBC_PEOPLE_DATA* WFBC_CORE_GetNotUseNpc_HitPercent( const FIELD_WFBC_CORE* cp_wk, u32 hit_percent, FIELD_WFBC_PEOPLE_DATA_LOAD* p_loader, int* p_setidx );
 static u32 WFBC_CORE_GetNotUseNpcID( const FIELD_WFBC_CORE* cp_wk, int idx );
 static u32 WFBC_CORE_GetNotUseNpcIndex( const FIELD_WFBC_CORE* cp_wk, int idx );
 static BOOL WFBC_CORE_IsUseNpc( const FIELD_WFBC_CORE* cp_wk, int npc_id );
+
 
 // 人データをソート
 static void WFBC_CORE_SortPeopleArray( FIELD_WFBC_CORE_PEOPLE* p_array, HEAPID heapID );
@@ -176,13 +178,14 @@ void FIELD_WFBC_CORE_SetUp( FIELD_WFBC_CORE* p_wk, const MYSTATUS* cp_mystatus, 
 {
   int i;
   int pos_idx;
-  int npc_idx;
+  int npc_hit_per;
   int set_npc_idx;
   FIELD_WFBC_CORE_PEOPLE* p_people;
   FIELD_WFBC_PEOPLE_DATA_LOAD* p_loader;
   const FIELD_WFBC_PEOPLE_DATA* cp_data;
   u32 mood;
   BOOL parent_set;
+  int hit_percent_total_num = FIELD_WFBC_HIT_PERCENT_MAX;
   GF_ASSERT( p_wk );
   
   p_wk->data_in = TRUE;
@@ -201,14 +204,11 @@ void FIELD_WFBC_CORE_SetUp( FIELD_WFBC_CORE* p_wk, const MYSTATUS* cp_mystatus, 
   for( i=0; i<FIELD_WFBC_INIT_PEOPLE_NUM; i++ )
   {
     // 設定位置と人を選ぶ
-    npc_idx = GFUser_GetPublicRand( FIELD_WFBC_NPCID_MAX - i );
+    npc_hit_per = GFUser_GetPublicRand( hit_percent_total_num );
 
     p_people  = WFBC_CORE_GetClearPeopleArray( p_wk->people );
-    set_npc_idx = WFBC_CORE_GetNotUseNpcID( p_wk, npc_idx );
+    cp_data = WFBC_CORE_GetNotUseNpc_HitPercent( p_wk, npc_hit_per, p_loader, &set_npc_idx );
 
-    // NPC情報読み込み
-    FIELD_WFBC_PEOPLE_DATA_Load( p_loader, set_npc_idx );
-    
     if( p_wk->type == FIELD_WFBC_CORE_TYPE_BLACK_CITY ){
       mood = cp_data->mood_bc;
       parent_set = TRUE;
@@ -217,6 +217,27 @@ void FIELD_WFBC_CORE_SetUp( FIELD_WFBC_CORE* p_wk, const MYSTATUS* cp_mystatus, 
       parent_set = FALSE;
     }
     WFBC_CORE_SetUpPeople( p_people, set_npc_idx, cp_mystatus, mood, parent_set );
+
+    // 相対値を計算しなおす
+    hit_percent_total_num -= cp_data->hit_percent;
+    GF_ASSERT( hit_percent_total_num > 0 );
+  }
+
+  // サブ面にも3体おく
+  for( i=0; i<FIELD_WFBC_INIT_BACK_PEOPLE_NUM; i++ )
+  {
+    // 設定位置と人を選ぶ
+    npc_hit_per = GFUser_GetPublicRand( hit_percent_total_num );
+
+    p_people  = WFBC_CORE_GetClearPeopleArray( p_wk->back_people );
+    cp_data = WFBC_CORE_GetNotUseNpc_HitPercent( p_wk, npc_hit_per, p_loader, &set_npc_idx );
+    
+    mood = 0;
+    WFBC_CORE_SetUpPeople( p_people, set_npc_idx, cp_mystatus, mood, parent_set );
+
+    // 相対値を計算しなおす
+    hit_percent_total_num -= cp_data->hit_percent;
+    GF_ASSERT( hit_percent_total_num > 0 );
   }
 
   FIELD_WFBC_PEOPLE_DATA_Delete( p_loader );
@@ -1285,6 +1306,44 @@ void FIELD_WFBC_EVENT_SetWFPokeCatchEventItem( FIELD_WFBC_EVENT* p_wk, u16 item 
  *        private関数
  */
 //-----------------------------------------------------------------------------
+//----------------------------------------------------------------------------
+/**
+ *	@brief  HITPERCENT計算つきの、NPCセットアップ
+ *
+ *	@param	cp_wk         ワーク
+ *	@param	hit_percent   今回のヒットpercent値
+ *	@param	p_loader      ローダー
+ */
+//-----------------------------------------------------------------------------
+static const FIELD_WFBC_PEOPLE_DATA* WFBC_CORE_GetNotUseNpc_HitPercent( const FIELD_WFBC_CORE* cp_wk, u32 hit_percent, FIELD_WFBC_PEOPLE_DATA_LOAD* p_loader, int* p_setidx )
+{
+  int i;
+  u32 npc_id = 0;
+  u32 hit_percent_total = 0;
+  const FIELD_WFBC_PEOPLE_DATA* cp_data;
+
+  cp_data = FIELD_WFBC_PEOPLE_DATA_GetData( p_loader );
+
+  for( i=0; i<FIELD_WFBC_NPCID_MAX; i++ )
+  {
+    npc_id = WFBC_CORE_GetNotUseNpcID( cp_wk, i );
+
+    // NPC情報読み込み
+    FIELD_WFBC_PEOPLE_DATA_Load( p_loader, npc_id );
+    hit_percent_total += cp_data->hit_percent;  
+
+    if( hit_percent_total > hit_percent ){
+      (*p_setidx) = npc_id;
+      // こいつを登録
+      return cp_data;
+    }
+  }
+
+  TOMOYA_Printf( "WFBC_CORE_GetNotUseNpc_HitPercent おかしい。\n" );
+  GF_ASSERT( 0 );
+  return cp_data;
+}
+
 //----------------------------------------------------------------------------
 /**
  *	@brief  まだ、人物データとして保持していない人物のIDX番目を取得する

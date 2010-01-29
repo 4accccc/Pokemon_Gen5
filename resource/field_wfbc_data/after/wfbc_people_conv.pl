@@ -146,20 +146,7 @@ foreach $one ( @EXCEL )
 
 
 #情報の出力
-
-#まずヘッダー
-open( FILEOUT, ">".$ARGV[11] );
-
-print( FILEOUT "// output resource/field_wfbc_data/wfbc_people_conv.pl\n" );
-print( FILEOUT "#pragma once\n" );
-
-print( FILEOUT "//-------------------------------------\n" );
-print( FILEOUT "///	NPCIDの最大値\n" );
-print( FILEOUT "//=====================================\n" );
-print( FILEOUT "#define FIELD_WFBC_NPCID_MAX  ( $PEOPLE_MAX )\n" );
-
-close( FILEOUT );
-
+$TOTAL_HIT_PERCENT = 0;
 
 for( $i=0; $i<$PEOPLE_MAX; $i++ )
 {
@@ -240,6 +227,8 @@ for( $i=0; $i<$PEOPLE_MAX; $i++ )
   #出現率
   $outnum = $PP_DATA[ $index + $PP_DATA_IDX_HIT_PERCENT ];
   print( FILEOUT pack( "S", $outnum ) );
+  $TOTAL_HIT_PERCENT  += $outnum; #出現相対値の最大数計算
+  
   #ブロック計算補正値
   $outnum = $PP_DATA[ $index + $PP_DATA_IDX_BLOCK_PARAM ];
   print( FILEOUT pack( "S", $outnum ) );
@@ -247,6 +236,27 @@ for( $i=0; $i<$PEOPLE_MAX; $i++ )
   
   close( FILEOUT );
 }
+
+
+
+#ヘッダー
+open( FILEOUT, ">".$ARGV[11] );
+
+print( FILEOUT "// output resource/field_wfbc_data/wfbc_people_conv.pl\n" );
+print( FILEOUT "#pragma once\n" );
+
+print( FILEOUT "//-------------------------------------\n" );
+print( FILEOUT "///	NPCIDの最大値\n" );
+print( FILEOUT "//=====================================\n" );
+print( FILEOUT "#define FIELD_WFBC_NPCID_MAX  ( $PEOPLE_MAX )\n" );
+
+print( FILEOUT "\n//-------------------------------------\n" );
+print( FILEOUT "///	出現相対値の最大値\n" );
+print( FILEOUT "//=====================================\n" );
+print( FILEOUT "#define FIELD_WFBC_HIT_PERCENT_MAX  ( $TOTAL_HIT_PERCENT )\n" );
+
+close( FILEOUT );
+
 
 
 exit(0);

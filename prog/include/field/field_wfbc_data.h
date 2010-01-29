@@ -107,6 +107,7 @@ typedef enum
 //=====================================
 #define FIELD_WFBC_PEOPLE_MAX ( 10 )
 #define FIELD_WFBC_INIT_PEOPLE_NUM ( 10 ) // 初期化での人の数を変更
+#define FIELD_WFBC_INIT_BACK_PEOPLE_NUM ( 3 ) // 初期化での人の数を変更
 
 
 
