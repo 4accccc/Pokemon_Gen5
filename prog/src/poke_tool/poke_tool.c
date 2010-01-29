@@ -1695,7 +1695,7 @@ u32  POKETOOL_CalcPersonalRand( u16 mons_no, u16 form_no, u8 sex )
  * @param[in] mons_no			個性乱数を計算するモンスターナンバー
  * @param[in] form_no     フォルムーナンバー（不要なら PTR_FORM_NONE）
  * @param[in] sex					性別
- * @param[in] tokusei			特性（ 0 or 1 で指定 ）
+ * @param[in] tokusei			特性（ 0 or 1 で指定 ）進化後に特性１or特性２になるかを指定するためのものです
  * @param[in] rare_flag		レアにするかどうか( FALSE:レアではない　TRUE:レアにする ）
  *
  * @retval	計算した個性乱数
