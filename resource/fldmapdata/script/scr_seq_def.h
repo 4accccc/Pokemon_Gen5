@@ -7130,3 +7130,43 @@
   .short EV_SEQ_SEARCH_POKEID_NUM
   .short \ret
   .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief 顔アップ開始
+ * @param ret       検索結果
+ */
+//--------------------------------------------------------------
+#define _START_FACEUP( back_idx, char_idx ) _ASM_START_FACEUP back_idx, char_idx
+
+  .macro  _ASM_START_FACEUP back_idx, char_idx
+  .short EV_SEQ_FACEUP_SATRT
+  .short \back_idx
+  .short \char_idx
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief 顔アップ終了
+ * @param ret       検索結果
+ */
+//--------------------------------------------------------------
+#define _END_FACEUP() _ASM_END_FACEUP
+
+  .macro  _ASM_END_FACEUP
+  .short EV_SEQ_FACEUP_END
+  .endm
+  
+//--------------------------------------------------------------
+/**
+ * @brief 顔アップ 顔j変更
+ * @param ret       検索結果
+ */
+//--------------------------------------------------------------
+#define _CHANGE_FACEUP( char_idx ) _ASM_CHANGE_FACEUP char_idx
+
+  .macro  _ASM_CHANGE_FACEUP char_idx
+  .short EV_SEQ_FACEUP_CHG
+  .short \char_idx
+  .endm
+

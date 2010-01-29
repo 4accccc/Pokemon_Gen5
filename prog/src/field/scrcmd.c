@@ -76,6 +76,7 @@
 #include "scrcmd_c03center.h"
 #include "scrcmd_crowd_people.h"
 #include "scrcmd_pokeid_search.h"
+#include "scrcmd_faceup.h"
 
 #include "../../../resource/fldmapdata/script/usescript.h"
 
@@ -125,11 +126,12 @@ static const SCR_END_CHECK_FUNC CheckEndFuncTbl[] = {
   SCREND_CheckEndCamera,
   SCREND_CheckEndWin,
   SCREND_CheckEndBallonWin,
-  /*ここにスクリプト終了時の終了関数を追加してください*/
   SCREND_CheckEndPlainWin,
   SCREND_CheckEndBGWin,
   SCREND_CheckEndSubWin,
   SCREND_CheckEndSpWin,
+  SCREND_CheckEndFaceup,
+  /*ここにスクリプト終了時の終了関数を追加してください*/
   NULL,   //テーブル終了検出用
 };
 

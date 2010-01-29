@@ -25,11 +25,12 @@ typedef enum
   SCREND_CHK_CAMERA = 0,
   SCREND_CHK_WIN_OPEN,
   SCREND_CHK_BALLON_WIN_OPEN,
-  /*‚±‚±‚É’è‹`‚ð’Ç‰Á‚µ‚Ä‚­‚¾‚³‚¢*/
   SCREND_CHK_PLAINWIN_OPEN,
   SCREND_CHK_BGWIN_OPEN,
   SCREND_CHK_SUBWIN_OPEN,
   SCREND_CHK_SPWIN_OPEN,
+  SCREND_CHK_FACEUP,
+  /*‚±‚±‚É’è‹`‚ð’Ç‰Á‚µ‚Ä‚­‚¾‚³‚¢*/
   SCREND_CHK_MAX
 }SCREND_CHK;
 

@@ -41,7 +41,7 @@ static void PushDisp(FACEUP_WK_PTR ptr);
 static void PopPriority(FACEUP_WK_PTR ptr);
 static void PopDisp(FACEUP_WK_PTR ptr);
 
-GMEVENT *FLD_FACEUP_Start(const int inTypeNo, GAMESYS_WORK *gsys)
+GMEVENT *FLD_FACEUP_Start(const int inBackNo, const int inCharNo, GAMESYS_WORK *gsys)
 {
   GMEVENT * event;
   HEAPID heapID;
@@ -222,6 +222,13 @@ GMEVENT *FLD_FACEUP_End(GAMESYS_WORK *gsys)
   //ÉCÉxÉìÉgçÏê¨
   event = GMEVENT_Create( gsys, NULL, ReleaseEvt, 0 );
   return event;
+}
+
+void FLD_FACEUP_Release( FIELDMAP_WORK *fieldmap )
+{
+  FACEUP_WK_PTR ptr;
+  ptr = *FIELDMAP_GetFaceupWkPtrAdr(fieldmap);
+  Release(fieldmap, ptr);
 }
 
 //--------------------------------------------------------------

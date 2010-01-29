@@ -818,6 +818,12 @@
   NO_CMD()
   NO_CMD()
 
+  //顔アップ
+  DEF_CMD( EvCmdFaceup_Start, EV_SEQ_FACEUP_SATRT )
+  DEF_CMD( EvCmdFaceup_End, EV_SEQ_FACEUP_END )
+  DEF_CMD( EvCmdFaceup_Change, EV_SEQ_FACEUP_CHG )
+  NO_CMD()
+
   END_CMD
   //スクリプトコマンドテーブル終了
 
