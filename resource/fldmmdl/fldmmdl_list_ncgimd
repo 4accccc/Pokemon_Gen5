@@ -85,13 +85,31 @@ FMMDL_RESLIST_NCGIMD = \
 	leader1c.imd \
 	leader4.imd \
 	leader8w.imd \
+	sage1.imd \
+	sage2.imd \
 	goddess1.imd \
+	boss.imd \
 	hakase2.imd \
 	icpo.imd \
 	tree.imd \
 	rock.imd \
 	monsterball.imd \
 	pikachu.imd \
+	poke2.imd \
+	poke3.imd \
+	poke4.imd \
+	poke5.imd \
+	poke6.imd \
+	poke9.imd \
+	poke11.imd \
+	poke12.imd \
+	poke13.imd \
+	poke14.imd \
+	poke16.imd \
+	poke17.imd \
+	poke18.imd \
+	poke19.imd \
+	poke20.imd \
 	accordion.imd \
 	basketm.imd \
 	support.imd \
@@ -120,11 +138,19 @@ FMMDL_RESLIST_NCGIMD = \
 	leader1b.imd \
 	leader1a.imd \
 	corn.imd \
+	ninja.imd \
 	espm.imd \
 	espw.imd \
 	poke21.imd \
 	danpei.imd \
+	sage3.imd \
+	sage4.imd \
+	sage5.imd \
+	sage6.imd \
+	sage7.imd \
 	goddess2.imd \
+	poke22.imd \
+	poke23.imd \
 	tsure_001.imd \
 	tsure_002.imd \
 	tsure_003.imd \
