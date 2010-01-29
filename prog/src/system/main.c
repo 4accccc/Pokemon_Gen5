@@ -61,6 +61,17 @@ static void DEBUG_StackOverCheck(void);
 //FS_EXTERN_OVERLAY(title);
 FS_EXTERN_OVERLAY(notwifi);
 
+
+//-------------------------------------
+///	バトルのライトの実験
+//  tomoya takahshi 2010 1 29
+//=====================================
+#ifdef PM_DEBUG
+#include "field/field_light_status.h"
+
+FIELD_LIGHT_STATUS DEBUG_light_data;
+#endif
+
 //------------------------------------------------------------------
 /**
  * @brief	メイン処理
