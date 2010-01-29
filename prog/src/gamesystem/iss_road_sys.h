@@ -26,6 +26,5 @@ extern void          ISS_ROAD_SYS_Delete( ISS_ROAD_SYS* system );
 extern void ISS_ROAD_SYS_Update( ISS_ROAD_SYS* system );
 
 // êßå‰
-extern void ISS_ROAD_SYS_On  ( ISS_ROAD_SYS* system );
-extern void ISS_ROAD_SYS_Off ( ISS_ROAD_SYS* system );
-extern BOOL ISS_ROAD_SYS_IsOn( const ISS_ROAD_SYS* system );
+extern void ISS_ROAD_SYS_On ( ISS_ROAD_SYS* system );
+extern void ISS_ROAD_SYS_Off( ISS_ROAD_SYS* system );

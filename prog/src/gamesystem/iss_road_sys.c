@@ -15,6 +15,7 @@
 //================================================================================
 // ■定数
 //================================================================================
+#define PRINT_DEST     (2)    // デバッグ情報の出力先
 #define MIN_VOLUME     (0)	  // 最低音量
 #define MAX_VOLUME     (127)	// 最大音量
 #define FADE_IN_SPEED  (8)	  // フェード イン速度
@@ -23,13 +24,18 @@
 
 
 //================================================================================
-// ■非公開関数のプロトタイプ宣言
+// ■非公開関数
 //================================================================================
-static BOOL IsVecEqual( const VecFx32* p_vec1, const VecFx32* p_vec2 );
-static void BootSystem( ISS_ROAD_SYS* sys );
-static void StopSystem( ISS_ROAD_SYS* sys );
-static void UpdateVolume( ISS_ROAD_SYS* sys );
-static void AddVolume( ISS_ROAD_SYS* sys, int val );
+// システム制御
+static void BootSystem( ISS_ROAD_SYS* system );
+static void StopSystem( ISS_ROAD_SYS* system );
+static void SystemMain( ISS_ROAD_SYS* system ); 
+// 自機の監視
+static BOOL CheckPlayerMove( ISS_ROAD_SYS* system ); 
+// ボリューム制御
+static void VolumeUp  ( ISS_ROAD_SYS* system );
+static void VolumeDown( ISS_ROAD_SYS* system );
+static void ChangeTrackVolume( const ISS_ROAD_SYS* system );
 
 
 //================================================================================
@@ -37,9 +43,8 @@ static void AddVolume( ISS_ROAD_SYS* sys, int val );
 //================================================================================
 struct _ISS_ROAD_SYS
 {
-	HEAPID heapID; 
-	BOOL   boot;               // 起動しているかどうか
-	int    targetTrackVolume;  // 操作対象トラックのボリューム
+	BOOL boot;               // 起動しているかどうか
+	int  targetTrackVolume;  // 操作対象トラックのボリューム
 
 	PLAYER_WORK* player;        // 監視対象プレイヤー
 	VecFx32      prevPlayerPos; // 前回監視時のプレイヤー座標
@@ -52,104 +57,83 @@ struct _ISS_ROAD_SYS
 
 //--------------------------------------------------------------------------------
 /**
- * @brief  道路ISSシステムを作成する
+ * @brief 道路ISSシステムを作成する
  *
- * @param  p_player 監視対象のプレイヤー
- * @param  heap_id  使用するヒープID
+ * @param player 監視対象のプレイヤー
+ * @param heapID 使用するヒープID
  * 
  * @return 道路ISSシステム
  */
 //--------------------------------------------------------------------------------
-ISS_ROAD_SYS* ISS_ROAD_SYS_Create( PLAYER_WORK* p_player, HEAPID heap_id )
+ISS_ROAD_SYS* ISS_ROAD_SYS_Create( PLAYER_WORK* player, HEAPID heapID )
 {
-	ISS_ROAD_SYS* sys;
+	ISS_ROAD_SYS* system;
 
-	// メモリ確保
-	sys = (ISS_ROAD_SYS*)GFL_HEAP_AllocMemory( heap_id, sizeof( ISS_ROAD_SYS ) );
+	// 生成
+	system = (ISS_ROAD_SYS*)GFL_HEAP_AllocMemory( heapID, sizeof( ISS_ROAD_SYS ) );
 
-	// 初期設定
-	sys->heapID        = heap_id;
-	sys->boot      = FALSE;
-	sys->targetTrackVolume        = MIN_VOLUME;
-	sys->player       = p_player;
-	sys->prevPlayerPos = *( PLAYERWORK_getPosition( p_player ) );
+	// 初期化
+	system->boot              = FALSE;
+	system->targetTrackVolume = MIN_VOLUME;
+	system->player            = player;
+	system->prevPlayerPos     = *( PLAYERWORK_getPosition( player ) );
 
   // DEBUG:
-  OBATA_Printf( "ISS-R: create\n" );
+  OS_TFPrintf( PRINT_DEST, "ISS-R: create\n" );
 	
-	// 作成した道路ISSシステムを返す
-	return sys;
+	return system;
 }
 
 //--------------------------------------------------------------------------------
 /**
- * @brief  道路ISSシステムを破棄する
+ * @brief 道路ISSシステムを破棄する
  *
- * @param sys 破棄する道路ISSシステム 
+ * @param system
  */
 //--------------------------------------------------------------------------------
-void ISS_ROAD_SYS_Delete( ISS_ROAD_SYS* sys )
+void ISS_ROAD_SYS_Delete( ISS_ROAD_SYS* system )
 {
-	GFL_HEAP_FreeMemory( sys );
+	GFL_HEAP_FreeMemory( system );
 
   // DEBUG:
-  OBATA_Printf( "ISS-R: delete\n" );
+  OS_TFPrintf( PRINT_DEST, "ISS-R: delete\n" );
 }
 
 //--------------------------------------------------------------------------------
 /**
- * @brief プレイヤーを監視し, 音量を調整する
+ * @brief システム動作
  *
- * @param sys 操作対象のシステム
+ * @param system 操作対象のシステム
  */
 //--------------------------------------------------------------------------------
-void ISS_ROAD_SYS_Update( ISS_ROAD_SYS* sys )
+void ISS_ROAD_SYS_Update( ISS_ROAD_SYS* system )
 { 
-	// 起動してない
-	if( sys->boot != TRUE ){ return; }
-
-  // 音量更新
-  UpdateVolume( sys );
+  SystemMain( system );
 }
 
 //--------------------------------------------------------------------------------
 /**
  * @brief システムを起動する
  *
- * @param sys 起動するシステム
+ * @param system
  */
 //--------------------------------------------------------------------------------
-void ISS_ROAD_SYS_On( ISS_ROAD_SYS* sys )
+void ISS_ROAD_SYS_On( ISS_ROAD_SYS* system )
 {
-  BootSystem( sys );
+  BootSystem( system );
 }
 
 //--------------------------------------------------------------------------------
 /**
  * @brief システムを停止させる
  *
- * @param sys 停止させるシステム
+ * @param system
  */
 //--------------------------------------------------------------------------------
-void ISS_ROAD_SYS_Off( ISS_ROAD_SYS* sys )
+void ISS_ROAD_SYS_Off( ISS_ROAD_SYS* system )
 {
-  StopSystem( sys );
+  StopSystem( system );
 }
-
-//--------------------------------------------------------------------------------
-/**
- * @breif 動作状態を取得する
- *
- * @param sys 状態を調べるISSシステム
- * 
- * @return 動作中かどうか
- */
-//--------------------------------------------------------------------------------
-BOOL ISS_ROAD_SYS_IsOn( const ISS_ROAD_SYS* sys )
-{
-	return sys->boot;
-}
-
 
 
 //================================================================================
@@ -158,124 +142,162 @@ BOOL ISS_ROAD_SYS_IsOn( const ISS_ROAD_SYS* sys )
 
 //--------------------------------------------------------------------------------
 /**
- * @brief 2つのベクトルが等しいかどうかを判定する
- *
- * @param p_vec1 判定するベクトル1
- * @param p_vec2 判定するベクトル2
- *
- * @return ベクトルが等しいなら TRUE
- */
-//--------------------------------------------------------------------------------
-static BOOL IsVecEqual( const VecFx32* p_vec1, const VecFx32* p_vec2 )
-{
-	return ( ( p_vec1->x == p_vec2->x ) &&
-			     ( p_vec1->y == p_vec2->y ) &&
-			     ( p_vec1->z == p_vec2->z ) );
-}
-
-//--------------------------------------------------------------------------------
-/**
  * @brief システムを起動する
  *
- * @param sys 道路ISSシステム
+ * @param system
  */
 //--------------------------------------------------------------------------------
-static void BootSystem( ISS_ROAD_SYS* sys )
+static void BootSystem( ISS_ROAD_SYS* system )
 {
-  // 起動中
-  if( sys->boot ){ return; }
-
-  // 起動
-	sys->boot = TRUE;
-	sys->targetTrackVolume   = MIN_VOLUME;	// 音量を最小に設定
-  PMSND_ChangeBGMVolume( TRACKBIT, MIN_VOLUME );
+  // 起動済み
+  if( system->boot ){ return; }
 
   // DEBUG:
-  OBATA_Printf( "ISS-R: boot\n" );
+  OS_TFPrintf( PRINT_DEST, "ISS-R: boot\n" );
+
+  // 起動
+	system->boot = TRUE;
+	system->targetTrackVolume = MIN_VOLUME;
+  ChangeTrackVolume( system ); 
 }
 
 //--------------------------------------------------------------------------------
 /**
  * @brief システムを停止する
  *
- * @param sys 道路ISSシステム
+ * @param system
  */
 //--------------------------------------------------------------------------------
-static void StopSystem( ISS_ROAD_SYS* sys )
+static void StopSystem( ISS_ROAD_SYS* system )
 {
-  // 停止中
-  if( !sys->boot ){ return; }
+  // 停止済み
+  if( system->boot == FALSE ){ return; }
 
   // 停止
-	sys->boot = FALSE; 
-  // 操作していたトラックを元に戻す
-  //PMSND_ChangeBGMVolume( TRACKBIT, 127 ); 
+	system->boot = FALSE; 
 
   // DEBUG:
-  OBATA_Printf( "ISS-R: stop\n" );
+  OS_TFPrintf( PRINT_DEST, "ISS-R: stop\n" );
 } 
 
 //--------------------------------------------------------------------------------
 /**
- * @brief 音量を更新する
+ * @brief システム動作
  *
- * @param sys 道路ISSシステム
+ * @param system
  */
 //--------------------------------------------------------------------------------
-static void UpdateVolume( ISS_ROAD_SYS* sys )
+static void SystemMain( ISS_ROAD_SYS* system )
 {
-	const VecFx32* pos = NULL;
-  int         volume = 0; // ボリューム変化量
+	// 起動してない
+	if( system->boot == FALSE ){ return; }
 
-  GF_ASSERT( sys->boot );
-  GF_ASSERT( sys->player );
-
-	// 主人公の座標を取得
-	pos = PLAYERWORK_getPosition( sys->player );
-
-	// 音量変化量を決定
-	if( IsVecEqual( pos, &sys->prevPlayerPos ) )
-	{
-		volume = -FADE_OUT_SPEED;
-	}
-	else
-	{ 
-		volume = FADE_IN_SPEED;
-	}
-
-  // 音量を変更
-  AddVolume( sys, volume );
-
-	// 記憶主人公座標を更新
-	sys->prevPlayerPos = *pos; 
+  // ボリューム更新
+  if( CheckPlayerMove( system ) )
+  {
+    VolumeUp( system );
+  }
+  else
+  {
+    VolumeDown( system );
+  }
 }
 
 //--------------------------------------------------------------------------------
 /**
- * @brief 音量を変更する
+ * @brief プレイヤーが動いているかどうかを判定する
  *
- * @param sys ISS-Rシステム
- * @param val 変更量
+ * @param system
  */
 //--------------------------------------------------------------------------------
-static void AddVolume( ISS_ROAD_SYS* sys, int val )
+static BOOL CheckPlayerMove( ISS_ROAD_SYS* system )
 {
-  int prev_volume; // 変化前のボリューム
+  BOOL moving;
+	const VecFx32* playerPos;
 
-  // 起動していない
-  GF_ASSERT( sys->boot );
+	// 主人公の座標を取得
+	playerPos = PLAYERWORK_getPosition( system->player );
 
-  // 変化量ゼロ
-  if( val == 0 ){ return; } 
-  
-  // 音量を更新
-  prev_volume  = sys->targetTrackVolume;
-  sys->targetTrackVolume += val;
-  if( sys->targetTrackVolume < MIN_VOLUME ){ sys->targetTrackVolume = MIN_VOLUME; }  // 最小値補正
-  if( sys->targetTrackVolume > MAX_VOLUME ){ sys->targetTrackVolume = MAX_VOLUME; }  // 最大値補正
-  if( sys->targetTrackVolume == prev_volume ){ return; }                  // 変化無し
-  PMSND_ChangeBGMVolume( TRACKBIT, sys->targetTrackVolume );
+  // 動いているかどうか
+  if( (playerPos->x == system->prevPlayerPos.x) &&
+      (playerPos->y == system->prevPlayerPos.y) &&
+      (playerPos->z == system->prevPlayerPos.z) )
+  {
+    moving = FALSE; 
+  }
+  else
+  { 
+    moving = TRUE; 
+  }
 
-  // DEBUG: 
-  OBATA_Printf( "ISS-R: change volume ==> %d\n", sys->targetTrackVolume );
+  // 主人公の座標を記憶
+  system->prevPlayerPos = *playerPos;
+
+  return moving;
+}
+
+//--------------------------------------------------------------------------------
+/**
+ * @brief ボリュームを上げる
+ *
+ * @param system
+ */
+//--------------------------------------------------------------------------------
+static void VolumeUp( ISS_ROAD_SYS* system )
+{
+  int nextVolume;
+
+  // すでに最大
+  if( MAX_VOLUME <= system->targetTrackVolume ){ return; }
+
+  // 更新後のボリュームを決定
+  nextVolume = system->targetTrackVolume + FADE_IN_SPEED;
+  if( MAX_VOLUME < nextVolume ){ nextVolume = MAX_VOLUME; }
+
+  // ボリュームUP
+  system->targetTrackVolume = nextVolume;
+  ChangeTrackVolume( system );
+}
+
+//--------------------------------------------------------------------------------
+/**
+ * @brief ボリュームを下げる
+ *
+ * @param system
+ */
+//--------------------------------------------------------------------------------
+static void VolumeDown( ISS_ROAD_SYS* system )
+{
+  int nextVolume;
+
+  // すでに最小
+  if( system->targetTrackVolume <= MIN_VOLUME ){ return; }
+
+  // 更新後のボリュームを決定
+  nextVolume = system->targetTrackVolume - FADE_OUT_SPEED;
+  if( nextVolume < MIN_VOLUME ){ nextVolume = MIN_VOLUME; }
+
+  // ボリュームDOWN
+  system->targetTrackVolume = nextVolume;
+  ChangeTrackVolume( system );
+}
+
+//--------------------------------------------------------------------------------
+/**
+ * @brief 操作対象トラックのボリュームを更新する
+ *
+ * @param system
+ */
+//--------------------------------------------------------------------------------
+static void ChangeTrackVolume( const ISS_ROAD_SYS* system )
+{
+  GF_ASSERT( system->boot );                             // 起動してない
+  GF_ASSERT( MIN_VOLUME <= system->targetTrackVolume );  // 音量がおかしい
+  GF_ASSERT( system->targetTrackVolume <= MAX_VOLUME );  // 音量がおかしい
+
+  // ボリューム更新
+  PMSND_ChangeBGMVolume( TRACKBIT, system->targetTrackVolume );
+
+  // DEBUG:
+  OS_TFPrintf( PRINT_DEST, "ISS-R: change volume ==> %d\n", system->targetTrackVolume );
 }
