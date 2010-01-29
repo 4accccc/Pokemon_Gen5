@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2010-01-29T14:50:01"/>
+	<create user="matsumiya" host="W00207" date="2010-01-29T20:05:22"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -334,7 +334,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="694"/>
 		<band id="3" index="3" style="0000" width="694"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -558,8 +558,8 @@
 	</row>
 
 	<row id="CROWD_NOISE_03">
-		<language name="JPN" width="256">そうなんです</language>
-		<language name="JPN_KANJI" width="256">そうなんです</language>
+		<language name="JPN" width="256">そうです</language>
+		<language name="JPN_KANJI" width="256">そうです</language>
 	</row>
 
 	<row id="CROWD_NOISE_04">
@@ -574,7 +574,7 @@
 
 	<row id="CROWD_NOISE_06">
 		<language name="JPN" width="256">ここはどこだ！</language>
-		<language name="JPN_KANJI" width="256">ここはどこだ！</language>
+		<language name="JPN_KANJI" width="256">ここはどこ？</language>
 	</row>
 
 	<row id="CROWD_NOISE_07">
@@ -623,8 +623,8 @@
 	</row>
 
 	<row id="CROWD_NOISE_16">
-		<language name="JPN" width="256">さいきん　どう？</language>
-		<language name="JPN_KANJI" width="256">最近　どう？</language>
+		<language name="JPN" width="256">どう？</language>
+		<language name="JPN_KANJI" width="256">最近どう？</language>
 	</row>
 
 	<row id="CROWD_NOISE_17">
@@ -638,8 +638,8 @@
 	</row>
 
 	<row id="CROWD_NOISE_19">
-		<language name="JPN" width="256">１・２！　１・２！</language>
-		<language name="JPN_KANJI" width="256">１・２！　１・２！</language>
+		<language name="JPN" width="256">１・２！</language>
+		<language name="JPN_KANJI" width="256">１・２！</language>
 	</row>
 
 	<row id="CROWD_NOISE_20">
