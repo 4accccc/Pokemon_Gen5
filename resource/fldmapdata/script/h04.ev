@@ -196,15 +196,15 @@ EVENT_START   ev_h04_leadersinger
 		IF $LOCALWORK13 == 0 THEN
 		
 			//ISSスイッチをオンに
-			_ISS_SWITCH_ON( 4 )
 			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_h04_leadsinger_01 )
+			_ISS_SWITCH_ON( 4 )
 		
 		//2回目以降
 		ELSE
 		
 			//ISSスイッチをオンに
-			_ISS_SWITCH_ON( 4 )
 			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_h04_leadsinger_03 )
+			_ISS_SWITCH_ON( 4 )
 		
 		ENDIF
 	
