@@ -317,7 +317,7 @@ File.open(OUTPUT_OVERLAYFILES,"w"){|file|
 #オーバーレイのターゲットネームとその番号をテキストに吐き出す
 File.open(OUTPUT_OVERLAYTEXT,"w"){|file|
   sections.each_with_index{|section, index|
-    file.printf( " ID 0x%x = %s\n",index + 3, section.put_name )
+    file.printf( " ID 0x%x = %s\n",index, section.put_name )
   }
 }
 
