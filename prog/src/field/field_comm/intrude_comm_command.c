@@ -972,6 +972,7 @@ static void _IntrudeRecv_MissionReq(const int netID, const int size, const void*
 //==================================================================
 BOOL IntrudeSend_MissionReq(INTRUDE_COMM_SYS_PTR intcomm, int monolith_type, u16 zone_id)
 {
+#if 0 //çÌèúó\íË 2010.01.29(ã‡) 
   MISSION_REQ req;
   
   if(_OtherPlayerExistence() == FALSE){
@@ -982,6 +983,10 @@ BOOL IntrudeSend_MissionReq(INTRUDE_COMM_SYS_PTR intcomm, int monolith_type, u16
   req.zone_id = zone_id;
   return GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), 
     INTRUDE_CMD_MISSION_REQ, sizeof(MISSION_REQ), &req);
+#else
+  GF_ASSERT(0);
+  return FALSE;
+#endif
 }
 
 //==============================================================================
