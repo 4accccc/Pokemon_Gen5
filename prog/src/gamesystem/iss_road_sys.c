@@ -15,10 +15,10 @@
 //================================================================================
 // ■定数
 //================================================================================
-#define MIN_VOLUME     (0)	// 最低音量
-#define MAX_VOLUME   (127)	// 最大音量
-#define FADE_IN_SPEED  (8)	// フェード・イン速度
-#define FADE_OUT_SPEED (8)	// フェード・アウト速度
+#define MIN_VOLUME     (0)	  // 最低音量
+#define MAX_VOLUME     (127)	// 最大音量
+#define FADE_IN_SPEED  (8)	  // フェード イン速度
+#define FADE_OUT_SPEED (8)	  // フェード アウト速度
 #define TRACKBIT ((1<<(9-1))|(1<<(10-1))) // 操作トラック(9,10)
 
 
@@ -33,24 +33,16 @@ static void AddVolume( ISS_ROAD_SYS* sys, int val );
 
 
 //================================================================================
-// ■道路ISSシステム構造体
+// ■道路ISSシステム
 //================================================================================
 struct _ISS_ROAD_SYS
 {
-	// 使用するヒープID
-	HEAPID heapID;
+	HEAPID heapID; 
+	BOOL   boot;               // 起動しているかどうか
+	int    targetTrackVolume;  // 操作対象トラックのボリューム
 
-	// 起動状態
-	BOOL isActive;
-
-	// 音量
-	int volume;
-
-	// 監視対象プレイヤー
-	PLAYER_WORK* pPlayer;
-
-	// 前回監視時のプレイヤー座標
-	VecFx32 prevPlayerPos;
+	PLAYER_WORK* player;        // 監視対象プレイヤー
+	VecFx32      prevPlayerPos; // 前回監視時のプレイヤー座標
 };
 
 
@@ -77,9 +69,9 @@ ISS_ROAD_SYS* ISS_ROAD_SYS_Create( PLAYER_WORK* p_player, HEAPID heap_id )
 
 	// 初期設定
 	sys->heapID        = heap_id;
-	sys->isActive      = FALSE;
-	sys->volume        = MIN_VOLUME;
-	sys->pPlayer       = p_player;
+	sys->boot      = FALSE;
+	sys->targetTrackVolume        = MIN_VOLUME;
+	sys->player       = p_player;
 	sys->prevPlayerPos = *( PLAYERWORK_getPosition( p_player ) );
 
   // DEBUG:
@@ -114,7 +106,7 @@ void ISS_ROAD_SYS_Delete( ISS_ROAD_SYS* sys )
 void ISS_ROAD_SYS_Update( ISS_ROAD_SYS* sys )
 { 
 	// 起動してない
-	if( sys->isActive != TRUE ){ return; }
+	if( sys->boot != TRUE ){ return; }
 
   // 音量更新
   UpdateVolume( sys );
@@ -155,7 +147,7 @@ void ISS_ROAD_SYS_Off( ISS_ROAD_SYS* sys )
 //--------------------------------------------------------------------------------
 BOOL ISS_ROAD_SYS_IsOn( const ISS_ROAD_SYS* sys )
 {
-	return sys->isActive;
+	return sys->boot;
 }
 
 
@@ -191,11 +183,11 @@ static BOOL IsVecEqual( const VecFx32* p_vec1, const VecFx32* p_vec2 )
 static void BootSystem( ISS_ROAD_SYS* sys )
 {
   // 起動中
-  if( sys->isActive ){ return; }
+  if( sys->boot ){ return; }
 
   // 起動
-	sys->isActive = TRUE;
-	sys->volume   = MIN_VOLUME;	// 音量を最小に設定
+	sys->boot = TRUE;
+	sys->targetTrackVolume   = MIN_VOLUME;	// 音量を最小に設定
   PMSND_ChangeBGMVolume( TRACKBIT, MIN_VOLUME );
 
   // DEBUG:
@@ -212,10 +204,10 @@ static void BootSystem( ISS_ROAD_SYS* sys )
 static void StopSystem( ISS_ROAD_SYS* sys )
 {
   // 停止中
-  if( !sys->isActive ){ return; }
+  if( !sys->boot ){ return; }
 
   // 停止
-	sys->isActive = FALSE; 
+	sys->boot = FALSE; 
   // 操作していたトラックを元に戻す
   //PMSND_ChangeBGMVolume( TRACKBIT, 127 ); 
 
@@ -235,11 +227,11 @@ static void UpdateVolume( ISS_ROAD_SYS* sys )
 	const VecFx32* pos = NULL;
   int         volume = 0; // ボリューム変化量
 
-  GF_ASSERT( sys->isActive );
-  GF_ASSERT( sys->pPlayer );
+  GF_ASSERT( sys->boot );
+  GF_ASSERT( sys->player );
 
 	// 主人公の座標を取得
-	pos = PLAYERWORK_getPosition( sys->pPlayer );
+	pos = PLAYERWORK_getPosition( sys->player );
 
 	// 音量変化量を決定
 	if( IsVecEqual( pos, &sys->prevPlayerPos ) )
@@ -271,19 +263,19 @@ static void AddVolume( ISS_ROAD_SYS* sys, int val )
   int prev_volume; // 変化前のボリューム
 
   // 起動していない
-  GF_ASSERT( sys->isActive );
+  GF_ASSERT( sys->boot );
 
   // 変化量ゼロ
   if( val == 0 ){ return; } 
   
   // 音量を更新
-  prev_volume  = sys->volume;
-  sys->volume += val;
-  if( sys->volume < MIN_VOLUME ){ sys->volume = MIN_VOLUME; }  // 最小値補正
-  if( sys->volume > MAX_VOLUME ){ sys->volume = MAX_VOLUME; }  // 最大値補正
-  if( sys->volume == prev_volume ){ return; }                  // 変化無し
-  PMSND_ChangeBGMVolume( TRACKBIT, sys->volume );
+  prev_volume  = sys->targetTrackVolume;
+  sys->targetTrackVolume += val;
+  if( sys->targetTrackVolume < MIN_VOLUME ){ sys->targetTrackVolume = MIN_VOLUME; }  // 最小値補正
+  if( sys->targetTrackVolume > MAX_VOLUME ){ sys->targetTrackVolume = MAX_VOLUME; }  // 最大値補正
+  if( sys->targetTrackVolume == prev_volume ){ return; }                  // 変化無し
+  PMSND_ChangeBGMVolume( TRACKBIT, sys->targetTrackVolume );
 
   // DEBUG: 
-  OBATA_Printf( "ISS-R: change volume ==> %d\n", sys->volume );
+  OBATA_Printf( "ISS-R: change volume ==> %d\n", sys->targetTrackVolume );
 }
