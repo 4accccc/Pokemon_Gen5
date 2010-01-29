@@ -26,6 +26,8 @@
 #include "beacon_view_local.h"
 #include "beacon_view_sub.h"
 
+#include "arc/wifi_unionobj_plt.cdat"
+
 //////////////////////////////////////////////////////////////////
 
 static void draw_LogNumWindow( BEACON_VIEW_PTR wk );
@@ -47,6 +49,7 @@ static void panel_Draw( BEACON_VIEW_PTR wk, PANEL_WORK* pp, GAMEBEACON_INFO* inf
 static void effReq_PanelScroll( BEACON_VIEW_PTR wk, u8 dir, PANEL_WORK* new_pp, PANEL_WORK* ignore_pp );
 static void effReq_PanelSlideIn( BEACON_VIEW_PTR wk, PANEL_WORK* pp );
 static void effReq_PopupMsgFromInfo( BEACON_VIEW_PTR wk, GAMEBEACON_INFO* info );
+static void effReq_PopupMsgGPower( BEACON_VIEW_PTR wk, GAMEBEACON_INFO* info );
 
 static BOOL list_IsView( BEACON_VIEW_PTR wk, u8 idx );
 
@@ -57,6 +60,8 @@ static BOOL list_IsView( BEACON_VIEW_PTR wk, u8 idx );
  */
 void BeaconView_InitialDraw( BEACON_VIEW_PTR wk )
 {
+  int i;
+
   PaletteTrans_AutoSet( wk->pfd, TRUE );
 
   //現在のログ数
@@ -64,6 +69,20 @@ void BeaconView_InitialDraw( BEACON_VIEW_PTR wk )
   //現在のトータルすれ違い人数
   draw_MenuWindow( wk, msg_sys_now_record );
 
+  //最新リストを描画
+  for(i = 0;i < wk->ctrl.view_max;i++){
+    int idx, ofs;
+    PANEL_WORK* pp;
+
+    ofs = wk->ctrl.view_top+i;
+    GAMEBEACON_InfoTblRing_GetBeacon( wk->infoLog, wk->tmpInfo, &wk->tmpTime, ofs );
+    idx = GAMEBEACON_InfoTblRing_Ofs2Idx( wk->infoLog, ofs );
+  
+    pp = panel_GetPanelFromDataIndex( wk, PANEL_DATA_BLANK );
+    panel_Entry( pp, ofs, idx );  //パネル新規登録
+    panel_Draw( wk, pp, wk->tmpInfo );   //パネル描画
+    panel_VisibleSet( pp, TRUE );   //パネル描画
+  }
 }
 
 /*
@@ -92,7 +111,8 @@ BOOL BeaconView_CheckStack( BEACON_VIEW_PTR wk )
     }
   }
   //ポップアップリクエスト
-  effReq_PopupMsgFromInfo( wk, wk->tmpInfo);
+//  effReq_PopupMsgFromInfo( wk, wk->tmpInfo);
+  effReq_PopupMsgGPower( wk, wk->tmpInfo );
 
   //新規でない時はスクロール無し
   if( !new_f ){
@@ -131,15 +151,23 @@ BOOL BeaconView_CheckStack( BEACON_VIEW_PTR wk )
 }
 
 /*
+ *  @brief  文字列整形
+ *
+ *  指定メッセージを wk->str_expandにつめる
+ */
+static void print_GetMsgToBuf( BEACON_VIEW_PTR wk, u8 msg_id )
+{
+  GFL_MSG_GetString( wk->mm_status, msg_id, wk->str_tmp);
+  WORDSET_ExpandStr( wk->wordset, wk->str_expand, wk->str_tmp );
+}
+
+/*
  *  @brief  文字列一括描画
  */
 static void print_Allput( BEACON_VIEW_PTR wk, GFL_BMP_DATA* bmp, u8 msg_id, u8 x, u8 y, u8 clear, PRINTSYS_LSB color )
 {
   GFL_BMP_Clear( bmp, clear );
-  
-  GFL_MSG_GetString( wk->mm_status, msg_id, wk->str_tmp);
-  WORDSET_ExpandStr( wk->wordset, wk->str_expand, wk->str_tmp );
-
+  print_GetMsgToBuf( wk, msg_id );
 	PRINTSYS_PrintColor( bmp, x, y, wk->str_expand, wk->fontHandle, color );
 }
 
@@ -167,12 +195,118 @@ static void draw_MenuWindow( BEACON_VIEW_PTR wk, u8 msg_id )
 /*
  *  @brief  ポップアップウィンドウ文字列描画
  */
-static void draw_PopupWindow( BEACON_VIEW_PTR wk, STRBUF* str )
+static void print_PopupWindow( BEACON_VIEW_PTR wk, STRBUF* str, u8 wait )
 {
   GFL_BMP_Clear( wk->win[WIN_POPUP].bmp, FCOL_POPUP_BASE );
 
-	PRINTSYS_PrintColor( wk->win[WIN_POPUP].bmp, 0, 0, str, wk->fontHandle, FCOL_POPUP );
-  GFL_BMPWIN_MakeTransWindow( wk->win[WIN_POPUP].win );
+  GF_ASSERT(wk->printStream == NULL);
+  wk->printStream = NULL;
+
+  if( wait == 0 ){
+  //	PRINTSYS_PrintColor( wk->win[WIN_POPUP].bmp, 0, 0, str, wk->fontHandle, FCOL_POPUP );
+    PRINT_UTIL_PrintColor( &wk->win[WIN_POPUP].putil, wk->printQue, 0, 0, str, wk->fontHandle, FCOL_POPUP );
+    GFL_BMPWIN_MakeTransWindow( wk->win[WIN_POPUP].win );
+  }else{
+    //ストリーム開始
+    wk->printStream = PRINTSYS_PrintStream( wk->win[WIN_POPUP].win, 0, 0,
+        str, wk->fontHandle, wait, wk->pTcbSys, 0, wk->heapID, FCOL_POPUP_BASE );
+  }
+}
+
+/*
+ *  @brief  ポップアップ　ストリーム終了チェック
+ *
+ *  @retval TRUE  描画終了
+ */
+static BOOL print_PopupWindowStreamCheck( BEACON_VIEW_PTR wk )
+{
+  PRINTSTREAM_STATE state;
+  
+  if( wk->printStream == NULL){
+    return TRUE;
+  }
+  state = PRINTSYS_PrintStreamGetState( wk->printStream );
+  APP_KEYCURSOR_Main( wk->key_cursor, wk->printStream, wk->win[WIN_POPUP].win );
+
+  switch( state ){
+  case PRINTSTREAM_STATE_DONE:  //全文描画終了
+    PRINTSYS_PrintStreamDelete( wk->printStream );
+    wk->printStream = NULL;
+    return TRUE;
+  case PRINTSTREAM_STATE_PAUSE: //一時停止中
+    if( GFL_UI_TP_GetTrg() ){
+      PRINTSYS_PrintStreamReleasePause( wk->printStream );
+    }
+    break;
+  case PRINTSTREAM_STATE_RUNNING :  // 実行中
+    // メッセージスキップ
+    if( GFL_UI_TP_GetCont() ){
+      PRINTSYS_PrintStreamShortWait( wk->printStream, 0 );
+    }
+    break;
+  }
+  return FALSE;
+}
+
+/*
+ *  @brief  TaskMenu生成
+ */
+static void tmenu_YnCreate( BEACON_VIEW_PTR wk )
+{
+  int i;
+  for( i = 0;i < TMENU_MAX;i++){
+    wk->tmenu[i].work = APP_TASKMENU_WIN_Create( wk->menuRes, &wk->tmenu[i].item, 
+                            TMENU_YN_PX+TMENU_YN_W*i, TMENU_YN_PY, TMENU_YN_W, wk->heapID );
+  }
+}
+
+/*
+ *  @brief  TaskMenu YesNo削除
+ */
+static void tmenu_YnDelete( BEACON_VIEW_PTR wk )
+{
+  int i;
+  for( i = 0;i < TMENU_MAX;i++){
+    APP_TASKMENU_WIN_Delete( wk->tmenu[i].work );
+    wk->tmenu[i].work = NULL;
+  }
+}
+
+/*
+ *  @brief  TaskMenu YesNoアップデート
+ */
+static int tmenu_YnUpdate( BEACON_VIEW_PTR wk )
+{
+  int i,ret = 0;
+
+  for( i = 0;i < TMENU_MAX;i++){
+    if( APP_TASKMENU_WIN_IsTrg( wk->tmenu[i].work )){
+      APP_TASKMENU_WIN_SetDecide( wk->tmenu[i].work, TRUE );
+      ret |= (i+1);
+    }
+    APP_TASKMENU_WIN_Update( wk->tmenu[i].work );
+  }
+  if(ret > 2){
+    ret = 1;
+  }
+  return ret;
+}
+
+/*
+ *  @brief  TaskMenu 終了アニメ待ち
+ */
+static BOOL tmenu_YnEndWait( BEACON_VIEW_PTR wk, u8 idx )
+{
+  int i;
+  APP_TASKMENU_WIN_Update( wk->tmenu[idx].work );
+  if( APP_TASKMENU_WIN_IsFinish( wk->tmenu[idx].work )){
+    for( i = 0;i < TMENU_MAX;i++){
+      APP_TASKMENU_WIN_Delete( wk->tmenu[i].work );
+      wk->tmenu[i].work = NULL;
+    }
+    return TRUE;
+  }
+  return FALSE;
 }
 
 /*
@@ -271,7 +405,7 @@ static PANEL_WORK* panel_GetPanelFromDataIndex( BEACON_VIEW_PTR wk, u8 data_idx 
  */
 static void panel_UnionObjUpdate( BEACON_VIEW_PTR wk, PANEL_WORK* pp, GAMEBEACON_INFO* info)
 {
-  u8 no, sex, char_no;
+  u8 no, sex, char_no, p_ofs;
  
   no = GAMEBEACON_Get_TrainerView(info);
   sex = GAMEBEACON_Get_Sex(info);
@@ -288,8 +422,8 @@ static void panel_UnionObjUpdate( BEACON_VIEW_PTR wk, PANEL_WORK* pp, GAMEBEACON
   GFL_CLGRP_CGR_Replace(  wk->objResUnion.res[ OBJ_RES_CGR ].tbl[ pp->id ],
                           wk->resCharUnion[ char_no ].p_char );
   //パレット転送
-//  sub_PlttVramTrans( wk->resPlttUnion.dat, (ACT_PAL_UNION+pp->id)*16, 16 );
-  PaletteWorkSet( wk->pfd, wk->resPlttUnion.dat, FADE_SUB_OBJ, (ACT_PAL_UNION+pp->id)*16, 0x20 );
+  p_ofs = 16*sc_wifi_unionobj_plt[char_no];
+  PaletteWorkSet( wk->pfd, &wk->resPlttUnion.dat[p_ofs], FADE_SUB_OBJ, (ACT_PAL_UNION+pp->id)*16, 0x20 );
 }
 
 /*
@@ -316,18 +450,20 @@ static u8 panel_FrameColorGet( GAMEBEACON_INFO* info )
  */
 static void panel_ColorPlttSet( BEACON_VIEW_PTR wk, PANEL_WORK* pp, GAMEBEACON_INFO* info )
 {
-  u16 pal[2];
+  u16 pal[5];
   u8  col;
-
-  //パネルベースカラー
-  GAMEBEACON_Get_FavoriteColor((GXRgb*)&pal[0], info);
-
+  
   //パネルフレームカラー
   col = panel_FrameColorGet( info );
-  pal[1] = wk->resPlttPanel.dat[ col ];
+  pal[0] = wk->resPlttPanel.dat[ col*16+1 ];
+  pal[1] = wk->resPlttPanel.dat[ col*16+2 ];
+  pal[2] = wk->resPlttPanel.dat[ col*16+3 ];
   
-//  sub_PlttVramTrans( pal, (ACT_PAL_PANEL+pp->id)*16+1, 2 );
-  PaletteWorkSet( wk->pfd, pal, FADE_SUB_OBJ, (ACT_PAL_PANEL+pp->id)*16+1, 2*2 );
+  //パネルベースカラー
+  GAMEBEACON_Get_FavoriteColor((GXRgb*)&pal[3], info);
+  SoftFade(&pal[3], &pal[4], 1, 3, 0x0000); //補色を作成
+ 
+  PaletteWorkSet( wk->pfd, pal, FADE_SUB_OBJ, (ACT_PAL_PANEL+pp->id)*16+1, 2*5 );
 }
 
 /*
@@ -335,8 +471,8 @@ static void panel_ColorPlttSet( BEACON_VIEW_PTR wk, PANEL_WORK* pp, GAMEBEACON_I
  */
 static void panel_MsgPrint( BEACON_VIEW_PTR wk, PANEL_WORK* pp, STRBUF* str )
 {
-  GFL_BMP_Clear( pp->msgOam.bmp, 1 );
-	PRINTSYS_PrintColor( pp->msgOam.bmp, 0, 0, str, wk->fontHandle, FCOL_FNTOAM );
+  GFL_BMP_Clear( pp->msgOam.bmp, 0 );
+	PRINTSYS_PrintColor( pp->msgOam.bmp, 0, 0, str, wk->fontHandle, FCOL_FNTOAM_W );
 	BmpOam_ActorBmpTrans( pp->msgOam.oam );
 }
 
@@ -594,7 +730,6 @@ typedef struct _TASKWK_WIN_POPUP{
   u8  seq;
   u8  wait;
   int child_task;
-  STRBUF* str;
  
   BEACON_VIEW_PTR bvp;
   int* task_ct;
@@ -605,9 +740,14 @@ static void tcb_WinPopup( GFL_TCBL *tcb , void* work);
 
 static void effReq_PopupMsgFromInfo( BEACON_VIEW_PTR wk, GAMEBEACON_INFO* info )
 {
-  GFL_MSG_GetString(wk->mm_status, GAMEBEACON_GetMsgID(info), wk->str_tmp);
   GAMEBEACON_Wordset( info, wk->wordset, wk->tmpHeapID );
-  WORDSET_ExpandStr( wk->wordset, wk->str_expand, wk->str_tmp );
+  print_GetMsgToBuf( wk, GAMEBEACON_GetMsgID(info) );
+  taskAdd_WinPopup( wk, wk->str_expand, &wk->eff_task_ct);
+}
+
+static void effReq_PopupMsgSys( BEACON_VIEW_PTR wk, u8 msg_id )
+{
+  print_GetMsgToBuf( wk, msg_id );
   taskAdd_WinPopup( wk, wk->str_expand, &wk->eff_task_ct);
 }
 
@@ -624,8 +764,9 @@ static void taskAdd_WinPopup( BEACON_VIEW_PTR wk, STRBUF* str, int* task_ct )
   twk = GFL_TCBL_GetWork(tcb);
   MI_CpuClear8( twk, sizeof( TASKWK_WIN_POPUP ));
 
+  GFL_STR_CopyBuffer( wk->str_popup, str );
+  
   twk->bvp = wk;
-  twk->str = GFL_STR_CreateCopyBuffer( str, GFL_HEAP_LOWID( wk->heapID ) );
   twk->wait = POPUP_WAIT;
 
   twk->task_ct = task_ct;
@@ -638,7 +779,7 @@ static void tcb_WinPopup( GFL_TCBL *tcb , void* tcb_wk)
 
   switch( twk->seq ){
   case 0:
-    draw_PopupWindow( twk->bvp, twk->str );
+    print_PopupWindow( twk->bvp, twk->bvp->str_popup, 0 );
     twk->seq++;
     return;
   case 1:
@@ -664,7 +805,132 @@ static void tcb_WinPopup( GFL_TCBL *tcb , void* tcb_wk)
     }
   }
   --(*twk->task_ct);
-  GFL_STR_DeleteBuffer( twk->str );
+  GFL_TCBL_Delete(tcb);
+}
+
+
+/////////////////////////////////////////////////////////////////////
+/*
+ *  @brief  メッセージウィンドウ Gパワー使用確認 
+ */
+/////////////////////////////////////////////////////////////////////
+typedef struct _TASKWK_WIN_GPOWER{
+  u8  seq;
+  u8  wait;
+  u8  type;
+  u8  cancel_f;
+  int child_task;
+
+  GPOWER_ID  g_power;
+  u32 tr_id;
+
+  BEACON_VIEW_PTR bvp;
+  int* task_ct;
+}TASKWK_WIN_GPOWER;
+
+static const u8 DATA_GPowerUseMsg[2] = {
+ msg_sys_gpower_use00, msg_sys_gpower_use01,
+};
+
+static void taskAdd_WinGPower( BEACON_VIEW_PTR wk, GPOWER_ID g_power, u32 tr_id, u8 type, int* task_ct );
+static void tcb_WinGPower( GFL_TCBL *tcb , void* work);
+
+static void effReq_PopupMsgGPower( BEACON_VIEW_PTR wk, GAMEBEACON_INFO* info )
+{
+  GAMEBEACON_Wordset( info, wk->wordset, wk->tmpHeapID );
+  WORDSET_ExpandStr( wk->wordset, wk->str_expand, wk->str_tmp );
+  taskAdd_WinGPower( wk,
+      GAMEBEACON_Get_GPowerID( info ),
+      GAMEBEACON_Get_TrainerID( info ), GPOWER_USE_BEACON, &wk->eff_task_ct);
+}
+
+/*
+ *  @brief  メッセージウィンドウ Gパワー使用確認タスク登録
+ */
+static void taskAdd_WinGPower( BEACON_VIEW_PTR wk, GPOWER_ID g_power, u32 tr_id, u8 type, int* task_ct )
+{
+  GFL_TCBL* tcb;
+  TASKWK_WIN_GPOWER* twk;
+
+  tcb = GFL_TCBL_Create( wk->pTcbSys, tcb_WinGPower, sizeof(TASKWK_WIN_GPOWER), 0 );
+
+  twk = GFL_TCBL_GetWork(tcb);
+  MI_CpuClear8( twk, sizeof( TASKWK_WIN_GPOWER ));
+
+  twk->bvp = wk;
+  twk->wait = POPUP_WAIT;
+  twk->g_power = g_power;
+  twk->tr_id = tr_id;
+  twk->type = type;
+
+  WORDSET_RegisterGPowerName( wk->wordset, 1, g_power );
+
+  twk->task_ct = task_ct;
+  (*task_ct)++;
+}
+
+static void tcb_WinGPower( GFL_TCBL *tcb , void* tcb_wk)
+{
+  TASKWK_WIN_GPOWER* twk = (TASKWK_WIN_GPOWER*)tcb_wk;
+  BEACON_VIEW_PTR bvp = twk->bvp;
+
+  switch( twk->seq ){
+  case 0:
+    GFL_BMP_Clear( bvp->win[WIN_POPUP].bmp, FCOL_POPUP_BASE );
+    GFL_BMPWIN_MakeTransWindow( bvp->win[WIN_POPUP].win );
+    taskAdd_MsgUpdown( bvp, SCROLL_UP, &twk->child_task );
+    twk->seq++;
+    return;
+  case 1:
+    if( twk->child_task == 0 ){
+      print_GetMsgToBuf( bvp, DATA_GPowerUseMsg[twk->type] );
+      print_PopupWindow( bvp, bvp->str_expand, bvp->msg_spd );
+      twk->seq++;
+    }
+    return;
+  case 2:
+    if( print_PopupWindowStreamCheck( bvp ) ){
+      tmenu_YnCreate( bvp );
+      twk->seq++;
+    }
+    return;
+  case 3: //選択待ち
+    {
+      int ret = tmenu_YnUpdate( bvp );
+      if( ret == 0){
+        return;
+      }
+      twk->cancel_f = ret-1;
+      twk->seq++;
+    }
+    return;
+  case 4: //決定アニメ待ち
+    if( !tmenu_YnEndWait( bvp, twk->cancel_f )){
+      return;
+    }
+    if( twk->cancel_f ){
+      twk->seq = 6;
+    }else{
+      print_GetMsgToBuf( bvp, msg_sys_gpower_use02 );
+      print_PopupWindow( bvp, bvp->str_expand, bvp->msg_spd );
+      twk->seq++;
+    }
+    return;
+  case 5:
+    if( print_PopupWindowStreamCheck( bvp ) ){
+      twk->seq++;
+    }
+    return;
+  case 6:
+    taskAdd_MsgUpdown( bvp, SCROLL_DOWN, &twk->child_task );
+    twk->seq++;
+    return;
+  case 7:
+    if( twk->child_task ){
+      return;
+    }
+  }
+  --(*twk->task_ct);
   GFL_TCBL_Delete(tcb);
 }
 

@@ -13,6 +13,8 @@
 #include "gamesystem/beacon_status.h"
 #include "system/palanm.h"
 #include "system/gfl_use.h"
+#include "app/app_taskmenu.h"
+#include "app/app_keycursor.h"
 #include "msg/msg_beacon_status.h"
 
 enum{
@@ -27,19 +29,38 @@ enum{
 #define FRM_POPUP  ( GFL_BG_FRAME2_S )
 #define FRM_BACK   ( GFL_BG_FRAME3_S )
 
+//BGアルファ設定
+#define ALPHA_1ST_NORMAL  (GX_BLEND_PLANEMASK_BG2)
+#define ALPHA_1ST_PASSIVE (GX_BLEND_PLANEMASK_BG0|GX_BLEND_PLANEMASK_BG2)
+#define ALPHA_2ND         (GX_BLEND_PLANEMASK_BG1|GX_BLEND_PLANEMASK_BG2|GX_BLEND_PLANEMASK_BG3|GX_BLEND_PLANEMASK_OBJ)
+#define ALPHA_EV2_NORMAL  (3)
+#define ALPHA_EV1_NORMAL  (16-ALPHA_EV2_NORMAL)
+#define ALPHA_EV2_PASSIVE  (6)
+#define ALPHA_EV1_PASSIVE  (16-ALPHA_EV2_PASSIVE)
+
 ///パレット展開位置
-#define FONT_PAL    (14)
-#define ACT_PAL_FONT  (3)
-#define ACT_PAL_PANEL (4)
-#define ACT_PAL_UNION (9)
-#define ACT_PAL_WMI   (14)
+#define FONT_PAL_POPUP    (1)
+#define BG_PAL_LOCALIZE   (12)  //ローカライズ用空きパレット
+#define FONT_PAL          (13)  //フォントパレット占有
+#define BG_PAL_TASKMENU   (14)  //TaskMenuが2本占有
+#define BG_PAL_TASKMENU_2 (15)  //↓
+
+#define BG_PALANM_AREA    (FONT_PAL+1)  //フォントパレット用領域までパレットアニメ影響下に置く
+
+#define ACT_PAL_FONT      (3)
+#define ACT_PAL_PANEL     (4)
+#define ACT_PAL_UNION     (9)
+#define ACT_PAL_WMI       (14)  //通信アイコン占有領域
+#define ACT_PAL_LOCALIZE  (15)  //ローカライズ用空きパレット
 
 ///フォントカラー
 #define	FCOL_FNTOAM   ( PRINTSYS_LSB_Make(1,2,0) )	 ///<OAMフォント黒抜
-#define FCOL_FNTOAM_W ( PRINTSYS_LSB_Make(15,14,0))  ///<Oam白抜き
+#define FCOL_FNTOAM_W ( PRINTSYS_LSB_Make(15,3,0))  ///<Oam白抜き
 #define FCOL_WHITE_N  ( PRINTSYS_LSB_Make(15,2,0) ) ///<BG白抜き
-#define FCOL_POPUP_BASE (1)
-#define FCOL_POPUP      ( PRINTSYS_LSB_Make(15,2,FCOL_POPUP_BASE))  //BGポップアップ
+#define FCOL_POPUP_BASE (7)
+#define FCOL_POPUP_MAIN (15)
+#define FCOL_POPUP_SDW  (14)
+#define FCOL_POPUP      ( PRINTSYS_LSB_Make(FCOL_POPUP_MAIN,FCOL_POPUP_SDW,FCOL_POPUP_BASE))  //BGポップアップ
 
 ///表示するログ件数
 #define VIEW_LOG_MAX    (4)
@@ -54,7 +75,7 @@ enum{
 #define PANEL_DATA_BLANK (0xFF)
 
 ///ポップアップメッセージバッファ長
-#define BUFLEN_POPUP_MSG  (18*3*2+EOM_SIZE)
+#define BUFLEN_POPUP_MSG  (18*6*2+EOM_SIZE)
 #define BUFLEN_TMP_MSG    (BUFLEN_POPUP_MSG)
 
 ///パネル文字列バッファ長
@@ -81,15 +102,15 @@ enum{
 #define BMP_POPUP_PY (22)
 #define BMP_POPUP_SX  (28)
 #define BMP_POPUP_SY  (6)
-#define BMP_POPUP_CGX (768-(BMP_POPUP_SX*BMP_POPUP_SY))
 #define BMP_POPUP_FRM (FRM_POPUP)
+#define BMP_POPUP_PAL (FONT_PAL_POPUP)
 //メニューバーウィンドウ
 #define BMP_MENU_PX  (1)
 #define BMP_MENU_PY  (21)
 #define BMP_MENU_SX  (15)
 #define BMP_MENU_SY  (3)
-#define BMP_MENU_CGX (BMP_POPUP_CGX-(BMP_MENU_SX*BMP_MENU_SY))
 #define BMP_MENU_FRM (FRM_MENUMSG)
+#define BMP_MENU_PAL (FONT_PAL)
 
 enum{
  WIN_POPUP,
@@ -102,6 +123,23 @@ enum{
 #define POPUP_DIFF    (8)
 #define POPUP_COUNT   (POPUP_HEIGHT/POPUP_DIFF)
 #define POPUP_WAIT    (30*3)
+
+//Gパワーポップアップタイプ
+enum{
+ GPOWER_USE_MINE, //自分
+ GPOWER_USE_BEACON, //他人
+};
+
+//タスクメニュー数
+enum{
+ TMENU_YES,
+ TMENU_NO,
+ TMENU_MAX,
+};
+
+#define TMENU_YN_PX (16)
+#define TMENU_YN_PY (21)
+#define TMENU_YN_W  (8)
 
 ////////////////////////////////////////////////////
 //アクター関連定義
@@ -130,10 +168,21 @@ enum{
  OBJ_SPRI_PANEL = OBJ_SPRI_UNION + PANEL_MAX,
 };
 
+///アクターID
+enum{
+ ACT_GPWR,
+ ACT_THANKS,
+ ACT_RETURN,
+ ACT_UP,
+ ACT_DOWN,
+ ACT_MAX,
+};
+
 ///ノーマルOBJ アニメID
 enum{
  ACTANM_PANEL,
 };
+
 
 #define ACT_PANEL_OX  (13)
 #define ACT_PANEL_OY  (5*8)
@@ -148,6 +197,8 @@ enum{
 #define ACT_ICON_OY   (ACT_UNION_OY)
 #define ACT_MSG_OX    (9*8)
 #define ACT_MSG_OY    (2*8)
+#define ACT_RANK_OX   ()
+#define ACT_RANK_OY   ()
 
 ///アイコンパターン数
 enum{
@@ -219,6 +270,12 @@ typedef struct {
 	GFL_BMP_DATA * bmp;
 }FONT_OAM;
 
+//TaskMenuワーク
+typedef struct {
+  APP_TASKMENU_WIN_WORK *work;
+  APP_TASKMENU_ITEMWORK item;
+}TMENU_ITEM;
+
 //パネル管理構造体
 typedef struct _PANEL_WORK{
   u8  id; //パネルID
@@ -268,6 +325,7 @@ typedef struct _BEACON_VIEW{
 
   BOOL      active;
   int       seq;
+  u8        msg_spd;
   LOG_CTRL  ctrl;
 
   ////////////////////////////////////////
@@ -284,10 +342,16 @@ typedef struct _BEACON_VIEW{
 
   GFL_FONT *fontHandle;
   PRINT_QUE *printQue;
+  PRINT_STREAM* printStream;
+  APP_TASKMENU_RES* menuRes;
+  APP_KEYCURSOR_WORK* key_cursor;
+  TMENU_ITEM tmenu[TMENU_MAX];
+
   WORDSET *wordset;
   GFL_MSGDATA *mm_status;
   STRBUF *str_tmp;
   STRBUF *str_expand;
+  STRBUF *str_popup;  //ポップアップ用テンポラリ
 
   BMPOAM_SYS_PTR bmpOam;
   GFL_CLUNIT* cellUnit;

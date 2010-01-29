@@ -12,6 +12,7 @@
 #include "gamesystem/gamesystem.h"
 #include "field/field_subscreen.h"
 #include "gamesystem/game_beacon.h"
+#include "gamesystem/msgspeed.h"
 #include "infowin/infowin.h"
 #include "app_menu_common.naix"
 #include "arc_def.h"
@@ -44,6 +45,8 @@ static void _sub_SystemSetup(BEACON_VIEW_PTR view);
 static void _sub_SystemExit(BEACON_VIEW_PTR view);
 static void _sub_BGLoad(BEACON_VIEW_PTR view, ARCHANDLE *handle);
 static void _sub_BGUnload(BEACON_VIEW_PTR view);
+static void _sub_TMenuInit( BEACON_VIEW_PTR wk );
+static void _sub_TMenuRelease( BEACON_VIEW_PTR wk );
 static void _sub_ActorResourceLoad(BEACON_VIEW_PTR view, ARCHANDLE *handle);
 static void _sub_ActorResourceUnload(BEACON_VIEW_PTR view);
 static void _sub_ActorCreate(BEACON_VIEW_PTR view, ARCHANDLE *handle);
@@ -115,6 +118,7 @@ BEACON_VIEW_PTR BEACON_VIEW_Init(GAMESYS_WORK *gsys, FIELD_SUBSCREEN_WORK *subsc
   _sub_DataSetup(wk);
   _sub_SystemSetup(wk);
   _sub_BGLoad(wk, wk->arc_handle);
+  _sub_TMenuInit( wk );
   _sub_ActorResourceLoad(wk, wk->arc_handle);
   _sub_ActorCreate(wk, wk->arc_handle);
   _sub_BmpWinCreate(wk);
@@ -136,12 +140,18 @@ BEACON_VIEW_PTR BEACON_VIEW_Init(GAMESYS_WORK *gsys, FIELD_SUBSCREEN_WORK *subsc
 //==================================================================
 void BEACON_VIEW_Exit(BEACON_VIEW_PTR wk)
 {
+  //ストリームが生きていたら削除
+  if( wk->printStream != NULL){
+    PRINTSYS_PrintStreamDelete( wk->printStream );
+    wk->printStream = NULL;
+  }
   //今生きている全てのタスクを削除
   GFL_TCBL_DeleteAll( wk->pTcbSys );
 
   _sub_BmpWinDelete( wk );
   _sub_ActorDelete( wk );
   _sub_ActorResourceUnload( wk );
+  _sub_TMenuRelease( wk );
   _sub_BGUnload( wk );
   _sub_SystemExit( wk );
   _sub_DataExit(wk);
@@ -297,10 +307,14 @@ static void BEACON_VIEW_TouchUpdata(BEACON_VIEW_PTR wk)
   switch(tp_ret){
   case 0: //Gパワー
     OS_TPrintf("Gパワー ビーコンセット\n");
+    GAMEBEACON_Set_GPower( 1 );
+
 //    GAMEBEACON_Set_EncountDown();
     break;
   case 1: //おめでとう
     OS_TPrintf("おめでとう ビーコンセット\n");
+    GAMEBEACON_Set_Thankyou( wk->gdata, 0x12345678 );
+
 //    GAMEBEACON_Set_Congratulations();
     break;
   case 2: //戻る
@@ -324,13 +338,22 @@ static void _sub_DataSetup(BEACON_VIEW_PTR wk)
   wk->b_status = GAMEDATA_GetBeaconStatus( wk->gdata );
   wk->infoLog = BEACON_STATUS_GetInfoTbl( wk->b_status );
 
-  wk->ctrl.max = 0;
-  wk->ctrl.top = 0;
+  wk->ctrl.max = GAMEBEACON_InfoTblRing_GetEntryNum( wk->infoLog );
+  wk->ctrl.view_top = BEACON_STATUS_GetViewTopOffset( wk->b_status );
+
+  if( wk->ctrl.max < PANEL_VIEW_MAX ){
+    wk->ctrl.view_max = wk->ctrl.max;
+  }else{
+    wk->ctrl.view_max = PANEL_VIEW_MAX;
+  }
   wk->ctrl.next_panel = 0;
 
   //スタックワーク領域取得
   wk->infoStack = GAMEBEACON_InfoTbl_Alloc( wk->heapID );
   wk->tmpInfo = GAMEBEACON_Alloc( wk->heapID );
+
+  //メッセージスピード取得
+  wk->msg_spd  = MSGSPEED_GetWait();
 }
 
 //--------------------------------------------------------------
@@ -342,6 +365,7 @@ static void _sub_DataSetup(BEACON_VIEW_PTR wk)
 //--------------------------------------------------------------
 static void _sub_DataExit(BEACON_VIEW_PTR wk)
 {
+  GAMEBEACON_Stack_PutBack( wk->infoStack );
   GFL_HEAP_FreeMemory( wk->tmpInfo );
   GFL_HEAP_FreeMemory( wk->infoStack );
 }
@@ -361,12 +385,14 @@ static void _sub_SystemSetup(BEACON_VIEW_PTR wk)
   wk->tcbVIntr = GFUser_VIntr_CreateTCB( tcb_VInter, (void*)wk, 0);
 
   wk->pfd = PaletteFadeInit( wk->heapID );
-  PaletteFadeWorkAllocSet( wk->pfd, FADE_SUB_BG, 0x200, wk->heapID );
+  PaletteFadeWorkAllocSet( wk->pfd, FADE_SUB_BG,  0x20*BG_PALANM_AREA, wk->heapID );
   PaletteFadeWorkAllocSet( wk->pfd, FADE_SUB_OBJ, 0x200, wk->heapID );
 
 	wk->printQue = PRINTSYS_QUE_Create( wk->heapID );
 	wk->fontHandle = GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr,
 		GFL_FONT_LOADTYPE_FILE, FALSE, wk->heapID );
+  GFL_FONTSYS_SetColor( FCOL_POPUP_MAIN, FCOL_POPUP_SDW, FCOL_POPUP_BASE );
+ 
   wk->wordset = WORDSET_Create( wk->heapID);
 
 	wk->mm_status = GFL_MSG_Create(
@@ -374,6 +400,7 @@ static void _sub_SystemSetup(BEACON_VIEW_PTR wk)
 
   wk->str_tmp = GFL_STR_CreateBuffer( BUFLEN_TMP_MSG, wk->heapID );
   wk->str_expand = GFL_STR_CreateBuffer( BUFLEN_TMP_MSG, wk->heapID );
+  wk->str_popup = GFL_STR_CreateBuffer( BUFLEN_TMP_MSG, wk->heapID );
 }
 
 //--------------------------------------------------------------
@@ -385,15 +412,18 @@ static void _sub_SystemSetup(BEACON_VIEW_PTR wk)
 //--------------------------------------------------------------
 static void _sub_SystemExit(BEACON_VIEW_PTR wk)
 {
-  GFL_STR_DeleteBuffer(wk->str_tmp);
+
+  GFL_STR_DeleteBuffer(wk->str_popup);
   GFL_STR_DeleteBuffer(wk->str_expand);
+  GFL_STR_DeleteBuffer(wk->str_tmp);
 
   GFL_MSG_Delete(wk->mm_status);
-  
 	WORDSET_Delete(wk->wordset);
+  
+  GFL_FONTSYS_SetDefaultColor();
   GFL_FONT_Delete(wk->fontHandle);
   PRINTSYS_QUE_Delete(wk->printQue);
-  
+ 
   PaletteFadeWorkAllocFree( wk->pfd, FADE_SUB_OBJ );
   PaletteFadeWorkAllocFree( wk->pfd, FADE_SUB_BG );
   PaletteFadeFree( wk->pfd );
@@ -449,14 +479,15 @@ static void _sub_BGLoad( BEACON_VIEW_PTR wk, ARCHANDLE *handle )
 	G2S_BlendNone();
   
   //パレット転送
+/*
   GFL_ARCHDL_UTIL_TransVramPalette(handle, NARC_beacon_status_bstatus_bg_nclr, 
-    PALTYPE_SUB_BG, 0, 0x20 * 4, wk->tmpHeapID);
+    PALTYPE_SUB_BG, 0, 0x20 * FONT_PAL, wk->tmpHeapID);
   //フォントパレット転送
   GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG,
     0x20*FONT_PAL, 0x20, wk->tmpHeapID);
-  
+*/  
   PaletteWorkSet_ArcHandle( wk->pfd, handle, NARC_beacon_status_bstatus_bg_nclr,
-      wk->tmpHeapID, FADE_SUB_BG, 0x20*4, 0 );
+      wk->tmpHeapID, FADE_SUB_BG, 0x20*FONT_PAL, 0 );
   PaletteWorkSet_Arc( wk->pfd, ARCID_FONT, NARC_font_default_nclr,
       wk->tmpHeapID, FADE_SUB_BG, 0x20, FONT_PAL*16 );
   
@@ -475,6 +506,8 @@ static void _sub_BGLoad( BEACON_VIEW_PTR wk, ARCHANDLE *handle )
   GFL_ARCHDL_UTIL_TransVramScreen(
     handle, NARC_beacon_status_bstatus_bg03_lz_nscr, GFL_BG_FRAME3_S, 0, 
     0x800, TRUE, wk->tmpHeapID);
+
+  G2S_SetBlendAlpha( ALPHA_1ST_NORMAL, ALPHA_2ND, ALPHA_EV1_NORMAL, ALPHA_EV2_NORMAL);
 
 	GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_ON );
 	GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_ON );
@@ -495,11 +528,61 @@ static void _sub_BGUnload(BEACON_VIEW_PTR wk )
 	GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_OFF );
 	GFL_BG_SetVisible( GFL_BG_FRAME2_S, VISIBLE_OFF );
 	GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_OFF );
+
+  G2S_BlendNone();
+
 	GFL_BG_FreeBGControl(GFL_BG_FRAME0_S);
 	GFL_BG_FreeBGControl(GFL_BG_FRAME1_S);
 	GFL_BG_FreeBGControl(GFL_BG_FRAME2_S);
 	GFL_BG_FreeBGControl(GFL_BG_FRAME3_S);
 }
+
+//--------------------------------------------------------------
+/**
+ * メニュー初期化
+ *
+ * @param   wk		
+ */
+//--------------------------------------------------------------
+static void _sub_TMenuInit( BEACON_VIEW_PTR wk )
+{
+  int i;
+
+  wk->key_cursor = APP_KEYCURSOR_Create( FCOL_POPUP_BASE, FALSE, TRUE, wk->heapID );
+
+  wk->menuRes = APP_TASKMENU_RES_Create( FRM_MENUMSG, BG_PAL_TASKMENU, wk->fontHandle, wk->printQue, wk->heapID );
+
+  //アイテム初期化
+  for( i = 0;i < TMENU_MAX;i++){
+    wk->tmenu[i].item.str      = GFL_MSG_CreateString( wk->mm_status, msg_sys_tmenu_yes+i ); //メニューに表示する文字列
+    wk->tmenu[i].item.msgColor = APP_TASKMENU_ITEM_MSGCOLOR;   //文字色。デフォルトでよいならばAPP_TASKMENU_ITEM_MSGCOLOR
+    wk->tmenu[i].item.type     = APP_TASKMENU_WIN_TYPE_NORMAL; //戻るマークの表示
+    wk->tmenu[i].work = NULL;
+  }
+}
+
+//--------------------------------------------------------------
+/**
+ * メニュー解放
+ *
+ * @param   wk		
+ */
+//--------------------------------------------------------------
+static void _sub_TMenuRelease( BEACON_VIEW_PTR wk )
+{
+  int i;
+
+  for( i = 0;i < TMENU_MAX; i++){
+    if( wk->tmenu[i].work != NULL ){
+      APP_TASKMENU_WIN_Delete( wk->tmenu[i].work );
+    }
+    GFL_STR_DeleteBuffer( wk->tmenu[i].item.str );
+  }
+  APP_TASKMENU_RES_Delete( wk->menuRes );
+
+  APP_KEYCURSOR_Delete( wk->key_cursor );
+}
+
 
 //--------------------------------------------------------------
 /**
@@ -661,9 +744,9 @@ static void _sub_ActorDelete( BEACON_VIEW_PTR wk )
 /*
  *  @brief  BmpWin個別追加
  */
-static void bmpwin_Add( BMP_WIN* win, u8 frm, u8 px, u8 py, u8 sx, u8 sy )
+static void bmpwin_Add( BMP_WIN* win, u8 frm, u8 pal, u8 px, u8 py, u8 sx, u8 sy )
 {
-  win->win = GFL_BMPWIN_Create( frm, px, py, sx, sy, FONT_PAL, GFL_BMP_CHRAREA_GET_B );
+  win->win = GFL_BMPWIN_Create( frm, px, py, sx, sy, pal, GFL_BMP_CHRAREA_GET_B );
   win->bmp = GFL_BMPWIN_GetBmp( win->win );
   PRINT_UTIL_Setup( &win->putil, win->win );
   GFL_BMPWIN_MakeTransWindow( win->win );
@@ -681,9 +764,9 @@ static void _sub_BmpWinCreate(BEACON_VIEW_PTR wk)
 	BMPOAM_ACT_DATA	finit;
   
   bmpwin_Add( &wk->win[WIN_POPUP],
-      BMP_POPUP_FRM, BMP_POPUP_PX, BMP_POPUP_PY,BMP_POPUP_SX, BMP_POPUP_SY );
+      BMP_POPUP_FRM, BMP_POPUP_PAL, BMP_POPUP_PX, BMP_POPUP_PY,BMP_POPUP_SX, BMP_POPUP_SY );
   bmpwin_Add( &wk->win[WIN_MENU],
-      BMP_MENU_FRM, BMP_MENU_PX, BMP_MENU_PY,BMP_MENU_SX, BMP_MENU_SY );
+      BMP_MENU_FRM, BMP_MENU_PAL, BMP_MENU_PX, BMP_MENU_PY,BMP_MENU_SX, BMP_MENU_SY );
 
   //人数表示
  	wk->foamLogNum.bmp = GFL_BMP_Create( BMP_LOGNUM_OAM_SX, BMP_LOGNUM_OAM_SY, GFL_BMP_16_COLOR, wk->heapID );
@@ -880,12 +963,10 @@ static void panel_PanelObjAdd( BEACON_VIEW_PTR wk, u8 idx )
 //	PRINTSYS_PrintColor( syswk->app->fobj[idx].bmp, x, 0, str, syswk->app->font, FCOL_FNTOAM );
 	BmpOam_ActorBmpTrans( pp->msgOam.oam );
 
-#if 1
 	BmpOam_ActorSetDrawEnable( pp->msgOam.oam, FALSE );
   GFL_CLACT_WK_SetDrawEnable( pp->cPanel, FALSE );
   GFL_CLACT_WK_SetDrawEnable( pp->cUnion, FALSE );
   GFL_CLACT_WK_SetDrawEnable( pp->cIcon, FALSE );
-#endif
 }
 
 /**

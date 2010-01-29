@@ -247,6 +247,7 @@ int GAMEBEACON_InfoTblRing_SetBeacon(GAMEBEACON_INFO_TBL *infotbl, const GAMEBEA
 
   //リングトップを更新
   infotbl->ring_top =  log_no;
+  infotbl->entry_num++;
   return 0;
 }
 
@@ -274,6 +275,19 @@ BOOL GAMEBEACON_InfoTblRing_GetBeacon(GAMEBEACON_INFO_TBL *infotbl, GAMEBEACON_I
   *dest_info = infotbl->info[log_no];
   *time = infotbl->time[log_no];
   return TRUE;
+}
+
+//==================================================================
+/**
+ * リング式ビーコンテーブルにエントリーしているビーコン数を取得
+ *
+ * @param   infotbl	  ビーコンテーブルへのポインタ
+ * @retval  int		    ビーコン登録数
+ */
+//==================================================================
+int GAMEBEACON_InfoTblRing_GetEntryNum(GAMEBEACON_INFO_TBL *infotbl )
+{
+  return infotbl->entry_num;
 }
 
 
@@ -351,6 +365,19 @@ void GAMEBEACON_Get_FavoriteColor(GXRgb *dest_buf, const GAMEBEACON_INFO *info)
 {
   *dest_buf = info->favorite_color;
 }
+
+//==================================================================
+/**
+ * トレーナーIDを取得する
+ * @param   info  ビーコン情報へのポインタ
+ * @retval  u8		トレーナーの見た目
+ */
+//==================================================================
+u32 GAMEBEACON_Get_TrainerID(const GAMEBEACON_INFO *info)
+{
+  return info->trainer_id;
+}
+
 
 //==================================================================
 /**

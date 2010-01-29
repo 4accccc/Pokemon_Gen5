@@ -10,6 +10,7 @@
 #include "gamesystem/beacon_status.h"
 
 struct _TAG_BEACON_STATUS{
+  u8  view_top_ofs; ///<ビューリストのトップのデータオフセット
   GAMEBEACON_INFO_TBL view_log; 
 };
 
@@ -41,4 +42,21 @@ GAMEBEACON_INFO_TBL* BEACON_STATUS_GetInfoTbl( BEACON_STATUS* wk )
 {
   return &wk->view_log;
 }
+
+/*
+ *  @brief  ビューリストのトップオフセットを取得
+ */
+u8  BEACON_STATUS_GetViewTopOffset( BEACON_STATUS* wk )
+{
+  return wk->view_top_ofs;
+}
+
+/*
+ *  @brief  ビューリストのトップオフセットをセット
+ */
+void BEACON_STATUS_SetViewTopOffset( BEACON_STATUS* wk, u8 ofs )
+{
+  wk->view_top_ofs = ofs;
+}
+
 

@@ -37,3 +37,14 @@ extern void BEACON_STATUS_Delete( BEACON_STATUS* wk );
  */
 extern GAMEBEACON_INFO_TBL* BEACON_STATUS_GetInfoTbl( BEACON_STATUS* wk );
 
+/*
+ *  @brief  ビューリストのトップオフセットを取得
+ */
+extern u8  BEACON_STATUS_GetViewTopOffset( BEACON_STATUS* wk );
+
+/*
+ *  @brief  ビューリストのトップオフセットをセット
+ */
+extern void BEACON_STATUS_SetViewTopOffset( BEACON_STATUS* wk, u8 ofs );
+
+
