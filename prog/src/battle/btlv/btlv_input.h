@@ -134,7 +134,7 @@ typedef struct
 
 #define BTLV_INPUT_NOMOVE ( -128 )
 
-extern  BTLV_INPUT_WORK*  BTLV_INPUT_Init( BTLV_INPUT_TYPE type, const BTL_CLIENT* client, GFL_FONT* font, u8* cursor_flag, HEAPID heapID );
+extern  BTLV_INPUT_WORK*  BTLV_INPUT_Init( BTLV_INPUT_TYPE type, BtlCompetitor comp, const BTL_CLIENT* clientWork, GFL_FONT* font, u8* cursor_flag, HEAPID heapID );
 extern  void              BTLV_INPUT_Exit( BTLV_INPUT_WORK* biw );
 extern  void              BTLV_INPUT_Main( BTLV_INPUT_WORK* biw );
 extern  void              BTLV_INPUT_InitBG( BTLV_INPUT_WORK* biw );
@@ -147,4 +147,5 @@ extern  BOOL              BTLV_INPUT_CheckFadeExecute( BTLV_INPUT_WORK* biw );
 extern  void              BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, void* param );
 extern  int               BTLV_INPUT_CheckInput( BTLV_INPUT_WORK* biw, const GFL_UI_TP_HITTBL* tp_tbl,
                                                  const BTLV_INPUT_KEYTBL* key_tbl );
+extern  BOOL              BTLV_INPUT_CheckInputDemo( BTLV_INPUT_WORK* biw );
 

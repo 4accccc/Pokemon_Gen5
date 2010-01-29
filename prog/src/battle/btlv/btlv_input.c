@@ -24,6 +24,7 @@
 
 #include "btlv_input.h"
 #include "data/btlv_input.cdat"
+#include "btlv_finger_cursor.h"
 
 #include "arc_def.h"
 #include "battle/battgra_wb.naix"
@@ -408,6 +409,13 @@ static  const GFL_CLWK_DATA obj_param =
   0, 0, 0,  //アニメ番号、優先順位、BGプライオリティ
 };
 
+enum
+{ 
+  FINGER_CURSOR_LOOP  = 3,
+  FINGER_CURSOR_FRAME = 7,
+  FINGER_CURSOR_WAIT  = 16,
+};
+
 
 //============================================================================================
 /**
@@ -429,8 +437,10 @@ struct _BTLV_INPUT_WORK
   void*                 tcbwork;
   ARCHANDLE*            handle;
   BTLV_INPUT_TYPE       type;
+  BtlCompetitor         comp;
   BTLV_INPUT_SCRTYPE    scr_type;
   GFL_MSGDATA*          msg;
+  BTLV_FINGER_CURSOR_WORK*  bfcw;
   u32                   tcb_execute_flag    :1;
   u32                   tcb_execute_count   :3;
   u32                   center_button_type  :1;
@@ -442,7 +452,9 @@ struct _BTLV_INPUT_WORK
   u32                   rotate_flag         :2;
   u32                   rotate_scr          :2;
   u32                   before_select_dir   :2;
-  u32                                       :10;
+  u32                   seq_no              :4;
+  u32                   demo_cursor_pos     :4;
+  u32                                       :1;
 
   //OBJリソース
   u32                   objcharID;
@@ -601,7 +613,7 @@ static  void  SetupBallGaugeMove( BTLV_INPUT_WORK* biw, BALL_GAUGE_MOVE_DIR dir 
 static  void  TCB_BallGaugeMove( GFL_TCB* tcb, void* work );
 static  void  TCB_Fade( GFL_TCB* tcb, void* work );
 static  void  TCB_WeatherIconMove( GFL_TCB* tcb, void* work );
-static  void  SetupRotateAction( BTLV_INPUT_WORK* biw, int hit );
+static  void  SetupRotateAction( BTLV_INPUT_WORK* biw, int dir );
 static  void  TCB_RotateAction( GFL_TCB* tcb, void* work );
 
 static  void  BTLV_INPUT_MainTCB( GFL_TCB* tcb, void* work );
@@ -623,16 +635,17 @@ static  void  BTLV_INPUT_CreateCursorOBJ( BTLV_INPUT_WORK* biw );
 static  void  BTLV_INPUT_DeleteCursorOBJ( BTLV_INPUT_WORK* biw );
 static  int   BTLV_INPUT_CheckKey( BTLV_INPUT_WORK* biw, const GFL_UI_TP_HITTBL* tp_tbl, const BTLV_INPUT_KEYTBL* key_tbl, int hit );
 static  void  BTLV_INPUT_PutCursorOBJ( BTLV_INPUT_WORK* biw, const GFL_UI_TP_HITTBL* tp_tbl, const BTLV_INPUT_KEYTBL* key_tbl );
-static  inline  void  SePlaySelect( void );
-static  inline  void  SePlayRotateSelect( void );
-static  inline  void  SePlayRotateDecide( void );
-static  inline  void  SePlayRotation( void );
+static  inline  void  SePlaySelect( BTLV_INPUT_WORK* biw );
+static  inline  void  SePlayRotateSelect( BTLV_INPUT_WORK* biw );
+static  inline  void  SePlayRotateDecide( BTLV_INPUT_WORK* biw );
+static  inline  void  SePlayRotation( BTLV_INPUT_WORK* biw );
 
 //============================================================================================
 /**
  *  @brief  システム初期化
  *
  *  @param[in]  type          インターフェースタイプ
+ *  @param[in]  comp          対戦相手（野生orトレーナーor通信）
  *  @param[in]  font          使用するフォント
  *  @param[in]  cursor_flag   カーソル表示するかどうかフラグのポインタ（他のアプリとも共用するため）
  *  @param[in]  heapID        ヒープID
@@ -640,7 +653,7 @@ static  inline  void  SePlayRotation( void );
  *  @retval システム管理構造体のポインタ
  */
 //============================================================================================
-BTLV_INPUT_WORK*  BTLV_INPUT_Init( BTLV_INPUT_TYPE type, const BTL_CLIENT* clientWork, GFL_FONT* font, u8* cursor_flag, HEAPID heapID )
+BTLV_INPUT_WORK*  BTLV_INPUT_Init( BTLV_INPUT_TYPE type, BtlCompetitor comp, const BTL_CLIENT* clientWork, GFL_FONT* font, u8* cursor_flag, HEAPID heapID )
 {
   BTLV_INPUT_WORK *biw = GFL_HEAP_AllocClearMemory( heapID, sizeof( BTLV_INPUT_WORK ) );
 
@@ -652,6 +665,7 @@ BTLV_INPUT_WORK*  BTLV_INPUT_Init( BTLV_INPUT_TYPE type, const BTL_CLIENT* clien
 
   biw->font = font;
   biw->type = type;
+  biw->comp = comp;
 
   biw->cursor_mode = cursor_flag;
 
@@ -698,6 +712,11 @@ void  BTLV_INPUT_Exit( BTLV_INPUT_WORK* biw )
   BTLV_INPUT_ExitBG( biw );
 
   GFL_MSG_Delete( biw->msg );
+
+  if( biw->bfcw )
+  { 
+    BTLV_FINGER_CURSOR_Exit( biw->bfcw );
+  }
 
   GFL_TCB_Exit( biw->tcbsys );
   GFL_HEAP_FreeMemory( biw->tcbwork );
@@ -970,6 +989,8 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
 {
   BTLV_INPUT_ClearScreen( biw );
 
+  biw->seq_no = 0;
+
   switch( type ){
   case BTLV_INPUT_SCRTYPE_STANDBY:
     if( biw->scr_type == BTLV_INPUT_SCRTYPE_STANDBY )
@@ -994,6 +1015,8 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
       BTLV_INPUT_DeleteBallGauge( biw );
       BTLV_INPUT_DeletePokeIcon( biw );
       BTLV_INPUT_DeleteWeatherIcon( biw );
+      
+      BTLV_TIMER_SetDrawEnable( BTLV_EFFECT_GetTimerWork(), BTLV_TIMER_TYPE_COMMAND_TIME, FALSE, FALSE );
 
       if( ( biw->scr_type == BTLV_INPUT_SCRTYPE_COMMAND ) || ( biw->scr_type == BTLV_INPUT_SCRTYPE_YES_NO ) )
       {
@@ -1158,12 +1181,12 @@ int BTLV_INPUT_CheckInput( BTLV_INPUT_WORK* biw, const GFL_UI_TP_HITTBL* tp_tbl,
         //けっていを選択
         if( hit == 2 )
         {
-          SePlayRotateDecide();
+          SePlayRotateDecide( biw );
           hit = biw->rotate_flag + 1;
         }
         else
         {
-          SePlayRotateSelect();
+          SePlayRotateSelect( biw );
           SetupRotateAction( biw, hit );
           hit = GFL_UI_TP_HIT_NONE;
         }
@@ -1186,6 +1209,42 @@ int BTLV_INPUT_CheckInput( BTLV_INPUT_WORK* biw, const GFL_UI_TP_HITTBL* tp_tbl,
     }
   }
   return hit;
+}
+
+//============================================================================================
+/**
+ *  @brief  入力チェック（デモ用）
+ */
+//============================================================================================
+BOOL  BTLV_INPUT_CheckInputDemo( BTLV_INPUT_WORK* biw )
+{ 
+  BOOL  ret = FALSE;
+
+  switch( biw->seq_no ){ 
+  case 0:
+    { 
+      int cursor_pos[][ 2 ] = { { 128, 72 }, { 64, 48 }, { 40, 152 } };
+      if( biw->bfcw == NULL )
+      { 
+        biw->bfcw = BTLV_FINGER_CURSOR_Init( 0x0b, biw->heapID );
+      }
+      if( BTLV_FINGER_CURSOR_Create( biw->bfcw,
+                                     cursor_pos[ biw->demo_cursor_pos ][ 0 ],
+                                     cursor_pos[ biw->demo_cursor_pos ][ 1 ],
+                                     FINGER_CURSOR_LOOP, FINGER_CURSOR_FRAME, FINGER_CURSOR_WAIT ) == FALSE )
+      { 
+        break;
+      }
+    }
+    biw->seq_no++; 
+    biw->demo_cursor_pos++; 
+    break;
+  case 1:
+    ret = BTLV_FINGER_CURSOR_CheckExecute( biw->bfcw );
+    break;
+  }
+
+  return ret;
 }
 
 //============================================================================================
@@ -1288,6 +1347,8 @@ static  void  TCB_TransformStandby2Command( GFL_TCB* tcb, void* work )
   default:
     if( ttw->biw->tcb_execute_count == 0 )
     {
+      BTLV_TIMER_SetDrawEnable( BTLV_EFFECT_GetTimerWork(), BTLV_TIMER_TYPE_GAME_TIME, TRUE, FALSE );
+      BTLV_TIMER_SetDrawEnable( BTLV_EFFECT_GetTimerWork(), BTLV_TIMER_TYPE_COMMAND_TIME, TRUE, TRUE );
       GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_ON );
       GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_ON );
       GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_OFF );
@@ -2142,10 +2203,10 @@ static  void  TCB_WeatherIconMove( GFL_TCB* tcb, void* work )
  *  @brief  ローテーションセットアップ
  *
  *  @param[in]  biw  システム管理構造体のポインタ
- *  @param[in]  hit  どっち回転か？（0：左回り　1:右回り）
+ *  @param[in]  dir  どっち回転か？（0：左回り　1:右回り）
  */
 //============================================================================================
-static  void  SetupRotateAction( BTLV_INPUT_WORK* biw, int hit )
+static  void  SetupRotateAction( BTLV_INPUT_WORK* biw, int dir )
 {
   int i, j;
   int old_rotate_pos = biw->rotate_flag;
@@ -2157,14 +2218,14 @@ static  void  SetupRotateAction( BTLV_INPUT_WORK* biw, int hit )
   {
     biw->rotate_flag = 0;
     biw->rotate_scr = bird[ biw->before_select_dir ].init_scr;
-    if( ( hit == 0 ) && ( ( biw->rotate_scr == ROTATE_SCR_C ) || ( biw->rotate_scr == ROTATE_SCR_C_ALL ) ) )
+    if( ( dir == 0 ) && ( ( biw->rotate_scr == ROTATE_SCR_C ) || ( biw->rotate_scr == ROTATE_SCR_C_ALL ) ) )
     {
       biw->cursor_pos = 1;
     }
   }
   else
   {
-    if( hit )
+    if( dir )
     {
       biw->rotate_flag = 1;
       biw->rotate_scr = bird[ biw->before_select_dir ].right_scr;
@@ -2198,6 +2259,8 @@ static  void  SetupRotateAction( BTLV_INPUT_WORK* biw, int hit )
 
   tra->biw = biw;
   tra->frame = ROTATE_FRAME;
+
+  BTLV_EFFECT_SetRotateEffect( dir, BTLV_STAGE_MINE );
 
   GFL_TCB_AddTask( biw->tcbsys, TCB_RotateAction, tra, 0 );
   biw->tcb_execute_flag = 1;
@@ -3209,7 +3272,7 @@ static  int   BTLV_INPUT_CheckKey( BTLV_INPUT_WORK* biw, const GFL_UI_TP_HITTBL*
       {
         if( move_pos != BTLV_INPUT_NOMOVE )
         {
-          SePlaySelect();
+          SePlaySelect( biw );
           if( move_pos < 0 )
           {
             if( ( -move_pos != biw->old_cursor_pos ) && ( biw->old_cursor_pos != CURSOR_NOMOVE ) )
@@ -3309,31 +3372,43 @@ static  void  BTLV_INPUT_PutCursorOBJ( BTLV_INPUT_WORK* biw, const GFL_UI_TP_HIT
 //=============================================================================================
 //  決定音再生
 //=============================================================================================
-static  inline  void  SePlaySelect( void )
+static  inline  void  SePlaySelect( BTLV_INPUT_WORK* biw )
 {
-  PMSND_PlaySE( SEQ_SE_SELECT1 );
+  if( biw->comp != BTL_COMPETITOR_COMM )
+  { 
+    PMSND_PlaySE( SEQ_SE_SELECT1 );
+  }
 }
 
 //=============================================================================================
 //  ローテーション選択音
 //=============================================================================================
-static  inline  void  SePlayRotateSelect( void )
+static  inline  void  SePlayRotateSelect( BTLV_INPUT_WORK* biw )
 {
-  PMSND_PlaySE( SEQ_SE_ROTATION_S );
+  if( biw->comp != BTL_COMPETITOR_COMM )
+  { 
+    PMSND_PlaySE( SEQ_SE_ROTATION_S );
+  }
 }
 
 //=============================================================================================
 //  ローテーション決定音
 //=============================================================================================
-static  inline  void  SePlayRotateDecide( void )
+static  inline  void  SePlayRotateDecide( BTLV_INPUT_WORK* biw )
 {
-  PMSND_PlaySE( SEQ_SE_DECIDE2 );
+  if( biw->comp != BTL_COMPETITOR_COMM )
+  { 
+    PMSND_PlaySE( SEQ_SE_DECIDE2 );
+  }
 }
 
 //=============================================================================================
 //  ローテーション音
 //=============================================================================================
-static  inline  void  SePlayRotation( void )
+static  inline  void  SePlayRotation( BTLV_INPUT_WORK* biw )
 {
-  PMSND_PlaySE( SEQ_SE_ROTATION_B );
+  if( biw->comp != BTL_COMPETITOR_COMM )
+  { 
+    PMSND_PlaySE( SEQ_SE_ROTATION_B );
+  }
 }
