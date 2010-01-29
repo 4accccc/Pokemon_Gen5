@@ -3,9 +3,9 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="unno" host="W00199" date="2009-12-14T21:58:47" source="m_gstation01_00_00.mb"/>
+	<create user="unno" host="W00199" date="2010-01-29T18:14:02"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
-	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+	<generator name="NNS_3DMaterialEditor" version="2.8.0.20050620"/>
 </head>
 
 <body>
@@ -22,14 +22,14 @@
 	tex_matrix_mode="maya"
 	compress_node="none" node_size="1 1"
 	compress_material="off" material_size="17 17"
-	output_texture="used"
+	output_texture="all"
 	force_full_weight="off"
 	use_primitive_strip="on"
 />
 
 <box_test pos_scale="7" xyz="-3.914307 -0.189941 -3.914307" whd="7.828125 2.336670 7.828125"/>
 
-<tex_image_array size="16">
+<tex_image_array size="22">
 	<tex_image index="0" name="gs2_base"
 		width="64" height="64" original_width="64" original_height="64"
 		format="palette16"
@@ -399,7 +399,7 @@
 		format="palette4"
 		color0_mode="color"
 		palette_name="lb_body_a_pl"
-		path="C:/mayadata_gs/demo/linear_demo/linear_body/tex/lb_body_a.tga"
+		path="C:/home/wb_data3d/gimmick/battle_subway/train/tex/lb_body_a.tga"
 	>
 		<bitmap size="128">
 			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
@@ -425,7 +425,7 @@
 		format="palette4"
 		color0_mode="color"
 		palette_name="lb_body_b_pl"
-		path="C:/mayadata_gs/demo/linear_demo/linear_body/tex/lb_body_b.tga"
+		path="C:/home/wb_data3d/gimmick/battle_subway/train/tex/lb_body_b.tga"
 	>
 		<bitmap size="64">
 			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
@@ -443,7 +443,7 @@
 		format="palette4"
 		color0_mode="color"
 		palette_name="lb_body_c_pl"
-		path="C:/mayadata_gs/demo/linear_demo/linear_body/tex/lb_body_c.tga"
+		path="C:/home/wb_data3d/gimmick/battle_subway/train/tex/lb_body_c.tga"
 	>
 		<bitmap size="128">
 			aaa1 aaaa aaaa aaaa aaa1 aaaa aaaa aaaa
@@ -490,7 +490,33 @@
 			ffff ffff 56bf 0000 0000 fa54 ffff ffff
 		</bitmap>
 	</tex_image>
-	<tex_image index="10" name="lb_body_e"
+	<tex_image index="10" name="lb_body_d1"
+		width="64" height="16" original_width="64" original_height="16"
+		format="palette4"
+		color0_mode="color"
+		palette_name="lb_body_d1_pl"
+		path="C:/home/wb_data3d/gimmick/battle_subway/train/tex/lb_body_d1.tga"
+	>
+		<bitmap size="128">
+			ffff ffff ffff ffff 15af 0000 0000 fe95
+			ffff ffff ffff ffff 056b 0000 4000 ffa5
+			ffff ffff ffff ffff 015a 0000 5000 ffe9
+			ffff ffff ffff bfff 0056 0000 5400 fffa
+			ffff ffff ffff afff 0015 0000 9500 fffe
+			ffff ffff ffff 6bff 0005 0000 a540 ffff
+			ffff ffff ffff 5aff 0001 0000 e950 ffff
+			ffff ffff ffff 56bf 0000 0000 fa54 ffff
+			ffff ffff ffff 15af 0000 0000 fe95 ffff
+			ffff ffff ffff 056b 0000 4000 ffa5 ffff
+			ffff ffff ffff 015a 0000 5000 ffe9 ffff
+			ffff ffff bfff 0056 0000 5400 fffa ffff
+			ffff ffff afff 0015 0000 9500 fffe ffff
+			ffff ffff 6bff 0005 0000 a540 ffff ffff
+			ffff ffff 5aff 0001 0000 e950 ffff ffff
+			ffff ffff 56bf 0000 0000 fa54 ffff ffff
+		</bitmap>
+	</tex_image>
+	<tex_image index="11" name="lb_body_e"
 		width="16" height="32" original_width="16" original_height="32"
 		format="palette4"
 		color0_mode="color"
@@ -508,7 +534,86 @@
 			5555 5555 5555 5555 5555 5555 5555 5555
 		</bitmap>
 	</tex_image>
-	<tex_image index="11" name="lb_light_a.1"
+	<tex_image index="12" name="lb_body_f"
+		width="8" height="8" original_width="8" original_height="8"
+		format="palette4"
+		color0_mode="color"
+		palette_name="lb_body_f_pl"
+		path="C:/home/wb_data3d/gimmick/battle_subway/train/tex/lb_body_f.tga"
+	>
+		<bitmap size="8">
+			0000 0000 0000 0000 0000 0000 0000 0000
+		</bitmap>
+	</tex_image>
+	<tex_image index="13" name="lb_body_g"
+		width="16" height="8" original_width="16" original_height="8"
+		format="palette4"
+		color0_mode="color"
+		palette_name="lb_body_g_pl"
+		path="C:/home/wb_data3d/gimmick/battle_subway/train/tex/lb_body_g.tga"
+	>
+		<bitmap size="16">
+			1694 1694 1694 1694 1694 1694 1694 1694
+			1694 1694 1694 1694 1694 1694 1694 1694
+		</bitmap>
+	</tex_image>
+	<tex_image index="14" name="lb_door_a"
+		width="32" height="32" original_width="32" original_height="32"
+		format="palette16"
+		color0_mode="color"
+		palette_name="lb_door_a_pl"
+		path="C:/home/wb_data3d/gimmick/battle_subway/train/tex/lb_door_a.tga"
+	>
+		<bitmap size="256">
+			4444 4444 4444 4444 4444 4444 4444 4444
+			3334 3333 3333 3333 3333 3333 3333 4333
+			3334 3333 3333 3333 3333 3333 3333 4333
+			5334 5555 5555 5555 5555 5555 5555 4335
+			5334 5555 5555 5555 5555 5555 5555 4335
+			5334 5555 5555 5555 5555 5555 5555 4335
+			5334 5555 5555 5555 5555 5555 5555 4335
+			5334 5555 5555 5555 5555 5555 5555 4335
+			5334 5555 5555 5555 5555 5555 5555 4335
+			5334 5555 5555 5555 5555 5555 5555 4335
+			5334 5555 5555 5555 5555 5555 5555 4335
+			5334 5555 5555 5555 5555 5555 5555 4335
+			5334 5555 5555 5555 5555 5555 5555 4335
+			2110 2222 2222 2222 2222 2222 2222 0112
+			2110 2222 2222 2222 2222 2222 2222 0112
+			2110 2222 2222 2222 2222 2222 2222 0112
+			2110 2222 2222 2222 2222 2222 2222 0112
+			2110 2222 2222 2222 2222 2222 2222 0112
+			2110 2222 2222 2222 2222 2222 2222 0112
+			2110 2222 2222 2222 2222 2222 2222 0112
+			5334 5555 5555 5555 5555 5555 5555 4335
+			5334 5555 5555 5555 5555 5555 5555 4335
+			5334 5555 5555 5555 5555 5555 5555 4335
+			5334 5555 5555 5555 5555 5555 5555 4335
+			5334 5555 5555 5555 5555 5555 5555 4335
+			5334 5555 5555 5555 5555 5555 5555 4335
+			5334 5555 5555 5555 5555 5555 5555 4335
+			5334 5555 5555 5555 5555 5555 5555 4335
+			5334 5555 5555 5555 5555 5555 5555 4335
+			3334 3333 3333 3333 3333 3333 3333 4333
+			3334 3333 3333 3333 3333 3333 3333 4333
+			4444 4444 4444 4444 4444 4444 4444 4444
+		</bitmap>
+	</tex_image>
+	<tex_image index="15" name="lb_ent_a.1"
+		width="16" height="16" original_width="16" original_height="16"
+		format="palette4"
+		color0_mode="color"
+		palette_name="lb_ent_a.1_pl"
+		path="C:/home/wb_data3d/gimmick/battle_subway/train/tex/lb_ent_a.1.tga"
+	>
+		<bitmap size="32">
+			05af 0000 05af 0000 05af 0000 05af 0000
+			05af 0000 05af 0000 05af 0000 05af 0000
+			05af 0000 05af 0000 05af 0000 05af 0000
+			05af 0000 05af 0000 05af 0000 05af 0000
+		</bitmap>
+	</tex_image>
+	<tex_image index="16" name="lb_light_a.1"
 		width="16" height="8" original_width="16" original_height="8"
 		format="palette4"
 		color0_mode="color"
@@ -520,7 +625,7 @@
 			fffd 4feb aaa1 42aa 0001 4000 5555 5555
 		</bitmap>
 	</tex_image>
-	<tex_image index="12" name="lb_light_b"
+	<tex_image index="17" name="lb_light_b"
 		width="64" height="8" original_width="64" original_height="8"
 		format="a5i3"
 		palette_name="lb_light_b_pl"
@@ -561,7 +666,7 @@
 			a0a0 8080 6060 4848 3030 1818 0808 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="13" name="lb_light_c"
+	<tex_image index="18" name="lb_light_c"
 		width="32" height="32" original_width="32" original_height="32"
 		format="a5i3"
 		palette_name="lb_light_c_pl"
@@ -634,7 +739,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="14" name="lb_win_a.1"
+	<tex_image index="19" name="lb_win_a.1"
 		width="64" height="16" original_width="64" original_height="16"
 		format="palette16"
 		color0_mode="color"
@@ -676,7 +781,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="15" name="lb_win_b"
+	<tex_image index="20" name="lb_win_b"
 		width="64" height="16" original_width="64" original_height="16"
 		format="palette4"
 		color0_mode="color"
@@ -702,9 +807,35 @@
 			5555 5400 6be9 0015 5555 5400 6be9 0015
 		</bitmap>
 	</tex_image>
+	<tex_image index="21" name="lb_win_c.1"
+		width="32" height="16" original_width="32" original_height="16"
+		format="palette16"
+		color0_mode="color"
+		palette_name="lb_win_c.1_pl"
+		path="C:/home/wb_data3d/gimmick/battle_subway/train/tex/lb_win_c.1.tga"
+	>
+		<bitmap size="128">
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			2200 4433 2234 0032 2200 4433 2234 0032
+			3200 4443 2223 0013 3200 4443 2223 0013
+			3300 3444 3222 0011 3300 3444 3222 0011
+			4300 2344 1322 0031 4300 2344 1322 0031
+			4100 2234 1132 0023 4100 2234 1132 0023
+			1100 2223 3113 0022 1100 2223 3113 0022
+			3300 3222 2311 0022 3300 3222 2311 0022
+			2300 1322 2231 0022 2300 1322 2231 0022
+			2200 3332 2223 0022 2200 3332 2223 0022
+			2200 3333 2222 0022 2200 3333 2222 0022
+			2200 2332 2222 0022 2200 2332 2222 0022
+			2200 2222 2222 0022 2200 2222 2222 0022
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+		</bitmap>
+	</tex_image>
 </tex_image_array>
 
-<tex_palette_array size="16">
+<tex_palette_array size="22">
 	<tex_palette index="0" name="gs2_base_pl" color_size="8">
 		5292 4e71 5ef5 5ad5 56b4 7fff 7fff 7fff
 	</tex_palette>
@@ -732,26 +863,44 @@
 	<tex_palette index="8" name="lb_body_c_pl" color_size="4">
 		6f7a 6738 7ffe 7fff
 	</tex_palette>
-	<tex_palette index="9" name="lb_body_d_pl" color_size="4">
+	<tex_palette index="9" name="lb_body_d1_pl" color_size="4">
+		5e60 6280 66a1 6aa2
+	</tex_palette>
+	<tex_palette index="10" name="lb_body_d_pl" color_size="4">
 		3962 3d83 41a4 45c5
 	</tex_palette>
-	<tex_palette index="10" name="lb_body_e_pl" color_size="4">
+	<tex_palette index="11" name="lb_body_e_pl" color_size="4">
 		6f7a 6738 7ffe 77bc
 	</tex_palette>
-	<tex_palette index="11" name="lb_light_a.1_pl" color_size="4">
+	<tex_palette index="12" name="lb_body_f_pl" color_size="4">
+		4630 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="13" name="lb_body_g_pl" color_size="4">
+		1ce6 2528 318b 7fff
+	</tex_palette>
+	<tex_palette index="14" name="lb_door_a_pl" color_size="8">
+		3120 3962 45c5 6f7a 6738 7ffe 7fff 7fff
+	</tex_palette>
+	<tex_palette index="15" name="lb_ent_a.1_pl" color_size="4">
+		1063 1484 18a5 1cc6
+	</tex_palette>
+	<tex_palette index="16" name="lb_light_a.1_pl" color_size="4">
 		62f6 4e51 6f59 77bc
 	</tex_palette>
-	<tex_palette index="12" name="lb_light_b_pl" color_size="8">
+	<tex_palette index="17" name="lb_light_b_pl" color_size="8">
 		3fde 7fff 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="13" name="lb_light_c_pl" color_size="8">
+	<tex_palette index="18" name="lb_light_c_pl" color_size="8">
 		3fde 7fff 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="14" name="lb_win_a.1_pl" color_size="8">
+	<tex_palette index="19" name="lb_win_a.1_pl" color_size="8">
 		18a5 1cc6 20e7 2508 2d4a 358c 3dce 7fff
 	</tex_palette>
-	<tex_palette index="15" name="lb_win_b_pl" color_size="4">
+	<tex_palette index="20" name="lb_win_b_pl" color_size="4">
 		0c42 1063 18a5 1cc6
+	</tex_palette>
+	<tex_palette index="21" name="lb_win_c.1_pl" color_size="8">
+		1ca5 354a 24e7 2d29 356b 7fff 7fff 7fff
 	</tex_palette>
 </tex_palette_array>
 
@@ -888,7 +1037,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="11" tex_palette_idx="11"
+		tex_image_idx="16" tex_palette_idx="16"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -912,7 +1061,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="12" tex_palette_idx="12"
+		tex_image_idx="17" tex_palette_idx="17"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -936,7 +1085,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="13" tex_palette_idx="13"
+		tex_image_idx="18" tex_palette_idx="18"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -1032,7 +1181,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="15" tex_palette_idx="15"
+		tex_image_idx="20" tex_palette_idx="20"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -1056,7 +1205,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="9" tex_palette_idx="9"
+		tex_image_idx="10" tex_palette_idx="9"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -1080,7 +1229,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="14" tex_palette_idx="14"
+		tex_image_idx="19" tex_palette_idx="19"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -1152,7 +1301,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="10" tex_palette_idx="10"
+		tex_image_idx="11" tex_palette_idx="11"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -9469,6 +9618,99 @@
 
 <output_info vertex_size="3548" polygon_size="1333"
 	triangle_size="528" quad_size="805"/>
+
+<ex_nns_3dme>
+	<ex_model_info scene_name="デフォルトシーン" disp_pos="0.000000 60.000000"/>
+	<ex_tex_image_array size="22">
+		<ex_tex_image index="0" disp_pos="-600.000000 300.000000"/>
+		<ex_tex_image index="1" disp_pos="120.000000 300.000000"/>
+		<ex_tex_image index="2" disp_pos="-960.000000 300.000000"/>
+		<ex_tex_image index="3" disp_pos="240.000000 300.000000"/>
+		<ex_tex_image index="4" disp_pos="-840.000000 300.000000"/>
+		<ex_tex_image index="5" disp_pos="-720.000000 300.000000"/>
+		<ex_tex_image index="6" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="7" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="8" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="9" disp_pos="480.000000 300.000000"/>
+		<ex_tex_image index="10" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="11" disp_pos="960.000000 300.000000"/>
+		<ex_tex_image index="12" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="13" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="14" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="15" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="16" disp_pos="-360.000000 300.000000"/>
+		<ex_tex_image index="17" disp_pos="-240.000000 300.000000"/>
+		<ex_tex_image index="18" disp_pos="-120.000000 300.000000"/>
+		<ex_tex_image index="19" disp_pos="600.000000 300.000000"/>
+		<ex_tex_image index="20" disp_pos="360.000000 300.000000"/>
+		<ex_tex_image index="21" disp_pos="0.000000 0.000000"/>
+	</ex_tex_image_array>
+	<ex_tex_palette_array size="22">
+		<ex_tex_palette index="0" disp_pos="-600.000000 360.000000"/>
+		<ex_tex_palette index="1" disp_pos="120.000000 360.000000"/>
+		<ex_tex_palette index="2" disp_pos="-960.000000 360.000000"/>
+		<ex_tex_palette index="3" disp_pos="240.000000 360.000000"/>
+		<ex_tex_palette index="4" disp_pos="-840.000000 360.000000"/>
+		<ex_tex_palette index="5" disp_pos="-720.000000 360.000000"/>
+		<ex_tex_palette index="6" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="7" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="8" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="9" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="10" disp_pos="480.000000 360.000000"/>
+		<ex_tex_palette index="11" disp_pos="960.000000 360.000000"/>
+		<ex_tex_palette index="12" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="13" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="14" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="15" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="16" disp_pos="-360.000000 360.000000"/>
+		<ex_tex_palette index="17" disp_pos="-240.000000 360.000000"/>
+		<ex_tex_palette index="18" disp_pos="-120.000000 360.000000"/>
+		<ex_tex_palette index="19" disp_pos="600.000000 360.000000"/>
+		<ex_tex_palette index="20" disp_pos="360.000000 360.000000"/>
+		<ex_tex_palette index="21" disp_pos="0.000000 0.000000"/>
+	</ex_tex_palette_array>
+	<ex_material_array size="17">
+		<ex_material index="0" disp_pos="-960.000000 240.000000"/>
+		<ex_material index="1" disp_pos="-840.000000 240.000000"/>
+		<ex_material index="2" disp_pos="-720.000000 240.000000"/>
+		<ex_material index="3" disp_pos="-600.000000 240.000000"/>
+		<ex_material index="4" disp_pos="-480.000000 240.000000"/>
+		<ex_material index="5" disp_pos="-360.000000 240.000000"/>
+		<ex_material index="6" disp_pos="-240.000000 240.000000"/>
+		<ex_material index="7" disp_pos="-120.000000 240.000000"/>
+		<ex_material index="8" disp_pos="0.000000 240.000000"/>
+		<ex_material index="9" disp_pos="120.000000 240.000000"/>
+		<ex_material index="10" disp_pos="240.000000 240.000000"/>
+		<ex_material index="11" disp_pos="360.000000 240.000000"/>
+		<ex_material index="12" disp_pos="480.000000 240.000000"/>
+		<ex_material index="13" disp_pos="600.000000 240.000000"/>
+		<ex_material index="14" disp_pos="720.000000 240.000000"/>
+		<ex_material index="15" disp_pos="840.000000 240.000000"/>
+		<ex_material index="16" disp_pos="960.000000 240.000000"/>
+	</ex_material_array>
+	<ex_polygon_array size="17">
+		<ex_polygon index="0" disp_pos="-480.000000 180.000000"/>
+		<ex_polygon index="1" disp_pos="0.000000 180.000000"/>
+		<ex_polygon index="2" disp_pos="360.000000 180.000000"/>
+		<ex_polygon index="3" disp_pos="480.000000 180.000000"/>
+		<ex_polygon index="4" disp_pos="600.000000 180.000000"/>
+		<ex_polygon index="5" disp_pos="720.000000 180.000000"/>
+		<ex_polygon index="6" disp_pos="840.000000 180.000000"/>
+		<ex_polygon index="7" disp_pos="960.000000 180.000000"/>
+		<ex_polygon index="8" disp_pos="-360.000000 180.000000"/>
+		<ex_polygon index="9" disp_pos="-240.000000 180.000000"/>
+		<ex_polygon index="10" disp_pos="-120.000000 180.000000"/>
+		<ex_polygon index="11" disp_pos="-960.000000 180.000000"/>
+		<ex_polygon index="12" disp_pos="-720.000000 180.000000"/>
+		<ex_polygon index="13" disp_pos="-600.000000 180.000000"/>
+		<ex_polygon index="14" disp_pos="120.000000 180.000000"/>
+		<ex_polygon index="15" disp_pos="-840.000000 180.000000"/>
+		<ex_polygon index="16" disp_pos="240.000000 180.000000"/>
+	</ex_polygon_array>
+	<ex_node_array size="1">
+		<ex_node index="0" disp_pos="0.000000 120.000000"/>
+	</ex_node_array>
+</ex_nns_3dme>
 
 </body>
 
