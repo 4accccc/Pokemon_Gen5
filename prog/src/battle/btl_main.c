@@ -3723,7 +3723,7 @@ static BtlResult checkWinner( BTL_MAIN_MODULE* wk )
 
 u32 BTL_MAIN_GetCommandLimitTime( const BTL_MAIN_MODULE* wk )
 {
-  return 300;
+  return 0;
 }
 
 u32 BTL_MAIN_GetGameLimitTime( const BTL_MAIN_MODULE * wk )

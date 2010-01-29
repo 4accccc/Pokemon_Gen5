@@ -700,7 +700,10 @@ static BOOL selact_Start( BTL_CLIENT* wk, int* seq )
 
   }
 
-  BTLV_EFFECT_DrawEnableTimer( BTLV_TIMER_TYPE_COMMAND_TIME, TRUE, TRUE );
+  if( wk->cmdLimitTime ){
+    BTLV_EFFECT_DrawEnableTimer( BTLV_TIMER_TYPE_COMMAND_TIME, TRUE, TRUE );
+  }
+
   SelActProc_Set( wk, selact_Root );
 
   return FALSE;
