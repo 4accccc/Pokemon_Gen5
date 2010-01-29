@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-11-19T17:59:14"/>
+	<create user="matsumiya" host="W00207" date="2010-01-29T16:15:45"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -296,22 +296,16 @@
 		<comment>♂
 ・おそらく未使用
 ・アイシクルバッジを
-　所有→_badge_02
+　所有→デモ後、_badge_03
 　未所有→badge_04</comment>
 		<attribute name="キャラ指定">VETERANM</attribute>
-		<language name="JPN" width="256">この　かたく　とざされた
-ゲートを　ひらく　カギは！[BE:01:ページ切り替え（クリア）]
-アイシクルバッジ！[BE:01:ページ切り替え（クリア）]
-ゆうきある　トレーナーよ
-アイシクルバッジを　もっているのか？[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">この　堅く　閉ざされた
-ゲートを　開く　カギは！[BE:01:ページ切り替え（クリア）]
-アイシクルバッジ！[BE:01:ページ切り替え（クリア）]
-勇気ある　トレーナーよ
-アイシクルバッジを　もっているのか？[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">この　とざされた　ゲートを
+ひらく　カギは　アイシクルバッジ！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">この　閉ざされた　ゲートを
+開く　カギは　アイシクルバッジ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r10r0701_badge_02">
+	<row id="msg_r10r0701_badge_02" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
 		<comment>♂
 ・メッセージ表示後、ゲートが開く処理</comment>
 		<language name="JPN" width="256">うむ！　よろしい！
@@ -323,20 +317,20 @@
 	<row id="msg_r10r0701_badge_03">
 		<comment>♂
 ・ゲートオープン後</comment>
+		<attribute name="キャラ指定">VETERANM</attribute>
 		<language name="JPN" width="256">アイシクルバッジを　もつ　ものよ！
-さきに　すすみ　ゆうきを　しめせ！</language>
-		<language name="JPN_KANJI" width="256">アイシクルバッジを　もつ　者よ！
-先に進み　勇気を　示せ！</language>
+つららの　するどさを　あらわせ！</language>
+		<language name="JPN_KANJI" width="256">アイシクルバッジを　持つ　者よ！
+氷柱の　鋭さを　表せ！</language>
 	</row>
 
 	<row id="msg_r10r0701_badge_04">
 		<comment>♂
 ・バッジ未所有時</comment>
-		<language name="JPN" width="256">トレーナーよ！[BE:01:ページ切り替え（クリア）]
-まずは　セッカ　ポケモンジムにて
+		<attribute name="キャラ指定">VETERANM</attribute>
+		<language name="JPN" width="256">まずは　セッカ　ポケモンジムにて
 アイシクルバッジを　てにいれるのだ！</language>
-		<language name="JPN_KANJI" width="256">トレーナーよ！[BE:01:ページ切り替え（クリア）]
-まずは　セッカ　ポケモンジムにて
+		<language name="JPN_KANJI" width="256">まずは　セッカ　ポケモンジムにて
 アイシクルバッジを　手に入れるのだ！</language>
 	</row>
 
@@ -344,10 +338,10 @@
 		<comment>♂
 ・ストッパー用</comment>
 		<attribute name="キャラ指定">ストッパー用</attribute>
-		<language name="JPN" width="256">まてい！　わしに　あいさつもせず
-ゲートを　とおるのは　ゆるさん！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">待てい！　わしに　あいさつもせず
-ゲートを　通るのは　許さん！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">まてい！　しかく　なきもの
+この　ゲートは　とおさん！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">待てい！　資格なき者
+この　ゲートは　通さん！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<flowchart-group-list>
