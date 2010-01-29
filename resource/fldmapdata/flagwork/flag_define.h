@@ -662,7 +662,7 @@
 #define FV_T02_SPEECH_AFTER                638 /* 0x027e カラクサタウン：演説誘導イベント後に表示されている群集 */
 #define FV_C04_SUPPORTPAPA_01              639 /* 0x027f ライモンシティ：サポートのパパ */
 #define FV_R04_RIVAL_01                    640 /* 0x0280 ４番道路：ライバル */
-		/* not used   641(0x0281) */
+#define FV_C03_GUIDE_01                    641 /* 0x0281 ヒウンシティ：街案内イベントのライバルとリーダー３ */
 		/* not used   642(0x0282) */
 		/* not used   643(0x0283) */
 		/* not used   644(0x0284) */

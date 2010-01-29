@@ -165,7 +165,8 @@
 #define WK_SCENE_C08GYM0101              16553 /* 0x40a9 ドラゴンジム：トレーナー戦POSワーク */
 #define WK_SCENE_D02R0101_HAKAI          16554 /* 0x40aa ヤグルマの森：盗難イベント中の プラズマ団との戦闘イベント用ワーク */
 #define WK_SCENE_C08R0301                16555 /* 0x40ab C08ソウリュウシティ：ミュージカル大好きおじさんイベント用ワーク */
-#define WK_SCENE_C03R0601                16556 /* 0x40ac ヒウンシティ：サポートのPOSイベント用ワーク */
+#define WK_SCENE_C03R0601                16556 /* 0x40ac ヒウンシティ：イベント用ワーク */
+#define WK_SCENE_C03                     16557 /* 0x40ad ヒウンシティ：イベント用ワーク */
 
 #define WK_SCENE_AREA_END                16687 /* 0x412f  */
 
