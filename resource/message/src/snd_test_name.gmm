@@ -4439,6 +4439,22 @@
 		<language name="JPN" width="256">BGM-T-04</language>
 		<language name="JPN_KANJI" width="256">BGM-T-04</language>
 	</row>
+	<row id="msg_seq_bgm_t_05_sp">
+		<language name="JPN" width="256">BGM-T-05-SP</language>
+		<language name="JPN_KANJI" width="256">BGM-T-05-SP</language>
+	</row>
+	<row id="msg_seq_bgm_t_05_su">
+		<language name="JPN" width="256">BGM-T-05-SU</language>
+		<language name="JPN_KANJI" width="256">BGM-T-05-SU</language>
+	</row>
+	<row id="msg_seq_bgm_t_05_au">
+		<language name="JPN" width="256">BGM-T-05-AU</language>
+		<language name="JPN_KANJI" width="256">BGM-T-05-AU</language>
+	</row>
+	<row id="msg_seq_bgm_t_05_wi">
+		<language name="JPN" width="256">BGM-T-05-WI</language>
+		<language name="JPN_KANJI" width="256">BGM-T-05-WI</language>
+	</row>
 	<row id="msg_seq_bgm_c_01">
 		<language name="JPN" width="256">BGM-C-01</language>
 		<language name="JPN_KANJI" width="256">BGM-C-01</language>
@@ -4482,6 +4498,10 @@
 	<row id="msg_seq_bgm_c_10_w">
 		<language name="JPN" width="256">BGM-C-10-W</language>
 		<language name="JPN_KANJI" width="256">BGM-C-10-W</language>
+	</row>
+	<row id="msg_seq_bgm_r_a">
+		<language name="JPN" width="256">BGM-R-A</language>
+		<language name="JPN_KANJI" width="256">BGM-R-A</language>
 	</row>
 	<row id="msg_seq_bgm_r_b_sp">
 		<language name="JPN" width="256">BGM-R-B-SP</language>
@@ -4546,6 +4566,10 @@
 	<row id="msg_seq_bgm_r_e_wi">
 		<language name="JPN" width="256">BGM-R-E-WI</language>
 		<language name="JPN_KANJI" width="256">BGM-R-E-WI</language>
+	</row>
+	<row id="msg_seq_bgm_r_f">
+		<language name="JPN" width="256">BGM-R-F</language>
+		<language name="JPN_KANJI" width="256">BGM-R-F</language>
 	</row>
 	<row id="msg_seq_bgm_h_01">
 		<language name="JPN" width="256">BGM-H-01</language>
@@ -4870,30 +4894,6 @@
 	<row id="msg_seq_bgm_msl_dl_02">
 		<language name="JPN" width="256">BGM-MSL-DL-02</language>
 		<language name="JPN_KANJI" width="256">BGM-MSL-DL-02</language>
-	</row>
-	<row id="msg_seq_bgm_r_a">
-		<language name="JPN" width="256">BGM-R-A</language>
-		<language name="JPN_KANJI" width="256">BGM-R-A</language>
-	</row>
-	<row id="msg_seq_bgm_r_f">
-		<language name="JPN" width="256">BGM-R-F</language>
-		<language name="JPN_KANJI" width="256">BGM-R-F</language>
-	</row>
-	<row id="msg_seq_bgm_t_05_sp">
-		<language name="JPN" width="256">BGM-T-05-SP</language>
-		<language name="JPN_KANJI" width="256">BGM-T-05-SP</language>
-	</row>
-	<row id="msg_seq_bgm_t_05_su">
-		<language name="JPN" width="256">BGM-T-05-SU</language>
-		<language name="JPN_KANJI" width="256">BGM-T-05-SU</language>
-	</row>
-	<row id="msg_seq_bgm_t_05_au">
-		<language name="JPN" width="256">BGM-T-05-AU</language>
-		<language name="JPN_KANJI" width="256">BGM-T-05-AU</language>
-	</row>
-	<row id="msg_seq_bgm_t_05_wi">
-		<language name="JPN" width="256">BGM-T-05-WI</language>
-		<language name="JPN_KANJI" width="256">BGM-T-05-WI</language>
 	</row>
 	<row id="msg_seq_bgm_end">
 		<language name="JPN" width="256">BGM-END</language>
