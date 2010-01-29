@@ -1,7 +1,7 @@
 //======================================================================
 /**
- * @file	field_comm_actor.c
- * @brief	
+ * @file  field_comm_actor.c
+ * @brief  
  * @author
  * @date
  */
@@ -12,11 +12,11 @@
 #include "field_comm_actor.h"
 
 //======================================================================
-//	define
+//  define
 //======================================================================
 
 //======================================================================
-//	struct
+//  struct
 //======================================================================
 //--------------------------------------------------------------
 /// FIELD_COMM_ACTOR
@@ -51,7 +51,7 @@ typedef struct
 }MV_COMMACT_WORK;
 
 //======================================================================
-//	proto
+//  proto
 //======================================================================
 static void fldcommAct_DeleteActor( FIELD_COMM_ACTOR *act );
 
@@ -278,13 +278,14 @@ static MMDL * fldcommAct_fmmdl_Add(
   
   head.obj_code = code;
   fmmdl = MMDLSYS_AddMMdl( fmmdlsys, &head, 0 );
+  
   fldcommAct_fmmdl_SetWatchData(
       fmmdl, watch_dir, watch_pos, watch_vanish, comm_actor );
   
   MMDL_InitPosition( fmmdl, watch_pos, grid_ChangeFourDir(*watch_dir) );
   MMDL_SetStatusBitHeightGetOFF( fmmdl, TRUE );
   MMDL_SetStatusBitNotZoneDelete( fmmdl, TRUE );
-  
+  MMDL_SetMoveBitRejectPauseMove( fmmdl, TRUE );
   return( fmmdl );
 }
 
@@ -385,26 +386,26 @@ static void fldcommAct_fmmdl_SetWatchData(
 //--------------------------------------------------------------
 /**
  * 360度方向->４方向に
- * @param	dir	方向　0x10000単位
- * @retval	u16 DIR_UP等
+ * @param  dir  方向　0x10000単位
+ * @retval  u16 DIR_UP等
  */
 //--------------------------------------------------------------
 static u16 grid_ChangeFourDir( u16 dir )
 {
 #if 0
-	if( (dir>0x2000) && (dir<0x6000) ){
-		dir = DIR_LEFT;
-	}else if( (dir >= 0x6000) && (dir <= 0xa000) ){
-		dir = DIR_DOWN;
-	}else if( (dir > 0xa000)&&(dir < 0xe000) ){
-		dir = DIR_RIGHT;
-	}else{
-		dir = DIR_UP;
-	}
+  if( (dir>0x2000) && (dir<0x6000) ){
+    dir = DIR_LEFT;
+  }else if( (dir >= 0x6000) && (dir <= 0xa000) ){
+    dir = DIR_DOWN;
+  }else if( (dir > 0xa000)&&(dir < 0xe000) ){
+    dir = DIR_RIGHT;
+  }else{
+    dir = DIR_UP;
+  }
 #else
   //通信はFIELD_PLAYER_GetDir()で採る
 #endif
-	return( dir );
+  return( dir );
 }
 
 //======================================================================
@@ -418,16 +419,16 @@ static const MMDL_HEADER fldcommActro_MMdlHeader =
   MMDL_ID_COMMACTOR,
   0,
   MV_COMM_ACTOR,
-  0,	///<イベントタイプ
-  0,	///<イベントフラグ
-  0,	///<イベントID
-  0,	///<指定方向
-  0,	///<指定パラメタ 0
-  0,	///<指定パラメタ 1
-  0,	///<指定パラメタ 2
-  4,	///<X方向移動制限
-  4,	///<Z方向移動制限
-  0,	///<グリッドX
-  0,	///<グリッドZ
-  0,	///<Y値 fx32型
+  0,  ///<イベントタイプ
+  0,  ///<イベントフラグ
+  0,  ///<イベントID
+  0,  ///<指定方向
+  0,  ///<指定パラメタ 0
+  0,  ///<指定パラメタ 1
+  0,  ///<指定パラメタ 2
+  4,  ///<X方向移動制限
+  4,  ///<Z方向移動制限
+  0,  ///<グリッドX
+  0,  ///<グリッドZ
+  0,  ///<Y値 fx32型
 };

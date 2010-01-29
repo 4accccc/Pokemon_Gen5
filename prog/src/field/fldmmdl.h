@@ -219,6 +219,7 @@ typedef enum
 	MMDL_MOVEBIT_GRASS_SET=(1<<16),///<草をセットした
 	MMDL_MOVEBIT_REFLECT_SET=(1<<17),///<映り込みをセットした
 	MMDL_MOVEBIT_EFFSET_SHOAL=(1<<18),///<浅瀬エフェクトをセット
+  MMDL_MOVEBIT_REJECT_PAUSE_MOVE=(1<<19),///<動作ポーズを拒否する
 }MMDL_MOVEBIT;
 
 //--------------------------------------------------------------
@@ -931,6 +932,8 @@ extern BOOL MMDL_CheckStatusBitBridge( const MMDL * mmdl );
 extern void MMDL_SetMoveBitReflect( MMDL * mmdl, BOOL flag );
 extern BOOL MMDL_CheckMoveBitReflect( const MMDL * mmdl );
 extern BOOL MMDL_CheckMoveBitAcmd( const MMDL * mmdl );
+extern void MMDL_SetMoveBitRejectPauseMove( MMDL *mmdl, BOOL flag );
+extern BOOL MMDL_CheckMoveBitRejectPauseMove( const MMDL *mmdl );
 #if 0 //wb null
 extern void MMDL_SetStatusBitHeightExpand( MMDL * mmdl, BOOL flag );
 extern BOOL MMDL_CheckStatusBitHeightExpand( const MMDL * mmdl );
