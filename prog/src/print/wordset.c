@@ -731,6 +731,32 @@ void WORDSET_RegisterBoxName( WORDSET* wordset, u32 bufID, const BOX_MANAGER* bo
   RegisterWord( wordset, bufID, wordset->tmpBuf, NULL );
 }
 
+//------------------------------------------------------------------
+/**
+ * @brief 指定バッファにGパワー名を登録
+ *
+ * @param bufID  バッファID
+ * @param zoneID ゾーンID
+ */
+//------------------------------------------------------------------
+void WORDSET_RegisterGPowerName( WORDSET* wordset, u32 bufID, GPOWER_ID g_power )
+{
+  GFL_MSGDATA *msg;
+  
+  if( g_power >= GPOWER_ID_MAX ){
+    GF_ASSERT( g_power < GPOWER_ID_MAX );
+    g_power = 1;
+  }
+  msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL,
+      ARCID_MESSAGE, NARC_message_power_name_dat, wordset->heapID );
+
+  if( msg )
+  {
+    GFL_MSG_GetString( msg, g_power, wordset->tmpBuf );
+    RegisterWord( wordset, bufID, wordset->tmpBuf, NULL );
+    GFL_MSG_Delete(msg);
+  }
+}
 
 
 
