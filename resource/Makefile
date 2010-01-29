@@ -139,7 +139,8 @@ SUBDIRS	=	wmi \
 			pl_boat \
 			enc_ci_face \
 			comm_btl_demo \
-			shinka_demo
+			shinka_demo \
+			face_up
 
 include $(RESOURCE_MACRO)
 
