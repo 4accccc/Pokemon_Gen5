@@ -10,6 +10,7 @@
 #include <gflib.h>
 #include <procsys.h>
 #include <tcbl.h>
+#include <math.h>
 
 #include "arc_def.h"
 #include "system/palanm.h"
@@ -76,6 +77,10 @@ static  void  MCSS_FreeResource( MCSS_WORK* mcss );
 
 static	void	TCB_LoadResource( GFL_TCB *tcb, void *work );
 static	void	TCB_LoadPalette( GFL_TCB *tcb, void *work );
+static  void  MCSS_CalcMosaic( MCSS_WORK* mcss, TCB_LOADRESOURCE_WORK* tlw );
+static  inline  void  mosaic_make( u8 *buf, int pos_x, int pos_y, int tex_x, int size_x, int size_y, int col );
+static  inline  int  mosaic_pos_get( int pos_x, int pos_y, int tex_x );
+static  inline  u8  mosaic_col_get( u8 *buf, int pos_x, int pos_y, int tex_x, int size_x, int size_y );
 
 static	void MTX_MultVec44( const VecFx32 *cp_src, const MtxFx44 *cp_m, VecFx32 *p_dst, fx32 *p_w );
 
@@ -713,6 +718,7 @@ MCSS_WORK*	MCSS_Add( MCSS_SYS_WORK *mcss_sys, fx32	pos_x, fx32	pos_y, fx32	pos_z
 			mcss_sys->mcss[ count ]->shadow_offset.x = 0;
 			mcss_sys->mcss[ count ]->shadow_offset.y = 0;
 			mcss_sys->mcss[ count ]->shadow_offset.z = MCSS_DEFAULT_SHADOW_OFFSET;
+			mcss_sys->mcss[ count ]->maw = *maw;
 			MCSS_LoadResource( mcss_sys, count, maw );
 			break;
 		}
@@ -1346,6 +1352,44 @@ void	MCSS_SetAnimeIndex( MCSS_WORK* mcss, int index )
 }
 
 //--------------------------------------------------------------------------
+/**
+ * @brief モザイク
+ *
+ * @param[in]  mcss_sys MCSSシステム管理構造体のポインタ
+ * @param[in]  mcss     再読み込みするmcss
+ * @param[in]  mosaic   モザイク加減
+ */
+//--------------------------------------------------------------------------
+u8	MCSS_GetMosaic( MCSS_WORK* mcss )
+{ 
+  return mcss->mosaic;
+}
+
+//--------------------------------------------------------------------------
+/**
+ * @brief モザイク
+ *
+ * @param[in]  mcss_sys MCSSシステム管理構造体のポインタ
+ * @param[in]  mcss     再読み込みするmcss
+ * @param[in]  mosaic   モザイク加減
+ */
+//--------------------------------------------------------------------------
+void	MCSS_SetMosaic( MCSS_SYS_WORK *mcss_sys, MCSS_WORK* mcss, int mosaic )
+{ 
+  if( mcss->mosaic == mosaic )
+  { 
+    return;
+  }
+  if( mosaic > 15 )
+  { 
+    mosaic = 15;
+  }
+  mcss->mosaic = mosaic;
+  MCSS_FreeResource( mcss );
+  MCSS_LoadResource( mcss_sys, mcss->index, &mcss->maw );
+}
+
+//--------------------------------------------------------------------------
 //--------------------------------------------------------------------------
 
 //--------------------------------------------------------------------------
@@ -1426,6 +1470,10 @@ static	void	MCSS_LoadResource( MCSS_SYS_WORK *mcss_sys, int count, const MCSS_AD
         mcss_sys->callback_work = NULL;
 
       }
+    }
+    if( mcss->mosaic )
+    { 
+      MCSS_CalcMosaic( mcss, tlw );
     }
 		GFUser_VIntr_CreateTCB( TCB_LoadResource, tlw, 0 );
 	}
@@ -1636,6 +1684,181 @@ static  void  MCSS_FreeResource( MCSS_WORK* mcss )
 	mcss->mcss_mcanim_buf = NULL;
 	mcss->mcss_ncec       = NULL;
 	mcss->pltt_data       = NULL;
+}
+
+//--------------------------------------------------------------------------
+/**
+ * @brief モザイク処理
+ *
+ * @param[in]	mcss	マルチセルワーク構造体
+ * @param[in]	tlw	  リソースデータ構造体
+ */
+//--------------------------------------------------------------------------
+static  void  MCSS_CalcMosaic( MCSS_WORK* mcss, TCB_LOADRESOURCE_WORK* tlw )
+{ 
+  //現状16色パレットしか対応しません
+  if( mcss->mcss_image_proxy.attr.fmt != GX_TEXFMT_PLTT16 )
+  { 
+    return;
+  }
+  { 
+    int tex_x = pow( 2, ( mcss->mcss_image_proxy.attr.sizeS + 2 ) );
+    int cells;
+    u8* buf = tlw->pCharData->pRawData;
+
+    for( cells = 0 ; cells < mcss->mcss_ncec->cells ; cells++ )
+    { 
+      int pos_x = mcss->mcss_ncec->ncec[ cells ].tex_s >> FX32_SHIFT;		//テクスチャs値
+      int pos_y = mcss->mcss_ncec->ncec[ cells ].tex_t >> FX32_SHIFT;		//テクスチャt値
+      int size_x = mcss->mcss_ncec->ncec[ cells ].size_x >> FX32_SHIFT;		//セルサイズX
+      int size_y = mcss->mcss_ncec->ncec[ cells ].size_y >> FX32_SHIFT;		//セルサイズY
+      int mosaic = mcss->mosaic + 1;
+      int col;
+      int pos;
+      int ofs_x;
+      int ofs_y;
+      int cnt_y = 0;
+
+      for( ofs_y = 0 ; ofs_y < size_y ; ofs_y += mosaic )
+      { 
+        int cnt_x = 0;
+        for( ofs_x = 0 ; ofs_x < size_x ; ofs_x += mosaic )
+        { 
+          int put_size_x = ( ( ofs_x + mosaic ) > size_x ) ? ( size_x - mosaic * cnt_x ) : mosaic; 
+          int put_size_y = ( ( ofs_y + mosaic ) > size_y ) ? ( size_y - mosaic * cnt_y ) : mosaic; 
+
+          col = mosaic_col_get( buf, pos_x + ofs_x, pos_y + ofs_y, tex_x, put_size_x, put_size_y );
+          mosaic_make( buf, pos_x + ofs_x, pos_y + ofs_y, tex_x, put_size_x, put_size_y, col );
+
+          cnt_x++;
+        }
+        cnt_y++;
+      }
+
+      if( mcss->mcss_ncec->ncec[ cells ].mepachi_size_x )
+      { 
+        int pos_mx = mcss->mcss_ncec->ncec[ cells ].mepachi_tex_s >> FX32_SHIFT;		//テクスチャs値
+        int pos_my = mcss->mcss_ncec->ncec[ cells ].mepachi_tex_t >> FX32_SHIFT;		//テクスチャt値
+        int size_mx = mcss->mcss_ncec->ncec[ cells ].mepachi_size_x >> FX32_SHIFT;		//セルサイズX
+        int size_my = ( mcss->mcss_ncec->ncec[ cells ].mepachi_size_y >> FX32_SHIFT ) * 2;		//セルサイズY
+        int cnt_my = 0;
+
+        for( ofs_y = 0 ; ofs_y < size_my ; ofs_y += mosaic )
+        { 
+          int cnt_mx = 0;
+          for( ofs_x = 0 ; ofs_x < size_mx ; ofs_x += mosaic )
+          { 
+            int put_size_mx = ( ( ofs_x + mosaic ) > size_mx ) ? ( size_mx - mosaic * cnt_mx ) : mosaic; 
+            int put_size_my = ( ( ofs_y + mosaic ) > size_my ) ? ( size_my - mosaic * cnt_my ) : mosaic; 
+
+            col = mosaic_col_get( buf, pos_mx + ofs_x, pos_my + ofs_y, tex_x, put_size_mx, put_size_my );
+            mosaic_make( buf, pos_mx + ofs_x, pos_my + ofs_y, tex_x, put_size_mx, put_size_my, col );
+
+            cnt_mx++;
+          }
+          cnt_my++;
+        }
+      }
+    }
+  }
+}
+
+static  inline  void  mosaic_make( u8 *buf, int pos_x, int pos_y, int tex_x, int size_x, int size_y, int col )
+{ 
+  int x, y;
+  int col_l = col;
+  int col_h = col << 4;
+
+  for( y = 0 ; y < size_y ; y++ )
+  { 
+    for( x = 0 ; x < size_x ; x++ )
+    { 
+      int put_x = pos_x + x;
+      int put_y = pos_y + y;
+      int pos = mosaic_pos_get( put_x, put_y, tex_x );
+
+      if( put_x & 1 )
+      { 
+        buf[ pos ] = ( buf[ pos ] & 0x0f ) | col_h;
+      }
+      else
+      { 
+        buf[ pos ] = ( buf[ pos ] & 0xf0 ) | col_l;
+      }
+    }
+  }
+}
+
+static  inline  int  mosaic_pos_get( int pos_x, int pos_y, int tex_x )
+{ 
+  return pos_x / 2 + pos_y * tex_x;
+}
+
+
+static  inline  u8  mosaic_col_get( u8 *buf, int pos_x, int pos_y, int tex_x, int size_x, int size_y )
+{ 
+#if 1
+#if 0
+  int i;
+  int get_x;
+  int get_y;
+  int pos;
+  int col[ 16 ];
+  int ret_col = 0;
+  int col_cnt = 0;
+
+  for( i = 0 ; i < 16 ; i++ )
+  { 
+    col[ i ] = 0;
+  }
+
+  for( get_y = 0 ; get_y < size_y ; get_y++ )
+  { 
+    for( get_x = 0 ; get_x < size_x ; get_x++ )
+    { 
+      pos = mosaic_pos_get( get_x + pos_x, get_y + pos_y, tex_x );
+      i = ( get_x & 1 ) ? ( buf[ pos ] & 0xf0 ) >> 4 : buf[ pos ] & 0x0f;
+      col[ i ]++;
+    }
+  }
+  for( i = 1 ; i < 16 ; i++ )
+  { 
+    if( col_cnt < col[ i ] )
+    { 
+      col_cnt = col[ i ];
+      ret_col = i;
+    }
+  }
+  return ret_col;
+#endif
+  int i;
+  int get_x;
+  int get_y;
+  int pos;
+  int ret_col = 0;
+
+  for( get_y = 0 ; get_y < size_y ; get_y++ )
+  { 
+    for( get_x = 0 ; get_x < size_x ; get_x++ )
+    { 
+      pos = mosaic_pos_get( get_x + pos_x, get_y + pos_y, tex_x );
+      i = ( get_x & 1 ) ? ( buf[ pos ] & 0xf0 ) >> 4 : buf[ pos ] & 0x0f;
+      if( i )
+      { 
+        ret_col = i;
+        break;
+      }
+    }
+    if( ret_col )
+    { 
+      break;
+    }
+  }
+  return ret_col;
+#else
+  int pos = mosaic_pos_get( pos_x, pos_y, tex_x );
+  return ( pos_x & 1 ) ? ( buf[ pos ] & 0xf0 ) >> 4 : buf[ pos ] & 0x0f;
+#endif
 }
 
 //神王蟲からいただき
