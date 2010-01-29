@@ -9,6 +9,9 @@
  *  モジュール名：SHINKADEMO_VIEW
  */
 //============================================================================
+//#define DEBUG_CODE
+
+
 // インクルード
 #include <gflib.h>
 #include "system/gfl_use.h"
@@ -18,6 +21,8 @@
 #include "system/mcss_tool.h"
 
 #include "sound/pm_voice.h"
+#include "sound/wb_sound_data.sadl"
+#include "sound/pm_sndsys.h"
 
 #include "shinka_demo_view.h"
 
@@ -39,9 +44,11 @@ typedef enum
 {
   // EVO
   STEP_EVO_START,             // 開始待ち中→鳴く
-  STEP_EVO_CRY_BEFORE,        // 鳴き終わるのを待ち中→しばし待ち
+  STEP_EVO_CRY_BEFORE,        // 鳴き終わるのを待ち中→鳴いた後の開始待ち
+  STEP_EVO_START_AFTER_CRY,   // 鳴いた後の開始待ち中→しばし待ち
   STEP_EVO_WAIT_BEFORE,       // しばし待ち中→白くする
-  STEP_EVO_WHITE,             // 白くなるのを待ち中→拡大縮小入れ替え演出を開始する
+  STEP_EVO_WHITE,             // 白くなるのを待ち中→しばし待ち
+  STEP_EVO_WAIT_AFTER_WHITE,  // しばし待ち中→拡大縮小入れ替え演出を開始する
   STEP_EVO_SCALE,             // 拡大縮小入れ替え演出中→色を付ける
   STEP_EVO_COLOR,             // 色が付くのを待ち中→しばし待ち
   STEP_EVO_WAIT_AFTER,        // しばし待ち中→鳴く
@@ -65,7 +72,58 @@ POKE;
 // 拡大縮小入れ替え演出
 #define ANM_ADD_START        (0x400)
 #define ANM_VAL_MAX          (0x10000)
-#define ANM_REPEAT_MAX       (15)
+
+  static const int anm_add_tbl[] =  // ANM_VAL_MAX/2 より小さな値で
+  {                    // disp_poke
+    ANM_ADD_START,     // BEFORE
+    0x1000,
+    0x1000,            // AFTER
+    0x400,
+    0x400,             // BEFORE
+    0x1000,
+    0x1000,            // AFTER
+    0x400,
+    0x400,             // BEFORE
+    0x1000,
+    0x1000,            // AFTER
+    0x400,
+
+    0x800,             // BEFORE
+    0x1000,
+    0x1000,            // AFTER
+    0x800,
+    0x800,             // BEFORE
+    0x1000,
+    0x1000,            // AFTER
+    0x800,
+
+    0x1000,            // BEFORE
+    0x1000,
+    0x1000,            // AFTER
+    0x1000,
+    0x1000,            // BEFORE
+    0x1000,
+    0x1000,            // AFTER
+    0x1000,
+    0x1000,            // BEFORE
+    0x1000,
+    0x1000,            // AFTER
+    0x1000,
+ 
+    0x1000,            // BEFORE
+    0x800,
+    0x800,             // AFTER
+    0x1000,
+
+    0x1000,            // BEFORE  // ANM_REPEAT_MAX-6
+    0x400,
+    0x400,             // AFTER   // ANM_REPEAT_MAX-4
+    0x1000,
+    0x1000,            // BEFORE  // ANM_REPEAT_MAX-2
+    0x400,
+  };
+#define ANM_REPEAT_MAX       ( sizeof(anm_add_tbl) / sizeof(anm_add_tbl[0]) )
+
 #define SCALE_MAX            (16.0f)
 #define SCALE_MIN            ( 4.0f)
 #define POKE_SIZE_MAX        (96.0f)
@@ -121,19 +179,27 @@ PARTICLE_MANAGER;
 
 static const PARTICLE_PLAY_DATA particle_play_data_tbl[] =
 {
-  {    0,     PARTICLE_SPA_FILE_0,         0 },
-  {   40,     PARTICLE_SPA_FILE_0,         1 },
-  {   80,     PARTICLE_SPA_FILE_0,         2 },
-  {  120,     PARTICLE_SPA_FILE_0,         3 },
-  {  160,     PARTICLE_SPA_FILE_0,         4 },
-  {  200,     PARTICLE_SPA_FILE_0,         5 },
-  {  240,     PARTICLE_SPA_FILE_0,         6 },
-  {  260,     PARTICLE_SPA_FILE_0,         7 },
-  {  280,     PARTICLE_SPA_FILE_0,         8 },
-  {  300,     PARTICLE_SPA_FILE_0,         9 },
-  {  320,     PARTICLE_SPA_FILE_0,        10 },
-  {  340,     PARTICLE_SPA_FILE_0,        11 },
-  {  360,     PARTICLE_SPA_FILE_0,        12 },
+  {    0,     PARTICLE_SPA_FILE_0,         0 },  // 0はポケモンを囲むように回る白丸
+  {  110,     PARTICLE_SPA_FILE_0,         1 },  // 1は細い白線が放射される
+  {  140,     PARTICLE_SPA_FILE_0,         1 },
+  {  150,     PARTICLE_SPA_FILE_0,         1 },
+  {  160,     PARTICLE_SPA_FILE_0,         2 },  // 2は太い白線が放射される
+  {  200,     PARTICLE_SPA_FILE_0,         3 },  // 3は黄色丸が放射される(動きがゆっくり)
+  {  215,     PARTICLE_SPA_FILE_0,         4 },
+  {  245,     PARTICLE_SPA_FILE_0,         5 },
+  {  275,     PARTICLE_SPA_FILE_0,         6 },
+  {  305,     PARTICLE_SPA_FILE_0,         4 },  // 4は黄色丸が放射される(動きが速い)
+  {  335,     PARTICLE_SPA_FILE_0,         5 },  // 5は白丸が放射される(動きが速い)
+  {  365,     PARTICLE_SPA_FILE_0,         6 },  // 6は黄色丸が放射される(動きが速い)
+  {  395,     PARTICLE_SPA_FILE_0,         4 },
+  {  425,     PARTICLE_SPA_FILE_0,         5 },
+  {  455,     PARTICLE_SPA_FILE_0,         6 },
+  {  470,     PARTICLE_SPA_FILE_0,         7 },  // 7は大黄色円(短い)
+  {  475,     PARTICLE_SPA_FILE_0,         8 },  // 8は大黄色円(長い、発生の瞬間が唐突過ぎる)
+  {  495,     PARTICLE_SPA_FILE_0,         9 },  // 9は大白円(発生が遅い)
+  {  685,     PARTICLE_SPA_FILE_0,        10 },  // 10は輪が広がる
+  {  725,     PARTICLE_SPA_FILE_0,        12 },  // 12は白丸が放射される
+//  {  810,     PARTICLE_SPA_FILE_0,        11 },  // 11は星がキラキラ放射される
 };
 
 
@@ -170,6 +236,7 @@ struct _SHINKADEMO_VIEW_WORK
 
   // フラグ
   BOOL                     b_start;
+  BOOL                     b_start_after_cry;
   BOOL                     b_cancel;  // 進化キャンセル
   BOOL                     b_white;
 
@@ -269,9 +336,10 @@ SHINKADEMO_VIEW_WORK* SHINKADEMO_VIEW_Init(
 
   // フラグ
   {
-    work->b_start      = FALSE;
-    work->b_cancel     = FALSE;
-    work->b_white      = FALSE;
+    work->b_start                = FALSE;
+    work->b_start_after_cry      = FALSE;
+    work->b_cancel               = FALSE;
+    work->b_white                = FALSE;
   }
   
   // 拡大縮小入れ替え演出
@@ -365,9 +433,24 @@ void SHINKADEMO_VIEW_Main( SHINKADEMO_VIEW_WORK* work )
       if( !PMVOICE_CheckPlay( work->voicePlayerIdx ) )
       {
         // 次へ
+        work->step = STEP_EVO_START_AFTER_CRY;
+      }
+    }
+    break;
+  case STEP_EVO_START_AFTER_CRY:
+    {
+      if( work->b_start_after_cry )
+      {
+        // 次へ
         work->step = STEP_EVO_WAIT_BEFORE;
+        
+        //work->wait_count = 60;
+        work->wait_count = 1;
 
-        work->wait_count = 30;
+        // パーティクル
+        Particle_Start( work->particle_mgr );
+
+        PMSND_PlaySE( SEQ_SE_W014_01 );
       }
     }
     break;
@@ -379,7 +462,9 @@ void SHINKADEMO_VIEW_Main( SHINKADEMO_VIEW_WORK* work )
         // 次へ
         work->step = STEP_EVO_WHITE;
         
-        MCSS_SetPaletteFade( work->poke_set[work->disp_poke].wk, 0, 16, 1, 0x7fff );
+        //MCSS_SetPaletteFade( work->poke_set[work->disp_poke].wk, 0, 16, 1, 0x7fff );
+        //MCSS_SetPaletteFade( work->poke_set[work->disp_poke].wk, 0, 16, 2, 0x7fff );
+        MCSS_SetPaletteFade( work->poke_set[work->disp_poke].wk, 0, 16, 3, 0x7fff );
         MCSS_SetPaletteFade( work->poke_set[NotDispPoke(work->disp_poke)].wk, 16, 16, 0, 0x7fff );
       }
     }
@@ -387,6 +472,20 @@ void SHINKADEMO_VIEW_Main( SHINKADEMO_VIEW_WORK* work )
   case STEP_EVO_WHITE:
     {
       if( !MCSS_CheckExecutePaletteFade( work->poke_set[work->disp_poke].wk ) )
+      {
+        // 次へ
+        work->step = STEP_EVO_WAIT_AFTER_WHITE;
+
+        //work->wait_count = 30;
+        //work->wait_count = 60;
+        work->wait_count = 20;
+      }
+    }
+    break;
+  case STEP_EVO_WAIT_AFTER_WHITE:
+    {
+      work->wait_count--;
+      if( work->wait_count == 0 )
       {
         // 次へ
         work->step = STEP_EVO_SCALE;
@@ -415,7 +514,7 @@ void SHINKADEMO_VIEW_Main( SHINKADEMO_VIEW_WORK* work )
         // 次へ
         work->step = STEP_EVO_WAIT_AFTER;
 
-        work->wait_count = 30;
+        work->wait_count = 60;
       }
     }
     break;
@@ -442,6 +541,12 @@ void SHINKADEMO_VIEW_Main( SHINKADEMO_VIEW_WORK* work )
       {
         // 次へ
         work->step = STEP_EVO_END;
+
+        if( !(work->b_cancel) )
+        {
+          VecFx32 pos = { 0, FX_F32_TO_FX32(0.5f), 0 };
+          GFL_PTC_CreateEmitter( work->particle_mgr->spa_set[ PARTICLE_SPA_FILE_0 ].ptc, 11, &pos );
+        }
       }
     }
     break;
@@ -495,7 +600,7 @@ void SHINKADEMO_VIEW_Draw( SHINKADEMO_VIEW_WORK* work )
 //-----------------------------------------------------------------------------
 BOOL SHINKADEMO_VIEW_CancelShinka( SHINKADEMO_VIEW_WORK* work )
 {
-  if( work->count <= ANM_REPEAT_MAX-2 )
+  if( work->count <= ANM_REPEAT_MAX-3 )
   {
     work->b_cancel = TRUE;
 
@@ -520,8 +625,59 @@ void SHINKADEMO_VIEW_StartShinka( SHINKADEMO_VIEW_WORK* work )
 {
   work->b_start = TRUE;
 
+#if 0
   // パーティクル
   Particle_Start( work->particle_mgr );
+#endif
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *  @brief         鳴いた後のスタート
+ *
+ *  @param[in,out] work  SHINKADEMO_VIEW_Initで生成したワーク
+ *
+ *  @retval        なし 
+ */
+//-----------------------------------------------------------------------------
+void SHINKADEMO_VIEW_StartShinkaAfterCry( SHINKADEMO_VIEW_WORK* work )
+{
+  work->b_start_after_cry = TRUE;
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *  @brief         黒帯を表示してもよいか
+ *
+ *  @param[in,out] work  SHINKADEMO_VIEW_Initで生成したワーク
+ *
+ *  @retval        黒帯を表示してもよいときTRUEを返す
+ */
+//-----------------------------------------------------------------------------
+BOOL SHINKADEMO_VIEW_IsWndAppear( SHINKADEMO_VIEW_WORK* work )
+{
+  if( work->step >= STEP_EVO_START_AFTER_CRY )
+    return TRUE;
+  else
+    return FALSE;
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *  @brief         イントロBGMを再生してもよいか
+ *
+ *  @param[in,out] work  SHINKADEMO_VIEW_Initで生成したワーク
+ *
+ *  @retval        BGMを再生してもよいときTRUEを返す
+ */
+//-----------------------------------------------------------------------------
+BOOL SHINKADEMO_VIEW_IsIntroBGMPlay( SHINKADEMO_VIEW_WORK* work )
+{
+  //if(    ( work->step == STEP_EVO_WAIT_BEFORE && work->wait_count < 35 )
+  if(    ( work->step == STEP_EVO_WAIT_BEFORE && work->wait_count < 9999 )
+      || ( STEP_EVO_WHITE <= work->step && work->step < STEP_EVO_COLOR ) )
+    return TRUE;
+  return FALSE;
 }
 
 //-----------------------------------------------------------------------------
@@ -535,7 +691,7 @@ void SHINKADEMO_VIEW_StartShinka( SHINKADEMO_VIEW_WORK* work )
 //-----------------------------------------------------------------------------
 BOOL SHINKADEMO_VIEW_IsBGMPlay( SHINKADEMO_VIEW_WORK* work )
 {
-  if(    STEP_EVO_WAIT_BEFORE <= work->step  
+  if(    STEP_EVO_SCALE <= work->step  
       && work->step < STEP_EVO_COLOR )
     return TRUE;
   return FALSE;
@@ -689,25 +845,6 @@ static u8 NotDispPoke( u8 disp_poke )
 //=====================================
 static BOOL ShinkaDemo_View_Evolve( SHINKADEMO_VIEW_WORK* work )
 {
-  const int anm_add_tbl[ANM_REPEAT_MAX] =  // ANM_VAL_MAX/2 より小さな値で
-  {                    // disp_poke
-    ANM_ADD_START,     // BEFORE
-    0x400,
-    0x400,             // BEFORE
-    0x800,
-    0x800,             // BEFORE
-    0x800,
-    0x800,             // BEFORE
-    0x1000,
-    0x1000,            // BEFORE
-    0x1000,
-    0x1000,            // BEFORE
-    0x1000,
-    0x1000,            // BEFORE        // ANM_REPEAT_MAX-3
-    0x1000,                             // ANM_REPEAT_MAX-2
-    0x1000,            // BEFORE        // ANM_REPEAT_MAX-1
-  };
-
   BOOL b_finish = FALSE;
   int prev_anm_val = work->anm_val;
 
@@ -719,7 +856,7 @@ static BOOL ShinkaDemo_View_Evolve( SHINKADEMO_VIEW_WORK* work )
   {
     work->count++;
     if(
-           ( work->count >= sizeof(anm_add_tbl)/sizeof(int) )
+           ( work->count >= ANM_REPEAT_MAX )
         || ( work->b_cancel && work->disp_poke == POKE_AFTER )
     )
     {
@@ -737,11 +874,21 @@ static BOOL ShinkaDemo_View_Evolve( SHINKADEMO_VIEW_WORK* work )
     // disp_pokeとNotDispPokeを入れ替え、新NotDispPokeを非表示にする
     work->disp_poke = NotDispPoke( work->disp_poke );
     MCSS_SetVanishFlag( work->poke_set[NotDispPoke(work->disp_poke)].wk );
-  }
 
+    // キャンセル成功しているのに進化してしまわないように、念のため
+    if( b_finish && work->b_cancel )
+    {
+      work->disp_poke = POKE_BEFORE;
+      MCSS_ResetVanishFlag( work->poke_set[work->disp_poke].wk );
+      MCSS_SetVanishFlag( work->poke_set[NotDispPoke(work->disp_poke)].wk );
+    }
+  }
   // ちょうど半周終了したとき
-  if( prev_anm_val < ANM_VAL_MAX/2 && work->anm_val >= ANM_VAL_MAX/2 )
+  else if( prev_anm_val < ANM_VAL_MAX/2 && work->anm_val >= ANM_VAL_MAX/2 )
   {
+    work->count++;
+    work->anm_add = anm_add_tbl[work->count];
+
     // disp_pokeを非表示にする
     MCSS_SetVanishFlag( work->poke_set[work->disp_poke].wk );  // alphaはきれいに見えないのでやめておく(半透明に見えないし、スプライトごとの切れ目が見えるし(Z位置の前後関係のせい？、カメラのせい？))
     // NotDispPokeを表示する
@@ -790,47 +937,6 @@ static BOOL ShinkaDemo_View_Evolve( SHINKADEMO_VIEW_WORK* work )
       MCSS_SetScale( work->poke_set[i].wk, &scale );
     }
   }
-
-/*
-  alphaはきれいに見えないのでやめておく(半透明に見えないし、スプライトごとの切れ目が見えるし(Z位置の前後関係のせい？、カメラのせい？))
-  // アルファ
-  if( work->anm_val < ANM_VAL_MAX/2 )  // だんだん小さく
-  {
-    MCSS_SetAlpha( work->poke_set[work->disp_poke].wk, 31 );
-    MCSS_SetAlpha( work->poke_set[NotDispPoke(work->disp_poke)].wk, 0 );
-  }
-  else  // だんだん大きく
-  {
-    int alpha_anm_val;
-    fx16 alpha_cos01_fx16;
-    f32 alpha_cos01;
-    f32 alpha_f32;
-    u8 alpha;
-    {
-      alpha_anm_val = ( work->anm_val - ANM_VAL_MAX/2 ) *2;
-      if( alpha_anm_val > ANM_VAL_MAX/2 ) alpha_anm_val = ANM_VAL_MAX/2;
-      alpha_cos01_fx16 = ( FX_CosIdx( alpha_anm_val ) + FX16_ONE ) /2;
-      alpha_cos01 = FX_FX16_TO_F32( alpha_cos01_fx16 );
-      alpha_f32 = 32.0f * alpha_cos01;
-      if( alpha_f32 < 0.0f ) alpha_f32 = 0.0f;
-      alpha = (u8)alpha_f32;
-      if( alpha > 31 ) alpha = 31;
-      MCSS_SetAlpha( work->poke_set[work->disp_poke].wk, alpha );
-    }
-    {
-      alpha_anm_val = ( work->anm_val - ANM_VAL_MAX/2 ) *3;
-      if( alpha_anm_val > ANM_VAL_MAX/2 ) alpha_anm_val = ANM_VAL_MAX/2;
-      alpha_cos01_fx16 = ( FX_CosIdx( alpha_anm_val ) + FX16_ONE ) /2;
-      alpha_cos01 = FX_FX16_TO_F32( alpha_cos01_fx16 );
-      alpha_cos01 = 1.0f - alpha_cos01;
-      alpha_f32 = 32.0f * alpha_cos01;
-      if( alpha_f32 < 0.0f ) alpha_f32 = 0.0f;
-      alpha = (u8)alpha_f32;
-      if( alpha > 31 ) alpha = 31;
-      MCSS_SetAlpha( work->poke_set[NotDispPoke(work->disp_poke)].wk, alpha );
-    }
-  }
-*/
 
   ShinkaDemo_View_AdjustPokePos(work);
 
@@ -928,7 +1034,11 @@ static void Particle_Main( PARTICLE_MANAGER* mgr )
 {
   if( mgr->play )
   {
+#if 0
     VecFx32 pos = { 0, 0, 0 };
+#else
+    VecFx32 pos = { 0, FX_F32_TO_FX32(0.5f), 0 };
+#endif
     GFL_EMIT_PTR emit;
 
     while( mgr->data_no < mgr->data_num )
@@ -936,6 +1046,14 @@ static void Particle_Main( PARTICLE_MANAGER* mgr )
       if( mgr->frame == mgr->data_tbl[mgr->data_no].frame )
       {
         emit = GFL_PTC_CreateEmitter( mgr->spa_set[ mgr->data_tbl[mgr->data_no].spa_idx ].ptc, mgr->data_tbl[mgr->data_no].res_no, &pos );
+
+#ifdef DEBUG_CODE
+        {
+          OS_Printf( "EGG_DEMO_VIEW : frame=%d, jspa_idx=%d, res_no=%d, emit=%p\n",
+              mgr->frame, mgr->data_tbl[mgr->data_no].spa_idx, mgr->data_tbl[mgr->data_no].res_no, emit );
+        }
+#endif
+
         mgr->data_no++;
       }
       else

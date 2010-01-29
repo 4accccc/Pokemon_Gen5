@@ -154,6 +154,12 @@ typedef enum
 {
   STEP_FADE_IN,                     // フェードイン
   STEP_EVO_BEFORE,                  // おや！？　ようすが……！
+  STEP_EVO_DEMO_CRY_FIRST,
+  STEP_EVO_DEMO_WND,                // デモ(BGMの再生が開始されていないときで、wndも表示されていないとき)
+  STEP_EVO_DEMO_WND_WAIT,      
+  STEP_EVO_DEMO_INTRO,              // デモ(BGMの再生が開始されていないときで、wndが表示されているとき)
+  STEP_EVO_DEMO_INTRO_END,
+  STEP_EVO_DEMO_INTRO_END_WAIT,
   STEP_EVO_DEMO_BEFORE,             // デモ(BGMの再生が開始されていないとき)
   STEP_EVO_DEMO,                    // デモ
   STEP_EVO_DEMO_AFTER,              // デモ(BGMをpushしているとき)
@@ -194,6 +200,8 @@ STEP;
 typedef enum
 {
   SOUND_STEP_WAIT,
+  SOUND_STEP_PLAY_INTRO,
+  SOUND_STEP_PLAYING_INTRO,
   SOUND_STEP_PLAY_SHINKA,
   SOUND_STEP_PLAYING_SHINKA,
   SOUND_STEP_PUSH_SHINKA,
@@ -249,6 +257,8 @@ typedef struct
   // サウンドステップ
   SOUND_STEP                  sound_step;
   BOOL                        sound_none;
+
+  u32                         wait_count;
 
   // VBlank中TCB
   GFL_TCB*                    vblank_tcb;
@@ -600,13 +610,84 @@ static GFL_PROC_RESULT ShinkaDemoProcMain( GFL_PROC * proc, int * seq, void * pw
       if( ShinkaDemo_WaitStmTextStream( work ) )
       {
         // 次へ
-        work->step = STEP_EVO_DEMO_BEFORE;
+        work->step = STEP_EVO_DEMO_CRY_FIRST;
         
         work->evo_cancel = FALSE;
         SHINKADEMO_VIEW_StartShinka( work->view );
-
+      }
+    }
+    break;
+  case STEP_EVO_DEMO_CRY_FIRST:
+    {
+      if( SHINKADEMO_VIEW_IsWndAppear( work->view ) )
+      {
+        // 次へ
+        work->step = STEP_EVO_DEMO_WND;
+        
         // 上下に黒帯を表示するためのwnd
         ShinkaDemo_AppearWnd( param, work );
+      }
+    }
+    break;
+  case STEP_EVO_DEMO_WND:
+    {
+      if( work->wnd_appear_speed == 0 )
+      {
+        // 次へ
+        //work->step = STEP_EVO_DEMO_INTRO;
+        work->step = STEP_EVO_DEMO_WND_WAIT;
+
+        work->wait_count = 30;
+        
+        //SHINKADEMO_VIEW_StartShinkaAfterCry( work->view );
+      }
+    }
+    break;
+  case STEP_EVO_DEMO_WND_WAIT:
+    {
+      work->wait_count--;
+      if( work->wait_count == 0 )
+      {
+        // 次へ
+        work->step = STEP_EVO_DEMO_INTRO;
+      }
+    }
+    break;
+  case STEP_EVO_DEMO_INTRO:
+    {
+      //if( SHINKADEMO_VIEW_IsIntroBGMPlay( work->view ) )
+      {
+        // 次へ
+        //work->step = STEP_EVO_DEMO_BEFORE;
+        work->step = STEP_EVO_DEMO_INTRO_END;
+
+        work->sound_step = SOUND_STEP_PLAY_INTRO;
+      }
+    }
+    break;
+  case STEP_EVO_DEMO_INTRO_END:
+    {
+      if( work->sound_step == SOUND_STEP_WAIT )
+      {
+        // 次へ
+        //work->step = STEP_EVO_DEMO_BEFORE;
+        work->step = STEP_EVO_DEMO_INTRO_END_WAIT;
+      
+        work->wait_count = 30;
+        
+        //SHINKADEMO_VIEW_StartShinkaAfterCry( work->view );
+      }
+    }
+    break;
+  case STEP_EVO_DEMO_INTRO_END_WAIT:
+    {
+      work->wait_count--;
+      if( work->wait_count == 0 )
+      {
+        // 次へ
+        work->step = STEP_EVO_DEMO_BEFORE;
+        
+        SHINKADEMO_VIEW_StartShinkaAfterCry( work->view );
       }
     }
     break;
@@ -1503,9 +1584,23 @@ static void ShinkaDemo_SoundMain( SHINKA_DEMO_PARAM* param, SHINKA_DEMO_WORK* wo
     {
     }
     break;
-  case SOUND_STEP_PLAY_SHINKA:
+  case SOUND_STEP_PLAY_INTRO:
     {
       PMSND_PlayBGM(SEQ_BGM_SHINKA);
+      work->sound_step = SOUND_STEP_PLAYING_INTRO;
+    }
+    break;
+  case SOUND_STEP_PLAYING_INTRO:
+    {
+      if( !PMSND_CheckPlayBGM() )
+      {
+        work->sound_step = SOUND_STEP_WAIT;
+      }
+    }
+    break;
+  case SOUND_STEP_PLAY_SHINKA:
+    {
+      PMSND_PlayBGM(SEQ_BGM_KOUKAN);
       work->sound_step = SOUND_STEP_PLAYING_SHINKA;
     }
     break;

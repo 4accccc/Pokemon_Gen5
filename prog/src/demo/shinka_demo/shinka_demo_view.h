@@ -84,6 +84,21 @@ extern BOOL SHINKADEMO_VIEW_CancelShinka( SHINKADEMO_VIEW_WORK* work );
 extern void SHINKADEMO_VIEW_StartShinka( SHINKADEMO_VIEW_WORK* work );
 
 //-------------------------------------
+/// 鳴いた後のスタート
+//=====================================
+extern void SHINKADEMO_VIEW_StartShinkaAfterCry( SHINKADEMO_VIEW_WORK* work );
+
+//-------------------------------------
+/// 黒帯を表示してもよいか
+//=====================================
+extern BOOL SHINKADEMO_VIEW_IsWndAppear( SHINKADEMO_VIEW_WORK* work );
+
+//-------------------------------------
+/// イントロBGMを再生してもよいか
+//=====================================
+extern BOOL SHINKADEMO_VIEW_IsIntroBGMPlay( SHINKADEMO_VIEW_WORK* work );
+
+//-------------------------------------
 /// BGMを再生してもよいか
 //=====================================
 extern BOOL SHINKADEMO_VIEW_IsBGMPlay( SHINKADEMO_VIEW_WORK* work );
