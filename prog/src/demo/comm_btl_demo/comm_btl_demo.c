@@ -13,6 +13,9 @@
 #include "system/gfl_use.h"
 #include "system/main.h"
 
+//SE
+#include "sound/pm_sndsys.h"
+
 #include "poke_tool/pokeparty.h" // for POKEPARTY
 
 //FONT
@@ -66,6 +69,13 @@ enum
 
   TRAINER_CNT_NORMAL = 2,
   TRAINER_CNT_MULTI = 4,
+};
+
+enum
+{ 
+  SE_BALL_IN = SEQ_SE_SYS_65,   ///< ボールが出現
+  SE_VS_IN   = SEQ_SE_SYS_66,   ///< VS表示
+  SE_WIN_IN  = SEQ_SE_SYS_67,   ///< WIN表示
 };
 
 //--------------------------------------------------------------
@@ -716,6 +726,14 @@ static GFL_PROC_RESULT CommBtlDemoProc_Exit( GFL_PROC *proc, int *seq, void *pwk
 static GFL_PROC_RESULT CommBtlDemoProc_Main( GFL_PROC *proc, int *seq, void *pwk, void *mywk )
 { 
 	COMM_BTL_DEMO_MAIN_WORK* wk = mywk;
+        
+#if 0
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
+  {
+    HOSAKA_Printf("aaa\n");
+    GFL_SOUND_PlaySE( SE_WIN_IN );
+  }
+#endif
 
 #ifdef PM_DEBUG
 #if 0
@@ -906,6 +924,7 @@ static BOOL SceneStartDemo_Main( UI_SCENE_CNT_PTR cnt, void* work )
 
     if( wk->timer == START_DEMO_VS_OPEN_SYNC )
     {
+      GFL_SOUND_PlaySE( SE_VS_IN );
       // 「VS」出現パーティクル
       G3D_PTC_CreateEmitter( &wk->wk_g3d, 0, &(VecFx32){0,0,-100} );
       G3D_PTC_CreateEmitter( &wk->wk_g3d, 1, &(VecFx32){0,0,-100} );
@@ -913,7 +932,7 @@ static BOOL SceneStartDemo_Main( UI_SCENE_CNT_PTR cnt, void* work )
     }
     else if( wk->timer == START_DEMO_VS_OPEN_WAIT_SYNC )
     {
-      // 「VS」パーティクル表示
+      // 「VS」ホワイトアウトパーティクル表示
       G3D_PTC_CreateEmitter( &wk->wk_g3d, 3, &(VecFx32){0,0,-100} );
     }
     else if( wk->timer == START_DEMO_FADEOUT_SYNC )
@@ -1061,6 +1080,7 @@ static BOOL SceneEndDemo_Main( UI_SCENE_CNT_PTR cnt, void* work )
           pos = RESULT_POS_YOU;
         }
 
+        GFL_SOUND_PlaySE( SE_WIN_IN );
         RESULT_UNIT_SetOpen( &wk->result_unit, pos, COMM_BTL_DEMO_RESULT_WIN );
       }
       // LOSE表示
@@ -1511,6 +1531,8 @@ static void _ball_open( BALL_UNIT* unit, int start_sync )
 
   if( id < unit->max )
   {
+    if(id==0){ GFL_SOUND_PlaySE( SE_BALL_IN ); } // ボール
+
     if( type_is_start(unit->type) )
     {
       // 開く
@@ -1757,7 +1779,7 @@ static void TRAINER_UNIT_Init( TRAINER_UNIT* unit, u8 type, u8 posid, const COMM
   if( type_is_start(unit->type) == FALSE )
   {
     // ポケモンの残り数CLWKを生成
-    TRAINER_UNIT_CreatePokeNum( unit );
+//    TRAINER_UNIT_CreatePokeNum( unit );
     // 最初から表示
     TRAINER_UNIT_DrawTrainerName( unit, unit->font );
   }
@@ -1837,6 +1859,7 @@ static void _trainer_unit_main_start( TRAINER_UNIT* unit )
  *	@retval
  */
 //-----------------------------------------------------------------------------
+//@TODO 
 static void _trainer_unit_main_end( TRAINER_UNIT* unit )
 {
   int sync;
@@ -1862,12 +1885,11 @@ static void _trainer_unit_main_end( TRAINER_UNIT* unit )
     GFL_CLACT_WK_SetDrawEnable( unit->clwk_pokenum , TRUE );
     GFL_CLACT_WK_SetAutoAnmFlag( unit->clwk_pokenum , TRUE );
   }
-
 }
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  トレイナーユニット 後処理
+ *	@brief  トレーナーユニット 後処理
  *
  *	@param	TRAINER_UNIT* unit 
  *
@@ -1885,10 +1907,12 @@ static void TRAINER_UNIT_Exit( TRAINER_UNIT* unit )
   // トレーナー名BMPWIN解放
   GFL_BMPWIN_Delete( unit->win_name );
 
+#if 0
   if( type_is_start(unit->type) == FALSE )
   {
     GFL_CLACT_WK_Remove( unit->clwk_pokenum );
   }
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -1915,7 +1939,7 @@ static void TRAINER_UNIT_Main( TRAINER_UNIT* unit )
   else
   {
     // 終了デモ
-    _trainer_unit_main_end( unit );
+//    _trainer_unit_main_end( unit );
   }
 
 //  HOSAKA_Printf("unit timer=%d \n", unit->timer);
@@ -1986,10 +2010,10 @@ static void TRAINER_UNIT_DrawTrainerName( TRAINER_UNIT* unit, GFL_FONT *font )
 //-----------------------------------------------------------------------------
 static void TRAINER_UNIT_CreatePokeNum( TRAINER_UNIT* unit )
 {
-  int anm;
   s16 px,py;
   u8 posid;
   u8 type;
+  int anm = 0;
 
   posid = unit->posid;
   type = unit->type;
@@ -2033,7 +2057,7 @@ static void TRAINER_UNIT_CreatePokeNum( TRAINER_UNIT* unit )
     }
   
   }
-
+  
   // 戦えるポケモン数を取得
   anm = PokeParty_GetPokeCountBattleEnable( unit->data->party );
 
