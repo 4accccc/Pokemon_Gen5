@@ -26,7 +26,7 @@ MATCH_OVERLAYSRC = /^SRCS_OVERLAY_.*/	# 行頭から「SRCS_OVERLAY_...」
 MATCH_ENDSRC	 = /[\s\t].*\\\z/				# 行末が「\」
 MATCH_ERROR      = /\\\s/
 
-DEFAULT_SECTION_NAME		= ["main", "ITCM", "EX_MEM_START"]
+DEFAULT_SECTION_NAME		= ["main", "ITCM", "EX_MEM_START", "LCDC_VRAM_H"]
 
 #デフォルトで読み込むファイル
 #default_lsf = File.read(DEFAULT_LSFFILE)
@@ -65,6 +65,11 @@ Autoload DTCM
 Autoload EX_MEM_START
 {
   Address		$EX_MEM_START_ADRS
+}
+
+Autoload  LCDC_VRAM_H
+{
+  Address 0x06898000
 }
 
 #----------------------------------------------------------------------------
@@ -295,7 +300,9 @@ File.open(OUTPUT_TWL_LSFFILE, "w" ) {|file|
   file.puts total_output.gsub("$HYB","TWL.HYB")
   file.puts(bottom_lsf1)
   sections.each{|section|
-    file.printf("\tAfter\t%s\n",section.put_name )
+    if section.afterList.include?("EX_MEM_START") == false && section.afterList.include?("LCDC_VRAM_H") == false then
+      file.printf("\tAfter\t%s\n",section.put_name )
+    end
   }
   file.puts(bottom_lsf2)
 }
