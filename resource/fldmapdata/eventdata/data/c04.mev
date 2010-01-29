@@ -1,5 +1,5 @@
 #event data
-#save date:2010/01/26 15:14:28
+#save date:2010/01/29 17:37:24
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c04.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c04.wms
 #hold event type:
 1
 #hold event number:
-11
+13
 #event number: 0
 #type
 1
@@ -40,7 +40,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-520 16 -88
+264 16 -88
 #event number: 1
 #type
 1
@@ -49,7 +49,7 @@ C04_CLOWN_01
 #OBJ CODE Number
 CLOWN
 #MOVE CODE Number
-MV_DIR_RND
+MV_RND
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
@@ -65,13 +65,13 @@ DIR_DOWN
 #Parameter 2 Number
 0
 #Move Limit X Number
-0
+1
 #Move Limit Z Number
-0
+1
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-424 16 -504
+248 16 -520
 #event number: 2
 #type
 1
@@ -96,13 +96,13 @@ DIR_DOWN
 #Parameter 2 Number
 0
 #Move Limit X Number
-4
+1
 #Move Limit Z Number
-0
+1
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-232 16 -568
+152 16 -328
 #event number: 3
 #type
 1
@@ -133,7 +133,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-296 16 -88
+408 16 -88
 #event number: 4
 #type
 1
@@ -158,13 +158,13 @@ DIR_DOWN
 #Parameter 2 Number
 0
 #Move Limit X Number
-1
+3
 #Move Limit Z Number
 1
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--8 16 -104
+-8 16 -120
 #event number: 5
 #type
 1
@@ -195,7 +195,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-568 16 -344
+552 16 -344
 #event number: 6
 #type
 1
@@ -226,7 +226,7 @@ DIR_RIGHT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-600 16 -328
+568 16 -360
 #event number: 7
 #type
 1
@@ -257,7 +257,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-600 16 -360
+568 16 -376
 #event number: 8
 #type
 1
@@ -265,68 +265,6 @@ EVENTDATA_POSTYPE_GRID
 C04_HAKAIM_01
 #OBJ CODE Number
 HAKAIM
-#MOVE CODE Number
-MV_DMY
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-FV_C04_HAKAI_01
-#Event Script Name
-SCRID_DUMMY
-#Direction Type Number
-DIR_RIGHT
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-472 0 -664
-#event number: 9
-#type
-1
-#ID name
-C04_HAKAIM_02
-#OBJ CODE Number
-HAKAIM
-#MOVE CODE Number
-MV_DMY
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-FV_C04_HAKAI_01
-#Event Script Name
-SCRID_DUMMY
-#Direction Type Number
-DIR_RIGHT
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-456 0 -680
-#event number: 10
-#type
-1
-#ID name
-C04_OLDMAN1_01
-#OBJ CODE Number
-OLDMAN1
 #MOVE CODE Number
 MV_DMY
 #EVENT TYPE Number
@@ -350,7 +288,131 @@ DIR_LEFT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-520 0 -680
+504 16 -536
+#event number: 9
+#type
+1
+#ID name
+C04_HAKAIM_02
+#OBJ CODE Number
+HAKAIM
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_C04_HAKAI_01
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_LEFT
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+520 16 -552
+#event number: 10
+#type
+1
+#ID name
+C04_OLDMAN1_01
+#OBJ CODE Number
+OLDMAN1
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_C04_HAKAI_01
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_RIGHT
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+456 16 -552
+#event number: 11
+#type
+1
+#ID name
+C04_SUPPORT_01
+#OBJ CODE Number
+SUPPORT
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_C04_SUPPORT_01
+#Event Script Name
+SCRID_C04_SUPPORT_01
+#Direction Type Number
+DIR_UP
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+536 16 -40
+#event number: 12
+#type
+1
+#ID name
+C04_SUPPORTPAPA_01
+#OBJ CODE Number
+MIDDLEMAN1
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_C04_SUPPORTPAPA_01
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_RIGHT
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+504 16 -104
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
@@ -451,19 +513,19 @@ EVENTDATA_POSTYPE_GRID
 2
 #event number: 0
 #Pos Event Label
-POSID_C04_LEADER4_01
+POS_C04_MUSICALGUIDE_01
 #Pos Script Name
-SCRID_POS_C04_LEADER4_01
+SCRID_POS_C04_MUSICALGUIDE_01
 #Pos Check Type
 POS_CHECK_TYPE_NORMAL
 #Event Trigger Work Name
 WK_SCENE_C04
 #Event Trigger Work Value
-2
+1
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--184 0 -72
+-136 16 -72
 #size
 1 5
 #event number: 1
@@ -480,9 +542,9 @@ WK_SCENE_C04
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-472 0 -712
+440 0 -664
 #size
-3 1
+7 1
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
@@ -626,7 +688,7 @@ EXIT_TYPE_SP6
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-360 16 -408
+360 32 -424
 #size
 1 1
 #event number: 8

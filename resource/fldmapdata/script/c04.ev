@@ -21,7 +21,7 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA    ev_pos_c04_hakai_01
-_EVENT_DATA    ev_pos_c04_leader4_01
+_EVENT_DATA    ev_pos_c04_musicalguide_01
 _EVENT_DATA    ev_c04_footballm_01
 _EVENT_DATA    ev_c04_clown_01
 _EVENT_DATA    ev_c04_badman_01
@@ -38,6 +38,9 @@ _EVENT_DATA    ev_bg_c04_board_05
 _EVENT_DATA    ev_bg_c04_board_06
 _EVENT_DATA    ev_reserve_c04_exit			//ギアステーションから出てきた時のアニメ
 _EVENT_DATA    ev_zone_c04
+_EVENT_DATA    ev_c04_support_01
+_EVENT_DATA    ev_scene_c04_support_01		//サポートとパパのイベント
+_EVENT_DATA    ev_init_c04
 _EVENT_DATA_END
 
 
@@ -50,6 +53,20 @@ INIT_EVENT_START	ev_zone_c04
 	$WK_OTHER_STATION_CONNECT = 0
 
 INIT_EVENT_END
+
+
+/************************************************************/
+/*					FIELD_INIT_SCRIPT						*/
+/************************************************************/
+INIT_EVENT_START	ev_init_c04
+	
+	//サポートパパイベントが有効なら、サポート位置を変更する
+	IF $WK_SCENE_C04 == 2 THEN
+		_OBJ_POS_CHANGE( C04_SUPPORT_01, 433, 1, 438, DIR_LEFT )
+	ENDIF
+
+INIT_EVENT_END
+
 
 /************************************************************/
 /*	予約スクリプト：ギアステーションから出てくるアニメ		*/
@@ -73,11 +90,37 @@ _ANIME_LABEL	anm_exit_player_walk_out
 /************************************************************/
 EVENT_START	ev_pos_c04_hakai_01
 	
+	{
+	
+	DEFINE_LOCAL	LWK_POSX
+	DEFINE_LOCAL	LWK_POSZ
+	
+	_PLAYER_POS_GET( LWK_POSX, LWK_POSZ )
+	//主人公：前へ
+	IF $LWK_POSX == 427 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_hakai_player_move_01a )
+	ELSIF $LWK_POSX == 428 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_hakai_player_move_01b )
+	ELSIF $LWK_POSX == 429 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_hakai_player_move_01c )
+	ELSIF $LWK_POSX == 430 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_hakai_player_move_01d )
+	ELSIF $LWK_POSX == 431 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_hakai_player_move_01e )
+	ELSIF $LWK_POSX == 432 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_hakai_player_move_01f )
+	ELSE
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_hakai_player_move_01g )
+	ENDIF
+	_OBJ_ANIME_WAIT()
+	
+	}
+	
 	_CAMERA_START()		//カメラ操作開始
 	_CAMERA_PURGE()		//対象物とカメラのバインドを解く
 	
 	//カメラ操作
-	_CAMERA_MOVE( 9688,0,970752,28246016,0,31080448,30 )	//一番最後の引数は移動にかかるフレーム数
+	_CAMERA_MOVE( 9688,0,970752,28213248,65551,30564352,30 )	//一番最後の引数は移動にかかるフレーム数
 	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 	
 	//じいさん！あんたが育て屋…
@@ -92,20 +135,36 @@ EVENT_START	ev_pos_c04_hakai_01
 	_BALLOONWIN_OBJMSG_POS( msg_c04_oldman_01, C04_OLDMAN1_01, WIN_NONE )
 	_MSGWIN_CLOSE()
 	
-	//じいさん：！マーク 【仮】主人公位置で分岐 隣接してからメッセージ
+	//じいさん：！マーク
 	_OBJ_ANIME( C04_OLDMAN1_01, anm_sodateya_gyoe_01 )
 	_OBJ_ANIME_WAIT()
+	
+	//主人公がいる位置にカメラを戻す
+	_CAMERA_DEF_MOVE( 16 )
+	
+	//じいさん：主人公横へ
+	_OBJ_ANIME( C04_OLDMAN1_01, anm_sodateya_come_01 )
+	//したっぱズ：主人公を見る
+	_OBJ_ANIME( C04_HAKAIM_01, anm_stay_walk_d )
+	_TIME_WAIT( 4 )
+	_OBJ_ANIME( C04_HAKAIM_02, anm_stay_walk_d )
+	_OBJ_ANIME_WAIT()
+	
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	_CAMERA_BIND()		//カメラバインド
+	_CAMERA_END()		//カメラ操作終了
 	
 	//おお！トレーナーさん
 	_BALLOONWIN_OBJMSG_POS( msg_c04_oldman_02, C04_OLDMAN1_01, WIN_NONE )
 	_MSGWIN_CLOSE()
 	
 	//したっぱ：主人公前へ
-	_OBJ_ANIME( C04_HAKAIM_01, anm_hakai_move_01 )
+	_OBJ_ANIME( C04_HAKAIM_01, anm_hakai_move_01a )
+	_OBJ_ANIME( C04_HAKAIM_02, anm_hakai_move_01b )
 	_OBJ_ANIME_WAIT()
 	
 	//だれだろうが…
-	_BALLOONWIN_OBJMSG_POS( msg_c04_hakaim1_02, C04_HAKAIM_01, WIN_NONE )
+	_BALLOONWIN_OBJMSG_POS( msg_c04_hakaim1_02, C04_HAKAIM_02, WIN_NONE )
 	_MSGWIN_CLOSE()
 	
 	//トレーナー戦呼び出し
@@ -118,16 +177,13 @@ EVENT_START	ev_pos_c04_hakai_01
 		_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
 	ENDIF
 	
-	_CAMERA_END()		//カメラ操作終了
-	
 	//！
-	_BALLOONWIN_OBJMSG_POS( msg_c04_hakaim1_03, C04_HAKAIM_01, WIN_NONE )
+	_BALLOONWIN_OBJMSG_POS( msg_c04_hakaim1_03, C04_HAKAIM_02, WIN_NONE )
 	_MSGWIN_CLOSE()
 	
 	//なんだコイツ！
-	_BALLOONWIN_OBJMSG_POS( msg_c04_hakaim2_02, C04_HAKAIM_02, WIN_NONE )
+	_BALLOONWIN_OBJMSG_POS( msg_c04_hakaim2_02, C04_HAKAIM_01, WIN_NONE )
 	_MSGWIN_CLOSE()
-	
 	
 	//したっぱ：去る
 	_OBJ_ANIME( C04_HAKAIM_01, anm_hakai_goaway_01a )
@@ -138,16 +194,16 @@ EVENT_START	ev_pos_c04_hakai_01
 	_OBJ_DEL( C04_HAKAIM_01 )
 	_OBJ_DEL( C04_HAKAIM_02 )
 	
-	//じいさん：その場歩き（視線注目）
-	_OBJ_ANIME( C04_OLDMAN1_01, anm_stay_walk_d )
+	//主人公：じいさんを見る
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_walk_l )
 	_OBJ_ANIME_WAIT()
 	
 	//ありがとうよ！
 	_BALLOONWIN_OBJMSG_POS( msg_c04_oldman_03, C04_OLDMAN1_01, WIN_NONE )
 	_MSGWIN_CLOSE()
 	
-	//わざマシンそらをとぶ入手【仮】
-	_ITEM_EVENT_KEYWAIT( ITEM_WAZAMASIN01, 1 )
+	//わざマシン「かいりき」入手
+	_ITEM_EVENT_KEYWAIT( ITEM_WAZAMASIN95, 1 )
 	
 	//わしは３番道路で
 	_BALLOONWIN_OBJMSG_POS( msg_c04_oldman_04, C04_OLDMAN1_01, WIN_NONE )
@@ -155,6 +211,9 @@ EVENT_START	ev_pos_c04_hakai_01
 	
 	//じいさん：去る
 	_OBJ_ANIME( C04_OLDMAN1_01, anm_sodateya_goaway_01 )
+	_TIME_WAIT( 8 )
+	//主人公：見送る
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_walk_d )
 	_OBJ_ANIME_WAIT()
 	
 	//じいさん消す
@@ -163,38 +222,33 @@ EVENT_START	ev_pos_c04_hakai_01
 	_SE_WAIT()
 	
 	
-	//サポート曲再生
-	_START_EVENT_BGM( SEQ_BGM_E_SUPPORT )
-	
 	//サポート表示
 	_OBJ_ADD_EX( 431, 477, DIR_UP, MMDL_ID_EVENTOBJ_00, SUPPORT, MV_DMY )
 	
 	//おーい！
 	_PLAYER_NAME( 0 )
-	_BALLOONWIN_OBJMSG_POS( msg_c04_white_01, MMDL_ID_EVENTOBJ_00, WIN_UP )
+	_PLAINWIN_MSG_DOWN( msg_c04_white_01 )
 	_MSGWIN_CLOSE()
 	
-	//サポート：主人公横へ 【仮】主人公位置で分岐
+	//サポート曲再生
+	_START_EVENT_BGM( SEQ_BGM_E_SUPPORT )
+	
+	//サポート：主人公横へ
 	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_support_come_01 )
+	_TIME_WAIT( 50 )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_walk_r )
 	_OBJ_ANIME_WAIT()
 	
-	//あたしさいいものもらったんだ
-	_BALLOONWIN_OBJMSG_POS( msg_c04_white_02, MMDL_ID_EVENTOBJ_00, WIN_UP )
-	_MSGWIN_CLOSE()
-	
-	//アクセサリー入れ入手処理
-	_ITEM_EVENT_KEYWAIT( ITEM_AKUSESARIIIRE, 1 )
-	
-	//そのアクセサリー入れがあれば
-	_BALLOONWIN_OBJMSG_POS( msg_c04_white_03, MMDL_ID_EVENTOBJ_00, WIN_UP )
+	//ライモンシティって見所いっぱいでしょ
+	_BALLOONWIN_OBJMSG_POS( msg_c04_white_02, MMDL_ID_EVENTOBJ_00, WIN_NONE )
 	_MSGWIN_CLOSE()
 	
 	//サポート：くるっと
 	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_support_dance_01 )
 	_OBJ_ANIME_WAIT()
 	
-	//ライモンシティって
-	_BALLOONWIN_OBJMSG_POS( msg_c04_white_04, MMDL_ID_EVENTOBJ_00, WIN_UP )
+	//あたしはミュージカルにいくつもり じゃあね
+	_BALLOONWIN_OBJMSG_POS( msg_c04_white_03, MMDL_ID_EVENTOBJ_00, WIN_NONE )
 	_MSGWIN_CLOSE()
 	
 	//サポート：去る
@@ -203,12 +257,10 @@ EVENT_START	ev_pos_c04_hakai_01
 	
 	//サポート消す
 	_OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
-	
-	
 	//サポート曲停止
 	_END_EVENT_BGM()
 	
-//===============フラグ操作===============//
+	//========================================//
 	
 	//POSイベント無効
 	$WK_SCENE_C04 = 1
@@ -222,62 +274,136 @@ EVENT_START	ev_pos_c04_hakai_01
 	//育て屋に２匹預けられるようにする
 	_FLAG_SET( FE_SODATEYAOLDMAN_OPEN )
 	
-//========================================//
+	//========================================//
 	
 EVENT_END
+
+
+//--------------------------------------------------------------------
+//主人公：プラズマ団前へ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_hakai_player_move_01a
+	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	AC_WALK_R_8F,3
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_hakai_player_move_01b
+	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	AC_WALK_R_8F,2
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_hakai_player_move_01c
+	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_hakai_player_move_01d
+	_ANIME_DATA	AC_WALK_U_8F,3
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_hakai_player_move_01e
+	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_hakai_player_move_01f
+	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	AC_WALK_L_8F,2
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_hakai_player_move_01g
+	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	AC_WALK_L_8F,3
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
 
 //--------------------------------------------------------------------
 //じいさん：！マーク
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_sodateya_gyoe_01
-	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WAIT_8F,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WAIT_4F,3
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
 	_ANIME_DATA	AC_MARK_GYOE,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
-//したっぱ：主人公前へ
+//育て屋：主人公横へ
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_hakai_move_01
-	_ANIME_DATA	AC_WALK_D_8F,1
+_ANIME_LABEL	anm_sodateya_come_01
+	_ANIME_DATA	AC_WALK_D_4F,4
+	_ANIME_DATA	AC_WALK_R_4F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//したっぱズ：主人公前へ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_hakai_move_01a
+	_ANIME_DATA	AC_WAIT_8F,2
+	_ANIME_DATA	AC_WALK_D_8F,3
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_hakai_move_01b
+	_ANIME_DATA	AC_WALK_L_8F,2
+	_ANIME_DATA	AC_WALK_D_8F,2
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
 //したっぱ：去る
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_hakai_goaway_01a
-	_ANIME_DATA	AC_WALK_U_6F,7
-	_ANIME_DATA	AC_WALK_R_6F,5
-	_ANIME_DATA	AC_WALK_R_6F,5
+	_ANIME_DATA	AC_WALK_R_6F,2
+	_ANIME_DATA	AC_WALK_U_6F,6
+	_ANIME_DATA	AC_WALK_R_6F,8
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_hakai_goaway_01b
-	_ANIME_DATA	AC_WALK_R_6F,1
-	_ANIME_DATA	AC_WALK_U_6F,7
-	_ANIME_DATA	AC_WALK_R_6F,5
-	_ANIME_DATA	AC_WALK_R_6F,5
+	_ANIME_DATA	AC_WAIT_4F,1
+	_ANIME_DATA	AC_WALK_R_6F,3
+	_ANIME_DATA	AC_WALK_U_6F,6
+	_ANIME_DATA	AC_WALK_R_6F,8
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
 //その場歩き
 //--------------------------------------------------------------------
+_ANIME_LABEL	anm_stay_walk_u
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
 _ANIME_LABEL	anm_stay_walk_d
 	_ANIME_DATA	AC_STAY_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stay_walk_l
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stay_walk_r
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
 
 //--------------------------------------------------------------------
 //じいさん：去る
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_sodateya_goaway_01
-	_ANIME_DATA	AC_WALK_D_6F,1
-	_ANIME_DATA	AC_WALK_L_6F,1
-	_ANIME_DATA	AC_WALK_D_6F,1
+	_ANIME_DATA	AC_WALK_D_8F,7
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
 //サポート：主人公横へ
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_support_come_01
-	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_WALK_U_8F,7
 	_ANIME_DATA	AC_STAY_WALK_L_8F,1
 	_ANIME_DATA	ACMD_END,0
 
@@ -286,20 +412,22 @@ _ANIME_LABEL	anm_support_come_01
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_support_dance_01
 	_ANIME_DATA	AC_DIR_U,1
-	_ANIME_DATA	AC_WAIT_4F,1
+	_ANIME_DATA	AC_WAIT_2F,1
 	_ANIME_DATA	AC_DIR_R,1
-	_ANIME_DATA	AC_WAIT_4F,1
+	_ANIME_DATA	AC_WAIT_2F,1
 	_ANIME_DATA	AC_DIR_D,1
-	_ANIME_DATA	AC_WAIT_4F,1
+	_ANIME_DATA	AC_WAIT_2F,1
 	_ANIME_DATA	AC_DIR_L,1
-	_ANIME_DATA	AC_WAIT_4F,1
+	_ANIME_DATA	AC_WAIT_2F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
 //サポート：去る
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_support_goaway_01
-	_ANIME_DATA	AC_WALK_U_8F,13
+	_ANIME_DATA	AC_WALK_U_8F,4
+	_ANIME_DATA	AC_WALK_R_8F,2
+	_ANIME_DATA	AC_WALK_U_8F,6
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
@@ -315,72 +443,619 @@ _ANIME_LABEL	anm_player_dir_l
 
 
 /************************************************************/
-/*			ジムリーダー(カミツレ) posイベント				*/
+/*			サポートのミュージカル案内 posイベント			*/
 /************************************************************/
-EVENT_START	ev_pos_c04_leader4_01
-	//カミツレ表示
-	_OBJ_ADD_EX( 399, 436, DIR_LEFT, MMDL_ID_EVENTOBJ_00, LEADER4, MV_DMY )
-
-	//リーダー：主人公横へ
-	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_pos_leader_come_01 )
+EVENT_START	ev_pos_c04_musicalguide_01
+	
+	{
+	
+	DEFINE_LOCAL	LWK_POSX
+	DEFINE_LOCAL	LWK_POSZ
+	
+	//おーい！
+	_PLAYER_NAME( 0 )
+	_PLAINWIN_MSG_DOWN( msg_c04_white_04 )
+	_MSGWIN_CLOSE()
+	
+	//サポート曲再生
+	_START_EVENT_BGM( SEQ_BGM_E_SUPPORT )
+	
+	//主人公：右を向く※ウェイトはサポート登場アニメと同じタイミング
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_walk_r )
+	
+	//主人公位置を取得
+	_PLAYER_POS_GET( LWK_POSX,LWK_POSZ  )
+	//サポートを主人公と同じZ軸に表示（436の場合は生垣に入ってしまうので437に出現）
+	IF $LWK_POSZ == 436 THEN
+		_OBJ_POS_CHANGE( C04_SUPPORT_01, 399, 0, 437, DIR_LEFT )
+	ELSE
+		_OBJ_POS_CHANGE( C04_SUPPORT_01, 399, 0, LWK_POSZ, DIR_LEFT )
+	ENDIF
+	
+	//サポート：主人公横へ
+	IF $LWK_POSZ == 436 THEN
+		_OBJ_ANIME( C04_SUPPORT_01, anm_pos_support_come_01a )
+	ELSE
+		_OBJ_ANIME( C04_SUPPORT_01, anm_pos_support_come_01b )
+	ENDIF
 	_OBJ_ANIME_WAIT()
-	//主人公：振り向く
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_dir_r )
+	
+	//～～もミュージカルいこうよ
+	_BALLOONWIN_OBJMSG_POS( msg_c04_white_05, C04_SUPPORT_01, WIN_NONE )
+	_MSGWIN_CLOSE()
+	
+	//サポート：移動
+	IF $LWK_POSZ == 436 THEN
+		_OBJ_ANIME( C04_SUPPORT_01, anm_pos_support_move_01a )
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_pos_player_move_01a )
+	ELSIF $LWK_POSZ == 437 THEN
+		_OBJ_ANIME( C04_SUPPORT_01, anm_pos_support_move_01b )
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_pos_player_move_01b )
+	ELSIF $LWK_POSZ == 438 THEN
+		_OBJ_ANIME( C04_SUPPORT_01, anm_pos_support_move_01c )
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_pos_player_move_01c )
+	ELSIF $LWK_POSZ == 439 THEN
+		_OBJ_ANIME( C04_SUPPORT_01, anm_pos_support_move_01d )
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_pos_player_move_01d )
+	ELSE
+		_OBJ_ANIME( C04_SUPPORT_01, anm_pos_support_move_01e )
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_pos_player_move_01e )
+	ENDIF
 	_OBJ_ANIME_WAIT()
-
-	//リーダー：遅くなってゴメン！
-	_BALLOONWIN_OBJMSG( msg_c04_leader_01 , MMDL_ID_EVENTOBJ_00 )
-	_BALLOONWIN_CLOSE()
-
-	//リーダー：少し前へ
-	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_pos_leader_move_01 )
-	//主人公：振り向く
-	_TIME_WAIT( 16 )
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_dir_l )
-	_OBJ_ANIME_WAIT()
-
-	//リーダー：先に行って待ってるね
-	_BALLOONWIN_OBJMSG( msg_c04_leader_02 , MMDL_ID_EVENTOBJ_00 )
-	_BALLOONWIN_CLOSE()
-
-	//リーダー：去る
-	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_pos_leader_goaway_01 )
-	_OBJ_ANIME_WAIT() 
-
-//=========フラグワーク操作============//
-
-	//posイベントを無効に
-	$WK_SCENE_C04 = 3
-
-	//ジムのカミツレを非表示
-	_FLAG_SET( FV_C04GYM0101_LEADER4 )
-
-//=====================================//
-
+	
+	//はい到着
+	_BALLOONWIN_OBJMSG_POS( msg_c04_white_06, C04_SUPPORT_01, WIN_NONE )
+	_MSGWIN_CLOSE()
+	
+	//ミュージカル施設のマップ遷移処理へ
+	_CALL	ev_map_change_musical
+	
+	}
+	
 EVENT_END
 
 //--------------------------------------------------------------------
-//リーダー：主人公横へ
+//サポート：主人公横へ
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_pos_leader_come_01
-	_ANIME_DATA	AC_WALK_L_4F,8
+_ANIME_LABEL	anm_pos_support_come_01a
+	_ANIME_DATA	AC_WALK_L_8F,6
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_pos_support_come_01b
+	_ANIME_DATA	AC_WALK_L_8F,7
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
-//リーダー：少し前へ
+//サポート：ミュージカル施設前へ
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_pos_leader_move_01
-	_ANIME_DATA	AC_WALK_U_4F,1
-	_ANIME_DATA	AC_WALK_L_4F,3
+_ANIME_LABEL	anm_pos_support_move_01a
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	AC_WALK_R_8F,40
+	_ANIME_DATA	AC_WALK_U_8F,4
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_pos_support_move_01b
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_R_8F,40
+	_ANIME_DATA	AC_WALK_U_8F,4
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_pos_support_move_01c
+	_ANIME_DATA	AC_WALK_R_8F,41
+	_ANIME_DATA	AC_WALK_U_8F,4
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_pos_support_move_01d
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_WALK_R_8F,40
+	_ANIME_DATA	AC_WALK_U_8F,4
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_pos_support_move_01e
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	AC_WALK_R_8F,40
+	_ANIME_DATA	AC_WALK_U_8F,4
 	_ANIME_DATA	AC_STAY_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
-//リーダー：去る
+//主人公：ミュージカル施設前へ
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_pos_leader_goaway_01
-	_ANIME_DATA	AC_WALK_L_4F,8
+_ANIME_LABEL	anm_pos_player_move_01a
+	_ANIME_DATA	AC_WAIT_4F,1
+	_ANIME_DATA	AC_WALK_R_8F,2
+	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	AC_WALK_R_8F,40
+	_ANIME_DATA	AC_WALK_U_8F,3
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_pos_player_move_01b
+	_ANIME_DATA	AC_WAIT_4F,1
+	_ANIME_DATA	AC_WALK_R_8F,2
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_R_8F,40
+	_ANIME_DATA	AC_WALK_U_8F,3
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_pos_player_move_01c
+	_ANIME_DATA	AC_WAIT_4F,1
+	_ANIME_DATA	AC_WALK_R_8F,42
+	_ANIME_DATA	AC_WALK_U_8F,3
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_pos_player_move_01d
+	_ANIME_DATA	AC_WAIT_4F,1
+	_ANIME_DATA	AC_WALK_R_8F,2
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_WALK_R_8F,40
+	_ANIME_DATA	AC_WALK_U_8F,3
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_pos_player_move_01e
+	_ANIME_DATA	AC_WAIT_4F,1
+	_ANIME_DATA	AC_WALK_R_8F,2
+	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	AC_WALK_R_8F,40
+	_ANIME_DATA	AC_WALK_U_8F,3
+	_ANIME_DATA	ACMD_END,0
+
+
+/************************************************************/
+/*						サポート							*/
+/************************************************************/
+EVENT_START	ev_c04_support_01
+	_TALK_OBJ_START()
+	
+	//ミュージカル気になる？いっしょに入ろう
+	_PLAYER_NAME( 0 )
+	_BALLOONWIN_TALKOBJ_MSG( msg_c04_white_07 )
+	_MSGWIN_CLOSE()
+	
+	//ミュージカル施設のマップ遷移処理へ
+	_CALL	ev_map_change_musical
+	
+EVENT_END
+
+//ミュージカル施設のマップ遷移
+ev_map_change_musical:
+
+	//主人公＆サポート：ミュージカル内部へ
+	_OBJ_ANIME( C04_SUPPORT_01, anm_music_support_move_01 )
+	_TIME_WAIT( 12 )
+	
+	_PLAYER_DIR_GET( SCWK_ANSWER )	//主人公の向きで分岐
+	IF $SCWK_ANSWER == DIR_UP THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_music_player_move_01u )
+	ELSIF $SCWK_ANSWER == DIR_LEFT THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_music_player_move_01l )
+	ELSE
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_music_player_move_01r )
+	ENDIF
+	_OBJ_ANIME_WAIT()
+	
+	_CAMERA_START()		//カメラ操作開始
+	_CAMERA_PURGE()		//カメラパージ
+	//カメラ移動：ミュージカル施設全体を見せる
+	_CAMERA_MOVE( 8664,0,1069056,28409856,151567,28246016, 20 )
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	_CAMERA_END()		//カメラ操作終了
+	
+	//主人公：一歩前へ
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_music_player_move_02 )
+	_OBJ_ANIME_WAIT()
+	
+	//========================================//
+	//サポートパパイベントを有効にする【仮】ミュージカル初回イベント後に値を変えた方が良い
+	$WK_SCENE_C04 = 2
+	//========================================//
+	
+	//ミュージカル内部へマップ遷移
+	_MAP_CHANGE( ZONE_ID_C04R0201, 14, 20, DIR_UP )
+
+	_RET
+
+//--------------------------------------------------------------------
+//サポート＆主人公：ミュージカル内部へ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_music_support_move_01
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	AC_WAIT_4F,1
+	_ANIME_DATA	AC_WALK_U_8F,1
 	_ANIME_DATA	AC_VANISH_ON,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_music_player_move_01u
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_music_player_move_01l
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_music_player_move_01r
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//主人公：一歩前へ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_music_player_move_02
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+
+/************************************************************/
+/*						サポート							*/
+/************************************************************/
+EVENT_START	ev_scene_c04_support_01
+	
+	//主人公：サポートの近くへ
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_papa_player_move_01 )
+	_OBJ_ANIME_WAIT()
+	
+	//パパ！？どうしてここに
+	_BALLOONWIN_OBJMSG_POS( msg_c04_white_08, C04_SUPPORT_01, WIN_NONE )
+	_MSGWIN_CLOSE()
+	
+	//どうもこうも
+	_BALLOONWIN_OBJMSG_POS( msg_c04_middleman1_01, C04_SUPPORTPAPA_01, WIN_NONE )
+	_MSGWIN_CLOSE()
+	
+	//サポート：後ずさり
+	_OBJ_ANIME( C04_SUPPORT_01, anm_papa_support_back_01 )
+	_OBJ_ANIME_WAIT()
+	
+	//やだぁ！
+	_PLAYER_NAME( 0 )
+	_BALLOONWIN_OBJMSG_POS( msg_c04_white_09, C04_SUPPORT_01, WIN_NONE )
+	_MSGWIN_CLOSE()
+	
+	//パパ：一歩前へ
+	_OBJ_ANIME( C04_SUPPORTPAPA_01, anm_papa_papa_move_01 )
+	_OBJ_ANIME_WAIT()
+	
+	//ダメだ！よそはよそウチはウチだ
+	_BALLOONWIN_OBJMSG_POS( msg_c04_middleman1_02, C04_SUPPORTPAPA_01, WIN_NONE )
+	_MSGWIN_CLOSE()
+	
+	//サポート：パパを見て
+	_OBJ_ANIME( C04_SUPPORT_01, anm_stay_walk_l )
+	_OBJ_ANIME_WAIT()
+	
+	//だったら！
+	_BALLOONWIN_OBJMSG_POS( msg_c04_white_10, C04_SUPPORT_01, WIN_NONE )
+	_MSGWIN_CLOSE()
+	
+	_TIME_WAIT( 8 )
+	
+	//おじょうさん…
+	_PLAINWIN_MSG_DOWN( msg_c04_leader_01 )
+	_MSGWIN_CLOSE()
+	
+	//サポート＆パパ：？マーク
+	_OBJ_ANIME( C04_SUPPORT_01, anm_mark_hatena )
+	_TIME_WAIT( 8 )
+	_OBJ_ANIME( C04_SUPPORTPAPA_01, anm_mark_hatena )
+	_OBJ_ANIME_WAIT()
+	
+	//サポート＆パパ：下を見る
+	_OBJ_ANIME( C04_SUPPORT_01, anm_stay_walk_d )
+	_OBJ_ANIME( C04_SUPPORTPAPA_01, anm_stay_walk_d )
+	
+	_CAMERA_START()		//カメラ操作開始
+	_CAMERA_PURGE()		//カメラパージ
+	_CAMERA_MOVE( 10488,0,970752,28409856,65551,28672000, 20 )
+	
+	//カミツレ：登場
+	_OBJ_ADD_EX( 433, 444, DIR_UP, MMDL_ID_EVENTOBJ_00, LEADER4, MV_DMY )
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_papa_leader4_come_01 )
+	_OBJ_ANIME_WAIT()
+	
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	
+	//ちょっと！
+	_BALLOONWIN_OBJMSG_POS( msg_c04_middleman1_03, C04_SUPPORTPAPA_01, WIN_UP )
+	_MSGWIN_CLOSE()
+	
+	//カミツレと申します
+	_BALLOONWIN_OBJMSG_POS( msg_c04_leader_02, MMDL_ID_EVENTOBJ_00, WIN_NONE )
+	_MSGWIN_CLOSE()
+	
+	//カミツレ：サポートの隣へいどう
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_papa_leader4_move_01 )
+	_OBJ_ANIME_WAIT()
+	//パパ：カミツレを見る
+	_OBJ_ANIME( C04_SUPPORTPAPA_01, anm_stay_walk_r )
+	_OBJ_ANIME_WAIT()
+	
+	//もちろん…
+	_BALLOONWIN_OBJMSG_POS( msg_c04_leader_03, MMDL_ID_EVENTOBJ_00, WIN_NONE )
+	_MSGWIN_CLOSE()
+	
+	//そうでしょうとも！
+	_BALLOONWIN_OBJMSG_POS( msg_c04_middleman1_04, C04_SUPPORTPAPA_01, WIN_UP )
+	_MSGWIN_CLOSE()
+	
+	//カミツレ：父を見て
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_stay_walk_l )
+	_OBJ_ANIME_WAIT()
+	
+	//ですが…
+	_BALLOONWIN_OBJMSG_POS( msg_c04_leader_04, MMDL_ID_EVENTOBJ_00, WIN_NONE )
+	_MSGWIN_CLOSE()
+	
+	//サポート：一歩前へ出て
+	_OBJ_ANIME( C04_SUPPORT_01, anm_papa_support_move_01 )
+	_OBJ_ANIME_WAIT()
+	
+	//おねがい！
+	_BALLOONWIN_OBJMSG_POS( msg_c04_white_11, C04_SUPPORT_01, WIN_UP )
+	_MSGWIN_CLOSE()
+	
+	//パパ：下を向いて
+	_OBJ_ANIME( C04_SUPPORTPAPA_01, anm_stay_walk_d )
+	_OBJ_ANIME_WAIT()
+	
+	//……むむっ
+	_BALLOONWIN_OBJMSG_POS( msg_c04_middleman1_05, C04_SUPPORTPAPA_01, WIN_UP )
+	_MSGWIN_CLOSE()
+	
+	//パパ：カミツレを見て
+	_OBJ_ANIME( C04_SUPPORTPAPA_01, anm_stay_walk_r )
+	_OBJ_ANIME_WAIT()
+	
+	//ジムリーダーさんに言われて気づいたよ
+	_PLAYER_NAME( 0 )
+	_BALLOONWIN_OBJMSG_POS( msg_c04_middleman1_06, C04_SUPPORTPAPA_01, WIN_UP )
+	_MSGWIN_CLOSE()
+	
+	//パパ：去る
+	_OBJ_ANIME( C04_SUPPORTPAPA_01, anm_papa_papa_goaway_01 )
+	_TIME_WAIT( 16 )
+	//サポート＆カミツレ：去る父を見送る
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_stay_walk_d )
+	_OBJ_ANIME( C04_SUPPORT_01, anm_stay_walk_d )
+	_OBJ_ANIME_WAIT()
+	_OBJ_DEL( C04_SUPPORTPAPA_01 )
+	
+	_CAMERA_MOVE( 9688,0,970752,28409856,65551,28737536, 8 )
+	
+	//サポート：一歩追いかける感じで
+	_OBJ_ANIME( C04_SUPPORT_01, anm_papa_support_move_02 )
+	_OBJ_ANIME_WAIT()
+	
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	
+	//…みつけたら ちゃんと帰るから！
+	_BALLOONWIN_OBJMSG_POS( msg_c04_white_12, C04_SUPPORT_01, WIN_NONE )
+	_MSGWIN_CLOSE()
+	
+	_TIME_WAIT( 30 )
+	
+	//親って大変なのね
+	_BALLOONWIN_OBJMSG_POS( msg_c04_leader_05, MMDL_ID_EVENTOBJ_00, WIN_NONE )
+	_MSGWIN_CLOSE()	
+	
+	//カミツレ：サポートを見て
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_stay_walk_l )
+	_OBJ_ANIME_WAIT()
+	//サポート：カミツレを見る
+	_OBJ_ANIME( C04_SUPPORT_01, anm_stay_walk_r )
+	_OBJ_ANIME_WAIT()
+	
+	//おせっかいだったかな
+	_BALLOONWIN_OBJMSG_POS( msg_c04_leader_06, MMDL_ID_EVENTOBJ_00, WIN_NONE )
+	_MSGWIN_CLOSE()	
+	
+	//バッジ取得で分岐
+	_GET_BADGE_FLAG( SCWK_TEMP0, BADGE_ID_04 )	//バッジフラグ取得
+	IF $SCWK_TEMP0 == 0 THEN
+		//バッジ未入手なら
+		
+		//ジムで待ってるわ
+		_BALLOONWIN_OBJMSG_POS( msg_c04_leader_07, MMDL_ID_EVENTOBJ_00, WIN_NONE )
+		_MSGWIN_CLOSE()	
+		
+		//カミツレ：ジム側へ去る
+		_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_papa_leader4_goaway_01a )
+		_TIME_WAIT( 16 )
+		_OBJ_ANIME( C04_SUPPORT_01, anm_stay_walk_d )
+		_OBJ_ANIME_WAIT()
+		
+		
+	ELSE
+		//入手済みなら
+		
+		//カミツレ：主人公を見る
+		_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_stay_walk_u )
+		_OBJ_ANIME_WAIT()
+		
+		//５番道路で待ってるわ
+		_PLAYER_NAME( 0 )
+		_BALLOONWIN_OBJMSG_POS( msg_c04_leader_08, MMDL_ID_EVENTOBJ_00, WIN_NONE )
+		_MSGWIN_CLOSE()	
+		
+		//サポート：道を開ける
+		_OBJ_ANIME( C04_SUPPORT_01, anm_papa_support_move_03 )
+		_TIME_WAIT( 8 )
+		//カミツレ：５番道路側へ去る
+		_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_papa_leader4_goaway_01b )
+		//_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_walk_l )	//【保留】動きすぎなのでカット
+		_OBJ_ANIME_WAIT()
+		
+		
+	ENDIF
+	
+	//カミツレ削除
+	_OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
+	
+	_CAMERA_DEF_MOVE( 20 )		//カメラ主人公位置に復帰
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	_CAMERA_BIND()		//カメラバインド
+	_CAMERA_END()		//カメラ操作終了
+	
+	//バッジ取得で分岐
+	_GET_BADGE_FLAG( SCWK_TEMP0, BADGE_ID_04 )	//バッジフラグ取得
+	IF $SCWK_TEMP0 == 0 THEN
+		//バッジ未入手なら
+		
+		//サポート：主人公を見て
+		_OBJ_ANIME( C04_SUPPORT_01, anm_papa_support_move_04 )
+		_OBJ_ANIME_WAIT()
+		
+	ELSE
+		//入手済みなら
+		
+		//サポート：主人公を見て
+		_OBJ_ANIME( C04_SUPPORT_01, anm_stay_walk_u )
+		_OBJ_ANIME_WAIT()
+		
+		//主人公：サポートを見る 【保留】動かしすぎな気がする サポートとカミツレに注目してほしいのでカット
+		//_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_walk_d )
+		//_OBJ_ANIME_WAIT()
+		
+	ENDIF
+	
+	//かっこいい！
+	_BALLOONWIN_OBJMSG_POS( msg_c04_white_13, C04_SUPPORT_01, WIN_NONE )
+	_MSGWIN_CLOSE()
+	
+	//サポート：去る
+	_OBJ_ANIME( C04_SUPPORT_01, anm_papa_support_goaway_01 )
+	_OBJ_ANIME_WAIT()
+	_OBJ_DEL( C04_SUPPORT_01 )
+	
+	
+	//========================================//
+	//シーンチェンジイベント無効
+	$WK_SCENE_C04 = 3
+	
+	//サポート＆パパ非表示
+	_FLAG_SET( FV_C04_SUPPORT_01 )
+	_FLAG_SET( FV_C04_SUPPORTPAPA_01 )
+	
+	//========================================//
+
+EVENT_END
+
+//--------------------------------------------------------------------
+//主人公：サポートの近くへ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_papa_player_move_01
+	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//サポート：後ずさり
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_papa_support_back_01
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_DIR_PAUSE_ON,1
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//パパ：一歩前へ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_papa_papa_move_01
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//？マーク
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_mark_hatena
+	_ANIME_DATA	AC_MARK_HATENA,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//カミツレ：登場
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_papa_leader4_come_01
+	_ANIME_DATA	AC_WALK_U_8F,5
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//カミツレ：サポートの隣へ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_papa_leader4_move_01
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//サポート：一歩前へ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_papa_support_move_01
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//パパ：去る
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_papa_papa_goaway_01
+	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,5
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//サポート：一歩前へ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_papa_support_move_02
+	_ANIME_DATA	AC_WALK_D_6F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//サポート：道を開ける
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_papa_support_move_03
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_DIR_PAUSE_ON,1
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA	AC_WAIT_8F,2
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//カミツレ：去る
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_papa_leader4_goaway_01a
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,5
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_papa_leader4_goaway_01b
+	_ANIME_DATA	AC_WALK_L_8F,9
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//サポート：主人公の前へ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_papa_support_move_04
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//サポート：去る
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_papa_support_goaway_01
+	_ANIME_DATA	AC_WALK_D_8F,6
 	_ANIME_DATA	ACMD_END,0
 
 

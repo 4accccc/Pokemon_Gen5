@@ -31,5 +31,7 @@
 #define C04_HAKAIM_01                      8
 #define C04_HAKAIM_02                      9
 #define C04_OLDMAN1_01                    10
+#define C04_SUPPORT_01                    11
+#define C04_SUPPORTPAPA_01                12
 
 #endif //ZONE_C04_EVC_H
