@@ -57,6 +57,10 @@ FS_EXTERN_OVERLAY(ui_common);
 // アプリ内でデバッグ用のパラメータをセット
 #define DEBUG_SET_PARAM
 
+#ifdef DEBUG_ONLY_FOR_genya_hosaka
+#define DEBUG_LOOP
+#endif
+
 //=============================================================================
 /**
  *								定数定義
@@ -833,7 +837,7 @@ static void _SceneEndDemoEnd( UI_SCENE_CNT_PTR cnt, COMM_BTL_DEMO_MAIN_WORK* wk 
   UI_SCENE_CNT_SetNextScene( cnt, UI_SCENE_ID_END );
 
 // @TODO 保坂のみループ
-#ifdef DEBUG_ONLY_FOR_genya_hosaka
+#ifdef DEBUG_LOOP
   if( (GFL_UI_KEY_GetCont() & PAD_BUTTON_START) == FALSE )
   {
     wk->result = GFUser_GetPublicRand(3); // 勝敗を変更
@@ -860,7 +864,7 @@ static BOOL SceneStartDemo_Init( UI_SCENE_CNT_PTR cnt, void* work )
   // トレーナーユニット初期化
   TRAINER_UNIT_CNT_Init( wk );
 
-#ifdef DEBUG_ONLY_FOR_genya_hosaka
+#ifdef DEBUG_LOOP
   GFL_BG_ClearScreen( BG_FRAME_TEXT_M ); // テキスト面を消去しておく
     // フェードアウト リクエスト
   GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_WHITEOUT, 16, 0, -8 );
@@ -974,8 +978,8 @@ static BOOL SceneStartDemo_End( UI_SCENE_CNT_PTR cnt, void* work )
   // 終了
   UI_SCENE_CNT_SetNextScene( cnt, UI_SCENE_ID_END );
 
-// @TODO 保坂のみループ
-#ifdef DEBUG_ONLY_FOR_genya_hosaka
+#ifdef DEBUG_LOOP
+  // スタート押しっぱで終了
   if( (GFL_UI_KEY_GetCont() & PAD_BUTTON_START) == FALSE )
   {
     UI_SCENE_CNT_SetNextScene( cnt, CBD_SCENE_ID_START_DEMO );
