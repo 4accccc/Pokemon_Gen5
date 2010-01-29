@@ -1016,8 +1016,6 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
       BTLV_INPUT_DeletePokeIcon( biw );
       BTLV_INPUT_DeleteWeatherIcon( biw );
       
-      BTLV_TIMER_SetDrawEnable( BTLV_EFFECT_GetTimerWork(), BTLV_TIMER_TYPE_COMMAND_TIME, FALSE, FALSE );
-
       if( ( biw->scr_type == BTLV_INPUT_SCRTYPE_COMMAND ) || ( biw->scr_type == BTLV_INPUT_SCRTYPE_YES_NO ) )
       {
         GFL_TCB_AddTask( biw->tcbsys, TCB_TransformCommand2Standby, ttw, 1 );
@@ -1347,8 +1345,6 @@ static  void  TCB_TransformStandby2Command( GFL_TCB* tcb, void* work )
   default:
     if( ttw->biw->tcb_execute_count == 0 )
     {
-      BTLV_TIMER_SetDrawEnable( BTLV_EFFECT_GetTimerWork(), BTLV_TIMER_TYPE_GAME_TIME, TRUE, FALSE );
-      BTLV_TIMER_SetDrawEnable( BTLV_EFFECT_GetTimerWork(), BTLV_TIMER_TYPE_COMMAND_TIME, TRUE, TRUE );
       GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_ON );
       GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_ON );
       GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_OFF );
