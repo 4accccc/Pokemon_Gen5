@@ -1,5 +1,5 @@
 #event data
-#save date:2010/01/28 21:50:57
+#save date:2010/01/29 18:17:31
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c04r0201.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c04r0201.wms
 #hold event type:
 1
 #hold event number:
-15
+16
 #event number: 0
 #type
 1
@@ -257,7 +257,7 @@ DIR_LEFT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-152 96 152
+168 96 152
 #event number: 8
 #type
 1
@@ -324,7 +324,7 @@ EVENTDATA_POSTYPE_GRID
 #type
 1
 #ID name
-C04R0201_MAN_02
+C04R0201_MAN2_01
 #OBJ CODE Number
 MAN2
 #MOVE CODE Number
@@ -334,7 +334,7 @@ EV_TYPE_NORMAL
 #Flag Name
 0
 #Event Script Name
-SCRID_DUMMY
+SCRID_C04R0201_MAN2_01
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
@@ -412,7 +412,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-56 96 200
+24 96 200
 #event number: 13
 #type
 1
@@ -475,6 +475,37 @@ DIR_LEFT
 EVENTDATA_POSTYPE_GRID
 #position
 168 0 40
+#event number: 15
+#type
+1
+#ID name
+C04R0201_GENTLEMAN_01
+#OBJ CODE Number
+GENTLEMAN
+#MOVE CODE Number
+MV_DOWN
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_C04R0201_GENTLEMAN_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+136 96 184
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT

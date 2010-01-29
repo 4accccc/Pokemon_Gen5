@@ -20,10 +20,11 @@
 #define C04R0201_LADY_01                   7
 #define C04R0201_DANCER_02                 8
 #define C04R0201_MAID_01                   9
-#define C04R0201_MAN_02                   10
+#define C04R0201_MAN2_01                  10
 #define C04R0201_STYLISTPOKE_01           11
 #define C04R0201_OWNER_01                 12
 #define C04R0201_GIRL3_01                 13
 #define C04R0201_MIDDLEMAN1_01            14
+#define C04R0201_GENTLEMAN_01             15
 
 #endif //ZONE_C04R0201_EVC_H
