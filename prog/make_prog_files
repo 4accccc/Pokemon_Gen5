@@ -197,6 +197,7 @@ SRCS  +=    $(SOUNDSRC) \
         gamesystem/iss_3ds_sys.c \
         gamesystem/iss_zone_sys.c \
         gamesystem/iss_switch_sys.c \
+        gamesystem/pm_weather.c \
         system/ica_anime.c \
         system/ica_camera.c \
 		    poke_tool/status_rcv.c \

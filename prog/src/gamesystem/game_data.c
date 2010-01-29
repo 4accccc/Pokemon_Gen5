@@ -86,6 +86,7 @@ struct _GAMEDATA{
 
   int fieldmap_walk_count; ///<フィールドマップ歩数カウント
   u8 season_id;       ///<季節指定ID
+  u8 weather_id;      ///<天気指定ID
   u8 subscreen_mode; ///< フィールド下画面の状態
   u8 subscreen_type;
   u8 frameSpritcount;    ///< フレーム分割動作で動作する場合のカウント
@@ -668,6 +669,35 @@ void GAMEDATA_SetSeasonID(GAMEDATA *gamedata, u8 season_id)
   GF_ASSERT(season_id < PMSEASON_TOTAL);
   gamedata->season_id = season_id;
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  天気IDを取得
+ *
+ *	@param	cp_data   データ
+ *
+ *	@return 天気ID
+ */
+//-----------------------------------------------------------------------------
+u32 GAMEDATA_GetWeatherNo( const GAMEDATA* cp_data )
+{
+  return cp_data->weather_id;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  天気IDを登録
+ *
+ *	@param	p_data
+ *	@param	weather_no 
+ */
+//-----------------------------------------------------------------------------
+void GAMEDATA_SetWeatherNo( GAMEDATA* p_data, u8 weather_no )
+{
+  p_data->weather_id = weather_no;
+}
+
+
 
 //--------------------------------------------------------------
 /**
@@ -1288,6 +1318,10 @@ static void GAMEDATA_SaveDataLoad(GAMEDATA *gamedata)
     const WIFI_LIST* swifilist = SaveData_GetWifiListData( gamedata->sv_control_ptr );
     WifiList_Copy(swifilist, wifilist);
   }
+  { //WEATHER_ID
+    SITUATION* sv = SaveData_GetSituation( gamedata->sv_control_ptr );
+    SaveData_SituationLoadWeatherID( sv, &gamedata->weather_id );
+  }
 }
 
 //--------------------------------------------------------------
@@ -1337,6 +1371,10 @@ static void GAMEDATA_SaveDataUpdate(GAMEDATA *gamedata)
     const WIFI_LIST* wifilist = GAMEDATA_GetWiFiList(gamedata);
     WIFI_LIST* swifilist = SaveData_GetWifiListData( gamedata->sv_control_ptr );
     WifiList_Copy(wifilist, swifilist);
+  }
+  { //WEATHER_ID
+    SITUATION* sv = SaveData_GetSituation( gamedata->sv_control_ptr );
+    SaveData_SituationUpdateWeatherID( sv, gamedata->weather_id );
   }
 }
 

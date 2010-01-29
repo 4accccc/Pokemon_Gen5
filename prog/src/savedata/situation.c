@@ -28,6 +28,8 @@ struct _SITUATION {
   u16 warp_id;            ///<ワープ飛び先指定ID
   u8  fs_flash;           ///<フラッシュフラグ          
   u8  season_id;          ///<季節
+  u8  weather_id;         ///<天気
+  u8  pad[3];             ///<padding
 
 	//PLAYER_WORKからセーブに必要なものだけを抜粋
 	PLAYERWORK_SAVE plsv;
@@ -236,7 +238,7 @@ void SaveData_SituationDataLoadStatus(const SITUATION * st, FIELD_STATUS* status
  *	@param	u8
  */
 //-----------------------------------------------------------------------------
-extern void SaveData_SituationUpdateSeasonID(SITUATION * st, const u8 season)
+void SaveData_SituationUpdateSeasonID(SITUATION * st, const u8 season)
 {
   st->season_id = season;
 }
@@ -246,7 +248,35 @@ extern void SaveData_SituationUpdateSeasonID(SITUATION * st, const u8 season)
  *	@brief  季節 のセーブ情報を取得
  */
 //-----------------------------------------------------------------------------
-extern void SaveData_SituationLoadSeasonID(SITUATION * st, u8 * season)
+void SaveData_SituationLoadSeasonID(SITUATION * st, u8 * season)
 {
   *season = st->season_id;
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  天気IDを保存
+ *
+ *	@param	st        セーブワーク
+ *	@param	weather   天気ID
+ */
+//-----------------------------------------------------------------------------
+void SaveData_SituationUpdateWeatherID(SITUATION * st, u8 weather)
+{
+  st->weather_id = weather;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brieif 天気IDを取得
+ *
+ *	@param	st        セーブワーク
+ *	@param	weather   天気ID
+ */
+//-----------------------------------------------------------------------------
+void SaveData_SituationLoadWeatherID(SITUATION * st, u8 * weather)
+{
+  *weather = st->weather_id;
+}
+
+

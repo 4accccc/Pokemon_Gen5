@@ -15,6 +15,7 @@
 #include "gamesystem/game_event.h"
 #include "gamesystem/game_data.h"
 #include "gamesystem/iss_sys.h"
+#include "gamesystem/pm_weather.h"
 
 #include "system/main.h"
 
@@ -162,6 +163,8 @@ static GMEVENT_RESULT EVENT_FirstMapIn(GMEVENT * event, int *seq, void *work)
         EVTIME_Update( gamedata );
         //コンティニューによるフラグ落とし処理
         FIELD_FLAGCONT_INIT_Continue( gamedata, fmw->loc_req.zone_id );
+        //天気ロード決定
+        PM_WEATHER_UpdateSaveLoadWeatherNo( gamedata, fmw->loc_req.zone_id );
       }
       break;
 
@@ -1533,6 +1536,9 @@ static void MAPCHG_updateGameData( GAMESYS_WORK * gsys, const LOCATION * loc_req
 
   // WFBCの設定
   MAPCHG_SetUpWfbc( gamedata, &loc );
+
+  // 天気更新
+  PM_WEATHER_UpdateZoneChangeWeatherNo( gamedata, loc.zone_id );
 }
 
 //--------------------------------------------------------------

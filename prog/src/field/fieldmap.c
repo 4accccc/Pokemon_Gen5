@@ -43,6 +43,7 @@
 #include "gamesystem/gamesystem.h"
 #include "gamesystem/playerwork.h"
 #include "gamesystem/game_event.h"
+#include "gamesystem/pm_weather.h"
 #include "field/zonedata.h"
 #include "field/areadata.h"
 #include "warpdata.h"   //ARRIVEDATA_SetArriveFlag
@@ -753,7 +754,7 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
   
   // 天気晴れ
   FIELD_WEATHER_Set(
-			fieldWork->weather_sys, FIELDMAP_GetZoneWeatherID( fieldWork, fieldWork->map_id), fieldWork->heapID );
+			fieldWork->weather_sys, GAMEDATA_GetWeatherNo( fieldWork->gamedata ), fieldWork->heapID );
 
   //フィールドギミックセットアップ
   FLDGMK_SetUpFieldGimmick(fieldWork);
@@ -1448,17 +1449,7 @@ FIELD_WEATHER * FIELDMAP_GetFieldWeather( FIELDMAP_WORK *fieldWork )
 //--------------------------------------------------------------
 u16 FIELDMAP_GetZoneWeatherID( FIELDMAP_WORK *fieldWork, u16 zone_id )
 {
-  CALENDER* calender = GAMEDATA_GetCalender( fieldWork->gamedata );
-  u16       weather  = MP_CheckMovePokeWeather( fieldWork->gamedata, zone_id );
-
-  if( weather != WEATHER_NO_NONE )
-  {
-    return weather;
-  }
-
-  // カレンダーを参照して天気を取得する.
-  // (カレンダーに登録されていないゾーンの天気は, ゾーンテーブルに従う.)
-	return CALENDER_GetWeather_today( calender, zone_id );
+	return PM_WEATHER_GetZoneChangeWeatherNo( fieldWork->gamedata, zone_id );
 }
 
 
@@ -2623,8 +2614,12 @@ static void zoneChange_SetBGM( FIELDMAP_WORK* fieldWork, u32 prev_zone_id, u32 n
 //--------------------------------------------------------------
 static void zoneChange_SetWeather( FIELDMAP_WORK *fieldWork, u32 zone_id )
 {
-	u16 w_no =  FIELDMAP_GetZoneWeatherID( fieldWork, zone_id );
+	u16 w_no;
 	FIELD_WEATHER *we = FIELDMAP_GetFieldWeather( fieldWork );
+
+  PM_WEATHER_UpdateZoneChangeWeatherNo( fieldWork->gamedata, zone_id );
+
+  w_no = GAMEDATA_GetWeatherNo( fieldWork->gamedata );
 
 	if( w_no != WEATHER_NO_NUM ){
 		FIELD_WEATHER_Change( we, w_no );

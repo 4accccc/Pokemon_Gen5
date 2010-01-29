@@ -56,5 +56,7 @@ extern void SaveData_SituationDataLoadStatus(const SITUATION * st, FIELD_STATUS*
 
 extern void SaveData_SituationUpdateSeasonID(SITUATION * st, const u8 season);
 extern void SaveData_SituationLoadSeasonID(SITUATION * st, u8 * season);
+extern void SaveData_SituationUpdateWeatherID(SITUATION * st, u8 weather);
+extern void SaveData_SituationLoadWeatherID(SITUATION * st, u8 * weather);
 
 #endif	//__SITUATION_H__
