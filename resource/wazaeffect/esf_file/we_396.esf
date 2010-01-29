@@ -1,12 +1,13 @@
 EFFSEQ
-$0002
+$0003
 C:\home\pokemon_wb\resource\particle\wazaeffect\w_396.spa
 C:\home\pokemon_wb\resource\wazaeffect\graphic\bg_056_juzu.NSCR
+C:\home\pokemon_wb\resource\wazaeffect\graphic\bg_056_juzu_y.NSCR
 #001
 %00
 BGのパレットフェード	すべて	0	13	2	0:0:0
 エフェクト終了待ち	すべて
-BGのロード	bg_056_juzu
+BGのロード	bg_056_juzu_y
 BGのスクロール	常に	-22	0	150	0	0
 BGの表示/非表示	フィールド	非表示
 BGの表示/非表示	お盆	非表示

@@ -1,8 +1,9 @@
 EFFSEQ
-$0004
+$0005
 C:\home\pokemon_wb\resource\particle\wazaeffect\w_425.spa
 C:\home\pokemon_wb\resource\particle\wazaeffect\w_424.spa
 C:\home\pokemon_wb\resource\particle\wazaeffect\w_354.spa
+C:\home\pokemon_wb\resource\wazaeffect\graphic\bg_025_firework.NSCR
 C:\home\pokemon_wb\resource\wazaeffect\graphic\bg_025_firework.NSCR
 #001
 %00
@@ -26,18 +27,18 @@ SEパン	SE2	追従	防御側	防御側	165	80:0:0
 パーティクル再生	w_354	W_354_354_PSY_BALL1	攻撃側	方向無し	2:0:0	1:1:1	1
 パーティクル再生	w_354	W_354_354_PSY_BALL2	攻撃側	方向無し	2:0:0	1:1:1	1
 タイマーによるウエイト	110
-BGのパレットフェード	お盆＋フィールド	0	13	1	0:0:0
-タイマーによるウエイト	10
+カメラ移動	追従	防御側	16	0	12
 ポケモンパレットフェード	攻撃側	0	12	4	31:31:31
 BGのロード	bg_025_firework
-ポケモンパレットフェード	攻撃側	12	0	1	31:31:31
-カメラ移動	追従	初期位置	16	0	12
-タイマーによるウエイト	10
-エフェクト終了待ち	すべて
-BGのスクロール	往復	0	4	1	1	16
 BGの表示/非表示	エフェクト	表示
-BGの表示/非表示	フィールド	非表示
+BGのパレットフェード	すべて	0	14	0	0:0:0
+タイマーによるウエイト	6
 BGの表示/非表示	お盆	非表示
+BGの表示/非表示	フィールド	非表示
+タイマーによるウエイト	6
+BGのパレットフェード	エフェクト面	14	0	0	0:0:0
+ポケモンパレットフェード	攻撃側	12	0	1	31:31:31
+BGのスクロール	往復	0	4	1	1	16
 パーティクル再生	w_354	W_354_354_HITMARK1	防御側	方向無し	2:0:0	1:1:1	1
 パーティクル再生	w_354	W_354_354_HITMARK2	防御側	方向無し	2:0:0	1:1:1	1
 ポケモンアニメ	防御側	アニメストップ

@@ -1,9 +1,10 @@
 EFFSEQ
-$0004
+$0005
 C:\home\pokemon_wb\resource\particle\wazaeffect\w_425.spa
 C:\home\pokemon_wb\resource\particle\wazaeffect\w_424.spa
 C:\home\pokemon_wb\resource\particle\wazaeffect\w_344.spa
 C:\home\pokemon_wb\resource\wazaeffect\graphic\bg_192_lightning.NSCR
+C:\home\pokemon_wb\resource\wazaeffect\graphic\bg_192_lightning_y.NSCR
 #001
 %00
 カメラ移動	追従	攻撃側	16	0	12
@@ -20,7 +21,7 @@ BGのパレットフェード	お盆＋フィールド	0	13	1	0:0:0
 タイマーによるウエイト	20
 パーティクル再生	w_344	W_344_344_THUNDER_LINE1	防御側	方向無し	1:0:0	1:1:1	1
 タイマーによるウエイト	20
-BGのロード	bg_192_lightning
+BGのロード	bg_192_lightning_y
 BGのスクロール	往復	0	8	1	1	16
 BGの表示/非表示	エフェクト	表示
 BGの表示/非表示	フィールド	非表示

@@ -1,7 +1,8 @@
 EFFSEQ
-$0002
+$0003
 C:\home\pokemon_wb\resource\particle\wazaeffect\w_411.spa
 C:\home\pokemon_wb\resource\wazaeffect\graphic\bg_056_juzu.NSCR
+C:\home\pokemon_wb\resource\wazaeffect\graphic\bg_056_juzu_r.NSCR
 #001
 %00
 カメラ移動	追従	攻撃側	16	0	8
@@ -17,7 +18,7 @@ SEパン	PSG	追従	攻撃側	攻撃側	0	90:0:0
 パーティクル再生	w_411	W_411_411_BALL1_BIG	攻撃側	方向無し	2:0:0	1:1:1	1
 パーティクル再生	w_411	W_411_411_BALL2_BIG	攻撃側	方向無し	2:0:0	1:1:1	1
 エフェクト終了待ち	すべて
-BGのロード	bg_056_juzu
+BGのロード	bg_056_juzu_r
 BGの表示/非表示	フィールド	非表示
 BGの表示/非表示	お盆	非表示
 BGの表示/非表示	エフェクト	表示

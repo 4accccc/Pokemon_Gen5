@@ -1,7 +1,8 @@
 EFFSEQ
-$0002
+$0003
 C:\home\pokemon_wb\resource\particle\wazaeffect\w_416.spa
 C:\home\pokemon_wb\resource\wazaeffect\graphic\bg_025_firework.NSCR
+C:\home\pokemon_wb\resource\wazaeffect\graphic\bg_025_firework_p.NSCR
 #001
 %00
 射影モード	透視射影
@@ -31,7 +32,7 @@ SEパン	PSG	追従	防御側	防御側	0	100:0:0
 パーティクル再生	w_416	W_416_416_RING	防御側	方向無し	2:0:0	1:1:1	1
 ポケモンアニメ	防御側	アニメストップ
 タイマーによるウエイト	40
-BGのロード	bg_025_firework
+BGのロード	bg_025_firework_p
 BGのパレットフェード	お盆＋フィールド	0	13	0	0:0:0
 BGのスクロール	往復	0	4	1	1	20
 BGの表示/非表示	フィールド	非表示
