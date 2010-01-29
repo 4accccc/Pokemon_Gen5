@@ -829,7 +829,7 @@ void IntrudeField_ConnectMap(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameSys, IN
   }
 #endif
   if(intcomm->connect_map_count < use_num){
-    MAP_MATRIX *mmatrix = MAP_MATRIX_Create( HEAPID_WORLD );
+    MAP_MATRIX *mmatrix = MAP_MATRIX_Create( HEAPID_FIELDMAP );
     MAP_MATRIX_Init(mmatrix, NARC_map_matrix_palace02_mat_bin, ZONE_ID_PALACE01);
 
     do{
