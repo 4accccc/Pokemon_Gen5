@@ -18,6 +18,8 @@
 #include "arc/arc_def.h"
 #include "arc/script_message.naix"
 
+#include "system/timezone.h"
+
 #include "field/field_const.h"
 #include "field/field_msgbg.h"
 
@@ -113,6 +115,8 @@ static MMDL_HEADER s_MMDL_HEADER =
 
 
 #define FIELD_CROWD_PEOPLE_SCRIPT_MAX   (4) // OBJCODEのスクリプトの数
+
+#define FIELD_CROWD_PEOPLE_TIMEZONE_TBL_MAX   (6) // タイムゾーンテーブルの数
 
 
 //-------------------------------------
@@ -214,7 +218,7 @@ typedef struct
 //=====================================
 typedef struct 
 {
-  s16 wait;       // 起動ウエイト 0最短 
+  s16 wait[FIELD_CROWD_PEOPLE_TIMEZONE_TBL_MAX];       // 起動ウエイト 0最短 
   u8 point_num;  // 起動ポイントの数
   u8 obj_code_num;// OBJCODEの数
   u16 obj_code_tbl[FIELD_CROWD_PEOPLE_OBJ_CODE_MAX]; // OBJCODEのテーブル
@@ -335,11 +339,11 @@ static void FIELD_CROWD_PEOPLE_WK_ClearMove( FIELD_CROWD_PEOPLE_WK* p_wk );
 
 
 // 起動管理
-static void FIELD_CROWD_PEOPLE_BOOT_CONTROL_Init( FIELD_CROWD_PEOPLE_BOOL_CONTROL* p_wk, int zone_id, HEAPID heapID );
+static void FIELD_CROWD_PEOPLE_BOOT_CONTROL_Init( FIELD_CROWD_PEOPLE_BOOL_CONTROL* p_wk, int timezone, int zone_id, HEAPID heapID );
 static void FIELD_CROWD_PEOPLE_BOOT_CONTROL_Exit( FIELD_CROWD_PEOPLE_BOOL_CONTROL* p_wk );
-static void FIELD_CROWD_PEOPLE_BOOT_CONTROL_Main( FIELD_CROWD_PEOPLE_BOOL_CONTROL* p_wk, FIELD_CROWD_PEOPLE* p_sysdata );
+static void FIELD_CROWD_PEOPLE_BOOT_CONTROL_Main( FIELD_CROWD_PEOPLE_BOOL_CONTROL* p_wk, FIELD_CROWD_PEOPLE* p_sysdata, int timezone );
 static void FIELD_CROWD_PEOPLE_BOOT_CONTROL_SetUpPeople( const FIELD_CROWD_PEOPLE* cp_sysdata, const FIELD_CROWD_PEOPLE_BOOT_DATA* cp_data, const FIELD_CROWD_PEOPLE_BOOT_POINT* cp_point, FIELD_CROWD_PEOPLE_WK* p_people, u16 add_grid );
-static void FIELD_CROWD_PEOPLE_BOOT_CONTROL_StartUp( const FIELD_CROWD_PEOPLE_BOOL_CONTROL* cp_wk, FIELD_CROWD_PEOPLE* p_sysdata );
+static void FIELD_CROWD_PEOPLE_BOOT_CONTROL_StartUp( const FIELD_CROWD_PEOPLE_BOOL_CONTROL* cp_wk, FIELD_CROWD_PEOPLE* p_sysdata, int timezone );
 
 // タイプごとの動き
 static void FIELD_CROWD_PEOPLE_WK_SetUpNormal( FIELD_CROWD_PEOPLE_WK* p_wk );
@@ -356,7 +360,7 @@ static BOOL FIELD_CROWD_PEOPLE_WK_TOOL_IsGridHit( s16 mygx, s16 mygz, s16 pl_gx,
 
 
 // NOISE管理
-static void FIELD_CROWD_PEOPLE_NOISE_Init( FIELD_CROWD_PEOPLE_NOISE* p_wk, FLDMSGBG* p_fmb, const FIELD_CROWD_PEOPLE_BOOL_CONTROL* cp_boot, HEAPID heapID );
+static void FIELD_CROWD_PEOPLE_NOISE_Init( FIELD_CROWD_PEOPLE_NOISE* p_wk, FLDMSGBG* p_fmb, const FIELD_CROWD_PEOPLE_BOOL_CONTROL* cp_boot, int timezone, HEAPID heapID );
 static void FIELD_CROWD_PEOPLE_NOISE_Exit( FIELD_CROWD_PEOPLE_NOISE* p_wk );
 static void FIELD_CROWD_PEOPLE_NOISE_Main( FIELD_CROWD_PEOPLE_NOISE* p_wk, const FIELD_CROWD_PEOPLE_BOOL_CONTROL* cp_boot, const FIELDMAP_WORK* cp_fieldmap );
 
@@ -407,15 +411,19 @@ static void FIELD_CROWD_PEOPLE_TASK_Create( FLDMAPFUNC_WORK* p_funcwk, FIELDMAP_
   int zone_id;
   HEAPID heapID;
   FLDMSGBG* p_fmb = FIELDMAP_GetFldMsgBG( p_fieldmap );
+  int timezone;
 
   // 管理システムワーク初期化
   p_wk->p_player  = FIELDMAP_GetFieldPlayer( p_fieldmap );
   p_wk->p_fos     = FIELDMAP_GetMMdlSys( p_fieldmap );
   zone_id = FIELDMAP_GetZoneID( p_fieldmap );
+  timezone = FIELDMAP_GetSeasonTimeZone( p_fieldmap );
   heapID = FIELDMAP_GetHeapID( p_fieldmap );
 
+  GF_ASSERT( timezone < TIMEZONE_MAX );
+
   // ゾーンから起動情報を読み込み
-  FIELD_CROWD_PEOPLE_BOOT_CONTROL_Init( &p_wk->boot_control, zone_id, heapID );
+  FIELD_CROWD_PEOPLE_BOOT_CONTROL_Init( &p_wk->boot_control, timezone, zone_id, heapID );
 
   for( i=0; i<FIELD_CROWD_PEOPLE_MAX; i++ )
   {
@@ -423,11 +431,11 @@ static void FIELD_CROWD_PEOPLE_TASK_Create( FLDMAPFUNC_WORK* p_funcwk, FIELDMAP_
   }
 
   // 全員を配置
-  FIELD_CROWD_PEOPLE_BOOT_CONTROL_StartUp( &p_wk->boot_control, p_wk );
+  FIELD_CROWD_PEOPLE_BOOT_CONTROL_StartUp( &p_wk->boot_control, p_wk, timezone );
 
 
   // 騒音システム初期化
-  FIELD_CROWD_PEOPLE_NOISE_Init( &p_wk->noise, p_fmb, &p_wk->boot_control, heapID );
+  FIELD_CROWD_PEOPLE_NOISE_Init( &p_wk->noise, p_fmb, &p_wk->boot_control, timezone, heapID );
 }
 
 //----------------------------------------------------------------------------
@@ -465,9 +473,12 @@ static void FIELD_CROWD_PEOPLE_TASK_Update( FLDMAPFUNC_WORK* p_funcwk, FIELDMAP_
 {
   FIELD_CROWD_PEOPLE* p_wk = p_work;
   int i;
+  int timezone = FIELDMAP_GetSeasonTimeZone( p_fieldmap );
 
+  GF_ASSERT( timezone < TIMEZONE_MAX );
+  
   // 起動チェック
-  FIELD_CROWD_PEOPLE_BOOT_CONTROL_Main( &p_wk->boot_control, p_wk ); 
+  FIELD_CROWD_PEOPLE_BOOT_CONTROL_Main( &p_wk->boot_control, p_wk, timezone ); 
 
   
   // 管理システムワーク更新
@@ -772,7 +783,7 @@ static void FIELD_CROWD_PEOPLE_WK_ClearMove( FIELD_CROWD_PEOPLE_WK* p_wk )
  *	@param	zone_id     ゾーンID
  */
 //-----------------------------------------------------------------------------
-static void FIELD_CROWD_PEOPLE_BOOT_CONTROL_Init( FIELD_CROWD_PEOPLE_BOOL_CONTROL* p_wk, int zone_id, HEAPID heapID )
+static void FIELD_CROWD_PEOPLE_BOOT_CONTROL_Init( FIELD_CROWD_PEOPLE_BOOL_CONTROL* p_wk, int timezone, int zone_id, HEAPID heapID )
 {
   int i;
   ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_FIELD_CROWD_PEOPLE, GFL_HEAP_LOWID(heapID) );
@@ -820,7 +831,7 @@ static void FIELD_CROWD_PEOPLE_BOOT_CONTROL_Init( FIELD_CROWD_PEOPLE_BOOL_CONTRO
 
   for( i=0; i<FIELD_CROWD_PEOPLE_BOOT_POINT_MAX; i++ )
   {
-    p_wk->wait[i] = GFUser_GetPublicRand(p_wk->boot_data.wait); // 初期ウエイト値
+    p_wk->wait[i] = GFUser_GetPublicRand(p_wk->boot_data.wait[timezone]); // 初期ウエイト値
   }
 
 }
@@ -847,14 +858,16 @@ static void FIELD_CROWD_PEOPLE_BOOT_CONTROL_Exit( FIELD_CROWD_PEOPLE_BOOL_CONTRO
  *	@param	p_sysdata   システムデータ
  */
 //-----------------------------------------------------------------------------
-static void FIELD_CROWD_PEOPLE_BOOT_CONTROL_Main( FIELD_CROWD_PEOPLE_BOOL_CONTROL* p_wk, FIELD_CROWD_PEOPLE* p_sysdata )
+static void FIELD_CROWD_PEOPLE_BOOT_CONTROL_Main( FIELD_CROWD_PEOPLE_BOOL_CONTROL* p_wk, FIELD_CROWD_PEOPLE* p_sysdata, int timezone )
 {
   int i;
+
+  GF_ASSERT( timezone < TIMEZONE_MAX );
   
   for( i=0; i<p_wk->boot_data.point_num; i++ )
   {
     // ウエイト時間がいったら、人を出す
-    if( p_wk->wait[i] >= p_wk->boot_data.wait )
+    if( p_wk->wait[i] >= p_wk->boot_data.wait[timezone] )
     {
       FIELD_CROWD_PEOPLE_WK* p_people = FIELD_CROWD_PEOPLE_GetClearWk( p_sysdata );
       if( p_people )
@@ -939,12 +952,13 @@ static void FIELD_CROWD_PEOPLE_BOOT_CONTROL_SetUpPeople( const FIELD_CROWD_PEOPL
  *	@param	p_sysdata   システムデータ
  */
 //-----------------------------------------------------------------------------
-static void FIELD_CROWD_PEOPLE_BOOT_CONTROL_StartUp( const FIELD_CROWD_PEOPLE_BOOL_CONTROL* cp_wk, FIELD_CROWD_PEOPLE* p_sysdata )
+static void FIELD_CROWD_PEOPLE_BOOT_CONTROL_StartUp( const FIELD_CROWD_PEOPLE_BOOL_CONTROL* cp_wk, FIELD_CROWD_PEOPLE* p_sysdata, int timezone )
 {
   int i, j;
   int total_time;
   int total_people_num;
   int time;
+  GF_ASSERT( timezone < TIMEZONE_MAX );
 
   for( i=0; i<cp_wk->boot_data.point_num; i++ )
   {
@@ -952,7 +966,7 @@ static void FIELD_CROWD_PEOPLE_BOOT_CONTROL_StartUp( const FIELD_CROWD_PEOPLE_BO
     total_time = cp_wk->boot_data.point[i].move_grid * FIELD_CROWD_PEOPLE_OBJ_WALK_FRAME;
 
     // waitで割ると、何人分かチェック
-    total_people_num = total_time / cp_wk->boot_data.wait;
+    total_people_num = total_time / cp_wk->boot_data.wait[timezone];
 
     // その人数セットアップ
     time = 0;
@@ -962,7 +976,7 @@ static void FIELD_CROWD_PEOPLE_BOOT_CONTROL_StartUp( const FIELD_CROWD_PEOPLE_BO
 
       if( p_people ){
         FIELD_CROWD_PEOPLE_BOOT_CONTROL_SetUpPeople( p_sysdata, &cp_wk->boot_data, &cp_wk->boot_data.point[i], p_people, time / FIELD_CROWD_PEOPLE_OBJ_WALK_FRAME ); 
-        time += cp_wk->boot_data.wait;
+        time += cp_wk->boot_data.wait[timezone];
       }
     }
   }
@@ -1310,13 +1324,13 @@ static BOOL FIELD_CROWD_PEOPLE_WK_TOOL_IsGridHit( s16 mygx, s16 mygz, s16 pl_gx,
  *	@param	heapID    ヒープID
  */
 //-----------------------------------------------------------------------------
-static void FIELD_CROWD_PEOPLE_NOISE_Init( FIELD_CROWD_PEOPLE_NOISE* p_wk, FLDMSGBG* p_fmb, const FIELD_CROWD_PEOPLE_BOOL_CONTROL* cp_boot, HEAPID heapID )
+static void FIELD_CROWD_PEOPLE_NOISE_Init( FIELD_CROWD_PEOPLE_NOISE* p_wk, FLDMSGBG* p_fmb, const FIELD_CROWD_PEOPLE_BOOL_CONTROL* cp_boot, int timezone, HEAPID heapID )
 {
   int i;
   u32 rand = GFUser_GetPublicRand(0);
   
   p_wk->wait = 0;
-  p_wk->wait_max = NOISE_TIME_MIN + ( rand % (cp_boot->boot_data.wait*NOISE_TIME_WAIT_NUM) );
+  p_wk->wait_max = NOISE_TIME_MIN + ( rand % (cp_boot->boot_data.wait[timezone]*NOISE_TIME_WAIT_NUM) );
   p_wk->p_msgdata = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_SCRIPT_MESSAGE, NARC_script_message_crowd_people_scr_dat, heapID );
   p_wk->p_fmb = p_fmb;
 
@@ -1360,6 +1374,9 @@ static void FIELD_CROWD_PEOPLE_NOISE_Main( FIELD_CROWD_PEOPLE_NOISE* p_wk, const
 {
   int i;
   u32 rand = GFUser_GetPublicRand(0);
+  int timezone = FIELDMAP_GetSeasonTimeZone( cp_fieldmap );
+
+  GF_ASSERT( timezone < TIMEZONE_MAX );
 
   if( FIELDMAP_CheckDoEvent( cp_fieldmap ) == FALSE )
   {
@@ -1374,7 +1391,7 @@ static void FIELD_CROWD_PEOPLE_NOISE_Main( FIELD_CROWD_PEOPLE_NOISE* p_wk, const
 
       // ウエイト初期化
       p_wk->wait = 0;
-      p_wk->wait_max = NOISE_TIME_MIN + (rand%(cp_boot->boot_data.wait*NOISE_TIME_WAIT_NUM));
+      p_wk->wait_max = NOISE_TIME_MIN + (rand%(cp_boot->boot_data.wait[timezone]*NOISE_TIME_WAIT_NUM));
     }
 
     // メッセージ表示

@@ -36,7 +36,11 @@ close( FILEIN );
 
 $DATA_NUM = 0;
 @DATA_ZONEID = undef;
-@DATA_WAIT = undef;
+@DATA_WAIT_MORNING = undef;
+@DATA_WAIT_NOON = undef;
+@DATA_WAIT_EVENING = undef;
+@DATA_WAIT_NIGHT = undef;
+@DATA_WAIT_MIDNIGHT = undef;
 @DATA_POINT_NUM = undef;
 @DATA_OBJCODE_NUM = undef;
 @DATA_OBJCODE00 = undef;
@@ -55,6 +59,34 @@ $DATA_NUM = 0;
 @DATA_POINT01_BOTTOM = undef;
 @DATA_POINT01_DIR = undef;
 @DATA_POINT01_GRID_NUM = undef;
+
+$DATA_IDX_ZONEID = 0;
+$DATA_IDX_WAIT_MORNING = 1;
+$DATA_IDX_WAIT_NOON = 2;
+$DATA_IDX_WAIT_EVENING = 3;
+$DATA_IDX_WAIT_NIGHT = 4;
+$DATA_IDX_WAIT_MIDNIGHT = 5;
+$DATA_IDX_POINT_NUM = 6;
+$DATA_IDX_OBJCODE_NUM = 7;
+$DATA_IDX_OBJCODE00 = 8;
+$DATA_IDX_OBJCODE01 = 9;
+$DATA_IDX_OBJCODE02 = 10;
+$DATA_IDX_OBJCODE03 = 11;
+$DATA_IDX_POINT00_LEFT = 12;
+$DATA_IDX_POINT00_RIGHT = 13;
+$DATA_IDX_POINT00_TOP = 14;
+$DATA_IDX_POINT00_BOTTOM = 15;
+$DATA_IDX_POINT00_DIR = 16;
+$DATA_IDX_POINT00_GRID_NUM = 17;
+$DATA_IDX_POINT01_LEFT = 18;
+$DATA_IDX_POINT01_RIGHT = 19;
+$DATA_IDX_POINT01_TOP = 20;
+$DATA_IDX_POINT01_BOTTOM = 21;
+$DATA_IDX_POINT01_DIR = 22;
+$DATA_IDX_POINT01_GRID_NUM = 23;
+$DATA_IDX_NUM = 23;
+
+
 
 
 @SCRIPT_DATA = undef;
@@ -105,140 +137,168 @@ foreach $one ( @EXCEL_FILE )
     }
     else
     {
-      if( $data_count == 0 )
+      if( $data_count == $DATA_IDX_ZONEID )
       {
         for( $i = 0; $i < $DATA_NUM; $i ++ )
         {
           $DATA_ZONEID[ $i ] = $line[1 + $i];
         }
       }
-      elsif ( $data_count == 1 )
+      elsif ( $data_count == $DATA_IDX_WAIT_MORNING )
       {
         for( $i = 0; $i < $DATA_NUM; $i ++ )
         {
-          $DATA_WAIT[ $i ] = $line[1 + $i];
+          $DATA_WAIT_MORNING[ $i ] = $line[1 + $i];
         }
       }
-      elsif ( $data_count == 2 )
+      elsif ( $data_count == $DATA_IDX_WAIT_NOON )
+      {
+        for( $i = 0; $i < $DATA_NUM; $i ++ )
+        {
+          $DATA_WAIT_NOON[ $i ] = $line[1 + $i];
+        }
+      }
+      elsif ( $data_count == $DATA_IDX_WAIT_EVENING )
+      {
+        for( $i = 0; $i < $DATA_NUM; $i ++ )
+        {
+          $DATA_WAIT_EVENING[ $i ] = $line[1 + $i];
+        }
+      }
+      elsif ( $data_count == $DATA_IDX_WAIT_NIGHT )
+      {
+        for( $i = 0; $i < $DATA_NUM; $i ++ )
+        {
+          $DATA_WAIT_NIGHT[ $i ] = $line[1 + $i];
+        }
+      }
+      elsif ( $data_count == $DATA_IDX_WAIT_MIDNIGHT )
+      {
+        for( $i = 0; $i < $DATA_NUM; $i ++ )
+        {
+          $DATA_WAIT_MIDNIGHT[ $i ] = $line[1 + $i];
+        }
+      }
+      elsif ( $data_count == $DATA_IDX_POINT_NUM )
       {
         for( $i = 0; $i < $DATA_NUM; $i ++ )
         {
           $DATA_POINT_NUM[ $i ] = $line[1 + $i];
         }
       }
-      elsif ( $data_count == 3 )
+      elsif ( $data_count == $DATA_IDX_OBJCODE_NUM )
       {
         for( $i = 0; $i < $DATA_NUM; $i ++ )
         {
           $DATA_OBJCODE_NUM[ $i ] = $line[1 + $i];
         }
       }
-      elsif ( $data_count == 4 )
+      elsif ( $data_count == $DATA_IDX_OBJCODE00 )
       {
         for( $i = 0; $i < $DATA_NUM; $i ++ )
         {
           $DATA_OBJCODE00[ $i ] = $line[1 + $i];
         }
       }
-      elsif ( $data_count == 5 )
+      elsif ( $data_count == $DATA_IDX_OBJCODE01 )
       {
         for( $i = 0; $i < $DATA_NUM; $i ++ )
         {
           $DATA_OBJCODE01[ $i ] = $line[1 + $i];
         }
       }
-      elsif ( $data_count == 6 )
+      elsif ( $data_count == $DATA_IDX_OBJCODE02 )
       {
         for( $i = 0; $i < $DATA_NUM; $i ++ )
         {
           $DATA_OBJCODE02[ $i ] = $line[1 + $i];
         }
       }
-      elsif ( $data_count == 7 )
+      elsif ( $data_count == $DATA_IDX_OBJCODE03 )
       {
         for( $i = 0; $i < $DATA_NUM; $i ++ )
         {
           $DATA_OBJCODE03[ $i ] = $line[1 + $i];
         }
       }
-      elsif ( $data_count == 8 )
+      elsif ( $data_count == $DATA_IDX_POINT00_LEFT )
       {
         for( $i = 0; $i < $DATA_NUM; $i ++ )
         {
           $DATA_POINT00_LEFT[ $i ] = $line[1 + $i];
         }
       }
-      elsif ( $data_count == 9 )
+      elsif ( $data_count == $DATA_IDX_POINT00_RIGHT )
       {
         for( $i = 0; $i < $DATA_NUM; $i ++ )
         {
           $DATA_POINT00_RIGHT[ $i ] = $line[1 + $i];
         }
       }
-      elsif ( $data_count == 10 )
+      elsif ( $data_count == $DATA_IDX_POINT00_TOP )
       {
         for( $i = 0; $i < $DATA_NUM; $i ++ )
         {
           $DATA_POINT00_TOP[ $i ] = $line[1 + $i];
         }
       }
-      elsif ( $data_count == 11 )
+      elsif ( $data_count == $DATA_IDX_POINT00_BOTTOM )
       {
         for( $i = 0; $i < $DATA_NUM; $i ++ )
         {
           $DATA_POINT00_BOTTOM[ $i ] = $line[1 + $i];
         }
       }
-      elsif ( $data_count == 12 )
+      elsif ( $data_count == $DATA_IDX_POINT00_DIR )
       {
         for( $i = 0; $i < $DATA_NUM; $i ++ )
         {
           $DATA_POINT00_DIR[ $i ] = $line[1 + $i];
         }
       }
-      elsif ( $data_count == 13 )
+      elsif ( $data_count == $DATA_IDX_POINT00_GRID_NUM )
       {
         for( $i = 0; $i < $DATA_NUM; $i ++ )
         {
           $DATA_POINT00_GRID_NUM[ $i ] = $line[1 + $i];
         }
       }
-      elsif ( $data_count == 14 )
+      elsif ( $data_count == $DATA_IDX_POINT01_LEFT )
       {
         for( $i = 0; $i < $DATA_NUM; $i ++ )
         {
           $DATA_POINT01_LEFT[ $i ] = $line[1 + $i];
         }
       }
-      elsif ( $data_count == 15 )
+      elsif ( $data_count == $DATA_IDX_POINT01_RIGHT )
       {
         for( $i = 0; $i < $DATA_NUM; $i ++ )
         {
           $DATA_POINT01_RIGHT[ $i ] = $line[1 + $i];
         }
       }
-      elsif ( $data_count == 16 )
+      elsif ( $data_count == $DATA_IDX_POINT01_TOP )
       {
         for( $i = 0; $i < $DATA_NUM; $i ++ )
         {
           $DATA_POINT01_TOP[ $i ] = $line[1 + $i];
         }
       }
-      elsif ( $data_count == 17 )
+      elsif ( $data_count == $DATA_IDX_POINT01_BOTTOM )
       {
         for( $i = 0; $i < $DATA_NUM; $i ++ )
         {
           $DATA_POINT01_BOTTOM[ $i ] = $line[1 + $i];
         }
       }
-      elsif ( $data_count == 18 )
+      elsif ( $data_count == $DATA_IDX_POINT01_DIR )
       {
         for( $i = 0; $i < $DATA_NUM; $i ++ )
         {
           $DATA_POINT01_DIR[ $i ] = $line[1 + $i];
         }
       }
-      elsif ( $data_count == 19 )
+      elsif ( $data_count == $DATA_IDX_POINT01_GRID_NUM )
       {
         for( $i = 0; $i < $DATA_NUM; $i ++ )
         {
@@ -281,7 +341,12 @@ for( $i=0; $i<$DATA_NUM; $i++ )
   open( FILEOUT, ">".$file_name );
   binmode( FILEOUT );
   
-  print( FILEOUT pack( "s", $DATA_WAIT[$i] ) );
+  print( FILEOUT pack( "s", $DATA_WAIT_MORNING[$i] ) );
+  print( FILEOUT pack( "s", $DATA_WAIT_NOON[$i] ) );
+  print( FILEOUT pack( "s", $DATA_WAIT_EVENING[$i] ) );
+  print( FILEOUT pack( "s", $DATA_WAIT_NIGHT[$i] ) );
+  print( FILEOUT pack( "s", $DATA_WAIT_MIDNIGHT[$i] ) );
+  print( FILEOUT pack( "s", 0 ) );    #padding
   print( FILEOUT pack( "C", $DATA_POINT_NUM[$i] ) );
   print( FILEOUT pack( "C", $DATA_OBJCODE_NUM[$i] ) );
   print( FILEOUT pack( "S", &getOBJCODE($DATA_OBJCODE00[$i]) ) );
