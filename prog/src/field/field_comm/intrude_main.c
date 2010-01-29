@@ -1039,33 +1039,3 @@ BOOL Intrude_OtherPlayerExistence(void)
   return FALSE;
 }
 
-//==================================================================
-/**
- * 動作モデルに対してポーズをしていいか判定 ※check　将来的には無くす
- *
- * @param   gsys		
- *
- * @retval  BOOL		TRUE:ポーズしてOK
- * @retval  BOOL		FALSE:侵入中。ポーズしてはいけない
- */
-//==================================================================
-#include "field/fieldmap.h"
-BOOL Intrude_ObjPauseCheck(GAMESYS_WORK *gsys)
-{
-  GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
-  int i;
-  ZONEID zone_id;
-  
-  if(GameCommSys_BootCheck(game_comm) == GAME_COMM_NO_INVASION
-      && GAMESYSTEM_CheckFieldMapWork(gsys) == TRUE){
-    FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
-    zone_id = FIELDMAP_GetZoneID( fieldWork );
-    for(i = 0; i < PALACE_TOWN_DATA_MAX; i++){
-      if(PalaceTownData[i].front_zone_id == zone_id 
-          || PalaceTownData[i].reverse_zone_id == zone_id){
-        return FALSE;
-      }
-    }
-  }
-  return TRUE;
-}

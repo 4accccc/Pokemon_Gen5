@@ -3244,32 +3244,6 @@ void MMDLSYS_PauseMoveProc( MMDLSYS *mmdlsys )
   mmdlsys->all_pause_f = TRUE;
 }
 
-#if 0 //old
-#include "field/field_comm/intrude_types.h"
-#include "field/field_comm/intrude_main.h"  //Intrude_ObjPauseCheck
-
-void MMDLSYS_PauseMoveProc( MMDLSYS *mmdlsys )
-{
-  u32 no = 0;
-  MMDL *mmdl;
-
-#if 1
-  FIELDMAP_WORK *fieldMap = mmdlsys->fieldMapWork;
-  if( fieldMap != NULL ){
-    GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( fieldMap );
-    if(Intrude_ObjPauseCheck(gsys) == FALSE){
-      return;
-    }
-  }
-#endif
-  
-  while( MMDLSYS_SearchUseMMdl(mmdlsys,&mmdl,&no) == TRUE ){
-    MMDL_OnMoveBitMoveProcPause( mmdl );
-  }
-  mmdlsys->all_pause_f = TRUE;
-}
-#endif
-
 //--------------------------------------------------------------
 /**
  * MMDLSYS フィールド動作モデル全体の一時停止を解除

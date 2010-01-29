@@ -1122,19 +1122,10 @@ static VMCMD_RESULT EvCmdLoadWkWkValue( VMHANDLE *core, void *wk )
  * @return  VMCMD_RESULT
  */
 //--------------------------------------------------------------
-#include "field/field_comm/intrude_types.h"
-#include "field/field_comm/intrude_main.h"  //Intrude_ObjPauseCheck
 static VMCMD_RESULT EvCmdCommonProcFieldEventStart( VMHANDLE * core, void *wk )
 {
   SCRCMD_WORK *work = wk;
   
-#if 1
-  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
-  if(Intrude_ObjPauseCheck(gsys) == FALSE){
-    return VMCMD_RESULT_SUSPEND;
-  }
-#endif
-
   //全動作モデルポーズ
   return( SCRCMD_SUB_ObjPauseAll(core,work) );
 }
