@@ -800,7 +800,7 @@ static void FIELD_GRANM_Itp_Main( FIELD_GRANM_ITP* p_wk, fx32 speed )
 
 		// アニメーション処理
 		p_wk->p_anime_frame[i] += speed;
-		if( p_wk->p_anime_frame[i] > (frame_max) ){
+		if( p_wk->p_anime_frame[i] >= (frame_max) ){
 			p_wk->p_anime_frame[i] = p_wk->p_anime_frame[i] % (frame_max);
 		}
     else
