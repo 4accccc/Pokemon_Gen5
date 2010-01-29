@@ -3,7 +3,7 @@
  * @file  scr_offset.cdat
  * @bfief  スクリプトIDのオフセットとそれに対応するアーカイブの定義テーブル
  * @author  tamada GAMEFREAK inc.
- * @date  2010 01/28 (Thu) 23:49
+ * @date  2010 01/29 (Fri) 12:57
  *
  * このファイルはコンバータにより自動生成されています
  */
@@ -18,21 +18,27 @@ static const SCRIPT_ARC_TABLE ScriptArcTable[] = {
       NARC_script_seq_debug_scr_bin,
       NARC_script_message_debug_scr_dat
     },
+    {//家具屋（PDW)用スクリプト
+      ID_FURNITURE_STORE_SCR_OFFSET,  //(10390),
+      ID_FURNITURE_STORE_SCR_OFFSET_END,//(10394),
+      NARC_script_seq_furniture_store_bin,
+      NARC_script_message_furniture_store_dat
+    },
     {//ずかん評価スクリプト
-      ID_HYOUKA_SCR_OFFSET,           //(10370),
-      ID_HYOUKA_SCR_OFFSET_END,       //(10379),
+      ID_HYOUKA_SCR_OFFSET,           //(10380),
+      ID_HYOUKA_SCR_OFFSET_END,       //(10389),
       NARC_script_seq_hyouka_scr_bin,
       NARC_script_message_hyouka_scr_dat
     },
     {//群集用スクリプト
-      ID_CROWD_PEOPLE_SCR_OFFSET,     //(10340),
-      ID_CROWD_PEOPLE_SCR_OFFSET_END, //(10369),
+      ID_CROWD_PEOPLE_SCR_OFFSET,     //(10350),
+      ID_CROWD_PEOPLE_SCR_OFFSET_END, //(10379),
       NARC_script_seq_crowd_people_scr_bin,
       NARC_script_message_crowd_people_scr_dat
     },
     {//バトルサブウェイ用スクリプト
       ID_BSUBWAY_SCR_OFFSET,          //(10330),
-      ID_BSUBWAY_SCR_OFFSET_END,      //(10339),
+      ID_BSUBWAY_SCR_OFFSET_END,      //(10349),
       NARC_script_seq_bsubway_scr_bin,
       NARC_script_message_bsubway_scr_dat
     },

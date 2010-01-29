@@ -96,6 +96,9 @@ crowd_people_scr_def.h: crowd_people_scr.ev
 hyouka_scr_def.h: hyouka_scr.ev
 	$(EV_DEF) hyouka_scr.ev $(SCR_OFFS_ID_H)
 
+furniture_store_def.h: furniture_store.ev
+	$(EV_DEF) furniture_store.ev $(SCR_OFFS_ID_H)
+
 debug_scr_def.h: debug_scr.ev
 	$(EV_DEF) debug_scr.ev $(SCR_OFFS_ID_H)
 
