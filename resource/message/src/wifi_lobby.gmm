@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00176" date="2010-01-29T13:36:16"/>
+	<create user="tetsuji_ohta" host="W00176" date="2010-01-29T15:17:23"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -584,7 +584,7 @@
 		<language name="JPN_KANJI" font=" 1:small" width="216">[1:00:トレーナー名:0]</language>
 	</row>
 
-	<row id="msg_wifilobby_034">
+	<row id="msg_wifilobby_034" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<comment>記録を見るときの所属グループ表示</comment>
 		<language name="JPN" font=" 1:small" width="216">グループ　[1:00:トレーナー名:0]</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">グループ　[1:00:トレーナー名:0]</language>
@@ -620,14 +620,14 @@
 		<language name="JPN_KANJI" font=" 1:small" width="216">[2:03:４桁:0]かい</language>
 	</row>
 
-	<row id="msg_wifilobby_102">
+	<row id="msg_wifilobby_102" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<comment>記録を見るときの料理回数項目表示
 プラチナで追加</comment>
 		<language name="JPN" font=" 1:small" width="216">りょうりかいすう</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">りょうりかいすう</language>
 	</row>
 
-	<row id="msg_wifilobby_103">
+	<row id="msg_wifilobby_103" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<comment>記録を見るときの料理回数表示
 プラチナで追加</comment>
 		<language name="JPN" font=" 1:small" width="216">[2:03:４桁:0]かい</language>
