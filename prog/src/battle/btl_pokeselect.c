@@ -111,7 +111,6 @@ void BTL_POKESELECT_RESULT_Push( BTL_POKESELECT_RESULT *result, u8 idx )
   if( result->cnt < result->max )
   {
     result->selIdx[ result->cnt++ ] = idx;
-    OS_TPrintf( "“ü‚ê‘Ö‚¦‘ÎÛ 1 Œ’Ç‰Á  Œv %d Œ\n", result->cnt );
   }
   else
   {
@@ -131,7 +130,6 @@ void BTL_POKESELECT_RESULT_Pop( BTL_POKESELECT_RESULT* result )
   if( result->cnt )
   {
     result->cnt--;
-    OS_TPrintf( "“ü‚ê‘Ö‚¦‘ÎÛ 1 Œíœ  Œv %d Œ\n", result->cnt );
   }
 }
 //=============================================================================================

@@ -251,10 +251,6 @@ extern BOOL BPP_TURNFLAG_Get( const BTL_POKEPARAM* pp, BppTurnFlag flagID );
 extern BOOL BPP_CONTFLAG_Get( const BTL_POKEPARAM* pp, BppContFlag flagID );
 extern u16 BPP_GetTurnCount( const BTL_POKEPARAM* pp );
 extern u16 BPP_GetAppearTurn( const BTL_POKEPARAM* pp );
-
-extern WazaID  BPP_GetPrevWazaID( const BTL_POKEPARAM* pp );
-extern BtlPokePos  BPP_GetPrevTargetPos( const BTL_POKEPARAM* pp );
-extern u32  BPP_GetWazaContCounter( const BTL_POKEPARAM* pp );
 extern fx32  BPP_GetHPRatio( const BTL_POKEPARAM* pp );
 
 
@@ -370,8 +366,14 @@ extern void BPP_ConsumeItem( BTL_POKEPARAM* pp );
 extern void BPP_ClearConsumedItem( BTL_POKEPARAM* bpp );
 extern u16 BPP_GetConsumedItem( const BTL_POKEPARAM* bpp );
 
-extern void BPP_UpdatePrevWazaID( BTL_POKEPARAM* pp, WazaID waza, BtlPokePos targetPos );
-extern void BPP_ResetWazaContConter( BTL_POKEPARAM* pp );
+extern void BPP_UpdateWazaProcResult( BTL_POKEPARAM* bpp, BtlPokePos actTargetPos, BOOL fActEnable, WazaID actWaza, WazaID orgWaza );
+
+extern WazaID  BPP_GetPrevWazaID( const BTL_POKEPARAM* bpp );
+extern WazaID  BPP_GetPrevOrgWazaID( const BTL_POKEPARAM* bpp );
+extern BtlPokePos  BPP_GetPrevTargetPos( const BTL_POKEPARAM* bpp );
+extern u32  BPP_GetWazaContCounter( const BTL_POKEPARAM* bpp );
+
+
 extern void BPP_RankRecover( BTL_POKEPARAM* pp );
 extern void BPP_RankReset( BTL_POKEPARAM* pp );
 extern void BPP_Clear_ForDead( BTL_POKEPARAM* pp );

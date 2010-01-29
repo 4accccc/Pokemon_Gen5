@@ -300,7 +300,7 @@ static inline void BPP_SICKCONT_AddParam( BPP_SICK_CONT* cont, u16 param )
 /*
  *  設定した汎用パラメータを取得
  */
-static inline u8 BPP_SICKCONT_GetParam( BPP_SICK_CONT cont )
+static inline u16 BPP_SICKCONT_GetParam( BPP_SICK_CONT cont )
 {
   if( cont.type == WAZASICK_CONT_PERMANENT ){
     return cont.permanent.param;

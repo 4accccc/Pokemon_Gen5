@@ -134,9 +134,11 @@ struct _BTL_POKEPARAM {
 
   u16 turnCount;        ///< 継続して戦闘に出ているカウンタ
   u16 appearedTurn;     ///< 戦闘に出たターンを記録
-  u16 prevWazaID;             ///< 直前に使ったワザナンバー
-  u16 sameWazaCounter;        ///< 同じワザを何連続で出しているかカウンタ
+  u16 prevSelectWazaID;       ///< 直前に選択したワザID（WAZALOCK状態等で強制的に選択されたワザ > クライアントが選択した所持ワザ）
+  u16 prevActWazaID;          ///< 直前に実行されたワザID（派生ワザを使った場合にprevSelectWazaIDと異なる）
+  u16 wazaContCounter;        ///< 同ワザ連続成功カウンタ（prevActWazaIDのワザを何回連続で成功させたか。直前失敗ならゼロ）
   BtlPokePos  prevTargetPos;  ///< 直前に狙った相手
+
   u8  turnFlag[ TURNFLG_BUF_SIZE ];
   u8  contFlag[ CONTFLG_BUF_SIZE ];
   u8  counter[ BPP_COUNTER_MAX ];
@@ -228,9 +230,10 @@ BTL_POKEPARAM*  BTL_POKEPARAM_Create( const POKEMON_PARAM* pp, u8 pokeID, HEAPID
   // 各種ワーク領域初期化
   bpp->appearedTurn = TURNCOUNT_NULL;
   bpp->turnCount = 0;
-  bpp->prevWazaID = WAZANO_NULL;
-  bpp->sameWazaCounter = 0;
   bpp->migawariHP = 0;
+  bpp->prevSelectWazaID = WAZANO_NULL;
+  bpp->prevActWazaID    = WAZANO_NULL;
+  bpp->wazaContCounter   = 0;
 
   flgbuf_clear( bpp->turnFlag, sizeof(bpp->turnFlag) );
   flgbuf_clear( bpp->contFlag, sizeof(bpp->contFlag) );
@@ -307,6 +310,10 @@ static void clearUsedWazaFlag( BTL_POKEPARAM* bpp )
   for(i=0; i<NELEMS(bpp->waza); ++i){
     bpp->waza[i].usedFlag = FALSE;
   }
+
+  bpp->prevSelectWazaID = WAZANO_NULL;
+  bpp->prevActWazaID    = WAZANO_NULL;
+  bpp->wazaContCounter  = 0;
 }
 //----------------------------------------------------------------------------------
 /**
@@ -1412,7 +1419,6 @@ void BPP_SetWazaSick( BTL_POKEPARAM* bpp, WazaSick sick, BPP_SICK_CONT contParam
   bpp->sickCont[ sick ] = contParam;
   bpp->wazaSickCounter[sick] = 0;
   if( sick == WAZASICK_NEMURI ){
-    OS_TPrintf("ねむりカウンタ [%p].. %d\n", &(bpp->wazaSickCounter[sick]), bpp->wazaSickCounter[sick]);
   }
 
   // 「どくどく」になる時は同時に「どく」にもかける
@@ -1437,6 +1443,7 @@ void BPP_WazaSick_TurnCheck( BTL_POKEPARAM* bpp, BtlSickTurnCheckFunc callbackFu
 {
   WazaSick  sick;
 
+
   for(sick=0; sick<NELEMS(bpp->sickCont); ++sick)
   {
     // ねむり・こんらんはアクション開始のタイミングで独自のカウンタデクリメント処理
@@ -1450,6 +1457,18 @@ void BPP_WazaSick_TurnCheck( BTL_POKEPARAM* bpp, BtlSickTurnCheckFunc callbackFu
       BPP_SICK_CONT oldCont;
 
       oldCont = bpp->sickCont[ sick ];
+
+      // こだわりロックは、該当するワザを持っていないなら直る
+      if( sick == WAZASICK_KODAWARI )
+      {
+        WazaID  waza = BPP_SICKCONT_GetParam( oldCont );
+        if( !BPP_WAZA_IsUsable(bpp, waza) )
+        {
+          bpp->sickCont[sick] = BPP_SICKCONT_MakeNull();;
+          bpp->wazaSickCounter[sick] = 0;
+          fCure = TRUE;
+        }
+      }
 
       // 継続ターン経過チェック
       if( turnMax )
@@ -2053,52 +2072,78 @@ u16 BPP_GetConsumedItem( const BTL_POKEPARAM* bpp )
 }
 
 
-
-
 //=============================================================================================
 /**
- * 直前に使ったワザナンバーを記録
+ * ワザプロセス終了通知
  *
- * @param   pp
- * @param   waza
+ * @param   bpp
+ * @param   actTargetPos  actWaza の対象位置
+ * @param   fActEnable    actWaza が効果があったか（ワザエフェクトが出るか）
+ * @param   actWaza       実行されたワザ（
+ * @param   orgWaza       クライアントが選択したワザ（ゆびをふる等、派生ワザの場合のみ actWaza と異なる）
  */
 //=============================================================================================
-void BPP_UpdatePrevWazaID( BTL_POKEPARAM* pp, WazaID waza, BtlPokePos targetPos )
+void BPP_UpdateWazaProcResult( BTL_POKEPARAM* bpp, BtlPokePos actTargetPos, BOOL fActEnable, WazaID actWaza, WazaID orgWaza )
 {
-  WazaID prev = pp->prevWazaID;
-  if( prev != waza ){
-    pp->prevWazaID = waza;
-    pp->sameWazaCounter = 0;
-  }else
+  WazaID  prevActWaza = bpp->prevActWazaID;
+
+  bpp->prevSelectWazaID = orgWaza;
+  bpp->prevActWazaID = actWaza;
+  bpp->prevTargetPos = actTargetPos;
+
+  if( prevActWaza == actWaza )
   {
-    pp->sameWazaCounter++;
+    if( fActEnable ){
+      bpp->wazaContCounter++;
+    }else{
+      bpp->wazaContCounter = 0;
+    }
   }
-  pp->prevTargetPos = targetPos;
+  else{
+    bpp->wazaContCounter = ( fActEnable )? 1 : 0;
+  }
 }
+
 //=============================================================================================
 /**
- * 直前に使ったワザナンバーをクリア
+ * 同じワザを連続何回出しているか返す（連続していない場合は0、連続中は1オリジンの値が返る）
  *
  * @param   pp
+ *
+ * @retval  u32
  */
 //=============================================================================================
-void BPP_ResetWazaContConter( BTL_POKEPARAM* bpp )
+u32 BPP_GetWazaContCounter( const BTL_POKEPARAM* bpp )
 {
-  bpp->sameWazaCounter = 0;
+  return bpp->wazaContCounter;
 }
 //=============================================================================================
 /**
- * 直前に使ったワザナンバーを返す（場に出てから使ったワザが無い場合は WAZANO_NULL ）
+ * 直近に実行されたワザナンバーを返す（場に出てから使ったワザが無い場合は WAZANO_NULL ）
  *
  * @param   pp
  *
  * @retval  WazaID
  */
 //=============================================================================================
-WazaID BPP_GetPrevWazaID( const BTL_POKEPARAM* pp )
+WazaID BPP_GetPrevWazaID( const BTL_POKEPARAM* bpp )
 {
-  return pp->prevWazaID;
+  return bpp->prevActWazaID;
 }
+//=============================================================================================
+/**
+ * 直近に選択されたワザナンバーを返す（派生ワザを選択した場合など、BPP_GetPrevWazaIDと値が異なる場合がある）
+ *
+ * @param   bpp
+ *
+ * @retval  WazaID
+ */
+//=============================================================================================
+WazaID BPP_GetPrevOrgWazaID( const BTL_POKEPARAM* bpp )
+{
+  return bpp->prevSelectWazaID;
+}
+
 //=============================================================================================
 /**
  * 直前に狙った相手の位置を返す
@@ -2112,19 +2157,8 @@ BtlPokePos BPP_GetPrevTargetPos( const BTL_POKEPARAM* pp )
 {
   return pp->prevTargetPos;
 }
-//=============================================================================================
-/**
- * 同じワザを連続何回出しているか返す（連続していない場合は0、連続中は1オリジンの値が返る）
- *
- * @param   pp
- *
- * @retval  u32
- */
-//=============================================================================================
-u32 BPP_GetWazaContCounter( const BTL_POKEPARAM* pp )
-{
-  return pp->sameWazaCounter;
-}
+
+
 //=============================================================================================
 /**
  * 体重を設定
@@ -2580,8 +2614,9 @@ BOOL BPP_HENSIN_Set( BTL_POKEPARAM* bpp, const BTL_POKEPARAM* target )
 
     bpp->appearedTurn = TURNCOUNT_NULL;
     bpp->turnCount = 0;
-    bpp->prevWazaID = WAZANO_NULL;
-    bpp->sameWazaCounter = 0;
+    bpp->prevSelectWazaID = WAZANO_NULL;
+    bpp->prevActWazaID = WAZANO_NULL;
+    bpp->wazaContCounter = 0;
 
     bpp->coreParam.fHensin = TRUE;
 

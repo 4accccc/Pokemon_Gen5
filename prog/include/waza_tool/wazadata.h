@@ -99,6 +99,7 @@ typedef enum {
 
   WAZASICK_WAZALOCK,        ///< 直前に使ったワザしか出せない上、行動も選択できない
   WAZASICK_TAMELOCK,        ///< 直前に使ったワザしか出せない上、行動も選択できない（溜めワザ専用）
+  WAZASICK_KODAWARI,        ///< 最初に使ったワザしか選択できない
   WAZASICK_MUSTHIT,         ///< ワザ必中状態
   WAZASICK_MUSTHIT_TARGET,  ///< 特定相手に対してのみ必中状態
   WAZASICK_FLYING,          ///< でんじふゆう

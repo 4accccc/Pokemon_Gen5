@@ -685,7 +685,6 @@ void BTLV_StartPokeSelect( BTLV_CORE* wk, const BTL_POKESELECT_PARAM* param, int
     {
       if( i >= NELEMS(wk->plistData.change_sel) ){ break; }
       wk->plistData.change_sel[i] = BTL_POKESELECT_RESULT_Get( result, i );
-      OS_TPrintf("  Šù‚É‘I‘ð‚³‚ê‚½ƒ|ƒP%d‘Ì–Ú ... Index=%d\n", i, wk->plistData.change_sel[i]);
     }
     for( ; i<NELEMS(wk->plistData.change_sel); ++i){
       wk->plistData.change_sel[i] = BPL_CHANGE_SEL_NONE;
@@ -1022,6 +1021,7 @@ static BOOL subprocDamageEffect( int* seq, void* wk_adrs )
     {
       BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_AffBad, 0 );
       BTLV_SCU_StartMsg( wk->scrnU, wk->strBuf, BTLV_MSGWAIT_STD );
+
       PMSND_PlaySE( SEQ_SE_KOUKA_L );
     }
     else if ( subwk->affinity > BTL_TYPEAFF_100 )
@@ -1093,11 +1093,15 @@ BOOL BTLV_ACT_DamageEffectPlural_Wait( BTLV_CORE* wk )
       case BTL_TYPEAFF_ABOUT_ADVANTAGE:
         BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_AffGood, 0 );
         BTLV_SCU_StartMsg( wk->scrnU, wk->strBuf, BTLV_MSGWAIT_STD );
+        PMSND_PlaySE( SEQ_SE_KOUKA_H );
         break;
       case BTL_TYPEAFF_ABOUT_DISADVANTAGE:
         BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_AffBad, 0 );
         BTLV_SCU_StartMsg( wk->scrnU, wk->strBuf, BTLV_MSGWAIT_STD );
+        PMSND_PlaySE( SEQ_SE_KOUKA_L );
         break;
+      default:
+        PMSND_PlaySE( SEQ_SE_KOUKA_M );
       }
       subwk->seq++;
     }

@@ -49,8 +49,7 @@ typedef enum {
   SC_OP_CHANGE_POKETYPE,    ///< 【計算】ポケモンのタイプ変更（ pokeID, type ）
   SC_OP_CHANGE_POKEFORM,    ///< 【計算】ポケモンのフォルム変更（ pokeID, type ）
   SC_OP_CONSUME_ITEM,       ///< 所有アイテム削除
-  SC_OP_UPDATE_USE_WAZA,    ///< 直前使用ワザ更新
-  SC_OP_RESET_USED_WAZA,    ///< 連続ワザ使用カウンタリセット
+  SC_OP_UPDATE_USE_WAZA,    ///< ワザプロセス終了情報
   SC_OP_SET_CONTFLAG,       ///< 永続フラグセット
   SC_OP_RESET_CONTFLAG,     ///< 永続フラグリセット
   SC_OP_SET_TURNFLAG,       ///< ターンフラグセット
@@ -257,13 +256,11 @@ static inline void SCQUE_PUT_OP_ConsumeItem( BTL_SERVER_CMD_QUE* que, u8 pokeID 
 {
   SCQUE_PUT_Common( que, SC_OP_CONSUME_ITEM, pokeID );
 }
-static inline void SCQUE_PUT_OP_UpdateUseWaza( BTL_SERVER_CMD_QUE* que, u8 pokeID, u8 targetPos, WazaID waza  )
+
+static inline void SCQUE_PUT_OP_UpdateWazaProcResult( BTL_SERVER_CMD_QUE* que,
+    u8 pokeID, BtlPokePos actTargetPos, BOOL fActEnable, WazaID actWaza, WazaID orgWaza )
 {
-  SCQUE_PUT_Common( que, SC_OP_UPDATE_USE_WAZA, pokeID, targetPos, waza );
-}
-static inline void SCQUE_PUT_OP_ResetUsedWazaCounter( BTL_SERVER_CMD_QUE* que, u8 pokeID )
-{
-  SCQUE_PUT_Common( que, SC_OP_RESET_USED_WAZA, pokeID );
+  SCQUE_PUT_Common( que, SC_OP_UPDATE_USE_WAZA, pokeID, actTargetPos, fActEnable, actWaza, orgWaza );
 }
 
 
