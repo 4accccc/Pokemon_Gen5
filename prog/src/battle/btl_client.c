@@ -1356,7 +1356,7 @@ static BOOL is_unselectable_waza( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, Waza
   {
     u16 kanasibariWaza = BPP_GetSickParam( bpp, WAZASICK_KANASIBARI );
     BTL_Printf("かなしばりチェック waza=%d\n", kanasibariWaza);
-    if( waza == kanasibariWaza )
+    if( (waza == kanasibariWaza) && (waza != WAZANO_WARUAGAKI) )
     {
       if( strParam != NULL )
       {

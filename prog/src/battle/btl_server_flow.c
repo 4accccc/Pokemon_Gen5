@@ -2866,7 +2866,9 @@ static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_ACTI
   reqWaza.targetPos = BTL_POS_NULL;
 
   orgWaza = action->fight.waza;
+  actWaza = orgWaza;
   orgTargetPos = action->fight.targetPos;
+  actTargetPos = orgTargetPos;
   fWazaEnable = FALSE;
   fWazaExecute = FALSE;
   fWazaLock = BPP_CheckSick( attacker, WAZASICK_WAZALOCK );
@@ -4254,11 +4256,15 @@ static BOOL scproc_Fight_CheckWazaExecuteFail_1st( BTL_SVFLOW_WORK* wk, BTL_POKE
       break;
     }
     // ‚©‚È‚µ‚Î‚è”»’è
-    if( BPP_CheckSick(attacker, WAZASICK_KANASIBARI) ){
-      BPP_SICK_CONT  sickCont = BPP_GetSickCont( attacker, WAZASICK_KANASIBARI );
-      if( BPP_SICKCONT_GetParam(sickCont) == waza ){
-        cause = SV_WAZAFAIL_KANASIBARI;
-        break;
+    if( BPP_CheckSick(attacker, WAZASICK_KANASIBARI) )
+    {
+      if( waza != WAZANO_WARUAGAKI )
+      {
+        BPP_SICK_CONT  sickCont = BPP_GetSickCont( attacker, WAZASICK_KANASIBARI );
+        if( BPP_SICKCONT_GetParam(sickCont) == waza ){
+          cause = SV_WAZAFAIL_KANASIBARI;
+          break;
+        }
       }
     }
 
@@ -8645,6 +8651,11 @@ static SV_WazaFailCause scEvent_CheckWazaExecute2ND( BTL_SVFLOW_WORK* wk, BTL_PO
   WazaSick sick = BPP_GetPokeSick( attacker );
   SV_WazaFailCause  cause = SV_WAZAFAIL_NULL;
   u8 pokeID = BPP_GetID( attacker );
+
+  // ‚í‚é‚ ‚ª‚«‚ÍŽ¸”s‚µ‚È‚¢
+  if( waza == WAZANO_WARUAGAKI ){
+    return SV_WAZAFAIL_NULL;
+  }
 
   do {
 
