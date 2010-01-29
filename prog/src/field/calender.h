@@ -1,90 +1,23 @@
-#pragma once 
-//////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 /**
- *
- * @brief  カレンダー情報取得システム
+ * @brief  カレンダー
+ * @file   calender.h
  * @author obata
- * @date   2009.0805 
- *
+ * @date   2010.01.29
  */
-////////////////////////////////////////////////////////////////////////////// 
+////////////////////////////////////////////////////////////////////////////////
+#pragma once 
 #include <gflib.h>
-#include "calender_encount.h"
-#include "calender_hatch.h"
-#include "calender_weather.h"
+#include "gamesystem/gamedata_def.h"
+#include "field/weather_no.h"
 
-
-// システム不完全型の宣言
 typedef struct _CALENDER CALENDER;
 
 
-//=============================================================================
-/**
- * @brief システムの作成・破棄
- */
-//=============================================================================
+// 作成 / 破棄
+extern CALENDER* CALENDER_Create( GAMEDATA* gameData, HEAPID heapID );
+extern void      CALENDER_Delete( CALENDER* calender );
 
-//-----------------------------------------------------------------------------
-/**
- * @brief カレンダーシステムを作成する
- *
- * @param heap_id 使用するヒープID
- *
- * @return 作成したカレンダー
- */
-//-----------------------------------------------------------------------------
-extern CALENDER* CALENDER_Create( HEAPID heap_id );
-
-//-----------------------------------------------------------------------------
-/**
- * @brief カレンダーシステムを破棄する
- *
- * @param p_sys 破棄するカレンダー
- */
-//-----------------------------------------------------------------------------
-extern void CALENDER_Delete( CALENDER* p_sys );
-
-
-//=============================================================================
-/**
- * @brief カレンダーへの問い合わせ
- */
-//=============================================================================
-
-//-----------------------------------------------------------------------------
-/**
- * @brief 指定日における, 指定ゾーンの天気を取得する
- *
- * @param p_sys   カレンダー
- * @param p_date  日付指定
- * @param zone_id ゾーン指定
- *
- * @return 天気番号( WEATHER_NO_XXXX )
- *         指定ゾーンが登録されていない場合, 無効値 WEATHER_NO_NONE が返る
- */
-//----------------------------------------------------------------------------- 
-extern u16 CALENDER_GetWeather( CALENDER* p_sys, const RTCDate* p_date, u16 zone_id );
-
-//-----------------------------------------------------------------------------
-/**
- * @breif 指定日の出現率変化番号を取得する
- *
- * @param p_sys  カレンダー
- * @param p_date 日付指定
- *
- * @return 出現率変化番号( ENCOUNT_NO_x )
- */
-//-----------------------------------------------------------------------------
-extern u8 CALENDER_GetEncountNo( CALENDER* p_sys, const RTCDate* p_date );
-
-//-----------------------------------------------------------------------------
-/**
- * @brief 指定日の孵化変化番号を取得する
- *
- * @param p_sys  カレンダー
- * @param p_date 日付指定
- *
- * @return 孵化変化番号( HATCH_NO_x )
- */
-//-----------------------------------------------------------------------------
-extern u8 CALENDER_GetHatchNo( CALENDER* p_sys, const RTCDate* p_date );
+// 天気
+extern WEATHER_NO CALENDER_GetWeather      ( const CALENDER* calender, u16 zoneID, u8 month, u8 day );
+extern WEATHER_NO CALENDER_GetWeather_today( const CALENDER* calender, u16 zoneID );

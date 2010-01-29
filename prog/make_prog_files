@@ -501,9 +501,6 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/fldeff_footmark.c \
         field/fldeff_reflect.c \
         field/field_place_name.c \
-        field/calender_encount.c \
-        field/calender_hatch.c \
-        field/calender_weather.c \
         field/calender.c \
         field/event_camera_act.c \
         field/event_entrance_in.c \
