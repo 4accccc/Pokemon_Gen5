@@ -7,6 +7,7 @@
 
   .include  "scr_seq_def.h"
   .include  "c04r0110_def.h"
+  .include "../../../prog/src/field/bsubway_scr_def.h"
 
 //--------------------------------------------------------------
 //              特殊スクリプト
@@ -19,8 +20,6 @@ _SP_EVENT_DATA_END
 //              特殊スクリプト
 //--------------------------------------------------------------
 sp_c04r0110_tbl:
-/*
-	_SCENE_CHANGE_DATA WK_OTHER_SCENE_C04R0110,1,SCRID_TRAIN_ENTRY_FIRST
-	_SCENE_CHANGE_DATA WK_OTHER_SCENE_C04R0110,2,SCRID_TRAIN_ENTRY_CONTINUE
-*/
+	_SCENE_CHANGE_DATA WK_OTHER_BSUBWAY_TRAIN,BSWAY_SCENE_TRAIN_FIRST,SCRID_TRAIN_ENTRY_FIRST
+	_SCENE_CHANGE_DATA WK_OTHER_BSUBWAY_TRAIN,BSWAY_SCENE_TRAIN_CONTINUE,SCRID_TRAIN_ENTRY_CONTINUE
 	_SCENE_CHANGE_END

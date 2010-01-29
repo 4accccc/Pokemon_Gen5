@@ -43,6 +43,10 @@ struct _BSUBWAY_PLAYDATA
   u8 saved_f    :1;  ///<セーブ済みかどうか
   u8 play_mode  :3;  ///<現在どこにチャレンジ中か?
   u8 partner    :3;  ///<現在誰と組んでいるか?
+  u8 speceial_mode:1; ///<スペシャルモードか？
+  u8 padding_bit:7; ///<余り
+  u8 padding[2]; ///<余り２
+  
   u8 wifi_rec_down;    ///<勝ち抜きまでに倒されたポケモン数
   u8 round;  ///<バトルサブウェイ ラウンド数
   u16 stage; ///<バトルサブウェイ ステージ数　周回数
@@ -70,24 +74,37 @@ struct _BSUBWAY_SCOREDATA
   
   union{
     struct{
-    u16  silver_get:1;    ///<シルバートロフィーゲット
-    u16  gold_get:1;      ///<ゴールドトロフィーゲット
-    u16  silver_ready:1;    ///<シルバー貰えます
-    u16  gold_ready:1;    ///<ゴールド貰えます
-    u16  wifi_lose_f:1;    ///<wifi連続敗戦フラグ
-    u16  wifi_update:1;    ///<wifi成績アップロードフラグ
-    u16  wifi_poke_data:1;  ///<wifiポケモンデータストック有りナシフラグ
-    u16  single_poke_data:1;  ///<singleポケモンデータストック有りナシフラグ
-    u16  single_record:1;  ///<シングルレコード挑戦中フラグ
-    u16  double_record:1;  ///<ダブルレコード挑戦中フラグ
-    u16  multi_record:1;    ///<マルチレコード挑戦中フラグ
-    u16  cmulti_record:1;  ///<通信マルチレコード挑戦中フラグ
-    u16  wifi_record:1;    ///<Wifiレコード挑戦中フラグ
-    u16  copper_get:1;    ///<カッパートロフィーゲット
-    u16  copper_ready:1;    ///<カッパー貰えます
-    u16  :1;  ///<境界ダミー
+    u32  silver_get:1;    ///<シルバートロフィーゲット
+    u32  gold_get:1;      ///<ゴールドトロフィーゲット
+    u32  silver_ready:1;    ///<シルバー貰えます
+    u32  gold_ready:1;    ///<ゴールド貰えます
+    u32  wifi_lose_f:1;    ///<wifi連続敗戦フラグ
+    u32  wifi_update:1;    ///<wifi成績アップロードフラグ
+    u32  wifi_poke_data:1;  ///<wifiポケモンデータストック有りナシフラグ
+    u32  single_poke_data:1;  ///<singleポケモンデータストック有りナシフラグ
+    u32  single_record:1;  ///<シングルレコード挑戦中フラグ
+    u32  double_record:1;  ///<ダブルレコード挑戦中フラグ
+    u32  multi_record:1;    ///<マルチレコード挑戦中フラグ
+    u32  cmulti_record:1;  ///<通信マルチレコード挑戦中フラグ
+    u32  wifi_record:1;    ///<Wifiレコード挑戦中フラグ
+    u32  copper_get:1;    ///<カッパートロフィーゲット
+    u32  copper_ready:1;    ///<カッパー貰えます
+    u32  wifi_multi_record; ///<Wifiマルチレコード挑戦中フラグ
+    u32  boss_clear_single:1;  ///<ボスクリアフラグ　シングル
+    u32  boss_clear_double:1;  ///<ボスクリアフラグ　ダブル
+    u32  boss_clear_multi:1;  ///<ボスクリアフラグ マルチ
+    u32  boss_clear_comm_multi:1;  ///<ボスクリアフラグ マルチ
+    u32  boss_clear_wifi:1;  ///<ボスクリアフラグ　Wifi
+    u32  boss_clear_wifi_multi:1;  ///<ボスクリアフラグ　Wifi
+    u32  boss_clear_single_s:1;  ///<ボスクリアフラグ　シングル
+    u32  boss_clear_double_s:1;  ///<ボスクリアフラグ　ダブル
+    u32  boss_clear_multi_s:1;  ///<ボスクリアフラグ マルチ
+    u32  boss_clear_comm_multi_s:1;  ///<ボスクリアフラグ マルチ
+    u32  boss_clear_wifi_s:1;  ///<ボスクリアフラグ　Wifi
+    u32  boss_clear_wifi_multi_s:1;  ///<ボスクリアフラグ　Wifi
+    u32  dummy:4;
     };
-    u16  flags;
+    u32  flags;
   };
   
   //連勝記録
@@ -96,7 +113,8 @@ struct _BSUBWAY_SCOREDATA
   
   //WiFiチャレンジデータ
   u16  wifi_score;  ///<WiFi成績
-  
+  u8  padding[2];
+
   //WiFiポケモンデータストック
   struct _BSUBWAY_POKEMON  wifi_poke[3];
   //トレーナーロード用シングルデータストック
@@ -629,8 +647,8 @@ u16 BSUBWAY_SCOREDATA_GetStageCount(
 BOOL BSUBWAY_SCOREDATA_SetFlag( BSUBWAY_SCOREDATA *bsw_score,
     BSWAY_SCOREDATA_FLAG id, BSWAY_SETMODE mode )
 {
-  u16 i;
-  u16 flag = 1;
+  u32 i;
+  u32 flag = 1;
   
   //エラーチェック
   if( id >= BSWAY_SCOREDATA_FLAG_MAX ){
@@ -645,7 +663,7 @@ BOOL BSUBWAY_SCOREDATA_SetFlag( BSUBWAY_SCOREDATA *bsw_score,
   
   switch( mode ){
   case BSWAY_SETMODE_reset:
-    flag = (flag^0xFFFF);
+    flag = (flag^0xFFFFFFFF);
     bsw_score->flags &= flag;
     break;
   case BSWAY_SETMODE_set:

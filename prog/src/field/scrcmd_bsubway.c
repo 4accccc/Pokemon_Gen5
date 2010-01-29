@@ -69,14 +69,13 @@ static BOOL bsway_CheckRegulation( int mode, GAMESYS_WORK *gsys );
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdBSubwayWorkCreate( VMHANDLE* core, void *wk )
 {
-  u16 init = VMGetU16(core);
-  u16 mode = VMGetU16(core);
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
   SCRIPT_FLDPARAM *fparam = SCRIPT_GetFieldParam( sc );
   GAMESYS_WORK *gsys = SCRIPT_GetGameSysWork( sc );
-  BSUBWAY_SCRWORK *bsw_scr;
-  bsw_scr = BSUBWAY_SCRWORK_CreateWork( gsys, init, mode );
+  u16 init = VMGetU16(core);
+  u16 mode = SCRCMD_GetVMWorkValue( core, work );
+  BSUBWAY_SCRWORK *bsw_scr = BSUBWAY_SCRWORK_CreateWork( gsys, init, mode );
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -92,7 +91,7 @@ VMCMD_RESULT EvCmdBSubwayWorkClear( VMHANDLE* core, void *wk )
   SCRIPT_FLDPARAM *fparam = SCRIPT_GetFieldParam( sc );
   GAMESYS_WORK *gsys = SCRIPT_GetGameSysWork( sc );
   BSUBWAY_SCRWORK_ClearWork( gsys );
-
+  
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -264,6 +263,30 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
   case BSWTOOL_GET_NEXT_ROUND:
     *ret_wk = BSUBWAY_PLAYDATA_GetRoundNo( bsw_scr->playData ) + 1;
     break;
+  //ボスクリア済みフラグ取得
+  case BSWTOOL_GET_BOSS_CLEAR_FLAG:
+    *ret_wk = BSUBWAY_SCOREDATA_SetFlag( scoreData,
+        BSWAY_SCOREDATA_FLAG_BOSS_CLEAR_SINGLE + param,
+        BSWAY_SETMODE_get );
+    break;
+  //スーパーボスクリア済みフラグ取得
+   case BSWTOOL_GET_S_BOSS_CLEAR_FLAG:
+    *ret_wk = BSUBWAY_SCOREDATA_SetFlag( scoreData,
+        BSWAY_SCOREDATA_FLAG_BOSS_CLEAR_SINGLE + param,
+        BSWAY_SETMODE_get );
+    break;
+  //ボスクリア済みフラグセット
+  case BSWTOOL_SET_BOSS_CLEAR_FLAG:
+    *ret_wk = BSUBWAY_SCOREDATA_SetFlag( scoreData,
+        BSWAY_SCOREDATA_FLAG_BOSS_CLEAR_SINGLE + param,
+        BSWAY_SETMODE_set );
+    break;
+  //スーパーボスクリア済みフラグ取得
+   case BSWTOOL_SET_S_BOSS_CLEAR_FLAG:
+    *ret_wk = BSUBWAY_SCOREDATA_SetFlag( scoreData,
+        BSWAY_SCOREDATA_FLAG_BOSS_CLEAR_SINGLE + param,
+        BSWAY_SETMODE_set );
+    break;
   //Wifiランクダウン
   case BSWTOOL_WIFI_RANK_DOWN:
     #if 0
@@ -383,13 +406,13 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
   case BSWSUB_GET_PLAY_MODE:
     *ret_wk = bsw_scr->play_mode;
     break;
-  //リーダークリアフラグをセット
-  case BSWSUB_SET_LEADER_CLEAR_FLAG:
-    bsw_scr->leader_f = param;
+  //ボスクリアフラグをセット
+  case BSWSUB_SET_BOSS_CLEAR_FLAG:
+    bsw_scr->boss_f = param;
     break;
-  //リーダークリアフラグを取得
-  case BSWSUB_GET_LEADER_CLEAR_FLAG:
-    *ret_wk = bsw_scr->leader_f;
+  //ボスクリアフラグを取得
+  case BSWSUB_GET_BOSS_CLEAR_FLAG:
+    *ret_wk = bsw_scr->boss_f;
     break;
   //バトルポイント加算
   case BSWSUB_ADD_BATTLE_POINT:

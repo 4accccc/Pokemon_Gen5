@@ -1,16 +1,12 @@
-
 //==============================================================
-//
 //              sp_c04r0111.ev
-//
 //    特殊スクリプトファイル：c04r0111用
-//
 //==============================================================
 
   .text
-
   .include  "scr_seq_def.h"
   .include  "c04r0111_def.h"
+  .include "../../../prog/src/field/bsubway_scr_def.h"
 
 //--------------------------------------------------------------
 //              特殊スクリプト
@@ -19,5 +15,5 @@ _SCENE_CHANGE_LABEL sp_c04r0111_tbl
 _SP_EVENT_DATA_END
 
 sp_c04r0111_tbl:
-//  _SCENE_CHANGE_DATA WK_OTHER_SCENE_C04R0111,1,SCRID_C04R0111_GAME_AFTER_FINISH
-_SP_EVENT_DATA_END
+  _SCENE_CHANGE_DATA WK_OTHER_BSUBWAY_HOME, BSWAY_SCENE_HOME_GAME_CLEAR, SCRID_C04R0111_HOME
+  _SCENE_CHANGE_END

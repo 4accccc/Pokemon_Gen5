@@ -525,7 +525,7 @@ u16  BSUBWAY_SCRWORK_AddBattlePoint( BSUBWAY_SCRWORK *bsw_scr )
   }else{ //é¸âÒêîÇ≤Ç∆
     u16 stage = BSUBWAY_PLAYDATA_GetStageNo( bsw_scr->playData );
     
-    if( bsw_scr->leader_f ){
+    if( bsw_scr->boss_f ){
       point = BTLPOINT_VAL_BSUBWAY_LEADER;
     }else if( stage >= 7 ){ //ÇVêÌà»è„
       point = BTLPOINT_VAL_BSUBWAY_STAGE8;

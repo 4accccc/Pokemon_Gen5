@@ -16,6 +16,7 @@ _EVENT_DATA ev_bsw_game_continue
 _EVENT_DATA ev_bsw_report_error
 _EVENT_DATA ev_bsw_game_cancel
 _EVENT_DATA ev_bsw_game_after
+_EVENT_DATA ev_bsw_retmap_receipt
 _EVENT_DATA_END
 
 //======================================================================
@@ -24,7 +25,7 @@ _EVENT_DATA_END
 //--------------------------------------------------------------
 //  受付話し掛け
 //--------------------------------------------------------------
-ev_bsw_receipt_talk:
+EVENT_START ev_bsw_receipt_talk
 {
   DEFINE_LOCAL play_mode
   
@@ -49,7 +50,7 @@ ev_bsw_receipt_talk:
   ENDIF
   
   //選択メニュー
-  $SCWK_ANSWER = 0
+  $SCWK_ANSWER = 1
   
   WHILE $SCWK_ANSWER == 1
     _BMPMENU_INIT_EX( 1, 1, 0, 1, SCWK_ANSWER )
@@ -68,9 +69,8 @@ ev_bsw_receipt_talk:
   ELSE //やめる
     _CALL sub_bsw_receipt_exit
   ENDIF
-  
-  _END
 }
+EVENT_END
 
 //--------------------------------------------------------------
 //  受付話し掛け　挨拶
@@ -471,4 +471,36 @@ sub_bsw_receipt_set_train_flag_continue:
   _FLAG_SET( FV_C04R0110_TRAINER )
   _FLAG_SET( FV_C04R0110_PLAYER )
   _RET
+}
+
+//=====================================================================
+//  共通処理
+//=====================================================================
+//--------------------------------------------------------------
+//  プレイモード別に受付に戻る
+//--------------------------------------------------------------
+ev_bsw_retmap_receipt:
+{
+  DEFINE_LOCAL play_mode
+  
+  //プレイモード取得
+  _BSUBWAY_TOOL( BSWSUB_GET_PLAY_MODE, BSW_NULL, play_mode )
+  
+  SWITCH $play_mode
+  CASE BSWAY_MODE_SINGLE THEN
+    _MAP_CHANGE_NO_FADE( ZONE_ID_C04R0102, 13, 0, 13, DIR_RIGHT )
+  CASE BSWAY_MODE_DOUBLE THEN
+    _MAP_CHANGE_NO_FADE( ZONE_ID_C04R0104, 13, 0, 13, DIR_RIGHT )
+  CASE BSWAY_MODE_MULTI THEN
+    _NOP
+  CASE BSWAY_MODE_COMM_MULTI THEN
+    _NOP
+  CASE BSWAY_MODE_WIFI THEN
+    _NOP
+  CASE BSWAY_MODE_WIFI_MULTI THEN
+    _NOP
+  ENDSWITCH
+  
+  _CHG_LOCAL_SCR
+  _END
 }

@@ -54,7 +54,7 @@ struct _BSUBWAY_SCRWORK
   u8 pare_sex;    ///<自分とパートナーの性別
   
   u8 clear_f:1;  ///<クリアフラグ
-  u8 leader_f:2;  ///<タイクーン2
+  u8 boss_f:2;  ///<ボスを倒したフラグ
   u8 retire_f:1;  ///<リタイアフラグ
   u8 prize_f:1;  ///<ご褒美フラグ
   u8 partner:3;  ///<パートナーNo
