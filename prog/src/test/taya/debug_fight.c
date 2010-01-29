@@ -680,7 +680,7 @@ static GFL_PROC_RESULT DebugFightProcInit( GFL_PROC * proc, int * seq, void * pw
 
   // 仮想フィールドBGMスタック設定
   {
-    PMSND_PlayBGM(SEQ_BGM_R_A_SP);
+    PMSND_PlayBGM( SEQ_BGM_R_A );
     PMSND_PauseBGM(TRUE);
     PMSND_PushBGM();
   }
