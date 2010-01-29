@@ -528,7 +528,7 @@ static BOOL CmdProc_SetupDemo( BTLV_CORE* core, int* seq, void* workBuffer )
       GFL_MSG_Delete( cdw->msg );
       (*seq)++;
     }
-    /*fall thru*/
+    break;
   case 20:
     return TRUE;
     break;
