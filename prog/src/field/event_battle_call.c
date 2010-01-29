@@ -162,7 +162,7 @@ static GFL_PROC_RESULT CommBattleCallProc(  GFL_PROC *proc, int *seq, void* pwk,
   case SEQ_CALL_BTL_REC_SEL:
     {
       // 通信相手と自分のROMのサーバーバージョンを比較する
-      BOOL b_rec = TRUE;  // TRUEのとき、「通信相手 <= 自分」となり録画選択画面へ行く
+      BOOL b_rec = TRUE;  // TRUEのとき、「通信相手 <= 自分」となり録画できる。
       u8 trainer_num = ( bcw->btl_setup_prm->multiMode == 0 ) ? (2) : (4);
       u8 my_version = bcw->demo_prm->trainer_data[COMM_BTL_DEMO_TRDATA_A].server_version;
       int i; 
@@ -175,11 +175,10 @@ static GFL_PROC_RESULT CommBattleCallProc(  GFL_PROC *proc, int *seq, void* pwk,
           break;
         }
       }
-
-      if( b_rec )
+      // 通信対戦後の録画選択画面へ移行(録画しない人も移行します)
       {
-        // 通信対戦後の録画選択画面へ
-        bcw->btl_rec_sel_param.gamedata = GAMESYSTEM_GetGameData( gsys );
+        bcw->btl_rec_sel_param.gamedata  = GAMESYSTEM_GetGameData( gsys );
+        bcw->btl_rec_sel_param.b_rec     = b_rec;
         GAMESYSTEM_CallProc( gsys, FS_OVERLAY_ID( btl_rec_sel ), &BTL_REC_SEL_ProcData, &bcw->btl_rec_sel_param );
       }
       (*seq)++;

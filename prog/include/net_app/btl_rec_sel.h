@@ -22,6 +22,15 @@ FS_EXTERN_OVERLAY(btl_rec_sel);
 
 //=============================================================================
 /**
+*  定数定義
+*/
+//=============================================================================
+// ネットタイミング番号
+#define BTL_REC_SEL_NET_TIMING_SYNC_NO   (150) 
+
+
+//=============================================================================
+/**
  *  PROC
  */
 //=============================================================================
@@ -39,6 +48,7 @@ extern const GFL_PROC_DATA    BTL_REC_SEL_ProcData;
 typedef struct _BTL_REC_SEL_PARAM
 {
   GAMEDATA*         gamedata;           ///< [in,out]  GAMEDATA
+  BOOL              b_rec;              ///< [in]      録画セーブ可能のときTRUE
 }
 BTL_REC_SEL_PARAM;
 
@@ -53,7 +63,8 @@ BTL_REC_SEL_PARAM;
 //=====================================
 extern BTL_REC_SEL_PARAM*  BTL_REC_SEL_AllocParam(
                             HEAPID           heap_id,
-                            GAMEDATA*        gamedata );
+                            GAMEDATA*        gamedata,
+                            BOOL             b_rec );
 
 //-------------------------------------
 /// PROC パラメータ解放
@@ -66,4 +77,5 @@ extern void             BTL_REC_SEL_FreeParam(
 //=====================================
 extern void             BTL_REC_SEL_InitParam(
                             BTL_REC_SEL_PARAM*  param,
-                            GAMEDATA*        gamedata );
+                            GAMEDATA*           gamedata,
+                            BOOL                b_rec );

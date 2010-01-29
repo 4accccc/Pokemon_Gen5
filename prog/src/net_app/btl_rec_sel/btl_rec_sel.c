@@ -171,9 +171,6 @@ enum
   SEQ_END,
 };
 
-// ネットタイミング番号
-#define NET_TIMING_SYNC_NO   (198) 
-
 
 //=============================================================================
 /**
@@ -342,16 +339,18 @@ const GFL_PROC_DATA    BTL_REC_SEL_ProcData =
  *
  *  @param[in]   heap_id       ヒープID
  *  @param[in]   gamedata      GAMEDATA
+ *  @param[in]   b_rec         録画セーブ可能のときTRUE
  *
  *  @retval      BTL_REC_SEL_PARAM
  */
 //------------------------------------------------------------------
 BTL_REC_SEL_PARAM*  BTL_REC_SEL_AllocParam(
                             HEAPID           heap_id,
-                            GAMEDATA*        gamedata )
+                            GAMEDATA*        gamedata,
+                            BOOL             b_rec )
 {
   BTL_REC_SEL_PARAM* param = GFL_HEAP_AllocMemory( heap_id, sizeof( BTL_REC_SEL_PARAM ) );
-  BTL_REC_SEL_InitParam( param, gamedata );
+  BTL_REC_SEL_InitParam( param, gamedata, b_rec );
   return param;
 }
 
@@ -376,15 +375,18 @@ void             BTL_REC_SEL_FreeParam(
  *
  *  @param[in,out]   param      BTL_REC_SEL_PARAM
  *  @param[in]       gamedata   GAMEDATA
+ *  @param[in]       b_rec      録画セーブ可能のときTRUE
  *
  *  @retval          
  */
 //------------------------------------------------------------------
 void             BTL_REC_SEL_InitParam(
                             BTL_REC_SEL_PARAM*  param,
-                            GAMEDATA*        gamedata )
+                            GAMEDATA*           gamedata,
+                            BOOL                b_rec )
 {
   param->gamedata    = gamedata;
+  param->b_rec       = b_rec;
 }
 
 
@@ -468,9 +470,17 @@ static GFL_PROC_RESULT Btl_Rec_Sel_ProcInit( GFL_PROC* proc, int* seq, void* pwk
   GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 16, 0 );
 
   // シーケンス処理用
-  Btl_Rec_Sel_ChangeSeqFade( seq, param, work, SEQ_QA_INIT,
-      GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, FADE_IN_WAIT );
-  Btl_Rec_Sel_NoChangeSeqQa( param, work, SEQ_QA_ANS_REC, msg_record_01_01 );
+  if( param->b_rec )
+  {
+    Btl_Rec_Sel_ChangeSeqFade( seq, param, work, SEQ_QA_INIT,
+        GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, FADE_IN_WAIT );
+    Btl_Rec_Sel_NoChangeSeqQa( param, work, SEQ_QA_ANS_REC, msg_record_01_01 );
+  }
+  else
+  {
+    Btl_Rec_Sel_ChangeSeqFade( seq, param, work, SEQ_WAIT_INIT,
+        GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, FADE_IN_WAIT );
+  }
 
   return GFL_PROC_RES_FINISH;
 }
@@ -758,7 +768,7 @@ static GFL_PROC_RESULT Btl_Rec_Sel_ProcMain( GFL_PROC* proc, int* seq, void* pwk
       Btl_Rec_Sel_TextStartStream( param, work, msg_record_07_01 );
       {
         GFL_NETHANDLE* nethandle = GFL_NET_HANDLE_GetCurrentHandle();
-        GFL_NET_TimingSyncStart( nethandle, NET_TIMING_SYNC_NO );
+        GFL_NET_TimingSyncStart( nethandle, BTL_REC_SEL_NET_TIMING_SYNC_NO );
       }
       (*seq) = SEQ_WAIT;
     }
@@ -769,8 +779,7 @@ static GFL_PROC_RESULT Btl_Rec_Sel_ProcMain( GFL_PROC* proc, int* seq, void* pwk
       {
         BOOL ret = TRUE;
         GFL_NETHANDLE* nethandle = GFL_NET_HANDLE_GetCurrentHandle();
-        ret = GFL_NET_IsTimingSync( nethandle, NET_TIMING_SYNC_NO );
-
+        ret = GFL_NET_IsTimingSync( nethandle, BTL_REC_SEL_NET_TIMING_SYNC_NO );
         if( ret )  // 相手待ち終了
         {
           Btl_Rec_Sel_ChangeSeqFade( seq, param, work, SEQ_END,
@@ -1092,7 +1101,7 @@ static void Btl_Rec_Sel_FixShowOnPre( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK
   {
     strbuf = GFL_MSG_CreateString( work->msgdata_rec, msg_record_10_01 );
     bmp_data = GFL_BMPWIN_GetBmp( work->fix_bmpwin[FIX_PRE] );
-    PRINTSYS_PrintQueColor( work->print_que, bmp_data, 0, 2, strbuf, work->font, PRINTSYS_LSB_Make(3,4,0) );
+    PRINTSYS_PrintQueColor( work->print_que, bmp_data, 0, 2, strbuf, work->font, PRINTSYS_LSB_Make(4,3,0) );
     GFL_STR_DeleteBuffer( strbuf );
   }
 
@@ -1160,7 +1169,7 @@ static void Btl_Rec_Sel_FixUpdateTime( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WOR
   }
   else
   {
-    color = PRINTSYS_LSB_Make(3,4,0);
+    color = PRINTSYS_LSB_Make(4,3,0);
   }
 
   // SELECT TIME
