@@ -133,6 +133,7 @@ SUBDIRS	=	wmi \
 			comm_tvt \
 			guru2 \
 			guru2_2d \
+			oekaki \
 			beacon_status \
 			tr_ai \
 			enceff_imd \
