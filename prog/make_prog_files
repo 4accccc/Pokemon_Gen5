@@ -351,8 +351,8 @@ SRCS_OVERLAY_NOTWIFI = sound/snd_viewer.c \
         field/itemuse_event.c \
         field/script_hideitem.c \
         field/scrcmd_gimmick_st.c \
-        field/calender.c
-
+        field/calender.c \
+        field/scrcmd_faceup.c
 
 
 # wifiプログラム
@@ -582,9 +582,7 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
 				net_app/comm_entry_menu_comm_command.c \
         field/enceff.c \
         field/enceffno.c \
-        field/scrcmd_pokeid_search.c \
-        field/fld_faceup.c \
-        field/scrcmd_faceup.c
+        field/scrcmd_pokeid_search.c
 
 # フィールド天気
 #===> SRCS_OVERLAY_FIELDMAP
@@ -834,6 +832,24 @@ SRCS_OVERLAY_ENCEFF_PNL2 = field/enceff_pnl2.c
 
 #===> SRCS_OVERLAY_ENCEFF_PNL
 SRCS_OVERLAY_ENCEFF_PNL3 = field/enceff_pnl3.c
+
+# 顔アップ
+#===> SRCS_OVERLAY_PL_BOAT_SETUP
+#===> SRCS_OVERLAY_FIELD_GYM_INIT
+#===> SRCS_OVERLAY_FIELD_GYM_INSECT
+#===> SRCS_OVERLAY_FIELD_GYM_ELEC
+#===> SRCS_OVERLAY_FIELD_GYM_NORMAL
+#===> SRCS_OVERLAY_FIELD_GYM_FLY
+#===> SRCS_OVERLAY_FIELD_GYM_ANTI
+#===> SRCS_OVERLAY_FIELD_GYM_GROUND
+#===> SRCS_OVERLAY_FIELD_GYM_GROUND_ENT
+#===> SRCS_OVERLAY_FIELD_GYM_ICE
+#===> SRCS_OVERLAY_FIELD_GYM_DRAGON
+#===> SRCS_OVERLAY_FIELD_GIMMICK_BGATE
+#===> SRCS_OVERLAY_FIELD_GIMMICK_GATE
+#===> SRCS_OVERLAY_FIELD_GIMMICK_H01
+#===> SRCS_OVERLAY_FIELD_GIMMICK_H03
+SRCS_OVERLAY_FLD_FACEUP = field/fld_faceup.c
 
 
 # サウンドデバッグ画面
