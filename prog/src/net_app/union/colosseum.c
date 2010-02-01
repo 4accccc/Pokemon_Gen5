@@ -63,11 +63,8 @@ COLOSSEUM_SYSTEM_PTR Colosseum_InitSystem(GAMEDATA *game_data, GAMESYS_WORK *gsy
   
   //自分の基本情報エリアにデータをセットする
   my_basic = &clsys->basic_status[my_net_id];
-  MyStatus_CopyNameStrCode(myst, my_basic->name, PERSON_NAME_SIZE + EOM_SIZE);
-  my_basic->id = MyStatus_GetID(myst);
+  MyStatus_Copy(myst, &my_basic->myst);
   OS_GetMacAddress(my_basic->mac_address);
-  my_basic->sex = MyStatus_GetMySex(myst);
-  my_basic->trainer_view = MyStatus_GetTrainerView(myst);
   my_basic->occ = TRUE;
   my_basic->force_entry = (intrude == TRUE) ? FALSE : TRUE;
   my_basic->battle_server_version = BTL_NET_SERVER_VERSION;

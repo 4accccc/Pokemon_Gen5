@@ -345,7 +345,13 @@ void ColosseumTool_CommPlayerUpdate(COLOSSEUM_SYSTEM_PTR clsys)
     }
     if(Colosseum_GetCommPlayerPos(clsys, net_id, &pospack) == TRUE){
       if(CommPlayer_CheckOcc(clsys->cps, net_id) == FALSE){
-        u16 obj_code = (clsys->basic_status[net_id].sex == PM_MALE) ? HERO : HEROINE;
+        u16 obj_code;
+        if(MyStatus_GetMySex(&clsys->basic_status[net_id].myst) == PM_MALE){
+          obj_code = HERO;
+        }
+        else{
+          obj_code = HEROINE;
+        }
         CommPlayer_Add(clsys->cps, net_id, obj_code, &pospack);
       }
       else{
@@ -407,13 +413,6 @@ void ColosseumTool_SetupBattleDemoParent(COLOSSEUM_SYSTEM_PTR clsys, COMM_BTL_DE
 //==================================================================
 void ColosseumTool_DeleteBattleDemoParent(COMM_BTL_DEMO_PARAM *cbdp)
 {
-  int net_id;
-  
-  for(net_id = 0; net_id < COLOSSEUM_MEMBER_MAX; net_id++){
-    if(cbdp->trainer_data[net_id].str_trname != NULL){
-      GFL_STR_DeleteBuffer(cbdp->trainer_data[net_id].str_trname);
-    }
-  }
   GFL_STD_MemClear(cbdp, sizeof(COMM_BTL_DEMO_PARAM));
 }
 
@@ -430,10 +429,7 @@ void ColosseumTool_DeleteBattleDemoParent(COMM_BTL_DEMO_PARAM *cbdp)
 static void _BattleDemoParent_SetTrainerData(COLOSSEUM_SYSTEM_PTR clsys, COMM_BTL_DEMO_TRAINER_DATA *demo_tr, NetID net_id, HEAPID heap_id)
 {
   demo_tr->party = clsys->recvbuf.pokeparty[net_id];
-  demo_tr->str_trname = GFL_STR_CreateBuffer( PERSON_NAME_SIZE + EOM_SIZE, heap_id );
-  GFL_STR_SetStringCodeOrderLength(demo_tr->str_trname, clsys->basic_status[net_id].name,
-    PERSON_NAME_SIZE + EOM_SIZE);
-  demo_tr->trsex = clsys->basic_status[net_id].sex;
+  demo_tr->mystatus = &clsys->basic_status[net_id].myst;
   demo_tr->server_version = clsys->basic_status[net_id].battle_server_version;
 }
 

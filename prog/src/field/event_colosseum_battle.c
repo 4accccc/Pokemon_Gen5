@@ -88,6 +88,7 @@ static GMEVENT_RESULT EVENT_ColosseumBattleMain(GMEVENT * event, int *  seq, voi
     break;
   case 3:
     GMEVENT_CallEvent( event, EVENT_CommBattle(gsys, &cbw->para, cbw->demo_prm) );
+    (*seq)++;
     break;
   case 4:
     BATTLE_PARAM_Release( &cbw->para ); //ƒoƒgƒ‹SetupParam‰ð•ú

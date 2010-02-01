@@ -12,6 +12,8 @@
 #include "app\trainer_card.h"
 #include "field/field_msgbg.h"
 #include "net_app/comm_entry_menu.h"
+#include "savedata/mystatus_local.h"
+#include "savedata/mystatus.h"
 
 
 //==============================================================================
@@ -35,15 +37,12 @@ enum{
 //==============================================================================
 ///各プレイヤーの基本情報
 typedef struct{
-  STRCODE name[PERSON_NAME_SIZE + EOM_SIZE];  ///<名前
-  u32 id;               ///< ID(トレーナーカードにかかれているID)
+  MYSTATUS myst;
   u8 mac_address[6];
-  u8 sex;
-  u8 trainer_view;
   u8 occ;               ///< TRUE:データ有効
   u8 force_entry;       ///< TRUE:強制エントリー
   u8 battle_server_version;    ///< バトルサーバーバージョン
-  u8 padding;
+  u8 padding[3];
 }COLOSSEUM_BASIC_STATUS;
 
 ///親だけが持つシステムデータ

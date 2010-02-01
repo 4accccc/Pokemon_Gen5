@@ -2969,7 +2969,8 @@ static BOOL OneselfSeq_ColosseumFirstDataSharingUpdate(UNION_SYSTEM_PTR unisys, 
       for(i = 0; i < member_num; i++){
         if(clsys->basic_status[i].occ == TRUE){
           UnionMyComm_PartyAddParam(&situ->mycomm, clsys->basic_status[i].mac_address, 
-            clsys->basic_status[i].trainer_view, clsys->basic_status[i].sex);
+            MyStatus_GetTrainerView(&clsys->basic_status[i].myst), 
+            MyStatus_GetMySex(&clsys->basic_status[i].myst));
         }
       }
       OS_TPrintf("‘Sˆõ•ª‚ÌŠî–{î•ñ‚ðŽóMŠ®—¹\n");
@@ -3686,8 +3687,10 @@ static BOOL OneselfSeq_ColosseumPokelist(UNION_SYSTEM_PTR unisys, UNION_MY_SITUA
             enemy_player++;
           }
           plist->comm_battle[comm_player].pp = clsys->recvbuf.pokeparty[net_id];
-          plist->comm_battle[comm_player].name = clsys->basic_status[net_id].name;
-          plist->comm_battle[comm_player].sex = clsys->basic_status[net_id].sex;
+          plist->comm_battle[comm_player].name 
+            = MyStatus_GetMyName(&clsys->basic_status[net_id].myst);
+          plist->comm_battle[comm_player].sex 
+            = MyStatus_GetMySex(&clsys->basic_status[net_id].myst);
           OS_TPrintf("plist set net_id = %d, comm_player=%d, pp=%x\n", net_id, comm_player, clsys->recvbuf.pokeparty[net_id]);
         }
       }
