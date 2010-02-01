@@ -1,5 +1,5 @@
 #event data
-#save date:2010/01/29 18:17:31
+#save date:2010/02/01 14:43:37
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c04r0201.wms
 #SECTION START:OBJ_EVENT
@@ -357,7 +357,7 @@ EVENTDATA_POSTYPE_GRID
 #ID name
 C04R0201_STYLISTPOKE_01
 #OBJ CODE Number
-POKE10
+POKE20
 #MOVE CODE Number
 MV_DOWN
 #EVENT TYPE Number
