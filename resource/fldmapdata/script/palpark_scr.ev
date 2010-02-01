@@ -18,6 +18,9 @@
 
 _EVENT_DATA   ev_palpark_reception
 _EVENT_DATA   ev_pos_palpark_reception
+_EVENT_DATA    ev_palpark_assistantw_01
+_EVENT_DATA    ev_palpark_assistantw_02
+_EVENT_DATA    ev_palpark_assistantm_03
 _EVENT_DATA_END
 
 
