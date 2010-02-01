@@ -1,0 +1,22 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: batt_rec_gra.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_BATT_REC_GRA_NAIX_
+#define NARC_BATT_REC_GRA_NAIX_
+
+enum {
+	NARC_batt_rec_gra_batt_rec_browse_bg_NCLR = 0,
+	NARC_batt_rec_gra_batt_rec_data_NCGR = 1,
+	NARC_batt_rec_gra_batt_rec_non_NSCR = 2,
+	NARC_batt_rec_gra_batt_rec_vs2_NSCR = 3,
+	NARC_batt_rec_gra_batt_rec_vs4_NSCR = 4
+};
+
+/* NARC_BATT_REC_GRA_NAIX_ */
+#endif

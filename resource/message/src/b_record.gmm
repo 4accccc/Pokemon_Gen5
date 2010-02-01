@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00176" date="2010-01-27T20:40:47"/>
+	<create user="kawada_koji" host="W00215" date="2010-02-01T11:35:06"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,7 +305,7 @@
 		</language>
 	</columns>
 
-	<dialog left="6" top="112" right="711" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="332" top="184" right="1037" bottom="812" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -420,6 +420,12 @@
 		<comment>制限時間</comment>
 		<language name="JPN" width="256">[2:01:２桁:0]:[2:01:２桁:1]</language>
 		<language name="JPN_KANJI" width="256">[2:01:２桁:0]:[2:01:２桁:1]</language>
+	</row>
+
+	<row id="msg_record_time03">
+		<comment>制限時間</comment>
+		<language name="JPN" width="256">[2:01:２桁:1]</language>
+		<language name="JPN_KANJI" width="256">[2:01:２桁:1]</language>
 	</row>
 
 	<row id="msg_record_10_01">
@@ -674,9 +680,9 @@
 
 	<row id="msg_record_title36">
 		<language name="JPN" width="256">たいかい　ダブル
-シューターあり</language>
+シューターなし</language>
 		<language name="JPN_KANJI" width="256">たいかい　ダブル
-シューターあり</language>
+シューターなし</language>
 	</row>
 
 	<row id="msg_record_title37">
@@ -688,9 +694,9 @@
 
 	<row id="msg_record_title38">
 		<language name="JPN" width="256">たいかい　トリプル
-シューターあり</language>
+シューターなし</language>
 		<language name="JPN_KANJI" width="256">たいかい　トリプル
-シューターあり</language>
+シューターなし</language>
 	</row>
 
 	<row id="msg_record_title39">
@@ -702,9 +708,9 @@
 
 	<row id="msg_record_title40">
 		<language name="JPN" width="256">たいかい　ローテーション
-シューターあり</language>
+シューターなし</language>
 		<language name="JPN_KANJI" width="256">たいかい　ローテーション
-シューターあり</language>
+シューターなし</language>
 	</row>
 
 	<row id="msg_record_title41">

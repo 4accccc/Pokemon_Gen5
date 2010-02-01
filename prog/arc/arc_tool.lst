@@ -268,3 +268,4 @@
   ARCID_ISS_BRIDGE "iss_bridge.narc"  # 橋ISSデータ
   ARCID_FIELD_CROWD_PEOPLE "fieldmap/field_crowd_people.narc"  # 群集情報
   ARCID_FLD_FACEUP "fieldmap/fld_faceup.narc"  # 顔アップ
+  ARCID_BATT_REC_GRA "batt_rec_gra.narc"  # 通信対戦後の録画選択画面

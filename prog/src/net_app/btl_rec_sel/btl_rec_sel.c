@@ -9,6 +9,9 @@
  *  モジュール名：BTL_REC_SEL
  */
 //============================================================================
+//#define OFFLINE_TEST
+
+
 // インクルード
 #include <gflib.h>
 #include "system/gfl_use.h"
@@ -37,6 +40,8 @@
 #include "font/font.naix"
 #include "message.naix"
 #include "msg/msg_b_record.h"
+#include "c_gear.naix"
+#include "batt_rec_gra.naix"
 // サウンド
 
 
@@ -62,26 +67,26 @@ FS_EXTERN_OVERLAY(ui_common);
 // 本数
 enum
 {
-  BG_PAL_NUM_M_BACKDROP      = 1,
+  BG_PAL_NUM_M_BACKDROP      = 0,
   BG_PAL_NUM_M_TEXT_FONT     = 1,
   BG_PAL_NUM_M_TEXT_FRAME    = 1,
   BG_PAL_NUM_M_YN            = 1,  // 使用せず
-  BG_PAL_NUM_M_BACK          = 1,
+  BG_PAL_NUM_M_BACK          = 9,
 };
 // 位置
 enum
 {
-  BG_PAL_POS_M_BACKDROP      = 0,                                                         // 0
-  BG_PAL_POS_M_TEXT_FONT     = BG_PAL_POS_M_BACKDROP    + BG_PAL_NUM_M_BACKDROP        ,  // 1
-  BG_PAL_POS_M_TEXT_FRAME    = BG_PAL_POS_M_TEXT_FONT   + BG_PAL_NUM_M_TEXT_FONT       ,  // 2
-  BG_PAL_POS_M_YN            = BG_PAL_POS_M_TEXT_FRAME  + BG_PAL_NUM_M_TEXT_FRAME      ,  // 3  // 使用せず
-  BG_PAL_POS_M_BACK          = BG_PAL_POS_M_YN          + BG_PAL_NUM_M_YN              ,  // 4
-  BG_PAL_POS_M_MAX           = BG_PAL_POS_M_BACK        + BG_PAL_NUM_M_BACK            ,  // 5  // ここから空き
+  BG_PAL_POS_M_BACK          = 0                                                       ,  // 0
+  BG_PAL_POS_M_BACKDROP      = BG_PAL_POS_M_BACK        + BG_PAL_NUM_M_BACK            ,  // 9 
+  BG_PAL_POS_M_TEXT_FONT     = BG_PAL_POS_M_BACKDROP    + BG_PAL_NUM_M_BACKDROP        ,  // 9 
+  BG_PAL_POS_M_TEXT_FRAME    = BG_PAL_POS_M_TEXT_FONT   + BG_PAL_NUM_M_TEXT_FONT       ,  // 10 
+  BG_PAL_POS_M_YN            = BG_PAL_POS_M_TEXT_FRAME  + BG_PAL_NUM_M_TEXT_FRAME      ,  // 11  // 使用せず
+  BG_PAL_POS_M_MAX           = BG_PAL_POS_M_YN          + BG_PAL_NUM_M_YN              ,  // 12  // ここから空き
 };
 // 本数
 enum
 {
-  BG_PAL_NUM_S_BACK          = 1,
+  BG_PAL_NUM_S_BACK          = 15,
 };
 // 位置
 enum
@@ -244,6 +249,10 @@ typedef struct
   // ポケアイコン
   PI_DATA                     pi_data[PI_POS_MAX][PI_PARTY_NUM];
 
+  // バトルモードから表示するテキストID、ポケアイコンの並べ方を決める
+  u32                         battle_mode_str_id;
+  BOOL                        battle_mode_arrange_two;
+
   // BattleRec BATTLE_REC
   BATTLE_REC_SAVEDATA*        battle_rec_savedata;
   BATTLE_MODE                 battle_rec_mode;
@@ -251,6 +260,12 @@ typedef struct
   u16                         battle_rec_new_work0;
   u16                         battle_rec_new_work1;
   SAVE_RESULT                 battle_rec_new_save_result;
+
+  // BG Main
+  GFL_ARCUTIL_TRANSINFO       bg_m_tinfo;
+  
+  // BG Sub
+  GFL_ARCUTIL_TRANSINFO       bg_s_tinfo;
 }
 BTL_REC_SEL_WORK;
 
@@ -283,6 +298,7 @@ static void Btl_Rec_Sel_TextInit( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* wo
 static void Btl_Rec_Sel_TextExit( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work );
 static void Btl_Rec_Sel_TextMain( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work );
 static void Btl_Rec_Sel_TextShowWinFrm( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work );
+static void Btl_Rec_Sel_TextClearWinIn( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work );
 
 static void Btl_Rec_Sel_TextStartStream( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work,
                                      u32 str_id );
@@ -309,6 +325,20 @@ static void Btl_Rec_Sel_PiExit( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work
 static GFL_CLWK* CreatePokeicon( GFL_CLUNIT* clunit, HEAPID heap_id, CLSYS_DRAW_TYPE draw_type, u8 pltt_line,
                      u32 monsno, u32 formno, BOOL egg, UI_EASY_CLWK_RES* res, u8 x, u8 y, u8 anim );
 static void DeletePokeicon( UI_EASY_CLWK_RES* res, GFL_CLWK* clwk );
+
+// バトルモードから表示するテキストID、ポケアイコンの並べ方を決める
+static void Btl_Rec_Sel_DecideFromBattleMode( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work );
+
+// BG Main
+void Btl_Rec_Sel_BgMInit( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work );
+void Btl_Rec_Sel_BgMExit( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work );
+void Btl_Rec_Sel_BgMCreateNon( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work );
+void Btl_Rec_Sel_BgMCreateVs2( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work );
+void Btl_Rec_Sel_BgMCreateVs4( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work );
+  
+// BG Sub
+void Btl_Rec_Sel_BgSInit( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work );
+void Btl_Rec_Sel_BgSExit( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work );
 
 
 //=============================================================================
@@ -447,6 +477,11 @@ static GFL_PROC_RESULT Btl_Rec_Sel_ProcInit( GFL_PROC* proc, int* seq, void* pwk
   Btl_Rec_Sel_YnInit( param, work );
   // 固定テキスト
   Btl_Rec_Sel_FixInit( param, work );
+  // BG Main
+  Btl_Rec_Sel_BgMInit( param, work ); 
+  Btl_Rec_Sel_BgMCreateNon( param, work ); 
+  // BG Sub
+  Btl_Rec_Sel_BgSInit( param, work ); 
  
   // プライオリティ、表示、背景色など
   {
@@ -493,6 +528,10 @@ static GFL_PROC_RESULT Btl_Rec_Sel_ProcExit( GFL_PROC* proc, int* seq, void* pwk
   BTL_REC_SEL_PARAM*    param    = (BTL_REC_SEL_PARAM*)pwk;
   BTL_REC_SEL_WORK*     work     = (BTL_REC_SEL_WORK*)mywk;
 
+  // BG Sub
+  Btl_Rec_Sel_BgSExit( param, work ); 
+  // BG Main
+  Btl_Rec_Sel_BgMExit( param, work ); 
   // 固定テキスト
   Btl_Rec_Sel_FixExit( param, work );
   // はい・いいえウィンドウ
@@ -595,8 +634,12 @@ static GFL_PROC_RESULT Btl_Rec_Sel_ProcMain( GFL_PROC* proc, int* seq, void* pwk
         if( ret == 0 )
         {
           LOAD_RESULT result;
+#ifdef OFFLINE_TEST
+          BOOL ret = TRUE; 
+#else
           BOOL ret = BattleRec_DataOccCheck( sv, work->heap_id, &result, LOADDATA_MYREC ); 
           // resultがRECLOAD_RESULT_OKならTRUEが返ってくるようだ
+#endif
 
           if( ret )  // 録画データがある場合
             Btl_Rec_Sel_ChangeSeqFade( seq, param, work, SEQ_PRE_SHOW_ON,
@@ -663,6 +706,37 @@ static GFL_PROC_RESULT Btl_Rec_Sel_ProcMain( GFL_PROC* proc, int* seq, void* pwk
     break;
   case SEQ_PRE_SHOW_ON:
     {
+#ifdef OFFLINE_TEST
+      u8 i, j;
+ 
+      // サンプルデータ作成
+      {
+        for( j=0; j<PI_POS_MAX; j++ )
+        {
+          for( i=0; i<PI_PARTY_NUM; i++ )
+          {
+            work->pi_data[j][i].monsno = PI_PARTY_NUM * j + i;
+            work->pi_data[j][i].formno = 0;
+          }
+        }
+        work->battle_rec_mode = BATTLE_MODE_COLOSSEUM_SINGLE_FREE;
+        //work->battle_rec_mode = BATTLE_MODE_COLOSSEUM_MULTI_FREE;
+      }
+      Btl_Rec_Sel_DecideFromBattleMode( param, work );
+      Btl_Rec_Sel_FixShowOnPre( param, work );
+      Btl_Rec_Sel_PiInit( param, work );
+      if( work->battle_mode_arrange_two )
+        Btl_Rec_Sel_BgMCreateVs2( param, work );
+      else
+        Btl_Rec_Sel_BgMCreateVs4( param, work );
+
+
+      Btl_Rec_Sel_ChangeSeqFade( seq, param, work, SEQ_QA_INIT,
+          GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN, 16, 0, INSIDE_FADE_IN_WAIT );
+      Btl_Rec_Sel_NoChangeSeqQa( param, work, SEQ_QA_ANS_PRE, msg_record_03_01 );
+      
+      Btl_Rec_Sel_TextClearWinIn( param, work );
+#else
       // ここで録画データを表示
       LOAD_RESULT result;
       work->battle_rec_savedata = BattleRec_LoadAlloc( sv, work->heap_id, &result, LOADDATA_MYREC );
@@ -690,8 +764,13 @@ static GFL_PROC_RESULT Btl_Rec_Sel_ProcMain( GFL_PROC* proc, int* seq, void* pwk
         hp = RecHeader_ParamGet( head, RECHEAD_IDX_MODE, i );
         work->battle_rec_mode = (int)hp;
 
+        Btl_Rec_Sel_DecideFromBattleMode( param, work );
         Btl_Rec_Sel_FixShowOnPre( param, work );
         Btl_Rec_Sel_PiInit( param, work );
+        if( work->battle_mode_arrange_two )
+          Btl_Rec_Sel_BgMCreateVs2( param, work );
+        else
+          Btl_Rec_Sel_BgMCreateVs4( param, work );
 
         Btl_Rec_Sel_ChangeSeqFade( seq, param, work, SEQ_QA_INIT,
             GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN, 16, 0, INSIDE_FADE_IN_WAIT );
@@ -704,6 +783,9 @@ static GFL_PROC_RESULT Btl_Rec_Sel_ProcMain( GFL_PROC* proc, int* seq, void* pwk
       }
 
       BattleRec_ExitWork( work->battle_rec_savedata );
+      
+      Btl_Rec_Sel_TextClearWinIn( param, work );
+#endif
     }
     break;
   case SEQ_PRE_SHOW_OFF:
@@ -711,9 +793,12 @@ static GFL_PROC_RESULT Btl_Rec_Sel_ProcMain( GFL_PROC* proc, int* seq, void* pwk
       // ここで録画データを非表示
       Btl_Rec_Sel_FixShowOffPre( param, work );
       Btl_Rec_Sel_PiExit( param, work );
+      Btl_Rec_Sel_BgMCreateNon( param, work );
       
       Btl_Rec_Sel_ChangeSeqFade( seq, param, work, work->next_seq,
           GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN, 16, 0, INSIDE_FADE_IN_WAIT );
+      
+      Btl_Rec_Sel_TextClearWinIn( param, work );
     }
     break;
   case SEQ_SAVE_INIT:
@@ -731,12 +816,16 @@ static GFL_PROC_RESULT Btl_Rec_Sel_ProcMain( GFL_PROC* proc, int* seq, void* pwk
     break;
   case SEQ_SAVE:
     {
+#ifdef OFFLINE_TEST
+      work->battle_rec_new_save_result = SAVE_RESULT_OK;
+#else
       if( work->battle_rec_new_save_result != SAVE_RESULT_OK && work->battle_rec_new_save_result != SAVE_RESULT_NG )
       {
         work->battle_rec_new_save_result = BattleRec_Save( sv, work->heap_id,
             work->battle_rec_new_mode, 0, LOADDATA_MYREC,  // fight_countはバトルサブウェイ以外では使わないので0でいい
             &(work->battle_rec_new_work0), &(work->battle_rec_new_work1) );
       }
+#endif
 
       if( Btl_Rec_Sel_TextWaitStream( param, work ) )
       {
@@ -767,8 +856,10 @@ static GFL_PROC_RESULT Btl_Rec_Sel_ProcMain( GFL_PROC* proc, int* seq, void* pwk
     {
       Btl_Rec_Sel_TextStartStream( param, work, msg_record_07_01 );
       {
+#ifndef OFFLINE_TEST
         GFL_NETHANDLE* nethandle = GFL_NET_HANDLE_GetCurrentHandle();
         GFL_NET_TimingSyncStart( nethandle, BTL_REC_SEL_NET_TIMING_SYNC_NO );
+#endif
       }
       (*seq) = SEQ_WAIT;
     }
@@ -778,8 +869,10 @@ static GFL_PROC_RESULT Btl_Rec_Sel_ProcMain( GFL_PROC* proc, int* seq, void* pwk
       if( Btl_Rec_Sel_TextWaitStream( param, work ) )
       {
         BOOL ret = TRUE;
+#ifndef OFFLINE_TEST
         GFL_NETHANDLE* nethandle = GFL_NET_HANDLE_GetCurrentHandle();
         ret = GFL_NET_IsTimingSync( nethandle, BTL_REC_SEL_NET_TIMING_SYNC_NO );
+#endif
         if( ret )  // 相手待ち終了
         {
           Btl_Rec_Sel_ChangeSeqFade( seq, param, work, SEQ_END,
@@ -924,6 +1017,11 @@ static void Btl_Rec_Sel_TextShowWinFrm( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WO
   BmpWinFrame_Write( work->text_winin_bmpwin, WINDOW_TRANS_ON_V,
       GFL_ARCUTIL_TRANSINFO_GetPos(work->text_winfrm_tinfo),
       BG_PAL_POS_M_TEXT_FRAME );
+  GFL_BMPWIN_MakeTransWindow_VBlank( work->text_winin_bmpwin );
+}
+static void Btl_Rec_Sel_TextClearWinIn( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work )
+{
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(work->text_winin_bmpwin), TEXT_WININ_BACK_COLOR );
   GFL_BMPWIN_MakeTransWindow_VBlank( work->text_winin_bmpwin );
 }
 static void Btl_Rec_Sel_TextStartStream( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work,
@@ -1105,11 +1203,11 @@ static void Btl_Rec_Sel_FixShowOnPre( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK
     GFL_STR_DeleteBuffer( strbuf );
   }
 
+  // バトルモード
   // 例：コロシアム　シングル
   // 　　せいげんなし
   {
-    u32 str_id = msg_record_title01 + 0;
-    strbuf = GFL_MSG_CreateString( work->msgdata_rec, str_id );
+    strbuf = GFL_MSG_CreateString( work->msgdata_rec, work->battle_mode_str_id );
     bmp_data = GFL_BMPWIN_GetBmp( work->fix_bmpwin[FIX_PRE_TITLE] );
     PRINTSYS_PrintQueColor( work->print_que, bmp_data, 0, 2, strbuf, work->font, PRINTSYS_LSB_Make(15,2,0) );
     GFL_STR_DeleteBuffer( strbuf );
@@ -1181,12 +1279,29 @@ static void Btl_Rec_Sel_FixUpdateTime( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WOR
   }
 
   // ??:??
+/*
   {
     WORDSET* wordset = WORDSET_Create( work->heap_id );
     STRBUF* src_strbuf = GFL_MSG_CreateString( work->msgdata_rec, msg_record_time02 );
     strbuf = GFL_STR_CreateBuffer( STRBUF_FIX_TIME_LENGTH, work->heap_id );
     
     WORDSET_RegisterNumber( wordset, 0, 0, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+    WORDSET_RegisterNumber( wordset, 1, sec, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+    WORDSET_ExpandStr( wordset, strbuf, src_strbuf );
+   
+    bmp_data = GFL_BMPWIN_GetBmp( work->fix_bmpwin[FIX_TIME] );
+    PRINTSYS_PrintQueColor( work->print_que, bmp_data, 0, 6, strbuf, work->font, color );
+   
+    GFL_STR_DeleteBuffer( strbuf );
+    GFL_STR_DeleteBuffer( src_strbuf );
+    WORDSET_Delete( wordset );
+  }
+*/
+  {
+    WORDSET* wordset = WORDSET_Create( work->heap_id );
+    STRBUF* src_strbuf = GFL_MSG_CreateString( work->msgdata_rec, msg_record_time03 );
+    strbuf = GFL_STR_CreateBuffer( STRBUF_FIX_TIME_LENGTH, work->heap_id );
+    
     WORDSET_RegisterNumber( wordset, 1, sec, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
     WORDSET_ExpandStr( wordset, strbuf, src_strbuf );
    
@@ -1212,8 +1327,7 @@ static void Btl_Rec_Sel_PiInit( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work
   GFL_CLUNIT* clunit = BTL_REC_SEL_GRAPHIC_GetClunit( work->graphic );
   u8 i, j;
  
-  // サンプルデータ作成
-  BOOL b_two = FALSE;//TRUE;
+  // データ作成
   {
     for( j=0; j<PI_POS_MAX; j++ )
     {
@@ -1226,14 +1340,14 @@ static void Btl_Rec_Sel_PiInit( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work
       }
     }
   }
- 
+
   // 位置
   {
     for( j=0; j<PI_POS_MAX; j++ )
     {
       for( i=0; i<PI_PARTY_NUM; i++ )
       {
-        if( b_two )  // 2人対戦
+        if( work->battle_mode_arrange_two )  // 2人対戦
         {
           if( j == PI_POS_R )
           {
@@ -1348,5 +1462,128 @@ static void DeletePokeicon( UI_EASY_CLWK_RES* res, GFL_CLWK* clwk )
 {
   GFL_CLACT_WK_Remove( clwk );
   UI_EASY_CLWK_UnLoadResource( res );
+}
+
+//-------------------------------------
+/// バトルモードから表示するテキストID、ポケアイコンの並べ方を決める
+//=====================================
+static void Btl_Rec_Sel_DecideFromBattleMode( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work )
+{
+  // テキストID
+  work->battle_mode_str_id = msg_record_title01 + work->battle_rec_mode;
+
+  // ポケアイコンの並べ方
+  if( BATTLE_MODE_COLOSSEUM_SINGLE_FREE <= work->battle_rec_mode && work->battle_rec_mode <= BATTLE_MODE_COLOSSEUM_SINGLE_50_SHOOTER )
+  {
+    work->battle_mode_arrange_two = TRUE;
+  }
+  else
+  {
+    work->battle_mode_arrange_two = FALSE;
+  }
+}
+
+//-------------------------------------
+/// BG Main
+//=====================================
+void Btl_Rec_Sel_BgMInit( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work )
+{
+  ARCHANDLE* handle = GFL_ARC_OpenDataHandle( ARCID_BATT_REC_GRA, work->heap_id );
+
+  GFL_ARCHDL_UTIL_TransVramPalette( handle, NARC_batt_rec_gra_batt_rec_browse_bg_NCLR, PALTYPE_MAIN_BG,
+                                    BG_PAL_POS_M_BACK * 0x20, BG_PAL_NUM_M_BACK * 0x20, work->heap_id );
+  work->bg_m_tinfo = GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( handle,
+                            NARC_batt_rec_gra_batt_rec_data_NCGR,
+                            BG_FRAME_M_BACK,
+                            0,
+                            FALSE, work->heap_id );
+  GF_ASSERT_MSG( work->bg_m_tinfo != GFL_ARCUTIL_TRANSINFO_FAIL, "BTL_REC_SEL : BGキャラ領域が足りませんでした。\n" );
+
+  GFL_ARC_CloseDataHandle( handle );
+}
+void Btl_Rec_Sel_BgMExit( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work )
+{
+  GFL_BG_FreeCharacterArea( BG_FRAME_M_BACK,
+                            GFL_ARCUTIL_TRANSINFO_GetPos( work->bg_m_tinfo ),
+                            GFL_ARCUTIL_TRANSINFO_GetSize( work->bg_m_tinfo ) );
+}
+void Btl_Rec_Sel_BgMCreateNon( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work )
+{
+  //GFL_ARCHDL_UTIL_TransVramScreen( handle, NARC_batt_rec_gra_batt_rec_non_NSCR,
+  //                                 BG_FRAME_M_BACK,
+  //                                 GFL_ARCUTIL_TRANSINFO_GetPos( work->bg_m_tinfo ),
+  //                                 0,//32*32*GFL_BG_1SCRDATASIZ,
+  //                                 FALSE, work->heap_id );
+
+  GFL_ARC_UTIL_TransVramScreen( ARCID_BATT_REC_GRA,
+                                NARC_batt_rec_gra_batt_rec_non_NSCR,
+                                BG_FRAME_M_BACK,
+                                GFL_ARCUTIL_TRANSINFO_GetPos( work->bg_m_tinfo ),
+                                0,
+                                FALSE,
+                                work->heap_id );
+      
+  //GFL_BG_SetScroll( BG_FRAME_M_BACK, GFL_BG_SCROLL_X_SET, 0 );
+  //GFL_BG_SetScroll( BG_FRAME_M_BACK, GFL_BG_SCROLL_Y_SET, 0 );
+
+  //GFL_BG_LoadScreenReq( BG_FRAME_M_BACK );
+  GFL_BG_LoadScreenV_Req( BG_FRAME_M_BACK );
+}
+void Btl_Rec_Sel_BgMCreateVs2( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work )
+{
+  GFL_ARC_UTIL_TransVramScreen( ARCID_BATT_REC_GRA,
+                                NARC_batt_rec_gra_batt_rec_vs2_NSCR,
+                                BG_FRAME_M_BACK,
+                                GFL_ARCUTIL_TRANSINFO_GetPos( work->bg_m_tinfo ),
+                                0,
+                                FALSE,
+                                work->heap_id );
+ 
+  GFL_BG_LoadScreenV_Req( BG_FRAME_M_BACK );
+}
+void Btl_Rec_Sel_BgMCreateVs4( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work )
+{
+  GFL_ARC_UTIL_TransVramScreen( ARCID_BATT_REC_GRA,
+                                NARC_batt_rec_gra_batt_rec_vs4_NSCR,
+                                BG_FRAME_M_BACK,
+                                GFL_ARCUTIL_TRANSINFO_GetPos( work->bg_m_tinfo ),
+                                0,
+                                FALSE,
+                                work->heap_id );
+ 
+  GFL_BG_LoadScreenV_Req( BG_FRAME_M_BACK );
+}
+  
+//-------------------------------------
+/// BG Sub
+//=====================================
+void Btl_Rec_Sel_BgSInit( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work )
+{
+  // Cギア入手前の下画面を使う
+
+  ARCHANDLE* handle = GFL_ARC_OpenDataHandle( ARCID_C_GEAR, work->heap_id );
+
+  GFL_ARCHDL_UTIL_TransVramPalette( handle, NARC_c_gear_c_gear_NCLR, PALTYPE_SUB_BG,
+                                    BG_PAL_POS_S_BACK * 0x20, 0/*BG_PAL_NUM_S_BACK * 0x20*/, work->heap_id );
+  work->bg_s_tinfo = GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( handle,
+                            NARC_c_gear_c_gear_NCGR,
+                            BG_FRAME_S_BACK,
+                            0,//32*24*GFL_BG_1CHRDATASIZ,
+                            FALSE, work->heap_id );
+  GF_ASSERT_MSG( work->bg_s_tinfo != GFL_ARCUTIL_TRANSINFO_FAIL, "BTL_REC_SEL : BGキャラ領域が足りませんでした。\n" );
+  GFL_ARCHDL_UTIL_TransVramScreen( handle, NARC_c_gear_c_gear01_n_NSCR,
+                                   BG_FRAME_S_BACK,
+                                   GFL_ARCUTIL_TRANSINFO_GetPos( work->bg_s_tinfo ),
+                                   0,//32*24*GFL_BG_1SCRDATASIZ,
+                                   FALSE, work->heap_id );
+  GFL_ARC_CloseDataHandle( handle );
+
+  GFL_BG_LoadScreenReq( BG_FRAME_S_BACK );
+}
+void Btl_Rec_Sel_BgSExit( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work )
+{
+  GFL_BG_FreeCharacterArea( BG_FRAME_S_BACK,
+                            GFL_ARCUTIL_TRANSINFO_GetPos( work->bg_s_tinfo ),
+                            GFL_ARCUTIL_TRANSINFO_GetSize( work->bg_s_tinfo ) );
 }
 
