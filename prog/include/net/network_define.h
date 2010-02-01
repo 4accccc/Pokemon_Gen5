@@ -173,6 +173,8 @@ enum NetworkServiceID_e {
   WB_NET_WIFIMATCH,         ///<WIFI世界対戦
   WB_NET_IRCBATTLE_MULTI,  ///< 赤外線バトルマルチ
   WB_NET_COMM_ENTRY_MENU,   ///<通信エントリーメニュー
+  WB_NET_GURUGURU,        ///<ぐるぐる交換
+  WB_NET_PICTURE,         ///<お絵かき
 
   WB_NET_SERVICEID_MAX   // 終端
 };
@@ -216,6 +218,8 @@ enum NetworkCommandHeaderNo_e {
   GFL_NET_CMD_WIFIMATCH = (WB_NET_WIFIMATCH<<8),         ///<WIFI世界対戦
   GFL_NET_CMD_IRCBATTLE_MULTI = (WB_NET_IRCBATTLE_MULTI<<8),         ///<赤外線バトルマルチ
   GFL_NET_CMD_COMM_ENTRY_MENU = (WB_NET_COMM_ENTRY_MENU<<8),  ///<通信エントリーメニュー
+  GFL_NET_CMD_GURUGURU = (WB_NET_GURUGURU << 8),      ///<ぐるぐる交換
+  GFL_NET_CMD_PICTURE = (WB_NET_PICTURE << 8),        ///<お絵かき
 
 
   
