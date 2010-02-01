@@ -1449,7 +1449,7 @@ FIELD_WEATHER * FIELDMAP_GetFieldWeather( FIELDMAP_WORK *fieldWork )
 //--------------------------------------------------------------
 u16 FIELDMAP_GetZoneWeatherID( FIELDMAP_WORK *fieldWork, u16 zone_id )
 {
-	return PM_WEATHER_GetZoneChangeWeatherNo( fieldWork->gamedata, zone_id );
+	return PM_WEATHER_GetZoneWeatherNo( fieldWork->gamedata, zone_id );
 }
 
 

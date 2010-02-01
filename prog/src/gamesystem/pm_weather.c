@@ -48,7 +48,7 @@ extern void GAMEDATA_SetWeatherNo( GAMEDATA* p_data, u8 weather_no );
  *	@return É]Å[ÉìÇÃìVãC
  */
 //-----------------------------------------------------------------------------
-u8 PM_WEATHER_GetZoneChangeWeatherNo( GAMEDATA* p_data, int zone_id )
+u8 PM_WEATHER_GetZoneWeatherNo( GAMEDATA* p_data, int zone_id )
 {
   CALENDER* calender = GAMEDATA_GetCalender( p_data );
   u16       weather  = MP_CheckMovePokeWeather( p_data, zone_id );
@@ -73,7 +73,7 @@ u8 PM_WEATHER_GetZoneChangeWeatherNo( GAMEDATA* p_data, int zone_id )
 //-----------------------------------------------------------------------------
 void PM_WEATHER_UpdateZoneChangeWeatherNo( GAMEDATA* p_data, int zone_id )
 {
-  u16       weather  = PM_WEATHER_GetZoneChangeWeatherNo( p_data, zone_id );
+  u16       weather  = PM_WEATHER_GetZoneWeatherNo( p_data, zone_id );
   GAMEDATA_SetWeatherNo( p_data, weather );
 }
 

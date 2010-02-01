@@ -24,17 +24,17 @@ extern "C"{
  *					プロトタイプ宣言
 */
 //-----------------------------------------------------------------------------
-// WeatherNoを取得
+// 今のWeatherNoを取得
 extern u32 GAMEDATA_GetWeatherNo( const GAMEDATA* cp_data );
 
 
-// 現在の指定ZONEの天気を取得する
-extern u8 PM_WEATHER_GetZoneChangeWeatherNo( GAMEDATA* p_data, int zone_id );
+// 今の指定ZONEの天気を取得する
+extern u8 PM_WEATHER_GetZoneWeatherNo( GAMEDATA* p_data, int zone_id );
 
-// ZoneChangeでの天気を求める
+// ZoneChangeでの天気更新処理
 extern void PM_WEATHER_UpdateZoneChangeWeatherNo( GAMEDATA* p_data, int zone_id );
 
-// セーブ復帰での天気を求める
+// セーブ復帰での天気更新処理
 extern void PM_WEATHER_UpdateSaveLoadWeatherNo( GAMEDATA* p_data, int zone_id );
 
 
