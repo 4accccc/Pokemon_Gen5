@@ -37,6 +37,7 @@ class ColumnID
 	attr :cDASH, true
 	attr :cESCAPE, true
 	attr :cFLY, true
+  attr :cBGM_CHG, true
 	attr :cBGM_SPRING, true
 	attr :cBGM_SUMMER, true
 	attr :cBGM_AUTUMN, true
@@ -81,6 +82,8 @@ class ColumnID
 				@cESCAPE = c_count
 			when "fly"
 				@cFLY = c_count
+      when "bgm_chg"
+        @cBGM_CHG = c_count
 			when "BGM_SPRING"
 				@cBGM_SPRING = c_count
 			when "BGM_SUMMER"
@@ -282,6 +285,7 @@ class ZoneDataFile < OutputFile
 		bicycle_flag = ox2bool column[@cl.cBICYCLE], id
 		escape_flag = ox2bool column[@cl.cESCAPE], id
 		fly_flag = ox2bool column[@cl.cFLY], id
+    bgm_chg_flag = ox2bool column[@cl.cBGM_CHG], id
 
 
 	@fp.puts <<DOCUMENT
@@ -309,6 +313,7 @@ class ZoneDataFile < OutputFile
 		#{dash_flag},
 		#{escape_flag},
 		#{fly_flag},
+    #{bgm_chg_flag},
 		#{camera_area}, // camera_area
 		0, // padding
 		#{column[@cl.cSX]},
