@@ -15,9 +15,12 @@
 
 #include "arc/fieldmap/fld_faceup.naix"
 
-#define BG_PLT_NO (15)
+#define BG_PLT_NO (10)
 #define FACE_PLT_NO (0)
 #define FACE_PLT_NUM  (2) 
+
+#define SCR_SIZE_W  (32)
+#define SCR_SIZE_H  (24)
 
 typedef struct FACEUP_WORK_tag
 {
@@ -40,6 +43,8 @@ static void PushPriority(FACEUP_WK_PTR ptr);
 static void PushDisp(FACEUP_WK_PTR ptr);
 static void PopPriority(FACEUP_WK_PTR ptr);
 static void PopDisp(FACEUP_WK_PTR ptr);
+
+static void ChangeScreenPlt( void *rawData, u8 px, u8 py, u8 sx, u8 sy, u8 pal );
 
 GMEVENT *FLD_FACEUP_Start(const int inBackNo, const int inCharNo, GAMESYS_WORK *gsys)
 {
@@ -88,7 +93,7 @@ static GMEVENT_RESULT SetupEvt( GMEVENT* event, int* seq, void* work )
   case 0:
     //ブラックアウト開始
     GFL_FADE_SetMasterBrightReq(
-          GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN, 0, 16, -1 );
+          GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN, 0, 16, -3 );
     (*seq)++;
     break;
   case 1:
@@ -98,7 +103,7 @@ static GMEVENT_RESULT SetupEvt( GMEVENT* event, int* seq, void* work )
     Setup(ptr);
     //ブラックイン開始
     GFL_FADE_SetMasterBrightReq(
-          GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN, 16, 0, -1 );
+          GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN, 16, 0, -3 );
     (*seq)++;
     break;
   case 2:
@@ -155,6 +160,7 @@ static void Setup(FACEUP_WK_PTR ptr)
       if( NNS_G2dGetUnpackedScreenData(buf,&scr) == FALSE ){
         GF_ASSERT( 0 );
       }
+      ChangeScreenPlt( scr->rawData, 0, 0, SCR_SIZE_W, SCR_SIZE_H, BG_PLT_NO );
       GFL_BG_LoadScreen( FLDBG_MFRM_EFF1, scr->rawData, scr->szByte, 0 );
       GFL_HEAP_FreeMemory( buf );
     }
@@ -254,7 +260,7 @@ static GMEVENT_RESULT ReleaseEvt( GMEVENT* event, int* seq, void* work )
   case 0:
     //ブラックアウト開始
     GFL_FADE_SetMasterBrightReq(
-          GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN, 0, 16, -1 );
+          GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN, 0, 16, -3 );
     (*seq)++;
     break;
   case 1:
@@ -264,7 +270,7 @@ static GMEVENT_RESULT ReleaseEvt( GMEVENT* event, int* seq, void* work )
     Release(fieldmap, ptr);
     //ブラックイン開始
     GFL_FADE_SetMasterBrightReq(
-          GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN, 16, 0, -1 );
+          GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN, 16, 0, -3 );
     (*seq)++;
     break;
   case 2:
@@ -400,5 +406,26 @@ static void PopDisp(FACEUP_WK_PTR ptr)
 
 
 
+static void ChangeScreenPlt( void *rawData, u8 px, u8 py, u8 sx, u8 sy, u8 pal )
+{
+  u16 * scrn;
+  u8  scr_sx, scr_sy;
+  u8  i, j;
 
+  scrn = (u16 *)rawData;
 
+  scr_sx = 32;
+  scr_sy = 32;
+
+  for( i=py; i<py+sy; i++ ){
+    if( i >= scr_sy ){ break; }
+    for( j=px; j<px+sx; j++ ){
+      if( j >= scr_sx ){ break; }
+      {
+        u16 scr_pos = i * 32 + j;
+
+        scrn[scr_pos] = ( scrn[scr_pos] & 0xfff ) | ( pal << 12 );
+      }
+    }
+  }
+}
