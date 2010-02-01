@@ -594,6 +594,10 @@ void CTVT_COMM_SetMode( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork , CTVT_CO
 {
   commWork->nextMode = mode;
 }
+const CTVT_COMM_INIT_MODE CTVT_COMM_GetMode( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
+{
+  return commWork->mode;
+}
 
 //--------------------------------------------------------------
 //	マックアドレス設定
@@ -1373,6 +1377,19 @@ static u8*  CTVT_COMM_Post_DrawBuff_Buff( int netID, void* pWork , int size )
 //  return G2_GetBG2ScrPtr();
 }
 #endif //CTVT_COMM_SHARE_DRAW_BUFF
+
+#pragma mark [>timing func
+void CTVT_COMM_SendTimingCommnad( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork , const u8 number )
+{
+  GFL_NETHANDLE *selfHandle = GFL_NET_HANDLE_GetCurrentHandle();
+  GFL_NET_TimingSyncStart( selfHandle , number );
+}
+
+const BOOL CTVT_COMM_CheckTimingCommnad( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork , const u8 number )
+{
+  GFL_NETHANDLE *selfHandle = GFL_NET_HANDLE_GetCurrentHandle();
+  return GFL_NET_IsTimingSync( selfHandle , number );
+}
 
 #pragma mark [>outer func
 const u8 CTVT_COMM_GetSelfNetId( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )

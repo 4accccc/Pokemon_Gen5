@@ -66,6 +66,9 @@ typedef enum
   CDED_RETURN,
 
   CDED_MAX,
+
+  CDED_STAMP,
+
 }CTVT_DRAW_EDTI_BUTTON_TYPE;
 //à–¾ƒ{ƒ^ƒ“Ží—Þ
 typedef enum
@@ -434,6 +437,13 @@ const COMM_TVT_MODE CTVT_DRAW_Main( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWo
       drawWork->isUpdateMsg = FALSE;
     }
   }
+
+#if defined(DEBUG_ONLY_FOR_ariizumi_nobuhiko)
+  if( GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT )
+  {
+    drawWork->editMode = CDED_STAMP;
+  }
+#endif
   return CTM_DRAW;
 }
 
@@ -605,7 +615,35 @@ static void CTVT_DRAW_UpdateDrawing( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawW
     GFL_CLACT_WK_SetDrawEnable( drawWork->clwkPenSize , FALSE );
     return;
   }
-      
+#if defined(DEBUG_ONLY_FOR_ariizumi_nobuhiko)
+  if( drawWork->state == CDS_EDIT &&
+      GFL_UI_TP_GetTrg() == TRUE &&
+      drawWork->isTouch == FALSE &&
+      drawWork->editMode == CDED_STAMP )
+  {
+    BOOL isFull;
+    const u8 connectNum = COMM_TVT_GetConnectNum( work );
+    CTVT_COMM_WORK *commWork = COMM_TVT_GetCommWork( work );
+    DRAW_SYS_WORK *drawSys = COMM_TVT_GetDrawSys( work );
+    DRAW_SYS_PEN_INFO *info = CTVT_COMM_GetDrawBuf(work,commWork,&isFull);
+
+    info->startX = tpx;
+    info->startY = tpy;
+    info->endX = tpx;
+    info->endY = tpy;
+    info->penType = DSPS_STAMP_TRI;
+    info->col  = drawWork->penCol;
+    
+    if( connectNum == 1 )
+    {
+      DRAW_SYS_SetPenInfo( drawSys , info );
+    }
+    else
+    {
+      CTVT_COMM_AddDrawBuf( work , commWork );
+    }
+  }
+#endif      
   
   if( GFL_UI_TP_GetTrg() == TRUE &&
       drawWork->isTouch == FALSE )

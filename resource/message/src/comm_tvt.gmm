@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ariizumi_nobuhiko" host="W00147" date="2010-01-25T11:51:08"/>
+	<create user="ariizumi_nobuhiko" host="W00147" date="2010-01-29T22:44:53"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -317,7 +317,7 @@
 		</language>
 	</columns>
 
-	<dialog left="250" top="153" right="955" bottom="773" maximized="no" rayout="Vertical2">
+	<dialog left="118" top="153" right="823" bottom="773" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -467,6 +467,12 @@
 		<language name="JPN">おやが　しゅうりょうしたので　
 かいさんします。</language>
 		<language name="JPN_KANJI">親が　終了したので　解散します。</language>
+	</row>
+
+	<row id="COMM_TVT_SYS_06">
+		<language name="JPN">あいてが　しゅうりょうしたので　
+かいさんします。</language>
+		<language name="JPN_KANJI">相手が　終了したので　解散します。</language>
 	</row>
 
 	<flowchart-group-list>

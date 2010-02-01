@@ -93,6 +93,13 @@ typedef enum
   CTS_END_PARENT_REQ_INIT,
   CTS_END_PARENT_REQ,
 
+  //WIFIのリクエストによる終了
+  CTS_END_WIFI_REQ_SEND,
+  CTS_END_WIFI_REQ_INIT_DISP,
+  CTS_END_WIFI_REQ_DISP,
+  CTS_END_WIFI_REQ_INIT,
+  CTS_END_WIFI_REQ,
+
 }CTVT_TALK_STATE;
 
 typedef enum
@@ -182,6 +189,8 @@ static void CTVT_TALK_DispMessage( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWor
 
 static void CTVT_TALK_InitEndConfirm( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork );
 static void CTVT_TALK_UpdateEndConfirm( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork );
+
+static const BOOL CTVT_TALK_CheckFinishReq( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork );
 
 static const GFL_UI_TP_HITTBL CTVT_TALK_HitRecButton[2] = 
 {
@@ -470,12 +479,7 @@ const COMM_TVT_MODE CTVT_TALK_Main( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWo
     break;
     
   case CTS_REQ_TALK:
-    if( COMM_TVT_GetFinishReq( work ) == TRUE )
-    {
-      //親のリクエストによる終了
-      talkWork->state = CTS_END_PARENT_REQ_INIT;
-    }
-    else
+    if( CTVT_TALK_CheckFinishReq( work , talkWork ) == FALSE )
     {
       const int isContTbl = GFL_UI_TP_HitCont( CTVT_TALK_HitRecButton );
       if( isContTbl == 0 || (GFL_UI_KEY_GetCont() & CTVT_BUTTON_TALK) )
@@ -495,12 +499,7 @@ const COMM_TVT_MODE CTVT_TALK_Main( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWo
     break;
   
   case CTS_REQ_TALK_WAIT:
-    if( COMM_TVT_GetFinishReq( work ) == TRUE )
-    {
-      //親のリクエストによる終了
-      talkWork->state = CTS_END_PARENT_REQ_INIT;
-    }
-    else
+    if( CTVT_TALK_CheckFinishReq( work , talkWork ) == FALSE )
     {
       CTVT_COMM_WORK *commWork = COMM_TVT_GetCommWork( work );
       const u8 talkMember = CTVT_COMM_GetTalkMember( work , commWork );
@@ -583,6 +582,59 @@ const COMM_TVT_MODE CTVT_TALK_Main( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWo
       COMM_TVT_SetSusspend( work , TRUE );
     }
     break;
+    
+    //WIFIのリクエストによる終了
+    
+  case CTS_END_WIFI_REQ_SEND:
+    {
+      CTVT_COMM_WORK *commWork = COMM_TVT_GetCommWork( work );
+      const BOOL ret = CTVT_COMM_SendFlg( work , commWork , CCFT_FINISH_PARENT , 0 );
+      if( ret == TRUE )
+      {
+        talkWork->state = CTS_END_WIFI_REQ_INIT;
+      }
+    }
+    break;
+
+  case CTS_END_WIFI_REQ_INIT_DISP:
+    {
+      CTVT_COMM_WORK *commWork = COMM_TVT_GetCommWork( work );
+      CTVT_COMM_ExitComm( work , commWork );
+      
+      CTVT_TALK_DispMessage( work , talkWork , COMM_TVT_SYS_06 );
+      talkWork->state = CTS_END_WIFI_REQ_DISP;
+    }
+    break;
+    
+  case CTS_END_WIFI_REQ_DISP:
+    if( GFL_UI_TP_GetTrg() == TRUE ||
+        GFL_UI_KEY_GetTrg() & (PAD_BUTTON_A|PAD_BUTTON_B) )
+    {
+      talkWork->state = CTS_END_WIFI_REQ_INIT;
+    }
+    break;
+    
+  case CTS_END_WIFI_REQ_INIT:
+    if( GFL_UI_TP_GetTrg() == TRUE ||
+        GFL_UI_KEY_GetTrg() & (PAD_BUTTON_A|PAD_BUTTON_B) )
+    {
+      CTVT_COMM_WORK *commWork = COMM_TVT_GetCommWork( work );
+      CTVT_COMM_SendTimingCommnad( work , commWork , CTVT_COMM_TIMING_END );
+      talkWork->state = CTS_END_WIFI_REQ;
+    }
+    break;
+    
+  case CTS_END_WIFI_REQ:
+    {
+      CTVT_COMM_WORK *commWork = COMM_TVT_GetCommWork( work );
+      if( CTVT_COMM_CheckTimingCommnad( work , commWork , CTVT_COMM_TIMING_END ) == TRUE )
+      {
+        talkWork->subState = CTSS_GO_END;
+        talkWork->state = CTS_FADEOUT_BOTH;
+        COMM_TVT_SetSusspend( work , TRUE );
+      }
+    }
+    break;
   }
 
   CTVT_TALK_UpdateButton( work , talkWork );
@@ -618,6 +670,7 @@ const COMM_TVT_MODE CTVT_TALK_Main( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWo
     }
   }
 
+  //ボタンの点灯
   if( talkWork->blinkButtonReq == TRUE )
   {
     static const u8 blinkTime = 6;
@@ -665,10 +718,8 @@ static void CTVT_TALK_UpdateWait( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork
   //const BOOL isTrg = GFL_UI_TP_GetPointTrg( &trgX,&trgY );
   //const BOOL isCont = GFL_UI_TP_GetPointTrg( &contX,&contY );
 
-  if( COMM_TVT_GetFinishReq( work ) == TRUE )
+  if( CTVT_TALK_CheckFinishReq( work , talkWork ) == TRUE )
   {
-    //親のリクエストによる終了
-    talkWork->state = CTS_END_PARENT_REQ_INIT;
     return;
   }
 
@@ -772,10 +823,8 @@ static void CTVT_TALK_UpdateWait( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork
 static void CTVT_TALK_UpdateTalk( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork )
 {
   const int isContTbl = GFL_UI_TP_HitCont( CTVT_TALK_HitRecButton );
-  if( COMM_TVT_GetFinishReq( work ) == TRUE )
+  if( CTVT_TALK_CheckFinishReq( work , talkWork ) == TRUE )
   {
-    //親のリクエストによる終了
-    talkWork->state = CTS_END_PARENT_REQ_INIT;
     return;
   }
   switch( talkWork->subState )
@@ -1086,6 +1135,13 @@ static void CTVT_TALK_DispMessage( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWor
 static void CTVT_TALK_InitEndConfirm( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork )
 {
 
+  CTVT_COMM_WORK *commWork = COMM_TVT_GetCommWork( work );
+  if( CTVT_COMM_GetMode( work , commWork ) == CCIM_CONNECTED )
+  {
+    //Wifi終了確認
+    CTVT_TALK_DispMessage( work , talkWork , COMM_TVT_SYS_01 );
+  }
+  else
   if( COMM_TVT_GetSelfIdx( work ) == 0 &&
       COMM_TVT_GetConnectNum( work ) > 1 )
   {
@@ -1106,10 +1162,9 @@ static void CTVT_TALK_InitEndConfirm( COMM_TVT_WORK *work , CTVT_TALK_WORK *talk
 
 static void CTVT_TALK_UpdateEndConfirm( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork )
 {
-  if( COMM_TVT_GetFinishReq( work ) == TRUE )
+  if( CTVT_TALK_CheckFinishReq( work , talkWork ) == TRUE )
   {
-    //親のリクエストによる終了
-    talkWork->state = CTS_END_PARENT_REQ_INIT;
+    //リクエストによる終了
     APP_TASKMENU_CloseMenu( talkWork->yesNoWork );
     talkWork->yesNoWork = NULL;
     return;
@@ -1120,6 +1175,13 @@ static void CTVT_TALK_UpdateEndConfirm( COMM_TVT_WORK *work , CTVT_TALK_WORK *ta
     const u8 retVal = APP_TASKMENU_GetCursorPos( talkWork->yesNoWork );
     if( retVal == 0 )
     {
+      CTVT_COMM_WORK *commWork = COMM_TVT_GetCommWork( work );
+      if( CTVT_COMM_GetMode( work , commWork ) == CCIM_CONNECTED )
+      {
+        //Wifi終了確認
+        talkWork->state = CTS_END_WIFI_REQ_SEND;
+      }
+      else
       if( COMM_TVT_GetSelfIdx( work ) == 0 &&
           COMM_TVT_GetConnectNum( work ) > 1 )
       {
@@ -1147,6 +1209,26 @@ static void CTVT_TALK_UpdateEndConfirm( COMM_TVT_WORK *work , CTVT_TALK_WORK *ta
     APP_TASKMENU_CloseMenu( talkWork->yesNoWork );
     talkWork->yesNoWork = NULL;
   }
+}
+
+static const BOOL CTVT_TALK_CheckFinishReq( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork )
+{
+  if( COMM_TVT_GetFinishReq( work ) == TRUE )
+  {
+    CTVT_COMM_WORK *commWork = COMM_TVT_GetCommWork( work );
+    if( CTVT_COMM_GetMode( work , commWork ) == CCIM_CONNECTED )
+    {
+      //Wifiのリクエストによる終了
+      talkWork->state = CTS_END_WIFI_REQ_INIT_DISP;
+    }
+    else
+    {
+      //親のリクエストによる終了
+      talkWork->state = CTS_END_PARENT_REQ_INIT;
+    }
+    return TRUE;
+  }
+  return FALSE;
 }
 
 

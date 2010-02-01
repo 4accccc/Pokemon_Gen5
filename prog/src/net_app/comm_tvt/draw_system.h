@@ -61,6 +61,8 @@ typedef enum
   DSPS_CIRCLE_4,
   DSPS_CIRCLE_8,
 
+  DSPS_STAMP_TRI,
+
   DSPS_MAX,
 }DRAW_SYS_PEN_SIZE;
 //======================================================================
