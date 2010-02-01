@@ -11,7 +11,7 @@
 #include "system/gfl_use.h"
 #include "arc_def.h"
 #include <dwc.h>
-#include "libdpw/dpw_tr.h"
+#include <dpw_tr.h>
 #include "print/wordset.h"
 #include "message.naix"
 #include "msg/msg_wifi_lobby.h"

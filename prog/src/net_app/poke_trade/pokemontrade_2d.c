@@ -36,6 +36,7 @@
 
 
 #define _TRADE_BG_PALLETE_NUM (5)  //交換BGのパレットの本数
+#define _SUCKEDCOUNT_NUM (10)  //吸い込みまでにかかる回数
 
 
 static void IRC_POKETRADE_TrayInit(POKEMON_TRADE_WORK* pWork,int subchar);
@@ -1719,7 +1720,7 @@ void IRC_POKETRADE_SetSubStatusIcon(POKEMON_TRADE_WORK* pWork)
                                                                 pWork->cellRes[ANM_SCROLLBAR],
                                                                 &cellInitData ,CLSYS_DRAW_SUB , pWork->heapID );
     GFL_CLACT_WK_SetAutoAnmFlag( pWork->curIcon[CELL_CUR_POKE_SELECT] , TRUE );
-    GFL_CLACT_WK_SetDrawEnable( pWork->curIcon[CELL_CUR_POKE_SELECT], TRUE );
+    GFL_CLACT_WK_SetDrawEnable( pWork->curIcon[CELL_CUR_POKE_SELECT], FALSE );
 
   }
 
@@ -2269,4 +2270,186 @@ void POKETRADE_2D_GTSPokemonIconResetAll(POKEMON_TRADE_WORK* pWork)
   }
 }
 
+
+#define N (3)
+
+static float ap[N];
+static float aa[N];
+static float ab[N];
+static float ax[N];
+static float ay[N];
+
+static void maketable(float *x,float *y, float *z)
+{
+  int i;
+  float t;
+  static float h[N] ,d[N];
+
+  z[0]=0;
+  z[N-1]=0;
+  
+  for(i=0;i<N-1;i++){
+    h[i]=x[i+1]-x[i];
+    d[i+1]=(y[i+1]-y[i]) / h[i];
+
+    z[1]=d[2]-d[1]-(h[0]*z[0]);
+    d[1]=2*(x[2]-x[0]);
+    for(i=1;i<N-2;i++){
+      t = h[i]/d[i];
+      z[i+1] = d[i+2] - d[i+1] - z[i] * t;
+      d[i+1] = 2 * (x[i+2]-x[i]) - h[i] * t;
+    }
+    z[N-2]-=h[N-2]*z[N-1];
+    for(i=N-2;i>0;i--){
+      z[i]=(z[i]-h[i]*z[i+1])/d[i];
+    }
+  }
+}
+
+static float spline(float t,float *x,float *y,float *z)
+{
+  int i,j,k;
+  float d, h;
+
+  
+  i=0;
+  j=N-1;
+  while(i<j){
+    k=(i+j)/2;
+    if(x[k]<t){
+      i=k+1;
+    }
+    else{
+      j=k;
+    }
+  }
+  if(i>0){
+    i--;
+  }
+  h = x[i+1] -x[i];
+  d = t - x[i];
+  return (((z[i+1]-z[i])*d/h+z[i]*3)*d+((y[i+1]-y[i])/h - (z[i]*2+z[i+1])*h))*d+y[i];
+}
+
+
+
+static void maketable2(float *p, float *x, float *y, float *a,float *b)
+{
+  int i;
+  float t1,t2;
+
+  p[0]=0;
+  for(i=1;i<N;i++){
+    t1 = x[i] - x[i-1];
+    t2 = y[i] - y[i-1];
+
+    {
+      fx32 fxret;
+      float fret;
+
+      fxret = FX_F32_TO_FX32(t1*t1 + t2*t2);
+      fxret = FX_Sqrt(fxret);
+      fret = FX_FX32_TO_F32(fxret);
+      p[i] = p[i-1] + fret;
+    }
+
+    for(i=1;i<N;i++){
+      p[i]/=p[N-1];
+    }
+    maketable( p, x, a);
+    maketable( p, y, b);
+  }
+}
+
+
+static void spline2(float t, float *px, float *py,float *p, float *x,float *y,float *a,float *b)
+{
+  *px = spline( t, p, x, a);
+  *py = spline( t, p, y, b);
+}
+
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   ぽけもんのつかみ処理開始
+ * @param   POKEMON_TRADE_WORK
+ * @param   palno      パレットを送る番号
+ * @param   palType   パレット転送タイプ MAINかSUB
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+void POKEMONTRADE_StartCatched(POKEMON_TRADE_WORK* pWork,int line, int pos,int x,int y)
+{
+  GFL_CLWK_DATA cellInitData;
+
+  cellInitData.pos_x = 0;
+  cellInitData.pos_y = 0;
+  cellInitData.anmseq = POKEICON_ANM_HPMAX;
+  cellInitData.softpri = _CLACT_SOFTPRI_POKELIST;
+  cellInitData.bgpri = 3;
+
+  pWork->curIcon[CELL_CUR_POKE_KEY] =
+    GFL_CLACT_WK_Create( pWork->cellUnit ,
+                         pWork->pokeIconNcgRes[line][pos],
+                         pWork->cellRes[PLT_POKEICON],
+                         pWork->cellRes[ANM_POKEICON],
+                         &cellInitData ,CLSYS_DRAW_SUB , pWork->heapID );
+}
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   ぽけもんの吸い込み処理
+ * @param   POKEMON_TRADE_WORK
+ * @param   palno      パレットを送る番号
+ * @param   palType   パレット転送タイプ MAINかSUB
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+void POKEMONTRADE_StartSucked(POKEMON_TRADE_WORK* pWork,int x1,int y1)
+{
+  GFL_CLACTPOS pos;
+
+  GFL_CLACT_WK_GetPos(pWork->curIcon[CELL_CUR_POKE_KEY], &pos, CLSYS_DRAW_SUB);
+  ax[0] = pos.x;
+  ay[0] = pos.y;
+  ax[1] = x1;
+  ay[1] = y1;
+  ax[2] = 28;
+  ay[2] = 0;
+
+  maketable2(ap,ax,ay,aa,ab);
+  pWork->SuckedCount = _SUCKEDCOUNT_NUM;
+
+}
+
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   ぽけもんの吸い込み処理メイン
+ * @param   POKEMON_TRADE_WORK
+ * @param   palno      パレットを送る番号
+ * @param   palType   パレット転送タイプ MAINかSUB
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+void POKEMONTRADE_SuckedMain(POKEMON_TRADE_WORK* pWork)
+{
+  float num;
+  float ansx,ansy;
+    GFL_CLACTPOS pos;
+  
+  if(pWork->SuckedCount){
+    pWork->SuckedCount--;
+    num = (_SUCKEDCOUNT_NUM - pWork->SuckedCount);
+    num = num / _SUCKEDCOUNT_NUM;
+    spline2(num, &ansx, &ansy ,ap,ax,ay,aa,ab);
+    pos.x = (int)ansx;
+    pos.y = (int)ansx;
+    GFL_CLACT_WK_SetPos(  pWork->curIcon[CELL_CUR_POKE_KEY], &pos, CLSYS_DRAW_SUB);
+  }
+
+}
 

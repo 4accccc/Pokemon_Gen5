@@ -12,7 +12,7 @@
 #include "system/main.h"
 #include "system/gfl_use.h"
 #include "arc_def.h"
-#include "libdpw/dpw_tr.h"
+#include <dpw_tr.h>
 
 #include "print/wordset.h"
 #include "message.naix"

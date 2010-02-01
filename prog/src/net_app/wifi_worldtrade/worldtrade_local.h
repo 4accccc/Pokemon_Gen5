@@ -8,10 +8,9 @@
  */
 //=============================================================================
 
+#pragma once
 
-#ifndef __WORLDTRADE_LOCAL_H__
-#define __WORLDTRADE_LOCAL_H__
-
+#include <dpw_tr.h>
 
 ///< DP‚Ì‚Ó‚è‚ð‚·‚é(??)
 #define GS_DP_GISOU
@@ -734,4 +733,4 @@ extern int WorldTrade_Demo_End(WORLDTRADE_WORK *wk, int seq);
 //==============================================================================
 extern const u32 CountryListTblNum;
 
-#endif
+

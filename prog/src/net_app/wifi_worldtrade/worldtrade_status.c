@@ -11,7 +11,7 @@
 #include "system/main.h"
 #include "system/gfl_use.h"
 #include "arc_def.h"
-#include "libdpw/dpw_tr.h"
+#include <dpw_tr.h>
 #include "print/wordset.h"
 #include "message.naix"
 #include "system/wipe.h"
@@ -25,8 +25,6 @@
 
 #include "net_app/worldtrade.h"
 #include "worldtrade_local.h"
-
-#include "libdpw/dpw_tr.h"
 
 #include "app/p_status.h"
 

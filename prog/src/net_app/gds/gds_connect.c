@@ -11,7 +11,7 @@
 #include <ghttp/dwci_ghttp.h>
 #include "net/dwc_rap.h"
 #include "system/main.h"
-#include "libdpw/dpw_tr.h"
+#include <dpw_tr.h>
 #include "net/dwc_rap.h"
 #include "savedata\save_control.h"
 #include "gds_battle_rec.h"
@@ -1318,7 +1318,7 @@ static int Enter_WifiConnectionLoginWait( GDS_CONNECT_SYS *wk )
 				wk->subprocess_seq = ENTER_DWC_ERROR_PRINT;
 				break;
 			case DWC_ETYPE_SHUTDOWN_GHTTP:
-				DWC_ShutdownGHTTP();
+        DWC_ShutdownGHTTP();
 				wk->subprocess_seq = ENTER_DWC_ERROR_PRINT;
 				break;
 			case DWC_ETYPE_DISCONNECT:

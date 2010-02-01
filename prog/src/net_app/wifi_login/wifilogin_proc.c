@@ -190,7 +190,7 @@ static void _modeSelectBattleTypeInit(WIFILOGIN_WORK* pWork);
 
 
 
-#ifdef _NET_DEBUG
+#if PM_DEBUG
 #define   _CHANGE_STATE(pWork, state)  _changeStateDebug(pWork ,state, __LINE__)
 #else  //_NET_DEBUG
 #define   _CHANGE_STATE(pWork, state)  _changeState(pWork ,state)

@@ -212,7 +212,14 @@ static void _vectorUpMath(POKEMON_TRADE_WORK *pWork)
         else{
 //          pWork->bUpVec = FALSE;
         }
-        if(GFL_STD_Abs(pWork->aCatchOldPos.x - x)+GFL_STD_Abs(pWork->aCatchOldPos.y - y) > 10){
+        if(GFL_STD_Abs(pWork->aCatchOldPos.x - pWork->aDifferencePos.x - x) > 1){
+          NET_PRINT("POSNOX %d %d %d\n",pWork->aCatchOldPos.x , pWork->aDifferencePos.x , x);
+          
+          pWork->bUpVec = TRUE;
+          //pWork->aPanWork.bAreaOver = TRUE;
+        }
+        if(GFL_STD_Abs(pWork->aCatchOldPos.y - pWork->aDifferencePos.y - y) > 1){
+          NET_PRINT("POSNOY %d %d %d \n",pWork->aCatchOldPos.y , pWork->aDifferencePos.y , y);
           pWork->bUpVec = TRUE;
           //pWork->aPanWork.bAreaOver = TRUE;
         }
@@ -247,11 +254,29 @@ static void _CatchPokemonMoveFunc(POKEMON_TRADE_WORK *pWork)
     u32 x,y;
     GFL_CLACTPOS pos;
     if(GFL_UI_TP_GetPointCont(&x,&y)){
-      pos.x = x;
-      pos.y = y;
-      GFL_CLACT_WK_SetSoftPri(pWork->pCatchCLWK,_CLACT_SOFTPRI_CATCHPOKE);
+      pos.x = x + pWork->aDifferencePos.x;
+      pos.y = y + pWork->aDifferencePos.y;
       GFL_CLACT_WK_SetPos( pWork->pCatchCLWK, &pos, CLSYS_DRAW_SUB);
     }
+  }
+}
+
+
+//------------------------------------------------------------------
+/**
+ * @brief   アイコンを元に戻す状態にする
+ * @param   POKEMON_TRADE_WORK
+ * @retval  void
+ */
+//------------------------------------------------------------------
+
+static void _CatchPokemonRelease(POKEMON_TRADE_WORK *pWork)
+{
+  if(pWork->pCatchCLWK){
+    GFL_CLACT_WK_SetBgPri(pWork->pCatchCLWK,3);
+    GFL_CLACT_WK_SetSoftPri(pWork->pCatchCLWK,_CLACT_SOFTPRI_POKELIST);
+    pWork->pCatchCLWK=NULL;
+    NET_PRINT("はなしたー\n");
   }
 }
 
@@ -269,7 +294,7 @@ static void _CatchPokemonPositionRewind(POKEMON_TRADE_WORK *pWork)
     GFL_CLACT_WK_SetSoftPri(pWork->pCatchCLWK,_CLACT_SOFTPRI_POKELIST);
     GFL_CLACT_WK_SetPos(pWork->pCatchCLWK, &pWork->aCatchOldPos, CLSYS_DRAW_SUB);
     GFL_CLACT_WK_SetDrawEnable( pWork->pCatchCLWK, TRUE);
-    pWork->pCatchCLWK=NULL;
+    _CatchPokemonRelease(pWork);
     GFL_STD_MemClear(&pWork->aPanWork,sizeof(PENMOVE_WORK));
   }
 }
@@ -287,6 +312,22 @@ static void _CatchPokemonPositionActive(POKEMON_TRADE_WORK *pWork,GFL_CLWK* pCL)
   pWork->pCatchCLWK = pCL;
   pWork->pSelectCLWK = pCL;
   GFL_CLACT_WK_GetPos(pWork->pCatchCLWK, &pWork->aCatchOldPos, CLSYS_DRAW_SUB);
+  GFL_CLACT_WK_SetSoftPri(pWork->pCatchCLWK,_CLACT_SOFTPRI_CATCHPOKE);
+  GFL_CLACT_WK_SetBgPri(pWork->pCatchCLWK,0);
+
+  {
+    u32 x,y;
+    GFL_CLACTPOS pos;
+    if(GFL_UI_TP_GetPointCont(&x,&y)){
+      pWork->aDifferencePos.x = pWork->aCatchOldPos.x - x;
+      pWork->aDifferencePos.y = pWork->aCatchOldPos.y - y;
+      
+      NET_PRINT("POSX %d %d %d\n",x,pWork->aDifferencePos.x,pWork->aCatchOldPos.x);
+      NET_PRINT("POSY %d %d %d\n",y,pWork->aDifferencePos.y,pWork->aCatchOldPos.y);
+      
+    }
+  }
+
 }
 
 
@@ -1420,7 +1461,7 @@ static BOOL _PokemonsetAndSendData(POKEMON_TRADE_WORK* pWork)
 #if PM_DEBUG
   if(!POKEMONTRADEPROC_IsNetworkMode(pWork)){
     const STRCODE *name;
-    POKEMON_PARAM* pp2; 
+    POKEMON_PARAM* pp2;
 
     pp2 = PP_Create(MONSNO_ONOKKUSU, 100, 123456, GFL_HEAPID_APP);
     name = MyStatus_GetMyName( pWork->pMy );
@@ -2020,7 +2061,10 @@ void POKE_TRADE_PROC_TouchStateCommon(POKEMON_TRADE_WORK* pWork)
       pWork->selectBoxno = pWork->underSelectBoxno;
 
       if(!POKEMONTRADEPROC_IsTriSelect(pWork)){
-        pWork->pCatchCLWK = NULL;
+        // 選択したポケモンを投げるところ
+        _CatchPokemonRelease(pWork);
+//        GFL_CLACT_WK_SetSoftPri(pWork->pCatchCLWK,_CLACT_SOFTPRI_POKELIST); //プライオリティーを先に戻しておく
+//        pWork->pCatchCLWK = NULL;
         GFL_CLACT_WK_SetDrawEnable( pWork->pSelectCLWK, FALSE);
         _PokemonsetAndSendData(pWork);
       }

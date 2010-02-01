@@ -18,6 +18,8 @@
 #define GAME_PRODUCTID		12230							// 使用するプロダクトID
 #define GAME_ID           2911              // ゲームID
 
+
+
 #if 0
 
 ●GameSpy設定情報（IRAJ/IRBJ 両バージョン共通です）
@@ -121,6 +123,13 @@ IRAJ
 #define WIFI_ND_LOGIN_PASSWD		"fZrUY6SVMLp4tdmB"		// パスワード(本番サーバ)
 #else
 #define WIFI_ND_LOGIN_PASSWD		"JDXNcp79mr54RUga"    // パスワード(テストサーバ)
+#endif
+
+
+#ifdef DEBUG_SERVER
+#define LIBDPW_SERVER_TYPE ( DPW_SERVER_DEBUG )   ///< PDW接続先 現在手違いがあってもデバッグにしかいかない
+#else
+#define LIBDPW_SERVER_TYPE ( DPW_SERVER_DEBUG )   ///< PDW接続先  DPW_SERVER_RELEASE
 #endif
 
 

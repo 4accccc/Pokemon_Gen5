@@ -14,7 +14,7 @@
 #include "system/main.h"
 #include "system/bmp_winframe.h"
 #include "gamesystem/msgspeed.h"
-#include "libdpw/dpw_tr.h"
+#include <dpw_tr.h>
 
 //mine
 #include "worldtrade_adapter.h"

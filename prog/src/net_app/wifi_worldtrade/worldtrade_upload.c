@@ -22,7 +22,7 @@
 #include "system/gfl_use.h"
 #include "arc_def.h"
 #include <dwc.h>
-#include "libdpw/dpw_tr.h"
+#include <dpw_tr.h>
 #include "print/wordset.h"
 #include "message.naix"
 #include "system/wipe.h"
@@ -43,8 +43,6 @@
 #include "msg/msg_wifi_lobby.h"
 #include "msg/msg_wifi_gts.h"
 #include "msg/msg_wifi_system.h"
-
-#include "libdpw/dpw_tr.h"
 
 
 #include "worldtrade.naix"			// グラフィックアーカイブ定義
@@ -684,8 +682,9 @@ static int Subseq_UploadStart( WORLDTRADE_WORK *wk )
 	// カスタムボール領域をクリア
 	PokePara_CustomBallDataInit( (POKEMON_PARAM*)wk->UploadPokemonData.postData.data );
 	
-	// ポケモンデータアップロード開始
-	Dpw_Tr_UploadAsync( &wk->UploadPokemonData );
+	// ポケモンデータアップロード開始  @todo  不正検査のハッシュキーが必要
+//	Dpw_Tr_UploadAsync( &wk->UploadPokemonData );
+  GF_ASSERT(0);
 
 	OS_TPrintf("Dpw Trade データアップロード開始\n");
 
@@ -1096,11 +1095,14 @@ static int Subseq_ExchangeStart( WORLDTRADE_WORK *wk )
 	PokePara_CustomBallDataInit( (POKEMON_PARAM*)wk->UploadPokemonData.postData.data );
 
 	
-	// ポケモンデータ交換開始
-	Dpw_Tr_TradeAsync ( wk->DownloadPokemonData[wk->TouchTrainerPos].id,
-						&wk->UploadPokemonData,
-						&wk->ExchangePokemonData );
+	// ポケモンデータ交換開始 @todo  不正検査のハッシュキーが必要
+//	Dpw_Tr_TradeAsync ( wk->DownloadPokemonData[wk->TouchTrainerPos].id,
+//						&wk->UploadPokemonData,
+//						&wk->ExchangePokemonData );
+  GF_ASSERT(0);
 
+
+  
 	OS_TPrintf("Dpw Trade データ交換開始 id = %08x\n", wk->DownloadPokemonData[wk->TouchTrainerPos].id);
 
 

@@ -21,7 +21,8 @@ enum {
 	NARC_gtsnego_nego_back_NSCR = 7,
 	NARC_gtsnego_nego_under_bg1_NSCR = 8,
 	NARC_gtsnego_nego_under_bg2_NSCR = 9,
-	NARC_gtsnego_nego_obj_NANR = 10
+	NARC_gtsnego_nego_under_bg_base_NSCR = 10,
+	NARC_gtsnego_nego_obj_NANR = 11
 };
 
 /* NARC_GTSNEGO_NAIX_ */

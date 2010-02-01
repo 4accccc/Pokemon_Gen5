@@ -34,6 +34,15 @@ LINCLUDES		+= 	$(GFLIB_DIR)/include
 LLIBRARY_DIRS	+=	$(GFLIB_DIR)/install/$(NITRO_BUILDTYPE)
 LLIBRARIES		+=  	gflib.a
 
+#----------------------------------------------------------------------------
+# LIBDPW-Library
+#----------------------------------------------------------------------------
+LIBDPW_DIR		=	../lib/libdpw/
+LINCLUDES		+= 	$(LIBDPW_DIR)/dpw_bt/include $(LIBDPW_DIR)/dpw_tr/include $(LIBDPW_DIR)/common/include
+LLIBRARY_DIRS	+=	$(LIBDPW_DIR)/dpw_bt/lib/$(NITRO_BUILDTYPE) $(LIBDPW_DIR)/dpw_tr/lib/$(NITRO_BUILDTYPE)
+##ライブラリ結合は make_prog_filesに
+###LLIBRARIES		+=  gflib.a
+
 
 # wifiをオーバーレイで使用する場合のLibrary定義
 LDEPENDS_NEF += $(TWLDWC_LIB_DEPENDS)

@@ -221,7 +221,7 @@ typedef enum
   CELL_CUR_POKE_FRIEND,
   CHAR_LEFTPAGE_MARK,
   CHAR_RETURNPAGE_MARK,
-  //CELL_CUR_POKE_KEY,
+  CELL_CUR_POKE_KEY,
   CELL_DISP_NUM
 } _CELL_DISP_TYPE;
 
@@ -460,6 +460,7 @@ struct _POKEMON_TRADE_WORK{
   GFL_CLWK* pSelectCLWK;   ///<選んでるポケモンCLACT   こちらは何を選択しているかに使う
   GFL_CLWK* pCatchCLWK;   ///<つかんでるポケモンCLACT  こちらはタッチ時に移動するために使う
   GFL_CLACTPOS aCatchOldPos;  //つかんでるポケモンの前の位置
+  GFL_CLACTPOS aDifferencePos;  //つかんでるポケモンの誤差位置
   BOOL bStatusDisp;
 
   int MainObjCursorLine;   //OBJカーソルライン
@@ -514,6 +515,7 @@ struct _POKEMON_TRADE_WORK{
   u16* scrTemoti;
   u8* pCharMem;
   POKEMONTRADE_TYPE type;
+  s16 SuckedCount;
   u8 BGClearFlg;
   u8 DemoBGClearFlg;
 
@@ -664,7 +666,7 @@ extern int IRC_TRADE_LINE2POKEINDEX(int lineno,int verticalindex);
 
 #define _CLACT_SOFTPRI_POKESEL  (11)
 #define _CLACT_SOFTPRI_POKESEL_BAR  (12)
-#define _CLACT_SOFTPRI_CATCHPOKE  (13)
+#define _CLACT_SOFTPRI_CATCHPOKE  (1)
 #define _CLACT_SOFTPRI_SCROLL_BAR  (14)
 #define _CLACT_SOFTPRI_SELECT (15)
 #define _CLACT_SOFTPRI_POKELIST  (16)
@@ -742,3 +744,6 @@ extern void POKE_GTS_DeletePokemonState(POKEMON_TRADE_WORK* pWork);
 
 extern void POKETRADE_2D_ObjTrayDispInit(POKEMON_TRADE_WORK* pWork);
 
+extern void POKEMONTRADE_StartCatched(POKEMON_TRADE_WORK* pWork,int line, int pos,int x,int y);
+extern void POKEMONTRADE_StartSucked(POKEMON_TRADE_WORK* pWork,int x1,int y1);
+extern void POKEMONTRADE_SuckedMain(POKEMON_TRADE_WORK* pWork);

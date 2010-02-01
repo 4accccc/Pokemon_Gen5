@@ -1170,10 +1170,10 @@ SRCS_OVERLAY_PALACE = app/palace/palace_edit.c \
 #LIB=>          libdwcghttp.$HYB.a
 #LIB=>          libdwcgsghttp.$HYB.a
 #LIB=>          libdwcnd.$HYB.a
-SRCS_OVERLAY_DPW_COMMON   = libdpw/dpwi_encrypt.c \
-              libdpw/dpwi_session.c \
-							libdpw/dpw_tr.c \
-							net/pdw_ca.c \
+#LIB=>          libdpwtr.$HYB.a
+#LIB=>          libdpwbt.$HYB.a
+#LIB=>          libdwcenc.$HYB.a
+SRCS_OVERLAY_DPW_COMMON   = 							net/pdw_ca.c \
 							net/nhttp_rap.c
 
 

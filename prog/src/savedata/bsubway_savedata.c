@@ -10,7 +10,7 @@
 #include <gflib.h>
 #include "system/gfl_use.h"
 
-#include "libdpw/dpw_bt.h"
+#include <dpw_bt.h>
 
 #include "savedata/bsubway_savedata.h"
 #include "bsubway_savedata_local.h"

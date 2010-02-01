@@ -664,7 +664,7 @@ static void _debugChangeState(WIFIP2PMATCH_WORK* wk, int state, int line)
   wk->seq = state;
 }
 
-#if 1
+#if PM_DEBUG
 #define   _CHANGESTATE(wk,state) _debugChangeState(wk,state,__LINE__)
 #else  //GFL_NET_DEBUG
 #define   _CHANGESTATE(wk,state)  wk->seq = state

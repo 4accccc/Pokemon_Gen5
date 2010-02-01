@@ -8,11 +8,12 @@
 //============================================================================================
 #include <gflib.h>
 #include <dwc.h>
-#include "libdpw/dwci_ghttp.h"
+//#include "libdpw/dwci_ghttp.h"
+#include "ghttp/dwci_ghttp.h"
 #include "system/main.h"
 #include "system/gfl_use.h"
 #include "arc_def.h"
-#include "libdpw/dpw_tr.h"
+#include <dpw_tr.h>
 #include "print/wordset.h"
 #include "print/printsys.h"
 #include "message.naix"
@@ -1059,7 +1060,7 @@ static int Enter_DpwTrInit( WORLDTRADE_WORK *wk )
 	OS_Printf("Dpwサーバーログイン情報 profileId=%08x\n", profileId);
 
 	// DPW_TR初期化
-	Dpw_Tr_Init( profileId, DWC_CreateFriendKey( MyUserData ) );
+	Dpw_Tr_Init( profileId, DWC_CreateFriendKey( MyUserData ),LIBDPW_SERVER_TYPE );
 
 	OS_TPrintf("Dpw Trade 初期化\n");
 

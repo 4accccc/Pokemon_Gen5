@@ -19,7 +19,7 @@
 #include "system/selbox.h"
 #include "system/net_err.h"
 
-#include "libdpw/dpw_common.h"
+#include <dpw_common.h>
 
 //savedata
 #include "savedata/config.h"
