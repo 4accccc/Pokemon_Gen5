@@ -2567,6 +2567,10 @@ static void handler_Ibiki_CheckFail_1( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WO
     if( cause == SV_WAZAFAIL_NEMURI ){
       BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_FLAG, TRUE );
     }
+
+    /*
+    「ねむり」状態でないのをココで失敗扱いにしちゃうとまずい。
+    （ワザメッセージが表示されるまえに「うまくきまらなかった」が表示されてしまう）
     else if( cause == SV_WAZAFAIL_NULL )
     {
       const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
@@ -2574,6 +2578,7 @@ static void handler_Ibiki_CheckFail_1( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WO
         BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_CAUSE, SV_WAZAFAIL_OTHER );
       }
     }
+    */
   }
 }
 // ワザ出し成否チェックハンドラ２
