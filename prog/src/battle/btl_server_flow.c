@@ -4565,22 +4565,20 @@ static void scproc_decrementPPUsedWaza( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* atta
 //----------------------------------------------------------------------------------
 static BOOL scproc_decrementPP( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u8 wazaIdx, u8 volume )
 {
-  if( !BPP_IsDead(bpp) )
-  {
-    u8 restPP = BPP_WAZA_GetPP( bpp, wazaIdx );
-    if( volume > restPP ){
-      volume = restPP;
-    }
-
-    if( volume )
-    {
-      scPut_DecrementPP( wk, bpp, wazaIdx, volume );
-      if( scEvent_DecrementPP_Reaction(wk, bpp, wazaIdx) ){
-        scproc_UseItemEquip( wk, bpp );
-      }
-      return TRUE;
-    }
+  u8 restPP = BPP_WAZA_GetPP( bpp, wazaIdx );
+  if( volume > restPP ){
+    volume = restPP;
   }
+
+  if( volume )
+  {
+    scPut_DecrementPP( wk, bpp, wazaIdx, volume );
+    if( scEvent_DecrementPP_Reaction(wk, bpp, wazaIdx) ){
+      scproc_UseItemEquip( wk, bpp );
+    }
+    return TRUE;
+  }
+
   return FALSE;
 }
 //----------------------------------------------------------------------
@@ -10341,7 +10339,7 @@ u8 BTL_SVFTOOL_GetMyBenchIndex( BTL_SVFLOW_WORK* wk, u8 pokeID )
 }
 //--------------------------------------------------------------------------------------
 /**
- * [ハンドラ用ツール] 自クライアントパーティに、控えのポケモン（戦闘可能な）がいるか
+ * [ハンドラ用ツール] 自クライアントパーティに、（戦闘可能な）控えのポケモンがいるか
  *
  * @param   wk
  * @param   pokeID
@@ -11194,8 +11192,9 @@ static u8 scproc_HandEx_decrementPP( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM
 {
   const BTL_HANDEX_PARAM_PP* param = (BTL_HANDEX_PARAM_PP*)param_header;
 
-  BTL_POKEPARAM* pokesetTarget = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID );
-  if( scproc_decrementPP(wk, pokesetTarget, param->wazaIdx, param->volume) ){
+  BTL_POKEPARAM* target = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID );
+  if( !BPP_IsDead(target) ){
+    scproc_decrementPP( wk, target, param->wazaIdx, param->volume );
     return 1;
   }
   return 0;

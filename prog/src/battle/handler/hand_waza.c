@@ -6416,15 +6416,18 @@ static void handler_MikadukiNoMai( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
-    BTL_HANDEX_PARAM_KILL* kill_param;
-    BTL_HANDEX_PARAM_POSEFF_ADD* eff_param;
+    if( BTL_SVFTOOL_IsExistBenchPoke(flowWk, pokeID) )
+    {
+      BTL_HANDEX_PARAM_KILL* kill_param;
+      BTL_HANDEX_PARAM_POSEFF_ADD* eff_param;
 
-    eff_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_POSEFF_ADD, pokeID );
-    eff_param->effect = BTL_POSEFF_MIKADUKINOMAI;
-    eff_param->pos = BTL_SVFTOOL_PokeIDtoPokePos( flowWk, pokeID );
+      eff_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_POSEFF_ADD, pokeID );
+      eff_param->effect = BTL_POSEFF_MIKADUKINOMAI;
+      eff_param->pos = BTL_SVFTOOL_PokeIDtoPokePos( flowWk, pokeID );
 
-    kill_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_KILL, pokeID );
-    kill_param->pokeID = pokeID;
+      kill_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_KILL, pokeID );
+      kill_param->pokeID = pokeID;
+    }
   }
 }
 //----------------------------------------------------------------------------------
@@ -6444,15 +6447,18 @@ static void handler_IyasiNoNegai( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
-    BTL_HANDEX_PARAM_KILL* kill_param;
-    BTL_HANDEX_PARAM_POSEFF_ADD* eff_param;
+    if( BTL_SVFTOOL_IsExistBenchPoke(flowWk, pokeID) )
+    {
+      BTL_HANDEX_PARAM_KILL* kill_param;
+      BTL_HANDEX_PARAM_POSEFF_ADD* eff_param;
 
-    eff_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_POSEFF_ADD, pokeID );
-    eff_param->effect = BTL_POSEFF_IYASINONEGAI;
-    eff_param->pos = BTL_SVFTOOL_PokeIDtoPokePos( flowWk, pokeID );
+      eff_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_POSEFF_ADD, pokeID );
+      eff_param->effect = BTL_POSEFF_IYASINONEGAI;
+      eff_param->pos = BTL_SVFTOOL_PokeIDtoPokePos( flowWk, pokeID );
 
-    kill_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_KILL, pokeID );
-    kill_param->pokeID = pokeID;
+      kill_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_KILL, pokeID );
+      kill_param->pokeID = pokeID;
+    }
   }
 }
 //----------------------------------------------------------------------------------
