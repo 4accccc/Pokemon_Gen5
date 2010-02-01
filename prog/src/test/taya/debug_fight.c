@@ -19,6 +19,7 @@
 // global includes --------------------
 #include "system\main.h"
 #include "print\printsys.h"
+#include "print\str_tool.h"
 #include "print\gf_font.h"
 #include "poke_tool\pokeparty.h"
 #include "poke_tool\poke_tool.h"
@@ -56,6 +57,9 @@ enum {
   POKEPARA_MAX = 24,    // 最大４パーティ×６体で24体を保存
   POKEPARA_SIZE = 228,  // ポケモンパラメータ想定サイズ
   POKEPARA_SAVEAREA_SIZE = POKEPARA_SIZE * POKEPARA_MAX,
+
+  LIMIT_TIME_GAME_MAX = 120,
+  LIMIT_TIME_CMD_MAX  = 240,
 
   SAVEAREA_SIZE = 0x2000,
 
@@ -179,6 +183,9 @@ typedef enum {
   SELITEM_HIT_100PER,
   SELITEM_DMG_RAND_OFF,
   SELITEM_SKIP_BTLIN,
+  SELITEM_LIMIT_GAME,
+  SELITEM_LIMIT_COMMAND,
+
 
   SELITEM_BACKGROUND,
   SELITEM_LAND,
@@ -261,6 +268,14 @@ enum {
   LAYOUT_LABEL_DMG_RAND_OFF_X   = 4,
   LAYOUT_LABEL_SKIP_BTLIN_X     = 4,
 
+  LAYOUT_LABEL_LIMITTIME_X       = 160,
+  LAYOUT_LABEL_LIMITTIME_Y       = 4,
+  LAYOUT_LABEL_LIMITGAME_X       = LAYOUT_LABEL_LIMITTIME_X + 8,
+  LAYOUT_LABEL_LIMITGAME_Y       = LAYOUT_LABEL_LIMITTIME_Y + 32,
+  LAYOUT_LABEL_LIMITCMD_X        = LAYOUT_LABEL_LIMITTIME_X + 8,
+  LAYOUT_LABEL_LIMITCMD_Y        = LAYOUT_LABEL_LIMITGAME_Y + 16,
+
+
   LAYOUT_LABEL_MUST_TUIKA_Y     = 8,
   LAYOUT_LABEL_MUST_TOKU_Y      = LAYOUT_LABEL_MUST_TUIKA_Y+LAYOUT_PARTY_DATA_LINE_HEIGHT,
   LAYOUT_LABEL_MUST_ITEM_Y      = LAYOUT_LABEL_MUST_TUIKA_Y+LAYOUT_PARTY_DATA_LINE_HEIGHT*2,
@@ -333,7 +348,12 @@ static const LABEL_LAYOUT LabelLayout_Page2[] = {
   { DBGF_LABEL_HIT100PER,     LAYOUT_LABEL_HIT_100PER_X,    LAYOUT_LABEL_HIT_100PER_Y    },
   { DBGF_LABEL_DMGRAND_OFF,   LAYOUT_LABEL_DMG_RAND_OFF_X,  LAYOUT_LABEL_DMG_RAND_OFF_Y  },
   { DBGF_LABEL_SKIP_IN,       LAYOUT_LABEL_SKIP_BTLIN_X,    LAYOUT_LABEL_SKIP_BTLIN_Y    },
+  { DBGF_LABEL_LIMIT_TIME,    LAYOUT_LABEL_LIMITTIME_X,     LAYOUT_LABEL_LIMITTIME_Y     },
+  { DBGF_LABEL_LIMIT_GAME,    LAYOUT_LABEL_LIMITGAME_X,     LAYOUT_LABEL_LIMITGAME_Y     },
+  { DBGF_LABEL_LIMIT_COMMAND, LAYOUT_LABEL_LIMITCMD_X,      LAYOUT_LABEL_LIMITCMD_Y      },
+
 };
+
 //------------------------------------------------------
 /*
  *  ラベルレイアウト（３ページ目）
@@ -489,6 +509,9 @@ typedef BOOL (*pMainProc)( DEBUG_BTL_WORK*, int* );
 typedef struct {
   u8  pokeParaArea[ POKEPARA_SAVEAREA_SIZE ];
 
+  u16  LimitTimeGame;
+  u16  LimitTimeCommand;
+
   u32  btlType  : 5;
   u32  commMode : 1;
   u32  msgSpeed : 3;
@@ -603,6 +626,7 @@ static void clearClipMark( DEBUG_BTL_WORK* wk );
 static void printSaveMark( DEBUG_BTL_WORK* wk );
 static void clearSaveMark( DEBUG_BTL_WORK* wk );
 static void printItem_Flag( DEBUG_BTL_WORK* wk, BOOL flag, STRBUF* buf );
+static void printItem_Number( DEBUG_BTL_WORK* wk, int num, STRBUF* buf );
 static BOOL mainProc_Setup( DEBUG_BTL_WORK* wk, int* seq );
 static BOOL mainProc_ChangePage( DEBUG_BTL_WORK* wk, int* seq );
 static BOOL mainProc_Root( DEBUG_BTL_WORK* wk, int* seq );
@@ -1166,6 +1190,25 @@ static void selItem_Increment( DEBUG_BTL_WORK* wk, u16 itemID, int incValue )
   case SELITEM_SKIP_BTLIN:
     save->fSkipBtlIn ^= 1;
     break;
+
+  case SELITEM_LIMIT_GAME:
+    save->LimitTimeGame += incValue;
+    if( save->LimitTimeGame >= LIMIT_TIME_GAME_MAX ){
+      save->LimitTimeGame -= LIMIT_TIME_GAME_MAX;
+    }else if( save->LimitTimeGame < 0 ){
+      save->LimitTimeGame += LIMIT_TIME_GAME_MAX;
+    }
+    break;
+
+  case SELITEM_LIMIT_COMMAND:
+    save->LimitTimeCommand += incValue;
+    if( save->LimitTimeCommand >= LIMIT_TIME_CMD_MAX ){
+      save->LimitTimeCommand -= LIMIT_TIME_CMD_MAX;
+    }else if( save->LimitTimeCommand < 0 ){
+      save->LimitTimeCommand += LIMIT_TIME_CMD_MAX;
+    }
+    break;
+
   }
 }
 //----------------------------------------------------------------------------------
@@ -1267,7 +1310,9 @@ static void PrintItem( DEBUG_BTL_WORK* wk, u16 itemID, BOOL fSelect )
 
       if( selItem_IsPoke(itemID) ){
         printItem_Poke( wk, itemID, wk->strbuf );
-      }else{
+      }
+      else
+      {
         switch( itemID ){
         case SELITEM_BTL_TYPE:    printItem_BtlType( wk, wk->strbuf ); break;
         case SELITEM_COMM_MODE:   printItem_CommMode( wk, wk->strbuf ); break;
@@ -1294,6 +1339,9 @@ static void PrintItem( DEBUG_BTL_WORK* wk, u16 itemID, BOOL fSelect )
         case SELITEM_HIT_100PER:    printItem_Flag( wk, wk->saveData.fHit100Per, wk->strbuf ); break;
         case SELITEM_DMG_RAND_OFF:  printItem_Flag( wk, wk->saveData.fDmgRandomOff, wk->strbuf ); break;
         case SELITEM_SKIP_BTLIN:    printItem_Flag( wk, wk->saveData.fSkipBtlIn, wk->strbuf ); break;
+
+        case SELITEM_LIMIT_GAME:      printItem_Number( wk, wk->saveData.LimitTimeGame, wk->strbuf ); break;
+        case SELITEM_LIMIT_COMMAND:   printItem_Number( wk, wk->saveData.LimitTimeCommand, wk->strbuf ); break;
 
 
         default:
@@ -1400,6 +1448,10 @@ static void clearSaveMark( DEBUG_BTL_WORK* wk )
 static void printItem_Flag( DEBUG_BTL_WORK* wk, BOOL flag, STRBUF* buf )
 {
   GFL_MSG_GetString( wk->mm, DBGF_ITEM_SUBWAY_OFF+flag, buf );
+}
+static void printItem_Number( DEBUG_BTL_WORK* wk, int num, STRBUF* buf )
+{
+  STRTOOL_SetNumber( buf, num, 3, STR_NUM_DISP_SPACE, STR_NUM_CODE_ZENKAKU );
 }
 
 //----------------------------------------------------------------------------------
@@ -1606,6 +1658,22 @@ static BOOL mainProc_Root( DEBUG_BTL_WORK* wk, int* seq )
     if( !selItem_IsPoke(wk->selectItem) )
     {
       selItem_Increment( wk, wk->selectItem, -1 );
+      PrintItem( wk, wk->selectItem, TRUE );
+      GFL_BMPWIN_TransVramCharacter( wk->win );
+    }
+  }
+  else if( key & PAD_BUTTON_X )
+  {
+    if( (wk->selectItem == SELITEM_LIMIT_GAME) || (wk->selectItem == SELITEM_LIMIT_COMMAND) ){
+      selItem_Increment( wk, wk->selectItem, 10 );
+      PrintItem( wk, wk->selectItem, TRUE );
+      GFL_BMPWIN_TransVramCharacter( wk->win );
+    }
+  }
+  else if( key & PAD_BUTTON_Y )
+  {
+    if( (wk->selectItem == SELITEM_LIMIT_GAME) || (wk->selectItem == SELITEM_LIMIT_COMMAND) ){
+      selItem_Increment( wk, wk->selectItem, -10 );
       PrintItem( wk, wk->selectItem, TRUE );
       GFL_BMPWIN_TransVramCharacter( wk->win );
     }
@@ -1843,6 +1911,8 @@ FS_EXTERN_OVERLAY(battle);
     }
 
     setupFieldSituation( &wk->fieldSit, &wk->saveData );
+    wk->setupParam.LimitTimeGame = wk->saveData.LimitTimeGame;
+    wk->setupParam.LimitTimeCommand = wk->saveData.LimitTimeCommand;
 
     // 捕獲デモ
     if( wk->saveData.btlType == BTLTYPE_DEMO_CAPTURE )
@@ -2119,6 +2189,9 @@ static void clearDebugParams( DEBUG_BTL_SAVEDATA* save )
   save->fHit100Per = 0;
   save->fDmgRandomOff = 0;
   save->fSkipBtlIn = 0;
+
+  save->LimitTimeGame = 0;
+  save->LimitTimeCommand = 0;
 }
 
 /**
