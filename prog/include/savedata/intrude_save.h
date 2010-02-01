@@ -10,6 +10,7 @@
 
 #include "gamesystem/gamedata_def.h"  //GAMEDATA
 #include "field/intrude_common.h"
+#include "buflen.h"
 
 
 //==============================================================================
@@ -24,6 +25,12 @@ enum {
 //==============================================================================
 //  構造体定義
 //==============================================================================
+///侵入セーブ構造体の不完全型
+typedef struct _INTRUDE_SAVE_WORK INTRUDE_SAVE_WORK;
+
+//--------------------------------------------------------------
+//  占拠
+//--------------------------------------------------------------
 ///占拠情報：街
 typedef struct{
   ///街の占拠値   (WHITE ---- OCCUPY_TOWN_NEUTRALITY ---- OCCUPY_TOWN_BLACK)
@@ -37,6 +44,23 @@ typedef struct{
   u8 intrude_level;                      ///<侵入レベル
   u8 padding;
 }OCCUPY_INFO;
+
+//--------------------------------------------------------------
+//  隠しアイテム
+//--------------------------------------------------------------
+///侵入隠しアイテムセーブワーク
+typedef struct{
+  STRCODE name[PERSON_NAME_SIZE + EOM_SIZE];  ///<隠した人の名前
+  u16 item;                                   ///<アイテム番号
+  u8 tbl_no;                                  ///<隠されている場所を示すテーブル番号
+  u8 padding;
+}INTRUDE_SECRET_ITEM_SAVE;
+
+
+//==============================================================================
+//  
+//==============================================================================
+extern INTRUDE_SAVE_WORK * SaveData_GetIntrude( SAVE_CONTROL_WORK * p_sv);
 
 
 //============================================================================================
@@ -78,3 +102,8 @@ extern void OccupyInfo_WorkInit(OCCUPY_INFO *occupy);
 extern void SaveData_OccupyInfoUpdate(SAVE_CONTROL_WORK * sv, const OCCUPY_INFO *occupy);
 extern void SaveData_OccupyInfoLoad(SAVE_CONTROL_WORK * sv, OCCUPY_INFO *dest_occupy);
 extern u32 OccupyInfo_GetIntrudeLevel(const OCCUPY_INFO *occupy);
+
+//--------------------------------------------------------------
+//  隠しアイテム
+//--------------------------------------------------------------
+extern void ISC_SAVE_SetItem(INTRUDE_SAVE_WORK *intsave, const INTRUDE_SECRET_ITEM_SAVE *src);

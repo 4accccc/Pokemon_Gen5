@@ -10,16 +10,16 @@
 #include "savedata/save_control.h"
 #include "savedata/save_tbl.h"
 #include "savedata/intrude_save.h"
+#include "intrude_save_local.h"
+
+
 
 
 //==============================================================================
-//  構造体定義
+//
+//  
+//
 //==============================================================================
-typedef struct{
-  OCCUPY_INFO occupy;
-}INTRUDE_SAVE_WORK;
-
-
 //------------------------------------------------------------------
 /**
  * セーブデータサイズを返す
@@ -71,6 +71,24 @@ void OccupyInfo_WorkInit(OCCUPY_INFO *occupy)
 
 
 //==============================================================================
+//  
+//==============================================================================
+//==================================================================
+/**
+ * 侵入セーブデータのポインタ取得
+ *
+ * @param   p_sv		
+ *
+ * @retval  INTRUDE_SAVE_WORK *		
+ */
+//==================================================================
+INTRUDE_SAVE_WORK * SaveData_GetIntrude( SAVE_CONTROL_WORK * p_sv)
+{
+	return SaveControl_DataPtrGet(p_sv, GMDATA_ID_INTRUDE);
+}
+
+
+//==============================================================================
 //	
 //==============================================================================
 //==================================================================
@@ -85,7 +103,7 @@ void OccupyInfo_WorkInit(OCCUPY_INFO *occupy)
 //==================================================================
 void SaveData_OccupyInfoUpdate(SAVE_CONTROL_WORK * sv, const OCCUPY_INFO *occupy)
 {
-	INTRUDE_SAVE_WORK *intsave = SaveControl_DataPtrGet(sv, GMDATA_ID_INTRUDE);
+	INTRUDE_SAVE_WORK *intsave = SaveData_GetIntrude(sv);
 
   intsave->occupy = *occupy;
 }
@@ -100,7 +118,7 @@ void SaveData_OccupyInfoUpdate(SAVE_CONTROL_WORK * sv, const OCCUPY_INFO *occupy
 //==================================================================
 void SaveData_OccupyInfoLoad(SAVE_CONTROL_WORK * sv, OCCUPY_INFO *dest_occupy)
 {
-	INTRUDE_SAVE_WORK *intsave = SaveControl_DataPtrGet(sv, GMDATA_ID_INTRUDE);
+	INTRUDE_SAVE_WORK *intsave = SaveData_GetIntrude(sv);
 
   *dest_occupy = intsave->occupy;
 }
@@ -120,4 +138,37 @@ void SaveData_OccupyInfoLoad(SAVE_CONTROL_WORK * sv, OCCUPY_INFO *dest_occupy)
 u32 OccupyInfo_GetIntrudeLevel(const OCCUPY_INFO *occupy)
 {
   return occupy->intrude_level;
+}
+
+//==============================================================================
+//  
+//==============================================================================
+//==================================================================
+/**
+ * 隠しアイテムをセーブデータへ登録します
+ *
+ * @param   intsave		
+ * @param   src		    隠しアイテムデータへのポインタ
+ * 
+ * データがいっぱいの時は古いデータを押し出してセットします
+ */
+//==================================================================
+void ISC_SAVE_SetItem(INTRUDE_SAVE_WORK *intsave, const INTRUDE_SECRET_ITEM_SAVE *src)
+{
+  int i;
+  INTRUDE_SECRET_ITEM_SAVE *isis = intsave->secret_item;
+  
+  for(i = 0; i < INTRUDE_SECRET_ITEM_SAVE_MAX; i++){
+    if(isis->item == 0){
+      *isis = *src;
+      return;
+    }
+    isis++;
+  }
+  
+  //データがいっぱいなので、古いデータを前詰めして最後尾につける
+  for(i = 1; i < INTRUDE_SECRET_ITEM_SAVE_MAX; i++){
+    intsave->secret_item[i - 1] = intsave->secret_item[i];
+  }
+  intsave->secret_item[INTRUDE_SECRET_ITEM_SAVE_MAX - 1] = *src;
 }
