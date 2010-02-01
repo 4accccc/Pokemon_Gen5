@@ -1644,8 +1644,7 @@ static void handler_SkillLink( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
     // ÉqÉbÉgâÒêîÇç≈ëÂÇ…
-    u16 max = BTL_EVENTVAR_GetValue( BTL_EVAR_HITCOUNT_MAX );
-    BTL_EVENTVAR_RewriteValue( BTL_EVAR_HITCOUNT, max );
+    BTL_EVENTVAR_RewriteValue( BTL_EVAR_GEN_FLAG, TRUE );
   }
 }
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_SkillLink( u32* numElems )

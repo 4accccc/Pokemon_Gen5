@@ -267,6 +267,7 @@ static void  common_Korogaru_Unlock( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK
 static void handler_Korogaru_Pow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable*  ADD_TripleKick( u32* numElems );
 static void handler_TripleKick( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_TripleKick_HitCount( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable*  ADD_GyroBall( u32* numElems );
 static void handler_GyroBall( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable*  ADD_Revenge( u32* numElems );
@@ -3308,7 +3309,8 @@ static void handler_Korogaru_Pow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
 static const BtlEventHandlerTable*  ADD_TripleKick( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_POWER, handler_TripleKick },    // ワザ威力チェックハンドラ
+    { BTL_EVENT_WAZA_POWER,      handler_TripleKick },    // ワザ威力チェックハンドラ
+    { BTL_EVENT_WAZA_HIT_COUNT,  handler_TripleKick_HitCount }
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -3321,6 +3323,15 @@ static void handler_TripleKick( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
     BTL_EVENTVAR_RewriteValue( BTL_EVAR_WAZA_POWER, work[0]*10 );
   }
 }
+static void handler_TripleKick_HitCount( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
+  {
+    BTL_EVENTVAR_RewriteValue( BTL_EVAR_AVOID_FLAG, TRUE );
+  }
+}
+
+
 //----------------------------------------------------------------------------------
 /**
  * ジャイロボール

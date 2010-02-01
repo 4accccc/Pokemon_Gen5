@@ -567,7 +567,7 @@ static BtlTypeAff scEvent_CheckDamageAffinity( BTL_SVFLOW_WORK* wk,
 static BtlTypeAff CalcTypeAffForDamage( PokeType wazaType, PokeTypePair pokeTypePair );
 static u32 scEvent_DecrementPPVolume( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, BTL_POKESET* rec );
 static BOOL scEvent_DecrementPP_Reaction( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, u8 wazaIdx );
-static BOOL scEvent_CheckPluralHit( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, WazaID waza, u8* hitCount );
+static BOOL scEvent_CheckPluralHitParam( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, WazaID waza, u8* hitCount, u8* fPluralHitCheck );
 static u16 scEvent_getWazaPower( BTL_SVFLOW_WORK* wk,
   const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, const SVFL_WAZAPARAM* wazaParam );
 static BOOL scEvent_CheckEnableSimpleDamage( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp, u32 damage );
@@ -4029,7 +4029,7 @@ static void flowsub_checkWazaAvoid( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* w
 {
   BTL_POKEPARAM* bpp;
   u8 pokeID[ BTL_POS_MAX ];
-  u8 count = 0;
+  u8 avoid_count = 0;
 
   // 対象が最初からワザを打ったポケモン１体のワザは命中率などによる判定を行わない
   if( (BTL_POKESET_GetCountMax(targets) == 1)
@@ -4044,15 +4044,15 @@ static void flowsub_checkWazaAvoid( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* w
     if( IsTripleFarPos(wk, attacker, bpp, wazaParam->wazaID)
     ||  !scEvent_CheckHit(wk, attacker, bpp, wazaParam)
     ){
-      pokeID[count++] = BPP_GetID( bpp );
+      pokeID[ avoid_count++ ] = BPP_GetID( bpp );
       BTL_POKESET_Remove( targets, bpp );
       scPut_WazaAvoid( wk, bpp, wazaParam->wazaID );
     }
   }
-  if( count )
+  if( avoid_count )
   {
     u32 hem_state = Hem_PushState( &wk->HEManager );
-    scEvent_WazaAvoid( wk, attacker, wazaParam->wazaID, count, pokeID );
+    scEvent_WazaAvoid( wk, attacker, wazaParam->wazaID, avoid_count, pokeID );
     scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
     Hem_PopState( &wk->HEManager, hem_state );
   }
@@ -4771,12 +4771,12 @@ static void svflowsub_damage_act_singular(  BTL_SVFLOW_WORK* wk,
   u8 fPluralHit = FALSE; // 複数回ヒットフラグ
   u8 fDead = FALSE;
 
-  u8 hit_count, fCritical, fFixDamage;
+  u8 hitCountMax, fPluralHitCheck, fCritical, fFixDamage, hitCount;
   u16 damage;
   u32 damage_sum;
   int i;
 
-  fPluralHit = scEvent_CheckPluralHit( wk, attacker, wazaParam->wazaID, &hit_count );
+  fPluralHit = scEvent_CheckPluralHitParam( wk, attacker, wazaParam->wazaID, &hitCountMax, &fPluralHitCheck );
   if( fPluralHit ){
     BTL_Printf("複数回ヒットワザ ... 回数=%d\n", hit_count);
   }
@@ -4784,11 +4784,12 @@ static void svflowsub_damage_act_singular(  BTL_SVFLOW_WORK* wk,
   wazaEffCtrl_SetEnable( &wk->wazaEffCtrl );
   damage_sum = 0;
 
-  for(i=0; i<hit_count; ++i)
+  for(i=0; i<hitCountMax; ++i)
   {
     fCritical = scEvent_CheckCritical( wk, attacker, defender, wazaParam->wazaID );
     fFixDamage = scEvent_CalcDamage( wk, attacker, defender, wazaParam,
                   affinity, targetDmgRatio, fCritical, &damage );
+    hitCount = i + 1;
 
     if( fFixDamage ){
       affinity = BTL_TYPEAFF_100;
@@ -4841,8 +4842,15 @@ static void svflowsub_damage_act_singular(  BTL_SVFLOW_WORK* wk,
     }
 
     if( fDead ){
-      ++i;
       break;
+    }
+
+    if( fPluralHitCheck )
+    {
+      if( !scEvent_CheckHit(wk, attacker, defender, wazaParam) ){
+        OS_TPrintf("途中でハズレた\n");
+        break;
+      }
     }
   }
 
@@ -4854,9 +4862,9 @@ static void svflowsub_damage_act_singular(  BTL_SVFLOW_WORK* wk,
   }
 
   // ○○回あたった！メッセージ
-  if( fPluralHit && (i > 0)){
+  if( fPluralHit && (hitCount > 0)){
     scPut_DamageAff( wk, affinity );
-    SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_Hit_PluralTimes, i );
+    SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_Hit_PluralTimes, hitCount );
   }
 }
 /**
@@ -9553,36 +9561,46 @@ static BOOL scEvent_DecrementPP_Reaction( BTL_SVFLOW_WORK* wk, const BTL_POKEPAR
  * @param   wk
  * @param   attacker
  * @param   waza
- * @param   hitCount    [out] 実行するヒット回数（ランダム）
+ * @param   hitCount          [out] 実行するヒット回数
+ * @param   fPluralHitCheck   [out] １回ごとに命中判定を行う場合=TRUE
  *
  * @retval  BOOL    複数回ヒットするワザならTRUE
  */
 //--------------------------------------------------------------------------
-static BOOL scEvent_CheckPluralHit( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, WazaID waza, u8* hitCount )
+static BOOL scEvent_CheckPluralHitParam( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, WazaID waza, u8* hitCount, u8* fPluralHitCheck )
 {
   u8 max = WAZADATA_GetParam( waza, WAZAPARAM_HITCOUNT_MAX );
 
-  BTL_Printf("ワザ[%d]の最大ヒット回数=%d\n", waza, max);
+  BTL_Printf( "ワザ[%d]の最大ヒット回数=%d\n", waza, max );
 
-  if( max > 1 ){
-    *hitCount = BTL_CALC_HitCountMax( max );
-  }else{
-    *hitCount = 1;
-  }
+  if( max > 1 )
+  {
+    BTL_EVENTVAR_Push();
+      BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );
+      BTL_EVENTVAR_SetConstValue( BTL_EVAR_HITCOUNT_MAX, max );
+      BTL_EVENTVAR_SetRewriteOnceValue( BTL_EVAR_GEN_FLAG, FALSE );   // 最大までヒットさせるフラグ
+      BTL_EVENTVAR_SetRewriteOnceValue( BTL_EVAR_AVOID_FLAG, FALSE ); // １回ヒットごとに命中判定を行うフラグ
 
-  BTL_EVENTVAR_Push();
-    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );
-    BTL_EVENTVAR_SetConstValue( BTL_EVAR_HITCOUNT_MAX, max );
-    BTL_EVENTVAR_SetValue( BTL_EVAR_HITCOUNT, *hitCount );
-    BTL_EVENT_CallHandlers( wk, BTL_EVENT_WAZA_HIT_COUNT );
-    *hitCount = BTL_EVENTVAR_GetValue( BTL_EVAR_HITCOUNT );
-  BTL_EVENTVAR_Pop();
+      BTL_EVENT_CallHandlers( wk, BTL_EVENT_WAZA_HIT_COUNT );
 
-  if( (max>1) || (*hitCount) >1 ){
+      // 強制的に最大回数までヒット
+      if( BTL_EVENTVAR_GetValue(BTL_EVAR_GEN_FLAG) ){
+        *hitCount = max;
+        *fPluralHitCheck = FALSE;
+      }else{
+        *hitCount = BTL_CALC_HitCountMax( max );
+        *fPluralHitCheck = BTL_EVENTVAR_GetValue( BTL_EVAR_AVOID_FLAG );
+      }
+    BTL_EVENTVAR_Pop();
+
     return TRUE;
   }
-
-  return FALSE;
+  else
+  {
+    *hitCount = 1;
+    *fPluralHitCheck = FALSE;
+    return FALSE;
+  }
 }
 
 //----------------------------------------------------------------------------------
