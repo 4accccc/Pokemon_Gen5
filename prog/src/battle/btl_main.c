@@ -3672,7 +3672,7 @@ static BtlResult checkWinner( BTL_MAIN_MODULE* wk )
   else if( wk->escapeClientID != BTL_CLIENTID_NULL )
   {
     result = (wk->escapeClientID == wk->myClientID)? BTL_RESULT_RUN : BTL_RESULT_RUN_ENEMY;
-    BTL_Printf("逃げたクライアント=%d, 自分=%d\n", wk->escapeClientID, wk->myClientID);
+    BTL_Printf( "逃げたクライアント=%d, 自分=%d\n", wk->escapeClientID, wk->myClientID );
   }
   else
   {
