@@ -55,10 +55,10 @@
 FS_EXTERN_OVERLAY(ui_common);
 
 // アプリ内でデバッグ用のパラメータをセット
-#define DEBUG_SET_PARAM
+//#define DEBUG_SET_PARAM
 
 #ifdef DEBUG_ONLY_FOR_genya_hosaka
-#define DEBUG_LOOP
+//#define DEBUG_LOOP
 #endif
 
 //=============================================================================
@@ -600,6 +600,9 @@ static void debug_param_del( COMM_BTL_DEMO_PARAM* prm )
 static GFL_PROC_RESULT CommBtlDemoProc_Init( GFL_PROC *proc, int *seq, void *pwk, void *mywk )
 {
 	COMM_BTL_DEMO_MAIN_WORK *wk;
+  COMM_BTL_DEMO_PARAM * prm;
+
+  prm = pwk;
   
   // フェード待ち
   if( (*seq) == 1 && GFL_FADE_CheckFade() == TRUE )
@@ -607,6 +610,7 @@ static GFL_PROC_RESULT CommBtlDemoProc_Init( GFL_PROC *proc, int *seq, void *pwk
     return GFL_PROC_RES_FINISH;
   }
 
+  GF_ASSERT( prm );
   GF_ASSERT( (*seq) == 0 );
 
 	//オーバーレイ読み込み
@@ -618,12 +622,15 @@ static GFL_PROC_RESULT CommBtlDemoProc_Init( GFL_PROC *proc, int *seq, void *pwk
   GFL_STD_MemClear( wk, sizeof(COMM_BTL_DEMO_MAIN_WORK) );
 	
 #ifdef DEBUG_SET_PARAM
-  debug_param( pwk );
+  debug_param( prm );
 #endif
+  
+  GF_ASSERT( prm->type > COMM_BTL_DEMO_TYPE_NULL &&
+             prm->type < COMM_BTL_DEMO_TYPE_MAX );
 
   // 初期化
   wk->heapID = HEAPID_COMM_BTL_DEMO;
-  wk->pwk = pwk;
+  wk->pwk = prm;
   wk->type = wk->pwk->type;
   wk->result = wk->pwk->result;
 	
@@ -1778,12 +1785,11 @@ static void TRAINER_UNIT_Init( TRAINER_UNIT* unit, u8 type, u8 posid, const COMM
     // トレーナー名BMPWIN初期化
   unit->win_name = TRAINERNAME_WIN_Create( type, posid );
 
-
   // 終了デモの初期化
   if( type_is_start(unit->type) == FALSE )
   {
     // ポケモンの残り数CLWKを生成
-//    TRAINER_UNIT_CreatePokeNum( unit );
+    TRAINER_UNIT_CreatePokeNum( unit );
     // 最初から表示
     TRAINER_UNIT_DrawTrainerName( unit, unit->font );
   }
@@ -1911,7 +1917,7 @@ static void TRAINER_UNIT_Exit( TRAINER_UNIT* unit )
   // トレーナー名BMPWIN解放
   GFL_BMPWIN_Delete( unit->win_name );
 
-#if 0
+#if 1
   if( type_is_start(unit->type) == FALSE )
   {
     GFL_CLACT_WK_Remove( unit->clwk_pokenum );
@@ -1943,7 +1949,7 @@ static void TRAINER_UNIT_Main( TRAINER_UNIT* unit )
   else
   {
     // 終了デモ
-//    _trainer_unit_main_end( unit );
+    _trainer_unit_main_end( unit );
   }
 
 //  HOSAKA_Printf("unit timer=%d \n", unit->timer);

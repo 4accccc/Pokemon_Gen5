@@ -21,10 +21,14 @@
 //==============================================================
 typedef enum
 { 
-  COMM_BTL_DEMO_TYPE_NORMAL_START = 0,  ///< ノーマル開始
+  COMM_BTL_DEMO_TYPE_NULL = 0,          ///< 指定タイプなし（エラー検出用）
+
+  COMM_BTL_DEMO_TYPE_NORMAL_START,      ///< ノーマル開始
   COMM_BTL_DEMO_TYPE_NORMAL_END,        ///< ノーマル終了
   COMM_BTL_DEMO_TYPE_MULTI_START,       ///< マルチバトル開始
   COMM_BTL_DEMO_TYPE_MULTI_END,         ///< マルチバトル終了
+
+  COMM_BTL_DEMO_TYPE_MAX,      
 } COMM_BTL_DEMO_TYPE;
 
 //--------------------------------------------------------------

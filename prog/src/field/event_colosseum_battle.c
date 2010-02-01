@@ -59,7 +59,6 @@ typedef struct{
 }EVENT_COLOSSEUM_BATTLE_WORK;
 
 
-
 //============================================================================================
 //
 //    サブイベント
@@ -84,7 +83,7 @@ static GMEVENT_RESULT EVENT_ColosseumBattleMain(GMEVENT * event, int *  seq, voi
     (*seq)++;
     break;
   case 2:
-    GMEVENT_CallEvent(event, EVENT_FieldClose(gsys, cbw->fieldmap));
+    GMEVENT_CallEvent( event, EVENT_FieldClose(gsys, cbw->fieldmap));
     (*seq)++;
     break;
   case 3:

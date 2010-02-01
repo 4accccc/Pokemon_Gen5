@@ -41,12 +41,70 @@
 #include "field/event_battle_call.h"
 
 
-static GFL_PROC_RESULT CommBattleCallProc( GFL_PROC * proc, int *seq, void *pwk, void* mywk );
+static GFL_PROC_RESULT CommBattleCallProc_Init(  GFL_PROC *proc, int *seq, void* pwk, void* mywk );
+static GFL_PROC_RESULT CommBattleCallProc_Main(  GFL_PROC *proc, int *seq, void* pwk, void* mywk );
+static GFL_PROC_RESULT CommBattleCallProc_End(  GFL_PROC *proc, int *seq, void* pwk, void* mywk );
 
 const GFL_PROC_DATA CommBattleCommProcData = 
 { 
-  CommBattleCallProc,
+  CommBattleCallProc_Init,
+  CommBattleCallProc_Main,
+  CommBattleCallProc_End,
 };
+
+//==============================================================================
+//  PROC構造体
+//==============================================================================
+typedef struct{
+  GFL_PROCSYS* procsys_up; 
+}COMM_BTL_DEMO_PROC_WORK;
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief
+ *
+ *	@param	GFL_PROC *proc
+ *	@param	*seq
+ *	@param	pwk
+ *	@param	mywk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static GFL_PROC_RESULT CommBattleCallProc_Init(  GFL_PROC *proc, int *seq, void* pwk, void* mywk )
+{
+  COMM_BTL_DEMO_PROC_WORK*   work;
+  
+  // ワーク アロケート
+  work = GFL_PROC_AllocWork( proc , sizeof(COMM_BTL_DEMO_PROC_WORK) , GFL_HEAPID_APP );
+
+  work->procsys_up = GFL_PROC_LOCAL_boot( GFL_HEAPID_APP );
+  
+  return GFL_PROC_RES_FINISH;
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief
+ *
+ *	@param	GFL_PROC *proc
+ *	@param	*seq
+ *	@param	pwk
+ *	@param	mywk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static GFL_PROC_RESULT CommBattleCallProc_End(  GFL_PROC *proc, int *seq, void* pwk, void* mywk )
+{
+  COMM_BTL_DEMO_PROC_WORK*   work;
+
+  GFL_PROC_LOCAL_Exit( work->procsys_up );
+  
+  GFL_PROC_FreeWork( proc );
+
+  return GFL_PROC_RES_FINISH;
+}
 
 //-----------------------------------------------------------------------------
 /**
@@ -60,14 +118,16 @@ const GFL_PROC_DATA CommBattleCommProcData =
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static GFL_PROC_RESULT CommBattleCallProc(  GFL_PROC *proc, int *seq, void* pwk, void* mywk )
+static GFL_PROC_RESULT CommBattleCallProc_Main(  GFL_PROC *proc, int *seq, void* pwk, void* mywk )
 {
   enum
   {
     SEQ_CALL_START_DEMO = 0,  ///< バトル前デモ呼び出し
+    SEQ_WAIT_START_DEMO,
     SEQ_BATTLE_TIMING_INIT,
     SEQ_BATTLE_TIMING_WAIT,
     SEQ_BATTLE_INIT,
+    SEQ_BATTLE_WAIT,
     SEQ_BATTLE_END,
     SEQ_CALL_END_DEMO,        ///< バトル後デモ呼び出し
     SEQ_CALL_BTL_REC_SEL,     ///< 通信対戦後の録画選択画面
@@ -75,8 +135,14 @@ static GFL_PROC_RESULT CommBattleCallProc(  GFL_PROC *proc, int *seq, void* pwk,
     SEQ_END
   };
 
+  COMM_BTL_DEMO_PROC_WORK * work = mywk;
   EVENT_BATTLE_CALL_WORK * bcw = pwk;
-  GAMESYS_WORK * gsys = bcw->gsys;
+  GFL_PROC_MAIN_STATUS up_status;
+
+  GF_ASSERT(work);
+  GF_ASSERT(bcw);
+
+  up_status = GFL_PROC_LOCAL_Main( work->procsys_up );
 
   switch (*seq) {
   case SEQ_CALL_START_DEMO:
@@ -91,41 +157,45 @@ static GFL_PROC_RESULT CommBattleCallProc(  GFL_PROC *proc, int *seq, void* pwk,
       {
         bcw->demo_prm->type = COMM_BTL_DEMO_TYPE_MULTI_START;
       }
-      GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID( comm_btl_demo ), &CommBtlDemoProcData, &bcw->demo_prm);
+      GFL_PROC_LOCAL_CallProc( work->procsys_up, FS_OVERLAY_ID( comm_btl_demo ), &CommBtlDemoProcData, &bcw->demo_prm);
     }
-    (*seq)++;
+    (*seq) = SEQ_WAIT_START_DEMO;
     break;
-
-  case SEQ_BATTLE_TIMING_INIT:
-    if (GAMESYSTEM_IsProcExists(gsys) != GFL_PROC_MAIN_NULL){
-      break;
+  
+  case SEQ_WAIT_START_DEMO:
+    if ( up_status != GFL_PROC_MAIN_VALID ){
+      (*seq) = SEQ_BATTLE_TIMING_INIT;
     }
+    break;
+  
+  case SEQ_BATTLE_TIMING_INIT:
     {
       GFL_OVERLAY_Load( FS_OVERLAY_ID( battle ) );
       GFL_NET_AddCommandTable(GFL_NET_CMD_BATTLE, BtlRecvFuncTable, BTL_NETFUNCTBL_ELEMS, NULL);
       GFL_NET_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle(), EVENT_BATTLE_ADD_CMD_TBL_TIMING);
       OS_TPrintf("戦闘用通信コマンドテーブルをAddしたので同期取り\n");
-      (*seq) ++;
+      (*seq) = SEQ_BATTLE_TIMING_WAIT;
     }
     break;
   case SEQ_BATTLE_TIMING_WAIT:
     if(GFL_NET_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(), EVENT_BATTLE_ADD_CMD_TBL_TIMING)){
       OS_TPrintf("戦闘用通信コマンドテーブルをAdd後の同期取り完了\n");
-      (*seq) ++;
+      (*seq) = SEQ_BATTLE_INIT;
     }
     break;
   case SEQ_BATTLE_INIT:
-//    GMEVENT_CallEvent(event, EVENT_FSND_PushPlayNextBGM(gsys, bcw->btl_setup_prm->musicDefault, FSND_FADE_SHORT, FSND_FADE_NONE)); 
-    GAMESYSTEM_CallProc(gsys, NO_OVERLAY_ID, &BtlProcData, bcw->btl_setup_prm);
-    (*seq)++;
+//  GMEVENT_CallEvent(event, EVENT_FSND_PushPlayNextBGM(gsys, bcw->btl_setup_prm->musicDefault, FSND_FADE_SHORT, FSND_FADE_NONE)); 
+    GFL_PROC_LOCAL_CallProc(work->procsys_up, NO_OVERLAY_ID, &BtlProcData, bcw->btl_setup_prm);
+    (*seq) = SEQ_BATTLE_WAIT;
     break;
-  case SEQ_BATTLE_END:
-    if (GAMESYSTEM_IsProcExists(gsys) != GFL_PROC_MAIN_NULL){
-      break;
+  case SEQ_BATTLE_WAIT:
+    if ( up_status != GFL_PROC_MAIN_VALID ){
+      (*seq) = SEQ_BATTLE_END;
     }
+  case SEQ_BATTLE_END:
     OS_TPrintf("バトル完了\n");
     GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle ) );
-    (*seq)++;
+    (*seq) = SEQ_CALL_END_DEMO;
     break;
   case SEQ_CALL_END_DEMO:
     // 通信バトル後デモ呼び出し
@@ -155,8 +225,8 @@ static GFL_PROC_RESULT CommBattleCallProc(  GFL_PROC *proc, int *seq, void* pwk,
         default : GF_ASSERT(0);
       }
 
-      GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID( comm_btl_demo ), &CommBtlDemoProcData, &bcw->demo_prm);
-      (*seq)++;
+      GFL_PROC_LOCAL_CallProc(work->procsys_up, FS_OVERLAY_ID( comm_btl_demo ), &CommBtlDemoProcData, &bcw->demo_prm);
+      (*seq) = SEQ_CALL_BTL_REC_SEL;
     }
     break;
   case SEQ_CALL_BTL_REC_SEL:
@@ -177,22 +247,18 @@ static GFL_PROC_RESULT CommBattleCallProc(  GFL_PROC *proc, int *seq, void* pwk,
       }
       // 通信対戦後の録画選択画面へ移行(録画しない人も移行します)
       {
-        bcw->btl_rec_sel_param.gamedata  = GAMESYSTEM_GetGameData( gsys );
+        bcw->btl_rec_sel_param.gamedata  = NULL;//GAMESYSTEM_GetGameData( work->procsys_up );
         bcw->btl_rec_sel_param.b_rec     = b_rec;
-        GAMESYSTEM_CallProc( gsys, FS_OVERLAY_ID( btl_rec_sel ), &BTL_REC_SEL_ProcData, &bcw->btl_rec_sel_param );
+        GFL_PROC_LOCAL_CallProc( work->procsys_up, FS_OVERLAY_ID( btl_rec_sel ), &BTL_REC_SEL_ProcData, &bcw->btl_rec_sel_param );
       }
-      (*seq)++;
+      (*seq) = SEQ_BGM_POP;
     }
     break;
   case SEQ_BGM_POP:
-    if (GAMESYSTEM_IsProcExists(gsys) != GFL_PROC_MAIN_NULL){
+    if ( up_status != GFL_PROC_MAIN_VALID){
       break;
     }
-    {
-      // BGM復帰
-//      GMEVENT_CallEvent(event, EVENT_FSND_PopBGM(gsys, FSND_FADE_SHORT, FSND_FADE_NORMAL));
-      (*seq) ++;
-    }
+    (*seq) = SEQ_END;
     break;
   case SEQ_END:
     return GFL_PROC_RES_FINISH;
@@ -263,7 +329,7 @@ GMEVENT_RESULT EVENT_CommBattleMain(GMEVENT * event, int *  seq, void * work)
   switch (*seq) 
   {
   case 0:
-    GAMESYSTEM_CallProc(gsys, NULL, &CommBattleCommProcData, bcw);
+    GAMESYSTEM_CallProc(gsys, NO_OVERLAY_ID, &CommBattleCommProcData, bcw);
     (*seq)++;
     break;
 
