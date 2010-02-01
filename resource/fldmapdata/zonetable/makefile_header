@@ -12,7 +12,6 @@
 #------------------------------------------------------------------------------
 #※コンバート作業が必要なユーザーの名前を記述する
 #------------------------------------------------------------------------------
-include users.def
 
 #----------------------------------------------------------------------------
 #※ここに作成するファイル名を書く
@@ -61,10 +60,7 @@ TEMP_FILES	= zonetable.txt
 #
 #----------------------------------------------------------------------------
 LDIRT_CLEAN = $(TEMP_FILES) $(TARGETDIR)/$(TARGETNAME)
-ifeq	($(CONVERTUSER),true)
-#コンバート対象者のみ、中間ファイル削除
 LDIRT_CLEAN	+= $(OUTPUT) $(DATATABTXT)
-endif
 
 
 #----------------------------------------------------------------------------
@@ -80,7 +76,6 @@ $(TARGETDIR)/$(TARGETNAME):	$(TARGETNAME)
 	$(COPY) $(TARGETNAME) $(TARGETDIR)/$(TARGETNAME)
 
 
-ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ動作させる
 
 #zonetable.txt	--(zonetable.rb)-->	zone_id.h
 $(TARGETNAME): $(DATATABTXT)
@@ -92,15 +87,11 @@ $(TARGETNAME): $(DATATABTXT)
 $(DATATABTXT):	$(DATAFILE)
 	@$(XLS2TAB) $(DATAFILE) > $(DATATABTXT)
 
-endif
 
 clean:
 	@rm -f $(TARGETDIR)/$(TARGETNAME)
-	@
-ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ動作させる
 	@rm -f $(TARGETNAME)
 	@rm -f $(DATATABTXT)
-endif
 
 
 dummyfiles:	$(DATATABTXT)

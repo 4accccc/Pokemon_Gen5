@@ -11,7 +11,6 @@
 #------------------------------------------------------------------------------
 #※コンバート作業が必要なユーザーの名前を記述する
 #------------------------------------------------------------------------------
-include users.def
 
 #----------------------------------------------------------------------------
 #※ここに作成するnarc名を書く
@@ -72,11 +71,8 @@ RESULTS		= $(RESDIR)/$(NARCNAME) $(RESDIR)/$(NAIXNAME)
 #
 #----------------------------------------------------------------------------
 LDIRT_CLEAN = $(TEMP_FILES) $(addprefix $(TARGETDIR)/, $(RESULTS))
-ifeq	($(CONVERTUSER),true)
-#コンバート対象者のみ、中間ファイル削除
 LDIRT_CLEAN	+= $(OUTPUT) $(RESDIR)/*.bin $(DATATABTXT) $(CONVSRCS) $(RESULTS) \
 							 $(MATRIXHEADER)
-endif
 
 LINCLUDES	= $(NITROSDK_ROOT)/include
 LINCLUDES	+= $(dir $<)
@@ -113,7 +109,7 @@ do-build: subdir $(TARGETDIR)/$(NARCNAME)
 $(TARGETDIR)/$(NARCNAME):	$(RESDIR)/$(NARCNAME)
 	$(foreach AFILE,$(RESULTS),$(COPY) $(AFILE) $(TARGETDIR) $(AND)) true
 
-ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ動作させる
+
 #zonetable.xls
 #	--(EXCEL2TAB)-->	zonetable.txt
 #	--(zonetable.rb)-->	zonetable.c（＋その他）
@@ -133,7 +129,6 @@ $(MATRIXHEADER):	$(MATRIXDATA)
 	$(XLS2TAB) $(MATRIXDATA) > $(MATRIXHEADER:.h=.txt)
 	ruby scripts/make_matrix_header.rb $(MATRIXHEADER:.h=.txt) > $(MATRIXHEADER)
 
-endif
 
 
 
