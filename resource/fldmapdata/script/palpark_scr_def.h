@@ -6,5 +6,6 @@
 
 //スクリプトデータID定義
 #define SCRID_PALPARK_RECEPTION (10290)
+#define SCRID_POS_PALPARK_RECEPTION (10291)
 
 #endif //_PALPARK_SCR_DEF_H_
