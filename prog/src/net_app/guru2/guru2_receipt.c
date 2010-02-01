@@ -86,7 +86,7 @@ static int  EndMessageWait( PRINT_STREAM *stream );
 static void EndMessageWindowOff( GURU2RC_WORK *wk );
 static int  OnlyParentCheck( GURU2RC_WORK *wk );
 static int  MyStatusGetNum( GURU2RC_WORK *wk );
-static u32 MyStatusGetNumBit( GURU2RC_WORK *wk );
+static u32  MyStatusGetNumBit( GURU2RC_WORK *wk );
 static void RecordDataSendRecv( GURU2RC_WORK *wk );
 static void CenteringPrint(GFL_BMPWIN *win, STRBUF *strbuf, GFL_FONT *font);
 static void SequenceChange_MesWait( GURU2RC_WORK *wk, int next );
@@ -95,10 +95,11 @@ static void LoadFieldObjData( GURU2RC_WORK *wk, ARCHANDLE* p_handle );
 static void FreeFieldObjData( GURU2RC_WORK *wk );
 static void TransFieldObjData( NNSG2dCharacterData *CharaData[2], NNSG2dPaletteData *PalData[2], int id, int view, int sex );
 static void TransPal( GFL_TCB* tcb, void *work );
-static int GetTalkSpeed( GURU2RC_WORK *wk );
+static int  GetTalkSpeed( GURU2RC_WORK *wk );
 static int  RecordCorner_BeaconControl( GURU2RC_WORK *wk, int plus );
 static void PadControl( GURU2RC_WORK *wk );
-static int _get_key_trg( void );
+static int  _get_key_trg( void );
+static void _print_func( GURU2RC_WORK *wk );
 
 // FuncTableからシーケンス遷移で呼ばれる関数
 static int Record_MainInit( GURU2RC_WORK *wk, int seq );
@@ -179,7 +180,7 @@ static int (* const FuncTable[])(GURU2RC_WORK *wk, int seq)={
  * @retval  GFL_PROC_RESULT GFL_PROC_RES_CONTINUE,GFL_PROC_RES_FINISH
  */
 //--------------------------------------------------------------
-GFL_PROC_RESULT Guru2Receipt_Init( GFL_PROC * proc, int *seq, void *pwk, void *mywk )
+GFL_PROC_RESULT Guru2ReceiptProc_Init( GFL_PROC * proc, int *seq, void *pwk, void *mywk )
 {
   GURU2RC_WORK *wk;
   ARCHANDLE *p_handle;
@@ -282,8 +283,18 @@ GFL_PROC_RESULT Guru2Receipt_Init( GFL_PROC * proc, int *seq, void *pwk, void *m
   return( GFL_PROC_RES_CONTINUE );
 }
 
+//----------------------------------------------------------------------------------
+/**
+ * @brief ユニオンルーム通信ワークポインタ取得
+ *
+ * @param   wk    
+ *
+ * @retval  UNION_APP_PTR   
+ */
+//----------------------------------------------------------------------------------
 static UNION_APP_PTR _get_unionwork(GURU2RC_WORK *wk)
 {
+//  OS_Printf("union app adr=%08x\n",(u32)wk->g2p->param.uniapp);
   return wk->g2p->param.uniapp;
 }
 
@@ -295,7 +306,7 @@ static UNION_APP_PTR _get_unionwork(GURU2RC_WORK *wk)
  * @retval  GFL_PROC_RESULT GFL_PROC_RES_CONTINUE,GFL_PROC_RES_FINISH
  */
 //--------------------------------------------------------------
-GFL_PROC_RESULT Guru2Receipt_Main( GFL_PROC * proc, int *seq, void *pwk, void *mywk )
+GFL_PROC_RESULT Guru2ReceiptProc_Main( GFL_PROC * proc, int *seq, void *pwk, void *mywk )
 {
   GURU2RC_WORK *wk = (GURU2RC_WORK *)mywk;
 
@@ -311,7 +322,7 @@ GFL_PROC_RESULT Guru2Receipt_Main( GFL_PROC * proc, int *seq, void *pwk, void *m
       // 自分が子機で接続台数が２台以上だった場合はもう絵が描かれている
       if(GFL_NET_SystemGetCurrentID()!=0){
         if(MyStatusGetNum(wk)>2){
-          Guru2Comm_SendData(wk->g2c,G2COMM_RC_CHILD_JOIN, NULL, 0);
+          //Guru2Comm_SendData(wk->g2c,G2COMM_RC_CHILD_JOIN, NULL, 0);
         }
       }
     }
@@ -351,10 +362,13 @@ GFL_PROC_RESULT Guru2Receipt_Main( GFL_PROC * proc, int *seq, void *pwk, void *m
     break;
   }
   
-  GFL_CLACT_SYS_Main();         // セルアクター常駐関数
+  GFL_CLACT_SYS_Main();               // セルアクター常駐関数
+  _print_func(wk);
+  
 
   return GFL_PROC_RES_CONTINUE;
 }
+
 
 #define DEFAULT_NAME_MAX    18
 
@@ -371,7 +385,7 @@ GFL_PROC_RESULT Guru2Receipt_Main( GFL_PROC * proc, int *seq, void *pwk, void *m
  * @return  処理状況
  */
 //--------------------------------------------------------------------------------------------
-GFL_PROC_RESULT Guru2Receipt_End( GFL_PROC * proc, int *seq, void *pwk, void *mywk )
+GFL_PROC_RESULT Guru2ReceiptProc_End( GFL_PROC * proc, int *seq, void *pwk, void *mywk )
 {
   int i;
   GURU2RC_WORK *wk = (GURU2RC_WORK *)mywk;
@@ -413,6 +427,8 @@ GFL_PROC_RESULT Guru2Receipt_End( GFL_PROC * proc, int *seq, void *pwk, void *my
   // メッセージマネージャー・ワードセットマネージャー解放
   GFL_MSG_Delete( wk->MsgManager );
   WORDSET_Delete( wk->WordSet );
+  GFL_FONT_Delete( wk->font );
+
 
   // 入れ替わっていた上下画面出力を元に戻す
   GX_SetDispSelect(GX_DISP_SELECT_MAIN_SUB);
@@ -495,6 +511,23 @@ static void VBlankFunc( GFL_TCB *tcb, void * work )
 }
 
 
+//----------------------------------------------------------------------------------
+/**
+ * @brief 文字描画関連常駐関数
+ *
+ * @param wk    
+ */
+//----------------------------------------------------------------------------------
+static void _print_func( GURU2RC_WORK *wk )
+{
+  if(wk->printQue!=NULL){
+    PRINTSYS_QUE_Main( wk->printQue );
+  }
+  GFL_TCBL_Main( wk->pMsgTcblSys );
+
+}
+
+
 static const GFL_DISP_VRAM Guru2DispVramDat = {
 
     GX_VRAM_BG_128_A,           // メイン2DエンジンのBG
@@ -555,8 +588,8 @@ static void BgInit()
   { 
     GFL_BG_BGCNT_HEADER TextBgCntDat = {
       0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0xf000, GX_BG_CHARBASE_0x10000, GX_BG_EXTPLTT_01,
-      0, 0, 0, FALSE
+      GX_BG_SCRBASE_0xf000, GX_BG_CHARBASE_0x10000, GFL_BG_CHRSIZ_256x128,
+      GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
     };
     GFL_BG_SetBGControl( GFL_BG_FRAME0_S, &TextBgCntDat, GFL_BG_MODE_TEXT );
     GFL_BG_ClearScreen( GFL_BG_FRAME0_S );
@@ -568,8 +601,8 @@ static void BgInit()
   { 
     GFL_BG_BGCNT_HEADER TextBgCntDat = {
       0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0xf800, GX_BG_CHARBASE_0x00000, GX_BG_EXTPLTT_01,
-      1, 0, 0, FALSE
+      GX_BG_SCRBASE_0xf800, GX_BG_CHARBASE_0x00000, GFL_BG_CHRSIZ_256x128,
+      GX_BG_EXTPLTT_01, 1, 0, 0, FALSE
     };
     GFL_BG_SetBGControl( GFL_BG_FRAME1_S, &TextBgCntDat, GFL_BG_MODE_TEXT );
     GFL_BG_ClearScreen( GFL_BG_FRAME1_S );
@@ -579,8 +612,8 @@ static void BgInit()
   { 
     GFL_BG_BGCNT_HEADER TextBgCntDat = {
       0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0xd800, GX_BG_CHARBASE_0x08000, GX_BG_EXTPLTT_01,
-      2, 0, 0, FALSE
+      GX_BG_SCRBASE_0xd800, GX_BG_CHARBASE_0x08000, GFL_BG_CHRSIZ_256x128,
+      GX_BG_EXTPLTT_01, 2, 0, 0, FALSE
     };
     GFL_BG_SetBGControl(  GFL_BG_FRAME2_S, &TextBgCntDat, GFL_BG_MODE_TEXT );
   }
@@ -590,8 +623,8 @@ static void BgInit()
   { 
     GFL_BG_BGCNT_HEADER TextBgCntDat = {
       0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0xf800, GX_BG_CHARBASE_0x00000, GX_BG_EXTPLTT_01,
-      0, 0, 0, FALSE
+      GX_BG_SCRBASE_0xf800, GX_BG_CHARBASE_0x00000, GFL_BG_CHRSIZ_256x128,
+      GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
     };
     GFL_BG_SetBGControl( GFL_BG_FRAME0_M, &TextBgCntDat, GFL_BG_MODE_TEXT );
     GFL_BG_ClearScreen(  GFL_BG_FRAME0_M );
@@ -601,8 +634,8 @@ static void BgInit()
   { 
     GFL_BG_BGCNT_HEADER TextBgCntDat = {
       0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0xf000, GX_BG_CHARBASE_0x08000, GX_BG_EXTPLTT_01,
-      1, 0, 0, FALSE
+      GX_BG_SCRBASE_0xf000, GX_BG_CHARBASE_0x08000, GFL_BG_CHRSIZ_256x128,
+      GX_BG_EXTPLTT_01, 1, 0, 0, FALSE
     };
     GFL_BG_SetBGControl( GFL_BG_FRAME1_M, &TextBgCntDat, GFL_BG_MODE_TEXT );
   }
@@ -725,22 +758,27 @@ static void BgExit( void )
 //--------------------------------------------------------------------------------------------
 static void BgGraphicSet( GURU2RC_WORK * wk, ARCHANDLE* p_handle )
 {
+  // ------上画面用BGリソース転送---------
   // 上下画面ＢＧパレット転送
   GFL_ARCHDL_UTIL_TransVramPalette( p_handle,  NARC_guru2_2d_record_s_NCLR, PALTYPE_MAIN_BG, 0, 16*16*2, HEAPID_GURU2 );
-  GFL_ARC_UTIL_TransVramPalette( ARCID_C_GEAR, NARC_c_gear_c_gear_NCLR,  PALTYPE_SUB_BG,  0, 16*5,   HEAPID_GURU2 );
-  
+  // メイン画面BG1キャラ転送
+  GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_guru2_2d_record_s_NCGR,  GFL_BG_FRAME1_M, 0, 32*8*0x20, 0, HEAPID_GURU2);
+  // メイン画面BG1スクリーン転送
+  GFL_ARCHDL_UTIL_TransVramScreen(   p_handle, NARC_guru2_2d_record_s_NSCR,  GFL_BG_FRAME1_M, 0, 32*24*2, 0, HEAPID_GURU2);
+
   // 会話フォントパレット転送
   GFL_ARC_UTIL_TransVramPalette( ARCID_FONT, NARC_font_default_nclr, PALTYPE_MAIN_BG, 
                                  13*0x20, 32, HEAPID_GURU2 );
 
+  // ------下画面用BGリソース転送---------
+  // サブ画面パレット転送
+  GFL_ARC_UTIL_TransVramPalette( ARCID_C_GEAR, NARC_c_gear_c_gear_NCLR,  PALTYPE_SUB_BG,  0, 32*11,   HEAPID_GURU2 );
+  // サブ画面キャラ転送
   GFL_ARC_UTIL_TransVramBgCharacter( ARCID_C_GEAR, NARC_c_gear_c_gear_NCGR,   GFL_BG_FRAME2_S, 0, 0, 0, HEAPID_GURU2);
-  GFL_ARC_UTIL_TransVramScreen(      ARCID_C_GEAR, NARC_c_gear_c_gear00_NSCR, GFL_BG_FRAME2_S, 0, 0, 0, HEAPID_GURU2);
+  // サブ画面スクリーンキャラ転送
+  GFL_ARC_UTIL_TransVramScreen(      ARCID_C_GEAR, NARC_c_gear_c_gear01_n_NSCR, GFL_BG_FRAME2_S, 0, 0, 0, HEAPID_GURU2);
 
-  // メイン画面BG1キャラ転送
-  GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_guru2_2d_record_s_NCGR,  GFL_BG_FRAME1_M, 0, 32*8*0x20, 1, HEAPID_GURU2);
 
-  // メイン画面BG1スクリーン転送
-  GFL_ARCHDL_UTIL_TransVramScreen(   p_handle, NARC_guru2_2d_record_s_NSCR,  GFL_BG_FRAME1_M, 0, 32*24*2, 1, HEAPID_GURU2);
 
   // メイン画面会話ウインドウグラフィック転送
   BmpWinFrame_GraphicSet(
@@ -749,6 +787,10 @@ static void BgGraphicSet( GURU2RC_WORK * wk, ARCHANDLE* p_handle )
 
   BmpWinFrame_GraphicSet(
          GFL_BG_FRAME0_M, 1+TALK_WIN_CGX_SIZ, MENUFRAME_PAL_INDEX, 0, HEAPID_GURU2 );
+
+  GFL_BG_SetVisible( GFL_BG_FRAME0_M, VISIBLE_ON );
+  GFL_BG_SetVisible( GFL_BG_FRAME1_M, VISIBLE_ON );
+  GFL_BG_SetVisible( GFL_BG_FRAME2_S, VISIBLE_ON );
 
 }
 
@@ -784,7 +826,7 @@ static void InitCellActor(GURU2RC_WORK *wk, ARCHANDLE* p_handle)
   //---------上画面人物OBJ読み込み-------------------
 
   //chara読み込み
-  wk->resObjTbl[GURU2_CLACT_RES_CHR] = GFL_CLGRP_CGR_Register( p_handle, NARC_guru2_2d_record_s_obj_NCGR, 1, 
+  wk->resObjTbl[GURU2_CLACT_RES_CHR] = GFL_CLGRP_CGR_Register( p_handle, NARC_guru2_2d_record_s_obj_NCGR, 0, 
                                                                CLSYS_DRAW_MAIN, HEAPID_GURU2 );
   //pal読み込み
   wk->resObjTbl[GURU2_CLACT_RES_PLTT] = GFL_CLGRP_PLTT_Register( p_handle, NARC_guru2_2d_record_s_obj_NCLR,
@@ -845,7 +887,7 @@ static void SetCellActor(GURU2RC_WORK *wk)
   
     add.bgpri   = 1;
     add.softpri = 0;
-
+    add.anmseq  = 0;
     //セルアクター表示開始
 
     // メイン画面用(人物の登録）
@@ -915,6 +957,7 @@ static void SetCellActor(GURU2RC_WORK *wk)
 static void BmpWinInit(GURU2RC_WORK *wk )
 {
   // ---------- メイン画面 ------------------
+  GFL_BMPWIN_Init( HEAPID_GURU2 );
 
   // BG1面BMP（やめる）ウインドウ確保・描画
   wk->EndWin = GFL_BMPWIN_Create( GFL_BG_FRAME1_S,
@@ -1015,6 +1058,7 @@ static void BmpWinDelete( GURU2RC_WORK *wk )
   GFL_BMPWIN_Delete( wk->EndWin );
   GFL_BMPWIN_Delete( wk->MsgWin );
 
+  GFL_BMPWIN_Exit();
 
 }
 
@@ -1126,12 +1170,14 @@ static void PadControl( GURU2RC_WORK *wk )
   if(_get_key_trg() & PAD_BUTTON_A){
     if(GFL_NET_SystemGetCurrentID()==0){
       if(MyStatusGetNum(wk)==wk->g2c->shareNum && wk->g2c->ridatu_bit == 0){
-        u8 flag = GURU2COMM_BAN_ON;
-        RecordMessagePrint( wk, msg_guru2_receipt_01_02, 0 );
-        SequenceChange_MesWait(wk,RECORD_MODE_START_SELECT);
+        // 離脱禁止通達(FALSEの場合は進行しない）
+        if(Union_App_Parent_EntryBlock( _get_unionwork(wk) )){
+//        Guru2Comm_SendData(wk->g2c, G2COMM_RC_BAN, &flag, 1 );
 
-        // 離脱禁止通達
-        Guru2Comm_SendData(wk->g2c, G2COMM_RC_BAN, &flag, 1 );
+          u8 flag = GURU2COMM_BAN_ON;
+          RecordMessagePrint( wk, msg_guru2_receipt_01_02, 0 );
+          SequenceChange_MesWait(wk,RECORD_MODE_START_SELECT);
+        }
         
         // 接続人数制限ON
         //ChangeConnectMax( wk, 0 );
@@ -1155,15 +1201,17 @@ static void PadControl( GURU2RC_WORK *wk )
     }else{
 //      if( MyStatusGetNum(wk)==wk->g2c->shareNum ){
       if( Union_App_GetMemberNum(_get_unionwork(wk))==wk->g2c->shareNum && wk->g2c->ridatu_bit == 0){
-        u8 flag = GURU2COMM_BAN_ON;
         // 親機は終了メニューへ
-        RecordMessagePrint( wk, msg_guru2_receipt_01_03, 0 );
-        SequenceChange_MesWait(wk,RECORD_MODE_END_SELECT);
-        // 離脱禁止通達
-        Guru2Comm_SendData(wk->g2c, G2COMM_RC_BAN, &flag, 1 );
+        if(Union_App_Parent_EntryBlock( _get_unionwork(wk) )){
+          u8 flag = GURU2COMM_BAN_ON;
+          RecordMessagePrint( wk, msg_guru2_receipt_01_03, 0 );
+          SequenceChange_MesWait(wk,RECORD_MODE_END_SELECT);
+          // 離脱禁止通達
+        //  Guru2Comm_SendData(wk->g2c, G2COMM_RC_BAN, &flag, 1 );
 
         // 接続人数制限ON
         //ChangeConnectMax( wk, 0 );
+        }
       }
       else{
         PMSND_PlaySE(SEQ_SE_SELECT1);
@@ -1173,9 +1221,13 @@ static void PadControl( GURU2RC_WORK *wk )
   else{
     if(wk->beacon_flag == GURU2COMM_BAN_NONE){
       if(GFL_NET_SystemGetCurrentID() == 0 && Union_App_GetMemberNum(_get_unionwork(wk))==wk->g2c->shareNum){
-        u8 flag = GURU2COMM_BAN_NONE;
-        // 離脱禁止解除通達
-        Guru2Comm_SendData(wk->g2c, G2COMM_RC_BAN, &flag, 1 );
+        if(Union_App_Parent_EntryBlock( _get_unionwork(wk) )){
+
+          u8 flag = GURU2COMM_BAN_NONE;
+          // 離脱禁止解除通達
+          Union_App_Parent_ResetEntryBlock(_get_unionwork(wk));
+//          Guru2Comm_SendData(wk->g2c, G2COMM_RC_BAN, &flag, 1 );
+        }
       }
     }
   }
@@ -1281,7 +1333,8 @@ static int Record_NewMemberEnd( GURU2RC_WORK *wk, int seq )
   if(GFL_NET_SystemGetCurrentID()==0){
     int flag = GURU2COMM_BAN_NONE;
     // 離脱禁止解除通達
-    Guru2Comm_SendData(wk->g2c, G2COMM_RC_BAN, &flag, 1 );
+    Union_App_Parent_ResetEntryBlock(_get_unionwork(wk));
+//    Guru2Comm_SendData(wk->g2c, G2COMM_RC_BAN, &flag, 1 );
   }
 
   wk->seq = RECORD_MODE;
@@ -1379,7 +1432,8 @@ static int Record_EndSelectWait( GURU2RC_WORK *wk, int seq )
       if(GFL_NET_SystemGetCurrentID()==0){
         int flag = GURU2COMM_BAN_NONE;
         // 離脱禁止解除通達
-        Guru2Comm_SendData(wk->g2c, G2COMM_RC_BAN, &flag, 1 );
+          Union_App_Parent_ResetEntryBlock(_get_unionwork(wk));
+//        Guru2Comm_SendData(wk->g2c, G2COMM_RC_BAN, &flag, 1 );
 
         // 接続人数制限OFF
         //ChangeConnectMax( wk, 1 );
@@ -1549,7 +1603,8 @@ static int Record_StartSelectWait( GURU2RC_WORK *wk, int seq )
     if(ret==BMPMENU_CANCEL){
       int flag = GURU2COMM_BAN_NONE;
       // 離脱禁止解除通達
-      Guru2Comm_SendData(wk->g2c, G2COMM_RC_BAN, &flag, 1 );
+      Union_App_Parent_ResetEntryBlock(_get_unionwork(wk));
+//      Guru2Comm_SendData(wk->g2c, G2COMM_RC_BAN, &flag, 1 );
 
       // ビーコン状態変更
       ////ChangeConnectMax( wk, 1 );
@@ -1764,7 +1819,8 @@ static int Record_EndSelectParentWait( GURU2RC_WORK *wk, int seq )
       wk->seq = RECORD_MODE_INIT;
 
       // 離脱禁止解除通達
-      Guru2Comm_SendData(wk->g2c, G2COMM_RC_BAN, &flag, 1 );
+      Union_App_Parent_ResetEntryBlock(_get_unionwork(wk));
+//      Guru2Comm_SendData(wk->g2c, G2COMM_RC_BAN, &flag, 1 );
 
       // 接続人数制限OFF
       //ChangeConnectMax( wk, 1 );
@@ -2228,12 +2284,12 @@ void Guru2Rc_MainSeqCheckChange( GURU2RC_WORK *wk, int seq, u8 id  )
       wk->seq      = seq;
       wk->g2c->shareNum = Union_App_GetMemberNum(_get_unionwork(wk));
       wk->g2c->ridatu_bit = 0;
-      if(GFL_NET_SystemGetCurrentID()==0){
-        int flag = GURU2COMM_BAN_ON;//NONE;
-        // 離脱禁止解除通達
-        Guru2Comm_SendData(wk->g2c, G2COMM_RC_BAN, &flag, 1 );
-        
-      }
+//      if(GFL_NET_SystemGetCurrentID()==0){
+//        int flag = GURU2COMM_BAN_ON;//NONE;
+//        // 離脱禁止解除通達
+//        Guru2Comm_SendData(wk->g2c, G2COMM_RC_BAN, &flag, 1 );
+//        
+//      }
       break;
       // ↓↓↓ 
     case RECORD_MODE_LOGOUT_CHILD:
@@ -2599,6 +2655,7 @@ static void RecordMessagePrint( GURU2RC_WORK *wk, int msgno, int all_put )
 
   }
 
+  GFL_BMPWIN_MakeTransWindow( wk->MsgWin );
 }
 
 //------------------------------------------------------------------
@@ -2717,7 +2774,7 @@ static void LoadFieldObjData( GURU2RC_WORK *wk, ARCHANDLE* p_handle )
 
   // 画像読み込み
   wk->FieldObjCharaBuf[0] = GFL_ARC_UTIL_LoadOBJCharacter( ARCID_WORLDTRADE_GRA, NARC_worldtrade_hero_lz_ncgr, 1, &(wk->FieldObjCharaData[0]), HEAPID_GURU2 );
-  wk->FieldObjCharaBuf[1] = GFL_ARCHDL_UTIL_LoadOBJCharacter( p_handle, NARC_guru2_2d_union_chara_NCGR,  1, &(wk->FieldObjCharaData[1]), HEAPID_GURU2 );
+  wk->FieldObjCharaBuf[1] = GFL_ARCHDL_UTIL_LoadOBJCharacter( p_handle, NARC_guru2_2d_union_chara_NCGR,  0, &(wk->FieldObjCharaData[1]), HEAPID_GURU2 );
 
 }
 
@@ -2818,10 +2875,12 @@ static int RecordCorner_BeaconControl( GURU2RC_WORK *wk, int plus )
   num = MyStatusGetNum(wk);
 
   if(num>wk->g2c->shareNum){
-    u8 flag = GURU2COMM_BAN_ON;
-    // 離脱禁止解除通達
-    Guru2Comm_SendData(wk->g2c, G2COMM_RC_BAN, &flag, 1 );
-    wk->beacon_flag = GURU2COMM_BAN_ON;
+    if(Union_App_Parent_EntryBlock(_get_unionwork(wk))){
+      u8 flag = GURU2COMM_BAN_ON;
+      // 離脱禁止通達
+//      Guru2Comm_SendData(wk->g2c, G2COMM_RC_BAN, &flag, 1 );
+      wk->beacon_flag = GURU2COMM_BAN_ON;
+    }
   }
   else{
     wk->beacon_flag = GURU2COMM_BAN_NONE;

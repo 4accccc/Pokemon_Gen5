@@ -69,12 +69,13 @@ GFL_PROC_RESULT Guru2Proc_Init( GFL_PROC * proc, int *seq, void *pwk, void *mywk
   GURU2_CALL_WORK *work;
   GURUGURU_PARENT_WORK *param = (GURUGURU_PARENT_WORK*)pwk;
   
-  work = GFL_HEAP_AllocMemory( HEAPID_PROC, sizeof(GURU2_CALL_WORK) );
+  work = GFL_PROC_AllocWork( proc, sizeof(GURU2_CALL_WORK),HEAPID_PROC );
   GFL_STD_MemFill( work, 0, sizeof(GURU2_CALL_WORK) );
   
   work->gamedata     = param->gamedata;
-  work->param.sv     = GAMEDATA_GetSaveControlWork( param->gamedata );
-  work->param.record = GAMEDATA_GetRecordPtr( param->gamedata );
+//  work->param.sv     = GAMEDATA_GetSaveControlWork( param->gamedata );
+//  work->param.record = GAMEDATA_GetRecordPtr( param->gamedata );
+  work->param        = *param;
 
   OS_Printf("ぐるぐるプロセス開始\n");
 
@@ -399,25 +400,25 @@ FS_EXTERN_OVERLAY(guru2);
 /// ぐるぐる受付プロセスデータ
 //--------------------------------------------------------------
 static const GFL_PROC_DATA Guru2Receipt_Proc = {
-  Guru2Receipt_Init,
-  Guru2Receipt_Main,
-  Guru2Receipt_End,
+  Guru2ReceiptProc_Init,
+  Guru2ReceiptProc_Main,
+  Guru2ReceiptProc_End,
 };
 
 //--------------------------------------------------------------
 /// ぐるぐるメインプロセスデータ
 //--------------------------------------------------------------
 static const GFL_PROC_DATA Guru2Main_Proc = {
-  Guru2Receipt_Init,
-  Guru2Receipt_Main,
-  Guru2Receipt_End,
-//  Guru2Main_Init,
-//  Guru2Main_Main,
-//  Guru2Main_End,
+  Guru2ReceiptProc_Init,
+  Guru2ReceiptProc_Main,
+  Guru2ReceiptProc_End,
+//  Guru2MainProc_Init,
+//  Guru2MainProc_Main,
+//  Guru2MainProc_End,
 };
 
 //--------------------------------------------------------------
-/// ぐるぐる交換プロックデータ
+/// ぐるぐる交換本体プロックデータ（外部参照用）
 //--------------------------------------------------------------
 const GFL_PROC_DATA Guru2ProcData = {
   Guru2Proc_Init,

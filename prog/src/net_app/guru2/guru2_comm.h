@@ -46,27 +46,28 @@ enum
 //--------------------------------------------------------------
 enum
 {
-  G2COMM_RC_STOP,     ///<乱入により停止
-  G2COMM_RC_RESTART,    ///<乱入終了、再度開始
-  G2COMM_RC_END_CHILD,  ///<子機離脱
-  G2COMM_RC_END,      ///<終了
-  G2COMM_RC_CHILD_JOIN, ///<子機乱入開始
-  G2COMM_RC_START,    ///<開始
-  G2COMM_RC_DATA,     ///<データ転送
-  G2COMM_RC_BAN,      ///<離脱禁止・許可
+//  G2COMM_RC_STOP,       ///<乱入により停止
+//  G2COMM_RC_RESTART,    ///<乱入終了、再度開始
+  G2COMM_RC_END_CHILD,    ///<子機離脱
+  G2COMM_RC_END,          ///<終了
+  G2COMM_RC_CHILD_JOIN,   ///<子機乱入開始
+  G2COMM_RC_START,        ///<開始
+//  G2COMM_RC_DATA,       ///<データ転送
+//  G2COMM_RC_BAN,        ///<離脱禁止・許可
   
-  G2COMM_GM_SIGNAL,   ///<ゲーム　シグナル
-  G2COMM_GM_JOIN,     ///<ゲーム　参加
-  G2COMM_GM_BTN,      ///<ゲーム　ボタン情報
-  G2COMM_GM_GAMEDATA,   ///<ゲーム　情報
-  G2COMM_GM_PLAYNO,   ///<ゲーム　プレイ番号
-  G2COMM_GM_PLAYMAX,    ///<ゲーム　プレイ最大数
-  G2COMM_GM_TRADE_POS,  ///<ゲーム　交換位置
-  G2COMM_GM_GAMERESULT, ///<ゲーム　結果
+  G2COMM_GM_SIGNAL,       ///<ゲーム　シグナル
+  G2COMM_GM_JOIN,         ///<ゲーム　参加
+  G2COMM_GM_BTN,          ///<ゲーム　ボタン情報
+  G2COMM_GM_GAMEDATA,     ///<ゲーム　情報
+  G2COMM_GM_PLAYNO,       ///<ゲーム　プレイ番号
+  G2COMM_GM_PLAYMAX,      ///<ゲーム　プレイ最大数
+  G2COMM_GM_TRADE_POS,    ///<ゲーム　交換位置
+  G2COMM_GM_GAMERESULT,   ///<ゲーム　結果
   G2COMM_GM_EGG_DATA_NG,  ///<ゲーム　卵データ異常
   G2COMM_GM_EGG_DATA_OK,  ///<ゲーム　卵データ正常
+  G2COMM_GM_SEND_EGG_DATA,///<ゲーム　卵データ送信
   
-  G2COMM_MAX,       ///<最大
+  G2COMM_MAX,             ///<最大
 };
 
 //--------------------------------------------------------------
@@ -234,7 +235,6 @@ extern void * Guru2Comm_WideUseSendWorkGet( GURU2COMM_WORK *g2c, u32 size );
 extern BOOL Guru2Comm_SendData(
   GURU2COMM_WORK *g2c, u32 code, const void *data, u32 size );
 
-extern int Guru2Comm_OnlineNumGet( void );
 extern void * Guru2Comm_FriendPokePartyGet( GURU2COMM_WORK *g2c, int id );
 
 #endif //GURU2_COMM_FILE

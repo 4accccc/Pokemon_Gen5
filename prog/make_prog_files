@@ -635,8 +635,9 @@ SRCS_OVERLAY_UNION_APP = net_app/union/union_app.c
 # ぐるぐる交換（ユニオンルーム）
 #===> SRCS_OVERLAY_UNION_ROOM
 SRCS_OVERLAY_GURU2 = net_app/guru2/guru2.c \
-                     net_app/guru2/guru2_receipt.c
-
+                     net_app/guru2/guru2_comm.c \
+                     net_app/guru2/guru2_receipt.c \
+                     net_app/guru2/guru2_main.c
 
 
 # 遊覧船部屋セットアップ

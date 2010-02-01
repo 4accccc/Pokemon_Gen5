@@ -7,20 +7,23 @@
  */
 //******************************************************************************
 #include <gflib.h>
-#include "communication/communication.h"
-#include "communication/comm_state.h"
+#include "net/network_define.h"
+#include "arc_def.h"
 
 #include "print/wordset.h"
 #include "system/bmp_menu.h"
-#include "system/snd_tool.h"
-#include "communication/wh.h"
+//#include "system/snd_tool.h"
+//#include "communication/wh.h"
 
 #include "guru2_local.h"
 #include "guru2_receipt.h"
 
-#ifdef DEBUG_ONLY_FOR_kagaya
+#ifdef DEBUG_ONLY_FOR_mori
 #define D_GURU2_PRINTF_ON //定義でOS_Printf有効
 #endif
+
+#define GURU2_MAIN_FUNC_OFF
+
 
 //==============================================================================
 //  typedef
@@ -44,8 +47,91 @@ static BOOL guru2Comm_WideUseSendWorkSend(
 
 static void Guru2Comm_PokeSelOyaEndTcbSet( GURU2COMM_WORK *g2c );
 
-static const CommPacketTbl DATA_CommPacketTbl[CF_COMMAND_MAX];
-static const PTRCommRecvFunc DATA_Guru2CommPacketTbl[G2COMM_MAX];
+
+static void CommCB_Receipt_EndChild(
+    const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
+static void CommCB_Receipt_End(
+    const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
+static void CommCB_Receipt_ChildJoin(
+    const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
+static void CommCB_Receipt_Start(
+    const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
+static void CommCB_Receipt_Data(
+    const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
+static void CommCB_Receipt_BanFlag (
+    const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
+static void CommCB_Main_Signal     (
+    const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
+static void CommCB_Main_Join       (
+    const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
+static void CommCB_Main_Button     (
+    const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
+static void CommCB_Main_GameData   (
+    const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
+static void CommCB_Main_PlayNo     (
+    const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
+static void CommCB_Main_PlayMax    (
+    const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
+static void CommCB_Main_TradeNo    (
+    const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
+static void CommCB_Main_GameResult (
+    const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
+static void CommCB_Main_EggDataNG  (
+    const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
+static void CommCB_Main_EggDataOK  (
+    const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
+static void CommCB_Guru2PokeParty  (
+    const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
+
+static u8 * _getPokePartyRecvBuff( int netID, void *pWork, int size );
+
+
+//static const CommPacketTbl DATA_CommPacketTbl[CF_COMMAND_MAX];
+//static const PTRCommRecvFunc DATA_Guru2CommPacketTbl[G2COMM_MAX];
+//--------------------------------------------------------------
+/// 通信コールバック関数
+//--------------------------------------------------------------
+  
+///通信コマンドテーブル
+const NetRecvFuncTable _Guru2CommPacketTbl[] = {
+//  { CommCB_Receipt_Stop,      NULL, },  // G2COMM_RC_STOP,     /
+//  { CommCB_Receipt_ReStart,   NULL, },  // G2COMM_RC_RESTART,   
+  { CommCB_Receipt_EndChild,  NULL, },  // G2COMM_RC_END_CHILD, 
+  { CommCB_Receipt_End,       NULL, },  // G2COMM_RC_END
+  { CommCB_Receipt_ChildJoin, NULL, },  // G2COMM_RC_CHILD_JOIN,
+  { CommCB_Receipt_Start,     NULL, },  // G2COMM_RC_START,    /
+//  { CommCB_Receipt_Data,      NULL, },  // G2COMM_RC_DATA,     /
+//  { CommCB_Receipt_BanFlag,   NULL, },  // G2COMM_RC_BAN,      /
+  { CommCB_Main_Signal,       NULL, },  // G2COMM_GM_SIGNAL,   /
+  { CommCB_Main_Join,         NULL, },  // G2COMM_GM_JOIN,     /
+  { CommCB_Main_Button,       NULL, },  // G2COMM_GM_BTN,      /
+  { CommCB_Main_GameData,     NULL, },  // G2COMM_GM_GAMEDATA,  
+  { CommCB_Main_PlayNo,       NULL, },  // G2COMM_GM_PLAYNO,   /
+  { CommCB_Main_PlayMax,      NULL, },  // G2COMM_GM_PLAYMAX,   
+  { CommCB_Main_TradeNo,      NULL, },  // G2COMM_GM_TRADE_POS, 
+  { CommCB_Main_GameResult,   NULL, },  // G2COMM_GM_GAMERESULT,
+  { CommCB_Main_EggDataNG,    NULL, },  // G2COMM_GM_EGG_DATA_NG
+  { CommCB_Main_EggDataOK,    NULL, },  // G2COMM_GM_EGG_DATA_OK
+  { CommCB_Guru2PokeParty,    _getPokePartyRecvBuff,}, // G2COMM_GM_SEND_EGG_DATA
+  
+};
+
+
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief 
+ *
+ * @param   wk    
+ *
+ * @retval  UNION_APP_PTR   
+ */
+//----------------------------------------------------------------------------------
+static UNION_APP_PTR _get_unionwork( GURU2COMM_WORK *wk)
+{
+  return wk->g2p->param.uniapp;
+}
+
 
 //==============================================================================
 //  ぐるぐる交換　通信コマンド
@@ -98,7 +184,10 @@ void Guru2Comm_WorkDelete( GURU2COMM_WORK *g2c )
 //--------------------------------------------------------------
 void Guru2Comm_CommandInit( GURU2COMM_WORK *g2c )
 {
-    CommCommandInitialize( DATA_CommPacketTbl, CF_COMMAND_MAX, g2c );
+//  CommCommandInitialize( DATA_CommPacketTbl, CF_COMMAND_MAX, g2c );
+  GFL_NET_AddCommandTable( GFL_NET_CMD_IRCTRADE,_Guru2CommPacketTbl,
+                           NELEMS(_Guru2CommPacketTbl), g2c);
+
 }
 
 //--------------------------------------------------------------
@@ -110,10 +199,10 @@ void Guru2Comm_CommandInit( GURU2COMM_WORK *g2c )
 //--------------------------------------------------------------
 void Guru2Comm_CommUnionRoomChange( GURU2COMM_WORK *g2c )
 {
-  CommStateSetLimitNum(2);
-  CommStateUnionBconCollectionRestart();
+//  CommStateSetLimitNum(2);
+//  CommStateUnionBconCollectionRestart();
 //  UnionRoomView_ObjInit( g2c->g2p->param.union_view );
-  Union_BeaconChange( UNION_PARENT_MODE_FREE );
+//  Union_BeaconChange( UNION_PARENT_MODE_FREE );
 }
 
 //==============================================================================
@@ -133,11 +222,13 @@ static BOOL guru2Comm_WideUseSendWorkSend(
   GF_ASSERT( size+4 <= GURU2_WIDEUSE_SENDWORK_SIZE );
   
   {
+    GFL_NETHANDLE *pNet = GFL_NET_HANDLE_GetCurrentHandle();
     BOOL ret;
     WUSE_SENDWORK *work = (void *)g2c->wideuse_sendwork;
     work->cmd = cmd;
     GFL_STD_MemCopy( buf, work->buf, size );
-    ret = CommSendData( CG_GURU2_CMD, work, GURU2_WIDEUSE_SENDWORK_SIZE );
+//    ret = ( CG_GURU2_CMD, work, GURU2_WIDEUSE_SENDWORK_SIZE );
+    ret=GFL_NET_SendData( pNet, cmd, GURU2_WIDEUSE_SENDWORK_SIZE, work->buf);
     
     #ifdef PM_DEBUG
     if( ret == FALSE ){
@@ -177,51 +268,26 @@ BOOL Guru2Comm_SendData(
 //==============================================================================
 //  コールバック関数　メイン
 //==============================================================================
-//--------------------------------------------------------------
-/**
- * ぐるぐる交換メインコールバック
- * @param   netID   
- * @param   size    
- * @param   pBuff   
- * @param   pWork   
- * @retval  nothing
- */
-//--------------------------------------------------------------
-static void CommCB_Guru2Cmd(
-    int netID, int size, void* pBuff, void* pWork )
-{
-  WUSE_SENDWORK *work = pBuff;
-  
-  if( work->cmd >= G2COMM_MAX ){
-    #ifdef D_GURU2_PRINTF_ON
-    OS_Printf( "GURU2 CALLBACK ERROR CMD cmd=%d\n", work->cmd );
-    #endif
-    GF_ASSERT( 0 );
-    return;
-  }
-  
-  DATA_Guru2CommPacketTbl[work->cmd]( netID, size, work->buf, pWork );
-}
 
 //--------------------------------------------------------------
 /**
  * 受付　ポケモンパーティを受信
  * @param   netID   
  * @param   size    
- * @param   pBuff   
- * @param   pWork   
+ * @param   pData   
+ * @param   pWk   
  * @retval  none    
  */
 //--------------------------------------------------------------
 static void CommCB_Guru2PokeParty(
-    int netID, int size, void *pBuff, void *pWork )
+    const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle)
 {
   void *buf;
-  GURU2COMM_WORK *g2c = pWork;
+  GURU2COMM_WORK *g2c = pWk;
   
   g2c->comm_game_egg_recv_bit |= 1 << netID;
   buf = Guru2Comm_FriendPokePartyGet( g2c, netID );
-  GFL_STD_MemCopy( pBuff, buf,  POKEPARTY_SEND_ONCE_SIZE );
+  GFL_STD_MemCopy( pData, buf,  POKEPARTY_SEND_ONCE_SIZE );
 
   #ifdef D_GURU2_PRINTF_ON
   OS_Printf( "タマゴ受信" );
@@ -231,67 +297,23 @@ static void CommCB_Guru2PokeParty(
 //==============================================================================
 //  コールバック関数　受付
 //==============================================================================
-//--------------------------------------------------------------
-/**
- * 受付　離脱制御フラグ到着
- * @param   netID   
- * @param   size    
- * @param   pBuff   
- * @param   pWork   
- * @retval  nothing
- */
-//--------------------------------------------------------------
-static void CommCB_Receipt_BanFlag(
-    int netID, int size, void* pBuff, void* pWork )
-{
-  GURU2COMM_WORK *g2c = pWork;
-  u8 *flag = (u8*)pBuff;
-  
-  if( netID==0 ){         //親
-    if( g2c->banFlag != *flag ){
-      #ifdef D_GURU2_PRINTF_ON
-      OS_Printf( "親機からの離脱禁止フラグ banFlag=%d\n", *flag );
-      #endif
-    }
-    g2c->banFlag = *flag;
-  }
-}
 
-//--------------------------------------------------------------
-/**
- * 受付　データ受信コールバック
- * @param   netID   
- * @param   size    
- * @param   pBuff   
- * @param   pWork   
- * @retval  nothing
- */
-//--------------------------------------------------------------
-static void CommCB_Receipt_Data(
-    int netID, int size, void* pBuff, void* pWork )
-{
-  GURU2COMM_WORK *g2c = pWork;
-  g2c->recv_count++;
-  #ifdef D_GURU2_PRINTF_ON
-  OS_Printf( "ぐるぐる交換データ受信完了 id=%d\n", netID );
-  #endif
-}
 
 //------------------------------------------------------------------
 /**
  * 受付　ぐるぐる交換　ポケモンセレクト開始　親発信
  * @param   netID   
  * @param   size    
- * @param   pBuff   
- * @param   pWork   
+ * @param   pData   
+ * @param   pWk   
  * @retval  nothing
  */
 //------------------------------------------------------------------
 static void CommCB_Receipt_Start(
-    int netID, int size, void* pBuff, void* pWork )
+    const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle)
 {
-  if( CommGetCurrentID() != 0 ){  //親発信 子のシーケンス変更 bug 0212 fix
-    GURU2COMM_WORK *wk = pWork;
+  if( GFL_NET_SystemGetCurrentID() != 0 ){  //親発信 子のシーケンス変更 bug 0212 fix
+    GURU2COMM_WORK *wk = pWk;
   
     wk->recv_count = 0;
     wk->record_execute = TRUE;
@@ -306,46 +328,26 @@ static void CommCB_Receipt_Start(
 
 //--------------------------------------------------------------
 /**
- * 受付　通信画面を再開する
- * @param   netID   
- * @param   size    
- * @param   pBuff   
- * @param   pWork   
- * @retval  nothing
- */
-//--------------------------------------------------------------
-static void CommCB_Receipt_ReStart(
-    int netID, int size, void* pBuff, void* pWork)
-{
-  GURU2COMM_WORK *g2c = pWork;
-  #ifdef D_GURU2_PRINTF_ON
-  OS_Printf("親機からレコード募集再開通知\n");
-  #endif
-  Guru2Rc_MainSeqForceChange( g2c->g2p->g2r, RECORD_MODE_NEWMEMBER_END, 0 );
-}
-
-//--------------------------------------------------------------
-/**
  * 受付　子機が離脱。
- * pBuff 子(離脱者)からの送信＝0:離脱許可確認。　1:離脱実行
+ * pData 子(離脱者)からの送信＝0:離脱許可確認。　1:離脱実行
  * 親からの送信＝上位4ビット：親のshareNum(0xfの場合は離脱NG)
  * @param   netID   
  * @param   size    
- * @param   pBuff   
- * @param   pWork   
+ * @param   pData   
+ * @param   pWk   
  * @retval  nothing
  */
 //--------------------------------------------------------------
 static void CommCB_Receipt_EndChild(
-    int netID, int size, void* pBuff, void* pWork)
+    const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle)
 {
-  GURU2COMM_WORK *g2c = pWork;
+  GURU2COMM_WORK *g2c = pWk;
   GURU2COMM_END_CHILD_WORK trans_work;
-  GURU2COMM_END_CHILD_WORK *recieve_work = pBuff;
+  const GURU2COMM_END_CHILD_WORK *recieve_work = pData;
   
   //子機(離脱者)からの送信
   if( netID != 0 ){           //離脱します通知
-    if( CommGetCurrentID()==0){     // 子機から(親機が受け取る)
+    if( GFL_NET_SystemGetCurrentID()==0){     // 子機から(親機が受け取る)
       // 子機がいなくなった事を全員に通知する
       trans_work = *recieve_work;
       trans_work.ridatu_id = netID;
@@ -353,24 +355,23 @@ static void CommCB_Receipt_EndChild(
       
       switch(recieve_work->request){
       case CREC_REQ_RIDATU_CHECK:
-        if(g2c->shareNum != CommGetConnectNum() 
-          || g2c->shareNum != Guru2Comm_OnlineNumGet()
-          || g2c->shareNum != MATH_CountPopulation(WH_GetBitmap())){
+        if(g2c->shareNum != Union_App_GetMemberNum(_get_unionwork(g2c)) 
+          || g2c->shareNum != MATH_CountPopulation(Union_App_GetMemberNetBit(_get_unionwork(g2c)))){
           trans_work.ridatu_kyoka = FALSE;  //離脱NG！
         }else{
           g2c->ridatu_bit |= 1 << netID;
           trans_work.ridatu_kyoka = TRUE;
           //離脱OKなので参加制限をかける
           //(乱入があればそちら側で制限がはずされるはず)
-          CommStateSetLimitNum( CommGetConnectNum() );
+          //CommStateSetLimitNum( Union_App_GetMemberNum(_get_unionwork) );
         }
         break;
       case CREC_REQ_RIDATU_EXE:
         break;
       }
     
-      Guru2Comm_SendData( g2c, G2COMM_RC_END_CHILD,
-        &trans_work, sizeof(GURU2COMM_END_CHILD_WORK) );
+//      Guru2Comm_SendData( g2c, G2COMM_RC_END_CHILD,
+//        &trans_work, sizeof(GURU2COMM_END_CHILD_WORK) );
       #ifdef D_GURU2_PRINTF_ON
       OS_Printf("子機%dから離脱を受け取った→送信\n",netID);
       #endif
@@ -379,7 +380,7 @@ static void CommCB_Receipt_EndChild(
     switch(recieve_work->request){
     case CREC_REQ_RIDATU_CHECK:
       //離脱確認なので、離脱しようとした子機にのみ結果を送る
-      if(recieve_work->ridatu_id == CommGetCurrentID()){
+      if(recieve_work->ridatu_id == GFL_NET_SystemGetCurrentID()){
         if(recieve_work->ridatu_kyoka == FALSE){
           Guru2Rc_MainSeqForceChange(
             g2c->g2p->g2r, RECORD_MODE_END_SELECT_ANSWER_NG,
@@ -404,56 +405,28 @@ static void CommCB_Receipt_EndChild(
   }
 }
 
-//--------------------------------------------------------------
-/**
- *  受付「子機が乱入してきたので一旦絵を送るよ止まってね」
- *  と親機が送信してきた時のコールバック
- * @param   netID   
- * @param   size    
- * @param   pBuff   
- * @param   pWork   
- * @retval  nothing
- */
-//--------------------------------------------------------------
-static void CommCB_Receipt_Stop(
-    int netID, int size, void* pBuff, void* pWork)
-{
-  GURU2COMM_WORK *wk = pWork;
-  u8 id;
-
-  id = *(u8*)pBuff;
-  Guru2Rc_MainSeqCheckChange( wk->g2p->g2r, RECORD_MODE_NEWMEMBER, id );
-
-  if(CommGetCurrentID()==0){  // 親機が画像データ送信を開始する
-    wk->send_num = 0;
-  }
-  
-  #ifdef D_GURU2_PRINTF_ON
-  OS_Printf("親機からの「子機%dに絵を送るから止まってね」通知\n",id);
-  #endif
-}
 
 //--------------------------------------------------------------
 /**
  * 受付　親機がやめるので強制終了させる
  * @param   netID   
  * @param   size    
- * @param   pBuff   
- * @param   pWork   
+ * @param   pData   
+ * @param   pWk   
  * @retval  none    
  */
 //--------------------------------------------------------------
 static void CommCB_Receipt_End(
-  int netID, int size, void* pBuff, void* pWork)
+    const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle)
 {
-  GURU2COMM_WORK *wk = pWork;
+  GURU2COMM_WORK *wk = pWk;
   
   #ifdef D_GURU2_PRINTF_ON
   OS_Printf("親機からの終了通知がきたのでやめる\n");
   #endif
   
   // 親機以外はこのコマンドで強制終了
-  if( CommGetCurrentID() != 0 ){
+  if( GFL_NET_SystemGetCurrentID() != 0 ){
     Guru2Rc_MainSeqForceChange( wk->g2p->g2r, RECORD_MODE_FORCE_END, 0  );
   }
 }
@@ -463,22 +436,22 @@ static void CommCB_Receipt_End(
  * 受付　３台目・４台目・５台目の子機が「絵をちょーだい」と言う
  * @param   netID   
  * @param   size    
- * @param   pBuff   
- * @param   pWork   
+ * @param   pData   
+ * @param   pWk   
  * @retval  none    
  */
 //--------------------------------------------------------------
 static void CommCB_Receipt_ChildJoin(
-  int netID, int size, void* pBuff, void* pWork )
+  const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle)
 {
   u8 id;
-  GURU2COMM_WORK *g2c = pWork;
+  GURU2COMM_WORK *g2c = pWk;
   
   // 親機が受け取ったら(というか親しか受け取らないけど）
-  if( CommGetCurrentID() == 0 ){
+  if( GFL_NET_SystemGetCurrentID() == 0 ){
     id  = netID;
     // 全台に「これから絵を送るので止まってください」と送信する
-    Guru2Comm_SendData( g2c, G2COMM_RC_STOP, &id, 1 );
+//    Guru2Comm_SendData( g2c, G2COMM_RC_STOP, &id, 1 );
     #ifdef D_GURU2_PRINTF_ON
     OS_Printf("子機(%d = %d)からの乱入／絵のください通知\n",id,netID);
     #endif
@@ -493,16 +466,17 @@ static void CommCB_Receipt_ChildJoin(
  * ゲームメイン　シグナル受信
  * @param   netID   
  * @param   size    
- * @param   pBuff   
- * @param   pWork   
+ * @param   pData   
+ * @param   pWk   
  * @retval  none    
  */
 //--------------------------------------------------------------
 static void CommCB_Main_Signal(
-    int netID, int size, void *pBuff, void *pWork )
+    const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle)
 {
-  u16 *buff = pBuff;
-  GURU2COMM_WORK *wk = pWork;
+  const u16 *buff = pData;
+  GURU2COMM_WORK *wk = pWk;
+
   wk->comm_game_signal_bit |= *buff;
   
   #ifdef D_GURU2_PRINTF_ON
@@ -515,15 +489,15 @@ static void CommCB_Main_Signal(
  * ゲームメイン　参加
  * @param   netID   
  * @param   size    
- * @param   pBuff   
- * @param   pWork   
+ * @param   pData   
+ * @param   pWk   
  * @retval  none    
  */
 //--------------------------------------------------------------
 static void CommCB_Main_Join(
-    int netID, int size, void *pBuff, void *pWork )
+    const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle)
 {
-  GURU2COMM_WORK *wk = pWork;
+  GURU2COMM_WORK *wk = pWk;
   wk->comm_game_join_bit |= 1 << netID;
   #ifdef D_GURU2_PRINTF_ON
   OS_Printf( "ぐるぐる ゲーム参加受け取り ID= 0x%d\n", netID );
@@ -535,17 +509,19 @@ static void CommCB_Main_Join(
  * ゲームメイン　プレイ番号を受信
  * @param   netID   
  * @param   size    
- * @param   pBuff   
- * @param   pWork   
+ * @param   pData   
+ * @param   pWk   
  * @retval  none    
  */
 //--------------------------------------------------------------
 static void CommCB_Main_PlayNo(
-    int netID, int size, void *pBuff, void *pWork )
+    const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle)
 {
-  GURU2COMM_WORK *g2c = pWork;
-  GURU2COMM_PLAYNO *no = pBuff;
+  GURU2COMM_WORK *g2c = pWk;
+  const GURU2COMM_PLAYNO *no = pData;
+#ifndef GURU2_MAIN_FUNC_OFF
   Guru2Main_CommPlayNoDataSet( g2c->g2p->g2m, no );
+#endif
 }
 
 //--------------------------------------------------------------
@@ -553,18 +529,20 @@ static void CommCB_Main_PlayNo(
  * ゲームメイン　プレイ最大数を受信
  * @param   netID   
  * @param   size    
- * @param   pBuff   
- * @param   pWork   
+ * @param   pData   
+ * @param   pWk   
  * @retval  none    
  */
 //--------------------------------------------------------------
 static void CommCB_Main_PlayMax(
-    int netID, int size, void *pBuff, void *pWork )
+    const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle)
 {
-  int max = *(int *)pBuff;
+  const int *max = pData;
   
-  GURU2COMM_WORK *g2c = pWork;
-  Guru2Main_CommPlayMaxSet( g2c->g2p->g2m, max );
+  GURU2COMM_WORK *g2c = pWk;
+#ifndef GURU2_MAIN_FUNC_OFF
+  Guru2Main_CommPlayMaxSet( g2c->g2p->g2m, *max );
+#endif
 }
 
 //--------------------------------------------------------------
@@ -572,17 +550,19 @@ static void CommCB_Main_PlayMax(
  * ゲーム　ボタン情報を受信
  * @param   netID   
  * @param   size    
- * @param   pBuff   
- * @param   pWork   
+ * @param   pData   
+ * @param   pWk   
  * @retval  none    
  */
 //--------------------------------------------------------------
 static void CommCB_Main_Button(
-    int netID, int size, void *pBuff, void *pWork )
+    const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle)
 {
-  u8 btn = *(u8*)pBuff;
-  GURU2COMM_WORK *g2c = pWork;
-  Guru2Main_CommButtonSet( g2c->g2p->g2m, btn );
+  const u8 *btn = pData;
+  GURU2COMM_WORK *g2c = pWk;
+#ifndef GURU2_MAIN_FUNC_OFF
+  Guru2Main_CommButtonSet( g2c->g2p->g2m, *btn );
+#endif
 }
 
 //--------------------------------------------------------------
@@ -590,18 +570,20 @@ static void CommCB_Main_Button(
  * ゲーム　ゲーム情報を受信
  * @param   netID   
  * @param   size    
- * @param   pBuff   
- * @param   pWork   
+ * @param   pData   
+ * @param   pWk   
  * @retval  none    
  */
 //--------------------------------------------------------------
 static void CommCB_Main_GameData(
-    int netID, int size, void *pBuff, void *pWork )
+    const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle)
 {
-  if( CommGetCurrentID() != 0 ){  //発信した親以外
-    GURU2COMM_WORK *g2c = pWork;
-    GURU2COMM_GAMEDATA *data = pBuff;
+  if( GFL_NET_SystemGetCurrentID() != 0 ){  //発信した親以外
+    GURU2COMM_WORK *g2c = pWk;
+    const GURU2COMM_GAMEDATA *data = pData;
+#ifndef GURU2_MAIN_FUNC_OFF
     Guru2Main_CommGameDataSet( g2c->g2p->g2m, data );
+#endif
   }
 }
 
@@ -610,17 +592,19 @@ static void CommCB_Main_GameData(
  * ゲームメイン　交換位置を受信
  * @param   netID   
  * @param   size    
- * @param   pBuff   
- * @param   pWork   
+ * @param   pData   
+ * @param   pWk   
  * @retval  none    
  */
 //--------------------------------------------------------------
 static void CommCB_Main_TradeNo(
-    int netID, int size, void *pBuff, void *pWork )
+    const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle)
 {
-  int no = *(int *)pBuff;
-  GURU2COMM_WORK *g2c = pWork;
-  Guru2Main_TradeNoSet( g2c->g2p->g2m, netID, no );
+  const int *no = pData;
+  GURU2COMM_WORK *g2c = pWk;
+#ifndef GURU2_MAIN_FUNC_OFF
+  Guru2Main_TradeNoSet( g2c->g2p->g2m, netID, *no );
+#endif
 }
 
 //--------------------------------------------------------------
@@ -628,17 +612,19 @@ static void CommCB_Main_TradeNo(
  * ゲームメイン　ゲーム結果を受信
  * @param   netID   
  * @param   size    
- * @param   pBuff   
- * @param   pWork   
+ * @param   pData   
+ * @param   pWk   
  * @retval  none    
  */
 //--------------------------------------------------------------
 static void CommCB_Main_GameResult(
-    int netID, int size, void *pBuff, void *pWork )
+    const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle)
 {
-  GURU2COMM_WORK *g2c = pWork;
-  GURU2COMM_GAMERESULT *result = pBuff;
+  GURU2COMM_WORK *g2c = pWk;
+  const GURU2COMM_GAMERESULT *result = pData;
+#ifndef GURU2_MAIN_FUNC_OFF
   Guru2Main_GameResultSet( g2c->g2p->g2m, result );
+#endif
 }
 
 //--------------------------------------------------------------
@@ -646,16 +632,16 @@ static void CommCB_Main_GameResult(
  * ゲームメイン　卵データ異常受信
  * @param   netID   
  * @param   size    
- * @param   pBuff   
- * @param   pWork   
+ * @param   pData   
+ * @param   pWk   
  * @retval  none    
  */
 //--------------------------------------------------------------
 static void CommCB_Main_EggDataNG(
-    int netID, int size, void *pBuff, void *pWork )
+    const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle)
 {
   u32 bit = 1 << netID;
-  GURU2COMM_WORK *g2c = pWork;
+  GURU2COMM_WORK *g2c = pWk;
   g2c->comm_game_egg_check_error_bit |= bit;
 }
 
@@ -664,16 +650,16 @@ static void CommCB_Main_EggDataNG(
  * ゲームメイン　卵データ正常受信
  * @param   netID
  * @param   size
- * @param   pBuff
- * @param   pWork
+ * @param   pData
+ * @param   pWk
  * @retval  none
  */
 //--------------------------------------------------------------
 static void CommCB_Main_EggDataOK(
-    int netID, int size, void *pBuff, void *pWork )
+    const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle)
 {
   u32 bit = 1 << netID;
-  GURU2COMM_WORK *g2c = pWork;
+  GURU2COMM_WORK *g2c = pWk;
   g2c->comm_game_egg_check_ok_bit |= bit;
 }
 
@@ -719,7 +705,7 @@ static u8 * _getPokePartyRecvBuff( int netID, void *pWork, int size )
   u32 buf;
   GURU2COMM_WORK *g2c = pWork;
   
-  buf = (u32)(g2c->recv_poke_party_buf);
+  buf  = (u32)(g2c->recv_poke_party_buf);
   buf += netID * POKEPARTY_SEND_ONCE_SIZE;
   return( (u8*)buf );
 }
@@ -727,25 +713,6 @@ static u8 * _getPokePartyRecvBuff( int netID, void *pWork, int size )
 //==============================================================================
 //  パーツ
 //==============================================================================
-//------------------------------------------------------------------
-/**
- * 現在のオンライン数を取得
- * @param   nothing
- * @retval  int   オンライン数
- */
-//------------------------------------------------------------------
-int Guru2Comm_OnlineNumGet( void )
-{
-  int i,result;
-  
-  for(result=0,i=0;i<G2MEMBER_MAX;i++){
-    if(CommInfoGetMyStatus(i)!=NULL){
-      result++;
-    }
-  }
-  return result;
-}
-
 
 //--------------------------------------------------------------
 /**
@@ -765,153 +732,3 @@ void * Guru2Comm_FriendPokePartyGet( GURU2COMM_WORK *g2c, int id )
 //==============================================================================
 //  data
 //==============================================================================
-//--------------------------------------------------------------
-/// 通信コールバック関数
-//--------------------------------------------------------------
-static const CommPacketTbl DATA_CommPacketTbl[CF_COMMAND_MAX] =
-{
-  // comm_command_field.cで登録されているコマンドテーブルの無効化
-    { CommDummyCallBack, _getZero, NULL},
-    { CommDummyCallBack, _getZero, NULL},
-    { CommDummyCallBack, _getZero, NULL},
-    { CommDummyCallBack, _getZero, NULL},
-    { CommDummyCallBack, _getZero, NULL},
-    { CommDummyCallBack, _getZero, NULL},
-    { CommDummyCallBack, _getZero, NULL},
-    { CommDummyCallBack, _getZero, NULL},
-    { CommDummyCallBack, _getZero, NULL},
-    { CommDummyCallBack, _getZero, NULL},
-    { CommDummyCallBack, _getZero, NULL},
-    { CommDummyCallBack, _getZero, NULL},
-    { CommDummyCallBack, _getZero, NULL},
-    { CommDummyCallBack, _getZero, NULL},
-    { CommDummyCallBack, _getZero, NULL},
-    { CommDummyCallBack, _getZero, NULL},
-    { CommDummyCallBack, _getZero, NULL},
-    { CommDummyCallBack, _getZero, NULL},
-    { CommDummyCallBack, _getZero, NULL},
-    { CommDummyCallBack, _getZero, NULL},
-    { CommDummyCallBack, _getZero, NULL},
-    { CommDummyCallBack, _getZero, NULL},
-    { CommDummyCallBack, _getZero, NULL},
-    { CommDummyCallBack, _getZero, NULL},
-    { CommDummyCallBack, _getZero, NULL},
-    { CommDummyCallBack, _getZero, NULL},
-    { CommDummyCallBack, _getZero, NULL},
-    { CommDummyCallBack, _getZero, NULL},
-    { CommDummyCallBack, _getZero, NULL},
-    { CommDummyCallBack, _getZero, NULL},
-    { CommDummyCallBack, _getZero, NULL},
-    { CommDummyCallBack, _getZero, NULL},
-    { CommDummyCallBack, _getZero, NULL},
-    { CommDummyCallBack, _getZero, NULL},
-    { CommDummyCallBack, _getZero, NULL},
-    { CommDummyCallBack, _getZero, NULL},
-    { CommDummyCallBack, _getZero, NULL},
-    { CommDummyCallBack, _getZero, NULL},
-    { CommDummyCallBack, _getZero, NULL},
-    { CommDummyCallBack, _getZero, NULL},
-    { CommDummyCallBack, _getZero, NULL},
-    { CommDummyCallBack, _getZero, NULL},
-    { CommDummyCallBack, _getZero, NULL},
-    { CommDummyCallBack, _getZero, NULL},
-    { CommDummyCallBack, _getZero, NULL},
-    { CommDummyCallBack, _getZero, NULL},
-    { CommDummyCallBack, _getZero, NULL},
-    { CommDummyCallBack, _getZero, NULL},
-    { CommDummyCallBack, _getZero, NULL},
-    { CommDummyCallBack, _getZero, NULL},
-    { CommDummyCallBack, _getZero, NULL},
-    { CommDummyCallBack, _getZero, NULL},
-    { CommDummyCallBack, _getZero, NULL},
-    { CommDummyCallBack, _getZero, NULL},
-    { CommDummyCallBack, _getZero, NULL},
-    { CommDummyCallBack, _getZero, NULL},
-    { CommDummyCallBack, _getZero, NULL},
-    { CommDummyCallBack, _getZero, NULL},
-    { CommDummyCallBack, _getZero, NULL},
-    { CommDummyCallBack, _getZero, NULL},
-    { CommDummyCallBack, _getZero, NULL},
-    { CommDummyCallBack, _getZero, NULL},
-    { CommDummyCallBack, _getZero, NULL},
-    { CommDummyCallBack, _getZero, NULL},
-    { CommDummyCallBack, _getZero, NULL},
-    { CommDummyCallBack, _getZero, NULL},
-    { CommDummyCallBack, _getZero, NULL},
-    { CommDummyCallBack, _getZero, NULL},
-    { CommDummyCallBack, _getZero, NULL},
-    { CommDummyCallBack, _getZero, NULL},
-    { CommDummyCallBack, _getZero, NULL},
-    { CommDummyCallBack, _getZero, NULL},
-    { CommDummyCallBack, _getZero, NULL},
-    { CommDummyCallBack, _getZero, NULL},
-    { CommDummyCallBack, _getZero, NULL},
-    { CommDummyCallBack, _getZero, NULL},
-    { CommDummyCallBack, _getZero, NULL},
-    { CommDummyCallBack, _getZero, NULL},
-    { CommDummyCallBack, _getZero, NULL},
-    { CommDummyCallBack, _getZero, NULL},
-    { CommDummyCallBack, _getZero, NULL},
-    { CommDummyCallBack, _getZero, NULL},
-    { CommDummyCallBack, _getZero, NULL},
-    { CommDummyCallBack, _getZero, NULL},
-    { CommDummyCallBack, _getZero, NULL},
-    { CommDummyCallBack, _getZero, NULL},
-  
-  // レコードが使用するコマンド部分
-    { CommDummyCallBack, _getZero, NULL},
-    { CommDummyCallBack, _getZero, NULL},
-    { CommDummyCallBack, _getZero, NULL},
-    { CommDummyCallBack, _getZero, NULL},
-    { CommDummyCallBack, _getZero, NULL},
-    { CommDummyCallBack, _getZero, NULL},
-    { CommDummyCallBack, _getZero, NULL},
-    { CommDummyCallBack, _getZero, NULL},
-    { CommDummyCallBack, _getZero, NULL},
-    { CommDummyCallBack, _getZero, NULL},
-  
-  // おえかきのコマンドを無視するための部分
-  { CommDummyCallBack, _getZero, NULL},
-  { CommDummyCallBack, _getZero, NULL},
-  { CommDummyCallBack, _getZero, NULL},
-  { CommDummyCallBack, _getZero, NULL},
-  { CommDummyCallBack, _getZero, NULL},
-    { CommDummyCallBack, _getZero, NULL},
-    { CommDummyCallBack, _getZero, NULL},
-    { CommDummyCallBack, _getZero, NULL},
-    { CommDummyCallBack, _getZero, NULL},
-    { CommDummyCallBack, _getZero, NULL},
-  { CommDummyCallBack, _getZero, NULL},
-  { CommDummyCallBack, _getZero, NULL},
-  
-  //ここからぐるぐる
-  {CommCB_Guru2Cmd, _getGuru2WideUseSendWorkSize, NULL }, //CG_GURU2_CMD
-  {CommCB_Guru2PokeParty,_getPokePartyOnceSize,_getPokePartyRecvBuff}, //CG_GURU2_EGG
-};
-
-//--------------------------------------------------------------
-/// ぐるぐる専用通信コールバック関数
-//--------------------------------------------------------------
-static const PTRCommRecvFunc DATA_Guru2CommPacketTbl[G2COMM_MAX] =
-{
-  CommCB_Receipt_Stop,
-  CommCB_Receipt_ReStart,
-  CommCB_Receipt_EndChild,
-  CommCB_Receipt_End,
-  CommCB_Receipt_ChildJoin,
-  CommCB_Receipt_Start,
-  CommCB_Receipt_Data,
-  CommCB_Receipt_BanFlag,
-  
-  CommCB_Main_Signal,
-  CommCB_Main_Join,
-  CommCB_Main_Button,
-  CommCB_Main_GameData,
-  CommCB_Main_PlayNo,
-  CommCB_Main_PlayMax,
-  CommCB_Main_TradeNo,
-  CommCB_Main_GameResult,
-  CommCB_Main_EggDataNG,
-  CommCB_Main_EggDataOK,
-};
-

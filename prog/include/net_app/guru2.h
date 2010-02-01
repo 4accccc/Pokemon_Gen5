@@ -21,6 +21,9 @@
 //  define
 //==============================================================================
 
+// ぐるぐる交換の接続最大人数
+#define NET_GURU2_CONNECT_MAX   ( 5 )
+
 //==============================================================================
 //  typedef
 //==============================================================================
@@ -29,18 +32,8 @@ typedef struct GURU2PROC_WORK GURU2PROC_WORK;
 //--------------------------------------------------------------
 /// GURU2_PARAM
 //--------------------------------------------------------------
-#if 0 //GURUGURU_PARENT_WORKを使用してください
-typedef struct
-{
-  int max;
-  
-  GAMEDATA              *gamedata;
-  SAVE_CONTROL_WORK     *sv;
-  RECORD                *record;
-  GURUGURU_PARENT_WORK  *guru2union;
-//  FIELDSYS_WORK *fsys;
-}GURU2_PARAM;
-#endif
+// net_app/union_app.hの中にある
+// GURUGURU_PARENT_WORKを使用してください
 
 //==============================================================================
 //  extern
@@ -52,13 +45,13 @@ extern BOOL Guru2_ReceiptRetCheck( GURU2PROC_WORK *g2p );
 extern void * EventCmd_Guru2ProcWorkAlloc( GAMEDATA *gamedata );
 extern BOOL EventCmd_Guru2Proc( void *wk );
 
-extern GFL_PROC_RESULT Guru2Receipt_Init( GFL_PROC * proc, int *seq, void *pwk, void *mywk );
-extern GFL_PROC_RESULT Guru2Receipt_Main( GFL_PROC * proc, int *seq, void *pwk, void *mywk );
-extern GFL_PROC_RESULT Guru2Receipt_End( GFL_PROC * proc, int *seq, void *pwk, void *mywk );
+extern GFL_PROC_RESULT Guru2ReceiptProc_Init( GFL_PROC * proc, int *seq, void *pwk, void *mywk );
+extern GFL_PROC_RESULT Guru2ReceiptProc_Main( GFL_PROC * proc, int *seq, void *pwk, void *mywk );
+extern GFL_PROC_RESULT Guru2ReceiptProc_End( GFL_PROC * proc, int *seq, void *pwk, void *mywk );
 
-extern GFL_PROC_RESULT Guru2Main_Init( GFL_PROC * proc, int *seq, void *pwk, void *mywk );
-extern GFL_PROC_RESULT Guru2Main_End( GFL_PROC * proc, int *seq, void *pwk, void *mywk );
-extern GFL_PROC_RESULT Guru2Main_Main( GFL_PROC * proc, int *seq, void *pwk, void *mywk );
+extern GFL_PROC_RESULT Guru2MainProc_Init( GFL_PROC * proc, int *seq, void *pwk, void *mywk );
+extern GFL_PROC_RESULT Guru2MainProc_End( GFL_PROC * proc, int *seq, void *pwk, void *mywk );
+extern GFL_PROC_RESULT Guru2MainProc_Main( GFL_PROC * proc, int *seq, void *pwk, void *mywk );
 
 extern GFL_PROC_RESULT Guru2Proc_Init( GFL_PROC * proc, int *seq, void *pwk, void *mywk );
 extern GFL_PROC_RESULT Guru2Proc_Main( GFL_PROC * proc, int *seq, void *pwk, void *mywk );

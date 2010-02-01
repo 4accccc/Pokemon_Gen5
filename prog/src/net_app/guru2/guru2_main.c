@@ -6,39 +6,48 @@
  * @author  Akito Mori(移植） / kagaya 
  * @data    2010.01.20
  *
+ * @todo 
+ * ・ぐるぐる交換終了時にトレーナーメモを書き込んでいない(GURU2_TRAINER_MEMO)
+ * ・同期セーブが入っていない(VIRTUAL_SAVE_FUNC)
+ * ・セーブの時の会話ウインドウ右下でアイコンくるくるが入っていない(WINDOW_SAVE_ICON)
+ * ・通信アイコンのパレットがパレットフェードで狂う(WMICON_PALETTE)
  */
 //******************************************************************************
 #include <gflib.h>
-#include "guru2_local.h"
-#include "guru2_snd.h"
+#include <calctool.h>
+
+#define GURU2_TRAINER_MEMO 
+#define VIRTUAL_SAVE_FUNC
+//#defein WINDOW_SAVE_ICON  
+//#define WMICON_PALETTE  
 
 #include "system/main.h"
 #include "arc/arc_def.h"
 #include "sound/pm_sndsys.h"
 #include "system/wipe.h"
+#include "system/palanm.h"
+#include "system/bmp_winframe.h"
+#include "savedata/mystatus.h"
 
 #include "print/printsys.h"
 #include "print/wordset.h"
 
-#include "system/bmp_list.h"
-//#include "system/fontproc.h"
-//#include "system/pm_str.h"
-#include "system\fontproc.h"
-#include "system\window.h"
-#include "..\..\field\fld_bmp.h"
-#include "..\..\field\fld_bgm.h"
-#include "..\..\field\field_rdobj.h"
+#include "system/bmp_menulist.h"
 
-#include "msgdata/msg.naix"
-#include "msgdata/msg_guru2.h"
+#include "arc/message.naix"
+#include "msg/msg_guru2.h"
 
-#include "poketool/pokeparty.h"
-#include "itemtool/myitem.h"
-#include "poketool/poke_memo.h"
+#include "poke_tool/pokeparty.h"
+#include "savedata/myitem_savedata.h"
+//#include "poketool/poke_memo.h"
 
-#include "system\font_arc.h"  //フォントアーカイブインデックス
-#include "..\..\demo\egg\data\egg_data_def.h" //卵アーカイブインデックス
+//#include "..\..\demo\egg\data\egg_data_def.h" //卵アーカイブインデックス
+
+#include "guru2_local.h"
+#include "guru2_snd.h"
 #include "guru2_2d.naix" //専用2Dリソースアーカイブ追加
+#include "winframe.naix"
+#include "font/font.naix"
 
 //==============================================================================
 //  define
@@ -114,6 +123,11 @@
 #define CLEAR_COLOR_G (31)
 #define CLEAR_COLOR_B (31)
 
+#define MSG_WIN_SX    ( 27 )
+#define MSG_WIN_SY    ( 4 )
+
+
+
 //--------------------------------------------------------------
 /// BG
 //--------------------------------------------------------------
@@ -146,7 +160,7 @@
 ///会話ウィンドウビットマップ
 #define BGF_BMPCHAR_TALK (BGF_BMPCHAR_BASE)
 ///会話ウィンドウビットマップサイズ
-#define BGF_BMPCHAR_SIZE (FLD_MSG_WIN_SX*FLD_MSG_WIN_SY)
+#define BGF_BMPCHAR_SIZE (MSG_WIN_SX*MSG_WIN_SY)
 
 ///ネームウィンドウビットマップ
 #define BGF_BMPCHAR_NAME_BASE (BGF_BMPCHAR_TALK+BGF_BMPCHAR_SIZE)
@@ -201,9 +215,13 @@
 #define BMPPOS_NAME_X_5_4 (CCX+4)
 #define BMPPOS_NAME_Y_5_4 (CCY+2)
 
-#define NAME_COL (PRINTSYS_LSB_MAKE(FBMP_COL_BLACK,FBMP_COL_BLK_SDW,0))
-#define NAME_COL_MINE (PRINTSYS_LSB_MAKE(FBMP_COL_RED,FBMP_COL_RED_SDW,0))
-  
+#define NAME_COL      ( PRINTSYS_LSB_Make( 1, 2,0) )
+#define NAME_COL_MINE ( PRINTSYS_LSB_Make( 3, 4,0) )
+
+// BMP内クリアカラー
+#define BMP_COL_WHITE   ( 15 )
+#define BMP_COL_NULL    (  0 )
+
 //--------------------------------------------------------------
 /// セルID
 //--------------------------------------------------------------
@@ -222,12 +240,6 @@ enum
 //--------------------------------------------------------------
 /// 会話ウィンドウ
 //--------------------------------------------------------------
-enum              ///<会話ウィンドウリスト
-{
-  GURU2TALK_WIN_TALK = 0,   ///<会話
-  GURU2TALKWIN_MAX,     ///<最大数
-};
-
 enum              ///<ネームウィンドウ
 {
   GURU2NAME_WIN_NAME_0,
@@ -263,12 +275,12 @@ enum              ///<ネームウィンドウ
 //--------------------------------------------------------------
 /// タッチパネル
 //--------------------------------------------------------------
-#define TP_SYNC (4) ///<タッチパネルサンプリングバッファ数
 
-#define TP_BTN_CX (128)   ///<ボタン中心座標
-#define TP_BTN_CY (96)    ///<ボタン中心座標
-#define TP_BTN_HSX (128/2)  ///<ボタンサイズ1/2
-#define TP_BTN_HSY (128/2)  ///<ボタンサイズ1/2
+#define TP_BTN_CX  (  128  )  ///< ボタン中心座標
+#define TP_BTN_CY  (   96  )  ///< ボタン中心座標
+#define TP_BTN_R   (   64  )  ///< 半径
+#define TP_BTN_HSX ( 128/2 )  ///< ボタンサイズ1/2
+#define TP_BTN_HSY ( 128/2 )  ///< ボタンサイズ1/2
 
 //--------------------------------------------------------------
 /// 角度
@@ -278,58 +290,53 @@ enum              ///<ネームウィンドウ
 #define ROT16_AG(a) (ROT16_ONE*(a))
 #define ROT16_AG_FX(a) NUM_FX32(ROT16_AG(a))
 
+
+//--------------------------------------------------------------
+/// 3Dリソース定義
+//--------------------------------------------------------------
+#define GURU2_3DRES_NUM (  7 )    // 読み込みリソース数
+#define GURU2_3DOBJ_MAX ( 11 )    // RENDEROBJ数
+
+
 //--------------------------------------------------------------
 //  皿
 //--------------------------------------------------------------
-#if 0
-#define DISC_POS_X_FX32 (FX32_ONE*0)    ///<皿初期位置
-#define DISC_POS_Y_FX32 (FX32_ONE*-10)
-#define DISC_POS_Z_FX32 (FX32_ONE*0)
-#else
-#define DISC_POS_X_FX32 (NUM_FX32(0))   ///<皿初期位置
-#define DISC_POS_Y_FX32 (NUM_FX32(-36))
-#define DISC_POS_Z_FX32 (NUM_FX32(0))
-#endif
 
-#define DISC_ROTATE_X (0)         ///<皿回転角度X
-#define DISC_ROTATE_Y (0)
-#define DISC_ROTATE_Z (0)
-#define DISC_ROTATE_DRAW_OFFS_FX_2 (NUM_FX32(-72))
-#define DISC_ROTATE_DRAW_OFFS_FX_3 (NUM_FX32(0))
-#define DISC_ROTATE_DRAW_OFFS_FX_4 (NUM_FX32(-181))
-#define DISC_ROTATE_DRAW_OFFS_FX_5 (NUM_FX32(0))
+#define DISC_POS_X_FX32             ( NUM_FX32(0) )     ///<皿初期位置
+#define DISC_POS_Y_FX32             ( NUM_FX32(-36) )
+#define DISC_POS_Z_FX32             ( NUM_FX32(0) )
 
-#define DISC_ROTATE_SPEED_MAX_FX (NUM_FX32(-4)) ///<回転速度
-#define EGG_ROTATE_SPEED_MAX_FX (NUM_FX32(4)) ///<回転速度
-#define DISC_ROTATE_SPEED_LOW_FX (NUM_FX32(-1)) ///<回転速度
-#define EGG_ROTATE_SPEED_LOW_FX (NUM_FX32(1)) ///<回転速度
+#define DISC_ROTATE_X               ( 0 )               ///<皿回転角度X
+#define DISC_ROTATE_Y               ( 0 )
+#define DISC_ROTATE_Z               ( 0 )
+#define DISC_ROTATE_DRAW_OFFS_FX_2  ( NUM_FX32(-72) )
+#define DISC_ROTATE_DRAW_OFFS_FX_3  ( NUM_FX32(0) )
+#define DISC_ROTATE_DRAW_OFFS_FX_4  ( NUM_FX32(-181) )
+#define DISC_ROTATE_DRAW_OFFS_FX_5  ( NUM_FX32(0) )
 
-#define EGG_ATARI_HABA_L_FX (NUM_FX32(-4))
-#define EGG_ATARI_HABA_R_FX (NUM_FX32(5))
+#define DISC_ROTATE_SPEED_MAX_FX    ( NUM_FX32(-4) )  ///<回転速度
+#define EGG_ROTATE_SPEED_MAX_FX     ( NUM_FX32(4) )   ///<回転速度
+#define DISC_ROTATE_SPEED_LOW_FX    ( NUM_FX32(-1) )  ///<回転速度
+#define EGG_ROTATE_SPEED_LOW_FX     ( NUM_FX32(1) )   ///<回転速度
 
-//#define DISC_TOP_SPEED (10)
-#define DISC_TOP_SPEED (14)
-#define DISC_TOP_SPEED_FX (NUM_FX32(DISC_TOP_SPEED))
-#define DISC_ACCEL_FX (ACCEL_FRAME_FX(GURU2_GAME_FRAME_H,DISC_TOP_SPEED))
-#define DISC_LOW_SPEED (4)
-#define DISC_LOW_SPEED_FX (NUM_FX32(DISC_LOW_SPEED))
-#define DISC_LAST_RANGE_FX (NUM_FX32(16))
+#define EGG_ATARI_HABA_L_FX         ( NUM_FX32(-4) )
+#define EGG_ATARI_HABA_R_FX         ( NUM_FX32(5) )
+
+#define DISC_TOP_SPEED      ( 14 )
+#define DISC_TOP_SPEED_FX   ( NUM_FX32(DISC_TOP_SPEED ))
+#define DISC_ACCEL_FX       ( ACCEL_FRAME_FX(GURU2_GAME_FRAME_H,DISC_TOP_SPEED) )
+#define DISC_LOW_SPEED      ( 4 )
+#define DISC_LOW_SPEED_FX   ( NUM_FX32(DISC_LOW_SPEED) )
+#define DISC_LAST_RANGE_FX  ( NUM_FX32(16) )
 
 //--------------------------------------------------------------
 //  卵
 //--------------------------------------------------------------
-#if 0
-#define EGG_DISC_CX_FX (NUM_FX32(128))      ///<卵皿中心位置
-#define EGG_DISC_CY_FX (NUM_FX32(100))
-#define EGG_DISC_CXS (60)           ///<卵皿サイズ
-#define EGG_DISC_CYS (40)
-#else
 #define EGG_DISC_CX_FX (NUM_FX32(0))      ///<卵皿中心位置
 #define EGG_DISC_CY_FX (NUM_FX32(-6))
 #define EGG_DISC_CZ_FX (NUM_FX32(0))
 #define EGG_DISC_CXS (22)           ///<卵皿半径サイズ
 #define EGG_DISC_CZS (22)
-#endif
 
 #define EGG_START_OFFS_Y_FX (NUM_FX32(192))   ///<卵登場オフセット
 #define EGG_ADD_NEXT_FRAME (15)         ///<卵追加時の待ち時間
@@ -374,26 +381,26 @@ enum              ///<ネームウィンドウ
 //--------------------------------------------------------------
 //  メッセージ
 //--------------------------------------------------------------
-#define MSG_WAIT          (msg_guru2_00)
-#define MSG_NICKNAME        (msg_guru2_01)
-#define MSG_EGG_GET         (msg_guru2_02)
-#define MSG_OMAKE_AREA        (msg_guru2_03)
-#define MSG_ZANNEN          (msg_guru2_04)
-#define MSG_COMM_TAIKI        (msg_guru2_05)
-#define MSG_COMM_ERROR_MEMBER   (msg_guru2_06)
-#define MSG_COMM_ERROR_CANCEL_OYA (msg_guru2_07)
-#define MSG_COMM_ERROR        (msg_guru2_08) 
-#define MSG_COMM_ERROR_JOIN_CLOSE (msg_guru2_09)
-#define MSG_SAVE          (msg_guru2_11)
-#define MSG_COMM_WAIT       (msg_guru2_10)
-#define MSG_COMM_ERROR_DAME_TAMAGO  (msg_guru2_12)
+#define MSG_WAIT                    ( msg_guru2_00  )
+#define MSG_NICKNAME                ( msg_guru2_01  )
+#define MSG_EGG_GET                 ( msg_guru2_02  )
+#define MSG_OMAKE_AREA              ( msg_guru2_03  )
+#define MSG_ZANNEN                  ( msg_guru2_04  )
+#define MSG_COMM_TAIKI              ( msg_guru2_05  )
+#define MSG_COMM_ERROR_MEMBER       ( msg_guru2_06  )
+#define MSG_COMM_ERROR_CANCEL_OYA   ( msg_guru2_07  )
+#define MSG_COMM_ERROR              ( msg_guru2_08  ) 
+#define MSG_COMM_ERROR_JOIN_CLOSE   ( msg_guru2_09  )
+#define MSG_SAVE                    ( msg_guru2_11  )
+#define MSG_COMM_WAIT               ( msg_guru2_10  )
+#define MSG_COMM_ERROR_DAME_TAMAGO  ( msg_guru2_12  )
 
 //--------------------------------------------------------------
 //  ボタン
 //--------------------------------------------------------------
 typedef enum
 {
-  BTN_OFF = 0,          ///<ボタン押されていない
+  BTN_OFF = 0,        ///<ボタン押されていない
   BTN_ON,             ///<ボタン押されている
 }BTN;
 
@@ -406,8 +413,8 @@ typedef enum
 typedef enum
 {
   RET_NON = 0,  ///<特になし
-  RET_CONT,   ///<継続
-  RET_END,    ///<終了
+  RET_CONT,     ///<継続
+  RET_END,      ///<終了
 }RET;
 
 //--------------------------------------------------------------
@@ -527,6 +534,71 @@ enum
 //==============================================================================
 //  typedef
 //==============================================================================
+
+#define VTCBPRI_FRO_TEXBIND (0xffff)    ///<テクスチャバインドVBlankTCBPriorty
+
+//--------------------------------------------------------------
+/// loop?
+//--------------------------------------------------------------
+typedef enum
+{
+  ANMLOOP_OFF = 0,
+  ANMLOOP_ON,
+}ANMLOOPTYPE;
+
+//==============================================================================
+//  typedef
+//==============================================================================
+//--------------------------------------------------------------
+//  typedef
+//--------------------------------------------------------------
+typedef struct _TAG_FRO_MDL FRO_MDL;
+typedef struct _TAG_FRO_ANM FRO_ANM;
+typedef struct _TAG_FRO_OBJ FRO_OBJ;
+
+//--------------------------------------------------------------
+/// ROTATE
+//--------------------------------------------------------------
+typedef struct
+{
+  u16 x;
+  u16 y;
+  u16 z;
+  u16 dmy;
+}ROTATE;
+
+//--------------------------------------------------------------
+/// FRO_MDL 
+//--------------------------------------------------------------
+struct _TAG_FRO_MDL
+{
+  BOOL bind_tex_flag;
+  NNSG3dResFileHeader *pResFileHeader;
+  NNSG3dResMdlSet *pResMdlSet;
+  NNSG3dResMdl *pResMdl;
+  NNSG3dResTex *pResTex;
+};
+
+//--------------------------------------------------------------
+/// FRO_ANM
+//--------------------------------------------------------------
+struct _TAG_FRO_ANM
+{
+  u32 status_bit;
+  fx32 frame;
+  void *pResAnm;
+  void *pResAnmIdx;
+  NNSG3dAnmObj *pAnmObj;
+  NNSFndAllocator Allocator;
+};
+
+//--------------------------------------------------------------
+/// FRO_OBJ
+//--------------------------------------------------------------
+struct _TAG_FRO_OBJ
+{
+  NNSG3dRenderObj RenderObj;
+};
 //--------------------------------------------------------------
 //  DEBUG
 //--------------------------------------------------------------
@@ -560,6 +632,7 @@ typedef struct
   ROTATE  rotate;
   FRO_MDL rmdl;
   FRO_OBJ robj;
+  u32     unitIndex;  // モデリングリソースID
 }DISCWORK;
 
 //--------------------------------------------------------------
@@ -621,6 +694,9 @@ typedef struct
   EGGACTOR eact[G2MEMBER_MAX];
   EGGKAGE ekage[G2MEMBER_MAX];
   EGGCURSOR ecursor[G2MEMBER_MAX];
+  u32     unitIndex_egg;
+  u32     unitIndex_kage;
+  u32     unitIndex_cursor[G2MEMBER_MAX];
 }EGGWORK;
 
 //--------------------------------------------------------------
@@ -642,10 +718,16 @@ typedef struct
 typedef struct 
 {
   int win_name_max;
+  
+  GFL_FONT    *font;
   GFL_MSGDATA *msgman;
   WORDSET *wordset;
-  GF_BGL_BMPWIN bmpwin_talk[GURU2TALKWIN_MAX];
-  GF_BGL_BMPWIN bmpwin_name[GURU2NAME_WIN_MAX];
+  GFL_BMPWIN *bmpwin_talk;
+  GFL_BMPWIN *bmpwin_name[GURU2NAME_WIN_MAX];
+
+  PRINT_UTIL printUtilTalk;
+  PRINT_UTIL printUtilName[GURU2NAME_WIN_MAX];
+  PRINT_QUE  *printQue;
   void *strbuf;
 }MSGWORK;
 
@@ -670,21 +752,9 @@ typedef struct
   fx32 distance;
   u32 persp;
   VecFx32 target_pos;
-  CAMERA_ANGLE angle;
-  GF_CAMERA_PTR gf_camera;
+  GFL_G3D_CAMERA *gf_camera;
 }CAMERAWORK;
 
-//--------------------------------------------------------------
-/// TPWORK
-//--------------------------------------------------------------
-typedef struct
-{
-  int x;
-  int y;
-  int trg;
-  int prs;
-  TP_ONE_DATA tp_now;
-}TPWORK;
 
 //--------------------------------------------------------------
 /// BTNFADE_WORK
@@ -819,6 +889,12 @@ typedef struct
   OMAKEJUMP_WORK omake_jump_work[G2MEMBER_MAX];
 }OMAKEJUMPTCB_WORK;
 
+typedef struct {
+  u32 frame;
+  u8  x,y,w,h;
+  u16 pal, chr;
+}BMPWIN_DAT;
+
 //--------------------------------------------------------------
 /// COMMDATA
 //--------------------------------------------------------------
@@ -834,10 +910,16 @@ typedef struct
   GURU2COMM_GAMEDATA game_data;
   GURU2COMM_GAMERESULT game_result;
   GURU2COMM_PLAYNO play_no_tbl[G2MEMBER_MAX];
-  MYSTATUS *my_status[G2MEMBER_MAX];
+  const MYSTATUS *my_status[G2MEMBER_MAX];
   STRBUF *my_name_buf[G2MEMBER_MAX];
 }COMMDATA;
 
+enum {
+  GURU2MAIN_CLACT_RES_CHR,
+  GURU2MAIN_CLACT_RES_PLTT,
+  GURU2MAIN_CLACT_RES_CELL,
+  GURU2MAIN_CLACT_RES_MAX,
+};
 //--------------------------------------------------------------
 /// GURU2MAIN_WORK
 //--------------------------------------------------------------
@@ -850,12 +932,11 @@ struct GURU2MAIN_WORK
   int comm_wait_frame;
   int play_send_count;
   int force_end_flag;
-  int before_bgm_no;
   u32 omake_bit;
   
   POKEPARTY *my_poke_party;
     
-  EGGACTOR *front_eggact;
+  EGGACTOR     *front_eggact;
   
   COMMDATA comm;
   
@@ -866,6 +947,7 @@ struct GURU2MAIN_WORK
   
   DISCWORK disc;
   EGGWORK egg;
+  GFL_G3D_UTIL *g3dUtil;     // 3Dリソース管理UTIL
   
   EGGJUMPTCB_WORK egg_jump_tcb_work;
   EGGSPINTCB_WORK egg_spin_tcb_work;
@@ -876,18 +958,18 @@ struct GURU2MAIN_WORK
   
   MSGWORK msgwork;
   CAMERAWORK camera;
-  TPWORK touch;
   ARCHANDLE *arc_handle;
   
-  GF_BGL_INI *bgl;
-  NNSG2dScreenData *bg_pScr;
+  NNSG2dScreenData    *bg_pScr;
   NNSG2dCharacterData *bg_pChar;
-  NNSG2dPaletteData *bg_pPltt;
+  NNSG2dPaletteData   *bg_pPltt;
   
-  CATS_SYS_PTR csp;
-  CATS_RES_PTR crp;
+//  CATS_SYS_PTR csp;
+//  CATS_RES_PTR crp;
+  GFL_CLUNIT  *clUnit;
+  u32         resobj[GURU2MAIN_CLACT_RES_MAX];
+  
   PALETTE_FADE_PTR pfd;
-  GXRgb edge_color_tbl[EDGE_COLOR_MAX];
   
   GFL_TCB* tcb_egg_jump;
   GFL_TCB* tcb_egg_spin;
@@ -897,6 +979,10 @@ struct GURU2MAIN_WORK
   GFL_TCB* tcb_omake_jump;
   
   void *time_wait_icon_p;
+
+  void        *tcbSysWork;  // タスクシステム用ワーク
+  GFL_TCBSYS  *tcbSys;      // タスクシステム
+  GFL_TCB     *vintr_tcb;   // Vblank割り込みTCB
   
 #ifdef GURU2_DEBUG_ON
   DEBUGWORK debug;
@@ -911,7 +997,7 @@ static void guru2Main_Delete( GURU2MAIN_WORK *g2m );
 
 static RET (* const DATA_Guru2ProcTbl[SEQNO_MAIN_MAX])( GURU2MAIN_WORK *g2m );
 
-static void guru2_VBlankFunc( GFL_TCB *tcb, void * work )
+static void guru2_VBlankFunc( GFL_TCB *tcb, void * work );
 
 static void guru2_DrawInit( GURU2MAIN_WORK *g2m );
 static void guru2_DrawDelete( GURU2MAIN_WORK *g2m );
@@ -937,8 +1023,6 @@ static void Guru2PlttFade_BtnFade( GURU2MAIN_WORK *g2m, u32 evy );
 static void guru2_ClActInit( GURU2MAIN_WORK *g2m );
 static void guru2_ClActResLoad( GURU2MAIN_WORK *g2m );
 static void guru2_ClActDelete( GURU2MAIN_WORK *g2m );
-static CATS_ACT_PTR Guru2ClAct_Add(
-  GURU2MAIN_WORK *g2m, const TCATS_OBJECT_ADD_PARAM_S *param );
 
 static void guru2_TalkWinFontInit( GURU2MAIN_WORK *g2m );
 static void guru2_TalkWinFontDelete( GURU2MAIN_WORK *g2m );
@@ -959,9 +1043,7 @@ static void guru2_CameraInit( GURU2MAIN_WORK *g2m );
 static void guru2_CameraDelete( GURU2MAIN_WORK *g2m );
 static void guru2_CameraSet( GURU2MAIN_WORK *g2m );
 
-static void guru2_TPProc( GURU2MAIN_WORK *g2m );
 static BOOL Guru2TP_ButtonHitTrgCheck( GURU2MAIN_WORK *g2m );
-static BOOL Guru2TP_ButtonHitContCheck( GURU2MAIN_WORK *g2m );
 
 static void Disc_Init( GURU2MAIN_WORK *g2m );
 static void Disc_Delete( GURU2MAIN_WORK *g2m );
@@ -971,8 +1053,6 @@ static void Disc_Rotate( DISCWORK *disc, fx32 add );
 
 static void Egg_Init( GURU2MAIN_WORK *g2m );
 static void Egg_Delete( GURU2MAIN_WORK *g2m );
-static void Egg_MdlInit( GURU2MAIN_WORK *g2m );
-static void Egg_MdlDelete( GURU2MAIN_WORK *g2m );
 static void Egg_MdlActInit( GURU2MAIN_WORK *g2m, EGGACTOR *act );
 
 static void EggAct_Update( GURU2MAIN_WORK *g2m );
@@ -985,7 +1065,7 @@ static void EggKage_Init( GURU2MAIN_WORK *g2m, EGGACTOR *act );
 static void EggKage_Update( GURU2MAIN_WORK *g2m, EGGKAGE *ekage );
 
 static void EggCursor_Init( GURU2MAIN_WORK *g2m, EGGACTOR *act );
-static void EggCursor_Update( GURU2MAIN_WORK *g2m, EGGCURSOR *ecs );
+static void EggCursor_Update( GURU2MAIN_WORK *g2m, EGGCURSOR *ecs, int i );
 
 static GFL_TCB* EggAct_StartTcbSet(
   GURU2MAIN_WORK *g2m, int id, int no, int name_no,
@@ -1049,7 +1129,7 @@ static BOOL Guru2MainDameTamagoCheck( GURU2MAIN_WORK *g2m );
 static int Guru2MainCommEggDataOKCountCheck( GURU2MAIN_WORK *g2m );
 static BOOL Guru2MainCommEggDataNGCheck( GURU2MAIN_WORK *g2m );
 
-static const BMPWIN_DAT DATA_Guru2BmpTalkWinList[GURU2TALKWIN_MAX];
+static const BMPWIN_DAT DATA_Guru2BmpTalkWinList;
 
 static const BMPWIN_DAT * const DATA_Guru2BmpNameWinTbl[G2MEMBER_MAX+1];
 static const u16 DATA_DiscOffsetAngle[G2MEMBER_MAX+1][G2MEMBER_MAX];
@@ -1057,8 +1137,10 @@ static const u16 DATA_EggStartAngle[G2MEMBER_MAX+1][G2MEMBER_MAX];
 //static const u16 DATA_GameEndAngle[G2MEMBER_MAX+1];
 static const OMAKE_AREA_TBL DATA_OmakeAreaTbl[G2MEMBER_MAX+1];
 static const u32 DATA_KinomiTbl[G2MEMBER_MAX+1][2];
-static const u32 DATA_SaraArcIdxTbl[G2MEMBER_MAX+1];
 static const fx32 DATA_DiscRotateDrawOffset[G2MEMBER_MAX+1];
+static BOOL  _me_end_check( void );
+static void  _me_play( int seq_bgm );
+
 
 
 #ifdef GURU2_DEBUG_ON
@@ -1069,6 +1151,8 @@ static void DEBUG_Proc( GURU2MAIN_WORK *g2m );
 #ifdef DEBUG_DISP_CHECK
 extern void DEBUG_DiscTest( GURU2MAIN_WORK *g2m );
 #endif
+
+#define GURU2_TCB_MAX   ( 32 )
 
 //==============================================================================
 //  ぐるぐる交換　メイン処理
@@ -1081,16 +1165,17 @@ extern void DEBUG_DiscTest( GURU2MAIN_WORK *g2m );
  * @retval  GFL_PROC_RESULT GFL_PROC_RES_CONTINUE,GFL_PROC_RES_FINISH
  */
 //--------------------------------------------------------------
-GFL_PROC_RESULT Guru2Main_Init( GFL_PROC * proc, int *seq, void *pwk, void *mywk )
+GFL_PROC_RESULT Guru2MainProc_Init( GFL_PROC * proc, int *seq, void *pwk, void *mywk )
 {
   GURU2MAIN_WORK *g2m;
   GURU2PROC_WORK *g2p = (GURU2PROC_WORK *)pwk;
   
   //切断禁止
-  GFL_NET_SetAutoErrorCheck(TRUE);      
+  GFL_NET_SetAutoErrorCheck( TRUE );      
+
   
   //ソフトリセット禁止
-  sys_SoftResetNG( SOFTRESET_TYPE_TRADE );
+  GFL_UI_SoftResetDisable(GFL_UI_SOFTRESET_USER);
   
   //ヒープ作成
   GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_GURU2, GURU2_HEAPSIZE );
@@ -1104,22 +1189,20 @@ GFL_PROC_RESULT Guru2Main_Init( GFL_PROC * proc, int *seq, void *pwk, void *mywk
   g2m->g2c = g2p->g2c;
   
   //ポケモンパーティ
-  g2m->my_poke_party = SaveData_GetTemotiPokemon( g2m->g2p->param.sv );
+  g2m->my_poke_party = GAMEDATA_GetMyPokemon( g2m->g2p->param.gamedata );
   
   //アーカイブハンドルオープン
   g2m->arc_handle = GFL_ARC_OpenDataHandle( ARCID_GURU2, HEAPID_GURU2 );
-  
-  //VRAM転送マネージャ初期化
-  initVramTransferManagerHeap(
-      GURU2_VRAMTRANSFER_MANAGER_NUM, HEAPID_GURU2 );
   
   //グラフィック初期化
   guru2_DrawInit( g2m );
   
   //VBlankセット
-//  sys_VBlankFuncChange( guru2_VBlankFunc, g2m );
-  wk->vintr_tcb = GFUser_VIntr_CreateTCB( guru2_VBlankFunc, g2m, 1 );
+  //  sys_VBlankFuncChange( guru2_VBlankFunc, g2m );
+  g2m->vintr_tcb = GFUser_VIntr_CreateTCB( guru2_VBlankFunc, g2m, 1 );
 
+  // モデリングリソース管理UTIL初期化
+  g2m->g3dUtil = GFL_G3D_UTIL_Create( GURU2_3DRES_NUM, GURU2_3DOBJ_MAX, HEAPID_GURU2 );
   
   //アクター初期化
   Disc_Init( g2m );
@@ -1127,7 +1210,7 @@ GFL_PROC_RESULT Guru2Main_Init( GFL_PROC * proc, int *seq, void *pwk, void *mywk
   
   { //現在のIDと参加人数でディスク角度セット
     int id = 0, count = 0;
-    int my_id = CommGetCurrentID();
+    int my_id = GFL_NET_SystemGetCurrentID();
     DISCWORK *disc = &g2m->disc;
     
     do{
@@ -1146,10 +1229,13 @@ GFL_PROC_RESULT Guru2Main_Init( GFL_PROC * proc, int *seq, void *pwk, void *mywk
       DATA_DiscOffsetAngle[g2m->g2p->receipt_num][count] );
   }
   
-  //現在再生中のBGM Noを保存
-  g2m->before_bgm_no = Snd_NowBgmNoGet();
-  
   //タスク初期化
+  {
+    g2m->tcbSysWork = GFL_HEAP_AllocMemoryLo( HEAPID_GURU2, 
+                                              GFL_TCB_CalcSystemWorkSize( GURU2_TCB_MAX ) );
+    g2m->tcbSys = GFL_TCB_Init( GURU2_TCB_MAX, g2m->tcbSysWork);
+  }
+  // タスク登録
   EggJumpTcb_Init( g2m );
   EggSpinTcb_Init( g2m );
   EggShakeTcb_Init( g2m );
@@ -1178,11 +1264,14 @@ GFL_PROC_RESULT Guru2Main_Init( GFL_PROC * proc, int *seq, void *pwk, void *mywk
  * @retval  GFL_PROC_RESULT GFL_PROC_RES_CONTINUE,GFL_PROC_RES_FINISH
  */
 //--------------------------------------------------------------
-GFL_PROC_RESULT Guru2Main_End( GFL_PROC * proc, int *seq, void *pwk, void *mywk )
+GFL_PROC_RESULT Guru2MainProc_End( GFL_PROC * proc, int *seq, void *pwk, void *mywk )
 {
   GURU2MAIN_WORK *g2m = (GURU2MAIN_WORK *)pwk;
   
-  //ワーク反映
+  // プリントキュー削除
+  PRINTSYS_QUE_Delete( g2m->msgwork.printQue );
+
+   //ワーク反映
   
   //タスク削除
   EggJumpTcb_Delete( g2m );
@@ -1192,16 +1281,21 @@ GFL_PROC_RESULT Guru2Main_End( GFL_PROC * proc, int *seq, void *pwk, void *mywk 
   BtnAnmTcb_Delete( g2m );
   OmakeEggJumpTcb_Delete( g2m );
   
+  // タスクシステム終了
+  GFL_TCB_Exit( g2m->tcbSys );
+  GFL_HEAP_FreeMemory( g2m->tcbSysWork );
+  
   //アクター削除
   Disc_Delete( g2m );
   Egg_Delete( g2m );
   
+  // 3DリソースUTIL削除
+  GFL_G3D_UTIL_Delete( g2m->g3dUtil );
+
   //グラフィック削除
   guru2_DrawDelete( g2m );
-  GFL_TCB_DeleteTask( wk->vintr_tcb );  // VBlank関数解除
+  GFL_TCB_DeleteTask( g2m->vintr_tcb );  // VBlank関数解除
 
-  DellVramTransferManager();
-  
   //アーカイブクローズ
   GFL_ARC_CloseDataHandle( g2m->arc_handle );
   
@@ -1210,7 +1304,7 @@ GFL_PROC_RESULT Guru2Main_End( GFL_PROC * proc, int *seq, void *pwk, void *mywk 
   GFL_HEAP_DeleteHeap( HEAPID_GURU2 );
   
   //ソフトリセット有効に戻す
-  sys_SoftResetOK( SOFTRESET_TYPE_TRADE );
+  GFL_UI_SoftResetDisable(GFL_UI_SOFTRESET_USER);
   
   return( GFL_PROC_RES_FINISH );
 }
@@ -1223,13 +1317,11 @@ GFL_PROC_RESULT Guru2Main_End( GFL_PROC * proc, int *seq, void *pwk, void *mywk 
  * @retval  GFL_PROC_RESULT GFL_PROC_RES_CONTINUE,GFL_PROC_RES_FINISH
  */
 //--------------------------------------------------------------
-GFL_PROC_RESULT Guru2Main_Main( GFL_PROC * proc, int *seq, void *pwk, void *mywk )
+GFL_PROC_RESULT Guru2MainProc_Main( GFL_PROC * proc, int *seq, void *pwk, void *mywk )
 {
   RET ret;
   GURU2MAIN_WORK *g2m = (GURU2MAIN_WORK *)pwk;
   
-  // タッチパネル処理
-  guru2_TPProc( g2m );
   
   do{
     #ifdef GURU2_DEBUG_ON
@@ -1247,6 +1339,9 @@ GFL_PROC_RESULT Guru2Main_Main( GFL_PROC * proc, int *seq, void *pwk, void *mywk
   
   guru2_DrawProc( g2m );
   guru2Main_FrameWorkClear( g2m );
+
+  // タスクメイン
+  GFL_TCB_Main( g2m->tcbSys );
   return( GFL_PROC_RES_CONTINUE );
 }
 
@@ -1273,7 +1368,7 @@ static void guru2Main_FrameWorkClear( GURU2MAIN_WORK *g2m )
  * @retval  GURU2RET  GURU2RET
  */
 //--------------------------------------------------------------
-static RET Guru2Proc_Init( GURU2MAIN_WORK *g2m )
+static RET Guru2Subproc_Init( GURU2MAIN_WORK *g2m )
 {
   Guru2TalkWin_Write( g2m, MSG_WAIT );
   g2m->seq_no = SEQNO_MAIN_FADEIN_WAIT;
@@ -1287,10 +1382,10 @@ static RET Guru2Proc_Init( GURU2MAIN_WORK *g2m )
  * @retval  GURU2RET  GURU2RET
  */
 //--------------------------------------------------------------
-static RET Guru2Proc_FadeInWait( GURU2MAIN_WORK *g2m )
+static RET Guru2Subproc_FadeInWait( GURU2MAIN_WORK *g2m )
 {
   if( WIPE_SYS_EndCheck() ){
-    if( CommGetCurrentID() == 0 ){
+    if( GFL_NET_SystemGetCurrentID() == 0 ){
       g2m->seq_no = SEQNO_MAIN_OYA_SIGNAL_JOIN_WAIT;
     }else{
       g2m->seq_no = SEQNO_MAIN_KO_SEND_SIGNAL_JOIN;
@@ -1309,7 +1404,7 @@ static RET Guru2Proc_FadeInWait( GURU2MAIN_WORK *g2m )
  * @retval  GURU2RET  GURU2RET
  */
 //--------------------------------------------------------------
-static RET Guru2Proc_OyaSignalJoinWait( GURU2MAIN_WORK *g2m )
+static RET Guru2Subproc_OyaSignalJoinWait( GURU2MAIN_WORK *g2m )
 {
   if( Guru2MainCommJoinNumCheck(g2m) ){   //参加数チェック
     #ifdef DEBUG_GURU2_PRINTF
@@ -1329,7 +1424,7 @@ static RET Guru2Proc_OyaSignalJoinWait( GURU2MAIN_WORK *g2m )
  * @retval  GURU2RET  GURU2RET
  */
 //--------------------------------------------------------------
-static RET Guru2Proc_OyaSendJoinClose( GURU2MAIN_WORK *g2m )
+static RET Guru2Subproc_OyaSendJoinClose( GURU2MAIN_WORK *g2m )
 {
   u16 bit = G2COMM_GMSBIT_JOIN_CLOSE;
   
@@ -1344,6 +1439,21 @@ static RET Guru2Proc_OyaSendJoinClose( GURU2MAIN_WORK *g2m )
   return( RET_NON );
 }
 
+//----------------------------------------------------------------------------------
+/**
+ * @brief ユニオンルーム通信ワークポインタ取得
+ *
+ * @param   wk    
+ *
+ * @retval  UNION_APP_PTR   
+ */
+//----------------------------------------------------------------------------------
+static UNION_APP_PTR _get_unionwork(GURU2MAIN_WORK *wk)
+{
+//  OS_Printf("union app adr=%08x\n",(u32)wk->g2p->param.uniapp);
+  return wk->g2p->param.uniapp;
+}
+
 //--------------------------------------------------------------
 /**
  * メイン　親　接続人数一致待ち
@@ -1351,11 +1461,11 @@ static RET Guru2Proc_OyaSendJoinClose( GURU2MAIN_WORK *g2m )
  * @retval  GURU2RET  GURU2RET
  */
 //--------------------------------------------------------------
-static RET Guru2Proc_OyaConnectNumCheck( GURU2MAIN_WORK *g2m )
+static RET Guru2Subproc_OyaConnectNumCheck( GURU2MAIN_WORK *g2m )
 {
   int count = Guru2MainCommJoinNumGet( g2m ) + 1; //+1=自身
   
-  if( count != CommGetConnectNum() ){
+  if( count != Union_App_GetMemberNum(_get_unionwork(g2m)) ){
     return( RET_NON );
   }
   
@@ -1370,7 +1480,7 @@ static RET Guru2Proc_OyaConnectNumCheck( GURU2MAIN_WORK *g2m )
  * @retval  GURU2RET  GURU2RET
  */
 //--------------------------------------------------------------
-static RET Guru2Proc_OyaSendPlayMax( GURU2MAIN_WORK *g2m )
+static RET Guru2Subproc_OyaSendPlayMax( GURU2MAIN_WORK *g2m )
 {
   int ret;
   
@@ -1397,7 +1507,7 @@ static RET Guru2Proc_OyaSendPlayMax( GURU2MAIN_WORK *g2m )
  * @retval  GURU2RET  GURU2RET
  */
 //--------------------------------------------------------------
-static RET Guru2Proc_OyaSendPlayNo( GURU2MAIN_WORK *g2m )
+static RET Guru2Subproc_OyaSendPlayNo( GURU2MAIN_WORK *g2m )
 {
   int ret;
   GURU2COMM_PLAYNO play;
@@ -1504,7 +1614,7 @@ static RET Guru2Proc_OyaSendPlayNo( GURU2MAIN_WORK *g2m )
  * @retval  GURU2RET  GURU2RET
  */
 //--------------------------------------------------------------
-static RET Guru2Proc_OyaSignalEggAddStart( GURU2MAIN_WORK *g2m )
+static RET Guru2Subproc_OyaSignalEggAddStart( GURU2MAIN_WORK *g2m )
 {
   u16 bit = G2COMM_GMSBIT_EGG_ADD_START;
   
@@ -1522,7 +1632,7 @@ static RET Guru2Proc_OyaSignalEggAddStart( GURU2MAIN_WORK *g2m )
  * @retval  GURU2RET  GURU2RET
  */
 //--------------------------------------------------------------
-static RET Guru2Proc_KoSendSignalJoin( GURU2MAIN_WORK *g2m )
+static RET Guru2Subproc_KoSendSignalJoin( GURU2MAIN_WORK *g2m )
 {
   int ret;
   
@@ -1558,7 +1668,7 @@ static RET Guru2Proc_KoSendSignalJoin( GURU2MAIN_WORK *g2m )
  * @retval  GURU2RET  GURU2RET
  */
 //--------------------------------------------------------------
-static RET Guru2Proc_KoEggAddStartWait( GURU2MAIN_WORK *g2m )
+static RET Guru2Subproc_KoEggAddStartWait( GURU2MAIN_WORK *g2m )
 {
   if( Guru2MainCommSignalCheck(g2m,G2COMM_GMSBIT_EGG_ADD_START) == TRUE ){
     GF_ASSERT( g2m->comm.play_max >= 2 );
@@ -1576,13 +1686,14 @@ static RET Guru2Proc_KoEggAddStartWait( GURU2MAIN_WORK *g2m )
  * @retval  GURU2RET  GURU2RET
  */
 //--------------------------------------------------------------
-static RET Guru2Proc_EggDataSendInit( GURU2MAIN_WORK *g2m )
+static RET Guru2Subproc_EggDataSendInit( GURU2MAIN_WORK *g2m )
 {
+  GFL_NETHANDLE* pNet = GFL_NET_HANDLE_GetCurrentHandle();
   #ifdef DEBUG_GURU2_PRINTF
   OS_Printf( "ぐるぐる　たまごデータ転送開始\n" );
   #endif
   
-  CommTimingSyncStart( COMM_GURU2_TIMINGSYNC_NO );
+  GFL_NET_TimingSyncStart( pNet, COMM_GURU2_TIMINGSYNC_NO );
   g2m->seq_no = SEQNO_MAIN_EGG_DATA_SEND_TIMING_WAIT;
   return( RET_NON );
 }
@@ -1594,9 +1705,11 @@ static RET Guru2Proc_EggDataSendInit( GURU2MAIN_WORK *g2m )
  * @retval  GURU2RET  GURU2RET
  */
 //--------------------------------------------------------------
-static RET Guru2Proc_EggDataSendTimingWait( GURU2MAIN_WORK *g2m )
+static RET Guru2Subproc_EggDataSendTimingWait( GURU2MAIN_WORK *g2m )
 {
-  if( CommIsTimingSync(COMM_GURU2_TIMINGSYNC_NO) ){
+  GFL_NETHANDLE* pNet = GFL_NET_HANDLE_GetCurrentHandle();
+
+  if( GFL_NET_IsTimingSync( pNet, COMM_GURU2_TIMINGSYNC_NO) ){
     g2m->seq_no = SEQNO_MAIN_EGG_DATA_TRADE_POS_SEND;
   }
   
@@ -1610,7 +1723,7 @@ static RET Guru2Proc_EggDataSendTimingWait( GURU2MAIN_WORK *g2m )
  * @retval  GURU2RET  GURU2RET
  */
 //--------------------------------------------------------------
-static RET Guru2Proc_EggDataTradePosSend( GURU2MAIN_WORK *g2m )
+static RET Guru2Subproc_EggDataTradePosSend( GURU2MAIN_WORK *g2m )
 {
   if( Guru2Comm_SendData(
       g2m->g2c,G2COMM_GM_TRADE_POS,&g2m->g2p->trade_no,4) ){
@@ -1627,16 +1740,12 @@ static RET Guru2Proc_EggDataTradePosSend( GURU2MAIN_WORK *g2m )
  * @retval  GURU2RET  GURU2RET
  */
 //--------------------------------------------------------------
-static RET Guru2Proc_EggDataSend( GURU2MAIN_WORK *g2m )
+static RET Guru2Subproc_EggDataSend( GURU2MAIN_WORK *g2m )
 {
-  int ret;
-  u32 send;
-  
-  send = (u32)g2m->my_poke_party;
-  
-  ret = CommSendHugeData(
-    CG_GURU2_EGG, (void*)send, POKEPARTY_SEND_ONCE_SIZE );
-  
+  GFL_NETHANDLE *pNet = GFL_NET_HANDLE_GetCurrentHandle();
+  BOOL ret;
+  ret=GFL_NET_SendData( pNet, G2COMM_GM_SEND_EGG_DATA, 
+                        GURU2_WIDEUSE_SENDWORK_SIZE, (void*)g2m->my_poke_party );
   if( ret ){
     g2m->seq_no = SEQNO_MAIN_EGG_DATA_RECV_WAIT;
   }
@@ -1651,7 +1760,7 @@ static RET Guru2Proc_EggDataSend( GURU2MAIN_WORK *g2m )
  * @retval  GURU2RET  GURU2RET
  */
 //--------------------------------------------------------------
-static RET Guru2Proc_EggDataRecvWait( GURU2MAIN_WORK *g2m )
+static RET Guru2Subproc_EggDataRecvWait( GURU2MAIN_WORK *g2m )
 {
   if( Guru2MainCommEggDataNumGet(g2m) == g2m->comm.play_max ){
     //タマゴデータ受信完了　ダメタマゴチェック
@@ -1680,7 +1789,7 @@ static RET Guru2Proc_EggDataRecvWait( GURU2MAIN_WORK *g2m )
  * @retval  GURU2RET  GURU2RET
  */
 //--------------------------------------------------------------
-static RET Guru2Proc_DameTamagoCheckWait( GURU2MAIN_WORK *g2m )
+static RET Guru2Subproc_DameTamagoCheckWait( GURU2MAIN_WORK *g2m )
 {
   if( Guru2MainCommEggDataNGCheck(g2m) == TRUE ){
     g2m->seq_no = SEQNO_MAIN_COMM_ERROR_DAME_TAMAGO_MSG;
@@ -1698,7 +1807,7 @@ static RET Guru2Proc_DameTamagoCheckWait( GURU2MAIN_WORK *g2m )
  * @retval  GURU2RET  GURU2RET
  */
 //--------------------------------------------------------------
-static RET Guru2Proc_EggAddInit( GURU2MAIN_WORK *g2m )
+static RET Guru2Subproc_EggAddInit( GURU2MAIN_WORK *g2m )
 {
   int i;
   EGGADDWORK *wk = Guru2MainTempWorkInit( g2m, sizeof(EGGADDWORK) );
@@ -1707,10 +1816,9 @@ static RET Guru2Proc_EggAddInit( GURU2MAIN_WORK *g2m )
   wk->max = g2m->comm.play_max;
   wk->offs = DATA_DiscOffsetAngle[wk->max][g2m->comm.my_play_no];
   
-  //BTS:0187 まわす数が足りてなかったので通信最大値に変更
-  for( i = 0; i < COMM_MACHINE_MAX; i++ ){
+  for( i = 0; i < NET_GURU2_CONNECT_MAX; i++ ){
     if( Guru2MainCommIDPlayCheck(g2m,i) ){
-      g2m->comm.my_status[i] = CommInfoGetMyStatus( i );
+      g2m->comm.my_status[i] = Union_App_GetMystatus( _get_unionwork(g2m), i );
       MyStatus_CopyNameString(
         g2m->comm.my_status[i], g2m->comm.my_name_buf[i] );
     }
@@ -1734,7 +1842,7 @@ static RET Guru2Proc_EggAddInit( GURU2MAIN_WORK *g2m )
  * @retval  GURU2RET  GURU2RET
  */
 //--------------------------------------------------------------
-static RET Guru2Proc_EggAdd( GURU2MAIN_WORK *g2m )
+static RET Guru2Subproc_EggAdd( GURU2MAIN_WORK *g2m )
 {
   g2m->frame--;
   
@@ -1772,7 +1880,7 @@ static RET Guru2Proc_EggAdd( GURU2MAIN_WORK *g2m )
  * @retval  GURU2RET  GURU2RET
  */
 //--------------------------------------------------------------
-static RET Guru2Proc_EggAddWait( GURU2MAIN_WORK *g2m )
+static RET Guru2Subproc_EggAddWait( GURU2MAIN_WORK *g2m )
 {
   EGGWORK *egg = &g2m->egg;
   int i = 0,count = 0,max = g2m->comm.play_max;
@@ -1800,14 +1908,14 @@ static RET Guru2Proc_EggAddWait( GURU2MAIN_WORK *g2m )
  * @retval  GURU2RET  GURU2RET
  */
 //--------------------------------------------------------------
-static RET Guru2Proc_EggAddEndWait( GURU2MAIN_WORK *g2m )
+static RET Guru2Subproc_EggAddEndWait( GURU2MAIN_WORK *g2m )
 {
   g2m->frame++;
   
   if( g2m->frame > EGG_ADD_END_WAIT ){
     g2m->frame = 0;
     
-    if( CommGetCurrentID() == 0 ){
+    if( GFL_NET_SystemGetCurrentID() == 0 ){
       g2m->seq_no = SEQNO_MAIN_SEND_GAME_START_FLAG;
     }else{
       g2m->seq_no = SEQNO_MAIN_RECV_GAME_START_FLAG;
@@ -1824,7 +1932,7 @@ static RET Guru2Proc_EggAddEndWait( GURU2MAIN_WORK *g2m )
  * @retval  GURU2RET GURU2RET
  */
 //--------------------------------------------------------------
-static RET Guru2Proc_SendGameStartFlag( GURU2MAIN_WORK *g2m )
+static RET Guru2Subproc_SendGameStartFlag( GURU2MAIN_WORK *g2m )
 {
   u16 bit = G2COMM_GMSBIT_GAME_START;
   
@@ -1846,7 +1954,7 @@ static RET Guru2Proc_SendGameStartFlag( GURU2MAIN_WORK *g2m )
  * @retval  GURU2RET GURU2RET
  */
 //--------------------------------------------------------------
-static RET Guru2Proc_RecvGameStartFlag( GURU2MAIN_WORK *g2m )
+static RET Guru2Subproc_RecvGameStartFlag( GURU2MAIN_WORK *g2m )
 {
   if( Guru2MainCommSignalCheck(g2m,G2COMM_GMSBIT_GAME_START) == TRUE ){
     #ifdef DEBUG_DISP_CHECK
@@ -1875,7 +1983,7 @@ static RET Guru2Proc_RecvGameStartFlag( GURU2MAIN_WORK *g2m )
  * @retval  GURU2RET GURU2RET
  */
 //--------------------------------------------------------------
-static RET DEBUG_Guru2Proc_DispCheck( GURU2MAIN_WORK *g2m )
+static RET DEBUG_Guru2Subproc_DispCheck( GURU2MAIN_WORK *g2m )
 {
   if( BtnAnmTcb_PushCheck(g2m) == FALSE ){
     if( Guru2TP_ButtonHitTrgCheck(g2m) == TRUE ){
@@ -1899,9 +2007,10 @@ static RET DEBUG_Guru2Proc_DispCheck( GURU2MAIN_WORK *g2m )
  * @retval  GURU2RET  GURU2RET
  */
 //--------------------------------------------------------------
-static RET Guru2Proc_CountDownBeforeTimingInit( GURU2MAIN_WORK *g2m )
+static RET Guru2Subproc_CountDownBeforeTimingInit( GURU2MAIN_WORK *g2m )
 {
-  CommTimingSyncStart( COMM_GURU2_TIMINGSYNC_NO );
+  GFL_NETHANDLE* pNet = GFL_NET_HANDLE_GetCurrentHandle();
+  GFL_NET_TimingSyncStart( pNet, COMM_GURU2_TIMINGSYNC_NO );
   g2m->seq_no = SEQNO_MAIN_COUNTDOWN_BEFORE_TIMING_WAIT;
   return( RET_NON );
 }
@@ -1913,9 +2022,10 @@ static RET Guru2Proc_CountDownBeforeTimingInit( GURU2MAIN_WORK *g2m )
  * @retval  GURU2RET  GURU2RET
  */
 //--------------------------------------------------------------
-static RET Guru2Proc_CountDownBeforeTimingWait( GURU2MAIN_WORK *g2m )
+static RET Guru2Subproc_CountDownBeforeTimingWait( GURU2MAIN_WORK *g2m )
 {
-  if( CommIsTimingSync(COMM_GURU2_TIMINGSYNC_NO) ){
+  GFL_NETHANDLE* pNet = GFL_NET_HANDLE_GetCurrentHandle();
+  if( GFL_NET_IsTimingSync( pNet, COMM_GURU2_TIMINGSYNC_NO) ){
     g2m->seq_no = SEQNO_MAIN_COUNTDOWN_INIT;
   }
   
@@ -1929,7 +2039,7 @@ static RET Guru2Proc_CountDownBeforeTimingWait( GURU2MAIN_WORK *g2m )
  * @retval  GURU2RET  GURU2RET
  */
 //--------------------------------------------------------------
-static RET Guru2Proc_CountDownInit( GURU2MAIN_WORK *g2m )
+static RET Guru2Subproc_CountDownInit( GURU2MAIN_WORK *g2m )
 {
   BtnFadeTcbAdd( g2m, TRUE );
   guru2_CountDownTcbSet( g2m );
@@ -1945,7 +2055,7 @@ static RET Guru2Proc_CountDownInit( GURU2MAIN_WORK *g2m )
  * @retval  GURU2RET  GURU2RET
  */
 //--------------------------------------------------------------
-static RET Guru2Proc_CountDown( GURU2MAIN_WORK *g2m )
+static RET Guru2Subproc_CountDown( GURU2MAIN_WORK *g2m )
 {
   int i;
   
@@ -1971,9 +2081,9 @@ static RET Guru2Proc_CountDown( GURU2MAIN_WORK *g2m )
  * @retval  GURU2RET  GURU2RET
  */
 //--------------------------------------------------------------
-static RET Guru2Proc_GameInit( GURU2MAIN_WORK *g2m )
+static RET Guru2Subproc_GameInit( GURU2MAIN_WORK *g2m )
 {
-  if( CommGetCurrentID() == 0 ){
+  if( GFL_NET_SystemGetCurrentID() == 0 ){
     g2m->seq_no = SEQNO_MAIN_GAME_OYA;
   }else{
     g2m->seq_no = SEQNO_MAIN_GAME_OYA;
@@ -1989,7 +2099,7 @@ static RET Guru2Proc_GameInit( GURU2MAIN_WORK *g2m )
  * @retval  GURU2RET  GURU2RET
  */
 //--------------------------------------------------------------
-static RET Guru2Proc_GameOya( GURU2MAIN_WORK *g2m )
+static RET Guru2Subproc_GameOya( GURU2MAIN_WORK *g2m )
 {
   {
     BOOL ret = Guru2GameTimeCount( g2m );
@@ -2070,7 +2180,7 @@ static RET Guru2Proc_GameOya( GURU2MAIN_WORK *g2m )
  * @retval  GURU2RET  GURU2RET
  */
 //--------------------------------------------------------------
-static RET Guru2Proc_GameKo( GURU2MAIN_WORK *g2m )
+static RET Guru2Subproc_GameKo( GURU2MAIN_WORK *g2m )
 {
   if( g2m->comm.game_data_send_flag == TRUE ){  //ゲームデータ受信
     g2m->disc.rotate_fx = NUM_FX32( g2m->comm.game_data.disc_angle );
@@ -2127,19 +2237,19 @@ static RET Guru2Proc_GameKo( GURU2MAIN_WORK *g2m )
  * @retval  GURU2RET  GURU2RET
  */
 //--------------------------------------------------------------
-static RET Guru2Proc_GameEndInit( GURU2MAIN_WORK *g2m )
+static RET Guru2Subproc_GameEndInit( GURU2MAIN_WORK *g2m )
 {
   BtnFadeTcbAdd( g2m, FALSE );
   
   g2m->front_eggact = EggAct_FrontEggActGet( g2m );
   
-  if( g2m->front_eggact->comm_id == CommGetCurrentID() ){
+  if( g2m->front_eggact->comm_id == GFL_NET_SystemGetCurrentID() ){
     g2m->seq_no = SEQNO_MAIN_GAME_END_ERROR_ROTATE;
   }else{
     g2m->seq_no = SEQNO_MAIN_GAME_END_LAST_ROTATE;
   }
   
-  Snd_SePlay( GURU2_SE_TIMEUP );  
+  PMSND_PlaySE( GURU2_SE_TIMEUP );  
   return( RET_CONT );
 }
 
@@ -2150,7 +2260,7 @@ static RET Guru2Proc_GameEndInit( GURU2MAIN_WORK *g2m )
  * @retval  GURU2RET  GURU2RET
  */
 //--------------------------------------------------------------
-static RET Guru2Proc_GameEndErrorRotate( GURU2MAIN_WORK *g2m )
+static RET Guru2Subproc_GameEndErrorRotate( GURU2MAIN_WORK *g2m )
 {
   u32 front;
   EGGACTOR *eact = g2m->front_eggact;
@@ -2158,7 +2268,7 @@ static RET Guru2Proc_GameEndErrorRotate( GURU2MAIN_WORK *g2m )
   DiscRotateEggMove( g2m, DISC_LOW_SPEED_FX );
   g2m->front_eggact = EggAct_FrontEggActGet( g2m );
   
-  if( g2m->front_eggact->comm_id != CommGetCurrentID() ){
+  if( g2m->front_eggact->comm_id != GFL_NET_SystemGetCurrentID() ){
     g2m->seq_no = SEQNO_MAIN_GAME_END_LAST_ROTATE;
   }
   
@@ -2172,7 +2282,7 @@ static RET Guru2Proc_GameEndErrorRotate( GURU2MAIN_WORK *g2m )
  * @retval  GURU2RET  GURU2RET
  */
 //--------------------------------------------------------------
-static RET Guru2Proc_GameEndLastRotate( GURU2MAIN_WORK *g2m )
+static RET Guru2Subproc_GameEndLastRotate( GURU2MAIN_WORK *g2m )
 {
   int max,no;
   fx32 angle,front,res,speed;
@@ -2218,9 +2328,10 @@ static RET Guru2Proc_GameEndLastRotate( GURU2MAIN_WORK *g2m )
  * @retval  GURU2RET  GURU2RET
  */
 //--------------------------------------------------------------
-static RET Guru2Proc_GameEndTimingInit( GURU2MAIN_WORK *g2m )
+static RET Guru2Subproc_GameEndTimingInit( GURU2MAIN_WORK *g2m )
 {
-  CommTimingSyncStart( COMM_GURU2_TIMINGSYNC_NO );
+  GFL_NETHANDLE* pNet = GFL_NET_HANDLE_GetCurrentHandle();
+  GFL_NET_TimingSyncStart( pNet,  COMM_GURU2_TIMINGSYNC_NO );
   g2m->seq_no = SEQNO_MAIN_GAME_END_TIMING_WAIT;
   return( RET_NON );
 }
@@ -2232,10 +2343,11 @@ static RET Guru2Proc_GameEndTimingInit( GURU2MAIN_WORK *g2m )
  * @retval  GURU2RET  GURU2RET
  */
 //--------------------------------------------------------------
-static RET Guru2Proc_GameEndTimingWait( GURU2MAIN_WORK *g2m )
+static RET Guru2Subproc_GameEndTimingWait( GURU2MAIN_WORK *g2m )
 {
-  if( CommIsTimingSync(COMM_GURU2_TIMINGSYNC_NO) ){
-    if( CommGetCurrentID() == 0 ){
+  GFL_NETHANDLE* pNet = GFL_NET_HANDLE_GetCurrentHandle();
+  if( GFL_NET_IsTimingSync( pNet, COMM_GURU2_TIMINGSYNC_NO) ){
+    if( GFL_NET_SystemGetCurrentID() == 0 ){
       g2m->seq_no = SEQNO_MAIN_GAME_END_OYA_DATA_SEND;
     }else{
       g2m->seq_no = SEQNO_MAIN_GAME_END_KO_DATA_RECV;
@@ -2252,7 +2364,7 @@ static RET Guru2Proc_GameEndTimingWait( GURU2MAIN_WORK *g2m )
  * @retval  GURU2RET  GURU2RET
  */
 //--------------------------------------------------------------
-static RET Guru2Proc_OyaGameEndDataSend( GURU2MAIN_WORK *g2m )
+static RET Guru2Subproc_OyaGameEndDataSend( GURU2MAIN_WORK *g2m )
 {
   int i,ret;
   EGGACTOR *eact;
@@ -2294,7 +2406,7 @@ static RET Guru2Proc_OyaGameEndDataSend( GURU2MAIN_WORK *g2m )
  * @retval  GURU2RET  GURU2RET
  */
 //--------------------------------------------------------------
-static RET Guru2Proc_KoGameEndDataRecv( GURU2MAIN_WORK *g2m )
+static RET Guru2Subproc_KoGameEndDataRecv( GURU2MAIN_WORK *g2m )
 {
   if( g2m->comm.game_result_get_flag == TRUE ){
     int i;
@@ -2332,7 +2444,7 @@ static RET Guru2Proc_KoGameEndDataRecv( GURU2MAIN_WORK *g2m )
  * @retval  GURU2RET  GURU2RET
  */
 //--------------------------------------------------------------
-static RET Guru2Proc_ResultInit( GURU2MAIN_WORK *g2m )
+static RET Guru2Subproc_ResultInit( GURU2MAIN_WORK *g2m )
 {
   int i,id;
   int no = g2m->front_eggact->play_no;
@@ -2357,7 +2469,7 @@ static RET Guru2Proc_ResultInit( GURU2MAIN_WORK *g2m )
  * @retval  GURU2RET  GURU2RET
  */
 //--------------------------------------------------------------
-static RET Guru2Proc_ResultNameWait( GURU2MAIN_WORK *g2m )
+static RET Guru2Subproc_ResultNameWait( GURU2MAIN_WORK *g2m )
 {
   g2m->frame++;
   
@@ -2382,7 +2494,7 @@ static RET Guru2Proc_ResultNameWait( GURU2MAIN_WORK *g2m )
   }
   
   { //卵取得ファンファーレ
-    Snd_MePlay( SEQ_ME_ITEM );
+    _me_play( SEQ_ME_ITEM );
   }
   
   g2m->seq_no = SEQNO_MAIN_RESULT_MSG_WAIT;
@@ -2396,11 +2508,11 @@ static RET Guru2Proc_ResultNameWait( GURU2MAIN_WORK *g2m )
  * @retval  GURU2RET  GURU2RET
  */
 //--------------------------------------------------------------
-static RET Guru2Proc_ResultMsgWait( GURU2MAIN_WORK *g2m )
+static RET Guru2Subproc_ResultMsgWait( GURU2MAIN_WORK *g2m )
 {
   if( g2m->frame < GURU2_RESULT_MSG_WAIT_FRAME ){
     g2m->frame++;
-  }else if( Snd_MePlayCheckBgmPlay() == FALSE ){
+  }else if( _me_end_check() == FALSE ){
     g2m->frame = 0;
     g2m->seq_no = SEQNO_MAIN_OMAKE_CHECK;
   }
@@ -2415,7 +2527,7 @@ static RET Guru2Proc_ResultMsgWait( GURU2MAIN_WORK *g2m )
  * @retval  GURU2RET  GURU2RET
  */
 //--------------------------------------------------------------
-static RET Guru2Proc_OmakeAreaCheck( GURU2MAIN_WORK *g2m )
+static RET Guru2Subproc_OmakeAreaCheck( GURU2MAIN_WORK *g2m )
 {
   OmakeEggJumpTcb_OmakeBitCheckSet( g2m );
   
@@ -2445,10 +2557,10 @@ static RET Guru2Proc_OmakeAreaCheck( GURU2MAIN_WORK *g2m )
     
     Guru2TalkWin_WriteItem( g2m, MSG_OMAKE_AREA, id );
     
-    ret = MyItem_AddItem(
-      SaveData_GetMyItem(g2m->g2p->param.sv), id, 1, HEAPID_GURU2 ); 
+    ret = MYITEM_AddItem(
+      GAMEDATA_GetMyItem(g2m->g2p->param.gamedata), id, 1, HEAPID_GURU2 ); 
     
-    Snd_MePlay( SEQ_ME_ITEM );  //ファンファーレ
+    _me_play( SEQ_ME_ITEM );  //ファンファーレ
     
     if( ret == TRUE ){  //成功
       g2m->seq_no = SEQNO_MAIN_OMAKE_MSG_WAIT;
@@ -2461,7 +2573,7 @@ static RET Guru2Proc_OmakeAreaCheck( GURU2MAIN_WORK *g2m )
 }
 
 #if 0 // old
-static RET Guru2Proc_OmakeAreaCheck( GURU2MAIN_WORK *g2m )
+static RET Guru2Subproc_OmakeAreaCheck( GURU2MAIN_WORK *g2m )
 {
   OmakeEggJumpTcb_AllSet( g2m );
   
@@ -2495,10 +2607,10 @@ static RET Guru2Proc_OmakeAreaCheck( GURU2MAIN_WORK *g2m )
     
     Guru2TalkWin_WriteItem( g2m, MSG_OMAKE_AREA, id );
     
-    ret = MyItem_AddItem(
-      SaveData_GetMyItem(g2m->g2p->param.sv), id, 1, HEAPID_GURU2 ); 
+    ret = MYITEM_AddItem(
+      GAMEDATA_GetMyItem(g2m->g2p->param.gamedata), id, 1, HEAPID_GURU2 ); 
     
-    Snd_MePlay( SEQ_ME_ITEM );  //ファンファーレ
+    _me_play( SEQ_ME_ITEM );  //ファンファーレ
     
     if( ret == TRUE ){  //成功
       g2m->seq_no = SEQNO_MAIN_OMAKE_MSG_WAIT;
@@ -2518,11 +2630,11 @@ static RET Guru2Proc_OmakeAreaCheck( GURU2MAIN_WORK *g2m )
  * @retval  GURU2RET  GURU2RET
  */
 //--------------------------------------------------------------
-static RET Guru2Proc_OmakeAreaMsgWait( GURU2MAIN_WORK *g2m )
+static RET Guru2Subproc_OmakeAreaMsgWait( GURU2MAIN_WORK *g2m )
 {
   if( g2m->frame < GURU2_MSG_WAIT_FRAME ){
     g2m->frame++;
-  }else if( Snd_MePlayCheckBgmPlay() == FALSE ){
+  }else if( _me_end_check() == FALSE ){
     g2m->frame = 0;
     g2m->seq_no = SEQNO_MAIN_SAVE_BEFORE_TIMING_INIT;
   }
@@ -2537,11 +2649,11 @@ static RET Guru2Proc_OmakeAreaMsgWait( GURU2MAIN_WORK *g2m )
  * @retval  GURU2RET  GURU2RET
  */
 //--------------------------------------------------------------
-static RET Guru2Proc_OmakeAreaErrorMsgStartWait( GURU2MAIN_WORK *g2m )
+static RET Guru2Subproc_OmakeAreaErrorMsgStartWait( GURU2MAIN_WORK *g2m )
 {
   if( g2m->frame < GURU2_MSG_WAIT_FRAME ){
     g2m->frame++;
-  }else if( Snd_MePlayCheckBgmPlay() == FALSE ){
+  }else if( _me_end_check() == FALSE ){
     g2m->frame = 0;
     g2m->seq_no = SEQNO_MAIN_OMAKE_MSG_WAIT;
     Guru2TalkWin_Write( g2m, MSG_ZANNEN );
@@ -2557,7 +2669,7 @@ static RET Guru2Proc_OmakeAreaErrorMsgStartWait( GURU2MAIN_WORK *g2m )
  * @retval  GURU2RET  GURU2RET
  */
 //--------------------------------------------------------------
-static RET Guru2Proc_OmakeAreaErrorMsgWait( GURU2MAIN_WORK *g2m )
+static RET Guru2Subproc_OmakeAreaErrorMsgWait( GURU2MAIN_WORK *g2m )
 {
   if( g2m->frame < GURU2_MSG_WAIT_FRAME ){
     g2m->frame++;
@@ -2576,15 +2688,15 @@ static RET Guru2Proc_OmakeAreaErrorMsgWait( GURU2MAIN_WORK *g2m )
  * @retval  GURU2RET  GURU2RET
  */
 //--------------------------------------------------------------
-static RET Guru2Proc_SaveBeforeTimingInit( GURU2MAIN_WORK *g2m )
+static RET Guru2Subproc_SaveBeforeTimingInit( GURU2MAIN_WORK *g2m )
 {
+  GFL_NETHANDLE* pNet = GFL_NET_HANDLE_GetCurrentHandle();
   RECORD_Inc( g2m->g2p->param.record, RECID_GURUGURU_COUNT );
   RECORD_Score_Add( g2m->g2p->param.record,SCORE_ID_GURUGURU );
   
   Guru2TalkWin_Write( g2m, MSG_SAVE );
-  CommTimingSyncStart( COMM_GURU2_TIMINGSYNC_NO );
+  GFL_NET_TimingSyncStart( pNet, COMM_GURU2_TIMINGSYNC_NO );
   
-  sys.DontSoftReset = 1; //ソフトリセット不可
   g2m->seq_no = SEQNO_MAIN_SAVE_BEFORE_TIMING_WAIT;
   
   #ifdef DEBUG_GURU2_PRINTF
@@ -2593,6 +2705,22 @@ static RET Guru2Proc_SaveBeforeTimingInit( GURU2MAIN_WORK *g2m )
   return( RET_NON );
 }
 
+#ifdef VIRTUAL_SAVE_FUNC
+void  CommSyncronizeSaveInit( int *seq );
+int CommSyncronizeSave( SAVE_CONTROL_WORK *sv, int *seq );
+
+void  CommSyncronizeSaveInit( int *seq )
+{
+   *seq = 0;
+}
+
+
+int CommSyncronizeSave( SAVE_CONTROL_WORK *sv, int *seq )
+{
+  return TRUE;
+}
+#endif
+
 //--------------------------------------------------------------
 /**
  * メイン　セーブ　セーブ前の同期
@@ -2600,13 +2728,16 @@ static RET Guru2Proc_SaveBeforeTimingInit( GURU2MAIN_WORK *g2m )
  * @retval  GURU2RET  GURU2RET
  */
 //--------------------------------------------------------------
-static RET Guru2Proc_SaveBeforeTimingWait( GURU2MAIN_WORK *g2m )
+static RET Guru2Subproc_SaveBeforeTimingWait( GURU2MAIN_WORK *g2m )
 {
-  if( CommIsTimingSync(COMM_GURU2_TIMINGSYNC_NO) ){
+  GFL_NETHANDLE* pNet = GFL_NET_HANDLE_GetCurrentHandle();
+  if( GFL_NET_IsTimingSync( pNet, COMM_GURU2_TIMINGSYNC_NO) ){
     Guru2MainFriendEggExchange( g2m, g2m->front_eggact->comm_id );
     CommSyncronizeSaveInit( &g2m->save_seq );
+#ifdef WINDOW_SAVE_ICON
     g2m->time_wait_icon_p = TimeWaitIconAdd(
-      &g2m->msgwork.bmpwin_talk[GURU2TALK_WIN_TALK], BGF_CHARNO_TALK );
+      g2m->msgwork.bmpwin_talk, BGF_CHARNO_TALK );
+#endif
     g2m->seq_no = SEQNO_MAIN_SAVE;
   }
   
@@ -2620,14 +2751,14 @@ static RET Guru2Proc_SaveBeforeTimingWait( GURU2MAIN_WORK *g2m )
  * @retval  GURU2RET  GURU2RET
  */
 //--------------------------------------------------------------
-static RET Guru2Proc_Save( GURU2MAIN_WORK *g2m )
+static RET Guru2Subproc_Save( GURU2MAIN_WORK *g2m )
 {
-  int ret = CommSyncronizeSave(
-    g2m->g2p->param.sv, SVBLK_ID_MAX, &g2m->save_seq );
+  int ret = CommSyncronizeSave( g2m->g2p->param.sv, &g2m->save_seq );
   
   if( ret ){
-    sys.DontSoftReset = 0;
+#ifdef WINDOW_SAVE_ICON
     TimeWaitIconDel( g2m->time_wait_icon_p );
+#endif
     g2m->seq_no = SEQNO_MAIN_END_TIMING_SYNC_INIT;
   }
   
@@ -2642,7 +2773,7 @@ static RET Guru2Proc_Save( GURU2MAIN_WORK *g2m )
  * @retval  GURU2RET  GURU2RET
  */
 //--------------------------------------------------------------
-static RET Guru2Proc_CommErrorMsg( GURU2MAIN_WORK *g2m )
+static RET Guru2Subproc_CommErrorMsg( GURU2MAIN_WORK *g2m )
 {
   Guru2TalkWin_Write( g2m, MSG_COMM_ERROR );
   g2m->seq_no = SEQNO_MAIN_MSG_WAIT_NEXT_END;
@@ -2656,7 +2787,7 @@ static RET Guru2Proc_CommErrorMsg( GURU2MAIN_WORK *g2m )
  * @retval  GURU2RET  GURU2RET
  */
 //--------------------------------------------------------------
-static RET Guru2Proc_CommErrorMember( GURU2MAIN_WORK *g2m )
+static RET Guru2Subproc_CommErrorMember( GURU2MAIN_WORK *g2m )
 {
   Guru2TalkWin_Write( g2m, MSG_COMM_ERROR_MEMBER );
   g2m->seq_no = SEQNO_MAIN_MSG_WAIT_NEXT_END;
@@ -2670,7 +2801,7 @@ static RET Guru2Proc_CommErrorMember( GURU2MAIN_WORK *g2m )
  * @retval  GURU2RET  GURU2RET
  */
 //--------------------------------------------------------------
-static RET Guru2Proc_CommErrorOyaCancelMsg( GURU2MAIN_WORK *g2m )
+static RET Guru2Subproc_CommErrorOyaCancelMsg( GURU2MAIN_WORK *g2m )
 {
   Guru2TalkWin_Write( g2m, MSG_COMM_ERROR_CANCEL_OYA );
   g2m->seq_no = SEQNO_MAIN_MSG_WAIT_NEXT_END;
@@ -2684,7 +2815,7 @@ static RET Guru2Proc_CommErrorOyaCancelMsg( GURU2MAIN_WORK *g2m )
  * @retval  GURU2RET  GURU2RET
  */
 //--------------------------------------------------------------
-static RET Guru2Proc_CommErrorJoinCloseMsg( GURU2MAIN_WORK *g2m )
+static RET Guru2Subproc_CommErrorJoinCloseMsg( GURU2MAIN_WORK *g2m )
 {
   Guru2TalkWin_Write( g2m, MSG_COMM_ERROR_JOIN_CLOSE );
   g2m->seq_no = SEQNO_MAIN_MSG_WAIT_NEXT_END;
@@ -2699,7 +2830,7 @@ static RET Guru2Proc_CommErrorJoinCloseMsg( GURU2MAIN_WORK *g2m )
  * @retval  GURU2RET  GURU2RET
  */
 //--------------------------------------------------------------
-static RET Guru2Proc_CommErrorDameTamagoMsg( GURU2MAIN_WORK *g2m )
+static RET Guru2Subproc_CommErrorDameTamagoMsg( GURU2MAIN_WORK *g2m )
 {
   Guru2TalkWin_Write( g2m, MSG_COMM_ERROR_DAME_TAMAGO );
   g2m->seq_no = SEQNO_MAIN_MSG_WAIT_NEXT_END;
@@ -2713,7 +2844,7 @@ static RET Guru2Proc_CommErrorDameTamagoMsg( GURU2MAIN_WORK *g2m )
  * @retval  GURU2RET  GURU2RET
  */
 //--------------------------------------------------------------
-static RET Guru2Proc_MsgWaitNextEnd( GURU2MAIN_WORK *g2m )
+static RET Guru2Subproc_MsgWaitNextEnd( GURU2MAIN_WORK *g2m )
 {
   g2m->frame++;
   
@@ -2733,10 +2864,11 @@ static RET Guru2Proc_MsgWaitNextEnd( GURU2MAIN_WORK *g2m )
  * @retval  GURU2RET GURU2RET
  */
 //--------------------------------------------------------------
-static RET Guru2Proc_EndTimingSyncInit( GURU2MAIN_WORK *g2m )
+static RET Guru2Subproc_EndTimingSyncInit( GURU2MAIN_WORK *g2m )
 {
+  GFL_NETHANDLE* pNet = GFL_NET_HANDLE_GetCurrentHandle();
   if( g2m->force_end_flag == FALSE ){
-    CommTimingSyncStart( COMM_GURU2_TIMINGSYNC_NO );
+    GFL_NET_TimingSyncStart( pNet, COMM_GURU2_TIMINGSYNC_NO );
   }
   
   Guru2TalkWin_Write( g2m, MSG_COMM_WAIT );
@@ -2751,13 +2883,14 @@ static RET Guru2Proc_EndTimingSyncInit( GURU2MAIN_WORK *g2m )
  * @retval  GURU2RET GURU2RET
  */
 //--------------------------------------------------------------
-static RET Guru2Proc_EndTimingSync( GURU2MAIN_WORK *g2m )
+static RET Guru2Subproc_EndTimingSync( GURU2MAIN_WORK *g2m )
 {
+  GFL_NETHANDLE* pNet = GFL_NET_HANDLE_GetCurrentHandle();
   if( g2m->force_end_flag == FALSE ){
-    if( CommIsTimingSync(COMM_GURU2_TIMINGSYNC_NO) ){
+    if( GFL_NET_IsTimingSync( pNet, COMM_GURU2_TIMINGSYNC_NO) ){
       GFL_NET_SetAutoErrorCheck( FALSE );     //切断可能に  
-      CommStateSetLimitNum( 1 );
-      CommStateUnionBconCollectionRestart();
+//      CommStateSetLimitNum( 1 );            // 接続最大人数を1人（ユニオンに戻るため）
+//      CommStateUnionBconCollectionRestart();
       g2m->seq_no = SEQNO_MAIN_END_CONNECT_CHECK;
     }
   }else{
@@ -2768,8 +2901,8 @@ static RET Guru2Proc_EndTimingSync( GURU2MAIN_WORK *g2m )
       
       if( g2m->g2c->comm_psel_oya_end_flag == G2C_OYA_END_FLAG_NON ){
         GFL_NET_SetAutoErrorCheck( FALSE );     //切断可能に  
-        CommStateSetLimitNum( 1 );
-        CommStateUnionBconCollectionRestart();
+//        CommStateSetLimitNum( 1 );            // 接続最大人数を1人（ユニオンに戻るため）
+//        CommStateUnionBconCollectionRestart();
       }
       
       g2m->seq_no = SEQNO_MAIN_END_CONNECT_CHECK;
@@ -2786,9 +2919,9 @@ static RET Guru2Proc_EndTimingSync( GURU2MAIN_WORK *g2m )
  * @retval  GURU2RET  GURU2RET
  */
 //--------------------------------------------------------------
-static RET Guru2Proc_EndConnectCheck( GURU2MAIN_WORK *g2m )
+static RET Guru2Subproc_EndConnectCheck( GURU2MAIN_WORK *g2m )
 {
-  if( CommGetConnectNum() <= 1 ){
+  if( Union_App_GetMemberNum(_get_unionwork(g2m)) <= 1 ){
     g2m->seq_no = SEQNO_MAIN_END_FADEOUT_START;
     return( RET_CONT );
   }
@@ -2803,15 +2936,12 @@ static RET Guru2Proc_EndConnectCheck( GURU2MAIN_WORK *g2m )
  * @retval  GURU2RET  GURU2RET
  */
 //--------------------------------------------------------------
-static RET Guru2Proc_EndFadeOutStart( GURU2MAIN_WORK *g2m )
+static RET Guru2Subproc_EndFadeOutStart( GURU2MAIN_WORK *g2m )
 {
   WIPE_SYS_Start( WIPE_PATTERN_FSAM,
     WIPE_TYPE_FADEOUT, WIPE_TYPE_FADEOUT,
     WIPE_FADE_BLACK, 8, 1, HEAPID_GURU2 );
   
-  if( g2m->before_bgm_no != Snd_NowBgmNoGet() ){
-    Snd_FieldSceneDataSet( NULL, g2m->before_bgm_no );    //SND_SCENE_FIELD + 環境音再生
-  }
   
   g2m->seq_no = SEQNO_MAIN_END_FADEOUT;
   return( RET_NON );
@@ -2824,7 +2954,7 @@ static RET Guru2Proc_EndFadeOutStart( GURU2MAIN_WORK *g2m )
  * @retval  GURU2RET  GURU2RET
  */
 //--------------------------------------------------------------
-static RET Guru2Proc_EndFadeOut( GURU2MAIN_WORK *g2m )
+static RET Guru2Subproc_EndFadeOut( GURU2MAIN_WORK *g2m )
 {
   if( WIPE_SYS_EndCheck() ){
     g2m->seq_no = SEQNO_MAIN_END;
@@ -2841,7 +2971,7 @@ static RET Guru2Proc_EndFadeOut( GURU2MAIN_WORK *g2m )
  * @retval  GURU2RET  GURU2RET
  */
 //--------------------------------------------------------------
-static RET Guru2Proc_End( GURU2MAIN_WORK *g2m )
+static RET Guru2Subproc_End( GURU2MAIN_WORK *g2m )
 {
   return( RET_END );
 }
@@ -2851,86 +2981,86 @@ static RET Guru2Proc_End( GURU2MAIN_WORK *g2m )
 //--------------------------------------------------------------
 static RET (* const DATA_Guru2ProcTbl[SEQNO_MAIN_MAX])( GURU2MAIN_WORK *g2m ) =
 {
-  Guru2Proc_Init,
-  Guru2Proc_FadeInWait,
+  Guru2Subproc_Init,
+  Guru2Subproc_FadeInWait,
   
-  Guru2Proc_OyaSignalJoinWait,
-  Guru2Proc_OyaSendJoinClose,
-  Guru2Proc_OyaConnectNumCheck,
-  Guru2Proc_OyaSendPlayMax,
-  Guru2Proc_OyaSendPlayNo,
-  Guru2Proc_OyaSignalEggAddStart,
+  Guru2Subproc_OyaSignalJoinWait,
+  Guru2Subproc_OyaSendJoinClose,
+  Guru2Subproc_OyaConnectNumCheck,
+  Guru2Subproc_OyaSendPlayMax,
+  Guru2Subproc_OyaSendPlayNo,
+  Guru2Subproc_OyaSignalEggAddStart,
 
-  Guru2Proc_KoSendSignalJoin,
-  Guru2Proc_KoEggAddStartWait,
+  Guru2Subproc_KoSendSignalJoin,
+  Guru2Subproc_KoEggAddStartWait,
   
-  Guru2Proc_EggDataSendInit,
-  Guru2Proc_EggDataSendTimingWait,
-  Guru2Proc_EggDataTradePosSend,
-  Guru2Proc_EggDataSend,
-  Guru2Proc_EggDataRecvWait,
+  Guru2Subproc_EggDataSendInit,
+  Guru2Subproc_EggDataSendTimingWait,
+  Guru2Subproc_EggDataTradePosSend,
+  Guru2Subproc_EggDataSend,
+  Guru2Subproc_EggDataRecvWait,
   
-  Guru2Proc_DameTamagoCheckWait,
+  Guru2Subproc_DameTamagoCheckWait,
   
-  Guru2Proc_EggAddInit,
-  Guru2Proc_EggAdd,
-  Guru2Proc_EggAddWait,
-  Guru2Proc_EggAddEndWait,
+  Guru2Subproc_EggAddInit,
+  Guru2Subproc_EggAdd,
+  Guru2Subproc_EggAddWait,
+  Guru2Subproc_EggAddEndWait,
   
-  Guru2Proc_SendGameStartFlag,
-  Guru2Proc_RecvGameStartFlag,
+  Guru2Subproc_SendGameStartFlag,
+  Guru2Subproc_RecvGameStartFlag,
   
   #ifdef DEBUG_DISP_CHECK
-  DEBUG_Guru2Proc_DispCheck,
+  DEBUG_Guru2Subproc_DispCheck,
   #endif
   
-  Guru2Proc_CountDownBeforeTimingInit,
-  Guru2Proc_CountDownBeforeTimingWait,
-  Guru2Proc_CountDownInit,
-  Guru2Proc_CountDown,
+  Guru2Subproc_CountDownBeforeTimingInit,
+  Guru2Subproc_CountDownBeforeTimingWait,
+  Guru2Subproc_CountDownInit,
+  Guru2Subproc_CountDown,
   
-  Guru2Proc_GameInit,
-  Guru2Proc_GameOya,
-  Guru2Proc_GameKo,
+  Guru2Subproc_GameInit,
+  Guru2Subproc_GameOya,
+  Guru2Subproc_GameKo,
   
-  Guru2Proc_GameEndInit,
-  Guru2Proc_GameEndErrorRotate,
-  Guru2Proc_GameEndLastRotate,
-  Guru2Proc_GameEndTimingInit,
-  Guru2Proc_GameEndTimingWait,
-  Guru2Proc_OyaGameEndDataSend,
-  Guru2Proc_KoGameEndDataRecv,
+  Guru2Subproc_GameEndInit,
+  Guru2Subproc_GameEndErrorRotate,
+  Guru2Subproc_GameEndLastRotate,
+  Guru2Subproc_GameEndTimingInit,
+  Guru2Subproc_GameEndTimingWait,
+  Guru2Subproc_OyaGameEndDataSend,
+  Guru2Subproc_KoGameEndDataRecv,
   
-  Guru2Proc_ResultInit,
-  Guru2Proc_ResultNameWait,
-  Guru2Proc_ResultMsgWait,
+  Guru2Subproc_ResultInit,
+  Guru2Subproc_ResultNameWait,
+  Guru2Subproc_ResultMsgWait,
   
-  Guru2Proc_OmakeAreaCheck,
-  Guru2Proc_OmakeAreaMsgWait,
-  Guru2Proc_OmakeAreaErrorMsgStartWait,
-  Guru2Proc_OmakeAreaErrorMsgWait,
+  Guru2Subproc_OmakeAreaCheck,
+  Guru2Subproc_OmakeAreaMsgWait,
+  Guru2Subproc_OmakeAreaErrorMsgStartWait,
+  Guru2Subproc_OmakeAreaErrorMsgWait,
   
-  Guru2Proc_SaveBeforeTimingInit,
-  Guru2Proc_SaveBeforeTimingWait,
-  Guru2Proc_Save,
+  Guru2Subproc_SaveBeforeTimingInit,
+  Guru2Subproc_SaveBeforeTimingWait,
+  Guru2Subproc_Save,
   
   #if 0
-  Guru2Proc_CommErrorMsg,
-  Guru2Proc_CommErrorMember,
-  Guru2Proc_CommErrorOyaCancelMsg,
-  Guru2Proc_CommErrorJoinCloseMsg,
+  Guru2Subproc_CommErrorMsg,
+  Guru2Subproc_CommErrorMember,
+  Guru2Subproc_CommErrorOyaCancelMsg,
+  Guru2Subproc_CommErrorJoinCloseMsg,
   #endif
-  Guru2Proc_CommErrorDameTamagoMsg,
+  Guru2Subproc_CommErrorDameTamagoMsg,
   
-  Guru2Proc_MsgWaitNextEnd,
+  Guru2Subproc_MsgWaitNextEnd,
   
-  Guru2Proc_EndTimingSyncInit,
-  Guru2Proc_EndTimingSync,
-  Guru2Proc_EndConnectCheck,
+  Guru2Subproc_EndTimingSyncInit,
+  Guru2Subproc_EndTimingSync,
+  Guru2Subproc_EndConnectCheck,
   
-  Guru2Proc_EndFadeOutStart,
-  Guru2Proc_EndFadeOut,
-  Guru2Proc_End,
+  Guru2Subproc_EndFadeOutStart,
+  Guru2Subproc_EndFadeOut,
+  Guru2Subproc_End,
 };
 
 //==============================================================================
@@ -2945,7 +3075,7 @@ static RET (* const DATA_Guru2ProcTbl[SEQNO_MAIN_MAX])( GURU2MAIN_WORK *g2m ) =
 //--------------------------------------------------------------
 static void guru2_VBlankFunc( GFL_TCB *tcb, void * work )
 {
-  GURU2MAIN_WORK *g2m = wk;
+  GURU2MAIN_WORK *g2m = work;
   
   PaletteFadeTrans( g2m->pfd );
 
@@ -2968,7 +3098,7 @@ static void guru2_DrawInit( GURU2MAIN_WORK *g2m )
 {
   guru2_DispInit( g2m );      //画面初期化
   guru2_3DDrawInit( g2m );    //3D描画初期化
-  guru2_CameraInit( g2m );    //カメラ初期化
+//  guru2_CameraInit( g2m );    //カメラ初期化
   guru2_BGInit( g2m );      //BG初期化
   guru2_PlttFadeInit( g2m );    //パレットフェード初期化
   guru2_ClActInit( g2m );     //セルアクター初期化
@@ -3007,10 +3137,11 @@ static void guru2_DrawDelete( GURU2MAIN_WORK *g2m )
 static void guru2_DrawProc( GURU2MAIN_WORK *g2m )
 {
   //----3D描画
-  GF_G3X_Reset();
+  GFL_G3D_DRAW_Start();
   
   //カメラ設定
-  GFC_CameraLookAt();
+  GFL_G3D_CAMERA_Switching( g2m->camera.gf_camera );
+  GFL_G3D_DRAW_SetLookAt();
   
   //ライト設定
   NNS_G3dGlbLightVector( 0, 0, -FX32_ONE, 0 );
@@ -3026,10 +3157,13 @@ static void guru2_DrawProc( GURU2MAIN_WORK *g2m )
   EggAct_Draw( g2m );
   
   //ジオメトリ＆レンダリングエンジン関連メモリのスワップ
-  GF_G3_RequestSwapBuffers(GX_SORTMODE_AUTO, GX_BUFFERMODE_Z);  
+  GFL_G3D_DRAW_End();
   
   //----2D描画
   GFL_CLACT_SYS_Main();
+
+  PRINTSYS_QUE_Main( g2m->msgwork.printQue );
+  
 }
 
 //==============================================================================
@@ -3046,8 +3180,8 @@ static const GFL_DISP_VRAM Guru2DispVramDat = {       //ディスプレイ　バンク初期
     GX_VRAM_SUB_OBJ_16_I,         // サブ2DエンジンのOBJ
     GX_VRAM_SUB_OBJEXTPLTT_NONE,  // サブ2DエンジンのOBJ拡張パレット
     GX_VRAM_TEX_0_A,              // テクスチャイメージスロット
-    GX_VRAM_TEXPLTT_0_G           // テクスチャパレットスロット
-    GX_OBJVRAMMODE_CHAR_1D_32K,   // メイン面OBJVRAMサイズ
+    GX_VRAM_TEXPLTT_0_G,          // テクスチャパレットスロット
+    GX_OBJVRAMMODE_CHAR_1D_64K,   // メイン面OBJVRAMサイズ
     GX_OBJVRAMMODE_CHAR_1D_32K,   // サブ面OBJVRAMサイズ
     
 };
@@ -3074,32 +3208,27 @@ static void guru2_DispInit( GURU2MAIN_WORK *g2m )
 //--------------------------------------------------------------
 static void guru2_DispON( GURU2MAIN_WORK *g2m )
 {
-  GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG0, VISIBLE_ON );
-  GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG1, VISIBLE_ON );
-  GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG2, VISIBLE_ON );
-  GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG3, VISIBLE_ON );
-  GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
-  GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG0, VISIBLE_OFF );
-  GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG1, VISIBLE_OFF );
-  GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG2, VISIBLE_ON );
-  GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG3, VISIBLE_ON );
+
+  GFL_BG_SetVisible( GFL_BG_FRAME0_M, VISIBLE_ON );
+  GFL_BG_SetVisible( GFL_BG_FRAME1_M, VISIBLE_ON );
+  GFL_BG_SetVisible( GFL_BG_FRAME2_M, VISIBLE_ON );
+  GFL_BG_SetVisible( GFL_BG_FRAME3_M, VISIBLE_ON );
+  GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_OFF );
+  GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_OFF );
+  GFL_BG_SetVisible( GFL_BG_FRAME2_S, VISIBLE_ON );
+  GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_ON );
+
+  GFL_DISP_GX_SetVisibleControl(  GX_PLANEMASK_OBJ, VISIBLE_ON );
   GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
   
+  // ポリゴン面のBGプライオリティを設定
   G2_SetBG0Priority( 1 );
-  G2_SetBG1Priority( 0 );
-  G2_SetBG2Priority( 2 );
-  G2_SetBG3Priority( 3 );
-  G2S_SetBG0Priority( 0 );
-  G2S_SetBG1Priority( 1 );
-  G2S_SetBG2Priority( 2 );
-  G2S_SetBG3Priority( 3 );
   
-  { //アルファ変更
-    G2_SetBlendAlpha(
-      GX_BLEND_PLANEMASK_BG2,
-      GX_BLEND_PLANEMASK_BG3|GX_BLEND_PLANEMASK_BD,
-      11, 10 );
-  }
+  //アルファ変更
+  G2_SetBlendAlpha(
+    GX_BLEND_PLANEMASK_BG2,
+    GX_BLEND_PLANEMASK_BG3|GX_BLEND_PLANEMASK_BD,
+    11, 10 );
 }
 
 //--------------------------------------------------------------
@@ -3111,15 +3240,16 @@ static void guru2_DispON( GURU2MAIN_WORK *g2m )
 //--------------------------------------------------------------
 static void guru2_DispOFF( GURU2MAIN_WORK *g2m )
 {
-  GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG0, VISIBLE_OFF );
-  GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG1, VISIBLE_OFF );
-  GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG2, VISIBLE_OFF );
-  GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG3, VISIBLE_OFF );
-  GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_OFF );
-  GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG0, VISIBLE_OFF );
-  GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG1, VISIBLE_OFF );
-  GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG2, VISIBLE_OFF );
-  GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG3, VISIBLE_OFF );
+  GFL_BG_SetVisible( GFL_BG_FRAME0_M, VISIBLE_OFF );
+  GFL_BG_SetVisible( GFL_BG_FRAME1_M, VISIBLE_OFF );
+  GFL_BG_SetVisible( GFL_BG_FRAME2_M, VISIBLE_OFF );
+  GFL_BG_SetVisible( GFL_BG_FRAME3_M, VISIBLE_OFF );
+  GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_OFF );
+  GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_OFF );
+  GFL_BG_SetVisible( GFL_BG_FRAME2_S, VISIBLE_OFF );
+  GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_OFF );
+  
+  GFL_DISP_GX_SetVisibleControl(  GX_PLANEMASK_OBJ, VISIBLE_OFF );
   GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_OFF );
 }
 
@@ -3127,6 +3257,43 @@ static void guru2_DispOFF( GURU2MAIN_WORK *g2m )
 //==============================================================================
 //  3D描画
 //==============================================================================
+
+#define GURU2_EDGE_COLOR  GX_RGB( EDGE_COLOR_R, EDGE_COLOR_G, EDGE_COLOR_B )
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief G3Dシステムに渡す３D初期化関数群
+ *
+ * @param   none    
+ */
+//----------------------------------------------------------------------------------
+static void _g3d_setup( void )
+{
+  // エッジマーキング用
+  static  const GXRgb edge_color_table[8]=
+  { GURU2_EDGE_COLOR, GURU2_EDGE_COLOR, GURU2_EDGE_COLOR, GURU2_EDGE_COLOR, 
+    GURU2_EDGE_COLOR, GURU2_EDGE_COLOR, GURU2_EDGE_COLOR, GURU2_EDGE_COLOR, };
+
+  G3X_SetShading( GX_SHADING_TOON );  //シェード
+  G3X_AntiAlias(  TRUE );               //アンチエイリアス
+  G3X_AlphaTest(  FALSE, 0 );          //アルファテスト　
+  G3X_AlphaBlend( TRUE );             //アルファブレンド
+  
+  G3X_EdgeMarking( TRUE );            // エッジマーキング設定
+  G3X_SetEdgeColorTable( edge_color_table );
+
+  G3X_SetClearColor(                  //クリアカラー
+    GX_RGB(CLEAR_COLOR_R,CLEAR_COLOR_G,CLEAR_COLOR_B),
+    0,                    //クリアカラーアルファブレンド値
+    0x7fff,               //クリアカラーデプス値
+    63,                   //アトリビュートバッファポリゴンID初期値
+    FALSE );              //アトリビュートバッファフォグON,OFF
+
+ 
+  G3_ViewPort( 0, 0, 255, 191 );       //ビューポート
+
+}
+
 //--------------------------------------------------------------
 /**
  * 3D描画初期化
@@ -3137,45 +3304,37 @@ static void guru2_DispOFF( GURU2MAIN_WORK *g2m )
 static void guru2_3DDrawInit( GURU2MAIN_WORK *g2m )
 {
   int i;
+  CAMERAWORK *cm = &g2m->camera;
     
-  NNS_G3dInit();            //3Dエンジン初期化
-    G3X_InitMtxStack();         //マトリクス初期化
+//  NNS_G3dInit();            //3Dエンジン初期化
+//  G3X_InitMtxStack();         //マトリクス初期化
+    //レンダリングエンジンへのスワップ
+//  G3_SwapBuffers( GX_SORTMODE_AUTO, GX_BUFFERMODE_W );
+    //テクスチャVRAMマネージャ初期化
+//  GF_G3D_InitFrmTexVramManager( 1, TRUE );
+    //パレットVRAMマネージャ初期化
+    //パレットRAM=0x4000=16kb,VRAMマネージャをデフォルトで使用
+//  GF_G3D_InitFrmPlttVramManager(0x4000, TRUE);
+
+  GFL_G3D_Init( GFL_G3D_VMANLNK, GFL_G3D_TEX128K, GFL_G3D_VMANLNK, 
+                GFL_G3D_PLT80K,  0, HEAPID_GURU2, _g3d_setup );
   
-  G3X_SetShading( GX_SHADING_TOON );  //シェード
-  G3X_AntiAlias( TRUE);       //アンチエイリアス
-  G3X_AlphaTest( FALSE, 0 );      //アルファテスト　
-  G3X_AlphaBlend( TRUE );       //アルファブレンド
+  //GF_G3_RequestSwapBuffers(GX_SORTMODE_AUTO, GX_BUFFERMODE_Z);  
+  GFL_G3D_SetSystemSwapBufferMode( GX_SORTMODE_AUTO, GX_BUFFERMODE_Z );
   
-  G3X_EdgeMarking( TRUE );
-                    //エッジ作成
-  for( i = 0; i < EDGE_COLOR_MAX; i++ ){
-    g2m->edge_color_tbl[i] =
-      GX_RGB( EDGE_COLOR_R, EDGE_COLOR_G, EDGE_COLOR_B );
+
+  //カメラ設定
+  { 
+    static const VecFx32 cam_pos    = { 0,0,0};
+    static const VecFx32 cam_target = { CAMERA_TARGET_X,CAMERA_TARGET_Y,CAMERA_TARGET_Z};
+    cm->gf_camera = GFL_G3D_CAMERA_CreateDefault( &cam_pos, &cam_target, HEAPID_GURU2 );
+    
+    GFL_G3D_CAMERA_Switching( cm->gf_camera );
   }
-  
-  G3X_SetEdgeColorTable( g2m->edge_color_tbl );
-  
-    G3X_SetClearColor(    //クリアカラー
-    GX_RGB(CLEAR_COLOR_R,CLEAR_COLOR_G,CLEAR_COLOR_B),
-    0,          //クリアカラーアルファブレンド値
-    0x7fff,       //クリアカラーデプス値
-    63,         //アトリビュートバッファポリゴンID初期値
-    FALSE );      //アトリビュートバッファフォグON,OFF
-  
-  //レンダリングエンジンへのスワップ
-    G3_SwapBuffers( GX_SORTMODE_AUTO, GX_BUFFERMODE_W );
-  
-  //ビューポート
-    G3_ViewPort( 0, 0, 255, 191 );
-  
-  //テクスチャVRAMマネージャ初期化
-  //VRAMスロット1, VRAMマネージャをデフォルトで使用
-  GF_G3D_InitFrmTexVramManager( 1, TRUE );
-  
-  //パレットVRAMマネージャ初期化
-  //パレットRAM=0x4000=16kb,VRAMマネージャをデフォルトで使用
-  GF_G3D_InitFrmPlttVramManager(0x4000, TRUE);
+
 }
+
+
 
 //==============================================================================
 //  BG
@@ -3190,6 +3349,7 @@ static void guru2_3DDrawInit( GURU2MAIN_WORK *g2m )
 static void guru2_BGInit( GURU2MAIN_WORK *g2m )
 {
   GFL_BG_Init( HEAPID_GURU2 );
+
   GX_SetDispSelect( GX_DISP_SELECT_MAIN_SUB );
   
   { //BG初期化
@@ -3202,11 +3362,11 @@ static void guru2_BGInit( GURU2MAIN_WORK *g2m )
   }
   
   { //main BG1  会話ウィンドウ
-    GF_BGL_BGCNT_HEADER bg_cnt_header = {
+    GFL_BG_BGCNT_HEADER bg_cnt_header = {
       0, 0, 0x800, 0,
       GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
       GX_BG_SCRBASE_0x0000, GX_BG_CHARBASE_0x04000,
-      GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
+      GFL_BG_CHRSIZ_256x128,GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
     };
     GFL_BG_SetBGControl(
        GFL_BG_FRAME1_M, &bg_cnt_header, GFL_BG_MODE_TEXT );
@@ -3215,11 +3375,11 @@ static void guru2_BGInit( GURU2MAIN_WORK *g2m )
   }
     
   { //main BG2  背景その1
-    GF_BGL_BGCNT_HEADER bg_cnt_header = {
+    GFL_BG_BGCNT_HEADER bg_cnt_header = {
       0, 0, 0x800, 0,
       GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
       GX_BG_SCRBASE_0x0800, GX_BG_CHARBASE_0x0c000,
-      GX_BG_EXTPLTT_01, 2, 0, 0, FALSE
+      GFL_BG_CHRSIZ_256x128,GX_BG_EXTPLTT_01, 2, 0, 0, FALSE
     };
     GFL_BG_SetBGControl(
        GFL_BG_FRAME2_M, &bg_cnt_header, GFL_BG_MODE_TEXT );
@@ -3227,21 +3387,21 @@ static void guru2_BGInit( GURU2MAIN_WORK *g2m )
   }
   
   { //main BG3 背景その２
-    GF_BGL_BGCNT_HEADER bg_cnt_header = {
+    GFL_BG_BGCNT_HEADER bg_cnt_header = {
       0, 0, 0x800, 0,
       GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
       GX_BG_SCRBASE_0x1000, GX_BG_CHARBASE_0x0c000,
-      GX_BG_EXTPLTT_01, 3, 0, 0, FALSE
+      GFL_BG_CHRSIZ_256x128,GX_BG_EXTPLTT_01, 3, 0, 0, FALSE
     };
     GFL_BG_SetBGControl( GFL_BG_FRAME3_M, &bg_cnt_header, GFL_BG_MODE_TEXT );
     GFL_BG_ClearScreen(  GFL_BG_FRAME3_M );
   }
   
   { //sub BG2　ボタン
-    GF_BGL_BGCNT_HEADER bg_cnt_header = {
+    GFL_BG_BGCNT_HEADER bg_cnt_header = {
       0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
       GX_BG_SCRBASE_0x1000, GX_BG_CHARBASE_0x14000, GX_BG_EXTPLTT_01,
-      2, 0, 0, FALSE
+      GFL_BG_CHRSIZ_256x128,2, 0, 0, FALSE
     };
     GFL_BG_SetBGControl(
        GFL_BG_FRAME2_S, &bg_cnt_header, GFL_BG_MODE_TEXT );
@@ -3249,10 +3409,10 @@ static void guru2_BGInit( GURU2MAIN_WORK *g2m )
   }
   
   { //sub BG3　ボタン背景
-    GF_BGL_BGCNT_HEADER bg_cnt_header = {
+    GFL_BG_BGCNT_HEADER bg_cnt_header = {
       0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
       GX_BG_SCRBASE_0x1800, GX_BG_CHARBASE_0x1c000, GX_BG_EXTPLTT_01,
-      3, 0, 0, FALSE
+      GFL_BG_CHRSIZ_256x128,3, 0, 0, FALSE
     };
     GFL_BG_SetBGControl( GFL_BG_FRAME3_S, &bg_cnt_header, GFL_BG_MODE_TEXT );
     GFL_BG_ClearScreen(  GFL_BG_FRAME3_S );
@@ -3428,10 +3588,10 @@ static void guru2_PlttFadeInit( GURU2MAIN_WORK *g2m )
 {
   g2m->pfd = PaletteFadeInit( HEAPID_GURU2 );
   PaletteTrans_AutoSet(g2m->pfd,TRUE);
-  PaletteFadeWorkAllocSet(g2m->pfd,FADE_MAIN_BG,0x200,HEAPID_GURU2);
-  PaletteFadeWorkAllocSet(g2m->pfd,FADE_MAIN_OBJ,0x200,HEAPID_GURU2);
-  PaletteFadeWorkAllocSet(g2m->pfd,FADE_SUB_BG,0x200,HEAPID_GURU2);
-  PaletteFadeWorkAllocSet(g2m->pfd,FADE_SUB_OBJ,0x200,HEAPID_GURU2);
+  PaletteFadeWorkAllocSet( g2m->pfd, FADE_MAIN_BG, 0x200, HEAPID_GURU2);
+  PaletteFadeWorkAllocSet( g2m->pfd, FADE_MAIN_OBJ,0x200, HEAPID_GURU2);
+  PaletteFadeWorkAllocSet( g2m->pfd, FADE_SUB_BG,  0x200, HEAPID_GURU2);
+  PaletteFadeWorkAllocSet( g2m->pfd, FADE_SUB_OBJ, 0x200, HEAPID_GURU2);
 }
 
 //--------------------------------------------------------------
@@ -3443,11 +3603,11 @@ static void guru2_PlttFadeInit( GURU2MAIN_WORK *g2m )
 //--------------------------------------------------------------
 static void guru2_PlttFadeDelete( GURU2MAIN_WORK *g2m )
 {
-  PaletteFadeWorkAllocFree(g2m->pfd, FADE_MAIN_BG);
-  PaletteFadeWorkAllocFree(g2m->pfd, FADE_MAIN_OBJ);
-  PaletteFadeWorkAllocFree(g2m->pfd, FADE_SUB_BG);
-  PaletteFadeWorkAllocFree(g2m->pfd, FADE_SUB_OBJ);
-  PaletteFadeFree(g2m->pfd);  
+  PaletteFadeWorkAllocFree( g2m->pfd, FADE_MAIN_BG  );
+  PaletteFadeWorkAllocFree( g2m->pfd, FADE_MAIN_OBJ );
+  PaletteFadeWorkAllocFree( g2m->pfd, FADE_SUB_BG   );
+  PaletteFadeWorkAllocFree( g2m->pfd, FADE_SUB_OBJ  );
+  PaletteFadeFree( g2m->pfd );  
 }
 
 //--------------------------------------------------------------
@@ -3475,40 +3635,9 @@ static void Guru2PlttFade_BtnFade( GURU2MAIN_WORK *g2m, u32 evy )
 //--------------------------------------------------------------
 static void guru2_ClActInit( GURU2MAIN_WORK *g2m )
 {
-  { //セルアクター初期化
-    const TCATS_OAM_INIT ED_OamInit = {
-      0, 128, 0, 32,
-      0, 128, 0, 32,
-    };
-    const TCATS_CHAR_MANAGER_MAKE ED_Ccmm = {
-      48 + 48,      ///< ID管理 main + sub
-      1024 * 0x40,    ///< 64k
-      512 * 0x20,     ///< 32k
-      GX_OBJVRAMMODE_CHAR_1D_64K,
-      GX_OBJVRAMMODE_CHAR_1D_32K
-    };
-    
-    g2m->csp = CATS_AllocMemory( HEAPID_GURU2 );
-    CATS_SystemInit( g2m->csp, &ED_OamInit, &ED_Ccmm, 16+16);
-  }
-  
-  { //セルリソースマネージャー初期化
-    BOOL active;
-    const TCATS_RESOURCE_NUM_LIST ED_ResList = {
-      48 + 48,  ///< キャラ登録数   main + sub
-      16 + 16,  ///< パレット登録数 main + sub
-      64,     ///< セル
-      64,     ///< セルアニメ
-      16,     ///< マルチセル
-      16,     ///< マルチセルアニメ
-    };
-    
-    g2m->crp = CATS_ResourceCreate( g2m->csp );
-    active   = CATS_ClactSetInit( g2m->csp, g2m->crp, 255 );
-    GF_ASSERT(active);
-    active  = CATS_ResourceManagerInit( g2m->csp, g2m->crp, &ED_ResList );
-    GF_ASSERT(active);
-  }
+  // セルアクターシステム開始
+  GFL_CLACT_SYS_Create( &GFL_CLSYSINIT_DEF_DIVSCREEN, &Guru2DispVramDat, HEAPID_GURU2 );
+
 }
 
 //--------------------------------------------------------------
@@ -3521,39 +3650,53 @@ static void guru2_ClActInit( GURU2MAIN_WORK *g2m )
 //--------------------------------------------------------------
 static void guru2_ClActResLoad( GURU2MAIN_WORK *g2m )
 {
-  CATS_SYS_PTR csp = g2m->csp;
-  CATS_RES_PTR crp = g2m->crp;
   PALETTE_FADE_PTR pfd = g2m->pfd;
   ARCHANDLE *hdl = g2m->arc_handle;
   
   //通信アイコン用パレット領域を先に確保
-  {
-    CLACT_U_WmIcon_SetReserveAreaPlttManager( NNS_G2D_VRAM_TYPE_2DMAIN );
-  }
+//  {
+//    CLACT_U_WmIcon_SetReserveAreaPlttManager( NNS_G2D_VRAM_TYPE_2DMAIN );
+//  }
   
   //卵
-  { //まぜまぜ流用←するのやめた 080718 iwasawa
+  { 
     ARCHANDLE *n_hdl;
-    n_hdl = GFL_ARC_OpenDataHandle( ARC_GURU2_2D_GRA, HEAPID_GURU2 );
+    n_hdl = GFL_ARC_OpenDataHandle( ARCID_GURU2_2D, HEAPID_GURU2 );
     
-    CATS_LoadResourceCharArcH( csp, crp,
-      n_hdl, NARC_guru2_2d_cook_s_obj0_ncgr, FALSE,
-      NNS_G2D_VRAM_TYPE_2DMAIN, EDID_CDOWN_NCGR );
-    CATS_LoadResourcePlttWorkArcH( pfd, FADE_MAIN_OBJ, csp, crp,
-      n_hdl, NARC_guru2_2d_cook_s_obj0_nclr,
-      FALSE, 1, NNS_G2D_VRAM_TYPE_2DMAIN, EDID_CDOWN_NCLR );
-    CATS_LoadResourceCellArcH( csp, crp, n_hdl,
-      NARC_guru2_2d_cook_s_obj0_ncer, FALSE, EDID_CDOWN_NCER );
-    CATS_LoadResourceCellAnmArcH( csp, crp, n_hdl,
-      NARC_guru2_2d_cook_s_obj0_nanr, FALSE, EDID_CDOWN_NANR);
+    g2m->resobj[GURU2MAIN_CLACT_RES_CHR] = GFL_CLGRP_CGR_Register( 
+                                              n_hdl, NARC_guru2_2d_cook_s_obj0_NCGR, 0, 
+                                              CLSYS_DRAW_MAIN, HEAPID_GURU2 );
+
+    g2m->resobj[GURU2MAIN_CLACT_RES_PLTT] =GFL_CLGRP_PLTT_Register( 
+                                              n_hdl, NARC_guru2_2d_cook_s_obj0_NCLR,
+                                              CLSYS_DRAW_MAIN, 0, HEAPID_GURU2 );
+
+    g2m->resobj[GURU2MAIN_CLACT_RES_CELL] =GFL_CLGRP_CELLANIM_Register( 
+                                              n_hdl, 
+                                              NARC_guru2_2d_cook_s_obj0_NCER, 
+                                              NARC_guru2_2d_cook_s_obj0_NANR, 
+                                              HEAPID_GURU2 );
+    
+//    CATS_LoadResourceCharArcH( csp, crp,
+//      n_hdl, NARC_guru2_2d_cook_s_obj0_ncgr, FALSE,
+//      NNS_G2D_VRAM_TYPE_2DMAIN, EDID_CDOWN_NCGR );
+//    CATS_LoadResourcePlttWorkArcH( pfd, FADE_MAIN_OBJ, csp, crp,
+//      n_hdl, NARC_guru2_2d_cook_s_obj0_nclr,
+//      FALSE, 1, NNS_G2D_VRAM_TYPE_2DMAIN, EDID_CDOWN_NCLR );
+//    CATS_LoadResourceCellArcH( csp, crp, n_hdl,
+//      NARC_guru2_2d_cook_s_obj0_ncer, FALSE, EDID_CDOWN_NCER );
+//    CATS_LoadResourceCellAnmArcH( csp, crp, n_hdl,
+//      NARC_guru2_2d_cook_s_obj0_nanr, FALSE, EDID_CDOWN_NANR);
     
     GFL_ARC_CloseDataHandle( n_hdl );
   }
   
   { //アイコンセット
-    WirelessIconEasy();
+//    WirelessIconEasy();
+    GFL_NET_WirelessIconEasy_DefaultLCD();
   }
-  
+
+#ifdef WMICON_PALETTE  
   { //パレットフェードに通信アイコンパレット転送
     NNSG2dPaletteData *palData;
     void *pal = WirelessIconPlttResGet( HEAPID_GURU2 );
@@ -3562,6 +3705,7 @@ static void guru2_ClActResLoad( GURU2MAIN_WORK *g2m )
       FADE_MAIN_OBJ, WM_ICON_PALETTE_NO*16, 32 );
     GFL_HEAP_FreeMemory( pal );
   }
+#endif
 }
 
 //--------------------------------------------------------------
@@ -3573,24 +3717,22 @@ static void guru2_ClActResLoad( GURU2MAIN_WORK *g2m )
 //--------------------------------------------------------------
 static void guru2_ClActDelete( GURU2MAIN_WORK *g2m )
 {
-  CATS_ResourceDestructor_S( g2m->csp, g2m->crp );
-  CATS_FreeMemory( g2m->csp );
+//  CATS_ResourceDestructor_S( g2m->csp, g2m->crp );
+//  CATS_FreeMemory( g2m->csp );
+
+  // キャラ破棄
+  GFL_CLGRP_CGR_Release( g2m->resobj[GURU2MAIN_CLACT_RES_CHR] );
+
+  // パレット破棄
+  GFL_CLGRP_PLTT_Release( g2m->resobj[GURU2MAIN_CLACT_RES_PLTT] );
+
+  // セル・アニメ破棄
+  GFL_CLGRP_CELLANIM_Release( g2m->resobj[GURU2MAIN_CLACT_RES_CELL] );
+
+  // セルアクターシステム終了
+  GFL_CLACT_SYS_Delete();
 }
 
-//--------------------------------------------------------------
-/**
- * セルアクター　アクター追加
- * @param g2m GURU2MAIN_WORK
- * @param param TCATS_OBJECT_ADD_PARAM_S
- * @retval  CATS_ACT_PTR CATS_ACT_PTR
- */
-//--------------------------------------------------------------
-static CATS_ACT_PTR Guru2ClAct_Add(
-  GURU2MAIN_WORK *g2m, const TCATS_OBJECT_ADD_PARAM_S *param )
-{
-  CATS_ACT_PTR act = CATS_ObjectAdd_S( g2m->csp, g2m->crp, param );
-  return( act );
-}
 
 //==============================================================================
 //  フォント
@@ -3609,35 +3751,37 @@ static void guru2_TalkWinFontInit( GURU2MAIN_WORK *g2m )
   
   BmpWinFrame_GraphicSet(  BGF_M_KAIWA,
     BGF_CHARNO_MENU, BGF_PANO_MENU_WIN, 0, HEAPID_GURU2 );
-  
-  BmpWinFrame_GraphicSet(
-     BGF_M_KAIWA, BGF_CHARNO_TALK,
-    BGF_PANO_TALK_WIN, g2m->g2p->param.win_type, HEAPID_GURU2 );
 
   PaletteWorkSet_Arc( g2m->pfd,
-    ARC_WINFRAME, TalkWinPalArcGet(g2m->g2p->param.win_type),
+    ARCID_FLDMAP_WINFRAME, NARC_winframe_system_NCLR,
     HEAPID_GURU2, FADE_MAIN_BG, 0x20, BGF_PANO_TALK_WIN * 16 );
+
   PaletteWorkSet_Arc( g2m->pfd,
-    ARC_FONT, NARC_font_talk_ncrl, 
+    ARCID_FONT, NARC_font_default_nclr, 
     HEAPID_GURU2, FADE_MAIN_BG, 0x20, BGF_PANO_MENU_WIN * 16 );
   
-  msg->msgman = MSGMAN_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, 
+  msg->font       = GFL_FONT_Create( ARCID_FONT , NARC_font_large_gftr ,
+                                     GFL_FONT_LOADTYPE_FILE , FALSE , HEAPID_GURU2 );
+  msg->msgman = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, 
                                NARC_message_guru2_dat, HEAPID_GURU2 );
   
   msg->wordset = WORDSET_Create( HEAPID_GURU2 );
+
+  // BMPWIN確保
+  msg->bmpwin_talk = GFL_BMPWIN_Create( BGF_M_KAIWA, 2, 19, 26, 4,
+                                        BGF_PANO_MENU_WIN, GFL_BMP_CHRAREA_GET_B);
   
-  for( i = 0; i < GURU2TALKWIN_MAX; i++ ){
-    GF_BGL_BmpWinAddEx(
-       &msg->bmpwin_talk[i], &DATA_Guru2BmpTalkWinList[i] );
-  }
-  
-  msg->strbuf = STRBUF_Create( STR_BUF_SIZE, HEAPID_GURU2 );
+  msg->strbuf = GFL_STR_CreateBuffer( STR_BUF_SIZE, HEAPID_GURU2 );
   
   for( i = 0; i < G2MEMBER_MAX; i++ ){
     g2m->comm.my_name_buf[i] =
-      STRBUF_Create( PERSON_NAME_SIZE+EOM_SIZE, HEAPID_GURU2 ); 
+      GFL_STR_CreateBuffer( PERSON_NAME_SIZE+EOM_SIZE, HEAPID_GURU2 ); 
   }
   
+  // PrintUtil関連付け
+  PRINT_UTIL_Setup( &msg->printUtilTalk, msg->bmpwin_talk );
+  msg->printQue = PRINTSYS_QUE_Create( HEAPID_GURU2 );
+
   Guru2NameWin_Init( g2m, g2m->g2p->receipt_num );
 }
 
@@ -3653,21 +3797,27 @@ static void guru2_TalkWinFontDelete( GURU2MAIN_WORK *g2m )
   int i;
   MSGWORK *msg = &g2m->msgwork;
   
-  for( i = 0; i < GURU2TALKWIN_MAX; i++ ){
-    GFL_BMPWIN_ClearTransWindow( msg->bmpwin_talk[i] );
-    GFL_BMPWIN_Delete( msg->bmpwin_talk[i] );
-  }
+  GFL_BMPWIN_ClearTransWindow( msg->bmpwin_talk );
+  GFL_BMPWIN_Delete( msg->bmpwin_talk );
   
   Guru2NameWin_Delete( g2m );
   
-  MSGMAN_Delete( msg->msgman );
+  GFL_MSG_Delete( msg->msgman );
   WORDSET_Delete( msg->wordset );
-  STRBUF_Delete( msg->strbuf );
+  GFL_FONT_Delete( msg->font );
+
+  GFL_STR_DeleteBuffer( msg->strbuf );
   
   for( i = 0; i < G2MEMBER_MAX; i++ ){
-    STRBUF_Delete( g2m->comm.my_name_buf[i] );
+    GFL_STR_DeleteBuffer( g2m->comm.my_name_buf[i] );
   }
+  GFL_BMPWIN_Exit();
+
+
 }
+
+
+#define GURU2_DEFAULT_COL  (PRINTSYS_LSB_Make(2,3,0))
 
 //--------------------------------------------------------------
 /**
@@ -3680,20 +3830,21 @@ static void guru2_TalkWinFontDelete( GURU2MAIN_WORK *g2m )
 static void Guru2TalkWin_Write( GURU2MAIN_WORK *g2m, u32 msgno )
 {
   MSGWORK *msg = &g2m->msgwork;
-  GF_BGL_BMPWIN *bmpwin = &msg->bmpwin_talk[GURU2TALK_WIN_TALK];
+  GFL_BMPWIN *bmpwin = msg->bmpwin_talk;
   
-  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(bmpwin), FBMP_COL_WHITE );
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(bmpwin), BMP_COL_WHITE );
   
   BmpWinFrame_Write( bmpwin,
     WINDOW_TRANS_OFF, BGF_CHARNO_TALK, BGF_PANO_TALK_WIN );
   
-  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(bmpwin), FBMP_COL_WHITE );
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(bmpwin), BMP_COL_WHITE );
   
-  MSGMAN_GetString( msg->msgman, msgno, msg->strbuf );
-  GF_STR_PrintSimple( bmpwin,
-    FONT_TALK, msg->strbuf, 0, 0, MSG_NO_PUT, NULL );
+  GFL_MSG_GetString( msg->msgman, msgno, msg->strbuf );
+
+  PRINT_UTIL_PrintColor( &msg->printUtilTalk, msg->printQue, 0,0, 
+                         msg->strbuf, msg->font, GURU2_DEFAULT_COL );
   
-  GFL_BMPWIN_MakeTransWindowVReq( bmpwin );
+  GFL_BMPWIN_MakeTransWindow_VBlank( bmpwin );
 }
 
 //--------------------------------------------------------------
@@ -3709,27 +3860,27 @@ static void Guru2TalkWin_WritePlayer(
 {
   STRBUF *str;
   MSGWORK *msg = &g2m->msgwork;
-  GF_BGL_BMPWIN *bmpwin = &msg->bmpwin_talk[GURU2TALK_WIN_TALK];
+  GFL_BMPWIN *bmpwin = msg->bmpwin_talk;
   
   //文字列生成
   WORDSET_RegisterPlayerName( msg->wordset, 1,
-      CommInfoGetMyStatus(CommGetCurrentID()) );
+      Union_App_GetMystatus( _get_unionwork(g2m), GFL_NET_SystemGetCurrentID()) );
   WORDSET_RegisterPlayerName( msg->wordset, 2, status );
   
-  str = STRBUF_Create( STR_BUF_SIZE, HEAPID_GURU2 );
-  MSGMAN_GetString( msg->msgman, msgno, str );
+  str = GFL_STR_CreateBuffer( STR_BUF_SIZE, HEAPID_GURU2 );
+  GFL_MSG_GetString( msg->msgman, msgno, str );
   WORDSET_ExpandStr( msg->wordset, msg->strbuf, str );
-  STRBUF_Delete( str );
+  GFL_STR_DeleteBuffer( str );
   
   BmpWinFrame_Write( bmpwin,
     WINDOW_TRANS_OFF, BGF_CHARNO_TALK, BGF_PANO_TALK_WIN );
   
-  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(bmpwin), FBMP_COL_WHITE );
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(bmpwin), BMP_COL_WHITE );
   
-  GF_STR_PrintSimple( bmpwin,
-    FONT_TALK, msg->strbuf, 0, 0, MSG_NO_PUT, NULL );
+  PRINT_UTIL_PrintColor( &msg->printUtilTalk, msg->printQue, 0,0, 
+                         msg->strbuf, msg->font, GURU2_DEFAULT_COL );
   
-  GFL_BMPWIN_MakeTransWindowVReq( bmpwin );
+  GFL_BMPWIN_MakeTransWindow_VBlank( bmpwin );
 }
 
 //--------------------------------------------------------------
@@ -3745,25 +3896,25 @@ static void Guru2TalkWin_WriteItem(
 {
   STRBUF *str;
   MSGWORK *msg = &g2m->msgwork;
-  GF_BGL_BMPWIN *bmpwin = &msg->bmpwin_talk[GURU2TALK_WIN_TALK];
+  GFL_BMPWIN *bmpwin = msg->bmpwin_talk;
   
   //文字列生成
   WORDSET_RegisterItemName( msg->wordset, 0, id );
   
-  str = STRBUF_Create( STR_BUF_SIZE, HEAPID_GURU2 );
-  MSGMAN_GetString( msg->msgman, msgno, str );
+  str = GFL_STR_CreateBuffer( STR_BUF_SIZE, HEAPID_GURU2 );
+  GFL_MSG_GetString( msg->msgman, msgno, str );
   WORDSET_ExpandStr( msg->wordset, msg->strbuf, str );
-  STRBUF_Delete( str );
+  GFL_STR_DeleteBuffer( str );
   
   BmpWinFrame_Write( bmpwin,
     WINDOW_TRANS_OFF, BGF_CHARNO_TALK, BGF_PANO_TALK_WIN );
   
-  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(bmpwin), FBMP_COL_WHITE );
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(bmpwin), BMP_COL_WHITE );
   
-  GF_STR_PrintSimple( bmpwin,
-    FONT_TALK, msg->strbuf, 0, 0, MSG_NO_PUT, NULL );
+  PRINT_UTIL_PrintColor( &msg->printUtilTalk, msg->printQue, 0,0, 
+                         msg->strbuf, msg->font, GURU2_DEFAULT_COL );
   
-  GFL_BMPWIN_MakeTransWindowVReq( bmpwin );
+  GFL_BMPWIN_MakeTransWindow_VBlank( bmpwin );
 }
 
 //--------------------------------------------------------------
@@ -3776,11 +3927,11 @@ static void Guru2TalkWin_WriteItem(
 static void Guru2TalkWin_Clear( GURU2MAIN_WORK *g2m )
 {
   MSGWORK *msg = &g2m->msgwork;
-  GF_BGL_BMPWIN *bmpwin = &msg->bmpwin_talk[GURU2TALK_WIN_TALK];
+  GFL_BMPWIN *bmpwin = msg->bmpwin_talk;
   
   BmpWinFrame_Clear( bmpwin, WINDOW_TRANS_OFF );
-  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(bmpwin), FBMP_COL_NULL );
-  GFL_BMPWIN_MakeTransWindowVReq( bmpwin );
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(bmpwin), BMP_COL_NULL );
+  GFL_BMPWIN_MakeTransWindow_VBlank( bmpwin );
 }
 
 //--------------------------------------------------------------
@@ -3802,7 +3953,12 @@ static void Guru2NameWin_Init( GURU2MAIN_WORK *g2m, int max )
   #endif
   
   for( i = 0; i < max; i++ ){
-    GF_BGL_BmpWinAddEx(  &msg->bmpwin_name[i], &bmpdata[i] );
+    msg->bmpwin_name[i] = GFL_BMPWIN_Create( bmpdata[i].frame,
+                                    bmpdata[i].x,   bmpdata[i].y,
+                                    bmpdata[i].w,   bmpdata[i].h, 
+                                    bmpdata[i].pal, GFL_BMP_CHRAREA_GET_B );
+    // 関連付け
+    PRINT_UTIL_Setup( &msg->printUtilName[i], msg->bmpwin_name[i] );
   }
 }
 
@@ -3838,13 +3994,18 @@ static void Guru2NameWin_Write(
   GURU2MAIN_WORK *g2m, STRBUF *name, int no, u32 col )
 {
   MSGWORK *msg = &g2m->msgwork;
-  GF_BGL_BMPWIN *bmp = &msg->bmpwin_name[no];
+  GFL_BMPWIN *bmp = msg->bmpwin_name[no];
   
   BmpWinFrame_Write(
     bmp, WINDOW_TRANS_OFF, BGF_CHARNO_MENU, BGF_PANO_TALK_WIN );
-  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(bmp), FBMP_COL_WHITE );
-  GF_STR_PrintColor( bmp, FONT_SYSTEM, name, 4, 1, MSG_NO_PUT, col, NULL );
-  GFL_BMPWIN_MakeTransWindowVReq( bmp );
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(bmp), BMP_COL_WHITE );
+//  GF_STR_PrintColor( bmp, FONT_SYSTEM, name, 4, 1, MSG_NO_PUT, col, NULL );
+
+  PRINT_UTIL_PrintColor( &msg->printUtilName[no], msg->printQue, 
+                         4, 1, name, msg->font, col );
+
+
+  GFL_BMPWIN_MakeTransWindow_VBlank( bmp );
 }
 
 //--------------------------------------------------------------
@@ -3861,7 +4022,7 @@ static void Guru2NameWin_WriteIDColor(
   GURU2MAIN_WORK *g2m, STRBUF *name, int no, int id )
 {
   u32 col = NAME_COL;
-  if( id == CommGetCurrentID() ){ col = NAME_COL_MINE; }
+  if( id == GFL_NET_SystemGetCurrentID() ){ col = NAME_COL_MINE; }
   Guru2NameWin_Write( g2m, name, no, col );
 }
 
@@ -3875,17 +4036,18 @@ static void Guru2NameWin_WriteIDColor(
 //--------------------------------------------------------------
 static void Guru2NameWin_Clear( GURU2MAIN_WORK *g2m, int no )
 {
-  MSGWORK *msg = &g2m->msgwork;
-  GF_BGL_BMPWIN *bmpwin = &msg->bmpwin_name[no];
+  MSGWORK *msg       = &g2m->msgwork;
+  GFL_BMPWIN *bmpwin = msg->bmpwin_name[no];
   
   BmpWinFrame_Clear( bmpwin, WINDOW_TRANS_OFF );
-  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(bmpwin), FBMP_COL_NULL );
-  GFL_BMPWIN_MakeTransWindowVReq( bmpwin );
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(bmpwin), BMP_COL_NULL );
+  GFL_BMPWIN_MakeTransWindow_VBlank( bmpwin );
 }
 
 //==============================================================================
 //  カメラ
 //==============================================================================
+#if 0
 //--------------------------------------------------------------
 /**
  * カメラ初期化
@@ -3930,6 +4092,7 @@ static void guru2_CameraInit( GURU2MAIN_WORK *g2m )
     GFC_AttachCamera( cm->gf_camera );
   }
 }
+#endif
 
 //--------------------------------------------------------------
 /**
@@ -3941,80 +4104,14 @@ static void guru2_CameraInit( GURU2MAIN_WORK *g2m )
 static void guru2_CameraDelete( GURU2MAIN_WORK *g2m )
 {
   CAMERAWORK *cm = &g2m->camera;
-  GFC_FreeCamera( cm->gf_camera );
+//  GFC_FreeCamera( cm->gf_camera );
+  GFL_G3D_CAMERA_Delete( cm->gf_camera );
 }
 
-//--------------------------------------------------------------
-/**
- * カメラ反映
- * @param
- * @retval
- */
-//--------------------------------------------------------------
-static void guru2_CameraSet( GURU2MAIN_WORK *g2m )
-{
-  CAMERAWORK *cm = &g2m->camera;
-  GFC_BindCameraTarget( &cm->target_pos, cm->gf_camera );
-  GFC_SetCameraAngleRev( &cm->angle, cm->gf_camera );
-  GFC_SetCameraDistance( cm->distance, cm->gf_camera );
-  GFC_SetCameraPerspWay( cm->persp, cm->gf_camera );  
-}
 
 //==============================================================================
 //  タッチパネル
 //==============================================================================
-//--------------------------------------------------------------
-/**
- * タッチパネル処理 
- * @param g2m GURU2MAIN_WORK
- * @retval  nothing
- */
-//--------------------------------------------------------------
-static void guru2_TPProc( GURU2MAIN_WORK *g2m )
-{
-  int prs = 0, i = TP_SYNC - 1;
-  TPWORK *tp = &g2m->touch;
-  
-  GFL_UI_TP_Main( &tp->tp_now, TP_NO_BUFF, 0 );
-  
-  while( i >= 0 ){
-    if( tp->tp_now.TPDataTbl[i].touch == TRUE ){
-      tp->x = tp->tp_now.TPDataTbl[i].x;
-      tp->y = tp->tp_now.TPDataTbl[i].y;
-      prs = 1;
-    }
-    
-    i--;
-  }
-  
-  tp->trg = prs & (prs ^ tp->prs );
-  tp->prs = prs;
-}
-
-//--------------------------------------------------------------
-/**
- * タッチパネル　ボタン範囲チェック
- * @param g2m GURU2MAIN_WORK
- * @retval  BOOL  TRUE=ヒット
- */
-//--------------------------------------------------------------
-static BOOL guru2_TPPosButtonCheck( TPWORK *tp )
-{
-  int sx,sy,ex,ey,x,y;
-  
-  x = tp->x;
-  y = tp->y;
-  sx = TP_BTN_CX - TP_BTN_HSX;
-  sy = TP_BTN_CY - TP_BTN_HSY;
-  ex = TP_BTN_CX + TP_BTN_HSX - 1;
-  ey = TP_BTN_CY + TP_BTN_HSY - 1;
-  
-  if( (y >= sy && y <= ey) && (x >= sx && x <= ex) ){
-    return( TRUE );
-  }
-  
-  return( FALSE );
-}
 
 //--------------------------------------------------------------
 /**
@@ -4025,43 +4122,68 @@ static BOOL guru2_TPPosButtonCheck( TPWORK *tp )
 //--------------------------------------------------------------
 static BOOL Guru2TP_ButtonHitTrgCheck( GURU2MAIN_WORK *g2m )
 {
-  TPWORK *tp = &g2m->touch;
-  
-  if( tp->trg ){
-    if( guru2_TPPosButtonCheck(tp) == TRUE ){
-      return( TRUE );
-    }
+  static const GFL_UI_TP_HITTBL hittbl[]={
+    { GFL_UI_TP_USE_CIRCLE, TP_BTN_CX, TP_BTN_CY, TP_BTN_R },
+    { GFL_UI_TP_HIT_END, 0, 0, 0 },   // 終了データ
+  };
+  u32 ret = GFL_UI_TP_HitTrg( hittbl );
+
+  if(ret!=GFL_UI_TP_HIT_NONE){
+    return TRUE;
   }
-  
-  return( FALSE );
+  return FALSE;
 }
 
-//--------------------------------------------------------------
-/**
- * タッチパネル　ボタン範囲内コンティニューチェック
- * @param g2m GURU2MAIN_WORK
- * @retval  BOOL  TRUE=ヒット
- */
-//--------------------------------------------------------------
-static BOOL Guru2TP_ButtonHitContCheck( GURU2MAIN_WORK *g2m )
-{
-  TPWORK *tp = &g2m->touch;
-  
-  if( tp->prs ){
-    if( guru2_TPPosButtonCheck(tp) == TRUE ){
-      return( TRUE );
-    }
-  }
-  
-  return( FALSE );
-}
 
 //==============================================================================
 //  皿
 //==============================================================================
 //--------------------------------------------------------------
+/// 人数別皿モデルアーカイブID
+//--------------------------------------------------------------
+static const u32 DATA_SaraArcIdxTbl[G2MEMBER_MAX+1] =
+{
+  0,  //0 dummy
+  0,  //1 dummy
+  NARC_guru2_g_panel02_c_nsbmd,
+  NARC_guru2_g_panel03_c_nsbmd,
+  NARC_guru2_g_panel04_c_nsbmd,
+  NARC_guru2_g_panel05_c_nsbmd,
+};
+
+// 皿
+static const GFL_G3D_UTIL_RES res_table_disc2[] = 
+  {  { ARCID_GURU2, NARC_guru2_g_panel02_c_nsbmd, GFL_G3D_UTIL_RESARC },};
+static const GFL_G3D_UTIL_RES res_table_disc3[] = 
+  {  { ARCID_GURU2, NARC_guru2_g_panel03_c_nsbmd, GFL_G3D_UTIL_RESARC },};
+static const GFL_G3D_UTIL_RES res_table_disc4[] = 
+  {  { ARCID_GURU2, NARC_guru2_g_panel04_c_nsbmd, GFL_G3D_UTIL_RESARC },};
+static const GFL_G3D_UTIL_RES res_table_disc5[] = 
+  {  { ARCID_GURU2, NARC_guru2_g_panel05_c_nsbmd, GFL_G3D_UTIL_RESARC },};
+
+static const GFL_G3D_UTIL_OBJ obj_table_disc[] = 
+{
+  {
+    0,    // モデルリソースID
+    0,    // モデルデータID(リソース内部INDEX)
+    0,    // テクスチャリソースID
+    NULL, // アニメ定義
+    0,    // アニメID
+  },
+}; 
+
+static const GFL_G3D_UTIL_SETUP setupDisc[] =
+{
+  { res_table_disc2, 1, obj_table_disc, 1 },
+  { res_table_disc3, 1, obj_table_disc, 1 },
+  { res_table_disc4, 1, obj_table_disc, 1 },
+  { res_table_disc5, 1, obj_table_disc, 1 },
+};
+
+
+//--------------------------------------------------------------
 /**
- * 皿初期化
+ * 皿初期化(接続人数にあわせてモデリング切り替え）
  * @param g2m GURU2MAIN_WORK
  * @retval  nothing
  */
@@ -4077,11 +4199,14 @@ static void Disc_Init( GURU2MAIN_WORK *g2m )
   #ifdef DEBUG_DISC_NO
   no = DEBUG_DISC_NO;
   #endif  
-  idx = DATA_SaraArcIdxTbl[no];
+//  idx = DATA_SaraArcIdxTbl[no];
+//  FRO_MDL_ResSetArcLoad( &disc->rmdl, 0, handle, idx, HEAPID_GURU2, 0 );
+//  FRO_MDL_TexTransBindVTaskAdd( &disc->rmdl );
+
+  disc->unitIndex = GFL_G3D_UTIL_AddUnit( g2m->g3dUtil, &setupDisc[no-2] );
   
-  FRO_MDL_ResSetArcLoad( &disc->rmdl, 0, handle, idx, HEAPID_GURU2, 0 );
-  FRO_MDL_TexTransBindVTaskAdd( &disc->rmdl );
-  FRO_OBJ_InitInMdl( &disc->robj, &disc->rmdl );
+
+//  FRO_OBJ_InitInMdl( &disc->robj, &disc->rmdl );
   
   disc->rotate_fx = NUM_FX32( DISC_ROTATE_Y );
   disc->rotate_draw_offs_fx = DATA_DiscRotateDrawOffset[no];
@@ -4107,7 +4232,9 @@ static void Disc_Init( GURU2MAIN_WORK *g2m )
 static void Disc_Delete( GURU2MAIN_WORK *g2m )
 {
   DISCWORK *disc = &g2m->disc;
-  FRO_MDL_DeleteAll( &disc->rmdl );
+ // FRO_MDL_DeleteAll( &disc->rmdl );
+ GFL_G3D_UTIL_DelUnit( g2m->g3dUtil, disc->unitIndex );
+
 }
 
 //--------------------------------------------------------------
@@ -4142,10 +4269,21 @@ static void Disc_Draw( GURU2MAIN_WORK *g2m )
   DISCWORK *disc = &g2m->disc;
   
 #ifndef DEBUG_DISP_CHECK_VANISH
-  FRO_OBJ_DrawScaleRotate(
-    &disc->robj, &disc->draw_pos, &disc->scale, &disc->rotate );
+//  FRO_OBJ_DrawScaleRotate(
+//    &disc->robj, &disc->draw_pos, &disc->scale, &disc->rotate );
+  GFL_G3D_OBJSTATUS status;
+  GFL_G3D_OBJ* obj = GFL_G3D_UTIL_GetObjHandle( g2m->g3dUtil, disc->unitIndex );
+  
+  VEC_Set( &status.trans, disc->draw_pos.x, disc->draw_pos.y, disc->draw_pos.z );
+  VEC_Set( &status.scale, disc->scale.x, disc->scale.y, disc->scale.z );
+//  MTX_Identity33( &status.scale );
+  GFL_CALC3D_MTX_CreateRot( disc->rotate.x, disc->rotate.y, disc->rotate.z, &status.rotate );
+
+  GFL_G3D_DRAW_DrawObject( obj, &status );
+    
 #endif
 }
+
 
 //--------------------------------------------------------------
 /**
@@ -4162,47 +4300,6 @@ static void Disc_Rotate( DISCWORK *disc, fx32 add )
 
 //==============================================================================
 //  卵
-//==============================================================================
-//--------------------------------------------------------------
-/**
- * 卵　初期化
- * @param g2m GURU2MAIN_WORK
- * @retval  nothing
- */
-//--------------------------------------------------------------
-static void Egg_Init( GURU2MAIN_WORK *g2m )
-{
-  EGGWORK *egg = &g2m->egg;
-  Egg_MdlInit( g2m );
-}
-
-//--------------------------------------------------------------
-/**
- * 卵　削除
- * @param g2m GURU2MAIN_WORK
- * @retval  nothing
- */
-//--------------------------------------------------------------
-static void Egg_Delete( GURU2MAIN_WORK *g2m )
-{
-  int i;
-  EGGACTOR *eact;
-  EGGWORK *egg = &g2m->egg;
-  
-  for( i = 0; i < G2MEMBER_MAX; i++ ){
-    eact = &egg->eact[i];
-/*  EGG_3D_USE
-    if( eact->cap != NULL ){
-      CATS_ActorPointerDelete_S( eact->cap );
-    }
-*/
-  }
-  
-  Egg_MdlDelete( g2m );
-}
-
-//==============================================================================
-//  卵グラフィック
 //==============================================================================
 static const u32 DATA_EggCursorMdlArcIDTbl[G2MEMBER_MAX] =
 {
@@ -4222,20 +4319,106 @@ static const u32 DATA_EggCursorAnmArcIDTbl[G2MEMBER_MAX] =
   NARC_guru2_g_egg_cursor5_nsbca,
 };
 
+static const GFL_G3D_UTIL_RES res_table_g_egg[] = 
+{  { ARCID_GURU2, NARC_guru2_g_egg_nsbmd, GFL_G3D_UTIL_RESARC },  };
+static const GFL_G3D_UTIL_OBJ obj_table_g_egg[] = 
+{
+  {
+    0,    // モデルリソースID
+    0,    // モデルデータID(リソース内部INDEX)
+    0,    // テクスチャリソースID
+    NULL, // アニメテーブル(複数指定のため)
+    0,    // アニメリソース数
+  },
+}; 
+static const GFL_G3D_UTIL_RES res_table_egg_kage[] = 
+{  { ARCID_GURU2, NARC_guru2_g_egg_kage_nsbmd, GFL_G3D_UTIL_RESARC },  };
+static const GFL_G3D_UTIL_OBJ obj_table_egg_kage[] = 
+{
+  {
+    0,    // モデルリソースID
+    0,    // モデルデータID(リソース内部INDEX)
+    0,    // テクスチャリソースID
+    NULL, // アニメテーブル(複数指定のため)
+    0,    // アニメリソース数
+  },
+}; 
+
+// タマゴリソースセットアップ
+static const GFL_G3D_UTIL_SETUP setupEgg[] =
+{
+  { res_table_g_egg,    1, obj_table_g_egg,    1 },
+  { res_table_egg_kage, 1, obj_table_egg_kage, 1 },
+};
+
+
+static const GFL_G3D_UTIL_RES res_table_cursor1[] = 
+{
+    { ARCID_GURU2, NARC_guru2_g_egg_cursor1_nsbmd, GFL_G3D_UTIL_RESARC },  
+    { ARCID_GURU2, NARC_guru2_g_egg_cursor1_nsbca, GFL_G3D_UTIL_RESARC },  
+};
+static const GFL_G3D_UTIL_RES res_table_cursor2[] = 
+{
+    { ARCID_GURU2, NARC_guru2_g_egg_cursor2_nsbmd, GFL_G3D_UTIL_RESARC },  
+    { ARCID_GURU2, NARC_guru2_g_egg_cursor2_nsbca, GFL_G3D_UTIL_RESARC },  
+};
+static const GFL_G3D_UTIL_RES res_table_cursor3[] = 
+{
+    { ARCID_GURU2, NARC_guru2_g_egg_cursor3_nsbmd, GFL_G3D_UTIL_RESARC },  
+    { ARCID_GURU2, NARC_guru2_g_egg_cursor3_nsbca, GFL_G3D_UTIL_RESARC },  
+};
+static const GFL_G3D_UTIL_RES res_table_cursor4[] = 
+{
+    { ARCID_GURU2, NARC_guru2_g_egg_cursor4_nsbmd, GFL_G3D_UTIL_RESARC },  
+    { ARCID_GURU2, NARC_guru2_g_egg_cursor4_nsbca, GFL_G3D_UTIL_RESARC },  
+};
+static const GFL_G3D_UTIL_RES res_table_cursor5[] = 
+{
+    { ARCID_GURU2, NARC_guru2_g_egg_cursor5_nsbmd, GFL_G3D_UTIL_RESARC },  
+    { ARCID_GURU2, NARC_guru2_g_egg_cursor5_nsbca, GFL_G3D_UTIL_RESARC },  
+};
+
+static const GFL_G3D_UTIL_ANM anm_table_cursor[] = 
+{
+  { 1, 0 },
+};
+
+
+static const GFL_G3D_UTIL_OBJ obj_table_cursor[] = 
+{
+  {
+    0,                        // モデルリソースID
+    0,                        // モデルデータID(リソース内部INDEX)
+    0,                        // テクスチャリソースID
+    anm_table_cursor,         // アニメテーブル(複数指定のため)
+    NELEMS(anm_table_cursor), // アニメリソース数
+  },
+}; 
+
+
+static const GFL_G3D_UTIL_SETUP setupCursor[] =
+{
+  { res_table_cursor1, 1, obj_table_cursor, 1 },
+  { res_table_cursor2, 1, obj_table_cursor, 1 },
+  { res_table_cursor3, 1, obj_table_cursor, 1 },
+  { res_table_cursor4, 1, obj_table_cursor, 1 },
+  { res_table_cursor5, 1, obj_table_cursor, 1 },
+};
+
 //--------------------------------------------------------------
 /**
- * 卵グラフィック初期化
- * @param GURU2MAIN_WORK *g2m
+ * 卵　初期化
+ * @param g2m GURU2MAIN_WORK
  * @retval  nothing
  */
 //--------------------------------------------------------------
-static void Egg_MdlInit( GURU2MAIN_WORK *g2m )
+static void Egg_Init( GURU2MAIN_WORK *g2m )
 {
   int i;
   const u32 *mdl_id, *anm_id;
   
   EGGWORK *egg = &g2m->egg;
-  
+/*  
   FRO_MDL_ResSetArcLoad(  //メインリソースとして扱う
     &egg->m_rmdl, 0, g2m->arc_handle,
     NARC_guru2_g_egg_nsbmd, HEAPID_GURU2, 0 );
@@ -4245,7 +4428,7 @@ static void Egg_MdlInit( GURU2MAIN_WORK *g2m )
     &egg->m_rmdl_kage, 0, g2m->arc_handle,
     NARC_guru2_g_egg_kage_nsbmd, HEAPID_GURU2, 0 );
   FRO_MDL_TexTransBindVTaskAdd( &egg->m_rmdl_kage );
-  
+
   mdl_id = DATA_EggCursorMdlArcIDTbl;
   anm_id = DATA_EggCursorAnmArcIDTbl;
   
@@ -4264,20 +4447,34 @@ static void Egg_MdlInit( GURU2MAIN_WORK *g2m )
     FRO_ANM_AnmObjInitInMdl(
       &egg->m_ranm_cursor[i], &egg->m_rmdl_cursor[i] );
   }
+
+*/
+  egg->unitIndex_egg  = GFL_G3D_UTIL_AddUnit( g2m->g3dUtil, &setupEgg[0] );
+  egg->unitIndex_kage = GFL_G3D_UTIL_AddUnit( g2m->g3dUtil, &setupEgg[1] );
+  
+  for( i = 0; i < G2MEMBER_MAX; i++){
+     egg->unitIndex_cursor[i] = GFL_G3D_UTIL_AddUnit( g2m->g3dUtil, &setupCursor[i] );
+  }
+
 }
 
 //--------------------------------------------------------------
 /**
- * 卵グラフィック削除
- * @param GURU2MAIN_WORK *g2m
+ * 卵モデリングリソース　削除
+ * @param g2m GURU2MAIN_WORK
  * @retval  nothing
  */
 //--------------------------------------------------------------
-static void Egg_MdlDelete( GURU2MAIN_WORK *g2m )
+static void Egg_Delete( GURU2MAIN_WORK *g2m )
 {
   int i;
-  
+  EGGACTOR *eact;
   EGGWORK *egg = &g2m->egg;
+  
+  for( i = 0; i < G2MEMBER_MAX; i++ ){
+    eact = &egg->eact[i];
+  }
+/*  
   FRO_MDL_DeleteAll( &egg->m_rmdl );
   FRO_MDL_DeleteAll( &egg->m_rmdl_kage );
   
@@ -4285,7 +4482,19 @@ static void Egg_MdlDelete( GURU2MAIN_WORK *g2m )
     FRO_MDL_DeleteAll( &egg->m_rmdl_cursor[i] );
     FRO_ANM_AnmResFree( &egg->m_ranm_cursor[i] );
   }
+*/
+
+ for( i = 0; i < G2MEMBER_MAX; i++){
+  GFL_G3D_UTIL_DelUnit( g2m->g3dUtil, egg->unitIndex_cursor[i]  );
+ }
+
+ GFL_G3D_UTIL_DelUnit( g2m->g3dUtil, egg->unitIndex_egg  );
+ GFL_G3D_UTIL_DelUnit( g2m->g3dUtil, egg->unitIndex_kage  );
+
+  
+  
 }
+
 
 //--------------------------------------------------------------
 /**
@@ -4298,7 +4507,7 @@ static void Egg_MdlDelete( GURU2MAIN_WORK *g2m )
 static void Egg_MdlActInit( GURU2MAIN_WORK *g2m, EGGACTOR *act )
 {
   EGGWORK *egg = &g2m->egg;
-  FRO_OBJ_InitInMdl( &act->robj, &egg->m_rmdl );
+//  FRO_OBJ_InitInMdl( &act->robj, &egg->m_rmdl );
   act->draw_flag = TRUE;
   
   EggKage_Init( g2m, act );
@@ -4330,7 +4539,7 @@ static void EggAct_Update( GURU2MAIN_WORK *g2m )
     }
     
     if( egg->ecursor[i].use_flag ){
-      EggCursor_Update( g2m, &egg->ecursor[i] );
+      EggCursor_Update( g2m, &egg->ecursor[i], i );
     }
     
     i++;
@@ -4353,18 +4562,51 @@ static void EggAct_Draw( GURU2MAIN_WORK *g2m )
   EGGCURSOR *ecs = egg->ecursor;
   
   while( i < max ){
+    // タマゴ描画
     if( eact->draw_flag ){
-      FRO_OBJ_DrawScaleRotate(
-        &eact->robj, &eact->pos, &eact->scale, &eact->rotate );
+//      FRO_OBJ_DrawScaleRotate(
+//        &eact->robj, &eact->pos, &eact->scale, &eact->rotate );
+
+        GFL_G3D_OBJSTATUS status;
+        GFL_G3D_OBJ* obj = GFL_G3D_UTIL_GetObjHandle( g2m->g3dUtil, egg->unitIndex_egg );
+        
+        VEC_Set( &status.trans, eact->pos.x, eact->pos.y, eact->pos.z );
+        VEC_Set( &status.scale, eact->scale.x, eact->scale.y, eact->scale.z );
+        GFL_CALC3D_MTX_CreateRot( eact->rotate.x, eact->rotate.y, eact->rotate.z, &status.rotate );
+      
+        GFL_G3D_DRAW_DrawObject( obj, &status );
+
     }
     
+    // 影描画
     if( ekage->use_flag ){
-      FRO_OBJ_DrawScaleRotate(
-        &ekage->robj, &ekage->pos, &ekage->scale, &ekage->rotate );
+//      FRO_OBJ_DrawScaleRotate(
+//        &ekage->robj, &ekage->pos, &ekage->scale, &ekage->rotate );
+        GFL_G3D_OBJSTATUS status;
+        GFL_G3D_OBJ* obj = GFL_G3D_UTIL_GetObjHandle( g2m->g3dUtil, egg->unitIndex_kage );
+        
+        VEC_Set( &status.trans, ekage->pos.x, ekage->pos.y, ekage->pos.z );
+        VEC_Set( &status.scale, ekage->scale.x, ekage->scale.y, ekage->scale.z );
+        GFL_CALC3D_MTX_CreateRot( ekage->rotate.x, ekage->rotate.y, ekage->rotate.z, &status.rotate );
+      
+        GFL_G3D_DRAW_DrawObject( obj, &status );
+
+
     }
     
+    // カーソル描画
     if( ecs->use_flag ){
-      FRO_OBJ_DrawPos( &ecs->robj, &ecs->pos );
+//      FRO_OBJ_DrawPos( &ecs->robj, &ecs->pos );
+        GFL_G3D_OBJSTATUS status;
+        GFL_G3D_OBJ* obj = GFL_G3D_UTIL_GetObjHandle( g2m->g3dUtil, egg->unitIndex_cursor[i] );
+        
+        VEC_Set( &status.trans, ecs->pos.x, ecs->pos.y, ecs->pos.z );
+        VEC_Set( &status.scale, FX32_ONE, FX32_ONE, FX32_ONE );
+        MTX_Identity33( &status.rotate );
+      
+        GFL_G3D_DRAW_DrawObject( obj, &status );
+
+
     }
     
     eact++;
@@ -4412,11 +4654,11 @@ static void EggAct_AnglePosSet( EGGACTOR *eact, const VecFx32 *offs )
   r = (u16)FX32_NUM( fa );
   
   eact->pos.x =
-    EGG_DISC_CX_FX + eact->offs.x + offs->x + (Cos360(r)*EGG_DISC_CXS);
+    EGG_DISC_CX_FX + eact->offs.x + offs->x + (GFL_CALC_Cos360(r)*EGG_DISC_CXS);
   eact->pos.y =
     EGG_DISC_CY_FX + eact->offs.y + offs->y;
   eact->pos.z =
-    EGG_DISC_CZ_FX + eact->offs.z + offs->z + (Sin360(r)*EGG_DISC_CZS);
+    EGG_DISC_CZ_FX + eact->offs.z + offs->z + (GFL_CALC_Cos360(r)*EGG_DISC_CZS);
   
   eact->rotate.x = FX32_NUM( eact->rotate_fx.x );
   eact->rotate.y = FX32_NUM( eact->rotate_fx.y );
@@ -4484,7 +4726,7 @@ static void EggKage_Init( GURU2MAIN_WORK *g2m, EGGACTOR *act )
   
   ekage->use_flag = TRUE;
   ekage->eact = act;
-  FRO_OBJ_InitInMdl( &ekage->robj, &egg->m_rmdl_kage );
+//  FRO_OBJ_InitInMdl( &ekage->robj, &egg->m_rmdl_kage );
   EggKage_Update( g2m, ekage );
 }
 
@@ -4545,9 +4787,9 @@ static void EggCursor_Init( GURU2MAIN_WORK *g2m, EGGACTOR *act )
   ecs->use_flag = TRUE;
   ecs->eact = act;
   
-  FRO_OBJ_InitAll( &ecs->robj,
-    &egg->m_rmdl_cursor[act->play_no],
-    &egg->m_ranm_cursor[act->play_no] );
+//  FRO_OBJ_InitAll( &ecs->robj,
+//    &egg->m_rmdl_cursor[act->play_no],
+//    &egg->m_ranm_cursor[act->play_no] );
 }
 
 //--------------------------------------------------------------
@@ -4557,13 +4799,16 @@ static void EggCursor_Init( GURU2MAIN_WORK *g2m, EGGACTOR *act )
  * @retval
  */
 //--------------------------------------------------------------
-static void EggCursor_Update( GURU2MAIN_WORK *g2m, EGGCURSOR *ecs )
+static void EggCursor_Update( GURU2MAIN_WORK *g2m, EGGCURSOR *ecs, int i )
 {
   EGGWORK *egg = &g2m->egg;
+  GFL_G3D_OBJ* obj = GFL_G3D_UTIL_GetObjHandle( g2m->g3dUtil, egg->unitIndex_cursor[i] );
   ecs->pos = ecs->eact->pos;
   ecs->pos.y += EGGCURSOR_OFFS_Y_FX;
-  FRO_ANM_Play(
-    &egg->m_ranm_cursor[ecs->eact->play_no], FX32_ONE, ANMLOOP_ON);
+//  FRO_ANM_Play(
+//    &egg->m_ranm_cursor[ecs->eact->play_no], FX32_ONE, ANMLOOP_ON);
+  GFL_G3D_OBJECT_LoopAnimeFrame( obj, ecs->eact->play_no, FX32_ONE );
+
 }
 
 //==============================================================================
@@ -4603,7 +4848,8 @@ static GFL_TCB* EggAct_StartTcbSet(
   work->g2m = g2m;
   work->eact = eact;
   
-  tcb = TCB_Add( EggActStartTcb, work, 0 );
+  tcb = GFL_TCB_AddTask( g2m->tcbSys,  EggActStartTcb, work, 0 );
+
   return( tcb );
 }
 
@@ -4627,7 +4873,7 @@ static void EggActStartTcb( GFL_TCB* tcb, void *wk )
   if( ret == RET_END ){
     work->eact->set_flag = TRUE;
     GFL_HEAP_FreeMemory( work );
-    TCB_Delete( tcb );
+    GFL_TCB_DeleteTask( tcb );
   }
 }
 
@@ -4669,7 +4915,7 @@ static RET EggStart_Fall( EGGSTARTWORK *work )
   if( work->fall_se_play == FALSE ){    //落下SE鳴らすタイミング調整
     if( eact->offs.y <= NUM_FX32(104) ){
       work->fall_se_play = TRUE;
-      Snd_SePlay( GURU2_SE_EGG_FALL );
+      PMSND_PlaySE( GURU2_SE_EGG_FALL );
     }
   }
   
@@ -4806,7 +5052,7 @@ static void EggJumpTcb_Init( GURU2MAIN_WORK *g2m )
   work = &g2m->egg_jump_tcb_work;
   GFL_STD_MemFill( work, 0, sizeof(EGGJUMPTCB_WORK) );
   
-  g2m->tcb_egg_jump = TCB_Add( EggJumpTcb, g2m, TCBPRI_EGG_JUMP );
+  g2m->tcb_egg_jump = GFL_TCB_AddTask( g2m->tcbSys,  EggJumpTcb, g2m, TCBPRI_EGG_JUMP );
   GF_ASSERT( g2m->tcb_egg_jump );
 }
 
@@ -4819,7 +5065,7 @@ static void EggJumpTcb_Init( GURU2MAIN_WORK *g2m )
 //--------------------------------------------------------------
 static void EggJumpTcb_Delete( GURU2MAIN_WORK *g2m )
 {
-  TCB_Delete( g2m->tcb_egg_jump );
+  GFL_TCB_DeleteTask( g2m->tcb_egg_jump );
 }
 
 //--------------------------------------------------------------
@@ -4960,7 +5206,7 @@ static void EggSpinTcb_Init( GURU2MAIN_WORK *g2m )
   work = &g2m->egg_spin_tcb_work;
   GFL_STD_MemFill( work, 0, sizeof(EGGSPINTCB_WORK) );
   
-  g2m->tcb_egg_spin = TCB_Add( EggSpinTcb, g2m, TCBPRI_EGG_SPIN );
+  g2m->tcb_egg_spin = GFL_TCB_AddTask( g2m->tcbSys,  EggSpinTcb, g2m, TCBPRI_EGG_SPIN );
   GF_ASSERT( g2m->tcb_egg_spin );
 }
 
@@ -4973,7 +5219,7 @@ static void EggSpinTcb_Init( GURU2MAIN_WORK *g2m )
 //--------------------------------------------------------------
 static void EggSpinTcb_Delete( GURU2MAIN_WORK *g2m )
 {
-  TCB_Delete( g2m->tcb_egg_spin );
+  GFL_TCB_DeleteTask( g2m->tcb_egg_spin );
 }
 
 //--------------------------------------------------------------
@@ -5033,7 +5279,7 @@ static void EggShake( EGGSHAKE_WORK *shake )
     shake->add_fx = EGG_SHAKE_TOPSPEED_FX;
     shake->seq_no++;
   case 1:
-    r = Sin360(FX32_NUM(shake->rad)) * FX32_NUM(shake->haba_fx);
+    r = GFL_CALC_Sin360( FX32_NUM(shake->rad)) * FX32_NUM(shake->haba_fx );
     eact->rotate_fx.z = 0;
     AngleAdd( &eact->rotate_fx.z, r );
     
@@ -5087,7 +5333,7 @@ static void EggShakeTcb_Init( GURU2MAIN_WORK *g2m )
   work = &g2m->egg_shake_tcb_work;
   GFL_STD_MemFill( work, 0, sizeof(EGGSHAKETCB_WORK) );
   
-  g2m->tcb_egg_shake = TCB_Add( EggShakeTcb, g2m, TCBPRI_EGG_SHAKE );
+  g2m->tcb_egg_shake = GFL_TCB_AddTask( g2m->tcbSys,  EggShakeTcb, g2m, TCBPRI_EGG_SHAKE );
   GF_ASSERT( g2m->tcb_egg_shake );
 }
 
@@ -5100,7 +5346,7 @@ static void EggShakeTcb_Init( GURU2MAIN_WORK *g2m )
 //--------------------------------------------------------------
 static void EggShakeTcb_Delete( GURU2MAIN_WORK *g2m )
 {
-  TCB_Delete( g2m->tcb_egg_shake );
+  GFL_TCB_DeleteTask( g2m->tcb_egg_shake );
 }
 
 //--------------------------------------------------------------
@@ -5171,7 +5417,7 @@ static void EggDiscJump( GURU2MAIN_WORK *g2m, EGGDISCJUMPTCB_WORK *work )
       work->jump_flag = TRUE;
       work->seq_no++;
       
-      Snd_SePlay( GURU2_SE_EGG_JUMP );
+      PMSND_PlaySE( GURU2_SE_EGG_JUMP );
     }
     break;
   case 4:
@@ -5193,7 +5439,7 @@ static void EggDiscJump( GURU2MAIN_WORK *g2m, EGGDISCJUMPTCB_WORK *work )
       work->jump_flag = FALSE;
       work->seq_no = 0;
       
-      Snd_SePlay( GURU2_SE_EGG_LANDING );
+      PMSND_PlaySE( GURU2_SE_EGG_LANDING );
     }
     break;
   }
@@ -5228,7 +5474,7 @@ static void EggDiscJumpTcb_Init( GURU2MAIN_WORK *g2m )
   work = &g2m->egg_disc_jump_tcb_work;
   GFL_STD_MemFill( work, 0, sizeof(EGGDISCJUMPTCB_WORK) );
   
-  g2m->tcb_egg_disc_jump = TCB_Add(
+  g2m->tcb_egg_disc_jump = GFL_TCB_AddTask( g2m->tcbSys, 
       EggDiscJumpTcb, g2m, TCBPRI_EGG_DISC_JUMP );
   GF_ASSERT( g2m->tcb_egg_disc_jump );
 }
@@ -5242,7 +5488,7 @@ static void EggDiscJumpTcb_Init( GURU2MAIN_WORK *g2m )
 //--------------------------------------------------------------
 static void EggDiscJumpTcb_Delete( GURU2MAIN_WORK *g2m )
 {
-  TCB_Delete( g2m->tcb_egg_disc_jump );
+  GFL_TCB_DeleteTask( g2m->tcb_egg_disc_jump );
 }
 
 //--------------------------------------------------------------
@@ -5304,7 +5550,7 @@ typedef struct
   int end;
   int count;
   GURU2MAIN_WORK *g2m;
-  CATS_ACT_PTR cap;
+  GFL_CLWK *cap;
 }CDOWNWORK;
 
 //--------------------------------------------------------------
@@ -5327,7 +5573,7 @@ static void CountDownTcb( GFL_TCB* tcb, void *wk )
       work->frame--;
       if( work->frame <= 0 ){
         work->frame = CDOWN_SE_FRAME;
-        Snd_SePlay( tbl[work->count] );
+        PMSND_PlaySE( tbl[work->count] );
         work->count++;
       }
     }
@@ -5339,9 +5585,10 @@ static void CountDownTcb( GFL_TCB* tcb, void *wk )
     }
     break;
   case 1:
-    CATS_ActorPointerDelete_S( work->cap );
+//    CATS_ActorPointerDelete_S( work->cap );
+    GFL_CLACT_WK_Remove( work->cap );
     GFL_HEAP_FreeMemory( work );
-    TCB_Delete( tcb );
+    GFL_TCB_DeleteTask( tcb );
   }
 }
 
@@ -5354,32 +5601,28 @@ static void CountDownTcb( GFL_TCB* tcb, void *wk )
 //--------------------------------------------------------------
 static GFL_TCB* guru2_CountDownTcbSet( GURU2MAIN_WORK *g2m )
 {
-  TCATS_OBJECT_ADD_PARAM_S prm;
   CDOWNWORK *work = GFL_HEAP_AllocMemoryLo( HEAPID_GURU2, sizeof(CDOWNWORK) );
+  GFL_CLWK_DATA prm;
   GFL_STD_MemFill( work, 0, sizeof(CDOWNWORK) );
   
-  prm.x = CDOWN_CX;
-  prm.y = CDOWN_CY;
-  prm.z = 0;
-  prm.anm = 0;
-  prm.pri = 0;
-  prm.pal = 0;
-  prm.d_area = CATS_D_AREA_MAIN;
-  prm.bg_pri = 0;
-  prm.vram_trans = 0;
-  prm.id[0] = EDID_CDOWN_NCGR;
-  prm.id[1] = EDID_CDOWN_NCLR;
-  prm.id[2] = EDID_CDOWN_NCER;
-  prm.id[3] = EDID_CDOWN_NANR;
-  prm.id[4] = CLACT_U_HEADER_DATA_NONE;
-  prm.id[5] = CLACT_U_HEADER_DATA_NONE;
+  prm.pos_x   = CDOWN_CX;
+  prm.pos_y   = CDOWN_CY;
+  prm.anmseq  = 0;
+  prm.bgpri   = 0;
+  prm.softpri = 0;
   
-  work->cap = Guru2ClAct_Add( g2m,&prm );
-  GFL_CLACT_WK_AddAnmFrame( work->cap );
+  work->cap = GFL_CLACT_WK_Create( g2m->clUnit, 
+                                   g2m->resobj[GURU2MAIN_CLACT_RES_CHR],
+                                   g2m->resobj[GURU2MAIN_CLACT_RES_PLTT],
+                                   g2m->resobj[GURU2MAIN_CLACT_RES_CELL],
+                                   &prm, CLSYS_DEFREND_MAIN, HEAPID_GURU2 );
+  
+//  work->cap = Guru2ClAct_Add( g2m,&prm );
+  GFL_CLACT_WK_AddAnmFrame( work->cap, FX32_ONE );
   
   work->g2m = g2m;
   {
-   GFL_TCB* tcb = TCB_Add(CountDownTcb,work,0);
+   GFL_TCB* tcb = GFL_TCB_AddTask( g2m->tcbSys, CountDownTcb,work,0);
    GF_ASSERT( tcb != NULL );
    return( tcb );
   }
@@ -5403,7 +5646,7 @@ static void BtnAnm( GURU2MAIN_WORK *g2m, BTNANMTCB_WORK *work )
     break;
   case 1: //押す開始
     Guru2BG_ButtonONSet( g2m );
-    Snd_SePlay( GURU2_SE_BTN_PUSH );
+    PMSND_PlaySE( GURU2_SE_BTN_PUSH );
     work->frame = 0;
     work->seq_no++;
   case 2: //ボタン押し込み
@@ -5460,7 +5703,7 @@ static void BtnAnmTcb_Init( GURU2MAIN_WORK *g2m )
   BTNANMTCB_WORK *work;
   work = &g2m->btn_anm_tcb_work;
   GFL_STD_MemFill( work, 0, sizeof(BTNANMTCB_WORK) );
-  g2m->tcb_btn_anm = TCB_Add( BtnAnmTcb, g2m, TCBPRI_BTN_ANM );
+  g2m->tcb_btn_anm = GFL_TCB_AddTask( g2m->tcbSys,  BtnAnmTcb, g2m, TCBPRI_BTN_ANM );
   GF_ASSERT( g2m->tcb_btn_anm );
 }
 
@@ -5473,7 +5716,7 @@ static void BtnAnmTcb_Init( GURU2MAIN_WORK *g2m )
 //--------------------------------------------------------------
 static void BtnAnmTcb_Delete( GURU2MAIN_WORK *g2m )
 {
-  TCB_Delete( g2m->tcb_btn_anm );
+  GFL_TCB_DeleteTask( g2m->tcb_btn_anm );
 }
 
 //--------------------------------------------------------------
@@ -5580,7 +5823,7 @@ static void OmakeEggJumpTcb_Init( GURU2MAIN_WORK *g2m )
   OMAKEJUMPTCB_WORK *work;
   work = &g2m->omake_jump_tcb_work;
   GFL_STD_MemFill( work,0,sizeof(OMAKEJUMPTCB_WORK) );
-  g2m->tcb_omake_jump = TCB_Add( OmakeEggJumpTcb, g2m, TCBPRI_OMAKE_JUMP );
+  g2m->tcb_omake_jump = GFL_TCB_AddTask( g2m->tcbSys,  OmakeEggJumpTcb, g2m, TCBPRI_OMAKE_JUMP );
   GF_ASSERT( g2m->tcb_omake_jump );
 }
 
@@ -5593,7 +5836,7 @@ static void OmakeEggJumpTcb_Init( GURU2MAIN_WORK *g2m )
 //--------------------------------------------------------------
 static void OmakeEggJumpTcb_Delete( GURU2MAIN_WORK *g2m )
 {
-  TCB_Delete( g2m->tcb_omake_jump );
+  GFL_TCB_DeleteTask( g2m->tcb_omake_jump );
 }
 
 //--------------------------------------------------------------
@@ -5695,7 +5938,7 @@ static void BtnFadeTcb( GFL_TCB* tcb, void *wk )
   
   if( end == TRUE ){
     GFL_HEAP_FreeMemory( work );
-    TCB_Delete( tcb );
+    GFL_TCB_DeleteTask( tcb );
   }
 }
 
@@ -5718,7 +5961,7 @@ static void BtnFadeTcbAdd( GURU2MAIN_WORK *g2m, int light )
   work->light_flag = light;
   work->evy = evy[light];
   
-  tcb = TCB_Add( BtnFadeTcb, work, 0 );
+  tcb = GFL_TCB_AddTask( g2m->tcbSys,  BtnFadeTcb, work, 0 );
   GF_ASSERT( tcb != NULL );
 }
 
@@ -5990,7 +6233,7 @@ void Guru2Main_CommPlayNoDataSet(
 {
   g2m->comm.play_no_tbl[no->play_no] = *no;
   
-  if( no->comm_id == CommGetCurrentID() ){
+  if( no->comm_id == GFL_NET_SystemGetCurrentID() ){
     g2m->comm.my_play_no = no->play_no;
     #ifdef DEBUG_GURU2_PRINTF
     OS_Printf( "ぐるぐる　自分のプレイ番号(%d)受信\n", no->play_no );
@@ -6055,14 +6298,17 @@ static void Guru2MainFriendEggExchange( GURU2MAIN_WORK *g2m, int id )
   m_pp = PokeParty_GetMemberPointer( m_poke, m_pos );
   f_pp = PokeParty_GetMemberPointer( f_poke, f_pos );
   
+  // トレーナーメモ処理
+#ifndef GURU2_TRAINER_MEMO 
   TrainerMemoSetPP(
     f_pp,
-    CommInfoGetMyStatus(CommGetCurrentID()),
+    Union_App_GetMystatus( _get_unionwork(g2m), GFL_NET_SystemGetCurrentID() ),
     TRMEMO_ONTRADE_PLACESET,
     0,
     HEAPID_PROC );
   
-  PokeCopyPPtoPP( f_pp, m_pp ); //コピー元,コピー先
+  POKETOOL_CopyPPtoPP( f_pp, m_pp ); //コピー元,コピー先
+#endif
 }
 
 //--------------------------------------------------------------
@@ -6221,8 +6467,8 @@ static BOOL Guru2MainPokePartyDameTamagoCheck( POKEPARTY *ppty )
   for( i = 0; i < max; i++ ){
     pp = PokeParty_GetMemberPointer( ppty, i );
     
-    if( PokeParaGet(pp,ID_PARA_tamago_flag,NULL) ){
-      if( PokeParaGet(pp,ID_PARA_fusei_tamago_flag,NULL) ){
+    if( PP_Get(pp,ID_PARA_tamago_flag,NULL) ){
+      if( PP_Get(pp,ID_PARA_fusei_tamago_flag,NULL) ){
         return( TRUE );
       }
     }
@@ -6301,17 +6547,59 @@ static BOOL Guru2MainCommEggDataNGCheck( GURU2MAIN_WORK *g2m )
   return( FALSE );
 }
 
+//----------------------------------------------------------------------------------
+/**
+ * @brief ME再生
+ *
+ * @param   seq_bgm   MEとして再生させるBGM
+ */
+//----------------------------------------------------------------------------------
+static void _me_play( int seq_bgm )
+{
+  //現在のＢＧＭを一時停止(TRUE停止,FALSE再開)
+  PMSND_PauseBGM( TRUE );  
+
+  //現在のＢＧＭを退避
+  PMSND_PushBGM();
+
+  PMSND_PlayBGM( seq_bgm );
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief ME終了検出＆BGM復帰
+ *
+ * @param   none    
+ *
+ * @retval  BOOL    TRUE:再生中 FALSE:終了
+ */
+//----------------------------------------------------------------------------------
+static BOOL _me_end_check( void )
+{
+
+  // MEとして再生しているBGMの終了検出
+  if(PMSND_CheckPlayBGM()==FALSE){
+    //退避したＢＧＭを復元
+    PMSND_PopBGM();
+
+    //一時停止したBGMを再開(TRUE停止,FALSE再開)
+    PMSND_PauseBGM( FALSE );  
+    return FALSE;
+  }
+
+  return TRUE;
+}
+
+
+
+
+
+
+
+
 //==============================================================================
 //  data
 //==============================================================================
-//--------------------------------------------------------------
-/// ビットマップウィンドウ　会話
-//--------------------------------------------------------------
-static const BMPWIN_DAT DATA_Guru2BmpTalkWinList[GURU2TALKWIN_MAX] =
-{
-  BGF_M_KAIWA, 2, 19, 26, 4,
-  BGF_PANO_MENU_WIN, BGF_BMPCHAR_TALK,
-};
 
 //--------------------------------------------------------------
 /// ビットマップウィンドウ　名前　人数 2
@@ -6428,8 +6716,7 @@ static const BMPWIN_DAT DATA_Guru2BmpNameWin_5[5] =
 //--------------------------------------------------------------
 /// ビットマップウィンドウ　名前　人数別
 //--------------------------------------------------------------
-static const BMPWIN_DAT * const
-  DATA_Guru2BmpNameWinTbl[G2MEMBER_MAX+1] =
+static const BMPWIN_DAT * const DATA_Guru2BmpNameWinTbl[G2MEMBER_MAX+1] =
 {
   NULL,         //ダミーデータ
   NULL,         //ダミーデータ
@@ -6541,18 +6828,6 @@ static const u32 DATA_KinomiTbl[G2MEMBER_MAX+1][2] =
   {175,183}, //5
 };
 
-//--------------------------------------------------------------
-/// 人数別皿モデルアーカイブID
-//--------------------------------------------------------------
-static const u32 DATA_SaraArcIdxTbl[G2MEMBER_MAX+1] =
-{
-  0,  //0 dummy
-  0,  //1 dummy
-  NARC_guru2_g_panel02_c_nsbmd,
-  NARC_guru2_g_panel03_c_nsbmd,
-  NARC_guru2_g_panel04_c_nsbmd,
-  NARC_guru2_g_panel05_c_nsbmd,
-};
 
 //--------------------------------------------------------------
 /// 人数別皿描画角度オフセット
@@ -6577,6 +6852,24 @@ static void DEBUG_OmakeCheck( GURU2MAIN_WORK *g2m );
 #endif
 
 #ifdef GURU2_DEBUG_ON
+
+//--------------------------------------------------------------
+/**
+ * カメラ反映
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+static void guru2_CameraSet( GURU2MAIN_WORK *g2m )
+{
+  CAMERAWORK *cm = &g2m->camera;
+  GFC_BindCameraTarget( &cm->target_pos, cm->gf_camera );
+  GFC_SetCameraAngleRev( &cm->angle, cm->gf_camera );
+  GFC_SetCameraDistance( cm->distance, cm->gf_camera );
+  GFC_SetCameraPerspWay( cm->persp, cm->gf_camera );  
+}
+
+
 static void DEBUG_WorkInit( GURU2MAIN_WORK *g2m )
 {
   DEBUGWORK *dw = &g2m->debug;
@@ -6663,7 +6956,7 @@ static void DEBUG_CameraTest( GURU2MAIN_WORK *g2m )
   dw->persp %= 360;
   
   if( Guru2Pad_TrgCheck(PAD_BUTTON_X) ){
-    OS_Printf( "ぐるぐる　カメラ設定 ID=%d ", CommGetCurrentID() );
+    OS_Printf( "ぐるぐる　カメラ設定 ID=%d ", GFL_NET_SystemGetCurrentID() );
     OS_Printf( "angle X=%d, Y=%d, Z=%d, ",
       dw->angle_x,dw->angle_y,dw->angle_z );
     OS_Printf( "distance 0x%x : ", cm->distance );
@@ -6727,7 +7020,7 @@ void DEBUG_DiscTest( GURU2MAIN_WORK *g2m )
   disc->rotate.z %= 360;
   
   if( Guru2Pad_TrgCheck(PAD_BUTTON_X) ){
-    OS_Printf( "ぐるぐる　皿設定 ID=%d ", CommGetCurrentID() );
+    OS_Printf( "ぐるぐる　皿設定 ID=%d ", GFL_NET_SystemGetCurrentID() );
     OS_Printf( "disc X=%d, Y=%d, Z=%d, AX=%d, AY=%d, AZ=%d\n",
       disc->pos.x/FX32_ONE,disc->pos.y/FX32_ONE,disc->pos.z/FX32_ONE,
       disc->rotate.x,FX32_NUM(disc->rotate_fx),disc->rotate.z );
@@ -6773,7 +7066,7 @@ static void DEBUG_OmakeCheck( GURU2MAIN_WORK *g2m )
     h_pos = FX32_NUM( dmy );
     
     OS_Printf( "ID = %d, disc angle = %d(%d), egg pos = %d(%d,%d)\n",
-      CommGetCurrentID(),
+      GFL_NET_SystemGetCurrentID(),
       d_pos, 360-d_pos, e_pos, 360-e_pos, h_pos );
   }
 }
