@@ -101,11 +101,18 @@ sub getDatID
   my( $datid ) = @_;
   my( $line ,$count );
 
+  $datid =~ s/\r\n//g;
+  $datid =~ s/\n//g;
+
   if( $datid =~ s/\.fog/\.dat/ )
   {
     $count  = 0;
     foreach $line ( @DAT_LIST )
     {
+      $line =~ s/\r\n//g;
+      $line =~ s/\n//g;
+      
+      #print( $line." == ".$datid."\n"  );
       if( $line =~ /$datid/ )
       {
         return $count;
