@@ -54,12 +54,15 @@
 
 FS_EXTERN_OVERLAY(ui_common);
 
+#ifdef PM_DEBUG
+
+#define DEBUG_LOOP
+static BOOL g_debug_loop = FALSE;
+
 // アプリ内でデバッグ用のパラメータをセット
 //#define DEBUG_SET_PARAM
 
-#ifdef DEBUG_ONLY_FOR_genya_hosaka
-//#define DEBUG_LOOP
-#endif
+#endif // PM_DEBUG
 
 //=============================================================================
 /**
@@ -609,6 +612,17 @@ static GFL_PROC_RESULT CommBtlDemoProc_Init( GFL_PROC *proc, int *seq, void *pwk
   COMM_BTL_DEMO_PARAM * prm;
 
   prm = pwk;
+
+#ifdef DEBUG_LOOP
+  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_START )
+  {
+    g_debug_loop = TRUE;
+  }
+  else
+  {
+    g_debug_loop = FALSE;
+  }
+#endif
   
   // フェード待ち
   if( (*seq) == 1 && GFL_FADE_CheckFade() == TRUE )
@@ -849,12 +863,14 @@ static void _SceneEndDemoEnd( UI_SCENE_CNT_PTR cnt, COMM_BTL_DEMO_MAIN_WORK* wk 
   // 終了
   UI_SCENE_CNT_SetNextScene( cnt, UI_SCENE_ID_END );
 
-// @TODO 保坂のみループ
 #ifdef DEBUG_LOOP
-  if( (GFL_UI_KEY_GetCont() & PAD_BUTTON_START) == FALSE )
+  if( g_debug_loop )
   {
-    wk->result = GFUser_GetPublicRand(3); // 勝敗を変更
-    UI_SCENE_CNT_SetNextScene( cnt, CBD_SCENE_ID_END_DEMO );
+    if( (GFL_UI_KEY_GetCont() & PAD_BUTTON_START) == FALSE ) // スタート押しながらで終了
+    {
+      wk->result = GFUser_GetPublicRand(3); // 勝敗を変更
+      UI_SCENE_CNT_SetNextScene( cnt, CBD_SCENE_ID_END_DEMO );
+    }
   }
 #endif
 
@@ -878,9 +894,12 @@ static BOOL SceneStartDemo_Init( UI_SCENE_CNT_PTR cnt, void* work )
   TRAINER_UNIT_CNT_Init( wk );
 
 #ifdef DEBUG_LOOP
-  GFL_BG_ClearScreen( BG_FRAME_TEXT_M ); // テキスト面を消去しておく
-    // フェードアウト リクエスト
-  GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_WHITEOUT, 16, 0, -8 );
+  if( g_debug_loop )
+  {
+    GFL_BG_ClearScreen( BG_FRAME_TEXT_M ); // テキスト面を消去しておく
+      // フェードアウト リクエスト
+    GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_WHITEOUT, 16, 0, -8 );
+  }
 #endif
 
   return TRUE;
@@ -992,10 +1011,13 @@ static BOOL SceneStartDemo_End( UI_SCENE_CNT_PTR cnt, void* work )
   UI_SCENE_CNT_SetNextScene( cnt, UI_SCENE_ID_END );
 
 #ifdef DEBUG_LOOP
-  // スタート押しっぱで終了
-  if( (GFL_UI_KEY_GetCont() & PAD_BUTTON_START) == FALSE )
+  if( g_debug_loop )
   {
-    UI_SCENE_CNT_SetNextScene( cnt, CBD_SCENE_ID_START_DEMO );
+    // スタート押しっぱで終了
+    if( (GFL_UI_KEY_GetCont() & PAD_BUTTON_START) == FALSE )
+    {
+      UI_SCENE_CNT_SetNextScene( cnt, CBD_SCENE_ID_START_DEMO );
+    }
   }
 #endif
 
