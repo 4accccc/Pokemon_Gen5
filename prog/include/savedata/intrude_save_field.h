@@ -9,6 +9,7 @@
 #pragma once
 
 #include "savedata/intrude_save.h"
+#include "field/intrude_secret_item.h"
 
 
 //==============================================================================
@@ -51,3 +52,27 @@ extern int ISC_SAVE_CheckItem(INTRUDE_SAVE_WORK *intsave, u16 zone_id, u16 grid_
 //==================================================================
 extern void ISC_SAVE_GetItem(INTRUDE_SAVE_WORK *intsave, int work_no, INTRUDE_SECRET_ITEM_SAVE *dest);
 
+//==================================================================
+/**
+ * セーブデータにあるアイテムの配置座標データへのポインタを取得する
+ *
+ * @param   intsave		
+ * @param   work_no		セーブデータの検索開始するワーク位置
+ *
+ * @retval  const INTRUDE_SECRET_ITEM_POSDATA *		配置座標へのポインタ(ヒットしなかった場合はNULL)
+ *
+ * ダウジングマシン等、あらかじめ隠しアイテムが配置されている座標一覧を
+ * 取得しておきたい場合に使用する
+ * 
+ * 使用例)
+ *    work_no = 0;
+ *    while(1){
+ *      posdata = ISC_SAVE_GetItemPosData(intsave, &work_no);
+ *      if(posdata == NULL){
+ *        break;  //セーブの終端まで探しきった
+ *      }
+ *      my_buffer[count++] = *posdata;  //座標データを自分のバッファにコピー
+ *    }
+ */
+//==================================================================
+extern const INTRUDE_SECRET_ITEM_POSDATA * ISC_SAVE_GetItemPosData(INTRUDE_SAVE_WORK *intsave, int *work_no);
