@@ -38,17 +38,17 @@ struct _GFL_NETHANDLE{
   NEGOTIATION_RESET_DATA aResetBuff[GFL_NET_HANDLE_MAX];
   u16 negotiationBit;  ///< 他の接続を許すかどうか 0なら許可
   u16 negotiationReturn;  ///< 他の接続を許すかどうか 0なら許可
-  u8 timingRecv;       ///< 通信で受け取った番号
-  u8 timingSyncEnd;    ///< 同期コマンド用
+  u16 timingSyncMy;     ///< 自分が送ったNO
+  u16 timingRecv;       ///< 通信で受け取った番号
+  u16 timingSyncEnd;    ///< 同期コマンド用
+  u16 timingR[(GFL_NET_HANDLE_MAX / 4) * 4];       ///< 子機からの受け取り記録padding
   u8 timingSendFlg;      ///< 送ったかどうか
-  u8 timingSyncMy;     ///< 自分が送ったNO
   u8 negotiationType;        ///< 接続しているハンドルの状態
   u8 negotiationSendFlg;      ///< 送ったかどうか
   u8 serviceNo;              ///< 通信サービス番号
   u8 version;                ///< 通信相手の通信バージョン番号
-  u8 timingR[(GFL_NET_HANDLE_MAX / 4) * 4];       ///< 子機からの受け取り記録padding
   u8 bSendInfomation;   ///< インフォメーションデータを送るフラグ
-  u8 dummy[3];
+  u8 dummy[2];
 };
 
 
@@ -133,6 +133,32 @@ extern void GFL_NET_HANDLE_TimingSyncStart(GFL_NETHANDLE* pNet, const u8 no);
  */
 //==============================================================================
 extern BOOL GFL_NET_HANDLE_IsTimingSync(const GFL_NETHANDLE* pNet, const u8 no);
+
+
+
+//==============================================================================
+/**
+ * @brief   タイミングコマンドを発行する
+ * @param[in,out]   pNet  通信ハンドルのポインタ
+ * @param   no   タイミング取りたい番号
+ * @param   networkDefId   識別ID
+ * @retval  none
+ */
+//==============================================================================
+extern void GFL_NET_HANDLE_TimeSyncStart(GFL_NETHANDLE* pNet, const u8 no, const u8 networkDefId);
+
+//==============================================================================
+/**
+ * @brief   タイミングコマンドが届いたかどうかを確認する
+ * @param   pNet   ネットワークハンドル
+ * @param   no     検査する番号
+ * @param   networkDefId   識別ID
+ * @retval  TRUE   届いていた
+ * @retval  FALSE  届いていない
+ */
+//==============================================================================
+extern BOOL GFL_NET_HANDLE_IsTimeSync(const GFL_NETHANDLE* pNet, const u8 no, const u8 networkDefId);
+
 //==============================================================================
 /**
  * @brief   ハンドル処理のメイン

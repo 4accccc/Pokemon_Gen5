@@ -81,9 +81,10 @@ extern void GFL_DISP_GXS_InitVisibleControlOBJ( void );
 //--------------------------------------------------------------------------------------------
 /**
  * メイン＆サブ画面の各面の表示コントロール
+ * BG面のON/OFFはラップ版のbg_sys.hが主にあるのでOBJ面制御用
  *
- * @param gxplanemask   設定面
- * @param flg       コントロールフラグ
+ * @param gxplanemask   設定面( GX_PLANEMASK_BG0 - GX_PLANEMASK_OBJ )
+ * @param flg           コントロールフラグ
  *
  * @li  flg = VISIBLE_ON  : 表示
  * @li  flg = VISIBLE_OFF : 非表示

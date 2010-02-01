@@ -305,7 +305,7 @@ extern void GFL_BG_SetBGControl3D( u8 priority );
 /**
  * BG面再設定
  *
- * @param frmnum    ＢＧフレーム番号
+ * @param frmnum  ＢＧフレーム番号
  * @param flg     変更パラメータ
  * @param prm     変更値
  *
@@ -330,7 +330,7 @@ extern void GFL_BG_SetPriority( u8 frmnum, u8 priority );
 /**
  * 表示ON・OFF設定
  *
- * @param frmnum    BGフレーム番号
+ * @param frmnum    BGフレーム番号( GFL_BG_FRAME0_M ～ GFL_BG_FRAME3_S )
  * @param visible   VISIBLE_ON or VISIBLE_OFF
  *
  * @return  none
@@ -1104,9 +1104,9 @@ extern void GFL_BG_DebugPrintCtrl( GflBgDisplayID dispID, BOOL flag );
 //--------------------------------------------------------------------------------------------
 /**
  * @brief スクリーンバッファのダイレクトな位置に値を書き込む
- * @param	frmnum	領域確保するフレームナンバー（VRAMアドレスを取得するのに使用）
- * @param	pos		書く位置
- * @param	data	書くデータ
+ * @param frmnum  領域確保するフレームナンバー（VRAMアドレスを取得するのに使用）
+ * @param pos   書く位置
+ * @param data  書くデータ
  */
 //--------------------------------------------------------------------------------------------
 
