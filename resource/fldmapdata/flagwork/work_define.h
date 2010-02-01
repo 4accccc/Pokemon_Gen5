@@ -167,6 +167,7 @@
 #define WK_SCENE_C08R0301                16555 /* 0x40ab C08ソウリュウシティ：ミュージカル大好きおじさんイベント用ワーク */
 #define WK_SCENE_C03R0601                16556 /* 0x40ac ヒウンシティ：イベント用ワーク */
 #define WK_SCENE_C03                     16557 /* 0x40ad ヒウンシティ：イベント用ワーク */
+#define WK_SCENE_R15R0301                16558 /* 0x40ae パルパーク：イベント用ワーク */
 
 #define WK_SCENE_AREA_END                16687 /* 0x412f  */
 
