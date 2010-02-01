@@ -2384,13 +2384,13 @@ static GFL_CLWK* OBJ_CreatePokeNum( COMM_BTL_DEMO_OBJ_WORK* obj, u8 posid, u8 po
     //@TODO MN
     if( posid == 0 )
     {
-      px = 50;
-      py = NORMAL_POSID0_BALL_PY-16;
+      px = GX_LCD_SIZE_X - 50;
+      py = NORMAL_POSID1_BALL_PY-16;
     }
     else
     {
-      px = GX_LCD_SIZE_X - 50;
-      py = NORMAL_POSID1_BALL_PY-16;
+      px = 50;
+      py = NORMAL_POSID0_BALL_PY-16;
     }
   }
 #if 0
