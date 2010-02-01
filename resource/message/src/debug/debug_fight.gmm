@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2010-01-29T19:22:54"/>
+	<create user="taya" host="W00146" date="2010-02-01T21:45:52"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -423,6 +423,18 @@
 
 	<row id="DBGF_LABEL_SKIP_IN">
 		<language name="JPN" width="256">入場スキップ</language>
+	</row>
+
+	<row id="DBGF_LABEL_LIMIT_TIME">
+		<language name="JPN" width="256">せいげんじかん</language>
+	</row>
+
+	<row id="DBGF_LABEL_LIMIT_GAME">
+		<language name="JPN" width="256">しあい</language>
+	</row>
+
+	<row id="DBGF_LABEL_LIMIT_COMMAND">
+		<language name="JPN" width="256">コマンド</language>
 	</row>
 
 	<row id="DBGF_ITEM_SAVE">
