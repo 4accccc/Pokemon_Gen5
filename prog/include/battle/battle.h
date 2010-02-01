@@ -71,8 +71,9 @@ typedef enum {
   BTL_COMM_DS,    ///< DS無線通信
   BTL_COMM_WIFI,  ///< Wi-Fi通信
 
-}BtlCommMode;
+}BtlCommMode_tag;
 
+typedef u8 BtlCommMode;
 
 //--------------------------------------------------------------
 /**
@@ -216,6 +217,10 @@ typedef struct {
 
   // ゲームデータ系
   COMM_PLAYER_SUPPORT*  commSupport;  ///< 通信プレイヤーサポート
+
+  // 制限時間設定
+  u16         LimitTimeGame;        ///< 試合制限時間（分）
+  u16         LimitTimeCommand;     ///< コマンド選択制限時間（秒）
 
   // デバッグ系
   u16         DebugFlagBit;          ///< 各種デバッグフラグ
