@@ -252,7 +252,7 @@ static ZONEDATA * loadZoneData( u16 zoneID )
   if( zoneID == data_handle->zoneDataID ){ return &( data_handle->zoneData ); }  
 
   GFL_ARC_LoadDataOfsByHandle( data_handle->handle,
-      NARC_zonedata_zonetable_bin,
+      NARC_result_zonedata_zonetable_bin,
       sizeof(ZONEDATA) * zoneID, sizeof(ZONEDATA), &( data_handle->zoneData ) );
 
   data_handle->zoneDataID = zoneID;
@@ -278,13 +278,13 @@ static ZONEDATA * getZoneData(ZONEDATA * zdbuf, u16 zone_id)
   if( data_handle != NULL )
   {
     GFL_ARC_LoadDataOfsByHandle(data_handle->handle,
-        NARC_zonedata_zonetable_bin,
+        NARC_result_zonedata_zonetable_bin,
         sizeof(ZONEDATA) * zone_id, sizeof(ZONEDATA), zdbuf);
   }
   else
   {
     GFL_ARC_LoadDataOfs(zdbuf,
-        ARCID_ZONEDATA, NARC_zonedata_zonetable_bin,
+        ARCID_ZONEDATA, NARC_result_zonedata_zonetable_bin,
         sizeof(ZONEDATA) * zone_id, sizeof(ZONEDATA));
   }
   return zdbuf;
@@ -946,13 +946,13 @@ void ZONEDATA_DEBUG_GetZoneName(char * buffer, u16 zone_id)
   if( data_handle != NULL )
   {
     GFL_ARC_LoadDataOfsByHandle(data_handle->handle,
-        NARC_zonedata_zonename_bin,
+        NARC_result_zonedata_zonename_bin,
         ZONEDATA_NAME_LENGTH * zone_id, ZONEDATA_NAME_LENGTH, buffer);
   }
   else
   {
     GFL_ARC_LoadDataOfs(buffer,
-        ARCID_ZONEDATA, NARC_zonedata_zonename_bin,
+        ARCID_ZONEDATA, NARC_result_zonedata_zonename_bin,
         ZONEDATA_NAME_LENGTH * zone_id, ZONEDATA_NAME_LENGTH);
   }
 }
@@ -965,12 +965,12 @@ const char * ZONEDATA_GetAllZoneName(HEAPID heapID)
   if( data_handle != NULL )
   {
     namedata = GFL_ARC_LoadDataAllocByHandle(
-        data_handle->handle, NARC_zonedata_zonename_bin, heapID);
+        data_handle->handle, NARC_result_zonedata_zonename_bin, heapID);
   }
   else
   {
     namedata = GFL_ARC_LoadDataAlloc(
-        ARCID_ZONEDATA, NARC_zonedata_zonename_bin, heapID);
+        ARCID_ZONEDATA, NARC_result_zonedata_zonename_bin, heapID);
   }
   return namedata;
 }

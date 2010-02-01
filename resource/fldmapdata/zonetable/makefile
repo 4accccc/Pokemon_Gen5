@@ -45,9 +45,10 @@ CONVERTER	= ruby scripts/zonetable.rb
 
 HEADERDIR	= header
 WORKDIR		= tmp
+RESDIR		= result
 DATAFILE	= zonetable.xls
 DATATABTXT	= $(WORKDIR)/$(DATAFILE:.xls=.txt)
-CONVSRCS	= $(WORKDIR)/zonetable.c
+CONVSRCS	= $(RESDIR)/zonetable.c
 DEPFILES	= ../area_data/area_id.h \
 						../../sound/wb_sound_data.sadl \
 						../script/script_seq.naix \
@@ -59,14 +60,13 @@ MATRIXDATA = ../map_matrix/map_matrix.xls
 MATRIXHEADER = $(WORKDIR)/map_matrix.h
 
 #コンバート結果のテキストファイル一覧（比較対象となるもの）
-OUTPUT		= zonetable.c zone_id.h #eventlist.txt
-#OUTPUT	+=	mapname.bin mapname.dat msg_header.h eventarc.txt doorevent.h
+OUTPUT		= $(RESDIR)/zonetable.c
 
 #確認用などのテンポラリファイル一覧
 TEMP_FILES	= zonetable.txt arc_result.txt diff.txt
 
 #arcディレクトリにコピーする必要があるファイルの一覧
-RESULTS		= $(NARCNAME) $(NAIXNAME) zone_id.h
+RESULTS		= $(RESDIR)/$(NARCNAME) $(RESDIR)/$(NAIXNAME)
 
 #----------------------------------------------------------------------------
 #
@@ -74,7 +74,7 @@ RESULTS		= $(NARCNAME) $(NAIXNAME) zone_id.h
 LDIRT_CLEAN = $(TEMP_FILES) $(addprefix $(TARGETDIR)/, $(RESULTS))
 ifeq	($(CONVERTUSER),true)
 #コンバート対象者のみ、中間ファイル削除
-LDIRT_CLEAN	+= $(OUTPUT) $(WORKDIR)/*.bin $(DATATABTXT) $(CONVSRCS) $(RESULTS) \
+LDIRT_CLEAN	+= $(OUTPUT) $(RESDIR)/*.bin $(DATATABTXT) $(CONVSRCS) $(RESULTS) \
 							 $(MATRIXHEADER)
 endif
 
@@ -110,7 +110,7 @@ include	$(NITROSYSTEM_ROOT)/build/buildtools/modulerules
 
 do-build: subdir $(TARGETDIR)/$(NARCNAME)
 
-$(TARGETDIR)/$(NARCNAME):	$(NARCNAME)
+$(TARGETDIR)/$(NARCNAME):	$(RESDIR)/$(NARCNAME)
 	$(foreach AFILE,$(RESULTS),$(COPY) $(AFILE) $(TARGETDIR) $(AND)) true
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ動作させる
@@ -119,13 +119,13 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ動作させる
 #	--(zonetable.rb)-->	zonetable.c（＋その他）
 #	--(コンパイル＆elf2bin)-->	zonetable.bin
 #	--(nnsarc)-->	zonedata.narc/.naix
-$(NARCNAME): $(DATAFILE) $(DEPFILES) $(MATRIXHEADER)
+$(RESDIR)/$(NARCNAME): $(DATAFILE) $(DEPFILES) $(MATRIXHEADER)
 	@echo マップ管理表更新
 	@$(XLS2TAB) $(DATAFILE) > $(DATATABTXT)
 	@$(CONVERTER) contents $(DATATABTXT)
 	@$(MAKE) makebin				#Ｃソース→バイナリ変換して
-	@nnsarc -i -c -l -n $(NARCNAME) $(WORKDIR)/*.bin > $(WORKDIR)/arc_result.txt	#アーカイブ作成
-	@$(NAIXCUT) $(NAIXNAME)
+	@nnsarc -i -c -l -n $(RESDIR)/$(NARCNAME) $(RESDIR)/*.bin > $(RESDIR)/arc_result.txt	#アーカイブ作成
+	@$(NAIXCUT) $(RESDIR)/$(NAIXNAME)
 
 
 #map_matrix.xlsからヘッダを生成する

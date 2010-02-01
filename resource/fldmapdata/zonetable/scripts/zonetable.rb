@@ -265,11 +265,6 @@ class ZoneDataFile < OutputFile
 			STDERR.puts "戦闘背景の指定がおかしい！:#{battle_bg_str}:#{id.upcase}\n"
 			exit 1
     end
-		#battle_bg = "#{column[@cl.cBATTLEBG]}"
-		#if !(battle_bg =~ /^BTL_BG_/) then
-		#	STDERR.puts "戦闘背景の指定がおかしい！:#{battle_bg}:#{id.upcase}\n"
-		#	exit 1
-		#end
 		name = column[@cl.cNAME].upcase
 		encount_id = case column[@cl.cENCOUNT]
 			when "○"
@@ -278,7 +273,7 @@ class ZoneDataFile < OutputFile
 				"enc_dummy"
 			end
     placename_flag = if column[@cl.cPLACENAMEFLAG] == "○" then 1 else 0 end
-    #placename_flag = 0
+
 		maptype = column[@cl.cMAPTYPE]
 		if !(maptype =~ /^MAPTYPE_/) then
 			STDERR.puts "マップタイプの指定がおかしい!:#{maptype}:\n"
@@ -328,24 +323,6 @@ end
 
 ###############################################################
 #
-#	ゾーン名テーブルデータ生成
-#
-###############################################################
-class ZoneNameFile < OutputFile
-	def putHeader
-		@fp.puts "static const char * const ZoneName[] = {\n"
-	end
-	def putFooter
-		@fp.puts "};\n"
-	end
-	def putLine linecount, column
-		zone_id = getID(column)
-		@fp.puts "\t\"#{zone_id}\",\n"
-	end
-end
-
-###############################################################
-#
 #	ゾーンID定義ヘッダ生成
 #
 ###############################################################
@@ -380,32 +357,8 @@ end
 
 
 ###############################################################
-#
-###############################################################
-class ZoneMsgHeader < OutputFile
-	def putHeader
-		@fp.puts "/* convert header file */"
-	end
-	def put id
-		@fp.puts "#include \"../../../include/msgdata/msg_#{id.downcase}.h\"\n"
-	end
-	def putLine linecount, column
-		#イベントファイルがあるときだけ生成する
-		if column[cl.cMSG] == "○" then
-			put getID(column)
-		end
-	end
-end
-
-###############################################################
 ###############################################################
 class ZoneNameBinaryFile < OutputFile
-=begin
-	def initialize fname
-		@fp = File.open(fname, "w")
-		@name = fname
-	end
-=end
 
 	def putHeader
 	end
@@ -474,20 +427,6 @@ def convert( datafilename, outputfiles )
   }
 end
 
-=begin
-  outputfiles = [
-    #カラム内容指定ID定義、ファイル名、上書き前に確認するかどうか
-    ZoneIDFile.new("zone_id.h", true),
-    ZoneDataFile.new("tmp/zonetable.c", false),
-  #	ZoneNameFile.new("mapname.dat", false),
-    ZoneNameBinaryFile.new("tmp/zonename.bin", false),
-  #	ZoneEventFile.new("eventlist.txt", false),
-  #	ZoneEventArcFile.new("eventarc.txt", false),
-  #	ZoneEventDoorHeader.new("doorevent.h", true),
-  #	ZoneMsgHeader.new("msg_header.h", true),
-  ]
-=end
-
 begin
   OPTION = ARGV.shift
   inputfilename = ARGV.shift
@@ -498,8 +437,8 @@ begin
                   ]
                 elsif OPTION == "contents" then
                   [
-                    ZoneDataFile.new("tmp/zonetable.c", false),
-                    ZoneNameBinaryFile.new("tmp/zonename.bin", false),
+                    ZoneDataFile.new("result/zonetable.c", false),
+                    ZoneNameBinaryFile.new("result/zonename.bin", false),
                   ]
                 end
 
