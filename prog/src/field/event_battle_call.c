@@ -97,7 +97,7 @@ static GFL_PROC_RESULT CommBattleCallProc_Init(  GFL_PROC *proc, int *seq, void*
 //-----------------------------------------------------------------------------
 static GFL_PROC_RESULT CommBattleCallProc_End(  GFL_PROC *proc, int *seq, void* pwk, void* mywk )
 {
-  COMM_BTL_DEMO_PROC_WORK*   work;
+  COMM_BTL_DEMO_PROC_WORK*   work = mywk;
 
   GFL_PROC_LOCAL_Exit( work->procsys_up );
   
@@ -130,6 +130,7 @@ static GFL_PROC_RESULT CommBattleCallProc_Main(  GFL_PROC *proc, int *seq, void*
     SEQ_BATTLE_WAIT,
     SEQ_BATTLE_END,
     SEQ_CALL_END_DEMO,        ///< バトル後デモ呼び出し
+    SEQ_WAIT_END_DEMO,
     SEQ_CALL_BTL_REC_SEL,     ///< 通信対戦後の録画選択画面
     SEQ_BGM_POP,
     SEQ_END
@@ -157,7 +158,8 @@ static GFL_PROC_RESULT CommBattleCallProc_Main(  GFL_PROC *proc, int *seq, void*
       {
         bcw->demo_prm->type = COMM_BTL_DEMO_TYPE_MULTI_START;
       }
-      GFL_PROC_LOCAL_CallProc( work->procsys_up, FS_OVERLAY_ID( comm_btl_demo ), &CommBtlDemoProcData, &bcw->demo_prm);
+      HOSAKA_Printf("comm battle demo type=%d\n",bcw->demo_prm->type);
+      GFL_PROC_LOCAL_CallProc( work->procsys_up, FS_OVERLAY_ID( comm_btl_demo ), &CommBtlDemoProcData, bcw->demo_prm);
     }
     (*seq) = SEQ_WAIT_START_DEMO;
     break;
@@ -192,6 +194,7 @@ static GFL_PROC_RESULT CommBattleCallProc_Main(  GFL_PROC *proc, int *seq, void*
     if ( up_status != GFL_PROC_MAIN_VALID ){
       (*seq) = SEQ_BATTLE_END;
     }
+    break;
   case SEQ_BATTLE_END:
     OS_TPrintf("バトル完了\n");
     GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle ) );
@@ -203,12 +206,13 @@ static GFL_PROC_RESULT CommBattleCallProc_Main(  GFL_PROC *proc, int *seq, void*
       // マルチバトル判定
       if( bcw->btl_setup_prm->multiMode == 0 )
       {
-        bcw->demo_prm->type = COMM_BTL_DEMO_TYPE_NORMAL_START;
+        bcw->demo_prm->type = COMM_BTL_DEMO_TYPE_NORMAL_END;
       }
       else
       {
-        bcw->demo_prm->type = COMM_BTL_DEMO_TYPE_MULTI_START;
+        bcw->demo_prm->type = COMM_BTL_DEMO_TYPE_MULTI_END;
       }
+      HOSAKA_Printf("comm battle demo type=%d\n",bcw->demo_prm->type);
 
       // 勝敗設定
       switch( bcw->btl_setup_prm->result )
@@ -217,6 +221,9 @@ static GFL_PROC_RESULT CommBattleCallProc_Main(  GFL_PROC *proc, int *seq, void*
           bcw->demo_prm->result = COMM_BTL_DEMO_RESULT_WIN;
           break;
         case BTL_RESULT_LOSE :
+#if PM_DEBUG
+        case BTL_RESULT_RUN : //@TODO 一時的なフォロー。将来的にはWIN/LOSE/DRAWしか入ってこなくなるはず
+#endif
           bcw->demo_prm->result = COMM_BTL_DEMO_RESULT_LOSE;
           break;
         case BTL_RESULT_DRAW :
@@ -225,7 +232,12 @@ static GFL_PROC_RESULT CommBattleCallProc_Main(  GFL_PROC *proc, int *seq, void*
         default : GF_ASSERT(0);
       }
 
-      GFL_PROC_LOCAL_CallProc(work->procsys_up, FS_OVERLAY_ID( comm_btl_demo ), &CommBtlDemoProcData, &bcw->demo_prm);
+      GFL_PROC_LOCAL_CallProc(work->procsys_up, FS_OVERLAY_ID( comm_btl_demo ), &CommBtlDemoProcData, bcw->demo_prm);
+      (*seq) = SEQ_WAIT_END_DEMO;
+    }
+    break;
+  case SEQ_WAIT_END_DEMO:
+    if ( up_status != GFL_PROC_MAIN_VALID ){
       (*seq) = SEQ_CALL_BTL_REC_SEL;
     }
     break;
@@ -256,9 +268,8 @@ static GFL_PROC_RESULT CommBattleCallProc_Main(  GFL_PROC *proc, int *seq, void*
     break;
   case SEQ_BGM_POP:
     if ( up_status != GFL_PROC_MAIN_VALID){
-      break;
+      (*seq) = SEQ_END;
     }
-    (*seq) = SEQ_END;
     break;
   case SEQ_END:
     return GFL_PROC_RES_FINISH;
