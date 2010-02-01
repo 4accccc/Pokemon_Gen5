@@ -362,6 +362,7 @@ static void scproc_Fight_Damage_side_single( BTL_SVFLOW_WORK* wk,
 static void svflowsub_damage_act_singular(  BTL_SVFLOW_WORK* wk,
     BTL_POKEPARAM* attacker,  BTL_POKEPARAM* defender,
     const SVFL_WAZAPARAM* wazaParam, BtlTypeAff affinity, fx32 targetDmgRatio );
+static void scPut_DamageAff( BTL_SVFLOW_WORK* wk, BtlTypeAff affinity );
 static void scproc_Fight_damage_side_plural( BTL_SVFLOW_WORK* wk,
     BTL_POKEPARAM* attacker, BTL_POKESET* targets, BtlTypeAff* affAry, const SVFL_WAZAPARAM* wazaParam, fx32 dmg_ratio );
 static u32 MarumeDamage( const BTL_POKEPARAM* bpp, u32 damage );
@@ -4853,7 +4854,20 @@ static void svflowsub_damage_act_singular(  BTL_SVFLOW_WORK* wk,
 
   // ○○回あたった！メッセージ
   if( fPluralHit && (i > 0)){
+    scPut_DamageAff( wk, affinity );
     SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_Hit_PluralTimes, i );
+  }
+}
+/**
+ *  効果は○○だ　メッセージ出力
+ */
+static void scPut_DamageAff( BTL_SVFLOW_WORK* wk, BtlTypeAff affinity )
+{
+  if( affinity < BTL_TYPEAFF_100 ){
+    SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_AffBad );
+  }
+  else if(affinity > BTL_TYPEAFF_100){
+    SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_AffGood );
   }
 }
 //
