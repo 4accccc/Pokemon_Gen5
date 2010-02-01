@@ -504,6 +504,128 @@ void* NNSi_SndArcLoadFile(
     return buffer;
 }
 
+
+
+/*---------------------------------------------------------------------------*
+  Name:         NNSgf_SndArcLoadFile
+
+  Description:  ファイルをメモリーに入れる
+
+  Arguments:    fileId   - ファイルID
+                callback - メモリ領域の破棄時に呼ばれるコールバック関数
+                data1    - ユーザーデータ
+                data2    - ユーザーデータ
+                heap     - データを格納するヒープ
+
+  Returns:      ロードしたメモリアドレス
+                ロード失敗時には NULL を返す
+ *---------------------------------------------------------------------------*/
+static void* NNSgf_SndArcLoadFile(
+    void* data,
+    NNSSndHeapDisposeCallback callback,
+    u32 data1,
+    u32 data2,
+    NNSSndHeapHandle heap,
+  u32 len
+)
+{
+  void* buffer;
+    
+  if ( heap == NNS_SND_HEAP_INVALID_HANDLE ) return NULL;
+    
+  buffer = NNS_SndHeapAlloc( heap, len + RESERVED_AREASIZE , callback, data1, data2 ); // NOTE: reserved 32byte
+  if ( buffer == NULL ) return NULL;
+
+  STD_MemCpy(buffer, data, len);
+
+  DC_StoreRange( buffer, len );
+
+
+
+
+  
+  return buffer;
+}
+
+
+
+/*---------------------------------------------------------------------------*
+  Name:         NNS_SndLoadMemory
+
+  Description:  バンクデータから波形をロード
+
+  Arguments:    bankNo   - バンク番号
+                loadFlag - ロードするデータ指定フラグ
+                heap     - データを格納するヒープ
+                bSetAddr - アドレスをNNS_SndArcSetFileAddressでセットするかどうか
+                pData    - ロードしたデータの位置を取得するためのポインタ
+
+  Returns:      結果コード
+ *---------------------------------------------------------------------------*/
+NNSSndArcLoadResult NNS_SndLoadMemory(
+  u32 seqfileId,
+  u32 bnkfileId,
+  NNSSndHeapHandle heap,
+  BOOL bSetAddr,
+  void* bank,
+  u32 banksize,
+  void* seqbuffer,
+  u32 seqsize,
+  const u16* waveArcNo)
+{
+  void* buffer;
+  const NNSSndArcWaveArcInfo* waveArcInfo;
+  SNDBankData* bankdata = NULL;
+  SNDWaveArc* waveArc;
+  NNSSndArcLoadResult result;
+  int i;
+
+  // バンクのロード
+
+  buffer = NNSgf_SndArcLoadFile( bank, BankDisposeCallback, (u32)NNS_SndArcGetCurrent(), bnkfileId, heap, banksize );
+  NNS_SndArcSetFileAddress( bnkfileId, buffer );
+  bankdata = buffer;
+
+  // 波形データのロード
+  for( i = 0; i < NNS_SND_ARC_BANK_TO_WAVEARC_NUM ; i++ )
+  {
+    if ( waveArcNo[i] == NNS_SND_ARC_INVALID_WAVEARC_NO ) break;
+    
+    // 波形アーカイブ情報の取得
+    waveArcInfo = NNS_SndArcGetWaveArcInfo( waveArcNo[i] );
+    if ( waveArcInfo == NULL ) return NNS_SND_ARC_LOAD_ERROR_INVALID_WAVEARC_NO;
+    
+    // 波形アーカイブのロード
+    result = NNSi_SndArcLoadWaveArc( waveArcNo[i], NNS_SND_ARC_LOAD_WAVE, heap, TRUE, &waveArc );
+    if ( result != NNS_SND_ARC_LOAD_SUCESS ) return result;
+    
+    if ( waveArcInfo->flags & NNS_SND_ARC_WAVEARC_SINGLE_LOAD )
+    {
+      // 波形データ個別ロード
+      if ( 1 )
+      {
+        if ( ! LoadSingleWaves( waveArc, bank, i, waveArcInfo->fileId, heap ) ) {
+          return NNS_SND_ARC_LOAD_ERROR_FAILED_LOAD_WAVE;
+        }
+      }
+    }
+    
+    // 波形とバンクの関連づけ
+    if ( bank != NULL && waveArc != NULL ) {
+      SND_AssignWaveArc( bank, i, waveArc );
+    }
+  }
+  
+  // シーケンスデータのロード
+  buffer = NNSgf_SndArcLoadFile( seqbuffer, SeqDisposeCallback, (u32)NNS_SndArcGetCurrent(), seqfileId, heap,seqsize );
+  NNS_SndArcSetFileAddress( seqfileId, buffer );
+
+  return NNS_SND_ARC_LOAD_SUCESS;
+}
+
+
+
+
 /******************************************************************************
     static function
  ******************************************************************************/

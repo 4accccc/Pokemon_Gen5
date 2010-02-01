@@ -80,6 +80,11 @@ NNSSndArcLoadResult NNSi_SndArcLoadSeq( int seqNo, u32 loadFlag, NNSSndHeapHandl
 NNSSndArcLoadResult NNSi_SndArcLoadSeqArc( int seqArcNo, u32 loadFlag, NNSSndHeapHandle heap, BOOL bSetAddr, struct NNSSndSeqArc** pData );
 NNSSndArcLoadResult NNSi_SndArcLoadBank( int bankNo, u32 loadFlag, NNSSndHeapHandle heap, BOOL bSetAddr, struct SNDBankData** pData );
 NNSSndArcLoadResult NNSi_SndArcLoadWaveArc( int waveArcNo, u32 loadFlag, NNSSndHeapHandle heap, BOOL bSetAddr, struct SNDWaveArc** pData );
+NNSSndArcLoadResult NNS_SndLoadMemory( u32 seqfileId, u32 bnkfileId, NNSSndHeapHandle heap, BOOL bSetAddr,
+                                       void* bank,u32 banksize, void* seqbuffer,u32 seqsize,
+                                       const u16* waveArcNo);
+
+
 
 #ifdef __cplusplus
 } /* extern "C" */
