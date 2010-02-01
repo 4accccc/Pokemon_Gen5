@@ -13,6 +13,11 @@
 extern void BeaconView_InitialDraw( BEACON_VIEW_PTR wk );
 
 /*
+ *  @brief  メインループ内での入力チェック
+ */
+extern int BeaconView_CheckInput( BEACON_VIEW_PTR wk );
+
+/*
  *  @brief  スタックからログを一件取り出し
  */
 extern BOOL BeaconView_CheckStack( BEACON_VIEW_PTR wk );

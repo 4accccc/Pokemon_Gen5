@@ -37,6 +37,10 @@
 //==============================================================================
 static int seq_Main( BEACON_VIEW_PTR wk );
 static int seq_ViewUpdate( BEACON_VIEW_PTR wk );
+static int seq_GPowerUse( BEACON_VIEW_PTR wk );
+static int seq_ThankYou( BEACON_VIEW_PTR wk );
+static int seq_ReturnCGear( BEACON_VIEW_PTR wk );
+static int seq_CallDetailView( BEACON_VIEW_PTR wk );
 
 static void BEACON_VIEW_TouchUpdata(BEACON_VIEW_PTR view);
 static void _sub_DataSetup(BEACON_VIEW_PTR wk);
@@ -189,6 +193,22 @@ void BEACON_VIEW_Update(BEACON_VIEW_PTR wk, BOOL bActive )
   case SEQ_VIEW_UPDATE:
     wk->seq = seq_ViewUpdate( wk );
     break;
+  case SEQ_GPOWER_USE:
+    wk->seq = seq_GPowerUse( wk );
+    break;
+  case SEQ_THANK_YOU:
+    wk->seq = seq_ThankYou( wk );
+    break;
+  case SEQ_RETURN_CGEAR:
+    wk->seq = seq_ReturnCGear( wk );
+    break;
+  case SEQ_CALL_DETAIL_VIEW:
+    wk->seq = seq_CallDetailView( wk );
+    break;
+  case SEQ_END:
+  default:
+    //外部リクエストによる終了待ち
+    break;
   }
 }
 
@@ -201,8 +221,8 @@ void BEACON_VIEW_Update(BEACON_VIEW_PTR wk, BOOL bActive )
 //==================================================================
 void BEACON_VIEW_Draw(BEACON_VIEW_PTR wk)
 {
-  BEACON_VIEW_TouchUpdata( wk );
 #if 0
+  BEACON_VIEW_TouchUpdata( wk );
   const GAMEBEACON_INFO *info;
   u32 old_log_count;
   s32 new_log_num, copy_src, copy_dest, write_start;
@@ -273,6 +293,14 @@ static void tcb_VInter( GFL_TCB* tcb, void * work)
  */
 static int seq_Main( BEACON_VIEW_PTR wk )
 {
+  int ret;
+
+  //メイン入力チェック
+  ret = BeaconView_CheckInput( wk );
+  if( ret != SEQ_MAIN ){
+    return ret;
+  }
+
   //スタックチェック
   if( BeaconView_CheckStack( wk ) == FALSE){
     return SEQ_MAIN;
@@ -290,6 +318,46 @@ static int seq_ViewUpdate( BEACON_VIEW_PTR wk )
     return SEQ_MAIN;
   }
   return SEQ_VIEW_UPDATE;
+}
+
+/*
+ *  @brief  自分のGパワーを使用
+ */
+static int seq_GPowerUse( BEACON_VIEW_PTR wk )
+{
+  OS_TPrintf("Gパワー ビーコンセット\n");
+  GAMEBEACON_Set_GPower( 1 );
+
+  return SEQ_MAIN;
+}
+
+/*
+ *  @brief  御礼をする相手を選ぶ
+ */
+static int seq_ThankYou( BEACON_VIEW_PTR wk )
+{
+  OS_TPrintf("ありがとう ビーコンセット\n");
+  GAMEBEACON_Set_Thankyou( wk->gdata, 0x12345678 );
+
+  return SEQ_MAIN;
+}
+
+/*
+ *  @brief  CGearに戻る
+ */
+static int seq_ReturnCGear( BEACON_VIEW_PTR wk )
+{
+  FIELD_SUBSCREEN_SetAction( wk->subscreen , FIELD_SUBSCREEN_ACTION_CHANGE_SCREEN_CGEAR);
+  return SEQ_END;
+}
+
+/*
+ *  @brief  詳細画面呼び出し
+ */
+static int seq_CallDetailView( BEACON_VIEW_PTR wk )
+{
+  FIELD_SUBSCREEN_SetAction( wk->subscreen , FIELD_SUBSCREEN_ACTION_IRC );
+  return SEQ_END;
 }
 
 
@@ -350,12 +418,15 @@ static void _sub_DataSetup(BEACON_VIEW_PTR wk)
   }
   wk->ctrl.next_panel = 0;
 
+  //メッセージスピード取得
+  wk->msg_spd  = MSGSPEED_GetWait();
+  
+  wk->my_data.power = 1;
+
   //スタックワーク領域取得
   wk->infoStack = GAMEBEACON_InfoTbl_Alloc( wk->heapID );
   wk->tmpInfo = GAMEBEACON_Alloc( wk->heapID );
 
-  //メッセージスピード取得
-  wk->msg_spd  = MSGSPEED_GetWait();
 }
 
 //--------------------------------------------------------------

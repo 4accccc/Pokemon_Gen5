@@ -29,7 +29,7 @@
 #include "arc/wifi_unionobj_plt.cdat"
 
 typedef struct _POINT{
-  s16 x,y;
+  int x,y;
 }POINT;
 
 typedef struct _TRIANGLE{
@@ -40,6 +40,10 @@ typedef struct _TRIANGLE{
 static int calc_Cross( POINT* a, POINT* b ) ;
 static void calc_PointMinus( POINT* a, POINT* b, POINT* out );
 static BOOL calc_PointInTriangle( POINT* p, TRIANGLE* tri );
+
+static int touchin_CheckPanel( BEACON_VIEW_PTR wk, POINT* tp );
+static int touchin_CheckUpDown( BEACON_VIEW_PTR wk, POINT* tp );
+static int touchin_CheckMenu( BEACON_VIEW_PTR wk, POINT* tp );
 
 static void draw_LogNumWindow( BEACON_VIEW_PTR wk );
 static void draw_MenuWindow( BEACON_VIEW_PTR wk, u8 msg_id );
@@ -61,6 +65,8 @@ static u8 panel_FrameColorGet( GAMEBEACON_INFO* info );
 static void panel_ColorPlttSet( BEACON_VIEW_PTR wk, PANEL_WORK* pp, GAMEBEACON_INFO* info );
 static void panel_MsgPrint( BEACON_VIEW_PTR wk, PANEL_WORK* pp, STRBUF* str );
 static void panel_Draw( BEACON_VIEW_PTR wk, PANEL_WORK* pp, GAMEBEACON_INFO* info );
+
+static void list_ScrollReq( BEACON_VIEW_PTR wk, GAMEBEACON_INFO* info, u8 ofs, u8 idx, u8 dir, BOOL new_f );
 
 static void effReq_PanelScroll( BEACON_VIEW_PTR wk, u8 dir, PANEL_WORK* new_pp, PANEL_WORK* ignore_pp );
 static void effReq_PanelSlideIn( BEACON_VIEW_PTR wk, PANEL_WORK* pp );
@@ -99,9 +105,54 @@ void BeaconView_InitialDraw( BEACON_VIEW_PTR wk )
     panel_Draw( wk, pp, wk->tmpInfo );   //パネル描画
     panel_VisibleSet( pp, TRUE );   //パネル描画
   }
-  //矢印の見た目セット
+  //矢印と御礼メニューの見た目セット
   obj_UpDownViewSet( wk );
   obj_ThanksViewSet( wk );
+}
+
+/*
+ *  @brief  メインループ内での入力チェック
+ */
+int BeaconView_CheckInput( BEACON_VIEW_PTR wk )
+{
+  int ret;
+  POINT tp;
+
+  if( !GFL_UI_TP_GetPointTrg( (u32*)&tp.x, (u32*)&tp.y )){
+    return SEQ_MAIN;
+  }
+  
+  //メニューあたり判定
+  ret = touchin_CheckMenu( wk, &tp );
+  if(ret != GFL_UI_TP_HIT_NONE){
+    return SEQ_GPOWER_USE+ret;
+  }
+
+  //パネルあたり判定
+  ret = touchin_CheckPanel( wk, &tp );
+  if(ret != GFL_UI_TP_HIT_NONE){
+    wk->ctrl.target = ret;
+    return SEQ_CALL_DETAIL_VIEW;
+  }
+
+  //上下矢印あたり判定
+  ret = touchin_CheckUpDown( wk, &tp );
+  if(ret != GFL_UI_TP_HIT_NONE){
+    u8 ofs,idx;
+
+    if( ret == SCROLL_UP ){
+      ofs = wk->ctrl.view_top+wk->ctrl.view_max+1;
+    }else{
+      ofs = wk->ctrl.view_top-1;
+    }
+    GAMEBEACON_InfoTblRing_GetBeacon( wk->infoLog, wk->tmpInfo, &wk->tmpTime, ofs );
+    idx = GAMEBEACON_InfoTblRing_Ofs2Idx( wk->infoLog, ofs );
+  
+    //スクロールリクエスト
+    list_ScrollReq( wk, wk->tmpInfo, ofs, idx, ret, FALSE);
+    return SEQ_VIEW_UPDATE;
+  }
+  return SEQ_MAIN;
 }
 
 /*
@@ -141,19 +192,21 @@ BOOL BeaconView_CheckStack( BEACON_VIEW_PTR wk )
     }
     return TRUE;
   }
-
-  //空きパネル検索
-  pp = panel_GetPanelFromDataIndex( wk, PANEL_DATA_BLANK );
-  if( pp == NULL){
-    return TRUE;  //万一のためのチェック(正しい挙動ならNULLはない)
-  }
   obj_ThanksViewSet( wk );
-
   if( wk->ctrl.view_top > 0){ //描画リストがトップでない時はスクロールのみ
     ofs = wk->ctrl.view_top-1;
     GAMEBEACON_InfoTblRing_GetBeacon( wk->infoLog, wk->tmpInfo, &wk->tmpTime, ofs );
     idx = GAMEBEACON_InfoTblRing_Ofs2Idx( wk->infoLog, ofs );
   }
+  //スクロールリクエスト
+  list_ScrollReq( wk, wk->tmpInfo, ofs, idx, SCROLL_DOWN, (wk->ctrl.view_top == 0));
+#if 0
+  //空きパネル検索
+  pp = panel_GetPanelFromDataIndex( wk, PANEL_DATA_BLANK );
+  if( pp == NULL){
+    return TRUE;  //万一のためのチェック(正しい挙動ならNULLはない)
+  }
+
   panel_Entry( pp, ofs, idx );  //パネル新規登録
   panel_Draw( wk, pp, wk->tmpInfo );   //パネル描画
   panel_VisibleSet( pp, TRUE );   //パネル描画
@@ -165,8 +218,7 @@ BOOL BeaconView_CheckStack( BEACON_VIEW_PTR wk )
     effReq_PanelScroll( wk, SCROLL_DOWN, pp, NULL );
   }
   wk->ctrl.view_top = pp->data_ofs;
-
-  //スクロールリクエスト
+#endif
   return TRUE;
 }
 
@@ -176,7 +228,7 @@ BOOL BeaconView_CheckStack( BEACON_VIEW_PTR wk )
  */
 static int calc_Cross( POINT* a, POINT* b ) 
 {
-  return ((int)a->x*b->y - (int)a->y*b->x);
+  return (a->x*b->y - a->y*b->x);
 }
 
 /*
@@ -209,6 +261,129 @@ static BOOL calc_PointInTriangle( POINT* p, TRIANGLE* tri )
     }
   }
   return TRUE;
+}
+
+/*
+ *  @brief  パネルあたり判定
+ */
+static int touchin_CheckPanel( BEACON_VIEW_PTR wk, POINT* tp )
+{
+  int i, ox, oy;
+  TRIANGLE tri;
+
+  for(i = 0; i < wk->ctrl.view_max; i++){
+    ox = ACT_PANEL_OX*i;
+    oy = ACT_PANEL_OY*i;
+    tri.p[0].x = TP_PANEL_X1+ox;  
+    tri.p[0].y = TP_PANEL_Y1+oy;  
+    tri.p[1].x = TP_PANEL_X2+ox;  
+    tri.p[1].y = TP_PANEL_Y2+oy;  
+    tri.p[2].x = TP_PANEL_X3+ox;  
+    tri.p[2].y = TP_PANEL_Y3+oy;  
+
+    if( calc_PointInTriangle( tp, &tri )){
+      return i;
+    }
+    tri.p[0].x = TP_PANEL_X1+ox;  
+    tri.p[0].y = TP_PANEL_Y1+oy;  
+    tri.p[1].x = TP_PANEL_X3+ox;  
+    tri.p[1].y = TP_PANEL_Y3+oy;  
+    tri.p[2].x = TP_PANEL_X4+ox;  
+    tri.p[2].y = TP_PANEL_Y4+oy;  
+
+    if( calc_PointInTriangle( tp, &tri )){
+      return i;
+    }
+  }
+  return GFL_UI_TP_HIT_NONE;
+}
+
+/*
+ *  @brief  上下矢印キーあたり判定
+ */
+static int touchin_CheckUpDown( BEACON_VIEW_PTR wk, POINT* tp )
+{
+  int i,j;
+  TRIANGLE tri;
+  u8 enable = 0;
+
+  static const POINT tbl[2][5] = {
+   {
+     { TP_UP_X1, TP_UP_Y1 },
+     { TP_UP_X2, TP_UP_Y2 },
+     { TP_UP_X3, TP_UP_Y3 },
+     { TP_UP_X4, TP_UP_Y4 },
+     { TP_UP_X5, TP_UP_Y5 },
+   },
+   {
+     { TP_DOWN_X1, TP_DOWN_Y1 },
+     { TP_DOWN_X2, TP_DOWN_Y2 },
+     { TP_DOWN_X3, TP_DOWN_Y3 },
+     { TP_DOWN_X4, TP_DOWN_Y4 },
+     { TP_DOWN_X5, TP_DOWN_Y5 },
+   },
+  };
+  static const u8 point[][3] = {
+   { 0, 1, 4},
+   { 1, 2, 4},
+   { 2, 3, 4},
+  };
+
+  if( wk->ctrl.view_top > 0 ){  //上キーチェック
+    enable |= 1;
+  }
+  if( (wk->ctrl.view_top+wk->ctrl.view_max) < wk->ctrl.max ){
+    enable |= 2;
+  }
+
+  for(i = 0;i < 2;i++){
+    if( !(enable & (i+1))){
+      continue;
+    }
+    for(j = 0;j < 3;j++){
+      tri.p[0] = tbl[i][point[j][0]];
+      tri.p[1] = tbl[i][point[j][1]];
+      tri.p[2] = tbl[i][point[j][2]];
+      if( calc_PointInTriangle( tp, &tri )){
+        return i;
+      }
+    }
+  }
+  return GFL_UI_TP_HIT_NONE;
+}
+
+/*
+ *  @brief  メニューバーあたり判定
+ */
+static int touchin_CheckMenu( BEACON_VIEW_PTR wk, POINT* tp )
+{
+  int i, ret;
+  u8  enable = 4;
+  GFL_UI_TP_HITTBL tbl[2];
+
+  if( wk->my_data.power != GPOWER_ID_NULL ){
+    enable |= 1;
+  }
+  if( wk->ctrl.max > 0 ){
+    enable |= 2;
+  }
+  tbl[1].rect.top = GFL_UI_TP_HIT_END;
+
+  for(i = 0;i < ACT_MENU_NUM;i++){
+    if( !(enable & (1<<i))){
+      continue;
+    }
+    tbl[0].rect.top = ACT_MENU_PY;
+    tbl[0].rect.bottom = tbl[0].rect.top+ACT_MENU_SY;
+    tbl[0].rect.left = ACT_MENU_PX+ACT_MENU_OX*i;
+    tbl[0].rect.right = tbl[0].rect.left+ACT_MENU_SX;
+
+    ret = GFL_UI_TP_HitSelf( tbl, tp->x, tp->y );
+    if(ret != GFL_UI_TP_HIT_NONE) {
+      return i;
+    }
+  }
+  return GFL_UI_TP_HIT_NONE;
 }
 
 /*
@@ -628,6 +803,33 @@ static void  panel_SetPos( PANEL_WORK* pp, s16 x, s16 y )
   act_SetPosition( pp->cIcon, x+ACT_ICON_OX, y+ACT_ICON_OY );
   BmpOam_ActorSetPos( pp->msgOam.oam, x+ACT_MSG_OX, y+ACT_MSG_OY);
 }
+
+
+/*
+ *  @brief  ビュー スクロールリクエスト
+ */
+static void list_ScrollReq( BEACON_VIEW_PTR wk, GAMEBEACON_INFO* info, u8 ofs, u8 idx, u8 dir, BOOL new_f )
+{
+  PANEL_WORK* pp;
+
+  //空きパネル検索
+  pp = panel_GetPanelFromDataIndex( wk, PANEL_DATA_BLANK );
+  if( pp == NULL){
+    return; //万一のためのチェック(正しい挙動ならNULLはない)
+  }
+  panel_Entry( pp, ofs, idx );  //パネル新規登録
+  panel_Draw( wk, pp, wk->tmpInfo );   //パネル描画
+  panel_VisibleSet( pp, TRUE );   //パネル描画
+  
+  //スクロールパターン
+  if( new_f ){  //スライドイン
+    effReq_PanelSlideIn( wk, pp );
+  }else{
+    effReq_PanelScroll( wk, dir, pp, NULL );
+  }
+  wk->ctrl.view_top = pp->data_ofs;
+}
+
 
 /*
  *  @brief  指定したindexのデータが描画ラインにいるかどうか？

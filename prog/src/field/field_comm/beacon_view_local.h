@@ -20,6 +20,11 @@
 enum{
   SEQ_MAIN,
   SEQ_VIEW_UPDATE,
+  SEQ_GPOWER_USE,
+  SEQ_THANK_YOU,
+  SEQ_RETURN_CGEAR,
+  SEQ_CALL_DETAIL_VIEW,
+  SEQ_END,
 };
 
 /////////////////////////////////////
@@ -224,6 +229,8 @@ enum{
 #define ACT_MENU_OX (4*8)
 #define ACT_MENU_OY (0)
 #define ACT_MENU_NUM  (3)
+#define ACT_MENU_SX (24)
+#define ACT_MENU_SY (24)
 
 #define ACT_UP_PX (26*8)
 #define ACT_UP_PY (1*8)
@@ -254,6 +261,52 @@ enum{
   SCROLL_DOWN,
   SCROLL_RIGHT,
 };
+
+/////////////////////////////////////////////
+//タッチパネル
+#define IO_INTERVAL (30*5)
+
+//パネルの矩形 LT,LB,RB,RT
+#define TP_PANEL_X1 (0)
+#define TP_PANEL_Y1 (5)
+#define TP_PANEL_X2 (TP_PANEL_X1+12)
+#define TP_PANEL_Y2 (TP_PANEL_Y1+38)
+#define TP_PANEL_X3 (TP_PANEL_X2+198)
+#define TP_PANEL_Y3 (TP_PANEL_Y2)
+#define TP_PANEL_X4 (TP_PANEL_X1+198)
+#define TP_PANEL_Y4 (TP_PANEL_Y1)
+
+/*
+  0
+1   4
+ 2 3
+*/
+#define TP_UP_X1  (6 + ACT_UP_PX )
+#define TP_UP_Y1  (3 + ACT_UP_PY )
+#define TP_UP_X2  (1 + ACT_UP_PX )
+#define TP_UP_Y2  (12 + ACT_UP_PY )
+#define TP_UP_X3  (9 + ACT_UP_PX )
+#define TP_UP_Y3  (31 + ACT_UP_PY )
+#define TP_UP_X4  (31 + ACT_UP_PX )
+#define TP_UP_Y4  (TP_UP_Y3 + ACT_UP_PY )
+#define TP_UP_X5  (24 + ACT_UP_PX )
+#define TP_UP_Y5  (10 + ACT_UP_PY )
+
+/*
+ 0 4
+1   3 
+  2
+*/
+#define TP_DOWN_X1  (1  + ACT_DOWN_PX )
+#define TP_DOWN_Y1  (1  + ACT_DOWN_PY )
+#define TP_DOWN_X2  (8  + ACT_DOWN_PX )
+#define TP_DOWN_Y2  (22 + ACT_DOWN_PY )
+#define TP_DOWN_X3  (23 + ACT_DOWN_PX )
+#define TP_DOWN_Y3  (30 + ACT_DOWN_PY )
+#define TP_DOWN_X4  (31 + ACT_DOWN_PX )
+#define TP_DOWN_Y4  (22 + ACT_DOWN_PY )
+#define TP_DOWN_X5  (24 + ACT_DOWN_PX )
+#define TP_DOWN_Y5  (1  + ACT_DOWN_PY )
 
 //==============================================================================
 //  構造体定義
@@ -339,9 +392,21 @@ typedef struct _LOG_CTRL{
   u8  view_top;
   u8  view_btm;
   u8  view_max;
+  u8  target;
 
   u8  panel_list[PANEL_VIEW_MAX];
 }LOG_CTRL;
+
+/*
+ *  @brief  セーブデータ他パラメータ
+ */
+typedef struct _MY_DATA{
+  GPOWER_ID power;
+  u32       tr_id;
+  u8        sex;
+  u8        union_char;
+}MY_DATA;
+
 
 ///すれ違い通信状態参照画面管理ワーク
 typedef struct _BEACON_VIEW{
@@ -355,9 +420,11 @@ typedef struct _BEACON_VIEW{
   GAMEBEACON_INFO_TBL*  infoLog;    //ログテーブル
   GAMEBEACON_INFO*      tmpInfo;
   u16                   tmpTime;
+  MY_DATA               my_data;
 
   BOOL      active;
   int       seq;
+  int       io_interval;
   u8        msg_spd;
   LOG_CTRL  ctrl;
 
