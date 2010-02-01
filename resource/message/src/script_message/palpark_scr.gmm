@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="hozumi_yukiko" host="W00211" date="2010-02-01T13:47:14"/>
+	<create user="ariizumi_nobuhiko" host="W00147" date="2010-02-01T14:14:09"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,7 +312,7 @@
 		</language>
 	</columns>
 
-	<dialog left="300" top="228" right="1005" bottom="848" maximized="no" rayout="Vertical2">
+	<dialog left="168" top="228" right="873" bottom="848" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -509,15 +509,6 @@ BOXに6匹以上の空きがある</comment>
 		<language name="JPN_KANJI" width="256"></language>
 	</row>
 
-	<row id="msg_palpark_first_03">
-		<comment>助手</comment>
-		<language name="JPN" width="256">はかせ！
-ちょっといいかしら　いいわよね！　きいて！
-このこ　でんどういりしてる　トレーナーなのよ！
-このなら　アレをうごかせるんじゃないかしら！</language>
-		<language name="JPN_KANJI" width="256"></language>
-	</row>
-
 	<row id="msg_palpark_first_04">
 		<comment>博士</comment>
 		<language name="JPN" width="256">だから　なんどもいっているだろう
@@ -580,8 +571,8 @@ BOXに6匹以上の空きがある</comment>
 	</row>
 
 	<row>
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
 	</row>
 
 	<row id="msg_palpark_15">
