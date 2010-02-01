@@ -137,7 +137,7 @@ static GFL_PROC_RESULT CommBattleCallProc_Main(  GFL_PROC *proc, int *seq, void*
   };
 
   COMM_BTL_DEMO_PROC_WORK * work = mywk;
-  EVENT_BATTLE_CALL_WORK * bcw = pwk;
+  COMM_BATTLE_CALL_PROC_PARAM * bcw = pwk;
   GFL_PROC_MAIN_STATUS up_status;
 
   GF_ASSERT(work);
@@ -259,7 +259,7 @@ static GFL_PROC_RESULT CommBattleCallProc_Main(  GFL_PROC *proc, int *seq, void*
       }
       // 通信対戦後の録画選択画面へ移行(録画しない人も移行します)
       {
-        bcw->btl_rec_sel_param.gamedata  = NULL;//GAMESYSTEM_GetGameData( work->procsys_up );
+        bcw->btl_rec_sel_param.gamedata  = bcw->gdata;
         bcw->btl_rec_sel_param.b_rec     = b_rec;
         GFL_PROC_LOCAL_CallProc( work->procsys_up, FS_OVERLAY_ID( btl_rec_sel ), &BTL_REC_SEL_ProcData, &bcw->btl_rec_sel_param );
       }
@@ -340,7 +340,14 @@ GMEVENT_RESULT EVENT_CommBattleMain(GMEVENT * event, int *  seq, void * work)
   switch (*seq) 
   {
   case 0:
-    GAMESYSTEM_CallProc(gsys, NO_OVERLAY_ID, &CommBattleCommProcData, bcw);
+    {
+      COMM_BATTLE_CALL_PROC_PARAM* prm = &bcw->cbc;
+
+      prm->gdata = GAMESYSTEM_GetGameData( gsys );
+      prm->btl_setup_prm = bcw->btl_setup_prm;
+      prm->demo_prm = bcw->demo_prm;
+      GAMESYSTEM_CallProc(gsys, NO_OVERLAY_ID, &CommBattleCommProcData, prm);
+    }
     (*seq)++;
     break;
 

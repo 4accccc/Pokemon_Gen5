@@ -39,14 +39,29 @@ extern const GFL_PROC_DATA CommBattleCommProcData;
  *								構造体定義
  */
 //=============================================================================
-//==============================================================================
-//  構造体定義
-//==============================================================================
-typedef struct{
-  GAMESYS_WORK * gsys;
+  
+//--------------------------------------------------------------
+///	通信バトル呼び出しPROC
+//==============================================================
+typedef struct {
+  // [IN]
+  GAMEDATA* gdata;
   BATTLE_SETUP_PARAM  *btl_setup_prm;
   COMM_BTL_DEMO_PARAM *demo_prm;
+  // [PRIVATE]
   BTL_REC_SEL_PARAM  btl_rec_sel_param;
+} COMM_BATTLE_CALL_PROC_PARAM;
+
+//==============================================================================
+//  通信バトル呼び出しイベント用ワーク
+//==============================================================================
+typedef struct{
+  // [IN]
+  GAMESYS_WORK * gsys;  
+  BATTLE_SETUP_PARAM  *btl_setup_prm;
+  COMM_BTL_DEMO_PARAM *demo_prm;
+  // [PRIVATE]
+  COMM_BATTLE_CALL_PROC_PARAM cbc;
 }EVENT_BATTLE_CALL_WORK;
 
 //=============================================================================
