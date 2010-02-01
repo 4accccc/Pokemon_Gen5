@@ -306,8 +306,8 @@
 	</tex_image>
 	<tex_image name='accordion.9' format='palette16' original_width='32' original_height='32' index='8' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/accordion/accordion.9.tga' palette_name='accordion' width='32' color0_mode='transparency'>
 		<bitmap size='256'>
-			0888 0000 0000 0000 0000 0000 0000 0000 
-			0888 0000 0000 0000 0000 0000 0000 0000 
+			8888 0000 0000 0000 0000 0000 0000 0000 
+			8888 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 6660 0666 0000 0000 0000 
