@@ -4805,27 +4805,6 @@ static void svflowsub_damage_act_singular(  BTL_SVFLOW_WORK* wk,
       SCQUE_PUT_ACT_WazaEffect( wk->que, atkPos, defPos, wazaParam->wazaID );
     }
 
-
-    // デバッグを簡単にするため必ず大ダメージにする措置
-    #if 0
-    if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L )
-    {
-      u8 pokeID = BPP_GetID(defender);
-      if( pokeID >= BTL_PARTY_MEMBER_MAX )
-      {
-        damage = 999;
-      }
-    }
-    if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R )
-    {
-      u8 pokeID = BPP_GetID(defender);
-      if( pokeID < BTL_PARTY_MEMBER_MAX )
-      {
-        damage = 999;
-      }
-    }
-    #endif
-
     if( BPP_MIGAWARI_IsExist(defender) ){
       scproc_Migawari_Damage( wk, defender, damage );
     }
@@ -4859,7 +4838,10 @@ static void svflowsub_damage_act_singular(  BTL_SVFLOW_WORK* wk,
       fDead = TRUE;
     }
 
-    if( fDead ){ break; }
+    if( fDead ){
+      ++i;
+      break;
+    }
   }
 
   BTL_POKESET_AddWithDamage( &wk->pokesetDamaged, defender, damage_sum );
@@ -4870,8 +4852,8 @@ static void svflowsub_damage_act_singular(  BTL_SVFLOW_WORK* wk,
   }
 
   // ○○回あたった！メッセージ
-  if( fPluralHit && (hit_count > 1)){
-    SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_Hit_PluralTimes, hit_count );
+  if( fPluralHit && (i > 0)){
+    SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_Hit_PluralTimes, i );
   }
 }
 //
