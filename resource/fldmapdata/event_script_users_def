@@ -1,4 +1,4 @@
 #---------------------------------------------------------------
 #	イベント・スクリプト　コンバート対象ユーザー定義
 #---------------------------------------------------------------
-USERS = tamada matsumiya nakatsui masafumi_saitou suginaka_katsunori mai_ando murakami_naoto hozumi_yukiko kagaya iwasawa obata_toshihiro tomoya_takahashi saitou takahashi ohno ariizumi_nobuhiko
+USERS = tamada matsumiya nakatsui masafumi_saitou suginaka_katsunori mizuguchi_mai mai_ando murakami_naoto hozumi_yukiko kagaya iwasawa obata_toshihiro tomoya_takahashi saitou takahashi ohno ariizumi_nobuhiko iwao_kazumasa
