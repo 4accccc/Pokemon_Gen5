@@ -3018,7 +3018,7 @@ static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_ACTI
 
   // 使ったワザのPP減らす（前ターンからロックされている場合は減らさない）
   // @todo 実行できなくてもPP減らすんじゃないか？　じゃないと守るとかがPP減らない。
-  if( !fWazaLock && fWazaExecute ){
+  if( !fWazaLock ){
     u8 wazaIdx = BPP_WAZA_SearchIdx( attacker, orgWaza );
     if( wazaIdx != PTL_WAZA_MAX ){
       scproc_decrementPPUsedWaza( wk, attacker, wazaIdx, &wk->pokesetDamaged );
