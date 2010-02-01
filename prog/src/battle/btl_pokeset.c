@@ -85,7 +85,7 @@ void BTL_POKESET_SortByAgility( BTL_POKESET* set, BTL_SVFLOW_WORK* flowWk )
   u32 i, j;
 
   for(i=0; i<set->count; ++i){
-    set->sortWork[i] = BTL_SVFTOOL_CalcAgility( flowWk, set->bpp[i] );
+    set->sortWork[i] = BTL_SVFTOOL_CalcAgility( flowWk, set->bpp[i], TRUE );
   }
 
   for(i=0; i<set->count; ++i)

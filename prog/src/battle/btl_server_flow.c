@@ -232,7 +232,7 @@ static BOOL scEvent_CheckFlying( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp )
 static u8 sortClientAction( BTL_SVFLOW_WORK* wk, ACTION_ORDER_WORK* order, u32 orderMax );
 static void reqWazaUseForCalcActOrder( BTL_SVFLOW_WORK* wk, ACTION_ORDER_WORK* order );
 static u8 scEvent_GetWazaPriority( BTL_SVFLOW_WORK* wk, WazaID waza, const BTL_POKEPARAM* bpp );
-static u16 scEvent_CalcAgility( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker );
+static u16 scEvent_CalcAgility( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, BOOL fTrickRoomEnable );
 static inline WazaID ActOrder_GetWazaID( const ACTION_ORDER_WORK* wk );
 static ACTION_ORDER_WORK* SearchActOrderByPokeID( BTL_SVFLOW_WORK* wk, u8 pokeID );
 static ACTION_ORDER_WORK* SearchActOrderByWaza( BTL_SVFLOW_WORK* wk, WazaID waza, u8 startIndex );
@@ -1409,7 +1409,7 @@ static u8 sortClientAction( BTL_SVFLOW_WORK* wk, ACTION_ORDER_WORK* order, u32 o
       spPri_B = BTL_SPPRI_B_DEFAULT;
     }
     // すばやさ
-    agility = scEvent_CalcAgility( wk, bpp );
+    agility = scEvent_CalcAgility( wk, bpp, TRUE );
 
     BTL_Printf("行動プライオリティ決定！ Client{%d-%d}'s actionPri=%d, wazaPri=%d, agility=%d\n",
         i, j, actionPri, wazaPri, agility );
@@ -1476,21 +1476,24 @@ static u8 scEvent_GetWazaPriority( BTL_SVFLOW_WORK* wk, WazaID waza, const BTL_P
  *
  * @param   wk
  * @param   attacker
+ * @param   fTrickRoomEnable
  *
  * @retval  u16
  */
 //--------------------------------------------------------------------------
-static u16 scEvent_CalcAgility( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker )
+static u16 scEvent_CalcAgility( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, BOOL fTrickRoomEnable )
 {
   u32 agi = BPP_GetValue( attacker, BPP_AGILITY );
-  BTL_Printf("素の素早さ poke=%d, agi=%d\n", BPP_GetID(attacker), agi);
+
   BTL_EVENTVAR_Push();
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID, BPP_GetID(attacker) );
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_AGILITY, agi );
     BTL_EVENTVAR_SetValue( BTL_EVAR_GEN_FLAG, TRUE ); // まひチェックフラグとして使っている
     BTL_EVENTVAR_SetValue( BTL_EVAR_TRICK_FLAG, FALSE );
     BTL_EVENTVAR_SetMulValue( BTL_EVAR_RATIO, FX32_CONST(1), FX32_CONST(0.1f), FX32_CONST(32) );
+
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_CALC_AGILITY );
+
     agi = BTL_EVENTVAR_GetValue( BTL_EVAR_AGILITY );
     {
       fx32 ratio = BTL_EVENTVAR_GetValue( BTL_EVAR_RATIO );
@@ -1508,11 +1511,15 @@ static u16 scEvent_CalcAgility( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attack
     if( agi > BTL_CALC_AGILITY_MAX ){
       agi = BTL_CALC_AGILITY_MAX;
     }
+
     // トリックルームでひっくりかえる
-    if( BTL_EVENTVAR_GetValue(BTL_EVAR_TRICK_FLAG) )
+    if( fTrickRoomEnable )
     {
-      agi = BTL_CALC_AGILITY_MAX - agi;
+      if( BTL_EVENTVAR_GetValue(BTL_EVAR_TRICK_FLAG) ){
+        agi = BTL_CALC_AGILITY_MAX - agi;
+      }
     }
+
   BTL_EVENTVAR_Pop();
 
   return agi;
@@ -10452,32 +10459,6 @@ BOOL BTL_SVFTOOL_GetThisTurnAction( BTL_SVFLOW_WORK* wk, u8 pokeID, BTL_ACTION_P
 }
 //--------------------------------------------------------------------------------------
 /**
- * [ハンドラ用ツール] このターンの行動プライオリティ決定に使われた素早さの値を取得
- * ※このターンに行動していないポケモンを指定された場合、素のすばやさ値を返す
- *
- * @param   wokk
- * @param   pokeID
- *
- * @retval  u16
- */
-//--------------------------------------------------------------------------------------
-u16 BTL_SVFTOOL_GetThisTurnAgility( BTL_SVFLOW_WORK* wk, u8 pokeID )
-{
-  u32 i;
-  for(i=0; i<wk->numActOrder; ++i)
-  {
-    if( BPP_GetID(wk->actOrder[i].bpp) == pokeID ){
-      return (wk->actOrder[i].priority & 0xffff);
-    }
-  }
-
-  {
-    BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, pokeID );
-    return BPP_GetValue( bpp, BPP_AGILITY );
-  }
-}
-//--------------------------------------------------------------------------------------
-/**
  * [ハンドラ用ツール] 自分のアクションが全体の何番目かを取得
  *
  * @param   wk
@@ -10665,10 +10646,11 @@ BOOL BTL_SVFTOOL_CheckSinkaMae( BTL_SVFLOW_WORK* wk, u8 pokeID )
  * @retval  u16
  */
 //--------------------------------------------------------------------------------------
-u16 BTL_SVFTOOL_CalcAgility( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp )
+u16 BTL_SVFTOOL_CalcAgility( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp, BOOL fTrickRoomEnable )
 {
-  return scEvent_CalcAgility( wk, bpp );
+  return scEvent_CalcAgility( wk, bpp, fTrickRoomEnable );
 }
+
 //--------------------------------------------------------------------------------------
 /**
  * [ハンドラ用ツール] 天候取得

@@ -3333,13 +3333,18 @@ static void handler_GyroBall( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
-    u16 selfAgi = BTL_SVFTOOL_GetThisTurnAgility( flowWk, pokeID );
-    u16 targetAgi = BTL_SVFTOOL_GetThisTurnAgility( flowWk, BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF)  );
+    const BTL_POKEPARAM* bppSelf = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
+    const BTL_POKEPARAM* bppTarget = BTL_SVFTOOL_GetPokeParam( flowWk, BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) );
+
+    u16 selfAgi = BTL_SVFTOOL_CalcAgility( flowWk, bppSelf, FALSE );
+    u16 targetAgi = BTL_SVFTOOL_CalcAgility( flowWk, bppTarget, FALSE );
 
     u32 pow = 1 + (25 * targetAgi / selfAgi);
     if( pow > 150 ){
       pow = 150;
     }
+
+    OS_TPrintf("攻撃側すばやさ=%d, 防御側素早さ=%d,  威力=%d\n", selfAgi, targetAgi, pow );
     BTL_EVENTVAR_RewriteValue( BTL_EVAR_WAZA_POWER, pow );
   }
 }
@@ -8480,6 +8485,7 @@ static void handler_SimpleBeem( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
     u32 targetCnt = BTL_EVENTVAR_GetValue( BTL_EVAR_TARGET_POKECNT );
     BTL_HANDEX_PARAM_CHANGE_TOKUSEI*  param;
     u32 i;
+
     // 対象ポケモンのとくせいを「たんじゅん」に書き換え
     for(i=0; i<targetCnt; ++i)
     {
