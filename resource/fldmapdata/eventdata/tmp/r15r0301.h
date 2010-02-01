@@ -10,5 +10,8 @@
 #define ZONE_R15R0301_EVC_H
 
 #define R15R0301_PARK                      0
+#define R15R0301_ASSISTANTW_01             1
+#define R15R0301_ASSISTANTM_03             2
+#define R15R0301_ASSISTANTW_02             3
 
 #endif //ZONE_R15R0301_EVC_H
