@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ariizumi_nobuhiko" host="W00147" date="2010-02-01T14:14:09"/>
+	<create user="hozumi_yukiko" host="W00211" date="2010-02-01T22:29:54"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,15 +312,15 @@
 		</language>
 	</columns>
 
-	<dialog left="168" top="228" right="873" bottom="848" maximized="no" rayout="Vertical2">
+	<dialog left="18" top="283" right="722" bottom="903" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="0" style="0000" width="530"/>
+		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
+		<band id="0" index="0" style="0000" width="529"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="697"/>
-		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
-		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
+		<band id="2" index="2" style="0000" width="696"/>
+		<band id="3" index="3" style="0000" width="696"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="1" language="JPN_KANJI" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
 	</dialog>
@@ -482,120 +482,209 @@ BOXに6匹以上の空きがある</comment>
 
 	<row id="msg_palpark_first_01">
 		<comment>助手のメッセージ</comment>
-		<language name="JPN" width="256">あらこんにちは　ここにきたということは
-あなた　けんがくしゃね？▼
-え　ちがうの？▽
-よくこんなとこまできたわねぇ▽
-へぇそう　トレーナーなの　たびのとちゅうなの▽
-あら　これがあなたの　トレーナーカード？</language>
-		<language name="JPN_KANJI" width="256"></language>
+		<language name="JPN" width="256">あら　こんにちは！▼
+ここにきた　ということは
+あなた　けんがくしゃ　ね？▼
+え　ちがうの？
+よく　こんなとこまで　きたわねぇ▼
+へぇ　そう　トレーナーなの？
+たびの　とちゅうなの？▼
+あら　これが
+あなたの　トレーナーカード？</language>
+		<language name="JPN_KANJI" width="256">あら　こんにちは！▼
+ここにきた　ということは
+あなた　見学者ね？▼
+え　違うの？
+よく　こんなとこまで　来たわねぇ▼
+へぇ　そう　トレーナーなの？
+旅の　途中なの？▼
+あら　これが
+あなたの　トレーナーカード？</language>
 	</row>
 
 	<row id="msg_palpark_first_02">
 		<comment>助手</comment>
-		<language name="JPN" width="256">ちょちょ　ちょっと
-あなた　でんどういりしてるじゃない！すごいわ！
-あなたならもしかしたら・・・
-ちょっとあなた　ついてきて！</language>
-		<language name="JPN_KANJI" width="256"></language>
+		<language name="JPN" width="256">ちょちょ　ちょっと　あなた！
+でんどういり　してるじゃない！▼
+すごいわ！
+あなたなら　もしかしたら……▼
+ちょっと　あなた　ついてきて！</language>
+		<language name="JPN_KANJI" width="256">ちょちょ　ちょっと　あなた！
+殿堂入り　してるじゃない！▼
+すごいわ！
+あなたなら　もしかしたら……▼
+ちょっと　あなた　着いて来て！</language>
 	</row>
 
 	<row id="msg_palpark_first_03">
 		<comment>助手</comment>
-		<language name="JPN" width="256">「はかせ！
-ちょっといいかしら　いいわよね！　きいて！
-このこ　でんどういりしてる　トレーナーなのよ！
-このこなら　アレを　きっとうごかせるわ！</language>
-		<language name="JPN_KANJI" width="256"></language>
+		<language name="JPN" width="256">はかせ！
+ちょっと　いいかしら？▼
+いいわよね！　きいて！▼
+このこ　なんと　でんどういり　してる
+トレーナー　なのよ！▼
+このこなら　きっと
+アレを　うごかせるわ！</language>
+		<language name="JPN_KANJI" width="256">博士！
+ちょっと　いいかしら？▼
+いいわよね！　きいて！▼
+この子　なんと　殿堂入り　してる
+トレーナー　なのよ！▼
+この子なら　きっと
+アレを　動かせるわ！</language>
 	</row>
 
 	<row id="msg_palpark_first_04">
 		<comment>博士</comment>
-		<language name="JPN" width="256">だから　なんどもいっているだろう
-このはつめいは　たしかにグレイトなものだが
-プロフェッショナルな　トレーナーが
-いななくては・・・
-</language>
-		<language name="JPN_KANJI" width="256"></language>
+		<language name="JPN" width="256">だから　なんども
+いっているだろう！▼
+この　はつめいは
+たしかに　グレイトな　ものだが▼
+プロフェッショナルな
+トレーナーが　いなくては……</language>
+		<language name="JPN_KANJI" width="256">だから　何度も
+いっているだろう！▼
+この　発明は
+たしかに　グレイトな　ものだが▼
+プロフェッショナルな
+トレーナーが　いなくては……</language>
 	</row>
 
 	<row id="msg_palpark_first_05">
 		<language name="JPN" width="256">って
-でんどういりしてるとな！
-ファンタスティック！
-ファンタスティコー！
-フーーーーーーーーーー！
-なんて日だ　グレイト！しんじられない！
-やあ　ぼくはアンドリュー・パーク博士！
-きみ！　えーと・・</language>
-		<language name="JPN_KANJI" width="256"></language>
+でんどういり　してるとな！▼
+ファンタスティック！▼
+ファンタスティコー！▼
+フーーーーーーーーーー！▼
+なんて　すばらしい　ひだ！
+グレイト！　しんじられない！▼
+やあ　ぼくは
+アンドリュー・パークはかせ！▼
+きみ！
+えーと……</language>
+		<language name="JPN_KANJI" width="256">って
+殿堂入り　してるとな！▼
+ファンタスティック！▼
+ファンタスティコー！▼
+フーーーーーーーーーー！▼
+なんて　すばらしい　ひだ！
+グレイト！　信じられない！▼
+やあ　ぼくは
+アンドリュー・パーク博士！▼
+きみ！
+えーと……</language>
 	</row>
 
 	<row id="msg_palpark_first_06">
 		<comment>助手</comment>
-		<language name="JPN" width="256">○○（トレーナー名）　よ！</language>
-		<language name="JPN_KANJI" width="256"></language>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]　よ！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]　よ！</language>
 	</row>
 
 	<row id="msg_palpark_first_07">
 		<comment>博士</comment>
-		<language name="JPN" width="256">○○くん！　れきしをうごかす　だいじっけんに
-さんかしないかい！？
-ここのそうちはね　エネルギーパーティクルの
-・・・のDSという・・・・モレキュールの・・・
-２つよういして・・とおくにいるポケモンと・・・
-フリークエンシーをマッチングすると・・・
-レディオアクティブな・・・・・アルファが・・・・
-ポケモンが・・・ファンタスティックに・・・</language>
-		<language name="JPN_KANJI" width="256"></language>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]くん！▼
+れきしを　うごかす　だいじっけんに
+さんか　しないかい！？▼
+ここの　そうちはね
+エネルギーパーティクルの　……の▽
+ＤＳという……　モレキュールの……▼
+２つ　よういして……
+とおくにいる　ポケモンと……▼
+フリークエンシーを
+マッチングすると……▼
+レディオアクティブな……
+アルファが……　ポケモンが……▽
+ファンタスティックに……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]くん！▼
+歴史を　動かす　大実験に
+参加しないかい！？▼
+ここの　装置はね
+エネルギーパーティクルの　……の▽
+ＤＳという……　モレキュールの……▼
+２つ　用意して……
+遠くにいる　ポケモンと……▼
+フリークエンシーを
+マッチングすると……▼
+レディオアクティブな……
+アルファが……　ポケモンが……▽
+ファンタスティックに……</language>
 	</row>
 
 	<row id="msg_palpark_first_08">
 		<comment>助手</comment>
-		<language name="JPN" width="256">つまりね　このそうちを　つかえば
-ポケモンを　べつのちほうから
-もってこられるかもしれないの
-ただし　ポケモンたちが　もっているどうぐは
-もってこられないわ　あんぜんにつれてくるのは
-てぶらが　いちばんなのよ</language>
-		<language name="JPN_KANJI" width="256"></language>
+		<language name="JPN" width="256">つまりね　この　そうちを　つかえば
+ポケモンを　べつの　ちほうから▽
+つれてこられる　かもしれないの▼
+ただし　ポケモンたちが　もっている
+どうぐは　もってこられないわ！▼
+あんぜんに　つれてくるのは
+てぶらが　いちばん　なのよ</language>
+		<language name="JPN_KANJI" width="256">つまりね　この　装置を　使えば
+ポケモンを　別の　地方から▽
+連れてこられる　かもしれないの▼
+ただし　ポケモンたちが　持っている
+どうぐは　持ってこられないわ！▼
+安全に　連れてくるのは
+てぶらが　一番　なのよ</language>
 	</row>
 
 	<row id="msg_palpark_first_09">
 		<comment>博士</comment>
-		<language name="JPN" width="256">・・・というわけでユー！
-ファンタスティック　ポケモントレーナー！▼
+		<language name="JPN" width="256">……というわけで　ユー！▼
+ファンタスティック
+ポケモントレーナー！▼
 せいきの　だいじっけんに
-つきあってくれるかい？</language>
-		<language name="JPN_KANJI" width="256"></language>
-	</row>
-
-	<row>
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
+つきあって　くれるかい？</language>
+		<language name="JPN_KANJI" width="256">……というわけで　ユー！▼
+ファンタスティック
+ポケモントレーナー！▼
+世紀の　大実験に
+つきあって　くれるかい？</language>
 	</row>
 
 	<row id="msg_palpark_15">
 		<comment>助手</comment>
-		<language name="JPN" width="256">「ポケモンがもっているどうぐは　もってこられないわあんぜんにてんそうするには　てぶらがいちばんなの　まれに　てんそうできないポケモンも　いるみたいだけど　そのときは　パーク博士が　説明してくれるわ」</language>
-		<language name="JPN_KANJI" width="256"></language>
+		<language name="JPN" width="256">ポケモンが　もっている
+どうぐは　もってこられないわ▼
+あんぜんに　てんそう　するには
+てぶらが　いちばんなの▼
+まれに　てんそうできない
+ポケモンも　いるみたいだけど▼
+そのときは　パークはかせが
+せつめい　してくれるわ</language>
+		<language name="JPN_KANJI" width="256">ポケモンが　持っている
+道具は　持ってこられないわ▼
+安全に　転送するには
+てぶらが　一番なの▼
+まれに　転送できない
+ポケモンも　いるみたいだけど▼
+そのときは　パーク博士が
+説明してくれるわ</language>
 	</row>
 
 	<row id="msg_palpark_16">
 		<comment>研究者A</comment>
-		<language name="JPN" width="256">ぼくのこの研究で　100年先の人にも200年先の人にも影響を与えたい！</language>
-		<language name="JPN_KANJI" width="256"></language>
+		<language name="JPN" width="256">わたしの　この　けんきゅうで
+１００ねんさきの　ひとにも▽
+２００ねんさきの　ひとにも▽
+えいきょうを　あたえたい！</language>
+		<language name="JPN_KANJI" width="256">わたしの　この　研究で
+１００年先の　人にも▽
+２００年先の　人にも▽
+影響を　与えたい！</language>
 	</row>
 
 	<row id="msg_palpark_17">
 		<comment>研究者B</comment>
-		<language name="JPN" width="256">ここでは　パーク転送システムの　モニターをしているんだ　ポケモンになにか　あったらいけないからね！</language>
-		<language name="JPN_KANJI" width="256"></language>
-	</row>
-
-	<row id="msg_palpark_18">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
+		<language name="JPN" width="256">ここでは　パークてんそうシステムの
+モニターを　しているんだ▼
+ポケモンに　なにか　あったら
+いけないからね！</language>
+		<language name="JPN_KANJI" width="256">ここでは　パーク転送システムの
+モニターを　しているんだ▼
+ポケモンに　なにか　あったら
+いけないからね！</language>
 	</row>
 
 	<flowchart-group-list>
