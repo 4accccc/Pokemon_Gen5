@@ -1,5 +1,5 @@
 #event data
-#save date:2010/02/01 19:16:15
+#save date:2010/02/01 23:01:07
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r15r0301.wms
 #SECTION START:OBJ_EVENT
@@ -86,7 +86,7 @@ EV_TYPE_NORMAL
 #Flag Name
 0
 #Event Script Name
-SCRID_DUMMY
+SCRID_PALPARK_ASSISTANTM_03
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
@@ -117,9 +117,9 @@ EV_TYPE_NORMAL
 #Flag Name
 0
 #Event Script Name
-SCRID_DUMMY
+SCRID_PALPARK_ASSISTANTW_02
 #Direction Type Number
-DIR_RIGHT
+DIR_DOWN
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -153,7 +153,24 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
+1
+#event number: 0
+#Pos Event Label
+POSID_PALPARK_FIRST
+#Pos Script Name
+SCRID_POS_PALPARK_RECEPTION
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+WK_SCENE_R15R0301
+#Event Trigger Work Value
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-104 0 -104
+#size
+3 1
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
