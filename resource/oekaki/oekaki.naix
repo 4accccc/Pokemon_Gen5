@@ -1,0 +1,26 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: oekaki.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_OEKAKI_NAIX_
+#define NARC_OEKAKI_NAIX_
+
+enum {
+	NARC_oekaki_oekaki_m_NCLR = 0,
+	NARC_oekaki_oekaki_s_NCLR = 1,
+	NARC_oekaki_oekaki_m_NCGR = 2,
+	NARC_oekaki_oekaki_m_obj_NCGR = 3,
+	NARC_oekaki_oekaki_s_NCGR = 4,
+	NARC_oekaki_oekaki_m_obj_NCER = 5,
+	NARC_oekaki_oekaki_m_NSCR = 6,
+	NARC_oekaki_oekaki_s_NSCR = 7,
+	NARC_oekaki_oekaki_m_obj_NANR = 8
+};
+
+/* NARC_OEKAKI_NAIX_ */
+#endif
