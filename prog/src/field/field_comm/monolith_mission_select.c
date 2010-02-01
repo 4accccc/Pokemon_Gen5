@@ -374,6 +374,7 @@ static GFL_PROC_RESULT MonolithMissionSelectProc_Main( GFL_PROC * proc, int * se
       if(GFL_UI_TP_GetTrg() || (GFL_UI_KEY_GetTrg() & (PAD_BUTTON_DECIDE | PAD_BUTTON_CANCEL))){
         _Clear_MsgStream(mmw);
         if((*seq) == SEQ_ORDER_OK_STREAM_WAIT){
+          MISSION_SetMissionEntry(&appwk->parent->intcomm->mission);  //受注者の為、参加セット
           mmw->order_end = TRUE;
           *seq = SEQ_FINISH;
         }

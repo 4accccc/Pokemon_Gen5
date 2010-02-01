@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsuda" host="W00142" date="2010-01-23T20:20:25"/>
+	<create user="matsuda" host="W00142" date="2010-01-26T12:31:58"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -499,6 +499,91 @@
 ・子プレイヤー３</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:3]の　パレスに　います</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:3]の　パレスに　います</language>
+	</row>
+
+	<row id="msg_invasion_info_000" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>状況メッセージ</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]が　[1:00:トレーナー名:1]の
+パレスに　しんにゅう　しました</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]が　[1:00:トレーナー名:1]の
+パレスに　しんにゅう　しました</language>
+	</row>
+
+	<row id="msg_invasion_info_001" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>状況メッセージ</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]が
+じぶんのパレスに　もどりました</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]が
+じぶんのパレスに　もどりました</language>
+	</row>
+
+	<row id="msg_invasion_info_002" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>状況メッセージ</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]の　パレスと　つながりました</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]の　パレスと　つながりました</language>
+	</row>
+
+	<row id="msg_invasion_info_003" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>状況メッセージ</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]は　かえっていきました</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は　かえっていきました</language>
+	</row>
+
+	<row id="msg_invasion_info_004" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>状況メッセージ</comment>
+		<language name="JPN" width="256">まもなく　ミッションを　かいしします
+さんかしゃは　さんかを　おしてください</language>
+		<language name="JPN_KANJI" width="256">まもなく　ミッションを　かいしします
+さんかしゃは　さんかを　おしてください</language>
+	</row>
+
+	<row id="msg_invasion_info_005" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>状況メッセージ</comment>
+		<language name="JPN" width="256">まもなく　ミッションを　かいしします
+しばらく　おまちください</language>
+		<language name="JPN_KANJI" width="256">まもなく　ミッションを　かいしします
+しばらく　おまちください</language>
+	</row>
+
+	<row id="msg_invasion_info_006" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>状況メッセージ</comment>
+		<language name="JPN" width="256">ミッションを　しているようです</language>
+		<language name="JPN_KANJI" width="256">ミッションを　しているようです</language>
+	</row>
+
+	<row id="msg_invasion_info_007" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>状況メッセージ</comment>
+		<language name="JPN" width="256">ミッションを　クリアしました</language>
+		<language name="JPN_KANJI" width="256">ミッションを　クリアしました</language>
+	</row>
+
+	<row id="msg_invasion_info_008" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>状況メッセージ</comment>
+		<language name="JPN" width="256">ミッションを　しっぱいしました</language>
+		<language name="JPN_KANJI" width="256">ミッションを　しっぱいしました</language>
+	</row>
+
+	<row id="msg_invasion_info_009" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>状況メッセージ</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]は　[1:00:トレーナー名:1]の
+パレスから　パワーをもらった</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は　[1:00:トレーナー名:1]の
+パレスから　パワーをもらった</language>
+	</row>
+
+	<row id="msg_invasion_info_010" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">[1:00:トレーナー名:0]は　じぶんの
+パレスから　パワーをもらった</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は　じぶんの
+パレスから　パワーをもらった</language>
+	</row>
+
+	<row id="msg_invasion_info_011" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>状況メッセージ</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]は
+ふしぎなコインを　ひろった</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は
+ふしぎなコインを　ひろった</language>
 	</row>
 
 	<row id="msg_invasion_mission_000" back-color="#ffff80,,,,,,,,,,,,,,,,,">

@@ -27,6 +27,7 @@
 #include "message.naix"
 #include "msg/msg_invasion.h"
 #include "system/bmp_oam.h"
+#include "intrude_mission_field.h"
 
 
 //==============================================================================
@@ -73,6 +74,7 @@ enum{
   INTSUB_ACTOR_CUR_S_MAX = INTSUB_ACTOR_CUR_S_3,
   
   INTSUB_ACTOR_CUR_L,       ///<自分の居場所を指す
+  INTSUB_ACTOR_ENTRY,       ///<「参加」ボタン
   
 //  INTSUB_ACTOR_MARK,        ///<自分のいるエリアを指す
 
@@ -137,9 +139,10 @@ enum{
   SOFTPRI_AREA = 50,
   SOFTPRI_CUR_S = 20,
   SOFTPRI_CUR_L = 19,
-  SOFTPRI_LV_NUM = 5,
-  SOFTPRI_POINT_NUM = 5,
-  SOFTPRI_INFOMSG = 1,
+  SOFTPRI_LV_NUM = 10,
+  SOFTPRI_POINT_NUM = 10,
+  SOFTPRI_INFOMSG = 8,
+  SOFTPRI_ENTRY_BUTTON = 5,
 };
 ///アクター共通BGプライオリティ
 #define BGPRI_ACTOR_COMMON      (2)
@@ -265,7 +268,8 @@ typedef struct _INTRUDE_SUBDISP{
   
   u8 title_print_type;    ///<_TITLE_PRINT_xxx
   u8 infomsg_trans_req;
-  u8 padding[2];
+  u8 mission_ready_msg_seq;
+  u8 mission_exe_msg_seq;
 }INTRUDE_SUBDISP;
 
 
@@ -290,6 +294,7 @@ static void _IntSub_ActorCreate_CursorS(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *h
 static void _IntSub_ActorCreate_CursorL(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *handle);
 static void _IntSub_ActorCreate_LvNum(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *handle);
 static void _IntSub_ActorCreate_PointNum(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *handle);
+static void _IntSub_ActorCreate_EntryButton(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *handle);
 static void _IntSub_ActorUpdate_TouchTown(
   INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_PTR intcomm, OCCUPY_INFO *area_occupy);
 static void _IntSub_ActorUpdate_Area(
@@ -297,13 +302,15 @@ static void _IntSub_ActorUpdate_Area(
 static void _IntSub_ActorUpdate_CursorS(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_PTR intcomm, OCCUPY_INFO *area_occupy);
 static void _IntSub_ActorUpdate_CursorL(
   INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_PTR intcomm, OCCUPY_INFO *area_occupy);
+static void _IntSub_ActorUpdate_EntryButton(INTRUDE_SUBDISP_PTR intsub, 
+  INTRUDE_COMM_SYS_PTR intcomm, OCCUPY_INFO *area_occupy);
 static void _IntSub_ActorUpdate_LvNum(
   INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_PTR intcomm, OCCUPY_INFO *area_occupy);
 static void _IntSub_ActorUpdate_PointNum(
   INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_PTR intcomm, OCCUPY_INFO *area_occupy);
 static OCCUPY_INFO * _IntSub_GetArreaOccupy(INTRUDE_COMM_SYS_PTR intcomm, INTRUDE_SUBDISP_PTR intsub);
 static void _IntSub_TitleMsgUpdate(INTRUDE_COMM_SYS_PTR intcomm, INTRUDE_SUBDISP_PTR intsub);
-static void _IntSub_InfoMsgUpdate(INTRUDE_SUBDISP_PTR intsub);
+static void _IntSub_InfoMsgUpdate(INTRUDE_COMM_SYS_PTR intcomm, INTRUDE_SUBDISP_PTR intsub);
 static u8 _IntSub_GetProfileRecvNum(INTRUDE_COMM_SYS_PTR intcomm);
 static u8 _IntSub_TownPosGet(ZONEID zone_id, GFL_CLACTPOS *dest_pos, int net_id);
 static void _SetRect(int x, int y, int half_size_x, int half_size_y, GFL_RECT *rect);
@@ -469,13 +476,14 @@ void INTRUDE_SUBDISP_Update(INTRUDE_SUBDISP_PTR intsub)
   
   //インフォメーションメッセージ
   _IntSub_TitleMsgUpdate(intcomm, intsub);
-  _IntSub_InfoMsgUpdate(intsub);
+  _IntSub_InfoMsgUpdate(intcomm, intsub);
   
   //アクター更新
   _IntSub_ActorUpdate_TouchTown(intsub, intcomm, area_occupy);
   _IntSub_ActorUpdate_Area(intsub, intcomm, area_occupy);
   _IntSub_ActorUpdate_CursorS(intsub, intcomm, area_occupy);
   _IntSub_ActorUpdate_CursorL(intsub, intcomm, area_occupy);
+  _IntSub_ActorUpdate_EntryButton(intsub, intcomm, area_occupy);
   _IntSub_ActorUpdate_LvNum(intsub, intcomm, area_occupy);
   _IntSub_ActorUpdate_PointNum(intsub, intcomm, area_occupy);
 
@@ -755,6 +763,7 @@ static void _IntSub_ActorCreate(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *handle)
   _IntSub_ActorCreate_CursorL(intsub, handle);
   _IntSub_ActorCreate_LvNum(intsub, handle);
   _IntSub_ActorCreate_PointNum(intsub, handle);
+  _IntSub_ActorCreate_EntryButton(intsub, handle);
 }
 
 //--------------------------------------------------------------
@@ -964,6 +973,29 @@ static void _IntSub_ActorCreate_PointNum(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *
   }
 }
 
+//--------------------------------------------------------------
+/**
+ * 参加ボタンアクター生成
+ *
+ * @param   intsub		
+ * @param   handle		
+ */
+//--------------------------------------------------------------
+static void _IntSub_ActorCreate_EntryButton(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *handle)
+{
+  static const GFL_CLWK_DATA head = {
+  	0x1c*8, 0x10*8,             //X, Y座標
+  	PALACE_ACT_ANMSEQ_BTN,      //アニメーションシーケンス
+  	SOFTPRI_ENTRY_BUTTON,       //ソフトプライオリティ
+  	BGPRI_ACTOR_COMMON,         //BGプライオリティ
+  };
+  
+  intsub->act[INTSUB_ACTOR_ENTRY] = GFL_CLACT_WK_Create(intsub->clunit, 
+    intsub->index_cgr, intsub->index_pltt, intsub->index_cell, 
+    &head, CLSYS_DEFREND_SUB, HEAPID_FIELD_SUBSCREEN);
+  GFL_CLACT_WK_SetDrawEnable(intsub->act[INTSUB_ACTOR_ENTRY], FALSE);  //表示OFF
+}
+
 //==============================================================================
 //  更新
 //==============================================================================
@@ -1160,6 +1192,36 @@ static void _IntSub_ActorUpdate_CursorL(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM
 
 //--------------------------------------------------------------
 /**
+ * 更新処理：参加しますボタン
+ *
+ * @param   intsub		
+ * @param   intcomm		
+ * @param   area_occupy		
+ */
+//--------------------------------------------------------------
+static void _IntSub_ActorUpdate_EntryButton(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_PTR intcomm, OCCUPY_INFO *area_occupy)
+{
+  MISSION_STATUS m_st;
+  
+  m_st = MISSION_FIELD_CheckStatus(&intcomm->mission);
+  switch(m_st){
+  case MISSION_STATUS_NULL:
+  case MISSION_STATUS_ENTRY:
+  case MISSION_STATUS_READY:
+  case MISSION_STATUS_EXE:
+    GFL_CLACT_WK_SetDrawEnable(intsub->act[INTSUB_ACTOR_ENTRY], FALSE);
+    break;
+  case MISSION_STATUS_NOT_ENTRY:
+    GFL_CLACT_WK_SetDrawEnable(intsub->act[INTSUB_ACTOR_ENTRY], TRUE);
+    break;
+  default:
+    GF_ASSERT(0);
+    return;
+  }
+}
+
+//--------------------------------------------------------------
+/**
  * 更新処理：レベル数値
  *
  * @param   intsub		
@@ -1263,12 +1325,16 @@ static void _IntSub_TitleMsgUpdate(INTRUDE_COMM_SYS_PTR intcomm, INTRUDE_SUBDISP
  * @param   intsub		
  */
 //--------------------------------------------------------------
-static void _IntSub_InfoMsgUpdate(INTRUDE_SUBDISP_PTR intsub)
+static void _IntSub_InfoMsgUpdate(INTRUDE_COMM_SYS_PTR intcomm, INTRUDE_SUBDISP_PTR intsub)
 {
   GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(intsub->gsys);
   GAME_COMM_INFO_MESSAGE infomsg;
   int k;
-  
+  const MISSION_DATA *md;
+#if 0
+  MISSION_STATUS mission_status;
+#endif
+
   if(intsub->infomsg_trans_req == TRUE){
     return;
   }
@@ -1277,7 +1343,26 @@ static void _IntSub_InfoMsgUpdate(INTRUDE_SUBDISP_PTR intsub)
     return;
   }
   
-  if(GameCommInfo_GetMessage(game_comm, &infomsg) == TRUE){
+  md = MISSION_GetRecvData(&intcomm->mission);
+  if(md != NULL){ //ミッション発動中の場合はミッションを表示
+#if 0
+    if(MISSION_FIELD_CheckStatus(mission) == MISSION_STATUS_READY){
+#else
+    if(0){
+#endif
+      intsub->mission_exe_msg_seq = 0;
+      switch(intsub->mission_ready_msg_seq){
+      case 0:
+        break;
+      }
+    }
+    else{
+      intsub->mission_ready_msg_seq = 0;
+    }
+  }
+  else if(GameCommInfo_GetMessage(game_comm, &infomsg) == TRUE){
+    intsub->mission_exe_msg_seq = 0;
+    intsub->mission_ready_msg_seq = 0;
     GFL_MSG_GetString(intsub->msgdata, infomsg.message_id, intsub->strbuf_temp );
     for(k = 0 ; k < INFO_WORDSET_MAX; k++){
       if(infomsg.name[k]!=NULL){

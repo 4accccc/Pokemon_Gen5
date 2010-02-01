@@ -305,6 +305,7 @@ BOOL MISSION_SetMissionData(MISSION_SYSTEM *mission, const MISSION_DATA *src)
   
   //親の場合、既にmisison_noはセットされているので判定の前に受信フラグをセット
   mission->start_timer = GFL_RTC_GetTimeBySecond();
+  mission->mine_entry = FALSE;
   if(mdata->accept_netid != INTRUDE_NETID_NULL){
     return new_mission;
   }
@@ -408,6 +409,38 @@ MISSION_DATA * MISSION_GetRecvData(MISSION_SYSTEM *mission)
     return NULL;
   }
   return &mission->data;
+}
+
+//==================================================================
+/**
+ * ミッション参加フラグをセットする
+ *
+ * @param   mission		
+ */
+//==================================================================
+void MISSION_SetMissionEntry(MISSION_SYSTEM *mission)
+{
+  if(MISSION_RecvCheck(mission) == TRUE){
+    mission->mine_entry = TRUE;
+    OS_TPrintf("ミッション参加フラグセット\n");
+  }
+}
+
+//==================================================================
+/**
+ * ミッション参加フラグを取得する
+ *
+ * @param   mission		
+ *
+ * @retval  BOOL		TRUE:ミッションに参加している
+ */
+//==================================================================
+BOOL MISSION_GetMissionEntry(const MISSION_SYSTEM *mission)
+{
+  if(MISSION_RecvCheck(mission) == TRUE){
+    return mission->mine_entry;
+  }
+  return FALSE;
 }
 
 //==================================================================
@@ -605,6 +638,7 @@ static void MISSION_SetMissionFail(MISSION_SYSTEM *mission, int fail_netid)
   result->mission_fail = TRUE;
   mission->result_send_req = TRUE;
   mission->send_mission_start = _SEND_MISSION_START_NULL;
+  mission->mine_entry = FALSE;
   OS_TPrintf("ミッション失敗をセット\n");
 }
 

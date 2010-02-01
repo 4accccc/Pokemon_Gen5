@@ -267,7 +267,7 @@ typedef struct{
   u8 data_send_req;           ///<TRUE:ミッションデータの送信を行う
   u8 result_send_req;         ///<TRUE:ミッションデータの送信を行う
   u8 send_mission_start;      ///<準備期間終了。ミッション開始を送信(_SEND_MISSION_START_xxx)
-  u8 padding;
+  u8 mine_entry;              ///<TRUE:ミッション参加している
 
   //子が持つデータ
   u8 parent_data_recv;        ///<TRUE:親からミッションデータを受信
