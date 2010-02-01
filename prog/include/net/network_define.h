@@ -240,6 +240,13 @@ enum NetworkCommandHeaderNo_e {
 #define NET_SEND_SIZE_STANDARD (96)
 
 
+typedef enum{
+  NHTTP_POKECHK_RANDOMMATCH = 0,//ランダムマッチ      │POKEMON_PARAM         │6                 │220     │
+  NHTTP_POKECHK_GTS,   //GTS                 │POKEMON_PASO_PARAM    │1                 │136     │
+  NHTTP_POKECHK_GTSNEGO,       // GTSネゴシエーション │POKEMON_PASO_PARAM    │3                 │136     │
+  NHTTP_POKECHK_VIDIO,   //     │バトルビデオ        │POKE_BATTLEVIDEO_PARAM│12                │108     │
+  NHTTP_POKECHK_SUBWAY,  // │バトルサブウェイ    │_B_TOWER_POKEMON      │3                 │56      │
+} NHTTP_POKECHK_ENUM;
 
 #include "net_irc.h"
 
