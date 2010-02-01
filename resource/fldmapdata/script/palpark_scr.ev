@@ -10,6 +10,7 @@
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_palpark_scr.h"
   .include  "palpark_scr_local.h"
+  .include  "r15r0301.h"
 
 //----------------------------------------------------------------------
 //               スクリプトテーブル
@@ -127,7 +128,8 @@ play_palpark:
   _BALLOONWIN_TALKOBJ_MSG( msg_palpark_08 )
   _BALLOONWIN_CLOSE()
 
-  //主人公アニメ    todo
+  //主人公マシンインアニメ
+  _CALL player_in_anm
 
   //「はじめるよ」
   _BALLOONWIN_TALKOBJ_MSG( msg_palpark_09 )
@@ -136,7 +138,8 @@ play_palpark:
   //パルパークコール (内部でフェードアウト＞アプリフェードインまでやる)
   _PALPARK_CALL()
 
-  //主人公アニメ    todo
+  //主人公マシンアウトアニメ
+  _CALL player_out_anm
 
   //終了状態取得
   _GET_PALPARK_VALUE_FINISH_STATE(palpark_retval)
@@ -208,6 +211,83 @@ score_msg:
 
 _RET
 
+//主人公マシンイン
+player_in_anm:
+  //博士はける
+  _OBJ_ANIME( R15R0301_PARK, anm_doc_in )
+	_OBJ_ANIME_WAIT()
+  //自機移動
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_in )
+	_OBJ_ANIME_WAIT()
+  //博士マシンいじるアニメ
+  _OBJ_ANIME( R15R0301_PARK, anm_doc_work )
+	_OBJ_ANIME_WAIT()
+_RET
+
+//主人公マシンアウト
+player_out_anm:
+  //自機移動
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_out )
+	_OBJ_ANIME_WAIT()
+  //博士入り口にもどる
+  _OBJ_ANIME( R15R0301_PARK, anm_doc_out )
+	_OBJ_ANIME_WAIT()
+  //自機が博士の方を向く
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_turn )
+	_OBJ_ANIME_WAIT()
+_RET
+
+//--------------------------------------------------------------------
+//博士はける
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_doc_in
+	_ANIME_DATA	AC_WALK_U_8F,1
+  _ANIME_DATA	AC_WALK_L_8F,1
+  _ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//自機マシンイン
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_in
+	_ANIME_DATA	AC_WALK_U_8F,3
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//博士マシン起動
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_doc_work
+	_ANIME_DATA	AC_WALK_U_8F,1
+  _ANIME_DATA	AC_WALK_D_8F,1
+  _ANIME_DATA	AC_WALK_R_8F,2
+  _ANIME_DATA	AC_WALK_U_8F,1
+  _ANIME_DATA	AC_WALK_D_8F,1
+  _ANIME_DATA	AC_WALK_L_8F,2
+  _ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//自機マシンアウト
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_out
+	_ANIME_DATA	AC_WALK_D_8F,3
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//博士もどる
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_doc_out
+	_ANIME_DATA	AC_WALK_R_8F,1
+  _ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//自機が博士の方を向く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_turn
+  _ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0  
+  
 //---------------------------------------------------------
 
 //初回アニメイベント
@@ -229,5 +309,30 @@ first_anime_evt:
   _BALLOONWIN_TALKOBJ_MSG( msg_palpark_first_08 )
   _BALLOONWIN_CLOSE()
 _RET
+
+/************************************************************/
+/*						助手								*/
+/************************************************************/
+EVENT_START   ev_palpark_assistantw_01
+	//「道具はNG」
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_palpark_15 )
+EVENT_END
+
+/************************************************************/
+/*						研究員A								*/
+/************************************************************/
+EVENT_START   ev_palpark_assistantw_02
+	//「100年先」
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_palpark_16 )
+EVENT_END
+
+/************************************************************/
+/*						研究員B								*/
+/************************************************************/
+EVENT_START   ev_palpark_assistantm_03
+	//「モニターしている」
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_palpark_17 )
+EVENT_END
+
 
 
