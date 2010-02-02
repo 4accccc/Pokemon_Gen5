@@ -94,7 +94,9 @@ struct _BTL_CLIENT {
   const void*    returnDataPtr;
   u32            returnDataSize;
   u32            dummyReturnData;
-  u32            cmdLimitTime;
+  u16            cmdLimitTime;
+  u16            gameLimitTime;
+
 
   const BTL_PARTY*  myParty;
   u8                numCoverPos;    ///< 担当する戦闘ポケモン数
@@ -187,6 +189,7 @@ static BOOL SubProc_AI_SelectPokemon( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_REC_SelectPokemon( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_UI_RecordData( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_UI_WinToTrainer( BTL_CLIENT* wk, int* seq );
+static BOOL SubProc_UI_NotifyTimeUp( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_REC_ServerCmd( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq );
 static BOOL scProc_ACT_MemberOut( BTL_CLIENT* wk, int* seq, const int* args );
@@ -301,6 +304,7 @@ BTL_CLIENT* BTL_CLIENT_Create(
   wk->commWaitInfoOn = FALSE;
   wk->shooterEnergy = 0;
   wk->cmdLimitTime = 0;
+  wk->gameLimitTime = 0;
   // @todo デバッグ用一時措置（シューターフル充電）
 //  wk->shooterEnergy = BTL_SHOOTER_ENERGY_MAX;
 
@@ -455,6 +459,9 @@ static ClientSubProc getSubProc( BTL_CLIENT* wk, BtlAdapterCmd cmd )
 
     { BTL_ACMD_EXIT_WIN_TRAINER,
       { SubProc_UI_WinToTrainer,   NULL,  NULL }, },
+
+    { BTL_ACMD_NOTIFY_TIMEUP,
+      { SubProc_UI_NotifyTimeUp,   NULL,  NULL }, },
   };
 
   int i;
@@ -484,6 +491,25 @@ u8 BTL_CLIENT_GetEscapeClientID( const BTL_CLIENT* wk )
 {
   return wk->escapeClientID;
 }
+
+//=============================================================================================
+/**
+ * ゲーム制限時間の終了チェック
+ *
+ * @param   wk
+ *
+ * @retval  BOOL    ゲームに制限時間が設定されており、かつそれが終わっている場合にTRUE
+ */
+//=============================================================================================
+BOOL BTL_CLIENT_IsGameTimeOver( const BTL_CLIENT* wk )
+{
+  if( wk->gameLimitTime )
+  {
+    return BTLV_EFFECT_IsZero( BTLV_TIMER_TYPE_GAME_TIME );
+  }
+  return FALSE;
+}
+
 //------------------------------------------------------------------------------------------------------
 //------------------------------------------------------------------------------------------------------
 
@@ -503,13 +529,14 @@ static BOOL SubProc_UI_Setup( BTL_CLIENT* wk, int* seq )
   case 1:
     if( BTLV_WaitCommand(wk->viewCore) )
     {
-      u32 gameTime = BTL_MAIN_GetGameLimitTime( wk->mainModule );
-      u32 cmdTime = BTL_MAIN_GetCommandLimitTime( wk->mainModule );
-      OS_TPrintf("GameLimit=%d, CmdLimit=%d\n", gameTime, cmdTime);
-      if( gameTime && cmdTime )
+      wk->cmdLimitTime  = BTL_MAIN_GetCommandLimitTime( wk->mainModule );
+      wk->gameLimitTime = BTL_MAIN_GetGameLimitTime( wk->mainModule );
+      if( wk->cmdLimitTime || wk->gameLimitTime )
       {
-        BTLV_EFFECT_CreateTimer( gameTime, cmdTime );
-        wk->cmdLimitTime = cmdTime;
+        BTLV_EFFECT_CreateTimer( wk->gameLimitTime, wk->cmdLimitTime );
+        if( wk->gameLimitTime ){
+          BTLV_EFFECT_DrawEnableTimer( BTLV_TIMER_TYPE_GAME_TIME, TRUE, TRUE );
+        }
       }
       return TRUE;
     }
@@ -979,6 +1006,7 @@ static BOOL selact_Fight( BTL_CLIENT* wk, int* seq )
 
   case SEQ_SELECT_TARGET_WAIT:
     if( CheckSelactForceQuit(wk, selact_ForceQuit) ){
+      BTLV_UI_SelectTarget_ForceQuit( wk->viewCore );
       return FALSE;
     }
 
@@ -2135,6 +2163,27 @@ static BOOL SubProc_UI_WinToTrainer( BTL_CLIENT* wk, int* seq )
     break;
 
   default:
+    return TRUE;
+  }
+  return FALSE;
+}
+//---------------------------------------------------
+// 制限時間終了
+//---------------------------------------------------
+static BOOL SubProc_UI_NotifyTimeUp( BTL_CLIENT* wk, int* seq )
+{
+  switch( *seq ){
+  case 0:
+    BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_STD, BTL_STRID_STD_BattleTimeOver );
+    BTLV_StartMsg( wk->viewCore, &wk->strParam );
+    (*seq)++;
+    break;
+  case 1:
+    if( BTLV_WaitMsg(wk->viewCore) ){
+      (*seq)++;
+    }
+    break;
+  case 2:
     return TRUE;
   }
   return FALSE;

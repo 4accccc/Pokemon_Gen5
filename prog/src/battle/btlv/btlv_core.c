@@ -95,15 +95,19 @@ struct _BTLV_CORE {
 static void* getGenericWork( BTLV_CORE* core, u32 size );
 static BOOL CmdProc_Setup( BTLV_CORE* core, int* seq, void* workBuffer );
 static BOOL CmdProc_SetupDemo( BTLV_CORE* core, int* seq, void* workBuffer );
+static  const BTL_POKEPARAM*  get_btl_pokeparam( BTLV_CORE* core, BtlvMcssPos pos );
+static void setup_core( BTLV_CORE* wk, HEAPID heapID );
+static void cleanup_core( BTLV_CORE* wk );
 static BOOL CmdProc_SelectAction( BTLV_CORE* core, int* seq, void* workBufer );
 static BOOL CmdProc_SelectWaza( BTLV_CORE* core, int* seq, void* workBufer );
 static BOOL CmdProc_SelectTarget( BTLV_CORE* core, int* seq, void* workBufer );
 static void mainproc_setup( BTLV_CORE* core, pCmdProc proc );
+static void mainproc_reset( BTLV_CORE* core );
 static BOOL mainproc_call( BTLV_CORE* core );
+static void ForceQuitSelect_Common( BTLV_CORE* core );
 static BOOL subprocDamageEffect( int* seq, void* wk_adrs );
 static BOOL subprocMemberIn( int* seq, void* wk_adrs );
-static void setup_core( BTLV_CORE* wk, HEAPID heapID );
-static void cleanup_core( BTLV_CORE* wk );
+static void StrParamToString( const BTLV_STRPARAM* param, STRBUF* dst );
 static BOOL subprocMoveMember( int* seq, void* wk_adrs );
 static BOOL subprocRotateMember( int* seq, void* wk_adrs );
 
@@ -791,7 +795,7 @@ void BTLV_UI_SelectAction_Start( BTLV_CORE* core, const BTL_POKEPARAM* bpp, BOOL
 //=============================================================================================
 void BTLV_UI_SelectAction_ForceQuit( BTLV_CORE* wk )
 {
-  mainproc_reset( wk );
+  ForceQuitSelect_Common( wk );
 }
 //=============================================================================================
 /**
@@ -835,7 +839,7 @@ void BTLV_UI_SelectWaza_Start( BTLV_CORE* core, const BTL_POKEPARAM* bpp, BTL_AC
 //=============================================================================================
 void BTLV_UI_SelectWaza_ForceQuit( BTLV_CORE* wk )
 {
-  mainproc_reset( wk );
+  ForceQuitSelect_Common( wk );
 }
 //=============================================================================================
 /**
@@ -868,7 +872,7 @@ void BTLV_UI_SelectTarget_Start( BTLV_CORE* core, const BTL_POKEPARAM* bpp, BTL_
 }
 //=============================================================================================
 /**
- * ワザ選択終了待ち
+ * ワザ対象選択終了待ち
  *
  * @param   core
  *
@@ -884,6 +888,26 @@ BtlvResult BTLV_UI_SelectTarget_Wait( BTLV_CORE* core )
     return BTLV_RESULT_CANCEL;
   }
   return BTLV_RESULT_NONE;
+}
+//=============================================================================================
+/**
+ * ワザ対象の強制終了通知（コマンド選択の制限時間）
+ *
+ * @param   wk
+ */
+//=============================================================================================
+void BTLV_UI_SelectTarget_ForceQuit( BTLV_CORE* core )
+{
+  ForceQuitSelect_Common( core );
+}
+
+/**
+ *  アクション・ワザ・対象の強制終了（コマンド選択時間制限） 共通
+ */
+static void ForceQuitSelect_Common( BTLV_CORE* core )
+{
+  BTLV_SCD_ForceQuitSelect( core->scrnD );
+  mainproc_reset( core );
 }
 
 

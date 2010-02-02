@@ -322,7 +322,14 @@ static BOOL spstack_call( BTLV_SCD* wk )
 //=============================================================================================
 
 //=============================================================================================
-//  アクション選択処理
+/**
+ * アクション選択処理 開始
+ *
+ * @param   wk
+ * @param   bpp
+ * @param   fPrevButton
+ * @param   dest
+ */
 //=============================================================================================
 void BTLV_SCD_StartActionSelect( BTLV_SCD* wk, const BTL_POKEPARAM* bpp, BOOL fPrevButton, BTL_ACTION_PARAM* dest )
 {
@@ -333,10 +340,6 @@ void BTLV_SCD_StartActionSelect( BTLV_SCD* wk, const BTL_POKEPARAM* bpp, BOOL fP
 
   spstack_push( wk, selectAction_init, selectActionRoot_loop );
 }
-void BTLV_SCD_RestartActionSelect( BTLV_SCD* wk )
-{
-  wk->selActionResult = BTL_ACTION_NULL;
-}
 void BTLV_SCD_StartActionSelectDemoCapture( BTLV_SCD* wk, const BTL_POKEPARAM* bpp, BOOL fPrevButton, BTL_ACTION_PARAM* dest )
 {
   wk->bpp = bpp;
@@ -346,6 +349,15 @@ void BTLV_SCD_StartActionSelectDemoCapture( BTLV_SCD* wk, const BTL_POKEPARAM* b
 
   spstack_push( wk, selectAction_init, selectDemoRoot_loop );
 }
+//=============================================================================================
+/**
+ * アクション選択処理 終了待ち
+ *
+ * @param   wk
+ *
+ * @retval  BtlAction
+ */
+//=============================================================================================
 BtlAction BTLV_SCD_WaitActionSelect( BTLV_SCD* wk )
 {
   if( spstack_call( wk ) ){
@@ -356,6 +368,15 @@ BtlAction BTLV_SCD_WaitActionSelect( BTLV_SCD* wk )
   }
 }
 
+//=============================================================================================
+/**
+ * ワザ選択処理 開始
+ *
+ * @param   wk
+ * @param   bpp
+ * @param   dest
+ */
+//=============================================================================================
 void BTLV_SCD_StartWazaSelect( BTLV_SCD* wk, const BTL_POKEPARAM* bpp, BTL_ACTION_PARAM* dest )
 {
   wk->bpp = bpp;
@@ -364,6 +385,15 @@ void BTLV_SCD_StartWazaSelect( BTLV_SCD* wk, const BTL_POKEPARAM* bpp, BTL_ACTIO
 
   spstack_push( wk, selectWaza_init, selectWaza_loop );
 }
+//=============================================================================================
+/**
+ * ワザ選択処理 終了待ち
+ *
+ * @param   wk
+ *
+ * @retval  BOOL
+ */
+//=============================================================================================
 BOOL BTLV_SCD_WaitWazaSelect( BTLV_SCD* wk )
 {
   return spstack_call( wk );
@@ -377,6 +407,15 @@ void BTLV_SCD_StartWazaSelectDemoCapture( BTLV_SCD* wk, const BTL_POKEPARAM* bpp
   spstack_push( wk, selectWaza_init, selectDemoRoot_loop );
 }
 
+//=============================================================================================
+/**
+ * ワザ対象選択（確認）処理 開始
+ *
+ * @param   wk
+ * @param   bpp
+ * @param   dest
+ */
+//=============================================================================================
 void BTLV_SCD_StartTargetSelect( BTLV_SCD* wk, const BTL_POKEPARAM* bpp, BTL_ACTION_PARAM* dest )
 {
   wk->bpp = bpp;
@@ -384,10 +423,33 @@ void BTLV_SCD_StartTargetSelect( BTLV_SCD* wk, const BTL_POKEPARAM* bpp, BTL_ACT
 
   spstack_push( wk, selectTarget_init, selectTarget_loop );
 }
+//=============================================================================================
+/**
+ * ワザ対象選択（確認）処理 終了待ち
+ *
+ * @param   wk
+ *
+ * @retval  BOOL
+ */
+//=============================================================================================
 BOOL BTLV_SCD_WaitTargetSelect( BTLV_SCD* wk )
 {
   return spstack_call( wk );
 }
+
+//=============================================================================================
+/**
+ * コマンド選択の制限時間による強制終了（アクション・ワザ・対象共通）
+ *
+ * @param   wk
+ */
+//=============================================================================================
+void BTLV_SCD_ForceQuitSelect( BTLV_SCD* wk )
+{
+  spstack_init( wk );
+}
+
+
 
 #include "data\command_sel.cdat"
 #include "msg/msg_d_soga.h"

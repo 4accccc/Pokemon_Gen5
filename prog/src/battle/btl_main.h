@@ -261,6 +261,7 @@ extern const MYSTATUS* BTL_MAIN_GetClientPlayerData( const BTL_MAIN_MODULE* wk, 
 //----------------------------------------------------------------------------------------------
 extern u32 BTL_MAIN_GetCommandLimitTime( const BTL_MAIN_MODULE* wk );
 extern u32 BTL_MAIN_GetGameLimitTime( const BTL_MAIN_MODULE * wk );
+extern BOOL BTL_MAIN_CheckGameLimitTimeOver( const BTL_MAIN_MODULE* wk );
 
 
 #endif

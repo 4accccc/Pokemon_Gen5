@@ -105,6 +105,8 @@ struct _BTL_MAIN_MODULE {
   u8        posCoverClientID[ BTL_POS_MAX ];
   u32       bonusMoney;
   int       msgSpeed;
+  u16       LimitTimeGame;
+  u16       LimitTimeCommand;
 
 
   BTL_PROC    subProc;
@@ -230,6 +232,8 @@ static GFL_PROC_RESULT BTL_PROC_Init( GFL_PROC* proc, int* seq, void* pwk, void*
       wk->setupParam->capturedPokeIdx = TEMOTI_POKEMAX;
       wk->playerStatus = wk->setupParam->playerStatus[ BTL_CLIENT_PLAYER ];
       wk->msgSpeed = CONFIG_GetMsgSpeed( wk->setupParam->configData );
+      wk->LimitTimeGame = wk->setupParam->LimitTimeGame;
+      wk->LimitTimeCommand = wk->setupParam->LimitTimeCommand;
 
       wk->bonusMoney = calcBonusMoneyBase( setup_param );
 
@@ -1193,6 +1197,8 @@ static BOOL setupseq_comm_determine_server( BTL_MAIN_MODULE* wk, int* seq )
     wk->serverNotifyParam.debugFlagBit = wk->setupParam->DebugFlagBit;
     wk->serverNotifyParam.msgSpeed = wk->msgSpeed;
     wk->serverNotifyParam.fWazaEffectEnable = wk->fWazaEffectEnable;
+    wk->serverNotifyParam.LimitTimeGame = wk->setupParam->LimitTimeGame;
+    wk->serverNotifyParam.LimitTimeCommand = wk->setupParam->LimitTimeCommand;
     if( BTL_NET_NotifyServerParam(&wk->serverNotifyParam) ){
       ++(*seq);
     }
@@ -1210,6 +1216,8 @@ static BOOL setupseq_comm_determine_server( BTL_MAIN_MODULE* wk, int* seq )
       wk->randomContext     = wk->serverNotifyParam.randomContext;
       wk->fWazaEffectEnable = wk->serverNotifyParam.fWazaEffectEnable;
       wk->msgSpeed          = wk->serverNotifyParam.msgSpeed;
+      wk->LimitTimeGame     = wk->serverNotifyParam.LimitTimeGame;
+      wk->LimitTimeCommand  = wk->serverNotifyParam.LimitTimeCommand;
 
       return TRUE;
     }
@@ -3721,16 +3729,31 @@ static BtlResult checkWinner( BTL_MAIN_MODULE* wk )
 // 制限時間関連
 //----------------------------------------------------------------------------------------------
 
+/**
+ *  コマンド選択の制限時間取得（秒）
+ */
 u32 BTL_MAIN_GetCommandLimitTime( const BTL_MAIN_MODULE* wk )
 {
-  return wk->setupParam->LimitTimeCommand;
+  return wk->LimitTimeCommand;
 }
-
+/**
+ *  試合全体の制限時間取得（秒）
+ */
 u32 BTL_MAIN_GetGameLimitTime( const BTL_MAIN_MODULE * wk )
 {
-  return wk->setupParam->LimitTimeGame * 60;
+  return wk->LimitTimeGame;
 }
 
+/**
+ *  試合の制限時間が終了したか判定
+ */
+BOOL BTL_MAIN_CheckGameLimitTimeOver( const BTL_MAIN_MODULE* wk )
+{
+  if( wk->LimitTimeGame ){
+    return BTL_CLIENT_IsGameTimeOver( wk->client[wk->myClientID] );
+  }
+  return FALSE;
+}
 
 //----------------------------------------------------------------------------------------------
 // バトルパラメータへ書き戻し

@@ -752,7 +752,7 @@ SvflowResult BTL_SVFLOW_Start_AfterPokemonIn( BTL_SVFLOW_WORK* wk )
   // @@@ しぬこともあるか?  状態異常・天候などの効果はターンエンド時なので、ないかな
   return SVFLOW_RESULT_DEFAULT;
 }
-//--------------------------------------------------------------------------
+//=============================================================================================
 /**
  * サーバコマンド生成（通常の１ターン分コマンド生成）
  *
@@ -760,7 +760,7 @@ SvflowResult BTL_SVFLOW_Start_AfterPokemonIn( BTL_SVFLOW_WORK* wk )
  *
  * @retval  SvflowResult
  */
-//--------------------------------------------------------------------------
+//=============================================================================================
 SvflowResult BTL_SVFLOW_StartTurn( BTL_SVFLOW_WORK* wk )
 {
   relivePokeRec_Init( wk );
@@ -905,8 +905,7 @@ static u32 ActOrderProc_Main( BTL_SVFLOW_WORK* wk, u32 startOrderIdx )
       wk->flowResult = SVFLOW_RESULT_BTL_SHOWDOWN;
       return i+1;
     }
-
-    if( wk->flowResult !=  SVFLOW_RESULT_DEFAULT ){
+    if( wk->flowResult != SVFLOW_RESULT_DEFAULT ){
       BTL_N_Printf( DBGSTR_SVFL_ActOrderMainDropOut, wk->flowResult );
       break;
     }

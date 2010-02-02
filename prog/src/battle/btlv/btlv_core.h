@@ -175,6 +175,8 @@ extern void BTLV_UI_SelectWaza_ForceQuit( BTLV_CORE* wk );
 
 extern void BTLV_UI_SelectTarget_Start( BTLV_CORE* core, const BTL_POKEPARAM* bpp, BTL_ACTION_PARAM* dest );
 extern BtlvResult BTLV_UI_SelectTarget_Wait( BTLV_CORE* core );
+extern void BTLV_UI_SelectTarget_ForceQuit( BTLV_CORE* core );
+
 
 extern void BTLV_UI_Restart( BTLV_CORE* wk );
 

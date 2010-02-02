@@ -104,6 +104,7 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq );
 static BOOL ServerMain_ConfirmChangeOrEscape( BTL_SERVER* server, int* seq );
 static BOOL ServerMain_SelectPokemonIn( BTL_SERVER* server, int* seq );
 static BOOL ServerMain_SelectPokemonChange( BTL_SERVER* server, int* seq );
+static BOOL ServerMain_BattleTimeOver( BTL_SERVER* server, int* seq );
 static BOOL ServerMain_ExitBattle( BTL_SERVER* server, int* seq );
 static BOOL ServerMain_ExitBattle_ForTrainer( BTL_SERVER* server, int* seq );
 static BOOL SendActionRecord( BTL_SERVER* server );
@@ -493,6 +494,13 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
     {
       BTL_N_Printf( DBGSTR_SERVER_ActionSelectDoneAll );
       ResetAdapterCmd( server );
+
+      // 試合制限時間切れのチェック
+      if( BTL_MAIN_CheckGameLimitTimeOver(server->mainModule) )
+      {
+        setMainProc( server, ServerMain_BattleTimeOver );
+        break;
+      }
       server->flowResult = BTL_SVFLOW_StartTurn( server->flowWork );
       BTL_N_Printf( DBGSTR_SERVER_FlowResult, server->flowResult);
 
@@ -771,7 +779,33 @@ static BOOL ServerMain_SelectPokemonChange( BTL_SERVER* server, int* seq )
 
   return FALSE;
 }
-
+//----------------------------------------------------------------------------------
+/**
+ * サーバメインループ：制限時間終了
+ *
+ * @param   server
+ * @param   seq
+ *
+ * @retval  BOOL
+ */
+//----------------------------------------------------------------------------------
+static BOOL ServerMain_BattleTimeOver( BTL_SERVER* server, int* seq )
+{
+  switch( *seq ){
+  case 0:
+    SetAdapterCmd( server, BTL_ACMD_NOTIFY_TIMEUP );
+    (*seq)++;
+    break;
+  case 1:
+    if( WaitAdapterCmd(server) )
+    {
+      ResetAdapterCmd( server );
+      setMainProc( server, ServerMain_ExitBattle );
+    }
+    break;
+  }
+  return FALSE;
+}
 //----------------------------------------------------------------------------------
 /**
  * サーバメインループ：バトル終了処理

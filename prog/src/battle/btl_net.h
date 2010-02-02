@@ -37,6 +37,8 @@ typedef struct {
 
   GFL_STD_RandContext  randomContext;
   u16                  debugFlagBit;
+  u16                  LimitTimeGame;
+  u16                  LimitTimeCommand;
   u8                   msgSpeed;
   u8                   fWazaEffectEnable;
 
