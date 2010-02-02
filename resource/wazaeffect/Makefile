@@ -80,8 +80,8 @@ esf: $(notdir $(WAZAEFFSRCS:.esf=.s)) $(notdir $(WAZAEFFSRCS:.esf=.bin))
 %.bin: %.s ../../prog/src/battle/btlv/btlv_effvm_def.h
 #	$(MWAS) $< -o $*.o
 #	$(MWLD) -dis -o $*.elf $*.o
-	/cygdrive/c/Program\ Files/Freescale/CW\ for\ NINTENDO\ DSi\ V1.1/ARM_Tools/Command_Line_Tools/mwasmarm.exe $< -o $*.o
-	/cygdrive/c/Program\ Files/Freescale/CW\ for\ NINTENDO\ DSi\ V1.1/ARM_Tools/Command_Line_Tools/mwldarm.exe -dis -o $*.elf $*.o
+	"$(CWFOLDER_TWL)ARM_Tools/Command_Line_Tools/mwasmarm.exe" $< -o $*.o
+	"$(CWFOLDER_TWL)ARM_Tools/Command_Line_Tools/mwldarm.exe" -dis -o $*.elf $*.o
 	../../tools/elf2bin $*.elf
 
 $(NARCNAME1): $(notdir $(WAZAEFFSRCS:.esf=.bin))
