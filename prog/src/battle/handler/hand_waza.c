@@ -236,6 +236,8 @@ static void handler_Daibakuhatsu_ExeFix( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_
 static const BtlEventHandlerTable*  ADD_Kiaidame( u32* numElems );
 static void handler_Kiaidame( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable*  ADD_Juden( u32* numElems );
+static void handler_Juden_WazaStart( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_Juden_WazaEnd( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Juden_Exe( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Juden_Pow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable*  ADD_HorobiNoUta( u32* numElems );
@@ -2805,13 +2807,15 @@ static void handler_Kiaidame( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
 static const BtlEventHandlerTable*  ADD_Juden( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_EXE_START,      handler_Juden_Exe },    // ワザ出し確定ハンドラ
-    { BTL_EVENT_WAZA_POWER,          handler_Juden_Pow },    // ワザ威力計算ハンドラ
+    { BTL_EVENT_WAZASEQ_START,       handler_Juden_WazaStart }, // ワザ処理開始ハンドラ
+    { BTL_EVENT_WAZA_EXE_START,      handler_Juden_Exe       }, // ワザ出し確定ハンドラ
+    { BTL_EVENT_WAZA_POWER,          handler_Juden_Pow       }, // ワザ威力計算ハンドラ
+    { BTL_EVENT_WAZASEQ_END,         handler_Juden_WazaEnd   }, // ワザ処理終了ハンドラ
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
 }
-
+// ワザ出し確定ハンドラ
 static void handler_Juden_Exe( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
@@ -2822,24 +2826,45 @@ static void handler_Juden_Exe( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
       HANDEX_STR_AddArg( &param->str, pokeID );
 
       work[ WORKIDX_STICK ] = 1;
-      work[0] = 1;
+      work[0] = 1;  // じゅうでんシーケンスを１にする（貼り付き開始）
     }
   }
 }
+// ワザ威力計算ハンドラ
 static void handler_Juden_Pow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  if( work[0] == 1 )
+  if( work[0] == 2 )
   {
     if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
     {
       if( BTL_EVENTVAR_GetValue(BTL_EVAR_WAZA_TYPE) == POKETYPE_DENKI ){
-        BTL_Printf("じゅうでんで威力２倍に\n");
         BTL_EVENTVAR_MulValue( BTL_EVAR_WAZA_POWER_RATIO, FX32_CONST(2) );
       }
       BTL_EVENT_FACTOR_Remove( myHandle );
     }
   }
 }
+// ワザ処理開始ハンドラ
+static void handler_Juden_WazaStart( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  // 「じゅうでん」以外のワザを出すなら、シーケンスを２にする
+  if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID)
+  &&  (BTL_EVENTVAR_GetValue(BTL_EVAR_WAZAID) != BTL_EVENT_FACTOR_GetSubID(myHandle))
+  ){
+     work[0] = 2;
+  }
+}
+// ワザ処理終了ハンドラ
+static void handler_Juden_WazaEnd( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID)
+  &&  (work[0] == 2)
+  ){
+    // シーケンス=2 でワザ処理終了したら貼り付き解除
+    BTL_EVENT_FACTOR_Remove( myHandle );
+  }
+}
+
 //----------------------------------------------------------------------------------
 /**
  * ほろびのうた
