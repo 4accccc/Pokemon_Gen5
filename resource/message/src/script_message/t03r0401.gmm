@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tamada" host="W00139" date="2010-01-24T20:30:54"/>
+	<create user="matsumiya" host="W00224" date="2010-02-02T11:23:23"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="954" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="1399" top="296" right="2105" bottom="916" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="531"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="544"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="698"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -305,10 +305,10 @@
 あなたの　もっている
 ジムバッジを　みても　いいですか？</language>
 		<language name="JPN_KANJI" width="256">わたしは
-ジムバッジに　こめられた　おもい……▼
-あなたと　いっしょに　たたかった
+ジムバッジに　こめられた　想い……▼
+あなたと　一緒に　戦った
 ポケモンが　わかるのです▼
-あなたの　もっている
+あなたの　持っている
 ジムバッジを　みても　いいですか？</language>
 	</row>
 
@@ -317,7 +317,7 @@
 		<language name="JPN" width="256">……わたしが　みなくても
 きちんと　おぼえているのですね</language>
 		<language name="JPN_KANJI" width="256">……わたしが　みなくても
-きちんと　おぼえているのですね</language>
+きちんと　覚えているのですね</language>
 	</row>
 
 	<row id="msg_badgeparty_03">
@@ -342,7 +342,7 @@
 		<language name="JPN" width="256">あなたが　ベーシックバッジを
 てにしたときの　ポケモンは……▼</language>
 		<language name="JPN_KANJI" width="256">あなたが　ベーシックバッジを
-てにしたときの　ポケモンは……▼</language>
+手にしたときの　ポケモンは……▼</language>
 	</row>
 
 	<row id="msg_badgeparty_06">
@@ -351,7 +351,7 @@
 		<language name="JPN" width="256">あなたが　ビートルバッジを
 てにしたときの　ポケモンは……▼</language>
 		<language name="JPN_KANJI" width="256">あなたが　ビートルバッジを
-てにしたときの　ポケモンは……▼</language>
+手にしたときの　ポケモンは……▼</language>
 	</row>
 
 	<row id="msg_badgeparty_07">
@@ -360,7 +360,7 @@
 		<language name="JPN" width="256">あなたが　ボルトバッジを
 てにしたときの　ポケモンは……▼</language>
 		<language name="JPN_KANJI" width="256">あなたが　ボルトバッジを
-てにしたときの　ポケモンは……▼</language>
+手にしたときの　ポケモンは……▼</language>
 	</row>
 
 	<row id="msg_badgeparty_08">
@@ -369,7 +369,7 @@
 		<language name="JPN" width="256">あなたが　クエイクバッジを
 てにしたときの　ポケモンは……▼</language>
 		<language name="JPN_KANJI" width="256">あなたが　クエイクバッジを
-てにしたときの　ポケモンは……▼</language>
+手にしたときの　ポケモンは……▼</language>
 	</row>
 
 	<row id="msg_badgeparty_09">
@@ -378,7 +378,7 @@
 		<language name="JPN" width="256">あなたが　ジェットバッジを
 てにしたときの　ポケモンは……▼</language>
 		<language name="JPN_KANJI" width="256">あなたが　ジェットバッジを
-てにしたときの　ポケモンは……▼</language>
+手にしたときの　ポケモンは……▼</language>
 	</row>
 
 	<row id="msg_badgeparty_10">
@@ -387,7 +387,7 @@
 		<language name="JPN" width="256">あなたが　アイシクルバッジを
 てにしたときの　ポケモンは……▼</language>
 		<language name="JPN_KANJI" width="256">あなたが　アイシクルバッジを
-てにしたときの　ポケモンは……▼</language>
+手にしたときの　ポケモンは……▼</language>
 	</row>
 
 	<row id="msg_badgeparty_11">
@@ -396,7 +396,7 @@
 		<language name="JPN" width="256">あなたが　レジェンドバッジを
 てにしたときの　ポケモンは……▼</language>
 		<language name="JPN_KANJI" width="256">あなたが　レジェンドバッジを
-てにしたときの　ポケモンは……▼</language>
+手にしたときの　ポケモンは……▼</language>
 	</row>
 
 	<row id="msg_badgeparty_12">
