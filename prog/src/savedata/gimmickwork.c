@@ -93,7 +93,7 @@ GIMMICKWORK * SaveData_GetGimmickWork(SAVE_CONTROL_WORK * sv)
 #endif
 //----------------------------------------------------------
 /**
- * @brief	ギミックワークへデータをコピー
+ * @brief	セーブワークへデータをコピー
  * @param	sv			セーブデータ保持ワークへのポインタ
  * @return	ギミックセーブデータへのポインタ
  */
@@ -107,7 +107,7 @@ void SaveData_SaveGimmickWork(const GIMMICKWORK * inGimmick, SAVE_CONTROL_WORK *
 
 //----------------------------------------------------------
 /**
- * @brief	ギミックワークへデータをコピー
+ * @brief	ギミックワークへロード
  * @param	sv			セーブデータ保持ワークへのポインタ
  * @return	ギミックセーブデータへのポインタ
  */
