@@ -40,7 +40,8 @@ typedef struct {
   u8 countryCount;  //交換した国の回数
   u8 nature:3;   //性格
   u8 bTalk:1;   //話したかどうか
-  u8 dummy1:4;
+  u8 valid:1;  //有効データか？
+  u8 dummy1:3;
   u8 dummy2;
 } UNITEDNATIONS_SAVE;
 
@@ -58,6 +59,8 @@ struct _WIFI_HISTORY{
 	u32	date;
 	u8 world_flag;			///<全世界対象モードかどうかのフラグ
   u8 myCountryCount;  ///< 何カ国と交換したか回数
+  u8 myFavorite;     ///自分の趣味
+  u8 myNature;       ///自分の性格
 	///履歴データ
 	u8	data[(WIFI_NATION_MAX - 1) * NATION_DATA_SIZE];
 

@@ -72,5 +72,7 @@ extern void WIFIHISTORY_SetWorldFlag(WIFI_HISTORY * wh, BOOL flag);
 //ì˙ïtÇ…ÇÊÇÈçXêVèàóù
 extern void WIFIHISTORY_Update(WIFI_HISTORY * wh);
 
+extern u8 WIFIHISTORY_GetMyCountryCount(WIFI_HISTORY * wh);
+
 #endif	/* __WIFIHISTORY_H__ */
 

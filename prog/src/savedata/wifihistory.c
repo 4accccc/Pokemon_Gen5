@@ -182,4 +182,15 @@ void WIFIHISTORY_Update(WIFI_HISTORY * wh)
 	}
 }
 
+//----------------------------------------------------------
+/**
+ * @brief	交換した国の数を取得
+ * @param	wh			WIFI履歴データへのポインタ
+ * @return u8     国数
+ */
+//----------------------------------------------------------
+u8 WIFIHISTORY_GetMyCountryCount(WIFI_HISTORY * wh)
+{
+  return wh->myCountryCount;
+}
 
