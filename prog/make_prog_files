@@ -491,6 +491,7 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/scrcmd_c03center.c \
         field/scrcmd_pokemon_fld.c \
         field/scrcmd_crowd_people.c \
+        field/scrcmd_feeling_check.c \
 				field/rail_editor.c \
         field/field_rail.c \
         field/field_rail_func.c \
