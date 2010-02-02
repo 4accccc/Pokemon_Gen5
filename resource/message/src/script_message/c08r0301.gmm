@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2010-01-26T15:35:54"/>
+	<create user="matsumiya" host="W00224" date="2010-02-02T12:46:06"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -297,8 +297,7 @@
 ・持っていないグッズがあるとき
 ・カテゴリー内全てのグッズを持っている
 　→goods_05
-
-・はい／いいえの選択肢表示
+・はい/いいえの選択肢表示
 　はい　→goods_02
 　いいえ→goods_03</comment>
 		<attribute name="キャラ指定">GENTLEMAN</attribute>
@@ -318,7 +317,7 @@
 グッズ　欲しいかい？</language>
 	</row>
 
-	<row id="msg_c08r0301_goods_02" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c08r0301_goods_02">
 		<comment>♂
 ・はい選択時
 ・1日1種類のグッズがもらえる

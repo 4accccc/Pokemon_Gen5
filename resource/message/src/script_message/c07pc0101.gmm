@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-16T12:46:14"/>
+	<create user="matsumiya" host="W00224" date="2010-02-02T12:45:10"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_c07pc0101_oldwoman1_01">
+	<row id="msg_c07pc0101_oldwoman1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♀
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">OLDWOMAN1
@@ -307,7 +307,7 @@
 記念して　これを　あげようかね[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c07pc0101_oldwoman1_02">
+	<row id="msg_c07pc0101_oldwoman1_02" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♀
 ・仮メッセージ</comment>
 		<language name="JPN" width="256">プレゼントが　うれしいのは

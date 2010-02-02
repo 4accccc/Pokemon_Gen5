@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-16T18:03:17"/>
+	<create user="matsumiya" host="W00224" date="2010-02-02T12:40:53"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="180"/>
+		<comment position="4" width="221"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="36" top="214" right="741" bottom="834" maximized="no" rayout="Vertical2">
+	<dialog left="1369" top="282" right="2074" bottom="902" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="735" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -292,41 +292,39 @@
 	</lock>
 
 
-	<row id="msg_c06pc0101_man1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c06pc0101_man1_01" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・初回
-・はい／いいえの選択肢
+・はい/いいえの選択肢
 　はい　→ポケモンリスト画面
-　いいえ→
-
-※仮メッセージ</comment>
+　いいえ→man1_05</comment>
 		<attribute name="キャラ指定">MAN1
 青年１</attribute>
 		<language name="JPN" width="256">わたくし　ポケモンが
 めざめるパワーを　おぼえたとき▼
 どのタイプの　わざに　なるのか
 なぜだか　わかるのです！▼
-そなたの　ポケモンが
+ユーの　ポケモンが
 どのタイプの　めざめるパワーを▽
-おぼえるか　みてしんぜよう！</language>
+おぼえるか　みてあげましょう！</language>
 		<language name="JPN_KANJI" width="256">わたくし　ポケモンが
-めざめるパワーを　おぼえたとき▼
+めざめるパワーを　覚えたとき▼
 どのタイプの　わざに　なるのか
 なぜだか　わかるのです！▼
-そなたの　ポケモンが
+ユーの　ポケモンが
 どのタイプの　めざめるパワーを▽
-おぼえるか　みてしんぜよう！</language>
+覚えるか　みてあげましょう！</language>
 	</row>
 
 	<row id="msg_c06pc0101_man1_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・2回目以降</comment>
-		<language name="JPN" width="256">そなたの　ポケモンが　どのタイプの
+		<language name="JPN" width="256">ユーの　ポケモンが　どのタイプの
 めざめるパワーを　おぼえるか▽
-めざめた　わたくしが　みてしんぜよう</language>
-		<language name="JPN_KANJI" width="256">そなたの　ポケモンが　どのタイプの
-めざめるパワーを　おぼえるか▽
-めざめた　わたくしが　みてしんぜよう</language>
+めざめた　わたくしが　みましょう！</language>
+		<language name="JPN_KANJI" width="256">ユーの　ポケモンが　どのタイプの
+めざめるパワーを　覚えるか▽
+めざめた　わたくしが　みましょう！</language>
 	</row>
 
 	<row id="msg_c06pc0101_man1_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -337,7 +335,7 @@
 めざめるパワーを　おぼえたら▽
 タイプは　「[1:03:ポケモンタイプ:0]」！</language>
 		<language name="JPN_KANJI" width="256">この　ポケモンが
-めざめるパワーを　おぼえたら▽
+めざめるパワーを　覚えたら▽
 タイプは　「[1:03:ポケモンタイプ:0]」！</language>
 	</row>
 
@@ -349,7 +347,7 @@
 つかう　めざめるパワーの▽
 タイプは　「[1:03:ポケモンタイプ:0]」！</language>
 		<language name="JPN_KANJI" width="256">この　ポケモンが
-つかう　めざめるパワーの▽
+使う　めざめるパワーの▽
 タイプは　「[1:03:ポケモンタイプ:0]」！</language>
 	</row>
 
@@ -359,7 +357,7 @@
 ・リスト画面で「やめる」選択</comment>
 		<language name="JPN" width="256">しりたくなったら
 めざめた　わたくしに　きいてください</language>
-		<language name="JPN_KANJI" width="256">しりたくなったら
+		<language name="JPN_KANJI" width="256">知りたくなったら
 めざめた　わたくしに　きいてください</language>
 	</row>
 
@@ -367,19 +365,19 @@
 		<comment>♂
 ・リスト画面で「タマゴ」選択</comment>
 		<language name="JPN" width="256">タマゴが　めざめるパワーを
-つかうのは　むり　ですな！</language>
+つかうのは　むり　ですねー！</language>
 		<language name="JPN_KANJI" width="256">タマゴが　めざめるパワーを
-つかうのは　むり　ですな！</language>
+使うのは　無理ですねー！</language>
 	</row>
 
 	<row id="msg_c06pc0101_man1_07" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・選んだポケモンが
 　「めざめるパワー」を覚えられない</comment>
-		<language name="JPN" width="256">ざんねんだが　この　ポケモンは
+		<language name="JPN" width="256">ざんねんですが　この　ポケモンは
 めざめるパワーを　おぼえられない！</language>
-		<language name="JPN_KANJI" width="256">ざんねんだが　この　ポケモンは
-めざめるパワーを　おぼえられない！</language>
+		<language name="JPN_KANJI" width="256">残念ですが　この　ポケモンは
+めざめるパワーを　覚えられない！</language>
 	</row>
 
 	<row id="msg_c06pc0101_pilot_01">

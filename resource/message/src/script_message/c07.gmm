@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-18T14:25:18"/>
+	<create user="matsumiya" host="W00224" date="2010-02-02T12:43:55"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -508,9 +508,9 @@
 ・主人公に隣接してメッセージ表示
 ・続けてmsg_c07_white_01</comment>
 		<attribute name="キャラクター">友達♂</attribute>
-		<language name="JPN" width="256">ブラッカー『よう　[1:00:トレーナー名:0]
+		<language name="JPN" width="256">チェレン『よう　[1:00:トレーナー名:0]
 ジムバッジを　てにいれたってところ？[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ブラッカー『よう　[1:00:トレーナー名:0]
+		<language name="JPN_KANJI" width="256">チェレン『よう　[1:00:トレーナー名:0]
 ジムバッジを　手に入れたってところ？[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
@@ -518,9 +518,9 @@
 		<comment>♀
 ・続けてmsg_c07_leader7_01</comment>
 		<attribute name="キャラクター">友達♀</attribute>
-		<language name="JPN" width="256">ホワイティ『ひさしぶり！
+		<language name="JPN" width="256">ベル『ひさしぶり！
 あたしはね　だいすきクラブで……[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ホワイティ『ひさしぶり！
+		<language name="JPN_KANJI" width="256">ベル『ひさしぶり！
 あたしはね　大好きクラブで……[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
@@ -544,10 +544,10 @@
 		<comment>♂
 ・続けてmsg_c07_white_03</comment>
 		<attribute name="キャラクター">友達♂</attribute>
-		<language name="JPN" width="256">ブラッカー『いまの　ジムリーダー？[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">チェレン『いまの　ジムリーダー？[BE:01:ページ切り替え（クリア）]
 なんだよ
 オレ　ちょうせん　できないじゃん[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ブラッカー『今の　ジムリーダー？[BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">チェレン『今の　ジムリーダー？[BE:01:ページ切り替え（クリア）]
 なんだよ
 オレ　挑戦できないじゃん[BE:01:ページ切り替え（クリア）]</language>
 	</row>
@@ -558,11 +558,11 @@
 　d08でのイベント開始まで繰り返し
 ・d08イベントが開始されるとここから削除</comment>
 		<attribute name="キャラクター">友達♀</attribute>
-		<language name="JPN" width="256">ホワイティ『そんなことよりも
+		<language name="JPN" width="256">ベル『そんなことよりも
 なんだか　たいへん　そうだよ！[BE:01:ページ切り替え（クリア）]
 あたしたちも　いったほうが　よくない？
 その　リュウラセンのとう　に</language>
-		<language name="JPN_KANJI" width="256">ホワイティ『そんなことよりも
+		<language name="JPN_KANJI" width="256">ベル『そんなことよりも
 なんだか　大変そうだよ！[BE:01:ページ切り替え（クリア）]
 あたしたちも　行ったほうが　よくない？
 その　リュウラセンの塔に</language>
@@ -574,10 +574,10 @@
 　d08でのイベント開始まで繰り返し
 ・d08イベントが開始されるとここから削除</comment>
 		<attribute name="キャラクター">友達♂</attribute>
-		<language name="JPN" width="256">ブラッカー『ぜんぜんッ
+		<language name="JPN" width="256">チェレン『ぜんぜんッ
 じじょうが　わからないけど[BE:01:ページ切り替え（クリア）]
 なにか　ヤバイって　ふんいき　だよな</language>
-		<language name="JPN_KANJI" width="256">ブラッカー『ぜんぜんッ
+		<language name="JPN_KANJI" width="256">チェレン『ぜんぜんッ
 事情が　わからないけど[BE:01:ページ切り替え（クリア）]
 なにか　ヤバイって　雰囲気だよな</language>
 	</row>
