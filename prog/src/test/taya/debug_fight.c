@@ -271,7 +271,7 @@ enum {
   LAYOUT_LABEL_LIMITTIME_X       = 160,
   LAYOUT_LABEL_LIMITTIME_Y       = 4,
   LAYOUT_LABEL_LIMITGAME_X       = LAYOUT_LABEL_LIMITTIME_X + 8,
-  LAYOUT_LABEL_LIMITGAME_Y       = LAYOUT_LABEL_LIMITTIME_Y + 32,
+  LAYOUT_LABEL_LIMITGAME_Y       = LAYOUT_LABEL_LIMITTIME_Y + 16,
   LAYOUT_LABEL_LIMITCMD_X        = LAYOUT_LABEL_LIMITTIME_X + 8,
   LAYOUT_LABEL_LIMITCMD_Y        = LAYOUT_LABEL_LIMITGAME_Y + 16,
 
@@ -436,6 +436,8 @@ static const ITEM_LAYOUT ItemLayout_Page2[] = {
   { SELITEM_HIT_100PER,     LAYOUT_LABEL_HIT_100PER_X    +68, LAYOUT_LABEL_HIT_100PER_Y     },
   { SELITEM_DMG_RAND_OFF,   LAYOUT_LABEL_DMG_RAND_OFF_X  +98, LAYOUT_LABEL_DMG_RAND_OFF_Y   },
   { SELITEM_SKIP_BTLIN,     LAYOUT_LABEL_SKIP_BTLIN_X    +68, LAYOUT_LABEL_SKIP_BTLIN_Y     },
+  { SELITEM_LIMIT_GAME,     LAYOUT_LABEL_LIMITGAME_X     +52, LAYOUT_LABEL_LIMITGAME_Y      },
+  { SELITEM_LIMIT_COMMAND,  LAYOUT_LABEL_LIMITCMD_X      +52, LAYOUT_LABEL_LIMITCMD_Y       },
 };
 
 /**
@@ -509,9 +511,6 @@ typedef BOOL (*pMainProc)( DEBUG_BTL_WORK*, int* );
 typedef struct {
   u8  pokeParaArea[ POKEPARA_SAVEAREA_SIZE ];
 
-  u16  LimitTimeGame;
-  u16  LimitTimeCommand;
-
   u32  btlType  : 5;
   u32  commMode : 1;
   u32  msgSpeed : 3;
@@ -535,6 +534,9 @@ typedef struct {
   u32  fHit100Per    : 1;
   u32  fDmgRandomOff : 1;
   u32  fSkipBtlIn    : 1;
+
+  u16  LimitTimeGame;
+  u16  LimitTimeCommand;
 
 }DEBUG_BTL_SAVEDATA;
 
@@ -1192,20 +1194,30 @@ static void selItem_Increment( DEBUG_BTL_WORK* wk, u16 itemID, int incValue )
     break;
 
   case SELITEM_LIMIT_GAME:
-    save->LimitTimeGame += incValue;
-    if( save->LimitTimeGame >= LIMIT_TIME_GAME_MAX ){
-      save->LimitTimeGame -= LIMIT_TIME_GAME_MAX;
-    }else if( save->LimitTimeGame < 0 ){
-      save->LimitTimeGame += LIMIT_TIME_GAME_MAX;
+    {
+      int val = save->LimitTimeGame + incValue;
+
+      if( val > LIMIT_TIME_GAME_MAX ){
+        val -= (LIMIT_TIME_GAME_MAX + 1);
+      }else if( val < 0 ){
+        val += (LIMIT_TIME_GAME_MAX + 1);
+      }
+
+      save->LimitTimeGame = val;
     }
     break;
 
   case SELITEM_LIMIT_COMMAND:
-    save->LimitTimeCommand += incValue;
-    if( save->LimitTimeCommand >= LIMIT_TIME_CMD_MAX ){
-      save->LimitTimeCommand -= LIMIT_TIME_CMD_MAX;
-    }else if( save->LimitTimeCommand < 0 ){
-      save->LimitTimeCommand += LIMIT_TIME_CMD_MAX;
+    {
+      int val = save->LimitTimeCommand + incValue;
+
+      if( val > LIMIT_TIME_CMD_MAX ){
+        val -= (LIMIT_TIME_CMD_MAX + 1);
+      }else if( val < 0 ){
+        val += (LIMIT_TIME_CMD_MAX + 1);
+      }
+
+      save->LimitTimeCommand = val;
     }
     break;
 
@@ -1557,15 +1569,17 @@ static BOOL mainProc_Root( DEBUG_BTL_WORK* wk, int* seq )
       { SELITEM_SAVE,          SELITEM_COMM_MODE,     SELITEM_POKE_SELF_1,   SELITEM_REC_MODE,      SELITEM_LOAD          },
       { SELITEM_LOAD,          SELITEM_COMM_MODE,     SELITEM_POKE_SELF_1,   SELITEM_SAVE,          SELITEM_REC_BUF       },
   /*    CurrentItem,           Up-Item,               Down-Item,             Right-Item,            Left-Item */
-      { SELITEM_MUST_TUIKA,    SELITEM_SKIP_BTLIN,    SELITEM_MUST_TOKU,     SELITEM_NULL,          SELITEM_NULL          },
-      { SELITEM_MUST_TOKU,     SELITEM_MUST_TUIKA,    SELITEM_MUST_ITEM,     SELITEM_NULL,          SELITEM_NULL          },
-      { SELITEM_MUST_ITEM,     SELITEM_MUST_TOKU,     SELITEM_MUST_CRITICAL, SELITEM_NULL,          SELITEM_NULL          },
-      { SELITEM_MUST_CRITICAL, SELITEM_MUST_ITEM,     SELITEM_HP_CONST,      SELITEM_NULL,          SELITEM_NULL          },
-      { SELITEM_HP_CONST,      SELITEM_MUST_CRITICAL, SELITEM_PP_CONST,      SELITEM_NULL,          SELITEM_NULL          },
-      { SELITEM_PP_CONST,      SELITEM_HP_CONST,      SELITEM_HIT_100PER,    SELITEM_NULL,          SELITEM_NULL          },
-      { SELITEM_HIT_100PER,    SELITEM_PP_CONST,      SELITEM_DMG_RAND_OFF,  SELITEM_NULL,          SELITEM_NULL          },
-      { SELITEM_DMG_RAND_OFF,  SELITEM_HIT_100PER,    SELITEM_SKIP_BTLIN,    SELITEM_NULL,          SELITEM_NULL          },
-      { SELITEM_SKIP_BTLIN,    SELITEM_DMG_RAND_OFF,  SELITEM_MUST_TUIKA,    SELITEM_NULL,          SELITEM_NULL          },
+      { SELITEM_MUST_TUIKA,    SELITEM_SKIP_BTLIN,    SELITEM_MUST_TOKU,     SELITEM_LIMIT_GAME,    SELITEM_NULL          },
+      { SELITEM_MUST_TOKU,     SELITEM_MUST_TUIKA,    SELITEM_MUST_ITEM,     SELITEM_LIMIT_GAME,    SELITEM_NULL          },
+      { SELITEM_MUST_ITEM,     SELITEM_MUST_TOKU,     SELITEM_MUST_CRITICAL, SELITEM_LIMIT_GAME,    SELITEM_NULL          },
+      { SELITEM_MUST_CRITICAL, SELITEM_MUST_ITEM,     SELITEM_HP_CONST,      SELITEM_LIMIT_GAME,    SELITEM_NULL          },
+      { SELITEM_HP_CONST,      SELITEM_MUST_CRITICAL, SELITEM_PP_CONST,      SELITEM_LIMIT_GAME,    SELITEM_NULL          },
+      { SELITEM_PP_CONST,      SELITEM_HP_CONST,      SELITEM_HIT_100PER,    SELITEM_LIMIT_GAME,    SELITEM_NULL          },
+      { SELITEM_HIT_100PER,    SELITEM_PP_CONST,      SELITEM_DMG_RAND_OFF,  SELITEM_LIMIT_GAME,    SELITEM_NULL          },
+      { SELITEM_DMG_RAND_OFF,  SELITEM_HIT_100PER,    SELITEM_SKIP_BTLIN,    SELITEM_LIMIT_GAME,    SELITEM_NULL          },
+      { SELITEM_SKIP_BTLIN,    SELITEM_DMG_RAND_OFF,  SELITEM_MUST_TUIKA,    SELITEM_LIMIT_GAME,    SELITEM_NULL          },
+      { SELITEM_LIMIT_GAME,    SELITEM_LIMIT_COMMAND, SELITEM_LIMIT_COMMAND, SELITEM_NULL,          SELITEM_MUST_TUIKA    },
+      { SELITEM_LIMIT_COMMAND, SELITEM_LIMIT_GAME,    SELITEM_LIMIT_GAME,    SELITEM_NULL,          SELITEM_MUST_TUIKA    },
   /*    CurrentItem,           Up-Item,               Down-Item,             Right-Item,            Left-Item */
       { SELITEM_BACKGROUND,    SELITEM_WEATHER,       SELITEM_LAND,          SELITEM_NULL,          SELITEM_NULL          },
       { SELITEM_LAND,          SELITEM_BACKGROUND,    SELITEM_TIMEZONE,      SELITEM_NULL,          SELITEM_NULL          },
@@ -1634,6 +1648,24 @@ static BOOL mainProc_Root( DEBUG_BTL_WORK* wk, int* seq )
   if( key & PAD_BUTTON_R ){
     wk->pageNum = loopValue( wk->pageNum+1, 0, (PAGE_MAX-1) );
     setMainProc( wk, mainProc_ChangePage );
+  }
+
+  if( (GFL_UI_KEY_GetCont() & (PAD_BUTTON_A|PAD_BUTTON_B)) ==  (PAD_BUTTON_A|PAD_BUTTON_B))
+  {
+    BOOL flg = FALSE;
+    if( wk->selectItem == SELITEM_LIMIT_GAME ){
+      wk->saveData.LimitTimeGame = 0;
+      flg = TRUE;
+    }
+    if( wk->selectItem == SELITEM_LIMIT_COMMAND ){
+      wk->saveData.LimitTimeCommand = 0;
+      flg = TRUE;
+    }
+
+    if( flg ){
+      PrintItem( wk, wk->selectItem, TRUE );
+      GFL_BMPWIN_TransVramCharacter( wk->win );
+    }
   }
 
   if( key & PAD_BUTTON_A )
@@ -1911,8 +1943,6 @@ FS_EXTERN_OVERLAY(battle);
     }
 
     setupFieldSituation( &wk->fieldSit, &wk->saveData );
-    wk->setupParam.LimitTimeGame = wk->saveData.LimitTimeGame;
-    wk->setupParam.LimitTimeCommand = wk->saveData.LimitTimeCommand;
 
     // •ßŠlƒfƒ‚
     if( wk->saveData.btlType == BTLTYPE_DEMO_CAPTURE )
@@ -1921,7 +1951,6 @@ FS_EXTERN_OVERLAY(battle);
 
       BTL_SETUP_Wild( &wk->setupParam, wk->gameData, wk->partyEnemy1, &wk->fieldSit, rule, HEAPID_BTL_DEBUG_SYS );
       wk->setupParam.competitor = BTL_COMPETITOR_DEMO_CAPTURE;
-
     }
     // –ì¶
     else if( btltype_IsWild(wk->saveData.btlType) )
@@ -1999,6 +2028,9 @@ FS_EXTERN_OVERLAY(battle);
       }
     }
     BATTLE_PARAM_SetPokeParty( &wk->setupParam, wk->partyPlayer, BTL_CLIENT_PLAYER );
+    wk->setupParam.LimitTimeGame = wk->saveData.LimitTimeGame;
+    wk->setupParam.LimitTimeCommand = wk->saveData.LimitTimeCommand;
+
     if( wk->saveData.recMode == DBF_RECMODE_REC )
     {
       BTL_SETUP_AllocRecBuffer( &wk->setupParam, wk->heapID );
