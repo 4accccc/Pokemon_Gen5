@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2010-01-20T11:57:18"/>
+	<create user="matsumiya" host="W00224" date="2010-02-02T15:59:47"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="1408" top="325" right="2113" bottom="945" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -296,12 +296,12 @@
 		<comment>♂
 ・pos（GRIDX=7､GRIDZ=2）に配置
 ・はい/いいえの選択肢
-・はい＋主人公♂→
-　はい＋主人公♀→
-　いいえ→</comment>
+・はい＋主人公♂→sunglasses_02
+　はい＋主人公♀→sunglasses_03
+　いいえ→sunglasses_05</comment>
 		<attribute name="キャラ指定">SUNGLASSES</attribute>
 		<language name="JPN" width="256">うえに　あがるつもり　か？</language>
-		<language name="JPN_KANJI" width="256">うえに　あがるつもり　か？</language>
+		<language name="JPN_KANJI" width="256">上に　あがるつもり　か？</language>
 	</row>
 
 	<row id="msg_c03r1301_sunglasses_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -311,7 +311,7 @@
 　sunglasses_03表示</comment>
 		<attribute name="キャラ指定">SUNGLASSES</attribute>
 		<language name="JPN" width="256">ちょっと　しらべさせてもらうぞ▼</language>
-		<language name="JPN_KANJI" width="256">ちょっと　しらべさせてもらうぞ▼</language>
+		<language name="JPN_KANJI" width="256">ちょっと　調べさせてもらうぞ▼</language>
 	</row>
 
 	<row id="msg_c03r1301_sunglasses_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -322,8 +322,8 @@
 もっていない　ようだな▽
 よし！　とおって　いいぞ</language>
 		<language name="JPN_KANJI" width="256">どうやら　あやしい　モノは
-もっていない　ようだな▽
-よし！　とおって　いいぞ</language>
+持っていない　ようだな▽
+よし！　通って　いいぞ</language>
 	</row>
 
 	<row id="msg_c03r1301_sunglasses_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -333,7 +333,7 @@
 ・以降、マップを出るまで繰り返し</comment>
 		<attribute name="キャラ指定">SUNGLASSES</attribute>
 		<language name="JPN" width="256">よし！　とおって　いいぞ</language>
-		<language name="JPN_KANJI" width="256">よし！　とおって　いいぞ</language>
+		<language name="JPN_KANJI" width="256">よし！　通って　いいぞ</language>
 	</row>
 
 	<row id="msg_c03r1301_sunglasses_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
