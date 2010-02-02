@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2010-01-15T20:00:10"/>
+	<create user="matsumiya" host="W00224" date="2010-02-02T14:46:37"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,7 +307,7 @@
 		</language>
 	</columns>
 
-	<dialog left="31" top="190" right="734" bottom="802" maximized="no" rayout="Vertical2">
+	<dialog left="1378" top="318" right="2081" bottom="930" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="528"/>
@@ -380,8 +380,8 @@
 プラズマ団♂</attribute>
 		<language name="JPN" width="256">……　……　……
 ……　……　……</language>
-		<language name="JPN_KANJI" width="256">間違った　価値観を
-ハカイするためなら……</language>
+		<language name="JPN_KANJI" width="256">……　……　……
+……　……　……</language>
 	</row>
 
 	<row id="msg_d02r0101_hakaiw_stop4_01" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -392,11 +392,11 @@
 プラズマ団♂</attribute>
 		<language name="JPN" width="256">……　……　……
 ……　……　……</language>
-		<language name="JPN_KANJI" width="256">仲間が　合流し次第
-作戦を　実行する！</language>
+		<language name="JPN_KANJI" width="256">……　……　……
+……　……　……</language>
 	</row>
 
-	<row id="msg_d02r0101_hakaiw_stop2_01" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_d02r0101_hakaiw_stop2_01" text-color="#000000,,,#000000,,#000000,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
 ・c02ジムバッジ取得で削除
 ・GRIDX=78、GRIDZ=78</comment>
@@ -404,11 +404,11 @@
 プラズマ団♀</attribute>
 		<language name="JPN" width="256">……　……　……
 ……　……　……</language>
-		<language name="JPN_KANJI" width="256">すべての　ポケモンを　解放する……
-なんて　すばらしいんでしょう</language>
+		<language name="JPN_KANJI" width="256">……　……　……
+……　……　……</language>
 	</row>
 
-	<row id="msg_d02r0101_leader3_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_d02r0101_leader3_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・きょろきょろした状態で待機
 ・pos（GRIDX=71~76、GRIDZ=71）を踏むと
@@ -416,21 +416,21 @@
 ・続けてleader3_02</comment>
 		<attribute name="キャラ指定">C03ジムリーダー
 アーティ</attribute>
-		<language name="JPN" width="256">アーティ『あのね
-ヤグルマのもりを　ぬけるには▽
+		<language name="JPN" width="256">アーティ『あのね▼
+ヤグルマのもりを　ぬけるには
 ふたとおり　あるんだ▼
 まっすぐ　いく　みちと
 もりのなかを　ぬける　みち▼
-ボクは　このまま　まっすぐ　すすんで▽
+ボクは　このまま　まっすぐ　すすんで
 あいつらを　おいかけるよ▼
 いなかったとしても　にげられないよう
 でぐちを　ふさぐ　つもりさ▼</language>
-		<language name="JPN_KANJI" width="256">アーティ『あのね
-ヤグルマの森を　抜けるには▽
+		<language name="JPN_KANJI" width="256">アーティ『あのね▼
+ヤグルマの森を　抜けるには
 二通り　あるんだ▼
 まっすぐ　行く　道と
 森の中を　抜ける　道▼
-ボクは　このまま　まっすぐ　進み▽
+ボクは　このまま　まっすぐ　進み
 あいつらを　追いかけるよ▼
 いなかったとしても　逃げられないよう
 出口を　ふさぐ　つもりさ▼</language>
@@ -653,7 +653,7 @@
 　所定の位置に到達するとメッセージ表示
 ・続けてhakaim3_04</comment>
 		<attribute name="キャラ指定">SAGE5
-七人衆５</attribute>
+七賢人５</attribute>
 		<language name="JPN" width="256">？？？『だいじょうぶ　ですか▼
 おうさまに　ちゅうせいを
 ちかった　なかま　よ▼</language>
@@ -681,7 +681,7 @@
 ・プラズマ団と向き合いながら
 ・続けてsage5_03</comment>
 		<attribute name="キャラ指定">SAGE5
-七人衆５</attribute>
+七賢人５</attribute>
 		<language name="JPN" width="256">？？？『いいのです▼
 こっかくひょうほん　ですが
 こんかいは　あきらめましょう▼
@@ -701,7 +701,7 @@
 ・主人公を見ながら
 ・続けてleader3_06</comment>
 		<attribute name="キャラ指定">SAGE5
-七人衆５</attribute>
+七賢人５</attribute>
 		<language name="JPN" width="256">ですが　われわれ　への
 ぼうがいは　みのがせません▼
 にどと　じゃま　できないよう
@@ -753,21 +753,22 @@
 こいつが　親玉かい？▼</language>
 	</row>
 
-	<row id="msg_d02r0101_sage5_04" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_d02r0101_sage5_04" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>♂
-・
-・続けてsage5_05</comment>
+・続けてsage5_05
+
+・トレーナーケースの称号にあわせるかどうか</comment>
 		<attribute name="キャラ指定">SAGE5
-七人衆５</attribute>
+七賢人５</attribute>
 		<language name="JPN" width="256">？？？『わたしは　プラズマだんの
-おうの　もとに　つどった　もの　だ▼
+おうの　もとに　つどった　もの▼
 インセクトマンの　アーティに
 ビッグママ　アロエか▼
 てきをしり　おのれをしれば
 ひゃくせんして　あやうからず……▽
 ここは　すなおに　ひきましょう▼</language>
 		<language name="JPN_KANJI" width="256">？？？『わたしは　プラズマ団の
-王の　もとに　集った　者だ▼
+王の　もとに　集った　者▼
 インセクトマンの　アーティに
 ビッグママ　アロエか▼
 敵を知り　己を知れば
@@ -782,7 +783,7 @@
 　動作モデルを全て削除
 ・画面復帰し、続けてleader2_02</comment>
 		<attribute name="キャラ指定">SAGE5
-七人衆５</attribute>
+七賢人５</attribute>
 		<language name="JPN" width="256">ですが　われわれは　にんげんから
 ポケモンを　かいほう　するため▽
 ひび　どりょくを　しているのです▼

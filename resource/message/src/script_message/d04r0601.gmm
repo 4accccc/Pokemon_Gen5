@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2010-01-21T16:05:33"/>
+	<create user="matsumiya" host="W00224" date="2010-02-02T14:42:29"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -299,16 +299,16 @@
 ・pos（詳細未定）を踏むとイベント発動
 　ライバルのメッセージ表示後
 　主人公がライバルの隣まで移動</comment>
-		<attribute name="キャラ指定">ライバル</attribute>
-		<language name="JPN" width="256">ブラッカー『……[1:00:トレーナー名:0]　こっちだね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ブラッカー『……[1:00:トレーナー名:0]　こっちだね[BE:01:ページ切り替え（クリア）]</language>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">チェレン『……[1:00:トレーナー名:0]　こっちだね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">チェレン『……[1:00:トレーナー名:0]　こっちだね[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_d04r0601_sage1_01w" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・WHITEver
 ・続けてmsg_d04r0601_sage1_02</comment>
-		<attribute name="キャラ指定">七賢者ゲーチス</attribute>
+		<attribute name="キャラ指定">七賢人ゲーチス</attribute>
 		<language name="JPN" width="256">ゲーチス『おそろいの　ようですね[BE:01:ページ切り替え（クリア）]
 わざわざ　こんなところまで
 いらっしゃったのです[BE:01:ページ切り替え（クリア）]
@@ -329,7 +329,7 @@
 		<comment>♂
 ・BLACKver
 ・続けてmsg_d04r0601_sage1_02</comment>
-		<attribute name="キャラ指定">七賢者ゲーチス</attribute>
+		<attribute name="キャラ指定">七賢人ゲーチス</attribute>
 		<language name="JPN" width="256">ゲーチス『おそろいの　ようですね[BE:01:ページ切り替え（クリア）]
 わざわざ　こんなところまで
 いらっしゃったのです[BE:01:ページ切り替え（クリア）]
@@ -350,7 +350,7 @@
 		<comment>♂
 ・このときゲーチス、一歩前に出る
 ・続けてmsg_d04r0601_champion_01</comment>
-		<attribute name="キャラ指定">七賢者ゲーチス</attribute>
+		<attribute name="キャラ指定">七賢人ゲーチス</attribute>
 		<language name="JPN" width="256">イッシュの　でんせつは
 ごぞんじ　なの　でしょう[BE:01:ページ切り替え（クリア）]
 ２ひきの　ドラゴンが
@@ -398,7 +398,7 @@
 		<comment>♂
 ・WHITEver
 ・続けてmsg_d04r0601_champion_02</comment>
-		<attribute name="キャラ指定">七賢者ゲーチス</attribute>
+		<attribute name="キャラ指定">七賢人ゲーチス</attribute>
 		<language name="JPN" width="256">ゲーチス『つごうの　いいことを[BE:01:ページ切り替え（クリア）]
 そもそも　ここに　あったのは
 ライトストーンだけ[BE:01:ページ切り替え（クリア）]
@@ -417,7 +417,7 @@
 		<comment>♂
 ・BLACKver
 ・続けてmsg_d04r0601_champion_02</comment>
-		<attribute name="キャラ指定">七賢者ゲーチス</attribute>
+		<attribute name="キャラ指定">七賢人ゲーチス</attribute>
 		<language name="JPN" width="256">ゲーチス『つごうの　いいことを[BE:01:ページ切り替え（クリア）]
 そもそも　ここに　あったのは
 ダークストーンだけ[BE:01:ページ切り替え（クリア）]
@@ -449,7 +449,7 @@
 ・メッセージ表示後、画面下（仮）に移動
 ・主人公とチャンピオンの間を割って立ち去る
 　画面外に消えると、msg_d04r0601_rival_02</comment>
-		<attribute name="キャラ指定">七賢者ゲーチス</attribute>
+		<attribute name="キャラ指定">七賢人ゲーチス</attribute>
 		<language name="JPN" width="256">ゲーチス『まさか[BE:01:ページ切り替え（クリア）]
 しんせつですよ　しんせつ
 たしかに　わたしは[BE:00:ページ切り替え（行送り）]
@@ -472,9 +472,9 @@
 　（ゲーチスの移動に追従する）
 ・続けてmsg_d04r0601_champion_03</comment>
 		<attribute name="キャラ指定">ライバル</attribute>
-		<language name="JPN" width="256">ブラッカー『……アデクさん
+		<language name="JPN" width="256">チェレン『……アデクさん
 ３ｖｓ１なのに　あきらめるのですか？[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ブラッカー『……アデクさん
+		<language name="JPN_KANJI" width="256">チェレン『……アデクさん
 ３ｖｓ１なのに　あきらめるのですか？[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
@@ -524,10 +524,10 @@
 		<comment>♂
 ・続けてmsg_d04r0601_champion_04</comment>
 		<attribute name="キャラ指定">ライバル</attribute>
-		<language name="JPN" width="256">ブラッカー『……じいさん[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">チェレン『……じいさん[BE:01:ページ切り替え（クリア）]
 ここに　いても　なにもないんだろ
 とにかく　うごこうぜ[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ブラッカー『……じいさん[BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">チェレン『……じいさん[BE:01:ページ切り替え（クリア）]
 ここに　いても　なにもないんだろ
 とにかく　動こうぜ[BE:01:ページ切り替え（クリア）]</language>
 	</row>

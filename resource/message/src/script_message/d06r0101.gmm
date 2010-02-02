@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2010-01-13T12:35:40"/>
+	<create user="matsumiya" host="W00224" date="2010-02-02T14:44:42"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -368,13 +368,13 @@
 　msg_d06r0101_white_02表示
 ・0＝主人公名前</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
-		<language name="JPN" width="256">ホワイティ『もう！
+		<language name="JPN" width="256">ベル『もう！
 [1:00:トレーナー名:0]ったら　あぶなかったよ▼
 あの　うかんでいる　いしって
 でんきを　おびているの▼
 うっかり　さわっちゃうと
 ビリッビリッ　しびれちゃうんだから！▼</language>
-		<language name="JPN_KANJI" width="256">ホワイティ『もう！
+		<language name="JPN_KANJI" width="256">ベル『もう！
 [1:00:トレーナー名:0]ったら　危なかったよ▼
 あの　浮かんでいる　石って
 電気を　帯びているの▼
@@ -459,10 +459,10 @@
 ・msg_d06r0101_hakase2_04表示以降
 ・d06r0201でのNとのイベント後まで繰り返し</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
-		<language name="JPN" width="256">ホワイティ『アタシはね
+		<language name="JPN" width="256">ベル『アタシはね
 はかせの　ボディーガードなの！▼
 って　そんな　ひつようないけど……</language>
-		<language name="JPN_KANJI" width="256">ホワイティ『アタシはね
+		<language name="JPN_KANJI" width="256">ベル『アタシはね
 博士の　ボディーガードなの！▼
 って　そんな　必要ないけど……</language>
 	</row>
@@ -529,7 +529,7 @@
 		<comment>♀
 ・主人公と隣接して（？）</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
-		<language name="JPN" width="256">ホワイティ『ねえねえ　[1:00:トレーナー名:0]！
+		<language name="JPN" width="256">ベル『ねえねえ　[1:00:トレーナー名:0]！
 その　グローブ　なあに？▼
 ……　……　……
 ……　……　……▼
@@ -537,7 +537,7 @@
 しびれないの！？▼
 すごーい！　じゃあ
 フキヨセシティに　いけるんだ！</language>
-		<language name="JPN_KANJI" width="256">ホワイティ『ねえねえ　[1:00:トレーナー名:0]！
+		<language name="JPN_KANJI" width="256">ベル『ねえねえ　[1:00:トレーナー名:0]！
 その　グローブ　なあに？▼
 ……　……　……
 ……　……　……▼
@@ -573,9 +573,9 @@
 　d06r0101出口付近のNイベント発生まで
 　繰り返し表示</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
-		<language name="JPN" width="256">ホワイティ『アタシは
+		<language name="JPN" width="256">ベル『アタシは
 ここで　ポケモン　つかまえるつもり！</language>
-		<language name="JPN_KANJI" width="256">ホワイティ『アタシは
+		<language name="JPN_KANJI" width="256">ベル『アタシは
 ここで　ポケモン　捕まえるつもり！</language>
 	</row>
 
@@ -657,8 +657,8 @@
 ・続けてmsg_d06r0101_white_07表示
 ・0＝主人公名前</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
-		<language name="JPN" width="256">ホワイティ『[1:00:トレーナー名:0]！▼</language>
-		<language name="JPN_KANJI" width="256">ホワイティ『[1:00:トレーナー名:0]！▼</language>
+		<language name="JPN" width="256">ベル『[1:00:トレーナー名:0]！▼</language>
+		<language name="JPN_KANJI" width="256">ベル『[1:00:トレーナー名:0]！▼</language>
 	</row>
 
 	<row id="msg_d06r0101_white_07" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -666,10 +666,10 @@
 ・主人公に近づくと、メッセージ表示
 ・続けてmsg_d06r0101_hakase2_09表示</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
-		<language name="JPN" width="256">ホワイティ『すごーい！！
+		<language name="JPN" width="256">ベル『すごーい！！
 もうすぐ　フキヨセシティ　でしょ！▽
 ぜんぶの　いしを　うごかしたんだ！▼</language>
-		<language name="JPN_KANJI" width="256">ホワイティ『すごーい！！
+		<language name="JPN_KANJI" width="256">ベル『すごーい！！
 もうすぐ　フキヨセシティ　でしょ！▽
 全部の　石を　動かしたんだ！▼</language>
 	</row>
@@ -681,13 +681,13 @@
 ・続けてmsg_d06r0101_boss_05表示
 ・0＝主人公の名前</comment>
 		<attribute name="キャラ指定">博士（娘）</attribute>
-		<language name="JPN" width="256">アララギ『……ホワイティは
+		<language name="JPN" width="256">アララギ『……ベルは
 みみが　いいのね▼
 あんな　とおくからでも
 [1:00:トレーナー名:0]の　こえが　きこえるなんて▼
 で　[1:00:トレーナー名:0]
 そちらの　トレーナーは　どなた……？▼</language>
-		<language name="JPN_KANJI" width="256">アララギ『……ホワイティは
+		<language name="JPN_KANJI" width="256">アララギ『……ベルは
 耳が　いいのね▼
 あんな　遠くからでも
 [1:00:トレーナー名:0]の　声が　聞こえるなんて▼
@@ -808,10 +808,10 @@
 　画面外に消えると、主人公操作可能に
 ・0＝主人公名前</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
-		<language name="JPN" width="256">ホワイティ『えーっと　[1:00:トレーナー名:0]！▼
+		<language name="JPN" width="256">ベル『えーっと　[1:00:トレーナー名:0]！▼
 わたし　いま　ボディガードだから
 はかせと　いっしょに　いくね！▼</language>
-		<language name="JPN_KANJI" width="256">ホワイティ『えーっと　[1:00:トレーナー名:0]！▼
+		<language name="JPN_KANJI" width="256">ベル『えーっと　[1:00:トレーナー名:0]！▼
 わたし　今　ボディガードだから
 博士と　一緒に　行くね！▼</language>
 	</row>

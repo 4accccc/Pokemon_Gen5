@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2010-01-15T20:02:41"/>
+	<create user="matsumiya" host="W00224" date="2010-02-02T14:28:04"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -293,8 +293,7 @@
 
 
 	<row id="msg_d02_girl1_01">
-		<comment>♀
-・7月ROM用メッセージ</comment>
+		<comment>♀</comment>
 		<attribute name="キャラ指定">GIRL1</attribute>
 		<language name="JPN" width="256">もりと　いっても
 つぎのまちへの　とおりみち　だから[BE:00:ページ切り替え（行送り）]

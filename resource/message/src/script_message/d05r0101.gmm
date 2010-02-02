@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-15T22:40:13"/>
+	<create user="matsumiya" host="W00224" date="2010-02-02T14:43:58"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -342,10 +342,10 @@
 ・表示後、うろうろしてから
 　次のメッセージ表示</comment>
 		<attribute name="キャラ指定">友達♂（ライバル）</attribute>
-		<language name="JPN" width="256">ブラッカー『……それにしても
+		<language name="JPN" width="256">チェレン『……それにしても
 せっかく　チャンピオンに　なれたのに[BE:00:ページ切り替え（行送り）]
 じぶんから　やめるのは　おかしいよな[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ブラッカー『……それにしても
+		<language name="JPN_KANJI" width="256">チェレン『……それにしても
 せっかく　チャンピオンに　なれたのに[BE:00:ページ切り替え（行送り）]
 自分から辞めるのは　おかしいよな[BE:01:ページ切り替え（クリア）]</language>
 	</row>
@@ -354,9 +354,9 @@
 		<comment>♂
 ・メッセージ表示後、
 　ライバルだけ、コンテナの奥へ移動</comment>
-		<language name="JPN" width="256">ブラッカー『……さっさと
+		<language name="JPN" width="256">チェレン『……さっさと
 コンテナの　なかを　しらべるか[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ブラッカー『……さて
+		<language name="JPN_KANJI" width="256">チェレン『……さて
 さっさと　中を　探索するか[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
@@ -367,11 +367,11 @@
 ・はい/いいえ
 ・はい→black_04
 　いいえ→black_05</comment>
-		<language name="JPN" width="256">クロック『……？
+		<language name="JPN" width="256">チェレン『……？
 この　おくにも　だれか　いるぞ[BE:01:ページ切り替え（クリア）]
 ひょっとしたら　プラズマだん　かもな
 じゅんびは　いいか？[1:00:トレーナー名:0]</language>
-		<language name="JPN_KANJI" width="256">クロック『……？
+		<language name="JPN_KANJI" width="256">チェレン『……？
 この　奥にも　だれか　いるぞ[BE:01:ページ切り替え（クリア）]
 ひょっとしたら　プラズマ団かもな
 準備は　良いか？[1:00:トレーナー名:0]</language>
@@ -413,11 +413,11 @@
 		<comment>♂
 ・続けてsage2_02</comment>
 		<attribute name="キャラ指定">友達♂（ライバル）</attribute>
-		<language name="JPN" width="256">クロック『……やれやれ
+		<language name="JPN" width="256">チェレン『……やれやれ
 ほんとうに　かくれていたとは[BE:01:ページ切り替え（クリア）]
 さむいんだろ？
 そとまで　あんない　してやるよ[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">クロック『……やれやれ
+		<language name="JPN_KANJI" width="256">チェレン『……やれやれ
 本当に　隠れていたとは[BE:01:ページ切り替え（クリア）]
 寒いんだろ？
 外まで　案内してやるよ[BE:01:ページ切り替え（クリア）]</language>
@@ -456,9 +456,9 @@
 		<comment>♂
 ・メッセージ表示後、戦闘</comment>
 		<attribute name="キャラ指定">友達♂（ライバル）</attribute>
-		<language name="JPN" width="256">クロック『[1:00:トレーナー名:0]！
+		<language name="JPN" width="256">チェレン『[1:00:トレーナー名:0]！
 ひとりずつ　かたづけるぞ！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">クロック『[1:00:トレーナー名:0]！
+		<language name="JPN_KANJI" width="256">チェレン『[1:00:トレーナー名:0]！
 一人ずつ　片付けるぞ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
@@ -502,9 +502,9 @@
 ・表示後、画面暗転してd05の外に
 ・コンテナ内のイベント関係のOBJ削除</comment>
 		<attribute name="キャラ指定">友達♂（ライバル）</attribute>
-		<language name="JPN" width="256">クロック『[1:00:トレーナー名:0]！
+		<language name="JPN" width="256">チェレン『[1:00:トレーナー名:0]！
 なんだか　おもしろくなってきたぜ！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">クロック『[1:00:トレーナー名:0]！
+		<language name="JPN_KANJI" width="256">チェレン『[1:00:トレーナー名:0]！
 なんだか　おもしろくなってきたぜ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 

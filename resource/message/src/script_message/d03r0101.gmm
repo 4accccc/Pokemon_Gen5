@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2010-01-21T22:42:15"/>
+	<create user="matsumiya" host="W00224" date="2010-02-02T14:31:51"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -438,9 +438,9 @@
 ・pos（座標未定）を踏むとイベント発動
 　主人公に隣接してメッセージ表示</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">ブラッカー『こだいのしろは
+		<language name="JPN" width="256">チェレン『こだいのしろは
 ここから　きたのほう　だってよ[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ブラッカー『古代の城は
+		<language name="JPN_KANJI" width="256">チェレン『古代の城は
 ここから　北のほう　だってよ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
@@ -460,12 +460,12 @@
 		<comment>♂：d04r0601のイベント後
 ・画面暗転から復帰後メッセージ自動で表示</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">ブラッカー『……はああ！
+		<language name="JPN" width="256">チェレン『……はああ！
 なんていうか　やるせねーな[BE:01:ページ切り替え（クリア）]
 なにが　ぜつぼうする
 その　しゅんかんを　みるのが[BE:00:ページ切り替え（行送り）]
 だいすき　だよ！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ブラッカー『……はああ！
+		<language name="JPN_KANJI" width="256">チェレン『……はああ！
 なんていうか　やるせねーな[BE:01:ページ切り替え（クリア）]
 なにが　絶望する
 その　瞬間を　みるのが[BE:00:ページ切り替え（行送り）]
@@ -491,9 +491,9 @@
 		<comment>♂：d04r0601のイベント後
 ・メッセージ後、ＴＶトランシーバー画面に切り替え（仮）</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">ブラッカー『[1:00:トレーナー名:0]！　おまえの
+		<language name="JPN" width="256">チェレン『[1:00:トレーナー名:0]！　おまえの
 ＴＶトランシーバー　なってるぜ[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ブラッカー『[1:00:トレーナー名:0]！　おまえの
+		<language name="JPN_KANJI" width="256">チェレン『[1:00:トレーナー名:0]！　おまえの
 ＴＶトランシーバー　鳴ってるぜ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
@@ -518,11 +518,11 @@
 ・c02gym0101でダークストーン（ライトストーン）入手で
 　ここから削除</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">ブラッカー『……オレ
+		<language name="JPN" width="256">チェレン『……オレ
 もういちど　このなかを　さがす[BE:01:ページ切り替え（クリア）]
 おまえは　シッポウシティの
 はくぶつかんに　むかいな！</language>
-		<language name="JPN_KANJI" width="256">ブラッカー『……オレ
+		<language name="JPN_KANJI" width="256">チェレン『……オレ
 もう一度　この中を　探す[BE:01:ページ切り替え（クリア）]
 おまえは　シッポウシティの
 博物館に　向かいな！</language>

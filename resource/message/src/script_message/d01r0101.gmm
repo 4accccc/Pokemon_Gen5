@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2010-01-21T19:59:47"/>
+	<create user="matsumiya" host="W00224" date="2010-02-02T14:27:18"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,7 +307,7 @@
 		</language>
 	</columns>
 
-	<dialog left="53" top="215" right="741" bottom="818" maximized="no" rayout="Vertical2">
+	<dialog left="1408" top="289" right="2096" bottom="892" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="141" right="1280" bottom="539" visible="yes"/>
 		<band id="0" index="1" style="0000" width="513"/>
@@ -315,7 +315,7 @@
 		<band id="2" index="3" style="0000" width="526"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="680"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -358,7 +358,7 @@
 じゃあ　この　[1:01:ポケモン種族名:1]は　ぴったりよ▼</language>
 	</row>
 
-	<row id="msg_d01r0101_girl_02" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
+	<row id="msg_d01r0101_girl_02" text-color="#000000,,,#000000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,,">
 		<comment>♀
 ・ポケモンをもらわずに２回目以降の会話
 ・はい/いいえの選択肢
@@ -376,8 +376,8 @@
 ねえねえ　あなた
 この　[1:01:ポケモン種族名:1]が　ほしい？</language>
 		<language name="JPN_KANJI" width="256">あなたの　[1:01:ポケモン種族名:0]が
-にがてな　[1:03:ポケモンタイプ:2]タイプの　ポケモンに[BE:00:ページ切り替え（行送り）]
-ゆうりな　タイプの　ポケモンだもん！[BE:01:ページ切り替え（クリア）]
+苦手な　[1:03:ポケモンタイプ:2]タイプの　ポケモンに[BE:00:ページ切り替え（行送り）]
+有利な　タイプの　ポケモンだもん！[BE:01:ページ切り替え（クリア）]
 ねえねえ　あなた
 この　[1:01:ポケモン種族名:1]が　ほしい？</language>
 	</row>
@@ -488,9 +488,9 @@
 ・主人公に隣接してメッセージ表示
 ・表示後、廃墟内に移動してきょろきょろ</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
-		<language name="JPN" width="256">ホワイティ『あっ　[1:00:トレーナー名:0]も
+		<language name="JPN" width="256">ベル『あっ　[1:00:トレーナー名:0]も
 ふしぎな　ポケモンを　さがすの？▼</language>
-		<language name="JPN_KANJI" width="256">ホワイティ『あっ　[1:00:トレーナー名:0]も
+		<language name="JPN_KANJI" width="256">ベル『あっ　[1:00:トレーナー名:0]も
 不思議な　ポケモンを　探すの？▼</language>
 	</row>
 
@@ -499,10 +499,10 @@
 ・廃墟内のPOS（GRIDX=23、GRIDZ=23）を踏むと
  主人公のほうを向いてメッセージ表示</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
-		<language name="JPN" width="256">ホワイティ『それにしても
+		<language name="JPN" width="256">ベル『それにしても
 ゆめを　みせるって▽
 どんな　しくみ　なのかしら？</language>
-		<language name="JPN_KANJI" width="256">ホワイティ『それにしても
+		<language name="JPN_KANJI" width="256">ベル『それにしても
 夢を　見せるって▽
 どんな　仕組み　なのかしら？</language>
 	</row>
@@ -514,11 +514,11 @@
 　その後、所定POS（GRIDX=27、GRIDZ=9）まで移動
 ・移動すると下記のポケモンのアニメ</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
-		<language name="JPN" width="256">ホワイティ『！▼
+		<language name="JPN" width="256">ベル『！▼
 なんだか　かべの　むこうから
 ものおと　きこえなかった！？▽
 ねえねえ　いってみようよ！▼</language>
-		<language name="JPN_KANJI" width="256">ホワイティ『！▼
+		<language name="JPN_KANJI" width="256">ベル『！▼
 なんだか　壁の　向こうから
 物音　聞こえなかった！？▽
 ねえねえ　行ってみようよ！▼</language>
@@ -543,8 +543,8 @@
 　画面上からプラズマ団登場（ムンナの左右に配置）
 ・続けてhakaiw_01</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
-		<language name="JPN" width="256">ホワイティ『あっ　まってえ！▼</language>
-		<language name="JPN_KANJI" width="256">ホワイティ『あっ　待ってえ！▼</language>
+		<language name="JPN" width="256">ベル『あっ　まってえ！▼</language>
+		<language name="JPN_KANJI" width="256">ベル『あっ　待ってえ！▼</language>
 	</row>
 
 	<row id="msg_d01r0101_hakaiw_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ffff,,,,,#80ffff,,,,,,,,,,,,,">
@@ -580,10 +580,10 @@
 		<comment>♀
 ・続けてhakaim_02</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
-		<language name="JPN" width="256">ホワイティ『ちょっと！▼
+		<language name="JPN" width="256">ベル『ちょっと！▼
 あなたたち　だあれ？▼
 なに　してるの！？▼</language>
-		<language name="JPN_KANJI" width="256">ホワイティ『ちょっと！▼
+		<language name="JPN_KANJI" width="256">ベル『ちょっと！▼
 あなたたち　だあれ？▼
 なに　してるの！？▼</language>
 	</row>
@@ -639,11 +639,11 @@
 		<comment>♀
 ・続けてhakaiw_03</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
-		<language name="JPN" width="256">ホワイティ『いま　ポケモンを　けって
+		<language name="JPN" width="256">ベル『いま　ポケモンを　けって
 ゆめのけむりを　ださせたの？▼
 ひどい！　どうして？
 あなたたちも　トレーナーなんでしょ？▼</language>
-		<language name="JPN_KANJI" width="256">ホワイティ『いま　ポケモンを　けって
+		<language name="JPN_KANJI" width="256">ベル『いま　ポケモンを　けって
 ゆめのけむりを　ださせたの？▼
 ひどい！　どうして？
 あなたたちも　トレーナーなんでしょ？▼</language>
@@ -689,9 +689,9 @@
 ・勝利するとフィールドに戻りhakaiw_04表示
 ・0＝主人公名</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
-		<language name="JPN" width="256">ホワイティ『えええ！
+		<language name="JPN" width="256">ベル『えええ！
 ちょっと　[1:00:トレーナー名:0]！▼</language>
-		<language name="JPN_KANJI" width="256">ホワイティ『えええ！
+		<language name="JPN_KANJI" width="256">ベル『えええ！
 ちょっと　[1:00:トレーナー名:0]！▼</language>
 	</row>
 
@@ -733,13 +733,13 @@
 ・再度主人公の隣に戻りwhite_09表示
 ・0＝主人公名</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
-		<language name="JPN" width="256">ホワイティ『ありがとう！
+		<language name="JPN" width="256">ベル『ありがとう！
 [1:00:トレーナー名:0]　ありがとうね！▼
 あのまま　だったら
 ムンナって　ポケモン▽
 もっと　ひどいことに　あってたよ！▼
 あれ……？▼</language>
-		<language name="JPN_KANJI" width="256">ホワイティ『ありがとう！
+		<language name="JPN_KANJI" width="256">ベル『ありがとう！
 [1:00:トレーナー名:0]　ありがとうね！▼
 あのまま　だったら
 ムンナって　ポケモン▽
@@ -751,10 +751,10 @@
 		<comment>♀
 ・続けてinventor_01</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
-		<language name="JPN" width="256">ホワイティ『これ……▼
+		<language name="JPN" width="256">ベル『これ……▼
 なかに　はいっているのって
 ムンナの　ゆめのけむり！？▼</language>
-		<language name="JPN_KANJI" width="256">ホワイティ『これ……▼
+		<language name="JPN_KANJI" width="256">ベル『これ……▼
 なかに　はいっているのって
 ムンナの　ゆめのけむり！？▼</language>
 	</row>
@@ -785,9 +785,9 @@
 		<comment>♀
 ・続けてinventor_03</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
-		<language name="JPN" width="256">ホワイティ『あっ　マコモさん
+		<language name="JPN" width="256">ベル『あっ　マコモさん
 これ　なんですけど……▼</language>
-		<language name="JPN_KANJI" width="256">ホワイティ『あっ　マコモさん
+		<language name="JPN_KANJI" width="256">ベル『あっ　マコモさん
 これ　なんですけど……▼</language>
 	</row>
 
@@ -809,14 +809,14 @@
 		<attribute name="キャラ指定">ASSISTANTW
 発明家</attribute>
 		<language name="JPN" width="256">ゆめのけむり！▼
-さすが　[1:00:トレーナー名:0]に　ホワイティ！
+さすが　[1:00:トレーナー名:0]に　ベル！
 アララギが　みこんだ　トレーナーね！▼
 これで　みんな　ハッピーな　ゆめを
 みられるように　なるわ！▼
 あなたたち　あとで
 あたしの　いえに　きてねー！！▼</language>
 		<language name="JPN_KANJI" width="256">ゆめのけむり！▼
-さすが　[1:00:トレーナー名:0]に　ホワイティ！
+さすが　[1:00:トレーナー名:0]に　ベル！
 アララギが　みこんだ　トレーナーね！▼
 これで　みんな　ハッピーな　夢を
 みられるように　なるわ！▼
@@ -828,13 +828,13 @@
 		<comment>♀
 ・メッセージ表示後、主人公フリーに</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
-		<language name="JPN" width="256">ホワイティ『ふええ　なんだか
+		<language name="JPN" width="256">ベル『ふええ　なんだか
 すっごく　ドタバタしちゃったねえ▼
 [1:00:トレーナー名:0]は
 マコモさんの　いえに　いってみたら？▼
 あたし？　あたしはね
 さっきの　ポケモン　さがすんだから！</language>
-		<language name="JPN_KANJI" width="256">ホワイティ『ふええ　なんだか
+		<language name="JPN_KANJI" width="256">ベル『ふええ　なんだか
 すっごく　ドタバタしちゃったねえ▼
 [1:00:トレーナー名:0]は
 マコモさんの　家に　行ってみたら？▼
@@ -847,11 +847,11 @@
 ・white_11表示以降繰り返し
 ・r03でのプラズマ団イベント発生でここから削除</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
-		<language name="JPN" width="256">ホワイティ『[1:00:トレーナー名:0]は
+		<language name="JPN" width="256">ベル『[1:00:トレーナー名:0]は
 マコモさんの　いえに　いってみたら？▼
 あたし？　あたしはね
 さっきの　ポケモン　さがすんだから！</language>
-		<language name="JPN_KANJI" width="256">ホワイティ『[1:00:トレーナー名:0]は
+		<language name="JPN_KANJI" width="256">ベル『[1:00:トレーナー名:0]は
 マコモさんの　家に　行ってみたら？▼
 あたし？　あたしはね
 さっきの　ポケモン　探すんだから！</language>

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-07T12:24:56"/>
+	<create user="matsumiya" host="W00224" date="2010-02-02T14:43:29"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -327,12 +327,12 @@
 ・ライバルの動作モデルが消えると主人公操作可能に
 ・0＝主人公名前</comment>
 		<attribute name="キャラ指定">友達♂（ライバル）</attribute>
-		<language name="JPN" width="256">ブラッカー『なあ　[1:00:トレーナー名:0]！[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">チェレン『なあ　[1:00:トレーナー名:0]！[BE:01:ページ切り替え（クリア）]
 まさか　とは　おもうけどさ
 ひょっとして　この　なかに[BE:00:ページ切り替え（行送り）]
 プラズマだん　いるんじゃねえの？[BE:01:ページ切り替え（クリア）]
 ……さむいの　イヤだけど　しらべるか[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ブラッカー『なあ　[1:00:トレーナー名:0]！[BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">チェレン『なあ　[1:00:トレーナー名:0]！[BE:01:ページ切り替え（クリア）]
 まさか　とは　思うけどさ
 ひょっとして　この中に[BE:00:ページ切り替え（行送り）]
 プラズマ団　いるんじゃねえの？[BE:01:ページ切り替え（クリア）]
@@ -346,11 +346,11 @@
 ・表示後、ライバルだけc05方面に移動
 　画面外に消えると操作可能に</comment>
 		<attribute name="キャラ指定">友達♂（ライバル）</attribute>
-		<language name="JPN" width="256">ブラッカー『さぎょういんの　おっさん
+		<language name="JPN" width="256">チェレン『さぎょういんの　おっさん
 あわてて　ジムに　もどったぜ[BE:01:ページ切り替え（クリア）]
 そうとうに　やばいんだろーな
 さ　オレたちも　いくぞ！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ブラッカー『さっきの　おっさん
+		<language name="JPN_KANJI" width="256">チェレン『さっきの　おっさん
 あわてて　ジムに　戻ったぜ[BE:01:ページ切り替え（クリア）]
 相当に　やばいんだろーな
 さ　オレたちも　行くぞ！[BE:01:ページ切り替え（クリア）]</language>
