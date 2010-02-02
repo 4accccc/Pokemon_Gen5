@@ -30,6 +30,7 @@
 #include "poke_tool/poke_tool.h"
 #include "pokeicon/pokeicon.h"
 #include "ui/ui_easy_clwk.h"
+#include "net/network_define.h"
 
 #include "btl_rec_sel_graphic.h"
 #include "net_app/btl_rec_sel.h"
@@ -858,7 +859,7 @@ static GFL_PROC_RESULT Btl_Rec_Sel_ProcMain( GFL_PROC* proc, int* seq, void* pwk
       {
 #ifndef OFFLINE_TEST
         GFL_NETHANDLE* nethandle = GFL_NET_HANDLE_GetCurrentHandle();
-        GFL_NET_TimingSyncStart( nethandle, BTL_REC_SEL_NET_TIMING_SYNC_NO );
+        GFL_NET_HANDLE_TimeSyncStart( nethandle, BTL_REC_SEL_NET_TIMING_SYNC_NO, WB_NET_BTL_REC_SEL );
 #endif
       }
       (*seq) = SEQ_WAIT;
@@ -871,7 +872,7 @@ static GFL_PROC_RESULT Btl_Rec_Sel_ProcMain( GFL_PROC* proc, int* seq, void* pwk
         BOOL ret = TRUE;
 #ifndef OFFLINE_TEST
         GFL_NETHANDLE* nethandle = GFL_NET_HANDLE_GetCurrentHandle();
-        ret = GFL_NET_IsTimingSync( nethandle, BTL_REC_SEL_NET_TIMING_SYNC_NO );
+        ret = GFL_NET_HANDLE_IsTimeSync( nethandle, BTL_REC_SEL_NET_TIMING_SYNC_NO, WB_NET_BTL_REC_SEL );
 #endif
         if( ret )  // ëäéËë“ÇøèIóπ
         {
