@@ -203,9 +203,9 @@ u8 WIFIHISTORY_GetMyCountryCount(WIFI_HISTORY * wh)
  * @return int    取得情報
  */
 //----------------------------------------------------------
-int WIFIHISTORY_GetUnInfo(WIFI_HISTORY * wh, const int inIdx, const UN_INFO_TYPE inType)
+u32 WIFIHISTORY_GetUnInfo(WIFI_HISTORY * wh, const u32 inIdx, const UN_INFO_TYPE inType)
 {
-  int info;
+  u32 info;
   UNITEDNATIONS_SAVE *un;
 
   if (inIdx >= UNITEDNATIONS_PEOPLE_MAX)
@@ -243,6 +243,73 @@ int WIFIHISTORY_GetUnInfo(WIFI_HISTORY * wh, const int inIdx, const UN_INFO_TYPE
   }
   return info;
 }
+
+//----------------------------------------------------------
+/**
+ * @brief	自分の所持している国連データを取得
+ * @param	wh			WIFI履歴データへのポインタ
+ * @param inIdx   更新したい、データインデックス
+ * @param inType  更新したい情報の種類 wifihistory.h 参照
+ * @param inInfo 　更新情報
+ * @return none
+ */
+//----------------------------------------------------------
+void WIFIHISTORY_SetUnInfo(WIFI_HISTORY * wh, const int inIdx, const UN_INFO_TYPE inType, const u32 inInfo)
+{
+  UNITEDNATIONS_SAVE *un;
+
+  if (inIdx >= UNITEDNATIONS_PEOPLE_MAX)
+  {
+    GF_ASSERT_MSG(0,"INDEX_OVER idx=%d",inIdx);
+    return;
+  }
+  un = &wh->aUnitedPeople[inIdx];
+  switch(inType){
+  case UN_INFO_RECV_POKE:       //もらったポケモン
+    //@todo 2010/02/02 今のところ未使用
+/**    
+    if ( (0 < inInfo) && (inInfo <= MONSNO_END) ) un->recvPokemon = inInfo;
+    else GF_ASSERT_MSG(0,"monsno error %d", inInfo);
+*/    
+    break;
+  case UN_INFO_SEND_POKE:      //あげたポケモン
+    //@todo 2010/02/02 今のところ未使用
+/**
+    if ( (0 < inInfo) && (inInfo <= MONSNO_END) ) un->sendPokemon = inInfo;
+    else GF_ASSERT_MSG(0,"monsno error %d", inInfo);
+*/    
+    break;
+  case UN_INFO_FAVORITE:       //趣味
+    //@todo 2010/02/02 今のところ未使用
+/**    
+    if (inInfo < 5) un->favorite = inInfo;
+    else GF_ASSERT_MSG(0,"favorite error %d", inInfo);
+*/    
+    break;
+  case UN_INFO_COUNTRY_NUM:    //交換した国の数
+    //@todo 2010/02/02 今のところ未使用
+/**    
+    if (inInfo <= WIFI_COUNTRY_MAX) un->countryCount = inInfo;
+    else GF_ASSEERT_MSG(0,"contry error %d", inInfo);
+*/    
+    break;
+  case UN_INFO_NATURE:         //性格
+    if (inInfo < 5 ) un->nature = inInfo;
+    else GF_ASSERT_MSG(0,"nature error %d", inInfo);
+    break;
+  case UN_INFO_TALK:           //話したことあるか？
+    if (inInfo) un->bTalk = 1;
+    else un->bTalk = 0;
+    break;
+  case UN_INFO_VALID:          //データは有効か？
+    if (inInfo) un->valid = 1;
+    else un->valid = 0;
+    break;
+  default:
+    GF_ASSERT_MSG(0,"TYPE ERROR %d",inType);
+  }
+}
+
 
 //----------------------------------------------------------
 /**
