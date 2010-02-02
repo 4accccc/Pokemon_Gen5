@@ -346,7 +346,7 @@ static void MB_CAP_POKE_SetEscape( MB_CAPTURE_WORK *capWork , MB_CAP_POKE *pokeW
 
 #pragma mark [>state func
 //--------------------------------------------------------------
-//	ステート：無し・逃げている
+//	ステート：無し・捕獲・逃げている
 //--------------------------------------------------------------
 static void MB_CAP_POKE_StateNone(MB_CAPTURE_WORK *capWork , MB_CAP_POKE *pokeWork )
 {

@@ -42,14 +42,15 @@ typedef enum
   CDOI_READY,
   CDOI_START,
   CDOI_TIMEUP,
+  CDOI_FINISH,
   CDOI_SCORE,
   
   CDOI_MAX,
 }MB_CAP_DEMO_OBJ_IDX;
 
-//開始デモ用ステート
 typedef enum
 {
+//開始デモ用ステート
   CDS_MSG_INIT,
   CDS_MSG_INIT_WAIT,
   CDS_MSG_DISP,
@@ -61,6 +62,15 @@ typedef enum
   CDS_START_DISP_WAIT,
   CDS_START_DISP_EXIT,
 
+//終了デモ用ステート
+  CDF_MSG_INIT,
+  CDF_MSG_DISP,
+  CDF_MSG_WAIT,
+  
+  CDF_SCORE_INIT,
+  CDF_SCORE_DISP,
+  CDF_SCORE_WAIT,
+  
 }MB_CAP_DEMO_STATE_START;
 
 //======================================================================
@@ -73,6 +83,9 @@ struct _MB_CAP_DEMO
   BOOL tpTouch;
   u32  tpx;
   u32  tpy;
+  
+  BOOL isTimeUp;
+  BOOL isHighScore;
 
   u8  state;
   u16 cnt;
@@ -261,6 +274,8 @@ const BOOL MC_CAP_DEMO_StartDemoMain( MB_CAPTURE_WORK *capWork , MB_CAP_DEMO *de
         GFL_BBD_SetObjectSiz( bbdSys , demoWork->objIdx[CDOI_READY] , &sizeX , &sizeY );
         GFL_BBD_SetObjectDrawEnable( bbdSys , demoWork->objIdx[CDOI_READY] , &isDisp );
         
+        PMSND_PlaySE( MB_SND_POKE_READY );
+
         demoWork->state = CDS_READY_DISP_PULL_BALL;
         demoWork->cnt = 0;
       }
@@ -270,13 +285,13 @@ const BOOL MC_CAP_DEMO_StartDemoMain( MB_CAPTURE_WORK *capWork , MB_CAP_DEMO *de
   //ボールを引く
   case CDS_READY_DISP_PULL_BALL:
     {
-      const u8 cntMax = 90;
+      const u8 cntMax = 120;
       demoWork->cnt++;
       if( demoWork->cnt < cntMax )
       {
-        const u16 anmIdx = demoWork->cnt/30;
+        const u16 anmIdx = demoWork->cnt/40;
         GFL_BBD_SetObjectCelIdx( bbdSys , demoWork->objIdx[CDOI_READY] , &anmIdx );
-        if( demoWork->cnt > 30 )
+        if( demoWork->cnt > 30 && demoWork->cnt < 90 )
         {
           demoWork->tpTouch = TRUE;
           demoWork->tpx = 128;
@@ -287,10 +302,12 @@ const BOOL MC_CAP_DEMO_StartDemoMain( MB_CAPTURE_WORK *capWork , MB_CAP_DEMO *de
       else
       {
         const BOOL isDisp = FALSE;
-        demoWork->state = CDS_START_DISP_INIT;
-        demoWork->cnt = 0;
         demoWork->tpTouch = FALSE;
         GFL_BBD_SetObjectDrawEnable( bbdSys , demoWork->objIdx[CDOI_READY] , &isDisp );
+        PMSND_PlaySE( MB_SND_POKE_START );
+
+        demoWork->state = CDS_START_DISP_INIT;
+        demoWork->cnt = 0;
       }
     }
     break;
@@ -434,8 +451,12 @@ const BOOL MC_CAP_DEMO_StartDemoMain( MB_CAPTURE_WORK *capWork , MB_CAP_DEMO *de
 //--------------------------------------------------------------
 //	終了Demo初期化
 //--------------------------------------------------------------
-void MC_CAP_DEMO_FinishDemoInit( MB_CAPTURE_WORK *capWork , MB_CAP_DEMO *demoWork )
+void MC_CAP_DEMO_FinishDemoInit( MB_CAPTURE_WORK *capWork , MB_CAP_DEMO *demoWork , const BOOL isTimeUp , const BOOL isHighScore )
 {
+  demoWork->state = CDF_MSG_INIT;
+  demoWork->cnt = 0;
+  demoWork->isTimeUp = isTimeUp;
+  demoWork->isHighScore = isHighScore;
 }
 
 //--------------------------------------------------------------
@@ -450,5 +471,138 @@ void MC_CAP_DEMO_FinishDemoTerm( MB_CAPTURE_WORK *capWork , MB_CAP_DEMO *demoWor
 //--------------------------------------------------------------
 const BOOL MC_CAP_DEMO_FinishDemoMain( MB_CAPTURE_WORK *capWork , MB_CAP_DEMO *demoWork )
 {
-  return TRUE;
+  GFL_BBD_SYS *bbdSys = MB_CAPTURE_GetBbdSys( capWork );
+  const u8 strIdx = (demoWork->isTimeUp == TRUE ? CDOI_TIMEUP : CDOI_FINISH);
+  
+  switch( demoWork->state )
+  {
+  //Finish or TimeUp 出現
+  case CDF_MSG_INIT:
+    {
+      const BOOL isDisp = TRUE;
+      VecFx32 pos = { MB_CAP_MSG_POS_X + FX32_CONST(128.0f+64.0f),
+                      MB_CAP_MSG_POS_Y ,
+                      MB_CAP_MSG_POS_Z };
+      GFL_BBD_SetObjectTrans( bbdSys , demoWork->objIdx[strIdx] , &pos );
+      GFL_BBD_SetObjectDrawEnable( bbdSys , demoWork->objIdx[strIdx] , &isDisp );
+      demoWork->state = CDF_MSG_DISP;
+      PMSND_PlaySE( MB_SND_POKE_FINISH );
+    }
+
+    break;
+  case CDF_MSG_DISP:
+    {
+      const u8 cntMax = 15;
+      demoWork->cnt++;
+      if( demoWork->cnt < cntMax )
+      {
+        const BOOL isDisp = TRUE;
+        VecFx32 pos = { MB_CAP_MSG_POS_X + FX32_CONST(128.0f+64.0f),
+                        MB_CAP_MSG_POS_Y ,
+                        MB_CAP_MSG_POS_Z };
+
+        pos.x -= demoWork->cnt * FX32_CONST(128.0f+64.0f) / cntMax;
+
+        GFL_BBD_SetObjectTrans( bbdSys , demoWork->objIdx[strIdx] , &pos );
+      }
+      else
+      {
+        demoWork->state = CDF_MSG_WAIT;
+        demoWork->cnt = 0;
+      }
+    }
+    break;
+    
+  case CDF_MSG_WAIT:
+    {
+      const u8 cntMax = 120;
+      demoWork->cnt++;
+      if( demoWork->cnt < cntMax )
+      {
+        VecFx32 pos = { MB_CAP_MSG_POS_X ,
+                        MB_CAP_MSG_POS_Y ,
+                        MB_CAP_MSG_POS_Z };
+        if( demoWork->cnt < 30 )
+        {
+          const fx32 ofsArr[4] = {FX32_CONST(2.0f),0,FX32_CONST(-2.0f),0};
+          
+          pos.x += ofsArr[demoWork->cnt%4];
+        }
+        
+        GFL_BBD_SetObjectTrans( bbdSys , demoWork->objIdx[strIdx] , &pos );
+      }
+      else
+      {
+        if( demoWork->isHighScore == FALSE )
+        {
+          return TRUE;
+        }
+        else
+        {
+          const BOOL isDisp = FALSE;
+
+          GFL_BBD_SetObjectDrawEnable( bbdSys , demoWork->objIdx[strIdx] , &isDisp );
+  
+          demoWork->state = CDF_SCORE_INIT;
+          demoWork->cnt = 0;
+        }
+      }
+    }
+    break;
+  
+  //ハイスコア降りてくる
+  case CDF_SCORE_INIT:
+    {
+      const BOOL isDisp = TRUE;
+      VecFx32 pos = { MB_CAP_MSG_POS_X ,
+                      FX32_CONST( -16.0f ),
+                      MB_CAP_MSG_POS_Z };
+      GFL_BBD_SetObjectTrans( bbdSys , demoWork->objIdx[CDOI_SCORE] , &pos );
+      GFL_BBD_SetObjectDrawEnable( bbdSys , demoWork->objIdx[CDOI_SCORE] , &isDisp );
+
+      PMSND_PlaySE( MB_SND_POKE_HIGH_SCORE );
+
+      demoWork->state = CDF_SCORE_DISP;
+    }
+    break;
+
+  case CDF_SCORE_DISP:
+    {
+      const u8 cntMax = 120;
+      demoWork->cnt++;
+      if( demoWork->cnt < cntMax )
+      {
+        VecFx32 pos = { MB_CAP_MSG_POS_X ,
+                        FX32_CONST( -16.0f ) ,
+                        MB_CAP_MSG_POS_Z };
+        pos.y += ( MB_CAP_MSG_POS_Y+FX32_CONST(16.0f) )* demoWork->cnt / cntMax;
+        
+        GFL_BBD_SetObjectTrans( bbdSys , demoWork->objIdx[CDOI_SCORE] , &pos );
+      }
+      else
+      {
+        VecFx32 pos = { MB_CAP_MSG_POS_X ,
+                        MB_CAP_MSG_POS_Y ,
+                        MB_CAP_MSG_POS_Z };
+        
+        GFL_BBD_SetObjectTrans( bbdSys , demoWork->objIdx[CDOI_SCORE] , &pos );
+        demoWork->state = CDF_SCORE_WAIT;
+        demoWork->cnt = 0;
+      }
+    }
+    break;
+
+  case CDF_SCORE_WAIT:
+    {
+      const u8 cntMax = 30;
+      demoWork->cnt++;
+      if( demoWork->cnt > cntMax )
+      {
+        return TRUE;
+      }
+    }
+    break;
+  }
+  
+  return FALSE;
 }

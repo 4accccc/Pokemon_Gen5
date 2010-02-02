@@ -63,7 +63,7 @@ typedef struct _MB_COMM_WORK MB_COMM_WORK;
 typedef struct
 {
   int  msgSpeed;
-  
+  u16  highScore;
 }MB_COMM_INIT_DATA;
 
 //======================================================================

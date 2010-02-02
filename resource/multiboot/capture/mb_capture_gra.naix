@@ -46,9 +46,10 @@ enum {
 	NARC_mb_capture_gra_cap_obj_ready_nsbtx = 32,
 	NARC_mb_capture_gra_cap_obj_start_nsbtx = 33,
 	NARC_mb_capture_gra_cap_obj_timeup_nsbtx = 34,
-	NARC_mb_capture_gra_cap_obj_highscore_nsbtx = 35,
-	NARC_mb_capture_gra_cap_bg_mask_nsbtx = 36,
-	NARC_mb_capture_gra_cap_poke_dummy_nsbtx = 37
+	NARC_mb_capture_gra_cap_obj_finish_nsbtx = 35,
+	NARC_mb_capture_gra_cap_obj_highscore_nsbtx = 36,
+	NARC_mb_capture_gra_cap_bg_mask_nsbtx = 37,
+	NARC_mb_capture_gra_cap_poke_dummy_nsbtx = 38
 };
 
 /* NARC_MB_CAPTURE_GRA_NAIX_ */

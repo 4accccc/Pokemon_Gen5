@@ -65,6 +65,7 @@ typedef enum
 
   MSS_INIT_DEMO,
   MSS_GAME_MAIN,
+  MSS_FINISH_DEMO,
   
 }MB_CAPTURE_STATE;
 
@@ -377,19 +378,47 @@ static const BOOL MB_CAPTURE_Main( MB_CAPTURE_WORK *work )
 
   case MSS_GAME_MAIN:
     {
+      u8 i;
+      BOOL isAllCap = TRUE;
       MB_CAPTURE_UpdateTime( work );
-      if( work->gameTime == 0 )
+      
+      //全捕獲チェック
+      for( i=0;i<MB_CAP_POKE_NUM;i++ )
       {
-        work->state = MSS_FADEOUT;
+        if( MB_CAP_POKE_GetState( work->pokeWork[i] ) != MCPS_CAPTURE )
+        {
+          isAllCap = FALSE;
+          break;
+        }
+      }
+      
+      if( isAllCap == TRUE || work->gameTime == 0 )
+      {
+        BOOL isHighScore = FALSE;
+        if( work->score > work->initWork->highScore )
+        {
+          isHighScore = TRUE;
+        }
+        MC_CAP_DEMO_FinishDemoInit( work , work->demoWork , isAllCap , isHighScore );
+        work->state = MSS_FINISH_DEMO;
       }
     }
+    break;
+  case MSS_FINISH_DEMO:
+    if( MC_CAP_DEMO_FinishDemoMain( work , work->demoWork ) == TRUE )
+    {
+      MC_CAP_DEMO_FinishDemoTerm( work , work->demoWork );
+      work->state = MSS_FADEOUT;
+    }
+    
+    break;
   }
 
   for( i=0;i<MB_CAP_OBJ_NUM;i++ )
   {
     MB_CAP_OBJ_UpdateObject( work , work->objWork[i] );
   }
-  if( work->state != MSS_INIT_DEMO )
+  if( work->state == MSS_GAME_MAIN )
   {
     //デモ中はDemoMainから操作する
     MB_CAP_DOWN_UpdateSystem( work , work->downWork );
@@ -647,6 +676,7 @@ static void MB_CAPTURE_LoadResource( MB_CAPTURE_WORK *work )
       //その他
       NARC_mb_capture_gra_cap_obj_ready_nsbtx ,
       NARC_mb_capture_gra_cap_obj_start_nsbtx ,
+      NARC_mb_capture_gra_cap_obj_finish_nsbtx ,
       NARC_mb_capture_gra_cap_obj_timeup_nsbtx ,
       NARC_mb_capture_gra_cap_obj_highscore_nsbtx ,
       };
@@ -669,6 +699,7 @@ static void MB_CAPTURE_LoadResource( MB_CAPTURE_WORK *work )
       GFL_BBD_TEXSIZDEF_128x32 ,
       //その他
       GFL_BBD_TEXSIZDEF_128x128 ,
+      GFL_BBD_TEXSIZDEF_128x32 ,
       GFL_BBD_TEXSIZDEF_128x32 ,
       GFL_BBD_TEXSIZDEF_128x32 ,
       GFL_BBD_TEXSIZDEF_128x32 ,
@@ -1332,7 +1363,7 @@ static GFL_PROC_RESULT MB_CAPTURE_ProcInit( GFL_PROC * proc, int * seq , void *p
     initWork->arcHandle = GFL_ARC_OpenDataHandle( ARCID_MB_CAPTER , parentHeap );
     PMSND_Exit();
 #endif //MULTI_BOOT_MAKE
-    
+    initWork->highScore = 600;
     work->initWork = initWork;
   }
   else

@@ -299,6 +299,7 @@ static const BOOL MB_PARENT_Main( MB_PARENT_WORK *work )
     if( MB_COMM_IsSendEnable( work->commWork ) == TRUE )
     {
       work->initData.msgSpeed = MSGSPEED_GetWait();
+      work->initData.highScore = MISC_GetPalparkHighscore(work->miscSave);
       if( MB_COMM_Send_InitData( work->commWork , &work->initData ) == TRUE )
       {
         work->state = MPS_SEND_GAMEDATA_INIT;

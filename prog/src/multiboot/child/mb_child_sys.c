@@ -473,6 +473,7 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
     if( WIPE_SYS_EndCheck() == TRUE )
     {
       u8 i;
+      MB_COMM_INIT_DATA *commInit = MB_COMM_GetInitData( work->commWork );
       MB_MSG_MessageTerm( work->msgWork );
       MB_CHILD_TermGraphic( work );
       PMSND_Exit();
@@ -492,7 +493,8 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
         const u8 idx  = work->selInitWork.selectPoke[i][1];
         work->capInitWork.ppp[i] = work->boxPoke[tray][idx];
       }
-      
+      work->capInitWork.highScore = commInit->highScore;
+
       GFL_PROC_LOCAL_CallProc( work->procSys , 
                                NO_OVERLAY_ID ,
                                &MultiBootCapture_ProcData ,

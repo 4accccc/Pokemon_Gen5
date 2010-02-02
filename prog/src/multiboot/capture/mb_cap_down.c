@@ -126,6 +126,8 @@ struct _MB_CAP_DOWN
 //	proto
 //======================================================================
 #pragma mark [> proto
+void MB_CAP_DOWN_UpdateSystem_Core( MB_CAPTURE_WORK *capWork , MB_CAP_DOWN *downWork , const BOOL isTrg , const BOOL isTouch , u32 tpx , u32 tpy );
+
 static void MB_CAP_DOWN_UpdateBow( MB_CAPTURE_WORK *capWork , MB_CAP_DOWN *downWork );
 static void MB_CAP_DOWN_UpdateBow_DrawLine( MB_CAPTURE_WORK *capWork , MB_CAP_DOWN *downWork );
 static void MB_CAP_DOWN_UpdateBow_DrawLine_Func( const u8* vramAdr , const int x1 , const int y1 , const int x2 , const int y2 );
@@ -279,41 +281,35 @@ void MB_CAP_DOWN_DeleteSystem( MB_CAPTURE_WORK *capWork , MB_CAP_DOWN *downWork 
 void MB_CAP_DOWN_UpdateSystem( MB_CAPTURE_WORK *capWork , MB_CAP_DOWN *downWork )
 {
   u32 tpx,tpy;
-  downWork->isTrg = GFL_UI_TP_GetTrg();
-  downWork->isTouch = GFL_UI_TP_GetPointCont( &tpx,&tpy );
-  MB_CAP_DOWN_UpdateTP( capWork , downWork , tpx , tpy );
-  MB_CAP_DOWN_UpdateBall( capWork , downWork );
-  MB_CAP_DOWN_UpdateBow( capWork , downWork );
-  
-  //スコア更新
-  {
-    u8 i;
-    const u16 score = MB_CAPTURE_GetScore( capWork );
-    if( score != downWork->dispScore )
-    {
-      u16 tempScore = score;
-      for( i=0;i<MB_CAP_DOWN_SCORE_DIGIT;i++ )
-      {
-        GFL_CLACT_WK_SetDrawEnable( downWork->clwkScore[i] , TRUE );
-        GFL_CLACT_WK_SetAnmIndex( downWork->clwkScore[i] , tempScore%10 );
-        tempScore /= 10;
-        if( tempScore == 0 )
-        {
-          break;
-        }
-      }
-      for( i=i+1;i<MB_CAP_DOWN_SCORE_DIGIT;i++ )
-      {
-        GFL_CLACT_WK_SetDrawEnable( downWork->clwkScore[i] , FALSE );
-      }
-    }
-  }
+  const BOOL isTrg = GFL_UI_TP_GetTrg();
+  const BOOL isTouch = GFL_UI_TP_GetPointCont( &tpx,&tpy );
+
+  MB_CAP_DOWN_UpdateSystem_Core( capWork , downWork , isTrg , isTouch , tpx , tpy );
+
 }
 
 //--------------------------------------------------------------
 //	下画面更新
 //--------------------------------------------------------------
 void MB_CAP_DOWN_UpdateSystem_Demo( MB_CAPTURE_WORK *capWork , MB_CAP_DOWN *downWork , const BOOL isTrg , const BOOL isTouch , u32 tpx , u32 tpy )
+{
+  MB_CAP_DOWN_UpdateSystem_Core( capWork , downWork , isTrg , isTouch , tpx , tpy );
+  //TPの表示
+  if( isTouch == TRUE )
+  {
+    GFL_CLACTPOS cellPos;
+    cellPos.x = tpx;
+    cellPos.y = tpy;
+    GFL_CLACT_WK_SetPos( downWork->clwkPen , &cellPos , CLSYS_DEFREND_SUB );
+    GFL_CLACT_WK_SetDrawEnable( downWork->clwkPen , TRUE );
+  }
+  else
+  {
+    GFL_CLACT_WK_SetDrawEnable( downWork->clwkPen , FALSE );
+  }
+}
+
+void MB_CAP_DOWN_UpdateSystem_Core( MB_CAPTURE_WORK *capWork , MB_CAP_DOWN *downWork , const BOOL isTrg , const BOOL isTouch , u32 tpx , u32 tpy )
 {
   downWork->isTrg = isTrg;
   downWork->isTouch = isTouch;
@@ -343,20 +339,7 @@ void MB_CAP_DOWN_UpdateSystem_Demo( MB_CAPTURE_WORK *capWork , MB_CAP_DOWN *down
         GFL_CLACT_WK_SetDrawEnable( downWork->clwkScore[i] , FALSE );
       }
     }
-  }
-  //TPの表示
-  if( isTouch == TRUE )
-  {
-    GFL_CLACTPOS cellPos;
-    cellPos.x = tpx;
-    cellPos.y = tpy;
-    GFL_CLACT_WK_SetPos( downWork->clwkPen , &cellPos , CLSYS_DEFREND_SUB );
-    GFL_CLACT_WK_SetDrawEnable( downWork->clwkPen , TRUE );
-  }
-  else
-  {
-    GFL_CLACT_WK_SetDrawEnable( downWork->clwkPen , FALSE );
-  }
+  }  
 }
 
 //--------------------------------------------------------------

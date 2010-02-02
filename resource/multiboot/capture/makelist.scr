@@ -38,6 +38,7 @@
 "cap_obj_ready.nsbtx"
 "cap_obj_start.nsbtx"
 "cap_obj_timeup.nsbtx"
+"cap_obj_finish.nsbtx"
 "cap_obj_highscore.nsbtx"
 
 "cap_bg_mask.nsbtx"

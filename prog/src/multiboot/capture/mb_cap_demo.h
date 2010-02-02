@@ -37,7 +37,7 @@ extern void MC_CAP_DEMO_StartDemoInit( MB_CAPTURE_WORK *capWork , MB_CAP_DEMO *d
 extern void MC_CAP_DEMO_StartDemoTerm( MB_CAPTURE_WORK *capWork , MB_CAP_DEMO *demoWork );
 extern const BOOL MC_CAP_DEMO_StartDemoMain( MB_CAPTURE_WORK *capWork , MB_CAP_DEMO *demoWork );
 
-extern void MC_CAP_DEMO_FinishDemoInit( MB_CAPTURE_WORK *capWork , MB_CAP_DEMO *demoWork );
+extern void MC_CAP_DEMO_FinishDemoInit( MB_CAPTURE_WORK *capWork , MB_CAP_DEMO *demoWork , const BOOL isTimeUp , const BOOL isHighScore );
 extern void MC_CAP_DEMO_FinishDemoTerm( MB_CAPTURE_WORK *capWork , MB_CAP_DEMO *demoWork );
 extern const BOOL MC_CAP_DEMO_FinishDemoMain( MB_CAPTURE_WORK *capWork , MB_CAP_DEMO *demoWork );
 
