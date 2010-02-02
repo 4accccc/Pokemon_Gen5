@@ -53,6 +53,7 @@ typedef enum {
   DBGSTR_CLIENT_UpdateWazaProcResult,
   DBGSTR_CLIENT_CmdLimitTimeEnable,
   DBGSTR_CLIENT_CmdLimitTimeOver,
+  DBGSTR_CLIENT_ForcePokeChange,
 
   DBGSTR_BPP_NemuriWakeCheck,
 

@@ -1091,10 +1091,16 @@ static void seltgt_init_setup_work( SEL_TARGET_WORK* stw, BTLV_SCD* wk )
 //=============================================================================================
 //  ローテーション選択
 //=============================================================================================
+/**
+ *  ローテーション選択 開始
+ */
 void BTLV_SCD_SelectRotate_Start( BTLV_SCD* wk, BTLV_INPUT_ROTATE_PARAM* param )
 {
   BTLV_INPUT_CreateScreen( wk->biw, BTLV_INPUT_SCRTYPE_ROTATE, param );
 }
+/**
+ *  ローテーション選択 終了待ち
+ */
 BOOL BTLV_SCD_SelectRotate_Wait( BTLV_SCD* wk, BtlRotateDir* result )
 {
   int input = BTLV_INPUT_CheckInput( wk->biw, NULL, NULL );
@@ -1104,6 +1110,13 @@ BOOL BTLV_SCD_SelectRotate_Wait( BTLV_SCD* wk, BtlRotateDir* result )
     return TRUE;
   }
   return FALSE;
+}
+/**
+ *  ローテーション選択 コマンド選択時間制限による強制終了
+ */
+void BTLV_SCD_SelectRotate_ForceQuit( BTLV_SCD* wk )
+{
+  BTLV_INPUT_CreateScreen( wk->biw, BTLV_INPUT_SCRTYPE_STANDBY, NULL );
 }
 
 //=============================================================================================

@@ -88,6 +88,8 @@ extern u8*  BTLV_SCD_GetCursorFlagPtr( BTLV_SCD* wk );
 
 extern void BTLV_SCD_SelectRotate_Start( BTLV_SCD* wk, BTLV_INPUT_ROTATE_PARAM* param );
 extern BOOL BTLV_SCD_SelectRotate_Wait( BTLV_SCD* wk, BtlRotateDir* result );
+extern void BTLV_SCD_SelectRotate_ForceQuit( BTLV_SCD* wk );
+
 
 extern void BTLV_SCD_SelectYesNo_Start( BTLV_SCD* wk, BTLV_INPUT_YESNO_PARAM* param );
 extern BOOL BTLV_SCD_SelectYesNo_Wait( BTLV_SCD* wk, BtlYesNo* result );

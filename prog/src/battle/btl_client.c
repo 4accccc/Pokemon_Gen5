@@ -145,16 +145,19 @@ static ClientSubProc getSubProc( BTL_CLIENT* wk, BtlAdapterCmd cmd );
 static BOOL SubProc_UI_Setup( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_REC_Setup( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_UI_SelectRotation( BTL_CLIENT* wk, int* seq );
+static BtlRotateDir decideNextDirRandom( BtlRotateDir prevDir );
 static BOOL SubProc_REC_SelectRotation( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_AI_SelectRotation( BTL_CLIENT* wk, int* seq );
-static BtlRotateDir _testAI_dir( BtlRotateDir prevDir );
+static void CmdLimit_Start( BTL_CLIENT* wk );
+static BOOL CmdLimit_CheckOver( BTL_CLIENT* wk );
+static BOOL CheckSelactForceQuit( BTL_CLIENT* wk, ClientSubProc nextProc );
+static void CmdLimit_End( BTL_CLIENT* wk );
 static void SelActProc_Set( BTL_CLIENT* wk, ClientSubProc proc );
 static BOOL SelActProc_Call( BTL_CLIENT* wk );
 static BOOL SubProc_UI_SelectAction( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_REC_SelectAction( BTL_CLIENT* wk, int* seq );
 static BOOL selact_Start( BTL_CLIENT* wk, int* seq );
 static void selact_startMsg( BTL_CLIENT* wk, const BTLV_STRPARAM* strParam );
-static BOOL CheckSelactForceQuit( BTL_CLIENT* wk, ClientSubProc nextProc );
 static BOOL selact_ForceQuit( BTL_CLIENT* wk, int* seq );
 static BOOL selact_Root( BTL_CLIENT* wk, int* seq );
 static BOOL selact_Fight( BTL_CLIENT* wk, int* seq );
@@ -179,7 +182,7 @@ static BOOL checkForbitEscapeEffective_Jiryoku( BTL_CLIENT* wk, const BTL_POKEPA
 static BOOL SubProc_AI_SelectAction( BTL_CLIENT* wk, int* seq );
 static u8 calcPuttablePokemons( BTL_CLIENT* wk, u8* list );
 static void setupPokeSelParam( BTL_CLIENT* wk, u8 mode, u8 numSelect, BTL_POKESELECT_PARAM* param, BTL_POKESELECT_RESULT* result );
-static void store_pokesel_to_action( BTL_CLIENT* wk, const BTL_POKESELECT_RESULT* res );
+static void storePokeSelResult( BTL_CLIENT* wk, const BTL_POKESELECT_RESULT* res );
 static u8 storeMyChangePokePos( BTL_CLIENT* wk, BtlPokePos* myCoverPos );
 static BOOL SubProc_UI_SelectChangeOrEscape( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_UI_SelectPokemonForCover( BTL_CLIENT* wk, int* seq );
@@ -565,41 +568,57 @@ static BOOL SubProc_UI_SelectRotation( BTL_CLIENT* wk, int* seq )
   case 0:
     {
       BTLV_UI_SelectRotation_Start( wk->viewCore, wk->prevRotateDir );
+      CmdLimit_Start( wk );
       (*seq)++;
     }
     break;
 
   case 1:
+    if( CmdLimit_CheckOver(wk) ){
+      BTLV_UI_SelectRotation_ForceQuit( wk->viewCore );
+      (*seq) = 2;
+      break;
+    }
+
     {
       BtlRotateDir  dir;
       if( BTLV_UI_SelectRotation_Wait(wk->viewCore, &dir) ){
         wk->prevRotateDir = dir;
-        wk->returnDataPtr = &wk->prevRotateDir;
-        wk->returnDataSize = sizeof(wk->prevRotateDir);
-        return TRUE;
+        (*seq) = 3;
       }
     }
     break;
+
+  // 強制終了時のランダム決定処理
+  case 2:
+    {
+      wk->prevRotateDir = decideNextDirRandom( wk->prevRotateDir );
+      (*seq)++;
+    }
+    break;
+
+  case 3:
+    CmdLimit_End( wk );
+    (*seq)++;
+    break;
+  case 4:
+    wk->returnDataPtr = &wk->prevRotateDir;
+    wk->returnDataSize = sizeof(wk->prevRotateDir);
+    return TRUE;
   }
 
   return FALSE;
 }
-
-static BOOL SubProc_REC_SelectRotation( BTL_CLIENT* wk, int* seq )
-{
-  return TRUE;
-}
-
-static BOOL SubProc_AI_SelectRotation( BTL_CLIENT* wk, int* seq )
-{
-  // @todo AI用。今は仮動作
-  wk->prevRotateDir = _testAI_dir( wk->prevRotateDir );
-  wk->returnDataPtr = &wk->prevRotateDir;
-  wk->returnDataSize = sizeof(wk->prevRotateDir);
-
-  return TRUE;
-}
-static BtlRotateDir _testAI_dir( BtlRotateDir prevDir )
+//----------------------------------------------------------------------------------
+/**
+ * 制限時間による強制終了時、ランダムで方向を決定する
+ *
+ * @param   prevDir
+ *
+ * @retval  BtlRotateDir
+ */
+//----------------------------------------------------------------------------------
+static BtlRotateDir decideNextDirRandom( BtlRotateDir prevDir )
 {
   u32 rnd = GFL_STD_MtRand( 100 );
 
@@ -635,6 +654,83 @@ static BtlRotateDir _testAI_dir( BtlRotateDir prevDir )
 }
 
 
+static BOOL SubProc_REC_SelectRotation( BTL_CLIENT* wk, int* seq )
+{
+  return TRUE;
+}
+
+static BOOL SubProc_AI_SelectRotation( BTL_CLIENT* wk, int* seq )
+{
+  // @todo AI用。今は仮動作
+  wk->prevRotateDir = decideNextDirRandom( wk->prevRotateDir );
+  wk->returnDataPtr = &wk->prevRotateDir;
+  wk->returnDataSize = sizeof(wk->prevRotateDir);
+
+  return TRUE;
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * 制限時間 表示＆カウント開始
+ *
+ * @param   wk
+ */
+//----------------------------------------------------------------------------------
+static void CmdLimit_Start( BTL_CLIENT* wk )
+{
+  if( wk->cmdLimitTime )
+  {
+    BTL_N_Printf( DBGSTR_CLIENT_CmdLimitTimeEnable, wk->cmdLimitTime );
+    BTLV_EFFECT_DrawEnableTimer( BTLV_TIMER_TYPE_COMMAND_TIME, TRUE, TRUE );
+    wk->fForceQuitSelAct = FALSE;
+  }
+}
+//----------------------------------------------------------------------------------
+/**
+ * 制限時間 タイムオーバーチェック
+ *
+ * @param   wk
+ *
+ * @retval  BOOL
+ */
+//----------------------------------------------------------------------------------
+static BOOL CmdLimit_CheckOver( BTL_CLIENT* wk )
+{
+  if( wk->cmdLimitTime )
+  {
+    if( wk->fForceQuitSelAct == FALSE )
+    {
+      if( BTLV_EFFECT_IsZero( BTLV_TIMER_TYPE_COMMAND_TIME ) ){
+        BTL_N_Printf( DBGSTR_CLIENT_CmdLimitTimeOver );
+        wk->fForceQuitSelAct = TRUE;
+      }
+    }
+    return wk->fForceQuitSelAct;
+  }
+  return FALSE;
+}
+//static BOOL CmdLimit_IsOver( BTL_CLIENT* wk )
+
+/**
+ *  時間制限による強制終了があれば、メインプロセスを切り替えてTRUEを返す
+ */
+static BOOL CheckSelactForceQuit( BTL_CLIENT* wk, ClientSubProc nextProc )
+{
+  if( CmdLimit_CheckOver(wk) ){
+    SelActProc_Set( wk, nextProc );
+    return TRUE;
+  }
+  return FALSE;
+}
+
+static void CmdLimit_End( BTL_CLIENT* wk )
+{
+  if( wk->cmdLimitTime )
+  {
+    BTLV_EFFECT_DrawEnableTimer( BTLV_TIMER_TYPE_COMMAND_TIME, FALSE, FALSE );
+  }
+}
+
 //--------------
 
 static void SelActProc_Set( BTL_CLIENT* wk, ClientSubProc proc )
@@ -651,24 +747,13 @@ static BOOL SubProc_UI_SelectAction( BTL_CLIENT* wk, int* seq )
 {
   switch( *seq ){
   case 0:
-    wk->fForceQuitSelAct = FALSE;
-
     SelActProc_Set( wk, selact_Start );
-    if( wk->cmdLimitTime ){
-      BTL_N_Printf( DBGSTR_CLIENT_CmdLimitTimeEnable, wk->cmdLimitTime );
-      BTLV_EFFECT_DrawEnableTimer( BTLV_TIMER_TYPE_COMMAND_TIME, TRUE, TRUE );
-    }
+    CmdLimit_Start( wk );
     (*seq)++;
     break;
 
   case 1:
-    if( wk->fForceQuitSelAct == FALSE )
-    {
-      if( BTLV_EFFECT_IsZero(BTLV_TIMER_TYPE_COMMAND_TIME) ){
-        BTL_N_Printf( DBGSTR_CLIENT_CmdLimitTimeOver );
-        wk->fForceQuitSelAct = TRUE;
-      }
-    }
+    CmdLimit_CheckOver( wk );
     if( SelActProc_Call(wk) ){
       return TRUE;
     }
@@ -749,23 +834,6 @@ static void selact_startMsg( BTL_CLIENT* wk, const BTLV_STRPARAM* strParam )
 {
   BTLV_StartMsg( wk->viewCore, strParam );
   wk->fStdMsgChanged = TRUE; // 「○○はどうする？」メッセージを書き換えたフラグON
-}
-/**
- *  時間制限による強制終了があれば、メインプロセスを切り替えてTRUEを返す
- */
-static BOOL CheckSelactForceQuit( BTL_CLIENT* wk, ClientSubProc nextProc )
-{
-  if( wk->cmdLimitTime )
-  {
-    if( wk->fForceQuitSelAct )
-    {
-      if( nextProc != NULL ){
-        SelActProc_Set( wk, nextProc );
-      }
-      return TRUE;
-    }
-  }
-  return FALSE;
 }
 //----------------------------------------------------------------------
 /**
@@ -1274,9 +1342,7 @@ static BOOL selact_Finish( BTL_CLIENT* wk, int* seq )
     if( !BTLV_EFFECT_CheckExecute() ){
       BTL_N_PrintfEx( PRINT_FLG, DBGSTR_CLIENT_ReturnSeqDone );
 
-      if( wk->cmdLimitTime ){
-        BTLV_EFFECT_DrawEnableTimer( BTLV_TIMER_TYPE_COMMAND_TIME, FALSE, FALSE );
-      }
+      CmdLimit_End( wk );
       (*seq)++;
       return TRUE;
     }
@@ -1880,7 +1946,7 @@ static void setupPokeSelParam( BTL_CLIENT* wk, u8 mode, u8 numSelect, BTL_POKESE
 
 
 // ポケモン選択画面結果 -> 決定アクションパラメータに変換
-static void store_pokesel_to_action( BTL_CLIENT* wk, const BTL_POKESELECT_RESULT* res )
+static void storePokeSelResult( BTL_CLIENT* wk, const BTL_POKESELECT_RESULT* res )
 {
   // res->cnt=選択されたポケモン数,  wk->myChangePokeCnt=自分が担当する入れ替えリクエストポケモン数
   GF_ASSERT_MSG(res->cnt <= wk->myChangePokeCnt, "selCnt=%d, changePokeCnt=%d\n", res->cnt, wk->myChangePokeCnt);
@@ -1900,6 +1966,38 @@ static void store_pokesel_to_action( BTL_CLIENT* wk, const BTL_POKESELECT_RESULT
     wk->returnDataPtr = &(wk->actionParam[0]);
     wk->returnDataSize = sizeof(wk->actionParam[0]) * res->cnt;
   }
+}
+
+// 強制終了時のポケモン選択自動決定処理
+static void storePokeSelResult_ForceQuit( BTL_CLIENT* wk )
+{
+  const BTL_POKEPARAM* bpp;
+  u8 clientID, posIdx, selIdx, memberMax, prevMemberIdx, selectCnt=0;
+  u32 i, j;
+
+  memberMax = BTL_PARTY_GetMemberCount( wk->myParty );
+  prevMemberIdx = wk->numCoverPos;
+
+  for(i=0; i<wk->myChangePokeCnt; ++i)
+  {
+    BTL_MAIN_BtlPosToClientID_and_PosIdx( wk->mainModule, wk->myChangePokePos[i], &clientID, &posIdx );
+    for(j=prevMemberIdx; j<memberMax; ++j)
+    {
+      bpp = BTL_PARTY_GetMemberDataConst( wk->myParty, j );
+      if( !BPP_IsDead(bpp) )
+      {
+        BTL_N_Printf( DBGSTR_CLIENT_ForcePokeChange, selectCnt+1, wk->myChangePokeCnt, posIdx, j );
+        BTL_ACTION_SetChangeParam( &wk->actionParam[selectCnt++], posIdx, j );
+        prevMemberIdx = j;
+        break;
+      }
+    }
+  }
+
+  GF_ASSERT(selectCnt);
+
+  wk->returnDataPtr = &(wk->actionParam[0]);
+  wk->returnDataSize = sizeof(wk->actionParam[0]) * selectCnt;
 }
 
 //----------------------------------------------------------------------------------
@@ -2022,8 +2120,9 @@ static BOOL SelectPokemonUI_Core( BTL_CLIENT* wk, int* seq, u8 mode )
 
         BTL_N_Printf( DBGSTR_CLIENT_ChangePokeCmdInfo, wk->myID, numSelect, mode );
         setupPokeSelParam( wk, mode, numSelect, &wk->pokeSelParam, &wk->pokeSelResult );
-
         BTLV_StartPokeSelect( wk->viewCore, &wk->pokeSelParam, -1, FALSE, &wk->pokeSelResult );
+
+        CmdLimit_Start( wk );
         (*seq)++;
       }
       else
@@ -2035,6 +2134,7 @@ static BOOL SelectPokemonUI_Core( BTL_CLIENT* wk, int* seq, u8 mode )
         return TRUE;
       }
     }
+    // 自分は空きが出来ていないので何も選ぶ必要がない
     else
     {
       BTL_N_Printf( DBGSTR_CLIENT_NotDeadMember, wk->myID);
@@ -2047,12 +2147,31 @@ static BOOL SelectPokemonUI_Core( BTL_CLIENT* wk, int* seq, u8 mode )
   break;
 
   case 1:
+    if( CmdLimit_CheckOver(wk) ){
+      BTLV_ForceQuitPokeSelect( wk->viewCore );
+      (*seq) = 2;
+      break;
+    }
+
     if( BTLV_WaitPokeSelect(wk->viewCore) )
     {
-      store_pokesel_to_action( wk, &wk->pokeSelResult );
-      return TRUE;
+      storePokeSelResult( wk, &wk->pokeSelResult );
+      (*seq) = 3;
     }
     break;
+
+  // コマンド制限時間による強制終了処理
+  case 2:
+    if( BTLV_WaitPokeSelect(wk->viewCore) )
+    {
+      storePokeSelResult_ForceQuit( wk );
+      (*seq) = 3;
+    }
+    break;
+
+  case 3:
+    CmdLimit_End( wk );
+    return TRUE;
   }
 
   return FALSE;

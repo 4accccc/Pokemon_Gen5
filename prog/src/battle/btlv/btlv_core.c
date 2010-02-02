@@ -2054,6 +2054,19 @@ BOOL BTLV_UI_SelectRotation_Wait( BTLV_CORE* wk, BtlRotateDir* result )
   return TRUE;
   #endif
 }
+//=============================================================================================
+/**
+ * ユーザ入力：ローテーション選択の強制終了通知
+ *
+ * @param   wk
+ */
+//=============================================================================================
+void BTLV_UI_SelectRotation_ForceQuit( BTLV_CORE* wk )
+{
+#ifndef TMP_SELROT_SKIP
+  BTLV_SCD_SelectRotate_ForceQuit( wk->scrnD );
+#endif
+}
 
 //=============================================================================================
 /**
