@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-02T12:53:42"/>
+	<create user="matsumiya" host="W00224" date="2010-02-02T19:31:40"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_r03_futago_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+	<row id="msg_r03_futago_01">
 		<comment>♀
 ・手持ち一匹で話しかけたとき</comment>
 		<attribute name="キャラ指定">futago_01</attribute>
@@ -306,7 +306,7 @@
 さきに　すすんじゃ　ダメです！</language>
 	</row>
 
-	<row id="msg_r03_futago_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+	<row id="msg_r03_futago_02">
 		<comment>♀
 ・手持ち一匹で
 　pos（GRIDX=741、GRIDZ=563~565）を踏んだとき
@@ -334,7 +334,7 @@
 　c01側から登場
 ・主人公に隣接するとメッセージ表示
 ・表示後、トレーナー戦闘へ
-0＝主人公名前</comment>
+・0＝主人公名前</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
 		<language name="JPN" width="256">チェレン『よう　[1:00:トレーナー名:0]！[BE:01:ページ切り替え（クリア）]
 オレも　トライバッジ　てにいれた
