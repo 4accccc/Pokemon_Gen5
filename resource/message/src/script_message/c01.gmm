@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-02T12:04:15"/>
+	<create user="matsumiya" host="W00224" date="2010-02-02T15:07:53"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,33 +312,6 @@
 ちょっと　ついてきて！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c01_musical_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>削除ラベル</comment>
-		<attribute name="キャラ指定">MAN2</attribute>
-		<language name="JPN" width="256">きみ　かがやいているね！
-ミュージカル　やってみない？</language>
-		<language name="JPN_KANJI" width="256">キミ　輝いているね！
-ミュージカル　やってみない？</language>
-	</row>
-
-	<row id="msg_c01_musical_02" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>削除ラベル</comment>
-		<attribute name="キャラ指定">MAN2</attribute>
-		<language name="JPN" width="256">では　ミュージカルの　せかいを
-おもうぞんぶん　たのしんで！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">では　ミュージカルの　世界を
-思う存分　楽しんで！[BE:01:ページ切り替え（クリア）]</language>
-	</row>
-
-	<row id="msg_c01_musical_03" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>削除ラベル</comment>
-		<attribute name="キャラ指定">MAN2</attribute>
-		<language name="JPN" width="256">えんりょ　すること　ないのに……
-きがむいたら　また　はなしかけてよ</language>
-		<language name="JPN_KANJI" width="256">遠慮すること　ないのに……
-気が向いたら　また　話しかけてよ</language>
-	</row>
-
 	<row id="msg_c01_glasses_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・初期状態で配置済み
@@ -575,12 +548,9 @@
 ほかにも　いろいろ　しってるよ！</language>
 	</row>
 
-	<row id="msg_c01_woman2a_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+	<row id="msg_c01_woman2a_01">
 		<comment>♀
-・GRIDX=792、GRIDZ=586
-※現状babygirlがいるところ
-※babygirlは
-　GRIDX=770、GRIDZ=597辺りに移動</comment>
+・GRIDX=792、GRIDZ=586</comment>
 		<attribute name="キャラ指定">WOMAN2
 女性</attribute>
 		<language name="JPN" width="256">ゆめのあとち　で　きたえている
