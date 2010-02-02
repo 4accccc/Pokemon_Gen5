@@ -45,7 +45,7 @@
 #define WBM_CARD_TRAINER_RES_NCGR(x)      (NARC_wifi_unionobj_front00_NCGR+x)
 #define WBM_CARD_TRAINER_RES_NCER         (NARC_wifi_unionobj_front00_NCER)
 #define WBM_CARD_TRAINER_RES_NANR         (NARC_wifi_unionobj_front00_NANR)
-#define WBM_CARD_TRAINER_RES_NCLR         (NARC_wifi_unionobj_wf_match_top_trainer_NCLR)
+#define WBM_CARD_TRAINER_RES_NCLR         (NARC_wifi_unionobj_wifi_union_obj_NCLR)
 #define WBM_CARD_TRAINER_RES_PLT_OFS(x)   (sc_wifi_unionobj_plt[x])
 
 #define WBM_CARD_INIT_POS_X (256)

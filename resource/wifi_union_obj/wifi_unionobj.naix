@@ -11,7 +11,7 @@
 #define NARC_WIFI_UNIONOBJ_NAIX_
 
 enum {
-	NARC_wifi_unionobj_wf_match_top_trainer_NCLR = 0,
+	NARC_wifi_unionobj_wifi_union_obj_NCLR = 0,
 	NARC_wifi_unionobj_normal00_NCGR = 1,
 	NARC_wifi_unionobj_normal01_NCGR = 2,
 	NARC_wifi_unionobj_normal02_NCGR = 3,

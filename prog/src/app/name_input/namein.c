@@ -4607,7 +4607,7 @@ static void ICON_Init( ICON_WORK *p_wk, ICON_TYPE type, u32 param1, u32 param2, 
       break;
     case ICON_TYPE_PERSON:
       arcID = ARCID_WIFIUNIONCHAR;
-      plt   = NARC_wifi_unionobj_wf_match_top_trainer_NCLR;
+      plt   = NARC_wifi_unionobj_wifi_union_obj_NCLR;
       plt_src_ofs = sc_wifi_unionobj_plt[param1];
       chr   = NARC_wifi_unionobj_front00_NCGR+param1;
       cel   = NARC_wifi_unionobj_front00_NCER;

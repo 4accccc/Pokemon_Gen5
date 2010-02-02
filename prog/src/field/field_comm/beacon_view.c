@@ -711,7 +711,7 @@ static void _sub_ActorResourceLoad( BEACON_VIEW_PTR wk, ARCHANDLE *handle)
   wk->resPlttPanel.dat = (u16*)wk->resPlttPanel.p_pltt->pRawData;
 
   wk->resPlttUnion.buf = GFL_ARC_LoadDataAllocByHandle( handle_union,
-                          NARC_wifi_unionobj_wf_match_top_trainer_NCLR,
+                          NARC_wifi_unionobj_wifi_union_obj_NCLR,
                           wk->tmpHeapID );
   NNS_G2dGetUnpackedPaletteData( wk->resPlttUnion.buf, &wk->resPlttUnion.p_pltt );
   wk->resPlttUnion.dat = (u16*)wk->resPlttUnion.p_pltt->pRawData;

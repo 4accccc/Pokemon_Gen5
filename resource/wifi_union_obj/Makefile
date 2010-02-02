@@ -7,7 +7,7 @@
 #------------------------------------------------------------------------------
 #※コンバートを行う人のユーザーIDをここに書く
 #------------------------------------------------------------------------------
-USERS	= ohno iwasawa
+USERS	= ohno iwasawa toru_nagihashi
 
 #------------------------------------------------------------------------------
 #※ここに作成するnarc名を書く
@@ -39,24 +39,24 @@ gobjects = $(subst .ncg,.NCGR,$(gsources))
 cobjects = $(subst .nsc,.NSCR,$(csources))
 eobjects = $(subst .nce,.NCER,$(esources))
 
-PAL_LST = wf_match_top_trainer.ncl
+PAL_LST = wifi_union_obj.ncl
 
-CHR_LST = wf_match_top_trainer_boy1.ncg \
-					wf_match_top_trainer_boy3.ncg \
-					wf_match_top_trainer_man3.ncg \
-					wf_match_top_trainer_badman.ncg \
-					wf_match_top_trainer_explore.ncg \
-					wf_match_top_trainer_fighter.ncg \
-					wf_match_top_trainer_gorggeousm.ncg \
-					wf_match_top_trainer_mystery.ncg \
-					wf_match_top_trainer_girl1.ncg \
-					wf_match_top_trainer_girl2.ncg \
-					wf_match_top_trainer_woman2.ncg \
-					wf_match_top_trainer_woman3.ncg \
-					wf_match_top_trainer_idol.ncg \
-					wf_match_top_trainer_lady.ncg \
-					wf_match_top_trainer_cowgirl.ncg \
-					wf_match_top_trainer_gorggeousw.ncg
+CHR_LST = wifi_union_tanpan.ncg \
+					wifi_union_elitem.ncg \
+					wifi_union_rangerm.ncg \
+					wifi_union_breederm.ncg \
+					wifi_union_scientistm.ncg \
+					wifi_union_mount.ncg \
+					wifi_union_heads.ncg \
+					wifi_union_kindergartenm.ncg \
+					wifi_union_mini.ncg \
+					wifi_union_elitew.ncg \
+					wifi_union_rangerw.ncg \
+					wifi_union_breederw.ncg \
+					wifi_union_scientistw.ncg \
+					wifi_union_parasol.ncg \
+					wifi_union_nurse.ncg \
+					wifi_union_kindergartenw.ncg
 
 NORMAL_LST = normal00.nce \
 						 normal01.nce \
