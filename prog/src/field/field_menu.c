@@ -31,6 +31,10 @@
 #include "field/zonedata.h" //ZONEDATA_IsUnionRoom
 #include "eventwork.h"
 
+// LとRで項目を減らすテストができる
+//#define TEST_FIELD_MENU
+
+
 //======================================================================
 //  define
 //======================================================================
@@ -63,6 +67,8 @@
 //パレット
 #define FIELD_MENU_PLT_FONT (0x0d)
 //InfoBarで0x0f
+
+
 
 //======================================================================
 //  enum
@@ -97,6 +103,7 @@ enum
   FIA_DECIDE,
   
 }FIELD_MENU_ICON_ANIME;
+
 
 typedef enum
 {
@@ -200,7 +207,6 @@ static void FIELD_MENU_Icon_CreateIcon( FIELD_MENU_WORK* work , FIELD_MENU_ICON 
 static void FIELD_MENU_Icon_DeleteIcon( FIELD_MENU_WORK* work , FIELD_MENU_ICON *icon ); 
 static void FIELD_MENU_Icon_TransBmp( FIELD_MENU_WORK* work , FIELD_MENU_ICON *icon );
 
-static int  _get_menuType( EVENTWORK *ev, int zoneId );
 static void _trans_touchbar_screen( HEAPID heapId, int bgfrm );
 static void _cancel_func_set( FIELD_MENU_WORK *work, BOOL isCancel );
 
@@ -282,7 +288,7 @@ FIELD_MENU_WORK* FIELD_MENU_InitMenu( const HEAPID heapId , const HEAPID tempHea
   
   arcHandle = GFL_ARC_OpenDataHandle( ARCID_FIELD_MENU , work->tempHeapId );
   //メニューの種類取得
-  menuType = _get_menuType( work->ev, work->zoneId );
+  menuType = FIELDMENU_GetMenuType( work->ev, work->zoneId );
   work->menuType = menuType;
 
   FIELD_MENU_InitGraphic( work , arcHandle, menuType);
@@ -346,6 +352,23 @@ void FIELD_MENU_ExitMenu( FIELD_MENU_WORK* work )
   GFL_HEAP_FreeMemory( work );
 }
 
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief 全てのBG面を有効にする
+ *
+ * @param   none    
+ */
+//----------------------------------------------------------------------------------
+static void _all_bg_appear( void )
+{
+  GFL_BG_SetVisible( FIELD_MENU_INFOBAR, VISIBLE_ON );
+  GFL_BG_SetVisible( FIELD_MENU_BG_BUTTON, VISIBLE_ON );
+  GFL_BG_SetVisible( FIELD_MENU_BG_NAME  , VISIBLE_ON );
+  GFL_BG_SetVisible( FIELD_MENU_BG_BACK  , VISIBLE_ON );
+  
+}
+
 //--------------------------------------------------------------
 //  更新
 //--------------------------------------------------------------
@@ -370,7 +393,7 @@ void FIELD_MENU_UpdateMenu( FIELD_MENU_WORK* work )
       else
       {
         work->state = FMS_LOOP;
-        GFL_BG_SetVisible( FIELD_MENU_INFOBAR, VISIBLE_ON );
+        _all_bg_appear();     // 全てのBGM面をON
       }
     }
     break;
@@ -380,11 +403,7 @@ void FIELD_MENU_UpdateMenu( FIELD_MENU_WORK* work )
     {
       work->scrollOffset = 0;
       work->state = FMS_LOOP;
-      GFL_BG_SetVisible( FIELD_MENU_INFOBAR, VISIBLE_ON );
-      GFL_BG_SetVisible( FIELD_MENU_BG_BUTTON, VISIBLE_ON );
-      GFL_BG_SetVisible( FIELD_MENU_BG_NAME  , VISIBLE_ON );
-      GFL_BG_SetVisible( FIELD_MENU_BG_BACK  , VISIBLE_ON );
-
+      _all_bg_appear();     // 全てのBGM面をON
     }
     else
     {
@@ -405,6 +424,9 @@ void FIELD_MENU_UpdateMenu( FIELD_MENU_WORK* work )
     if(GFL_CLACT_WK_CheckAnmActive( work->cellEndButton )==FALSE){
       work->state = FMS_EXIT_INIT;
       // インフォバー・タッチバーの面をON
+      GFL_BG_SetVisible( FIELD_MENU_BG_BUTTON, VISIBLE_ON );
+      GFL_BG_SetVisible( FIELD_MENU_BG_NAME  , VISIBLE_ON );
+      GFL_BG_SetVisible( FIELD_MENU_BG_BACK  , VISIBLE_ON );
       GFL_BG_SetVisible( FIELD_MENU_INFOBAR, VISIBLE_ON );
     }
     break;
@@ -419,6 +441,9 @@ void FIELD_MENU_UpdateMenu( FIELD_MENU_WORK* work )
       PMSND_PlaySystemSE( SEQ_SE_CLOSE1 );
       // インフォバー・タッチバーの面をOFF
       GFL_BG_SetVisible( FIELD_MENU_INFOBAR, VISIBLE_OFF );
+      GFL_BG_SetVisible( FIELD_MENU_BG_BUTTON, VISIBLE_ON );
+      GFL_BG_SetVisible( FIELD_MENU_BG_NAME  , VISIBLE_ON );
+      GFL_BG_SetVisible( FIELD_MENU_BG_BACK  , VISIBLE_ON );
       GFL_CLACT_WK_SetDrawEnable( work->cellEndButton, FALSE );
 
     }
@@ -695,42 +720,50 @@ void FIELDMENU_RewriteInfoScreen( HEAPID heapId )
 
 }
 
+
 //----------------------------------------------------------------------------------
 /**
  * @brief 現在のメニュータイプを取得する
  *
- * @param   ev    
+ * @param   ev     EVENTWORK
+ * @param   zoneId ゾーンID
  *
- * @retval  int   
+ * @retval  int     FIELD_MENU_NORMAL～FIELD_MENU_PLEASURE_BOAT( field_menu.h )
  */
 //----------------------------------------------------------------------------------
-static int _get_menuType( EVENTWORK *ev, int zoneId )
+int FIELDMENU_GetMenuType( EVENTWORK *ev, int zoneId )
 {
-  int type=0;   // 通常
+  int type=FIELD_MENU_NORMAL;   // 通常
 
-  // ユニオンルーム・コロシアム・遊覧船か？
+  // ユニオンルーム・コロシアム
   if (ZONEDATA_IsUnionRoom(zoneId) 
-  ||  ZONEDATA_IsColosseum(zoneId)
-  ||  ZONEDATA_IsPlBoat(zoneId) ){
-    type = 1; // ユニオンルームモード
-  }
+  ||  ZONEDATA_IsColosseum(zoneId)){
+    type = FIELD_MENU_UNION;
 
-
+  // 遊覧船か？
+  }else if(ZONEDATA_IsPlBoat(zoneId))
+  {
+    type = FIELD_MENU_PLEASURE_BOAT; 
+  
   // ゲーム開始時チェック
-  if(EVENTWORK_CheckEventFlag(ev,SYS_FLAG_ZUKAN_GET) == FALSE ){
-    type  = 3; // 図鑑無し
-  }
-  if( EVENTWORK_CheckEventFlag(ev,SYS_FLAG_FIRST_POKE_GET) == FALSE ){
-    type = 2; // 図鑑無し・ポケモン無し
+  }else if( EVENTWORK_CheckEventFlag(ev,SYS_FLAG_FIRST_POKE_GET) == FALSE ){
+    type = FIELD_MENU_NO_POKEMON_NO_ZUKAN; // 図鑑無し・ポケモン無し
+
+  }else if(EVENTWORK_CheckEventFlag(ev,SYS_FLAG_ZUKAN_GET) == FALSE ){
+    type  = FIELD_MENU_NO_ZUKAN;            // 図鑑無し
   }
 
-#if 0
+
+
+
+
+#ifdef TEST_FIELD_MENU
   if(GFL_UI_KEY_GetCont()&PAD_BUTTON_L){
-    type = 3;
+    type = FIELD_MENU_NO_ZUKAN;
   }
 
   if(GFL_UI_KEY_GetCont()&PAD_BUTTON_DEBUG){
-    type = 2;
+    type = FIELD_MENU_NO_POKEMON_NO_ZUKAN;
   }
 
 #endif
@@ -788,6 +821,15 @@ static void FIELD_MENU_InitIcon(  FIELD_MENU_WORK* work , ARCHANDLE *arcHandle, 
       FMIT_ITEMMENU,
       FMIT_TRAINERCARD,
       FMIT_REPORT,
+      FMIT_CONFING,
+      FMIT_NONE,
+      FMIT_EXIT,
+    },
+    { //遊覧船
+      FMIT_POKEMON,
+      FMIT_ZUKAN,
+      FMIT_ITEMMENU,
+      FMIT_TRAINERCARD,
       FMIT_CONFING,
       FMIT_NONE,
       FMIT_EXIT,

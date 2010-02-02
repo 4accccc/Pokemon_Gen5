@@ -729,6 +729,9 @@ static void init_topmenu_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSCREEN
   };
   GAMESYS_WORK *gameSys = FIELDMAP_GetGameSysWork( pWork->fieldmap );
   GAME_COMM_SYS_PTR commSys = GAMESYSTEM_GetGameCommSysPtr(gameSys);
+  u32 zoneId = PLAYERWORK_getZoneID( GAMESYSTEM_GetMyPlayerWork(gameSys) );
+  GAMEDATA *gameData = GAMESYSTEM_GetGameData( gameSys );
+  EVENTWORK *ev = GAMEDATA_GetEventWork( gameData );
 
   BOOL isScrollIn = FALSE;
 
@@ -747,8 +750,9 @@ static void init_topmenu_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSCREEN
   GFL_DISP_GXS_SetVisibleControl(GX_PLANEMASK_OBJ,VISIBLE_ON);
   
   pWork->fieldMenuWork = FIELD_MENU_InitMenu( HEAPID_FIELD_SUBSCREEN , pWork->heapID , pWork , pWork->fieldmap , isScrollIn );
-  INFOWIN_Init( FIELD_SUBSCREEN_BGPLANE , FIELD_SUBSCREEN_PALLET , commSys , pWork->heapID);
-
+  if(FIELDMENU_GetMenuType(ev,zoneId)!=FIELD_MENU_UNION){
+    INFOWIN_Init( FIELD_SUBSCREEN_BGPLANE , FIELD_SUBSCREEN_PALLET , commSys , pWork->heapID);
+  }
   // INFOWINのスクリーン下部分にタッチバーを書き込む(のでINFOWIN_Initの後に置いてね）
   FIELDMENU_RewriteInfoScreen( pWork->heapID );
 }
@@ -760,7 +764,14 @@ static void init_topmenu_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSCREEN
 //-----------------------------------------------------------------------------
 static void exit_topmenu_subscreen( FIELD_SUBSCREEN_WORK* pWork )
 {
-  INFOWIN_Exit();
+  GAMESYS_WORK *gameSys = FIELDMAP_GetGameSysWork( pWork->fieldmap );
+  u32 zoneId = PLAYERWORK_getZoneID( GAMESYSTEM_GetMyPlayerWork(gameSys) );
+  GAMEDATA *gameData = GAMESYSTEM_GetGameData( gameSys );
+  EVENTWORK *ev = GAMEDATA_GetEventWork( gameData );
+
+  if(FIELDMENU_GetMenuType(ev,zoneId)!=FIELD_MENU_UNION){
+    INFOWIN_Exit();
+  }
   FIELD_MENU_ExitMenu( pWork->fieldMenuWork );
   GFL_BG_FreeBGControl(FIELD_SUBSCREEN_BGPLANE);
 }
