@@ -3,7 +3,7 @@
 <itp version="1.6.0">
 
 <head>
-	<create user="fujiwara_maiko" host="W00194" date="2010-01-26T13:42:29" source="m_siten03_00_00.mb"/>
+	<create user="fujiwara_maiko" host="W00194" date="2010-02-01T17:09:38" source="m_siten03_00_00.mb"/>
 	<title>Texture Pattern Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
@@ -17,55 +17,56 @@
 	compress_material="on" material_size="6 6"
 />
 
-<tex_pattern_list_data image_size="5" palette_size="5">
+<tex_pattern_list_data image_size="7" palette_size="7">
 	<image_name index="0" name="c09_03kigo.1"/>
 	<image_name index="1" name="c09_03kigo.2"/>
-	<image_name index="2" name="c09_kemu.1"/>
-	<image_name index="3" name="c09_kemu.2"/>
-	<image_name index="4" name="c09_kemu.3"/>
+	<image_name index="2" name="c09_03kigo.3"/>
+	<image_name index="3" name="c09_03kigo.4"/>
+	<image_name index="4" name="c09_kemu.1"/>
+	<image_name index="5" name="c09_kemu.2"/>
+	<image_name index="6" name="c09_kemu.3"/>
 	<palette_name index="0" name="c09_03kigo.1_pl"/>
 	<palette_name index="1" name="c09_03kigo.2_pl"/>
-	<palette_name index="2" name="c09_kemu.1_pl"/>
-	<palette_name index="3" name="c09_kemu.2_pl"/>
-	<palette_name index="4" name="c09_kemu.3_pl"/>
+	<palette_name index="2" name="c09_03kigo.3_pl"/>
+	<palette_name index="3" name="c09_03kigo.4_pl"/>
+	<palette_name index="4" name="c09_kemu.1_pl"/>
+	<palette_name index="5" name="c09_kemu.2_pl"/>
+	<palette_name index="6" name="c09_kemu.3_pl"/>
 </tex_pattern_list_data>
 
 <tex_pattern_data>
-	<frame_idx size="79">
-		0 5 16 25 36 45 56 65 76 85
-		96 105 116 125 136 145 156 165 176 185
-		196 205 216 225 236 245 256 265 276 285
-		296 305 316 325 336 345 356 365 376 385
-		396 405 416 425 436 445 456 465 476 485
-		496 505 516 525 536 545 556 565 576 585
-		596 605 616 625 636 645 656 665 676 685
-		0 84 86 93 99 228 230 237 244
+	<frame_idx size="70">
+		0 5 16 25 36 45 56 65 77 83
+		87 96 106 121 131 146 156 171 181 196
+		206 221 231 240 251 266 276 291 301 316
+		326 341 351 366 376 385 396 411 421 436
+		446 461 471 486 496 511 521 530 541 556
+		566 581 591 606 616 631 641 656 666 675
+		686 0 174 176 183 189 318 320 327 334
 	</frame_idx>
-	<image_idx size="79">
+	<image_idx size="70">
+		2 3 2 3 2 3 2 3 2 1
 		0 1 0 1 0 1 0 1 0 1
 		0 1 0 1 0 1 0 1 0 1
 		0 1 0 1 0 1 0 1 0 1
 		0 1 0 1 0 1 0 1 0 1
 		0 1 0 1 0 1 0 1 0 1
-		0 1 0 1 0 1 0 1 0 1
-		0 1 0 1 0 1 0 1 0 1
-		2 3 4 3 2 3 4 3 2
+		0 4 5 6 5 4 5 6 5 4
 	</image_idx>
-	<palette_idx size="79">
+	<palette_idx size="70">
+		2 3 2 3 2 3 2 3 2 1
 		0 1 0 1 0 1 0 1 0 1
 		0 1 0 1 0 1 0 1 0 1
 		0 1 0 1 0 1 0 1 0 1
 		0 1 0 1 0 1 0 1 0 1
 		0 1 0 1 0 1 0 1 0 1
-		0 1 0 1 0 1 0 1 0 1
-		0 1 0 1 0 1 0 1 0 1
-		2 3 4 3 2 3 4 3 2
+		0 4 5 6 5 4 5 6 5 4
 	</palette_idx>
 </tex_pattern_data>
 
 <tex_pattern_anm_array size="2">
-	<tex_pattern_anm index="0" material_name="c09_03kigo_1" data_size="70" data_head="0"/>
-	<tex_pattern_anm index="1" material_name="kemo" data_size="9" data_head="70"/>
+	<tex_pattern_anm index="0" material_name="c09_03kigo_1" data_size="61" data_head="0"/>
+	<tex_pattern_anm index="1" material_name="kemo" data_size="9" data_head="61"/>
 </tex_pattern_anm_array>
 
 </body>
