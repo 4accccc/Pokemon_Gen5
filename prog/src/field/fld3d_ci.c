@@ -1943,11 +1943,10 @@ static GMEVENT_RESULT EncEffGraTransEvt( GMEVENT* event, int* seq, void* work )
     GMEVENT * parent = GMEVENT_GetParentEvent(event);
     evt_work = GMEVENT_GetEventWork(parent);
   }
-  
-  mystatus = GAMEDATA_GetMyStatus(GAMESYSTEM_GetGameData(gsys));
-  
-  ptr = evt_work->CiPtr;
+
   gsys = GMEVENT_GetGameSysWork(event);
+  mystatus = GAMEDATA_GetMyStatus(GAMESYSTEM_GetGameData(gsys));
+  ptr = evt_work->CiPtr;
   fieldmap = GAMESYSTEM_GetFieldMapWork(gsys);
   enc_wk = (ENC_WORK*)ptr->Work;
   switch(*seq){
