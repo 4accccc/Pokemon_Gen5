@@ -22,6 +22,7 @@ extern void EVTIME_Update(GAMEDATA * gdata);
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
+extern const RTCDate * EVTIME_GetRTCDate( const GAMEDATA * gdata );
 extern int EVTIME_GetTimeZone(const GAMEDATA * gdata);
 extern int EVTIME_GetHour(const GAMEDATA * gdata);
 extern int EVTIME_GetMinute(const GAMEDATA * gdata);

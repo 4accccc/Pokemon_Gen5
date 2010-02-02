@@ -825,7 +825,14 @@
   DEF_CMD( EvCmdFaceup_Change, EV_SEQ_FACEUP_CHG )
   NO_CMD()
 
+  //相性チェック
+  DEF_CMD( EvCmdGetFeelingCheckCount, EV_SEQ_GET_FEELING_COUNT )
+  DEF_CMD( EvCmdSetFeelingCheckName, EV_SEQ_SET_FEELING_NAME )
+  NO_CMD()
+  NO_CMD()
+
   END_CMD
+
   //スクリプトコマンドテーブル終了
 
 

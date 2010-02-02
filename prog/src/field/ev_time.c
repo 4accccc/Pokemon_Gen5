@@ -221,6 +221,19 @@ static void UpdateMinuteEvent(GAMEDATA * gdata, s32 diff_minute, const RTCTime *
 //============================================================================================
 //------------------------------------------------------------------
 /**
+ * @brief   イベント時間：RTCDateの取得
+ * @param	gdata	フィールド制御ワークへのポインタ
+ * @return  RTCDateへのポインタ
+ */
+//------------------------------------------------------------------
+const RTCDate * EVTIME_GetRTCDate( const GAMEDATA * gdata )
+{
+	const GMTIME * tm = SaveData_GetGameTime( GAMEDATA_GetSaveControlWork( (GAMEDATA*)gdata ) );
+  return &tm->sv_date;
+}
+
+//------------------------------------------------------------------
+/**
  * @brief	時間帯の取得
  * @param	gdata	フィールド制御ワークへのポインタ
  * @return	int		時間帯（field/timezone.hを参照）

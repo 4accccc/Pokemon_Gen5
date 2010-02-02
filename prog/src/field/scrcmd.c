@@ -77,6 +77,7 @@
 #include "scrcmd_crowd_people.h"
 #include "scrcmd_pokeid_search.h"
 #include "scrcmd_faceup.h"
+#include "scrcmd_feeling_check.h"
 
 #include "../../../resource/fldmapdata/script/usescript.h"
 
