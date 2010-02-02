@@ -1197,7 +1197,7 @@ static void selItem_Increment( DEBUG_BTL_WORK* wk, u16 itemID, int incValue )
     save->fld_hour = loopValue( save->fld_hour + incValue, 0, 23 );
     break;
   case SELITEM_FLD_MINUTE:
-    save->fld_minute = loopValue( save->fld_hour + incValue, 0, 59 );
+    save->fld_minute = loopValue( save->fld_minute + incValue, 0, 59 );
     break;
 
   case SELITEM_MUST_TUIKA:
