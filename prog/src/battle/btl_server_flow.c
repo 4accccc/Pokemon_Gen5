@@ -5481,6 +5481,7 @@ static BOOL scEvent_CalcDamage( BTL_SVFLOW_WORK* wk,
     // Ç‚ÇØÇ«ï‚ê≥
     if( (dmgType == WAZADATA_DMG_PHYSIC)
     &&  (BPP_GetPokeSick(attacker) == POKESICK_YAKEDO)
+    &&  (BPP_GetValue(attacker, BPP_TOKUSEI_EFFECTIVE) != POKETOKUSEI_KONJOU)
     ){
       fxDamage = (fxDamage * BTL_YAKEDO_DAMAGE_RATIO) / 100;
     }
