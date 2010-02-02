@@ -7823,21 +7823,21 @@
 		<language name="JPN" width="256">FLD-115</language>
 		<language name="JPN_KANJI" width="256">FLD-115</language>
 	</row>
-	<row id="msg_seq_se_dmy_202">
-		<language name="JPN" width="256">DMY-202</language>
-		<language name="JPN_KANJI" width="256">DMY-202</language>
+	<row id="msg_seq_se_w255_momomo">
+		<language name="JPN" width="256">W255-MOMOMO</language>
+		<language name="JPN_KANJI" width="256">W255-MOMOMO</language>
 	</row>
-	<row id="msg_seq_se_dmy_203">
-		<language name="JPN" width="256">DMY-203</language>
-		<language name="JPN_KANJI" width="256">DMY-203</language>
+	<row id="msg_seq_se_w288_hyuu">
+		<language name="JPN" width="256">W288-HYUU</language>
+		<language name="JPN_KANJI" width="256">W288-HYUU</language>
 	</row>
-	<row id="msg_seq_se_dmy_204">
-		<language name="JPN" width="256">DMY-204</language>
-		<language name="JPN_KANJI" width="256">DMY-204</language>
+	<row id="msg_seq_se_w312_harp">
+		<language name="JPN" width="256">W312-HARP</language>
+		<language name="JPN_KANJI" width="256">W312-HARP</language>
 	</row>
-	<row id="msg_seq_se_dmy_205">
-		<language name="JPN" width="256">DMY-205</language>
-		<language name="JPN_KANJI" width="256">DMY-205</language>
+	<row id="msg_seq_se_w319_sward">
+		<language name="JPN" width="256">W319-SWARD</language>
+		<language name="JPN_KANJI" width="256">W319-SWARD</language>
 	</row>
 	<row id="msg_seq_se_dmy_206">
 		<language name="JPN" width="256">DMY-206</language>
