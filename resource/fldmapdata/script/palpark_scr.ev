@@ -37,6 +37,8 @@ EVENT_END
 EVENT_START ev_pos_palpark_reception
   _CALL first_anime_evt
   _CALL palpark_main
+  //対象ワークに1をセットして以降のPOS起動をオフ
+  $WK_SCENE_R15R0301 = 1
 EVENT_END
 
 //パルパーク共通メイン
