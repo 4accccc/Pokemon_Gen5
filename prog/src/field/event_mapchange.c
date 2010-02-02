@@ -165,6 +165,8 @@ static GMEVENT_RESULT EVENT_FirstMapIn(GMEVENT * event, int *seq, void *work)
         //コンティニューによるフラグ落とし処理
         FIELD_FLAGCONT_INIT_Continue( gamedata, fmw->loc_req.zone_id );
         //天気ロード決定
+        //**上のFIELD_FLAGCONT_INIT_Continueで移動ポケモンの天気が抽選されるので、
+        //必ず、その下で行う。**
         PM_WEATHER_UpdateSaveLoadWeatherNo( gamedata, fmw->loc_req.zone_id );
       }
       break;
