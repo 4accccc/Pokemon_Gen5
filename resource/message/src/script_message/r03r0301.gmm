@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2010-01-15T11:54:45"/>
+	<create user="matsumiya" host="W00224" date="2010-02-02T12:55:06"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -298,9 +298,9 @@
 　メッセージ表示
 ・続けてhakaim1_01</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">ブラッカー『[1:00:トレーナー名:0]　きをつけて！▼
+		<language name="JPN" width="256">チェレン『[1:00:トレーナー名:0]　きをつけて！▼
 こいつら　はなしが　つうじないよ▼</language>
-		<language name="JPN_KANJI" width="256">ブラッカー『[1:00:トレーナー名:0]　気をつけて！▼
+		<language name="JPN_KANJI" width="256">チェレン『[1:00:トレーナー名:0]　気をつけて！▼
 こいつら　話が　通じないよ▼</language>
 	</row>
 
@@ -343,10 +343,10 @@
 ・続けてhakaim2_01
 ・0＝主人公名前</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">ブラッカー『さすがだね　[1:00:トレーナー名:0]▼
+		<language name="JPN" width="256">チェレン『さすがだね　[1:00:トレーナー名:0]▼
 さあ　あのこから　とりあげた
 ポケモンを　かえしてください▼</language>
-		<language name="JPN_KANJI" width="256">ブラッカー『さすがだね　[1:00:トレーナー名:0]▼
+		<language name="JPN_KANJI" width="256">チェレン『さすがだね　[1:00:トレーナー名:0]▼
 さあ　あの子から　取り上げた
 ポケモンを　返してください▼</language>
 	</row>
@@ -394,10 +394,10 @@
 ・プラズマ団を見たままメッセージ表示
 ・続けて、主人公を見てblack_04</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">ブラッカー『まだ　いたとはね……▼
+		<language name="JPN" width="256">チェレン『まだ　いたとはね……▼
 それにしても　ポケモンドロボウが
 なにを　ひらきなおって　いるんだか▼</language>
-		<language name="JPN_KANJI" width="256">ブラッカー『まだ　いたとはね……▼
+		<language name="JPN_KANJI" width="256">チェレン『まだ　いたとはね……▼
 それにしても　ポケモンドロボウが
 なにを　開き直って　いるんだか▼</language>
 	</row>
@@ -441,9 +441,9 @@
 		<comment>♂
 ・続けてhakaiw1_02</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">ブラッカー『どんな　りゆう　でも
+		<language name="JPN" width="256">チェレン『どんな　りゆう　でも
 ひとのモノを　とったら　ドロボウです▼</language>
-		<language name="JPN_KANJI" width="256">ブラッカー『どんな　理由でも
+		<language name="JPN_KANJI" width="256">チェレン『どんな　理由でも
 ひとのモノを　とったら　ドロボウです▼</language>
 	</row>
 
@@ -463,10 +463,10 @@
 		<comment>♂
 ・続けてhakaim1_03</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">ブラッカー『……なぜ　トレーナーが
+		<language name="JPN" width="256">チェレン『……なぜ　トレーナーが
 ポケモンを　くるしめて　いるのか▽
 ちょっと　りかい　できないんだけど▼</language>
-		<language name="JPN_KANJI" width="256">ブラッカー『……なぜ　トレーナーが
+		<language name="JPN_KANJI" width="256">チェレン『……なぜ　トレーナーが
 ポケモンを　苦しめて　いるのか▽
 ちょっと　理解できないんだけど▼</language>
 	</row>
@@ -493,13 +493,13 @@
 ・画面右をみてメッセージ表示
 ・続けてblack_08</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">ブラッカー『ポケモンを
+		<language name="JPN" width="256">チェレン『ポケモンを
 あいする　トレーナーが　いる▼
 トレーナーを
 しんじる　ポケモンが　いる▼
 これで　どうして　ポケモンが
 かわいそう　なのか　わからないね▼</language>
-		<language name="JPN_KANJI" width="256">ブラッカー『ポケモンを
+		<language name="JPN_KANJI" width="256">チェレン『ポケモンを
 愛する　トレーナーが　いる▼
 トレーナーを
 信じる　ポケモンが　いる▼

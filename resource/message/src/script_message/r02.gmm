@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2010-01-13T17:02:32"/>
+	<create user="matsumiya" host="W00224" date="2010-02-02T12:53:08"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -310,16 +310,13 @@
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_r02_tvt_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_r02_tvt_01" text-color="#ff0000,,,,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>・POSを踏むとコ
 　ＴＶトランシーバーのコール音再生＋
-　主人公頭上に！マーク表示
-・続けて
-　メッセージ表示後
+　主人公頭上に「！」マーク表示
+・続けてメッセージ表示後
 　tvt.gmmのmsg_transceiver_r02_01呼び出し
-・0＝主人公名前
-
-※現状ないので画面暗転などの対応で可</comment>
+・0＝主人公名前</comment>
 		<attribute name="キャラ指定">システム
 TVトランシーバー</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]は
@@ -328,7 +325,7 @@ TVトランシーバー</attribute>
 ＴＶトランシーバーを　つなげた[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r02_mama_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r02_mama_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀：主人公ママ
 ・画面切り替え後
 　主人公の背後にママ配置
@@ -470,8 +467,7 @@ TVトランシーバー</attribute>
 	</row>
 
 	<row id="msg_r02_boy2_01">
-		<comment>♂
-・7月末ROM用</comment>
+		<comment>♂</comment>
 		<attribute name="キャラ指定">BOY2</attribute>
 		<language name="JPN" width="256">ポケモンを　たたかわせたい！
 そんなときは　くさむらに！[BE:01:ページ切り替え（クリア）]
@@ -484,8 +480,7 @@ TVトランシーバー</attribute>
 	</row>
 
 	<row id="msg_r02_girl2_01">
-		<comment>♀
-・7月末ROM用</comment>
+		<comment>♀</comment>
 		<attribute name="キャラ指定">GIRL2</attribute>
 		<language name="JPN" width="256">ポケモンリストの　ひだりうえ！[BE:01:ページ切り替え（クリア）]
 そこに　セットしてあげるのは
@@ -500,18 +495,21 @@ TVトランシーバー</attribute>
 	</row>
 
 	<row id="msg_r02_sign1_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>BGメッセージ</comment>
 		<attribute name="キャラ指定">看板：道路</attribute>
 		<language name="JPN" width="256">２ばんどうろ</language>
 		<language name="JPN_KANJI" width="256">２番道路</language>
 	</row>
 
 	<row id="msg_r02_sign2_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>BGメッセージ</comment>
 		<attribute name="キャラ指定">看板：道路</attribute>
 		<language name="JPN" width="256">２ばんどうろ</language>
 		<language name="JPN_KANJI" width="256">２番道路</language>
 	</row>
 
 	<row id="msg_r02_sign3_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>BGメッセージ</comment>
 		<attribute name="キャラ指定">看板：お得な掲示板</attribute>
 		<language name="JPN" width="256">おとくな　けいじばん！[BE:01:ページ切り替え（クリア）]
 たたかいに　さんかした　ポケモンは
