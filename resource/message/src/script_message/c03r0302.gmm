@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2010-01-20T15:24:22"/>
+	<create user="matsumiya" host="W00224" date="2010-02-02T20:38:53"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="1414" top="365" right="2119" bottom="985" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_c03r0302_assistantm_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c03r0302_assistantm_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・仮メッセージ
 ・アイテム入手処理
@@ -306,7 +306,7 @@
 君に　これを　あげよう！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c03r0302_assistantm_02" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c03r0302_assistantm_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">ASSISTANTM</attribute>
@@ -320,6 +320,22 @@
 経験値を　わけてもらえる！▼
 弱い　ポケモンを　育てるのには
 もってこいの　道具だよ</language>
+	</row>
+
+	<row id="msg_c03r0302_businessman_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♂
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">BUSINESSMAN</attribute>
+		<language name="JPN" width="256">いやあ……　いつも　おこされるとき
+ポケモンの　めざましビンタでして▽
+ちょいと　ボロボロ　なんです▼
+でも　おこしてくれる　かのじょのため
+きょうも　はりきって　がんばりますよ！</language>
+		<language name="JPN_KANJI" width="256">いやあ……　いつも　起こされるとき
+ポケモンの　めざましビンタでして▽
+ちょいと　ボロボロ　なんです▼
+でも　起こしてくれる　彼女のため
+今日も　はりきって　がんばりますよ！</language>
 	</row>
 
 	<flowchart-group-list>
