@@ -85,6 +85,7 @@ extern void WIFIHISTORY_Update(WIFI_HISTORY * wh);
 extern u8 WIFIHISTORY_GetMyCountryCount(WIFI_HISTORY * wh);
 
 extern int WIFIHISTORY_GetUnInfo(WIFI_HISTORY * wh, const int inIdx, const UN_INFO_TYPE inType);
+extern MYSTATUS *WIFIHISTORY_GetUnMyStatus(WIFI_HISTORY * wh, const int inIdx);
 
 #endif	/* __WIFIHISTORY_H__ */
 

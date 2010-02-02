@@ -244,4 +244,26 @@ int WIFIHISTORY_GetUnInfo(WIFI_HISTORY * wh, const int inIdx, const UN_INFO_TYPE
   return info;
 }
 
+//----------------------------------------------------------
+/**
+ * @brief	自分の所持している国連データを取得
+ * @param	wh			WIFI履歴データへのポインタ
+ * @param inIdx   取得したい、データインデックス
+ * @param inType  取得したい情報の種類 wifihistory.h 参照
+ * @return int    取得情報
+ */
+//----------------------------------------------------------
+MYSTATUS *WIFIHISTORY_GetUnMyStatus(WIFI_HISTORY * wh, const int inIdx)
+{
+  int info;
+  UNITEDNATIONS_SAVE *un;
+
+  if (inIdx >= UNITEDNATIONS_PEOPLE_MAX)
+  {
+    GF_ASSERT_MSG(0,"INDEX_OVER idx=%d",inIdx);
+    return NULL;
+  }
+  un = &wh->aUnitedPeople[inIdx];
+  return &un->aMyStatus;
+}
 
