@@ -196,6 +196,31 @@ u8 WIFIHISTORY_GetMyCountryCount(WIFI_HISTORY * wh)
 
 //----------------------------------------------------------
 /**
+ * @brief	交換した国の数を加算
+ * @param	wh			WIFI履歴データへのポインタ
+ * @return none
+ */
+//----------------------------------------------------------
+void WIFIHISTORY_AddMyCountryCount(WIFI_HISTORY * wh)
+{
+  if ( wh->myCountryCount < WIFI_COUNTRY_MAX ) wh->myCountryCount++;
+}
+
+//----------------------------------------------------------
+/**
+ * @brief	自分の性格をセット
+ * @param	wh			WIFI履歴データへのポインタ
+ * @param inNature    性格コード　0～4
+ * @return none
+ */
+//----------------------------------------------------------
+void WIFIHISTORY_GetMyNature(WIFI_HISTORY * wh, const NATURE_TYPE inType)
+{
+  if ( inType < NATURE_MAX ) wh->myNature = inType;
+}
+
+//----------------------------------------------------------
+/**
  * @brief	自分の所持している国連データを取得
  * @param	wh			WIFI履歴データへのポインタ
  * @param inIdx   取得したい、データインデックス

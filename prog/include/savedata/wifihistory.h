@@ -37,6 +37,11 @@ typedef struct _WIFI_HISTORY WIFI_HISTORY;
 ///地域名のある地域の数（wifi_earth/wifi_place_msg_USA.gmm）
 #define	WIFI_AREADATA_MAX		(52)
 
+typedef enum
+{
+  NATURE_MAX = 5
+}NATURE_TYPE;
+
 //----------------------------------------------------------
 /**
  * @brief	WiFi通信履歴データの状態定義
@@ -83,7 +88,8 @@ extern void WIFIHISTORY_SetWorldFlag(WIFI_HISTORY * wh, BOOL flag);
 extern void WIFIHISTORY_Update(WIFI_HISTORY * wh);
 
 extern u8 WIFIHISTORY_GetMyCountryCount(WIFI_HISTORY * wh);
-
+extern void WIFIHISTORY_AddMyCountryCount(WIFI_HISTORY * wh);
+extern void WIFIHISTORY_GetMyNature(WIFI_HISTORY * wh, const NATURE_TYPE inType);
 extern u32 WIFIHISTORY_GetUnInfo(WIFI_HISTORY * wh, const u32 inIdx, const UN_INFO_TYPE inType);
 extern void WIFIHISTORY_SetUnInfo(
     WIFI_HISTORY * wh, const int inIdx,const UN_INFO_TYPE inType, const u32 inInfo);
