@@ -269,3 +269,5 @@
   ARCID_FIELD_CROWD_PEOPLE "fieldmap/field_crowd_people.narc"  # 群集情報
   ARCID_FLD_FACEUP "fieldmap/fld_faceup.narc"  # 顔アップ
   ARCID_BATT_REC_GRA "batt_rec_gra.narc"  # 通信対戦後の録画選択画面
+  ARCID_EGG_DEMO "egg_demo_particle.narc"  # タマゴ孵化デモのデータ
+
