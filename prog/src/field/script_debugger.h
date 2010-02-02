@@ -12,6 +12,7 @@
 //============================================================================================
 //------------------------------------------------------------------
 //------------------------------------------------------------------
+extern BOOL SCRDEBUGGER_Boot( void );
 extern void * SCRDEBUGGER_ReadScriptFile( HEAPID heapID, u32 scr_id );
 
 extern BOOL SCRDEBUGGER_ReadSpecialScriptFile( u32 scr_id, void * buffer, u32 buf_size );
