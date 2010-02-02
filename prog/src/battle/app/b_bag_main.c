@@ -506,8 +506,18 @@ static int BBAG_SeqPokeSelect( BBAG_WORK * wk )
       break;
 
     case BBAG_UI_P1_RETURN:   // 戻る
+			if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH ){
+				PMSND_PlaySE( SEQ_SE_CANCEL2 );
+			}else{
+				PMSND_PlaySE( SEQ_SE_DECIDE2 );
+			}
+      wk->dat->ret_item = ITEM_DUMMY_DATA;
+      wk->dat->ret_page = BBAG_POKE_MAX;
+      BBAGANM_ButtonAnmInit( wk, BBAG_BGWF_RETURN );
+      return SEQ_BBAG_ENDSET;
+
     case CURSORMOVE_CANCEL:   // キャンセル
-      PMSND_PlaySE( SEQ_SE_DECIDE2 );
+      PMSND_PlaySE( SEQ_SE_CANCEL2 );
       wk->dat->ret_item = ITEM_DUMMY_DATA;
       wk->dat->ret_page = BBAG_POKE_MAX;
       BBAGANM_ButtonAnmInit( wk, BBAG_BGWF_RETURN );
@@ -566,8 +576,24 @@ static int BBAG_SeqItemSelect( BBAG_WORK * wk )
     break;
 
   case BBAG_UI_P2_RETURN:   // 戻る
+		if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH ){
+			PMSND_PlaySE( SEQ_SE_CANCEL2 );
+		}else{
+			PMSND_PlaySE( SEQ_SE_DECIDE2 );
+		}
+    BBAGANM_ButtonAnmInit( wk, BBAG_BGWF_RETURN );
+    if( wk->dat->mode == BBAG_MODE_SHOOTER ){
+      wk->dat->ret_item = ITEM_DUMMY_DATA;
+      wk->dat->ret_page = BBAG_POKE_MAX;
+      return SEQ_BBAG_ENDSET;
+    }else{
+      wk->ret_seq = SEQ_BBAG_PAGE1_CHG;
+      return SEQ_BBAG_BUTTON_WAIT;
+    }
+    break;
+
   case CURSORMOVE_CANCEL:   // キャンセル
-    PMSND_PlaySE( SEQ_SE_DECIDE2 );
+		PMSND_PlaySE( SEQ_SE_CANCEL2 );
     BBAGANM_ButtonAnmInit( wk, BBAG_BGWF_RETURN );
     if( wk->dat->mode == BBAG_MODE_SHOOTER ){
       wk->dat->ret_item = ITEM_DUMMY_DATA;
@@ -722,8 +748,17 @@ static int BBAG_SeqUseSelect( BBAG_WORK * wk )
     return BBAG_ItemUse( wk );
 
   case BBAG_UI_P3_RETURN:   // 戻る
+		if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH ){
+			PMSND_PlaySE( SEQ_SE_CANCEL2 );
+		}else{
+			PMSND_PlaySE( SEQ_SE_DECIDE2 );
+		}
+    wk->ret_seq = SEQ_BBAG_PAGE2_CHG;
+    BBAGANM_ButtonAnmInit( wk, BBAG_BGWF_RETURN );
+    return SEQ_BBAG_BUTTON_WAIT;
+
   case CURSORMOVE_CANCEL:   // キャンセル
-    PMSND_PlaySE( SEQ_SE_DECIDE2 );
+		PMSND_PlaySE( SEQ_SE_CANCEL2 );
     wk->ret_seq = SEQ_BBAG_PAGE2_CHG;
     BBAGANM_ButtonAnmInit( wk, BBAG_BGWF_RETURN );
     return SEQ_BBAG_BUTTON_WAIT;

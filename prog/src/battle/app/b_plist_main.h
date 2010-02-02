@@ -482,6 +482,8 @@ typedef struct {
 	u32	palRes[BPLIST_PALRES_MAX];
 	u32	celRes[BPLIST_CELRES_MAX];
 
+	u32	cancelSE;			// ƒLƒƒƒ“ƒZƒ‹—p‚r‚d
+
 	const u8 * putWin;
 
 }BPLIST_WORK;
