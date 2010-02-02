@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-07T11:34:54"/>
+	<create user="matsumiya" host="W00224" date="2010-02-02T22:46:41"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,7 +307,7 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="184" right="950" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="1476" top="354" right="2178" bottom="966" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="527"/>
@@ -344,11 +344,11 @@
 ・はい→black_04
 　いいえ→black_05</comment>
 		<attribute name="キャラ指定">友達♂（ライバル）</attribute>
-		<language name="JPN" width="256">ブラッカー『……？
+		<language name="JPN" width="256">チェレン『……？
 この　おくにも　だれか　いるぞ[BE:01:ページ切り替え（クリア）]
 ひょっとしたら　プラズマだん　かもな
 じゅんびは　いいか？[1:00:トレーナー名:0]</language>
-		<language name="JPN_KANJI" width="256">ブラッカー『……？
+		<language name="JPN_KANJI" width="256">チェレン『……？
 この　奥にも　だれか　いるぞ[BE:01:ページ切り替え（クリア）]
 ひょっとしたら　プラズマ団かもな
 準備は　良いか？[1:00:トレーナー名:0]</language>
@@ -390,11 +390,11 @@
 		<comment>♂
 ・続けてsage2_02</comment>
 		<attribute name="キャラ指定">友達♂（ライバル）</attribute>
-		<language name="JPN" width="256">ブラッカー『……やれやれ
+		<language name="JPN" width="256">チェレン『……やれやれ
 ほんとうに　かくれていたとは[BE:01:ページ切り替え（クリア）]
 さむいんだろ？
 そとまで　あんない　してやるよ[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ブラッカー『……やれやれ
+		<language name="JPN_KANJI" width="256">チェレン『……やれやれ
 本当に　隠れていたとは[BE:01:ページ切り替え（クリア）]
 寒いんだろ？
 外まで　案内してやるよ[BE:01:ページ切り替え（クリア）]</language>
@@ -433,10 +433,10 @@
 		<comment>♂
 ・メッセージ表示後、戦闘</comment>
 		<attribute name="キャラ指定">友達♂（ライバル）</attribute>
-		<language name="JPN" width="256">ブラッカー『[1:00:トレーナー名:0]！
-ひとりずつ　かたづけるぞ！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ブラッカー『[1:00:トレーナー名:0]！
-一人ずつ　片付けるぞ！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">チェレン『[1:00:トレーナー名:0]！
+ひとりずつ　かたづけよう！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">チェレン『[1:00:トレーナー名:0]！
+一人ずつ　片付けよう！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_d05r0201_hakaim_02">
@@ -481,10 +481,10 @@
 ・表示後、画面暗転してd05の外に
 ・コンテナ内のイベント関係のOBJ削除</comment>
 		<attribute name="キャラ指定">友達♂（ライバル）</attribute>
-		<language name="JPN" width="256">ブラッカー『[1:00:トレーナー名:0]！
-なんだか　おもしろくなってきたぜ！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ブラッカー『[1:00:トレーナー名:0]！
-なんだか　おもしろくなってきたぜ！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">チェレン『[1:00:トレーナー名:0]
+なんだか　おおごとに　なってきたね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">チェレン『[1:00:トレーナー名:0]
+なんだか　おおごとに　なってきたね[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<flowchart-group-list>
