@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-02T12:09:52"/>
+	<create user="matsumiya" host="W00224" date="2010-02-02T16:05:21"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="10" top="235" right="713" bottom="855" maximized="no" rayout="Vertical2">
+	<dialog left="1430" top="354" right="2133" bottom="974" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="528"/>
@@ -311,12 +311,12 @@
 ・戦闘後メッセージ</comment>
 		<attribute name="キャラ指定">LEADER4</attribute>
 		<language name="JPN" width="256">ステキ……
-ホレボレするような　たたかいかた[BE:01:ページ切り替え（クリア）]
+ホレボレしちゃう　ファイトスタイル[BE:01:ページ切り替え（クリア）]
 アナタ　いい　トレーナーね
 なんだか　かんげき……[BE:00:ページ切り替え（行送り）]
 これを……！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ステキ……
-ホレボレするような　たたかいかた[BE:01:ページ切り替え（クリア）]
+ホレボレしちゃう　ファイトスタイル[BE:01:ページ切り替え（クリア）]
 アナタ　いい　トレーナーね
 なんだか　感激……[BE:00:ページ切り替え（行送り）]
 これを……[BE:01:ページ切り替え（クリア）]</language>
@@ -340,13 +340,13 @@
 レベル５０までの　ポケモンは[BE:00:ページ切り替え（行送り）]
 アナタに　したがってくれる[BE:01:ページ切り替え（クリア）]
 それと　これは
-わたしの　すきな　わざ……[BE:00:ページ切り替え（行送り）]
+ワタシの　すきな　わざ……[BE:00:ページ切り替え（行送り）]
 よければ　アナタも　つかって[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ボルトバッジが　あれば
 レベル５０までの　ポケモンは[BE:00:ページ切り替え（行送り）]
 アナタに　従ってくれる[BE:01:ページ切り替え（クリア）]
 それと　これは
-わたしの　好きな　技……[BE:00:ページ切り替え（行送り）]
+ワタシの　好きな　技……[BE:00:ページ切り替え（行送り）]
 よければ　アナタも　使って[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
