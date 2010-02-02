@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ariizumi_nobuhiko" host="W00147" date="2010-01-29T22:44:53"/>
+	<create user="tetsuji_ohta" host="W00222" date="2010-02-02T21:15:55"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -362,8 +362,8 @@
 	</row>
 
 	<row id="COMM_TVT_DRAW_004">
-		<language name="JPN">へんしゅうモードＯＮ</language>
-		<language name="JPN_KANJI">編集モードＯＮ</language>
+		<language name="JPN">らくがきツールＯＮ</language>
+		<language name="JPN_KANJI">落書きツールＯＮ</language>
 	</row>
 
 	<row id="COMM_TVT_DRAW_005">
@@ -392,8 +392,13 @@
 	</row>
 
 	<row id="COMM_TVT_DRAW_010">
-		<language name="JPN">へんしゅうモードOFF</language>
-		<language name="JPN_KANJI">編集モードOFF</language>
+		<language name="JPN">らくがきツールＯＦＦ</language>
+		<language name="JPN_KANJI">落書きツールОＦＦ</language>
+	</row>
+
+	<row id="COMM_TVT_DRAW_011">
+		<language name="JPN">スタンプ</language>
+		<language name="JPN_KANJI">スタンプ</language>
 	</row>
 
 	<row id="COMM_TVT_TALK_01">
@@ -402,7 +407,7 @@
 		<language name="JPN_KANJI">REC</language>
 	</row>
 
-	<row id="COMM_TVT_TALK_02">
+	<row id="COMM_TVT_TALK_02" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<language name="JPN">らくがき</language>
 		<language name="JPN_KANJI">らくがき</language>
 	</row>
@@ -436,6 +441,26 @@
 	<row id="COMM_TVT_CALL_06">
 		<language name="JPN">さんかする</language>
 		<language name="JPN_KANJI">参加する</language>
+	</row>
+
+	<row id="COMM_TVT_CALL_07">
+		<language name="JPN">ともだちを　よびだしちゅう</language>
+		<language name="JPN_KANJI">友達を　呼び出し中</language>
+	</row>
+
+	<row id="COMM_TVT_CALL_08">
+		<language name="JPN">ともだちを　よびだしちゅう・</language>
+		<language name="JPN_KANJI">友達を　呼び出し中・</language>
+	</row>
+
+	<row id="COMM_TVT_CALL_09">
+		<language name="JPN">ともだちを　よびだしちゅう・・</language>
+		<language name="JPN_KANJI">友達を　呼び出し中・・</language>
+	</row>
+
+	<row id="COMM_TVT_CALL_10">
+		<language name="JPN">ともだちを　よびだしちゅう・・・</language>
+		<language name="JPN_KANJI">友達を　呼び出し中・・・</language>
 	</row>
 
 	<row id="COMM_TVT_SYS_01">
