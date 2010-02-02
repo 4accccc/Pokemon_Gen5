@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-22T13:06:05"/>
+	<create user="matsumiya" host="W00224" date="2010-02-02T12:07:51"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="155" top="0" right="851" bottom="617" maximized="no" rayout="Vertical2">
+	<dialog left="1530" top="177" right="2226" bottom="794" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="521"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="534"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="688"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -396,14 +396,14 @@
 ジムリーダー　アロエ
 にんてい　トレーナー！[BE:00:ページ切り替え（行送り）]
 [1:00:トレーナー名:0][BE:00:ページ切り替え（行送り）]
-ブラッカー[BE:00:ページ切り替え（行送り）]
-ホワイティ</language>
+チェレン[BE:00:ページ切り替え（行送り）]
+ベル</language>
 		<language name="JPN_KANJI" width="256">シッポウ　ポケモンジム[BE:01:ページ切り替え（クリア）]
 ジムリーダー　アロエ
 認定　トレーナー！[BE:00:ページ切り替え（行送り）]
 [1:00:トレーナー名:0][BE:00:ページ切り替え（行送り）]
-ブラッカー[BE:00:ページ切り替え（行送り）]
-ホワイティ</language>
+チェレン[BE:00:ページ切り替え（行送り）]
+ベル</language>
 	</row>
 
 	<row id="msg_c02gym0101_girl3_01">

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2010-01-13T19:49:39"/>
+	<create user="matsumiya" host="W00224" date="2010-02-02T12:07:05"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -788,7 +788,8 @@
 	</row>
 
 	<row id="msg_c01gym0101_statue_02" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
-		<comment>・ジムバッジ取得後</comment>
+		<comment>・ジムバッジ取得後
+・0＝主人公名前</comment>
 		<language name="JPN" width="256">サンヨウ　ポケモンジム[BE:01:ページ切り替え（クリア）]
 ジムリーダー　コーン＆ポッド＆デント
 にんてい　トレーナー！[BE:00:ページ切り替え（行送り）]
@@ -805,14 +806,14 @@
 ジムリーダー　コーン＆ポッド＆デント
 にんてい　トレーナー！[BE:00:ページ切り替え（行送り）]
 [1:00:トレーナー名:0][BE:00:ページ切り替え（行送り）]
-ブラッカー[BE:00:ページ切り替え（行送り）]
-ホワイティ</language>
+チェレン[BE:00:ページ切り替え（行送り）]
+ベル</language>
 		<language name="JPN_KANJI" width="256">サンヨウ　ポケモンジム[BE:01:ページ切り替え（クリア）]
 ジムリーダー　コーン＆ポッド＆デント
 認定　トレーナー！[BE:00:ページ切り替え（行送り）]
 [1:00:トレーナー名:0][BE:00:ページ切り替え（行送り）]
-ブラッカー[BE:00:ページ切り替え（行送り）]
-ホワイティ</language>
+チェレン[BE:00:ページ切り替え（行送り）]
+ベル</language>
 	</row>
 
 	<flowchart-group-list>
