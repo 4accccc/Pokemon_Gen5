@@ -184,6 +184,7 @@ enum NetworkServiceID_e {
   WB_NET_COMM_ENTRY_MENU,   ///<通信エントリーメニュー
   WB_NET_GURUGURU,        ///<ぐるぐる交換
   WB_NET_PICTURE,         ///<お絵かき
+  WB_NET_BATTLE_ADD_CMD,  ///< 通信バトル コマンド送信
   WB_NET_BTL_REC_SEL,      ///<通信対戦後の録画選択画面
 
   WB_NET_SERVICEID_MAX   // 終端

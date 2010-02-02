@@ -41,6 +41,8 @@
 #include "field/event_battle_call.h"
 
 
+//------------------------------------------------------------------
+//------------------------------------------------------------------
 static GFL_PROC_RESULT CommBattleCallProc_Init(  GFL_PROC *proc, int *seq, void* pwk, void* mywk );
 static GFL_PROC_RESULT CommBattleCallProc_Main(  GFL_PROC *proc, int *seq, void* pwk, void* mywk );
 static GFL_PROC_RESULT CommBattleCallProc_End(  GFL_PROC *proc, int *seq, void* pwk, void* mywk );
@@ -53,15 +55,17 @@ const GFL_PROC_DATA CommBattleCommProcData =
 };
 
 //==============================================================================
-//  PROC構造体
+//  PROC内構造体
 //==============================================================================
 typedef struct{
   GFL_PROCSYS* procsys_up; 
 }COMM_BTL_DEMO_PROC_WORK;
 
+#define BATTLE_CALL_HEAP_SIZE (0x4000) // PROC内用ヒープのサイズ
+
 //-----------------------------------------------------------------------------
 /**
- *	@brief
+ *	@brief  通信バトル呼び出しPROC 初期化処理
  *
  *	@param	GFL_PROC *proc
  *	@param	*seq
@@ -74,18 +78,21 @@ typedef struct{
 static GFL_PROC_RESULT CommBattleCallProc_Init(  GFL_PROC *proc, int *seq, void* pwk, void* mywk )
 {
   COMM_BTL_DEMO_PROC_WORK*   work;
-  
-  // ワーク アロケート
-  work = GFL_PROC_AllocWork( proc , sizeof(COMM_BTL_DEMO_PROC_WORK) , GFL_HEAPID_APP );
 
-  work->procsys_up = GFL_PROC_LOCAL_boot( GFL_HEAPID_APP );
+  // ヒープ生成
+  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_BATTLE_CALL, BATTLE_CALL_HEAP_SIZE );
+
+  // ワーク アロケート
+  work = GFL_PROC_AllocWork( proc , sizeof(COMM_BTL_DEMO_PROC_WORK) , HEAPID_BATTLE_CALL );
+
+  work->procsys_up = GFL_PROC_LOCAL_boot( HEAPID_BATTLE_CALL );
   
   return GFL_PROC_RES_FINISH;
 }
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief
+ *	@brief  通信バトル呼び出しPROC 終了処理
  *
  *	@param	GFL_PROC *proc
  *	@param	*seq
@@ -103,12 +110,15 @@ static GFL_PROC_RESULT CommBattleCallProc_End(  GFL_PROC *proc, int *seq, void* 
   
   GFL_PROC_FreeWork( proc );
 
+  // ヒープ開放
+  GFL_HEAP_DeleteHeap( HEAPID_BATTLE_CALL );
+
   return GFL_PROC_RES_FINISH;
 }
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  通信バトル呼び出しPROC
+ *	@brief  通信バトル呼び出しPROC 主処理
  *
  *	@param	GFL_PROC *proc
  *	@param	*seq
@@ -174,20 +184,22 @@ static GFL_PROC_RESULT CommBattleCallProc_Main(  GFL_PROC *proc, int *seq, void*
     {
       GFL_OVERLAY_Load( FS_OVERLAY_ID( battle ) );
       GFL_NET_AddCommandTable(GFL_NET_CMD_BATTLE, BtlRecvFuncTable, BTL_NETFUNCTBL_ELEMS, NULL);
+//    GFL_NET_HANDLE_TimeSyncStart( GFL_NET_HANDLE_GetCurrentHandle(), EVENT_BATTLE_ADD_CMD_TBL_TIMING, WB_NET_BATTLE_ADD_CMD );
       GFL_NET_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle(), EVENT_BATTLE_ADD_CMD_TBL_TIMING);
       OS_TPrintf("戦闘用通信コマンドテーブルをAddしたので同期取り\n");
       (*seq) = SEQ_BATTLE_TIMING_WAIT;
     }
     break;
   case SEQ_BATTLE_TIMING_WAIT:
+//  if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(), EVENT_BATTLE_ADD_CMD_TBL_TIMING, WB_NET_BATTLE_ADD_CMD) ){
     if(GFL_NET_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(), EVENT_BATTLE_ADD_CMD_TBL_TIMING)){
       OS_TPrintf("戦闘用通信コマンドテーブルをAdd後の同期取り完了\n");
       (*seq) = SEQ_BATTLE_INIT;
     }
     break;
   case SEQ_BATTLE_INIT:
-    BattleRec_Init( GFL_HEAPID_APP );                                // 録画
-    BTL_SETUP_AllocRecBuffer( bcw->btl_setup_prm, GFL_HEAPID_APP );  // 録画
+    BattleRec_Init( HEAPID_BATTLE_CALL );                                // 録画
+    BTL_SETUP_AllocRecBuffer( bcw->btl_setup_prm, HEAPID_BATTLE_CALL );  // 録画
 
 //  GMEVENT_CallEvent(event, EVENT_FSND_PushPlayNextBGM(gsys, bcw->btl_setup_prm->musicDefault, FSND_FADE_SHORT, FSND_FADE_NONE)); 
     GFL_PROC_LOCAL_CallProc(work->procsys_up, NO_OVERLAY_ID, &BtlProcData, bcw->btl_setup_prm);
