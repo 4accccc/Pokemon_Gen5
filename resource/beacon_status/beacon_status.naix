@@ -44,8 +44,8 @@ enum {
 	NARC_beacon_status_bdetail_bgu_lz_ncgr = 30,
 	NARC_beacon_status_bdetail_bgd_lz_ncgr = 31,
 	NARC_beacon_status_bdetail_bgu01_lz_nscr = 32,
-	NARC_beacon_status_bdetail_bgd01_lz_nscr = 33,
-	NARC_beacon_status_bdetail_bgd02_lz_nscr = 34
+	NARC_beacon_status_bdetail_bgu02_lz_nscr = 33,
+	NARC_beacon_status_bdetail_bgd01_lz_nscr = 34
 };
 
 /* NARC_BEACON_STATUS_NAIX_ */

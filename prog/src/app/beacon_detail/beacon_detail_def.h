@@ -23,13 +23,12 @@ enum{
 enum
 {	
 	BG_FRAME_BAR_M	= GFL_BG_FRAME0_M,
-	BG_FRAME_MSG_M	= GFL_BG_FRAME1_M,
+	BG_FRAME_POPUP_M	= GFL_BG_FRAME1_M,
 	BG_FRAME_MAP01_M	= GFL_BG_FRAME2_M,
 	BG_FRAME_MAP02_M	= GFL_BG_FRAME3_M,
-	BG_FRAME_DAT01_S	= GFL_BG_FRAME0_S,
-	BG_FRAME_WIN01_S	= GFL_BG_FRAME1_S,
-	BG_FRAME_DAT02_S	= GFL_BG_FRAME2_S,
-	BG_FRAME_WIN02_S	= GFL_BG_FRAME3_S,
+	BG_FRAME_WIN01_S	= GFL_BG_FRAME0_S,
+	BG_FRAME_WIN02_S	= GFL_BG_FRAME1_S,
+	BG_FRAME_BASE_S	= GFL_BG_FRAME3_S,
 };
 //-------------------------------------
 ///	パレット
@@ -44,17 +43,84 @@ enum
 	PLTID_BG_LOCALIZE_M		= 15, //ローカライズ用
 
 	//サブBG
-	PLTID_BG_BACK_S				=	0,
+	PLTID_BG_WIN01_S			=	0,
+	PLTID_BG_WIN02_S			=	1,
+  PLTID_BG_PMS_S        = 10, //簡易会話デコメ用5本占有
+  PLTID_BG_FONT_S       = 14, //フォント
 	PLTID_BG_LOCALIZE_S		= 15, //ローカライズ用
 
 	//メインOBJ
-	PLTID_OBJ_TOUCHBAR_M	= 0, // 3本使用
+	PLTID_OBJ_NORMAL_M	= 0, //通常
+  PLTID_OBJ_UNION_M = 10, //Unionオブジェ用
+	PLTID_OBJ_TOUCHBAR_M	= 11, // 3本使用
 	PLTID_OBJ_LOCALIZE_M	= 14,		//ローカライズ用
   PLTID_OBJ_WMI_M = 15,	  //通信アイコン
 
   //サブOBJ
-  PLTID_OBJ_PMS_DRAW = 0, // 5本使用
+  PLTID_OBJ_NORMAL_S = 0, //
+  PLTID_OBJ_TRAINER_S = 8, // 2本使用
+  PLTID_OBJ_PMS_DRAW = 10, // 5本使用
 	PLTID_OBJ_LOCALIZE_S	= 15,		//ローカライズ用
 };
 
+#define BUFLEN_TMP_MSG  (18*3*2+EOM_SIZE)
 
+#define	FCOL_FNTOAM   ( PRINTSYS_LSB_Make(1,2,0) )	 ///<OAMフォント黒抜
+#define FCOL_FNTOAM_W ( PRINTSYS_LSB_Make(15,3,0))  ///<Oam白抜き
+#define FCOL_WHITE_N  ( PRINTSYS_LSB_Make(15,2,0) ) ///<BG白抜き
+#define FCOL_POPUP_BASE (7)
+#define FCOL_POPUP_MAIN (15)
+#define FCOL_POPUP_SDW  (14)
+#define FCOL_POPUP      ( PRINTSYS_LSB_Make(FCOL_POPUP_MAIN,FCOL_POPUP_SDW,FCOL_POPUP_BASE))  //BGポップアップ
+
+#define FCOL_WIN_BASE1  (3)
+#define FCOL_WIN_BASE2  (4)
+#define FCOL_WIN_MAIN   (7)
+#define FCOL_WIN_SDW    (6)
+
+#define FCOL_WIN01 ( PRINTSYS_LSB_Make(FCOL_WIN_MAIN,FCOL_WIN_SDW,FCOL_WIN_BASE1))  //ビーコンウィンドウ1
+#define FCOL_WIN02 ( PRINTSYS_LSB_Make(FCOL_WIN_MAIN,FCOL_WIN_SDW,FCOL_WIN_BASE2))  //ビーコンウィンドウ2
+
+//BGアルファ設定
+#define ALPHA_1ST_M (GX_BLEND_PLANEMASK_BG0|GX_BLEND_PLANEMASK_BG1)
+#define ALPHA_2ND_M (GX_BLEND_PLANEMASK_BG1|GX_BLEND_PLANEMASK_BG2|GX_BLEND_PLANEMASK_BG3|GX_BLEND_PLANEMASK_OBJ)
+#define ALPHA_1ST_S (GX_BLEND_PLANEMASK_BG1)
+#define ALPHA_2ND_S (GX_BLEND_PLANEMASK_BG2|GX_BLEND_PLANEMASK_BG3|GX_BLEND_PLANEMASK_OBJ)
+
+#define ALPHA_EV2  (2)
+#define ALPHA_EV1  (16-ALPHA_EV2)
+
+//ビーコンウィンドウの数
+#define BEACON_WIN_MAX    (2)
+#define BEACON_PROF_MAX   (4)
+#define BEACON_RECORD_MAX (3)
+
+///////////////////////////////////////////////////
+//BMP関連
+#define BMP_BEACON_FRM  (BG_FRAME_WIN01_S)
+
+#define BMP_PROF_PX (3)
+#define BMP_PROF_PY (1)
+#define BMP_PROF_SX (18)
+#define BMP_PROF_SY (2)
+#define BMP_PROF_OY (3)
+#define BMP_PROF_PAL ( PLTID_BG_WIN01_S )
+
+#define BMP_RECORD_PX (BMP_PROF_PX)
+#define BMP_RECORD_PY (13)
+#define BMP_RECORD_SX (28)
+#define BMP_RECORD_SY (6)
+#define BMP_RECORD_PAL ( PLTID_BG_WIN01_S )
+
+#define BMP_PMS_PX (BMP_PROF_PX)
+#define BMP_PMS_PY (19)
+#define BMP_PMS_SX (28)
+#define BMP_PMS_SY (4)
+#define BMP_PMS_PAL ( PLTID_BG_WIN01_S )
+
+
+///////////////////////////////////////////
+//ウィンドウレイアウト
+
+#define BEACON_WIN_PROF_PX  (16)
+#define BEACON_WIN_PROF_PY  ()

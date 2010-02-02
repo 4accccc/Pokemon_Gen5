@@ -47,20 +47,6 @@
 #include "poke_tool/poke_tool.h"
 #include "poke_tool/monsno_def.h"
 
-//ポケアイコン
-#include "pokeicon/pokeicon.h"
-
-//MCSS
-#include "system/mcss.h"
-#include "system/mcss_tool.h"
-
-//タスクメニュー
-#include "app/app_taskmenu.h"
-
-//どうぐアイコン
-#include "item/item.h"
-#include "item_icon.naix"
-
 //ポケモンBG,OBJ読みこみ
 #include "system/poke2dgra.h"
 
@@ -73,21 +59,19 @@
 //外部公開
 #include "app/beacon_detail.h"
 
-
-//@TODO BG読み込み とりあえずマイクテストのリソース
 #include "message.naix"
-#include "mictest.naix"	// アーカイブ
-#include "msg/msg_mictest.h"  // GMM
-#include "townmap_gra.naix"		// タッチバーカスタムボタン用サンプルにタウンマップリソース
+#include "msg/msg_beacon_detail.h"  // GMM
 #include "beacon_status.naix"		// タッチバーカスタムボタン用サンプルにタウンマップリソース
+#include "townmap_gra.naix"		// タッチバーカスタムボタン用サンプルにタウンマップリソース
+#include "wifi_unionobj.naix"
+#include "wmi.naix"
 
-#include "beacon_detail_def.h"
+#include "beacon_detail_local.h"
+#include "beacon_detail_sub.h"
 
 //=============================================================================
 // 下記defineをコメントアウトすると、機能を取り除けます
 //=============================================================================
-#define BEACON_DETAIL_PMSDRAW       // 簡易会話表示
-
 FS_EXTERN_OVERLAY(ui_common);
 
 //=============================================================================
@@ -95,61 +79,12 @@ FS_EXTERN_OVERLAY(ui_common);
  *								定数定義
  */
 //=============================================================================
+
 //=============================================================================
 /**
  *								構造体定義
  */
 //=============================================================================
-//--------------------------------------------------------------
-///	BG管理ワーク
-//==============================================================
-typedef struct 
-{
-	int dummy;
-  ARCHANDLE* handle;
-} BEACON_DETAIL_BG_WORK;
-
-
-#ifdef BEACON_DETAIL_PMSDRAW
-#define BEACON_DETAIL_PMSDRAW_NUM (3) ///< 簡易会話の個数
-#endif // BEACON_DETAIL_PMSDRAW 
-
-//--------------------------------------------------------------
-///	メインワーク
-//==============================================================
-typedef struct 
-{
-  HEAPID heapID;
-  int                       seq;
-	int											  sub_seq;
-
-	BEACON_DETAIL_BG_WORK				wk_bg;
-
-	//描画設定
-	BEACON_DETAIL_GRAPHIC_WORK	*graphic;
-  ARCHANDLE* handle;
-
-	//タッチバー
-	TOUCHBAR_WORK							*touchbar;
-
-	//フォント
-	GFL_FONT									*font;
-
-	//プリントキュー
-	PRINT_QUE									*print_que;
-	GFL_MSGDATA								*msg;
-
-#ifdef	BEACON_DETAIL_PRINT_TOOL
-	//プリントユーティリティ
-	PRINT_UTIL								print_util;
-#endif	//BEACON_DETAIL_PRINT_TOOL
-
-#ifdef BEACON_DETAIL_PMSDRAW
-  GFL_BMPWIN*               pms_win[ BEACON_DETAIL_PMSDRAW_NUM ];
-  PMS_DRAW_WORK*            pms_draw;
-#endif //BEACON_DETAIL_PMSDRAW
-
-} BEACON_DETAIL_WORK;
 
 
 //=============================================================================
@@ -179,24 +114,33 @@ static int seq_FadeOut( BEACON_DETAIL_WORK* wk );
 //-------------------------------------
 ///	汎用処理ユーティリティ
 //=====================================
-static void BeaconDetail_BGResInit( BEACON_DETAIL_WORK* wk, HEAPID heapID );
-static void BeaconDetail_BGResRelease( BEACON_DETAIL_WORK* wk );
+static void _sub_SystemSetup( BEACON_DETAIL_WORK* wk);
+static void _sub_SystemExit( BEACON_DETAIL_WORK* wk);
+static void _sub_BGResInit( BEACON_DETAIL_WORK* wk, HEAPID heapID );
+static void _sub_BGResRelease( BEACON_DETAIL_WORK* wk );
 
 //-------------------------------------
 ///	タッチバー
 //=====================================
-static TOUCHBAR_WORK * BeaconDetail_TOUCHBAR_Init( GFL_CLUNIT *clunit, HEAPID heapID );
-static void BeaconDetail_TOUCHBAR_Exit( TOUCHBAR_WORK	*touchbar );
-static void BeaconDetail_TOUCHBAR_Main( TOUCHBAR_WORK	*touchbar );
+static TOUCHBAR_WORK * _sub_TouchBarInit( GFL_CLUNIT *clunit, HEAPID heapID );
+static void _sub_TouchBarExit( TOUCHBAR_WORK	*touchbar );
+static void _sub_TouchBarMain( TOUCHBAR_WORK	*touchbar );
 
-#ifdef BEACON_DETAIL_PMSDRAW
+//-------------------------------------
+/// アクター関連	
+//=====================================
+static void obj_ObjResInit( BEACON_DETAIL_WORK* wk, OBJ_RES_TBL* res, const OBJ_RES_SRC* src, ARCHANDLE* p_handle );
+static void obj_ObjResRelease( BEACON_DETAIL_WORK* wk, OBJ_RES_TBL* res );
+static void _sub_ActorResourceLoad( BEACON_DETAIL_WORK* wk, ARCHANDLE *handle);
+static void _sub_ActorResourceUnload( BEACON_DETAIL_WORK* wk );
+
+
 //-------------------------------------
 ///	簡易会話表示
 //=====================================
-static void BeaconDetail_PMSDRAW_Init( BEACON_DETAIL_WORK* wk );
-static void BeaconDetail_PMSDRAW_Exit( BEACON_DETAIL_WORK* wk );
-static void BeaconDetail_PMSDRAW_Proc( BEACON_DETAIL_WORK* wk );
-#endif // BEACON_DETAIL_PMSDRAW
+static void _sub_BeaconWinInit( BEACON_DETAIL_WORK* wk );
+static void _sub_BeaconWinExit( BEACON_DETAIL_WORK* wk );
+static void _sub_BeaconWinProc( BEACON_DETAIL_WORK* wk );
 
 
 //=============================================================================
@@ -245,39 +189,23 @@ static GFL_PROC_RESULT BeaconDetailProc_Init( GFL_PROC *proc, int *seq, void *pw
 
   // 初期化
   wk->heapID = HEAPID_BEACON_DETAIL;
+  wk->tmpHeapID = GFL_HEAP_LOWID( HEAPID_BEACON_DETAIL );
 	
 	//描画設定初期化
 	wk->graphic	= BEACON_DETAIL_GRAPHIC_Init( GX_DISP_SELECT_SUB_MAIN, wk->heapID );
 
-	//フォント作成
-	wk->font			= GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr,
-												GFL_FONT_LOADTYPE_FILE, FALSE, wk->heapID );
-
-	//メッセージ
-	wk->msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, 
-			NARC_message_mictest_dat, wk->heapID );
-
-	//PRINT_QUE作成
-	wk->print_que		= PRINTSYS_QUE_Create( wk->heapID );
-
-	//BGリソース読み込み
-	BeaconDetail_BGResInit( wk, wk->heapID );
+  _sub_SystemSetup( wk );
+	_sub_BGResInit( wk, wk->heapID );
+  _sub_ActorResourceLoad( wk, wk->handle);
 
 	//タッチバーの初期化
-	{	
-		GFL_CLUNIT	*clunit	= BEACON_DETAIL_GRAPHIC_GetClunit( wk->graphic );
-		wk->touchbar	= BeaconDetail_TOUCHBAR_Init( clunit, wk->heapID );
-	}
+	wk->touchbar = _sub_TouchBarInit( BEACON_DETAIL_GRAPHIC_GetClunit( wk->graphic ), wk->heapID );
 
-#ifdef BEACON_DETAIL_PMSDRAW  
-  BeaconDetail_PMSDRAW_Init( wk );
-#endif //BEACON_DETAIL_PMSDRAW
+  //ウィンドウ初期化
+  _sub_BeaconWinInit( wk );
 
-#if 0
-	//@todo	フェードシーケンスがないので
-	GX_SetMasterBrightness(0);
-	GXS_SetMasterBrightness(0);
-#endif
+  //初期描画
+  BeaconDetail_InitialDraw( wk );
 
   return GFL_PROC_RES_FINISH;
 }
@@ -298,24 +226,11 @@ static GFL_PROC_RESULT BeaconDetailProc_Exit( GFL_PROC *proc, int *seq, void *pw
 { 
 	BEACON_DETAIL_WORK* wk = mywk;
 
-	//タッチバー
-	BeaconDetail_TOUCHBAR_Exit( wk->touchbar );
-
-#ifdef BEACON_DETAIL_PMSDRAW
-  BeaconDetail_PMSDRAW_Exit( wk );
-#endif //BEACON_DETAIL_PMSDRAW
-	
-  //BGリソース破棄
-	BeaconDetail_BGResRelease( wk );
-
-	//メッセージ破棄
-	GFL_MSG_Delete( wk->msg );
-
-	//PRINT_QUE
-	PRINTSYS_QUE_Delete( wk->print_que );
-
-	//FONT
-	GFL_FONT_Delete( wk->font );
+  _sub_BeaconWinExit( wk );
+	_sub_TouchBarExit( wk->touchbar );
+  _sub_ActorResourceUnload( wk );
+	_sub_BGResRelease( wk );
+  _sub_SystemExit( wk );
 
 	//描画設定破棄
 	BEACON_DETAIL_GRAPHIC_Exit( wk->graphic );
@@ -361,10 +276,7 @@ static GFL_PROC_RESULT BeaconDetailProc_Main( GFL_PROC *proc, int *seq, void *pw
 
 	//PRINT_QUE
 	PRINTSYS_QUE_Main( wk->print_que );
-
-#ifdef BEACON_DETAIL_PMSDRAW
-  BeaconDetail_PMSDRAW_Proc( wk );
-#endif //BEACON_DETAIL_PMSDRAW
+  _sub_BeaconWinProc( wk );
 
 	//2D描画
 	BEACON_DETAIL_GRAPHIC_2D_Draw( wk->graphic );
@@ -389,7 +301,7 @@ static int seq_Main( BEACON_DETAIL_WORK* wk )
   }
 	
   //タッチバーメイン処理
-	BeaconDetail_TOUCHBAR_Main( wk->touchbar );
+	_sub_TouchBarMain( wk->touchbar );
 
   return SEQ_MAIN;
 }
@@ -434,6 +346,69 @@ static int seq_FadeOut( BEACON_DETAIL_WORK* wk )
   return SEQ_FADEOUT; 
 }
 
+////////////////////////////////////////////////////////////////////////////////////
+/***********************************************************************************
+ *
+ ***********************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////
+
+//--------------------------------------------------------------
+/**
+ * システム関連のセットアップ
+ *
+ * @param   wk		
+ */
+//--------------------------------------------------------------
+static void _sub_SystemSetup( BEACON_DETAIL_WORK* wk)
+{
+  wk->pTcbSys = GFL_TCBL_Init( wk->heapID, wk->heapID, 16, 128 );
+
+  //グラフィックハンドル取得
+  wk->handle	= GFL_ARC_OpenDataHandle( ARCID_BEACON_STATUS, wk->heapID );
+
+  //メッセージ関連
+  GFL_FONTSYS_SetColor( FCOL_POPUP_MAIN, FCOL_POPUP_SDW, FCOL_POPUP_BASE );
+	
+  wk->print_que = PRINTSYS_QUE_Create( wk->heapID );
+	wk->font			= GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr,
+												GFL_FONT_LOADTYPE_FILE, FALSE, wk->heapID );
+
+  wk->wset = WORDSET_Create( wk->heapID);
+	
+  //メッセージデータ
+	wk->msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, 
+			        NARC_message_beacon_detail_dat, wk->heapID );
+
+  wk->str_tmp = GFL_STR_CreateBuffer( BUFLEN_TMP_MSG, wk->heapID );
+  wk->str_expand = GFL_STR_CreateBuffer( BUFLEN_TMP_MSG, wk->heapID );
+  wk->str_popup = GFL_STR_CreateBuffer( BUFLEN_TMP_MSG, wk->heapID );
+}
+
+//--------------------------------------------------------------
+/**
+ * システム関連の破棄
+ *
+ * @param   wk		
+ */
+//--------------------------------------------------------------
+static void _sub_SystemExit( BEACON_DETAIL_WORK* wk)
+{
+  GFL_STR_DeleteBuffer(wk->str_popup);
+  GFL_STR_DeleteBuffer(wk->str_expand);
+  GFL_STR_DeleteBuffer(wk->str_tmp);
+
+  GFL_MSG_Delete(wk->msg);
+	WORDSET_Delete(wk->wset);
+  
+  GFL_FONT_Delete(wk->font);
+  PRINTSYS_QUE_Delete(wk->print_que);
+  GFL_FONTSYS_SetDefaultColor();
+ 
+  GFL_TCBL_Exit( wk->pTcbSys );
+	
+  GFL_ARC_CloseDataHandle( wk->handle );
+}
+
 //-----------------------------------------------------------------------------
 /**
  *	@brief  BG管理モジュール リソース読み込み
@@ -444,11 +419,10 @@ static int seq_FadeOut( BEACON_DETAIL_WORK* wk )
  *	@retval none
  */
 //-----------------------------------------------------------------------------
-static void BeaconDetail_BGResInit( BEACON_DETAIL_WORK* wk, HEAPID heapID )
+static void _sub_BGResInit( BEACON_DETAIL_WORK* wk, HEAPID heapID )
 {
   ARCHANDLE* tmap_h;
 
-	wk->handle	= GFL_ARC_OpenDataHandle( ARCID_BEACON_STATUS, heapID );
 	tmap_h	= GFL_ARC_OpenDataHandle( ARCID_TOWNMAP_GRAPHIC, heapID );
 
 	// 上下画面ＢＧパレット転送
@@ -458,12 +432,22 @@ static void BeaconDetail_BGResInit( BEACON_DETAIL_WORK* wk, HEAPID heapID )
 	//	----- 上画面 -----
 	GFL_ARCHDL_UTIL_TransVramBgCharacter(	wk->handle, NARC_beacon_status_bdetail_bgu_lz_ncgr,
 						BG_FRAME_WIN01_S, 0, 0, TRUE, heapID );
+	GFL_ARCHDL_UTIL_TransVramBgCharacter(	wk->handle, NARC_beacon_status_bdetail_bgu_lz_ncgr,
+						BG_FRAME_WIN02_S, 0, 0, TRUE, heapID );
+	GFL_ARCHDL_UTIL_TransVramBgCharacter(	wk->handle, NARC_beacon_status_bdetail_bgu_lz_ncgr,
+						BG_FRAME_BASE_S, 0, 0, TRUE, heapID );
 	GFL_ARCHDL_UTIL_TransVramScreen(	wk->handle, NARC_beacon_status_bdetail_bgu01_lz_nscr,
 						BG_FRAME_WIN01_S, 0, 0, TRUE, heapID );		
 	GFL_ARCHDL_UTIL_TransVramScreen(	wk->handle, NARC_beacon_status_bdetail_bgu01_lz_nscr,
 						BG_FRAME_WIN02_S, 0, 0, TRUE, heapID );		
+	GFL_ARCHDL_UTIL_TransVramScreen(	wk->handle, NARC_beacon_status_bdetail_bgu02_lz_nscr,
+						BG_FRAME_BASE_S, 0, 0, TRUE, heapID );		
 	
   //	----- 下画面 -----
+	GFL_ARCHDL_UTIL_TransVramBgCharacter(	wk->handle, NARC_beacon_status_bdetail_bgd_lz_ncgr,
+						BG_FRAME_POPUP_M, 0, 0, TRUE, heapID );
+	GFL_ARCHDL_UTIL_TransVramScreen(	wk->handle, NARC_beacon_status_bdetail_bgd01_lz_nscr,
+						BG_FRAME_POPUP_M, 0, 0x800, TRUE, heapID );	
 	GFL_ARCHDL_UTIL_TransVramBgCharacter(	tmap_h, NARC_townmap_gra_tmap_bg_d_NCGR,
 						BG_FRAME_MAP01_M, 0, 0, 0, heapID );
 	GFL_ARCHDL_UTIL_TransVramScreen(	tmap_h, NARC_townmap_gra_tmap_root_d_NSCR,
@@ -474,6 +458,9 @@ static void BeaconDetail_BGResInit( BEACON_DETAIL_WORK* wk, HEAPID heapID )
 						BG_FRAME_MAP02_M, 0, 0x800, 0, heapID );	
 
   GFL_ARC_CloseDataHandle( tmap_h );
+
+  G2_SetBlendAlpha( ALPHA_1ST_M, ALPHA_2ND_M, ALPHA_EV1, ALPHA_EV2);
+  G2S_SetBlendAlpha( ALPHA_1ST_S, ALPHA_2ND_S, ALPHA_EV1, ALPHA_EV2);
 }
 
 //-----------------------------------------------------------------------------
@@ -486,9 +473,10 @@ static void BeaconDetail_BGResInit( BEACON_DETAIL_WORK* wk, HEAPID heapID )
  *	@retval none
  */
 //-----------------------------------------------------------------------------
-static void BeaconDetail_BGResRelease( BEACON_DETAIL_WORK* wk )
+static void _sub_BGResRelease( BEACON_DETAIL_WORK* wk )
 {
-	GFL_ARC_CloseDataHandle( wk->handle );
+  G2S_BlendNone();
+  G2_BlendNone();
 }
 
 
@@ -511,7 +499,7 @@ static void BeaconDetail_BGResRelease( BEACON_DETAIL_WORK* wk )
  *	@return	TOUCHBAR_WORK
  */
 //-----------------------------------------------------------------------------
-static TOUCHBAR_WORK * BeaconDetail_TOUCHBAR_Init( GFL_CLUNIT *clunit, HEAPID heapID )
+static TOUCHBAR_WORK * _sub_TouchBarInit( GFL_CLUNIT *clunit, HEAPID heapID )
 {	
 	//アイコンの設定
 	//数分作る
@@ -546,7 +534,7 @@ static TOUCHBAR_WORK * BeaconDetail_TOUCHBAR_Init( GFL_CLUNIT *clunit, HEAPID he
 	touchbar_setup.bar_frm	= BG_FRAME_BAR_M;						//BG読み込みのためのBG面
 	touchbar_setup.bg_plt		= PLTID_BG_TOUCHBAR_M;			//BGﾊﾟﾚｯﾄ
 	touchbar_setup.obj_plt	= PLTID_OBJ_TOUCHBAR_M;			//OBJﾊﾟﾚｯﾄ
-	touchbar_setup.mapping	= APP_COMMON_MAPPING_128K;	//マッピングモード
+	touchbar_setup.mapping	= APP_COMMON_MAPPING_32K;	//マッピングモード
 
 	return TOUCHBAR_Init( &touchbar_setup, heapID );
 }
@@ -557,7 +545,7 @@ static TOUCHBAR_WORK * BeaconDetail_TOUCHBAR_Init( GFL_CLUNIT *clunit, HEAPID he
  *	@param	TOUCHBAR_WORK	*touchbar タッチバー
  */
 //-----------------------------------------------------------------------------
-static void BeaconDetail_TOUCHBAR_Exit( TOUCHBAR_WORK	*touchbar )
+static void _sub_TouchBarExit( TOUCHBAR_WORK	*touchbar )
 {	
 	TOUCHBAR_Exit( touchbar );
 }
@@ -569,9 +557,94 @@ static void BeaconDetail_TOUCHBAR_Exit( TOUCHBAR_WORK	*touchbar )
  *	@param	TOUCHBAR_WORK	*touchbar タッチバー
  */
 //-----------------------------------------------------------------------------
-static void BeaconDetail_TOUCHBAR_Main( TOUCHBAR_WORK	*touchbar )
+static void _sub_TouchBarMain( TOUCHBAR_WORK	*touchbar )
 {	
 	TOUCHBAR_Main( touchbar );
+}
+
+//--------------------------------------------------------------
+/**
+ * アクターリソース取得
+ *
+ * @param   wk		
+ */
+//--------------------------------------------------------------
+static void obj_ObjResInit( BEACON_DETAIL_WORK* wk, OBJ_RES_TBL* res, const OBJ_RES_SRC* src, ARCHANDLE* p_handle )
+{
+  MI_CpuClear8( res, sizeof(OBJ_RES_TBL));
+
+  res->pltt = GFL_CLGRP_PLTT_RegisterEx(  p_handle, src->pltt_id, src->type, src->pltt_ofs*0x20, 0, src->pltt_siz, wk->heapID );
+  res->cgr = GFL_CLGRP_CGR_Register( p_handle, src->cgr_id, FALSE, src->type, wk->heapID );
+  res->cell = GFL_CLGRP_CELLANIM_Register( p_handle, src->cell_id, src->cell_id+1, wk->heapID );
+}
+
+//--------------------------------------------------------------
+/**
+ * アクターリソース解放
+ *
+ * @param   wk		
+ */
+//--------------------------------------------------------------
+static void obj_ObjResRelease( BEACON_DETAIL_WORK* wk, OBJ_RES_TBL* res )
+{
+  GFL_CLGRP_CELLANIM_Release( res->cell );
+  GFL_CLGRP_CGR_Release( res->cgr );
+  GFL_CLGRP_PLTT_Release( res->pltt );
+}
+
+//--------------------------------------------------------------
+/**
+ * アクターで使用するリソースのロード
+ *
+ * @param   view		
+ * @param   handle		
+ */
+//--------------------------------------------------------------
+static void _sub_ActorResourceLoad( BEACON_DETAIL_WORK* wk, ARCHANDLE *handle )
+{
+  ARCHANDLE* h_union = GFL_ARC_OpenDataHandle( ARCID_WIFIUNIONCHAR, wk->tmpHeapID );
+
+  {
+    const OBJ_RES_SRC srcNormal = {
+      CLSYS_DRAW_MAX, PLTID_OBJ_NORMAL_M, 3,
+      NARC_beacon_status_bdetail_obj_nclr,
+      NARC_beacon_status_bdetail_obj_ncgr,
+      NARC_beacon_status_bdetail_obj_ncer,
+    };
+    obj_ObjResInit( wk, &wk->objResNormal, &srcNormal, handle );
+  }
+  {
+    const OBJ_RES_SRC srcUnion = {
+      CLSYS_DRAW_MAIN, PLTID_OBJ_UNION_M, 1,
+      NARC_wifi_unionobj_wifi_union_obj_NCLR,
+      NARC_wifi_unionobj_front00_NCGR,
+      NARC_wifi_unionobj_front00_NCER,
+    };
+    obj_ObjResInit( wk, &wk->objResUnion, &srcUnion, h_union );
+  }
+  {
+    const OBJ_RES_SRC srcTrainer = {
+      CLSYS_DRAW_SUB, PLTID_OBJ_TRAINER_S, 1,
+      NARC_beacon_status_bdetail_obj_nclr,
+      NARC_beacon_status_bdetail_obj_ncgr,
+      NARC_beacon_status_bdetail_obj_ncer,
+    };
+    obj_ObjResInit( wk, &wk->objResTrainer, &srcTrainer, handle );
+  }
+  GFL_ARC_CloseDataHandle( h_union );
+}
+
+//--------------------------------------------------------------
+/**
+ * アクターで使用するアクターのアンロード
+ *
+ * @param   view		
+ */
+//--------------------------------------------------------------
+static void _sub_ActorResourceUnload( BEACON_DETAIL_WORK* wk )
+{
+  obj_ObjResRelease( wk, &wk->objResTrainer );
+  obj_ObjResRelease( wk, &wk->objResNormal );
 }
 
 #ifdef	BEACON_DETAIL_PRINT_TOOL
@@ -666,7 +739,19 @@ static void PrintTool_PrintHP( BEACON_DETAIL_WORK * wk )
 }
 #endif	//BEACON_DETAIL_PRINT_TOOL
 
-#ifdef BEACON_DETAIL_PMSDRAW
+//-----------------------------------------------------------------------------
+/*
+ *  @brief  BmpWin個別追加
+ */
+static void bmpwin_Add( BMP_WIN* win, u8 frm, u8 pal, u8 px, u8 py, u8 sx, u8 sy )
+{
+  win->win = GFL_BMPWIN_Create( frm, px, py, sx, sy, pal, GFL_BMP_CHRAREA_GET_B );
+  win->bmp = GFL_BMPWIN_GetBmp( win->win );
+  PRINT_UTIL_Setup( &win->putil, win->win );
+  GFL_BMP_Clear( win->bmp, FCOL_WIN_BASE1 );
+  GFL_BMPWIN_MakeTransWindow( win->win );
+}
+//-----------------------------------------------------------------------------
 
 //-----------------------------------------------------------------------------
 /**
@@ -677,46 +762,41 @@ static void PrintTool_PrintHP( BEACON_DETAIL_WORK * wk )
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static void BeaconDetail_PMSDRAW_Init( BEACON_DETAIL_WORK* wk )
+static void _sub_BeaconWinInit( BEACON_DETAIL_WORK* wk )
 {
 	GFL_CLUNIT	*clunit;
   
   clunit = BEACON_DETAIL_GRAPHIC_GetClunit( wk->graphic );
 
   wk->pms_draw  = PMS_DRAW_Init( clunit, CLSYS_DRAW_SUB, wk->print_que, wk->font, 
-      PLTID_OBJ_PMS_DRAW, BEACON_DETAIL_PMSDRAW_NUM ,wk->heapID );
+      PLTID_BG_PMS_S, BEACON_WIN_MAX ,wk->heapID );
+  PMS_DRAW_SetNullColorPallet( wk->pms_draw, FCOL_WIN_BASE2);
+  PMS_DRAW_SetPrintColor( wk->pms_draw, FCOL_WIN02 );
   
   {
-    int i;
+    int i,j;
     PMS_DATA pms;
-
+    BEACON_WIN* bp;
     // PMS表示用BMPWIN生成
-    for( i=0; i<BEACON_DETAIL_PMSDRAW_NUM; i++ )
+    for( i=0; i < BEACON_WIN_MAX; i++ )
     {
-      wk->pms_win[i] = GFL_BMPWIN_Create(
-          BG_FRAME_DAT01_S,					// ＢＧフレーム
-          2+4*i, 0 + 6 * i,					  	// 表示座標(キャラ単位)
-          28, 4,    							  // 表示サイズ
-          15,												// パレット
-          GFL_BMP_CHRAREA_GET_B );	// キャラ取得方向
-    }
-    
-    // 1個目 通常+空欄表示
-    PMSDAT_SetDebug( &pms );
-    PMSDAT_SetWord( &pms, 1, PMS_WORD_NULL );
-    PMS_DRAW_Print( wk->pms_draw, wk->pms_win[0], &pms ,0 );
+      bp = &wk->beacon_win[i];
+      bp->pms = GFL_BMPWIN_Create(
+                  BMP_BEACON_FRM+i, BMP_PMS_PX, BMP_PMS_PY, BMP_PMS_SX, BMP_PMS_SY,
+                  BMP_PMS_PAL+i, GFL_BMP_CHRAREA_GET_B );
 
-    // 2個目 デコメ
-    PMSDAT_SetDeco( &pms, 1, PMS_DECOID_HERO );
-    PMS_DRAW_Print( wk->pms_draw, wk->pms_win[1], &pms ,1 );
-    
-    // 3個目 デコメ二個表示
-    PMSDAT_SetDeco( &pms, 0, PMS_DECOID_TANKS );
-    PMSDAT_SetDeco( &pms, 1, PMS_DECOID_LOVE );
-    PMS_DRAW_Print( wk->pms_draw, wk->pms_win[2], &pms ,2 );
-    
-    // 1の要素を2にコピー(移動表現などにご使用ください。)
-    PMS_DRAW_Copy( wk->pms_draw, 1, 2 );
+      PMSDAT_SetDebugRandom( &pms );
+      PMSDAT_SetDeco( &pms, 0, PMS_DECOID_HERO+i );
+      PMS_DRAW_Print( wk->pms_draw, bp->pms, &pms , i );
+
+      for(j = 0;j < BEACON_PROF_MAX;j++){
+        bmpwin_Add( &bp->prof[j], BMP_BEACON_FRM+i,
+            BMP_PROF_PAL+i, BMP_PROF_PX, BMP_PROF_PY+BMP_PROF_OY*j, BMP_PROF_SX, BMP_PROF_SY );
+      }
+      bmpwin_Add( &bp->record, BMP_BEACON_FRM+i,
+          BMP_RECORD_PAL+i, BMP_RECORD_PX, BMP_RECORD_PY, BMP_RECORD_SX, BMP_RECORD_SY );
+      
+    }
   }
 }
 
@@ -729,16 +809,21 @@ static void BeaconDetail_PMSDRAW_Init( BEACON_DETAIL_WORK* wk )
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static void BeaconDetail_PMSDRAW_Exit( BEACON_DETAIL_WORK* wk )
+static void _sub_BeaconWinExit( BEACON_DETAIL_WORK* wk )
 {
-  PMS_DRAW_Exit( wk->pms_draw );
+  int i,j;
+  BEACON_WIN* wp;
+    
+  for( i=0; i < BEACON_WIN_MAX; i++ )
   {
-    int i;
-    for( i=0; i<BEACON_DETAIL_PMSDRAW_NUM; i++ )
-    {
-      GFL_BMPWIN_Delete( wk->pms_win[i] );
-    }
+    wp = &wk->beacon_win[i];
+    GFL_BMPWIN_Delete( wp->record.win );
+    for(j = 0;j < BEACON_PROF_MAX;j++){
+      GFL_BMPWIN_Delete( wp->prof[j].win );
+   }
+    GFL_BMPWIN_Delete( wp->pms );
   }
+  PMS_DRAW_Exit( wk->pms_draw );
 }
 
 //-----------------------------------------------------------------------------
@@ -750,9 +835,9 @@ static void BeaconDetail_PMSDRAW_Exit( BEACON_DETAIL_WORK* wk )
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static void BeaconDetail_PMSDRAW_Proc( BEACON_DETAIL_WORK* wk )
+static void _sub_BeaconWinProc( BEACON_DETAIL_WORK* wk )
 {
-#if 1
+#if 0
   // SELECTでクリア
   if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT )
   {
@@ -771,13 +856,11 @@ static void BeaconDetail_PMSDRAW_Proc( BEACON_DETAIL_WORK* wk )
       PMS_DATA pms;
       PMSDAT_SetDebugRandom( &pms );
       PMSDAT_SetDeco( &pms, 0, GFUser_GetPublicRand(10)+1 );
-      PMS_DRAW_Print( wk->pms_draw, wk->pms_win[i], &pms ,i );
+      PMS_DRAW_Print( wk->pms_draw, wp->pms, &pms ,i );
     }
   }
 #endif
-
   PMS_DRAW_Main( wk->pms_draw );
 }
 
-#endif // BEACON_DETAIL_PMSDRAW
 

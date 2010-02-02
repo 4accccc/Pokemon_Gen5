@@ -31,5 +31,5 @@
 "bdetail_bgu_lz.ncgr"
 "bdetail_bgd_lz.ncgr"
 "bdetail_bgu01_lz.nscr"
+"bdetail_bgu02_lz.nscr"
 "bdetail_bgd01_lz.nscr"
-"bdetail_bgd02_lz.nscr"
