@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-02T12:31:07"/>
+	<create user="matsumiya" host="W00224" date="2010-02-02T16:15:34"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,11 +292,11 @@
 	</lock>
 
 
-	<row id="msg_c05r0501_veteranw_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
-		<comment>・はい/いいえ
-　はい→
-　いいえ→
-・仮メッセージ</comment>
+	<row id="msg_c05r0501_veteranw_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀
+・はい/いいえ
+　はい→veteranw_02
+　いいえ→veteranw_03</comment>
 		<attribute name="キャラ指定">VETERANW</attribute>
 		<language name="JPN" width="256">せかいの　にんげん　すべてが
 わかりあえると　おもいますか？</language>
@@ -304,7 +304,7 @@
 わかりあえると　思いますか？</language>
 	</row>
 
-	<row id="msg_c05r0501_veteranw_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c05r0501_veteranw_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>・はい選択時</comment>
 		<language name="JPN" width="256">……なるほど
 そのかんがえも　わからなくもないです</language>
@@ -312,7 +312,7 @@
 その考えも　わからなくもないです</language>
 	</row>
 
-	<row id="msg_c05r0501_veteranw_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c05r0501_veteranw_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>・いいえ選択時</comment>
 		<language name="JPN" width="256">……そうですね
 たしかに　そのとおりかもしれません</language>
@@ -320,8 +320,8 @@
 たしかに　そのとおりかもしれません</language>
 	</row>
 
-	<row id="msg_c05r0501_gentleman_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
-		<comment>・仮メッセージ</comment>
+	<row id="msg_c05r0501_gentleman_01">
+		<comment>♂</comment>
 		<attribute name="キャラ指定">GENTLEMAN</attribute>
 		<language name="JPN" width="256">いきるとは　まようこと[BE:01:ページ切り替え（クリア）]
 なやみ　とまどうたびに
@@ -331,8 +331,8 @@
 それぞれの　答えを　みつけなさい</language>
 	</row>
 
-	<row id="msg_c05r0501_veteranm_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
-		<comment>・仮メッセージ</comment>
+	<row id="msg_c05r0501_veteranm_01">
+		<comment>♂</comment>
 		<attribute name="キャラ指定">VETERANM</attribute>
 		<language name="JPN" width="256">つよい　こころ　とは　なんだろう？
 やさしさとは　どういうことだ？[BE:01:ページ切り替え（クリア）]
@@ -344,8 +344,8 @@
 トレーナーや　ポケモンは　いるのか？</language>
 	</row>
 
-	<row id="msg_c05r0501_girl2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
-		<comment>・仮メッセージ</comment>
+	<row id="msg_c05r0501_girl2_01">
+		<comment>♀</comment>
 		<attribute name="キャラ指定">GIRL2</attribute>
 		<language name="JPN" width="256">よろこぶこと……[BE:01:ページ切り替え（クリア）]
 その　ほんとうの　いみをしりたいなら
@@ -355,8 +355,8 @@
 悲しみの　意味を　知るべきです</language>
 	</row>
 
-	<row id="msg_c05r0501_oldwoman_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
-		<comment>・仮メッセージ</comment>
+	<row id="msg_c05r0501_oldwoman_01">
+		<comment>♂</comment>
 		<attribute name="キャラ指定">OLDWOMAN</attribute>
 		<language name="JPN" width="256">いきること　しぬこと……
 だれも　えらべないのです</language>
@@ -364,8 +364,8 @@
 だれも　選べないのです</language>
 	</row>
 
-	<row id="msg_c05r0501_mountain_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
-		<comment>・仮メッセージ</comment>
+	<row id="msg_c05r0501_mountain_01">
+		<comment>♂</comment>
 		<attribute name="キャラ指定">MOUNTAIN</attribute>
 		<language name="JPN" width="256">ひとも　ポケモンも
 じぶんのために　なにかをする……[BE:00:ページ切り替え（行送り）]
@@ -377,8 +377,8 @@
 その　どちらを　大事にすべきでしょう？</language>
 	</row>
 
-	<row id="msg_c05r0501_man1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
-		<comment>・仮メッセージ</comment>
+	<row id="msg_c05r0501_man1_01">
+		<comment>♂</comment>
 		<attribute name="キャラ指定">MAN1</attribute>
 		<language name="JPN" width="256">いきると　いうことは
 あたえられた　じかんを　つかうこと[BE:01:ページ切り替え（クリア）]
@@ -390,8 +390,8 @@
 そのことを　忘れないように……</language>
 	</row>
 
-	<row id="msg_c05r0501_woman2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
-		<comment>・仮メッセージ</comment>
+	<row id="msg_c05r0501_woman2_01">
+		<comment>♀</comment>
 		<attribute name="キャラ指定">WOMAN2</attribute>
 		<language name="JPN" width="256">しあわせとは　はかないもの……[BE:01:ページ切り替え（クリア）]
 ですから　えいえんの　しあわせ　など

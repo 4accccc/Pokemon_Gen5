@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2010-01-13T15:42:05"/>
+	<create user="matsumiya" host="W00224" date="2010-02-02T16:10:42"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -365,9 +365,9 @@
 		<comment>♂
 ・続けてleader_02</comment>
 		<attribute name="キャラクター">友達♂（ライバル）</attribute>
-		<language name="JPN" width="256">ブラッカー『……いみふめい！
+		<language name="JPN" width="256">チェレン『……いみふめい！
 そんなの　そっちの　せきにんだろ？[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ブラッカー『……意味不明！
+		<language name="JPN_KANJI" width="256">チェレン『……意味不明！
 そんなの　そっちの　責任だろ？[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
@@ -419,10 +419,10 @@
 ・メッセージ表示後、ライバル、画面左に移動
 ・画面外に消えると、主人公操作可能</comment>
 		<attribute name="キャラクター">友達♂（ライバル）</attribute>
-		<language name="JPN" width="256">ブラッカー『……ったく
+		<language name="JPN" width="256">チェレン『……ったく
 さがせば　いいんだろ！　さがせば！[BE:01:ページ切り替え（クリア）]
 [1:00:トレーナー名:0]！　さきに　いくぜ[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ブラッカー『……ったく
+		<language name="JPN_KANJI" width="256">チェレン『……ったく
 探せば　いいんだろ！　探せば！[BE:01:ページ切り替え（クリア）]
 [1:00:トレーナー名:0]！　先に　行くぜ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
@@ -434,7 +434,7 @@
 ・七賢人×１
 　プラズマ団したっぱ♂×２も配置
 ・続けてleader_04</comment>
-		<attribute name="キャラクター">七賢者ゲーチス</attribute>
+		<attribute name="キャラクター">七賢人ゲーチス</attribute>
 		<language name="JPN" width="256">ゲーチス『ヤーコンさん
 はじめまして[BE:01:ページ切り替え（クリア）]
 わたくし　プラズマだんの
@@ -465,7 +465,7 @@
 	<row id="msg_c05_sage1_02" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・続けてleader_05</comment>
-		<attribute name="キャラクター">七賢者ゲーチス</attribute>
+		<attribute name="キャラクター">七賢人ゲーチス</attribute>
 		<language name="JPN" width="256">ゲーチス『おや　ごかいが　あるようで[BE:01:ページ切り替え（クリア）]
 わたしどもは　ポケモンを
 かいほう　こそすれ[BE:01:ページ切り替え（クリア）]
@@ -490,7 +490,7 @@
 	<row id="msg_c05_sage1_03" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・続けてleader_06</comment>
-		<attribute name="キャラクター">七賢者ゲーチス</attribute>
+		<attribute name="キャラクター">七賢人ゲーチス</attribute>
 		<language name="JPN" width="256">ゲーチス『プラズマだん　としても
 ホドモエシティに[BE:00:ページ切り替え（行送り）]
 きょうみが　ありまして[BE:01:ページ切り替え（クリア）]
@@ -517,7 +517,7 @@
 		<comment>♂
 ・メッセージ表示後、七賢人のOBJ
 　ヤーコンのほうに移動</comment>
-		<attribute name="キャラクター">七賢者ゲーチス</attribute>
+		<attribute name="キャラクター">七賢人ゲーチス</attribute>
 		<language name="JPN" width="256">ゲーチス『さすが
 こうざんおうと　よばれる[BE:00:ページ切り替え（行送り）]
 すぐれた　しょうばいにん……[BE:01:ページ切り替え（クリア）]
@@ -544,7 +544,7 @@
 		<comment>♂
 ・その後、画面暗転し
 　プラズマ団のOBJ削除</comment>
-		<attribute name="キャラクター">七賢者ゲーチス</attribute>
+		<attribute name="キャラクター">七賢人ゲーチス</attribute>
 		<language name="JPN" width="256">ゲーチス『よいのです
 ともに　おうのため　はたらく　なかま……[BE:01:ページ切り替え（クリア）]
 それでは　みなさん
@@ -580,14 +580,14 @@
 		<comment>♂
 ・メッセージ表示後、画面左に移動</comment>
 		<attribute name="キャラクター">友達♂（ライバル）</attribute>
-		<language name="JPN" width="256">ブラッカー『……おたがい
+		<language name="JPN" width="256">チェレン『……おたがい
 まちなかでの　あらそいは　さけたか[BE:01:ページ切り替え（クリア）]
 それにしても　ゲーチスってヤツ
 フツウじゃないって　かんじだな[BE:01:ページ切り替え（クリア）]
 ……なんだか　きが　ぬけたし
 オレ　まちなかでも　さんさくするわ[BE:00:ページ切り替え（行送り）]
 きてから　コンテナしか　しらないし[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ブラッカー『……お互い
+		<language name="JPN_KANJI" width="256">チェレン『……お互い
 街中での　争いは避けたか[BE:01:ページ切り替え（クリア）]
 それにしても　ゲーチスってヤツ
 普通じゃないって　感じだな[BE:01:ページ切り替え（クリア）]

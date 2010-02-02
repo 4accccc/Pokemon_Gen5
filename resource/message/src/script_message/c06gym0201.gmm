@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-20T14:40:21"/>
+	<create user="matsumiya" host="W00224" date="2010-02-02T16:16:38"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="124"/>
+		<comment position="4" width="223"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -364,7 +364,7 @@
 組みあわせれば　おもしろいかもよ！</language>
 	</row>
 
-	<row id="msg_c06gym0201_leader_06">
+	<row id="msg_c06gym0201_leader_06" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>仮：d07イベント終了まで</comment>
 		<attribute name="キャラ指定">LEADER6</attribute>
 		<language name="JPN" width="256">……そういえばなんだけど
@@ -379,7 +379,7 @@
 あれって　なあに？</language>
 	</row>
 
-	<row id="msg_c06gym0201_leader_07">
+	<row id="msg_c06gym0201_leader_07" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>仮：d07イベント終了後から</comment>
 		<attribute name="キャラ指定">LEADER6</attribute>
 		<language name="JPN" width="256">どう
