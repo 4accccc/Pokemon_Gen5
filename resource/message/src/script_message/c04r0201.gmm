@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2010-01-26T17:52:35"/>
+	<create user="matsumiya" host="W00224" date="2010-02-02T12:23:31"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="33" top="274" right="674" bottom="893" maximized="no" rayout="Vertical2">
+	<dialog left="1365" top="287" right="2006" bottom="906" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="466"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="479"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="633"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -298,9 +298,9 @@
 ・続けてowner_demo_01</comment>
 		<attribute name="キャラ指定">友達♀
 サポート</attribute>
-		<language name="JPN" width="256">ホワイティ『ねっ！
+		<language name="JPN" width="256">ベル『ねっ！
 すっごいでしょ！？▼</language>
-		<language name="JPN_KANJI" width="256">ホワイティ『ねっ！
+		<language name="JPN_KANJI" width="256">ベル『ねっ！
 すっごいでしょ！？▼</language>
 	</row>
 
@@ -409,26 +409,26 @@
 楽しみに　しているよ▼</language>
 	</row>
 
-	<row id="msg_c04r0201_white_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c04r0201_white_03" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・メッセージ表示後
 　サポート、外に
 ・画面外に消えると、主人公操作可能</comment>
 		<attribute name="キャラ指定">友達♀
 サポート</attribute>
-		<language name="JPN" width="256">うーん
+		<language name="JPN" width="256">ベル『うーん
 どうしようかなー？▼
 ミュージカルも　ステキだけど
 ほかにも　きになる　ところ　あるし▼
 きーめた！　さきに
 ライモンけんぶつ　しちゃお▼
 じゃあね　[1:00:トレーナー名:0]！▼</language>
-		<language name="JPN_KANJI" width="256">うーん
+		<language name="JPN_KANJI" width="256">ベル『うーん
 どうしようかなー？▼
 ミュージカルも　ステキだけど
-ほかにも　きになる　ところ　あるし▼
-きーめた！　さきに
-ライモンけんぶつ　しちゃお▼
+他にも　気になる　ところ　あるし▼
+決ーめた！　さきに
+ライモン見物　しちゃお▼
 じゃあね　[1:00:トレーナー名:0]！▼</language>
 	</row>
 
@@ -443,9 +443,9 @@
 ポケモンが　いても　ゆるしてほしいね▼
 だって　ポケモンだからね</language>
 		<language name="JPN_KANJI" width="256">ぜひぜひ　ミュージカルに
-さんか　してくれたまえ！▼
+参加してくれたまえ！▼
 ただし！　グッズを　イヤがる
-ポケモンが　いても　ゆるしてほしいね▼
+ポケモンが　いても　許してほしいね▼
 だって　ポケモンだからね</language>
 	</row>
 
@@ -463,12 +463,12 @@
 そんな　きみに　プレゼントだ
 えんりょ　しないで　うけとりたまえ！▼</language>
 		<language name="JPN_KANJI" width="256">ちょっと！　きみ！▼
-おともだちと　いっしょに
-ミュージカルに　さんか　したんだね！▼
-ミュージカルの　あたらしい
-かのうせいを　かんじたよ！▼
+おともだちと　一緒に
+ミュージカルに　参加したんだね！▼
+ミュージカルの　新しい
+可能性を　感じたよ！▼
 そんな　きみに　プレゼントだ
-えんりょ　しないで　うけとりたまえ！▼</language>
+遠慮しないで　受け取りたまえ！▼</language>
 	</row>
 
 	<row id="msg_c04r0201_owner_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -479,8 +479,8 @@
 ＝オーナー</attribute>
 		<language name="JPN" width="256">では　ぶたいで　あえる　ひを
 たのしみに　しているよ！▼</language>
-		<language name="JPN_KANJI" width="256">では　ぶたいで　あえる　ひを
-たのしみに　しているよ！▼</language>
+		<language name="JPN_KANJI" width="256">では　舞台で　会える　日を
+楽しみに　しているよ！▼</language>
 	</row>
 
 	<row id="msg_c04r0201_owner_03_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -497,14 +497,14 @@
 ちゅうもく　しているのだよ▼
 これは　そんな　わたしの　きもちだ
 えんりょ　せず　うけとりたまえ！▼</language>
-		<language name="JPN_KANJI" width="256">いつも　さんか　してくれて
+		<language name="JPN_KANJI" width="256">いつも　参加してくれて
 オーナーとして　うれしいよ！▼
-きたいの　スタイリストとして
-かなり　ちゅうもく　されているね▼
+期待の　スタイリストとして
+かなり　注目されているね▼
 もちろん　わたしも　きみに
-ちゅうもく　しているのだよ▼
-これは　そんな　わたしの　きもちだ
-えんりょ　せず　うけとりたまえ！▼</language>
+注目しているのだよ▼
+これは　そんな　わたしの　気持ちだ
+遠慮せず　うけとりたまえ！▼</language>
 	</row>
 
 	<row id="msg_c04r0201_owner_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -519,10 +519,10 @@
 いった　きが　するね▼
 いいんだよ
 わたしは　オーナーだからね</language>
-		<language name="JPN_KANJI" width="256">では　ぶたいで　あえる　ひを
-たのしみに　しているよ！▼
-って　まえにも　おなじ　せりふを
-いった　きが　するね▼
+		<language name="JPN_KANJI" width="256">では　舞台で　会える　日を
+楽しみに　しているよ！▼
+って　前にも　同じ　台詞を
+いった　気が　するね▼
 いいんだよ
 わたしは　オーナーだからね</language>
 	</row>
@@ -542,15 +542,15 @@
 みぬいた　わたしが　すごいのだがね▼
 これは　かんしゃの　きもちだ
 えんりょ　せず　うけとりたまえ！▼</language>
-		<language name="JPN_KANJI" width="256">いつも　さんか　してくれて
+		<language name="JPN_KANJI" width="256">いつも　参加してくれて
 オーナーとして　うれしいかぎり！▼
 ちかごろでは　きみのことを
-トップスタイリスト　なんて　よぶ▽
-かんきゃくも　いるみたいだね▼
-もっとも……　きみの　さいのうを
-みぬいた　わたしが　すごいのだがね▼
-これは　かんしゃの　きもちだ
-えんりょ　せず　うけとりたまえ！▼</language>
+トップスタイリスト　なんて　呼ぶ▽
+観客も　いるみたいだね▼
+もっとも……　きみの　才能を
+見抜いた　わたしが　すごいのだがね▼
+これは　感謝の　気持ちだ
+遠慮せず　うけとりたまえ！▼</language>
 	</row>
 
 	<row id="msg_c04r0201_owner_05" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -562,7 +562,7 @@
 		<language name="JPN" width="256">これからも　ぜひぜひ
 ミュージカルを　たのしんでくれ！</language>
 		<language name="JPN_KANJI" width="256">これからも　ぜひぜひ
-ミュージカルを　たのしんでくれ！</language>
+ミュージカルを　楽しんでくれ！</language>
 	</row>
 
 	<row id="msg_c04r0201_owner_05_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -581,7 +581,7 @@
 ちなみに　きょうが　きみの
 たんじょうび　じゃなくても▽
 わたしは　あやまったりしないぞ！▼
-だって　わたしは　オーナーだからな！</language>
+だって　わたしは　オーナーだからね</language>
 		<language name="JPN_KANJI" width="256">ハッピー　バースデイ！！▼
 わたしからは　この　ハッピーな
 グッズを　きみに　プレゼントだ！▼
@@ -589,10 +589,10 @@
 わたすのは　ケーキ！▼
 もちろん　グッズだから
 ポケモンに　つけてあげられる！▼
-ちなみに　きょうが　きみの
-たんじょうび　じゃなくても▽
-わたしは　あやまったりしないぞ！▼
-だって　わたしは　オーナーだからな！</language>
+ちなみに　今日が　きみの
+誕生日じゃなくても▽
+わたしは　謝ったりしないぞ！▼
+だって　わたしは　オーナーだからね</language>
 	</row>
 
 	<row id="msg_c04r0201_man2_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -625,13 +625,13 @@
 クールさは　ひかえめ　だったね▼
 よし！　ぼくも　まけないよ！！</language>
 		<language name="JPN_KANJI" width="256">おつかれっ！　きみの
-ポケモンの　かつやく　みてたよ！▼
-ぜんたいてきに
+ポケモンの　活躍　みてたよ！▼
+全体的に
 とても　キュート！▼
 アクセントで　ユニークな　グッズを
 つけていて　よかったと　おもうな！▼
 クールさは　ひかえめ　だったね▼
-よし！　ぼくも　まけないよ！！</language>
+よし！　ぼくも　負けないよ！！</language>
 	</row>
 
 	<row id="msg_c04r0201_man2_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -645,7 +645,7 @@
 そんな　きみに
 ぼくからの　プレゼントだよ！▼</language>
 		<language name="JPN_KANJI" width="256">やあ！　ミュージカル
-たのしんで　いるようだね！▼
+楽しんで　いるようだね！▼
 そんな　きみに
 ぼくからの　プレゼントだよ！▼</language>
 	</row>
@@ -661,7 +661,7 @@
 そんな　きみに　ぼくからの
 とっておきの　プレゼントだよ！▼</language>
 		<language name="JPN_KANJI" width="256">やあ！　ミュージカルを
-とても　たのしんで　いるようだね！▼
+とても　楽しんで　いるようだね！▼
 そんな　きみに　ぼくからの
 とっておきの　プレゼントだよ！▼</language>
 	</row>
@@ -690,11 +690,11 @@
 せっかく　ステージに　あがるなら
 めだたないと　もったいないもの！</language>
 		<language name="JPN_KANJI" width="256">ドレスアップ　するなら
-ミュージカルの　えんもくに▽
+ミュージカルの　演目に▽
 あっているかが　ポ・イ・ン・ト！▼
-あっていれば　かんきゃくの
+あっていれば　観客の
 ハートを　わしづかみ！▽
-まちがいなく　ちゅうもく　されるわ！▼
+間違いなく　注目されるわ！▼
 せっかく　ステージに　あがるなら
 めだたないと　もったいないもの！</language>
 	</row>
@@ -716,7 +716,7 @@
 クール　キュート　エレガント
 そして　ユニーク▼
 どういう　イメージにするか
-かんがえて　ドレスアップするのも▽
+考えて　ドレスアップするのも▽
 ありだと　おもいますです</language>
 	</row>
 
@@ -729,7 +729,7 @@
 セレブなのね　あたしたち▼
 で　セレブといえば　ミュージカル
 いわゆる　たしなみって　やつね</language>
-		<language name="JPN_KANJI" width="256">じぶんで　いうのも　なんだけど
+		<language name="JPN_KANJI" width="256">自分で　いうのも　なんだけど
 セレブなのね　あたしたち▼
 で　セレブといえば　ミュージカル
 いわゆる　たしなみって　やつね</language>
@@ -744,8 +744,8 @@
 みりょくてきに　ドレスアップできる▽
 トレーナーは　じつに　すばらしい！</language>
 		<language name="JPN_KANJI" width="256">すばらしい！　ポケモンを
-みりょくてきに　ドレスアップできる▽
-トレーナーは　じつに　すばらしい！</language>
+魅力的に　ドレスアップできる▽
+トレーナーは　実に　すばらしい！</language>
 	</row>
 
 	<row id="msg_c04r0201_gentleman_02" back-color="#ffff00,,,#ffff00,,#ffff00,#ffff00,,,,,,#ffff00,,,,,,">
@@ -773,11 +773,11 @@
 セレブな　わたしから　みても
 じつに　すばらしい！▽
 ごくじょうの　エンターテイメントだ！</language>
-		<language name="JPN_KANJI" width="256">きみが　さんかする　えんもくは
+		<language name="JPN_KANJI" width="256">きみが　参加する　演目は
 すべて　みさせて　もらっている！▼
 セレブな　わたしから　みても
 じつに　すばらしい！▽
-ごくじょうの　エンターテイメントだ！</language>
+極上の　エンターテイメントだ！</language>
 	</row>
 
 	<row id="msg_c04r0201_breederw_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">

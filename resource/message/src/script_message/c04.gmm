@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2010-01-29T18:36:16"/>
+	<create user="matsumiya" host="W00224" date="2010-02-02T12:13:42"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -421,8 +421,8 @@
 ・0＝主人公名前</comment>
 		<attribute name="キャラ指定">友達♀
 サポート</attribute>
-		<language name="JPN" width="256">ホワイティ『おーい　[1:00:トレーナー名:0]！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ホワイティ『おーい　[1:00:トレーナー名:0]！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">ベル『おーい　[1:00:トレーナー名:0]！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ベル『おーい　[1:00:トレーナー名:0]！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_c04_white_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -464,8 +464,8 @@
 　このイベントは発生しない</comment>
 		<attribute name="キャラ指定">友達♀
 サポート</attribute>
-		<language name="JPN" width="256">ホワイティ『おーい　[1:00:トレーナー名:0]！▼</language>
-		<language name="JPN_KANJI" width="256">ホワイティ『おーい　[1:00:トレーナー名:0]！▼</language>
+		<language name="JPN" width="256">ベル『おーい　[1:00:トレーナー名:0]！▼</language>
+		<language name="JPN_KANJI" width="256">ベル『おーい　[1:00:トレーナー名:0]！▼</language>
 	</row>
 
 	<row id="msg_c04_white_05" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -511,10 +511,10 @@
 ・0＝主人公名前</comment>
 		<attribute name="キャラ指定">友達♀
 サポート</attribute>
-		<language name="JPN" width="256">ホワイティ『あっ　[1:00:トレーナー名:0]！▼
+		<language name="JPN" width="256">ベル『あっ　[1:00:トレーナー名:0]！▼
 ミュージカルが　きになる？
 じゃあ　いっしょに　はいろうっ！▼</language>
-		<language name="JPN_KANJI" width="256">ホワイティ『あっ　[1:00:トレーナー名:0]！▼
+		<language name="JPN_KANJI" width="256">ベル『あっ　[1:00:トレーナー名:0]！▼
 ミュージカルが　気になる？
 じゃあ　一緒に　入ろうっ！▼</language>
 	</row>
@@ -527,9 +527,9 @@
 　続けてmiddleman1_01</comment>
 		<attribute name="キャラ指定">友達♀
 サポート</attribute>
-		<language name="JPN" width="256">ホワイティ『パパ！？
+		<language name="JPN" width="256">ベル『パパ！？
 どうしたの　こんなところで？▼</language>
-		<language name="JPN_KANJI" width="256">ホワイティ『パパ！？
+		<language name="JPN_KANJI" width="256">ベル『パパ！？
 どうしたの　こんなところで？▼</language>
 	</row>
 
@@ -539,11 +539,11 @@
 ・続けてwhite_09</comment>
 		<attribute name="キャラ指定">男性
 サポートの父親</attribute>
-		<language name="JPN" width="256">ホワイティのパパ『どうもこうも
+		<language name="JPN" width="256">ベルのパパ『どうもこうも
 おまえを　つれもどしに　きたんだよ▼
 ここまで　たびを　したんだ
 もう　じゅうぶん　じゃないか▼</language>
-		<language name="JPN_KANJI" width="256">ホワイティのパパ『どうもこうも
+		<language name="JPN_KANJI" width="256">ベルのパパ『どうもこうも
 おまえを　連れ戻しに　来たんだよ▼
 ここまで　旅を　したんだ
 もう　充分じゃないか▼</language>
@@ -555,10 +555,10 @@
 ・0＝主人公名前</comment>
 		<attribute name="キャラ指定">友達♀
 サポート</attribute>
-		<language name="JPN" width="256">ホワイティ『やだあ！！▼
+		<language name="JPN" width="256">ベル『やだあ！！▼
 [1:00:トレーナー名:0]や　ともだちと
 いっしょに　たび　するんだもん！▼</language>
-		<language name="JPN_KANJI" width="256">ホワイティ『やだあ！！▼
+		<language name="JPN_KANJI" width="256">ベル『やだあ！！▼
 [1:00:トレーナー名:0]や　ともだちと
 一緒に　旅するんだもん！▼</language>
 	</row>
@@ -568,9 +568,9 @@
 ・続けてwhite_10</comment>
 		<attribute name="キャラ指定">男性
 サポートの父親</attribute>
-		<language name="JPN" width="256">ホワイティのパパ『ダメだ！
+		<language name="JPN" width="256">ベルのパパ『ダメだ！
 よそはよそ　うちはうち　だよ▼</language>
-		<language name="JPN_KANJI" width="256">ホワイティのパパ『ダメだ！
+		<language name="JPN_KANJI" width="256">ベルのパパ『ダメだ！
 他所は他所　うちはうち　だよ▼</language>
 	</row>
 
@@ -579,10 +579,10 @@
 ・続けてleader_01</comment>
 		<attribute name="キャラ指定">友達♀
 サポート</attribute>
-		<language name="JPN" width="256">ホワイティ『だったら▼
+		<language name="JPN" width="256">ベル『だったら▼
 アタシは　アタシ！
 パパは　パパ　だもん！▼</language>
-		<language name="JPN_KANJI" width="256">ホワイティ『だったら▼
+		<language name="JPN_KANJI" width="256">ベル『だったら▼
 アタシは　アタシ！
 パパは　パパ　だもん！▼</language>
 	</row>
@@ -607,9 +607,9 @@
 ・続けてleader_02</comment>
 		<attribute name="キャラ指定">男性
 サポートの父親</attribute>
-		<language name="JPN" width="256">ホワイティのパパ『ちょっと！
+		<language name="JPN" width="256">ベルのパパ『ちょっと！
 どなたです？　おやこの　はなしに▼</language>
-		<language name="JPN_KANJI" width="256">ホワイティのパパ『ちょっと！
+		<language name="JPN_KANJI" width="256">ベルのパパ『ちょっと！
 どなたです？　親子の　話に▼</language>
 	</row>
 
@@ -651,10 +651,10 @@
 ・続けてleader_03</comment>
 		<attribute name="キャラ指定">男性
 サポートの父親</attribute>
-		<language name="JPN" width="256">ホワイティのパパ『そうでしょうとも！▼
+		<language name="JPN" width="256">ベルのパパ『そうでしょうとも！▼
 そうなんです！
 わたしは　それが　しんぱいで……▼</language>
-		<language name="JPN_KANJI" width="256">ホワイティのパパ『そうでしょうとも！▼
+		<language name="JPN_KANJI" width="256">ベルのパパ『そうでしょうとも！▼
 そうなんです！
 わたしは　それが　心配で……▼</language>
 	</row>
@@ -694,11 +694,11 @@
 ・続けてmiddleman1_05</comment>
 		<attribute name="キャラ指定">友達♀
 サポート</attribute>
-		<language name="JPN" width="256">ホワイティ『おねがい！▼
+		<language name="JPN" width="256">ベル『おねがい！▼
 ポケモンと　いっしょに
 あたしも　ちょっとは▽
 つよくなったんだよ！　だから！▼</language>
-		<language name="JPN_KANJI" width="256">ホワイティ『おねがい！▼
+		<language name="JPN_KANJI" width="256">ベル『おねがい！▼
 ポケモンと　いっしょに
 あたしも　ちょっとは▽
 つよくなったんだよ！　だから！▼</language>
@@ -710,20 +710,20 @@
 ・続けて</comment>
 		<attribute name="キャラ指定">男性
 サポートの父親</attribute>
-		<language name="JPN" width="256">ホワイティのパパ『……むむっ▼
+		<language name="JPN" width="256">ベルのパパ『……むむっ▼
 ……　……　……
 ……　……　そうだよねえ▼
 たびを　つづけたいのが
-ホワイティの　ワガママと　いうなら▼
+ベルの　ワガママと　いうなら▼
 たびを　やめさせたいのは
 わたしの　ワガママ　だ▼
 しかも　どう　かんがえても
 わたしの　ほうが　こどもっぽい▼</language>
-		<language name="JPN_KANJI" width="256">ホワイティのパパ『……むむっ▼
+		<language name="JPN_KANJI" width="256">ベルのパパ『……むむっ▼
 ……　……　……
 ……　……　そうだよねえ▼
 旅を　続けたいのが
-ホワイティの　ワガママと　いうなら▼
+ベルの　ワガママと　いうなら▼
 旅を　止めさせたいのは
 わたしの　ワガママ　だ▼
 しかも　どう　考えても
@@ -740,22 +740,22 @@
 サポートの父親</attribute>
 		<language name="JPN" width="256">ジムリーダーさんに
 いわれて　きづいたよ▼
-そうだね　ホワイティ
+そうだね　ベル
 いまは　きみが　したいことを▽
 したほうが　いいんだよ　きっと▼
 パパは　きみの　たびが
 たのしいものであるよう　いのるさ▼
 [1:00:トレーナー名:0]
-ホワイティを　よろしく　たのむよ▼</language>
+ベルを　よろしく　たのむよ▼</language>
 		<language name="JPN_KANJI" width="256">ジムリーダーさんに
 いわれて　気づいたよ▼
-そうだね　ホワイティ
+そうだね　ベル
 今は　君が　したいことを▽
 したほうが　いいんだよ　きっと▼
 パパは　君の　旅が
 楽しいものであるよう　祈るさ▼
 [1:00:トレーナー名:0]
-ホワイティを　よろしく　頼むよ▼</language>
+ベルを　よろしく　頼むよ▼</language>
 	</row>
 
 	<row id="msg_c04_white_12" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -764,10 +764,10 @@
 ・続けてleader_05</comment>
 		<attribute name="キャラ指定">友達♀
 サポート</attribute>
-		<language name="JPN" width="256">ホワイティ『パパ▼
+		<language name="JPN" width="256">ベル『パパ▼
 あたし　やりたいことを　みつけたら
 ちゃんと　いえに　かえるから！▼</language>
-		<language name="JPN_KANJI" width="256">ホワイティ『パパ▼
+		<language name="JPN_KANJI" width="256">ベル『パパ▼
 あたし　やりたいことを　みつけたら
 ちゃんと　家に　帰るから！▼</language>
 	</row>
@@ -842,13 +842,13 @@
 ・0＝主人公名前</comment>
 		<attribute name="キャラ指定">友達♀
 サポート</attribute>
-		<language name="JPN" width="256">ホワイティ『かっこいい！▼
+		<language name="JPN" width="256">ベル『かっこいい！▼
 あたし　カミツレさんの　ような
 ステキな　じょせいに　なりたい！▼
 というわけで
 あたしは　ポケモンジムに　いくね！▽
 じゃあね　[1:00:トレーナー名:0]！▼</language>
-		<language name="JPN_KANJI" width="256">ホワイティ『かっこいい！▼
+		<language name="JPN_KANJI" width="256">ベル『かっこいい！▼
 あたし　カミツレさんの　ような
 ステキな　女性に　なりたい！▼
 というわけで
