@@ -159,7 +159,7 @@ VMCMD_RESULT EvCmdUn_SetPlayerNature( VMHANDLE *core, void *wk )
  * @retval VMCMD_RESULT
  */
 //--------------------------------------------------------------
-VMCMD_RESULT EvCmdUn_SetContryInfo( VMHANDLE *core, void *wk )
+VMCMD_RESULT EvCmdUn_SetCountryInfo( VMHANDLE *core, void *wk )
 {
   u16 country_code;
   SCRCMD_WORK *work = wk;

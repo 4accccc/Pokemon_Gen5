@@ -14,6 +14,7 @@
 #include "savedata/un_savedata.h"
 
 #include "united_nations.h"
+#include "net_app/union/union_beacon_tool.h"
 
 
 #define UNDATA_MAX  (UNITEDNATIONS_PEOPLE_MAX)
@@ -81,7 +82,7 @@ static void SetData(WIFI_HISTORY *wh, UNSV_WORK* work, const int inCountryCode)
           u8 tr_view;
           tr_view = MyStatus_GetTrainerView( my );
           work->UnIdx[work->ObjNum] = i;            //インデックス格納
-          work->UnObjCode[work->ObjNum] = tr_view;  //表示OBJコード格納 @todo ここでテーブル変換 
+          work->UnObjCode[work->ObjNum] = UnionView_GetObjCode(tr_view);  //表示OBJコード格納
           work->ObjNum++;                           //表示OBJ数加算
           if (work->ObjNum >= UN_ROOM_OBJ_MAX) break;
         }
