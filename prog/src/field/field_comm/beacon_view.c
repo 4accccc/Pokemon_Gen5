@@ -295,6 +295,9 @@ static int seq_Main( BEACON_VIEW_PTR wk )
 {
   int ret;
 
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_R ){
+    return SEQ_CALL_DETAIL_VIEW;
+  }
   //メイン入力チェック
   ret = BeaconView_CheckInput( wk );
   if( ret != SEQ_MAIN ){
@@ -356,7 +359,7 @@ static int seq_ReturnCGear( BEACON_VIEW_PTR wk )
  */
 static int seq_CallDetailView( BEACON_VIEW_PTR wk )
 {
-  FIELD_SUBSCREEN_SetAction( wk->subscreen , FIELD_SUBSCREEN_ACTION_IRC );
+  FIELD_SUBSCREEN_SetAction( wk->subscreen , FIELD_SUBSCREEN_ACTION_BEACON_DETAIL );
   return SEQ_END;
 }
 
@@ -452,7 +455,7 @@ static void _sub_DataExit(BEACON_VIEW_PTR wk)
 //--------------------------------------------------------------
 static void _sub_SystemSetup(BEACON_VIEW_PTR wk)
 {
-  wk->pTcbSys = GFL_TCBL_Init( wk->heapID, wk->heapID, 5, 128 );
+  wk->pTcbSys = GFL_TCBL_Init( wk->heapID, wk->heapID, 16, 128 );
 
   //Vタスク追加
   wk->tcbVIntr = GFUser_VIntr_CreateTCB( tcb_VInter, (void*)wk, 0);

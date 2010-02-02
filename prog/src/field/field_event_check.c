@@ -32,6 +32,7 @@
 #include "event_battle.h"         //EVENT_Battle
 #include "event_gsync.h"         //EVENT_GSync
 #include "event_cg_wireless.h"         //EVENT_CG_Wireless
+#include "event_beacon_detail.h"         //EVENT_BeaconDetail
 #include "event_fieldtalk.h"      //EVENT_FieldTalk
 #include "event_fieldmap_menu.h"  //EVENT_FieldMapMenu
 #include "rail_editor.h"
@@ -2129,6 +2130,9 @@ static GMEVENT * checkSubScreenEvent(
     break;
   case FIELD_SUBSCREEN_ACTION_CHANGE_SCREEN_INTRUDE:
     event = EVENT_ChangeSubScreen(gsys, fieldWork, FIELD_SUBSCREEN_INTRUDE);
+    break;
+  case FIELD_SUBSCREEN_ACTION_BEACON_DETAIL:
+    event = EVENT_BeaconDetail( gsys, fieldWork );
     break;
     
 #if 0

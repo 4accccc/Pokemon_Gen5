@@ -66,6 +66,7 @@
 #ifdef PM_DEBUG
 #include "../gamesystem/debug_data.h"
 FS_EXTERN_OVERLAY(debug_data);
+#include "debug/debug_flg.h"
 #endif
 
 //============================================================================================
@@ -287,6 +288,7 @@ GMEVENT * EVENT_CallGameStart(GAMESYS_WORK * gsys, GAME_INIT_WORK * game_init_wo
     break;
 #ifdef PM_DEBUG
   case GAMEINIT_MODE_DEBUG:
+     DEBUG_FLG_FlgOn( DEBUG_FLG_ShortcutBtlIn );
     GFL_OVERLAY_Load( FS_OVERLAY_ID(debug_data));
     //ìKìñÇ…éËéùÇøÉ|ÉPÉÇÉìÇAdd
     DEBUG_MyPokeAdd( GAMESYSTEM_GetGameData(gsys), GFL_HEAPID_APP );

@@ -352,7 +352,8 @@ SRCS_OVERLAY_NOTWIFI = sound/snd_viewer.c \
         field/script_hideitem.c \
         field/scrcmd_gimmick_st.c \
         field/calender.c \
-        field/scrcmd_faceup.c
+        field/scrcmd_faceup.c \
+        field/event_beacon_detail.c
 
 
 # wifiƒvƒƒOƒ‰ƒ€
@@ -1631,4 +1632,9 @@ SRCS_OVERLAY_BTL_REC_SEL = net_app/btl_rec_sel/btl_rec_sel.c \
 SRCS_OVERLAY_EGG_DEMO = demo/egg_demo/egg_demo.c \
                         demo/egg_demo/egg_demo_graphic.c \
                         demo/egg_demo/egg_demo_view.c
+
+# ‚·‚êˆá‚¢Ú×‰æ–Ê
+#===> SRCS_OVERLAY_UI_COMMON
+SRCS_OVERLAY_BEACON_DETAIL = app/beacon_detail/beacon_detail.c \
+											 app/beacon_detail/beacon_detail_gra.c
 
