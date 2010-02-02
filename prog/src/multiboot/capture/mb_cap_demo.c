@@ -555,12 +555,10 @@ const BOOL MC_CAP_DEMO_FinishDemoMain( MB_CAPTURE_WORK *capWork , MB_CAP_DEMO *d
     {
       const BOOL isDisp = TRUE;
       VecFx32 pos = { MB_CAP_MSG_POS_X ,
-                      FX32_CONST( -16.0f ),
+                      0,
                       MB_CAP_MSG_POS_Z };
       GFL_BBD_SetObjectTrans( bbdSys , demoWork->objIdx[CDOI_SCORE] , &pos );
       GFL_BBD_SetObjectDrawEnable( bbdSys , demoWork->objIdx[CDOI_SCORE] , &isDisp );
-
-      PMSND_PlaySE( MB_SND_POKE_HIGH_SCORE );
 
       demoWork->state = CDF_SCORE_DISP;
     }
@@ -568,12 +566,12 @@ const BOOL MC_CAP_DEMO_FinishDemoMain( MB_CAPTURE_WORK *capWork , MB_CAP_DEMO *d
 
   case CDF_SCORE_DISP:
     {
-      const u8 cntMax = 120;
+      const u8 cntMax = 15;
       demoWork->cnt++;
       if( demoWork->cnt < cntMax )
       {
         VecFx32 pos = { MB_CAP_MSG_POS_X ,
-                        FX32_CONST( -16.0f ) ,
+                        0 ,
                         MB_CAP_MSG_POS_Z };
         pos.y += ( MB_CAP_MSG_POS_Y+FX32_CONST(16.0f) )* demoWork->cnt / cntMax;
         
@@ -588,15 +586,31 @@ const BOOL MC_CAP_DEMO_FinishDemoMain( MB_CAPTURE_WORK *capWork , MB_CAP_DEMO *d
         GFL_BBD_SetObjectTrans( bbdSys , demoWork->objIdx[CDOI_SCORE] , &pos );
         demoWork->state = CDF_SCORE_WAIT;
         demoWork->cnt = 0;
+
+        PMSND_PlaySE( MB_SND_POKE_HIGH_SCORE );
       }
     }
     break;
 
   case CDF_SCORE_WAIT:
     {
-      const u8 cntMax = 30;
+      const u8 cntMax = 90;
       demoWork->cnt++;
-      if( demoWork->cnt > cntMax )
+      if( demoWork->cnt < cntMax )
+      {
+        VecFx32 pos = { MB_CAP_MSG_POS_X ,
+                        MB_CAP_MSG_POS_Y ,
+                        MB_CAP_MSG_POS_Z };
+        if( demoWork->cnt < 30 )
+        {
+          const fx32 ofsArr[4] = {FX32_CONST(2.0f),0,FX32_CONST(-2.0f),0};
+          
+          pos.y += ofsArr[demoWork->cnt%4];
+        }
+        
+        GFL_BBD_SetObjectTrans( bbdSys , demoWork->objIdx[CDOI_SCORE] , &pos );      
+      }
+      else
       {
         return TRUE;
       }
