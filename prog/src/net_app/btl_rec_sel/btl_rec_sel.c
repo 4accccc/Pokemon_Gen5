@@ -1274,7 +1274,8 @@ static void Btl_Rec_Sel_FixUpdateTime( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WOR
   {
     strbuf = GFL_MSG_CreateString( work->msgdata_rec, msg_record_time01 );
     bmp_data = GFL_BMPWIN_GetBmp( work->fix_bmpwin[FIX_SEL_TIME] );
-    PRINTSYS_PrintQueColor( work->print_que, bmp_data, 0, 6, strbuf, work->font, color );
+    //PRINTSYS_PrintQueColor( work->print_que, bmp_data, 0, 6, strbuf, work->font, color );
+    PRINTSYS_PrintColor( bmp_data, 0, 6, strbuf, work->font, color );
     GFL_STR_DeleteBuffer( strbuf );
   }
 
@@ -1306,8 +1307,9 @@ static void Btl_Rec_Sel_FixUpdateTime( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WOR
     WORDSET_ExpandStr( wordset, strbuf, src_strbuf );
    
     bmp_data = GFL_BMPWIN_GetBmp( work->fix_bmpwin[FIX_TIME] );
-    PRINTSYS_PrintQueColor( work->print_que, bmp_data, 0, 6, strbuf, work->font, color );
-   
+    //PRINTSYS_PrintQueColor( work->print_que, bmp_data, 0, 6, strbuf, work->font, color );
+    PRINTSYS_PrintColor( bmp_data, 0, 6, strbuf, work->font, color );
+
     GFL_STR_DeleteBuffer( strbuf );
     GFL_STR_DeleteBuffer( src_strbuf );
     WORDSET_Delete( wordset );
