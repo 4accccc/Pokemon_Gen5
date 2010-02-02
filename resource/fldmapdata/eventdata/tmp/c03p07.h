@@ -11,5 +11,7 @@
 #ifndef ZONE_C03P07_EVC_H
 #define ZONE_C03P07_EVC_H
 
+#define C03P07_VETERANM_01                 0
+#define C03P07_TRAINERW_01                 1
 
 #endif //ZONE_C03P07_EVC_H

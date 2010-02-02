@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_c03.h"
-  //.include  "c03.h"
+  .include  "c03.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -29,6 +29,7 @@ _EVENT_DATA		ev_c03_businessman2_01
 _EVENT_DATA		ev_c03_businessman3_01
 _EVENT_DATA		ev_c03_businessman4_01
 _EVENT_DATA		ev_c03_businessman5_01
+_EVENT_DATA		ev_pos_c03_rivalevent_01
 _EVENT_DATA_END
 
 
@@ -107,3 +108,198 @@ EVENT_END
 EVENT_START		ev_c03_businessman5_01
 	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03_businessman5_01 )
 EVENT_END
+
+/**************************************************************/
+/*		RIVAL	POSイベント用スクリプト						  */
+/**************************************************************/
+EVENT_START		ev_pos_c03_rivalevent_01
+
+	//やあ
+	_PLAYER_NAME(0)
+	_BALLOONWIN_OBJMSG( msg_c03_black_01 , C03_RIVAL_01 )
+	_MSGWIN_CLOSE()
+	
+	//きいたよ　ヤグルマのもり　でのこと
+	_BALLOONWIN_OBJMSG( msg_c03_black_02 , C03_RIVAL_01 )
+	_MSGWIN_CLOSE()
+	
+	//それは　さておき……
+	_BALLOONWIN_OBJMSG( msg_c03_black_03 , C03_RIVAL_01 )
+
+	DEFINE_LOCAL  LWK_WIN
+
+	//選択肢表示
+   	_BMPMENU_INIT_EX( 1, 1, 0, 0, LWK_WIN )
+
+	_BMPMENU_MAKE_LIST( msg_c03_black_win01, 0 )	//『ポケモンセンター』
+	_BMPMENU_MAKE_LIST( msg_c03_black_win02, 1 )	//『ポケモンジム』
+
+	// メニュー表示
+	_BMPMENU_START()
+	_MSGWIN_CLOSE()
+
+		//ポケモンセンター
+		IF $LWK_WIN == 0 THEN
+			//そう！　そのとおり
+			_BALLOONWIN_OBJMSG( msg_c03_black_04 , C03_RIVAL_01 )
+			_MSGWIN_CLOSE()
+		
+		//ポケモンジム
+		ELSE
+			//ポケモンジム……？
+			_BALLOONWIN_OBJMSG( msg_c03_black_05 , C03_RIVAL_01 )
+			_MSGWIN_CLOSE()
+			
+		ENDIF
+	//ライバル・自機：連れ歩き
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_kari )
+	_OBJ_ANIME( C03_RIVAL_01, anm_kari )
+	_OBJ_ANIME_WAIT()
+
+	//ライバル：自機の方を見る
+	_OBJ_ANIME( C03_RIVAL_01, anm_stay_r )
+	_OBJ_ANIME_WAIT()
+
+	//ほら　ポケモンセンターがあるだろ？
+	_BALLOONWIN_OBJMSG( msg_c03_black_06 , C03_RIVAL_01 )
+	_MSGWIN_CLOSE()
+
+	//ライバル：上向き
+	_OBJ_ANIME( C03_RIVAL_01, anm_stay_u )
+	_OBJ_ANIME_WAIT()
+	
+	//あちらには　ポケモンセンターの
+	_BALLOONWIN_OBJMSG( msg_c03_black_07 , C03_RIVAL_01 )
+	_MSGWIN_CLOSE()
+
+	//ついでだから　ポケモンジムも
+	_BALLOONWIN_OBJMSG( msg_c03_black_08 , C03_RIVAL_01 )
+	_MSGWIN_CLOSE()
+
+	//ライバル・自機：連れ歩き
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_kari )
+	_OBJ_ANIME( C03_RIVAL_01, anm_kari )
+	_OBJ_ANIME_WAIT()
+
+	//ジムリーダー：登場
+	_OBJ_ANIME( C03_LEADER3_01, anm_kari )
+	_OBJ_ANIME_WAIT()
+
+	//んうん？　ああ　きみ！
+	_PLAYER_NAME(0)
+	_BALLOONWIN_OBJMSG( msg_c03_leader3_01 , C03_LEADER3_01 )
+	_MSGWIN_CLOSE()
+
+	//ジムリーダー：下向き
+	_OBJ_ANIME( C03_LEADER3_01, anm_stay_d )
+	_OBJ_ANIME_WAIT()
+
+	//ヒウンシティにも　プラズマだんが　いたんだ
+	_BALLOONWIN_OBJMSG( msg_c03_leader3_02 , C03_LEADER3_01 )
+	_MSGWIN_CLOSE()
+
+	//ジムリーダー：右向き
+	_OBJ_ANIME( C03_LEADER3_01, anm_stay_r )
+	_OBJ_ANIME_WAIT()
+
+	//もちろん　おっぱったけどね
+	_BALLOONWIN_OBJMSG( msg_c03_leader3_03 , C03_LEADER3_01 )
+	_MSGWIN_CLOSE()
+
+	//ジムリーダー：画面左へ行き消去
+	_OBJ_ANIME( C03_LEADER3_01, anm_leader_leave )
+	_OBJ_ANIME_WAIT()
+
+	//アーティさん　とらえどころが　ないようで
+	_BALLOONWIN_OBJMSG( msg_c03_black_09 , C03_RIVAL_01 )
+	_MSGWIN_CLOSE()
+
+	//ライバル：右向き
+	_OBJ_ANIME( C03_RIVAL_01, anm_stay_r )
+	_OBJ_ANIME_WAIT()
+
+	//バトルカンパニーと　いうのは
+	_BALLOONWIN_OBJMSG( msg_c03_black_10 , C03_RIVAL_01 )
+	_MSGWIN_CLOSE()
+
+	//ライバル・自機：連れ歩き
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_kari )
+	_OBJ_ANIME( C03_RIVAL_01, anm_kari )
+	_OBJ_ANIME_WAIT()
+
+	//こっちの　ろめんには
+	_BALLOONWIN_OBJMSG( msg_c03_black_11 , C03_RIVAL_01 )
+	_MSGWIN_CLOSE()
+
+	//ボクは　いちど　ポケモンセンターに　もどる
+	_BALLOONWIN_OBJMSG( msg_c03_black_12 , C03_RIVAL_01 )
+	_MSGWIN_CLOSE()
+
+	//ライバル：ポケセン方面に消える
+	_OBJ_ANIME( C03_RIVAL_01, anm_rival_leave )
+	_OBJ_ANIME_WAIT()
+
+	//アーティ・ライバル削除
+	_OBJ_DEL( C03_RIVAL_01 )
+	_OBJ_DEL( C03_LEADER3_01 )
+	_FLAG_SET( FV_C03_GUIDE_01 )
+
+	//フラグ操作・ライバルＲ０４に出現
+	_FLAG_RESET( FV_R04_RIVAL_01 )
+	
+	//ワークの値を１にし、イベント終了
+	$WK_SCENE_C03 = 1
+
+EVENT_END
+
+//--------------------------------------------------------------
+//	方向転換
+//--------------------------------------------------------------
+_ANIME_LABEL anm_dir_u
+	_ANIME_DATA		AC_DIR_U,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL anm_dir_d
+	_ANIME_DATA		AC_DIR_D,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL anm_dir_r
+	_ANIME_DATA		AC_DIR_R,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL anm_dir_l
+	_ANIME_DATA		AC_DIR_L,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL anm_stay_u
+	_ANIME_DATA		AC_STAY_WALK_U_8F,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL anm_stay_d
+	_ANIME_DATA		AC_STAY_WALK_D_8F,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL anm_stay_r
+	_ANIME_DATA		AC_STAY_WALK_R_8F,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL anm_stay_l
+	_ANIME_DATA		AC_STAY_WALK_L_8F,1
+	_ANIME_DATA		ACMD_END,0
+
+//--------------------------------------------------------------
+//	仮アニメ
+//--------------------------------------------------------------
+_ANIME_LABEL anm_kari
+	_ANIME_DATA		AC_STAY_WALK_L_4F,10
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL anm_leader_leave
+	/*_ANIME_DATA		AC_WALK_L_8F,10*/
+	_ANIME_DATA		AC_VANISH_ON,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL anm_rival_leave
+	/*_ANIME_DATA		AC_WALK_R_8F,10*/
+	_ANIME_DATA		AC_VANISH_ON,1
+	_ANIME_DATA		ACMD_END,0

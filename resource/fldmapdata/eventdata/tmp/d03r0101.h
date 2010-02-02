@@ -16,5 +16,10 @@
 #define D03R0101_RIVAL_01                  2
 #define D03R0101_RIVAL_02                  3
 #define D03R0101_CHAMPION_01               4
+#define D03R0101_DARUMA_01                 5
+#define D03R0101_DARUMA_02                 6
+#define D03R0101_DARUMA_03                 7
+#define D03R0101_DARUMA_04                 8
+#define D03R0101_DARUMA_05                 9
 
 #endif //ZONE_D03R0101_EVC_H

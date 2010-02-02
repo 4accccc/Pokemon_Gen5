@@ -1,5 +1,5 @@
 #event data
-#save date:2010/01/22 16:47:43
+#save date:2010/02/02 15:50:32
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c03.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c03.wms
 #hold event type:
 1
 #hold event number:
-10
+12
 #event number: 0
 #type
 1
@@ -320,6 +320,68 @@ DIR_DOWN
 EVENTDATA_POSTYPE_RAIL
 #position
 13 10 2
+#event number: 10
+#type
+1
+#ID name
+C03_RIVAL_01
+#OBJ CODE Number
+RIVEL
+#MOVE CODE Number
+MV_RAIL_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_RIGHT
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_RAIL
+#position
+4 6 0
+#event number: 11
+#type
+1
+#ID name
+C03_LEADER3_01
+#OBJ CODE Number
+LEADER3
+#MOVE CODE Number
+MV_RAIL_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_RAIL
+#position
+4 7 2
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
@@ -339,7 +401,24 @@ EVENTDATA_POSTYPE_RAIL
 #hold event type:
 1
 #hold event number:
+1
+#event number: 0
+#Pos Event Label
+C03_RIVALEVENT_01
+#Pos Script Name
+SCRID_POS_C03_RIVALEVENT_01
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+WK_SCENE_C03
+#Event Trigger Work Value
 0
+#Pos Type
+EVENTDATA_POSTYPE_RAIL
+#position
+4 5 0
+#size
+1 1
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT

@@ -23,6 +23,8 @@ _EVENT_DATA		ev_d03r0101_fighterm_01
 _EVENT_DATA		ev_pos_d03r0101_event_01
 _EVENT_DATA		ev_d03r0101_rival_02
 _EVENT_DATA		ev_scene_d03r0101_plasmaevent_01
+_EVENT_DATA		ev_pos_d03r0101_hakase2_01
+_EVENT_DATA		ev_d03r0101_daruma_01
 _EVENT_DATA_END
 
 /**************************************************************/
@@ -35,71 +37,30 @@ _EVENT_DATA_END
 /*			サングラス	D03R0101イベントスクリプト			  */
 /**************************************************************/
 EVENT_START		ev_d03r0101_sunglasses_01
-_TALK_OBJ_START()
 
-	//おっ　おいしいみず　くっ　くれない　か？
-	_BALLOONWIN_TALKOBJ_MSG( msg_d03r0101_sunglasses_01 )
-	//分岐処理：はい／いいえ
-	_YES_NO_WIN( SCWK_ANSWER )
-	_BALLOONWIN_CLOSE()
-
-	//はい選択
-	IF $SCWK_ANSWER == SCR_YES THEN
-		
-		//[トレーナー名]は　おいしいみずをあげた
-		_PLAYER_NAME( 0 )
-		_BALLOONWIN_OBJMSG( msg_d03r0101_sunglasses_03 , MMDL_ID_PLAYER )
-		_BALLOONWIN_CLOSE()
-		
-		//サングラスの人は　おいしいみずを　のみだした！
-		_BALLOONWIN_OBJMSG( msg_d03r0101_sunglasses_04 , D03R0101_SUNGLASSES_01 )
-		_BALLOONWIN_CLOSE()
-		
-		//サングラスの人は　おいしいみずを　のみだした！
-		_BALLOONWIN_OBJMSG( msg_d03r0101_sunglasses_05 , D03R0101_SUNGLASSES_01 )
-		_BALLOONWIN_CLOSE()
+	//じてんしゃを貰っていない場合
+	IF FLAG_OFF( FH_01) THEN
+		_EASY_TALK_ITEM_EVENT(ITEM_ZITENSYA, 1, FH_01, msg_d03r0101_sunglasses_01, msg_d03r0101_sunglasses_02, msg_d03r0101_sunglasses_02 )
 	
-		//【仮】じてんしゃ入手処理
-	
-		//はあ　たすかったよ！　じてんしゃで　さばくを　おうだんして
-		_BALLOONWIN_OBJMSG( msg_d03r0101_sunglasses_06 , D03R0101_SUNGLASSES_01 )
-		_BALLOONWIN_CLOSE()
-		
-		//サングラス：遺跡へダッシュ
-		_OBJ_ANIME( D03R0101_SUNGLASSES_01, anm_sunglasses_dush )
-		_OBJ_ANIME_WAIT()
-		
-		//サングラスのオブジェを消す
-		_OBJ_DEL( D03R0101_SUNGLASSES_01 )
-		
-		//============フラグワーク操作============//
-		
-		//サングラスのおいしいみずイベント終了
-		_FLAG_SET( FV_D03R0101_SUNGLASSES_01 )
-		
-		//古代の城にサングラス出現
-		_FLAG_RESET( FV_D04R0101_SUNGLASSES_01 )
-		
-		//========================================//
-		
-	//いいえ選択	
+	//じてんしゃ取得済み
 	ELSE
 	
-		//のど　がっ！
-		_BALLOONWIN_TALKOBJ_MSG( msg_d03r0101_sunglasses_02 )
-		_BALLOONWIN_CLOSE()
+		//D08のイベント終了後なら
+		IF $WK_SCENE_D03R0101 >= 2 THEN
+			
+			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d03r0101_sunglasses_04 )
+		
+		//終了していない場合
+		ELSE
+		
+			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d03r0101_sunglasses_03 )
+		
+		ENDIF
+		
 	
 	ENDIF
 
 EVENT_END
-
-//--------------------------------------------------------------------
-//サングラス：ダッシュ
-//--------------------------------------------------------------------
-_ANIME_LABEL	anm_sunglasses_dush
-	_ANIME_DATA	AC_STAY_WALK_U_8F,4
-	_ANIME_DATA	AC_WALK_U_4F,12
-	_ANIME_DATA	ACMD_END,0
 
 /**************************************************************/
 /*			格闘家♂	D03R0101イベントスクリプト			  */
@@ -111,7 +72,7 @@ EVENT_END
 /**************************************************************/
 /*		ＰＯＳプラズマ団イベント D03R0101イベントスクリプト	  */
 /**************************************************************/
-//WK_SCENE_D03R0101=1の時に起動します。
+//WK_SCENE_D03R0101=2の時に起動します。
 EVENT_START		ev_pos_d03r0101_event_01
 
 	//ローカル変数を定義
@@ -178,7 +139,7 @@ EVENT_START		ev_pos_d03r0101_event_01
 	_FLAG_SET( FV_D03R0101_RIVAL_01 )
 
 	//ライバルＰＯＳイベント終了
-	$WK_SCENE_D03R0101 = 2
+	$WK_SCENE_D03R0101 = 3
 	
 	//========================================/
 
@@ -269,7 +230,7 @@ EVENT_END
 /**************************************************************/
 /*			ライバル・チャンピオン	シーンチェンジイベント	  */
 /**************************************************************/
-//WK_SCENE_D03R0101=3の時に起動します。
+//WK_SCENE_D03R0101=4の時に起動します。
 EVENT_START		ev_scene_d03r0101_plasmaevent_01
 
 	_BLACK_IN()
@@ -314,7 +275,7 @@ EVENT_START		ev_scene_d03r0101_plasmaevent_01
 	_FLAG_SET( FV_D03R0101_CHAMPION_01 )
 
 	//プラズマ団イベント終了
-	$WK_SCENE_D03R0101 = 4
+	$WK_SCENE_D03R0101 = 5
 
 	//========================================/
 
@@ -332,3 +293,128 @@ _ANIME_LABEL	anm_champion_sora
 	_ANIME_DATA	AC_STAY_WALK_R_2F,5
 	_ANIME_DATA	AC_VANISH_ON,1
 	_ANIME_DATA	ACMD_END,0
+
+/**************************************************************/
+/*		HAKASE2		D03R0101POSイベント						  */
+/**************************************************************/
+EVENT_START		ev_pos_d03r0101_hakase2_01
+
+	//博士（娘）遺跡から出てくる
+	_OBJ_ADD_EX( 61,29,DIR_DOWN,MMDL_ID_EVENTOBJ_00,HAKASE2,MV_DMY )
+
+	//博士：一歩前へ
+	//自機：一歩下がる
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_hakase2_come )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_back )
+	_OBJ_ANIME_WAIT()
+
+	//ハーイ！
+	_PLAYER_NAME(0)
+	_BALLOONWIN_OBJMSG( msg_d03r0101_hakase2_01 , MMDL_ID_EVENTOBJ_00 )
+	_MSGWIN_CLOSE()
+	
+	//いせきの　いりぐち
+	_BALLOONWIN_OBJMSG( msg_d03r0101_hakase2_02 , MMDL_ID_EVENTOBJ_00 )
+	_MSGWIN_CLOSE()
+
+	//博士：ゴリダルマの前に移動
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_hakase2_move )
+	_OBJ_ANIME_WAIT()
+
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_l )
+	_OBJ_ANIME_WAIT()
+
+	//ちなみに
+	_BALLOONWIN_OBJMSG( msg_d03r0101_hakase2_03 , MMDL_ID_EVENTOBJ_00 )
+	_MSGWIN_CLOSE()
+
+	//博士：自機の方を向いて
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_stay_r )
+	_OBJ_ANIME_WAIT()
+
+	//いつから　そんざいしていたのか
+	_BALLOONWIN_OBJMSG( msg_d03r0101_hakase2_04 , MMDL_ID_EVENTOBJ_00 )
+	_MSGWIN_CLOSE()
+
+	//この　ポケモンたち……
+	_BALLOONWIN_OBJMSG( msg_d03r0101_hakase2_05 , MMDL_ID_EVENTOBJ_00 )
+	_MSGWIN_CLOSE()
+
+	//じゃあ　アタシは
+	_BALLOONWIN_OBJMSG( msg_d03r0101_hakase2_06 , MMDL_ID_EVENTOBJ_00 )
+	_MSGWIN_CLOSE()
+
+	//博士：画面下に移動する
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_hakase2_leave )
+	_OBJ_ANIME_WAIT()
+
+	//博士OBJDEL
+	_OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
+	
+	//ワーク操作
+	$WK_SCENE_D03R0101 = 1
+
+EVENT_END
+
+//--------------------------------------------------------------------
+//	博士２：登場
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_hakase2_come
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+_ANIME_LABEL	anm_stay_r
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_hakase2_leave
+	_ANIME_DATA	AC_WALK_D_8F,10
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_hakase2_move
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_l
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//自機：ゆっくり下がる
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_back
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_DIR_PAUSE_ON,1
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA	ACMD_END,0
+
+/**************************************************************/
+/*		ゴリダルマ		D03R0101							  */
+/**************************************************************/
+EVENT_START		ev_d03r0101_daruma_01
+
+	//ゴリダルマを目覚めさせるどうぐを持っている場合
+	IF FLAG_ON( FH_01) THEN
+	
+		//
+		_BALLOONWIN_OBJMSG( msg_d03r0101_daruma_02 , D03R0101_DARUMA_01 )
+		_YES_NO_WIN( SCWK_ANSWER )
+		
+		//はいの場合
+		IF $SCWK_ANSWER == SCR_YES THEN
+			_MSGWIN_CLOSE()
+			
+			_BALLOONWIN_OBJMSG( msg_d03r0101_daruma_03 , D03R0101_DARUMA_01 )
+			_MSGWIN_CLOSE()
+		
+		ENDIF
+		
+	ELSE
+	
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d03r0101_daruma_01 )
+	
+	ENDIF
+
+EVENT_END
