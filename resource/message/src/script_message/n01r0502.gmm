@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2010-01-13T12:55:18"/>
+	<create user="matsumiya" host="W00224" date="2010-02-02T22:27:10"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -330,7 +330,7 @@
 		</language>
 	</columns>
 
-	<dialog left="2" top="270" right="707" bottom="875" maximized="no" rayout="Vertical2">
+	<dialog left="1399" top="332" right="2104" bottom="937" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -338,7 +338,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -558,12 +558,12 @@
 		<attribute name="キャラ指定">ゲーチス</attribute>
 		<language name="JPN" width="256">……そして
 [1:00:トレーナー名:0]　おめでとう！[BE:01:ページ切り替え（クリア）]
-しちにんしゅうと　ジムリーダーの
+しちけんじんと　ジムリーダーの
 たたかいは　みごと　ジムリーダーが[BE:00:ページ切り替え（行送り）]
 しょうりを　おさめました！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">……そして
 [1:00:トレーナー名:0]　おめでとう！[BE:01:ページ切り替え（クリア）]
-七人衆と　ジムリーダーの
+七賢人と　ジムリーダーの
 闘いは　みごと　ジムリーダーが[BE:00:ページ切り替え（行送り）]
 勝利を　おさめました！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
@@ -575,11 +575,11 @@
 　所定のpos（詳細未定）まで移動しメッセージ表示
 ・続けてsage1_05</comment>
 		<attribute name="キャラ指定">ライバル</attribute>
-		<language name="JPN" width="256">ブラッカー『[1:00:トレーナー名:0]！
+		<language name="JPN" width="256">チェレン『[1:00:トレーナー名:0]！
 きこえたけれど……[BE:01:ページ切り替え（クリア）]
 そいつが……
 そいつが　Ｎを　あやつっていたのか！？[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ブラッカー『[1:00:トレーナー名:0]！
+		<language name="JPN_KANJI" width="256">チェレン『[1:00:トレーナー名:0]！
 きこえたけれど……[BE:01:ページ切り替え（クリア）]
 そいつが……
 そいつが　Ｎを　あやつっていたのか！？[BE:01:ページ切り替え（クリア）]</language>
@@ -697,8 +697,8 @@
 ・ゲーチスに隣接してからメッセージ表示
 ・続けてsage1_10</comment>
 		<attribute name="キャラ指定">ライバル</attribute>
-		<language name="JPN" width="256">ブラッカー『……みぐるしいよ[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ブラッカー『……みぐるしいよ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">チェレン『……みぐるしいよ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">チェレン『……みぐるしいよ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_n01r0502_sage1_10" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -737,11 +737,11 @@
 		<comment>♂
 ・続けてchampion_03</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
-		<language name="JPN" width="256">Ｎ『たび　だよ……[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">Ｎ『……たび　だよ[BE:01:ページ切り替え（クリア）]
 ゲーチスに　いわれ
 にんげんの　おろかさを[BE:00:ページ切り替え（行送り）]
 たしかめるための……[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">Ｎ『旅　だよ……[BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">Ｎ『……旅　だよ[BE:01:ページ切り替え（クリア）]
 ゲーチスに　いわれ
 人間の　愚かさを[BE:00:ページ切り替え（行送り）]
 確かめる　ための……[BE:01:ページ切り替え（クリア）]</language>
@@ -840,56 +840,56 @@
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]！！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_n01r0502_boss_last_01">
+	<row id="msg_n01r0502_boss_last_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
 ・続けてエンディングに</comment>
 		<language name="JPN" width="256">キミの　しんじた　みちを　ゆけ！</language>
 		<language name="JPN_KANJI" width="256">キミの　信じた　道を　ゆけ！</language>
 	</row>
 
-	<row id="msg_n01r0502_boss_last_02">
+	<row id="msg_n01r0502_boss_last_02" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
 ・続けてエンディングに</comment>
 		<language name="JPN" width="256">Ｎの　さいごの　ことば　その２</language>
 		<language name="JPN_KANJI" width="256">Ｎの　さいごの　ことば　その２</language>
 	</row>
 
-	<row id="msg_n01r0502_boss_last_03">
+	<row id="msg_n01r0502_boss_last_03" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
 ・続けてエンディングに</comment>
 		<language name="JPN" width="256">Ｎの　さいごの　ことば　その３</language>
 		<language name="JPN_KANJI" width="256">Ｎの　さいごの　ことば　その３</language>
 	</row>
 
-	<row id="msg_n01r0502_boss_last_04">
+	<row id="msg_n01r0502_boss_last_04" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
 ・続けてエンディングに</comment>
 		<language name="JPN" width="256">Ｎの　さいごの　ことば　その４</language>
 		<language name="JPN_KANJI" width="256">Ｎの　さいごの　ことば　その４</language>
 	</row>
 
-	<row id="msg_n01r0502_boss_last_05">
+	<row id="msg_n01r0502_boss_last_05" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
 ・続けてエンディングに</comment>
 		<language name="JPN" width="256">Ｎの　さいごの　ことば　その５</language>
 		<language name="JPN_KANJI" width="256">Ｎの　さいごの　ことば　その５</language>
 	</row>
 
-	<row id="msg_n01r0502_boss_last_06">
+	<row id="msg_n01r0502_boss_last_06" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
 ・続けてエンディングに</comment>
 		<language name="JPN" width="256">Ｎの　さいごの　ことば　その６</language>
 		<language name="JPN_KANJI" width="256">Ｎの　さいごの　ことば　その６</language>
 	</row>
 
-	<row id="msg_n01r0502_boss_last_07">
+	<row id="msg_n01r0502_boss_last_07" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
 ・続けてエンディングに</comment>
 		<language name="JPN" width="256">Ｎの　さいごの　ことば　その７</language>
 		<language name="JPN_KANJI" width="256">Ｎの　さいごの　ことば　その７</language>
 	</row>
 
-	<row id="msg_n01r0502_boss_last_08">
+	<row id="msg_n01r0502_boss_last_08" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
 ・続けてエンディングに</comment>
 		<language name="JPN" width="256">Ｎの　さいごの　ことば　その８</language>

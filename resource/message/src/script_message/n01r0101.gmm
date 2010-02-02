@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-17T18:34:16"/>
+	<create user="matsumiya" host="W00224" date="2010-02-02T22:27:55"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -298,7 +298,7 @@
 ・配置順は
 　６・４・２・１・３・５
 ・続けてsage3_01</comment>
-		<attribute name="キャラ指定">七人衆２</attribute>
+		<attribute name="キャラ指定">七賢人２</attribute>
 		<language name="JPN" width="256">てんに　したがう　ものは　いき
 てんに　さからう　ものは　ほろぶ[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">天に　従う者は　存し
@@ -308,7 +308,7 @@
 	<row id="msg_n01r0101_sage3_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・続けてsage4_01</comment>
-		<attribute name="キャラ指定">七人衆３</attribute>
+		<attribute name="キャラ指定">七賢人３</attribute>
 		<language name="JPN" width="256">たいどう　すたれて
 じんぎ　あり[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">大道　廃れて　仁義あり[BE:01:ページ切り替え（クリア）]</language>
@@ -317,7 +317,7 @@
 	<row id="msg_n01r0101_sage4_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・続けてsage5_01</comment>
-		<attribute name="キャラ指定">七人衆４</attribute>
+		<attribute name="キャラ指定">七賢人４</attribute>
 		<language name="JPN" width="256">いちを　しりて
 にを　しらず[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">一を知りて　二を知らず[BE:01:ページ切り替え（クリア）]</language>
@@ -326,7 +326,7 @@
 	<row id="msg_n01r0101_sage5_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・続けてsage6_01</comment>
-		<attribute name="キャラ指定">七人衆５</attribute>
+		<attribute name="キャラ指定">七賢人５</attribute>
 		<language name="JPN" width="256">あやまちて　あらためざる
 これを　あやまちと　いう[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">過ちて　改めざる
@@ -336,7 +336,7 @@
 	<row id="msg_n01r0101_sage6_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・続けてsage7_01</comment>
-		<attribute name="キャラ指定">七人衆６</attribute>
+		<attribute name="キャラ指定">七賢人６</attribute>
 		<language name="JPN" width="256">くんしは　ぎに　さとり
 しょうじんは　りに　さとる[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">君子は　義に　さとり
@@ -347,7 +347,7 @@
 		<comment>♂
 ・メッセージ表示後、七人衆全員
 　主人公を囲む位置に移動しsage2_02に</comment>
-		<attribute name="キャラ指定">七人衆７</attribute>
+		<attribute name="キャラ指定">七賢人７</attribute>
 		<language name="JPN" width="256">てんに　ふつか　なく
 たみに　ふたりの　おう　なし[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">天に二日なく　民に二王なし[BE:01:ページ切り替え（クリア）]</language>
@@ -356,7 +356,7 @@
 	<row id="msg_n01r0101_sage2_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・続けてleader5_01</comment>
-		<attribute name="キャラ指定">七人衆２</attribute>
+		<attribute name="キャラ指定">七賢人２</attribute>
 		<language name="JPN" width="256">さて……[BE:01:ページ切り替え（クリア）]
 いかに　おまえと　いえど
 われら　６にんを　あいてに[BE:00:ページ切り替え（行送り）]
@@ -393,7 +393,7 @@
 	<row id="msg_n01r0101_sage2_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・続けてleader5_03</comment>
-		<attribute name="キャラ指定">七人衆２</attribute>
+		<attribute name="キャラ指定">七賢人２</attribute>
 		<language name="JPN" width="256">きさま……
 ホドモエの……！？[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">きさま……
@@ -429,7 +429,7 @@
 	<row id="msg_n01r0101_sage3_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・続けてleader4_01</comment>
-		<attribute name="キャラ指定">七人衆３</attribute>
+		<attribute name="キャラ指定">七賢人３</attribute>
 		<language name="JPN" width="256">ジムリーダーどもめ！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ジムリーダーどもめ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
@@ -517,56 +517,56 @@
 先に　進みなさい[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_n01r0101_sage2_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_n01r0101_sage2_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・主人公のほうを見ないでメッセージ表示
 ・クリアまで繰り返し</comment>
-		<attribute name="キャラ指定">七人衆２</attribute>
+		<attribute name="キャラ指定">七賢人２</attribute>
 		<language name="JPN" width="256">おうの　ジャマを　するな！</language>
 		<language name="JPN_KANJI" width="256">王の　ジャマを　するな！</language>
 	</row>
 
-	<row id="msg_n01r0101_sage3_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_n01r0101_sage3_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・主人公のほうを見ないでメッセージ表示
 ・クリアまで繰り返し</comment>
-		<attribute name="キャラ指定">七人衆３</attribute>
+		<attribute name="キャラ指定">七賢人３</attribute>
 		<language name="JPN" width="256">おうの　ジャマを　するな！</language>
 		<language name="JPN_KANJI" width="256">王の　ジャマを　するな！</language>
 	</row>
 
-	<row id="msg_n01r0101_sage4_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_n01r0101_sage4_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・主人公のほうを見ないでメッセージ表示
 ・クリアまで繰り返し</comment>
-		<attribute name="キャラ指定">七人衆４</attribute>
+		<attribute name="キャラ指定">七賢人４</attribute>
 		<language name="JPN" width="256">おうの　ジャマを　するな！</language>
 		<language name="JPN_KANJI" width="256">王の　ジャマを　するな！</language>
 	</row>
 
-	<row id="msg_n01r0101_sage5_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_n01r0101_sage5_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・主人公のほうを見ないでメッセージ表示
 ・クリアまで繰り返し</comment>
-		<attribute name="キャラ指定">七人衆５</attribute>
+		<attribute name="キャラ指定">七賢人５</attribute>
 		<language name="JPN" width="256">おうの　ジャマを　するな！</language>
 		<language name="JPN_KANJI" width="256">王の　ジャマを　するな！</language>
 	</row>
 
-	<row id="msg_n01r0101_sage6_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_n01r0101_sage6_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・主人公のほうを見ないでメッセージ表示
 ・クリアまで繰り返し</comment>
-		<attribute name="キャラ指定">七人衆６</attribute>
+		<attribute name="キャラ指定">七賢人６</attribute>
 		<language name="JPN" width="256">おうの　ジャマを　するな！</language>
 		<language name="JPN_KANJI" width="256">王の　ジャマを　するな！</language>
 	</row>
 
-	<row id="msg_n01r0101_sage7_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_n01r0101_sage7_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・主人公のほうを見ないでメッセージ表示
 ・クリアまで繰り返し</comment>
-		<attribute name="キャラ指定">七人衆７</attribute>
+		<attribute name="キャラ指定">七賢人７</attribute>
 		<language name="JPN" width="256">おうの　ジャマを　するな！</language>
 		<language name="JPN_KANJI" width="256">王の　ジャマを　するな！</language>
 	</row>

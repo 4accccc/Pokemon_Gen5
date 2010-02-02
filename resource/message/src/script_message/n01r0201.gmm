@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-16T18:34:57"/>
+	<create user="matsumiya" host="W00224" date="2010-02-02T22:28:07"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,6 +312,8 @@
 ・主人公に！マーク表示後、主人公左向きにして
 　メッセージ表示
 </comment>
+		<attribute name="キャラ指定">NINJA
+ダークトリニティ</attribute>
 		<language name="JPN" width="256">……わたしは
 ダークトリニティの　ひとり[BE:01:ページ切り替え（クリア）]
 ……ゲーチスさまの
@@ -336,6 +338,8 @@
 　上向きにしてメッセージ表示
 ・メッセージ表示後、動作モデル消去
 　主人公、操作可能になる</comment>
+		<attribute name="キャラ指定">NINJA
+ダークトリニティ</attribute>
 		<language name="JPN" width="256">……まずは　あのへやで
 ポケモンを　やすめるが　いい[BE:01:ページ切り替え（クリア）]
 おまえが　このしろの

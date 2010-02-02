@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-05T20:27:36"/>
+	<create user="matsumiya" host="W00224" date="2010-02-02T22:37:52"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="36" top="214" right="741" bottom="834" maximized="no" rayout="Vertical2">
+	<dialog left="1373" top="367" right="2078" bottom="987" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="726" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,28 +292,24 @@
 	</lock>
 
 
-	<row id="msg_c03pc0101_man1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
-		<comment>♂
-・仮メッセージ</comment>
+	<row id="msg_c03pc0101_man1_01">
+		<comment>♂</comment>
 		<attribute name="キャラ指定">MAN1
 青年</attribute>
-		<language name="JPN" width="256">でかい　ビルばかりで
-あっとう　されちまうよな！</language>
-		<language name="JPN_KANJI" width="256">でかい　ビルばかりで
-圧倒されちまうよ　ここ！</language>
+		<language name="JPN" width="256">くもに　ささりそうな　ビルばかりで
+あっとう　されてしまうよな！</language>
+		<language name="JPN_KANJI" width="256">雲に　ささりそうな　ビルばかりで
+圧倒されて　しまうよな！</language>
 	</row>
 
-	<row id="msg_c03pc0101_businessman2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
-		<comment>♂
-・仮メッセージ</comment>
+	<row id="msg_c03pc0101_businessman2_01">
+		<comment>♂</comment>
 		<attribute name="キャラ指定">BUSINESSMAN
 サラリーマン</attribute>
-		<language name="JPN" width="256">ここは　はじめてかい？[BE:01:ページ切り替え（クリア）]
-だとしたら　かんばんを　めじるしに
-あるくと　まよわなくて　すむかもだよ</language>
-		<language name="JPN_KANJI" width="256">この街は　はじめてかい？[BE:01:ページ切り替え（クリア）]
-だとしたら　看板を　目印に歩くと
-迷わなくて　すむかもだよ</language>
+		<language name="JPN" width="256">つかれたら　やすむ！
+ひとも　ポケモンも　おなじだよ</language>
+		<language name="JPN_KANJI" width="256">つかれたら　休む！
+人も　ポケモンも　同じだよ</language>
 	</row>
 
 	<flowchart-group-list>
