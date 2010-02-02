@@ -2987,8 +2987,14 @@ const PLIST_SKILL_CAN_LEARN PLIST_UTIL_CheckLearnSkill( PLIST_WORK *work , const
       isEmpty = TRUE;
     }
   }
-  
-  if( work->plData->wazaLearnBit != 0 )
+
+#if PM_DEBUG
+  OS_TPrintf("-------------------------------------------------------\n");
+  OS_TPrintf("wazaLearnBitが0ですが、未使用時は0xFFを入れてください。\n");
+  OS_TPrintf("-------------------------------------------------------\n");
+#endif
+
+  if( work->plData->wazaLearnBit != 0xFF )
   {
     //イベントなど特殊な技覚え(外からBitでもらう)
     if( work->plData->wazaLearnBit & 1<<idx )

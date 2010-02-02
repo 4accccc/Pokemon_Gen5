@@ -189,6 +189,7 @@ typedef struct
   
   //WBより追加
   u8  wazaLearnBit; //イベントなど特殊な技覚えで外から覚えられるやつのbitをもらう
+                    //未使用時は0xFF
   
   //通信時相手見せ系
   PL_COMM_TYPE comm_type;

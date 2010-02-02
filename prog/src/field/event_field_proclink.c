@@ -728,6 +728,7 @@ static void * FMenuCallProc_PokeList(PROCLINK_WORK* wk, u32 param, EVENT_PROCLIN
   plistData->mode     = PL_MODE_FIELD;
   plistData->ret_sel  = wk->param->select_poke;
   plistData->waza = 0;
+  plistData->wazaLearnBit = 0xFF;
   plistData->place    = ZONEDATA_GetPlaceNameID( GAMEDATA_GetMyPlayerWork(gmData)->zoneID ); 
 
   if( pre == EVENT_PROCLINK_CALL_POKELIST )
