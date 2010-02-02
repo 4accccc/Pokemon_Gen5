@@ -36,7 +36,7 @@
 
 
 #define _TRADE_BG_PALLETE_NUM (5)  //交換BGのパレットの本数
-#define _SUCKEDCOUNT_NUM (10)  //吸い込みまでにかかる回数
+#define _SUCKEDCOUNT_NUM (21)  //吸い込みまでにかかる回数
 
 
 static void IRC_POKETRADE_TrayInit(POKEMON_TRADE_WORK* pWork,int subchar);
@@ -867,6 +867,22 @@ static BOOL _hedenWazaCheck(POKEMON_PASO_PARAM* ppp)
 }
 
 
+void POKMEONTRADE2D_IconGray(POKEMON_TRADE_WORK* pWork, GFL_CLWK* pCL ,BOOL bGray)
+{
+  NNSG2dImagePaletteProxy proxy;
+  u32 res;
+
+  if(bGray){
+    res = pWork->cellRes[PLT_POKEICON_GRAY];
+  }
+  else{
+    res = pWork->cellRes[PLT_POKEICON];
+  }
+  GFL_CLGRP_PLTT_GetProxy(res , &proxy);
+  GFL_CLACT_WK_SetPlttProxy( pCL , &proxy);
+}
+
+
 static void _pokeIconPaletteGray(POKEMON_TRADE_WORK* pWork,int line, int i,POKEMON_PASO_PARAM* ppp,BOOL bTemoti,int k)
 {
   NNSG2dImagePaletteProxy proxy;
@@ -903,7 +919,9 @@ static void _createPokeIconResource(POKEMON_TRADE_WORK* pWork,BOX_MANAGER* boxDa
 
 
   if(line == pWork->MainObjCursorLine){
-    GFL_CLACT_WK_SetDrawEnable( pWork->markIcon[k][pWork->MainObjCursorIndex], TRUE );
+    if(pWork->padMode==TRUE){
+      GFL_CLACT_WK_SetDrawEnable( pWork->markIcon[k][pWork->MainObjCursorIndex], TRUE );
+    }
   }
   
 
@@ -2270,20 +2288,102 @@ void POKETRADE_2D_GTSPokemonIconResetAll(POKEMON_TRADE_WORK* pWork)
   }
 }
 
+#if 0
 
-#define N (3)
+#define N (4)
 
-static float ap[N];
-static float aa[N];
-static float ab[N];
-static float ax[N];
-static float ay[N];
+static double ap[N];
+static double aa[N];
+static double ab[N];
+static double ax[N];
+static double ay[N];
 
-static void maketable(float *x,float *y, float *z)
+
+
+void maketable(double x[], double y[], double z[])
+{
+	int i;
+	double t;
+	static double h[N], d[N];
+
+	z[0] = 0;  z[N - 1] = 0;  /* 両端点での y''(x) / 6 */
+    for (i = 0; i < N - 1; i++) {
+		h[i    ] =  x[i + 1] - x[i];
+		d[i + 1] = (y[i + 1] - y[i]) / h[i];
+	}
+	z[1] = d[2] - d[1] - h[0] * z[0];
+	d[1] = 2 * (x[2] - x[0]);
+	for (i = 1; i < N - 2; i++) {
+		t = h[i] / d[i];
+		z[i + 1] = d[i + 2] - d[i + 1] - z[i] * t;
+		d[i + 1] = 2 * (x[i + 2] - x[i]) - h[i] * t;
+	}
+	z[N - 2] -= h[N - 2] * z[N - 1];
+	for (i = N - 2; i > 0; i--)
+		z[i] = (z[i] - h[i] * z[i + 1]) / d[i];
+}
+
+double spline(double t, double x[], double y[], double z[])
+{
+	int i, j, k;
+	double d, h;
+
+	i = 0;  j = N - 1;
+	while (i < j) {
+		k = (i + j) / 2;
+		if (x[k] < t) i = k + 1;  else j = k;
+	}
+	if (i > 0) i--;
+	h = x[i + 1] - x[i];  d = t - x[i];
+	return (((z[i + 1] - z[i]) * d / h + z[i] * 3) * d
+		+ ((y[i + 1] - y[i]) / h
+		- (z[i] * 2 + z[i + 1]) * h)) * d + y[i];
+}
+
+void maketable2(double p[], double x[], double y[],
+		double a[], double b[])
+{
+	int i;
+	double t1, t2;
+
+	p[0] = 0;
+	for (i = 1; i < N; i++) {
+		t1 = x[i] - x[i - 1];
+		t2 = y[i] - y[i - 1];
+
+    {
+      fx32 fxret;
+      double fret;
+
+      fret = t1*t1 + t2*t2;
+      fxret = FX_F32_TO_FX32((float)fret);
+      fxret = FX_Sqrt(fxret);
+      fret = (double)FX_FX32_TO_F32(fxret);
+      p[i] = p[i-1] + fret;
+    }
+
+//		p[i] = p[i - 1] + sqrt(t1 * t1 + t2 * t2);
+	}
+	for (i = 1; i < N; i++) p[i] /= p[N - 1];
+	maketable(p, x, a);
+	maketable(p, y, b);
+}
+
+void spline2(double t, double *px, double *py,
+		double p[], double x[], double  y[], 
+		double a[], double b[])
+{
+	*px = spline(t, p, x, a);
+	*py = spline(t, p, y, b);
+}
+
+
+
+static void maketable(double *x,double *y, double *z)
 {
   int i;
-  float t;
-  static float h[N] ,d[N];
+  double t;
+  static double h[N] ,d[N];
 
   z[0]=0;
   z[N-1]=0;
@@ -2291,25 +2391,24 @@ static void maketable(float *x,float *y, float *z)
   for(i=0;i<N-1;i++){
     h[i]=x[i+1]-x[i];
     d[i+1]=(y[i+1]-y[i]) / h[i];
-
-    z[1]=d[2]-d[1]-(h[0]*z[0]);
-    d[1]=2*(x[2]-x[0]);
-    for(i=1;i<N-2;i++){
-      t = h[i]/d[i];
-      z[i+1] = d[i+2] - d[i+1] - z[i] * t;
-      d[i+1] = 2 * (x[i+2]-x[i]) - h[i] * t;
-    }
-    z[N-2]-=h[N-2]*z[N-1];
-    for(i=N-2;i>0;i--){
-      z[i]=(z[i]-h[i]*z[i+1])/d[i];
-    }
+  }
+  z[1]=d[2]-d[1]-(h[0]*z[0]);
+  d[1]=2.0*(x[2]-x[0]);
+  for(i=1;i<N-2;i++){
+    t = h[i]/d[i];
+    z[i+1] = d[i+2] - d[i+1] - z[i] * t;
+    d[i+1] = 2.0 * (x[i+2]-x[i]) - h[i] * t;
+  }
+  z[N-2]-=h[N-2]*z[N-1];
+  for(i=N-2;i>0;i--){
+    z[i]=(z[i]-h[i]*z[i+1])/d[i];
   }
 }
 
-static float spline(float t,float *x,float *y,float *z)
+static double spline(double t,double *x,double *y,double *z)
 {
   int i,j,k;
-  float d, h;
+  double d, h;
 
   
   i=0;
@@ -2328,15 +2427,15 @@ static float spline(float t,float *x,float *y,float *z)
   }
   h = x[i+1] -x[i];
   d = t - x[i];
-  return (((z[i+1]-z[i])*d/h+z[i]*3)*d+((y[i+1]-y[i])/h - (z[i]*2+z[i+1])*h))*d+y[i];
+  return (((z[i+1]-z[i])*d/h+z[i]*3)*d+((y[i+1]-y[i])/h - (z[i]*2.0+z[i+1])*h))*d+y[i];
 }
 
 
 
-static void maketable2(float *p, float *x, float *y, float *a,float *b)
+static void maketable2(double *p, double *x, double *y, double *a,double *b)
 {
   int i;
-  float t1,t2;
+  double t1,t2;
 
   p[0]=0;
   for(i=1;i<N;i++){
@@ -2345,28 +2444,37 @@ static void maketable2(float *p, float *x, float *y, float *a,float *b)
 
     {
       fx32 fxret;
-      float fret;
+      double fret;
 
-      fxret = FX_F32_TO_FX32(t1*t1 + t2*t2);
+      fret = t1*t1 + t2*t2;
+      fxret = FX_F32_TO_FX32((float)fret);
+      OS_Printf("%d \n",fxret / FX32_ONE);
+
       fxret = FX_Sqrt(fxret);
-      fret = FX_FX32_TO_F32(fxret);
+      OS_Printf("%d \n",fxret / FX32_ONE);
+
+
+      
+      fret = (double)FX_FX32_TO_F32(fxret);
       p[i] = p[i-1] + fret;
     }
-
-    for(i=1;i<N;i++){
-      p[i]/=p[N-1];
-    }
-    maketable( p, x, a);
-    maketable( p, y, b);
   }
+
+  for(i=1;i<N;i++){
+    p[i]/=p[N-1];
+  }
+  maketable( p, x, a);
+  maketable( p, y, b);
 }
 
 
-static void spline2(float t, float *px, float *py,float *p, float *x,float *y,float *a,float *b)
+static void spline2(double t, double *px, double *py,double *p, double *x,double *y,double *a,double *b)
 {
   *px = spline( t, p, x, a);
   *py = spline( t, p, y, b);
 }
+#endif
+
 
 
 //------------------------------------------------------------------------------
@@ -2379,15 +2487,15 @@ static void spline2(float t, float *px, float *py,float *p, float *x,float *y,fl
  */
 //------------------------------------------------------------------------------
 
-void POKEMONTRADE_StartCatched(POKEMON_TRADE_WORK* pWork,int line, int pos,int x,int y)
+void POKEMONTRADE_StartCatched(POKEMON_TRADE_WORK* pWork,int line, int pos,int x,int y,POKEMON_PASO_PARAM* ppp)
 {
   GFL_CLWK_DATA cellInitData;
 
-  cellInitData.pos_x = 0;
-  cellInitData.pos_y = 0;
+  cellInitData.pos_x = x;
+  cellInitData.pos_y = y;
   cellInitData.anmseq = POKEICON_ANM_HPMAX;
-  cellInitData.softpri = _CLACT_SOFTPRI_POKELIST;
-  cellInitData.bgpri = 3;
+  cellInitData.softpri = 0;
+  cellInitData.bgpri = 0;
 
   pWork->curIcon[CELL_CUR_POKE_KEY] =
     GFL_CLACT_WK_Create( pWork->cellUnit ,
@@ -2395,6 +2503,10 @@ void POKEMONTRADE_StartCatched(POKEMON_TRADE_WORK* pWork,int line, int pos,int x
                          pWork->cellRes[PLT_POKEICON],
                          pWork->cellRes[ANM_POKEICON],
                          &cellInitData ,CLSYS_DRAW_SUB , pWork->heapID );
+
+  GFL_CLACT_WK_SetPlttOffs( pWork->curIcon[CELL_CUR_POKE_KEY] ,
+                            POKEICON_GetPalNumGetByPPP( ppp ) , CLWK_PLTTOFFS_MODE_PLTT_TOP );
+
 }
 
 //------------------------------------------------------------------------------
@@ -2407,19 +2519,50 @@ void POKEMONTRADE_StartCatched(POKEMON_TRADE_WORK* pWork,int line, int pos,int x
  */
 //------------------------------------------------------------------------------
 
-void POKEMONTRADE_StartSucked(POKEMON_TRADE_WORK* pWork,int x1,int y1)
+void POKEMONTRADE_StartSucked(POKEMON_TRADE_WORK* pWork)
 {
   GFL_CLACTPOS pos;
 
   GFL_CLACT_WK_GetPos(pWork->curIcon[CELL_CUR_POKE_KEY], &pos, CLSYS_DRAW_SUB);
+
+#if 0
+
   ax[0] = pos.x;
   ay[0] = pos.y;
-  ax[1] = x1;
-  ay[1] = y1;
+  ax[1] = pos.x - (pWork->aVecPos.x-pos.x);
+  ay[1] = pos.y - (pWork->aVecPos.y-pos.y);
   ax[2] = 28;
-  ay[2] = 0;
+  ay[2] = 8;
+  ax[3] = 28;
+  ay[3] = 0;
 
   maketable2(ap,ax,ay,aa,ab);
+#endif
+  {
+    VecFx32 mullpos[4];
+
+    mullpos[0].x = pos.x*FX32_ONE;
+    mullpos[0].y = pos.y*FX32_ONE;
+    mullpos[0].z = 0;
+    mullpos[1].x = (pos.x-(pWork->aVecPos.x-pos.x)*10)*FX32_ONE;
+    mullpos[1].y = (pos.y-(pWork->aVecPos.y-pos.y)*10)*FX32_ONE;
+    mullpos[1].z = 0;
+    mullpos[2].x = 28*FX32_ONE;
+    mullpos[2].y = 154*FX32_ONE;
+    mullpos[2].z = 0;
+    mullpos[3].x = 28*FX32_ONE;
+    mullpos[3].y = 0*FX32_ONE;
+    mullpos[3].z = 0;
+
+    OS_Printf("%d %d\n",mullpos[0].x/FX32_ONE,mullpos[0].y/FX32_ONE);
+    OS_Printf("%d %d\n",mullpos[1].x/FX32_ONE,mullpos[1].y/FX32_ONE);
+    OS_Printf("%d %d\n",mullpos[2].x/FX32_ONE,mullpos[2].y/FX32_ONE);
+    OS_Printf("%d %d\n",mullpos[3].x/FX32_ONE,mullpos[3].y/FX32_ONE);
+
+    PROGVAL_PEZIER_Init(&pWork->aCutMullRom,
+                         &mullpos[0],&mullpos[1],&mullpos[2],&mullpos[3],_SUCKEDCOUNT_NUM-2);
+
+  }
   pWork->SuckedCount = _SUCKEDCOUNT_NUM;
 
 }
@@ -2435,21 +2578,46 @@ void POKEMONTRADE_StartSucked(POKEMON_TRADE_WORK* pWork,int x1,int y1)
  */
 //------------------------------------------------------------------------------
 
-void POKEMONTRADE_SuckedMain(POKEMON_TRADE_WORK* pWork)
+BOOL POKEMONTRADE_SuckedMain(POKEMON_TRADE_WORK* pWork)
 {
-  float num;
-  float ansx,ansy;
+  double num;
+  double ansx,ansy;
     GFL_CLACTPOS pos;
   
   if(pWork->SuckedCount){
     pWork->SuckedCount--;
-    num = (_SUCKEDCOUNT_NUM - pWork->SuckedCount);
-    num = num / _SUCKEDCOUNT_NUM;
-    spline2(num, &ansx, &ansy ,ap,ax,ay,aa,ab);
-    pos.x = (int)ansx;
-    pos.y = (int)ansx;
-    GFL_CLACT_WK_SetPos(  pWork->curIcon[CELL_CUR_POKE_KEY], &pos, CLSYS_DRAW_SUB);
+    if(pWork->SuckedCount==0){
+      return TRUE;
+    }
+    if(pWork->SuckedCount==1){
+      POKEMONTRADE_RemovePokemonCursor(pWork);
+    }
+    else{
+      PROGVAL_PEZIER_Main( &pWork->aCutMullRom );
+      pos.x = pWork->aCutMullRom.now_val.x/FX32_ONE;
+      pos.y = pWork->aCutMullRom.now_val.y/FX32_ONE;
+      OS_Printf("spline %d %d \n",pos.x,pos.y);
+      GFL_CLACT_WK_SetPos(  pWork->curIcon[CELL_CUR_POKE_KEY], &pos, CLSYS_DRAW_SUB);
+    }
   }
+  return FALSE;
 
 }
 
+//------------------------------------------------------------------------------
+/**
+ * @brief   ポケモンカーソルを消す
+ * @param   POKEMON_TRADE_WORK
+ * @param   palno      パレットを送る番号
+ * @param   palType   パレット転送タイプ MAINかSUB
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+void POKEMONTRADE_RemovePokemonCursor(POKEMON_TRADE_WORK* pWork)
+{
+  if(pWork->curIcon[CELL_CUR_POKE_KEY]){
+    GFL_CLACT_WK_Remove(pWork->curIcon[CELL_CUR_POKE_KEY]);
+    pWork->curIcon[CELL_CUR_POKE_KEY]=NULL;
+  }
+}

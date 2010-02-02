@@ -36,6 +36,7 @@
 //タッチバー
 #include "ui/touchbar.h"
 #include "savedata/mail_util.h"
+#include "progval.h"
 
 ///3Dモデルのタイプ
 typedef enum
@@ -361,7 +362,7 @@ struct _POKEMON_TRADE_WORK{
 
   GFL_ARCUTIL_TRANSINFO bgchar;
 
-  
+  BOOL padMode;
 
   APP_TASKMENU_WORK* pAppTask;
   APP_TASKMENU_ITEMWORK appitem[_SUBMENU_LISTMAX];
@@ -461,6 +462,7 @@ struct _POKEMON_TRADE_WORK{
   GFL_CLWK* pCatchCLWK;   ///<つかんでるポケモンCLACT  こちらはタッチ時に移動するために使う
   GFL_CLACTPOS aCatchOldPos;  //つかんでるポケモンの前の位置
   GFL_CLACTPOS aDifferencePos;  //つかんでるポケモンの誤差位置
+  GFL_CLACTPOS aVecPos;  //ベクトルを作る為にとっておく前の位置
   BOOL bStatusDisp;
 
   int MainObjCursorLine;   //OBJカーソルライン
@@ -515,6 +517,7 @@ struct _POKEMON_TRADE_WORK{
   u16* scrTemoti;
   u8* pCharMem;
   POKEMONTRADE_TYPE type;
+  PROGVAL_PEZIER_WORK aCutMullRom;
   s16 SuckedCount;
   u8 BGClearFlg;
   u8 DemoBGClearFlg;
@@ -614,6 +617,7 @@ extern void IRC_POKETRADE_EndIconResource(POKEMON_TRADE_WORK* pWork);
 
 extern void IRC_POKETRADE_DEMOCLACT_Create(POKEMON_TRADE_WORK* pWork);
 extern void IRC_POKETRADE_CLACT_Create(POKEMON_TRADE_WORK* pWork);
+extern void POKMEONTRADE2D_IconGray(POKEMON_TRADE_WORK* pWork, GFL_CLWK* pCL ,BOOL bGray);
 
 
 #if _TRADE_DEBUG
@@ -744,6 +748,8 @@ extern void POKE_GTS_DeletePokemonState(POKEMON_TRADE_WORK* pWork);
 
 extern void POKETRADE_2D_ObjTrayDispInit(POKEMON_TRADE_WORK* pWork);
 
-extern void POKEMONTRADE_StartCatched(POKEMON_TRADE_WORK* pWork,int line, int pos,int x,int y);
-extern void POKEMONTRADE_StartSucked(POKEMON_TRADE_WORK* pWork,int x1,int y1);
-extern void POKEMONTRADE_SuckedMain(POKEMON_TRADE_WORK* pWork);
+extern void POKEMONTRADE_StartCatched(POKEMON_TRADE_WORK* pWork,int line, int pos,int x,int y,POKEMON_PASO_PARAM* ppp);
+extern void POKEMONTRADE_StartSucked(POKEMON_TRADE_WORK* pWork);
+extern BOOL POKEMONTRADE_SuckedMain(POKEMON_TRADE_WORK* pWork);
+extern void POKEMONTRADE_RemovePokemonCursor(POKEMON_TRADE_WORK* pWork);
+

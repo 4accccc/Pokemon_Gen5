@@ -575,10 +575,15 @@ static void * _PokeTradeWorkCreate(D_OHNO_WORK *wk)
 static void * _PokeIrcTradeWorkCreate(D_OHNO_WORK *wk)
 {
 	POKEMONTRADE_PARAM *pWork;
+  MYSTATUS* pFriend;
 
   
 	pWork = GFL_HEAP_AllocClearMemory(GFL_HEAPID_APP, sizeof(POKEMONTRADE_PARAM));
   pWork->gamedata = GAMEDATA_Create(GFL_HEAPID_APP);
+
+  pFriend = GAMEDATA_GetMyStatusPlayer(pWork->gamedata, 1);
+  GFL_STD_MemCopy(MyStatus_AllocWork(GFL_HEAPID_APP),pFriend,MyStatus_GetWorkSize() );
+
   
   return pWork;
 }

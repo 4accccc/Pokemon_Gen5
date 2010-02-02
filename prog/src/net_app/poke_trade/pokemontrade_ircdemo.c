@@ -307,8 +307,10 @@ static void _changeDemo_ModelTrade0(POKEMON_TRADE_WORK* pWork)
   pWork->pD2Fade->pal_end = -16;
 
   if(pWork->modelno!=-1){
-    pWork->pModelFade = _createPaletteFade(GFL_G3D_UTIL_GetResHandle(pWork->g3dUtil,0), pWork->heapID);
-    _FIELD_StartPaletteFade( pWork->pModelFade, 0, 16, ANMCNTC(_POKEMON_CENTER_TIME/3)/16, 0 );
+    IRC_POKETRADEDEMO_RemoveModel(pWork);
+    
+//    pWork->pModelFade = _createPaletteFade(GFL_G3D_UTIL_GetResHandle(pWork->g3dUtil,0), pWork->heapID);
+//    _FIELD_StartPaletteFade( pWork->pModelFade, 0, 16, ANMCNTC(_POKEMON_CENTER_TIME/3)/16, 0 );
   }
 
   {
@@ -339,9 +341,9 @@ static void _changeDemo_ModelTrade1(POKEMON_TRADE_WORK* pWork)
 
   {  // フェード中
     _setFadeMask(pWork->pD2Fade);
-    if(pWork->pModelFade){
-      _EFFTOOL_CalcPaletteFade(pWork->pModelFade);
-    }
+//    if(pWork->pModelFade){
+//      _EFFTOOL_CalcPaletteFade(pWork->pModelFade);
+//    }
     _pokeMoveFunc(pWork->pMoveMcss[0]);
     _pokeMoveFunc(pWork->pMoveMcss[1]);
   }
@@ -351,8 +353,8 @@ static void _changeDemo_ModelTrade1(POKEMON_TRADE_WORK* pWork)
     GFL_DISP_GX_SetVisibleControlDirect( GX_PLANEMASK_BG0|GX_PLANEMASK_OBJ );
     GFL_DISP_GXS_SetVisibleControlDirect( 0 );
     POKMEONTRADE_RemoveCoreResource( pWork);
-    _freePaletteFade(pWork->pModelFade);
-    pWork->pModelFade = NULL;
+//    _freePaletteFade(pWork->pModelFade);
+//    pWork->pModelFade = NULL;
     
     pWork->cellUnit = GFL_CLACT_UNIT_Create( 3 , 0 , pWork->heapID );
 

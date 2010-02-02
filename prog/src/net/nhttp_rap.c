@@ -371,12 +371,10 @@ BOOL NHTTP_RAP_SvlGetTokenMain(NHTTP_RAP_WORK* pWork)
 }
 
 
-void NHTTP_RAP_PokemonEvilCheckCreate(NHTTP_RAP_WORK* pWork, HEAPID heapID, int size, NHTTP_POKECHK_ENUM type)
+
+void NHTTP_RAP_PokemonEvilCheckReset(NHTTP_RAP_WORK* pWork,NHTTP_POKECHK_ENUM type)
 {
   u16 typeu16 = type;
-
-  pWork->pData = GFL_NET_Align32Alloc(heapID, size + DWC_SVL_TOKEN_LENGTH + 4);
-
 #if _EVILSERVER_PROTO
   pWork->length = 127;
   GFL_STD_MemCopy(pWork->svl.svltoken, pWork->pData, pWork->length);
@@ -388,6 +386,16 @@ void NHTTP_RAP_PokemonEvilCheckCreate(NHTTP_RAP_WORK* pWork, HEAPID heapID, int 
 #endif
   GFL_STD_MemCopy(&typeu16, &pWork->pData[pWork->length], 2);
   pWork->length += 2;
+}
+
+
+void NHTTP_RAP_PokemonEvilCheckCreate(NHTTP_RAP_WORK* pWork, HEAPID heapID, int size, NHTTP_POKECHK_ENUM type)
+{
+  u16 typeu16 = type;
+
+  pWork->pData = GFL_NET_Align32Alloc(heapID, size + DWC_SVL_TOKEN_LENGTH + 4);
+
+  NHTTP_RAP_PokemonEvilCheckReset(pWork, type);
 }
 
 
@@ -471,4 +479,13 @@ BOOL NHTTP_RAP_PokemonEvilCheckConectionCreate(NHTTP_RAP_WORK* pWork)
   return TRUE;
 }
 
+
+void NHTTP_RAP_PokemonEvilCheckDelete(NHTTP_RAP_WORK* pWork, HEAPID heapID, int size, NHTTP_POKECHK_ENUM type)
+{
+  u16 typeu16 = type;
+
+  GFL_NET_Align32Free(pWork->pData);
+  pWork->pData = NULL;
+  pWork->length = 0;
+}
 

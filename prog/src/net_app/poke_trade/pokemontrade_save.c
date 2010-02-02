@@ -184,8 +184,10 @@ static void _changeDemo_ModelTrade23(POKEMON_TRADE_WORK* pWork)
     pWork->pParentWork->selectBoxno = pWork->selectBoxno;
     pWork->pParentWork->selectIndex = pWork->selectIndex;
 
-    PokeParty_Init( pWork->pParentWork->pParty, TEMOTI_POKEMAX );
-    PokeParty_Add( pWork->pParentWork->pParty, pp );
+    if(pWork->pParentWork->pParty){
+      PokeParty_Init( pWork->pParentWork->pParty, TEMOTI_POKEMAX );
+      PokeParty_Add( pWork->pParentWork->pParty, pp );
+    }
   }
 
   {
@@ -336,8 +338,8 @@ static void _changeTimingSaveStart(POKEMON_TRADE_WORK* pWork)
     _CHANGE_STATE(pWork, _changeTimingSaveStart2);
   }
   else{
-    GAMEDATA_SaveAsyncStart(pWork->pGameData);
-    _CHANGE_STATE(pWork, _changeTimingSaveStart3);
+  //  GAMEDATA_SaveAsyncStart(pWork->pGameData);
+    _CHANGE_STATE(pWork, _changeDemo_ModelTrade30);
   }
 
 }
@@ -369,6 +371,9 @@ static void _changeTimingSaveStart4(POKEMON_TRADE_WORK* pWork)
     if(POKEMONTRADEPROC_IsNetworkMode(pWork)){
       GFL_NET_HANDLE_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_SAVELAST);
       _CHANGE_STATE(pWork, _changeTimingSaveStart5);
+    }
+    else{
+      _CHANGE_STATE(pWork,_changeDemo_ModelTrade30);
     }
   }
 }

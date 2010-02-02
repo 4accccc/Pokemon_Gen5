@@ -35,6 +35,7 @@
 #define cameraNear	    ( 1 << FX32_SHIFT )
 #define cameraFar       ( 400 << FX32_SHIFT )
 
+static void _polygondraw( POKEMON_TRADE_WORK* pWork);
 
 //============================================================================================
 /**
@@ -225,6 +226,7 @@ static void _cameraSetTrade01(POKEMON_TRADE_WORK* pWork)
 }
 
 
+#if 0
 static void _moveSetReel(POKEMON_TRADE_WORK* pWork,GFL_G3D_OBJSTATUS* pStatus)
 {
   int a;
@@ -285,6 +287,13 @@ static void _moveSetReel(POKEMON_TRADE_WORK* pWork,GFL_G3D_OBJSTATUS* pStatus)
     }
   }
 }
+#else
+static void _moveSetReel(POKEMON_TRADE_WORK* pWork,GFL_G3D_OBJSTATUS* pStatus)
+{
+  int a;
+  _polygondraw(pWork);
+}
+#endif
 
 static void _moveSetTrade01(POKEMON_TRADE_WORK* pWork,GFL_G3D_OBJSTATUS* pStatus)
 {
@@ -388,7 +397,7 @@ static void _moveSetTrade01(POKEMON_TRADE_WORK* pWork,GFL_G3D_OBJSTATUS* pStatus
 
 static const MODEL3D_SET_FUNCS modelset[] =
 {
-  { _cameraSetReel,_moveSetReel },
+  { _cameraSetReel,  _moveSetReel },
   { _cameraSetTrade01,_moveSetTrade01 },
   { _cameraSetTrade01,_moveSetTrade01 },
 };
@@ -617,7 +626,7 @@ void IRC_POKETRADEDEMO_Init( POKEMON_TRADE_WORK* pWork )
     pWork->camera   = GFL_G3D_CAMERA_CreateDefault( &pos, &target, pWork->heapID );
   }
   if(pWork->modelno!=-1){
-//    modelset[pWork->modelno].setCamera(pWork);
+    modelset[pWork->modelno].setCamera(pWork);
   }
 
    _panelLoad(pWork,25);
@@ -759,7 +768,6 @@ static void Finalize( POKEMON_TRADE_WORK* pWork )
 
 }
 
-static void _polygondraw( POKEMON_TRADE_WORK* pWork);
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -773,7 +781,6 @@ static void Draw( POKEMON_TRADE_WORK* pWork )
   static fx32 anime_speed = FX32_ONE;  // 1/60‚Å‚Ì“®ì‚Ìˆ×
   GFL_G3D_OBJSTATUS status;
 
-  _polygondraw(pWork);
 
   
   if(pWork->modelno==-1){
@@ -781,9 +788,9 @@ static void Draw( POKEMON_TRADE_WORK* pWork )
   }
 
 
-
-//  modelset[pWork->modelno].setMove(pWork, &status);
-
+  if(modelset[pWork->modelno].setMove){
+    modelset[pWork->modelno].setMove(pWork, &status);
+  }
   // TEMP: ƒJƒƒ‰İ’è
   //  {
   //    fx32 far = FX32_ONE * 0;
@@ -1045,8 +1052,6 @@ static void DEMO_Set3DDefaultMaterial(BOOL bUsediffuseAsVtxCol, BOOL bUseShinine
 }
 
 
-
-static float posfx = -1;
 
 static void _createBoard(float pos, int index)
 {

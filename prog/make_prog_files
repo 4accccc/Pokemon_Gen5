@@ -1205,7 +1205,8 @@ SRCS_OVERLAY_POKEMON_TRADE = net_app/poke_trade/pokemontrade_proc.c \
 								net_app/poke_trade/pokemontrade_message.c \
 								net_app/poke_trade/pokemontrade_3d.c \
 								net_app/poke_trade/pokemontrade_disptool.c \
-								net_app/poke_trade/pokemontrade_2d.c
+								net_app/poke_trade/pokemontrade_2d.c \
+								net_app/poke_trade/progval.c
 
 # GTSネゴシエーション交換
 #===> SRCS_OVERLAY_DPW_COMMON
