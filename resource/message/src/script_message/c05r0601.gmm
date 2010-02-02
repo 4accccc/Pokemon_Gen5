@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2010-01-13T11:40:30"/>
+	<create user="matsumiya" host="W00224" date="2010-02-02T12:35:20"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="1310" top="227" right="2015" bottom="847" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -352,16 +352,11 @@
 なんでも　かってけー！</language>
 	</row>
 
-	<row id="msg_c05r0601_trainerw_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♀
-・このメッセージラベルは削除</comment>
+	<row id="msg_c05r0601_trainerw_01" text-color="#ffffff,,,#ffffff,,#ffffff,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>・このメッセージラベルは削除</comment>
 		<attribute name="キャラ指定">TRAINERW</attribute>
-		<language name="JPN" width="256">なんていうか　なんていうか
-こう　ものが　あふれていると[BE:00:ページ切り替え（行送り）]
-エネルギーを　かんじちゃう</language>
-		<language name="JPN_KANJI" width="256">なんていうか　なんていうか
-こう　物が　あふれていると[BE:00:ページ切り替え（行送り）]
-エネルギーを　感じちゃうね</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_c05r0601_trainerw_01w">
@@ -379,24 +374,21 @@
 		<comment>♀
 ・BLACKver</comment>
 		<attribute name="キャラ指定">TRAINERW</attribute>
-		<language name="JPN" width="256">いろいろ　ゆしゅつを　していて
-きっと　ゆったりとした[BE:00:ページ切り替え（行送り）]
-きせつを　だいじにする　まちが　あるわ</language>
-		<language name="JPN_KANJI" width="256">いろいろ　輸出を　していて
-きっと　ゆったりとした[BE:00:ページ切り替え（行送り）]
-季節を　大事にする　街が　あるわ</language>
+		<language name="JPN" width="256">きせつを　だいじにする
+ゆったりとして　まちが　あるの▼
+その　まちから　いろいろ
+ゆしゅつ　しているんだって！</language>
+		<language name="JPN_KANJI" width="256">季節を　大事にする
+ゆったりとして　街が　あるの▼
+そこから　いろいろ
+輸出　しているんだって！</language>
 	</row>
 
 	<row id="msg_c05r0601_nurse_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♀
-・このメッセージラベルは削除</comment>
+		<comment>・このメッセージラベルは削除</comment>
 		<attribute name="キャラ指定">NURSE</attribute>
-		<language name="JPN" width="256">ホドモエは　りゅうつうの　まち[BE:01:ページ切り替え（クリア）]
-とおい　ちほうの
-めずらしい　しなも　そろってるわ！</language>
-		<language name="JPN_KANJI" width="256">ホドモエは　流通の　街[BE:01:ページ切り替え（クリア）]
-遠い　地方の
-珍しい　品物も　手に入るわ！</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_c05r0601_nurse_01w">
@@ -426,13 +418,10 @@
 	</row>
 
 	<row id="msg_c05r0601_workman_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・このメッセージラベルは削除</comment>
+		<comment>・このメッセージラベルは削除</comment>
 		<attribute name="キャラ指定">WORKMAN</attribute>
-		<language name="JPN" width="256">せかいが　うみで　つながるかぎり
-この　いちばには　なんでも　そろう！</language>
-		<language name="JPN_KANJI" width="256">世界が　海で　つながるかぎり
-この　マーケットには　なんでも　そろう！</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_c05r0601_workman_01w">
@@ -444,7 +433,7 @@
 せかいって　こうやって
 どこかに　つながっているんだよな</language>
 		<language name="JPN_KANJI" width="256">ホドモエから　運ばれた　荷物が
-どこかの　まちに　届く……[BE:01:ページ切り替え（クリア）]
+どこかの　街に　届く……[BE:01:ページ切り替え（クリア）]
 世界って　こうやって
 どこかに　つながっているんだよな</language>
 	</row>
@@ -457,7 +446,7 @@
 にもつが　ホドモエに　とどく……[BE:01:ページ切り替え（クリア）]
 せかいって　こうやって
 どこかに　つながっているんだよな</language>
-		<language name="JPN_KANJI" width="256">どこかの　まちから　運ばれた
+		<language name="JPN_KANJI" width="256">どこかの　街から　運ばれた
 荷物が　ホドモエに　届く……[BE:01:ページ切り替え（クリア）]
 世界って　こうやって
 どこかに　つながっているんだよな</language>
