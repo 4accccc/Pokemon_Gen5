@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-02T19:40:05"/>
+	<create user="matsumiya" host="W00224" date="2010-02-02T20:21:23"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="20" top="266" right="721" bottom="886" maximized="no" rayout="Vertical2">
+	<dialog left="1355" top="307" right="2056" bottom="927" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="526"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="539"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="693"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -298,9 +298,9 @@
 ・続けてmsg_t01r0401_white_01</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
 		<language name="JPN" width="256">チェレン『ほら！
-はかせが　まってる[BE:01:ページ切り替え（クリア）]</language>
+はかせが　まってるよ[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">チェレン『ほら！
-博士が　待ってる[BE:01:ページ切り替え（クリア）]</language>
+博士が　待ってるよ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_t01r0401_white_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -334,11 +334,11 @@
 ・続けてmsg_t01r0401_doctor_jr_02表示</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
 		<language name="JPN" width="256">チェレン『アララギはかせ？[BE:01:ページ切り替え（クリア）]
-いまさら　そんなこと　しなくても
-なまえぐらい　しってるよ[BE:01:ページ切り替え（クリア）]</language>
+いまさら　そんなこと　なさらなくても
+なまえは　しっていますよ[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">チェレン『アララギ博士？[BE:01:ページ切り替え（クリア）]
-いまさら　そんなこと　しなくても
-名前ぐらい　知ってるよ[BE:01:ページ切り替え（クリア）]</language>
+いまさら　そんなこと　なさらなくても
+名前は　知っていますよ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_t01r0401_hakase2_02">
@@ -451,8 +451,8 @@
 		<comment>♂
 ・続けてmsg_t01r0401_white_01表示</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">チェレン『ポケモンずかん　でしょ[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">チェレン『ポケモン図鑑　でしょ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">チェレン『ポケモンずかん　ですよね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">チェレン『ポケモン図鑑　ですよね[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_t01r0401_white_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -606,10 +606,10 @@
 　画面外に消えると、操作可能に</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
 		<language name="JPN" width="256">チェレン『ああ　そうだね[BE:01:ページ切り替え（クリア）]
-というわけで　オレたちも
+というわけで　ぼくたちも
 １ばんどうろに　いくと　しよう[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">チェレン『ああ　そうだね[BE:01:ページ切り替え（クリア）]
-というわけで　オレたちも
+というわけで　ぼくたちも
 １番道路に　行くと　しよう[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
