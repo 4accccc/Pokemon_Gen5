@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2010-01-13T19:25:19"/>
+	<create user="matsumiya" host="W00224" date="2010-02-02T15:18:31"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="6" top="172" right="704" bottom="788" maximized="no" rayout="Vertical2">
+	<dialog left="1472" top="370" right="2170" bottom="986" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="523"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="536"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="690"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,26 +292,26 @@
 	</lock>
 
 
-	<row id="msg_c01r0501_black_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c01r0501_black_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・黒板をむいたままメッセージ表示
 ・続けてblack_02</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">ブラッカー『ポケモンが
+		<language name="JPN" width="256">チェレン『ポケモンが
 どくを　うけると▼
 たたかっている　あいだ
 どんどん　たいりょくが　へる▼
 ただし　たいりょくが　へるのは
-たたかっているとき　だけ　か……▼</language>
-		<language name="JPN_KANJI" width="256">ブラッカー『ポケモンが
+たたかっているとき　だけ　ね……▼</language>
+		<language name="JPN_KANJI" width="256">チェレン『ポケモンが
 毒を　受けると▼
 戦っている　あいだ
 どんどん　体力が　減る▼
 ただし　体力が　減るのは
-戦っているとき　だけ　か……▼</language>
+戦っているとき　だけ　ね……▼</language>
 	</row>
 
-	<row id="msg_c01r0501_black_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c01r0501_black_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・はい/いいえの選択肢表示
 　はい→black_03
@@ -334,7 +334,7 @@
 探しにきた　とか？</language>
 	</row>
 
-	<row id="msg_c01r0501_black_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c01r0501_black_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・はい選択時
 ・続けてblack_05</comment>
@@ -345,22 +345,24 @@
 すれちがったのかな？▼</language>
 	</row>
 
-	<row id="msg_c01r0501_black_04" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c01r0501_black_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・いいえ選択時
 ・続けてblack_05</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">そんなこと　いわないでさ▼
-ジムリーダーと　たたかうことは
+		<language name="JPN" width="256">きみも　べんきょう　なんだね▼
+そういう　いみで　いうなら
+ジムリーダーと　たたかうことは▽
 トレーナーに　とって▽
-すごく　べんきょうに　なるからね▼</language>
-		<language name="JPN_KANJI" width="256">そんなこと　いわないでさ▼
-ジムリーダーと　戦うことは
+すごく　べんきょうに　なるよ▼</language>
+		<language name="JPN_KANJI" width="256">きみも　勉強なんだね▼
+そういう意味で　いうなら
+ジムリーダーと　戦うことは▽
 トレーナーに　とって▽
-すごく　勉強に　なるからね▼</language>
+すごく　勉強に　なるよ▼</language>
 	</row>
 
-	<row id="msg_c01r0501_black_05" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c01r0501_black_05" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・アイテム入手処理
 　No155「オレンのみ」
@@ -373,22 +375,22 @@
 この　きのみを　あげるよ▼</language>
 	</row>
 
-	<row id="msg_c01r0501_black_06" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c01r0501_black_06" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・black_05表示後は繰り返し
 ・c01ジムバッジ取得でここから削除</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">ブラッカー『ポケモンに
+		<language name="JPN" width="256">チェレン『ポケモンに
 きのみを　もたせておけば▼
-たたかって　たいりょくが　へると
+たたかって　たいりょくが　へったとき
 かってに　たべてくれるんだ▼
 もっとも　キズぐすりの　ように
 ひとが　つくった　どうぐは▽
 もたせておいても　つかえないけどね▼
 じゃ　がんばって</language>
-		<language name="JPN_KANJI" width="256">ブラッカー『ポケモンに
+		<language name="JPN_KANJI" width="256">チェレン『ポケモンに
 きのみを　持たせておけば▼
-戦って　体力が　減ると
+戦って　体力が　減ったとき
 勝手に　食べてくれるんだ▼
 もっとも　キズぐすりの　ように
 人が　つくった　道具は▽
@@ -456,7 +458,7 @@
 別の　わざマシンを　使えばいいし</language>
 	</row>
 
-	<row id="msg_c01r0501_boy3_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c01r0501_boy3_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・状態異常のクイズ（予定）</comment>
 		<attribute name="キャラ指定">BOY3

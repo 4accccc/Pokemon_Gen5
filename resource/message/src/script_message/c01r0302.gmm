@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-10T16:02:35"/>
+	<create user="matsumiya" host="W00224" date="2010-02-02T15:14:14"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,8 +292,9 @@
 	</lock>
 
 
-	<row id="msg_c01r0302_man1_01">
-		<comment>？？？</comment>
+	<row id="msg_c01r0302_man1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♂
+・仮メッセージ</comment>
 		<attribute name="キャラ指定">MAN1
 青年</attribute>
 		<language name="JPN" width="256">６ひき　つれあるける　ポケモンだが[BE:01:ページ切り替え（クリア）]
@@ -306,8 +307,9 @@
 勝負は　きびしく　なるだろうな！</language>
 	</row>
 
-	<row id="msg_c01r0302_breederw_01">
-		<comment>？？？</comment>
+	<row id="msg_c01r0302_breederw_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♀
+・仮メッセージ</comment>
 		<attribute name="キャラ指定">BREEDERW
 ブリーダー♀</attribute>
 		<language name="JPN" width="256">ポケモン　６ひきを　まんべんなく
@@ -320,7 +322,7 @@
 育てている　トレーナーも　いるってよ</language>
 	</row>
 
-	<row id="msg_c01r0302_poke1_01">
+	<row id="msg_c01r0302_poke1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>ポケモン
 ・暫定
 ・あわせて鳴き声SE</comment>
@@ -330,7 +332,7 @@
 		<language name="JPN_KANJI" width="256">ポケモン『ぴかぴかー！</language>
 	</row>
 
-	<row id="msg_c01r0302_poke2_01">
+	<row id="msg_c01r0302_poke2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>ポケモン
 ・暫定
 ・あわせて鳴き声SE</comment>

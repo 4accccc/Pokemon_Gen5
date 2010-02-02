@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-22T19:44:12"/>
+	<create user="matsumiya" host="W00224" date="2010-02-02T15:11:12"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="0" top="221" right="703" bottom="841" maximized="no" rayout="Vertical2">
+	<dialog left="1527" top="175" right="2230" bottom="795" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="528"/>
@@ -292,8 +292,9 @@
 	</lock>
 
 
-	<row id="msg_c01r0202_gentleman_01">
-		<comment>？？？</comment>
+	<row id="msg_c01r0202_gentleman_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♂
+・仮メッセージ</comment>
 		<attribute name="キャラ指定">GENTLEMAN
 紳士</attribute>
 		<language name="JPN" width="256">イッシュちほうの　ひとびとはね
@@ -312,7 +313,9 @@
 すごい　ポケモンだからね</language>
 	</row>
 
-	<row id="msg_c01r0202_dancer_01">
+	<row id="msg_c01r0202_dancer_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♂
+・仮メッセージ</comment>
 		<attribute name="キャラ指定">DANCER
 ダンサー</attribute>
 		<language name="JPN" width="256">ダンスは　ことばが　なくても
