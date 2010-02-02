@@ -190,9 +190,11 @@ typedef enum {
 
   SELITEM_BACKGROUND,
   SELITEM_LAND,
-  SELITEM_TIMEZONE,
   SELITEM_SEASON,
   SELITEM_WEATHER,
+  SELITEM_ZONEID,
+  SELITEM_FLD_HOUR,
+  SELITEM_FLD_MINUTE,
 
   SELITEM_MAX,
   SELITEM_NULL = SELITEM_MAX,
@@ -293,15 +295,21 @@ enum {
   LAYOUT_LABEL_PAGE3_X = 4,
   LAYOUT_LABEL_BACKGROUND_X    = LAYOUT_LABEL_PAGE3_X,
   LAYOUT_LABEL_LAND_X          = LAYOUT_LABEL_PAGE3_X,
-  LAYOUT_LABEL_TIMEZONE_X      = LAYOUT_LABEL_PAGE3_X,
   LAYOUT_LABEL_SEASON_X        = LAYOUT_LABEL_PAGE3_X,
   LAYOUT_LABEL_WEATHER_X       = LAYOUT_LABEL_PAGE3_X,
+  LAYOUT_LABEL_ZONEID_X        = LAYOUT_LABEL_PAGE3_X,
+  LAYOUT_LABEL_HOUR_X          = LAYOUT_LABEL_PAGE3_X,
+  LAYOUT_LABEL_MINUTE_X        = LAYOUT_LABEL_PAGE3_X,
+
+
 
   LAYOUT_LABEL_BACKGROUND_Y    = 8,
   LAYOUT_LABEL_LAND_Y          = LAYOUT_LABEL_BACKGROUND_Y+LAYOUT_PARTY_DATA_LINE_HEIGHT,
-  LAYOUT_LABEL_TIMEZONE_Y      = LAYOUT_LABEL_BACKGROUND_Y+LAYOUT_PARTY_DATA_LINE_HEIGHT*2,
-  LAYOUT_LABEL_SEASON_Y        = LAYOUT_LABEL_BACKGROUND_Y+LAYOUT_PARTY_DATA_LINE_HEIGHT*3,
-  LAYOUT_LABEL_WEATHER_Y       = LAYOUT_LABEL_BACKGROUND_Y+LAYOUT_PARTY_DATA_LINE_HEIGHT*4,
+  LAYOUT_LABEL_SEASON_Y        = LAYOUT_LABEL_BACKGROUND_Y+LAYOUT_PARTY_DATA_LINE_HEIGHT*2,
+  LAYOUT_LABEL_WEATHER_Y       = LAYOUT_LABEL_BACKGROUND_Y+LAYOUT_PARTY_DATA_LINE_HEIGHT*3,
+  LAYOUT_LABEL_ZONEID_Y        = LAYOUT_LABEL_BACKGROUND_Y+LAYOUT_PARTY_DATA_LINE_HEIGHT*4,
+  LAYOUT_LABEL_HOUR_Y          = LAYOUT_LABEL_BACKGROUND_Y+LAYOUT_PARTY_DATA_LINE_HEIGHT*5,
+  LAYOUT_LABEL_MINUTE_Y        = LAYOUT_LABEL_BACKGROUND_Y+LAYOUT_PARTY_DATA_LINE_HEIGHT*6,
 
 };
 
@@ -366,9 +374,11 @@ static const LABEL_LAYOUT LabelLayout_Page2[] = {
 static const LABEL_LAYOUT LabelLayout_Page3[] = {
   { DBGF_LABEL_BACKGROUND, LAYOUT_LABEL_BACKGROUND_X,   LAYOUT_LABEL_BACKGROUND_Y },
   { DBGF_LABEL_LAND,       LAYOUT_LABEL_LAND_X,         LAYOUT_LABEL_LAND_Y       },
-  { DBGF_LABEL_TIMEZONE,   LAYOUT_LABEL_TIMEZONE_X,     LAYOUT_LABEL_TIMEZONE_Y   },
   { DBGF_LABEL_SEASON,     LAYOUT_LABEL_SEASON_X,       LAYOUT_LABEL_SEASON_Y     },
   { DBGF_LABEL_WEATHER,    LAYOUT_LABEL_WEATHER_X,      LAYOUT_LABEL_WEATHER_Y    },
+  { DBGF_LABEL_ZONEID,     LAYOUT_LABEL_ZONEID_X,       LAYOUT_LABEL_ZONEID_Y     },
+  { DBGF_LABEL_HOUR,       LAYOUT_LABEL_HOUR_X,         LAYOUT_LABEL_HOUR_Y       },
+  { DBGF_LABEL_MINUTE,     LAYOUT_LABEL_MINUTE_X,       LAYOUT_LABEL_MINUTE_Y     },
 };
 
 
@@ -451,9 +461,11 @@ static const ITEM_LAYOUT ItemLayout_Page2[] = {
 static const ITEM_LAYOUT ItemLayout_Page3[] = {
   { SELITEM_BACKGROUND,  LAYOUT_LABEL_BACKGROUND_X  +56,   LAYOUT_LABEL_BACKGROUND_Y },
   { SELITEM_LAND,        LAYOUT_LABEL_LAND_X        +56,   LAYOUT_LABEL_LAND_Y       },
-  { SELITEM_TIMEZONE,    LAYOUT_LABEL_TIMEZONE_X    +56,   LAYOUT_LABEL_TIMEZONE_Y   },
   { SELITEM_SEASON,      LAYOUT_LABEL_SEASON_X      +56,   LAYOUT_LABEL_SEASON_Y     },
   { SELITEM_WEATHER,     LAYOUT_LABEL_WEATHER_X     +56,   LAYOUT_LABEL_WEATHER_Y    },
+  { SELITEM_ZONEID,      LAYOUT_LABEL_ZONEID_X      +56,   LAYOUT_LABEL_ZONEID_Y     },
+  { SELITEM_FLD_HOUR,    LAYOUT_LABEL_HOUR_X        +56,   LAYOUT_LABEL_HOUR_Y       },
+  { SELITEM_FLD_MINUTE,  LAYOUT_LABEL_MINUTE_X      +56,   LAYOUT_LABEL_MINUTE_Y     },
 };
 
 
@@ -543,6 +555,10 @@ typedef struct {
   u16  LimitTimeCommand;
   u8   LimitTimeGameMinute;
   u8   LimitTimeGameSec;
+
+  u16  field_zoneID;
+  u8   field_hour;
+  u8   field_minute;
 
 }DEBUG_BTL_SAVEDATA;
 
@@ -1166,7 +1182,7 @@ static void selItem_Increment( DEBUG_BTL_WORK* wk, u16 itemID, int incValue )
   case SELITEM_LAND:
     save->landForm = loopValue( save->landForm + incValue, 0, BATTLE_BG_ATTR_MAX-1 );
     break;
-  case SELITEM_TIMEZONE:
+  case SELITEM_ZONEID:
     save->timeZone = loopValue( save->timeZone + incValue, 0, TIMEZONE_MAX-1 );
     break;
   case SELITEM_SEASON:
@@ -1362,7 +1378,7 @@ static void PrintItem( DEBUG_BTL_WORK* wk, u16 itemID, BOOL fSelect )
 
         case SELITEM_BACKGROUND:  printItem_BackGround( wk, wk->strbuf ); break;
         case SELITEM_LAND:        printItem_LandForm( wk, wk->strbuf ); break;
-        case SELITEM_TIMEZONE:    printItem_TimeZone( wk, wk->strbuf ); break;
+        case SELITEM_ZONEID:    printItem_TimeZone( wk, wk->strbuf ); break;
         case SELITEM_SEASON:      printItem_Season( wk, wk->strbuf ); break;
         case SELITEM_WEATHER:     printItem_Weather( wk, wk->strbuf ); break;
 
@@ -1607,13 +1623,15 @@ static BOOL mainProc_Root( DEBUG_BTL_WORK* wk, int* seq )
       { SELITEM_LIMIT_GAME_SEC, SELITEM_LIMIT_GAME_MIN,SELITEM_LIMIT_COMMAND, SELITEM_NULL,           SELITEM_MUST_TUIKA    },
       { SELITEM_LIMIT_COMMAND,  SELITEM_LIMIT_GAME_SEC,SELITEM_LIMIT_GAME_MIN,SELITEM_NULL,           SELITEM_MUST_TUIKA    },
   /*    CurrentItem,            Up-Item,               Down-Item,             Right-Item,             Left-Item */
-      { SELITEM_BACKGROUND,     SELITEM_WEATHER,       SELITEM_LAND,          SELITEM_NULL,           SELITEM_NULL          },
-      { SELITEM_LAND,           SELITEM_BACKGROUND,    SELITEM_TIMEZONE,      SELITEM_NULL,           SELITEM_NULL          },
-      { SELITEM_TIMEZONE,       SELITEM_LAND,          SELITEM_SEASON,        SELITEM_NULL,           SELITEM_NULL          },
-      { SELITEM_SEASON,         SELITEM_TIMEZONE,      SELITEM_WEATHER,       SELITEM_NULL,           SELITEM_NULL          },
-      { SELITEM_WEATHER,        SELITEM_SEASON,        SELITEM_BACKGROUND,    SELITEM_NULL,           SELITEM_NULL          },
+      { SELITEM_BACKGROUND,     SELITEM_FLD_MINUTE,    SELITEM_LAND,          SELITEM_NULL,           SELITEM_NULL          },
+      { SELITEM_LAND,           SELITEM_BACKGROUND,    SELITEM_SEASON,        SELITEM_NULL,           SELITEM_NULL          },
+      { SELITEM_SEASON,         SELITEM_LAND,          SELITEM_WEATHER,       SELITEM_NULL,           SELITEM_NULL          },
+      { SELITEM_WEATHER,        SELITEM_SEASON,        SELITEM_ZONEID,        SELITEM_NULL,           SELITEM_NULL          },
+      { SELITEM_ZONEID,         SELITEM_WEATHER,       SELITEM_FLD_HOUR,      SELITEM_NULL,           SELITEM_NULL          },
+      { SELITEM_FLD_HOUR,       SELITEM_ZONEID,        SELITEM_FLD_MINUTE,    SELITEM_NULL,           SELITEM_NULL          },
+      { SELITEM_FLD_MINUTE,     SELITEM_FLD_HOUR,      SELITEM_BACKGROUND,    SELITEM_NULL,           SELITEM_NULL          },
 
-  /*    CurrentItem,           Up-Item,               Down-Item,             Right-Item,            Left-Item */
+  /*    CurrentItem,            Up-Item,               Down-Item,             Right-Item,            Left-Item */
     };
 
     u32 nextItem = SELITEM_NULL, i;

@@ -12,7 +12,7 @@
 #include <strbuf.h>
 
 #include "savedata/save_control.h"  //SAVE_CONTROL_WORK参照のため
-
+#include "buflen.h"
 
 //============================================================================================
 //============================================================================================
@@ -22,6 +22,26 @@
  */
 //----------------------------------------------------------
 typedef struct _MYSTATUS MYSTATUS;
+
+//----------------------------------------------------------
+/**
+ * @brief 自分状態データ型定義
+ */
+//----------------------------------------------------------
+struct _MYSTATUS {
+  STRCODE name[PERSON_NAME_SIZE + EOM_SIZE];    // 16
+  u32 id;               // 20 PlayerID
+  u32 profileID;        // 24
+  u8 nation;            ///< 国  25
+  u8 area;              ///< 地域 26
+  u8 region_code;       //PM_LANG   27
+  u8 rom_code;          // PM_VERSION   28
+  u8 trainer_view;  // ユニオンルーム内での見た目フラグ29
+  u8 sex;            //性別 30
+  u8 dummy2;                    // 31
+  u8 dummy3;                    // 32
+};
+
 
 #define MYSTATUS_SAVE_SIZE (32)
 
