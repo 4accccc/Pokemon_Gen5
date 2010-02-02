@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-02T16:10:42"/>
+	<create user="matsumiya" host="W00224" date="2010-02-02T21:33:50"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -623,9 +623,9 @@
 また　のちほど　いらしてください</language>
 	</row>
 
-	<row id="msg_c05_woman2_01" text-color=",,,#000000,,,,,,,,,,,,,,,">
+	<row id="msg_c05_woman2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♀
-・台詞のみ</comment>
+・仮メッセージ</comment>
 		<attribute name="キャラクター">WOMAN2</attribute>
 		<language name="JPN" width="256">どうですか
 この　まち　じまんの　はねばし[BE:01:ページ切り替え（クリア）]
@@ -639,9 +639,9 @@
 呼ばれて　いるんですよ</language>
 	</row>
 
-	<row id="msg_c05_babygirl1_01" text-color=",,,#000000,,,,,,,,,,,,,,,">
+	<row id="msg_c05_babygirl1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♀
-・台詞のみ</comment>
+・仮メッセージ</comment>
 		<attribute name="キャラクター">BABYGIRL1</attribute>
 		<language name="JPN" width="256">ねえねえ　トレーナーさん[BE:01:ページ切り替え（クリア）]
 ポケモンリーグ　してんのう　と
@@ -651,9 +651,9 @@
 たたかったことは　ある？</language>
 	</row>
 
-	<row id="msg_c05_backpackerw_01" text-color=",,,#000000,,,,,,,,,,,,,,,">
+	<row id="msg_c05_backpackerw_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♀
-・台詞のみ</comment>
+・仮メッセージ</comment>
 		<attribute name="キャラクター">BACKPACKERW</attribute>
 		<language name="JPN" width="256">うみ……[BE:01:ページ切り替え（クリア）]
 わたしが　ここで　こぼした　なみだは
@@ -663,9 +663,9 @@
 アサギシティまで　流れるのかしら</language>
 	</row>
 
-	<row id="msg_c05_trainerm_01" text-color=",,,#000000,,,,,,,,,,,,,,,">
+	<row id="msg_c05_trainerm_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
-・台詞のみ</comment>
+・仮メッセージ</comment>
 		<attribute name="キャラクター">TRAINERM</attribute>
 		<language name="JPN" width="256">プラズマだんの　やつらに
 むりやり　ポケモンしょうぶを[BE:00:ページ切り替え（行送り）]
@@ -677,9 +677,9 @@
 ポケモン　奪われちゃったよ……</language>
 	</row>
 
-	<row id="msg_c05_driver_01" text-color=",,,#000000,,#ff0000,,,,,,,,,,,,,">
+	<row id="msg_c05_driver_01" text-color=",,,#ff0000,,#ff0000,,,,,,,,,,,,,">
 		<comment>♂
-・台詞のみ</comment>
+・仮メッセージ</comment>
 		<attribute name="キャラクター">TRAINERM</attribute>
 		<language name="JPN" width="256">あれだけの　にもつを　はこぶのに
 ポケモンたちの　ちからを　かりるのは[BE:00:ページ切り替え（行送り）]
@@ -689,9 +689,9 @@
 ナンセンスって　もんだね</language>
 	</row>
 
-	<row id="msg_c05_badman_01" text-color=",,,#000000,,,,,,,,,,,,,,,">
+	<row id="msg_c05_badman_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
-・台詞のみ</comment>
+・仮メッセージ</comment>
 		<attribute name="キャラクター">BADMAN</attribute>
 		<language name="JPN" width="256">ここだけの　はなし……[BE:01:ページ切り替え（クリア）]
 ジムリーダーの　ヤーコンさんは
@@ -703,9 +703,9 @@
 なにが　ヤバイかは　いえないけどさ</language>
 	</row>
 
-	<row id="msg_c05_workman_01" text-color=",,,#000000,,,,,,,,,,,,,,,">
+	<row id="msg_c05_workman_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
-・台詞のみ</comment>
+・仮メッセージ</comment>
 		<attribute name="キャラクター">WORKMAN</attribute>
 		<language name="JPN" width="256">れいとうコンテナ？
 あんなところに　ようじが　あるのか？</language>

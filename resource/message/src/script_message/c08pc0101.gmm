@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2010-01-23T16:50:27"/>
+	<create user="matsumiya" host="W00224" date="2010-02-02T21:53:19"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -310,6 +310,8 @@
 		<comment>♀
 ・BLACKver
 ・仮メッセージ</comment>
+		<attribute name="キャラ指定">LADY
+淑女</attribute>
 		<language name="JPN" width="256">のこされた　じかんを
 たっぷりと　ゼイタクに　くらす……[BE:00:ページ切り替え（行送り）]
 それができるのが　ソウリュウシティね</language>
@@ -318,7 +320,7 @@
 それができるのが　ソウリュウシティね</language>
 	</row>
 
-	<row id="msg_c08pc0101_gentleman_01w" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c08pc0101_gentleman_01w" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・WHITEver
 ・仮メッセージ</comment>
@@ -334,10 +336,12 @@
 そんな　世界が　あるんじゃないかと</language>
 	</row>
 
-	<row id="msg_c08pc0101_gentleman_01b" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c08pc0101_gentleman_01b" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・BLACKver
 ・仮メッセージ</comment>
+		<attribute name="キャラ指定">GENTLEMAN
+紳士</attribute>
 		<language name="JPN" width="256">まったく　おなじ　にんげんでも
 すむ　せかいに　よっては[BE:00:ページ切り替え（行送り）]
 おおきく　かわるのだろうな！</language>
