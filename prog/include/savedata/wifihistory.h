@@ -51,6 +51,16 @@ typedef enum {
 	WIFIHIST_STAT_MAX,
 }WIFIHIST_STAT;
 
+typedef enum {
+  UN_INFO_RECV_POKE,       //もらったポケモン
+  UN_INFO_SEND_POKE,      //あげたポケモン
+  UN_INFO_FAVORITE,       //趣味
+  UN_INFO_COUNTRY_NUM,    //交換した国の数
+  UN_INFO_NATURE,         //性格
+  UN_INFO_TALK,           //話したことあるか？
+  UN_INFO_VALID,          //データは有効か？
+}UN_INFO_TYPE;
+
 //----------------------------------------------------------
 //----------------------------------------------------------
 //ワークサイズ取得（セーブシステムから呼ばれる）
@@ -73,6 +83,8 @@ extern void WIFIHISTORY_SetWorldFlag(WIFI_HISTORY * wh, BOOL flag);
 extern void WIFIHISTORY_Update(WIFI_HISTORY * wh);
 
 extern u8 WIFIHISTORY_GetMyCountryCount(WIFI_HISTORY * wh);
+
+extern int WIFIHISTORY_GetUnInfo(WIFI_HISTORY * wh, const int inIdx, const UN_INFO_TYPE inType);
 
 #endif	/* __WIFIHISTORY_H__ */
 

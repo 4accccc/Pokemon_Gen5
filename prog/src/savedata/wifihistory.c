@@ -194,3 +194,54 @@ u8 WIFIHISTORY_GetMyCountryCount(WIFI_HISTORY * wh)
   return wh->myCountryCount;
 }
 
+//----------------------------------------------------------
+/**
+ * @brief	自分の所持している国連データを取得
+ * @param	wh			WIFI履歴データへのポインタ
+ * @param inIdx   取得したい、データインデックス
+ * @param inType  取得したい情報の種類 wifihistory.h 参照
+ * @return int    取得情報
+ */
+//----------------------------------------------------------
+int WIFIHISTORY_GetUnInfo(WIFI_HISTORY * wh, const int inIdx, const UN_INFO_TYPE inType)
+{
+  int info;
+  UNITEDNATIONS_SAVE *un;
+
+  if (inIdx >= UNITEDNATIONS_PEOPLE_MAX)
+  {
+    GF_ASSERT_MSG(0,"INDEX_OVER idx=%d",inIdx);
+    return 0;
+  }
+
+  un = &wh->aUnitedPeople[inIdx];
+  switch(inType){
+  case UN_INFO_RECV_POKE:       //もらったポケモン
+    info = un->recvPokemon;
+    break;
+  case UN_INFO_SEND_POKE:      //あげたポケモン
+    info = un->sendPokemon;
+    break;
+  case UN_INFO_FAVORITE:       //趣味
+    info = un->favorite;
+    break;
+  case UN_INFO_COUNTRY_NUM:    //交換した国の数
+    info = un->countryCount;
+    break;
+  case UN_INFO_NATURE:         //性格
+    info = un->nature;
+    break;
+  case UN_INFO_TALK:           //話したことあるか？
+    info = un->bTalk;
+    break;
+  case UN_INFO_VALID:          //データは有効か？
+    info = un->valid;
+    break;
+  default:
+    GF_ASSERT_MSG(0,"TYPE ERROR %d",inType);
+    info = 0;
+  }
+  return info;
+}
+
+
