@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fujiwara_maiko" host="W00194" date="2010-01-26T16:25:50" source="m_siten03_00_00.mb"/>
+	<create user="fujiwara_maiko" host="W00194" date="2010-02-01T18:26:32" source="m_siten03_00_00.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="fujiwara_maiko" host="W00194" date="2010-01-26T16:25:50" source="m_siten03_00_00.mb"/>
+<original_create user="fujiwara_maiko" host="W00194" date="2010-02-01T18:26:32" source="m_siten03_00_00.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -20,22 +20,22 @@
 	magnify="1.000000"
 	tool_start_frame="0"
 	tex_matrix_mode="maya"
-	compress_node="merge" node_size="2 1"
-	compress_material="on" material_size="1 1"
+	compress_node="merge" node_size="3 3"
+	compress_material="on" material_size="2 2"
 	output_texture="used"
 	force_full_weight="off"
 	use_primitive_strip="on"
 />
 
-<box_test pos_scale="5" xyz="-0.742676 0.553223 4.785400" whd="1.000000 1.000000 0.000000"/>
+<box_test pos_scale="5" xyz="-0.742676 0.521973 4.754150" whd="1.000000 1.031250 0.031250"/>
 
-<tex_image_array size="6">
-	<tex_image index="0" name="hero.1"
+<tex_image_array size="7">
+	<tex_image index="0" name="hero2.1"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
 		color0_mode="transparency"
-		palette_name="hero.1_pl"
-		path="C:/home/wb_data3d/field/in52/chip/tex/hero/hero.1.tga"
+		palette_name="hero2.1_pl"
+		path="C:/home/wb_data3d/field/in52/chip/tex/hero/hero2.1.tga"
 	>
 		<bitmap size="256">
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -72,12 +72,12 @@
 			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="1" name="hero.10"
+	<tex_image index="1" name="hero2.10"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
 		color0_mode="transparency"
-		palette_name="hero.10_pl"
-		path="C:/home/wb_data3d/field/in52/chip/tex/hero/hero.10.tga"
+		palette_name="hero2.10_pl"
+		path="C:/home/wb_data3d/field/in52/chip/tex/hero/hero2.10.tga"
 	>
 		<bitmap size="256">
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -114,12 +114,12 @@
 			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="2" name="hero.2"
+	<tex_image index="2" name="hero2.2"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
 		color0_mode="transparency"
-		palette_name="hero.2_pl"
-		path="C:/home/wb_data3d/field/in52/chip/tex/hero/hero.2.tga"
+		palette_name="hero2.2_pl"
+		path="C:/home/wb_data3d/field/in52/chip/tex/hero/hero2.2.tga"
 	>
 		<bitmap size="256">
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -156,12 +156,12 @@
 			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="3" name="hero.3"
+	<tex_image index="3" name="hero2.3"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
 		color0_mode="transparency"
-		palette_name="hero.3_pl"
-		path="C:/home/wb_data3d/field/in52/chip/tex/hero/hero.3.tga"
+		palette_name="hero2.3_pl"
+		path="C:/home/wb_data3d/field/in52/chip/tex/hero/hero2.3.tga"
 	>
 		<bitmap size="256">
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -198,12 +198,12 @@
 			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="4" name="hero.4"
+	<tex_image index="4" name="hero2.4"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
 		color0_mode="transparency"
-		palette_name="hero.4_pl"
-		path="C:/home/wb_data3d/field/in52/chip/tex/hero/hero.4.tga"
+		palette_name="hero2.4_pl"
+		path="C:/home/wb_data3d/field/in52/chip/tex/hero/hero2.4.tga"
 	>
 		<bitmap size="256">
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -240,12 +240,12 @@
 			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="5" name="hero.7"
+	<tex_image index="5" name="hero2.7"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
 		color0_mode="transparency"
-		palette_name="hero.7_pl"
-		path="C:/home/wb_data3d/field/in52/chip/tex/hero/hero.7.tga"
+		palette_name="hero2.7_pl"
+		path="C:/home/wb_data3d/field/in52/chip/tex/hero/hero2.7.tga"
 	>
 		<bitmap size="256">
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -282,36 +282,81 @@
 			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
+	<tex_image index="6" name="hero2kage"
+		width="32" height="32" original_width="32" original_height="32"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="hero2kage_pl"
+		path="C:/home/wb_data3d/field/in52/chip/tex/hero/hero2kage.tga"
+	>
+		<bitmap size="256">
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 1111 1111 0001 0000 0000
+			0000 0000 1100 1111 1111 0111 0000 0000
+			0000 0000 1111 1111 1111 1111 0001 0000
+			0000 0000 1111 1111 1111 1111 0001 0000
+			0000 0000 1100 1111 1111 0111 0000 0000
+			0000 0000 0000 1111 1111 0001 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+		</bitmap>
+	</tex_image>
 </tex_image_array>
 
-<tex_palette_array size="6">
-	<tex_palette index="0" name="hero.10_pl" color_size="16">
+<tex_palette_array size="7">
+	<tex_palette index="0" name="hero2.10_pl" color_size="16">
 		2e47 416b 28e7 1ca5 4d47 6af5 61e8 728e
 		7779 192d 3a7a 5f5f 35bd 7fff 0000 7fff
 	</tex_palette>
-	<tex_palette index="1" name="hero.1_pl" color_size="16">
+	<tex_palette index="1" name="hero2.1_pl" color_size="16">
 		2e47 3554 416b 28e7 1ca5 4d47 6af5 61e8
 		728e 7779 192d 3a7a 5f5f 35bd 7fff 0000
 	</tex_palette>
-	<tex_palette index="2" name="hero.2_pl" color_size="16">
+	<tex_palette index="2" name="hero2.2_pl" color_size="16">
 		2e47 3554 416b 28e7 1ca5 4d47 6af5 61e8
 		728e 7779 192d 3a7a 5f5f 35bd 7fff 0000
 	</tex_palette>
-	<tex_palette index="3" name="hero.3_pl" color_size="16">
+	<tex_palette index="3" name="hero2.3_pl" color_size="16">
 		2e47 3554 416b 28e7 1ca5 4d47 6af5 61e8
 		728e 7779 192d 3a7a 5f5f 35bd 7fff 0000
 	</tex_palette>
-	<tex_palette index="4" name="hero.4_pl" color_size="16">
+	<tex_palette index="4" name="hero2.4_pl" color_size="16">
 		2e47 3554 416b 28e7 1ca5 4d47 6af5 61e8
 		728e 7779 192d 3a7a 5f5f 35bd 7fff 0000
 	</tex_palette>
-	<tex_palette index="5" name="hero.7_pl" color_size="16">
+	<tex_palette index="5" name="hero2.7_pl" color_size="16">
 		2e47 3554 416b 28e7 1ca5 4d47 6af5 61e8
 		728e 7779 192d 3a7a 5f5f 35bd 7fff 0000
+	</tex_palette>
+	<tex_palette index="6" name="hero2kage_pl" color_size="8">
+		7fff 2108 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
 </tex_palette_array>
 
-<material_array size="1">
+<material_array size="2">
 	<material index="0" name="hero_3"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
@@ -336,13 +381,38 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
+	<material index="1" name="lambert10"
+		light0="off" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="31"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="0"
+		fog_flag="off"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="25 25 25"
+		ambient="0 0 0"
+		specular="0 0 0"
+		emission="0 0 0"
+		shininess_table_flag="off"
+		tex_image_idx="6" tex_palette_idx="6"
+		tex_tiling="repeat repeat"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
+	/>
 </material_array>
 
-<matrix_array size="1">
-	<matrix index="0" mtx_weight="1" node_idx="0"/>
+<matrix_array size="2">
+	<matrix index="0" mtx_weight="1" node_idx="1"/>
+	<matrix index="1" mtx_weight="1" node_idx="2"/>
 </matrix_array>
 
-<polygon_array size="1">
+<polygon_array size="2">
 	<polygon index="0" name="polygon0"
 		vertex_size="4" polygon_size="1"
 		triangle_size="0" quad_size="1"
@@ -370,19 +440,60 @@
 			</primitive_array>
 		</mtx_prim>
 	</polygon>
+	<polygon index="1" name="polygon1"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="-2.000000 0.208252 0.000000"
+		volume_max="2.000000 4.208252 0.000000"
+		volume_r="4.659424"
+		mtx_prim_size="1"
+		nrm_flag="off" clr_flag="on" tex_flag="on"
+	>
+		<mtx_prim index="0">
+			<mtx_list size="1">1</mtx_list>
+			<primitive_array size="1">
+				<primitive index="0" type="quads" vertex_size="4">
+					<mtx idx="0"/>
+					<tex st="0.000000 32.000000"/>
+					<clr rgb="31 31 31"/>
+					<pos_xyz xyz="-2.000000 0.208252 0.000000"/>
+					<tex st="32.000000 32.000000"/>
+					<pos_xy xy="2.000000 0.208252"/>
+					<tex st="32.000000 0.000000"/>
+					<pos_xy xy="2.000000 4.208252"/>
+					<tex st="0.000000 0.000000"/>
+					<pos_xy xy="-2.000000 4.208252"/>
+				</primitive>
+			</primitive_array>
+		</mtx_prim>
+	</polygon>
 </polygon_array>
 
-<node_array size="1">
-	<node index="0" name="usiro" kind="mesh"
+<node_array size="3">
+	<node index="0" name="group3" kind="null"
 		parent="-1"
-		child="-1"
+		child="1"
 		brother_next="-1"
+		brother_prev="-1"
+		draw_mtx="off"
+		billboard="on"
+		scale="1.000000 1.000000 1.000000"
+		rotate="0.000000 0.000000 0.000000"
+		translate="-7.764893 16.041992 153.139404"
+		visibility="on"
+		display_size="0"
+	>
+	</node>
+	<node index="1" name="usiro" kind="mesh"
+		parent="0"
+		child="-1"
+		brother_next="2"
 		brother_prev="-1"
 		draw_mtx="on"
 		billboard="on"
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="-7.764893 16.041992 153.139404"
+		translate="0.000000 0.000000 0.000000"
 		visibility="on"
 		display_size="1"
 		vertex_size="4" polygon_size="1"
@@ -393,10 +504,30 @@
 	>
 		<display index="0" material="0" polygon="0" priority="0"/>
 	</node>
+	<node index="2" name="usiro1" kind="mesh"
+		parent="0"
+		child="-1"
+		brother_next="-1"
+		brother_prev="1"
+		draw_mtx="on"
+		billboard="on"
+		scale="1.000000 1.000000 1.000000"
+		rotate="0.000000 0.000000 0.000000"
+		translate="0.000000 -1.000000 -1.000000"
+		visibility="on"
+		display_size="1"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="-2.000000 0.208252 0.000000"
+		volume_max="2.000000 4.208252 0.000000"
+		volume_r="4.659424"
+	>
+		<display index="0" material="1" polygon="1" priority="0"/>
+	</node>
 </node_array>
 
-<output_info vertex_size="4" polygon_size="1"
-	triangle_size="0" quad_size="1"/>
+<output_info vertex_size="8" polygon_size="2"
+	triangle_size="0" quad_size="2"/>
 
 </body>
 
