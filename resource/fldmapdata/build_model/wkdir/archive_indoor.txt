@@ -126,3 +126,4 @@
 "nsbmdfiles/c09_03_light.nsbmd"
 "nsbmdfiles/shelf06.nsbmd"
 "nsbmdfiles/globe01s.nsbmd"
+"nsbmdfiles/c09_03_light2.nsbmd"

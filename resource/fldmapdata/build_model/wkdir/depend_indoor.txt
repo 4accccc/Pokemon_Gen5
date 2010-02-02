@@ -127,4 +127,5 @@ DEP_INDOOR	=	\
 	$(RESDIR)/c09_03_light.nsbmd \
 	$(RESDIR)/shelf06.nsbmd \
 	$(RESDIR)/globe01s.nsbmd \
+	$(RESDIR)/c09_03_light2.nsbmd \
 
