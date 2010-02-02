@@ -18,7 +18,7 @@
  * @retval  u32       ‚n‚a‚iƒR[ƒh
 */
 //--------------------------------------------------------------
-u32 UN_GetObjCode(UNSV_WORK* work, const u32 inObjIdx)
+u32 UN_GetRoomObjCode(UNSV_WORK* work, const u32 inObjIdx)
 {
   if (inObjIdx >= UN_ROOM_OBJ_MAX)
   {
