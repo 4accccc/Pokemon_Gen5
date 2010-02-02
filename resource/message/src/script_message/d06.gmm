@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-20T14:30:03"/>
+	<create user="matsumiya" host="W00224" date="2010-02-02T22:09:05"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -331,7 +331,7 @@
 モグリュー！！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_d06_leader_03">
+	<row id="msg_d06_leader_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
 		<comment>♂
 ・ポケモンが巣に向かい技を出したような演出
 ・巣を削除する処理

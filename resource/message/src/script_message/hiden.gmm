@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2010-01-25T11:48:24"/>
+	<create user="matsumiya" host="W00224" date="2010-02-02T22:15:10"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,15 +263,15 @@
 		</language>
 	</columns>
 
-	<dialog left="-13" top="164" right="689" bottom="793" maximized="no" rayout="Vertical2">
+	<dialog left="1330" top="228" right="2019" bottom="857" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
-		<band id="0" index="1" style="0000" width="527"/>
+		<tag-palette left="2064" top="109" right="2537" bottom="507" visible="yes"/>
+		<band id="0" index="1" style="0000" width="514"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="540"/>
+		<band id="2" index="3" style="0000" width="527"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="694"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<band id="4" index="0" style="0000" width="681"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -308,9 +308,9 @@
 		<comment>秘伝いあいぎり
 ・秘伝使用時
 ・0＝ポケモン名</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]は
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]は
 いあいぎりを　つかった！▼</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]は
 いあいぎりを　使った！▼</language>
 	</row>
 
@@ -345,9 +345,9 @@
 		<comment>秘伝いわくだき
 ・秘伝使用時
 ・0＝ポケモン名</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]は
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]は
 いわくだきを　つかった！▼</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]は
 いわくだきを　使った！▼</language>
 	</row>
 
@@ -370,13 +370,13 @@
 		<comment>秘伝かいりき
 ・秘伝使用可能時
 ・0＝ポケモン名</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]は
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]は
 かいりきを　はっき　した！▼
-[1:00:トレーナー名:0]の　かいりきの　おかげで
+[1:02:ポケモンニックネーム:0]の　かいりきの　おかげで
 いわを　おせるように　なった！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]は
 かいりきを　発揮した！▼
-[1:00:トレーナー名:0]の　かいりきの　おかげで
+[1:02:ポケモンニックネーム:0]の　かいりきの　おかげで
 岩を　押せるように　なった！</language>
 	</row>
 
@@ -402,9 +402,9 @@
 		<comment>秘伝かいりき
 ・秘伝使用可能時
 ・0＝ポケモン名</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]は
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]は
 かいりきを　はっき　した！▼</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]は
 かいりきを　発揮した！▼</language>
 	</row>
 
@@ -412,9 +412,9 @@
 		<comment>秘伝かいりき
 ・秘伝使用可能時
 ・0＝ポケモン名</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]の　かいりきの　おかげで
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]の　かいりきの　おかげで
 いわを　おせるように　なった！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]の　かいりきの　おかげで
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]の　かいりきの　おかげで
 岩を　押せるように　なった！</language>
 	</row>
 
@@ -438,9 +438,9 @@
 	<row id="msg_naminori_02">
 		<comment>秘伝なみのり
 ・0＝ポケモン名</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]は
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]は
 なみのりを　つかった！▼</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]は
 なみのりを　使った！▼</language>
 	</row>
 
@@ -467,9 +467,9 @@
 	<row id="msg_kiri_02">
 		<comment>秘伝きりはらい
 ・0＝ポケモン名</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]は
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]は
 きりばらいを　つかった！▼</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]は
 きりばらいを　使った！▼</language>
 	</row>
 
@@ -497,9 +497,9 @@
 	<row id="msg_rock_02">
 		<comment>秘伝ロッククライム
 ・0＝ポケモン名</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]は
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]は
 ロッククライムを　つかった！▼</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]は
 ロッククライムを　つかった！▼</language>
 	</row>
 
@@ -535,9 +535,9 @@
 	<row id="msg_taki_02">
 		<comment>秘伝たきのぼり
 ・0＝ポケモン名</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]は
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]は
 たきのぼりを　つかった！▼</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]は
 たきのぼりを　使った！▼</language>
 	</row>
 

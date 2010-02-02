@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2010-01-08T16:28:43"/>
+	<create user="matsumiya" host="W00224" date="2010-02-02T22:15:30"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -371,6 +371,7 @@
 ・はい/いいえ
 　はい→present_03
 　いいえ→present_04</comment>
+		<attribute name="キャラ指定">SUNGLASSES</attribute>
 		<language name="JPN" width="256">コンニチハ！　トレーナーさん▼
 アナタ　いろんな　ひとと
 ポケモンこうかん　してますカ？</language>
@@ -382,6 +383,7 @@
 	<row id="msg_id_present_03">
 		<comment>はい選択時
 ・続けてpresent_03a</comment>
+		<attribute name="キャラ指定">SUNGLASSES</attribute>
 		<language name="JPN" width="256">おう　いいですネ▼
 では　どれだけ　おおくの　ひとと
 ポケモンこうかん　したか▽
@@ -396,6 +398,7 @@
 		<comment>チェック中
 ・手持ちとボックスの親IDの数をチェック
 ・その数に応じてメッセージ表示</comment>
+		<attribute name="キャラ指定">SUNGLASSES</attribute>
 		<language name="JPN" width="256">……　……　……
 ……　……　……▼</language>
 		<language name="JPN_KANJI" width="256">……　……　……
@@ -405,6 +408,7 @@
 	<row id="msg_id_present_04">
 		<comment>いいえ選択時
 ・終了！</comment>
+		<attribute name="キャラ指定">SUNGLASSES</attribute>
 		<language name="JPN" width="256">いろんな　ひとと
 ポケモンこうかん　してみてヨ！▼
 わたしが
@@ -420,6 +424,7 @@
 	<row id="msg_id_present_05">
 		<comment>ＩＤの総数が4以下
 ・終了！</comment>
+		<attribute name="キャラ指定">SUNGLASSES</attribute>
 		<language name="JPN" width="256">[2:00:１桁:0]にんと　こうかん　ですか？
 せかいは　もっと　ひろいですヨ！▼
 ともだちと　こうかん　したり
@@ -434,6 +439,7 @@
 		<comment>ＩＤの総数が5以上9以下
 ・もらえるときはpresent_12
 ・もらえないときはpresent_14</comment>
+		<attribute name="キャラ指定">SUNGLASSES</attribute>
 		<language name="JPN" width="256">なんと！
 [2:00:１桁:0]にんと　こうかん　したのネ！▼</language>
 		<language name="JPN_KANJI" width="256">なんと！
@@ -444,6 +450,7 @@
 		<comment>ＩＤの総数が10以上19以下
 ・もらえるときはpresent_12
 ・もらえないときはpresent_14</comment>
+		<attribute name="キャラ指定">SUNGLASSES</attribute>
 		<language name="JPN" width="256">なんと！　ステキ！
 [2:01:２桁:0]にんと　こうかん　したのネ！▼</language>
 		<language name="JPN_KANJI" width="256">なんと！　ステキ！
@@ -454,6 +461,7 @@
 		<comment>ＩＤの総数が20以上29以下
 ・もらえるときはpresent_12
 ・もらえないときはpresent_14</comment>
+		<attribute name="キャラ指定">SUNGLASSES</attribute>
 		<language name="JPN" width="256">なんと！　かんげき！
 [2:01:２桁:0]にんと　こうかん　したのネ！▼</language>
 		<language name="JPN_KANJI" width="256">なんと！　感激！
@@ -464,6 +472,7 @@
 		<comment>ＩＤの総数が30以上39以下
 ・もらえるときはpresent_12
 ・もらえないときはpresent_14</comment>
+		<attribute name="キャラ指定">SUNGLASSES</attribute>
 		<language name="JPN" width="256">なんと！　エクスタシー！
 [2:01:２桁:0]にんと　こうかん　したのネ！▼</language>
 		<language name="JPN_KANJI" width="256">なんと！　エクスタシー！
@@ -474,6 +483,7 @@
 		<comment>ＩＤの総数が40以上49以下
 ・もらえるときはpresent_12
 ・もらえないときはpresent_14</comment>
+		<attribute name="キャラ指定">SUNGLASSES</attribute>
 		<language name="JPN" width="256">なんと！　おどろき！
 [2:01:２桁:0]にんと　こうかん　したのネ！▼</language>
 		<language name="JPN_KANJI" width="256">なんと！　おどろき！
@@ -484,6 +494,7 @@
 		<comment>ＩＤの総数が50
 ・もらえるときはpresent_12
 ・もらえないときはpresent_14</comment>
+		<attribute name="キャラ指定">SUNGLASSES</attribute>
 		<language name="JPN" width="256">なんと！　ワンダフル！
 [2:01:２桁:0]にんと　こうかん　したのネ！▼</language>
 		<language name="JPN_KANJI" width="256">なんと！　ワンダフル！
@@ -494,6 +505,7 @@
 		<comment>アイテムがもらえるとき
 ・アイテム入手処理へ
 ・そのあと続けてpresent_13表示</comment>
+		<attribute name="キャラ指定">SUNGLASSES</attribute>
 		<language name="JPN" width="256">すごいネ！
 これを　プレゼント　するヨ！▼</language>
 		<language name="JPN_KANJI" width="256">すごいネ！
@@ -503,6 +515,7 @@
 	<row id="msg_id_present_13">
 		<comment>さらにアイテムがもらえるとき
 ・続けてアイテム入手処理</comment>
+		<attribute name="キャラ指定">SUNGLASSES</attribute>
 		<language name="JPN" width="256">アナタ　ほんとうに　すごいネ！
 うれしいから　これも　あげるヨ！▼</language>
 		<language name="JPN_KANJI" width="256">アナタ　本当に　すごいネ！
@@ -512,6 +525,7 @@
 	<row id="msg_id_present_14">
 		<comment>すべてのアイテムをもらったあと
 ・終了！</comment>
+		<attribute name="キャラ指定">SUNGLASSES</attribute>
 		<language name="JPN" width="256">こうかん　した　ポケモンは
 いまごろ　どうしてる？▼
 こうかん　してくれた　ひとは
