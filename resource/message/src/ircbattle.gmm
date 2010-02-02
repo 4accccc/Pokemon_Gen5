@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00176" date="2010-01-25T19:31:19"/>
+	<create user="tetsuji_ohta" host="W00222" date="2010-02-02T16:10:20"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -410,7 +410,7 @@
 	</row>
 
 	<row id="IRCBTL_STR_15">
-		<language name="JPN" width="256">あいしょう
+		<language name="JPN" width="256">フィーリング
 チェック</language>
 		<language name="JPN_KANJI" width="256">Ｆｅｅｌｉｎｇ
 Ｃｈｅｃｋ</language>
