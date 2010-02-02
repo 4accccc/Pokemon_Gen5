@@ -1063,14 +1063,15 @@ static void MMdl_MapAttrReflect_01( MMDL *mmdl, ATTRDATA *data )
         attr = next;
       }
     }
-      
+    
     if( attr != MAPATTR_ERROR )
     {
       REFLECT_TYPE type = REFLECT_TYPE_POND;
       MAPATTR_VALUE val = MAPATTR_GetAttrValue( attr );
       MMDLSYS *mmdlsys = (MMDLSYS*)MMDL_GetMMdlSys( mmdl );
-        
-      if( MAPATTR_VALUE_CheckMirrorFloor(val) == TRUE ){
+       
+      if( MAPATTR_VALUE_CheckMirrorFloor(val) == TRUE ||
+          MAPATTR_VALUE_CheckIce02(val) == TRUE ){
         type = REFLECT_TYPE_MIRROR;
       }
       

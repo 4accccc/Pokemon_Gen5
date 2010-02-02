@@ -624,7 +624,22 @@ BOOL MAPATTR_VALUE_CheckSnowType( const MAPATTR_VALUE val )
 //--------------------------------------------------------------
 BOOL MAPATTR_VALUE_CheckIce( const MAPATTR_VALUE val )
 {
-  return( val == MATTR_ICE_01 );
+  if( val == MATTR_ICE_01 || val == MATTR_ICE_02 ){
+    return( TRUE );
+  }
+  return( FALSE );
+}
+
+//--------------------------------------------------------------
+/**
+ * アトリビュートバリュー　チェック　揺れない映り込み氷
+ * @param val MAPATTR_VALUE
+ * @retval BOOL FALSE=違う
+ */
+//--------------------------------------------------------------
+BOOL MAPATTR_VALUE_CheckIce02( const MAPATTR_VALUE val )
+{
+  return( val == MATTR_ICE_02 );
 }
 
 //--------------------------------------------------------------
