@@ -152,7 +152,7 @@ static BOOL SubProc_UI_SelectAction( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_REC_SelectAction( BTL_CLIENT* wk, int* seq );
 static BOOL selact_Start( BTL_CLIENT* wk, int* seq );
 static void selact_startMsg( BTL_CLIENT* wk, const BTLV_STRPARAM* strParam );
-static BOOL CheckSelactForceQuit( BTL_CLIENT* wk );
+static BOOL CheckSelactForceQuit( BTL_CLIENT* wk, ClientSubProc nextProc );
 static BOOL selact_ForceQuit( BTL_CLIENT* wk, int* seq );
 static BOOL selact_Root( BTL_CLIENT* wk, int* seq );
 static BOOL selact_Fight( BTL_CLIENT* wk, int* seq );
@@ -430,7 +430,7 @@ static ClientSubProc getSubProc( BTL_CLIENT* wk, BtlAdapterCmd cmd )
 
 #if 1
     { BTL_ACMD_SELECT_ACTION,
-     { SubProc_UI_SelectAction,  SubProc_AI_SelectAction,   SubProc_REC_SelectAction   } },
+     { SubProc_UI_SelectAction,    SubProc_AI_SelectAction,   SubProc_REC_SelectAction   } },
 #else
 // AIにテスト駆動させる
     { BTL_ACMD_SELECT_ACTION,
@@ -505,6 +505,7 @@ static BOOL SubProc_UI_Setup( BTL_CLIENT* wk, int* seq )
     {
       u32 gameTime = BTL_MAIN_GetGameLimitTime( wk->mainModule );
       u32 cmdTime = BTL_MAIN_GetCommandLimitTime( wk->mainModule );
+      OS_TPrintf("GameLimit=%d, CmdLimit=%d\n", gameTime, cmdTime);
       if( gameTime && cmdTime )
       {
         BTLV_EFFECT_CreateTimer( gameTime, cmdTime );
@@ -624,13 +625,22 @@ static BOOL SubProc_UI_SelectAction( BTL_CLIENT* wk, int* seq )
   switch( *seq ){
   case 0:
     wk->fForceQuitSelAct = FALSE;
+
     SelActProc_Set( wk, selact_Start );
+    if( wk->cmdLimitTime ){
+      BTL_N_Printf( DBGSTR_CLIENT_CmdLimitTimeEnable, wk->cmdLimitTime );
+      BTLV_EFFECT_DrawEnableTimer( BTLV_TIMER_TYPE_COMMAND_TIME, TRUE, TRUE );
+    }
     (*seq)++;
     break;
 
   case 1:
-    if( BTLV_EFFECT_IsZero(BTLV_TIMER_TYPE_COMMAND_TIME) ){
-      wk->fForceQuitSelAct = TRUE;
+    if( wk->fForceQuitSelAct == FALSE )
+    {
+      if( BTLV_EFFECT_IsZero(BTLV_TIMER_TYPE_COMMAND_TIME) ){
+        BTL_N_Printf( DBGSTR_CLIENT_CmdLimitTimeOver );
+        wk->fForceQuitSelAct = TRUE;
+      }
     }
     if( SelActProc_Call(wk) ){
       return TRUE;
@@ -700,9 +710,6 @@ static BOOL selact_Start( BTL_CLIENT* wk, int* seq )
 
   }
 
-  if( wk->cmdLimitTime ){
-    BTLV_EFFECT_DrawEnableTimer( BTLV_TIMER_TYPE_COMMAND_TIME, TRUE, TRUE );
-  }
 
   SelActProc_Set( wk, selact_Root );
 
@@ -719,13 +726,15 @@ static void selact_startMsg( BTL_CLIENT* wk, const BTLV_STRPARAM* strParam )
 /**
  *  時間制限による強制終了があれば、メインプロセスを切り替えてTRUEを返す
  */
-static BOOL CheckSelactForceQuit( BTL_CLIENT* wk )
+static BOOL CheckSelactForceQuit( BTL_CLIENT* wk, ClientSubProc nextProc )
 {
   if( wk->cmdLimitTime )
   {
     if( wk->fForceQuitSelAct )
     {
-      SelActProc_Set( wk, selact_ForceQuit );
+      if( nextProc != NULL ){
+        SelActProc_Set( wk, nextProc );
+      }
       return TRUE;
     }
   }
@@ -832,7 +841,9 @@ static BOOL selact_Root( BTL_CLIENT* wk, int* seq )
     break;
 
   case 4:
-    if( CheckSelactForceQuit(wk) ){
+    if( CheckSelactForceQuit(wk, selact_ForceQuit) )
+    {
+      BTLV_UI_SelectAction_ForceQuit( wk->viewCore );
       return FALSE;
     }
 
@@ -920,6 +931,12 @@ static BOOL selact_Fight( BTL_CLIENT* wk, int* seq )
     break;
 
   case SEQ_SELECT_WAZA_WAIT:
+    if( CheckSelactForceQuit(wk, selact_ForceQuit) )
+    {
+      BTLV_UI_SelectWaza_ForceQuit( wk->viewCore );
+      return FALSE;
+    }
+
     if( BTLV_UI_SelectWaza_Wait(wk->viewCore) )
     {
       BtlAction action = BTL_ACTION_GetAction( wk->procAction );
@@ -961,6 +978,10 @@ static BOOL selact_Fight( BTL_CLIENT* wk, int* seq )
     break;
 
   case SEQ_SELECT_TARGET_WAIT:
+    if( CheckSelactForceQuit(wk, selact_ForceQuit) ){
+      return FALSE;
+    }
+
     {
       BtlvResult result = BTLV_UI_SelectTarget_Wait( wk->viewCore );
       if( result == BTLV_RESULT_DONE ){
@@ -1006,6 +1027,13 @@ static BOOL selact_SelectChangePokemon( BTL_CLIENT* wk, int* seq )
     break;
 
   case 1:
+    // 制限時間による強制終了（ポケモン選択画面の終了通知）
+    if( CheckSelactForceQuit(wk, NULL) ){
+      BTLV_ForceQuitPokeSelect( wk->viewCore );
+      (*seq) = 2;
+      return FALSE;
+    }
+
     if( BTLV_WaitPokeSelect(wk->viewCore) )
     {
       if( !BTL_POKESELECT_IsCancel(&wk->pokeSelResult) )
@@ -1021,6 +1049,13 @@ static BOOL selact_SelectChangePokemon( BTL_CLIENT* wk, int* seq )
 
       BTL_N_Printf( DBGSTR_CLIENT_SelectChangePokeCancel );
       SelActProc_Set( wk, selact_Root );
+    }
+    break;
+
+  // 制限時間による強制終了（ポケモン選択画面の終了待ち後）
+  case 2:
+    if( BTLV_WaitPokeSelect(wk->viewCore) ){
+      SelActProc_Set( wk, selact_ForceQuit );
     }
     break;
   }
@@ -1043,6 +1078,13 @@ static BOOL selact_Item( BTL_CLIENT* wk, int* seq )
     break;
 
   case 1:
+    // 制限時間による強制終了通知
+    if( CheckSelactForceQuit(wk, NULL) ){
+      BTLV_ITEMSELECT_ForceQuit( wk->viewCore );
+      (*seq) = 2;
+      return FALSE;
+    }
+
     if( BTLV_ITEMSELECT_Wait(wk->viewCore) )
     {
       u16 itemID, targetIdx;
@@ -1067,6 +1109,14 @@ static BOOL selact_Item( BTL_CLIENT* wk, int* seq )
       }
     }
     break;
+
+  // 制限時間による強制終了待ち後
+  case 2:
+    if( BTLV_ITEMSELECT_Wait(wk->viewCore) ){
+      SelActProc_Set( wk, selact_ForceQuit );
+    }
+    break;
+
   }
   return FALSE;
 }
@@ -1195,6 +1245,10 @@ static BOOL selact_Finish( BTL_CLIENT* wk, int* seq )
   case 2:
     if( !BTLV_EFFECT_CheckExecute() ){
       BTL_N_PrintfEx( PRINT_FLG, DBGSTR_CLIENT_ReturnSeqDone );
+
+      if( wk->cmdLimitTime ){
+        BTLV_EFFECT_DrawEnableTimer( BTLV_TIMER_TYPE_COMMAND_TIME, FALSE, FALSE );
+      }
       (*seq)++;
       return TRUE;
     }

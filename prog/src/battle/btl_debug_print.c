@@ -88,6 +88,8 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_CLIENT_ForbidEscape_Jiryoku_Chk:      return "逃げ交換禁止チェック「じりょく」by pokeID(%d)\n";
   case DBGSTR_CLIENT_ForbidEscape_Jiryoku_Enable:   return "  「じりょく」有効！\n";
   case DBGSTR_CLIENT_UpdateWazaProcResult:          return "ワザプロセス情報更新 : PokeID=%d, OrgWaza=%d, ActWaza=%d, ActTargetPos=%d, ActEnable=%d\n";
+  case DBGSTR_CLIENT_CmdLimitTimeEnable:  return "コマンド選択制限時間が有効 -> %d sec\n";
+  case DBGSTR_CLIENT_CmdLimitTimeOver:    return "コマンド選択タイムアップ ... 強制終了フラグON\n";
 
   case DBGSTR_BPP_NemuriWakeCheck:        return "ポケ[%d]のねむりターン最大値=%d, 経過ターン=%d\n";
 

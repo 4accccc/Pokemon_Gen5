@@ -727,6 +727,18 @@ static void mainproc_setup( BTLV_CORE* core, pCmdProc proc )
   core->mainProc = proc;
   core->mainSeq = 0;
 }
+//----------------------------------------------------------------------------------
+/**
+ * メインプロセス初期化
+ *
+ * @param   core
+ */
+//----------------------------------------------------------------------------------
+static void mainproc_reset( BTLV_CORE* core )
+{
+  core->mainProc = NULL;
+  core->mainSeq = 0;
+}
 //--------------------------------------------------------------------------
 /**
  * メインプロセスコール
@@ -772,6 +784,17 @@ void BTLV_UI_SelectAction_Start( BTLV_CORE* core, const BTL_POKEPARAM* bpp, BOOL
 }
 //=============================================================================================
 /**
+ * アクション選択の強制終了通知（コマンド選択の制限時間）
+ *
+ * @param   wk
+ */
+//=============================================================================================
+void BTLV_UI_SelectAction_ForceQuit( BTLV_CORE* wk )
+{
+  mainproc_reset( wk );
+}
+//=============================================================================================
+/**
  * アクション選択終了待ち
  *
  * @param   core
@@ -802,6 +825,17 @@ void BTLV_UI_SelectWaza_Start( BTLV_CORE* core, const BTL_POKEPARAM* bpp, BTL_AC
   BTL_Printf("ワザ選択開始：対象ポケID=%d\n", core->procPokeID);
   core->actionParam = dest;
   mainproc_setup( core, CmdProc_SelectWaza );
+}
+//=============================================================================================
+/**
+ * ワザ選択の強制終了通知（コマンド選択の制限時間）
+ *
+ * @param   wk
+ */
+//=============================================================================================
+void BTLV_UI_SelectWaza_ForceQuit( BTLV_CORE* wk )
+{
+  mainproc_reset( wk );
 }
 //=============================================================================================
 /**
@@ -859,6 +893,17 @@ void BTLV_UI_Restart( BTLV_CORE* core )
 }
 
 
+//=============================================================================================
+/**
+ * コマンド選択トップから「ポケモン」選択->交換するポケモン選択開始
+ *
+ * @param   wk
+ * @param   param
+ * @param   outMemberIndex
+ * @param   fCantEsc
+ * @param   result
+ */
+//=============================================================================================
 void BTLV_StartPokeSelect( BTLV_CORE* wk, const BTL_POKESELECT_PARAM* param, int outMemberIndex, BOOL fCantEsc, BTL_POKESELECT_RESULT* result )
 {
   wk->plistData.pp = BTL_MAIN_GetPlayerPokeParty( wk->mainModule );
@@ -880,6 +925,7 @@ void BTLV_StartPokeSelect( BTLV_CORE* wk, const BTL_POKESELECT_PARAM* param, int
   wk->plistData.tcb_sys = BTLV_EFFECT_GetTCBSYS();
   wk->plistData.pfd = BTLV_EFFECT_GetPfd();
   wk->plistData.chg_waza = fCantEsc;  // 逃げ・交換禁止フラグ
+  wk->plistData.time_out_flg = FALSE;
 
   // 既に選択されているポケモンの位置情報を初期化
   {
@@ -900,7 +946,26 @@ void BTLV_StartPokeSelect( BTLV_CORE* wk, const BTL_POKESELECT_PARAM* param, int
   wk->pokeselResult = result;
   wk->selectItemSeq = 0;
 }
-
+//=============================================================================================
+/**
+ * ポケモン選択の強制終了通知（制限時間切れによる）
+ *
+ * @param   wk
+ */
+//=============================================================================================
+void BTLV_ForceQuitPokeSelect( BTLV_CORE* wk )
+{
+  wk->plistData.time_out_flg = TRUE;
+}
+//=============================================================================================
+/**
+ * ポケモン選択画面の終了待ち
+ *
+ * @param   wk
+ *
+ * @retval  BOOL
+ */
+//=============================================================================================
 BOOL BTLV_WaitPokeSelect( BTLV_CORE* wk )
 {
   switch( wk->selectItemSeq ){
@@ -920,22 +985,25 @@ BOOL BTLV_WaitPokeSelect( BTLV_CORE* wk )
   case 2:
     if( wk->plistData.end_flg )
     {
-      u32 i;
-
       BTL_N_Printf( DBGSTR_VCORE_SelPokeEnd );
 
-      for(i=0; i<NELEMS(wk->plistData.sel_pos); ++i)
+      // 制限時間による強制終了でないなら、選択されたポケモンデータを格納
+      if( !(wk->plistData.time_out_flg) )
       {
-        if( wk->plistData.sel_pos[i] != BPL_SELPOS_NONE ){
-          BTL_POKESELECT_RESULT_Push( wk->pokeselResult, wk->plistData.sel_pos[i] );
-          {
-            u8 storeCnt = BTL_POKESELECT_RESULT_GetCount( wk->pokeselResult );
-            BTL_N_Printf( DBGSTR_VCORE_SelPokeEnd_Sel, i, storeCnt);
-            wk->pokeselResult->fCancel = FALSE;
+        u32 i;
+        for(i=0; i<NELEMS(wk->plistData.sel_pos); ++i)
+        {
+          if( wk->plistData.sel_pos[i] != BPL_SELPOS_NONE ){
+            BTL_POKESELECT_RESULT_Push( wk->pokeselResult, wk->plistData.sel_pos[i] );
+            {
+              u8 storeCnt = BTL_POKESELECT_RESULT_GetCount( wk->pokeselResult );
+              BTL_N_Printf( DBGSTR_VCORE_SelPokeEnd_Sel, i, storeCnt);
+              wk->pokeselResult->fCancel = FALSE;
+            }
           }
-        }
-        else{
-          BTL_N_Printf( DBGSTR_VCORE_SelPokeEnd_Unsel, i );
+          else{
+            BTL_N_Printf( DBGSTR_VCORE_SelPokeEnd_Unsel, i );
+          }
         }
       }
 
@@ -957,6 +1025,8 @@ BOOL BTLV_WaitPokeSelect( BTLV_CORE* wk )
   }
   return FALSE;
 }
+
+
 //=============================================================================================
 /**
  * アイテム選択開始
@@ -980,6 +1050,7 @@ void BTLV_ITEMSELECT_Start( BTLV_CORE* wk, u8 bagMode, u8 energy, u8 reserved_en
     wk->bagData.end_flg = FALSE;
     wk->bagData.ret_item = ITEM_DUMMY_DATA;
     wk->bagData.cursor_flg = BTLV_SCD_GetCursorFlagPtr( wk->scrnD );
+    wk->bagData.time_out_flg = FALSE;
 
     wk->plistData.pp = BTL_MAIN_GetPlayerPokeParty( wk->mainModule );
     wk->plistData.multi_pp = BTL_MAIN_GetMultiPlayerPokeParty( wk->mainModule );
@@ -994,10 +1065,25 @@ void BTLV_ITEMSELECT_Start( BTLV_CORE* wk, u8 bagMode, u8 energy, u8 reserved_en
     wk->plistData.cursor_flg = BTLV_SCD_GetCursorFlagPtr( wk->scrnD );
     wk->plistData.tcb_sys = BTLV_EFFECT_GetTCBSYS();
     wk->plistData.pfd = BTLV_EFFECT_GetPfd();
+    wk->plistData.time_out_flg = FALSE;
 
     wk->selectItemSeq = 1;
   }
 }
+
+//=============================================================================================
+/**
+ * アイテム選択の強制終了通知（コマンド選択の制限時間切れによる）
+ *
+ * @param   wk
+ */
+//=============================================================================================
+void BTLV_ITEMSELECT_ForceQuit( BTLV_CORE* wk )
+{
+  wk->bagData.time_out_flg = TRUE;
+  wk->plistData.time_out_flg = TRUE;
+}
+
 //=============================================================================================
 /**
  * アイテム選択終了待ち
@@ -1009,30 +1095,47 @@ void BTLV_ITEMSELECT_Start( BTLV_CORE* wk, u8 bagMode, u8 energy, u8 reserved_en
 //=============================================================================================
 BOOL BTLV_ITEMSELECT_Wait( BTLV_CORE* wk )
 {
+  enum {
+    SEQ_NULL = 0,
+    SEQ_INIT = 1,
+    SEQ_START_SCENE_BAG,
+    SEQ_WAIT_SCENE_BAG,
+    SEQ_START_SCENE_POKELIST,
+    SEQ_WAIT_SCENE_POKELIST,
+
+    SEQ_START_RECOVER,
+    SEQ_WAIT_RECOVER,
+  };
+
   switch( wk->selectItemSeq ){
-  case 1:
+  case SEQ_INIT:
     BTLV_SCD_FadeOut( wk->scrnD );
     GFL_OVERLAY_Load( FS_OVERLAY_ID( battle_b_app ) );
-    wk->selectItemSeq++;
+    wk->selectItemSeq = SEQ_START_SCENE_BAG;
     break;
 
-  case 2:
+  case SEQ_START_SCENE_BAG:
     if( BTLV_SCD_FadeFwd(wk->scrnD) ){
       BTLV_SCD_Cleanup( wk->scrnD );
       GFL_OVERLAY_Load( FS_OVERLAY_ID( battle_bag ) );
       BattleBag_TaskAdd( &wk->bagData );
-      wk->selectItemSeq++;
+      wk->selectItemSeq = SEQ_WAIT_SCENE_BAG;
     }
     break;
 
-  case 3:
+  case SEQ_WAIT_SCENE_BAG:
     if( wk->bagData.end_flg ){
       GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle_bag ) );
-      wk->selectItemSeq++;
+
+      if( !(wk->bagData.time_out_flg) ){
+        wk->selectItemSeq = SEQ_START_SCENE_POKELIST;
+      }else{
+        wk->selectItemSeq = SEQ_START_RECOVER;
+      }
     }
     break;
 
- case 4:
+ case SEQ_START_SCENE_POKELIST:
     if( (wk->bagData.ret_item != ITEM_DUMMY_DATA)
     &&  (wk->bagData.ret_page != BBAG_POKE_BALL)
     ){
@@ -1040,27 +1143,29 @@ BOOL BTLV_ITEMSELECT_Wait( BTLV_CORE* wk )
       GFL_OVERLAY_Load( FS_OVERLAY_ID( battle_plist ) );
       BattlePokeList_TaskAdd( &wk->plistData );
       BTL_Printf("アイテム選択:%d\n", wk->plistData.item);
-      wk->selectItemSeq++;
+      wk->selectItemSeq = SEQ_WAIT_SCENE_POKELIST;
     }else{
-      BTLV_SCD_FadeIn( wk->scrnD );
-      BTLV_SCD_Setup( wk->scrnD );
-      wk->selectItemSeq = 6;
+      wk->selectItemSeq = SEQ_START_RECOVER;
     }
     break;
 
-  case 5:
+  case SEQ_WAIT_SCENE_POKELIST:
     if( wk->plistData.end_flg ){
       GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle_plist ) );
-      BTLV_SCD_FadeIn( wk->scrnD );
-      BTLV_SCD_Setup( wk->scrnD );
-      wk->selectItemSeq++;
+      wk->selectItemSeq = SEQ_START_RECOVER;
     }
     break;
 
-  case 6:
+  case SEQ_START_RECOVER:
+    BTLV_SCD_FadeIn( wk->scrnD );
+    BTLV_SCD_Setup( wk->scrnD );
+    wk->selectItemSeq = SEQ_WAIT_RECOVER;
+    break;
+
+  case SEQ_WAIT_RECOVER:
     if( BTLV_SCD_FadeFwd(wk->scrnD) ){
       GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle_b_app ) );
-      wk->selectItemSeq = 0;
+      wk->selectItemSeq = SEQ_NULL;
       return TRUE;
     }
   }
