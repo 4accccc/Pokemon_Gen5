@@ -1061,9 +1061,12 @@ static BOOL SceneEndDemo_Init( UI_SCENE_CNT_PTR cnt, void *work )
     RESULT_UNIT_Init( &wk->result_unit, &wk->wk_obj, &wk->wk_g3d, me, you, wk->type );
   }
 
-#ifdef DEBUG_ONLY_FOR_genya_hosaka
-    // フェードアウト リクエスト
-  GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, -8 );
+#ifdef DEBUG_LOOP
+  if( g_debug_loop )
+  {
+      // フェードアウト リクエスト
+    GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_WHITEOUT, 16, 0, -8 );
+  }
 #endif
 
   return TRUE;
