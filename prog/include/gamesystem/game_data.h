@@ -39,6 +39,7 @@
 #include "field/bsubway_scr_proc.h"
 
 #include "field/calender.h"
+#include "savedata/un_savedata.h"
 
 //============================================================================================
 //============================================================================================
@@ -610,4 +611,14 @@ extern void GAMEDATA_SetBSubwayScrWork(GAMEDATA * gamedata, BSUBWAY_SCRWORK *bsw
  */
 //----------------------------------------------------------
 extern int TRAINERCARD_GetCardRank( GAMEDATA *gameData );
+
+//----------------------------------------------------------
+/**
+ * @brief 国連ワークポインタ取得
+ * @param   gamedata    GAMEDATAへのポインタ
+ * @retval  UNSV_WORK *    
+ */
+//----------------------------------------------------------
+extern UNSV_WORK *GAMEDATA_GetUnsvWorkPtr(GAMEDATA * gamedata);
+
 

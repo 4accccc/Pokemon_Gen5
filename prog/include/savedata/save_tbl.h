@@ -98,6 +98,7 @@ enum{
   GMDATA_ID_SYMBOL,           // シンボルエンカウント
   GMDATA_ID_MYPMS,            // 主人公の挨拶文データ
   GMDATA_ID_ANKETO,           // すれ違いアンケート
+  GMDATA_ID_UNSV,             // 国連
 
 	GMDATA_ID_MAX,
 };

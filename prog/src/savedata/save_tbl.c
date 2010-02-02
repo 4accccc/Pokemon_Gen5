@@ -53,6 +53,7 @@
 #include "savedata/my_pms_data.h"
 #include "savedata/battle_examination.h"
 #include "savedata/anketo_save.h"
+#include "savedata/un_savedata.h"
 
 //==============================================================================
 //  íËêîíËã`
@@ -414,6 +415,11 @@ static const GFL_SAVEDATA_TABLE SaveDataTbl_Normal[] = {
     GMDATA_ID_ANKETO,
     (FUNC_GET_SIZE)AnketoSave_GetWorkSize,
     (FUNC_INIT_WORK)AnketoSave_WorkInit,
+  },
+  { //çëòA
+    GMDATA_ID_UNSV,
+    (FUNC_GET_SIZE)UNSV_GetWorkSize,
+    (FUNC_INIT_WORK)UNSV_Init,
   },
 };
 

@@ -49,6 +49,8 @@
 #include "gamesystem/beacon_status.h"
 #include "savedata/gimmickwork_local.h"
 #include "savedata/gimmickwork.h"
+#include "savedata/un_savedata_local.h"
+#include "savedata/un_savedata.h"
 
 //============================================================================================
 //============================================================================================
@@ -115,6 +117,7 @@ struct _GAMEDATA{
   BEACON_STATUS* beacon_status; ///<ビーコン関連ログ他
 
   CALENDER* calender;  // カレンダー
+  UNSV_WORK UnsvWork;      //国連ワーク
 };
 
 //==============================================================================
@@ -1322,6 +1325,9 @@ static void GAMEDATA_SaveDataLoad(GAMEDATA *gamedata)
     SITUATION* sv = SaveData_GetSituation( gamedata->sv_control_ptr );
     SaveData_SituationLoadWeatherID( sv, &gamedata->weather_id );
   }
+  { //UNSV_WORK
+    SaveData_LoadUnsvWork(gamedata->sv_control_ptr, &gamedata->UnsvWork);
+  }
 }
 
 //--------------------------------------------------------------
@@ -1375,6 +1381,10 @@ static void GAMEDATA_SaveDataUpdate(GAMEDATA *gamedata)
   { //WEATHER_ID
     SITUATION* sv = SaveData_GetSituation( gamedata->sv_control_ptr );
     SaveData_SituationUpdateWeatherID( sv, gamedata->weather_id );
+  }
+
+  { //UNSV_WORK
+    SaveData_SaveUnsvWork(&gamedata->UnsvWork, gamedata->sv_control_ptr);
   }
 }
 
@@ -1575,3 +1585,14 @@ RECORD *GAMEDATA_GetRecordPtr(GAMEDATA * gamedata)
   return SaveControl_DataPtrGet( gamedata->sv_control_ptr, GMDATA_ID_RECORD);
 }
 
+//=============================================================================================
+/**
+ * @brief 国連ワークポインタ取得
+ * @param   gamedata    GAMEDATAへのポインタ
+ * @retval  UNSV_WORK *    
+ */
+//=============================================================================================
+UNSV_WORK *GAMEDATA_GetUnsvWorkPtr(GAMEDATA * gamedata)
+{
+  return &gamedata->UnsvWork;
+}

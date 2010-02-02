@@ -53,7 +53,8 @@ SAVEDATASRC =   savedata/save_tbl.c \
         savedata/symbol_save.c \
         savedata/anketo_save.c \
 				savedata/battle_examination.c \
-        savedata/my_pms_data.c
+        savedata/my_pms_data.c \
+        savedata/un_savedata.c
 
 
 #’ÊM‚Ìí’“
