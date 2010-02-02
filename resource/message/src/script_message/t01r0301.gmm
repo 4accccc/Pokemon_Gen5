@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-11-09T21:51:40"/>
+	<create user="matsumiya" host="W00224" date="2010-02-02T21:15:37"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="30" top="198" right="735" bottom="818" maximized="no" rayout="Vertical2">
+	<dialog left="1393" top="326" right="2098" bottom="946" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -297,14 +297,14 @@
 ・ポケモン図鑑入手まで</comment>
 		<attribute name="キャラ指定">男性
 ・友達♂の父</attribute>
-		<language name="JPN" width="256">ブラッカーのパパ『おお！　[1:00:トレーナー名:0][BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">チェレンのパパ『おお！　[1:00:トレーナー名:0][BE:01:ページ切り替え（クリア）]
 きいたよ　はかせから
 ポケモンを　もらうんだって[BE:01:ページ切り替え（クリア）]
 って　もう　もらったのか！
 おお！　かわいい　ポケモンだなあ[BE:01:ページ切り替え（クリア）]
 ついに　きみたちも
 トレーナーとして　たびだつんだなあ</language>
-		<language name="JPN_KANJI" width="256">ブラッカーのパパ『おお！　[1:00:トレーナー名:0][BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">チェレンのパパ『おお！　[1:00:トレーナー名:0][BE:01:ページ切り替え（クリア）]
 聞いたよ！　博士から
 ポケモンを　もらうんだって[BE:01:ページ切り替え（クリア）]
 って　もう　もらったのか！
@@ -318,12 +318,12 @@
 ・ポケモン図鑑入手まで</comment>
 		<attribute name="キャラ指定">女性
 ・友達♂の母</attribute>
-		<language name="JPN" width="256">ブラッカーのママ『ブラッカーったら
+		<language name="JPN" width="256">チェレンのママ『チェレンったら
 けんきゅうじょに　いるのね　きっと[BE:01:ページ切り替え（クリア）]
 なんていうか　りちぎ　というか
 きまじめ　なのよね　あのこ</language>
-		<language name="JPN_KANJI" width="256">ブラッカーのママ『これからも
-ブラッカーと　仲良くしてね[BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">チェレンのママ『これからも
+チェレンと　仲良くしてね[BE:01:ページ切り替え（クリア）]
 あまり　感情とか　表にださないし
 一緒にいて　大変かも　知れないけれど</language>
 	</row>
@@ -333,11 +333,12 @@
 ・ポケモン図鑑入手後から
 　ランニングシューズ入手するまで</comment>
 		<attribute name="キャラ指定">男性</attribute>
-		<language name="JPN" width="256">ブラッカーのパパ『たびは　いいよ！[BE:01:ページ切り替え（クリア）]
-じぶんの　しらないもの
-りかいできないものに　たくさんふれて[BE:00:ページ切り替え（行送り）]
+		<language name="JPN" width="256">チェレンのパパ『たびは　いいよ！[BE:01:ページ切り替え（クリア）]
+じぶんの　しらない　もの
+りかい　できない　ものに▽
+たくさん　ふれて[BE:00:ページ切り替え（行送り）]
 じぶんが　どんどん　かわっていくんだ</language>
-		<language name="JPN_KANJI" width="256">ブラッカーのパパ『旅は　いいよ！[BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">チェレンのパパ『旅は　いいよ！[BE:01:ページ切り替え（クリア）]
 自分の　知らないもの
 理解できないものに　たくさんふれて[BE:00:ページ切り替え（行送り）]
 自分が　どんどん　変わっていくんだ</language>
@@ -348,15 +349,15 @@
 ・ポケモン図鑑入手後から
 　ランニングシューズ入手するまで</comment>
 		<attribute name="キャラ指定">女性</attribute>
-		<language name="JPN" width="256">ブラッカーのママ『あら　[1:00:トレーナー名:0]
-さっき　ブラッカーから　きいたわ[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">チェレンのママ『あら　[1:00:トレーナー名:0]
+さっき　チェレンから　きいたわ[BE:01:ページ切り替え（クリア）]
 はかせに　たのまれて
 ずかんを　かんせい　させるんですって！[BE:01:ページ切り替え（クリア）]
 だいじょうぶ！　なにがあっても
 あなたたちの　そばには[BE:00:ページ切り替え（行送り）]
 ポケモンが　いるんですからね</language>
-		<language name="JPN_KANJI" width="256">ブラッカーのママ『あら　[1:00:トレーナー名:0]
-さっき　ブラッカーから　きいたわ[BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">チェレンのママ『あら　[1:00:トレーナー名:0]
+さっき　チェレンから　きいたわ[BE:01:ページ切り替え（クリア）]
 博士に　たのまれて
 図鑑を　完成させるんですって！[BE:01:ページ切り替え（クリア）]
 大丈夫！　なにがあっても

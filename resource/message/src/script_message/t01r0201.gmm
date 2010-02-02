@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2010-01-26T14:58:24"/>
+	<create user="matsumiya" host="W00224" date="2010-02-02T21:14:29"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -301,11 +301,11 @@
 ・主人公と隣接したとき
 　msg_t01r0301_white_02</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
-		<language name="JPN" width="256">ホワイティ『あたしだって……[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">ベル『あたしだって……[BE:01:ページ切り替え（クリア）]
 ポケモンを　もらった
 りっぱな　トレーナー　なんだもん！[BE:00:ページ切り替え（行送り）]
 ぼうけんだって　できるんだから！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ホワイティ『あたしだって……[BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">ベル『あたしだって……[BE:01:ページ切り替え（クリア）]
 ポケモンを　もらった
 立派な　トレーナー　なんだもん！[BE:00:ページ切り替え（行送り）]
 冒険だって　できるんだから！[BE:01:ページ切り替え（クリア）]</language>
@@ -315,12 +315,12 @@
 		<comment>♀
 ・このメッセージ表示後
 　研究所内に入れる</comment>
-		<language name="JPN" width="256">ホワイティ『あっ　[1:00:トレーナー名:0][BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">ベル『あっ　[1:00:トレーナー名:0][BE:01:ページ切り替え（クリア）]
 ……だいじょうぶ　だよ[BE:01:ページ切り替え（クリア）]
 ……だいじょうぶ！[BE:01:ページ切り替え（クリア）]
 あたし　けんきゅうじょの　まえで
 まってるからね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ホワイティ『あっ　[1:00:トレーナー名:0][BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">ベル『あっ　[1:00:トレーナー名:0][BE:01:ページ切り替え（クリア）]
 ……大丈夫だよ[BE:01:ページ切り替え（クリア）]
 ……大丈夫！[BE:01:ページ切り替え（クリア）]
 それじゃ　あたし
@@ -331,11 +331,11 @@
 		<comment>♂
 ・ポケモン図鑑入手まで（仮）</comment>
 		<attribute name="キャラ指定">男性</attribute>
-		<language name="JPN" width="256">ホワイティのパパ『なんってこったい！？[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">ベルのパパ『なんってこったい！？[BE:01:ページ切り替え（クリア）]
 うちの　むすめが
 ポケモンと　たびに　でるだなんて……[BE:00:ページ切り替え（行送り）]
 あんなに　せけんしらず　なのに！？</language>
-		<language name="JPN_KANJI" width="256">ホワイティのパパ『なんってこったい！？[BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">ベルのパパ『なんってこったい！？[BE:01:ページ切り替え（クリア）]
 うちの　娘が
 ポケモンと　旅に　でるだなんて……[BE:00:ページ切り替え（行送り）]
 あんなに　世間知らず　なのに！？</language>
@@ -345,12 +345,12 @@
 		<comment>♀
 ・ポケモン図鑑入手まで（仮）</comment>
 		<attribute name="キャラ指定">女性</attribute>
-		<language name="JPN" width="256">ホワイティのママ『もう　パパったら
+		<language name="JPN" width="256">ベルのママ『もう　パパったら
 むすめのこと　しんぱい　しすぎよね[BE:01:ページ切り替え（クリア）]
 こどもは　だれだって
 ポケモンと　いっしょに　たびをして[BE:00:ページ切り替え（行送り）]
 おとなに　なるんですから</language>
-		<language name="JPN_KANJI" width="256">ホワイティのママ『もう　パパったら
+		<language name="JPN_KANJI" width="256">ベルのママ『もう　パパったら
 娘のこと　心配しすぎよね[BE:01:ページ切り替え（クリア）]
 子供は　だれだって
 ポケモンと　一緒に　旅をして[BE:00:ページ切り替え（行送り）]
