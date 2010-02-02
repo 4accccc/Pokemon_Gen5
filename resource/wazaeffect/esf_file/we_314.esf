@@ -6,7 +6,9 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\w_314.spa
 カメラ移動	追従	防御側	16	0	8
 SE再生	SEQ_SE_BC01	SYSTEM	0	0	100	0	0
 制御モード変更	継続
-SE再生	SEQ_SE_W239_01	SE1	20	0	50	0	0
+SE再生	SEQ_SE_W221_NOISE	SE1	20	300	80	0	0
+SE動的変化	SE1	追従	ピッチ	300	2000	20	80:0:0
+SE動的変化	SE1	追従	ボリューム	80	0	20	80:0:0
 SE再生	SEQ_SE_DUMMY5	SE1	100	0	0	0	0
 SE再生	SEQ_SE_W010_01	SE2	27	0	125	0	0
 SE再生	SEQ_SE_W010_01	SE2	35	0	125	0	0
