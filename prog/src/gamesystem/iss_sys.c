@@ -140,10 +140,10 @@ void ISS_SYS_Update( ISS_SYS* sys )
   // 各ISSの更新
 	if( sys->frame++ % 2 == 0 )
   {
-    ISS_ROAD_SYS_Update( sys->issR );  // 道路ISS(30フレームで動作)
-    ISS_3DS_SYS_Main( sys->issB );     // 橋ISS(30フレームで動作)
+    ISS_ROAD_SYS_Update( sys->issR );  // 道路ISS (30フレームで動作)
+    ISS_CITY_SYS_Main( sys->issC );    // 街ISS (30フレームで動作)
+    ISS_3DS_SYS_Main( sys->issB );     // 橋ISS (30フレームで動作)
   }
-	ISS_CITY_SYS_Update( sys->issC );    // 街ISS 
 	ISS_DUNGEON_SYS_Update( sys->issD ); // ダンジョンISS 
   ISS_ZONE_SYS_Update( sys->issZ );    // ゾーンISS 
   ISS_SWITCH_SYS_Update( sys->issS );  // スイッチISS

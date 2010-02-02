@@ -20,13 +20,16 @@
 //===========================================================================================
 // ■定数・マクロ
 //===========================================================================================
+// デバッグ情報の出力先
+#define PRINT_DEST (1)
 
-// 無効ユニット番号(街ISSのBGMが鳴っているが, ISSユニットが配置されていない状況)
-#define INVALID_UNIT_NO (0xff)
+// 無効ユニット番号
+// ( 街ISSのBGMが鳴っているが, ISSユニットが配置されていない状況. )
+#define UNIT_NOT_FOUND (0xff)
 
-// 最大音量
-#define MAX_VOLUME (127)
-#define INVALID_VOLUME (0xffff)
+#define MIN_VOLUME               (0)   // 最小ボリューム
+#define MAX_VOLUME               (127) // 最大ボリューム
+#define MASTER_VOLUME_FADE_SPEED (2)   // マスターボリュームのフェード速度
 
 // 操作トラック
 #define TRACKBIT ((1<<(9-1))|(1<<(10-1))) // 9,10トラック
@@ -37,31 +40,42 @@
 //===========================================================================================
 struct _ISS_CITY_SYS
 {
-	// 使用するヒープID
-	HEAPID heapID;
+	HEAPID       heapID; 
+	PLAYER_WORK* player; // 監視対象プレイヤー
 
-	// 監視対象プレイヤー
-	PLAYER_WORK* pPlayer;
+	// システム
+	BOOL boot;		               // 起動中かどうか
+	u8   activeUnitIdx;	         // 動作中のユニット番号
+  int  trackVolume;            // 操作トラックのボリューム
+  int  masterVolume;           // マスターボリューム ( 設定値 )
+  int  practicalMasterVolume;  // マスターボリューム ( 実行値 )
 
-	// 起動状態
-	BOOL isActive;		  // 動作中かどうか
-	u8   activeUnitNo;	// 動作中のユニット番号
-  int  volume;        // 音量
-
-	// ユニット情報
-	u8        unitNum;		// ユニット数
-	ISS_C_UNIT** unit;		// ユニット配列
+	// ユニット
+	ISS_C_UNIT** unit;		 // ユニット配列
+	u8           unitNum;	 // ユニット数
 };
 
 
 //===========================================================================================
 // ■非公開関数のプロトタイプ宣言
 //===========================================================================================
-static void BootSystem( ISS_CITY_SYS* sys );
-static void StopSystem( ISS_CITY_SYS* sys );
-static void LoadUnitData( ISS_CITY_SYS* sys );
-static void UpdateVolume( ISS_CITY_SYS* sys );
-static void ChangeUnit( ISS_CITY_SYS* sys, u16 zone_id );
+// 生成/破棄
+static void InitializeSystem( ISS_CITY_SYS* system );
+static void LoadUnitData    ( ISS_CITY_SYS* system );
+static void UnloadUnitData  ( ISS_CITY_SYS* system );
+// システム制御
+static void BootSystem( ISS_CITY_SYS* system );
+static void StopSystem( ISS_CITY_SYS* system );
+static void ZoneChange( ISS_CITY_SYS* system, u16 nextZoneID );
+static void SystemMain( ISS_CITY_SYS* system );
+// ユニット制御
+static void ChangeUnit( ISS_CITY_SYS* system, u16 zoneID ); 
+// ボリューム制御 ( マスターボリューム )
+static BOOL UpdateMasterVolume( ISS_CITY_SYS* system );
+static void SetMasterVolume   ( ISS_CITY_SYS* system, int volume );
+// ボリューム制御 ( トラックボリューム )
+static BOOL UpdateTrackVolume   ( ISS_CITY_SYS* system );
+static void ChangeBGMTrackVolume( const ISS_CITY_SYS* system );
 
 
 //===========================================================================================
@@ -72,135 +86,99 @@ static void ChangeUnit( ISS_CITY_SYS* sys, u16 zone_id );
 /**
  * @brief  街ISSシステムを作成する
  *
- * @param  p_player 監視対象のプレイヤー
- * @param  heap_id  使用するヒープID
+ * @param  player  監視対象のプレイヤー
+ * @param  heapID  使用するヒープID
  * 
  * @return 街ISSシステム
  */
 //-------------------------------------------------------------------------------------------
-ISS_CITY_SYS* ISS_CITY_SYS_Create( PLAYER_WORK* p_player, HEAPID heap_id )
+ISS_CITY_SYS* ISS_CITY_SYS_Create( PLAYER_WORK* player, HEAPID heapID )
 {
-	ISS_CITY_SYS* sys;
+	ISS_CITY_SYS* system;
 
-	// メモリ確保
-	sys = (ISS_CITY_SYS*)GFL_HEAP_AllocMemory( heap_id, sizeof( ISS_CITY_SYS ) );
+  // DEBUG:
+  OS_TFPrintf( PRINT_DEST, "ISS-C: create\n" );
+
+	// 生成
+	system = (ISS_CITY_SYS*)GFL_HEAP_AllocMemory( heapID, sizeof( ISS_CITY_SYS ) );
 
 	// 初期化
-	sys->heapID       = heap_id;
-	sys->pPlayer      = p_player;
-	sys->isActive     = FALSE;
-	sys->activeUnitNo = INVALID_UNIT_NO;
-  sys->volume       = INVALID_VOLUME;
-	sys->unitNum      = 0;
-	sys->unit         = NULL;
+  InitializeSystem( system );
+	system->heapID = heapID;
+	system->player = player;
 
 	// ユニット情報の読み込み
-	LoadUnitData( sys );
-
-  // DEBUG:
-  OBATA_Printf( "ISS-C: create\n" );
+	LoadUnitData( system );
 	
-	// 作成した街ISSシステムを返す
-	return sys;
+	return system;
 }
 
 //------------------------------------------------------------------------------------------
 /**
- * @brief  街ISSシステムを破棄する
+ * @brief 街ISSシステムを破棄する
  *
- * @param sys 破棄する街ISSシステム
+ * @param system
  */
 //------------------------------------------------------------------------------------------
-void ISS_CITY_SYS_Delete( ISS_CITY_SYS* sys )
+void ISS_CITY_SYS_Delete( ISS_CITY_SYS* system )
 {
-  int i;
-
-	// 各ユニットを破棄
-  for( i=0; i<sys->unitNum; i++ )
-  {
-    ISS_C_UNIT_Delete( sys->unit[i] );
-  }
-	GFL_HEAP_FreeMemory( sys->unit );
+  // ユニットデータの破棄
+  UnloadUnitData( system );
 
 	// 本体の破棄
-	GFL_HEAP_FreeMemory( sys );
+	GFL_HEAP_FreeMemory( system );
 
   // DEBUG:
-  OBATA_Printf( "ISS-C: delete\n" );
+  OS_TFPrintf( PRINT_DEST, "ISS-C: delete\n" );
 }
 
 //------------------------------------------------------------------------------------------
 /**
- * @brief プレイヤーを監視し, 音量を調整する
+ * @brief システム動作
  *
- * @param sys 動作対象の街ISSシステム
+ * @param system
  */
 //------------------------------------------------------------------------------------------
-void ISS_CITY_SYS_Update( ISS_CITY_SYS* sys )
+void ISS_CITY_SYS_Main( ISS_CITY_SYS* system )
 {
-  // 停止中
-	if( sys->isActive != TRUE ){ return; }
-
-  // 音量を調整する
-  UpdateVolume( sys );
+  SystemMain( system );
 }
 	
-//------------------------------------------------------------------------------------------
-/**
- * @brief ゾーン切り替えを通知する
- *
- * @param sys        通知対象の街ISSシステム
- * @param next_zone_id 新しいゾーンID
- */
-//------------------------------------------------------------------------------------------
-void ISS_CITY_SYS_ZoneChange( ISS_CITY_SYS* sys, u16 next_zone_id )
-{ 
-  // 停止中
-  if( sys->isActive != TRUE ){ return; }
-
-  // ユニットを切り替える
-  ChangeUnit( sys, next_zone_id );
-
-  // 音量を調整
-  UpdateVolume( sys );
-}
-
 //------------------------------------------------------------------------------------------
 /**
  * @brief システムを起動する
  *
- * @param sys 起動するシステム
+ * @param system
  */
 //------------------------------------------------------------------------------------------
-void ISS_CITY_SYS_On( ISS_CITY_SYS* sys )
+void ISS_CITY_SYS_On( ISS_CITY_SYS* system )
 { 
-  BootSystem( sys );
+  BootSystem( system );
 }
 
 //------------------------------------------------------------------------------------------
 /**
  * @brief システムを停止させる
  *
- * @param sys 停止させるシステム
+ * @param system
  */
 //------------------------------------------------------------------------------------------
-void ISS_CITY_SYS_Off( ISS_CITY_SYS* sys )
+void ISS_CITY_SYS_Off( ISS_CITY_SYS* system )
 {
-  StopSystem( sys );
+  StopSystem( system );
 }
 
 //------------------------------------------------------------------------------------------
 /**
- * @breif 動作状態を取得する
+ * @brief ゾーン切り替えを通知する
  *
- * @param sys 状態を調べるISSシステム
- * 
- * @return 動作中かどうか
+ * @param system
+ * @param nextZoneID 新しいゾーンID
  */
 //------------------------------------------------------------------------------------------
-BOOL ISS_CITY_SYS_IsOn( const ISS_CITY_SYS* sys )
-{
-	return sys->isActive;
+void ISS_CITY_SYS_ZoneChange( ISS_CITY_SYS* system, u16 nextZoneID )
+{ 
+  ZoneChange( system, nextZoneID );
 }
 
 
@@ -210,110 +188,192 @@ BOOL ISS_CITY_SYS_IsOn( const ISS_CITY_SYS* sys )
 
 //-------------------------------------------------------------------------------------------
 /**
- * @brief システムを起動する
+ * @brief システムを初期化する
  *
- * @param sys 街ISSシステム
+ * @param system
  */
 //-------------------------------------------------------------------------------------------
-static void BootSystem( ISS_CITY_SYS* sys )
+static void InitializeSystem( ISS_CITY_SYS* system )
 {
-  // 起動中
-  if( sys->isActive ){ return; }
-
-  // システム起動
-  sys->isActive = TRUE;
-  sys->volume   = INVALID_VOLUME;
-  // DEBUG:
-  OBATA_Printf( "ISS-C: boot\n" );
-
-  // ユニット検索
-  {
-    u16 zone_id;
-    zone_id = PLAYERWORK_getZoneID( sys->pPlayer );
-    ChangeUnit( sys, zone_id ); 
-  } 
-}
-
-//-------------------------------------------------------------------------------------------
-/**
- * @brief システムを停止する
- *
- * @param sys 街ISSシステム
- */
-//-------------------------------------------------------------------------------------------
-static void StopSystem( ISS_CITY_SYS* sys )
-{
-  // 停止中
-  if( !sys->isActive ){ return; }
-
-  // 停止
-	sys->isActive     = FALSE;
-  sys->activeUnitNo = INVALID_UNIT_NO;
-  // 操作していたトラックを元に戻す
-  //PMSND_ChangeBGMVolume( TRACKBIT, 127 ); 
-
-  // DEBUG:
-  OBATA_Printf( "ISS-C: stop\n" );
+	system->heapID                = 0;
+	system->player                = NULL;
+	system->boot                  = FALSE;
+	system->activeUnitIdx         = UNIT_NOT_FOUND;
+  system->masterVolume          = MAX_VOLUME;
+  system->practicalMasterVolume = MAX_VOLUME;
+	system->unitNum               = 0;
+	system->unit                  = NULL;
 }
 
 //-------------------------------------------------------------------------------------------
 /**
  * @brief ユニットデータを読み込む
  *
- * @param sys 読み込んだデータを保持するシステム
+ * @param system
  */
 //-------------------------------------------------------------------------------------------
-static void LoadUnitData( ISS_CITY_SYS* sys )
+static void LoadUnitData( ISS_CITY_SYS* system )
 {
+  int datnum;
   int datid;
 
-  // 登録されているユニットの数を取得
-  sys->unitNum = GFL_ARC_GetDataFileCnt( ARCID_ISS_CITY );
+  GF_ASSERT( system->unit == NULL );
 
-  // 各ユニットを作成
-  sys->unit = GFL_HEAP_AllocMemory( sys->heapID, sys->unitNum * sizeof(ISS_C_UNIT*) );
+  // DEBUG:
+  OS_TFPrintf( PRINT_DEST, "ISS-C: load unit data\n" );
+
+  // ユニット数 取得
+  datnum          = GFL_ARC_GetDataFileCnt( ARCID_ISS_CITY );
+  system->unitNum = datnum;
+
+  // 各ユニットデータ ワーク生成
+  system->unit = GFL_HEAP_AllocMemory( system->heapID, datnum * sizeof(ISS_C_UNIT*) );
 
   // 各ユニットデータを読み込む
-  for( datid=0; datid<sys->unitNum; datid++ )
+  for( datid=0; datid < datnum; datid++ )
   {
-    sys->unit[datid] = ISS_C_UNIT_Create( sys->heapID, datid );
+    system->unit[ datid ] = ISS_C_UNIT_Create( system->heapID, datid );
   } 
 }
 
 //-------------------------------------------------------------------------------------------
 /**
- * @brief 音量を調整する
+ * @brief ユニットデータを破棄する
  *
- * @param sys 調整を行う
+ * @param system
  */
 //-------------------------------------------------------------------------------------------
-static void UpdateVolume( ISS_CITY_SYS* sys )
+static void UnloadUnitData( ISS_CITY_SYS* system )
 {
-  int new_volume = 0;
-  const VecFx32* pos;
+  int unitIdx;
+  int unitNum;
 
-  // 起動していない
-  GF_ASSERT( sys->isActive );  
+  GF_ASSERT( system->unit );
 
-  // ユニットが配置されていない
-  if( sys->activeUnitNo == INVALID_UNIT_NO )
+  // DEBUG:
+  OS_TFPrintf( PRINT_DEST, "ISS-C: unload unit data\n" );
+
+  unitNum = system->unitNum;
+
+	// 各ユニットを破棄
+  for( unitIdx=0; unitIdx < unitNum; unitIdx++ )
   {
-    PMSND_ChangeBGMVolume( TRACKBIT, 0 );
-    return; 
+    ISS_C_UNIT_Delete( system->unit[ unitIdx ] );
+  }
+	GFL_HEAP_FreeMemory( system->unit );
+  system->unit = NULL;
+}
+
+//-------------------------------------------------------------------------------------------
+/**
+ * @brief システムを起動する
+ *
+ * @param system
+ */
+//-------------------------------------------------------------------------------------------
+static void BootSystem( ISS_CITY_SYS* system )
+{
+  // 起動中
+  if( system->boot ){ return; }
+
+  // DEBUG:
+  OS_TFPrintf( PRINT_DEST, "ISS-C: boot\n" );
+
+  // 起動
+  system->boot        = TRUE;
+  system->trackVolume = MIN_VOLUME; 
+
+  // ユニット検索
+  {
+    u16 zoneID;
+
+    zoneID = PLAYERWORK_getZoneID( system->player );
+    ChangeUnit( system, zoneID ); 
+  } 
+
+  // 音量を調整
+  UpdateTrackVolume( system );
+  ChangeBGMTrackVolume( system );
+}
+
+//-------------------------------------------------------------------------------------------
+/**
+ * @brief システムを停止する
+ *
+ * @param system
+ */
+//-------------------------------------------------------------------------------------------
+static void StopSystem( ISS_CITY_SYS* system )
+{
+  // 停止中
+  if( system->boot == FALSE ){ return; }
+
+  // 停止
+	system->boot          = FALSE;
+  system->activeUnitIdx = UNIT_NOT_FOUND;
+
+  // DEBUG:
+  OS_TFPrintf( PRINT_DEST, "ISS-C: stop\n" );
+} 
+
+//-------------------------------------------------------------------------------------------
+/**
+ * @brief ゾーンの切り替えを通知する
+ *
+ * @param system
+ * @param nextZoneID 切り替え先のゾーンID
+ */
+//-------------------------------------------------------------------------------------------
+static void ZoneChange( ISS_CITY_SYS* system, u16 nextZoneID )
+{
+  // 停止中
+  if( system->boot == FALSE ){ return; }
+
+  // ユニットを切り替える
+  ChangeUnit( system, nextZoneID );
+
+  // マスターボリューム設定
+  if( system->activeUnitIdx == UNIT_NOT_FOUND )
+  {
+    SetMasterVolume( system, MIN_VOLUME );
+  }
+  else
+  {
+    SetMasterVolume( system, MAX_VOLUME );
   }
 
-  // ユニットと自機の位置からボリュームを算出
-  pos        = PLAYERWORK_getPosition( sys->pPlayer );
-  new_volume = ISS_C_UNIT_GetVolume( sys->unit[sys->activeUnitNo], pos );
-
-  // 音量が変化した場合
-  if( sys->volume != new_volume )
+  // 音量を調整
+  if( UpdateTrackVolume( system ) )
   {
-    // 更新
-    sys->volume = new_volume;
-    PMSND_ChangeBGMVolume( TRACKBIT, new_volume );
-    // DEBUG:
-    OBATA_Printf( "ISS-C: update volume ==> %d\n", new_volume );
+    ChangeBGMTrackVolume( system ); 
+  }
+}
+
+//-------------------------------------------------------------------------------------------
+/**
+ * @brief システム動作
+ *
+ * @param system
+ */
+//-------------------------------------------------------------------------------------------
+static void SystemMain( ISS_CITY_SYS* system )
+{
+  BOOL changeMasterVolume;
+  BOOL changeTrackVolume;
+
+  // 停止中
+  if( system->boot == FALSE ){ return; }
+
+  // マスターボリューム更新
+  changeMasterVolume = UpdateMasterVolume( system );
+
+  // ボリューム調整
+  changeTrackVolume = UpdateTrackVolume( system );
+  
+  // ボリュームが変化
+  if( changeMasterVolume || changeTrackVolume )
+  {
+    ChangeBGMTrackVolume( system );
   }
 }
 
@@ -321,30 +381,166 @@ static void UpdateVolume( ISS_CITY_SYS* sys )
 /**
  * @brief 指定したゾーンに配置されたユニットに切り替える
  *
- * @param sys     ユニットを切り替えるシステム
- * @param zone_id 切り替え先のゾーンID
+ * @param system
+ * @param zoneID 切り替え先のゾーンID
  */
 //-------------------------------------------------------------------------------------------
-static void ChangeUnit( ISS_CITY_SYS* sys, u16 zone_id )
+static void ChangeUnit( ISS_CITY_SYS* system, u16 zoneID )
 {
-	int unit_idx;
+	int unitIdx, unitNum;
 
   // 起動していない
-  GF_ASSERT( sys->isActive );
+  GF_ASSERT( system->boot );
+
+  unitNum = system->unitNum;
 
   // 検索
-	for( unit_idx=0; unit_idx<sys->unitNum; unit_idx++ )
+	for( unitIdx=0; unitIdx < unitNum; unitIdx++ )
 	{
-		// 発見 ==> ユニット番号を更新
-		if( ISS_C_UNIT_GetZoneID( sys->unit[unit_idx] ) == zone_id )
+		// 発見
+		if( ISS_C_UNIT_GetZoneID( system->unit[ unitIdx ] ) == zoneID )
 		{ 
-			sys->activeUnitNo = unit_idx;
+			system->activeUnitIdx = unitIdx;
+
       // DEBUG:
-      OBATA_Printf( "ISS-C: change unit index ==> %d\n", sys->activeUnitNo );
+      OS_TFPrintf( PRINT_DEST, "ISS-C: change unit index ==> %d\n", unitIdx );
       return;
 		}
 	}
 
   // 配置されていない
-  sys->activeUnitNo = INVALID_UNIT_NO;
+  system->activeUnitIdx = UNIT_NOT_FOUND;
+}
+
+//-------------------------------------------------------------------------------------------
+/**
+ * @brief マスターボリュームを更新する
+ *
+ * @param system
+ *
+ * @return マスターボリュームが変化した場合 TRUE
+ *         そうでなければ FALSE
+ */
+//-------------------------------------------------------------------------------------------
+static BOOL UpdateMasterVolume( ISS_CITY_SYS* system )
+{
+  int nowVolume;
+  int destVolume;
+  int nextVolume;
+
+  // 起動していない
+  GF_ASSERT( system->boot );
+
+  // 現在値/目標値
+  nowVolume  = system->practicalMasterVolume;
+  destVolume = system->masterVolume;
+
+  // フェード完了済み
+  if( nowVolume == destVolume ){ return FALSE; }
+
+  // フェード
+  if( destVolume < nowVolume )
+  {
+    nextVolume = nowVolume - MASTER_VOLUME_FADE_SPEED;
+  }
+  else
+  {
+    nextVolume = nowVolume + MASTER_VOLUME_FADE_SPEED;
+  }
+
+  // 最小/最大補正
+  if( nextVolume < MIN_VOLUME ){ nextVolume = MIN_VOLUME; }
+  if( MAX_VOLUME < nextVolume ){ nextVolume = MAX_VOLUME; }
+
+  // マスター更新
+  system->practicalMasterVolume = nextVolume;
+
+  // DEBUG:
+  OS_TFPrintf( PRINT_DEST, "ISS-C: update master volume => %d\n", nextVolume );
+
+  return TRUE;
+}
+
+//-------------------------------------------------------------------------------------------
+/**
+ * @brief マスターボリュームを設定する
+ *
+ * @param system
+ * @param volume 設定するボリューム
+ */
+//-------------------------------------------------------------------------------------------
+static void SetMasterVolume( ISS_CITY_SYS* system, int volume )
+{
+  GF_ASSERT( system->boot );
+  GF_ASSERT( MIN_VOLUME <= volume );
+  GF_ASSERT( volume <= MAX_VOLUME );
+
+  system->masterVolume = volume;
+}
+
+//-------------------------------------------------------------------------------------------
+/**
+ * @brief トラックボリュームを調整する
+ *
+ * @param system
+ *
+ * @return ボリュームが変化した場合 TRUE
+ *         そうでなければ FALSE
+ */
+//-------------------------------------------------------------------------------------------
+static BOOL UpdateTrackVolume( ISS_CITY_SYS* system )
+{
+  int newVolume = 0;
+  const VecFx32* playerPos;
+
+  // 起動していない
+  GF_ASSERT( system->boot );  
+
+  // ユニットが配置されていない
+  if( system->activeUnitIdx == UNIT_NOT_FOUND ){ return FALSE; }
+
+  // ユニットと自機の位置からボリュームを算出
+  playerPos = PLAYERWORK_getPosition( system->player );
+  newVolume = ISS_C_UNIT_GetVolume( system->unit[ system->activeUnitIdx ], playerPos );
+
+  // ボリュームが変化した場合
+  if( system->trackVolume != newVolume )
+  {
+    system->trackVolume = newVolume; 
+    return TRUE;
+  }
+  return FALSE;
+}
+
+//-------------------------------------------------------------------------------------------
+/**
+ * @brief BGMのボリュームを変更する
+ *
+ * @param system
+ */
+//-------------------------------------------------------------------------------------------
+static void ChangeBGMTrackVolume( const ISS_CITY_SYS* system )
+{
+  int trackVolume;
+  int masterVolume;
+  int volume;
+
+  // 実ボリューム値を算出
+  trackVolume  = system->trackVolume;
+  masterVolume = system->practicalMasterVolume;
+  volume       = trackVolume * masterVolume / MAX_VOLUME;
+
+  // ボリュームの値域チェック
+  GF_ASSERT( MIN_VOLUME   <= trackVolume );
+  GF_ASSERT( MIN_VOLUME   <= masterVolume );
+  GF_ASSERT( MIN_VOLUME   <= volume );
+  GF_ASSERT( trackVolume  <= MAX_VOLUME );
+  GF_ASSERT( masterVolume <= MAX_VOLUME );
+  GF_ASSERT( volume       <= MAX_VOLUME );
+
+  // トラックボリューム変更
+  PMSND_ChangeBGMVolume( TRACKBIT, volume );
+
+  // DEBUG:
+  OS_TFPrintf( PRINT_DEST, "ISS-C: change BGM track volume ==> %d\n", volume );
 }
