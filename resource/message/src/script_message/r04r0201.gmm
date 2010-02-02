@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2010-01-13T14:38:54"/>
+	<create user="matsumiya" host="W00224" date="2010-02-02T12:57:09"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,8 +292,7 @@
 	</lock>
 
 
-	<row id="msg_r04r0201_gentleman_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>（汎用ビル）</comment>
+	<row id="msg_r04r0201_gentleman_01">
 		<attribute name="キャラ指定">GENTLEMAN</attribute>
 		<language name="JPN" width="256">テストメッセージ
 （サブイベントのよてい）</language>
@@ -301,8 +300,7 @@
 （サブイベント予定）</language>
 	</row>
 
-	<row id="msg_r04r0201_lady_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>（汎用ビル）</comment>
+	<row id="msg_r04r0201_lady_01">
 		<attribute name="キャラ指定">LADY</attribute>
 		<language name="JPN" width="256">テストメッセージ
 （サブイベントのよてい）</language>
@@ -310,8 +308,7 @@
 （サブイベント予定）</language>
 	</row>
 
-	<row id="msg_r04r0201_girl4_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>（汎用ビル）</comment>
+	<row id="msg_r04r0201_girl4_01">
 		<attribute name="キャラ指定">GIRL4</attribute>
 		<language name="JPN" width="256">テストメッセージ
 （サブイベントのよてい）</language>

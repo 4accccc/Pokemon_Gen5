@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2010-01-23T15:34:00"/>
+	<create user="matsumiya" host="W00224" date="2010-02-02T12:56:33"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -365,11 +365,11 @@
 　GRIDX＝00、GRIDZ=00に配置
 ・c03ジムバッジ取得前まで</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">ブラッカー『じめんタイプの
+		<language name="JPN" width="256">チェレン『じめんタイプの
 ポケモンを　つかまえておくか？▼
 それとも　ポケモンを　きたえるか
 なやましい　もんだい　だよね</language>
-		<language name="JPN_KANJI" width="256">ブラッカー『じめんタイプの
+		<language name="JPN_KANJI" width="256">チェレン『じめんタイプの
 ポケモンを　捕まえておくか？▼
 それとも　ポケモンを　鍛えるか
 悩ましい　問題だよね</language>
@@ -380,7 +380,7 @@
 ・c03ジムバッジ取得後
 ・0＝主人公名前</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">ブラッカー『やあ　[1:00:トレーナー名:0]
+		<language name="JPN" width="256">チェレン『やあ　[1:00:トレーナー名:0]
 ジムバッジを　てにいれたんだね▼
 いきなりで　わるいけれど
 おねがいが　あるんだ▼
@@ -389,7 +389,7 @@
 どれほど　ちがうのか　たしかめたい▼
 というわけで
 よろしく　たのむよ！▼</language>
-		<language name="JPN_KANJI" width="256">ブラッカー『やあ　[1:00:トレーナー名:0]
+		<language name="JPN_KANJI" width="256">チェレン『やあ　[1:00:トレーナー名:0]
 ジムバッジを　てにいれたんだね▼
 いきなりで　わるいけれど
 おねがいが　あるんだ▼
@@ -406,12 +406,12 @@
 ・メッセージ表示後、画面下に移動
 　msg_r04_tvt_01</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">ブラッカー『ありがとう！
+		<language name="JPN" width="256">チェレン『ありがとう！
 なんとなく　わかったことがある▼
 それを　たしかめるため
 ぼくも　アーティさんに　いどむよ▼
 それじゃあね▼</language>
-		<language name="JPN_KANJI" width="256">ブラッカー『ありがとう！
+		<language name="JPN_KANJI" width="256">チェレン『ありがとう！
 なんとなく　わかったことがある▼
 それを　たしかめるため
 ぼくも　アーティさんに　いどむよ▼

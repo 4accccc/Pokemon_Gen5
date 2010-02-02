@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-11-12T10:57:10"/>
+	<create user="matsumiya" host="W00224" date="2010-02-02T14:19:11"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -309,8 +309,7 @@
 		<comment>♂
 ・仮メッセージ
 ・上記モデルと隣接</comment>
-		<attribute name="キャラ指定">CAMERAMAN
-カメラマン</attribute>
+		<attribute name="キャラ指定">？？？</attribute>
 		<language name="JPN" width="256">てつどうマニアに　とって
 シリンダーブリッジは[BE:00:ページ切り替え（行送り）]
 かっこうの　さつえいポイントさ！</language>

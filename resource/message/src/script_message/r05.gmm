@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2010-01-27T21:39:36"/>
+	<create user="matsumiya" host="W00224" date="2010-02-02T12:57:24"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -300,11 +300,11 @@
 ・表示後、戦闘に</comment>
 		<attribute name="キャラ指定">ライバル
 友達♂</attribute>
-		<language name="JPN" width="256">ブラッカー『まってよ　[1:00:トレーナー名:0]！
+		<language name="JPN" width="256">チェレン『まってよ　[1:00:トレーナー名:0]！
 ぼくも　ボルトバッジを　もっている▼
 どちらが　つよいのか
 ポケモンしょうぶを　してほしい▼</language>
-		<language name="JPN_KANJI" width="256">ブラッカー『待ってよ　[1:00:トレーナー名:0]！
+		<language name="JPN_KANJI" width="256">チェレン『待ってよ　[1:00:トレーナー名:0]！
 ぼくも　ボルトバッジを　持っている▼
 どちらが　強いのか
 ポケモン勝負を　してほしい▼</language>
@@ -317,9 +317,9 @@
 　msg_r05_leader_01表示</comment>
 		<attribute name="キャラ指定">ライバル
 友達♂</attribute>
-		<language name="JPN" width="256">ブラッカー『……いつも
+		<language name="JPN" width="256">チェレン『……いつも
 いっぽ　およばないんだよね▼</language>
-		<language name="JPN_KANJI" width="256">ブラッカー『……いつも
+		<language name="JPN_KANJI" width="256">チェレン『……いつも
 一歩　及ばないんだよね▼</language>
 	</row>
 
@@ -371,8 +371,8 @@
 ・続けて</comment>
 		<attribute name="キャラ指定">ライバル
 友達♂</attribute>
-		<language name="JPN" width="256">ブラッカー『……どなた　ですか？▼</language>
-		<language name="JPN_KANJI" width="256">ブラッカー『……どなた　ですか？▼</language>
+		<language name="JPN" width="256">チェレン『……どなた　ですか？▼</language>
+		<language name="JPN_KANJI" width="256">チェレン『……どなた　ですか？▼</language>
 	</row>
 
 	<row id="msg_r05_leader_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -394,10 +394,10 @@
 ・続けてchampion_02</comment>
 		<attribute name="キャラ指定">ライバル
 友達♂</attribute>
-		<language name="JPN" width="256">ブラッカー『チャンピオン！？▼
+		<language name="JPN" width="256">チェレン『チャンピオン！？▼
 どうして　チャンピオンが
 こんなところで　あそんでいるのです？▼</language>
-		<language name="JPN_KANJI" width="256">ブラッカー『チャンピオン！？▼
+		<language name="JPN_KANJI" width="256">チェレン『チャンピオン！？▼
 どうして　チャンピオンが
 こんなところで　遊んでいるのです？▼</language>
 	</row>
@@ -425,14 +425,14 @@
 ・続けてchampion_03</comment>
 		<attribute name="キャラ指定">ライバル
 友達♂</attribute>
-		<language name="JPN" width="256">ブラッカー『はじめまして▼
+		<language name="JPN" width="256">チェレン『はじめまして▼
 じぶんは　カノコタウン　しゅっしんの
-ブラッカーと　いいます▼
+チェレンと　いいます▼
 トレーナーとしての　もくてきは
 チャンピオン　です▼</language>
-		<language name="JPN_KANJI" width="256">ブラッカー『はじめまして▼
+		<language name="JPN_KANJI" width="256">チェレン『はじめまして▼
 自分は　カノコタウン出身の
-ブラッカーと　いいます▼
+チェレンと　いいます▼
 トレーナーとしての　目的は
 チャンピオン　です！▼</language>
 	</row>
@@ -457,11 +457,11 @@
 ・続けてchampion_04</comment>
 		<attribute name="キャラ指定">ライバル
 友達♂</attribute>
-		<language name="JPN" width="256">ブラッカー『……つよさを　もとめる
+		<language name="JPN" width="256">チェレン『……つよさを　もとめる
 それいがいに　なにが　あるのですか？▼
 いちばん　つよい　トレーナー
 それが　チャンピオン　ですよね▼</language>
-		<language name="JPN_KANJI" width="256">ブラッカー『……強さを　求める
+		<language name="JPN_KANJI" width="256">チェレン『……強さを　求める
 それ以外に　なにか　あるのですか？▼
 一番　強い　トレーナー
 それが　チャンピオン　ですよね▼</language>
@@ -513,9 +513,9 @@
 ・0＝主人公名前</comment>
 		<attribute name="キャラ指定">ライバル
 友達♂</attribute>
-		<language name="JPN" width="256">ブラッカー『わかりました▼
+		<language name="JPN" width="256">チェレン『わかりました▼
 では　いくよ　[1:00:トレーナー名:0]▼</language>
-		<language name="JPN_KANJI" width="256">ブラッカー『わかりました▼
+		<language name="JPN_KANJI" width="256">チェレン『わかりました▼
 では　いくよ　[1:00:トレーナー名:0]▼</language>
 	</row>
 
@@ -621,9 +621,9 @@
 　画面外に消えると、主人公操作可能に</comment>
 		<attribute name="キャラ指定">ライバル
 友達♂</attribute>
-		<language name="JPN" width="256">ブラッカー『チャンピオンは　つよい！
+		<language name="JPN" width="256">チェレン『チャンピオンは　つよい！
 それいがいの　こたえは　ないよ▼</language>
-		<language name="JPN_KANJI" width="256">ブラッカー『チャンピオンは　強い！
+		<language name="JPN_KANJI" width="256">チェレン『チャンピオンは　強い！
 それ以外の　答えは　ないよ▼</language>
 	</row>
 
@@ -695,9 +695,9 @@
 ・画面外に消えると、主人公操作可能に</comment>
 		<attribute name="キャラ指定">ライバル
 友達♂</attribute>
-		<language name="JPN" width="256">ブラッカー『……さあ　いこう
+		<language name="JPN" width="256">チェレン『……さあ　いこう
 もっと　つよくなるために▼</language>
-		<language name="JPN_KANJI" width="256">ブラッカー『……さあ　行こう
+		<language name="JPN_KANJI" width="256">チェレン『……さあ　行こう
 もっと　強くなるために▼</language>
 	</row>
 
