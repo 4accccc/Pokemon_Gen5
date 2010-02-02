@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-22T12:44:34"/>
+	<create user="matsumiya" host="W00224" date="2010-02-02T11:35:03"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,7 +307,7 @@
 		</language>
 	</columns>
 
-	<dialog left="21" top="178" right="726" bottom="806" maximized="no" rayout="Vertical2">
+	<dialog left="1420" top="302" right="2125" bottom="930" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -315,7 +315,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -371,7 +371,7 @@
 　キー待ちあり</comment>
 		<language name="JPN" width="256">２ひきの　なかは
 とっても　よいようじゃ！</language>
-		<language name="JPN_KANJI" width="256">２ひきの　仲は
+		<language name="JPN_KANJI" width="256">２匹の　仲は
 とっても　よいようじゃ！</language>
 	</row>
 
@@ -383,7 +383,7 @@
 　キー待ちあり</comment>
 		<language name="JPN" width="256">２ひきの　なかは
 まずまずの　ようじゃ</language>
-		<language name="JPN_KANJI" width="256">２ひきの　仲は
+		<language name="JPN_KANJI" width="256">２匹の　仲は
 まずまずの　ようじゃ</language>
 	</row>
 
@@ -395,7 +395,7 @@
 　キー待ちあり</comment>
 		<language name="JPN" width="256">２ひきの　なかは
 それほど　よくないがなあ</language>
-		<language name="JPN_KANJI" width="256">２ひきの　仲は
+		<language name="JPN_KANJI" width="256">２匹の　仲は
 それほど　よくないがなあ</language>
 	</row>
 
@@ -408,7 +408,7 @@
 		<language name="JPN" width="256">２ひきは　おたがいに
 ちがう　ポケモンたちと▽
 あそんでおるがなあ……</language>
-		<language name="JPN_KANJI" width="256">２ひきは　おたがいに
+		<language name="JPN_KANJI" width="256">２匹は　おたがいに
 違う　ポケモンたちと▽
 遊んでおるがなあ……</language>
 	</row>
@@ -532,7 +532,7 @@
 たたかえなく　なるぞ▼
 また　きなさいよ</language>
 		<language name="JPN_KANJI" width="256">その　ポケモンを　預けると
-闘えなく　なるぞ▼
+戦えなくなるぞ▼
 また　来なさいよ</language>
 	</row>
 
@@ -575,8 +575,8 @@
 		<comment>♀：育て屋ばあさん</comment>
 		<language name="JPN" width="256">２ひき　までなら　あずかれるけど
 もう　１ぴき　そだててみるかい？</language>
-		<language name="JPN_KANJI" width="256">２ひき　までなら　預かれるけど
-もう　１ぴき　育ててみるかい？</language>
+		<language name="JPN_KANJI" width="256">２匹までなら　預かれるけど
+もう　１匹　育ててみるかい？</language>
 	</row>
 
 	<row id="msg_sodateya_oldwoman_11" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,,,,,,,,">
@@ -639,7 +639,7 @@
 　はい→oldwoman_11
 　いいえ→oldwoman_03</comment>
 		<language name="JPN" width="256">もう　１ぴきも　ひきとるかい？</language>
-		<language name="JPN_KANJI" width="256">もう　１ぴきも　ひきとるかい？</language>
+		<language name="JPN_KANJI" width="256">もう　１匹も　ひきとるかい？</language>
 	</row>
 
 	<row id="msg_sodateya_oldwoman_17" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,,,,,,,,">
@@ -657,7 +657,7 @@
 きてみては　どうじゃ？</language>
 		<language name="JPN_KANJI" width="256">おや？　おまえさん
 その　ポケモンを　預けると▽
-全部で　ポケモンが　１ひき　だけに▽
+全部で　ポケモンが　１匹だけに▽
 なってしまう　みたいじゃな▼
 もっと　たくさん　捕まえてから
 来てみては　どうじゃ？</language>
@@ -682,7 +682,7 @@
 		<comment>メニュー用</comment>
 		<attribute name="キャラ指定">メニュー用</attribute>
 		<language name="JPN" width="256">ひきとる</language>
-		<language name="JPN_KANJI" width="256">引き取る</language>
+		<language name="JPN_KANJI" width="256">ひきとる</language>
 	</row>
 
 	<row id="msg_sodateya_menu_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
