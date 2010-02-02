@@ -22,8 +22,51 @@ def GetZoneID( str_zone_id )
 	file_def.close
 
   puts( "===============================================================" );
-  puts( "error: 指定されたゾーンID[# str_zone_id}]は定義されていません。" );
+  puts( "error: 指定されたゾーンID[#{str_zone_id}]は定義されていません。" );
   puts( "===============================================================" );
+end
+
+
+#==================================================================================
+# ■街ISSユニットデータ
+#==================================================================================
+class UnitData
+  def initialize()
+    @zoneID_lavel = nil        # ゾーンID ( ラベル )
+    @zoneID       = 0          # ゾーンID
+    @gridX        = 0          # x座標[grid]
+    @gridY        = 0          # y座標[grid]
+    @gridZ        = 0          # z座標[grid]
+    @volume       = Array.new  # ボリューム
+    @distanceX    = Array.new  # 距離x
+    @distanceY    = Array.new  # 距離y
+    @distanceZ    = Array.new  # 距離z
+  end
+
+  attr_accessor :zoneID_lavel, :zoneID, :gridX, :gridY, :gridZ, 
+                :volume, :distanceX, :distanceY, :distanceZ
+
+  #--------------------------------------
+  # @brief バイナリデータを出力する
+  # @param pass 出力先のパス
+  def OutBinaryData( pass ) 
+    # 出力データ作成
+    outData = Array.new
+    outData << @zoneID
+    outData << 0  # padding
+    outData << @gridX
+    outData << @gridY
+    outData << @gridZ
+    @volume.each    do |vol|  outData << vol  end
+    @distanceX.each do |dist| outData << dist end
+    @distanceY.each do |dist| outData << dist end
+    @distanceZ.each do |dist| outData << dist end
+    # 出力
+    filename = "#{pass}/iss_city_unit_#{@zoneID_lavel.downcase}.bin"
+    file = File.open( filename, "wb" )
+    file.write( outData.pack( "SSiiiCCCCCCCCCCCCCCCCCCCCCCCC" ) )
+    file.close
+  end
 end
 
 
@@ -33,75 +76,129 @@ end
 # @param ARGV[1] バイナリデータの出力先ディレクトリ
 #----------------------------------------------------------------------------------
 
-# データ・インデックス
-ROW_ZONE      = 0   # ゾーンID
-ROW_POS_X     = 1   # x座標
-ROW_POS_Y     = 2   # y座標
-ROW_POS_Z     = 3   # z座標
-ROW_VOLUME_1  = 4   # 音量1
-ROW_VOLUME_2  = 5   # 音量2
-ROW_VOLUME_3  = 6   # 音量3
-ROW_VOLUME_4  = 7   # 音量4
-ROW_RANGE_X_1 = 8   # x距離1
-ROW_RANGE_X_2 = 9   # x距離2
-ROW_RANGE_X_3 = 10  # x距離3
-ROW_RANGE_X_4 = 11  # x距離4
-ROW_RANGE_Y_1 = 12  # y距離1
-ROW_RANGE_Y_2 = 13  # y距離2
-ROW_RANGE_Y_3 = 14  # y距離3
-ROW_RANGE_Y_4 = 15  # y距離4
-ROW_RANGE_Z_1 = 16  # z距離1
-ROW_RANGE_Z_2 = 17  # z距離2
-ROW_RANGE_Z_3 = 18  # z距離3
-ROW_RANGE_Z_4 = 19  # z距離4
+# 行インデックス
+ROW_ZONE_ID    = 0  # ゾーンID
+ROW_POS_X      = 1  # x座標
+ROW_POS_Y      = 2  # y座標
+ROW_POS_Z      = 3  # z座標
+ROW_VOLUME     = 4  # ボリューム
+ROW_DISTANCE_X = 5  # x距離
+ROW_DISTANCE_Y = 6  # y距離
+ROW_DISTANCE_Z = 7  # z距離
 
-# 出力ファイル名のリスト
-bin_file_list = Array.new
+# 列インデックス
+COLUMN_ZONE_ID        = 0  # ゾーンID
+COLUMN_POS_X          = 1  # x座標
+COLUMN_POS_Y          = 1  # y座標
+COLUMN_POS_Z          = 1  # z座標
+COLUMN_VOLUME_SPACE_0 = 6  # 音量空間データ0
+COLUMN_VOLUME_SPACE_1 = 5  # 音量空間データ1
+COLUMN_VOLUME_SPACE_2 = 4  # 音量空間データ2
+COLUMN_VOLUME_SPACE_3 = 3  # 音量空間データ3
+COLUMN_VOLUME_SPACE_4 = 2  # 音量空間データ4
+COLUMN_VOLUME_SPACE_5 = 1  # 音量空間データ5
 
-# ファイルデータを読み込み
+
+# ユニット配列
+units = Array.new
+
+
+#-------------------------
+# ファイルデータの読み込み
+#-------------------------
 file = File.open( ARGV[0], "r" )
-file_lines = file.readlines
+fileLines = file.readlines
 file.close
 
-# 2行目以降の全ラインをコンバート
-1.upto( file_lines.size - 1 ) do |i|
-  # コンバート対象のデータを取得
-  line = file_lines[i]
-  in_data = line.split(/\s/)
-  if in_data[0]==nil then break end # 空データを発見==>終了
-  # 出力データを作成
-  out_data = Array.new
-  out_data << GetZoneID("ZONE_ID_"+in_data[ROW_ZONE])
-  out_data << 0  # padding
-  out_data << in_data[ROW_POS_X].to_i
-  out_data << in_data[ROW_POS_Y].to_i
-  out_data << in_data[ROW_POS_Z].to_i
-  out_data << in_data[ROW_VOLUME_1].to_i
-  out_data << in_data[ROW_VOLUME_2].to_i
-  out_data << in_data[ROW_VOLUME_3].to_i
-  out_data << in_data[ROW_VOLUME_4].to_i
-  out_data << in_data[ROW_RANGE_X_1].to_i
-  out_data << in_data[ROW_RANGE_X_2].to_i
-  out_data << in_data[ROW_RANGE_X_3].to_i
-  out_data << in_data[ROW_RANGE_X_4].to_i
-  out_data << in_data[ROW_RANGE_Y_1].to_i
-  out_data << in_data[ROW_RANGE_Y_2].to_i
-  out_data << in_data[ROW_RANGE_Y_3].to_i
-  out_data << in_data[ROW_RANGE_Y_4].to_i
-  out_data << in_data[ROW_RANGE_Z_1].to_i
-  out_data << in_data[ROW_RANGE_Z_2].to_i
-  out_data << in_data[ROW_RANGE_Z_3].to_i
-  out_data << in_data[ROW_RANGE_Z_4].to_i
-  # バイナリデータを出力
-  filename = ARGV[1] + "/iss_city_unit_" + in_data[ROW_ZONE].downcase + ".bin"
-  file = File.open( filename, "wb" )
-  file.write( out_data.pack("SSiiiCCCCCCCCCCCCCCCC") )
-  file.close
-  # 出力ファイル名を記憶
-  bin_file_list << filename
+
+#-------------------------
+# 先頭行リストの洗い出し
+#-------------------------
+validRowList = Array.new
+0.upto( fileLines.size - 1 ) do |rowIdx|
+  line = fileLines[ rowIdx ]
+  if line.index( "ZONE_ID_" ) != nil then
+    validRowList << rowIdx
+  end
 end
 
-# 出力したバイナリファイル名を表示
-bin_file_list.each do |filename|
-  puts "-output: #{filename}"
-end 
+
+#-------------------------
+# リストの全データを取得
+#-------------------------
+validRowList.each do |baseRowIdx|
+
+  unit = UnitData.new
+
+  # ゾーンID
+  line  = fileLines[ baseRowIdx + ROW_ZONE_ID ]
+  items = line.split(/\t/)
+  unit.zoneID_lavel = items[ COLUMN_ZONE_ID ]
+  unit.zoneID       = GetZoneID( items[ COLUMN_ZONE_ID ] )
+
+  # x座標
+  line  = fileLines[ baseRowIdx + ROW_POS_X ]
+  items = line.split(/\t/)
+  unit.gridX = items[ COLUMN_POS_X ].to_i
+
+  # y座標
+  line  = fileLines[ baseRowIdx + ROW_POS_Y ]
+  items = line.split(/\t/)
+  unit.gridY = items[ COLUMN_POS_Y ].to_i
+
+  # z座標
+  line  = fileLines[ baseRowIdx + ROW_POS_Z ]
+  items = line.split(/\t/)
+  unit.gridZ = items[ COLUMN_POS_Z ].to_i
+
+  # ボリューム
+  line  = fileLines[ baseRowIdx + ROW_VOLUME ]
+  items = line.split(/\t/) 
+  unit.volume << items[ COLUMN_VOLUME_SPACE_0 ].to_i
+  unit.volume << items[ COLUMN_VOLUME_SPACE_1 ].to_i
+  unit.volume << items[ COLUMN_VOLUME_SPACE_2 ].to_i
+  unit.volume << items[ COLUMN_VOLUME_SPACE_3 ].to_i
+  unit.volume << items[ COLUMN_VOLUME_SPACE_4 ].to_i
+  unit.volume << items[ COLUMN_VOLUME_SPACE_5 ].to_i
+
+  # x距離
+  line  = fileLines[ baseRowIdx + ROW_DISTANCE_X ]
+  items = line.split(/\t/) 
+  unit.distanceX << items[ COLUMN_VOLUME_SPACE_0 ].to_i
+  unit.distanceX << items[ COLUMN_VOLUME_SPACE_1 ].to_i
+  unit.distanceX << items[ COLUMN_VOLUME_SPACE_2 ].to_i
+  unit.distanceX << items[ COLUMN_VOLUME_SPACE_3 ].to_i
+  unit.distanceX << items[ COLUMN_VOLUME_SPACE_4 ].to_i
+  unit.distanceX << items[ COLUMN_VOLUME_SPACE_5 ].to_i
+
+  # y距離
+  line  = fileLines[ baseRowIdx + ROW_DISTANCE_Y ]
+  items = line.split(/\t/) 
+  unit.distanceY << items[ COLUMN_VOLUME_SPACE_0 ].to_i
+  unit.distanceY << items[ COLUMN_VOLUME_SPACE_1 ].to_i
+  unit.distanceY << items[ COLUMN_VOLUME_SPACE_2 ].to_i
+  unit.distanceY << items[ COLUMN_VOLUME_SPACE_3 ].to_i
+  unit.distanceY << items[ COLUMN_VOLUME_SPACE_4 ].to_i
+  unit.distanceY << items[ COLUMN_VOLUME_SPACE_5 ].to_i
+
+  # z距離
+  line  = fileLines[ baseRowIdx + ROW_DISTANCE_Z ]
+  items = line.split(/\t/) 
+  unit.distanceZ << items[ COLUMN_VOLUME_SPACE_0 ].to_i
+  unit.distanceZ << items[ COLUMN_VOLUME_SPACE_1 ].to_i
+  unit.distanceZ << items[ COLUMN_VOLUME_SPACE_2 ].to_i
+  unit.distanceZ << items[ COLUMN_VOLUME_SPACE_3 ].to_i
+  unit.distanceZ << items[ COLUMN_VOLUME_SPACE_4 ].to_i
+  unit.distanceZ << items[ COLUMN_VOLUME_SPACE_5 ].to_i
+
+  # 配列に追加
+  units << unit
+end
+
+
+#-------------------------
+# バイナリデータ出力
+#-------------------------
+units.each do |unitData|
+  unitData.OutBinaryData( "./bin" )
+end
