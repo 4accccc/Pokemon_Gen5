@@ -535,7 +535,7 @@ static void PLIST_PLATE_DrawParam( PLIST_WORK *work , PLIST_PLATE_WORK *plateWor
   if( work->plData->mode == PL_MODE_WAZASET )
   {
     u32 strId;
-    const PLIST_SKILL_CAN_LEARN learnType = PLIST_UTIL_CheckLearnSkill( work , plateWork->pp );
+    const PLIST_SKILL_CAN_LEARN learnType = PLIST_UTIL_CheckLearnSkill( work , plateWork->pp , plateWork->idx );
     
     switch( learnType )
     {

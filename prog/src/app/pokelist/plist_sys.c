@@ -1401,7 +1401,7 @@ static void PLIST_TermMode_Select_Decide( PLIST_WORK *work )
     break;
 
   case PL_MODE_WAZASET:
-    switch( PLIST_UTIL_CheckLearnSkill( work , work->selectPokePara ) )
+    switch( PLIST_UTIL_CheckLearnSkill( work , work->selectPokePara , work->plData->ret_sel ) )
     {
     case LSCL_OK:
       work->plData->ret_mode = PL_RET_BAG;
@@ -2970,7 +2970,7 @@ const BOOL PLIST_UTIL_IsBattleMenu_CanReturn( const PLIST_WORK *work )
 //--------------------------------------------------------------
 //	今渡されている技が覚えられるか？
 //--------------------------------------------------------------
-const PLIST_SKILL_CAN_LEARN PLIST_UTIL_CheckLearnSkill( PLIST_WORK *work , const POKEMON_PARAM *pp )
+const PLIST_SKILL_CAN_LEARN PLIST_UTIL_CheckLearnSkill( PLIST_WORK *work , const POKEMON_PARAM *pp , const u8 idx )
 {
   u8 i;
   BOOL isEmpty = FALSE;
@@ -2987,13 +2987,32 @@ const PLIST_SKILL_CAN_LEARN PLIST_UTIL_CheckLearnSkill( PLIST_WORK *work , const
       isEmpty = TRUE;
     }
   }
-
-  //FIXME 正しい技チェック
-  if( isEmpty == TRUE )
+  
+  if( work->plData->wazaLearnBit != 0 )
   {
-    return LSCL_OK;
+    //イベントなど特殊な技覚え(外からBitでもらう)
+    if( work->plData->wazaLearnBit & 1<<idx )
+    {
+      if( isEmpty == TRUE )
+      {
+        return LSCL_OK;
+      }
+      return LSCL_OK_FULL;
+    }
+    else
+    {
+      return LSCL_NG;
+    }
   }
-  return LSCL_OK_FULL;
+  else
+  {
+    //FIXME 正しい技チェック
+    if( isEmpty == TRUE )
+    {
+      return LSCL_OK;
+    }
+    return LSCL_OK_FULL;
+  }
 }
 
 //--------------------------------------------------------------

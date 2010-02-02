@@ -189,24 +189,25 @@ static GFL_PROC_RESULT PokeListProc_Init( GFL_PROC * proc, int * seq , void *pwk
         //plData->item = 28; //元気のかけら
         //plData->item = 18; //毒消し
         //plData->item = 47; //ブロムヘキシン
-        //plData->item = 38; //PPエイド
+        plData->item = 38; //PPエイド
         //plData->item = 41; //PPマックス
         //plData->item = 51; //Pアップ
         
         //plData->item = 44; //聖なる灰
         //plData->item = 174; //マトマの実
         //plData->item = 81; //月の石
-        plData->item = 50; //あめ
+        //plData->item = 50; //あめ
       }
       else
       if( GFL_UI_KEY_GetCont() & PAD_BUTTON_Y )
       {
-        plData->mode = PL_MODE_SODATEYA;
-        /*
+        //plData->mode = PL_MODE_SODATEYA;
+        
         plData->mode = PL_MODE_WAZASET;
         plData->item = 328; //技マシン気合パンチ
         plData->waza = 0;
-        */
+        plData->wazaLearnBit = 0x3E;
+        
       }
       GFL_UI_SetTouchOrKey( GFL_APP_KTST_TOUCH );
     }

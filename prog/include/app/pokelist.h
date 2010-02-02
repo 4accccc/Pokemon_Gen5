@@ -188,6 +188,9 @@ typedef struct
   int shinka_cond;  // 進化条件ワーク
   
   //WBより追加
+  u8  wazaLearnBit; //イベントなど特殊な技覚えで外から覚えられるやつのbitをもらう
+  
+  //通信時相手見せ系
   PL_COMM_TYPE comm_type;
   PL_COMM_BATTLE_PARAM comm_battle[PL_COMM_PLAYER_TYPE_MAX];  //通信相手のパラメータ
   BOOL    is_disp_party;  //パーティーの表示設定
