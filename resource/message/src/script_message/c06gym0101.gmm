@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-20T14:40:15"/>
+	<create user="matsumiya" host="W00224" date="2010-02-02T12:11:01"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -485,21 +485,21 @@
 [1:00:トレーナー名:0]</language>
 	</row>
 
-	<row id="msg_c06gym0101_statue_03" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c06gym0101_statue_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>？？後</comment>
 		<attribute name="キャラ指定">ポケモン像</attribute>
 		<language name="JPN" width="256">フキヨセ　ポケモンジム[BE:01:ページ切り替え（クリア）]
 ジムリーダー　フウロ
 にんてい　トレーナー！[BE:00:ページ切り替え（行送り）]
 [1:00:トレーナー名:0][BE:00:ページ切り替え（行送り）]
-ブラッカー[BE:00:ページ切り替え（行送り）]
-ホワイティ</language>
+チェレン[BE:00:ページ切り替え（行送り）]
+ベル</language>
 		<language name="JPN_KANJI" width="256">フキヨセ　ポケモンジム[BE:01:ページ切り替え（クリア）]
 ジムリーダー　フウロ
 認定　トレーナー！[BE:00:ページ切り替え（行送り）]
 [1:00:トレーナー名:0][BE:00:ページ切り替え（行送り）]
-ブラッカー[BE:00:ページ切り替え（行送り）]
-ホワイティ</language>
+チェレン[BE:00:ページ切り替え（行送り）]
+ベル</language>
 	</row>
 
 	<flowchart-group-list>

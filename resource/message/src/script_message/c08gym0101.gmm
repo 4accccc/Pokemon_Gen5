@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2010-01-26T21:48:37"/>
+	<create user="matsumiya" host="W00224" date="2010-02-02T12:11:53"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -640,7 +640,7 @@
 [1:00:トレーナー名:0]</language>
 	</row>
 
-	<row id="msg_c02gym0101_statue_w_03" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c02gym0101_statue_w_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>ホワイトver
 ？？後</comment>
 		<attribute name="キャラ指定">ポケモン像</attribute>
@@ -648,14 +648,14 @@
 ジムリーダー　アイリス
 にんてい　トレーナー！[BE:00:ページ切り替え（行送り）]
 [1:00:トレーナー名:0][BE:00:ページ切り替え（行送り）]
-ともだち♂[BE:00:ページ切り替え（行送り）]
-ともだち♀</language>
+チェレン[BE:00:ページ切り替え（行送り）]
+ベル</language>
 		<language name="JPN_KANJI" width="256">ソウリュウ　ポケモンジム[BE:01:ページ切り替え（クリア）]
 ジムリーダー　アイリス
 認定　トレーナー！[BE:00:ページ切り替え（行送り）]
 [1:00:トレーナー名:0][BE:00:ページ切り替え（行送り）]
-ブラッカー[BE:00:ページ切り替え（行送り）]
-ホワイティ</language>
+チェレン[BE:00:ページ切り替え（行送り）]
+ベル</language>
 	</row>
 
 	<row id="msg_c02gym0101_statue_b_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
@@ -684,7 +684,7 @@
 [1:00:トレーナー名:0]</language>
 	</row>
 
-	<row id="msg_c02gym0101_statue_b_03" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c02gym0101_statue_b_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>ブラックver
 ？？後</comment>
 		<attribute name="キャラ指定">ポケモン像</attribute>
@@ -692,14 +692,14 @@
 ジムリーダー　シャガ
 にんてい　トレーナー！[BE:00:ページ切り替え（行送り）]
 [1:00:トレーナー名:0][BE:00:ページ切り替え（行送り）]
-ブラッカー[BE:00:ページ切り替え（行送り）]
-ホワイティ</language>
+チェレン[BE:00:ページ切り替え（行送り）]
+ベル</language>
 		<language name="JPN_KANJI" width="256">ソウリュウ　ポケモンジム[BE:01:ページ切り替え（クリア）]
 ジムリーダー　シャガ
 認定　トレーナー！[BE:00:ページ切り替え（行送り）]
 [1:00:トレーナー名:0][BE:00:ページ切り替え（行送り）]
-ブラッカー[BE:00:ページ切り替え（行送り）]
-ホワイティ</language>
+チェレン[BE:00:ページ切り替え（行送り）]
+ベル</language>
 	</row>
 
 	<flowchart-group-list>
