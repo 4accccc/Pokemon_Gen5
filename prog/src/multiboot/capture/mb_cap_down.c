@@ -76,7 +76,7 @@ typedef enum
   MCDA_BALL,
   MCDA_BALL_BONUS,
   MCDA_BALL_GET,
-  MCDA_BALL_PEN,
+  MCDA_PEN,
   
   MCDA_MAX,
 }MB_CAP_DOWN_ANMTYPE;
@@ -98,6 +98,7 @@ struct _MB_CAP_DOWN
   u32 cellRes[MCDO_MAX];
   GFL_CLUNIT  *cellUnit;
   GFL_CLWK    *clwkBall;
+  GFL_CLWK    *clwkPen;
   GFL_CLWK    *clwkScore[MB_CAP_DOWN_SCORE_DIGIT];
   
   u16 dispScore;
@@ -194,6 +195,20 @@ MB_CAP_DOWN* MB_CAP_DOWN_InitSystem( MB_CAPTURE_WORK *capWork )
               downWork->cellRes[MCDO_PLT],
               downWork->cellRes[MCDO_ANM],
               &cellInitData ,CLSYS_DEFREND_SUB , heapId );
+    GFL_CLACT_WK_SetDrawEnable( downWork->clwkBall , FALSE );
+
+    cellInitData.softpri = 0;
+    cellInitData.bgpri = 0;
+    cellInitData.pos_x = 0;
+    cellInitData.pos_y = 0;
+    cellInitData.anmseq = MCDA_PEN;
+
+    downWork->clwkPen = GFL_CLACT_WK_Create( downWork->cellUnit ,
+              downWork->cellRes[MCDO_NCG],
+              downWork->cellRes[MCDO_PLT],
+              downWork->cellRes[MCDO_ANM],
+              &cellInitData ,CLSYS_DEFREND_SUB , heapId );
+    GFL_CLACT_WK_SetDrawEnable( downWork->clwkPen , FALSE );
 
     cellInitData.anmseq = MCDA_NUMBER;
     cellInitData.pos_y = MB_CAP_DOWN_SCORE_POS_Y;
@@ -212,7 +227,7 @@ MB_CAP_DOWN* MB_CAP_DOWN_InitSystem( MB_CAPTURE_WORK *capWork )
   
   downWork->dispScore = 65536;  //初回更新のため
   downWork->pullBow = 0;
-  downWork->state = MCDS_NONE;
+  downWork->state = MCDS_INIT;
   downWork->ballPosX = MB_CAP_DOWN_BALL_X;
   downWork->ballPosY = MB_CAP_DOWN_BALL_Y;
   downWork->isUpdateBall = TRUE;
@@ -247,6 +262,7 @@ void MB_CAP_DOWN_DeleteSystem( MB_CAPTURE_WORK *capWork , MB_CAP_DOWN *downWork 
   {
     GFL_CLACT_WK_Remove( downWork->clwkScore[i] );
   }
+  GFL_CLACT_WK_Remove( downWork->clwkPen );
   GFL_CLACT_WK_Remove( downWork->clwkBall );
   GFL_CLGRP_PLTT_Release( downWork->cellRes[MCDO_PLT] );
   GFL_CLGRP_CGR_Release( downWork->cellRes[MCDO_NCG] );
@@ -291,6 +307,55 @@ void MB_CAP_DOWN_UpdateSystem( MB_CAPTURE_WORK *capWork , MB_CAP_DOWN *downWork 
         GFL_CLACT_WK_SetDrawEnable( downWork->clwkScore[i] , FALSE );
       }
     }
+  }
+}
+
+//--------------------------------------------------------------
+//	下画面更新
+//--------------------------------------------------------------
+void MB_CAP_DOWN_UpdateSystem_Demo( MB_CAPTURE_WORK *capWork , MB_CAP_DOWN *downWork , const BOOL isTrg , const BOOL isTouch , u32 tpx , u32 tpy )
+{
+  downWork->isTrg = isTrg;
+  downWork->isTouch = isTouch;
+  MB_CAP_DOWN_UpdateTP( capWork , downWork , tpx , tpy );
+  MB_CAP_DOWN_UpdateBall( capWork , downWork );
+  MB_CAP_DOWN_UpdateBow( capWork , downWork );
+  
+  //スコア更新
+  {
+    u8 i;
+    const u16 score = MB_CAPTURE_GetScore( capWork );
+    if( score != downWork->dispScore )
+    {
+      u16 tempScore = score;
+      for( i=0;i<MB_CAP_DOWN_SCORE_DIGIT;i++ )
+      {
+        GFL_CLACT_WK_SetDrawEnable( downWork->clwkScore[i] , TRUE );
+        GFL_CLACT_WK_SetAnmIndex( downWork->clwkScore[i] , tempScore%10 );
+        tempScore /= 10;
+        if( tempScore == 0 )
+        {
+          break;
+        }
+      }
+      for( i=i+1;i<MB_CAP_DOWN_SCORE_DIGIT;i++ )
+      {
+        GFL_CLACT_WK_SetDrawEnable( downWork->clwkScore[i] , FALSE );
+      }
+    }
+  }
+  //TPの表示
+  if( isTouch == TRUE )
+  {
+    GFL_CLACTPOS cellPos;
+    cellPos.x = tpx;
+    cellPos.y = tpy;
+    GFL_CLACT_WK_SetPos( downWork->clwkPen , &cellPos , CLSYS_DEFREND_SUB );
+    GFL_CLACT_WK_SetDrawEnable( downWork->clwkPen , TRUE );
+  }
+  else
+  {
+    GFL_CLACT_WK_SetDrawEnable( downWork->clwkPen , FALSE );
   }
 }
 
@@ -518,6 +583,11 @@ static void MB_CAP_DOWN_UpdateBow_DrawDot( const u8* vramAdr , const int x , con
 //--------------------------------------------------------------
 static void MB_CAP_DOWN_UpdateBall( MB_CAPTURE_WORK *capWork , MB_CAP_DOWN *downWork )
 {
+  if( downWork->state == MCDS_INIT )
+  {
+    downWork->isFlying = TRUE;
+  }
+  else
   if( downWork->state == MCDS_NONE )
   {
     downWork->ballPosX = FX32_CONST(MB_CAP_DOWN_BALL_X);
@@ -697,5 +767,6 @@ void MB_CAP_DOWN_ReloadBall( MB_CAP_DOWN *downWork , const BOOL isBonus )
   {
     GFL_CLACT_WK_SetAnmSeq( downWork->clwkBall , MCDA_BALL );
   }
+  GFL_CLACT_WK_SetDrawEnable( downWork->clwkBall , TRUE );
 }
 

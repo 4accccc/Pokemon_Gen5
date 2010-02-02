@@ -1,0 +1,653 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+
+<imd version="1.6.0">
+
+<head>
+	<create user="ariizumi_nobuhiko" host="W00147" date="2010-02-02T10:01:12" source="item01.mb"/>
+	<title>Model Data for NINTENDO NITRO-System</title>
+	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+</head>
+
+<body>
+
+<original_create user="ariizumi_nobuhiko" host="W00147" date="2010-02-02T10:01:12" source="item01.mb"/>
+<original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+
+<model_info
+	pos_scale="0"
+	scaling_rule="standard"
+	vertex_style="direct"
+	magnify="1.000000"
+	tool_start_frame="1"
+	tex_matrix_mode="maya"
+	compress_node="none" node_size="1 1"
+	compress_material="off" material_size="1 1"
+	output_texture="used"
+	force_full_weight="off"
+	use_primitive_strip="on"
+/>
+
+<box_test pos_scale="0" xyz="-0.500000 0.000000 -0.500000" whd="1.000000 0.000000 1.000000"/>
+
+<tex_image_array size="1">
+	<tex_image index="0" name="dummy128_128"
+		width="128" height="128" original_width="128" original_height="128"
+		format="palette16"
+		color0_mode="color"
+		palette_name="dummy128_128_pl"
+		path="C:/home/pokemon_wb_doc/staff/ariizumi_nobuhiko/musical_item/maya/tex/dummy128_128.tga"
+	>
+		<bitmap size="4096">
+			3333 3333 aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			3333 a333 aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			3333 aa33 a1aa aaa4 aaaa aaaa aaaa aaaa
+			a0aa aaaa a0aa aaa0 aaaa aaaa aaaa aaaa
+			a0aa aaaa a0aa aaa0 aaaa aaaa aaaa aaaa
+			a0aa aaaa a0aa aaa0 aaaa aaaa aaaa aaaa
+			22aa 2222 a1a2 aaa4 aaaa aaaa aaaa aaaa
+			00aa 0000 a0a0 aaa0 aaaa aaaa aaaa aaaa
+			00aa 0000 a0a0 aaa0 aaaa aaaa aaaa aaaa
+			00aa 0000 a0a0 aaa0 aaaa aaaa aaaa aaaa
+			a2aa aaaa a1a2 aaaa aaaa aaaa aaaa aaaa
+			a0aa aaaa a0a0 aaaa aaaa aaaa aaaa aaaa
+			a0aa aaaa a0a0 aaaa aaaa aaaa aaaa aaaa
+			a0aa aaaa a0a0 aaaa aaaa aaaa aaaa aaaa
+			a2aa 2aa2 aaaa aaaa aaaa aaaa aaaa aaaa
+			a0aa 0aa0 aaaa aaaa aaaa aaaa aaaa aaaa
+			a0aa 0aa0 aaaa aaaa aaaa aaaa aaaa aaaa
+			a0aa 0aa0 aaaa aaaa aaaa aaaa aaaa aaaa
+			a2aa 2222 aaaa aaaa aaaa aaaa aaaa aaaa
+			a0aa 0000 aaaa aaaa aaaa aaaa aaaa aaaa
+			a0aa 0000 aaaa aaaa aaaa aaaa aaaa aaaa
+			a0aa 0000 aaaa aaaa aaaa aaaa aaaa aaaa
+			a2aa 2aaa aaaa aaaa aaaa aaaa aaaa aaaa
+			a0aa 0aaa aaaa aaaa aaaa aaaa aaaa aaaa
+			a0aa 0aaa aaaa aaaa aaaa aaaa aaaa aaaa
+			a0aa 0aaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa 2aaa 8aaa aaaa aaaa aaaa aaaa aaaa
+			aaaa 0aaa 0aaa aaaa aaaa aaaa aaaa aaaa
+			aaaa 0aaa 0aaa aaaa aaaa aaaa aaaa aaaa
+			aaaa 0aaa 0aaa aaaa aaaa aaaa aaaa aaaa
+			aaaa 2aaa aaaa aa88 aaaa aaaa aaaa aaaa
+			aaaa 0aaa aaaa aa00 aaaa aaaa aaaa aaaa
+			aaaa 0aaa aaaa aa00 aaaa aaaa aaaa aaaa
+			aaaa 0aaa aaaa aa00 aaaa aaaa aaaa aaaa
+			aaaa a2aa aaaa 88aa aaaa aaaa aaaa aaaa
+			aaaa a0aa aaaa 00aa aaaa aaaa aaaa aaaa
+			aaaa a0aa aaaa 00aa aaaa aaaa aaaa aaaa
+			aaaa a0aa aaaa 00aa aaaa aaaa aaaa aaaa
+			aaaa a2aa aaaa aaaa aa88 aaaa aaaa aaaa
+			aaaa a0aa aaaa aaaa aa00 aaaa aaaa aaaa
+			aaaa a0aa aaaa aaaa aa00 aaaa aaaa aaaa
+			aaaa a0aa aaaa aaaa aa00 aaaa aaaa aaaa
+			aaaa a22a aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa a00a aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa a00a aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa a00a aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aa2a aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aa0a aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aa0a aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aa0a aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaa7 aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaa0 aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaa0 aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaa0 aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa 777a aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa 000a aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa 000a aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa 000a aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa 7aaa aaa7 aaaa aaaa aaaa
+			aaaa aaaa aaaa 0aaa aaa0 aaaa aaaa aaaa
+			aaaa aaaa aaaa 0aaa aaa0 aaaa aaaa aaaa
+			aaaa aaaa aaaa 0aaa aaa0 aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa 6aaa aaaa aaaa 9999 a999 aaaa
+			aaaa aaaa 0aaa aaaa aaaa 0000 a000 aaaa
+			aaaa aaaa 0aaa aaaa aaaa 0000 a000 aaaa
+			aaaa aaaa 0aaa aaaa aaaa 0000 a000 aaaa
+			aaaa aaaa aaaa aaa6 aaaa aaaa 99aa aaa9
+			aaaa aaaa aaaa aaa0 aaaa aaaa 00aa aaa0
+			aaaa aaaa aaaa aaa0 aaaa aaaa 00aa aaa0
+			aaaa aaaa aaaa aaa0 aaaa aaaa 00aa aaa0
+			aaaa aaaa aaaa aa6a aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aa0a aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aa0a aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aa0a aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa 66aa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa 00aa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa 00aa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa 00aa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa 6aaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa 0aaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa 0aaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa 0aaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaa5 aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aa55 aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			a555 aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			a555 aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			a555 aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			a555 aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			3333 3333 aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			3333 a333 aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			3333 aa33 a1aa aaa4 aaaa aaaa aaaa aaaa
+			a0aa aaaa a0aa aaa0 aaaa aaaa aaaa aaaa
+			a0aa aaaa a0aa aaa0 aaaa aaaa aaaa aaaa
+			a0aa aaaa a0aa aaa0 aaaa aaaa aaaa aaaa
+			22aa 2222 a1a2 aaa4 aaaa aaaa aaaa aaaa
+			00aa 0000 a0a0 aaa0 aaaa aaaa aaaa aaaa
+			00aa 0000 a0a0 aaa0 aaaa aaaa aaaa aaaa
+			00aa 0000 a0a0 aaa0 aaaa aaaa aaaa aaaa
+			a2aa aaaa a1a2 aaaa aaaa aaaa aaaa aaaa
+			a0aa aaaa a0a0 aaaa aaaa aaaa aaaa aaaa
+			a0aa aaaa a0a0 aaaa aaaa aaaa aaaa aaaa
+			a0aa aaaa a0a0 aaaa aaaa aaaa aaaa aaaa
+			a2aa 2aa2 aaaa aaaa aaaa aaaa aaaa aaaa
+			a0aa 0aa0 aaaa aaaa aaaa aaaa aaaa aaaa
+			a0aa 0aa0 aaaa aaaa aaaa aaaa aaaa aaaa
+			a0aa 0aa0 aaaa aaaa aaaa aaaa aaaa aaaa
+			a2aa 2222 aaaa aaaa aaaa aaaa aaaa aaaa
+			a0aa 0000 aaaa aaaa aaaa aaaa aaaa aaaa
+			a0aa 0000 aaaa aaaa aaaa aaaa aaaa aaaa
+			a0aa 0000 aaaa aaaa aaaa aaaa aaaa aaaa
+			a2aa 2aaa aaaa aaaa aaaa aaaa aaaa aaaa
+			a0aa 0aaa aaaa aaaa aaaa aaaa aaaa aaaa
+			a0aa 0aaa aaaa aaaa aaaa aaaa aaaa aaaa
+			a0aa 0aaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa 2aaa 8aaa aaaa aaaa aaaa aaaa aaaa
+			aaaa 0aaa 0aaa aaaa aaaa aaaa aaaa aaaa
+			aaaa 0aaa 0aaa aaaa aaaa aaaa aaaa aaaa
+			aaaa 0aaa 0aaa aaaa aaaa aaaa aaaa aaaa
+			aaaa 2aaa aaaa aa88 aaaa aaaa aaaa aaaa
+			aaaa 0aaa aaaa aa00 aaaa aaaa aaaa aaaa
+			aaaa 0aaa aaaa aa00 aaaa aaaa aaaa aaaa
+			aaaa 0aaa aaaa aa00 aaaa aaaa aaaa aaaa
+			aaaa a2aa aaaa 88aa aaaa aaaa aaaa aaaa
+			aaaa a0aa aaaa 00aa aaaa aaaa aaaa aaaa
+			aaaa a0aa aaaa 00aa aaaa aaaa aaaa aaaa
+			aaaa a0aa aaaa 00aa aaaa aaaa aaaa aaaa
+			aaaa a2aa aaaa aaaa aa88 aaaa aaaa aaaa
+			aaaa a0aa aaaa aaaa aa00 aaaa aaaa aaaa
+			aaaa a0aa aaaa aaaa aa00 aaaa aaaa aaaa
+			aaaa a0aa aaaa aaaa aa00 aaaa aaaa aaaa
+			aaaa a22a aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa a00a aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa a00a aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa a00a aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aa2a aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aa0a aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aa0a aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aa0a aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaa7 aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaa0 aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaa0 aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaa0 aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa 777a aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa 000a aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa 000a aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa 000a aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa 7aaa aaa7 aaaa aaaa aaaa
+			aaaa aaaa aaaa 0aaa aaa0 aaaa aaaa aaaa
+			aaaa aaaa aaaa 0aaa aaa0 aaaa aaaa aaaa
+			aaaa aaaa aaaa 0aaa aaa0 aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa 6aaa aaaa aaaa 9999 a999 aaaa
+			aaaa aaaa 0aaa aaaa aaaa 0000 a000 aaaa
+			aaaa aaaa 0aaa aaaa aaaa 0000 a000 aaaa
+			aaaa aaaa 0aaa aaaa aaaa 0000 a000 aaaa
+			aaaa aaaa aaaa aaa6 aaaa aaaa 99aa aaa9
+			aaaa aaaa aaaa aaa0 aaaa aaaa 00aa aaa0
+			aaaa aaaa aaaa aaa0 aaaa aaaa 00aa aaa0
+			aaaa aaaa aaaa aaa0 aaaa aaaa 00aa aaa0
+			aaaa aaaa aaaa aa6a aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aa0a aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aa0a aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aa0a aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa 66aa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa 00aa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa 00aa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa 00aa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa 6aaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa 0aaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa 0aaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa 0aaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaa5 aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aa55 aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			a555 aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			a555 aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			a555 aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			a555 aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			3333 3333 aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			3333 a333 aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			3333 aa33 a1aa aaa4 aaaa aaaa aaaa aaaa
+			a0aa aaaa a0aa aaa0 aaaa aaaa aaaa aaaa
+			a0aa aaaa a0aa aaa0 aaaa aaaa aaaa aaaa
+			a0aa aaaa a0aa aaa0 aaaa aaaa aaaa aaaa
+			22aa 2222 a1a2 aaa4 aaaa aaaa aaaa aaaa
+			00aa 0000 a0a0 aaa0 aaaa aaaa aaaa aaaa
+			00aa 0000 a0a0 aaa0 aaaa aaaa aaaa aaaa
+			00aa 0000 a0a0 aaa0 aaaa aaaa aaaa aaaa
+			a2aa aaaa a1a2 aaaa aaaa aaaa aaaa aaaa
+			a0aa aaaa a0a0 aaaa aaaa aaaa aaaa aaaa
+			a0aa aaaa a0a0 aaaa aaaa aaaa aaaa aaaa
+			a0aa aaaa a0a0 aaaa aaaa aaaa aaaa aaaa
+			a2aa 2aa2 aaaa aaaa aaaa aaaa aaaa aaaa
+			a0aa 0aa0 aaaa aaaa aaaa aaaa aaaa aaaa
+			a0aa 0aa0 aaaa aaaa aaaa aaaa aaaa aaaa
+			a0aa 0aa0 aaaa aaaa aaaa aaaa aaaa aaaa
+			a2aa 2222 aaaa aaaa aaaa aaaa aaaa aaaa
+			a0aa 0000 aaaa aaaa aaaa aaaa aaaa aaaa
+			a0aa 0000 aaaa aaaa aaaa aaaa aaaa aaaa
+			a0aa 0000 aaaa aaaa aaaa aaaa aaaa aaaa
+			a2aa 2aaa aaaa aaaa aaaa aaaa aaaa aaaa
+			a0aa 0aaa aaaa aaaa aaaa aaaa aaaa aaaa
+			a0aa 0aaa aaaa aaaa aaaa aaaa aaaa aaaa
+			a0aa 0aaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa 2aaa 8aaa aaaa aaaa aaaa aaaa aaaa
+			aaaa 0aaa 0aaa aaaa aaaa aaaa aaaa aaaa
+			aaaa 0aaa 0aaa aaaa aaaa aaaa aaaa aaaa
+			aaaa 0aaa 0aaa aaaa aaaa aaaa aaaa aaaa
+			aaaa 2aaa aaaa aa88 aaaa aaaa aaaa aaaa
+			aaaa 0aaa aaaa aa00 aaaa aaaa aaaa aaaa
+			aaaa 0aaa aaaa aa00 aaaa aaaa aaaa aaaa
+			aaaa 0aaa aaaa aa00 aaaa aaaa aaaa aaaa
+			aaaa a2aa aaaa 88aa aaaa aaaa aaaa aaaa
+			aaaa a0aa aaaa 00aa aaaa aaaa aaaa aaaa
+			aaaa a0aa aaaa 00aa aaaa aaaa aaaa aaaa
+			aaaa a0aa aaaa 00aa aaaa aaaa aaaa aaaa
+			aaaa a2aa aaaa aaaa aa88 aaaa aaaa aaaa
+			aaaa a0aa aaaa aaaa aa00 aaaa aaaa aaaa
+			aaaa a0aa aaaa aaaa aa00 aaaa aaaa aaaa
+			aaaa a0aa aaaa aaaa aa00 aaaa aaaa aaaa
+			aaaa a22a aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa a00a aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa a00a aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa a00a aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aa2a aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aa0a aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aa0a aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aa0a aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaa7 aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaa0 aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaa0 aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaa0 aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa 777a aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa 000a aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa 000a aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa 000a aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa 7aaa aaa7 aaaa aaaa aaaa
+			aaaa aaaa aaaa 0aaa aaa0 aaaa aaaa aaaa
+			aaaa aaaa aaaa 0aaa aaa0 aaaa aaaa aaaa
+			aaaa aaaa aaaa 0aaa aaa0 aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa 6aaa aaaa aaaa 9999 a999 aaaa
+			aaaa aaaa 0aaa aaaa aaaa 0000 a000 aaaa
+			aaaa aaaa 0aaa aaaa aaaa 0000 a000 aaaa
+			aaaa aaaa 0aaa aaaa aaaa 0000 a000 aaaa
+			aaaa aaaa aaaa aaa6 aaaa aaaa 99aa aaa9
+			aaaa aaaa aaaa aaa0 aaaa aaaa 00aa aaa0
+			aaaa aaaa aaaa aaa0 aaaa aaaa 00aa aaa0
+			aaaa aaaa aaaa aaa0 aaaa aaaa 00aa aaa0
+			aaaa aaaa aaaa aa6a aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aa0a aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aa0a aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aa0a aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa 66aa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa 00aa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa 00aa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa 00aa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa 6aaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa 0aaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa 0aaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa 0aaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaa5 aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aa55 aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			a555 aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			a555 aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			a555 aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			a555 aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			3333 3333 aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			3333 a333 aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			3333 aa33 a1aa aaa4 aaaa aaaa aaaa aaaa
+			a0aa aaaa a0aa aaa0 aaaa aaaa aaaa aaaa
+			a0aa aaaa a0aa aaa0 aaaa aaaa aaaa aaaa
+			a0aa aaaa a0aa aaa0 aaaa aaaa aaaa aaaa
+			22aa 2222 a1a2 aaa4 aaaa aaaa aaaa aaaa
+			00aa 0000 a0a0 aaa0 aaaa aaaa aaaa aaaa
+			00aa 0000 a0a0 aaa0 aaaa aaaa aaaa aaaa
+			00aa 0000 a0a0 aaa0 aaaa aaaa aaaa aaaa
+			a2aa aaaa a1a2 aaaa aaaa aaaa aaaa aaaa
+			a0aa aaaa a0a0 aaaa aaaa aaaa aaaa aaaa
+			a0aa aaaa a0a0 aaaa aaaa aaaa aaaa aaaa
+			a0aa aaaa a0a0 aaaa aaaa aaaa aaaa aaaa
+			a2aa 2aa2 aaaa aaaa aaaa aaaa aaaa aaaa
+			a0aa 0aa0 aaaa aaaa aaaa aaaa aaaa aaaa
+			a0aa 0aa0 aaaa aaaa aaaa aaaa aaaa aaaa
+			a0aa 0aa0 aaaa aaaa aaaa aaaa aaaa aaaa
+			a2aa 2222 aaaa aaaa aaaa aaaa aaaa aaaa
+			a0aa 0000 aaaa aaaa aaaa aaaa aaaa aaaa
+			a0aa 0000 aaaa aaaa aaaa aaaa aaaa aaaa
+			a0aa 0000 aaaa aaaa aaaa aaaa aaaa aaaa
+			a2aa 2aaa aaaa aaaa aaaa aaaa aaaa aaaa
+			a0aa 0aaa aaaa aaaa aaaa aaaa aaaa aaaa
+			a0aa 0aaa aaaa aaaa aaaa aaaa aaaa aaaa
+			a0aa 0aaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa 2aaa 8aaa aaaa aaaa aaaa aaaa aaaa
+			aaaa 0aaa 0aaa aaaa aaaa aaaa aaaa aaaa
+			aaaa 0aaa 0aaa aaaa aaaa aaaa aaaa aaaa
+			aaaa 0aaa 0aaa aaaa aaaa aaaa aaaa aaaa
+			aaaa 2aaa aaaa aa88 aaaa aaaa aaaa aaaa
+			aaaa 0aaa aaaa aa00 aaaa aaaa aaaa aaaa
+			aaaa 0aaa aaaa aa00 aaaa aaaa aaaa aaaa
+			aaaa 0aaa aaaa aa00 aaaa aaaa aaaa aaaa
+			aaaa a2aa aaaa 88aa aaaa aaaa aaaa aaaa
+			aaaa a0aa aaaa 00aa aaaa aaaa aaaa aaaa
+			aaaa a0aa aaaa 00aa aaaa aaaa aaaa aaaa
+			aaaa a0aa aaaa 00aa aaaa aaaa aaaa aaaa
+			aaaa a2aa aaaa aaaa aa88 aaaa aaaa aaaa
+			aaaa a0aa aaaa aaaa aa00 aaaa aaaa aaaa
+			aaaa a0aa aaaa aaaa aa00 aaaa aaaa aaaa
+			aaaa a0aa aaaa aaaa aa00 aaaa aaaa aaaa
+			aaaa a22a aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa a00a aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa a00a aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa a00a aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aa2a aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aa0a aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aa0a aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aa0a aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaa7 aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaa0 aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaa0 aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaa0 aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa 777a aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa 000a aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa 000a aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa 000a aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa 7aaa aaa7 aaaa aaaa aaaa
+			aaaa aaaa aaaa 0aaa aaa0 aaaa aaaa aaaa
+			aaaa aaaa aaaa 0aaa aaa0 aaaa aaaa aaaa
+			aaaa aaaa aaaa 0aaa aaa0 aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa 6aaa aaaa aaaa 9999 a999 aaaa
+			aaaa aaaa 0aaa aaaa aaaa 0000 a000 aaaa
+			aaaa aaaa 0aaa aaaa aaaa 0000 a000 aaaa
+			aaaa aaaa 0aaa aaaa aaaa 0000 a000 aaaa
+			aaaa aaaa aaaa aaa6 aaaa aaaa 99aa aaa9
+			aaaa aaaa aaaa aaa0 aaaa aaaa 00aa aaa0
+			aaaa aaaa aaaa aaa0 aaaa aaaa 00aa aaa0
+			aaaa aaaa aaaa aaa0 aaaa aaaa 00aa aaa0
+			aaaa aaaa aaaa aa6a aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aa0a aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aa0a aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aa0a aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa 66aa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa 00aa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa 00aa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa 00aa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa 6aaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa 0aaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa 0aaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa 0aaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaa5 aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aa55 aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			a555 aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			a555 aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			a555 aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			a555 aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+		</bitmap>
+	</tex_image>
+</tex_image_array>
+
+<tex_palette_array size="1">
+	<tex_palette index="0" name="dummy128_128_pl" color_size="16">
+		0000 001f 00df 03f9 181f 1be0 64c0 7c06
+		7c1f 7fe0 7fff 7fff 7fff 7fff 7fff 7fff
+	</tex_palette>
+</tex_palette_array>
+
+<material_array size="1">
+	<material index="0" name="lambert7"
+		light0="on" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="31"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="0"
+		fog_flag="off"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="25 25 25"
+		ambient="0 0 0"
+		specular="0 0 0"
+		emission="0 0 0"
+		shininess_table_flag="off"
+		tex_image_idx="0" tex_palette_idx="0"
+		tex_tiling="repeat repeat"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
+	/>
+</material_array>
+
+<matrix_array size="1">
+	<matrix index="0" mtx_weight="1" node_idx="0"/>
+</matrix_array>
+
+<polygon_array size="1">
+	<polygon index="0" name="polygon0"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="-0.500000 0.000000 -0.500000"
+		volume_max="0.500000 0.000000 0.500000"
+		volume_r="0.707031"
+		mtx_prim_size="1"
+		nrm_flag="on" clr_flag="off" tex_flag="on"
+	>
+		<mtx_prim index="0">
+			<mtx_list size="1">0</mtx_list>
+			<primitive_array size="1">
+				<primitive index="0" type="quads" vertex_size="4">
+					<mtx idx="0"/>
+					<tex st="0.000000 128.000000"/>
+					<nrm xyz="0.000000 0.998047 0.000000"/>
+					<pos_s xyz="-0.500000 0.000000 0.500000"/>
+					<tex st="128.000000 128.000000"/>
+					<pos_xy xy="0.500000 0.000000"/>
+					<tex st="128.000000 0.000000"/>
+					<pos_xz xz="0.500000 -0.500000"/>
+					<tex st="0.000000 0.000000"/>
+					<pos_xy xy="-0.500000 0.000000"/>
+				</primitive>
+			</primitive_array>
+		</mtx_prim>
+	</polygon>
+</polygon_array>
+
+<node_array size="1">
+	<node index="0" name="pPlane1" kind="mesh"
+		parent="-1"
+		child="-1"
+		brother_next="-1"
+		brother_prev="-1"
+		draw_mtx="on"
+		billboard="off"
+		scale="1.000000 1.000000 1.000000"
+		rotate="0.000000 0.000000 0.000000"
+		translate="0.000000 0.000000 0.000000"
+		visibility="on"
+		display_size="1"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="-0.500000 0.000000 -0.500000"
+		volume_max="0.500000 0.000000 0.500000"
+		volume_r="0.707031"
+	>
+		<display index="0" material="0" polygon="0" priority="0"/>
+	</node>
+</node_array>
+
+<output_info vertex_size="4" polygon_size="1"
+	triangle_size="0" quad_size="1"/>
+
+</body>
+
+</imd>

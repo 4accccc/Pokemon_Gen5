@@ -72,10 +72,11 @@ MB_CAP_OBJ* MB_CAP_OBJ_CreateObject( MB_CAPTURE_WORK *capWork , MB_CAP_OBJ_INIT_
   const BOOL flg = TRUE;
   
   objWork->pos = initWork->pos;
+  //文字演出のためサイズを2倍にしてるのでデフォは半分
   objWork->objIdx = GFL_BBD_AddObject( bbdSys , 
                                      resIdx ,
-                                     FX32_ONE , 
-                                     FX32_ONE , 
+                                     FX32_HALF , 
+                                     FX32_HALF , 
                                      &objWork->pos ,
                                      31 ,
                                      GFL_BBD_LIGHT_NONE );

@@ -23,6 +23,8 @@
 //ステート
 typedef enum
 {
+  MCDS_INIT,        //開始時用
+  
   MCDS_NONE,        //処理無し
   MCDS_DRAG,        //引っ張る
   MCDS_SHOT_WAIT,   //飛んでる
@@ -33,7 +35,6 @@ typedef enum
 //	typedef struct
 //======================================================================
 #pragma mark [> struct
-typedef struct _MB_CAP_DOWN MB_CAP_DOWN;
 
 //======================================================================
 //	proto
@@ -46,6 +47,7 @@ typedef struct _MB_CAP_DOWN MB_CAP_DOWN;
 extern MB_CAP_DOWN* MB_CAP_DOWN_InitSystem( MB_CAPTURE_WORK *work );
 extern void MB_CAP_DOWN_DeleteSystem( MB_CAPTURE_WORK *work , MB_CAP_DOWN *downWork );
 extern void MB_CAP_DOWN_UpdateSystem( MB_CAPTURE_WORK *capWork , MB_CAP_DOWN *downWork );
+extern void MB_CAP_DOWN_UpdateSystem_Demo( MB_CAPTURE_WORK *capWork , MB_CAP_DOWN *downWork , const BOOL isTrg , const BOOL isTouch , u32 tpx , u32 tpy );
 
 extern const MB_CAP_DOWN_STATE MB_CAP_DOWN_GetState( const MB_CAP_DOWN *downWork );
 

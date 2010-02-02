@@ -111,17 +111,18 @@ MB_CAP_BALL* MB_CAP_BALL_CreateObject( MB_CAPTURE_WORK *capWork , MB_CAP_BALL_IN
   
   ballWork->targetPos = initWork->targetPos;
   
+  //文字演出のためサイズを2倍にしてるのでデフォは半分
   ballWork->objIdx = GFL_BBD_AddObject( bbdSys , 
                                      resIdx ,
-                                     FX32_ONE , 
-                                     FX32_ONE , 
+                                     FX32_HALF , 
+                                     FX32_HALF , 
                                      &ballWork->pos ,
                                      31 ,
                                      GFL_BBD_LIGHT_NONE );
   ballWork->objShadowIdx = GFL_BBD_AddObject( bbdSys , 
                                      resShadowIdx ,
-                                     FX32_ONE , 
-                                     FX32_ONE , 
+                                     FX32_HALF , 
+                                     FX32_HALF , 
                                      &ballWork->pos ,
                                      31 ,
                                      GFL_BBD_LIGHT_NONE );
@@ -387,7 +388,8 @@ static void MB_CAP_BALL_CheckHitPoke_Shooting( MB_CAPTURE_WORK *capWork , MB_CAP
     {
       const u16 cellIdx = 0;
       const u16 rot = 0;
-      const fx16 size = FX16_ONE;
+      //文字演出のためサイズを2倍にしてるのでデフォは半分
+      const fx16 size = FX16_HALF;
       VecFx32 effPos = ballWork->pos;
       MB_CAPTURE_GetPokeFunc( capWork , ballWork , i );
       
@@ -479,7 +481,8 @@ static void MB_CAP_BALL_StateShot(MB_CAPTURE_WORK *capWork , MB_CAP_BALL *ballWo
     u16 angle = 0x8000 * ballWork->cnt / ballWork->shotCnt;
     fx16 sin = FX_SinIdx( angle );
     fx16 size = FX_Mul( MB_CAP_BALL_HEIGHT_SCALE_MAX , sin ) + FX16_ONE;
-
+    //文字演出のためサイズを2倍にしてるのでデフォは半分
+    size = size>>1;
     ballWork->height = sin*MB_CAP_BALL_HEIGHT_MAX;
     GFL_BBD_SetObjectSiz( bbdSys , ballWork->objIdx , &size , &size );
   }
@@ -586,8 +589,9 @@ static void MB_CAP_BALL_StateCaptureAnime(MB_CAPTURE_WORK *capWork , MB_CAP_BALL
   case MCBS_CAPTURE_TRANS: //飛んでいく
     {
       const fx16 rate = FX32_CONST(ballWork->cnt)/MB_CAP_EFFECT_TRANS_FRAME_MAX;
-      const fx16 scaleX = FX16_ONE - rate;
-      const fx16 scaleY = FX16_ONE + rate;
+      //文字演出のためサイズを2倍にしてるのでデフォは半分
+      const fx16 scaleX = (FX16_ONE - rate)/2;
+      const fx16 scaleY = (FX16_ONE + rate)/2;
       VecFx32 pos;
       
       pos.x = ballWork->pos.x;

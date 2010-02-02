@@ -113,17 +113,18 @@ MB_CAP_POKE* MB_CAP_POKE_CreateObject( MB_CAPTURE_WORK *capWork , MB_CAP_POKE_IN
                                        32 , 32 );
   GFL_BBD_CutResourceData( bbdSys , pokeWork->resIdx );
   
+  //文字演出のためサイズを2倍にしてるのでデフォは半分
   pokeWork->objIdx = GFL_BBD_AddObject( bbdSys , 
                                      pokeWork->resIdx ,
-                                     FX32_ONE , 
-                                     FX32_ONE , 
+                                     FX32_HALF , 
+                                     FX32_HALF , 
                                      &pokeWork->pos ,
                                      31 ,
                                      GFL_BBD_LIGHT_NONE );
   pokeWork->objShadowIdx = GFL_BBD_AddObject( bbdSys , 
                                      resShadowIdx ,
-                                     FX32_ONE , 
-                                     FX32_ONE , 
+                                     FX32_HALF , 
+                                     FX32_HALF , 
                                      &pokeWork->pos ,
                                      31 ,
                                      GFL_BBD_LIGHT_NONE );

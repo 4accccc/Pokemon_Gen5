@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ariizumi_nobuhiko" host="W00147" date="2009-12-10T19:00:41"/>
+	<create user="ariizumi_nobuhiko" host="W00147" date="2010-02-01T14:34:22"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,7 +312,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1544" top="198" right="2249" bottom="826" maximized="no" rayout="Vertical2">
+	<dialog left="1557" top="191" right="2262" bottom="819" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -422,6 +422,13 @@ WB側のDSの説明に従って下さい。</language>
 	<row id="MSG_MB_CHILD_SEL_05">
 		<language name="JPN" width="240">この６ひきで　よろしいですか？</language>
 		<language name="JPN_KANJI" width="240">この６ひきで　よろしいですか？</language>
+	</row>
+
+	<row id="MSG_MB_CHILD_CAP_01">
+		<language name="JPN" width="240">じかんないに　ポケモンを
+ぜんぶ　つかまえろ！</language>
+		<language name="JPN_KANJI" width="240">時間内に　ポケモンを
+全部　捕まえろ！</language>
 	</row>
 
 	<row id="MSG_MB_CHILD_DEB_01">

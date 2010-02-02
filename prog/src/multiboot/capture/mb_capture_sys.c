@@ -11,13 +11,14 @@
 #include <gflib.h>
 #include "system/main.h"
 #include "system/gfl_use.h"
-#include "print/printsys.h"
 #include "print/wordset.h"
 #include "sound/pm_sndsys.h"
 #include "system/wipe.h"
+#include "system/bmp_winframe.h"
 
 #include "arc_def.h"
 #include "mb_capture_gra.naix"
+#include "font/font.naix"
 
 #include "multiboot/mb_util_msg.h"
 #include "multiboot/mb_poke_icon.h"
@@ -28,6 +29,7 @@
 #include "./mb_cap_down.h"
 #include "./mb_cap_ball.h"
 #include "./mb_cap_effect.h"
+#include "./mb_cap_demo.h"
 #include "./mb_cap_local_def.h"
 #include "./mb_cap_snd_def.h"
 
@@ -61,6 +63,7 @@ typedef enum
   MSS_FADEOUT,
   MSS_WAIT_FADEOUT,
 
+  MSS_INIT_DEMO,
   MSS_GAME_MAIN,
   
 }MB_CAPTURE_STATE;
@@ -91,6 +94,7 @@ struct _MB_CAPTURE_WORK
   MB_CAP_BALL  *ballWork[MB_CAP_BALL_NUM];
   MB_CAP_EFFECT  *effWork[MB_CAP_EFFECT_NUM];
   MB_CAP_DOWN *downWork;
+  MB_CAP_DEMO *demoWork;
   
   //上画面系
   BOOL isShotBall;
@@ -116,9 +120,11 @@ struct _MB_CAPTURE_WORK
   
   void* sndData;
 
+  GFL_FONT    *fontHandle;
+  PRINT_QUE   *printQue;
+  GFL_MSGDATA *msgHandle;
+
 #if MB_CAP_DEB
-  //今のところデバッグ以外ではフォント使わないので
-  GFL_FONT *fontHandle;
   BOOL isTimeFreeze;
 #endif
 };
@@ -152,15 +158,15 @@ static void MB_CAPTURE_InitTime( MB_CAPTURE_WORK *work );
 static void MB_CAPTURE_UpdateTime( MB_CAPTURE_WORK *work );
 
 static const GFL_DISP_VRAM vramBank = {
-  GX_VRAM_BG_128_A,             // メイン2DエンジンのBG
+  GX_VRAM_BG_64_E,             // メイン2DエンジンのBG
   GX_VRAM_BGEXTPLTT_NONE,       // メイン2DエンジンのBG拡張パレット
   GX_VRAM_SUB_BG_128_C,         // サブ2DエンジンのBG
   GX_VRAM_SUB_BGEXTPLTT_NONE,   // サブ2DエンジンのBG拡張パレット
-  GX_VRAM_OBJ_64_E ,           // メイン2DエンジンのOBJ
+  GX_VRAM_OBJ_NONE ,           // メイン2DエンジンのOBJ
   GX_VRAM_OBJEXTPLTT_NONE,      // メイン2DエンジンのOBJ拡張パレット
   GX_VRAM_SUB_OBJ_128_D,        // サブ2DエンジンのOBJ
   GX_VRAM_SUB_OBJEXTPLTT_NONE,  // サブ2DエンジンのOBJ拡張パレット
-  GX_VRAM_TEX_0_B,             // テクスチャイメージスロット
+  GX_VRAM_TEX_01_AB,             // テクスチャイメージスロット
   GX_VRAM_TEXPLTT_01_FG,         // テクスチャパレットスロット
   GX_OBJVRAMMODE_CHAR_1D_32K,
   GX_OBJVRAMMODE_CHAR_1D_32K
@@ -193,7 +199,22 @@ static void MB_CAPTURE_Init( MB_CAPTURE_WORK *work )
   MB_CAPTURE_InitObject( work );
   MB_CAPTURE_InitPoke( work );
   MB_CAPTURE_InitUpper( work );
+
+  work->fontHandle = GFL_FONT_Create( ARCID_FONT , NARC_font_large_gftr , GFL_FONT_LOADTYPE_FILE , FALSE , work->heapId );
+//マルチブート用きり分け
+#ifndef MULTI_BOOT_MAKE  //通常時処理
+  work->msgHandle = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL , ARCID_MESSAGE_MB , NARC_message_multiboot_child_dat , work->heapId );
+#else                    //DL子機時処理
+  work->msgHandle = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL , ARCID_MESSAGE_MB , NARC_message_dl_multiboot_child_dat , work->heapId );
+#endif //MULTI_BOOT_MAKE
+  work->printQue = PRINTSYS_QUE_Create( work->heapId );
+  GFL_FONTSYS_SetDefaultColor();
+
+  BmpWinFrame_GraphicSet( MB_CAPTURE_FRAME_MSG , MB_CAPTURE_MSGWIN_CGX , MB_CAPTURE_PAL_MAIN_BG_MSGWIN , 0 , work->heapId );
+  GFL_ARC_UTIL_TransVramPalette( ARCID_FONT , FILE_FONT_PLT_MB , PALTYPE_MAIN_BG , MB_CAPTURE_PAL_MAIN_BG_FONT*0x20, 16*2, work->heapId );
+
   work->downWork = MB_CAP_DOWN_InitSystem( work );
+  work->demoWork = MB_CAP_DEMO_InitSystem( work );
   work->isShotBall = FALSE;
   work->targetAnmCnt = 0;
   work->targetAnmFrame = 0;
@@ -235,6 +256,10 @@ static void MB_CAPTURE_Term( MB_CAPTURE_WORK *work )
   MB_CAPTURE_TermDebug( work );
 #endif
 
+  GFL_MSG_Delete( work->msgHandle );
+  PRINTSYS_QUE_Delete( work->printQue );
+  GFL_FONT_Delete( work->fontHandle );
+
   GFL_NET_WirelessIconEasyEnd();
   PMSND_StopBGM();
 
@@ -259,6 +284,7 @@ static void MB_CAPTURE_Term( MB_CAPTURE_WORK *work )
     }
   }
 
+  MB_CAP_DEMO_DeleteSystem( work , work->demoWork );
   MB_CAP_DOWN_DeleteSystem( work , work->downWork );
   MB_CAPTURE_TermUpper( work );
   MB_CAPTURE_TermObject( work );
@@ -296,7 +322,8 @@ static const BOOL MB_CAPTURE_Main( MB_CAPTURE_WORK *work )
   case MSS_WAIT_FADEIN:
     if( WIPE_SYS_EndCheck() == TRUE )
     {
-      work->state = MSS_GAME_MAIN;
+      work->state = MSS_INIT_DEMO;
+      MC_CAP_DEMO_StartDemoInit( work , work->demoWork );
     }
     break;
 
@@ -313,6 +340,41 @@ static const BOOL MB_CAPTURE_Main( MB_CAPTURE_WORK *work )
     }
     break;
     
+  case MSS_INIT_DEMO:
+    if( MC_CAP_DEMO_StartDemoMain( work , work->demoWork ) == TRUE )
+    {
+      u8 i;
+      MC_CAP_DEMO_StartDemoTerm( work , work->demoWork );
+
+      //出現設定
+      for( i=0;i<MB_CAP_POKE_NUM;i++ )
+      {
+        BOOL isLoop = TRUE;
+        while( isLoop == TRUE )
+        {
+          u8 j;
+          const u8 idxX = GFUser_GetPublicRand0( MB_CAP_OBJ_X_NUM );
+          const u8 idxY = GFUser_GetPublicRand0( MB_CAP_OBJ_Y_NUM );
+          isLoop = FALSE;
+          for( j=0;j<i;j++ )
+          {
+            if( MB_CAP_POKE_CheckPos( work->pokeWork[j] , idxX , idxY ) == TRUE )
+            {
+              isLoop = TRUE;
+              break;
+            }
+          }
+          if( isLoop == FALSE )
+          {
+            MB_CAP_POKE_SetHide( work , work->pokeWork[j] , idxX , idxY );
+            MB_TPrintf("[%d][%d]\n",idxX,idxY);
+          }
+        }
+      }
+      work->state = MSS_GAME_MAIN;
+    }
+    break;
+
   case MSS_GAME_MAIN:
     {
       MB_CAPTURE_UpdateTime( work );
@@ -327,8 +389,11 @@ static const BOOL MB_CAPTURE_Main( MB_CAPTURE_WORK *work )
   {
     MB_CAP_OBJ_UpdateObject( work , work->objWork[i] );
   }
-
-  MB_CAP_DOWN_UpdateSystem( work , work->downWork );
+  if( work->state != MSS_INIT_DEMO )
+  {
+    //デモ中はDemoMainから操作する
+    MB_CAP_DOWN_UpdateSystem( work , work->downWork );
+  }
   MB_CAPTURE_UpdateUpper( work );
 
   //3D描画  
@@ -342,6 +407,7 @@ static const BOOL MB_CAPTURE_Main( MB_CAPTURE_WORK *work )
   //OBJの更新
   GFL_CLACT_SYS_Main();
 
+  PRINTSYS_QUE_Main( work->printQue );
   
   if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_START )
   {
@@ -391,21 +457,21 @@ static void MB_CAPTURE_InitGraphic( MB_CAPTURE_WORK *work )
     static const GFL_BG_BGCNT_HEADER header_main1 = {
       0, 0, 0x800, 0, // scrX, scrY, scrbufSize, scrbufofs,
       GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0x6000, GX_BG_CHARBASE_0x18000,0x0000,
+      GX_BG_SCRBASE_0x6000, GX_BG_CHARBASE_0x08000,0x0000,
       GX_BG_EXTPLTT_01, 1, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
     };
     // BG2 MAIN (デバッグ
     static const GFL_BG_BGCNT_HEADER header_main2 = {
       0, 0, 0x800, 0,  // scrX, scrY, scrbufSize, scrbufofs,
       GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0x7800, GX_BG_CHARBASE_0x10000,0x08000,
+      GX_BG_SCRBASE_0x7800, GX_BG_CHARBASE_0x00000,0x06000,
       GX_BG_EXTPLTT_23, 0, 1, 0, FALSE  // pal, pri, areaover, dmy, mosaic
     };
     // BG3 MAIN (背景
     static const GFL_BG_BGCNT_HEADER header_main3 = {
       0, 0, 0x800, 0,  // scrX, scrY, scrbufSize, scrbufofs,
       GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0x7000, GX_BG_CHARBASE_0x18000,0x08000,
+      GX_BG_SCRBASE_0x7000, GX_BG_CHARBASE_0x08000,0x08000,
       GX_BG_EXTPLTT_23, 3, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
     };
 
@@ -459,7 +525,7 @@ static void MB_CAPTURE_InitGraphic( MB_CAPTURE_WORK *work )
     //エッジマーキングカラー
     static  const GXRgb stage_edge_color_table[8]=
       { GX_RGB( 0, 0, 0 ), GX_RGB( 0, 0, 0 ), 0, 0, 0, 0, 0, 0 };
-    GFL_G3D_Init( GFL_G3D_VMANLNK, GFL_G3D_TEX256K, GFL_G3D_VMANLNK, GFL_G3D_PLT80K,
+    GFL_G3D_Init( GFL_G3D_VMANLNK, GFL_G3D_TEX256K, GFL_G3D_VMANLNK, GFL_G3D_PLT64K,
             0, work->heapId, NULL );
     GFL_BG_SetBGControl3D( 2 ); //NNS_g3dInitの中で表示優先順位変わる・・・
     GFL_G3D_SetSystemSwapBufferMode( GX_SORTMODE_AUTO, GX_BUFFERMODE_W );
@@ -491,7 +557,8 @@ static void MB_CAPTURE_InitGraphic( MB_CAPTURE_WORK *work )
     G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG0 , GX_BLEND_PLANEMASK_BG3 , 31 , 31 );
   }
   {
-    VecFx32 bbdScale = {FX32_CONST(16.0f),FX32_CONST(16.0f),FX32_CONST(16.0f)};
+    //文字演出のため2倍(16->32)
+    VecFx32 bbdScale = {FX32_CONST(32.0f),FX32_CONST(32.0f),FX32_CONST(32.0f)};
     GFL_BBD_SETUP bbdSetup = {
       128,128,
       {FX32_ONE,FX32_ONE,FX32_ONE},
@@ -577,6 +644,11 @@ static void MB_CAPTURE_LoadResource( MB_CAPTURE_WORK *work )
       NARC_mb_capture_gra_cap_obj_memai_nsbtx ,
       NARC_mb_capture_gra_cap_obj_kemuri_bonus_nsbtx ,  //ボーナス煙
       NARC_mb_capture_gra_cap_obj_zzz_nsbtx ,
+      //その他
+      NARC_mb_capture_gra_cap_obj_ready_nsbtx ,
+      NARC_mb_capture_gra_cap_obj_start_nsbtx ,
+      NARC_mb_capture_gra_cap_obj_timeup_nsbtx ,
+      NARC_mb_capture_gra_cap_obj_highscore_nsbtx ,
       };
     static const u32 resSizeArr[MCBR_MAX] = {
       GFL_BBD_TEXSIZDEF_32x32 ,
@@ -595,6 +667,12 @@ static void MB_CAPTURE_LoadResource( MB_CAPTURE_WORK *work )
       GFL_BBD_TEXSIZDEF_128x32 ,
       GFL_BBD_TEXSIZDEF_256x32 ,  //ボーナス煙
       GFL_BBD_TEXSIZDEF_128x32 ,
+      //その他
+      GFL_BBD_TEXSIZDEF_128x128 ,
+      GFL_BBD_TEXSIZDEF_128x32 ,
+      GFL_BBD_TEXSIZDEF_128x32 ,
+      GFL_BBD_TEXSIZDEF_128x32 ,
+      
       };
     u8 i;
     
@@ -602,11 +680,23 @@ static void MB_CAPTURE_LoadResource( MB_CAPTURE_WORK *work )
     {
       GFL_G3D_RES* res = GFL_G3D_CreateResourceHandle( work->initWork->arcHandle , resListArr[i] );
       GFL_G3D_TransVramTexture( res );
-      work->bbdRes[i] = GFL_BBD_AddResource( work->bbdSys , 
-                                       res , 
-                                       GFL_BBD_TEXFMT_PAL16 ,
-                                       resSizeArr[i] ,
-                                       32 , 32 );
+      NNS_GfdDumpLnkTexVramManager();
+      if( i < MCBR_DEMO_READY )
+      {
+        work->bbdRes[i] = GFL_BBD_AddResource( work->bbdSys , 
+                                         res , 
+                                         GFL_BBD_TEXFMT_PAL16 ,
+                                         resSizeArr[i] ,
+                                         32 , 32 );
+      }
+      else
+      {
+        work->bbdRes[i] = GFL_BBD_AddResource( work->bbdSys , 
+                                         res , 
+                                         GFL_BBD_TEXFMT_PAL16 ,
+                                         resSizeArr[i] ,
+                                         128 , 32 );
+      }
       GFL_BBD_CutResourceData( work->bbdSys , work->bbdRes[i] );
     }
   }
@@ -680,18 +770,19 @@ static void MB_CAPTURE_InitObject( MB_CAPTURE_WORK *work )
   {
     BOOL flg = TRUE;
     VecFx32 pos = {FX32_CONST(64.0),FX32_CONST(72.0),FX32_CONST(MB_CAP_OBJ_BASE_Z- MB_CAP_OBJ_LINEOFS_Z)};
+    //文字演出のためサイズを2倍にしてるのでデフォは半分
     work->bbdObjBgMask[0] = GFL_BBD_AddObject( work->bbdSys , 
                                        work->bbdResBgMask ,
-                                       FX32_ONE*4 , 
-                                       FX32_ONE , 
+                                       FX32_HALF*4 , 
+                                       FX32_HALF , 
                                        &pos ,
                                        31 ,
                                        GFL_BBD_LIGHT_NONE );
     pos.x = FX32_CONST(192.0);
     work->bbdObjBgMask[1] = GFL_BBD_AddObject( work->bbdSys , 
                                        work->bbdResBgMask ,
-                                       FX32_ONE*4 , 
-                                       FX32_ONE , 
+                                       FX32_HALF*4 , 
+                                       FX32_HALF , 
                                        &pos ,
                                        31 ,
                                        GFL_BBD_LIGHT_NONE );
@@ -734,30 +825,6 @@ static void MB_CAPTURE_InitPoke( MB_CAPTURE_WORK *work )
   }
   GFL_ARC_CloseDataHandle( initWork.pokeArcHandle );
 
-  //出現設定
-  for( i=0;i<MB_CAP_POKE_NUM;i++ )
-  {
-    BOOL isLoop = TRUE;
-    while( isLoop == TRUE )
-    {
-      const u8 idxX = GFUser_GetPublicRand0( MB_CAP_OBJ_X_NUM );
-      const u8 idxY = GFUser_GetPublicRand0( MB_CAP_OBJ_Y_NUM );
-      isLoop = FALSE;
-      for( j=0;j<i;j++ )
-      {
-        if( MB_CAP_POKE_CheckPos( work->pokeWork[j] , idxX , idxY ) == TRUE )
-        {
-          isLoop = TRUE;
-          break;
-        }
-      }
-      if( isLoop == FALSE )
-      {
-        MB_CAP_POKE_SetHide( work , work->pokeWork[j] , idxX , idxY );
-        MB_TPrintf("[%d][%d]\n",idxX,idxY);
-      }
-    }
-  }
 }
 
 //--------------------------------------------------------------
@@ -789,10 +856,11 @@ static void MB_CAPTURE_InitUpper( MB_CAPTURE_WORK *work )
                                        32 , 32 );
   GFL_BBD_CutResourceData( work->bbdSys , work->resIdxTarget );
   
+    //文字演出のためサイズを2倍にしてるのでデフォは半分
   work->objIdxTarget = GFL_BBD_AddObject( work->bbdSys , 
                                      work->resIdxTarget ,
-                                     FX32_ONE , 
-                                     FX32_ONE , 
+                                     FX32_HALF , 
+                                     FX32_HALF , 
                                      &pos ,
                                      31 ,
                                      GFL_BBD_LIGHT_NONE );
@@ -1455,6 +1523,24 @@ const BOOL MB_CAPTURE_CheckHit( const MB_CAP_HIT_WORK *work1 , MB_CAP_HIT_WORK *
   return FALSE;
 }
 
+MB_CAP_DOWN* MB_CAPTURE_GetDownWork( MB_CAPTURE_WORK *work )
+{
+  return work->downWork;
+}
+
+GFL_FONT* MB_CAPTURE_GetFontHandle( MB_CAPTURE_WORK *work )
+{
+  return work->fontHandle;
+}
+GFL_MSGDATA* MB_CAPTURE_GetMsgHandle( MB_CAPTURE_WORK *work )
+{
+  return work->msgHandle;
+}
+PRINT_QUE* MB_CAPTURE_GetPrintQue( MB_CAPTURE_WORK *work )
+{
+  return work->printQue;
+}
+
 
 #pragma mark [>debug func
 #if MB_CAP_DEB
@@ -1520,7 +1606,6 @@ static void MCD_D_BgmPitch( void* userWork , DEBUGWIN_ITEM* item );
 
 static void MB_CAPTURE_InitDebug( MB_CAPTURE_WORK *work )
 {
-  work->fontHandle = GFL_FONT_Create( ARCID_FONT , NARC_font_large_gftr , GFL_FONT_LOADTYPE_FILE , FALSE , work->heapId );
 
   DEBUGWIN_InitProc( MB_CAPTURE_FRAME_DEBUG , work->fontHandle );
   DEBUGWIN_ChangeLetterColor( 0,0,0 );
@@ -1556,7 +1641,6 @@ static void MB_CAPTURE_TermDebug( MB_CAPTURE_WORK *work )
   DEBUGWIN_RemoveGroup( MB_CAP_DEBUG_GROUP_TOP );
   DEBUGWIN_ExitProc();
 
-  GFL_FONT_Delete( work->fontHandle );
 }
 
 

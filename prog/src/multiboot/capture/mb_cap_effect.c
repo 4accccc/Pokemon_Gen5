@@ -82,10 +82,11 @@ MB_CAP_EFFECT* MB_CAP_EFFECT_CreateObject( MB_CAPTURE_WORK *capWork , MB_CAP_EFF
   const BOOL flg = TRUE;
   
   effWork->pos = initWork->pos;
+  //文字演出のためサイズを2倍にしてるのでデフォは半分
   effWork->objIdx = GFL_BBD_AddObject( bbdSys , 
                                      resIdx ,
-                                     FX32_ONE , 
-                                     FX32_ONE , 
+                                     FX32_HALF , 
+                                     FX32_HALF , 
                                      &effWork->pos ,
                                      31 ,
                                      GFL_BBD_LIGHT_NONE );

@@ -271,6 +271,8 @@ elsif (ncg_width == 4 && ncg_height == 8) then
 	template = "dummy_32x64.imd"
 elsif (ncg_width == 4 && ncg_height == 16) then
 	template = "dummy_32x128.imd"
+elsif (ncg_width == 16 && ncg_height == 16) then
+	template = "dummy_128x128.imd"
 else
   printf( "w[%d] h[%d]\n",ncg_width,ncg_height )
 	p "OutputFailed!!"

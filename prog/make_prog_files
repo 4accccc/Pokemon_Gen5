@@ -1084,6 +1084,7 @@ SRCS_OVERLAY_MULTIBOOT = multiboot/parent/mb_parent_sys.c \
         multiboot/capture/mb_cap_down.c \
         multiboot/capture/mb_cap_ball.c \
         multiboot/capture/mb_cap_effect.c \
+        multiboot/capture/mb_cap_demo.c \
         test/dlplay/dlplay_func.c 
 
 # 大野デバッグ

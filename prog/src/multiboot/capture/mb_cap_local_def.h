@@ -10,6 +10,7 @@
 //======================================================================
 #pragma once
 #include "multiboot/mb_data_def.h"
+#include "print/printsys.h"
 
 //======================================================================
 //	define
@@ -28,11 +29,17 @@
 #pragma mark [> define
 #define MB_CAPTURE_FRAME_FRAME (GFL_BG_FRAME1_M)
 #define MB_CAPTURE_FRAME_DEBUG (GFL_BG_FRAME2_M)
+#define MB_CAPTURE_FRAME_MSG   (GFL_BG_FRAME2_M)
 #define MB_CAPTURE_FRAME_BG  (GFL_BG_FRAME3_M)
 
 #define MB_CAPTURE_FRAME_SUB_BOW_LINE  (GFL_BG_FRAME1_S)
 #define MB_CAPTURE_FRAME_SUB_BG  (GFL_BG_FRAME2_S)
 #define MB_CAPTURE_FRAME_SUB_BOW  (GFL_BG_FRAME3_S)
+
+#define MB_CAPTURE_MSGWIN_CGX (1)
+
+#define MB_CAPTURE_PAL_MAIN_BG_MSGWIN (0xD) //1本
+#define MB_CAPTURE_PAL_MAIN_BG_FONT (0xE) //1本
 
 #define MB_CAPTURE_PAL_SUB_BG_BOW (0) //3本
 #define MB_CAPTURE_PAL_SUB_BG     (3) //1本
@@ -197,7 +204,13 @@ typedef enum
   MCBR_EFF_BONUS,
   MCBR_EFF_ZZZ,
 
-  //その他
+  //ここ以降はサイズが128*32で読む
+  //以下DEMOは並びをDEMO内ののTYPE定義とあわせる
+  MCBR_DEMO_READY,
+  MCBR_DEMO_START,
+  MCBR_DEMO_TIMEUP,
+  MCBR_DEMO_SCORE,
+
   MCBR_MAX,
 }MB_CAP_BBD_RES;
 
@@ -224,6 +237,8 @@ typedef struct _MB_CAP_OBJ MB_CAP_OBJ;
 typedef struct _MB_CAP_POKE MB_CAP_POKE;
 typedef struct _MB_CAP_BALL MB_CAP_BALL;
 typedef struct _MB_CAP_EFFECT MB_CAP_EFFECT;
+typedef struct _MB_CAP_DOWN MB_CAP_DOWN;
+typedef struct _MB_CAP_DEMO MB_CAP_DEMO;
 
 //あたり判定のチェックに使う
 typedef struct
@@ -255,3 +270,8 @@ extern MB_CAP_EFFECT* MB_CAPTURE_CreateEffect( MB_CAPTURE_WORK *work , VecFx32 *
 
 extern void MB_CAPTURE_GetGrassObjectPos( const s8 idxX , const s8 idxY , VecFx32 *ret );
 extern const BOOL MB_CAPTURE_CheckHit( const MB_CAP_HIT_WORK *work1 , MB_CAP_HIT_WORK *work2 );
+
+extern MB_CAP_DOWN* MB_CAPTURE_GetDownWork( MB_CAPTURE_WORK *work );
+extern GFL_FONT* MB_CAPTURE_GetFontHandle( MB_CAPTURE_WORK *work );
+extern GFL_MSGDATA* MB_CAPTURE_GetMsgHandle( MB_CAPTURE_WORK *work );
+extern PRINT_QUE* MB_CAPTURE_GetPrintQue( MB_CAPTURE_WORK *work );
