@@ -38,7 +38,7 @@
 #include "poke_tool\monsno_def.h"
 #include "savedata\battle_rec.h"
 #include "battle\battle.h"
-
+#include "fieldmap\zone_id.h"
 
 // local includes ---------------------
 #include "msg\msg_debug_fight.h"
@@ -535,12 +535,11 @@ typedef struct {
   u32  fSubway  : 1;
   u32  recMode  : 2;
   u32  recBufID : 2;
-
   u32  backGround      : 4;
   u32  landForm        : 4;
-  u32  timeZone        : 3;
   u32  season          : 2;
   u32  weather         : 3;
+  u32  dmy             : 4;
 
   u32  fMustTuika    : 1;
   u32  fMustToku     : 1;
@@ -556,9 +555,9 @@ typedef struct {
   u8   LimitTimeGameMinute;
   u8   LimitTimeGameSec;
 
-  u16  field_zoneID;
-  u8   field_hour;
-  u8   field_minute;
+  u16  fld_zoneID;
+  u8   fld_hour;
+  u8   fld_minute;
 
 }DEBUG_BTL_SAVEDATA;
 
@@ -641,7 +640,6 @@ static void printItem_RecMode( DEBUG_BTL_WORK* wk, STRBUF* buf );
 static void printItem_RecBuf( DEBUG_BTL_WORK* wk, STRBUF* buf );
 static void printItem_BackGround( DEBUG_BTL_WORK* wk, STRBUF* buf );
 static void printItem_LandForm( DEBUG_BTL_WORK* wk, STRBUF* buf );
-static void printItem_TimeZone( DEBUG_BTL_WORK* wk, STRBUF* buf );
 static void printItem_Season( DEBUG_BTL_WORK* wk, STRBUF* buf );
 static void printItem_Weather( DEBUG_BTL_WORK* wk, STRBUF* buf );
 static void printItem_DirectStr( DEBUG_BTL_WORK* wk, u16 strID, STRBUF* buf );
@@ -1029,9 +1027,12 @@ static void savework_Init( DEBUG_BTL_SAVEDATA* saveData )
 
   saveData->backGround = 0;
   saveData->landForm = 0;
-  saveData->timeZone = TIMEZONE_MORNING;
   saveData->season =  SEASON_SPRING,
   saveData->weather = BTL_WEATHER_NONE;
+
+  saveData->fld_zoneID = 0;
+  saveData->fld_hour = 0;
+  saveData->fld_minute = 0;
 
 
   for(i=0; i<POKEPARA_MAX; ++i){
@@ -1182,14 +1183,21 @@ static void selItem_Increment( DEBUG_BTL_WORK* wk, u16 itemID, int incValue )
   case SELITEM_LAND:
     save->landForm = loopValue( save->landForm + incValue, 0, BATTLE_BG_ATTR_MAX-1 );
     break;
-  case SELITEM_ZONEID:
-    save->timeZone = loopValue( save->timeZone + incValue, 0, TIMEZONE_MAX-1 );
-    break;
   case SELITEM_SEASON:
     save->season = loopValue( save->season + incValue, SEASON_SPRING, SEASON_WINTER );
     break;
   case SELITEM_WEATHER:
     save->weather = loopValue( save->weather + incValue, BTL_WEATHER_NONE, BTL_WEATHER_MAX-1 );
+    break;
+
+  case SELITEM_ZONEID:
+    save->fld_zoneID = loopValue( save->fld_zoneID + incValue, 0, ZONE_ID_MAX-1 );
+    break;
+  case SELITEM_FLD_HOUR:
+    save->fld_hour = loopValue( save->fld_hour + incValue, 0, 23 );
+    break;
+  case SELITEM_FLD_MINUTE:
+    save->fld_minute = loopValue( save->fld_hour + incValue, 0, 59 );
     break;
 
   case SELITEM_MUST_TUIKA:
@@ -1378,9 +1386,11 @@ static void PrintItem( DEBUG_BTL_WORK* wk, u16 itemID, BOOL fSelect )
 
         case SELITEM_BACKGROUND:  printItem_BackGround( wk, wk->strbuf ); break;
         case SELITEM_LAND:        printItem_LandForm( wk, wk->strbuf ); break;
-        case SELITEM_ZONEID:    printItem_TimeZone( wk, wk->strbuf ); break;
         case SELITEM_SEASON:      printItem_Season( wk, wk->strbuf ); break;
         case SELITEM_WEATHER:     printItem_Weather( wk, wk->strbuf ); break;
+        case SELITEM_ZONEID:      printItem_Number( wk, wk->saveData.fld_zoneID, wk->strbuf ); break;
+        case SELITEM_FLD_HOUR:    printItem_Number( wk, wk->saveData.fld_hour,   wk->strbuf ); break;
+        case SELITEM_FLD_MINUTE:  printItem_Number( wk, wk->saveData.fld_minute, wk->strbuf ); break;
 
         case SELITEM_MUST_TUIKA:    printItem_Flag( wk, wk->saveData.fMustTuika,    wk->strbuf ); break;
         case SELITEM_MUST_TOKU:     printItem_Flag( wk, wk->saveData.fMustToku,     wk->strbuf ); break;
@@ -1454,10 +1464,6 @@ static void printItem_BackGround( DEBUG_BTL_WORK* wk, STRBUF* buf )
 static void printItem_LandForm( DEBUG_BTL_WORK* wk, STRBUF* buf )
 {
   GFL_MSG_GetString( wk->mm, DBGF_LAND_00+wk->saveData.landForm, buf );
-}
-static void printItem_TimeZone( DEBUG_BTL_WORK* wk, STRBUF* buf )
-{
-  GFL_MSG_GetString( wk->mm, DBGF_TIMEZONE_0+wk->saveData.timeZone, buf );
 }
 static void printItem_Season( DEBUG_BTL_WORK* wk, STRBUF* buf )
 {
@@ -1566,7 +1572,7 @@ static BOOL mainProc_ChangePage( DEBUG_BTL_WORK* wk, int* seq )
 //----------------------------------------------------------------------------------
 static BOOL mainProc_Root( DEBUG_BTL_WORK* wk, int* seq )
 {
-  u16 key = GFL_UI_KEY_GetTrg();
+  u16 key = GFL_UI_KEY_GetRepeat();
   if( key & PAD_PLUS_KEY_MASK )
   {
     static const struct {
@@ -2166,9 +2172,9 @@ static void setupFieldSituation( BTL_FIELD_SITUATION* sit, const DEBUG_BTL_SAVED
   sit->bgAttr   = save->landForm;
   sit->season   = save->season;
   sit->weather  = save->weather;
-  sit->zoneID   = 0;
-  sit->hour     = 12;
-  sit->minute   = 0;
+  sit->zoneID   = save->fld_zoneID;
+  sit->hour     = save->fld_hour;
+  sit->minute   = save->fld_minute;
 }
 
 //static void Record_SaveParty_Start( DEBUG_BTL_WORK* wk,
