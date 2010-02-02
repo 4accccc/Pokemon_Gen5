@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2010-01-15T13:31:08"/>
+	<create user="taya" host="W00146" date="2010-02-02T16:24:23"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1257,7 +1257,15 @@
 		<comment>道具○○○ジュエル発動</comment>
 		<language name="JPN" width="216">[1:09:どうぐ名:0]は　[1:07:わざ名:1]の
 いりょくを　つよめた！</language>
-		<language name="JPN_KANJI" width="216"></language>
+		<language name="JPN_KANJI" width="216">[1:09:どうぐ名:0]は　[1:07:わざ名:1]の
+威力を　強めた！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_BattleTimeOver">
+		<language name="JPN" width="216">せいげんじかんが　なくなりました！
+たいせんを　しゅうりょう　します！</language>
+		<language name="JPN_KANJI" width="216">制限時間が　無くなりました！
+対戦を　終了します！</language>
 	</row>
 
 	<flowchart-group-list>
