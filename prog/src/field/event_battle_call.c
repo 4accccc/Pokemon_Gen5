@@ -186,6 +186,9 @@ static GFL_PROC_RESULT CommBattleCallProc_Main(  GFL_PROC *proc, int *seq, void*
     }
     break;
   case SEQ_BATTLE_INIT:
+    BattleRec_Init( GFL_HEAPID_APP );                                // ˜^‰æ
+    BTL_SETUP_AllocRecBuffer( bcw->btl_setup_prm, GFL_HEAPID_APP );  // ˜^‰æ
+
 //  GMEVENT_CallEvent(event, EVENT_FSND_PushPlayNextBGM(gsys, bcw->btl_setup_prm->musicDefault, FSND_FADE_SHORT, FSND_FADE_NONE)); 
     GFL_PROC_LOCAL_CallProc(work->procsys_up, NO_OVERLAY_ID, &BtlProcData, bcw->btl_setup_prm);
     (*seq) = SEQ_BATTLE_WAIT;
@@ -198,6 +201,11 @@ static GFL_PROC_RESULT CommBattleCallProc_Main(  GFL_PROC *proc, int *seq, void*
   case SEQ_BATTLE_END:
     OS_TPrintf("ƒoƒgƒ‹Š®—¹\n");
     GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle ) );
+
+    BattleRec_LoadToolModule();                       // ˜^‰æ
+    BattleRec_StoreSetupParam( bcw->btl_setup_prm );  // ˜^‰æ
+    BattleRec_UnloadToolModule();                     // ˜^‰æ
+
     (*seq) = SEQ_CALL_END_DEMO;
     break;
   case SEQ_CALL_END_DEMO:
@@ -268,6 +276,8 @@ static GFL_PROC_RESULT CommBattleCallProc_Main(  GFL_PROC *proc, int *seq, void*
     break;
   case SEQ_BGM_POP:
     if ( up_status != GFL_PROC_MAIN_VALID){
+      BattleRec_Exit();  // ˜^‰æ
+
       (*seq) = SEQ_END;
     }
     break;
