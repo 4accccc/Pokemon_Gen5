@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-02T17:56:07"/>
+	<create user="matsumiya" host="W00224" date="2010-02-02T15:31:39"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="213" top="121" right="911" bottom="741" maximized="no" rayout="Vertical2">
+	<dialog left="1462" top="375" right="2160" bottom="995" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="523"/>
@@ -292,17 +292,20 @@
 	</lock>
 
 
-	<row id="msg_c02r0201_musician_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
-		<comment>♂
-・仮メッセージ</comment>
+	<row id="msg_c02r0201_musician_01">
+		<comment>♂</comment>
 		<attribute name="キャラ指定">MUSICAN
 ミュージシャン</attribute>
 		<language name="JPN" width="256">まいにち　ギターを　ひいても
-ポケモンしょうぶを　くりかえしても[BE:00:ページ切り替え（行送り）]
-まだ　うまくなれるって　おもうよ</language>
+まだ　うまくなれるって　おもうよ▼
+ポケモンしょうぶも　おんなじ！
+どれだけ　たたかっても▽
+まだ　つよくなれるって　おもうね</language>
 		<language name="JPN_KANJI" width="256">毎日毎日　ギターを弾いても
-ポケモン勝負を　繰り返しても[BE:00:ページ切り替え（行送り）]
-まだ　うまくなれるって　思うよ</language>
+まだ　うまくなれるって　思うよ▼
+ポケモン勝負も　おんなじ！
+どれだけ　戦っても▽
+まだ　強くなれるって　思うね</language>
 	</row>
 
 	<row id="msg_c02r0201_babyboy1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
