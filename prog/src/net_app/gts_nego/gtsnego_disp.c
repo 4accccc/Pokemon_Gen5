@@ -426,7 +426,7 @@ static void _SetArrow(GTSNEGO_DISP_WORK* pWork,int x,int y,BOOL bRight)
 
       cellInitData.pos_x = x;
       cellInitData.pos_y = y;
-      cellInitData.anmseq = bRight ? 8 :  6;
+      cellInitData.anmseq = bRight ? 2 :  0;
       cellInitData.softpri = 0;
       cellInitData.bgpri = 1;
       pWork->curIcon[i] = GFL_CLACT_WK_Create( pWork->cellUnit ,
