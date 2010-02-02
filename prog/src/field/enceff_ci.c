@@ -27,13 +27,6 @@ typedef struct
 static GMEVENT *CreateEffCommon(  GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const int inType );
 static GMEVENT_RESULT ev_encEffectFunc( GMEVENT *event, int *seq, void *wk );
 
-GMEVENT *ENCEFF_CI_Create1(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork)
-{
-  GMEVENT *event;
-  event = CreateEffCommon( gsys, fieldWork, 0 );
-  return( event );
-}
-
 //--------------------------------------------------------------
 /**
  * ÉCÉxÉìÉgçÏê¨
