@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-02T12:52:09"/>
+	<create user="matsumiya" host="W00224" date="2010-02-02T19:24:55"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="87" top="134" right="780" bottom="745" maximized="no" rayout="Vertical2">
+	<dialog left="1495" top="247" right="2188" bottom="858" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="788" top="101" right="1261" bottom="499" visible="yes"/>
 		<band id="0" index="1" style="0000" width="518"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="531"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="685"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -298,9 +298,9 @@
 次のメッセージ表示</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
 		<language name="JPN" width="256">チェレン『はかせ
-みんな　そろったよ[BE:01:ページ切り替え（クリア）]</language>
+みんな　そろいましたよ[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">チェレン『博士
-みんな　そろったよ[BE:01:ページ切り替え（クリア）]</language>
+みんな　そろいましたよ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_r01_hakase2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -400,19 +400,19 @@
 　次のmsg_r01_black_03表示</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
 		<language name="JPN" width="256">チェレン『いいたいこと　いったら
-いっちゃったぜ　はかせ……[BE:01:ページ切り替え（クリア）]</language>
+いっちゃったね　はかせ……[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">チェレン『いいたいこと　いったら
-行っちゃったぜ　博士……[BE:01:ページ切り替え（クリア）]</language>
+行っちゃったね　博士……[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_r01_black_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・続けてmsg_r01_white_01表示</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">それじゃ　オレたちも
-カラクサタウンに　むかうか[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">それじゃ　オレたちも
-カラクサタウンに　向かうか[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">それじゃ　ぼくたちも
+カラクサタウンに　むかおう[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">それじゃ　ぼくたちも
+カラクサタウンに　向かおう[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_r01_white_01">
