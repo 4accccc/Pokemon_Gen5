@@ -91,7 +91,9 @@ typedef enum {
 
   BTL_WEATHER_MAX,
 
-}BtlWeather;
+}BtlWeather_tag;
+
+typedef u8 BtlWeather;
 
 //--------------------------------------------------------------
 /**
@@ -219,7 +221,7 @@ typedef struct {
   COMM_PLAYER_SUPPORT*  commSupport;  ///< 通信プレイヤーサポート
 
   // 制限時間設定
-  u16         LimitTimeGame;        ///< 試合制限時間（分）         [ 0 = 無制限 ]
+  u16         LimitTimeGame;        ///< 試合制限時間（秒）         [ 0 = 無制限 ]
   u16         LimitTimeCommand;     ///< コマンド選択制限時間（秒） [ 0 = 無制限 ]
 
   // デバッグ系
