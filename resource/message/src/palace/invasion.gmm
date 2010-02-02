@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsuda" host="W00142" date="2010-01-26T12:31:58"/>
+	<create user="matsuda" host="W00142" date="2010-02-02T17:04:13"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -638,6 +638,12 @@
 		<language name="JPN_KANJI" width="256">いま　[1:00:トレーナー名:0]の　パレスにいます</language>
 	</row>
 
+	<row id="msg_invasion_subdisp_000" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>下画面：参加ボタン</comment>
+		<language name="JPN" width="256">さんか</language>
+		<language name="JPN_KANJI" width="256">さんか</language>
+	</row>
+
 	<row id="msg_invasion_test09_00">
 		<comment>通信相手不在時</comment>
 		<language name="JPN" width="256">だれとも　つながっていないので
@@ -771,6 +777,17 @@
 	<row id="msg_invasion_mission_sys004" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<language name="JPN" width="256">ミッションせいこう！</language>
 		<language name="JPN_KANJI" width="256">ミッションせいこう！</language>
+	</row>
+
+	<row id="msg_invasion_mission_sys005" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>ミッションエントリー後、開始までの待ち</comment>
+		<language name="JPN" width="256">はじまるまで　おまちください</language>
+		<language name="JPN_KANJI" width="256">はじまるまで　おまちください</language>
+	</row>
+
+	<row id="msg_invasion_mission_sys006" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">ミッション　スタート！</language>
+		<language name="JPN_KANJI" width="256">ミッション　スタート！</language>
 	</row>
 
 	<row id="msg_invasion_mission000" back-color="#ffff80,,,,,,,,,,,,,,,,,">

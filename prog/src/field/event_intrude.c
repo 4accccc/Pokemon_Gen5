@@ -103,11 +103,15 @@ GMEVENT * EVENT_Disguise(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork,
 	dis_wk->heapID = heap_id;
 	dis_wk->fieldWork = fieldWork;
 	dis_wk->mdata = *mdata;
+#if 0
 	if(mdata->accept_netid != GAMEDATA_GetIntrudeMyID(gamedata)){
     //受注したのが自分で無いなら、まずミッション内容を表示
     dis_wk->mission_view = TRUE;
   }
-  
+#else //誰でも表示に変更　2010.02.01(月)
+  dis_wk->mission_view = TRUE;
+#endif
+
   IntrudeEventPrint_SetupFieldMsg(&dis_wk->iem, gsys);
 
 	//侵入システムのアクションステータスを更新

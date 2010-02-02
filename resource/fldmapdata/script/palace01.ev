@@ -85,4 +85,10 @@ EVENT_START ev_palace01_monolith
   _FIELD_OPEN()
   _MAP_FADE_BLACK_IN()
   _MAP_FADE_END_CHECK()
+  
+  //モノリス画面を抜けた時にミッションエントリーしていたならば、待機イベント呼び出し
+  _GET_MISSION_ENTRY( SCWK_ANSWER )
+	IF $SCWK_ANSWER == TRUE THEN
+	  _MISSION_START_WAIT_EVENT()
+  ENDIF
 EVENT_END

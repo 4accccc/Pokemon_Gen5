@@ -6322,6 +6322,33 @@
   .short  EV_SEQ_PALACE_IN_DISGUISE
   .endm
 
+//--------------------------------------------------------------
+/**
+ *  ミッションにエントリーしているか取得
+ *  @param ret_wk タイプ格納先ワーク
+ * 
+ * TRUE:エントリーしている　FALSE:エントリーしていない
+ */
+//--------------------------------------------------------------
+#define _GET_MISSION_ENTRY( ret_wk ) \
+  _ASM_GET_MISSION_ENTRY  ret_wk
+
+  .macro  _ASM_GET_MISSION_ENTRY  ret_wk
+  .short  EV_SEQ_GET_MISSION_ENTRY
+  .short  \ret_wk
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * 侵入コマンド　ミッションエントリー後、開始までの待ちイベント
+ */
+//--------------------------------------------------------------
+#define _MISSION_START_WAIT_EVENT() _ASM_MISSION_START_WAIT_EVENT
+
+  .macro  _ASM_MISSION_START_WAIT_EVENT
+  .short  EV_SEQ_MISSION_START_WAIT_EVENT
+  .endm
+
 //======================================================================
 //
 //

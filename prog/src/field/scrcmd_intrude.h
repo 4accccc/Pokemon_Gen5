@@ -25,6 +25,11 @@ extern VMCMD_RESULT EvCmdSymbolPokeSet( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdIntrudeMissionChoiceListReq( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdGetDisguiseCode( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdPalaceInDisguise( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdGetMissionEntry( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdIntrudeMissionStartWait( VMHANDLE *core, void *wk );
+
+//-- イベント単体抜き出し
+extern GMEVENT * EVENT_Intrude_MissionStartWait(GAMESYS_WORK * gsys);
 
 
 #endif	/* __ASM_NO_DEF_ */

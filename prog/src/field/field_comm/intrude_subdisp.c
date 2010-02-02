@@ -98,7 +98,7 @@ enum{
 };
 
 ///BMPOAMで使用するアクター数
-#define INTSUB_ACTOR_BMPOAM_NUM   (16)
+#define INTSUB_ACTOR_BMPOAM_NUM   (16 + 2)
 
 ///OBJパレットINDEX
 enum{
@@ -143,6 +143,7 @@ enum{
   SOFTPRI_POINT_NUM = 10,
   SOFTPRI_INFOMSG = 8,
   SOFTPRI_ENTRY_BUTTON = 5,
+  SOFTPRI_ENTRY_BUTTON_MSG = 4,
 };
 ///アクター共通BGプライオリティ
 #define BGPRI_ACTOR_COMMON      (2)
@@ -204,6 +205,11 @@ enum{
   INFOMSG_BMP_SIZE_Y = 4,   //キャラ単位
 };
 
+enum{
+  ENTRYMSG_BMP_SIZE_X = 6,  //キャラ単位
+  ENTRYMSG_BMP_SIZE_Y = 2,   //キャラ単位
+};
+
 //--------------------------------------------------------------
 //  
 //--------------------------------------------------------------
@@ -254,7 +260,9 @@ typedef struct _INTRUDE_SUBDISP{
   GFL_CLWK *act[INTSUB_ACTOR_MAX];
 
   BMPOAM_SYS_PTR bmpoam_sys;
+  GFL_BMP_DATA *entrymsg_bmp;
   GFL_BMP_DATA *infomsg_bmp;
+  BMPOAM_ACT_PTR entrymsg_bmpoam;
   BMPOAM_ACT_PTR infomsg_bmpoam;
   
   u8 my_net_id;
@@ -295,6 +303,7 @@ static void _IntSub_ActorCreate_CursorL(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *h
 static void _IntSub_ActorCreate_LvNum(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *handle);
 static void _IntSub_ActorCreate_PointNum(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *handle);
 static void _IntSub_ActorCreate_EntryButton(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *handle);
+static void _IntSub_Delete_EntryButton(INTRUDE_SUBDISP_PTR intsub);
 static void _IntSub_ActorUpdate_TouchTown(
   INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_PTR intcomm, OCCUPY_INFO *area_occupy);
 static void _IntSub_ActorUpdate_Area(
@@ -340,6 +349,14 @@ enum{
   AREA_POST_WIDTH = AREA_POST_RIGHT - AREA_POST_LEFT, ///<配置座標範囲の幅
   
   AREA_POST_Y = 3*8 + 4,                              ///<配置座標Y
+};
+
+///参加ボタンのアイコン座標
+enum{
+  ENTRY_BUTTON_POS_X = 0x1c*8,        ///<参加ボタンのアイコン座標X
+  ENTRY_BUTTON_POS_Y = 0x10*8,        ///<参加ボタンのアイコン座標Y
+  ENTRY_BUTTON_HITRANGE_HALF_X = 16,  ///<参加ボタンのタッチ判定半径X
+  ENTRY_BUTTON_HITRANGE_HALF_Y = 8,   ///<参加ボタンのタッチ判定半径Y
 };
 
 
@@ -397,6 +414,7 @@ INTRUDE_SUBDISP_PTR INTRUDE_SUBDISP_Init(GAMESYS_WORK *gsys)
 void INTRUDE_SUBDISP_Exit(INTRUDE_SUBDISP_PTR intsub)
 {
   _IntSub_BmpOamDelete(intsub);
+  _IntSub_Delete_EntryButton(intsub);
   _IntSub_ActorDelete(intsub);
   _IntSub_ActorResourceUnload(intsub);
   _IntSub_BmpWinDel(intsub);
@@ -431,6 +449,9 @@ void INTRUDE_SUBDISP_Update(INTRUDE_SUBDISP_PTR intsub)
       && PRINTSYS_QUE_IsExistTarget(intsub->print_que, intsub->infomsg_bmp) == FALSE){
     BmpOam_ActorBmpTrans(intsub->infomsg_bmpoam);
     intsub->infomsg_trans_req = FALSE;
+  }
+  if(PRINTSYS_QUE_IsExistTarget(intsub->print_que, intsub->entrymsg_bmp) == FALSE){
+    BmpOam_ActorBmpTrans(intsub->entrymsg_bmpoam);
   }
   
   area_occupy = _IntSub_GetArreaOccupy(intcomm, intsub);
@@ -984,7 +1005,7 @@ static void _IntSub_ActorCreate_PointNum(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *
 static void _IntSub_ActorCreate_EntryButton(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *handle)
 {
   static const GFL_CLWK_DATA head = {
-  	0x1c*8, 0x10*8,             //X, Y座標
+  	ENTRY_BUTTON_POS_X, ENTRY_BUTTON_POS_Y,             //X, Y座標
   	PALACE_ACT_ANMSEQ_BTN,      //アニメーションシーケンス
   	SOFTPRI_ENTRY_BUTTON,       //ソフトプライオリティ
   	BGPRI_ACTOR_COMMON,         //BGプライオリティ
@@ -994,6 +1015,47 @@ static void _IntSub_ActorCreate_EntryButton(INTRUDE_SUBDISP_PTR intsub, ARCHANDL
     intsub->index_cgr, intsub->index_pltt, intsub->index_cell, 
     &head, CLSYS_DEFREND_SUB, HEAPID_FIELD_SUBSCREEN);
   GFL_CLACT_WK_SetDrawEnable(intsub->act[INTSUB_ACTOR_ENTRY], FALSE);  //表示OFF
+
+  {//「さんか」BMPOAM
+    BMPOAM_ACT_DATA bmpoam_head = {
+      NULL,   //OAMとして表示させるBMPデータへのポインタ
+      ENTRY_BUTTON_POS_X - 16, ENTRY_BUTTON_POS_Y - 8,   //X, Y
+      0,      //適用するパレットのindex(GFL_CLGRP_PLTT_Registerの戻り値)
+      0,      //pal_offset(pltt_indexのパレット内でのオフセット)
+      SOFTPRI_ENTRY_BUTTON_MSG,
+      BGPRI_ACTOR_COMMON,
+      CLSYS_DEFREND_SUB,
+      CLSYS_DRAW_SUB,
+    };
+    STRBUF *entry_str;
+    
+    intsub->entrymsg_bmp = GFL_BMP_Create( 
+      ENTRYMSG_BMP_SIZE_X, ENTRYMSG_BMP_SIZE_Y, GFL_BMP_16_COLOR, HEAPID_FIELD_SUBSCREEN );
+    
+    bmpoam_head.bmp = intsub->entrymsg_bmp;
+    bmpoam_head.pltt_index = intsub->index_pltt_font;
+    intsub->entrymsg_bmpoam = BmpOam_ActorAdd(intsub->bmpoam_sys, &bmpoam_head);
+    BmpOam_ActorSetDrawEnable(intsub->entrymsg_bmpoam, FALSE);
+
+    entry_str = GFL_MSG_CreateString( intsub->msgdata, msg_invasion_subdisp_000 );
+    PRINTSYS_PrintQueColor( intsub->print_que, intsub->entrymsg_bmp, 0, 0, entry_str, 
+      intsub->font_handle, PRINTSYS_MACRO_LSB(15,2,0) );
+    GFL_STR_DeleteBuffer(entry_str);
+  }
+}
+
+//--------------------------------------------------------------
+/**
+ * 「さんか」ボタンの削除
+ *
+ * @param   intsub		
+ */
+//--------------------------------------------------------------
+static void _IntSub_Delete_EntryButton(INTRUDE_SUBDISP_PTR intsub)
+{
+  //アクターはまとめて削除されるので、それ以外のBMPOAM等を削除
+  BmpOam_ActorDel(intsub->entrymsg_bmpoam);
+  GFL_BMP_Delete(intsub->entrymsg_bmp);
 }
 
 //==============================================================================
@@ -1210,9 +1272,11 @@ static void _IntSub_ActorUpdate_EntryButton(INTRUDE_SUBDISP_PTR intsub, INTRUDE_
   case MISSION_STATUS_READY:
   case MISSION_STATUS_EXE:
     GFL_CLACT_WK_SetDrawEnable(intsub->act[INTSUB_ACTOR_ENTRY], FALSE);
+    BmpOam_ActorSetDrawEnable(intsub->entrymsg_bmpoam, FALSE);
     break;
   case MISSION_STATUS_NOT_ENTRY:
     GFL_CLACT_WK_SetDrawEnable(intsub->act[INTSUB_ACTOR_ENTRY], TRUE);
+    BmpOam_ActorSetDrawEnable(intsub->entrymsg_bmpoam, TRUE);
     break;
   default:
     GF_ASSERT(0);
@@ -1584,6 +1648,16 @@ static void _IntSub_TouchUpdate(INTRUDE_COMM_SYS_PTR intcomm, INTRUDE_SUBDISP_PT
     Intrude_SetWarpTown(game_comm, PALACE_TOWN_DATA_PALACE);
     FIELD_SUBSCREEN_SetAction(subscreen, FIELD_SUBSCREEN_ACTION_INTRUDE_TOWN_WARP);
     return;
+  }
+  
+  ///参加ボタンタッチ判定
+  if(MISSION_FIELD_CheckStatus(&intcomm->mission) == MISSION_STATUS_NOT_ENTRY){
+    _SetRect(ENTRY_BUTTON_POS_X, ENTRY_BUTTON_POS_Y, 
+      ENTRY_BUTTON_HITRANGE_HALF_X, ENTRY_BUTTON_HITRANGE_HALF_Y, &rect);
+    if(_CheckRectHit(x, y, &rect) == TRUE){
+      MISSION_SetMissionEntry(&intcomm->mission);
+      FIELD_SUBSCREEN_SetAction(subscreen, FIELD_SUBSCREEN_ACTION_INTRUDE_MISSION_ENTRY);
+    }
   }
   
 #if 0

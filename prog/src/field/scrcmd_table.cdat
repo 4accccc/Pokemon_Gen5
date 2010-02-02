@@ -749,8 +749,9 @@
   NO_CMD()
   NO_CMD()
 
-  NO_CMD()
-  NO_CMD()
+  //êNì¸ä÷òAÇªÇÃÇQ
+  DEF_CMD( EvCmdGetMissionEntry, EV_SEQ_GET_MISSION_ENTRY )
+  DEF_CMD( EvCmdIntrudeMissionStartWait, EV_SEQ_MISSION_START_WAIT_EVENT )
   NO_CMD()
   NO_CMD()
 

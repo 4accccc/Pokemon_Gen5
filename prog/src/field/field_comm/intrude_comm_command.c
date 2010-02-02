@@ -1011,11 +1011,13 @@ static void _IntrudeRecv_MissionData(const int netID, const int size, const void
   GAMEDATA *gamedata = GameCommSys_GetGameData(intcomm->game_comm);
   ZONEID zone_id = PLAYERWORK_getZoneID(GAMEDATA_GetMyPlayerWork(gamedata));
   
+#if 0 //エントリー式にしたため、表でも受け取るようにした　2010.02.02(火)
   if(ZONEDATA_IsPalaceField(zone_id) == FALSE && ZONEDATA_IsPalace(zone_id) == FALSE){
     OS_TPrintf("ミッション受信：表フィールドにいるため、受け取らない\n");
     return;
   }
-  
+#endif
+
   new_mission = MISSION_SetMissionData(&intcomm->mission, mdata);
   if(new_mission == TRUE){  //連続受信で上書きされないように直接代入はしない
     intcomm->new_mission_recv = TRUE;

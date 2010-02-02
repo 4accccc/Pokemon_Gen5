@@ -99,6 +99,8 @@
 
 #include "event_intrude.h"
 #include "field_comm/intrude_work.h"
+#include "scrcmd.h"
+#include "scrcmd_intrude.h"
 
 #ifdef PM_DEBUG
 extern BOOL DebugBGInitEnd;    //BG初期化監視フラグ             宣言元　fieldmap.c
@@ -407,11 +409,6 @@ static GMEVENT * FIELD_EVENT_CheckNormal(
     u32 talk_netid;
     
     if(GameCommSys_BootCheck(game_comm) == GAME_COMM_NO_INVASION && intcomm != NULL){
-      //新規ミッションが発動していないかチェック
-      if(Intrude_GetNewMissionRecvFlag(intcomm) == TRUE 
-          && MISSION_GetRecvData(&intcomm->mission) != NULL){
-        return EVENT_Disguise(gsys, fieldWork, intcomm, req.heapID);
-      }
       //話しかけられていないかチェック
       if(IntrudeField_CheckTalkedTo(intcomm, &talk_netid) == TRUE){
         FIELD_PLAYER_GRID_ForceStop( req.field_player );
@@ -2118,8 +2115,8 @@ static GMEVENT * checkSubScreenEvent(
       event = EVENT_IntrudePlayerWarp(gsys, fieldWork, Intrude_GetWarpPlayerNetID(game_comm));
     }
     break;
-  case FIELD_SUBSCREEN_ACTION_INTRUDE_MISSION_PUT:
-    event = EVENT_IntrudeMissionPut(gsys, fieldWork, FIELDMAP_GetHeapID(fieldWork));
+  case FIELD_SUBSCREEN_ACTION_INTRUDE_MISSION_ENTRY:
+    event = EVENT_Intrude_MissionStartWait(gsys);
     break;
   
   case FIELD_SUBSCREEN_ACTION_CHANGE_SCREEN_BEACON_VIEW:
