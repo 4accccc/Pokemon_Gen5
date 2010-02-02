@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-02T14:43:29"/>
+	<create user="matsumiya" host="W00224" date="2010-02-02T22:03:09"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="15" top="236" right="720" bottom="856" maximized="no" rayout="Vertical2">
+	<dialog left="1458" top="270" right="2163" bottom="890" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -292,34 +292,34 @@
 	</lock>
 
 
-	<row id="msg_d05_workman_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_d05_workman_01">
 		<comment>♂
 ・冷凍コンテナの出入り口前に配置</comment>
 		<attribute name="キャラ指定">WORKMAN</attribute>
-		<language name="JPN" width="256">ここ？[BE:01:ページ切り替え（クリア）]
-れいとうコンテナ　だーよ[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">ここ？▼
+れいとうコンテナ　だーよ▼
 なかに　さぎょういん　とか
 やせいの　ポケモンが　おるだーよ！</language>
-		<language name="JPN_KANJI" width="256">ここ？[BE:01:ページ切り替え（クリア）]
-冷凍コンテナ　だーよ[BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">ここ？▼
+冷凍コンテナ　だーよ▼
 なかに　さぎょういん　とか
 野生のポケモンが　おるだーよ！</language>
 	</row>
 
-	<row id="msg_d05_workman_02" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_d05_workman_02">
 		<comment>♂
 ・black_01表示後に話しかけたとき
 ・コンテナ内のプラズマ団に勝利するとここから削除</comment>
 		<attribute name="キャラ指定">WORKMAN</attribute>
 		<language name="JPN" width="256">プラズマだんを　さがさせているのも
-なんだかんだで　おまえらのこと[BE:00:ページ切り替え（行送り）]
+なんだかんだで　おまえらのこと▽
 ヤーコンさん　ひょうか　してるだーよ</language>
 		<language name="JPN_KANJI" width="256">プラズマ団を　探させているのも
-なんだかんだで　おまえらのこと[BE:00:ページ切り替え（行送り）]
+なんだかんだで　おまえらのこと▽
 ヤーコンさん　評価してるだーよ</language>
 	</row>
 
-	<row id="msg_d05_black_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_d05_black_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・pos（詳細未定）を踏むと
 　主人公に隣接してメッセージ表示
@@ -327,33 +327,35 @@
 ・ライバルの動作モデルが消えると主人公操作可能に
 ・0＝主人公名前</comment>
 		<attribute name="キャラ指定">友達♂（ライバル）</attribute>
-		<language name="JPN" width="256">チェレン『なあ　[1:00:トレーナー名:0]！[BE:01:ページ切り替え（クリア）]
-まさか　とは　おもうけどさ
-ひょっとして　この　なかに[BE:00:ページ切り替え（行送り）]
-プラズマだん　いるんじゃねえの？[BE:01:ページ切り替え（クリア）]
-……さむいの　イヤだけど　しらべるか[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">チェレン『なあ　[1:00:トレーナー名:0]！[BE:01:ページ切り替え（クリア）]
-まさか　とは　思うけどさ
-ひょっとして　この中に[BE:00:ページ切り替え（行送り）]
-プラズマ団　いるんじゃねえの？[BE:01:ページ切り替え（クリア）]
-……寒いの　イヤだけど　調べるか[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">チェレン『ねえ　[1:00:トレーナー名:0]▼
+まさか　とは　おもうんだけど
+ひょっとして　このなかに▽
+プラズマだん　いるんじゃない？▼
+……さむいのは　にがて　だけど
+これは　しらべないと　いけないね▼</language>
+		<language name="JPN_KANJI" width="256">チェレン『ねえ　[1:00:トレーナー名:0]▼
+まさか　とは　思うんだけど
+ひょっとして　この中に▽
+プラズマ団　いるんじゃない？▼
+……寒いのは　苦手だけど
+これは　調べないと　いけないね▼</language>
 	</row>
 
-	<row id="msg_d05_black_02" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_d05_black_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・d05r0101内でプラズマ団に勝利後
 　画面暗転でここに復帰するとメッセージ表示
 ・表示後、ライバルだけc05方面に移動
 　画面外に消えると操作可能に</comment>
 		<attribute name="キャラ指定">友達♂（ライバル）</attribute>
-		<language name="JPN" width="256">チェレン『さぎょういんの　おっさん
-あわてて　ジムに　もどったぜ[BE:01:ページ切り替え（クリア）]
-そうとうに　やばいんだろーな
-さ　オレたちも　いくぞ！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">チェレン『さっきの　おっさん
-あわてて　ジムに　戻ったぜ[BE:01:ページ切り替え（クリア）]
-相当に　やばいんだろーな
-さ　オレたちも　行くぞ！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">チェレン『さっきの　おじさん
+あわてて　ジムに　もどったね▼
+そうとうに　よくない　かんじだね
+さあ　ぼくたちも　いこう！▼</language>
+		<language name="JPN_KANJI" width="256">チェレン『さっきの　おじさん
+あわてて　ジムに　戻ったね▼
+相当に　よくない　感じだね
+さあ　ぼくたちも　行こう！▼</language>
 	</row>
 
 	<flowchart-group-list>
