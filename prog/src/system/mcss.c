@@ -1431,7 +1431,7 @@ static	void	MCSS_LoadResource( MCSS_SYS_WORK *mcss_sys, int count, const MCSS_AD
 	mcss->mcss_ncec = GFL_ARC_LoadDataAlloc( maw->arcID, maw->ncec, mcss->heapID );
   { 
 	  //静止アニメーション時にパターンアニメするノードデータ（独自フォーマット）
-    u32 size = 4 + sizeof( MCSS_NCEC ) * mcss->mcss_ncec->cells;
+    u32 size = 8 + sizeof( MCSS_NCEC ) * mcss->mcss_ncec->cells;
     mcss->mcss_ncen = ( MCSS_NCEN_WORK *)(mcss->mcss_ncec);
     mcss->mcss_ncen += ( size / sizeof( MCSS_NCEN_WORK ) );
   }
@@ -2017,7 +2017,7 @@ static	void	MCSS_LoadResourceDebug( MCSS_SYS_WORK *mcss_sys, int count, const MC
 	mcss->mcss_ncec = madw->ncec;
   { 
 	  //静止アニメーション時にパターンアニメするノードデータ（独自フォーマット）
-    u32 size = 4 + sizeof( MCSS_NCEC ) * mcss->mcss_ncec->cells;
+    u32 size = 8 + sizeof( MCSS_NCEC ) * mcss->mcss_ncec->cells;
     mcss->mcss_ncen = ( MCSS_NCEN_WORK *)(mcss->mcss_ncec);
     mcss->mcss_ncen += ( size / sizeof( MCSS_NCEN_WORK ) );
   }
