@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-10T21:36:55"/>
+	<create user="matsumiya" host="W00224" date="2010-02-02T14:50:19"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -297,10 +297,10 @@
 ・pos（詳細未定：倒れた柱の近く）を踏むと
 　主人公を見ないままメッセージ表示
 ・続けてblack_02</comment>
-		<attribute name="キャラ指定">ライバル</attribute>
-		<language name="JPN" width="256">ブラッカー『なにが　あったんだろうな
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">チェレン『なにが　あったんだろうな
 あんな　はしらが　たおれているなんて[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ブラッカー『なにが　あったんだろうな
+		<language name="JPN_KANJI" width="256">チェレン『なにが　あったんだろうな
 あんな　柱が　倒れているなんて[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
@@ -309,7 +309,7 @@
 ・主人公と向き合ってメッセージ表示
 ・表示後、階段方向へ移動
 　画面外に消えると、主人公操作可能に</comment>
-		<attribute name="キャラ指定">ライバル</attribute>
+		<attribute name="キャラ指定">友達♂</attribute>
 		<language name="JPN" width="256">プラズマだんは　うえ　だな
 いそぐぞ！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">プラズマ団は　上だな

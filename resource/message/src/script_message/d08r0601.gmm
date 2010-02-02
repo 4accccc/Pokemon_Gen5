@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-10T21:35:31"/>
+	<create user="matsumiya" host="W00224" date="2010-02-02T14:50:38"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -299,10 +299,10 @@
 　→
 ・続けてeader7_01</comment>
 		<attribute name="キャラ指定">ライバル</attribute>
-		<language name="JPN" width="256">ブラッカー『……まってたぜ[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">チェレン『……まってたぜ[BE:01:ページ切り替え（クリア）]
 オレも　ハチクさんも
 ざこの　あいてで　ヘトヘトなんだよ[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ブラッカー『……待ってたぜ[BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">チェレン『……待ってたぜ[BE:01:ページ切り替え（クリア）]
 オレも　ハチクさんも
 雑魚の　相手で　ヘトヘトなんだよ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
@@ -327,11 +327,11 @@
 ・応じてプラズマ団も移動して
 　先のフロアに進めるように</comment>
 		<attribute name="キャラ指定">ライバル</attribute>
-		<language name="JPN" width="256">ブラッカー『でだ！　いまから
+		<language name="JPN" width="256">チェレン『でだ！　いまから
 ハチクさんと　みちを　ひらくからさ[BE:01:ページ切り替え（クリア）]
 [1:00:トレーナー名:0]！
 おまえが　さきに　すすめ！！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ブラッカー『でだ！　今から
+		<language name="JPN_KANJI" width="256">チェレン『でだ！　今から
 ハチクさんと　道を　開くからさ[BE:01:ページ切り替え（クリア）]
 [1:00:トレーナー名:0]！
 おまえが　先に　進め！！[BE:01:ページ切り替え（クリア）]</language>
@@ -341,9 +341,9 @@
 		<comment>♂：最上階イベント前
 ・black_02表示後？？終了まで</comment>
 		<attribute name="キャラ指定">ライバル</attribute>
-		<language name="JPN" width="256">ブラッカー『どいつも　こいつも
+		<language name="JPN" width="256">チェレン『どいつも　こいつも
 おんなじ　ポケモンばかり　じゃん！</language>
-		<language name="JPN_KANJI" width="256">ブラッカー『どいつも　こいつも
+		<language name="JPN_KANJI" width="256">チェレン『どいつも　こいつも
 おんなじ　ポケモンばかり　じゃん！</language>
 	</row>
 

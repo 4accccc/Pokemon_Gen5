@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2010-01-13T12:48:41"/>
+	<create user="matsumiya" host="W00224" date="2010-02-02T14:51:17"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -432,8 +432,8 @@
 ・所定のposに到達後、メッセージ表示
 ・続けてleader7_01</comment>
 		<attribute name="キャラ指定">ライバル</attribute>
-		<language name="JPN" width="256">ブラッカー『いま　とびさったのって……▼</language>
-		<language name="JPN_KANJI" width="256">ブラッカー『いま　飛び去ったのって……▼</language>
+		<language name="JPN" width="256">チェレン『いま　とびさったのって……▼</language>
+		<language name="JPN_KANJI" width="256">チェレン『いま　飛び去ったのって……▼</language>
 	</row>
 
 	<row id="msg_d08r0901_leader7_01">
@@ -450,11 +450,11 @@
 ・Ｎが飛び去ったposに到達後、メッセージ表示
 ・続けてleader7_02</comment>
 		<attribute name="キャラ指定">ライバル</attribute>
-		<language name="JPN" width="256">ブラッカー『なんで！
+		<language name="JPN" width="256">チェレン『なんで！
 なんで　Ｎが！▼
 でんせつの　ポケモンを
 めざめさせるんだよ！？▼</language>
-		<language name="JPN_KANJI" width="256">ブラッカー『なんで！
+		<language name="JPN_KANJI" width="256">チェレン『なんで！
 なんで　Ｎが！▼
 伝説の　ポケモンを
 目覚めさせるんだよ！？▼</language>

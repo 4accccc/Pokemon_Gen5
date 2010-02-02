@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-15T22:42:55"/>
+	<create user="matsumiya" host="W00224" date="2010-02-02T14:49:35"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -343,7 +343,7 @@
 　このメッセージ表示
 ・続けてmsg_d08_white_01</comment>
 		<attribute name="キャラ指定">ライバル</attribute>
-		<language name="JPN" width="256">ブラッカー『なあ　[1:00:トレーナー名:0]
+		<language name="JPN" width="256">チェレン『なあ　[1:00:トレーナー名:0]
 ジムリーダーは　どこ？[BE:01:ページ切り替え（クリア）]
 ……　……　……
 ……　……　……[BE:01:ページ切り替え（クリア）]
@@ -351,7 +351,7 @@
 とうのなか　って　わけね[BE:01:ページ切り替え（クリア）]
 プラズマだんか……
 ほうって　おけないよな[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ブラッカー『なあ　[1:00:トレーナー名:0]
+		<language name="JPN_KANJI" width="256">チェレン『なあ　[1:00:トレーナー名:0]
 ジムリーダーは　どこ？[BE:01:ページ切り替え（クリア）]
 ……　……　……
 ……　……　……[BE:01:ページ切り替え（クリア）]
@@ -365,9 +365,9 @@
 		<comment>♀
 ・続けてmsg_d08_black_02</comment>
 		<attribute name="キャラ指定">サポート</attribute>
-		<language name="JPN" width="256">ホワイティ『……ブラッカー
+		<language name="JPN" width="256">ベル『……チェレン
 だいじょうぶ　なの？[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ホワイティ『……ブラッカー
+		<language name="JPN_KANJI" width="256">ベル『……チェレン
 だいじょうぶ　なの？[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
@@ -376,11 +376,11 @@
 ・メッセージ表示後、塔に入るように移動
 　画面外に消えると、msg_d08_hakase1_03表示</comment>
 		<attribute name="キャラ指定">ライバル</attribute>
-		<language name="JPN" width="256">ブラッカー『ダイジョーブだろ
+		<language name="JPN" width="256">チェレン『ダイジョーブだろ
 コイツも　いっしょ　だし[BE:01:ページ切り替え（クリア）]
 な　[1:00:トレーナー名:0]！
 じゃ　オレ　いくわ[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ブラッカー『ダイジョーブだろ
+		<language name="JPN_KANJI" width="256">チェレン『ダイジョーブだろ
 コイツも　一緒だし[BE:01:ページ切り替え（クリア）]
 な　[1:00:トレーナー名:0]！
 じゃ　オレ　行くわ[BE:01:ページ切り替え（クリア）]</language>
@@ -399,13 +399,13 @@
 		<comment>♀
 ・続けてmsg_d08_hakase1_04</comment>
 		<attribute name="キャラ指定">サポート</attribute>
-		<language name="JPN" width="256">ホワイティ『あたしは　ホワイティで
-さっきのは　ブラッカー　です！[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">ベル『あたしは　ベルで
+さっきのは　チェレン　です！[BE:01:ページ切り替え（クリア）]
 [1:00:トレーナー名:0]と　いっしょに
 ポケモンずかん　かんせいのため[BE:00:ページ切り替え（行送り）]
 イッシュちほうを　たび　してるの！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ホワイティ『あたしは　ホワイティで
-さっきのは　ブラッカー　です！[BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">ベル『あたしは　ベルで
+さっきのは　チェレン　です！[BE:01:ページ切り替え（クリア）]
 [1:00:トレーナー名:0]と　一緒に
 ポケモン図鑑　完成のため[BE:00:ページ切り替え（行送り）]
 イッシュ地方を　旅してるの！[BE:01:ページ切り替え（クリア）]</language>
@@ -432,24 +432,24 @@
 ・博士に近づいてからメッセージ表示
 ・続けてmsg_d08_hakase1_05</comment>
 		<attribute name="キャラ指定">サポート</attribute>
-		<language name="JPN" width="256">ホワイティ『おじいちゃん
+		<language name="JPN" width="256">ベル『おじいちゃん
 しんぱい　しないで！[BE:01:ページ切り替え（クリア）]
-ブラッカーは　たよりないけど
+チェレンは　たよりないけど
 [1:00:トレーナー名:0]は　つよいし[BE:00:ページ切り替え（行送り）]
 プラズマだんを　たおしたこと　あるし！[BE:01:ページ切り替え（クリア）]
 なにより　わるいことは
 みのがせないでしょ！[BE:01:ページ切り替え（クリア）]
 じゃあ　[1:00:トレーナー名:0]
-ブラッカーのこと　ヨロシク！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ホワイティ『おじいちゃん
+チェレンのこと　ヨロシク！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ベル『おじいちゃん
 心配しないで！[BE:01:ページ切り替え（クリア）]
-ブラッカーは　頼りないけど
+チェレンは　頼りないけど
 [1:00:トレーナー名:0]は　強いし[BE:00:ページ切り替え（行送り）]
 プラズマだんを　倒したこと　あるし！[BE:01:ページ切り替え（クリア）]
 なにより　悪いことは
 見逃せないでしょ！[BE:01:ページ切り替え（クリア）]
 じゃあ　[1:00:トレーナー名:0]
-ブラッカーのこと　ヨロシク！[BE:01:ページ切り替え（クリア）]</language>
+チェレンのこと　ヨロシク！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_d08_hakase1_05" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -468,10 +468,10 @@
 		<comment>♀
 ・d08r0701イベント終了まで繰り返し</comment>
 		<attribute name="キャラ指定">サポート</attribute>
-		<language name="JPN" width="256">ホワイティ『じゃあ　[1:00:トレーナー名:0]
-ブラッカーのこと　ヨロシク！</language>
-		<language name="JPN_KANJI" width="256">ホワイティ『じゃあ　[1:00:トレーナー名:0]
-ブラッカーのこと　ヨロシク！</language>
+		<language name="JPN" width="256">ベル『じゃあ　[1:00:トレーナー名:0]
+チェレンのこと　ヨロシク！</language>
+		<language name="JPN_KANJI" width="256">ベル『じゃあ　[1:00:トレーナー名:0]
+チェレンのこと　ヨロシク！</language>
 	</row>
 
 	<row id="msg_d08_hakase1_06" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -494,10 +494,10 @@
 		<comment>♂：d08r0701イベント後
 ・続けてmsg_d08_white_05</comment>
 		<attribute name="キャラ指定">ライバル</attribute>
-		<language name="JPN" width="256">ブラッカー『あの　Ｎってヤツ！[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">チェレン『あの　Ｎってヤツ！[BE:01:ページ切り替え（クリア）]
 ドラゴンポケモンの　ちからで
 すべての　ポケモンを　すくうってさ！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ブラッカー『あの　Ｎってヤツ！[BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">チェレン『あの　Ｎってヤツ！[BE:01:ページ切り替え（クリア）]
 ドラゴンポケモンの　力で
 すべての　ポケモンを　救うってさ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
@@ -506,9 +506,9 @@
 		<comment>♀：d08r0701イベント後
 ・続けてmsg_d08_champion_01</comment>
 		<attribute name="キャラ指定">サポート</attribute>
-		<language name="JPN" width="256">ホワイティ『……そんなに
+		<language name="JPN" width="256">ベル『……そんなに
 ドラゴンポケモンって　すごいの？[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ホワイティ『……そんなに
+		<language name="JPN_KANJI" width="256">ベル『……そんなに
 ドラゴンポケモンって　すごいの？[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
@@ -619,10 +619,10 @@
 		<comment>♀：d08r0701イベント後
 ・続けてmsg_d08_champion_04</comment>
 		<attribute name="キャラ指定">サポート</attribute>
-		<language name="JPN" width="256">ホワイティ『……でも　それだと
+		<language name="JPN" width="256">ベル『……でも　それだと
 シンと　ムの　あらそいが[BE:00:ページ切り替え（行送り）]
 さいげん　しちゃうんじゃ……[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ホワイティ『……でも　それだと
+		<language name="JPN_KANJI" width="256">ベル『……でも　それだと
 シンと　ムの　争いが[BE:00:ページ切り替え（行送り）]
 再現しちゃうんじゃ……[BE:01:ページ切り替え（クリア）]</language>
 	</row>
@@ -682,12 +682,12 @@
 ・動作モデルが画面外に消えると
 　続けてmsg_d08_white_07</comment>
 		<attribute name="キャラ指定">ライバル</attribute>
-		<language name="JPN" width="256">ブラッカー『そうだよな
+		<language name="JPN" width="256">チェレン『そうだよな
 オレも　こだいのしろに　いく[BE:01:ページ切り替え（クリア）]
 だって　イヤだもん
 プラズマだんの　いいなり　なんて[BE:01:ページ切り替え（クリア）]
 じいさん　ほら　いそぐぜ！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ブラッカー『そうだよな
+		<language name="JPN_KANJI" width="256">チェレン『そうだよな
 オレも　古代の城に　行く[BE:01:ページ切り替え（クリア）]
 だって　イヤだもん
 プラズマだんの　いいなり　なんて[BE:01:ページ切り替え（クリア）]
@@ -698,7 +698,7 @@
 		<comment>♂：d08r0701イベント後
 ・主人公に近づいてからメッセージ表示</comment>
 		<attribute name="キャラ指定">サポート</attribute>
-		<language name="JPN" width="256">ホワイティ『[1:00:トレーナー名:0]
+		<language name="JPN" width="256">ベル『[1:00:トレーナー名:0]
 たいへんな　ことに　なっちゃったね[BE:01:ページ切り替え（クリア）]
 あたし　なんだか
 こんらん　しちゃって……[BE:01:ページ切り替え（クリア）]
@@ -707,7 +707,7 @@
 ライモンシティから　つながる
 リゾートデザートの　おく……[BE:00:ページ切り替え（行送り）]
 そこが　こだいのしろ　だよ</language>
-		<language name="JPN_KANJI" width="256">ホワイティ『[1:00:トレーナー名:0]
+		<language name="JPN_KANJI" width="256">ベル『[1:00:トレーナー名:0]
 大変な　ことに　なっちゃったね[BE:01:ページ切り替え（クリア）]
 あたし　なんだか
 混乱しちゃって……[BE:01:ページ切り替え（クリア）]
@@ -723,11 +723,11 @@
 ・msg_d08_white_08表示後から繰り返し
 ・d04r0601イベント終了で動作モデルを削除</comment>
 		<attribute name="キャラ指定">サポート</attribute>
-		<language name="JPN" width="256">ホワイティ『[1:00:トレーナー名:0][BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">ベル『[1:00:トレーナー名:0][BE:01:ページ切り替え（クリア）]
 ライモンシティから　つながる
 リゾートデザートの　おく……[BE:00:ページ切り替え（行送り）]
 そこが　こだいのしろ　だよ</language>
-		<language name="JPN_KANJI" width="256">ホワイティ『[1:00:トレーナー名:0][BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">ベル『[1:00:トレーナー名:0][BE:01:ページ切り替え（クリア）]
 ライモンシティから　つながる
 リゾートデザートの　奥……[BE:00:ページ切り替え（行送り）]
 そこが　古代の城　だよ</language>
