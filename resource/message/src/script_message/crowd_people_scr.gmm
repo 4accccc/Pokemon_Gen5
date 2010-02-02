@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2010-01-29T20:05:22"/>
+	<create user="matsumiya" host="W00224" date="2010-02-02T21:59:09"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -327,14 +327,14 @@
 		</language>
 	</columns>
 
-	<dialog left="76" top="61" right="778" bottom="681" maximized="no" rayout="Vertical2">
+	<dialog left="1369" top="347" right="2071" bottom="967" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="527"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="694"/>
 		<band id="3" index="3" style="0000" width="694"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -568,12 +568,12 @@
 	</row>
 
 	<row id="CROWD_NOISE_05">
-		<language name="JPN" width="256">たいへんだあ</language>
-		<language name="JPN_KANJI" width="256">大変だあ</language>
+		<language name="JPN" width="256">たいへんだ</language>
+		<language name="JPN_KANJI" width="256">大変だ</language>
 	</row>
 
 	<row id="CROWD_NOISE_06">
-		<language name="JPN" width="256">ここはどこだ！</language>
+		<language name="JPN" width="256">ここはどこ？</language>
 		<language name="JPN_KANJI" width="256">ここはどこ？</language>
 	</row>
 
@@ -603,8 +603,8 @@
 	</row>
 
 	<row id="CROWD_NOISE_12">
-		<language name="JPN" width="256">どうしようか</language>
-		<language name="JPN_KANJI" width="256">どうしようか</language>
+		<language name="JPN" width="256">どう？</language>
+		<language name="JPN_KANJI" width="256">どう？</language>
 	</row>
 
 	<row id="CROWD_NOISE_13">
@@ -623,13 +623,13 @@
 	</row>
 
 	<row id="CROWD_NOISE_16">
-		<language name="JPN" width="256">どう？</language>
-		<language name="JPN_KANJI" width="256">最近どう？</language>
+		<language name="JPN" width="256">ハイ！</language>
+		<language name="JPN_KANJI" width="256">ハイ！</language>
 	</row>
 
 	<row id="CROWD_NOISE_17">
-		<language name="JPN" width="256">ひらめいた！</language>
-		<language name="JPN_KANJI" width="256">ひらめいた！</language>
+		<language name="JPN" width="256">！！</language>
+		<language name="JPN_KANJI" width="256">！！</language>
 	</row>
 
 	<row id="CROWD_NOISE_18">
@@ -643,8 +643,8 @@
 	</row>
 
 	<row id="CROWD_NOISE_20">
-		<language name="JPN" width="256">あれ　いまの？</language>
-		<language name="JPN_KANJI" width="256">あれ　今の？</language>
+		<language name="JPN" width="256">いまの？</language>
+		<language name="JPN_KANJI" width="256">今の？</language>
 	</row>
 
 	<flowchart-group-list>
