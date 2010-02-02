@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-18T18:06:44"/>
+	<create user="matsumiya" host="W00224" date="2010-02-02T11:36:54"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,7 +307,7 @@
 		</language>
 	</columns>
 
-	<dialog left="0" top="202" right="701" bottom="822" maximized="no" rayout="Vertical2">
+	<dialog left="1528" top="175" right="2229" bottom="795" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="526"/>
@@ -371,7 +371,7 @@
 		<language name="JPN" width="256">どの　カセキを
 ポケモンに　ふくげん　しますか？</language>
 		<language name="JPN_KANJI" width="256">どの　カセキを
-ポケモンに　復元　しますか？</language>
+ポケモンに　復元しますか？</language>
 	</row>
 
 	<row id="msg_kaseki_04">
@@ -394,7 +394,7 @@
 		<attribute name="キャラ指定">助手♀＝化石の復元</attribute>
 		<language name="JPN" width="256">カセキを　ふくげん　しないのですね
 わかりました！</language>
-		<language name="JPN_KANJI" width="256">カセキを　復元　しないのですね
+		<language name="JPN_KANJI" width="256">カセキを　復元しないのですね
 わかりました！</language>
 	</row>
 
