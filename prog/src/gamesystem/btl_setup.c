@@ -120,11 +120,17 @@ POKEPARTY* BATTLE_PARAM_GetPokePartyPointer( BATTLE_SETUP_PARAM* bp, BTL_CLIENT_
 }
 
 /*
- *  @brief  戦闘フィールドシチュエーションデータデフォルト初期化
+ *  @brief  戦闘フィールドシチュエーションデータデフォルト初期化（室内設定・ライトなし）
  */
 void BTL_FIELD_SITUATION_Init( BTL_FIELD_SITUATION* sit )
 {
-  setup_common_situation( sit );
+  sit->bgType = BATTLE_BG_TYPE_ROOM;
+  sit->bgAttr = BATTLE_BG_ATTR_LAWN;
+  sit->weather = BTL_WEATHER_NONE;
+  sit->zoneID = 0;
+  sit->hour   = 0;
+  sit->minute = 0;
+  sit->season = 0;
 }
 
 static void setup_common_situation( BTL_FIELD_SITUATION* sit )
@@ -132,9 +138,12 @@ static void setup_common_situation( BTL_FIELD_SITUATION* sit )
   // @todo 現在は仮作成
   sit->bgType = BATTLE_BG_TYPE_GRASS;
   sit->bgAttr = BATTLE_BG_ATTR_LAWN;
-  sit->timeZone = TIMEZONE_MORNING;
   sit->season = PMSEASON_SPRING;
   sit->weather = BTL_WEATHER_NONE;
+
+  sit->zoneID = 0;
+  sit->hour   = 10;
+  sit->minute = 0;
 }
 
 /*

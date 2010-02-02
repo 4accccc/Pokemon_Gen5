@@ -24,6 +24,7 @@
 #include "savedata/myitem_savedata.h"
 #include "savedata/config.h"
 #include "gamesystem/comm_player_support.h"
+#include "gamesystem/playerwork.h"
 #include "buflen.h"
 
 #include "battle_bg_def.h"  //zonetableコンバータから参照させたいので定義を分離しました by iwasawa
@@ -131,9 +132,15 @@ typedef struct {
   BtlBgType   bgType;
   BtlBgAttr   bgAttr;
   BtlWeather  weather;
-  TIMEZONE              timeZone;
   u8          season;
+
+  // ライト設定用パラメータ
+  ZONEID      zoneID;
+  u8          hour;
+  u8          minute;
+
 }BTL_FIELD_SITUATION;
+
 
 //-----------------------------------------------------------------------------------
 /**

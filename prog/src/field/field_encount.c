@@ -183,7 +183,7 @@ void* FIELD_ENCOUNT_CheckEncount( FIELD_ENCOUNT *enc, ENCOUNT_TYPE enc_type )
 
   if( enc_type != ENC_TYPE_EFFECT ){ //移動ポケモンチェック
     mpd = ENCPOKE_GetMovePokeEncountData( enc->encdata,
-              &fld_spa, FIELDMAP_GetZoneID( enc->fwork ) ); 
+              &fld_spa, FIELDMAP_GetZoneID( enc->fwork ) );
   }
   if( mpd != NULL){
     //バトルパラメータセット
@@ -671,7 +671,7 @@ static void BTL_FIELD_SITUATION_SetFromFieldStatus( BTL_FIELD_SITUATION* sit, GA
     sit->bgAttr = FIELD_BATTLE_GetBattleAttrID(MAPATTR_GetAttrValue(attr));
   }
   //タイムゾーン取得
-  sit->timeZone = GFL_RTC_GetTimeZone();  //@todo EVTIMEからの取得に変更予定
+//  sit->timeZone = GFL_RTC_GetTimeZone();  //@todo EVTIMEからの取得に変更予定
 
   //天候
   sit->weather = btlparam_GetBattleWeather( fieldWork );

@@ -2146,9 +2146,11 @@ static void setupFieldSituation( BTL_FIELD_SITUATION* sit, const DEBUG_BTL_SAVED
 
   sit->bgType   = save->backGround;
   sit->bgAttr   = save->landForm;
-  sit->timeZone = save->timeZone;
   sit->season   = save->season;
   sit->weather  = save->weather;
+  sit->zoneID   = 0;
+  sit->hour     = 12;
+  sit->minute   = 0;
 }
 
 //static void Record_SaveParty_Start( DEBUG_BTL_WORK* wk,
