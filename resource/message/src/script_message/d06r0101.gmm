@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-02T14:44:42"/>
+	<create user="matsumiya" host="W00224" date="2010-02-02T18:17:49"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -359,7 +359,7 @@
 	</lock>
 
 
-	<row id="msg_d06r0101_white_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_d06r0101_white_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀：シーン1
 ・pos（GRIDX=9~11、GRIDZ=48）で発動
 　ｒ06側から登場
@@ -382,7 +382,7 @@
 ビリッビリッ　しびれちゃうんだから！▼</language>
 	</row>
 
-	<row id="msg_d06r0101_white_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_d06r0101_white_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・続けてmsg_d06r0101_hakase2_01</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
@@ -525,7 +525,7 @@
 そう　信じているんだよねー▼</language>
 	</row>
 
-	<row id="msg_d06r0101_white_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_d06r0101_white_04" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・主人公と隣接して（？）</comment>
 		<attribute name="キャラ指定">友達♀</attribute>

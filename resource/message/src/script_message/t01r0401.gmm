@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2010-01-13T13:34:49"/>
+	<create user="matsumiya" host="W00224" date="2010-02-02T19:40:05"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -229,7 +229,7 @@
 	</tag-table>
 
 	<columns>
-		<id position="0" width="195"/>
+		<id position="0" width="152"/>
 		<group default=" 0:デフォルト" position="-1" width="100">
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
@@ -297,9 +297,9 @@
 ・マップに入ると自動で表示
 ・続けてmsg_t01r0401_white_01</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">ブラッカー『ほら！
+		<language name="JPN" width="256">チェレン『ほら！
 はかせが　まってる[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ブラッカー『ほら！
+		<language name="JPN_KANJI" width="256">チェレン『ほら！
 博士が　待ってる[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
@@ -307,8 +307,8 @@
 		<comment>♀
 ・メッセージ表示後、アニメ移動</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
-		<language name="JPN" width="256">ホワイティ『どきどき　するねー[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ホワイティ『どきどき　するねー[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">ベル『どきどき　するねー[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ベル『どきどき　するねー[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_t01r0401_hakase2_01">
@@ -333,10 +333,10 @@
 		<comment>♂
 ・続けてmsg_t01r0401_doctor_jr_02表示</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">ブラッカー『アララギはかせ？[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">チェレン『アララギはかせ？[BE:01:ページ切り替え（クリア）]
 いまさら　そんなこと　しなくても
 なまえぐらい　しってるよ[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ブラッカー『アララギ博士？[BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">チェレン『アララギ博士？[BE:01:ページ切り替え（クリア）]
 いまさら　そんなこと　しなくても
 名前ぐらい　知ってるよ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
@@ -451,16 +451,16 @@
 		<comment>♂
 ・続けてmsg_t01r0401_white_01表示</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">ブラッカー『ポケモンずかん　でしょ[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ブラッカー『ポケモン図鑑　でしょ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">チェレン『ポケモンずかん　でしょ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">チェレン『ポケモン図鑑　でしょ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_t01r0401_white_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・続けてmsg_t01r0401_doctor_jr_08表示</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
-		<language name="JPN" width="256">ホワイティ『ポケモンずかん……？[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ホワイティ『ポケモン図鑑……？[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">ベル『ポケモンずかん……？[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ベル『ポケモン図鑑……？[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_t01r0401_hakase2_08">
@@ -471,13 +471,13 @@
 		<attribute name="キャラ指定">HAKASE2
 博士</attribute>
 		<language name="JPN" width="256">アララギ『すごいすごい！
-さすが　ブラッカー！[BE:01:ページ切り替え（クリア）]
+さすが　チェレン！[BE:01:ページ切り替え（クリア）]
 ゆめは　さいこうの　トレーナーなのも
 すっごく　なっとくね[BE:01:ページ切り替え（クリア）]
 ということで！　あらためて
 せつめいさせて　もらうわね！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">アララギ『すごいすごい！
-さすが　ブラッカー！[BE:01:ページ切り替え（クリア）]
+さすが　チェレン！[BE:01:ページ切り替え（クリア）]
 夢は　最高の　トレーナーなのも
 すっごく　納得ね[BE:01:ページ切り替え（クリア）]
 ということで！　あらためて
@@ -518,12 +518,12 @@
 博士</attribute>
 		<language name="JPN" width="256">では　おききします[BE:01:ページ切り替え（クリア）]
 [1:00:トレーナー名:0]！
-ブラッカー！　ホワイティ！[BE:01:ページ切り替え（クリア）]
+チェレン！　ベル！[BE:01:ページ切り替え（クリア）]
 ポケモンずかんを　かんせいさせるため
 ぼうけんの　たびに　でかけるよね！</language>
 		<language name="JPN_KANJI" width="256">では　お聞きしまーす[BE:01:ページ切り替え（クリア）]
 [1:00:トレーナー名:0]！
-ブラッカー！　ホワイティ！[BE:01:ページ切り替え（クリア）]
+チェレン！　ベル！[BE:01:ページ切り替え（クリア）]
 ポケモン図鑑を　完成させるべく
 冒険の　旅に　でかけるよね！</language>
 	</row>
@@ -592,10 +592,10 @@
 		<comment>♀
 ・続けてmsg_t01r0401_black_03</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
-		<language name="JPN" width="256">ホワイティ『あっ　あたしたち
+		<language name="JPN" width="256">ベル『あっ　あたしたち
 はかせに　たのまれたから[BE:00:ページ切り替え（行送り）]
 ぼうけんしても　いいんだよね？[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ホワイティ『あっ　あたしたち
+		<language name="JPN_KANJI" width="256">ベル『あっ　あたしたち
 博士に　頼まれたから[BE:00:ページ切り替え（行送り）]
 冒険しても　いいんだよね？[BE:01:ページ切り替え（クリア）]</language>
 	</row>
@@ -605,10 +605,10 @@
 ・メッセージ表示後、友達♂♀退場
 　画面外に消えると、操作可能に</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">ブラッカー『ああ　そうだね[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">チェレン『ああ　そうだね[BE:01:ページ切り替え（クリア）]
 というわけで　オレたちも
 １ばんどうろに　いくと　しよう[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ブラッカー『ああ　そうだね[BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">チェレン『ああ　そうだね[BE:01:ページ切り替え（クリア）]
 というわけで　オレたちも
 １番道路に　行くと　しよう[BE:01:ページ切り替え（クリア）]</language>
 	</row>

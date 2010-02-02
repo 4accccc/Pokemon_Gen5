@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-02T12:48:35"/>
+	<create user="matsumiya" host="W00224" date="2010-02-02T19:36:15"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -456,6 +456,7 @@
 ・主人公がポケモンセンターからでると
 　メッセージ自動で表示
 ・続けて</comment>
+		<attribute name="キャラ指定">群集</attribute>
 		<language name="JPN" width="256">なんか　ひろばで
 はじまるらしいぞ！▼</language>
 		<language name="JPN_KANJI" width="256">なんか　広場で
@@ -466,6 +467,7 @@
 		<comment>♂
 ・メッセージ表示後、2体の動作モデル
 　画面左に移動する</comment>
+		<attribute name="キャラ指定">群集</attribute>
 		<language name="JPN" width="256">んじゃ　ちょいと
 いってみるかね▼</language>
 		<language name="JPN_KANJI" width="256">んじゃ　ちょいと
@@ -496,7 +498,7 @@
 	<row id="msg_t02_sage1_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・続けてmsg_t02_boodle_01表示</comment>
-		<attribute name="キャラ指定">七賢者ゲーチス</attribute>
+		<attribute name="キャラ指定">七賢人ゲーチス</attribute>
 		<language name="JPN" width="256">わたくしの　なまえは
 ゲーチス▼
 プラズマだん　という　そしきで
@@ -534,7 +536,7 @@
 		<comment>♂
 ・ゲーチス、上下に動くアニメ
 ・続けてmsg_t02_sage2_03表示</comment>
-		<attribute name="キャラ指定">七賢者ゲーチス</attribute>
+		<attribute name="キャラ指定">七賢人ゲーチス</attribute>
 		<language name="JPN" width="256">ゲーチス『われわれ　にんげんは　
 ポケモンと　いっしょに▽
 くらして　きました▼
@@ -565,7 +567,7 @@
 	<row id="msg_t02_sage3_03" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・続けてmsg_t02_boodle_01a</comment>
-		<attribute name="キャラ指定">七賢者ゲーチス</attribute>
+		<attribute name="キャラ指定">七賢人ゲーチス</attribute>
 		<language name="JPN" width="256">トレーナーは
 ポケモンに　すきかって▽
 めいれい　している……▼
@@ -612,7 +614,7 @@
 	<row id="msg_t02_sage4_04" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・続けてmsg_t02_sage2_05表示</comment>
-		<attribute name="キャラ指定">七賢者ゲーチス</attribute>
+		<attribute name="キャラ指定">七賢人ゲーチス</attribute>
 		<language name="JPN" width="256">ゲーチス『いいですか
 みなさん▼
 ポケモンは　にんげんとは　ことなり
@@ -658,7 +660,7 @@
 ・メッセージ表示後
 　ゲーチスとしたっぱたち退場
 ・続けてmsg_t02_boodle_04</comment>
-		<attribute name="キャラ指定">七賢者ゲーチス</attribute>
+		<attribute name="キャラ指定">七賢人ゲーチス</attribute>
 		<language name="JPN" width="256">ゲーチス『そうです！
 ポケモンを　じゆうに　することです！！▼
 そうしてこそ

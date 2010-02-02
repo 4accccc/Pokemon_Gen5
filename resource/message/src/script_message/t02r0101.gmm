@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-20T16:18:24"/>
+	<create user="matsumiya" host="W00224" date="2010-02-02T19:38:02"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="100"/>
+		<comment position="4" width="171"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -310,8 +310,9 @@
 体力を　回復させないとね</language>
 	</row>
 
-	<row id="msg_t02r0101_woman1_01">
-		<comment>♀</comment>
+	<row id="msg_t02r0101_woman1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♀
+・仮メッセージ</comment>
 		<attribute name="キャラ指定">女性１</attribute>
 		<language name="JPN" width="256">[FF:00:色:2]Ｃギア[FF:00:色:0]って　ごぞんじ？[BE:01:ページ切り替え（クリア）]
 つうしんに　ついての　じょうほうが

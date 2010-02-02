@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-02T12:49:09"/>
+	<create user="matsumiya" host="W00224" date="2010-02-02T19:37:31"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_t02pc0101_hakase2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_t02pc0101_hakase2_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・マップ切り替え直後からイベント
 　カウンター前まで進むと
@@ -309,7 +309,7 @@
 それでは　案内しまーす！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_t02pc0101_white_03" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_t02pc0101_white_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・続けてhakase2_02</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
@@ -359,7 +359,7 @@
 きみの　ポケモンを　預けてみて[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_t02pc0101_hakase2_03a" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_t02pc0101_hakase2_03a" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
 		<comment>♀
 ・hakase2_03表示後、回復前に再度会話</comment>
 		<attribute name="キャラ指定">DOCTOR_JR
@@ -370,7 +370,7 @@
 わたしじゃなくて　お姉さんよ</language>
 	</row>
 
-	<row id="msg_t02pc0101_white_04" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_t02pc0101_white_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・hakase2_03表示後、回復前に会話</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
@@ -414,7 +414,7 @@
 わたしが　図鑑評価　しまーす！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_t02pc0101_white_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_t02pc0101_white_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・続けてhakase2_05表示</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
@@ -473,7 +473,7 @@
 対応して　くれるわよ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_t02pc0101_hakase2_07" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_t02pc0101_hakase2_07" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・メッセージ表示後退場
 　画面外に消えると
@@ -509,13 +509,6 @@
 実り多いもので　ありますように！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_t02pc0101_black_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>削除ラベル</comment>
-		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">no data</language>
-		<language name="JPN_KANJI" width="256">no data</language>
-	</row>
-
 	<row id="msg_t02pc0101_white_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・t02での演説イベント終了まで
@@ -540,13 +533,6 @@
 		<language name="JPN_KANJI" width="256">今までの　出来事を
 忘れないよう　レポートして……[BE:00:ページ切り替え（行送り）]
 これで　一休み　できるわね</language>
-	</row>
-
-	<row id="msg_t02pc0101_middlewoman1_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>削除ラベル</comment>
-		<attribute name="キャラ指定">おばさん！</attribute>
-		<language name="JPN" width="256">no data</language>
-		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<flowchart-group-list>

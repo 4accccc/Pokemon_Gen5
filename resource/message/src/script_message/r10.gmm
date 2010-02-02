@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-02T14:20:24"/>
+	<create user="matsumiya" host="W00224" date="2010-02-02T19:35:14"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -300,7 +300,7 @@
 ・はい/いいえの選択肢表示
 　はい→black_02
 　いいえ→black_03</comment>
-		<attribute name="キャラ指定">ライバル</attribute>
+		<attribute name="キャラ指定">友達♂</attribute>
 		<language name="JPN" width="256">チェレン『……[1:00:トレーナー名:0]！[BE:01:ページ切り替え（クリア）]
 アデクの　じーさん……[BE:01:ページ切り替え（クリア）]
 チャンピオンが　Ｎを　おいかけ
@@ -315,6 +315,7 @@
 		<comment>♂
 ・はい選択時
 ・続けてblack_04</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
 		<language name="JPN" width="256">チェレン『……やはり[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">チェレン『……やはり[BE:01:ページ切り替え（クリア）]</language>
 	</row>
@@ -323,6 +324,7 @@
 		<comment>♂
 ・いいえ選択時
 ・続けてblack_04</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
 		<language name="JPN" width="256">チェレン『……かくすなよ[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">チェレン『……かくすなよ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
@@ -331,6 +333,7 @@
 		<comment>♂
 ・メッセージ表示後、画面左に戻っていく
 ・画面外に消えると主人公、操作可能に</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
 		<language name="JPN" width="256">……オレ　まだ
 そこまで　つよくないからさ……[BE:01:ページ切り替え（クリア）]
 だから　たのむッ！[BE:01:ページ切り替え（クリア）]
