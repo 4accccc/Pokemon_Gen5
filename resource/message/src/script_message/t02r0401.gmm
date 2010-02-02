@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2010-01-13T13:38:09"/>
+	<create user="matsumiya" host="W00224" date="2010-02-02T12:50:19"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -382,7 +382,7 @@
 		<language name="JPN_KANJI" width="256">えんそうに　むちゅうだ！</language>
 	</row>
 
-	<row id="msg_t02r0401_poke_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+	<row id="msg_t02r0401_poke_01" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,,">
 		<comment>ポケモン
 ・あわせて鳴き声SE</comment>
 		<attribute name="キャラ指定">ポケモン

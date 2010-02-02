@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2010-01-13T13:35:46"/>
+	<create user="matsumiya" host="W00224" date="2010-02-02T12:49:09"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -313,8 +313,8 @@
 		<comment>♀
 ・続けてhakase2_02</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
-		<language name="JPN" width="256">ホワイティ『あっ　あたしも！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ホワイティ『あっ　あたしも！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">ベル『あっ　あたしも！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ベル『あっ　あたしも！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_t02pc0101_hakase2_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -374,9 +374,9 @@
 		<comment>♀
 ・hakase2_03表示後、回復前に会話</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
-		<language name="JPN" width="256">ホワイティ『[1:00:トレーナー名:0]の
+		<language name="JPN" width="256">ベル『[1:00:トレーナー名:0]の
 ポケモンを　あずければ　いいのよ</language>
-		<language name="JPN_KANJI" width="256">ホワイティ『[1:00:トレーナー名:0]の
+		<language name="JPN_KANJI" width="256">ベル『[1:00:トレーナー名:0]の
 ポケモンを　預ければ　いいのよ</language>
 	</row>
 
@@ -418,10 +418,10 @@
 		<comment>♀
 ・続けてhakase2_05表示</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
-		<language name="JPN" width="256">ホワイティ『はかせ……[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">ベル『はかせ……[BE:01:ページ切り替え（クリア）]
 がめんの　「だれかのパソコン」って
 だれの　パソコンの　こと……？[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ホワイティ『博士……[BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">ベル『博士……[BE:01:ページ切り替え（クリア）]
 画面の　「だれかのパソコン」って
 だれの　パソコンの　こと……？[BE:01:ページ切り替え（クリア）]</language>
 	</row>
@@ -430,7 +430,7 @@
 		<comment>♀</comment>
 		<attribute name="キャラ指定">DOCTOR_JR
 博士</attribute>
-		<language name="JPN" width="256">アララギ『まぁ　ホワイティ！
+		<language name="JPN" width="256">アララギ『まぁ　ベル！
 よく　きづいたわね！[BE:00:ページ切り替え（行送り）]
 すっごく　いい　しつもんよ[BE:01:ページ切り替え（クリア）]
 といいたいところ　だけど
@@ -439,7 +439,7 @@
 ポケモンあずかりシステムを[BE:01:ページ切り替え（クリア）]
 つくった　ひとの　ことでね
 きみたちも　いつか　であうわよ！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">アララギ『まぁ　ホワイティ！
+		<language name="JPN_KANJI" width="256">アララギ『まぁ　ベル！
 よく　気づいたわね！[BE:00:ページ切り替え（行送り）]
 すっごく　いい　質問よ[BE:01:ページ切り替え（クリア）]
 といいたいところ　だけど
@@ -521,11 +521,11 @@
 ・t02での演説イベント終了まで
 　ここでこのメッセージ繰り返し</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
-		<language name="JPN" width="256">ホワイティ『あたし
+		<language name="JPN" width="256">ベル『あたし
 ちょっと　のんびり　していくね[BE:01:ページ切り替え（クリア）]
 キズぐすりとか　モンスターボール
 いろいろ　かっておきたいし</language>
-		<language name="JPN_KANJI" width="256">ホワイティ『あたし
+		<language name="JPN_KANJI" width="256">ベル『あたし
 ちょっと　のんびり　していくね[BE:01:ページ切り替え（クリア）]
 キズぐすりとか　モンスターボール
 いろいろ　買っておきたいし</language>

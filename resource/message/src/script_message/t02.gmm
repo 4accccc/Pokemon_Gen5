@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2010-01-13T13:35:15"/>
+	<create user="matsumiya" host="W00224" date="2010-02-02T12:48:35"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -430,10 +430,10 @@
 　POSを踏むとこのメッセージ
 0＝プレイヤー名</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">ブラッカー『おい　[1:00:トレーナー名:0]▼
+		<language name="JPN" width="256">チェレン『おい　[1:00:トレーナー名:0]▼
 ポケモンセンターの　まえで
 はかせが　まっていただろ？▼</language>
-		<language name="JPN_KANJI" width="256">ブラッカー『おい　[1:00:トレーナー名:0]▼
+		<language name="JPN_KANJI" width="256">チェレン『おい　[1:00:トレーナー名:0]▼
 博士　いただろ？
 ポケモンセンターの　前にさ▼</language>
 	</row>
@@ -443,10 +443,10 @@
 ・上記メッセージ、直接会話した時用
 0＝プレイヤー名</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">ブラッカー『おい　[1:00:トレーナー名:0]▼
+		<language name="JPN" width="256">チェレン『おい　[1:00:トレーナー名:0]▼
 ポケモンセンターの　まえで
 はかせが　まっていただろ？</language>
-		<language name="JPN_KANJI" width="256">ブラッカー『おい　[1:00:トレーナー名:0]▼
+		<language name="JPN_KANJI" width="256">チェレン『おい　[1:00:トレーナー名:0]▼
 博士　いただろ？
 ポケモンセンターの　前にさ</language>
 	</row>
@@ -487,9 +487,9 @@
 
 ・0＝プレイヤー名</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">ブラッカー『おい　[1:00:トレーナー名:0]▼
+		<language name="JPN" width="256">チェレン『おい　[1:00:トレーナー名:0]▼
 こっち！▼</language>
-		<language name="JPN_KANJI" width="256">ブラッカー『おい　[1:00:トレーナー名:0]▼
+		<language name="JPN_KANJI" width="256">チェレン『おい　[1:00:トレーナー名:0]▼
 こっち！▼</language>
 	</row>
 
@@ -725,10 +725,10 @@
 		<comment>♂
 ・続けてmsg_t02_boss_02</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">ブラッカー『ポケモンが
+		<language name="JPN" width="256">チェレン『ポケモンが
 はなした……　ですか？▽
 おかしなことを　いうんだな▼</language>
-		<language name="JPN_KANJI" width="256">ブラッカー『ポケモンが
+		<language name="JPN_KANJI" width="256">チェレン『ポケモンが
 話した……　ですか？▽
 おかしなことを　いうんだな▼</language>
 	</row>
@@ -753,13 +753,13 @@
 		<comment>♂
 ・続けてmsg_t02_boss_03</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">ブラッカー『……オレは　ブラッカー
+		<language name="JPN" width="256">チェレン『……オレは　チェレン
 こちらは　[1:00:トレーナー名:0]▼
 たのまれて　ポケモンずかんを
 かんせい　させるための　たびにでた▼
 もっとも　オレの　もくひょうは
 チャンピオン　だけど……▼</language>
-		<language name="JPN_KANJI" width="256">ブラッカー『……オレは　ブラッカー
+		<language name="JPN_KANJI" width="256">チェレン『……オレは　チェレン
 こちらは　[1:00:トレーナー名:0]▼
 頼まれて　ポケモン図鑑を
 完成させるための　旅にでた▼
@@ -845,7 +845,7 @@
 　動作モデル、2番道路のほうへ移動
 ・画面外に消えると主人公、操作可能に</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">ブラッカー『チッ！　オレのせいで
+		<language name="JPN" width="256">チェレン『チッ！　オレのせいで
 おかしなことに　なったな▼
 まあ　きにするなよ
 トレーナーと　ポケモンは▽
@@ -854,7 +854,7 @@
 ポケモンと　トレーナーが▽
 もっと　なかよくなる　ためだろ▼
 じゃあな▼</language>
-		<language name="JPN_KANJI" width="256">ブラッカー『チッ！　オレのせいで
+		<language name="JPN_KANJI" width="256">チェレン『チッ！　オレのせいで
 おかしなことに　なったな▼
 まあ　気にするなよ
 トレーナーと　ポケモンは▽
@@ -1015,7 +1015,7 @@
 		<language name="JPN_KANJI" width="256">みず</language>
 	</row>
 
-	<row id="msg_t01_woman1_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
+	<row id="msg_t01_woman1_01" text-color="#000000,,,#ff0000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<comment>♀
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">女性１</attribute>
@@ -1029,7 +1029,7 @@
 人々は　喜ぶもの　なのね</language>
 	</row>
 
-	<row id="msg_t01_oldman1_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
+	<row id="msg_t01_oldman1_01" text-color="#000000,,,#ff0000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<comment>♂
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">老人１</attribute>
@@ -1043,7 +1043,7 @@
 ポケモンは　６匹まで　なんじゃ！</language>
 	</row>
 
-	<row id="msg_t01_oldwoman1_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
+	<row id="msg_t01_oldwoman1_01" text-color="#000000,,,#ff0000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<comment>♀
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">老婆１</attribute>
@@ -1086,7 +1086,7 @@
 生い茂る　ツルは　繁栄の証</language>
 	</row>
 
-	<row id="msg_t02_sign2_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_t02_sign2_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<attribute name="キャラ指定">看板：ポケセン</attribute>
 		<language name="JPN" width="256">たびのおともに　ポケモンセンター
 フレンドリィショップも　あります</language>
