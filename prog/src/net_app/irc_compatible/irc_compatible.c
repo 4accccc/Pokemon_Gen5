@@ -1295,44 +1295,5 @@ static u32 MATH_GetMostOnebit( u32 x, u8 bit )
 #include "system/rtc_tool.h"
 static u32 RULE_CalcBioRhythm( const COMPATIBLE_STATUS *cp_status )
 { 
-  enum
-  { 
-    BIORHYTHM_CYCLE = 30,  //周期
-  };
-
-
-  u32 days;
-  u32 now_days; //今日の日付を日数に
-  u32 days_diff;
-  fx32 sin;
-  u32 bio;
-
-  //今日までの総日数を計算（年が取れないので、一年だけとする）
-  { 
-    RTCDate date;
-    GFL_RTC_GetDate( &date );
-    now_days  = GFL_RTC_GetDaysOffset(&date);
-
-    date.month  = cp_status->barth_month;
-    date.day    = cp_status->barth_day;
-    days        = GFL_RTC_GetDaysOffset(&date);
-  }
-
-  //誕生日から今日まで何日かかっているか
-  if( now_days >= days  )
-  { 
-    days  += 365;
-  }
-  days_diff = days  - now_days;
-
-  days_diff %= BIORHYTHM_CYCLE;
-
-  sin = FX_SinIdx( 0xFFFF * days_diff / BIORHYTHM_CYCLE );
-
-  bio = ((sin + FX32_ONE) * 50 ) >> FX32_SHIFT;
-
-
-  OS_TFPrintf( 3, "バイオリズム %d 誕生経過%d 現在%d,差%d\n", bio, days, now_days, days_diff );
-
-  return bio;
+  return Irc_Compatible_SV_CalcBioRhythm( cp_status->barth_month, cp_status->barth_day );
 }

@@ -16,6 +16,8 @@
 
 #include "savedata/irc_compatible_savedata.h"
 
+#include "system/rtc_tool.h"  //バイオリズムのため
+
 //=============================================================================
 /**
  *					定数宣言
@@ -156,17 +158,48 @@ u16 IRC_COMPATIBLE_SV_GetPlayCount( const IRC_COMPATIBLE_SAVEDATA *cp_sv, u32 ra
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  ランキングに入っている男性の人数を取得
+ *	@brief  性別取得
  *
  *	@param	const IRC_COMPATIBLE_SAVEDATA *cp_sv  セーブ
+ *	@param  rank                                  順位
  *
- *	@return 男性の人数
+ *	@return 性別
  */
 //-----------------------------------------------------------------------------
 u32 IRC_COMPATIBLE_SV_GetSex( const IRC_COMPATIBLE_SAVEDATA *cp_sv, u32 rank )
 { 
 	GF_ASSERT( rank < IRC_COMPATIBLE_SV_RANKING_MAX );
 	return cp_sv->rank[ rank ].sex;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  誕生月取得
+ *
+ *	@param	const IRC_COMPATIBLE_SAVEDATA *cp_sv  セーブ
+ *	@param  rank                                  順位
+ *
+ *	@return 誕生月
+ */
+//-----------------------------------------------------------------------------
+u32 IRC_COMPATIBLE_SV_GetBirthMonth( const IRC_COMPATIBLE_SAVEDATA *cp_sv, u32 rank )
+{ 
+	GF_ASSERT( rank < IRC_COMPATIBLE_SV_RANKING_MAX );
+	return cp_sv->rank[ rank ].birth_month;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  誕生日取得
+ *
+ *	@param	const IRC_COMPATIBLE_SAVEDATA *cp_sv  セーブ
+ *	@param  rank                                  順位
+ *
+ *	@return 誕生日
+ */
+//-----------------------------------------------------------------------------
+u32 IRC_COMPATIBLE_SV_GetBirthDay( const IRC_COMPATIBLE_SAVEDATA *cp_sv, u32 rank )
+{ 
+	GF_ASSERT( rank < IRC_COMPATIBLE_SV_RANKING_MAX );
+	return cp_sv->rank[ rank ].birth_day;
 }
 //----------------------------------------------------------------------------
 /**
@@ -180,6 +213,112 @@ u32 IRC_COMPATIBLE_SV_GetSex( const IRC_COMPATIBLE_SAVEDATA *cp_sv, u32 rank )
 u8	IRC_COMPATIBLE_SV_GetNewRank( const IRC_COMPATIBLE_SAVEDATA *cp_sv )
 {	
 	return cp_sv->new_rank;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  バイオリズムを取得
+ *
+ *	@param	const IRC_COMPATIBLE_SAVEDATA *cp_sv  セーブ
+ *	@param	rank                                  順位
+ *
+ *	@return 0～100の値
+ */
+//-----------------------------------------------------------------------------
+u8 IRC_COMPATIBLE_SV_GetBioRhythm( const IRC_COMPATIBLE_SAVEDATA *cp_sv, u32 rank )
+{ 
+  u8 month, day;
+
+  GF_ASSERT( rank < IRC_COMPATIBLE_SV_RANKING_MAX );
+
+  month  = IRC_COMPATIBLE_SV_GetBirthMonth( cp_sv, rank );
+  day    = IRC_COMPATIBLE_SV_GetBirthDay( cp_sv, rank ); 
+  return Irc_Compatible_SV_CalcBioRhythm( month, day );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  一番自分とバイオリズムが合っている人を取得
+ *
+ *	@param	const IRC_COMPATIBLE_SAVEDATA *cp_sv  セーブ
+ *	@param	player_birth_month                    プレイヤーの誕生月
+ *	@param	player_birth_day                      プレイヤーの誕生日
+ *
+ *	@return 一番自分とバイオリズムが合っている人の順位
+ */
+//-----------------------------------------------------------------------------
+u32 IRC_COMPATIBLE_SV_GetBestBioRhythm( const IRC_COMPATIBLE_SAVEDATA *cp_sv, u8 player_birth_month, u8 player_birth_day )
+{ 
+  const u32 max         = IRC_COMPATIBLE_SV_GetRankNum( cp_sv );
+  const u32 player_bio  = Irc_Compatible_SV_CalcBioRhythm( player_birth_month, player_birth_day );
+
+  int i;
+  u32 best_idx  = 0;
+  u32 best_dif  = 0xFFFFFFFF;
+  u32 dif;
+
+  for( i = 0; i < max; i++ )
+  { 
+    dif = MATH_IAbs( (s32)IRC_COMPATIBLE_SV_GetBioRhythm( cp_sv, i ) - (s32)player_bio );
+
+    if( best_dif > dif )
+    { 
+      best_idx  = i;
+      best_dif  = dif;
+    }
+  }
+
+  return best_idx;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  バイオリズムを計算
+ *
+ *	@param	month 月
+ *	@param	day   日
+ *
+ *	@return 0～100の値
+ */
+//-----------------------------------------------------------------------------
+u8 Irc_Compatible_SV_CalcBioRhythm( u8 month, u8 day )
+{ 
+  enum
+  { 
+    BIORHYTHM_CYCLE = 30,  //周期
+  };
+ 
+  u32 days;
+  u32 now_days; //今日の日付を日数に
+  u32 days_diff;
+  fx32 sin;
+  u32 bio;
+
+  //今日までの総日数を計算（年が取れないので、一年だけとする）
+  { 
+    RTCDate date;
+    GFL_RTC_GetDate( &date );
+    now_days  = GFL_RTC_GetDaysOffset(&date);
+
+    date.month  = month;
+    date.day    = day;
+    days        = GFL_RTC_GetDaysOffset(&date);
+  }
+
+  //誕生日から今日まで何日かかっているか
+  if( now_days >= days  )
+  { 
+    days  += 365;
+  }
+  days_diff = days  - now_days;
+
+  days_diff %= BIORHYTHM_CYCLE;
+
+  sin = FX_SinIdx( 0xFFFF * days_diff / BIORHYTHM_CYCLE );
+
+  bio = ((sin + FX32_ONE) * 50 ) >> FX32_SHIFT;
+
+
+  OS_TFPrintf( 0, "バイオリズム %d 誕生経過%d 現在%d,差%d\n", bio, days, now_days, days_diff );
+
+  return bio;
 }
 
 

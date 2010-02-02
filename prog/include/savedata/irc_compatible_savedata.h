@@ -56,7 +56,21 @@ extern const STRCODE* IRC_COMPATIBLE_SV_GetPlayerName( const IRC_COMPATIBLE_SAVE
 extern u8	IRC_COMPATIBLE_SV_GetScore( const IRC_COMPATIBLE_SAVEDATA *cp_sv, u32 rank );
 extern u16 IRC_COMPATIBLE_SV_GetPlayCount( const IRC_COMPATIBLE_SAVEDATA *cp_sv, u32 rank );
 extern u32 IRC_COMPATIBLE_SV_GetSex( const IRC_COMPATIBLE_SAVEDATA *cp_sv, u32 rank );
+extern u32 IRC_COMPATIBLE_SV_GetBirthMonth( const IRC_COMPATIBLE_SAVEDATA *cp_sv, u32 rank );
+extern u32 IRC_COMPATIBLE_SV_GetBirthDay( const IRC_COMPATIBLE_SAVEDATA *cp_sv, u32 rank );
 extern u8	IRC_COMPATIBLE_SV_GetNewRank( const IRC_COMPATIBLE_SAVEDATA *cp_sv );
+extern u8 IRC_COMPATIBLE_SV_GetBioRhythm( const IRC_COMPATIBLE_SAVEDATA *cp_sv, u32 rank );
+extern u32 IRC_COMPATIBLE_SV_GetBestBioRhythm( const IRC_COMPATIBLE_SAVEDATA *cp_sv, u8 player_birth_month, u8 player_birth_day );
+
+inline BOOL IRC_COMPATIBLE_SV_IsEmpty( const IRC_COMPATIBLE_SAVEDATA *cp_sv )
+{ 
+  return IRC_COMPATIBLE_SV_GetRankNum( cp_sv ) == 0;
+}
+
+//-------------------------------------
+///	irc_compatible.cでのみ使うprivate関数
+//=====================================
+extern u8 Irc_Compatible_SV_CalcBioRhythm( u8 month, u8 day );
 
 //-------------------------------------
 ///	データ設定関数
