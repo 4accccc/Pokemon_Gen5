@@ -831,6 +831,17 @@
   NO_CMD()
   NO_CMD()
 
+  //国連
+  DEF_CMD( EvCmdUn_GetCountryNum, EV_SEQ_UN_GET_COUNTRY_NUM )
+  DEF_CMD( EvCmdUn_SetTalkFlg, EV_SEQ_UN_SET_TALK_FLG )
+  DEF_CMD( EvCmdUn_CheckTalkFlg, EV_SEQ_UN_CHK_TALK_FLG )
+  DEF_CMD( EvCmdUn_SetPlayerNature, EV_SEQ_UN_SET_MY_NATURE )
+
+  DEF_CMD( EvCmdUn_SetCountryInfo, EV_SEQ_UN_SET_COUNTRY_INFO )
+  DEF_CMD( EvCmdUn_GetRoomObjCode, EV_SEQ_UN_GET_ROOM_OBJ_CODE )
+  NO_CMD()
+  NO_CMD()
+
   END_CMD
 
   //スクリプトコマンドテーブル終了

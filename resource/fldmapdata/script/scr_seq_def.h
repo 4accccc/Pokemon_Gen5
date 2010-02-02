@@ -7262,3 +7262,83 @@
   .short \char_idx
   .endm
 
+
+//--------------------------------------------------------------
+/**
+ * @brief 国連関連 交換した国数を取得
+ * @param ret       検索結果
+ */
+//--------------------------------------------------------------
+#define _UN_GET_COUNTRY_NUM( ret ) _ASM_UN_GET_COUNTRY_NUM ret
+
+  .macro  _ASM_UN_GET_COUNTRY_NUM ret
+  .short EV_SEQ_UN_GET_COUNTRY_NUM
+  .short \ret
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief 国連関連 会話フラグセット
+ * @param ret       検索結果
+ */
+//--------------------------------------------------------------
+#define _UN_SET_TALK_FLG( obj_idx ) _ASM_UN_SET_TALK_FLG obj_idx
+
+  .macro _ASM_UN_SET_TALK_FLG obj_idx
+  .short EV_SEQ_UN_SET_TALK_FLG
+  .short \obj_idx
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief 国連関連 会話フラグチェック
+ * @param ret       検索結果
+ */
+//--------------------------------------------------------------
+#define _UN_CHK_TALK_FLG( ret ) _ASM_UN_CHK_TALK_FLG ret
+
+  .macro _ASM_UN_CHK_TALK_FLG ret
+  .short EV_SEQ_UN_CHK_TALK_FLG
+  .short \ret
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief 国連関連 自分の性格をセット
+ * @param ret       検索結果
+ */
+//--------------------------------------------------------------
+#define _UN_SET_MY_NATURE( nature_idx ) _ASM_UN_SET_MY_NATURE nature_idx
+
+  .macro _ASM_UN_SET_MY_NATURE nature_idx
+  .short EV_SEQ_UN_SET_MY_NATURE
+  .short \nature_idx
+  .endm
+  
+//--------------------------------------------------------------
+/**
+ * @brief 国連関連 部屋に行く前の情報セット
+ * @param ret       検索結果
+ */
+//--------------------------------------------------------------
+#define _UN_SET_COUNTRY_INFO( country_code ) _ASM_UN_SET_COUNTRY_INFO country_code
+
+  .macro _ASM_UN_SET_COUNTRY_INFO country_code
+  .short EV_SEQ_UN_SET_COUNTRY_INFO
+  .short \country_code
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief 国連関連 部屋内　OBJコード取得
+ * @param idx       部屋の中のOBJインデックス0～4
+ * @param ret       検索結果
+ */
+//--------------------------------------------------------------
+#define _UN_GET_ROOM_OBJ_CODE( idx, ret ) _ASM_UN_GET_ROOM_OBJ_CODE idx, ret
+
+  .macro _ASM_UN_GET_ROOM_OBJ_CODE idx, ret
+  .short EV_SEQ_UN_GET_ROOM_OBJ_CODE
+  .short \idx
+  .short \ret
+  .endm  

@@ -78,6 +78,7 @@
 #include "scrcmd_pokeid_search.h"
 #include "scrcmd_faceup.h"
 #include "scrcmd_feeling_check.h"
+#include "scrcmd_un.h"
 
 #include "../../../resource/fldmapdata/script/usescript.h"
 
