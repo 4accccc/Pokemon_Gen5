@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-02T15:33:00"/>
+	<create user="matsumiya" host="W00224" date="2010-02-02T21:23:23"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,14 +263,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1526" top="175" right="2230" bottom="795" maximized="no" rayout="Vertical2">
+	<dialog left="1304" top="256" right="2009" bottom="884" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
-		<band id="0" index="1" style="0000" width="529"/>
+		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="542"/>
+		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="696"/>
+		<band id="4" index="0" style="0000" width="697"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -320,6 +320,8 @@
 　終了後、以下のメッセージを自動表示
 ・0＝渡すポケモン
 ・1＝もらうポケモン</comment>
+		<attribute name="キャラ指定">WOMAN2
+女性（金髪）</attribute>
 		<language name="JPN" width="256">うふふ！　あたしの
 [1:01:ポケモン種族名:1]　だいじにしてね！▼
 あたしも　もらった
@@ -334,6 +336,8 @@
 		<comment>♀
 ・ポケモン交換
 ・0＝渡すポケモン</comment>
+		<attribute name="キャラ指定">WOMAN2
+女性（金髪）</attribute>
 		<language name="JPN" width="256">あたしが　ほしいのは
 [1:01:ポケモン種族名:0]　なんだけど……</language>
 		<language name="JPN_KANJI" width="256">あたしが　ほしいのは
@@ -344,6 +348,8 @@
 		<comment>♀
 ・いいえ選択
 　もしくはポケモン選択画面で「やめる」を選択</comment>
+		<attribute name="キャラ指定">WOMAN2
+女性（金髪）</attribute>
 		<language name="JPN" width="256">だめなら　しかたないな……▼
 でも　きが　かわったら
 ポケモン　こうかん　しようね！</language>
@@ -355,6 +361,8 @@
 	<row id="msg_c02r0301_woman2_05">
 		<comment>♀
 ・ポケモン交換後</comment>
+		<attribute name="キャラ指定">WOMAN2
+女性（金髪）</attribute>
 		<language name="JPN" width="256">ポケモンの　おかげで
 あたしと　あなた▽
 おともだちに　なれたよね！</language>
@@ -380,6 +388,7 @@
 	<row id="msg_c02r0301_girl1_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀：なつき度チェック
 ・なつき度120～255</comment>
+		<attribute name="キャラ指定">女の子</attribute>
 		<language name="JPN" width="256">あなたに　なついているのね
 いっしょにいると　しあわせ　なのね</language>
 		<language name="JPN_KANJI" width="256">あなたに　なついているのね
@@ -389,6 +398,7 @@
 	<row id="msg_c02r0301_girl1_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀：なつき度チェック
 ・なつき度70～119</comment>
+		<attribute name="キャラ指定">女の子</attribute>
 		<language name="JPN" width="256">ちょっぴり　なついている……
 そんな　かんじかしら</language>
 		<language name="JPN_KANJI" width="256">ちょっぴり　なついている……
@@ -398,6 +408,7 @@
 	<row id="msg_c02r0301_girl1_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀：なつき度チェック
 ・なつき度0～69</comment>
+		<attribute name="キャラ指定">女の子</attribute>
 		<language name="JPN" width="256">うーん……
 まだまだ　これからって　かんじね</language>
 		<language name="JPN_KANJI" width="256">うーん……

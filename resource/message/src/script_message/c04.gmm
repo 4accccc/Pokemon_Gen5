@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-02T12:13:42"/>
+	<create user="matsumiya" host="W00224" date="2010-02-02T21:28:39"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -378,7 +378,7 @@
 遊園地で　待ち合わせ　だぜ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c04_oldman_03" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c04_oldman_03">
 		<comment>♂
 ・メッセージ表示後、アイテム入手処理
 　ItemNo601「わざマシン「かいりき」」入手処理（暫定）</comment>
@@ -425,7 +425,7 @@
 		<language name="JPN_KANJI" width="256">ベル『おーい　[1:00:トレーナー名:0]！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c04_white_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c04_white_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・表示後、その場で一回転アニメ
 ・続けてwhite_04</comment>
@@ -443,7 +443,7 @@
 それに　バトルサブウェイ！▼</language>
 	</row>
 
-	<row id="msg_c04_white_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c04_white_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・表示後、画面上に移動
 ・画面外に消えると、主人公操作可能に</comment>
@@ -455,7 +455,7 @@
 行くつもりなの！　じゃあねえ！！▼</language>
 	</row>
 
-	<row id="msg_c04_white_04" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c04_white_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・グッズケースを持たずに
 　pos（GRIDX=390、GRIDZ=436～440）を踏んだとき
@@ -468,7 +468,7 @@
 		<language name="JPN_KANJI" width="256">ベル『おーい　[1:00:トレーナー名:0]！▼</language>
 	</row>
 
-	<row id="msg_c04_white_05" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c04_white_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・メッセージ表示後、連れ歩き状態で
 　ミュージカルホールに
@@ -489,7 +489,7 @@
 こっちこっちー！▼</language>
 	</row>
 
-	<row id="msg_c04_white_06" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c04_white_06" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・ミュージカルホールの前に到達時に
 　このメッセージ表示
@@ -502,7 +502,7 @@
 じゃあ　入ろうっ！▼</language>
 	</row>
 
-	<row id="msg_c04_white_07" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff00,,,#ffff00,,#ffff00,#ffff00,,,,,,#ffff00,,,,,,">
+	<row id="msg_c04_white_07" back-color="#ffff00,,,#ffff00,,#ffff00,#ffff00,,,,,,#ffff00,,,,,,">
 		<comment>♀
 ・msg_c04_white_04イベント発生させずに
 　ミュージカルホールの前に到達したときは
@@ -519,7 +519,7 @@
 じゃあ　一緒に　入ろうっ！▼</language>
 	</row>
 
-	<row id="msg_c04_white_08" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c04_white_08" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・GRIDX=433、GRIDZ=436に配置
 ・主人公がミュージカルからでると
@@ -533,7 +533,7 @@
 どうしたの　こんなところで？▼</language>
 	</row>
 
-	<row id="msg_c04_middleman1_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_c04_middleman1_01">
 		<comment>♂
 ・GRIDX=433、GRIDZ=438に配置
 ・続けてwhite_09</comment>
@@ -549,7 +549,7 @@
 もう　充分じゃないか▼</language>
 	</row>
 
-	<row id="msg_c04_white_09" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c04_white_09" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・続けてmiddleman1_02
 ・0＝主人公名前</comment>
@@ -563,7 +563,7 @@
 一緒に　旅するんだもん！▼</language>
 	</row>
 
-	<row id="msg_c04_middleman1_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_c04_middleman1_02">
 		<comment>♂
 ・続けてwhite_10</comment>
 		<attribute name="キャラ指定">男性
@@ -574,7 +574,7 @@
 他所は他所　うちはうち　だよ▼</language>
 	</row>
 
-	<row id="msg_c04_white_10" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c04_white_10" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・続けてleader_01</comment>
 		<attribute name="キャラ指定">友達♀
@@ -587,7 +587,7 @@
 パパは　パパ　だもん！▼</language>
 	</row>
 
-	<row id="msg_c04_leader_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c04_leader_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
 ・まずメッセージのみ
 　その後所定位置
@@ -601,7 +601,7 @@
 旅を　続けなさいな▼</language>
 	</row>
 
-	<row id="msg_c04_middleman1_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_c04_middleman1_03">
 		<comment>♂
 ・主人公たちの頭上に「？」表示
 ・続けてleader_02</comment>
@@ -613,7 +613,7 @@
 どなたです？　親子の　話に▼</language>
 	</row>
 
-	<row id="msg_c04_leader_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c04_leader_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
 ・サポート父親と向き合って
 ・表示後、サポートの隣に移動
@@ -628,7 +628,7 @@
 モデルを　しています▼</language>
 	</row>
 
-	<row id="msg_c04_leader_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c04_leader_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
 ・サポート父親を見ながらメッセージ表示
 ・続けてmiddleman1_04</comment>
@@ -646,7 +646,7 @@
 ときには　傷つくことも　あるかも▼</language>
 	</row>
 
-	<row id="msg_c04_middleman1_04" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_c04_middleman1_04">
 		<comment>♂
 ・続けてleader_03</comment>
 		<attribute name="キャラ指定">男性
@@ -659,7 +659,7 @@
 わたしは　それが　心配で……▼</language>
 	</row>
 
-	<row id="msg_c04_leader_04" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c04_leader_04" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
 ・続けてwhite_11</comment>
 		<attribute name="キャラ指定">LEADER4
@@ -688,7 +688,7 @@
 すてきな　ポケモン……▼</language>
 	</row>
 
-	<row id="msg_c04_white_11" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c04_white_11" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 （一歩前に出て）
 ・続けてmiddleman1_05</comment>
@@ -704,7 +704,7 @@
 つよくなったんだよ！　だから！▼</language>
 	</row>
 
-	<row id="msg_c04_middleman1_05" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_c04_middleman1_05">
 		<comment>♂
 ・画面下を向いてメッセージ表示
 ・続けて</comment>
@@ -730,7 +730,7 @@
 わたしの　ほうが　子供っぽい▼</language>
 	</row>
 
-	<row id="msg_c04_middleman1_06" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+	<row id="msg_c04_middleman1_06">
 		<comment>♂
 ・画面上を向いてメッセージ表示
 　表示後、画面下に移動
@@ -758,7 +758,7 @@
 ベルを　よろしく　頼むよ▼</language>
 	</row>
 
-	<row id="msg_c04_white_12" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c04_white_12" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 （一歩前に出て）
 ・続けてleader_05</comment>
@@ -772,7 +772,7 @@
 ちゃんと　家に　帰るから！▼</language>
 	</row>
 
-	<row id="msg_c04_leader_05" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c04_leader_05" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
 （位置調整が必要かも）
 ・画面下を向いたままメッセージ
@@ -789,7 +789,7 @@
 親って　大変なのね▼</language>
 	</row>
 
-	<row id="msg_c04_leader_06" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c04_leader_06" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
 ・メッセージ分岐
 　c04ジムバッジ入手前→leader_07
@@ -804,7 +804,7 @@
 みえたから　声を　かけちゃった▼</language>
 	</row>
 
-	<row id="msg_c04_leader_07" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c04_leader_07" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
 ・c04ジムバッジ入手前
 ・表示後、画面下に移動する
@@ -821,7 +821,7 @@
 教えて　あげるから▼</language>
 	</row>
 
-	<row id="msg_c04_leader_08" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c04_leader_08" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
 ・c04ジムバッジ入手後
 ・表示後、r05方面に移動する
@@ -835,7 +835,7 @@
 ５番道路で　待っているから▼</language>
 	</row>
 
-	<row id="msg_c04_white_13" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c04_white_13" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・表示後、画面下に移動
 　画面外に消えると主人公操作可能に

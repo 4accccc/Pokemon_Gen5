@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-02T12:50:19"/>
+	<create user="matsumiya" host="W00224" date="2010-02-02T21:25:27"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -309,6 +309,8 @@
 ・msg_t02r0401_girl4_01表示後に
 ・はい選択
 ・ISS起動</comment>
+		<attribute name="キャラ指定">GIRL4
+お嬢様</attribute>
 		<language name="JPN" width="256">ウフフ……
 では　きいてくださいね</language>
 		<language name="JPN_KANJI" width="256">ウフフ……
@@ -319,6 +321,8 @@
 		<comment>♀：ピアノ演奏
 ・msg_t02r0401_girl4_01表示後に
 ・いいえ選択</comment>
+		<attribute name="キャラ指定">GIRL4
+お嬢様</attribute>
 		<language name="JPN" width="256">あら　ざんねん　ですわ……
 ききたくなったら　おっしゃってね</language>
 		<language name="JPN_KANJI" width="256">あら　残念ですわ……
@@ -328,6 +332,8 @@
 	<row id="msg_t02r0401_girl4_04" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀：ピアノ演奏
 ・弾いているとき</comment>
+		<attribute name="キャラ指定">GIRL4
+お嬢様</attribute>
 		<language name="JPN" width="256">えんそうに　むちゅうだ！</language>
 		<language name="JPN_KANJI" width="256">えんそうに　むちゅうだ！</language>
 	</row>
@@ -359,6 +365,8 @@
 ・msg_t02r0401_man2_01表示後に
 ・はい選択
 ・ISS起動</comment>
+		<attribute name="キャラ指定">MAN2
+青年２（金髪）</attribute>
 		<language name="JPN" width="256">オレのッ！　しんぞうがッ！
 ビートを　きざむかぎり！[BE:00:ページ切り替え（行送り）]
 ドラムを　たたき！　つづけるッ！！</language>
@@ -371,6 +379,8 @@
 		<comment>♂：ドラム演奏
 ・msg_t02r0401_man2_01表示後に
 ・いいえ選択</comment>
+		<attribute name="キャラ指定">MAN2
+青年２（金髪）</attribute>
 		<language name="JPN" width="256">……ですよね</language>
 		<language name="JPN_KANJI" width="256">……ですよね</language>
 	</row>
@@ -378,6 +388,8 @@
 	<row id="msg_t02r0401_man2_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂：ドラム演奏
 ・弾いているとき</comment>
+		<attribute name="キャラ指定">MAN2
+青年２（金髪）</attribute>
 		<language name="JPN" width="256">えんそうに　むちゅうだ！</language>
 		<language name="JPN_KANJI" width="256">えんそうに　むちゅうだ！</language>
 	</row>
