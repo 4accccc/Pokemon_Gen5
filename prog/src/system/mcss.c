@@ -353,6 +353,12 @@ void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys )
 
 				anim_pos.x = FX32_CONST( anim_SRT_mc.px );
 				anim_pos.y = FX32_CONST( -anim_SRT_mc.py );
+				OS_TPrintf("x:%08x\n", mcss->scale.x / 16 );
+				OS_TPrintf("y:%08x\n", mcss->scale.y / 16 );
+				//anim_pos.x = FX_Mul( anim_pos.x, FX_Div( mcss->scale.x, 16 ) );
+				//anim_pos.y = FX_Mul( anim_pos.y, FX_Div( mcss->scale.y, 16 ) );
+				anim_pos.x = FX_Mul( anim_pos.x, mcss->scale.x / 16 );
+				anim_pos.y = FX_Mul( anim_pos.y, mcss->scale.y / 16 );
 			}
 
 			//前もって、不変なマルチセルデータをカレント行列にかけておく
