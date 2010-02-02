@@ -25,6 +25,7 @@ endif
 SUBDIRS	=	wmi \
 			tokusei\
 			waza_tbl\
+			itemconv\
 			personal\
 			trdata \
 			trmsg \
@@ -41,13 +42,12 @@ SUBDIRS	=	wmi \
 			fldmmdl \
 			encount \
 			fld3d_ci \
+			batt_bg_tbl\
 			fldmapdata\
 			pokegra\
 			battle\
-			batt_bg_tbl\
 			net_err\
 			font\
-			itemconv\
 			itemicon\
 			title\
 			snd_strm\
