@@ -1,5 +1,5 @@
 #event data
-#save date:2010/01/29 21:22:32
+#save date:2010/02/02 22:21:13
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\bc10.wms
 #SECTION START:OBJ_EVENT
@@ -135,11 +135,11 @@ DOOR_ID_BC10R0201_BC10_EXIT01
 #Door Direction
 EXIT_DIR_DOWN
 #Door Type
-EXIT_TYPE_NONE
+EXIT_TYPE_DOOR
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-56 0 -536
+56 0 -472
 #size
 1 1
 #event number: 6
@@ -152,11 +152,11 @@ DOOR_ID_BC10R0301_BC10_EXIT01
 #Door Direction
 EXIT_DIR_DOWN
 #Door Type
-EXIT_TYPE_NONE
+EXIT_TYPE_DOOR
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-312 0 -536
+312 0 -472
 #size
 1 1
 #Map Event List Data End
