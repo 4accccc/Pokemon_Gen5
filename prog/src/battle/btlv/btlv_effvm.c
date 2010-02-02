@@ -33,6 +33,9 @@ enum{
 	ORTHO_HEIGHT = 3,
 
   BTLV_EFFVM_TCB_MAX = 16,      //EFFVMで登録できるタスクのMAX
+
+  EFFVM_CHANGE_VOLUME = ( 127 * 70 / 100 ) << FX32_SHIFT,
+  EFFVM_CHANGE_VOLUME_FRAME = 16,
 };
 
 #ifdef PM_DEBUG
@@ -170,6 +173,16 @@ typedef struct
   int               tcb_index;
 }BTLV_EFFVM_SEEFFECT;
 
+//ボリューム変化
+typedef struct
+{ 
+  BTLV_EFFVM_WORK*  bevw;
+  fx32              start_vol;
+  fx32              end_vol;
+  fx32              vec_vol;
+  int               tcb_index;
+}BTLV_EFFVM_CHANGE_VOLUME;
+
 //============================================================================================
 /**
  *  プロトタイプ宣言
@@ -269,6 +282,7 @@ static  void          EFFVM_FreeTcb( BTLV_EFFVM_WORK* bevw );
 //TCB関数
 static  void  TCB_EFFVM_SEPLAY( GFL_TCB* tcb, void* work );
 static  void  TCB_EFFVM_SEEFFECT( GFL_TCB* tcb, void* work );
+static  void  TCB_EFFVM_ChangeVolume( GFL_TCB* tcb, void* work );
 
 #ifdef PM_DEBUG
 typedef enum
@@ -443,7 +457,7 @@ BOOL    BTLV_EFFVM_Main( VMHANDLE *vmh )
 
   if( ( ret == FALSE ) && ( bevw->sequence ) )
   {
-    if( bevw->waza < BTLEFF_SINGLE_ENCOUNT_1 )
+    if( bevw->execute_effect_type == EXECUTE_EFF_TYPE_WAZA )
     { 
       //HPゲージ表示
       BTLV_EFFECT_SetGaugeDrawEnable( TRUE );
@@ -454,6 +468,16 @@ BOOL    BTLV_EFFVM_Main( VMHANDLE *vmh )
                         GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG3 |
                         GX_BLEND_PLANEMASK_OBJ | GX_BLEND_PLANEMASK_BD,
                         31, 3 );
+      //BGMのマスターボリュームを上げる
+      { 
+        BTLV_EFFVM_CHANGE_VOLUME* becv = GFL_HEAP_AllocMemory( bevw->heapID, sizeof( BTLV_EFFVM_CHANGE_VOLUME ) );
+        becv->tcb_index = EFFVM_GetTcbIndex( bevw );
+        becv->start_vol = EFFVM_CHANGE_VOLUME;
+        becv->end_vol = 127 << FX32_SHIFT;
+        becv->bevw = bevw;
+        BTLV_EFFTOOL_CalcMove( becv->start_vol, becv->end_vol, &becv->vec_vol, EFFVM_CHANGE_VOLUME_FRAME );
+        bevw->tcb[ becv->tcb_index ] = GFL_TCB_AddTask( bevw->tcbsys, TCB_EFFVM_ChangeVolume, becv, 0 );
+      }
     }
 
     GFL_HEAP_FreeMemory( bevw->sequence );
@@ -516,6 +540,16 @@ void  BTLV_EFFVM_Start( VMHANDLE *vmh, BtlvMcssPos from, BtlvMcssPos to, WazaID 
                       GX_BLEND_PLANEMASK_OBJ | GX_BLEND_PLANEMASK_BD,
                       0, 0 );
     bevw->execute_effect_type = EXECUTE_EFF_TYPE_WAZA;
+    //BGMのマスターボリュームを下げる
+    { 
+      BTLV_EFFVM_CHANGE_VOLUME* becv = GFL_HEAP_AllocMemory( bevw->heapID, sizeof( BTLV_EFFVM_CHANGE_VOLUME ) );
+      becv->tcb_index = EFFVM_GetTcbIndex( bevw );
+      becv->start_vol = 127 << FX32_ONE;
+      becv->end_vol = EFFVM_CHANGE_VOLUME;
+      becv->bevw = bevw;
+      BTLV_EFFTOOL_CalcMove( becv->start_vol, becv->end_vol, &becv->vec_vol, EFFVM_CHANGE_VOLUME_FRAME );
+      bevw->tcb[ becv->tcb_index ] = GFL_TCB_AddTask( bevw->tcbsys, TCB_EFFVM_ChangeVolume, becv, 0 );
+    }
   }
   else
   { 
@@ -554,6 +588,7 @@ void  BTLV_EFFVM_Start( VMHANDLE *vmh, BtlvMcssPos from, BtlvMcssPos to, WazaID 
   bevw->sequence_work = 0;
 
   VM_Start( vmh, &bevw->sequence[ (*start_ofs) ] );
+
 }
 
 //============================================================================================
@@ -4241,6 +4276,27 @@ static  void  TCB_EFFVM_SEEFFECT( GFL_TCB* tcb, void* work )
     bes->bevw->se_effect_enable_flag = 0;
     bes->bevw->tcb[ bes->tcb_index ] = NULL;
     GFL_HEAP_FreeMemory( bes );
+    GFL_TCB_DeleteTask( tcb );
+  }
+}
+
+//============================================================================================
+/**
+ * @brief ボリューム変化
+ */
+//============================================================================================
+static  void  TCB_EFFVM_ChangeVolume( GFL_TCB* tcb, void* work )
+{ 
+  BTLV_EFFVM_CHANGE_VOLUME* becv = ( BTLV_EFFVM_CHANGE_VOLUME* )work;
+  BOOL  ret;
+
+  BTLV_EFFTOOL_CheckMove( &becv->start_vol, &becv->vec_vol, &becv->end_vol, &ret );
+  PMSND_ChangeBGMVolume( 0xffff, becv->start_vol >> FX32_SHIFT );
+
+  if( ret )
+  { 
+    becv->bevw->tcb[ becv->tcb_index ] = NULL;
+    GFL_HEAP_FreeMemory( becv );
     GFL_TCB_DeleteTask( tcb );
   }
 }

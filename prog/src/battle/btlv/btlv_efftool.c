@@ -22,6 +22,27 @@
 /**
  *	移動量を計算
  *
+ * @param[in]	  start	移動元
+ * @param[in]	  endif	移動先
+ * @param[out]	out		移動量を格納するワークへのポインタ
+ * @param[in]	  frame	移動フレーム数
+ */
+//============================================================================================
+void	BTLV_EFFTOOL_CalcMove( fx32 start, fx32 end, fx32 *out, fx32 frame )
+{
+	*out = 0;
+	if( end - start ){
+		*out = FX_Div( end - start, frame );
+		if( *out == 0 ){
+			*out = 1;
+		}
+	}
+}
+
+//============================================================================================
+/**
+ *	移動量を計算（3軸Ver）
+ *
  * @param[in]	start	移動元
  * @param[in]	endif	移動先
  * @param[out]	out		移動量を格納するワークへのポインタ

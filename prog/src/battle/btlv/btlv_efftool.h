@@ -48,6 +48,7 @@ typedef struct
 	u16           pal_fade_rgb;				//パレットフェード　end_evy時のrgb値
 }EFFTOOL_PAL_FADE_WORK;
 
+extern  void	BTLV_EFFTOOL_CalcMove( fx32 start, fx32 end, fx32 *out, fx32 frame );
 extern	void	BTLV_EFFTOOL_CalcMoveVector( VecFx32 *start, VecFx32 *end, VecFx32 *out, fx32 flame );
 extern	void	BTLV_EFFTOOL_CheckMove( fx32 *now_pos, fx32 *vec, fx32 *move_pos, BOOL *ret );
 extern  void	BTLV_EFFTOOL_CheckVecMove( VecFx32 *now_pos, VecFx32 *vec, VecFx32 *move_pos, BOOL *ret );
