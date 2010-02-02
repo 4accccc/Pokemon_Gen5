@@ -695,7 +695,7 @@
   // 四天王関連
   DEF_CMD( EvCmdFourKings_WalkEvent, EV_SEQ_FOURKINGS_WALKEVENT )
   DEF_CMD( EvCmdFourKings_SetCameraParam, EV_SEQ_FOURKINGS_SET_TOP_CAMERA )
-  NO_CMD()
+  DEF_CMD( EvCmdFourKings_SetGhostSparkSound, EV_SEQ_FOURKINGS_SET_GHOST_SPARK_SOUND )
   NO_CMD()
 
   // 遊覧船関連

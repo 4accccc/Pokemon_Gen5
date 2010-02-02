@@ -6386,6 +6386,18 @@
   .short  \fourking_id
   .endm
 
+//--------------------------------------------------------------
+/**
+ * @def _FOURKINGS_SET_GHOST_SPARK_SOUND
+ * @brief 四天王　ゴースト部屋　雷音
+ */
+//--------------------------------------------------------------
+#define _FOURKINGS_SET_GHOST_SPARK_SOUND() _ASM_FOURKINGS_SET_GHOST_SPARK_SOUND
+
+  .macro  _ASM_FOURKINGS_SET_GHOST_SPARK_SOUND
+  .short  EV_SEQ_FOURKINGS_SET_GHOST_SPARK_SOUND
+  .endm
+
 
 
 //======================================================================

@@ -34,6 +34,8 @@
 
 #include "field_fk_sound_anime.h"
 
+#include "field_sound.h"
+
 
 #ifdef PM_DEBUG
 
@@ -1255,5 +1257,184 @@ static BOOL EV_SE_ANIME_Update( EV_CIRCLEWALK_SE* p_wk )
   }
   return result;
 }
+
+
+
+
+
+
+
+
+//-----------------------------------------------------------------------------
+/**
+ *      雷音用のシステム
+ */
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+/**
+ *					定数宣言
+*/
+//-----------------------------------------------------------------------------
+#define GHOST_SPARK_SOUND_ANM_INDEX (1)
+
+// 位置
+static const VecFx32 sc_GHOST_SPARK_SARCH_POS = 
+{
+  FX32_CONST(256), 0, FX32_CONST(240)
+};
+
+// 音のタイミング
+//static fx32 sc_GHOST_SPARK_SOUND_TIMING[] = {
+static const fx32 sc_GHOST_SPARK_SOUND_TIMING[] = {
+  FX32_CONST(6), 
+};
+
+#define GHOST_SPARK_SOUND_TIMING_TBL_MAX  (NELEMS(sc_GHOST_SPARK_SOUND_TIMING))
+
+
+// サウンドID
+#define GHOST_SND_SE_SPARK      ( SEQ_SE_FLD_33 )
+#define GHOST_SND_SE_SPARK_SML  ( SEQ_SE_FLD_34 )
+
+//-----------------------------------------------------------------------------
+/**
+ *					構造体宣言
+*/
+//-----------------------------------------------------------------------------
+//-------------------------------------
+///	SPARK SOUND
+//=====================================
+typedef struct 
+{
+  FIELD_BMODEL_MAN* p_man;
+  const G3DMAPOBJST* cp_spark_obj;
+
+  fx32 next_frame;
+  int tbl_index;
+} GHOST_SPARK_SOUND;
+
+//-----------------------------------------------------------------------------
+/**
+ *					プロトタイプ宣言
+*/
+//-----------------------------------------------------------------------------
+
+static void GHOST_SPARK_SOUND_Create(FLDMAPFUNC_WORK* p_funcwk, FIELDMAP_WORK* p_fieldmap, void* p_work );
+static void GHOST_SPARK_SOUND_Delete(FLDMAPFUNC_WORK* p_funcwk, FIELDMAP_WORK* p_fieldmap, void* p_work );
+static void GHOST_SPARK_SOUND_Update(FLDMAPFUNC_WORK* p_funcwk, FIELDMAP_WORK* p_fieldmap, void* p_work );
+
+
+static const FLDMAPFUNC_DATA sc_FLDMAPFUNC_GHOST_SPARK_SOUND = 
+{
+  128,
+  sizeof(GHOST_SPARK_SOUND),
+  GHOST_SPARK_SOUND_Create,
+  GHOST_SPARK_SOUND_Delete,
+  GHOST_SPARK_SOUND_Update,
+  NULL,
+};
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  四天王　ゴースト部屋　雷音　起動
+ *
+ *	@param	p_fieldmap 
+ */
+//-----------------------------------------------------------------------------
+void FIELDMAPFUNC_FourkingsGhostSparkSound( FIELDMAP_WORK* p_fieldmap )
+{
+  FLDMAPFUNC_WORK * p_funcwk;
+  FLDMAPFUNC_SYS* p_funcsys = FIELDMAP_GetFldmapFuncSys( p_fieldmap );
+
+  // 
+  p_funcwk = FLDMAPFUNC_Create(p_funcsys, &sc_FLDMAPFUNC_GHOST_SPARK_SOUND);
+}
+
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ゴースト　雷音　管理
+ */
+//-----------------------------------------------------------------------------
+static void GHOST_SPARK_SOUND_Create(FLDMAPFUNC_WORK* p_funcwk, FIELDMAP_WORK* p_fieldmap, void* p_work )
+{
+  GHOST_SPARK_SOUND* p_wk = p_work;
+  FLDMAPPER* p_mapper = FIELDMAP_GetFieldG3Dmapper( p_fieldmap );
+  FIELD_BMODEL_MAN* p_model_man = FLDMAPPER_GetBuildModelManager( p_mapper );
+  fx32 start_frame;
+  int  i;
+
+  // 動作配置オブジェ
+  p_wk->cp_spark_obj  = FIELD_BMODEL_MAN_SearchObjStatusPos( p_model_man, BM_SEARCH_ID_NULL, &sc_GHOST_SPARK_SARCH_POS );
+  p_wk->p_man         = p_model_man;
+
+  GF_ASSERT(p_wk->cp_spark_obj);
+  GF_ASSERT(p_wk->p_man);
+  
+  start_frame = G3DMAPOBJST_getAnimeFrame( p_wk->p_man, p_wk->cp_spark_obj, GHOST_SPARK_SOUND_ANM_INDEX );
+  
+  // 開始時の音だしフレームを設定
+  p_wk->next_frame  = sc_GHOST_SPARK_SOUND_TIMING[0];
+  p_wk->tbl_index   = 0;
+  for( i=0; i<GHOST_SPARK_SOUND_TIMING_TBL_MAX; i++ )
+  {
+    if( start_frame < sc_GHOST_SPARK_SOUND_TIMING[i] )
+    {
+      p_wk->next_frame  = sc_GHOST_SPARK_SOUND_TIMING[i];
+      p_wk->tbl_index   = i;
+      break;
+    }
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ゴースト　雷音　破棄
+ */
+//-----------------------------------------------------------------------------
+static void GHOST_SPARK_SOUND_Delete(FLDMAPFUNC_WORK* p_funcwk, FIELDMAP_WORK* p_fieldmap, void* p_work )
+{
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ゴースト　雷音　更新
+ */
+//-----------------------------------------------------------------------------
+static void GHOST_SPARK_SOUND_Update(FLDMAPFUNC_WORK* p_funcwk, FIELDMAP_WORK* p_fieldmap, void* p_work )
+{
+  GHOST_SPARK_SOUND* p_wk = p_work;
+  fx32 now_frame;
+
+  now_frame = G3DMAPOBJST_getAnimeFrame( p_wk->p_man, p_wk->cp_spark_obj, GHOST_SPARK_SOUND_ANM_INDEX );
+
+  // 決まったフレームで、音を鳴らす。
+  if( p_wk->next_frame == now_frame )
+  {
+    p_wk->tbl_index = (p_wk->tbl_index + 1) % GHOST_SPARK_SOUND_TIMING_TBL_MAX;
+
+    p_wk->next_frame = sc_GHOST_SPARK_SOUND_TIMING[ p_wk->tbl_index ];
+    PMSND_PlaySE( GHOST_SND_SE_SPARK );
+  }
+
+  /*
+#ifdef PM_DEBUG
+  if( GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT  )
+  {
+    sc_GHOST_SPARK_SOUND_TIMING[0] -= FX32_ONE;
+    TOMOYA_Printf( "frame %d\n", FX_Whole(sc_GHOST_SPARK_SOUND_TIMING[0]) );
+  }
+  else if( GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT  )
+  {
+    sc_GHOST_SPARK_SOUND_TIMING[0] += FX32_ONE;
+    TOMOYA_Printf( "frame %d\n", FX_Whole(sc_GHOST_SPARK_SOUND_TIMING[0]) );
+  }
+#endif
+//*/
+}
+
+
 
 

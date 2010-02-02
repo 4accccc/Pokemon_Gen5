@@ -353,6 +353,7 @@ static void OBJHND_finalize( OBJ_HND * objHdl );
 static void OBJHND_animate(const FIELD_BMODEL_MAN * man, OBJ_HND * objHdl );
 static void OBJHND_setAnime( OBJ_HND * objHdl, u32 anmNo, BMANM_REQUEST req);
 static BOOL OBJHND_getAnimeStatus( const OBJ_HND * objHdl, u32 anmNo);
+static fx32 OBJHND_getAnimeFrame( const OBJ_HND * objHdl, u32 anmNo);
 
 static void TIMEANIME_CTRL_init( TIMEANIME_CTRL * tmanm_ctrl );
 static void TIMEANIME_CTRL_update( TIMEANIME_CTRL * tmanm_ctrl );
@@ -1716,6 +1717,26 @@ static BOOL OBJHND_getAnimeStatus( const OBJ_HND * objHdl, u32 anmNo)
   return FALSE;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  アニメーションフレームを取得する
+ *
+ *	@param	objHdl  ハンドル
+ *  
+ *	@return フレーム数
+ */
+//-----------------------------------------------------------------------------
+static fx32 OBJHND_getAnimeFrame( const OBJ_HND * objHdl, u32 anmNo)
+{
+  int frame;
+  
+  GF_ASSERT( objHdl );
+  GFL_G3D_OBJECT_GetAnimeFrame( objHdl->g3Dobj, anmNo, &frame );
+
+  return frame;
+}
+
+
 
 //============================================================================================
 //
@@ -1971,6 +1992,26 @@ void G3DMAPOBJST_getPos(G3DMAPOBJST * obj, VecFx32 * dst)
   GFL_G3D_MAP_GetTrans( obj->g3Dmap, &pos );
   VEC_Add( &obj->objSt->trans, &pos, dst );
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  配置モデル実データ：アニメーションフレーム取得
+ *
+ *	@param	obj       オブジェ
+ *	@param  anm_idx   アニメーションインデックス
+ *
+ *	@return アニメーションフレーム
+ */
+//-----------------------------------------------------------------------------
+fx32 G3DMAPOBJST_getAnimeFrame(FIELD_BMODEL_MAN* man, const G3DMAPOBJST * obj, u32 anm_idx )
+{
+  u8 entryNo;
+  entryNo = G3DMAPOBJST_getEntryNo( obj );
+  //entryNo = obj->objSt->id;
+  ENTRYNO_ASSERT( man, entryNo );
+  return OBJHND_getAnimeFrame( &man->objHdl[entryNo], anm_idx );
+}
+
 
 
 //============================================================================================

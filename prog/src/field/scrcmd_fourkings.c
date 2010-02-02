@@ -102,3 +102,24 @@ VMCMD_RESULT EvCmdFourKings_SetCameraParam( VMHANDLE *core, void *wk )
 
   return VMCMD_RESULT_CONTINUE;
 }
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ゴースト雷音　設定
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdFourKings_SetGhostSparkSound( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK*  work = (SCRCMD_WORK*)wk;
+  GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
+  FIELDMAP_WORK* fieldWork = GAMESYSTEM_GetFieldMapWork( gsys );
+
+  // 雷音ON
+  FIELDMAPFUNC_FourkingsGhostSparkSound( fieldWork );
+
+  return VMCMD_RESULT_CONTINUE;
+}
+
+
+
