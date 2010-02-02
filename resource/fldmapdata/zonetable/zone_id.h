@@ -461,6 +461,7 @@
 #define ZONE_ID_WC10             (457)
 #define ZONE_ID_WC10PCR0101      (458)
 #define ZONE_ID_WC10R0101        (459)
-#define ZONE_ID_MAX	(460)
+#define ZONE_ID_C11R0201         (460)
+#define ZONE_ID_MAX	(461)
 #endif // __ZONE_ID_H__
 

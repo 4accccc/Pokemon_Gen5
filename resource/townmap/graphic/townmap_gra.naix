@@ -14,17 +14,20 @@ enum {
 	NARC_townmap_gra_tmap_bg_d_NCLR = 0,
 	NARC_townmap_gra_tmap_bg_u_NCLR = 1,
 	NARC_townmap_gra_tmap_obj_NCLR = 2,
-	NARC_townmap_gra_tmap_bg_d_NCGR = 3,
-	NARC_townmap_gra_tmap_bg_u_NCGR = 4,
-	NARC_townmap_gra_tmap_map_d_NCGR = 5,
-	NARC_townmap_gra_tmap_obj_d_NCGR = 6,
-	NARC_townmap_gra_tmap_test_NCGR = 7,
-	NARC_townmap_gra_tmap_obj_d_NCER = 8,
-	NARC_townmap_gra_tmap_bar_d_NSCR = 9,
-	NARC_townmap_gra_tmap_bg_u_NSCR = 10,
-	NARC_townmap_gra_tmap_map_d_NSCR = 11,
-	NARC_townmap_gra_tmap_root_d_NSCR = 12,
-	NARC_townmap_gra_tmap_obj_d_NANR = 13
+	NARC_townmap_gra_tmap_ship_NCLR = 3,
+	NARC_townmap_gra_tmap_bg_d_NCGR = 4,
+	NARC_townmap_gra_tmap_bg_u_NCGR = 5,
+	NARC_townmap_gra_tmap_map_d_NCGR = 6,
+	NARC_townmap_gra_tmap_obj_d_NCGR = 7,
+	NARC_townmap_gra_tmap_ship_NCGR = 8,
+	NARC_townmap_gra_tmap_test_NCGR = 9,
+	NARC_townmap_gra_tmap_obj_d_NCER = 10,
+	NARC_townmap_gra_tmap_bar_d_NSCR = 11,
+	NARC_townmap_gra_tmap_bg_u_NSCR = 12,
+	NARC_townmap_gra_tmap_map_d_NSCR = 13,
+	NARC_townmap_gra_tmap_root_d_NSCR = 14,
+	NARC_townmap_gra_tmap_ship_NSCR = 15,
+	NARC_townmap_gra_tmap_obj_d_NANR = 16
 };
 
 /* NARC_TOWNMAP_GRA_NAIX_ */
