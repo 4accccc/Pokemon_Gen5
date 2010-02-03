@@ -1,0 +1,104 @@
+<?xml version='1.0' encoding='SHIFT_JIS'?><imd version='1.6.0'>
+
+<head>
+	<create date='2009-09-18T12:32:09' host='W00154A' user='lee_hyunjung' source='monsterball.mb'/>
+	<title>Model Data for NINTENDO NITRO-System</title>
+	<generator name='Maya 6.5 NNS_Export' version='1.6.0.20060417'/>
+</head>
+
+<body>
+
+<original_create date='2009-09-18T12:32:09' host='W00154A' user='lee_hyunjung' source='monsterball.mb'/>
+<original_generator name='Maya 6.5 NNS_Export' version='1.6.0.20060417'/>
+
+<model_info tool_start_frame='0' force_full_weight='off' magnify='1.000000' scaling_rule='standard' compress_node='none' material_size='1 1' vertex_style='direct' compress_material='off' output_texture='used' node_size='1 1' pos_scale='3' tex_matrix_mode='maya' use_primitive_strip='on'/>
+
+<box_test xyz='-2.000000 0.000000 0.000000' whd='4.000000 4.000000 0.000000' pos_scale='3'/>
+
+<tex_image_array size='1'>
+	<tex_image name='monsterball' format='palette16' original_width='32' original_height='32' index='0' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/monsterball/monsterball.tga' palette_name='monsterball' width='32' color0_mode='transparency'>
+		<bitmap size='256'>
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 6000 6666 6666 6666 6666 0006 0000 
+			0000 8600 8888 8888 8888 8888 0068 0000 
+			0000 7600 7777 7777 7777 7777 0067 0000 
+			0000 7600 7557 7777 7777 7777 0067 0000 
+			0000 7600 3552 2222 2222 2222 0067 0000 
+			0000 7600 3d3d dddd dddd dddd 0067 0000 
+			0000 7600 dd3d dede dede dded 0067 0000 
+			0000 7600 dddd dede dede dded 0067 0000 
+			0000 7600 dddd dede dede dded 0067 0000 
+			0000 7600 dedd dede dede dded 0067 0000 
+			0000 7600 dddd ddde dede dddd 0067 0000 
+			0000 7600 dedd dddd dede d44d 0067 0000 
+			0000 7600 dedd dddd dede d44d 0067 0000 
+			0000 7600 dddd dddd dddd dddd 0067 0000 
+			0000 7600 8888 8888 8888 8888 0067 0000 
+			0000 7600 7777 7777 7777 7777 0067 0000 
+			0000 6000 6666 6666 6666 6666 0006 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+		</bitmap>
+	</tex_image>
+</tex_image_array>
+
+<tex_palette_array size='1'>
+	<tex_palette name='monsterball' color_size='16' index='0'>
+		4330 14a5 5294 0c72 4258 0278 0888 190c 
+		2170 2df2 192f 3a7a 5f5f 7fff 5e91 0000 
+	</tex_palette>
+</tex_palette_array>
+
+<material_array size='1'>
+	<material name='obj' tex_translate='0.000000 0.000000' tex_image_idx='0' tex_gen_mode='none' polygon_id='0' tex_palette_idx='0' light0='on' fog_flag='off' render_1_pixel='off' diffuse='0 0 0' shininess_table_flag='off' light1='off' specular='0 0 0' tex_tiling='clamp clamp' light2='off' ambient='31 31 31' index='0' light3='off' emission='0 0 0' polygon_mode='modulate' depth_test_decal='off' tex_rotate='0.000000' face='front' wire_mode='off' tex_scale='1.000000 1.000000' alpha='31' translucent_update_depth='off' far_clipping='off'/>
+</material_array>
+
+<matrix_array size='1'>
+	<matrix node_idx='0' index='0' mtx_weight='1'/>
+</matrix_array>
+
+<polygon_array size='1'>
+	<polygon name='polygon0' volume_max='2.000000 4.000000 0.000000' clr_flag='off' triangle_size='0' volume_min='-2.000000 0.000000 0.000000' volume_r='4.472168' polygon_size='1' nrm_flag='on' tex_flag='on' index='0' quad_size='1' vertex_size='4' mtx_prim_size='1'>
+		<mtx_prim index='0'>
+			<mtx_list size='1'>0</mtx_list>
+			<primitive_array size='1'>
+				<primitive type='quads' index='0' vertex_size='4'>
+					<mtx idx='0'/>
+					<tex st='0.000000 32.000000'/>
+					<nrm xyz='0.000000 0.000000 0.998047'/>
+					<pos_s xyz='-2.000000 0.000000 0.000000'/>
+					<tex st='32.000000 32.000000'/>
+					<pos_xy xy='2.000000 0.000000'/>
+					<tex st='32.000000 0.000000'/>
+					<pos_xy xy='2.000000 4.000000'/>
+					<tex st='0.000000 0.000000'/>
+					<pos_xy xy='-2.000000 4.000000'/>
+				</primitive>
+			</primitive_array>
+		</mtx_prim>
+	</polygon>
+</polygon_array>
+
+<node_array size='1'>
+	<node name='pPlane1' kind='mesh' volume_max='2.000000 4.000000 0.000000' parent='-1' scale='1.000000 1.000000 1.000000' display_size='1' draw_mtx='on' billboard='on' triangle_size='0' volume_min='-2.000000 0.000000 0.000000' volume_r='4.472168' translate='0.000000 0.000000 0.000000' polygon_size='1' index='0' rotate='0.000000 0.000000 0.000000' quad_size='1' child='-1' vertex_size='4' brother_next='-1' brother_prev='-1' visibility='on'>
+		<display polygon='0' priority='0' index='0' material='0'/>
+	</node>
+</node_array>
+
+<output_info triangle_size='0' polygon_size='1' quad_size='1' vertex_size='4'/>
+
+</body>
+
+</imd>
