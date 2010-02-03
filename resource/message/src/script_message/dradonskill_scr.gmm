@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2010-01-12T12:38:19"/>
+	<create user="matsumiya" host="W00224" date="2010-02-03T17:55:05"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -380,7 +380,8 @@
 		<comment>♂：ドラゴン技教え
 ・はいを選択
 　覚えられるポケモンがいるが
-　なつき度がＭＡＸではない</comment>
+　なつき度がＭＡＸではない
+・選択画面で選んだ場合も</comment>
 		<attribute name="キャラ指定">ジムリーダー
 シャガ</attribute>
 		<language name="JPN" width="256">フム……▼
@@ -618,7 +619,8 @@
 		<comment>♂：ドラゴン技教え
 ・はいを選択
 　覚えられるポケモンがいるが
-　なつき度がＭＡＸではない</comment>
+　なつき度がＭＡＸではない
+・選択画面で選んだ場合も</comment>
 		<attribute name="キャラ指定">ジムリーダー
 アイリス</attribute>
 		<language name="JPN" width="256">どれどれ……▼
