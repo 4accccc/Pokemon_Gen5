@@ -182,3 +182,10 @@
 "sentaku_win.NCLR"
 "sentaku_win.NCGR"
 "sentaku_win.NSCR"
+
+"tr2dgra_dummy_32k.NCER"
+"tr2dgra_dummy_64k.NCER"
+"tr2dgra_dummy_128k.NCER"
+"tr2dgra_dummy_32k.NANR"
+"tr2dgra_dummy_64k.NANR"
+"tr2dgra_dummy_128k.NANR"

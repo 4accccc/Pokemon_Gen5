@@ -174,7 +174,13 @@ enum {
 	NARC_app_menu_common_pokerus_128k_NANR = 160,
 	NARC_app_menu_common_sentaku_win_NCLR = 161,
 	NARC_app_menu_common_sentaku_win_NCGR = 162,
-	NARC_app_menu_common_sentaku_win_NSCR = 163
+	NARC_app_menu_common_sentaku_win_NSCR = 163,
+	NARC_app_menu_common_tr2dgra_dummy_32k_NCER = 164,
+	NARC_app_menu_common_tr2dgra_dummy_64k_NCER = 165,
+	NARC_app_menu_common_tr2dgra_dummy_128k_NCER = 166,
+	NARC_app_menu_common_tr2dgra_dummy_32k_NANR = 167,
+	NARC_app_menu_common_tr2dgra_dummy_64k_NANR = 168,
+	NARC_app_menu_common_tr2dgra_dummy_128k_NANR = 169
 };
 
 /* NARC_APP_MENU_COMMON_NAIX_ */
