@@ -1,5 +1,5 @@
 #event data
-#save date:2009/12/18 17:16:58
+#save date:2010/02/03 15:42:42
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c05gym0101.wms
 #SECTION START:OBJ_EVENT
@@ -45,9 +45,9 @@ EVENTDATA_POSTYPE_GRID
 #type
 1
 #ID name
-C05GYM0101_LIFT_00D
+C05GYM0101_STOPPER_00D_B1
 #OBJ CODE Number
-NONDRAW
+STOPPER
 #MOVE CODE Number
 MV_DMY
 #EVENT TYPE Number
@@ -55,7 +55,7 @@ EV_TYPE_NORMAL
 #Flag Name
 0
 #Event Script Name
-SCRID_C05GYM0101_LIFT_00D
+SCRID_DUMMY
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
@@ -76,9 +76,9 @@ EVENTDATA_POSTYPE_GRID
 #type
 1
 #ID name
-C05GYM0101_LIFT_00U
+C05GYM0101_STOPPER_00U_B1
 #OBJ CODE Number
-NONDRAW
+STOPPER
 #MOVE CODE Number
 MV_DMY
 #EVENT TYPE Number
@@ -86,7 +86,7 @@ EV_TYPE_NORMAL
 #Flag Name
 0
 #Event Script Name
-SCRID_C05GYM0101_LIFT_00U
+SCRID_DUMMY
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
@@ -107,9 +107,9 @@ EVENTDATA_POSTYPE_GRID
 #type
 1
 #ID name
-C05GYM0101_LIFT_05D
+C05GYM0101_STOPPER_05D
 #OBJ CODE Number
-NONDRAW
+STOPPER
 #MOVE CODE Number
 MV_DMY
 #EVENT TYPE Number
@@ -117,7 +117,7 @@ EV_TYPE_NORMAL
 #Flag Name
 0
 #Event Script Name
-SCRID_C05GYM0101_LIFT_05D
+SCRID_DUMMY
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
@@ -138,9 +138,9 @@ EVENTDATA_POSTYPE_GRID
 #type
 1
 #ID name
-C05GYM0101_LIFT_05U
+C05GYM0101_STOPPER_05U
 #OBJ CODE Number
-NONDRAW
+STOPPER
 #MOVE CODE Number
 MV_DMY
 #EVENT TYPE Number
@@ -148,7 +148,7 @@ EV_TYPE_NORMAL
 #Flag Name
 0
 #Event Script Name
-SCRID_C05GYM0101_LIFT_05U
+SCRID_DUMMY
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
@@ -169,9 +169,9 @@ EVENTDATA_POSTYPE_GRID
 #type
 1
 #ID name
-C05GYM0101_LIFT_04D
+C05GYM0101_STOPPER_04D_B3
 #OBJ CODE Number
-NONDRAW
+STOPPER
 #MOVE CODE Number
 MV_DMY
 #EVENT TYPE Number
@@ -179,7 +179,7 @@ EV_TYPE_NORMAL
 #Flag Name
 0
 #Event Script Name
-SCRID_C05GYM0101_LIFT_04D
+SCRID_DUMMY
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
@@ -200,9 +200,9 @@ EVENTDATA_POSTYPE_GRID
 #type
 1
 #ID name
-C05GYM0101_LIFT_04U
+C05GYM0101_STOPPER_04U_B3
 #OBJ CODE Number
-NONDRAW
+STOPPER
 #MOVE CODE Number
 MV_DMY
 #EVENT TYPE Number
@@ -210,7 +210,7 @@ EV_TYPE_NORMAL
 #Flag Name
 0
 #Event Script Name
-SCRID_C05GYM0101_LIFT_04U
+SCRID_DUMMY
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
@@ -231,9 +231,9 @@ EVENTDATA_POSTYPE_GRID
 #type
 1
 #ID name
-C05GYM0101_LIFT_01D
+C05GYM0101_STOPPER_01D_B2
 #OBJ CODE Number
-NONDRAW
+STOPPER
 #MOVE CODE Number
 MV_DMY
 #EVENT TYPE Number
@@ -241,7 +241,7 @@ EV_TYPE_NORMAL
 #Flag Name
 0
 #Event Script Name
-SCRID_C05GYM0101_LIFT_01D
+SCRID_DUMMY
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
@@ -262,9 +262,9 @@ EVENTDATA_POSTYPE_GRID
 #type
 1
 #ID name
-C05GYM0101_LIFT_01U
+C05GYM0101_STOPPER_01U_B2
 #OBJ CODE Number
-NONDRAW
+STOPPER
 #MOVE CODE Number
 MV_DMY
 #EVENT TYPE Number
@@ -272,7 +272,7 @@ EV_TYPE_NORMAL
 #Flag Name
 0
 #Event Script Name
-SCRID_C05GYM0101_LIFT_01U
+SCRID_DUMMY
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
@@ -293,9 +293,9 @@ EVENTDATA_POSTYPE_GRID
 #type
 1
 #ID name
-C05GYM0101_LIFT_02D
+C05GYM0101_STOPPER_02D_B2
 #OBJ CODE Number
-NONDRAW
+STOPPER
 #MOVE CODE Number
 MV_DMY
 #EVENT TYPE Number
@@ -303,7 +303,7 @@ EV_TYPE_NORMAL
 #Flag Name
 0
 #Event Script Name
-SCRID_C05GYM0101_LIFT_02D
+SCRID_DUMMY
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
@@ -324,9 +324,9 @@ EVENTDATA_POSTYPE_GRID
 #type
 1
 #ID name
-C05GYM0101_LIFT_02U
+C05GYM0101_STOPPER_02U_B2
 #OBJ CODE Number
-NONDRAW
+STOPPER
 #MOVE CODE Number
 MV_DMY
 #EVENT TYPE Number
@@ -334,7 +334,7 @@ EV_TYPE_NORMAL
 #Flag Name
 0
 #Event Script Name
-SCRID_C05GYM0101_LIFT_02U
+SCRID_DUMMY
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
@@ -355,9 +355,9 @@ EVENTDATA_POSTYPE_GRID
 #type
 1
 #ID name
-C05GYM0101_LIFT_03D
+C05GYM0101_STOPPER_03D_B3
 #OBJ CODE Number
-NONDRAW
+STOPPER
 #MOVE CODE Number
 MV_DMY
 #EVENT TYPE Number
@@ -365,7 +365,7 @@ EV_TYPE_NORMAL
 #Flag Name
 0
 #Event Script Name
-SCRID_C05GYM0101_LIFT_03D
+SCRID_DUMMY
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
@@ -386,9 +386,9 @@ EVENTDATA_POSTYPE_GRID
 #type
 1
 #ID name
-C05GYM0101_LIFT_03U
+C05GYM0101_STOPPER_03U_B3
 #OBJ CODE Number
-NONDRAW
+STOPPER
 #MOVE CODE Number
 MV_DMY
 #EVENT TYPE Number
@@ -396,7 +396,7 @@ EV_TYPE_NORMAL
 #Flag Name
 0
 #Event Script Name
-SCRID_C05GYM0101_LIFT_03U
+SCRID_DUMMY
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
@@ -572,9 +572,9 @@ EVENTDATA_POSTYPE_GRID
 #type
 1
 #ID name
-C05GYM0101_EXITLIFT_00D
+C05GYM0101_EXITSTOPPER_00D
 #OBJ CODE Number
-NONDRAW
+STOPPER
 #MOVE CODE Number
 MV_DMY
 #EVENT TYPE Number
@@ -582,7 +582,7 @@ EV_TYPE_NORMAL
 #Flag Name
 0
 #Event Script Name
-SCRID_C05GYM0101_EXITLIFT_00D
+SCRID_DUMMY
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
@@ -603,9 +603,9 @@ EVENTDATA_POSTYPE_GRID
 #type
 1
 #ID name
-C05GYM0101_EXITLIFT_00U
+C05GYM0101_EXITSTOPPER_00U
 #OBJ CODE Number
-NONDRAW
+STOPPER
 #MOVE CODE Number
 MV_DMY
 #EVENT TYPE Number
@@ -613,7 +613,7 @@ EV_TYPE_NORMAL
 #Flag Name
 0
 #Event Script Name
-SCRID_C05GYM0101_EXITLIFT_00U
+SCRID_DUMMY
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
@@ -636,7 +636,7 @@ EVENTDATA_POSTYPE_GRID
 #ID name
 C05GYM0101_DUMMY_00
 #OBJ CODE Number
-NONDRAW
+STOPPER
 #MOVE CODE Number
 MV_DMY
 #EVENT TYPE Number
@@ -667,7 +667,7 @@ EVENTDATA_POSTYPE_GRID
 #ID name
 C05GYM0101_DUMMY_01
 #OBJ CODE Number
-NONDRAW
+STOPPER
 #MOVE CODE Number
 MV_DMY
 #EVENT TYPE Number
@@ -825,7 +825,345 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-0
+26
+#event number: 0
+#Bg Event Label
+C05GYM0101_LIFT_00U_B1
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_C05GYM0101_LIFT_00U
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+40 800 -136
+#event number: 1
+#Bg Event Label
+C05GYM0101_LIFT_00D_B1
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_C05GYM0101_LIFT_00D
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+104 800 -136
+#event number: 2
+#Bg Event Label
+C05GYM0101_LIFT_00U_B2
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_C05GYM0101_LIFT_00U
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+40 640 -136
+#event number: 3
+#Bg Event Label
+C05GYM0101_LIFT_00D_B2
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_C05GYM0101_LIFT_00D
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+104 640 -136
+#event number: 4
+#Bg Event Label
+C05GYM0101_LIFT_01U_B2
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_C05GYM0101_LIFT_01U
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+40 640 -72
+#event number: 5
+#Bg Event Label
+C05GYM0101_LIFT_01D_B2
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_C05GYM0101_LIFT_01D
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+104 640 -72
+#event number: 6
+#Bg Event Label
+C05GYM0101_LIFT_01U_B1
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_C05GYM0101_LIFT_01U
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+40 800 -72
+#event number: 7
+#Bg Event Label
+C05GYM0101_LIFT_01D_B1
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_C05GYM0101_LIFT_01D
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+104 800 -72
+#event number: 8
+#Bg Event Label
+C05GYM0101_LIFT_02U_B2
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_C05GYM0101_LIFT_02U
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-120 640 -136
+#event number: 9
+#Bg Event Label
+C05GYM0101_LIFT_02D_B2
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_C05GYM0101_LIFT_02D
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-56 640 -136
+#event number: 10
+#Bg Event Label
+C05GYM0101_LIFT_02D_B3
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_C05GYM0101_LIFT_02D
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-56 480 -136
+#event number: 11
+#Bg Event Label
+C05GYM0101_LIFT_02U_B3
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_C05GYM0101_LIFT_02U
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-120 480 -136
+#event number: 12
+#Bg Event Label
+C05GYM0101_LIFT_03U_B2
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_C05GYM0101_LIFT_03U
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-40 640 -136
+#event number: 13
+#Bg Event Label
+C05GYM0101_LIFT_03D_B2
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_C05GYM0101_LIFT_03D
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+24 640 -136
+#event number: 14
+#Bg Event Label
+C05GYM0101_LIFT_03U_B3
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_C05GYM0101_LIFT_03U
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-40 480 -136
+#event number: 15
+#Bg Event Label
+C05GYM0101_LIFT_03D_B3
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_C05GYM0101_LIFT_03D
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+24 480 -136
+#event number: 16
+#Bg Event Label
+C05GYM0101_LIFT_04U_B3
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_C05GYM0101_LIFT_04U
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-120 480 -72
+#event number: 17
+#Bg Event Label
+C05GYM0101_LIFT_04D_B3
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_C05GYM0101_LIFT_04D
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-56 480 -72
+#event number: 18
+#Bg Event Label
+C05GYM0101_LIFT_04U_B1
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_C05GYM0101_LIFT_04U
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-120 800 -72
+#event number: 19
+#Bg Event Label
+C05GYM0101_LIFT_04D_B1
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_C05GYM0101_LIFT_04D
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-56 800 -72
+#event number: 20
+#Bg Event Label
+C05GYM0101_LIFT_05U_B1
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_C05GYM0101_LIFT_05U
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-24 800 -72
+#event number: 21
+#Bg Event Label
+C05GYM0101_LIFT_05D_B1
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_C05GYM0101_LIFT_05D
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+8 800 -72
+#event number: 22
+#Bg Event Label
+C05GYM0101_LIFT_05U_B4
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_C05GYM0101_LIFT_05U
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-24 -944 -72
+#event number: 23
+#Bg Event Label
+C05GYM0101_LIFT_05D_B4
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_C05GYM0101_LIFT_05D
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+8 -944 -72
+#event number: 24
+#Bg Event Label
+C05GYM0101_EXITLIFT_00U
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_C05GYM0101_EXITLIFT_00U
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-40 800 -136
+#event number: 25
+#Bg Event Label
+C05GYM0101_EXITLIFT_00D
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_C05GYM0101_EXITLIFT_00D
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+24 800 -136
 #Map Event List Data End
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT

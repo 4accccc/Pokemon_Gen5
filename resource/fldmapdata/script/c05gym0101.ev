@@ -21,23 +21,23 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA    ev_c05gym0101_leader
-_EVENT_DATA    ev_c05gym0101_lift_00u
-_EVENT_DATA    ev_c05gym0101_lift_00d
-_EVENT_DATA    ev_c05gym0101_lift_01u
-_EVENT_DATA    ev_c05gym0101_lift_01d
-_EVENT_DATA    ev_c05gym0101_lift_02u
-_EVENT_DATA    ev_c05gym0101_lift_02d
-_EVENT_DATA    ev_c05gym0101_lift_03u
-_EVENT_DATA    ev_c05gym0101_lift_03d
-_EVENT_DATA    ev_c05gym0101_lift_04u
-_EVENT_DATA    ev_c05gym0101_lift_04d
-_EVENT_DATA    ev_c05gym0101_lift_05u
-_EVENT_DATA    ev_c05gym0101_lift_05d
+_EVENT_DATA    ev_bg_c05gym0101_lift_00u
+_EVENT_DATA    ev_bg_c05gym0101_lift_00d
+_EVENT_DATA    ev_bg_c05gym0101_lift_01u
+_EVENT_DATA    ev_bg_c05gym0101_lift_01d
+_EVENT_DATA    ev_bg_c05gym0101_lift_02u
+_EVENT_DATA    ev_bg_c05gym0101_lift_02d
+_EVENT_DATA    ev_bg_c05gym0101_lift_03u
+_EVENT_DATA    ev_bg_c05gym0101_lift_03d
+_EVENT_DATA    ev_bg_c05gym0101_lift_04u
+_EVENT_DATA    ev_bg_c05gym0101_lift_04d
+_EVENT_DATA    ev_bg_c05gym0101_lift_05u
+_EVENT_DATA    ev_bg_c05gym0101_lift_05d
 _EVENT_DATA    ev_c05gym0101_workman_00
 _EVENT_DATA    ev_zone_c05gym0101
 _EVENT_DATA    ev_reserve_c05gym0101_gymstart_01
-_EVENT_DATA    ev_c05gym0101_exitlift_00u
-_EVENT_DATA    ev_c05gym0101_exitlift_00d
+_EVENT_DATA    ev_bg_c05gym0101_exitlift_00u
+_EVENT_DATA    ev_bg_c05gym0101_exitlift_00d
 _EVENT_DATA_END
 
 
@@ -90,7 +90,7 @@ EVENT_END
 
 
 /**************************************************************/
-/*    【仮】ジムリーダー会話                                  */
+/*    ジムリーダー会話                                  */
 /**************************************************************/
 EVENT_START		ev_c05gym0101_leader
 	_TALK_OBJ_START()
@@ -175,11 +175,10 @@ EVENT_END
 /************************************************************/
 /*					リフト0号機 上昇ボタン					*/
 /************************************************************/
-EVENT_START		ev_c05gym0101_lift_00u
-	_PLAYER_DIR_GET( SCWK_ANSWER )	//主人公の向き情報を取得
+EVENT_START		ev_bg_c05gym0101_lift_00u
 
-	//スイッチの下側から話しかけた&リフトが下にある場合はリフト起動
-	IF $SCWK_ANSWER == DIR_UP && FLAG_ON( FH_10 ) THEN
+	//リフトが下にある場合はリフト起動
+	IF  FLAG_ON( FH_10 ) THEN
 		//リフトを上昇させる（引数はリフトインデックス）
 		_SE_PLAY( SEQ_SE_FLD_61 )
 		_GYM_GROUND_MV_LIFT( 0 )
@@ -187,7 +186,7 @@ EVENT_START		ev_c05gym0101_lift_00u
 		_FLAG_RESET( FH_10 )
 		
 	//リフトを起動できないとき
-	ELSIF $SCWK_ANSWER == DIR_UP && FLAG_OFF( FH_10 ) THEN
+	ELSIF  FLAG_OFF( FH_10 ) THEN
 		_TALK_START_SE_PLAY()
 		
 		//これ以上上昇しません！
@@ -202,11 +201,10 @@ EVENT_END
 /************************************************************/
 /*					リフト0号機 下降ボタン					*/
 /************************************************************/
-EVENT_START		ev_c05gym0101_lift_00d
-	_PLAYER_DIR_GET( SCWK_ANSWER )	//主人公の向き情報を取得
+EVENT_START		ev_bg_c05gym0101_lift_00d
 
-	//スイッチの下側から話しかけた&リフトが上にある場合はリフト起動
-	IF $SCWK_ANSWER == DIR_UP && FLAG_OFF( FH_10 ) THEN
+	//リフトが上にある場合はリフト起動
+	IF FLAG_OFF( FH_10 ) THEN
 		//リフトを下降させる（引数はリフトインデックス）
 		_SE_PLAY( SEQ_SE_FLD_61 )
 		_GYM_GROUND_MV_LIFT( 0 )
@@ -214,7 +212,7 @@ EVENT_START		ev_c05gym0101_lift_00d
 		_FLAG_SET( FH_10 )
 		
 	//リフトを起動できないとき
-	ELSIF $SCWK_ANSWER == DIR_UP && FLAG_ON( FH_10 ) THEN
+	ELSIF FLAG_ON( FH_10 ) THEN
 		_TALK_START_SE_PLAY()
 		
 		//これいじょう下降しません！
@@ -230,11 +228,10 @@ EVENT_END
 /************************************************************/
 /*					リフト1号機 上昇ボタン					*/
 /************************************************************/
-EVENT_START		ev_c05gym0101_lift_01u
-	_PLAYER_DIR_GET( SCWK_ANSWER )	//主人公の向き情報を取得
+EVENT_START		ev_bg_c05gym0101_lift_01u
 
-	//スイッチの下側から話しかけた&リフトが下にある場合はリフト起動
-	IF $SCWK_ANSWER == DIR_UP && FLAG_ON( FH_11 ) THEN
+	//リフトが下にある場合はリフト起動
+	IF FLAG_ON( FH_11 ) THEN
 		//リフトを上昇させる（引数はリフトインデックス）
 		_SE_PLAY( SEQ_SE_FLD_61 )
 		_GYM_GROUND_MV_LIFT( 1 )
@@ -242,7 +239,7 @@ EVENT_START		ev_c05gym0101_lift_01u
 		_FLAG_RESET( FH_11 )
 		
 	//リフトを起動できないとき
-	ELSIF $SCWK_ANSWER == DIR_UP && FLAG_OFF( FH_11 ) THEN
+	ELSIF FLAG_OFF( FH_11 ) THEN
 		_TALK_START_SE_PLAY()
 		
 		//これ以上上昇しません！
@@ -258,11 +255,10 @@ EVENT_END
 /************************************************************/
 /*					リフト1号機 下降ボタン					*/
 /************************************************************/
-EVENT_START		ev_c05gym0101_lift_01d
-	_PLAYER_DIR_GET( SCWK_ANSWER )	//主人公の向き情報を取得
+EVENT_START		ev_bg_c05gym0101_lift_01d
 
-	//スイッチの下側から話しかけた&リフトが上にある場合はリフト起動
-	IF $SCWK_ANSWER == DIR_UP && FLAG_OFF( FH_11 ) THEN
+	//リフトが上にある場合はリフト起動
+	IF FLAG_OFF( FH_11 ) THEN
 		//リフトを上昇させる（引数はリフトインデックス）
 		_SE_PLAY( SEQ_SE_FLD_61 )
 		_GYM_GROUND_MV_LIFT( 1 )
@@ -270,7 +266,7 @@ EVENT_START		ev_c05gym0101_lift_01d
 		_FLAG_SET( FH_11 )
 		
 	//リフトを起動できないとき
-	ELSIF $SCWK_ANSWER == DIR_UP && FLAG_ON( FH_11 ) THEN
+	ELSIF FLAG_ON( FH_11 ) THEN
 		_TALK_START_SE_PLAY()
 		
 		//これいじょう下降しません！
@@ -286,11 +282,10 @@ EVENT_END
 /************************************************************/
 /*					リフト2号機 上昇ボタン					*/
 /************************************************************/
-EVENT_START		ev_c05gym0101_lift_02u
-	_PLAYER_DIR_GET( SCWK_ANSWER )	//主人公の向き情報を取得
+EVENT_START		ev_bg_c05gym0101_lift_02u
 
-	//スイッチの下側から話しかけた&リフトが下にある場合はリフト起動
-	IF $SCWK_ANSWER == DIR_UP && FLAG_ON( FH_12 ) THEN
+	//リフトが下にある場合はリフト起動
+	IF FLAG_ON( FH_12 ) THEN
 		//リフトを動作させる（引数はリフトインデックス）
 		_SE_PLAY( SEQ_SE_FLD_61 )
 		_GYM_GROUND_MV_LIFT( 2 )
@@ -298,7 +293,7 @@ EVENT_START		ev_c05gym0101_lift_02u
 		_FLAG_RESET( FH_12 )
 		
 	//リフトを起動できないとき
-	ELSIF $SCWK_ANSWER == DIR_UP && FLAG_OFF( FH_12 ) THEN
+	ELSIF FLAG_OFF( FH_12 ) THEN
 		_TALK_START_SE_PLAY()
 		
 		//これ以上上昇しません！
@@ -314,11 +309,10 @@ EVENT_END
 /************************************************************/
 /*					リフト2号機 下降ボタン					*/
 /************************************************************/
-EVENT_START		ev_c05gym0101_lift_02d
-	_PLAYER_DIR_GET( SCWK_ANSWER )	//主人公の向き情報を取得
+EVENT_START		ev_bg_c05gym0101_lift_02d
 
-	//スイッチの下側から話しかけた&リフトが上にある場合はリフト起動
-	IF $SCWK_ANSWER == DIR_UP && FLAG_OFF( FH_12 ) THEN
+	//リフトが上にある場合はリフト起動
+	IF FLAG_OFF( FH_12 ) THEN
 		//リフトを動作させる（引数はリフトインデックス）
 		_SE_PLAY( SEQ_SE_FLD_61 )
 		_GYM_GROUND_MV_LIFT( 2 )
@@ -326,7 +320,7 @@ EVENT_START		ev_c05gym0101_lift_02d
 		_FLAG_SET( FH_12 )
 		
 	//リフトを起動できないとき
-	ELSIF $SCWK_ANSWER == DIR_UP && FLAG_ON( FH_12 ) THEN
+	ELSIF FLAG_ON( FH_12 ) THEN
 		_TALK_START_SE_PLAY()
 		
 		//これいじょう下降しません！
@@ -342,11 +336,10 @@ EVENT_END
 /************************************************************/
 /*					リフト3号機 上昇ボタン					*/
 /************************************************************/
-EVENT_START		ev_c05gym0101_lift_03u
-	_PLAYER_DIR_GET( SCWK_ANSWER )	//主人公の向き情報を取得
+EVENT_START		ev_bg_c05gym0101_lift_03u
 
-	//スイッチの下側から話しかけた&リフトが下にある場合はリフト起動
-	IF $SCWK_ANSWER == DIR_UP && FLAG_ON( FH_13 ) THEN
+	//リフトが下にある場合はリフト起動
+	IF FLAG_ON( FH_13 ) THEN
 		//リフトを動作させる（引数はリフトインデックス）
 		_SE_PLAY( SEQ_SE_FLD_61 )
 		_GYM_GROUND_MV_LIFT( 3 )
@@ -354,7 +347,7 @@ EVENT_START		ev_c05gym0101_lift_03u
 		_FLAG_RESET( FH_13 )
 		
 	//リフトを起動できないとき
-	ELSIF $SCWK_ANSWER == DIR_UP && FLAG_OFF( FH_13 ) THEN
+	ELSIF FLAG_OFF( FH_13 ) THEN
 		_TALK_START_SE_PLAY()
 		
 		//これ以上上昇しません！
@@ -370,11 +363,10 @@ EVENT_END
 /************************************************************/
 /*					リフト3号機 下降ボタン					*/
 /************************************************************/
-EVENT_START		ev_c05gym0101_lift_03d
-	_PLAYER_DIR_GET( SCWK_ANSWER )	//主人公の向き情報を取得
+EVENT_START		ev_bg_c05gym0101_lift_03d
 
-	//スイッチの下側から話しかけた&リフトが上にある場合はリフト起動
-	IF $SCWK_ANSWER == DIR_UP && FLAG_OFF( FH_13 ) THEN
+	//リフトが上にある場合はリフト起動
+	IF FLAG_OFF( FH_13 ) THEN
 		//リフトを動作させる（引数はリフトインデックス）
 		_SE_PLAY( SEQ_SE_FLD_61 )
 		_GYM_GROUND_MV_LIFT( 3 )
@@ -382,7 +374,7 @@ EVENT_START		ev_c05gym0101_lift_03d
 		_FLAG_SET( FH_13 )
 		
 	//リフトを起動できないとき
-	ELSIF $SCWK_ANSWER == DIR_UP && FLAG_ON( FH_13 ) THEN
+	ELSIF FLAG_ON( FH_13 ) THEN
 		_TALK_START_SE_PLAY()
 		
 		//これいじょう下降しません！
@@ -398,11 +390,10 @@ EVENT_END
 /************************************************************/
 /*					リフト4号機 上昇ボタン					*/
 /************************************************************/
-EVENT_START		ev_c05gym0101_lift_04u
-	_PLAYER_DIR_GET( SCWK_ANSWER )	//主人公の向き情報を取得
+EVENT_START		ev_bg_c05gym0101_lift_04u
 
-	//スイッチの下側から話しかけた&リフトが下にある場合はリフト起動
-	IF $SCWK_ANSWER == DIR_UP && FLAG_ON( FH_14 ) THEN
+	//リフトが下にある場合はリフト起動
+	IF FLAG_ON( FH_14 ) THEN
 		//リフトを動作させる（引数はリフトインデックス）
 		_SE_PLAY( SEQ_SE_FLD_61 )
 		_GYM_GROUND_MV_LIFT( 4 )
@@ -410,7 +401,7 @@ EVENT_START		ev_c05gym0101_lift_04u
 		_FLAG_RESET( FH_14 )
 		
 	//リフトを起動できないとき
-	ELSIF $SCWK_ANSWER == DIR_UP && FLAG_OFF( FH_14 ) THEN
+	ELSIF FLAG_OFF( FH_14 ) THEN
 		_TALK_START_SE_PLAY()
 		
 		//これ以上上昇しません！
@@ -426,11 +417,10 @@ EVENT_END
 /************************************************************/
 /*					リフト4号機 下降ボタン					*/
 /************************************************************/
-EVENT_START		ev_c05gym0101_lift_04d
-	_PLAYER_DIR_GET( SCWK_ANSWER )	//主人公の向き情報を取得
+EVENT_START		ev_bg_c05gym0101_lift_04d
 
-	//スイッチの下側から話しかけた&リフトが上にある場合はリフト起動
-	IF $SCWK_ANSWER == DIR_UP && FLAG_OFF( FH_14 ) THEN
+	//リフトが上にある場合はリフト起動
+	IF FLAG_OFF( FH_14 ) THEN
 		//リフトを動作させる（引数はリフトインデックス）
 		_SE_PLAY( SEQ_SE_FLD_61 )
 		_GYM_GROUND_MV_LIFT( 4 )
@@ -438,7 +428,7 @@ EVENT_START		ev_c05gym0101_lift_04d
 		_FLAG_SET( FH_14 )
 		
 	//リフトを起動できないとき
-	ELSIF $SCWK_ANSWER == DIR_UP && FLAG_ON( FH_14 ) THEN
+	ELSIF FLAG_ON( FH_14 ) THEN
 		_TALK_START_SE_PLAY()
 		
 		//これいじょう下降しません！
@@ -454,11 +444,10 @@ EVENT_END
 /************************************************************/
 /*					リフト5号機 上昇ボタン					*/
 /************************************************************/
-EVENT_START		ev_c05gym0101_lift_05u
-	_PLAYER_DIR_GET( SCWK_ANSWER )	//主人公の向き情報を取得
+EVENT_START		ev_bg_c05gym0101_lift_05u
 
-	//スイッチの下側から話しかけた&リフトが下にある場合はリフト起動
-	IF $SCWK_ANSWER == DIR_UP && FLAG_ON( FH_15 ) THEN
+	//リフトが下にある場合はリフト起動
+	IF FLAG_ON( FH_15 ) THEN
 		//リフトを動作させる（引数はリフトインデックス）
 		_SE_PLAY( SEQ_SE_FLD_61 )
 		_GYM_GROUND_MV_LIFT( 5 )
@@ -466,7 +455,7 @@ EVENT_START		ev_c05gym0101_lift_05u
 		_FLAG_RESET( FH_15 )
 		
 	//リフトを起動できないとき
-	ELSIF $SCWK_ANSWER == DIR_UP && FLAG_OFF( FH_15 ) THEN
+	ELSIF FLAG_OFF( FH_15 ) THEN
 		_TALK_START_SE_PLAY()
 		
 		//これ以上上昇しません！
@@ -482,11 +471,10 @@ EVENT_END
 /************************************************************/
 /*					リフト5号機 下降ボタン					*/
 /************************************************************/
-EVENT_START		ev_c05gym0101_lift_05d
-	_PLAYER_DIR_GET( SCWK_ANSWER )	//主人公の向き情報を取得
+EVENT_START		ev_bg_c05gym0101_lift_05d
 
 	//スイッチの下側から話しかけた&リフトが上にある場合はリフト起動
-	IF $SCWK_ANSWER == DIR_UP && FLAG_OFF( FH_15 ) THEN
+	IF FLAG_OFF( FH_15 ) THEN
 		//リフトを動作させる（引数はリフトインデックス）
 		_SE_PLAY( SEQ_SE_FLD_61 )
 		_GYM_GROUND_MV_LIFT( 5 )
@@ -494,7 +482,7 @@ EVENT_START		ev_c05gym0101_lift_05d
 		_FLAG_SET( FH_15 )
 		
 	//リフトを起動できないとき
-	ELSIF $SCWK_ANSWER == DIR_UP && FLAG_ON( FH_15 ) THEN
+	ELSIF FLAG_ON( FH_15 ) THEN
 		_TALK_START_SE_PLAY()
 		
 		//これいじょう下降しません！
@@ -518,29 +506,26 @@ EVENT_END
 /************************************************************/
 /*				接続リフト 至ジムエントランス				*/
 /************************************************************/
-EVENT_START	ev_c05gym0101_exitlift_00u
-	_PLAYER_DIR_GET( SCWK_ANSWER )	//主人公の向き情報を取得
+EVENT_START	ev_bg_c05gym0101_exitlift_00u
 
-	//スイッチの下側から話しかけた場合はリフト起動
-	IF $SCWK_ANSWER == DIR_UP THEN
-		_SE_PLAY( SEQ_SE_FLD_61 )		//スイッチＳＥを再生
-		_SE_WAIT()
+	//リフト起動
+	_SE_PLAY( SEQ_SE_FLD_61 )		//スイッチＳＥを再生
+	_SE_WAIT()
+		
+	//マップ遷移ブラックアウト
+	_MAP_FADE_BLACK_OUT()
 
-		//マップ遷移ブラックアウト
-		_MAP_FADE_BLACK_OUT()
+	//リフトを上昇させる（1 = エントランスに移動アニメ）
+	_GYM_GROUND_EXIT_LIFT( 1 )
 
-		//リフトを上昇させる（1 = エントランスに移動アニメ）
-		_GYM_GROUND_EXIT_LIFT( 1 )
+	_MAP_FADE_END_CHECK()
 
-		_MAP_FADE_END_CHECK()
+	//スクリプト予約 マップチェンジ後にエントランスのリフト上昇演出を起動
+	_RESERVE_SCRIPT( SCRID_RESERVE_C05GYM0201_GYMBACK_01 )
 
-		//スクリプト予約 マップチェンジ後にエントランスのリフト上昇演出を起動
-		_RESERVE_SCRIPT( SCRID_RESERVE_C05GYM0201_GYMBACK_01 )
-
-		//マップチェンジ
-		_MAP_CHANGE_NO_FADE( ZONE_ID_C05GYM0201, 5, 0, 4, DIR_UP )
-
-	ENDIF
+	//マップチェンジ
+	_MAP_CHANGE_NO_FADE( ZONE_ID_C05GYM0201, 5, 0, 4, DIR_UP )
+
 
 EVENT_END
 
@@ -548,7 +533,7 @@ EVENT_END
 /************************************************************/
 /*					接続リフト 下降スイッチ					*/
 /************************************************************/
-EVENT_START	ev_c05gym0101_exitlift_00d
+EVENT_START	ev_bg_c05gym0101_exitlift_00d
 	_TALK_START_SE_PLAY()
 	
 	//これいじょう下降しません！
