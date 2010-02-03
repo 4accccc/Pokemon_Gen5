@@ -8551,9 +8551,9 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
 		MATRIX_ID_DUN2001, // camera_area
 		0, // padding
-		5,
 		0,
-		4,
+		0,
+		0,
 	},
 	{//ZONE_ID_D20R0101 = 276
 		RSC_GRID_DEFAULT,

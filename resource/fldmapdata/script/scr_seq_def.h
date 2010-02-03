@@ -7209,6 +7209,18 @@
   .short EV_SEQ_CROWD_PEOPLE_START
   .endm
 
+//--------------------------------------------------------------
+/**
+ * @brief D20ŠC’ê•\Œ»ON
+ */
+//--------------------------------------------------------------
+#define _SEATEMPLE_START() \
+    _ASM_SEATEMPLE_START
+
+  .macro  _ASM_SEATEMPLE_START
+  .short EV_SEQ_SEATEMPLE_START
+  .endm
+
 
 //--------------------------------------------------------------
 /**

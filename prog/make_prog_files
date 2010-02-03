@@ -590,6 +590,7 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/enceff.c \
         field/enceffno.c \
         field/scrcmd_pokeid_search.c \
+        field/scrcmd_seatemple.c \
         savedata/intrude_save_field.c \
         field/intrude_secret_item.c \
         field/united_nations.c \

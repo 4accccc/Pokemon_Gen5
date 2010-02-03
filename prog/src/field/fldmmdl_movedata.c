@@ -1500,6 +1500,14 @@ int (* const * const DATA_RailAcmdActionTbl[ACMD_MAX])( MMDL * ) =
   DATA_AC_RailDummy,                  //AC_WALKGU_R_2F
   DATA_AC_RailDummy,              //AC_MARK_GYOE_TWAIT
   DATA_AC_HeroItemGet_Tbl,              // AC_HERO_ITEMGET
+  DATA_AC_RailDummy,                  //
+  DATA_AC_RailDummy,                  //
+  DATA_AC_RailDummy,                  //
+  DATA_AC_RailDummy,                  //
+  DATA_AC_RailDummy,                  //
+  DATA_AC_RailDummy,                  //
+  DATA_AC_RailDummy,                  //
+  DATA_AC_RailDummy,                  //
 };
 
 //==============================================================================

@@ -270,4 +270,5 @@
   ARCID_FLD_FACEUP "fieldmap/fld_faceup.narc"  # 顔アップ
   ARCID_BATT_REC_GRA "batt_rec_gra.narc"  # 通信対戦後の録画選択画面
   ARCID_EGG_DEMO "egg_demo_particle.narc"  # タマゴ孵化デモのデータ
+  ARCID_FLD_SEA_TEMPLE "fieldmap/field_sea_temple.narc"  # 海底神殿グラフィック
 

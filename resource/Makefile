@@ -143,6 +143,7 @@ SUBDIRS	=	wmi \
 			shinka_demo \
 			face_up \
 			batt_rec_gra \
+			sea_temple \
 			egg_demo
 
 include $(RESOURCE_MACRO)
