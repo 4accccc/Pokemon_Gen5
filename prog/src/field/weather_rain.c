@@ -977,7 +977,7 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_RAIN_FadeIn( WEATHER_TASK* p_wk, WEATHER
 			fog_cont );
 
       // ライト変更
-      WEATHER_TASK_LIGHT_Change( p_wk, ARCID_FIELD_WEATHER_LIGHT, NARC_field_weather_light_light_rain_dat );
+      WEATHER_TASK_LIGHT_Change( p_wk, ARCID_FIELD_WEATHER_LIGHT, FIELD_LIGHT_STATUS_GetWeatherLightDatIdx( WEATHER_NO_RAIN ) );
 
       // 音
       WEATHER_TASK_PlayLoopSnd( p_wk, WEATHER_SND_SE_RAIN );	
@@ -1371,7 +1371,7 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_SPARKRAIN_FadeIn( WEATHER_TASK* p_wk, WE
 			fog_cont );
 
       // ライト変更
-      WEATHER_TASK_LIGHT_Change( p_wk, ARCID_FIELD_WEATHER_LIGHT, NARC_field_weather_light_light_rain_dat );
+      WEATHER_TASK_LIGHT_Change( p_wk, ARCID_FIELD_WEATHER_LIGHT, FIELD_LIGHT_STATUS_GetWeatherLightDatIdx( WEATHER_NO_SPARK ) );
 
 		}
 	}else{
@@ -1749,7 +1749,7 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_RAIKAMI_FadeIn( WEATHER_TASK* p_wk, WEAT
   {
   case WEATHER_RAIKAMI_FADEIN_SEQ_INIT:
     // ライト変更
-    WEATHER_TASK_LIGHT_Change( p_wk, ARCID_FIELD_WEATHER_LIGHT, NARC_field_weather_light_light_raikami_dat );
+    WEATHER_TASK_LIGHT_Change( p_wk, ARCID_FIELD_WEATHER_LIGHT, FIELD_LIGHT_STATUS_GetWeatherLightDatIdx( WEATHER_NO_RAIKAMI ) );
 
     p_local_wk->seq++;
     p_local_wk->wait = WEATHER_RAIKAMI_LIGHT_SPARK_WAIT;
@@ -2174,7 +2174,7 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_KAZAKAMI_FadeIn( WEATHER_TASK* p_wk, WEA
   {
   case KAZAKAMI_FADEIN_SEQ_INIT:
     // ライト変更
-    WEATHER_TASK_LIGHT_Change( p_wk, ARCID_FIELD_WEATHER_LIGHT, NARC_field_weather_light_light_kazakami_dat );
+    WEATHER_TASK_LIGHT_Change( p_wk, ARCID_FIELD_WEATHER_LIGHT, FIELD_LIGHT_STATUS_GetWeatherLightDatIdx( WEATHER_NO_KAZAKAMI ) );
 
     p_local_wk->wait = KAZAKAMI_FADEIN_WIND_WAIT;
     p_local_wk->seq++;

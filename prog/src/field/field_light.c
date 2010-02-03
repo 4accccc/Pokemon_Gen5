@@ -161,23 +161,6 @@ enum {
 */
 //-----------------------------------------------------------------------------
 
-//-------------------------------------
-/// ライト１データ
-//=====================================
-typedef struct {
-  u32     endtime;
-  u8      light_flag[4];
-  GXRgb   light_color[4];
-  VecFx16   light_vec[4];
-
-  GXRgb   diffuse;
-  GXRgb   ambient;
-  GXRgb   specular;
-  GXRgb   emission;
-  GXRgb   fog_color;
-  GXRgb   bg_color;
-
-} LIGHT_DATA;
 
 //-------------------------------------
 /// RGBフェード

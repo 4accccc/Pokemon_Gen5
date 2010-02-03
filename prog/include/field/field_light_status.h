@@ -23,6 +23,7 @@ extern "C"{
  *          定数宣言
 */
 //-----------------------------------------------------------------------------
+#define FIELD_LIGHT_STATUS_WEATHER_LIGHT_DAT_NONE ( 0xffff )
 
 //-----------------------------------------------------------------------------
 /**
@@ -46,6 +47,11 @@ typedef struct {
  *          プロトタイプ宣言
 */
 //-----------------------------------------------------------------------------
+
+// ライトカラーの取得
+extern void FIELD_LIGHT_STATUS_Get( u32 zone_id, int time, int weather_id, int season, FIELD_LIGHT_STATUS* p_status, HEAPID heapID );
+// 天気NOからライトデータのアーカイブインデックス取得
+extern u16 FIELD_LIGHT_STATUS_GetWeatherLightDatIdx( int weather_id );
 
 #ifdef _cplusplus
 } // extern "C"{

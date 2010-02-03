@@ -91,6 +91,7 @@ SRCS  +=    $(SOUNDSRC) \
         gamesystem/btl_setup.c \
         map/dp3format.c \
         field/zonedata.c \
+        field/areadata.c \
         field/warpdata.c \
         field/location.c \
 				field/map_matrix.c \
@@ -113,6 +114,7 @@ SRCS  +=    $(SOUNDSRC) \
         field/event_battle_call.c \
         field/event_bsubway.c \
         field/field_comm/bingo_system.c \
+        field/field_light_status.c \
         net_app/union/comm_player.c \
         system/mcss.c \
         system/mcss_tool.c \
@@ -392,7 +394,6 @@ SRCS_OVERLAY_FIELD_INIT		=	field/event_mapchange.c \
         field/ev_time.c \
         field/field_wfbc_data_local.c \
         field/scrcmd_wfbc.c \
-        field/areadata.c \
         system/el_scoreboard.c
 
 # field

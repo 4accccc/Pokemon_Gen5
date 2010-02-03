@@ -601,7 +601,7 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_SNOW_FadeIn( WEATHER_TASK* p_wk, WEATHER
 
 
       // ライト変更
-      WEATHER_TASK_LIGHT_Change( p_wk, ARCID_FIELD_WEATHER_LIGHT, NARC_field_weather_light_light_show_dat );
+      WEATHER_TASK_LIGHT_Change( p_wk, ARCID_FIELD_WEATHER_LIGHT, FIELD_LIGHT_STATUS_GetWeatherLightDatIdx( WEATHER_NO_SNOW ) );
 		}
 	}else{
 		
@@ -1020,7 +1020,7 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_SSNOW_FadeIn( WEATHER_TASK* p_wk, WEATHE
 					WEATHER_FOG_DEPTH_DEFAULT + WEATHER_SNOW_S_FOG_OFS,
 					WEATHER_SSNOW_FOG_TIMING, fog_cont );
       // ライト変更
-      WEATHER_TASK_LIGHT_Change( p_wk, ARCID_FIELD_WEATHER_LIGHT, NARC_field_weather_light_light_show_dat );
+      WEATHER_TASK_LIGHT_Change( p_wk, ARCID_FIELD_WEATHER_LIGHT, FIELD_LIGHT_STATUS_GetWeatherLightDatIdx( WEATHER_NO_SNOWSTORM ) );
 		}
 	}else{
 		
@@ -1434,7 +1434,7 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_SNOW_S_FadeIn( WEATHER_TASK* p_wk, WEATH
 					WEATHER_SNOW_S_FOG_TIMING, fog_cont );
 
       // ライト変更
-      WEATHER_TASK_LIGHT_Change( p_wk, ARCID_FIELD_WEATHER_LIGHT, NARC_field_weather_light_light_show_dat );
+      WEATHER_TASK_LIGHT_Change( p_wk, ARCID_FIELD_WEATHER_LIGHT, FIELD_LIGHT_STATUS_GetWeatherLightDatIdx( WEATHER_NO_SNOWSTORM ) );
 		}
 	}else{
 		
@@ -1850,7 +1850,7 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_ARARE_FadeIn( WEATHER_TASK* p_wk, WEATHE
 
 
       // ライト変更
-      WEATHER_TASK_LIGHT_Change( p_wk, ARCID_FIELD_WEATHER_LIGHT, NARC_field_weather_light_light_rain_dat );
+      WEATHER_TASK_LIGHT_Change( p_wk, ARCID_FIELD_WEATHER_LIGHT, FIELD_LIGHT_STATUS_GetWeatherLightDatIdx( WEATHER_NO_ARARE ) );
 		}
 	}else{
 		

@@ -257,9 +257,8 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_STORM_FadeIn( WEATHER_TASK* p_wk, WEATHE
 			WEATHER_STORM_FOG_TIMING,
 			fog_cont );
 
-
       // ÉâÉCÉgïœçX
-      WEATHER_TASK_LIGHT_Change( p_wk, ARCID_FIELD_WEATHER_LIGHT, NARC_field_weather_light_light_storm_dat );
+      WEATHER_TASK_LIGHT_Change( p_wk, ARCID_FIELD_WEATHER_LIGHT, FIELD_LIGHT_STATUS_GetWeatherLightDatIdx( WEATHER_NO_STORM ) );
 		}
 	}else{
 		
