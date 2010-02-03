@@ -195,5 +195,5 @@ void BLINKPALANM_Main( BLINKPALANM_WORK * wk )
 //--------------------------------------------------------------------------------------------
 void BLINKPALANM_InitAnimeCount( BLINKPALANM_WORK * wk )
 {
-	wk->cnt = 0;
+	wk->cnt = ANM_CNT_MAX;
 }
