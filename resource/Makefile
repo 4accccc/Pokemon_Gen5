@@ -58,6 +58,7 @@ SUBDIRS	=	wmi \
 			wifi_login \
 			wifi_union_obj \
 			wifi_2dchar \
+			wifi_leading_obj \
 			trainer_case \
 			yn_touch \
 			mysign \

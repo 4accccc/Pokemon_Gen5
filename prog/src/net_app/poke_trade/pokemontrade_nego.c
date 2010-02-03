@@ -779,15 +779,25 @@ BOOL POKETRADE_NEGO_IsSelect(POKEMON_TRADE_WORK* pWork,int line , int height)
   int boxno = IRC_TRADE_LINE2TRAY(line,pWork);
   int index = IRC_TRADE_LINE2POKEINDEX(line, height);
 
-  for(l=0;l<GTS_PLAYER_WORK_NUM;l++){
-    for(m=0;m<GTS_NEGO_POKESLT_MAX;m++){
-      if(pWork->GTSSelectIndex[l][m] != -1){
-        if((pWork->GTSSelectIndex[l][m]==index) && (pWork->GTSSelectBoxno[l][m]==boxno)){
+
+  if(POKEMONTRADEPROC_IsTriSelect(pWork)){
+    for(l=0;l<GTS_PLAYER_WORK_NUM;l++){
+      for(m=0;m<GTS_NEGO_POKESLT_MAX;m++){
+        if(pWork->GTSSelectIndex[l][m] != -1){
+          if((pWork->GTSSelectIndex[l][m]==index) && (pWork->GTSSelectBoxno[l][m]==boxno)){
           return TRUE;
+          }
         }
       }
     }
   }
+  else{
+    if((pWork->selectIndex==index) && (pWork->selectBoxno==boxno)){
+      return TRUE;
+    }
+  }
+
+  
   return FALSE;
 }
 

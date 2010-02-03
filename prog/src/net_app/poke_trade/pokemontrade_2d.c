@@ -880,22 +880,22 @@ void POKMEONTRADE2D_IconGray(POKEMON_TRADE_WORK* pWork, GFL_CLWK* pCL ,BOOL bGra
   }
   GFL_CLGRP_PLTT_GetProxy(res , &proxy);
   GFL_CLACT_WK_SetPlttProxy( pCL , &proxy);
+
+  GFL_CLACT_WK_SetAutoAnmFlag( pCL , FALSE );
+  GFL_CLACT_WK_SetDrawEnable( pCL, TRUE );
+
+  
 }
 
 
 static void _pokeIconPaletteGray(POKEMON_TRADE_WORK* pWork,int line, int i,POKEMON_PASO_PARAM* ppp,BOOL bTemoti,int k)
 {
-  NNSG2dImagePaletteProxy proxy;
-  u32 res;
+  BOOL bGray = FALSE;
 
   if((bTemoti && _hedenWazaCheck(ppp))  || ( POKETRADE_NEGO_IsSelect(pWork,line,i)) ){
-    res = pWork->cellRes[PLT_POKEICON_GRAY];
+    bGray=TRUE;
   }
-  else{
-    res = pWork->cellRes[PLT_POKEICON];
-  }
-  GFL_CLGRP_PLTT_GetProxy(res , &proxy);
-  GFL_CLACT_WK_SetPlttProxy( pWork->pokeIcon[k][i] , &proxy);
+  POKMEONTRADE2D_IconGray(pWork, pWork->pokeIcon[k][i], bGray);
 }
 
 
@@ -2544,11 +2544,11 @@ void POKEMONTRADE_StartSucked(POKEMON_TRADE_WORK* pWork)
     mullpos[0].x = pos.x*FX32_ONE;
     mullpos[0].y = pos.y*FX32_ONE;
     mullpos[0].z = 0;
-    mullpos[1].x = (pos.x-(pWork->aVecPos.x-pos.x)*10)*FX32_ONE;
-    mullpos[1].y = (pos.y-(pWork->aVecPos.y-pos.y)*10)*FX32_ONE;
+    mullpos[1].x = (pos.x-(pWork->aVecPos.x-pos.x)*5)*FX32_ONE;
+    mullpos[1].y = (pos.y-(pWork->aVecPos.y-pos.y)*5)*FX32_ONE;
     mullpos[1].z = 0;
-    mullpos[2].x = 28*FX32_ONE;
-    mullpos[2].y = 154*FX32_ONE;
+    mullpos[2].x = (pos.x-(pWork->aVecPos.x-pos.x)*10)*FX32_ONE;
+    mullpos[2].y = (pos.y-(pWork->aVecPos.y-pos.y)*10)*FX32_ONE;
     mullpos[2].z = 0;
     mullpos[3].x = 28*FX32_ONE;
     mullpos[3].y = 0*FX32_ONE;
@@ -2559,7 +2559,7 @@ void POKEMONTRADE_StartSucked(POKEMON_TRADE_WORK* pWork)
     OS_Printf("%d %d\n",mullpos[2].x/FX32_ONE,mullpos[2].y/FX32_ONE);
     OS_Printf("%d %d\n",mullpos[3].x/FX32_ONE,mullpos[3].y/FX32_ONE);
 
-    PROGVAL_PEZIER_Init(&pWork->aCutMullRom,
+    PROGVAL_CATMULLROM_Init(&pWork->aCutMullRom,
                          &mullpos[0],&mullpos[1],&mullpos[2],&mullpos[3],_SUCKEDCOUNT_NUM-2);
 
   }
@@ -2593,7 +2593,7 @@ BOOL POKEMONTRADE_SuckedMain(POKEMON_TRADE_WORK* pWork)
       POKEMONTRADE_RemovePokemonCursor(pWork);
     }
     else{
-      PROGVAL_PEZIER_Main( &pWork->aCutMullRom );
+      PROGVAL_CATMULLROM_Main( &pWork->aCutMullRom );
       pos.x = pWork->aCutMullRom.now_val.x/FX32_ONE;
       pos.y = pWork->aCutMullRom.now_val.y/FX32_ONE;
       OS_Printf("spline %d %d \n",pos.x,pos.y);
@@ -2621,3 +2621,15 @@ void POKEMONTRADE_RemovePokemonCursor(POKEMON_TRADE_WORK* pWork)
     pWork->curIcon[CELL_CUR_POKE_KEY]=NULL;
   }
 }
+
+
+
+
+#if 0
+void G2_SetBlendAlpha(
+    int plane1 /* GXBlendPlaneMask */,
+    int plane2 /* GXBlendPlaneMask */,
+    int ev1,
+    int ev2
+);
+#endif

@@ -89,6 +89,7 @@
   ARCID_CG_COMM  "cg_comm.narc"           #コミュニケーションギア 接続後
   ARCID_C_GEAR    "c_gear.narc"           #コミュニケーションギア
   ARCID_WIFI2DCHAR    "wifi2dchar.narc"
+  ARCID_WIFILEADING     "wifileadingchar.narc"
   ARCID_WIFIUNIONCHAR   "wifi_unionobj.narc"
   ARCID_WIFIP2PMATCH    "wifip2pmatch.narc"
   ARCID_MYSTERY   "mystery.narc"      #不思議な贈り物

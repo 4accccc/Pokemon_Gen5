@@ -14,7 +14,8 @@
 //#include "include/system/arc_util.h"
 //#include "include/system/clact_util.h"
 #include "arc_def.h"
-#include "wifi2dchar.naix"
+//#include "wifi2dchar.naix"
+#include "wifileadingchar.naix"
 #include "wifi_unionobj.naix"
 #include "src/field/fldmmdl_pl_code.h"
 
@@ -46,7 +47,7 @@
 //-------------------------------------
 
 //#include "../../pokeicon/unionchar.cdat"
-#include "unionchar.cdat"
+//#include "unionchar.cdat"
 
 
 #define WF_2DC_RESM_OBJ_NUM	(WF_2DC_CHARNUM+1)	// リソース数	+1は陰
@@ -85,14 +86,19 @@ static const u8 sc_WF_2DC_ANMRES_ANMCONTID[ WF_2DC_ANMRES_ANM_NUM ] = {
 };
  
 // 通常キャラクター
-#define WF_2DC_ARC_CHARIDX	( NARC_wifi2dchar_pl_boy01_NCLR )	// キャラクタグラフィックの開始
+#define WF_2DC_ARC_CHARIDX	( NARC_wifileadingchar_hero_NCLR )	// キャラクタグラフィックの開始
 #define WF_2DC_ARC_GETNCL(x)	(((x)*2)+WF_2DC_ARC_CHARIDX)	// パレット取得
 #define WF_2DC_ARC_GETNCG(x)	(WF_2DC_ARC_GETNCL(x) + 1)		// キャラクタ取得
+#define WF_2DC_ARC_ANMIDX	( NARC_wifileadingchar_hero_NCER )	// ユニオンアニメデータ
+#define WF_2DC_ARC_GETCEL(x)	(WF_2DC_ARC_ANMIDX+((x)*2))	// セルdataidゲット
+#define WF_2DC_ARC_GETANM(x)	(WF_2DC_ARC_GETCEL(x)+1)		// アニメdataidゲット
+
+
 
 // ユニオンキャラクター
 #define WF_2DC_ARC_UNICHARIDX	( NARC_wifi_unionobj_normal00_NCGR )	// キャラクタグラフィックの開始 boy1 から normal00に置き換えました nagihashi
 #define WF_2DC_ARC_GETUNINCL	(NARC_wifi_unionobj_wifi_union_obj_NCLR)	// パレット取得
-#define WF_2DC_ARC_GETUNINCG(x)	(WF_2DC_ARC_UNICHARIDX + ((x) - WF_2DC_BOY1))		// キャラクタ取得
+#define WF_2DC_ARC_GETUNINCG(x)	(WF_2DC_ARC_UNICHARIDX + x)		// キャラクタ取得
 #define WF_2DC_UNIPLTT_NUM		( 8 )	// ユニオンキャラクタが使用するパレット本数
 #define WF_2DC_ARC_UNIANMIDX	( NARC_wifi_unionobj_normal00_NCER )	// ユニオンアニメデータ
 #define WF_2DC_ARC_GETUNICEL(x)	(WF_2DC_ARC_UNIANMIDX+((x)*2))	// セルdataidゲット
@@ -209,8 +215,9 @@ typedef struct {
 	WF_2DCWK*		p_wk;
 	u32 objnum;
 	WF_2DCRES		chrres[ WF_2DC_CHARNUM ];
-	WF_2DCANMRES	anmres[ WF_2DC_MOVENUM ];
-	WF_2DCANMRES	unionres[ WF_2DC_UNICHAR_NUM ];
+	WF_2DCANMRES	anmres[ WF_2DC_CHARNUM ];
+//	WF_2DCANMRES	anmres[ WF_2DC_MOVENUM ];
+//	WF_2DCANMRES	unionres[ WF_2DC_UNICHAR_NUM ];
 	WF_2DCSH_RES	shadowres;
 	u32				shadow_pri;		// 陰のソフト優先順位開始位置
 //	CLACT_U_RES_MANAGER_PTR p_res_man[ WF_2DC_RESMAN_NUM ];
@@ -239,191 +246,6 @@ typedef struct {
  */
 //-----------------------------------------------------------------------------
 
-///	グラフィックファイルとキャラクタコードをリンク
-static const WF_2DC_CHARDATA FIELDOBJCODE_CharIdx[WF_2DC_CHARNUM] = {
-	{PLHERO,		WF_2DC_HERO},
-	{PLBOY1,		WF_2DC_BOY1},
-	{PLBOY3,      WF_2DC_BOY3},
-	{PLMAN3,      WF_2DC_MAN3},
-	{PLBADMAN,    WF_2DC_BADMAN},
-	{PLEXPLORE,   WF_2DC_EXPLORE},
-	{PLFIGHTER,   WF_2DC_FIGHTER},
-	{PLGORGGEOUSM,WF_2DC_GORGGEOUSM},
-	{PLMYSTERY,   WF_2DC_MYSTERY},
-	{PLHEROINE,	WF_2DC_HEROINE},
-	{PLGIRL1,     WF_2DC_GIRL1},
-	{PLGIRL2,     WF_2DC_GIRL2},
-	{PLWOMAN2,    WF_2DC_WOMAN2},
-	{PLWOMAN3,    WF_2DC_WOMAN3},
-	{PLIDOL,      WF_2DC_IDOL},
-	{PLLADY,      WF_2DC_LADY},
-	{PLCOWGIRL,   WF_2DC_COWGIRL},
-	{PLGORGGEOUSW,WF_2DC_GORGGEOUSW},
-	{PLBOY2,			WF_2DC_BOY2},
-	{PLGIRL3,			WF_2DC_GIRL3},
-	{PLCAMPBOY,		WF_2DC_CAMPBOY},
-	{PLPICNICGIRL,	WF_2DC_PICNICGIRL},
-	{PLBABYGIRL1,		WF_2DC_BABYGIRL1},
-	{PLMIDDLEMAN1,	WF_2DC_MIDDLEMAN1},
-	{PLMIDDLEWOMAN1,	WF_2DC_MIDDLEWOMAN1},
-	{PLWAITER,		WF_2DC_WAITER},
-	{PLWAITRESS,		WF_2DC_WAITRESS},
-	{PLMAN1,			WF_2DC_MAN1},
-	{PLWOMAN1,		WF_2DC_WOMAN1},
-	{PLCAMERAMAN,		WF_2DC_CAMERAMAN},
-	{PLREPORTER,		WF_2DC_REPORTER},
-	{PLFARMER,		WF_2DC_FARMER},
-	{PLCYCLEM,		WF_2DC_CYCLEM},
-	{PLCYCLEW,		WF_2DC_CYCLEW},
-	{PLOLDMAN1,		WF_2DC_OLDMAN1},
-	{PLMAN5,			WF_2DC_MAN5},
-	{PLWOMAN5,		WF_2DC_WOMAN5},
-	{PLBABYBOY1,		WF_2DC_BABYBOY1},
-	{PLSPORTSMAN,		WF_2DC_SPORTSMAN},
-	{PLFISHING,		WF_2DC_FISHING},
-	{PLSEAMAN,		WF_2DC_SEAMAN},
-	{PLMOUNT,			WF_2DC_MOUNT},
-	{PLMAN2,			WF_2DC_MAN2},
-	{PLBIGMAN,		WF_2DC_BIGMAN},
-	{PLASSISTANTM,	WF_2DC_ASSISTANTM},
-	{PLGENTLEMAN,		WF_2DC_GENTLEMAN},
-	{PLWORKMAN,		WF_2DC_WORKMAN},
-	{PLCLOWN,			WF_2DC_CLOWN},
-	{PLPOLICEMAN,		WF_2DC_POLICEMAN},
-	{PLAMBRELLA,		WF_2DC_AMBRELLA},
-	{PLPIKACHU,		WF_2DC_PIKACHU},
-	{PLSEVEN1,		WF_2DC_SEVEN1},
-	{PLSEVEN2,		WF_2DC_SEVEN2},
-	{PLSEVEN3,		WF_2DC_SEVEN3},
-	{PLSEVEN4,		WF_2DC_SEVEN4},
-	{PLSEVEN5,		WF_2DC_SEVEN5},
-	{PLTOWERBOSS,		WF_2DC_TOWERBOSS},
-	{PLACHAMO,		WF_2DC_ACHAMO},
-	{PLARTIST,		WF_2DC_ARTIST},
-	{PLASSISTANTW,	WF_2DC_ASSISTANTW},
-	{PLBABY,			WF_2DC_BABY},
-	{PLBAG,			WF_2DC_BAG},
-	{PLBALLOON,		WF_2DC_BALLOON},
-	{PLBEACHBOY,		WF_2DC_BEACHBOY},
-	{PLBEACHGIRL,		WF_2DC_BEACHGIRL},
-	{PLBIGFOUR1,		WF_2DC_BIGFOUR1},
-	{PLBIGFOUR2,		WF_2DC_BIGFOUR2},
-	{PLBIGFOUR3,		WF_2DC_BIGFOUR3},
-	{PLBIGFOUR4,		WF_2DC_BIGFOUR4},
-	{PLBIRD,			WF_2DC_BIRD},
-	{PLBOY4,			WF_2DC_BOY4},
-	{PLCHAMPION,		WF_2DC_CHAMPION},
-	{PLDOCTOR,		WF_2DC_DOCTOR},
-	{PLDSBOY,			WF_2DC_DSBOY},
-	{PLENECO,			WF_2DC_ENECO},
-	{PLFREEZES,		WF_2DC_FREEZES},
-	{PLGINGABOSS,		WF_2DC_GINGABOSS},
-	{PLGINGAM,		WF_2DC_GINGAM},
-	{PLGINGAW,		WF_2DC_GINGAW},
-	{PLGIRL4,			WF_2DC_GIRL4},
-	{PLGKANBU1,		WF_2DC_GKANBU1},
-	{PLGKANBU2,		WF_2DC_GKANBU2},
-	{PLGKANBU3,		WF_2DC_GKANBU3},
-	{PLKINOCOCO,		WF_2DC_KINOCOCO},
-	{PLKODUCK,		WF_2DC_KODUCK},
-	{PLKOIKING,		WF_2DC_KOIKING},
-	{PLLEADER1,		WF_2DC_LEADER1},
-	{PLLEADER2,		WF_2DC_LEADER2},
-	{PLLEADER3,		WF_2DC_LEADER3},
-	{PLLEADER4,		WF_2DC_LEADER4},
-	{PLLEADER5,		WF_2DC_LEADER5},
-	{PLLEADER6,		WF_2DC_LEADER6},
-	{PLLEADER7,		WF_2DC_LEADER7},
-	{PLLEADER8,		WF_2DC_LEADER8},
-	{PLMAID,			WF_2DC_MAID},
-	{PLMAMA,			WF_2DC_MAMA},
-	{PLMIDDLEMAN2,	WF_2DC_MIDDLEMAN2},
-	{PLMIDDLEWOMAN2,	WF_2DC_MIDDLEWOMAN2},
-	{PLMIKAN,			WF_2DC_MIKAN},
-	{PLMIMITUTO,		WF_2DC_MIMITUTO},
-	{PLMINUN,			WF_2DC_MINUN},
-	{PLMOSS,			WF_2DC_MOSS},
-	{PLOLDMAN2,		WF_2DC_OLDMAN2},
-	{PLOLDWOMAN1,		WF_2DC_OLDWOMAN1},
-	{PLOLDWOMAN2,		WF_2DC_OLDWOMAN2},
-	{PLOOKIDO,		WF_2DC_OOKIDO},
-	{PLPATIRITUSU,	WF_2DC_PATIRITUSU},
-	{PLPCWOMAN1,		WF_2DC_PCWOMAN1},
-	{PLPCWOMAN2,		WF_2DC_PCWOMAN2},
-	{PLPCWOMAN3,		WF_2DC_PCWOMAN3},
-	{PLPIPPI,			WF_2DC_PIPPI},
-	{PLPOLE,			WF_2DC_POLE},
-	{PLPRASLE,		WF_2DC_PRASLE},
-	{PLPURIN,			WF_2DC_PURIN},
-	{PLRIVEL,			WF_2DC_RIVEL},
-	{PLROCK,			WF_2DC_ROCK},
-	{PLSHOPM1,		WF_2DC_SHOPM1},
-	{PLSHOPW1,		WF_2DC_SHOPW1},
-	{PLSKIERM,		WF_2DC_SKIERM},
-	{PLSKIERW,		WF_2DC_SKIERW},
-	{PLSPPOKE1,		WF_2DC_SPPOKE1},
-	{PLSPPOKE10,		WF_2DC_SPPOKE10},
-	{PLSPPOKE11,		WF_2DC_SPPOKE11},
-	{PLSPPOKE12,		WF_2DC_SPPOKE12},
-	{PLSPPOKE2,		WF_2DC_SPPOKE2},
-	{PLSPPOKE3,		WF_2DC_SPPOKE3},
-	{PLSPPOKE4,		WF_2DC_SPPOKE4},
-	{PLSPPOKE5,		WF_2DC_SPPOKE5},
-	{PLSPPOKE6,		WF_2DC_SPPOKE6},
-	{PLSPPOKE7,		WF_2DC_SPPOKE7},
-	{PLSPPOKE8,		WF_2DC_SPPOKE8},
-	{PLSPPOKE9,		WF_2DC_SPPOKE9},
-	{PLSUNGLASSES,	WF_2DC_SUNGLASSES},
-	{PLSWIMMERM,		WF_2DC_SWIMMERM},
-	{PLSWIMMERW,		WF_2DC_SWIMMERW},
-	{PLTREE,			WF_2DC_TREE},
-	{PLVENTHOLE,		WF_2DC_VENTHOLE},
-	{PLWANRIKY,		WF_2DC_WANRIKY},
-	{PLWOMAN6,		WF_2DC_WOMAN6},
-	{PLBRAINS1,		WF_2DC_BRAINS1},
-	{PLBRAINS2,		WF_2DC_BRAINS2},
-	{PLBRAINS3,		WF_2DC_BRAINS3},
-	{PLBRAINS4,		WF_2DC_BRAINS4},
-	{PLPRINCESS,		WF_2DC_PRINCESS},
-	{PLBFSM,			WF_2DC_BFSM},
-	{PLBFSW1,			WF_2DC_BFSW1},
-	{PLBFSW2,			WF_2DC_BFSW2},
-	{PLWIFISM,		WF_2DC_WIFISM},
-	{PLWIFISW,		WF_2DC_WIFISW},
-	{PLDPHERO,		WF_2DC_DPHERO},		// DP主人公男
-	{PLDPHEROINE,		WF_2DC_DPHEROINE},	// DP主人公女
-
-/*
-	// データとして組み込んでいないもの
-	{ICPO,			WF_2DC_ICPO},
-	{GKANBU4,		WF_2DC_GKANBU4},
-	{NAETLE,		WF_2DC_NAETLE},
-	{HAYASHIGAME,	WF_2DC_HAYASHIGAME},
-	{DODAITOSE,		WF_2DC_DODAITOSE},
-	{HIKOZARU,		WF_2DC_HIKOZARU},
-	{MOUKAZARU,		WF_2DC_MOUKAZARU},
-	{GOUKAZARU,		WF_2DC_GOUKAZARU},
-	{POCHAMA,		WF_2DC_POCHAMA},
-	{POTTAISHI,		WF_2DC_POTTAISHI},
-	{EMPERTE,		WF_2DC_EMPERTE},
-	{GUREGGRU,		WF_2DC_GUREGGRU},
-	{GIRATINAORIGIN,WF_2DC_GIRATINAORIGIN},
-	{ROTOM,			WF_2DC_ROTOM},
-	{ROTOMF,		WF_2DC_ROTOMF},
-	{ROTOMS,		WF_2DC_ROTOMS},
-	{ROTOMI,		WF_2DC_ROTOMI},
-	{ROTOMW,		WF_2DC_ROTOMW},
-	{ROTOMG,		WF_2DC_ROTOMG},
-	{DIRECTOR,		WF_2DC_DIRECTOR},
-	{FIREBOX,		WF_2DC_FIREBOX},
-	{SKYBOX,		WF_2DC_SKYBOX},
-	{ICEBOX,		WF_2DC_ICEBOX},
-	{WATERBOX,		WF_2DC_WATERBOX},
-	{GRASSBOX,		WF_2DC_GRASSBOX},
-	{GSET1,			WF_2DC_GSET1},
-	{GSET2,			WF_2DC_GSET2},
-	*/
-};
 
 /// 各アニメの終了フレーム数
 static const u8 WF_2DC_AnmFrame[WF_2DC_ANMNUM] = {
@@ -547,7 +369,7 @@ WF_2DCSYS* WF_2DC_SysInit( GFL_CLUNIT* p_unit, PALETTE_FADE_PTR p_pfd, u32 objnu
 	p_sys->p_pfd = p_pfd;
 
 	// アーカイブハンドルオープン
-	p_sys->p_handle[WF_2DC_ARCHANDLE_NML] = GFL_ARC_OpenDataHandle( ARCID_WIFI2DCHAR, heap );
+	p_sys->p_handle[WF_2DC_ARCHANDLE_NML] = GFL_ARC_OpenDataHandle( ARCID_WIFILEADING, heap );
 	p_sys->p_handle[WF_2DC_ARCHANDLE_UNI] = GFL_ARC_OpenDataHandle( ARCID_WIFIUNIONCHAR, heap );
 
 
@@ -572,9 +394,9 @@ WF_2DCSYS* WF_2DC_SysInit( GFL_CLUNIT* p_unit, PALETTE_FADE_PTR p_pfd, u32 objnu
     p_sys->unionplttid = GFL_CLGRP_REGISTER_FAILED;
 
 	// アニメーションリソース読み込み
-	for( i=0; i<WF_2DC_MOVENUM; i++ ){
-		WF_2DC_AnmResLoad( p_sys, i, heap );
-	}
+//	for( i=0; i<WF_2DC_MOVENUM; i++ ){
+		WF_2DC_AnmResLoad( p_sys, 0, heap );
+//	}
 
 	// アクターワーク作成
 	p_sys->objnum = objnum;
@@ -602,9 +424,9 @@ void WF_2DC_SysExit( WF_2DCSYS* p_sys )
 	}
 	
 	// アニメーションリソース破棄
-	for( i=0; i<WF_2DC_MOVENUM; i++ ){
-		WF_2DC_AnmResDel( p_sys, i );
-	}
+//	for( i=0; i<WF_2DC_MOVENUM; i++ ){
+		WF_2DC_AnmResDel( p_sys, 0 );
+//	}
 
 	// キャラクタリソース破棄
 	WF_2DC_AllResDel( p_sys );
@@ -757,7 +579,7 @@ void WF_2DC_UnionResSet( WF_2DCSYS* p_sys, u32 draw_type, WF_2DC_MOVETYPE movety
 
 	for( i=0; i<WF_2DC_UNICHAR_NUM; i++ ){
 		// 読み込み
-		WF_2DC_CharResLoad( p_sys, WF_2DC_UnionChar[i], draw_type, movetype, heap, WF_2DC_RES_UNI );
+		WF_2DC_CharResLoad( p_sys, i, draw_type, movetype, heap, WF_2DC_RES_UNI );
 	}
 }
 
@@ -780,7 +602,7 @@ void WF_2DC_UnionResDel( WF_2DCSYS* p_sys )
 
 	for( i=0; i<WF_2DC_UNICHAR_NUM; i++ ){
 		// キャラクタはき
-		WF_2DC_CharResDel( p_sys, WF_2DC_UnionChar[i] );
+		WF_2DC_CharResDel( p_sys, i );
 	}
 }
 
@@ -844,6 +666,7 @@ WF_2DCWK* WF_2DC_WkAdd( WF_2DCSYS* p_sys, const WF_2DC_WKDATA* cp_data, u32 view
 	// キャラクタナンバー取得
 	char_no = WF_2DC_CharNoGet( view_type );
 
+  
   NET_PRINT("WF_2DC_WkAdd %d %d\n",char_no,view_type);
 
 	// 読み込み済みチェック
@@ -882,7 +705,8 @@ WF_2DCWK* WF_2DC_WkAdd( WF_2DCSYS* p_sys, const WF_2DC_WKDATA* cp_data, u32 view
     p_wk->p_clwk = GFL_CLACT_WK_Create(p_sys->p_unit,
                                        p_sys->chrres[ char_no ].resid[ 0 ],
                                        p_sys->chrres[ char_no ].resid[ 1 ],
-                                       p_sys->CELLANIMIndex[0][0],
+                                       p_sys->anmres[char_no].resid,
+//                                       p_sys->CELLANIMIndex[0][0],
                                        &cellInitData, CLSYS_DEFREND_MAIN, heap );
 
     //	CLACT_BGPriorityChg( p_wk->p_clwk, cp_data->bgpri );
@@ -939,7 +763,7 @@ WF_2DCWK* WF_2DC_WkAdd( WF_2DCSYS* p_sys, const WF_2DC_WKDATA* cp_data, u32 view
 //		p_wk->p_shadow = GFL_CLACT_WK_Add( p_wk->p_unit ,&add , ,CLWK_SETSF_NONE, heap);
         p_wk->p_shadow = GFL_CLACT_WK_Create(p_sys->p_unit,
                                              p_sys->shadowres.resid[0],
-                                             p_sys->chrres[ p_sys->hero_no ].resid[ 1 ],
+                                             p_sys->shadowres.resid[1],
                                              //WF_2DC_ARC_CONTCHARID+p_sys->hero_no,
                                              p_sys->shadowres.resid[2],
                                              &cellInitData,
@@ -1331,8 +1155,8 @@ void WF_2DC_WkPatAnmAddFrame( WF_2DCWK* p_wk )
 //-----------------------------------------------------------------------------
 static void WF_2DC_AnmResLoad( WF_2DCSYS* p_sys, WF_2DC_MOVETYPE movetype, u32 heap )
 {
-#if 0
     int i;
+#if 0
 	u32 res_type;
 	u32 anm_contid;
 	static const u32 sc_WF_2DC_ANMRES_ANM_IDX[ WF_2DC_MOVENUM ][ WF_2DC_ANMRES_ANM_NUM ] = {
@@ -1370,7 +1194,6 @@ static void WF_2DC_AnmResLoad( WF_2DCSYS* p_sys, WF_2DC_MOVETYPE movetype, u32 h
 				sc_WF_2DC_ANMRES_ANM_IDX[movetype][i], FALSE,
 				anm_contid, res_type, heap );
 	}
-#endif
 
     int i,k;
 	static const u32 sc_WF_2DC_ANMRES_ANM_IDX[ WF_2DC_MOVENUM ][ WF_2DC_ANMRES_ANM_NUM ] = {
@@ -1403,6 +1226,15 @@ static void WF_2DC_AnmResLoad( WF_2DCSYS* p_sys, WF_2DC_MOVETYPE movetype, u32 h
                                     heap);
     }
 
+#endif
+
+
+  for(i = WF_2DC_UNICHAR_NUM; i < WF_2DC_CHARNUM; i++ ){
+    p_sys->anmres[i].resid = GFL_CLGRP_CELLANIM_Register(p_sys->p_handle[WF_2DC_ARCHANDLE_NML],
+                                                             WF_2DC_ARC_GETCEL(i-WB_HERO),
+                                                             WF_2DC_ARC_GETANM(i-WB_HERO),
+                                                             heap);
+  }
 }
 
 //----------------------------------------------------------------------------
@@ -1429,12 +1261,21 @@ static void WF_2DC_AnmResDel( WF_2DCSYS* p_sys, WF_2DC_MOVETYPE movetype )
 		p_sys->anmres[ movetype ].resobj[i] = NULL;
 	}
        */
+#if 0
     int i;
 
     for(i = 0; i < WF_2DC_ANMRES_ANM_NUM/2; i++ ){
         GFL_CLGRP_CELLANIM_Release(p_sys->CELLANIMIndex[movetype][i]);
         p_sys->CELLANIMIndex[movetype][i] = 0;
     }
+#endif
+  int i;
+
+  for(i = WF_2DC_UNICHAR_NUM; i < WF_2DC_CHARNUM; i++ ){
+    GFL_CLGRP_CELLANIM_Release(p_sys->anmres[i].resid);
+    p_sys->anmres[i].resid = 0;
+  }
+
 }
 
 //----------------------------------------------------------------------------
@@ -1448,7 +1289,10 @@ static void WF_2DC_AnmResDel( WF_2DCSYS* p_sys, WF_2DC_MOVETYPE movetype )
 //-----------------------------------------------------------------------------
 static u32 WF_2DC_CharNoGet( u32 view_type )
 {
-	int i;
+  return view_type;
+  
+#if 0
+  int i;
 
 	for( i=0; i<WF_2DC_CHARNUM; i++ ){
 		if( view_type == FIELDOBJCODE_CharIdx[i].code ){
@@ -1457,6 +1301,7 @@ static u32 WF_2DC_CharNoGet( u32 view_type )
 	}
 	GF_ASSERT( 0 );
 	return 0;
+#endif
 }
 
 //----------------------------------------------------------------------------
@@ -1472,14 +1317,15 @@ static u32 WF_2DC_CharNoGet( u32 view_type )
 //-----------------------------------------------------------------------------
 static BOOL WF_2DC_AnmModeLinkCheck( u32 view_type, WF_2DC_MOVETYPE movetype )
 {
+#if 0
 	if( movetype == WF_2DC_MOVERUN ){
-		if( (view_type == PLHERO) || (view_type == PLHEROINE) ||
-			(view_type == PLDPHERO) || (view_type == PLDPHEROINE) ){
+    if( (view_type == WB_HERO) || (view_type == WB_HEROINE) ){
 			return TRUE;
 		}else{
 			return FALSE;
 		}
 	}
+#endif
 	return TRUE;
 }
 
@@ -1569,7 +1415,7 @@ static void WF_2DC_CharResLoadNml( WF_2DCSYS* p_sys, u32 char_no, u32 draw_type,
 
 
     p_sys->chrres[ char_no ].resid[ 0 ] = GFL_CLGRP_CGR_Register(p_sys->p_handle[WF_2DC_ARCHANDLE_NML],
-                                                              WF_2DC_ARC_GETNCG( char_no ),
+                                                              WF_2DC_ARC_GETNCG( char_no-WB_HERO ),
                                                               FALSE , draw_type, heap);
 
 //	p_sys->res[ char_no ].resobj[ 1 ] = 
@@ -1578,10 +1424,16 @@ static void WF_2DC_CharResLoadNml( WF_2DCSYS* p_sys, u32 char_no, u32 draw_type,
 //				WF_2DC_ARC_GETNCL( char_no ),
 //				FALSE, WF_2DC_ARC_CONTCHARID+char_no, draw_type, 1, heap );
 
-    p_sys->chrres[ char_no ].resid[ 1 ] = GFL_CLGRP_PLTT_Register(p_sys->p_handle[WF_2DC_ARCHANDLE_NML],
-                                                               WF_2DC_ARC_GETNCL( char_no ),
-                                                               draw_type, 0x20*2, heap);
+ //   p_sys->chrres[ char_no ].resid[ 1 ] = GFL_CLGRP_PLTT_Register(p_sys->p_handle[WF_2DC_ARCHANDLE_NML],
+   //                                                            WF_2DC_ARC_GETNCL( char_no-WB_HERO ),
+     //                                                          draw_type, 0x20*2, heap);
 
+  p_sys->chrres[ char_no ].resid[ 1 ] = GFL_CLGRP_PLTT_RegisterEx(p_sys->p_handle[WF_2DC_ARCHANDLE_NML],
+                                                                  WF_2DC_ARC_GETNCL( char_no-WB_HERO ),
+                                                                  draw_type, 8*0x20, 0, 2, heap);
+
+
+  
 //	OS_TPrintf( "pltt contid=0x%x  ncl=%d\n", WF_2DC_ARC_CONTCHARID+char_no, WF_2DC_ARC_GETNCL( char_no ) );
 
 #if 0  // 素材依存 
@@ -1673,9 +1525,9 @@ static void WF_2DC_CharResLoadUni( WF_2DCSYS* p_sys, u32 char_no, u32 draw_type,
 	u32 union_idx;
 
 	// ユニオンキャラクタとしてのナンバーを取得
-	union_idx = char_no - WF_2DC_BOY1;
+//	union_idx = char_no - WF_2DC_BOY1;
 
-	OS_Printf( "char_no %d\n", char_no );
+	//OS_Printf( "char_no %d\n", char_no );
 
 	// 読み込み
 //	p_sys->res[ char_no ].resobj[ 0 ] = 
@@ -1870,20 +1722,12 @@ static void WF_2DC_ShResLoad( WF_2DCSYS* p_sys, u32 draw_type, u32 heap )
 	// 主人公が読み込まれているかチェックする
 
 	hero_load = FALSE;
-	if( WF_2DC_CharResCheck( p_sys, WF_2DC_HERO ) == TRUE ){
-		p_sys->hero_no		= WF_2DC_HERO;
+	if( WF_2DC_CharResCheck( p_sys, WB_HERO ) == TRUE ){
+		p_sys->hero_no		= WB_HERO;
 		hero_load	= TRUE;
 	}
-	else if( WF_2DC_CharResCheck( p_sys, WF_2DC_HEROINE ) == TRUE ){
-		p_sys->hero_no		= WF_2DC_HEROINE;
-		hero_load	= TRUE;
-	}
-	else if( WF_2DC_CharResCheck( p_sys, WF_2DC_DPHERO ) == TRUE ){
-		p_sys->hero_no		= WF_2DC_DPHERO;
-		hero_load	= TRUE;
-	}
-	else if( WF_2DC_CharResCheck( p_sys, WF_2DC_DPHEROINE ) == TRUE ){
-		p_sys->hero_no		= WF_2DC_DPHEROINE;
+	else if( WF_2DC_CharResCheck( p_sys, WB_HEROINE ) == TRUE ){
+		p_sys->hero_no		= WB_HEROINE;
 		hero_load	= TRUE;
 	}
 
@@ -1899,8 +1743,8 @@ static void WF_2DC_ShResLoad( WF_2DCSYS* p_sys, u32 draw_type, u32 heap )
 //    }
 
     p_sys->shadowres.resid[2] = GFL_CLGRP_CELLANIM_Register(p_sys->p_handle[WF_2DC_ARCHANDLE_NML],
-                                                                    NARC_wifi2dchar_hero_ine_kage_NCER,
-                                                                    NARC_wifi2dchar_hero_ine_kage_NANR,
+                                                                    NARC_wifileadingchar_hero_ine_kage_NCER,
+                                                                    NARC_wifileadingchar_hero_ine_kage_NANR,
                                                                     heap);
 
     
@@ -1913,9 +1757,15 @@ static void WF_2DC_ShResLoad( WF_2DCSYS* p_sys, u32 draw_type, u32 heap )
 //				FALSE, WF_2DC_ARC_CONTSHADOWID, draw_type, heap );
 
     p_sys->shadowres.resid[0] = GFL_CLGRP_CGR_Register(p_sys->p_handle[WF_2DC_ARCHANDLE_NML],
-                                                       NARC_wifi2dchar_hero_ine_kage_NCGR,
+                                                       NARC_wifileadingchar_hero_ine_kage_NCGR,
                                                        FALSE , draw_type, heap);
+  //  p_sys->shadowres.resid[1] = GFL_CLGRP_CGR_Register(p_sys->p_handle[WF_2DC_ARCHANDLE_NML],
+    //                                                   NARC_wifileadingchar_hero_ine_kage_NCGR,
+      //                                                 FALSE , draw_type, heap);
 
+      p_sys->shadowres.resid[1] = GFL_CLGRP_PLTT_RegisterEx(p_sys->p_handle[WF_2DC_ARCHANDLE_NML],
+                                                 NARC_wifileadingchar_hero_ine_kage_NCLR,
+                                                 draw_type, 11*0x20, 0, 1,heap);
 	
 	// 転送
 //	result = CLACT_U_CharManagerSetCharModeAdjustAreaCont( p_sys->shadowres.resobj[0] );
@@ -1959,6 +1809,8 @@ static void WF_2DC_ShResDel( WF_2DCSYS* p_sys )
 
             GFL_CLGRP_CGR_Release(p_sys->shadowres.resid[0]);
             p_sys->shadowres.resid[ 0 ] = GFL_CLGRP_REGISTER_FAILED;
+            GFL_CLGRP_CGR_Release(p_sys->shadowres.resid[1]);
+            p_sys->shadowres.resid[ 1 ] = GFL_CLGRP_REGISTER_FAILED;
 
 
         }
@@ -2023,10 +1875,13 @@ static void WF_2DC_UniCharPlttResLoad( WF_2DCSYS* p_sys, u32 draw_type, u32 heap
 //	result = CLACT_U_PlttManagerSetCleanArea( p_sys->p_unionpltt );
 //	GF_ASSERT( result );
 
-
-    p_sys->unionplttid = GFL_CLGRP_PLTT_Register(p_sys->p_handle[WF_2DC_ARCHANDLE_UNI],
+  p_sys->unionplttid = GFL_CLGRP_PLTT_RegisterEx(p_sys->p_handle[WF_2DC_ARCHANDLE_UNI],
                                                  WF_2DC_ARC_GETUNINCL,
-                                                 draw_type, WF_2DC_UNIPLTT_NUM*0x20, heap);
+                                                 draw_type, 0, 0, WF_2DC_UNIPLTT_NUM,heap);
+
+   // p_sys->unionplttid = GFL_CLGRP_PLTT_Register(p_sys->p_handle[WF_2DC_ARCHANDLE_UNI],
+     //                                            WF_2DC_ARC_GETUNINCL,
+       //                                          draw_type, WF_2DC_UNIPLTT_NUM*0x20, heap);
 
 	// パレットフェード設定
 	if( p_sys->p_pfd ){
@@ -2069,11 +1924,11 @@ static void WF_2DC_UniCharAnmResLoad( WF_2DCSYS* p_sys, u32 heap )
 {
 	int i;
 
-	GF_ASSERT( p_sys->unionres[ 0 ].resobj[0] == NULL );
+	GF_ASSERT( p_sys->anmres[ 0 ].resobj[0] == NULL );
 
 	for( i=0; i<WF_2DC_UNICHAR_NUM; i++ ){
 
-        p_sys->unionres[i].resid = GFL_CLGRP_CELLANIM_Register(p_sys->p_handle[WF_2DC_ARCHANDLE_UNI],
+        p_sys->anmres[i].resid = GFL_CLGRP_CELLANIM_Register(p_sys->p_handle[WF_2DC_ARCHANDLE_UNI],
                                                                WF_2DC_ARC_GETUNICEL(i),
                                                                WF_2DC_ARC_GETUNIANM(i),
                                                                heap);
@@ -2109,8 +1964,8 @@ static void WF_2DC_UniCharAnmResDel( WF_2DCSYS* p_sys )
 //	GF_ASSERT( p_sys->unionres[ 0 ].resobj[0] != NULL );
 
 	for( i=0; i<WF_2DC_UNICHAR_NUM; i++ ){
-        GFL_CLGRP_CELLANIM_Release(p_sys->unionres[i].resid);
-        p_sys->unionres[i].resid = GFL_CLGRP_REGISTER_FAILED;
+        GFL_CLGRP_CELLANIM_Release(p_sys->anmres[i].resid);
+        p_sys->anmres[i].resid = GFL_CLGRP_REGISTER_FAILED;
 
         
 //		CLACT_U_ResManagerResDelete( p_sys->p_res_man[2],

@@ -102,7 +102,7 @@ static GFL_DISP_VRAM _defVBTbl = {
   GX_VRAM_OBJ_128_B,				// メイン2DエンジンのOBJ
   GX_VRAM_OBJEXTPLTT_NONE,		// メイン2DエンジンのOBJ拡張パレット
 
-  GX_VRAM_SUB_OBJ_16_I,			// サブ2DエンジンのOBJ
+  GX_VRAM_SUB_OBJ_128_D,			// サブ2DエンジンのOBJ
   GX_VRAM_SUB_OBJEXTPLTT_NONE,	// サブ2DエンジンのOBJ拡張パレット
 
   GX_VRAM_TEX_NONE,				// テクスチャイメージスロット
@@ -125,7 +125,7 @@ static void dispOamEnd(WIFILOGIN_DISP_WORK* pWork);
 static void	_VBlank( GFL_TCB *tcb, void *work );
 static void _moveSmoke(WIFILOGIN_DISP_WORK* pWork);
 
-static void settingSubBgControl(WIFILOGIN_DISP_WORK* pWork);
+static void settingSubBgControl(WIFILOGIN_DISP_WORK* pWork,int frame);
 
 
 WIFILOGIN_DISP_WORK* WIFILOGIN_DISP_Init(HEAPID id, BOOL bDreamWorld)
@@ -146,7 +146,8 @@ WIFILOGIN_DISP_WORK* WIFILOGIN_DISP_Init(HEAPID id, BOOL bDreamWorld)
 
   GFL_DISP_SetBank( &_defVBTbl );
   GFL_BG_SetBGMode( &BGsys_data );
-  settingSubBgControl(pWork);
+  settingSubBgControl(pWork,GFL_BG_FRAME0_M);
+  settingSubBgControl(pWork,GFL_BG_FRAME0_S);
   if(pWork->bDreamWorld){
     dispOamInit(pWork);
     dispInitDream(pWork);
@@ -186,10 +187,9 @@ void WIFILOGIN_DISP_End(WIFILOGIN_DISP_WORK* pWork)
 }
 
 
-static void settingSubBgControl(WIFILOGIN_DISP_WORK* pWork)
+static void settingSubBgControl(WIFILOGIN_DISP_WORK* pWork,int frameno)
 {
-
-  // 背景面
+  /*
   {
     GFL_BG_BGCNT_HEADER TextBgCntDat = {
       0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
@@ -205,9 +205,12 @@ static void settingSubBgControl(WIFILOGIN_DISP_WORK* pWork)
 		GFL_BG_SetVisible( GFL_BG_FRAME0_M, VISIBLE_ON );
 
   }
+  */
 
+
+  
   {
-    int frame = GFL_BG_FRAME0_S;
+    int frame = frameno;
     GFL_BG_BGCNT_HEADER TextBgCntDat = {
       0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
       GX_BG_SCRBASE_0xf800, GX_BG_CHARBASE_0x00000, 0x8000,GX_BG_EXTPLTT_01,
@@ -220,7 +223,7 @@ static void settingSubBgControl(WIFILOGIN_DISP_WORK* pWork)
     GFL_BG_LoadScreenReq( frame );
   }
   {
-    int frame = GFL_BG_FRAME1_S;
+    int frame = frameno+1;
     GFL_BG_BGCNT_HEADER TextBgCntDat = {
       0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
       GX_BG_SCRBASE_0xf000, GX_BG_CHARBASE_0x08000, 0x8000,GX_BG_EXTPLTT_01,
@@ -236,7 +239,7 @@ static void settingSubBgControl(WIFILOGIN_DISP_WORK* pWork)
     GFL_BG_LoadScreenReq( frame );
   }
   {
-    int frame = GFL_BG_FRAME2_S;
+    int frame = frameno+2;
     GFL_BG_BGCNT_HEADER TextBgCntDat = {
       0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
       GX_BG_SCRBASE_0xe000, GX_BG_CHARBASE_0x10000, 0x8000,GX_BG_EXTPLTT_01,
@@ -252,7 +255,7 @@ static void settingSubBgControl(WIFILOGIN_DISP_WORK* pWork)
     GFL_BG_LoadScreenReq( frame );
   }
   {
-    int frame = GFL_BG_FRAME3_S;
+    int frame = frameno+3;
     GFL_BG_BGCNT_HEADER TextBgCntDat = {
       0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
       GX_BG_SCRBASE_0xe800, GX_BG_CHARBASE_0x18000, 0x8000,GX_BG_EXTPLTT_01,

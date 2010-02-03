@@ -1474,10 +1474,16 @@ static void WcrClactResEffectLoad( MCR_CLACT* p_clact, u32 heapID, ARCHANDLE* p_
                                       NARC_wifip2pmatch_wf_match_top_room_obj_NCGR,
                                       FALSE,CLSYS_DRAW_MAIN, heapID);
 
-    p_clact->effect.CLRid = GFL_CLGRP_PLTT_Register(p_handle,
-                                      NARC_wifip2pmatch_wf_match_top_room_obj_NCLR,
-                                      CLSYS_DRAW_MAIN, 0, heapID);
+//    p_clact->effect.CLRid = GFL_CLGRP_PLTT_Register(p_handle,
+  //                                    NARC_wifip2pmatch_wf_match_top_room_obj_NCLR,
+    //                                  CLSYS_DRAW_MAIN, 0, heapID);
 
+  p_clact->effect.CLRid = GFL_CLGRP_PLTT_RegisterEx(p_handle,
+                                                    NARC_wifip2pmatch_wf_match_top_room_obj_NCLR,
+                                                    CLSYS_DRAW_MAIN, 10*0x20, 0, 1, heapID);
+
+
+  
     p_clact->effect.CERid = GFL_CLGRP_CELLANIM_Register(p_handle,
                                            NARC_wifip2pmatch_wf_match_top_room_obj_NCER,
                                            NARC_wifip2pmatch_wf_match_top_room_obj_NANR,
@@ -2115,143 +2121,6 @@ static BOOL WcrMoveObj_MoveFuncPlayerKeyWait( WIFI_MATCHROOM* p_mcr, MCR_MOVEOBJ
 	}
 
 
-	// キャラクタを入れ替えるデバック機能
-#ifdef MCR_DEBUG_2CCHAR_CHECK
-	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_START ){
-		static const u16 sc_DEBUG_VIEW_TBL[] = {
-			PLHERO,
-			PLBOY1,
-			PLBOY3,
-			PLMAN3,
-			PLBADMAN,
-			PLEXPLORE,
-			PLFIGHTER,
-			PLGORGGEOUSM,
-			PLMYSTERY, 
-			PLHEROINE,
-			PLGIRL1, 
-			PLGIRL2, 
-			PLWOMAN2,
-			PLWOMAN3,
-			PLIDOL,  
-			PLLADY,  
-			PLCOWGIRL,
-			PLGORGGEOUSW,
-			PLBOY2,			
-			PLGIRL3,			
-			PLCAMPBOY,		
-			PLPICNICGIRL,	
-			PLBABYGIRL1,		
-			PLMIDDLEMAN1,	
-			PLMIDDLEWOMAN1,	
-			PLWAITER,		
-			PLWAITRESS,		
-			PLMAN1,			
-			PLWOMAN1,		
-			PLCAMERAMAN,		
-			PLREPORTER,		
-			PLFARMER,		
-			PLCYCLEM,		
-			PLCYCLEW,		
-			PLOLDMAN1,		
-			PLMAN5,			
-			PLWOMAN5,		
-			PLBABYBOY1,		
-			PLSPORTSMAN,		
-			PLFISHING,		
-			PLSEAMAN,		
-			PLMOUNT,			
-			PLMAN2,			
-			PLBIGMAN,		
-			PLASSISTANTM,	
-			PLGENTLEMAN,		
-			PLWORKMAN,		
-			PLCLOWN,			
-			PLPOLICEMAN,		
-			PLAMBRELLA,		
-			PLPIKACHU,		
-			PLSEVEN1,		
-			PLSEVEN2,		
-			PLSEVEN3,		
-			PLSEVEN4,		
-			PLSEVEN5,		
-			PLTOWERBOSS,		
-			PLACHAMO,		
-			PLARTIST,		
-			PLASSISTANTW,	
-			PLBABY,			
-			PLBAG,			
-			PLBALLOON,		
-			PLBEACHBOY,		
-			PLBEACHGIRL,		
-			PLBIGFOUR1,		
-			PLBIGFOUR2,		
-			PLBIGFOUR3,		
-			PLBIGFOUR4,		
-			PLBIRD,			
-			PLBOY4,			
-			PLCHAMPION,		
-			PLDOCTOR,		
-			PLDSBOY,			
-			PLENECO,			
-			PLFREEZES,		
-			PLGINGABOSS,		
-			PLGINGAM,		
-			PLGINGAW,		
-			PLGIRL4,			
-			PLGKANBU1,		
-			PLGKANBU2,		
-			PLGKANBU3,		
-			PLKINOCOCO,		
-			PLKODUCK,		
-			PLKOIKING,		
-			PLLEADER1,		
-			PLLEADER2,		
-			PLLEADER3,		
-			PLLEADER4,		
-			PLLEADER5,		
-			PLLEADER6,		
-			PLLEADER7,		
-			PLLEADER8,		
-			PLMAID,			
-			PLMAMA,			
-			PLMIDDLEMAN2,	
-			PLMIDDLEWOMAN2,	
-			PLMIKAN,			
-			PLMIMITUTO,		
-			PLMINUN,			
-			PLMOSS,			
-			PLOLDMAN2,		
-			PLOLDWOMAN1,		
-			PLOLDWOMAN2,		
-			PLOOKIDO,		
-			PLPATIRITUSU,	
-			PLPCWOMAN1,		
-			PLBRAINS2,		
-			PLBRAINS3,		
-			PLBRAINS4,		
-			PLPRINCESS,		
-			PLBFSM,			
-			PLBFSW1,			
-			PLBFSW2,			
-			PLWIFISM,		
-			PLWIFISW,		
-			PLDPHERO,		
-			PLDPHEROINE,		
-		};
-		
-		WF2DMAP_OBJDrawWkDel( p_obj->p_draw );
-		WF2DMAP_OBJDrawSysResDel( p_mcr->p_objdraw, s_MCR_DEBUG_2CCHAR_VIEW_ID );
-
-		s_MCR_DEBUG_2CCHAR_VIEW_ID = sc_DEBUG_VIEW_TBL[s_MCR_DEBUG_2CCHAR_VIEW_COUNT];
-		s_MCR_DEBUG_2CCHAR_VIEW_COUNT = (s_MCR_DEBUG_2CCHAR_VIEW_COUNT + 1) % NELEMS(sc_DEBUG_VIEW_TBL);
-
-		WF2DMAP_OBJDrawSysResSet( p_mcr->p_objdraw, s_MCR_DEBUG_2CCHAR_VIEW_ID, WF_2DC_MOVENORMAL, p_mcr->use_heap );
-
-		WF2DMAP_OBJWkDataSet( p_obj->p_obj, WF2DMAP_OBJPM_CHARA, s_MCR_DEBUG_2CCHAR_VIEW_ID );
-		p_obj->p_draw = WF2DMAP_OBJDrawWkNew( p_mcr->p_objdraw, p_obj->p_obj, TRUE, p_mcr->use_heap );
-	}
-#endif
 
 	// 選択関係
 	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE ){

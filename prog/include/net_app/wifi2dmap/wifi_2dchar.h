@@ -19,6 +19,30 @@ extern "C" {
 #include "wifi_2dcharcon.h"
 #include "net_app/wifi2dmap/wifi_2dcommon.h"
 
+enum unionchar_enum{
+	WF_2DC_BOY2,
+	WF_2DC_TRAINERM,	//エリートトレーナー
+	WF_2DC_RANGERM,	//ポケモンレンジャー
+	WF_2DC_BREEDERM,	//	ポケモンブリーダー
+	WF_2DC_ASSISTANTM,	//	けんきゅういん
+	WF_2DC_MOUNTMAN,	//	やまおとこ
+	WF_2DC_BADMAN,	//	スキンヘッズ
+	WF_2DC_BABYBOY1,	//	ようちえん
+	WF_2DC_GIRL2,	//	ミニスカート
+	WF_2DC_TRAINERW,	//	エリートトレーナー
+	WF_2DC_RANGERW,	//	ポケモンレンジャー
+	WF_2DC_BREEDERW,	//	ポケモンブリーダー
+	WF_2DC_ASSISTANTW,	//	けんきゅういん
+	WF_2DC_AMBRELLA,	//	パラソルおねえさん
+	WF_2DC_NURSE,	//	ナース
+	WF_2DC_BABYGIRL1,	//	ようちえん
+  WF_2DC_UNICHAR_NUM,
+  WB_HERO    = (WF_2DC_UNICHAR_NUM),
+  WB_HEROINE,
+  WF_2DC_CHARNUM,
+};
+
+
 
 //-----------------------------------------------------------------------------
 /**

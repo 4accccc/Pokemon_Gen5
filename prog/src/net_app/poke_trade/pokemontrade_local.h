@@ -517,7 +517,7 @@ struct _POKEMON_TRADE_WORK{
   u16* scrTemoti;
   u8* pCharMem;
   POKEMONTRADE_TYPE type;
-  PROGVAL_PEZIER_WORK aCutMullRom;
+  PROGVAL_CATMULLROM_WORK aCutMullRom;
   s16 SuckedCount;
   u8 BGClearFlg;
   u8 DemoBGClearFlg;
@@ -714,6 +714,7 @@ extern void POKETRADE_MESSAGE_WindowClear(POKEMON_TRADE_WORK* pWork);
 extern BOOL POKETRADE_MESSAGE_EndCheck(POKEMON_TRADE_WORK* pWork);
 extern void POKETRADE_MESSAGE_HeapInit(POKEMON_TRADE_WORK* pWork);
 extern void POKETRADE_MESSAGE_HeapEnd(POKEMON_TRADE_WORK* pWork);
+extern void POKETRADE_MESSAGE_AppMenuOpenCustom(POKEMON_TRADE_WORK* pWork, int *menustr,int num, int x,int y);
 extern void POKETRADE_MESSAGE_AppMenuOpen(POKEMON_TRADE_WORK* pWork, int *menustr,int num);
 extern void POKETRADE_MESSAGE_AppMenuClose(POKEMON_TRADE_WORK* pWork);
 extern void POKETRADE_MESSAGE_ChangePokemonMyStDisp(POKEMON_TRADE_WORK* pWork,int pageno,int leftright,POKEMON_PARAM* pp);

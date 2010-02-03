@@ -372,7 +372,7 @@ void POKETRADE_MESSAGE_AppMenuClose(POKEMON_TRADE_WORK* pWork)
   }
 }
 
-void POKETRADE_MESSAGE_AppMenuOpen(POKEMON_TRADE_WORK* pWork, int *menustr,int num)
+void POKETRADE_MESSAGE_AppMenuOpenCustom(POKEMON_TRADE_WORK* pWork, int *menustr,int num, int x,int y)
 {
   int i;
   APP_TASKMENU_INITWORK appinit;
@@ -382,14 +382,8 @@ void POKETRADE_MESSAGE_AppMenuOpen(POKEMON_TRADE_WORK* pWork, int *menustr,int n
   appinit.itemWork =  &pWork->appitem[0];
 
   appinit.posType = ATPT_RIGHT_DOWN;
-  if(num==1){
-    appinit.charPosX = 32;
-    appinit.charPosY = 21;
-  }
-  else{
-    appinit.charPosX = 32;
-    appinit.charPosY = 24;
-  }
+  appinit.charPosX = x;
+  appinit.charPosY = y;
 	appinit.w				 = APP_TASKMENU_PLATE_WIDTH;
 	appinit.h				 = APP_TASKMENU_PLATE_HEIGHT;
 
@@ -405,6 +399,15 @@ void POKETRADE_MESSAGE_AppMenuOpen(POKEMON_TRADE_WORK* pWork, int *menustr,int n
 
 }
 
+void POKETRADE_MESSAGE_AppMenuOpen(POKEMON_TRADE_WORK* pWork, int *menustr,int num)
+{
+  if(num==1){
+    POKETRADE_MESSAGE_AppMenuOpenCustom(pWork, menustr, num, 32,21);
+  }
+  else{
+    POKETRADE_MESSAGE_AppMenuOpenCustom(pWork, menustr, num, 32,24);
+  }
+}
 
 //------------------------------------------------------------------------------
 /**
@@ -599,7 +602,7 @@ void POKETRADE_MESSAGE_SetPokemonStatusMessage(POKEMON_TRADE_WORK *pWork, int si
   if(!bEgg){
     _pokeSexMsgDisp(pp, pWork->StatusWin[side], 10*8, 0, pWork);
     GFL_FONTSYS_SetColor( FBMP_COL_BLACK, FBMP_COL_BLK_SDW, 0x0 );
-    _pokeLvMsgDisp(pp, pWork->StatusWin[side], 16, 17, pWork);
+    _pokeLvMsgDisp(pp, pWork->StatusWin[side], 16, 19, pWork);
     _pokePocketItemMsgDisp(pp, pWork->StatusWin[side], 16, 16*8, pWork);
     UITemplate_BALLICON_CreateCLWK( &pWork->aBallIcon[side+UI_BALL_MYSTATUS], pp, pWork->cellUnit,
                                     xdotpos[side]+16, 16, CLSYS_DRAW_MAIN, pWork->heapID );

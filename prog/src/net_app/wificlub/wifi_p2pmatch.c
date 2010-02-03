@@ -56,6 +56,8 @@
 #include "sound/pm_sndsys.h"  //SOUND関連
 
 
+
+
 // 置き換える必要があるがまだない関数  @@OO
 #define SND_HANDLE_FIELD (0)
 #define BGM_POKECEN_VOL (0)
@@ -654,7 +656,7 @@ static GFL_DISP_VRAM _defVBTbl = {
 };
 
 #ifdef WFP2P_DEBUG  // 人をいっぱい出す
-//#define WFP2PM_MANY_OBJ
+#define WFP2PM_MANY_OBJ
 #endif
 
 
@@ -2977,44 +2979,10 @@ static void DEBUG_DummyObjIn( WIFIP2PMATCH_WORK *wk, int num )
 {
   int i;
   MCR_MOVEOBJ* p_moveobj;
-  static const u8 view_list[ 32 ][2] = {
-    { PLBOY1, PM_MALE },
-    { PLBOY3, PM_MALE },
-    { PLMAN3, PM_MALE },
-    { PLBADMAN, PM_MALE },
-    { PLEXPLORE, PM_MALE },
-    { PLFIGHTER, PM_MALE },
-    { PLGORGGEOUSM, PM_MALE },
-    { PLMYSTERY, PM_MALE },
-    { PLGIRL1, PM_FEMALE },
-    { PLGIRL2, PM_FEMALE },
-    { PLWOMAN2, PM_FEMALE },
-    { PLWOMAN3, PM_FEMALE },
-    { PLIDOL, PM_FEMALE },
-    { PLLADY, PM_FEMALE },
-    { PLCOWGIRL, PM_FEMALE },
-    { PLGORGGEOUSW, PM_FEMALE },
-    { PLBOY1, PM_MALE },
-    { PLBOY3, PM_MALE },
-    { PLMAN3, PM_MALE },
-    { PLBADMAN, PM_MALE },
-    { PLEXPLORE, PM_MALE },
-    { PLFIGHTER, PM_MALE },
-    { PLGORGGEOUSM, PM_MALE },
-    { PLMYSTERY, PM_MALE },
-    { PLGIRL1, PM_FEMALE },
-    { PLGIRL2, PM_FEMALE },
-    { PLWOMAN2, PM_FEMALE },
-    { PLWOMAN3, PM_FEMALE },
-    { PLIDOL, PM_FEMALE },
-    { PLLADY, PM_FEMALE },
-    { PLCOWGIRL, PM_FEMALE },
-    { PLGORGGEOUSW, PM_FEMALE },
-  };
 
   for( i=0; i<num; i++ ){
     // 自分を出す
-    p_moveobj = WIFI_MCR_SetNpc( &wk->matchroom, view_list[i][0], i+1 );
+    p_moveobj = WIFI_MCR_SetNpc( &wk->matchroom, i%16, i+1 );
 
     // みんな飛び跳ねる
     WIFI_MCR_NpcMoveSet( &wk->matchroom, p_moveobj, MCR_NPC_MOVE_JUMP );
@@ -3129,9 +3097,9 @@ static int WifiP2PMatch_FriendListInit2( WIFIP2PMATCH_WORK *wk, int seq )
   if( WIFI_MCR_GetInitFlag( &wk->matchroom ) == FALSE ){
 
     if( MyStatus_GetMySex( GAMEDATA_GetMyStatus(wk->pGameData) ) == PM_MALE ){
-      obj_code = PLHERO;
+      obj_code = WB_HERO;
     }else{
-      obj_code = PLHEROINE;
+      obj_code = WB_HEROINE;
     }
 
     // マッチングルーム初期化
