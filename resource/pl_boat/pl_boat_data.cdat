@@ -17,7 +17,7 @@ static const TR_DATA TrData[TRAINER_MAX] = {
 	{GIRL4, TRID_PRINCESS_04, {msg_c03r0801_girl4_03, msg_c03r0801_girl4_04}},
 	{GENTLEMAN, TRID_GENTLE_01, {msg_c03r0801_gentleman_04, msg_c03r0801_gentleman_05}},
 	{LADY, TRID_MADAM_01, {msg_c03r0801_lady_04, msg_c03r0801_lady_05}},
-	{MAID, TRID_FUTAGO_03, {msg_c03r0801_babygirl1_01, msg_c03r0801_babygirl1_02}},
+	{MAID, TRID_FUTAGO_03, {msg_c03r0801_maid_01, msg_c03r0801_maid_02}},
 };
 
 static const NONE_TR_DATA LongTalkerData[LONG_TALKER_MAX] = {
