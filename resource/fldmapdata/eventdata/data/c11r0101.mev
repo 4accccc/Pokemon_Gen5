@@ -1,5 +1,5 @@
 #event data
-#save date:2010/02/02 21:49:23
+#save date:2010/02/03 15:11:46
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c11r0101.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,224 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c11r0101.wms
 #hold event type:
 1
 #hold event number:
+7
+#event number: 0
+#type
+1
+#ID name
+UN_ENTRANCE_RECEPTION_01
+#OBJ CODE Number
+INFORMATIONW
+#MOVE CODE Number
+MV_RND
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
 0
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-24 0 72
+#event number: 1
+#type
+1
+#ID name
+UN_ENTRANCE_RECEPTION_02
+#OBJ CODE Number
+INFORMATIONW
+#MOVE CODE Number
+MV_RND
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+56 0 104
+#event number: 2
+#type
+1
+#ID name
+UN_ENTRANCE_RECEPTION_03
+#OBJ CODE Number
+INFORMATIONM
+#MOVE CODE Number
+MV_RND
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+88 0 104
+#event number: 3
+#type
+1
+#ID name
+UN_ENTRANCE_BACKPACKERM_01
+#OBJ CODE Number
+BACKPACKERM
+#MOVE CODE Number
+MV_RND
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+136 0 8
+#event number: 4
+#type
+1
+#ID name
+UN_ENTRANCE_POLICEMAN_01
+#OBJ CODE Number
+POLICEMAN
+#MOVE CODE Number
+MV_RND
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+56 0 8
+#event number: 5
+#type
+1
+#ID name
+UN_ENTRANCE_BABYBOY1_01
+#OBJ CODE Number
+BABYBOY1
+#MOVE CODE Number
+MV_RND
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-88 0 24
+#event number: 6
+#type
+1
+#ID name
+UN_ENTRANCE_DANCER_01
+#OBJ CODE Number
+DANCER
+#MOVE CODE Number
+MV_RND
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-88 0 -56
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
