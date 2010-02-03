@@ -284,50 +284,50 @@
 //--------------------------------------------------------------
 //	フィールド動作モデル アニメーションコマンドコード
 //--------------------------------------------------------------
-#define AC_DIR_U				0x00 ///<上に向く
-#define AC_DIR_D				0x01 ///<下に向く
-#define AC_DIR_L				0x02 ///<左に向く
-#define AC_DIR_R				0x03 ///<右に向く
+#define AC_DIR_U				0x00 ///<上に向く [rail]
+#define AC_DIR_D				0x01 ///<下に向く [rail]
+#define AC_DIR_L				0x02 ///<左に向く [rail]
+#define AC_DIR_R				0x03 ///<右に向く [rail]
 #define AC_WALK_U_32F			0x04 ///<上に移動　32フレーム
 #define AC_WALK_D_32F			0x05 ///<下に移動　32フレーム
 #define AC_WALK_L_32F			0x06 ///<左に移動　32フレーム
 #define AC_WALK_R_32F			0x07 ///<右に移動　32フレーム
-#define AC_WALK_U_16F			0x08 ///<上に移動　16フレーム
-#define AC_WALK_D_16F			0x09 ///<下に移動　16フレーム
-#define AC_WALK_L_16F			0x0a ///<左に移動　16フレーム
-#define AC_WALK_R_16F			0x0b ///<右に移動　16フレーム
-#define AC_WALK_U_8F			0x0c ///<上に移動　8フレーム
-#define AC_WALK_D_8F			0x0d ///<下に移動　8フレーム
-#define AC_WALK_L_8F			0x0e ///<左に移動　8フレーム
-#define AC_WALK_R_8F			0x0f ///<右に移動　8フレーム
-#define AC_WALK_U_4F			0x10 ///<上に移動　4フレーム
-#define AC_WALK_D_4F			0x11 ///<下に移動　4フレーム
-#define AC_WALK_L_4F			0x12 ///<左に移動　4フレーム
-#define AC_WALK_R_4F			0x13 ///<右に移動　4フレーム
-#define AC_WALK_U_2F			0x14 ///<上に移動　2フレーム
-#define AC_WALK_D_2F			0x15 ///<下に移動　2フレーム
-#define AC_WALK_L_2F			0x16 ///<左に移動　2フレーム
-#define AC_WALK_R_2F			0x17 ///<右に移動　2フレーム
+#define AC_WALK_U_16F			0x08 ///<上に移動　16フレーム [rail]
+#define AC_WALK_D_16F			0x09 ///<下に移動　16フレーム [rail]
+#define AC_WALK_L_16F			0x0a ///<左に移動　16フレーム [rail]
+#define AC_WALK_R_16F			0x0b ///<右に移動　16フレーム [rail]
+#define AC_WALK_U_8F			0x0c ///<上に移動　8フレーム [rail]
+#define AC_WALK_D_8F			0x0d ///<下に移動　8フレーム [rail]
+#define AC_WALK_L_8F			0x0e ///<左に移動　8フレーム [rail]
+#define AC_WALK_R_8F			0x0f ///<右に移動　8フレーム [rail]
+#define AC_WALK_U_4F			0x10 ///<上に移動　4フレーム [rail]
+#define AC_WALK_D_4F			0x11 ///<下に移動　4フレーム [rail]
+#define AC_WALK_L_4F			0x12 ///<左に移動　4フレーム [rail]
+#define AC_WALK_R_4F			0x13 ///<右に移動　4フレーム [rail]
+#define AC_WALK_U_2F			0x14 ///<上に移動　2フレーム [rail]
+#define AC_WALK_D_2F			0x15 ///<下に移動　2フレーム [rail]
+#define AC_WALK_L_2F			0x16 ///<左に移動　2フレーム [rail]
+#define AC_WALK_R_2F			0x17 ///<右に移動　2フレーム [rail]
 #define AC_STAY_WALK_U_32F		0x18 ///<上向きにその場歩き　32フレーム
 #define AC_STAY_WALK_D_32F		0x19 ///<下向きにその場歩き　32フレーム
 #define AC_STAY_WALK_L_32F		0x1a ///<左向きにその場歩き　32フレーム
 #define AC_STAY_WALK_R_32F		0x1b ///<右向きにその場歩き　32フレーム
-#define AC_STAY_WALK_U_16F		0x1c ///<上向きにその場歩き　16フレーム
-#define AC_STAY_WALK_D_16F		0x1d ///<下向きにその場歩き　16フレーム
-#define AC_STAY_WALK_L_16F		0x1e ///<左向きにその場歩き　16フレーム
-#define AC_STAY_WALK_R_16F		0x1f ///<右向きにその場歩き　16フレーム
-#define AC_STAY_WALK_U_8F		0x20 ///<上向きにその場歩き　8フレーム
-#define AC_STAY_WALK_D_8F		0x21 ///<下向きにその場歩き　8フレーム
-#define AC_STAY_WALK_L_8F		0x22 ///<左向きにその場歩き　8フレーム
-#define AC_STAY_WALK_R_8F		0x23 ///<右向きにその場歩き　8フレーム
-#define AC_STAY_WALK_U_4F		0x24 ///<上向きにその場歩き　4フレーム
-#define AC_STAY_WALK_D_4F		0x25 ///<下向きにその場歩き　4フレーム
-#define AC_STAY_WALK_L_4F		0x26 ///<左向きにその場歩き　4フレーム
-#define AC_STAY_WALK_R_4F		0x27 ///<右向きにその場歩き　4フレーム
-#define AC_STAY_WALK_U_2F		0x28 ///<上向きにその場歩き　2フレーム
-#define AC_STAY_WALK_D_2F		0x29 ///<下向きにその場歩き　2フレーム
-#define AC_STAY_WALK_L_2F		0x2a ///<左向きにその場歩き　2フレーム
-#define AC_STAY_WALK_R_2F		0x2b ///<右向きにその場歩き　2フレーム
+#define AC_STAY_WALK_U_16F		0x1c ///<上向きにその場歩き　16フレーム [rail]
+#define AC_STAY_WALK_D_16F		0x1d ///<下向きにその場歩き　16フレーム [rail]
+#define AC_STAY_WALK_L_16F		0x1e ///<左向きにその場歩き　16フレーム [rail]
+#define AC_STAY_WALK_R_16F		0x1f ///<右向きにその場歩き　16フレーム [rail]
+#define AC_STAY_WALK_U_8F		0x20 ///<上向きにその場歩き　8フレーム [rail]
+#define AC_STAY_WALK_D_8F		0x21 ///<下向きにその場歩き　8フレーム [rail]
+#define AC_STAY_WALK_L_8F		0x22 ///<左向きにその場歩き　8フレーム [rail]
+#define AC_STAY_WALK_R_8F		0x23 ///<右向きにその場歩き　8フレーム [rail]
+#define AC_STAY_WALK_U_4F		0x24 ///<上向きにその場歩き　4フレーム [rail]
+#define AC_STAY_WALK_D_4F		0x25 ///<下向きにその場歩き　4フレーム [rail]
+#define AC_STAY_WALK_L_4F		0x26 ///<左向きにその場歩き　4フレーム [rail]
+#define AC_STAY_WALK_R_4F		0x27 ///<右向きにその場歩き　4フレーム [rail]
+#define AC_STAY_WALK_U_2F		0x28 ///<上向きにその場歩き　2フレーム [rail]
+#define AC_STAY_WALK_D_2F		0x29 ///<下向きにその場歩き　2フレーム [rail]
+#define AC_STAY_WALK_L_2F		0x2a ///<左向きにその場歩き　2フレーム [rail]
+#define AC_STAY_WALK_R_2F		0x2b ///<右向きにその場歩き　2フレーム [rail]
 #define AC_STAY_JUMP_U_16F		0x2c ///<上向きにその場ジャンプ 16フレーム
 #define AC_STAY_JUMP_D_16F		0x2d ///<下向きにその場ジャンプ 16フレーム
 #define AC_STAY_JUMP_L_16F		0x2e ///<左向きにその場ジャンプ 16フレーム
@@ -336,30 +336,30 @@
 #define AC_STAY_JUMP_D_8F		0x31 ///<下向きにその場ジャンプ 8フレーム
 #define AC_STAY_JUMP_L_8F		0x32 ///<左向きにその場ジャンプ 8フレーム
 #define AC_STAY_JUMP_R_8F		0x33 ///<右向きにその場ジャンプ 8フレーム
-#define AC_JUMP_U_1G_8F			0x34 ///<上向きにジャンプ 1grid 8フレーム
-#define AC_JUMP_D_1G_8F			0x35 ///<下向きにジャンプ 1grid 8フレーム
-#define AC_JUMP_L_1G_8F			0x36 ///<左向きにジャンプ 1grid 8フレーム
-#define AC_JUMP_R_1G_8F			0x37 ///<右向きにジャンプ 1grid 8フレーム
-#define AC_JUMP_U_2G_16F		0x38 ///<上向きにジャンプ 2grid 16フレーム
-#define AC_JUMP_D_2G_16F		0x39 ///<下向きにジャンプ 2grid 16フレーム
-#define AC_JUMP_L_2G_16F		0x3a ///<左向きにジャンプ 2grid 16フレーム
-#define AC_JUMP_R_2G_16F		0x3b ///<右向きにジャンプ 2grid 16フレーム
-#define AC_WAIT_1F				0x3c ///<1フレーム待ち
-#define AC_WAIT_2F				0x3d ///<2フレーム待ち
-#define AC_WAIT_4F				0x3e ///<4フレーム待ち
-#define AC_WAIT_8F				0x3f ///<8フレーム待ち
-#define AC_WAIT_15F				0x40 ///<15フレーム待ち
-#define AC_WAIT_16F				0x41 ///<16フレーム待ち
-#define AC_WAIT_32F				0x42 ///<32フレーム待ち
+#define AC_JUMP_U_1G_8F			0x34 ///<上向きにジャンプ 1grid 8フレーム [rail]
+#define AC_JUMP_D_1G_8F			0x35 ///<下向きにジャンプ 1grid 8フレーム [rail]
+#define AC_JUMP_L_1G_8F			0x36 ///<左向きにジャンプ 1grid 8フレーム [rail]
+#define AC_JUMP_R_1G_8F			0x37 ///<右向きにジャンプ 1grid 8フレーム [rail]
+#define AC_JUMP_U_2G_16F		0x38 ///<上向きにジャンプ 2grid 16フレーム [rail]
+#define AC_JUMP_D_2G_16F		0x39 ///<下向きにジャンプ 2grid 16フレーム [rail]
+#define AC_JUMP_L_2G_16F		0x3a ///<左向きにジャンプ 2grid 16フレーム [rail]
+#define AC_JUMP_R_2G_16F		0x3b ///<右向きにジャンプ 2grid 16フレーム [rail]
+#define AC_WAIT_1F				0x3c ///<1フレーム待ち [rail]
+#define AC_WAIT_2F				0x3d ///<2フレーム待ち [rail]
+#define AC_WAIT_4F				0x3e ///<4フレーム待ち [rail]
+#define AC_WAIT_8F				0x3f ///<8フレーム待ち [rail]
+#define AC_WAIT_15F				0x40 ///<15フレーム待ち [rail]
+#define AC_WAIT_16F				0x41 ///<16フレーム待ち [rail]
+#define AC_WAIT_32F				0x42 ///<32フレーム待ち [rail]
 #define AC_WARP_UP				0x43 ///<上にワープ
 #define AC_WARP_DOWN			0x44 ///<下にワープ
-#define AC_VANISH_ON			0x45 ///<非表示にする
-#define AC_VANISH_OFF			0x46 ///<表示にする
-#define AC_DIR_PAUSE_ON			0x47 ///<方向固定する
-#define AC_DIR_PAUSE_OFF		0x48 ///<方向固定しない
-#define AC_ANM_PAUSE_ON			0x49 ///<アニメポーズ
-#define AC_ANM_PAUSE_OFF		0x4a ///<アニメポーズを解除
-#define AC_MARK_GYOE			0x4b ///<!マークを出す
+#define AC_VANISH_ON			0x45 ///<非表示にする [rail]
+#define AC_VANISH_OFF			0x46 ///<表示にする [rail]
+#define AC_DIR_PAUSE_ON			0x47 ///<方向固定する [rail]
+#define AC_DIR_PAUSE_OFF		0x48 ///<方向固定しない [rail]
+#define AC_ANM_PAUSE_ON			0x49 ///<アニメポーズ [rail]
+#define AC_ANM_PAUSE_OFF		0x4a ///<アニメポーズを解除 [rail]
+#define AC_MARK_GYOE			0x4b ///<!マークを出す [rail]
 #define AC_WALK_U_6F			0x4c ///<上方向に移動　6フレーム
 #define AC_WALK_D_6F			0x4d ///<下方向に移動　6フレーム
 #define AC_WALK_L_6F			0x4e ///<左方向に移動　6フレーム
@@ -372,10 +372,10 @@
 #define AC_WALK_D_1F			0x55 ///<下方向に移動　1フレーム(システム未対応 使用禁止
 #define AC_WALK_L_1F			0x56 ///<左方向に移動　1フレーム(システム未対応 使用禁止
 #define AC_WALK_R_1F			0x57 ///<右方向に移動　1フレーム(システム未対応 使用禁止
-#define AC_DASH_U_4F			0x58 ///<上方向に移動　4フレーム(自機専用
-#define AC_DASH_D_4F			0x59 ///<下方向に移動　4フレーム(自機専用
-#define AC_DASH_L_4F			0x5a ///<左方向に移動　4フレーム(自機専用
-#define AC_DASH_R_4F			0x5b ///<右方向に移動　4フレーム(自機専用
+#define AC_DASH_U_4F			0x58 ///<上方向に移動　4フレーム(自機専用 [rail]
+#define AC_DASH_D_4F			0x59 ///<下方向に移動　4フレーム(自機専用 [rail]
+#define AC_DASH_L_4F			0x5a ///<左方向に移動　4フレーム(自機専用 [rail]
+#define AC_DASH_R_4F			0x5b ///<右方向に移動　4フレーム(自機専用 [rail]
 #define AC_JUMPHI_L_1G_16F		0x5c ///<左方向に高いジャンプ 1grid 16フレーム(自機専用
 #define AC_JUMPHI_R_1G_16F		0x5d ///<右方向に高いジャンプ 1grid 16フレーム(自機専用
 #define AC_JUMPHI_L_3G_32F		0x5e ///<左方向に高いジャンプ 3grid 32フレーム(自機専用
@@ -439,7 +439,7 @@
 #define AC_WALKGU_L_2F			0x97 ///<上壁移動 左 2フレーム
 #define AC_WALKGU_R_2F			0x98 ///<上壁移動 右 2フレーム
 #define AC_MARK_GYOE_TWAIT		0x99 ///<!マークを出す グラフィックデータ転送待ち版
-#define AC_HERO_ITEMGET     0x9a ///<自機アイテムゲットアニメ
+#define AC_HERO_ITEMGET     0x9a ///<自機アイテムゲットアニメ [rail]
 #define AC_SANDWALK_U_16F  0x9b ///<上に移動 16F移動、表示アニメは2Fアニメ
 #define AC_SANDWALK_D_16F  0x9c ///<下に移動 16F移動、表示アニメは2Fアニメ
 #define AC_SANDWALK_L_16F  0x9d ///<左に移動 16F移動、表示アニメは2Fアニメ
