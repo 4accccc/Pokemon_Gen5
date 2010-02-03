@@ -168,6 +168,7 @@
 #define WK_SCENE_C03R0601                16556 /* 0x40ac ヒウンシティ：イベント用ワーク */
 #define WK_SCENE_C03                     16557 /* 0x40ad ヒウンシティ：イベント用ワーク */
 #define WK_SCENE_R15R0301                16558 /* 0x40ae パルパーク：イベント用ワーク */
+#define WK_SCENE_C03P07                  16559 /* 0x40af ヒウンシティ（ジム前通り）：イベント用ワーク */
 
 #define WK_SCENE_AREA_END                16687 /* 0x412f  */
 
