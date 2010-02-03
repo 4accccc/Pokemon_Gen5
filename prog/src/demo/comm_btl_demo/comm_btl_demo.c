@@ -150,7 +150,7 @@ enum
 
   // トレーナー名
   TRNAME_CSX = 10,
-  TRNAME_CSY = 2,
+  TRNAME_CSY = 3,
   TRNAME_OPEN_SYNC = 45, ///< 表示開始SYNC
 
   NORMAL_POSID0_TRNAME_CPX = 16,
@@ -466,6 +466,7 @@ static void G3D_PTC_Delete( COMM_BTL_DEMO_G3D_WORK* g3d );
 static void G3D_PTC_Exit( COMM_BTL_DEMO_G3D_WORK* g3d );
 static void G3D_PTC_CreateEmitter( COMM_BTL_DEMO_G3D_WORK * g3d, u16 idx, const VecFx32* pos );
 static void G3D_PTC_CreateEmitterAll( COMM_BTL_DEMO_G3D_WORK* g3d, const VecFx32* pos );
+static BOOL G3D_OBJ_PaletteReBind( GFL_G3D_OBJ* obj, int mat_idx, int pal_idx );
 static void G3D_AnimeSet( COMM_BTL_DEMO_G3D_WORK* g3d, u16 demo_id );
 static void G3D_AnimeDel( COMM_BTL_DEMO_G3D_WORK* g3d );
 static void G3D_AnimeExit( COMM_BTL_DEMO_G3D_WORK* g3d );
@@ -905,6 +906,59 @@ static BOOL SceneStartDemo_Init( UI_SCENE_CNT_PTR cnt, void* work )
   return TRUE;
 }
 
+// トレーナーの性別によってマテリアルのパレットの関連付けを変更
+static void _start_demo_init_rebind_normal( COMM_BTL_DEMO_MAIN_WORK* wk )
+{
+  int i;
+  COMM_BTL_DEMO_G3D_WORK* g3d = &wk->wk_g3d;
+  GFL_G3D_OBJ* obj = GFL_G3D_UTIL_GetObjHandle( g3d->g3d_util, g3d->anm_unit_idx );
+
+  for( i=0; i<2; i++ )
+  {
+    int trsex;
+    int pal;
+
+    trsex = wk->trainer_unit[i].trsex;
+
+    if( trsex == PM_MALE )
+    {
+      pal = 1;
+    }
+    else
+    {
+      pal = 2;
+    }
+
+    G3D_OBJ_PaletteReBind( obj, 1+i, pal );
+  }
+}
+
+static void _start_demo_init_rebind_multi( COMM_BTL_DEMO_MAIN_WORK* wk )
+{
+  int i;
+  COMM_BTL_DEMO_G3D_WORK* g3d = &wk->wk_g3d;
+  GFL_G3D_OBJ* obj = GFL_G3D_UTIL_GetObjHandle( g3d->g3d_util, g3d->anm_unit_idx );
+
+  for( i=0; i<4; i++ )
+  {
+    int trsex;
+    int pal;
+
+    trsex = wk->trainer_unit[i].trsex;
+
+    if( trsex == PM_MALE )
+    {
+      pal = 1;
+    }
+    else
+    {
+      pal = 2;
+    }
+
+    G3D_OBJ_PaletteReBind( obj, 1+i, pal );
+  }
+}
+
 //-----------------------------------------------------------------------------
 /**
  *	@brief  バトル前デモ 主処理
@@ -932,10 +986,12 @@ static BOOL SceneStartDemo_Main( UI_SCENE_CNT_PTR cnt, void* work )
     if( type_is_normal(wk->type) )
     {
       G3D_AnimeSet( &wk->wk_g3d, DEMO_ID_01_A );
+      _start_demo_init_rebind_normal(wk);
     }
     else
     {
       G3D_AnimeSet( &wk->wk_g3d, DEMO_ID_02_A );
+      _start_demo_init_rebind_multi(wk);
     }
     
     // ボールアニメ開始
@@ -2024,15 +2080,14 @@ static void TRAINER_UNIT_DrawTrainerName( TRAINER_UNIT* unit, GFL_FONT *font )
     GFL_FONTSYS_SetColor( 0x4, 0x4, 0x4 );
   }
 
-  PRINTSYS_Print( GFL_BMPWIN_GetBmp(unit->win_name), -1, -1, unit->str_trname, font );
-  PRINTSYS_Print( GFL_BMPWIN_GetBmp(unit->win_name), 1, -1, unit->str_trname, font );
-  PRINTSYS_Print( GFL_BMPWIN_GetBmp(unit->win_name), 1, 1, unit->str_trname, font );
-  PRINTSYS_Print( GFL_BMPWIN_GetBmp(unit->win_name), -1, 1, unit->str_trname, font );
-
+  PRINTSYS_Print( GFL_BMPWIN_GetBmp(unit->win_name), 0, 0, unit->str_trname, font );
   PRINTSYS_Print( GFL_BMPWIN_GetBmp(unit->win_name), 0, 1, unit->str_trname, font );
-  PRINTSYS_Print( GFL_BMPWIN_GetBmp(unit->win_name), 0, -1, unit->str_trname, font );
+  PRINTSYS_Print( GFL_BMPWIN_GetBmp(unit->win_name), 0, 2, unit->str_trname, font );
   PRINTSYS_Print( GFL_BMPWIN_GetBmp(unit->win_name), 1, 0, unit->str_trname, font );
-  PRINTSYS_Print( GFL_BMPWIN_GetBmp(unit->win_name), -1, 0, unit->str_trname, font );
+  PRINTSYS_Print( GFL_BMPWIN_GetBmp(unit->win_name), 1, 2, unit->str_trname, font );
+  PRINTSYS_Print( GFL_BMPWIN_GetBmp(unit->win_name), 2, 0, unit->str_trname, font );
+  PRINTSYS_Print( GFL_BMPWIN_GetBmp(unit->win_name), 2, 1, unit->str_trname, font );
+  PRINTSYS_Print( GFL_BMPWIN_GetBmp(unit->win_name), 2, 2, unit->str_trname, font );
   
   if( unit->trsex == PM_MALE )
   {
@@ -2047,7 +2102,7 @@ static void TRAINER_UNIT_DrawTrainerName( TRAINER_UNIT* unit, GFL_FONT *font )
 
 //  GFL_FONTSYS_SetColor( 0x7, 0x4, 0x5 );
 
-  PRINTSYS_Print( GFL_BMPWIN_GetBmp(unit->win_name), 0, 0, unit->str_trname, font );
+  PRINTSYS_Print( GFL_BMPWIN_GetBmp(unit->win_name), 1, 1, unit->str_trname, font );
   GFL_BMPWIN_MakeTransWindow_VBlank( unit->win_name );
 }
 
@@ -2690,6 +2745,37 @@ static void G3D_PTC_CreateEmitterAll( COMM_BTL_DEMO_G3D_WORK* g3d, const VecFx32
 }
 
 //-----------------------------------------------------------------------------
+/** 
+ *	@brief  imd内マテリアルのパレットの結びつきを変更
+ *
+ *	@param	GFL_G3D_OBJ* obj G3D_OBJ
+ *	@param	mat_idx マテリアル インデックス
+ *	@param	pal_idx パレット インデックス
+ *
+ *	@retval TRUE:成功 FALSE:失敗
+ */
+//-----------------------------------------------------------------------------
+static BOOL G3D_OBJ_PaletteReBind( GFL_G3D_OBJ* obj, int mat_idx, int pal_idx )
+{
+  GFL_G3D_RND* rnd = GFL_G3D_OBJECT_GetG3Drnd(obj);
+  GFL_G3D_RES* restex = GFL_G3D_RENDER_GetG3DresTex(rnd);
+
+  NNSG3dRenderObj* rndobj = GFL_G3D_RENDER_GetRenderObj(rnd);
+  NNSG3dResMdl* mdl = NNS_G3dRenderObjGetResMdl(rndobj);
+  NNSG3dResTex* tex = GFL_G3D_GetResTex(restex);
+    
+  BOOL result = TRUE;
+
+  // リリース
+  NNS_G3dReleaseMdlPltt(mdl);
+
+  // リバインド
+  result &= NNS_G3dForceBindMdlPltt( mdl, tex, mat_idx, pal_idx );
+
+  return result;
+}
+
+//-----------------------------------------------------------------------------
 /**
  *	@brief  アニメーション初期化
  *
@@ -2734,22 +2820,66 @@ static void G3D_AnimeSet( COMM_BTL_DEMO_G3D_WORK* g3d, u16 demo_id )
       GFL_G3D_UTIL_GetUnitResCount(g3d->g3d_util,0),
       GFL_G3D_UTIL_GetUnitResIdx(g3d->g3d_util, 0)
     );
+  }
+}
 
-    //@TODO 男女からテクスチャのパレットを設定
+#if 0
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  男女からテクスチャリソースの結びつきを変更
+ *
+ *	@param	COMM_BTL_DEMO_G3D_WORK* g3d
+ *	@param	trsex 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void G3D_AnimeSetTrSex( COMM_BTL_DEMO_G3D_WORK* g3d, u8 trsex, u8 is_normal )
+{
+  GFL_G3D_OBJ* obj = GFL_G3D_UTIL_GetObjHandle( g3d->g3d_util, g3d->anm_unit_idx );
+  BOOL result = TRUE;
+
+  // デバッグ張替
+  {
+    static int mat = 0;
+    static int pal = 0;
+
+    if( GFL_UI_KEY_GetTrg() & PAD_KEY_UP )
     {
-      GFL_G3D_RND* rnd = GFL_G3D_OBJECT_GetG3Drnd(obj);
-      GFL_G3D_RES* tex = GFL_G3D_RENDER_GetG3DresTex(rnd);
-      GFL_G3D_RES* mdl = GFL_G3D_RENDER_GetG3DresMdl(rnd);
-
-//      GFL_G3D_GetTexturePlttKey();
-
-//    NNSG3dRenderObj* renderobj = GFL_G3D_RENDER_GetRenderObj( GFL_G3D_OBJECT_GetG3Drnd(g3Dobj) );
-
-
-//BOOL GFL_G3D_RENDER_SetTexture( GFL_G3D_RND* g3Drnd, const int mdlidx, const GFL_G3D_RES* tex )
+      mat++;
+      HOSAKA_Printf("mat=%d pal=%d \n", mat, pal);
+    }
+    else if( GFL_UI_KEY_GetTrg() & PAD_KEY_DOWN )
+    {
+      mat--;
+      HOSAKA_Printf("mat=%d pal=%d \n", mat, pal);
+    }
+    else if( GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT )
+    {
+      pal++;
+      HOSAKA_Printf("mat=%d pal=%d \n", mat, pal);
+    }
+    else if( GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT )
+    {
+      pal--;
+      HOSAKA_Printf("mat=%d pal=%d \n", mat, pal);
+    }
+    else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X )
+    {
+      BOOL result = TRUE;
+      // リリース
+      NNS_G3dReleaseMdlPltt(mdl);
+      // リバインド
+      result &= NNS_G3dForceBindMdlPltt( mdl, tex, mat, pal );
+      HOSAKA_Printf("bind mat=%d pal=%d \n", mat, pal);
+      if( result == FALSE )
+      {
+        HOSAKA_Printf("failed.\n");
+      }
     }
   }
 }
+#endif
 
 //-----------------------------------------------------------------------------
 /**

@@ -75,10 +75,35 @@ static void debug_param( COMM_BTL_DEMO_PARAM* prm )
   for( i=0; i<COMM_BTL_DEMO_TRDATA_MAX; i++ )
   {
     prm->trainer_data[i].server_version = GFUser_GetPublicRand(2);
-    prm->trainer_data[i].mystatus = SaveData_GetMyStatus( SaveControl_GetPointer() );
+
+    {
+      MYSTATUS* st;
+
+      st = SaveData_GetMyStatus( SaveControl_GetPointer() );
+
+      if( GFUser_GetPublicRand(2) == 0 )
+      {
+        STRCODE debugname[8] = L"ブラック";
+        debugname[4] = GFL_STR_GetEOMCode();
+
+        MyStatus_SetMySex( st, PM_MALE );
+        MyStatus_SetMyName( st, debugname);
+      }
+      else
+      {
+        STRCODE debugname[8] = L"ホワイト";
+        debugname[4] = GFL_STR_GetEOMCode();
+
+        MyStatus_SetMySex( st, PM_FEMALE );
+        MyStatus_SetMyName( st, debugname);
+      }
+
+      prm->trainer_data[i].mystatus = st;
+    }
 
 #if 0
-    prm->trainer_data[i].trsex = (i!=0) ? PM_MALE : PM_FEMALE; //@TODO とりあえず01は男固定
+ // 廃止予定
+//    prm->trainer_data[i].trsex = PM_FEMALE;//(GFUser_GetPublicRand(2)==0) ? PM_MALE : PM_FEMALE;  
     // トレーナー名
     {
       //終端コードを追加してからSTRBUFに変換
