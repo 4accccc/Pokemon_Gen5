@@ -60,6 +60,9 @@ typedef struct{
     u8 work[24];
     u16 tr_no;                              ///<トレーナー番号
     u16 itemno;                             ///<アイテム番号
+    u16 hour;                               ///<時
+    u16 monsno;                             ///<ポケモン番号
+    u32 thankyou_count;                     ///<お礼を受けた回数
     u32 target_trainer_id;                  ///<対象相手のトレーナーID
     STRCODE nickname[BUFLEN_POKEMON_NAME];  ///<ポケモン名(ニックネーム)
     STRCODE thankyou_message[GAMEBEACON_THANKYOU_MESSAGE_LEN]; ///お礼メッセージ
@@ -88,10 +91,14 @@ struct _GAMEBEACON_INFO{
   u32 suretigai_count:17;                  ///<すれ違い人数
   u32 language:5;                          ///<PM_LANG
   u32 trainer_view:3;                      ///<ユニオンルームでの見た目
-  u32           :7;
+  u32 research_team_rank:3;                ///<調査隊ランク(RESEARCH_TEAM_RANK)
+  u32           :4;
 
   u32 favorite_color:15;                   ///<本体情報の色(GXRgb)
   u32 thanks_recv_count:17;                ///<お礼を受けた回数
+  
+  u16 play_hour:10;                        ///<プレイ時間：時(MAX999)
+  u16 play_min:6;                          ///<プレイ時間：分(MAX59)
   
   STRCODE name[PERSON_NAME_SIZE + EOM_SIZE];         ///<トレーナー名
   u32 trainer_id;                          ///<トレーナーID

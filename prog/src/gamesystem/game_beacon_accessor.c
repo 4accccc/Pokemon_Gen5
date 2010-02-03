@@ -355,6 +355,54 @@ void GAMEBEACON_Get_PlayerNameToBuf(const GAMEBEACON_INFO *info, STRBUF* strbuf)
 
 //==================================================================
 /**
+ * PM_VERSIONを取得
+ * @param   info		ビーコン情報へのポインタ
+ * @retval  int	  	PM_VERSION
+ */
+//==================================================================
+int GAMEBEACON_Get_PmVersion(const GAMEBEACON_INFO *info)
+{
+  return info->pm_version;
+}
+
+//==================================================================
+/**
+ * 住んでいる国を取得
+ * @param   info		ビーコン情報へのポインタ
+ * @retval  int		  国番号
+ */
+//==================================================================
+int GAMEBEACON_Get_Nation(const GAMEBEACON_INFO *info)
+{
+  return info->nation;
+}
+
+//==================================================================
+/**
+ * 住んでいる地域を取得
+ * @param   info		ビーコン情報へのポインタ
+ * @retval  int		  地域番号
+ */
+//==================================================================
+int GAMEBEACON_Get_Area(const GAMEBEACON_INFO *info)
+{
+  return info->area;
+}
+
+//==================================================================
+/**
+ * 調査隊員ランクを取得
+ * @param   info		ビーコン情報へのポインタ
+ * @retval  RESEARCH_TEAM_RANK		調査隊員ランク
+ */
+//==================================================================
+RESEARCH_TEAM_RANK GAMEBEACON_Get_ResearchTeamRank(const GAMEBEACON_INFO *info)
+{
+  return info->research_team_rank;
+}
+
+//==================================================================
+/**
  * お気に入りの色を取得する
  *
  * @param   dest_buf		色の代入先へのポインタ
@@ -401,6 +449,21 @@ u8 GAMEBEACON_Get_TrainerView(const GAMEBEACON_INFO *info)
 u8 GAMEBEACON_Get_Sex(const GAMEBEACON_INFO *info)
 {
   return info->sex;
+}
+
+//==================================================================
+/**
+ * プレイ時間を取得する
+ *
+ * @param   info		    ビーコン情報へのポインタ
+ * @param   dest_hour		代入先：時
+ * @param   dest_min		代入先：分
+ */
+//==================================================================
+void GAMEBEACON_Get_PlayTime(const GAMEBEACON_INFO *info, u16 *dest_hour, u16 *dest_min)
+{
+  *dest_hour = info->play_hour;
+  *dest_min = info->play_min;
 }
 
 //==================================================================
@@ -514,8 +577,8 @@ u16 GAMEBEACON_Get_Details_BattleTrainer(const GAMEBEACON_INFO *info)
 u16 GAMEBEACON_Get_Details_BattleMonsNo(const GAMEBEACON_INFO *info)
 {
   switch(info->details.details_no){
-  case GAMEBEACON_DETAILS_NO_BATTLE_POKEMON:         ///<野生ポケモンと対戦中
-  case GAMEBEACON_DETAILS_NO_BATTLE_SPECIAL_POKEMON: ///<特別なポケモンと対戦中
+  case GAMEBEACON_DETAILS_NO_BATTLE_WILD_POKE:        ///<野生ポケモンと対戦中
+  case GAMEBEACON_DETAILS_NO_BATTLE_SP_POKE:          ///<特別なポケモンと対戦中
     return info->details.battle_monsno;
   }
   GF_ASSERT(0);
@@ -538,6 +601,27 @@ GAMEBEACON_ACTION GAMEBEACON_Get_Action_ActionNo(const GAMEBEACON_INFO *info)
 
 //==================================================================
 /**
+ * 行動パラメータ取得：ポケモン番号
+ * @param   info		ビーコン情報へのポインタ
+ * @retval  u16		ポケモン番号
+ */
+//==================================================================
+u16 GAMEBEACON_Get_Action_Monsno(const GAMEBEACON_INFO *info)
+{
+  switch(info->action.action_no){
+  case GAMEBEACON_ACTION_BATTLE_WILD_POKE_START:
+  case GAMEBEACON_ACTION_BATTLE_WILD_POKE_VICTORY:
+  case GAMEBEACON_ACTION_BATTLE_SP_POKE_START:
+  case GAMEBEACON_ACTION_BATTLE_SP_POKE_VICTORY:
+  case GAMEBEACON_ACTION_DISTRIBUTION_POKE:          ///<ポケモン配布中
+    return info->action.monsno;
+  }
+  GF_ASSERT(0);
+  return info->action.monsno;
+}
+
+//==================================================================
+/**
  * 行動パラメータ取得：アイテム番号
  * @param   info		ビーコン情報へのポインタ
  * @retval  u16		  アイテム番号
@@ -546,10 +630,11 @@ GAMEBEACON_ACTION GAMEBEACON_Get_Action_ActionNo(const GAMEBEACON_INFO *info)
 u16 GAMEBEACON_Get_Action_ItemNo(const GAMEBEACON_INFO *info)
 {
   switch(info->action.action_no){
-  case GAMEBEACON_ACTION_NULL:  //※check
-  default:
-    break;
+  case GAMEBEACON_ACTION_SP_ITEM_GET:
+  case GAMEBEACON_ACTION_DISTRIBUTION_ITEM:
+    return info->action.itemno;
   }
+  GF_ASSERT(0);
   return info->action.itemno;
 }
 
@@ -581,5 +666,50 @@ const STRCODE * GAMEBEACON_Get_Action_Nickname(const GAMEBEACON_INFO *info)
 //==================================================================
 u16 GAMEBEACON_Get_Action_TrNo(const GAMEBEACON_INFO *info)
 {
+  switch(info->action.action_no){
+  case GAMEBEACON_ACTION_BATTLE_TRAINER_START:
+  case GAMEBEACON_ACTION_BATTLE_TRAINER_VICTORY:
+  case GAMEBEACON_ACTION_BATTLE_LEADER_START:
+  case GAMEBEACON_ACTION_BATTLE_LEADER_VICTORY:
+  case GAMEBEACON_ACTION_BATTLE_BIGFOUR_START:
+  case GAMEBEACON_ACTION_BATTLE_BIGFOUR_VICTORY:
+  case GAMEBEACON_ACTION_BATTLE_CHAMPION_START:
+  case GAMEBEACON_ACTION_BATTLE_CHAMPION_VICTORY:
+    return info->action.tr_no;
+  }
   return info->action.tr_no;
+}
+
+//==================================================================
+/**
+ * 行動パラメータ取得：お礼を受けた回数
+ * @param   info	ビーコン情報へのポインタ
+ * @retval  u32		お礼を受けた回数
+ */
+//==================================================================
+u32 GAMEBEACON_Get_Action_ThankyouCount(const GAMEBEACON_INFO *info)
+{
+  switch(info->action.action_no){
+  case GAMEBEACON_ACTION_THANKYOU_OVER:
+    return info->action.thankyou_count;
+  }
+  GF_ASSERT(0);
+  return info->action.thankyou_count;
+}
+
+//==================================================================
+/**
+ * 行動パラメータ取得：経過時間
+ * @param   info	ビーコン情報へのポインタ
+ * @retval  u32		経過時間(時)
+ */
+//==================================================================
+u32 GAMEBEACON_Get_Action_Hour(const GAMEBEACON_INFO *info)
+{
+  switch(info->action.action_no){
+  case GAMEBEACON_ACTION_PLAYTIME:
+    return info->action.hour;
+  }
+  GF_ASSERT(0);
+  return info->action.hour;
 }
