@@ -176,6 +176,10 @@ extern u32 APP_COMMON_GetStatusIconAnime( POKEMON_PARAM * pp );
 extern u32 APP_COMMON_GetDummyCellArcIdx( const APP_COMMON_MAPPING mapping );
 extern u32 APP_COMMON_GetDummyAnimeArcIdx( const APP_COMMON_MAPPING mapping );
 
+//トレーナー絵OBJのためのダミーセル取得
+extern u32 APP_COMMON_GetTrDummyCellArcIdx( const APP_COMMON_MAPPING mapping );
+extern u32 APP_COMMON_GetTrDummyAnimeArcIdx( const APP_COMMON_MAPPING mapping );
+
 //ボールアイコン取得
 //2*2キャラのアイコンです。大きい方はアイテムアイコンから取得してください
 extern u32 APP_COMMON_GetBallPltArcIdx( const BALL_ID ball );
