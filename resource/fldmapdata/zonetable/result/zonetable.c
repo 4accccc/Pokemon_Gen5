@@ -8525,10 +8525,10 @@ static const ZONEDATA ZoneData[] = {
 		4,
 	},
 	{//ZONE_ID_D20 = 275
-		RSC_GRID_DEFAULT,
+		RSC_NOGRID_DEFAULT,
 		MMLID_SAMPLEOBJ,
-		AREA_ID_OUT17,
-		MATRIX_ID_WB,
+		AREA_ID_IN59,
+		MATRIX_ID_DUN2001,
 		NARC_script_seq_d20_bin,
 		NARC_script_seq_sp_d20_bin,	//NARC_script_seq_sp_d20_bin,
 		NARC_script_message_d20_dat,
@@ -8549,11 +8549,11 @@ static const ZONEDATA ZoneData[] = {
 		FALSE,
 		TRUE,
     TRUE,
-		MATRIX_ID_WB, // camera_area
+		MATRIX_ID_DUN2001, // camera_area
 		0, // padding
-		687,
+		5,
 		0,
-		153,
+		4,
 	},
 	{//ZONE_ID_D20R0101 = 276
 		RSC_GRID_DEFAULT,

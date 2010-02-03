@@ -5113,13 +5113,14 @@ $(DIR_TEMP)/m_dun2102_00_00.nsbmd: $(DIR_RES)/m_dun2102_00_00.imd
 	@$(G3DCVTR) $(DIR_RES)/m_dun2102_00_00.imd -o $(DIR_TEMP)/m_dun2102_00_00.nsbmd
 
 #m_dun2001_00_00
-$(DIR_OUTPUT)/m_dun2001_00_00.3dppack: $(DIR_TEMP)/m_dun2001_00_00.nsbmd $(DIR_RES)/m_dun2001_00_00.bin $(DIR_RES)/m_dun2001_00_00.3dmd
-	@echo create 3dppack m_dun2001_00_00
-	@$(BINLINKER) $(DIR_TEMP)/m_dun2001_00_00.nsbmd $(DIR_RES)/m_dun2001_00_00.bin $(DIR_RES)/m_dun2001_00_00.3dmd $(DIR_OUTPUT)/m_dun2001_00_00.3dppack WB
+$(DIR_OUTPUT)/m_dun2001_00_00.ngpack: $(DIR_TEMP)/m_dun2001_00_00.nsbmd $(DIR_RES)/m_dun2001_00_00.3dmd
+	@echo create ngpack m_dun2001_00_00
+	@$(BINLINKER) $(DIR_TEMP)/m_dun2001_00_00.nsbmd $(DIR_RES)/m_dun2001_00_00.3dmd $(DIR_OUTPUT)/m_dun2001_00_00.ngpack NG
 
 $(DIR_TEMP)/m_dun2001_00_00.nsbmd: $(DIR_RES)/m_dun2001_00_00.imd
 	@echo create_nsbmd m_dun2001_00_00
-	@$(G3DCVTR) $(DIR_RES)/m_dun2001_00_00.imd -o $(DIR_TEMP)/m_dun2001_00_00.nsbmd
+	@$(G3DCVTR) $(DIR_RES)/m_dun2001_00_00.imd -emdl -o $(DIR_TEMP)/m_dun2001_00_00.nsbmd
+	@$(CHECK_SIZE) $(DIR_TEMP)/m_dun2001_00_00.nsbmd
 
 #m_dun2102_00_01
 $(DIR_OUTPUT)/m_dun2102_00_01.3dppack: $(DIR_TEMP)/m_dun2102_00_01.nsbmd $(DIR_RES)/m_dun2102_00_01.bin $(DIR_RES)/m_dun2102_00_01.3dmd
