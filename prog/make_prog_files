@@ -742,7 +742,9 @@ SRCS_OVERLAY_UI_COMMON = ui/ui_scene.c \
                          ui/touchbar.c \
                          ui/print_tool.c \
 												 ui/msgsearch.c \
-												 ui/yesno_menu.c
+												 ui/yesno_menu.c \
+                         ui/frame_list.c
+
 
 # コンフィグ画面
 #===> SRCS_OVERLAY_UI_COMMON
@@ -1627,7 +1629,6 @@ SRCS_OVERLAY_ZUKAN_LIST = app/zukan/list/zukanlist.c \
 #===> SRCS_OVERLAY_ZUKAN_LIST
 SRCS_OVERLAY_ZUKAN = app/zukan/zukan.c \
                      app/zukan/zukan_common.c
-
 
 
 # バトル接続デモ
