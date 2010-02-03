@@ -22,3 +22,8 @@ use File::Basename;
 		system $cmd;
 		exit(1);
 	}
+ 	$filename = basename( @ARGV[0] );
+	$filename = basename( $filename, '.nmc' );
+	$cmd = "rm " . $filename . ".NCGR";
+	system $cmd;
+

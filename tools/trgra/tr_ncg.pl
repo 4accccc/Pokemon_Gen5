@@ -13,8 +13,13 @@
 use File::Basename;
 
 use constant NCG_HEAD_SIZE			=>	4 + 2 + 2 + 4 + 2 + 2 + 4 + 4 + 4 + 4 + 4;
-use constant NCG_LINE_SIZE			=>	0x180;
-use constant NCG_LINE_SIZE_AMARI	=>	0x400 - NCG_LINE_SIZE;
+use constant NCG_LINE_SIZE2			=>	0x40;
+use constant NCG_LINE_SIZE4			=>	0x80;
+use constant NCG_LINE_SIZE8			=>	0x100;
+use constant NCG_LINE_ALL_SIZE	=>	0x400;
+use constant NCG_LINE_SIZE4_AMARI		=>	(NCG_LINE_ALL_SIZE - NCG_LINE_SIZE4);
+use constant NCG_LINE_SIZE8_AMARI		=>	(NCG_LINE_ALL_SIZE - NCG_LINE_SIZE8);
+use constant NCG_LINE_SIZE10_AMARI	=>	(NCG_LINE_ALL_SIZE - (NCG_LINE_SIZE2 + NCG_LINE_SIZE8));
 use constant NCG_X	=>	10;
 use constant NCG_Y	=>	10;
 
@@ -75,15 +80,55 @@ sub NCGRMake
 	}
 
 	#ヘッダーデータを読み込み
-	read NCG, $header, NCG_HEAD_SIZE; 
+	read NCG, $header, NCG_HEAD_SIZE;
 
-	for( $i = 0 ; $i < NCG_X ; $i++ ){
-		read NCG, $data, NCG_LINE_SIZE;
+	#10x10のOAMは無いので、8x8,2*4,2*4,4*2,4*2,2*2の6つのOAMにあわせる
+	#8x8
+	seek( NCG, NCG_HEAD_SIZE, SEEK_SET);
+	for( $i = 0 ; $i < 8; $i++ ){
+		read NCG, $data, NCG_LINE_SIZE8;
 		print NCGR $data;
-		read NCG, $data, NCG_LINE_SIZE_AMARI;
+		read NCG, $data, NCG_LINE_SIZE8_AMARI;
+	}
+	#2x4
+	seek( NCG, NCG_HEAD_SIZE, SEEK_SET);
+	for( $i = 0 ; $i < 4; $i++ ){
+		read NCG, $data, NCG_LINE_SIZE8;
+		read NCG, $data, NCG_LINE_SIZE2;
+		print NCGR $data;
+		read NCG, $data, NCG_LINE_SIZE10_AMARI;
+	}
+	#2x4
+	seek( NCG, NCG_HEAD_SIZE+(NCG_LINE_ALL_SIZE*4), SEEK_SET);
+	for( $i = 0 ; $i < 4; $i++ ){
+		read NCG, $data, NCG_LINE_SIZE8;
+		read NCG, $data, NCG_LINE_SIZE2;
+		print NCGR $data;
+		read NCG, $data, NCG_LINE_SIZE10_AMARI;
+	}
+	#4x2
+	seek( NCG, (NCG_HEAD_SIZE+(NCG_LINE_ALL_SIZE*8)), SEEK_SET);
+	for( $i = 0 ; $i < 2; $i++ ){
+		read NCG, $data, NCG_LINE_SIZE4;
+		print NCGR $data;
+		read NCG, $data, NCG_LINE_SIZE4_AMARI;
+	}
+	seek( NCG, (NCG_HEAD_SIZE+(NCG_LINE_ALL_SIZE*8)), SEEK_SET);
+	for( $i = 0 ; $i < 2; $i++ ){
+		read NCG, $data, NCG_LINE_SIZE4;
+		read NCG, $data, NCG_LINE_SIZE4;
+		print NCGR $data;
+		read NCG, $data, NCG_LINE_SIZE8_AMARI;
+	}
+	#2x2
+	seek( NCG, (NCG_HEAD_SIZE+(NCG_LINE_ALL_SIZE*8)), SEEK_SET);
+	for( $i = 0 ; $i < 2; $i++ ){
+		read NCG, $data, NCG_LINE_SIZE8;
+		read NCG, $data, NCG_LINE_SIZE2;
+		print NCGR $data;
+		read NCG, $data, NCG_LINE_SIZE10_AMARI;
 	}
 
 	close( NCG );
 	close( NCGR );
 }
-
