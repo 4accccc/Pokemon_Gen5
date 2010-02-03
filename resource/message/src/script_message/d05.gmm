@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-02T22:03:09"/>
+	<create user="matsumiya" host="W00224" date="2010-02-03T16:17:48"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -229,7 +229,7 @@
 	</tag-table>
 
 	<columns>
-		<id position="0" width="130"/>
+		<id position="0" width="135"/>
 		<group default=" 0:デフォルト" position="-1" width="100">
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1458" top="270" right="2163" bottom="890" maximized="no" rayout="Vertical2">
+	<dialog left="1303" top="210" right="2008" bottom="838" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -356,6 +356,32 @@
 あわてて　ジムに　戻ったね▼
 相当に　よくない　感じだね
 さあ　ぼくたちも　行こう！▼</language>
+	</row>
+
+	<row id="msg_d05_workman2_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+		<comment>♂
+・GRIDX=174、GRIDZ=459
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">WORKMAN</attribute>
+		<language name="JPN" width="256">そこの　かなあみの　すきまから
+れいとうコンテナに　いけるべ</language>
+		<language name="JPN_KANJI" width="256">そこの　金網の　すき間から
+冷凍コンテナに　行けるべ</language>
+	</row>
+
+	<row id="msg_d05_trainerm_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>♂
+・GRIDX=205、GRIDZ=453
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">TRAINERM</attribute>
+		<language name="JPN" width="256">すこしの　にもつは　ポケモンで
+たくさんの　にもつは　ふねで▼
+どんな　ことにも
+ベストな　やりかたが　あるものさ</language>
+		<language name="JPN_KANJI" width="256">少しの　荷物は　ポケモンで
+たくさんの　荷物は　船で▼
+どんな　ことにも
+ベストな　やり方が　あるものさ</language>
 	</row>
 
 	<flowchart-group-list>
