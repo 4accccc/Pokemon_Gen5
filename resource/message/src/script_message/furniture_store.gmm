@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-10T21:34:27"/>
+	<create user="matsumiya" host="W00224" date="2010-02-03T19:20:54"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,14 +263,14 @@
 		</language>
 	</columns>
 
-	<dialog left="249" top="274" right="954" bottom="894" maximized="no" rayout="Vertical2">
+	<dialog left="1779" top="276" right="2482" bottom="895" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="1" style="0000" width="530"/>
+		<band id="0" index="1" style="0000" width="528"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="543"/>
+		<band id="2" index="3" style="0000" width="541"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="697"/>
+		<band id="4" index="0" style="0000" width="695"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,11 +292,115 @@
 	</lock>
 
 
-	<row id="msg_mapscript_dummy">
-		<comment>？？？</comment>
-		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	<row id="msg_furniture_store_01">
+		<comment>♀：PDW用の家具入手
+・初回の会話
+・POSを踏むと！マーク表示後
+　隣接してメッセージ表示</comment>
+		<attribute name="キャラ指定">WOMANB</attribute>
+		<language name="JPN" width="256">そこの　トレーナー！
+ちょっと　まって！！▼</language>
+		<language name="JPN_KANJI" width="256">そこの　トレーナー！
+ちょっと　待って！！▼</language>
+	</row>
+
+	<row id="msg_furniture_store_02">
+		<comment>♀：PDW用の家具入手
+・はい/いいえ
+・はい→furniture_store_03
+　いいえ→urniture_store_04</comment>
+		<attribute name="キャラ指定">WOMANB</attribute>
+		<language name="JPN" width="256">その　ポケモン……▼
+なかなかの　センスの　もちぬし▼
+ツウごのみの　ステキな　かんじ！！▼
+その　ステキセンスを　みこんで
+おねがいが　あるの！！　きいてね！▼
+うちは　みてのとおりの
+インテリアショップ　なんだけど▼
+おきゃくさんの　このみが
+わからなくて　なやんでいるの……▼
+そこで！　この　カタログから
+これがすき！　っていう▽
+かぐを　１つ　えらんでほしいんだ▼
+アナタの　センスを　しんじるので
+アドバイスを　おねがいします！</language>
+		<language name="JPN_KANJI" width="256">その　ポケモン……▼
+なかなかの　センスの　持ち主▼
+通好みの　ステキな　感じ！！▼
+その　ステキセンスを　見込んで
+お願いが　あるの！！　聞いてね！▼
+うちは　見てのとおりの
+インテリアショップ　なんだけど▼
+お客さんの　好みが
+わからなくて　悩んでいるの……▼
+そこで！　この　カタログから
+これが好き！　っていう▽
+家具を　１つ　選んでほしいんだ▼
+アナタの　センスを　信じるので
+アドバイスを　お願いします！</language>
+	</row>
+
+	<row id="msg_furniture_store_03">
+		<comment>♀：PDW用の家具入手
+・はい選択時
+・メッセージ表示後
+　カタログメニューが開く</comment>
+		<attribute name="キャラ指定">WOMANB</attribute>
+		<language name="JPN" width="256">この　カタログから　さいこうの
+かぐを　１つ　えらんでほしいの！</language>
+		<language name="JPN_KANJI" width="256">この　カタログから
+最高の家具を　１つ　選んでほしいの！</language>
+	</row>
+
+	<row id="msg_furniture_store_04">
+		<comment>♀：PDW用の家具入手
+・いいえ選択時
+・カタログでやめる選択時も同様</comment>
+		<attribute name="キャラ指定">WOMANB</attribute>
+		<language name="JPN" width="256">そそそそんなあああッ……！
+アタシを　みすてないで　くださああい</language>
+		<language name="JPN_KANJI" width="256">そそそそんなあああッ……！
+アタシを　見捨てないで　くださああい</language>
+	</row>
+
+	<row id="msg_furniture_store_05">
+		<comment>♀：PDW用の家具入手
+・家具選択時
+・PDWに行くと、選んだ家具が
+　追加されている（予定）</comment>
+		<attribute name="キャラ指定">WOMANB</attribute>
+		<language name="JPN" width="256">なるほど！　こんなに　ステキなら
+ゆめにも　でてきそうですよね！</language>
+		<language name="JPN_KANJI" width="256">なるほど！　こんなに　ステキなら
+夢にも　でてきそうですよね！</language>
+	</row>
+
+	<row id="msg_furniture_store_06">
+		<comment>♀：PDW用の家具入手
+・新規のカタログがないとき
+　＝家具選択後も</comment>
+		<attribute name="キャラ指定">WOMANB</attribute>
+		<language name="JPN" width="256">あたらしい　カタログが　とどいたら
+また　えらんでくださいね！！</language>
+		<language name="JPN_KANJI" width="256">新しい　カタログが　届いたら
+また　選んでくださいね！！</language>
+	</row>
+
+	<row id="msg_furniture_store_07">
+		<comment>♀：PDW用の家具入手
+・1度でも家具を選択し
+　新規のカタログがある場合
+・メッセージ表示後
+　カタログメニューが開く</comment>
+		<attribute name="キャラ指定">WOMANB</attribute>
+		<language name="JPN" width="256">アナタの　ステキセンスを　みこんで
+またまた　おねがいしたいのです！▼
+この　カタログから　さいこうの
+かぐを　１つ　えらんでほしいの！</language>
+		<language name="JPN_KANJI" width="256">アナタの　ステキセンスを　見込んで
+またまた　お願いしたいのです！▼
+この　カタログから
+最高の家具を　１つ　選んでほしいの！</language>
 	</row>
 
 	<flowchart-group-list>
