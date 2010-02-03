@@ -86,6 +86,8 @@ FMMDL_RESLIST_NCGIMD = \
 	leader1c.imd \
 	leader4.imd \
 	leader8w.imd \
+	hakaim.imd \
+	hakaiw.imd \
 	sage1.imd \
 	sage2.imd \
 	goddess1.imd \
@@ -164,6 +166,7 @@ FMMDL_RESLIST_NCGIMD = \
 	trophy3.imd \
 	prize1.imd \
 	prize2.imd \
+	flag.imd \
 	tsure_001.imd \
 	tsure_002.imd \
 	tsure_003.imd \

@@ -433,6 +433,16 @@
 	@echo convert ncg_imd leader8w
 	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/leader8w.ncg ./mmdl_res ./mmdl_res/ncg4x4nflip.imd 4 4 12
 
+#hakaim.imd
+./mmdl_res/hakaim.imd: ./mmdl_nchara/hakaim.ncg ./mmdl_nchara/hakaim.ncl
+	@echo convert ncg_imd hakaim
+	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/hakaim.ncg ./mmdl_res ./mmdl_res/ncg4x4nflip.imd 4 4 12
+
+#hakaiw.imd
+./mmdl_res/hakaiw.imd: ./mmdl_nchara/hakaiw.ncg ./mmdl_nchara/hakaiw.ncl
+	@echo convert ncg_imd hakaiw
+	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/hakaiw.ncg ./mmdl_res ./mmdl_res/ncg4x4nflip.imd 4 4 12
+
 #sage1.imd
 ./mmdl_res/sage1.imd: ./mmdl_nchara/sage1.ncg ./mmdl_nchara/sage1.ncl
 	@echo convert ncg_imd sage1
@@ -822,6 +832,11 @@
 ./mmdl_res/prize2.imd: ./mmdl_nchara/prize2.ncg ./mmdl_nchara/prize2.ncl
 	@echo convert ncg_imd prize2
 	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/prize2.ncg ./mmdl_res ./mmdl_res/ncg4x4ocell.imd 4 4 1
+
+#flag.imd
+./mmdl_res/flag.imd: ./mmdl_nchara/flag.ncg ./mmdl_nchara/flag.ncl
+	@echo convert ncg_imd flag
+	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/flag.ncg ./mmdl_res ./mmdl_res/ncg4x4ocell.imd 4 4 1
 
 #tsure_001.imd
 ./mmdl_res/tsure_001.imd: ./mmdl_nchara/pokemon//tsure_001.ncg ./mmdl_nchara/pokemon//tsure_001.ncl
