@@ -9,7 +9,7 @@
  *  モジュール名：BTL_REC_SEL
  */
 //============================================================================
-//#define OFFLINE_TEST
+#define OFFLINE_TEST
 
 
 // インクルード
@@ -323,7 +323,7 @@ static void Btl_Rec_Sel_FixMain( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* wor
 static void Btl_Rec_Sel_FixShowOnPre( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work );
 static void Btl_Rec_Sel_FixShowOffPre( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work );
 static void Btl_Rec_Sel_FixStartTime( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work, u16 sec, BOOL b_y_ori );
-static void Btl_Rec_Sel_FixEndTime( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work );
+static void Btl_Rec_Sel_FixEndTime( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work, BOOL b_y_ori );
 static void Btl_Rec_Sel_FixUpdateTime( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work, u16 sec );
 
 // ポケアイコン
@@ -342,6 +342,7 @@ void Btl_Rec_Sel_BgMExit( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work );
 void Btl_Rec_Sel_BgMCreateNon( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work );
 void Btl_Rec_Sel_BgMCreateVs2( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work );
 void Btl_Rec_Sel_BgMCreateVs4( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work );
+void Btl_Rec_Sel_BgMClear( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work );
   
 // BG Sub
 void Btl_Rec_Sel_BgSInit( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work );
@@ -479,7 +480,7 @@ static GFL_PROC_RESULT Btl_Rec_Sel_ProcInit( GFL_PROC* proc, int* seq, void* pwk
 
   // BG Main
   Btl_Rec_Sel_BgMInit( param, work ); 
-  Btl_Rec_Sel_BgMCreateNon( param, work ); 
+  Btl_Rec_Sel_BgMClear( param, work );
   // BG Sub
   Btl_Rec_Sel_BgSInit( param, work ); 
 
@@ -627,7 +628,7 @@ static GFL_PROC_RESULT Btl_Rec_Sel_ProcMain( GFL_PROC* proc, int* seq, void* pwk
       u32 ret = BmpMenu_YesNoSelectMain( work->yn_wk );
       if( ret != BMPMENU_NULL )
       {
-        Btl_Rec_Sel_FixEndTime( param, work );
+        Btl_Rec_Sel_FixEndTime( param, work, work->qa_non );
       }
       else
       {
@@ -666,7 +667,7 @@ static GFL_PROC_RESULT Btl_Rec_Sel_ProcMain( GFL_PROC* proc, int* seq, void* pwk
       u32 ret = BmpMenu_YesNoSelectMain( work->yn_wk );
       if( ret != BMPMENU_NULL )
       {
-        Btl_Rec_Sel_FixEndTime( param, work );
+        Btl_Rec_Sel_FixEndTime( param, work, work->qa_non );
       }
       else
       {
@@ -691,7 +692,7 @@ static GFL_PROC_RESULT Btl_Rec_Sel_ProcMain( GFL_PROC* proc, int* seq, void* pwk
       u32 ret = BmpMenu_YesNoSelectMain( work->yn_wk );
       if( ret != BMPMENU_NULL )
       {
-        Btl_Rec_Sel_FixEndTime( param, work );
+        Btl_Rec_Sel_FixEndTime( param, work, work->qa_non );
       }
       else
       {
@@ -802,7 +803,7 @@ static GFL_PROC_RESULT Btl_Rec_Sel_ProcMain( GFL_PROC* proc, int* seq, void* pwk
       // ここで録画データを非表示
       Btl_Rec_Sel_FixShowOffPre( param, work );
       Btl_Rec_Sel_PiExit( param, work );
-      Btl_Rec_Sel_BgMCreateNon( param, work );
+      Btl_Rec_Sel_BgMClear( param, work );
       
       Btl_Rec_Sel_ChangeSeqFade( seq, param, work, work->next_seq,
           GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN, 16, 0, INSIDE_FADE_IN_WAIT );
@@ -1223,11 +1224,7 @@ static void Btl_Rec_Sel_FixMain( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* wor
       if( work->fix_wait_count == 0 )
       {
         // SELECT TIME ??を非表示にする
-        for( i=FIX_SEL_TIME; i<=FIX_TIME; i++ )
-        {
-          GFL_BMP_Clear( GFL_BMPWIN_GetBmp(work->fix_bmpwin[i]), 0 );
-          GFL_BMPWIN_MakeTransWindow_VBlank( work->fix_bmpwin[i] );
-        }
+        Btl_Rec_Sel_FixEndTime( param, work, work->qa_non );
       }
     }
   }
@@ -1323,7 +1320,8 @@ static void Btl_Rec_Sel_FixShowOnPre( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK
   {
     strbuf = GFL_MSG_CreateString( work->msgdata_rec, msg_record_10_01 );
     bmp_data = GFL_BMPWIN_GetBmp( work->fix_bmpwin[FIX_PRE] );
-    PRINTSYS_PrintColor( bmp_data, 4, 1, strbuf, work->font, PRINTSYS_LSB_Make(3,4,0) );
+    //PRINTSYS_PrintColor( bmp_data, 4, 1, strbuf, work->font, PRINTSYS_LSB_Make(3,4,0) );
+    PRINTSYS_PrintColor( bmp_data, 4, 1, strbuf, work->font, PRINTSYS_LSB_Make(1,2,0) );
     GFL_STR_DeleteBuffer( strbuf );
   }
 
@@ -1365,6 +1363,8 @@ static void Btl_Rec_Sel_FixStartTime( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK
   {
     //GFL_BG_SetScroll( BG_FRAME_M_TIME, GFL_BG_SCROLL_X_SET, 0 );
     GFL_BG_SetScroll( BG_FRAME_M_TIME, GFL_BG_SCROLL_Y_SET, 0 );
+   
+    Btl_Rec_Sel_BgMCreateNon( param, work );
   }
   else
   {
@@ -1374,7 +1374,7 @@ static void Btl_Rec_Sel_FixStartTime( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK
 
   Btl_Rec_Sel_FixUpdateTime( param, work, sec );
 }
-static void Btl_Rec_Sel_FixEndTime( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work )
+static void Btl_Rec_Sel_FixEndTime( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work, BOOL b_y_ori )
 {
   u8 i;
 
@@ -1385,6 +1385,11 @@ static void Btl_Rec_Sel_FixEndTime( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* 
   {
     GFL_BMP_Clear( GFL_BMPWIN_GetBmp(work->fix_bmpwin[i]), 0 );
     GFL_BMPWIN_MakeTransWindow_VBlank( work->fix_bmpwin[i] );
+  }
+
+  if( b_y_ori )
+  {
+    Btl_Rec_Sel_BgMClear( param, work );
   }
 }
 static void Btl_Rec_Sel_FixUpdateTime( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work, u16 sec )
@@ -1698,6 +1703,10 @@ void Btl_Rec_Sel_BgMCreateVs4( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work 
                                 work->heap_id );
  
   GFL_BG_LoadScreenV_Req( BG_FRAME_M_BACK );
+}
+void Btl_Rec_Sel_BgMClear( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work )
+{
+  GFL_BG_ClearScreenCodeVReq( BG_FRAME_M_BACK, 0 );
 }
   
 //-------------------------------------
