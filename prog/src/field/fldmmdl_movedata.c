@@ -1405,22 +1405,22 @@ int (* const * const DATA_RailAcmdActionTbl[ACMD_MAX])( MMDL * ) =
   DATA_AC_RailJumpD_2G_16F_Tbl,                //AC_JUMP_D_2G_16F
   DATA_AC_RailJumpL_2G_16F_Tbl,                //AC_JUMP_L_2G_16F
   DATA_AC_RailJumpR_2G_16F_Tbl,                //AC_JUMP_R_2G_16F
-  DATA_AC_RailDummy,                  //AC_WAIT_1F
-  DATA_AC_RailDummy,                  //AC_WAIT_2F
-  DATA_AC_RailDummy,                  //AC_WAIT_4F
-  DATA_AC_RailDummy,                  //AC_WAIT_8F
-  DATA_AC_RailDummy,                  //AC_WAIT_15F
-  DATA_AC_RailDummy,                  //AC_WAIT_16F
-  DATA_AC_RailDummy,                  //AC_WAIT_32F
+  DATA_AC_Wait_1F_Tbl,                  //AC_WAIT_1F  (GRIDと同様)
+  DATA_AC_Wait_2F_Tbl,                  //AC_WAIT_2F  (GRIDと同様)
+  DATA_AC_Wait_4F_Tbl,                  //AC_WAIT_4F  (GRIDと同様)
+  DATA_AC_Wait_8F_Tbl,                  //AC_WAIT_8F  (GRIDと同様)
+  DATA_AC_Wait_15F_Tbl,                  //AC_WAIT_15F(GRIDと同様)
+  DATA_AC_Wait_16F_Tbl,                  //AC_WAIT_16F(GRIDと同様)
+  DATA_AC_Wait_32F_Tbl,                  //AC_WAIT_32F(GRIDと同様)
   DATA_AC_RailDummy,                    //AC_WARP_UP
   DATA_AC_RailDummy,                  //AC_WARP_DOWN
-  DATA_AC_RailDummy,                  //AC_VANISH_ON
-  DATA_AC_RailDummy,                  //AC_VANISH_OFF
-  DATA_AC_RailDummy,                  //AC_DIR_PAUSE_ON
-  DATA_AC_RailDummy,                //AC_DIR_PAUSE_OFF
-  DATA_AC_RailDummy,                  //AC_ANM_PAUSE_ON
-  DATA_AC_RailDummy,                //AC_ANM_PAUSE_OFF
-  DATA_AC_RailDummy,                  //AC_MARK_GYOE
+  DATA_AC_VanishON_Tbl,                  //AC_VANISH_ON(GRIDと同様)
+  DATA_AC_VanishOFF_Tbl,                  //AC_VANISH_OFF(GRIDと同様)
+  DATA_AC_DirPauseON_Tbl,                  //AC_DIR_PAUSE_ON(GRIDと同様)
+  DATA_AC_DirPauseOFF_Tbl,                //AC_DIR_PAUSE_OFF(GRIDと同様)
+  DATA_AC_AnmPauseON_Tbl,                  //AC_ANM_PAUSE_ON(GRIDと同様)
+  DATA_AC_AnmPauseOFF_Tbl,                //AC_ANM_PAUSE_OFF(GRIDと同様)
+  DATA_AC_MarkGyoe_Tbl,                  //AC_MARK_GYOE(GRIDと同様)
   DATA_AC_RailDummy,                  //AC_WALK_U_6F
   DATA_AC_RailDummy,                  //AC_WALK_D_6F
   DATA_AC_RailDummy,                  //AC_WALK_L_6F

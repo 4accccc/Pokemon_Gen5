@@ -312,7 +312,21 @@ static void gyoeTask_Update( FLDEFF_TASK *task, void *wk )
   
   MMDL_GetVectorPos( work->head.mmdl, &pos );
   pos.y += GYOE_FLDOBJ_Y_OFFSET + work->offs_y;
-  pos.z += GYOE_FLDOBJ_Z_OFFSET;
+
+  // GRIDとRAILでオフセットの足し方を変更
+  if( MMDL_CheckStatusBit( work->head.mmdl, MMDL_STABIT_RAIL_MOVE ) == FALSE ){
+    // GRID
+    pos.z += GYOE_FLDOBJ_Z_OFFSET;
+  }else{
+    VecFx16 way;
+    MMDL_Rail_GetFrontWay( work->head.mmdl, &way );
+    way.y = 0;
+    VEC_Fx16Normalize( &way, &way );
+    // RAIL
+    pos.x += FX_Mul( GYOE_FLDOBJ_Z_OFFSET, way.x );
+    pos.z += FX_Mul( GYOE_FLDOBJ_Z_OFFSET, way.z );
+  }
+  
   FLDEFF_TASK_SetPos( task, &pos );
 }
 
@@ -356,7 +370,19 @@ static void gyoeTask_Update_only( FLDEFF_TASK *task, void *wk )
   
   MMDL_GetVectorPos( work->head.mmdl, &pos );
   pos.y += GYOE_FLDOBJ_Y_OFFSET + work->offs_y;
-  pos.z += GYOE_FLDOBJ_Z_OFFSET;
+  // GRIDとRAILでオフセットの足し方を変更
+  if( MMDL_CheckStatusBit( work->head.mmdl, MMDL_STABIT_RAIL_MOVE ) == FALSE ){
+    // GRID
+    pos.z += GYOE_FLDOBJ_Z_OFFSET;
+  }else{
+    VecFx16 way;
+    MMDL_Rail_GetFrontWay( work->head.mmdl, &way );
+    way.y = 0;
+    VEC_Fx16Normalize( &way, &way );
+    // RAIL
+    pos.x += FX_Mul( GYOE_FLDOBJ_Z_OFFSET, way.x );
+    pos.z += FX_Mul( GYOE_FLDOBJ_Z_OFFSET, way.z );
+  }
   FLDEFF_TASK_SetPos( task, &pos );
 }
 
