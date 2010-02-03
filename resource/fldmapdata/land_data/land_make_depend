@@ -3148,6 +3148,15 @@ $(DIR_TEMP)/map10_04.nsbmd: $(DIR_RES)/map10_04.imd
 	@echo create_nsbmd map10_04
 	@$(G3DCVTR) $(DIR_RES)/map10_04.imd -o $(DIR_TEMP)/map10_04.nsbmd
 
+#map14_04
+$(DIR_OUTPUT)/map14_04.3dppack: $(DIR_TEMP)/map14_04.nsbmd $(DIR_RES)/map14_04.bin $(DIR_RES)/map14_04.3dmd
+	@echo create 3dppack map14_04
+	@$(BINLINKER) $(DIR_TEMP)/map14_04.nsbmd $(DIR_RES)/map14_04.bin $(DIR_RES)/map14_04.3dmd $(DIR_OUTPUT)/map14_04.3dppack WB
+
+$(DIR_TEMP)/map14_04.nsbmd: $(DIR_RES)/map14_04.imd
+	@echo create_nsbmd map14_04
+	@$(G3DCVTR) $(DIR_RES)/map14_04.imd -o $(DIR_TEMP)/map14_04.nsbmd
+
 #m_dun0101_00_00
 $(DIR_OUTPUT)/m_dun0101_00_00.3dppack: $(DIR_TEMP)/m_dun0101_00_00.nsbmd $(DIR_RES)/m_dun0101_00_00.bin $(DIR_RES)/m_dun0101_00_00_ex.bin $(DIR_RES)/m_dun0101_00_00.3dmd
 	@echo create 3dppack m_dun0101_00_00
