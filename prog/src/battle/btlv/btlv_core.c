@@ -33,7 +33,7 @@
 
 
 //バトル描画とバトルバッグとバトルポケモンリストをオーバーレイ化
-//FS_EXTERN_OVERLAY(battle_view);
+FS_EXTERN_OVERLAY(battle_view);
 FS_EXTERN_OVERLAY(battle_b_app);
 FS_EXTERN_OVERLAY(battle_bag);
 FS_EXTERN_OVERLAY(battle_plist);
@@ -157,7 +157,7 @@ BTLV_CORE*  BTLV_Create( BTL_MAIN_MODULE* mainModule, const BTL_CLIENT* client, 
   BTL_STR_InitSystem( mainModule, client, pokeCon, heapID );
 
   //描画系オーバーレイロード
-//  GFL_OVERLAY_Load( FS_OVERLAY_ID( battle_view ) );
+  GFL_OVERLAY_Load( FS_OVERLAY_ID( battle_view ) );
 
   return core;
 }
@@ -184,7 +184,7 @@ void BTLV_Delete( BTLV_CORE* core )
   GFL_HEAP_FreeMemory( core );
 
   //描画系オーバーレイアンロード
-//  GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle_view ) );
+  GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle_view ) );
   GFL_OVERLAY_Unload( FS_OVERLAY_ID( vram_h ) );
 }
 
