@@ -20,6 +20,15 @@
 //-------------------------------------
 ///	リソース
 //=====================================
+#define TRGRA_TRAINER_CHARA_WIDTH		( 10 )	//ポケモン絵のキャラ幅
+#define TRGRA_TRAINER_CHARA_HEIGHT	( 10 )	//ポケモン絵のキャラ高さ
+
+//トレーナーのキャラサイズ
+#define TRGRA_TRAINER_CHARA_SIZE		( TRGRA_TRAINER_CHARA_WIDTH * TRGRA_TRAINER_CHARA_HEIGHT * GFL_BG_1CHRDATASIZ )
+
+#define TRGRA_TRAINER_PLT_NUM				( 1 )	                            //トレーナー一人分のパレット使用本数
+#define TRGRA_TRAINER_PLT_SIZE			( TRGRA_TRAINER_PLT_NUM * 0x20 )	//トレーナー一人分のパレットサイズ
+
 
 //=============================================================================
 /**
