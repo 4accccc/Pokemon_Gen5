@@ -190,7 +190,7 @@ int UnionView_GetObjCode(int view_index)
  * @retval  int		TRTYPE
  */
 //==================================================================
-int UnionView_GetTrainerType(int view_index)
+int UnionView_GetTrType(int view_index)
 {
   if(view_index >= NELEMS(UnionViewTable)){
     GF_ASSERT(0);

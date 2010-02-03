@@ -27,7 +27,7 @@ extern int  UnionView_GetTrainerType( u32 id, int sex, u32 select );
 extern void UnionView_SetUpTrainerTypeSelect( u32 id, int sex, WORDSET *wordset );
 extern int UnionView_GetCharaNo( int sex, int view_type );
 extern int UnionView_GetObjCode(int view_index);
-extern int UnionView_GetTrainerType(int view_index);
+extern int UnionView_GetTrType(int view_index);
 extern u16 *UnionView_GetPalNo( u16 * table, int sex, int view_type );
 extern u16 *UnionView_PalleteTableAlloc( int heapID );
 
