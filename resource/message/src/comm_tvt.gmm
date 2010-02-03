@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00222" date="2010-02-02T21:15:55"/>
+	<create user="tetsuji_ohta" host="W00222" date="2010-02-03T17:05:54"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -286,45 +286,45 @@
 	</tag-table>
 
 	<columns>
-		<id position="0" width="183"/>
+		<id position="0" width="137"/>
 		<group default=" 0:デフォルト" position="-1" width="100">
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="1" width="100"/>
+		<comment position="1" width="309"/>
 		<erase position="-1" width="100"/>
 		<language japanese="JPN" english="JPN">
 			<message position="2" width="274"/>
-			<font default=" 0:large" position="4" width="109">
+			<font default=" 0:large" position="4" width="67">
 				<list entry="0" file="W:\font\large.nftr"/>
 				<list entry="1" file="W:\font\small.nftr"/>
 			</font>
 			<size position="-1" width="100"/>
 			<space position="-1" width="100"/>
-			<width position="6" width="70"/>
+			<width position="6" width="42"/>
 			<line position="-1" width="100"/>
 		</language>
 		<language japanese="JPN_KANJI" english="JPN_KANJI">
 			<message position="3" width="246"/>
-			<font default=" 0:large" position="5" width="106">
+			<font default=" 0:large" position="5" width="63">
 				<list entry="0" file="W:\font\large.nftr"/>
 				<list entry="1" file="W:\font\small.nftr"/>
 			</font>
 			<size position="-1" width="100"/>
 			<space position="-1" width="100"/>
-			<width position="7" width="75"/>
+			<width position="7" width="47"/>
 			<line position="-1" width="100"/>
 		</language>
 	</columns>
 
-	<dialog left="118" top="153" right="823" bottom="773" maximized="no" rayout="Vertical2">
+	<dialog left="559" top="129" right="1264" bottom="749" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -465,17 +465,17 @@
 
 	<row id="COMM_TVT_SYS_01">
 		<comment>システムメッセージ</comment>
-		<language name="JPN">TVトランシーバーを　しゅうりょうします。　
-よろしいですか？</language>
-		<language name="JPN_KANJI">TVトランシーバーを　終了します。
-よろしいですか？</language>
+		<language name="JPN">ＴＶトランシーバーを
+しゅうりょう　しますか？</language>
+		<language name="JPN_KANJI">ＴＶトランシーバーを
+終了しますか？</language>
 	</row>
 
 	<row id="COMM_TVT_SYS_02">
-		<language name="JPN">おやが　やめると　かいさんになります。
-よろしいですか？</language>
-		<language name="JPN_KANJI">親が　やめると　解散になります。
-よろしいですか？</language>
+		<language name="JPN">リーダーが　やめると　かいさんに
+なりますが　よろしいですか？</language>
+		<language name="JPN_KANJI">リーダーが　やめると　解散に
+なりますが　よろしいですか？</language>
 	</row>
 
 	<row id="COMM_TVT_SYS_03">
@@ -489,15 +489,25 @@
 	</row>
 
 	<row id="COMM_TVT_SYS_05">
-		<language name="JPN">おやが　しゅうりょうしたので　
-かいさんします。</language>
-		<language name="JPN_KANJI">親が　終了したので　解散します。</language>
+		<comment>自分が子機で、親機が終了したとき</comment>
+		<language name="JPN">リーダーが　しゅうりょうしたので　
+かいさんします</language>
+		<language name="JPN_KANJI">リーダーが　終了したので　解散します</language>
 	</row>
 
 	<row id="COMM_TVT_SYS_06">
+		<comment>WiFiクラブで、友達が終了したとき</comment>
 		<language name="JPN">あいてが　しゅうりょうしたので　
-かいさんします。</language>
-		<language name="JPN_KANJI">相手が　終了したので　解散します。</language>
+かいさんします</language>
+		<language name="JPN_KANJI">相手が　終了したので　解散します</language>
+	</row>
+
+	<row id="COMM_TVT_SYS_07">
+		<comment>自分が親機で、メンバーがいなくなったとき</comment>
+		<language name="JPN">メンバーが　いなくなったので
+しゅうりょうします</language>
+		<language name="JPN_KANJI">メンバーが　いなくなったので
+終了します</language>
 	</row>
 
 	<flowchart-group-list>
