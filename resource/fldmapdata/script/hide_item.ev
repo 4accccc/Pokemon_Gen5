@@ -253,12 +253,12 @@ _EVENT_DATA  ev_hide_item_230
 //               スクリプト本体 開始
 //--------------------------------------------------------------
 EVENT_START ev_hide_item_000
-//カノコタウン ( 772, 736 )
+//７番道路 ( 106, 246 )
 	_ITEM_EVENT_HIDEITEM( 17, 1, FLAG_HIDEITEM_000 )// キズぐすり
 EVENT_END
 
 EVENT_START ev_hide_item_001
-//カノコタウン ( 771, 760 )
+//７番道路 ( 105, 247 )
 	_ITEM_EVENT_HIDEITEM( 92, 1, FLAG_HIDEITEM_001 )// きんのたま
 EVENT_END
 
