@@ -236,7 +236,8 @@ SRCS  +=    $(SOUNDSRC) \
         system/font2tex.c \
 		debug/debug_sd_print.c \
 		system/ds_system.c \
-        savedata/undata_update.c
+        savedata/undata_update.c \
+        system/scroll_bar.c
 
 
 #================================================

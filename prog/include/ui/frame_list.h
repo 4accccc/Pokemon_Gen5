@@ -32,14 +32,10 @@
 
 #define	FRAMELIST_SUB_BG_NONE	( 0xff )		// 上画面ＢＧ未使用
 
-// リストモード
-enum {
-	FRAMELIST_MODE_NORMAL = 0,		// 通常モード（タッチをすると選択項目のパラメータを返す）
-	FRAMELIST_MODE_REEL,					// 項目部分をタッチするとスクロールする
-};
+#define	FRAMELIST_SPEED_MAX		( 6 )				// スクロール速度の段階
 
 // タッチパラメータ
-enum {
+typedef enum {
 	FRAMELIST_TOUCH_PARAM_SLIDE = 0,					// スライド
 
 	FRAMELIST_TOUCH_PARAM_RAIL,								// レール
@@ -55,7 +51,8 @@ enum {
 
 //	FRAMELIST_TOUCH_PARAM_ITEM = 0x80000000,	// 項目
 	FRAMELIST_TOUCH_PARAM_ITEM,								// 項目
-};
+
+}FRAMELIST_TOUCH_PARAM;
 
 // コールバック関数
 typedef struct {
@@ -69,16 +66,14 @@ typedef struct {
 
 // タッチデータ
 typedef struct {
-	GFL_UI_TP_HITTBL	tbl;
-	u32	prm;
+	GFL_UI_TP_HITTBL	tbl;				// 範囲データ
+	FRAMELIST_TOUCH_PARAM	prm;		// パラメータ
 }FRAMELIST_TOUCH_DATA;
 
 // ヘッダーデータ
 typedef struct {
 	u8	mainBG;								// 下画面ＢＧ
-	u8	subBG;								// 上画面ＢＧ
-
-	u8	selPal;								// 選択項目のパレット
+	u8	subBG;								// 上画面ＢＧ ( FRAMELIST_SUB_BG_NONE = 未使用 )
 
 	s8	itemPosX;							// 項目フレーム表示開始Ｘ座標
 	s8	itemPosY;							// 項目フレーム表示開始Ｙ座標
@@ -91,14 +86,18 @@ typedef struct {
 	u8	bmpSizY;							// フレーム内に表示するBMPWINの表示Ｙサイズ
 	u8	bmpPal;								// フレーム内に表示するBMPWINのパレット
 
+	u8	scrollSpeed[FRAMELIST_SPEED_MAX];		// スクロール速度 [0] = 最速 ※itemSizYを割り切れる値であること！
+
+	u8	selPal;								// 選択項目のパレット
+
+	u8	barSize;							// スクロールバーのＹサイズ
+
 	u16	itemMax;							// 項目登録数
 	u16	graMax;								// 背景登録数
 
-	u8	initPos;							// 初期位置
+	u8	initPos;							// 初期カーソル位置
 	u8	posMax;								// カーソル移動範囲
 	u16	initScroll;						// 初期スクロール値
-
-	u8	scrollSpeed[6];				// スクロール速度 [0] = 最速
 
 	PRINT_QUE * que;					// プリントキュー
 
@@ -167,12 +166,32 @@ extern void FRAMELIST_AddItem( FRAMELIST_WORK * wk, u32 type, u32 param );
 //--------------------------------------------------------------------------------------------
 extern void FRAMELIST_LoadFrameGraphicAH( FRAMELIST_WORK * wk, ARCHANDLE * ah, u32 dataIdx, BOOL comp, u32 frameNum );
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		カーソルパレットアニメ用データ読み込み
+ *
+ * @param		wk				ワーク
+ * @param		ah				アーカイブハンドル
+ * @param		dataIdx		データインデックス
+ * @param		startPal	パレット１ 0～15
+ * @param		endPal		パレット２ 0～15
+ *
+ * @return	ワーク
+ */
+//--------------------------------------------------------------------------------------------
 extern void FRAMELIST_LoadBlinkPalette( FRAMELIST_WORK * wk, ARCHANDLE * ah, u32 dataIdx, u32 startPal, u32 endPal );
 
-//extern PRINT_UTIL * FRAMELIST_GetPrintUtil( FRAMELIST_WORK * wk, u32 printIdx );
-
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		項目パラメータ取得
+ *
+ * @param		wk				ワーク
+ * @param		itemIdx		項目インデックス
+ *
+ * @return	項目パラメータ
+ */
+//--------------------------------------------------------------------------------------------
 extern u32 FRAMELIST_GetItemParam( FRAMELIST_WORK * wk, u32 itemIdx );
-
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -195,3 +214,15 @@ extern BOOL FRAMELIST_Init( FRAMELIST_WORK * wk );
  */
 //--------------------------------------------------------------------------------------------
 extern u32 FRAMELIST_Main( FRAMELIST_WORK * wk );
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		スクロールバーの表示Ｙ座標を取得
+ *
+ * @param		wk			ワーク
+ * @param		barSY		バーのＹサイズ
+ *
+ * @return	Ｙ座標
+ */
+//--------------------------------------------------------------------------------------------
+extern u32 FRAMELIST_GetScrollBarPY( FRAMELIST_WORK * wk );

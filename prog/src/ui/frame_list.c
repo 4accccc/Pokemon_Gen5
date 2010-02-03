@@ -15,6 +15,7 @@
 
 #include "system/bgwinfrm.h"
 #include "system/blink_palanm.h"
+#include "system/scroll_bar.h"
 
 #include "ui/frame_list.h"
 
@@ -61,12 +62,11 @@ struct _FRAMELIST_WORK {
 
 	u16	listMax;					// リスト登録数
 
-	u16	mainSeq;
-	u16	nextSeq;
+	u16	mainSeq;					// メインシーケンス
+	u16	nextSeq;					// 復帰シーケンス
 
-	u32	nowTpy;
-	u32	oldTpy;
-
+	u32	nowTpy;						// 現在のタッチＹ座標
+	u32	oldTpy;						// 前回のタッチＹ座標
 
 	s16	listPos;					// カーソル表示位置
 	u16	listPosMax;				// カーソル移動最大値
@@ -80,22 +80,22 @@ struct _FRAMELIST_WORK {
 	u8	listBgScrollMax;		// ＢＧスクロール回数
 	u8	listBgScrollCount;	// ＢＧスクロールカウンタ
 
-	BOOL autoScroll;
+	BOOL autoScroll;				// 自動スクロールフラグ
 
-	GFL_UI_TP_HITTBL	railHit[2];	// レール移動用タッチテーブル
-	u8	railTop;
-	u8	railBottom;
+	GFL_UI_TP_HITTBL	railHit[2];		// レール移動用タッチテーブル
+	u8	railTop;										// レール最上部のＹ座標
+	u8	railBottom;									// レール最下部のＹ座標
 
-	u8	slidePos;
-	u8	slideCnt;
+	u8	slidePos;						// スライド基準項目位置
+	u8	slideCnt;						// スライド処理テーブル位置
 
 //	s8	slideReq;
 //	s16	slideInitCount;
 //	u32	slidePy[10];
 
-	u8	keyRepeat;
-	u8	keyRepPos;
-	u8	listWait;
+	u8	keyRepeat;					// キーリピートカウンタ
+	u8	keyRepPos;					// キーリピート処理テーブル位置
+	u8	listWait;						// キーリピートウェイト
 
 	HEAPID	heapID;								// ヒープＩＤ
 };
@@ -365,24 +365,38 @@ void FRAMELIST_LoadFrameGraphicAH( FRAMELIST_WORK * wk, ARCHANDLE * ah, u32 data
 	GFL_HEAP_FreeMemory( buf );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		カーソルパレットアニメ用データ読み込み
+ *
+ * @param		wk				ワーク
+ * @param		ah				アーカイブハンドル
+ * @param		dataIdx		データインデックス
+ * @param		startPal	パレット１ 0～15
+ * @param		endPal		パレット２ 0～15
+ *
+ * @return	ワーク
+ */
+//--------------------------------------------------------------------------------------------
 void FRAMELIST_LoadBlinkPalette( FRAMELIST_WORK * wk, ARCHANDLE * ah, u32 dataIdx, u32 startPal, u32 endPal )
 {
 	BLINKPALANM_SetPalBufferArcHDL( wk->blink, ah, dataIdx, startPal*16, endPal*16 );
 }
 
-
-/*
-PRINT_UTIL * FRAMELIST_GetPrintUtil( FRAMELIST_WORK * wk, u32 printIdx )
-{
-	return &wk->printUtil[printIdx].util;
-}
-*/
-
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		項目パラメータ取得
+ *
+ * @param		wk				ワーク
+ * @param		itemIdx		項目インデックス
+ *
+ * @return	項目パラメータ
+ */
+//--------------------------------------------------------------------------------------------
 u32 FRAMELIST_GetItemParam( FRAMELIST_WORK * wk, u32 itemIdx )
 {
 	return wk->item[itemIdx].param;
 }
-
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -952,7 +966,7 @@ static BOOL MainListScroll( FRAMELIST_WORK * wk )
 					u32	max = GetListScrollCount( wk, wk->listBgScrollSpeed );
 					u32	abs = GFL_STD_Abs( wk->listBgScrollSpeed );
 					wk->autoScroll = TRUE;
-					for( wk->slideCnt=0; wk->slideCnt<6; wk->slideCnt++ ){
+					for( wk->slideCnt=0; wk->slideCnt<FRAMELIST_SPEED_MAX; wk->slideCnt++ ){
 						if( abs == wk->hed.scrollSpeed[wk->slideCnt] ){
 							wk->listBgScrollMax = AutoScrollCount[wk->slideCnt];
 							break;
@@ -983,7 +997,7 @@ static BOOL MainListScroll( FRAMELIST_WORK * wk )
 					u32	max = GetListScrollCount( wk, wk->listBgScrollSpeed );
 					u32	abs = GFL_STD_Abs( wk->listBgScrollSpeed );
 					wk->slideCnt++;
-					if( wk->slideCnt != 6 ){
+					if( wk->slideCnt != FRAMELIST_SPEED_MAX ){
 						if( wk->listBgScrollSpeed < 0 ){
 							wk->listBgScrollSpeed = -wk->hed.scrollSpeed[wk->slideCnt];
 						}else{
@@ -1075,6 +1089,7 @@ static void InitRailMove( FRAMELIST_WORK * wk, int pos )
 
 static u32 GetRailScroll( FRAMELIST_WORK * wk )
 {
+/*
 	u32	x, y;
 
 	GFL_UI_TP_GetPointCont( &x, &y );
@@ -1089,6 +1104,66 @@ static u32 GetRailScroll( FRAMELIST_WORK * wk )
 	y = ( ( (wk->listScrollMax+1) << 8 ) / ( wk->railBottom - wk->railTop ) * y ) >> 8;
 
 	return y;
+*/
+	u32	x, y;
+
+	GFL_UI_TP_GetPointCont( &x, &y );
+
+	return SCROLLBAR_GetCount( wk->listScrollMax, y, wk->railTop, wk->railBottom, wk->hed.barSize );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		スクロールバーの表示Ｙ座標を取得
+ *
+ * @param		wk			ワーク
+ *
+ * @return	Ｙ座標
+ */
+//--------------------------------------------------------------------------------------------
+u32 FRAMELIST_GetScrollBarPY( FRAMELIST_WORK * wk )
+{
+/*
+	u32	py;
+	u8	ty, by;
+	u8	i;
+
+	i = 0;
+	while( 1 ){
+		if( wk->hed.touch[i].tbl.rect.top == GFL_UI_TP_HIT_END ){
+			return 0;
+		}
+		if( wk->hed.touch[i].prm == FRAMELIST_TOUCH_PARAM_RAIL ){
+			ty = wk->hed.touch[i].tbl.rect.top;
+			by = wk->hed.touch[i].tbl.rect.bottom;
+			break;
+		}
+		i++;
+	}
+
+	barSY /= 2;
+	py = by - ty - barSY;
+	py = ( ( py << 8 ) / ( wk->listScrollMax + 1 ) * wk->listScroll ) >> 8;
+
+	return ( ty + py + barSY );
+*/
+	u8	ty, by;
+	u8	i;
+
+	i = 0;
+	while( 1 ){
+		if( wk->hed.touch[i].tbl.rect.top == GFL_UI_TP_HIT_END ){
+			return 0;
+		}
+		if( wk->hed.touch[i].prm == FRAMELIST_TOUCH_PARAM_RAIL ){
+			ty = wk->hed.touch[i].tbl.rect.top;
+			by = wk->hed.touch[i].tbl.rect.bottom;
+			break;
+		}
+		i++;
+	}
+
+	return SCROLLBAR_GetPosY( wk->listScrollMax, wk->listScroll, ty, by, wk->hed.barSize );
 }
 
 static BOOL MainRailMove( FRAMELIST_WORK * wk )
