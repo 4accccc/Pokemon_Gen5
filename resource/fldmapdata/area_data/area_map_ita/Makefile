@@ -126,7 +126,6 @@ $(TARGETDIR)/$(targetname).narc: $(targetname).narc
 
 
 #コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
-ifeq	($(CONVERTUSER),true)	
 # コピー先のnarcが古い場合実行する
 $(targetname).narc: $(OBJ_FILE)
 	-ls *.N*R >> $(LIST_FILE)
@@ -135,7 +134,7 @@ $(targetname).narc: $(OBJ_FILE)
 	nnsarc -c -l -n -i $(targetname) -S $(LIST_FILE)
 	$(NAIXCUT) $(targetname).naix
 	-rm	$(LIST_FILE)
-endif
+	
 
 #------------------------------------------------------------------------------
 #	make clean ルール
@@ -145,6 +144,8 @@ clean:
 	@$(MAKE_SUBDIR)
 	rm -f $(TARGETDIR)/$(targetname).narc
 	rm -f $(TARGETDIR)/$(targetname).naix
+	rm -f $(targetname).narc
+	rm -f $(targetname).naix
 
 #コンバート対象者のみ、中間ファイル削除
 ifeq	($(CONVERTUSER),true)	
@@ -152,8 +153,6 @@ ifeq	($(CONVERTUSER),true)
 	rm -f *.nsb*
 	rm -f *.narc
 	rm -f *.naix
-	rm -f $(targetname).narc
-	rm -f $(targetname).naix
 endif
 
 
