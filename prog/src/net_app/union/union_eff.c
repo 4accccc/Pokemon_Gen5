@@ -329,6 +329,7 @@ static void UnionEff_Focus_Update(UNION_EFF_FOCUS *focus)
 static void UnionEff_Focus_Draw( UNION_EFF_FOCUS *focus, GFL_G3D_OBJSTATUS *status )
 {
   MMDL_GetVectorPos( focus->mmdl, &status->trans );
+  status->trans.y -= 0x4000;  //影と同様のオフセットを入れる
   GFL_G3D_DRAW_DrawObjectCullingON( focus->g3dobj, status );
 }
 
