@@ -68,21 +68,24 @@ FS_EXTERN_OVERLAY(ui_common);
 // 本数
 enum
 {
-  BG_PAL_NUM_M_BACKDROP      = 0,
-  BG_PAL_NUM_M_TEXT_FONT     = 1,
+  BG_PAL_NUM_M_BACKDROP      = 0,  // 使用せず
+  BG_PAL_NUM_M_TEXT_FONT     = 0,  // 使用せず
   BG_PAL_NUM_M_TEXT_FRAME    = 1,
-  BG_PAL_NUM_M_YN            = 1,  // 使用せず
-  BG_PAL_NUM_M_BACK          = 9,
+  BG_PAL_NUM_M_YN            = 1,
+  BG_PAL_NUM_M_BACK          = 10,  // 0を含めて数えて9がフォント用のパレット<白(1,2)>,<赤(3,4)>
+                                    // 黒文字白背景は(黒11,10,10(294b)),(灰20,20,21(5694)),(白31,31,31(7fff))
 };
 // 位置
 enum
 {
   BG_PAL_POS_M_BACK          = 0                                                       ,  // 0
-  BG_PAL_POS_M_BACKDROP      = BG_PAL_POS_M_BACK        + BG_PAL_NUM_M_BACK            ,  // 9 
-  BG_PAL_POS_M_TEXT_FONT     = BG_PAL_POS_M_BACKDROP    + BG_PAL_NUM_M_BACKDROP        ,  // 9 
+  BG_PAL_POS_M_BACKDROP      = BG_PAL_POS_M_BACK        + BG_PAL_NUM_M_BACK            ,  // 10  // 使用せず
+  BG_PAL_POS_M_TEXT_FONT     = BG_PAL_POS_M_BACKDROP    + BG_PAL_NUM_M_BACKDROP        ,  // 10  // 使用せず
   BG_PAL_POS_M_TEXT_FRAME    = BG_PAL_POS_M_TEXT_FONT   + BG_PAL_NUM_M_TEXT_FONT       ,  // 10 
   BG_PAL_POS_M_YN            = BG_PAL_POS_M_TEXT_FRAME  + BG_PAL_NUM_M_TEXT_FRAME      ,  // 11  // 使用せず
   BG_PAL_POS_M_MAX           = BG_PAL_POS_M_YN          + BG_PAL_NUM_M_YN              ,  // 12  // ここから空き
+
+  BG_PAL_POS_M_BACK_FONT     = 9,  // BACKのパレットのここをフォントのパレットとして使う
 };
 // 本数
 enum
@@ -217,6 +220,7 @@ typedef struct
 
   int                         qa_next_seq;
   u32                         qa_str_id;
+  BOOL                        qa_non;
  
   int                         stm_next_seq;
   u32                         stm_str_id;
@@ -246,6 +250,8 @@ typedef struct
   u32                         fix_frame;
   u32                         fix_wait_count;
   BOOL                        fix_timeup;  // TRUEのとき時間切れ
+  PRINT_UTIL*                 fix_print_util_pre;
+  PRINT_UTIL*                 fix_print_util_pre_title;
 
   // ポケアイコン
   PI_DATA                     pi_data[PI_POS_MAX][PI_PARTY_NUM];
@@ -282,9 +288,9 @@ static void Btl_Rec_Sel_ChangeSeqFade( int* seq,
                 int next_seq, int mode, int start_evy, int end_evy, int wait );
 static void Btl_Rec_Sel_ChangeSeqQa( int* seq,
                 BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work,
-                int next_seq, u32 str_id );
+                int next_seq, u32 str_id, BOOL non );
 static void Btl_Rec_Sel_NoChangeSeqQa( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work,
-                int next_seq, u32 str_id );
+                int next_seq, u32 str_id, BOOL non );
 static void Btl_Rec_Sel_ChangeSeqStm( int* seq,
                 BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work,
                 int next_seq, u32 str_id );
@@ -316,7 +322,7 @@ static void Btl_Rec_Sel_FixExit( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* wor
 static void Btl_Rec_Sel_FixMain( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work );
 static void Btl_Rec_Sel_FixShowOnPre( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work );
 static void Btl_Rec_Sel_FixShowOffPre( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work );
-static void Btl_Rec_Sel_FixStartTime( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work, u16 sec );
+static void Btl_Rec_Sel_FixStartTime( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work, u16 sec, BOOL b_y_ori );
 static void Btl_Rec_Sel_FixEndTime( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work );
 static void Btl_Rec_Sel_FixUpdateTime( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work, u16 sec );
 
@@ -324,7 +330,7 @@ static void Btl_Rec_Sel_FixUpdateTime( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WOR
 static void Btl_Rec_Sel_PiInit( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work );
 static void Btl_Rec_Sel_PiExit( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work );
 static GFL_CLWK* CreatePokeicon( GFL_CLUNIT* clunit, HEAPID heap_id, CLSYS_DRAW_TYPE draw_type, u8 pltt_line,
-                     u32 monsno, u32 formno, BOOL egg, UI_EASY_CLWK_RES* res, u8 x, u8 y, u8 anim );
+                     u32 monsno, u32 formno, BOOL egg, UI_EASY_CLWK_RES* res, u8 x, u8 y, u8 anim, u8 bg_pri );
 static void DeletePokeicon( UI_EASY_CLWK_RES* res, GFL_CLWK* clwk );
 
 // バトルモードから表示するテキストID、ポケアイコンの並べ方を決める
@@ -471,6 +477,12 @@ static GFL_PROC_RESULT Btl_Rec_Sel_ProcInit( GFL_PROC* proc, int* seq, void* pwk
   // メッセージ
   work->msgdata_rec     = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_b_record_dat, work->heap_id );
 
+  // BG Main
+  Btl_Rec_Sel_BgMInit( param, work ); 
+  Btl_Rec_Sel_BgMCreateNon( param, work ); 
+  // BG Sub
+  Btl_Rec_Sel_BgSInit( param, work ); 
+
   // ストリームテキストウィンドウ
   Btl_Rec_Sel_TextInit( param, work );
   Btl_Rec_Sel_TextShowWinFrm( param, work );
@@ -478,12 +490,7 @@ static GFL_PROC_RESULT Btl_Rec_Sel_ProcInit( GFL_PROC* proc, int* seq, void* pwk
   Btl_Rec_Sel_YnInit( param, work );
   // 固定テキスト
   Btl_Rec_Sel_FixInit( param, work );
-  // BG Main
-  Btl_Rec_Sel_BgMInit( param, work ); 
-  Btl_Rec_Sel_BgMCreateNon( param, work ); 
-  // BG Sub
-  Btl_Rec_Sel_BgSInit( param, work ); 
- 
+
   // プライオリティ、表示、背景色など
   {
     GFL_BG_SetPriority( BG_FRAME_M_BACK              , 2 );
@@ -510,7 +517,7 @@ static GFL_PROC_RESULT Btl_Rec_Sel_ProcInit( GFL_PROC* proc, int* seq, void* pwk
   {
     Btl_Rec_Sel_ChangeSeqFade( seq, param, work, SEQ_QA_INIT,
         GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, FADE_IN_WAIT );
-    Btl_Rec_Sel_NoChangeSeqQa( param, work, SEQ_QA_ANS_REC, msg_record_01_01 );
+    Btl_Rec_Sel_NoChangeSeqQa( param, work, SEQ_QA_ANS_REC, msg_record_01_01, TRUE );
   }
   else
   {
@@ -529,16 +536,17 @@ static GFL_PROC_RESULT Btl_Rec_Sel_ProcExit( GFL_PROC* proc, int* seq, void* pwk
   BTL_REC_SEL_PARAM*    param    = (BTL_REC_SEL_PARAM*)pwk;
   BTL_REC_SEL_WORK*     work     = (BTL_REC_SEL_WORK*)mywk;
 
-  // BG Sub
-  Btl_Rec_Sel_BgSExit( param, work ); 
-  // BG Main
-  Btl_Rec_Sel_BgMExit( param, work ); 
   // 固定テキスト
   Btl_Rec_Sel_FixExit( param, work );
   // はい・いいえウィンドウ
   Btl_Rec_Sel_YnExit( param, work );
   // ストリームテキストウィンドウ
   Btl_Rec_Sel_TextExit( param, work );
+
+  // BG Sub
+  Btl_Rec_Sel_BgSExit( param, work ); 
+  // BG Main
+  Btl_Rec_Sel_BgMExit( param, work ); 
 
   // メッセージ
   GFL_MSG_Delete( work->msgdata_rec );
@@ -603,7 +611,7 @@ static GFL_PROC_RESULT Btl_Rec_Sel_ProcMain( GFL_PROC* proc, int* seq, void* pwk
       if( Btl_Rec_Sel_TextWaitStream( param, work ) )
       {
         Btl_Rec_Sel_YnStartSel( param, work );
-        Btl_Rec_Sel_FixStartTime( param, work, 30 );
+        Btl_Rec_Sel_FixStartTime( param, work, 30, work->qa_non );
         (*seq) = work->qa_next_seq;
       }
     }
@@ -649,7 +657,7 @@ static GFL_PROC_RESULT Btl_Rec_Sel_ProcMain( GFL_PROC* proc, int* seq, void* pwk
             (*seq) = SEQ_SAVE_INIT;
         }
         else
-          Btl_Rec_Sel_ChangeSeqQa( seq, param, work, SEQ_QA_ANS_NOREC, msg_record_02_01 );
+          Btl_Rec_Sel_ChangeSeqQa( seq, param, work, SEQ_QA_ANS_NOREC, msg_record_02_01, TRUE );
       }
     }
     break;
@@ -674,7 +682,7 @@ static GFL_PROC_RESULT Btl_Rec_Sel_ProcMain( GFL_PROC* proc, int* seq, void* pwk
         if( ret == 0 )
           (*seq) = SEQ_WAIT_INIT;
         else
-          Btl_Rec_Sel_ChangeSeqQa( seq, param, work, SEQ_QA_ANS_REC, msg_record_01_01 );
+          Btl_Rec_Sel_ChangeSeqQa( seq, param, work, SEQ_QA_ANS_REC, msg_record_01_01, TRUE );
       }
     }
     break;
@@ -716,7 +724,7 @@ static GFL_PROC_RESULT Btl_Rec_Sel_ProcMain( GFL_PROC* proc, int* seq, void* pwk
         {
           for( i=0; i<PI_PARTY_NUM; i++ )
           {
-            work->pi_data[j][i].monsno = PI_PARTY_NUM * j + i;
+            work->pi_data[j][i].monsno = PI_PARTY_NUM * j + i + 1;
             work->pi_data[j][i].formno = 0;
           }
         }
@@ -734,7 +742,7 @@ static GFL_PROC_RESULT Btl_Rec_Sel_ProcMain( GFL_PROC* proc, int* seq, void* pwk
 
       Btl_Rec_Sel_ChangeSeqFade( seq, param, work, SEQ_QA_INIT,
           GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN, 16, 0, INSIDE_FADE_IN_WAIT );
-      Btl_Rec_Sel_NoChangeSeqQa( param, work, SEQ_QA_ANS_PRE, msg_record_03_01 );
+      Btl_Rec_Sel_NoChangeSeqQa( param, work, SEQ_QA_ANS_PRE, msg_record_03_01, FALSE );
       
       Btl_Rec_Sel_TextClearWinIn( param, work );
 #else
@@ -775,7 +783,7 @@ static GFL_PROC_RESULT Btl_Rec_Sel_ProcMain( GFL_PROC* proc, int* seq, void* pwk
 
         Btl_Rec_Sel_ChangeSeqFade( seq, param, work, SEQ_QA_INIT,
             GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN, 16, 0, INSIDE_FADE_IN_WAIT );
-        Btl_Rec_Sel_NoChangeSeqQa( param, work, SEQ_QA_ANS_PRE, msg_record_03_01 );
+        Btl_Rec_Sel_NoChangeSeqQa( param, work, SEQ_QA_ANS_PRE, msg_record_03_01, FALSE );
       }
       else
       {
@@ -926,16 +934,17 @@ static void Btl_Rec_Sel_ChangeSeqFade( int* seq,
 
 static void Btl_Rec_Sel_ChangeSeqQa( int* seq,
                 BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work,
-                int next_seq, u32 str_id )
+                int next_seq, u32 str_id, BOOL non )
 {
   (*seq) = SEQ_QA_INIT;
-  Btl_Rec_Sel_NoChangeSeqQa( param, work, next_seq, str_id );
+  Btl_Rec_Sel_NoChangeSeqQa( param, work, next_seq, str_id, non );
 }
 static void Btl_Rec_Sel_NoChangeSeqQa( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work,
-                int next_seq, u32 str_id )
+                int next_seq, u32 str_id, BOOL non )
 {
   work->qa_next_seq    = next_seq;
   work->qa_str_id      = str_id;
+  work->qa_non         = non;
 }
 
 static void Btl_Rec_Sel_ChangeSeqStm( int* seq,
@@ -967,18 +976,33 @@ static void Btl_Rec_Sel_VBlankFunc( GFL_TCB* tcb, void* wk )
 static void Btl_Rec_Sel_TextInit( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work )
 {
   // パレット
-  GFL_ARC_UTIL_TransVramPalette( ARCID_FONT, NARC_font_default_nclr, PALTYPE_MAIN_BG,
-      BG_PAL_POS_M_TEXT_FONT * 0x20, BG_PAL_NUM_M_TEXT_FONT * 0x20, work->heap_id );
+//  GFL_ARC_UTIL_TransVramPalette( ARCID_FONT, NARC_font_default_nclr, PALTYPE_MAIN_BG,
+//      BG_PAL_POS_M_TEXT_FONT * 0x20, BG_PAL_NUM_M_TEXT_FONT * 0x20, work->heap_id );
+
+  // パレット
+  // BACKのパレットのここをフォントのパレットとして使う
+  {
+    // パレットの作成＆転送
+    u16 num = 3;
+    u16 siz = sizeof(u16) * num;
+    u16 ofs = BG_PAL_POS_M_BACK_FONT * 0x20 + 0x20 - 2 * num;
+    u16* pal = GFL_HEAP_AllocClearMemory( work->heap_id, siz );
+    pal[0x00] = 0x294b;  // 13  // 黒
+    pal[0x01] = 0x5694;  // 14  // 灰
+    pal[0x02] = 0x7fff;  // 15  // 白 
+    GFL_BG_LoadPalette( BG_FRAME_M_BACK, pal, siz, ofs );
+    GFL_HEAP_FreeMemory( pal );
+  }
 
   // BGフレームのスクリーンの空いている箇所に何も表示がされないようにしておく
   work->text_dummy_bmpwin = GFL_BMPWIN_Create( BG_FRAME_M_TEXT, 0, 0, 1, 1,
-                                BG_PAL_POS_M_TEXT_FONT, GFL_BMP_CHRAREA_GET_F );
+                                BG_PAL_POS_M_BACK_FONT, GFL_BMP_CHRAREA_GET_F );
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(work->text_dummy_bmpwin), 0 );
   GFL_BMPWIN_TransVramCharacter(work->text_dummy_bmpwin);
 
   // ウィンドウ内
   work->text_winin_bmpwin = GFL_BMPWIN_Create( BG_FRAME_M_TEXT, 1, 19, 30, 4,
-                                 BG_PAL_POS_M_TEXT_FONT, GFL_BMP_CHRAREA_GET_F );
+                                 BG_PAL_POS_M_BACK_FONT, GFL_BMP_CHRAREA_GET_F );
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(work->text_winin_bmpwin), TEXT_WININ_BACK_COLOR );
   GFL_BMPWIN_TransVramCharacter(work->text_winin_bmpwin);
     
@@ -991,7 +1015,7 @@ static void Btl_Rec_Sel_TextInit( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* wo
 
   // TCBL、フォントカラー、転送など
   work->text_tcblsys = GFL_TCBL_Init( work->heap_id, work->heap_id, 1, 0 );
-  GFL_FONTSYS_SetColor( 1, 2, TEXT_WININ_BACK_COLOR );
+  GFL_FONTSYS_SetColor( 13, 14, TEXT_WININ_BACK_COLOR );
   GFL_BG_LoadScreenV_Req( BG_FRAME_M_TEXT );
 
   // NULL初期化
@@ -1086,10 +1110,28 @@ static void Btl_Rec_Sel_YnInit( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work
   GF_ASSERT_MSG( pos != AREAMAN_POS_NOTFOUND, "BTL_REC_SEL : BGキャラ領域が足りませんでした。\n" );
   GFL_BG_FreeCharacterArea( BG_FRAME_M_TEXT, pos, size );
 
+  //カーソルの色がデフォルトフォントパレットになっていないと都合が悪いので
+  GFL_ARC_UTIL_TransVramPalette( ARCID_FONT, NARC_font_default_nclr, PALTYPE_MAIN_BG,
+      BG_PAL_POS_M_YN * 0x20, BG_PAL_NUM_M_YN * 0x20, work->heap_id );
+  // BACKのパレットのここをフォントのパレットとして使う
+  // に合わせる
+  {
+    // パレットの作成＆転送
+    u16 num = 3;
+    u16 siz = sizeof(u16) * num;
+    u16 ofs = BG_PAL_POS_M_YN * 0x20 + 0x20 - 2 * num;
+    u16* pal = GFL_HEAP_AllocClearMemory( work->heap_id, siz );
+    pal[0x00] = 0x294b;  // 13  // 黒
+    pal[0x01] = 0x5694;  // 14  // 灰
+    pal[0x02] = 0x7fff;  // 15  // 白 
+    GFL_BG_LoadPalette( BG_FRAME_M_BACK, pal, siz, ofs );
+    GFL_HEAP_FreeMemory( pal );
+  }
+
   work->yn_dat.frmnum    = BG_FRAME_M_TEXT;
   work->yn_dat.pos_x     = 24;
-  work->yn_dat.pos_y     = 13;
-  work->yn_dat.palnum    = BG_PAL_POS_M_TEXT_FONT;//BG_PAL_POS_M_YN;
+  work->yn_dat.pos_y     = 13;  // 14ではメッセージウィンドウにかかる
+  work->yn_dat.palnum    = BG_PAL_POS_M_YN;//BG_PAL_POS_M_BACK_FONT;//カーソルの色がデフォルトフォントパレットになっていないと都合が悪いので
   work->yn_dat.chrnum    = pos;  // 使われていないようだ
 }
 static void Btl_Rec_Sel_YnExit( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work )
@@ -1130,10 +1172,10 @@ static void Btl_Rec_Sel_FixInit( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* wor
   FIX_DATA;
   FIX_DATA fix_data[FIX_MAX] =
   {
-    { BG_FRAME_M_TEXT,  1,  0, 14, 2, GFL_BMP_CHRAREA_GET_F },
-    { BG_FRAME_M_TEXT,  2,  2, 30, 4, GFL_BMP_CHRAREA_GET_F },
-    { BG_FRAME_M_TIME,  1, 15, 11, 3, GFL_BMP_CHRAREA_GET_B },  // ダミーのキャラをつくるのが面倒なので後ろから確保
-    { BG_FRAME_M_TIME, 14, 15,  5, 3, GFL_BMP_CHRAREA_GET_B },//{ 14, 15,  2, 3 },
+    { BG_FRAME_M_TEXT,  2,  1, 13, 2, GFL_BMP_CHRAREA_GET_F },
+    { BG_FRAME_M_TEXT,  3,  3, 26, 4, GFL_BMP_CHRAREA_GET_F },
+    { BG_FRAME_M_TIME,  2, 15, 11, 2, GFL_BMP_CHRAREA_GET_B },  // ダミーのキャラをつくるのが面倒なので後ろから確保
+    { BG_FRAME_M_TIME, 13, 15,  5, 3, GFL_BMP_CHRAREA_GET_B },//{ 14, 15,  2, 3 },
   };
   u8 i;
 
@@ -1141,7 +1183,7 @@ static void Btl_Rec_Sel_FixInit( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* wor
   {
     work->fix_bmpwin[i] = GFL_BMPWIN_Create( fix_data[i].frmnum,
                         fix_data[i].posx, fix_data[i].posy, fix_data[i].sizx, fix_data[i].sizy,
-                        BG_PAL_POS_M_TEXT_FONT, fix_data[i].dir );
+                        BG_PAL_POS_M_BACK_FONT, fix_data[i].dir );
     GFL_BMP_Clear( GFL_BMPWIN_GetBmp(work->fix_bmpwin[i]), 0 );
   }
 }
@@ -1190,6 +1232,7 @@ static void Btl_Rec_Sel_FixMain( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* wor
     }
   }
 }
+/*
 static void Btl_Rec_Sel_FixShowOnPre( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work )
 {
   STRBUF* strbuf;
@@ -1228,11 +1271,106 @@ static void Btl_Rec_Sel_FixShowOffPre( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WOR
     GFL_BMPWIN_MakeTransWindow_VBlank( work->fix_bmpwin[i] );
   }
 }
-static void Btl_Rec_Sel_FixStartTime( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work, u16 sec )
+*/
+/*
+static void Btl_Rec_Sel_FixShowOnPre( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work )
+{
+  STRBUF* strbuf;
+  GFL_BMP_DATA* bmp_data;
+  u8 i;
+
+  // 前回の記録
+  {
+    strbuf = GFL_MSG_CreateString( work->msgdata_rec, msg_record_10_01 );
+
+    work->fix_print_util_pre = GFL_HEAP_AllocClearMemory( work->heap_id, sizeof(PRINT_UTIL) );
+    PRINT_UTIL_Setup( work->fix_print_util_pre, work->fix_bmpwin[FIX_PRE] ); 
+    PRINT_UTIL_PrintColor(
+        work->fix_print_util_pre, work->print_que,
+        4, 1, strbuf, work->font, PRINTSYS_LSB_Make(3,4,0) );
+    
+    GFL_STR_DeleteBuffer( strbuf );
+  }
+
+  // バトルモード
+  // 例：コロシアム　シングル
+  // 　　せいげんなし
+  {
+    strbuf = GFL_MSG_CreateString( work->msgdata_rec, work->battle_mode_str_id );
+    
+    work->fix_print_util_pre_title = GFL_HEAP_AllocClearMemory( work->heap_id, sizeof(PRINT_UTIL) );
+    PRINT_UTIL_Setup( work->fix_print_util_pre_title, work->fix_bmpwin[FIX_PRE_TITLE] ); 
+    PRINT_UTIL_PrintColor(
+        work->fix_print_util_pre_title, work->print_que,
+        4, 1, strbuf, work->font, PRINTSYS_LSB_Make(1,2,0) );
+    
+    GFL_STR_DeleteBuffer( strbuf );
+  }
+
+  for( i=FIX_PRE; i<=FIX_PRE_TITLE; i++ )
+  {
+    GFL_BMPWIN_MakeTransWindow_VBlank( work->fix_bmpwin[i] );
+  }
+}
+*/
+static void Btl_Rec_Sel_FixShowOnPre( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work )
+{
+  STRBUF* strbuf;
+  GFL_BMP_DATA* bmp_data;
+  u8 i;
+
+  // 前回の記録
+  {
+    strbuf = GFL_MSG_CreateString( work->msgdata_rec, msg_record_10_01 );
+    bmp_data = GFL_BMPWIN_GetBmp( work->fix_bmpwin[FIX_PRE] );
+    PRINTSYS_PrintColor( bmp_data, 4, 1, strbuf, work->font, PRINTSYS_LSB_Make(3,4,0) );
+    GFL_STR_DeleteBuffer( strbuf );
+  }
+
+  // バトルモード
+  // 例：コロシアム　シングル
+  // 　　せいげんなし
+  {
+    strbuf = GFL_MSG_CreateString( work->msgdata_rec, work->battle_mode_str_id );
+    bmp_data = GFL_BMPWIN_GetBmp( work->fix_bmpwin[FIX_PRE_TITLE] );
+    PRINTSYS_PrintColor( bmp_data, 4, 1, strbuf, work->font, PRINTSYS_LSB_Make(1,2,0) );
+    GFL_STR_DeleteBuffer( strbuf );
+  }
+
+  for( i=FIX_PRE; i<=FIX_PRE_TITLE; i++ )
+  {
+    GFL_BMPWIN_MakeTransWindow_VBlank( work->fix_bmpwin[i] );
+  }
+}
+static void Btl_Rec_Sel_FixShowOffPre( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work )
+{
+  u8 i;
+  for( i=FIX_PRE; i<=FIX_PRE_TITLE; i++ )
+  {
+    GFL_BMP_Clear( GFL_BMPWIN_GetBmp(work->fix_bmpwin[i]), 0 );
+    GFL_BMPWIN_MakeTransWindow_VBlank( work->fix_bmpwin[i] );
+  }
+
+  //GFL_HEAP_FreeMemory( work->fix_print_util_pre_title );
+  //GFL_HEAP_FreeMemory( work->fix_print_util_pre );
+}
+
+static void Btl_Rec_Sel_FixStartTime( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work, u16 sec, BOOL b_y_ori )
 {
   work->fix_frame = sec * FPS + (FPS-1);
   work->fix_wait_count = FPS /2;
   work->fix_timeup = FALSE;
+
+  if( b_y_ori )
+  {
+    //GFL_BG_SetScroll( BG_FRAME_M_TIME, GFL_BG_SCROLL_X_SET, 0 );
+    GFL_BG_SetScroll( BG_FRAME_M_TIME, GFL_BG_SCROLL_Y_SET, 0 );
+  }
+  else
+  {
+    //GFL_BG_SetScroll( BG_FRAME_M_TIME, GFL_BG_SCROLL_X_SET, 0 );
+    GFL_BG_SetScroll( BG_FRAME_M_TIME, GFL_BG_SCROLL_Y_SET, -8 );
+  }
 
   Btl_Rec_Sel_FixUpdateTime( param, work, sec );
 }
@@ -1264,11 +1402,12 @@ static void Btl_Rec_Sel_FixUpdateTime( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WOR
 
   if( sec > 10 )
   {
-    color = PRINTSYS_LSB_Make(15,2,0);
+    color = PRINTSYS_LSB_Make(1,2,0);
   }
   else
   {
-    color = PRINTSYS_LSB_Make(4,3,0);
+    //color = PRINTSYS_LSB_Make(4,3,0);
+    color = PRINTSYS_LSB_Make(3,4,0);
   }
 
   // SELECT TIME
@@ -1276,7 +1415,7 @@ static void Btl_Rec_Sel_FixUpdateTime( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WOR
     strbuf = GFL_MSG_CreateString( work->msgdata_rec, msg_record_time01 );
     bmp_data = GFL_BMPWIN_GetBmp( work->fix_bmpwin[FIX_SEL_TIME] );
     //PRINTSYS_PrintQueColor( work->print_que, bmp_data, 0, 6, strbuf, work->font, color );
-    PRINTSYS_PrintColor( bmp_data, 0, 6, strbuf, work->font, color );
+    PRINTSYS_PrintColor( bmp_data, 4, 1, strbuf, work->font, color );
     GFL_STR_DeleteBuffer( strbuf );
   }
 
@@ -1309,7 +1448,8 @@ static void Btl_Rec_Sel_FixUpdateTime( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WOR
    
     bmp_data = GFL_BMPWIN_GetBmp( work->fix_bmpwin[FIX_TIME] );
     //PRINTSYS_PrintQueColor( work->print_que, bmp_data, 0, 6, strbuf, work->font, color );
-    PRINTSYS_PrintColor( bmp_data, 0, 6, strbuf, work->font, color );
+    //PRINTSYS_PrintColor( bmp_data, 2, 1, strbuf, work->font, color );
+    PRINTSYS_PrintColor( bmp_data, 2, 0, strbuf, work->font, color );
 
     GFL_STR_DeleteBuffer( strbuf );
     GFL_STR_DeleteBuffer( src_strbuf );
@@ -1354,13 +1494,13 @@ static void Btl_Rec_Sel_PiInit( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work
         {
           if( j == PI_POS_R )
           {
-            work->pi_data[j][i].x      = 12*8 + 3*8*i;
-            work->pi_data[j][i].y      =  7*8;
+            work->pi_data[j][i].x      = 11*8+12 + 3*8*i;
+            work->pi_data[j][i].y      =  8*8;
           }
           else
           {
-            work->pi_data[j][i].x      =  1*8 + 3*8*i;
-            work->pi_data[j][i].y      = 12*8;
+            work->pi_data[j][i].x      =  3*8+12 + 3*8*i;
+            work->pi_data[j][i].y      = 14*8;
           }
         }
         else  // 4人対戦
@@ -1369,26 +1509,26 @@ static void Btl_Rec_Sel_PiInit( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work
           {
             if( i < 3 )
             {
-              work->pi_data[j][i].x      = 20*8 + 3*8*i;
-              work->pi_data[j][i].y      =  6*8;
+              work->pi_data[j][i].x      = 20*8+12 + 3*8*i;
+              work->pi_data[j][i].y      =  8*8;
             }
             else
             {
-              work->pi_data[j][i].x      = 20*8 + 3*8*(i-3);
-              work->pi_data[j][i].y      =  9*8;
+              work->pi_data[j][i].x      = 20*8+12 + 3*8*(i-3);
+              work->pi_data[j][i].y      = 11*8;
             }
           }
           else
           {
             if( i< 3 )
             {
-              work->pi_data[j][i].x      =  2*8 + 3*8*i;
-              work->pi_data[j][i].y      =  9*8;
+              work->pi_data[j][i].x      =  3*8+12 + 3*8*i;
+              work->pi_data[j][i].y      = 11*8;
             }
             else
             {
-              work->pi_data[j][i].x      =  2*8 + 3*8*(i-3);
-              work->pi_data[j][i].y      = 12*8;
+              work->pi_data[j][i].x      =  3*8+12 + 3*8*(i-3);
+              work->pi_data[j][i].y      = 14*8;
             }
           }
         }
@@ -1407,7 +1547,7 @@ static void Btl_Rec_Sel_PiInit( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work
                                        clunit, work->heap_id, CLSYS_DRAW_MAIN, OBJ_PAL_POS_M_PI,
                                        work->pi_data[j][i].monsno, work->pi_data[j][i].formno,
                                        work->pi_data[j][i].egg, &(work->pi_data[j][i].res),
-                                       work->pi_data[j][i].x, work->pi_data[j][i].y, work->pi_data[j][i].anim  );
+                                       work->pi_data[j][i].x, work->pi_data[j][i].y, work->pi_data[j][i].anim, 1 );
       }
     }
   }
@@ -1427,7 +1567,7 @@ static void Btl_Rec_Sel_PiExit( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work
   }
 }
 static GFL_CLWK* CreatePokeicon( GFL_CLUNIT* clunit, HEAPID heap_id, CLSYS_DRAW_TYPE draw_type, u8 pltt_line,
-                     u32 monsno, u32 formno, BOOL egg, UI_EASY_CLWK_RES* res, u8 x, u8 y, u8 anim )
+                     u32 monsno, u32 formno, BOOL egg, UI_EASY_CLWK_RES* res, u8 x, u8 y, u8 anim, u8 bg_pri )
 {
   GFL_CLWK* clwk;
 
@@ -1449,6 +1589,9 @@ static GFL_CLWK* CreatePokeicon( GFL_CLUNIT* clunit, HEAPID heap_id, CLSYS_DRAW_
   // アニメシーケンスで指定( 0=瀕死, 1=HP最大, 2=HP緑, 3=HP黄, 4=HP赤, 5=状態異常 )
   clwk = UI_EASY_CLWK_CreateCLWK( res, clunit, x, y, anim, heap_id );
 
+  // 上にメッセージウィンドウが出ることもあるので、BGプライオリティを変更しておく
+  GFL_CLACT_WK_SetBgPri( clwk, bg_pri );
+  
   // 上にアイテムアイコンを描画するので優先度を下げておく
   GFL_CLACT_WK_SetSoftPri( clwk, 1 );
   // オートアニメ ON
