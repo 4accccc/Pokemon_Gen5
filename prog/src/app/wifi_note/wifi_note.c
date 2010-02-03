@@ -42,7 +42,7 @@
 #include "net_app/union/union_gra_tool.h"
 #include "net/dwc_rapfriend.h"
 
-#include "system/trgra.h"
+#include "system/tr2dgra.h"
 #include "system/blink_palanm.h"
 #include "app/app_menu_common.h"
 #include "app/app_taskmenu.h"
@@ -7450,21 +7450,11 @@ static void FInfo_DrawBaseInfo( WFNOTE_FRIENDINFO* p_wk, WFNOTE_DATA* p_data, WF
 		        p_data->idx.fridx[p_data->select_listidx], WIFILIST_FRIEND_UNION_GRA );
     num = UnionView_GetTrainerInfo( sex, num, UNIONVIEW_TRTYPE );
 
-		ah = GFL_ARC_OpenDataHandle( TRGRA_GetArcID(), heapID );
-
-		p_wk->trRes[0] = GFL_CLGRP_CGR_Register(
-											ah, TRGRA_GetCgrArcIndex(num),
-											FALSE , CLSYS_DRAW_MAIN, heapID );
-	  p_wk->trRes[1] = GFL_CLGRP_PLTT_Register(
-											ah, TRGRA_GetPalArcIndex(num),
-											CLSYS_DRAW_MAIN, CLACT_PALNUM_TRGRA*0x20, heapID );
-
+		ah = TR2DGRA_OpenHandle( heapID );
+		p_wk->trRes[0] = TR2DGRA_OBJ_CGR_Register( ah, num, CLSYS_DRAW_MAIN, heapID );
+	  p_wk->trRes[1] = TR2DGRA_OBJ_PLTT_Register( ah, num, CLSYS_DRAW_MAIN, CLACT_PALNUM_TRGRA*0x20, heapID );
+		p_wk->trRes[2] = TR2DGRA_OBJ_CELLANM_Register( num, APP_COMMON_MAPPING_128K, CLSYS_DRAW_MAIN, heapID );
 	  GFL_ARC_CloseDataHandle( ah );
-
-		p_wk->trRes[2] = GFL_CLGRP_CELLANIM_Register(
-											p_draw->p_handle,
-											NARC_wifi_note_tr_128_NCER,
-											NARC_wifi_note_tr_128_NANR, heapID );
 
     p_wk->p_trgra = GFL_CLACT_WK_Create(
 												p_draw->cellUnit,
