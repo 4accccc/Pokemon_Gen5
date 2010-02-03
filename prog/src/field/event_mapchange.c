@@ -290,7 +290,11 @@ GMEVENT * EVENT_CallGameStart(GAMESYS_WORK * gsys, GAME_INIT_WORK * game_init_wo
     break;
 #ifdef PM_DEBUG
   case GAMEINIT_MODE_DEBUG:
-     DEBUG_FLG_FlgOn( DEBUG_FLG_ShortcutBtlIn );
+#ifdef DEBUG_ONLY_FOR_iwasawa
+    if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R ){
+       DEBUG_FLG_FlgOn( DEBUG_FLG_ShortcutBtlIn );
+    }
+#endif
     GFL_OVERLAY_Load( FS_OVERLAY_ID(debug_data));
     //ìKìñÇ…éËéùÇøÉ|ÉPÉÇÉìÇAdd
     DEBUG_MyPokeAdd( GAMESYSTEM_GetGameData(gsys), GFL_HEAPID_APP );
