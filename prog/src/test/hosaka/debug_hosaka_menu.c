@@ -77,9 +77,10 @@ static void debug_param( COMM_BTL_DEMO_PARAM* prm )
     prm->trainer_data[i].server_version = GFUser_GetPublicRand(2);
 
     {
-      MYSTATUS* st;
+      //@TODO ALLOC‚µ‚Á‚Ï‚È‚µ
+      MYSTATUS* st = GFL_HEAP_AllocMemoryLo( GFL_HEAPID_APP, MyStatus_GetWorkSize() );
 
-      st = SaveData_GetMyStatus( SaveControl_GetPointer() );
+      MyStatus_Copy( SaveData_GetMyStatus( SaveControl_GetPointer() ), st );
 
       if( GFUser_GetPublicRand(2) == 0 )
       {
@@ -163,7 +164,7 @@ static void debug_param( COMM_BTL_DEMO_PARAM* prm )
 
       HOSAKA_Printf("[%d] server_version=%d trsex=%d poke_cnt=%d \n",i, 
           prm->trainer_data[i].server_version,
-          prm->trainer_data[i].trsex,
+          MyStatus_GetMySex( prm->trainer_data[i].mystatus ),
           poke_cnt );
     }
   }

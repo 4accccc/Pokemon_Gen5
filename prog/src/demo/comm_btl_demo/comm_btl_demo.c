@@ -929,7 +929,7 @@ static void _start_demo_init_rebind_normal( COMM_BTL_DEMO_MAIN_WORK* wk )
       pal = 2;
     }
 
-    G3D_OBJ_PaletteReBind( obj, 1+i, pal );
+    G3D_OBJ_PaletteReBind( obj, 2-i, pal );
   }
 }
 
@@ -955,6 +955,7 @@ static void _start_demo_init_rebind_multi( COMM_BTL_DEMO_MAIN_WORK* wk )
       pal = 2;
     }
 
+    // @TODO ƒ}ƒeƒŠƒAƒ‹ID
     G3D_OBJ_PaletteReBind( obj, 1+i, pal );
   }
 }
