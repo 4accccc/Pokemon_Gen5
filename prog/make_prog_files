@@ -235,7 +235,8 @@ SRCS  +=    $(SOUNDSRC) \
         system/blink_palanm.c \
         system/font2tex.c \
 		debug/debug_sd_print.c \
-		system/ds_system.c
+		system/ds_system.c \
+        savedata/undata_update.c
 
 
 #================================================

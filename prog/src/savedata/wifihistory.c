@@ -12,6 +12,7 @@
 #include "savedata/wifihistory.h"
 #include "savedata/mystatus.h"
 #include "wifihistory_local.h"
+#include "savedata/unitednations_def.h"
 
 
 //============================================================================================

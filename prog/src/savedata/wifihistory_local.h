@@ -32,7 +32,7 @@ enum {
 
 
 
-typedef struct {
+typedef struct _UNITEDNATIONS_SAVE_tag{
   MYSTATUS aMyStatus;
   u16 recvPokemon;  //貰ったポケモン
   u16 sendPokemon;  //あげたポケモン
@@ -43,8 +43,7 @@ typedef struct {
   u8 valid:1;  //有効データか？
   u8 dummy1:3;
   u8 dummy2;
-} UNITEDNATIONS_SAVE;
-
+}_UNITEDNATIONS_SAVE;
 
 //----------------------------------------------------------
 /**
@@ -53,7 +52,7 @@ typedef struct {
 //----------------------------------------------------------
 struct _WIFI_HISTORY{
   /// 国連にとっておく人
-  UNITEDNATIONS_SAVE aUnitedPeople[UNITEDNATIONS_PEOPLE_MAX];
+  _UNITEDNATIONS_SAVE aUnitedPeople[UNITEDNATIONS_PEOPLE_MAX];
   u8 billopen[BILL_DATA_SIZE];  ///< あけたことがあるビルのフロア
 	///日付
 	u32	date;
