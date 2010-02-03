@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-02T20:21:23"/>
+	<create user="matsumiya" host="W00224" date="2010-02-03T12:19:15"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,15 +263,15 @@
 		</language>
 	</columns>
 
-	<dialog left="1355" top="307" right="2056" bottom="927" maximized="no" rayout="Vertical2">
+	<dialog left="1424" top="217" right="2129" bottom="845" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
-		<band id="0" index="1" style="0000" width="526"/>
+		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="539"/>
+		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="693"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<band id="4" index="0" style="0000" width="697"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -298,17 +298,17 @@
 ・続けてmsg_t01r0401_white_01</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
 		<language name="JPN" width="256">チェレン『ほら！
-はかせが　まってるよ[BE:01:ページ切り替え（クリア）]</language>
+はかせが　まってるよ▼</language>
 		<language name="JPN_KANJI" width="256">チェレン『ほら！
-博士が　待ってるよ[BE:01:ページ切り替え（クリア）]</language>
+博士が　待ってるよ▼</language>
 	</row>
 
 	<row id="msg_t01r0401_white_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・メッセージ表示後、アニメ移動</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
-		<language name="JPN" width="256">ベル『どきどき　するねー[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ベル『どきどき　するねー[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">ベル『どきどき　するねー▼</language>
+		<language name="JPN_KANJI" width="256">ベル『どきどき　するねー▼</language>
 	</row>
 
 	<row id="msg_t01r0401_hakase2_01">
@@ -316,29 +316,29 @@
 ・アニメ後
 　続けてmsg_t01r0401_black_01表示</comment>
 		<attribute name="キャラ指定">HAKASE2
-博士</attribute>
-		<language name="JPN" width="256">ハーイ！[BE:01:ページ切り替え（クリア）]
+博士（娘）</attribute>
+		<language name="JPN" width="256">ハーイ！▼
 まってたわよ
-ヤングガールに　ヤングボーイ！[BE:01:ページ切り替え（クリア）]
-あらためて　じこしょうかい　するね[BE:01:ページ切り替え（クリア）]
-わたしの　なまえは……[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ハーイ！[BE:01:ページ切り替え（クリア）]
+ヤングガールに　ヤングボーイ！▼
+あらためて　じこしょうかい　するね▼
+わたしの　なまえは……▼</language>
+		<language name="JPN_KANJI" width="256">ハーイ！▼
 待ってたわよ
-ヤングガールに　ヤングボーイ！[BE:01:ページ切り替え（クリア）]
-あらためて　自己紹介　するね[BE:01:ページ切り替え（クリア）]
-わたしの　名前は……[BE:01:ページ切り替え（クリア）]</language>
+ヤングガールに　ヤングボーイ！▼
+あらためて　自己紹介　するね▼
+わたしの　名前は……▼</language>
 	</row>
 
 	<row id="msg_t01r0401_black_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・続けてmsg_t01r0401_doctor_jr_02表示</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">チェレン『アララギはかせ？[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">チェレン『アララギはかせ？▼
 いまさら　そんなこと　なさらなくても
-なまえは　しっていますよ[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">チェレン『アララギ博士？[BE:01:ページ切り替え（クリア）]
+なまえは　しっていますよ▼</language>
+		<language name="JPN_KANJI" width="256">チェレン『アララギ博士？▼
 いまさら　そんなこと　なさらなくても
-名前は　知っていますよ[BE:01:ページ切り替え（クリア）]</language>
+名前は　知っていますよ▼</language>
 	</row>
 
 	<row id="msg_t01r0401_hakase2_02">
@@ -347,23 +347,23 @@
 　3人の前を移動するアニメ
 ・続けてmsg_t01r0401_doctor_jr_03</comment>
 		<attribute name="キャラ指定">HAKASE2
-博士</attribute>
-		<language name="JPN" width="256">アララギ『もう！[BE:01:ページ切り替え（クリア）]
+博士（娘）</attribute>
+		<language name="JPN" width="256">アララギ『もう！▼
 きょうは　きねんとなる　ひ　でしょ
-かしこまったほうが　いいじゃない[BE:01:ページ切り替え（クリア）]
-では　あらためて……[BE:01:ページ切り替え（クリア）]
+かしこまったほうが　いいじゃない▼
+では　あらためて……▼
 わたしの　なまえは　アララギ！
-じぶんで　いうのも　なんだけど[BE:00:ページ切り替え（行送り）]
-わりと　ゆうしゅうな　けんきゅうか！[BE:00:ページ切り替え（行送り）]
-の　つもり……[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">アララギ『もう！[BE:01:ページ切り替え（クリア）]
+じぶんで　いうのも　なんだけど▽
+わりと　ゆうしゅうな　けんきゅうか！▽
+の　つもり……▼</language>
+		<language name="JPN_KANJI" width="256">アララギ『もう！▼
 きょうは　記念となる　日でしょ
-かしこまったほうが　いいじゃない[BE:01:ページ切り替え（クリア）]
-では　あらためて……[BE:01:ページ切り替え（クリア）]
+かしこまったほうが　いいじゃない▼
+では　あらためて……▼
 わたしの　名前は　アララギ！
-自分で　いうのも　なんだけど[BE:00:ページ切り替え（行送り）]
-わりと　優秀な　研究家！[BE:00:ページ切り替え（行送り）]
-の　つもり……[BE:01:ページ切り替え（クリア）]</language>
+自分で　いうのも　なんだけど▽
+わりと　優秀な　研究家！▽
+の　つもり……▼</language>
 	</row>
 
 	<row id="msg_t01r0401_hakase2_03">
@@ -374,20 +374,20 @@
 ・今回はmsg_t01r0401_doctor_jr_04
 　はい/いいえともに同じ流れ</comment>
 		<attribute name="キャラ指定">HAKASE2
-博士</attribute>
+博士（娘）</attribute>
 		<language name="JPN" width="256">あっ　すごーい！
-もう　ポケモンしょうぶを　したのね[BE:01:ページ切り替え（クリア）]
+もう　ポケモンしょうぶを　したのね▼
 それでかな
-ポケモンたちも　きみたちを[BE:00:ページ切り替え（行送り）]
-しんらい　しはじめた……[BE:00:ページ切り替え（行送り）]
-そんな　かんじ！[BE:01:ページ切り替え（クリア）]
+ポケモンたちも　きみたちを▽
+しんらい　しはじめた……▽
+そんな　かんじ！▼
 ところで　ポケモンに
 ニックネームを　つける？</language>
 		<language name="JPN_KANJI" width="256">あっ　すごーい！
-もう　ポケモン勝負を　したのね[BE:01:ページ切り替え（クリア）]
+もう　ポケモン勝負を　したのね▼
 それでかな
-ポケモンたちも　きみたちを[BE:00:ページ切り替え（行送り）]
-信頼しはじめた……　そんな感じ！[BE:01:ページ切り替え（クリア）]
+ポケモンたちも　きみたちを▽
+信頼しはじめた……　そんな感じ！▼
 ところで　ポケモンに
 ニックネームを　つける？</language>
 	</row>
@@ -399,7 +399,7 @@
 　はい→msg_t01r0401_doctor_jr_07
 　いいえ→名前入力画面</comment>
 		<attribute name="キャラ指定">HAKASE2
-博士</attribute>
+博士（娘）</attribute>
 		<language name="JPN" width="256">アララギ『なるほどなるほど
 その　ニックネームで　オーケー？</language>
 		<language name="JPN_KANJI" width="256">アララギ『なるほどなるほど
@@ -412,13 +412,13 @@
 　ニックネーム変わった
 ・続けてmsg_t01r0401_doctor_jr_07表示</comment>
 		<attribute name="キャラ指定">HAKASE2
-博士</attribute>
-		<language name="JPN" width="256">アララギ『なるほどなるほど[BE:01:ページ切り替え（クリア）]
+博士（娘）</attribute>
+		<language name="JPN" width="256">アララギ『なるほどなるほど▼
 [1:02:ポケモンニックネーム:0]と　いうんだ
-すっごく　いい　なまえ　よね！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">アララギ『なるほどなるほど[BE:01:ページ切り替え（クリア）]
+すっごく　いい　なまえ　よね！▼</language>
+		<language name="JPN_KANJI" width="256">アララギ『なるほどなるほど▼
 [1:02:ポケモンニックネーム:0]と　いうんだ
-すっごく　いい名前　よね！[BE:01:ページ切り替え（クリア）]</language>
+すっごく　いい名前　よね！▼</language>
 	</row>
 
 	<row id="msg_t01r0401_hakase2_06">
@@ -427,40 +427,41 @@
 　ニックネーム変わっていない
 ・続けてmsg_t01r0401_doctor_jr_07表示</comment>
 		<attribute name="キャラ指定">HAKASE2
-博士</attribute>
+博士（娘）</attribute>
 		<language name="JPN" width="256">アララギ『なるほどなるほど
-ニックネームは　つけないんだ[BE:00:ページ切り替え（行送り）]
-ま　それも　ありだよね[BE:01:ページ切り替え（クリア）]</language>
+ニックネームは　つけないんだ▽
+ま　それも　ありだよね▼</language>
 		<language name="JPN_KANJI" width="256">アララギ『なるほどなるほど
-ニックネームは　つけないんだ[BE:00:ページ切り替え（行送り）]
-ま　それも　ありだよね[BE:01:ページ切り替え（クリア）]</language>
+ニックネームは　つけないんだ▽
+ま　それも　ありだよね▼</language>
 	</row>
 
 	<row id="msg_t01r0401_hakase2_07">
 		<comment>♀
 ・続けてmsg_t01r0401_black_02表示</comment>
 		<attribute name="キャラ指定">HAKASE2
-博士</attribute>
+博士（娘）</attribute>
 		<language name="JPN" width="256">アララギ『さて　きみたちに
-ポケモンを　あげた　りゆうだけど……[BE:01:ページ切り替え（クリア）]</language>
+ポケモンを　あげた　りゆうだけど……▼</language>
 		<language name="JPN_KANJI" width="256">アララギ『さて　きみたちに
-ポケモンを　あげた　理由だけど……[BE:01:ページ切り替え（クリア）]</language>
+ポケモンを　あげた　理由だけど……▼</language>
 	</row>
 
 	<row id="msg_t01r0401_black_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・続けてmsg_t01r0401_white_01表示</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">チェレン『ポケモンずかん　ですよね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">チェレン『ポケモン図鑑　ですよね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">チェレン『ポケモンずかん　ですよね▼</language>
+		<language name="JPN_KANJI" width="256">チェレン『ポケモン図鑑　ですよね▼</language>
 	</row>
 
-	<row id="msg_t01r0401_white_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_t01r0401_white_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
+・サポートの頭上に「？」マーク表示
 ・続けてmsg_t01r0401_doctor_jr_08表示</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
-		<language name="JPN" width="256">ベル『ポケモンずかん……？[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ベル『ポケモン図鑑……？[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">ベル『ポケモンずかん……？▼</language>
+		<language name="JPN_KANJI" width="256">ベル『ポケモン図鑑……？▼</language>
 	</row>
 
 	<row id="msg_t01r0401_hakase2_08">
@@ -469,19 +470,19 @@
 　その場で一回転など
 ・続けてmsg_t01r0401_doctor_jr_09表示</comment>
 		<attribute name="キャラ指定">HAKASE2
-博士</attribute>
+博士（娘）</attribute>
 		<language name="JPN" width="256">アララギ『すごいすごい！
-さすが　チェレン！[BE:01:ページ切り替え（クリア）]
+さすが　チェレン！▼
 ゆめは　さいこうの　トレーナーなのも
-すっごく　なっとくね[BE:01:ページ切り替え（クリア）]
+すっごく　なっとくね▼
 ということで！　あらためて
-せつめいさせて　もらうわね！[BE:01:ページ切り替え（クリア）]</language>
+せつめいさせて　もらうわね！▼</language>
 		<language name="JPN_KANJI" width="256">アララギ『すごいすごい！
-さすが　チェレン！[BE:01:ページ切り替え（クリア）]
+さすが　チェレン！▼
 夢は　最高の　トレーナーなのも
-すっごく　納得ね[BE:01:ページ切り替え（クリア）]
+すっごく　納得ね▼
 ということで！　あらためて
-説明させて　もらうわね！[BE:01:ページ切り替え（クリア）]</language>
+説明させて　もらうわね！▼</language>
 	</row>
 
 	<row id="msg_t01r0401_hakase2_09">
@@ -489,23 +490,23 @@
 ・アニメなどの演出予定
 ・続けてmsg_t01r0401_doctor_jr_10表示</comment>
 		<attribute name="キャラ指定">HAKASE2
-博士</attribute>
-		<language name="JPN" width="256">ポケモンずかん　とは……！[BE:01:ページ切り替え（クリア）]
+博士（娘）</attribute>
+		<language name="JPN" width="256">ポケモンずかん　とは……！▼
 きみたちが　であった　ポケモンを
-じどうてきに　きろく　していく[BE:00:ページ切り替え（行送り）]
-ハイテクな　どうぐ　なの！[BE:01:ページ切り替え（クリア）]
+じどうてきに　きろく　していく▽
+ハイテクな　どうぐ　なの！▼
 だからね　[1:00:トレーナー名:0]たちは
-いろんな　ところに　でかけ[BE:00:ページ切り替え（行送り）]
-この　イッシュちほう　すべての[BE:00:ページ切り替え（行送り）]
-ポケモンに　であってほしいのッ！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ポケモン図鑑　とは……！[BE:01:ページ切り替え（クリア）]
+いろんな　ところに　でかけ▽
+この　イッシュちほう　すべての▽
+ポケモンに　であってほしいのッ！▼</language>
+		<language name="JPN_KANJI" width="256">ポケモン図鑑　とは……！▼
 きみたちが　出会った　ポケモンを
-自動的に　記録していく[BE:00:ページ切り替え（行送り）]
-ハイテクな　道具　なの！[BE:01:ページ切り替え（クリア）]
+自動的に　記録していく▽
+ハイテクな　道具　なの！▼
 だからね　[1:00:トレーナー名:0]たちは
-いろんな　ところに　でかけ[BE:00:ページ切り替え（行送り）]
-この　イッシュ地方　すべての[BE:00:ページ切り替え（行送り）]
-ポケモンに　出会ってほしいのッ！[BE:01:ページ切り替え（クリア）]</language>
+いろんな　ところに　でかけ▽
+この　イッシュ地方　すべての▽
+ポケモンに　出会ってほしいのッ！▼</language>
 	</row>
 
 	<row id="msg_t01r0401_hakase2_10">
@@ -515,15 +516,15 @@
 　いいえ→msg_t01r0401_doctor_jr_11
 ・0＝プレイヤーの名前</comment>
 		<attribute name="キャラ指定">HAKASE2
-博士</attribute>
-		<language name="JPN" width="256">では　おききします[BE:01:ページ切り替え（クリア）]
+博士（娘）</attribute>
+		<language name="JPN" width="256">では　おききします▼
 [1:00:トレーナー名:0]！
-チェレン！　ベル！[BE:01:ページ切り替え（クリア）]
+チェレン！　ベル！▼
 ポケモンずかんを　かんせいさせるため
 ぼうけんの　たびに　でかけるよね！</language>
-		<language name="JPN_KANJI" width="256">では　お聞きしまーす[BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">では　お聞きしまーす▼
 [1:00:トレーナー名:0]！
-チェレン！　ベル！[BE:01:ページ切り替え（クリア）]
+チェレン！　ベル！▼
 ポケモン図鑑を　完成させるべく
 冒険の　旅に　でかけるよね！</language>
 	</row>
@@ -535,57 +536,61 @@
 　はい→msg_t01r0401_doctor_jr_12
 　いいえ→msg_t01r0401_doctor_jr_11</comment>
 		<attribute name="キャラ指定">HAKASE2
-博士</attribute>
-		<language name="JPN" width="256">アララギ『もう！[BE:01:ページ切り替え（クリア）]
+博士（娘）</attribute>
+		<language name="JPN" width="256">アララギ『もう！▼
 わたしが　ききたいのは
-せかいを　きりひらく[BE:01:ページ切り替え（クリア）]
-ゆうきある　ことば　だけなの！！[BE:01:ページ切り替え（クリア）]
+せかいを　きりひらく▼
+ゆうきある　ことば　だけなの！！▼
 [1:00:トレーナー名:0]たちは
-いろんな　ところに　でかけ[BE:00:ページ切り替え（行送り）]
-この　イッシュちほう　すべての[BE:00:ページ切り替え（行送り）]
+いろんな　ところに　でかけ▽
+この　イッシュちほう　すべての▽
 ポケモンに　であってほしいのッ！</language>
-		<language name="JPN_KANJI" width="256">アララギ『もう！[BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">アララギ『もう！▼
 わたしが　聞きたいのは
-世界を　切り開く[BE:01:ページ切り替え（クリア）]
-勇気ある　言葉だけなの！！[BE:01:ページ切り替え（クリア）]
+世界を　切り開く▼
+勇気ある　言葉だけなの！！▼
 [1:00:トレーナー名:0]たちは
-いろんな　ところに　でかけ[BE:00:ページ切り替え（行送り）]
-この　イッシュ地方　すべての[BE:00:ページ切り替え（行送り）]
+いろんな　ところに　でかけ▽
+この　イッシュ地方　すべての▽
 ポケモンに　出会ってほしいのッ！</language>
 	</row>
 
-	<row id="msg_t01r0401_hakase2_12" back-color=",,,,,,#ff8080,,,,,,,,,,,,">
-		<comment>♂
+	<row id="msg_t01r0401_hakase2_12">
+		<comment>♀
 ・はい選択時
 ・メッセージ表示後、退場
 ・1番道路に博士を配置
 　あわせて友達♂、♀も
 ・続けてmsg_t01r0401_white_02</comment>
 		<attribute name="キャラ指定">HAKASE2
-博士</attribute>
+博士（娘）</attribute>
 		<language name="JPN" width="256">アララギ『ありがとッ！
-さいこうの　へんじ　よね！[BE:01:ページ切り替え（クリア）]</language>
+さいこうの　へんじ　よね！▼</language>
 		<language name="JPN_KANJI" width="256">アララギ『ありがとッ！
-最高の　返事よね！[BE:01:ページ切り替え（クリア）]</language>
+最高の　返事よね！▼</language>
 	</row>
 
 	<row id="msg_t01r0401_hakase2_13">
+		<attribute name="キャラ指定">システム</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]は
 [FF:00:色:2]ポケモンずかん[FF:00:色:0]を　てにいれた！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は
 [FF:00:色:2]ポケモン図鑑[FF:00:色:0]を　手に入れた！</language>
 	</row>
 
-	<row id="msg_t01r0401_hakase2_14" back-color=",,,,,,#ff8080,,,,,,,,,,,,">
-		<comment>・本来12と14でひとつのメッセージ</comment>
-		<language name="JPN" width="256">アララギ『では　つぎのステップね[BE:01:ページ切り替え（クリア）]
-ポケモンと　であう
-ほうほうを　おしえるから[BE:00:ページ切り替え（行送り）]
-１ばんどうろに　きてね！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">アララギ『では　次のステップね[BE:01:ページ切り替え（クリア）]
+	<row id="msg_t01r0401_hakase2_14">
+		<comment>♀
+・メッセージ後、研究所の外へ</comment>
+		<attribute name="キャラ指定">HAKASE2
+博士（娘）</attribute>
+		<language name="JPN" width="256">アララギ『では　つぎのステップね▼
+どのように　ポケモンと
+であうのかを　おしえるから▽
+１ばんどうろに　きてね！▼</language>
+		<language name="JPN_KANJI" width="256">アララギ『では　次のステップね▼
 ポケモンと　出会う
-方法を　教えるから[BE:00:ページ切り替え（行送り）]
-１番道路に　来てね！[BE:01:ページ切り替え（クリア）]</language>
+方法を　教えるから▽
+１番道路に　来てね！▼</language>
 	</row>
 
 	<row id="msg_t01r0401_white_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -593,11 +598,11 @@
 ・続けてmsg_t01r0401_black_03</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
 		<language name="JPN" width="256">ベル『あっ　あたしたち
-はかせに　たのまれたから[BE:00:ページ切り替え（行送り）]
-ぼうけんしても　いいんだよね？[BE:01:ページ切り替え（クリア）]</language>
+はかせに　たのまれたから▽
+ぼうけんしても　いいんだよね？▼</language>
 		<language name="JPN_KANJI" width="256">ベル『あっ　あたしたち
-博士に　頼まれたから[BE:00:ページ切り替え（行送り）]
-冒険しても　いいんだよね？[BE:01:ページ切り替え（クリア）]</language>
+博士に　頼まれたから▽
+冒険しても　いいんだよね？▼</language>
 	</row>
 
 	<row id="msg_t01r0401_black_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -605,68 +610,118 @@
 ・メッセージ表示後、友達♂♀退場
 　画面外に消えると、操作可能に</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">チェレン『ああ　そうだね[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">チェレン『ああ　そうだね▼
 というわけで　ぼくたちも
-１ばんどうろに　いくと　しよう[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">チェレン『ああ　そうだね[BE:01:ページ切り替え（クリア）]
+１ばんどうろに　いくと　しよう▼</language>
+		<language name="JPN_KANJI" width="256">チェレン『ああ　そうだね▼
 というわけで　ぼくたちも
-１番道路に　行くと　しよう[BE:01:ページ切り替え（クリア）]</language>
+１番道路に　行くと　しよう▼</language>
 	</row>
 
 	<row id="msg_t01r0401_hakase2_20" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♀
 ・t02pc0101のイベント後以降
-・図鑑評価関連（仮）</comment>
+・シナリオイベントがあるときはそちらに
+　（以降追加予定）
+　ないときは続けて図鑑評価
+　hyouka_scr.gmmに</comment>
 		<attribute name="キャラ指定">HAKASE2
-博士</attribute>
-		<language name="JPN" width="256">アララギ『どうなのどうなの！？
-ポケモンずかんの　ちょうしは[BE:01:ページ切り替え（クリア）]
-・つづけて　ずかんひょうか　へ</language>
-		<language name="JPN_KANJI" width="256">アララギ『どうなのどうなの！？
-ポケモン図鑑の　調子は[BE:01:ページ切り替え（クリア）]
-・つづけて　ずかんひょうか　へ</language>
+博士（娘）</attribute>
+		<language name="JPN" width="256">アララギ『ハーイ！　[1:00:トレーナー名:0]！
+さいきんの　ちょうしは　どう？▼</language>
+		<language name="JPN_KANJI" width="256">アララギ『ハーイ！　[1:00:トレーナー名:0]！
+最近の　調子は　どう？▼</language>
 	</row>
 
-	<row id="msg_t01r0401_doctor01_01" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
-		<attribute name="キャラ指定">博士（子）</attribute>
-		<language name="JPN" width="256">no data</language>
-		<language name="JPN_KANJI" width="256">no data</language>
+	<row id="msg_t01r0401_hakase1_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・c06イベント後に登場
+　GRIDX=12、GRIDZ=7、左向き
+・全国図鑑解放前</comment>
+		<attribute name="キャラ指定">HAKASE
+博士（父）</attribute>
+		<language name="JPN" width="256">アララギちち『よお　[1:00:トレーナー名:0]！
+ポケモンと　であっておるか？▼
+イッシュちほうは　もちろん
+せかいには　ほんとうに▽
+おおくの　ポケモンが　いるぞ！</language>
+		<language name="JPN_KANJI" width="256">アララギちち『よお　[1:00:トレーナー名:0]！
+ポケモンと　出会っておるか？▼
+イッシュ地方は　もちろん
+世界には　本当に▽
+多くの　ポケモンが　いるぞ！</language>
 	</row>
 
-	<row id="msg_t01r0401_doctor01_02" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
-		<attribute name="キャラ指定">博士（子）</attribute>
-		<language name="JPN" width="256">no data</language>
-		<language name="JPN_KANJI" width="256">no data</language>
+	<row id="msg_t01r0401_hakase1_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・c06イベント後に登場
+・全国図鑑開放条件を満たしているとき
+　続けてhakase1_03</comment>
+		<attribute name="キャラ指定">HAKASE
+博士（父）</attribute>
+		<language name="JPN" width="256">アララギちち『よお　[1:00:トレーナー名:0]！▼
+そろそろ　おまえの　ポケモンずかんを
+ぜんこくずかんに▽
+パワーアップせねば　ならん！▼
+いやなに　おまえさんの
+こうどうはんいも　ひろがるだろう？▼
+となれば　とうぜん　であう
+ポケモンも　ふえるからなあ▼
+ちょいと　ずかんを　かしとくれ！▼</language>
+		<language name="JPN_KANJI" width="256">アララギちち『よお　[1:00:トレーナー名:0]！▼
+そろそろ　おまえの　ポケモン図鑑を
+全国図鑑に▽
+パワーアップせねば　ならん！▼
+いやなに　おまえさんの
+行動範囲も　広がるだろう？▼
+となれば　当然　出会う
+ポケモンも　増えるからなあ▼
+ちょいと　図鑑を　貸しとくれ！▼</language>
 	</row>
 
-	<row id="msg_t01r0401_doctor01_03" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
-		<attribute name="キャラ指定">博士（子）</attribute>
-		<language name="JPN" width="256">no data</language>
-		<language name="JPN_KANJI" width="256">no data</language>
+	<row id="msg_t01r0401_hakase1_03" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>システム
+・全国図鑑機能を拡張
+・0＝プレイヤー名
+・続けてhakase1_04</comment>
+		<attribute name="キャラ指定">システム</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]の　ポケモンずかんが
+ぜんこくばんに　バージョンアップした！▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]の　ポケモン図鑑が
+全国ばんに　バージョンアップした！▼</language>
 	</row>
 
-	<row id="msg_t01r0401_doctor01_04" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
-		<attribute name="キャラ指定">博士（子）</attribute>
-		<language name="JPN" width="256">no data</language>
-		<language name="JPN_KANJI" width="256">no data</language>
+	<row id="msg_t01r0401_hakase1_04" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・一度、イベント終了</comment>
+		<attribute name="キャラ指定">HAKASE
+博士（父）</attribute>
+		<language name="JPN" width="256">アララギちち『あらよっと！▼
+これで　おまえさんの　ポケモンずかんを
+ぜんこくずかんにも　きりかえられる▼
+ぜんこくずかんの　かんせいは
+ちょいと　たいへんかも　しれぬが▽
+まあ　がんばって　みなさいよ！▼</language>
+		<language name="JPN_KANJI" width="256">アララギちち『あらよっと！▼
+これで　おまえさんの　ポケモン図鑑を
+全国図鑑にも　切り替えられる▼
+全国図鑑の　完成は
+ちょいと　大変かも　しれぬが▽
+まあ　がんばって　みなさいよ！▼</language>
 	</row>
 
-	<row id="msg_t01r0401_doctor01_05" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
-		<attribute name="キャラ指定">博士（子）</attribute>
-		<language name="JPN" width="256">no data</language>
-		<language name="JPN_KANJI" width="256">no data</language>
-	</row>
-
-	<row id="msg_t01r0401_doctor01_06" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
-		<attribute name="キャラ指定">博士（子）</attribute>
-		<language name="JPN" width="256">no data</language>
-		<language name="JPN_KANJI" width="256">no data</language>
-	</row>
-
-	<row id="msg_t01r0401_doctor01_07" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
-		<attribute name="キャラ指定">博士（子）</attribute>
-		<language name="JPN" width="256">no data</language>
-		<language name="JPN_KANJI" width="256">no data</language>
+	<row id="msg_t01r0401_hakase1_05" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・c06イベント後に登場
+・全国図鑑解放後
+・シナリオイベントがあるときはそちらに
+　（以降追加予定）
+　ないときは続けて図鑑評価
+　hyouka_scr.gmmに</comment>
+		<attribute name="キャラ指定">HAKASE
+博士（父）</attribute>
+		<language name="JPN" width="256">アララギちち『よお　[1:00:トレーナー名:0]！▼</language>
+		<language name="JPN_KANJI" width="256">アララギちち『よお　[1:00:トレーナー名:0]！</language>
 	</row>
 
 	<row id="msg_t01r0401_photo_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
@@ -678,15 +733,54 @@
 笑顔の　男性が　写っている</language>
 	</row>
 
-	<row id="msg_t01r0401_photo_02" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_t01r0401_photo_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ
-・所定のイベント以降
-　こちらのメッセージ表示</comment>
+・c06でのイベント後メッセージ切り替え</comment>
 		<attribute name="キャラ指定">写真たて</attribute>
 		<language name="JPN" width="256">ちちと　むすめ……
 ふたりの　アララギはかせの　しゃしん</language>
 		<language name="JPN_KANJI" width="256">父と　娘……
 二人の　アララギ博士の　写真だ</language>
+	</row>
+
+	<row id="msg_t01r0401_photo_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>ＢＧメッセージ
+・GRIDX=5、GRIDZ=2</comment>
+		<attribute name="キャラ指定">本棚</attribute>
+		<language name="JPN" width="256">たんけんの　こころえ　その１
+Ｘボタンで　メニューがひらく</language>
+		<language name="JPN_KANJI" width="256">たんけんの　こころえ　その１
+Ｘボタンで　メニューがひらく</language>
+	</row>
+
+	<row id="msg_t01r0401_photo_04" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>ＢＧメッセージ
+・GRIDX=6、GRIDZ=2</comment>
+		<attribute name="キャラ指定">本棚</attribute>
+		<language name="JPN" width="256">たんけんの　こころえ　その２
+ポケモン　レポートで　きろくできる</language>
+		<language name="JPN_KANJI" width="256">たんけんの　こころえ　その２
+ポケモン　レポートで　きろくできる</language>
+	</row>
+
+	<row id="msg_t01r0401_photo_05" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>ＢＧメッセージ
+・GRIDX=1、GRIDZ=5</comment>
+		<attribute name="キャラ指定">学術書</attribute>
+		<language name="JPN" width="256">ポケモンに　ついて　かかれた
+ほんが　いっぱい　ある！</language>
+		<language name="JPN_KANJI" width="256">ポケモンに　ついて　かかれた
+ほんが　いっぱい　ある！</language>
+	</row>
+
+	<row id="msg_t01r0401_photo_06" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>ＢＧメッセージ
+・GRIDX=1、GRIDZ=4</comment>
+		<attribute name="キャラ指定">ノート</attribute>
+		<language name="JPN" width="256">ポケモンに　かんする　しりょうや
+けんきゅうほうこくが　たくさん！</language>
+		<language name="JPN_KANJI" width="256">ポケモンに　かんする　しりょうや
+けんきゅうほうこくが　たくさん！</language>
 	</row>
 
 	<flowchart-group-list>
