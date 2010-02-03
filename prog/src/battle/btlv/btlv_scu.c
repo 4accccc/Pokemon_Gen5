@@ -653,7 +653,7 @@ static BOOL btlin_wild_single( int* seq, void* wk_adrs )
       BtlCompetitor  competitor = BTL_MAIN_GetCompetitor( wk->mainModule );
       const MYSTATUS* status = BTL_MAIN_GetPlayerStatus( wk->mainModule );
       if( competitor == BTL_COMPETITOR_DEMO_CAPTURE ){ 
-        BTLV_EFFECT_Add( BTLEFF_SINGLE_ENCOUNT_2_FEMALE );
+        BTLV_EFFECT_Add( BTLEFF_SINGLE_ENCOUNT_2_ARARAGI );
       }
       else if( MyStatus_GetMySex(status) == PM_MALE ){
         BTLV_EFFECT_Add( BTLEFF_SINGLE_ENCOUNT_2_MALE );
