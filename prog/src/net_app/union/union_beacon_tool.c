@@ -183,6 +183,22 @@ int UnionView_GetObjCode(int view_index)
   return UnionViewTable[view_index].objcode;
 }
 
+//==================================================================
+/**
+ * トレーナータイプのテーブルINDEXからTRTYPEを取得する
+ * @param   view_index		テーブルINDEX
+ * @retval  int		TRTYPE
+ */
+//==================================================================
+int UnionView_GetTrainerType(int view_index)
+{
+  if(view_index >= NELEMS(UnionViewTable)){
+    GF_ASSERT(0);
+    return BOY2;
+  }
+  return UnionViewTable[view_index].tr_type;
+}
+
 
 //==============================================================================
 /**
