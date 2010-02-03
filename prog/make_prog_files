@@ -210,6 +210,7 @@ SRCS  +=    $(SOUNDSRC) \
 				system/pokegra.c \
 				system/trgra.c \
 				system/poke2dgra.c \
+				system/tr2dgra.c \
         system/nsbtx_to_clwk.c \
         system/pms_draw.c \
         field/field_encount_st.c \
@@ -964,8 +965,11 @@ SRCS_OVERLAY_BATTLE =	battle/btl_main.c \
 			battle/handler/hand_pos.c \
 			battle/btlv/btlv_core.c \
 			battle/btlv/btlv_scu.c \
-			battle/btlv/btlv_scd.c \
-      battle/btlv/btlv_stage.c \
+			battle/btlv/btlv_scd.c
+
+# バトル表示
+#===> SRCS_OVERLAY_BATTLE
+SRCS_OVERLAY_BATTLE_VIEW = battle/btlv/btlv_stage.c \
 			battle/btlv/btlv_field.c \
 			battle/btlv/btlv_camera.c \
 			battle/btlv/btlv_effect.c \
@@ -981,7 +985,7 @@ SRCS_OVERLAY_BATTLE =	battle/btl_main.c \
 			battle/btlv/btlv_finger_cursor.c
 
 # バトル用バッグ&ポケモンリスト共通ツール
-#===> SRCS_OVERLAY_BATTLE
+#===> SRCS_OVERLAY_BATTLE_VIEW
 SRCS_OVERLAY_BATTLE_B_APP = battle/app/b_app_tool.c
 
 # バトル用バッグ
