@@ -671,10 +671,13 @@ static void BTL_FIELD_SITUATION_SetFromFieldStatus( BTL_FIELD_SITUATION* sit, GA
     sit->bgAttr = FIELD_BATTLE_GetBattleAttrID(MAPATTR_GetAttrValue(attr));
   }
   //タイムゾーン取得
-//  sit->timeZone = GFL_RTC_GetTimeZone();
   sit->zoneID = zone_id;
-  sit->hour   = 0;    //@todo おそらくRTCから取れば良いハズ
-  sit->minute = 0;    //@todo おそらくRTCから取れば良いハズ
+  {
+    RTCTime time;
+    GFL_RTC_GetTime(&time);
+    sit->hour   = time.hour;
+    sit->minute = time.minute;
+  }
 
   //天候
   sit->weather = btlparam_GetBattleWeather( fieldWork );
