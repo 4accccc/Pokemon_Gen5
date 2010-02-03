@@ -25,6 +25,9 @@
 
 #include "font/font.naix"
 
+#include "system/tr2dgra.h"
+#include "tr_tool/trtype_def.h"
+
 #define MCS_ENABLE    //MCSを使用する
 #define BTLV_MCSS_1vs1    //1vs1描画
 
@@ -104,6 +107,12 @@ typedef struct
   int         timer_flag;
   int         timer;
 
+  GFL_CLUNIT* cl_unit;
+  GFL_CLWK*   clwk;
+  u32         charID;
+  u32         plttID;
+  u32         cellID;
+
   //MCS
     u8*         mcsWorkMem;
     NNSMcsDeviceCaps  deviceCaps;
@@ -158,7 +167,7 @@ static  const int pokemon_pos_table[][2]={
   { BTLV_MCSS_POS_C, BTLV_MCSS_POS_D }
 };
 
-//FS_EXTERN_OVERLAY(battle_view);
+FS_EXTERN_OVERLAY(battle_view);
 FS_EXTERN_OVERLAY(battle);
 
 //--------------------------------------------------------------------------
@@ -184,7 +193,7 @@ static GFL_PROC_RESULT CaptureTestProcInit( GFL_PROC * proc, int * seq, void * p
     GX_OBJVRAMMODE_CHAR_1D_32K,   // サブOBJマッピングモード
   };
 
-//  GFL_OVERLAY_Load(FS_OVERLAY_ID(battle_view));
+  GFL_OVERLAY_Load(FS_OVERLAY_ID(battle_view));
   GFL_OVERLAY_Load(FS_OVERLAY_ID(battle));
 
   GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_SOGABE_DEBUG, 0xc0000 );
@@ -218,7 +227,7 @@ static GFL_PROC_RESULT CaptureTestProcInit( GFL_PROC * proc, int * seq, void * p
   {
     ///< main
     GFL_BG_SetVisible( GFL_BG_FRAME0_M,   VISIBLE_ON );
-    GFL_BG_SetVisible( GFL_BG_FRAME1_M,   VISIBLE_OFF );
+    GFL_BG_SetVisible( GFL_BG_FRAME1_M,   VISIBLE_ON );
     GFL_BG_SetVisible( GFL_BG_FRAME2_M,   VISIBLE_OFF );
     GFL_BG_SetVisible( GFL_BG_FRAME3_M,   VISIBLE_OFF );
 
@@ -335,6 +344,29 @@ static GFL_PROC_RESULT CaptureTestProcInit( GFL_PROC * proc, int * seq, void * p
 
   GFL_UI_KEY_GetRepeatSpeed( &wk->key_repeat_speed, &wk->key_repeat_wait );
   GFL_UI_KEY_SetRepeatSpeed( wk->key_repeat_speed / 4, wk->key_repeat_wait );
+
+  //BG
+  { 
+    TR2DGRA_BG_TransResource( TRTYPE_FISHING, GFL_BG_FRAME1_M, 1, 0, wk->heapID );
+    TR2DGRA_BG_WriteScreen( GFL_BG_FRAME1_M, 1, 0, 0, 0 );
+    GFL_BG_LoadScreenReq( GFL_BG_FRAME1_M );
+  }
+
+  //OBJ
+  { 
+    GFL_CLWK_DATA obj = { 
+      128, 96,
+      0, 0, 1
+    };
+    ARCHANDLE*  handle = TR2DGRA_OpenHandle( wk->heapID );
+
+    wk->cl_unit = GFL_CLACT_UNIT_Create( 1, 0, wk->heapID );
+    wk->charID = TR2DGRA_OBJ_CGR_Register( handle, TRTYPE_FISHING, CLSYS_DRAW_MAIN, wk->heapID );
+    wk->plttID = TR2DGRA_OBJ_PLTT_Register( handle, TRTYPE_FISHING, CLSYS_DRAW_MAIN, 0, wk->heapID );
+    wk->cellID = TR2DGRA_OBJ_CELLANM_Register( TRTYPE_FISHING, APP_COMMON_MAPPING_64K, CLSYS_DRAW_MAIN, wk->heapID );
+
+    wk->clwk = GFL_CLACT_WK_Create( wk->cl_unit, wk->charID, wk->plttID, wk->cellID, &obj, CLSYS_DEFREND_MAIN, wk->heapID );
+  }
 
   return GFL_PROC_RES_FINISH;
 }

@@ -185,7 +185,7 @@ static  const int bgm_table[]={
   SEQ_BGM_VS_NORAPOKE,
 };
 
-//FS_EXTERN_OVERLAY(battle_view);
+FS_EXTERN_OVERLAY(battle_view);
 FS_EXTERN_OVERLAY(battle);
 
 //--------------------------------------------------------------------------
@@ -496,7 +496,7 @@ static GFL_PROC_RESULT EffectViewerProcExit( GFL_PROC * proc, int * seq, void * 
 
   GFL_HEAP_DeleteHeap( HEAPID_SOGABE_DEBUG );
 
-//  GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle_view ) );
+  GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle_view ) );
   GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle ) );
 
   return GFL_PROC_RES_FINISH;

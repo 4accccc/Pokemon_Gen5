@@ -12,6 +12,7 @@
 #include <tcbl.h>
 
 #include "system/main.h"
+#include "system/pokegra.h"
 #include "arc_def.h"
 
 #include "battle/btlv/btlv_effect.h"
@@ -26,6 +27,7 @@
 #include "msg/msg_d_soga.h"
 #include "font/font.naix"
 #include "message.naix"
+#include "pokegra/pokegra_wb.naix"
 
 
 
@@ -212,6 +214,8 @@ typedef struct
   int                   form_max;
   BTLV_MCSS_PROJECTION  proj;
 
+  int                   mosaic;
+
   void*                 resource_data[ RESOURCE_MAX ][ BTLV_MCSS_POS_MAX ];
 }POKEMON_VIEWER_WORK;
 
@@ -294,7 +298,7 @@ static const GFL_UI_TP_HITTBL TP_HitTbl[] = {
   { GFL_UI_TP_HIT_END, 0, 0, 0 },
 };
 
-//FS_EXTERN_OVERLAY(battle_view);
+FS_EXTERN_OVERLAY(battle_view);
 FS_EXTERN_OVERLAY(battle);
 
 //--------------------------------------------------------------------------
@@ -320,7 +324,7 @@ static GFL_PROC_RESULT PokemonViewerProcInit( GFL_PROC * proc, int * seq, void *
     GX_OBJVRAMMODE_CHAR_1D_32K,   // サブOBJマッピングモード
   };
 
-//  GFL_OVERLAY_Load(FS_OVERLAY_ID(battle_view));
+  GFL_OVERLAY_Load(FS_OVERLAY_ID(battle_view));
   GFL_OVERLAY_Load(FS_OVERLAY_ID(battle));
 
   GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_SOGABE_DEBUG, 0xc0000 );
@@ -567,6 +571,7 @@ static GFL_PROC_RESULT PokemonViewerProcMain( GFL_PROC * proc, int * seq, void *
     mcss_mode_change( pvw );
   }
 
+#if 0
   if( trg & PAD_BUTTON_L )
   {
     int mcss_mode;
@@ -602,6 +607,7 @@ static GFL_PROC_RESULT PokemonViewerProcMain( GFL_PROC * proc, int * seq, void *
       }
     }
   }
+#endif
 
   if( (trg & PAD_BUTTON_DEBUG ) )
   {
@@ -629,6 +635,34 @@ static GFL_PROC_RESULT PokemonViewerProcMain( GFL_PROC * proc, int * seq, void *
     }
 #endif
   }
+
+  { 
+    BOOL  mosaic = FALSE;
+
+    if( (rep & PAD_BUTTON_L ) && ( pvw->mosaic ) )
+    { 
+      pvw->mosaic--;
+      mosaic = TRUE;
+    }
+    if( (rep & PAD_BUTTON_R ) && ( pvw->mosaic < 31 ) )
+    { 
+      pvw->mosaic++;
+      mosaic = TRUE;
+    }
+    if( mosaic )
+    { 
+      BtlvMcssPos mcss_pos;
+
+      for( mcss_pos = BTLV_MCSS_POS_AA ; mcss_pos < BTLV_MCSS_POS_MAX ; mcss_pos++ )
+      {
+        if( BTLV_EFFECT_CheckExist( mcss_pos ) == TRUE )
+        {
+          BTLV_MCSS_SetMosaic( BTLV_EFFECT_GetMcssWork(), mcss_pos, pvw->mosaic );
+        }
+      }
+    }
+  }
+
 
   {
     int hit = GFL_UI_TP_HitTrg( TP_HitTbl );
