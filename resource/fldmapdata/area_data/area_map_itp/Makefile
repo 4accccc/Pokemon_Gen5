@@ -147,7 +147,6 @@ $(TARGETDIR)/$(targetname3).narc: $(targetname3).narc
 
 
 #コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
-ifeq	($(CONVERTUSER),true)	
 # コピー先のnarcが古い場合実行する
 $(targetname).narc: $(OBJ_FILE)
 	-ls *.itpdat > $(LIST_FILE)
@@ -158,7 +157,7 @@ $(targetname).narc: $(OBJ_FILE)
 
 # コピー先のnarcが古い場合実行する
 $(targetname2).narc: $(OBJ_FILE2)
-	-ls *.nsb* >> $(LIST_FILE)
+	-ls *.nsb* > $(LIST_FILE)
 	$(ARCLIST_MAKE) $(LIST_FILE)
 	nnsarc -c -l -n -i $(targetname2) -S $(LIST_FILE)
 	$(NAIXCUT) $(targetname2).naix
@@ -166,12 +165,11 @@ $(targetname2).narc: $(OBJ_FILE2)
 
 # コピー先のnarcが古い場合実行する
 $(targetname3).narc: $(OBJ_FILE3)
-	-ls *.itptbl >> $(LIST_FILE)
+	-ls *.itptbl > $(LIST_FILE)
 	$(ARCLIST_MAKE) $(LIST_FILE)
 	nnsarc -c -l -n -i $(targetname3) -S $(LIST_FILE)
 	$(NAIXCUT) $(targetname3).naix
 	-rm	$(LIST_FILE)
-endif
 
 #------------------------------------------------------------------------------
 #	make clean ルール
@@ -185,6 +183,12 @@ clean:
 	rm -f $(TARGETDIR)/$(targetname2).naix
 	rm -f $(TARGETDIR)/$(targetname3).narc
 	rm -f $(TARGETDIR)/$(targetname3).naix
+	rm -f $(targetname).narc
+	rm -f $(targetname).naix
+	rm -f $(targetname2).narc
+	rm -f $(targetname2).naix
+	rm -f $(targetname3).narc
+	rm -f $(targetname3).naix
 
 #コンバート対象者のみ、中間ファイル削除
 ifeq	($(CONVERTUSER),true)	
@@ -193,12 +197,6 @@ ifeq	($(CONVERTUSER),true)
 	rm -f *.itptbl
 	rm -f *.narc
 	rm -f *.naix
-	rm -f $(targetname).narc
-	rm -f $(targetname).naix
-	rm -f $(targetname2).narc
-	rm -f $(targetname2).naix
-	rm -f $(targetname3).narc
-	rm -f $(targetname3).naix
 endif
 
 
