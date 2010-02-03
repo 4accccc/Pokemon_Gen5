@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="murakami_naoto" host="W00210" date="2010-01-15T13:15:12"/>
+	<create user="murakami_naoto" host="W00228" date="2010-02-02T23:31:22"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -281,7 +281,7 @@
 	</tag-table>
 
 	<columns>
-		<id position="0" width="137"/>
+		<id position="0" width="158"/>
 		<group default=" 0:デフォルト" position="-1" width="100">
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 		</group>
@@ -319,7 +319,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -364,916 +364,923 @@
 	<row id="msg_gate_common_jim_01" back-color="#80ffff,,,#80ffff,,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>各ゲート共通メッセージ
 ・臨時ニュース/主人公がジム1をクリア</comment>
-		<language name="JPN" width="256">◇カノコタウンの　トレーナーが　ジムリーダー１を　げきは！</language>
-		<language name="JPN_KANJI" width="256">◇カノコタウンの　トレーナーが　ジムリーダー１を　撃破！</language>
+		<language name="JPN" width="256">◇カノコタウンしゅっしんの　むめいトレーナーが　サンヨウジムリーダー　コーン・ポッド・デントをげきは！</language>
+		<language name="JPN_KANJI" width="256">◇カノコタウン出身の　無名トレーナーが　サンヨウジムリーダー　コーン・ポッド・デントを撃破！</language>
 	</row>
 
 	<row id="msg_gate_common_jim_02" back-color="#80ffff,,,#80ffff,,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>各ゲート共通メッセージ
 ・臨時ニュース/主人公がジム2をクリア</comment>
-		<language name="JPN" width="256">◇カノコタウンの　トレーナーが　ジムリーダー２を　げきは！</language>
-		<language name="JPN_KANJI" width="256">◇カノコタウンの　トレーナーが　ジムリーダー２を　撃破!</language>
+		<language name="JPN" width="256">◇カノコタウンしゅっしんの　むめいトレーナーが　シッポウジムリーダー　アロエをくだす！</language>
+		<language name="JPN_KANJI" width="256">◇カノコタウン出身の　無名トレーナーが　シッポウジムリーダー　アロエをくだす！</language>
 	</row>
 
 	<row id="msg_gate_common_jim_03" back-color="#80ffff,,,#80ffff,,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>各ゲート共通メッセージ
 ・臨時ニュース/主人公がジム3をクリア</comment>
-		<language name="JPN" width="256">◇カノコタウンの　トレーナーが　ジムリーダー３を　げきは！</language>
-		<language name="JPN_KANJI" width="256">◇カノコタウンの　トレーナーが　ジムリーダー３を　撃破!</language>
+		<language name="JPN" width="256">◇カノコタウンしゅっしんの　かけだしトレーナーが　ヒウンジムリーダー　アーティをうつ！</language>
+		<language name="JPN_KANJI" width="256">◇カノコタウン出身の　駆け出しトレーナーが　ヒウンジムリーダー　アーティを討つ！</language>
 	</row>
 
 	<row id="msg_gate_common_jim_04" back-color="#80ffff,,,#80ffff,,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>各ゲート共通メッセージ
 ・臨時ニュース/主人公がジム4をクリア</comment>
-		<language name="JPN" width="256">◇カノコタウンの　トレーナーが　ジムリーダー４を　げきは！</language>
-		<language name="JPN_KANJI" width="256">◇カノコタウンの　トレーナーが　ジムリーダー４を　撃破!</language>
+		<language name="JPN" width="256">◇カノコタウンしゅっしんの　かけだしトレーナーが　ライモンジムリーダー　カミツレをやぶる！</language>
+		<language name="JPN_KANJI" width="256">◇カノコタウン出身の　駆け出しトレーナーが　ライモンジムリーダー　カミツレを破る！</language>
 	</row>
 
 	<row id="msg_gate_common_jim_05" back-color="#80ffff,,,#80ffff,,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>各ゲート共通メッセージ
 ・臨時ニュース/主人公がジム5をクリア</comment>
-		<language name="JPN" width="256">◇カノコタウンの　トレーナーが　ジムリーダー５を　げきは！</language>
-		<language name="JPN_KANJI" width="256">◇カノコタウンの　トレーナーが　ジムリーダー５を　撃破!</language>
+		<language name="JPN" width="256">◇カノコタウンしゅっしんの　うわさのトレーナーが　ホドモエジムリーダー　ヤーコンをとっぱ！</language>
+		<language name="JPN_KANJI" width="256">◇カノコタウン出身の　噂のトレーナーが　ホドモエジムリーダー　ヤーコンを突破！</language>
 	</row>
 
 	<row id="msg_gate_common_jim_06" back-color="#80ffff,,,#80ffff,,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>各ゲート共通メッセージ
 ・臨時ニュース/主人公がジム6をクリア</comment>
-		<language name="JPN" width="256">◇カノコタウンの　トレーナーが　ジムリーダー６を　げきは！</language>
-		<language name="JPN_KANJI" width="256">◇カノコタウンの　トレーナーが　ジムリーダー６を　撃破!</language>
+		<language name="JPN" width="256">◇カノコタウンしゅっしんの　うわさのトレーナーが　フキヨセジムリーダー　フウロをしりぞける！</language>
+		<language name="JPN_KANJI" width="256">◇カノコタウン出身の　噂のトレーナーが　フキヨセジムリーダー　フウロを退ける！</language>
 	</row>
 
 	<row id="msg_gate_common_jim_07" back-color="#80ffff,,,#80ffff,,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>各ゲート共通メッセージ
 ・臨時ニュース/主人公がジム7をクリア</comment>
-		<language name="JPN" width="256">◇カノコタウンの　トレーナーが　ジムリーダー７を　げきは！</language>
-		<language name="JPN_KANJI" width="256">◇カノコタウンの　トレーナーが　ジムリーダー７を　撃破!</language>
+		<language name="JPN" width="256">◇カノコタウンしゅっしんの　ゆうめいトレーナーが　セッカジムリーダー　ハチクをけちらす！</language>
+		<language name="JPN_KANJI" width="256">◇カノコタウン出身の　有名トレーナーが　セッカジムリーダー　ハチクを蹴散らす！</language>
 	</row>
 
-	<row id="msg_gate_common_jim_08" back-color="#80ffff,,,#80ffff,,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_gate_common_jim_08w" back-color="#80ffff,,,#80ffff,,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>各ゲート共通メッセージ
-・臨時ニュース/主人公がジム8をクリア</comment>
-		<language name="JPN" width="256">◇カノコタウンの　トレーナーが　ジムリーダー８を　げきは！</language>
-		<language name="JPN_KANJI" width="256">◇カノコタウンの　トレーナーが　ジムリーダー８を　撃破!</language>
+・臨時ニュース/主人公がジム8wをクリア</comment>
+		<language name="JPN" width="256">◇カノコタウンしゅっしんの　さいきょうトレーナーが　ソウリュウジムリーダー　アイリスにかいしょう！</language>
+		<language name="JPN_KANJI" width="256">◇カノコタウン出身の　最強トレーナーが　ソウリュウジムリーダー　アイリスに快勝！</language>
+	</row>
+
+	<row id="msg_gate_common_jim_08b" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>各ゲート共通メッセージ
+・臨時ニュース/主人公がジム8bをクリア</comment>
+		<language name="JPN" width="256">◇カノコタウンしゅっしんの　さいきょうトレーナーが　ソウリュウジムリーダー　ジャガにかいしょう！</language>
+		<language name="JPN_KANJI" width="256">◇カノコタウン出身の　最強トレーナーが　ソウリュウジムリーダー　ジャガに快勝！</language>
 	</row>
 
 	<row id="msg_gate_common_cm_01" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>各ゲート共通メッセージ
 ・一言cM/月曜</comment>
-		<language name="JPN" width="256">◇「ポケモンが　きずついたら　おちかくの　ポケモンセンターまで！」　　　ポケモンセンター</language>
-		<language name="JPN_KANJI" width="256">◇「ポケモンが　傷ついたら　お近くの　ポケモンセンターまで!」　　　ポケモンセンター</language>
+		<language name="JPN" width="256">◇「はしってたたかえ!でんしゃはとまらない!」バトルサブウェイ</language>
+		<language name="JPN_KANJI" width="256">◇「走って戦え!電車は止まらない!」バトルサブウェイ</language>
 	</row>
 
 	<row id="msg_gate_common_cm_02" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>各ゲート共通メッセージ
 ・一言cM/火曜</comment>
-		<language name="JPN" width="256">◇「かってよかった　キズぐすり　なくてこまった　キズぐすり」　フレンドリィショップ</language>
-		<language name="JPN_KANJI" width="256">◇「買ってよかった　キズぐすり　無くて困った　キズぐすり」　フレンドリィショップ</language>
+		<language name="JPN" width="256">◇「あなたとすれちがいたい」すれちがいよてい</language>
+		<language name="JPN_KANJI" width="256">◇「あなたとすれ違いたい」すれ違い予定</language>
 	</row>
 
 	<row id="msg_gate_common_cm_03" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>各ゲート共通メッセージ
 ・一言cM/水曜</comment>
-		<language name="JPN" width="256">◇「あなたの　かわりに　そだてます　あずけるだけで　ポケモンは　つよくなる」　　　３ばんどうろ　そだてや　</language>
-		<language name="JPN_KANJI" width="256">◇「あなたの　代わりに　育てます　預けるだけで　ポケモンは　強くなる」　　　３番道路　育て屋　</language>
+		<language name="JPN" width="256">◇「つよくなりたい……！」３ばんどうろそだてや</language>
+		<language name="JPN_KANJI" width="256">◇「強くなりたい……！」3番道路育て屋</language>
 	</row>
 
 	<row id="msg_gate_common_cm_04" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>各ゲート共通メッセージ
 ・一言cM/木曜</comment>
-		<language name="JPN" width="256">◇「スターへの　かいだんが　ここから　はじまる……　あなたの　さんかを　まっています」　　　ライモンシティ　ミュージカル</language>
-		<language name="JPN_KANJI" width="256">◇「スターへの　階段が　ここから　始まる……　あなたの　参加を　待っています」　　　ライモンシティ　ミュージカル</language>
+		<language name="JPN" width="256">◇「スターへのかいだんが　ここからはじまる」ライモンシティミュージカル</language>
+		<language name="JPN_KANJI" width="256">◇「スターへの階段が　ここから始まる」ライモンシティミュージカル</language>
 	</row>
 
 	<row id="msg_gate_common_cm_05" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>各ゲート共通メッセージ
 ・一言cM/金曜</comment>
-		<language name="JPN" width="256">◇「わぁ　こんなものまで　うっているなんて　　あなたを　まんぞくが　ここに　あります」　　　９ばんどうろ　ショッピングモール</language>
-		<language name="JPN_KANJI" width="256">◇「わぁ　こんなものまで　売っているなんて　　あなたの　満足が　ここに　あります」　　　９ばん道路　ショッピングモール</language>
+		<language name="JPN" width="256">◇「わぁ　こんなものまで　うっているなんて」９ばんどうろショッピングモール</language>
+		<language name="JPN_KANJI" width="256">◇「わぁ　こんなものまで　売っているなんて」9番道路ショッピングモール</language>
 	</row>
 
 	<row id="msg_gate_common_cm_06" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>各ゲート共通メッセージ
 ・一言cM/土曜</comment>
-		<language name="JPN" width="256">◇「なまえを　かえれば　すばらしい　みらい　　なまえが　みちびく　すばらしい　かんけい」　　　ヒウンシティ　せいめいはんだんの　みせ</language>
-		<language name="JPN_KANJI" width="256">◇「名前を　変えれば　素晴らしい　未来　名前が　導く　素晴らしい　関係」　　　ヒウンシティ　姓名判断の店</language>
+		<language name="JPN" width="256">◇「なまえがみちびく　すばらしいかんけい」ヒウンシティせいめいはんだんし</language>
+		<language name="JPN_KANJI" width="256">◇「名前が導く　すばらしい関係」ヒウンシティ姓名判断士</language>
 	</row>
 
 	<row id="msg_gate_common_cm_07" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>各ゲート共通メッセージ
 ・一言cM/日曜</comment>
-		<language name="JPN" width="256">◇「にがさは　りょうやくの　あかし　　にがさは　あいの　あかし」　　　ホドモエシティ　マーケット　かんぽうや</language>
-		<language name="JPN_KANJI" width="256">◇「苦さは　良薬の　証　　苦さは　愛の　証」　　　ホドモエシティ　マーケット　漢方屋</language>
+		<language name="JPN" width="256">◇「ボォオオ！きてきが　みずべで　ときをつげる」ゆうらんせん</language>
+		<language name="JPN_KANJI" width="256">◇「ぼぉおお！汽笛が　水辺で　時を告げる」遊覧船</language>
 	</row>
 
 	<row id="msg_gate_c1_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffffff,,,#ffffff,,#ffff80,#ffffff,,,#ffffff,,">
 		<comment>c1についての地域情報1</comment>
-		<language name="JPN" width="256">◇サンヨウシティは……　じょうほう１</language>
-		<language name="JPN_KANJI" width="256">◇サンヨウシティは……　情報１</language>
+		<language name="JPN" width="256">◇サンヨウシティは　かけだしトレーナーが　すだっていくまちです</language>
+		<language name="JPN_KANJI" width="256">◇サンヨウシティは　駆け出しトレーナーが　巣立っていく町です</language>
 	</row>
 
 	<row id="msg_gate_c1_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffffff,,,#ffffff,,#ffff80,#ffffff,,,#ffffff,,">
 		<comment>c1についての地域情報2</comment>
-		<language name="JPN" width="256">◇サンヨウシティは……　じょうほう２</language>
-		<language name="JPN_KANJI" width="256">◇サンヨウシティは……　情報２</language>
+		<language name="JPN" width="256">◇げんかんさきにあるかいだんは　ゆきにうもれないために　あります</language>
+		<language name="JPN_KANJI" width="256">◇玄関先にある階段は　雪に埋もれないために　あります</language>
 	</row>
 
 	<row id="msg_gate_c1_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffffff,,,#ffffff,,#ffff80,#ffffff,,,#ffffff,,">
 		<comment>c1についての地域情報3</comment>
-		<language name="JPN" width="256">◇サンヨウシティは……　じょうほう３</language>
-		<language name="JPN_KANJI" width="256">◇サンヨウシティは……　情報３</language>
+		<language name="JPN" width="256">◇サンヨウシティジムは　レストランでもあります</language>
+		<language name="JPN_KANJI" width="256">◇サンヨウシティジムは　レストランでもあります</language>
 	</row>
 
 	<row id="msg_gate_c1_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffffff,,,#ffffff,,#ffff80,#ffffff,,,#ffffff,,">
 		<comment>c1についての地域情報4</comment>
-		<language name="JPN" width="256">◇サンヨウシティは……　じょうほう４</language>
-		<language name="JPN_KANJI" width="256">◇サンヨウシティは……　情報４</language>
+		<language name="JPN" width="256">◇サンヨウシティジムリーダーは　みつごです</language>
+		<language name="JPN_KANJI" width="256">◇サンヨウシティジムリーダーは　三つ子です</language>
 	</row>
 
 	<row id="msg_gate_c1_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffffff,,,#ffffff,,#ffff80,#ffffff,,,#ffffff,,">
 		<comment>c1についての地域情報5</comment>
-		<language name="JPN" width="256">◇サンヨウシティは……　じょうほう５</language>
-		<language name="JPN_KANJI" width="256">◇サンヨウシティは……　情報５</language>
+		<language name="JPN" width="256">◇まちのとなりは　みどりゆたかなていえんが　ひろがっています</language>
+		<language name="JPN_KANJI" width="256">◇町の隣は　緑豊かな庭園が　広がっています</language>
 	</row>
 
 	<row id="msg_gate_c1_06" back-color="#ffff80,,,#ffff80,,#ffff80,#ffffff,,,#ffffff,,#ffff80,#ffffff,,,#ffffff,,">
 		<comment>c1についての地域情報6</comment>
-		<language name="JPN" width="256">◇サンヨウシティは……　じょうほう６</language>
-		<language name="JPN_KANJI" width="256">◇サンヨウシティは……　情報６</language>
+		<language name="JPN" width="256">◇ジムリーダーは　ふだんウェイターをしています</language>
+		<language name="JPN_KANJI" width="256">◇ジムリーダーは　普段は　ウェイターをしています</language>
 	</row>
 
 	<row id="msg_gate_c1_07" back-color="#ffff80,,,#ffff80,,#ffff80,#ffffff,,,#ffffff,,#ffff80,#ffffff,,,#ffffff,,">
 		<comment>c1についての地域情報7</comment>
-		<language name="JPN" width="256">◇サンヨウシティは……　じょうほう７</language>
-		<language name="JPN_KANJI" width="256">◇サンヨウシティは……　情報７</language>
+		<language name="JPN" width="256">◇トレーナーズスクールでは　ポケモンのきそからおしえてくれます</language>
+		<language name="JPN_KANJI" width="256">◇トレーナーズスクールでは　ポケモンの基礎から教えてくれます</language>
 	</row>
 
 	<row id="msg_gate_c1_08" back-color="#ffff80,,,#ffff80,,#ffff80,#ffffff,,,#ffffff,,#ffff80,#ffffff,,,#ffffff,,">
 		<comment>c1についての地域情報8</comment>
-		<language name="JPN" width="256">◇サンヨウシティは……　じょうほう８</language>
-		<language name="JPN_KANJI" width="256">◇サンヨウシティは……　情報８</language>
+		<language name="JPN" width="256">◇サンヨウシティは　かけだしトレーナーが　すだっていくまちです</language>
+		<language name="JPN_KANJI" width="256">◇サンヨウシティは　駆け出しトレーナーが　巣立っていく町です</language>
 	</row>
 
 	<row id="msg_gate_c1_09" back-color="#ffff80,,,#ffff80,,#ffff80,#ffffff,,,#ffffff,,#ffff80,#ffffff,,,#ffffff,,">
 		<comment>c1についての地域情報9</comment>
-		<language name="JPN" width="256">◇サンヨウシティは……　じょうほう９</language>
-		<language name="JPN_KANJI" width="256">◇サンヨウシティは……　情報９</language>
+		<language name="JPN" width="256">◇げんかんさきにあるかいだんは　ゆきにうもれないために　あります</language>
+		<language name="JPN_KANJI" width="256">◇玄関先にある階段は　雪に埋もれない為に　あります</language>
 	</row>
 
 	<row id="msg_gate_c2_01" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>c2についての地域情報1</comment>
-		<language name="JPN" width="256">◇シッポウシティは　いしだたみと　おおくの　そうこが　とくちょう32</language>
-		<language name="JPN_KANJI" width="256">◇シッポウシティは　石畳と　多くの　倉庫が　特徴24</language>
+		<language name="JPN" width="256">◇シッポウシティは　いしだたみとそうこが　とくちょうです</language>
+		<language name="JPN_KANJI" width="256">◇シッポウシティは　石畳と倉庫が　特徴です</language>
 	</row>
 
 	<row id="msg_gate_c2_02" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>c2についての地域情報2</comment>
-		<language name="JPN" width="256">◇はくぶつかんでは　ホネを　けんきゅうしている24</language>
-		<language name="JPN_KANJI" width="256">◇博物館では　骨と　化石から　ポケモンを　研究している27</language>
+		<language name="JPN" width="256">◇はくぶつかんでは　ほねからポケモンをけんきゅうしています</language>
+		<language name="JPN_KANJI" width="256">◇博物館では　骨からポケモンを研究しています</language>
 	</row>
 
 	<row id="msg_gate_c2_03" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>c2についての地域情報3</comment>
-		<language name="JPN" width="256">◇シッポウシティ　ジムリーダーは　はくぶつかん　かんちょうを　けんにんしている39</language>
-		<language name="JPN_KANJI" width="256">◇シッポウシティ　ジムリーダーは　博物館館長を　兼任している30</language>
+		<language name="JPN" width="256">◇ジムリーダーは　はくぶつかんかんちょうも　つとめています</language>
+		<language name="JPN_KANJI" width="256">◇ジムリーダーは　博物館館長も　務めています</language>
 	</row>
 
 	<row id="msg_gate_c2_04" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>c2についての地域情報4</comment>
-		<language name="JPN" width="256">◇げいじゅつかが　おおく　すむまち　そうこを かいちくした　アトリエが　ならぶ39</language>
-		<language name="JPN_KANJI" width="256">◇芸術家が　多く　住む街　倉庫を　改築した　アトリエが　並ぶ30</language>
+		<language name="JPN" width="256">◇わかてげいじゅつかがおおく　そうこをアトリエにしています</language>
+		<language name="JPN_KANJI" width="256">◇若手芸術家が　多く　倉庫をアトリエにしています</language>
 	</row>
 
 	<row id="msg_gate_c2_05" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>c2についての地域情報5</comment>
-		<language name="JPN" width="256">◇アトリエと　はくぶつかんを　めあてに　かんこうきゃくも　おおい32</language>
-		<language name="JPN_KANJI" width="256">◇シッポウシティは　アトリエと　博物館を　目当てに　観光客も　多い33</language>
+		<language name="JPN" width="256">◇アトリエとはくぶつかんを　めあてに　かんこうきゃくがみられます</language>
+		<language name="JPN_KANJI" width="256">◇アトリエと博物館を　目当てに　観光客が見られます</language>
 	</row>
 
 	<row id="msg_gate_c2_06" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>c2についての地域情報6</comment>
-		<language name="JPN" width="256">◇カフェでは　ティーが　たびの　つかれを　いやす24</language>
-		<language name="JPN_KANJI" width="256">◇カフェでは　ティーが　旅の　疲れを　癒す21</language>
+		<language name="JPN" width="256">◇まちがつくられるまえは　でんしゃがとおっていました</language>
+		<language name="JPN_KANJI" width="256">◇町が作られる前は　電車が通っていました</language>
 	</row>
 
 	<row id="msg_gate_c2_07" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>c2についての地域情報7</comment>
-		<language name="JPN" width="256">◇げいじゅつで　ひとが　あつまり　ちかが　こうとう25</language>
-		<language name="JPN_KANJI" width="256">◇芸術に　魅せられた人が　集まり　地価が　高騰している27</language>
+		<language name="JPN" width="256">◇げいじゅつにみせられたひとがあつまる　かっきのあるまちです</language>
+		<language name="JPN_KANJI" width="256">◇芸術に魅せられた人が集まる　活気のある町です</language>
 	</row>
 
 	<row id="msg_gate_c2_08" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>c2についての地域情報8</comment>
-		<language name="JPN" width="256">◇はくぶつかんは　にんげんの　ぶんかと　しぜんの　たいひが　テーマ33</language>
-		<language name="JPN_KANJI" width="256">◇シッポウシティ博物館では　人間の文化と　自然の　対比が　テーマとなっている38</language>
+		<language name="JPN" width="256">◇はくぶつかんのテーマは　ぶんかとしぜんのたいひに　なっています</language>
+		<language name="JPN_KANJI" width="256">◇博物館のテーマは　文化と自然の対比に　なっています</language>
 	</row>
 
 	<row id="msg_gate_c2_09" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>c2についての地域情報9</comment>
-		<language name="JPN" width="256">◇シッポウ　しゅっしんの　げいじゅつかも　おおい　アーティも　そのひとりで　ある41</language>
-		<language name="JPN_KANJI" width="256">◇シッポウシティ　出身の　有名芸術家も　多い　画家　アーティも　その一人で　ある30</language>
+		<language name="JPN" width="256">◇ゆうめいげいじゅつかのアーティも　このまちのしゅっしんです</language>
+		<language name="JPN_KANJI" width="256">◇有名芸術家のアーティも　この町の出身です</language>
 	</row>
 
 	<row id="msg_gate_c3_01" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>c3についての地域情報1</comment>
-		<language name="JPN" width="256">◇ヒウンシティは･･････　じょうほう１</language>
-		<language name="JPN_KANJI" width="256">◇ヒウンシティは･･････　情報１</language>
+		<language name="JPN" width="256">◇うつくしいけしきと　しげきのバトルは　ヒウンシティ　ゆうらんせんで</language>
+		<language name="JPN_KANJI" width="256">◇美しい景色と　刺激のバトルは　ヒウンシティ　遊覧船で</language>
 	</row>
 
 	<row id="msg_gate_c3_02" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>c3についての地域情報2</comment>
-		<language name="JPN" width="256">◇ヒウンシティは･･････　じょうほう２</language>
-		<language name="JPN_KANJI" width="256">◇ヒウンシティは･･････　情報２</language>
+		<language name="JPN" width="256">◇ヒウンシティには　５つのピアがあり　そこからは　ふねがでています</language>
+		<language name="JPN_KANJI" width="256">◇ヒウンシティには　５つのピアがあり　そこからは　船がでていますす</language>
 	</row>
 
 	<row id="msg_gate_c3_03" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>c3についての地域情報3</comment>
-		<language name="JPN" width="256">◇ヒウンシティは･･････　じょうほう３</language>
-		<language name="JPN_KANJI" width="256">◇ヒウンシティは･･････　情報３</language>
+		<language name="JPN" width="256">◇しげき　あふれる　ヒウンシティ　なかでも　ジムには　おどろきの　しかけが・・・？</language>
+		<language name="JPN_KANJI" width="256">◇刺激　あふれる　ヒウンシティ　なかでも　ジムには　驚きの　しかけが……？</language>
 	</row>
 
 	<row id="msg_gate_c3_04" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>c3についての地域情報4</comment>
-		<language name="JPN" width="256">◇ヒウンシティは･･････　じょうほう４</language>
-		<language name="JPN_KANJI" width="256">◇ヒウンシティは･･････　情報４</language>
+		<language name="JPN" width="256">◇まちのとおりには　それぞれ　ちがったとくちょうが　あります</language>
+		<language name="JPN_KANJI" width="256">◇街の通りには　それぞれ　違った特徴が　あります</language>
 	</row>
 
 	<row id="msg_gate_c3_05" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>c3についての地域情報5</comment>
-		<language name="JPN" width="256">◇ヒウンシティは･･････　じょうほう５</language>
-		<language name="JPN_KANJI" width="256">◇ヒウンシティは･･････　情報５</language>
+		<language name="JPN" width="256">◇ちゅうしんの　ふんすいは　ひととひとをつなぐ　ばしょだと　いわれています</language>
+		<language name="JPN_KANJI" width="256">◇中心の噴水は　人と人をつなぐ　場所だと　言われています</language>
 	</row>
 
 	<row id="msg_gate_c3_06" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>c3についての地域情報6</comment>
-		<language name="JPN" width="256">◇ヒウンシティは･･････　じょうほう６</language>
-		<language name="JPN_KANJI" width="256">◇ヒウンシティは･･････　情報６</language>
+		<language name="JPN" width="256">◇ヒウンシティの　みちは　ちかにまで　ひろがっています</language>
+		<language name="JPN_KANJI" width="256">◇ヒウンシティの　道は　地下にまで　広がっています</language>
 	</row>
 
 	<row id="msg_gate_c3_07" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>c3についての地域情報7</comment>
-		<language name="JPN" width="256">◇ヒウンシティは･･････　じょうほう７</language>
-		<language name="JPN_KANJI" width="256">◇ヒウンシティは･･････　情報７</language>
+		<language name="JPN" width="256">◇せかいじゅうの　げいじゅつかが　ヒウンシティで　ギャラリーを　ひらいています</language>
+		<language name="JPN_KANJI" width="256">◇世界中の　芸術家が　ヒウンシティで　ギャラリーを　ひらいています</language>
 	</row>
 
 	<row id="msg_gate_c3_08" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>c3についての地域情報8</comment>
-		<language name="JPN" width="256">◇ヒウンシティは･･････　じょうほう８</language>
-		<language name="JPN_KANJI" width="256">◇ヒウンシティは･･････　情報８</language>
+		<language name="JPN" width="256">◇ヒウンシティは　じかんを　ひじょうに　たいせつにするひとが　おおいです</language>
+		<language name="JPN_KANJI" width="256">◇ヒウンシティは時間を　非常に　大切にする人が　多いです</language>
 	</row>
 
 	<row id="msg_gate_c3_09" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>c3についての地域情報9</comment>
-		<language name="JPN" width="256">◇ヒウンシティは･･････　じょうほう９</language>
-		<language name="JPN_KANJI" width="256">◇ヒウンシティは･･････　情報９</language>
+		<language name="JPN" width="256">◇いちぶのギャラリーでは　ひがわりで　てんじひんを　かえています</language>
+		<language name="JPN_KANJI" width="256">◇一部のギャラリーでは　日替わりで　展示品を　変えています</language>
 	</row>
 
 	<row id="msg_gate_c4_01" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>c4についての地域情報1</comment>
-		<language name="JPN" width="256">◇ライモンシティは･･････　じょうほう１</language>
-		<language name="JPN_KANJI" width="256">◇ライモンシティは･･････　情報１</language>
+		<language name="JPN" width="256">◇スタジアムでは　ひがわりの　スポーツのしあいが　みられます</language>
+		<language name="JPN_KANJI" width="256">◇スタジアムでは　日替わりの　スポーツの試合が　見られますす</language>
 	</row>
 
 	<row id="msg_gate_c4_02" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>c4についての地域情報2</comment>
-		<language name="JPN" width="256">◇ライモンシティは･･････　じょうほう２</language>
-		<language name="JPN_KANJI" width="256">◇ライモンシティは･･････　情報２</language>
+		<language name="JPN" width="256">◇あついテニス　はくねつのバスケットボール　ねっきあふれる　リトルコート</language>
+		<language name="JPN_KANJI" width="256">◇あついテニス　白熱のバスケットボール　熱気あふれる　リトルコート</language>
 	</row>
 
 	<row id="msg_gate_c4_03" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>c4についての地域情報3</comment>
-		<language name="JPN" width="256">◇ライモンシティは･･････　じょうほう３</language>
-		<language name="JPN_KANJI" width="256">◇ライモンシティは･･････　情報３</language>
+		<language name="JPN" width="256">◇かってかってかちまくれ！　バトルのせいち　バトルサブウェイ</language>
+		<language name="JPN_KANJI" width="256">◇勝って勝って勝ちまくれ！　バトルの聖地　バトルサブウェイ</language>
 	</row>
 
 	<row id="msg_gate_c4_04" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>c4についての地域情報4</comment>
-		<language name="JPN" width="256">◇ライモンシティは･･････　じょうほう４</language>
-		<language name="JPN_KANJI" width="256">◇ライモンシティは･･････　情報４</language>
+		<language name="JPN" width="256">◇バトルサブウェイでは　つよければ　つよいほど　とおくへいけます</language>
+		<language name="JPN_KANJI" width="256">◇バトルサブウェイでは　強ければ　強いほど　遠くへ行けます</language>
 	</row>
 
 	<row id="msg_gate_c4_05" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>c4についての地域情報5</comment>
-		<language name="JPN" width="256">◇ライモンシティは･･････　じょうほう５</language>
-		<language name="JPN_KANJI" width="256">◇ライモンシティは･･････　情報５</language>
+		<language name="JPN" width="256">◇ミュージカルホールでは　ときおり　ポケモンのスカウトが　あるそうです</language>
+		<language name="JPN_KANJI" width="256">◇ミュージカルホールでは　時折　ポケモンのスカウトが　あるそうです</language>
 	</row>
 
 	<row id="msg_gate_c4_06" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>c4についての地域情報6</comment>
-		<language name="JPN" width="256">◇ライモンシティは･･････　じょうほう６</language>
-		<language name="JPN_KANJI" width="256">◇ライモンシティは･･････　情報６</language>
+		<language name="JPN" width="256">◇スタープレイヤー　あつまる　スタジアム　うんがよければ　せんしゅに　あえるかも？</language>
+		<language name="JPN_KANJI" width="256">◇スタープレイヤー　集まる　スタジアム　運が良ければ　選手に　会えるかも？</language>
 	</row>
 
 	<row id="msg_gate_c4_07" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>c4についての地域情報7</comment>
-		<language name="JPN" width="256">◇ライモンシティは･･････　じょうほう７</language>
-		<language name="JPN_KANJI" width="256">◇ライモンシティは･･････　情報７</language>
+		<language name="JPN" width="256">◇めいぶつの　ジェットコースターは　おどろきのばしょで　はしっています</language>
+		<language name="JPN_KANJI" width="256">◇名物の　ジェットッコースターは　驚きの場所で　走っています</language>
 	</row>
 
 	<row id="msg_gate_c4_08" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>c4についての地域情報8</comment>
-		<language name="JPN" width="256">◇ライモンシティは･･････　じょうほう８</language>
-		<language name="JPN_KANJI" width="256">◇ライモンシティは･･････　情報８</language>
+		<language name="JPN" width="256">◇キラキラけしき　ワクワクたかさ　ドキドキであいの　あいのりかんらんしゃ</language>
+		<language name="JPN_KANJI" width="256">◇キラキラ景色　ワクワク高さ　ドキドキ出会いの　相乗り観覧車</language>
 	</row>
 
 	<row id="msg_gate_c4_09" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>c4についての地域情報9</comment>
-		<language name="JPN" width="256">◇ライモンシティは･･････　じょうほう９</language>
-		<language name="JPN_KANJI" width="256">◇ライモンシティは･･････　情報９</language>
+		<language name="JPN" width="256">◇ギアステーションからは　トレインタウンへ　いくことが　できます</language>
+		<language name="JPN_KANJI" width="256">◇ギアステーションからは　トレインタウンへ　行くことが　できます</language>
 	</row>
 
 	<row id="msg_gate_c5_01" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>c5についての地域情報1</comment>
-		<language name="JPN" width="256">◇ホドモエシティは･･････　じょうほう１</language>
-		<language name="JPN_KANJI" width="256">◇ホドモエシティは･･････　情報１</language>
+		<language name="JPN" width="256">◇ホドモエシティは　すいじょうにりんせつする　みなとまちです</language>
+		<language name="JPN_KANJI" width="256">◇ホドモエは　貨物取引と　漁業で発展しました</language>
 	</row>
 
 	<row id="msg_gate_c5_02" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>c5についての地域情報2</comment>
-		<language name="JPN" width="256">◇ホドモエシティは･･････　じょうほう２</language>
-		<language name="JPN_KANJI" width="256">◇ホドモエシティは･･････　情報２</language>
+		<language name="JPN" width="256">◇ホドモエは　かもつとりひきと　ぎょぎょうではってんしました</language>
+		<language name="JPN_KANJI" width="256">◇市場は　世界から集まった品物で　にぎわっています</language>
 	</row>
 
 	<row id="msg_gate_c5_03" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>c5についての地域情報3</comment>
-		<language name="JPN" width="256">◇ホドモエシティは･･････　じょうほう３</language>
-		<language name="JPN_KANJI" width="256">◇ホドモエシティは･･････　情報３</language>
+		<language name="JPN" width="256">◇いちばは　せかいからあつまったしなもので　にぎわっています</language>
+		<language name="JPN_KANJI" width="256">◇屋根はオレンジで統一され　夕焼けが　とても映えます</language>
 	</row>
 
 	<row id="msg_gate_c5_04" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>c5についての地域情報4</comment>
-		<language name="JPN" width="256">◇ホドモエシティは･･････　じょうほう４</language>
-		<language name="JPN_KANJI" width="256">◇ホドモエシティは･･････　情報４</language>
+		<language name="JPN" width="256">◇やねはオレンジでとういつされ　ゆうやけが　とてもはえます</language>
+		<language name="JPN_KANJI" width="256">◇空にそびえるリザードン橋は　息を呑む絶景です</language>
 	</row>
 
 	<row id="msg_gate_c5_05" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>c5についての地域情報5</comment>
-		<language name="JPN" width="256">◇ホドモエシティは･･････　じょうほう５</language>
-		<language name="JPN_KANJI" width="256">◇ホドモエシティは･･････　情報５</language>
+		<language name="JPN" width="256">◇そらにそびえるリザードンばしは　いきをのむぜっけいです</language>
+		<language name="JPN_KANJI" width="256">◇港には　巨大な冷凍コンテナが　並んでいます</language>
 	</row>
 
 	<row id="msg_gate_c5_06" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>c5についての地域情報6</comment>
-		<language name="JPN" width="256">◇ホドモエシティは･･････　じょうほう６</language>
-		<language name="JPN_KANJI" width="256">◇ホドモエシティは･･････　情報６</language>
+		<language name="JPN" width="256">◇みなとには　きょだいなれいとうコンテナが　ならんでいます</language>
+		<language name="JPN_KANJI" width="256">◇冷凍コンテナには　ポケモンが住み着いています</language>
 	</row>
 
 	<row id="msg_gate_c5_07" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>c5についての地域情報7</comment>
-		<language name="JPN" width="256">◇ホドモエシティは･･････　じょうほう７</language>
-		<language name="JPN_KANJI" width="256">◇ホドモエシティは･･････　情報７</language>
+		<language name="JPN" width="256">◇れいとうコンテナには　ポケモンがすみついています</language>
+		<language name="JPN_KANJI" width="256">◇ホドモエシティは　水上に隣接する　港町です</language>
 	</row>
 
 	<row id="msg_gate_c5_08" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>c5についての地域情報8</comment>
-		<language name="JPN" width="256">◇ホドモエシティは･･････　じょうほう８</language>
-		<language name="JPN_KANJI" width="256">◇ホドモエシティは･･････　情報８</language>
+		<language name="JPN" width="256">◇ホドモエシティは　すいじょうにりんせつする　みなとまちです</language>
+		<language name="JPN_KANJI" width="256">◇ホドモエは　貨物取引と　漁業で発展しました</language>
 	</row>
 
 	<row id="msg_gate_c5_09" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>c5についての地域情報9</comment>
-		<language name="JPN" width="256">◇ホドモエシティは･･････　じょうほう９</language>
-		<language name="JPN_KANJI" width="256">◇ホドモエシティは･･････　情報９</language>
+		<language name="JPN" width="256">◇ホドモエは　かもつとりひきと　ぎょぎょうではってんしました</language>
+		<language name="JPN_KANJI" width="256">◇ホドモエは　貨物取引と　漁業で発展しました</language>
 	</row>
 
 	<row id="msg_gate_c6_01" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>c6についての地域情報1</comment>
-		<language name="JPN" width="256">◇フキヨセシティは･･････　じょうほう１</language>
-		<language name="JPN_KANJI" width="256">◇フキヨセシティは･･････　情報１</language>
+		<language name="JPN" width="256">◇まちのうえのきりゅうは　イッシュちほういち　おだやかです</language>
+		<language name="JPN_KANJI" width="256">◇町の上の気流は　イッシュ地方一　穏やかです</language>
 	</row>
 
 	<row id="msg_gate_c6_02" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>c6についての地域情報2</comment>
-		<language name="JPN" width="256">◇フキヨセシティは･･････　じょうほう２</language>
-		<language name="JPN_KANJI" width="256">◇フキヨセシティは･･････　情報２</language>
+		<language name="JPN" width="256">◇くうちゅうでは　おおくの　とりポケモンが　とんでいます</language>
+		<language name="JPN_KANJI" width="256">◇空中では　多くの　鳥ポケモンが　飛んでいます</language>
 	</row>
 
 	<row id="msg_gate_c6_03" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>c6についての地域情報3</comment>
-		<language name="JPN" width="256">◇フキヨセシティは･･････　じょうほう３</language>
-		<language name="JPN_KANJI" width="256">◇フキヨセシティは･･････　情報３</language>
+		<language name="JPN" width="256">◇むかしの　やまかじでは　まちのひこうきから　みずをやり　ひをけしました</language>
+		<language name="JPN_KANJI" width="256">◇昔の　山火事では　町の飛行機から　水をやり　火を消しました</language>
 	</row>
 
 	<row id="msg_gate_c6_04" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>c6についての地域情報4</comment>
-		<language name="JPN" width="256">◇フキヨセシティは･･････　じょうほう４</language>
-		<language name="JPN_KANJI" width="256">◇フキヨセシティは･･････　情報４</language>
+		<language name="JPN" width="256">◇まちのちかくのかもつは　すべてフキヨセに　あつめられます</language>
+		<language name="JPN_KANJI" width="256">◇町の近くの貨物は　全てフキヨセに　集められます</language>
 	</row>
 
 	<row id="msg_gate_c6_05" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>c6についての地域情報5</comment>
-		<language name="JPN" width="256">◇フキヨセシティは･･････　じょうほう５</language>
-		<language name="JPN_KANJI" width="256">◇フキヨセシティは･･････　情報５</language>
+		<language name="JPN" width="256">◇そらをとびたいひとは　みんな　ジムにいきたがります</language>
+		<language name="JPN_KANJI" width="256">◇空をとびたい人は　みんな　ジムに行きたがります</language>
 	</row>
 
 	<row id="msg_gate_c6_06" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>c6についての地域情報6</comment>
-		<language name="JPN" width="256">◇フキヨセシティは･･････　じょうほう６</language>
-		<language name="JPN_KANJI" width="256">◇フキヨセシティは･･････　情報６</language>
+		<language name="JPN" width="256">◇フキヨセシティの　ひこうきエンジンは　とてもしずかです</language>
+		<language name="JPN_KANJI" width="256">◇フキヨセシティの　飛行機エンジンは　とても静かです</language>
 	</row>
 
 	<row id="msg_gate_c6_07" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>c6についての地域情報7</comment>
-		<language name="JPN" width="256">◇フキヨセシティは･･････　じょうほう７</language>
-		<language name="JPN_KANJI" width="256">◇フキヨセシティは･･････　情報７</language>
+		<language name="JPN" width="256">◇あんぜんとすいみんを　まもるため　ひこうきは　ひるまにとびます</language>
+		<language name="JPN_KANJI" width="256">◇安全と睡眠を　守るため　飛行機は　昼間に飛びます</language>
 	</row>
 
 	<row id="msg_gate_c6_08" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>c6についての地域情報8</comment>
-		<language name="JPN" width="256">◇フキヨセシティは･･････　じょうほう８</language>
-		<language name="JPN_KANJI" width="256">◇フキヨセシティは･･････　情報８</language>
+		<language name="JPN" width="256">◇フキヨセシティから　イッシュちほう　かくちへ　かもつがとどけられます</language>
+		<language name="JPN_KANJI" width="256">◇フキヨセシティから　イッシュ地方　各地へ　貨物が届けられます</language>
 	</row>
 
 	<row id="msg_gate_c6_09" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>c6についての地域情報9</comment>
-		<language name="JPN" width="256">◇フキヨセシティは･･････　じょうほう９</language>
-		<language name="JPN_KANJI" width="256">◇フキヨセシティは･･････　情報９</language>
+		<language name="JPN" width="256">◇ひこうきをつかって　そらからごうかいに　みずをまきます</language>
+		<language name="JPN_KANJI" width="256">◇飛行機を使って　空から豪快に　水をまきます</language>
 	</row>
 
 	<row id="msg_gate_c7_01" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>c7についての地域情報1</comment>
-		<language name="JPN" width="256">◇セッカシティは･･････　じょうほう１</language>
-		<language name="JPN_KANJI" width="256">◇セッカシティは･･････　情報１</language>
+		<language name="JPN" width="256">◇セッカシティはみずがあふれるしぜんのまちです</language>
+		<language name="JPN_KANJI" width="256">◇セッカシティは　水が溢れる　自然の町です</language>
 	</row>
 
 	<row id="msg_gate_c7_02" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>c7についての地域情報2</comment>
-		<language name="JPN" width="256">◇セッカシティは･･････　じょうほう２</language>
-		<language name="JPN_KANJI" width="256">◇セッカシティは･･････　情報２</language>
+		<language name="JPN" width="256">◇セッカシティのふゆはいちめんぎんせかいにそまります</language>
+		<language name="JPN_KANJI" width="256">◇セッカシティの冬は　一面銀世界に　染まります</language>
 	</row>
 
 	<row id="msg_gate_c7_03" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>c7についての地域情報3</comment>
-		<language name="JPN" width="256">◇セッカシティは･･････　じょうほう３</language>
-		<language name="JPN_KANJI" width="256">◇セッカシティは･･････　情報３</language>
+		<language name="JPN" width="256">◇セッカのひとびとはしぜんをしんこうしています</language>
+		<language name="JPN_KANJI" width="256">◇セッカの人々は　自然を信仰しています</language>
 	</row>
 
 	<row id="msg_gate_c7_04" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>c7についての地域情報4</comment>
-		<language name="JPN" width="256">◇セッカシティは･･････　じょうほう４</language>
-		<language name="JPN_KANJI" width="256">◇セッカシティは･･････　情報４</language>
+		<language name="JPN" width="256">◇セッカのけんちくはいしづくりがとくちょうてきです</language>
+		<language name="JPN_KANJI" width="256">◇セッカの建築は　石造りが特徴的です</language>
 	</row>
 
 	<row id="msg_gate_c7_05" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>c7についての地域情報5</comment>
-		<language name="JPN" width="256">◇セッカシティは･･････　じょうほう５</language>
-		<language name="JPN_KANJI" width="256">◇セッカシティは･･････　情報５</language>
+		<language name="JPN" width="256">◇セッカシティおくにはリュウラセンとよばれるとうがあります</language>
+		<language name="JPN_KANJI" width="256">◇セッカシティ奥には　竜螺旋と呼ばれる　塔があります</language>
 	</row>
 
 	<row id="msg_gate_c7_06" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>c7についての地域情報6</comment>
-		<language name="JPN" width="256">◇セッカシティは･･････　じょうほう６</language>
-		<language name="JPN_KANJI" width="256">◇セッカシティは･･････　情報６</language>
+		<language name="JPN" width="256">◇セッカシティではつめたいかぜがふうしゃをまわします</language>
+		<language name="JPN_KANJI" width="256">◇セッカシティでは　冷たい風が　風車を回します</language>
 	</row>
 
 	<row id="msg_gate_c7_07" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>c7についての地域情報7</comment>
-		<language name="JPN" width="256">◇セッカシティは･･････　じょうほう７</language>
-		<language name="JPN_KANJI" width="256">◇セッカシティは･･････　情報７</language>
+		<language name="JPN" width="256">◇まちにはえいゆうのでんしょうがつたわっています</language>
+		<language name="JPN_KANJI" width="256">◇町には英雄の伝承が　伝わっています</language>
 	</row>
 
 	<row id="msg_gate_c7_08" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>c7についての地域情報8</comment>
-		<language name="JPN" width="256">◇セッカシティは･･････　じょうほう８</language>
-		<language name="JPN_KANJI" width="256">◇セッカシティは･･････　情報８</language>
+		<language name="JPN" width="256">◇セッカシティはみずがあふれるしぜんのまちです</language>
+		<language name="JPN_KANJI" width="256">◇セッカシティは　水が溢れる自然の町です</language>
 	</row>
 
 	<row id="msg_gate_c7_09" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>c7についての地域情報9</comment>
-		<language name="JPN" width="256">◇セッカシティは･･････　じょうほう９</language>
-		<language name="JPN_KANJI" width="256">◇セッカシティは･･････　情報９</language>
+		<language name="JPN" width="256">◇セッカシティのふゆはいちめんぎんせかいにそまります</language>
+		<language name="JPN_KANJI" width="256">◇セッカシティの冬は　一面銀世界に　染まります</language>
 	</row>
 
 	<row id="msg_gate_c8w_01" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>c8wについての地域情報1</comment>
-		<language name="JPN" width="256">◇ソウリュウシティは･･････　じょうほう１</language>
-		<language name="JPN_KANJI" width="256">◇ソウリュウシティは･･････　情報１</language>
+		<language name="JPN" width="256">◇ビルのそうしょくは　100ねんかけて　しょくにんたちのてで　つくられています</language>
+		<language name="JPN_KANJI" width="256">◇ビルの装飾は　100年かけて　職人達の手で　造られています</language>
 	</row>
 
 	<row id="msg_gate_c8w_02" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>c8wについての地域情報2</comment>
-		<language name="JPN" width="256">◇ソウリュウシティは･･････　じょうほう２</language>
-		<language name="JPN_KANJI" width="256">◇ソウリュウシティは･･････　情報２</language>
+		<language name="JPN" width="256">◇ソウリュウシティのれきしは　せかいいちふるいと　いわれています</language>
+		<language name="JPN_KANJI" width="256">◇ソウリュウシティの歴史は　世界一古いと　言われています</language>
 	</row>
 
 	<row id="msg_gate_c8w_03" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>c8wについての地域情報3</comment>
-		<language name="JPN" width="256">◇ソウリュウシティは･･････　じょうほう３</language>
-		<language name="JPN_KANJI" width="256">◇ソウリュウシティは･･････　情報３</language>
+		<language name="JPN" width="256">◇ソウリュウシティでは　むかしのぎじゅつを　いまでも　やくだてています</language>
+		<language name="JPN_KANJI" width="256">◇ソウリュウシティでは　昔の技術を　今でも　役立てています</language>
 	</row>
 
 	<row id="msg_gate_c8w_04" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>c8wについての地域情報4</comment>
-		<language name="JPN" width="256">◇ソウリュウシティは･･････　じょうほう４</language>
-		<language name="JPN_KANJI" width="256">◇ソウリュウシティは･･････　情報４</language>
+		<language name="JPN" width="256">◇まちからは　まいとし　こうこがくしゃが　おおく　たんじょうします</language>
+		<language name="JPN_KANJI" width="256">◇街からは　毎年　考古学者が　多く　誕生します</language>
 	</row>
 
 	<row id="msg_gate_c8w_05" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>c8wについての地域情報5</comment>
-		<language name="JPN" width="256">◇ソウリュウシティは･･････　じょうほう５</language>
-		<language name="JPN_KANJI" width="256">◇ソウリュウシティは･･････　情報５</language>
+		<language name="JPN" width="256">◇まちでは　なんびゃくねんという　れきしを　もつ　おんがくを　きくことができます</language>
+		<language name="JPN_KANJI" width="256">◇街では　何百年という　歴史を　もつ　音楽を　聴くことができます</language>
 	</row>
 
 	<row id="msg_gate_c8w_06" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>c8wについての地域情報6</comment>
-		<language name="JPN" width="256">◇ソウリュウシティは･･････　じょうほう６</language>
-		<language name="JPN_KANJI" width="256">◇ソウリュウシティは･･････　情報６</language>
+		<language name="JPN" width="256">◇ビルのそうしょくは　100ねんかけて　しょくにんたちのてで　つくられています</language>
+		<language name="JPN_KANJI" width="256">◇ビルの装飾は　100年かけて　職人達の手で　造られています</language>
 	</row>
 
 	<row id="msg_gate_c8w_07" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>c8wについての地域情報7</comment>
-		<language name="JPN" width="256">◇ソウリュウシティは･･････　じょうほう７</language>
-		<language name="JPN_KANJI" width="256">◇ソウリュウシティは･･････　情報７</language>
+		<language name="JPN" width="256">◇ソウリュウシティのれきしは　せかいいちふるいと　いわれています</language>
+		<language name="JPN_KANJI" width="256">◇ソウリュウシティの歴史は　世界一古いと　言われています</language>
 	</row>
 
 	<row id="msg_gate_c8w_08" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>c8wについての地域情報8</comment>
-		<language name="JPN" width="256">◇ソウリュウシティは･･････　じょうほう８</language>
-		<language name="JPN_KANJI" width="256">◇ソウリュウシティは･･････　情報８</language>
+		<language name="JPN" width="256">◇ソウリュウシティでは　むかしのぎじゅつを　いまでも　やくだてています</language>
+		<language name="JPN_KANJI" width="256">◇ソウリュウシティでは　昔の技術を　今でも　役立てています</language>
 	</row>
 
 	<row id="msg_gate_c8w_09" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>c8wについての地域情報9</comment>
-		<language name="JPN" width="256">◇ソウリュウシティは･･････　じょうほう９</language>
-		<language name="JPN_KANJI" width="256">◇ソウリュウシティは･･････　情報９</language>
+		<language name="JPN" width="256">◇まちからは　まいとし　こうこがくしゃが　おおく　たんじょうします</language>
+		<language name="JPN_KANJI" width="256">◇街からは　毎年　考古学者が　多く　誕生します</language>
 	</row>
 
 	<row id="msg_gate_c8b_01" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>c8bについての地域情報1</comment>
-		<language name="JPN" width="256">◇シッポウシティは……　じょうほう１</language>
-		<language name="JPN_KANJI" width="256">◇シッポウシティは……　情報１</language>
+		<language name="JPN" width="256">◇まちのビルは　ポケモンが　100ぴきのっても　くずれないと　いわれています</language>
+		<language name="JPN_KANJI" width="256">◇まちのビルは　ポケモンが　100ぴき乗っても　崩れないと　言われています</language>
 	</row>
 
 	<row id="msg_gate_c8b_02" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>c8bについての地域情報2</comment>
-		<language name="JPN" width="256">◇シッポウシティは……　じょうほう２</language>
-		<language name="JPN_KANJI" width="256">◇シッポウシティは……　情報２</language>
+		<language name="JPN" width="256">◇ソウリュウシティでは　さいしんのモンスターボールが　かいはつされています</language>
+		<language name="JPN_KANJI" width="256">◇ソウリュウシティでは　最新のモンスターボールが　開発されています</language>
 	</row>
 
 	<row id="msg_gate_c8b_03" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>c8bについての地域情報3</comment>
-		<language name="JPN" width="256">◇シッポウシティは……　じょうほう３</language>
-		<language name="JPN_KANJI" width="256">◇シッポウシティは……　情報３</language>
+		<language name="JPN" width="256">◇まちのビルは　さいしんの　ざいりょうで　たてられています</language>
+		<language name="JPN_KANJI" width="256">◇街のビルは　最新の材料で　建てられています</language>
 	</row>
 
 	<row id="msg_gate_c8b_04" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>c8bについての地域情報4</comment>
-		<language name="JPN" width="256">◇シッポウシティは……　じょうほう４</language>
-		<language name="JPN_KANJI" width="256">◇シッポウシティは……　情報４</language>
+		<language name="JPN" width="256">◇ソウリュウシティの　セキュリティは　あんぜんなことで　ゆうめいです</language>
+		<language name="JPN_KANJI" width="256">◇ソウリュウシティの　セキュリティは　安全なことで　有名です</language>
 	</row>
 
 	<row id="msg_gate_c8b_05" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>c8bについての地域情報5</comment>
-		<language name="JPN" width="256">◇シッポウシティは……　じょうほう５</language>
-		<language name="JPN_KANJI" width="256">◇シッポウシティは……　情報５</language>
+		<language name="JPN" width="256">◇ネットワークをつかった　とてもべんりな　せいかつが　できます</language>
+		<language name="JPN_KANJI" width="256">◇ネットワークを使った　とても便利な生活が　できます</language>
 	</row>
 
 	<row id="msg_gate_c8b_06" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>c8bについての地域情報6</comment>
-		<language name="JPN" width="256">◇シッポウシティは……　じょうほう６</language>
-		<language name="JPN_KANJI" width="256">◇シッポウシティは……　情報６</language>
+		<language name="JPN" width="256">◇まちのビルは　ポケモンが　100ぴきのっても　くずれないと　いわれています</language>
+		<language name="JPN_KANJI" width="256">◇まちのビルは　ポケモンが　100ぴき乗っても　崩れないと　言われています</language>
 	</row>
 
 	<row id="msg_gate_c8b_07" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>c8bについての地域情報7</comment>
-		<language name="JPN" width="256">◇シッポウシティは……　じょうほう７</language>
-		<language name="JPN_KANJI" width="256">◇シッポウシティは……　情報７</language>
+		<language name="JPN" width="256">◇ソウリュウシティでは　さいしんのモンスターボールが　かいはつされています</language>
+		<language name="JPN_KANJI" width="256">◇ソウリュウシティでは　最新のモンスターボールが　開発されています</language>
 	</row>
 
 	<row id="msg_gate_c8b_08" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>c8bについての地域情報8</comment>
-		<language name="JPN" width="256">◇シッポウシティは……　じょうほう８</language>
-		<language name="JPN_KANJI" width="256">◇シッポウシティは……　情報８</language>
+		<language name="JPN" width="256">◇まちのビルは　さいしんの　ざいりょうで　たてられています</language>
+		<language name="JPN_KANJI" width="256">◇街のビルは　最新の材料で　建てられています</language>
 	</row>
 
 	<row id="msg_gate_c8b_09" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>c8bについての地域情報9</comment>
-		<language name="JPN" width="256">◇シッポウシティは……　じょうほう９</language>
-		<language name="JPN_KANJI" width="256">◇シッポウシティは……　情報９</language>
+		<language name="JPN" width="256">◇ソウリュウシティの　セキュリティは　あんぜんなことで　ゆうめいです</language>
+		<language name="JPN_KANJI" width="256">◇ソウリュウシティの　セキュリティは　安全なことで　有名です</language>
 	</row>
 
 	<row id="msg_gate_tg_01" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>tgについての地域情報1</comment>
-		<language name="JPN" width="256">◇トレインゲートは･･････　じょうほう１</language>
-		<language name="JPN_KANJI" width="256">◇トレインゲートは･･････　情報１</language>
+		<language name="JPN" width="256">◇タウングレースは　ひじょうにのんびりとした　ところです</language>
+		<language name="JPN_KANJI" width="256">◇タウングレースは　非常にのんびりとした　所です</language>
 	</row>
 
 	<row id="msg_gate_tg_02" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>tgについての地域情報2</comment>
-		<language name="JPN" width="256">◇トレインゲートは･･････　じょうほう２</language>
-		<language name="JPN_KANJI" width="256">◇トレインゲートは･･････　情報２</language>
+		<language name="JPN" width="256">◇タウングレースでは　ひがしずむとともに　しごとをおえます</language>
+		<language name="JPN_KANJI" width="256">◇タウングレースでは　日が沈むと共にに　仕事を終えます</language>
 	</row>
 
 	<row id="msg_gate_tg_03" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>tgについての地域情報3</comment>
-		<language name="JPN" width="256">◇トレインゲートは･･････　じょうほう３</language>
-		<language name="JPN_KANJI" width="256">◇トレインゲートは･･････　情報３</language>
+		<language name="JPN" width="256">◇きょだいな　はしのうえから　まちぜんたいを　みおろせます</language>
+		<language name="JPN_KANJI" width="256">◇巨大な　橋の上から　街全体を　見下ろせます</language>
 	</row>
 
 	<row id="msg_gate_tg_04" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>tgについての地域情報4</comment>
-		<language name="JPN" width="256">◇トレインゲートは･･････　じょうほう４</language>
-		<language name="JPN_KANJI" width="256">◇トレインゲートは･･････　情報４</language>
+		<language name="JPN" width="256">◇まちからみえる　もりでは　なぞのポケモンの　もくげきじょうほうがあります</language>
+		<language name="JPN_KANJI" width="256">◇街から見える森では　謎のポケモンの目撃情報が　あります</language>
 	</row>
 
 	<row id="msg_gate_tg_05" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>tgについての地域情報5</comment>
-		<language name="JPN" width="256">◇トレインゲートは･･････　じょうほう５</language>
-		<language name="JPN_KANJI" width="256">◇トレインゲートは･･････　情報５</language>
+		<language name="JPN" width="256">◇タウングレースの　どうろも　たてものも　すべて　いしで　できています</language>
+		<language name="JPN_KANJI" width="256">◇タウングレースの　道路も　建物も　すべて　石で　できています</language>
 	</row>
 
 	<row id="msg_gate_tg_06" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>tgについての地域情報6</comment>
-		<language name="JPN" width="256">◇トレインゲートは･･････　じょうほう６</language>
-		<language name="JPN_KANJI" width="256">◇トレインゲートは･･････　情報６</language>
+		<language name="JPN" width="256">◇タウングレースでは　ひるをすぎてから　まちが　かっぱつになります</language>
+		<language name="JPN_KANJI" width="256">◇タウングレースでは　昼をすぎてから　街が　活発になります</language>
 	</row>
 
 	<row id="msg_gate_tg_07" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>tgについての地域情報7</comment>
-		<language name="JPN" width="256">◇トレインゲートは･･････　じょうほう７</language>
-		<language name="JPN_KANJI" width="256">◇トレインゲートは･･････　情報７</language>
+		<language name="JPN" width="256">◇はれのひの　おくじょうでは　にっこうよくをするひとが　おおくみられます</language>
+		<language name="JPN_KANJI" width="256">◇晴れの日の　屋上では　日光浴をする人が　多くみられます</language>
 	</row>
 
 	<row id="msg_gate_tg_08" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>tgについての地域情報8</comment>
-		<language name="JPN" width="256">◇トレインゲートは･･････　じょうほう８</language>
-		<language name="JPN_KANJI" width="256">◇トレインゲートは･･････　情報８</language>
+		<language name="JPN" width="256">◇タウングレースは　ひじょうにのんびりとした　ところです</language>
+		<language name="JPN_KANJI" width="256">◇タウングレースは　非常にのんびりとした　所です</language>
 	</row>
 
 	<row id="msg_gate_tg_09" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>tgについての地域情報9</comment>
-		<language name="JPN" width="256">◇トレインゲートは･･････　じょうほう９</language>
-		<language name="JPN_KANJI" width="256">◇トレインゲートは･･････　情報９</language>
+		<language name="JPN" width="256">◇タウングレースでは　ひがしずむとともに　しごとをおえます</language>
+		<language name="JPN_KANJI" width="256">◇タウングレースでは　日が沈むと共にに　仕事を終えます</language>
 	</row>
 
 	<row id="msg_gate_st_01" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>stについての地域情報1</comment>
-		<language name="JPN" width="256">◇STは･･････　じょうほう１</language>
-		<language name="JPN_KANJI" width="256">◇STは･･････　情報１</language>
+		<language name="JPN" width="256">◇はまべのすなは　とてもこまかく　あしあとがハッキリと　のこります</language>
+		<language name="JPN_KANJI" width="256">◇浜辺の砂は　とても細かく　足跡がハッキリと　残ります</language>
 	</row>
 
 	<row id="msg_gate_st_02" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>stについての地域情報2</comment>
-		<language name="JPN" width="256">◇STは･･････　じょうほう２</language>
-		<language name="JPN_KANJI" width="256">◇STは･･････　情報２</language>
+		<language name="JPN" width="256">◇サマータウンに　べっそうをもつことは　あこがれとされています</language>
+		<language name="JPN_KANJI" width="256">◇サマータウンに　別荘をもつことは　憧れとされています</language>
 	</row>
 
 	<row id="msg_gate_st_03" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>stについての地域情報3</comment>
-		<language name="JPN" width="256">◇STは･･････　じょうほう３</language>
-		<language name="JPN_KANJI" width="256">◇STは･･････　情報３</language>
+		<language name="JPN" width="256">◇はまべからは　あさせがつづいており　みずぎわのさんぽを　たのしめます</language>
+		<language name="JPN_KANJI" width="256">◇浜辺からは　浅瀬が続いており　水ぎわの散歩を　楽しめます</language>
 	</row>
 
 	<row id="msg_gate_st_04" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>stについての地域情報4</comment>
-		<language name="JPN" width="256">◇STは･･････　じょうほう４</language>
-		<language name="JPN_KANJI" width="256">◇STは･･････　情報４</language>
+		<language name="JPN" width="256">◇なつには　すきとおるうみに　およぎにくる　かんこうきゃくがいます</language>
+		<language name="JPN_KANJI" width="256">◇夏には　透き通る海に　泳ぎにくる　観光客がいます</language>
 	</row>
 
 	<row id="msg_gate_st_05" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>stについての地域情報5</comment>
-		<language name="JPN" width="256">◇STは･･････　じょうほう５</language>
-		<language name="JPN_KANJI" width="256">◇STは･･････　情報５</language>
+		<language name="JPN" width="256">◇おおきながけが　サマータウンぜんたいを　まもっています</language>
+		<language name="JPN_KANJI" width="256">◇大きな崖が　サマータウン全体を　守っています</language>
 	</row>
 
 	<row id="msg_gate_st_06" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>stについての地域情報6</comment>
-		<language name="JPN" width="256">◇STは･･････　じょうほう６</language>
-		<language name="JPN_KANJI" width="256">◇STは･･････　情報６</language>
+		<language name="JPN" width="256">◇なみはつねに　おだやかなので　うみからいえまでは　とてもちかいです</language>
+		<language name="JPN_KANJI" width="256">◇波は常に　穏やかなので　海から家までは　とても近いです</language>
 	</row>
 
 	<row id="msg_gate_st_07" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>stについての地域情報7</comment>
-		<language name="JPN" width="256">◇STは･･････　じょうほう７</language>
-		<language name="JPN_KANJI" width="256">◇STは･･････　情報７</language>
+		<language name="JPN" width="256">◇サマータウンでは　ウォータースポーツが　ひじょうに　にんきです</language>
+		<language name="JPN_KANJI" width="256">◇サマータウンでは　ウォータースポーツが　非常に　人気です</language>
 	</row>
 
 	<row id="msg_gate_st_08" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>stについての地域情報8</comment>
-		<language name="JPN" width="256">◇STは･･････　じょうほう８</language>
-		<language name="JPN_KANJI" width="256">◇STは･･････　情報８</language>
+		<language name="JPN" width="256">◇いちねんじゅう　はれていて　とてもすごしやすいばしょです</language>
+		<language name="JPN_KANJI" width="256">◇一年中　晴れていて　とても過ごしやすい場所です</language>
 	</row>
 
 	<row id="msg_gate_st_09" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>stについての地域情報9</comment>
-		<language name="JPN" width="256">◇STは･･････　じょうほう９</language>
-		<language name="JPN_KANJI" width="256">◇STは･･････　情報９</language>
+		<language name="JPN" width="256">◇はまべのすなは　とてもこまかく　あしあとがハッキリと　のこります</language>
+		<language name="JPN_KANJI" width="256">◇浜辺の砂は　とても細かく　足跡がハッキリと　残ります</language>
 	</row>
 
 	<row id="msg_gate_wf_01" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>wfについての地域情報1</comment>
-		<language name="JPN" width="256">◇ホワイトフォレストは･･････　じょうほう１</language>
-		<language name="JPN_KANJI" width="256">◇ホワイトフォレストは･･････　情報１</language>
+		<language name="JPN" width="256">◇ホワイトフォレストには　こうだいなしぜんが　ひろがっています</language>
+		<language name="JPN_KANJI" width="256">◇ホワイトフォレストには　広大な自然が　広がっています</language>
 	</row>
 
 	<row id="msg_gate_wf_02" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>wfについての地域情報2</comment>
-		<language name="JPN" width="256">◇ホワイトフォレストは･･････　じょうほう２</language>
-		<language name="JPN_KANJI" width="256">◇ホワイトフォレストは･･････　情報２</language>
+		<language name="JPN" width="256">◇ホワイトフォレストのじゅもくは　ひび　せいちょうしています</language>
+		<language name="JPN_KANJI" width="256">◇ホワイトフォレストの樹木は　日々　成長しています</language>
 	</row>
 
 	<row id="msg_gate_wf_03" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>wfについての地域情報3</comment>
-		<language name="JPN" width="256">◇ホワイトフォレストは･･････　じょうほう３</language>
-		<language name="JPN_KANJI" width="256">◇ホワイトフォレストは･･････　情報３</language>
+		<language name="JPN" width="256">◇しぜんをあいするブリーダーが　おおくすんでいます</language>
+		<language name="JPN_KANJI" width="256">◇自然を愛するブリーダーが　多く住んでいます</language>
 	</row>
 
 	<row id="msg_gate_wf_04" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>wfについての地域情報4</comment>
-		<language name="JPN" width="256">◇ホワイトフォレストは･･････　じょうほう４</language>
-		<language name="JPN_KANJI" width="256">◇ホワイトフォレストは･･････　情報４</language>
+		<language name="JPN" width="256">◇くさむらには　めずらしいポケモンが　すんでいます</language>
+		<language name="JPN_KANJI" width="256">◇草むらには　珍しいポケモンが　住んでいます</language>
 	</row>
 
 	<row id="msg_gate_wf_05" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>wfについての地域情報5</comment>
-		<language name="JPN" width="256">◇ホワイトフォレストは･･････　じょうほう５</language>
-		<language name="JPN_KANJI" width="256">◇ホワイトフォレストは･･････　情報５</language>
+		<language name="JPN" width="256">◇まちにはやせいのポケモンが　ひろってきたものが　おちています</language>
+		<language name="JPN_KANJI" width="256">◇町には野生のポケモンが　拾ってきたものが　落ちています</language>
 	</row>
 
 	<row id="msg_gate_wf_06" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>wfについての地域情報6</comment>
-		<language name="JPN" width="256">◇ホワイトフォレストは･･････　じょうほう６</language>
-		<language name="JPN_KANJI" width="256">◇ホワイトフォレストは･･････　情報６</language>
+		<language name="JPN" width="256">◇まちのじんこうは　つねにへんかしつづけています</language>
+		<language name="JPN_KANJI" width="256">◇町の人口は　常に変化し続けています</language>
 	</row>
 
 	<row id="msg_gate_wf_07" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>wfについての地域情報7</comment>
-		<language name="JPN" width="256">◇ホワイトフォレストは･･････　じょうほう７</language>
-		<language name="JPN_KANJI" width="256">◇ホワイトフォレストは･･････　情報７</language>
+		<language name="JPN" width="256">◇ホワイトフォレストには　こうだいなしぜんが　ひろがっています</language>
+		<language name="JPN_KANJI" width="256">◇ホワイトフォレストには　広大な自然が　広がっています</language>
 	</row>
 
 	<row id="msg_gate_wf_08" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>wfについての地域情報8</comment>
-		<language name="JPN" width="256">◇ホワイトフォレストは･･････　じょうほう８</language>
-		<language name="JPN_KANJI" width="256">◇ホワイトフォレストは･･････　情報８</language>
+		<language name="JPN" width="256">◇ホワイトフォレストのじゅもくは　ひび　せいちょうしています</language>
+		<language name="JPN_KANJI" width="256">◇ホワイトフォレストの樹木は　日々　生長しています</language>
 	</row>
 
 	<row id="msg_gate_wf_09" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>wfについての地域情報9</comment>
-		<language name="JPN" width="256">◇ホワイトフォレストは･･････　じょうほう９</language>
-		<language name="JPN_KANJI" width="256">◇ホワイトフォレストは･･････　情報９</language>
+		<language name="JPN" width="256">◇しぜんをあいするブリーダーが　おおくすんでいます</language>
+		<language name="JPN_KANJI" width="256">◇自然を愛するブリーダーが　多く住んでいます</language>
 	</row>
 
 	<row id="msg_gate_bc_01" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>bcについての地域情報1</comment>
-		<language name="JPN" width="256">◇ブラックシティは･･････　じょうほう１</language>
-		<language name="JPN_KANJI" width="256">◇ブラックシティは･･････　情報１</language>
+		<language name="JPN" width="256">◇ブラックシティは　ビルがならぶ　ぶんめいのまちです</language>
+		<language name="JPN_KANJI" width="256">◇ブラックシティは　ビルが並ぶ　文明の町です</language>
 	</row>
 
 	<row id="msg_gate_bc_02" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>bcについての地域情報2</comment>
-		<language name="JPN" width="256">◇ブラックシティは･･････　じょうほう２</language>
-		<language name="JPN_KANJI" width="256">◇ブラックシティは･･････　情報２</language>
+		<language name="JPN" width="256">◇ブラックシティのまちは　ひび　はってんしています</language>
+		<language name="JPN_KANJI" width="256">◇ブラックシティの町は　日々　発展しています</language>
 	</row>
 
 	<row id="msg_gate_bc_03" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>bcについての地域情報3</comment>
-		<language name="JPN" width="256">◇ブラックシティは･･････　じょうほう３</language>
-		<language name="JPN_KANJI" width="256">◇ブラックシティは･･････　情報３</language>
+		<language name="JPN" width="256">◇きょうそういしきのたかいトレーナーが　おおくすんでいます</language>
+		<language name="JPN_KANJI" width="256">◇競争意識の高いトレーナーが　多く住んでいます</language>
 	</row>
 
 	<row id="msg_gate_bc_04" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>bcについての地域情報4</comment>
-		<language name="JPN" width="256">◇ブラックシティは･･････　じょうほう４</language>
-		<language name="JPN_KANJI" width="256">◇ブラックシティは･･････　情報４</language>
+		<language name="JPN" width="256">◇まちのおおきなデパートは　はってんのシンボルです</language>
+		<language name="JPN_KANJI" width="256">◇町の大きなデパートは　発展のシンボルです</language>
 	</row>
 
 	<row id="msg_gate_bc_05" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>bcについての地域情報5</comment>
-		<language name="JPN" width="256">◇ブラックシティは･･････　じょうほう５</language>
-		<language name="JPN_KANJI" width="256">◇ブラックシティは･･････　情報５</language>
+		<language name="JPN" width="256">◇あつまったひとが　りゅうつうをかえ　しなものがかわります</language>
+		<language name="JPN_KANJI" width="256">◇集まった人が　流通を買え　品物がかわります</language>
 	</row>
 
 	<row id="msg_gate_bc_06" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>bcについての地域情報6</comment>
-		<language name="JPN" width="256">◇ブラックシティは･･････　じょうほう６</language>
-		<language name="JPN_KANJI" width="256">◇ブラックシティは･･････　情報６</language>
+		<language name="JPN" width="256">◇まちのじんこうは　つねにへんかしつづけています</language>
+		<language name="JPN_KANJI" width="256">◇町の人口は　常に変化し続けています</language>
 	</row>
 
 	<row id="msg_gate_bc_07" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>bcについての地域情報7</comment>
-		<language name="JPN" width="256">◇ブラックシティは･･････　じょうほう７</language>
-		<language name="JPN_KANJI" width="256">◇ブラックシティは･･････　情報７</language>
+		<language name="JPN" width="256">◇ブラックシティは　ビルがならぶ　ぶんめいのまちです</language>
+		<language name="JPN_KANJI" width="256">◇ブラックシティは　ビルが並ぶ　文明の町です</language>
 	</row>
 
 	<row id="msg_gate_bc_08" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>bcについての地域情報8</comment>
-		<language name="JPN" width="256">◇ブラックシティは･･････　じょうほう８</language>
-		<language name="JPN_KANJI" width="256">◇ブラックシティは･･････　情報８</language>
+		<language name="JPN" width="256">◇ブラックシティのまちは　ひび　はってんしています</language>
+		<language name="JPN_KANJI" width="256">◇ブラックシティの町は　日々　発展しています</language>
 	</row>
 
 	<row id="msg_gate_bc_09" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>bcについての地域情報9</comment>
-		<language name="JPN" width="256">◇ブラックシティは･･････　じょうほう９</language>
-		<language name="JPN_KANJI" width="256">◇ブラックシティは･･････　情報９</language>
+		<language name="JPN" width="256">◇きょうそういしきのたかいトレーナーが　おおくすんでいます</language>
+		<language name="JPN_KANJI" width="256">◇競争意識の高いトレーナーが　多く住んでいます</language>
 	</row>
 
 	<row id="msg_gate_d3_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<comment>d3についての地域情報1</comment>
-		<language name="JPN" width="256">◇リゾートデザートは･･････　じょうほう１</language>
-		<language name="JPN_KANJI" width="256">◇リゾートデザートは･･････　情報１</language>
+		<language name="JPN" width="256">◇さばくでは　ここちよいすなかぜが　でむかえてくれます</language>
+		<language name="JPN_KANJI" width="256">◇砂漠では　心地よい砂風が　出迎えてくれます</language>
 	</row>
 
 	<row id="msg_gate_d3_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<comment>d3についての地域情報2</comment>
-		<language name="JPN" width="256">◇リゾートデザートは･･････　じょうほう２</language>
-		<language name="JPN_KANJI" width="256">◇リゾートデザートは･･････　情報２</language>
+		<language name="JPN" width="256">◇このさきは　リゾートデザートとよばれる　かんこうスポットです</language>
+		<language name="JPN_KANJI" width="256">◇この先は　リゾートデザートと呼ばれる　観光スポットです</language>
 	</row>
 
 	<row id="msg_gate_d3_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<comment>d3についての地域情報3</comment>
-		<language name="JPN" width="256">◇リゾートデザートは･･････　じょうほう３</language>
-		<language name="JPN_KANJI" width="256">◇リゾートデザートは･･････　情報３</language>
+		<language name="JPN" width="256">◇すなにうもれたいせきは　むかしさかえたくにのものです</language>
+		<language name="JPN_KANJI" width="256">◇砂に埋もれた遺跡は　昔栄えた国のものです</language>
 	</row>
 
 	<row id="msg_gate_d3_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<comment>d3についての地域情報4</comment>
-		<language name="JPN" width="256">◇リゾートデザートは･･････　じょうほう４</language>
-		<language name="JPN_KANJI" width="256">◇リゾートデザートは･･････　情報４</language>
+		<language name="JPN" width="256">◇こだいのくには　げんざいのれきしに　のこっていません</language>
+		<language name="JPN_KANJI" width="256">◇古代の国は　現在の歴史に　残っていません</language>
 	</row>
 
 	<row id="msg_gate_d3_05" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<comment>d3についての地域情報5</comment>
-		<language name="JPN" width="256">◇リゾートデザートは･･････　じょうほう５</language>
-		<language name="JPN_KANJI" width="256">◇リゾートデザートは･･････　情報５</language>
+		<language name="JPN" width="256">◇いせきがみつかったため　こうじはちゅうしになりました</language>
+		<language name="JPN_KANJI" width="256">◇遺跡が見つかったため　工事は中止になりました</language>
 	</row>
 
 	<row id="msg_gate_d3_06" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<comment>d3についての地域情報6</comment>
-		<language name="JPN" width="256">◇リゾートデザートは･･････　じょうほう６</language>
-		<language name="JPN_KANJI" width="256">◇リゾートデザートは･･････　情報６</language>
+		<language name="JPN" width="256">◇さばくではかせきが　しゅつどすることがあります</language>
+		<language name="JPN_KANJI" width="256">◇砂漠では化石が　出土することがあります</language>
 	</row>
 
 	<row id="msg_gate_d3_07" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<comment>d3についての地域情報7</comment>
-		<language name="JPN" width="256">◇リゾートデザートは･･････　じょうほう７</language>
-		<language name="JPN_KANJI" width="256">◇リゾートデザートは･･････　情報７</language>
+		<language name="JPN" width="256">◇いせきにはこだいのゴーストが　すみついています</language>
+		<language name="JPN_KANJI" width="256">◇遺跡には古代のゴーストが　住み着いています</language>
 	</row>
 
 	<row id="msg_gate_d3_08" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<comment>d3についての地域情報8</comment>
-		<language name="JPN" width="256">◇リゾートデザートは･･････　じょうほう８</language>
-		<language name="JPN_KANJI" width="256">◇リゾートデザートは･･････　情報８</language>
+		<language name="JPN" width="256">◇こだいのくにが　なぜほろびたのかは　なぞです</language>
+		<language name="JPN_KANJI" width="256">◇古代の国が　なぜ滅びたのかは　なぞです</language>
 	</row>
 
 	<row id="msg_gate_d3_09" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<comment>d3についての地域情報9</comment>
-		<language name="JPN" width="256">◇リゾートデザートは･･････　じょうほう９</language>
-		<language name="JPN_KANJI" width="256">◇リゾートデザートは･･････　情報９</language>
+		<language name="JPN" width="256">◇こだいのしろないぶでは　げんざいもすなが　ながれおちています</language>
+		<language name="JPN_KANJI" width="256">◇古代の城内部では　現在も砂が　流れ落ちています</language>
 	</row>
 
 	<row id="msg_gate_d8_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
 		<comment>d8についての地域情報1</comment>
-		<language name="JPN" width="256">◇仮　じょうほう１</language>
-		<language name="JPN_KANJI" width="256">◇仮　情報１</language>
+		<language name="JPN" width="256">◇みずべにたつとうはそらにとけこむしろさがうつくしいです</language>
+		<language name="JPN_KANJI" width="256">◇水辺に立つ塔は　空に溶け込む白さが　美しいです</language>
 	</row>
 
 	<row id="msg_gate_d8_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
 		<comment>d8についての地域情報2</comment>
-		<language name="JPN" width="256">◇仮　じょうほう２</language>
-		<language name="JPN_KANJI" width="256">◇仮　情報２</language>
+		<language name="JPN" width="256">◇げんざいとうのなかにはいることはきんしされています</language>
+		<language name="JPN_KANJI" width="256">◇現在　塔の中に入ることは　禁止されています</language>
 	</row>
 
 	<row id="msg_gate_d8_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
 		<comment>d8についての地域情報3</comment>
-		<language name="JPN" width="256">◇仮　じょうほう３</language>
-		<language name="JPN_KANJI" width="256">◇仮　情報３</language>
+		<language name="JPN" width="256">◇リュウラセンのとうはれきしにのこっていないほどこだいのものです</language>
+		<language name="JPN_KANJI" width="256">◇リュウラセンの塔は　歴史に残っていないほど　古代のものです</language>
 	</row>
 
 	<row id="msg_gate_d8_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
 		<comment>d8についての地域情報4</comment>
-		<language name="JPN" width="256">◇仮　じょうほう４</language>
-		<language name="JPN_KANJI" width="256">◇仮　情報４</language>
+		<language name="JPN" width="256">◇しんせいなとうでありセッカのひとびとにまもられてきました</language>
+		<language name="JPN_KANJI" width="256">◇神聖な塔であり　石化の人々に守られてきました</language>
 	</row>
 
 	<row id="msg_gate_d8_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
 		<comment>d8についての地域情報5</comment>
-		<language name="JPN" width="256">◇仮　じょうほう５</language>
-		<language name="JPN_KANJI" width="256">◇仮　情報５</language>
+		<language name="JPN" width="256">◇リュウラセンにはおおくのしんわがいまもねむっています</language>
+		<language name="JPN_KANJI" width="256">◇リュウラセンには　多くの神話が今も眠っています</language>
 	</row>
 
 	<row id="msg_gate_d8_06" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
 		<comment>d8についての地域情報6</comment>
-		<language name="JPN" width="256">◇仮　じょうほう６</language>
-		<language name="JPN_KANJI" width="256">◇仮　情報６</language>
+		<language name="JPN" width="256">◇リュウラセンのとうはぎしきのためにつくられたとされています</language>
+		<language name="JPN_KANJI" width="256">◇リュウラセンの塔は　儀式のために作られたとされています</language>
 	</row>
 
 	<row id="msg_gate_d8_07" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
 		<comment>d8についての地域情報7</comment>
-		<language name="JPN" width="256">◇仮　じょうほう７</language>
-		<language name="JPN_KANJI" width="256">◇仮　情報７</language>
+		<language name="JPN" width="256">◇げんざいリュウラセンのとうではえいゆうがまつられています</language>
+		<language name="JPN_KANJI" width="256">◇現在リュウラセンの塔では　英雄が祭られています</language>
 	</row>
 
 	<row id="msg_gate_d8_08" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
 		<comment>d8についての地域情報8</comment>
-		<language name="JPN" width="256">◇仮　じょうほう８</language>
-		<language name="JPN_KANJI" width="256">◇仮　情報８</language>
+		<language name="JPN" width="256">◇みずべにたつとうはそらにとけこむしろさがうつくしいです</language>
+		<language name="JPN_KANJI" width="256">◇水辺に立つ塔は　空に溶け込む白さが　美しいです</language>
 	</row>
 
 	<row id="msg_gate_d8_09" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
 		<comment>d8についての地域情報9</comment>
-		<language name="JPN" width="256">◇仮　じょうほう９</language>
-		<language name="JPN_KANJI" width="256">◇仮　情報９</language>
+		<language name="JPN" width="256">◇げんざいとうのなかにはいることはきんしされています</language>
+		<language name="JPN_KANJI" width="256">◇現在塔の中に入ることは　禁止されています</language>
 	</row>
 
 	<row id="msg_gate_d10_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
