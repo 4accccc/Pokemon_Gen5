@@ -338,6 +338,33 @@ void MISC_CrossComm_SetThankyouMessage(MISC *misc, const STRBUF *srcbuf)
   GFL_STR_GetStringCode( srcbuf, misc->thankyou_message, SAVE_SURETIGAI_THANKYOU_LEN );
 }
 
+//==================================================================
+/**
+ * すれ違い通信の調査隊隊員ランクをゲット
+ *
+ * @param   misc		
+ * 
+ * @retval  RESEARCH_TEAM_RANK_xxx
+ */
+//==================================================================
+int MISC_CrossComm_GetResearchTeamRank(const MISC *misc)
+{
+  return misc->research_team_rank;
+}
+
+//==================================================================
+/**
+ * すれ違い通信の調査隊隊員ランクをセット
+ *
+ * @param   misc		
+ * @param   rank		RESEARCH_TEAM_RANK_xxx
+ */
+//==================================================================
+void MISC_CrossComm_SetResearchTeamRank(MISC *misc, int rank)
+{
+  misc->research_team_rank = rank;
+}
+
 //----------------------------------------------------------
 /**
  * @brief バッジ保持状態の取得

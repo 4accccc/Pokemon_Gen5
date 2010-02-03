@@ -37,6 +37,8 @@ struct _MISC
   u32 suretigai_count;           ///<すれ違い人数
   STRCODE self_introduction[SAVE_SURETIGAI_SELFINTRODUCTION_LEN]; ///<自己紹介
   STRCODE thankyou_message[SAVE_SURETIGAI_THANKYOU_LEN];  ///<お礼メッセージ
+  u8 research_team_rank;         ///<調査隊隊員ランク(RESEARCH_TEAM_RANK_xxx)
+  u8 padding[3];
 
   //ジムリーダー戦勝利時の手持ち記録
   u16 gym_win_monsno[GYM_MAX][TEMOTI_POKEMAX];
