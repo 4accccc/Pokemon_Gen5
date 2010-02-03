@@ -64,6 +64,11 @@ typedef struct{
     u16 monsno;                             ///<ポケモン番号
     u32 thankyou_count;                     ///<お礼を受けた回数
     u32 target_trainer_id;                  ///<対象相手のトレーナーID
+    struct{ //配布用
+      u32 magic_key;                        ///<マジックキー
+      u16 monsno;                           ///<ポケモン番号
+      u16 itemno;                           ///<アイテム番号
+    }distribution;
     STRCODE nickname[BUFLEN_POKEMON_NAME];  ///<ポケモン名(ニックネーム)
     STRCODE thankyou_message[GAMEBEACON_THANKYOU_MESSAGE_LEN]; ///お礼メッセージ
   };

@@ -22,6 +22,13 @@
 ///ビーコン寿命
 #define LIFE_TIME     (15 * 60)
 
+///配信用マジックキー：ポケモン
+#define MAGIC_KEY_DISTRIBUTION_POKE    (0x2932013a)
+///配信用マジックキー：アイテム
+#define MAGIC_KEY_DISTRIBUTION_ITEM    (0x48841dc1)
+///配信用マジックキー：その他
+#define MAGIC_KEY_DISTRIBUTION_ETC     (0x701ddc92)
+
 //ここのASSERTにひっかかったらupdate_logをbit管理ではなく配列管理に変更する
 SDK_COMPILER_ASSERT(GAMEBEACON_SYSTEM_LOG_MAX < 32);
 
@@ -264,6 +271,23 @@ BOOL GAMEBEACON_SetRecvBeacon(const GAMEBEACON_INFO *info)
         same_player = TRUE; //1プレイヤーは対になった1つのログバッファしか持たない
         break;
       }
+    }
+  }
+  
+  //受信ビーコンデータ整合性チェック
+  if(info->action.action_no == GAMEBEACON_ACTION_DISTRIBUTION_POKE){
+    if(info->action.distribution.magic_key != MAGIC_KEY_DISTRIBUTION_POKE){
+      return FALSE; //マジックキー不一致の為、受け取り拒否
+    }
+  }
+  else if(info->action.action_no == GAMEBEACON_ACTION_DISTRIBUTION_ITEM){
+    if(info->action.distribution.magic_key != MAGIC_KEY_DISTRIBUTION_ITEM){
+      return FALSE; //マジックキー不一致の為、受け取り拒否
+    }
+  }
+  else if(info->action.action_no == GAMEBEACON_ACTION_DISTRIBUTION_ETC){
+    if(info->action.distribution.magic_key != MAGIC_KEY_DISTRIBUTION_ETC){
+      return FALSE; //マジックキー不一致の為、受け取り拒否
     }
   }
   
@@ -944,7 +968,8 @@ void GAMEBEACON_Set_DistributionPoke(u16 monsno)
   GAMEBEACON_SEND_MANAGER *send = &GameBeaconSys->send;
 
   send->info.action.action_no = GAMEBEACON_ACTION_DISTRIBUTION_POKE;
-  send->info.action.monsno = monsno;
+  send->info.action.distribution.monsno = monsno;
+  send->info.action.distribution.magic_key = MAGIC_KEY_DISTRIBUTION_POKE;
 
   _Set_Details_Walk();
 
@@ -963,7 +988,8 @@ void GAMEBEACON_Set_DistributionItem(u16 item)
   GAMEBEACON_SEND_MANAGER *send = &GameBeaconSys->send;
 
   send->info.action.action_no = GAMEBEACON_ACTION_DISTRIBUTION_ITEM;
-  send->info.action.itemno = item;
+  send->info.action.distribution.itemno = item;
+  send->info.action.distribution.magic_key = MAGIC_KEY_DISTRIBUTION_ITEM;
 
   _Set_Details_Walk();
 
@@ -980,6 +1006,7 @@ void GAMEBEACON_Set_DistributionEtc(void)
   GAMEBEACON_SEND_MANAGER *send = &GameBeaconSys->send;
 
   send->info.action.action_no = GAMEBEACON_ACTION_DISTRIBUTION_ETC;
+  send->info.action.distribution.magic_key = MAGIC_KEY_DISTRIBUTION_ETC;
 
   _Set_Details_Walk();
 

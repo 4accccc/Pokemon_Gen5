@@ -613,7 +613,6 @@ u16 GAMEBEACON_Get_Action_Monsno(const GAMEBEACON_INFO *info)
   case GAMEBEACON_ACTION_BATTLE_WILD_POKE_VICTORY:
   case GAMEBEACON_ACTION_BATTLE_SP_POKE_START:
   case GAMEBEACON_ACTION_BATTLE_SP_POKE_VICTORY:
-  case GAMEBEACON_ACTION_DISTRIBUTION_POKE:          ///<ポケモン配布中
     return info->action.monsno;
   }
   GF_ASSERT(0);
@@ -631,11 +630,44 @@ u16 GAMEBEACON_Get_Action_ItemNo(const GAMEBEACON_INFO *info)
 {
   switch(info->action.action_no){
   case GAMEBEACON_ACTION_SP_ITEM_GET:
-  case GAMEBEACON_ACTION_DISTRIBUTION_ITEM:
     return info->action.itemno;
   }
   GF_ASSERT(0);
   return info->action.itemno;
+}
+
+//==================================================================
+/**
+ * 行動パラメータ取得：配布ポケモン番号
+ * @param   info		ビーコン情報へのポインタ
+ * @retval  u16		ポケモン番号
+ */
+//==================================================================
+u16 GAMEBEACON_Get_Action_DistributionMonsno(const GAMEBEACON_INFO *info)
+{
+  switch(info->action.action_no){
+  case GAMEBEACON_ACTION_DISTRIBUTION_POKE:          ///<ポケモン配布中
+    return info->action.distribution.monsno;
+  }
+  GF_ASSERT(0);
+  return info->action.distribution.monsno;
+}
+
+//==================================================================
+/**
+ * 行動パラメータ取得：配布アイテム番号
+ * @param   info		ビーコン情報へのポインタ
+ * @retval  u16		  アイテム番号
+ */
+//==================================================================
+u16 GAMEBEACON_Get_Action_DistributionItemNo(const GAMEBEACON_INFO *info)
+{
+  switch(info->action.action_no){
+  case GAMEBEACON_ACTION_DISTRIBUTION_ITEM:
+    return info->action.distribution.itemno;
+  }
+  GF_ASSERT(0);
+  return info->action.distribution.itemno;
 }
 
 //==================================================================
