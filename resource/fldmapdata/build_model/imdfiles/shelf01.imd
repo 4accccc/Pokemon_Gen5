@@ -3,9 +3,9 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fuchino" host="W00152" date="2009-04-27T14:48:52" source="shelf01.mb"/>
+	<create user="lee_hyunjung" host="W00154A" date="2010-02-02T21:28:43"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
-	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+	<generator name="NNS_3DMaterialEditor" version="2.8.0.20050620"/>
 </head>
 
 <body>
@@ -22,7 +22,7 @@
 	tex_matrix_mode="maya"
 	compress_node="merge" node_size="1 1"
 	compress_material="on" material_size="1 1"
-	output_texture="used"
+	output_texture="all"
 	force_full_weight="off"
 	use_primitive_strip="on"
 />
@@ -63,7 +63,7 @@
 		alpha="31"
 		wire_mode="off"
 		polygon_mode="modulate"
-		polygon_id="0"
+		polygon_id="20"
 		fog_flag="on"
 		depth_test_decal="off"
 		translucent_update_depth="off"
@@ -188,6 +188,25 @@
 
 <output_info vertex_size="28" polygon_size="7"
 	triangle_size="0" quad_size="7"/>
+
+<ex_nns_3dme>
+	<ex_model_info scene_name="デフォルトシーン" disp_pos="0.000000 60.000000"/>
+	<ex_tex_image_array size="1">
+		<ex_tex_image index="0" disp_pos="0.000000 300.000000"/>
+	</ex_tex_image_array>
+	<ex_tex_palette_array size="1">
+		<ex_tex_palette index="0" disp_pos="0.000000 360.000000"/>
+	</ex_tex_palette_array>
+	<ex_material_array size="1">
+		<ex_material index="0" disp_pos="0.000000 240.000000"/>
+	</ex_material_array>
+	<ex_polygon_array size="1">
+		<ex_polygon index="0" disp_pos="0.000000 180.000000"/>
+	</ex_polygon_array>
+	<ex_node_array size="1">
+		<ex_node index="0" disp_pos="0.000000 120.000000"/>
+	</ex_node_array>
+</ex_nns_3dme>
 
 </body>
 
