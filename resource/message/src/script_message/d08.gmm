@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-02T22:50:38"/>
+	<create user="matsumiya" host="W00224" date="2010-02-03T19:27:41"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,14 +263,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1463" top="374" right="2168" bottom="989" maximized="no" rayout="Vertical2">
+	<dialog left="1303" top="217" right="1998" bottom="844" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
-		<band id="0" index="1" style="0000" width="530"/>
+		<band id="0" index="1" style="0000" width="520"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="543"/>
+		<band id="2" index="3" style="0000" width="533"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="697"/>
+		<band id="4" index="0" style="0000" width="687"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -445,7 +445,7 @@
 心配しないで！[BE:01:ページ切り替え（クリア）]
 チェレンは　頼りないけど
 [1:00:トレーナー名:0]は　強いし[BE:00:ページ切り替え（行送り）]
-プラズマだんを　倒したこと　あるし！[BE:01:ページ切り替え（クリア）]
+プラズマ団を　倒したこと　あるし！[BE:01:ページ切り替え（クリア）]
 なにより　悪いことは
 見逃せないでしょ！[BE:01:ページ切り替え（クリア）]
 じゃあ　[1:00:トレーナー名:0]

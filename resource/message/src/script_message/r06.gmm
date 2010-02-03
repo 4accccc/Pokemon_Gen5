@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-02T19:33:40"/>
+	<create user="matsumiya" host="W00224" date="2010-02-03T17:34:39"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="57" top="200" right="751" bottom="815" maximized="no" rayout="Vertical2">
+	<dialog left="1406" top="277" right="2100" bottom="892" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="790" top="142" right="1263" bottom="540" visible="yes"/>
 		<band id="0" index="1" style="0000" width="519"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="532"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="686"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_r06_mountain_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r06_mountain_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・d06洞窟前ストッパー解除前
 ・仮メッセージ</comment>
@@ -322,28 +322,27 @@
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">MOUNTAIN
 山男</attribute>
-		<language name="JPN" width="256">でんきいしのほらあなは
-まさに　てんねんの　めいろ！[BE:01:ページ切り替え（クリア）]
-でんきが　じりょくを　うみだし
-さまざまな　しかけで　いっぱいだ！</language>
-		<language name="JPN_KANJI" width="256">電気石の洞穴は
-まさに　天然の　迷路！[BE:01:ページ切り替え（クリア）]
-電気が　磁力を　うみだし
-さまざまな　仕掛けで　いっぱいだ！</language>
+		<language name="JPN" width="256">でんきいしのほらあな　は
+ふくざつな　めいろのようだが▽
+じつは　いっぽんみち　なんだ</language>
+		<language name="JPN_KANJI" width="256">電気石の洞穴は　一見
+複雑な　迷路のようだが▽
+実は　一本道　なんだ</language>
 	</row>
 
-	<row id="msg_r06_sportsw_01_01" text-color=",,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+	<row id="msg_r06_sportsw_01_01" text-color=",,,,,#ff0000,,,,,,,,,,,,,">
 		<comment>♀
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">WOMAN2</attribute>
-		<language name="JPN" width="256">きせつが　うつれば
-はなも　その　すがたを　かえる[BE:01:ページ切り替え（クリア）]
-この　あたりの　ようすも
-がらりと　かわるのよ</language>
-		<language name="JPN_KANJI" width="256">季節が　移れば
-花も　その姿を　変える[BE:01:ページ切り替え（クリア）]
-このあたりの　様子も
-がらりと　一変するのよ</language>
+		<language name="JPN" width="256">かんそうはだの　ポケモンは
+みずタイプの　わざや▽
+あめの　ひが　すきなの♪▼
+これ　ポケモンの
+とくせいの　おはなし　ね！</language>
+		<language name="JPN_KANJI" width="256">かんそうはだの　ポケモンは
+みずタイプの技や　雨が好きなの♪▼
+これ　ポケモンの
+とくせいの　お話ね！</language>
 	</row>
 
 	<row id="msg_r06_sign1_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
