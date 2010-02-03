@@ -1,0 +1,8 @@
+"hero.NCER"
+"hero.NANR"
+"heroine.NCER"
+"heroine.NANR"
+"hero.NCLR"
+"hero.NCGR"
+"heroine.NCLR"
+"heroine.NCGR"

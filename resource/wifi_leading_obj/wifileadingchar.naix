@@ -1,0 +1,25 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: wifileadingchar.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_WIFILEADINGCHAR_NAIX_
+#define NARC_WIFILEADINGCHAR_NAIX_
+
+enum {
+	NARC_wifileadingchar_hero_NCER = 0,
+	NARC_wifileadingchar_hero_NANR = 1,
+	NARC_wifileadingchar_heroine_NCER = 2,
+	NARC_wifileadingchar_heroine_NANR = 3,
+	NARC_wifileadingchar_hero_NCLR = 4,
+	NARC_wifileadingchar_hero_NCGR = 5,
+	NARC_wifileadingchar_heroine_NCLR = 6,
+	NARC_wifileadingchar_heroine_NCGR = 7
+};
+
+/* NARC_WIFILEADINGCHAR_NAIX_ */
+#endif
