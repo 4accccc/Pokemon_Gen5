@@ -1496,6 +1496,10 @@ void FIELD_CAMERA_DEBUG_ReleaseSubScreen(FIELD_CAMERA * camera)
   camera->debug_trace_off = FALSE;
 
   FIELD_CAMERA_ChangeMode( camera, camera->debug_save_camera_mode );
+  if(camera->debug_save_camera_mode == FIELD_CAMERA_MODE_CALC_CAMERA_POS)
+  {
+    FIELD_CAMERA_BindDefaultTarget( camera );
+  }
 
   // ワイプ表示破棄
   FLD_WIPEOBJ_Delete( camera->p_debug_wipe );
@@ -2021,6 +2025,12 @@ BOOL FIELD_CAMERA_DEBUG_Control( FIELD_CAMERA* camera, int trg, int cont, int re
     }
   }
 
+  // 再表示
+  if( trg & PAD_BUTTON_DEBUG )
+  {
+    ret = TRUE;
+  }
+
   DEBUG_ControlWork( camera );
 
   return ret;
@@ -2092,8 +2102,6 @@ void FIELD_CAMERA_DEBUG_DrawInfo( FIELD_CAMERA* camera, GFL_BMPWIN* p_win, fx32 
     GFL_G3D_CAMERA_GetNear(camera->g3Dcamera, &near);
     GFL_G3D_CAMERA_GetFar(camera->g3Dcamera, &far);
 
-    OS_TPrintf( "far = 0x%x\n", far );
-    
     WORDSET_RegisterHexNumber( camera->p_debug_wordset, 0, camera->fovy, 4, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
     WORDSET_RegisterHexNumber( camera->p_debug_wordset, 1, FX_Whole(near), 4, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
     WORDSET_RegisterHexNumber( camera->p_debug_wordset, 2, FX_Whole(far), 4, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
@@ -2140,11 +2148,12 @@ void FIELD_CAMERA_DEBUG_DrawInfo( FIELD_CAMERA* camera, GFL_BMPWIN* p_win, fx32 
     GFL_G3D_CAMERA_GetTarget( camera->g3Dcamera, &target );
     GFL_G3D_CAMERA_GetPos( camera->g3Dcamera, &camerapos );
 
+    if( GFL_UI_KEY_GetCont() & PAD_BUTTON_DEBUG )
     {
       fx32 half_x, half_z;
       half_x = FX_Div( map_size_x, 2<<FX32_SHIFT );
       half_z = FX_Div( map_size_z, 2<<FX32_SHIFT );
-      OS_Printf( "Maya Trans x[%f] y[%f] z[%f]\n", FX_FX32_TO_F32(camerapos.x - half_x), FX_FX32_TO_F32(camerapos.y), FX_FX32_TO_F32(camerapos.z - half_z) );
+      OS_Printf( "\n--------------Maya Param-------------\nMaya Trans x[%f] y[%f] z[%f]\n", FX_FX32_TO_F32(camerapos.x - half_x), FX_FX32_TO_F32(camerapos.y), FX_FX32_TO_F32(camerapos.z - half_z) );
     }
     
     // カメラ座標を表示
@@ -2192,6 +2201,7 @@ void FIELD_CAMERA_DEBUG_DrawInfo( FIELD_CAMERA* camera, GFL_BMPWIN* p_win, fx32 
     f_x = (f32)(rot_x / (f32)0x10000) * 360.0f;
     f_y = (f32)(rot_y / (f32)0x10000) * 360.0f;
 
+    if( GFL_UI_KEY_GetCont() & PAD_BUTTON_DEBUG )
     {
       OS_Printf( "Maya Rotate x[%f] y[%f]\n", f_x, f_y );
     }

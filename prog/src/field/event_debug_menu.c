@@ -3568,6 +3568,13 @@ static GMEVENT_RESULT debugMenuDelicateCamera( GMEVENT *p_event, int *p_seq, voi
         FIELD_SUBSCREEN_Init( p_work->heapID, p_work->p_field, FIELD_SUBSCREEN_NORMAL ));
     return ( GMEVENT_RES_FINISH );
   }
+
+  // DEBUGで、スクリプト操作用の表示を出す。
+  // バッファリングモードも変わってしまいますが・・・。
+  if( trg & PAD_BUTTON_DEBUG ){
+    DampCameraInfo( p_work->p_camera );
+  }
+  
   
   // カメラデバック入力
   result = FIELD_CAMERA_DEBUG_Control( p_work->p_camera, trg, cont, repeat );

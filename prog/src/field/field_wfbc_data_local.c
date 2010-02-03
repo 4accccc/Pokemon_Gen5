@@ -1159,6 +1159,7 @@ MMDL_HEADER* FIELD_WFBC_CORE_ITEM_MMDLHeaderCreateHeapLo( const FIELD_WFBC_CORE_
       cp_itempos = FIELD_WFBC_PEOPLE_POS_GetIndexItemPos( p_pos, i );
       
       p_buff[item_index] = sc_DEFAULT_ITEM_HEADER;
+      p_buff[item_index].id       = FIELD_WFBC_ITEM_OBJID_START + i;
       p_buff[item_index].event_id = FIELD_WFBC_CORE_ITEM_GetItemData( cp_wk, i );
       GF_ASSERT( i < 10 );
       p_buff[item_index].event_flag = TMFLG_WC10_ITEM_01 + i;

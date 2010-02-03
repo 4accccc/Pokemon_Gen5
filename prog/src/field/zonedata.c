@@ -248,6 +248,9 @@ static ZONEDATA * loadZoneData( u16 zoneID )
     return NULL;
   }
 
+  // ZONEID‚Ì‚·‚è‘Ö‚¦
+  zoneID = ControlZoneID(zoneID);
+
   // “Ç‚Ýž‚ÝÏ‚Ý
   if( zoneID == data_handle->zoneDataID ){ return &( data_handle->zoneData ); }  
 

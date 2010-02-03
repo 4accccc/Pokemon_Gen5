@@ -78,6 +78,8 @@ typedef enum {
 #define FIELD_WFBC_OBJID_SET(x)  ( (x) + FIELD_WFBC_OBJID_START )
 #define FIELD_WFBC_OBJID_GET(x)  ( (x) - FIELD_WFBC_OBJID_START )
 
+#define FIELD_WFBC_ITEM_OBJID_START  ( 160 )
+
 
 //-------------------------------------
 ///	GAMEDATA　街情報インデックス

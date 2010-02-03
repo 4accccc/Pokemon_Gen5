@@ -18,13 +18,7 @@ enum {
 	NARC_rail_editor_rail_editor_point_nsbmd = 4,
 	NARC_rail_editor_rail_editor_position_nsbca = 5,
 	NARC_rail_editor_rail_editor_position_nsbma = 6,
-	NARC_rail_editor_rail_editor_position_nsbmd = 7,
-	NARC_rail_editor_sea_haichi_nsbmd = 8,
-	NARC_rail_editor_sea_light_nsbmd = 9,
-	NARC_rail_editor_sea_light_2_nsbmd = 10,
-	NARC_rail_editor_sea_light_shadow_nsbmd = 11,
-	NARC_rail_editor_sea_light_shadow_2_nsbmd = 12,
-	NARC_rail_editor_sea_shodow_nsbmd = 13
+	NARC_rail_editor_rail_editor_position_nsbmd = 7
 };
 
 /* NARC_RAIL_EDITOR_NAIX_ */
