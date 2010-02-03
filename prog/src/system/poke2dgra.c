@@ -162,7 +162,7 @@ void POKE2DGRA_BG_TransResource( int mons_no, int form_no, int sex, int rare, in
 {
 	PALTYPE	paltype;
 	ARCID		arc;
-	ARCDATID	cgr, plt;
+	ARCDATID	plt;
 
 	//パレット読込先取得
 	if( frm < GFL_BG_FRAME0_S )
@@ -177,7 +177,6 @@ void POKE2DGRA_BG_TransResource( int mons_no, int form_no, int sex, int rare, in
 	//リソース受け取り
 	{	
 		arc	= POKEGRA_GetArcID();
-		cgr	= POKEGRA_GetCgrArcIndex( mons_no, form_no, sex, rare, dir, egg );
 		plt	= POKEGRA_GetPalArcIndex( mons_no, form_no, sex, rare, dir, egg );
 	}
 
@@ -222,7 +221,7 @@ GFL_ARCUTIL_TRANSINFO POKE2DGRA_BG_TransResourceByAreaMan( int mons_no, int form
 {	
 	PALTYPE	paltype;
 	ARCID		arc;
-	ARCDATID	cgr, plt;
+	ARCDATID	plt;
 	GFL_ARCUTIL_TRANSINFO info;
 
 	//パレット読込先取得
@@ -238,7 +237,6 @@ GFL_ARCUTIL_TRANSINFO POKE2DGRA_BG_TransResourceByAreaMan( int mons_no, int form
 	//リソース受け取り
 	{	
 		arc	= POKEGRA_GetArcID();
-		cgr	= POKEGRA_GetCgrArcIndex( mons_no, form_no, sex, rare, dir, egg );
 		plt	= POKEGRA_GetPalArcIndex( mons_no, form_no, sex, rare, dir, egg );
 	}
 
