@@ -3747,11 +3747,14 @@ static void WallPaperBufferFill( BOX2_SYS_WORK * syswk, u8 * buf, u32 wp, u32 ch
 	u8	col;
 
 	if( wp >= BOX_NORMAL_WALLPAPER_MAX ){
+/*
 		if( BOXDAT_GetDaisukiKabegamiFlag( syswk->dat->sv_box, wp-BOX_NORMAL_WALLPAPER_MAX ) == FALSE ){
 			col = WP_IMAGE_COLOR_START + BOX_TOTAL_WALLPAPER_MAX;
 		}else{
 			col = WP_IMAGE_COLOR_START + wp;
 		}
+*/
+		col = WP_IMAGE_COLOR_START + wp;
 	}else{
 		col = WP_IMAGE_COLOR_START + wp;
 	}

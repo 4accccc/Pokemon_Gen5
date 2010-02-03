@@ -42,6 +42,11 @@ typedef struct _BOX_TRAY_DATA BOX_TRAY_DATA;
 #define BOX_NORMAL_WALLPAPER_MAX	(16)
 #define BOX_EX_WALLPAPER_MAX			(8)
 #define BOX_TOTAL_WALLPAPER_MAX		(BOX_NORMAL_WALLPAPER_MAX+BOX_EX_WALLPAPER_MAX)
+// 追加壁紙設定パラメータ
+enum {
+	BOX_EX_WALLPAPER_SET_FLAG_1 = 1,
+	BOX_EX_WALLPAPER_SET_FLAG_2,
+};
 /*
 #define BOX_PL_EX_WALLPAPER_MAX		(8)	//プラチナで追加された秘密壁紙
 #define BOX_GS_EX_WALLPAPER_MAX		(8)	//金銀で追加された秘密壁紙
@@ -198,11 +203,18 @@ extern void BOXDAT_PokeParaPut( BOX_MANAGER* box, u32 trayNum, u32 pos, int para
 
 
 //==============================================================================================
+//	追加壁紙（旧だいすきクラブ壁紙）
+//==============================================================================================
+
+extern void BOXDAT_SetExWallPaperFlag( BOX_MANAGER * box, u32 flag );
+extern BOOL BOXDAT_GetExWallPaperFlag( BOX_MANAGER * box, u32 flag );
+
+//==============================================================================================
 // だいすきクラブ壁紙
 //==============================================================================================
-extern void BOXDAT_SetDaisukiKabegamiFlag( BOX_MANAGER* box, u32 number );
-extern BOOL BOXDAT_GetDaisukiKabegamiFlag( const BOX_MANAGER* box, u32 number );
-extern u32  BOXDAT_GetDaiukiKabegamiCount( const BOX_MANAGER* box );
+//extern void BOXDAT_SetDaisukiKabegamiFlag( BOX_MANAGER* box, u32 number );
+//extern BOOL BOXDAT_GetDaisukiKabegamiFlag( const BOX_MANAGER* box, u32 number );
+//extern u32  BOXDAT_GetDaiukiKabegamiCount( const BOX_MANAGER* box );
 
 
 //extern void BOXDAT_SetTrayUseBit(BOX_MANAGER* box, const u8 inTrayIdx);

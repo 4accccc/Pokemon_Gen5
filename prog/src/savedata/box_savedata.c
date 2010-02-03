@@ -919,7 +919,48 @@ POKEMON_PASO_PARAM* BOXDAT_GetPokeDataAddress( const BOX_MANAGER* box, u32 trayN
 
 
 
+//==============================================================================================
+//	追加壁紙（旧だいすきクラブ壁紙）
+//==============================================================================================
 
+//------------------------------------------------------------------
+/**
+ * 追加壁紙を有効にする
+ *
+ * @param   box				ボックスデータポインタ
+ * @param   flag			有効にする壁紙フラグ
+ *
+ * @return	none
+ */
+//------------------------------------------------------------------
+void BOXDAT_SetExWallPaperFlag( BOX_MANAGER * box, u32 flag )
+{
+  BOX_SAVEDATA * boxData = BOXDAT_GetBoxSaveData( box );
+
+	GF_ASSERT( flag == BOX_EX_WALLPAPER_SET_FLAG_1 || flag == BOX_EX_WALLPAPER_SET_FLAG_2 );
+
+	boxData->daisukiBitFlag |= flag;
+}
+
+//------------------------------------------------------------------
+/**
+ * 追加壁紙が有効か
+ *
+ * @param   box				ボックスデータポインタ
+ * @param   flag			壁紙フラグ
+ *
+ * @retval	"TURE = 有効"
+ * @retval	"FALSE = それ以外"
+ */
+//------------------------------------------------------------------
+BOOL BOXDAT_GetExWallPaperFlag( BOX_MANAGER * box, u32 flag )
+{
+  BOX_SAVEDATA * boxData = BOXDAT_GetBoxSaveData( box );
+
+	GF_ASSERT( flag == BOX_EX_WALLPAPER_SET_FLAG_1 || flag == BOX_EX_WALLPAPER_SET_FLAG_2 );
+
+	return ( boxData->daisukiBitFlag & flag );
+}
 
 
 //==============================================================================================
@@ -935,6 +976,7 @@ POKEMON_PASO_PARAM* BOXDAT_GetPokeDataAddress( const BOX_MANAGER* box, u32 trayN
  *
  */
 //------------------------------------------------------------------
+/*
 void BOXDAT_SetDaisukiKabegamiFlag( BOX_MANAGER* box, u32 number )
 {
   BOX_SAVEDATA *boxData = BOXDAT_GetBoxSaveData(box);
@@ -943,6 +985,7 @@ void BOXDAT_SetDaisukiKabegamiFlag( BOX_MANAGER* box, u32 number )
 	boxData->daisukiBitFlag |= (1 << number);
 ///	SaveData_RequestTotalSave();金銀で削除　ポケモン以外のデータはいかなる場合も書くのでこの関数でリクエストしなくてＯＫ
 }
+*/
 
 //------------------------------------------------------------------
 /**
@@ -954,6 +997,7 @@ void BOXDAT_SetDaisukiKabegamiFlag( BOX_MANAGER* box, u32 number )
  * @retval  BOOL		TRUEで取得している
  */
 //------------------------------------------------------------------
+/*
 BOOL BOXDAT_GetDaisukiKabegamiFlag( const BOX_MANAGER* box, u32 number )
 {
   BOX_SAVEDATA *boxData = BOXDAT_GetBoxSaveData(box);
@@ -961,6 +1005,7 @@ BOOL BOXDAT_GetDaisukiKabegamiFlag( const BOX_MANAGER* box, u32 number )
 
 	return (boxData->daisukiBitFlag & (1<<number)) != 0;
 }
+*/
 
 //------------------------------------------------------------------
 /**
@@ -971,6 +1016,7 @@ BOOL BOXDAT_GetDaisukiKabegamiFlag( const BOX_MANAGER* box, u32 number )
  * @retval  u32		
  */
 //------------------------------------------------------------------
+/*
 u32 BOXDAT_GetDaiukiKabegamiCount( const BOX_MANAGER* box )
 {
 	u32 i, cnt;
@@ -984,6 +1030,7 @@ u32 BOXDAT_GetDaiukiKabegamiCount( const BOX_MANAGER* box )
 	}
 	return cnt;
 }
+*/
 
 //------------------------------------------------------------------
 /**
