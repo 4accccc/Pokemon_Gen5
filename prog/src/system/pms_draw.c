@@ -35,6 +35,8 @@
 typedef struct {
   PRINT_UTIL    print_util;
   GFL_CLWK*     clwk[PMS_WORD_MAX];
+  int           pre_scrcnt_x; ///< 前フレームのBGスクロールカウンタ
+  int           pre_scrcnt_y; ///< 前フレームのBGスクロールカウンタ
   BOOL          b_useflag;
   BOOL          b_clwk_deco[PMS_WORD_MAX]; ///< CLWKデコメ判定フラグ
 } PMS_DRAW_UNIT;
@@ -64,6 +66,7 @@ struct _PMS_DRAW_WORK {
   PMS_DRAW_OBJ wk_obj;
   PRINTSYS_LSB print_color;
   BOOL    b_print_end;  ///< プリント終了フラグ
+  BOOL    is_clwk_auto_scroll;  ///< CLWK オートスクロールフラグ
   u8      unit_num;
   u8      null_color;   ///< 空欄を塗りつぶすパレット番号
   u8      padding[2];
@@ -83,7 +86,7 @@ static GFL_CLWK* _obj_create( PMS_DRAW_OBJ* obj, HEAPID heap_id );
 static void _obj_set_deco( GFL_CLWK* act, GFL_BMPWIN* win, u8 width, u8 line, PMS_DECO_ID deco_id, GFL_POINT* offset );
 static void _unit_init( PMS_DRAW_UNIT* unit, PMS_DRAW_OBJ* obj, HEAPID heap_id );
 static void _unit_exit( PMS_DRAW_UNIT* unit );
-static BOOL _unit_main( PMS_DRAW_UNIT* unit, PRINT_QUE* que );
+static BOOL _unit_main( PMS_DRAW_UNIT* unit, PRINT_QUE* que, BOOL is_clwk_auto_scroll );
 static void _unit_print( PMS_DRAW_UNIT* unit, PRINT_QUE* print_que, GFL_FONT* font, GFL_BMPWIN* win, PMS_DATA* pms, GFL_POINT* offset, PRINTSYS_LSB print_color, u8 null_color, HEAPID heap_id );
 static void _unit_clear( PMS_DRAW_UNIT* unit, BOOL is_trans );
 static CLSYS_DRAW_TYPE BGFrameToVramType( u8 frame );
@@ -126,6 +129,7 @@ PMS_DRAW_WORK* PMS_DRAW_Init( GFL_CLUNIT* clunit, CLSYS_DRAW_TYPE vram_type, PRI
   wk->font        = font;
   wk->unit_num    = id_max;
   wk->null_color  = PMS_DRAW_DEF_NULL_COLOR;  
+  wk->is_clwk_auto_scroll = FALSE; ///< デフォルトは無効
 
   // 表示ユニットメモリ確保
   wk->unit = GFL_HEAP_AllocClearMemory( heap_id, sizeof(PMS_DRAW_UNIT) *id_max );
@@ -167,7 +171,7 @@ void PMS_DRAW_Main( PMS_DRAW_WORK* wk )
   
   for( i=0; i<wk->unit_num; i++ )
   {
-    if( _unit_main( &wk->unit[i], wk->print_que ) )
+    if( _unit_main( &wk->unit[i], wk->print_que, wk->is_clwk_auto_scroll ) )
     {
       // 一個でも転送が終わってないものがあったら転送終了フラグをOFF
       wk->b_print_end = FALSE;
@@ -399,7 +403,26 @@ void PMS_DRAW_SetNullColorPallet( PMS_DRAW_WORK* wk, u8 pltt_pos )
 //-----------------------------------------------------------------------------
 void PMS_DRAW_SetPrintColor( PMS_DRAW_WORK* wk, PRINTSYS_LSB color )
 {
+  GF_ASSERT( wk );
+
   wk->print_color = color;
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  アクターをBGスクロールに追随させるフラグON／OFF
+ *
+ *	@param	PMS_DRAW_WORK* wk ワーク
+ *	@param	is_clwk_auto_scroll TRUE:追随させる
+ *
+ *	@retval none
+ */
+//-----------------------------------------------------------------------------
+void PMS_DRAW_SetCLWKAutoScrollFlag( PMS_DRAW_WORK* wk, BOOL is_clwk_auto_scroll )
+{
+  GF_ASSERT( wk );
+
+  wk->is_clwk_auto_scroll = is_clwk_auto_scroll;
 }
 
 
@@ -664,7 +687,7 @@ static void _unit_exit( PMS_DRAW_UNIT* unit )
  *  @retval BOOL	まだ転送が終わっていない場合はTRUE／それ以外FALSE
  */
 //-----------------------------------------------------------------------------
-static BOOL _unit_main( PMS_DRAW_UNIT* unit, PRINT_QUE* que )
+static BOOL _unit_main( PMS_DRAW_UNIT* unit, PRINT_QUE* que, BOOL is_clwk_auto_scroll )
 {
   BOOL doing;
 
@@ -682,6 +705,47 @@ static BOOL _unit_main( PMS_DRAW_UNIT* unit, PRINT_QUE* que )
       }
     }
   }
+
+  // スクロールカウンタの差をCLWKに反映
+  if( is_clwk_auto_scroll )
+  {
+    int frame = GFL_BMPWIN_GetFrame(unit->print_util.win);
+    GFL_CLACTPOS pos = {0};
+    int sx;
+    int sy;
+    int i;
+
+    sx = GFL_BG_GetScreenScrollX( frame );
+    sy = GFL_BG_GetScreenScrollY( frame );
+
+    if( sx != unit->pre_scrcnt_x )
+    {
+      pos.x = unit->pre_scrcnt_x - sx;
+      unit->pre_scrcnt_x = sx;
+    }
+
+    if( sy != unit->pre_scrcnt_y )
+    {
+      pos.y = unit->pre_scrcnt_y - sy;
+      unit->pre_scrcnt_y = sy;
+    }
+
+    // CLWKに値を流す
+    if( pos.x != 0 || pos.y != 0 )
+    {
+      for( i=0; i<PMS_WORD_MAX; i++ )
+      {
+        GFL_CLACTPOS org;
+
+        GFL_CLACT_WK_GetWldPos( unit->clwk[i], &org );
+        HOSAKA_Printf("[%d]pos=%d \n",i, org.x);
+        HOSAKA_Printf("[%d]pos=%d \n",i, org.y);
+        org.x += pos.x;
+        org.y += pos.y;
+        GFL_CLACT_WK_SetWldPos( unit->clwk[i], &org );
+      }
+    }
+  } // if( is_clwk_auto_scroll )
 
   return doing;
 }

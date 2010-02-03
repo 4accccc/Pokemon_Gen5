@@ -158,7 +158,6 @@ extern void PMS_DRAW_Copy( PMS_DRAW_WORK* wk, u8 id_src, u8 id_dst );
  */
 //-----------------------------------------------------------------------------
 extern void PMS_DRAW_SetNullColorPallet( PMS_DRAW_WORK* wk, u8 pltt_pos );
-
 //-----------------------------------------------------------------------------
 /**
  *	@brief  文字描画色を指定
@@ -170,4 +169,15 @@ extern void PMS_DRAW_SetNullColorPallet( PMS_DRAW_WORK* wk, u8 pltt_pos );
  */
 //-----------------------------------------------------------------------------
 extern void PMS_DRAW_SetPrintColor( PMS_DRAW_WORK* wk, PRINTSYS_LSB color );
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  アクターをBGスクロールに追随させるフラグON／OFF
+ *
+ *	@param	PMS_DRAW_WORK* wk ワーク
+ *	@param	is_clwk_auto_scroll TRUE:追随させる
+ *
+ *	@retval none
+ */
+//-----------------------------------------------------------------------------
+extern void PMS_DRAW_SetCLWKAutoScrollFlag( PMS_DRAW_WORK* wk, BOOL is_clwk_auto_scroll );
 
