@@ -17,7 +17,6 @@
 #define TR_PILOT_02                        3
 #define TR_WORKER2_08                      4
 #define TR_WORKER2_10                      5
-#define TR_WORKER2_09                      6
-#define TR_WORKER2_11                      7
+#define TR_WORKER2_11                      6
 
 #endif //ZONE_C06GYM0101_EVC_H

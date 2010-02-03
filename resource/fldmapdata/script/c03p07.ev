@@ -21,6 +21,7 @@
 //--------------------------------------------------------------
 _EVENT_DATA		ev_c03p07_veteranm_01
 _EVENT_DATA		ev_c03p07_trainerw_01
+_EVENT_DATA		ev_scene_c03p07_tvt_01
 _EVENT_DATA_END
 
 
@@ -43,3 +44,15 @@ EVENT_END
 EVENT_START		ev_c03p07_trainerw_01
 	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03p07_trainerw_01 )
 EVENT_END
+
+/**************************************************************/
+/*		トランシーバー	C03P07								  */
+/**************************************************************/
+EVENT_START		ev_scene_c03p07_tvt_01
+	_PLAYER_NAME(0)
+	_PLAINWIN_MSG_DOWN( msg_c03p07_tvt_01 )
+	_PLAINWIN_CLOSE()
+	$WK_SCENE_C03P07 = 2
+	
+EVENT_END
+

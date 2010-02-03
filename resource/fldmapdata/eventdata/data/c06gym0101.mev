@@ -1,5 +1,5 @@
 #event data
-#save date:2010/01/20 17:40:50
+#save date:2010/02/03 18:14:59
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c06gym0101.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c06gym0101.wms
 #hold event type:
 1
 #hold event number:
-8
+7
 #event number: 0
 #type
 1
@@ -173,7 +173,7 @@ TR_WORKER2_10
 #OBJ CODE Number
 WORKMAN2
 #MOVE CODE Number
-MV_RND
+MV_LEFT
 #EVENT TYPE Number
 EV_TYPE_TRAINER
 #Flag Name
@@ -181,9 +181,9 @@ EV_TYPE_TRAINER
 #Event Script Name
 SCRID_TRID_WORKER2_10
 #Direction Type Number
-DIR_DOWN
+DIR_LEFT
 #Parameter 0 Number
-4
+2
 #Parameter 1 Number
 0
 #Parameter 2 Number
@@ -195,39 +195,8 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-136 64 -184
+104 64 -152
 #event number: 6
-#type
-1
-#ID name
-TR_WORKER2_09
-#OBJ CODE Number
-WORKMAN2
-#MOVE CODE Number
-MV_RND
-#EVENT TYPE Number
-EV_TYPE_TRAINER
-#Flag Name
-0
-#Event Script Name
-SCRID_TRID_WORKER2_09
-#Direction Type Number
-DIR_DOWN
-#Parameter 0 Number
-4
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--168 64 -200
-#event number: 7
 #type
 1
 #ID name

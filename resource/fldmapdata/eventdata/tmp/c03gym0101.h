@@ -21,7 +21,6 @@
 #define C03GYM0101_LEADER3_01              9
 #define C03GYM0101_SUNGLASSES_01          10
 #define TR_JUGGLING_04                    11
-#define TR_JUGGLING_03                    12
-#define TR_JUGGLING_02                    13
+#define TR_JUGGLING_02                    12
 
 #endif //ZONE_C03GYM0101_EVC_H
