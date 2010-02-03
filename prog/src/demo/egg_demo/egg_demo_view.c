@@ -59,9 +59,9 @@ STEP;
 #define POKE_SCALE       (16.0f)
 #define POKE_SIZE_MAX    (96.0f)
 
-// パーティクルとポケモンを連携させる
-#define PARTICLE_BURST_FRAME   (300)
-#define PARTICLE_LAST_FRAME    (310)
+// パーティクルのフレームとポケモンアニメーションのフレームを連携させる
+#define PARTICLE_BURST_FRAME   (72)
+#define PARTICLE_LAST_FRAME    (82)
 
 
 //=============================================================================
@@ -139,11 +139,20 @@ static const PARTICLE_PLAY_DATA particle_play_data_tbl[] =
   {  480,     PARTICLE_SPA_FILE_1,        2 },  // 白輪が広がる
   {  560,     PARTICLE_SPA_FILE_1,        3 },  // 奇妙な色のタマゴ
 };
-#else
+#elif 0
 static const PARTICLE_PLAY_DATA particle_play_data_tbl[] =
 {
   {                     120,     PARTICLE_SPA_FILE_0,        0 },  // タマゴの小さな殻が少し飛ぶ
   {                     210,     PARTICLE_SPA_FILE_0,        1 },  // タマゴの小さな殻が大きく飛ぶ
+  {    PARTICLE_BURST_FRAME,     PARTICLE_SPA_FILE_0,        2 },  // タマゴの大きな殻が放射状に激しく飛ぶ
+  {  PARTICLE_LAST_FRAME -5,     PARTICLE_SPA_FILE_0,        3 },  // 黄色の星キラキラ
+  {     PARTICLE_LAST_FRAME,     PARTICLE_SPA_FILE_0,        3 },  // 黄色の星キラキラ
+};
+#else
+static const PARTICLE_PLAY_DATA particle_play_data_tbl[] =
+{
+  {                      23,     PARTICLE_SPA_FILE_0,        0 },  // タマゴの小さな殻が少し飛ぶ
+  {                      67,     PARTICLE_SPA_FILE_0,        1 },  // タマゴの小さな殻が大きく飛ぶ
   {    PARTICLE_BURST_FRAME,     PARTICLE_SPA_FILE_0,        2 },  // タマゴの大きな殻が放射状に激しく飛ぶ
   {  PARTICLE_LAST_FRAME -5,     PARTICLE_SPA_FILE_0,        3 },  // 黄色の星キラキラ
   {     PARTICLE_LAST_FRAME,     PARTICLE_SPA_FILE_0,        3 },  // 黄色の星キラキラ
@@ -191,7 +200,8 @@ static void Egg_Demo_View_McssSysExit( EGG_DEMO_VIEW_WORK* work );
 static void Egg_Demo_View_McssInit( EGG_DEMO_VIEW_WORK* work );
 static void Egg_Demo_View_McssExit( EGG_DEMO_VIEW_WORK* work );
 static void Egg_Demo_View_McssVanish( EGG_DEMO_VIEW_WORK* work );
- 
+static void Egg_Demo_View_McssSetAnimeIndex( EGG_DEMO_VIEW_WORK* work, int index );
+
 //-------------------------------------
 /// パーティクル
 //=====================================
@@ -308,6 +318,9 @@ void EGG_DEMO_VIEW_Main( EGG_DEMO_VIEW_WORK* work )
         
         work->wait_count = 0;
 
+        // アニメーション
+        Egg_Demo_View_McssSetAnimeIndex( work, 1 );
+        
         // パーティクル
         Particle_Start( work->particle_mgr );
       }
@@ -339,7 +352,7 @@ void EGG_DEMO_VIEW_Main( EGG_DEMO_VIEW_WORK* work )
   case STEP_MON_START:
     {
       work->wait_count++;
-      if( work->wait_count >= 60 )
+      if( work->wait_count >= 65 )
       {
         // 次へ
         work->step = STEP_MON_CRY;
@@ -589,6 +602,13 @@ static void Egg_Demo_View_McssExit( EGG_DEMO_VIEW_WORK* work )
 static void Egg_Demo_View_McssVanish( EGG_DEMO_VIEW_WORK* work )
 {
   MCSS_SetVanishFlag( work->mcss_wk );
+}
+//-------------------------------------
+/// MCSSポケモンアニメーション設定
+//=====================================
+static void Egg_Demo_View_McssSetAnimeIndex( EGG_DEMO_VIEW_WORK* work, int index )
+{
+  MCSS_SetAnimeIndex( work->mcss_wk, index );
 }
 
 //-------------------------------------

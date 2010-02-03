@@ -8,6 +8,7 @@
  *  モジュール名：EGG_DEMO
  */
 //============================================================================
+#define DEBUG_KAWADA
 #define HEAPID_EGG_DEMO (HEAPID_SHINKA_DEMO)
 
 
@@ -270,8 +271,13 @@ typedef struct
   // 名前入力
   NAMEIN_PARAM*               namein_param;
 
+
+#ifdef DEBUG_KAWADA
   // 制作中だけ
   POKEMON_PARAM*              tmp_pp;
+#endif
+
+
 }
 EGG_DEMO_WORK;
 
@@ -441,13 +447,11 @@ static GFL_PROC_RESULT Egg_Demo_ProcInit( GFL_PROC* proc, int* seq, void* pwk, v
   }
 
 
-
-
+#ifdef DEBUG_KAWADA
   work->tmp_pp    = PP_Create( MONSNO_HUSIGIDANE, 0, 0, work->heap_id );
   param->pp       = work->tmp_pp;
   PP_Put( param->pp, ID_PARA_tamago_flag, 1 );
-
-
+#endif
 
 
   // ステップ
@@ -486,11 +490,9 @@ static GFL_PROC_RESULT Egg_Demo_ProcExit( GFL_PROC* proc, int* seq, void* pwk, v
     Egg_Demo_Exit( param, work );
 
 
-
-
+#ifdef DEBUG_KAWADA
   GFL_HEAP_FreeMemory( work->tmp_pp );
-
- 
+#endif
 
 
   // ヒープ
@@ -520,9 +522,6 @@ static GFL_PROC_RESULT Egg_Demo_ProcMain( GFL_PROC* proc, int* seq, void* pwk, v
       {
         // 次へ
         work->trunk_step = TRUNK_STEP_SOUND_INTRO;
-
-        // タマゴ孵化デモの演出
-        EGG_DEMO_VIEW_Start( work->view );
 
         Egg_Demo_SoundPlayIntro( param, work );
       }
