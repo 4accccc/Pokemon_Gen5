@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-02T15:58:21"/>
+	<create user="matsumiya" host="W00224" date="2010-02-03T16:52:45"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1425" top="352" right="2130" bottom="972" maximized="no" rayout="Vertical2">
+	<dialog left="1303" top="210" right="2008" bottom="838" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -332,7 +332,10 @@
 	<row id="msg_c03r1001_woman3_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・画面暗転中にこのメッセージ表示
-・続けて暗転終了しwoman3_05表示</comment>
+・暗転終了
+　＋３０　　５％
+　＋１０　２５％
+　＋　５　７０％</comment>
 		<attribute name="キャラ指定">WOMAN3</attribute>
 		<language name="JPN" width="256">もみもみもみもみもみもみ
 もみもみもみもみもみもみ……▼</language>
@@ -343,10 +346,7 @@
 	<row id="msg_c03r1001_woman3_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・終了時
-・先頭のポケモンのなつき度＋３０のとき
-　＋３０　　５％
-　＋１０　２５％
-　＋　５　７０％</comment>
+・先頭のポケモンのなつき度＋３０のとき</comment>
 		<attribute name="キャラ指定">WOMAN3</attribute>
 		<language name="JPN" width="256">はい　おつかれさま！！▼
 いまの　マッサージで
