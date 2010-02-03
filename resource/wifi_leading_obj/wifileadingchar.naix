@@ -18,7 +18,11 @@ enum {
 	NARC_wifileadingchar_hero_NCLR = 4,
 	NARC_wifileadingchar_hero_NCGR = 5,
 	NARC_wifileadingchar_heroine_NCLR = 6,
-	NARC_wifileadingchar_heroine_NCGR = 7
+	NARC_wifileadingchar_heroine_NCGR = 7,
+	NARC_wifileadingchar_hero_ine_kage_NANR = 8,
+	NARC_wifileadingchar_hero_ine_kage_NCER = 9,
+	NARC_wifileadingchar_hero_ine_kage_NCLR = 10,
+	NARC_wifileadingchar_hero_ine_kage_NCGR = 11
 };
 
 /* NARC_WIFILEADINGCHAR_NAIX_ */

@@ -6,3 +6,7 @@
 "hero.NCGR"
 "heroine.NCLR"
 "heroine.NCGR"
+"hero_ine_kage.NANR"
+"hero_ine_kage.NCER"
+"hero_ine_kage.NCLR"
+"hero_ine_kage.NCGR"
