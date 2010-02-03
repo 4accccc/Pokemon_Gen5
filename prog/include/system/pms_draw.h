@@ -171,7 +171,7 @@ extern void PMS_DRAW_SetNullColorPallet( PMS_DRAW_WORK* wk, u8 pltt_pos );
 extern void PMS_DRAW_SetPrintColor( PMS_DRAW_WORK* wk, PRINTSYS_LSB color );
 //-----------------------------------------------------------------------------
 /**
- *	@brief  アクターをBGスクロールに追随させるフラグON／OFF
+ *	@brief  アクターをBGスクロールに追随させるフラグON／OFF (デフォルト無効)
  *
  *	@param	PMS_DRAW_WORK* wk ワーク
  *	@param	is_clwk_auto_scroll TRUE:追随させる
