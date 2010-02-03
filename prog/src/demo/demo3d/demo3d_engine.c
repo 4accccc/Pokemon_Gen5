@@ -193,10 +193,10 @@ DEMO3D_ENGINE_WORK* Demo3D_ENGINE_Init( DEMO3D_GRAPHIC_WORK* graphic, DEMO3D_ID 
   wk->is_double = Demo3D_DATA_GetDoubleFlag( demo_id );
 
 #ifdef PM_DEBUG
-  //@TODO セレクトを押しながら起動すると強制的に二画面化
+  //@TODO セレクトを押しながら起動すると二画面フラグ反転
   if( GFL_UI_KEY_GetCont() & PAD_BUTTON_SELECT )
   {
-    wk->is_double = TRUE;
+    wk->is_double ^= 1;
   }
 #endif // PM_DEBUG
   
