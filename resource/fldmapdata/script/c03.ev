@@ -152,12 +152,12 @@ EVENT_START		ev_pos_c03_rivalevent_01
 			
 		ENDIF
 	//ライバル・自機：連れ歩き
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_kari )
-	_OBJ_ANIME( C03_RIVAL_01, anm_kari )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_l )
+	_OBJ_ANIME( C03_RIVAL_01, anm_dir_l )
 	_OBJ_ANIME_WAIT()
 
 	//ライバル：自機の方を見る
-	_OBJ_ANIME( C03_RIVAL_01, anm_stay_r )
+	_OBJ_ANIME( C03_RIVAL_01, anm_dir_r )
 	_OBJ_ANIME_WAIT()
 
 	//ほら　ポケモンセンターがあるだろ？
@@ -165,7 +165,7 @@ EVENT_START		ev_pos_c03_rivalevent_01
 	_MSGWIN_CLOSE()
 
 	//ライバル：上向き
-	_OBJ_ANIME( C03_RIVAL_01, anm_stay_u )
+	_OBJ_ANIME( C03_RIVAL_01, anm_dir_u )
 	_OBJ_ANIME_WAIT()
 	
 	//あちらには　ポケモンセンターの
@@ -177,12 +177,12 @@ EVENT_START		ev_pos_c03_rivalevent_01
 	_MSGWIN_CLOSE()
 
 	//ライバル・自機：連れ歩き
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_kari )
-	_OBJ_ANIME( C03_RIVAL_01, anm_kari )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_l )
+	_OBJ_ANIME( C03_RIVAL_01, anm_dir_l )
 	_OBJ_ANIME_WAIT()
 
 	//ジムリーダー：登場
-	_OBJ_ANIME( C03_LEADER3_01, anm_kari )
+	_OBJ_ANIME( C03_LEADER3_01, anm_dir_r )
 	_OBJ_ANIME_WAIT()
 
 	//んうん？　ああ　きみ！
@@ -191,7 +191,7 @@ EVENT_START		ev_pos_c03_rivalevent_01
 	_MSGWIN_CLOSE()
 
 	//ジムリーダー：下向き
-	_OBJ_ANIME( C03_LEADER3_01, anm_stay_d )
+	_OBJ_ANIME( C03_LEADER3_01, anm_dir_d )
 	_OBJ_ANIME_WAIT()
 
 	//ヒウンシティにも　プラズマだんが　いたんだ
@@ -199,7 +199,7 @@ EVENT_START		ev_pos_c03_rivalevent_01
 	_MSGWIN_CLOSE()
 
 	//ジムリーダー：右向き
-	_OBJ_ANIME( C03_LEADER3_01, anm_stay_r )
+	_OBJ_ANIME( C03_LEADER3_01, anm_dir_r )
 	_OBJ_ANIME_WAIT()
 
 	//もちろん　おっぱったけどね
@@ -215,7 +215,7 @@ EVENT_START		ev_pos_c03_rivalevent_01
 	_MSGWIN_CLOSE()
 
 	//ライバル：右向き
-	_OBJ_ANIME( C03_RIVAL_01, anm_stay_r )
+	_OBJ_ANIME( C03_RIVAL_01, anm_dir_r )
 	_OBJ_ANIME_WAIT()
 
 	//バトルカンパニーと　いうのは
@@ -223,8 +223,8 @@ EVENT_START		ev_pos_c03_rivalevent_01
 	_MSGWIN_CLOSE()
 
 	//ライバル・自機：連れ歩き
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_kari )
-	_OBJ_ANIME( C03_RIVAL_01, anm_kari )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_l )
+	_OBJ_ANIME( C03_RIVAL_01, anm_dir_l )
 	_OBJ_ANIME_WAIT()
 
 	//こっちの　ろめんには
@@ -290,16 +290,12 @@ _ANIME_LABEL anm_stay_l
 //--------------------------------------------------------------
 //	仮アニメ
 //--------------------------------------------------------------
-_ANIME_LABEL anm_kari
-	_ANIME_DATA		AC_STAY_WALK_L_4F,10
-	_ANIME_DATA		ACMD_END,0
-
 _ANIME_LABEL anm_leader_leave
 	/*_ANIME_DATA		AC_WALK_L_8F,10*/
-	_ANIME_DATA		AC_VANISH_ON,1
+	_ANIME_DATA		AC_DIR_L,1
 	_ANIME_DATA		ACMD_END,0
 
 _ANIME_LABEL anm_rival_leave
 	/*_ANIME_DATA		AC_WALK_R_8F,10*/
-	_ANIME_DATA		AC_VANISH_ON,1
+	_ANIME_DATA		AC_DIR_L,1
 	_ANIME_DATA		ACMD_END,0

@@ -19,6 +19,7 @@ _EVENT_DATA		ev_scene_c01r0102_pdwguide_01
 _EVENT_DATA		ev_c01r0102_inventor_01
 _EVENT_DATA		ev_c01r0102_girl3_01
 _EVENT_DATA		ev_c01r0102_books_01
+_EVENT_DATA		ev_c01r0102_books_02
 _EVENT_DATA_END
 
 /**************************************************************/
@@ -49,6 +50,42 @@ EVENT_START   ev_scene_c01r0102_pdwguide_01
 	//Cギア入手イベント演出
 	_CGEAR_ON_DEMO()
 	
+	//あと　この　ともだちてちょうも　どうぞ！
+	_BALLOONWIN_OBJMSG( msg_c01r0102_inventor_friend_01 , C01R0102_INVENTOR_01 )
+	_BALLOONWIN_CLOSE()
+	
+	//ともだちてちょう入手処理
+	_ITEM_EVENT_KEYWAIT( ITEM_TOMODATITETYOU, 1 )
+	
+	//その　ともだちてちょうに
+	_BALLOONWIN_OBJMSG( msg_c01r0102_inventor_friend_02 , C01R0102_INVENTOR_01 )
+	
+	//YESNO分岐
+	_YES_NO_WIN( SCWK_ANSWER )
+	_BALLOONWIN_CLOSE()
+	
+	IF $SCWK_ANSWER == SCR_YES THEN
+	
+		//はい選択時
+		_BALLOONWIN_OBJMSG( msg_c01r0102_inventor_friend_03 , C01R0102_INVENTOR_01 )
+		//再質問にいいえと答えるまでループ
+		DEFINE_LOCAL	ans_no
+		$ans_no = SCR_YES
+			
+		WHILE $ans_no == SCR_YES
+		
+			_MSGWIN_CLOSE()
+			_BALLOONWIN_OBJMSG( msg_c01r0102_inventor_friend_03 , C01R0102_INVENTOR_01 )
+			_YES_NO_WIN( ans_no )
+			
+			IF $ans_no == SCR_NO THEN
+				
+			ENDIF
+			
+		ENDWHILE
+	
+	ENDIF
+	
 	//で　アタシからの　バックアップです　この　わざマシンを　どうぞ！
 	_BALLOONWIN_OBJMSG( msg_c01r0102_inventor_03 , C01R0102_INVENTOR_01 )
 	_BALLOONWIN_CLOSE()
@@ -70,6 +107,7 @@ EVENT_START   ev_scene_c01r0102_pdwguide_01
 	
 	//……ごめんなさい　つい　おどっちゃうのよね
 	_BALLOONWIN_OBJMSG( msg_c01r0102_inventor_06 , C01R0102_INVENTOR_01 )
+	_LAST_KEYWAIT()
 	_BALLOONWIN_CLOSE()
 
 	//===========フラグワーク操作===========//
@@ -189,4 +227,27 @@ EVENT_START   ev_c01r0102_books_01
 	_SYSWIN_MSG_DOWN   ( msg_c01r0101_books_01 )
 	_LAST_KEYWAIT()
 	_SYSWIN_CLOSE()
+EVENT_END
+
+/**************************************************************/
+/*  C01R0102 本棚２のイベントスクリプト						  */
+/**************************************************************/
+EVENT_START   ev_c01r0102_books_02
+	//ともだちてちょうに　ついて
+	_SYSWIN_MSG_DOWN   ( msg_c01r0101_books2_01 )
+	
+	_YES_NO_WIN( SCWK_ANSWER )
+	
+	IF $SCWK_ANSWER == SCR_YES THEN
+	
+		_MSGWIN_CLOSE()
+		_SYSWIN_MSG_DOWN   ( msg_c01r0101_books2_02 )
+		_MSGWIN_CLOSE()
+	
+	ELSE
+	
+		_MSGWIN_CLOSE()
+	
+	ENDIF
+
 EVENT_END
