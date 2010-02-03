@@ -14,6 +14,7 @@
 #include "system/gfl_use.h"
 #include "system/wipe.h"
 #include "system/camera_system.h"
+#include "system/bmp_winframe.h"
 #include "net/network_define.h"
 #include "app/app_menu_common.h"
 
@@ -92,6 +93,19 @@ typedef enum
 
   CDS_DRAW,
   CDS_EDIT,
+  
+  //親のリクエストによる終了
+  CDS_END_PARENT_REQ_INIT,
+  CDS_END_PARENT_REQ,
+
+  //WIFIのリクエストによる終了
+  CDS_END_WIFI_REQ_SEND,
+  CDS_END_WIFI_REQ_INIT_DISP,
+  CDS_END_WIFI_REQ_DISP,
+  CDS_END_WIFI_REQ_INIT,
+  CDS_END_WIFI_REQ,
+  
+  
 }CTVT_DRAW_STATE;
 
 //======================================================================
@@ -110,6 +124,8 @@ struct _CTVT_DRAW_WORK
   BOOL isTouch; //落書ききのTrgをはじくフラグ
   BOOL isHold;
   BOOL isDispPenSize;
+  BOOL canDraw;
+  BOOL isFinish;
   CTVT_DRAW_EDTI_BUTTON_TYPE editMode;
 
   u32 befPenX;
@@ -122,8 +138,10 @@ struct _CTVT_DRAW_WORK
   TP_ONE_DATA	tpData;
 
   
-  BOOL isUpdateMsg;
-  GFL_BMPWIN *infoWin;
+  BOOL isUpdateInfo;    //上画面用
+  BOOL isUpdateMsgWin;  //下画面用
+  GFL_BMPWIN *infoWin;  //上画面用
+  GFL_BMPWIN *msgWin;   //下画面用
   
   //セル関係
   GFL_CLWK    *clwkEditButton[CDED_MAX];
@@ -145,6 +163,9 @@ static void CTVT_DRAW_UpdateDrawing( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawW
 static void CTVT_DRAW_UpdateEditButton( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork );
 
 static void CTVT_DRAW_DrawInfoMsg( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork , const BOOL isEditMode );
+
+static const BOOL CTVT_DRAW_CheckFinishReq( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork );
+static void CTVT_DRAW_DispMessage( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork , const u16 msgId );
 
 //--------------------------------------------------------------
 //	初期化
@@ -307,6 +328,12 @@ void CTVT_DRAW_InitMode( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork )
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp( drawWork->infoWin ) , 0x0 );
   GFL_BMPWIN_MakeScreen( drawWork->infoWin );
   GFL_BG_LoadScreenReq(CTVT_FRAME_SUB_MSG);
+
+  //MakeScreenは文字表示の時
+  drawWork->msgWin = GFL_BMPWIN_Create( CTVT_FRAME_MAIN_MSG , 
+                                        1 , 1 , 30 , 4 ,
+                                        CTVT_PAL_BG_SUB_FONT ,
+                                        GFL_BMP_CHRAREA_GET_B );
   
   drawWork->state = CDS_FADEIN;
   drawWork->barScroll = 24;
@@ -315,7 +342,10 @@ void CTVT_DRAW_InitMode( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork )
   drawWork->isTouch = FALSE;
   drawWork->editMode = CDED_PEN;
   drawWork->isDispPenSize = FALSE;
-  drawWork->isUpdateMsg = FALSE;
+  drawWork->isUpdateInfo = FALSE;
+  drawWork->isUpdateMsgWin = FALSE;
+  drawWork->canDraw = FALSE;
+  drawWork->isFinish = FALSE;
 
   CTVT_DRAW_DrawInfoMsg( work , drawWork , FALSE );
   
@@ -342,6 +372,8 @@ void CTVT_DRAW_TermMode( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork )
 
   GFL_BMPWIN_ClearTransWindow( drawWork->infoWin );
   GFL_BMPWIN_Delete( drawWork->infoWin );
+  GFL_BMPWIN_ClearTransWindow( drawWork->msgWin );
+  GFL_BMPWIN_Delete( drawWork->msgWin );
   
   for( i=0;i<CDEX_MAX;i++ )
   {
@@ -395,6 +427,7 @@ const COMM_TVT_MODE CTVT_DRAW_Main( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWo
   case CDS_FADEIN_WAIT:
     if( WIPE_SYS_EndCheck() == TRUE )
     {
+      drawWork->canDraw = TRUE;
       drawWork->state = CDS_DRAW;
     }
     break;
@@ -402,23 +435,102 @@ const COMM_TVT_MODE CTVT_DRAW_Main( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWo
   case CDS_FADEOUT:
     WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
                 WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , heapId );
-    COMM_TVT_SetUpperFade( work , TRUE );
     drawWork->state = CDS_FADEOUT_WAIT;
+    drawWork->canDraw = FALSE;
     break;
 
   case CDS_FADEOUT_WAIT:
     if( WIPE_SYS_EndCheck() == TRUE )
     {
-      return CTM_TALK;
+      if( drawWork->isFinish == FALSE )
+      {
+        return CTM_TALK;
+      }
+      else
+      {
+        return CTM_END;
+      }
     }
     break;
     
   case CDS_DRAW:
-    CTVT_DRAW_UpdateDraw( work , drawWork );
+    if( CTVT_DRAW_CheckFinishReq( work , drawWork ) == FALSE )
+    {
+      CTVT_DRAW_UpdateDraw( work , drawWork );
+    }
     break;
 
   case CDS_EDIT:
-    CTVT_DRAW_UpdateEdit( work , drawWork );
+    if( CTVT_DRAW_CheckFinishReq( work , drawWork ) == FALSE )
+    {
+      CTVT_DRAW_UpdateEdit( work , drawWork );
+    }
+    break;
+    
+  //親のリクエストによる終了
+  case CDS_END_PARENT_REQ_INIT:
+    {
+      CTVT_COMM_WORK *commWork = COMM_TVT_GetCommWork( work );
+      CTVT_COMM_ExitComm( work , commWork );
+      
+      CTVT_DRAW_DispMessage( work , drawWork , COMM_TVT_SYS_05 );
+      drawWork->state = CDS_END_PARENT_REQ;
+    }
+    break;
+  case CDS_END_PARENT_REQ:
+    if( GFL_UI_TP_GetTrg() == TRUE ||
+        GFL_UI_KEY_GetTrg() & (PAD_BUTTON_A|PAD_BUTTON_B) )
+    {
+      drawWork->isFinish = TRUE;
+      drawWork->state = CDS_FADEOUT;
+      COMM_TVT_SetSusspend( work , TRUE );
+    }
+    break;
+
+  //WIFIのリクエストによる終了
+  case CDS_END_WIFI_REQ_SEND:
+    {
+      CTVT_COMM_WORK *commWork = COMM_TVT_GetCommWork( work );
+      const BOOL ret = CTVT_COMM_SendFlg( work , commWork , CCFT_FINISH_PARENT , 0 );
+      if( ret == TRUE )
+      {
+        drawWork->state = CDS_END_WIFI_REQ_INIT_DISP;
+      }
+    }
+    break;
+  case CDS_END_WIFI_REQ_INIT_DISP:
+    {
+      CTVT_COMM_WORK *commWork = COMM_TVT_GetCommWork( work );
+      CTVT_COMM_ExitComm( work , commWork );
+      
+      CTVT_DRAW_DispMessage( work , drawWork , COMM_TVT_SYS_06 );
+      drawWork->state = CDS_END_WIFI_REQ_DISP;
+    }
+    break;
+  case CDS_END_WIFI_REQ_DISP:
+    if( GFL_UI_TP_GetTrg() == TRUE ||
+        GFL_UI_KEY_GetTrg() & (PAD_BUTTON_A|PAD_BUTTON_B) )
+    {
+      drawWork->state = CDS_END_WIFI_REQ_INIT;
+    }
+    break;
+  case CDS_END_WIFI_REQ_INIT:
+    {
+      CTVT_COMM_WORK *commWork = COMM_TVT_GetCommWork( work );
+      CTVT_COMM_SendTimingCommnad( work , commWork , CTVT_COMM_TIMING_END );
+      drawWork->state = CDS_END_WIFI_REQ;
+    }
+    break;
+  case CDS_END_WIFI_REQ:
+    {
+      CTVT_COMM_WORK *commWork = COMM_TVT_GetCommWork( work );
+      if( CTVT_COMM_CheckTimingCommnad( work , commWork , CTVT_COMM_TIMING_END ) == TRUE )
+      {
+        drawWork->isFinish = TRUE;
+        drawWork->state = CDS_FADEOUT;
+        COMM_TVT_SetSusspend( work , TRUE );
+      }
+    }
     break;
   }
   
@@ -426,18 +538,32 @@ const COMM_TVT_MODE CTVT_DRAW_Main( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWo
   CTVT_DRAW_UpdateBar( work,drawWork );
   
   //落書き更新
-  CTVT_DRAW_UpdateDrawing( work,drawWork );
+  if( drawWork->canDraw == TRUE )
+  {
+    CTVT_DRAW_UpdateDrawing( work,drawWork );
+  }
   
-  if( drawWork->isUpdateMsg == TRUE )
+  if( drawWork->isUpdateInfo == TRUE )
   {
     PRINT_QUE *printQue = COMM_TVT_GetPrintQue( work );
     if( PRINTSYS_QUE_IsExistTarget( printQue , GFL_BMPWIN_GetBmp( drawWork->infoWin )) == FALSE )
     {
       GFL_BMPWIN_TransVramCharacter( drawWork->infoWin );
-      drawWork->isUpdateMsg = FALSE;
+      drawWork->isUpdateInfo = FALSE;
     }
   }
-
+  
+  if( drawWork->isUpdateMsgWin == TRUE )
+  {
+    PRINT_QUE *printQue = COMM_TVT_GetPrintQue( work );
+    if( PRINTSYS_QUE_IsExistTarget( printQue , GFL_BMPWIN_GetBmp( drawWork->msgWin )) == FALSE )
+    {
+      GFL_BMPWIN_TransVramCharacter( drawWork->msgWin );
+      GFL_BMPWIN_MakeScreen( drawWork->msgWin );
+      GFL_BG_LoadScreenReq(CTVT_FRAME_MAIN_MSG);
+      drawWork->isUpdateMsgWin = FALSE;
+    }
+  }
 #if defined(DEBUG_ONLY_FOR_ariizumi_nobuhiko)
   if( GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT )
   {
@@ -922,5 +1048,51 @@ static void CTVT_DRAW_DrawInfoMsg( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWor
       GFL_CLACT_WK_SetDrawEnable( drawWork->clwkExplainButton[i] , FALSE );
     }
   }
-  drawWork->isUpdateMsg = TRUE;
+  drawWork->isUpdateInfo = TRUE;
+}
+
+
+//--------------------------------------------------------------
+//	強制終了チェック
+//--------------------------------------------------------------
+static const BOOL CTVT_DRAW_CheckFinishReq( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork )
+{
+  if( COMM_TVT_GetFinishReq( work ) == TRUE )
+  {
+    CTVT_COMM_WORK *commWork = COMM_TVT_GetCommWork( work );
+    if( CTVT_COMM_GetMode( work , commWork ) == CCIM_CONNECTED )
+    {
+      //Wifiのリクエストによる終了
+      drawWork->state = CDS_END_WIFI_REQ_INIT_DISP;
+    }
+    else
+    {
+      //親のリクエストによる終了
+      drawWork->state = CDS_END_PARENT_REQ_INIT;
+    }
+    return TRUE;
+  }
+  return FALSE;
+}
+
+//--------------------------------------------------------------
+//	Msg表示
+//--------------------------------------------------------------
+static void CTVT_DRAW_DispMessage( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork , const u16 msgId )
+{
+  GFL_FONT *fontHandle = COMM_TVT_GetFontHandle( work );
+  GFL_MSGDATA *msgHandle = COMM_TVT_GetMegHandle( work );
+  PRINT_QUE *printQue = COMM_TVT_GetPrintQue( work );
+  STRBUF *str;
+  
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp( drawWork->msgWin) , 0xF );
+  str = GFL_MSG_CreateString( msgHandle , msgId );
+  PRINTSYS_PrintQueColor( printQue , GFL_BMPWIN_GetBmp( drawWork->msgWin ) , 
+          0 , 0 , str , fontHandle ,CTVT_FONT_COLOR_BLACK );
+  GFL_STR_DeleteBuffer( str );
+
+  BmpWinFrame_Write( drawWork->msgWin , WINDOW_TRANS_OFF , 
+                      CTVT_BMPWIN_CGX , CTVT_PAL_BG_MAIN_WINFRAME );
+  drawWork->isUpdateMsgWin = TRUE;
+
 }

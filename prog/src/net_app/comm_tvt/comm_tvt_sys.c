@@ -660,6 +660,8 @@ static void COMM_TVT_InitMessage( COMM_TVT_WORK *work )
 
   BmpWinFrame_GraphicSet( CTVT_FRAME_SUB_MSG , CTVT_BMPWIN_CGX , CTVT_PAL_BG_SUB_WINFRAME ,
                           0 , work->heapId );
+  BmpWinFrame_GraphicSet( CTVT_FRAME_MAIN_MSG , CTVT_BMPWIN_CGX , CTVT_PAL_BG_MAIN_WINFRAME ,
+                          0 , work->heapId );
 
 }
 

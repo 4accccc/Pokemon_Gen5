@@ -43,6 +43,7 @@
 
 #define CTVT_PAL_BG_MAIN_BAR   (0) //1本
 #define CTVT_PAL_BG_MAIN_BG    (1) //1本
+#define CTVT_PAL_BG_MAIN_WINFRAME (9) //1本
 #define CTVT_PAL_BG_MAIN_FONT   (10) //1本
 
 #define CTVT_PAL_BG_SUB_BG    (0) //6本

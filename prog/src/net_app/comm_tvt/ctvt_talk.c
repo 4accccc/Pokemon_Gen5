@@ -615,8 +615,6 @@ const COMM_TVT_MODE CTVT_TALK_Main( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWo
     break;
     
   case CTS_END_WIFI_REQ_INIT:
-    if( GFL_UI_TP_GetTrg() == TRUE ||
-        GFL_UI_KEY_GetTrg() & (PAD_BUTTON_A|PAD_BUTTON_B) )
     {
       CTVT_COMM_WORK *commWork = COMM_TVT_GetCommWork( work );
       CTVT_COMM_SendTimingCommnad( work , commWork , CTVT_COMM_TIMING_END );
