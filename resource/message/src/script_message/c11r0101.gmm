@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tamada" host="W00139" date="2009-07-15T19:04:53"/>
+	<create user="hozumi_yukiko" host="W00211" date="2010-02-03T15:13:48"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -297,6 +297,223 @@
 		<attribute name="キャラ指定">？？？</attribute>
 		<language name="JPN" width="256">テストメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_reception01_01">
+		<attribute name="キャラ指定">受付嬢１</attribute>
+		<language name="JPN" width="256">こんにちわ！
+こくれんへ　ようこそ！▽
+どのフロアに　いきますか？</language>
+		<language name="JPN_KANJI" width="256">こんにちわ！
+国連へ　ようこそ！
+どのフロアに　行きますか？</language>
+	</row>
+
+	<row id="msg_reception01_02">
+		<attribute name="キャラ指定">受付嬢１</attribute>
+		<language name="JPN" width="256">それでは　エレベーターへ　どうぞ</language>
+		<language name="JPN_KANJI" width="256">それでは　エレベーターへ　どうぞ</language>
+	</row>
+
+	<row id="msg_reception01_03">
+		<attribute name="キャラ指定">受付嬢１</attribute>
+		<language name="JPN" width="256">また　おこしくださいね</language>
+		<language name="JPN_KANJI" width="256">また　おこしくださいね</language>
+	</row>
+
+	<row id="msg_reception02_01">
+		<attribute name="キャラ指定">受付嬢２</attribute>
+		<language name="JPN" width="256">ここは　こくれん</language>
+		<language name="JPN_KANJI" width="256">ここは　国連</language>
+	</row>
+
+	<row id="msg_reception03_01">
+		<attribute name="キャラ指定">受付男性３</attribute>
+		<language name="JPN" width="256">いまは　これくらいのひとが
+こくれんに　きているよ</language>
+		<language name="JPN_KANJI" width="256">今は　これくらいの人が
+国連に　来ているよ</language>
+	</row>
+
+	<row id="msg_backpackerm_01">
+		<attribute name="キャラ指定">バックパッカー</attribute>
+		<language name="JPN" width="256">せかいが　ちからをあわせたら
+きっと　なんでも　できるんだろうね</language>
+		<language name="JPN_KANJI" width="256">世界が　力を合わせたら
+きっと　なんでも　できるんだろうね</language>
+	</row>
+
+	<row id="msg_babyboy1_01">
+		<attribute name="キャラ指定">小さな男の子</attribute>
+		<language name="JPN" width="256">すげー！
+てんじょう　たっけーーー！▽
+ぼくの　しんちょう　なんにんぶんかな？</language>
+		<language name="JPN_KANJI" width="256">すげー！
+てんじょう　たっけーーー！▽
+ぼくの　しんちょう　なんにんぶんかな？</language>
+	</row>
+
+	<row id="msg_dancer_01">
+		<attribute name="キャラ指定">ダンサー</attribute>
+		<language name="JPN" width="256">ここに　くると　いつも　こうふんするよ▼
+せかいは　ほんとうに　ひろい
+それを　じっかん　できるんだ</language>
+		<language name="JPN_KANJI" width="256">ここに　来ると　興奮するよ▼
+世界は　本当に　広い
+それを　実感　できるんだ</language>
+	</row>
+
+	<row id="msg_policeman_01_01">
+		<comment>初回メッセージ</comment>
+		<attribute name="キャラ指定">ガードマン</attribute>
+		<language name="JPN" width="256">なんだ　かんこうきゃくか？
+ボディチェックをするぞ</language>
+		<language name="JPN_KANJI" width="256">なんだ　観光客か？
+ボディチェックをするぞ</language>
+	</row>
+
+	<row id="msg_policeman_01_02">
+		<comment>1カ国とこうかん　</comment>
+		<attribute name="キャラ指定">ガードマン</attribute>
+		<language name="JPN" width="256">なんだ　かんこうきゃくか？
+ボディチェックをするぞ</language>
+		<language name="JPN_KANJI" width="256">なんだ　観光客か？
+ボディチェックをするぞ</language>
+	</row>
+
+	<row id="msg_policeman_01_03">
+		<comment>3カ国と交換　</comment>
+		<attribute name="キャラ指定">ガードマン</attribute>
+		<language name="JPN" width="256">なんだ　かんこうきゃくか？
+ボディチェックをするぞ</language>
+		<language name="JPN_KANJI" width="256">なんだ　観光客か？
+ボディチェックをするぞ</language>
+	</row>
+
+	<row id="msg_policeman_01_04">
+		<comment>6カ国と交換　</comment>
+		<attribute name="キャラ指定">ガードマン</attribute>
+		<language name="JPN" width="256">なんだ　かんこうきゃくか？
+ボディチェックをするぞ</language>
+		<language name="JPN_KANJI" width="256">なんだ　観光客か？
+ボディチェックをするぞ</language>
+	</row>
+
+	<row id="msg_policeman_01_05">
+		<comment>10カ国と交換</comment>
+		<attribute name="キャラ指定">ガードマン</attribute>
+		<language name="JPN" width="256">なんだ　かんこうきゃくか？
+ボディチェックをするぞ</language>
+		<language name="JPN_KANJI" width="256">なんだ　観光客か？
+ボディチェックをするぞ</language>
+	</row>
+
+	<row id="msg_policeman_01_06">
+		<comment>15カ国と交換　</comment>
+		<attribute name="キャラ指定">ガードマン</attribute>
+		<language name="JPN" width="256">なんだ　かんこうきゃくか？
+ボディチェックをするぞ</language>
+		<language name="JPN_KANJI" width="256">なんだ　観光客か？
+ボディチェックをするぞ</language>
+	</row>
+
+	<row id="msg_policeman_01_07">
+		<comment>20カ国と交換</comment>
+		<attribute name="キャラ指定">ガードマン</attribute>
+		<language name="JPN" width="256">なんだ　かんこうきゃくか？
+ボディチェックをするぞ</language>
+		<language name="JPN_KANJI" width="256">なんだ　観光客か？
+ボディチェックをするぞ</language>
+	</row>
+
+	<row id="msg_policeman_01_08">
+		<comment>30カ国と交換</comment>
+		<attribute name="キャラ指定">ガードマン</attribute>
+		<language name="JPN" width="256">なんだ　かんこうきゃくか？
+ボディチェックをするぞ</language>
+		<language name="JPN_KANJI" width="256">なんだ　観光客か？
+ボディチェックをするぞ</language>
+	</row>
+
+	<row id="msg_policeman_01_09">
+		<comment>40カ国と交換</comment>
+		<attribute name="キャラ指定">ガードマン</attribute>
+		<language name="JPN" width="256">なんだ　かんこうきゃくか？
+ボディチェックをするぞ</language>
+		<language name="JPN_KANJI" width="256">なんだ　観光客か？
+ボディチェックをするぞ</language>
+	</row>
+
+	<row id="msg_policeman_01_10">
+		<comment>50カ国と交換</comment>
+		<attribute name="キャラ指定">ガードマン</attribute>
+		<language name="JPN" width="256">なんだ　かんこうきゃくか？
+ボディチェックをするぞ</language>
+		<language name="JPN_KANJI" width="256">なんだ　観光客か？
+ボディチェックをするぞ</language>
+	</row>
+
+	<row id="msg_policeman_01_11">
+		<comment>60カ国と交換</comment>
+		<attribute name="キャラ指定">ガードマン</attribute>
+		<language name="JPN" width="256">なんだ　かんこうきゃくか？
+ボディチェックをするぞ</language>
+		<language name="JPN_KANJI" width="256">なんだ　観光客か？
+ボディチェックをするぞ</language>
+	</row>
+
+	<row id="msg_policeman_01_12">
+		<comment>70カ国と交換</comment>
+		<attribute name="キャラ指定">ガードマン</attribute>
+		<language name="JPN" width="256">なんだ　かんこうきゃくか？
+ボディチェックをするぞ</language>
+		<language name="JPN_KANJI" width="256">なんだ　観光客か？
+ボディチェックをするぞ</language>
+	</row>
+
+	<row id="msg_policeman_01_13">
+		<comment>80カ国と交換</comment>
+		<attribute name="キャラ指定">ガードマン</attribute>
+		<language name="JPN" width="256">なんだ　かんこうきゃくか？
+ボディチェックをするぞ</language>
+		<language name="JPN_KANJI" width="256">なんだ　観光客か？
+ボディチェックをするぞ</language>
+	</row>
+
+	<row id="msg_policeman_01_14">
+		<comment>90カ国と交換</comment>
+		<attribute name="キャラ指定">ガードマン</attribute>
+		<language name="JPN" width="256">なんだ　かんこうきゃくか？
+ボディチェックをするぞ</language>
+		<language name="JPN_KANJI" width="256">なんだ　観光客か？
+ボディチェックをするぞ</language>
+	</row>
+
+	<row id="msg_policeman_01_15">
+		<comment>100カ国と交換</comment>
+		<attribute name="キャラ指定">ガードマン</attribute>
+		<language name="JPN" width="256">なんだ　かんこうきゃくか？
+ボディチェックをするぞ</language>
+		<language name="JPN_KANJI" width="256">なんだ　観光客か？
+ボディチェックをするぞ</language>
+	</row>
+
+	<row id="msg_policeman_01_16">
+		<comment>150カ国と交換</comment>
+		<attribute name="キャラ指定">ガードマン</attribute>
+		<language name="JPN" width="256">なんだ　かんこうきゃくか？
+ボディチェックをするぞ</language>
+		<language name="JPN_KANJI" width="256">なんだ　観光客か？
+ボディチェックをするぞ</language>
+	</row>
+
+	<row id="msg_policeman_01_17">
+		<comment>233カ国と交換</comment>
+		<attribute name="キャラ指定">ガードマン</attribute>
+		<language name="JPN" width="256">なんだ　かんこうきゃくか？
+ボディチェックをするぞ</language>
+		<language name="JPN_KANJI" width="256">なんだ　観光客か？
+ボディチェックをするぞ</language>
 	</row>
 
 	<flowchart-group-list>
