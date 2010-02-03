@@ -20,15 +20,15 @@
 //--------------------------------------------------------------
 u32 UN_GetRoomObjCode(UNSV_WORK* work, const u32 inObjIdx)
 {
-  if (inObjIdx >= UN_ROOM_OBJ_MAX)
-  {
-    GF_ASSERT(0);
-    return BOY1;
-  }
   if (inObjIdx >= work->ObjNum)
   {
-    GF_ASSERT_MSG(0,"idx error idx=%d max=%d",inObjIdx, work->ObjNum);
-    return BOY1;
+    if (inObjIdx >= UN_ROOM_OBJ_MAX)
+    {
+      GF_ASSERT_MSG(0,"idx error idx=%d",inObjIdx);
+      return BOY2;
+    }
+    //’èˆõ”ˆÈ“à‚Å‚ ‚ê‚ÎA•\Ž¦‚Í‚µ‚È‚¢‚Í‚¸‚¾‚ªA’è”‚ð•Ô‚µ‚Ä‚¨‚­
+    return BOY2;
   }
   
   return work->UnObjCode[inObjIdx];
