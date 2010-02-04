@@ -557,7 +557,6 @@ static void SetPokemonParam( POKEMON_PARAM* pp, FLD_TRADE_POKEDATA* data,
 #endif
   // ïﬂÇ‹Ç¶ÇΩèÍèä
 	PP_Put( pp, ID_PARA_get_place, zone_id );
-	PP_Put( pp, ID_PARA_new_get_place, zone_id );
 
   PP_Dump( pp );
 
@@ -632,7 +631,6 @@ static void PP_Dump( const POKEMON_PARAM* pp )
   val = PP_Get( pp, ID_PARA_oyasex, NULL ); OBATA_Printf( "oyasex = %d\n", val );
   val = PP_Get( pp, ID_PARA_level, NULL ); OBATA_Printf( "level = %d\n", val );
   val = PP_Get( pp, ID_PARA_get_place, NULL ); OBATA_Printf( "get_place = %d\n", val );
-  val = PP_Get( pp, ID_PARA_new_get_place, NULL ); OBATA_Printf( "new_get_place = %d\n", val );
   OBATA_Printf( "-------------------------------------------------\n" );
 }
 
