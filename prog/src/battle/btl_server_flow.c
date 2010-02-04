@@ -5468,7 +5468,8 @@ static BOOL scEvent_CalcDamage( BTL_SVFLOW_WORK* wk,
     BTL_N_PrintfEx( PRINT_FLG, DBGSTR_CALCDMG_RangeHosei, fxDamage);
     // “VŒó•â³
     {
-      fx32 weatherDmgRatio = BTL_FIELD_GetWeatherDmgRatio( wazaParam->wazaID );
+      BtlWeather weather = scEvent_GetWeather( wk );
+      fx32 weatherDmgRatio = BTL_CALC_GetWeatherDmgRatio( weather, wazaParam->wazaType );
       if( weatherDmgRatio != BTL_CALC_DMG_WEATHER_RATIO_NONE )
       {
         u32 prevDmg = fxDamage;
@@ -7361,6 +7362,7 @@ static int scEvent_CheckWeatherReaction( BTL_SVFLOW_WORK* wk, const BTL_POKEPARA
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_WEATHER, weather );
     BTL_EVENTVAR_SetRewriteOnceValue( BTL_EVAR_FAIL_FLAG, FALSE );
     BTL_EVENTVAR_SetValue( BTL_EVAR_DAMAGE,  damage );
+
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_WEATHER_REACTION );
     damage = BTL_EVENTVAR_GetValue( BTL_EVAR_DAMAGE );
     failFlag = BTL_EVENTVAR_GetValue( BTL_EVAR_FAIL_FLAG );

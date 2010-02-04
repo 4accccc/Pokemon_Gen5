@@ -91,46 +91,6 @@ void BTL_FIELD_ClearWeather( void )
 
 //=============================================================================================
 /**
- * 天候によってダメージが増加・減少するワザの増減率を返す
- *
- * @param   waza    ワザID
- *
- * @retval  fx32    増減率（パーセンテージ）
- */
-//=============================================================================================
-fx32 BTL_FIELD_GetWeatherDmgRatio( WazaID waza )
-{
-  switch( Work.weather ){
-  case BTL_WEATHER_SHINE:
-    {
-      PokeType type = WAZADATA_GetType( waza );
-      if( type == POKETYPE_HONOO ){
-        return BTL_CALC_DMG_WEATHER_RATIO_ADVANTAGE;
-      }
-      if( type == POKETYPE_MIZU ){
-        return BTL_CALC_DMG_WEATHER_RATIO_DISADVANTAGE;
-      }
-    }
-    break;
-  case BTL_WEATHER_RAIN:
-    {
-      PokeType type = WAZADATA_GetType( waza );
-      if( type == POKETYPE_HONOO ){
-        return BTL_CALC_DMG_WEATHER_RATIO_DISADVANTAGE;
-      }
-      if( type == POKETYPE_MIZU ){
-        return BTL_CALC_DMG_WEATHER_RATIO_ADVANTAGE;
-      }
-    }
-    break;
-  default:
-    break;
-  }
-  return BTL_CALC_DMG_WEATHER_RATIO_NONE;
-}
-
-//=============================================================================================
-/**
  * ターンチェック
  *
  * @retval  BtlWeather    ターンチェックにより終わった天候

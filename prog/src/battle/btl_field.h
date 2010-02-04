@@ -51,18 +51,6 @@ extern u8 BTL_FIELD_GetDependPokeID( BtlFieldEffect effect );
 
 
 
-//=============================================================================================
-/**
- * 天候によってダメージが増加・減少するワザの増減率を返す
- *
- * @param   waza    ワザID
- *
- * @retval  fx32    増減率（パーセンテージ）
- */
-//=============================================================================================
-extern fx32 BTL_FIELD_GetWeatherDmgRatio( WazaID waza );
-
-
 extern BtlWeather BTL_FIELD_TurnCheckWeather( void );
 
 

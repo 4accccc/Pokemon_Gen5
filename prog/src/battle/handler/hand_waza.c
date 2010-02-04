@@ -7278,9 +7278,9 @@ static void handler_AnaWoHoru_TameRelease( BTL_EVENT_FACTOR* myHandle, BTL_SVFLO
 static const BtlEventHandlerTable*  ADD_SolarBeam( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_CHECK_TAMETURN_SKIP,  handler_SolarBeam_TameSkip },    // 溜めスキップ判定
-    { BTL_EVENT_TAME_START,           handler_SolarBeam_TameStart },   // 溜め開始
-    { BTL_EVENT_WAZA_POWER,           handler_SolarBeam_Power     },   // ワザ威力決定
+    { BTL_EVENT_CHECK_TAMETURN_SKIP,  handler_SolarBeam_TameSkip },  // 溜めスキップ判定
+    { BTL_EVENT_TAME_START,           handler_SolarBeam_TameStart }, // 溜め開始
+    { BTL_EVENT_WAZA_POWER,           handler_SolarBeam_Power     }, // ワザ威力決定
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;

@@ -414,6 +414,43 @@ u16 BTL_CALC_RecvWeatherDamage( const BTL_POKEPARAM* bpp, BtlWeather weather )
     return dmg;
   }
 }
+//=============================================================================================
+/**
+ * 天候・ワザタイプ相性による威力倍率補正
+ *
+ * @param   weather
+ * @param   wazaType
+ *
+ * @retval  fx32
+ */
+//=============================================================================================
+fx32 BTL_CALC_GetWeatherDmgRatio( BtlWeather weather, PokeType wazaType )
+{
+  switch( weather ){
+  case BTL_WEATHER_SHINE:
+    if( wazaType == POKETYPE_HONOO ){
+      return BTL_CALC_DMG_WEATHER_RATIO_ADVANTAGE;
+    }
+    if( wazaType == POKETYPE_MIZU ){
+      return BTL_CALC_DMG_WEATHER_RATIO_DISADVANTAGE;
+     }
+    break;
+
+  case BTL_WEATHER_RAIN:
+    if( wazaType == POKETYPE_HONOO ){
+      return BTL_CALC_DMG_WEATHER_RATIO_DISADVANTAGE;
+    }
+    if( wazaType == POKETYPE_MIZU ){
+      return BTL_CALC_DMG_WEATHER_RATIO_ADVANTAGE;
+    }
+    break;
+
+  default:
+    break;
+  }
+  return BTL_CALC_DMG_WEATHER_RATIO_NONE;
+}
+
 
 //=============================================================================================
 /**
