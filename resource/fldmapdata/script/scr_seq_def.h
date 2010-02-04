@@ -4332,10 +4332,10 @@
     _ASM_CHECK_SET_TEMOTI_NATSUKI pos, value
 
   .macro  _ASM_CHECK_SET_TEMOTI_NATSUKI pos,value
-  .short  EV_SEQ_GET_TEMOTI_NATSUKI
-  .short  \ret_wk
+  .short  EV_SEQ_SET_TEMOTI_NATSUKI
   .short  \pos
-  .byte   0
+  .short  \value
+  .short   0
   .endm
 
 //--------------------------------------------------------------
@@ -4354,7 +4354,7 @@
   .short  EV_SEQ_SET_TEMOTI_NATSUKI
   .short  \pos
   .short  \value
-  .byte   1
+  .short  1
   .endm
 
 //--------------------------------------------------------------
@@ -4373,7 +4373,7 @@
   .short  EV_SEQ_SET_TEMOTI_NATSUKI
   .short  \pos
   .short  \value
-  .byte   2
+  .short  2
   .endm
 
 //--------------------------------------------------------------
@@ -4476,6 +4476,75 @@
   .short  \waza_pos
   .short  \waza_id
   .endm
+
+
+//--------------------------------------------------------------
+/**
+ * @def   わざおぼえ：適用チェック
+ * @brief _WAZAOBOE_CHECK_USE
+ * @param mode    技覚えモード（script_def.hのSCR_WAZAOBOE_MODE参照）
+ * @param ret_wk  script_def.hのSCR_WAZAOBOE_CHECK_RESULT_を参照
+ * @retval  SCR_WAZAOBOE_CHECK_RESULT_OK          対象となるポケモンがいる
+ * @retval  SCR_WAZAOBOE_CHECK_RESULT_POKEMON_NG  対象となるポケモンがいない
+ * @retval  SCR_WAZAOBOE_CHECK_RESULT_NATSUKI_NG  対象となるポケモンはいるがなつきが足りない
+ *
+ * 最強技（あるいはドラゴン技）を覚えることができる手持ちかどうかを
+ * チェックする
+ */
+//--------------------------------------------------------------
+#define _WAZAOBOE_CHECK_USE( mode, ret_wk ) \
+    _ASM_WAZAOBOE_CHECK_USE mode, ret_wk
+
+    .macro  _ASM_WAZAOBOE_CHECK_USE mode, ret_wk
+    .short  EV_SEQ_WAZAOBOE_CHECK_USE
+    .short  \mode
+    .short  \ret_wk
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @def   わざおぼえ：適用ポケモンのチェック
+ * @brief _WAZAOBOE_CHECK_POKEMON
+ * @param mode    技覚えモード（script_def.hのSCR_WAZAOBOE_MODE参照）
+ * @param pos     選択したポケモンの位置
+ * @param ret_wk  script_def.hのSCR_WAZAOBOE_CHECK_RESULT_を参照
+ * @retval  SCR_WAZAOBOE_CHECK_RESULT_OK          覚えさせられる
+ * @retval  SCR_WAZAOBOE_CHECK_RESULT_POKEMON_NG  覚えないポケモンを選んだ
+ * @retval  SCR_WAZAOBOE_CHECK_RESULT_NATSUKI_NG  なつきが足りないポケモンを選んだ
+ * @retval  SCR_WAZAOBOE_CHECK_RESULT_ALREADY_NG  すでに持っているポケモンを選んだ
+ *
+ * 最強技（あるいはドラゴン技）を覚えることができる手持ちかどうかを
+ * チェックする
+ */
+//--------------------------------------------------------------
+#define _WAZAOBOE_CHECK_POKEMON( mode, pos, ret_wk ) \
+    _ASM_WAZAOBOE_CHECK_POKEMON mode, pos, ret_wk
+
+    .macro  _ASM_WAZAOBOE_CHECK_POKEMON mode, pos, ret_wk
+    .short  EV_SEQ_WAZAOBOE_CHECK_POKEMON
+    .short  \mode
+    .short  \pos
+    .short  \ret_wk
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _WAZAOBOE_SELECT_POKEMON
+ * @brief ポケモン選択：わざおぼえ用
+ * @param ret_decide  選択したかどうかの戻り値（TRUE/FALSE）
+ * @param ret_wk    選択したポケモンの位置
+ * @param mode    技覚えモード（script_def.hのSCR_WAZAOBOE_MODE参照）
+ */
+//--------------------------------------------------------------
+#define _WAZAOBOE_SELECT_POKEMON( mode, ret_decide, ret_wk ) \
+    _ASM_WAZAOBOE_SELECT_POKEMON mode, ret_decide, ret_wk
+
+    .macro  _ASM_WAZAOBOE_SELECT_POKEMON mode, ret_decide, ret_wk
+    .short  EV_SEQ_WAZAOBOE_SELECT_POKEMON
+    .short  \mode
+    .short  \ret_decide
+    .short  \ret_wk
+    .endm
 
 //--------------------------------------------------------------
 /**
