@@ -231,7 +231,13 @@ static void  AddData(UNITEDNATIONS_SAVE *un_data, UNITEDNATIONS_SAVE *add_data, 
   u32 last_idx;
 
   //有効データ件数を取得して末尾のインデックスを決定する
-  last_idx = UNDATAUP_GetDataNum(un_data) - 1;
+  last_idx = UNDATAUP_GetDataNum(un_data);
+
+  if (last_idx >= UNITEDNATIONS_PEOPLE_MAX)
+  {
+    GF_ASSERT_MSG(0,"index over %d",last_idx);
+    return;   //追加せずに戻る
+  }
 
   //追加するデータ内で、初期化しなければならないメンバをここで初期化する
   if (inTalkFlg) add_data->bTalk = 1;     //話したか？ >>  話した

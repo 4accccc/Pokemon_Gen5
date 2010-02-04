@@ -11,6 +11,7 @@
 
 #include "savedata/save_control.h"
 #include "savedata/mystatus.h"
+#include "unitednations_def.h"
 
 //============================================================================================
 //============================================================================================
@@ -94,6 +95,8 @@ extern u32 WIFIHISTORY_GetUnInfo(WIFI_HISTORY * wh, const u32 inIdx, const UN_IN
 extern void WIFIHISTORY_SetUnInfo(
     WIFI_HISTORY * wh, const int inIdx,const UN_INFO_TYPE inType, const u32 inInfo);
 extern MYSTATUS *WIFIHISTORY_GetUnMyStatus(WIFI_HISTORY * wh, const int inIdx);
+
+extern UNITEDNATIONS_SAVE *WIFIHISTORY_GetUNDataPtr(WIFI_HISTORY * wh);
 
 #endif	/* __WIFIHISTORY_H__ */
 

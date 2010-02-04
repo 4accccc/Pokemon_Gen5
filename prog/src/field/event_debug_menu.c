@@ -195,6 +195,8 @@ static BOOL debugMenuCallProc_MakeEgg( DEBUG_MENU_EVENT_WORK *wk );
 
 static BOOL debugMenuCallProc_EncEffList( DEBUG_MENU_EVENT_WORK *wk );
 
+static BOOL debugMenuCallProc_DebugMakeUNData( DEBUG_MENU_EVENT_WORK *p_wk );
+
 //======================================================================
 //  デバッグメニューリスト
 //======================================================================
@@ -256,7 +258,8 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
   { DEBUG_FIELD_STR62,   debugMenuCallProc_BBDColor }, 
   { DEBUG_FIELD_FOG_TEST,   debugMenuCallProc_FogLightTest },
   { DEBUG_FIELD_ENCEFF, debugMenuCallProc_EncEffList },
-  { DEBUG_FIELD_MAKE_EGG,   debugMenuCallProc_MakeEgg }, 
+  { DEBUG_FIELD_MAKE_EGG,   debugMenuCallProc_MakeEgg },
+  { DEBUG_FIELD_MAKE_UNDATA,   debugMenuCallProc_DebugMakeUNData },
 };
 
 
@@ -4436,3 +4439,91 @@ static GMEVENT_RESULT debugMenuEncEffListEvent(
   
   return( GMEVENT_RES_CONTINUE );
 }
+
+//======================================================================
+//  デバッグメニュー 国連データ作成
+//======================================================================
+#include "debug/debug_make_undata.h"
+FS_EXTERN_OVERLAY(debug_make_undata);
+static GMEVENT_RESULT debugMenuMakeUNData( GMEVENT *p_event, int *p_seq, void *p_wk_adrs );
+//-------------------------------------
+/// デバッグ国連データ作成用ワーク  
+//=====================================
+typedef struct 
+{
+  HEAPID HeapID;
+  GAMESYS_WORK    *gsys;
+  GMEVENT         *Event;
+  FIELDMAP_WORK *FieldWork;
+  PROCPARAM_DEBUG_MAKE_UNDATA p_work;
+} DEBUG_MAKE_UNDATA_EVENT_WORK;
+
+//----------------------------------------------------------------------------
+/**
+ *  @brief  国連データ作成
+ *
+ *  @param  DEBUG_MENU_EVENT_WORK *wk   ワーク
+ *
+ *  @return TRUEイベント継続  FALSE終了
+ */
+//-----------------------------------------------------------------------------
+static BOOL debugMenuCallProc_DebugMakeUNData( DEBUG_MENU_EVENT_WORK *p_wk )
+{ 
+  GAMESYS_WORK  *gsys  = p_wk->gmSys;
+  GMEVENT       *event    = p_wk->gmEvent;
+  FIELDMAP_WORK *fieldWork  = p_wk->fieldWork;
+  HEAPID heapID = HEAPID_PROC;
+  DEBUG_MAKE_UNDATA_EVENT_WORK *evt_work;
+  SAVE_CONTROL_WORK* pSave = GAMEDATA_GetSaveControlWork(GAMESYSTEM_GetGameData(gsys));
+
+  //イベントチェンジ
+  GMEVENT_Change( event, debugMenuMakeUNData, sizeof(DEBUG_MAKE_UNDATA_EVENT_WORK) );
+  evt_work = GMEVENT_GetEventWork( event );
+  GFL_STD_MemClear( evt_work, sizeof(DEBUG_MAKE_UNDATA_EVENT_WORK) );
+  
+  //ワーク設定
+  evt_work->gsys = gsys;
+  evt_work->Event = event;
+  evt_work->FieldWork = fieldWork;
+  evt_work->HeapID = heapID;
+  evt_work->p_work.wh = SaveData_GetWifiHistory(pSave);
+
+  return TRUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *  @brief  デバッグ国連データ作成イベント
+ *
+ *  @param  GMEVENT *event  GMEVENT
+ *  @param  *seq            シーケンス
+ *  @param  *work           ワーク
+ *
+ *  @return 終了コード
+ */
+//-----------------------------------------------------------------------------
+static GMEVENT_RESULT debugMenuMakeUNData( GMEVENT *p_event, int *p_seq, void *p_wk_adrs )
+{ 
+  enum
+  { 
+    SEQ_CALL_PROC,
+    SEQ_PROC_END,
+  };
+
+  DEBUG_MAKE_UNDATA_EVENT_WORK *evt_work = p_wk_adrs;
+
+  switch(*p_seq )
+  { 
+  case SEQ_CALL_PROC:
+    GMEVENT_CallEvent( evt_work->Event, EVENT_FieldSubProc( evt_work->gsys, evt_work->FieldWork,
+        FS_OVERLAY_ID(debug_make_undata), &ProcData_DebugMakeUNData, &evt_work->p_work ) );
+    *p_seq  = SEQ_PROC_END;
+    break;
+  case SEQ_PROC_END:
+    return GMEVENT_RES_FINISH;
+    break;
+  }
+
+  return GMEVENT_RES_CONTINUE ;
+}
+

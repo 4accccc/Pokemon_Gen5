@@ -360,3 +360,16 @@ MYSTATUS *WIFIHISTORY_GetUnMyStatus(WIFI_HISTORY * wh, const int inIdx)
   return &un->aMyStatus;
 }
 
+//----------------------------------------------------------
+/**
+ * @brief	国連データ先頭ポインタ取得
+ * @param	wh			WIFI履歴データへのポインタ
+ * @return adr    先頭アドレス
+ */
+//----------------------------------------------------------
+UNITEDNATIONS_SAVE *WIFIHISTORY_GetUNDataPtr(WIFI_HISTORY * wh)
+{
+  return wh->aUnitedPeople;
+}
+
+

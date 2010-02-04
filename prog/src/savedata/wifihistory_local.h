@@ -25,7 +25,7 @@ enum {
 
 enum {
   //国連のフロアのサイズ
-  BILL_DATA_SIZE = WIFI_COUNTRY_MAX / 8,
+  BILL_DATA_SIZE = (WIFI_COUNTRY_MAX+7) / 8,
   //国連にとっておく人の数
   UNITEDNATIONS_PEOPLE_MAX = 20,
 };
