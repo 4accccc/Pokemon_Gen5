@@ -1,5 +1,5 @@
 #event data
-#save date:2010/01/26 13:17:26
+#save date:2010/02/04 21:26:45
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r10.wms
 #SECTION START:OBJ_EVENT
@@ -40,7 +40,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-728 0 -40
+648 96 -104
 #event number: 1
 #type
 1
@@ -49,7 +49,7 @@ TR_BATTLEG_01
 #OBJ CODE Number
 FIGHTERW
 #MOVE CODE Number
-MV_RND_V
+MV_DOWN
 #EVENT TYPE Number
 EV_TYPE_TRAINER
 #Flag Name
@@ -59,7 +59,7 @@ SCRID_TRID_BATTLEG_01
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
-3
+4
 #Parameter 1 Number
 0
 #Parameter 2 Number
@@ -71,7 +71,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-40 0 -24
+72 0 -104
 #event number: 2
 #type
 1
@@ -80,7 +80,7 @@ TR_KARATE_01
 #OBJ CODE Number
 FIGHTERM
 #MOVE CODE Number
-MV_RT2
+MV_RTDR         
 #EVENT TYPE Number
 EV_TYPE_TRAINER_KYORO
 #Flag Name
@@ -88,7 +88,7 @@ EV_TYPE_TRAINER_KYORO
 #Event Script Name
 SCRID_TRID_KARATE_01
 #Direction Type Number
-DIR_LEFT
+DIR_DOWN
 #Parameter 0 Number
 2
 #Parameter 1 Number
@@ -96,13 +96,13 @@ DIR_LEFT
 #Parameter 2 Number
 0
 #Move Limit X Number
-8
+6
 #Move Limit Z Number
 0
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-168 32 88
+392 96 152
 #event number: 3
 #type
 1
@@ -111,7 +111,7 @@ TR_MOUNT_01
 #OBJ CODE Number
 MOUNTMAN
 #MOVE CODE Number
-MV_LEFT
+MV_RND_H
 #EVENT TYPE Number
 EV_TYPE_TRAINER
 #Flag Name
@@ -119,9 +119,9 @@ EV_TYPE_TRAINER
 #Event Script Name
 SCRID_TRID_MOUNT_01
 #Direction Type Number
-DIR_LEFT
+DIR_RIGHT
 #Parameter 0 Number
-3
+2
 #Parameter 1 Number
 0
 #Parameter 2 Number
@@ -133,7 +133,7 @@ DIR_LEFT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-408 32 56
+248 96 88
 #event number: 4
 #type
 1
@@ -142,7 +142,7 @@ TR_ELITEM_01
 #OBJ CODE Number
 TRAINERM
 #MOVE CODE Number
-MV_RND_UL
+MV_LEFT
 #EVENT TYPE Number
 EV_TYPE_TRAINER
 #Flag Name
@@ -152,7 +152,7 @@ SCRID_TRID_ELITEM_01
 #Direction Type Number
 DIR_LEFT
 #Parameter 0 Number
-3
+6
 #Parameter 1 Number
 0
 #Parameter 2 Number
@@ -164,7 +164,7 @@ DIR_LEFT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-504 0 -40
+408 96 -120
 #event number: 5
 #type
 1
@@ -173,7 +173,7 @@ TR_ELITEM_02
 #OBJ CODE Number
 TRAINERM
 #MOVE CODE Number
-MV_LEFT
+MV_RND_UR
 #EVENT TYPE Number
 EV_TYPE_TRAINER
 #Flag Name
@@ -181,9 +181,9 @@ EV_TYPE_TRAINER
 #Event Script Name
 SCRID_TRID_ELITEM_02
 #Direction Type Number
-DIR_LEFT
+DIR_UP
 #Parameter 0 Number
-3
+5
 #Parameter 1 Number
 0
 #Parameter 2 Number
@@ -195,7 +195,7 @@ DIR_LEFT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-1112 0 -56
+936 96 -120
 #event number: 6
 #type
 1
@@ -204,7 +204,7 @@ TR_VETERANM_01
 #OBJ CODE Number
 VETERANM
 #MOVE CODE Number
-MV_DIR_RND
+MV_RND_H
 #EVENT TYPE Number
 EV_TYPE_TRAINER
 #Flag Name
@@ -212,9 +212,9 @@ EV_TYPE_TRAINER
 #Event Script Name
 SCRID_TRID_VETERANM_01
 #Direction Type Number
-DIR_DOWN
+DIR_LEFT
 #Parameter 0 Number
-1
+5
 #Parameter 1 Number
 0
 #Parameter 2 Number
@@ -226,7 +226,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-664 -16 136
+1032 96 -72
 #event number: 7
 #type
 1
@@ -235,7 +235,7 @@ TR_VETERANW_01
 #OBJ CODE Number
 VETERANW
 #MOVE CODE Number
-MV_RIGHT
+MV_RND_V
 #EVENT TYPE Number
 EV_TYPE_TRAINER
 #Flag Name
@@ -243,9 +243,9 @@ EV_TYPE_TRAINER
 #Event Script Name
 SCRID_TRID_VETERANW_01
 #Direction Type Number
-DIR_RIGHT
+DIR_DOWN
 #Parameter 0 Number
-3
+4
 #Parameter 1 Number
 0
 #Parameter 2 Number
@@ -257,7 +257,7 @@ DIR_RIGHT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-312 0 -72
+552 96 -88
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
@@ -292,7 +292,7 @@ WK_SCENE_R10
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-888 0 -24
+808 96 -88
 #size
 1 3
 #Map Event List Data End
@@ -336,7 +336,7 @@ EXIT_TYPE_SP16
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-1048 16 152
+1064 112 72
 #size
 1 1
 #Map Event List Data End
