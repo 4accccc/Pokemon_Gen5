@@ -15,6 +15,7 @@
 #include "print/gf_font.h"  //GFL_FONT
 #include "print/printsys.h"
 #include "system/bmp_menulist.h"  //BMPMENULIST_NULL
+#include "system/bmp_oam.h"
 
 
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
@@ -24,6 +25,19 @@
 */
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 //-------------------------------------
+///	座標位置
+//=====================================
+typedef enum 
+{
+  MYSTERY_MSGWIN_POS_ABSOLUTE,     //絶対位置
+  MYSTERY_MSGWIN_POS_WH_CENTER,  //相対座標  幅、高さともに中央
+  MYSTERY_MSGWIN_POS_H_CENTER,    //相対座標  高さのみ中央
+} MYSTERY_MSGWIN_POS;
+
+#define MYSTERY_MSGWIN_DEFAULT_COLOR  (PRINTSYS_MACRO_LSB( 1, 2, 0 ))
+#define MYSTERY_MSGWIN_WHITE_COLOR    (PRINTSYS_MACRO_LSB( 0xf, 2, 0 ))
+
+//-------------------------------------
 ///	メッセージウィンドウ
 //=====================================
 typedef struct _MYSTERY_MSGWIN_WORK MYSTERY_MSGWIN_WORK;
@@ -31,10 +45,12 @@ typedef struct _MYSTERY_MSGWIN_WORK MYSTERY_MSGWIN_WORK;
 ///	パブリック
 //=====================================
 extern MYSTERY_MSGWIN_WORK * MYSTERY_MSGWIN_Init( u16 frm, u8 x, u8 y, u8 w, u8 h, u8 plt, PRINT_QUE *p_que, HEAPID heapID );
+extern void MYSTERY_MSGWIN_Clear( MYSTERY_MSGWIN_WORK* p_wk );
 extern void MYSTERY_MSGWIN_Exit( MYSTERY_MSGWIN_WORK* p_wk );
 extern void MYSTERY_MSGWIN_Print( MYSTERY_MSGWIN_WORK* p_wk, GFL_MSGDATA *p_msg, u32 strID, GFL_FONT *p_font );
 extern void MYSTERY_MSGWIN_PrintBuf( MYSTERY_MSGWIN_WORK* p_wk, const STRBUF *cp_strbuf, GFL_FONT *p_font );
-extern void MYSTERY_MSGWIN_PrintColor( MYSTERY_MSGWIN_WORK* p_wk, GFL_MSGDATA *p_msg, u32 strID, GFL_FONT *p_font, PRINTSYS_LSB lsb );
+extern void MYSTERY_MSGWIN_SetColor( MYSTERY_MSGWIN_WORK* p_wk, PRINTSYS_LSB color );
+extern void MYSTERY_MSGWIN_SetPos( MYSTERY_MSGWIN_WORK* p_wk, s16 x, s16 y, MYSTERY_MSGWIN_POS type );
 extern BOOL MYSTERY_MSGWIN_PrintMain( MYSTERY_MSGWIN_WORK* p_wk );
 
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
@@ -129,6 +145,10 @@ typedef struct
   u8  h;
   u32 strID;
   STRBUF *p_strbuf;
+  MYSTERY_MSGWIN_POS  pos_type;
+  s16 pos_x;
+  s16 pos_y;
+  PRINTSYS_LSB  color;
 } MYSTERY_MSGWINSET_SETUP_TBL;
 
 //-------------------------------------
@@ -140,6 +160,7 @@ typedef struct _MYSTERY_MSGWINSET_WORK MYSTERY_MSGWINSET_WORK;
 //=====================================
 MYSTERY_MSGWINSET_WORK * MYSTERY_MSGWINSET_Init( const MYSTERY_MSGWINSET_SETUP_TBL *cp_tbl, u32 tbl_len, u16 frm, u8 plt, PRINT_QUE *p_que, GFL_MSGDATA *p_msg, GFL_FONT *p_font, HEAPID heapID );
 extern void MYSTERY_MSGWINSET_Exit( MYSTERY_MSGWINSET_WORK* p_wk );
+extern void MYSTERY_MSGWINSET_Clear( MYSTERY_MSGWINSET_WORK* p_wk );
 extern BOOL MYSTERY_MSGWINSET_PrintMain( MYSTERY_MSGWINSET_WORK* p_wk );
 
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
@@ -169,10 +190,10 @@ typedef struct
   };
   u32 list_max;
 
-  u16 frm;
-  u16 font_plt; // 15.～15-list_maxを背景色に使います（15を14，13に上書き）
-  u16 frm_plt;
-  u16 frm_chr;
+  u16 font_frm;
+  u16 font_plt;
+  u16 bg_frm; //枠  
+  u16 bg_ofs;  //BGパレット
 } MYSTERY_MENU_SETUP;
 
 //-------------------------------------
@@ -215,3 +236,36 @@ extern void MYSTERY_SEQ_SetNext( MYSTERY_SEQ_WORK *p_wk, MYSTERY_SEQ_FUNCTION se
 extern void MYSTERY_SEQ_End( MYSTERY_SEQ_WORK *p_wk );
 extern void MYSTERY_SEQ_SetReservSeq( MYSTERY_SEQ_WORK *p_wk, int seq );
 extern void MYSTERY_SEQ_NextReservSeq( MYSTERY_SEQ_WORK *p_wk );
+
+//_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+/**
+ *				  MSGOAM  OAMで文字を書くモジュール
+*/
+//_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+//-------------------------------------
+///	座標位置
+//=====================================
+typedef enum 
+{
+  MYSTERY_MSGOAM_POS_ABSOLUTE,    //絶対位置
+  MYSTERY_MSGOAM_POS_WH_CENTER,  //相対座標  幅、高さともに中央
+  MYSTERY_MSGOAM_POS_H_CENTER,  //相対座標  高さのみ中央
+} MYSTERY_MSGOAM_POS;
+
+//-------------------------------------
+///	メッセージOAM
+//=====================================
+typedef struct _MYSTERY_MSGOAM_WORK MYSTERY_MSGOAM_WORK;
+//-------------------------------------
+///	パブリック
+//=====================================
+extern MYSTERY_MSGOAM_WORK * MYSTERY_MSGOAM_Init( const GFL_CLWK_DATA *cp_cldata, u8 w, u8 h, u32 plt_idx, u8 plt_ofs, CLSYS_DRAW_TYPE draw_type, BMPOAM_SYS_PTR p_bmpoam_sys, PRINT_QUE *p_que, HEAPID heapID );
+extern void MYSTERY_MSGOAM_Exit( MYSTERY_MSGOAM_WORK* p_wk );
+extern void MYSTERY_MSGOAM_Clear( MYSTERY_MSGOAM_WORK* p_wk );
+extern void MYSTERY_MSGOAM_Print( MYSTERY_MSGOAM_WORK* p_wk, GFL_MSGDATA *p_msg, u32 strID, GFL_FONT *p_font );
+extern void MYSTERY_MSGOAM_PrintBuf( MYSTERY_MSGOAM_WORK* p_wk, const STRBUF *cp_strbuf, GFL_FONT *p_font );
+extern void MYSTERY_MSGOAM_SetStrColor( MYSTERY_MSGOAM_WORK* p_wk, PRINTSYS_LSB color );
+extern void MYSTERY_MSGOAM_SetStrPos( MYSTERY_MSGOAM_WORK* p_wk, s16 x, s16 y, MYSTERY_MSGOAM_POS type );
+extern BOOL MYSTERY_MSGOAM_PrintMain( MYSTERY_MSGOAM_WORK* p_wk );
+extern BMPOAM_ACT_PTR MYSTERY_MSGOAM_GetBmpOamAct( MYSTERY_MSGOAM_WORK* p_wk );
+

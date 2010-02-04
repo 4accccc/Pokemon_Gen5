@@ -103,9 +103,9 @@ enum
 
 	//メイン画面OBJ
 	PLT_OBJ_CURSOR_M  = 0,
-  PLT_OBJ_GIFT_M    = 1,
-  PLT_OBJ_CARD_ICON_M       = 2,
-  PLT_OBJ_CARD_SILHOUETTE_M = 3,
+  PLT_OBJ_GIFT_M    = 14,
+  PLT_OBJ_CARD_ICON_M       = 10,
+  PLT_OBJ_CARD_SILHOUETTE_M = 13,
 
 	//サブ画面OBJ
 } ;
@@ -116,7 +116,6 @@ enum
 enum
 { 
   OBJ_RES_PLT_CURSOR  = 0, 
-
   OBJ_RES_PLT_MAX,
 
   OBJ_RES_CGX_CURSOR  = 0,
@@ -125,9 +124,15 @@ enum
   OBJ_RES_CEL_CURSOR  = 0,
   OBJ_RES_CEL_MAX,
 };
+
+#define EFFECT_BRIGHT_MAX  (32)
 enum
 {
 	OBJ_CLWKID_CURSOR,
+  OBJ_CLWKID_BRIGHT_TOP,
+  OBJ_CLWKID_BRIGHT_END = OBJ_CLWKID_BRIGHT_TOP + EFFECT_BRIGHT_MAX,
+
+  OBJ_CLWKID_BTN,
 	OBJ_CLWKID_MAX,
 } ;
 
@@ -141,6 +146,17 @@ enum
   BG_CGX_OFS_M_LIST  = 1,
   BG_CGX_OFS_M_TEXT  = 10,
 };
+
+//-------------------------------------
+///	BG読み込み
+//=====================================
+typedef enum
+{
+  BG_LOAD_TYPE_INIT,  //初期グラ
+  BG_LOAD_TYPE_GUIDE_S, //下画面ガイドBG
+  BG_LOAD_TYPE_STAGE_M, //デモ用ステージ
+} BG_LOAD_TYPE;
+
 
 //-------------------------------------
 ///	通信方法
@@ -157,12 +173,30 @@ typedef enum
 //=====================================
 #define MYSTERY_DEMO_GIFT_X             (128)
 #define MYSTERY_DEMO_MOVE_GIFT_START_Y  (-96)
-#define MYSTERY_DEMO_MOVE_GIFT_END_Y    (120)
+#define MYSTERY_DEMO_MOVE_GIFT_END_Y    (100)
 #define MYSTERY_DEMO_MOVE_GIFT_DIFF_Y   (MYSTERY_DEMO_MOVE_GIFT_END_Y-MYSTERY_DEMO_MOVE_GIFT_START_Y)
 #define MYSTERY_DEMO_MOVE_GIFT_SYNC     (60)
-#define MYSTERY_DEMO_INIT_WAIT_SYNC     (60)
-#define MYSTERY_DEMO_END_WAIT_SYNC     (60)
+#define MYSTERY_DEMO_INIT_WAIT_SYNC     (180)
+#define MYSTERY_DEMO_END_WAIT_SYNC      (60)
+#define MYSTERY_DEMO_STAGE_FADE_SYNC    (30)
 
+//-------------------------------------
+///	演出
+//=====================================
+#define MYSTERY_EFFECT_DEFAULT_SCROLL_SPEED     (0)
+#define MYSTERY_EFFECT_DEMO_SCROLL_SPEED        (-FX32_CONST(4.0))
+#define MYSTERY_EFFECT_DEMO_SCROLL_CHANGE_SYNC  (60)
+
+//演出タイプ
+typedef enum
+{ 
+  MYSTERY_EFFECT_TYPE_NORMAL,
+  MYSTERY_EFFECT_TYPE_DEMO,
+} MYSTERY_EFFECT_TYPE;
+
+
+#define MYSTERY_MENU_ALPHA_EV1  (15)
+#define MYSTERY_MENU_ALPHA_EV2  (1)
 
 //=============================================================================
 /**
@@ -188,7 +222,7 @@ typedef struct
 //=====================================
 typedef struct 
 {
-	int dummy;
+  HEAPID  heapID;
 } BG_WORK;
 //-------------------------------------
 ///	OBJリソース管理
@@ -200,6 +234,33 @@ typedef struct
   u32       res_cel[OBJ_RES_CEL_MAX]; //リソースセル
   GFL_CLWK  *p_clwk[OBJ_CLWKID_MAX];  //CLWK
 } OBJ_WORK;
+
+//-------------------------------------
+///	ボタン
+//=====================================
+typedef struct 
+{
+  BMPOAM_SYS_PTR      p_bmpoam_sys;
+  MYSTERY_MSGOAM_WORK *p_msgoam;
+  const OBJ_WORK      *cp_obj;
+} MYSTERY_BTN_WORK;
+
+//-------------------------------------
+///	エフェクトワーク
+//=====================================
+typedef struct 
+{
+  BOOL is_start;
+  BOOL is_update;
+  MYSTERY_EFFECT_TYPE type;
+  u16   cnt;
+  fx32  scroll_now;
+  fx32  scroll_add;
+  fx32  init_add;
+  fx32  bright_pos[EFFECT_BRIGHT_MAX];
+  fx32  bright_add[EFFECT_BRIGHT_MAX];
+  const OBJ_WORK *cp_obj;
+} MYSTERY_EFFECT_WORK;
 
 //-------------------------------------
 ///	メインワーク
@@ -215,8 +276,13 @@ typedef struct
   //デモ
   MYSTERY_DEMO_WORK         demo;
 
+  //演出
+  MYSTERY_EFFECT_WORK       effect;
+    
   //選択肢
   MYSTERY_LIST_WORK         *p_list;
+
+  MYSTERY_BTN_WORK          btn;
 
   //メニュー
   MYSTERY_MENU_WORK         *p_menu;
@@ -272,7 +338,10 @@ typedef struct
   //ログインプロセスへの引数
   WIFILOGIN_PARAM           *p_wifilogin_param;
 
-  //仮データ
+  //汎用カウンタ
+  u32                       cnt;
+
+  //仮データ @todo
   DOWNLOAD_GIFT_DATA        data;
 } MYSTERY_WORK;
 
@@ -295,12 +364,15 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_PROC_Main
 //=====================================
 static void BG_Init( BG_WORK *p_wk, HEAPID heapID );
 static void BG_Exit( BG_WORK *p_wk );
+static void BG_Load( BG_WORK *p_wk, BG_LOAD_TYPE type );
+static void BG_UnLoad( BG_WORK *p_wk, BG_LOAD_TYPE type );
 //-------------------------------------
 ///	OBJリソース
 //=====================================
 static void OBJ_Init( OBJ_WORK *p_wk, GFL_CLUNIT *p_clunit, HEAPID heapID );
 static void OBJ_Exit( OBJ_WORK *p_wk );
 static GFL_CLWK *OBJ_GetClwk( const OBJ_WORK *cp_wk, u32 clwkID );
+static void OBJ_ReLoad( OBJ_WORK *p_wk, HEAPID heapID );
 //-------------------------------------
 ///	SEQFUNC
 //=====================================
@@ -345,8 +417,22 @@ static void UTIL_DeleteGuideText( MYSTERY_WORK *p_wk );
 //=====================================
 static void MYSTERY_DEMO_Init( MYSTERY_DEMO_WORK *p_wk, GFL_CLUNIT *p_unit, const DOWNLOAD_GIFT_DATA *cp_data, HEAPID heapID );
 static void MYSTERY_DEMO_Exit( MYSTERY_DEMO_WORK *p_wk );
-static void MYSTERY_DEMO_Main( MYSTERY_DEMO_WORK *p_wk );
+static void MYSTERY_DEMO_Main( MYSTERY_DEMO_WORK *p_wk, BG_WORK *p_bg );
 static BOOL MYSTERY_DEMO_IsEnd( const MYSTERY_DEMO_WORK *cp_wk );
+//-------------------------------------
+///	演出
+//=====================================
+static void MYSTERY_EFFECT_Init( MYSTERY_EFFECT_WORK *p_wk, const OBJ_WORK *cp_obj, HEAPID heapID );
+static void MYSTERY_EFFECT_Exit( MYSTERY_EFFECT_WORK *p_wk );
+static void MYSTERY_EFFECT_Main( MYSTERY_EFFECT_WORK *p_wk );
+static void MYSTERY_EFFECT_Start( MYSTERY_EFFECT_WORK *p_wk, MYSTERY_EFFECT_TYPE type );
+static void MYSTERY_EFFECT_SetUpdateFlag( MYSTERY_EFFECT_WORK *p_wk, BOOL is_update );
+//-------------------------------------
+///	ボタン
+//=====================================
+static void MYSTERY_BTN_Init( MYSTERY_BTN_WORK *p_wk, const OBJ_WORK *cp_obj, GFL_CLUNIT *p_clunit, PRINT_QUE *p_que, GFL_MSGDATA *p_msg, u32 strID, GFL_FONT *p_font, HEAPID heapID );
+static void MYSTERY_BTN_Exit( MYSTERY_BTN_WORK *p_wk );
+static void MYSTERY_BTN_PrintMain( MYSTERY_BTN_WORK *p_wk );
 
 //=============================================================================
 /**
@@ -447,6 +533,10 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_PROC_Init( GFL_PROC *p_proc, int *p_seq, 
 
   p_wk->p_net   = MYSTERY_NET_Init( GAMEDATA_GetSaveControlWork(p_wk->p_gamedata), HEAPID_MYSTERYGIFT );
 
+  MYSTERY_EFFECT_Init( &p_wk->effect, &p_wk->obj, HEAPID_MYSTERYGIFT );
+  MYSTERY_EFFECT_Start( &p_wk->effect, MYSTERY_EFFECT_TYPE_NORMAL );
+  MYSTERY_EFFECT_SetUpdateFlag( &p_wk->effect, TRUE );
+
   return GFL_PROC_RES_FINISH;
 }
 //----------------------------------------------------------------------------
@@ -467,6 +557,7 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_PROC_Exit( GFL_PROC *p_proc, int *p_seq, 
   MYSTERY_PARAM *p_param  = p_param_adrs;
 
   //モジュール破棄
+  MYSTERY_EFFECT_Exit( &p_wk->effect );
   MYSTERY_NET_Exit( p_wk->p_net );
   if( p_wk->p_text )
   { 
@@ -528,6 +619,8 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_PROC_Main( GFL_PROC *p_proc, int *p_seq, 
   
   //描画
 	MYSTERY_GRAPHIC_2D_Draw( p_wk->p_graphic );
+  
+  MYSTERY_EFFECT_Main( &p_wk->effect );
 
   //プリント
 	PRINTSYS_QUE_Main( p_wk->p_que );
@@ -570,57 +663,11 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_PROC_Main( GFL_PROC *p_proc, int *p_seq, 
 //-----------------------------------------------------------------------------
 static void BG_Init( BG_WORK *p_wk, HEAPID heapID )
 {	
-	{	
-		ARCHANDLE	*	p_handle	= GFL_ARC_OpenDataHandle( ARCID_MYSTERY, heapID );
-		//PLT
-		GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_mystery_fusigi_bg_00_NCLR,
-				PALTYPE_MAIN_BG, PLT_BG_BACK_M*0x20, 0x20, heapID );
-  	GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_mystery_fushigi_back_NCLR,
-				PALTYPE_MAIN_BG, PLT_BG_RECV_M*0x20, 0x20*6, heapID );
-		GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_mystery_fusigi_bg_00_NCLR,
-				PALTYPE_SUB_BG, PLT_BG_BACK_S*0x20, 0x20, heapID );
-		GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_mystery_fusigi_card_NCLR,
-				PALTYPE_SUB_BG, PLT_BG_CARD_S*0x20, 0x20, heapID );
+  GFL_STD_MemClear( p_wk, sizeof(BG_WORK) );
+  p_wk->heapID  = heapID;
 
-		//CHR
-		GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_mystery_fusigi_bg_00_NCGR, 
-				BG_FRAME_M_BACK2, 0, 0, FALSE, heapID );
-		GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_mystery_fusigi_bg_00_NCGR, 
-				BG_FRAME_S_BACK2, 0, 0, FALSE, heapID );
+  BG_Load( p_wk, BG_LOAD_TYPE_INIT );
 
-		//SCR
-		GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_mystery_fusigi_bg_00_NSCR,
-				BG_FRAME_M_BACK2, 0, 0, FALSE, heapID );
-		GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_mystery_fusigi_bg_00_NSCR,
-				BG_FRAME_S_BACK2, 0, 0, FALSE, heapID );
-
-		GFL_ARC_CloseDataHandle( p_handle );
-	}
-
-	{	
-		ARCHANDLE	*	p_handle	= GFL_ARC_OpenDataHandle( ARCID_FONT, heapID );
-
-		//上下画面フォントパレット
-		GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_font_default_nclr,
-				PALTYPE_MAIN_BG, PLT_BG_FONT_M*0x20, 0x20, heapID );
-		GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_font_default_nclr,
-				PALTYPE_SUB_BG, PLT_BG_FONT_S*0x20, 0x20, heapID );
-
-		GFL_ARC_CloseDataHandle( p_handle );
-	}
-
-  //キャラを単位で読み込み
-  { 
-    //BG_FRAME_M_TEXT
-    GFL_BG_FillCharacter( BG_FRAME_M_TEXT, 0, 1, BG_CGX_OFS_M_CLEAR );
-    BmpWinFrame_GraphicSet( BG_FRAME_M_TEXT, BG_CGX_OFS_M_LIST, PLT_BG_LIST_M, MENU_TYPE_SYSTEM, heapID );
-    TalkWinFrame_GraphicSet( BG_FRAME_M_TEXT, BG_CGX_OFS_M_TEXT, PLT_BG_TEXT_M, MENU_TYPE_SYSTEM, heapID );
-
-    //BG_FRAME_M_LIST
-    GFL_BG_FillCharacter( BG_FRAME_M_LIST, 0, 1, BG_CGX_OFS_M_CLEAR );
-    BmpWinFrame_GraphicSet( BG_FRAME_M_LIST, BG_CGX_OFS_M_LIST, PLT_BG_LIST_M, MENU_TYPE_SYSTEM, heapID );
-    TalkWinFrame_GraphicSet( BG_FRAME_M_LIST, BG_CGX_OFS_M_LIST, PLT_BG_LIST_M, MENU_TYPE_SYSTEM, heapID );
-  }
 
   //初期は非表示のもの
   GFL_BG_SetVisible( BG_FRAME_S_BACK1, FALSE );
@@ -635,8 +682,103 @@ static void BG_Init( BG_WORK *p_wk, HEAPID heapID )
 //-----------------------------------------------------------------------------
 static void BG_Exit( BG_WORK *p_wk )
 {	
-  GFL_BG_FillCharacterRelease( BG_FRAME_M_LIST, 1, BG_CGX_OFS_M_CLEAR );
-  GFL_BG_FillCharacterRelease( BG_FRAME_M_TEXT, 1, BG_CGX_OFS_M_CLEAR );
+  //GFL_BG_FillCharacterRelease( BG_FRAME_M_LIST, 1, BG_CGX_OFS_M_CLEAR );
+  //GFL_BG_FillCharacterRelease( BG_FRAME_M_TEXT, 1, BG_CGX_OFS_M_CLEAR );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	BG読み込み
+ *
+ *	@param	BG_WORK *p_wk ワーク
+ *	@param  type          読み込みタイプ
+ */
+//-----------------------------------------------------------------------------
+static void BG_Load( BG_WORK *p_wk, BG_LOAD_TYPE type )
+{ 
+  HEAPID  heapID  = GFL_HEAP_LOWID( p_wk->heapID );
+
+  switch( type )
+  { 
+  case BG_LOAD_TYPE_INIT:
+    {	
+      ARCHANDLE	*	p_handle	= GFL_ARC_OpenDataHandle( ARCID_MYSTERY, heapID );
+      //PLT
+      GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_mystery_fusigi_bg_00_NCLR,
+          PALTYPE_MAIN_BG, PLT_BG_BACK_M*0x20, 0, heapID );
+      GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_mystery_fusigi_bg_00_NCLR,
+          PALTYPE_SUB_BG, PLT_BG_BACK_S*0x20, 0x20*4, heapID );
+      GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_mystery_fusigi_card_NCLR,
+          PALTYPE_SUB_BG, PLT_BG_CARD_S*0x20, 0x20, heapID );
+
+      //CHR
+      GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_mystery_fusigi_bg_00_NCGR, 
+          BG_FRAME_M_BACK2, 0, 0, FALSE, heapID );
+      GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_mystery_fusigi_bg_00_NCGR, 
+          BG_FRAME_S_BACK2, 0, 0, FALSE, heapID );
+
+      //SCR
+      GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_mystery_fusigi_bg_00_NSCR,
+          BG_FRAME_M_BACK2, 0, 0, FALSE, heapID );
+      GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_mystery_fusigi_bg_00_NSCR,
+          BG_FRAME_S_BACK2, 0, 0, FALSE, heapID );
+
+      GFL_ARC_CloseDataHandle( p_handle );
+    }
+    //フォント
+    {	
+      ARCHANDLE	*	p_handle	= GFL_ARC_OpenDataHandle( ARCID_FONT, heapID );
+
+      //上下画面フォントパレット
+      GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_font_default_nclr,
+          PALTYPE_MAIN_BG, PLT_BG_FONT_M*0x20, 0x20, heapID );
+      GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_font_default_nclr,
+          PALTYPE_SUB_BG, PLT_BG_FONT_S*0x20, 0x20, heapID );
+
+      GFL_ARC_CloseDataHandle( p_handle );
+    }
+
+    //キャラを単位で読み込み
+    { 
+      static const u8 sc_blank_chr[0x20] = { 
+        0
+      };
+      GFL_BG_LoadCharacter( BG_FRAME_M_TEXT, sc_blank_chr, 0x20, BG_CGX_OFS_M_CLEAR );
+      GFL_BG_LoadCharacter( BG_FRAME_M_LIST, sc_blank_chr, 0x20, BG_CGX_OFS_M_CLEAR );
+    }
+
+
+    { 
+      TalkWinFrame_GraphicSet( BG_FRAME_M_TEXT, BG_CGX_OFS_M_TEXT, PLT_BG_TEXT_M, MENU_TYPE_SYSTEM, heapID );
+      TalkWinFrame_GraphicSet( BG_FRAME_M_LIST, BG_CGX_OFS_M_LIST, PLT_BG_LIST_M, MENU_TYPE_SYSTEM, heapID );
+
+    }
+    break;
+
+  case BG_LOAD_TYPE_GUIDE_S:
+    {	
+      ARCHANDLE	*	p_handle	= GFL_ARC_OpenDataHandle( ARCID_MYSTERY, heapID );
+      GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_mystery_fusigi_bg_00_NCLR,
+          PALTYPE_SUB_BG, PLT_BG_BACK_S*0x20, 0x20*6, heapID );
+      GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_mystery_fusigi_bg_00_NCGR, 
+          BG_FRAME_S_BACK1, 0, 0, FALSE, heapID );
+      GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_mystery_fushigi_card03_NSCR,
+          BG_FRAME_S_BACK1, 0, 0, FALSE, heapID );
+      GFL_ARC_CloseDataHandle( p_handle );
+    }
+    break;
+
+  case BG_LOAD_TYPE_STAGE_M:
+    {	
+      ARCHANDLE	*	p_handle	= GFL_ARC_OpenDataHandle( ARCID_MYSTERY, heapID );
+      GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_mystery_fushigi_back_NCGR, 
+          BG_FRAME_M_BACK1, 0, 0, FALSE, heapID );
+      GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_mystery_fushigi_stage_NSCR,
+          BG_FRAME_M_BACK1, 0, 0, FALSE, heapID );
+      GFL_ARC_CloseDataHandle( p_handle );
+    }
+    break;
+  }
 }
 //=============================================================================
 /**
@@ -659,11 +801,11 @@ static void OBJ_Init( OBJ_WORK *p_wk, GFL_CLUNIT *p_clunit, HEAPID heapID )
 		ARCHANDLE	*	p_handle	= GFL_ARC_OpenDataHandle( ARCID_MYSTERY, heapID );
 
 		p_wk->res_plt[ OBJ_RES_PLT_CURSOR ]	= GFL_CLGRP_PLTT_Register( p_handle, 
-				NARC_mystery_title_cursol_NCLR, CLSYS_DRAW_MAIN, PLT_OBJ_CURSOR_M*0x20, heapID );
+				NARC_mystery_title_cursol_NCLR, CLSYS_DRAW_MAX, PLT_OBJ_CURSOR_M*0x20, heapID );
 		p_wk->res_cel[ OBJ_RES_CEL_CURSOR ]	= GFL_CLGRP_CELLANIM_Register( p_handle,
 				NARC_mystery_title_cursol_NCER, NARC_mystery_title_cursol_NANR, heapID );
 		p_wk->res_cgx[ OBJ_RES_CGX_CURSOR ]	= GFL_CLGRP_CGR_Register( p_handle,
-				NARC_mystery_title_cursol_NCGR, FALSE, CLSYS_DRAW_MAIN, heapID );
+				NARC_mystery_title_cursol_NCGR, FALSE, CLSYS_DRAW_MAX, heapID );
 
 		GFL_ARC_CloseDataHandle( p_handle );
 	}
@@ -682,6 +824,36 @@ static void OBJ_Init( OBJ_WORK *p_wk, GFL_CLUNIT *p_clunit, HEAPID heapID )
 				CLSYS_DEFREND_MAIN,
 				heapID );
 		GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[OBJ_CLWKID_CURSOR], FALSE );
+
+    for( i = 0; i < EFFECT_BRIGHT_MAX; i++ )
+    { 
+      cldata.pos_x   = GFUser_GetPublicRand0( 256 );
+      cldata.pos_y   = GFUser_GetPublicRand0( 256 ) - (256 + 16);
+      cldata.bgpri   = BG_FRAME_M_BACK2;
+      cldata.anmseq  = 3 + GFUser_GetPublicRand0( 6 );
+      p_wk->p_clwk[OBJ_CLWKID_BRIGHT_TOP + i]	=		GFL_CLACT_WK_Create( p_clunit,
+          p_wk->res_cgx[OBJ_RES_CGX_CURSOR],
+          p_wk->res_plt[OBJ_RES_PLT_CURSOR],
+          p_wk->res_cel[OBJ_RES_CEL_CURSOR],
+          &cldata,
+          CLSYS_DEFREND_MAIN,
+          heapID );
+      GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[OBJ_CLWKID_BRIGHT_TOP + i], FALSE );
+    }
+
+    cldata.pos_x   = 128;
+    cldata.pos_y   = 177;
+    cldata.bgpri   = 0;
+    cldata.softpri = 1;
+    cldata.anmseq  = 9;
+    p_wk->p_clwk[OBJ_CLWKID_BTN]	=		GFL_CLACT_WK_Create( p_clunit,
+				p_wk->res_cgx[OBJ_RES_CGX_CURSOR],
+				p_wk->res_plt[OBJ_RES_PLT_CURSOR],
+				p_wk->res_cel[OBJ_RES_CEL_CURSOR],
+				&cldata,
+				CLSYS_DEFREND_MAIN,
+				heapID );
+		GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[OBJ_CLWKID_BTN], FALSE );
 	}
 }
 //----------------------------------------------------------------------------
@@ -737,6 +909,25 @@ static GFL_CLWK *OBJ_GetClwk( const OBJ_WORK *cp_wk, u32 clwkID )
 	return cp_wk->p_clwk[ clwkID ];
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  再読み込み
+ *
+ *	@param	OBJ_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void OBJ_ReLoad( OBJ_WORK *p_wk, HEAPID heapID )
+{ 
+
+  //リソース読みこみ
+	{	
+    void *p_plt_buff;
+    NNSG2dPaletteData *p_plt_data;
+    p_plt_buff  = GFL_ARC_UTIL_LoadPalette( ARCID_MYSTERY, NARC_mystery_title_cursol_NCLR, &p_plt_data, heapID );
+    GFL_CLGRP_PLTT_Replace( p_wk->res_plt[ OBJ_RES_PLT_CURSOR ], p_plt_data, 6 );
+    GFL_HEAP_FreeMemory( p_plt_buff );
+	} 
+}
 //=============================================================================
 /**
  *					SEQFUNC
@@ -754,7 +945,6 @@ static GFL_CLWK *OBJ_GetClwk( const OBJ_WORK *cp_wk, u32 clwkID )
 static void SEQFUNC_Start( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
 {
   MYSTERY_WORK  *p_wk     = p_wk_adrs;  
-  
   
   MYSTERY_TEXT_Print( p_wk->p_text, p_wk->p_msg, syachi_mystery_01_001, MYSTERY_TEXT_TYPE_QUE );
   UTIL_CreateMenu( p_wk, UTIL_MENU_TYPE_TOP, HEAPID_MYSTERYGIFT ); 
@@ -1507,12 +1697,17 @@ static void SEQFUNC_Demo( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
   enum
   { 
     SEQ_INIT,
+    SEQ_INIT_WAIT,
+    SEQ_DEMO_MAIN,
     SEQ_SAVE_INIT,
     SEQ_SAVE_MAIN,
     SEQ_RECV,
     SEQ_MSG_WAIT,
-    SEQ_MSG_DECIDE,
     SEQ_CARD_INIT,
+    SEQ_START_CARD_EFFECT,
+    SEQ_WAIT_CARD_EFFECT,
+    SEQ_WAIT_SYNC,
+    SEQ_INIT_BTN,
     SEQ_CARD_WAIT,
     SEQ_END,
   };
@@ -1522,27 +1717,40 @@ static void SEQFUNC_Demo( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
   switch( *p_seq )
   { 
   case SEQ_INIT:
+    MYSTERY_EFFECT_Start( &p_wk->effect, MYSTERY_EFFECT_TYPE_DEMO );
+
     //おくりものを受信中です
     { 
       GFL_CLUNIT	*p_unit	= MYSTERY_GRAPHIC_GetClunit( p_wk->p_graphic );
       MYSTERY_DEMO_Init( &p_wk->demo, p_unit, &p_wk->data, HEAPID_MYSTERYGIFT );
       MYSTERY_TEXT_Print( p_wk->p_text, p_wk->p_msg, syachi_mystery_01_014, MYSTERY_TEXT_TYPE_QUE );
+      *p_seq  = SEQ_INIT_WAIT;
+    }
+    break;
+
+  case SEQ_INIT_WAIT:
+    if( MYSTERY_TEXT_IsEndPrint(p_wk->p_text) )
+    {
+      *p_seq  = SEQ_DEMO_MAIN;
+    }
+    break;
+
+  case SEQ_DEMO_MAIN:
+    MYSTERY_DEMO_Main( &p_wk->demo, &p_wk->bg );
+    if( MYSTERY_DEMO_IsEnd(&p_wk->demo) )
+    {
       *p_seq  = SEQ_SAVE_INIT;
     }
     break;
 
   case SEQ_SAVE_INIT:
-    if( MYSTERY_TEXT_IsEndPrint(p_wk->p_text) )
-    { 
-      SaveControl_SaveAsyncInit( GAMEDATA_GetSaveControlWork(p_wk->p_gamedata) );
-      *p_seq  = SEQ_SAVE_MAIN;
-    }
+    GAMEDATA_SaveAsyncStart(p_wk->p_gamedata);
+    *p_seq  = SEQ_SAVE_MAIN;
     break;
 
   case SEQ_SAVE_MAIN:
     { 
-      SAVE_RESULT result  = SaveControl_SaveAsyncMain(GAMEDATA_GetSaveControlWork(p_wk->p_gamedata));
-      MYSTERY_DEMO_Main( &p_wk->demo );
+      SAVE_RESULT result  = GAMEDATA_SaveAsyncMain(p_wk->p_gamedata);
       if( result == SAVE_RESULT_OK )
       { 
         *p_seq  = SEQ_RECV;
@@ -1551,26 +1759,14 @@ static void SEQFUNC_Demo( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     break;
 
   case SEQ_RECV:
-    { 
-      MYSTERY_DEMO_Main( &p_wk->demo );
-      if( MYSTERY_DEMO_IsEnd(&p_wk->demo) )
-      { 
-        MYSTERY_TEXT_Print( p_wk->p_text, p_wk->p_msg, syachi_mystery_01_015, MYSTERY_TEXT_TYPE_STREAM );
-        *p_seq  = SEQ_MSG_WAIT;
-      }
-    }
+    MYSTERY_TEXT_Print( p_wk->p_text, p_wk->p_msg, syachi_mystery_01_015, MYSTERY_TEXT_TYPE_STREAM );
+    *p_seq  = SEQ_MSG_WAIT;
     break;
 
   case SEQ_MSG_WAIT:
     if( MYSTERY_TEXT_IsEndPrint(p_wk->p_text) )
     { 
-      *p_seq  = SEQ_MSG_DECIDE;
-    }
-    break;
-
-  case SEQ_MSG_DECIDE:
-    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE )
-    { 
+      MYSTERY_EFFECT_Start( &p_wk->effect, MYSTERY_EFFECT_TYPE_NORMAL );
       *p_seq  = SEQ_CARD_INIT;
     }
     break;
@@ -1603,13 +1799,45 @@ static void SEQFUNC_Demo( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
         p_wk->p_card  = MYSTERY_CARD_Init( &setup, HEAPID_MYSTERYGIFT );
       }
     }
-    *p_seq  = SEQ_CARD_WAIT;
+    *p_seq  = SEQ_START_CARD_EFFECT;
+    break;
+
+  case SEQ_START_CARD_EFFECT:
+    MYSTERY_CARD_Main( p_wk->p_card );
+    MYSTERY_CARD_StartEffect( p_wk->p_card );
+    *p_seq = SEQ_WAIT_CARD_EFFECT;
+    break;
+
+  case SEQ_WAIT_CARD_EFFECT:
+    MYSTERY_CARD_Main( p_wk->p_card );
+    if( MYSTERY_CARD_IsEndEffect(p_wk->p_card) )
+    { 
+      *p_seq  = SEQ_WAIT_SYNC;
+    }
+    break;
+    
+  case SEQ_WAIT_SYNC:
+    if( p_wk->cnt++ > 30 )
+    { 
+      p_wk->cnt  = 0;
+      *p_seq  = SEQ_INIT_BTN;
+    }
+    break;
+
+  case SEQ_INIT_BTN:
+    {	
+      GFL_CLUNIT	*p_clunit	= MYSTERY_GRAPHIC_GetClunit( p_wk->p_graphic );
+      MYSTERY_BTN_Init( &p_wk->btn, &p_wk->obj, p_clunit, p_wk->p_que, p_wk->p_msg, syachi_mystery_album_009, p_wk->p_font, HEAPID_MYSTERYGIFT );
+      MYSTERY_BTN_PrintMain( &p_wk->btn );
+      *p_seq  = SEQ_CARD_WAIT;
+    }
     break;
 
   case SEQ_CARD_WAIT:
-    MYSTERY_CARD_Main( p_wk->p_card );
+    MYSTERY_BTN_PrintMain( &p_wk->btn );
     if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE )
     { 
+      MYSTERY_BTN_Exit( &p_wk->btn );
       *p_seq  = SEQ_END;
     }
     break;
@@ -1633,16 +1861,29 @@ static void SEQFUNC_CardAlbum( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk
 { 
   enum
   { 
+    SEQ_START_FADEOUT_INIT,
     SEQ_INIT,
+    SEQ_START_FADEIN_INIT,
     SEQ_MAIN,
+    SEQ_START_FADEOUT_EXIT,
     SEQ_EXIT,
+    SEQ_START_FADEIN_EXIT,
+    SEQ_NEXT_STARTSELECT,
+
+    SEQ_WAIT_FADE,
   };
 
   MYSTERY_WORK  *p_wk     = p_wk_adrs;
 
   switch( *p_seq )
   { 
+  case SEQ_START_FADEOUT_INIT:
+		GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, 0 );
+    MYSTERY_SEQ_SetReservSeq( p_seqwk, SEQ_INIT );
+    *p_seq  = SEQ_WAIT_FADE;
+    break;
   case SEQ_INIT:
+    MYSTERY_EFFECT_SetUpdateFlag( &p_wk->effect, FALSE );
     { 
       UTIL_DeleteMenu( p_wk );
       MYSTERY_TEXT_Exit( p_wk->p_text );
@@ -1660,39 +1901,57 @@ static void SEQFUNC_CardAlbum( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk
       setup.p_msg     = p_wk->p_msg;
       setup.p_gamedata  = p_wk->p_gamedata;
       p_wk->p_album = MYSTERY_ALBUM_Init( &setup, HEAPID_MYSTERYGIFT );
-      *p_seq  = SEQ_MAIN;
+      *p_seq  = SEQ_START_FADEIN_INIT;
     }
+    break;
+  case SEQ_START_FADEIN_INIT:
+		GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 0 );
+    MYSTERY_SEQ_SetReservSeq( p_seqwk, SEQ_MAIN );
+    *p_seq  = SEQ_WAIT_FADE;
     break;
   case SEQ_MAIN:
     MYSTERY_ALBUM_Main( p_wk->p_album );
     if( MYSTERY_ALBUM_IsEnd( p_wk->p_album ) )
     { 
-      *p_seq  = SEQ_EXIT;
+      *p_seq  = SEQ_START_FADEOUT_EXIT;
     }
+    break;
+  case SEQ_START_FADEOUT_EXIT:
+		GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, 0 );
+    MYSTERY_SEQ_SetReservSeq( p_seqwk, SEQ_EXIT );
+    *p_seq  = SEQ_WAIT_FADE;
     break;
   case SEQ_EXIT:
+    MYSTERY_EFFECT_SetUpdateFlag( &p_wk->effect, TRUE );
     MYSTERY_ALBUM_Exit( p_wk->p_album );
-    { 
-      ARCHANDLE	*	p_handle	= GFL_ARC_OpenDataHandle( ARCID_MYSTERY, HEAPID_MYSTERYGIFT );
-      //PLT
-      GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_mystery_fusigi_bg_00_NCLR,
-          PALTYPE_MAIN_BG, PLT_BG_BACK_M*0x20, 0x20, HEAPID_MYSTERYGIFT );
-      GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_mystery_fushigi_back_NCLR,
-          PALTYPE_MAIN_BG, PLT_BG_RECV_M*0x20, 0x20*6, HEAPID_MYSTERYGIFT );
-      //CHR
-      GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_mystery_fusigi_bg_00_NCGR, 
-          BG_FRAME_M_BACK2, 0, 0, FALSE, HEAPID_MYSTERYGIFT );
-      //SCR
-      GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_mystery_fusigi_bg_00_NSCR,
-          BG_FRAME_M_BACK2, 0, 0, FALSE, HEAPID_MYSTERYGIFT );
-      GFL_ARC_CloseDataHandle( p_handle );
-    }
-
-
-    MYSTERY_SEQ_SetNext( p_seqwk, SEQFUNC_StartSelect );
+    p_wk->p_album = NULL;
+    BG_Load( &p_wk->bg, BG_LOAD_TYPE_INIT );
+    OBJ_ReLoad( &p_wk->obj, HEAPID_MYSTERYGIFT );
     p_wk->p_text  = MYSTERY_TEXT_Init( BG_FRAME_M_TEXT, PLT_BG_FONT_M, p_wk->p_que, p_wk->p_font, HEAPID_MYSTERYGIFT );
     MYSTERY_TEXT_WriteWindowFrame( p_wk->p_text, BG_CGX_OFS_M_TEXT, PLT_BG_TEXT_M );
+    *p_seq  = SEQ_START_FADEIN_EXIT;
     break;
+  case SEQ_START_FADEIN_EXIT:
+		GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 0 );
+    MYSTERY_SEQ_SetReservSeq( p_seqwk, SEQ_NEXT_STARTSELECT );
+    *p_seq  = SEQ_WAIT_FADE;
+    break;
+
+  case SEQ_NEXT_STARTSELECT:
+    MYSTERY_SEQ_SetNext( p_seqwk, SEQFUNC_StartSelect );
+    break;
+
+  case SEQ_WAIT_FADE:
+		if( !GFL_FADE_CheckFade() )
+		{	
+      MYSTERY_SEQ_NextReservSeq( p_seqwk );
+		}
+    break;
+  }
+
+  if( p_wk->p_album )
+  { 
+    MYSTERY_ALBUM_PrintMain( p_wk->p_album );
   }
 }
 
@@ -1710,16 +1969,29 @@ static void SEQFUNC_DeleteCard( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
 { 
   enum
   { 
+    SEQ_START_FADEOUT_INIT,
     SEQ_INIT,
+    SEQ_START_FADEIN_INIT,
     SEQ_MAIN,
+    SEQ_START_FADEOUT_EXIT,
     SEQ_EXIT,
+    SEQ_START_FADEIN_EXIT,
+    SEQ_NEXT_STARTSELECT,
+
+    SEQ_WAIT_FADE,
   };
 
   MYSTERY_WORK  *p_wk     = p_wk_adrs;
 
   switch( *p_seq )
   { 
+  case SEQ_START_FADEOUT_INIT:
+		GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, 0 );
+    MYSTERY_SEQ_SetReservSeq( p_seqwk, SEQ_INIT );
+    *p_seq  = SEQ_WAIT_FADE;
+    break;
   case SEQ_INIT:
+    MYSTERY_EFFECT_SetUpdateFlag( &p_wk->effect, FALSE );
     { 
       UTIL_DeleteMenu( p_wk );
       MYSTERY_TEXT_Exit( p_wk->p_text );
@@ -1737,39 +2009,57 @@ static void SEQFUNC_DeleteCard( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
       setup.p_msg     = p_wk->p_msg;
       setup.p_gamedata  = p_wk->p_gamedata;
       p_wk->p_album = MYSTERY_ALBUM_Init( &setup, HEAPID_MYSTERYGIFT );
-      *p_seq  = SEQ_MAIN;
+      *p_seq  = SEQ_START_FADEIN_INIT;
     }
+    break;
+  case SEQ_START_FADEIN_INIT:
+		GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 0 );
+    MYSTERY_SEQ_SetReservSeq( p_seqwk, SEQ_MAIN );
+    *p_seq  = SEQ_WAIT_FADE;
     break;
   case SEQ_MAIN:
     MYSTERY_ALBUM_Main( p_wk->p_album );
     if( MYSTERY_ALBUM_IsEnd( p_wk->p_album ) )
     { 
-      *p_seq  = SEQ_EXIT;
+      *p_seq  = SEQ_START_FADEOUT_EXIT;
     }
+    break;
+  case SEQ_START_FADEOUT_EXIT:
+		GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, 0 );
+    MYSTERY_SEQ_SetReservSeq( p_seqwk, SEQ_EXIT );
+    *p_seq  = SEQ_WAIT_FADE;
     break;
   case SEQ_EXIT:
+    MYSTERY_EFFECT_SetUpdateFlag( &p_wk->effect, TRUE );
     MYSTERY_ALBUM_Exit( p_wk->p_album );
-    { 
-      ARCHANDLE	*	p_handle	= GFL_ARC_OpenDataHandle( ARCID_MYSTERY, HEAPID_MYSTERYGIFT );
-      //PLT
-      GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_mystery_fusigi_bg_00_NCLR,
-          PALTYPE_MAIN_BG, PLT_BG_BACK_M*0x20, 0x20, HEAPID_MYSTERYGIFT );
-      GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_mystery_fushigi_back_NCLR,
-          PALTYPE_MAIN_BG, PLT_BG_RECV_M*0x20, 0x20*6, HEAPID_MYSTERYGIFT );
-      //CHR
-      GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_mystery_fusigi_bg_00_NCGR, 
-          BG_FRAME_M_BACK2, 0, 0, FALSE, HEAPID_MYSTERYGIFT );
-      //SCR
-      GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_mystery_fusigi_bg_00_NSCR,
-          BG_FRAME_M_BACK2, 0, 0, FALSE, HEAPID_MYSTERYGIFT );
-      GFL_ARC_CloseDataHandle( p_handle );
-    }
-
-
-    MYSTERY_SEQ_SetNext( p_seqwk, SEQFUNC_StartSelect );
+    p_wk->p_album = NULL;
+    BG_Load( &p_wk->bg, BG_LOAD_TYPE_INIT );
+    OBJ_ReLoad( &p_wk->obj, HEAPID_MYSTERYGIFT );
     p_wk->p_text  = MYSTERY_TEXT_Init( BG_FRAME_M_TEXT, PLT_BG_FONT_M, p_wk->p_que, p_wk->p_font, HEAPID_MYSTERYGIFT );
     MYSTERY_TEXT_WriteWindowFrame( p_wk->p_text, BG_CGX_OFS_M_TEXT, PLT_BG_TEXT_M );
+    *p_seq  = SEQ_START_FADEIN_EXIT;
     break;
+  case SEQ_START_FADEIN_EXIT:
+		GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 0 );
+    MYSTERY_SEQ_SetReservSeq( p_seqwk, SEQ_NEXT_STARTSELECT );
+    *p_seq  = SEQ_WAIT_FADE;
+    break;
+
+  case SEQ_NEXT_STARTSELECT:
+    MYSTERY_SEQ_SetNext( p_seqwk, SEQFUNC_StartSelect );
+    break;
+
+  case SEQ_WAIT_FADE:
+		if( !GFL_FADE_CheckFade() )
+		{	
+      MYSTERY_SEQ_NextReservSeq( p_seqwk );
+		}
+    break;
+  }
+
+  if( p_wk->p_album )
+  { 
+    MYSTERY_ALBUM_PrintMain( p_wk->p_album );
   }
 }
 
@@ -1809,6 +2099,7 @@ static void SEQFUNC_WifiLogin( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk
 	case SEQ_FADEIN_WAIT:
 		if( !GFL_FADE_CheckFade() )
 		{	
+      MYSTERY_EFFECT_SetUpdateFlag( &p_wk->effect, FALSE );
 			*p_seq	= SEQ_DELETE;
 		}
 		break;
@@ -1852,6 +2143,8 @@ static void SEQFUNC_WifiLogin( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk
 
     p_wk->p_text  = MYSTERY_TEXT_Init( BG_FRAME_M_TEXT, PLT_BG_FONT_M, p_wk->p_que, p_wk->p_font, HEAPID_MYSTERYGIFT );
     MYSTERY_TEXT_WriteWindowFrame( p_wk->p_text, BG_CGX_OFS_M_TEXT, PLT_BG_TEXT_M );
+
+    MYSTERY_EFFECT_SetUpdateFlag( &p_wk->effect, TRUE );
     *p_seq  = SEQ_PROC_WAIT;
     break;
 
@@ -2082,10 +2375,10 @@ static void UTIL_CreateMenu( MYSTERY_WORK *p_wk, UTIL_MENU_TYPE type, HEAPID hea
     setup.p_font  = p_wk->p_font;
     setup.p_que   = p_wk->p_que;
     setup.p_cursor= OBJ_GetClwk( &p_wk->obj, OBJ_CLWKID_CURSOR );
-    setup.frm     = BG_FRAME_M_TEXT;
+    setup.font_frm     = BG_FRAME_M_TEXT;
     setup.font_plt= PLT_BG_FONT_M;
-    setup.frm_plt = PLT_BG_TEXT_M;
-    setup.frm_chr = BG_CGX_OFS_M_TEXT;
+    setup.bg_frm = BG_FRAME_M_BACK1;
+    setup.bg_ofs = PLT_BG_RECV_M;
 
     switch( type )
     { 
@@ -2139,6 +2432,40 @@ static void UTIL_CreateMenu( MYSTERY_WORK *p_wk, UTIL_MENU_TYPE type, HEAPID hea
         }
       }
     }
+
+    //BG設定
+    { 
+      ARCHANDLE	*	p_handle	= GFL_ARC_OpenDataHandle( ARCID_MYSTERY, heapID );
+      GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_mystery_fusigi_bg_00_NCGR, 
+          BG_FRAME_M_BACK1, 0, 0, FALSE, heapID );
+
+      if( type == UTIL_MENU_TYPE_GIFT )
+      { 
+        GFL_ARC_UTIL_TransVramScreen( ARCID_MYSTERY, NARC_mystery_fushigi_top02_NSCR,
+            BG_FRAME_M_BACK1, 0, 0, FALSE, heapID );
+      }
+      else
+      { 
+        GFL_ARC_UTIL_TransVramScreen( ARCID_MYSTERY, NARC_mystery_fushigi_top_NSCR,
+            BG_FRAME_M_BACK1, 0, 0, FALSE, heapID );
+      }
+      GFL_ARC_CloseDataHandle( p_handle );
+
+      GFL_BG_ChangeScreenPalette( BG_FRAME_M_BACK1, 0, 0, 32, 24, PLT_BG_RECV_M );
+
+      GFL_BG_LoadScreenReq( BG_FRAME_M_BACK1 );
+      GFL_BG_SetVisible( BG_FRAME_M_BACK1, TRUE );
+    }
+
+    //アルファ設定
+    { 
+      G2_SetBlendAlpha(
+          GX_BLEND_PLANEMASK_BG2,
+          GX_BLEND_PLANEMASK_BG3 | GX_BLEND_PLANEMASK_OBJ,
+          MYSTERY_MENU_ALPHA_EV1,
+          MYSTERY_MENU_ALPHA_EV2
+          );
+    }
   }
 }
 //----------------------------------------------------------------------------
@@ -2152,7 +2479,13 @@ static void UTIL_CreateMenu( MYSTERY_WORK *p_wk, UTIL_MENU_TYPE type, HEAPID hea
 static void UTIL_DeleteMenu( MYSTERY_WORK *p_wk )
 {
   if(p_wk->p_menu)
-  { 
+  {
+    G2_BlendNone();
+
+    GFL_BG_ClearScreen( BG_FRAME_M_BACK1 );
+    GFL_BG_LoadScreenReq( BG_FRAME_M_BACK1 );
+    GFL_BG_SetVisible( BG_FRAME_M_BACK1, FALSE );
+
     MYSTERY_MENU_Exit( p_wk->p_menu );
     p_wk->p_menu  = NULL;
   }
@@ -2173,11 +2506,11 @@ static void UTIL_CreateGuideText( MYSTERY_WORK *p_wk, HEAPID heapID )
     { 
       //タイトル
       { 
-        3,2,28,2,
+        1,2,30,2, 0, NULL, MYSTERY_MSGWIN_POS_WH_CENTER, 0, 0, MYSTERY_MSGWIN_WHITE_COLOR,
       },
       //本文
       {
-        2,5,28,18,
+        2,7,28,13, 0, NULL, MYSTERY_MSGWIN_POS_ABSOLUTE, 0, 0, MYSTERY_MSGWIN_WHITE_COLOR,
       },
     };
     tbl[0].p_strbuf = GFL_STR_CreateBuffer( GIFT_DATA_CARD_TITLE_MAX+1, heapID );
@@ -2191,19 +2524,22 @@ static void UTIL_CreateGuideText( MYSTERY_WORK *p_wk, HEAPID heapID )
     GFL_STR_DeleteBuffer( tbl[0].p_strbuf );
     GFL_STR_DeleteBuffer( tbl[1].p_strbuf );
 
-    {	
-      ARCHANDLE	*	p_handle	= GFL_ARC_OpenDataHandle( ARCID_MYSTERY, heapID );
-      GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_mystery_fusigi_card_NCGR, 
-          BG_FRAME_S_BACK1, 0, 0, FALSE, heapID );
-      GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_mystery_fusigi_card02_NSCR,
-          BG_FRAME_S_BACK1, 0, 0, FALSE, heapID );
-      GFL_ARC_CloseDataHandle( p_handle );
-    }
-
-    GFL_BG_ChangeScreenPalette( BG_FRAME_S_BACK1, 0, 0, 32, 23, PLT_BG_CARD_S );
+    BG_Load( &p_wk->bg, BG_LOAD_TYPE_GUIDE_S ); 
+    
+ //   GFL_BG_ChangeScreenPalette( BG_FRAME_S_BACK1, 0, 0, 32, 23, PLT_BG_CARD_S );
     GFL_BG_LoadScreenReq( BG_FRAME_S_BACK1 );
 
     GFL_BG_SetVisible( BG_FRAME_S_BACK1, TRUE );
+
+    //アルファ設定
+    { 
+      G2S_SetBlendAlpha(
+          GX_BLEND_PLANEMASK_BG2,
+          GX_BLEND_PLANEMASK_BG3 | GX_BLEND_PLANEMASK_OBJ,
+          MYSTERY_MENU_ALPHA_EV1,
+          MYSTERY_MENU_ALPHA_EV2
+          );
+    }
   }
 }
 //----------------------------------------------------------------------------
@@ -2217,6 +2553,8 @@ static void UTIL_DeleteGuideText( MYSTERY_WORK *p_wk )
 { 
   if( p_wk->p_winset_s )
   { 
+    G2S_BlendNone();
+
    MYSTERY_MSGWINSET_Exit( p_wk->p_winset_s );
    p_wk->p_winset_s = NULL;
 
@@ -2242,21 +2580,6 @@ static void UTIL_DeleteGuideText( MYSTERY_WORK *p_wk )
 static void MYSTERY_DEMO_Init( MYSTERY_DEMO_WORK *p_wk, GFL_CLUNIT *p_unit, const DOWNLOAD_GIFT_DATA *cp_data, HEAPID heapID )
 {
   GFL_STD_MemClear( p_wk, sizeof(MYSTERY_DEMO_WORK) );
-
-  //BG設定
-  { 
-    ARCHANDLE	*	p_handle	= GFL_ARC_OpenDataHandle( ARCID_MYSTERY, heapID );
-    GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_mystery_fushigi_back_NCGR, 
-				BG_FRAME_M_BACK1, 0, 0, FALSE, heapID );
-    GFL_ARC_UTIL_TransVramScreen( ARCID_MYSTERY, NARC_mystery_fushigi_back_NSCR,
-        BG_FRAME_M_BACK1, 0, 0, FALSE, heapID );
-    GFL_ARC_CloseDataHandle( p_handle );
-
-    GFL_BG_ChangeScreenPalette( BG_FRAME_M_BACK1, 0, 0, 32, 24, PLT_BG_RECV_M );
-
-    GFL_BG_LoadScreenReq( BG_FRAME_M_BACK1 );
-    GFL_BG_SetVisible( BG_FRAME_M_BACK1, TRUE );
-  } 
 
 	//リソース読みこみ
   switch( cp_data->data.gift_type )
@@ -2372,10 +2695,13 @@ static void MYSTERY_DEMO_Exit( MYSTERY_DEMO_WORK *p_wk )
  *
  */
 //-----------------------------------------------------------------------------
-static void MYSTERY_DEMO_Main( MYSTERY_DEMO_WORK *p_wk )
+static void MYSTERY_DEMO_Main( MYSTERY_DEMO_WORK *p_wk, BG_WORK *p_bg )
 {
   enum
   { 
+    SEQ_INIT,
+    SEQ_START_FADEIN,
+    SEQ_WAIT_FADEIN,
     SEQ_INIT_WAIT,
     SEQ_MOVE,
     SEQ_END_WAIT,
@@ -2384,6 +2710,37 @@ static void MYSTERY_DEMO_Main( MYSTERY_DEMO_WORK *p_wk )
 
   switch( p_wk->seq )
   {
+  case SEQ_INIT:
+    GFL_BG_SetVisible( BG_FRAME_M_BACK1, FALSE );
+    BG_Load( p_bg, BG_LOAD_TYPE_STAGE_M );
+    p_wk->seq = SEQ_START_FADEIN;
+    break;
+
+  case SEQ_START_FADEIN:
+    G2_SetBlendAlpha(
+          GX_BLEND_PLANEMASK_BG2,
+          GX_BLEND_PLANEMASK_BG3,
+          0,
+          16
+          );
+    GFL_BG_SetVisible( BG_FRAME_M_BACK1, TRUE );
+    p_wk->seq = SEQ_WAIT_FADEIN;
+    break;
+
+  case SEQ_WAIT_FADEIN:
+    {
+      s16 ev1 = 0 + 16 * p_wk->sync / MYSTERY_DEMO_STAGE_FADE_SYNC;
+      s16 ev2 = 16 - 16 * p_wk->sync / MYSTERY_DEMO_STAGE_FADE_SYNC;
+      G2_ChangeBlendAlpha( ev1, ev2 );
+      if( p_wk->sync++ > MYSTERY_DEMO_STAGE_FADE_SYNC )
+      { 
+        G2_BlendNone();
+        p_wk->sync  = 0;
+        p_wk->seq = SEQ_INIT_WAIT;
+      }
+    }
+    break;
+
   case SEQ_INIT_WAIT:
     if( p_wk->sync++ > MYSTERY_DEMO_INIT_WAIT_SYNC )
     { 
@@ -2434,3 +2791,254 @@ static BOOL MYSTERY_DEMO_IsEnd( const MYSTERY_DEMO_WORK *cp_wk )
   return cp_wk->is_end;
 }
 
+//=============================================================================
+/**
+ *  演出ワーク
+ */
+//=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief  演出ワーク  初期化
+ *
+ *	@param	MYSTERY_EFFECT_WORK *p_wk ワーク
+ *	@param	heapID                    ヒープID
+ */
+//-----------------------------------------------------------------------------
+static void MYSTERY_EFFECT_Init( MYSTERY_EFFECT_WORK *p_wk, const OBJ_WORK *cp_obj, HEAPID heapID )
+{ 
+  GFL_STD_MemClear( p_wk, sizeof(MYSTERY_EFFECT_WORK) );
+  p_wk->scroll_add  = MYSTERY_EFFECT_DEFAULT_SCROLL_SPEED;
+  p_wk->cp_obj  = cp_obj;
+  p_wk->init_add    = p_wk->scroll_add;
+
+  { 
+    int i;
+    GFL_CLWK      *p_clwk;
+    GFL_CLACTPOS  pos;
+    for( i = 0; i < EFFECT_BRIGHT_MAX; i++ )
+    { 
+      p_clwk  = OBJ_GetClwk( p_wk->cp_obj, OBJ_CLWKID_BRIGHT_TOP+i );
+      GFL_CLACT_WK_GetWldPos( p_clwk, &pos );
+      p_wk->bright_pos[i] = pos.y << FX32_SHIFT;
+      p_wk->bright_add[i] = FX32_CONST(1.6) + GFUser_GetPublicRand0( FX32_CONST(1.0) );
+    }
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  演出ワーク  破棄
+ *
+ *	@param	MYSTERY_EFFECT_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void MYSTERY_EFFECT_Exit( MYSTERY_EFFECT_WORK *p_wk )
+{ 
+  GFL_STD_MemClear( p_wk, sizeof(MYSTERY_EFFECT_WORK) );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  演出ワーク  メイン処理
+ *
+ *	@param	MYSTERY_EFFECT_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void MYSTERY_EFFECT_Main( MYSTERY_EFFECT_WORK *p_wk )
+{ 
+  if( p_wk->is_update )
+  { 
+    if( p_wk->is_start )
+    { 
+      switch( p_wk->type )
+      { 
+      case MYSTERY_EFFECT_TYPE_NORMAL:
+        if( p_wk->scroll_add != MYSTERY_EFFECT_DEFAULT_SCROLL_SPEED )
+        { 
+          p_wk->scroll_add  = p_wk->init_add  + (MYSTERY_EFFECT_DEFAULT_SCROLL_SPEED-p_wk->init_add) * p_wk->cnt / MYSTERY_EFFECT_DEMO_SCROLL_CHANGE_SYNC;
+          if( p_wk->cnt++ > MYSTERY_EFFECT_DEMO_SCROLL_CHANGE_SYNC )
+          { 
+            p_wk->scroll_add  = MYSTERY_EFFECT_DEFAULT_SCROLL_SPEED;
+          }
+        }
+        { 
+          int i;
+          GFL_CLWK      *p_clwk;
+          GFL_CLACTPOS  pos;
+          for( i = 0; i < EFFECT_BRIGHT_MAX; i++ )
+          { 
+            p_clwk  = OBJ_GetClwk( p_wk->cp_obj, OBJ_CLWKID_BRIGHT_TOP+i );
+            if( GFL_CLACT_WK_GetDrawEnable( p_clwk ) )
+            { 
+              p_wk->bright_pos[i] += p_wk->bright_add[ i ];
+
+              GFL_CLACT_WK_GetWldPos( p_clwk, &pos );
+              pos.y = p_wk->bright_pos[i] >> FX32_SHIFT;
+              GFL_CLACT_WK_SetWldPos( p_clwk, &pos );
+
+              if( 0 <= pos.y && pos.y <= 192 + 16 )
+              { 
+                GFL_CLACT_WK_SetDrawEnable( p_clwk, TRUE );
+              }
+              else
+              { 
+                GFL_CLACT_WK_SetDrawEnable( p_clwk, FALSE );
+              }
+            }
+          }
+        }
+        break;
+
+      case MYSTERY_EFFECT_TYPE_DEMO:
+        if( p_wk->scroll_add != MYSTERY_EFFECT_DEMO_SCROLL_SPEED )
+        { 
+          p_wk->scroll_add  = p_wk->init_add  + (MYSTERY_EFFECT_DEMO_SCROLL_SPEED-p_wk->init_add) * p_wk->cnt / MYSTERY_EFFECT_DEMO_SCROLL_CHANGE_SYNC;
+          if( p_wk->cnt++ > MYSTERY_EFFECT_DEMO_SCROLL_CHANGE_SYNC )
+          { 
+            p_wk->scroll_add  = MYSTERY_EFFECT_DEMO_SCROLL_SPEED;
+          }
+        }
+        { 
+          int i;
+          GFL_CLWK      *p_clwk;
+          GFL_CLACTPOS  pos;
+          for( i = 0; i < EFFECT_BRIGHT_MAX; i++ )
+          { 
+            p_wk->bright_pos[i] += p_wk->bright_add[ i ];
+            if( p_wk->bright_pos[i]>= FX32_CONST(192 +16) )
+            { 
+              p_wk->bright_pos[i] = FX32_CONST( -16 );
+            }
+
+            p_clwk  = OBJ_GetClwk( p_wk->cp_obj, OBJ_CLWKID_BRIGHT_TOP+i );
+            GFL_CLACT_WK_GetWldPos( p_clwk, &pos );
+            pos.y = p_wk->bright_pos[i] >> FX32_SHIFT;
+            GFL_CLACT_WK_SetWldPos( p_clwk, &pos );
+
+            if( 0 <= pos.y && pos.y <= 192 + 16 )
+            { 
+              GFL_CLACT_WK_SetDrawEnable( p_clwk, TRUE );
+            }
+            else
+            { 
+              GFL_CLACT_WK_SetDrawEnable( p_clwk, FALSE );
+            }
+          }
+        }
+        break;
+      }
+
+      p_wk->scroll_now  += p_wk->scroll_add;
+      GFL_BG_SetScrollReq( BG_FRAME_M_BACK2, GFL_BG_SCROLL_Y_SET, p_wk->scroll_now >> FX32_SHIFT );
+      GFL_BG_SetScrollReq( BG_FRAME_S_BACK2, GFL_BG_SCROLL_Y_SET, p_wk->scroll_now >> FX32_SHIFT );
+    }
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  演出ワーク  開始
+ *
+ *	@param	MYSTERY_EFFECT_WORK *p_wk ワーク
+ *	@param	type                      開始種類
+ */
+//-----------------------------------------------------------------------------
+static void MYSTERY_EFFECT_Start( MYSTERY_EFFECT_WORK *p_wk, MYSTERY_EFFECT_TYPE type )
+{
+  p_wk->type      = type;
+  p_wk->is_start  = TRUE;
+  p_wk->cnt       = 0;
+  p_wk->init_add  = p_wk->scroll_add;
+
+  switch( p_wk->type )
+  { 
+  case MYSTERY_EFFECT_TYPE_NORMAL:
+    break;
+
+  case MYSTERY_EFFECT_TYPE_DEMO:
+
+    break;
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  演出ワーク  アップデート設定
+ *
+ *	@param	MYSTERY_EFFECT_WORK *p_wk ワーク
+ *	@param	is_update TRUEで動作  FALSEで停止
+ */
+//-----------------------------------------------------------------------------
+static void MYSTERY_EFFECT_SetUpdateFlag( MYSTERY_EFFECT_WORK *p_wk, BOOL is_update )
+{ 
+  p_wk->is_update  = is_update;
+}
+//=============================================================================
+/**
+ *    ぼたん
+ */
+//=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ボタン初期化
+ *
+ *	@param	MYSTERY_BTN_WORK *p_wk  ワーク
+ *	@param	heapID                  ヒープID
+ */
+//-----------------------------------------------------------------------------
+static void MYSTERY_BTN_Init( MYSTERY_BTN_WORK *p_wk, const OBJ_WORK *cp_obj, GFL_CLUNIT *p_clunit, PRINT_QUE *p_que, GFL_MSGDATA *p_msg, u32 strID, GFL_FONT *p_font, HEAPID heapID )
+{ 
+  GFL_STD_MemClear( p_wk, sizeof(MYSTERY_BTN_WORK) );
+  p_wk->cp_obj  = cp_obj;
+
+  p_wk->p_bmpoam_sys  = BmpOam_Init( heapID, p_clunit );
+
+  { 
+    GFL_CLWK_DATA cldata;
+    GFL_STD_MemClear( &cldata, sizeof(GFL_CLWK_DATA) );
+    cldata.pos_x  = 128 - 32;
+    cldata.pos_y  = 177 - 8;
+    cldata.softpri  = 0;
+    cldata.bgpri    = 0;
+
+    p_wk->p_msgoam  = MYSTERY_MSGOAM_Init( &cldata, 8, 2, cp_obj->res_plt[OBJ_RES_PLT_CURSOR], 3, CLSYS_DRAW_MAIN, p_wk->p_bmpoam_sys, p_que, heapID );
+    MYSTERY_MSGOAM_SetStrColor( p_wk->p_msgoam, PRINTSYS_LSB_Make( 1, 3, 0) );
+    MYSTERY_MSGOAM_SetStrPos( p_wk->p_msgoam, 0, 0, MYSTERY_MSGOAM_POS_WH_CENTER );
+    MYSTERY_MSGOAM_Print( p_wk->p_msgoam, p_msg, strID, p_font );
+  }
+
+  //OBJ表示
+  { 
+    GFL_CLWK  *p_clwk = OBJ_GetClwk( cp_obj, OBJ_CLWKID_BTN );
+    GFL_CLACT_WK_SetDrawEnable( p_clwk, TRUE );
+  }
+
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ボタン破棄
+ *
+ *	@param	MYSTERY_BTN_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void MYSTERY_BTN_Exit( MYSTERY_BTN_WORK *p_wk )
+{ 
+  MYSTERY_MSGOAM_Clear( p_wk->p_msgoam );
+
+  //OBJ表示
+  { 
+    GFL_CLWK  *p_clwk = OBJ_GetClwk( p_wk->cp_obj, OBJ_CLWKID_BTN );
+    GFL_CLACT_WK_SetDrawEnable( p_clwk, FALSE );
+  }
+
+  MYSTERY_MSGOAM_Exit( p_wk->p_msgoam );
+  BmpOam_Exit( p_wk->p_bmpoam_sys );
+  GFL_STD_MemClear( p_wk, sizeof(MYSTERY_BTN_WORK) );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ボタン  文字描画
+ *
+ *	@param	MYSTERY_BTN_WORK *p_wk  ワーク
+ */
+//-----------------------------------------------------------------------------
+static void MYSTERY_BTN_PrintMain( MYSTERY_BTN_WORK *p_wk )
+{
+  MYSTERY_MSGOAM_PrintMain( p_wk->p_msgoam );
+}

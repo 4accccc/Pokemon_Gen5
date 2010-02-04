@@ -63,6 +63,7 @@ typedef struct _MYSTERY_ALBUM_WORK MYSTERY_ALBUM_WORK;
 extern MYSTERY_ALBUM_WORK * MYSTERY_ALBUM_Init( const MYSTERY_ALBUM_SETUP *cp_setup, HEAPID heapID );
 extern void MYSTERY_ALBUM_Exit( MYSTERY_ALBUM_WORK *p_wk );
 extern void MYSTERY_ALBUM_Main( MYSTERY_ALBUM_WORK *p_wk );
+extern void MYSTERY_ALBUM_PrintMain( MYSTERY_ALBUM_WORK *p_wk );
 extern BOOL MYSTERY_ALBUM_IsEnd( const MYSTERY_ALBUM_WORK *cp_wk );
 
 
@@ -102,3 +103,5 @@ typedef struct _MYSTERY_CARD_WORK MYSTERY_CARD_WORK;
 extern MYSTERY_CARD_WORK * MYSTERY_CARD_Init( const MYSTERY_CARD_SETUP *cp_setup, HEAPID heapID );
 extern void MYSTERY_CARD_Exit( MYSTERY_CARD_WORK *p_wk );
 extern void MYSTERY_CARD_Main( MYSTERY_CARD_WORK *p_wk );
+extern void MYSTERY_CARD_StartEffect( MYSTERY_CARD_WORK *p_wk );
+extern BOOL MYSTERY_CARD_IsEndEffect( const MYSTERY_CARD_WORK *cp_wk );
