@@ -56,7 +56,7 @@ do-build: wazano_def.h
 wazano_def.h: waza.tab
 	ruby $(RUBYDIR)waza_tbl_conv.rb waza.tab tame_waza.csv ../../resource/message/template.gmm
 
-$(NARCNAME): waza.tab
+$(NARCNAME): waza.tab wazaconv.pl
 	perl wazaconv.pl waza.tab
 	nnsarc -c -l -n -i $(NARCNAME) bin/*.bin > error
 	$(NAIXCUT) $(NAIXNAME)
