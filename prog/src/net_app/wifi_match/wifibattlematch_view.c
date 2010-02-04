@@ -1920,7 +1920,7 @@ MATCHINFO_WORK * MATCHINFO_Init( const WIFIBATTLEMATCH_ENEMYDATA *cp_data, GFL_C
 	
   rank = CalcRank( cp_data->btl_cnt, cp_data->win_cnt, cp_data->lose_cnt );
 	MatchInfo_Bmpwin_Create( p_wk, cp_data, p_font, p_que, p_msg, p_word, rank == WBM_CARD_RANK_BLACK, heapID );
-	MatchInfo_TRAINER_Create( p_wk, cp_data->trainer_view, p_unit, heapID );
+	MatchInfo_TRAINER_Create( p_wk, MyStatus_GetTrainerView( (MYSTATUS*)cp_data->mystatus ), p_unit, heapID );
   MatchInfo_STAR_Cleate( p_wk, cp_data, p_unit, cp_res, heapID );
 
 
@@ -2184,7 +2184,7 @@ static void MatchInfo_Bmpwin_Create( MATCHINFO_WORK * p_wk, const WIFIBATTLEMATC
 			switch( i )
 			{	
 			case MATCHINFO_BMPWIN_PLAYER:
-				GFL_STR_SetStringCode( p_str, cp_data->name );
+				GFL_STR_SetStringCode( p_str, MyStatus_GetMyName( (MYSTATUS*)cp_data->mystatus ) );
 
         color = PLAYERINFO_STR_COLOR_WHITE;
 				break;
@@ -2204,12 +2204,13 @@ static void MatchInfo_Bmpwin_Create( MATCHINFO_WORK * p_wk, const WIFIBATTLEMATC
 				break;
 			case MATCHINFO_BMPWIN_CONTRY:
 				GFL_MSG_GetString( p_msg, WIFIMATCH_STR_020, p_src );
-				WORDSET_RegisterCountryName( p_word, 0, cp_data->nation );
+				WORDSET_RegisterCountryName( p_word, 0, MyStatus_GetMyNation( (MYSTATUS*)cp_data->mystatus ) );
 				WORDSET_ExpandStr( p_word, p_str, p_src );
 				break;
 			case MATCHINFO_BMPWIN_PLACE:
 				GFL_MSG_GetString( p_msg, WIFIMATCH_STR_021, p_src );
-				WORDSET_RegisterLocalPlaceName( p_word, 0, cp_data->nation, cp_data->area );
+				WORDSET_RegisterLocalPlaceName( p_word, 0, MyStatus_GetMyNation( (MYSTATUS*)cp_data->mystatus ),
+            MyStatus_GetMyArea( (MYSTATUS*)cp_data->mystatus ) );
 				WORDSET_ExpandStr( p_word, p_str, p_src );
 				break;
 			case MATCHINFO_BMPWIN_GREET:

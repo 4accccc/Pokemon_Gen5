@@ -41,7 +41,7 @@ typedef struct
 { 
   REGULATION          *regulation;                  //[in]レギュレーション
   POKEMON_PASO_PARAM  *ppp[TEMOTI_POKEMAX];         //[in]選ぶポケモン
-  STRCODE   *enemyName;                             //[in]相手の名前
+  const STRCODE   *enemyName;                             //[in]相手の名前
   u8        enemySex;                               //[in]相手の性別
   u8        pad2[3];                                //パディング
   POKEPARTY *enemyPokeParty;                             //[in]相手のポケモン

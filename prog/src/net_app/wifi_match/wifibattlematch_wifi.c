@@ -2012,8 +2012,18 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
       WIFIBATTLEMATCH_ENEMYDATA *p_recv;
       if( WIFIBATTLEMATCH_NET_WaitEnemyData( p_wk->p_net, &p_recv ) )
       { 
+        u32 dirty ;
         GFL_STD_MemCopy( p_recv, p_param->p_enemy_data, WIFIBATTLEMATCH_DATA_ENEMYDATA_SIZE );
-        WIFIBATTLEMATCH_DATA_ModifiEnemyData( p_param->p_enemy_data, HEAPID_WIFIBATTLEMATCH_CORE );  //不正データ対策
+        
+        dirty = WIFIBATTLEMATCH_DATA_ModifiEnemyData( p_param->p_enemy_data, HEAPID_WIFIBATTLEMATCH_CORE );  //不正データ対策
+
+        if( dirty == 0 )
+        { 
+          SAVE_CONTROL_WORK *p_sv_ctrl  = GAMEDATA_GetSaveControlWork( p_param->p_param->p_game_data );
+          WIFI_NEGOTIATION_SAVEDATA* pSV  = WIFI_NEGOTIATION_SV_GetSaveData(p_sv_ctrl);
+          WIFI_NEGOTIATION_SV_SetFriend(pSV, (MYSTATUS*)p_param->p_enemy_data->mystatus );
+        }
+
         *p_seq  = SEQ_CHECK_YOU_CUPNO;
       }
     }
@@ -2089,7 +2099,7 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
     break;
 
   case SEQ_START_BADWORD:
-    WIFIBATTLEMATCH_NET_StartBadWord( p_wk->p_net, p_param->p_enemy_data->name, PERSON_NAME_SIZE+EOM_SIZE );
+    WIFIBATTLEMATCH_NET_StartBadWord( p_wk->p_net, MyStatus_GetMyName( (MYSTATUS*)p_param->p_enemy_data), PERSON_NAME_SIZE+EOM_SIZE );
     *p_seq  = SEQ_WAIT_BADWORD;
     break;
   case SEQ_WAIT_BADWORD:
@@ -3347,12 +3357,7 @@ static void Util_SetupMyData( WIFIBATTLEMATCH_ENEMYDATA *p_my_data, const WIFIBA
   {
     MYSTATUS  *p_my;
     p_my  = GAMEDATA_GetMyStatus(cp_wk->p_param->p_param->p_game_data);
-    STRTOOL_Copy( MyStatus_GetMyName(p_my), p_my_data->name, PERSON_NAME_SIZE+EOM_SIZE );
-    p_my_data->sex           = MyStatus_GetMySex(p_my);
-    p_my_data->trainer_view  = MyStatus_GetTrainerView(p_my);
-
-    p_my_data->nation  = MyStatus_GetMyNation(p_my); 
-    p_my_data->area    = MyStatus_GetMyArea(p_my); 
+    GFL_STD_MemCopy( p_my, p_my_data->mystatus, MyStatus_GetWorkSize() );
   }
   { 
     const MYPMS_DATA *cp_mypms;

@@ -934,9 +934,17 @@ static void WbmRndSeq_Rate_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
       WIFIBATTLEMATCH_ENEMYDATA *p_recv;
       if( WIFIBATTLEMATCH_NET_WaitEnemyData( p_wk->p_net, &p_recv ) )
       {   
+        u32 dirty;
         WIFIBATTLEMATCH_ENEMYDATA *p_enemy_data = p_param->p_enemy_data;
         GFL_STD_MemCopy( p_recv, p_enemy_data, WIFIBATTLEMATCH_DATA_ENEMYDATA_SIZE );
-        WIFIBATTLEMATCH_DATA_ModifiEnemyData( p_enemy_data, HEAPID_WIFIBATTLEMATCH_CORE );
+        dirty = WIFIBATTLEMATCH_DATA_ModifiEnemyData( p_enemy_data, HEAPID_WIFIBATTLEMATCH_CORE );
+
+        if( dirty == 0 )
+        { 
+          SAVE_CONTROL_WORK *p_sv_ctrl  = GAMEDATA_GetSaveControlWork( p_param->p_param->p_game_data );
+          WIFI_NEGOTIATION_SAVEDATA* pSV  = WIFI_NEGOTIATION_SV_GetSaveData(p_sv_ctrl);
+          WIFI_NEGOTIATION_SV_SetFriend(pSV, (MYSTATUS*)p_param->p_enemy_data->mystatus );
+        }
 
         //‘ÎíŽÒî•ñ•\Ž¦
         Util_MatchInfo_Create( p_wk, p_param->p_enemy_data );
@@ -1463,9 +1471,19 @@ static void WbmRndSeq_Free_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
       WIFIBATTLEMATCH_ENEMYDATA *p_recv;
       if( WIFIBATTLEMATCH_NET_WaitEnemyData( p_wk->p_net, &p_recv ) )
       { 
+        u32 dirty;
         WIFIBATTLEMATCH_ENEMYDATA *p_enemy_data = p_param->p_enemy_data;
         GFL_STD_MemCopy( p_recv, p_enemy_data, WIFIBATTLEMATCH_DATA_ENEMYDATA_SIZE );
         Util_MatchInfo_Create( p_wk, p_param->p_enemy_data );
+
+        dirty = WIFIBATTLEMATCH_DATA_ModifiEnemyData( p_enemy_data, HEAPID_WIFIBATTLEMATCH_CORE );
+
+        if( dirty == 0 )
+        { 
+          SAVE_CONTROL_WORK *p_sv_ctrl  = GAMEDATA_GetSaveControlWork( p_param->p_param->p_game_data );
+          WIFI_NEGOTIATION_SAVEDATA* pSV  = WIFI_NEGOTIATION_SV_GetSaveData(p_sv_ctrl);
+          WIFI_NEGOTIATION_SV_SetFriend(pSV, (MYSTATUS*)p_param->p_enemy_data->mystatus );
+        }
 
         WBM_WAITICON_SetDrawEnable( p_wk->p_wait, FALSE );
         *p_seq       = SEQ_OK_MATCHING_MSG;
