@@ -663,11 +663,11 @@
 #define FV_C04_SUPPORTPAPA_01              639 /* 0x027f ライモンシティ：サポートのパパ */
 #define FV_R04_RIVAL_01                    640 /* 0x0280 ４番道路：ライバル */
 #define FV_C03_GUIDE_01                    641 /* 0x0281 ヒウンシティ：街案内イベントのライバルとリーダー３ */
-		/* not used   642(0x0282) */
-		/* not used   643(0x0283) */
-		/* not used   644(0x0284) */
-		/* not used   645(0x0285) */
-		/* not used   646(0x0286) */
+#define FV_UN_GTSFRIEND_00                 642 /* 0x0282 国連(内部）：GTSで交換した相手１ */
+#define FV_UN_GTSFRIEND_01                 643 /* 0x0283 国連(内部）：GTSで交換した相手２ */
+#define FV_UN_GTSFRIEND_02                 644 /* 0x0284 国連(内部）：GTSで交換した相手３ */
+#define FV_UN_GTSFRIEND_03                 645 /* 0x0285 国連(内部）：GTSで交換した相手４ */
+#define FV_UN_GTSFRIEND_04                 646 /* 0x0286 国連(内部）：GTSで交換した相手５ */
 		/* not used   647(0x0287) */
 		/* not used   648(0x0288) */
 		/* not used   649(0x0289) */
