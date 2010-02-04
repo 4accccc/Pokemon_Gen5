@@ -12,6 +12,7 @@
 
 #include "system/gfl_use.h"
 #include "system/vm_cmd.h"
+#include "sound/pm_voice.h"
 
 #include "btlv_effect.h"
 #include "btlv_effect_def.h"
@@ -90,6 +91,9 @@ static  void  BTLV_EFFECT_TCB_Damage( GFL_TCB *tcb, void *work );
 
 #ifdef PM_DEBUG
 void  BTLV_EFFECT_SetPokemonDebug( const MCSS_ADD_DEBUG_WORK *madw, int position );
+
+#include "field/field_light_status.h" //ライト実験
+extern FIELD_LIGHT_STATUS DEBUG_light_data;
 #endif
 
 //============================================================================================
@@ -165,6 +169,23 @@ void  BTLV_EFFECT_Init( BtlRule rule, const BTL_FIELD_SITUATION *bfs, GFL_FONT* 
 
   //VBlank関数
   bew->v_tcb = GFUser_VIntr_CreateTCB( BTLV_EFFECT_VBlank, NULL, 1 );
+
+  //3体同時で鳴き声を鳴かせられるようにバッファを確保
+  PMVOICE_PlayerHeapReserve( 2, bew->heapID );
+
+  //ライト実験
+#ifdef PM_DEBUG
+#if 0
+  { 
+	  GFL_G3D_LIGHT light;
+    light.color = DEBUG_light_data.light;
+    light.vec.x = 0;
+    light.vec.y = -FX32_ONE;
+    light.vec.z = 0;
+	  GFL_G3D_SetSystemLight( 0, &light );
+  }
+#endif
+#endif
 }
 
 //============================================================================================
@@ -175,6 +196,8 @@ void  BTLV_EFFECT_Init( BtlRule rule, const BTL_FIELD_SITUATION *bfs, GFL_FONT* 
 void  BTLV_EFFECT_Exit( void )
 {
   GF_ASSERT( bew != NULL );
+
+  PMVOICE_PlayerHeapRelease();
 
   PaletteFadeWorkAllocFree( bew->pfd, FADE_MAIN_BG );
   PaletteFadeWorkAllocFree( bew->pfd, FADE_SUB_BG );
