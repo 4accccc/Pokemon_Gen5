@@ -12,5 +12,6 @@
 #define ZONE_D09R1001_EVC_H
 
 #define TR_DOCTOR_03                       0
+#define D09R1001_ROCK_01                   1
 
 #endif //ZONE_D09R1001_EVC_H
