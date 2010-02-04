@@ -236,11 +236,7 @@ BOOL FIELD_WFBC_CORE_IsOnNpcIDPeople( const FIELD_WFBC_CORE* cp_wk, u32 npc_id, 
 void FIELD_WFBC_CORE_PEOPLE_Clear( FIELD_WFBC_CORE_PEOPLE* p_wk )
 {
   GF_ASSERT( p_wk );
-
-  p_wk->data_in = FALSE;
-  p_wk->npc_id  = 0;
-  p_wk->mood    = 0;
-  p_wk->one_day_msk  = 0;
+  GFL_STD_MemClear( p_wk, sizeof(FIELD_WFBC_CORE_PEOPLE) );
 }
 
 //----------------------------------------------------------------------------

@@ -1573,10 +1573,15 @@ static void DEBWIN_Update_CityLevel( void* userWork , DEBUGWIN_ITEM* item )
     {
       if( p_wk->people[i].data_in == FALSE )
       {
+        FIELD_WFBC_CORE_PEOPLE_Clear( &p_wk->people[i] );
         p_wk->people[i].npc_id  = FIELD_WFBC_CORE_DEBUG_GetRandomNpcID( p_wk );
         p_wk->people[i].mood  = 50;
         p_wk->people[i].one_day_msk  = FIELD_WFBC_ONEDAY_MSK_INIT;
         p_wk->people[i].data_in = TRUE;
+        if( p_wk->type == FIELD_WFBC_CORE_TYPE_BLACK_CITY )
+        {
+          FIELD_WFBC_CORE_PEOPLE_SetParentData( &p_wk->people[i], GAMEDATA_GetMyStatus(p_gdata) );
+        }
         break;
       }
     }
@@ -1586,10 +1591,15 @@ static void DEBWIN_Update_CityLevel( void* userWork , DEBUGWIN_ITEM* item )
     {
       if( p_wk->back_people[i].data_in == FALSE )
       {
+        FIELD_WFBC_CORE_PEOPLE_Clear( &p_wk->people[i] );
         p_wk->back_people[i].npc_id  = FIELD_WFBC_CORE_DEBUG_GetRandomNpcID( p_wk );
         p_wk->back_people[i].mood  = 0;
         p_wk->back_people[i].one_day_msk  = FIELD_WFBC_ONEDAY_MSK_INIT;
         p_wk->back_people[i].data_in = TRUE;
+        if( p_wk->type == FIELD_WFBC_CORE_TYPE_BLACK_CITY )
+        {
+          FIELD_WFBC_CORE_PEOPLE_SetParentData( &p_wk->back_people[i], GAMEDATA_GetMyStatus(p_gdata) );
+        }
         break;
       }
     }
@@ -1604,6 +1614,15 @@ static void DEBWIN_Update_CityLevel( void* userWork , DEBUGWIN_ITEM* item )
       if( p_wk->people[i].data_in )
       {
         FIELD_WFBC_CORE_PEOPLE_Clear( &p_wk->people[i] );
+        break;
+      }
+    }
+
+    for( i=0; i<FIELD_WFBC_PEOPLE_MAX; i++ )
+    {
+      if( p_wk->back_people[i].data_in )
+      {
+        FIELD_WFBC_CORE_PEOPLE_Clear( &p_wk->back_people[i] );
         break;
       }
     }
