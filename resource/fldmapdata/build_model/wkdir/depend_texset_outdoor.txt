@@ -309,7 +309,8 @@ DEP_TEXSET_IMD_OUTDOOR007 = \
 	$(SRCDIR)/out_dust01.imd \
 	$(SRCDIR)/outwarp01.imd \
 	$(SRCDIR)/outwarp02.imd \
-	$(SRCDIR)/outwarp03.imd
+	$(SRCDIR)/outwarp03.imd \
+	$(SRCDIR)/gate_01_2.imd
 
 texset/outdoor007.imd: $(DEP_TEXSET_IMD_OUTDOOR007) texset/tmp/outdoor007.list
 	$(TEXMAG) -q -n -o $@ -S texset/tmp/outdoor007.list
