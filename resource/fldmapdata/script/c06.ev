@@ -82,17 +82,9 @@ EVENT_START    ev_pos_c06_hakase1_01
 	_OBJ_ANIME_WAIT()
 	
 	//博士が主人公に隣接
-//	IF $LWK_PLY_Z == 296 THEN
-//		_OBJ_ANIME( C06_HAKASE1_01,anm_hakase1_kuru_02_posz296)
-//		_OBJ_ANIME_WAIT()
-//	ELSIF $LWK_PLY_Z == 297 THEN
-//		_OBJ_ANIME( C06_HAKASE1_01,anm_hakase1_kuru_02_posz297)
-//		_OBJ_ANIME_WAIT()
-//	ELSIF $LWK_PLY_Z == 298 THEN
-		_OBJ_ANIME( C06_HAKASE1_01,anm_hakase1_kuru_02_posz298)
-		_OBJ_ANIME_WAIT()
-//	ENDIF
-	
+	_OBJ_ANIME( C06_HAKASE1_01,anm_hakase1_kuru_02)
+	_OBJ_ANIME_WAIT()
+
 	//プレイヤーの名前の格納
 	_PLAYER_NAME(0)
 	
@@ -256,15 +248,15 @@ EVENT_START    ev_pos_c06_hakase1_01
 	_OBJ_ANIME_WAIT()
 	
 	//博士とジムリーダーの姿を消す
-//	_OBJ_DEL( C06_LEADER6_01 )
-//	_OBJ_DEL( C06_HAKASE1_01 )
+	_OBJ_DEL( C06_LEADER6_01 )
+	_OBJ_DEL( C06_HAKASE1_01 )
 
 	//===============フラグ操作===============//
 	//POSイベントを無効に
-//	$WK_SCENE_C06 = 1
+	$WK_SCENE_C06 = 1
 
 	//博士とジムリーダーを消す
-//	_FLAG_SET( FV_C06_ZUKANCHK_01 )
+	_FLAG_SET( FV_C06_ZUKANCHK_01 )
 
 	//========================================//
 
@@ -333,27 +325,9 @@ _ANIME_LABEL	anm_leader06_kuru_02
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
-//博士:主人公に近づく２_プレイヤーPOSZ296                     
+//博士:主人公に近づく２_プレイヤーPOSZ                    
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_hakase1_kuru_02_posz296
-	_ANIME_DATA AC_WALK_U_8F,1
-	_ANIME_DATA AC_WALK_R_8F,1
-	_ANIME_DATA AC_WALK_U_8F,1
-	_ANIME_DATA AC_WALK_R_8F,1
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------------
-//博士:主人公に近づく２_プレイヤーPOSZ297                     
-//--------------------------------------------------------------------
-_ANIME_LABEL	anm_hakase1_kuru_02_posz297 
-	_ANIME_DATA AC_WALK_U_8F,1
-	_ANIME_DATA AC_WALK_R_8F,2
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------------
-//博士:主人公に近づく２_プレイヤーPOSZ298                     
-//--------------------------------------------------------------------
-_ANIME_LABEL	anm_hakase1_kuru_02_posz298
+_ANIME_LABEL	anm_hakase1_kuru_02
 	_ANIME_DATA AC_WALK_R_8F,2
 	_ANIME_DATA	ACMD_END,0
 
