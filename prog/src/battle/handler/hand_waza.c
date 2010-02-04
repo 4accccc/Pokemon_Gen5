@@ -231,6 +231,7 @@ static const BtlEventHandlerTable*  ADD_Oiuti( u32* numElems );
 static void handler_Oiuti_Intr( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Oiuti_Dmg( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable*  ADD_Daibakuhatsu( u32* numElems );
+static void handler_Daibakuhatsu_DmgDetermine( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Daibakuhatsu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Daibakuhatsu_ExeFix( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable*  ADD_Kiaidame( u32* numElems );
@@ -2739,23 +2740,22 @@ static void handler_Oiuti_Dmg( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
 static const BtlEventHandlerTable*  ADD_Daibakuhatsu( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_DEFENDER_GUARD,     handler_Daibakuhatsu },         // 防御力チェックハンドラ
-    { BTL_EVENT_WAZA_EXE_START,     handler_Daibakuhatsu_ExeFix },  // わざ出し確定ハンドラ
+    { BTL_EVENT_WAZA_DMG_DETERMINE,    handler_Daibakuhatsu_DmgDetermine }, // ダメージ確定ハンドラ
+    { BTL_EVENT_WAZA_EXECUTE_DONE,     handler_Daibakuhatsu_ExeFix },  // ワザ処理終了ハンドラ
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
 }
-static void handler_Daibakuhatsu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+// ダメージ確定ハンドラ
+static void handler_Daibakuhatsu_DmgDetermine( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  // WBよりこの仕様はなし
-  #if 0
-  // 自分が攻撃の時、相手側防御を半分にして計算
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
-    BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, FX32_CONST(0.5) );
+    BTL_HANDEX_PARAM_KILL* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_KILL, pokeID );
+    param->pokeID = pokeID;
   }
-  #endif
 }
+// ワザ処理終了ハンドラ
 static void handler_Daibakuhatsu_ExeFix( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
@@ -2764,6 +2764,7 @@ static void handler_Daibakuhatsu_ExeFix( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_
     param->pokeID = pokeID;
   }
 }
+
 //----------------------------------------------------------------------------------
 /**
  * きあいだめ
