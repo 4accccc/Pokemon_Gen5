@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00176" date="2009-12-18T20:19:49"/>
+	<create user="matsumiya" host="W00224" date="2010-02-04T12:26:53"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,7 +305,7 @@
 		</language>
 	</columns>
 
-	<dialog left="338" top="263" right="1043" bottom="883" maximized="no" rayout="Vertical2">
+	<dialog left="1356" top="330" right="2061" bottom="950" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -364,10 +364,10 @@
 ゲームちゅうの　せっていがめんでも
 へんこう　することが　できます　</language>
 		<language name="JPN_KANJI" width="256">このゲームを　最大限に　楽しむためには
-無線通信機能を　ＯＮにして下さい
+無線通信機能を　ＯＮにしてください
 飛行機や　病院など
 無線通信を　禁止にしている場所では
-ＯＦＦにして下さい
+ＯＦＦにしてください
 ゲーム中の　設定画面でも
 変更することが　できます</language>
 	</row>
