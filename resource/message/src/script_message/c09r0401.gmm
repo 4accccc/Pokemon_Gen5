@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-21T14:12:27"/>
+	<create user="matsumiya" host="W00224" date="2010-02-04T19:13:35"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="1383" top="259" right="2088" bottom="879" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -323,11 +323,11 @@
 	<row id="msg_c09r0401_bigfour4_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀：クリア前
 ・戦闘後：フィールド</comment>
-		<language name="JPN" width="256">まだ　たたかっていない
+		<language name="JPN" width="256">まだ　てあわせ　していない
 してんのうが　いるのでしょ？▼
 アタクシに　かまわず
 さきに　すすみなさいな</language>
-		<language name="JPN_KANJI" width="256">まだ　戦っていない
+		<language name="JPN_KANJI" width="256">まだ　手合わせ　していない
 四天王が　いるのでしょ？▼
 アタクシに　かまわず
 先に　進みなさいな</language>
@@ -399,15 +399,15 @@
 たいくつな　しょうぶ　だけは▽
 かんべん　ね……▼</language>
 		<language name="JPN_KANJI" width="256">どなた……？▼
-アタクシの　ねむりを　さまたげる
-やぼな　トレーナーさんは？▼
+アタクシの　眠りを　さまたげる
+野暮な　トレーナーさんは？▼
 ……ふうん
 また　アナタ　なのね……▼
 あいかわらず
-つよさと　やさしさを　あわせもち▽
-さらに　つよくなった　みたい……▼
+強さと　優しさを　あわせもち
+さらに　強くなった　みたい……▼
 だけど　あくびが　でちゃうような
-たいくつな　しょうぶ　だけは▽
+退屈な　勝負　だけは▽
 かんべん　ね……▼</language>
 	</row>
 
@@ -419,12 +419,12 @@
 トレーナーの　こころえ　たしなみを▽
 もってしても　かてない……▼
 アナタのような　トレーナーと
-たたかうため　ここに　きたの……</language>
-		<language name="JPN_KANJI" width="256">いちぞくに　つたわる
+あいまみえるため　ここに　きたの……</language>
+		<language name="JPN_KANJI" width="256">一族に　伝わる
 トレーナーの　こころえ　たしなみを▽
-もってしても　かてない……▼
+もってしても　勝てない……▼
 アナタのような　トレーナーと
-たたかうため　ここに　きたの……</language>
+相見えるため　ここに　来たの……</language>
 	</row>
 
 	<row id="msg_c09r0401_bigfour4_07">
@@ -439,15 +439,15 @@
 ウフフ……
 いま　アタクシ　えがおに　なっている▽
 すこし　はずかしい</language>
-		<language name="JPN_KANJI" width="256">……みじゅくな　こころゆえ
-ちからが　ぼうそうし▽
-たたかいを　きんじられていた　ひび▼
+		<language name="JPN_KANJI" width="256">……未熟な　心ゆえ
+力が　暴走し▽
+戦いを　禁じられていた　ひび▼
 そのときに　アタクシが
-こころから　こがれていたのは▽
-いまのような　こころおどる　とき▼
+心から　焦がれていたのは▽
+今のような　心躍る　とき▼
 ウフフ……
-いま　アタクシ　えがおに　なっている▽
-すこし　はずかしい</language>
+いま　アタクシ　笑顔に　なっている▽
+すこし　恥ずかしい</language>
 	</row>
 
 	<row id="msg_c09r0401_bigfour4_08">
@@ -463,14 +463,14 @@
 いくだけでは　いみは　ないわ……▼
 そこで　おもうぞんぶん
 ちからを　はっき　しなさい</language>
-		<language name="JPN_KANJI" width="256">……ポケモンリーグの　してんのう
-ぜんいんに　かったのね▼
+		<language name="JPN_KANJI" width="256">……ポケモンリーグの　四天王
+全員に　勝利したのね▼
 それなら　アナタは
-チャンピオンの　へやに　いく▽
-しかくを　えたと　いうこと……▼
-いくだけでは　いみは　ないわね……▼
-そこで　おもうぞんぶん
-ちからを　はっき　しなさいな</language>
+チャンピオンの　部屋に　行く▽
+資格を　得たと　いうこと……▼
+行くだけでは　意味は　ないわね……▼
+そこで　思う存分
+持てる力を　発揮しなさいな</language>
 	</row>
 
 	<flowchart-group-list>
