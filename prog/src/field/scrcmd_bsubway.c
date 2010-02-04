@@ -46,6 +46,10 @@
 //======================================================================
 //  struct
 //======================================================================
+static BOOL evCommTimingSync( VMHANDLE *core, void *wk );
+static BOOL evCommEntryMenuPerent( VMHANDLE *core, void *wk );
+static BOOL evCommEntryMenuChild( VMHANDLE *core, void *wk );
+
 static BOOL bsway_CheckEntryPokeNum(
     u16 num, GAMESYS_WORK *gsys, BOOL item_flag );
 static BOOL bsway_CheckRegulation( int mode, GAMESYS_WORK *gsys );
@@ -156,13 +160,27 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
   case BSWTOOL_GET_ZONE_PLAY_MODE:
     {
       u16 zone_id = FIELDMAP_GetZoneID( fieldmap );
-      
       switch( zone_id ){
       case ZONE_ID_C04R0102:
         *ret_wk = BSWAY_MODE_SINGLE;
         break;
+      case ZONE_ID_C04R0103:
+        *ret_wk = BSWAY_MODE_S_SINGLE;
+        break;
       case ZONE_ID_C04R0104:
         *ret_wk = BSWAY_MODE_DOUBLE;
+        break;
+      case ZONE_ID_C04R0105:
+        *ret_wk = BSWAY_MODE_S_DOUBLE;
+        break;
+      case ZONE_ID_C04R0106:
+        *ret_wk = BSWAY_MODE_MULTI;
+        break;
+      case ZONE_ID_C04R0107:
+        *ret_wk = BSWAY_MODE_S_MULTI;
+        break;
+      case ZONE_ID_C04R0108:
+        *ret_wk = BSWAY_MODE_WIFI;
         break;
       default:
         GF_ASSERT( 0 );
@@ -285,6 +303,18 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
    case BSWTOOL_SET_S_BOSS_CLEAR_FLAG:
     *ret_wk = BSUBWAY_SCOREDATA_SetFlag( scoreData,
         BSWAY_SCOREDATA_FLAG_BOSS_CLEAR_SINGLE + param,
+        BSWAY_SETMODE_set );
+    break;
+  //サポート遭遇フラグ取得
+  case BSWTOOL_GET_SUPPORT_ENCOUNT_END:
+    *ret_wk = BSUBWAY_SCOREDATA_SetFlag( scoreData,
+        BSWAY_SCOREDATA_FLAG_SUPPORT_ENCOUNT_END,
+        BSWAY_SETMODE_get );
+    break;
+  //サポート遭遇フラグセット
+  case BSWTOOL_SET_SUPPORT_ENCOUNT_END:
+    *ret_wk = BSUBWAY_SCOREDATA_SetFlag( scoreData,
+        BSWAY_SCOREDATA_FLAG_SUPPORT_ENCOUNT_END,
         BSWAY_SETMODE_set );
     break;
   //Wifiランクダウン
@@ -444,11 +474,7 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
     break;
   //受信バッファクリア
   case BSWSUB_RECV_BUF_CLEAR:
-    #if 0
-    MI_CpuClear8(wk->recv_buf,BSWAY_SIO_BUF_LEN);
-    #else
-    GF_ASSERT( 0 && "BSWSUB_RECV_BUF_CLEAR WB未作成" );
-    #endif
+    MI_CpuClear8( bsw_scr->recv_buf, BSWAY_SIO_BUF_LEN );
     break;
   //トレーナー対戦前メッセージ表示
   case BSWSUB_TRAINER_BEFORE_MSG:
@@ -463,7 +489,61 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
   case BSWSUB_LOAD_POKEMON_MEMBER:
     BSUBWAY_SCRWORK_LoadPokemonMember( bsw_scr, gsys );
     break;
-  //エラー
+  //スーパーモードセット
+  case BSWSUB_SET_SUPER_MODE:
+    bsw_scr->super_mode = 1;
+    break;
+  //スーパーモードかどうか
+  case BSWSUB_CHECK_SUPER_MODE:
+    *ret_wk = bsw_scr->super_mode;
+    break;
+  //通信同期
+  case BSWSUB_COMM_TIMSYNC:
+    bsw_scr->comm_timing_no = param;
+    BSUBWAY_COMM_TimingSyncStart( bsw_scr->comm_timing_no );
+    VMCMD_SetWait( core, evCommTimingSync );
+    return( VMCMD_RESULT_SUSPEND );
+  //親機選択メニュー表示
+  case BSWSUB_COMM_ENTRY_PARENT_MENU:
+    {
+      bsw_scr->pCommEntryResult = ret_wk;
+      bsw_scr->pCommEntryMenu = CommEntryMenu_Setup(
+          GAMEDATA_GetMyStatus(gdata),
+          fieldmap, 2, 2, HEAPID_PROC,
+          COMM_ENTRY_MODE_PARENT,
+          COMM_ENTRY_GAMETYPE_SUBWAY, NULL );
+      VMCMD_SetWait( core, evCommEntryMenuPerent );
+    }
+    return( VMCMD_RESULT_SUSPEND );
+  //子機選択メニュー表示
+  case BSWSUB_COMM_ENTRY_CHILD_MENU:
+    {
+      bsw_scr->pCommEntryResult = ret_wk;
+      bsw_scr->pCommEntryMenu = CommEntryMenu_Setup(
+          GAMEDATA_GetMyStatus(gdata),
+          fieldmap, 2, 2, HEAPID_PROC, 
+          COMM_ENTRY_MODE_CHILD,
+          COMM_ENTRY_GAMETYPE_SUBWAY, NULL );
+      VMCMD_SetWait( core, evCommEntryMenuChild );
+    }
+    return( VMCMD_RESULT_SUSPEND );
+  //通信データ送信
+  case BSWSUB_COMM_SEND_BUF:
+    GF_ASSERT( 0 );
+    break;
+  //通信データ受信
+  case BSWSUB_COMM_RECV_BUF:
+    GF_ASSERT( 0 );
+    break;
+  //自分の通信IDを取得
+  case BSWSUB_COMM_GET_CURRENT_ID:
+    GF_ASSERT( 0 );
+    break;
+  //通信終了
+  case BSWSUB_COMM_MULTI_SIO_END:
+    GF_ASSERT( 0 );
+    break;
+  //未対応コマンドエラー
   default:
     OS_Printf( "渡されたcom_id = %d\n", com_id );
     GF_ASSERT( 0 && "com_idが未対応です！" );
@@ -471,7 +551,132 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
     break;
   }
   
-  return VMCMD_RESULT_CONTINUE;
+  return( VMCMD_RESULT_CONTINUE );
+}
+
+//======================================================================
+//  通信関連
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * 通信同期待ち
+ * @param core VMHANDLE
+ * @param wk script work
+ * @retval BOOL
+ */
+//--------------------------------------------------------------
+static BOOL evCommTimingSync( VMHANDLE *core, void *wk )
+{
+  COMM_ENTRY_RESULT entry_ret;
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK *gsys = SCRIPT_GetGameSysWork( sc );
+  GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
+  BSUBWAY_SCRWORK *bsw_scr = GAMEDATA_GetBSubwayScrWork( gdata );
+  
+  if( BSUBWAY_COMM_IsTimingSync(bsw_scr->comm_timing_no) == TRUE ){
+    return( TRUE );
+  }
+  return( FALSE );
+}
+
+//--------------------------------------------------------------
+/**
+ * 通信マルチ受付メニュー　親
+ * @param core VMHANDLE
+ * @param wk script work
+ * @retval BOOL
+ */
+//--------------------------------------------------------------
+static BOOL evCommEntryMenuPerent( VMHANDLE *core, void *wk )
+{
+  COMM_ENTRY_RESULT entry_ret;
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  SCRIPT_FLDPARAM *fparam = SCRIPT_GetFieldParam( sc );
+  GAMESYS_WORK *gsys = SCRIPT_GetGameSysWork( sc );
+  GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
+  SAVE_CONTROL_WORK *save = GAMEDATA_GetSaveControlWork( gdata );
+  EVENTWORK *event = GAMEDATA_GetEventWork( gdata );
+  BSUBWAY_SCRWORK *bsw_scr = GAMEDATA_GetBSubwayScrWork( gdata );
+  BSUBWAY_PLAYDATA *playData =
+    SaveControl_DataPtrGet( save, GMDATA_ID_BSUBWAY_PLAYDATA );
+  u32 play_mode = (u32)BSUBWAY_PLAYDATA_GetData(
+        playData, BSWAY_PLAYDATA_ID_playmode, NULL );
+  BSUBWAY_SCOREDATA *scoreData = SaveControl_DataPtrGet(
+      save, GMDATA_ID_BSUBWAY_SCOREDATA );
+  
+  entry_ret = CommEntryMenu_Update( bsw_scr->pCommEntryMenu ); 
+  
+  switch( entry_ret ){
+  case COMM_ENTRY_RESULT_SUCCESS:      //メンバーが集まった
+    (*bsw_scr->pCommEntryResult) = BSWAY_COMM_PERENT_ENTRY_OK;
+    return( TRUE );
+  case COMM_ENTRY_RESULT_CANCEL:       //キャンセルして終了
+    (*bsw_scr->pCommEntryResult) = BSWAY_COMM_PERENT_ENTRY_CANCEL;
+    return( TRUE );
+    break;
+  case COMM_ENTRY_RESULT_ERROR:        //エラーで終了
+    (*bsw_scr->pCommEntryResult) = BSWAY_COMM_PERENT_ENTRY_ERROR;
+    return( TRUE );
+  default:
+    GF_ASSERT( 0 );
+  }
+   
+  if( entry_ret != COMM_ENTRY_RESULT_NULL ){
+    CommEntryMenu_Exit( bsw_scr->pCommEntryMenu );
+    bsw_scr->pCommEntryMenu = NULL;
+  }
+  
+  return( FALSE );
+}
+
+//--------------------------------------------------------------
+/**
+ * 通信マルチ受付メニュー　子
+ * @param core VMHANDLE
+ * @param wk script work
+ * @retval BOOL
+ */
+//--------------------------------------------------------------
+static BOOL evCommEntryMenuChild( VMHANDLE *core, void *wk )
+{
+  COMM_ENTRY_RESULT entry_ret;
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  SCRIPT_FLDPARAM *fparam = SCRIPT_GetFieldParam( sc );
+  GAMESYS_WORK *gsys = SCRIPT_GetGameSysWork( sc );
+  GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
+  SAVE_CONTROL_WORK *save = GAMEDATA_GetSaveControlWork( gdata );
+  EVENTWORK *event = GAMEDATA_GetEventWork( gdata );
+  BSUBWAY_SCRWORK *bsw_scr = GAMEDATA_GetBSubwayScrWork( gdata );
+  BSUBWAY_PLAYDATA *playData =
+    SaveControl_DataPtrGet( save, GMDATA_ID_BSUBWAY_PLAYDATA );
+  u32 play_mode = (u32)BSUBWAY_PLAYDATA_GetData(
+        playData, BSWAY_PLAYDATA_ID_playmode, NULL );
+  BSUBWAY_SCOREDATA *scoreData = SaveControl_DataPtrGet(
+      save, GMDATA_ID_BSUBWAY_SCOREDATA );
+  
+  entry_ret = CommEntryMenu_Update( bsw_scr->pCommEntryMenu ); 
+  
+  switch( entry_ret ){
+  case ENTRY_PARENT_ANSWER_OK:      //エントリーOK
+    (*bsw_scr->pCommEntryResult) = BSWAY_COMM_CHILD_ENTRY_OK;
+    return( TRUE );
+  case ENTRY_PARENT_ANSWER_NG:    //エントリーNG
+    (*bsw_scr->pCommEntryResult) = BSWAY_COMM_CHILD_ENTRY_NG ;
+    return( TRUE );
+    break;
+  default:
+    GF_ASSERT( 0 );
+  }
+  
+  if( entry_ret != COMM_ENTRY_RESULT_NULL ){
+    CommEntryMenu_Exit( bsw_scr->pCommEntryMenu );
+    bsw_scr->pCommEntryMenu = NULL;
+  }
+  
+  return( FALSE );
 }
 
 //======================================================================

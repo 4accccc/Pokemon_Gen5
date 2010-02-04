@@ -70,7 +70,8 @@ NETWORKSRC =  net/net_icondata.c \
         net_app/union/union_subproc.c \
         net_app/union/colosseum_comm_command.c \
         net_app/union/colosseum.c \
-        net_app/gds/gds_main.c
+        net_app/gds/gds_main.c \
+        field/bsubway_comm.c
 
 
 #í’“ƒvƒƒOƒ‰ƒ€

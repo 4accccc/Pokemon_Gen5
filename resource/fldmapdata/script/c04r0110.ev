@@ -204,7 +204,6 @@ sub_train_battle_win:
 //--------------------------------------------------------------
 sub_train_battle_win_clear:
 {
-  
   //‘ŞêƒAƒjƒ
   _CALL sub_anm_train_battle_win_clear
   

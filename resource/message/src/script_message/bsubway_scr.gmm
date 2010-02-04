@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="kagaya" host="W00143" date="2010-01-26T21:21:28"/>
+	<create user="kagaya" host="W00143" date="2010-02-03T19:07:50"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="83" top="123" right="788" bottom="743" maximized="no" rayout="Vertical2">
+	<dialog left="22" top="294" right="727" bottom="914" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="693" top="127" right="1166" bottom="525" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -317,11 +317,576 @@
 
 	<row id="msg_bsw_scr_02">
 		<language name="JPN" width="256">バトルサブウェイに　ようこそ！[BE:01:ページ切り替え（クリア）]
-こちらでは　シングルトレインの
+こちらでは　マルチトレインの
 じょうしゃを　ごあんない　しております</language>
 		<language name="JPN_KANJI" width="256">バトルサブウェイに　ようこそ！[BE:01:ページ切り替え（クリア）]
-こちらでは　シングルトレインの
+こちらでは　マルチトレインの
 じょうしゃを　ごあんない　しております</language>
+	</row>
+
+	<row id="msg_bsw_scr_03">
+		<language name="JPN" width="256">バトルサブウェイに　ようこそ！[BE:01:ページ切り替え（クリア）]
+こちらでは　Wifiトレインの
+じょうしゃを　ごあんない　しております</language>
+		<language name="JPN_KANJI" width="256">バトルサブウェイに　ようこそ！[BE:01:ページ切り替え（クリア）]
+こちらでは　Wifiトレインの
+じょうしゃを　ごあんない　しております</language>
+	</row>
+
+	<row id="msg_bsw_scr_04">
+		<language name="JPN" width="256">バトルサブウェイに　ようこそ！[BE:01:ページ切り替え（クリア）]
+こちらでは　スーパーシングルトレインの
+じょうしゃを　ごあんない　しております</language>
+		<language name="JPN_KANJI" width="256">バトルサブウェイに　ようこそ！[BE:01:ページ切り替え（クリア）]
+こちらでは　スーパーシングルトレインの
+じょうしゃを　ごあんない　しております</language>
+	</row>
+
+	<row id="msg_bsw_scr_05">
+		<language name="JPN" width="256">バトルサブウェイに　ようこそ！[BE:01:ページ切り替え（クリア）]
+こちらでは　スーパーダブルトレインの
+じょうしゃを　ごあんない　しております</language>
+		<language name="JPN_KANJI" width="256">バトルサブウェイに　ようこそ！[BE:01:ページ切り替え（クリア）]
+こちらでは　スーパーダブルトレインの
+じょうしゃを　ごあんない　しております</language>
+	</row>
+
+	<row id="msg_bsw_scr_06">
+		<language name="JPN" width="256">バトルサブウェイに　ようこそ！[BE:01:ページ切り替え（クリア）]
+こちらでは　スーパーマルチトレインの
+じょうしゃを　ごあんない　しております</language>
+		<language name="JPN_KANJI" width="256">バトルサブウェイに　ようこそ！[BE:01:ページ切り替え（クリア）]
+こちらでは　スーパーマルチトレインの
+じょうしゃを　ごあんない　しております</language>
+	</row>
+
+	<row id="msg_bsw_scr_07">
+		<language name="JPN" width="256">バトルサブウェイに　ようこそ！[BE:01:ページ切り替え（クリア）]
+こちらでは　スーパーWifiトレインの
+じょうしゃを　ごあんない　しております</language>
+		<language name="JPN_KANJI" width="256">バトルサブウェイに　ようこそ！[BE:01:ページ切り替え（クリア）]
+こちらでは　スーパーWifiトレインの
+じょうしゃを　ごあんない　しております</language>
+	</row>
+
+	<row id="msg_bsw_scr_08">
+		<comment>連勝中</comment>
+		<language name="JPN" width="256">げんざい　[1:00:トレーナー名:0]さまは
+[2:02:３桁:1]れんしょうちゅう　です</language>
+		<language name="JPN_KANJI" width="256">げんざい　[1:00:トレーナー名:0]さまは
+[2:02:３桁:1]れんしょうちゅう　です</language>
+	</row>
+
+	<row id="msg_bsw_scr_09">
+		<language name="JPN" width="256">シングルトレイン説明</language>
+		<language name="JPN_KANJI" width="256">シングルトレイン説明</language>
+	</row>
+
+	<row id="msg_bsw_scr_10">
+		<language name="JPN" width="256">ダブルトレイン説明</language>
+		<language name="JPN_KANJI" width="256">ダブルトレイン説明</language>
+	</row>
+
+	<row id="msg_bsw_scr_11">
+		<language name="JPN" width="256">マルチトレイン説明</language>
+		<language name="JPN_KANJI" width="256">マルチトレイン説明</language>
+	</row>
+
+	<row id="msg_bsw_scr_12">
+		<language name="JPN" width="256">Wifiトレイン説明</language>
+		<language name="JPN_KANJI" width="256">Wifiトレイン説明</language>
+	</row>
+
+	<row id="msg_bsw_scr_13">
+		<language name="JPN" width="256">シングルトレインにじょうしゃしますか</language>
+		<language name="JPN_KANJI" width="256">シングルトレインにじょうしゃしますか</language>
+	</row>
+
+	<row id="msg_bsw_scr_14">
+		<language name="JPN" width="256">ダブルトレインにじょうしゃしますか</language>
+		<language name="JPN_KANJI" width="256">ダブルトレインにじょうしゃしますか</language>
+	</row>
+
+	<row id="msg_bsw_scr_15">
+		<language name="JPN" width="256">マルチトレインにじょうしゃしますか</language>
+		<language name="JPN_KANJI" width="256">マルチトレインにじょうしゃしますか</language>
+	</row>
+
+	<row id="msg_bsw_scr_16">
+		<language name="JPN" width="256">Wifiトレインにじょうしゃしますか</language>
+		<language name="JPN_KANJI" width="256">Wifiトレインにじょうしゃしますか</language>
+	</row>
+
+	<row id="msg_bsw_scr_17">
+		<language name="JPN" width="256">スーパーシングルトレインにじょうしゃしますか</language>
+		<language name="JPN_KANJI" width="256">スーパーシングルトレインにじょうしゃしますか</language>
+	</row>
+
+	<row id="msg_bsw_scr_18">
+		<language name="JPN" width="256">スーパーダブルトレインにじょうしゃしますか</language>
+		<language name="JPN_KANJI" width="256">スーパーダブルトレインにじょうしゃしますか</language>
+	</row>
+
+	<row id="msg_bsw_scr_19">
+		<language name="JPN" width="256">スーパーマルチトレインにじょうしゃしますか</language>
+		<language name="JPN_KANJI" width="256">スーパーマルチトレインにじょうしゃしますか</language>
+	</row>
+
+	<row id="msg_bsw_scr_20">
+		<language name="JPN" width="256">スーパーWifiトレインにじょうしゃしますか</language>
+		<language name="JPN_KANJI" width="256">スーパーWifiトレインにじょうしゃしますか</language>
+	</row>
+
+	<row id="msg_bsw_scr_21">
+		<language name="JPN" width="256">おきゃくさま！[BE:01:ページ切り替え（クリア）]
+さんかできる　ポケモンが
+３ひき　いません[BE:01:ページ切り替え（クリア）]
+さんかするには　しゅるいが　ちがう
+ポケモンを　３ひき　よういし[BE:00:ページ切り替え（行送り）]
+ちがう　どうぐに　してください</language>
+		<language name="JPN_KANJI" width="256">おきゃくさま！[BE:01:ページ切り替え（クリア）]
+さんかできる　ポケモンが
+３ひき　いません[BE:01:ページ切り替え（クリア）]
+さんかするには　しゅるいが　ちがう
+ポケモンを　３ひき　よういし[BE:00:ページ切り替え（行送り）]
+ちがう　どうぐに　してください</language>
+	</row>
+
+	<row id="msg_bsw_scr_22">
+		<language name="JPN" width="256">なお　タマゴ　ポケモンめいは
+さんか　させることは　できません！[BE:01:ページ切り替え（クリア）]
+じゅんびが　できましたら
+また　おこし　ください</language>
+		<language name="JPN_KANJI" width="256">なお　タマゴ　ポケモンめいは
+さんか　させることは　できません！[BE:01:ページ切り替え（クリア）]
+じゅんびが　できましたら
+また　おこし　ください</language>
+	</row>
+
+	<row id="msg_bsw_scr_23">
+		<language name="JPN" width="256">それでは　さんかする　ポケモンを
+えらんで　ください</language>
+		<language name="JPN_KANJI" width="256">それでは　さんかする　ポケモンを
+えらんで　ください</language>
+	</row>
+
+	<row id="msg_bsw_scr_24">
+		<language name="JPN" width="256">それでは　シングルトレインへ
+ごじょうしゃ　ください！</language>
+		<language name="JPN_KANJI" width="256">それでは　シングルトレインへ
+ごじょうしゃ　ください！</language>
+	</row>
+
+	<row id="msg_bsw_scr_25">
+		<language name="JPN" width="256">それでは　ダブルトレインへ
+ごじょうしゃ　ください！</language>
+		<language name="JPN_KANJI" width="256">それでは　ダブルトレインへ
+ごじょうしゃ　ください！</language>
+	</row>
+
+	<row id="msg_bsw_scr_26">
+		<language name="JPN" width="256">それでは　マルチトレインへ
+ごじょうしゃ　ください！</language>
+		<language name="JPN_KANJI" width="256">それでは　マルチトレインへ
+ごじょうしゃ　ください！</language>
+	</row>
+
+	<row id="msg_bsw_scr_27">
+		<language name="JPN" width="256">それでは　Wifiトレインへ
+ごじょうしゃ　ください！</language>
+		<language name="JPN_KANJI" width="256">それでは　Wifiトレインへ
+ごじょうしゃ　ください！</language>
+	</row>
+
+	<row id="msg_bsw_scr_28">
+		<language name="JPN" width="256">それでは　スーパーシングルトレインへ
+ごじょうしゃ　ください！</language>
+		<language name="JPN_KANJI" width="256">それでは　スーパーシングルトレインへ
+ごじょうしゃ　ください！</language>
+	</row>
+
+	<row id="msg_bsw_scr_29">
+		<language name="JPN" width="256">それでは　スーパーダブルトレインへ
+ごじょうしゃ　ください！</language>
+		<language name="JPN_KANJI" width="256">それでは　スーパーダブルトレインへ
+ごじょうしゃ　ください！</language>
+	</row>
+
+	<row id="msg_bsw_scr_30">
+		<language name="JPN" width="256">それでは　スーパーマルチトレインへ
+ごじょうしゃ　ください！</language>
+		<language name="JPN_KANJI" width="256">それでは　スーパーマルチトレインへ
+ごじょうしゃ　ください！</language>
+	</row>
+
+	<row id="msg_bsw_scr_31">
+		<language name="JPN" width="256">それでは　スーパーWifiトレインへ
+ごじょうしゃ　ください！</language>
+		<language name="JPN_KANJI" width="256">それでは　スーパーWifiトレインへ
+ごじょうしゃ　ください！</language>
+	</row>
+
+	<row id="msg_bsw_scr_32">
+		<language name="JPN" width="256">おまちしておりました[BE:01:ページ切り替え（クリア）]
+バトルサブウェイへのチャレンジを
+さいかい　しますか？</language>
+		<language name="JPN_KANJI" width="256">おまちしておりました[BE:01:ページ切り替え（クリア）]
+バトルサブウェイへのチャレンジを
+さいかい　しますか？</language>
+	</row>
+
+	<row id="msg_bsw_scr_33">
+		<language name="JPN" width="256">ごあんないする　まえに
+レポートを　かきます</language>
+		<language name="JPN_KANJI" width="256">ごあんないする　まえに
+レポートを　かきます</language>
+	</row>
+
+	<row id="msg_bsw_scr_34">
+		<language name="JPN" width="256">それでは　ちゅうだんした　ところまで
+ごあんない　いたします</language>
+		<language name="JPN_KANJI" width="256">それでは　ちゅうだんした　ところまで
+ごあんない　いたします</language>
+	</row>
+
+	<row id="msg_bsw_scr_35">
+		<language name="JPN" width="256">おつかれさまでした！[BE:01:ページ切り替え（クリア）]
+つづきを　チャレンジする　ばあいは
+また　おこし　ください</language>
+		<language name="JPN_KANJI" width="256">おつかれさまでした！[BE:01:ページ切り替え（クリア）]
+つづきを　チャレンジする　ばあいは
+また　おこし　ください</language>
+	</row>
+
+	<row id="msg_bsw_scr_36">
+		<language name="JPN" width="256">せいせきを　レポートに　かきこんでいます
+しばらく　おまちください</language>
+		<language name="JPN_KANJI" width="256">せいせきを　レポートに　かきこんでいます
+しばらく　おまちください</language>
+	</row>
+
+	<row id="msg_bsw_scr_37">
+		<language name="JPN" width="256">おきゃくさま！[BE:01:ページ切り替え（クリア）]
+ぜんかい　ちゃんと　レポートを　かいて
+しゅうりょう　しませんでしたね？[BE:01:ページ切り替え（クリア）]
+もうしわけ　ありませんが　そのばあい
+ちょうせんは　むこうと　なります</language>
+		<language name="JPN_KANJI" width="256">おきゃくさま！[BE:01:ページ切り替え（クリア）]
+ぜんかい　ちゃんと　レポートを　かいて
+しゅうりょう　しませんでしたね？[BE:01:ページ切り替え（クリア）]
+もうしわけ　ありませんが　そのばあい
+ちょうせんは　むこうと　なります</language>
+	</row>
+
+	<row id="msg_bsw_scr_38">
+		<language name="JPN" width="256">それでは　またの　ごりようを
+おまちして　おります！</language>
+		<language name="JPN_KANJI" width="256">それでは　またの　ごりようを
+おまちして　おります！</language>
+	</row>
+
+	<row id="msg_bsw_scr_39">
+		<language name="JPN" width="256">じょうしゃする</language>
+		<language name="JPN_KANJI" width="256">じょうしゃする</language>
+	</row>
+
+	<row id="msg_bsw_scr_40">
+		<language name="JPN" width="256">せつめいをきく</language>
+		<language name="JPN_KANJI" width="256">せつめいをきく</language>
+	</row>
+
+	<row id="msg_bsw_scr_41">
+		<language name="JPN" width="256">やめる</language>
+		<language name="JPN_KANJI" width="256">やめる</language>
+	</row>
+
+	<row id="msg_bsw_scr_42">
+		<comment>wifi メニュー</comment>
+		<language name="JPN" width="256">れきだいのきろく</language>
+		<language name="JPN_KANJI" width="256">れきだいのきろく</language>
+	</row>
+
+	<row id="msg_bsw_scr_43">
+		<comment>wifi　メニュー</comment>
+		<language name="JPN" width="256">まえのトレイン</language>
+		<language name="JPN_KANJI" width="256">まえのトレイン</language>
+	</row>
+
+	<row id="msg_bsw_scr_44">
+		<language name="JPN" width="256">てもちか　バトルボックスの
+どちらを　つかうか　えらんでください</language>
+		<language name="JPN_KANJI" width="256">てもちか　バトルボックスの
+どちらを　つかうか　えらんでください</language>
+	</row>
+
+	<row id="msg_bsw_scr_45">
+		<language name="JPN" width="256">てもち</language>
+		<language name="JPN_KANJI" width="256">てもち</language>
+	</row>
+
+	<row id="msg_bsw_scr_46">
+		<language name="JPN" width="256">バトルボックス</language>
+		<language name="JPN_KANJI" width="256">バトルボックス</language>
+	</row>
+
+	<row id="msg_bsw_scr_47">
+		<language name="JPN" width="256">やめる</language>
+		<language name="JPN_KANJI" width="256">やめる</language>
+	</row>
+
+	<row id="msg_bsw_scr_48">
+		<comment>マルチ</comment>
+		<language name="JPN" width="256">つうしんで　おともだちと
+いっしょに　ちょうせん　しますか？</language>
+		<language name="JPN_KANJI" width="256">つうしんで　おともだちと
+いっしょに　ちょうせん　しますか？</language>
+	</row>
+
+	<row id="msg_bsw_scr_49">
+		<comment>wifi</comment>
+		<language name="JPN" width="256">○○○○○さまの　げんざいの　ランクは
+ランク○　です！</language>
+		<language name="JPN_KANJI" width="256">○○○○○さまの　げんざいの　ランクは
+ランク○　です！</language>
+	</row>
+
+	<row id="msg_bsw_scr_50">
+		<comment>wifi</comment>
+		<language name="JPN" width="256">おまちしておりました！[BE:01:ページ切り替え（クリア）]
+ぜんかいの　せいせきを　Ｗｉ-Ｆｉ
+コネクションに　おくって　いませんが[BE:00:ページ切り替え（行送り）]
+これから　おくりますか？</language>
+		<language name="JPN_KANJI" width="256">おまちしておりました！[BE:01:ページ切り替え（クリア）]
+ぜんかいの　せいせきを　Ｗｉ-Ｆｉ
+コネクションに　おくって　いませんが[BE:00:ページ切り替え（行送り）]
+これから　おくりますか？</language>
+	</row>
+
+	<row id="msg_bsw_scr_51">
+		<comment>wifi</comment>
+		<language name="JPN" width="256">せいせきを　Ｗｉ-Ｆｉコネクションに
+おくりました！</language>
+		<language name="JPN_KANJI" width="256">せいせきを　Ｗｉ-Ｆｉコネクションに
+おくりました！</language>
+	</row>
+
+	<row id="msg_bsw_scr_52">
+		<comment>wifi</comment>
+		<language name="JPN" width="256">ランク○○　バトルルーム○○○の
+れきだいの　きろくを　うけとりました[BE:01:ページ切り替え（クリア）]
+おもてに　せっちされた　せいせき
+モニターで　ごかくにん　ください</language>
+		<language name="JPN_KANJI" width="256">ランク○○　バトルルーム○○○の
+れきだいの　きろくを　うけとりました[BE:01:ページ切り替え（クリア）]
+おもてに　せっちされた　せいせき
+モニターで　ごかくにん　ください</language>
+	</row>
+
+	<row id="msg_bsw_scr_53">
+		<comment>マルチ</comment>
+		<language name="JPN" width="256">ふたりの　うち　ひとりが
+リーダーになる　を　えらび[BE:01:ページ切り替え（クリア）]
+もう　ひとりは　グループにはいる　を
+えらんでください</language>
+		<language name="JPN_KANJI" width="256">ふたりの　うち　ひとりが
+リーダーになる　を　えらび[BE:01:ページ切り替え（クリア）]
+もう　ひとりは　グループにはいる　を
+えらんでください</language>
+	</row>
+
+	<row id="msg_bsw_scr_54">
+		<comment>マルチ</comment>
+		<language name="JPN" width="256">おともだちと　おなじ
+○○○○○を　えらんで　います！▼[BE:01:ページ切り替え（クリア）]
+おともだちと　そうだん　してから
+また　おこし　ください</language>
+		<language name="JPN_KANJI" width="256">おともだちと　おなじ
+○○○○○を　えらんで　います！▼[BE:01:ページ切り替え（クリア）]
+おともだちと　そうだん　してから
+また　おこし　ください</language>
+	</row>
+
+	<row id="msg_bsw_scr_55">
+		<comment>マルチ</comment>
+		<language name="JPN" width="256">おともだちと　おなじ　○○○○○や
+○○○○○を　えらんで　います！[BE:01:ページ切り替え（クリア）]
+おともだちと　そうだん　してから
+また　おこし　ください</language>
+		<language name="JPN_KANJI" width="256">おともだちと　おなじ　○○○○○や
+○○○○○を　えらんで　います！[BE:01:ページ切り替え（クリア）]
+おともだちと　そうだん　してから
+また　おこし　ください</language>
+	</row>
+
+	<row id="msg_bsw_scr_56">
+		<comment>マルチ</comment>
+		<language name="JPN" width="256">おともだちと　えらんだ
+トレインが　ちがって　います！[BE:01:ページ切り替え（クリア）]
+おともだちと　そうだん　してから
+また　おこし　ください</language>
+		<language name="JPN_KANJI" width="256">おともだちと　えらんだ
+トレインが　ちがって　います！[BE:01:ページ切り替え（クリア）]
+おともだちと　そうだん　してから
+また　おこし　ください</language>
+	</row>
+
+	<row id="msg_bsw_scr_57">
+		<comment>マルチ　パートナー男</comment>
+		<language name="JPN" width="256">こんにちは！　わたし○○○○○！[BE:01:ページ切り替え（クリア）]
+あなた　マルチトレインに
+ちょうせんするの　はじめて　でしょ？[BE:01:ページ切り替え（クリア）]
+マルチトレインに　ちょうせんするには
+パートナーが　ひつようなのよ</language>
+		<language name="JPN_KANJI" width="256">こんにちは！　わたし○○○○○！[BE:01:ページ切り替え（クリア）]
+あなた　マルチトレインに
+ちょうせんするの　はじめて　でしょ？[BE:01:ページ切り替え（クリア）]
+マルチトレインに　ちょうせんするには
+パートナーが　ひつようなのよ</language>
+	</row>
+
+	<row id="msg_bsw_scr_58">
+		<comment>マルチ　パートナー女</comment>
+		<language name="JPN" width="256">こんにちは！　わたし○○○○○！[BE:01:ページ切り替え（クリア）]
+あなた　マルチトレインに
+ちょうせんするの　はじめて　でしょ？[BE:01:ページ切り替え（クリア）]
+マルチトレインに　ちょうせんするには
+パートナーが　ひつようなのよ</language>
+		<language name="JPN_KANJI" width="256">こんにちは！　わたし○○○○○！[BE:01:ページ切り替え（クリア）]
+あなた　マルチトレインに
+ちょうせんするの　はじめて　でしょ？[BE:01:ページ切り替え（クリア）]
+マルチトレインに　ちょうせんするには
+パートナーが　ひつようなのよ</language>
+	</row>
+
+	<row id="msg_bsw_scr_59">
+		<comment>マルチ　パートナー男</comment>
+		<language name="JPN" width="256">こんにちは！　○○○○○くん！
+また　あったわね！</language>
+		<language name="JPN_KANJI" width="256">こんにちは！　○○○○○くん！
+また　あったわね！</language>
+	</row>
+
+	<row id="msg_bsw_scr_60">
+		<comment>マルチ　パートナー女</comment>
+		<language name="JPN" width="256">こんにちは！　○○○○○くん！
+また　あったわね！</language>
+		<language name="JPN_KANJI" width="256">こんにちは！　○○○○○くん！
+また　あったわね！</language>
+	</row>
+
+	<row id="msg_bsw_scr_61">
+		<comment>マルチ　パートナー男</comment>
+		<language name="JPN" width="256">もしかして　きょうはひとり？？[BE:01:ページ切り替え（クリア）]
+だったら　わたしと　パートナーを
+くもうよ！　うん　うん　それがいいわ[BE:01:ページ切り替え（クリア）]
+じゃ　わたしは　どんな　ポケモンを
+さんか　させればいい？</language>
+		<language name="JPN_KANJI" width="256">もしかして　きょうはひとり？？[BE:01:ページ切り替え（クリア）]
+だったら　わたしと　パートナーを
+くもうよ！　うん　うん　それがいいわ[BE:01:ページ切り替え（クリア）]
+じゃ　わたしは　どんな　ポケモンを
+さんか　させればいい？</language>
+	</row>
+
+	<row id="msg_bsw_scr_62">
+		<comment>マルチ　パートナー女</comment>
+		<language name="JPN" width="256">もしかして　きょうはひとり？？[BE:01:ページ切り替え（クリア）]
+だったら　わたしと　パートナーを
+くもうよ！　うん　うん　それがいいわ[BE:01:ページ切り替え（クリア）]
+じゃ　わたしは　どんな　ポケモンを
+さんか　させればいい？</language>
+		<language name="JPN_KANJI" width="256">もしかして　きょうはひとり？？[BE:01:ページ切り替え（クリア）]
+だったら　わたしと　パートナーを
+くもうよ！　うん　うん　それがいいわ[BE:01:ページ切り替え（クリア）]
+じゃ　わたしは　どんな　ポケモンを
+さんか　させればいい？</language>
+	</row>
+
+	<row id="msg_bsw_scr_63">
+		<comment>マルチ　メニュー</comment>
+		<language name="JPN" width="256">こうげきじゅうし</language>
+		<language name="JPN_KANJI" width="256">こうげきじゅうし</language>
+	</row>
+
+	<row id="msg_bsw_scr_64">
+		<comment>マルチ　メニュー</comment>
+		<language name="JPN" width="256">ぼうぎょじゅうし</language>
+		<language name="JPN_KANJI" width="256">ぼうぎょじゅうし</language>
+	</row>
+
+	<row id="msg_bsw_scr_65">
+		<comment>マルチ　メニュー</comment>
+		<language name="JPN" width="256">バランスじゅうし</language>
+		<language name="JPN_KANJI" width="256">バランスじゅうし</language>
+	</row>
+
+	<row id="msg_bsw_scr_66">
+		<comment>マルチ　パートナー男</comment>
+		<language name="JPN" width="256">わかったわ　こうげきじゅうしね！
+じゃ　はじめましょ！</language>
+		<language name="JPN_KANJI" width="256">わかったわ　こうげきじゅうしね！
+じゃ　はじめましょ！</language>
+	</row>
+
+	<row id="msg_bsw_scr_67">
+		<comment>マルチ　パートナー男</comment>
+		<language name="JPN" width="256">わかったわ　ぼうぎょじゅうしね！
+じゃ　はじめましょ！</language>
+		<language name="JPN_KANJI" width="256">わかったわ　ぼうぎょじゅうしね！
+じゃ　はじめましょ！</language>
+	</row>
+
+	<row id="msg_bsw_scr_68">
+		<comment>マルチ　パートナー男</comment>
+		<language name="JPN" width="256">わかったわ　ぼうぎょじゅうしね！
+じゃ　はじめましょ！</language>
+		<language name="JPN_KANJI" width="256">わかったわ　ぼうぎょじゅうしね！
+じゃ　はじめましょ！</language>
+	</row>
+
+	<row id="msg_bsw_scr_69">
+		<comment>マルチ　パートナー女</comment>
+		<language name="JPN" width="256">わかったわ　こうげきじゅうしね！
+じゃ　はじめましょ！</language>
+		<language name="JPN_KANJI" width="256">わかったわ　こうげきじゅうしね！
+じゃ　はじめましょ！</language>
+	</row>
+
+	<row id="msg_bsw_scr_70">
+		<comment>マルチ　パートナー女</comment>
+		<language name="JPN" width="256">わかったわ　ぼうぎょじゅうしね！
+じゃ　はじめましょ！</language>
+		<language name="JPN_KANJI" width="256">わかったわ　ぼうぎょじゅうしね！
+じゃ　はじめましょ！</language>
+	</row>
+
+	<row id="msg_bsw_scr_71">
+		<comment>マルチ　パートナー女</comment>
+		<language name="JPN" width="256">わかったわ　ぼうぎょじゅうしね！
+じゃ　はじめましょ！</language>
+		<language name="JPN_KANJI" width="256">わかったわ　ぼうぎょじゅうしね！
+じゃ　はじめましょ！</language>
+	</row>
+
+	<row id="msg_bsw_scr_72">
+		<comment>マルチ　パートナー男</comment>
+		<language name="JPN" width="256">えー　わたしと　くむき　ないの？[BE:01:ページ切り替え（クリア）]
+さよなら……</language>
+		<language name="JPN_KANJI" width="256">えー　わたしと　くむき　ないの？[BE:01:ページ切り替え（クリア）]
+さよなら……</language>
+	</row>
+
+	<row id="msg_bsw_scr_73">
+		<comment>マルチ　パートナー女</comment>
+		<language name="JPN" width="256">えー　わたしと　くむき　ないの？[BE:01:ページ切り替え（クリア）]
+さよなら……</language>
+		<language name="JPN_KANJI" width="256">えー　わたしと　くむき　ないの？[BE:01:ページ切り替え（クリア）]
+さよなら……</language>
+	</row>
+
+	<row id="msg_bsw_scr_74">
+		<language name="JPN" width="256">test</language>
+		<language name="JPN_KANJI" width="256">test</language>
 	</row>
 
 	<flowchart-group-list>

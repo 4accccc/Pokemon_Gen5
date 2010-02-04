@@ -37,13 +37,16 @@
 #define BSUBWAY_FIVE_FIRST  (300)  ///<5人衆データのスタートindex
 
 ///バトルサブウェイプレイモードスクリプト用定義 BSWAY_PLAYMODEと同一
-#define BSWAY_MODE_NULL    (0xFFFF)
 #define BSWAY_MODE_SINGLE  (0)
 #define BSWAY_MODE_DOUBLE  (1)
 #define BSWAY_MODE_MULTI  (2)
 #define BSWAY_MODE_COMM_MULTI  (3)
 #define BSWAY_MODE_WIFI (4)
 #define BSWAY_MODE_WIFI_MULTI (5)
+#define BSWAY_MODE_S_SINGLE (6)
+#define BSWAY_MODE_S_DOUBLE (7)
+#define BSWAY_MODE_S_MULTI (8)
+#define BSWAY_MODE_NULL (9)
 
 ///バトルサブウェイ　パートナーコード
 #define BSWAY_PTCODE_OBJ    (2)
@@ -120,6 +123,7 @@
 //ホーム制御
 #define BSWAY_SCENE_HOME_NON (0) //何も無し
 #define BSWAY_SCENE_HOME_GAME_CLEAR (1) //ゲームクリア
+#define BSWAY_SCENE_HOME_TERMINUS (2) //ホーム終点
 
 //--------------------------------------------------------------
 /// バトルサブウェイコマンドツールID
@@ -146,8 +150,10 @@
 #define BSWTOOL_GET_S_BOSS_CLEAR_FLAG (18)
 #define BSWTOOL_SET_BOSS_CLEAR_FLAG (19)
 #define BSWTOOL_SET_S_BOSS_CLEAR_FLAG (20)
+#define BSWTOOL_GET_SUPPORT_ENCOUNT_END (21)
+#define BSWTOOL_SET_SUPPORT_ENCOUNT_END (22)
 
-#define BSWTOOL_WIFI_START (30)
+#define BSWTOOL_WIFI_START (40)
 #define BSWTOOL_WIFI_RANK_DOWN (BSWTOOL_WIFI_START+0)
 #define BSWTOOL_GET_WIFI_RANK (BSWTOOL_WIFI_START+1)
 #define BSWTOOL_SET_WIFI_UPLOAD_FLAG (BSWTOOL_WIFI_START+2)
@@ -183,7 +189,16 @@
 #define BSWSUB_SAVE_GAMECLEAR (BSWSUB_START+21)
 #define BSWSUB_SET_PLAY_MODE_LOCATION (BSWSUB_START+22)
 #define BSWSUB_LOAD_POKEMON_MEMBER (BSWSUB_START+23)
-#define BSWSUB_END (BSWSUB_START+24)
+#define BSWSUB_SET_SUPER_MODE (BSWSUB_START+24)
+#define BSWSUB_CHECK_SUPER_MODE (BSWSUB_START+25)
+#define BSWSUB_COMM_TIMSYNC (BSWSUB_START+27)
+#define BSWSUB_COMM_ENTRY_PARENT_MENU (BSWSUB_START+28)
+#define BSWSUB_COMM_ENTRY_CHILD_MENU (BSWSUB_START+29)
+#define BSWSUB_COMM_SEND_BUF (BSWSUB_START+30)
+#define BSWSUB_COMM_RECV_BUF (BSWSUB_START+31)
+#define BSWSUB_COMM_GET_CURRENT_ID (BSWSUB_START+32)
+#define BSWSUB_COMM_MULTI_SIO_END (BSWSUB_START+33)
+#define BSWSUB_END (BSWSUB_START+34)
 
 //バトルサブウェイコマンド　引数NULL
 #define BSW_NULL (0)
@@ -191,14 +206,24 @@
 //--------------------------------------------------------------
 //  通信マルチ　同期コード
 //--------------------------------------------------------------
-#define BSUBWAY_COMM_MULTI_POKE_SELECT    1
-#define BSUBWAY_COMM_MULTI_BTL_TRAINER_SET  2
-#define BSUBWAY_COMM_MULTI_AUTO_SAVE      3
-#define BSUBWAY_COMM_MULTI_BATTLE_START    4
-#define BSUBWAY_COMM_MULTI_NEXT_SELECT    5
-#define BSUBWAY_COMM_MULTI_EXIT_WAIT      6
-#define BSUBWAY_COMM_MULTI_RETIRE_WAIT    7
-#define BSUBWAY_COMM_MULTI_SIO_END      8
+#define BSW_COMM_MULTI_POKE_SELECT    1
+#define BSW_COMM_MULTI_BTL_TRAINER_SET  2
+#define BSW_COMM_MULTI_AUTO_SAVE      3
+#define BSW_COMM_MULTI_BATTLE_START    4
+#define BSW_COMM_MULTI_NEXT_SELECT    5
+#define BSW_COMM_MULTI_EXIT_WAIT      6
+#define BSW_COMM_MULTI_RETIRE_WAIT    7
+#define BSW_COMM_MULTI_SIO_END      8
+
+//--------------------------------------------------------------
+//  通信マルチ　参加メニュー結果
+//--------------------------------------------------------------
+#define BSWAY_COMM_PERENT_ENTRY_OK 0 //親メニュー　メンバーが集まった
+#define BSWAY_COMM_PERENT_ENTRY_CANCEL 1 //親メニュー　キャンセル
+#define BSWAY_COMM_PERENT_ENTRY_ERROR 2 //親メニュー　エラー
+
+#define BSWAY_COMM_CHILD_ENTRY_OK 0 //子メニュー　OK
+#define BSWAY_COMM_CHILD_ENTRY_NG 1 //子メニュー　NG
 
 //--------------------------------------------------------------
 //  スクリプト　飛び先座標指定系
@@ -237,9 +262,10 @@
 #define SB_SALON_PLAYER_SY    (2)
 
 //通信定義(プラチナで追加)
-#define BSUBWAY_COMM_PLAYER_DATA    (0)
-#define BSUBWAY_COMM_TR_DATA      (1)
-#define BSUBWAY_COMM_RETIRE_SELECT  (2)
+#define BSWAY_COMM_PLAYER_DATA    (0)
+#define BSWAY_COMM_TR_DATA      (1)
+#define BSWAY_COMM_RETIRE_SELECT  (2)
+
 //D31R0205_HERO kari
 #define HERO_OBJ (0)
 

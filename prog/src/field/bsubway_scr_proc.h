@@ -12,4 +12,4 @@
 //  struct
 //======================================================================
 ///BSUBWAY_SCRWORK
-typedef struct _BSUBWAY_SCRWORK BSUBWAY_SCRWORK;
+typedef struct _TAG_BSUBWAY_SCRWORK BSUBWAY_SCRWORK;

@@ -156,6 +156,11 @@ GMEVENT * BSUBWAY_EVENT_SetSelectPokeList(
       reg = REG_SUBWAY_DOUBLE;
       type = PL_TYPE_DOUBLE;
       break;
+    case BSWAY_MODE_MULTI:
+    case BSWAY_MODE_COMM_MULTI:
+      reg = REG_SUBWAY_MALTI;
+      type = PL_TYPE_MULTI;
+      break;
     }
     
     KAGAYA_Printf( "ÉåÉMÉÖÉåÅ[ÉVÉáÉìÅ@%d\n", reg );

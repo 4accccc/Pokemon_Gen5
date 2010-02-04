@@ -102,7 +102,8 @@ struct _BSUBWAY_SCOREDATA
     u32  boss_clear_comm_multi_s:1;  ///<ボスクリアフラグ マルチ
     u32  boss_clear_wifi_s:1;  ///<ボスクリアフラグ　Wifi
     u32  boss_clear_wifi_multi_s:1;  ///<ボスクリアフラグ　Wifi
-    u32  dummy:4;
+    u32  ai_support_encount_end:1; ///<サポート遭遇済みフラグ
+    u32  dummy:3;
     };
     u32  flags;
   };
@@ -278,6 +279,7 @@ void BSUBWAY_PLAYDATA_SetData(
     break;
   case BSWAY_PLAYDATA_ID_stage:
     bsw_play->stage = buf16[0];
+    break;
   default:
     GF_ASSERT( 0 );
   }
@@ -655,7 +657,7 @@ BOOL BSUBWAY_SCOREDATA_SetFlag( BSUBWAY_SCOREDATA *bsw_score,
     GF_ASSERT( 0 );
     return 0;
   }
-
+  
   //フラグID生成
   for( i = 0; i < id; i++ ){
     flag <<= 1;

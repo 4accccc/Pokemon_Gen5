@@ -30,7 +30,7 @@ EVENT_START ev_bsw_receipt_talk
   DEFINE_LOCAL play_mode
   
   _BSUBWAY_WORK_CLEAR() //バトルサブウェイワーク　クリア
-
+  
   _TALK_OBJ_START()
   
   //ゾーン別プレイモード取得
@@ -45,24 +45,16 @@ EVENT_START ev_bsw_receipt_talk
   IF $SCWK_ANSWER != 0 THEN
     _PLAYER_NAME( 0 )
     _NUMBER( 1, SCWK_ANSWER, 3 )
-    _SYSWIN_MSG_DOWN( msg_bsw_scr_test )
+    _SYSWIN_MSG_DOWN( msg_bsw_scr_08 ) //連勝中です
     _AB_KEYWAIT()
   ENDIF
   
   //選択メニュー
-  $SCWK_ANSWER = 1
-  
-  WHILE $SCWK_ANSWER == 1
-    _BMPMENU_INIT_EX( 1, 1, 0, 1, SCWK_ANSWER )
-    _BMPMENU_MAKE_LIST( msg_bsw_scr_test, 0 ) //挑戦
-    _BMPMENU_MAKE_LIST( msg_bsw_scr_test, 1 ) //説明
-    _BMPMENU_MAKE_LIST( msg_bsw_scr_test, 2 ) //やめる
-    _BMPMENU_START()
-    
-    IF $SCWK_ANSWER == 1 THEN //説明文
-      _CALL sub_bsw_receipt_msg_account
-    ENDIF
-  ENDWHILE
+  IF $play_mode == BSWAY_MODE_WIFI THEN //wifiメニュー
+    _CALL sub_bsw_receipt_challenge_menu_wifi
+  ELSE //通常メニュー
+    _CALL sub_bsw_receipt_challenge_menu
+  ENDIF
   
   IF $SCWK_ANSWER == 0 THEN //挑戦する
     _CALL sub_bsw_receipt_challenge
@@ -79,25 +71,45 @@ sub_bsw_receipt_msg_greet:
 {
   DEFINE_LOCAL play_mode
   
-  _BSUBWAY_TOOL( BSWTOOL_GET_RENSHOU_CNT, play_mode, SCWK_ANSWER )
+  _BSUBWAY_TOOL( BSWTOOL_GET_ZONE_PLAY_MODE, BSW_NULL, play_mode )
   
   //プレイモード別　挨拶
   SWITCH $play_mode
   CASE BSWAY_MODE_SINGLE THEN
-    _SYSWIN_MSG_DOWN( msg_bsw_scr_test )
+    _SYSWIN_MSG_DOWN( msg_bsw_scr_00 )
   CASE BSWAY_MODE_DOUBLE THEN
-    _SYSWIN_MSG_DOWN( msg_bsw_scr_test )
+    _SYSWIN_MSG_DOWN( msg_bsw_scr_01 )
   CASE BSWAY_MODE_MULTI THEN
-    _SYSWIN_MSG_DOWN( msg_bsw_scr_test )
-  CASE BSWAY_MODE_COMM_MULTI THEN
-    _SYSWIN_MSG_DOWN( msg_bsw_scr_test )
+    _SYSWIN_MSG_DOWN( msg_bsw_scr_02 )
   CASE BSWAY_MODE_WIFI THEN
-    _SYSWIN_MSG_DOWN( msg_bsw_scr_test )
-  CASE BSWAY_MODE_WIFI_MULTI THEN
-    _SYSWIN_MSG_DOWN( msg_bsw_scr_test )
+    _SYSWIN_MSG_DOWN( msg_bsw_scr_03 )
   ENDSWITCH
   
   _AB_KEYWAIT()
+  _RET
+}
+
+//--------------------------------------------------------------
+//  受付話し掛け　乗車しますか？
+//--------------------------------------------------------------
+sub_bsw_receipt_msg_ask_geton:
+{
+  DEFINE_LOCAL play_mode
+  
+  _BSUBWAY_TOOL( BSWTOOL_GET_ZONE_PLAY_MODE, BSW_NULL, play_mode )
+  
+  //プレイモード別　乗車を尋ねるメッセージ
+  SWITCH $play_mode
+  CASE BSWAY_MODE_SINGLE THEN
+    _SYSWIN_MSG_DOWN( msg_bsw_scr_13 )
+  CASE BSWAY_MODE_DOUBLE THEN
+    _SYSWIN_MSG_DOWN( msg_bsw_scr_14 )
+  CASE BSWAY_MODE_MULTI THEN
+    _SYSWIN_MSG_DOWN( msg_bsw_scr_15 )
+  CASE BSWAY_MODE_WIFI THEN
+    _SYSWIN_MSG_DOWN( msg_bsw_scr_16 )
+  ENDSWITCH
+  
   _RET
 }
 
@@ -108,22 +120,18 @@ sub_bsw_receipt_msg_account:
 {
   DEFINE_LOCAL play_mode
   
-  _BSUBWAY_TOOL( BSWTOOL_GET_RENSHOU_CNT, play_mode, SCWK_ANSWER )
+  _BSUBWAY_TOOL( BSWTOOL_GET_ZONE_PLAY_MODE, BSW_NULL, play_mode )
   
   //プレイモード別　説明
   SWITCH $play_mode
   CASE BSWAY_MODE_SINGLE THEN
-    _SYSWIN_MSG_DOWN( msg_bsw_scr_test )
+    _SYSWIN_MSG_DOWN( msg_bsw_scr_09 )
   CASE BSWAY_MODE_DOUBLE THEN
-    _SYSWIN_MSG_DOWN( msg_bsw_scr_test )
+    _SYSWIN_MSG_DOWN( msg_bsw_scr_10 )
   CASE BSWAY_MODE_MULTI THEN
-    _SYSWIN_MSG_DOWN( msg_bsw_scr_test )
-  CASE BSWAY_MODE_COMM_MULTI THEN
-    _SYSWIN_MSG_DOWN( msg_bsw_scr_test )
+    _SYSWIN_MSG_DOWN( msg_bsw_scr_11 )
   CASE BSWAY_MODE_WIFI THEN
-    _SYSWIN_MSG_DOWN( msg_bsw_scr_test )
-  CASE BSWAY_MODE_WIFI_MULTI THEN
-    _SYSWIN_MSG_DOWN( msg_bsw_scr_test )
+    _SYSWIN_MSG_DOWN( msg_bsw_scr_12 )
   ENDSWITCH
   
   _AB_KEYWAIT()
@@ -137,22 +145,20 @@ sub_bsw_receipt_msg_geton_train:
 {
   DEFINE_LOCAL play_mode
   
-  _BSUBWAY_TOOL( BSWTOOL_GET_RENSHOU_CNT, play_mode, SCWK_ANSWER )
+  _BSUBWAY_TOOL( BSWTOOL_GET_PLAY_MODE, BSW_NULL, play_mode )
   
   //プレイモード別　乗車メッセージ
   SWITCH $play_mode
   CASE BSWAY_MODE_SINGLE THEN
-    _SYSWIN_MSG_DOWN( msg_bsw_scr_test )
+    _SYSWIN_MSG_DOWN( msg_bsw_scr_24 )
   CASE BSWAY_MODE_DOUBLE THEN
-    _SYSWIN_MSG_DOWN( msg_bsw_scr_test )
+    _SYSWIN_MSG_DOWN( msg_bsw_scr_25 )
   CASE BSWAY_MODE_MULTI THEN
-    _SYSWIN_MSG_DOWN( msg_bsw_scr_test )
+    _SYSWIN_MSG_DOWN( msg_bsw_scr_26 )
   CASE BSWAY_MODE_COMM_MULTI THEN
-    _SYSWIN_MSG_DOWN( msg_bsw_scr_test )
+    _SYSWIN_MSG_DOWN( msg_bsw_scr_26 )
   CASE BSWAY_MODE_WIFI THEN
-    _SYSWIN_MSG_DOWN( msg_bsw_scr_test )
-  CASE BSWAY_MODE_WIFI_MULTI THEN
-    _SYSWIN_MSG_DOWN( msg_bsw_scr_test )
+    _SYSWIN_MSG_DOWN( msg_bsw_scr_27 )
   ENDSWITCH
   
   _LAST_KEYWAIT()
@@ -165,8 +171,59 @@ sub_bsw_receipt_msg_geton_train:
 //--------------------------------------------------------------
 sub_bsw_receipt_msg_poke_error:
 {
-  _SYSWIN_MSG_DOWN( msg_bsw_scr_test )
+  _SYSWIN_MSG_DOWN( msg_bsw_scr_21 )
   _AB_KEYWAIT()
+  _SYSWIN_MSG_DOWN( msg_bsw_scr_22 )
+  _RET
+}
+
+//--------------------------------------------------------------
+//  受付話し掛け　プレイモード別メニュー選択
+//  @retval SCWK_ANSWER  0=挑戦するそれ以外=やめる
+//--------------------------------------------------------------
+sub_bsw_receipt_challenge_menu:
+{
+  $SCWK_ANSWER = 1
+  
+  WHILE $SCWK_ANSWER == 1
+    _CALL sub_bsw_receipt_msg_ask_geton
+    
+    _BMPMENU_INIT_EX( 1, 1, 0, 1, SCWK_ANSWER )
+    _BMPMENU_MAKE_LIST( msg_bsw_scr_39, 0 ) //挑戦
+    _BMPMENU_MAKE_LIST( msg_bsw_scr_40, 1 ) //説明
+    _BMPMENU_MAKE_LIST( msg_bsw_scr_41, 2 ) //やめる
+    _BMPMENU_START()
+    
+    IF $SCWK_ANSWER == 1 THEN //説明文
+      _CALL sub_bsw_receipt_msg_account
+    ENDIF
+  ENDWHILE
+  
+  _RET
+}
+
+//--------------------------------------------------------------
+//  受付話し掛け　プレイモード別メニュー選択 Wifi
+//  @retval SCWK_ANSWER  0=挑戦する それ以外=やめる
+//--------------------------------------------------------------
+sub_bsw_receipt_challenge_menu_wifi:
+{
+  $SCWK_ANSWER = 1
+  
+  WHILE $SCWK_ANSWER == 1
+    _CALL sub_bsw_receipt_msg_ask_geton
+
+    _BMPMENU_INIT_EX( 1, 1, 0, 1, SCWK_ANSWER )
+    _BMPMENU_MAKE_LIST( msg_bsw_scr_39, 0 ) //挑戦
+    _BMPMENU_MAKE_LIST( msg_bsw_scr_40, 1 ) //説明
+    _BMPMENU_MAKE_LIST( msg_bsw_scr_41, 2 ) //やめる
+    _BMPMENU_START()
+    
+    IF $SCWK_ANSWER == 1 THEN //説明文
+      _CALL sub_bsw_receipt_msg_account
+    ENDIF
+  ENDWHILE
+  
   _RET
 }
 
@@ -180,11 +237,36 @@ sub_bsw_receipt_challenge:
   //ゾーン別プレイモード取得
   _BSUBWAY_TOOL( BSWTOOL_GET_ZONE_PLAY_MODE, BSW_NULL, play_mode )
   
+  //プレイモード別に選択処理
+  SWITCH $play_mode
+  CASE BSWAY_MODE_SINGLE THEN
+    _CALL sub_bsw_receipt_single_double_select
+  CASE BSWAY_MODE_DOUBLE THEN
+    _CALL sub_bsw_receipt_single_double_select
+  CASE BSWAY_MODE_MULTI THEN
+    _CALL sub_bsw_receipt_multi_select
+  CASE BSWAY_MODE_WIFI THEN
+    _CALL sub_bsw_receipt_wifi_select
+  ENDSWITCH
+  
+  _RET
+}
+
+//--------------------------------------------------------------
+//  受付話し掛け　シングル、ダブル　選択
+//--------------------------------------------------------------
+sub_bsw_receipt_single_double_select:
+{
+  DEFINE_LOCAL play_mode
+  
+  //ゾーン別プレイモード取得
+  _BSUBWAY_TOOL( BSWTOOL_GET_ZONE_PLAY_MODE, BSW_NULL, play_mode )
+  
   //ワーク作成
   _BSUBWAY_WORK_CREATE( BSWAY_PLAY_NEW, play_mode )
   
   //手持ちポケモンチェック
-  _BSUBWAY_TOOL( BSWTOOL_CHK_ENTRY_POKE_NUM,BSW_NULL,SCWK_ANSWER )
+  _BSUBWAY_TOOL( BSWTOOL_CHK_ENTRY_POKE_NUM, BSW_NULL, SCWK_ANSWER )
   
   IF $SCWK_ANSWER == 0 THEN //参加条件合わない
     _CALL sub_bsw_receipt_msg_poke_error
@@ -193,38 +275,42 @@ sub_bsw_receipt_challenge:
   ENDIF
   
   //それでは参加するポケモンを選んでください
-  _SYSWIN_MSG_DOWN( msg_bsw_scr_test )
+  _SYSWIN_MSG_DOWN( msg_bsw_scr_23 )
   _AB_KEYWAIT()
   _SYSWIN_CLOSE()
   
   //ポケモン選択
   _BSUBWAY_TOOL( BSWSUB_SELECT_POKE, BSW_NULL, BSW_NULL )
+  
+  //ポケモン選択結果
   _BSUBWAY_TOOL( BSWSUB_GET_ENTRY_POKE, BSW_NULL, SCWK_ANSWER )
   
-  IF $SCWK_ANSWER == 0 THEN //非選択
+  IF $SCWK_ANSWER == 0 THEN
     _CALL sub_bsw_receipt_exit
     _RET
   ENDIF
-  
+   
   //フラグ初期化
   _CALL sub_bsw_receipt_set_train_flag_first
   
   //現在位置Push
-  _BSUBWAY_TOOL( BSWTOOL_PUSH_NOW_LOCATION,BSW_NULL,BSW_NULL )
-  
-  //回復
-  _TEMOTI_POKEMON_KAIFUKU()
+  _BSUBWAY_TOOL( BSWTOOL_PUSH_NOW_LOCATION, BSW_NULL, BSW_NULL )
   
   //レポート
   _REPORT_EVENT_CALL( SCWK_ANSWER )
   
   IF $SCWK_ANSWER == 1 THEN //キャンセル
+    _BSUBWAY_TOOL( BSWTOOL_POP_NOW_LOCATION, BSW_NULL, BSW_NULL )
+    _CALL sub_bsw_receipt_init_flag
     _CALL sub_bsw_receipt_exit
     _RET
   ENDIF
   
+  //回復
+  _TEMOTI_POKEMON_KAIFUKU()
+  
   //トレーナー抽選
-  _BSUBWAY_TOOL( BSWSUB_BTL_TRAINER_SET,BSW_NULL,BSW_NULL )
+  _BSUBWAY_TOOL( BSWSUB_BTL_TRAINER_SET, BSW_NULL, BSW_NULL )
   
   //乗車メッセージ
   _CALL sub_bsw_receipt_msg_geton_train
@@ -237,11 +323,302 @@ sub_bsw_receipt_challenge:
   
   //マップ遷移
   _CALL sub_bsw_receipt_map_train_change
+
   _RET
 }
 
 //--------------------------------------------------------------
-// 受付話し掛け  アニメ　乗車
+//  受付話し掛け　マルチ　選択
+//--------------------------------------------------------------
+sub_bsw_receipt_multi_select:
+{
+  DEFINE_LOCAL play_mode
+  
+  //手持ちポケモンチェック
+  _BSUBWAY_TOOL( BSWTOOL_CHK_ENTRY_POKE_NUM, BSW_NULL, SCWK_ANSWER )
+  
+  IF $SCWK_ANSWER == 0 THEN //参加条件合わない
+    _CALL sub_bsw_receipt_msg_poke_error
+    _CALL sub_bsw_receipt_exit
+    _RET
+  ENDIF
+  
+  $play_mode = BSWAY_MODE_MULTI
+  
+  //お友達と一緒に対戦？
+  _SYSWIN_MSG_DOWN( msg_bsw_scr_48 )
+  _YES_NO_WIN( SCWK_ANSWER )
+  
+  IF $SCWK_ANSWER == SCR_YES THEN
+    $play_mode = BSWAY_MODE_COMM_MULTI
+  ENDIF
+  
+  //ワーク作成
+  _BSUBWAY_WORK_CREATE( BSWAY_PLAY_NEW, play_mode )
+  
+  //それでは参加するポケモンを選んでください
+  _SYSWIN_MSG_DOWN( msg_bsw_scr_23 )
+  _AB_KEYWAIT()
+  _SYSWIN_CLOSE()
+  
+  //ポケモン選択
+  _BSUBWAY_TOOL( BSWSUB_SELECT_POKE, BSW_NULL, BSW_NULL )
+  
+  //ポケモン選択結果
+  _BSUBWAY_TOOL( BSWSUB_GET_ENTRY_POKE, BSW_NULL, SCWK_ANSWER )
+  
+  IF $SCWK_ANSWER == 0 THEN
+    _CALL sub_bsw_receipt_exit
+    _RET
+  ENDIF
+  
+  //フラグ初期化
+  _CALL sub_bsw_receipt_set_train_flag_first
+  
+  //現在位置Push
+  _BSUBWAY_TOOL( BSWTOOL_PUSH_NOW_LOCATION, BSW_NULL, BSW_NULL )
+  
+  //レポート
+  _REPORT_EVENT_CALL( SCWK_ANSWER )
+  
+  IF $SCWK_ANSWER == 1 THEN //キャンセル
+    _BSUBWAY_TOOL( BSWTOOL_POP_NOW_LOCATION, BSW_NULL, BSW_NULL )
+    _CALL sub_bsw_receipt_init_flag
+    _CALL sub_bsw_receipt_exit
+    _RET
+  ENDIF
+  
+  //回復
+  _TEMOTI_POKEMON_KAIFUKU()
+  
+  IF $play_mode == BSWAY_MODE_MULTI THEN //AIマルチ
+    _CALL sub_bsw_receipt_multi_select_ai
+  ELSE //通信マルチ
+    _CALL sub_bsw_receipt_multi_select_comm
+  ENDIF
+  
+  _RET
+}
+
+//--------------------------------------------------------------
+//  受付話し掛け　AIマルチ 選択
+//--------------------------------------------------------------
+sub_bsw_receipt_multi_select_ai:
+{
+  //サポート登場アニメ
+  
+  //初遭遇か？
+  _BSUBWAY_TOOL( BSWTOOL_GET_SUPPORT_ENCOUNT_END, BSW_NULL, SCWK_ANSWER )
+  
+  IF $SCWK_ANSWER == 0 THEN
+    _SYSWIN_MSG_DOWN( msg_bsw_scr_57 ) //始めまして 性別切り替え必要
+    _BSUBWAY_TOOL( BSWTOOL_SET_SUPPORT_ENCOUNT_END, BSW_NULL, BSW_NULL )
+  ELSE
+    _SYSWIN_MSG_DOWN( msg_bsw_scr_59 ) //またあったね 性別切り替え必要
+  ENDIF
+  
+  _AB_KEYWAIT()
+  
+  //どんなポケモンを参加させる？ 性別切り替え必要
+  _SYSWIN_MSG_DOWN( msg_bsw_scr_61 )
+  
+  _BMPMENU_INIT_EX( 1, 1, 0, 1, SCWK_ANSWER )
+  _BMPMENU_MAKE_LIST( msg_bsw_scr_63, 0 ) //攻撃重視
+  _BMPMENU_MAKE_LIST( msg_bsw_scr_64, 1 ) //防御重視
+  _BMPMENU_MAKE_LIST( msg_bsw_scr_65, 2 ) //バランス重視
+  _BMPMENU_MAKE_LIST( msg_bsw_scr_41, 3 ) //やめる
+  _BMPMENU_START()
+  
+  SWITCH $SCWK_ANSWER
+  CASE 0 THEN //攻撃
+    _SYSWIN_MSG_DOWN( msg_bsw_scr_66 )  //性別切り替えが必要
+  CASE 1 THEN //防御
+    _SYSWIN_MSG_DOWN( msg_bsw_scr_67 )  //性別切り替えが必要
+  CASE 2 THEN //バランス
+    _SYSWIN_MSG_DOWN( msg_bsw_scr_68 )  //性別切り替えが必要
+  CASE 3 THEN //やめる
+    _SYSWIN_MSG_DOWN( msg_bsw_scr_72 ) //さよなら
+    _AB_KEYWAIT()
+    _CALL sub_bsw_receipt_exit //サポート退場アニメ
+    _RET
+  ENDSWITCH
+  
+  _AB_KEYWAIT()
+  
+  //乗車メッセージ
+  _CALL sub_bsw_receipt_msg_geton_train
+  
+  //乗車アニメ
+  _CALL sub_bsw_receipt_anm_geton_train
+  
+  //電車移動
+  _CALL sub_bsw_receipt_demo_start_train
+  
+  //マップ遷移
+  _CALL sub_bsw_receipt_map_train_change
+  
+  _RET
+}
+
+//--------------------------------------------------------------
+//  受付話し掛け　通信マルチ 選択
+//--------------------------------------------------------------
+sub_bsw_receipt_multi_select_comm:
+{
+  DEFINE_LOCAL ret
+  DEFINE_LOCAL connect_on
+  
+  $connect_on = FALSE
+  
+  //ワイヤレス通信開始します
+  _SYSWIN_MSG_DOWN( msg_bsw_scr_test )
+  _YES_NO_WIN( ret )
+  
+  IF $ret == SCR_YES THEN
+    $connect_on = TRUE
+  ENDIF
+  
+  IF $connect_on == TRUE THEN
+    _FIELD_COMM_EXIT_EVENT_CALL( ret ) //通信切断
+    
+    IF $ret == SCR_FIELD_COMM_EXIT_CANCEL THEN
+      $connect_on = FALSE
+    ELSIF $ret == SCR_FIELD_COMM_EXIT_ERROR THEN
+      $connect_on = FALSE
+    ENDIF
+  ENDIF
+  
+  //通信前のレポート
+  IF $connect_on == TRUE THEN
+    // レポートを書く
+    _REPORT_EVENT_CALL_WIRELESS( ret )
+    // 書き込みに失敗
+    IF $ret != SCR_REPORT_OK THEN
+      $connect_on = FALSE
+    ENDIF
+  ENDIF
+  
+  //親になるか子になるか
+  IF $connect_on == TRUE THEN
+    _SYSWIN_MSG_DOWN( 0 )
+    _BMPMENU_INIT_EX( 1, 1, 0, 1, ret )
+    _BMPMENU_MAKE_LIST( msg_bsw_scr_test, 0 ) //リーダー
+    _BMPMENU_MAKE_LIST( msg_bsw_scr_test, 1 ) //グループ
+    _BMPMENU_MAKE_LIST( msg_bsw_scr_test, 2 ) //やめる
+    _BMPMENU_START()
+    
+    SWITCH $SCWK_ANSWER
+    CASE 0 THEN //リーダー
+      _CALL sub_bsw_receipt_multi_select_comm_connect_leader
+      $connect_on = $SCWK_ANSWER
+    CASE 1 THEN //グループ
+      _CALL sub_bsw_receipt_multi_select_comm_connect_group
+      $connect_on = $SCWK_ANSWER
+    CASE 2 THEN //やめる
+      $connect_on = FALSE
+    ENDSWITCH
+  ENDIF
+  
+  //互いの参加ポケモンチェック
+  IF $connect_on == TRUE THEN
+    //通信同期
+    _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_POKE_SELECT, BSW_NULL )
+    //受信バッファクリア
+    _BSUBWAY_TOOL( BSWSUB_RECV_BUF_CLEAR, BSW_NULL, BSW_NULL )
+    //お互いが選んだポケモンデータを交換
+    _BSUBWAY_TOOL( BSWSUB_COMM_SEND_BUF, 0, BSW_NULL )
+    _BSUBWAY_TOOL( BSWSUB_COMM_RECV_BUF, 0, SCWK_ANSWER )
+    
+    SWITCH $SCWK_ANSWER
+    CASE 1 THEN //同じポケモン 1
+      _NOP
+    CASE 2 THEN //同じポケモン 2
+      _NOP
+    CASE 3 THEN //同じポケモン 3
+      _NOP
+    ENDSWITCH
+  ENDIF
+  
+  //トレーナーデータ
+  IF $connect_on == TRUE THEN 
+    //トレーナーセット
+    _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_BTL_TRAINER_SET, BSW_NULL )
+    //親機なら対戦トレーナー抽選
+    _BSUBWAY_TOOL( BSWSUB_COMM_GET_CURRENT_ID, BSW_NULL, SCWK_ANSWER )
+    
+    IF $SCWK_ANSWER == 0 THEN //親
+        
+    ELSE //子機は親からデータを受け取る
+        
+    ENDIF
+  ENDIF
+  
+  //データセット後の通信同期とマップ遷移
+  IF $connect_on == TRUE THEN
+    //ワークセット
+    //現在位置のプッシュ
+    //オートセーブ
+    //それではバトルルームへ
+  ENDIF
+  
+  //接続したか
+  IF $connect_on != TRUE THEN
+    _CALL sub_bsw_receipt_exit
+  ENDIF
+  
+  _RET
+}
+
+//--------------------------------------------------------------
+//  受付話し掛け　通信マルチ　選択　リーダー接続
+//  @retval SCWK_ANSWER FALSE=接続無し
+//--------------------------------------------------------------
+sub_bsw_receipt_multi_select_comm_connect_leader:
+{
+  //親参加メニュー
+  _BSUBWAY_TOOL( BSWSUB_COMM_ENTRY_PARENT_MENU, BSW_NULL, SCWK_ANSWER )
+  
+  SWITCH $SCWK_ANSWER
+  CASE BSWAY_COMM_PERENT_ENTRY_OK THEN //OK
+    $SCWK_ANSWER = TRUE
+  CASE BSWAY_COMM_PERENT_ENTRY_CANCEL THEN //キャンセル
+    $SCWK_ANSWER = FALSE
+  CASE BSWAY_COMM_PERENT_ENTRY_ERROR THEN //エラー
+    $SCWK_ANSWER = FALSE
+  ENDSWITCH
+  
+  _RET
+}
+
+//--------------------------------------------------------------
+//  受付話し掛け　通信マルチ　選択　グループ接続
+//  @retval SCWK_ANSWER FALSE=接続無し
+//--------------------------------------------------------------
+sub_bsw_receipt_multi_select_comm_connect_group:
+{
+  //子参加メニュー
+  _BSUBWAY_TOOL( BSWSUB_COMM_ENTRY_CHILD_MENU, BSW_NULL, SCWK_ANSWER )
+  
+  SWITCH $SCWK_ANSWER
+  CASE BSWAY_COMM_CHILD_ENTRY_OK THEN //OK
+    $SCWK_ANSWER = TRUE
+  CASE BSWAY_COMM_CHILD_ENTRY_NG THEN //NG
+    $SCWK_ANSWER = FALSE
+  ENDSWITCH
+  
+  _RET
+}
+
+//--------------------------------------------------------------
+//  受付話し掛け　wifi 選択
+//--------------------------------------------------------------
+sub_bsw_receipt_wifi_select:
+{
+  _RET
+}
+
+//--------------------------------------------------------------
+//  受付話し掛け  アニメ　乗車
 //--------------------------------------------------------------
 sub_bsw_receipt_anm_geton_train:
 {
@@ -249,7 +626,7 @@ sub_bsw_receipt_anm_geton_train:
 }
 
 //--------------------------------------------------------------
-// 受付話し掛け  デモ　電車移動
+//  受付話し掛け  デモ　電車移動
 //--------------------------------------------------------------
 sub_bsw_receipt_demo_start_train:
 {
@@ -266,7 +643,7 @@ ev_bsw_game_continue:
 {
   //ステートクリア
   _CALL sub_bsw_receipt_init_flag
-
+  
   //セーブデータ有効チェック
   _BSUBWAY_TOOL( BSWTOOL_IS_SAVE_DATA_ENABLE, BSW_NULL, SCWK_ANSWER )
   
@@ -277,7 +654,7 @@ ev_bsw_game_continue:
   ENDIF
   
   //おまちしておりました
-  _SYSWIN_MSG_DOWN( msg_bsw_scr_test )
+  _SYSWIN_MSG_DOWN( msg_bsw_scr_32 )
   _YES_NO_WIN( SCWK_ANSWER )
   
   IF $SCWK_ANSWER != SCR_YES THEN //やめる
@@ -302,11 +679,11 @@ ev_bsw_game_continue:
   _BSUBWAY_TOOL( BSWTOOL_PUSH_NOW_LOCATION, BSW_NULL, BSW_NULL )
   
   //セーブ
-  _SYSWIN_MSG_ALLPUT_DOWN( msg_bsw_scr_test )
+  _SYSWIN_MSG_ALLPUT_DOWN( msg_bsw_scr_33 )
   _REPORT_CALL( SCWK_ANSWER )
   
   //それでは中断した所まで案内します
-  _SYSWIN_MSG_DOWN( msg_bsw_scr_test )
+  _SYSWIN_MSG_DOWN( msg_bsw_scr_34 )
   _LAST_KEYWAIT()
   _SYSWIN_CLOSE()
   
@@ -318,7 +695,7 @@ ev_bsw_game_continue:
   
   //マップチェンジ
   _CALL sub_bsw_receipt_map_train_change
-
+  
   _CHG_LOCAL_SCR
   _RET
 }
@@ -336,7 +713,7 @@ ev_bsw_report_error:
   
   //エラー処理
   _CALL sub_bsw_receipt_report_error
-
+  
   _CHG_LOCAL_SCR
   _END
 }
@@ -353,7 +730,7 @@ ev_bsw_game_cancel:
   _CALL sub_bsw_receipt_init_flag
   
   //成績をレポートに
-  _SYSWIN_MSG_DOWN( msg_bsw_scr_test )
+  _SYSWIN_MSG_DOWN( msg_bsw_scr_36 )
   _REPORT_CALL( SCWK_ANSWER )
   
   //またのご利用を
@@ -373,9 +750,9 @@ ev_bsw_game_after:
 {
   //ステートクリア
   _CALL sub_bsw_receipt_init_flag
-  
+   
   //お疲れ様でした
-  _SYSWIN_MSG_DOWN( msg_bsw_scr_test )
+  _SYSWIN_MSG_DOWN( msg_bsw_scr_35 )
   _AB_KEYWAIT()
   
   //またのご利用を
@@ -393,7 +770,7 @@ ev_bsw_game_after:
 //--------------------------------------------------------------
 sub_bsw_receipt_msg_last_talk:
 {
-  _SYSWIN_MSG_DOWN( msg_bsw_scr_test ) //またのご利用を
+  _SYSWIN_MSG_DOWN( msg_bsw_scr_38 ) //またのご利用を
   _LAST_KEYWAIT()
   _SYSWIN_CLOSE()
   _RET
@@ -415,7 +792,7 @@ sub_bsw_receipt_exit:
 sub_bsw_receipt_report_error:
 {
   //お客様！
-  _SYSWIN_MSG_DOWN( msg_bsw_scr_test )
+  _SYSWIN_MSG_DOWN( msg_bsw_scr_37 )
   _AB_KEYWAIT()
   
   //不正終了時のパラメータ処理

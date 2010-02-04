@@ -45,3 +45,26 @@ extern BOOL BSUBWAY_SCRWORK_IsClear( BSUBWAY_SCRWORK *bsw_scr );
 extern void BSUBWAY_SCRWORK_SetClearScore( BSUBWAY_SCRWORK *wk, GAMESYS_WORK *gsys );
 extern void BSUBWAY_SCRWORK_ChoiceBattlePartner( BSUBWAY_SCRWORK *bsw_scr );
 extern u16 BSUBWAY_SCRWORK_GetTrainerOBJCode( BSUBWAY_SCRWORK *bsw_scr, u16 idx );
+
+//bsubway_comm.h
+extern void BSUBWAY_COMM_AddCommandTable( BSUBWAY_SCRWORK *bsw_scr );
+extern void BSUBWAY_COMM_DeleteCommandTable( BSUBWAY_SCRWORK *bsw_scr );
+
+extern void BSUBWAY_COMM_TimingSyncStart( u8 no );
+extern BOOL BSUBWAY_COMM_IsTimingSync( u8 no );
+
+extern u16 BSUBWAY_SCRWORK_CommReceivePlayerData(
+    BSUBWAY_SCRWORK *bsw_scr, const u16 *recv_buf );
+extern u16 BSUBWAY_SCRWORK_CommReciveTrainerData(
+    BSUBWAY_SCRWORK *bsw_scr, const u16* recv_buf );
+extern u16 BSUBWAY_SCRWORK_CommReciveRetireSelect(
+    BSUBWAY_SCRWORK *bsw_scr, const u16 *recv_buf );
+extern void BSUBWAY_SCRWORK_CommSendPlayerData(
+    BSUBWAY_SCRWORK *bsw_scr, GAMEDATA *gdata );
+extern void BSUBWAY_SCRWORK_CommSendTrainerData( BSUBWAY_SCRWORK *bsw_scr );
+extern void BSUBWAY_SCRWORK_CommSendRetireSelect(
+    BSUBWAY_SCRWORK *bsw_scr, u16 retire );
+extern BOOL BSUBWAY_SCRWORK_CommSendData(
+    BSUBWAY_SCRWORK *bsw_scr, u16 mode, u16 param, GAMEDATA *gdata );
+extern BOOL BSUBWAY_SCRWORK_CommFrWiFiCounterTowerSendBufTrainerData(
+    BSUBWAY_SCRWORK *bsw_scr );

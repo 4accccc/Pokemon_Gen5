@@ -28,9 +28,7 @@ EVENT_START ev_c04r0111_receipt_talk
 {
   _TALK_OBJ_START()
   
-  $SCWK_ANSWER = 0 //test
-  
-  IF $SCWK_ANSWER == 0 THEN //途中駅
+  IF $WK_OTHER_BSUBWAY_HOME == BSWAY_SCENE_HOME_NON THEN //途中駅
     _SYSWIN_MSG_DOWN( msg_c04r0111_02 ) //どうしますか
     _BMPMENU_INIT_EX( 1, 1, 0, 1, SCWK_ANSWER )
     _BMPMENU_MAKE_LIST( msg_c04r0111_03, 0 ) //続ける
@@ -61,7 +59,10 @@ sub_challenge_continue:
   
   //受付をエラー状態に
   $WK_OTHER_BSUBWAY_RECEIPT = BSWAY_SCENE_RECEIPT_ERROR
-
+  
+  //車内を乗車状態に
+  $WK_OTHER_BSUBWAY_TRAIN = BSWAY_SCENE_TRAIN_FIRST
+  
   //ワーク初期化
   _BSUBWAY_TOOL( BSWTOOL_GET_PLAY_MODE, BSW_NULL, SCWK_ANSWER )
   _BSUBWAY_WORK_CREATE( BSWAY_PLAY_NEW, SCWK_ANSWER )
@@ -120,6 +121,8 @@ sub_mapchg_receipt:
 //--------------------------------------------------------------
 EVENT_START ev_c04r0111_home
 {
+  DEFINE_LOCAL play_mode
+  
   //ホーム制御　無しに
   $WK_OTHER_BSUBWAY_HOME = BSWAY_SCENE_HOME_NON
   
@@ -127,35 +130,86 @@ EVENT_START ev_c04r0111_home
   _BSUBWAY_TOOL( BSWTOOL_POP_NOW_LOCATION, BSW_NULL,BSW_NULL )
   
   //プレイモード取得
-  _BSUBWAY_TOOL( BSWTOOL_GET_PLAY_MODE, BSW_NULL, SCWK_ANSWER )
+  _BSUBWAY_TOOL( BSWTOOL_GET_PLAY_MODE, BSW_NULL, play_mode )
+  
+  //ボスを倒したか
+  _BSUBWAY_TOOL( BSWSUB_GET_BOSS_CLEAR_FLAG, BSW_NULL, SCWK_ANSWER )
+  
+  IF $SCWK_ANSWER == 1 THEN //倒した
+    _BSUBWAY_TOOL( BSWSUB_CHECK_SUPER_MODE, BSW_NULL, SCWK_ANSWER )
+    
+    IF $SCWK_ANSWER == 1 THEN //スーパーボスである
+      _SYSWIN_MSG_DOWN( 0 ) //おめでとうございます
+      
+      _BSUBWAY_TOOL( BSWTOOL_GET_S_BOSS_CLEAR_FLAG, play_mode, SCWK_ANSWER )
+
+       IF $SCWK_ANSWER == 0 THEN //初めて倒した
+        _SYSWIN_MSG_DOWN( 0 ) //トロフィを差し上げます
+        _AB_KEYWAIT()
+        _BSUBWAY_TOOL( BSWTOOL_SET_S_BOSS_CLEAR_FLAG, play_mode, BSW_NULL )
+      ENDIF
+      
+      //レポート
+      _SYSWIN_MSG_DOWN( 0 )
+      _REPORT_CALL( SCWK_ANSWER )
+      
+      //また話し掛けてくれ
+      _SYSWIN_MSG_DOWN( 0 )
+      _LAST_KEYWAIT()
+      _SYSWIN_CLOSE()
+    ELSE  //ノーマルボスである
+      _SYSWIN_MSG_DOWN( 0 ) //おめでとうございます
+      _AB_KEYWAIT()
+      
+      _BSUBWAY_TOOL( BSWTOOL_GET_BOSS_CLEAR_FLAG, play_mode, SCWK_ANSWER )
+      
+      IF $SCWK_ANSWER == 0 THEN //初めて倒した
+        _SYSWIN_MSG_DOWN( 0 ) //スーパーに挑戦出来ます
+        _AB_KEYWAIT()
+        _BSUBWAY_TOOL( BSWTOOL_SET_BOSS_CLEAR_FLAG, play_mode, BSW_NULL )
+      ENDIF
+      
+      //レポート
+      _SYSWIN_MSG_DOWN( 0 )
+      _REPORT_CALL( SCWK_ANSWER )
+
+      //終点メッセージ
+      SWITCH $play_mode
+      CASE BSWAY_MODE_SINGLE THEN
+        _SYSWIN_MSG_DOWN( 0 )
+      CASE BSWAY_MODE_DOUBLE THEN
+        _SYSWIN_MSG_DOWN( 0 )
+      CASE BSWAY_MODE_MULTI THEN
+        _SYSWIN_MSG_DOWN( 0 )
+      CASE BSWAY_MODE_COMM_MULTI THEN
+        _SYSWIN_MSG_DOWN( 0 )
+      CASE BSWAY_MODE_WIFI THEN
+        _SYSWIN_MSG_DOWN( 0 )
+      CASE BSWAY_MODE_WIFI_MULTI THEN
+        _SYSWIN_MSG_DOWN( 0 )
+      ENDSWITCH
+      
+      _LAST_KEYWAIT()
+      _SYSWIN_CLOSE()
+      
+      //終点にする
+      $WK_OTHER_BSUBWAY_HOME = BSWAY_SCENE_HOME_TERMINUS
+    ENDIF
+  ELSE //倒していない
+    _SYSWIN_MSG_DOWN( 0 ) //おめでとうございます
+    _AB_KEYWAIT()
+
+    //レポート
+    _SYSWIN_MSG_DOWN( 0 )
+    _REPORT_CALL( SCWK_ANSWER )
+    
+    //また話し掛けてくれ
+    _SYSWIN_MSG_DOWN( 0 )
+    _LAST_KEYWAIT()
+    _SYSWIN_CLOSE()
+  ENDIF
 }
 EVENT_END
-
-//--------------------------------------------------------------
-//  ホーム　対戦終了後の戻り　ボスを倒した際のメッセージ
-//--------------------------------------------------------------
-sub_home_boss_msg:
-{
-  //ボスチェック
-  //スーパーモードか？
-  _RET
-}
-
-//--------------------------------------------------------------
-//  ホーム　対戦終了後の戻り　初めてボスを倒した際のメッセージ
-//--------------------------------------------------------------
-sub_home_boss_1st_msg:
-{
-  _RET
-}
-
-//--------------------------------------------------------------
-//  ホーム　対戦終了後の戻り　スーパー解禁メッセージ
-//--------------------------------------------------------------
-sub_home_lifting_special_msg:
-{
-  _RET
-}
 
 //======================================================================
 //======================================================================
