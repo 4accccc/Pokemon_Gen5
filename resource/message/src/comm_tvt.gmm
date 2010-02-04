@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00222" date="2010-02-03T17:05:54"/>
+	<create user="tetsuji_ohta" host="W00222" date="2010-02-04T15:37:51"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -399,6 +399,11 @@
 	<row id="COMM_TVT_DRAW_011">
 		<language name="JPN">スタンプ</language>
 		<language name="JPN_KANJI">スタンプ</language>
+	</row>
+
+	<row id="COMM_TVT_DRAW_012">
+		<language name="JPN">らくがきモード</language>
+		<language name="JPN_KANJI">落書きモード</language>
 	</row>
 
 	<row id="COMM_TVT_TALK_01">
