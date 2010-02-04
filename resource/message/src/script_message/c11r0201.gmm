@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tamada" host="W00139" date="2009-07-15T19:04:53"/>
+	<create user="hozumi_yukiko" host="W00211" date="2010-02-04T19:40:16"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -229,7 +229,7 @@
 	</tag-table>
 
 	<columns>
-		<id position="0" width="152"/>
+		<id position="0" width="163"/>
 		<group default=" 0:デフォルト" position="-1" width="100">
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
@@ -271,8 +271,8 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
-		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
 	</dialog>
@@ -292,11 +292,397 @@
 	</lock>
 
 
-	<row id="msg_mapscript_dummy">
-		<comment>？？？</comment>
-		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	<row id="msg_un_room_talker_00">
+		<comment>ＮＰＣがいる場合</comment>
+		<attribute name="キャラ指定">スタッフ</attribute>
+		<language name="JPN" width="256">ここは　なになにこく　の
+フロアですよ</language>
+		<language name="JPN_KANJI" width="256">ここは　なになに国　の
+フロアですよ</language>
+	</row>
+
+	<row id="msg_un_room_talker_01">
+		<comment>ＮＰＣがいない場合</comment>
+		<attribute name="キャラ指定">スタッフ</attribute>
+		<language name="JPN" width="256">ここは　なになにこくの
+フロアですよ▼
+おきゃくさんは　もう　かえられましたよ</language>
+		<language name="JPN_KANJI" width="256">ここは　何々国の
+フロアですよ▼
+お客さんは　もう　帰られましたよ</language>
+	</row>
+
+	<row id="msg_un_default_man_00">
+		<comment>初回メッセージ</comment>
+		<attribute name="キャラ指定">デフォルト男</attribute>
+		<language name="JPN" width="256">はじめまして　ぼく　ふつうです</language>
+		<language name="JPN_KANJI" width="256">初めまして　僕　普通です</language>
+	</row>
+
+	<row id="msg_un_default_man_01">
+		<attribute name="キャラ指定">デフォルト男</attribute>
+		<language name="JPN" width="256">普通♂1</language>
+		<language name="JPN_KANJI" width="256">ふつう♂1</language>
+	</row>
+
+	<row id="msg_un_default_man_02">
+		<attribute name="キャラ指定">デフォルト男</attribute>
+		<language name="JPN" width="256">普通♂2</language>
+		<language name="JPN_KANJI" width="256">ふつう♂2</language>
+	</row>
+
+	<row id="msg_un_default_man_03">
+		<attribute name="キャラ指定">デフォルト男</attribute>
+		<language name="JPN" width="256">普通♂3</language>
+		<language name="JPN_KANJI" width="256">ふつう♂3</language>
+	</row>
+
+	<row id="msg_un_default_man_04">
+		<attribute name="キャラ指定">デフォルト男</attribute>
+		<language name="JPN" width="256">普通♂4</language>
+		<language name="JPN_KANJI" width="256">ふつう♂4</language>
+	</row>
+
+	<row id="msg_un_default_man_05">
+		<attribute name="キャラ指定">デフォルト男</attribute>
+		<language name="JPN" width="256">普通♂5</language>
+		<language name="JPN_KANJI" width="256">ふつう♂5</language>
+	</row>
+
+	<row id="msg_un_default_woman_00">
+		<comment>初回メッセージ</comment>
+		<attribute name="キャラ指定">デフォルト女</attribute>
+		<language name="JPN" width="256">はじめまして　わたし　ふつうよ</language>
+		<language name="JPN_KANJI" width="256">はじめまして　私　普通よ</language>
+	</row>
+
+	<row id="msg_un_default_woman_01">
+		<attribute name="キャラ指定">デフォルト女</attribute>
+		<language name="JPN" width="256">ふつう♀1</language>
+		<language name="JPN_KANJI" width="256">普通♀1</language>
+	</row>
+
+	<row id="msg_un_default_woman_02">
+		<attribute name="キャラ指定">デフォルト女</attribute>
+		<language name="JPN" width="256">ふつう♀2</language>
+		<language name="JPN_KANJI" width="256">普通♀2</language>
+	</row>
+
+	<row id="msg_un_default_woman_03">
+		<attribute name="キャラ指定">デフォルト女</attribute>
+		<language name="JPN" width="256">ふつう♀3</language>
+		<language name="JPN_KANJI" width="256">普通♀3</language>
+	</row>
+
+	<row id="msg_un_default_woman_04">
+		<attribute name="キャラ指定">デフォルト女</attribute>
+		<language name="JPN" width="256">ふつう♀4</language>
+		<language name="JPN_KANJI" width="256">普通♀4</language>
+	</row>
+
+	<row id="msg_un_default_woman_05">
+		<attribute name="キャラ指定">デフォルト女</attribute>
+		<language name="JPN" width="256">ふつう♀5</language>
+		<language name="JPN_KANJI" width="256">普通♀5</language>
+	</row>
+
+	<row id="msg_un_leader_man_00">
+		<comment>初回メッセージ</comment>
+		<attribute name="キャラ指定">リーダー男</attribute>
+		<language name="JPN" width="256">はじめまして　おれ　リーダー</language>
+		<language name="JPN_KANJI" width="256">初めまして　オレ　リーダー</language>
+	</row>
+
+	<row id="msg_un_leader_man_01">
+		<attribute name="キャラ指定">リーダー男</attribute>
+		<language name="JPN" width="256">リーダー♂1</language>
+		<language name="JPN_KANJI" width="256">リーダー♂1</language>
+	</row>
+
+	<row id="msg_un_leader_man_02">
+		<attribute name="キャラ指定">リーダー男</attribute>
+		<language name="JPN" width="256">リーダー♂2</language>
+		<language name="JPN_KANJI" width="256">リーダー♂2</language>
+	</row>
+
+	<row id="msg_un_leader_man_03">
+		<attribute name="キャラ指定">リーダー男</attribute>
+		<language name="JPN" width="256">リーダー♂3</language>
+		<language name="JPN_KANJI" width="256">リーダー♂3</language>
+	</row>
+
+	<row id="msg_un_leader_man_04">
+		<attribute name="キャラ指定">リーダー男</attribute>
+		<language name="JPN" width="256">リーダー♂4</language>
+		<language name="JPN_KANJI" width="256">リーダー♂4</language>
+	</row>
+
+	<row id="msg_un_leader_man_05">
+		<attribute name="キャラ指定">リーダー男</attribute>
+		<language name="JPN" width="256">リーダー♂5</language>
+		<language name="JPN_KANJI" width="256">リーダー♂5</language>
+	</row>
+
+	<row id="msg_un_leader_woman_00">
+		<comment>初回メッセージ</comment>
+		<attribute name="キャラ指定">リーダー女</attribute>
+		<language name="JPN" width="256">はじめまして　わたし　リーダー</language>
+		<language name="JPN_KANJI" width="256">初めまして　私　リーダー</language>
+	</row>
+
+	<row id="msg_un_leader_woman_01">
+		<attribute name="キャラ指定">リーダー女</attribute>
+		<language name="JPN" width="256">リーダー♀1</language>
+		<language name="JPN_KANJI" width="256">リーダー♀1</language>
+	</row>
+
+	<row id="msg_un_leader_woman_02">
+		<attribute name="キャラ指定">リーダー女</attribute>
+		<language name="JPN" width="256">リーダー♀2</language>
+		<language name="JPN_KANJI" width="256">リーダー♀2</language>
+	</row>
+
+	<row id="msg_un_leader_woman_03">
+		<attribute name="キャラ指定">リーダー女</attribute>
+		<language name="JPN" width="256">リーダー♀3</language>
+		<language name="JPN_KANJI" width="256">リーダー♀3</language>
+	</row>
+
+	<row id="msg_un_leader_woman_04">
+		<attribute name="キャラ指定">リーダー女</attribute>
+		<language name="JPN" width="256">リーダー♀4</language>
+		<language name="JPN_KANJI" width="256">リーダー♀4</language>
+	</row>
+
+	<row id="msg_un_leader_woman_05">
+		<attribute name="キャラ指定">リーダー女</attribute>
+		<language name="JPN" width="256">リーダー♀5</language>
+		<language name="JPN_KANJI" width="256">リーダー♀5</language>
+	</row>
+
+	<row id="msg_un_wierd_man_00">
+		<comment>初回メッセージ</comment>
+		<attribute name="キャラ指定">変人男</attribute>
+		<language name="JPN" width="256">はじめまして　おれ　へんじん</language>
+		<language name="JPN_KANJI" width="256">初めまして　オレ　変人</language>
+	</row>
+
+	<row id="msg_un_wierd_man_01">
+		<attribute name="キャラ指定">変人男</attribute>
+		<language name="JPN" width="256">へんじん♂1</language>
+		<language name="JPN_KANJI" width="256">変人♂1</language>
+	</row>
+
+	<row id="msg_un_wierd_man_02">
+		<attribute name="キャラ指定">変人男</attribute>
+		<language name="JPN" width="256">へんじん♂2</language>
+		<language name="JPN_KANJI" width="256">変人♂2</language>
+	</row>
+
+	<row id="msg_un_wierd_man_03">
+		<attribute name="キャラ指定">変人男</attribute>
+		<language name="JPN" width="256">へんじん♂3</language>
+		<language name="JPN_KANJI" width="256">変人♂3</language>
+	</row>
+
+	<row id="msg_un_wierd_man_04">
+		<attribute name="キャラ指定">変人男</attribute>
+		<language name="JPN" width="256">へんじん♂4</language>
+		<language name="JPN_KANJI" width="256">変人♂4</language>
+	</row>
+
+	<row id="msg_un_wierd_man_05">
+		<attribute name="キャラ指定">変人男</attribute>
+		<language name="JPN" width="256">へんじん♂5</language>
+		<language name="JPN_KANJI" width="256">変人♂5</language>
+	</row>
+
+	<row id="msg_un_wierd_woman_00">
+		<comment>初回メッセージ</comment>
+		<attribute name="キャラ指定">変人女</attribute>
+		<language name="JPN" width="256">はじめまして　わたし　へんじんよ</language>
+		<language name="JPN_KANJI" width="256">初めまして　私　変人よ</language>
+	</row>
+
+	<row id="msg_un_wierd_woman_01">
+		<attribute name="キャラ指定">変人女</attribute>
+		<language name="JPN" width="256">へんじん♀1</language>
+		<language name="JPN_KANJI" width="256">変人♀1</language>
+	</row>
+
+	<row id="msg_un_wierd_woman_02">
+		<attribute name="キャラ指定">変人女</attribute>
+		<language name="JPN" width="256">へんじん♀2</language>
+		<language name="JPN_KANJI" width="256">変人♀2</language>
+	</row>
+
+	<row id="msg_un_wierd_woman_03">
+		<attribute name="キャラ指定">変人女</attribute>
+		<language name="JPN" width="256">へんじん♀3</language>
+		<language name="JPN_KANJI" width="256">変人♀3</language>
+	</row>
+
+	<row id="msg_un_wierd_woman_04">
+		<attribute name="キャラ指定">変人女</attribute>
+		<language name="JPN" width="256">へんじん♀4</language>
+		<language name="JPN_KANJI" width="256">変人♀4</language>
+	</row>
+
+	<row id="msg_un_wierd_woman_05">
+		<attribute name="キャラ指定">変人女</attribute>
+		<language name="JPN" width="256">へんじん♀5</language>
+		<language name="JPN_KANJI" width="256">変人♀5</language>
+	</row>
+
+	<row id="msg_un_researcher_man_00">
+		<comment>初回メッセージ</comment>
+		<attribute name="キャラ指定">研究者男</attribute>
+		<language name="JPN" width="256">はじめまして
+ぼく　けんきゅう　だいすき</language>
+		<language name="JPN_KANJI" width="256">初めまして
+僕　研究　大好き</language>
+	</row>
+
+	<row id="msg_un_researcher_man_01">
+		<attribute name="キャラ指定">研究者男</attribute>
+		<language name="JPN" width="256">けんきゅうしゃ♂1</language>
+		<language name="JPN_KANJI" width="256">研究者♂1</language>
+	</row>
+
+	<row id="msg_un_researcher_man_02">
+		<attribute name="キャラ指定">研究者男</attribute>
+		<language name="JPN" width="256">けんきゅうしゃ♂2</language>
+		<language name="JPN_KANJI" width="256">研究者♂2</language>
+	</row>
+
+	<row id="msg_un_researcher_man_03">
+		<attribute name="キャラ指定">研究者男</attribute>
+		<language name="JPN" width="256">けんきゅうしゃ♂3</language>
+		<language name="JPN_KANJI" width="256">研究者♂3</language>
+	</row>
+
+	<row id="msg_un_researcher_man_04">
+		<attribute name="キャラ指定">研究者男</attribute>
+		<language name="JPN" width="256">けんきゅうしゃ♂4</language>
+		<language name="JPN_KANJI" width="256">研究者♂4</language>
+	</row>
+
+	<row id="msg_un_researcher_man_05">
+		<attribute name="キャラ指定">研究者男</attribute>
+		<language name="JPN" width="256">けんきゅうしゃ♂5</language>
+		<language name="JPN_KANJI" width="256">研究者♂5</language>
+	</row>
+
+	<row id="msg_un_researcher_woman_00">
+		<attribute name="キャラ指定">研究者女</attribute>
+		<language name="JPN" width="256">はじめまして
+わたし　けんきゅう　だいすき</language>
+		<language name="JPN_KANJI" width="256">初めまして
+私　研究　大好き</language>
+	</row>
+
+	<row id="msg_un_researcher_woman_01">
+		<attribute name="キャラ指定">研究者女</attribute>
+		<language name="JPN" width="256">けんきゅうしゃ♀1</language>
+		<language name="JPN_KANJI" width="256">研究者♀1</language>
+	</row>
+
+	<row id="msg_un_researcher_woman_02">
+		<attribute name="キャラ指定">研究者女</attribute>
+		<language name="JPN" width="256">けんきゅうしゃ♀2</language>
+		<language name="JPN_KANJI" width="256">研究者♀2</language>
+	</row>
+
+	<row id="msg_un_researcher_woman_03">
+		<attribute name="キャラ指定">研究者女</attribute>
+		<language name="JPN" width="256">けんきゅうしゃ♀3</language>
+		<language name="JPN_KANJI" width="256">研究者♀3</language>
+	</row>
+
+	<row id="msg_un_researcher_woman_04">
+		<attribute name="キャラ指定">研究者女</attribute>
+		<language name="JPN" width="256">けんきゅうしゃ♀4</language>
+		<language name="JPN_KANJI" width="256">研究者♀4</language>
+	</row>
+
+	<row id="msg_un_researcher_woman_05">
+		<attribute name="キャラ指定">研究者女</attribute>
+		<language name="JPN" width="256">けんきゅうしゃ♀5</language>
+		<language name="JPN_KANJI" width="256">研究者♀5</language>
+	</row>
+
+	<row id="msg_un_soft_man_00">
+		<comment>初回メッセージ</comment>
+		<attribute name="キャラ指定">おっとり男</attribute>
+		<language name="JPN" width="256">やあ　ぼく　おっとりしてるかなぁ</language>
+		<language name="JPN_KANJI" width="256">やあ　僕　おっとりしてるかなぁ</language>
+	</row>
+
+	<row id="msg_un_soft_man_01">
+		<attribute name="キャラ指定">おっとり男</attribute>
+		<language name="JPN" width="256">おっとり♂1</language>
+		<language name="JPN_KANJI" width="256">おっとり♂1</language>
+	</row>
+
+	<row id="msg_un_soft_man_02">
+		<attribute name="キャラ指定">おっとり男</attribute>
+		<language name="JPN" width="256">おっとり♂2</language>
+		<language name="JPN_KANJI" width="256">おっとり♂2</language>
+	</row>
+
+	<row id="msg_un_soft_man_03">
+		<attribute name="キャラ指定">おっとり男</attribute>
+		<language name="JPN" width="256">おっとり♂3</language>
+		<language name="JPN_KANJI" width="256">おっとり♂3</language>
+	</row>
+
+	<row id="msg_un_soft_man_04">
+		<attribute name="キャラ指定">おっとり男</attribute>
+		<language name="JPN" width="256">おっとり♂4</language>
+		<language name="JPN_KANJI" width="256">おっとり♂4</language>
+	</row>
+
+	<row id="msg_un_soft_man_05">
+		<attribute name="キャラ指定">おっとり男</attribute>
+		<language name="JPN" width="256">おっとり♂5</language>
+		<language name="JPN_KANJI" width="256">おっとり♂5</language>
+	</row>
+
+	<row id="msg_un_soft_woman_00">
+		<comment>初回メッセージ</comment>
+		<attribute name="キャラ指定">おっとり女</attribute>
+		<language name="JPN" width="256">あら　わたし　おっとりしてるかしら</language>
+		<language name="JPN_KANJI" width="256">あら　私　おっとりしてるかしら</language>
+	</row>
+
+	<row id="msg_un_soft_woman_01">
+		<attribute name="キャラ指定">おっとり女</attribute>
+		<language name="JPN" width="256">おっとり♀1</language>
+		<language name="JPN_KANJI" width="256">おっとり♀1</language>
+	</row>
+
+	<row id="msg_un_soft_woman_02">
+		<attribute name="キャラ指定">おっとり女</attribute>
+		<language name="JPN" width="256">おっとり♀2</language>
+		<language name="JPN_KANJI" width="256">おっとり♀2</language>
+	</row>
+
+	<row id="msg_un_soft_woman_03">
+		<attribute name="キャラ指定">おっとり女</attribute>
+		<language name="JPN" width="256">おっとり♀3</language>
+		<language name="JPN_KANJI" width="256">おっとり♀3</language>
+	</row>
+
+	<row id="msg_un_soft_woman_04">
+		<attribute name="キャラ指定">おっとり女</attribute>
+		<language name="JPN" width="256">おっとり♀4</language>
+		<language name="JPN_KANJI" width="256">おっとり♀4</language>
+	</row>
+
+	<row id="msg_un_soft_woman_05">
+		<attribute name="キャラ指定">おっとり女</attribute>
+		<language name="JPN" width="256">おっとり♀5</language>
+		<language name="JPN_KANJI" width="256">おっとり♀5</language>
 	</row>
 
 	<flowchart-group-list>
