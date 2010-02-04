@@ -12,6 +12,8 @@
 
 #include "system/gfl_use.h"
 #include "system/mcss_tool.h"
+#include "sound/pm_voice.h"
+#include "sound/pm_wb_voice.h"
 
 #include "btlv_effect.h"
 
@@ -59,6 +61,8 @@ struct  _BTLV_MCSS
   MCSS_WORK*      mcss;
   MCSS_ADD_WORK   maw;
   GFL_TCB*        tcb;
+  int             mons_no;
+  int             form_no;
   u32             personal_rnd;
   u32             status_flag;
   u16             weight;
@@ -224,6 +228,41 @@ static  const fx32 trainer_scale_table[]={
 
 //============================================================================================
 /**
+ *  ポケモンの立ち位置による鳴き声パンテーブル
+ */
+//============================================================================================
+static  const int pokevoice_pan_single_table[]={
+   20, //POS_AA
+  107, //POS_BB
+};
+
+static  const int pokevoice_pan_double_table[]={
+   12, //POS_A
+  115, //POS_B
+   28, //POS_C
+   99, //POS_D
+};
+
+static  const int pokevoice_pan_triple_table[]={
+    0, //POS_A
+  127, //POS_B
+   20, //POS_C
+  107, //POS_D
+   40, //POS_E
+   87, //POS_F
+};
+
+static  const int pokevoice_pan_rotate_table[]={
+   12, //POS_A
+  115, //POS_B
+   28, //POS_C
+   99, //POS_D
+   20, //POS_E
+  107, //POS_F
+};
+
+//============================================================================================
+/**
  * @brief システム初期化
  *
  * @param[in] tcb_sys システム内で使用するTCBSYS構造体へのポインタ
@@ -318,11 +357,12 @@ void  BTLV_MCSS_Add( BTLV_MCSS_WORK *bmw, const POKEMON_PARAM *pp, int position 
   BTLV_MCSS_GetDefaultPos( bmw, &pos, position );
   bmw->btlv_mcss[ position ].mcss = MCSS_Add( bmw->mcss_sys, pos.x, pos.y, pos.z, &bmw->btlv_mcss[ position ].maw );
 
-  //ポケモンの体重データを取得しておく
+  //ポケモンのナンバー、フォルム、体重データを取得しておく
   { 
-    u16 mons_no = PP_Get( pp, ID_PARA_monsno, NULL );
-    u16 form_no = PP_Get( pp, ID_PARA_form_no, NULL );
-    bmw->btlv_mcss[ position ].weight = POKETOOL_GetPersonalParam( mons_no, form_no, POKEPER_ID_weight );
+    bmw->btlv_mcss[ position ].mons_no = PP_Get( pp, ID_PARA_monsno, NULL );
+    bmw->btlv_mcss[ position ].form_no = PP_Get( pp, ID_PARA_form_no, NULL );
+    bmw->btlv_mcss[ position ].weight = POKETOOL_GetPersonalParam( bmw->btlv_mcss[ position ].mons_no,
+                                                                   bmw->btlv_mcss[ position ].form_no, POKEPER_ID_weight );
   }
 
   BTLV_MCSS_SetDefaultScale( bmw, position );
@@ -928,6 +968,34 @@ void  BTLV_MCSS_SetPaletteFade( BTLV_MCSS_WORK *bmw, int position, u8 start_evy,
 
 //============================================================================================
 /**
+ * @brief 指定された立ち位置のMCSSのポケモンNoデータを取得
+ *
+ * @param[in] bmw       BTLV_MCSS管理ワークへのポインタ
+ * @param[in] position  MCSSの立ち位置
+ *
+ */
+//============================================================================================
+int  BTLV_MCSS_GetMonsNo( BTLV_MCSS_WORK *bmw, int position )
+{ 
+  return bmw->btlv_mcss[ position ].mons_no;
+}
+
+//============================================================================================
+/**
+ * @brief 指定された立ち位置のMCSSのポケモンNoデータを取得
+ *
+ * @param[in] bmw       BTLV_MCSS管理ワークへのポインタ
+ * @param[in] position  MCSSの立ち位置
+ *
+ */
+//============================================================================================
+int  BTLV_MCSS_GetFormNo( BTLV_MCSS_WORK *bmw, int position )
+{ 
+  return bmw->btlv_mcss[ position ].form_no;
+}
+
+//============================================================================================
+/**
  * @brief 指定された立ち位置のMCSSの体重データを取得
  *
  * @param[in] bmw       BTLV_MCSS管理ワークへのポインタ
@@ -1047,6 +1115,66 @@ void  BTLV_MCSS_CopyMAW( BTLV_MCSS_WORK *bmw, int src, int dst )
   }
   bmw->btlv_mcss[ dst ].personal_rnd = bmw->btlv_mcss[ src ].personal_rnd;
   MCSS_ReloadResource( bmw->mcss_sys, bmw->btlv_mcss[ dst ].mcss, &bmw->btlv_mcss[ dst ].maw );
+}
+
+//============================================================================================
+/**
+ * @brief 指定された立ち位置のポケモンの鳴き声を再生
+ *
+ * @param[in] bmw BTLV_MCSS管理ワークへのポインタ
+ * @param[in] pos 立ち位置
+ */
+//============================================================================================
+void  BTLV_MCSS_PlayVoice( BTLV_MCSS_WORK *bmw, int pos )
+{ 
+  PMV_REF pmvRef;
+  int pan;
+  switch( pos ){
+  case BTLV_MCSS_POS_AA:
+  case BTLV_MCSS_POS_BB:
+    pan = pokevoice_pan_single_table[ pos ];
+    break;
+  case BTLV_MCSS_POS_A:
+  case BTLV_MCSS_POS_B:
+  case BTLV_MCSS_POS_C:
+  case BTLV_MCSS_POS_D:
+    if( bmw->mcss_pos_rotate )
+    { 
+      pan = pokevoice_pan_rotate_table[ pos - BTLV_MCSS_POS_A ];
+    }
+    else if( bmw->mcss_pos_3vs3 )
+    {
+      pan = pokevoice_pan_triple_table[ pos - BTLV_MCSS_POS_A ];
+    }
+    else
+    {
+      pan = pokevoice_pan_double_table[ pos - BTLV_MCSS_POS_A ];
+    }
+    break;
+  case BTLV_MCSS_POS_E:
+  case BTLV_MCSS_POS_F:
+    GF_ASSERT( bmw->mcss_pos_3vs3 == 1 || bmw->mcss_pos_rotate == 1 );
+    if( bmw->mcss_pos_rotate )
+    { 
+      pan = pokevoice_pan_rotate_table[ pos - BTLV_MCSS_POS_A ];
+    }
+    else
+    { 
+      pan = pokevoice_pan_triple_table[ pos - BTLV_MCSS_POS_A ];
+    }
+    break;
+  default:
+    //定義されていないポジションが指定されています
+    GF_ASSERT( 0 );
+    break;
+  }
+   
+  if( ( pos & 1 ) == 0 )
+  { 
+    PMV_MakeRefDataMine( &pmvRef );
+  }
+
+	PMVOICE_Play(	bmw->btlv_mcss[ pos ].mons_no, bmw->btlv_mcss[ pos ].form_no, pan, FALSE, 0, 0, FALSE, (u32)&pmvRef );	
 }
 
 //============================================================================================
