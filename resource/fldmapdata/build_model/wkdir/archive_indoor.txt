@@ -127,3 +127,6 @@
 "nsbmdfiles/shelf06.nsbmd"
 "nsbmdfiles/globe01s.nsbmd"
 "nsbmdfiles/c09_03_light2.nsbmd"
+"nsbmdfiles/elevator01.nsbmd"
+"nsbmdfiles/in55_globbe.nsbmd"
+"nsbmdfiles/door_h5_in.nsbmd"
