@@ -188,6 +188,27 @@ enum
 
   MULTI_POSID3_TRNAME_CPX = 15+8,
   MULTI_POSID3_TRNAME_CPY = 7,
+
+  BALL_PTC_DIFF_X = 0x800,
+
+  NORMAL_POSID0_BALL_PTC_BASE_X = 0x300,
+  NORMAL_POSID0_BALL_PTC_BASE_Y = 0x1300,
+
+  NORMAL_POSID1_BALL_PTC_BASE_X = 0xfffffc00,
+  NORMAL_POSID1_BALL_PTC_BASE_Y = 0xffffdb00,
+  
+  MULTI_POSID0_BALL_PTC_BASE_X = 0xffffe800,
+  MULTI_POSID0_BALL_PTC_BASE_Y = 0xffffeb00,
+  
+  MULTI_POSID1_BALL_PTC_BASE_X = 0x800,
+  MULTI_POSID1_BALL_PTC_BASE_Y = 0xffffd800,
+
+  MULTI_POSID2_BALL_PTC_BASE_X = 0xffffff00,
+  MULTI_POSID2_BALL_PTC_BASE_Y = 0x1800,
+
+  MULTI_POSID3_BALL_PTC_BASE_X = 0x1f00,
+  MULTI_POSID3_BALL_PTC_BASE_Y = 0x300,
+
 };
 
 //-------------------------------------
@@ -270,8 +291,9 @@ typedef struct {
 ///	ボールUNITワーク
 //==============================================================
 typedef struct {
-  // [IN]
+  //[IN]
   const POKEPARTY* party;
+  COMM_BTL_DEMO_G3D_WORK* g3d;
   u8 type;
   u8 posid;
   u8 num;
@@ -432,7 +454,7 @@ static CBD_SCENE_ID calc_first_scene( COMM_BTL_DEMO_PARAM* pwk );
 BOOL type_is_normal( u8 type );
 BOOL type_is_start( u8 type );
 
-static void BALL_UNIT_Init( BALL_UNIT* unit, const POKEPARTY* party, u8 type, u8 posid, COMM_BTL_DEMO_OBJ_WORK* obj );
+static void BALL_UNIT_Init( BALL_UNIT* unit, const POKEPARTY* party, u8 type, u8 posid, COMM_BTL_DEMO_OBJ_WORK* obj, COMM_BTL_DEMO_G3D_WORK* g3d );
 static void BALL_UNIT_Exit( BALL_UNIT* unit );
 static void BALL_UNIT_Main( BALL_UNIT* unit );
 static void BALL_UNIT_SetStart( BALL_UNIT* unit );
@@ -980,8 +1002,8 @@ static BOOL SceneStartDemo_Main( UI_SCENE_CNT_PTR cnt, void* work )
   switch( seq )
   {
   case 0:
-    //「VS」用PTCロード
-    G3D_PTC_Setup( &wk->wk_g3d, NARC_comm_btl_demo_vs_demo01_spa );
+    //「モンスターボール」用PTCロード
+    G3D_PTC_Setup( &wk->wk_g3d, NARC_comm_btl_demo_vs_demo04_spa );
 
     // 開始リソース選択
     if( type_is_normal(wk->type) )
@@ -1005,6 +1027,9 @@ static BOOL SceneStartDemo_Main( UI_SCENE_CNT_PTR cnt, void* work )
     {
       // 3D開始アニメ
       G3D_AnimeSet( &wk->wk_g3d, DEMO_ID_START );
+      
+      //「VS」用PTCロード
+      G3D_PTC_Setup( &wk->wk_g3d, NARC_comm_btl_demo_vs_demo01_spa );
       
       wk->timer = 0;
 
@@ -1500,7 +1525,7 @@ static u32 PokeParaToBallAnim( POKEMON_PARAM* pp )
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static void BALL_UNIT_Init( BALL_UNIT* unit, const POKEPARTY* party, u8 type, u8 posid, COMM_BTL_DEMO_OBJ_WORK* obj )
+static void BALL_UNIT_Init( BALL_UNIT* unit, const POKEPARTY* party, u8 type, u8 posid, COMM_BTL_DEMO_OBJ_WORK* obj, COMM_BTL_DEMO_G3D_WORK* g3d )
 {
   int i;
   int clwk_id;
@@ -1515,6 +1540,7 @@ static void BALL_UNIT_Init( BALL_UNIT* unit, const POKEPARTY* party, u8 type, u8
   unit->num = PokeParty_GetPokeCount( party );
   unit->max = ( type_is_normal(type) ? 6 : 3 );
   unit->timer = 0;
+  unit->g3d = g3d;
 
   HOSAKA_Printf("max=%d pokenum=%d\n", unit->max, unit->num);
 
@@ -1640,6 +1666,8 @@ static void BALL_UNIT_Exit( BALL_UNIT* unit )
 //-----------------------------------------------------------------------------
 static void _ball_open( BALL_UNIT* unit, int start_sync )
 {
+  fx32 fx;
+  fx32 fy;
   int id = unit->timer - start_sync;
 
   GF_ASSERT( id <= unit->max && id >= 0 );
@@ -1649,7 +1677,47 @@ static void _ball_open( BALL_UNIT* unit, int start_sync )
 
   if( id < unit->max )
   {
-    if(id==0){ GFL_SOUND_PlaySE( SE_BALL_IN ); } // ボール
+    if( id == 0 ){ GFL_SOUND_PlaySE( SE_BALL_IN ); } // ボール
+
+    // パーティクル表示
+    if( type_is_normal(unit->type) )
+    {
+      if( unit->posid == 0 )
+      {
+        fx = NORMAL_POSID0_BALL_PTC_BASE_X + id * BALL_PTC_DIFF_X;
+        fy = NORMAL_POSID0_BALL_PTC_BASE_Y;
+      }
+      else if( unit->posid == 1 )
+      {
+        fx = NORMAL_POSID1_BALL_PTC_BASE_X - id * BALL_PTC_DIFF_X;
+        fy = NORMAL_POSID1_BALL_PTC_BASE_Y;
+      }
+    }
+    else
+    {
+      if( unit->posid == 0 )
+      {
+        fx = MULTI_POSID0_BALL_PTC_BASE_X - id * BALL_PTC_DIFF_X;
+        fy = MULTI_POSID0_BALL_PTC_BASE_Y;
+      }
+      else if( unit->posid == 1 )
+      {
+        fx = MULTI_POSID1_BALL_PTC_BASE_X - id * BALL_PTC_DIFF_X;
+        fy = MULTI_POSID1_BALL_PTC_BASE_Y;
+      }
+      else if( unit->posid == 2 )
+      {
+        fx = MULTI_POSID2_BALL_PTC_BASE_X + id * BALL_PTC_DIFF_X;
+        fy = MULTI_POSID2_BALL_PTC_BASE_Y;
+      }
+      else if( unit->posid == 3 )
+      {
+        fx = MULTI_POSID3_BALL_PTC_BASE_X + id * BALL_PTC_DIFF_X;
+        fy = MULTI_POSID3_BALL_PTC_BASE_Y;
+      }
+    }
+        
+    G3D_PTC_CreateEmitterAll( unit->g3d, &(VecFx32){fx,fy,-100} );
 
     if( type_is_start(unit->type) )
     {
@@ -1880,7 +1948,7 @@ static void TRAINER_UNIT_Init( TRAINER_UNIT* unit, u8 type, u8 posid, const COMM
   unit->timer = 0;
 
   // ボール初期化
-  BALL_UNIT_Init( &unit->ball, data->party, type, posid, unit->obj );
+  BALL_UNIT_Init( &unit->ball, data->party, type, posid, obj, g3d );
 
   // トレーナー名 生成
   unit->str_trname = GFL_STR_CreateBuffer( STR_TRNAME_SIZE, HEAPID_COMM_BTL_DEMO );
@@ -2172,11 +2240,14 @@ static void TRAINER_UNIT_CNT_Main( COMM_BTL_DEMO_MAIN_WORK* wk )
   {
     static fx32 fx=0;
     static fx32 fy=0;
+    static fx32 num = FX32_ONE;
     
-    if( GFL_UI_KEY_GetTrg() & PAD_KEY_UP )  { fy+=FX32_ONE/2; }else
-    if( GFL_UI_KEY_GetTrg() & PAD_KEY_DOWN ){ fy-=FX32_ONE/2; }else
-    if( GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT ){ fx-=FX32_ONE/2; }else
-    if( GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT ){ fx+=FX32_ONE/2; }else
+    if( GFL_UI_KEY_GetTrg() & PAD_KEY_UP )  {  fy += num; }else
+    if( GFL_UI_KEY_GetTrg() & PAD_KEY_DOWN ){  fy -= num; }else
+    if( GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT ){  fx -= num; }else
+    if( GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT ){ fx += num; }else
+    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X ){ num += 0x100; HOSAKA_Printf("num=0x%x\n",num); }else
+    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y ){ num -= 0x100; HOSAKA_Printf("num=0x%x\n",num); }else
     if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
     {
       if( wk->wk_g3d.ptc != NULL )
@@ -2662,7 +2733,6 @@ static void G3D_PTC_Setup( COMM_BTL_DEMO_G3D_WORK* g3d, int spa_idx )
     HOSAKA_Printf("load spa_idx=%d num=%d \n", spa_idx, g3d->spa_num );
     GFL_PTC_SetResource( g3d->ptc, res, TRUE, NULL );
   }
-
 }
 
 //-----------------------------------------------------------------------------
