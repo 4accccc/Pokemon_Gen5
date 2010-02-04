@@ -30,6 +30,7 @@
 #pragma mark [> struct
 typedef struct
 {
+  int msgSpeed;
   HEAPID parentHeap;
   DLPLAY_CARD_TYPE cardType;
   

@@ -55,6 +55,11 @@ const MB_UTIL_CHECK_PLAY_RET MB_UTIL_CheckPlay_PalGate( POKEMON_PASO_PARAM *ppp 
   {
     ret = MUCPR_EGG;
   }
+  if( PPP_Get( ppp , ID_PARA_monsno , NULL ) == MONSNO_PITYUU &&
+      PPP_Get( ppp , ID_PARA_form_no , NULL ) == 1 )
+  {
+    ret = MUCPR_GIZAMIMI;
+  }
 
   if( ret == MUCPR_OK )
   {
@@ -64,14 +69,33 @@ const MB_UTIL_CHECK_PLAY_RET MB_UTIL_CheckPlay_PalGate( POKEMON_PASO_PARAM *ppp 
     }
     for( i=0;i<4;i++ )
     {
-      //暫定！(カードタイプで分岐かも？
-      if( wazaArr[i] == WAZANO_IAIGIRI ||
-          wazaArr[i] == WAZANO_SORAWOTOBU ||
-          wazaArr[i] == WAZANO_KAIRIKI ||
-          wazaArr[i] == WAZANO_NAMINORI ||
-          wazaArr[i] == WAZANO_HURASSYU )
+      if( cardType == CARD_TYPE_GS )
       {
-        ret = MUCPR_HIDEN;
+        if( wazaArr[i] == WAZANO_IAIGIRI ||
+            wazaArr[i] == WAZANO_SORAWOTOBU ||
+            wazaArr[i] == WAZANO_KAIRIKI ||
+            wazaArr[i] == WAZANO_NAMINORI ||
+            wazaArr[i] == WAZANO_UZUSIO ||      //ここが違う
+            wazaArr[i] == WAZANO_IWAKUDAKI ||
+            wazaArr[i] == WAZANO_TAKINOBORI ||
+            wazaArr[i] == WAZANO_ROKKUKURAIMU  )
+        {
+          ret = MUCPR_HIDEN;
+        }
+      }
+      else
+      {
+        if( wazaArr[i] == WAZANO_IAIGIRI ||
+            wazaArr[i] == WAZANO_SORAWOTOBU ||
+            wazaArr[i] == WAZANO_KAIRIKI ||
+            wazaArr[i] == WAZANO_NAMINORI ||
+            wazaArr[i] == WAZANO_KIRIBARAI ||      //ここが違う
+            wazaArr[i] == WAZANO_IWAKUDAKI ||
+            wazaArr[i] == WAZANO_TAKINOBORI ||
+            wazaArr[i] == WAZANO_ROKKUKURAIMU  )
+        {
+          ret = MUCPR_HIDEN;
+        }
       }
     }
   }

@@ -190,7 +190,7 @@ static void MB_PARENT_Init( MB_PARENT_WORK *work )
   
   MB_PARENT_InitGraphic( work );
   MB_PARENT_LoadResource( work );
-  work->msgWork = MB_MSG_MessageInit( work->heapId , MB_PARENT_FRAME_MSG , MB_PARENT_FRAME_SUB_MSG , FILE_MSGID_MB );
+  work->msgWork = MB_MSG_MessageInit( work->heapId , MB_PARENT_FRAME_MSG , MB_PARENT_FRAME_SUB_MSG , FILE_MSGID_MB , FALSE );
   MB_MSG_MessageCreateWindow( work->msgWork , MMWT_NORMAL );
   
   work->commWork = MB_COMM_CreateSystem( work->heapId );

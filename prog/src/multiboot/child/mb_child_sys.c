@@ -192,7 +192,7 @@ static void MB_CHILD_Init( MB_CHILD_WORK *work )
 
   MB_CHILD_InitGraphic( work );
   MB_CHILD_LoadResource( work );
-  work->msgWork = MB_MSG_MessageInit( work->heapId , MB_CHILD_FRAME_MSG , MB_CHILD_FRAME_SUB_MSG , FILE_MSGID_MB );
+  work->msgWork = MB_MSG_MessageInit( work->heapId , MB_CHILD_FRAME_MSG , MB_CHILD_FRAME_SUB_MSG , FILE_MSGID_MB , FALSE );
   MB_MSG_MessageCreateWindow( work->msgWork , MMWT_NORMAL );
   work->commWork = MB_COMM_CreateSystem( work->heapId );
   
@@ -391,6 +391,7 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
       //InitWork‚Ìppp‚ÍÅ‰‚É“ü‚ê‚Ä‚¢‚é
       work->selInitWork.parentHeap = work->heapId;
       work->selInitWork.cardType = work->cardType;
+      work->selInitWork.msgSpeed = work->initData->msgSpeed;
       for( i=0;i<MB_POKE_BOX_TRAY;i++ )
       {
         for( j=0;j<MB_POKE_BOX_POKE;j++ )
@@ -424,7 +425,7 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
 
     MB_CHILD_InitGraphic( work );
     MB_CHILD_LoadResource( work );
-    work->msgWork = MB_MSG_MessageInit( work->heapId , MB_CHILD_FRAME_MSG , MB_CHILD_FRAME_SUB_MSG , FILE_MSGID_MB );
+    work->msgWork = MB_MSG_MessageInit( work->heapId , MB_CHILD_FRAME_MSG , MB_CHILD_FRAME_SUB_MSG , FILE_MSGID_MB , FALSE );
     MB_MSG_MessageCreateWindow( work->msgWork , MMWT_NORMAL );
     MB_MSG_MessageDispNoWait( work->msgWork , MSG_MB_CHILD_03 );
 
@@ -520,7 +521,7 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
     PMSND_InitMultiBoot( work->sndData );
     MB_CHILD_InitGraphic( work );
     MB_CHILD_LoadResource( work );
-    work->msgWork = MB_MSG_MessageInit( work->heapId , MB_CHILD_FRAME_MSG , MB_CHILD_FRAME_SUB_MSG , FILE_MSGID_MB );
+    work->msgWork = MB_MSG_MessageInit( work->heapId , MB_CHILD_FRAME_MSG , MB_CHILD_FRAME_SUB_MSG , FILE_MSGID_MB , FALSE );
     MB_MSG_MessageCreateWindow( work->msgWork , MMWT_NORMAL );
 
     break;

@@ -324,7 +324,7 @@ void  INFOWIN_Update( void )
       }
     }
   }
-#if DEBUG_ONLY_FOR_ariizumi_nobuhiko | DEBUG_ONLY_FOR_toyama
+#if 0//DEBUG_ONLY_FOR_ariizumi_nobuhiko | DEBUG_ONLY_FOR_toyama
   if( GFL_UI_KEY_GetCont() & PAD_KEY_UP )
   {
     INFOWIN_SetBit(INFOWIN_REFRESH_BEACON);

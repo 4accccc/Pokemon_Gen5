@@ -248,10 +248,12 @@ TALKMSGWIN_SYS* TALKMSGWIN_SystemCreate( TALKMSGWIN_SYS_SETUP* setup )
 	for( i=0; i<TALKMSGWIN_NUM; i++ ){ initWindow(&tmsgwinSys->tmsgwin[i]); }
 
 	//ƒeƒNƒXƒ`ƒƒ‚u‚q‚`‚lŠm•Û
+#ifndef MULTI_BOOT_MAKE  //’ÊíŽžˆ—
 	tmsgwinSys->texDataVramKey = NNS_GfdAllocTexVram(TEX_DATA_SIZ, FALSE, 0);
 	tmsgwinSys->texPlttVramKey = NNS_GfdAllocPlttVram(TEX_PLTT_SIZ, FALSE, 0);
 	GF_ASSERT(tmsgwinSys->texDataVramKey != NNS_GFD_ALLOC_ERROR_TEXKEY);
 	GF_ASSERT(tmsgwinSys->texPlttVramKey != NNS_GFD_ALLOC_ERROR_PLTTKEY);
+#endif
 	{
 		u32 siz = setupWindowBG(tmsgwinSys, &tmsgwinSys->setup);
 		tmsgwinSys->chrNum = siz/0x20;
@@ -312,9 +314,10 @@ void TALKMSGWIN_SystemDelete( TALKMSGWIN_SYS* tmsgwinSys )
 	for( i=0; i<TALKMSGWIN_NUM; i++ ){ 
 		deleteWindow(tmsgwinSys, &tmsgwinSys->tmsgwin[i]); 
 	}
+#ifndef MULTI_BOOT_MAKE  //’ÊíŽžˆ—
 	NNS_GfdFreePlttVram(tmsgwinSys->texPlttVramKey);
 	NNS_GfdFreeTexVram(tmsgwinSys->texDataVramKey);
-
+#endif
   GFL_TCBL_Exit(tmsgwinSys->tcbl);
 	GFL_HEAP_FreeMemory(tmsgwinSys);
 }

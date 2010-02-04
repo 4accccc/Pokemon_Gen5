@@ -46,6 +46,7 @@ struct _MB_SEL_POKE
   int moveOfsX,moveOfsY;
   u8 endCnt;
   u8 cnt;
+  u8 alphaRetCnt; //Alphaを戻すまでの時間
   
   BOOL isValid;
 };
@@ -73,15 +74,15 @@ MB_SEL_POKE* MB_SEL_POKE_CreateWork( MB_SELECT_WORK *selWork , MB_SEL_POKE_INIT_
 
   cellInitData.pos_x = MB_SEL_POKE_GetPosX( pokeWork );
   cellInitData.pos_y = MB_SEL_POKE_GetPosY( pokeWork );
-  cellInitData.anmseq = 1;
+  cellInitData.anmseq = 0;
   cellInitData.softpri = 0;
   if( pokeWork->type == MSPT_BOX )
   {
-    cellInitData.bgpri = 1;
+    cellInitData.bgpri = 2;
   }
   else
   {
-    cellInitData.bgpri = 0;
+    cellInitData.bgpri = 1;
   }
 
   pokeWork->pokeIcon = GFL_CLACT_WK_Create( initWork->cellUnit ,
@@ -96,6 +97,7 @@ MB_SEL_POKE* MB_SEL_POKE_CreateWork( MB_SELECT_WORK *selWork , MB_SEL_POKE_INIT_
   pokeWork->ppp = NULL;
   pokeWork->isValid = FALSE;
   pokeWork->isMove = FALSE;
+  pokeWork->alphaRetCnt = 0;
   return pokeWork;
 }
 
@@ -132,6 +134,16 @@ const BOOL MB_SEL_POKE_UpdateWork( MB_SELECT_WORK *selWork , MB_SEL_POKE *pokeWo
       //最終確認キャンセル時、トレー戻り後のみ例外処理があるのでその対応
       MB_SEL_POKE_SetPri( selWork , pokeWork , pokeWork->type );
     }
+  }
+  //移動処理のため、時間差でアルファを戻すよう
+  if( pokeWork->alphaRetCnt > 0 )
+  {
+    pokeWork->alphaRetCnt--;
+    if( pokeWork->alphaRetCnt == 0 )
+    {
+      MB_SEL_POKE_SetAlpha( selWork , pokeWork , FALSE );
+    }
+    
   }
   return pokeWork->isMove;
 }
@@ -234,6 +246,33 @@ void MB_SEL_POKE_SetPri( MB_SELECT_WORK *selWork , MB_SEL_POKE *pokeWork , const
     GFL_CLACT_WK_SetSoftPri( pokeWork->pokeIcon , MB_SEL_POKE_SOFT_PRI_HOLD );
     break;
   }
+}
+
+//--------------------------------------------------------------
+//	アルファ設定
+//--------------------------------------------------------------
+void MB_SEL_POKE_SetAlpha( MB_SELECT_WORK *selWork , MB_SEL_POKE *pokeWork , const BOOL flg )
+{
+  if( flg == TRUE )
+  {
+    GFL_CLACT_WK_SetObjMode( pokeWork->pokeIcon , GX_OAM_MODE_XLU );
+  }
+  else
+  {
+    GFL_CLACT_WK_SetObjMode( pokeWork->pokeIcon , GX_OAM_MODE_NORMAL );
+  }
+}
+void MB_SEL_POKE_ResetAlphaCnt( MB_SELECT_WORK *selWork , MB_SEL_POKE *pokeWork , const u8 cnt)
+{
+  pokeWork->alphaRetCnt = cnt;
+}
+const BOOL MB_SEL_POKE_GetAlpha( MB_SELECT_WORK *selWork , MB_SEL_POKE *pokeWork )
+{
+  if( GFL_CLACT_WK_GetObjMode( pokeWork->pokeIcon ) == GX_OAM_MODE_NORMAL )
+  {
+    return FALSE;
+  }
+  return TRUE;
 }
 
 //--------------------------------------------------------------

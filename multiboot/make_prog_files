@@ -4,6 +4,7 @@ SRCS	+= \
 		fatal_error_dl.c \
 		$(PARENT_SRC)/app/app_menu_common.c \
 		$(PARENT_SRC)/app/app_taskmenu.c \
+		$(PARENT_SRC)/app/app_keycursor.c \
 		$(PARENT_SRC)/net/net_dev.c \
 		$(PARENT_SRC)/net/net_icondata.c \
 		$(PARENT_SRC)/net/net_devwireless.c \
@@ -20,6 +21,7 @@ SRCS	+= \
 		$(PARENT_SRC)/sound/pm_sndsys.c \
 		$(PARENT_SRC)/sound/sound_manager.c \
 		$(PARENT_SRC)/system/bmp_winframe.c \
+		$(PARENT_SRC)/system/talkmsgwin.c \
 		$(PARENT_SRC)/system/net_define.c \
 		$(PARENT_SRC)/system/wipe.c \
 		$(PARENT_SRC)/system/wipe_sub.c \

@@ -12,17 +12,20 @@
 
 #include "app/app_taskmenu.h"
 #include "print/wordset.h"
+#include "system/bmp_winframe.h"
 
 //======================================================================
 //	define
 //======================================================================
 #pragma mark [> define
 
-#define MB_MSG_PLT_MAIN_TASKMENU (12)  //2–{
-#define MB_MSG_PLT_MAIN_MSGWIN (14)
-#define MB_MSG_PLT_MAIN_FONT   (15)
+#define MB_MSG_PLT_MAIN_TASKMENU (10)  //2–{
+#define MB_MSG_PLT_MAIN_TALKWIN (12)
+#define MB_MSG_PLT_MAIN_MSGWIN (13)
+#define MB_MSG_PLT_MAIN_FONT   (14)
 
 #define MB_MSG_MSGWIN_CGX    (1)
+#define MB_MSG_TALKWIN_CGX   (MB_MSG_MSGWIN_CGX+MENU_WIN_CGX_SIZ)
 #define MB_MSG_MSGWIN_TOP    (8)
 #define MB_MSG_MSGWIN_LEFT   (3)
 #define MB_MSG_MSGWIN_HEIGHT (8)
@@ -55,6 +58,8 @@ typedef enum
   MMWT_NORMAL,  //‰æ–Ê’†‰›
   MMWT_1LINE,   //‰æ–Ê‰º‚Ps
   MMWT_2LINE,   //‰æ–Ê‰º‚Qs
+
+  MMWT_2LINE_TALK,   //‰æ–Ê‰º‚Qs(‰ï˜bWIN
 }MB_MSG_WIN_TYPE;
 
 typedef enum
@@ -75,7 +80,7 @@ typedef struct _MB_MSG_WORK MB_MSG_WORK;
 //======================================================================
 #pragma mark [> proto
 
-extern MB_MSG_WORK* MB_MSG_MessageInit( HEAPID heapId , const u8 frame , const u8 selFrame , const u32 datId );
+extern MB_MSG_WORK* MB_MSG_MessageInit( HEAPID heapId , const u8 frame , const u8 selFrame , const u32 datId , const BOOL useTalkWin );
 extern void MB_MSG_MessageTerm( MB_MSG_WORK *work );
 extern void MB_MSG_MessageMain( MB_MSG_WORK *work );
 extern void MB_MSG_MessageCreateWindow( MB_MSG_WORK *msgWork , MB_MSG_WIN_TYPE type );
@@ -96,5 +101,6 @@ extern GFL_FONT* MB_MSG_GetFont( MB_MSG_WORK *msgWork );
 extern PRINT_QUE* MB_MSG_GetPrintQue( MB_MSG_WORK *msgWork );
 extern const BOOL MB_MSG_CheckPrintQueIsFinish( MB_MSG_WORK *msgWork );
 extern const BOOL MB_MSG_CheckPrintStreamIsFinish( MB_MSG_WORK *msgWork );
+extern void MB_MSG_SetDispKeyCursor( MB_MSG_WORK *msgWork , const BOOL flg );
 
 

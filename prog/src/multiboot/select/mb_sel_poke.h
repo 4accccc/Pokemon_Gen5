@@ -17,9 +17,9 @@
 //======================================================================
 #pragma mark [> define
 
-#define MB_SEL_POKE_BG_PRI_BOX (1)
-#define MB_SEL_POKE_BG_PRI_TRAY (0)
-#define MB_SEL_POKE_BG_PRI_HOLD (0)
+#define MB_SEL_POKE_BG_PRI_BOX (2)
+#define MB_SEL_POKE_BG_PRI_TRAY (1)
+#define MB_SEL_POKE_BG_PRI_HOLD (1)
 #define MB_SEL_POKE_SOFT_PRI_BOX (16)
 #define MB_SEL_POKE_SOFT_PRI_TRAY (1)
 #define MB_SEL_POKE_SOFT_PRI_HOLD (0)
@@ -74,6 +74,9 @@ extern void MB_SEL_POKE_SetMove( MB_SELECT_WORK *selWork ,
                                  int endX , int endY , 
                                  const u8 cnt , const BOOL autoDel );
 extern void MB_SEL_POKE_SetPri( MB_SELECT_WORK *selWork , MB_SEL_POKE *pokeWork , const MB_SEL_POKE_TYPE type );
+extern void MB_SEL_POKE_SetAlpha( MB_SELECT_WORK *selWork , MB_SEL_POKE *pokeWork , const BOOL flg );
+extern const BOOL MB_SEL_POKE_GetAlpha( MB_SELECT_WORK *selWork , MB_SEL_POKE *pokeWork );
+extern void MB_SEL_POKE_ResetAlphaCnt( MB_SELECT_WORK *selWork , MB_SEL_POKE *pokeWork , const u8 cnt);
 
 extern const int MB_SEL_POKE_GetPosX( MB_SEL_POKE *pokeWork );
 extern const int MB_SEL_POKE_GetPosY( MB_SEL_POKE *pokeWork );

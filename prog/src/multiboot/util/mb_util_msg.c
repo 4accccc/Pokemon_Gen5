@@ -11,11 +11,17 @@
 #include <gflib.h>
 
 #include "arc_def.h"
+#include "app/app_keycursor.h"
 #include "print/printsys.h"
-#include "system/bmp_winframe.h"
+#include "system/talkmsgwin.h"
 
 #include "multiboot/mb_util_msg.h"
 #include "multiboot/mb_local_def.h"
+
+#ifndef MULTI_BOOT_MAKE  //通常時処理
+  //talkmsgwin用にfieldを読む
+  FS_EXTERN_OVERLAY(fieldmap);
+#endif //MULTI_BOOT_MAKE
 
 //======================================================================
 //	define
@@ -49,9 +55,13 @@ struct _MB_MSG_WORK
   
   PRINT_QUE *printQue;
   BOOL      isUpdateQue;
+  BOOL      isUseCursor;
   
   APP_TASKMENU_WORK *yesNoWork;
   APP_TASKMENU_RES  *takmenures;
+  APP_KEYCURSOR_WORK *cursorWork;
+  
+  TALKMSGWIN_SYS    *talkWinSys;
 };
 
 
@@ -63,7 +73,7 @@ struct _MB_MSG_WORK
 //--------------------------------------------------------------
 //  メッセージ系 初期化
 //--------------------------------------------------------------
-MB_MSG_WORK* MB_MSG_MessageInit( HEAPID heapId , const u8 frame ,const u8 selFrame , const u32 datId )
+MB_MSG_WORK* MB_MSG_MessageInit( HEAPID heapId , const u8 frame ,const u8 selFrame , const u32 datId , const BOOL useTalkWin )
 {
   
   MB_MSG_WORK* msgWork = GFL_HEAP_AllocClearMemory( heapId , sizeof( MB_MSG_WORK ) );
@@ -94,7 +104,35 @@ MB_MSG_WORK* MB_MSG_MessageInit( HEAPID heapId , const u8 frame ,const u8 selFra
   msgWork->takmenures  = APP_TASKMENU_RES_Create( msgWork->selFrame, MB_MSG_PLT_MAIN_TASKMENU, msgWork->fontHandle, msgWork->printQue, msgWork->heapId );
   msgWork->yesNoWork = NULL;
   
+  msgWork->cursorWork = APP_KEYCURSOR_Create( 0x0f , FALSE , TRUE , msgWork->heapId );
+  
+#ifndef MULTI_BOOT_MAKE  //通常時処理
+  //talkmsgwin用にfieldを読む
+  GFL_OVERLAY_Load( FS_OVERLAY_ID( fieldmap ) );
+  OS_TPrintf("デバッグ起動だとASSERT出ますがSKIPしてください。\n");
+  OS_TPrintf("↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓\n");
+#endif //MULTI_BOOT_MAKE
+
+  //会話Win
+  if( useTalkWin == TRUE )
+  {
+    TALKMSGWIN_SYS_SETUP setup;
+    setup.heapID = heapId;
+    setup.g3Dcamera = NULL;
+    setup.fontHandle = msgWork->fontHandle;
+    setup.chrNumOffs = MB_MSG_TALKWIN_CGX;
+    setup.ini.frameID = frame;
+    setup.ini.winPltID = MB_MSG_PLT_MAIN_TALKWIN;
+    setup.ini.fontPltID = MB_MSG_PLT_MAIN_FONT;
+    msgWork->talkWinSys = TALKMSGWIN_SystemCreate( &setup );
+  }
+  else
+  {
+    msgWork->talkWinSys = NULL;
+  }
+  
   msgWork->isUpdateQue = FALSE;
+  msgWork->isUseCursor = FALSE;
   return msgWork;
 }
 
@@ -104,10 +142,15 @@ MB_MSG_WORK* MB_MSG_MessageInit( HEAPID heapId , const u8 frame ,const u8 selFra
 //--------------------------------------------------------------
 void MB_MSG_MessageTerm( MB_MSG_WORK *msgWork )
 {
+  if( msgWork->talkWinSys != NULL )
+  {
+    TALKMSGWIN_SystemDelete( msgWork->talkWinSys );
+  }
   if( msgWork->yesNoWork != NULL )
   {
     APP_TASKMENU_CloseMenu( msgWork->yesNoWork );
   }
+  APP_KEYCURSOR_Delete( msgWork->cursorWork );
   APP_TASKMENU_RES_Delete( msgWork->takmenures );
   PRINTSYS_QUE_Delete( msgWork->printQue );
   if( msgWork->printHandle != NULL )
@@ -131,6 +174,11 @@ void MB_MSG_MessageTerm( MB_MSG_WORK *msgWork )
   GFL_TCBL_Exit( msgWork->tcblSys );
   
   GFL_HEAP_FreeMemory( msgWork );
+
+#ifndef MULTI_BOOT_MAKE  //通常時処理
+  //talkmsgwin用にfieldを読む
+  GFL_OVERLAY_Unload( FS_OVERLAY_ID( fieldmap ) );
+#endif //MULTI_BOOT_MAKE
 }
 
 //--------------------------------------------------------------
@@ -141,10 +189,30 @@ void MB_MSG_MessageMain( MB_MSG_WORK *msgWork )
   GFL_TCBL_Main( msgWork->tcblSys );
   if( msgWork->printHandle != NULL  )
   {
+    if( msgWork->isUseCursor == TRUE )
+    {
+      APP_KEYCURSOR_Main( msgWork->cursorWork , msgWork->printHandle , msgWork->msgWin );
+    }
+    
     if( PRINTSYS_PrintStreamGetState( msgWork->printHandle ) == PRINTSTREAM_STATE_DONE )
     {
       PRINTSYS_PrintStreamDelete( msgWork->printHandle );
       msgWork->printHandle = NULL;
+    }
+    else
+    if( PRINTSYS_PrintStreamGetState( msgWork->printHandle ) == PRINTSTREAM_STATE_PAUSE )
+    {
+      if( GFL_UI_TP_GetTrg() == TRUE )
+      {
+        PRINTSYS_PrintStreamReleasePause( msgWork->printHandle );
+      }
+    }
+    else
+    {
+      if( GFL_UI_TP_GetCont() == TRUE )
+      {
+        PRINTSYS_PrintStreamShortWait( msgWork->printHandle , 0 );
+      }
     }
   }
   PRINTSYS_QUE_Main( msgWork->printQue );
@@ -196,6 +264,7 @@ void MB_MSG_MessageCreateWindow( MB_MSG_WORK *msgWork , MB_MSG_WIN_TYPE type )
                                         GFL_BMP_CHRAREA_GET_B );
       break;
     case MMWT_2LINE:   //画面下２行
+    case MMWT_2LINE_TALK:   //画面下２行(会話WIN
       msgWork->msgWin = GFL_BMPWIN_Create( msgWork->frame , 
                                         MB_MSG_MSGWIN_SEL_L_LEFT , 
                                         MB_MSG_MSGWIN_SEL_L_TOP ,
@@ -226,7 +295,10 @@ void MB_MSG_MessageDisp( MB_MSG_WORK *msgWork , const u16 msgId , const int msgS
     PRINTSYS_PrintStreamDelete( msgWork->printHandle );
     msgWork->printHandle = NULL;
   }
-
+  
+  //一応デフォは消しておく
+  msgWork->isUseCursor = FALSE;
+  
   {
     if( msgWork->msgStr != NULL )
     {
@@ -246,9 +318,16 @@ void MB_MSG_MessageDisp( MB_MSG_WORK *msgWork , const u16 msgId , const int msgS
     }
     
     msgWork->printHandle = PRINTSYS_PrintStream( msgWork->msgWin , 0,0, msgWork->msgStr ,msgWork->fontHandle ,
-                        msgSpeed , msgWork->tcblSys , 2 , msgWork->heapId , 0 );
+                        msgSpeed , msgWork->tcblSys , 2 , msgWork->heapId , 0xf );
   }
-  BmpWinFrame_Write( msgWork->msgWin , WINDOW_TRANS_ON_V , MB_MSG_MSGWIN_CGX , MB_MSG_PLT_MAIN_MSGWIN );
+  if( msgWork->type == MMWT_2LINE_TALK )
+  {
+    TALKMSGWIN_WriteBmpWindow( msgWork->talkWinSys , msgWork->msgWin , TALKMSGWIN_TYPE_NORMAL );
+  }
+  else
+  {
+    BmpWinFrame_Write( msgWork->msgWin , WINDOW_TRANS_ON_V , MB_MSG_MSGWIN_CGX , MB_MSG_PLT_MAIN_MSGWIN );
+  }
 }
 
 
@@ -286,7 +365,15 @@ void MB_MSG_MessageDispNoWait( MB_MSG_WORK *msgWork , const u16 msgId )
     msgWork->isUpdateQue = TRUE;
 
   }
-  BmpWinFrame_Write( msgWork->msgWin , WINDOW_TRANS_ON_V , MB_MSG_MSGWIN_CGX , MB_MSG_PLT_MAIN_MSGWIN );
+  if( msgWork->type == MMWT_2LINE_TALK )
+  {
+    TALKMSGWIN_WriteBmpWindow( msgWork->talkWinSys , msgWork->msgWin , TALKMSGWIN_TYPE_NORMAL );
+    GFL_BG_LoadScreenReq(msgWork->frame);
+    }
+  else
+  {
+    BmpWinFrame_Write( msgWork->msgWin , WINDOW_TRANS_ON_V , MB_MSG_MSGWIN_CGX , MB_MSG_PLT_MAIN_MSGWIN );
+  }
 }
 
 //--------------------------------------------------------------------------
@@ -295,7 +382,15 @@ void MB_MSG_MessageDispNoWait( MB_MSG_WORK *msgWork , const u16 msgId )
 void MB_MSG_MessageHide( MB_MSG_WORK *msgWork )
 {
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp( msgWork->msgWin ) , 0 );
-  BmpWinFrame_Clear( msgWork->msgWin , WINDOW_TRANS_ON_V );
+  if( msgWork->type == MMWT_2LINE_TALK )
+  {
+    TALKMSGWIN_ClearBmpWindow( msgWork->talkWinSys , msgWork->msgWin );
+    GFL_BG_LoadScreenReq(msgWork->frame);
+  }
+  else
+  {
+    BmpWinFrame_Clear( msgWork->msgWin , WINDOW_TRANS_ON_V );
+  }
 }
 
 //--------------------------------------------------------------------------
@@ -436,6 +531,9 @@ PRINT_QUE* MB_MSG_GetPrintQue( MB_MSG_WORK *msgWork )
 {
   return msgWork->printQue;
 }
+//--------------------------------------------------------------------------
+//  終了チェック
+//--------------------------------------------------------------------------
 const BOOL MB_MSG_CheckPrintQueIsFinish( MB_MSG_WORK *msgWork )
 {
   return PRINTSYS_QUE_IsFinished( msgWork->printQue );
@@ -448,3 +546,12 @@ const BOOL MB_MSG_CheckPrintStreamIsFinish( MB_MSG_WORK *msgWork )
   }
   return FALSE;
 }
+
+//--------------------------------------------------------------------------
+//  メッセージ待ちカーソルの表示
+//--------------------------------------------------------------------------
+void MB_MSG_SetDispKeyCursor( MB_MSG_WORK *msgWork , const BOOL flg )
+{
+  msgWork->isUseCursor = flg;
+}
+

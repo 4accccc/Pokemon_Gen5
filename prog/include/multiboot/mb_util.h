@@ -28,6 +28,7 @@ typedef enum
   MUCPR_EGG,    //タマゴはダメ
   MUCPR_HIDEN,  //秘伝持ちもダメ
   MUCPR_FUSEI,  //不正！
+  MUCPR_GIZAMIMI,  //ぎざみみピチュー
 }MB_UTIL_CHECK_PLAY_RET;
 
 //======================================================================

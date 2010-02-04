@@ -1081,9 +1081,11 @@ SRCS_OVERLAY_IRC_RANKING	= net_app/irc_ranking/irc_ranking.c
 
 #マルチブート  DP/PL/GS吸い上げ
 #dlplay_funcは不思議な贈り物で文字コード変換に使っている。移植後削除を。
+#FIELDのしたにあるのはselectでtalkmsgwinを使っているから。
 #===> SRCS_OVERLAY_DEV_WIRELESS
 #===> SRCS_OVERLAY_DEV_IRC
 #===> SRCS_OVERLAY_DEV_WIFI
+#===> SRCS_OVERLAY_FIELDMAP
 #LIB=>          libmb.$HYB.a
 #LIB=>          libwbt.$HYB.a
 SRCS_OVERLAY_MULTIBOOT = multiboot/parent/mb_parent_sys.c \

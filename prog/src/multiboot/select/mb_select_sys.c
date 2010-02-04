@@ -129,6 +129,7 @@ struct _MB_SELECT_WORK
 
   MB_SEL_POKE *boxPoke[MB_POKE_BOX_POKE];
   MB_SEL_POKE *selPoke[MB_CAP_POKE_NUM];
+  MB_SEL_POKE *boxHoldPoke;
 
   GFL_CLUNIT  *cellUnit;
   u32         cellResIdx[MSCR_MAX];
@@ -203,9 +204,9 @@ static void MB_SELECT_Init( MB_SELECT_WORK *work )
   MB_SELECT_InitCell( work );
 
 #ifndef MULTI_BOOT_MAKE
-  work->msgWork = MB_MSG_MessageInit( work->heapId , MB_SELECT_FRAME_MSG , MB_SELECT_FRAME_MSG , NARC_message_multiboot_child_dat );
+  work->msgWork = MB_MSG_MessageInit( work->heapId , MB_SELECT_FRAME_MSG , MB_SELECT_FRAME_MSG , NARC_message_multiboot_child_dat , TRUE );
 #else
-  work->msgWork = MB_MSG_MessageInit( work->heapId , MB_SELECT_FRAME_MSG , MB_SELECT_FRAME_MSG , NARC_message_dl_multiboot_child_dat );
+  work->msgWork = MB_MSG_MessageInit( work->heapId , MB_SELECT_FRAME_MSG , MB_SELECT_FRAME_MSG , NARC_message_dl_multiboot_child_dat , TRUE );
 #endif
   work->vBlankTcb = GFUser_VIntr_CreateTCB( MB_SELECT_VBlankFunc , work , 8 );
 
@@ -230,6 +231,8 @@ static void MB_SELECT_Init( MB_SELECT_WORK *work )
       initWork.idx = i;
       work->selPoke[i] = MB_SEL_POKE_CreateWork( work , &initWork );
     }
+    initWork.iconType  = MSPT_BOX;
+    work->boxHoldPoke = MB_SEL_POKE_CreateWork( work , &initWork );
   }
 
   work->msgBoxName = GFL_BMPWIN_Create( MB_SELECT_FRAME_MSG , 
@@ -287,6 +290,7 @@ static void MB_SELECT_Term( MB_SELECT_WORK *work )
   GFL_BMPWIN_Delete( work->msgPokeInfo );
   GFL_BMPWIN_Delete( work->msgBoxName );
 
+  MB_SEL_POKE_DeleteWork( work , work->boxHoldPoke );
   for( i=0;i<MB_CAP_POKE_NUM;i++ )
   {
     MB_SEL_POKE_DeleteWork( work , work->selPoke[i] );
@@ -328,6 +332,10 @@ static const BOOL MB_SELECT_Main( MB_SELECT_WORK *work )
       {
         isMovePoke = TRUE;
       }
+    }
+    if( MB_SEL_POKE_UpdateWork( work , work->boxHoldPoke ) == TRUE )
+    {
+      isMovePoke = TRUE;
     }
   }
 
@@ -373,10 +381,13 @@ static const BOOL MB_SELECT_Main( MB_SELECT_WORK *work )
     break;
     
   case MSS_MSG_WAIT:
-    if( GFL_UI_TP_GetTrg() == TRUE )
+    if( MB_MSG_CheckPrintStreamIsFinish( work->msgWork ) == TRUE )
     {
-      MB_MSG_MessageHide( work->msgWork );
-      work->state = MSS_MAIN;
+      if( GFL_UI_TP_GetTrg() == TRUE )
+      {
+        MB_MSG_MessageHide( work->msgWork );
+        work->state = MSS_MAIN;
+      }
     }
     break;
 
@@ -476,7 +487,7 @@ static void MB_SELECT_InitGraphic( MB_SELECT_WORK *work )
       0, 0, 0x800, 0,  // scrX, scrY, scrbufSize, scrbufofs,
       GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
       GX_BG_SCRBASE_0x6800, GX_BG_CHARBASE_0x10000,0x08000,
-      GX_BG_EXTPLTT_23, 1, 1, 0, FALSE  // pal, pri, areaover, dmy, mosaic
+      GX_BG_EXTPLTT_23, 2, 1, 0, FALSE  // pal, pri, areaover, dmy, mosaic
     };
     // BG3 MAIN (背景
     static const GFL_BG_BGCNT_HEADER header_main3 = {
@@ -499,7 +510,8 @@ static void MB_SELECT_InitGraphic( MB_SELECT_WORK *work )
     MB_SELECT_SetupBgFunc( &header_main1 , MB_SELECT_FRAME_BAR , GFL_BG_MODE_TEXT );
     MB_SELECT_SetupBgFunc( &header_main3 , MB_SELECT_FRAME_BG , GFL_BG_MODE_TEXT );
     MB_SELECT_SetupBgFunc( &header_sub3  , MB_SELECT_FRAME_SUB_BG , GFL_BG_MODE_TEXT );
-    
+   
+    G2_SetBlendAlpha( GX_BLEND_PLANEMASK_NONE , GX_BLEND_PLANEMASK_BG3 , 8 , 8 );
   }
 
   //OBJ系の初期化
@@ -664,7 +676,7 @@ static void MB_SELECT_InitCell( MB_SELECT_WORK *work )
   cellInitData.pos_y = MB_SEL_TRAY_Y;
   cellInitData.anmseq = 3;
   cellInitData.softpri = 8;
-  cellInitData.bgpri = 1;
+  cellInitData.bgpri = 2;
   
   work->clwkTray = GFL_CLACT_WK_Create( work->cellUnit ,
             work->cellResIdx[MSCR_NCG_COMMON],
@@ -697,7 +709,7 @@ static void MB_SELECT_InitCell( MB_SELECT_WORK *work )
   cellInitData.pos_x = 256-24;
   cellInitData.pos_y = 192-24;
   cellInitData.anmseq = APP_COMMON_BARICON_EXIT;
-  cellInitData.bgpri = 1;
+  cellInitData.bgpri = 2;
 
   work->clwkRetIcon = GFL_CLACT_WK_Create( work->cellUnit ,
             work->cellResIdx[MSCR_NCG_BAR_ICON],
@@ -710,7 +722,7 @@ static void MB_SELECT_InitCell( MB_SELECT_WORK *work )
     cellInitData.pos_x = 256-80 + i*8;
     cellInitData.pos_y = 40;
     cellInitData.anmseq = APP_COMMON_POKE_MARK_CIRCLE_WHITE + i*2;
-    cellInitData.bgpri = 0;
+    cellInitData.bgpri = 1;
     work->clwkMark[i] = GFL_CLACT_WK_Create( work->cellUnit ,
               work->cellResIdx[MSCR_NCG_POKE_MARK],
               work->cellResIdx[MSCR_PLT_POKE_MARK],
@@ -818,12 +830,25 @@ static void MB_SELECT_UpdateUI( MB_SELECT_WORK *work )
         const u8 idxY = (tpy-(MB_SEL_POKE_BOX_TOP - 8))/MB_SEL_POKE_BOX_HEIGHT;
         const u8 idx  = idxX + idxY*MB_SEL_POKE_BOX_X_NUM;
         
-        if( MB_SEL_POKE_isValid( work->boxPoke[idx] ) == TRUE )
+        if( MB_SEL_POKE_isValid( work->boxPoke[idx] ) == TRUE &&
+            MB_SEL_POKE_GetAlpha( work , work->boxPoke[idx] ) == FALSE )
         {
+          GFL_CLACTPOS cellPos;
+          cellPos.x = tpx;
+          cellPos.y = tpy;
+
           work->isHold = TRUE;
-          work->holdPoke = work->boxPoke[idx];
-          MB_SEL_POKE_SetPri( work , work->boxPoke[idx] , MSPT_HOLD );
+          //work->holdPoke = work->boxPoke[idx];
+          //MB_SEL_POKE_SetPri( work , work->boxPoke[idx] , MSPT_HOLD );
+          //MB_SELECT_SetPokeInfo( work , work->initWork->boxData[work->boxPage][idx] );
+          work->holdPoke = work->boxHoldPoke;
+          MB_SEL_POKE_SetIdx( work->holdPoke , idx );
+          MB_SEL_POKE_SetPPP( work , work->holdPoke , work->initWork->boxData[work->boxPage][idx] );
+          MB_SEL_POKE_SetPri( work , work->holdPoke , MSPT_HOLD );
+          MB_SEL_POKE_SetPos( work , work->holdPoke , &cellPos );
           MB_SELECT_SetPokeInfo( work , work->initWork->boxData[work->boxPage][idx] );
+          
+          MB_SEL_POKE_SetAlpha( work , work->boxPoke[idx] , TRUE );
         }
       }
       else
@@ -835,6 +860,9 @@ static void MB_SELECT_UpdateUI( MB_SELECT_WORK *work )
         work->state = MSS_FADEOUT;
         work->exitWaitCell = work->clwkRetIcon;
       }
+      work->befTpx = tpx;
+      work->befTpy = tpy;
+
     }
     else
     {
@@ -879,8 +907,17 @@ static void MB_SELECT_UpdateUI( MB_SELECT_WORK *work )
           const int returnPosX = MB_SEL_POKE_GetPosX( work->holdPoke );
           const int returnPosY = MB_SEL_POKE_GetPosY( work->holdPoke );
           
-          MB_SEL_POKE_SetMove( work , work->holdPoke , work->befTpx , work->befTpy ,
-                               returnPosX , returnPosY , MB_SEL_RETUN_ICON_CNT , FALSE );
+          if( work->holdPoke == work->boxHoldPoke )
+          {
+            MB_SEL_POKE_SetMove( work , work->holdPoke , work->befTpx , work->befTpy ,
+                                 returnPosX , returnPosY , MB_SEL_RETUN_ICON_CNT , TRUE );
+            MB_SEL_POKE_ResetAlphaCnt( work , work->boxPoke[MB_SEL_POKE_GetIdx(work->holdPoke)] , MB_SEL_RETUN_ICON_CNT );
+          }
+          else
+          {
+            MB_SEL_POKE_SetMove( work , work->holdPoke , work->befTpx , work->befTpy ,
+                                 returnPosX , returnPosY , MB_SEL_RETUN_ICON_CNT , FALSE );
+          }
 
           //トレーの上を通るので例外的に表示優先を変える
           MB_SEL_POKE_SetPri( work , work->holdPoke , MSPT_TRAY );
@@ -970,6 +1007,14 @@ static const BOOL MB_SELECT_CheckDropTray( MB_SELECT_WORK *work )
         work->state = MSS_MSG_WAIT;
       }
       else
+      if( checkRet == MUCPR_GIZAMIMI )
+      {
+        MB_MSG_MessageCreateWindow( work->msgWork , MMWT_2LINE_TALK );
+        MB_MSG_MessageDisp( work->msgWork , MSG_MB_CHILD_SEL_06 , work->initWork->msgSpeed );
+        MB_MSG_SetDispKeyCursor( work->msgWork , TRUE );
+        work->state = MSS_MSG_WAIT;
+      }
+      else
       if( checkRet == MUCPR_FUSEI )
       {
         MB_MSG_MessageCreateWindow( work->msgWork , MMWT_2LINE );
@@ -1024,14 +1069,21 @@ static const BOOL MB_SELECT_CheckDropBox( MB_SELECT_WORK *work )
       //今見えてるページに帰るところがある
       if( retPage == work->boxPage )
       {
+        GFL_CLACTPOS cellPos;
         POKEMON_PASO_PARAM *ppp = work->initWork->boxData[retPage][retIdx];
+        cellPos.x = work->befTpx;
+        cellPos.y = work->befTpy;
+
         MB_SEL_POKE_SetPPP( work , work->holdPoke , NULL );
-        MB_SEL_POKE_SetPPP( work , work->boxPoke[retIdx] , ppp );
-        MB_SEL_POKE_SetMove( work , work->boxPoke[retIdx] , 
+        MB_SEL_POKE_SetPos( work , work->boxHoldPoke , &cellPos );
+        MB_SEL_POKE_SetPPP( work , work->boxHoldPoke , ppp );
+        MB_SEL_POKE_SetPri( work , work->boxHoldPoke , MSPT_HOLD );
+        MB_SEL_POKE_SetMove( work , work->boxHoldPoke , 
                              work->befTpx , work->befTpy ,
                              MB_SEL_POKE_GetPosX( work->boxPoke[retIdx] ),
                              MB_SEL_POKE_GetPosY( work->boxPoke[retIdx] ),
-                             MB_SEL_RETURN_BOX_ICON_CNT , FALSE );
+                             MB_SEL_RETURN_BOX_ICON_CNT , TRUE );
+        MB_SEL_POKE_ResetAlphaCnt( work , work->boxPoke[retIdx] , MB_SEL_RETURN_BOX_ICON_CNT );
       }
       else
       {
@@ -1124,13 +1176,16 @@ static void MB_SELECT_UpdateChangePage( MB_SELECT_WORK *work )
           if( i==MB_CAP_POKE_NUM )
           {
             //トレーに移動済みではない
+            MB_SEL_POKE_SetAlpha( work , work->boxPoke[idx] , FALSE );
             MB_SEL_POKE_SetPPP( work , work->boxPoke[idx] , 
                                 work->initWork->boxData[nextPage][idx] );
           }
           else
           {
             //トレーに移動済み!!
-            MB_SEL_POKE_SetPPP( work , work->boxPoke[idx] , NULL );
+            MB_SEL_POKE_SetAlpha( work , work->boxPoke[idx] , TRUE );
+            MB_SEL_POKE_SetPPP( work , work->boxPoke[idx] , 
+                                work->initWork->boxData[nextPage][idx] );
           }
           
         }
@@ -1288,7 +1343,7 @@ static void MB_SELECT_InitComfirm( MB_SELECT_WORK *work )
                          posX-MB_SEL_CONF_MOVE_LEN , posY , 
                          MB_SEL_CONF_MOVE_CNT , FALSE );
   }
-  GFL_CLACT_WK_SetBgPri( work->clwkTray , 0 );
+  GFL_CLACT_WK_SetBgPri( work->clwkTray , 1 );
 }
 
 //--------------------------------------------------------------
@@ -1369,26 +1424,32 @@ static void MB_SELECT_UpdateReturnComfirm( MB_SELECT_WORK *work )
   if( work->anmCnt >= MB_SEL_CONF_MOVE_CNT )
   {
     work->state = MSS_MAIN;
-    GFL_CLACT_WK_SetBgPri( work->clwkTray , 1 );
+    GFL_CLACT_WK_SetBgPri( work->clwkTray , 2 );
     //6番目をBOXに戻す
     {
+      GFL_CLACTPOS cellPos;
       const u8 retPage = work->initWork->selectPoke[5][0];
       const u8 retIdx  = work->initWork->selectPoke[5][1];
       POKEMON_PASO_PARAM *ppp = work->initWork->boxData[retPage][retIdx];
       MB_SEL_POKE_SetPPP( work , work->selPoke[5] , NULL );
-      MB_SEL_POKE_SetPPP( work , work->boxPoke[retIdx] , ppp );
-      //トレーの上を通るので例外的に表示優先を変える
-      MB_SEL_POKE_SetPri( work , work->boxPoke[retIdx] , MSPT_TRAY );
-      MB_SEL_POKE_SetMove( work , work->boxPoke[retIdx] , 
+
+      cellPos.x = MB_SEL_POKE_GetPosX( work->selPoke[5] );
+      cellPos.y = MB_SEL_POKE_GetPosY( work->selPoke[5] );
+
+      MB_SEL_POKE_SetPos( work , work->boxHoldPoke , &cellPos );
+      MB_SEL_POKE_SetPPP( work , work->boxHoldPoke , ppp );
+      MB_SEL_POKE_SetPri( work , work->boxHoldPoke , MSPT_HOLD );
+      MB_SEL_POKE_SetMove( work , work->boxHoldPoke , 
                            MB_SEL_POKE_GetPosX( work->selPoke[5] ),
                            MB_SEL_POKE_GetPosY( work->selPoke[5] ),
                            MB_SEL_POKE_GetPosX( work->boxPoke[retIdx] ),
                            MB_SEL_POKE_GetPosY( work->boxPoke[retIdx] ),
-                           MB_SEL_RETURN_BOX_ICON_CNT , FALSE );
+                           MB_SEL_RETURN_BOX_ICON_CNT , TRUE );
+      MB_SEL_POKE_ResetAlphaCnt( work , work->boxPoke[retIdx] , MB_SEL_RETURN_BOX_ICON_CNT );
+
       work->initWork->selectPoke[5][0] = 0xFF;
       work->initWork->selectPoke[5][1] = 0xFF;
     }
-    
   }
 }
 
@@ -1426,6 +1487,7 @@ static GFL_PROC_RESULT MB_SELECT_ProcInit( GFL_PROC * proc, int * seq , void *pw
     work = GFL_PROC_AllocWork( proc, sizeof(MB_SELECT_WORK), parentHeap );
     initWork = GFL_HEAP_AllocClearMemory( HEAPID_MB_BOX , sizeof(MB_SELECT_INIT_WORK) );
 
+    initWork->msgSpeed = 1;
     initWork->parentHeap = parentHeap;
     initWork->cardType = CARD_TYPE_DUMMY;
     MB_TPrintf("デバッグポケ作成");
@@ -1435,6 +1497,17 @@ static GFL_PROC_RESULT MB_SELECT_ProcInit( GFL_PROC * proc, int * seq , void *pw
       {
         initWork->boxData[i][j] = GFL_HEAP_AllocClearMemory( parentHeap , POKETOOL_GetPPPWorkSize() );
         PPP_Clear( initWork->boxData[i][j] );
+        if( i==0 && j == 0 )
+        {
+          //ぎざみみピチュー
+          PPP_Setup( initWork->boxData[i][j] ,
+                     172 ,
+                     100 ,
+                     PTL_SETUP_ID_AUTO );
+          //デバッグで例外的に１を入れるためPPP_Put使ってます。
+          PPP_Put( initWork->boxData[i][j] , ID_PARA_form_no , 1 );
+        }
+        else
         if( GFUser_GetPublicRand0(10) == 0 )
         //if( i == 0 || i == 1 || i == 17 )
         {
