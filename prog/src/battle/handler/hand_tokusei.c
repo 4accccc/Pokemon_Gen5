@@ -238,6 +238,7 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_Tikuden( u32* numElems );
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_DenkiEngine( u32* numElems );
 static void handler_DenkiEngine_Check( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_DenkiEngine_Fix( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_DenkiEngine_CheckEx( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_NoGuard( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_NoGuard( u32* numElems );
 static void handler_Kimottama( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
@@ -2068,7 +2069,7 @@ static void handler_Donkan( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk,
     // メロメロ
     if( BTL_EVENTVAR_GetValue(BTL_EVAR_SICKID) == WAZASICK_MEROMERO )
     {
-      BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_FLAG, TRUE );
+      work[0] = BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_FLAG, TRUE );
     }
   }
 }
@@ -3559,9 +3560,9 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_Tikuden( u32* numElems )
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_DenkiEngine( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_DMG_TO_RECOVER_CHECK,   handler_DenkiEngine_Check },  // ダメージワザ回復チェックハンドラ
-    { BTL_EVENT_DMG_TO_RECOVER_FIX,     handler_DenkiEngine_Fix   },  // ダメージワザ回復化決定ハンドラ
-    { BTL_EVENT_NOEFFECT_CHECK_L2,      handler_Tikuden_CheckEx   },
+    { BTL_EVENT_DMG_TO_RECOVER_CHECK,   handler_DenkiEngine_Check   },  // ダメージワザ回復チェックハンドラ
+    { BTL_EVENT_DMG_TO_RECOVER_FIX,     handler_DenkiEngine_Fix     },  // ダメージワザ回復化決定ハンドラ
+    { BTL_EVENT_NOEFFECT_CHECK_L2,      handler_DenkiEngine_CheckEx },
   };
   *numElems = NELEMS(HandlerTable);
   return HandlerTable;
@@ -3587,6 +3588,22 @@ static void handler_DenkiEngine_Fix( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK
     param->header.tokwin_flag = TRUE;
   }
 }
+// ワザ無効チェックレベル２
+static void handler_DenkiEngine_CheckEx( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) == pokeID)
+  &&  (BTL_EVENTVAR_GetValue(BTL_EVAR_WAZAID) == WAZANO_DENZIHA)
+  ){
+    if( BTL_EVENTVAR_RewriteValue(BTL_EVAR_NOEFFECT_FLAG, TRUE) )
+    {
+      BTL_HANDEX_PARAM_MESSAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
+      param->header.tokwin_flag = TRUE;
+      HANDEX_STR_Setup( &param->str, BTL_STRTYPE_SET, BTL_STRID_SET_NoEffect );
+      HANDEX_STR_AddArg( &param->str, pokeID );
+    }
+  }
+}
+
 //------------------------------------------------------------------------------
 /**
  *  とくせい「ノーガード」
