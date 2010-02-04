@@ -211,7 +211,7 @@ static GFL_PROC_RESULT EffectViewerProcInit( GFL_PROC * proc, int * seq, void * 
     GX_OBJVRAMMODE_CHAR_1D_32K,   // サブOBJマッピングモード
   };
 
-//  GFL_OVERLAY_Load( FS_OVERLAY_ID( battle_view ) );
+  GFL_OVERLAY_Load( FS_OVERLAY_ID( battle_view ) );
   GFL_OVERLAY_Load( FS_OVERLAY_ID( battle ) );
 
   GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_SOGABE_DEBUG, 0xc0000 );
@@ -423,9 +423,13 @@ static GFL_PROC_RESULT EffectViewerProcMain( GFL_PROC * proc, int * seq, void * 
     del_pokemon( evw );
     set_pokemon( evw );
   }
-  if( ( rep & PAD_KEY_LEFT ) && ( evw->mons_no - 10 ) )
+  if( rep & PAD_KEY_LEFT )
   { 
     evw->mons_no -= 10;
+    if( evw->mons_no < 0 )
+    { 
+      evw->mons_no = 0;
+    }
     del_pokemon( evw );
     set_pokemon( evw );
   }
@@ -601,6 +605,11 @@ static  void  EffectViewerSequence( EFFECT_VIEWER_WORK *evw )
       evw->seq_no = SEQ_EFFECT_WAIT;
     }
     else if( cont == PAD_BUTTON_X ){
+#if 0
+      BTLV_EFFVM_PARAM  param;
+      param.continue_count = 0;
+      param. = 0;
+#endif
       BTLV_EFFECT_Add( BTLEFF_WEATHER_AME );
       evw->ret_seq_no = evw->seq_no;
       evw->seq_no = SEQ_EFFECT_WAIT;
