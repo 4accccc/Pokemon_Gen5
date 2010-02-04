@@ -162,6 +162,7 @@ enum {
   RES_ID_ARM_ANM3,
   RES_ID_ARM_ANM4,
   RES_ID_BUTTON_ANM,
+  RES_ID_FLOOR_ANM,
 };
 
 //ＯＢＪインデックス
@@ -206,7 +207,8 @@ static const GFL_G3D_UTIL_RES g3Dutil_resTbl[] = {
 	{ ARCID_GYM_DRAGON, NARC_gym_dragon_in31_l_sita_nsbca, GFL_G3D_UTIL_RESARC }, //ICA
 	{ ARCID_GYM_DRAGON, NARC_gym_dragon_in31_r_ue_nsbca, GFL_G3D_UTIL_RESARC }, //ICA
 	{ ARCID_GYM_DRAGON, NARC_gym_dragon_in31_r_sita_nsbca, GFL_G3D_UTIL_RESARC }, //ICA
-		{ ARCID_GYM_DRAGON, NARC_gym_dragon_in31_botton_nsbtp, GFL_G3D_UTIL_RESARC }, //ITP
+  { ARCID_GYM_DRAGON, NARC_gym_dragon_in31_botton_nsbtp, GFL_G3D_UTIL_RESARC }, //ITP
+  { ARCID_GYM_DRAGON, NARC_gym_dragon_m_gym0802f_nsbta, GFL_G3D_UTIL_RESARC }, //ITA
 };
 
 //3Dアニメ　頭
@@ -232,10 +234,14 @@ static const GFL_G3D_UTIL_ANM g3Dutil_anmTbl_r_arm[] = {
   { RES_ID_ARM_ANM4,0 }, //アニメリソースID, アニメデータID(リソース内部INDEX)　腕下
 };
 
-
 //3Dアニメ　ボタン
 static const GFL_G3D_UTIL_ANM g3Dutil_anmTbl_btn[] = {
   { RES_ID_BUTTON_ANM,0 }, //アニメリソースID, アニメデータID(リソース内部INDEX)
+};
+
+//3Dアニメ　床
+static const GFL_G3D_UTIL_ANM g3Dutil_anmTbl_floor[] = {
+  { RES_ID_FLOOR_ANM,0 }, //アニメリソースID, アニメデータID(リソース内部INDEX)
 };
 
 
@@ -369,8 +375,8 @@ static const GFL_G3D_UTIL_OBJ g3Dutil_objTbl[] = {
 		RES_ID_FLOOR_MDL, 	//モデルリソースID
 		0, 							  //モデルデータID(リソース内部INDEX)
 		RES_ID_FLOOR_MDL, 	//テクスチャリソースID
-		NULL,			//アニメテーブル(複数指定のため)
-		0,	//アニメリソース数
+		g3Dutil_anmTbl_floor,			//アニメテーブル(複数指定のため)
+		NELEMS(g3Dutil_anmTbl_floor),	//アニメリソース数
 	},
 };
 
@@ -507,6 +513,8 @@ void GYM_DRAGON_Setup(FIELDMAP_WORK *fieldWork)
     int idx = OBJ_FLOOR;
     VecFx32 pos = {FLOOR_X,FLOOR_Y,FLOOR_Z};
     SetupMdl(ptr, idx, &pos, NULL, 0, FALSE);
+    //アニメ無効化解除
+    FLD_EXP_OBJ_ValidCntAnm(ptr, GYM_DRAGON_UNIT_IDX, OBJ_FLOOR, 0, TRUE);
   }
 
   //セットアップ時2階表示判定
