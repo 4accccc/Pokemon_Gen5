@@ -7839,25 +7839,33 @@
 		<language name="JPN" width="256">W319-SWARD</language>
 		<language name="JPN_KANJI" width="256">W319-SWARD</language>
 	</row>
-	<row id="msg_seq_se_dmy_206">
-		<language name="JPN" width="256">DMY-206</language>
-		<language name="JPN_KANJI" width="256">DMY-206</language>
+	<row id="msg_seq_se_w300_besyo">
+		<language name="JPN" width="256">W300-BESYO</language>
+		<language name="JPN_KANJI" width="256">W300-BESYO</language>
 	</row>
-	<row id="msg_seq_se_dmy_207">
-		<language name="JPN" width="256">DMY-207</language>
-		<language name="JPN_KANJI" width="256">DMY-207</language>
+	<row id="msg_seq_se_w322_cosmo">
+		<language name="JPN" width="256">W322-COSMO</language>
+		<language name="JPN_KANJI" width="256">W322-COSMO</language>
 	</row>
-	<row id="msg_seq_se_dmy_208">
-		<language name="JPN" width="256">DMY-208</language>
-		<language name="JPN_KANJI" width="256">DMY-208</language>
+	<row id="msg_seq_se_w325_bunn">
+		<language name="JPN" width="256">W325-BUNN</language>
+		<language name="JPN_KANJI" width="256">W325-BUNN</language>
 	</row>
-	<row id="msg_seq_se_dmy_209">
-		<language name="JPN" width="256">DMY-209</language>
-		<language name="JPN_KANJI" width="256">DMY-209</language>
+	<row id="msg_seq_se_w350_pasu">
+		<language name="JPN" width="256">W350-PASU</language>
+		<language name="JPN_KANJI" width="256">W350-PASU</language>
 	</row>
-	<row id="msg_seq_se_dmy_210">
-		<language name="JPN" width="256">DMY-210</language>
-		<language name="JPN_KANJI" width="256">DMY-210</language>
+	<row id="msg_seq_se_w454_mushi">
+		<language name="JPN" width="256">W454-MUSHI</language>
+		<language name="JPN_KANJI" width="256">W454-MUSHI</language>
+	</row>
+	<row id="msg_seq_se_w360_momomon">
+		<language name="JPN" width="256">W360-MOMOMON</language>
+		<language name="JPN_KANJI" width="256">W360-MOMOMON</language>
+	</row>
+	<row id="msg_seq_se_w437_noisehit">
+		<language name="JPN" width="256">W437-NOISEHIT</language>
+		<language name="JPN_KANJI" width="256">W437-NOISEHIT</language>
 	</row>
 	<row id="msg_seq_se_dmy_211">
 		<language name="JPN" width="256">DMY-211</language>
