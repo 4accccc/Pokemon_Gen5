@@ -79,7 +79,7 @@ EVENT_START   ev_scene_c01r0102_pdwguide_01
 			_YES_NO_WIN( ans_no )
 			
 			IF $ans_no == SCR_NO THEN
-				
+				_MSGWIN_CLOSE()
 			ENDIF
 			
 		ENDWHILE
@@ -165,17 +165,85 @@ _ANIME_LABEL	anm_inventor_dance
 EVENT_START   ev_c01r0102_inventor_01
 	_TALK_OBJ_START()
 
+	IF $WK_SCENE_C01R0102 == 1 THEN
+
 	//重要アイテム「？？？」を所持しているか、いないかの分岐
 	
 		//重要アイテム「？？？」を持っていない場合
-		IF $WK_SCENE_D01R0101_POKE <= 3 THEN
+		IF $WK_SCENE_D01R0101_POKE <= 2 THEN
 			//マコモ『ゆめのあとちに　いる　ふしぎなポケモン』
 			_BALLOONWIN_TALKOBJ_MSG( msg_c01r0102_inventor_07 )
+			_LAST_KEYWAIT()
+			_BALLOONWIN_CLOSE()
 		
 		//重要アイテム「？？？」を持っている場合
 		ELSE
-			//マコモ『それって！　ムシャーナの「？？？？？」！？』
+			//マコモ『じゃじゃーん！
 			_BALLOONWIN_TALKOBJ_MSG( msg_c01r0102_inventor_08 )
+			_MSGWIN_CLOSE()
+
+		//マコモ：一歩横に移動
+			DEFINE_LOCAL	LWK_DIR
+			_PLAYER_DIR_GET( LWK_DIR )
+			SWITCH $LWK_DIR
+			CASE DIR_UP THEN
+				_OBJ_ANIME( C01R0102_INVENTOR_01, anm_move_left )
+				_OBJ_ANIME_WAIT()
+			CASE DIR_DOWN THEN
+				_OBJ_ANIME( C01R0102_INVENTOR_01, anm_move_left )
+				_OBJ_ANIME_WAIT()
+			CASE DIR_LEFT THEN
+				_OBJ_ANIME( C01R0102_INVENTOR_01, anm_move_down )
+				_OBJ_ANIME_WAIT()
+			CASE DIR_RIGHT THEN
+				_OBJ_ANIME( C01R0102_INVENTOR_01, anm_move_down )
+				_OBJ_ANIME_WAIT()
+			ENDSWITCH
+			
+			//ムンナたちが　みせる　ゆめは
+			_BALLOONWIN_TALKOBJ_MSG( msg_c01r0102_inventor_09 )
+			_MSGWIN_CLOSE()
+			
+			//マコモ：主人公と向き合う
+			SWITCH $LWK_DIR
+			CASE DIR_UP THEN
+				_OBJ_ANIME( C01R0102_INVENTOR_01, anm_return_left1 )
+				_OBJ_ANIME_WAIT()
+			CASE DIR_DOWN THEN
+				_OBJ_ANIME( C01R0102_INVENTOR_01, anm_return_left2 )
+				_OBJ_ANIME_WAIT()
+			CASE DIR_LEFT THEN
+				_OBJ_ANIME( C01R0102_INVENTOR_01, anm_return_down1 )
+				_OBJ_ANIME_WAIT()
+			CASE DIR_RIGHT THEN
+				_OBJ_ANIME( C01R0102_INVENTOR_01, anm_return_down2 )
+				_OBJ_ANIME_WAIT()
+			ENDSWITCH
+			
+			//アタシは　それを　さいげんし
+			_BALLOONWIN_TALKOBJ_MSG( msg_c01r0102_inventor_10 )
+			_MSGWIN_CLOSE()
+			
+			//Cギアに　gamesync
+			_BALLOONWIN_TALKOBJ_MSG( msg_c01r0102_inventor_11 )
+			_MSGWIN_CLOSE()
+			
+			//そして　ポケモンが　ねむり
+			_BALLOONWIN_TALKOBJ_MSG( msg_c01r0102_inventor_12 )
+			_MSGWIN_CLOSE()
+			
+			//イッシュちほうには　パレス　という
+			_BALLOONWIN_TALKOBJ_MSG( msg_c01r0102_inventor_13 )
+			_MSGWIN_CLOSE()
+
+			//まあ　りくつは　ともかく
+			_BALLOONWIN_TALKOBJ_MSG( msg_c01r0102_inventor_14 )
+			_MSGWIN_CLOSE()
+
+			//そうそう　ひとつだけ　ちゅうい　してね
+			_BALLOONWIN_TALKOBJ_MSG( msg_c01r0102_inventor_15 )
+			_LAST_KEYWAIT()
+			_MSGWIN_CLOSE()
 			
 			//========================================/
 			
@@ -185,15 +253,50 @@ EVENT_START   ev_c01r0102_inventor_01
 			//ゆめのあとちイベント終了
 			$WK_SCENE_D01R0101_POKE = 5
 			
+			//ＰＤＷ説明イベント終了
+			$WK_SCENE_C01R0102 = 2
+			
 			//========================================/
 			
 		ENDIF
-		
-	_LAST_KEYWAIT()
-	_BALLOONWIN_CLOSE()
+	
+	ELSE
+	
+		//gamesyncでねかせた　ポケモンを　おこしたら
+		_BALLOONWIN_TALKOBJ_MSG( msg_c01r0102_inventor_16 )
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
+	
+	ENDIF
 
 EVENT_END
-  
+ 
+//--------------------------------------------------------------
+//	マコモ　一歩移動　元の場所に戻る
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_move_left
+	_ANIME_DATA AC_WALK_L_16F,1
+	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL	anm_move_down
+	_ANIME_DATA AC_WALK_U_16F,1
+	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL	anm_return_left1
+	_ANIME_DATA AC_WALK_R_8F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL	anm_return_left2
+	_ANIME_DATA AC_WALK_R_8F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL	anm_return_down1
+	_ANIME_DATA AC_WALK_D_8F,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL	anm_return_down2
+	_ANIME_DATA AC_WALK_D_8F,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+
 /**************************************************************/
 /*  C01R0102 GIRL3の会話用イベントスクリプト				  */
 /**************************************************************/
