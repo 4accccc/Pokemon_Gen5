@@ -1,1 +1,1 @@
-SUBDIRS = c_cruiser n_castle 
+SUBDIRS = c_cruiser c_cruiser_port f_wheel g_ship_port n_castle n_final_b n_final_w n_legend_born_b n_legend_born_w n_legend_come_b n_legend_come_w n_legend_meat_b n_legend_meat_w riza_bridge v_boat_port 

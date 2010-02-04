@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="saitou" host="W00158" date="2010-02-04T20:01:22"/>
+	<create user="genya_hosaka" host="W00159" date="2010-02-04T20:56:30"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,7 +305,7 @@
 		</language>
 	</columns>
 
-	<dialog left="137" top="142" right="842" bottom="770" maximized="no" rayout="Vertical2">
+	<dialog left="72" top="142" right="777" bottom="770" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="752" top="128" right="1280" bottom="650" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -908,38 +908,73 @@ allocable (0x[2:07:８桁:5])</language>
 	</row>
 
 	<row id="DEBUG_FIELD_DEMO3D_DEMO_02">
+		<language name="JPN" width="160">ゆうらんせんPORT</language>
+		<language name="JPN_KANJI" width="160">ゆうらんせんPORT</language>
+	</row>
+
+	<row id="DEBUG_FIELD_DEMO3D_DEMO_03">
+		<language name="JPN" width="160">かんらんしゃ</language>
+		<language name="JPN_KANJI" width="160">かんらんしゃ</language>
+	</row>
+
+	<row id="DEBUG_FIELD_DEMO3D_DEMO_04">
+		<language name="JPN" width="160">こくれんせんPORT</language>
+		<language name="JPN_KANJI" width="160">こくれんせんPORT</language>
+	</row>
+
+	<row id="DEBUG_FIELD_DEMO3D_DEMO_05">
 		<language name="JPN" width="160">Nのしろ</language>
 		<language name="JPN_KANJI" width="160">Nの城</language>
 	</row>
 
-	<row id="DEBUG_FIELD_DEMO3D_DEMO_03">
-		<language name="JPN" width="160">デモ3</language>
-		<language name="JPN_KANJI" width="160">デモ3</language>
-	</row>
-
-	<row id="DEBUG_FIELD_DEMO3D_DEMO_04">
-		<language name="JPN" width="160">デモ4</language>
-		<language name="JPN_KANJI" width="160">デモ4</language>
-	</row>
-
-	<row id="DEBUG_FIELD_DEMO3D_DEMO_05">
-		<language name="JPN" width="160">デモ5</language>
-		<language name="JPN_KANJI" width="160">デモ5</language>
-	</row>
-
 	<row id="DEBUG_FIELD_DEMO3D_DEMO_06">
-		<language name="JPN" width="160">デモ6</language>
-		<language name="JPN_KANJI" width="160">デモ6</language>
+		<language name="JPN" width="160">Nのさいご B</language>
+		<language name="JPN_KANJI" width="160">Nの最後 B</language>
 	</row>
 
 	<row id="DEBUG_FIELD_DEMO3D_DEMO_07">
-		<language name="JPN" width="160">デモ7</language>
-		<language name="JPN_KANJI" width="160">デモ7</language>
+		<language name="JPN" width="160">Nのさいご W</language>
+		<language name="JPN_KANJI" width="160">Nの最後 W</language>
 	</row>
 
 	<row id="DEBUG_FIELD_DEMO3D_DEMO_08">
-		<language name="JPN" width="160">デモ8</language>
-		<language name="JPN_KANJI" width="160">デモ8</language>
+		<language name="JPN" width="160">LEGEND BORN B</language>
+		<language name="JPN_KANJI" width="160">LEGEND BORN B</language>
+	</row>
+
+	<row id="DEBUG_FIELD_DEMO3D_DEMO_09">
+		<language name="JPN" width="160">LEGEND BORN W</language>
+		<language name="JPN_KANJI" width="160">LEGEND BORN W</language>
+	</row>
+
+	<row id="DEBUG_FIELD_DEMO3D_DEMO_10">
+		<language name="JPN" width="160">LEGEND COME B</language>
+		<language name="JPN_KANJI" width="160">LEGEND COME B</language>
+	</row>
+
+	<row id="DEBUG_FIELD_DEMO3D_DEMO_11">
+		<language name="JPN" width="160">LEGEND COME W</language>
+		<language name="JPN_KANJI" width="160">LEGEND COME W</language>
+	</row>
+
+	<row id="DEBUG_FIELD_DEMO3D_DEMO_12">
+		<language name="JPN" width="160">LEGEND MEAT B</language>
+		<language name="JPN_KANJI" width="160">LEGEND MEAT B</language>
+	</row>
+
+	<row id="DEBUG_FIELD_DEMO3D_DEMO_13">
+		<language name="JPN" width="160">LEGEND MEAT W</language>
+		<language name="JPN_KANJI" width="160">LEGEND MEAT W</language>
+	</row>
+
+	<row id="DEBUG_FIELD_DEMO3D_DEMO_14">
+		<language name="JPN" width="160">リザードンばし</language>
+		<language name="JPN_KANJI" width="160">リザードン橋</language>
+	</row>
+
+	<row id="DEBUG_FIELD_DEMO3D_DEMO_15">
+		<language name="JPN" width="160">ビクティボードPORT</language>
+		<language name="JPN_KANJI" width="160">ビクティボードPORT</language>
 	</row>
 
 	<row id="DEBUG_FIELD_MVPOKE">

@@ -104,6 +104,36 @@ enum
  *								構造体定義
  */
 //=============================================================================
+
+// 不完全型
+typedef struct _APP_EXCEPTION_WORK APP_EXCEPTION_WORK;
+
+//--------------------------------------------------------------
+/// 例外処理 関数定義
+//==============================================================
+typedef void (*APP_EXCEPTION_FUNC)( APP_EXCEPTION_WORK* wk );
+
+//--------------------------------------------------------------
+/// 例外処理 関数テーブル
+//==============================================================
+typedef struct {
+  APP_EXCEPTION_FUNC Init;
+  APP_EXCEPTION_FUNC Main;
+  APP_EXCEPTION_FUNC End;
+} APP_EXCEPTION_FUNC_SET;
+
+//--------------------------------------------------------------
+///	アプリ例外処理
+//==============================================================
+struct _APP_EXCEPTION_WORK {
+  //[IN]
+  HEAPID heapID;
+  const DEMO3D_GRAPHIC_WORK* graphic;
+  const DEMO3D_ENGINE_WORK* engine;
+  //[PRIVATE]
+  const APP_EXCEPTION_FUNC_SET* p_funcset;
+};
+
 //--------------------------------------------------------------
 ///	BG管理ワーク
 //==============================================================
@@ -148,7 +178,11 @@ typedef struct
 	APP_TASKMENU_WORK					*menu;
 #endif //DEMO3D_TASKMENU
 
+  // デモエンジン
   DEMO3D_ENGINE_WORK*   engine;
+
+  // アプリ例外処理エンジン
+  APP_EXCEPTION_WORK*   expection;
 
 } DEMO3D_MAIN_WORK;
 
@@ -208,6 +242,27 @@ static APP_TASKMENU_WORK * Demo3D_TASKMENU_Init( APP_TASKMENU_RES *menu_res, GFL
 static void Demo3D_TASKMENU_Exit( APP_TASKMENU_WORK *menu );
 static void Demo3D_TASKMENU_Main( APP_TASKMENU_WORK *menu );
 #endif //DEMO3D_TASKMENU
+
+//-----------------------------------------------------------
+// アプリ例外処理
+//-----------------------------------------------------------
+static APP_EXCEPTION_WORK* APP_EXCEPTION_Create( DEMO3D_ID demo_id, DEMO3D_GRAPHIC_WORK* graphic, DEMO3D_ENGINE_WORK* engine, HEAPID heapID );
+static void APP_EXCEPTION_Delete( APP_EXCEPTION_WORK* wk );
+static void APP_EXCEPTION_Main( APP_EXCEPTION_WORK* wk );
+
+//-----------------------------------------------------------
+// 遊覧船下画面
+//-----------------------------------------------------------
+static void EXP_C_CRUISER_Init( APP_EXCEPTION_WORK* wk );
+static void EXP_C_CRUISER_Main( APP_EXCEPTION_WORK* wk );
+static void EXP_C_CRUISER_End( APP_EXCEPTION_WORK* wk );
+
+static const APP_EXCEPTION_FUNC_SET c_exp_funcset_c_cruiser = 
+{
+  EXP_C_CRUISER_Init,
+  EXP_C_CRUISER_Main,
+  EXP_C_CRUISER_End,
+};
 
 //=============================================================================
 /**
@@ -312,6 +367,9 @@ static GFL_PROC_RESULT Demo3DProc_Init( GFL_PROC *proc, int *seq, void *pwk, voi
   // フェードイン リクエスト
   GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 2 );
 
+  // デモ毎の例外処理エンジン初期化
+  wk->expection = APP_EXCEPTION_Create( param->demo_id, wk->graphic, wk->engine, wk->heapID );
+
   return GFL_PROC_RES_FINISH;
 }
 //-----------------------------------------------------------------------------
@@ -342,6 +400,9 @@ static GFL_PROC_RESULT Demo3DProc_Exit( GFL_PROC *proc, int *seq, void *pwk, voi
     // フェード中は処理に入らない
     return GFL_PROC_RES_CONTINUE;
   }
+
+  // 例外処理エンジン 終了処理
+  APP_EXCEPTION_Delete( wk->expection );
 
 #ifdef DEMO3D_TASKMENU
 	//TASKMENUシステム＆リソース破棄
@@ -425,6 +486,9 @@ static GFL_PROC_RESULT Demo3DProc_Main( GFL_PROC *proc, int *seq, void *pwk, voi
     wk->param->result = DEMO3D_RESULT_USER_END;
     return GFL_PROC_RES_FINISH;
   }
+  
+  // 例外処理エンジン 主処理
+  APP_EXCEPTION_Main( wk->expection );
 
 #ifdef DEMO3D_TOUCHBAR
 	//タッチバーメイン処理
@@ -803,4 +867,118 @@ static void Demo3D_TASKMENU_Main( APP_TASKMENU_WORK *menu )
 	APP_TASKMENU_UpdateMenu( menu );
 }
 #endif //DEMO3D_TASKMENU
+
+//-----------------------------------------------------------------------------
+// アプリごとの例外表示
+//-----------------------------------------------------------------------------
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  アプリ例外処理エンジン 生成
+ *
+ *	@param	DEMO3D_ID demo_id
+ *	@param	heapID 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static APP_EXCEPTION_WORK* APP_EXCEPTION_Create( DEMO3D_ID demo_id, DEMO3D_GRAPHIC_WORK* graphic, DEMO3D_ENGINE_WORK* engine, HEAPID heapID )
+{
+  APP_EXCEPTION_WORK* wk;
+
+  GF_ASSERT( graphic );
+  GF_ASSERT( engine );
+  
+  // メインワーク アロケート
+  wk = GFL_HEAP_AllocClearMemory( heapID, sizeof(APP_EXCEPTION_WORK) );
+
+  // メンバ初期化
+  wk->graphic = graphic;
+  wk->engine = engine;
+  wk->heapID = heapID;
+
+  wk->p_funcset = NULL;
+
+  // 遊覧船
+  switch( demo_id )
+  {
+  case DEMO3D_ID_C_CRUISER :
+    wk->p_funcset = &c_exp_funcset_c_cruiser;
+    break;
+  default : 
+    ;
+  }
+
+  // 初期化処理
+  if( wk->p_funcset )
+  {
+    wk->p_funcset->Init( wk );
+  }
+
+  return wk;
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  アプリ例外処理エンジン 削除
+ *
+ *	@param	APP_EXCEPTION_WORK* wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void APP_EXCEPTION_Delete( APP_EXCEPTION_WORK* wk )
+{
+  GF_ASSERT(wk);
+
+  // 終了処理
+  if( wk->p_funcset )
+  {
+    wk->p_funcset->End( wk );
+  }
+
+  GFL_HEAP_FreeMemory( wk );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  アプリ例外処理エンジン 主処理
+ *
+ *	@param	APP_EXCEPTION_WORK* wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void APP_EXCEPTION_Main( APP_EXCEPTION_WORK* wk )
+{
+  GF_ASSERT(wk);
+
+  // 主処理
+  if( wk->p_funcset )
+  {
+    wk->p_funcset->Main( wk );
+  }
+}
+
+
+
+
+//-----------------------------------------------------------------------------
+// 遊覧船 下画面
+//-----------------------------------------------------------------------------
+
+static void EXP_C_CRUISER_Init( APP_EXCEPTION_WORK* wk )
+{
+
+}
+
+static void EXP_C_CRUISER_Main( APP_EXCEPTION_WORK* wk )
+{
+  DEMO3D_ENGINE_GetNowFrame( wk->engine );
+}
+
+static void EXP_C_CRUISER_End( APP_EXCEPTION_WORK* wk )
+{
+
+}
 

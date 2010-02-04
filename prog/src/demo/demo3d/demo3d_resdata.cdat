@@ -70,6 +70,60 @@ static const GFL_G3D_UTIL_SETUP c_cruiser_setup[] = {
 	{ res_c_cruiser_unit04, NELEMS(res_c_cruiser_unit04), obj_c_cruiser_unit04, NELEMS(obj_c_cruiser_unit04) },
 };
 //=========================================================================
+// DEMO3D_ID_C_CRUISER_PORT
+//=========================================================================
+//UNIT
+static const GFL_G3D_UTIL_RES res_c_cruiser_port_unit01[] = {
+	{ ARCID_DEMO3D_GRA, NARC_demo3d_c_cruiser_port_01_nsbmd, GFL_G3D_UTIL_RESARC },
+};
+//OBJ
+static const GFL_G3D_UTIL_OBJ obj_c_cruiser_port_unit01[] = {
+	{
+		0, 0, 0, // MdlResID, MdlDataID, TexResID
+		NULL, 0, // AnmTbl, AnmTblNum
+	}
+};
+//setup
+static const GFL_G3D_UTIL_SETUP c_cruiser_port_setup[] = {
+	{ res_c_cruiser_port_unit01, NELEMS(res_c_cruiser_port_unit01), obj_c_cruiser_port_unit01, NELEMS(obj_c_cruiser_port_unit01) },
+};
+//=========================================================================
+// DEMO3D_ID_F_WHEEL
+//=========================================================================
+//UNIT
+static const GFL_G3D_UTIL_RES res_f_wheel_unit01[] = {
+	{ ARCID_DEMO3D_GRA, NARC_demo3d_f_wheel_01_nsbmd, GFL_G3D_UTIL_RESARC },
+};
+//OBJ
+static const GFL_G3D_UTIL_OBJ obj_f_wheel_unit01[] = {
+	{
+		0, 0, 0, // MdlResID, MdlDataID, TexResID
+		NULL, 0, // AnmTbl, AnmTblNum
+	}
+};
+//setup
+static const GFL_G3D_UTIL_SETUP f_wheel_setup[] = {
+	{ res_f_wheel_unit01, NELEMS(res_f_wheel_unit01), obj_f_wheel_unit01, NELEMS(obj_f_wheel_unit01) },
+};
+//=========================================================================
+// DEMO3D_ID_G_SHIP_PORT
+//=========================================================================
+//UNIT
+static const GFL_G3D_UTIL_RES res_g_ship_port_unit01[] = {
+	{ ARCID_DEMO3D_GRA, NARC_demo3d_g_ship_port_01_nsbmd, GFL_G3D_UTIL_RESARC },
+};
+//OBJ
+static const GFL_G3D_UTIL_OBJ obj_g_ship_port_unit01[] = {
+	{
+		0, 0, 0, // MdlResID, MdlDataID, TexResID
+		NULL, 0, // AnmTbl, AnmTblNum
+	}
+};
+//setup
+static const GFL_G3D_UTIL_SETUP g_ship_port_setup[] = {
+	{ res_g_ship_port_unit01, NELEMS(res_g_ship_port_unit01), obj_g_ship_port_unit01, NELEMS(obj_g_ship_port_unit01) },
+};
+//=========================================================================
 // DEMO3D_ID_N_CASTLE
 //=========================================================================
 //UNIT
@@ -134,6 +188,186 @@ static const GFL_G3D_UTIL_SETUP n_castle_setup[] = {
 	{ res_n_castle_unit02, NELEMS(res_n_castle_unit02), obj_n_castle_unit02, NELEMS(obj_n_castle_unit02) },
 	{ res_n_castle_unit03, NELEMS(res_n_castle_unit03), obj_n_castle_unit03, NELEMS(obj_n_castle_unit03) },
 };
+//=========================================================================
+// DEMO3D_ID_N_FINAL_B
+//=========================================================================
+//UNIT
+static const GFL_G3D_UTIL_RES res_n_final_b_unit01[] = {
+	{ ARCID_DEMO3D_GRA, NARC_demo3d_n_final_b_01_nsbmd, GFL_G3D_UTIL_RESARC },
+};
+//OBJ
+static const GFL_G3D_UTIL_OBJ obj_n_final_b_unit01[] = {
+	{
+		0, 0, 0, // MdlResID, MdlDataID, TexResID
+		NULL, 0, // AnmTbl, AnmTblNum
+	}
+};
+//setup
+static const GFL_G3D_UTIL_SETUP n_final_b_setup[] = {
+	{ res_n_final_b_unit01, NELEMS(res_n_final_b_unit01), obj_n_final_b_unit01, NELEMS(obj_n_final_b_unit01) },
+};
+//=========================================================================
+// DEMO3D_ID_N_FINAL_W
+//=========================================================================
+//UNIT
+static const GFL_G3D_UTIL_RES res_n_final_w_unit01[] = {
+	{ ARCID_DEMO3D_GRA, NARC_demo3d_n_final_w_01_nsbmd, GFL_G3D_UTIL_RESARC },
+};
+//OBJ
+static const GFL_G3D_UTIL_OBJ obj_n_final_w_unit01[] = {
+	{
+		0, 0, 0, // MdlResID, MdlDataID, TexResID
+		NULL, 0, // AnmTbl, AnmTblNum
+	}
+};
+//setup
+static const GFL_G3D_UTIL_SETUP n_final_w_setup[] = {
+	{ res_n_final_w_unit01, NELEMS(res_n_final_w_unit01), obj_n_final_w_unit01, NELEMS(obj_n_final_w_unit01) },
+};
+//=========================================================================
+// DEMO3D_ID_N_LEGEND_BORN_B
+//=========================================================================
+//UNIT
+static const GFL_G3D_UTIL_RES res_n_legend_born_b_unit01[] = {
+	{ ARCID_DEMO3D_GRA, NARC_demo3d_n_legend_born_b_01_nsbmd, GFL_G3D_UTIL_RESARC },
+};
+//OBJ
+static const GFL_G3D_UTIL_OBJ obj_n_legend_born_b_unit01[] = {
+	{
+		0, 0, 0, // MdlResID, MdlDataID, TexResID
+		NULL, 0, // AnmTbl, AnmTblNum
+	}
+};
+//setup
+static const GFL_G3D_UTIL_SETUP n_legend_born_b_setup[] = {
+	{ res_n_legend_born_b_unit01, NELEMS(res_n_legend_born_b_unit01), obj_n_legend_born_b_unit01, NELEMS(obj_n_legend_born_b_unit01) },
+};
+//=========================================================================
+// DEMO3D_ID_N_LEGEND_BORN_W
+//=========================================================================
+//UNIT
+static const GFL_G3D_UTIL_RES res_n_legend_born_w_unit01[] = {
+	{ ARCID_DEMO3D_GRA, NARC_demo3d_n_legend_born_w_01_nsbmd, GFL_G3D_UTIL_RESARC },
+};
+//OBJ
+static const GFL_G3D_UTIL_OBJ obj_n_legend_born_w_unit01[] = {
+	{
+		0, 0, 0, // MdlResID, MdlDataID, TexResID
+		NULL, 0, // AnmTbl, AnmTblNum
+	}
+};
+//setup
+static const GFL_G3D_UTIL_SETUP n_legend_born_w_setup[] = {
+	{ res_n_legend_born_w_unit01, NELEMS(res_n_legend_born_w_unit01), obj_n_legend_born_w_unit01, NELEMS(obj_n_legend_born_w_unit01) },
+};
+//=========================================================================
+// DEMO3D_ID_N_LEGEND_COME_B
+//=========================================================================
+//UNIT
+static const GFL_G3D_UTIL_RES res_n_legend_come_b_unit01[] = {
+	{ ARCID_DEMO3D_GRA, NARC_demo3d_n_legend_come_b_01_nsbmd, GFL_G3D_UTIL_RESARC },
+};
+//OBJ
+static const GFL_G3D_UTIL_OBJ obj_n_legend_come_b_unit01[] = {
+	{
+		0, 0, 0, // MdlResID, MdlDataID, TexResID
+		NULL, 0, // AnmTbl, AnmTblNum
+	}
+};
+//setup
+static const GFL_G3D_UTIL_SETUP n_legend_come_b_setup[] = {
+	{ res_n_legend_come_b_unit01, NELEMS(res_n_legend_come_b_unit01), obj_n_legend_come_b_unit01, NELEMS(obj_n_legend_come_b_unit01) },
+};
+//=========================================================================
+// DEMO3D_ID_N_LEGEND_COME_W
+//=========================================================================
+//UNIT
+static const GFL_G3D_UTIL_RES res_n_legend_come_w_unit01[] = {
+	{ ARCID_DEMO3D_GRA, NARC_demo3d_n_legend_come_w_01_nsbmd, GFL_G3D_UTIL_RESARC },
+};
+//OBJ
+static const GFL_G3D_UTIL_OBJ obj_n_legend_come_w_unit01[] = {
+	{
+		0, 0, 0, // MdlResID, MdlDataID, TexResID
+		NULL, 0, // AnmTbl, AnmTblNum
+	}
+};
+//setup
+static const GFL_G3D_UTIL_SETUP n_legend_come_w_setup[] = {
+	{ res_n_legend_come_w_unit01, NELEMS(res_n_legend_come_w_unit01), obj_n_legend_come_w_unit01, NELEMS(obj_n_legend_come_w_unit01) },
+};
+//=========================================================================
+// DEMO3D_ID_N_LEGEND_MEAT_B
+//=========================================================================
+//UNIT
+static const GFL_G3D_UTIL_RES res_n_legend_meat_b_unit01[] = {
+	{ ARCID_DEMO3D_GRA, NARC_demo3d_n_legend_meat_b_01_nsbmd, GFL_G3D_UTIL_RESARC },
+};
+//OBJ
+static const GFL_G3D_UTIL_OBJ obj_n_legend_meat_b_unit01[] = {
+	{
+		0, 0, 0, // MdlResID, MdlDataID, TexResID
+		NULL, 0, // AnmTbl, AnmTblNum
+	}
+};
+//setup
+static const GFL_G3D_UTIL_SETUP n_legend_meat_b_setup[] = {
+	{ res_n_legend_meat_b_unit01, NELEMS(res_n_legend_meat_b_unit01), obj_n_legend_meat_b_unit01, NELEMS(obj_n_legend_meat_b_unit01) },
+};
+//=========================================================================
+// DEMO3D_ID_N_LEGEND_MEAT_W
+//=========================================================================
+//UNIT
+static const GFL_G3D_UTIL_RES res_n_legend_meat_w_unit01[] = {
+	{ ARCID_DEMO3D_GRA, NARC_demo3d_n_legend_meat_w_01_nsbmd, GFL_G3D_UTIL_RESARC },
+};
+//OBJ
+static const GFL_G3D_UTIL_OBJ obj_n_legend_meat_w_unit01[] = {
+	{
+		0, 0, 0, // MdlResID, MdlDataID, TexResID
+		NULL, 0, // AnmTbl, AnmTblNum
+	}
+};
+//setup
+static const GFL_G3D_UTIL_SETUP n_legend_meat_w_setup[] = {
+	{ res_n_legend_meat_w_unit01, NELEMS(res_n_legend_meat_w_unit01), obj_n_legend_meat_w_unit01, NELEMS(obj_n_legend_meat_w_unit01) },
+};
+//=========================================================================
+// DEMO3D_ID_RIZA_BRIDGE
+//=========================================================================
+//UNIT
+static const GFL_G3D_UTIL_RES res_riza_bridge_unit01[] = {
+	{ ARCID_DEMO3D_GRA, NARC_demo3d_riza_bridge_01_nsbmd, GFL_G3D_UTIL_RESARC },
+};
+//OBJ
+static const GFL_G3D_UTIL_OBJ obj_riza_bridge_unit01[] = {
+	{
+		0, 0, 0, // MdlResID, MdlDataID, TexResID
+		NULL, 0, // AnmTbl, AnmTblNum
+	}
+};
+//setup
+static const GFL_G3D_UTIL_SETUP riza_bridge_setup[] = {
+	{ res_riza_bridge_unit01, NELEMS(res_riza_bridge_unit01), obj_riza_bridge_unit01, NELEMS(obj_riza_bridge_unit01) },
+};
+//=========================================================================
+// DEMO3D_ID_V_BOAT_PORT
+//=========================================================================
+//UNIT
+static const GFL_G3D_UTIL_RES res_v_boat_port_unit01[] = {
+	{ ARCID_DEMO3D_GRA, NARC_demo3d_v_boat_port_01_nsbmd, GFL_G3D_UTIL_RESARC },
+};
+//OBJ
+static const GFL_G3D_UTIL_OBJ obj_v_boat_port_unit01[] = {
+	{
+		0, 0, 0, // MdlResID, MdlDataID, TexResID
+		NULL, 0, // AnmTbl, AnmTblNum
+	}
+};
+//setup
+static const GFL_G3D_UTIL_SETUP v_boat_port_setup[] = {
+	{ res_v_boat_port_unit01, NELEMS(res_v_boat_port_unit01), obj_v_boat_port_unit01, NELEMS(obj_v_boat_port_unit01) },
+};
 
 
 //=========================================================================
@@ -142,5 +376,18 @@ static const GFL_G3D_UTIL_SETUP n_castle_setup[] = {
 static const DEMO3D_SETUP_DATA c_demo3d_setup_data[ DEMO3D_ID_MAX ] = {
 	{ 0 }, // DEMO3D_ID_NULL
 	{ c_cruiser_setup, NELEMS(c_cruiser_setup), NARC_demo3d_c_camera_bin, 2048, 163840, 163840, 0,  },
+	{ c_cruiser_port_setup, NELEMS(c_cruiser_port_setup), NARC_demo3d_c_cruiser_port_camera_bin, 4096, 163840, 163840, 0,  },
+	{ f_wheel_setup, NELEMS(f_wheel_setup), NARC_demo3d_f_wheel_camera_bin, 4096, 163840, 163840, 0,  },
+	{ g_ship_port_setup, NELEMS(g_ship_port_setup), NARC_demo3d_g_ship_port_camera_bin, 4096, 163840, 163840, 0,  },
 	{ n_castle_setup, NELEMS(n_castle_setup), NARC_demo3d_n_camera_bin, 4096, 286720, 286720, 1,  },
+	{ n_final_b_setup, NELEMS(n_final_b_setup), NARC_demo3d_n_final_b_camera_bin, 4096, 163840, 163840, 0,  },
+	{ n_final_w_setup, NELEMS(n_final_w_setup), NARC_demo3d_n_final_w_camera_bin, 4096, 163840, 163840, 0,  },
+	{ n_legend_born_b_setup, NELEMS(n_legend_born_b_setup), NARC_demo3d_n_legend_born_b_camera_bin, 4096, 163840, 163840, 0,  },
+	{ n_legend_born_w_setup, NELEMS(n_legend_born_w_setup), NARC_demo3d_n_legend_born_w_camera_bin, 4096, 163840, 163840, 0,  },
+	{ n_legend_come_b_setup, NELEMS(n_legend_come_b_setup), NARC_demo3d_n_legend_come_b_camera_bin, 4096, 163840, 163840, 0,  },
+	{ n_legend_come_w_setup, NELEMS(n_legend_come_w_setup), NARC_demo3d_n_legend_come_w_camera_bin, 4096, 163840, 163840, 0,  },
+	{ n_legend_meat_b_setup, NELEMS(n_legend_meat_b_setup), NARC_demo3d_n_legend_meat_b_camera_bin, 4096, 163840, 163840, 0,  },
+	{ n_legend_meat_w_setup, NELEMS(n_legend_meat_w_setup), NARC_demo3d_n_legend_meat_w_camera_bin, 4096, 163840, 163840, 0,  },
+	{ riza_bridge_setup, NELEMS(riza_bridge_setup), NARC_demo3d_riza_bridge_camera_bin, 4096, 163840, 163840, 0,  },
+	{ v_boat_port_setup, NELEMS(v_boat_port_setup), NARC_demo3d_v_boat_port_camera_bin, 4096, 163840, 163840, 0,  },
 };

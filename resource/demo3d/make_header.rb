@@ -122,7 +122,7 @@ def print_scene(file, dir)
       file.puts "static const GFL_G3D_UTIL_RES res_" + dir + "_unit" + sprintf("%02d",cnt) + "[] = {\n";
 
       #imd‚ğæ‚É‘‚«o‚µ
-      file.puts "\t{ " + ARC_ID + ", NARC_demo3d_" + imd.sub(/.i/,"_nsb") + ", GFL_G3D_UTIL_RESARC },";
+      file.puts "\t{ " + ARC_ID + ", NARC_demo3d_" + imd.sub(/.imd/,"_nsbmd") + ", GFL_G3D_UTIL_RESARC },";
       
       #UNIT€–Ú‘‚«o‚µ
       val.each{|i|

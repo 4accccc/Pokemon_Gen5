@@ -622,7 +622,7 @@ BOOL Demo3D_ENGINE_Main( DEMO3D_ENGINE_WORK* wk )
  *	@retval ƒt[ƒŒƒ€’l
  */
 //-----------------------------------------------------------------------------
-fx32 DEMO3D_ENGINE_GetNowFrame( DEMO3D_ENGINE_WORK* wk )
+fx32 DEMO3D_ENGINE_GetNowFrame( const DEMO3D_ENGINE_WORK* wk )
 {
   GF_ASSERT(wk);
   GF_ASSERT(wk->ica_anime);

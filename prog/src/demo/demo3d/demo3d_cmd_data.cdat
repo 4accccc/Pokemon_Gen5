@@ -127,6 +127,77 @@ static const DEMO3D_CMD_DATA demo3d_cmd08_end_data[] =
   {  DEMO3D_CMD_TYPE_END, 0, { 0 } },
 };
 
+//------
+static const DEMO3D_CMD_DATA demo3d_cmd09_data[] = 
+{ 
+  {  DEMO3D_CMD_TYPE_END, 0, { 0 } },
+};
+static const DEMO3D_CMD_DATA demo3d_cmd09_end_data[] = 
+{ 
+  {  DEMO3D_CMD_TYPE_END, 0, { 0 } },
+};
+
+//------
+static const DEMO3D_CMD_DATA demo3d_cmd10_data[] = 
+{ 
+  {  DEMO3D_CMD_TYPE_END, 0, { 0 } },
+};
+static const DEMO3D_CMD_DATA demo3d_cmd10_end_data[] = 
+{ 
+  {  DEMO3D_CMD_TYPE_END, 0, { 0 } },
+};
+
+//------
+static const DEMO3D_CMD_DATA demo3d_cmd11_data[] = 
+{ 
+  {  DEMO3D_CMD_TYPE_END, 0, { 0 } },
+};
+static const DEMO3D_CMD_DATA demo3d_cmd11_end_data[] = 
+{ 
+  {  DEMO3D_CMD_TYPE_END, 0, { 0 } },
+};
+
+//------
+static const DEMO3D_CMD_DATA demo3d_cmd12_data[] = 
+{ 
+  {  DEMO3D_CMD_TYPE_END, 0, { 0 } },
+};
+static const DEMO3D_CMD_DATA demo3d_cmd12_end_data[] = 
+{ 
+  {  DEMO3D_CMD_TYPE_END, 0, { 0 } },
+};
+
+//------
+static const DEMO3D_CMD_DATA demo3d_cmd13_data[] = 
+{ 
+  {  DEMO3D_CMD_TYPE_END, 0, { 0 } },
+};
+static const DEMO3D_CMD_DATA demo3d_cmd13_end_data[] = 
+{ 
+  {  DEMO3D_CMD_TYPE_END, 0, { 0 } },
+};
+
+//------
+static const DEMO3D_CMD_DATA demo3d_cmd14_data[] = 
+{ 
+  {  DEMO3D_CMD_TYPE_END, 0, { 0 } },
+};
+static const DEMO3D_CMD_DATA demo3d_cmd14_end_data[] = 
+{ 
+  {  DEMO3D_CMD_TYPE_END, 0, { 0 } },
+};
+
+//------
+static const DEMO3D_CMD_DATA demo3d_cmd15_data[] = 
+{ 
+  {  DEMO3D_CMD_TYPE_END, 0, { 0 } },
+};
+static const DEMO3D_CMD_DATA demo3d_cmd15_end_data[] = 
+{ 
+  {  DEMO3D_CMD_TYPE_END, 0, { 0 } },
+};
+
+
 //================================
 // アクセステーブル
 //================================
@@ -141,6 +212,13 @@ static const DEMO3D_CMD_DATA* demo3d_cmd_access_tbl[] =
   demo3d_cmd06_data,
   demo3d_cmd07_data,
   demo3d_cmd08_data,
+  demo3d_cmd09_data,
+  demo3d_cmd10_data,
+  demo3d_cmd11_data,
+  demo3d_cmd12_data,
+  demo3d_cmd13_data,
+  demo3d_cmd14_data,
+  demo3d_cmd15_data,
 };
 
 static const DEMO3D_CMD_DATA* demo3d_endcmd_access_tbl[] =
@@ -154,5 +232,12 @@ static const DEMO3D_CMD_DATA* demo3d_endcmd_access_tbl[] =
   demo3d_cmd06_end_data,
   demo3d_cmd07_end_data,
   demo3d_cmd08_end_data,
+  demo3d_cmd09_end_data,
+  demo3d_cmd10_end_data,
+  demo3d_cmd11_end_data,
+  demo3d_cmd12_end_data,
+  demo3d_cmd13_end_data,
+  demo3d_cmd14_end_data,
+  demo3d_cmd15_end_data,
 };
 

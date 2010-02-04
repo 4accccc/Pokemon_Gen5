@@ -81,4 +81,4 @@ extern BOOL Demo3D_ENGINE_Main( DEMO3D_ENGINE_WORK* wk );
  *	@retval ÉtÅ[ÉåÉÄíl
  */
 //-----------------------------------------------------------------------------
-extern fx32 DEMO3D_ENGINE_GetNowFrame( DEMO3D_ENGINE_WORK* wk );
+extern fx32 DEMO3D_ENGINE_GetNowFrame( const DEMO3D_ENGINE_WORK* wk );
