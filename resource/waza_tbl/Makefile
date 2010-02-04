@@ -8,7 +8,7 @@
 #------------------------------------------------------------------------------
 #※コンバート作業が必要なユーザーの名前を記述する
 #------------------------------------------------------------------------------
-USERS	=	taya
+USERS	=	taya sogabe
 
 #------------------------------------------------------------------------------
 #※ここに作成するnarc名を書く
@@ -21,6 +21,7 @@ WAZAINFO_GMM	= wazainfo.gmm
 ATKMSG_GMM		= btl_attack.gmm
 WAZANAME_HASH = wazano_hash.rb
 WAZANO_DEF		= wazano_def.h
+WAZALIST			= wazalist.txt
 
 #------------------------------------------------------------------------------
 #※コピー先へのパスを書く（通常はPROJECT_ARCDIRでよい）
@@ -32,6 +33,7 @@ WAZAINFO_GMM_DIR	= ../../resource/message/src/
 ATKMSG_GMM_DIR		= ../../resource/message/src/battle/
 WAZANAME_HASH_DIR = ../../tools/hash/
 WAZANO_DEF_DIR		= ../../prog/include/waza_tool/
+WAZALIST_DIR			= ../../tools/btl_subway/
 
 #------------------------------------------------------------------------------
 #※サブディレクトリでもMakeしたい場合、ここにディレクトリ名を書く
@@ -52,7 +54,7 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 do-build: wazano_def.h
 
 wazano_def.h: waza.tab
-	ruby $(RUBYDIR)waza_tbl_conv.rb waza.tab ../../resource/message/template.gmm
+	ruby $(RUBYDIR)waza_tbl_conv.rb waza.tab tame_waza.csv ../../resource/message/template.gmm
 
 $(NARCNAME): waza.tab
 	perl wazaconv.pl waza.tab
@@ -64,7 +66,7 @@ endif
 #------------------------------------------------------------------------------
 #	make do-build ルール
 #------------------------------------------------------------------------------
-do-build: $(WAZANAME_GMM_DIR)$(WAZANAME_GMM) $(WAZAINFO_GMM_DIR)$(WAZAINFO_GMM) $(ATKMSG_GMM_DIR)$(ATKMSG_GMM) $(WAZANAME_HASH_DIR)$(WAZANAME_HASH) $(WAZANO_DEF_DIR)$(WAZANO_DEF) $(TARGETDIR)/$(NARCNAME)
+do-build: $(WAZANAME_GMM_DIR)$(WAZANAME_GMM) $(WAZAINFO_GMM_DIR)$(WAZAINFO_GMM) $(ATKMSG_GMM_DIR)$(ATKMSG_GMM) $(WAZANAME_HASH_DIR)$(WAZANAME_HASH) $(WAZANO_DEF_DIR)$(WAZANO_DEF) $(TARGETDIR)/$(NARCNAME) $(WAZALIST_DIR)$(WAZALIST)
 
 $(TARGETDIR)/$(NARCNAME):	$(NARCNAME)
 	$(COPY)	$(NARCNAME) $(TARGETDIR)
@@ -84,14 +86,17 @@ $(WAZANAME_HASH_DIR)$(WAZANAME_HASH): $(WAZANAME_HASH)
 $(WAZANO_DEF_DIR)$(WAZANO_DEF): $(WAZANO_DEF)
 	$(COPY)	$(WAZANO_DEF) $(WAZANO_DEF_DIR)
 
+$(WAZALIST_DIR)$(WAZALIST): $(WAZALIST)
+	$(COPY)	$(WAZALIST) $(WAZALIST_DIR)
+
 #------------------------------------------------------------------------------
 #	ファイル削除ルール
 #------------------------------------------------------------------------------
-LDIRT_CLEAN = $(TARGETDIR)/$(NARCNAME) $(WAZANAME_GMM_DIR)$(WAZANAME_GMM) $(WAZAINFO_GMM_DIR)$(WAZAINFO_GMM) $(ATKMSG_GMM_DIR)$(ATKMSG_GMM) $(WAZANAME_HASH_DIR)$(WAZANAME_HASH) $(WAZANO_DEF_DIR)$(WAZANO_DEF)
+LDIRT_CLEAN = $(TARGETDIR)/$(NARCNAME) $(WAZANAME_GMM_DIR)$(WAZANAME_GMM) $(WAZAINFO_GMM_DIR)$(WAZAINFO_GMM) $(ATKMSG_GMM_DIR)$(ATKMSG_GMM) $(WAZANAME_HASH_DIR)$(WAZANAME_HASH) $(WAZANO_DEF_DIR)$(WAZANO_DEF) $(WAZALIST_DIR)$(WAZALIST)
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 #LDIRT_CLEAN += $(NARCNAME) $(WAZANAME_GMM) $(WAZAINFO_GMM) $(ATKMSG_GMM) $(WAZANAME_HASH) $(WAZANO_DEF)
 #NARCは現状生成していないのでCLEAN対象からは外しておく
-LDIRT_CLEAN += $(WAZANAME_GMM) $(WAZAINFO_GMM) $(ATKMSG_GMM) $(WAZANAME_HASH) $(WAZANO_DEF)
+LDIRT_CLEAN += $(WAZANAME_GMM) $(WAZAINFO_GMM) $(ATKMSG_GMM) $(WAZANAME_HASH) $(WAZANO_DEF) $(WAZALIST)
 endif
 
