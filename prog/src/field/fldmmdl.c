@@ -5194,7 +5194,7 @@ BOOL MMDLSYS_ROCKPOS_CheckRockFalled(
 //--------------------------------------------------------------
 BOOL MMDL_CheckOBJCodeKairiki( const u16 code )
 {
-  if( code == ROCK || code == BIGROCK || code == JUNK ){
+  if( code == ROCK || code == BIGROCK || code == JUNK || code == BIGROCK2 ){
     return( TRUE );
   }
   return( FALSE );
