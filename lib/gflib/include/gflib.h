@@ -31,6 +31,7 @@ extern "C" {
 
 #include "bg_sys.h"
 #include "strbuf.h"
+#include "strconv.h"
 #include "msgdata.h"
 #include "bmp.h"
 #include "bmp_win.h"

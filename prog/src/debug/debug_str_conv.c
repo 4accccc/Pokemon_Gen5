@@ -20,6 +20,9 @@
 //======================================================================
 #pragma mark [> define
 
+//GFLibに移植されました。
+
+#if 0
 //SJISコード
 #define SJIS_EOM (0x00)
 #define SJIS_0 (0x30)
@@ -445,3 +448,4 @@ const BOOL DEB_STR_CONV_StrcodeToSjis_OneChara( const STRCODE *str1 , char* str2
   
   return isDouble;
 }
+#endif
