@@ -1542,7 +1542,7 @@ static void APPBAR_Init( APPBAR_WORK *p_wk, TOWNMAP_MODE mode, GFL_CLUNIT* p_uni
 		ARCHANDLE	*	p_handle	= GFL_ARC_OpenDataHandle( ARCID_TOWNMAP_GRAPHIC, heapID );
 
 		p_wk->res[APPBAR_RES_SCALE_PLT]	= GFL_CLGRP_PLTT_RegisterEx( p_handle,
-				NARC_townmap_gra_tmap_bg_d_NCLR, CLSYS_DRAW_MAIN, (0)*0x20,
+				NARC_townmap_gra_tmap_obj_NCLR, CLSYS_DRAW_MAIN, (0)*0x20,
 				0, 4, heapID );	
 
 		p_wk->res[APPBAR_RES_SCALE_CHR]	= GFL_CLGRP_CGR_Register( p_handle,
