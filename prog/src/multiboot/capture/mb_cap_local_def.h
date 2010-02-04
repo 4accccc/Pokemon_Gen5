@@ -26,6 +26,8 @@
 #define MB_CAP_DEB (0)
 #endif //MULTI_BOOT_MAKE
 
+#define MB_CAPTURE_USE_EDGE (0)
+
 #pragma mark [> define
 #define MB_CAPTURE_FRAME_FRAME (GFL_BG_FRAME1_M)
 #define MB_CAPTURE_FRAME_DEBUG (GFL_BG_FRAME2_M)

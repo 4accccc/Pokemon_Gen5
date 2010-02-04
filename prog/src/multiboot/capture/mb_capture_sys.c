@@ -121,6 +121,13 @@ struct _MB_CAPTURE_WORK
   
   void* sndData;
 
+  //ポケモンふち用
+#if MB_CAPTURE_USE_EDGE
+  u16           edgePlttAnmCnt;
+  u16           edgePltt[16];
+  NNSGfdPlttKey edgePltKey;
+#endif //MB_CAPTURE_USE_EDGE
+
   GFL_FONT    *fontHandle;
   PRINT_QUE   *printQue;
   GFL_MSGDATA *msgHandle;
@@ -424,6 +431,33 @@ static const BOOL MB_CAPTURE_Main( MB_CAPTURE_WORK *work )
     MB_CAP_DOWN_UpdateSystem( work , work->downWork );
   }
   MB_CAPTURE_UpdateUpper( work );
+
+  
+  //パレットアニメ
+#if MB_CAPTURE_USE_EDGE
+  {
+    const u16 anmSpd = 0x400;
+    if( work->edgePlttAnmCnt + anmSpd < 0x10000 )
+    {
+      work->edgePlttAnmCnt += anmSpd;
+    }
+    else
+    {
+      work->edgePlttAnmCnt += anmSpd-0x10000;
+    }
+    
+    for( i=0;i<16;i++ )
+    {
+      const fx32 sin = FX_SinIdx( work->edgePlttAnmCnt );
+      //31,31,24 → 31,24,24
+      const u8 g = 24 + FX_FX32_TO_F32( (31-24) * sin );
+      work->edgePltt[i] = GX_RGB( 31 , g , 24 );
+    }
+    NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_3D_TEX_PLTT ,
+                                        NNS_GfdGetPlttKeyAddr( work->edgePltKey ) ,
+                                        work->edgePltt , 2*16 );
+  }
+#endif //MB_CAPTURE_USE_EDGE
 
   //3D描画  
   GFL_G3D_DRAW_Start();
@@ -848,6 +882,17 @@ static void MB_CAPTURE_InitPoke( MB_CAPTURE_WORK *work )
   int i,j;
   MB_CAP_POKE_INIT_WORK initWork;
   initWork.pokeArcHandle = MB_ICON_GetArcHandle(GFL_HEAP_LOWID(work->heapId),work->initWork->cardType);
+
+#if MB_CAPTURE_USE_EDGE
+  //ふち用パレット確保
+  work->edgePltKey = NNS_GfdAllocPlttVram( 2*16 , FALSE , 0 );
+  work->edgePlttAnmCnt = 0;
+  for( i=0;i<16;i++ )
+  {
+    work->edgePltt[i] = 0x63ff;  //薄黄
+  }
+  initWork.edgePlttKey = work->edgePltKey;
+#endif //MB_CAPTURE_USE_EDGE
   
   for( i=0;i<MB_CAP_POKE_NUM;i++ )
   {
@@ -868,6 +913,10 @@ static void MB_CAPTURE_TermPoke( MB_CAPTURE_WORK *work )
   {
     MB_CAP_POKE_DeleteObject( work , work->pokeWork[i] );
   }
+  
+#if MB_CAPTURE_USE_EDGE
+  NNS_GfdFreePlttVram( work->edgePltKey );
+#endif //MB_CAPTURE_USE_EDGE
 }
 
 #pragma mark [>upper func

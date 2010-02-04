@@ -63,6 +63,7 @@ typedef struct
   ARCHANDLE   *pokeArcHandle;
   
   POKEMON_PASO_PARAM *ppp;
+  NNSGfdPlttKey edgePlttKey;
   
 }MB_CAP_POKE_INIT_WORK;
 

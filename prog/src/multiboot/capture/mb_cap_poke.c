@@ -69,8 +69,10 @@ struct _MB_CAP_POKE
   fx32 height;
   
   int resIdx;
+  int resEdgeIdx;
   int objIdx;
   int objShadowIdx;
+  int objEdgeIdx;
   
   MB_CAP_EFFECT *downEff;
 };
@@ -131,6 +133,28 @@ MB_CAP_POKE* MB_CAP_POKE_CreateObject( MB_CAPTURE_WORK *capWork , MB_CAP_POKE_IN
   //3D設定の関係で反転させる・・・
   GFL_BBD_SetObjectFlipT( bbdSys , pokeWork->objIdx , &flg );
 
+  //ふち
+#if MB_CAPTURE_USE_EDGE
+  {
+    NNSGfdTexKey texKey;
+    GFL_BBD_GetResourceTexKey( bbdSys , pokeWork->resIdx , &texKey );
+    pokeWork->resEdgeIdx = GFL_BBD_AddResourceKey(  bbdSys , 
+                                       texKey , 
+                                       initWork->edgePlttKey ,
+                                       GFL_BBD_TEXFMT_PAL16 ,
+                                       GFL_BBD_TEXSIZDEF_32x64 ,
+                                       32 , 32 );
+    pokeWork->objEdgeIdx = GFL_BBD_AddObject( bbdSys , 
+                                       pokeWork->resEdgeIdx ,
+                                       FX32_CONST(0.6f) , 
+                                       FX32_CONST(0.6f) , 
+                                       &pokeWork->pos ,
+                                       31 ,
+                                       GFL_BBD_LIGHT_NONE );
+    GFL_BBD_SetObjectFlipT( bbdSys , pokeWork->objEdgeIdx , &flg );
+  }
+#endif //MB_CAPTURE_USE_EDGE
+
   //アイコンデータをVRAMへ送る
   {
     const u32 pltResNo = MB_ICON_GetPltResId( cardType );
@@ -185,6 +209,10 @@ void MB_CAP_POKE_DeleteObject( MB_CAPTURE_WORK *capWork , MB_CAP_POKE *pokeWork 
 {
   GFL_BBD_SYS *bbdSys = MB_CAPTURE_GetBbdSys( capWork );
 
+#if MB_CAPTURE_USE_EDGE
+  GFL_BBD_RemoveObject( bbdSys , pokeWork->objEdgeIdx );
+  GFL_BBD_RemoveResource( bbdSys , pokeWork->resEdgeIdx );
+#endif //MB_CAPTURE_USE_EDGE
   GFL_BBD_RemoveObject( bbdSys , pokeWork->objShadowIdx );
   GFL_BBD_RemoveObject( bbdSys , pokeWork->objIdx );
   GFL_BBD_RemoveResource( bbdSys , pokeWork->resIdx );
@@ -213,6 +241,22 @@ void MB_CAP_POKE_UpdateObject( MB_CAPTURE_WORK *capWork , MB_CAP_POKE *pokeWork 
     }
     GFL_BBD_SetObjectCelIdx( bbdSys , pokeWork->objIdx , &pokeWork->anmIdx );
   }
+  
+  //枠の追従
+#if MB_CAPTURE_USE_EDGE
+  {
+    VecFx32 pos;
+    BOOL isDisp = GFL_BBD_GetObjectDrawEnable( bbdSys , pokeWork->objIdx );
+    BOOL isFlip = GFL_BBD_GetObjectFlipS( bbdSys , pokeWork->objIdx );
+    GFL_BBD_SetObjectDrawEnable( bbdSys , pokeWork->objEdgeIdx , &isDisp );
+    GFL_BBD_SetObjectFlipS( bbdSys , pokeWork->objEdgeIdx , &isFlip );
+
+    GFL_BBD_GetObjectTrans( bbdSys , pokeWork->objIdx , &pos );
+    //pos.z -= FX32_CONST(0.1f);
+    GFL_BBD_SetObjectTrans( bbdSys , pokeWork->objEdgeIdx , &pos );
+    GFL_BBD_SetObjectCelIdx( bbdSys , pokeWork->objEdgeIdx , &pokeWork->anmIdx );
+  }
+#endif //MB_CAPTURE_USE_EDGE
   
 }
 
