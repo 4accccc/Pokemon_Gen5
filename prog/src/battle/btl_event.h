@@ -28,6 +28,7 @@
 typedef enum {
   BTL_EVENT_NULL = 0,
 
+  BTL_EVENT_ACTPROC_END,            ///< アクション処理１件終了
   BTL_EVENT_WAZASEQ_START,          ///< ワザ処理開始
   BTL_EVENT_WAZASEQ_END,            ///< ワザ処理終了
   BTL_EVENT_CHECK_DELAY_WAZA,       ///< 遅延発動ワザ準備チェック

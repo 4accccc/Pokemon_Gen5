@@ -36,6 +36,8 @@ typedef enum {
   SC_OP_RANK_UP,            ///< ステータスランクアップ  [ClientID, StatusType, プラス量]
   SC_OP_RANK_DOWN,          ///< ステータスランクダウン  [ClientID, StatusType, マイナス量]
   SC_OP_RANK_SET5,          ///< ステータスランク主要５種セット[ pokeID, atk, def, sp_atk, sp_def, agi ]
+  SC_OP_RANK_RECOVER,       ///< ステータスランク（７種）下がっているもののみフラットに
+  SC_OP_RANK_RESET,         ///< ステータスランク（７種）全てをフラットに
   SC_OP_ADD_CRITICAL,       ///< クリティカルランク加算[ pokeID, (int)value ]
   SC_OP_SICK_SET,           ///< 状態異常 [PokeID, Sick, contParam]
   SC_OP_CURE_POKESICK,      ///< ポケモン系状態異常を回復 [PokeID ]
@@ -197,6 +199,15 @@ static inline void SCQUE_PUT_OP_RankSet5( BTL_SERVER_CMD_QUE* que, u8 pokeID, u8
 {
   SCQUE_PUT_Common( que, SC_OP_RANK_SET5, pokeID, atk, def, sp_atk, sp_def, agi );
 }
+static inline void SCQUE_PUT_OP_RankRecover( BTL_SERVER_CMD_QUE* que, u8 pokeID )
+{
+  SCQUE_PUT_Common( que, SC_OP_RANK_RECOVER, pokeID );
+}
+static inline void SCQUE_PUT_OP_RankReset( BTL_SERVER_CMD_QUE* que, u8 pokeID )
+{
+  SCQUE_PUT_Common( que, SC_OP_RANK_RESET, pokeID );
+}
+
 static inline void SCQUE_PUT_OP_AddCritical( BTL_SERVER_CMD_QUE* que, u8 pokeID, int value )
 {
   SCQUE_PUT_Common( que, SC_OP_ADD_CRITICAL, pokeID, value );

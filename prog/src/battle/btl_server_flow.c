@@ -239,6 +239,7 @@ static ACTION_ORDER_WORK* SearchActOrderByWaza( BTL_SVFLOW_WORK* wk, WazaID waza
 static int IntrActOrder( BTL_SVFLOW_WORK* wk, const ACTION_ORDER_WORK* actOrder, u32 intrIndex );
 static void SendLastActOrder( BTL_SVFLOW_WORK* wk, const ACTION_ORDER_WORK* actOrder );
 static void ActOrder_Proc( BTL_SVFLOW_WORK* wk, ACTION_ORDER_WORK* actOrder );
+static void scEvent_ActProcEnd( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
 static BOOL ActOrder_IntrProc( BTL_SVFLOW_WORK* wk, u8 intrPokeID );
 static BOOL ActOrder_IntrReserve( BTL_SVFLOW_WORK* wk, u8 intrPokeID );
 static BOOL ActOrder_IntrReserveByWaza( BTL_SVFLOW_WORK* wk, WazaID waza );
@@ -1708,9 +1709,30 @@ static void ActOrder_Proc( BTL_SVFLOW_WORK* wk, ACTION_ORDER_WORK* actOrder )
 
       BPP_TURNFLAG_Set( bpp, BPP_TURNFLG_ACTION_DONE );
       scPut_SetContFlag( wk, bpp, BPP_CONTFLG_ACTION_DONE );
-    }
 
+      {
+        u32 hem_state = Hem_PushState( &wk->HEManager );
+        scEvent_ActProcEnd( wk, bpp );
+        scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
+        Hem_PopState( &wk->HEManager, hem_state );
+      }
+    }
   }
+}
+//----------------------------------------------------------------------------------
+/**
+ * [Event] アクション実行の終了
+ *
+ * @param   wk
+ * @param   bpp
+ */
+//----------------------------------------------------------------------------------
+static void scEvent_ActProcEnd( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp )
+{
+  BTL_EVENTVAR_Push();
+    BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID, BPP_GetID(bpp) );
+    BTL_EVENT_CallHandlers( wk, BTL_EVENT_ACTPROC_END );
+  BTL_EVENTVAR_Pop();
 }
 //--------------------------------------------------------------
 /**
@@ -11373,8 +11395,10 @@ static u8 scproc_HandEx_recoverRank( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM
   BTL_POKEPARAM* pp_target = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID );
   if( !BPP_IsDead(pp_target) )
   {
-    BPP_RankRecover( pp_target );
-    return 1;
+    u8 result;
+    SCQUE_PUT_OP_RankRecover( wk->que, param->pokeID );
+    result = BPP_RankRecover( pp_target );
+    return result;
   }
   return 0;
 }
@@ -11392,6 +11416,7 @@ static u8 scproc_HandEx_resetRank( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_H
   for(i=0; i<param->poke_cnt; ++i){
     pp_target = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID[i] );
     if( !BPP_IsDead(pp_target) ){
+      SCQUE_PUT_OP_RankReset( wk->que, param->pokeID[i] );
       BPP_RankReset( pp_target );
       result = 1;
     }

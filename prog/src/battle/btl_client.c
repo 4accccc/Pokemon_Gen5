@@ -183,6 +183,7 @@ static BOOL SubProc_AI_SelectAction( BTL_CLIENT* wk, int* seq );
 static u8 calcPuttablePokemons( BTL_CLIENT* wk, u8* list );
 static void setupPokeSelParam( BTL_CLIENT* wk, u8 mode, u8 numSelect, BTL_POKESELECT_PARAM* param, BTL_POKESELECT_RESULT* result );
 static void storePokeSelResult( BTL_CLIENT* wk, const BTL_POKESELECT_RESULT* res );
+static void storePokeSelResult_ForceQuit( BTL_CLIENT* wk );
 static u8 storeMyChangePokePos( BTL_CLIENT* wk, BtlPokePos* myCoverPos );
 static BOOL SubProc_UI_SelectChangeOrEscape( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_UI_SelectPokemonForCover( BTL_CLIENT* wk, int* seq );
@@ -237,6 +238,8 @@ static BOOL scProc_OP_PPPlus( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_RankUp( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_RankDown( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_RankSet5( BTL_CLIENT* wk, int* seq, const int* args );
+static BOOL scProc_OP_RankRecover( BTL_CLIENT* wk, int* seq, const int* args );
+static BOOL scProc_OP_RankReset( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_AddCritical( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_SickSet( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_CurePokeSick( BTL_CLIENT* wk, int* seq, const int* args );
@@ -2356,6 +2359,8 @@ static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq )
     { SC_OP_RANK_UP,            scProc_OP_RankUp          },
     { SC_OP_RANK_DOWN,          scProc_OP_RankDown        },
     { SC_OP_RANK_SET5,          scProc_OP_RankSet5        },
+    { SC_OP_RANK_RECOVER,       scProc_OP_RankRecover     },
+    { SC_OP_RANK_RESET,         scProc_OP_RankReset       },
     { SC_OP_ADD_CRITICAL,       scProc_OP_AddCritical     },
     { SC_OP_SICK_SET,           scProc_OP_SickSet         },
     { SC_OP_CURE_POKESICK,      scProc_OP_CurePokeSick    },
@@ -2368,7 +2373,7 @@ static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq )
     { SC_OP_CHANGE_POKETYPE,    scProc_OP_ChangePokeType  },
     { SC_OP_CHANGE_POKEFORM,    scProc_OP_ChangePokeForm  },
     { SC_OP_WAZASICK_TURNCHECK, scProc_OP_WSTurnCheck     },
-    { SC_OP_CONSUME_ITEM,       scProc_OP_ConsumeItem      },
+    { SC_OP_CONSUME_ITEM,       scProc_OP_ConsumeItem     },
     { SC_OP_UPDATE_USE_WAZA,    scProc_OP_UpdateUseWaza   },
     { SC_OP_SET_CONTFLAG,       scProc_OP_SetContFlag     },
     { SC_OP_RESET_CONTFLAG,     scProc_OP_ResetContFlag   },
@@ -3849,12 +3854,24 @@ static BOOL scProc_OP_RankDown( BTL_CLIENT* wk, int* seq, const int* args )
 }
 static BOOL scProc_OP_RankSet5( BTL_CLIENT* wk, int* seq, const int* args )
 {
-  BTL_POKEPARAM* pp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
-  BPP_RankSet( pp, BPP_ATTACK,      args[1] );
-  BPP_RankSet( pp, BPP_DEFENCE,     args[2] );
-  BPP_RankSet( pp, BPP_SP_ATTACK,   args[3] );
-  BPP_RankSet( pp, BPP_SP_DEFENCE,  args[4] );
-  BPP_RankSet( pp, BPP_AGILITY,     args[5] );
+  BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
+  BPP_RankSet( bpp, BPP_ATTACK,      args[1] );
+  BPP_RankSet( bpp, BPP_DEFENCE,     args[2] );
+  BPP_RankSet( bpp, BPP_SP_ATTACK,   args[3] );
+  BPP_RankSet( bpp, BPP_SP_DEFENCE,  args[4] );
+  BPP_RankSet( bpp, BPP_AGILITY,     args[5] );
+  return TRUE;
+}
+static BOOL scProc_OP_RankRecover( BTL_CLIENT* wk, int* seq, const int* args )
+{
+  BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
+  BPP_RankRecover( bpp );
+  return TRUE;
+}
+static BOOL scProc_OP_RankReset( BTL_CLIENT* wk, int* seq, const int* args )
+{
+  BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
+  BPP_RankReset( bpp );
   return TRUE;
 }
 static BOOL scProc_OP_AddCritical( BTL_CLIENT* wk, int* seq, const int* args )

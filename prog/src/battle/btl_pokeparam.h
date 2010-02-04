@@ -319,6 +319,9 @@ extern int BPP_RankEffectUpLimit( const BTL_POKEPARAM* pp, BppValueID rankType )
 //=============================================================================================
 extern int BPP_RankEffectDownLimit( const BTL_POKEPARAM* pp, BppValueID rankType );
 
+extern BOOL BPP_IsRankEffectDowned( const BTL_POKEPARAM* bpp );
+
+
 //-------------------------
 typedef void (*BtlSickTurnCheckFunc)( BTL_POKEPARAM* bpp, WazaSick sick, BPP_SICK_CONT oldCont, BOOL fCure, void* work );
 typedef void( *BppCureWazaSickDependPokeCallback)( void* arg, BTL_POKEPARAM* bpp, WazaSick sickID, u8 dependPokeID );
@@ -374,7 +377,7 @@ extern BtlPokePos  BPP_GetPrevTargetPos( const BTL_POKEPARAM* bpp );
 extern u32  BPP_GetWazaContCounter( const BTL_POKEPARAM* bpp );
 
 
-extern void BPP_RankRecover( BTL_POKEPARAM* pp );
+extern BOOL BPP_RankRecover( BTL_POKEPARAM* pp );
 extern void BPP_RankReset( BTL_POKEPARAM* pp );
 extern void BPP_Clear_ForDead( BTL_POKEPARAM* pp );
 extern void BPP_Clear_ForOut( BTL_POKEPARAM* bpp );

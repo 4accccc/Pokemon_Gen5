@@ -163,7 +163,7 @@ static void clearUsedWazaFlag( BTL_POKEPARAM* bpp );
 static void clearCounter( BTL_POKEPARAM* bpp );
 static void Effrank_Init( BPP_VARIABLE_PARAM* rank );
 static void Effrank_Reset( BPP_VARIABLE_PARAM* rank );
-static void Effrank_Recover( BPP_VARIABLE_PARAM* rank );
+static BOOL Effrank_Recover( BPP_VARIABLE_PARAM* rank );
 static BppValueID ConvertValueID( const BTL_POKEPARAM* bpp, BppValueID vid );
 static const s8* getRankVaryStatusConst( const BTL_POKEPARAM* pp, BppValueID type, s8* min, s8* max );
 static s8* getRankVaryStatus( BTL_POKEPARAM* pp, BppValueID type, s8* min, s8* max );
@@ -374,15 +374,40 @@ static void Effrank_Reset( BPP_VARIABLE_PARAM* rank )
   rank->hit = RANK_STATUS_DEF;
   rank->avoid = RANK_STATUS_DEF;
 }
-static void Effrank_Recover( BPP_VARIABLE_PARAM* rank )
+static BOOL Effrank_Recover( BPP_VARIABLE_PARAM* rank )
 {
-  if( rank->attack < RANK_STATUS_DEF ){ rank->attack = RANK_STATUS_DEF; };
-  if( rank->defence < RANK_STATUS_DEF ){  rank->defence = RANK_STATUS_DEF; }
-  if( rank->sp_attack < RANK_STATUS_DEF ){ rank->sp_attack = RANK_STATUS_DEF; }
-  if( rank->sp_defence < RANK_STATUS_DEF ){  rank->sp_defence = RANK_STATUS_DEF; }
-  if( rank->agility < RANK_STATUS_DEF ){ rank->agility = RANK_STATUS_DEF; }
-  if( rank->hit < RANK_STATUS_DEF ){ rank->hit = RANK_STATUS_DEF; }
-  if( rank->avoid < RANK_STATUS_DEF ) { rank->avoid = RANK_STATUS_DEF; }
+  BOOL fEffective = FALSE;
+
+  if( rank->attack < RANK_STATUS_DEF ){
+    rank->attack = RANK_STATUS_DEF;
+    fEffective = TRUE;
+  };
+  if( rank->defence < RANK_STATUS_DEF ){
+    rank->defence = RANK_STATUS_DEF;
+    fEffective = TRUE;
+  }
+  if( rank->sp_attack < RANK_STATUS_DEF ){
+    rank->sp_attack = RANK_STATUS_DEF;
+    fEffective = TRUE;
+  }
+  if( rank->sp_defence < RANK_STATUS_DEF ){
+    rank->sp_defence = RANK_STATUS_DEF;
+    fEffective = TRUE;
+  }
+  if( rank->agility < RANK_STATUS_DEF ){
+    rank->agility = RANK_STATUS_DEF;
+    fEffective = TRUE;
+  }
+  if( rank->hit < RANK_STATUS_DEF ){
+    rank->hit = RANK_STATUS_DEF;
+    fEffective = TRUE;
+  }
+  if( rank->avoid < RANK_STATUS_DEF ){
+    rank->avoid = RANK_STATUS_DEF;
+    fEffective = TRUE;
+  }
+
+  return fEffective;
 }
 
 
@@ -668,24 +693,25 @@ int BPP_GetValue( const BTL_POKEPARAM* bpp, BppValueID vid )
 int BPP_GetValue_Critical( const BTL_POKEPARAM* bpp, BppValueID vid )
 {
   BOOL fFlatParam = FALSE;
+  BppValueID  vid_org = vid;
 
   // @todo これだと BPP_GetValue_Base を呼び出しているので再変換が起こりまずい
-  vid = ConvertValueID( bpp, vid );
+  vid = ConvertValueID( bpp, vid_org );
 
   switch( vid ){
-  case BPP_ATTACK:     fFlatParam = (bpp->varyParam.attack < 0); break;
-  case BPP_SP_ATTACK:  fFlatParam = (bpp->varyParam.sp_attack < 0); break;
-  case BPP_DEFENCE:    fFlatParam = (bpp->varyParam.defence > 0); break;
-  case BPP_SP_DEFENCE: fFlatParam = (bpp->varyParam.sp_defence > 0); break;
+  case BPP_ATTACK:     fFlatParam = (bpp->varyParam.attack < RANK_STATUS_DEF); break;
+  case BPP_SP_ATTACK:  fFlatParam = (bpp->varyParam.sp_attack < RANK_STATUS_DEF); break;
+  case BPP_DEFENCE:    fFlatParam = (bpp->varyParam.defence > RANK_STATUS_DEF); break;
+  case BPP_SP_DEFENCE: fFlatParam = (bpp->varyParam.sp_defence > RANK_STATUS_DEF); break;
 
   default:
-    return BPP_GetValue( bpp, vid );
+    break;
   }
 
   if( fFlatParam ){
-    return BPP_GetValue_Base( bpp, vid );
+    return BPP_GetValue_Base( bpp, vid_org );
   }else{
-    return BPP_GetValue( bpp, vid );
+    return BPP_GetValue( bpp, vid_org );
   }
 }
 //=============================================================================================
@@ -904,7 +930,7 @@ u8 BPP_WAZA_SearchIdx( const BTL_POKEPARAM* pp, WazaID waza )
 }
 
 //-----------------------------
-static const s8* getRankVaryStatusConst( const BTL_POKEPARAM* pp, BppValueID type, s8* min, s8* max )
+static const s8* getRankVaryStatusConst( const BTL_POKEPARAM* bpp, BppValueID type, s8* min, s8* max )
 {
   const s8* ptr;
 
@@ -912,13 +938,13 @@ static const s8* getRankVaryStatusConst( const BTL_POKEPARAM* pp, BppValueID typ
   *max = RANK_STATUS_MAX;
 
   switch( type ) {
-  case BPP_ATTACK:      ptr = &pp->varyParam.attack; break;
-  case BPP_DEFENCE:     ptr = &pp->varyParam.defence; break;
-  case BPP_SP_ATTACK:   ptr = &pp->varyParam.sp_attack; break;
-  case BPP_SP_DEFENCE:  ptr = &pp->varyParam.sp_defence; break;
-  case BPP_AGILITY:     ptr = &pp->varyParam.agility; break;
-  case BPP_HIT_RATIO:   ptr = &pp->varyParam.hit; break;
-  case BPP_AVOID_RATIO: ptr = &pp->varyParam.avoid; break;
+  case BPP_ATTACK:      ptr = &bpp->varyParam.attack; break;
+  case BPP_DEFENCE:     ptr = &bpp->varyParam.defence; break;
+  case BPP_SP_ATTACK:   ptr = &bpp->varyParam.sp_attack; break;
+  case BPP_SP_DEFENCE:  ptr = &bpp->varyParam.sp_defence; break;
+  case BPP_AGILITY:     ptr = &bpp->varyParam.agility; break;
+  case BPP_HIT_RATIO:   ptr = &bpp->varyParam.hit; break;
+  case BPP_AVOID_RATIO: ptr = &bpp->varyParam.avoid; break;
 
   default:
     GF_ASSERT_MSG(0, "illegal rank Type ->%d", type);
@@ -984,14 +1010,35 @@ int BPP_RankEffectUpLimit( const BTL_POKEPARAM* pp, BppValueID rankType )
  * @retval  int   段階数（マイナス）
  */
 //=============================================================================================
-int BPP_RankEffectDownLimit( const BTL_POKEPARAM* pp, BppValueID rankType )
+int BPP_RankEffectDownLimit( const BTL_POKEPARAM* bpp, BppValueID rankType )
 {
   const s8* ptr;
   s8  min, max;
 
-  ptr = getRankVaryStatusConst( pp, rankType, &min, &max );
+  ptr = getRankVaryStatusConst( bpp, rankType, &min, &max );
   return (*ptr) - min;
 }
+//=============================================================================================
+/**
+ * フラットよりランクが下がっている能力が１つ以上あるかチェック
+ *
+ * @param   bpp
+ *
+ * @retval  BOOL
+ */
+//=============================================================================================
+BOOL BPP_IsRankEffectDowned( const BTL_POKEPARAM* bpp )
+{
+  if( bpp->varyParam.attack < RANK_STATUS_DEF ){ return TRUE; }
+  if( bpp->varyParam.defence  < RANK_STATUS_DEF ){ return TRUE; }
+  if( bpp->varyParam.sp_attack  < RANK_STATUS_DEF ){ return TRUE; }
+  if( bpp->varyParam.sp_defence  < RANK_STATUS_DEF ){ return TRUE; }
+  if( bpp->varyParam.agility  < RANK_STATUS_DEF ){ return TRUE; }
+  if( bpp->varyParam.hit  < RANK_STATUS_DEF ){ return TRUE; }
+  if( bpp->varyParam.avoid  < RANK_STATUS_DEF ){ return TRUE; }
+  return FALSE;
+}
+
 //=============================================================================================
 /**
  * ランクアップ効果
@@ -1111,25 +1158,27 @@ void BPP_RankSet( BTL_POKEPARAM* pp, BppValueID rankType, u8 value )
 }
 //=============================================================================================
 /**
- * 下がっているランク効果をフラットに戻す
+ * ランク効果（７種）の内、下がっているものをフラットに戻す
  *
- * @param   pp
+ * @param   bpp
+ *
+ * @retval  BOOL    有効だった（ランクが下がっている能力が１つ以上あった）場合、TRUE
  */
 //=============================================================================================
-void BPP_RankRecover( BTL_POKEPARAM* pp )
+BOOL BPP_RankRecover( BTL_POKEPARAM* bpp )
 {
-  Effrank_Recover( &pp->varyParam );
+  return Effrank_Recover( &bpp->varyParam );
 }
 //=============================================================================================
 /**
- * 全てのランク効果をフラットに戻す
+ * ランク効果（７種）をフラットに戻す
  *
  * @param   pp
  */
 //=============================================================================================
-void BPP_RankReset( BTL_POKEPARAM* pp )
+void BPP_RankReset( BTL_POKEPARAM* bpp )
 {
-  Effrank_Reset( &pp->varyParam );
+  Effrank_Reset( &bpp->varyParam );
 }
 
 //=============================================================================================
