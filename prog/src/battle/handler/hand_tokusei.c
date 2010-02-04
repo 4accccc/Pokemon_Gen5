@@ -2011,9 +2011,7 @@ static BOOL common_GuardWazaSick( BTL_SVFLOW_WORK* flowWk, u8 pokeID, WazaSick g
   {
     // ‚­‚ç‚¤•a‹C‚ªŽw’è’Ê‚è
     WazaSick  attackSick = BTL_EVENTVAR_GetValue( BTL_EVAR_SICKID );
-    if( (guardSick == attackSick)
-    ||  ((guardSick == WAZASICK_DOKU) && (attackSick == WAZASICK_DOKUDOKU))
-    ){
+    if( guardSick == attackSick ){
       return BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_FLAG, TRUE );
     }
   }
@@ -2458,7 +2456,7 @@ static void handler_PoisonHeal( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
   if( pokeID == BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) )
   {
     WazaSick sick = BTL_EVENTVAR_GetValue( BTL_EVAR_SICKID );
-    if( (sick == WAZASICK_DOKU) || (sick == WAZASICK_DOKUDOKU) )
+    if( sick == WAZASICK_DOKU )
     {
       const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
       BTL_HANDEX_PARAM_RECOVER_HP* param;

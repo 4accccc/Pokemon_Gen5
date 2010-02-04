@@ -501,7 +501,7 @@ BPP_SICK_CONT BTL_CALC_MakeDefaultPokeSickCont( PokeSick sick )
 //=============================================================================================
 BOOL BTL_CALC_IsBasicSickID( WazaSick sickID )
 {
-  return (sickID < POKESICK_MAX) || (sickID == WAZASICK_DOKUDOKU);
+  return sickID < POKESICK_MAX;
 }
 
 //=============================================================================================
@@ -567,10 +567,6 @@ void BTL_CALC_MakeDefaultWazaSickCont( WazaSick sick, const BTL_POKEPARAM* attac
       u8 turns = BTL_CALC_RandRange( BTL_CONF_TURN_MIN, BTL_CONF_TURN_MAX );
       *cont = BPP_SICKCONT_MakeTurn( turns );
     }
-    break;
-
-  case WAZASICK_DOKUDOKU:
-    *cont = BPP_SICKCONT_MakePermanentInc( BTL_MOUDOKU_INC_MAX );
     break;
 
   default:

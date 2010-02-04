@@ -3550,7 +3550,7 @@ static void handler_DokudokuDama( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
   {
     BTL_HANDEX_PARAM_ADD_SICK* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_SICK, pokeID );
 
-    param->sickID = WAZASICK_DOKUDOKU;
+    param->sickID = WAZASICK_DOKU;
     param->sickCont = BPP_SICKCONT_MakeMoudokuCont();
     param->fAlmost = FALSE;
     param->poke_cnt = 1;

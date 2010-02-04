@@ -5880,9 +5880,7 @@ static BOOL scproc_AddSick( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, BTL_POKE
   {
     // エフェクトの用意されている異常はそれを表示
     switch( sick ){
-    case WAZASICK_DOKU:
-    case WAZASICK_DOKUDOKU:
-      scPut_EffectByPokePos( wk, target, BTLEFF_DOKU ); break;
+    case WAZASICK_DOKU:     scPut_EffectByPokePos( wk, target, BTLEFF_DOKU ); break;
     case WAZASICK_YAKEDO:   scPut_EffectByPokePos( wk, target, BTLEFF_YAKEDO ); break;
     case WAZASICK_MAHI:     scPut_EffectByPokePos( wk, target, BTLEFF_MAHI ); break;
     case WAZASICK_KOORI:    scPut_EffectByPokePos( wk, target, BTLEFF_KOORI ); break;
@@ -5983,7 +5981,7 @@ static BtlAddSickFailCode addsick_check_fail( BTL_SVFLOW_WORK* wk, const BTL_POK
   }
 
   // すでにポケモン系状態異常になっているなら、新たにポケモン系状態異常にはならない
-  if( (sick < POKESICK_MAX) || (sick == WAZASICK_DOKUDOKU) )
+  if( sick < POKESICK_MAX )
   {
     if( BPP_GetPokeSick(target) != POKESICK_NULL ){
       return BTL_ADDSICK_FAIL_OTHER;
@@ -5991,7 +5989,7 @@ static BtlAddSickFailCode addsick_check_fail( BTL_SVFLOW_WORK* wk, const BTL_POK
   }
 
   // はがね or どくタイプは、「どく」にならない
-  if( (sick==WAZASICK_DOKU) || (sick==WAZASICK_DOKUDOKU) )
+  if( sick==WAZASICK_DOKU )
   {
     PokeTypePair type = BPP_GetPokeType( target );
     if( PokeTypePair_IsMatch(type, POKETYPE_HAGANE)
@@ -7215,7 +7213,6 @@ void BTL_SVF_SickDamageRecall( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, WazaSick
     HANDEX_STR_Clear( &wk->strParam );
     switch( sickID ){
     case WAZASICK_DOKU:
-    case WAZASICK_DOKUDOKU:
       scPut_EffectByPokePos( wk, bpp, BTLEFF_DOKU );
       break;
     case WAZASICK_YAKEDO:
@@ -8246,13 +8243,8 @@ static void scPut_AddSick( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, WazaSick 
   SCQUE_PUT_OP_SetSick( wk->que, pokeID, sick, sickCont.raw );
 
   // 状態異常アイコン付加
-  {
-    if( sick == WAZASICK_DOKUDOKU ){
-      sick = WAZASICK_DOKU;
-    }
-    if( sick < POKESICK_MAX ){
-      SCQUE_PUT_ACT_SickIcon( wk->que, pokeID, sick );
-    }
+  if( sick < POKESICK_MAX ){
+    SCQUE_PUT_ACT_SickIcon( wk->que, pokeID, sick );
   }
 }
 static void scPut_AddSickFail( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target, BtlAddSickFailCode failCode, WazaSick sick )

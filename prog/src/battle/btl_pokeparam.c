@@ -1470,12 +1470,6 @@ void BPP_SetWazaSick( BTL_POKEPARAM* bpp, WazaSick sick, BPP_SICK_CONT contParam
   if( sick == WAZASICK_NEMURI ){
   }
 
-  // 「どくどく」になる時は同時に「どく」にもかける
-  if( sick == WAZASICK_DOKUDOKU )
-  {
-    bpp->sickCont[ WAZASICK_DOKU ] = contParam;
-    bpp->wazaSickCounter[ WAZASICK_DOKU ] = 0;
-  }
 }
 
 
@@ -1543,10 +1537,7 @@ void BPP_WazaSick_TurnCheck( BTL_POKEPARAM* bpp, BtlSickTurnCheckFunc callbackFu
         }
       }
       if( callbackFunc != NULL ){
-        // 「どくどく」は普通のどくと処理が重なってしまうのでコールバックしない
-        if( sick != WAZASICK_DOKUDOKU ){
-          callbackFunc( bpp, sick, oldCont, fCure, callbackWork );
-        }
+        callbackFunc( bpp, sick, oldCont, fCure, callbackWork );
       }
     }
   }
@@ -1652,10 +1643,6 @@ static void cureDependSick( BTL_POKEPARAM* bpp, WazaSick sickID  )
   case WAZASICK_NEMURI:
     bpp->sickCont[ WAZASICK_AKUMU ] = BPP_SICKCONT_MakeNull();    // 眠りが治れば“あくむ”も治る
     bpp->wazaSickCounter[ WAZASICK_AKUMU ] = 0;
-    break;
-  case WAZASICK_DOKU:
-    bpp->sickCont[ WAZASICK_DOKUDOKU ] = BPP_SICKCONT_MakeNull(); // 毒が治れば“どくどく”も治る
-    bpp->wazaSickCounter[ WAZASICK_DOKUDOKU ] = 0;
     break;
   }
 }
@@ -1829,7 +1816,7 @@ int BPP_CalcSickDamage( const BTL_POKEPARAM* bpp, WazaSick sick )
     switch( sick ){
     case WAZASICK_DOKU:
       // 「どくどく」状態ならターン数でダメージ増加
-      if( BPP_CheckSick(bpp, WAZASICK_DOKUDOKU) ){
+      if( BPP_SICKCONT_IsMoudokuCont(bpp->sickCont[sick]) ){
         return (bpp->baseParam.hpMax / 16) * bpp->wazaSickCounter[sick];
       }else{
         return BTL_CALC_QuotMaxHP( bpp, 8 );
@@ -1980,13 +1967,7 @@ void BPP_Clear_ForIn( BTL_POKEPARAM* bpp )
   setupBySrcData( bpp, bpp->coreParam.ppSrc );
   flgbuf_clear( bpp->contFlag, sizeof(bpp->contFlag) );
 
-  // どくどくだけ退場時の状態引き継ぎ（カウンタはリセットさせる）
-  {
-    BPP_SICK_CONT dokudokuCont = bpp->sickCont[ WAZASICK_DOKUDOKU ];
-    clearWazaSickWork( bpp, FALSE );
-    bpp->sickCont[ WAZASICK_DOKUDOKU ] = dokudokuCont;
-  }
-
+  clearWazaSickWork( bpp, FALSE );
   Effrank_Init( &bpp->varyParam );
 }
 //=============================================================================================
