@@ -48,6 +48,7 @@ typedef struct {
   GAMESYS_WORK * gsys;
   GAMEDATA * gdata;
   SAVE_CONTROL_WORK *save;
+  BEACON_DETAIL_PARAM prm;
 } EVENT_BEACON_DETAIL_WORK;
 
 //============================================================================================
@@ -80,7 +81,10 @@ static GMEVENT_RESULT EVENT_BeaconDetailMain(GMEVENT * event, int *  seq, void *
     (*seq)++;
     //break throw
   case _CALL_BEACON_DETAIL:
-    GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(beacon_detail), &BeaconDetailProcData, bdw);
+    MI_CpuClear8(&bdw->prm,sizeof(BEACON_DETAIL_PARAM));
+    bdw->prm.gsys = bdw->gsys;
+    bdw->prm.gdata = bdw->gdata;
+    GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(beacon_detail), &BeaconDetailProcData, &bdw->prm);
     (*seq)++;
     break;
   case _WAIT_BEACON_DETAIL:

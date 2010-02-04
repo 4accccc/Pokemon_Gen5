@@ -38,8 +38,8 @@ enum
 	//メインBG
 	PLTID_BG_BACK_M				= 0,
 	PLTID_BG_POKE_M				= 1,
-	PLTID_BG_TASKMENU_M		= 11,
-	PLTID_BG_TOUCHBAR_M		= 13,
+	PLTID_BG_POPUP_M		  = 11, //ポップアップウィンドウパレット
+	PLTID_BG_TOUCHBAR_M		= 13, //タッチバー2本占有
 	PLTID_BG_LOCALIZE_M		= 15, //ローカライズ用
 
 	//サブBG
@@ -68,15 +68,15 @@ enum
 #define	FCOL_FNTOAM   ( PRINTSYS_LSB_Make(1,2,0) )	 ///<OAMフォント黒抜
 #define FCOL_FNTOAM_W ( PRINTSYS_LSB_Make(15,3,0))  ///<Oam白抜き
 #define FCOL_WHITE_N  ( PRINTSYS_LSB_Make(15,2,0) ) ///<BG白抜き
-#define FCOL_POPUP_BASE (7)
-#define FCOL_POPUP_MAIN (15)
-#define FCOL_POPUP_SDW  (14)
+#define FCOL_POPUP_BASE (15)
+#define FCOL_POPUP_MAIN (7)
+#define FCOL_POPUP_SDW  (8)
 #define FCOL_POPUP      ( PRINTSYS_LSB_Make(FCOL_POPUP_MAIN,FCOL_POPUP_SDW,FCOL_POPUP_BASE))  //BGポップアップ
 
 #define FCOL_WIN_BASE1  (3)
 #define FCOL_WIN_BASE2  (4)
-#define FCOL_WIN_MAIN   (7)
-#define FCOL_WIN_SDW    (6)
+#define FCOL_WIN_MAIN   (15)
+#define FCOL_WIN_SDW    (14)
 
 #define FCOL_WIN01 ( PRINTSYS_LSB_Make(FCOL_WIN_MAIN,FCOL_WIN_SDW,FCOL_WIN_BASE1))  //ビーコンウィンドウ1
 #define FCOL_WIN02 ( PRINTSYS_LSB_Make(FCOL_WIN_MAIN,FCOL_WIN_SDW,FCOL_WIN_BASE2))  //ビーコンウィンドウ2
@@ -95,13 +95,15 @@ enum
 #define BEACON_PROF_MAX   (4)
 #define BEACON_RECORD_MAX (3)
 
+#define UNION_CHAR_MAX  (16)
+
 ///////////////////////////////////////////////////
 //BMP関連
 #define BMP_BEACON_FRM  (BG_FRAME_WIN01_S)
 
-#define BMP_PROF_PX (3)
+#define BMP_PROF_PX (2)
 #define BMP_PROF_PY (1)
-#define BMP_PROF_SX (18)
+#define BMP_PROF_SX (19)
 #define BMP_PROF_SY (2)
 #define BMP_PROF_OY (3)
 #define BMP_PROF_PAL ( PLTID_BG_WIN01_S )
@@ -118,9 +120,66 @@ enum
 #define BMP_PMS_SY (4)
 #define BMP_PMS_PAL ( PLTID_BG_WIN01_S )
 
+//ポップアップウィンドウ
+#define BMP_POPUP_PX (2)
+#define BMP_POPUP_PY (22)
+#define BMP_POPUP_SX  (28)
+#define BMP_POPUP_SY  (6)
+#define BMP_POPUP_FRM (BG_FRAME_POPUP_M)
+#define BMP_POPUP_PAL (PLTID_BG_POPUP_M)
 
 ///////////////////////////////////////////
 //ウィンドウレイアウト
 
-#define BEACON_WIN_PROF_PX  (16)
-#define BEACON_WIN_PROF_PY  ()
+#define BMP_PROF_DAT_PX  (10)
+#define BMP_PROF_DAT_SX  (BMP_PROF_SX-BMP_PROF_DAT_PX)
+#define BMP_PROF_DAT_SY  (BMP_PROF_SY)
+
+#define BMP_RECORD_DAT_PX  (17)
+#define BMP_RECORD_DAT_SX  (BMP_RECORD_SX-BMP_RECORD_DAT_PX)
+#define BMP_RECORD_DAT_SY  (BMP_RECORD_SY)
+
+//////////////////////////////////////////////
+//アクター
+enum{
+ ACTANM_ICON_TR,
+ ACTANM_ICON_POKE,
+ ACTANM_RANK01,
+ ACTANM_RANK02,
+ ACTANM_RANK03,
+ ACTANM_RANK04,
+ ACTANM_RANK05,
+};
+
+#define ACT_TRAINER_PX  (26*8)
+#define ACT_TRAINER_PY  (7*8)
+#define ACT_RANK_PX     (24*8)
+#define ACT_RANK_PY     (12*8)
+#define ACT_TRAINER_BGPRI (0)
+
+
+
+//////////////////////////////////////////
+//エフェクト関連定義値
+enum{
+ SCROLL_UP,
+ SCROLL_DOWN,
+};
+
+///ポップアップスクロール
+#define POPUP_HEIGHT  (8*8)
+#define POPUP_DIFF    (8)
+#define POPUP_COUNT   (POPUP_HEIGHT/POPUP_DIFF)
+#define POPUP_WAIT    (30*3)
+
+
+///ページスクロール
+#define PAGE_SCROLL_H   (192)
+#define PAGE_SCROLL_PYU (PAGE_SCROLL_H)
+#define PAGE_SCROLL_PYD (-PAGE_SCROLL_H)
+
+enum{
+ SCROLL_POS_UP,
+ SCROLL_POS_DEF,
+ SCROLL_POS_DOWN,
+};

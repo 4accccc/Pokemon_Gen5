@@ -114,10 +114,14 @@ static int seq_FadeOut( BEACON_DETAIL_WORK* wk );
 //-------------------------------------
 ///	汎用処理ユーティリティ
 //=====================================
+static void _sub_DataSetup(BEACON_DETAIL_WORK* wk);
+static void _sub_DataExit(BEACON_DETAIL_WORK* wk);
 static void _sub_SystemSetup( BEACON_DETAIL_WORK* wk);
 static void _sub_SystemExit( BEACON_DETAIL_WORK* wk);
 static void _sub_BGResInit( BEACON_DETAIL_WORK* wk, HEAPID heapID );
 static void _sub_BGResRelease( BEACON_DETAIL_WORK* wk );
+static void _sub_BmpWinCreate(BEACON_DETAIL_WORK* wk);
+static void _sub_BmpWinDelete(BEACON_DETAIL_WORK* wk);
 
 //-------------------------------------
 ///	タッチバー
@@ -174,18 +178,17 @@ const GFL_PROC_DATA BeaconDetailProcData =
 static GFL_PROC_RESULT BeaconDetailProc_Init( GFL_PROC *proc, int *seq, void *pwk, void *mywk )
 {
 	BEACON_DETAIL_WORK *wk;
-	BEACON_DETAIL_PARAM *param;
 
 	//オーバーレイ読み込み
 	GFL_OVERLAY_Load( FS_OVERLAY_ID(ui_common));
 	
-	//引数取得
-	param	= pwk;
-
 	//ヒープ作成
   GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_BEACON_DETAIL, BEACON_DETAIL_HEAP_SIZE );
   wk = GFL_PROC_AllocWork( proc, sizeof(BEACON_DETAIL_WORK), HEAPID_BEACON_DETAIL );
   GFL_STD_MemClear( wk, sizeof(BEACON_DETAIL_WORK) );
+	
+  //引数取得
+	wk->param	= pwk;
 
   // 初期化
   wk->heapID = HEAPID_BEACON_DETAIL;
@@ -194,8 +197,10 @@ static GFL_PROC_RESULT BeaconDetailProc_Init( GFL_PROC *proc, int *seq, void *pw
 	//描画設定初期化
 	wk->graphic	= BEACON_DETAIL_GRAPHIC_Init( GX_DISP_SELECT_SUB_MAIN, wk->heapID );
 
+  _sub_DataSetup( wk );
   _sub_SystemSetup( wk );
 	_sub_BGResInit( wk, wk->heapID );
+  _sub_BmpWinCreate( wk );
   _sub_ActorResourceLoad( wk, wk->handle);
 
 	//タッチバーの初期化
@@ -229,8 +234,10 @@ static GFL_PROC_RESULT BeaconDetailProc_Exit( GFL_PROC *proc, int *seq, void *pw
   _sub_BeaconWinExit( wk );
 	_sub_TouchBarExit( wk->touchbar );
   _sub_ActorResourceUnload( wk );
+  _sub_BmpWinDelete( wk );
 	_sub_BGResRelease( wk );
   _sub_SystemExit( wk );
+  _sub_DataExit( wk );
 
 	//描画設定破棄
 	BEACON_DETAIL_GRAPHIC_Exit( wk->graphic );
@@ -351,6 +358,52 @@ static int seq_FadeOut( BEACON_DETAIL_WORK* wk )
  *
  ***********************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////
+//--------------------------------------------------------------
+/**
+ * データ関連のセットアップ
+ *
+ * @param   wk		
+ */
+//--------------------------------------------------------------
+static void _sub_DataSetup(BEACON_DETAIL_WORK* wk)
+{
+  int i,max,target;
+
+  //テンポラリを作成
+  wk->tmpInfo = GAMEBEACON_Alloc( wk->heapID );
+
+  wk->b_status = GAMEDATA_GetBeaconStatus( wk->param->gdata );
+  wk->infoLog = BEACON_STATUS_GetInfoTbl( wk->b_status );
+
+  target = BEACON_STATUS_GetViewTopOffset( wk->b_status );
+  max = GAMEBEACON_InfoTblRing_GetEntryNum( wk->infoLog );
+
+  //詳細が有効なデータindexを取得
+  for(i = 0;i < max;i++){
+    if( GAMEBEACON_Check_NPC( wk->tmpInfo )){
+      continue;
+    }
+    if( target == i ){
+      wk->list_top = wk->list_max;
+    }
+    wk->list[wk->list_max++] = i;
+  }
+
+  //メッセージスピード取得
+  wk->msg_spd  = MSGSPEED_GetWait();
+}
+
+//--------------------------------------------------------------
+/**
+ * データ関連の破棄＆終了処理
+ *
+ * @param   wk		
+ */
+//--------------------------------------------------------------
+static void _sub_DataExit(BEACON_DETAIL_WORK* wk)
+{
+  GFL_HEAP_FreeMemory( wk->tmpInfo );
+}
 
 //--------------------------------------------------------------
 /**
@@ -602,9 +655,11 @@ static void obj_ObjResRelease( BEACON_DETAIL_WORK* wk, OBJ_RES_TBL* res )
 //--------------------------------------------------------------
 static void _sub_ActorResourceLoad( BEACON_DETAIL_WORK* wk, ARCHANDLE *handle )
 {
-  ARCHANDLE* h_union = GFL_ARC_OpenDataHandle( ARCID_WIFIUNIONCHAR, wk->tmpHeapID );
+  int i;
 
-  {
+  wk->h_trgra = TR2DGRA_OpenHandle( wk->heapID );
+
+  { //ノーマル
     const OBJ_RES_SRC srcNormal = {
       CLSYS_DRAW_MAX, PLTID_OBJ_NORMAL_M, 3,
       NARC_beacon_status_bdetail_obj_nclr,
@@ -613,25 +668,45 @@ static void _sub_ActorResourceLoad( BEACON_DETAIL_WORK* wk, ARCHANDLE *handle )
     };
     obj_ObjResInit( wk, &wk->objResNormal, &srcNormal, handle );
   }
-  {
+  { //ユニオン
     const OBJ_RES_SRC srcUnion = {
       CLSYS_DRAW_MAIN, PLTID_OBJ_UNION_M, 1,
       NARC_wifi_unionobj_wifi_union_obj_NCLR,
       NARC_wifi_unionobj_front00_NCGR,
       NARC_wifi_unionobj_front00_NCER,
     };
+    ARCHANDLE* h_union = GFL_ARC_OpenDataHandle( ARCID_WIFIUNIONCHAR, wk->tmpHeapID );
+
     obj_ObjResInit( wk, &wk->objResUnion, &srcUnion, h_union );
+   
+    //再転送用のリソースを確保
+    wk->resPlttUnion.buf = GFL_ARC_LoadDataAllocByHandle( h_union,
+                              NARC_wifi_unionobj_wifi_union_obj_NCLR, wk->heapID );
+
+    NNS_G2dGetUnpackedPaletteData( wk->resPlttUnion.buf, &wk->resPlttUnion.p_pltt );
+    wk->resPlttUnion.dat = (u16*)wk->resPlttUnion.p_pltt->pRawData;
+  
+    for(i = 0;i < UNION_CHAR_MAX;i++){
+      wk->resCharUnion[i].buf = GFL_ARC_LoadDataAllocByHandle( h_union,
+                              NARC_wifi_unionobj_front00_NCGR+i,
+                              wk->heapID );
+      NNS_G2dGetUnpackedCharacterData( wk->resCharUnion[i].buf, &wk->resCharUnion[i].p_char );
+    }
+    GFL_ARC_CloseDataHandle( h_union );
   }
-  {
-    const OBJ_RES_SRC srcTrainer = {
-      CLSYS_DRAW_SUB, PLTID_OBJ_TRAINER_S, 1,
-      NARC_beacon_status_bdetail_obj_nclr,
-      NARC_beacon_status_bdetail_obj_ncgr,
-      NARC_beacon_status_bdetail_obj_ncer,
-    };
-    obj_ObjResInit( wk, &wk->objResTrainer, &srcTrainer, handle );
+  { //トレーナー
+    int i;
+
+    for(i = 0;i < BEACON_WIN_MAX;i++){
+      wk->objResTrainer[i].cgr = 
+        TR2DGRA_OBJ_CGR_Register( wk->h_trgra, TRTYPE_TANPAN+i, CLSYS_DRAW_SUB, wk->heapID );
+      wk->objResTrainer[i].pltt =
+        TR2DGRA_OBJ_PLTT_Register( wk->h_trgra, TRTYPE_TANPAN+i, CLSYS_DRAW_SUB,
+            (PLTID_OBJ_TRAINER_S+i)*0x20, wk->heapID );
+      wk->objResTrainer[i].cell =
+        TR2DGRA_OBJ_CELLANM_Register( TRTYPE_TANPAN+i, APP_COMMON_MAPPING_32K, CLSYS_DRAW_SUB, wk->heapID );
+    }
   }
-  GFL_ARC_CloseDataHandle( h_union );
 }
 
 //--------------------------------------------------------------
@@ -643,8 +718,21 @@ static void _sub_ActorResourceLoad( BEACON_DETAIL_WORK* wk, ARCHANDLE *handle )
 //--------------------------------------------------------------
 static void _sub_ActorResourceUnload( BEACON_DETAIL_WORK* wk )
 {
-  obj_ObjResRelease( wk, &wk->objResTrainer );
+  int i;
+
+  for(i = 0;i < BEACON_WIN_MAX;i++){
+    obj_ObjResRelease( wk, &wk->objResTrainer[i] );
+  }
+  
+  for( i = 0;i < UNION_CHAR_MAX;i++){
+    GFL_HEAP_FreeMemory( wk->resCharUnion[i].buf );
+  }
+  GFL_HEAP_FreeMemory( wk->resPlttUnion.buf );
+
+  obj_ObjResRelease( wk, &wk->objResUnion );
   obj_ObjResRelease( wk, &wk->objResNormal );
+  
+  GFL_ARC_CloseDataHandle( wk->h_trgra );
 }
 
 #ifdef	BEACON_DETAIL_PRINT_TOOL
@@ -751,7 +839,55 @@ static void bmpwin_Add( BMP_WIN* win, u8 frm, u8 pal, u8 px, u8 py, u8 sx, u8 sy
   GFL_BMP_Clear( win->bmp, FCOL_WIN_BASE1 );
   GFL_BMPWIN_MakeTransWindow( win->win );
 }
+
 //-----------------------------------------------------------------------------
+/*
+ *  @brief  アクター個別追加
+ */
+static GFL_CLWK* act_Add(
+   BEACON_DETAIL_WORK* wk, GFL_CLUNIT* unit, OBJ_RES_TBL* res,
+  s16 x, s16 y, u8 anm, u8 spri, u8 bg_pri)
+{
+  GFL_CLWK_DATA ini;
+  GFL_CLWK* obj;
+
+  //セルの生成
+  ini.pos_x = x;
+  ini.pos_y = y;
+  ini.anmseq = anm;
+  ini.bgpri = bg_pri;
+  ini.softpri = spri;
+  
+  obj = GFL_CLACT_WK_Create( unit,
+          res->cgr,res->pltt,res->cell, &ini, CLSYS_DEFREND_SUB, wk->heapID );
+
+  return obj;
+}
+
+//--------------------------------------------------------------
+/**
+ * BMPWIN作成
+ *
+ * @param   view		
+ */
+//--------------------------------------------------------------
+static void _sub_BmpWinCreate(BEACON_DETAIL_WORK* wk)
+{
+  bmpwin_Add( &wk->win_popup,
+      BMP_POPUP_FRM, BMP_POPUP_PAL, BMP_POPUP_PX, BMP_POPUP_PY,BMP_POPUP_SX, BMP_POPUP_SY );
+}
+
+//--------------------------------------------------------------
+/**
+ * BMPWIN削除
+ *
+ * @param   wk		
+ */
+//--------------------------------------------------------------
+static void _sub_BmpWinDelete(BEACON_DETAIL_WORK* wk)
+{
+  GFL_BMPWIN_Delete( wk->win_popup.win );
+}
 
 //-----------------------------------------------------------------------------
 /**
@@ -777,6 +913,7 @@ static void _sub_BeaconWinInit( BEACON_DETAIL_WORK* wk )
     int i,j;
     PMS_DATA pms;
     BEACON_WIN* bp;
+    
     // PMS表示用BMPWIN生成
     for( i=0; i < BEACON_WIN_MAX; i++ )
     {
@@ -795,7 +932,11 @@ static void _sub_BeaconWinInit( BEACON_DETAIL_WORK* wk )
       }
       bmpwin_Add( &bp->record, BMP_BEACON_FRM+i,
           BMP_RECORD_PAL+i, BMP_RECORD_PX, BMP_RECORD_PY, BMP_RECORD_SX, BMP_RECORD_SY );
-      
+    
+      bp->cTrainer = act_Add( wk, clunit, &wk->objResTrainer[i],
+                        ACT_TRAINER_PX, ACT_TRAINER_PY, 0, 0, ACT_TRAINER_BGPRI+i );
+      bp->cRank = act_Add( wk, clunit, &wk->objResNormal,
+                        ACT_RANK_PX, ACT_RANK_PY, ACTANM_RANK05, 0, ACT_TRAINER_BGPRI+i );
     }
   }
 }
@@ -812,16 +953,22 @@ static void _sub_BeaconWinInit( BEACON_DETAIL_WORK* wk )
 static void _sub_BeaconWinExit( BEACON_DETAIL_WORK* wk )
 {
   int i,j;
-  BEACON_WIN* wp;
+  BEACON_WIN* bp;
     
   for( i=0; i < BEACON_WIN_MAX; i++ )
   {
-    wp = &wk->beacon_win[i];
-    GFL_BMPWIN_Delete( wp->record.win );
+    bp = &wk->beacon_win[i];
+
+    GFL_CLACT_WK_SetDrawEnable( bp->cTrainer, FALSE );
+    GFL_CLACT_WK_Remove( bp->cTrainer);
+    GFL_CLACT_WK_SetDrawEnable( bp->cRank, FALSE );
+    GFL_CLACT_WK_Remove( bp->cRank);
+
+    GFL_BMPWIN_Delete( bp->record.win );
     for(j = 0;j < BEACON_PROF_MAX;j++){
-      GFL_BMPWIN_Delete( wp->prof[j].win );
-   }
-    GFL_BMPWIN_Delete( wp->pms );
+      GFL_BMPWIN_Delete( bp->prof[j].win );
+    }
+    GFL_BMPWIN_Delete( bp->pms );
   }
   PMS_DRAW_Exit( wk->pms_draw );
 }

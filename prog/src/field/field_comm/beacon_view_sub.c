@@ -684,18 +684,9 @@ static PANEL_WORK* panel_GetPanelFromDataIndex( BEACON_VIEW_PTR wk, u8 data_idx 
  */
 static void panel_UnionObjUpdate( BEACON_VIEW_PTR wk, PANEL_WORK* pp, GAMEBEACON_INFO* info)
 {
-  u8 no, sex, char_no, p_ofs;
+  u8 sex, char_no, p_ofs;
  
-  no = GAMEBEACON_Get_TrainerView(info);
-  sex = GAMEBEACON_Get_Sex(info);
- 
-  if(no > 8){
-    no = 0;
-  }
-  if(sex > 1){
-    sex = 0;
-  }
-  char_no = no+(sex*8);
+  char_no = GAMEBEACON_Get_TrainerView(info);
 
   //ƒLƒƒƒ‰ƒNƒ^“]‘—
   GFL_CLGRP_CGR_Replace(  wk->objResUnion.res[ OBJ_RES_CGR ].tbl[ pp->id ],

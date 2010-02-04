@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwasawa" host="W00157" date="2010-02-02T20:03:34"/>
+	<create user="iwasawa" host="W00157" date="2010-02-03T13:31:36"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -317,10 +317,17 @@
 プレイじかん</language>
 	</row>
 
-	<row id="msg_record_num01">
-		<comment>0：御礼を受けた回数&lt;0-99999&gt;</comment>
-		<language name="JPN" width="256">[2:04:５桁:0]かい</language>
-		<language name="JPN_KANJI" width="256">[2:04:５桁:0]かい</language>
+	<row id="msg_record_num">
+		<comment>0：御礼を受けた回数&lt;0-99999&gt;
+1：すれ違った人数&lt;0-99999&gt;
+2：プレイ時間（時）&lt;0-999&gt;
+3：プレイ時間（分）&lt;0-59&gt;</comment>
+		<language name="JPN" width="256">[BD:03:Ｘ右寄せ:0][2:04:５桁:0]かい
+[BD:03:Ｘ右寄せ:0][2:04:５桁:0][2:04:５桁:1]にん
+[BD:03:Ｘ右寄せ:0][2:04:５桁:0][2:02:３桁:2]:[2:01:２桁:3]</language>
+		<language name="JPN_KANJI" width="256">[BD:03:Ｘ右寄せ:0][2:04:５桁:0]かい
+[BD:03:Ｘ右寄せ:0][2:04:５桁:0][2:04:５桁:1]にん
+[BD:03:Ｘ右寄せ:0][2:04:５桁:0][2:02:３桁:2]:[2:01:２桁:3]</language>
 	</row>
 
 	<row id="msg_record_num02">
@@ -336,22 +343,18 @@
 		<language name="JPN_KANJI" width="256">[2:02:３桁:2]:[2:01:２桁:3]</language>
 	</row>
 
-	<row id="msg_receive_time">
-		<comment>0：&quot;AM&quot; or &quot;PM&quot;
-1：すれ違った時間(時)&lt;0-12&gt;
+	<row id="msg_receive_time01">
+		<comment>1：すれ違った時間(時)&lt;0-12&gt;
 2：すれ違った時間(分)&lt;0-59&gt;</comment>
-		<language name="JPN" width="256">すれちがったじかん　[1:21:時間帯:0][2:01:２桁:1]：[2:01:２桁:2]</language>
-		<language name="JPN_KANJI" width="256">すれちがったじかん　[1:21:時間帯:0][2:01:２桁:1]：[2:01:２桁:2]</language>
+		<language name="JPN" width="256">すれちがったじかん　ＡＭ[2:01:２桁:0]：[2:01:２桁:1]</language>
+		<language name="JPN_KANJI" width="256">すれちがったじかん　ＡＭ[2:01:２桁:0]：[2:01:２桁:1]</language>
 	</row>
 
-	<row id="msg_time_zone01">
-		<language name="JPN" width="256">ＡＭ</language>
-		<language name="JPN_KANJI" width="256">ＡＭ</language>
-	</row>
-
-	<row id="msg_time_zone02">
-		<language name="JPN" width="256">ＰＭ</language>
-		<language name="JPN_KANJI" width="256">ＰＭ</language>
+	<row id="msg_receive_time02">
+		<comment>1：すれ違った時間(時)&lt;0-12&gt;
+2：すれ違った時間(分)&lt;0-59&gt;</comment>
+		<language name="JPN" width="256">すれちがったじかん　ＰＭ[2:01:２桁:0]：[2:01:２桁:1]</language>
+		<language name="JPN_KANJI" width="256">すれちがったじかん　ＰＭ[2:01:２桁:0]：[2:01:２桁:1]</language>
 	</row>
 
 	<row id="msg_beacon_001" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">

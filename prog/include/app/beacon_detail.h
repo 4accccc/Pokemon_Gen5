@@ -37,5 +37,7 @@ extern const GFL_PROC_DATA BeaconDetailProcData;
 //=====================================
 typedef struct
 {	
-	GAMESYS_WORK				*gamesys;	//[in]ゲームシステム
+	GAMESYS_WORK		*gsys;	//[in]ゲームシステム
+	GAMEDATA				*gdata;	//[in]ゲームシステム
 }BEACON_DETAIL_PARAM;
+

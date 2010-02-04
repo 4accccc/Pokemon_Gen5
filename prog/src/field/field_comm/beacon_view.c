@@ -706,27 +706,27 @@ static void _sub_ActorResourceLoad( BEACON_VIEW_PTR wk, ARCHANDLE *handle)
       wk->tmpHeapID, FADE_SUB_OBJ, 0x20, ACT_PAL_WMI*16 );
   wk->resPlttPanel.buf = GFL_ARC_LoadDataAllocByHandle( handle,
                           NARC_beacon_status_bstatus_panel_nclr,
-                          wk->tmpHeapID );
+                          wk->heapID );
   NNS_G2dGetUnpackedPaletteData( wk->resPlttPanel.buf, &wk->resPlttPanel.p_pltt );
   wk->resPlttPanel.dat = (u16*)wk->resPlttPanel.p_pltt->pRawData;
 
   wk->resPlttUnion.buf = GFL_ARC_LoadDataAllocByHandle( handle_union,
                           NARC_wifi_unionobj_wifi_union_obj_NCLR,
-                          wk->tmpHeapID );
+                          wk->heapID );
   NNS_G2dGetUnpackedPaletteData( wk->resPlttUnion.buf, &wk->resPlttUnion.p_pltt );
   wk->resPlttUnion.dat = (u16*)wk->resPlttUnion.p_pltt->pRawData;
   
   for(i = 0;i < UNION_CHAR_MAX;i++){
     wk->resCharUnion[i].buf = GFL_ARC_LoadDataAllocByHandle( handle_union,
                               NARC_wifi_unionobj_front00_NCGR+i,
-                              wk->tmpHeapID );
+                              wk->heapID );
     NNS_G2dGetUnpackedCharacterData( wk->resCharUnion[i].buf, &wk->resCharUnion[i].p_char );
   }
 
   for(i = 0;i < ICON_MAX;i++){
     wk->resCharIcon[i].buf = GFL_ARC_LoadDataAllocByHandle( handle,
                           NARC_beacon_status_bstatus_icon01_ncgr+i,
-                          wk->tmpHeapID );
+                          wk->heapID );
     NNS_G2dGetUnpackedCharacterData( wk->resCharIcon[i].buf, &wk->resCharIcon[i].p_char );
   }
   DC_FlushAll();
