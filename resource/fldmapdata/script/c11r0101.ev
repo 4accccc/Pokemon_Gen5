@@ -38,17 +38,30 @@ _EVENT_DATA     ev_c11r0101_pos01
 /*            受付1                                            */
 /**************************************************************/
 EVENT_START ev_c11r0101_reception01
+  DEFINE_LOCAL AppSelectRec
   //「国連行く？」
+  _BALLOONWIN_TALKOBJ_MSG( msg_reception01_01 )
+  _YES_NO_WIN( SCWK_ANSWER )
+  _BALLOONWIN_CLOSE()
 
-  //選択アプリ
+  IF $SCWK_ANSWER == 0 THEN     //行く
+    //選択アプリ    todo
+    $AppSelectRec = 0   //国コードセット  todo
+    //データセット
+    _UN_SET_COUNTRY_INFO( AppSelectRec )
+    //「こちらへ」
+    _BALLOONWIN_TALKOBJ_MSG( msg_reception01_02 )
+    _BALLOONWIN_CLOSE()
+    //アニメ
 
-  //データセット
-
-  //「こちらへ」
-
-  //アニメ
-
-  //マップジャンプ
+    //マップチェンジ
+    _MAP_CHANGE( ZONE_ID_C11R0201, 10, 5, DIR_DOWN )
+  ELSE
+    //「またね」
+    _BALLOONWIN_TALKOBJ_MSG( msg_reception01_03 )
+    _LAST_KEYWAIT()
+    _BALLOONWIN_CLOSE()
+  ENDIF  
 
 EVENT_END
 
