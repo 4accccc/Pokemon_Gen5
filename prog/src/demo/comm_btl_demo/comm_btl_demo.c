@@ -974,7 +974,7 @@ static void _start_demo_init_rebind_multi( COMM_BTL_DEMO_MAIN_WORK* wk )
     }
     else
     {
-      pal = 2;
+      pal = 3;
     }
 
     // @TODO マテリアルID
@@ -1184,9 +1184,8 @@ static BOOL SceneEndDemo_Main( UI_SCENE_CNT_PTR cnt, void* work )
     {
       G3D_AnimeSet( &wk->wk_g3d, DEMO_ID_02_B );
     }
-    
-    //「WIN」用PTCロード
-    G3D_PTC_Setup( &wk->wk_g3d, NARC_comm_btl_demo_vs_demo03_spa );
+    //「モンスターボール」用PTCロード
+    G3D_PTC_Setup( &wk->wk_g3d, NARC_comm_btl_demo_vs_demo04_spa );
     
     // ボールアニメ開始
     TRAINER_UNIT_CNT_BallSetStart( wk );
@@ -1203,6 +1202,9 @@ static BOOL SceneEndDemo_Main( UI_SCENE_CNT_PTR cnt, void* work )
       }
     
       wk->timer = 0;
+      
+      //「WIN」用PTCロード
+      G3D_PTC_Setup( &wk->wk_g3d, NARC_comm_btl_demo_vs_demo03_spa );
 
       UI_SCENE_CNT_IncSubSeq( cnt );
     }
@@ -1970,7 +1972,7 @@ static void TRAINER_UNIT_Init( TRAINER_UNIT* unit, u8 type, u8 posid, const COMM
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  
+ *	@brief  トレーナーユニット 
  *
  *	@param	TRAINER_UNIT* unit 
  *
@@ -2116,7 +2118,7 @@ static void TRAINER_UNIT_Main( TRAINER_UNIT* unit )
   else
   {
     // 終了デモ
-//    _trainer_unit_main_end( unit );
+//  _trainer_unit_main_end( unit );
   }
 
 //  HOSAKA_Printf("unit timer=%d \n", unit->timer);
