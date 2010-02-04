@@ -62,6 +62,7 @@ SE再生	SEQ_SE_BOWA2	デフォルト	0	0	127	0	0
 パーティクル再生	be_ball_normal_1	BE_BALL_NORMAL_1_BALL_NORMAL_3	POS_BB	方向無し	4:0:0	1:1:1	1
 ポケモンパレットフェード	POS_BB	16	16	0	31:31:31
 ポケモン拡縮	POS_BB	追従	1.2	1.2	32	0	0
+ポケモン鳴き声	POS_BB
 ラベル	NO_EXIST_BB_3
 立ち位置チェック	POS_B	いない	NO_EXIST_B_3
 パーティクル再生	be_ball_normal_1	BE_BALL_NORMAL_1_BALL_NORMAL_1	POS_B	方向無し	4:0:0	1:1:1	1
@@ -69,6 +70,7 @@ SE再生	SEQ_SE_BOWA2	デフォルト	0	0	127	0	0
 パーティクル再生	be_ball_normal_1	BE_BALL_NORMAL_1_BALL_NORMAL_3	POS_B	方向無し	4:0:0	1:1:1	1
 ポケモンパレットフェード	POS_B	16	16	0	31:31:31
 ポケモン拡縮	POS_B	追従	1.2	1.2	32	0	0
+ポケモン鳴き声	POS_B
 ラベル	NO_EXIST_B_3
 立ち位置チェック	POS_D	いない	NO_EXIST_D_3
 パーティクル再生	be_ball_normal_1	BE_BALL_NORMAL_1_BALL_NORMAL_1	POS_D	方向無し	4:0:0	1:1:1	1
@@ -76,6 +78,7 @@ SE再生	SEQ_SE_BOWA2	デフォルト	0	0	127	0	0
 パーティクル再生	be_ball_normal_1	BE_BALL_NORMAL_1_BALL_NORMAL_3	POS_D	方向無し	4:0:0	1:1:1	1
 ポケモンパレットフェード	POS_D	16	16	0	31:31:31
 ポケモン拡縮	POS_D	追従	1.2	1.2	32	0	0
+ポケモン鳴き声	POS_D
 ラベル	NO_EXIST_D_3
 立ち位置チェック	POS_F	いない	NO_EXIST_F_3
 パーティクル再生	be_ball_normal_1	BE_BALL_NORMAL_1_BALL_NORMAL_1	POS_F	方向無し	4:0:0	1:1:1	1
@@ -83,6 +86,7 @@ SE再生	SEQ_SE_BOWA2	デフォルト	0	0	127	0	0
 パーティクル再生	be_ball_normal_1	BE_BALL_NORMAL_1_BALL_NORMAL_3	POS_F	方向無し	4:0:0	1:1:1	1
 ポケモンパレットフェード	POS_F	16	16	0	31:31:31
 ポケモン拡縮	POS_F	追従	1.2	1.2	32	0	0
+ポケモン鳴き声	POS_F
 ラベル	NO_EXIST_F_3
 エフェクト終了待ち	ポケモン
 制御モード変更	継続
