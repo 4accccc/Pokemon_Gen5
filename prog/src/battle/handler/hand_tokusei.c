@@ -502,9 +502,9 @@ BTL_EVENT_FACTOR*  BTL_HANDLER_TOKUSEI_Add( const BTL_POKEPARAM* pp )
     { POKETOKUSEI_HIRAISIN,         HAND_TOK_ADD_Hiraisin      },
     { POKETOKUSEI_YOBIMIZU,         HAND_TOK_ADD_Yobimizu      },
     { POKETOKUSEI_SUROOSUTAATO,     HAND_TOK_ADD_SlowStart     },
-    { POKETOKUSEI_ARIJIGOKU,        HAND_TOK_ADD_Arijigoku     },
-    { POKETOKUSEI_KAGEFUMI,         HAND_TOK_ADD_Kagefumi      },
-    { POKETOKUSEI_JIRYOKU,          HAND_TOK_ADD_Jiryoku       },
+//    { POKETOKUSEI_ARIJIGOKU,        HAND_TOK_ADD_Arijigoku     },
+//    { POKETOKUSEI_KAGEFUMI,         HAND_TOK_ADD_Kagefumi      },
+//    { POKETOKUSEI_JIRYOKU,          HAND_TOK_ADD_Jiryoku       },
     { POKETOKUSEI_SIMERIKE,         HAND_TOK_ADD_Simerike      },
 //    { POKETOKUSEI_MARUTITAIPU,      HAND_TOK_ADD_MultiType     },
     { POKETOKUSEI_FUSIGINAMAMORI,   HAND_TOK_ADD_FusiginaMamori},
@@ -662,7 +662,8 @@ static BOOL Tokusei_IsExePer( BTL_SVFLOW_WORK* flowWk, u8 per )
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Ikaku( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_MEMBER_IN, handler_Ikaku_MemberIn },
+    { BTL_EVENT_MEMBER_IN,            handler_Ikaku_MemberIn },
+    { BTL_EVENT_CHANGE_TOKUSEI_AFTER, handler_Ikaku_MemberIn },
   };
 
   *numElems = NELEMS(HandlerTable);
@@ -2095,7 +2096,8 @@ static void handler_Amefurasi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Amefurasi( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_MEMBER_IN, handler_Amefurasi }, // 自分が出場ハンドラ
+    { BTL_EVENT_MEMBER_IN,             handler_Amefurasi }, // 自分が出場ハンドラ
+    { BTL_EVENT_CHANGE_TOKUSEI_AFTER,  handler_Amefurasi }, // とくせい書き換えハンドラ
   };
   *numElems = NELEMS(HandlerTable);
   return HandlerTable;
@@ -2112,7 +2114,8 @@ static void handler_Hideri( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk,
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Hideri( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_MEMBER_IN, handler_Hideri },  // 自分が出場ハンドラ
+    { BTL_EVENT_MEMBER_IN,            handler_Hideri },  // 自分が出場ハンドラ
+    { BTL_EVENT_CHANGE_TOKUSEI_AFTER, handler_Hideri },  // とくせい書き換えハンドラ
   };
   *numElems = NELEMS(HandlerTable);
   return HandlerTable;
@@ -2129,7 +2132,8 @@ static void handler_Sunaokosi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Sunaokosi( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_MEMBER_IN, handler_Sunaokosi }, // 自分が出場ハンドラ
+    { BTL_EVENT_MEMBER_IN,              handler_Sunaokosi }, // 自分が出場ハンドラ
+    { BTL_EVENT_CHANGE_TOKUSEI_AFTER,   handler_Sunaokosi }, // // とくせい書き換えハンドラ
   };
   *numElems = NELEMS(HandlerTable);
   return HandlerTable;
@@ -2146,7 +2150,8 @@ static void handler_Yukifurasi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Yukifurasi( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_MEMBER_IN, handler_Yukifurasi },  // 自分が出場ハンドラ
+    { BTL_EVENT_MEMBER_IN,            handler_Yukifurasi },  // 自分が出場ハンドラ
+    { BTL_EVENT_CHANGE_TOKUSEI_AFTER, handler_Yukifurasi },  // とくせい書き換えハンドラ
   };
   *numElems = NELEMS(HandlerTable);
   return HandlerTable;
@@ -2197,7 +2202,6 @@ static void handler_AirLock_ChangeWeather( BTL_EVENT_FACTOR* myHandle, BTL_SVFLO
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_AirLock( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-//    { BTL_EVENT_MEMBER_IN,      handler_AirLock_Appear },         // 自分が出場ハンドラ
     { BTL_EVENT_WEATHER_CHECK,  handler_AirLock_ChangeWeather },  // 天候チェックハンドラ
     { BTL_EVENT_WEATHER_CHANGE, handler_AirLock_ChangeWeather },  // 天候変化ハンドラ
   };
@@ -3040,7 +3044,8 @@ static void handler_Download( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_DownLoad( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_MEMBER_IN, handler_Download },    // メンバー入場ハンドラ
+    { BTL_EVENT_MEMBER_IN,            handler_Download },    // メンバー入場ハンドラ
+    { BTL_EVENT_CHANGE_TOKUSEI_AFTER, handler_Download },    // とくせい書き換えハンドラ
   };
   *numElems = NELEMS(HandlerTable);
   return HandlerTable;
@@ -3083,7 +3088,8 @@ static void handler_Yotimu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk,
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Yotimu( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_MEMBER_IN,        handler_Yotimu }, // 入場ハンドラ
+    { BTL_EVENT_MEMBER_IN,             handler_Yotimu }, // 入場ハンドラ
+    { BTL_EVENT_CHANGE_TOKUSEI_AFTER,  handler_Yotimu }, // とくせい書き換えハンドラ
   };
   *numElems = NELEMS(HandlerTable);
   return HandlerTable;
@@ -3151,7 +3157,8 @@ static BOOL _check_kikenyoti_poke( const BTL_POKEPARAM* bppUser, const BTL_POKEP
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_KikenYoti( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_MEMBER_IN,        handler_KikenYoti },  // 入場ハンドラ
+    { BTL_EVENT_MEMBER_IN,             handler_KikenYoti },  // 入場ハンドラ
+    { BTL_EVENT_CHANGE_TOKUSEI_AFTER,  handler_KikenYoti },  // とくせい書き換えハンドラ
   };
   *numElems = NELEMS(HandlerTable);
   return HandlerTable;
@@ -3198,7 +3205,8 @@ static void handler_Omitoosi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Omitoosi( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_MEMBER_IN,        handler_Omitoosi }, // 入場ハンドラ
+    { BTL_EVENT_MEMBER_IN,             handler_Omitoosi }, // 入場ハンドラ
+    { BTL_EVENT_CHANGE_TOKUSEI_AFTER,  handler_Omitoosi }, // とくせい書き換えハンドラ
   };
   *numElems = NELEMS(HandlerTable);
   return HandlerTable;
@@ -3909,69 +3917,6 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_Nigeasi( u32* numElems )
 }
 //------------------------------------------------------------------------------
 /**
- *  とくせい「ありじごく」
- */
-//------------------------------------------------------------------------------
-// 入場ハンドラ
-static void handler_Arijigoku( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
-{
-  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
-  {
-    BTL_SVFRET_CantEscapeAdd( flowWk, pokeID, BTL_CANTESC_ARIJIGOKU );
-  }
-}
-static  const BtlEventHandlerTable*  HAND_TOK_ADD_Arijigoku( u32* numElems )
-{
-  static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_MEMBER_IN,        handler_Arijigoku },  // 入場ハンドラ
-  };
-  *numElems = NELEMS(HandlerTable);
-  return HandlerTable;
-}
-//------------------------------------------------------------------------------
-/**
- *  とくせい「かげふみ」
- */
-//------------------------------------------------------------------------------
-// 入場ハンドラ
-static void handler_Kagefumi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
-{
-  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
-  {
-    BTL_SVFRET_CantEscapeAdd( flowWk, pokeID, BTL_CANTESC_KAGEFUMI );
-  }
-}
-static  const BtlEventHandlerTable*  HAND_TOK_ADD_Kagefumi( u32* numElems )
-{
-  static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_MEMBER_IN,        handler_Kagefumi }, // 入場ハンドラ
-  };
-  *numElems = NELEMS(HandlerTable);
-  return HandlerTable;
-}
-//------------------------------------------------------------------------------
-/**
- *  とくせい「じりょく」
- */
-//------------------------------------------------------------------------------
-// 入場ハンドラ
-static void handler_Jiryoku( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
-{
-  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
-  {
-    BTL_SVFRET_CantEscapeAdd( flowWk, pokeID, BTL_CANTESC_JIRYOKU );
-  }
-}
-static  const BtlEventHandlerTable*  HAND_TOK_ADD_Jiryoku( u32* numElems )
-{
-  static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_MEMBER_IN,        handler_Jiryoku },  // 入場ハンドラ
-  };
-  *numElems = NELEMS(HandlerTable);
-  return HandlerTable;
-}
-//------------------------------------------------------------------------------
-/**
  *  とくせい「かたやぶり」
  */
 //------------------------------------------------------------------------------
@@ -4051,9 +3996,10 @@ static void handler_Katayaburi_End( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK*
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Katayaburi( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_MEMBER_IN,        handler_Katayaburi_MemberIn },  // 入場ハンドラ
-    { BTL_EVENT_WAZASEQ_START,    handler_Katayaburi_Start },     // ワザ処理開始ハンドラ
-    { BTL_EVENT_WAZASEQ_END,      handler_Katayaburi_End   },     // ワザ処理終了ハンドラ
+    { BTL_EVENT_MEMBER_IN,            handler_Katayaburi_MemberIn },  // 入場ハンドラ
+    { BTL_EVENT_CHANGE_TOKUSEI_AFTER, handler_Katayaburi_MemberIn },  // とくせい書き換えハンドラ
+    { BTL_EVENT_WAZASEQ_START,        handler_Katayaburi_Start    },  // ワザ処理開始ハンドラ
+    { BTL_EVENT_WAZASEQ_END,          handler_Katayaburi_End      },  // ワザ処理終了ハンドラ
   };
 
   *numElems = NELEMS(HandlerTable);
@@ -4112,6 +4058,7 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_Tenkiya( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_MEMBER_IN,            handler_Tenkiya_MemberIn  },  // ポケ入場ハンドラ
+    { BTL_EVENT_CHANGE_TOKUSEI_AFTER, handler_Tenkiya_MemberIn  },  // とくせい書き換えハンドラ
     { BTL_EVENT_WEATHER_CHANGE_AFTER, handler_Tenkiya_Weather   },  // 天候変化後ハンドラ
   };
   *numElems = NELEMS(HandlerTable);
@@ -4294,6 +4241,11 @@ static void handler_Bukiyou_MemberIn( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WOR
     work[0] = 1;
   }
 }
+// とくせい書き換え直前ハンドラ
+static void handler_Bukiyou_PreChange( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  BTL_EVENT_FACTOR_DettachSkipCheckHandler( myHandle );
+}
 // ワザ出し成否チェックハンドラ
 static void handler_Bukiyou_ExeCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
@@ -4311,8 +4263,10 @@ static void handler_Bukiyou_ExeCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WOR
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Bukiyou( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_MEMBER_IN,                handler_Bukiyou_MemberIn }, /// メンバー入場ハンドラ
-    { BTL_EVENT_WAZA_EXECUTE_CHECK_2ND,   handler_Bukiyou_ExeCheck }, // ワザ出し成否チェックハンドラ
+    { BTL_EVENT_MEMBER_IN,                handler_Bukiyou_MemberIn  }, // メンバー入場ハンドラ
+    { BTL_EVENT_CHANGE_TOKUSEI_AFTER,     handler_Bukiyou_MemberIn  }, // とくせい書き換えハンドラ
+    { BTL_EVENT_CHANGE_TOKUSEI_BEFORE,    handler_Bukiyou_PreChange }, // とくせい書き換え直前ハンドラ
+    { BTL_EVENT_WAZA_EXECUTE_CHECK_2ND,   handler_Bukiyou_ExeCheck  }, // ワザ出し成否チェックハンドラ
 
   };
 
@@ -4374,6 +4328,7 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_Pressure( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_MEMBER_IN,            handler_Pressure_MemberIN },  // メンバー入場ハンドラ
+    { BTL_EVENT_CHANGE_TOKUSEI_AFTER, handler_Pressure_MemberIN },  // とくせい書き換えハンドラ
     { BTL_EVENT_DECREMENT_PP_VOLUME,  handler_Pressure          },  // PP消費チェックハンドラ
   };
   *numElems = NELEMS(HandlerTable);
@@ -5535,15 +5490,21 @@ static void handler_Miira( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, 
   // 自分が防御側で
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) == pokeID )
   {
-    // 接触ワザなら相手のとくせいも「ミイラ」に
+    // 食らったのが接触ワザで
     WazaID waza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
     if( WAZADATA_GetFlag(waza, WAZAFLAG_Touch) )
     {
-      BTL_HANDEX_PARAM_CHANGE_TOKUSEI* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CHANGE_TOKUSEI, pokeID );
-      param->tokuseiID = POKETOKUSEI_MIIRA;
-      param->pokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_ATK );
-      HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_Miira );
-      HANDEX_STR_AddArg( &param->exStr, param->pokeID );
+      // 相手のとくせいが「ミイラ」以外なら「ミイラ」にする
+      u8 targetPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_ATK );
+      const BTL_POKEPARAM* bppTarget = BTL_SVFTOOL_GetPokeParam( flowWk, targetPokeID );
+      if( BPP_GetValue(bppTarget, BPP_TOKUSEI) != POKETOKUSEI_MIIRA )
+      {
+        BTL_HANDEX_PARAM_CHANGE_TOKUSEI* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CHANGE_TOKUSEI, pokeID );
+        param->tokuseiID = POKETOKUSEI_MIIRA;
+        param->pokeID = targetPokeID;
+        HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_Miira );
+        HANDEX_STR_AddArg( &param->exStr, param->pokeID );
+      }
     }
   }
 }
@@ -5853,6 +5814,7 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_Kinchoukan( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_MEMBER_IN,             handler_Kinchoukan_MemberIn       }, // メンバー入場ハンドラ
+    { BTL_EVENT_CHANGE_TOKUSEI_AFTER,  handler_Kinchoukan_MemberIn       }, // とくせい書き換えハンドラ
     { BTL_EVENT_CHECK_ITEMEQUIP_FAIL,  handler_Kinchoukan_CheckItemEquip }, // 装備アイテム使用チェックハンドラ
     { BTL_EVENT_MEMBER_OUT_FIXED,      handler_Kinchoukan_MemberOutFixed }, // メンバー退場確定ハンドラ
     { BTL_EVENT_IEKI_FIXED,            handler_Kinchoukan_Ieki           }, // いえき確定ハンドラ
@@ -5894,7 +5856,8 @@ static void handler_Hensin( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk,
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Hensin( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_MEMBER_IN,        handler_Hensin },  // 入場ハンドラ
+    { BTL_EVENT_MEMBER_IN,              handler_Hensin }, // 入場ハンドラ
+    { BTL_EVENT_CHANGE_TOKUSEI_AFTER,   handler_Hensin }, // とくせい書き換えハンドラ
   };
   *numElems = NELEMS(HandlerTable);
   return HandlerTable;

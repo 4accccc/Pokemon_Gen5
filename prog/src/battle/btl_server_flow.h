@@ -577,9 +577,10 @@ typedef struct {
  */
 typedef struct {
   BTL_HANDEX_PARAM_HEADER  header;
-  u16             tokuseiID;    ///< 書き換え後のとくせい（POKETOKUSEI_NULLならとくせいを消す）
-  u8              pokeID;       ///< 対象ポケモンID
-  BTL_HANDEX_STR_PARAMS  exStr; ///< 成功時メッセージ
+  u16                      tokuseiID;  ///< 書き換え後のとくせい（POKETOKUSEI_NULLならとくせいを消す）
+  u8                       pokeID;     ///< 対象ポケモンID
+  u8                       fSameTokEffective; /// < おなじ「とくせい」を持つ対象にも効く
+  BTL_HANDEX_STR_PARAMS    exStr;      ///< 成功時メッセージ
 }BTL_HANDEX_PARAM_CHANGE_TOKUSEI;
 
 /**

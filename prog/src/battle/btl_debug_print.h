@@ -68,6 +68,7 @@ typedef enum {
   DBGSTR_NET_ReturnToServerTrying,
   DBGSTR_NET_RecvedClientData,
   DBGSTR_CALCDMG_BaseDamage,
+  DBGSTR_CALCDMG_WazaParam,
   DBGSTR_CALCDMG_RangeHosei,
   DBGSTR_CALCDMG_WeatherHosei,
   DBGSTR_CALCDMG_RAW_DAMAGE,

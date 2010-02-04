@@ -5461,6 +5461,7 @@ static BOOL scEvent_CalcDamage( BTL_SVFLOW_WORK* wk,
       fxDamage = (wazaPower * atkPower * (atkLevel*2/5+2));
       fxDamage = fxDamage / defGuard / 50;
       fxDamage += 2;
+      BTL_N_PrintfEx(PRINT_FLG, DBGSTR_CALCDMG_WazaParam, wazaParam->wazaID, wazaParam->wazaType);
       BTL_N_PrintfEx(PRINT_FLG, DBGSTR_CALCDMG_BaseDamage, fxDamage);
     }
     fxDamage  = BTL_CALC_MulRatio( fxDamage, targetDmgRatio );
@@ -11720,7 +11721,7 @@ static u8 scproc_HandEx_tokuseiChange( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PAR
   BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID );
   u16 prevTokusei = BPP_GetValue( bpp, BPP_TOKUSEI );
 
-  if( ( param->tokuseiID != prevTokusei )
+  if( ((param->fSameTokEffective) || ( param->tokuseiID != prevTokusei ))
   &&  !BTL_CALC_TOK_CheckCantChange(param->tokuseiID)
   ){
     SCQUE_PUT_ACT_ChangeTokusei( wk->que, param->pokeID, param->tokuseiID );
