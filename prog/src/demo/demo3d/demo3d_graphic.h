@@ -12,6 +12,8 @@
 
 #include <gflib.h>
 
+#include "demo/demo3d.h" // for DEMO3D_ID
+
 //=============================================================================
 /**
  *					定数宣言
@@ -38,7 +40,7 @@ typedef struct _DEMO3D_GRAPHIC_WORK  DEMO3D_GRAPHIC_WORK;
 //	ディスプレイセレクトにはGX_DISP_SELECT_MAIN_SUB or GX_DISP_SELECT_SUB_MAINを
 //	渡してください。途中で書き換えたい場合、GFL_DISP_SetDispSelectを使用して下さい。
 //=====================================
-extern DEMO3D_GRAPHIC_WORK * DEMO3D_GRAPHIC_Init( int display_select, HEAPID heapID );
+extern DEMO3D_GRAPHIC_WORK * DEMO3D_GRAPHIC_Init( int display_select, DEMO3D_ID demo_id, HEAPID heapID );
 //-------------------------------------
 ///破棄
 //=====================================

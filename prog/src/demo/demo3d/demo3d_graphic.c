@@ -13,6 +13,8 @@
 //システム
 #include "system/gfl_use.h"
 #include "print/gf_font.h"
+ 
+#include "demo3d_data.h" // for Demo3D_DATA_XXX
 
 //外部公開
 #include "demo3d_graphic.h"
@@ -34,17 +36,18 @@
 //-------------------------------------
 ///	使用グラフィックマクロ設定
 //=====================================
-//#define GRAPHIC_BG_USE	//OFFにするとBG使用しません
-//#define GRAPHIC_OBJ_USE	//OFFにするとOBJ使用しません
 #define GRAPHIC_G3D_USE	//OFFにすると3D使用しません
 
-//@TODO
-// 2画面連結表示でVRAM-C,Dを使うことを考慮して外してある。
-// 必要であれば、連結表示を使うときのVRAM設定と使わない時のVRAM設定を分けることは可能。
-// ただその場合、現状デモ毎のデータは demo3d_engine.c の中で管理してしまっているため、依存関係について考える必要あり。
 //-------------------------------------
 ///	バンク設定
 //=====================================
+//------------------------------------------------------------------------------------------------------------------------
+// ■メモ
+//
+// 2画面連結表示でVRAM-C,Dを使うことを考慮して外してある。
+// 必要であれば、連結表示を使うときのVRAM設定と使わない時のVRAM設定を分けることは可能。
+// ただその場合、現状デモ毎のデータは demo3d_engine.c の中で管理してしまっているため、依存関係について考える必要あり。
+//------------------------------------------------------------------------------------------------------------------------
 static const GFL_DISP_VRAM sc_vramSetTable =
 {
 	GX_VRAM_BG_64_E,						// メイン2DエンジンのBG
@@ -68,7 +71,6 @@ static const GFL_DISP_VRAM sc_vramSetTable =
  *						・BMPWINの初期化
 */
 //=============================================================================
-#ifdef GRAPHIC_BG_USE
 //-------------------------------------
 ///	BGグラフィックモード設定
 //=====================================
@@ -184,13 +186,11 @@ static const struct
 #endif
 };
 
-#endif //GRAPHIC_BG_USE
 //=============================================================================
 /**
  *					ＯＢＪ設定
 */
 //=============================================================================
-#ifdef GRAPHIC_OBJ_USE
 //-------------------------------------
 ///	CLSYS_INITデータ
 //=====================================
@@ -221,7 +221,7 @@ static const GFL_CLSYS_INIT sc_clsys_init	=
 //=====================================
 #define GRAPHIC_OBJ_CLWK_CREATE_MAX	(128)
 
-#endif //GRAPHIC_OBJ_USE
+
 //=============================================================================
 /**
  *					３Ｄ設定
@@ -333,6 +333,7 @@ struct _DEMO3D_GRAPHIC_WORK
 	GRAPHIC_OBJ_WORK	obj;
 	GRAPHIC_G3D_WORK		g3d;
 	GFL_TCB						*p_vblank_task;
+  BOOL is_double;
 };
 
 //=============================================================================
@@ -347,22 +348,19 @@ static void Graphic_VBlankTask( GFL_TCB *p_tcb, void *p_work );
 //-------------------------------------
 ///	BG
 //=====================================
-#ifdef GRAPHIC_BG_USE
 static void GRAPHIC_BG_Init( GRAPHIC_BG_WORK *p_wk, HEAPID heapID );
 static void GRAPHIC_BG_Exit( GRAPHIC_BG_WORK *p_wk );
 static void GRAPHIC_BG_Main( GRAPHIC_BG_WORK *p_wk );
 static void GRAPHIC_BG_VBlankFunction( GRAPHIC_BG_WORK *p_wk );
-#endif //GRAPHIC_BG_USE
 //-------------------------------------
 ///	OBJ
 //=====================================
-#ifdef GRAPHIC_OBJ_USE
 static void GRAPHIC_OBJ_Init( GRAPHIC_OBJ_WORK *p_wk, const GFL_DISP_VRAM* cp_vram_bank, HEAPID heapID );
 static void GRAPHIC_OBJ_Exit( GRAPHIC_OBJ_WORK *p_wk );
 static void GRAPHIC_OBJ_Main( GRAPHIC_OBJ_WORK *p_wk );
 static void GRAPHIC_OBJ_VBlankFunction( GRAPHIC_OBJ_WORK *p_wk );
 static GFL_CLUNIT* GRAPHIC_OBJ_GetUnit( const GRAPHIC_OBJ_WORK *cp_wk );
-#endif //GRAPHIC_OBJ_USE
+
 //-------------------------------------
 ///	3D
 //=====================================
@@ -387,11 +385,13 @@ static void Graphic_3d_SetUp( void );
  *	@param	HEAPID heapID ヒープ
  */
 //-----------------------------------------------------------------------------
-DEMO3D_GRAPHIC_WORK * DEMO3D_GRAPHIC_Init( int display_select, HEAPID heapID )
+DEMO3D_GRAPHIC_WORK * DEMO3D_GRAPHIC_Init( int display_select, DEMO3D_ID demo_id, HEAPID heapID )
 {	
 	DEMO3D_GRAPHIC_WORK * p_wk;
 	p_wk	= GFL_HEAP_AllocMemory(heapID, sizeof(DEMO3D_GRAPHIC_WORK) );
 	GFL_STD_MemClear( p_wk, sizeof(DEMO3D_GRAPHIC_WORK) );
+
+  p_wk->is_double = Demo3D_DATA_GetDoubleFlag( demo_id );
 
 	//レジスタ初期化
 	G2_BlendNone();
@@ -417,12 +417,14 @@ DEMO3D_GRAPHIC_WORK * DEMO3D_GRAPHIC_Init( int display_select, HEAPID heapID )
 	GFL_FONTSYS_Init();
 
 	//モジュール初期化
-#ifdef GRAPHIC_BG_USE
-	GRAPHIC_BG_Init( &p_wk->bg, heapID );
-#endif //GRAPHIC_BG_USE
-#ifdef GRAPHIC_OBJ_USE
-	GRAPHIC_OBJ_Init( &p_wk->obj, &sc_vramSetTable, heapID );
-#endif //GRAPHIC_OBJ_USE
+  
+  // ダブルモードはBG/OBJを使わない
+  if( p_wk->is_double == FALSE )
+  {
+    GRAPHIC_BG_Init( &p_wk->bg, heapID );
+    GRAPHIC_OBJ_Init( &p_wk->obj, &sc_vramSetTable, heapID );
+  }
+
 #ifdef GRAPHIC_G3D_USE
 	GRAPHIC_G3D_Init( &p_wk->g3d, heapID );
 #endif //GRAPHIC_G3D_USE
@@ -448,12 +450,13 @@ void DEMO3D_GRAPHIC_Exit( DEMO3D_GRAPHIC_WORK *p_wk )
 #ifdef GRAPHIC_G3D_USE
 	GRAPHIC_G3D_Exit( &p_wk->g3d );
 #endif //GRAPHIC_G3D_USE
-#ifdef GRAPHIC_OBJ_USE
-	GRAPHIC_OBJ_Exit( &p_wk->obj );
-#endif //GRAPHIC_OBJ_USE
-#ifdef GRAPHIC_BG_USE
-	GRAPHIC_BG_Exit( &p_wk->bg );
-#endif //GRAPHIC_BG_USE
+
+  // ダブルモードはBG/OBJを使わない
+  if( p_wk->is_double == FALSE )
+  {
+    GRAPHIC_OBJ_Exit( &p_wk->obj );
+    GRAPHIC_BG_Exit( &p_wk->bg );
+  }
 
 	//デフォルト色へ戻す
 	GFL_FONTSYS_SetDefaultColor();
@@ -477,12 +480,12 @@ void DEMO3D_GRAPHIC_Exit( DEMO3D_GRAPHIC_WORK *p_wk )
 //-----------------------------------------------------------------------------
 void DEMO3D_GRAPHIC_2D_Draw( DEMO3D_GRAPHIC_WORK *p_wk )
 {	
-#ifdef GRAPHIC_OBJ_USE
-	GRAPHIC_OBJ_Main( &p_wk->obj );
-#endif //GRAPHIC_OBJ_USE
-#ifdef GRAPHIC_BG_USE
-	GRAPHIC_BG_Main( &p_wk->bg );
-#endif //GRAPHIC_BG_USE
+  // ダブルモードはBG/OBJを使わない
+  if( p_wk->is_double == FALSE )
+  {
+    GRAPHIC_OBJ_Main( &p_wk->obj );
+    GRAPHIC_BG_Main( &p_wk->bg );
+  }
 }
 //----------------------------------------------------------------------------
 /**
@@ -521,11 +524,10 @@ void DEMO3D_GRAPHIC_3D_EndDraw( DEMO3D_GRAPHIC_WORK *p_wk )
 //-----------------------------------------------------------------------------
 GFL_CLUNIT * DEMO3D_GRAPHIC_GetClunit( const DEMO3D_GRAPHIC_WORK *cp_wk )
 {	
-#ifdef GRAPHIC_OBJ_USE
+  GF_ASSERT( cp_wk );
+  GF_ASSERT( cp_wk->is_double == FALSE );
+
 	return GRAPHIC_OBJ_GetUnit( &cp_wk->obj );
-#else
-	return NULL;
-#endif //GRAPHIC_OBJ_USE
 }
 
 //=============================================================================
@@ -544,19 +546,18 @@ GFL_CLUNIT * DEMO3D_GRAPHIC_GetClunit( const DEMO3D_GRAPHIC_WORK *cp_wk )
 static void Graphic_VBlankTask( GFL_TCB *p_tcb, void *p_work )
 {
 	DEMO3D_GRAPHIC_WORK *p_wk	= p_work;
-#ifdef GRAPHIC_BG_USE
-	GRAPHIC_BG_VBlankFunction( &p_wk->bg );
-#endif //GRAPHIC_BG_USE
-#ifdef GRAPHIC_OBJ_USE
-	GRAPHIC_OBJ_VBlankFunction( &p_wk->obj );
-#endif //GRAPHIC_OBJ_USE
+
+  if( p_wk->is_double == FALSE )
+  {
+    GRAPHIC_BG_VBlankFunction( &p_wk->bg );
+    GRAPHIC_OBJ_VBlankFunction( &p_wk->obj );
+  }
 }
 //=============================================================================
 /**
  *						BG
  */
 //=============================================================================
-#ifdef GRAPHIC_BG_USE
 //----------------------------------------------------------------------------
 /**
  *	@brief	BG	初期化
@@ -639,13 +640,12 @@ static void GRAPHIC_BG_VBlankFunction( GRAPHIC_BG_WORK *p_wk )
 {	
 	GFL_BG_VBlankFunc();
 }
-#endif //GRAPHIC_BG_USE
+
 //=============================================================================
 /**
  *				OBJ
  */
 //=============================================================================
-#ifdef GRAPHIC_OBJ_USE
 //----------------------------------------------------------------------------
 /**
  *	@brief	OBJ描画	初期化
@@ -723,7 +723,7 @@ static GFL_CLUNIT* GRAPHIC_OBJ_GetUnit( const GRAPHIC_OBJ_WORK *cp_wk )
 {	
 	return cp_wk->p_clunit;
 }
-#endif// GRAPHIC_OBJ_USE
+
 //=============================================================================
 /**
  *					GRAPHIC_G3D

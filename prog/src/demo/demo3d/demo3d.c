@@ -260,7 +260,7 @@ static GFL_PROC_RESULT Demo3DProc_Init( GFL_PROC *proc, int *seq, void *pwk, voi
   wk->param       = param;
 	
 	//•`‰æÝ’è‰Šú‰»
-	wk->graphic	= DEMO3D_GRAPHIC_Init( GX_DISP_SELECT_MAIN_SUB, wk->heapID );
+	wk->graphic	= DEMO3D_GRAPHIC_Init( GX_DISP_SELECT_MAIN_SUB, param->demo_id, wk->heapID );
 
 	//ƒtƒHƒ“ƒgì¬
 	wk->font			= GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr,

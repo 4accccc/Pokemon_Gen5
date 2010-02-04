@@ -585,7 +585,7 @@ BOOL Demo3D_ENGINE_Main( DEMO3D_ENGINE_WORK* wk )
 
   // •`‰æ
 	DEMO3D_GRAPHIC_3D_StartDraw( wk->graphic );
-  
+	
   {
     int i;
     GFL_G3D_OBJSTATUS status;
