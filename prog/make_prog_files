@@ -358,10 +358,11 @@ SRCS_OVERLAY_NOTWIFI = sound/snd_viewer.c \
         field/calender.c \
         field/scrcmd_faceup.c \
         field/event_beacon_detail.c \
+				gamesystem/game_beacon_accessor.c \
         field/pleasure_boat_st.c \
         field/scrcmd_pl_boat_init.c \
         field/united_nations_st.c \
-        field/scrcmd_un_init.c
+        field/scrcmd_un_init.c 
 
 
 # wifiÉvÉçÉOÉâÉÄ
@@ -586,7 +587,6 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
 				field/fog_light_test.c \
 				field/field_crowd_people.c \
 				field/field_season_time.c \
-				gamesystem/game_beacon_accessor.c \
 				net_app/comm_entry_menu.c \
 				net_app/comm_entry_menu_comm_command.c \
         field/enceff.c \
