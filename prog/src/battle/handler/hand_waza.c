@@ -3823,16 +3823,21 @@ static void handler_Kirifuda( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
-    u8 wazaIdx, pp;
+    u16 pow;
+    u8 wazaIdx;
 
     wazaIdx = BPP_WAZA_SearchIdx( bpp, BTL_EVENT_FACTOR_GetSubID(myHandle) );
     if( wazaIdx != PTL_WAZA_MAX ){
-      pp = BPP_WAZA_GetPP( bpp, wazaIdx );
+      u8 pp = BPP_WAZA_GetPP( bpp, wazaIdx );
+      if( pp >= NELEMS(powTbl) ){
+        pp = NELEMS(powTbl) - 1;
+      }
+      pow = powTbl[ pp ];
     }else{
       GF_ASSERT(0);
-      pp = NELEMS(powTbl) - 1;
+      pow = powTbl[ (NELEMS(powTbl)-1) ];
     }
-    BTL_EVENTVAR_RewriteValue( BTL_EVAR_WAZA_POWER, powTbl[pp] );
+    BTL_EVENTVAR_RewriteValue( BTL_EVAR_WAZA_POWER, pow );
   }
 }
 //----------------------------------------------------------------------------------
