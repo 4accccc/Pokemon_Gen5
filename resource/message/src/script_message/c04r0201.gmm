@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-02T16:07:25"/>
+	<create user="iwao_kazumasa" host="W00203" date="2010-02-04T13:03:50"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,14 +263,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1306" top="174" right="2011" bottom="802" maximized="no" rayout="Vertical2">
+	<dialog left="2077" top="532" right="2371" bottom="1160" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
-		<band id="0" index="1" style="0000" width="530"/>
-		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="543"/>
-		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="697"/>
+		<band id="0" index="1" style="0000" width="445"/>
+		<band id="1" index="2" style="0000" width="286"/>
+		<band id="2" index="3" style="0000" width="286"/>
+		<band id="3" index="4" style="0000" width="286"/>
+		<band id="4" index="0" style="0000" width="591"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -294,6 +294,7 @@
 
 	<row id="msg_c04r0201_white_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
+・主人公の左。主人公と共に入り口から前に3歩移動
 ・主人公と向き合って
 ・続けてowner_demo_01</comment>
 		<attribute name="キャラ指定">友達♀
@@ -306,7 +307,9 @@
 
 	<row id="msg_c04r0201_owner_demo_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
-・初期配置箇所から移動してくる
+・中央受付の１歩下が初期配置
+・主人公たちに気づいて[！]を出す
+・初期配置箇所から下へ3歩移動してくる
 ・続けてowner_demo_02</comment>
 		<attribute name="キャラ指定">GENTLEMAN
 ＝オーナー</attribute>
@@ -322,6 +325,7 @@
 
 	<row id="msg_c04r0201_owner_demo_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
+・主人公とサポートの前方を行ったりきたりした後メッセージ
 ・メッセージ表示後
 　グッズケース入手処理
 ・続けてowner_demo_03</comment>
@@ -369,6 +373,7 @@
 		<comment>♂
 ・ドレスアップアプリが終わると
 　フィールド画面に復帰してこのメッセージ
+・コンディションを引っ張ってくるタグは未完成（発注済）
 ・続けてowner_demo_05</comment>
 		<attribute name="キャラ指定">GENTLEMAN
 ＝オーナー</attribute>
@@ -382,7 +387,7 @@
 
 	<row id="msg_c04r0201_owner_demo_05" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
-・表示後
+・表示後、そのまま左に向かって歩いて行きフェードアウト
 　初期配置箇所に戻る
 ・続けてmsg_c04r0201_white_03
 ・これ以降、オーナーにはなしかけると
@@ -411,6 +416,7 @@
 
 	<row id="msg_c04r0201_white_03" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
+・主人公の方向（右）を向く
 ・メッセージ表示後
 　サポート、外に
 ・画面外に消えると、主人公操作可能</comment>
