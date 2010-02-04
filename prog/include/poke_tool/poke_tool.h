@@ -384,8 +384,7 @@ enum{
   ID_PARA_form_no,              //形状ナンバー（アンノーン、デオキシス、ミノメスなど用）
   ID_PARA_seikaku,             //性格
   ID_PARA_dummy_p2_2,             //あまり
-  ID_PARA_new_get_place,            //1eh 捕まえた場所（なぞの場所対応用）
-  ID_PARA_new_birth_place,          //20h 生まれた場所（なぞの場所対応用）
+  ID_PARA_dummy_p2_3,             //あまり
 
   ID_PARA_nickname,             //ニックネーム（STRBUF使用）
   ID_PARA_nickname_raw,           //ニックネーム（STRCODE配列使用 ※許可制）
