@@ -99,8 +99,6 @@ typedef struct {
 	u8	posMax;								// カーソル移動範囲
 	u16	initScroll;						// 初期スクロール値
 
-	PRINT_QUE * que;					// プリントキュー
-
 	const FRAMELIST_TOUCH_DATA * touch;	// タッチデータ
 
 	const FRAMELIST_CALLBACK * cbFunc;	// コールバック関数
@@ -180,6 +178,17 @@ extern void FRAMELIST_LoadFrameGraphicAH( FRAMELIST_WORK * wk, ARCHANDLE * ah, u
  */
 //--------------------------------------------------------------------------------------------
 extern void FRAMELIST_LoadBlinkPalette( FRAMELIST_WORK * wk, ARCHANDLE * ah, u32 dataIdx, u32 startPal, u32 endPal );
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		プリントキュー取得
+ *
+ * @param		wk				ワーク
+ *
+ * @return	プリントキュー
+ */
+//--------------------------------------------------------------------------------------------
+extern PRINT_QUE * FRAMELIST_GetPrintQue( FRAMELIST_WORK * wk );
 
 //--------------------------------------------------------------------------------------------
 /**

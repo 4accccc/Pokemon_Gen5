@@ -50,6 +50,7 @@ struct _FRAMELIST_WORK {
 
 	BLINKPALANM_WORK * blink;			// 点滅パレットアニメ
 
+	PRINT_QUE * que;							// プリントキュー
 	FL_PRINT_UTIL * printUtil;		// PRINT_UTIL
 	BGWINFRM_WORK * wfrm;					// ウィンドウフレーム
 	FL_GRA * wfrmGra;							// 背景保存場所
@@ -206,6 +207,11 @@ FRAMELIST_WORK * FRAMELIST_Create( FRAMELIST_HEADER * hed, HEAPID heapID )
 	wk->nowTpy = 0xffffffff;
 	wk->oldTpy = 0xffffffff;
 
+	// プリントキュー作成
+	wk->que  = PRINTSYS_QUE_Create( heapID );
+	// 点滅アニメ作成
+	wk->blink = BLINKPALANM_Create( wk->hed.selPal*16, 16, wk->hed.mainBG, wk->heapID );
+
 	// 項目データ領域確保
 	wk->item = GFL_HEAP_AllocClearMemory( wk->heapID, sizeof(FL_ITEM)*wk->hed.itemMax );
 
@@ -253,6 +259,7 @@ FRAMELIST_WORK * FRAMELIST_Create( FRAMELIST_HEADER * hed, HEAPID heapID )
 		i = 0;
 		while( 1 ){
 			if( wk->hed.touch[max].tbl.rect.top == GFL_UI_TP_HIT_END ){
+				max++;
 				break;
 			}
 			max++;
@@ -263,8 +270,6 @@ FRAMELIST_WORK * FRAMELIST_Create( FRAMELIST_HEADER * hed, HEAPID heapID )
 		}
 	}
 
-	// 点滅アニメ作成
-	wk->blink = BLINKPALANM_Create( wk->hed.selPal*16, 16, wk->hed.mainBG, wk->heapID );
 
 /*
 	// ダミーコールバック設定
@@ -289,9 +294,6 @@ void FRAMELIST_Exit( FRAMELIST_WORK * wk )
 {
 	u32	i;
 
-	// 点滅アニメ削除
-	BLINKPALANM_Exit( wk->blink );
-
 	// タッチデータ削除
 	GFL_HEAP_FreeMemory( wk->touch );
 
@@ -314,6 +316,11 @@ void FRAMELIST_Exit( FRAMELIST_WORK * wk )
 
 	// 項目データ削除
 	GFL_HEAP_FreeMemory( wk->item );
+
+	// 点滅アニメ削除
+	BLINKPALANM_Exit( wk->blink );
+	// プリントキュー削除
+	PRINTSYS_QUE_Delete( wk->que );
 
 	// ＢＧフレームリストワーク削除
 	GFL_HEAP_FreeMemory( wk );
@@ -385,6 +392,20 @@ void FRAMELIST_LoadBlinkPalette( FRAMELIST_WORK * wk, ARCHANDLE * ah, u32 dataId
 
 //--------------------------------------------------------------------------------------------
 /**
+ * @brief		プリントキュー取得
+ *
+ * @param		wk				ワーク
+ *
+ * @return	プリントキュー
+ */
+//--------------------------------------------------------------------------------------------
+PRINT_QUE * FRAMELIST_GetPrintQue( FRAMELIST_WORK * wk )
+{
+	return wk->que;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
  * @brief		項目パラメータ取得
  *
  * @param		wk				ワーク
@@ -417,7 +438,7 @@ BOOL FRAMELIST_Init( FRAMELIST_WORK * wk )
 		break;
 
 	case 1:
-	  if( PRINTSYS_QUE_IsFinished( wk->hed.que ) == TRUE ){
+	  if( PRINTSYS_QUE_IsFinished( wk->que ) == TRUE ){
 			wk->mainSeq = 0;
 			return FALSE;
 		}
@@ -1509,11 +1530,11 @@ static void ChangePosPalette( FRAMELIST_WORK * wk, u16 pos, u16 pal )
 
 static void ChangeCursorPosPalette( FRAMELIST_WORK * wk, u16 now, u16 old )
 {
-	if( old != PALCHG_NONE ){
+	if( old < wk->listPosMax ){
 		u16 * scrn = wk->wfrmGra[wk->item[wk->listScroll+old].type].scrn;
 		ChangePosPalette( wk, old, scrn[0] >> 12 );
 	}
-	if( now != PALCHG_NONE && GFL_UI_CheckTouchOrKey() == GFL_APP_END_KEY ){
+	if( now < wk->listPosMax && GFL_UI_CheckTouchOrKey() == GFL_APP_END_KEY ){
 		BLINKPALANM_InitAnimeCount( wk->blink );
 		ChangePosPalette( wk, now, wk->hed.selPal );
 	}
@@ -1524,8 +1545,9 @@ static void PrintTransMain( FRAMELIST_WORK * wk )
 {
 	u32	i;
 
+	PRINTSYS_QUE_Main( wk->que );
 	for( i=0; i<wk->printMax; i++ ){
-		PRINT_UTIL_Trans( &wk->printUtil[i].util, wk->hed.que );
+		PRINT_UTIL_Trans( &wk->printUtil[i].util, wk->que );
 	}
 }
 
