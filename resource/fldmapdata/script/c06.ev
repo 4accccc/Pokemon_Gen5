@@ -42,8 +42,24 @@ EVENT_START    ev_pos_c06_hakase1_01
 	DEFINE_LOCAL	LWK_GIAN_CHECK
 	DEFINE_LOCAL	LWK_HOKAKU_COUNT
 	DEFINE_LOCAL	LWK_YES
+	DEFINE_LOCAL	LWK_PLY_X
+	DEFINE_LOCAL	LWK_PLY_Z
+
+	//主人公位置の座標取得
+	_PLAYER_POS_GET( LWK_PLY_X, LWK_PLY_Z )
 	
 	$LWK_YES = 1
+
+	IF $LWK_PLY_Z == 296 THEN
+		_OBJ_POS_CHANGE( C06_LEADER6_01, 77, 0, 295, DIR_DOWN )
+		_OBJ_POS_CHANGE( C06_HAKASE1_01, 77, 0, 296, DIR_DOWN )
+	ELSIF $LWK_PLY_Z == 297 THEN
+		_OBJ_POS_CHANGE( C06_LEADER6_01, 77, 0, 296, DIR_DOWN )
+		_OBJ_POS_CHANGE( C06_HAKASE1_01, 77, 0, 297, DIR_DOWN )
+	ELSIF $LWK_PLY_Z == 298 THEN
+		_OBJ_POS_CHANGE( C06_LEADER6_01, 77, 0, 297, DIR_DOWN )
+		_OBJ_POS_CHANGE( C06_HAKASE1_01, 77, 0, 298, DIR_DOWN )
+	ENDIF
 
 	//ギアンを捕まえているかのチェック
 	//511はギアンのポケモンナンバー
@@ -66,8 +82,16 @@ EVENT_START    ev_pos_c06_hakase1_01
 	_OBJ_ANIME_WAIT()
 	
 	//博士が主人公に隣接
-	_OBJ_ANIME( C06_HAKASE1_01,anm_hakase1_kuru_02)
-	_OBJ_ANIME_WAIT()
+//	IF $LWK_PLY_Z == 296 THEN
+//		_OBJ_ANIME( C06_HAKASE1_01,anm_hakase1_kuru_02_posz296)
+//		_OBJ_ANIME_WAIT()
+//	ELSIF $LWK_PLY_Z == 297 THEN
+//		_OBJ_ANIME( C06_HAKASE1_01,anm_hakase1_kuru_02_posz297)
+//		_OBJ_ANIME_WAIT()
+//	ELSIF $LWK_PLY_Z == 298 THEN
+		_OBJ_ANIME( C06_HAKASE1_01,anm_hakase1_kuru_02_posz298)
+		_OBJ_ANIME_WAIT()
+//	ENDIF
 	
 	//プレイヤーの名前の格納
 	_PLAYER_NAME(0)
@@ -83,10 +107,9 @@ EVENT_START    ev_pos_c06_hakase1_01
 	
 	//博士が主人公に話しかける
 	//博士:ちょいと　ずかんを　みせてもらうよ
-	
 	_BALLOONWIN_OBJMSG( msg_c06_hakase1_02, C06_HAKASE1_01)
 	_BALLOONWIN_CLOSE()
-
+		
 	//ギアンがいるかどうかで、分岐	
 	//ギアンを捕まえている？
 	IF $LWK_GIAN_CHECK ==  LWK_YES	THEN
@@ -186,10 +209,27 @@ EVENT_START    ev_pos_c06_hakase1_01
 	_BALLOONWIN_CLOSE()
 	
 	//博士が画面外に移動
+	
+	IF $LWK_PLY_Z == 296 THEN
+		_OBJ_ANIME( C06_HAKASE1_01,anm_hakase1_saru_01_posz296)
+		_TIME_WAIT  ( 32 )
+		_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_muku_01_posz296)
+	
+	ELSIF $LWK_PLY_Z == 297 THEN
+		_OBJ_ANIME( C06_HAKASE1_01,anm_hakase1_saru_01_posz297)
+		_TIME_WAIT  ( 32 )
+		_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_muku_01_posz297)
+	
+	ELSIF $LWK_PLY_Z == 298 THEN
+	
+		_OBJ_ANIME( C06_HAKASE1_01,anm_hakase1_saru_01_posz298)
+		_TIME_WAIT  ( 32 )
+		_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_muku_01_posz298)
+	ENDIF
+	
 	//ジムリーダーが博士を向く
 	//主人公が博士を向く
-	_OBJ_ANIME( C06_HAKASE1_01,anm_hakase1_saru_01)
-	_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_muku_01)
+
 	_OBJ_ANIME( C06_LEADER6_01,anm_leader06_muku_03)
 	_OBJ_ANIME_WAIT()
 	
@@ -216,15 +256,15 @@ EVENT_START    ev_pos_c06_hakase1_01
 	_OBJ_ANIME_WAIT()
 	
 	//博士とジムリーダーの姿を消す
-	_OBJ_DEL( C06_LEADER6_01 )
-	_OBJ_DEL( C06_HAKASE1_01 )
+//	_OBJ_DEL( C06_LEADER6_01 )
+//	_OBJ_DEL( C06_HAKASE1_01 )
 
 	//===============フラグ操作===============//
 	//POSイベントを無効に
-	$WK_SCENE_C06 = 1
+//	$WK_SCENE_C06 = 1
 
 	//博士とジムリーダーを消す
-	_FLAG_SET( FV_C06_ZUKANCHK_01 )
+//	_FLAG_SET( FV_C06_ZUKANCHK_01 )
 
 	//========================================//
 
@@ -240,8 +280,27 @@ _ANIME_LABEL	anm_player_gyoe
 //--------------------------------------------------------------------
 //主人公:振り向く１（右）                    
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_player_muku_01
-	_ANIME_DATA AC_DIR_D,8
+_ANIME_LABEL	anm_player_muku_01_posz296
+	_ANIME_DATA AC_DIR_D,1
+	_ANIME_DATA AC_WAIT_16F,1
+	_ANIME_DATA AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//主人公:振り向く１（右）                    
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_muku_01_posz297
+	_ANIME_DATA AC_DIR_D,1
+	_ANIME_DATA AC_WAIT_16F,1
+	_ANIME_DATA AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//主人公:振り向く１（右）                    
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_muku_01_posz298
+	_ANIME_DATA AC_DIR_U,1
+	_ANIME_DATA AC_WAIT_16F,1
 	_ANIME_DATA AC_DIR_R,1
 	_ANIME_DATA	ACMD_END,0
 
@@ -274,9 +333,27 @@ _ANIME_LABEL	anm_leader06_kuru_02
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
-//博士:主人公に近づく２                     
+//博士:主人公に近づく２_プレイヤーPOSZ296                     
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_hakase1_kuru_02
+_ANIME_LABEL	anm_hakase1_kuru_02_posz296
+	_ANIME_DATA AC_WALK_U_8F,1
+	_ANIME_DATA AC_WALK_R_8F,1
+	_ANIME_DATA AC_WALK_U_8F,1
+	_ANIME_DATA AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//博士:主人公に近づく２_プレイヤーPOSZ297                     
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_hakase1_kuru_02_posz297 
+	_ANIME_DATA AC_WALK_U_8F,1
+	_ANIME_DATA AC_WALK_R_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//博士:主人公に近づく２_プレイヤーPOSZ298                     
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_hakase1_kuru_02_posz298
 	_ANIME_DATA AC_WALK_R_8F,2
 	_ANIME_DATA	ACMD_END,0
 
@@ -332,10 +409,28 @@ _ANIME_LABEL	anm_leader06_saru_01
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
-//博士:立ち去る                      
+//博士:立ち去る_POSZ296                      
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_hakase1_saru_01
+_ANIME_LABEL	anm_hakase1_saru_01_posz296
+	_ANIME_DATA AC_WALK_D_8F,1
 	_ANIME_DATA AC_WALK_R_8F,12
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//博士:立ち去る_POSZ297                     
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_hakase1_saru_01_posz297
+	_ANIME_DATA AC_WALK_D_8F,1
+	_ANIME_DATA AC_WALK_R_8F,12
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//博士:立ち去る_POSZ298                      
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_hakase1_saru_01_posz298
+	_ANIME_DATA AC_WALK_R_8F,1
+	_ANIME_DATA AC_WALK_U_8F,1
+	_ANIME_DATA AC_WALK_R_8F,11
 	_ANIME_DATA	ACMD_END,0
 	
 //--------------------------------------------------------------------
