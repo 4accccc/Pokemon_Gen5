@@ -53,6 +53,21 @@ ev_zone_c11r0201:
 /*		エレベーターの近くの人										  */
 /**************************************************************/
 EVENT_START		ev_un_room_talker
+  DEFINE_LOCAL	NpcNum
+  DEFINE_LOCAL	TalkerMsg
+  $NpcNum = 0   //todo
+  //お客いるか？
+  IF $NpcNum != 0 THEN
+    //「客おるで」
+    $TalkerMsg= msg_un_room_talker_00
+  ELSE
+    //「客おらんで」
+    $TalkerMsg = msg_un_room_talker_01
+  ENDIF
+
+  _BALLOONWIN_TALKOBJ_MSG( TalkerMsg )
+  _LAST_KEYWAIT()
+  _BALLOONWIN_CLOSE()
 EVENT_END
 
 /**************************************************************/
