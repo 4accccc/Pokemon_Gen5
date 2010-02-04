@@ -138,4 +138,4 @@ extern BOOL COMPATIBLE_MENU_RecvReturnMenu( COMPATIBLE_IRC_SYS *p_sys );
 extern BOOL COMPATIBLE_MENU_SendStatusData( COMPATIBLE_IRC_SYS *p_sys, GAMESYS_WORK *p_gamesys );
 extern void COMPATIBLE_MENU_GetStatusData( const COMPATIBLE_IRC_SYS *cp_sys, COMPATIBLE_STATUS *p_status );
 
-extern void COMPATIBLE_IRC_GetStatus( const GAMESYS_WORK *cp_gamesys, COMPATIBLE_STATUS *p_status );
+extern void COMPATIBLE_IRC_GetStatus( GAMESYS_WORK *cp_gamesys, COMPATIBLE_STATUS *p_status );

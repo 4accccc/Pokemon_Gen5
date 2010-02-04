@@ -463,14 +463,14 @@ BOOL COMPATIBLE_IRC_ConnextWait( COMPATIBLE_IRC_SYS *p_sys )
 		break;
 
 	case SEQ_CONNECT_TIMING_START:
-		GFL_NET_HANDLE_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),
-				COMPATIBLE_IRC_CONNECT_TIMINGSYNC_NO);
+		GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),
+				COMPATIBLE_IRC_CONNECT_TIMINGSYNC_NO, WB_NET_IRCCOMPATIBLE);
 		p_sys->seq	= SEQ_CONNECT_TIMING_WAIT;
 		break;
 
 	case SEQ_CONNECT_TIMING_WAIT:
-		if( GFL_NET_HANDLE_IsTimingSync( GFL_NET_HANDLE_GetCurrentHandle(),
-					COMPATIBLE_IRC_CONNECT_TIMINGSYNC_NO) )
+		if( GFL_NET_HANDLE_IsTimeSync( GFL_NET_HANDLE_GetCurrentHandle(),
+					COMPATIBLE_IRC_CONNECT_TIMINGSYNC_NO, WB_NET_IRCCOMPATIBLE) )
 		{
 			p_sys->seq	= SEQ_CONNECT_END;
 		}
@@ -1107,17 +1107,20 @@ void COMPATIBLE_MENU_GetStatusData( const COMPATIBLE_IRC_SYS *cp_sys, COMPATIBLE
  *	@param	*p_status                       ステータス
  */
 //-----------------------------------------------------------------------------
-void COMPATIBLE_IRC_GetStatus( const GAMESYS_WORK *cp_gamesys, COMPATIBLE_STATUS *p_status )
+void COMPATIBLE_IRC_GetStatus( GAMESYS_WORK *cp_gamesys, COMPATIBLE_STATUS *p_status )
 { 
-  const PLAYER_WORK *cp_player;
+  GAMEDATA  *p_gamedata;
+  MYSTATUS *p_player;
   OSOwnerInfo info;
 
   OS_GetOwnerInfo( &info );
-  cp_player	= GAMESYSTEM_GetMyPlayerWork( (GAMESYS_WORK *)cp_gamesys );
+
+  p_gamedata  = GAMESYSTEM_GetGameData( cp_gamesys );
+  p_player	  = GAMEDATA_GetMyStatus( p_gamedata );
 
   p_status->barth_month  = info.birthday.month;
   p_status->barth_day    = info.birthday.day;
-  MyStatus_Copy(&cp_player->mystatus, (MYSTATUS*)p_status->my_status );
+  MyStatus_Copy( p_player, (MYSTATUS*)p_status->my_status );
 }
 
 //=============================================================================

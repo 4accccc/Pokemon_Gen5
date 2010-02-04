@@ -784,7 +784,7 @@ static BOOL POKELIST_FreeParam( void *p_param_adrs, void *p_wk_adrs )
   case 0:
     if( p_param->result == WIFIBATTLEMATCH_SUBPROC_RESULT_SUCCESS )
     { 
-      GFL_NET_HANDLE_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),17);
+      GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),17, WB_NET_WIFIMATCH);
       p_wk->sub_seq++;
     }
     else if( p_param->result == WIFIBATTLEMATCH_SUBPROC_RESULT_ERROR_NEXT_LOGIN )
@@ -798,7 +798,7 @@ static BOOL POKELIST_FreeParam( void *p_param_adrs, void *p_wk_adrs )
     break;
 
   case 1:
-    if(GFL_NET_HANDLE_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(),17) )
+    if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),17, WB_NET_WIFIMATCH) )
     { 
       GFL_HEAP_FreeMemory( p_param->regulation );
       SUBPROC_CallProc( &p_wk->subproc, SUBPROCID_BATTLE );

@@ -369,13 +369,13 @@ BOOL DWCRAP_SC_Process( DWCRAP_SC_GDB_WORK *p_wk, const DWCUserData *cp_user_dat
    case DWCRAP_SC_SEQ_SEND_PLAYERDATA_TIMING_START:
       GFL_STD_MemCopy( DWC_ScGetConnectionId(), p_wk->player[0].mConnectionId, DWC_SC_CONNECTION_GUID_SIZE );
 
-      GFL_NET_HANDLE_TimingSyncStart( GFL_NET_HANDLE_GetCurrentHandle(), DWCRAP_SC_SEND_PLAYERDATA_TIMING );
+      GFL_NET_HANDLE_TimeSyncStart( GFL_NET_HANDLE_GetCurrentHandle(), DWCRAP_SC_SEND_PLAYERDATA_TIMING, WB_NET_WIFIMATCH );
       p_wk->seq  = DWCRAP_SC_SEQ_SEND_PLAYERDATA_TIMING_WAIT;
       break;
 
     //タイミング待ち
     case DWCRAP_SC_SEQ_SEND_PLAYERDATA_TIMING_WAIT:
-      if( GFL_NET_HANDLE_IsTimingSync( GFL_NET_HANDLE_GetCurrentHandle(), DWCRAP_SC_SEND_PLAYERDATA_TIMING ) )
+      if( GFL_NET_HANDLE_IsTimeSync( GFL_NET_HANDLE_GetCurrentHandle(), DWCRAP_SC_SEND_PLAYERDATA_TIMING, WB_NET_WIFIMATCH ) )
       { 
         p_wk->seq = DWCRAP_SC_SEQ_SEND_PLAYERDATA;
       }
@@ -453,13 +453,13 @@ BOOL DWCRAP_SC_Process( DWCRAP_SC_GDB_WORK *p_wk, const DWCUserData *cp_user_dat
 
     //クライアントの情報をホストがもらうためのタイミングとり
     case DWCRAP_SC_SEQ_RETURN_PLAYERDATA_TIMING_START:
-      GFL_NET_HANDLE_TimingSyncStart( GFL_NET_HANDLE_GetCurrentHandle(), DWCRAP_SC_RETURN_PLAYERDATA_TIMING );
+      GFL_NET_HANDLE_TimeSyncStart( GFL_NET_HANDLE_GetCurrentHandle(), DWCRAP_SC_RETURN_PLAYERDATA_TIMING, WB_NET_WIFIMATCH );
       p_wk->seq  = DWCRAP_SC_SEQ_RETURN_PLAYERDATA_TIMING_WAIT;
       break;
 
     //タイミング待ち
     case DWCRAP_SC_SEQ_RETURN_PLAYERDATA_TIMING_WAIT:
-      if( GFL_NET_HANDLE_IsTimingSync( GFL_NET_HANDLE_GetCurrentHandle(), DWCRAP_SC_RETURN_PLAYERDATA_TIMING ) )
+      if( GFL_NET_HANDLE_IsTimeSync( GFL_NET_HANDLE_GetCurrentHandle(), DWCRAP_SC_RETURN_PLAYERDATA_TIMING, WB_NET_WIFIMATCH ) )
       { 
         p_wk->seq = DWCRAP_SC_SEQ_SEND_PLAYERDATA_CCID_PARENT;
       }
@@ -511,13 +511,13 @@ BOOL DWCRAP_SC_Process( DWCRAP_SC_GDB_WORK *p_wk, const DWCUserData *cp_user_dat
 
     //受信後、レポート作成のためのタイミングとり
     case DWCRAP_SC_SEQ_CREATE_REPORT_TIMING_START:
-      GFL_NET_HANDLE_TimingSyncStart( GFL_NET_HANDLE_GetCurrentHandle(), DWCRAP_SC_REPORT_TIMING );
+      GFL_NET_HANDLE_TimeSyncStart( GFL_NET_HANDLE_GetCurrentHandle(), DWCRAP_SC_REPORT_TIMING, WB_NET_WIFIMATCH );
       p_wk->seq  = DWCRAP_SC_SEQ_CREATE_REPORT_TIMING_WAIT;
       break;
 
     //タイミングまち
     case DWCRAP_SC_SEQ_CREATE_REPORT_TIMING_WAIT:
-      if( GFL_NET_HANDLE_IsTimingSync( GFL_NET_HANDLE_GetCurrentHandle(), DWCRAP_SC_REPORT_TIMING ) )
+      if( GFL_NET_HANDLE_IsTimeSync( GFL_NET_HANDLE_GetCurrentHandle(), DWCRAP_SC_REPORT_TIMING, WB_NET_WIFIMATCH ) )
       { 
         p_wk->seq = DWCRAP_SC_SEQ_CREATE_REPORT;
       }
