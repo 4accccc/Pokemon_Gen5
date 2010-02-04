@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-03T15:16:27"/>
+	<create user="matsumiya" host="W00224" date="2010-02-04T15:20:31"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1304" top="226" right="2009" bottom="854" maximized="no" rayout="Vertical2">
+	<dialog left="1310" top="141" right="2015" bottom="769" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -387,7 +387,7 @@
 詳しい　説明を　ききたい？</language>
 	</row>
 
-	<row id="msg_c01r0102_inventor_03" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,,,,,,,,">
+	<row id="msg_c01r0102_inventor_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・アイテム入手
 ・No600「わざマシン９４：いあいぎり」</comment>
@@ -401,7 +401,7 @@
 この　わざマシンを　どうぞ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c01r0102_inventor_04" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,,,,,,,,">
+	<row id="msg_c01r0102_inventor_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・</comment>
 		<attribute name="キャラ指定">ASSISTANTW
@@ -420,7 +420,7 @@
 いあいぎりと　いう　技が　使えるわ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c01r0102_inventor_05" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,,,,,,,,">
+	<row id="msg_c01r0102_inventor_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・メッセージ後、踊りだすようなアニメ
 ・続けてmsg_c01r0102_inventor_06</comment>
@@ -452,7 +452,7 @@
 夢の中に　入れるのです！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c01r0102_inventor_06" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,,,,,,,,">
+	<row id="msg_c01r0102_inventor_06" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・このメッセージ表示後は
 　msg_c01r0102_inventor_07を
@@ -494,30 +494,170 @@
 ムンナの　「ゆめのけむり」が　必要なんだ</language>
 	</row>
 
-	<row id="msg_c01r0102_inventor_08" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,,,,,,,,">
+	<row id="msg_c01r0102_inventor_08" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
-・重要アイテム「？？？」所有時
-・以降、PDWのチュートリアル用の
-　メッセージ追加予定</comment>
+・d01r0101イベント後
+・続けてinventor_09</comment>
 		<attribute name="キャラ指定">ASSISTANTW
 発明家</attribute>
-		<language name="JPN" width="256">マコモ『それって！
-ムンナの　「ゆめのけむり」！？[BE:01:ページ切り替え（クリア）]
-以下　ポケモンドリームワールドの
-チュートリアル　メッセージ予定</language>
-		<language name="JPN_KANJI" width="256">マコモ『それって！
-ムンナの　「ゆめのけむり」！？[BE:01:ページ切り替え（クリア）]
-以下　ポケモンドリームワールドの
-チュートリアル　メッセージ予定</language>
+		<language name="JPN" width="256">マコモ『じゃじゃーん！▼
+あなたが　ゆめのけむりを
+てにいれてくれた　おかげで▼
+アタシの　けんきゅうが
+やっと　かんせい　しました！▼
+ほんとうに　ありがとうね！▼</language>
+		<language name="JPN_KANJI" width="256">マコモ『じゃじゃーん！▼
+あなたが　ゆめのけむりを
+手に入れてくれた　おかげで▼
+アタシの　研究が
+やっと　完成しました！▼
+ほんとうに　ありがとうね！▼</language>
 	</row>
 
-	<row id="msg_c01r0102_inventor_09" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,,,,,,,,">
+	<row id="msg_c01r0102_inventor_09" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
 		<comment>♀
-・PDW関連メッセージの予定</comment>
+・一歩横に移動し
+　そちらを向いたままメッセージ表示
+・続けてinventor_10</comment>
 		<attribute name="キャラ指定">ASSISTANTW
 発明家</attribute>
-		<language name="JPN" width="256">かりメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">ムンナたちが　みせる　ゆめは
+ときとして　げんじつに　おこる……▽
+という　はなしは　したよね▼</language>
+		<language name="JPN_KANJI" width="256">ムンナたちが　みせる　夢は
+時として　現実に　起こる……▽
+という　話は　したよね▼</language>
+	</row>
+
+	<row id="msg_c01r0102_inventor_10" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+		<comment>♀
+・再度主人公と隣接、向き合って
+・続けてinventor_11</comment>
+		<attribute name="キャラ指定">ASSISTANTW
+発明家</attribute>
+		<language name="JPN" width="256">アタシは　それを　さいげんし
+ポケモンの　ゆめを　げんじつにする▽
+システムを　つくったの！▽
+そのなも　ＰＤＷシステム！▼
+ちなみに　ＰＤＷとは
+ポケモン　ドリーム　ワールドのことよ▼</language>
+		<language name="JPN_KANJI" width="256">アタシは　それを　再現し
+ポケモンの　みた夢を　現実にする▽
+システムを　つくったの！▽
+その名も　ＰＤＷシステム！▼
+ちなみに　ＰＤＷとは
+ポケモン　ドリーム　ワールドのことよ▼</language>
+	</row>
+
+	<row id="msg_c01r0102_inventor_11" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+		<comment>♀
+・続けてinventor_12</comment>
+		<attribute name="キャラ指定">ASSISTANTW
+発明家</attribute>
+		<language name="JPN" width="256">Ｃギアに　[FF:00:色:1]ＧａｍｅＳｙｎｃ[FF:00:色:0]という
+ボタンが　あるでしょ▼
+それを　おせば　ＰＤＷシステムで
+ねかせたい　ポケモンを　えらべるわ！▼</language>
+		<language name="JPN_KANJI" width="256">Ｃギアに　[FF:00:色:1]ＧａｍｅＳｙｎｃ[FF:00:色:0]という
+ボタンが　あるでしょ▼
+それを　押せば　ＰＤＷシステムで
+寝かせたい　ポケモンを　選べるわ！▼</language>
+	</row>
+
+	<row id="msg_c01r0102_inventor_12" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+		<comment>♀
+・続けてinventor_13</comment>
+		<attribute name="キャラ指定">ASSISTANTW
+発明家</attribute>
+		<language name="JPN" width="256">そして　ポケモンが　ねむり……
+ゆめを　みたあとに　おこすと……▼
+なんと　ポケモンが　みた　ゆめが
+げんじつでも　おきているの！！▼</language>
+		<language name="JPN_KANJI" width="256">そして　ポケモンが　眠り……
+夢を　みたあとに　起こすと……▼
+なんと　ポケモンが　みた　夢が
+現実でも　起きているの！！▼</language>
+	</row>
+
+	<row id="msg_c01r0102_inventor_13" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+		<comment>♀
+・続けてinventor_14</comment>
+		<attribute name="キャラ指定">ASSISTANTW
+発明家</attribute>
+		<language name="JPN" width="256">イッシュちほう　には
+パレス　という▽
+ふしぎな　ばしょが　あるのね▼
+そこに　ポケモンが
+ゆめで　みた　ものが▽
+しゅつげん　するみたいね▼</language>
+		<language name="JPN_KANJI" width="256">イッシュ地方には
+パレス　という▽
+不思議な　場所が　あるのね▼
+そこに　ポケモンが
+夢で　みた　ものが▽
+出現するみたいね▼</language>
+	</row>
+
+	<row id="msg_c01r0102_inventor_14" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+		<comment>♀
+・続けてinventor_15</comment>
+		<attribute name="キャラ指定">ASSISTANTW
+発明家</attribute>
+		<language name="JPN" width="256">まあ　りくつは　ともかく
+ためしてみて！▼
+Ｃギアの　[FF:00:色:1]ＧａｍｅＳｙｎｃ[FF:00:色:0]ボタンで
+ボックスに　いる　ポケモンを▽
+ねかせることが　できるから▼</language>
+		<language name="JPN_KANJI" width="256">まあ　理屈は　ともかく
+試してみて！▼
+Ｃギアの　[FF:00:色:1]ＧａｍｅＳｙｎｃ[FF:00:色:0]ボタンで
+ボックスに　いる　ポケモンを▽
+寝かせることが　できるから▼</language>
+	</row>
+
+	<row id="msg_c01r0102_inventor_15" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+		<comment>♀
+・イベント終了
+・再度話しかけるとinventor_16から</comment>
+		<attribute name="キャラ指定">ASSISTANTW
+発明家</attribute>
+		<language name="JPN" width="256">そうそう
+ひとつだけ　ちゅうい　しておくね▼
+ＰＤＷシステムは　うごかすのに
+ものすごく　エネルギーを　つかうのよ▼
+だから　１にちに　１ぴきしか
+ポケモンを　ねかせられないの▼
+いじょう　ゆめみる　おとめの
+マコモさんの　せつめい　でした！</language>
+		<language name="JPN_KANJI" width="256">そうそう
+ひとつだけ　注意しておくね▼
+ＰＤＷシステムは　動かすのに
+膨大な　エネルギーを　つかうのよ▼
+だから　１日に　１匹しか
+ポケモンを　寝かせられないの▼
+以上　夢見る乙女の
+マコモさんの　説明でした！</language>
+	</row>
+
+	<row id="msg_c01r0102_inventor_16" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+		<comment>♀
+・inventor_15表示以降</comment>
+		<attribute name="キャラ指定">ASSISTANTW
+発明家</attribute>
+		<language name="JPN" width="256">マコモ『[FF:00:色:1]ＧａｍｅＳｙｎｃ[FF:00:色:0]で　ねかせた
+ポケモンを　おこしたら▼
+Ｃギアで　パレスに　いくと
+ポケモンが　みた　ゆめが▽
+げんじつに　なってるわ！▼
+ポケモンたちは　いったい
+どんな　ゆめを　みるのかしらね？</language>
+		<language name="JPN_KANJI" width="256">マコモ『[FF:00:色:1]ＧａｍｅＳｙｎｃ[FF:00:色:0]で　寝かせた
+ポケモンを　起こしたあと▼
+Ｃギアで　パレスに　行くと
+ポケモンが　みた　夢が▽
+現実に　なってるわ！▼
+ポケモンたちは　いったい
+どんな　夢を　みるのかしらね？</language>
 	</row>
 
 	<row id="msg_c01r0102_girl3_01">
