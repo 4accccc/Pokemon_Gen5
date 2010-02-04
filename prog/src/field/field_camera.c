@@ -151,8 +151,17 @@ struct _FIELD_CAMERA {
   FIELD_CAMERA_AREA camera_area[FIELD_CAMERA_AREA_DATA_MAX];  
   u16               camera_area_num;
   u16               camera_area_active;
+
+
+  CAMERA_TRACE * Trace;
+
+  FLD_MOVE_CAM_DATA MoveData;
+  CAMERA_CALL_BACK CallBack;
   
 #ifdef PM_DEBUG
+  // デバック用
+
+
   u16 debug_subscreen_type;
   u16 debug_trace_off;
 
@@ -182,12 +191,9 @@ struct _FIELD_CAMERA {
   // ワイプ表示
   FLD_WIPEOBJ* p_debug_wipe;
   
+  // 基本ターゲットオフセット
+  VecFx32 debug_default_target_offs;
 #endif
-
-  CAMERA_TRACE * Trace;
-
-  FLD_MOVE_CAM_DATA MoveData;
-  CAMERA_CALL_BACK CallBack;
 };
 
 
@@ -532,6 +538,10 @@ static void loadCameraParameters(FIELD_CAMERA * camera, const VecFx32* watch_tar
   {
     camera->debug_save_buffer_mode = 3; // CAMERA_DEBUG_BUFFER_MODE_WBUFF_AUTO
   }
+
+  // 基本ターゲットオフセット設定
+  camera->debug_default_target_offs = param.Shift;
+  
 #endif
 
   camera->angle_len = param.Distance * FX32_ONE;
@@ -2248,6 +2258,32 @@ void FIELD_CAMERA_DEBUG_DrawControlHelp( FIELD_CAMERA* camera, GFL_BMPWIN* p_win
 
   GFL_BMPWIN_TransVramCharacter( p_win );
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  線形カメラデバック出力用のパラメータを設定
+ */
+//-----------------------------------------------------------------------------
+void FIELD_CAMERA_DEBUG_SetUpLinerCameraInfoData( FIELD_CAMERA* camera )
+{
+  VecFx32 set_target;
+  VecFx32 move_camera;
+
+  // ターゲット
+  set_target = camera->target_offset;
+  VEC_Add( &set_target, &camera->target, &set_target );
+  VEC_Subtract( &set_target, &camera->debug_default_target_offs, &set_target );
+  camera->target = set_target;
+
+  // オフセット
+  camera->target_offset = camera->debug_default_target_offs;
+
+  // アングル
+  VEC_Subtract( &camera->camPos, &camera->target, &move_camera );
+  modeChange_CalcVecAngel( &move_camera, &camera->angle_pitch, &camera->angle_yaw, &camera->angle_len );
+}
+
+
 
 #endif  //PM_DEBUG
 

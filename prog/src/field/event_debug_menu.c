@@ -134,7 +134,6 @@ static BOOL debugMenuCallProc_ScriptSelect( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL debugMenuCallProc_GameEnd( DEBUG_MENU_EVENT_WORK * wk );
 
 static BOOL debugMenuCallProc_ControlCamera( DEBUG_MENU_EVENT_WORK *wk );
-static BOOL debugMenuCallProc_ControlTarget( DEBUG_MENU_EVENT_WORK *wk );
 
 static BOOL debugMenuCallProc_CameraList( DEBUG_MENU_EVENT_WORK *wk );
 
@@ -209,8 +208,8 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
   { DEBUG_FIELD_STR17, debugMenuCallProc_FieldPosData },
   { DEBUG_FIELD_STR43, debugMenuCallProc_Jump },
   { DEBUG_FIELD_NUMINPUT, debugMenuCallProc_NumInput },
-  { DEBUG_FIELD_STR02, debugMenuCallProc_ControlCamera },
-  { DEBUG_FIELD_STR20, debugMenuCallProc_ControlTarget },
+  { DEBUG_FIELD_STR02, debugMenuCallProc_ControlLinerCamera },
+  { DEBUG_FIELD_STR52, debugMenuCallProc_ControlDelicateCamera },
   { DEBUG_FIELD_EVENT_CONTROL, debugMenuCallProc_EventFlagScript },
   { DEBUG_FIELD_STR03, debugMenuCallProc_ScriptSelect },
   { DEBUG_FIELD_STR04, debugMenuCallProc_GameEnd },
@@ -241,11 +240,9 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
   { DEBUG_FIELD_STR48, debugMenuCallProc_GDS },
   { DEBUG_FIELD_STR44, debugMenuCallProc_UITemplate },
   { DEBUG_FIELD_STR45, debugMenuCallProc_Kairiki },
-  { DEBUG_FIELD_STR46, debugMenuCallProc_ControlLinerCamera },
   { DEBUG_FIELD_STR47, debugMenu_ControlShortCut },
   { DEBUG_FIELD_STR49, debugMenuCallProc_BeaconFriendCode },
   { DEBUG_FIELD_STR50, debugMenuCallProc_WazaOshie },
-  { DEBUG_FIELD_STR52, debugMenuCallProc_ControlDelicateCamera },
   { DEBUG_FIELD_STR56, debugMenuCallProc_WifiBattleMatch },
   { DEBUG_FIELD_SEASON_DISPLAY, debugMenuCallProc_SeasonDisplay }, 
   { DEBUG_FIELD_STR57, debugMenuCallProc_DebugSake }, 
@@ -1121,25 +1118,6 @@ static void setupMusicarAll(DEB_MENU_MUS_WORK * work)
 //======================================================================
 //  デバッグメニュー　カメラ操作
 //======================================================================
-#define CM_RT_SPEED (FX32_ONE/8)
-#define CM_HEIGHT_MV (FX32_ONE*2)
-#define CM_NEARFAR_MV (FX32_ONE)
-
-//--------------------------------------------------------------
-/// DEBUG_CTLCAMERA_WORK カメラ操作ワーク1
-//--------------------------------------------------------------
-typedef struct
-{
-  int vanish;
-  GAMESYS_WORK *gsys;
-  GMEVENT *event;
-  HEAPID heapID;
-  FIELDMAP_WORK *fieldWork;
-  FLDMSGBG *pMsgBG;
-  FLDMSGWIN *pMsgWin;
-  STRBUF *pStrBuf;
-}DEBUG_CTLCAMERA_WORK;
-
 //--------------------------------------------------------------
 /// DEBUG_CTL_LINERCAMERA_WORK 線形カメラ操作ワーク1
 //--------------------------------------------------------------
@@ -1160,150 +1138,10 @@ typedef struct
 //--------------------------------------------------------------
 /// proto
 //--------------------------------------------------------------
-static GMEVENT_RESULT debugMenuControlCamera(
-    GMEVENT *event, int *seq, void *wk );
 static GMEVENT_RESULT debugMenuControlLinerCamera(
     GMEVENT *event, int *seq, void *wk );
 static void DampCameraInfo(FIELD_CAMERA * cam);
 static BOOL LinerCamKeyContCtl(DEBUG_CTL_LINERCAMERA_WORK *work, const fx32 inAddVal, fx32 *outVal);
-
-//--------------------------------------------------------------
-/**
- * デバッグメニュー呼び出し　カメラ操作
- * @param wk  DEBUG_MENU_EVENT_WORK*
- * @retval  BOOL  TRUE=イベント継続
- */
-//--------------------------------------------------------------
-static BOOL debugMenuCallProc_ControlCamera( DEBUG_MENU_EVENT_WORK *wk )
-{
-  DEBUG_CTLCAMERA_WORK *work;
-  GAMESYS_WORK *gsys = wk->gmSys;
-  GMEVENT *event = wk->gmEvent;
-  HEAPID heapID = wk->heapID;
-  FIELDMAP_WORK *fieldWork = wk->fieldWork;
-  
-  GMEVENT_Change( event, debugMenuControlCamera, sizeof(DEBUG_CTLCAMERA_WORK) );
-  work = GMEVENT_GetEventWork( event );
-  GFL_STD_MemClear( work, sizeof(DEBUG_CTLCAMERA_WORK) );
-  
-  work->gsys = gsys;
-  work->event = event;
-  work->heapID = heapID;
-  work->fieldWork = fieldWork;
-
-  {
-
-    FIELD_SUBSCREEN_WORK * subscreen;
-    
-
-    // カメラ操作は下画面で行う
-    subscreen = FIELDMAP_GetFieldSubscreenWork(work->fieldWork);
-    FIELD_SUBSCREEN_ChangeForce(subscreen, FIELD_SUBSCREEN_DEBUG_TOUCHCAMERA);
-    { 
-      void * inner_work;
-      FIELD_CAMERA * cam = FIELDMAP_GetFieldCamera(work->fieldWork);
-      inner_work = FIELD_SUBSCREEN_DEBUG_GetControl(subscreen);
-      FIELD_CAMERA_DEBUG_BindSubScreen(cam, inner_work, FIELD_CAMERA_DEBUG_BIND_CAMERA_POS, heapID);
-    }
-  }
-  // レールカメラ反映の停止
-  {
-    FLDNOGRID_MAPPER* mapper;
-    
-    if( FIELDMAP_GetBaseSystemType( work->fieldWork ) == FLDMAP_BASESYS_RAIL )
-    {
-      mapper = FIELDMAP_GetFldNoGridMapper( work->fieldWork );
-      FLDNOGRID_MAPPER_SetRailCameraActive( mapper, FALSE );
-    }
-  }
-  return( TRUE );
-}
-
-//--------------------------------------------------------------
-/**
- * デバッグメニュー呼び出し　カメラ操作
- * @param wk  DEBUG_MENU_EVENT_WORK*
- * @retval  BOOL  TRUE=イベント継続
- */
-//--------------------------------------------------------------
-static BOOL debugMenuCallProc_ControlTarget( DEBUG_MENU_EVENT_WORK *wk )
-{
-  DEBUG_CTLCAMERA_WORK *work;
-  GAMESYS_WORK *gsys = wk->gmSys;
-  GMEVENT *event = wk->gmEvent;
-  HEAPID heapID = wk->heapID;
-  FIELDMAP_WORK *fieldWork = wk->fieldWork;
-  
-  GMEVENT_Change( event, debugMenuControlCamera, sizeof(DEBUG_CTLCAMERA_WORK) );
-  work = GMEVENT_GetEventWork( event );
-  GFL_STD_MemClear( work, sizeof(DEBUG_CTLCAMERA_WORK) );
-  
-  work->gsys = gsys;
-  work->event = event;
-  work->heapID = heapID;
-  work->fieldWork = fieldWork;
-
-  {
-    FIELD_SUBSCREEN_WORK * subscreen;
-
-    // カメラ操作は下画面で行う
-    subscreen = FIELDMAP_GetFieldSubscreenWork(work->fieldWork);
-    FIELD_SUBSCREEN_ChangeForce(subscreen, FIELD_SUBSCREEN_DEBUG_TOUCHCAMERA);
-    { 
-      void * inner_work;
-      FIELD_CAMERA * cam = FIELDMAP_GetFieldCamera(work->fieldWork);
-      inner_work = FIELD_SUBSCREEN_DEBUG_GetControl(subscreen);
-      FIELD_CAMERA_DEBUG_BindSubScreen(cam, inner_work, FIELD_CAMERA_DEBUG_BIND_TARGET_POS, heapID);
-    }
-  }
-
-  // レールカメラ反映の停止
-  {
-    FLDNOGRID_MAPPER* mapper;
-    
-    if( FIELDMAP_GetBaseSystemType( work->fieldWork ) == FLDMAP_BASESYS_RAIL )
-    {
-      mapper = FIELDMAP_GetFldNoGridMapper( work->fieldWork );
-      FLDNOGRID_MAPPER_SetRailCameraActive( mapper, FALSE );
-    }
-  }
-  return( TRUE );
-}
-
-//--------------------------------------------------------------
-/**
- * イベント：カメラ操作
- * @param event GMEVENT
- * @param seq   シーケンス
- * @param wk    event work
- * @retval  GMEVENT_RESULT
- */
-//--------------------------------------------------------------
-static GMEVENT_RESULT debugMenuControlCamera(
-    GMEVENT *event, int *seq, void *wk )
-{
-  DEBUG_CTLCAMERA_WORK *work = wk;
-  FIELD_CAMERA * cam = FIELDMAP_GetFieldCamera(work->fieldWork);
-
-
-  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT ){
-    FIELD_CAMERA_DEBUG_ReleaseSubScreen( cam );
-
-    // レールカメラ反映の再開
-    {
-      FLDNOGRID_MAPPER* mapper;
-      
-      if( FIELDMAP_GetBaseSystemType( work->fieldWork ) == FLDMAP_BASESYS_RAIL )
-      {
-        mapper = FIELDMAP_GetFldNoGridMapper( work->fieldWork );
-        FLDNOGRID_MAPPER_SetRailCameraActive( mapper, TRUE );
-      }
-    }
-    return( GMEVENT_RES_FINISH );
-  }
-
-  return( GMEVENT_RES_CONTINUE );
-}
 
 //======================================================================
 //  デバッグメニュー　テストカメラリスト
@@ -3571,8 +3409,31 @@ static GMEVENT_RESULT debugMenuDelicateCamera( GMEVENT *p_event, int *p_seq, voi
 
   // DEBUGで、スクリプト操作用の表示を出す。
   // バッファリングモードも変わってしまいますが・・・。
-  if( trg & PAD_BUTTON_DEBUG ){
+  if( trg & PAD_BUTTON_DEBUG )
+  {
+    VecFx32 offset;
+    VecFx32 target;
+    u16 pitch;
+    u16 yaw;
+    fx32 len;
+
+    // 線形カメラ用表示パラメータをカメラに設定
+    FIELD_CAMERA_GetTargetOffset( p_work->p_camera, &offset );
+    FIELD_CAMERA_GetTargetPos( p_work->p_camera, &target );
+    pitch = FIELD_CAMERA_GetAnglePitch( p_work->p_camera );
+    yaw   = FIELD_CAMERA_GetAngleYaw( p_work->p_camera );
+    len   = FIELD_CAMERA_GetAngleLen( p_work->p_camera );
+    FIELD_CAMERA_DEBUG_SetUpLinerCameraInfoData( p_work->p_camera );
+
+    // 平行移動も含めた座標を返す。
     DampCameraInfo( p_work->p_camera );
+
+    // 元に戻す
+    FIELD_CAMERA_SetTargetPos( p_work->p_camera, &target );
+    FIELD_CAMERA_SetTargetOffset( p_work->p_camera, &offset );
+    FIELD_CAMERA_SetAnglePitch( p_work->p_camera, pitch );
+    FIELD_CAMERA_SetAngleYaw( p_work->p_camera, yaw );
+    FIELD_CAMERA_SetAngleLen( p_work->p_camera, len );
   }
   
   

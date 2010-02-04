@@ -447,5 +447,9 @@ extern void FIELD_CAMERA_DEBUG_ExitControl( FIELD_CAMERA* camera );
 extern BOOL FIELD_CAMERA_DEBUG_Control( FIELD_CAMERA* camera, int trg, int cont, int repeat );
 extern void FIELD_CAMERA_DEBUG_DrawInfo( FIELD_CAMERA* camera, GFL_BMPWIN* p_win, fx32 map_size_x, fx32 map_size_z );
 extern void FIELD_CAMERA_DEBUG_DrawControlHelp( FIELD_CAMERA* camera, GFL_BMPWIN* p_win );
+
+// 線形カメラ用のパラメータをカメラワークに設定
+// デバック操作中のパラメータの値が消えるので注意
+extern void FIELD_CAMERA_DEBUG_SetUpLinerCameraInfoData( FIELD_CAMERA* camera );
 #endif
 
