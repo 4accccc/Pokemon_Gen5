@@ -151,6 +151,7 @@ struct _GTSNEGO_WORK {
   BOOL receive_ok;
   BOOL bInitMessage;
   BOOL bSaving;
+  GAMEDATA* pGameData;
   SAVE_CONTROL_WORK* pSave;
   APP_TASKMENU_WORK* pAppTask;
   GTSNEGO_DISP_WORK* pDispWork;  // 描画系
@@ -167,6 +168,7 @@ struct _GTSNEGO_WORK {
   int friendChageType;  //相手に交換してもらいたいタイプ
   int chageLevel;    // ポケモンレベル範囲
   s32 profileID;
+  int listmax;
 };
 
 
@@ -194,6 +196,7 @@ static BOOL _modeSelectMenuButtonCallback(int bttnid,GTSNEGO_WORK* pWork);
 static void _modeSelectBattleTypeInit(GTSNEGO_WORK* pWork);
 
 static void _levelSelect( GTSNEGO_WORK *pWork );
+static void _friendSelect( GTSNEGO_WORK *pWork );
 
 static void _recvInfomationData(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
 static void _recvMystatusData(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
@@ -293,9 +296,13 @@ static void _recvMystatusData(const int netID, const int size, const void* pData
 //------------------------------------------------------------------------------
 static BOOL _AnyoneOrFriendButtonCallback(int bttnid,GTSNEGO_WORK* pWork)
 {
-
   pWork->changeMode = bttnid;
-  _CHANGE_STATE(pWork, _levelSelect);
+  if(bttnid==0){
+    _CHANGE_STATE(pWork, _levelSelect);
+  }
+  else{
+    _CHANGE_STATE(pWork, _friendSelect);
+  }
   return TRUE;
 }
 
@@ -732,6 +739,7 @@ static void _levelSelectWait( GTSNEGO_WORK *pWork )
       GTSNEGO_MESSAGE_DeleteDispLevel(pWork->pMessageWork);
       GTSNEGO_DISP_LevelInputFree(pWork->pDispWork);
       APP_TASKMENU_CloseMenu(pWork->pAppTask);
+    pWork->pAppTask=NULL;
       _CHANGE_STATE(pWork,_modeSelectMenuInit);
       break;
     default:
@@ -758,11 +766,62 @@ static void _levelSelect( GTSNEGO_WORK *pWork )
 
   GTSNEGO_MESSAGE_InfoMessageDisp(pWork->pMessageWork,GTSNEGO_025);
   
-  pWork->pAppTask = GTSNEGO_MESSAGE_SearchButtonStart(pWork->pMessageWork);
+  pWork->pAppTask = GTSNEGO_MESSAGE_SearchButtonStart(pWork->pMessageWork,GTSNEGO_023);
 
   _CHANGE_STATE(pWork,_levelSelectWait);
 }
 
+
+
+
+
+
+//------------------------------------------------------------------
+/**
+ * $brief   交換相手選択待ち
+ * @param   wk
+ * @retval  none
+ */
+//------------------------------------------------------------------
+
+static void _friendSelectWait( GTSNEGO_WORK *pWork )
+{
+  if(!GTSNEGO_MESSAGE_InfoMessageEndCheck(pWork->pMessageWork)){
+    return;
+  }
+
+  TOUCHBAR_Main(GTSNEGO_DISP_GetTouchWork(pWork->pDispWork));
+  switch( TOUCHBAR_GetTrg(GTSNEGO_DISP_GetTouchWork(pWork->pDispWork))){
+  case TOUCHBAR_ICON_RETURN:
+    GTSNEGO_DISP_FriendSelectFree(pWork->pDispWork);
+    APP_TASKMENU_CloseMenu(pWork->pAppTask);
+    pWork->pAppTask=NULL;
+    _CHANGE_STATE(pWork,_modeSelectMenuInit);
+    break;
+  default:
+    break;
+  }
+
+}
+
+//------------------------------------------------------------------
+/**
+ * $brief   交換相手選択
+ * @param   wk
+ * @retval  none
+ */
+//------------------------------------------------------------------
+
+static void _friendSelect( GTSNEGO_WORK *pWork )
+{
+  GTSNEGO_MESSAGE_DispClear(pWork->pMessageWork);
+
+  GTSNEGO_DISP_FriendSelectInit(pWork->pDispWork,pWork->pMessageWork);
+
+  pWork->pAppTask = GTSNEGO_MESSAGE_SearchButtonStart(pWork->pMessageWork,GTSNEGO_032);
+
+  _CHANGE_STATE(pWork,_friendSelectWait);
+}
 
 
 
@@ -849,8 +908,9 @@ static GFL_PROC_RESULT GameSyncMenuProcInit( GFL_PROC * proc, int * seq, void * 
   GFL_STD_MemClear(pWork, sizeof(GTSNEGO_WORK));
   pWork->heapID = HEAPID_IRCBATTLE;
   pWork->dbw = pEv;
-  pWork->pDispWork = GTSNEGO_DISP_Init(pWork->heapID);
+  pWork->pDispWork = GTSNEGO_DISP_Init(pWork->heapID, pEv->gamedata);
   pWork->pMessageWork = GTSNEGO_MESSAGE_Init(pWork->heapID, NARC_message_gtsnego_dat);
+  pWork->pGameData = pEv->gamedata;
   pWork->pSave = GAMEDATA_GetSaveControlWork(pEv->gamedata);
   pWork->pList = GAMEDATA_GetWiFiList(pEv->gamedata);
 
@@ -860,15 +920,22 @@ static GFL_PROC_RESULT GameSyncMenuProcInit( GFL_PROC * proc, int * seq, void * 
     GFL_NET_AddCommandTable(GFL_NET_CMD_GTSNEGO,_PacketTbl,NELEMS(_PacketTbl), pWork);
   }
 
+  {
+    int i;
 
+    pWork->listmax = 0;
+    for(i=0;i< WIFI_NEGOTIATION_DATAMAX;i++){
+      MYSTATUS* pMyStatus = WIFI_NEGOTIATION_SV_GetMyStatus(GAMEDATA_GetWifiNegotiation(pWork->pGameData), i);
+      if(pMyStatus){
+        pWork->listmax++;
+      }
+    }
+  }
 
   WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEIN , WIPE_TYPE_FADEIN ,
                   WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
   
-  
-  _CHANGE_STATE(pWork,_modeSelectMenuInit);
-  
-  
+  _CHANGE_STATE(pWork, _modeSelectMenuInit);
 
   return GFL_PROC_RES_FINISH;
 }

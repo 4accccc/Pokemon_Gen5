@@ -310,7 +310,7 @@ static void _CatchPokemonPositionRewind(POKEMON_TRADE_WORK *pWork)
 
 static void _CatchPokemonPositionActive(POKEMON_TRADE_WORK *pWork,GFL_CLWK* pCL,int line ,int index,POKEMON_PASO_PARAM*ppp)
 {
-  int pltNum;
+//  int pltNum;
 
 
   NET_PRINT("‚Â‚©‚Ý‚»‚Ì‚Q\n");
@@ -318,9 +318,9 @@ static void _CatchPokemonPositionActive(POKEMON_TRADE_WORK *pWork,GFL_CLWK* pCL,
   pWork->pSelectCLWK = pCL;
   GFL_CLACT_WK_GetPos(pWork->pCatchCLWK, &pWork->aCatchOldPos, CLSYS_DRAW_SUB);
 
-  pltNum = POKEICON_GetPalNumGetByPPP( ppp );
+ // pltNum = POKEICON_GetPalNumGetByPPP( ppp );
   POKMEONTRADE2D_IconGray(pWork, pWork->pCatchCLWK, TRUE);
-  GFL_CLACT_WK_SetPlttOffs( pWork->pCatchCLWK , pltNum , CLWK_PLTTOFFS_MODE_PLTT_TOP );
+  //GFL_CLACT_WK_SetPlttOffs( pWork->pCatchCLWK , pltNum , CLWK_PLTTOFFS_MODE_PLTT_TOP );
 
 
   //  GFL_CLACT_WK_SetSoftPri(pWork->pCatchCLWK,_CLACT_SOFTPRI_CATCHPOKE);
@@ -1125,6 +1125,9 @@ static BOOL IsTouchCLACTPosition(POKEMON_TRADE_WORK* pWork, BOOL bCatch)
 //            void POKEMONTRADE_StartCatched(POKEMON_TRADE_WORK* pWork,int line, int pos,int x,int y)
          //   pWork->pCatchCLWK=pCL;
           }
+          pWork->oldLine++;
+          pWork->bgscrollRenew = TRUE;
+          _scrollMainFunc(pWork,FALSE,FALSE);
           bChange = TRUE;
         }
       }

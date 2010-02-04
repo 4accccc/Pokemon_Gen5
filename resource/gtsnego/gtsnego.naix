@@ -11,23 +11,27 @@
 #define NARC_GTSNEGO_NAIX_
 
 enum {
-	NARC_gtsnego_nego_back_NCLR = 0,
-	NARC_gtsnego_nego_obj_NCLR = 1,
-	NARC_gtsnego_nego_under_bg_NCLR = 2,
-	NARC_gtsnego_nego_wait_under_bg_NCLR = 3,
-	NARC_gtsnego_nego_back_NCGR = 4,
-	NARC_gtsnego_nego_obj_NCGR = 5,
-	NARC_gtsnego_nego_under_bg_NCGR = 6,
-	NARC_gtsnego_nego_wait_under_bg_NCGR = 7,
-	NARC_gtsnego_nego_obj_NCER = 8,
-	NARC_gtsnego_nego_back_NSCR = 9,
-	NARC_gtsnego_nego_under_bg1_NSCR = 10,
-	NARC_gtsnego_nego_under_bg2_NSCR = 11,
-	NARC_gtsnego_nego_under_bg3_NSCR = 12,
-	NARC_gtsnego_nego_under_bg_base_NSCR = 13,
-	NARC_gtsnego_nego_wait_under_bg_NSCR = 14,
-	NARC_gtsnego_nego_wait_under_bg2_NSCR = 15,
-	NARC_gtsnego_nego_obj_NANR = 16
+	NARC_gtsnego_menu_bar_NCLR = 0,
+	NARC_gtsnego_nego_back_NCLR = 1,
+	NARC_gtsnego_nego_obj_NCLR = 2,
+	NARC_gtsnego_nego_under_bg_NCLR = 3,
+	NARC_gtsnego_nego_wait_under_bg_NCLR = 4,
+	NARC_gtsnego_menu_bar_NCGR = 5,
+	NARC_gtsnego_nego_back_NCGR = 6,
+	NARC_gtsnego_nego_obj_NCGR = 7,
+	NARC_gtsnego_nego_under_bg_NCGR = 8,
+	NARC_gtsnego_nego_wait_under_bg_NCGR = 9,
+	NARC_gtsnego_menubar_NCER = 10,
+	NARC_gtsnego_nego_obj_NCER = 11,
+	NARC_gtsnego_nego_back_NSCR = 12,
+	NARC_gtsnego_nego_back_under_NSCR = 13,
+	NARC_gtsnego_nego_under_bg1_NSCR = 14,
+	NARC_gtsnego_nego_under_bg2_NSCR = 15,
+	NARC_gtsnego_nego_under_bg3_NSCR = 16,
+	NARC_gtsnego_nego_wait_under_bg_NSCR = 17,
+	NARC_gtsnego_nego_wait_under_bg2_NSCR = 18,
+	NARC_gtsnego_menubar_NANR = 19,
+	NARC_gtsnego_nego_obj_NANR = 20
 };
 
 /* NARC_GTSNEGO_NAIX_ */

@@ -43,6 +43,7 @@
 #include "gtsnego_local.h"
 #include "gtsnego.naix"
 
+
 FS_EXTERN_OVERLAY(ui_common);
 
 typedef enum
@@ -62,6 +63,7 @@ typedef enum
 struct _GTSNEGO_DISP_WORK {
 	u32 subchar;
   u32 mainchar;
+  u32 backchar;
   TOUCHBAR_WORK* pTouchWork;
   GFL_CLUNIT	*cellUnit;
   GFL_TCB *g3dVintr; //3D用vIntrTaskハンドル
@@ -71,7 +73,11 @@ struct _GTSNEGO_DISP_WORK {
   GFL_CLWK* curIcon[_CELL_DISP_NUM];
   HEAPID heapID;
   BLINKPALANM_WORK* pBlink;
-
+  BLINKPALANM_WORK* pBlinkUnder;
+  BOOL bgscrollRenew;
+  int bgscroll;
+  int listmax;
+  GAMEDATA* pGameData;
 };
 
 static GFL_DISP_VRAM _defVBTbl = {
@@ -124,13 +130,21 @@ static void _TOUCHBAR_Init(GTSNEGO_DISP_WORK* pWork);
 static void	_VBlank( GFL_TCB *tcb, void *work );
 static void _SetArrow(GTSNEGO_DISP_WORK* pWork,int x,int y,BOOL bRight);
 static void _ArrowRelease(GTSNEGO_DISP_WORK* pWork);
+static void _FriendListPlateDisp(GTSNEGO_DISP_WORK* pWork, GTSNEGO_MESSAGE_WORK* pMessageWork);
+static void _DebugDataCreate(GTSNEGO_DISP_WORK* pWork);
+
+
+#define SCROLL_HEIGHT_SINGLE (48)   ///１パネルの高さ
+#define SCROLL_HEIGHT_DEFAULT (-24);
 
 
 
-GTSNEGO_DISP_WORK* GTSNEGO_DISP_Init(HEAPID id)
+
+GTSNEGO_DISP_WORK* GTSNEGO_DISP_Init(HEAPID id, GAMEDATA* pGameData)
 {
   GTSNEGO_DISP_WORK* pWork = GFL_HEAP_AllocClearMemory(id, sizeof(GTSNEGO_DISP_WORK));
   pWork->heapID = id;
+  pWork->pGameData = pGameData;
 
   GFL_OVERLAY_Load( FS_OVERLAY_ID(ui_common));
 
@@ -156,6 +170,10 @@ GTSNEGO_DISP_WORK* GTSNEGO_DISP_Init(HEAPID id)
   _TOUCHBAR_Init(pWork);
 
   GFL_DISP_GXS_SetVisibleControlDirect( GX_PLANEMASK_BG0|GX_PLANEMASK_BG1|GX_PLANEMASK_BG2|GX_PLANEMASK_BG3|GX_PLANEMASK_OBJ );
+
+#if DEBUG_ONLY_FOR_ohno
+  _DebugDataCreate(pWork);
+#endif
   
   return pWork;
 }
@@ -165,6 +183,9 @@ void GTSNEGO_DISP_Main(GTSNEGO_DISP_WORK* pWork)
   GFL_CLACT_SYS_Main();
   if(pWork->pBlink){
     BLINKPALANM_Main(pWork->pBlink);
+  }
+  if(pWork->pBlinkUnder){
+    BLINKPALANM_Main(pWork->pBlinkUnder);
   }
 }
 
@@ -181,6 +202,7 @@ void GTSNEGO_DISP_End(GTSNEGO_DISP_WORK* pWork)
   GFL_CLACT_UNIT_Delete(pWork->cellUnit);
   GFL_CLACT_SYS_Delete();
   BLINKPALANM_Exit(pWork->pBlink);
+  BLINKPALANM_Exit(pWork->pBlinkUnder);
 
   GFL_BG_FillCharacterRelease( GFL_BG_FRAME1_M, 1, 0);
   GFL_BG_FillCharacterRelease( GFL_BG_FRAME1_S, 1, 0);
@@ -279,7 +301,7 @@ static void settingSubBgControl(GTSNEGO_DISP_WORK* pWork)
     int frame = GFL_BG_FRAME3_S;
     GFL_BG_BGCNT_HEADER TextBgCntDat = {
       0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0xe800, GX_BG_CHARBASE_0x00000, 0x8000,GX_BG_EXTPLTT_01,
+      GX_BG_SCRBASE_0xe800, GX_BG_CHARBASE_0x18000, 0x8000,GX_BG_EXTPLTT_01,
       3, 0, 0, FALSE
       };
     GFL_BG_SetBGControl(
@@ -302,7 +324,13 @@ static void	_VBlank( GFL_TCB *tcb, void *work )
   GTSNEGO_DISP_WORK *pWork=work;
 
   GFL_CLACT_SYS_VBlankFunc();	//セルアクターVBlank
-
+#if 0
+  if(pWork->bgscrollRenew){
+    GFL_BG_SetScroll(GFL_BG_FRAME0_S,GFL_BG_SCROLL_Y_SET, (pWork->bgscroll + SCROLL_HEIGHT_DEFAULT)%SCROLL_HEIGHT_SINGLE);
+    GFL_BG_SetScroll(GFL_BG_FRAME2_S,GFL_BG_SCROLL_Y_SET, (pWork->bgscroll + SCROLL_HEIGHT_DEFAULT)%SCROLL_HEIGHT_SINGLE);
+    pWork->bgscrollRenew=FALSE;
+  }
+#endif
 }
 
 static void dispInit(GTSNEGO_DISP_WORK* pWork)
@@ -311,7 +339,18 @@ static void dispInit(GTSNEGO_DISP_WORK* pWork)
     ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_GTSNEGO, pWork->heapID );
 
     GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_gtsnego_nego_under_bg_NCLR,
-                                      PALTYPE_SUB_BG, 0, 0,  pWork->heapID);
+                                      PALTYPE_SUB_BG, 0, 6*0x20,  pWork->heapID);
+    GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_gtsnego_nego_back_NCLR,
+                                      PALTYPE_SUB_BG, 0, 2*0x20,  pWork->heapID);
+
+    pWork->backchar = GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( p_handle, NARC_gtsnego_nego_back_NCGR,
+                                                                  GFL_BG_FRAME3_S, 0, 0, pWork->heapID);
+    // サブ画面BG3スクリーン転送
+    GFL_ARCHDL_UTIL_TransVramScreenCharOfs(   p_handle, NARC_gtsnego_nego_back_under_NSCR,
+                                              GFL_BG_FRAME3_S, 0,
+                                              GFL_ARCUTIL_TRANSINFO_GetPos(pWork->backchar), 0, 0,
+                                              pWork->heapID);
+
     // サブ画面BG0キャラ転送
     pWork->subchar = GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( p_handle, NARC_gtsnego_nego_under_bg_NCGR,
                                                                   GFL_BG_FRAME0_S, 0, 0, pWork->heapID);
@@ -322,11 +361,7 @@ static void dispInit(GTSNEGO_DISP_WORK* pWork)
                                               GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar), 0, 0,
                                               pWork->heapID);
 
-    // サブ画面BG3スクリーン転送
-    GFL_ARCHDL_UTIL_TransVramScreenCharOfs(   p_handle, NARC_gtsnego_nego_under_bg_base_NSCR,
-                                              GFL_BG_FRAME3_S, 0,
-                                              GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar), 0, 0,
-                                              pWork->heapID);
+
 
 
     GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_gtsnego_nego_back_NCLR,
@@ -355,6 +390,9 @@ static void dispInit(GTSNEGO_DISP_WORK* pWork)
 
     pWork->pBlink = BLINKPALANM_Create(0,16,GFL_BG_FRAME0_M,pWork->heapID);
     BLINKPALANM_SetPalBufferArcHDL(pWork->pBlink,p_handle,NARC_gtsnego_nego_back_NCLR,0,16 );
+
+    pWork->pBlinkUnder = BLINKPALANM_Create(0,16,GFL_BG_FRAME3_S,pWork->heapID);
+    BLINKPALANM_SetPalBufferArcHDL(pWork->pBlinkUnder,p_handle,NARC_gtsnego_nego_back_NCLR,0,16 );
     
     
     GFL_ARC_CloseDataHandle(p_handle);
@@ -378,6 +416,11 @@ void GTSNEGO_DISP_LevelInputInit(GTSNEGO_DISP_WORK* pWork)
                                               GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar), 0, 0,
                                               pWork->heapID);
 
+    // サブ画面BG0スクリーン転送
+    GFL_ARCHDL_UTIL_TransVramScreenCharOfs(   p_handle, NARC_gtsnego_nego_under_bg3_NSCR,
+                                              GFL_BG_FRAME0_S, 0,
+                                              GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar), 2*0x20*3, 0,
+                                              pWork->heapID);
 
 
     GFL_ARC_CloseDataHandle(p_handle);
@@ -392,8 +435,6 @@ void GTSNEGO_DISP_LevelInputInit(GTSNEGO_DISP_WORK* pWork)
   _SetArrow(pWork,_ARROW_FRIEND_XU * 8, _ARROW_FRIEND_YU * 8,FALSE);
   _SetArrow(pWork,_ARROW_FRIEND_XD * 8, _ARROW_FRIEND_YD * 8,TRUE);
 
-
-  
 }
 
 void GTSNEGO_DISP_LevelInputFree(GTSNEGO_DISP_WORK* pWork)
@@ -407,8 +448,10 @@ void GTSNEGO_DISP_LevelInputFree(GTSNEGO_DISP_WORK* pWork)
                                             GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar), 0, 0,
                                             pWork->heapID);
 
+
+  
   GFL_BG_LoadScreenV_Req( GFL_BG_FRAME0_S );
-    GFL_ARC_CloseDataHandle(p_handle);
+  GFL_ARC_CloseDataHandle(p_handle);
 }
 
 
@@ -490,3 +533,119 @@ static void _ArrowRelease(GTSNEGO_DISP_WORK* pWork)
   }
 }
 
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	フレンド選択初期化
+ *	@param	POKEMON_TRADE_WORK
+ *	@return	none
+ */
+//-----------------------------------------------------------------------------
+
+void GTSNEGO_DISP_FriendSelectInit(GTSNEGO_DISP_WORK* pWork, GTSNEGO_MESSAGE_WORK* pMessageWork)
+{
+
+	{
+    ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_GTSNEGO, pWork->heapID );
+
+
+    // サブ画面BG0スクリーン転送
+    GFL_ARCHDL_UTIL_TransVramScreenCharOfs(   p_handle, NARC_gtsnego_nego_wait_under_bg2_NSCR,
+                                              GFL_BG_FRAME0_S, 0,
+                                              GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar), 0, 0,
+                                              pWork->heapID);
+
+//    GFL_ARCHDL_UTIL_TransVramScreenCharOfs(   p_handle, NARC_gtsnego_nego_wait_under_bg_NSCR,
+  //                                            GFL_BG_FRAME0_S, 0,
+    //                                          GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar), 0, 0,
+      //                                        pWork->heapID);
+    
+    GFL_ARC_CloseDataHandle(p_handle);
+	}
+  pWork->bgscroll = 0;
+
+//  _FriendListPlateDisp(pWork, pMessageWork);
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	フレンド選択開放
+ *	@param	POKEMON_TRADE_WORK
+ *	@return	none
+ */
+//-----------------------------------------------------------------------------
+
+void GTSNEGO_DISP_FriendSelectFree(GTSNEGO_DISP_WORK* pWork)
+{
+  ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_GTSNEGO, pWork->heapID );
+
+  GFL_BG_FillScreen( GFL_BG_FRAME2_S,	0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
+  GFL_BG_LoadScreenV_Req( GFL_BG_FRAME2_S );
+  GFL_ARCHDL_UTIL_TransVramScreenCharOfs(   p_handle, NARC_gtsnego_nego_under_bg1_NSCR,
+                                            GFL_BG_FRAME0_S, 0,
+                                            GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar), 0, 0,
+                                            pWork->heapID);
+
+  GFL_BG_LoadScreenV_Req( GFL_BG_FRAME0_S );
+  GFL_ARC_CloseDataHandle(p_handle);
+}
+
+
+
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	下キーが押された時の処理
+ *	@param	GTSNEGO_DISP_WORK
+ *	@return	none
+ */
+//-----------------------------------------------------------------------------
+
+static BOOL _FriendListDownChk(GTSNEGO_DISP_WORK* pWork)
+{
+  BOOL bChange = FALSE;
+#if 0  
+
+  if((pWork->curpos==4) && ((pWork->oamlistpos+7) < pWork->listmax)){
+    //カーソルはそのままでリストが移動
+    pWork->oamlistpos++;
+    bChange = TRUE;
+  }
+  else if((pWork->curpos==4) && ((pWork->curpos+1) < pWork->listmax)){
+    //リストの終端まで来たのでカーソルが移動
+    pWork->curpos++;
+    bChange = TRUE;
+  }
+  else if((pWork->curpos!=5) && ((pWork->curpos+1) < pWork->listmax)){
+    //リストの終端まで来たのでカーソルが移動
+    pWork->curpos++;
+    bChange = TRUE;
+  }
+#endif
+  return bChange;
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	フレンドダミーデータ作成
+ *	@param	POKEMON_TRADE_WORK
+ *	@return	none
+ */
+//-----------------------------------------------------------------------------
+#if DEBUG_ONLY_FOR_ohno
+
+static void _DebugDataCreate(GTSNEGO_DISP_WORK* pWork)
+{
+  int i;
+  MYSTATUS* pMyStatus = MyStatus_AllocWork(pWork->heapID);
+
+  for(i = 0; i < WIFI_NEGOTIATION_DATAMAX;i++){
+    WIFI_NEGOTIATION_SV_SetFriend(GAMEDATA_GetWifiNegotiation(pWork->pGameData),pMyStatus);
+  }
+  GFL_HEAP_FreeMemory(pMyStatus);
+}
+
+
+#endif

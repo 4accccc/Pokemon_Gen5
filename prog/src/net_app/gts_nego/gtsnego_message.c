@@ -225,7 +225,7 @@ void GTSNEGO_MESSAGE_InfoMessageDisp(GTSNEGO_MESSAGE_WORK* pWork,int msgid)
   if(pWork->infoDispWin==NULL){
     pWork->infoDispWin = GFL_BMPWIN_Create(
       GFL_BG_FRAME1_M ,
-      1 , 1, 30 ,4 ,
+      1 , 19, 30 ,4 ,
       _BUTTON_MSG_PAL , GFL_BMP_CHRAREA_GET_B );
   }
   pwin = pWork->infoDispWin;
@@ -582,11 +582,12 @@ void GTSNEGO_MESSAGE_DispLevel(GTSNEGO_MESSAGE_WORK* pWork,pBmnCallBackFunc call
   GFL_FONTSYS_SetColor(15, 14, 0);
   GTSNEGO_MESSAGE_Disp(pWork, GTSNEGO_007, 0, 0);
 
-  GFL_FONTSYS_SetColor(1, 2, 0);
+  GFL_FONTSYS_SetColor(15, 14, 0);
   GTSNEGO_MESSAGE_Disp(pWork, GTSNEGO_008, 3, 6);
   GTSNEGO_MESSAGE_Disp(pWork, GTSNEGO_028, 1, 11);
   GTSNEGO_MESSAGE_Disp(pWork, GTSNEGO_029, 1, 16);
 
+  GFL_FONTSYS_SetColor(1, 2, 0);
   pWork->msgidx[_MESSAGE_LEVEL] = GTSNEGO_MESSAGE_Disp(pWork, GTSNEGO_012,  13,  6);
   pWork->msgidx[_MESSAGE_MY] = GTSNEGO_MESSAGE_Disp(pWork, GTSNEGO_017,     16, 11);
   pWork->msgidx[_MESSAGE_FRIEND] = GTSNEGO_MESSAGE_Disp(pWork, GTSNEGO_017, 16, 16);
@@ -628,7 +629,7 @@ void GTSNEGO_MESSAGE_DeleteDispLevel(GTSNEGO_MESSAGE_WORK* pWork)
 
 
 
-APP_TASKMENU_WORK* GTSNEGO_MESSAGE_SearchButtonStart(GTSNEGO_MESSAGE_WORK* pWork)
+APP_TASKMENU_WORK* GTSNEGO_MESSAGE_SearchButtonStart(GTSNEGO_MESSAGE_WORK* pWork,int msgno)
 {
   int i;
   APP_TASKMENU_INITWORK appinit;
@@ -644,11 +645,40 @@ APP_TASKMENU_WORK* GTSNEGO_MESSAGE_SearchButtonStart(GTSNEGO_MESSAGE_WORK* pWork
 	appinit.h				 = APP_TASKMENU_PLATE_HEIGHT;
 
   pWork->appitem[0].str = GFL_STR_CreateBuffer(100, pWork->heapID);
-  GFL_MSG_GetString(pWork->pMsgData, GTSNEGO_023, pWork->appitem[0].str);
+  GFL_MSG_GetString(pWork->pMsgData, msgno, pWork->appitem[0].str);
   pWork->appitem[0].msgColor = PRINTSYS_LSB_Make( 0xe,0xf,0);
   pAppTask = APP_TASKMENU_OpenMenu(&appinit,pWork->pAppTaskRes);
   GFL_STR_DeleteBuffer(pWork->appitem[0].str);
   return pAppTask;
 }
 
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ÉtÉåÉìÉhëIëèâä˙âª
+ *	@param	POKEMON_TRADE_WORK
+ *	@return	none
+ */
+//-----------------------------------------------------------------------------
+
+void GTSNEGO_MESSAGE_FriendListPlateDisp(GTSNEGO_MESSAGE_WORK* pMessageWork)
+{
+  int i, j, count;
+  MYSTATUS* pMyStatus;
+#if 0  
+
+  count = WIFI_NEGOTIATION_SV_GetCount();
+
+  for(i = 0 ; i < 4; i++){
+    j = count - 1 - i;
+    pMyStatus = WIFI_NEGOTIATION_SV_GetMyStatus(GAMEDATA_GetWifiNegotiation(pWork->pGameData),
+                                                j % WIFI_NEGOTIATION_DATAMAX);
+    if(pMyStatus){
+        GTSNEGO_MESSAGE_PlateDisp(pMessageWork, pMyStatus, i);
+    }
+  }
+#endif
+
+}
 

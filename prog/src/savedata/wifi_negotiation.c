@@ -109,6 +109,27 @@ s32 WIFI_NEGOTIATION_SV_GetFriend(WIFI_NEGOTIATION_SAVEDATA* pSV,u32 index)
   return MyStatus_GetProfileID(&pSV->aMyStatus[ i ]);
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief   Wi-Fiネゴシエーション用MYSTATUSを引き出す
+ * @param   WIFI_NEGOTIATION_SAVEDATAポインタ
+ * @param   index インデックス WIFI_NEGOTIATION_DATAMAXまで
+ * @return	profileID
+ */
+//--------------------------------------------------------------------------------------------
+MYSTATUS* WIFI_NEGOTIATION_SV_GetMyStatus(WIFI_NEGOTIATION_SAVEDATA* pSV,u32 index)
+{
+  int i = index;
+  GF_ASSERT(index < WIFI_NEGOTIATION_DATAMAX);
+
+  if(index >= WIFI_NEGOTIATION_DATAMAX){
+    return NULL;
+  }
+  if(0==WIFI_NEGOTIATION_SV_GetFriend(pSV,index)){
+    return NULL;
+  }
+  return &pSV->aMyStatus[ i ];
+}
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -130,6 +151,18 @@ BOOL WIFI_NEGOTIATION_SV_IsCheckFriend(WIFI_NEGOTIATION_SAVEDATA* pSV,s32 profil
   return FALSE;
 }
 
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief   保存番号を返す
+ * @param   WIFI_NEGOTIATION_SAVEDATAポインタ
+ * @return	順番
+ */
+//--------------------------------------------------------------------------------------------
+int WIFI_NEGOTIATION_SV_GetCount(WIFI_NEGOTIATION_SAVEDATA* pSV)
+{
+  return pSV->count;
+}
 
 
 //--------------------------------------------------------------------------------------------
