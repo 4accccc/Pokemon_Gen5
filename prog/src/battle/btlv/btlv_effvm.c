@@ -32,9 +32,9 @@ enum{
 	ORTHO_WIDTH = 4,
 	ORTHO_HEIGHT = 3,
 
-  BTLV_EFFVM_TCB_MAX = 16,      //EFFVMで登録できるタスクのMAX
+  BTLV_EFFVM_TCB_MAX = 20,      //EFFVMで登録できるタスクのMAX
 
-  EFFVM_CHANGE_VOLUME = ( 127 * 70 / 100 ) << FX32_SHIFT,
+  EFFVM_CHANGE_VOLUME = ( 127 * 80 / 100 ) << FX32_SHIFT,
   EFFVM_CHANGE_VOLUME_FRAME = 16,
 };
 
@@ -251,6 +251,7 @@ static VMCMD_RESULT VMEC_MCSS_POS_CHECK( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_SET_WORK( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_MIGAWARI( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_HENSHIN( VMHANDLE *vmh, void *context_work );
+static VMCMD_RESULT VMEC_NAKIGOE( VMHANDLE *vmh, void *context_work );
 
 static VMCMD_RESULT VMEC_SEQ_END( VMHANDLE *vmh, void *context_work );
 
@@ -388,6 +389,7 @@ static const VMCMD_FUNC btlv_effect_command_table[]={
   VMEC_SET_WORK,
   VMEC_MIGAWARI,
   VMEC_HENSHIN,
+  VMEC_NAKIGOE,
 
   VMEC_SEQ_END,
 };
@@ -523,6 +525,10 @@ void  BTLV_EFFVM_Start( VMHANDLE *vmh, BtlvMcssPos from, BtlvMcssPos to, WazaID 
   if( param != NULL )
   { 
     bevw->param = *param;
+  }
+  else
+  { 
+    MI_CpuClear16( &bevw->param, sizeof( BTLV_EFFVM_PARAM ) );
   }
   
   bevw->attack_pos = from;
@@ -2719,6 +2725,38 @@ static VMCMD_RESULT VMEC_HENSHIN( VMHANDLE *vmh, void *context_work )
 
 //============================================================================================
 /**
+ * @brief	ポケモン鳴き声
+ *
+ * @param[in] vmh       仮想マシン制御構造体へのポインタ
+ * @param[in] context_work  コンテキストワークへのポインタ
+ */
+//============================================================================================
+static VMCMD_RESULT VMEC_NAKIGOE( VMHANDLE *vmh, void *context_work )
+{ 
+  BTLV_EFFVM_WORK *bevw = ( BTLV_EFFVM_WORK* )context_work;
+  BtlvMcssPos pos[ BTLV_MCSS_POS_MAX ];
+  int pos_cnt =  EFFVM_GetPokePosition( vmh, ( int )VMGetU32( vmh ), pos );
+
+#ifdef DEBUG_OS_PRINT
+  OS_TPrintf("VMEC_NAKIGOE:\npos:%d\n",pos_cnt);
+#endif DEBUG_OS_PRINT
+
+  //立ち位置情報がないときは、コマンド実行しない
+  if( pos_cnt )
+  { 
+    int i;
+
+    for( i = 0 ; i < pos_cnt ; i++ )
+    { 
+      BTLV_MCSS_PlayVoice( BTLV_EFFECT_GetMcssWork(), pos[ i ] );
+    }
+  }
+
+  return bevw->control_mode;
+}
+
+//============================================================================================
+/**
  * @brief エフェクトシーケンス終了
  *
  * @param[in] vmh       仮想マシン制御構造体へのポインタ
@@ -4145,7 +4183,6 @@ static  void  EFFVM_FreeTcb( BTLV_EFFVM_WORK* bevw )
       GFL_HEAP_FreeMemory( work );
       GFL_TCB_DeleteTask( bevw->tcb[ i ] );
       bevw->tcb[ i ] = NULL;
-      OS_TPrintf("TCB Free:%d\n",i);
     }
   }
 }
@@ -4332,6 +4369,19 @@ void  BTLV_EFFVM_StartDebug( VMHANDLE *vmh, BtlvMcssPos from, BtlvMcssPos to, co
                     GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG3 |
                     GX_BLEND_PLANEMASK_OBJ | GX_BLEND_PLANEMASK_BD,
                     0, 0 );
+
+  bevw->execute_effect_type = EXECUTE_EFF_TYPE_WAZA;
+
+  //BGMのマスターボリュームを下げる
+  { 
+    BTLV_EFFVM_CHANGE_VOLUME* becv = GFL_HEAP_AllocMemory( bevw->heapID, sizeof( BTLV_EFFVM_CHANGE_VOLUME ) );
+    becv->tcb_index = EFFVM_GetTcbIndex( bevw );
+    becv->start_vol = 127 << FX32_ONE;
+    becv->end_vol = EFFVM_CHANGE_VOLUME;
+    becv->bevw = bevw;
+    BTLV_EFFTOOL_CalcMove( becv->start_vol, becv->end_vol, &becv->vec_vol, EFFVM_CHANGE_VOLUME_FRAME );
+    bevw->tcb[ becv->tcb_index ] = GFL_TCB_AddTask( bevw->tcbsys, TCB_EFFVM_ChangeVolume, becv, 0 );
+  }
 
   bevw->attack_pos = from;
   bevw->defence_pos = to;

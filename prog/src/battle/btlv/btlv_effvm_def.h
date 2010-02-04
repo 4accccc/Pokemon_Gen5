@@ -415,9 +415,10 @@ ex)
 #define	EC_SET_WORK						        ( 52 )
 #define	EC_MIGAWARI						        ( 53 )
 #define	EC_HENSHIN						        ( 54 )
+#define	EC_NAKIGOE						        ( 55 )
 
 //終了コマンドは必ず一番下になるようにする
-#define	EC_SEQ_END									  ( 55 )
+#define	EC_SEQ_END									  ( 56 )
 
 #ifndef __C_NO_DEF_
 
@@ -1907,6 +1908,22 @@ ex)
   .short  EC_HENSHIN
 	.endm
 
+//======================================================================
+/**
+ * @brief	ポケモン鳴き声
+ *
+ * #param_num	1
+ * @param pos 鳴き声を出すポケモンの立ち位置
+ *
+ * #param	COMBOBOX_TEXT	攻撃側	防御側	POS_AA	POS_BB	POS_A	POS_B	POS_C	POS_D POS_E POS_F
+ * #param	COMBOBOX_VALUE	BTLEFF_POKEMON_SIDE_ATTACK	BTLEFF_POKEMON_SIDE_DEFENCE	BTLEFF_POKEMON_POS_AA	BTLEFF_POKEMON_POS_BB	BTLEFF_POKEMON_POS_A  BTLEFF_POKEMON_POS_B	BTLEFF_POKEMON_POS_C  BTLEFF_POKEMON_POS_D  BTLEFF_POKEMON_POS_E  BTLEFF_POKEMON_POS_F
+ *
+ */
+//======================================================================
+	.macro	NAKIGOE pos
+  .short  EC_NAKIGOE
+	.long		\pos
+	.endm
 
 //======================================================================
 /**
