@@ -791,10 +791,11 @@
 #define WHITEMONO (0x2002) //8194(2,total 773) モノリス（白）
 #define BIGROCK (0x2003) //8195(3,total 774) かいりきの岩
 #define JUNK (0x2004) //8196(4,total 775) 機械
-#define OBJCODEEND_MDL (0x2005) //8197(total 776) モデルコード終端
-#define OBJCODECOUNT_MDL (0x5) //5 モデルコード数
+#define BIGROCK2 (0x2005) //8197(5,total 776) かいりきの岩２
+#define OBJCODEEND_MDL (0x2006) //8198(total 777) モデルコード終端
+#define OBJCODECOUNT_MDL (0x6) //6 モデルコード数
 
-#define OBJCODETOTAL (0x308) //776 コード総数
+#define OBJCODETOTAL (0x309) //777 コード総数
 #define OBJCODEMAX (0xffff) //65535 無効コード
 
 #endif //__FLDMMDL_OBJCODE__
