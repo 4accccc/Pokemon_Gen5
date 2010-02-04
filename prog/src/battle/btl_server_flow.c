@@ -9345,6 +9345,7 @@ static void scEvent_WazaDamageReaction( BTL_SVFLOW_WORK* wk,
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_WAZA_TYPE, wazaParam->wazaType );
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_DAMAGE_TYPE, wazaParam->damageType );
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_CRITICAL_FLAG, criticalFlag );
+
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_WAZA_DMG_REACTION );
   BTL_EVENTVAR_Pop();
 }
@@ -11500,7 +11501,19 @@ static u8 scproc_HandEx_changeType( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_
 static u8 scproc_HandEx_message( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header )
 {
   const BTL_HANDEX_PARAM_MESSAGE* param = (const BTL_HANDEX_PARAM_MESSAGE*)(param_header);
+  const BTL_POKEPARAM* pp_user = BTL_POKECON_GetPokeParam( wk->pokeCon, param_header->userPokeID );
+
+
+  if( param_header->tokwin_flag ){
+    scPut_TokWin_In( wk, pp_user );
+  }
+
   handexSub_putString( wk, &param->str );
+
+  if( param_header->tokwin_flag ){
+    scPut_TokWin_Out( wk, pp_user );
+  }
+
   return 1;
 }
 /**

@@ -500,6 +500,10 @@ static BOOL check_handler_skip( BTL_SVFLOW_WORK* flowWork, BTL_EVENT_FACTOR* fac
     if( bpp && BPP_CheckSick(bpp, WAZASICK_SASIOSAE) ){  // 「さしおさえ」状態のポケモンは呼び出さない
       return TRUE;
     }
+    if( bpp && BPP_TURNFLAG_Get(bpp, BPP_TURNFLG_ITEM_CANT_USE) ){  // 装備アイテム使えないフラグONなら呼び出さない
+      return TRUE;
+    }
+
   }
 
 

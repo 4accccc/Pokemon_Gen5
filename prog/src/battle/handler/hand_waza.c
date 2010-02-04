@@ -7396,16 +7396,20 @@ static void handler_RocketZutuki_TameStart( BTL_EVENT_FACTOR* myHandle, BTL_SVFL
 static const BtlEventHandlerTable* ADD_Tuibamu( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_DAMAGEPROC_END_INFO,  handler_Tuibamu },
+    { BTL_EVENT_WAZA_DMG_REACTION,   handler_Tuibamu              },
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
+}
+static void handler_Tuibamu_DmgDetermine( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+
 }
 static void handler_Tuibamu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
-    u8 targetPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_TARGET1 );
+    u8 targetPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_DEF );
     const BTL_POKEPARAM* target = BTL_SVFTOOL_GetPokeParam( flowWk, targetPokeID );
     u16 itemID = BPP_GetItem( target );
     if( ITEM_CheckNuts(itemID) )
