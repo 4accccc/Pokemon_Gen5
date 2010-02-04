@@ -74,14 +74,15 @@ end
 
 
 	if ARGV.size < 2
-		print "error: ruby waza_tbl_conv.rb read_file gmm_file\n"
+		print "error: ruby waza_tbl_conv.rb read_file tame_waza_file gmm_file\n"
 		print "read_file:読み込むファイル\n"
 		print "gmm_file:ポケモン名のgmmファイルを書き出すための元になるファイル\n"
 		exit( 1 )
 	end
 
   ARGV_READ_FILE = 0
-  ARGV_READ_GMM_FILE = 1
+  ARGV_READ_TAME_FILE = 1
+  ARGV_READ_GMM_FILE = 2
 
   label = LabelMake.new
   read_data = []
@@ -136,14 +137,20 @@ end
 
   #タメ技リスト
   tame_waza = []
+  cnt = 0
+  open( ARGV[ ARGV_READ_TAME_FILE ] ) {|fp_r|
+    while str = fp_r.gets
+      str = str.tosjis
+      str = str.tr( "\"\r\n", "" )
+      tame_waza << str
+      cnt += 1
+    end
+  }
 
   cnt = 1
 
   read_data.size.times {|i|
     split_data = read_data[ i ].split(/\t/)
-    if split_data[ PARA::FLG_Tame ] == "1"
-      tame_waza << cnt
-    end
     fp_wazano.print( "#define\t\t" )
     wazaname << "%s\n" % [ split_data[ PARA::WAZANAME ] ]
     label_str = label.make_label( "WAZANO_", split_data[ PARA::WAZANAME ] )
@@ -178,7 +185,9 @@ end
   fp_hash.print("\n\t$tame_waza = [\n")
 
   tame_waza.size.times{ |cnt|
-    fp_hash.printf("\t\t%d,\n",tame_waza[ cnt ])
+    if tame_waza[ cnt ] == "1"
+      fp_hash.printf("\t\t%d,\n", cnt + 1 )
+    end
   }
   fp_hash.printf("\t]\n" )
 
