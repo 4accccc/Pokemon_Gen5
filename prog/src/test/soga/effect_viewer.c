@@ -605,12 +605,26 @@ static  void  EffectViewerSequence( EFFECT_VIEWER_WORK *evw )
       evw->seq_no = SEQ_EFFECT_WAIT;
     }
     else if( cont == PAD_BUTTON_X ){
-#if 0
       BTLV_EFFVM_PARAM  param;
-      param.continue_count = 0;
-      param. = 0;
-#endif
-      BTLV_EFFECT_Add( BTLEFF_WEATHER_AME );
+      param.waza_range = 0;       ///<技の効果範囲
+      param.turn_count = 1;       ///< ターンによって異なるエフェクトを出す場合のターン指定。（ex.そらをとぶ）
+      param.continue_count = 0;   ///< 連続して出すとエフェクトが異なる場合の連続カウンタ（ex. ころがる）
+      param.yure_cnt = 0;         ///<ボールゆれるカウント
+      param.get_success = FALSE;  ///<捕獲成功かどうか
+      param.item_no = 0;          ///<ボールのアイテムナンバー
+      BTLV_EFFVM_Start( BTLV_EFFECT_GetVMHandle(), BTLV_MCSS_POS_BB, BTLV_MCSS_POS_AA, evw->waza_no, &param );
+      evw->ret_seq_no = evw->seq_no;
+      evw->seq_no = SEQ_EFFECT_WAIT;
+    }
+    else if( cont == PAD_BUTTON_Y ){
+      BTLV_EFFVM_PARAM  param;
+      param.waza_range = 0;       ///<技の効果範囲
+      param.turn_count = 1;       ///< ターンによって異なるエフェクトを出す場合のターン指定。（ex.そらをとぶ）
+      param.continue_count = 0;   ///< 連続して出すとエフェクトが異なる場合の連続カウンタ（ex. ころがる）
+      param.yure_cnt = 0;         ///<ボールゆれるカウント
+      param.get_success = FALSE;  ///<捕獲成功かどうか
+      param.item_no = 0;          ///<ボールのアイテムナンバー
+      BTLV_EFFVM_Start( BTLV_EFFECT_GetVMHandle(), BTLV_MCSS_POS_AA, BTLV_MCSS_POS_BB, evw->waza_no, &param );
       evw->ret_seq_no = evw->seq_no;
       evw->seq_no = SEQ_EFFECT_WAIT;
     }
