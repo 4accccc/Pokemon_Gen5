@@ -30,6 +30,7 @@ typedef enum
   PMIT_SET_JOIN,    //参加する(参加しない)
   PMIT_GIVE,    //持たせる
   PMIT_TAKE,    //預かる
+  PMIT_ENTER,    //決定
 
   PMIT_MAIL_READ,    //メールを読む
   PMIT_MAIL_TAKE,    //メールを取る

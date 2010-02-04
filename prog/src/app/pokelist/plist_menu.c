@@ -314,6 +314,11 @@ static void PLIST_MENU_CreateItem(  PLIST_WORK *work , PLIST_MENU_WORK *menuWork
       menuWork->itemArr[menuWork->itemNum] = PMIT_TAKE;
       menuWork->itemNum += 1;
       break;
+      
+    case PMIT_ENTER:  //決定
+      menuWork->itemArr[menuWork->itemNum] = PMIT_ENTER;
+      menuWork->itemNum += 1;
+      break;
 
     case PMIT_MAIL_READ:    //メールを読む
       menuWork->itemArr[menuWork->itemNum] = PMIT_MAIL_READ;
@@ -385,6 +390,7 @@ static STRBUF* PLIST_MENU_CreateMenuStr( PLIST_WORK *work , PLIST_MENU_WORK *men
     0 ,          //PMIT_SET_JOIN,    //参加する(参加しない)
     mes_pokelist_05_16 ,  //  PMIT_GIVE,    //持たせる
     mes_pokelist_05_17 ,  //  PMIT_TAKE,    //預かる
+    mes_pokelist_10_04 ,  //  PMIT_ENTER,    //決定
     mes_pokelist_05_05 ,  //  PMIT_MAIL_READ,    //メールを読む
     mes_pokelist_05_06 ,  //  PMIT_MAIL_TAKE,    //メールを取る
     mes_pokelist_yes ,  //  PMIT_YES,    //はい

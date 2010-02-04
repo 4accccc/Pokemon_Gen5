@@ -108,8 +108,9 @@ static GFL_PROC_RESULT PokeListProc_Init( GFL_PROC * proc, int * seq , void *pwk
           PP_Put( pPara , ID_PARA_item , 1 );
           break;
         case 4:
-          PP_Put( pPara , ID_PARA_hp , 1 );
-          PP_Put( pPara , ID_PARA_item , 1 );
+          PP_Put( pPara , ID_PARA_tamago_flag , 1 );
+          //PP_Put( pPara , ID_PARA_hp , 1 );
+          //PP_Put( pPara , ID_PARA_item , 1 );
           break;
         }
   #endif
@@ -202,11 +203,12 @@ static GFL_PROC_RESULT PokeListProc_Init( GFL_PROC * proc, int * seq , void *pwk
       if( GFL_UI_KEY_GetCont() & PAD_BUTTON_Y )
       {
         //plData->mode = PL_MODE_SODATEYA;
+        plData->mode = PL_MODE_GURU2;
         
-        plData->mode = PL_MODE_WAZASET;
-        plData->item = 328; //技マシン気合パンチ
-        plData->waza = 0;
-        plData->wazaLearnBit = 0x3E;
+        //plData->mode = PL_MODE_WAZASET;
+        //plData->item = 328; //技マシン気合パンチ
+        //plData->waza = 0;
+        //plData->wazaLearnBit = 0x3E;
         
       }
       GFL_UI_SetTouchOrKey( GFL_APP_KTST_TOUCH );

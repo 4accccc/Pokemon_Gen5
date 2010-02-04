@@ -1043,6 +1043,7 @@ static void PLIST_InitMode( PLIST_WORK *work )
   case PL_MODE_MAILBOX:
   case PL_MODE_WAZASET:
   case PL_MODE_SODATEYA:
+  case PL_MODE_GURU2:
     //選択画面へ
     PLIST_InitMode_Select( work );
     work->nextMainSeq = PSMS_SELECT_POKE;
@@ -1244,6 +1245,13 @@ static void PLIST_InitMode_Select( PLIST_WORK *work )
     PLIST_MSG_DrawMessageNoWait( work , work->msgWork , mes_pokelist_02_01 );
     work->canExit = FALSE;
     break;
+  
+  case PL_MODE_GURU2:
+    PLIST_MSG_OpenWindow( work , work->msgWork , PMT_BAR );
+    PLIST_MSG_DrawMessageNoWait( work , work->msgWork , mes_pokelist_10_02_01 );
+    GFL_CLACT_WK_SetDrawEnable( work->clwkBarIcon[PBT_RETURN] , FALSE );
+    work->canExit = FALSE;
+    break;
 
   default:
     GF_ASSERT_MSG( NULL , "PLIST mode まだ作ってない！[%d]\n" , work->plData->mode );
@@ -1261,6 +1269,7 @@ static void PLIST_TermMode_Select_Decide( PLIST_WORK *work )
   case PL_MODE_FIELD:
   case PL_MODE_BATTLE:
   case PL_MODE_SODATEYA:
+  case PL_MODE_GURU2:
     PLIST_SelectMenuInit( work );
     //中で一緒にメニューを開く
     PLIST_InitMode_Menu( work );
@@ -1566,6 +1575,30 @@ static void PLIST_InitMode_Menu( PLIST_WORK *work )
 
     break;
     
+  case PL_MODE_GURU2:
+    if( PLIST_PLATE_IsEgg( work , work->plateWork[work->pokeCursor] ) == TRUE )
+    {
+      itemArr[0] = PMIT_STATSU;
+      itemArr[1] = PMIT_ENTER;
+      itemArr[2] = PMIT_CLOSE;
+      itemArr[3] = PMIT_END_LIST;
+      PLIST_MSG_OpenWindow( work , work->msgWork , PMT_MENU );
+      PLIST_MSG_DrawMessageNoWait( work , work->msgWork , mes_pokelist_10_02 );
+    }
+    else
+    {
+      itemArr[0] = PMIT_STATSU;
+      itemArr[1] = PMIT_CLOSE;
+      itemArr[2] = PMIT_END_LIST;
+
+      PLIST_MSG_CreateWordSet( work , work->msgWork );
+      PLIST_MSG_AddWordSet_PokeName( work , work->msgWork , 0 , work->selectPokePara );
+      PLIST_MSG_OpenWindow( work , work->msgWork , PMT_MENU );
+      PLIST_MSG_DrawMessageNoWait( work , work->msgWork , mes_pokelist_03_01 );
+      PLIST_MSG_DeleteWordSet( work , work->msgWork );
+    }
+    break;
+    
   default:
     GF_ASSERT_MSG( NULL , "PLIST mode まだ作ってない！[%d]\n" , work->plData->mode );
     itemArr[0] = PMIT_STATSU;
@@ -1671,7 +1704,8 @@ static void PLIST_SelectPokeInit( PLIST_WORK *work )
   GFL_CLACT_WK_SetDrawEnable( work->clwkBarIcon[PBT_EXIT] , work->canExit );
   
   //バトル処理
-  if( PLIST_UTIL_IsBattleMenu(work) == TRUE )
+  if( PLIST_UTIL_IsBattleMenu(work) == TRUE ||
+      PLIST_UTIL_CanReturn(work) == FALSE )
   {
     GFL_CLACT_WK_SetDrawEnable( work->clwkBarIcon[PBT_RETURN] , FALSE );
   }
@@ -2051,8 +2085,9 @@ static void PLIST_SelectPokeUpdateKey( PLIST_WORK *work )
     }
     else if( trg & PAD_BUTTON_B )
     {
-      if( PLIST_UTIL_IsBattleMenu( work ) == FALSE ||
-          PLIST_UTIL_IsBattleMenu_CanReturn( work ) == TRUE )
+      if( (PLIST_UTIL_IsBattleMenu( work ) == FALSE || 
+           PLIST_UTIL_IsBattleMenu_CanReturn( work ) == TRUE) &&
+          PLIST_UTIL_CanReturn( work ) == TRUE )
       {
         work->selectState = PSSEL_RETURN;
         work->clwkExitButton = work->clwkBarIcon[PBT_RETURN];
@@ -2275,10 +2310,13 @@ static void PLIST_SelectPokeUpdateTP( PLIST_WORK *work )
     }
     else
     {
-      hitTbl[PSSEL_RETURN].rect.top    = PLIST_BARICON_Y;
-      hitTbl[PSSEL_RETURN].rect.bottom = PLIST_BARICON_Y + 24;
-      hitTbl[PSSEL_RETURN].rect.left   = PLIST_BARICON_RETURN_X_BAR;
-      hitTbl[PSSEL_RETURN].rect.right  = PLIST_BARICON_RETURN_X_BAR + 24;
+      if( PLIST_UTIL_CanReturn( work ) == TRUE )
+      {
+        hitTbl[PSSEL_RETURN].rect.top    = PLIST_BARICON_Y;
+        hitTbl[PSSEL_RETURN].rect.bottom = PLIST_BARICON_Y + 24;
+        hitTbl[PSSEL_RETURN].rect.left   = PLIST_BARICON_RETURN_X_BAR;
+        hitTbl[PSSEL_RETURN].rect.right  = PLIST_BARICON_RETURN_X_BAR + 24;
+      }
       if( work->canExit == TRUE )
       {
         hitTbl[PSSEL_EXIT  ].rect.top    = PLIST_BARICON_Y;
@@ -2470,6 +2508,13 @@ static void PLIST_SelectMenuTerm( PLIST_WORK *work )
 {
   PLIST_MENU_CloseMenu( work , work->menuWork );
   PLIST_MSG_CloseWindow( work , work->msgWork );
+  //バトル処理
+  if( PLIST_UTIL_IsBattleMenu(work) == TRUE ||
+      PLIST_UTIL_CanReturn(work) == FALSE )
+  {
+    GFL_CLACT_WK_SetDrawEnable( work->clwkBarIcon[PBT_RETURN] , FALSE );
+  }
+  else
   {
     GFL_CLACT_WK_SetDrawEnable( work->clwkBarIcon[PBT_RETURN] , TRUE );
   }
@@ -2613,6 +2658,12 @@ static void PLIST_SelectMenuExit( PLIST_WORK *work )
         PLIST_PLATE_ReDrawParam( work , work->plateWork[work->pokeCursor] );
       }
     }
+    break;
+
+  case PMIT_ENTER:
+    work->mainSeq = PSMS_FADEOUT;
+    work->plData->ret_sel = work->pokeCursor;
+    work->plData->ret_mode = PL_RET_NORMAL;
     break;
 
   case PMIT_GIVE:
@@ -2961,6 +3012,16 @@ const BOOL PLIST_UTIL_IsBattleMenu( const PLIST_WORK *work )
 const BOOL PLIST_UTIL_IsBattleMenu_CanReturn( const PLIST_WORK *work )
 {
   if( work->plData->mode == PL_MODE_BATTLE )
+  {
+    return FALSE;
+  }
+  return TRUE;
+}
+
+const BOOL PLIST_UTIL_CanReturn( const PLIST_WORK *work )
+{
+  //ぐるぐるはダメ
+  if( work->plData->mode == PL_MODE_GURU2 )
   {
     return FALSE;
   }

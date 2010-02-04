@@ -33,6 +33,7 @@ extern const BOOL PLIST_UpdatePokeList( PLIST_WORK *work );
 extern u32 PLIST_UTIL_CheckFieldWaza( const POKEMON_PARAM *pp , const u8 wazaPos );
 extern const BOOL PLIST_UTIL_IsBattleMenu( const PLIST_WORK *work );
 extern const BOOL PLIST_UTIL_IsBattleMenu_CanReturn( const PLIST_WORK *work );
+extern const BOOL PLIST_UTIL_CanReturn( const PLIST_WORK *work );
 extern const PLIST_SKILL_CAN_LEARN PLIST_UTIL_CheckLearnSkill( PLIST_WORK *work , const POKEMON_PARAM *pp , const u8 idx );
 //monsno•Ô‚µ
 extern const u16 PLIST_UTIL_CheckItemEvolution( PLIST_WORK *work , POKEMON_PARAM *pp , const u16 itemNo );
