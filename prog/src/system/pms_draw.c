@@ -812,6 +812,7 @@ static void _unit_print( PMS_DRAW_UNIT* unit, PRINT_QUE* print_que, GFL_FONT* fo
 #endif 
 
 // PRINT_UTIL_Print( &unit->print_util, print_que, offset->x, offset->y, buf, font );
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(unit->print_util.win), null_color );
   PRINTSYS_PrintQueColor( print_que, GFL_BMPWIN_GetBmp(unit->print_util.win), offset->x, offset->y, buf, font, print_color );
 	unit->print_util.transReq = TRUE;
 
