@@ -331,6 +331,18 @@ GAMEBEACON_INFO_TBL * GAMEBEACON_InfoTbl_Alloc(HEAPID heap_id)
 //==============================================================================
 //==================================================================
 /**
+ * NPCデータかどうかチェック 
+ * @param   info	ビーコン情報へのポインタ
+ * @retval  TRUE  NPCデータ(=詳細情報なし)
+ */
+//==================================================================
+BOOL GAMEBEACON_Check_NPC(const GAMEBEACON_INFO *info)
+{
+  return FALSE; //@todo なにがしかの条件でNPC判定をする
+}
+
+//==================================================================
+/**
  * プレイヤー名へのポインタを取得する
  * @param   info		ビーコン情報へのポインタ
  * @retval  const STRCODE *		プレイヤー名へのポインタ
@@ -432,6 +444,8 @@ u32 GAMEBEACON_Get_TrainerID(const GAMEBEACON_INFO *info)
  * トレーナーの見た目を取得する
  * @param   info  ビーコン情報へのポインタ
  * @retval  u8		トレーナーの見た目
+ *
+ * ＊性別も込みで、0-15のIDを返す
  */
 //==================================================================
 u8 GAMEBEACON_Get_TrainerView(const GAMEBEACON_INFO *info)

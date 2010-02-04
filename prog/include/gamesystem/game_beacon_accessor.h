@@ -35,6 +35,7 @@ extern GAMEBEACON_INFO_TBL * GAMEBEACON_InfoTbl_Alloc(HEAPID heap_id);
 //--------------------------------------------------------------
 //  アクセサ
 //--------------------------------------------------------------
+extern BOOL GAMEBEACON_Check_NPC(const GAMEBEACON_INFO *info);
 extern const STRCODE * GAMEBEACON_Get_PlayerName(const GAMEBEACON_INFO *info);
 extern void GAMEBEACON_Get_PlayerNameToBuf(const GAMEBEACON_INFO *info, STRBUF* strbuf);
 extern int GAMEBEACON_Get_PmVersion(const GAMEBEACON_INFO *info);
