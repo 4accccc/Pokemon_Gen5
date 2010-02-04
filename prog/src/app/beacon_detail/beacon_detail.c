@@ -918,6 +918,8 @@ static void _sub_BeaconWinInit( BEACON_DETAIL_WORK* wk )
     for( i=0; i < BEACON_WIN_MAX; i++ )
     {
       bp = &wk->beacon_win[i];
+      bp->frame = BG_FRAME_WIN01_S+i;
+
       bp->pms = GFL_BMPWIN_Create(
                   BMP_BEACON_FRM+i, BMP_PMS_PX, BMP_PMS_PY, BMP_PMS_SX, BMP_PMS_SY,
                   BMP_PMS_PAL+i, GFL_BMP_CHRAREA_GET_B );

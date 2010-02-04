@@ -71,6 +71,8 @@ typedef struct _BEACON_WIN{
   GFL_CLWK* cRank;
   GFL_CLWK* cTrainer;
   u8  union_char;
+  u8  rank;
+  u8  frame;
 }BEACON_WIN;
 
 //--------------------------------------------------------------

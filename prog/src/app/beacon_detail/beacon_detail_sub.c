@@ -75,13 +75,18 @@ static void draw_BeaconWindowIni( BEACON_DETAIL_WORK* wk );
 
 static void sub_PlttVramTrans( u16* p_data, u16 pos, u16 num );
 static void act_AnmStart( GFL_CLWK* act, u8 anm_no );
+static void act_SetPosition( GFL_CLWK* act, s16 x, s16 y );
 static void print_GetMsgToBuf( BEACON_DETAIL_WORK* wk, u8 msg_id );
 
 
 static void draw_UnionObjUpdate( BEACON_DETAIL_WORK* wk, u8 char_no );
 static void draw_BeaconWindowIni( BEACON_DETAIL_WORK* wk );
 static void draw_BeaconData( BEACON_DETAIL_WORK* wk, BMP_WIN* win, STRBUF* str, u8 px, u8 fx, u8 sx, u8 sy );
+static void draw_BeaconWindowScroll( BEACON_WIN* bp, s16 py );
+static void draw_BeaconWindowVisibleSet( BEACON_WIN* bp, BOOL visible_f );
 static void draw_BeaconWindow( BEACON_DETAIL_WORK* wk, GAMEBEACON_INFO* info, u16 time, u8 idx );
+
+static void effReq_PageScroll( BEACON_DETAIL_WORK* wk, u8 dir );
 
 /*
  *  @brief  ビーコン詳細画面初期描画
@@ -94,6 +99,7 @@ void BeaconDetail_InitialDraw( BEACON_DETAIL_WORK* wk )
 
   GAMEBEACON_InfoTblRing_GetBeacon( wk->infoLog, wk->tmpInfo, &wk->tmpTime, wk->list[0]);
   draw_BeaconWindow( wk, wk->tmpInfo, wk->tmpTime, wk->flip_sw );
+  draw_BeaconWindowVisibleSet( &wk->beacon_win[wk->flip_sw^1], FALSE );
 }
 
 /*
@@ -115,6 +121,18 @@ static void act_AnmStart( GFL_CLWK* act, u8 anm_no )
 {
   GFL_CLACT_WK_SetAnmSeq( act, anm_no );
   GFL_CLACT_WK_ResetAnm( act );
+}
+
+/*
+ *  @brief  アクター　座標セット
+ */
+static void act_SetPosition( GFL_CLWK* act, s16 x, s16 y )
+{
+  GFL_CLACTPOS pos;
+  pos.x = x;
+  pos.y = y;
+  
+//  GFL_CLACT_WK_SetPos( act, &pos, );
 }
 
 /*
@@ -186,6 +204,29 @@ static void draw_BeaconData( BEACON_DETAIL_WORK* wk, BMP_WIN* win, STRBUF* str, 
   PRINT_UTIL_PrintColor( &win->putil, wk->print_que,
       fx, 0, str, wk->font, FCOL_WIN01 );
   GFL_BMPWIN_MakeTransWindow( win->win );
+}
+
+/*
+ *  @brief  ビーコンウィンドウ 表示制御
+ */
+static void draw_BeaconWindowVisibleSet( BEACON_WIN* bp, BOOL visible_f )
+{
+  GFL_CLACT_WK_SetDrawEnable( bp->cTrainer, visible_f );
+  if(bp->rank > 0){
+    GFL_CLACT_WK_SetDrawEnable( bp->cRank, visible_f );
+  }
+	GFL_BG_SetVisible( bp->frame, visible_f );
+}
+
+/*
+ *  @brief  ビーコンウィンドウポジションセット
+ */
+static void draw_BeaconWindowScroll( BEACON_WIN* bp, s16 py )
+{
+  GFL_BG_SetScroll( bp->frame, GFL_BG_SCROLL_Y_SET, -py );
+ 
+  act_SetPosition( bp->cTrainer, ACT_TRAINER_PX, ACT_TRAINER_PY+py );
+  act_SetPosition( bp->cRank, ACT_RANK_PX, ACT_RANK_PY+py );
 }
 
 /*
@@ -413,31 +454,111 @@ static void tcb_WinPopup( GFL_TCBL *tcb , void* tcb_wk)
  *  @brief  ビーコンウィンドウ スクロール 
  */
 /////////////////////////////////////////////////////////////////////
-typedef struct _TASKWK_PAGE_SCROLL{
+typedef struct _TASKWK_BWIN_SCROLL{
   u8  seq;
   u8  wait;
+  u8  frame;
   s16 py;
+  s16 dy;
 
   int child_task;
  
-  BEACON_WIN* win;
+  BEACON_WIN* bp;
   BEACON_DETAIL_WORK* bdw;
   int* task_ct;
-}TASKWK_PAGE_SCROLL;
+}TASKWK_BWIN_SCROLL;
 
-static void taskAdd_PageScroll( BEACON_DETAIL_WORK* wk, u8 dir, u8 next_idx, int* task_ct );
-static void tcb_PageScroll( GFL_TCBL *tcb , void* work);
+static void taskAdd_BWinScroll( BEACON_DETAIL_WORK* wk, u8 win_idx, u8 spos, u8 dir, int* task_ct );
+static void tcb_BWinScroll( GFL_TCBL *tcb , void* work);
 
-static void effReq_PageScroll( BEACON_DETAIL_WORK* wk, u8 msg_id )
+static void effReq_BWinScroll( BEACON_DETAIL_WORK* wk, u8 msg_id )
 {
   print_GetMsgToBuf( wk, msg_id );
-//  taskAdd_PageScroll( wk, wk->str_expand, &wk->eff_task_ct);
+//  taskAdd_BWinScroll( wk, wk->str_expand, &wk->eff_task_ct);
 }
 
 /*
  *  @brief  ビーコンウィンドウ スクロールタスク登録
  */
-static void taskAdd_PageScroll( BEACON_DETAIL_WORK* wk, u8 win_idx, u8 spos, u8 dir, int* task_ct )
+static void taskAdd_BWinScroll( BEACON_DETAIL_WORK* wk, u8 win_idx, u8 spos, u8 dir, int* task_ct )
+{
+  GFL_TCBL* tcb;
+  TASKWK_BWIN_SCROLL* twk;
+
+  tcb = GFL_TCBL_Create( wk->pTcbSys, tcb_BWinScroll, sizeof(TASKWK_BWIN_SCROLL), 0 );
+
+  twk = GFL_TCBL_GetWork(tcb);
+  MI_CpuClear8( twk, sizeof( TASKWK_BWIN_SCROLL ));
+
+  twk->bp = &wk->beacon_win[win_idx];
+  twk->py = PAGE_SCROLL_PY+spos*PAGE_SCROLL_H;
+
+  if( dir == SCROLL_UP ){
+    twk->dy -= PAGE_SCROLL_DY;
+  }else{
+    twk->dy = PAGE_SCROLL_DY;
+  }
+  twk->wait = PAGE_SCROLL_TIME;
+
+  GFL_BG_SetScroll( twk->bp->frame, GFL_BG_SCROLL_Y_SET, twk->py );
+
+  if( spos != SCROLL_POS_DEF ){
+    draw_BeaconWindowVisibleSet( twk->bp, TRUE );
+  }
+  twk->bdw = wk;
+
+  twk->task_ct = task_ct;
+  (*task_ct)++;
+}
+
+static void tcb_BWinScroll( GFL_TCBL *tcb , void* tcb_wk)
+{
+  TASKWK_BWIN_SCROLL* twk = (TASKWK_BWIN_SCROLL*)tcb_wk;
+
+  if( twk->wait-- > 0 ){
+    twk->py += twk->dy;
+    GFL_BG_SetScroll( twk->bp->frame, GFL_BG_SCROLL_Y_SET, twk->py );
+    return;
+  }
+
+  if( twk->py != 0 ){
+    draw_BeaconWindowVisibleSet( twk->bp, FALSE );
+  }
+  --(*twk->task_ct);
+  GFL_TCBL_Delete(tcb);
+}
+
+/////////////////////////////////////////////////////////////////////
+/*
+ *  @brief  ビーコンウィンドウ スクロール 
+ */
+/////////////////////////////////////////////////////////////////////
+typedef struct _TASKWK_PAGE_SCROLL{
+  u8  seq;
+  u8  wait;
+  u8  frame;
+  u8  next;
+  u8  dir;
+
+  int child_task;
+ 
+  BEACON_WIN* bp;
+  BEACON_DETAIL_WORK* bdw;
+  int* task_ct;
+}TASKWK_PAGE_SCROLL;
+
+static void taskAdd_PageScroll( BEACON_DETAIL_WORK* wk, u8 dir, int* task_ct );
+static void tcb_PageScroll( GFL_TCBL *tcb , void* work);
+
+static void effReq_PageScroll( BEACON_DETAIL_WORK* wk, u8 dir )
+{
+  taskAdd_PageScroll( wk, dir, &wk->eff_task_ct );
+}
+
+/*
+ *  @brief  ビーコンウィンドウ スクロールタスク登録
+ */
+static void taskAdd_PageScroll( BEACON_DETAIL_WORK* wk, u8 dir, int* task_ct )
 {
   GFL_TCBL* tcb;
   TASKWK_PAGE_SCROLL* twk;
@@ -447,12 +568,17 @@ static void taskAdd_PageScroll( BEACON_DETAIL_WORK* wk, u8 win_idx, u8 spos, u8 
   twk = GFL_TCBL_GetWork(tcb);
   MI_CpuClear8( twk, sizeof( TASKWK_PAGE_SCROLL ));
 
-  twk->py = PAGE_SCROLL_PY-spos*PAGE_SCROLL_H;
-  GFL_BG_SetScroll( BG_FRAME_POPUP_M, GFL_BG_SCROLL_Y_SET, twk->y );
+  twk->dir = dir;
+  if( dir == SCROLL_UP ){
+    twk->next = wk->list_top+1;
+  }else{
+    twk->next = wk->list_top-1;
+  }
+  //次に表示されるウィンドウを描く
+  GAMEBEACON_InfoTblRing_GetBeacon( wk->infoLog, wk->tmpInfo, &wk->tmpTime, wk->list[twk->next]);
+  draw_BeaconWindow( wk, wk->tmpInfo, wk->tmpTime, twk->bdw->flip_sw^1 );
 
   twk->bdw = wk;
-  twk->wait = POPUP_WAIT;
-
   twk->task_ct = task_ct;
   (*task_ct)++;
 }
@@ -460,36 +586,23 @@ static void taskAdd_PageScroll( BEACON_DETAIL_WORK* wk, u8 win_idx, u8 spos, u8 
 static void tcb_PageScroll( GFL_TCBL *tcb , void* tcb_wk)
 {
   TASKWK_PAGE_SCROLL* twk = (TASKWK_PAGE_SCROLL*)tcb_wk;
+  static const u8 pos_tbl[] = { SCROLL_POS_DOWN, SCROLL_POS_UP };
 
   switch( twk->seq ){
   case 0:
-//    print_PopupWindow( twk->bdw, twk->bdw->str_popup, 0 );
-//    PRINT_UTIL_PrintColor( &wk->win[WIN_POPUP].putil, wk->print_que, 0, 0, str, wk->font, FCOL_POPUP );
-//    GFL_BMPWIN_MakeTransWindow( wk->win[WIN_POPUP].win );
+    taskAdd_BWinScroll( twk->bdw, twk->bdw->flip_sw, SCROLL_POS_DEF, twk->dir, &twk->child_task );
+    taskAdd_BWinScroll( twk->bdw, twk->bdw->flip_sw^1, pos_tbl[twk->dir], twk->dir, &twk->child_task );
     twk->seq++;
     return;
   case 1:
-    taskAdd_MsgUpdown( twk->bdw, SCROLL_UP, &twk->child_task );
-    twk->seq++;
-    return;
-  case 2:
     if( twk->child_task ){
       return;
     }
-    twk->seq++;
-    return;
-  case 3:
-    if( twk->wait-- > 0 ){
-      return;
-    }
-    taskAdd_MsgUpdown( twk->bdw, SCROLL_DOWN, &twk->child_task );
-    twk->seq++;
-    return;
-  case 4:
-    if( twk->child_task ){
-      return;
-    }
+    break;
   }
+  twk->bdw->flip_sw ^= 1;
+  twk->bdw->list_top = twk->next;
+
   --(*twk->task_ct);
   GFL_TCBL_Delete(tcb);
 }
