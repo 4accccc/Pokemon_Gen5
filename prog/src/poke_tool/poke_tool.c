@@ -2451,6 +2451,9 @@ static  u32 ppp_getAct( POKEMON_PASO_PARAM *ppp, int id, void *buf )
     case ID_PARA_dummy_p2_2:
       ret = ppp2->dummy_p2_2;
       break;
+    case ID_PARA_dummy_p2_3:
+      ret = ppp2->dummy_p2_3;
+      break;
 //PARAM3
     case ID_PARA_nickname:
       if( ppp->fusei_tamago_flag ){
@@ -2530,27 +2533,10 @@ static  u32 ppp_getAct( POKEMON_PASO_PARAM *ppp, int id, void *buf )
       ret = ppp4->birth_day;
       break;
     case ID_PARA_get_place:             //捕まえた場所
-    case ID_PARA_new_get_place:           //捕まえた場所
-      //旧領域の値が「とおいばしょ」で、新領域の値が 0 以外なら、新領域の値を返す
-      if( ( ppp4->get_place == ID_TOOIBASYO ) && ( ppp2->new_get_place ) ){
-        ret = ppp2->new_get_place;
-      }
-      //前項以外の場合、旧領域の値を返す
-      else{
-        ret = ppp4->get_place;
-      }
+      ret = ppp4->get_place;
       break;
     case ID_PARA_birth_place:           //生まれた場所
-    case ID_PARA_new_birth_place:         //生まれた場所
-      //旧領域の値が「とおいばしょ」で、新領域の値が 0 以外なら、新領域の値を返す
-      if( ( ppp4->birth_place == ID_TOOIBASYO ) && ( ppp2->new_birth_place ) ){
-        ret = ppp2->new_birth_place;
-      }
-      //前項以外の場合、旧領域の値を返す
-      else{
-        ret = ppp4->birth_place;
-      }
-      break;
+      ret = ppp4->birth_place;
       break;
     case ID_PARA_pokerus:             //ポケルス
       ret = ppp4->pokerus;
@@ -2909,6 +2895,9 @@ static  void  ppp_putAct( POKEMON_PASO_PARAM *ppp, int paramID, u32 arg )
     case ID_PARA_dummy_p2_2:
       ppp2->dummy_p2_2 = arg;
       break;
+    case ID_PARA_dummy_p2_3:
+      ppp2->dummy_p2_3 = arg;
+      break;
 
     case ID_PARA_nickname_flag:
       GF_ASSERT_MSG(0, "ニックネームフラグを直接セットすることはできません\n");
@@ -2987,46 +2976,10 @@ static  void  ppp_putAct( POKEMON_PASO_PARAM *ppp, int paramID, u32 arg )
       ppp4->birth_day = arg;
       break;
     case ID_PARA_get_place:             //捕まえた場所
-    case ID_PARA_new_get_place:           //捕まえた場所
-//処理ないです
-#ifdef DEBUG_ONLY_FOR_sogabe
-#warning PlaceName_RangeCheckDP Nothing
-#endif
-#if 0
-      //DPにもあった場所なら、新領域と旧領域にその地名IDを書き込む
-      if( buf16[0] == 0 || PlaceName_RangeCheckDP( buf16[0] ) == TRUE ){
-        //get_placeが0かどうかでタマゴで孵ったか、生体で取得したか判定しているので
-        //get_placeの0セットはありにする
-        ppp4->get_place = buf16[0];       //捕まえた場所
-        ppp2->new_get_place = buf16[0];     //捕まえた場所
-      }
-      //DPになかった場所なら、新領域にその地名ID、旧領域に「とおいばしょ」を書き込む
-      else{
-        ppp4->get_place = ID_TOOIBASYO;     //捕まえた場所
-        ppp2->new_get_place = buf16[0];     //捕まえた場所
-      }
-#endif
+      ppp4->get_place = arg;
       break;
     case ID_PARA_birth_place:           //生まれた場所
-    case ID_PARA_new_birth_place:         //生まれた場所
-//処理ないです
-#ifdef DEBUG_ONLY_FOR_sogabe
-#warning PlaceName_RangeCheckDP Nothing
-#endif
-#if 0
-      //DPにもあった場所なら、新領域と旧領域にその地名IDを書き込む
-      if( buf16[0] == 0 || PlaceName_RangeCheckDP( buf16[0] ) == TRUE ){
-        //範囲外マップで捕まえたポケモンは「なぞのばしょ」と表示する為、
-        //birth_placeの0セットもありにした。
-        ppp4->birth_place = buf16[0];     //生まれた場所
-        ppp2->new_birth_place = buf16[0];   //生まれた場所
-      }
-      //DPになかった場所なら、新領域にその地名ID、旧領域に「とおいばしょ」を書き込む
-      else{
-        ppp4->birth_place = ID_TOOIBASYO;   //生まれた場所
-        ppp2->new_birth_place = buf16[0];   //生まれた場所
-      }
-#endif
+      ppp4->birth_place = arg;
       break;
     case ID_PARA_pokerus:             //ポケルス
       ppp4->pokerus = arg;
