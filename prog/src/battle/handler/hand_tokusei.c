@@ -3529,11 +3529,24 @@ static void handler_Tikuden_Fix( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
 {
   common_DmgToRecover_Fix( flowWk, pokeID, work, 4 );
 }
+// ワザ無効チェックレベル２
+static void handler_Tikuden_CheckEx( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) == pokeID)
+  &&  (BTL_EVENTVAR_GetValue(BTL_EVAR_WAZAID) == WAZANO_DENZIHA)
+  ){
+    work[0] = BTL_EVENTVAR_RewriteValue( BTL_EVAR_NOEFFECT_FLAG, TRUE );
+    if( work[0] ){
+        common_DmgToRecover_Fix( flowWk, pokeID, work, 4 );
+    }
+  }
+}
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Tikuden( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_DMG_TO_RECOVER_CHECK,   handler_Tikuden_Check }, // ダメージワザ回復チェックハンドラ
-    { BTL_EVENT_DMG_TO_RECOVER_FIX,     handler_Tikuden_Fix },
+    { BTL_EVENT_DMG_TO_RECOVER_CHECK,   handler_Tikuden_Check   }, // ダメージワザ回復チェックハンドラ
+    { BTL_EVENT_DMG_TO_RECOVER_FIX,     handler_Tikuden_Fix     },
+    { BTL_EVENT_NOEFFECT_CHECK_L2,      handler_Tikuden_CheckEx },
   };
   *numElems = NELEMS(HandlerTable);
   return HandlerTable;
@@ -3548,6 +3561,7 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_DenkiEngine( u32* numElems )
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_DMG_TO_RECOVER_CHECK,   handler_DenkiEngine_Check },  // ダメージワザ回復チェックハンドラ
     { BTL_EVENT_DMG_TO_RECOVER_FIX,     handler_DenkiEngine_Fix   },  // ダメージワザ回復化決定ハンドラ
+    { BTL_EVENT_NOEFFECT_CHECK_L2,      handler_Tikuden_CheckEx   },
   };
   *numElems = NELEMS(HandlerTable);
   return HandlerTable;
