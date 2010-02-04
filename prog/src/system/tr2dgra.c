@@ -305,6 +305,7 @@ u32 TR2DGRA_OBJ_CGR_Register( ARCHANDLE *p_handle, int trtype, CLSYS_DRAW_TYPE v
 	//読み込み
 	return GFL_CLGRP_CGR_Register( p_handle, cgr, FALSE, vramType, heapID );
 }
+
 //----------------------------------------------------------------------------
 /**
  *	@brief	トレーナーセル読み込み
@@ -334,3 +335,44 @@ u32 TR2DGRA_OBJ_CELLANM_Register( int trtype, APP_COMMON_MAPPING mapping, CLSYS_
 
 	return ret;
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	トレーナーパレット&キャラクター再読み込み
+ *
+ *	@param	p_handle								アークハンドル
+ *	@param	trtype									モンスター番号
+ *	@param	vramType								読み込みタイプ
+ *	@param	heapID									ヒープID
+ *
+ *	@return	登録番号
+ */
+//-----------------------------------------------------------------------------
+void TR2DGRA_OBJ_RES_Replace( ARCHANDLE *p_handle, int trtype, int cgr_idx, int pltt_idx, HEAPID heapID )
+{	
+  {
+    u32 pltt;
+    u32* pltt_buf;
+    NNSG2dPaletteData* pltt_res;
+
+	  pltt	= TRGRA_GetPalArcIndex( trtype );
+    pltt_buf = GFL_ARC_LoadDataAllocByHandle( p_handle, pltt, heapID );
+    NNS_G2dGetUnpackedPaletteData( pltt_buf, &pltt_res );
+    GFL_CLGRP_PLTT_Replace( pltt_idx, pltt_res, TRGRA_TRAINER_PLT_NUM );
+
+    GFL_HEAP_FreeMemory( pltt_buf );
+  }
+  {
+    NNSG2dCharacterData* cgr_res;
+    u32* cgr_buf;
+	  u32 cgr	= TRGRA_GetCgrArcIndex( trtype );
+
+    cgr_buf = GFL_ARC_LoadDataAllocByHandle( p_handle, cgr, heapID );
+    NNS_G2dGetUnpackedCharacterData( cgr_buf, &cgr_res );
+
+    GFL_CLGRP_CGR_Replace( cgr_idx, cgr_res );
+    
+    GFL_HEAP_FreeMemory( cgr_buf );
+  }
+}
+
