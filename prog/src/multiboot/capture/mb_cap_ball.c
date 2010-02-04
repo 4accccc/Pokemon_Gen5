@@ -225,7 +225,7 @@ static const BOOL MB_CAP_BALL_CheckHitObj_ShotFinish( MB_CAPTURE_WORK *capWork ,
           else
           if( pokeState == MCPS_HIDE && isHitPoke == TRUE )
           {
-            PMSND_PlaySE( MB_SND_BALL_BOUND );
+            PMSND_PlaySE( MB_SND_BALL_HIT_WOOD );
             isHitAnyPoke = TRUE;
             isBlockAnyPoke = TRUE;
           }
@@ -517,11 +517,11 @@ static void MB_CAP_BALL_StateShot(MB_CAPTURE_WORK *capWork , MB_CAP_BALL *ballWo
       //ぶっ飛ぶ処理へ
       if( GFUser_GetPublicRand0(2) == 0 )
       {
-        ballWork->spd.x = FX32_CONST(4) + GFUser_GetPublicRand0( FX32_CONST(4) );
+        ballWork->spd.x = FX32_CONST(3) + GFUser_GetPublicRand0( FX32_CONST(3) );
       }
       else
       {
-        ballWork->spd.x = FX32_CONST(-4) - GFUser_GetPublicRand0( FX32_CONST(4) );
+        ballWork->spd.x = FX32_CONST(-3) - GFUser_GetPublicRand0( FX32_CONST(3) );
       }
       
       ballWork->spd.y = GFUser_GetPublicRand0( FX32_CONST(1) ) - FX32_HALF;
@@ -633,6 +633,14 @@ static void MB_CAP_BALL_StateFlying(MB_CAPTURE_WORK *capWork , MB_CAP_BALL *ball
     ballWork->height += ballWork->spd.z;
   }
   
+  {
+    //高さ拡縮処理
+    //文字演出のためサイズを2倍にしてるのでデフォは半分
+    fx16 size = (ballWork->height/128) + FX16_HALF;
+    OS_FPrintf(3,"[%.2f]\n",FX_FX32_TO_F32(ballWork->height));
+    GFL_BBD_SetObjectSiz( bbdSys , ballWork->objIdx , &size , &size );
+  }
+  
   pos.x = ballWork->pos.x;
   pos.y = ballWork->pos.y - ballWork->height;
   pos.z = ballWork->pos.z + FX32_ONE;
@@ -641,7 +649,7 @@ static void MB_CAP_BALL_StateFlying(MB_CAPTURE_WORK *capWork , MB_CAP_BALL *ball
   //回る
   {
     u16 rot;
-    const u16 rotVal = 0x400;
+    const u16 rotVal = 0x800;
     GFL_BBD_GetObjectRotate( bbdSys , ballWork->objIdx , &rot );
     if( pos.x > 0 )
     {
