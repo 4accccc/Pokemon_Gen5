@@ -46,13 +46,12 @@ typedef struct
  * @brief ポケモン選択イベント
  *
  * @param gsys      ゲームシステム
- * @param fieldmap  フィールドマップ
  * @param retDecide 選択結果の格納先ワーク
  * @param retValue  選択位置の格納先ワーク
  */
 //------------------------------------------------------------------
 GMEVENT * EVENT_CreatePokeSelect( 
-    GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, u16* retDecide , u16* retPos )
+    GAMESYS_WORK * gsys, u16* retDecide , u16* retPos )
 {
 	GMEVENT* event;
 	SELECT_POKE_WORK* psw;
@@ -71,7 +70,7 @@ GMEVENT * EVENT_CreatePokeSelect(
   event = GMEVENT_Create(gsys, NULL, EVENT_FUNC_PokeSelect, sizeof(SELECT_POKE_WORK));
   psw   = GMEVENT_GetEventWork(event);
 	psw->gsys      = gsys;
-	psw->fieldmap  = fieldmap;
+	psw->fieldmap  = GAMESYSTEM_GetFieldMapWork( gsys );
   psw->plData    = pl_data;
   psw->retDecide = retDecide;
   psw->retPos    = retPos;
@@ -83,14 +82,13 @@ GMEVENT * EVENT_CreatePokeSelect(
  * @brief ポケモン選択イベント：わざ覚え
  *
  * @param gsys      ゲームシステム
- * @param fieldmap  フィールドマップ
  * @param retDecide 選択結果の格納先ワーク
  * @param retValue  選択位置の格納先ワーク
  * @param learnBit  覚えられるポケモンを示すビット
  */
 //------------------------------------------------------------------
 GMEVENT * EVENT_CreatePokeSelectWazaOboe( 
-    GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, u16* retDecide , u16* retPos, u8 learnBit )
+    GAMESYS_WORK * gsys, u16* retDecide , u16* retPos, u8 learnBit )
 {
 	GMEVENT* event;
 	SELECT_POKE_WORK* psw;
@@ -110,7 +108,7 @@ GMEVENT * EVENT_CreatePokeSelectWazaOboe(
   event = GMEVENT_Create(gsys, NULL, EVENT_FUNC_PokeSelect, sizeof(SELECT_POKE_WORK));
   psw   = GMEVENT_GetEventWork(event);
 	psw->gsys      = gsys;
-	psw->fieldmap  = fieldmap;
+	psw->fieldmap  = GAMESYSTEM_GetFieldMapWork( gsys );
   psw->plData    = pl_data;
   psw->retDecide = retDecide;
   psw->retPos    = retPos;

@@ -16,14 +16,14 @@
  * @brief ポケモン選択イベント
  *
  * @param gsys      ゲームシステム
- * @param fieldmap  フィールドマップ
  * @param retDecide 選択結果の格納先ワーク
  * @param retValue  選択位置の格納先ワーク
  *
  * @return イベント
  */
 //-------------------------------------------------------------------------------------
-extern GMEVENT * EVENT_CreatePokeSelect( GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, u16* retDecide , u16* retPos );
+extern GMEVENT * EVENT_CreatePokeSelect( 
+    GAMESYS_WORK * gsys, u16* retDecide , u16* retPos );
 
 //------------------------------------------------------------------
 /**
@@ -37,7 +37,7 @@ extern GMEVENT * EVENT_CreatePokeSelect( GAMESYS_WORK * gsys, FIELDMAP_WORK * fi
  */
 //------------------------------------------------------------------
 extern GMEVENT * EVENT_CreatePokeSelectWazaOboe( 
-    GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, u16* retDecide , u16* retPos, u8 learnBit );
+    GAMESYS_WORK * gsys, u16* retDecide , u16* retPos, u8 learnBit );
 
 //------------------------------------------------------------------
 /**

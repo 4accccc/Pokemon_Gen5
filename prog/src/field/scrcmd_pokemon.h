@@ -9,10 +9,11 @@
 //======================================================================
 #pragma once
 
+#include "poke_tool/poke_tool.h"
 //======================================================================
 //  ÉcÅ[Éãä÷êî
 //======================================================================
-extern POKEMON_PARAM * SCRCMD_GetTemotiPP( SCRCMD_WORK * work, u16 pos );
+extern BOOL SCRCMD_GetTemotiPP( SCRCMD_WORK * work, u16 pos, POKEMON_PARAM ** poke_para );
 
 
 //======================================================================

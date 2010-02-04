@@ -52,14 +52,18 @@ VMCMD_RESULT EvCmdSetFavoritePoke( VMHANDLE * core, void *wk )
 {
 
   u16 pos = SCRCMD_GetVMWorkValue( core, wk );  //ポケモンの位置
-  POKEMON_PARAM * pp = SCRCMD_GetTemotiPP( wk, pos );
+  POKEMON_PARAM * pp;
 
-  GAMEDATA * gamedata = SCRCMD_WORK_GetGameData( wk );
-  MISC * misc = GAMEDATA_GetMiscWork( gamedata );
-  u16 monsno = PP_Get( pp, ID_PARA_monsno, NULL );
-  u16 form_no = PP_Get( pp, ID_PARA_form_no, NULL );
-  u16 egg_flag = PP_Get( pp, ID_PARA_tamago_flag, NULL );
-  MISC_SetFavoriteMonsno( misc, monsno, form_no, egg_flag );
+  if ( SCRCMD_GetTemotiPP( wk, pos, &pp ) == TRUE )
+  { //エラー対処
+    GAMEDATA * gamedata = SCRCMD_WORK_GetGameData( wk );
+    MISC * misc = GAMEDATA_GetMiscWork( gamedata );
+    u16 monsno = PP_Get( pp, ID_PARA_monsno, NULL );
+    u16 form_no = PP_Get( pp, ID_PARA_form_no, NULL );
+    u16 egg_flag = PP_Get( pp, ID_PARA_tamago_flag, NULL );
+
+    MISC_SetFavoriteMonsno( misc, monsno, form_no, egg_flag );
+  }
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -82,7 +86,7 @@ VMCMD_RESULT EvCmdSetGymVictoryInfo( VMHANDLE * core, void *wk )
   }
   for (i = 0; i < PokeParty_GetPokeCount( party ); i++)
   {
-    POKEMON_PARAM * pp = SCRCMD_GetTemotiPP( wk, i );
+    POKEMON_PARAM * pp = PokeParty_GetMemberPointer( party, i );
     if ( PP_Get( pp, ID_PARA_tamago_flag, NULL ) == FALSE )
     {
       monsnos[i] = PP_Get( pp, ID_PARA_monsno, NULL);
@@ -142,7 +146,12 @@ VMCMD_RESULT EvCmdGetBreederJudgeResult( VMHANDLE * core, void *wk )
   u16* ret_wk    = SCRCMD_GetVMWork( core, wk );   //パワー乱数の合計
 
   //ポケモンへのポインタ取得
-  pp = SCRCMD_GetTemotiPP( wk, pos );
+  //
+  if (SCRCMD_GetTemotiPP( wk, pos, &pp ) == FALSE )
+  { //エラー対処
+    *ret_wk = 0;
+    return VMCMD_RESULT_CONTINUE;
+  }
 
   //パワー乱数取得
   temp[0] = PP_Get( pp, ID_PARA_hp_rnd, NULL );
