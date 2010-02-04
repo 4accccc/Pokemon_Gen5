@@ -842,6 +842,11 @@
   NO_CMD()
   NO_CMD()
 
+  DEF_CMD( EvCmdWazaOboeCheckUse, EV_SEQ_WAZAOBOE_CHECK_USE )
+  DEF_CMD( EvCmdWazaOboeSelectPokemon, EV_SEQ_WAZAOBOE_SELECT_POKEMON )
+  DEF_CMD( EvCmdWazaOboeCheckPokemon, EV_SEQ_WAZAOBOE_CHECK_POKEMON )
+  NO_CMD()
+
   END_CMD
 
   //スクリプトコマンドテーブル終了

@@ -65,3 +65,7 @@ extern VMCMD_RESULT EvCmdCheckRemaindWaza( VMHANDLE* core, void* wk );
 extern VMCMD_RESULT EvCmdCheckPartyPokeGetPlace( VMHANDLE* core, void* wk );
 extern VMCMD_RESULT EvCmdGetPartyPokeGetDate( VMHANDLE* core, void* wk );
 
+extern VMCMD_RESULT EvCmdWazaOboeCheckUse( VMHANDLE* core, void* wk );
+extern VMCMD_RESULT EvCmdWazaOboeCheckPokemon( VMHANDLE* core, void* wk );
+extern VMCMD_RESULT EvCmdWazaOboeSelectPokemon( VMHANDLE * core, void * wk );
+

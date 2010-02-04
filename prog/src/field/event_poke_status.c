@@ -80,6 +80,46 @@ GMEVENT * EVENT_CreatePokeSelect(
 
 //------------------------------------------------------------------
 /**
+ * @brief ポケモン選択イベント：わざ覚え
+ *
+ * @param gsys      ゲームシステム
+ * @param fieldmap  フィールドマップ
+ * @param retDecide 選択結果の格納先ワーク
+ * @param retValue  選択位置の格納先ワーク
+ * @param learnBit  覚えられるポケモンを示すビット
+ */
+//------------------------------------------------------------------
+GMEVENT * EVENT_CreatePokeSelectWazaOboe( 
+    GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, u16* retDecide , u16* retPos, u8 learnBit )
+{
+	GMEVENT* event;
+	SELECT_POKE_WORK* psw;
+  PLIST_DATA* pl_data;
+  GAMEDATA*  gdata = GAMESYSTEM_GetGameData( gsys );
+  POKEPARTY* party = GAMEDATA_GetMyPokemon( gdata );
+
+  // ポケモンリスト生成
+  pl_data    = GFL_HEAP_AllocClearMemory( HEAPID_PROC, sizeof(PLIST_DATA) );
+  pl_data->pp = party;
+  pl_data->mode = PL_MODE_WAZASET;
+  pl_data->type = PL_TYPE_SINGLE;
+  pl_data->ret_sel = 0;
+  pl_data->wazaLearnBit = learnBit;
+
+  // イベント生成
+  event = GMEVENT_Create(gsys, NULL, EVENT_FUNC_PokeSelect, sizeof(SELECT_POKE_WORK));
+  psw   = GMEVENT_GetEventWork(event);
+	psw->gsys      = gsys;
+	psw->fieldmap  = fieldmap;
+  psw->plData    = pl_data;
+  psw->retDecide = retDecide;
+  psw->retPos    = retPos;
+	return event;
+}
+
+
+//------------------------------------------------------------------
+/**
  * @brief イベント動作関数 (ポケモン選択イベント)
  */
 //------------------------------------------------------------------

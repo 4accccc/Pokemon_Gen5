@@ -27,6 +27,20 @@ extern GMEVENT * EVENT_CreatePokeSelect( GAMESYS_WORK * gsys, FIELDMAP_WORK * fi
 
 //------------------------------------------------------------------
 /**
+ * @brief ポケモン選択イベント：わざ覚え
+ *
+ * @param gsys      ゲームシステム
+ * @param fieldmap  フィールドマップ
+ * @param retDecide 選択結果の格納先ワーク
+ * @param retValue  選択位置の格納先ワーク
+ * @param learnBit  覚えられるポケモンを示すビット
+ */
+//------------------------------------------------------------------
+extern GMEVENT * EVENT_CreatePokeSelectWazaOboe( 
+    GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, u16* retDecide , u16* retPos, u8 learnBit );
+
+//------------------------------------------------------------------
+/**
  * @brief ポケモン選択イベント
  *
  * @param gsys      ゲームシステム
