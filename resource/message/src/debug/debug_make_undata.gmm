@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="saitou" host="W00158" date="2010-02-03T19:36:53"/>
+	<create user="saitou" host="W00158" date="2010-02-04T19:44:56"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -359,7 +359,19 @@
 	</row>
 
 	<row id="UND_STR_OBJIDX">
-		<language name="JPN" width="256">みためインデックス</language>
+		<language name="JPN" width="256">ひょうじOBJ</language>
+	</row>
+
+	<row id="UND_STR_SEX_MALE">
+		<language name="JPN" width="256">♂</language>
+	</row>
+
+	<row id="UND_STR_SEX_FEMALE">
+		<language name="JPN" width="256">♀</language>
+	</row>
+
+	<row id="UND_STR_NAME_TEST">
+		<language name="JPN" width="256">テスト</language>
 	</row>
 
 	<flowchart-group-list>
