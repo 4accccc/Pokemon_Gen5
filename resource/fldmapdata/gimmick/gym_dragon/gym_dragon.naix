@@ -4,7 +4,7 @@
 
 	This file was created by NINTENDO TWL-System Archiver.
 
-	Update:2010-02-04T11:33:49
+	Update:2010-02-04T12:52:18
  *****************************************************************************/
 
 #ifndef NARC_GYM_DRAGON_NAIX_
@@ -28,7 +28,8 @@ enum {
 	NARC_gym_dragon_in31_l_ue_nsbca = 14,
 	NARC_gym_dragon_in31_l_sita_nsbca = 15,
 	NARC_gym_dragon_in31_botton_nsbmd = 16,
-	NARC_gym_dragon_in31_botton_nsbtp = 17
+	NARC_gym_dragon_in31_botton_nsbtp = 17,
+	NARC_gym_dragon_m_gym0802f_nsbta = 18
 };
 
 /* NARC_GYM_DRAGON_NAIX_ */
