@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-20T19:11:08"/>
+	<create user="matsumiya" host="W00224" date="2010-02-04T16:31:53"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="35" top="218" right="738" bottom="835" maximized="no" rayout="Vertical2">
+	<dialog left="1468" top="361" right="2171" bottom="978" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="733" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="528"/>
@@ -292,10 +292,9 @@
 	</lock>
 
 
-	<row id="msg_c02gym0101_counter1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c02gym0101_counter1_01">
 		<comment>♀
-・通常時
-・仮メッセージ</comment>
+・通常時</comment>
 		<attribute name="キャラ指定">受付嬢その１</attribute>
 		<language name="JPN" width="256">ようこそ！
 シッポウはくぶつかん　へ</language>
@@ -313,10 +312,9 @@
 展示品を　奪っていきました……</language>
 	</row>
 
-	<row id="msg_c02gym0101_counter2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c02gym0101_counter2_01">
 		<comment>♀
-・通常時
-・仮メッセージ</comment>
+・通常時</comment>
 		<attribute name="キャラ指定">受付嬢その２</attribute>
 		<language name="JPN" width="256">ポケモンジムへは
 はくぶつかんの　おくから　いけます！</language>
@@ -334,93 +332,96 @@
 なにも　できなかったんです……</language>
 	</row>
 
-	<row id="msg_c02gym0101_ad_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c02gym0101_ad_01" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・初回
-・受付カウンターを越えたあたりに
-　POS設定
+・受付カウンターを越えたあたりにpos設定
 ・最初標本の前、上向きに鉢
 　posを踏むと！マーク表示後
 　下を向き、主人公に隣接してmsg_c02gym0101_ad_02
-・ホネ（大）→隕石→石→ジム
-・仮メッセージ</comment>
+・ホネ（大）→隕石→石→ジム</comment>
 		<attribute name="キャラ指定">副館長（Assistant　Director）
 助手♂</attribute>
-		<language name="JPN" width="256">うーむ！　この　こっかくひょうほんは
+		<language name="JPN" width="256">うーむ！　この　こっかくは
 いつみても……　ホレボレしますな▼</language>
-		<language name="JPN_KANJI" width="256">うーむ！　この　骨格標本は
-いつみても……　ホレボレしますな[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">うーむ！　この　骨格は
+いつみても……　ホレボレしますな▼</language>
 	</row>
 
-	<row id="msg_c02gym0101_ad_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c02gym0101_ad_02" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">副館長（Assistant　Director）
 助手♂</attribute>
 		<language name="JPN" width="256">どうも　わたくし
-ふくかんちょうの　キダチ　です[BE:01:ページ切り替え（クリア）]
+ふくかんちょうの　キダチ　です▼
 せっかく　いらしたのです　
-かんないを　あんない　しましょう！[BE:01:ページ切り替え（クリア）]
+かんないを　あんない　しましょう！▼
 いいんです
 えんりょ　しないで　くださいませ▼</language>
 		<language name="JPN_KANJI" width="256">どうも　わたくし
-副館長の　キダチ　です[BE:01:ページ切り替え（クリア）]
+副館長の　キダチ　です▼
 せっかく　いらしたのです　
-館内を　案内いたしましょう！[BE:01:ページ切り替え（クリア）]
+館内を　案内いたしましょう！▼
 いいんです
 遠慮しないで　くださいませ▼</language>
 	</row>
 
-	<row id="msg_c02gym0101_ad_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c02gym0101_ad_03" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
-・骨格標本（大きい骨）（予定）
-・仮メッセージ</comment>
+・骨格標本</comment>
 		<attribute name="キャラ指定">副館長（Assistant　Director）
 助手♂</attribute>
-		<language name="JPN" width="256">こっかく……
-おおむかしの　ポケモン……▼</language>
-		<language name="JPN_KANJI" width="256">骨格……
-大昔の　ポケモン……▼</language>
+		<language name="JPN" width="256">こちらの　こっかく……
+ドラゴンタイプの　ポケモンですね▼
+おそらく　せかいかくちを
+とびまわっているうちに▽
+なんらかの　じこにあって▽
+そのまま　カセキに　なったようです▼</language>
+		<language name="JPN_KANJI" width="256">こちらの　骨格……
+ドラゴンタイプの　ポケモンですね▼
+おそらく　世界各地を
+飛び回っているうちに▽
+なんらかの　事故にあって▽
+そのまま　カセキに　なったようです▼</language>
 	</row>
 
-	<row id="msg_c02gym0101_ad_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c02gym0101_ad_04" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
-・隕石（予定）
-・仮メッセージ</comment>
+・隕石</comment>
 		<attribute name="キャラ指定">副館長（Assistant　Director）
 助手♂</attribute>
 		<language name="JPN" width="256">この　いしは　すごいですよ
-いんせき　なんですよ！[BE:01:ページ切り替え（クリア）]
+いんせき　なんですよ！▼
 なにかしらの
 うちゅうエネルギーを　ひめています▼</language>
 		<language name="JPN_KANJI" width="256">この　石は　すごいですよ
-いん石なんですよ！[BE:01:ページ切り替え（クリア）]
+いん石なんですよ！▼
 なにかしらの
 宇宙エネルギーを　秘めています▼</language>
 	</row>
 
-	<row id="msg_c02gym0101_ad_05" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c02gym0101_ad_05" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
-・古い石（予定）
+・古い石
 　Wverなら「ダークストーン（黒）」
-　Bverなら「ライトストーン（しろ）」
-・仮メッセージ</comment>
+　Bverなら「ライトストーン（しろ）」</comment>
 		<attribute name="キャラ指定">副館長（Assistant　Director）
 助手♂</attribute>
 		<language name="JPN" width="256">ああ　こちらは
-ただの　ふるいいし　です[BE:01:ページ切り替え（クリア）]
+ただの　ふるいいし　です▼
 さばくあたりで　みつかったのですが
-ふるい　いがいには　まったく[BE:00:ページ切り替え（行送り）]
-かちの　ない　ものでして……[BE:01:ページ切り替え（クリア）]
-ただ　きれいなので
+ふるいこと　いがいには　まったく▽
+かちが　なさそうな　ものでして……▼
+ただ　とても　キレイですので
 てんじ　しております▼</language>
 		<language name="JPN_KANJI" width="256">ああ　こちらは
-ただの　ふるいいし　です[BE:01:ページ切り替え（クリア）]
+ただの　ふるいいし　です▼
 砂漠付近で　見つかったのですが
-古い以外には　まったく[BE:00:ページ切り替え（行送り）]
-価値の　ない　ものでして……[BE:01:ページ切り替え（クリア）]
-ただ　きれいなので
-展示しております▼</language>
+古いこと以外には　まったく▽
+価値が　なさそうな　ものでして……▼
+ただ　とても　キレイですので
+展示して　おります▼</language>
 	</row>
 
 	<row id="msg_c02gym0101_ad_06" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -432,17 +433,76 @@
 		<attribute name="キャラ指定">副館長（Assistant　Director）
 助手♂</attribute>
 		<language name="JPN" width="256">この　さきが
-ポケモンジムと　なっております[BE:01:ページ切り替え（クリア）]
+ポケモンジムと　なっております▼
 いちばん　おくで　つよくて　やさしい
-ジムリーダーが　まってます[BE:01:ページ切り替え（クリア）]
+ジムリーダーが　まってます▼
 ちなみに　ジムリーダーの　アロエは
 わたくしの　おくさん　なのです</language>
 		<language name="JPN_KANJI" width="256">この　先が
-ポケモンジムと　なっております[BE:01:ページ切り替え（クリア）]
+ポケモンジムと　なっております▼
 一番　奥で　強くて　やさしい
-ジムリーダーが　待ってます[BE:01:ページ切り替え（クリア）]
+ジムリーダーが　待ってます▼
 ちなみに　ジムリーダーの　アロエは
 わたくしの　奥さん　なのです</language>
+	</row>
+
+	<row id="msg_c02gym0101_leader_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♀
+・盗難イベント時、posを踏むとメッセージ表示
+・プラズマ団を追加配置
+ GRIDX=11、GRIDZ=12
+ GRIDX=13、GRIDZ=12
+ GRIDX=9、GRIDZ=13
+ GRIDX=10、GRIDZ=13
+ GRIDX=14、GRIDZ=13
+ GRIDX=15、GRIDZ=13
+・続けてhakaim1_01</comment>
+		<attribute name="キャラ指定">C02ジムリーダー
+アロエ</attribute>
+		<language name="JPN" width="256">アロエ『ちょっと　あんたたち！
+おふざけは　よしとくれ！！▼</language>
+		<language name="JPN_KANJI" width="256">アロエ『ちょっと　あんたたち！
+おふざけは　よしとくれ！！▼</language>
+	</row>
+
+	<row id="msg_c02gym0101_hakaim1_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+		<comment>♂
+・GRIDX=11、GRIDZ=12に配置されたもの
+・続けてhakaim2_01</comment>
+		<attribute name="キャラ指定">HAKAIM</attribute>
+		<language name="JPN" width="256">プラズマだん『きたか　ジムリーダー▼
+われわれ　プラズマだんは
+ポケモンを　じゆうにするため▼
+はくぶつかんに　ある
+ドラゴンの　ほねを　いただく▼</language>
+		<language name="JPN_KANJI" width="256">プラズマ団『来たか　ジムリーダー▼
+われわれ　プラズマ団は
+ポケモンを　自由にするため▼
+博物館に　ある
+ドラゴンの　骨を　いただく▼</language>
+	</row>
+
+	<row id="msg_c02gym0101_hakaim2_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+		<comment>♂
+ GRIDX=13、GRIDZ=12に配置されたもの
+・続けてhakaim1_02</comment>
+		<attribute name="キャラ指定">HAKAIM</attribute>
+		<language name="JPN" width="256">プラズマだん『われわれが
+ほんきであることを　おしえるため▽
+あえて　おまえのまえで　うばおう▼</language>
+		<language name="JPN_KANJI" width="256">プラズマ団『我々が
+本気であることを　教えるため▽
+あえて　おまえの前で　奪おう▼</language>
+	</row>
+
+	<row id="msg_c02gym0101_hakaim1_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+		<comment>♂
+・煙演出に
+　この間に動作モデル「骨」削除
+・画面から煙がなくなるとleader_01</comment>
+		<attribute name="キャラ指定">HAKAIM</attribute>
+		<language name="JPN" width="256">プラズマだん『では　えんまく！▼</language>
+		<language name="JPN_KANJI" width="256">プラズマ団『では　えんまく！▼</language>
 	</row>
 
 	<row id="msg_c02gym0101_leader_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -453,23 +513,22 @@
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">C02ジムリーダー
 アロエ</attribute>
-		<language name="JPN" width="256">アロエ『なんてこったい……[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">アロエ『なんてこったい……▼
 プラズマだんってのが　てんじひんを
-あらかた　もっていったんだね……[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">アロエ『なんてこったい……[BE:01:ページ切り替え（クリア）]
+あらかた　もっていったんだね……▼</language>
+		<language name="JPN_KANJI" width="256">アロエ『なんてこったい……▼
 プラズマ団ってのが　展示品を
-あらかた　持って行ったんだね……[BE:01:ページ切り替え（クリア）]</language>
+あらかた　持って行ったんだね……▼</language>
 	</row>
 
-	<row id="msg_c02gym0101_ad_07" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c02gym0101_ad_07" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
-・ジムバッジ取得後～盗難イベント解決前
-・仮メッセージ</comment>
+・ジムバッジ取得後～盗難イベント解決前</comment>
 		<attribute name="キャラ指定">副館長（Assistant　Director）
 助手♂</attribute>
-		<language name="JPN" width="256">キダチ『あの　こっかくひょうほんは
+		<language name="JPN" width="256">キダチ『あの　ほねは
 アロエが　だいすきな　もの……</language>
-		<language name="JPN_KANJI" width="256">キダチ『あの　骨格標本は……
+		<language name="JPN_KANJI" width="256">キダチ『あの　骨は……
 アロエが　大好きな　もの……</language>
 	</row>
 
@@ -479,9 +538,9 @@
 　メッセージは繰り返し
 ・削除タイミングは盗難イベントクリア時（仮）</comment>
 		<attribute name="キャラ指定">サポート（友達♀）</attribute>
-		<language name="JPN" width="256">ホワイティ『ドロボウだなんて
+		<language name="JPN" width="256">ベル『ドロボウだなんて
 あたし　ゆるせない！</language>
-		<language name="JPN_KANJI" width="256">ホワイティ『ドロボウだなんて
+		<language name="JPN_KANJI" width="256">ベル『ドロボウだなんて
 あたし　ゆるせない！</language>
 	</row>
 
@@ -491,11 +550,11 @@
 　メッセージは繰り返し
 ・削除タイミングは盗難イベントクリア時（仮）</comment>
 		<attribute name="キャラ指定">ライバル（友達♂）</attribute>
-		<language name="JPN" width="256">ブラッカー『プラズマだんの　せいで
-ジムリーダー　いないのか……[BE:00:ページ切り替え（行送り）]
+		<language name="JPN" width="256">チェレン『プラズマだんの　せいで
+ジムリーダー　いないのか……▽
 なんとも　めいわくな　はなしだな</language>
-		<language name="JPN_KANJI" width="256">ブラッカー『プラズマ団のせいで
-ジムリーダー　いないのか……[BE:00:ページ切り替え（行送り）]
+		<language name="JPN_KANJI" width="256">チェレン『プラズマ団のせいで
+ジムリーダー　いないのか……▽
 なんとも　迷惑な　話だな</language>
 	</row>
 
@@ -506,75 +565,78 @@
 		<attribute name="キャラ指定">副館長（Assistant　Director）
 助手♂</attribute>
 		<language name="JPN" width="256">こっかくひょうほんって
-ふしぎ　なんですよ[BE:00:ページ切り替え（行送り）]
+ふしぎ　なんですよ▽
 以下　仮メッセージ</language>
 		<language name="JPN_KANJI" width="256">骨格標本って　不思議なんですよ
 以下　仮メッセージ</language>
 	</row>
 
-	<row id="msg_c02gym0101_man1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c02gym0101_man1_01" text-color=",,,#000000,,,,,,,,,,,,,,,">
 		<comment>♂
-・通常時
-・仮メッセージ</comment>
+・通常時</comment>
 		<attribute name="キャラ指定">見物客その１
 MAN1</attribute>
-		<language name="JPN" width="256">せかいかっこくの　めずしいモノ……[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">せかいかっこくの　めずしいモノ……▼
 そう　かんがえると　はくぶつかんは
 ロマンの　しゅうごうたい　だね</language>
 		<language name="JPN_KANJI" width="256">世界各国の　珍しいモノ……
 そう考えると　ロマンの　集合体だね</language>
 	</row>
 
-	<row id="msg_c02gym0101_man1_02" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c02gym0101_man1_02" text-color=",,,#000000,,,,,,,,,,,,,,,">
 		<comment>♂
-・盗難イベント発生時
-・仮メッセージ</comment>
+・盗難イベント発生時</comment>
+		<attribute name="キャラ指定">見物客その１
+MAN1</attribute>
 		<language name="JPN" width="256">あわわわわ！</language>
 		<language name="JPN_KANJI" width="256">あわわわわ！</language>
 	</row>
 
-	<row id="msg_c02gym0101_girl3_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c02gym0101_girl3_01" text-color=",,,#000000,,,,,,,,,,,,,,,">
 		<comment>♀
-・通常時
-・仮メッセージ</comment>
+・通常時</comment>
 		<attribute name="キャラ指定">見物客その２
 GIRL3</attribute>
 		<language name="JPN" width="256">ここの　ジムリーダーは
-カセキや　ポケモンのホネの[BE:00:ページ切り替え（行送り）]
+カセキや　ポケモンのホネの▽
 けんきゅうも　しているってね</language>
-		<language name="JPN_KANJI" width="256">ここの　ジムリーダーは　カセキや
-ポケモンの骨の　研究も　しているってね</language>
+		<language name="JPN_KANJI" width="256">ここの　ジムリーダーは
+カセキや　ポケモンの骨の▽
+研究も　しているってね</language>
 	</row>
 
 	<row id="msg_c02gym0101_girl3_012" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♀
 ・盗難イベント発生時
 ・仮メッセージ</comment>
+		<attribute name="キャラ指定">見物客その２
+GIRL3</attribute>
 		<language name="JPN" width="256">ドロボウたちの
-あの　だいたんな　こうどう……[BE:01:ページ切り替え（クリア）]
+あの　だいたんな　こうどう……▼
 まるで　じぶんたちの
 せいぎを　しんじているみたい</language>
 		<language name="JPN_KANJI" width="256">泥棒たちの　あの　大胆な行動……
 自分たちの　正義を　信じているみたい</language>
 	</row>
 
-	<row id="msg_c02gym0101_oldman_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c02gym0101_oldman_01" text-color=",,,#000000,,,,,,,,,,,,,,,">
 		<comment>♂
-・通常時
-・仮メッセージ</comment>
+・通常時</comment>
 		<attribute name="キャラ指定">見物客その３
 OLDMAN1</attribute>
-		<language name="JPN" width="256">いんせきと　いっしょに
-うちゅうから　きた[BE:00:ページ切り替え（行送り）]
+		<language name="JPN" width="256">もしかすると　いんせきと　いっしょに
+うちゅうから　やってきた▽
 ポケモンも　いるかもしれんのう</language>
-		<language name="JPN_KANJI" width="256">いん石と　一緒に　宇宙から来た
+		<language name="JPN_KANJI" width="256">もしかすると　いん石と　一緒に
+宇宙から　やってきた▽
 ポケモンも　いるかもしれんのう</language>
 	</row>
 
-	<row id="msg_c02gym0101_oldman_02" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c02gym0101_oldman_02" text-color=",,,#000000,,,,,,,,,,,,,,,">
 		<comment>♂
-・盗難イベント発生時
-・仮メッセージ</comment>
+・盗難イベント発生時</comment>
+		<attribute name="キャラ指定">見物客その３
+OLDMAN1</attribute>
 		<language name="JPN" width="256">あの　プラズマだん　というのは
 いったい　なにもの　なんだ！？</language>
 		<language name="JPN_KANJI" width="256">あの　プラズマ団　というのは
