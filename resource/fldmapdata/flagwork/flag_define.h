@@ -176,8 +176,8 @@
 #define FE_POKEID_ITEM5                    160 /* 0x00a0 ポケモンIDイベント用フラグ：アイテム５を入手した */
 #define FE_POKEID_ITEM6                    161 /* 0x00a1 ポケモンIDイベント用フラグ：アイテム６を入手した */
 #define FE_POKEID_FIRSTTALK                162 /* 0x00a2 ポケモンIDイベント初回会話フラグ */
-		/* not used   163(0x00a3) */
-		/* not used   164(0x00a4) */
+#define FE_C03R0303_CLEANINGM              163 /* 0x00a3 ヒウンシティ バトルカンパニー3F：会長と戦った */
+#define FE_C03R0901_ITEMGET                164 /* 0x00a4 ヒウンシティ バー：アイテムを入手した */
 		/* not used   165(0x00a5) */
 		/* not used   166(0x00a6) */
 		/* not used   167(0x00a7) */
@@ -2503,9 +2503,9 @@
 #define TMFLG_WC10_ITEM_10                2729 /* 0x0aa9 WC10のアイテム１０ */
 #define TMFLG_WC10R0101_OLDMAN            2730 /* 0x0aaa WC村長 */
 #define TMFLG_C08R0301_GOODS              2731 /* 0x0aab ミュージカル大好きおじさん */
-		/* not used  2732(0x0aac) */
-		/* not used  2733(0x0aad) */
-		/* not used  2734(0x0aae) */
+#define TMFLG_C03R0201_GALLERY_TYPE       2732 /* 0x0aac ギャラリーの日替わりポケモンタイプ */
+#define TMFLG_C03R0201_GALLERY_CLEAR      2733 /* 0x0aad ギャラリーの日替わりミッションクリア判定 */
+#define TMFLG_C03R1001_MASSAGE            2734 /* 0x0aae １日１回なつきマッサージ */
 		/* not used  2735(0x0aaf) */
 		/* not used  2736(0x0ab0) */
 		/* not used  2737(0x0ab1) */

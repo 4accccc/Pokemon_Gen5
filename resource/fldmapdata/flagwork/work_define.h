@@ -169,6 +169,9 @@
 #define WK_SCENE_C03                     16557 /* 0x40ad ヒウンシティ：イベント用ワーク */
 #define WK_SCENE_R15R0301                16558 /* 0x40ae パルパーク：イベント用ワーク */
 #define WK_SCENE_C03P07                  16559 /* 0x40af ヒウンシティ（ジム前通り）：イベント用ワーク */
+#define WK_SCENE_C03R0201_GALLERY        16560 /* 0x40b0 ヒウンシティ（ギャラリー）：イベント用ワーク */
+#define WK_SCENE_C03R0101                16561 /* 0x40b1 ヒウンシティ（バトルカンパニーF1）：イベント用ワーク */
+#define WK_SCENE_C03R1301_SUNGLASSES     16562 /* 0x40b2 ヒウンシティ（お金持ちの家１F）：ボディチェックイベント用ワーク */
 
 #define WK_SCENE_AREA_END                16687 /* 0x412f  */
 
