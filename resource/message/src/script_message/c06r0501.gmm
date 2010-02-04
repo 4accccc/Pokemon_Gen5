@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-02T16:17:43"/>
+	<create user="matsumiya" host="W00224" date="2010-02-04T18:53:53"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1528" top="346" right="2233" bottom="966" maximized="no" rayout="Vertical2">
+	<dialog left="1294" top="281" right="1999" bottom="909" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -292,43 +292,27 @@
 	</lock>
 
 
-	<row id="msg_c06r0501_workman_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
-		<comment>♂
-・仮メッセージ</comment>
+	<row id="msg_c06r0501_workman_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>このMAP IDは未使用</comment>
 		<attribute name="キャラ指定">WORKMAN
 作業員</attribute>
-		<language name="JPN" width="256">モノを　つくる　ひと
-つくられたモノを　つかう　ひと[BE:01:ページ切り替え（クリア）]
-おたがいの　かおは　しらないが
-つながって　いるんだよな</language>
-		<language name="JPN_KANJI" width="256">モノを　つくる　人
-つくられたモノを　つかう　人[BE:01:ページ切り替え（クリア）]
-お互いの　顔は　知らないが
-つながって　いるんだよな</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c06r0501_cleaningm_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
-		<comment>♂
-・仮メッセージ</comment>
+	<row id="msg_c06r0501_cleaningm_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>このMAP IDは未使用</comment>
 		<attribute name="キャラ指定">CLEANINGM
 清掃員</attribute>
-		<language name="JPN" width="256">おわかいの！[BE:01:ページ切り替え（クリア）]
-まわりが　きれいに　なれば
-からだぜんたいが　かろやかになる[BE:00:ページ切り替え（行送り）]
-これって　まるで　まほうのようだろ？</language>
-		<language name="JPN_KANJI" width="256">おわかいの！[BE:01:ページ切り替え（クリア）]
-周りが　きれいに　なれば
-体全体が　軽やかになる[BE:00:ページ切り替え（行送り）]
-それって　魔法みたいだと　思わんか？</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c06r0501_poke_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
-		<comment>ポケモン
-・仮メッセージ
-・メッセージ表示にあわせ鳴き声再生</comment>
+	<row id="msg_c06r0501_poke_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>このMAP IDは未使用</comment>
 		<attribute name="キャラ指定">ポケモン</attribute>
-		<language name="JPN" width="256">ぎゃぼー！</language>
-		<language name="JPN_KANJI" width="256">ぎゃぼー！</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<flowchart-group-list>
