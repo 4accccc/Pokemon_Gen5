@@ -1722,13 +1722,18 @@ static BOOL mainProc_Root( DEBUG_BTL_WORK* wk, int* seq )
     }
   }
 
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
+  {
+    if( wk->selectItem == SELITEM_SAVE ){
+      setMainProc( wk, mainProc_Save );
+      return FALSE;
+    }
+  }
+
   if( key & PAD_BUTTON_A )
   {
     if( selItem_IsPoke(wk->selectItem) ){
       setMainProc( wk, mainProc_MakePokePara );
-    }
-    else if( wk->selectItem == SELITEM_SAVE ){
-      setMainProc( wk, mainProc_Save );
     }
     else if( wk->selectItem == SELITEM_LOAD ){
       setMainProc( wk, mainProc_Load );
