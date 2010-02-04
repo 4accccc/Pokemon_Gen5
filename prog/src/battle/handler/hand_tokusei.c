@@ -2848,6 +2848,9 @@ static void handler_Syncro( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk,
       {
         BTL_HANDEX_PARAM_ADD_SICK* param;
         const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
+        BPP_SICK_CONT cont;
+
+        cont.raw = BTL_EVENTVAR_GetValue( BTL_EVAR_SICK_CONT );
 
         BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_TOKWIN_IN, pokeID );
 
@@ -2855,7 +2858,14 @@ static void handler_Syncro( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk,
         param->poke_cnt = 1;
         param->pokeID[0] = attackPokeID;
         param->sickID = sick;
-        BTL_CALC_MakeDefaultWazaSickCont( sick, bpp, &param->sickCont );
+        // もうどくは継続パラメータをそのままにする必要がある
+        if( (sick == POKESICK_DOKU) && (BPP_SICKCONT_IsMoudokuCont(cont)) ){
+          OS_TPrintf("もうどくシンクロします->対象ポケ=%d\n", attackPokeID);
+          param->sickCont = cont;
+        }else{
+          OS_TPrintf("ふつうにシンクロします\n");
+          BTL_CALC_MakeDefaultWazaSickCont( sick, bpp, &param->sickCont );
+        }
         param->fAlmost = TRUE;
 
         BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_TOKWIN_OUT, pokeID );

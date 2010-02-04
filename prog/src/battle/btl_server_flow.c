@@ -415,7 +415,7 @@ static BtlAddSickFailCode addsick_check_fail( BTL_SVFLOW_WORK* wk, const BTL_POK
 static BtlWeather scEvent_GetWeather( BTL_SVFLOW_WORK* wk );
 static BOOL scEvent_StdSick_CheckFail( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target, WazaSick sick  );
 static void scEvent_AddSick_Failed( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target, WazaSick sick );
-static void scEvent_PokeSickFixed( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target, const BTL_POKEPARAM* attacker, PokeSick sick );
+static void scEvent_PokeSickFixed( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target, const BTL_POKEPARAM* attacker, PokeSick sick, BPP_SICK_CONT sickCont );
 static void scEvent_WazaSickFixed( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target, const BTL_POKEPARAM* attacker, WazaSick sick );
 static void scEvent_IekiFixed( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target );
 static void scproc_Fight_Damage_AddEffect( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam, BTL_POKEPARAM* attacker, BTL_POKEPARAM* target );
@@ -560,7 +560,7 @@ static void scEvent_WazaDamageAfter( BTL_SVFLOW_WORK* wk,
   const BTL_POKEPARAM* attacker, const SVFL_WAZAPARAM* wazaParam,
   u32 damage, BOOL criticalFlag );
 static void scEvent_ItemEquip( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
-static void scEvent_ItemEquipTmp( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
+static void scEvent_ItemEquipTmp( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp, u8 atkPokeID );
 static BtlTypeAff scProc_checkWazaDamageAffinity( BTL_SVFLOW_WORK* wk,
   BTL_POKEPARAM* attacker, BTL_POKEPARAM* defender, const SVFL_WAZAPARAM* wazaParam );
 static BtlTypeAff scEvent_CheckDamageAffinity( BTL_SVFLOW_WORK* wk,
@@ -5899,7 +5899,7 @@ static BOOL scproc_AddSick( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, BTL_POKE
       u32 hem_state = Hem_PushState( &wk->HEManager );
 
       if( BTL_CALC_IsBasicSickID(sick) ){
-        scEvent_PokeSickFixed( wk, target, attacker, sick );
+        scEvent_PokeSickFixed( wk, target, attacker, sick, sickCont );
       }else if( sick == WAZASICK_IEKI ){
         scEvent_IekiFixed( wk, target );
       }else {
@@ -6102,7 +6102,8 @@ static void scEvent_AddSick_Failed( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* ta
  * @param   sick
  */
 //----------------------------------------------------------------------------------
-static void scEvent_PokeSickFixed( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target, const BTL_POKEPARAM* attacker, PokeSick sick )
+static void scEvent_PokeSickFixed( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target, const BTL_POKEPARAM* attacker,
+  PokeSick sick, BPP_SICK_CONT sickCont )
 {
   BTL_EVENTVAR_Push();
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_DEF, BPP_GetID(target) );
@@ -6111,6 +6112,7 @@ static void scEvent_PokeSickFixed( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* tar
       BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_ATK, atkPokeID );
     }
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_SICKID, sick );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_SICK_CONT, sickCont.raw );
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_POKESICK_FIXED );
   BTL_EVENTVAR_Pop();
 }
@@ -9395,10 +9397,11 @@ static void scEvent_ItemEquip( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp )
  * @param   evwk
  */
 //----------------------------------------------------------------------------------
-static void scEvent_ItemEquipTmp( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp )
+static void scEvent_ItemEquipTmp( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp, u8 atkPokeID )
 {
   BTL_EVENTVAR_Push();
     BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID, BPP_GetID(bpp) );
+    BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_ATK, atkPokeID );
     BTL_EVENT_ForceCallHandlers( wk, BTL_EVENT_USE_ITEM_TMP );
   BTL_EVENTVAR_Pop();
 }
@@ -11288,6 +11291,7 @@ static u8 scproc_HandEx_addSick( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEA
     target = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID[i] );
     if( !BPP_IsDead(target) )
     {
+      BTL_N_Printf( DBGSTR_SVFL_HandEx_AddSick, param->pokeID[i], param->sickID, param->fAlmost );
       if( scproc_AddSick(wk, target, pp_user, param->sickID, param->sickCont, param->fAlmost, fDefaultMsg) ){
         result = 1;
       }
@@ -11871,7 +11875,7 @@ static u8 scproc_HandEx_ItemSP( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEAD
     if( factor )
     {
       u32 hem_state = Hem_PushState( &wk->HEManager );
-      scEvent_ItemEquipTmp( wk, bpp );
+      scEvent_ItemEquipTmp( wk, bpp, param_header->userPokeID );
       scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
       Hem_PopState( &wk->HEManager, hem_state );
       BTL_HANDLER_ITEM_TMP_Remove( factor );

@@ -134,6 +134,7 @@ typedef enum {
   DBGSTR_SVFL_ReqWazaCallActOrder,
   DBGSTR_SVFL_WazaExeFail_1,
   DBGSTR_SVFL_WazaExeFail_2,
+  DBGSTR_SVFL_HandEx_AddSick,
 
   DBGSTR_SC_PutCmd,
   DBGSTR_SC_ReservedPos,
