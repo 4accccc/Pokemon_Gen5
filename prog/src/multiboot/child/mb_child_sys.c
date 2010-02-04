@@ -286,13 +286,13 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
     if( MB_COMM_IsInitComm(work->commWork) == TRUE )
     {
       //親機情報
-      if( MB_IsMultiBootChild() == FALSE )
+      if( MB_IsMultiBootChild() == FALSE ||
+          GFL_UI_KEY_GetCont() & PAD_BUTTON_R )
       {
 #if DEB_ARI
-        //青箱の05053056のMacAddress(手打ち)
-        u8 addTemp[6] = {0x00,0x09,0xbf,0xf4,0x33,0x15};
-        MB_COMM_InitChild( work->commWork , addTemp );
-        MB_TPrintf("Quick boot!!\n");
+        
+        work->state = MCS_CHECK_ROM;
+        return FALSE;
 #else
         GF_ASSERT_MSG(0,"This DS is not multiboot child!!\n");
 #endif
@@ -568,7 +568,13 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
         {
           const u8 tray = work->selInitWork.selectPoke[i][0];
           const u8 idx  = work->selInitWork.selectPoke[i][1];
+          const u32 itemNo = PPP_Get( work->capInitWork.ppp[i] , ID_PARA_item , NULL );
           MB_COMM_AddSendPokeData( work->commWork , work->capInitWork.ppp[i] );
+          
+          if( itemNo != 0 )
+          {
+            MB_DATA_AddItem( work->dataWork , itemNo );
+          }
           
           //元データのpppを消す
           MB_DATA_ClearBoxPPP( work->dataWork , tray , idx );

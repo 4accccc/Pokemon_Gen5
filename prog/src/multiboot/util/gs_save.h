@@ -140,3 +140,36 @@ typedef struct {
   //これにＣＲＣ４バイトを追加すると、0x12300となり、256バイトアライメントされ、
   //フッター情報のみの書き込みの際に、フラッシュページをまたがなくなる
 }GS_BOX_DATA;
+
+
+//---------------------------------------------------------------------------
+//  アイテム関係
+//---------------------------------------------------------------------------
+typedef struct
+{
+  u16 id;   // アイテム番号
+  u16 no;   // 個数
+}GS_MINEITEM;
+
+#define GS_BAG_NORMAL_ITEM_MAX    ( 165 )   // 道具ポケット最大数
+#define GS_BAG_EVENT_ITEM_MAX     ( 50 )    // 大切な物ポケット最大数
+#define GS_BAG_WAZA_ITEM_MAX      ( 101 )   // 技マシンポケット最大数
+#define GS_BAG_SEAL_ITEM_MAX      ( 12 )    // シールポケット最大数
+#define GS_BAG_DRUG_ITEM_MAX      ( 40 )    // 薬ポケット最大数
+#define GS_BAG_NUTS_ITEM_MAX      ( 64 )    // 木の実ポケット最大数
+#define GS_BAG_BALL_ITEM_MAX      ( 24 )    // モンスターボールポケット最大数
+#define GS_BAG_BATTLE_ITEM_MAX    ( 30 )    // 戦闘用アイテムポケット最大数
+
+typedef struct {
+  GS_MINEITEM MyNormalItem[ GS_BAG_NORMAL_ITEM_MAX ]; // 手持ちの普通の道具
+  GS_MINEITEM MyEventItem[ GS_BAG_EVENT_ITEM_MAX ];   // 手持ちの大切な道具
+  GS_MINEITEM MySkillItem[ GS_BAG_WAZA_ITEM_MAX ];    // 手持ちの技マシン
+  GS_MINEITEM MySealItem[ GS_BAG_SEAL_ITEM_MAX ];   // 手持ちのシール(実際はメール
+  GS_MINEITEM MyDrugItem[ GS_BAG_DRUG_ITEM_MAX ];   // 手持ちの薬
+  GS_MINEITEM MyNutsItem[ GS_BAG_NUTS_ITEM_MAX ];   // 手持ちの木の実
+  GS_MINEITEM MyBallItem[ GS_BAG_BALL_ITEM_MAX ];   // 手持ちのモンスターボール
+  GS_MINEITEM MyBattleItem[ GS_BAG_BATTLE_ITEM_MAX ]; // 手持ちの戦闘用アイテム
+  u16 cnv_button1;                // 便利ボタン1(Yボタン）
+  u16 cnv_button2;                // 便利ボタン2
+}GS_MYITEM;
+

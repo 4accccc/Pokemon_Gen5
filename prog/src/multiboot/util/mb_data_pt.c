@@ -19,6 +19,7 @@
 
 #include "./pt_save.dat"  //mb_data_pt.c 以外で読むな
 #include "./dp_save.dat"  //mb_data_pt.c 以外で読むな
+#include "./mb_item.cdat"
 
 //======================================================================
 //  define
@@ -52,6 +53,8 @@ static  BOOL MB_DATA_PT_CheckDataCorrect( PT_SAVE_FOOTER **pFooterArr , MB_DATA_
 static u8 MB_DATA_PT_CompareFooterData( PT_SAVE_FOOTER *fData , BOOL fCorr ,
                        PT_SAVE_FOOTER *sData , BOOL sCorr ,
                        u8 *pos );
+static const BOOL MB_DATA_PT_AddItemFunc( MB_DATA_WORK *dataWork , u16 itemNo , PT_MINEITEM *mineItem , const u16 arrMax );
+static void MB_DATA_PT_SortItem( MB_DATA_WORK *dataWork , PT_MINEITEM *mineItem , const u16 arrMax );
 
 
 
@@ -109,6 +112,7 @@ BOOL  MB_DATA_PT_LoadData( MB_DATA_WORK *dataWork )
       //各ブロックのCRCをチェック(一応通常データも見ておく
       u8 i;
       const u32 boxStartAdd = MB_DATA_GetStartAddress(PT_GMDATA_ID_BOXDATA , dataWork->cardType );
+      const u32 itemStartAdd = MB_DATA_GetStartAddress(PT_GMDATA_ID_TEMOTI_ITEM , dataWork->cardType );
       PT_SAVE_FOOTER *footer[4];
       footer[PT_MAIN_FIRST] = (PT_SAVE_FOOTER*)&dataWork->pData[ MB_DATA_GetStartAddress(PT_GMDATA_NORMAL_FOOTER , dataWork->cardType ) ];
       footer[PT_BOX_FIRST]  = (PT_SAVE_FOOTER*)&dataWork->pData[ MB_DATA_GetStartAddress(PT_GMDATA_BOX_FOOTER , dataWork->cardType ) ];
@@ -133,6 +137,15 @@ BOOL  MB_DATA_PT_LoadData( MB_DATA_WORK *dataWork )
           {
             dataWork->pBoxData = dataWork->pDataMirror + boxStartAdd;
           }
+          if( dataWork->mainSavePos == DDS_FIRST )
+          {
+            dataWork->pItemData = dataWork->pData + itemStartAdd;
+          }
+          else
+          {
+            dataWork->pItemData = dataWork->pDataMirror + itemStartAdd;
+          }
+
         }
         else
         {
@@ -159,6 +172,69 @@ BOOL  MB_DATA_PT_LoadData( MB_DATA_WORK *dataWork )
           MB_DATA_TPrintf("[%3d]",monsNo);
         }
         MB_DATA_TPrintf("\n");
+      }
+    }
+    //アイテムデータの解析
+    if( dataWork->pItemData != NULL )
+    {
+      int i;
+      PT_MYITEM *myItem = (PT_MYITEM*)dataWork->pItemData;
+      MB_DATA_TPrintf("ItemData Analyze...\n");
+
+      MB_DATA_TPrintf("NormalItem\n");
+      for(i=0;i<PT_BAG_NORMAL_ITEM_MAX;i++)
+      {
+        MB_DATA_TPrintf("[%3d:%3d]",myItem->MyNormalItem[i].id,myItem->MyNormalItem[i].no);
+        if( (i%8)==7 ){MB_DATA_TPrintf("\n");}
+      }
+
+      MB_DATA_TPrintf("\nEventItem\n");
+      for(i=0;i<PT_BAG_EVENT_ITEM_MAX;i++)
+      {
+        MB_DATA_TPrintf("[%3d:%3d]",myItem->MyEventItem[i].id,myItem->MyEventItem[i].no);
+        if( (i%8)==7 ){MB_DATA_TPrintf("\n");}
+      }
+
+      MB_DATA_TPrintf("\nSkillItem\n");
+      for(i=0;i<PT_BAG_WAZA_ITEM_MAX;i++)
+      {
+        MB_DATA_TPrintf("[%3d:%3d]",myItem->MySkillItem[i].id,myItem->MySkillItem[i].no);
+        if( (i%8)==7 ){MB_DATA_TPrintf("\n");}
+      }
+
+      MB_DATA_TPrintf("\nSealItem\n");
+      for(i=0;i<PT_BAG_SEAL_ITEM_MAX;i++)
+      {
+        MB_DATA_TPrintf("[%3d:%3d]",myItem->MySealItem[i].id,myItem->MySealItem[i].no);
+        if( (i%8)==7 ){MB_DATA_TPrintf("\n");}
+      }
+
+      MB_DATA_TPrintf("\nDrugItem\n");
+      for(i=0;i<PT_BAG_DRUG_ITEM_MAX;i++)
+      {
+        MB_DATA_TPrintf("[%3d:%3d]",myItem->MyDrugItem[i].id,myItem->MyDrugItem[i].no);
+        if( (i%8)==7 ){MB_DATA_TPrintf("\n");}
+      }
+
+      MB_DATA_TPrintf("\nNutsItem\n");
+      for(i=0;i<PT_BAG_NUTS_ITEM_MAX;i++)
+      {
+        MB_DATA_TPrintf("[%3d:%3d]",myItem->MyNutsItem[i].id,myItem->MyNutsItem[i].no);
+        if( (i%8)==7 ){MB_DATA_TPrintf("\n");}
+      }
+
+      MB_DATA_TPrintf("\nBallItem\n");
+      for(i=0;i<PT_BAG_BALL_ITEM_MAX;i++)
+      {
+        MB_DATA_TPrintf("[%3d:%3d]",myItem->MyBallItem[i].id,myItem->MyBallItem[i].no);
+        if( (i%8)==7 ){MB_DATA_TPrintf("\n");}
+      }
+
+      MB_DATA_TPrintf("\nBattleItem\n");
+      for(i=0;i<PT_BAG_BATTLE_ITEM_MAX;i++)
+      {
+        MB_DATA_TPrintf("[%3d:%3d]",myItem->MyBattleItem[i].id,myItem->MyBattleItem[i].no);
+        if( (i%8)==7 ){MB_DATA_TPrintf("\n");}
       }
     }
 #endif
@@ -600,4 +676,112 @@ void  MB_DATA_PT_ClearBoxPPP( MB_DATA_WORK *dataWork , const u8 tray , const u8 
   GF_ASSERT( dataWork->pBoxData != NULL );
   
   PPP_Clear( (POKEMON_PASO_PARAM*)&boxData->ppp[tray][idx] );
+}
+
+
+
+void  MB_DATA_PT_AddItem( MB_DATA_WORK *dataWork , u16 itemNo )
+{
+  PT_MYITEM *myItem = (PT_MYITEM*)dataWork->pItemData;
+  GF_ASSERT( dataWork->pItemData != NULL );
+  
+  switch( gsItemPocketArr[itemNo] )
+  {
+  case MB_ITEM_POCKET_NONE:
+    GF_ASSERT_MSG(0,"ItemTypeInvalid!\n");
+    break;
+  case MB_ITEM_POCKET_NORMAL:
+    MB_DATA_PT_AddItemFunc( dataWork , itemNo , myItem->MyNormalItem , PT_BAG_NORMAL_ITEM_MAX );
+    break;
+  case MB_ITEM_POCKET_EVENT:
+    MB_DATA_PT_AddItemFunc( dataWork , itemNo , myItem->MyEventItem , PT_BAG_EVENT_ITEM_MAX );
+    break;
+  case MB_ITEM_POCKET_WAZA:
+    {
+      const BOOL ret = MB_DATA_PT_AddItemFunc( dataWork , itemNo , myItem->MySkillItem , PT_BAG_WAZA_ITEM_MAX );
+      if( ret == TRUE )
+      {
+        MB_DATA_PT_SortItem( dataWork , myItem->MySkillItem , PT_BAG_WAZA_ITEM_MAX );
+      }
+    }
+    break;
+  case MB_ITEM_POCKET_SEAL:
+    MB_DATA_PT_AddItemFunc( dataWork , itemNo , myItem->MySealItem , PT_BAG_SEAL_ITEM_MAX );
+    break;
+  case MB_ITEM_POCKET_DRUG:
+    MB_DATA_PT_AddItemFunc( dataWork , itemNo , myItem->MyDrugItem , PT_BAG_DRUG_ITEM_MAX );
+    break;
+  case MB_ITEM_POCKET_NUTS:
+    {
+      const BOOL ret = MB_DATA_PT_AddItemFunc( dataWork , itemNo , myItem->MyNutsItem , PT_BAG_NUTS_ITEM_MAX );
+      if( ret == TRUE )
+      {
+        MB_DATA_PT_SortItem( dataWork , myItem->MyNutsItem , PT_BAG_NUTS_ITEM_MAX );
+      }
+    }
+    break;
+  case MB_ITEM_POCKET_BALL:
+    MB_DATA_PT_AddItemFunc( dataWork , itemNo , myItem->MyBallItem , PT_BAG_BALL_ITEM_MAX );
+    break;
+  case MB_ITEM_POCKET_BATTLE:
+    MB_DATA_PT_AddItemFunc( dataWork , itemNo , myItem->MyBattleItem , PT_BAG_BATTLE_ITEM_MAX );
+    break;
+  }
+  
+  
+}
+
+static const BOOL MB_DATA_PT_AddItemFunc( MB_DATA_WORK *dataWork , u16 itemNo , PT_MINEITEM *mineItem , const u16 arrMax )
+{
+  u16 i;
+  u16 emptyIdx = 0xFFFF;
+  MB_DATA_TPrintf("AddItem[%3d(%d)] ",itemNo,gsItemPocketArr[itemNo]);
+  for( i=0;i<arrMax;i++ )
+  {
+    if( mineItem[i].id == itemNo )
+    {
+      MB_DATA_TPrintf("Add[%3d:%3d]->",i,mineItem[i].no);
+      if( mineItem[i].no < 999 )
+      {
+        mineItem[i].no++;
+      }
+      MB_DATA_TPrintf("[%3d:%3d]\n",i,mineItem[i].no);
+      return FALSE;
+    }
+    else
+    if( mineItem[i].id == 0 &&
+        emptyIdx == 0xFFFF )
+    {
+      emptyIdx = i;
+    }
+  }
+  if( emptyIdx != 0xFFFF )
+  {
+    mineItem[emptyIdx].id = itemNo;
+    mineItem[emptyIdx].no = 1;
+    MB_DATA_TPrintf("New[%3d:%3d]\n",emptyIdx,mineItem[emptyIdx].no);
+    return TRUE;
+  }
+  return FALSE;
+}
+
+static void MB_DATA_PT_SortItem( MB_DATA_WORK *dataWork , PT_MINEITEM *mineItem , const u16 arrMax )
+{
+  u32 i, j;
+
+  for( i=0; i<arrMax-1; i++ )
+  {
+    for( j=i+1; j<arrMax; j++ )
+    {
+      if( mineItem[i].no == 0 || ( mineItem[j].no != 0 && mineItem[i].id > mineItem[j].id ) )
+      {
+        const u16 tempId = mineItem[i].id;
+        const u16 tempNo = mineItem[i].no;
+        mineItem[i].id = mineItem[j].id;
+        mineItem[i].no = mineItem[j].no;
+        mineItem[j].id = tempId;
+        mineItem[j].no = tempNo;
+      }
+    }
+  }
 }

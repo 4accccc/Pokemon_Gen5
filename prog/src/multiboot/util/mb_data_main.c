@@ -59,6 +59,7 @@ MB_DATA_WORK* MB_DATA_InitSystem( int heapID )
   dataWork->mainSeq = 0;
   dataWork->subSeq   = 0;
   dataWork->pBoxData = NULL;
+  dataWork->pItemData = NULL;
   dataWork->errorState = DES_NONE;
   dataWork->cardType = CARD_TYPE_INVALID;
   dataWork->isFinishSaveFirst = FALSE;
@@ -225,6 +226,25 @@ void MB_DATA_ClearBoxPPP( MB_DATA_WORK *dataWork , const u8 tray , const u8 idx 
 
   case CARD_TYPE_GS:
     MB_DATA_GS_ClearBoxPPP( dataWork , tray , idx );
+    break;
+  }
+}
+
+//ƒAƒCƒeƒ€‚Ì’Ç‰Á
+void MB_DATA_AddItem( MB_DATA_WORK *dataWork , const u16 itemNo )
+{
+  switch( dataWork->cardType )
+  {
+  case CARD_TYPE_DP:
+    MB_DATA_PT_AddItem( dataWork , itemNo );
+    break;
+
+  case CARD_TYPE_PT:
+    MB_DATA_PT_AddItem( dataWork , itemNo );
+    break;
+
+  case CARD_TYPE_GS:
+    MB_DATA_GS_AddItem( dataWork , itemNo );
     break;
   }
 }

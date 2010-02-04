@@ -128,3 +128,34 @@ struct pt_box_data
   u8          daisukiBitFlag;
 };
 
+
+//---------------------------------------------------------------------------
+//  アイテム関係
+//---------------------------------------------------------------------------
+typedef struct
+{
+  u16 id;   // アイテム番号
+  u16 no;   // 個数
+}PT_MINEITEM;
+
+#define PT_BAG_NORMAL_ITEM_MAX    ( 165 )   // 道具ポケット最大数
+#define PT_BAG_EVENT_ITEM_MAX     ( 50 )    // 大切な物ポケット最大数
+#define PT_BAG_WAZA_ITEM_MAX      ( 100 )   // 技マシンポケット最大数
+#define PT_BAG_SEAL_ITEM_MAX      ( 12 )    // シールポケット最大数
+#define PT_BAG_DRUG_ITEM_MAX      ( 40 )    // 薬ポケット最大数
+#define PT_BAG_NUTS_ITEM_MAX      ( 64 )    // 木の実ポケット最大数
+#define PT_BAG_BALL_ITEM_MAX      ( 15 )    // モンスターボールポケット最大数
+#define PT_BAG_BATTLE_ITEM_MAX    ( 30 )    // 戦闘用アイテムポケット最大数
+
+typedef struct {
+  PT_MINEITEM MyNormalItem[ PT_BAG_NORMAL_ITEM_MAX ]; // 手持ちの普通の道具
+  PT_MINEITEM MyEventItem[ PT_BAG_EVENT_ITEM_MAX ];   // 手持ちの大切な道具
+  PT_MINEITEM MySkillItem[ PT_BAG_WAZA_ITEM_MAX ];    // 手持ちの技マシン
+  PT_MINEITEM MySealItem[ PT_BAG_SEAL_ITEM_MAX ];   // 手持ちのシール(実際はメール
+  PT_MINEITEM MyDrugItem[ PT_BAG_DRUG_ITEM_MAX ];   // 手持ちの薬
+  PT_MINEITEM MyNutsItem[ PT_BAG_NUTS_ITEM_MAX ];   // 手持ちの木の実
+  PT_MINEITEM MyBallItem[ PT_BAG_BALL_ITEM_MAX ];   // 手持ちのモンスターボール
+  PT_MINEITEM MyBattleItem[ PT_BAG_BATTLE_ITEM_MAX ]; // 手持ちの戦闘用アイテム
+  u32	cnv_button;     // 便利ボタン
+}PT_MYITEM;
+

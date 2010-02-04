@@ -73,5 +73,6 @@ struct _MB_DATA_WORK
   u8  *pData;  //読み出したデータ
   u8  *pDataMirror;  //ミラー用データ
   u8  *pBoxData;    //読み込み対象のBOXデータアドレス(まだポケモンデータじゃない！
+  u8  *pItemData;   //読み込み対象のアイテムデータアドレス(まだアイテムデータじゃない！
 };
 

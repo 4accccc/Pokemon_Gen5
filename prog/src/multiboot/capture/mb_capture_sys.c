@@ -271,11 +271,21 @@ static void MB_CAPTURE_Term( MB_CAPTURE_WORK *work )
   GFL_NET_WirelessIconEasyEnd();
   PMSND_StopBGM();
 
-  MB_TPrintf("Debug AllCapture!!!\n");
+  MB_TPrintf( "CaptureCheck:" );
   for( i=0;i<MB_CAP_POKE_NUM;i++ )
   {
-    work->initWork->isCapture[i] = TRUE;
+    if( MB_CAP_POKE_GetState( work->pokeWork[i] ) == MCPS_CAPTURE )
+    {
+      work->initWork->isCapture[i] = TRUE;
+      MB_TPrintf( "[o]" );
+    }
+    else
+    {
+      work->initWork->isCapture[i] = FALSE;
+      MB_TPrintf( "[x]" );
+    }
   }
+  MB_TPrintf( "\n" );
 
   for( i=0;i<MB_CAP_BALL_NUM;i++ )
   {
@@ -745,7 +755,6 @@ static void MB_CAPTURE_LoadResource( MB_CAPTURE_WORK *work )
     {
       GFL_G3D_RES* res = GFL_G3D_CreateResourceHandle( work->initWork->arcHandle , resListArr[i] );
       GFL_G3D_TransVramTexture( res );
-      NNS_GfdDumpLnkTexVramManager();
       if( i < MCBR_DEMO_READY )
       {
         work->bbdRes[i] = GFL_BBD_AddResource( work->bbdSys , 
