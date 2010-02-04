@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-04T18:05:35"/>
+	<create user="matsumiya" host="W00224" date="2010-02-04T21:33:59"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1310" top="141" right="2015" bottom="769" maximized="no" rayout="Vertical2">
+	<dialog left="1289" top="153" right="1994" bottom="781" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -654,7 +654,7 @@
 どんな　夢を　みるのかしらね？</language>
 	</row>
 
-	<row id="msg_c01r0102_girl3_01">
+	<row id="msg_c01r0102_girl3_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・会話後、パソコンメニューの
 　「だれかのパソコン」が
@@ -673,7 +673,7 @@
 管理しています　ショウロです</language>
 	</row>
 
-	<row id="msg_c01r0102_girl3_02">
+	<row id="msg_c01r0102_girl3_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・msg_c01r0102_girl3_01表示後から
 　PDWのチュートリアル終了まで</comment>
@@ -689,20 +689,22 @@
 つくりあげた　もの　なんです</language>
 	</row>
 
-	<row id="msg_c01r0102_girl3_03">
+	<row id="msg_c01r0102_girl3_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
-・msg_c01r0102_inventor_07表示後
+・inventor_08表示後
 　＝ＰＤＷのチュートリアル後
-（イベント追加の可能性あり）</comment>
+・イベント追加の可能性あり</comment>
 		<attribute name="キャラ指定">ＧＩＲＬ3
 パソコン管理者</attribute>
-		<language name="JPN" width="256">ポケモンドリームワールドに行くなら
-そのパソコンを　つかって　いいですよ</language>
-		<language name="JPN_KANJI" width="256">ポケモンドリームワールドに行くなら
-その　パソコンを使って　いいですよ</language>
+		<language name="JPN" width="256">ねかせたい　ポケモンを
+ボックスに　てんそう　するなら▽
+そこのパソコンを　つかってくださいな</language>
+		<language name="JPN_KANJI" width="256">寝かせたい　ポケモンを
+ボックスに　転送するなら▽
+そこの　パソコンを　使ってくださいな</language>
 	</row>
 
-	<row id="msg_c01r0101_books_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c01r0101_books_01" text-color="#000000,,,#000000,,#000000,#ff0000,,,,,,#ff0000,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>本棚その１
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">本棚その１</attribute>
@@ -710,7 +712,7 @@
 		<language name="JPN_KANJI" width="256">Ｃギアの　マニュアル</language>
 	</row>
 
-	<row id="msg_c01r0101_books2_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#8080ff,,,#8080ff,,,,,,,,,,,,,,,">
+	<row id="msg_c01r0101_books2_01" text-color="#000000,,,#000000,,#000000,#ff0000,,,,,,#ff0000,,,,,," back-color="#8080ff,,,#8080ff,,,,,,,,,,,,,,,">
 		<comment>本棚その２
 ・ともだちてちょうのマニュアル
 ・はい/いいえの選択肢
@@ -723,7 +725,7 @@
 ……続きを　読みますか？</language>
 	</row>
 
-	<row id="msg_c01r0101_books2_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#8080ff,,,#8080ff,,,,,,,,,,,,,,,">
+	<row id="msg_c01r0101_books2_02" text-color="#000000,,,#000000,,#000000,#ff0000,,,,,,#ff0000,,,,,," back-color="#8080ff,,,#8080ff,,,,,,,,,,,,,,,">
 		<comment>本棚その２</comment>
 		<attribute name="キャラ指定">本棚その２</attribute>
 		<language name="JPN" width="256">ともだちてちょうに
