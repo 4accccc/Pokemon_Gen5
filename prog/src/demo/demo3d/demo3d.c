@@ -148,12 +148,6 @@ typedef struct
 	APP_TASKMENU_WORK					*menu;
 #endif //DEMO3D_TASKMENU
 
-#ifdef	DEMO3D_PRINT_TOOL
-	//プリントユーティリティ
-	PRINT_UTIL								print_util;
-	u32												seq;
-#endif	//DEMO3D_PRINT_TOOL
-
   DEMO3D_ENGINE_WORK*   engine;
 
 } DEMO3D_MAIN_WORK;
@@ -810,96 +804,3 @@ static void Demo3D_TASKMENU_Main( APP_TASKMENU_WORK *menu )
 }
 #endif //DEMO3D_TASKMENU
 
-#ifdef	DEMO3D_PRINT_TOOL
-//=============================================================================
-/**
- *	PRINT_TOOL
- */
-//=============================================================================
-/*
-		・「HP ??/??」を表示するサンプルです
-		・BMPWINのサイズは 20 x 2 です
-		・現在のHP = 618, 最大HP = 999 とします
-		・サンプルメインが FALSE を返すと終了です
-*/
-
-// サンプルメイン
-static BOOL PrintTool_MainFunc( DEMO3D_MAIN_WORK * wk )
-{
-	switch( wk->seq ){
-	case 0:
-		PrintTool_AddBmpWin( wk );			// BMPWIN作成
-		PrintTool_PrintHP( wk );				// ＨＰ表示
-		PrintTool_ScreenTrans( wk );		// スクリーン転送
-		wk->seq = 1;
-		break;
-
-	case 1:
-		// プリント終了待ち
-		if( PRINTSYS_QUE_IsFinished( wk->que ) == TRUE ){
-			wk->seq = 2;
-		}
-		break;
-
-	case 2:
-		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL ){
-			PrintTool_DelBmpWin( wk );		// BMPWIN削除
-			return FALSE;
-		}
-	}
-
-	PRINT_UTIL_Trans( &wk->print_util, wk->que );
-	return TRUE;
-}
-
-// BMPWIN作成
-static void PrintTool_AddBmpWin( DEMO3D_MAIN_WORK * wk )
-{
-	wk->print_util.win = GFL_BMPWIN_Create(
-													GFL_BG_FRAME0_M,					// ＢＧフレーム
-													1, 1,											// 表示座標
-													20, 2,										// 表示サイズ
-													15,												// パレット
-													GFL_BMP_CHRAREA_GET_B );	// キャラ取得方向
-}
-
-// BMPWIN削除
-static void PrintTool_DelBmpWin( DEMO3D_MAIN_WORK * wk )
-{
-		GFL_BMPWIN_Delete( wk->print_util.win );
-}
-
-// BMPWINスクリーン転送
-static void PrintTool_ScreenTrans( DEMO3D_MAIN_WORK * wk )
-{
-	GFL_BMPWIN_MakeScreen( wk->print_util.win );
-	GFL_BG_LoadScreenReq( GFL_BMPWIN_GetFrame(wk->print_util.win) );
-}
-
-// ＨＰ表示
-static void PrintTool_PrintHP( DEMO3D_MAIN_WORK * wk )
-{
-	STRBUF * strbuf;
-
-	// BMPWIN内の座標(32,0)を基準に右詰めで「ＨＰ」と表示
-	PRINTTOOL_Print(
-				&wk->print_util,				// プリントユーティル ( BMPWIN )
-				wk->que,								// プリントキュー
-				32, 0,									// 表示基準座標
-				strbuf,									// 文字列（すでに「ＨＰ」が展開されているものとする）
-				wk->font,								// フォント
-				PRINTTOOL_MODE_RIGHT );	// 右詰
-
-	// BMPWIN内の座標(100,0)を「／」の中心にしてＨＰを表示 ( hp / mhp )
-	PRINTTOOL_PrintFraction(
-				&wk->print_util,				// プリントユーティル ( BMPWIN )
-				wk->que,								// プリントキュー
-				wk->font,								// フォント
-				100, 0,									// 表示基準座標
-				618,										// hp
-				999,										// mhp
-				wk->heapID );						// ヒープＩＤ
-}
-#endif	//DEMO3D_PRINT_TOOL
-
-    
