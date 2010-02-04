@@ -196,7 +196,7 @@ typedef enum
 
 
 #define MYSTERY_MENU_ALPHA_EV1  (15)
-#define MYSTERY_MENU_ALPHA_EV2  (1)
+#define MYSTERY_MENU_ALPHA_EV2  (3)
 
 //=============================================================================
 /**

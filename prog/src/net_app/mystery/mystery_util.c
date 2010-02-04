@@ -105,7 +105,7 @@ MYSTERY_MSGWIN_WORK * MYSTERY_MSGWIN_Init( u16 frm, u8 x, u8 y, u8 w, u8 h, u8 p
 //-----------------------------------------------------------------------------
 void MYSTERY_MSGWIN_Exit( MYSTERY_MSGWIN_WORK* p_wk )
 { 
-  //MYSTERY_MSGWIN_Clear( p_wk );
+  MYSTERY_MSGWIN_Clear( p_wk );
 
   //BMPWIN”jŠü
 	GFL_BMPWIN_Delete( p_wk->p_bmpwin );
