@@ -753,4 +753,5 @@ extern void POKEMONTRADE_StartCatched(POKEMON_TRADE_WORK* pWork,int line, int po
 extern void POKEMONTRADE_StartSucked(POKEMON_TRADE_WORK* pWork);
 extern BOOL POKEMONTRADE_SuckedMain(POKEMON_TRADE_WORK* pWork);
 extern void POKEMONTRADE_RemovePokemonCursor(POKEMON_TRADE_WORK* pWork);
+extern void POKEMONTRADE_2D_AlphaSet(POKEMON_TRADE_WORK* pWork);
 

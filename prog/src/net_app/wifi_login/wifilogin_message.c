@@ -301,7 +301,7 @@ APP_TASKMENU_WORK* WIFILOGIN_MESSAGE_YesNoStart(WIFILOGIN_MESSAGE_WORK* pWork,in
   switch(type){
   case WIFILOGIN_YESNOTYPE_INFO:
     appinit.charPosX = 32;
-    appinit.charPosY = 14;
+    appinit.charPosY = 13;
     appinit.posType = ATPT_RIGHT_DOWN;
     break;
   case WIFILOGIN_YESNOTYPE_SYS:
@@ -446,7 +446,7 @@ void WIFILOGIN_MESSAGE_SystemMessageDisp(WIFILOGIN_MESSAGE_WORK* pWork,int msgid
   
   if(pWork->systemDispWin==NULL){
     pWork->systemDispWin = GFL_BMPWIN_Create(
-      GFL_BG_FRAME2_S , 1 , 1, 30 , 16 ,  _BUTTON_MSG_PAL , GFL_BMP_CHRAREA_GET_B );
+      GFL_BG_FRAME2_S , 1 , 2, 30 , 16 ,  _BUTTON_MSG_PAL , GFL_BMP_CHRAREA_GET_B );
   }
   pwin = pWork->systemDispWin;
 
@@ -490,3 +490,29 @@ void WIFILOGIN_MESSAGE_ErrorMessageDisp(WIFILOGIN_MESSAGE_WORK* pWork,int msgid,
                          5, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT);
   WIFILOGIN_MESSAGE_SystemMessageDisp(pWork, msgid);
 }
+
+
+
+//------------------------------------------------------------------
+/**
+ * $brief   yesnoウインドウを出す
+ * @param   msg_index
+ * @retval  int       int friend = GFL_NET_DWC_GetFriendIndex();
+
+ */
+//------------------------------------------------------------------
+#if 0
+static const BMPWIN_YESNO_DAT _yesNoBmpDat = {
+  GFL_BG_FRAME2_M, FLD_YESNO_WIN_PX, FLD_YESNO_WIN_PY,
+  FLD_YESNO_WIN_PAL, FLD_YESNO_WIN_CGX
+  };
+
+
+static void WIFILOGIN_MESSAGE_YesNoWinCreate(WIFILOGIN_MESSAGE_WORK* pWork)
+{
+  pWork->pYesNoWork =
+    BmpMenu_YesNoSelectInit( &_yesNoBmpDat, GFL_ARCUTIL_TRANSINFO_GetPos(wk->menuwin_m2),
+                             MENU_WIN_PAL, 0, pWork->heapID );
+}
+
+#endif

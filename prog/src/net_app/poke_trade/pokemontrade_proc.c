@@ -212,13 +212,13 @@ static void _vectorUpMath(POKEMON_TRADE_WORK *pWork)
         else{
 //          pWork->bUpVec = FALSE;
         }
-        if(GFL_STD_Abs(pWork->aCatchOldPos.x - pWork->aDifferencePos.x - x) > 1){
+        if(GFL_STD_Abs(pWork->aCatchOldPos.x - pWork->aDifferencePos.x - x) > 2){
           NET_PRINT("POSNOX %d %d %d\n",pWork->aCatchOldPos.x , pWork->aDifferencePos.x , x);
           
           pWork->bUpVec = TRUE;
           //pWork->aPanWork.bAreaOver = TRUE;
         }
-        if(GFL_STD_Abs(pWork->aCatchOldPos.y - pWork->aDifferencePos.y - y) > 1){
+        if(GFL_STD_Abs(pWork->aCatchOldPos.y - pWork->aDifferencePos.y - y) > 2){
           NET_PRINT("POSNOY %d %d %d \n",pWork->aCatchOldPos.y , pWork->aDifferencePos.y , y);
           pWork->bUpVec = TRUE;
           //pWork->aPanWork.bAreaOver = TRUE;
@@ -1944,7 +1944,7 @@ static void _touchState(POKEMON_TRADE_WORK* pWork)
   GFL_CLACT_WK_SetDrawEnable( pWork->curIcon[CELL_CUR_SCROLLBAR], TRUE );
 
   IRC_POKETRADE_SendVramBoxNameChar(pWork); // ボックス名初期化
-  G2S_BlendNone();
+  POKEMONTRADE_2D_AlphaSet(pWork); //G2S_BlendNone();
 
   pWork->oldLine++;
   pWork->bgscrollRenew = TRUE;
@@ -1994,7 +1994,7 @@ static void _touchStateGTS(POKEMON_TRADE_WORK* pWork)
   GFL_CLACT_WK_SetDrawEnable( pWork->curIcon[CELL_CUR_SCROLLBAR], TRUE );
 
   IRC_POKETRADE_SendVramBoxNameChar(pWork); // ボックス名初期化
-  G2S_BlendNone();
+  POKEMONTRADE_2D_AlphaSet(pWork); //G2S_BlendNone();
 
   pWork->oldLine++;
   pWork->bgscrollRenew = TRUE;
@@ -2214,7 +2214,7 @@ static void _gtsFirstMsgState(POKEMON_TRADE_WORK* pWork)
   if(GFL_UI_KEY_GetTrg() || GFL_UI_TP_GetTrg()){
 
     POKETRADE_MESSAGE_WindowClear(pWork);
-    G2S_BlendNone();
+    POKEMONTRADE_2D_AlphaSet(pWork); //G2S_BlendNone();
 
     _CHANGE_STATE(pWork,_touchState);
 

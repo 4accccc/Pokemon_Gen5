@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohno" host="W00141" date="2009-11-18T17:29:55"/>
+	<create user="ohno" host="W00141" date="2010-02-04T13:47:07"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -339,8 +339,8 @@
 	</row>
 
 	<row id="GTSNEGO_006">
-		<language name="JPN" width="256">しりあい　こうかん</language>
-		<language name="JPN_KANJI" width="256">しりあい　こうかん</language>
+		<language name="JPN" width="256">まちあわせ　こうかん</language>
+		<language name="JPN_KANJI" width="256">まちあわせ　こうかん</language>
 	</row>
 
 	<row id="GTSNEGO_007">

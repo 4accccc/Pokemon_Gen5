@@ -32,9 +32,9 @@ typedef enum
 
 //Å®ç¿ïW
 #define _ARROW_LEVEL_XU  (12)
-#define _ARROW_LEVEL_YU  (5)
+#define _ARROW_LEVEL_YU  (7)
 #define _ARROW_LEVEL_XD  (30)
-#define _ARROW_LEVEL_YD  (5)
+#define _ARROW_LEVEL_YD  (7)
 
 #define _ARROW_MY_XU  (15)
 #define _ARROW_MY_YU  (12)
@@ -70,6 +70,7 @@ extern void GTSNEGO_MESSAGE_DispClear(GTSNEGO_MESSAGE_WORK* pWork);
 extern void GTSNEGO_MESSAGE_DispLevelChange(GTSNEGO_MESSAGE_WORK* pWork,int no);
 extern void GTSNEGO_MESSAGE_DispMyChange(GTSNEGO_MESSAGE_WORK* pWork,int no);
 extern void GTSNEGO_MESSAGE_DispFriendChange(GTSNEGO_MESSAGE_WORK* pWork,int no);
+extern void GTSNEGO_MESSAGE_DeleteDispLevel(GTSNEGO_MESSAGE_WORK* pWork);
 
 extern APP_TASKMENU_WORK* GTSNEGO_MESSAGE_SearchButtonStart(GTSNEGO_MESSAGE_WORK* pWork);
 
@@ -79,5 +80,6 @@ extern void GTSNEGO_DISP_Main(GTSNEGO_DISP_WORK* pWork);
 extern void GTSNEGO_DISP_End(GTSNEGO_DISP_WORK* pWork);
 extern void GTSNEGO_DISP_SettingSubBgControl(GTSNEGO_DISP_WORK* pWork);
 extern void GTSNEGO_DISP_LevelInputInit(GTSNEGO_DISP_WORK* pWork);
+extern void GTSNEGO_DISP_LevelInputFree(GTSNEGO_DISP_WORK* pWork);
 extern TOUCHBAR_WORK* GTSNEGO_DISP_GetTouchWork(GTSNEGO_DISP_WORK* pWork);
 

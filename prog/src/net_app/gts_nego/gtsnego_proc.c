@@ -62,7 +62,7 @@
 //--------------------------------------------
 
 //BG–Ê‚ÆƒpƒŒƒbƒg”Ô†(‰¼Ý’è
-#define _SUBSCREEN_BGPLANE	(GFL_BG_FRAME3_S)
+
 #define _SUBSCREEN_PALLET	(0xE)
 
 #define STOP_TIME_ (60)
@@ -729,7 +729,10 @@ static void _levelSelectWait( GTSNEGO_WORK *pWork )
     TOUCHBAR_Main(GTSNEGO_DISP_GetTouchWork(pWork->pDispWork));
     switch( TOUCHBAR_GetTrg(GTSNEGO_DISP_GetTouchWork(pWork->pDispWork))){
     case TOUCHBAR_ICON_RETURN:
-      _CHANGE_STATE(pWork,NULL);
+      GTSNEGO_MESSAGE_DeleteDispLevel(pWork->pMessageWork);
+      GTSNEGO_DISP_LevelInputFree(pWork->pDispWork);
+      APP_TASKMENU_CloseMenu(pWork->pAppTask);
+      _CHANGE_STATE(pWork,_modeSelectMenuInit);
       break;
     default:
       break;

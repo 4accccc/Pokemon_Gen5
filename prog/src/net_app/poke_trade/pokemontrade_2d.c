@@ -357,7 +357,7 @@ void IRC_POKETRADE_SubStatusEnd(POKEMON_TRADE_WORK* pWork)
   GFL_BG_SetVisible( frame , FALSE );
 
 	GFL_BG_SetScroll( frame, GFL_BG_SCROLL_X_SET, 0 );
-  G2S_BlendNone();
+  POKEMONTRADE_2D_AlphaSet(pWork); //G2S_BlendNone();
   GFL_BG_ClearScreen(frame);  //自分ステータス
   GFL_BG_LoadScreenV_Req( frame );
   GFL_CLACT_WK_SetDrawEnable( pWork->curIcon[CELL_CUR_SCROLLBAR], TRUE );
@@ -871,7 +871,19 @@ void POKMEONTRADE2D_IconGray(POKEMON_TRADE_WORK* pWork, GFL_CLWK* pCL ,BOOL bGra
 {
   NNSG2dImagePaletteProxy proxy;
   u32 res;
+  GXOamMode mode;
 
+  if(bGray){
+    mode=GX_OAM_MODE_XLU;
+  }
+  else{
+    mode=GX_OAM_MODE_NORMAL;
+  }
+  
+  GFL_CLACT_WK_SetObjMode(pCL,mode);
+
+  
+#if 0
   if(bGray){
     res = pWork->cellRes[PLT_POKEICON_GRAY];
   }
@@ -883,7 +895,7 @@ void POKMEONTRADE2D_IconGray(POKEMON_TRADE_WORK* pWork, GFL_CLWK* pCL ,BOOL bGra
 
   GFL_CLACT_WK_SetAutoAnmFlag( pCL , FALSE );
   GFL_CLACT_WK_SetDrawEnable( pCL, TRUE );
-
+#endif
   
 }
 
@@ -2544,11 +2556,11 @@ void POKEMONTRADE_StartSucked(POKEMON_TRADE_WORK* pWork)
     mullpos[0].x = pos.x*FX32_ONE;
     mullpos[0].y = pos.y*FX32_ONE;
     mullpos[0].z = 0;
-    mullpos[1].x = (pos.x-(pWork->aVecPos.x-pos.x)*5)*FX32_ONE;
-    mullpos[1].y = (pos.y-(pWork->aVecPos.y-pos.y)*5)*FX32_ONE;
+    mullpos[1].x = (pos.x-(pWork->aVecPos.x-pos.x)*1)*FX32_ONE;
+    mullpos[1].y = (pos.y-(pWork->aVecPos.y-pos.y)*1)*FX32_ONE;
     mullpos[1].z = 0;
-    mullpos[2].x = (pos.x-(pWork->aVecPos.x-pos.x)*10)*FX32_ONE;
-    mullpos[2].y = (pos.y-(pWork->aVecPos.y-pos.y)*10)*FX32_ONE;
+    mullpos[2].x = (pos.x-(pWork->aVecPos.x-pos.x)*2)*FX32_ONE;
+    mullpos[2].y = (pos.y-(pWork->aVecPos.y-pos.y)*2)*FX32_ONE;
     mullpos[2].z = 0;
     mullpos[3].x = 28*FX32_ONE;
     mullpos[3].y = 0*FX32_ONE;
@@ -2625,11 +2637,9 @@ void POKEMONTRADE_RemovePokemonCursor(POKEMON_TRADE_WORK* pWork)
 
 
 
-#if 0
-void G2_SetBlendAlpha(
-    int plane1 /* GXBlendPlaneMask */,
-    int plane2 /* GXBlendPlaneMask */,
-    int ev1,
-    int ev2
-);
-#endif
+void POKEMONTRADE_2D_AlphaSet(POKEMON_TRADE_WORK* pWork)
+{
+  G2S_SetBlendAlpha(GX_BLEND_PLANEMASK_NONE,
+                   GX_BLEND_PLANEMASK_BG0|GX_BLEND_PLANEMASK_BG1|GX_BLEND_PLANEMASK_BG2|GX_BLEND_PLANEMASK_BG3,
+                   8,8);
+}

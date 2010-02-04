@@ -225,7 +225,7 @@ void GTSNEGO_MESSAGE_InfoMessageDisp(GTSNEGO_MESSAGE_WORK* pWork,int msgid)
   if(pWork->infoDispWin==NULL){
     pWork->infoDispWin = GFL_BMPWIN_Create(
       GFL_BG_FRAME1_M ,
-      1 , 3, 30 ,4 ,
+      1 , 1, 30 ,4 ,
       _BUTTON_MSG_PAL , GFL_BMP_CHRAREA_GET_B );
   }
   pwin = pWork->infoDispWin;
@@ -240,7 +240,7 @@ void GTSNEGO_MESSAGE_InfoMessageDisp(GTSNEGO_MESSAGE_WORK* pWork,int msgid)
 
   GFL_BMPWIN_TransVramCharacter(pwin);
   GFL_BMPWIN_MakeScreen(pwin);
-  GFL_BG_LoadScreenV_Req(GFL_BG_FRAME1_S);
+  GFL_BG_LoadScreenV_Req(GFL_BG_FRAME1_M);
 }
 
 
@@ -503,12 +503,12 @@ void GTSNEGO_MESSAGE_DispClear(GTSNEGO_MESSAGE_WORK* pWork)
 
 
 #define _BUTTON_ANYONE_X (9)
-#define _BUTTON_ANYONE_Y (6)
+#define _BUTTON_ANYONE_Y (7)
 
 #define _BUTTON_FRIEND_X (9)
-#define _BUTTON_FRIEND_Y (12)
+#define _BUTTON_FRIEND_Y (13)
 
-#define _BUTTON_TYPE_WIDTH (10*8)
+#define _BUTTON_TYPE_WIDTH (13*8)
 #define _BUTTON_TYPE_HEIGHT (3*8)
 
 static const GFL_UI_TP_HITTBL _AnyoneOrFriendBtnTbl[] = {
@@ -547,20 +547,20 @@ void GTSNEGO_MESSAGE_DispAnyoneOrFriend(GTSNEGO_MESSAGE_WORK* pWork,pBmnCallBack
 
 
 static const GFL_UI_TP_HITTBL _levelselectBtnTbl[] = {
-  {	_ARROW_LEVEL_YU*8,   _ARROW_LEVEL_YU*8 + 16 ,
-    _ARROW_LEVEL_XU*8 ,  _ARROW_LEVEL_XU*8 + 16  },
-  {	_ARROW_LEVEL_YD*8,   _ARROW_LEVEL_YD*8 + 16 ,
-    _ARROW_LEVEL_XD*8 ,  _ARROW_LEVEL_XD*8 + 16  },
+  {	_ARROW_LEVEL_YU*8-8,   _ARROW_LEVEL_YU*8 + 8 ,
+    _ARROW_LEVEL_XU*8-8 ,  _ARROW_LEVEL_XU*8 + 8  },
+  {	_ARROW_LEVEL_YD*8-8,   _ARROW_LEVEL_YD*8 + 8 ,
+    _ARROW_LEVEL_XD*8-8 ,  _ARROW_LEVEL_XD*8 + 8  },
 
-  {	_ARROW_MY_YU*8,   _ARROW_MY_YU*8 + 16 ,
-    _ARROW_MY_XU*8 ,  _ARROW_MY_XU*8 + 16  },
-  {	_ARROW_MY_YD*8,   _ARROW_MY_YD*8 + 16 ,
-    _ARROW_MY_XD*8 ,  _ARROW_MY_XD*8 + 16  },
+  {	_ARROW_MY_YU*8-8,   _ARROW_MY_YU*8 + 8 ,
+    _ARROW_MY_XU*8-8 ,  _ARROW_MY_XU*8 + 8  },
+  {	_ARROW_MY_YD*8-8,   _ARROW_MY_YD*8 + 8 ,
+    _ARROW_MY_XD*8-8 ,  _ARROW_MY_XD*8 + 8  },
 
-  {	_ARROW_FRIEND_YU*8,   _ARROW_FRIEND_YU*8 + 16 ,
-    _ARROW_FRIEND_XU*8 ,  _ARROW_FRIEND_XU*8 + 16  },
-  {	_ARROW_FRIEND_YD*8,   _ARROW_FRIEND_YD*8 + 16 ,
-    _ARROW_FRIEND_XD*8 ,  _ARROW_FRIEND_XD*8 + 16  },
+  {	_ARROW_FRIEND_YU*8-8,   _ARROW_FRIEND_YU*8 + 8 ,
+    _ARROW_FRIEND_XU*8-8 ,  _ARROW_FRIEND_XU*8 + 8  },
+  {	_ARROW_FRIEND_YD*8-8,   _ARROW_FRIEND_YD*8 + 8 ,
+    _ARROW_FRIEND_XD*8-8 ,  _ARROW_FRIEND_XD*8 + 8  },
 
   {GFL_UI_TP_HIT_END,0,0,0},		 //終了データ
 };
@@ -583,11 +583,11 @@ void GTSNEGO_MESSAGE_DispLevel(GTSNEGO_MESSAGE_WORK* pWork,pBmnCallBackFunc call
   GTSNEGO_MESSAGE_Disp(pWork, GTSNEGO_007, 0, 0);
 
   GFL_FONTSYS_SetColor(1, 2, 0);
-  GTSNEGO_MESSAGE_Disp(pWork, GTSNEGO_008, 3, 4);
+  GTSNEGO_MESSAGE_Disp(pWork, GTSNEGO_008, 3, 6);
   GTSNEGO_MESSAGE_Disp(pWork, GTSNEGO_028, 1, 11);
   GTSNEGO_MESSAGE_Disp(pWork, GTSNEGO_029, 1, 16);
 
-  pWork->msgidx[_MESSAGE_LEVEL] = GTSNEGO_MESSAGE_Disp(pWork, GTSNEGO_012,  13,  4);
+  pWork->msgidx[_MESSAGE_LEVEL] = GTSNEGO_MESSAGE_Disp(pWork, GTSNEGO_012,  13,  6);
   pWork->msgidx[_MESSAGE_MY] = GTSNEGO_MESSAGE_Disp(pWork, GTSNEGO_017,     16, 11);
   pWork->msgidx[_MESSAGE_FRIEND] = GTSNEGO_MESSAGE_Disp(pWork, GTSNEGO_017, 16, 16);
 
@@ -618,6 +618,14 @@ void GTSNEGO_MESSAGE_DispFriendChange(GTSNEGO_MESSAGE_WORK* pWork,int no)
   
   GTSNEGO_MESSAGE_DispMsgChange(pWork, msg[no],  pWork->msgidx[_MESSAGE_FRIEND]);
 }
+
+
+void GTSNEGO_MESSAGE_DeleteDispLevel(GTSNEGO_MESSAGE_WORK* pWork)
+{
+  _ButtonSafeDelete(pWork);
+}
+
+
 
 
 APP_TASKMENU_WORK* GTSNEGO_MESSAGE_SearchButtonStart(GTSNEGO_MESSAGE_WORK* pWork)

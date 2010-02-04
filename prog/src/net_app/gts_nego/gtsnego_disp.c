@@ -14,8 +14,15 @@
 #include "net_app/gsync.h"
 
 #include "infowin/infowin.h"
+
 #include "system/main.h"
 #include "system/wipe.h"
+#include "system/bmp_menuwork.h"
+#include "system/bmp_winframe.h"
+#include "system/bmp_menulist.h"
+#include "system/bmp_menu.h"
+#include "system/blink_palanm.h"
+
 #include "gamesystem/msgspeed.h" // MSGSPEED_GetWait
 
 #include "message.naix"
@@ -24,19 +31,16 @@
 #include "print/global_font.h"
 #include "font/font.naix"
 #include "print/str_tool.h"
+#include "msg/msg_gtsnego.h"
 
-#include "system/bmp_menuwork.h"
-#include "system/bmp_winframe.h"
-#include "system/bmp_menulist.h"
-#include "system/bmp_menu.h"
 #include "sound/pm_sndsys.h"
 #include "ui/touchbar.h"
 
-#include "../../field/event_ircbattle.h"
 #include "app/app_taskmenu.h"  //APP_TASKMENU_INITWORK
 
+#include "../../field/event_ircbattle.h"
+
 #include "gtsnego_local.h"
-#include "msg/msg_gtsnego.h"
 #include "gtsnego.naix"
 
 FS_EXTERN_OVERLAY(ui_common);
@@ -66,6 +70,7 @@ struct _GTSNEGO_DISP_WORK {
 
   GFL_CLWK* curIcon[_CELL_DISP_NUM];
   HEAPID heapID;
+  BLINKPALANM_WORK* pBlink;
 
 };
 
@@ -80,7 +85,7 @@ static GFL_DISP_VRAM _defVBTbl = {
   GX_VRAM_OBJ_128_B,				// メイン2DエンジンのOBJ
   GX_VRAM_OBJEXTPLTT_NONE,		// メイン2DエンジンのOBJ拡張パレット
 
-  GX_VRAM_SUB_OBJ_16_I,			// サブ2DエンジンのOBJ
+  GX_VRAM_SUB_OBJ_128_D,			// サブ2DエンジンのOBJ
   GX_VRAM_SUB_OBJEXTPLTT_NONE,	// サブ2DエンジンのOBJ拡張パレット
 
   GX_VRAM_TEX_NONE,				// テクスチャイメージスロット
@@ -158,6 +163,9 @@ GTSNEGO_DISP_WORK* GTSNEGO_DISP_Init(HEAPID id)
 void GTSNEGO_DISP_Main(GTSNEGO_DISP_WORK* pWork)
 {
   GFL_CLACT_SYS_Main();
+  if(pWork->pBlink){
+    BLINKPALANM_Main(pWork->pBlink);
+  }
 }
 
 void GTSNEGO_DISP_End(GTSNEGO_DISP_WORK* pWork)
@@ -172,9 +180,10 @@ void GTSNEGO_DISP_End(GTSNEGO_DISP_WORK* pWork)
   GFL_TCB_DeleteTask( pWork->g3dVintr );
   GFL_CLACT_UNIT_Delete(pWork->cellUnit);
   GFL_CLACT_SYS_Delete();
+  BLINKPALANM_Exit(pWork->pBlink);
 
   GFL_BG_FillCharacterRelease( GFL_BG_FRAME1_M, 1, 0);
-//  GFL_BG_FillCharacterRelease( GFL_BG_FRAME1_S, 1, 0);
+  GFL_BG_FillCharacterRelease( GFL_BG_FRAME1_S, 1, 0);
   GFL_BG_FillCharacterRelease( GFL_BG_FRAME2_S, 1, 0);
   GFL_BG_FreeBGControl(GFL_BG_FRAME1_S);
   GFL_BG_FreeBGControl(GFL_BG_FRAME0_S);
@@ -182,6 +191,7 @@ void GTSNEGO_DISP_End(GTSNEGO_DISP_WORK* pWork)
 	GFL_BG_Exit();
   GFL_HEAP_FreeMemory(pWork);
   GFL_OVERLAY_Unload( FS_OVERLAY_ID(ui_common));
+  
 
 }
 
@@ -225,7 +235,7 @@ static void settingSubBgControl(GTSNEGO_DISP_WORK* pWork)
     GFL_BG_BGCNT_HEADER TextBgCntDat = {
       0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
       GX_BG_SCRBASE_0xf800, GX_BG_CHARBASE_0x00000, 0x8000,GX_BG_EXTPLTT_01,
-      3, 0, 0, FALSE
+      2, 0, 0, FALSE
       };
 
     GFL_BG_SetBGControl(
@@ -238,14 +248,14 @@ static void settingSubBgControl(GTSNEGO_DISP_WORK* pWork)
     GFL_BG_BGCNT_HEADER TextBgCntDat = {
       0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
       GX_BG_SCRBASE_0xf000, GX_BG_CHARBASE_0x08000, 0x8000,GX_BG_EXTPLTT_01,
-      2, 0, 0, FALSE
+      1, 0, 0, FALSE
       };
 
     GFL_BG_SetBGControl(
       frame, &TextBgCntDat, GFL_BG_MODE_TEXT );
 
     GFL_BG_SetVisible( frame, VISIBLE_ON );
-//    GFL_BG_FillCharacter( frame, 0x00, 1, 0 );
+    GFL_BG_FillCharacter( frame, 0x00, 1, 0 );
     GFL_BG_FillScreen( frame,	0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
     GFL_BG_LoadScreenReq( frame );
   }
@@ -254,7 +264,7 @@ static void settingSubBgControl(GTSNEGO_DISP_WORK* pWork)
     GFL_BG_BGCNT_HEADER TextBgCntDat = {
       0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
       GX_BG_SCRBASE_0xe000, GX_BG_CHARBASE_0x10000, 0x8000,GX_BG_EXTPLTT_01,
-      2, 0, 0, FALSE
+      0, 0, 0, FALSE
       };
 
     GFL_BG_SetBGControl(
@@ -269,8 +279,8 @@ static void settingSubBgControl(GTSNEGO_DISP_WORK* pWork)
     int frame = GFL_BG_FRAME3_S;
     GFL_BG_BGCNT_HEADER TextBgCntDat = {
       0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0xe800, GX_BG_CHARBASE_0x18000, 0x8000,GX_BG_EXTPLTT_01,
-      0, 0, 0, FALSE
+      GX_BG_SCRBASE_0xe800, GX_BG_CHARBASE_0x00000, 0x8000,GX_BG_EXTPLTT_01,
+      3, 0, 0, FALSE
       };
     GFL_BG_SetBGControl(
       frame, &TextBgCntDat, GFL_BG_MODE_TEXT );
@@ -312,6 +322,12 @@ static void dispInit(GTSNEGO_DISP_WORK* pWork)
                                               GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar), 0, 0,
                                               pWork->heapID);
 
+    // サブ画面BG3スクリーン転送
+    GFL_ARCHDL_UTIL_TransVramScreenCharOfs(   p_handle, NARC_gtsnego_nego_under_bg_base_NSCR,
+                                              GFL_BG_FRAME3_S, 0,
+                                              GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar), 0, 0,
+                                              pWork->heapID);
+
 
     GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_gtsnego_nego_back_NCLR,
                                       PALTYPE_MAIN_BG, 0, 0,  pWork->heapID);
@@ -336,9 +352,16 @@ static void dispInit(GTSNEGO_DISP_WORK* pWork)
       GFL_CLGRP_CELLANIM_Register(
         p_handle , NARC_gtsnego_nego_obj_NCER, NARC_gtsnego_nego_obj_NANR , pWork->heapID  );
 
+
+    pWork->pBlink = BLINKPALANM_Create(0,16,GFL_BG_FRAME0_M,pWork->heapID);
+    BLINKPALANM_SetPalBufferArcHDL(pWork->pBlink,p_handle,NARC_gtsnego_nego_back_NCLR,0,16 );
+    
     
     GFL_ARC_CloseDataHandle(p_handle);
+
+    
 	}
+  G2S_SetBlendAlpha(GX_BLEND_PLANEMASK_BG0,GX_BLEND_PLANEMASK_BG3,15,9);
 
 }
 
@@ -373,6 +396,20 @@ void GTSNEGO_DISP_LevelInputInit(GTSNEGO_DISP_WORK* pWork)
   
 }
 
+void GTSNEGO_DISP_LevelInputFree(GTSNEGO_DISP_WORK* pWork)
+{
+    ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_GTSNEGO, pWork->heapID );
+  _ArrowRelease(pWork);
+  GFL_BG_FillScreen( GFL_BG_FRAME2_S,	0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
+  GFL_BG_LoadScreenV_Req( GFL_BG_FRAME2_S );
+  GFL_ARCHDL_UTIL_TransVramScreenCharOfs(   p_handle, NARC_gtsnego_nego_under_bg1_NSCR,
+                                            GFL_BG_FRAME0_S, 0,
+                                            GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar), 0, 0,
+                                            pWork->heapID);
+
+  GFL_BG_LoadScreenV_Req( GFL_BG_FRAME0_S );
+    GFL_ARC_CloseDataHandle(p_handle);
+}
 
 
 //----------------------------------------------------------------------------
@@ -402,7 +439,7 @@ static void _TOUCHBAR_Init(GTSNEGO_DISP_WORK* pWork)
   touchbar_setup.item_num	= NELEMS(touchbar_icon_tbl);//いくつ窓があるか
   touchbar_setup.p_unit		= pWork->cellUnit;										//OBJ読み込みのためのCLUNIT
   touchbar_setup.is_notload_bg = FALSE;
-  touchbar_setup.bar_frm	= GFL_BG_FRAME1_S;						//BG読み込みのためのBG面上下画面判定にも必要
+  touchbar_setup.bar_frm	= GFL_BG_FRAME3_S;						//BG読み込みのためのBG面上下画面判定にも必要
   touchbar_setup.bg_plt		= _TOUCHBAR_PAL;			//BGﾊﾟﾚｯﾄ
   touchbar_setup.obj_plt	= _TOUCHBAR_PAL;			//OBJﾊﾟﾚｯﾄ
   touchbar_setup.mapping	= APP_COMMON_MAPPING_128K;	//マッピングモード
