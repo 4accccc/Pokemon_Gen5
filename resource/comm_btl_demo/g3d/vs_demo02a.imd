@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="yoshida" host="W00151" date="2010-01-28T17:39:56" source="vs_demo02a.mb"/>
+	<create user="yoshida" host="W00151" date="2010-02-04T14:54:56" source="vs_demo02a.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="yoshida" host="W00151" date="2010-01-28T17:39:56" source="vs_demo02a.mb"/>
+<original_create user="yoshida" host="W00151" date="2010-02-04T14:54:56" source="vs_demo02a.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -21,7 +21,7 @@
 	tool_start_frame="0"
 	tex_matrix_mode="maya"
 	compress_node="merge" node_size="9 9"
-	compress_material="on" material_size="3 3"
+	compress_material="on" material_size="5 5"
 	output_texture="used"
 	force_full_weight="off"
 	use_primitive_strip="on"
@@ -29,7 +29,7 @@
 
 <box_test pos_scale="7" xyz="-2.000000 -0.328125 -0.062500" whd="4.000000 0.659180 0.062500"/>
 
-<tex_image_array size="3">
+<tex_image_array size="5">
 	<tex_image index="0" name="line01"
 		width="128" height="16" original_width="128" original_height="16"
 		format="a3i5"
@@ -185,7 +185,25 @@
 			1111 1111 1111 1111 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="2" name="line_name02"
+	<tex_image index="2" name="line_name011"
+		width="16" height="16" original_width="16" original_height="16"
+		format="palette16"
+		color0_mode="color"
+		palette_name="line_name011_pl"
+		path="C:/mayadata/line_name011.tga"
+	>
+		<bitmap size="64">
+			0000 0000 0000 0000 1111 1111 1111 1111
+			2222 2222 2222 2222 4434 3433 4444 4344
+			5555 5555 5555 5555 6666 6666 6666 6666
+			6666 6666 6666 6666 6666 6666 6666 6666
+			6666 6666 6666 6666 6666 6666 6666 6666
+			6666 6666 6666 6666 5555 5555 5555 5555
+			4434 3433 4444 4344 2222 2222 2222 2222
+			1111 1111 1111 1111 0000 0000 0000 0000
+		</bitmap>
+	</tex_image>
+	<tex_image index="3" name="line_name02"
 		width="16" height="16" original_width="16" original_height="16"
 		format="palette16"
 		color0_mode="color"
@@ -203,22 +221,46 @@
 			1111 1111 1111 1111 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
+	<tex_image index="4" name="line_name022"
+		width="16" height="16" original_width="16" original_height="16"
+		format="palette16"
+		color0_mode="color"
+		palette_name="line_name022_pl"
+		path="C:/mayadata/line_name022.tga"
+	>
+		<bitmap size="64">
+			0000 0000 0000 0000 1111 1111 1111 1111
+			2222 2222 2222 2222 4434 3433 4444 4344
+			5555 5555 5555 5555 6666 6666 6666 6666
+			6666 6666 6666 6666 6666 6666 6666 6666
+			6666 6666 6666 6666 6666 6666 6666 6666
+			6666 6666 6666 6666 5555 5555 5555 5555
+			4434 3433 4444 4344 2222 2222 2222 2222
+			1111 1111 1111 1111 0000 0000 0000 0000
+		</bitmap>
+	</tex_image>
 </tex_image_array>
 
-<tex_palette_array size="3">
+<tex_palette_array size="5">
 	<tex_palette index="0" name="line01_pl" color_size="16">
 		7fff 7fff 6743 4e62 39c2 1080 0c60 0420
 		77af 7bd8 2941 18e1 6f88 0440 0000 0000
 	</tex_palette>
-	<tex_palette index="1" name="line_name01_pl" color_size="8">
+	<tex_palette index="1" name="line_name011_pl" color_size="8">
 		0800 1800 2c20 3c20 3c40 6060 7480 7fff
 	</tex_palette>
-	<tex_palette index="2" name="line_name02_pl" color_size="8">
+	<tex_palette index="2" name="line_name01_pl" color_size="8">
+		0800 1800 2c20 3c20 3c40 6060 7480 7fff
+	</tex_palette>
+	<tex_palette index="3" name="line_name022_pl" color_size="8">
+		0002 0406 080a 0c0e 100e 1816 201b 7fff
+	</tex_palette>
+	<tex_palette index="4" name="line_name02_pl" color_size="8">
 		0002 0406 080a 0c0e 100e 1816 201b 7fff
 	</tex_palette>
 </tex_palette_array>
 
-<material_array size="3">
+<material_array size="5">
 	<material index="0" name="file1Material"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
@@ -243,7 +285,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="1" name="material1"
+	<material index="1" name="file3Material"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="0"
@@ -260,14 +302,14 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="1" tex_palette_idx="1"
+		tex_image_idx="2" tex_palette_idx="1"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="2" name="pasted1"
+	<material index="2" name="file4Material"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="0"
@@ -284,7 +326,55 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="2" tex_palette_idx="2"
+		tex_image_idx="4" tex_palette_idx="3"
+		tex_tiling="repeat repeat"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
+	/>
+	<material index="3" name="material1"
+		light0="on" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="0"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="0"
+		fog_flag="off"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="0 0 0"
+		ambient="31 31 31"
+		specular="0 0 0"
+		emission="0 0 0"
+		shininess_table_flag="off"
+		tex_image_idx="1" tex_palette_idx="2"
+		tex_tiling="repeat repeat"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
+	/>
+	<material index="4" name="pasted1"
+		light0="on" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="0"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="0"
+		fog_flag="off"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="0 0 0"
+		ambient="31 31 31"
+		specular="0 0 0"
+		emission="0 0 0"
+		shininess_table_flag="off"
+		tex_image_idx="3" tex_palette_idx="4"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -608,7 +698,7 @@
 		volume_max="2.250000 0.250000 0.000000"
 		volume_r="2.263916"
 	>
-		<display index="0" material="1" polygon="1" priority="0"/>
+		<display index="0" material="3" polygon="1" priority="0"/>
 	</node>
 	<node index="3" name="pasted2" kind="mesh"
 		parent="0"
@@ -648,7 +738,7 @@
 		volume_max="2.250000 0.250000 0.000000"
 		volume_r="2.263916"
 	>
-		<display index="0" material="2" polygon="3" priority="0"/>
+		<display index="0" material="4" polygon="3" priority="0"/>
 	</node>
 	<node index="5" name="pasted4" kind="mesh"
 		parent="0"
