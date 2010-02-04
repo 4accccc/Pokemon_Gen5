@@ -138,36 +138,45 @@ static BOOL is_registable( BtlPosEffect effect, BtlPokePos pokePos )
 static const BtlEventHandlerTable* ADD_POS_Negaigoto( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_TURNCHECK_BEGIN,  handler_pos_Negaigoto   },  // ターンチェックハンドラ
+    { BTL_EVENT_TURNCHECK_BEGIN,  handler_pos_Negaigoto      },  // ターンチェック開始ハンドラ
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
 }
-// ターンチェックハンドラ
+// ターンチェック開始ハンドラ
 static void handler_pos_Negaigoto( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokePos, int* work )
 {
-  u8 targetPokeID = BTL_SVFTOOL_PokePosToPokeID( flowWk, pokePos );
-
-  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == targetPokeID )
+  // 初ターン呼び出し時、これまでの経過ターン数を work[1] に保存
+  if( work[0] == 0 ){
+    work[1] = BTL_SVFTOOL_GetTurnCount( flowWk );
+    work[0] = 1;
+    return;
+  }
+  else
   {
-    work[0]++;
-    if( work[0] >= 2 )
+    u32 turnCnt = BTL_SVFTOOL_GetTurnCount( flowWk );
+    if( turnCnt > work[1] )
     {
-      const BTL_POKEPARAM* target = BTL_SVFTOOL_GetPokeParam( flowWk, targetPokeID );
+      u8 targetPokeID = BTL_SVFTOOL_PokePosToPokeID( flowWk, pokePos );
 
-      if( !BPP_IsHPFull(target) )
+      if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == targetPokeID )
       {
-        u8 userPokeID = work[ WORKIDX_USER_POKEID ];
-        const BTL_POKEPARAM* user = BTL_SVFTOOL_GetPokeParam( flowWk, userPokeID );
+        const BTL_POKEPARAM* target = BTL_SVFTOOL_GetPokeParam( flowWk, targetPokeID );
 
-        BTL_HANDEX_PARAM_RECOVER_HP* hp_param;
-        hp_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RECOVER_HP, userPokeID );
-        hp_param->pokeID = targetPokeID;
-        hp_param->recoverHP = BTL_CALC_QuotMaxHP( user, 2 );
-        HANDEX_STR_Setup( &hp_param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_Negaigoto );
-        HANDEX_STR_AddArg( &hp_param->exStr, userPokeID );
+        if( !BPP_IsHPFull(target) )
+        {
+          u8 userPokeID = work[ WORKIDX_USER_POKEID ];
+          const BTL_POKEPARAM* user = BTL_SVFTOOL_GetPokeParam( flowWk, userPokeID );
+
+          BTL_HANDEX_PARAM_RECOVER_HP* hp_param;
+          hp_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RECOVER_HP, userPokeID );
+          hp_param->pokeID = targetPokeID;
+          hp_param->recoverHP = BTL_CALC_QuotMaxHP( user, 2 );
+          HANDEX_STR_Setup( &hp_param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_Negaigoto );
+          HANDEX_STR_AddArg( &hp_param->exStr, userPokeID );
+        }
+        BTL_EVENT_FACTOR_Remove( myHandle );
       }
-      BTL_EVENT_FACTOR_Remove( myHandle );
     }
   }
 }
