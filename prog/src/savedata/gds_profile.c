@@ -115,8 +115,7 @@ void GDS_Profile_MyDataSet(GDS_PROFILE_PTR gpp, SAVE_CONTROL_WORK *sv)
 	MYPMS_GetPms(mypms, MYPMS_PMS_TYPE_INTRODUCTION, &gpp->self_introduction);
 
 	gpp->birthday_month = info.birthday.month;
-	gpp->trainer_view = UnionView_GetTrainerInfo(
-		MyStatus_GetMySex(my), MyStatus_GetTrainerView(my), UNIONVIEW_ICONINDEX);
+	gpp->trainer_view = MyStatus_GetTrainerView(my);
 	gpp->version_code = PM_VERSION;
 	gpp->language = PM_LANG;
 

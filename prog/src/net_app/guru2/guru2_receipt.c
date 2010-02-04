@@ -2809,7 +2809,8 @@ static void TransFieldObjData( NNSG2dCharacterData *CharaData[2], NNSG2dPaletteD
   
   // ƒ†ƒjƒIƒ“ƒLƒƒƒ‰‚ð“]‘—
 
-  pos   = UnionView_GetCharaNo( sex, view );
+//  pos   = UnionView_GetCharaNo( sex, view );
+  pos   = view;
 
   chara = (u8*)CharaData[1]->pRawData;
   pal   = (u8*)PalData[1]->pRawData;

@@ -619,7 +619,8 @@ static void TransFieldObjData( NNSG2dCharacterData *CharaData, NNSG2dPaletteData
 	
 	// ユニオンキャラを転送
 
-	pos   = UnionView_GetCharaNo( sex, view );
+//	pos   = UnionView_GetCharaNo( sex, view );
+  pos = view; //WBではview=indexに変更　2010.02.04(木)　matsuda
 
 	chara = (u8*)CharaData->pRawData;
 	pal   = (u8*)PalData->pRawData;

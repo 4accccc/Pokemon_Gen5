@@ -356,9 +356,13 @@ static GFL_PROC_RESULT GameStart_FirstProcMain( GFL_PROC * proc, int * seq, void
 
       MyStatus_SetMyNameFromString( myStatus , work->nameInParam->strbuf );
       MyStatus_SetID(myStatus, GFL_STD_MtRand(GFL_STD_RAND_MAX));
-
-      MyStatus_SetTrainerView(myStatus, 
-        UnionView_GetTrainerTypeIndex(MyStatus_GetID(myStatus), MyStatus_GetMySex(myStatus), 0));
+      
+      if(MyStatus_GetMySex(myStatus) == PM_MALE){
+        MyStatus_SetTrainerView(myStatus, UNION_VIEW_INDEX_MAN_START);
+      }
+      else{
+        MyStatus_SetTrainerView(myStatus, UNION_VIEW_INDEX_WOMAN_START);
+      }
     }
 
     //イントロデモ 名前入力の判定
@@ -589,8 +593,12 @@ static GFL_PROC_RESULT GameStart_DebugProcEnd( GFL_PROC * proc, int * seq, void 
     MyStatus_SetMyNameFromString( myStatus , namebuf );
     MyStatus_SetMySex(myStatus, sex);
     MyStatus_SetID(myStatus, GFUser_GetPublicRand0(0xFFFFFFFF));
-    MyStatus_SetTrainerView(myStatus, 
-      UnionView_GetTrainerTypeIndex(MyStatus_GetID(myStatus), MyStatus_GetMySex(myStatus), 0));
+    if(MyStatus_GetMySex(myStatus) == PM_MALE){
+      MyStatus_SetTrainerView(myStatus, UNION_VIEW_INDEX_MAN_START);
+    }
+    else{
+      MyStatus_SetTrainerView(myStatus, UNION_VIEW_INDEX_WOMAN_START);
+    }
     
     GFL_STR_DeleteBuffer(namebuf);
     GFL_MSG_Delete(msgman);

@@ -1130,8 +1130,12 @@ static BOOL TESTMODE_ITEM_SelectFuncSelectName( TESTMODE_WORK *work , const int 
   myStatus = SaveData_GetMyStatus( work->saveControl_ );
   MyStatus_SetMyNameFromString( myStatus , str );
   MyStatus_SetID(myStatus, GFL_STD_MtRand(GFL_STD_RAND_MAX));
-  MyStatus_SetTrainerView(myStatus,
-    UnionView_GetTrainerTypeIndex(MyStatus_GetID(myStatus), MyStatus_GetMySex(myStatus), 0));
+  if(MyStatus_GetMySex(myStatus) == PM_MALE){
+    MyStatus_SetTrainerView(myStatus, UNION_VIEW_INDEX_MAN_START);
+  }
+  else{
+    MyStatus_SetTrainerView(myStatus, UNION_VIEW_INDEX_WOMAN_START);
+  }
 
   GFL_STR_DeleteBuffer( str );
 

@@ -7448,7 +7448,8 @@ static void FInfo_DrawBaseInfo( WFNOTE_FRIENDINFO* p_wk, WFNOTE_DATA* p_data, WF
     num = WifiList_GetFriendInfo(
 						p_wifilist,
 		        p_data->idx.fridx[p_data->select_listidx], WIFILIST_FRIEND_UNION_GRA );
-    num = UnionView_GetTrainerInfo( sex, num, UNIONVIEW_TRTYPE );
+    //num = UnionView_GetTrainerInfo( sex, num, UNIONVIEW_TRTYPE );
+    num = UnionView_GetTrType( UnionView_Objcode_to_Index(num) );
 
 		ah = TR2DGRA_OpenHandle( heapID );
 		p_wk->trRes[0] = TR2DGRA_OBJ_CGR_Register( ah, num, CLSYS_DRAW_MAIN, heapID );
