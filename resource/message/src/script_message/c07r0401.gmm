@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-02T16:30:39"/>
+	<create user="matsumiya" host="W00224" date="2010-02-04T18:54:50"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1374" top="385" right="2079" bottom="1005" maximized="no" rayout="Vertical2">
+	<dialog left="1294" top="281" right="1999" bottom="909" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -323,9 +323,7 @@
 ・はい/いいえの選択肢
 ・はい→ポケモンリスト画面へ
 　　　　　（所有ポケモンのみで選択ウインドウ表示できるか?）
-　いいえ→終了
-
-・仮メッセージ</comment>
+　いいえ→終了</comment>
 		<attribute name="キャラ指定">WOMAN2
 お洒落姉さん</attribute>
 		<language name="JPN" width="256">だいすきクラブへ　ようこそ！▼

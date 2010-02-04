@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-28T20:12:13"/>
+	<create user="matsumiya" host="W00224" date="2010-02-04T18:55:33"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -294,7 +294,8 @@
 
 	<row id="msg_c07r0101_oldman_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
-・c07ジムバッジ入手前</comment>
+・c07ジムバッジ入手前
+・仮メッセージ</comment>
 		<attribute name="キャラ指定">OLDMAN</attribute>
 		<language name="JPN" width="256">りそうと　しんじつが　まじりあい
 できたとされる　リュウラセンのとう……[BE:01:ページ切り替え（クリア）]
@@ -309,7 +310,8 @@
 	<row id="msg_c07r0101_oldman_02" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
 ・c07ジムバッジ入手後から
-　d08最上階でのイベント発生前</comment>
+　d08最上階でのイベント発生前
+・仮メッセージ</comment>
 		<language name="JPN" width="256">まっ　まさか！[BE:01:ページ切り替え（クリア）]
 リュウラセンのとうに　はいろうとする
 ふとどきものが　いようとは……！</language>
@@ -320,7 +322,8 @@
 
 	<row id="msg_c07r0101_oldman_03" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
-・d08最上階でのイベント発生後</comment>
+・d08最上階でのイベント発生後
+・仮メッセージ</comment>
 		<language name="JPN" width="256">みたぞ！[BE:01:ページ切り替え（クリア）]
 とうの　てっぺんから　はなたれた
 しろと　くろの　ひかり……！[BE:01:ページ切り替え（クリア）]
