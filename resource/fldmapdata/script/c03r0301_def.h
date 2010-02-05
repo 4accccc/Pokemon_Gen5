@@ -6,5 +6,6 @@
 
 //スクリプトデータID定義
 #define SCRID_C03R0301_INFOMATIONW_01 (1)
+#define SCRID_POS_C03R0301_CLEANINGM_01 (2)
 
 #endif //_C03R0301_DEF_H_

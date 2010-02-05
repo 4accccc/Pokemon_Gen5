@@ -10,5 +10,6 @@
 #define ZONE_C03R0301_EVC_H
 
 #define C03R0301_INFOMATIONW_01            0
+#define C03R0301_CLEANINGM_01              1
 
 #endif //ZONE_C03R0301_EVC_H

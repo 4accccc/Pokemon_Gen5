@@ -8,5 +8,8 @@
 #ifndef ZONE_C03R0303_EVC_H
 #define ZONE_C03R0303_EVC_H
 
+#define C03R0303_CLEANINGM_01              0
+#define TR_C03R0303_BUSINESS1_03           1
+#define TR_C03R0303_SCIENTISTM_03          2
 
 #endif //ZONE_C03R0303_EVC_H

@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_c03r0901.h"
-  //.include  "c03r0901.h"
+  .include  "c03r0901.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -20,6 +20,7 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA		ev_c03r0901_musician_01
+_EVENT_DATA		ev_c03r0901_waiter_01
 _EVENT_DATA_END
 
 
@@ -34,4 +35,12 @@ _EVENT_DATA_END
 /**************************************************************/
 EVENT_START		ev_c03r0901_musician_01
 	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r0901_musician_01 )
+EVENT_END
+
+/**************************************************************/
+/* 			WAITER（アイテム入手）	C03R0901				  */
+/**************************************************************/
+EVENT_START   ev_c03r0901_waiter_01
+	//ミックスオレ入手
+  _EASY_TALK_ITEM_EVENT(ITEM_MIKKUSUORE, 1, FE_C03R0901_ITEMGET, msg_c03r0901_waiter_01, msg_c03r0901_waiter_02, msg_c03r0901_waiter_03 )
 EVENT_END

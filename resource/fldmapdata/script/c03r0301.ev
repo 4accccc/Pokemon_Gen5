@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_c03r0301.h"
-  //.include  "c03r0301.h"
+  .include  "c03r0301.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -20,6 +20,7 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA		ev_c03r0301_infomationw_01
+_EVENT_DATA		ev_pos_c03r0301_cleaningm_01
 _EVENT_DATA_END
 
 
@@ -35,3 +36,50 @@ _EVENT_DATA_END
 EVENT_START		ev_c03r0301_infomationw_01
 	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r0301_infomationw_01 )
 EVENT_END
+
+/**************************************************************/
+/* 			POS：会長		C03R0301						  */
+/**************************************************************/
+EVENT_START		ev_pos_c03r0301_cleaningm_01
+
+	//【仮】会長隣接（POS位置による処理が仮です）
+	_OBJ_ANIME( C03R0301_CLEANINGM_01 , anm_cleaningm_come )
+	_OBJ_ANIME_WAIT()
+	
+	//
+	_BALLOONWIN_OBJMSG( msg_c03r0301_cleaningm_01,C03R0301_CLEANINGM_01)
+	_BALLOONWIN_CLOSE()
+	
+	//会長退場
+	_OBJ_ANIME( C03R0301_CLEANINGM_01 , anm_cleaningm_bye )
+	_OBJ_ANIME_WAIT()
+	
+	//会長OBJ非表示
+	_OBJ_DEL( C03R0301_CLEANINGM_01 )
+	
+	//==================================//
+
+	//会長を非表示
+	_FLAG_SET( FV_C03R0301_CLEANINGM_01 )
+
+	//R01の全てのPOSを無効に
+	$WK_SCENE_C03R0301 = 1
+
+	//==================================//
+	
+EVENT_END
+
+//--------------------------------------------------------------
+//	会長：隣接
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_cleaningm_come
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------
+//	会長：退場
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_cleaningm_bye
+	_ANIME_DATA	AC_WALK_U_8F,7
+	_ANIME_DATA	ACMD_END,0

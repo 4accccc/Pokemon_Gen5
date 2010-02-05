@@ -5,6 +5,8 @@
 #define _C03R1001_DEF_H_
 
 //スクリプトデータID定義
-#define SCRID_C03R1001 (1)
+#define SCRID_C03R1001_WOMAN3_01 (1)
+#define SCRID_C03R1001_MOUNTAIN_01 (2)
+#define SCRID_C03R1001_POKE_01 (3)
 
 #endif //_C03R1001_DEF_H_

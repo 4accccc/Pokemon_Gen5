@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_c03r1302.h"
-  //.include  "c03r1302.h"
+  .include  "c03r1302.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,20 +19,80 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_c03r1302
+_EVENT_DATA    ev_c03r1302_gentleman_01
+_EVENT_DATA    ev_c03r1302_man3_01
+_EVENT_DATA    ev_c03r1302_middleman2_01
+_EVENT_DATA    ev_c03r1302_dancer_01
+_EVENT_DATA    ev_c03r1302_girl3_01
+_EVENT_DATA    ev_c03r1302_woman2_01
+_EVENT_DATA    ev_c03r1302_rangerw_01
+_EVENT_DATA    ev_c03r1302_trainerw_01
 _EVENT_DATA_END
 
+/**************************************************************/
+/* 			gentleman	C03R1302							  */
+/**************************************************************/
+EVENT_START		ev_c03r1302_gentleman_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r1302_gentleman_01 )
+EVENT_END
 
 /**************************************************************/
-/*            ZONE_CHANGE_LABEL                               */
+/* 			man3	C03R1302							  */
 /**************************************************************/
-//ev_zone_c03r1302:
-//  _END
+EVENT_START		ev_c03r1302_man3_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r1302_man3_01 )
+EVENT_END
 
 /**************************************************************/
-/*                                                            */
+/* 			middleman2	C03R1302							  */
 /**************************************************************/
-ev_c03r1302:
-  //とりあえず最初のラベルだけ生成している
-  _END
+EVENT_START		ev_c03r1302_middleman2_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r1302_middleman2_01 )
+EVENT_END
 
+/**************************************************************/
+/* 			dancer	C03R1302							  */
+/**************************************************************/
+EVENT_START		ev_c03r1302_dancer_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r1302_dancer_01 )
+EVENT_END
+
+/**************************************************************/
+/* 			girl3	C03R1302							  */
+/**************************************************************/
+EVENT_START		ev_c03r1302_girl3_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r1302_girl3_01 )
+EVENT_END
+
+/**************************************************************/
+/* 			woman2	C03R1302							  */
+/**************************************************************/
+EVENT_START		ev_c03r1302_woman2_01
+	_OBJ_ANIME( C03R1302_WOMAN2_01 , anm_woman2_staystep )
+	_OBJ_ANIME_WAIT()
+	_BALLOONWIN_OBJMSG( msg_c03r1302_woman2_01 , C03R1302_WOMAN2_01 )
+	_BALLOONWIN_CLOSE()
+	_BALLOONWIN_OBJMSG( msg_c03r1302_woman2a_01 , C03R1302_WOMAN2_02 )
+	_BALLOONWIN_CLOSE()
+EVENT_END
+
+//--------------------------------------------------------------
+// その場歩きで隣の女性に話しかける
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_woman2_staystep
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+/**************************************************************/
+/* 			rangerw	C03R1302							  */
+/**************************************************************/
+EVENT_START		ev_c03r1302_rangerw_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r1302_rangerw_01 )
+EVENT_END
+
+/**************************************************************/
+/* 			trainerw	C03R1302							  */
+/**************************************************************/
+EVENT_START		ev_c03r1302_trainerw_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r1302_trainerw_01 )
+EVENT_END

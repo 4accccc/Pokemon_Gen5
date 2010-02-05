@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_c03r0303.h"
-  //.include  "c03r0303.h"
+  .include  "c03r0303.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,20 +19,48 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_c03r0303
+_EVENT_DATA    ev_c03r0303_cleaningm_01
 _EVENT_DATA_END
 
 
 /**************************************************************/
-/*            FLAG_CHANGE_LABEL                               */
+/* 			MOUNTMAN	C03R0101							  */
 /**************************************************************/
-//ev_c03r0303_flag_change:
-//  _END
+EVENT_START		ev_c03r0303_cleaningm_01
+	_TALK_OBJ_START()
 
-/**************************************************************/
-/*                                                            */
-/**************************************************************/
-ev_c03r0303:
-  //とりあえず最初のラベルだけ生成している
-  _END
-
+	//まだ戦闘していないなら
+	IF FLAG_OFF( FE_C03R0303_CLEANINGM ) THEN
+	
+		_BALLOONWIN_OBJMSG( msg_c03r0303_cleaningm_01 , C03R0303_CLEANINGM_01 )
+		_BALLOONWIN_CLOSE()
+		
+		//戦闘処理
+		_TRAINER_BTL_SET( TRID_CLEANING_01, 0 )
+		//結果チェック
+		_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+		IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+			_TRAINER_WIN()
+		ELSE
+			_TRAINER_LOSE()
+		ENDIF
+		
+		_BALLOONWIN_OBJMSG( msg_c03r0303_cleaningm_02 , C03R0303_CLEANINGM_01 )
+		_BALLOONWIN_CLOSE()
+		
+		//==================================//
+		
+		//会長との戦闘完了
+		_FLAG_SET ( FE_C03R0303_CLEANINGM )
+		
+		//==================================//
+		
+	//既に戦闘していたら
+	ELSE
+	
+		_BALLOONWIN_OBJMSG( msg_c03r0303_cleaningm_02 , C03R0303_CLEANINGM_01 )
+		_BALLOONWIN_CLOSE()
+	
+	ENDIF
+	
+EVENT_END

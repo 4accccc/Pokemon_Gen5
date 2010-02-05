@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_c03r0201.h"
-  //.include  "c03r0201.h"
+  .include  "c03r0201.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -21,6 +21,13 @@
 //--------------------------------------------------------------
 _EVENT_DATA		ev_c03r0201_sunglasses_01
 _EVENT_DATA		ev_c03r0201_lady_01
+_EVENT_DATA		ev_bg_c03r0201_painting1_01
+_EVENT_DATA		ev_bg_c03r0201_painting2_01
+_EVENT_DATA		ev_bg_c03r0201_painting3_01
+_EVENT_DATA		ev_bg_c03r0201_painting4_01
+_EVENT_DATA		ev_bg_c03r0201_painting5_01
+_EVENT_DATA		ev_bg_c03r0201_painting6_01
+_EVENT_DATA		ev_c03r0201_clown_01
 _EVENT_DATA_END
 
 
@@ -42,4 +49,175 @@ EVENT_END
 /**************************************************************/
 EVENT_START		ev_c03r0201_lady_01
 	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r0201_lady_01 )
+EVENT_END
+
+/**************************************************************/
+/* 			PAINTING1	C03R0201								  */
+/**************************************************************/
+EVENT_START		ev_bg_c03r0201_painting1_01
+	_EASY_BGWIN_MSG( msg_c03r0201_painting1_01 , TYPE_INFO)
+EVENT_END
+
+/**************************************************************/
+/* 			PAINTING2	C03R0201								  */
+/**************************************************************/
+EVENT_START		ev_bg_c03r0201_painting2_01
+	_EASY_BGWIN_MSG( msg_c03r0201_painting2_01 , TYPE_INFO)
+EVENT_END
+
+/**************************************************************/
+/* 			PAINTING3	C03R0201								  */
+/**************************************************************/
+EVENT_START		ev_bg_c03r0201_painting3_01
+	_EASY_BGWIN_MSG( msg_c03r0201_painting3_01 , TYPE_INFO)
+EVENT_END
+
+/**************************************************************/
+/* 			PAINTING4	C03R0201								  */
+/**************************************************************/
+EVENT_START		ev_bg_c03r0201_painting4_01
+	_EASY_BGWIN_MSG( msg_c03r0201_painting4_01 , TYPE_INFO)
+EVENT_END
+
+/**************************************************************/
+/* 			PAINTING5	C03R0201								  */
+/**************************************************************/
+EVENT_START		ev_bg_c03r0201_painting5_01
+	_EASY_BGWIN_MSG( msg_c03r0201_painting5_01 , TYPE_INFO)
+EVENT_END
+
+/**************************************************************/
+/* 			PAINTING6	C03R0201								  */
+/**************************************************************/
+EVENT_START		ev_bg_c03r0201_painting6_01
+	_EASY_BGWIN_MSG( msg_c03r0201_painting6_01 , TYPE_INFO)
+EVENT_END
+
+/**************************************************************/
+/* 			日替わり特定タイプポケモン見せイベント			  */
+/**************************************************************/
+EVENT_START		ev_c03r0201_clown_01
+	
+	_TALK_OBJ_START()
+	
+	//今日のタイプは既に決まっているか？
+	
+	//決まっていない
+	IF FLAG_OFF( TMFLG_C03R0201_GALLERY_TYPE ) THEN
+	
+		//乱数で0～16のうちのひとつを選んで格納する
+		_GET_RND( WK_OTHER_C03R0201_GALLERY,16 )
+		
+		//==================================//
+			
+		//今日のタイプは既に決まった
+		_FLAG_SET ( TMFLG_C03R0201_GALLERY_TYPE )
+		
+		//==================================//
+	ENDIF
+	
+	//今日の指定ポケモンを台詞内のタグにセット
+	_POKETYPE_NAME( 0 , WK_OTHER_C03R0201_GALLERY ) 
+	
+	//今日の指定ポケモン見せイベントを既に終えたか？
+	
+	//まだ終えていない
+	IF FLAG_OFF( TMFLG_C03R0201_GALLERY_CLEAR ) THEN
+		
+		//今日は（指定ポケモン）タイプが見たい！見せてくれる？
+		_BALLOONWIN_OBJMSG( msg_c03r0201_juggling_01 , C03R0201_CLOWN_01 )
+		_YES_NO_WIN( SCWK_ANSWER )
+		_BALLOONWIN_CLOSE()
+		
+		//はい
+		IF $SCWK_ANSWER == 0 THEN
+			//（指定ポケモン）タイプを見せてよ
+			_BALLOONWIN_OBJMSG( msg_c03r0201_juggling_01a , C03R0201_CLOWN_01 )
+			_BALLOONWIN_CLOSE()
+			
+			//選択ポケモン格納変数定義
+			DEFINE_LOCAL LWK_CHOICE
+			//キャンセルしたか結果格納変数定義
+			DEFINE_LOCAL LWK_SELECT_RESULT
+			
+			//ポケモン選択画面開く
+			_SELECT_TEMOTI_POKE  ( LWK_SELECT_RESULT , LWK_CHOICE , 0 )
+			
+			//ポケモンを選択した
+			IF $LWK_SELECT_RESULT == TRUE THEN
+			
+				//タマゴチェック戻り値定義
+				DEFINE_LOCAL LWK_EGG_RESULT
+			
+				//選択したポケモンがタマゴでないかチェック
+				_CHECK_TEMOTI_EGG  ( LWK_EGG_RESULT , LWK_CHOICE )
+			
+				//【仮】タマゴの場合の台詞
+				IF $LWK_EGG_RESULT == TRUE THEN
+					_BALLOONWIN_OBJMSG( msg_c03r0201_juggling_06 ,C03R0201_CLOWN_01)
+					_BALLOONWIN_CLOSE()
+		
+				//タマゴ以外の場合
+				ELSE
+				
+					//選択したポケモンのタイプ戻り値定義
+					DEFINE_LOCAL LWK_POKE_TYPE01
+					DEFINE_LOCAL LWK_POKE_TYPE02
+					//選択したポケモンのタイプを取得
+					_GET_TEMOTI_POKE_TYPE ( LWK_POKE_TYPE01 , LWK_POKE_TYPE02 , LWK_CHOICE )
+					
+					//選択したポケモンと指定タイプが一致していた
+					IF $WK_OTHER_C03R0201_GALLERY == $LWK_POKE_TYPE01 || $WK_OTHER_C03R0201_GALLERY == $LWK_POKE_TYPE02 THEN
+					
+						//ありがとう！お礼にこれをあげよう！
+						_BALLOONWIN_OBJMSG( msg_c03r0201_juggling_02 ,C03R0201_CLOWN_01)
+						_BALLOONWIN_CLOSE()
+						
+						//アイテム入手処理
+						DEFINE_LOCAL LWK_ITEM_RET
+						_ADD_ITEM( ITEM_KIZUGUSURI , 1 ,  LWK_ITEM_RET )
+						//アイテム入手SE
+						_ME_PLAY( SEQ_ME_ITEM )
+						_ME_WAIT()
+						//【仮】アイテム入手メッセージ
+						
+						//また明日も来てね
+						_BALLOONWIN_OBJMSG( msg_c03r0201_juggling_03 ,C03R0201_CLOWN_01)
+						_BALLOONWIN_CLOSE()
+						
+						//==================================//
+			
+						//今日の指定タイプ見せイベントは終了
+						_FLAG_SET ( TMFLG_C03R0201_GALLERY_CLEAR )
+						
+						//==================================//
+						
+					//選択したポケモンと指定タイプが一致しない
+					ELSE
+						_BALLOONWIN_OBJMSG( msg_c03r0201_juggling_06 ,C03R0201_CLOWN_01)
+						_BALLOONWIN_CLOSE()
+					ENDIF
+					
+				ENDIF
+			
+			//選択キャンセル
+			ELSE
+				//（指定ポケモン）タイプを捕まえてたら見せてね
+				_BALLOONWIN_OBJMSG( msg_c03r0201_juggling_05 , C03R0201_CLOWN_01 )
+				_BALLOONWIN_CLOSE()
+			ENDIF
+		
+		//いいえ
+		ELSE
+			//（指定ポケモン）タイプを捕まえてたら見せてね
+			_BALLOONWIN_OBJMSG( msg_c03r0201_juggling_05 , C03R0201_CLOWN_01 )
+			_BALLOONWIN_CLOSE()
+		ENDIF
+		
+	//今日のイベントは既に終えている
+	ELSE
+		_BALLOONWIN_OBJMSG( msg_c03r0201_juggling_04 , C03R0201_CLOWN_01 )
+		_BALLOONWIN_CLOSE()
+	ENDIF
+	
 EVENT_END

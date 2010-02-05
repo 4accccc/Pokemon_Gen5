@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_c03r1001.h"
-  //.include  "c03r1001.h"
+  .include  "c03r1001.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,20 +19,132 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_c03r1001
+_EVENT_DATA    ev_c03r1001_woman3_01
+_EVENT_DATA    ev_c03r1001_mountain_01
+_EVENT_DATA    ev_c03r1001_poke_01
 _EVENT_DATA_END
 
+//------------------------------注意--------------------------------//
+//																	//
+//	ジムギミックに LOCALWORK10を使用ししています。					//
+//	同マップ内の使用を禁止します。									//
+//	LOCALWORK10 ⇒ なつき度の確率を格納								//
+//																	//
+//------------------------------------------------------------------//
 
 /**************************************************************/
-/*            ZONE_CHANGE_LABEL                               */
+/* 			マッサージお姉さん								  */
 /**************************************************************/
-//ev_zone_c03r1001:
-//  _END
+EVENT_START		ev_c03r1001_woman3_01
+	_TALK_OBJ_START()
+	
+	//今日イベントを終えたかチェック
+	
+	//まだである
+	IF FLAG_OFF( TMFLG_C03R1001_MASSAGE ) THEN
+	
+		
+		//マッサージするか質問
+		_BALLOONWIN_OBJMSG( msg_c03r1001_woman3_01,C03R1001_WOMAN3_01)
+		_YES_NO_WIN( SCWK_ANSWER )
+		_BALLOONWIN_CLOSE()
+		
+		//「はい」
+		IF $SCWK_ANSWER == SCR_YES THEN
+		
+			//選択ポケモン格納変数定義
+			DEFINE_LOCAL LWK_CHOICE
+			//キャンセルしたか結果格納変数定義
+			DEFINE_LOCAL LWK_SELECT_RESULT
+			
+			//ポケモン選択画面開く
+			_SELECT_TEMOTI_POKE  ( LWK_SELECT_RESULT , LWK_CHOICE , 0 )
+			
+			//ポケモンを選択した
+			IF $LWK_SELECT_RESULT == TRUE THEN
+		
+				//それでははじめますね！
+				_BALLOONWIN_OBJMSG( msg_c03r1001_woman3_03 , C03R1001_WOMAN3_01 )
+				_BALLOONWIN_CLOSE()
+		
+				//暗転処理
+				_BLACK_OUT()
+				_DISP_FADE_END_CHECK()
+				_BLACK_IN()
+				_DISP_FADE_END_CHECK()
+				
+				//乱数で0～100幅で確率を決める
+				_GET_RND( LOCALWORK10,100 )
+				
+				//5%以下
+				IF $LOCALWORK10 <= 5 THEN
+				
+					//指定されたポケモンのなつき度加算（30）
+					_ADD_TEMOTI_NATSUKI (LWK_CHOICE , 30)
+					_BALLOONWIN_OBJMSG( msg_c03r1001_woman3_05 , C03R1001_WOMAN3_01 )
+					_BALLOONWIN_CLOSE()
+				
+				//25%以下
+				ELSIF $LOCALWORK10 <= 25 THEN
+				
+					//指定されたポケモンのなつき度加算（10）
+					_ADD_TEMOTI_NATSUKI (LWK_CHOICE , 10)
+					_BALLOONWIN_OBJMSG( msg_c03r1001_woman3_06 , C03R1001_WOMAN3_01 )
+					_BALLOONWIN_CLOSE()
+				
+				//70%以下
+				ELSE
+				
+					//指定されたポケモンのなつき度加算（5）
+					_ADD_TEMOTI_NATSUKI (LWK_CHOICE , 5)
+					_BALLOONWIN_OBJMSG( msg_c03r1001_woman3_07 , C03R1001_WOMAN3_01 )
+					_BALLOONWIN_CLOSE()
+				
+				ENDIF
+				
+				//==================================//
+					
+				//今日のマッサージイベントはもう終了
+				_FLAG_SET ( TMFLG_C03R1001_MASSAGE )
+				
+				//==================================//
+			
+			//ポケモン選択をキャンセル
+			ELSE
+			
+				_BALLOONWIN_OBJMSG( msg_c03r1001_woman3_02 , C03R1001_WOMAN3_01 )
+				_BALLOONWIN_CLOSE()
+			
+			ENDIF
+		
+		//「いいえ」
+		ELSE
+		
+			_BALLOONWIN_OBJMSG( msg_c03r1001_woman3_02 , C03R1001_WOMAN3_01 )
+			_BALLOONWIN_CLOSE()
+		
+		ENDIF
+	
+	//もうイベントを終えた
+	ELSE
+		
+		_BALLOONWIN_OBJMSG( msg_c03r1001_woman3_08 , C03R1001_WOMAN3_01 )
+		_BALLOONWIN_CLOSE()
+	
+	ENDIF
+	
+EVENT_END
 
 /**************************************************************/
-/*                                                            */
+/* 			MUSICIAN	C03R1001							  */
 /**************************************************************/
-ev_c03r1001:
-  //とりあえず最初のラベルだけ生成している
-  _END
+EVENT_START		ev_c03r1001_mountain_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r1001_mountain_01 )
+EVENT_END
 
+/**************************************************************/
+/* 			POKEMON	C03R0901							  */
+/**************************************************************/
+EVENT_START		ev_c03r1001_poke_01
+	_EASY_TALK_POKEVOICE( MONSNO_533, msg_c03r1001_poke_01 )
+EVENT_END

@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_c03r1301.h"
-  //.include  "c03r1301.h"
+  .include  "c03r1301.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,20 +19,155 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_c03r1301
+_EVENT_DATA    ev_c03r1301_sunglasses_01
+_EVENT_DATA    ev_c03r1301_boy4_01
+_EVENT_DATA    ev_c03r1301_lady_01
+_EVENT_DATA    ev_init_c03r1301
 _EVENT_DATA_END
 
+/************************************************************/
+/*					FIELD_INIT_LABEL						*/
+/************************************************************/
+INIT_EVENT_START	ev_init_c03r1301
+	
+
+	//どこから来たかによってサングラスの初期位置を変更する
+	IF $WK_SCENE_C03R1301_SUNGLASSES == 1 THEN
+		_OBJ_POS_CHANGE( C03R1301_SUNGLASSES_01, 8, 0, 2, DIR_DOWN )
+
+	ELSE
+		_OBJ_POS_CHANGE( C03R1301_SUNGLASSES_01, 7, 0, 2, DIR_DOWN )
+	
+	ENDIF
+
+INIT_EVENT_END
 
 /**************************************************************/
-/*            ZONE_CHANGE_LABEL                               */
+/*	C03R1301	ボディーガード								*/
 /**************************************************************/
-//ev_zone_c03r1301:
-//  _END
+EVENT_START   ev_c03r1301_sunglasses_01
+	_TALK_OBJ_START()
+
+	//C03側から来て通る
+	IF $WK_SCENE_C03R1301_SUNGLASSES == 0 THEN
+	
+		//ここを通るか質問
+		_BALLOONWIN_OBJMSG( msg_c03r1301_sunglasses_01,C03R1301_SUNGLASSES_01)
+		_YES_NO_WIN( SCWK_ANSWER )
+		_BALLOONWIN_CLOSE()
+		
+		//「はい」
+		IF $SCWK_ANSWER == SCR_YES THEN
+			
+			//性別格納変数定義
+			DEFINE_LOCAL LWK_SEX
+			//主人公性別取得
+			_GET_MY_SEX ( LWK_SEX )
+			
+			
+			//男
+			IF $LWK_SEX == PM_MALE THEN
+			
+				//ちょっと調べさせてもらうぞ
+				_BALLOONWIN_OBJMSG( msg_c03r1301_sunglasses_02 , C03R1301_SUNGLASSES_01 )
+				_BALLOONWIN_CLOSE()
+				
+				//一周アニメーション
+				_OBJ_ANIME( C03R1301_SUNGLASSES_01 , anm_c03r1301_sunglasses_check )
+				_OBJ_ANIME_WAIT()
+				
+				//よし！通っていいぞ！
+				_BALLOONWIN_OBJMSG( msg_c03r1301_sunglasses_03 , C03R1301_SUNGLASSES_01 )
+				_BALLOONWIN_CLOSE()
+				
+				//階段わきにどく
+				_OBJ_ANIME( C03R1301_SUNGLASSES_01 , anm_c03r1301_sunglasses_ok )
+				_OBJ_ANIME_WAIT()
+				
+				//==================================//
+					
+				//ボディチェック完了（外に出ると初期化）
+				$WK_SCENE_C03R1301_SUNGLASSES = 1
+				
+				//==================================//
+			
+			//女
+			ELSE
+				
+				//よし！通っていいぞ！
+				_BALLOONWIN_OBJMSG( msg_c03r1301_sunglasses_03 , C03R1301_SUNGLASSES_01 )
+				_BALLOONWIN_CLOSE()
+				
+				//階段わきにどく
+				_OBJ_ANIME( C03R1301_SUNGLASSES_01 , anm_c03r1301_sunglasses_ok )
+				_OBJ_ANIME_WAIT()
+				
+				//==================================//
+					
+				//ボディチェック完了（外に出ると初期化）
+				$WK_SCENE_C03R1301_SUNGLASSES = 1
+				
+				//==================================//
+			
+			ENDIF
+		
+		//「いいえ」
+		ELSE
+			_BALLOONWIN_OBJMSG( msg_c03r1301_sunglasses_05 , C03R1301_SUNGLASSES_01 )
+			_BALLOONWIN_CLOSE()
+		
+		ENDIF
+	
+	//既にボディチェックを受けた＋外に出ていない
+	ELSE
+	
+			_BALLOONWIN_OBJMSG( msg_c03r1301_sunglasses_04 , C03R1301_SUNGLASSES_01 )
+			_BALLOONWIN_CLOSE()
+	
+	ENDIF
+	
+EVENT_END
+
+//--------------------------------------------------------------
+//	ボディガード主人公の周りを一周する
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c03r1301_sunglasses_check
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+
+//--------------------------------------------------------------
+//	ボディガード階段わきにどく
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c03r1301_sunglasses_ok
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_DIR_PAUSE_ON,1
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA	ACMD_END,0
+
 
 /**************************************************************/
-/*                                                            */
+/*	C03R1301	boy4										*/
 /**************************************************************/
-ev_c03r1301:
-  //とりあえず最初のラベルだけ生成している
-  _END
+EVENT_START   ev_c03r1301_boy4_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_c03r1301_boy4_01)
+EVENT_END
 
+/**************************************************************/
+/*	C03R1301	lady										*/
+/**************************************************************/
+EVENT_START   ev_c03r1301_lady_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_c03r1301_lady_01)
+EVENT_END

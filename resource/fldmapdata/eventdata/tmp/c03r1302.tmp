@@ -1,5 +1,5 @@
 #../data/c03r1302.mev
-../tmp/c03r1302.bin:../data/c03r1302.mev $(UNIQ_SCRIPTHEADER) ../tmp/c03r1302.h 
+../tmp/c03r1302.bin:../data/c03r1302.mev $(UNIQ_SCRIPTHEADER) ../tmp/c03r1302.h ../../../../prog/arc/fieldmap/fldmmdl_objcode.h ../../../../prog/src/field/fldmmdl_code.h ../../../../prog/include/field/field_dir.h ../../../../prog/src/field/fldmmdl.h ../../flagwork/flag_define.h ../../../../prog/include/field/eventdata_type.h ../../script/C03R1302_def.h 
 	@echo ../data/c03r1302.mev
-	@ruby make_binary.rb $< $(UNIQ_SCRIPTHEADER) ../tmp/c03r1302.h 
+	@ruby make_binary.rb $< $(UNIQ_SCRIPTHEADER) ../tmp/c03r1302.h ../../../../prog/arc/fieldmap/fldmmdl_objcode.h ../../../../prog/src/field/fldmmdl_code.h ../../../../prog/include/field/field_dir.h ../../../../prog/src/field/fldmmdl.h ../../flagwork/flag_define.h ../../../../prog/include/field/eventdata_type.h ../../script/C03R1302_def.h 
 

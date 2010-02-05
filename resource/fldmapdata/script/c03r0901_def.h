@@ -6,5 +6,6 @@
 
 //スクリプトデータID定義
 #define SCRID_C03R0901_MUSICIAN_01 (1)
+#define SCRID_C03R0901_WAITER_01 (2)
 
 #endif //_C03R0901_DEF_H_
