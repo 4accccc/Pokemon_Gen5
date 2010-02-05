@@ -236,6 +236,18 @@ extern void
 	GFL_STR_AddCode
 		( STRBUF* dst, STRCODE code );
 
+//------------------------------------------------------------------
+/**
+ * １文字削除
+ *
+ * @param   dst			対象バッファオブジェクト
+ *
+ */
+//------------------------------------------------------------------
+extern void
+	GFL_STR_DelCode
+		( STRBUF* dst );
+
 #ifdef __cplusplus
 }/* extern "C" */
 #endif

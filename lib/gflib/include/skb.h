@@ -22,12 +22,13 @@ typedef struct _GFL_SKB GFL_SKB;
 typedef enum {
   GFL_SKB_MODE_HIRAGANA = 0,
   GFL_SKB_MODE_KATAKANA,
-  GFL_SKB_MODE_ENGNUM,
+  GFL_SKB_MODE_ENG,
+  GFL_SKB_MODE_NUM,
 }GFL_SKB_MODE;
 
 typedef enum {
   GFL_SKB_STRTYPE_STRBUF = 0,
-  GFL_SKB_STRTYPE_SJIS,//配列の大きさは長さ*sizeof(u16)にすること
+  //GFL_SKB_STRTYPE_SJIS,//配列の大きさは長さ*sizeof(u16)にすること
 }GFL_SKB_STRTYPE;
 
 //　設定定義
@@ -37,9 +38,9 @@ typedef struct {
   GFL_SKB_STRTYPE strtype;//文字列格納タイプ
 
   GFL_SKB_MODE  mode;     //初期モード
-  BOOL      modeChange;   //モード変更可否フラグ
-  u16       cancelKey;    //中断キー判定トリガ（不要なら0でよい。その場合は中断不可)
-  u16       decideKey;    //確定キー判定トリガ（不要なら0でよい。その場合はタッチパネル操作でのみ確定可）
+  BOOL	modeChange;   //モード変更可否フラグ
+  u16	cancelKey;    //中断キー判定トリガ（不要なら0でよい。その場合は中断不可)
+  u16	decideKey;    //確定キー判定トリガ（不要なら0でよい。その場合はタッチパネル操作でのみ確定可）
 
   GFL_DISPUT_BGID   bgID;        //使用BGVRAMID
   GFL_DISPUT_PALID  bgPalID;     //使用BGパレットID
@@ -63,15 +64,15 @@ typedef enum {
  *
  */
 //============================================================================================
-extern GFL_SKB*   GFL_SKB_Create( void* strings, const GFL_SKB_SETUP* setup, HEAPID heapID );
-extern void     GFL_SKB_Delete( GFL_SKB* gflSkb );
-extern GflSkbReaction     GFL_SKB_Main( GFL_SKB* gflSkb );  //FALSEで終了
+extern GFL_SKB*				GFL_SKB_Create( void* strings, const GFL_SKB_SETUP* setup, HEAPID heapID );
+extern void						GFL_SKB_Delete( GFL_SKB* gflSkb );
+extern GflSkbReaction GFL_SKB_Main( GFL_SKB* gflSkb );  //FALSEで終了
 
 extern void GFL_SKB_PickStr( GFL_SKB* skb );
 extern void GFL_SKB_ReloadStr( GFL_SKB* skb, const STRBUF* strbuf );
 
 //SjisCode格納用文字列バッファ作成
 //GFL_SKB_STRTYPE_SJISを使用する場合、この関数で入力最大配列を確保出来る
-extern void*  GFL_SKB_CreateSjisCodeBuffer( HEAPID heapID );
-extern void   GFL_SKB_DeleteSjisCodeBuffer( void* strbuf );
+//extern void*  GFL_SKB_CreateSjisCodeBuffer( HEAPID heapID );
+//extern void   GFL_SKB_DeleteSjisCodeBuffer( void* strbuf );
 
