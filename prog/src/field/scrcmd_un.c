@@ -166,10 +166,37 @@ VMCMD_RESULT EvCmdUn_SetCountryInfo( VMHANDLE *core, void *wk )
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
   GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
 
-  country_code = VMGetU16( core );
+  country_code = SCRCMD_GetVMWorkValue( core, work );
 
   UN_SetData(gsys, country_code);
 
   return VMCMD_RESULT_CONTINUE;
 }
+
+//--------------------------------------------------------------
+/**
+ * メッセージ取得
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdUn_GetRoomObjMsg( VMHANDLE *core, void *wk )
+{
+  u16 obj_idx;
+  u16 first;
+  u16 *msg;
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+  GAMEDATA *gdata =  GAMESYSTEM_GetGameData(gsys);
+  UNSV_WORK *unsv_work = GAMEDATA_GetUnsvWorkPtr(gdata);
+
+  obj_idx = SCRCMD_GetVMWorkValue( core, work );
+  first = VMGetU16( core );
+  msg = SCRCMD_GetVMWork( core, work );
+  *msg = UN_GetRoomObjMsg(gsys, unsv_work, obj_idx, first);
+  return VMCMD_RESULT_CONTINUE;
+}
+
+
 

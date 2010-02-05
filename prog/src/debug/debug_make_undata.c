@@ -170,6 +170,7 @@ typedef struct {
 
   s8   NumAry[ NUMINPUT_DISIT_MAX ];
   u8   CurDisit;
+  u32  DispNumWork;
 }NUMINPUT_WORK;
 
 typedef struct {
@@ -798,6 +799,7 @@ static void NumInput_Setup( NUMINPUT_WORK* wk, STRBUF* buf, GFL_BMPWIN* win, GFL
 #else
   wk->NumMax = strParam->arg;
   wk->NumMin = strParam->arg2;
+  wk->DispNumWork = value;
 #endif
   wk->Disit = CalcDisit( wk->NumMax );
   wk->CurDisit = 0;
@@ -820,6 +822,7 @@ static BOOL NumInput_Main( NUMINPUT_WORK* wk )
 
   {
     u8 update = TRUE;
+    u8 up_key_flg = FALSE;
     do {
       if( key & PAD_KEY_LEFT ){
         if( wk->CurDisit < (wk->Disit-1) ){
@@ -847,6 +850,8 @@ static BOOL NumInput_Main( NUMINPUT_WORK* wk )
           OS_Printf("↑　ケタあふれ\n");
           SetAryNumInput( wk, wk->NumMax );
         }
+        //上キー押下チェックON
+        up_key_flg = TRUE;
         break;
       }
       if( key & PAD_KEY_DOWN )
@@ -880,6 +885,17 @@ static BOOL NumInput_Main( NUMINPUT_WORK* wk )
 
     if( update ){
       u32 num = CalcInputNum( wk );
+
+      //数値加算したのに値が下回ったをチェック（値のオーバーフローチェック）
+      if ( up_key_flg )
+      {
+        if (num < wk->DispNumWork)
+        {
+          num = wk->NumMax;
+          SetAryNumInput( wk, num );
+        }
+      }
+
       if( num > wk->NumMax ){
         num = wk->NumMax;
         SetAryNumInput( wk, num );
@@ -889,6 +905,7 @@ static BOOL NumInput_Main( NUMINPUT_WORK* wk )
         SetAryNumInput( wk, num );
       }
       DrawNumInput( wk );
+      wk->DispNumWork = num;
     }
   }
   return FALSE;
@@ -981,11 +998,8 @@ static void MakeData(MAKE_WORK *wk)
   wk->UNData.countryCount = wk->BoxValue[EDITBOX_ID_NUM];  //交換した国の回数
   wk->UNData.nature = wk->BoxValue[EDITBOX_ID_NATURE];   //性格
 
-  {
-    UNITEDNATIONS_SAVE *un_data;
-    un_data = WIFIHISTORY_GetUNDataPtr(wk->wh);
-    UNDATAUP_Update(un_data, &wk->UNData);
-  }
+  //追加
+  UNDATAUP_Update(wk->wh, &wk->UNData);
 
   OS_Printf("UN DATA ADD\n");
 }

@@ -34,3 +34,16 @@ u32 UN_GetRoomObjCode(UNSV_WORK* work, const u32 inObjIdx)
   return work->UnObjCode[inObjIdx];
 }
 
+//--------------------------------------------------------------
+/**
+ * @brief 部屋のOBJ数を返す
+ * @note    ゾーンチェンジ時にスクリプトからコールされる
+ * @param * work            国連ワークポインタ
+ * @retval  u32     OBJ数 0～5
+ */
+//--------------------------------------------------------------
+u32 UN_GetRoomObjNum(UNSV_WORK* work)
+{
+  return work->ObjNum;
+}
+

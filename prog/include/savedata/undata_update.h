@@ -9,8 +9,9 @@
 #pragma once
 
 #include "unitednations_def.h" 
+#include "wifihistory.h"
 
-extern void UNDATAUP_Update(UNITEDNATIONS_SAVE *un_data, UNITEDNATIONS_SAVE *add_data);
+extern void UNDATAUP_Update(WIFI_HISTORY * wh, UNITEDNATIONS_SAVE *add_data);
 extern u32 UNDATAUP_GetDataNum(const UNITEDNATIONS_SAVE *un_data);
 
 

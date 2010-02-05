@@ -16,10 +16,13 @@
 #include "united_nations.h"
 #include "net_app/union/union_beacon_tool.h"
 
+#include "msg/script/msg_c11r0201.h"
+
 
 #define UNDATA_MAX  (UNITEDNATIONS_PEOPLE_MAX)
 
 static void SetData(WIFI_HISTORY *wh, UNSV_WORK* work, const int inCountryCode);
+static u32 GetMsg(const int inSex, const u32 inTrID, const int inNature, const BOOL inFirst);
 
 //--------------------------------------------------------------
 /**
@@ -52,6 +55,7 @@ void UN_SetData(GAMESYS_WORK *gsys, const int inCountryCode)
 /**
  * @brief 国連関連データのセット
  *
+ * @param * wh              WIFI履歴ワークポインタ
  * @param * work            国連ワークポインタ
  * @param inCountryCode     国コード
  * @retval  none
@@ -95,6 +99,7 @@ static void SetData(WIFI_HISTORY *wh, UNSV_WORK* work, const int inCountryCode)
 //--------------------------------------------------------------
 /**
  * @brief 指定したインデックスの国連関連データインデックスを取得する
+ * @param * work            国連ワークポインタ
  * @param inOnjIdx 部屋内OBJのインデックス0～4
  * @retval  u32     国連セーブデータの他人データインデックス  失敗した場合はUN_IDX_OVER
  */
@@ -105,10 +110,104 @@ u8 UN_GetUnIdx(UNSV_WORK* work, const u32 inObjIdx)
   if (inObjIdx < UN_ROOM_OBJ_MAX)
   {
     if ( inObjIdx < work->ObjNum ) rc = work->UnIdx[inObjIdx];
-    else GF_ASSERT_MSG(0,"OBJ_IDX_ERROR %d",inObjIdx);
+    else GF_ASSERT_MSG(0,"OBJ_IDX_ERROR obj_idx=%d max=%d",inObjIdx, work->ObjNum);
   }
   else GF_ASSERT_MSG(0,"OBJ_IDX_ERROR %d",inObjIdx);
 
   return rc;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief OBJの話すメッセージの決定
+ * @param gsys          ゲームシステムポインタ
+ * @param work            国連ワークポインタ
+ * @param   inObjIdx        OBJインデックス0～4
+ * @param  inFirstMsg       取得したいのは初回メッセージか？
+ * @retval  u32     メッセージID
+ */
+//--------------------------------------------------------------
+u32 UN_GetRoomObjMsg(GAMESYS_WORK *gsys, UNSV_WORK* work, const int inObjIdx, const BOOL inFirstMsg)
+{
+  int undata_idx;
+  int sex;
+  u32 id;
+  int nature;
+
+  //セーブデータにアクセス
+  GAMEDATA *gdata =  GAMESYSTEM_GetGameData(gsys);
+  SAVE_CONTROL_WORK * sv = GAMEDATA_GetSaveControlWork( gdata );
+  WIFI_HISTORY *wh = SaveData_GetWifiHistory(sv);
+
+  if ( inObjIdx >= 5 )
+  {
+    GF_ASSERT(0);
+    //適当なメッセージIDを返しておく
+    return msg_un_default_man_00;
+  }
+
+  undata_idx = work->UnIdx[inObjIdx];
+  {
+    MYSTATUS *my;
+    my = WIFIHISTORY_GetUnMyStatus(wh, undata_idx);
+    //性別取得
+    sex = MyStatus_GetMySex(my);
+    //性格取得
+    nature = WIFIHISTORY_GetUnInfo(wh, undata_idx, UN_INFO_NATURE);
+    //トレーナーID取得
+    id = MyStatus_GetID(my);
+  }
+  //メッセージ決定
+  return GetMsg(sex, id, nature, inFirstMsg);
+
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief OBJの話すメッセージの決定
+ * @param inSex         性別 0 or 1
+ * @param inTrID        トレーナーID
+ * @param inNature      性格0～4
+ * @param inFirst       取得したいのは初回メッセージか？
+ * @retval  u32     メッセージID
+ */
+//--------------------------------------------------------------
+static u32 GetMsg(const int inSex, const u32 inTrID, const int inNature, const BOOL inFirst)
+{
+  u32 base;
+  u32 msg;
+  //性格でメッセージインデックスの基点を決める
+  switch(inNature){
+  case 0:
+    base = msg_un_default_man_00;
+    break;
+  case 1:
+    base = msg_un_leader_man_00;
+    break;
+  case 2:
+    base = msg_un_wierd_man_00;
+    break;
+  case 3:
+    base = msg_un_researcher_man_00;
+    break;
+  case 4:
+    base = msg_un_soft_man_00;
+    break;
+  default:
+    GF_ASSERT_MSG(0,"nature error %d",inNature);
+    base = msg_un_default_man_00;
+  }
+  msg = base;
+  //性別でオフセットを計算
+  if (inSex) msg = base + 6;//女性
+  //初回会話か？
+  if ( !inFirst )      //2回目以降
+  {
+    msg += 1;
+    //トレーナIDを5で割った余りを基点に足しこむ
+    msg += (inTrID % 5);
+  }
+
+  return msg;
 }
 

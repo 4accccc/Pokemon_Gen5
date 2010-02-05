@@ -16,20 +16,24 @@ static u32 GetDataNumByCountryCode(const UNITEDNATIONS_SAVE *un_data, const u32 
 static u32 GetDataIdxByCountryCode(const UNITEDNATIONS_SAVE *un_data, const u32 inCountryCode);
 static u32 SearchSameData(const UNITEDNATIONS_SAVE *un_data, const MYSTATUS * inMyStatus);
 static void  DelData(UNITEDNATIONS_SAVE *un_data, const u32 inDelIdx);
-static void  AddData(UNITEDNATIONS_SAVE *un_data, UNITEDNATIONS_SAVE *add_data, const BOOL inTalkFlg);
+static void  AddData(WIFI_HISTORY * wh, UNITEDNATIONS_SAVE *add_data, const BOOL inTalkFlg);
+static void  AddDataCore(UNITEDNATIONS_SAVE *un_data, UNITEDNATIONS_SAVE *add_data, const BOOL inTalkFlg);
 
 //----------------------------------------------------------
 /**
  * @brief	データ更新
- * @param	  un_data   国連データの先頭ポインタ
+ * @param	  wh        wifi履歴データポインタ
  * @param   add_data  追加するデータ
  *
  * @return	none
  */
 //----------------------------------------------------------
-void UNDATAUP_Update(UNITEDNATIONS_SAVE *un_data, UNITEDNATIONS_SAVE *add_data)
+void UNDATAUP_Update(WIFI_HISTORY * wh, UNITEDNATIONS_SAVE *add_data)
 {
+  UNITEDNATIONS_SAVE *un_data;
   u32 same_idx;
+
+  un_data = WIFIHISTORY_GetUNDataPtr(wh);
 
   //同一人物検索
   same_idx = SearchSameData(un_data, &add_data->aMyStatus);
@@ -42,7 +46,7 @@ void UNDATAUP_Update(UNITEDNATIONS_SAVE *un_data, UNITEDNATIONS_SAVE *add_data)
     //削除
     DelData(un_data, same_idx);
     //リストの最後尾へ追加  自分の持っていたデータに存在していたので会話状態は引き継ぐ
-    AddData(un_data, add_data, talk);
+    AddData(wh, add_data, talk);
   }
   else
   {       //見つからなかった
@@ -64,7 +68,7 @@ void UNDATAUP_Update(UNITEDNATIONS_SAVE *un_data, UNITEDNATIONS_SAVE *add_data)
         DelData(un_data, 0);
       }
       //リストの最後尾へ追加　自分の持っていたデータには存在していなかったので会話フラグはFALSE確定
-      AddData(un_data, add_data, FALSE);
+      AddData(wh, add_data, FALSE);
     }
     else //定数
     {
@@ -73,7 +77,7 @@ void UNDATAUP_Update(UNITEDNATIONS_SAVE *un_data, UNITEDNATIONS_SAVE *add_data)
       del_idx = GetDataIdxByCountryCode(un_data, country_code);
       DelData(un_data, del_idx);
       //リストの最後尾へ追加  自分の持っていたデータには存在していなかったので会話フラグはFALSE確定
-      AddData(un_data, add_data, FALSE);
+      AddData(wh, add_data, FALSE);
     }
   }
 }
@@ -219,6 +223,30 @@ static void  DelData(UNITEDNATIONS_SAVE *un_data, const u32 inDelIdx)
 //----------------------------------------------------------
 /**
  * @brief	指定位置のデータを削除してデータをつめる
+ * @param	  wh          wifi履歴データポインタ
+ * @param   add_data    追加する国連データ
+ * @param   inTalkFlg   追加するデータの人を会話したか（自分が持っていたデータの更新の可能性があるので）
+ *
+ * @return	none
+ */
+//----------------------------------------------------------
+static void  AddData(WIFI_HISTORY * wh, UNITEDNATIONS_SAVE *add_data, const BOOL inTalkFlg)
+{
+  UNITEDNATIONS_SAVE *un_data = WIFIHISTORY_GetUNDataPtr(wh);
+  AddDataCore(un_data, add_data, inTalkFlg);
+  //国ビット立てる
+  {
+    u32 code;
+    //国コードを取得
+    code = MyStatus_GetMyNation(&add_data->aMyStatus);
+    WIFIHISTORY_SetCountryBit(wh, code);
+  }
+}
+
+
+//----------------------------------------------------------
+/**
+ * @brief	指定位置のデータを削除してデータをつめる
  * @param	  un_data     国連データの先頭ポインタ
  * @param   add_data    追加する国連データ
  * @param   inTalkFlg   追加するデータの人を会話したか（自分が持っていたデータの更新の可能性があるので）
@@ -226,7 +254,7 @@ static void  DelData(UNITEDNATIONS_SAVE *un_data, const u32 inDelIdx)
  * @return	none
  */
 //----------------------------------------------------------
-static void  AddData(UNITEDNATIONS_SAVE *un_data, UNITEDNATIONS_SAVE *add_data, const BOOL inTalkFlg)
+static void  AddDataCore(UNITEDNATIONS_SAVE *un_data, UNITEDNATIONS_SAVE *add_data, const BOOL inTalkFlg)
 {
   u32 last_idx;
 

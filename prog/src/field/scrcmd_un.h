@@ -16,3 +16,5 @@ extern VMCMD_RESULT EvCmdUn_CheckTalkFlg( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdUn_SetPlayerNature( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdUn_SetCountryInfo( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdUn_GetRoomObjCode( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdUn_GetRoomObjNum( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdUn_GetRoomObjMsg( VMHANDLE *core, void *wk );

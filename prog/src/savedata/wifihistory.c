@@ -372,4 +372,61 @@ UNITEDNATIONS_SAVE *WIFIHISTORY_GetUNDataPtr(WIFI_HISTORY * wh)
   return wh->aUnitedPeople;
 }
 
+//----------------------------------------------------------
+/**
+ * @brief	指定インデックスの国ビットを立てる
+ * @param	wh			WIFI履歴データへのポインタ
+ * @param inCountryCode
+ * @return none
+ */
+//----------------------------------------------------------
+void WIFIHISTORY_SetCountryBit(WIFI_HISTORY * wh, const u32 inCountryCode)
+{
+  //指定インデックオーバーチェック
+  if (inCountryCode < WIFI_COUNTRY_MAX)
+  {
+    u32 idx;
+    u8 data;
+    u8 bit_pos; //0～7
+    //指定国のビットが格納されている1バイトデータを配列から取得
+    idx = inCountryCode / 8;
+    data = wh->billopen[idx];
+    //対応するビット位置を算出
+    bit_pos = inCountryCode % 8;
+    //ビットON
+    data |= (1 << bit_pos);
+    //配列に格納しなおし
+    wh->billopen[idx] = data;
+  }
+}
+
+//----------------------------------------------------------
+/**
+ * @brief	指定インデックスの国ビットをチェックする
+ * @param	wh			WIFI履歴データへのポインタ
+ * @param inCountryCode
+ * @return BOOL     ビットが立っていたらTRUE
+ */
+//----------------------------------------------------------
+BOOL WIFIHISTORY_CheckCountryBit(WIFI_HISTORY * wh, const u32 inCountryCode)
+{
+  BOOL rc = FALSE;
+  //指定インデックオーバーチェック
+  if (inCountryCode < WIFI_COUNTRY_MAX)
+  {
+    u32 idx;
+    u8 data;
+    u8 bit_pos; //0～7
+    u8 bit; //0 or 1
+    //指定国のビットが格納されている1バイトデータを配列から取得
+    idx = inCountryCode / 8;
+    data = wh->billopen[idx];
+    //対応するビット位置を算出
+    bit_pos = inCountryCode % 8;
+    //ビットチェック
+    bit = (data >> bit_pos) & 0x1;
+    if (bit) rc = TRUE;
+  }
+  return rc;
+}
 

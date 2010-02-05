@@ -98,5 +98,8 @@ extern MYSTATUS *WIFIHISTORY_GetUnMyStatus(WIFI_HISTORY * wh, const int inIdx);
 
 extern UNITEDNATIONS_SAVE *WIFIHISTORY_GetUNDataPtr(WIFI_HISTORY * wh);
 
+extern void WIFIHISTORY_SetCountryBit(WIFI_HISTORY * wh, const u32 inCountryCode);
+extern BOOL WIFIHISTORY_CheckCountryBit(WIFI_HISTORY * wh, const u32 inCountryCode);
+
 #endif	/* __WIFIHISTORY_H__ */
 
