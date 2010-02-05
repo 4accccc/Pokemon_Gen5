@@ -67,6 +67,19 @@ typedef struct {
 }FRAMELIST_CALLBACK;
 
 // タッチデータ
+/*　※ タッチデータは、項目部分を最初に追加してください
+		{ { 0,15,128,255}, FRAMELIST_TOUCH_PARAM_ITEM or FRAMELIST_TOUCH_PARAM_SLIDE },	// 項目１
+		{ {16,31,128,255}, FRAMELIST_TOUCH_PARAM_ITEM or FRAMELIST_TOUCH_PARAM_SLIDE },	// 項目２
+		{ {32,47,128,255}, FRAMELIST_TOUCH_PARAM_ITEM or FRAMELIST_TOUCH_PARAM_SLIDE },	// 項目３
+		{ {48,63,128,255}, FRAMELIST_TOUCH_PARAM_ITEM or FRAMELIST_TOUCH_PARAM_SLIDE },	// 項目４
+				:
+				:
+		{ {....}, FRAMELIST_TOUCH_PARAM_RAIL },					// レール
+		{ {....}, FRAMELIST_TOUCH_PARAM_PAGE_UP },			// ページアップ
+		{ {....}, FRAMELIST_TOUCH_PARAM_PAGE_DOWN },		// ページダウン
+
+		{ {GFL_UI_TP_HIT_END,0,0,0}, 0 },								// データ終了
+*/
 typedef struct {
 	GFL_UI_TP_HITTBL	tbl;				// 範囲データ
 	FRAMELIST_TOUCH_PARAM	prm;		// パラメータ

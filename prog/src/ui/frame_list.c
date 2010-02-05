@@ -134,6 +134,7 @@ enum {
 
 	COMMAND_SELECT,									// 選択
 
+	COMMAND_ERROR,									// コマンド無効
 	COMMAND_NONE,										// 動作なし
 };
 
@@ -630,12 +631,18 @@ static int MoveListTouch( FRAMELIST_WORK * wk )
 
 	switch( wk->hed.touch[ret].prm ){
 	case FRAMELIST_TOUCH_PARAM_ITEM:					// 項目
+		if( ret >= wk->listPosMax ){
+			return COMMAND_ERROR;					// コマンド無効
+		}
 		wk->listOldPos = wk->listPos;
 		wk->listPos = ret;
 //		return COMMAND_CURSOR_MOVE;		// カーソル移動
 		return COMMAND_SELECT;					// 選択
 
 	case FRAMELIST_TOUCH_PARAM_SLIDE:
+		if( ret >= wk->listPosMax ){
+			return COMMAND_ERROR;					// コマンド無効
+		}
 		wk->listOldPos = wk->listPos;
 		wk->listPos = ret;
 		return COMMAND_SLIDE;
@@ -883,7 +890,7 @@ static u32 MoveListMain( FRAMELIST_WORK * wk )
 		ChangeCursorPosPalette( wk, PALCHG_NONE, wk->listOldPos );
 		wk->hed.cbFunc->move( wk->hed.cbWork, wk->listPos+wk->listScroll, TRUE );
 		InitSlideMove( wk, wk->listPos );
-//		PMSND_PlaySE( SEQ_SE_SYS_06 );
+		PMSND_PlaySE( SEQ_SE_SYS_06 );
 		return FRAMELIST_RET_SLIDE;
 
 	case COMMAND_SELECT:					// 選択
@@ -894,6 +901,7 @@ static u32 MoveListMain( FRAMELIST_WORK * wk )
 		}
 		return wk->listPos;
 
+	case COMMAND_ERROR:						// コマンド無効
 	case COMMAND_NONE:						// 動作なし
 		break;
 	}
