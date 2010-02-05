@@ -632,7 +632,15 @@ GMEVENT * FIELD_EVENT_CheckUnion( GAMESYS_WORK *gsys, void *work )
 
   if(unisys == NULL){
     //ユニオン終了
+  #if 1   //※check　コロシアムマップをチェックする為、ユニオン限定にしておく
+          //         コロシアム込みでエラー処理が確定したら修正を行う
+    if(ZONEDATA_IsUnionRoom(FIELDMAP_GetZoneID(fieldWork)) == TRUE){
+      return EVENT_ChangeMapFromUnion( gsys, fieldWork );
+    }
+    return NULL;
+  #else
     return EVENT_ChangeMapFromUnion( gsys, fieldWork );
+  #endif
   }
   
   if(UnionMain_GetFinishReq(unisys) == TRUE){
