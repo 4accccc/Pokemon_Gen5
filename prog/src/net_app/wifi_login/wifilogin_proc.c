@@ -156,17 +156,13 @@ struct _WIFILOGIN_WORK {
   BOOL receive_ok;
   BOOL bInitMessage;
   BOOL bSaving;
-  BOOL bDreamWorld;
   SAVE_CONTROL_WORK* pSave;
-  APP_TASKMENU_WORK* pAppTask;
+  WIFILOGIN_YESNO_WORK* pSelectWork;  //選択肢
   WIFILOGIN_DISP_WORK* pDispWork;  // 描画系
   WIFILOGIN_MESSAGE_WORK* pMessageWork; //メッセージ系
   WIFI_LIST* pList;
   WIFILOGIN_PARAM * dbw;  //親のワーク
   GAMEDATA* gamedata;
-  GAMESYS_WORK *gameSys_;
-  FIELDMAP_WORK *fieldWork_;
-  GMEVENT* event_;
 };
 
 
@@ -176,17 +172,7 @@ struct _WIFILOGIN_WORK {
 //-----------------------------------------------
 static void _changeState(WIFILOGIN_WORK* pWork,StateFunc* state);
 static void _changeStateDebug(WIFILOGIN_WORK* pWork,StateFunc* state, int line);
-
-static void _modeSelectMenuInit(WIFILOGIN_WORK* pWork);
-static void _modeSelectMenuWait(WIFILOGIN_WORK* pWork);
 static void _profileIDCheck(WIFILOGIN_WORK* pWork);
-
-static void _modeReportInit(WIFILOGIN_WORK* pWork);
-static void _modeReportWait(WIFILOGIN_WORK* pWork);
-static void _modeReportWait2(WIFILOGIN_WORK* pWork);
-static BOOL _modeSelectMenuButtonCallback(int bttnid,WIFILOGIN_WORK* pWork);
-static void _modeSelectBattleTypeInit(WIFILOGIN_WORK* pWork);
-
 
 
 
@@ -642,8 +628,8 @@ static void _connectionStart(WIFILOGIN_WORK* pWork)
 //------------------------------------------------------------------------------
 static void _modeProfileWait2(WIFILOGIN_WORK* pWork)
 {
-  if(APP_TASKMENU_IsFinish(pWork->pAppTask)){
-    int selectno = APP_TASKMENU_GetCursorPos(pWork->pAppTask);
+  if(WIFILOGIN_MESSAGE_YesNoIsFinish(pWork->pSelectWork)){
+    int selectno = WIFILOGIN_MESSAGE_YesNoGetCursorPos(pWork->pSelectWork);
 
     if(selectno==0){
       pWork->dbw->result  = WIFILOGIN_RESULT_LOGIN;
@@ -655,16 +641,16 @@ static void _modeProfileWait2(WIFILOGIN_WORK* pWork)
       _CHANGE_STATE(pWork,NULL);
     }
     WIFILOGIN_MESSAGE_SystemMessageEnd(pWork->pMessageWork);
-    APP_TASKMENU_CloseMenu(pWork->pAppTask);
-    pWork->pAppTask=NULL;
+    WIFILOGIN_MESSAGE_YesNoEnd(pWork->pSelectWork);
+    pWork->pSelectWork=NULL;
     G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_OBJ , 0 );
   }
 }
 
 static void _modeLoginWait2(WIFILOGIN_WORK* pWork)
 {
-  if(APP_TASKMENU_IsFinish(pWork->pAppTask)){
-    int selectno = APP_TASKMENU_GetCursorPos(pWork->pAppTask);
+  if(WIFILOGIN_MESSAGE_YesNoIsFinish(pWork->pSelectWork)){
+    int selectno = WIFILOGIN_MESSAGE_YesNoGetCursorPos(pWork->pSelectWork);
 
     if(selectno==0){
       pWork->dbw->result  = WIFILOGIN_RESULT_LOGIN;
@@ -676,8 +662,8 @@ static void _modeLoginWait2(WIFILOGIN_WORK* pWork)
       _CHANGE_STATE(pWork,NULL);
     }
     WIFILOGIN_MESSAGE_InfoMessageEnd(pWork->pMessageWork);
-    APP_TASKMENU_CloseMenu(pWork->pAppTask);
-    pWork->pAppTask=NULL;
+    WIFILOGIN_MESSAGE_YesNoEnd(pWork->pSelectWork);
+    pWork->pSelectWork=NULL;
     G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_OBJ , 0 );
   }
 }
@@ -693,7 +679,7 @@ static void _modeProfileWait(WIFILOGIN_WORK* pWork)
   if(!WIFILOGIN_MESSAGE_InfoMessageEndCheck(pWork->pMessageWork)){
     return;
   }
-  pWork->pAppTask = WIFILOGIN_MESSAGE_YesNoStart(pWork->pMessageWork,WIFILOGIN_YESNOTYPE_SYS);
+  pWork->pSelectWork = WIFILOGIN_MESSAGE_YesNoStart(pWork->pMessageWork,WIFILOGIN_YESNOTYPE_SYS);
   _CHANGE_STATE(pWork,_modeProfileWait2);
 }
 
@@ -704,7 +690,7 @@ static void _modeLoginWait(WIFILOGIN_WORK* pWork)
   if(!WIFILOGIN_MESSAGE_InfoMessageEndCheck(pWork->pMessageWork)){
     return;
   }
-  pWork->pAppTask = WIFILOGIN_MESSAGE_YesNoStart(pWork->pMessageWork,WIFILOGIN_YESNOTYPE_INFO);
+ pWork->pSelectWork = WIFILOGIN_MESSAGE_YesNoStart(pWork->pMessageWork,WIFILOGIN_YESNOTYPE_INFO);
   _CHANGE_STATE(pWork,_modeLoginWait2);
 }
 
@@ -712,8 +698,8 @@ static void _modeLoginWait(WIFILOGIN_WORK* pWork)
 
 static void _modeDifferDSWait5(WIFILOGIN_WORK* pWork)
 {
-  if(APP_TASKMENU_IsFinish(pWork->pAppTask)){
-    int selectno = APP_TASKMENU_GetCursorPos(pWork->pAppTask);
+  if(WIFILOGIN_MESSAGE_YesNoIsFinish(pWork->pSelectWork)){
+    int selectno = WIFILOGIN_MESSAGE_YesNoGetCursorPos(pWork->pSelectWork);
 
     if(selectno==0){
       pWork->dbw->result  = WIFILOGIN_RESULT_LOGIN;
@@ -726,8 +712,8 @@ static void _modeDifferDSWait5(WIFILOGIN_WORK* pWork)
       _CHANGE_STATE(pWork,NULL);
     }
     WIFILOGIN_MESSAGE_SystemMessageEnd(pWork->pMessageWork);
-    APP_TASKMENU_CloseMenu(pWork->pAppTask);
-    pWork->pAppTask=NULL;
+    WIFILOGIN_MESSAGE_YesNoEnd(pWork->pSelectWork);
+    pWork->pSelectWork=NULL;
   }
 }
 
@@ -736,15 +722,15 @@ static void _modeDifferDSWait5(WIFILOGIN_WORK* pWork)
 static void _modeDifferDSWait4(WIFILOGIN_WORK* pWork)
 {
 
-  pWork->pAppTask = WIFILOGIN_MESSAGE_YesNoStart(pWork->pMessageWork,WIFILOGIN_YESNOTYPE_SYS);
+  pWork->pSelectWork = WIFILOGIN_MESSAGE_YesNoStart(pWork->pMessageWork,WIFILOGIN_YESNOTYPE_SYS);
   _CHANGE_STATE(pWork,_modeDifferDSWait5);
 }
 
 
 static void _modeDifferDSWait3(WIFILOGIN_WORK* pWork)
 {
-  if(APP_TASKMENU_IsFinish(pWork->pAppTask)){
-    int selectno = APP_TASKMENU_GetCursorPos(pWork->pAppTask);
+  if(WIFILOGIN_MESSAGE_YesNoIsFinish(pWork->pSelectWork)){
+    int selectno = WIFILOGIN_MESSAGE_YesNoGetCursorPos(pWork->pSelectWork);
 
     if(selectno==0){
       pWork->dbw->result  = WIFILOGIN_RESULT_LOGIN;
@@ -756,8 +742,8 @@ static void _modeDifferDSWait3(WIFILOGIN_WORK* pWork)
       WIFILOGIN_MESSAGE_SystemMessageEnd(pWork->pMessageWork);
       _CHANGE_STATE(pWork,NULL);
     }
-    APP_TASKMENU_CloseMenu(pWork->pAppTask);
-    pWork->pAppTask=NULL;
+    WIFILOGIN_MESSAGE_YesNoEnd(pWork->pSelectWork);
+    pWork->pSelectWork=NULL;
   }
 }
 
@@ -767,7 +753,7 @@ static void _modeDifferDSWait2(WIFILOGIN_WORK* pWork)
 {
 
 
-  pWork->pAppTask = WIFILOGIN_MESSAGE_YesNoStart(pWork->pMessageWork,WIFILOGIN_YESNOTYPE_SYS);
+  pWork->pSelectWork = WIFILOGIN_MESSAGE_YesNoStart(pWork->pMessageWork,WIFILOGIN_YESNOTYPE_SYS);
   _CHANGE_STATE(pWork,_modeDifferDSWait3);
 }
 
@@ -778,7 +764,6 @@ static void _modeDifferDSWait(WIFILOGIN_WORK* pWork)
     WIFILOGIN_MESSAGE_SystemMessageDisp(pWork->pMessageWork, dwc_message_0006);
     _CHANGE_STATE(pWork,_modeDifferDSWait2);
   }
-//  pWork->pAppTask = WIFILOGIN_MESSAGE_YesNoStart(pWork->pMessageWork,WIFILOGIN_YESNOTYPE_SYS);
 }
 
 //------------------------------------------------------------------------------
@@ -809,19 +794,6 @@ static void _profileIDCheck(WIFILOGIN_WORK* pWork)
 
 }
 
-
-static void _modeSelectMenuInit(WIFILOGIN_WORK* pWork)
-{ 
-  int aMsgBuff[]={dwc_message_0013,dwc_message_0014};
-
-  WIFILOGIN_MESSAGE_ButtonWindowCreate(NELEMS(aMsgBuff), aMsgBuff, pWork->pMessageWork, _BttnCallBack, pWork);
-
-	pWork->touch = &_modeSelectMenuButtonCallback;
-
-	_CHANGE_STATE(pWork,_modeSelectMenuWait);
-
-}
-
 //------------------------------------------------------------------------------
 /**
  * @brief   フェードアウト処理
@@ -848,66 +820,6 @@ static void _modeFadeStart(WIFILOGIN_WORK* pWork)
   WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
                   WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
   _CHANGE_STATE(pWork,_modeFadeout);        // 終わり
-}
-
-//------------------------------------------------------------------------------
-/**
- * @brief   モードセレクト画面タッチ処理
- * @retval  none
- */
-//------------------------------------------------------------------------------
-static BOOL _modeSelectMenuButtonCallback(int bttnid,WIFILOGIN_WORK* pWork)
-{
-  switch( bttnid ){
-  case _SELECTMODE_GSYNC:
-		PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
-    _CHANGE_STATE(pWork,_modeReportInit);
-    return TRUE;
-  case _SELECTMODE_UTIL:
-    PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
-    _CHANGE_STATE(pWork,_modeReportInit);
-    return TRUE;
-  case _SELECTMODE_EXIT:
-		PMSND_PlaySystemSE(SEQ_SE_CANCEL1);
-    _CHANGE_STATE(pWork,_modeFadeStart);        // 終わり
-    return TRUE;
-  default:
-    break;
-  }
-  return FALSE;
-}
-
-//------------------------------------------------------------------------------
-/**
- * @brief   モードセレクト画面待機
- * @retval  none
- */
-//------------------------------------------------------------------------------
-static void _modeSelectMenuWait(WIFILOGIN_WORK* pWork)
-{
-	if(WIPE_SYS_EndCheck()){
-		WIFILOGIN_MESSAGE_ButtonWindowMain( pWork->pMessageWork );
-	}
-}
-
-
-//------------------------------------------------------------------------------
-/**
- * @brief   セーブ確認画面初期化
- * @retval  none
- */
-//------------------------------------------------------------------------------
-static void _modeReportInit(WIFILOGIN_WORK* pWork)
-{
-
-  //    GAMEDATA_Save(GAMESYSTEM_GetGameData(GMEVENT_GetGameSysWork(event)));
-
-  GFL_BG_ClearScreenCodeVReq(GFL_BG_FRAME1_S,0);
-  
- // WIFILOGIN_MESSAGE_InfoMessageDisp(pWork->pMessageWork,GAMESYNC_004);
-
-  
-  _CHANGE_STATE(pWork,_modeReportWait);
 }
 
 
@@ -948,53 +860,6 @@ static void _modeReporting(WIFILOGIN_WORK* pWork)
   }
 }
 
-//------------------------------------------------------------------------------
-/**
- * @brief   セーブ確認画面待機
- * @retval  none
- */
-//------------------------------------------------------------------------------
-static void _modeReportWait2(WIFILOGIN_WORK* pWork)
-{
-
-  if(APP_TASKMENU_IsFinish(pWork->pAppTask)){
-    int selectno = APP_TASKMENU_GetCursorPos(pWork->pAppTask);
-
-    if(selectno==0){
-
-
-      pWork->dbw->result  = WIFILOGIN_RESULT_LOGIN;
-      GAMEDATA_SaveAsyncStart(pWork->gamedata);
-      _CHANGE_STATE(pWork,_modeReporting);
-    }
-    else{
-      GFL_BG_ClearScreen(GFL_BG_FRAME3_M);
-      pWork->dbw->result  = WIFILOGIN_RESULT_CANCEL;
-      _CHANGE_STATE(pWork,NULL);
-    }
-    APP_TASKMENU_CloseMenu(pWork->pAppTask);
-    pWork->pAppTask=NULL;
-    G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_OBJ , 0 );
-  }
-}
-
-
-
-//------------------------------------------------------------------------------
-/**
- * @brief   セーブ確認画面待機
- * @retval  none
- */
-//------------------------------------------------------------------------------
-static void _modeReportWait(WIFILOGIN_WORK* pWork)
-{
-  if(!WIFILOGIN_MESSAGE_InfoMessageEndCheck(pWork->pMessageWork)){
-    return;
-  }
-  pWork->pAppTask = WIFILOGIN_MESSAGE_YesNoStart(pWork->pMessageWork,WIFILOGIN_YESNOTYPE_INFO);
-  _CHANGE_STATE(pWork,_modeReportWait2);
-}
-
 
 //------------------------------------------------------------------------------
 /**
@@ -1006,16 +871,15 @@ static GFL_PROC_RESULT WiFiLogin_ProcInit( GFL_PROC * proc, int * seq, void * pw
 {
   WIFILOGIN_PARAM* pEv=pwk;
 	
-  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_IRCBATTLE, 0x18000 );
+  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_WIFILOGIN, 0x18000 );
 
   {
-    WIFILOGIN_WORK *pWork = GFL_PROC_AllocWork( proc, sizeof( WIFILOGIN_WORK ), HEAPID_IRCBATTLE );
+    WIFILOGIN_WORK *pWork = GFL_PROC_AllocWork( proc, sizeof( WIFILOGIN_WORK ), HEAPID_WIFILOGIN );
     GFL_STD_MemClear(pWork, sizeof(WIFILOGIN_WORK));
-    pWork->heapID = HEAPID_IRCBATTLE;
+    pWork->heapID = HEAPID_WIFILOGIN;
     pWork->gamedata = pEv->gamedata;
-    pWork->bDreamWorld = pEv->bDreamWorld;
-    pWork->pDispWork = WIFILOGIN_DISP_Init(pWork->heapID,pEv->bDreamWorld);
-    pWork->pMessageWork = WIFILOGIN_MESSAGE_Init(pWork->heapID, NARC_message_wifi_system_dat);
+    pWork->pDispWork = WIFILOGIN_DISP_Init(pWork->heapID,pEv->bg,pEv->display);
+    pWork->pMessageWork = WIFILOGIN_MESSAGE_Init(pWork->heapID, NARC_message_wifi_system_dat,pEv->display);
     pWork->pSave = GAMEDATA_GetSaveControlWork(pEv->gamedata);
     pWork->pList = GAMEDATA_GetWiFiList(pEv->gamedata);
 
@@ -1027,7 +891,6 @@ static GFL_PROC_RESULT WiFiLogin_ProcInit( GFL_PROC * proc, int * seq, void * pw
     
     if(GFL_NET_IsInit()){       // 接続中
       GF_ASSERT(0);
-      //_CHANGE_STATE(pWork,_modeSelectMenuInit);
     }
     else{
       //接続開始 プロファイル検査
@@ -1057,8 +920,8 @@ static GFL_PROC_RESULT WiFiLogin_ProcMain( GFL_PROC * proc, int * seq, void * pw
     retCode = GFL_PROC_RES_CONTINUE;
   }
 
-  if(pWork->pAppTask){
-    APP_TASKMENU_UpdateMenu(pWork->pAppTask);
+  if(pWork->pSelectWork){
+    WIFILOGIN_MESSAGE_YesNoUpdate(pWork->pSelectWork);
   }
 
   WIFILOGIN_DISP_Main(pWork->pDispWork);
@@ -1081,15 +944,14 @@ static GFL_PROC_RESULT WiFiLogin_ProcEnd( GFL_PROC * proc, int * seq, void * pwk
 
 //  EVENT_IrcBattleSetType(pParentWork, pWork->selectType);
 
-  GFL_PROC_FreeWork(proc);
-
 	GFL_BG_FreeBGControl(_SUBSCREEN_BGPLANE);
 
 
   WIFILOGIN_MESSAGE_End(pWork->pMessageWork);
   WIFILOGIN_DISP_End(pWork->pDispWork);
 
-	GFL_HEAP_DeleteHeap(HEAPID_IRCBATTLE);
+  GFL_PROC_FreeWork(proc);
+	GFL_HEAP_DeleteHeap(HEAPID_WIFILOGIN);
   //EVENT_IrcBattle_SetEnd(pParentWork);
 
 

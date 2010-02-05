@@ -1204,7 +1204,8 @@ SRCS_OVERLAY_DPW_COMMON   = 							net/pdw_ca.c \
 #===> SRCS_OVERLAY_DPW_COMMON
 SRCS_OVERLAY_WIFI_LOGIN =  net_app/wifi_login/wifilogin_proc.c \
 								net_app/wifi_login/wifilogin_disp.c \
-								net_app/wifi_login/wifilogin_message.c
+								net_app/wifi_login/wifilogin_message.c \
+                net_app/wifi_login/wifilogout_proc.c
 
 
 

@@ -104,7 +104,6 @@ static GMEVENT_RESULT EVENT_DebugWifiMatchMain(GMEVENT * event, int *  seq, void
       dbw->p_sub_wk = GFL_HEAP_AllocClearMemory(HEAPID_PROC,sizeof(WIFILOGIN_PARAM));
       p_param = dbw->p_sub_wk;
       p_param->gamedata = GAMESYSTEM_GetGameData( gsys );
-      p_param->bDreamWorld  = FALSE;
       GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(wifi_login), &WiFiLogin_ProcData, dbw->p_sub_wk);
     }
     (*seq)++;

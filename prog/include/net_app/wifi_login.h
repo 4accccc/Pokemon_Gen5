@@ -23,15 +23,33 @@ typedef enum
   WIFILOGIN_RESULT_CANCEL,//キャンセルした
 } WIFILOGIN_RESULT;
 
+//-------------------------------------
+///	WIFILOGIN表示方法 文字やはいいいえが表示されるディスプレイ
+//=====================================
+typedef enum
+{
+  WIFILOGIN_DISPLAY_DOWN, //下画面にテキストと選択肢を表示
+  WIFILOGIN_DISPLAY_UP,   //上画面にテキストと選択肢を表示
+} WIFILOGIN_DISPLAY;
+
+//-------------------------------------
+///	WIFILOGIN表示方法 
+//=====================================
+typedef enum
+{
+  WIFILOGIN_BG_NORMAL,      //通常用
+  WIFILOGIN_BG_DREAM_WORLD, //ドリームワールド用
+} WIFILOGIN_BG;
 
 //-------------------------------------
 ///	WIFILOGINに渡す引数
 //=====================================
 typedef struct 
 {
-  GAMEDATA      *gamedata;  //[in ]ゲームデータ
-  int bDreamWorld;          //[in ]ドリームワールドの時は背景変更
-  WIFILOGIN_RESULT  result; //[out]終了方法
+  GAMEDATA      *gamedata;    //[in ]ゲームデータ
+  WIFILOGIN_BG  bg;           //[in ]使用する背景
+  WIFILOGIN_DISPLAY display;  //[in ]どちらの画面を使うか
+  WIFILOGIN_RESULT  result;   //[out]終了方法
 } WIFILOGIN_PARAM;
 
 

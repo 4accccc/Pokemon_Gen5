@@ -81,7 +81,7 @@ typedef struct{
 struct _WIFILOGIN_DISP_WORK {
 	u32 subchar;
   u32 mainchar;
-  BOOL bDreamWorld;
+  WIFILOGIN_BG  bg;
   HEAPID heapID;
 
   GFL_CLUNIT	*cellUnit;
@@ -128,11 +128,11 @@ static void _moveSmoke(WIFILOGIN_DISP_WORK* pWork);
 static void settingSubBgControl(WIFILOGIN_DISP_WORK* pWork,int frame);
 
 
-WIFILOGIN_DISP_WORK* WIFILOGIN_DISP_Init(HEAPID id, BOOL bDreamWorld)
+WIFILOGIN_DISP_WORK* WIFILOGIN_DISP_Init(HEAPID id, WIFILOGIN_BG bg, WIFILOGIN_DISPLAY display )
 {
   WIFILOGIN_DISP_WORK* pWork = GFL_HEAP_AllocClearMemory(id, sizeof(WIFILOGIN_DISP_WORK));
   pWork->heapID = id;
-  pWork->bDreamWorld = bDreamWorld;
+  pWork->bg = bg;
 
 
   GFL_DISP_GX_SetVisibleControlDirect(0);		//‘SBG&OBJ‚Ì•\Ž¦OFF
@@ -148,30 +148,32 @@ WIFILOGIN_DISP_WORK* WIFILOGIN_DISP_Init(HEAPID id, BOOL bDreamWorld)
   GFL_BG_SetBGMode( &BGsys_data );
   settingSubBgControl(pWork,GFL_BG_FRAME0_M);
   settingSubBgControl(pWork,GFL_BG_FRAME0_S);
-  if(pWork->bDreamWorld){
+  switch( pWork->bg ){
+  case WIFILOGIN_BG_DREAM_WORLD:
     dispOamInit(pWork);
     dispInitDream(pWork);
-  }
-  else{
+    break;
+  case WIFILOGIN_BG_NORMAL:
     dispInit(pWork);
+    break;
   }
 
   GFL_DISP_GXS_SetVisibleControlDirect( GX_PLANEMASK_BG0|GX_PLANEMASK_BG1|GX_PLANEMASK_BG2|GX_PLANEMASK_BG3|GX_PLANEMASK_OBJ );
-  GFL_DISP_GX_SetVisibleControlDirect( GX_PLANEMASK_BG0|GX_PLANEMASK_OBJ );
+  GFL_DISP_GX_SetVisibleControlDirect( GX_PLANEMASK_BG0|GX_PLANEMASK_BG1|GX_PLANEMASK_BG2|GX_PLANEMASK_OBJ );
 
   return pWork;
 }
 
 void WIFILOGIN_DISP_Main(WIFILOGIN_DISP_WORK* pWork)
 {
-  if(pWork->bDreamWorld){
+  if(pWork->bg == WIFILOGIN_BG_DREAM_WORLD){
     dispOamMain(pWork);
   }
 }
 
 void WIFILOGIN_DISP_End(WIFILOGIN_DISP_WORK* pWork)
 {
-  if(pWork->bDreamWorld){
+  if(pWork->bg == WIFILOGIN_BG_DREAM_WORLD){
     dispOamEnd(pWork);
   }
 

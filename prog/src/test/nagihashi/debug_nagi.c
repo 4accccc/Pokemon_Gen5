@@ -42,6 +42,7 @@
 #include "net_app/wifibattlematch.h"
 #include "net_app/battle_recorder.h"
 #include "title/title.h"
+#include "net_app/wifi_logout.h"
 
 #include "savedata/irc_compatible_savedata.h"
 #include "savedata/shortcut.h"
@@ -180,6 +181,8 @@ typedef struct
 	const GFL_PROC_DATA *p_procdata;
 	void	*p_proc_work;
 
+  union
+  { 
 	IRC_RESULT_PARAM			result_param;
 	IRC_COMPATIBLE_PARAM	compatible_param;
 	IRC_AURA_PARAM				aura_param;
@@ -189,6 +192,8 @@ typedef struct
 	TEMPLATE_PARAM				template_param;
 	CONFIG_PANEL_PARAM		config_param;
 	WIFIBATTLEMATCH_PARAM	wifibattlematch_param;
+	WIFILOGOUT_PARAM      wifilogout_param;
+  };
 	NAMEIN_PARAM					*p_namein_param;
 } DEBUG_NAGI_MAIN_WORK;
 
@@ -266,6 +271,7 @@ static void LISTDATA_NextListPage1( DEBUG_NAGI_MAIN_WORK *p_wk );
 static void LISTDATA_FullShortCutData( DEBUG_NAGI_MAIN_WORK *p_wk );
 static void LISTDATA_CallWifiBattleMatch( DEBUG_NAGI_MAIN_WORK *p_wk );
 static void LISTDATA_CallBtlRecorder( DEBUG_NAGI_MAIN_WORK *p_wk );
+static void LISTDATA_CallWifiLogout( DEBUG_NAGI_MAIN_WORK *p_wk );
 //3d
 static void GRAPHIC_3D_Init( GRAPHIC_3D_WORK *p_wk, HEAPID heapID );
 static void GRAPHIC_3D_Exit( GRAPHIC_3D_WORK *p_wk );
@@ -344,10 +350,11 @@ enum
 	LISTDATA_SEQ_SHORTCUTDATA_FULL,
 	LISTDATA_SEQ_PROC_WIFIBATTLEMATCH,
 	LISTDATA_SEQ_PROC_BTLRECORDER,
+	LISTDATA_SEQ_PROC_WIFILOGOUT,
 
 	LISTDATA_SEQ_MAX,
 };
-static const LISTDATA_FUNCTION	sc_list_funciton[]	= 
+static const LISTDATA_FUNCTION	sc_list_funciton[LISTDATA_SEQ_MAX]	= 
 {	
 	LISTDATA_CallProcAura,
 	LISTDATA_CallProcRhythm,
@@ -371,6 +378,7 @@ static const LISTDATA_FUNCTION	sc_list_funciton[]	=
 	LISTDATA_FullShortCutData,
 	LISTDATA_CallWifiBattleMatch,
 	LISTDATA_CallBtlRecorder,
+  LISTDATA_CallWifiLogout,
 };
 
 //-------------------------------------
@@ -399,7 +407,7 @@ static const LIST_SETUP_TBL sc_list_data_home[]	=
 		L"名前入力", LISTDATA_SEQ_PROC_NAMEIN,
 	},
 	{	
-		L"コンフィグ", LISTDATA_SEQ_PROC_CONFIG
+		L"ログアウト", LISTDATA_SEQ_PROC_WIFILOGOUT,
 	},
 	{	
 		L"テンプレート", LISTDATA_SEQ_PROC_TEMPLATE,
@@ -1318,6 +1326,28 @@ static void LISTDATA_CallBtlRecorder( DEBUG_NAGI_MAIN_WORK *p_wk )
 	DEBUG_NAGI_COMMAND_NextProc( p_wk, FS_OVERLAY_ID(battle_recorder), &BattleRecorder_ProcData, &s_battle_recorder_param.mode );
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  WIFIログアウト
+ *
+ *	@param	DEBUG_NAGI_MAIN_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void LISTDATA_CallWifiLogout( DEBUG_NAGI_MAIN_WORK *p_wk )
+{ 
+  p_wk->wifilogout_param.bg = WIFILOGIN_BG_NORMAL;
+  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L )
+  { 
+    p_wk->wifilogout_param.bg = WIFILOGIN_BG_DREAM_WORLD;
+  }
+
+  p_wk->wifilogout_param.display = WIFILOGIN_DISPLAY_DOWN;
+  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_X )
+  { 
+    p_wk->wifilogout_param.display  = WIFILOGIN_DISPLAY_UP;
+  }
+  DEBUG_NAGI_COMMAND_CallProc( p_wk, FS_OVERLAY_ID(wifi_login), &WiFiLogout_ProcData, &p_wk->wifilogout_param );
+}
 //=============================================================================
 /**
  *				GRAPHIC

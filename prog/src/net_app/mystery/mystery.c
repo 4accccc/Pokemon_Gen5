@@ -2124,7 +2124,8 @@ static void SEQFUNC_WifiLogin( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk
     p_wk->p_wifilogin_param = GFL_HEAP_AllocMemory( HEAPID_MYSTERYGIFT, sizeof(WIFILOGIN_PARAM) );
     GFL_STD_MemClear( p_wk->p_wifilogin_param, sizeof(WIFILOGIN_PARAM) );
     p_wk->p_wifilogin_param->gamedata     = GAMEDATA_Create(HEAPID_MYSTERYGIFT);
-    p_wk->p_wifilogin_param->bDreamWorld  = FALSE;
+    p_wk->p_wifilogin_param->bg           = WIFILOGIN_BG_NORMAL;
+    p_wk->p_wifilogin_param->display      = WIFILOGIN_DISPLAY_UP;
 
     GFL_PROC_SysCallProc( FS_OVERLAY_ID(wifi_login), &WiFiLogin_ProcData, p_wk->p_wifilogin_param );
     *p_seq  = SEQ_CREATE;

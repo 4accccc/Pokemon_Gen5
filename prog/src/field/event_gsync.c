@@ -268,7 +268,8 @@ GMEVENT* EVENT_GSync(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,GMEVENT * pre
   dbw->ctrl = GAMEDATA_GetSaveControlWork(dbw->gameData);
   dbw->gsys = gsys;
   dbw->aLoginWork.gamedata = GAMESYSTEM_GetGameData(gsys);
-  dbw->aLoginWork.bDreamWorld = TRUE;
+  dbw->aLoginWork.bg = WIFILOGIN_BG_DREAM_WORLD;
+  dbw->aLoginWork.bg = WIFILOGIN_DISPLAY_DOWN;
   return event;
 }
 

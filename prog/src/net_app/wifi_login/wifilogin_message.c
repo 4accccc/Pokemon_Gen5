@@ -74,22 +74,16 @@
 
 #define _SUBLIST_NORMAL_PAL   (9)   //サブメニューの通常パレット
 
-typedef struct {
-  int leftx;
-  int lefty;
-  int width;
-  int height;
-} _WINDOWPOS;
 
-
-static _WINDOWPOS wind4[]={
-  { ((0x20-_BUTTON_WIN_WIDTH)/2), (0x18-(2+_BUTTON_WIN_HEIGHT)*4), _BUTTON_WIN_WIDTH,_BUTTON_WIN_HEIGHT},
-  { ((0x20-_BUTTON_WIN_WIDTH)/2), (0x18-(2+_BUTTON_WIN_HEIGHT)*3), _BUTTON_WIN_WIDTH,_BUTTON_WIN_HEIGHT},
-  { ((0x20-_BUTTON_WIN_WIDTH)/2), (0x18-(2+_BUTTON_WIN_HEIGHT)*2), _BUTTON_WIN_WIDTH,_BUTTON_WIN_HEIGHT},
-  { ((0x20-_BUTTON_WIN_WIDTH)/2), (0x18-(2+_BUTTON_WIN_HEIGHT)), _BUTTON_WIN_WIDTH,_BUTTON_WIN_HEIGHT},
+struct _WIFILOGIN_YESNO_WORK
+{ 
+  WIFILOGIN_DISPLAY display;
+  APP_TASKMENU_ITEMWORK appitem[_SUBMENU_LISTMAX];
+	APP_TASKMENU_RES  *pAppTaskRes;
+  APP_TASKMENU_WORK *pAppTask;
+  BMPMENU_WORK      *pYesNoWork;
+  u32 yesno_ret;
 };
-
-
 
 struct _WIFILOGIN_MESSAGE_WORK {
   u32 bgchar;  //GFL_ARCUTIL_TRANSINFO
@@ -112,35 +106,28 @@ struct _WIFILOGIN_MESSAGE_WORK {
 	GFL_TCBLSYS *pMsgTcblSys;
   PRINT_QUE*            SysMsgQue;
 
-  APP_TASKMENU_ITEMWORK appitem[_SUBMENU_LISTMAX];
-	APP_TASKMENU_RES* pAppTaskRes;
 //  int windowNum;
   HEAPID heapID;
-  
+
+  WIFILOGIN_DISPLAY display;
+
+  WIFILOGIN_YESNO_WORK  yesno_wk;
 };
 
 
-static const GFL_UI_TP_HITTBL bttndata[] = {
-  //上下左右
-  {	((0x18-(2+_BUTTON_WIN_HEIGHT)*4)*8),(((0x18-(2+_BUTTON_WIN_HEIGHT)*4)*8)+_BUTTON_WIN_HEIGHT*8)-1,
-    (((0x20-_BUTTON_WIN_WIDTH)/2)*8),     ((((0x20-_BUTTON_WIN_WIDTH)/2)*8)+_BUTTON_WIN_WIDTH*8)-1  },
-  {	((0x18-(2+_BUTTON_WIN_HEIGHT)*3)*8),(((0x18-(2+_BUTTON_WIN_HEIGHT)*3)*8)+_BUTTON_WIN_HEIGHT*8)-1,
-    (((0x20-_BUTTON_WIN_WIDTH)/2)*8),     ((((0x20-_BUTTON_WIN_WIDTH)/2)*8)+_BUTTON_WIN_WIDTH*8)-1  },
-  {	((0x18-(2+_BUTTON_WIN_HEIGHT)*2)*8),(((0x18-(2+_BUTTON_WIN_HEIGHT)*2)*8)+_BUTTON_WIN_HEIGHT*8)-1,
-    (((0x20-_BUTTON_WIN_WIDTH)/2)*8),     ((((0x20-_BUTTON_WIN_WIDTH)/2)*8)+_BUTTON_WIN_WIDTH*8)-1  },
-  {	((0x18-(2+_BUTTON_WIN_HEIGHT)*1)*8),(((0x18-(2+_BUTTON_WIN_HEIGHT)*1)*8)+_BUTTON_WIN_HEIGHT*8)-1,
-    (((0x20-_BUTTON_WIN_WIDTH)/2)*8),     ((((0x20-_BUTTON_WIN_WIDTH)/2)*8)+_BUTTON_WIN_WIDTH*8)-1  },
-  {GFL_UI_TP_HIT_END,0,0,0},		 //終了データ
-};
+//------------------------------------------------------------------
+//	プロトタイプ
+//------------------------------------------------------------------
+static u8 WifiLogin_Message_GetTextFrame( WIFILOGIN_DISPLAY display );
+static u8 WifiLogin_Message_GetSysFrame( WIFILOGIN_DISPLAY display );
+static BMPMENU_WORK * WIFILOGIN_MESSAGE_YesNoWinCreate(WIFILOGIN_MESSAGE_WORK* pWork);
 
 
-
-
-
-WIFILOGIN_MESSAGE_WORK* WIFILOGIN_MESSAGE_Init(HEAPID id,int msg_dat)
+WIFILOGIN_MESSAGE_WORK* WIFILOGIN_MESSAGE_Init(HEAPID id,int msg_dat, WIFILOGIN_DISPLAY display)
 {
   WIFILOGIN_MESSAGE_WORK* pWork = GFL_HEAP_AllocClearMemory(id, sizeof(WIFILOGIN_MESSAGE_WORK));
-  pWork->heapID = id;
+  pWork->heapID   = id;
+  pWork->display  = display;
 
   GFL_BMPWIN_Init(pWork->heapID);
   GFL_FONTSYS_Init();
@@ -150,15 +137,27 @@ WIFILOGIN_MESSAGE_WORK* WIFILOGIN_MESSAGE_Init(HEAPID id,int msg_dat)
   pWork->pFontHandle = GFL_FONT_Create( ARCID_FONT , NARC_font_large_gftr , GFL_FONT_LOADTYPE_FILE , FALSE , pWork->heapID );
   pWork->pMsgData = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, msg_dat, pWork->heapID );
 
-  pWork->pAppTaskRes =
+  //下画面でしかAPP_TASKは使わない
+  pWork->yesno_wk.pAppTaskRes =
     APP_TASKMENU_RES_Create( GFL_BG_FRAME1_S, _SUBLIST_NORMAL_PAL,
                              pWork->pFontHandle, pWork->SysMsgQue, pWork->heapID  );
 
-  pWork->bgchar = BmpWinFrame_GraphicSetAreaMan(GFL_BG_FRAME1_S, _BUTTON_WIN_PAL, MENU_TYPE_SYSTEM, pWork->heapID);
-  pWork->bgchar2S = BmpWinFrame_GraphicSetAreaMan(GFL_BG_FRAME2_S, _BUTTON_WIN_PAL, MENU_TYPE_SYSTEM, pWork->heapID);
+  pWork->bgchar = BmpWinFrame_GraphicSetAreaMan( WifiLogin_Message_GetTextFrame( pWork->display ), _BUTTON_WIN_PAL, MENU_TYPE_SYSTEM, pWork->heapID);
+  pWork->bgchar2S = BmpWinFrame_GraphicSetAreaMan(WifiLogin_Message_GetSysFrame( pWork->display ), _BUTTON_WIN_PAL, MENU_TYPE_SYSTEM, pWork->heapID);
 	
-	GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG,
+  {
+    PALTYPE paltype;
+    if( pWork->display == WIFILOGIN_DISPLAY_DOWN )
+    { 
+      paltype = PALTYPE_SUB_BG;
+    }
+    else
+    { 
+      paltype = PALTYPE_MAIN_BG;
+    }
+    GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, paltype,
 																0x20*_BUTTON_MSG_PAL, 0x20, pWork->heapID);
+  }
   
   return pWork;
 }
@@ -172,19 +171,20 @@ void WIFILOGIN_MESSAGE_Main(WIFILOGIN_MESSAGE_WORK* pWork)
 
 void WIFILOGIN_MESSAGE_End(WIFILOGIN_MESSAGE_WORK* pWork)
 {
-  GFL_BG_FreeCharacterArea(GFL_BG_FRAME1_S,GFL_ARCUTIL_TRANSINFO_GetPos(pWork->bgchar),
+  GFL_BG_FreeCharacterArea(WifiLogin_Message_GetTextFrame( pWork->display ),
+      GFL_ARCUTIL_TRANSINFO_GetPos(pWork->bgchar),
                            GFL_ARCUTIL_TRANSINFO_GetSize(pWork->bgchar));
-  GFL_BG_FreeCharacterArea(GFL_BG_FRAME2_S,GFL_ARCUTIL_TRANSINFO_GetPos(pWork->bgchar2S),
+  GFL_BG_FreeCharacterArea(WifiLogin_Message_GetSysFrame( pWork->display ),
+                          GFL_ARCUTIL_TRANSINFO_GetPos(pWork->bgchar2S),
                            GFL_ARCUTIL_TRANSINFO_GetSize(pWork->bgchar2S));
 
-  WIFILOGIN_MESSAGE_ButtonWindowDelete(pWork);
 
   GFL_FONTSYS_SetDefaultColor();
   GFL_MSG_Delete( pWork->pMsgData );
   GFL_FONT_Delete(pWork->pFontHandle);
   GFL_STR_DeleteBuffer(pWork->pStrBuf);
 
-  APP_TASKMENU_RES_Delete( pWork->pAppTaskRes );
+  APP_TASKMENU_RES_Delete( pWork->yesno_wk.pAppTaskRes );
   GFL_TCBL_Exit(pWork->pMsgTcblSys);
   PRINTSYS_QUE_Clear(pWork->SysMsgQue);
   PRINTSYS_QUE_Delete(pWork->SysMsgQue);
@@ -211,13 +211,23 @@ void WIFILOGIN_MESSAGE_End(WIFILOGIN_MESSAGE_WORK* pWork)
 void WIFILOGIN_MESSAGE_InfoMessageDisp(WIFILOGIN_MESSAGE_WORK* pWork,int msgid)
 {
   GFL_BMPWIN* pwin;
+  u8 y;
 
   GFL_MSG_GetString( pWork->pMsgData, msgid, pWork->pStrBuf );
+
+  if( pWork->display == WIFILOGIN_DISPLAY_DOWN )
+  { 
+    y = 1;
+  }
+  else
+  { 
+    y = 24-5;
+  }
   
   if(pWork->infoDispWin==NULL){
     pWork->infoDispWin = GFL_BMPWIN_Create(
-      GFL_BG_FRAME1_S ,
-      1 , 1, 30 ,4 ,
+      WifiLogin_Message_GetTextFrame( pWork->display ) ,
+      1 , y, 30 ,4 ,
       _BUTTON_MSG_PAL , GFL_BMP_CHRAREA_GET_B );
   }
   pwin = pWork->infoDispWin;
@@ -232,7 +242,7 @@ void WIFILOGIN_MESSAGE_InfoMessageDisp(WIFILOGIN_MESSAGE_WORK* pWork,int msgid)
 
   GFL_BMPWIN_TransVramCharacter(pwin);
   GFL_BMPWIN_MakeScreen(pwin);
-  GFL_BG_LoadScreenV_Req(GFL_BG_FRAME1_S);
+  GFL_BG_LoadScreenV_Req(WifiLogin_Message_GetTextFrame( pWork->display ));
 }
 
 
@@ -276,7 +286,7 @@ void WIFILOGIN_MESSAGE_InfoMessageEnd(WIFILOGIN_MESSAGE_WORK* pWork)
 {
   BmpWinFrame_Clear(pWork->infoDispWin, WINDOW_TRANS_OFF);
   GFL_BMPWIN_ClearScreen(pWork->infoDispWin);
-  GFL_BG_LoadScreenV_Req(GFL_BG_FRAME1_S);
+  GFL_BG_LoadScreenV_Req(WifiLogin_Message_GetTextFrame( pWork->display ));
 }
 
 //------------------------------------------------------------------------------
@@ -288,148 +298,136 @@ void WIFILOGIN_MESSAGE_InfoMessageEnd(WIFILOGIN_MESSAGE_WORK* pWork)
 
 
 
-APP_TASKMENU_WORK* WIFILOGIN_MESSAGE_YesNoStart(WIFILOGIN_MESSAGE_WORK* pWork,int type)
+WIFILOGIN_YESNO_WORK* WIFILOGIN_MESSAGE_YesNoStart(WIFILOGIN_MESSAGE_WORK* pWork,int type)
 {
-  int i;
-  APP_TASKMENU_INITWORK appinit;
-  APP_TASKMENU_WORK* pAppTask;
+  WIFILOGIN_YESNO_WORK* yesno_wk  = &pWork->yesno_wk;
+  yesno_wk->display = pWork->display;
 
-  appinit.heapId = pWork->heapID;
-  appinit.itemNum =  2;
-  appinit.itemWork =  &pWork->appitem[0];
+  switch( yesno_wk->display )
+  { 
+  case WIFILOGIN_DISPLAY_DOWN:
+    { 
+      int i;
+      APP_TASKMENU_INITWORK appinit;
+      APP_TASKMENU_WORK* pAppTask;
 
-  switch(type){
-  case WIFILOGIN_YESNOTYPE_INFO:
-    appinit.charPosX = 32;
-    appinit.charPosY = 13;
-    appinit.posType = ATPT_RIGHT_DOWN;
+      appinit.heapId = pWork->heapID;
+      appinit.itemNum =  2;
+      appinit.itemWork =  &yesno_wk->appitem[0];
+
+      switch(type){
+      case WIFILOGIN_YESNOTYPE_INFO:
+        appinit.charPosX = 32;
+        appinit.charPosY = 13;
+        appinit.posType = ATPT_RIGHT_DOWN;
+        break;
+      case WIFILOGIN_YESNOTYPE_SYS:
+        appinit.charPosX = 32;
+        appinit.charPosY = 24;
+        appinit.posType = ATPT_RIGHT_DOWN;
+        break;
+      }
+      appinit.w				 = APP_TASKMENU_PLATE_WIDTH;
+      appinit.h				 = APP_TASKMENU_PLATE_HEIGHT;
+
+      yesno_wk->appitem[0].str = GFL_STR_CreateBuffer(100, pWork->heapID);
+      GFL_MSG_GetString(pWork->pMsgData, dwc_message_0013, yesno_wk->appitem[0].str);
+      yesno_wk->appitem[0].msgColor = PRINTSYS_LSB_Make( 0xe,0xf,0);
+      yesno_wk->appitem[1].str = GFL_STR_CreateBuffer(100, pWork->heapID);
+      GFL_MSG_GetString(pWork->pMsgData, dwc_message_0014, yesno_wk->appitem[1].str);
+      yesno_wk->appitem[1].msgColor = PRINTSYS_LSB_Make( 0xe,0xf,0);
+      yesno_wk->pAppTask = APP_TASKMENU_OpenMenu(&appinit,yesno_wk->pAppTaskRes);
+      GFL_STR_DeleteBuffer(yesno_wk->appitem[0].str);
+      GFL_STR_DeleteBuffer(yesno_wk->appitem[1].str);
+      G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_OBJ , -8 );
+    }
     break;
-  case WIFILOGIN_YESNOTYPE_SYS:
-    appinit.charPosX = 32;
-    appinit.charPosY = 24;
-    appinit.posType = ATPT_RIGHT_DOWN;
+
+  case WIFILOGIN_DISPLAY_UP:
+    yesno_wk->pYesNoWork = WIFILOGIN_MESSAGE_YesNoWinCreate(pWork);
     break;
   }
-	appinit.w				 = APP_TASKMENU_PLATE_WIDTH;
-	appinit.h				 = APP_TASKMENU_PLATE_HEIGHT;
-
-  pWork->appitem[0].str = GFL_STR_CreateBuffer(100, pWork->heapID);
-  GFL_MSG_GetString(pWork->pMsgData, dwc_message_0013, pWork->appitem[0].str);
-  pWork->appitem[0].msgColor = PRINTSYS_LSB_Make( 0xe,0xf,0);
-  pWork->appitem[1].str = GFL_STR_CreateBuffer(100, pWork->heapID);
-  GFL_MSG_GetString(pWork->pMsgData, dwc_message_0014, pWork->appitem[1].str);
-  pWork->appitem[1].msgColor = PRINTSYS_LSB_Make( 0xe,0xf,0);
-  pAppTask = APP_TASKMENU_OpenMenu(&appinit,pWork->pAppTaskRes);
-  GFL_STR_DeleteBuffer(pWork->appitem[0].str);
-  GFL_STR_DeleteBuffer(pWork->appitem[1].str);
-  G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_OBJ , -8 );
-  return pAppTask;
+  return yesno_wk;
 }
-
 //------------------------------------------------------------------------------
 /**
- * @brief   受け取った数のウインドウを等間隔に作る 幅は3char
- * @retval  none
+ * @brief   はいいいえウインドウ  終了
+ * @param   pWork はいいいえワーク
  */
 //------------------------------------------------------------------------------
-
-void WIFILOGIN_MESSAGE_ButtonWindowCreate(int num,int* pMsgBuff,WIFILOGIN_MESSAGE_WORK* pWork,pBmnCallBackFunc callback,void* pParentWork)
-{
-  int i;
-  u32 cgx;
-  int frame = GFL_BG_FRAME1_S;
-
-
-//  pWork->windowNum = num;
-  GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG,
-                                0x20*_BUTTON_MSG_PAL, 0x20, pWork->heapID);
-	
-  for(i=0;i < num;i++){
-    _WINDOWPOS* pos = wind4;
-
-		GFL_FONTSYS_SetDefaultColor();
-		if(pWork->buttonWin[i]==NULL){
-			pWork->buttonWin[i] = GFL_BMPWIN_Create(
-				frame,
-				pos[i].leftx, pos[i].lefty,
-				pos[i].width, pos[i].height,
-				_BUTTON_MSG_PAL, GFL_BMP_CHRAREA_GET_F);
-		}
-    GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->buttonWin[i]), WINCLR_COL(FBMP_COL_WHITE) );
-    GFL_BMPWIN_MakeScreen(pWork->buttonWin[i]);
-//    GFL_BMPWIN_TransVramCharacter(pWork->buttonWin[i]);
-		BmpWinFrame_Write( pWork->buttonWin[i], WINDOW_TRANS_ON, GFL_ARCUTIL_TRANSINFO_GetPos(pWork->bgchar), _BUTTON_WIN_PAL );
-
-    // システムウインドウ枠描画
-    GFL_MSG_GetString(  pWork->pMsgData, pMsgBuff[i], pWork->pStrBuf );
-    PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->buttonWin[i]), 4, 4, pWork->pStrBuf, pWork->pFontHandle);
-    GFL_BMPWIN_TransVramCharacter(pWork->buttonWin[i]);
-
+void WIFILOGIN_MESSAGE_YesNoEnd( WIFILOGIN_YESNO_WORK* pWork )
+{ 
+  switch( pWork->display )
+  { 
+  case WIFILOGIN_DISPLAY_DOWN:
+    APP_TASKMENU_CloseMenu( pWork->pAppTask );
+    break;
+  case WIFILOGIN_DISPLAY_UP:
+    //下がコメントなのは、BmpMenu_YesNoSelectMainの内部で、決定した瞬間に
+    //EXITされているので
+    //BmpMenu_YesNoMenuExit( pWork->pYesNoWork );
+    break;
   }
-
-
-	if(pWork->pButton){
-		GFL_BMN_Delete(pWork->pButton);
-	}
-  pWork->pButton = NULL;
-	 
-  for(i = num;i < _WINDOW_MAXNUM;i++){
-		if(pWork->buttonWin[i]){
-			GFL_BMPWIN_ClearScreen(pWork->buttonWin[i]);
-			GFL_BG_LoadScreenV_Req(GFL_BG_FRAME1_S);
-			BmpWinFrame_Clear(pWork->buttonWin[i], WINDOW_TRANS_OFF);
-			GFL_BMPWIN_Delete(pWork->buttonWin[i]);
-		}
-    pWork->buttonWin[i] = NULL;
-  }
-	pWork->pButton = GFL_BMN_Create( bttndata, callback, pParentWork,  pWork->heapID );
-	 
 }
-
-//----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 /**
- *	@brief	ボタンイベントコールバック
- *
- *	@param	bttnid		ボタンID
- *	@param	event		イベント種類
- *	@param	p_work		ワーク
+ * @brief   はいいいえウインドウ  実行
+ * @param   pWork はいいいえワーク
  */
-//-----------------------------------------------------------------------------
-
-void WIFILOGIN_MESSAGE_ButtonWindowDelete(WIFILOGIN_MESSAGE_WORK* pWork)
-{
-  int i;
-
-	if(pWork->pButton){
-		GFL_BMN_Delete(pWork->pButton);
-	}
-  pWork->pButton = NULL;
-  for(i=0;i < _WINDOW_MAXNUM;i++){
-		if(pWork->buttonWin[i]){
-			GFL_BMPWIN_ClearScreen(pWork->buttonWin[i]);
-			GFL_BG_LoadScreenV_Req(GFL_BG_FRAME1_S);
-			BmpWinFrame_Clear(pWork->buttonWin[i], WINDOW_TRANS_OFF);
-			GFL_BMPWIN_Delete(pWork->buttonWin[i]);
-		}
-    pWork->buttonWin[i] = NULL;
+//------------------------------------------------------------------------------
+void WIFILOGIN_MESSAGE_YesNoUpdate( WIFILOGIN_YESNO_WORK* pWork )
+{ 
+  switch( pWork->display )
+  { 
+  case WIFILOGIN_DISPLAY_DOWN:
+    APP_TASKMENU_UpdateMenu(pWork->pAppTask);
+    break;
+  case WIFILOGIN_DISPLAY_UP:
+    pWork->yesno_ret  = BmpMenu_YesNoSelectMain( pWork->pYesNoWork );
+    break;
   }
-//  pWork->windowNum = 0;
 }
-
-//----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 /**
- *	@brief	ボタンイベント実行関数
- *
- *	@param	bttnid		ボタンID
- *	@param	event		イベント種類
- *	@param	p_work		ワーク
+ * @brief   はいいいえウインドウ  選んだかどうか
+ * @param   pWork はいいいえワーク
+ * @retval  TRUEで選択終了  FALSEで選択中
  */
-//-----------------------------------------------------------------------------
-
-void WIFILOGIN_MESSAGE_ButtonWindowMain(WIFILOGIN_MESSAGE_WORK* pWork)
-{
-  GFL_BMN_Main( pWork->pButton );
+//------------------------------------------------------------------------------
+BOOL WIFILOGIN_MESSAGE_YesNoIsFinish( const WIFILOGIN_YESNO_WORK* pWork )
+{ 
+  switch( pWork->display )
+  { 
+  case WIFILOGIN_DISPLAY_DOWN:
+    return APP_TASKMENU_IsFinish(pWork->pAppTask);
+  case WIFILOGIN_DISPLAY_UP:
+    return pWork->yesno_ret != BMPMENU_NULL;
+  default:
+    GF_ASSERT(0);
+    return 0;
+  }
 }
+//------------------------------------------------------------------------------
+/**
+ * @brief   はいいいえウインドウ  カーソルの位置を取得
+ * @param   pWork はいいいえワーク
+ * @retval  カーソルの位置を取得
+ */
+//------------------------------------------------------------------------------
+u8 WIFILOGIN_MESSAGE_YesNoGetCursorPos( const WIFILOGIN_YESNO_WORK* pWork )
+{ 
+  switch( pWork->display )
+  { 
+  case WIFILOGIN_DISPLAY_DOWN:
+    return APP_TASKMENU_GetCursorPos(pWork->pAppTask);
+  case WIFILOGIN_DISPLAY_UP:
+    return pWork->yesno_ret;
+  default:
+    GF_ASSERT(0);
+    return 0;
+  }
+}
+
 
 //------------------------------------------------------------------------------
 /**
@@ -446,7 +444,8 @@ void WIFILOGIN_MESSAGE_SystemMessageDisp(WIFILOGIN_MESSAGE_WORK* pWork,int msgid
   
   if(pWork->systemDispWin==NULL){
     pWork->systemDispWin = GFL_BMPWIN_Create(
-      GFL_BG_FRAME2_S , 1 , 2, 30 , 16 ,  _BUTTON_MSG_PAL , GFL_BMP_CHRAREA_GET_B );
+      WifiLogin_Message_GetSysFrame( pWork->display )
+      , 1 , 2, 30 , 16 ,  _BUTTON_MSG_PAL , GFL_BMP_CHRAREA_GET_B );
   }
   pwin = pWork->systemDispWin;
 
@@ -458,7 +457,7 @@ void WIFILOGIN_MESSAGE_SystemMessageDisp(WIFILOGIN_MESSAGE_WORK* pWork,int msgid
 
   GFL_BMPWIN_TransVramCharacter(pwin);
   GFL_BMPWIN_MakeScreen(pwin);
-  GFL_BG_LoadScreenV_Req(GFL_BG_FRAME2_S);
+  GFL_BG_LoadScreenV_Req(WifiLogin_Message_GetSysFrame( pWork->display ));
 }
 
 
@@ -473,7 +472,7 @@ void WIFILOGIN_MESSAGE_SystemMessageEnd(WIFILOGIN_MESSAGE_WORK* pWork)
 {
   BmpWinFrame_Clear(pWork->systemDispWin, WINDOW_TRANS_OFF);
   GFL_BMPWIN_ClearScreen(pWork->systemDispWin);
-  GFL_BG_LoadScreenV_Req(GFL_BG_FRAME2_S);
+  GFL_BG_LoadScreenV_Req(WifiLogin_Message_GetSysFrame( pWork->display ));
 }
 
 
@@ -491,7 +490,55 @@ void WIFILOGIN_MESSAGE_ErrorMessageDisp(WIFILOGIN_MESSAGE_WORK* pWork,int msgid,
   WIFILOGIN_MESSAGE_SystemMessageDisp(pWork, msgid);
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  テキスト表示面を取得
+ *
+ *	@param	WIFILOGIN_DISPLAY display   描画先
+ *
+ *	@return
+ */
+//-----------------------------------------------------------------------------
+static u8 WifiLogin_Message_GetTextFrame( WIFILOGIN_DISPLAY display )
+{ 
+  switch( display )
+  { 
+  case WIFILOGIN_DISPLAY_UP:
+    return GFL_BG_FRAME1_M;
 
+  case WIFILOGIN_DISPLAY_DOWN:
+    return GFL_BG_FRAME1_S;
+
+  default:
+    GF_ASSERT( 0);
+    return 0;
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  システムメッセージ表示面を取得
+ *
+ *	@param	WIFILOGIN_DISPLAY display   描画先
+ *
+ *	@return
+ */
+//-----------------------------------------------------------------------------
+static u8 WifiLogin_Message_GetSysFrame( WIFILOGIN_DISPLAY display )
+{ 
+  switch( display )
+  { 
+  case WIFILOGIN_DISPLAY_UP:
+    return GFL_BG_FRAME2_M;
+
+  case WIFILOGIN_DISPLAY_DOWN:
+    return GFL_BG_FRAME2_S;
+
+  default:
+    GF_ASSERT( 0);
+    return 0;
+  }
+}
 
 //------------------------------------------------------------------
 /**
@@ -501,18 +548,18 @@ void WIFILOGIN_MESSAGE_ErrorMessageDisp(WIFILOGIN_MESSAGE_WORK* pWork,int msgid,
 
  */
 //------------------------------------------------------------------
-#if 0
+#define	FLD_YESNO_WIN_PX	( 24 )
+#define	FLD_YESNO_WIN_PY	( 13 )
 static const BMPWIN_YESNO_DAT _yesNoBmpDat = {
   GFL_BG_FRAME2_M, FLD_YESNO_WIN_PX, FLD_YESNO_WIN_PY,
-  FLD_YESNO_WIN_PAL, FLD_YESNO_WIN_CGX
-  };
+  _BUTTON_MSG_PAL, 0
+};
 
 
-static void WIFILOGIN_MESSAGE_YesNoWinCreate(WIFILOGIN_MESSAGE_WORK* pWork)
+static BMPMENU_WORK * WIFILOGIN_MESSAGE_YesNoWinCreate(WIFILOGIN_MESSAGE_WORK* pWork)
 {
-  pWork->pYesNoWork =
-    BmpMenu_YesNoSelectInit( &_yesNoBmpDat, GFL_ARCUTIL_TRANSINFO_GetPos(wk->menuwin_m2),
-                             MENU_WIN_PAL, 0, pWork->heapID );
+  BMPWIN_YESNO_DAT  dat = _yesNoBmpDat;
+  dat.chrnum  = GFL_ARCUTIL_TRANSINFO_GetPos(pWork->bgchar2S);
+  return BmpMenu_YesNoSelectInit( &_yesNoBmpDat, GFL_ARCUTIL_TRANSINFO_GetPos(pWork->bgchar2S),
+                             _BUTTON_WIN_PAL, 0, pWork->heapID );
 }
-
-#endif
