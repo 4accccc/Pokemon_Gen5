@@ -4482,22 +4482,22 @@
 //--------------------------------------------------------------
 /**
  * @def   わざおぼえ：適用チェック
- * @brief _WAZAOBOE_CHECK_USE
- * @param mode    技覚えモード（script_def.hのSCR_WAZAOBOE_MODE参照）
- * @param ret_wk  script_def.hのSCR_WAZAOBOE_CHECK_RESULT_を参照
- * @retval  SCR_WAZAOBOE_CHECK_RESULT_OK          対象となるポケモンがいる
- * @retval  SCR_WAZAOBOE_CHECK_RESULT_POKEMON_NG  対象となるポケモンがいない
- * @retval  SCR_WAZAOBOE_CHECK_RESULT_NATSUKI_NG  対象となるポケモンはいるがなつきが足りない
+ * @brief _SKILLTEACH_CHECK_PARTY
+ * @param mode    技覚えモード（script_def.hのSCR_SKILLTEACH_MODE参照）
+ * @param ret_wk  script_def.hのSCR_SKILLTEACH_CHECK_RESULT_を参照
+ * @retval  SCR_SKILLTEACH_CHECK_RESULT_OK          対象となるポケモンがいる
+ * @retval  SCR_SKILLTEACH_CHECK_RESULT_POKEMON_NG  対象となるポケモンがいない
+ * @retval  SCR_SKILLTEACH_CHECK_RESULT_NATSUKI_NG  対象となるポケモンはいるがなつきが足りない
  *
  * 最強技（あるいはドラゴン技）を覚えることができる手持ちかどうかを
  * チェックする
  */
 //--------------------------------------------------------------
-#define _WAZAOBOE_CHECK_USE( mode, ret_wk ) \
-    _ASM_WAZAOBOE_CHECK_USE mode, ret_wk
+#define _SKILLTEACH_CHECK_PARTY( mode, ret_wk ) \
+    _ASM_SKILLTEACH_CHECK_PARTY mode, ret_wk
 
-    .macro  _ASM_WAZAOBOE_CHECK_USE mode, ret_wk
-    .short  EV_SEQ_WAZAOBOE_CHECK_USE
+    .macro  _ASM_SKILLTEACH_CHECK_PARTY mode, ret_wk
+    .short  EV_SEQ_SKILLTEACH_CHECK_PARTY
     .short  \mode
     .short  \ret_wk
     .endm
@@ -4505,24 +4505,24 @@
 //--------------------------------------------------------------
 /**
  * @def   わざおぼえ：適用ポケモンのチェック
- * @brief _WAZAOBOE_CHECK_POKEMON
- * @param mode    技覚えモード（script_def.hのSCR_WAZAOBOE_MODE参照）
+ * @brief _SKILLTEACH_CHECK_POKEMON
+ * @param mode    技覚えモード（script_def.hのSCR_SKILLTEACH_MODE参照）
  * @param pos     選択したポケモンの位置
- * @param ret_wk  script_def.hのSCR_WAZAOBOE_CHECK_RESULT_を参照
- * @retval  SCR_WAZAOBOE_CHECK_RESULT_OK          覚えさせられる
- * @retval  SCR_WAZAOBOE_CHECK_RESULT_POKEMON_NG  覚えないポケモンを選んだ
- * @retval  SCR_WAZAOBOE_CHECK_RESULT_NATSUKI_NG  なつきが足りないポケモンを選んだ
- * @retval  SCR_WAZAOBOE_CHECK_RESULT_ALREADY_NG  すでに持っているポケモンを選んだ
+ * @param ret_wk  script_def.hのSCR_SKILLTEACH_CHECK_RESULT_を参照
+ * @retval  SCR_SKILLTEACH_CHECK_RESULT_OK          覚えさせられる
+ * @retval  SCR_SKILLTEACH_CHECK_RESULT_POKEMON_NG  覚えないポケモンを選んだ
+ * @retval  SCR_SKILLTEACH_CHECK_RESULT_NATSUKI_NG  なつきが足りないポケモンを選んだ
+ * @retval  SCR_SKILLTEACH_CHECK_RESULT_ALREADY_NG  すでに持っているポケモンを選んだ
  *
  * 最強技（あるいはドラゴン技）を覚えることができる手持ちかどうかを
  * チェックする
  */
 //--------------------------------------------------------------
-#define _WAZAOBOE_CHECK_POKEMON( mode, pos, ret_wk ) \
-    _ASM_WAZAOBOE_CHECK_POKEMON mode, pos, ret_wk
+#define _SKILLTEACH_CHECK_POKEMON( mode, pos, ret_wk ) \
+    _ASM_SKILLTEACH_CHECK_POKEMON mode, pos, ret_wk
 
-    .macro  _ASM_WAZAOBOE_CHECK_POKEMON mode, pos, ret_wk
-    .short  EV_SEQ_WAZAOBOE_CHECK_POKEMON
+    .macro  _ASM_SKILLTEACH_CHECK_POKEMON mode, pos, ret_wk
+    .short  EV_SEQ_SKILLTEACH_CHECK_POKEMON
     .short  \mode
     .short  \pos
     .short  \ret_wk
@@ -4530,20 +4530,39 @@
 
 //--------------------------------------------------------------
 /**
- * @def _WAZAOBOE_SELECT_POKEMON
+ * @def _SKILLTEACH_SELECT_POKEMON
  * @brief ポケモン選択：わざおぼえ用
+ * @param mode    技覚えモード（script_def.hのSCR_SKILLTEACH_MODE参照）
  * @param ret_decide  選択したかどうかの戻り値（TRUE/FALSE）
  * @param ret_wk    選択したポケモンの位置
- * @param mode    技覚えモード（script_def.hのSCR_WAZAOBOE_MODE参照）
  */
 //--------------------------------------------------------------
-#define _WAZAOBOE_SELECT_POKEMON( mode, ret_decide, ret_wk ) \
-    _ASM_WAZAOBOE_SELECT_POKEMON mode, ret_decide, ret_wk
+#define _SKILLTEACH_SELECT_POKEMON( mode, ret_decide, ret_wk ) \
+    _ASM_SKILLTEACH_SELECT_POKEMON mode, ret_decide, ret_wk
 
-    .macro  _ASM_WAZAOBOE_SELECT_POKEMON mode, ret_decide, ret_wk
-    .short  EV_SEQ_WAZAOBOE_SELECT_POKEMON
+    .macro  _ASM_SKILLTEACH_SELECT_POKEMON mode, ret_decide, ret_wk
+    .short  EV_SEQ_SKILLTEACH_SELECT_POKEMON
     .short  \mode
     .short  \ret_decide
+    .short  \ret_wk
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _SKILLTEACH_GET_WAZAID
+ * @brief
+ * @param mode    技覚えモード（script_def.hのSCR_SKILLTEACH_MODE参照）
+ * @param sel_pos 選択したポケモンの位置 
+ * @param ret_wk  対象となる技のID
+ */
+//--------------------------------------------------------------
+#define _SKILLTEACH_GET_WAZAID( mode, sel_pos, ret_wk ) \
+    _ASM_SKILLTEACH_GET_WAZAID mode, sel_pos, ret_wk
+
+    .macro  _ASM_SKILLTEACH_GET_WAZAID mode, sel_pos, ret_wk
+    .short  EV_SEQ_SKILLTEACH_GET_WAZAID
+    .short  \mode
+    .short  \sel_pos
     .short  \ret_wk
     .endm
 

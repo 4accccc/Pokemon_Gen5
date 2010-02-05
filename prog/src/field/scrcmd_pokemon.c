@@ -380,8 +380,8 @@ VMCMD_RESULT EvCmdSetPokemonFriendValue( VMHANDLE * core, void *wk )
   switch(mode)
   {
   case 0: //セット
-    if(value > 256){
-      friend = 255;
+    if(value > PTL_FRIEND_MAX){
+      friend = PTL_FRIEND_MAX;
     }else if(value < 0){
       friend = 0;
     }else{
@@ -389,8 +389,8 @@ VMCMD_RESULT EvCmdSetPokemonFriendValue( VMHANDLE * core, void *wk )
     }
     break;
   case 1: //加算
-    if((friend + value) > 256) {
-      friend = 255;
+    if((friend + value) > PTL_FRIEND_MAX) {
+      friend = PTL_FRIEND_MAX;
     }else{
       friend += value;
     }
@@ -703,6 +703,12 @@ VMCMD_RESULT EvCmdGetPartyPosByMonsNo( VMHANDLE * core, void *wk )
 //======================================================================
 //======================================================================
 //--------------------------------------------------------------
+/**
+ * @brief 指定したわざを持っているか？のチェック
+ * @param pp
+ * @param wazano
+ * @return  BOOL
+ */
 //--------------------------------------------------------------
 static BOOL checkPokemonWaza( POKEMON_PARAM * pp, u16 wazano )
 {
@@ -744,20 +750,6 @@ VMCMD_RESULT EvCmdChkPokeWaza( VMHANDLE *core, void *wk )
   {
     *ret_wk = 1;
   }
-#if 0
-  //たまごチェック
-  if( PP_Get(pp,ID_PARA_tamago_flag,NULL) != 0 ){
-    return VMCMD_RESULT_CONTINUE;
-  }
-  
-  //技リストからチェック
-  if( PP_Get(pp,ID_PARA_waza1,NULL) == waza ||
-      PP_Get(pp,ID_PARA_waza2,NULL) == waza ||
-      PP_Get(pp,ID_PARA_waza3,NULL) == waza ||
-      PP_Get(pp,ID_PARA_waza4,NULL) == waza ){
-    *ret_wk = 1;
-  }
-#endif
   
   return VMCMD_RESULT_CONTINUE;
 }
@@ -794,21 +786,6 @@ VMCMD_RESULT EvCmdChkPokeWazaGroup( VMHANDLE *core, void *wk )
       *ret_wk = i;
       break;
     }
-#if 0
-    //たまごチェック
-    if( PP_Get(pp,ID_PARA_tamago_flag,NULL) != 0 ){
-      continue;
-    }
-    
-    //技リストからチェック
-    if( PP_Get(pp,ID_PARA_waza1,NULL) == waza ||
-        PP_Get(pp,ID_PARA_waza2,NULL) == waza ||
-        PP_Get(pp,ID_PARA_waza3,NULL) == waza ||
-        PP_Get(pp,ID_PARA_waza4,NULL) == waza ){
-      *ret_wk = i;
-      break;
-    }
-#endif
   }
   
   return VMCMD_RESULT_CONTINUE;
@@ -1031,23 +1008,22 @@ VMCMD_RESULT EvCmdPartyPokeWazaSelect( VMHANDLE *core, void *wk )
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdGetPokemonWazaID( VMHANDLE *core, void *wk )
 {
-  int i;
   SCRCMD_WORK*       work = (SCRCMD_WORK*)wk;
   u16*             ret_wk = SCRCMD_GetVMWork( core, work );       // コマンド第1引数
   u16            poke_pos = SCRCMD_GetVMWorkValue( core, work );       // コマンド第2引数
   u16            waza_pos = SCRCMD_GetVMWorkValue( core, work );       // コマンド第3引数
-
-  SCRIPT_WORK*        scw = SCRCMD_WORK_GetScriptWork( work );
-  GAMESYS_WORK*      gsys = SCRCMD_WORK_GetGameSysWork( work );
-  FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
-  GAMEDATA*         gdata = GAMESYSTEM_GetGameData( gsys );
-  POKEPARTY*        party = GAMEDATA_GetMyPokemon( gdata );
   
-  const POKEMON_PARAM *pp = PokeParty_GetMemberPointer( party , poke_pos );
-  const u32 wazaNo = PP_Get( pp , ID_PARA_waza1+waza_pos , NULL );
-  *ret_wk = wazaNo;
+  POKEMON_PARAM *pp;
+  if ( SCRCMD_GetTemotiPP( work, poke_pos, &pp ) == TRUE )
+  {
+    const u32 wazaNo = PP_Get( pp , ID_PARA_waza1+waza_pos , NULL );
+    *ret_wk = wazaNo;
+  }
+  else
+  {
+    *ret_wk = 0;  //エラー対処
+  }
   return VMCMD_RESULT_CONTINUE;
-  
 }
 
 
@@ -1067,14 +1043,16 @@ VMCMD_RESULT EvCmdSetPokemonWaza( VMHANDLE *core, void *wk )
   u16            waza_pos = SCRCMD_GetVMWorkValue( core, work );       // コマンド第3引数
   u16             waza_id = SCRCMD_GetVMWorkValue( core, work );       // コマンド第3引数
 
-  SCRIPT_WORK*        scw = SCRCMD_WORK_GetScriptWork( work );
-  GAMESYS_WORK*      gsys = SCRCMD_WORK_GetGameSysWork( work );
-  FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
-  GAMEDATA*         gdata = GAMESYSTEM_GetGameData( gsys );
-  POKEPARTY*        party = GAMEDATA_GetMyPokemon( gdata );
-  
-  POKEMON_PARAM *pp = PokeParty_GetMemberPointer( party , poke_pos );
-  BOOL fastMode = PP_FastModeOn( pp );
+  POKEMON_PARAM      *pp;
+  BOOL          fastMode;
+
+  if ( SCRCMD_GetTemotiPP( work, poke_pos, &pp ) == FALSE )
+  { //エラー対処用
+    return VMCMD_RESULT_CONTINUE;
+  }
+
+  fastMode = PP_FastModeOn( pp );
+
   if( waza_pos > PTL_WAZA_MAX )
   {
     //押し出しモード
@@ -1420,45 +1398,99 @@ VMCMD_RESULT EvCmdGetPartyPokeGetDate( VMHANDLE* core, void* wk )
 //    技覚え関連
 //
 //======================================================================
+//--------------------------------------------------------------
+/**
+ * @brief ポケモンナンバーと最強技の対照表
+ * @todo  パーソナルデータから参照可能になるまでのつなぎ
+ */
+//--------------------------------------------------------------
   static u16 strongest_tbl[] = {
     MONSNO_RIZAADON,    WAZANO_BURASUTOBAAN,
     MONSNO_BAKUHUUN,    WAZANO_BURASUTOBAAN,
     MONSNO_BASYAAMO,    WAZANO_BURASUTOBAAN,
     MONSNO_GOUKAZARU,   WAZANO_BURASUTOBAAN,
+    MONSNO_YAKIBUUTO,   WAZANO_BURASUTOBAAN,
 
     MONSNO_KAMEKKUSU,   WAZANO_HAIDOROKANON,
     MONSNO_OODAIRU,     WAZANO_HAIDOROKANON,
     MONSNO_RAGURAAZI,   WAZANO_HAIDOROKANON,
     MONSNO_ENPERUTO,    WAZANO_HAIDOROKANON,
+    MONSNO_RAKKOORU,    WAZANO_HAIDOROKANON,
 
     MONSNO_HUSIGIBANA,  WAZANO_HAADOPURANTO,
     MONSNO_MEGANIUMU,   WAZANO_HAADOPURANTO,
     MONSNO_ZYUKAIN,     WAZANO_HAADOPURANTO,
     MONSNO_DODAITOSU,   WAZANO_HAADOPURANTO,
+    MONSNO_KUSANEEKU,   WAZANO_HAADOPURANTO,
   };
 //--------------------------------------------------------------
 //--------------------------------------------------------------
-static u16 get_strongest_waza( u16 monsno )
+static u16 get_teach_waza( const POKEMON_PARAM * pp, u16 mode )
 {
   int i;
-  for ( i = 0; i < NELEMS(strongest_tbl); i ++ )
+  u16 monsno;
+
+  switch ( mode )
   {
-    if ( strongest_tbl[ i * 2 ] != monsno ) continue;
-    return strongest_tbl[ i * 2 + 1 ];
+  case SCR_SKILLTEACH_MODE_STRONGEST:
+    {
+      u16 monsno = PP_Get( pp, ID_PARA_monsno, NULL );
+      for ( i = 0; i < NELEMS(strongest_tbl); i ++ )
+      {
+        if ( strongest_tbl[ i * 2 ] != monsno ) continue;
+        return strongest_tbl[ i * 2 + 1 ];
+      }
+    }
+    GF_ASSERT(0);
+    break;
+
+  case SCR_SKILLTEACH_MODE_DRAGON:
+    return WAZANO_RYUUSEIGUN;
+
+  default:
+    GF_ASSERT(0);
   }
-  GF_ASSERT(0);
   return WAZANO_BURASUTOBAAN;
 }
 
 //--------------------------------------------------------------
 //--------------------------------------------------------------
-static BOOL check_strongest_mons( u16 monsno )
+static u16 get_teach_limit_friendly( u16 mode )
+{
+  /* とりあえず、現状は最大値必要としている */
+  return PTL_FRIEND_MAX;
+}
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static BOOL check_teach_mons( const POKEMON_PARAM * pp, u16 mode )
 {
   int i;
-  for (i = 0; i < NELEMS(strongest_tbl); i ++ )
+
+  switch ( mode )
   {
-    if ( strongest_tbl[i*2] == monsno ) return TRUE;
+  case SCR_SKILLTEACH_MODE_STRONGEST:
+    {
+      u16 monsno = PP_Get( pp, ID_PARA_monsno, NULL );
+      for (i = 0; i < NELEMS(strongest_tbl); i ++ )
+      {
+        if ( strongest_tbl[i*2] == monsno ) return TRUE;
+      }
+    }
+    return FALSE;
+
+  case SCR_SKILLTEACH_MODE_DRAGON:
+    {
+      u16 type1 = PP_Get( pp, ID_PARA_type1, NULL );
+      u16 type2 = PP_Get( pp, ID_PARA_type2, NULL );
+      if ( type1 == POKETYPE_DRAGON && type2 == POKETYPE_DRAGON )
+      {
+        return TRUE;
+      }
+    }
+    return FALSE;
   }
+  GF_ASSERT(0);
   return FALSE;
 }
 
@@ -1466,7 +1498,7 @@ static BOOL check_strongest_mons( u16 monsno )
 /**
  */
 //--------------------------------------------------------------
-static u32 checkWazaOboe( VMHANDLE * core, void * wk, u16 mode, u8 * oboeBit )
+static u32 checkSkillTeach( VMHANDLE * core, void * wk, u16 mode, u8 * oboeBit )
 {
   GAMEDATA*      gdata = SCRCMD_WORK_GetGameData( wk );
   POKEPARTY*     party = GAMEDATA_GetMyPokemon( gdata );
@@ -1479,83 +1511,90 @@ static u32 checkWazaOboe( VMHANDLE * core, void * wk, u16 mode, u8 * oboeBit )
   * oboeBit = 0;
   for ( pos = 0; pos < max; pos++ )
   {
-    u16 monsno, type1, type2, natsuki;
-    POKEMON_PARAM* param = PokeParty_GetMemberPointer( party, pos );
-    if ( PP_Get( param, ID_PARA_tamago_flag, NULL ) == TRUE)
+    POKEMON_PARAM* pp = PokeParty_GetMemberPointer( party, pos );
+    if ( PP_Get( pp, ID_PARA_tamago_flag, NULL ) == TRUE)
     {
       continue;
     }
-    natsuki = PP_Get( param, ID_PARA_friend, NULL );
-    if ( mode == SCR_WAZAOBOE_MODE_STRONGEST )
+    if ( check_teach_mons( pp, mode ) == FALSE )
     {
-      monsno = PP_Get( param, ID_PARA_monsno, NULL );
-      if ( check_strongest_mons( monsno ) == FALSE )
-      {
-        continue;
-      }
-      has_pokemon_flag = TRUE;
-      if ( natsuki >= 255 )
-      {
-        enough_natsuki_flag = TRUE;
-        *oboeBit |= ( 1 << pos );
-      }
+      continue;
     }
-    else if ( mode == SCR_WAZAOBOE_MODE_DRAGON )
+    has_pokemon_flag = TRUE;
+    if ( PP_Get( pp, ID_PARA_friend, NULL ) >= get_teach_limit_friendly( mode ) )
     {
-      type1 = PP_Get( param, ID_PARA_type1, NULL );
-      type2 = PP_Get( param, ID_PARA_type2, NULL );
-      if ( type1 != POKETYPE_DRAGON && type2 != POKETYPE_DRAGON )
-      {
-        continue;
-      }
-      has_pokemon_flag = TRUE;
-      if ( natsuki >= 255 )
-      {
-        enough_natsuki_flag = TRUE;
-        *oboeBit |= ( 1 << pos );
-      }
+      enough_natsuki_flag = TRUE;
+      *oboeBit |= ( 1 << pos );
     }
   }
 
   if ( has_pokemon_flag == FALSE )
   {
-    return SCR_WAZAOBOE_CHECK_RESULT_POKEMON_NG;
+    return SCR_SKILLTEACH_CHECK_RESULT_POKEMON_NG;
   }
   if ( enough_natsuki_flag == FALSE )
   {
-    return SCR_WAZAOBOE_CHECK_RESULT_NATSUKI_NG;
+    return SCR_SKILLTEACH_CHECK_RESULT_NATSUKI_NG;
   }
-  return SCR_WAZAOBOE_CHECK_RESULT_OK;
+  return SCR_SKILLTEACH_CHECK_RESULT_OK;
 }
 
 //--------------------------------------------------------------
 /**
- * @brief 捕獲日時の取得
+ * @brief 
  * @param	core		仮想マシン制御構造体へのポインタ
  * @param wk      SCRCMD_WORKへのポインタ
  * @retval VMCMD_RESULT
  */
 //--------------------------------------------------------------
-VMCMD_RESULT EvCmdWazaOboeCheckUse( VMHANDLE* core, void* wk )
+VMCMD_RESULT EvCmdSkillTeachCheckParty( VMHANDLE* core, void* wk )
 {
   SCRCMD_WORK*       work = (SCRCMD_WORK*)wk;
   u16 mode = SCRCMD_GetVMWorkValue( core, work );
   u16 * ret_wk = SCRCMD_GetVMWork( core, work );
   u8 oboeBit;
 
-  *ret_wk = checkWazaOboe( core, wk, mode, &oboeBit );
+  *ret_wk = checkSkillTeach( core, wk, mode, &oboeBit );
 
   return VMCMD_RESULT_CONTINUE;
 }
+
 //--------------------------------------------------------------
 /**
- * @brief 捕獲日時の取得
+ * @brief 
  * @param	core		仮想マシン制御構造体へのポインタ
  * @param wk      SCRCMD_WORKへのポインタ
  * @retval VMCMD_RESULT
  */
 //--------------------------------------------------------------
-VMCMD_RESULT EvCmdWazaOboeCheckPokemon( VMHANDLE* core, void* wk )
+VMCMD_RESULT EvCmdSkillTeachGetWazaID( VMHANDLE * core, void* wk )
+{
+  SCRCMD_WORK*       work = (SCRCMD_WORK*)wk;
+  u16 mode = SCRCMD_GetVMWorkValue( core, work );
+  u16 pos = SCRCMD_GetVMWorkValue( core, work );
+  u16 * ret_wk = SCRCMD_GetVMWork( core, work );
+  POKEMON_PARAM * pp;
+
+  if ( SCRCMD_GetTemotiPP( work, pos, &pp ) == TRUE )
+  {
+    *ret_wk = get_teach_waza( pp, mode );
+  }
+  else
+  {
+    *ret_wk = 0;
+  }
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief 
+ * @param	core		仮想マシン制御構造体へのポインタ
+ * @param wk      SCRCMD_WORKへのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdSkillTeachCheckPokemon( VMHANDLE* core, void* wk )
 {
   SCRCMD_WORK*       work = (SCRCMD_WORK*)wk;
   u16 mode = SCRCMD_GetVMWorkValue( core, work );
@@ -1563,52 +1602,36 @@ VMCMD_RESULT EvCmdWazaOboeCheckPokemon( VMHANDLE* core, void* wk )
   u16 * ret_wk = SCRCMD_GetVMWork( core, work );
   POKEMON_PARAM * pp;
   
-
-  *ret_wk = SCR_WAZAOBOE_CHECK_RESULT_POKEMON_NG; //エラー対処用
+  *ret_wk = SCR_SKILLTEACH_CHECK_RESULT_POKEMON_NG; //エラー対処用
 
   if ( SCRCMD_GetTemotiPP( work, pos, &pp ) == FALSE )
   { //エラー対処
     return VMCMD_RESULT_CONTINUE;
   }
 
-  if ( mode == SCR_WAZAOBOE_MODE_DRAGON )
+  if ( check_teach_mons( pp, mode ) == FALSE )
   {
-    u16 type1, type2;
-    type1 = PP_Get( pp, ID_PARA_type1, NULL );
-    type2 = PP_Get( pp, ID_PARA_type2, NULL );
-    if ( type1 != POKETYPE_DRAGON && type2 != POKETYPE_DRAGON )
-    {
-      *ret_wk = SCR_WAZAOBOE_CHECK_RESULT_POKEMON_NG;
-    }
-    else if ( PP_Get( pp, ID_PARA_friend, NULL ) < 255 )
-    {
-      *ret_wk = SCR_WAZAOBOE_CHECK_RESULT_NATSUKI_NG;
-    }
-    else if ( checkPokemonWaza( pp, WAZANO_RYUUSEIGUN ) == TRUE )
-    {
-      *ret_wk = SCR_WAZAOBOE_CHECK_RESULT_ALREADY_NG;
-    }
-    *ret_wk = SCR_WAZAOBOE_CHECK_RESULT_OK;
+    *ret_wk = SCR_SKILLTEACH_CHECK_RESULT_POKEMON_NG;
   }
-  else if (mode == SCR_WAZAOBOE_MODE_STRONGEST )
+  else if ( checkPokemonWaza( pp, get_teach_waza( pp, mode ) ) == TRUE )
   {
-    u16 monsno = PP_Get( pp, ID_PARA_monsno, NULL );
-    if ( check_strongest_mons( monsno ) == FALSE )
-    {
-      *ret_wk = SCR_WAZAOBOE_CHECK_RESULT_POKEMON_NG;
-    }
-    else if ( PP_Get( pp, ID_PARA_friend, NULL ) < 255 )
-    {
-      *ret_wk = SCR_WAZAOBOE_CHECK_RESULT_NATSUKI_NG;
-    }
-    *ret_wk = SCR_WAZAOBOE_CHECK_RESULT_OK;
+    *ret_wk = SCR_SKILLTEACH_CHECK_RESULT_ALREADY_NG;
   }
+  else if ( PP_Get( pp, ID_PARA_friend, NULL ) < get_teach_limit_friendly( mode ) )
+  {
+    *ret_wk = SCR_SKILLTEACH_CHECK_RESULT_NATSUKI_NG;
+  }
+  else
+  {
+    *ret_wk = SCR_SKILLTEACH_CHECK_RESULT_OK;
+  }
+
   return  VMCMD_RESULT_CONTINUE;
 }
 
 //--------------------------------------------------------------
 //--------------------------------------------------------------
-VMCMD_RESULT EvCmdWazaOboeSelectPokemon( VMHANDLE * core, void * wk )
+VMCMD_RESULT EvCmdSkillTeachSelectPokemon( VMHANDLE * core, void * wk )
 {
   int i;
   SCRCMD_WORK*       work = (SCRCMD_WORK*)wk;
@@ -1619,14 +1642,14 @@ VMCMD_RESULT EvCmdWazaOboeSelectPokemon( VMHANDLE * core, void * wk )
   GAMESYS_WORK*      gsys = SCRCMD_WORK_GetGameSysWork( work );
 
   u8 learnBit;
-  if ( checkWazaOboe( core, wk, mode, &learnBit ) != SCR_WAZAOBOE_CHECK_RESULT_OK )
+  if ( checkSkillTeach( core, wk, mode, &learnBit ) != SCR_SKILLTEACH_CHECK_RESULT_OK )
   {
     *ret_decide = FALSE;
   }
   else
   {
-    GMEVENT *event;
-    event = EVENT_CreatePokeSelectWazaOboe( gsys , ret_decide , ret_wk, learnBit );
+    GMEVENT *event = EVENT_CreatePokeSelect( gsys , ret_decide , ret_wk );
+    //GMEVENT *event = EVENT_CreatePokeSelectWazaOboe( gsys , ret_decide , ret_wk, learnBit );
     SCRIPT_CallEvent( scw, event );
   }
   

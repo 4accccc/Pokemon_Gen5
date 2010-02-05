@@ -3,7 +3,7 @@
  * @file  scr_offset.cdat
  * @bfief  スクリプトIDのオフセットとそれに対応するアーカイブの定義テーブル
  * @author  tamada GAMEFREAK inc.
- * @date  2010 01/29 (Fri) 12:57
+ * @date  2010 02/05 (Fri) 16:24
  *
  * このファイルはコンバータにより自動生成されています
  */
@@ -180,9 +180,15 @@ static const SCRIPT_ARC_TABLE ScriptArcTable[] = {
       NARC_script_seq_bg_attr_bin,
       NARC_script_message_bg_attr_dat
     },
+    {//ポケモンわざおぼえ用
+      ID_POKE_WAZA_OBOE_OFFSET,       //( 2280),
+      ID_POKE_WAZA_OBOE_OFFSET_END,   //( 2299),
+      NARC_script_seq_skill_teach_scr_bin,
+      NARC_script_message_skill_teach_scr_dat
+    },
     {//ポケモンわざ忘れなど用
       ID_POKE_WAZA_OFFSET,            //( 2260),
-      ID_POKE_WAZA_OFFSET_END,        //( 2299),
+      ID_POKE_WAZA_OFFSET_END,        //( 2279),
       NARC_script_seq_poke_waza_bin,
       NARC_script_message_poke_waza_dat
     },

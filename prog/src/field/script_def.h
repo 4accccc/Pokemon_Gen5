@@ -234,13 +234,13 @@
 //--------------------------------------------------------------
 /// 技おぼえモード指定
 //--------------------------------------------------------------
-#define SCR_WAZAOBOE_MODE_DRAGON    (0)
-#define SCR_WAZAOBOE_MODE_STRONGEST (1)
+#define SCR_SKILLTEACH_MODE_DRAGON    (0)
+#define SCR_SKILLTEACH_MODE_STRONGEST (1)
 
-#define SCR_WAZAOBOE_CHECK_RESULT_OK         (0)
-#define SCR_WAZAOBOE_CHECK_RESULT_POKEMON_NG (1)
-#define SCR_WAZAOBOE_CHECK_RESULT_NATSUKI_NG (2)
-#define SCR_WAZAOBOE_CHECK_RESULT_ALREADY_NG (3)
+#define SCR_SKILLTEACH_CHECK_RESULT_OK         (0)
+#define SCR_SKILLTEACH_CHECK_RESULT_POKEMON_NG (1)
+#define SCR_SKILLTEACH_CHECK_RESULT_NATSUKI_NG (2)
+#define SCR_SKILLTEACH_CHECK_RESULT_ALREADY_NG (3)
 
 //--------------------------------------------------------------
 /// ボックス終了モード

@@ -3,7 +3,7 @@
  * @file  scr_offset_id.h
  * @bfief  スクリプトIDのオフセット定義
  * @author  tamada GAMEFREAK inc.
- * @date  2010 01/29 (Fri) 12:57
+ * @date  2010 02/05 (Fri) 16:24
  *
  * このファイルはコンバータにより自動生成されています
  */
@@ -32,7 +32,10 @@
 #define ID_EGGEVENT_SCR_OFFSET_END       (2259)
 
 #define ID_POKE_WAZA_OFFSET              (2260) //ポケモンわざ忘れなど用
-#define ID_POKE_WAZA_OFFSET_END          (2299)
+#define ID_POKE_WAZA_OFFSET_END          (2279)
+
+#define ID_POKE_WAZA_OBOE_OFFSET         (2280) //ポケモンわざおぼえ用
+#define ID_POKE_WAZA_OBOE_OFFSET_END     (2299)
 
 #define ID_BG_ATTR_OFFSET                (2500) //BGアトリビュート話かけスクリプト
 #define ID_BG_ATTR_OFFSET_END            (2799)
