@@ -2187,17 +2187,13 @@ static const BtlEventHandlerTable* HAND_ADD_ITEM_MentalHerb( u32* numElems )
 }
 static void handler_MentalHerb_React( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  if( work[0] == 0 )
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
-    if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
+    const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
+    if( BPP_CheckSick(bpp, WAZASICK_MEROMERO) )
     {
-      const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
-      if( BPP_CheckSick(bpp, WAZASICK_MEROMERO) )
-      {
-        BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_USE_ITEM, pokeID );
-      }
+      BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_USE_ITEM, pokeID );
     }
-    work[0] = 1;  // êÌì¨íÜÅAÇPìxÇµÇ©égÇ¶Ç»Ç¢
   }
 }
 static void handler_MentalHerb_Use( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
