@@ -232,6 +232,7 @@ void PL_BOAT_SETUP_EntryTrainer(PL_BOAT_WORK *work)
       work->RoomParam[room_idx].NpcType = NPC_TYPE_TRAINER;
       work->RoomParam[room_idx].NpcMsg[0] = TrData[entry_id].Msg[0];
       work->RoomParam[room_idx].NpcMsg[1] = TrData[entry_id].Msg[1];
+      OS_Printf("trainer_entry %d\n",entry_id);
     }
     //部屋に非トレーナー（長話）を格納
     for(i=0;i<ENTRY_LONG_TALKER_MAX;i++)
@@ -285,7 +286,7 @@ static void CreateTrTbl(const int inTblLen, const int inNum, u8 *workTbl, u8 *ou
     workTbl[i] = i;
   }
 
-  num = inNum;
+  num = inTblLen;
   for (i=0;i<inNum;i++)
   {
     u8 idx;
