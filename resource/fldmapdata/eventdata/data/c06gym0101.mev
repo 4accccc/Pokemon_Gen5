@@ -1,5 +1,5 @@
 #event data
-#save date:2010/02/03 18:14:59
+#save date:2010/02/05 12:22:04
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c06gym0101.wms
 #SECTION START:OBJ_EVENT
@@ -113,7 +113,7 @@ PILOT
 #MOVE CODE Number
 MV_DOWN
 #EVENT TYPE Number
-EV_TYPE_NORMAL
+EV_TYPE_TRAINER
 #Flag Name
 0
 #Event Script Name
