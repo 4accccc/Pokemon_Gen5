@@ -7362,7 +7362,7 @@
 //--------------------------------------------------------------
 /**
  * @brief 国連関連 会話フラグセット
- * @param ret       検索結果
+ * @param obj_idx   OBJインデックス0～4
  */
 //--------------------------------------------------------------
 #define _UN_SET_TALK_FLG( obj_idx ) _ASM_UN_SET_TALK_FLG obj_idx
@@ -7375,13 +7375,15 @@
 //--------------------------------------------------------------
 /**
  * @brief 国連関連 会話フラグチェック
+ * @param obj_idx   OBJインデックス0～4
  * @param ret       検索結果
  */
 //--------------------------------------------------------------
-#define _UN_CHK_TALK_FLG( ret ) _ASM_UN_CHK_TALK_FLG ret
+#define _UN_CHK_TALK_FLG( obj_idx, ret ) _ASM_UN_CHK_TALK_FLG obj_idx, ret
 
-  .macro _ASM_UN_CHK_TALK_FLG ret
+  .macro _ASM_UN_CHK_TALK_FLG obj_idx, ret
   .short EV_SEQ_UN_CHK_TALK_FLG
+  .short \obj_idx
   .short \ret
   .endm
 
@@ -7424,4 +7426,34 @@
   .short EV_SEQ_UN_GET_ROOM_OBJ_CODE
   .short \idx
   .short \ret
-  .endm  
+  .endm 
+
+//--------------------------------------------------------------
+/**
+ * @brief 国連関連 部屋内　OBJ数取得
+ * @param ret       検索結果
+ */
+//--------------------------------------------------------------
+#define _UN_GET_ROOM_OBJ_NUM( ret ) _ASM_UN_GET_ROOM_OBJ_NUM ret
+
+  .macro _ASM_UN_GET_ROOM_OBJ_NUM ret
+  .short EV_SEQ_UN_GET_ROOM_OBJ_NUM
+  .short \ret
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief 国連関連 部屋内　OBJメッセージ取得
+ * @param idx       部屋の中のOBJインデックス0～4
+ * @param idx       取得したいのは初回メッセージか？  TRUEで初回メッセージ
+ * @param ret       検索結果
+ */
+//--------------------------------------------------------------
+#define _UN_GET_ROOM_OBJ_MSG( idx, first, ret ) _ASM_UN_GET_ROOM_OBJ_MSG idx, first, ret
+
+  .macro _ASM_UN_GET_ROOM_OBJ_MSG idx, first, ret
+  .short EV_SEQ_UN_GET_ROOM_OBJ_MSG
+  .short \idx
+  .short \first
+  .short \ret
+  .endm
