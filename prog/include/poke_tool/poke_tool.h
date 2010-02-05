@@ -213,20 +213,6 @@
 #endif
 
 #ifndef __ASM_NO_DEF_
-//なつき計算
-enum{
-  FRIEND_LEVELUP = 0,   //レベルアップ
-  FRIEND_PARAEXP_ITEM,  //努力値アイテム
-  FRIEND_BATTLE_ITEM,   //戦闘中アイテム
-  FRIEND_BOSS_BATTLE,   //ボス戦闘
-  FRIEND_WAZA_MACHINE,  //技マシン使用
-  FRIEND_TSUREARUKI,    //連れ歩き
-  FRIEND_HINSHI,      //瀕死
-  FRIEND_DOKU_HINSHI,   //毒による瀕死
-  FRIEND_LEVEL30_HINSHI,  //レベル差30以上の瀕死
-  FRIEND_CONTEST_VICTORY, //コンテスト優勝
-};
-
 ///<ボックスポケモン分の構造体
 typedef struct pokemon_paso_param POKEMON_PASO_PARAM;
 typedef struct pokemon_paso_param1 POKEMON_PASO_PARAM1;
