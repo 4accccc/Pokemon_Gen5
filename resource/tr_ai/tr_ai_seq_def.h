@@ -60,6 +60,8 @@ DEF_CMD_COUNT 	=	(DEF_CMD_COUNT + 1)
 	DEF_CMD		AI_IFN_POKESICK
 	DEF_CMD		AI_IF_WAZASICK      //状態異常の種類を選択して調べる
 	DEF_CMD		AI_IFN_WAZASICK
+	DEF_CMD		AI_IF_DOKUDOKU      //どくどく状態を調べる
+	DEF_CMD		AI_IFN_DOKUDOKU
 	DEF_CMD		AI_IF_CONTFLG       //技効果の種類を選択して調べる
 	DEF_CMD		AI_IFN_CONTFLG
 	DEF_CMD		AI_IF_SIDEEFF
@@ -411,6 +413,19 @@ DEF_CMD_COUNT 	=	(DEF_CMD_COUNT + 1)
 	.short	AI_IFN_WAZASICK
 	.long		\side
 	.long		\condition
+	.long		(\adrs-.)-4
+	.endm
+
+//どくどく系のチェック
+	.macro	IF_DOKUDOKU   side,adrs
+	.short	AI_IF_DOKUDOKU
+	.long		\side
+	.long		(\adrs-.)-4
+	.endm
+
+	.macro	IFN_DOKUDOKU	side,adrs
+	.short	AI_IFN_DOKUDOKU
+	.long		\side
 	.long		(\adrs-.)-4
 	.endm
 
