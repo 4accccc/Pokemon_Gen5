@@ -1,5 +1,5 @@
 #event data
-#save date:2010/01/13 18:19:07
+#save date:2010/02/04 23:21:43
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r05.wms
 #SECTION START:OBJ_EVENT
@@ -34,13 +34,13 @@ DIR_DOWN
 #Parameter 2 Number
 0
 #Move Limit X Number
-4
+2
 #Move Limit Z Number
-4
+2
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-168 0 -24
+584 0 -8
 #event number: 1
 #type
 1
@@ -57,7 +57,7 @@ EV_TYPE_TRAINER_SPIN_STOP_L
 #Event Script Name
 SCRID_TRID_JUGGLING_01
 #Direction Type Number
-DIR_LEFT
+DIR_DOWN
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -65,13 +65,13 @@ DIR_LEFT
 #Parameter 2 Number
 0
 #Move Limit X Number
-2
-#Move Limit Z Number
 0
+#Move Limit Z Number
+2
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-344 0 -88
+328 0 -8
 #event number: 2
 #type
 1
@@ -257,7 +257,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-280 0 -8
+232 0 8
 #event number: 8
 #type
 1
@@ -288,7 +288,7 @@ DIR_RIGHT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-104 0 -72
+120 0 -72
 #event number: 9
 #type
 1
@@ -350,7 +350,7 @@ DIR_LEFT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-680 0 -88
+680 0 -104
 #event number: 11
 #type
 1
@@ -359,7 +359,7 @@ R05_CHAMPION_01
 #OBJ CODE Number
 CHAMPION
 #MOVE CODE Number
-MV_RIGHT
+MV_LEFT
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
@@ -367,7 +367,7 @@ EV_TYPE_NORMAL
 #Event Script Name
 SCRID_R05_CHAMPION_01
 #Direction Type Number
-DIR_RIGHT
+DIR_DOWN
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -381,7 +381,7 @@ DIR_RIGHT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-568 0 -8
+376 0 -40
 #event number: 12
 #type
 1
@@ -412,7 +412,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-600 0 8
+376 0 -24
 #event number: 13
 #type
 1
@@ -443,7 +443,7 @@ DIR_UP
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-616 0 -24
+376 0 -8
 #event number: 14
 #type
 1
@@ -613,7 +613,7 @@ WK_SCENE_R05
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--8 0 8
+40 0 8
 #size
 1 5
 #Map Event List Data End

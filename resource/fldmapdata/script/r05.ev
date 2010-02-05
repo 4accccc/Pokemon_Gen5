@@ -41,8 +41,8 @@ INIT_EVENT_START	ev_init_r05
 	IF $WK_SCENE_R05 == 2 THEN
 		//ライバル戦posイベント後
 		//カミツレ＆ライバル：位置移動
-		_OBJ_POS_CHANGE( R05_RIVAL_01, 333, 0, 432, DIR_LEFT )
-		_OBJ_POS_CHANGE( R05_LEADER4_01, 332, 0, 433, DIR_LEFT )
+		_OBJ_POS_CHANGE( R05_RIVAL_01, 336, 0, 431, DIR_LEFT )
+		_OBJ_POS_CHANGE( R05_LEADER4_01, 335, 0, 432, DIR_LEFT )
 
 	ENDIF
 
@@ -53,6 +53,15 @@ INIT_EVENT_END
 /*					ライバルposイベント						*/
 /************************************************************/
 EVENT_START	ev_pos_r05_rival_01
+	
+	{
+	DEFINE_LOCAL	LWK_POSX
+	DEFINE_LOCAL	LWK_POSZ
+	
+	//主人公位置を取得
+	_PLAYER_POS_GET( LWK_POSX, LWK_POSZ )
+	
+	
 	//ライバル表示
 	_FLAG_RESET( FV_R05_RIVAL )
 	_OBJ_ADD( R05_RIVAL_01 )
@@ -60,18 +69,32 @@ EVENT_START	ev_pos_r05_rival_01
 	_START_EVENT_BGM( SEQ_BGM_E_RIVAL )
 
 	//ライバル：主人公横へ
-	_OBJ_ANIME( R05_RIVAL_01, anm_rival_move_01 )
+	IF $LWK_POSZ == 437 THEN
+		_OBJ_ANIME( R05_RIVAL_01, anm_rival_come_01a )
+	ELSIF $LWK_POSZ == 438 THEN
+		_OBJ_ANIME( R05_RIVAL_01, anm_rival_come_01b )
+	ELSE
+		_OBJ_ANIME( R05_RIVAL_01, anm_rival_come_01c )
+	ENDIF
+	
+	_TIME_WAIT( 16 )
+	
+	//主人公：ライバルを見る
+	IF $LWK_POSZ == 440 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move_00a )
+	ELSIF $LWK_POSZ == 441 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move_00b )
+	ELSE
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_obj_dir_r )
+	ENDIF
 	_OBJ_ANIME_WAIT()
-
-	//主人公：振り向く
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_obj_dir_r )
-	_OBJ_ANIME_WAIT()
-
+	
 	//ライバル：主人公に勝負を挑む
 	_PLAYER_NAME( 0 )
-	_BALLOONWIN_OBJMSG( msg_r05_black_01 , R05_RIVAL_01 )
-	_BALLOONWIN_CLOSE()
+	_BALLOONWIN_OBJMSG_POS( msg_r05_black_01 , R05_RIVAL_01 , WIN_NONE )
+	_MSGWIN_CLOSE()
 
+/*【仮】停止バグが起きるため
 	//トレーナー戦呼び出し
 	IF $WK_SYS_FIRST_POKETYPE == FIRST_POKETYPE_KUSA THEN
 		//初期３匹が草タイプなら
@@ -83,150 +106,243 @@ EVENT_START	ev_pos_r05_rival_01
 		//初期３匹が水タイプなら
 		_TRAINER_BTL_SET( TRID_RIVAL_09,0 )
 	ENDIF
-
+	
 	//敗戦処理
 	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
 	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
-		_START_EVENT_BGM( SEQ_BGM_E_RIVAL )
 		_TRAINER_WIN()
 	ELSE
 		_TRAINER_LOSE()
 	ENDIF
-
+*/	
 	//ライバル：戦闘後メッセージ
 	_BALLOONWIN_OBJMSG( msg_r05_black_02 , R05_RIVAL_01 )
-	_BALLOONWIN_CLOSE()
-
+	_MSGWIN_CLOSE()
+	
+	_END_EVENT_BGM()	//【仮】
+	
 	//ジムリーダー(カミツレ)表示
 	_FLAG_RESET( FV_R05_LEADER4 )
 	_OBJ_ADD( R05_LEADER4_01 )
-
+	
+	//プレイヤー位置を再取得
+	_PLAYER_POS_GET( LWK_POSX, LWK_POSZ )
+	
+	//カミツレ、まっすぐ右に進むと主人公に当たる位置に変更
+	_OBJ_POS_CHANGE( R05_LEADER4_01, 363, 0, LWK_POSZ, DIR_RIGHT )
+	
 	//カミツレ：主人公前へ
 	_OBJ_ANIME( R05_LEADER4_01, anm_leader_move_01 )
 	_OBJ_ANIME_WAIT()
-
+	
+	//主人公：カミツレを見る
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_obj_dir_l )
+	_OBJ_ANIME_WAIT()
+	
 	//カミツレ：遅いから見にくれば…
 	_BALLOONWIN_OBJMSG( msg_r05_leader_01 , R05_LEADER4_01 )
-	_BALLOONWIN_CLOSE()
-
-	//ライバル：そうです！
-	_BALLOONWIN_OBJMSG( msg_r05_black_03 , R05_RIVAL_01 )
-	_BALLOONWIN_CLOSE()
-
-	//ライバル：主人公を見る
-	_OBJ_ANIME( R05_RIVAL_01, anm_obj_dir_u )
+	_MSGWIN_CLOSE()
+	
+	//カミツレ：先を見て
+	_OBJ_ANIME( R05_LEADER4_01, anm_obj_dir_l )
 	_OBJ_ANIME_WAIT()
-
-	//ライバル：待たせちゃダメだろ
-	_BALLOONWIN_OBJMSG( msg_r05_black_04 , R05_RIVAL_01 )
-	_BALLOONWIN_CLOSE()
-
-	//ライバル：リーダーを見る
-	_OBJ_ANIME( R05_RIVAL_01, anm_obj_dir_l )
-	_OBJ_ANIME_WAIT()
-
-	//ライバル：さあ行きましょう
-	_BALLOONWIN_OBJMSG( msg_r05_black_05 , R05_RIVAL_01 )
-	_BALLOONWIN_CLOSE()
-
-	//３人：広場の方へ　ライバルが途中でチャンプに気づく
-	//マップ調整の必要があるのでコメントアウト　091219
-//	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_walk_01 )
-//	_OBJ_ANIME( R05_RIVAL_01, anm_rival_walk_01 )
-//	_OBJ_ANIME( R05_LEADER4_01, anm_leader_walk_01 )
-//	_OBJ_ANIME_WAIT()
-
-	//ライバル：じいさんが…
-	_BALLOONWIN_OBJMSG( msg_r05_black_06 , R05_RIVAL_01 )
-	_BALLOONWIN_CLOSE()
-
-	//カミツレ：振り向く
-	_OBJ_ANIME( R05_LEADER4_01, anm_obj_dir_d )
-	_OBJ_ANIME_WAIT()
-
-	//カミツレ：そうね　強いんじゃない？
+	
+	//カミツレ：さ いきましょう
 	_BALLOONWIN_OBJMSG( msg_r05_leader_02 , R05_LEADER4_01 )
-	_BALLOONWIN_CLOSE()
-
-	//ライバル：もと？
-	_BALLOONWIN_OBJMSG( msg_r05_black_07 , R05_RIVAL_01 )
-	_BALLOONWIN_CLOSE()
-
-	//チャンプ：近づく
-	_OBJ_ANIME( R05_CHAMPION_01, anm_champion_come_01 )
+	_MSGWIN_CLOSE()
+	
+	//３人：先へ進む
+	IF $LWK_POSZ == 437 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_walk_01a )
+		_OBJ_ANIME( R05_RIVAL_01, anm_rival_walk_01a )
+		_OBJ_ANIME( R05_LEADER4_01, anm_leader_walk_01a )
+		_TIME_WAIT( 100 )
+	ELSIF $LWK_POSZ == 438 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_walk_01b )
+		_OBJ_ANIME( R05_RIVAL_01, anm_rival_walk_01b )
+		_OBJ_ANIME( R05_LEADER4_01, anm_leader_walk_01b )
+		_TIME_WAIT( 108 )
+	ELSE
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_walk_01c )
+		_OBJ_ANIME( R05_RIVAL_01, anm_rival_walk_01c )
+		_OBJ_ANIME( R05_LEADER4_01, anm_leader_walk_01c )
+		_TIME_WAIT( 116 )
+	ENDIF
+	
+	//チャンプ：！マーク
+	_OBJ_ANIME( R05_CHAMPION_01, anm_champ_look_01 )
 	_OBJ_ANIME_WAIT()
-
-	//チャンプ：どうした少年
-	_BALLOONWIN_OBJMSG( msg_r05_champion_01 , R05_CHAMPION_01 )
-	_BALLOONWIN_CLOSE()
-
-	//３人：チャンプを見る
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_obj_dir_u )
+	
+	//チャンプ：おお！カミツレではないか
+	_PLAINWIN_MSG_UP( msg_r05_champion_01 )
+	_MSGWIN_CLOSE()
+	
+	//カミツレたち：チャンプを見る
 	_OBJ_ANIME( R05_LEADER4_01, anm_obj_dir_u )
 	_OBJ_ANIME( R05_RIVAL_01, anm_obj_dir_u )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_obj_dir_u )
 	_OBJ_ANIME_WAIT()
-
-	//ライバル：なぜやめた？
-	_BALLOONWIN_OBJMSG( msg_r05_black_08 , R05_RIVAL_01 )
-	_BALLOONWIN_CLOSE()
-
-	//チャンプ：人気がでない
-	_BALLOONWIN_OBJMSG( msg_r05_champion_02 , R05_CHAMPION_01 )
-	_BALLOONWIN_CLOSE()
-
-	//ライバル：ふざけるなよ
-	_BALLOONWIN_OBJMSG( msg_r05_black_09 , R05_RIVAL_01 )
-	_BALLOONWIN_CLOSE()
-
-	//チャンプ：すまないが
-	_BALLOONWIN_OBJMSG( msg_r05_champion_03 , R05_CHAMPION_01 )
-	_BALLOONWIN_CLOSE()
-
-	//ライバル：いや……
-	_BALLOONWIN_OBJMSG( msg_r05_black_10 , R05_RIVAL_01 )
-	_BALLOONWIN_CLOSE()
-
-	//カミツレ：アタシ　先行くね
+	
+	//チャンプ：カミツレ前へ
+	_OBJ_ANIME( R05_CHAMPION_01, anm_champ_come_01 )
+	//子供たち：チャンプの後ろをついてくる
+	_OBJ_ANIME( R05_BOY3_01, anm_boy3_come_01 )
+	_OBJ_ANIME( R05_GIRL2_01, anm_girl2_come_01 )
+	_OBJ_ANIME_WAIT()
+	
+	//チャンプ：フェスティバルはいいのう
+	_BALLOONWIN_OBJMSG( msg_r05_champion_01_01 , R05_CHAMPION_01 )
+	_MSGWIN_CLOSE()
+	
+	//ライバル：カミツレを見て
+	_OBJ_ANIME( R05_RIVAL_01, anm_obj_dir_l )
+	_OBJ_ANIME_WAIT()
+	
+	//ライバル：だれこの人
+	_BALLOONWIN_OBJMSG( msg_r05_black_03 , R05_RIVAL_01 )
+	_MSGWIN_CLOSE()
+	
+	//カミツレ：ライバルを見て
+	_OBJ_ANIME( R05_LEADER4_01, anm_obj_dir_r )
+	_OBJ_ANIME_WAIT()
+	
+	//イッシュ地方のチャンピオンよ
 	_BALLOONWIN_OBJMSG( msg_r05_leader_03 , R05_LEADER4_01 )
-	_BALLOONWIN_CLOSE()
-	_BALLOONWIN_OBJMSG( msg_r05_leader_04 , R05_LEADER4_01 )
-	_BALLOONWIN_CLOSE()
+	_MSGWIN_CLOSE()
+	
+	//ライバル：チャンプの前にかけよる
+	_OBJ_ANIME( R05_RIVAL_01, anm_rival_move_01 )
+	_TIME_WAIT( 8 )
+	_OBJ_ANIME( R05_LEADER4_01, anm_obj_dir_u )
+	_OBJ_ANIME_WAIT()
+	
+	//どうしてチャンピオンが？
+	_BALLOONWIN_OBJMSG( msg_r05_black_04 , R05_RIVAL_01 )
+	_MSGWIN_CLOSE()
+	
+	//チャンプ：ライバルを見て
+	_OBJ_ANIME( R05_CHAMPION_01, anm_obj_dir_r )
+	_OBJ_ANIME_WAIT()
+	
+	//手厳しい若者だな
+	_BALLOONWIN_OBJMSG( msg_r05_champion_02 , R05_CHAMPION_01 )
+	_MSGWIN_CLOSE()
+	
+	//はじめまして
+	_BALLOONWIN_OBJMSG( msg_r05_black_05 , R05_RIVAL_01 )
+	_MSGWIN_CLOSE()
+	
+	//目的をもって
+	_BALLOONWIN_OBJMSG_POS( msg_r05_champion_03 , R05_CHAMPION_01 , WIN_UP )
+	_MSGWIN_CLOSE()
+	
+	//ライバル：？マーク
+	_OBJ_ANIME( R05_RIVAL_01, anm_obj_hatena )
+	_OBJ_ANIME_WAIT()
+	
+	//強さを求める以外に
+	_BALLOONWIN_OBJMSG_POS( msg_r05_black_06 , R05_RIVAL_01 , WIN_NONE )
+	_MSGWIN_CLOSE()
+	
+	//ふむう強くなる か
+	_BALLOONWIN_OBJMSG_POS( msg_r05_champion_04 , R05_CHAMPION_01 , WIN_UP )
+	_MSGWIN_CLOSE()
+	
+	//チャンプ：ちらっと上を見て
+//	_OBJ_ANIME( R05_CHAMPION_01, anm_champ_look_02 )
+//	_OBJ_ANIME_WAIT()
+	
+	//マルチバトルをしてみないかね？
+	_BALLOONWIN_OBJMSG_POS( msg_r05_champion_05 , R05_CHAMPION_01 , WIN_UP )
+	_MSGWIN_CLOSE()
+	
+	//男の子＆女の子：主人公前へ
+//	_OBJ_ANIME( R05_BOY3_01, anm_battle_boy3_move_01 )
+//	_OBJ_ANIME( R05_GIRL2_01, anm_battle_girl2_move_01 )
+//	_TIME_WAIT( 16 )
 
-	//チャンプ：
-	_BALLOONWIN_OBJMSG( msg_r05_champion_04 , R05_CHAMPION_01 )
-	_BALLOONWIN_CLOSE()
-
-	//カミツレ＆ライバル：先に行く
+	//ライバル：主人公の隣へ
 	_OBJ_ANIME( R05_RIVAL_01, anm_rival_move_02 )
+	//チャンプ：主人公たちを見る
+	_OBJ_ANIME( R05_CHAMPION_01, anm_obj_dir_d )
+	_OBJ_ANIME_WAIT()
+	
+	//わかりました ～～ いくよ！
+	_PLAYER_NAME( 0 )
+	_BALLOONWIN_OBJMSG_POS( msg_r05_black_07 , R05_RIVAL_01 , WIN_NONE )
+	_MSGWIN_CLOSE()
+	
+	//マルチバトル呼び出し【仮】
+	_BLACK_OUT()
+	_DISP_FADE_END_CHECK()
+	_BLACK_IN()
+	_DISP_FADE_END_CHECK()
+	
+	
+	//負けの場合ライバルとカミツレの非表示フラグをセット
+	
+	
+	
+	//チャンプ：男の子たちを見て
+	_OBJ_ANIME( R05_CHAMPION_01, anm_obj_dir_r )
+	_OBJ_ANIME_WAIT()
+	
+	//おまえたち！勝てなかったが…
+	_BALLOONWIN_OBJMSG_POS( msg_r05_champion_06 , R05_CHAMPION_01 , WIN_UP )
+	_MSGWIN_CLOSE()
+	
+	//チャンプ：主人公たちを見て
+	_OBJ_ANIME( R05_CHAMPION_01, anm_obj_dir_d )
+	_OBJ_ANIME_WAIT()
+	
+	//さて わかものよ
+	_BALLOONWIN_OBJMSG_POS( msg_r05_champion_07 , R05_CHAMPION_01 , WIN_UP )
+	_MSGWIN_CLOSE()
+	
+	//カミツレ：主人公たちを見て
+	_OBJ_ANIME( R05_LEADER4_01, anm_obj_dir_r )
+	_OBJ_ANIME_WAIT()
+	
+	//さ いきましょ
+	_BALLOONWIN_OBJMSG_POS( msg_r05_leader_04 , R05_LEADER4_01 , WIN_DOWN )
+	_MSGWIN_CLOSE()
+	
+	//カミツレ：先に行く
 	_OBJ_ANIME( R05_LEADER4_01, anm_leader_move_02 )
+	_OBJ_ANIME_WAIT()
+	
+	//ライバル：下を向いて
+	_OBJ_ANIME( R05_RIVAL_01, anm_obj_dir_d )
+	_OBJ_ANIME_WAIT()
+	
+	_TIME_WAIT( 16 )
+	
+	//チャンピオンは強い それ以外にないよ
+	_BALLOONWIN_OBJMSG_POS( msg_r05_black_08 , R05_RIVAL_01 , WIN_DOWN )
+	_MSGWIN_CLOSE()
+	
+	//ライバル：先に行く
+	_OBJ_ANIME( R05_RIVAL_01, anm_rival_move_03 )
 	_OBJ_ANIME_WAIT()
 
 	//カミツレ＆ライバル：位置移動
-	_OBJ_POS_CHANGE( R05_RIVAL_01, 333, 0, 432, DIR_LEFT )
-	_OBJ_POS_CHANGE( R05_LEADER4_01, 332, 0, 433, DIR_LEFT )
+	_OBJ_POS_CHANGE( R05_RIVAL_01, 336, 0, 431, DIR_LEFT )
+	_OBJ_POS_CHANGE( R05_LEADER4_01, 335, 0, 432, DIR_LEFT )
 
 	//========================================//
 		//ライバル戦闘posイベントを無効、橋デモposイベントを有効
 		$WK_SCENE_R05 = 2
 	//========================================//
-
-	_END_EVENT_BGM()
-
+	
+	}
+	
 EVENT_END
 
-
 //--------------------------------------------------------------------
-//ライバル：主人公横へ
+//？マーク
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_rival_move_01
-	_ANIME_DATA	AC_WALK_L_8F,5
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------------
-//ジムリーダー：主人公横へ
-//--------------------------------------------------------------------
-_ANIME_LABEL	anm_leader_move_01
-	_ANIME_DATA	AC_WALK_R_8F,8
+_ANIME_LABEL	anm_obj_hatena
+	_ANIME_DATA	AC_MARK_HATENA,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
@@ -249,46 +365,183 @@ _ANIME_LABEL	anm_obj_dir_r
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
-//３人：広場へ歩く
+//ライバル：主人公横へ
 //--------------------------------------------------------------------
-//主人公
-_ANIME_LABEL	anm_player_walk_01
-	_ANIME_DATA	AC_WALK_L_8F,6
-	_ANIME_DATA	AC_WALK_U_8F,4
-	_ANIME_DATA	ACMD_END,0
-//ライバル
-_ANIME_LABEL	anm_rival_walk_01
-	_ANIME_DATA	AC_WALK_L_8F,6
-	_ANIME_DATA	AC_WALK_U_8F,4
-	_ANIME_DATA	AC_DIR_R,1
-	_ANIME_DATA	AC_MARK_GYOE,1
-	_ANIME_DATA	ACMD_END,0
-//ジムリーダー
-_ANIME_LABEL	anm_leader_walk_01
+_ANIME_LABEL	anm_rival_come_01a
+	_ANIME_DATA	AC_WALK_L_8F,2
+	_ANIME_DATA	AC_WALK_U_8F,1
 	_ANIME_DATA	AC_WALK_L_8F,3
-	_ANIME_DATA	AC_STAY_WALK_R_8F,1
-	_ANIME_DATA	AC_WALK_U_8F,6
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_rival_come_01b
+	_ANIME_DATA	AC_WALK_L_8F,5
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_rival_come_01c
+	_ANIME_DATA	AC_WALK_L_8F,2
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_L_8F,3
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
-//チャンプ：近づく
+//主人公：ライバルの前へ
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_champion_come_01
+_ANIME_LABEL	anm_player_move_00a
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_player_move_00b
+	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//ジムリーダー：主人公横へ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_leader_move_01
+	_ANIME_DATA	AC_WALK_R_8F,7
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//３人：先へ進む
+//--------------------------------------------------------------------
+//主人公
+_ANIME_LABEL	anm_player_walk_01a
+	_ANIME_DATA	AC_WALK_L_8F,14
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_player_walk_01b
+	_ANIME_DATA	AC_WALK_L_8F,9
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_WALK_L_8F,5
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_player_walk_01c
+	_ANIME_DATA	AC_WALK_L_8F,9
+	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	AC_WALK_L_8F,5
+	_ANIME_DATA	ACMD_END,0
+
+//ライバル
+_ANIME_LABEL	anm_rival_walk_01a
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_WALK_L_8F,14
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_rival_walk_01b
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_WALK_L_8F,10
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_WALK_L_8F,4
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_rival_walk_01c
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_WALK_L_8F,10
+	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	AC_WALK_L_8F,4
+	_ANIME_DATA	ACMD_END,0
+
+//ジムリーダー
+_ANIME_LABEL	anm_leader_walk_01a
+	_ANIME_DATA	AC_WALK_L_8F,13
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_leader_walk_01b
+	_ANIME_DATA	AC_WALK_L_8F,7
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_WALK_L_8F,6
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_leader_walk_01c
+	_ANIME_DATA	AC_WALK_L_8F,7
+	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	AC_WALK_L_8F,6
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//チャンプ：カミツレに気づく
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_champ_look_01
+//	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//チャンプ：カミツレ前へ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_champ_come_01
+	_ANIME_DATA	AC_WALK_L_8F,2
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//子供たち：チャンプの後をついて移動
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_boy3_come_01
+	_ANIME_DATA	AC_WAIT_8F,3
+	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_girl2_come_01
+	_ANIME_DATA	AC_WAIT_8F,3
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_WALK_D_8F,3
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//ライバル：チャンプ前へ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_rival_move_01
+	_ANIME_DATA	AC_WALK_U_4F,1
+	_ANIME_DATA	AC_STAY_WALK_L_4F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//チャンプ：ちらっと上を見て
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_champ_look_02
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	AC_WAIT_8F,1
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//男の子＆女の子：主人公前へ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_battle_boy3_move_01
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_battle_girl2_move_01
 	_ANIME_DATA	AC_WALK_R_8F,1
 	_ANIME_DATA	AC_WALK_D_8F,3
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
-//カミツレ＆ライバル：先に行く
+//ライバル：主人公横へ
 //--------------------------------------------------------------------
-//ジムリーダー
+_ANIME_LABEL	anm_rival_move_02
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//カミツレ：先に行く
+//--------------------------------------------------------------------
 _ANIME_LABEL	anm_leader_move_02
 	_ANIME_DATA	AC_WALK_L_8F,8
 	_ANIME_DATA	ACMD_END,0
 
-//ジムリーダー
-_ANIME_LABEL	anm_rival_move_02
-	_ANIME_DATA	AC_WALK_L_8F,8
+//--------------------------------------------------------------------
+//ライバル：先に行く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_rival_move_03
+	_ANIME_DATA	AC_WALK_D_6F,1
+	_ANIME_DATA	AC_WALK_L_6F,10
 	_ANIME_DATA	ACMD_END,0
 
 
@@ -296,7 +549,7 @@ _ANIME_LABEL	anm_rival_move_02
 /*						チャンピオン						*/
 /************************************************************/
 EVENT_START	ev_r05_champion_01
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_r05_champion_04 )
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_r05_champion_08 )
 EVENT_END
 
 /************************************************************/
@@ -319,42 +572,103 @@ EVENT_END
 /*						橋開通posイベント					*/
 /************************************************************/
 EVENT_START	ev_pos_r05_h02demo_01
-	//カミツレ：その場歩き
-	_OBJ_ANIME( R05_LEADER4_01, anm_obj_dir_l )
+	
+	{
+	DEFINE_LOCAL	LWK_POSX
+	DEFINE_LOCAL	LWK_POSZ
+	
+	//主人公：近寄る
+	_PLAYER_POS_GET( LWK_POSX, LWK_POSZ )
+	IF $LWK_POSZ == 431 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move_01a )
+	ELSIF $LWK_POSZ == 432 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move_01b )
+	ELSIF $LWK_POSZ == 433 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move_01c )
+	ELSIF $LWK_POSZ == 434 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move_01d )
+	ELSE
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move_01e )
+	ENDIF
 	_OBJ_ANIME_WAIT()
-
+	
 	//カミツレ：さてと…
 	_BALLOONWIN_OBJMSG( msg_r05_leader_05 , R05_LEADER4_01 )
-	_BALLOONWIN_CLOSE()
-
+	_MSGWIN_CLOSE()
+	
+	//カミツレ：前へ
+	_OBJ_ANIME( R05_LEADER4_01, anm_leader_move_03 )
+	_OBJ_ANIME_WAIT()
+	
+	//TVT着信音を再生
+	_SE_PLAY( SEQ_SE_SYS_35 )
+	_SE_WAIT()
+	_SE_PLAY( SEQ_SE_SYS_35 )
+	_SE_WAIT()
+	
+	//カミツレ：上を向く
+	_OBJ_ANIME( R05_LEADER4_01, anm_obj_dir_u )
+	_OBJ_ANIME_WAIT()
+	
+	//アタシです はねばし降ろしてよ
+	_BALLOONWIN_OBJMSG( msg_r05_leader_06 , R05_LEADER4_01 )
+	_MSGWIN_CLOSE()
+	
+	//カミツレ：主人公の横へ
+	_OBJ_ANIME( R05_LEADER4_01, anm_leader_move_04 )
+	_OBJ_ANIME_WAIT()
+	
+	//さ みてて！
+	_BALLOONWIN_OBJMSG( msg_r05_leader_07 , R05_LEADER4_01 )
+	_MSGWIN_CLOSE()
+	
 	//【仮】H02デモ
 	_BLACK_OUT()
 	_DISP_FADE_END_CHECK()
 	_BLACK_IN()
 	_DISP_FADE_END_CHECK()
-
-	//カミツレ：ここで帰るけど　頑張ってね
-	_BALLOONWIN_OBJMSG( msg_r05_leader_06 , R05_LEADER4_01 )
-	_BALLOONWIN_CLOSE()
-
+	
+	_TIME_WAIT( 16 )
+	
+	//カミツレ：主人公たちを見て
+	_OBJ_ANIME( R05_LEADER4_01, anm_obj_dir_r )
+	_OBJ_ANIME_WAIT()
+	
+	//テレビの仕事があるから 帰るね
+	_BALLOONWIN_OBJMSG( msg_r05_leader_08 , R05_LEADER4_01 )
+	_MSGWIN_CLOSE()
+	
 	//カミツレ：去る
 	_OBJ_ANIME( R05_LEADER4_01, anm_leader_goaway_01 )
+	_TIME_WAIT( 16 )
+	_OBJ_ANIME( R05_RIVAL_01, anm_obj_dir_r )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_obj_dir_r )
 	_OBJ_ANIME_WAIT()
-
-	//カミツレ非表示
+	
+	//カミツレ消す
 	_OBJ_DEL( R05_LEADER4_01 )
-
-	//ライバル：いいや決めた！
-	_BALLOONWIN_OBJMSG( msg_r05_black_11 , R05_RIVAL_01 )
-	_BALLOONWIN_CLOSE()
-
+	
+	//ライバル：主人公を見て
+	_OBJ_ANIME( R05_RIVAL_01, anm_obj_dir_d )
+	_OBJ_ANIME_WAIT()
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_obj_dir_u )
+	_OBJ_ANIME_WAIT()
+	
+	//さあ いこう
+	_BALLOONWIN_OBJMSG( msg_r05_black_09 , R05_RIVAL_01 )
+	_MSGWIN_CLOSE()
+	
 	//ライバル：先に行く
 	_OBJ_ANIME( R05_RIVAL_01, anm_rival_goaway_01 )
+	_TIME_WAIT( 8 )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_obj_dir_l )
 	_OBJ_ANIME_WAIT()
-
-	//ライバル非表示
+	
+	//ライバル消す
 	_OBJ_DEL( R05_RIVAL_01 )
-
+	
+	}
+	
 	//========================================//
 
 	//posイベント無効
@@ -372,17 +686,64 @@ EVENT_START	ev_pos_r05_h02demo_01
 EVENT_END
 
 //--------------------------------------------------------------------
+//主人公：近寄る
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_move_01a
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_player_move_01b
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_player_move_01c
+	_ANIME_DATA	AC_WALK_L_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_player_move_01d
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_player_move_01e
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//カミツレ：前へ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_leader_move_03
+	_ANIME_DATA	AC_WALK_L_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//カミツレ：主人公の横へ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_leader_move_04
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
 //カミツレ：去る
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_leader_goaway_01
-	_ANIME_DATA	AC_WALK_R_8F,8
+	_ANIME_DATA	AC_WALK_R_8F,10
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
 //ライバル：去る
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_rival_goaway_01
-	_ANIME_DATA	AC_WALK_L_8F,6
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_L_8F,8
 	_ANIME_DATA	ACMD_END,0
 
 
@@ -396,7 +757,7 @@ EVENT_START	ev_pos_r05_h02stop_01
 
 	//カメラマン：橋を渡りたいなら
 	_BALLOONWIN_OBJMSG( msg_r05_cameraman_02 , R05_MAN2_01 )
-	_BALLOONWIN_CLOSE()
+	_MSGWIN_CLOSE()
 
 	//主人公：一歩下がる
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_back_01 )
