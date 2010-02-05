@@ -1,5 +1,5 @@
 #event data
-#save date:2010/02/05 17:12:56
+#save date:2010/02/05 18:09:07
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r06.wms
 #SECTION START:OBJ_EVENT
@@ -357,7 +357,7 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-2
+3
 #event number: 0
 #Door Event Label
 DOOR_ID_R06_R06R0101_EXIT01
@@ -392,5 +392,22 @@ EVENTDATA_POSTYPE_GRID
 712 0 104
 #size
 1 2
+#event number: 2
+#Door Event Label
+DOOR_ID_R06_R06R0301_EXIT01
+#Next Zone ID Name
+ZONE_ID_R06R0301
+#Next Door ID Name
+DOOR_ID_R06R0301_R06_EXIT01
+#Door Direction
+EXIT_DIR_DOWN
+#Door Type
+EXIT_TYPE_DOOR
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+72 0 104
+#size
+1 1
 #Map Event List Data End
 #SECTION End:DOOR_EVENT
