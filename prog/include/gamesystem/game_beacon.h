@@ -131,10 +131,10 @@ extern void GAMEBEACON_Set_BattleBigFourStart(u16 tr_no);
 extern void GAMEBEACON_Set_BattleBigFourVictory(u16 tr_no);
 extern void GAMEBEACON_Set_BattleChampionStart(u16 tr_no);
 extern void GAMEBEACON_Set_BattleChampionVictory(u16 tr_no);
-extern void GAMEBEACON_Set_PokemonGet(const STRBUF *nickname);
-extern void GAMEBEACON_Set_SpecialPokemonGet(const STRBUF *nickname);
+extern void GAMEBEACON_Set_PokemonGet(u16 monsno);
+extern void GAMEBEACON_Set_SpecialPokemonGet(u16 monsno);
 extern void GAMEBEACON_Set_PokemonLevelUp(const STRBUF *nickname);
-extern void GAMEBEACON_Set_PokemonEvolution(const STRBUF *nickname);
+extern void GAMEBEACON_Set_PokemonEvolution(u16 monsno, const STRBUF *nickname);
 extern void GAMEBEACON_Set_GPower(GPOWER_ID g_power_id);
 extern void GAMEBEACON_Set_SpItemGet(u16 item);
 extern void GAMEBEACON_Set_PlayTime(u32 hour);
@@ -150,6 +150,7 @@ extern void GAMEBEACON_Set_Thankyou(GAMEDATA *gamedata, u32 target_trainer_id);
 
 //=====詳細パラメータセット
 extern void GAMEBEACON_Set_ZoneChange(ZONEID zone_id);
+extern void GAMEBEACON_Set_Details_IntroductionPms(const PMS_DATA *pms);
 
 //--------------------------------------------------------------
 //  削除予定

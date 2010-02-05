@@ -803,7 +803,7 @@ static GFL_PROC_RESULT ShinkaDemoProcMain( GFL_PROC * proc, int * seq, void * pw
         { 
           STRBUF* strbuf = GFL_STR_CreateBuffer( STRBUF_LENGTH, work->heap_id );
           PP_Get( work->pp, ID_PARA_nickname, strbuf );  // ここは新しいニックネームでいいのだろうか？
-          GAMEBEACON_Set_PokemonEvolution( strbuf );
+          GAMEBEACON_Set_PokemonEvolution( PP_Get( work->pp, ID_PARA_monsno, NULL ), strbuf );
           GFL_STR_DeleteBuffer( strbuf );
         }
 

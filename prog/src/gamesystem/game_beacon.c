@@ -14,6 +14,7 @@
 #include "savedata/encount_sv.h"
 #include "savedata/misc.h"
 #include "net/net_whpipe.h"
+#include "savedata/my_pms_data.h"
 
 
 //==============================================================================
@@ -451,13 +452,17 @@ static void SendBeacon_Init(GAMEBEACON_SEND_MANAGER *send, GAMEDATA * gamedata)
   GAMEBEACON_INFO *info = &send->info;
   MYSTATUS *myst = GAMEDATA_GetMyStatus(gamedata);
   const MISC *misc = SaveData_GetMisc( GAMEDATA_GetSaveControlWork(gamedata) );
+  const MYPMS_DATA *mypms = SaveData_GetMyPmsDataConst( GAMEDATA_GetSaveControlWork(gamedata) );
+  OSOwnerInfo owner_info;
+  PMS_DATA pms;
+  
+  OS_GetOwnerInfo(&owner_info);
   
   info->version_bit = 0xffff; //全バージョン指定
   info->zone_id = PLAYERWORK_getZoneID(GAMEDATA_GetMyPlayerWork(gamedata));
   info->g_power_id = GPOWER_ID_NULL;
-  info->trainer_id = MyStatus_GetID(myst);
-  MyStatus_CopyNameStrCode( myst, info->name, BUFLEN_PERSON_NAME );
-  info->favorite_color = *(OS_GetFavoriteColorTable());
+  info->trainer_id = MyStatus_GetID_Low(myst);
+  info->favorite_color_index = owner_info.favoriteColor;
   info->trainer_view = MyStatus_GetTrainerView(myst);
   info->sex = MyStatus_GetMySex( myst );
   info->pm_version = PM_VERSION;
@@ -468,11 +473,25 @@ static void SendBeacon_Init(GAMEBEACON_SEND_MANAGER *send, GAMEDATA * gamedata)
   
   info->thanks_recv_count = MISC_CrossComm_GetThanksRecvCount(misc);
   info->suretigai_count = MISC_CrossComm_GetSuretigaiCount(misc);
-  { //自己紹介文コピー　文字数がFullの場合はEOMを差し込まないので
+  
+  MYPMS_GetPms( mypms, MYPMS_PMS_TYPE_INTRODUCTION, &pms );
+  GAMEBEACON_Set_Details_IntroductionPms(&pms);
+
+  { //名前＆自己紹介文コピー　文字数がFullの場合はEOMを差し込まないので
     //STRTOOL_Copyは使用せずに独自コピー
     STRCODE code_eom = GFL_STR_GetEOMCode();
-    const STRCODE *src_code = MISC_CrossComm_GetSelfIntroduction(misc);
+    const STRCODE *src_code;
     int i;
+    
+    src_code = MyStatus_GetMyName(myst);
+    for(i = 0; i < PERSON_NAME_SIZE; i++){
+      info->name[i] = src_code[i];
+      if(src_code[i] == code_eom){
+        break;
+      }
+    }
+
+    src_code = MISC_CrossComm_GetSelfIntroduction(misc);
     for(i = 0; i < GAMEBEACON_SELFINTRODUCTION_MESSAGE_LEN; i++){
       info->self_introduction[i] = src_code[i];
       if(src_code[i] == code_eom){
@@ -524,7 +543,7 @@ void GAMEBEACON_Wordset(const GAMEBEACON_INFO *info, WORDSET *wordset, HEAPID te
   case GAMEBEACON_ACTION_POKE_EVOLUTION:       ///<ポケモン進化
   case GAMEBEACON_ACTION_POKE_LVUP:            ///<ポケモンレベルアップ
   case GAMEBEACON_ACTION_POKE_GET:             ///<ポケモン捕獲
-  	GFL_STR_SetStringCodeOrderLength(name_strbuf, info->action.nickname, BUFLEN_POKEMON_NAME);
+  	GFL_STR_SetStringCodeOrderLength(name_strbuf, info->action.normal.nickname, BUFLEN_POKEMON_NAME);
     WORDSET_RegisterWord(wordset, 1, name_strbuf, 0, TRUE, PM_LANG);
     break;
   }
@@ -776,15 +795,15 @@ void GAMEBEACON_Set_BattleChampionVictory(u16 tr_no)
 /**
  * ビーコンセット：ポケモン捕獲
  *
- * @param   nickname		対象ポケモンのニックネーム
+ * @param   monsno    ポケモン番号
  */
 //==================================================================
-void GAMEBEACON_Set_PokemonGet(const STRBUF *nickname)
+void GAMEBEACON_Set_PokemonGet(u16 monsno)
 {
   GAMEBEACON_SEND_MANAGER *send = &GameBeaconSys->send;
   
   send->info.action.action_no = GAMEBEACON_ACTION_POKE_GET;
-  GFL_STR_GetStringCode(nickname, send->info.action.nickname, BUFLEN_POKEMON_NAME);
+  send->info.action.monsno = monsno;
 
   _Set_Details_Walk();
 
@@ -795,19 +814,45 @@ void GAMEBEACON_Set_PokemonGet(const STRBUF *nickname)
 /**
  * ビーコンセット：特別なポケモン捕獲
  *
- * @param   nickname		対象ポケモンのニックネーム
+ * @param   monsno    ポケモン番号
  */
 //==================================================================
-void GAMEBEACON_Set_SpecialPokemonGet(const STRBUF *nickname)
+void GAMEBEACON_Set_SpecialPokemonGet(u16 monsno)
 {
   GAMEBEACON_SEND_MANAGER *send = &GameBeaconSys->send;
   
   send->info.action.action_no = GAMEBEACON_ACTION_POKE_GET;
-  GFL_STR_GetStringCode(nickname, send->info.action.nickname, BUFLEN_POKEMON_NAME);
+  send->info.action.monsno = monsno;
 
   _Set_Details_Walk();
 
   SendBeacon_SetCommon(send);
+}
+
+//--------------------------------------------------------------
+/**
+ * ニックネームのコピー　※文字数がFullの場合はEOMを差し込まないので独自コピー処理
+ *
+ * @param   nickname		    コピー元ニックネーム
+ * @param   dest_nickname		ニックネームコピー先
+ */
+//--------------------------------------------------------------
+static void _StrbufNicknameCopy(const STRBUF *nickname, STRCODE *dest_nickname)
+{
+  STRCODE temp_name[BUFLEN_POKEMON_NAME];
+  STRCODE code_eom = GFL_STR_GetEOMCode();
+  int i;
+
+  //文字数がFullの場合はEOMを差し込まないので独自コピー
+
+  //STRBUFに入っているSTRCODEをEOMも込みで展開できる一時バッファに取り出す
+  GFL_STR_GetStringCode(nickname, temp_name, BUFLEN_POKEMON_NAME);
+  for(i = 0; i < MONS_NAME_SIZE; i++){
+    dest_nickname[i] = temp_name[i];
+    if(temp_name[i] == code_eom){
+      break;
+    }
+  }
 }
 
 //==================================================================
@@ -822,7 +867,7 @@ void GAMEBEACON_Set_PokemonLevelUp(const STRBUF *nickname)
   GAMEBEACON_SEND_MANAGER *send = &GameBeaconSys->send;
   
   send->info.action.action_no = GAMEBEACON_ACTION_POKE_LVUP;
-  GFL_STR_GetStringCode(nickname, send->info.action.nickname, BUFLEN_POKEMON_NAME);
+  _StrbufNicknameCopy(nickname, send->info.action.normal.nickname);
 
   _Set_Details_Walk();
 
@@ -833,15 +878,17 @@ void GAMEBEACON_Set_PokemonLevelUp(const STRBUF *nickname)
 /**
  * ビーコンセット：ポケモン進化
  *
+ * @param   monsno  		対象ポケモンのポケモン番号
  * @param   nickname		対象ポケモンのニックネーム
  */
 //==================================================================
-void GAMEBEACON_Set_PokemonEvolution(const STRBUF *nickname)
+void GAMEBEACON_Set_PokemonEvolution(u16 monsno, const STRBUF *nickname)
 {
   GAMEBEACON_SEND_MANAGER *send = &GameBeaconSys->send;
   
   send->info.action.action_no = GAMEBEACON_ACTION_POKE_EVOLUTION;
-  GFL_STR_GetStringCode(nickname, send->info.action.nickname, BUFLEN_POKEMON_NAME);
+  send->info.action.monsno = monsno;
+  _StrbufNicknameCopy(nickname, send->info.action.normal.nickname);
 
   _Set_Details_Walk();
 
@@ -1218,4 +1265,21 @@ static void _Set_Details_Walk(void)
   //ゾーンIDはゾーン切り替えした時にセットしてもらうイメージ。
   //※そのようにしなければ詳細Noが「移動中」のビーコンセット命令全てで
   //　ゾーンIDを渡す必要が出てくる
+}
+
+//==================================================================
+/**
+ * ビーコン詳細セット：自己紹介簡易会話
+ *
+ * @param   pms		簡易会話データへのポインタ
+ */
+//==================================================================
+void GAMEBEACON_Set_Details_IntroductionPms(const PMS_DATA *pms)
+{
+  GAMEBEACON_SEND_MANAGER *send = &GameBeaconSys->send;
+  
+  send->info.details.sentence_type = pms->sentence_type;
+  send->info.details.sentence_id = pms->sentence_id;
+  send->info.details.word[0] = pms->word[0];
+  send->info.details.word[1] = pms->word[1];
 }

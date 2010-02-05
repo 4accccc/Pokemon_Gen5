@@ -343,18 +343,6 @@ BOOL GAMEBEACON_Check_NPC(const GAMEBEACON_INFO *info)
 
 //==================================================================
 /**
- * プレイヤー名へのポインタを取得する
- * @param   info		ビーコン情報へのポインタ
- * @retval  const STRCODE *		プレイヤー名へのポインタ
- */
-//==================================================================
-const STRCODE * GAMEBEACON_Get_PlayerName(const GAMEBEACON_INFO *info)
-{
-  return info->name;
-}
-
-//==================================================================
-/**
  * プレイヤー名をSTRBUFに取得する
  * @param   info		ビーコン情報へのポインタ
  * @retval  const STRCODE *		プレイヤー名へのポインタ
@@ -362,7 +350,13 @@ const STRCODE * GAMEBEACON_Get_PlayerName(const GAMEBEACON_INFO *info)
 //==================================================================
 void GAMEBEACON_Get_PlayerNameToBuf(const GAMEBEACON_INFO *info, STRBUF* strbuf)
 {
-  GFL_STR_SetStringCode( strbuf, info->name );
+  STRCODE temp_name[BUFLEN_PERSON_NAME];
+  
+  //文字数がFullの場合はEOMがついていないので一時バッファにコピーして終端にEOMをつける
+  GFL_STD_MemCopy16(info->name, temp_name, PERSON_NAME_SIZE*2);
+  temp_name[PERSON_NAME_SIZE] = GFL_STR_GetEOMCode();
+  
+  GFL_STR_SetStringCode( strbuf, temp_name );
 }
 
 //==================================================================
@@ -403,6 +397,22 @@ int GAMEBEACON_Get_Area(const GAMEBEACON_INFO *info)
 
 //==================================================================
 /**
+ * 自己紹介簡易会話を取得
+ *
+ * @param   info		    ビーコン情報へのポインタ
+ * @param   dest_pms		代入先
+ */
+//==================================================================
+void GAMEBEACON_Get_IntroductionPms(const GAMEBEACON_INFO *info, PMS_DATA *dest_pms)
+{
+  dest_pms->sentence_type = info->details.sentence_type;
+  dest_pms->sentence_id = info->details.sentence_id;
+  dest_pms->word[0] = info->details.word[0];
+  dest_pms->word[1] = info->details.word[1];
+}
+
+//==================================================================
+/**
  * 調査隊員ランクを取得
  * @param   info		ビーコン情報へのポインタ
  * @retval  RESEARCH_TEAM_RANK		調査隊員ランク
@@ -423,7 +433,7 @@ RESEARCH_TEAM_RANK GAMEBEACON_Get_ResearchTeamRank(const GAMEBEACON_INFO *info)
 //==================================================================
 void GAMEBEACON_Get_FavoriteColor(GXRgb *dest_buf, const GAMEBEACON_INFO *info)
 {
-  *dest_buf = info->favorite_color;
+  *dest_buf = OS_GetFavoriteColor(info->favorite_color_index);
 }
 
 //==================================================================
@@ -627,6 +637,9 @@ u16 GAMEBEACON_Get_Action_Monsno(const GAMEBEACON_INFO *info)
   case GAMEBEACON_ACTION_BATTLE_WILD_POKE_VICTORY:
   case GAMEBEACON_ACTION_BATTLE_SP_POKE_START:
   case GAMEBEACON_ACTION_BATTLE_SP_POKE_VICTORY:
+  case GAMEBEACON_ACTION_POKE_GET:
+  case GAMEBEACON_ACTION_SP_POKE_GET:
+  case GAMEBEACON_ACTION_POKE_EVOLUTION:
     return info->action.monsno;
   }
   GF_ASSERT(0);
@@ -691,16 +704,23 @@ u16 GAMEBEACON_Get_Action_DistributionItemNo(const GAMEBEACON_INFO *info)
  * @retval  const STRCODE *		ニックネームへのポインタ
  */
 //==================================================================
-const STRCODE * GAMEBEACON_Get_Action_Nickname(const GAMEBEACON_INFO *info)
+void GAMEBEACON_Get_Action_Nickname(const GAMEBEACON_INFO *info, STRBUF *dest)
 {
+  STRCODE temp_name[BUFLEN_POKEMON_NAME];
+
+  //文字数がFullの場合はEOMがついていないので一時バッファにコピーして終端にEOMをつける
+  GFL_STD_MemCopy16(info->name, temp_name, MONS_NAME_SIZE*2);
+  temp_name[MONS_NAME_SIZE] = GFL_STR_GetEOMCode();
+
+  GFL_STR_SetStringCode( dest, temp_name );
+
   switch(info->action.action_no){
   case GAMEBEACON_ACTION_POKE_EVOLUTION:
   case GAMEBEACON_ACTION_POKE_LVUP:
-  case GAMEBEACON_ACTION_POKE_GET:
-    return info->action.nickname;
+    return;
   }
   GF_ASSERT(0);
-  return info->action.nickname;
+  return;
 }
 
 //==================================================================

@@ -36,11 +36,11 @@ extern GAMEBEACON_INFO_TBL * GAMEBEACON_InfoTbl_Alloc(HEAPID heap_id);
 //  アクセサ
 //--------------------------------------------------------------
 extern BOOL GAMEBEACON_Check_NPC(const GAMEBEACON_INFO *info);
-extern const STRCODE * GAMEBEACON_Get_PlayerName(const GAMEBEACON_INFO *info);
 extern void GAMEBEACON_Get_PlayerNameToBuf(const GAMEBEACON_INFO *info, STRBUF* strbuf);
 extern int GAMEBEACON_Get_PmVersion(const GAMEBEACON_INFO *info);
 extern int GAMEBEACON_Get_Nation(const GAMEBEACON_INFO *info);
 extern int GAMEBEACON_Get_Area(const GAMEBEACON_INFO *info);
+extern void GAMEBEACON_Get_IntroductionPms(const GAMEBEACON_INFO *info, PMS_DATA *dest_pms);
 extern RESEARCH_TEAM_RANK GAMEBEACON_Get_ResearchTeamRank(const GAMEBEACON_INFO *info);
 extern void GAMEBEACON_Get_FavoriteColor(GXRgb *dest_buf, const GAMEBEACON_INFO *info);
 extern u32 GAMEBEACON_Get_TrainerID(const GAMEBEACON_INFO *info);
@@ -60,7 +60,7 @@ extern u16 GAMEBEACON_Get_Action_Monsno(const GAMEBEACON_INFO *info);
 extern u16 GAMEBEACON_Get_Action_ItemNo(const GAMEBEACON_INFO *info);
 extern u16 GAMEBEACON_Get_Action_DistributionMonsno(const GAMEBEACON_INFO *info);
 extern u16 GAMEBEACON_Get_Action_DistributionItemNo(const GAMEBEACON_INFO *info);
-extern const STRCODE * GAMEBEACON_Get_Action_Nickname(const GAMEBEACON_INFO *info);
+extern void GAMEBEACON_Get_Action_Nickname(const GAMEBEACON_INFO *info, STRBUF *dest);
 extern u16 GAMEBEACON_Get_Action_TrNo(const GAMEBEACON_INFO *info);
 extern u32 GAMEBEACON_Get_Action_ThankyouCount(const GAMEBEACON_INFO *info);
 extern u32 GAMEBEACON_Get_Action_Hour(const GAMEBEACON_INFO *info);
