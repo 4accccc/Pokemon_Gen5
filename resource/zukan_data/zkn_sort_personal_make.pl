@@ -5,6 +5,7 @@
             「MONSNO」を○○順に並べて出力する(全国図鑑順、地方図鑑順、五十音順)
             五十音順ファイルのどこからアが始まるか、イが始まるか、…を出力する
             おまけ機能：地方図鑑番号を出力する(MONSNOの順番に出力する)
+            おまけ機能：頭文字番号を出力する(MONSNOの順番に出力する)
      author Koji Kawada
      data   2010.01.05
      note   perl zkn_sort_personal_make.pl personal_wb.csv
@@ -35,6 +36,9 @@
     リトルエンディアンのu16
     1<=地方図鑑に登場し有効な番号
     0地方図鑑に登場しない
+
+頭文字番号
+    リトルエンディアンのu8
 
 MONSNOだけのとき
     リトルエンディアンのu16
@@ -96,6 +100,7 @@ $sort_aiueo_idx_file_name = "zkn_sort_aiueo_idx.dat";  # $sort_aiueo_file_name�
 $sort_aiueo_idx_header_file_name  = "zkn_sort_aiueo_idx.h";  # $sort_aiueo_file_nameのどこからアが始まるか、イが始まるか、…  # shiftjis
 
 $chihou_no_file_name      = "zkn_chihou_no.dat";       # 地方図鑑番号     # リトルエンディアンのバイナリ      # おまけ
+$initial_file_name        = "zkn_initial.dat";         # 頭文字番号       # バイナリ                          # おまけ
 
 # デバッグ
 $debug_monsno_formno_csv_file_name    = "debug_zkn_sort_personal_make_monsno_formno.csv";  # shiftjis
@@ -113,6 +118,7 @@ $debug_sort_aiueo_file_name     = "debug_zkn_sort_personal_make_sort_aiueo.csv";
 $debug_sort_aiueo_idx_csv_file_name = "debug_zkn_sort_personal_make_aiueo_idx.csv";  # shiftjis
 
 $debug_chihou_no_csv_file_name  = "debug_zkn_sort_personal_make_chihou_no.csv";     # shiftjis      # おまけ
+$debug_initial_csv_file_name    = "debug_zkn_sort_personal_make_initial.csv";       # shiftjis      # おまけ
 
 # ビット
 $monsno_shift    =  0;  # $monsno_formno = ($formno << $formno_shift) | ($monsno << $monsno_shift);
@@ -161,9 +167,10 @@ $mons_num;
 @mons_tbl = ();  # 0<= <$mons_num
 $mons_col_monsname       = 0;  # 例：アーボック
 $mons_col_aiueo_monsname = 1;  # 例：アアホツク
-$mons_col_monsno         = 2;  # 1スタート。001がフシギダネ。
-$mons_col_form_num       = 3;
-$mons_col_form_start     = 4;  # 最後(含まない)は($mons_col_form_start + $form_col_offset_max * $mons_col_form_numの値)
+$mons_col_initial        = 2;  # 例："ア"=>0
+$mons_col_monsno         = 3;  # 1スタート。001がフシギダネ。
+$mons_col_form_num       = 4;
+$mons_col_form_start     = 5;  # 最後(含まない)は($mons_col_form_start + $form_col_offset_max * $mons_col_form_numの値)
 
 $form_col_offset_form_name   = 0;
 $form_col_offset_formno      = 1;  # 0スタート。($mons_col_form_numの値 - 1)が最後(含む)。
@@ -215,6 +222,24 @@ $monsform_col_formno          = 2;  # $form_col_offset_formnoの値
   "ン"=>$sort_aiueo_idx_none, 
 );
 
+# 頭文字番号
+%initial_to_no_tbl =
+(
+  "ア"=>0,  "イ"=>1,  "ウ"=>2,  "エ"=>3,  "オ"=>4,
+  "カ"=>5,  "キ"=>6,  "ク"=>7,  "ケ"=>8,  "コ"=>9,
+  "サ"=>10, "シ"=>11, "ス"=>12, "セ"=>13, "ソ"=>14,
+  "タ"=>15, "チ"=>16, "ツ"=>17, "テ"=>18, "ト"=>19,
+  "ナ"=>20, "ニ"=>21, "ヌ"=>22, "ネ"=>23, "ノ"=>24,
+  "ハ"=>25, "ヒ"=>26, "フ"=>27, "ヘ"=>28, "ホ"=>29,
+  "マ"=>30, "ミ"=>31, "ム"=>32, "メ"=>33, "モ"=>34,
+  "ヤ"=>35,           "ユ"=>36,           "ヨ"=>37,
+  "ラ"=>38, "リ"=>39, "ル"=>40, "レ"=>41, "ロ"=>42,
+  "ワ"=>43,                               "ヲ"=>44,
+  "ン"=>45, 
+);
+$initial_to_no_unknown   = 46;  # 不明な頭文字のとき
+
+
 ##=============================================================================
 =pod
     メイン処理
@@ -230,6 +255,9 @@ $personal_csv_file_name = $temp_personal_csv_file_name;  # これ以降に使用
 
 # aiueoソート用の名前を作成する
 &MakeAiueoMonsname();
+
+# 頭文字を見て頭文字番号を与える
+&SetInitial();
 
 # monsとformを一列にした配列を作成する
 &MakeMonsformTable();
@@ -273,6 +301,10 @@ $personal_csv_file_name = $temp_personal_csv_file_name;  # これ以降に使用
 # 地方図鑑番号を出力する
 &WriteChihouNoFile();                    # おまけ
 &DebugWriteChihouNoFile();  #debug       # おまけ
+
+# 頭文字番号を出力する
+&WriteInitialFile();                     # おまけ
+&DebugWriteInitialFile();  #debug        # おまけ
 
 # 不要なファイルを削除する
 &DeleteTemp();
@@ -335,6 +367,7 @@ sub DebugDeleteFile
   unlink( $debug_sort_aiueo_idx_csv_file_name );
 
   unlink( $debug_chihou_no_csv_file_name );
+  unlink( $debug_initial_csv_file_name );
 }
 
 ##-------------------------------------
@@ -860,6 +893,92 @@ sub DebugWriteChihouNoFile
   }
 
   close( FH );
+}
+
+
+##-------------------------------------
+### 頭文字番号を出力する
+##=====================================
+sub WriteInitialFile
+{
+  open( FH, ">", $initial_file_name );
+
+  binmode FH;
+
+  my $buf;
+  my $initial;
+
+  # MONSNO 0番
+  $initial = $initial_to_no_unknown;
+  $buf = pack "C", $initial;  # 符号なし8ビット整数。(u8だからリトルエンディアンとかない)
+  print FH "$buf";
+
+  # MONSNO 1番から
+  for( my $i=0; $i<$mons_num; $i++ )
+  {
+    $initial = $initial_to_no_unknown;
+    if( $mons_tbl[$i][$mons_col_initial] ne "" )
+    {
+      $initial = $mons_tbl[$i][$mons_col_initial];
+    }
+    $buf = pack "C", $initial;  # 符号なし8ビット整数。(u8だからリトルエンディアンとかない)
+    print FH "$buf";
+  }
+
+  close( FH );
+}
+
+sub DebugWriteInitialFile
+{
+  open( FH, ">:encoding(shiftjis)", $debug_initial_csv_file_name );
+
+  my $initial;
+  
+  print FH "pokename,initial,monsno,\r\n";  # 0D 0A
+
+  # MONSNO 0番
+  $initial = $initial_to_no_unknown;
+  print FH "ーーーーー,$initial,0,\r\n";  # 0D 0A
+
+  # MONSNO 1番から
+  for( my $i=0; $i<$mons_num; $i++ )
+  {
+    $initial = $initial_to_no_unknown;
+    if( $mons_tbl[$i][$mons_col_initial] ne "" )
+    {
+      $initial = $mons_tbl[$i][$mons_col_initial];
+    }
+
+    print FH "$mons_tbl[$i][$mons_col_monsname],";
+    print FH "$initial,";
+    print FH "$mons_tbl[$i][$mons_col_monsno],";
+    
+    print FH "\r\n";  # 0D 0A
+  }
+
+  close( FH );
+}
+
+##-------------------------------------
+### 頭文字を見て頭文字番号を与える
+##=====================================
+sub SetInitial
+{
+  # MakeAiueoMonsname()が済み、
+  # $mons_tbl[$i][$mons_col_aiueo_monsname]に値が
+  # 設定されてから呼ぶこと。
+
+  for( my $i=0; $i<$mons_num; $i++ )
+  {
+    my $str = $mons_tbl[$i][$mons_col_aiueo_monsname];
+    my $c = substr( $str, 0, 1 );
+    my $no = $initial_to_no_tbl{$c};
+    if( !defined($no) )
+    {
+      $no = $initial_to_no_unknown;
+    }
+    $mons_tbl[$i][$mons_col_initial] = $no;
+  }
 }
 
 ##-------------------------------------

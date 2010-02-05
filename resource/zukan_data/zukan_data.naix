@@ -13,14 +13,15 @@
 enum {
 	NARC_zukan_data_zkn_next_form_pos_dat = 0,
 	NARC_zukan_data_zkn_chihou_no_dat = 1,
-	NARC_zukan_data_zkn_style_dat = 2,
-	NARC_zukan_data_zkn_sort_zenkoku_dat = 3,
-	NARC_zukan_data_zkn_sort_chihou_dat = 4,
-	NARC_zukan_data_zkn_sort_aiueo_dat = 5,
-	NARC_zukan_data_zkn_sort_high_dat = 6,
-	NARC_zukan_data_zkn_sort_short_dat = 7,
-	NARC_zukan_data_zkn_sort_heavy_dat = 8,
-	NARC_zukan_data_zkn_sort_light_dat = 9
+	NARC_zukan_data_zkn_initial_dat = 2,
+	NARC_zukan_data_zkn_style_dat = 3,
+	NARC_zukan_data_zkn_sort_zenkoku_dat = 4,
+	NARC_zukan_data_zkn_sort_chihou_dat = 5,
+	NARC_zukan_data_zkn_sort_aiueo_dat = 6,
+	NARC_zukan_data_zkn_sort_high_dat = 7,
+	NARC_zukan_data_zkn_sort_short_dat = 8,
+	NARC_zukan_data_zkn_sort_heavy_dat = 9,
+	NARC_zukan_data_zkn_sort_light_dat = 10
 };
 
 /* NARC_ZUKAN_DATA_NAIX_ */
