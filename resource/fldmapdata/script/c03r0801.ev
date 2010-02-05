@@ -756,6 +756,7 @@ EVENT_START		ev_reserve_c03r0801_cabinguide_01
 
 	//ヒウンゆうらんせんの　ごじょうせん
 	_BALLOONWIN_OBJMSG( msg_c03r0801_ex_01 , C03R0801_CREW_01 )
+	_LAST_KEYWAIT()
 	_BALLOONWIN_CLOSE()
 }
 	//出港デモ再生・暗転⇒デモ再生⇒復帰
