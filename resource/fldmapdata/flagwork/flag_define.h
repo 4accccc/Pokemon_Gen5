@@ -668,7 +668,7 @@
 #define FV_UN_GTSFRIEND_02                 644 /* 0x0284 国連(内部）：GTSで交換した相手３ */
 #define FV_UN_GTSFRIEND_03                 645 /* 0x0285 国連(内部）：GTSで交換した相手４ */
 #define FV_UN_GTSFRIEND_04                 646 /* 0x0286 国連(内部）：GTSで交換した相手５ */
-		/* not used   647(0x0287) */
+#define FV_C03R0301_CLEANINGM_01           647 /* 0x0287 バトルカンパニー１F：会長 */
 		/* not used   648(0x0288) */
 		/* not used   649(0x0289) */
 		/* not used   650(0x028a) */

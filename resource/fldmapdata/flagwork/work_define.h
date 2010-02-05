@@ -169,8 +169,8 @@
 #define WK_SCENE_C03                     16557 /* 0x40ad ヒウンシティ：イベント用ワーク */
 #define WK_SCENE_R15R0301                16558 /* 0x40ae パルパーク：イベント用ワーク */
 #define WK_SCENE_C03P07                  16559 /* 0x40af ヒウンシティ（ジム前通り）：イベント用ワーク */
-#define WK_SCENE_C03R0201_GALLERY        16560 /* 0x40b0 ヒウンシティ（ギャラリー）：イベント用ワーク */
-#define WK_SCENE_C03R0101                16561 /* 0x40b1 ヒウンシティ（バトルカンパニーF1）：イベント用ワーク */
+		/* not used 16560(0x40b0) */
+#define WK_SCENE_C03R0301                16561 /* 0x40b1 ヒウンシティ（バトルカンパニーF1）：イベント用ワーク */
 #define WK_SCENE_C03R1301_SUNGLASSES     16562 /* 0x40b2 ヒウンシティ（お金持ちの家１F）：ボディチェックイベント用ワーク */
 
 #define WK_SCENE_AREA_END                16687 /* 0x412f  */
@@ -187,7 +187,7 @@
 #define WK_OTHER_KASEKI_NUM              16692 /* 0x4134 化石復元イベント用ワーク */
 #define WK_OTHER_PASSENGERBOAT           16693 /* 0x4135 遊覧船イベント用ワーク */
 #define WK_OTHER_STATION_CONNECT         16694 /* 0x4136 C04とギアステーションの接続イベント用ワーク */
-		/* not used 16695(0x4137) */
+#define WK_OTHER_C03R0201_GALLERY        16695 /* 0x4137 日替わりタイプ指定ポケモン見せ用ワーク */
 		/* not used 16696(0x4138) */
 		/* not used 16697(0x4139) */
 		/* not used 16698(0x413a) */
