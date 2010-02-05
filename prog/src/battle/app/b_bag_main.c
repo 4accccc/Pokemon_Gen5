@@ -803,6 +803,18 @@ static int BBAG_ItemUse( BBAG_WORK * wk )
     }
   }
 
+	// ボール使用チェック
+	if( wk->poke_id == BBAG_POKE_BALL ){
+		// 手持ち・ボックスに空きがない
+		if( dat->ball_use == BBAG_BALLUSE_POKEMAX ){
+      GFL_MSG_GetString( wk->mman, mes_b_bag_m12, wk->msg_buf );
+			BattleBag_TalkMsgSet( wk );
+			wk->ret_seq = SEQ_BBAG_ERR;
+			return SEQ_BBAG_MSG_WAIT;
+		}
+	}
+
+
 /*
   // エラーメッセージテスト
   GFL_MSG_GetString( wk->mman, mes_b_bag_m01, wk->msg_buf );

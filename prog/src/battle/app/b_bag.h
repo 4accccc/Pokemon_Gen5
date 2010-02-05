@@ -32,6 +32,12 @@ enum {
   BBAG_POKE_MAX
 };
 
+// ボール使用設定
+enum {
+	BBAG_BALLUSE_TRUE = 0,		// 使用可能
+	BBAG_BALLUSE_POKEMAX,			// 手持ち・ボックスに空きがないため使用不可
+};
+
 // 外部設定データ
 typedef struct {
 
@@ -50,21 +56,25 @@ typedef struct {
 
   BOOL time_out_flg;    // 強制終了フラグ TRUE = 強制終了　※バトル側がリアルタイムで変更します
 
+	u8	ball_use;				// ボールを投げられるか
 
-  u32 skill_item_use; // 技で使用不可
-  s32 client_no;    // クライアントNo
-
-  u8  enc_double;     // 野生2vs2でボールが投げられない場合は１
-  u8  waza_vanish;    // 相手が「そらをとぶ」などで見えない場合は１
-  u8  waza_migawari;  // 相手が「みがわり」を使用している場合は１
   u8  ret_page;       // 使用したアイテムのポケット
   u8 * cursor_flg;    // カーソル表示フラグ
 
   s16 item_pos[BATTLE_BAG_POKE_MAX];  // アイテム位置
   s16 item_scr[BATTLE_BAG_POKE_MAX];  // アイテムスクロールカウンタ
 
+
+
 //  u16 used_item;    // 前回使用したアイテム
 //  u8  used_poke;    // 前回使用したアイテムのポケット
+
+//  u32 skill_item_use; // 技で使用不可
+//  s32 client_no;    // クライアントNo
+
+//  u8  enc_double;     // 野生2vs2でボールが投げられない場合は１
+//  u8  waza_vanish;    // 相手が「そらをとぶ」などで見えない場合は１
+//  u8  waza_migawari;  // 相手が「みがわり」を使用している場合は１
 
 }BBAG_DATA;
 
