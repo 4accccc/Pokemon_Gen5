@@ -12836,8 +12836,8 @@ static const ZONEDATA ZoneData[] = {
 	{//ZONE_ID_R15R0401 = 414
 		RSC_GRID_DEFAULT,
 		MMLID_NOENTRY,
-		AREA_ID_IN22,
-		MATRIX_ID_PAL01,
+		AREA_ID_IN01,
+		MATRIX_ID_THOUSE01,
 		NARC_script_seq_r15r0401_bin,
 		NARC_script_seq_sp_r15r0401_bin,	//NARC_script_seq_sp_r15r0401_bin,
 		NARC_script_message_r15r0401_dat,
@@ -12858,7 +12858,7 @@ static const ZONEDATA ZoneData[] = {
 		FALSE,
 		FALSE,
     TRUE,
-		MATRIX_ID_PAL01, // camera_area
+		MATRIX_ID_THOUSE01, // camera_area
 		0, // padding
 		5,
 		0,
