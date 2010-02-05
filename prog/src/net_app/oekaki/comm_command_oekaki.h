@@ -10,28 +10,31 @@
 #ifndef __COMM_COMMAND_OEKAKI_H__
 #define __COMM_COMMAND_OEKAKI_H__
 
+#include <gflib.h>
 
-#include "communication/comm_command.h"
-#include "../../field/comm_command_field.h"
-
+//#include "communication/comm_command.h"
+//#include "../../field/comm_command_field.h"
+#include "net/network_define.h"
 
 // ５人接続通信の時にユーザーが子機として送信できる最大受信バイト数
 #define COMM_SEND_5TH_PACKET_MAX  (10)
 
+// ---------------------------------------------------
+// 通信コマンド定義
+// ---------------------------------------------------
+enum{
+  CO_OEKAKI_GRAPHICDATA=GFL_NET_CMD_PICTURE,
+  CO_OEKAKI_LINEPOS,   
+  CO_OEKAKI_LINEPOS_SERVER,   
+  CO_OEKAKI_STOP,      
+  CO_OEKAKI_RESTART,   
+  CO_OEKAKI_END_CHILD, 
+  CO_OEKAKI_END,     
+  CO_OEKAKI_CHILD_JOIN,
+  CO_OEKAKI_OUT_CONTROL,
+};
+extern void OEKAKIBOARD_CommandInitialize( void* pWk );
 
-extern void CommCommandOekakiBoardInitialize(void* pWork);
-
-extern void CommOekakiBoardPicture(int netID, int size, void* pBuff, void* pWork);
-extern void CommOekakiBoardLinePos(int netID, int size, void* pBuff, void* pWork);
-extern void CommOekakiBoardLinePosServer(int netID, int size, void* pBuff, void* pWork);
-extern void CommOekakiBoardYes(int netID, int size, void* pBuff, void* pWork);
-extern void CommOekakiBoardNo(int netID, int size, void* pBuff, void* pWork);
-extern void CommOekakiBoardStop(int netID, int size, void* pBuff, void* pWork);
-extern void CommOekakiBoardReStart(int netID, int size, void* pBuff, void* pWork);
-extern void CommOekakiBoardEndQuestion(int netID, int size, void* pBuff, void* pWork);
-extern void CommOekakiBoardEndChild(int netID, int size, void* pBuff, void* pWork);
-extern void CommOekakiBoardEnd(int netID, int size, void* pBuff, void* pWork);
-extern void CommOekakiBoardChildJoin(int netID, int size, void* pBuff, void* pWork);
 
 
 #endif

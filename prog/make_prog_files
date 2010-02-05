@@ -648,10 +648,8 @@ SRCS_OVERLAY_UNION_APP = net_app/union/union_app.c
 
 # ぐるぐる交換（ユニオンルーム）
 #===> SRCS_OVERLAY_UNION_ROOM
-SRCS_OVERLAY_GURU2 = net_app/guru2/guru2.c \
-                     net_app/guru2/guru2_comm.c \
-                     net_app/guru2/guru2_receipt.c \
-                     net_app/guru2/guru2_main.c
+SRCS_OVERLAY_OEKAKI = net_app/oekaki/comm_command_oekaki.c \
+		      net_app/oekaki/oekaki.c
 
 
 # 遊覧船部屋セットアップ
@@ -1355,6 +1353,14 @@ SRCS_OVERLAY_POKE_STATUS = app/p_status/p_sta_sys.c \
 		app/p_status/p_sta_skill.c \
 		app/p_status/p_sta_oam.c \
 		app/p_status/ribbon.c
+
+# ぐるぐる交換（ユニオンルーム）
+#===> SRCS_OVERLAY_POKE_STATUS
+SRCS_OVERLAY_GURU2 = net_app/guru2/guru2.c \
+                     net_app/guru2/guru2_comm.c \
+                     net_app/guru2/guru2_receipt.c \
+                     net_app/guru2/guru2_main.c
+
 
 # バトル大会メニュー
 #===> SRCS_OVERLAY_BATTLE

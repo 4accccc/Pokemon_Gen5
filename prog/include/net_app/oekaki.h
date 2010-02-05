@@ -15,7 +15,7 @@
 
 // プロセス定義データ
 extern GFL_PROC_RESULT OekakiProc_Init( GFL_PROC * proc, int *seq, void *pwk, void *mywk );
-extern GFL_PROC_RESULT OekakiProc_Main( PGFL_PROC * proc, int *seq, void *pwk, void *mywk );
+extern GFL_PROC_RESULT OekakiProc_Main( GFL_PROC * proc, int *seq, void *pwk, void *mywk );
 extern GFL_PROC_RESULT OekakiProc_End(  GFL_PROC * proc, int *seq, void *pwk, void *mywk );
 
 // ポインタ参照だけできるお絵かきボードワーク構造体

@@ -14,6 +14,7 @@
 #define __OEKAKI_LOCAL_H__
 
 #include "system/touch_subwindow.h"
+#include "net_app/union_app.h"
 
 // 機能ボタン用定義
 #define FUNCBUTTON_NUM  ( 7 )     // 機能ボタンの数
@@ -100,6 +101,16 @@ enum{
     
 };
 
+enum{
+  CLACT_RES_M_PLTT,
+  CLACT_RES_M_CHR,
+  CLACT_RES_M_CELL,
+  CLACT_RES_S_PLTT,
+  CLACT_RES_S_CHR,
+  CLACT_RES_S_CELL,
+  CLACT_RES_OEKAKI_MAX,
+};
+
 
 enum{
   OEKAKI_SYNCHRONIZE_END=200,
@@ -149,16 +160,30 @@ typedef struct{
   u8  dummy[3];
 }OEKAKIG_SPLIT_DATA;
 
+enum{
+  OEKAKI_PRINT_UTIL_NAME_WIN0=0,
+  OEKAKI_PRINT_UTIL_NAME_WIN1,
+  OEKAKI_PRINT_UTIL_NAME_WIN2,
+  OEKAKI_PRINT_UTIL_NAME_WIN3,
+  OEKAKI_PRINT_UTIL_NAME_WIN4,
+  OEKAKI_PRINT_UTIL_BOARD,
+  OEKAKI_PRINT_UTIL_MSG,
+  OEKAKI_PRINT_UTIL_END,
+  OEKAKI_PRINT_UTIL_MAX,
+};
+
+
 //============================================================================================
 //  構造体定義
 //============================================================================================
 
 struct OEKAKI_WORK{
-  GF_BGL_INI    *bgl;
   BOOL      wipe_end;
-  OEKAKI_PARAM  *param;
+//  OEKAKI_PARAM  *param;
+  PICTURE_PARENT_WORK *param;
   GFL_TCB       *vblankTcb;
 
+  GFL_FONT    *font;
   WORDSET     *WordSet;                   // メッセージ展開用ワークマネージャー
   GFL_MSGDATA *MsgManager;            // 名前入力メッセージデータマネージャー
   STRBUF      *TrainerName[OEKAKI_MEMBER_MAX];    // 名前
@@ -166,21 +191,26 @@ struct OEKAKI_WORK{
   STRBUF      *TalkString;                // 会話メッセージ用
   int       MsgIndex;                     // 終了検出用ワーク
 
-  GFL_CLUNIT              clUnit;      // セルアクターセット
-  CLACT_U_EASYRENDER_DATA renddata;       // 簡易レンダーデータ
-  CLACT_U_RES_MANAGER_PTR resMan[CLACT_RESOURCE_NUM];       // リソースマネージャ
-  CLACT_U_RES_OBJ_PTR   resObjTbl[BOTH_LCD][CLACT_RESOURCE_NUM];// リソースオブジェテーブル
-  CLACT_HEADER      clActHeader_m;        // セルアクターヘッダー
-  CLACT_HEADER      clActHeader_s;        // セルアクターヘッダー
-  CLACT_WORK_PTR      MainActWork[NAMEIN_OAM_NUM];        // セルアクターワークポインタ配列
-  CLACT_WORK_PTR      SubActWork[NAMEIN_OAM_NUM];       // セルアクターワークポインタ配列
-  CLACT_WORK_PTR      ButtonActWork[12];  // ボタンアクターポインタ
+  GFL_CLUNIT              *clUnit;      // セルアクターセット
+  u32                     resObjTbl[ CLACT_RES_OEKAKI_MAX ];
+//  CLACT_U_EASYRENDER_DATA renddata;       // 簡易レンダーデータ
+//  CLACT_U_RES_MANAGER_PTR resMan[CLACT_RESOURCE_NUM];       // リソースマネージャ
+//  CLACT_U_RES_OBJ_PTR   resObjTbl[BOTH_LCD][CLACT_RESOURCE_NUM];// リソースオブジェテーブル
+//  CLACT_HEADER      clActHeader_m;        // セルアクターヘッダー
+//  CLACT_HEADER      clActHeader_s;        // セルアクターヘッダー
+  GFL_CLWK      *MainActWork[NAMEIN_OAM_NUM];        // セルアクターワークポインタ配列
+  GFL_CLWK      *SubActWork[NAMEIN_OAM_NUM];       // セルアクターワークポインタ配列
+  GFL_CLWK      *ButtonActWork[12];  // ボタンアクターポインタ
 
-  GFL_BMPWIN     *TrainerNameWin[BMP_OEKAKI_MAX];     // お絵かき画面用BMPウインドウ
-  GFL_BMPWIN     *OekakiBoard;
-  GFL_BMPWIN     *MsgWin;               // 会話ウインドウ
-  GFL_BMPWIN     *EndWin;               // やめる
-  GFL_BMPWIN     *YesNoWin[2];         // はい・いいえウインドウのポインタ
+  GFL_BMPWIN    *TrainerNameWin[BMP_OEKAKI_MAX];     // お絵かき画面用BMPウインドウ
+  GFL_BMPWIN    *OekakiBoard;
+  GFL_BMPWIN    *MsgWin;                // 会話ウインドウ
+  GFL_BMPWIN    *EndWin;                // やめる
+  GFL_BMPWIN    *YesNoWin[2];           // はい・いいえウインドウのポインタ
+  PRINT_UTIL    printUtil[OEKAKI_PRINT_UTIL_MAX];
+  PRINT_QUE     *printQue;
+  PRINT_STREAM  *printStream;           // 
+  GFL_TCBLSYS   *pMsgTcblSys;           // メッセージ表示用タスクシステム
 
   int           proc_seq;                 // MainProcのシーケンスを監視するためだけにある
                                           // （サブシーケンスは書き換えない）
@@ -194,7 +224,7 @@ struct OEKAKI_WORK{
   int           newMemberId;              // 乱入してきた人のID
   
   u8            ConnectCheck[8][2];
-  MYSTATUS        *TrainerStatus[8][2];
+  const MYSTATUS *TrainerStatus[8][2];
 
   u8            SendBoardGraphic[0x4000];
   u16           CursorPal;
@@ -203,7 +233,7 @@ struct OEKAKI_WORK{
 
   TOUCH_INFO        MyTouchResult;        // 自分のサンプリング結果（これは送信するだけ
   TOUCH_INFO        AllTouchResult[OEKAKI_MEMBER_MAX];  // 通信で取得したサンプリング結果（このデータで描画する
-  OLD_TOUCH_INFO      OldTouch[OEKAKI_MEMBER_MAX];      // 前回からのポイント履歴
+  OLD_TOUCH_INFO    OldTouch[OEKAKI_MEMBER_MAX];      // 前回からのポイント履歴
 
   u8            *lz_buf;                   // 圧縮画像格納領域
   int           send_num;
@@ -257,7 +287,6 @@ extern void OekakiBoardCommSendPokeData(int netID, POKEPARTY *party, int no);
 extern void OekakiBoardCommSend(int netID, int command, int pos);
 extern void OekakiBoard_MainSeqCheckChange( OEKAKI_WORK *wk, int seq, u8 id );
 extern void OekakiBoard_MainSeqForceChange( OEKAKI_WORK *wk, int seq, u8 id  );
-extern int OekakiBoard_MyStatusGetNum(void);
 
 
 #endif
