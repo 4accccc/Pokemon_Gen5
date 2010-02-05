@@ -33,10 +33,11 @@ enum {
 };
 
 // ボール使用設定
-enum {
-	BBAG_BALLUSE_TRUE = 0,		// 使用可能
-	BBAG_BALLUSE_POKEMAX,			// 手持ち・ボックスに空きがないため使用不可
+enum BBagBallUse_tag {
+  BBAG_BALLUSE_TRUE = 0,    // 使用可能
+  BBAG_BALLUSE_POKEMAX,     // 手持ち・ボックスに空きがないため使用不可
 };
+typedef u8 BBagBallUse;
 
 // 外部設定データ
 typedef struct {
@@ -56,7 +57,7 @@ typedef struct {
 
   BOOL time_out_flg;    // 強制終了フラグ TRUE = 強制終了　※バトル側がリアルタイムで変更します
 
-	u8	ball_use;				// ボールを投げられるか
+  BBagBallUse   ball_use;       // ボールを投げられるか
 
   u8  ret_page;       // 使用したアイテムのポケット
   u8 * cursor_flg;    // カーソル表示フラグ
