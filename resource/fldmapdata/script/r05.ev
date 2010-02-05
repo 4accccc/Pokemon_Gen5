@@ -65,8 +65,9 @@ EVENT_START	ev_pos_r05_rival_01
 	//ライバル表示
 	_FLAG_RESET( FV_R05_RIVAL )
 	_OBJ_ADD( R05_RIVAL_01 )
-
-	_START_EVENT_BGM( SEQ_BGM_E_RIVAL )
+	
+	//ライバル曲再生
+	_START_TEMP_EVENT_BGM( SEQ_BGM_E_RIVAL )
 
 	//ライバル：主人公横へ
 	IF $LWK_POSZ == 437 THEN
@@ -94,7 +95,6 @@ EVENT_START	ev_pos_r05_rival_01
 	_BALLOONWIN_OBJMSG_POS( msg_r05_black_01 , R05_RIVAL_01 , WIN_NONE )
 	_MSGWIN_CLOSE()
 
-/*【仮】停止バグが起きるため
 	//トレーナー戦呼び出し
 	IF $WK_SYS_FIRST_POKETYPE == FIRST_POKETYPE_KUSA THEN
 		//初期３匹が草タイプなら
@@ -114,12 +114,10 @@ EVENT_START	ev_pos_r05_rival_01
 	ELSE
 		_TRAINER_LOSE()
 	ENDIF
-*/	
+	
 	//ライバル：戦闘後メッセージ
 	_BALLOONWIN_OBJMSG( msg_r05_black_02 , R05_RIVAL_01 )
 	_MSGWIN_CLOSE()
-	
-	_END_EVENT_BGM()	//【仮】
 	
 	//ジムリーダー(カミツレ)表示
 	_FLAG_RESET( FV_R05_LEADER4 )
@@ -185,9 +183,6 @@ EVENT_START	ev_pos_r05_rival_01
 	
 	//チャンプ：カミツレ前へ
 	_OBJ_ANIME( R05_CHAMPION_01, anm_champ_come_01 )
-	//子供たち：チャンプの後ろをついてくる
-	_OBJ_ANIME( R05_BOY3_01, anm_boy3_come_01 )
-	_OBJ_ANIME( R05_GIRL2_01, anm_girl2_come_01 )
 	_OBJ_ANIME_WAIT()
 	
 	//チャンプ：フェスティバルはいいのう
@@ -248,23 +243,28 @@ EVENT_START	ev_pos_r05_rival_01
 	_BALLOONWIN_OBJMSG_POS( msg_r05_champion_04 , R05_CHAMPION_01 , WIN_UP )
 	_MSGWIN_CLOSE()
 	
-	//チャンプ：ちらっと上を見て
-//	_OBJ_ANIME( R05_CHAMPION_01, anm_champ_look_02 )
-//	_OBJ_ANIME_WAIT()
-	
 	//マルチバトルをしてみないかね？
 	_BALLOONWIN_OBJMSG_POS( msg_r05_champion_05 , R05_CHAMPION_01 , WIN_UP )
 	_MSGWIN_CLOSE()
 	
-	//男の子＆女の子：主人公前へ
-//	_OBJ_ANIME( R05_BOY3_01, anm_battle_boy3_move_01 )
-//	_OBJ_ANIME( R05_GIRL2_01, anm_battle_girl2_move_01 )
-//	_TIME_WAIT( 16 )
-
-	//ライバル：主人公の隣へ
-	_OBJ_ANIME( R05_RIVAL_01, anm_rival_move_02 )
+	//チャンプ：上を見て
+	_OBJ_ANIME( R05_CHAMPION_01, anm_obj_dir_u )
+	_OBJ_ANIME_WAIT()
+	
+	//おーいオマエたち！
+	_BALLOONWIN_OBJMSG_POS( msg_r05_champion_05_01 , R05_CHAMPION_01 , WIN_UP )
+	_MSGWIN_CLOSE()
+	
+	//子供たち：主人公の前へ
+	_OBJ_ANIME( R05_BOY3_01, anm_boy3_come_01 )
+	_OBJ_ANIME( R05_GIRL2_01, anm_girl2_come_01 )
+	_TIME_WAIT( 16 )
 	//チャンプ：主人公たちを見る
 	_OBJ_ANIME( R05_CHAMPION_01, anm_obj_dir_d )
+	_OBJ_ANIME_WAIT()
+	
+	//ライバル：主人公の隣へ
+	_OBJ_ANIME( R05_RIVAL_01, anm_rival_move_02 )
 	_OBJ_ANIME_WAIT()
 	
 	//わかりました ～～ いくよ！
@@ -477,22 +477,6 @@ _ANIME_LABEL	anm_champ_come_01
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
-//子供たち：チャンプの後をついて移動
-//--------------------------------------------------------------------
-_ANIME_LABEL	anm_boy3_come_01
-	_ANIME_DATA	AC_WAIT_8F,3
-	_ANIME_DATA	AC_WALK_D_8F,2
-	_ANIME_DATA	AC_WALK_L_8F,1
-	_ANIME_DATA	ACMD_END,0
-
-_ANIME_LABEL	anm_girl2_come_01
-	_ANIME_DATA	AC_WAIT_8F,3
-	_ANIME_DATA	AC_WAIT_2F,1
-	_ANIME_DATA	AC_WALK_D_8F,3
-	_ANIME_DATA	AC_STAY_WALK_L_8F,1
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------------
 //ライバル：チャンプ前へ
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_rival_move_01
@@ -510,14 +494,16 @@ _ANIME_LABEL	anm_champ_look_02
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
-//男の子＆女の子：主人公前へ
+//子供たち：主人公の前へ
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_battle_boy3_move_01
-	_ANIME_DATA	AC_WALK_D_8F,1
+_ANIME_LABEL	anm_boy3_come_01
+	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0
 
-_ANIME_LABEL	anm_battle_girl2_move_01
-	_ANIME_DATA	AC_WALK_R_8F,1
+_ANIME_LABEL	anm_girl2_come_01
+	_ANIME_DATA	AC_WAIT_2F,1
 	_ANIME_DATA	AC_WALK_D_8F,3
 	_ANIME_DATA	ACMD_END,0
 
