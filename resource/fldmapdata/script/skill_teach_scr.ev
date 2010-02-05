@@ -1,0 +1,370 @@
+//======================================================================
+//                skill_teach_scr.ev
+//
+//    スクリプトファイル：わざ教え用
+//
+//======================================================================
+
+  .text
+
+  .include  "scr_seq_def.h"
+  .include  "msg_poke_waza.h"
+  .include  "msg_skill_teach_scr.h"
+
+//----------------------------------------------------------------------
+//               スクリプト本体
+//----------------------------------------------------------------------
+
+//----------------------------------------------------------------------
+//               スクリプトテーブル
+//----------------------------------------------------------------------
+_EVENT_DATA   ev_waza_teacher_dragon
+_EVENT_DATA   ev_waza_teacher_powerful
+_EVENT_DATA_END
+
+//----------------------------------------------------------------------
+// ローカルワーク
+//----------------------------------------------------------------------
+
+DEFINE_LOCAL select_pos	// 選択ポケモン
+DEFINE_LOCAL teach_waza_id
+
+
+
+//======================================================================
+//======================================================================
+/**************************************************************/
+/*  りゅうせいぐんを教えてくれる人                            */
+/**************************************************************/
+EVENT_START ev_waza_teacher_dragon
+
+  _TALK_OBJ_START()
+
+  _CALL sub_waza_teacher_dragon
+
+EVENT_END
+
+/**************************************************************/
+/**************************************************************/
+sub_waza_teacher_dragon:
+{
+    _BALLOONWIN_OBJMSG_WB( msg_skillteach_dragon_01w, msg_skillteach_dragon_01b, SCWK_TARGET_OBJID, SCRCMD_MSGWIN_NON )
+    _YES_NO_WIN( SCWK_ANSWER )
+    _BALLOONWIN_CLOSE()
+
+    IF $SCWK_ANSWER == SCR_NO THEN
+        _BALLOONWIN_OBJMSG_WB( msg_skillteach_dragon_02w, msg_skillteach_dragon_02b, SCWK_TARGET_OBJID, SCRCMD_MSGWIN_NON )
+        _LAST_KEYWAIT()
+        _BALLOONWIN_CLOSE()
+        _RET
+    ENDIF
+
+    _SKILLTEACH_CHECK_PARTY( SCR_SKILLTEACH_MODE_DRAGON, SCWK_ANSWER )
+    IF $SCWK_ANSWER == SCR_SKILLTEACH_CHECK_RESULT_POKEMON_NG THEN
+        //手持ちポケモンでは覚えられない
+        _BALLOONWIN_OBJMSG_WB( msg_skillteach_dragon_04w, msg_skillteach_dragon_04b, SCWK_TARGET_OBJID, SCRCMD_MSGWIN_NON )
+        _LAST_KEYWAIT()
+        _BALLOONWIN_CLOSE()
+        _RET
+    ELSIF $SCWK_ANSWER == SCR_SKILLTEACH_CHECK_RESULT_NATSUKI_NG THEN
+        //そのポケモンはなつきが足りない
+        _BALLOONWIN_OBJMSG_WB( msg_skillteach_dragon_03w, msg_skillteach_dragon_03b, SCWK_TARGET_OBJID, SCRCMD_MSGWIN_NON )
+        _LAST_KEYWAIT()
+        _BALLOONWIN_CLOSE()
+        _RET
+    ENDIF
+
+    //ポケモン選択
+    _SKILLTEACH_SELECT_POKEMON( SCR_SKILLTEACH_MODE_DRAGON, SCWK_ANSWER, select_pos )
+    IF $SCWK_ANSWER == FALSE THEN
+        _BALLOONWIN_OBJMSG_WB( msg_skillteach_dragon_02w, msg_skillteach_dragon_02b, SCWK_TARGET_OBJID, SCRCMD_MSGWIN_NON )
+        _LAST_KEYWAIT()
+        _BALLOONWIN_CLOSE()
+        _RET
+    ENDIF
+
+    //タマゴチェック
+    _CHECK_TEMOTI_EGG( SCWK_ANSWER, select_pos )
+    IF $SCWK_ANSWER == TRUE THEN
+        //タマゴには教えられない
+        _BALLOONWIN_OBJMSG_WB( msg_skillteach_dragon_07w, msg_skillteach_dragon_07b, SCWK_TARGET_OBJID, SCRCMD_MSGWIN_NON )
+        _LAST_KEYWAIT()
+        _BALLOONWIN_CLOSE()
+        _RET
+    ENDIF
+
+    _SKILLTEACH_CHECK_POKEMON( SCR_SKILLTEACH_MODE_DRAGON, select_pos, SCWK_ANSWER )
+
+    SWITCH  $SCWK_ANSWER
+    CASE SCR_SKILLTEACH_CHECK_RESULT_NATSUKI_NG THEN
+        //そのポケモンはなつきが足りない
+        _BALLOONWIN_OBJMSG_WB( msg_skillteach_dragon_03w, msg_skillteach_dragon_03b, SCWK_TARGET_OBJID, SCRCMD_MSGWIN_NON )
+        _LAST_KEYWAIT()
+        _BALLOONWIN_CLOSE()
+        _RET
+
+    CASE SCR_SKILLTEACH_CHECK_RESULT_POKEMON_NG THEN
+        //そのポケモンは覚えられない
+        _BALLOONWIN_OBJMSG_WB( msg_skillteach_dragon_06w, msg_skillteach_dragon_06b, SCWK_TARGET_OBJID, SCRCMD_MSGWIN_NON )
+        _LAST_KEYWAIT()
+        _BALLOONWIN_CLOSE()
+        _RET
+
+    CASE SCR_SKILLTEACH_CHECK_RESULT_ALREADY_NG THEN
+        //すでに覚えている
+        _WAZA_NAME( 0, WAZANO_RYUUSEIGUN )
+        _BALLOONWIN_OBJMSG_WB( msg_skillteach_dragon_08w, msg_skillteach_dragon_08b, SCWK_TARGET_OBJID, SCRCMD_MSGWIN_NON )
+        _LAST_KEYWAIT()
+        _BALLOONWIN_CLOSE()
+        _RET
+
+    ENDSWITCH
+
+    $teach_waza_id = WAZANO_RYUUSEIGUN
+    _CALL sub_skillteacher_system
+
+    IF $SCWK_ANSWER == TRUE THEN
+        _BALLOONWIN_OBJMSG_WB( msg_skillteach_dragon_09w, msg_skillteach_dragon_09b, SCWK_TARGET_OBJID, SCRCMD_MSGWIN_NON )
+        _LAST_KEYWAIT()
+        _BALLOONWIN_CLOSE()
+    ENDIF
+
+    _RET
+}
+
+//======================================================================
+//======================================================================
+/**************************************************************/
+/* 最強技を教えてくれる人                                     */
+/**************************************************************/
+EVENT_START ev_waza_teacher_powerful
+
+  _TALK_OBJ_START()
+
+  _CALL sub_waza_teacher_powerful
+
+EVENT_END
+
+
+sub_waza_teacher_powerful:
+    _BALLOONWIN_TALKOBJ_MSG( msg_skillteach_powerful_01 )
+    _YES_NO_WIN( SCWK_ANSWER )
+    _BALLOONWIN_CLOSE()
+
+    IF $SCWK_ANSWER == SCR_NO THEN
+        _BALLOONWIN_TALKOBJ_MSG( msg_skillteach_powerful_04 )
+        _LAST_KEYWAIT()
+        _BALLOONWIN_CLOSE()
+        _RET
+    ENDIF
+
+    _SKILLTEACH_CHECK_PARTY( SCR_SKILLTEACH_MODE_DRAGON, SCWK_ANSWER )
+    IF $SCWK_ANSWER == SCR_SKILLTEACH_CHECK_RESULT_POKEMON_NG THEN
+        //手持ちポケモンでは覚えられない
+        _BALLOONWIN_TALKOBJ_MSG( msg_skillteach_powerful_03 )
+        _LAST_KEYWAIT()
+        _BALLOONWIN_CLOSE()
+        _RET
+    ELSIF $SCWK_ANSWER == SCR_SKILLTEACH_CHECK_RESULT_NATSUKI_NG THEN
+        //そのポケモンはなつきが足りない
+        _BALLOONWIN_TALKOBJ_MSG( msg_skillteach_powerful_08 )
+        _LAST_KEYWAIT()
+        _BALLOONWIN_CLOSE()
+        _RET
+    ENDIF
+
+    //ポケモン選択
+    _SKILLTEACH_SELECT_POKEMON( SCR_SKILLTEACH_MODE_DRAGON, SCWK_ANSWER, select_pos )
+    IF $SCWK_ANSWER == FALSE THEN
+        _BALLOONWIN_TALKOBJ_MSG( msg_skillteach_powerful_04 )
+        _LAST_KEYWAIT()
+        _BALLOONWIN_CLOSE()
+        _RET
+    ENDIF
+
+    //タマゴチェック
+    _CHECK_TEMOTI_EGG( SCWK_ANSWER, select_pos )
+    IF $SCWK_ANSWER == TRUE THEN
+        //タマゴには教えられない
+        _BALLOONWIN_TALKOBJ_MSG( msg_skillteach_powerful_07 )
+        _LAST_KEYWAIT()
+        _BALLOONWIN_CLOSE()
+        _RET
+    ENDIF
+
+    _SKILLTEACH_CHECK_POKEMON( SCR_SKILLTEACH_MODE_DRAGON, select_pos, SCWK_ANSWER )
+
+    SWITCH  $SCWK_ANSWER
+    CASE SCR_SKILLTEACH_CHECK_RESULT_NATSUKI_NG THEN
+        //そのポケモンはなつきが足りない
+        _BALLOONWIN_TALKOBJ_MSG( msg_skillteach_powerful_08 )
+        _LAST_KEYWAIT()
+        _BALLOONWIN_CLOSE()
+        _RET
+
+    CASE SCR_SKILLTEACH_CHECK_RESULT_POKEMON_NG THEN
+        //そのポケモンは覚えられない
+        _BALLOONWIN_TALKOBJ_MSG( msg_skillteach_powerful_06 )
+        _LAST_KEYWAIT()
+        _BALLOONWIN_CLOSE()
+        _RET
+
+    CASE SCR_SKILLTEACH_CHECK_RESULT_ALREADY_NG THEN
+        //すでに覚えている
+        _BALLOONWIN_TALKOBJ_MSG( msg_skillteach_powerful_09 )
+        _LAST_KEYWAIT()
+        _BALLOONWIN_CLOSE()
+        _RET
+
+    ENDSWITCH
+
+    _SKILLTEACH_GET_WAZAID( SCR_SKILLTEACH_MODE_DRAGON, select_pos, teach_waza_id )
+    //$teach_waza_id = WAZANO_RYUUSEIGUN
+    _CALL sub_skillteacher_system
+
+    IF $SCWK_ANSWER == TRUE THEN
+        _BALLOONWIN_TALKOBJ_MSG( msg_skillteach_dragon_09b )
+        _LAST_KEYWAIT()
+        _BALLOONWIN_CLOSE()
+    ENDIF
+
+    _RET
+
+
+//======================================================================
+//
+//    わざ教え共通ルーチン
+//
+//======================================================================
+/**************************************************************/
+/* サブルーチン：わざおしえ：忘れ処理ループ                   */
+// IN: select_pos     選択したポケモンの位置
+// IN: teach_waza_id  教えるわざのID
+// OUT:SCWK_ANSWER
+/**************************************************************/
+{
+	DEFINE_LOCAL waza_pos	// 選択技
+	DEFINE_LOCAL waza_id	// 技番号
+	DEFINE_LOCAL loop_flag	// 技ループ処理監視
+	DEFINE_LOCAL user_result	// 
+
+sub_skillteacher_system:
+	$user_result = FALSE
+
+  _GET_TEMOTI_WAZA_NUM( SCWK_ANSWER, select_pos )
+
+  IF $SCWK_ANSWER != 4 THEN 
+
+    _TEMOTI_NICK_NAME( 0, select_pos )
+    _WAZA_NAME( 1, teach_waza_id )
+    _SYSWIN_MSG_DOWN( msg_skillteach_system_01 )
+    _ME_PLAY( SEQ_ME_LVUP )
+    _AB_KEYWAIT()
+    _ME_WAIT()
+    _SYSWIN_CLOSE()
+
+    _SET_TEMOTI_WAZA( select_pos , SCWK_ANSWER , teach_waza_id )
+
+    _RET
+  ENDIF
+
+  $loop_flag = TRUE
+  WHILE $loop_flag == TRUE
+
+    _CALL   sub_skillteacher_wasure_core
+
+    IF $user_result == TRUE THEN
+      $SCWK_ANSWER = TRUE
+      $loop_flag = FALSE
+    ELSE
+
+      _CALL   sub_skillteacher_wasure_ask_retire
+      IF $user_result == TRUE THEN
+        $SCWK_ANSWER = FALSE
+        $loop_flag = FALSE
+      ENDIF
+
+    ENDIF
+
+  ENDWHILE
+
+  _RET
+
+
+/**************************************************************/
+/**************************************************************/
+sub_skillteacher_wasure_ask_retire:
+  //"それでは　～をおぼえさせるのをあきらめますか？"
+  _WAZA_NAME( 0, teach_waza_id )
+  _SYSWIN_MSG_DOWN( msg_skillteach_system_03 )
+  _YES_NO_WIN( SCWK_ANSWER )
+  _SYSWIN_CLOSE()
+
+  IF $SCWK_ANSWER == SCR_YES THEN
+    //"～は　～を　おぼえずにおわった！"
+    _TEMOTI_NICK_NAME( 0, select_pos )
+    _WAZA_NAME( 1, teach_waza_id )
+    _SYSWIN_MSG_DOWN( msg_skillteach_system_04 )
+    _LAST_KEYWAIT()
+    _SYSWIN_CLOSE()
+    $user_result = TRUE //終了
+    _RET
+  ENDIF
+
+  $user_result = FALSE //継続
+  _RET
+
+/**************************************************************/
+/**************************************************************/
+sub_skillteacher_wasure_core:
+    $user_result = FALSE
+
+		//"あたらしくおぼえたい…しかしすでに～"
+    _TEMOTI_NICK_NAME( 0, select_pos )
+    _WAZA_NAME( 1, teach_waza_id )
+		_SYSWIN_MSG_DOWN( msg_skillteach_system_02 )
+    _YES_NO_WIN( SCWK_ANSWER )
+		_SYSWIN_CLOSE()
+    IF $SCWK_ANSWER == SCR_NO THEN
+      _RET
+    ENDIF
+		
+		_SELECT_WAZA_TEMOTI_POKE( SCWK_ANSWER , waza_pos , select_pos , 0 )
+    IF $SCWK_ANSWER == FALSE THEN
+      _RET
+    ENDIF
+
+    _GET_TEMOTI_WAZA_ID( waza_id , select_pos , waza_pos )
+    _WAZA_NAME( 0 , waza_id )
+    //"～をわすれさせて　よろしいですね？"
+    _SYSWIN_MSG_DOWN( msg_skillteach_system_05 )
+    //_SYSWIN_MSG_DOWN( msg_skillteach_system_05 )
+    _YES_NO_WIN( SCWK_ANSWER )
+    _SYSWIN_CLOSE()
+
+    IF $SCWK_ANSWER == SCR_NO THEN
+      _RET
+    ENDIF
+    
+    _GET_TEMOTI_WAZA_ID( waza_id , select_pos , waza_pos )
+    _TEMOTI_MONS_NAME( 0, select_pos )
+    _WAZA_NAME( 1 , waza_id )
+    _WAZA_NAME( 2 , teach_waza_id )
+    //"1　２　のポカン！"
+    _SYSWIN_MSG_DOWN( msg_skillteach_system_06 )
+    _ME_PLAY( SEQ_ME_LVUP )
+    _AB_KEYWAIT()
+    _ME_WAIT()
+    _SYSWIN_CLOSE()
+    
+    _SET_TEMOTI_WAZA( select_pos , waza_pos , teach_waza_id )
+    $user_result = TRUE
+    _RET
+
+}
+
+
+
+
+
+
