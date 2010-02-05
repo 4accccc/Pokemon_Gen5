@@ -11,6 +11,18 @@
 #include "poke_tool/pokeparty.h"
 #include "poke_tool/poke_tool.h"
 
+//なつき計算
+typedef enum{
+  CALC_NATSUKI_LEVELUP = 0,       //レベルアップ
+  CALC_NATSUKI_USE_ITEM,          //アイテム使用
+  CALC_NATSUKI_BOSS_BATTLE,       //ボス戦闘
+  CALC_NATSUKI_TSUREARUKI,        //連れ歩き
+  CALC_NATSUKI_HINSHI,            //瀕死
+  CALC_NATSUKI_LEVEL30_HINSHI,    //レベル差30以上の瀕死
+  CALC_NATSUKI_MUSICAL,           //ミュージカル
+}CALC_NATSUKI;
+
+
 //なつき度計算
 void  NATSUKI_Calc( POKEMON_PARAM* pp, CALC_NATSUKI calcID, u16 placeID, HEAPID heapID );
 void  NATSUKI_CalcUseItem( POKEMON_PARAM* pp, u16 item_no, u16 placeID, HEAPID heapID );
