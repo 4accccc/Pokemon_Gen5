@@ -1693,7 +1693,7 @@ static RET Guru2Subproc_EggDataSendInit( GURU2MAIN_WORK *g2m )
   OS_Printf( "ぐるぐる　たまごデータ転送開始\n" );
   #endif
   
-  GFL_NET_TimingSyncStart( pNet, COMM_GURU2_TIMINGSYNC_NO );
+  GFL_NET_HANDLE_TimeSyncStart( pNet, COMM_GURU2_TIMINGSYNC_NO, WB_NET_GURUGURU );
   g2m->seq_no = SEQNO_MAIN_EGG_DATA_SEND_TIMING_WAIT;
   return( RET_NON );
 }
@@ -1709,7 +1709,7 @@ static RET Guru2Subproc_EggDataSendTimingWait( GURU2MAIN_WORK *g2m )
 {
   GFL_NETHANDLE* pNet = GFL_NET_HANDLE_GetCurrentHandle();
 
-  if( GFL_NET_IsTimingSync( pNet, COMM_GURU2_TIMINGSYNC_NO) ){
+  if( GFL_NET_HANDLE_IsTimeSync( pNet, COMM_GURU2_TIMINGSYNC_NO, WB_NET_GURUGURU) ){
     g2m->seq_no = SEQNO_MAIN_EGG_DATA_TRADE_POS_SEND;
   }
   
@@ -2010,7 +2010,7 @@ static RET DEBUG_Guru2Subproc_DispCheck( GURU2MAIN_WORK *g2m )
 static RET Guru2Subproc_CountDownBeforeTimingInit( GURU2MAIN_WORK *g2m )
 {
   GFL_NETHANDLE* pNet = GFL_NET_HANDLE_GetCurrentHandle();
-  GFL_NET_TimingSyncStart( pNet, COMM_GURU2_TIMINGSYNC_NO );
+  GFL_NET_HANDLE_TimeSyncStart( pNet, COMM_GURU2_TIMINGSYNC_NO, WB_NET_GURUGURU );
   g2m->seq_no = SEQNO_MAIN_COUNTDOWN_BEFORE_TIMING_WAIT;
   return( RET_NON );
 }
@@ -2025,7 +2025,7 @@ static RET Guru2Subproc_CountDownBeforeTimingInit( GURU2MAIN_WORK *g2m )
 static RET Guru2Subproc_CountDownBeforeTimingWait( GURU2MAIN_WORK *g2m )
 {
   GFL_NETHANDLE* pNet = GFL_NET_HANDLE_GetCurrentHandle();
-  if( GFL_NET_IsTimingSync( pNet, COMM_GURU2_TIMINGSYNC_NO) ){
+  if( GFL_NET_HANDLE_IsTimeSync( pNet, COMM_GURU2_TIMINGSYNC_NO, WB_NET_GURUGURU) ){
     g2m->seq_no = SEQNO_MAIN_COUNTDOWN_INIT;
   }
   
@@ -2331,7 +2331,7 @@ static RET Guru2Subproc_GameEndLastRotate( GURU2MAIN_WORK *g2m )
 static RET Guru2Subproc_GameEndTimingInit( GURU2MAIN_WORK *g2m )
 {
   GFL_NETHANDLE* pNet = GFL_NET_HANDLE_GetCurrentHandle();
-  GFL_NET_TimingSyncStart( pNet,  COMM_GURU2_TIMINGSYNC_NO );
+  GFL_NET_HANDLE_TimeSyncStart( pNet,  COMM_GURU2_TIMINGSYNC_NO, WB_NET_GURUGURU );
   g2m->seq_no = SEQNO_MAIN_GAME_END_TIMING_WAIT;
   return( RET_NON );
 }
@@ -2346,7 +2346,7 @@ static RET Guru2Subproc_GameEndTimingInit( GURU2MAIN_WORK *g2m )
 static RET Guru2Subproc_GameEndTimingWait( GURU2MAIN_WORK *g2m )
 {
   GFL_NETHANDLE* pNet = GFL_NET_HANDLE_GetCurrentHandle();
-  if( GFL_NET_IsTimingSync( pNet, COMM_GURU2_TIMINGSYNC_NO) ){
+  if( GFL_NET_HANDLE_IsTimeSync( pNet, COMM_GURU2_TIMINGSYNC_NO, WB_NET_GURUGURU) ){
     if( GFL_NET_SystemGetCurrentID() == 0 ){
       g2m->seq_no = SEQNO_MAIN_GAME_END_OYA_DATA_SEND;
     }else{
@@ -2695,7 +2695,7 @@ static RET Guru2Subproc_SaveBeforeTimingInit( GURU2MAIN_WORK *g2m )
   RECORD_Score_Add( g2m->g2p->param.record,SCORE_ID_GURUGURU );
   
   Guru2TalkWin_Write( g2m, MSG_SAVE );
-  GFL_NET_TimingSyncStart( pNet, COMM_GURU2_TIMINGSYNC_NO );
+  GFL_NET_HANDLE_TimeSyncStart( pNet, COMM_GURU2_TIMINGSYNC_NO, WB_NET_GURUGURU );
   
   g2m->seq_no = SEQNO_MAIN_SAVE_BEFORE_TIMING_WAIT;
   
@@ -2731,7 +2731,7 @@ int CommSyncronizeSave( SAVE_CONTROL_WORK *sv, int *seq )
 static RET Guru2Subproc_SaveBeforeTimingWait( GURU2MAIN_WORK *g2m )
 {
   GFL_NETHANDLE* pNet = GFL_NET_HANDLE_GetCurrentHandle();
-  if( GFL_NET_IsTimingSync( pNet, COMM_GURU2_TIMINGSYNC_NO) ){
+  if( GFL_NET_HANDLE_IsTimeSync( pNet, COMM_GURU2_TIMINGSYNC_NO, WB_NET_GURUGURU) ){
     Guru2MainFriendEggExchange( g2m, g2m->front_eggact->comm_id );
     CommSyncronizeSaveInit( &g2m->save_seq );
 #ifdef WINDOW_SAVE_ICON
@@ -2868,7 +2868,7 @@ static RET Guru2Subproc_EndTimingSyncInit( GURU2MAIN_WORK *g2m )
 {
   GFL_NETHANDLE* pNet = GFL_NET_HANDLE_GetCurrentHandle();
   if( g2m->force_end_flag == FALSE ){
-    GFL_NET_TimingSyncStart( pNet, COMM_GURU2_TIMINGSYNC_NO );
+    GFL_NET_HANDLE_TimeSyncStart( pNet, COMM_GURU2_TIMINGSYNC_NO, WB_NET_GURUGURU );
   }
   
   Guru2TalkWin_Write( g2m, MSG_COMM_WAIT );
@@ -2887,7 +2887,7 @@ static RET Guru2Subproc_EndTimingSync( GURU2MAIN_WORK *g2m )
 {
   GFL_NETHANDLE* pNet = GFL_NET_HANDLE_GetCurrentHandle();
   if( g2m->force_end_flag == FALSE ){
-    if( GFL_NET_IsTimingSync( pNet, COMM_GURU2_TIMINGSYNC_NO) ){
+    if( GFL_NET_HANDLE_IsTimeSync( pNet, COMM_GURU2_TIMINGSYNC_NO, WB_NET_GURUGURU) ){
       GFL_NET_SetAutoErrorCheck( FALSE );     //切断可能に  
 //      CommStateSetLimitNum( 1 );            // 接続最大人数を1人（ユニオンに戻るため）
 //      CommStateUnionBconCollectionRestart();

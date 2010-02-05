@@ -223,6 +223,8 @@ static BOOL _seq_Init( GURU2_CALL_WORK *g2call )
   g2call->g2p = Guru2_WorkInit( &g2call->param, HEAPID_PROC );
   g2call->seq_no = SEQNO_G2P_RECEIPT;
 //  GameSystem_StartSubProc( g2call->fsys, &Guru2Receipt_Proc, g2call->g2p );
+
+  OS_Printf("gamedata adr=%08x\n", (u32)g2call->gamedata);
   GFL_PROC_SysCallProc( NO_OVERLAY_ID, &Guru2Receipt_Proc, g2call->g2p );
   return( FALSE );
 }
@@ -242,13 +244,25 @@ static BOOL _seq_Init( GURU2_CALL_WORK *g2call )
 //--------------------------------------------------------------------------------------------
 static PLIST_DATA* Guru2PokeListWorkCreate( GURU2_CALL_WORK *g2call, u32 mode,  u16 pos )
 {
-  PLIST_DATA * pld = GFL_HEAP_AllocClearMemory( HEAPID_MAILBOX_SYS, sizeof(PLIST_DATA) );
+  PLIST_DATA * pld = GFL_HEAP_AllocClearMemory( HEAPID_PROC, sizeof(PLIST_DATA) );
 
   pld->pp        = GAMEDATA_GetMyPokemon( g2call->gamedata );
   pld->myitem    = GAMEDATA_GetMyItem( g2call->gamedata );
   pld->type      = PL_TYPE_SINGLE;
   pld->mode      = mode;
   pld->ret_sel   = pos;
+
+  {
+    int i;
+
+    OS_Printf("count=%d\n", PokeParty_GetPokeCount(pld->pp));
+    for(i=0;i<PokeParty_GetPokeCount(pld->pp);i++){
+      POKEMON_PARAM *pp = PokeParty_GetMemberPointer( pld->pp, i);
+      OS_Printf("egg=%d\n", PP_Get( pp, ID_PARA_monsno_egg,NULL ));
+    }
+  }
+  OS_Printf("gamedata adr=%08x\n", (u32)g2call->gamedata);
+  OS_Printf("pp adr=%08x\n", (u32)pld->pp);
 
   return pld;
 }
@@ -267,13 +281,14 @@ static BOOL _seq_Receipt( GURU2_CALL_WORK *g2call )
     if( Guru2_ReceiptRetCheck(g2call->g2p) == FALSE ){
       g2call->seq_no = SEQNO_G2P_END;
     }else{
+      OS_Printf("pokelist start\n");
       GFL_NET_SetAutoErrorCheck( TRUE );
       g2call->plist = Guru2PokeListWorkCreate( g2call, PL_MODE_GURU2, 0 );
-      GFL_PROC_SysCallProc( FS_OVERLAY_ID(pokelist), &PokeList_ProcData, &g2call->plist );
+      GFL_PROC_SysCallProc( FS_OVERLAY_ID(pokelist), &PokeList_ProcData, g2call->plist );
 
 //    g2call->plist = Guru2ListEvent_SetProc( g2call->fsys, g2call->psel_pos );
-//    g2call->g2p->guru2_mode = GURU2MODE_POKESEL;
-//    g2call->seq_no = SEQNO_G2P_POKE_SELECT;
+      g2call->g2p->guru2_mode = GURU2MODE_POKESEL;
+      g2call->seq_no          = SEQNO_G2P_POKE_SELECT;
     }
   
   return( FALSE );

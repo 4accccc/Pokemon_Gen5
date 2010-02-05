@@ -185,7 +185,7 @@ void Guru2Comm_WorkDelete( GURU2COMM_WORK *g2c )
 void Guru2Comm_CommandInit( GURU2COMM_WORK *g2c )
 {
 //  CommCommandInitialize( DATA_CommPacketTbl, CF_COMMAND_MAX, g2c );
-  GFL_NET_AddCommandTable( GFL_NET_CMD_IRCTRADE,_Guru2CommPacketTbl,
+  GFL_NET_AddCommandTable( GFL_NET_CMD_GURUGURU,_Guru2CommPacketTbl,
                            NELEMS(_Guru2CommPacketTbl), g2c);
 
 }

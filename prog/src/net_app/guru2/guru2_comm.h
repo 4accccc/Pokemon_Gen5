@@ -20,6 +20,7 @@
 //#include "field/comm_union_view_common.h"
 
 #include "net_app/union/union_types.h"
+#include "net/network_define.h"
 
 //==============================================================================
 //  define
@@ -48,7 +49,7 @@ enum
 {
 //  G2COMM_RC_STOP,       ///<乱入により停止
 //  G2COMM_RC_RESTART,    ///<乱入終了、再度開始
-  G2COMM_RC_END_CHILD,    ///<子機離脱
+  G2COMM_RC_END_CHILD=GFL_NET_CMD_GURUGURU,    ///<子機離脱
   G2COMM_RC_END,          ///<終了
   G2COMM_RC_CHILD_JOIN,   ///<子機乱入開始
   G2COMM_RC_START,        ///<開始

@@ -136,37 +136,37 @@ static int  Record_Guru2PokeSelStart( GURU2RC_WORK *wk, int seq );
 
 // レコードコーナーメインシーケンス用関数配列定義
 static int (* const FuncTable[])(GURU2RC_WORK *wk, int seq)={
-  Record_MainInit,            //  RECORD_MODE_INIT  = 0, 
-  Record_NewMember,           //  RECORD_MODE_NEWMEMBER,
-  Record_NewMemberEnd,        //  RECORD_MODE_NEWMEMBER_END,
-  Record_MainNormal,          //  RECORD_MODE,
-  Record_EndSelectPutString,  //  RECORD_MODE_END_SELECT,
-  Record_EndSelectWait,       //  RECORD_MODE_END_SELECT_WAIT,
-  Record_EndSelectAnswerWait, //  RECORD_MODE_END_SELECT_ANSWER_WAIT
-  Record_EndSelectAnswerOK,   //  RECORD_MODE_END_SELECT_ANSWER_OK
-  Record_EndSelectAnswerNG,   //  RECORD_MODE_END_SELECT_ANSWER_NG
-  Record_EndChild,            //  RECORD_MODE_END_CHILD,
-  Record_EndChildWait,        //  RECORD_MODE_END_CHILD_WAIT,
-  Record_EndSelectParent,     //  RECORD_MODE_END_SELECT_PARENT,
-  Record_EndSelectParentWait, //  RECORD_MODE_END_SELECT_PARENT_WAIT,
-  Record_ForceEnd,            //  RECORD_MODE_FORCE_END,
-  Record_FroceEndMesWait,     //  RECORD_MODE_FORCE_END_MES_WAIT,
-  Record_ForceEndWait,        //  RECORD_MODE_FORCE_END_WAIT,
-  Record_ForceEndSynchronize, //  RECORD_MODE_FORCE_END_SYNCHRONIZE,
-  Record_EndParentOnly,       //  RECORD_MODE_END_PARENT_ONLY,
-  Record_EndParentOnlyWait,   //  RECORD_MODE_END_PARENT_ONLY_WAIT,
-  Record_LogoutChildMes,      //  RECORD_MODE_LOGOUT_CHILD,
-  Record_LogoutChildMesWait,  //  RECORD_MODE_LOGOUT_CHILD_WAIT,
-  Record_LogoutChildClose,    //  RECORD_MODE_LOGOUT_CHILD_CLOSE,
-  Record_StartSelect,         //  RECORD_MODE_START_SELECT,
-  Record_StartSelectWait,     //  RECORD_MODE_START_SELECT_WAIT
-  Record_StartRecordCommand,  //  RECORD_MODE_START_RECORD_COMMAND
-  Record_RecordSendData,      //  RECORD_MODE_RECORD_SEND_DATA ここがレコードデータ受信チェック
+  Record_MainInit,            // RECORD_MODE_INIT  = 0, 
+  Record_NewMember,           // RECORD_MODE_NEWMEMBER,
+  Record_NewMemberEnd,        // RECORD_MODE_NEWMEMBER_END,
+  Record_MainNormal,          // RECORD_MODE,
+  Record_EndSelectPutString,  // RECORD_MODE_END_SELECT,
+  Record_EndSelectWait,       // RECORD_MODE_END_SELECT_WAIT,
+  Record_EndSelectAnswerWait, // RECORD_MODE_END_SELECT_ANSWER_WAIT
+  Record_EndSelectAnswerOK,   // RECORD_MODE_END_SELECT_ANSWER_OK
+  Record_EndSelectAnswerNG,   // RECORD_MODE_END_SELECT_ANSWER_NG
+  Record_EndChild,            // RECORD_MODE_END_CHILD,
+  Record_EndChildWait,        // RECORD_MODE_END_CHILD_WAIT,
+  Record_EndSelectParent,     // RECORD_MODE_END_SELECT_PARENT,
+  Record_EndSelectParentWait, // RECORD_MODE_END_SELECT_PARENT_WAIT,
+  Record_ForceEnd,            // RECORD_MODE_FORCE_END,
+  Record_FroceEndMesWait,     // RECORD_MODE_FORCE_END_MES_WAIT,
+  Record_ForceEndWait,        // RECORD_MODE_FORCE_END_WAIT,
+  Record_ForceEndSynchronize, // RECORD_MODE_FORCE_END_SYNCHRONIZE,
+  Record_EndParentOnly,       // RECORD_MODE_END_PARENT_ONLY,
+  Record_EndParentOnlyWait,   // RECORD_MODE_END_PARENT_ONLY_WAIT,
+  Record_LogoutChildMes,      // RECORD_MODE_LOGOUT_CHILD,
+  Record_LogoutChildMesWait,  // RECORD_MODE_LOGOUT_CHILD_WAIT,
+  Record_LogoutChildClose,    // RECORD_MODE_LOGOUT_CHILD_CLOSE,
+  Record_StartSelect,         // RECORD_MODE_START_SELECT,
+  Record_StartSelectWait,     // RECORD_MODE_START_SELECT_WAIT
+  Record_StartRecordCommand,  // RECORD_MODE_START_RECORD_COMMAND
+  Record_RecordSendData,      // RECORD_MODE_RECORD_SEND_DATA ここがレコードデータ受信チェック
 
-  Record_MessageWaitSeq,      //  RECORD_MODE_MESSAGE_WAIT,
+  Record_MessageWaitSeq,      // RECORD_MODE_MESSAGE_WAIT,
   
   //ぐるぐる
-  Record_Guru2PokeSelStart,
+  Record_Guru2PokeSelStart,   // RECORD_MODE_GURU2_POKESEL_START,
 };
 
 //==============================================================================
@@ -681,7 +681,7 @@ static void InitWork( GURU2RC_WORK *wk, ARCHANDLE* p_handle )
   // フィールドOBJ画像読み込み
   LoadFieldObjData( wk, p_handle );
 
-  wk->ObjPaletteTable = UnionView_PalleteTableAlloc( HEAPID_GURU2 );
+//  wk->ObjPaletteTable = UnionView_PalleteTableAlloc( HEAPID_GURU2 );
 
 
   // パレットアニメ用ワーク初期化
@@ -715,7 +715,7 @@ static void FreeWork( GURU2RC_WORK *wk )
   GFL_HEAP_FreeMemory( wk->palwork.paldata );
 
   // ユニオンOBJのパレットデータ解放
-  GFL_HEAP_FreeMemory( wk->ObjPaletteTable );
+//  GFL_HEAP_FreeMemory( wk->ObjPaletteTable );
 
   for(i=0;i<RECORD_CORNER_MEMBER_MAX;i++){
     GFL_STR_DeleteBuffer( wk->TrainerName[i] );
@@ -810,9 +810,6 @@ static void InitCellActor(GURU2RC_WORK *wk, ARCHANDLE* p_handle)
   int i;
   
   
-  // OAMマネージャーの初期化
-  NNS_G2dInitOamManagerModule();
-
   // 共有OAMマネージャ作成
   // レンダラ用OAMマネージャ作成
   // ここで作成したOAMマネージャをみんなで共有する
@@ -820,7 +817,7 @@ static void InitCellActor(GURU2RC_WORK *wk, ARCHANDLE* p_handle)
   GFL_CLACT_SYS_Create( &GFL_CLSYSINIT_DEF_DIVSCREEN, &Guru2DispVramDat, HEAPID_GURU2 );
   
   // セルアクター初期化
-  wk->clUnit = GFL_CLACT_UNIT_Create( 30, 0, HEAPID_GURU2 );
+  wk->clUnit = GFL_CLACT_UNIT_Create( 30, 1, HEAPID_GURU2 );
   GF_ASSERT( wk->clUnit );
   
   //---------上画面人物OBJ読み込み-------------------
@@ -1167,8 +1164,9 @@ static int Record_MainNormal( GURU2RC_WORK *wk, int seq )
 static void PadControl( GURU2RC_WORK *wk )
 {
   // レコード交換を開始しますか？（親のみ）
-  if(_get_key_trg() & PAD_BUTTON_A){
+  if(_get_key_trg() & PAD_BUTTON_DECIDE){
     if(GFL_NET_SystemGetCurrentID()==0){
+      OS_Printf("currentID =%d\n", GFL_NET_SystemGetCurrentID());
       if(MyStatusGetNum(wk)==wk->g2c->shareNum && wk->g2c->ridatu_bit == 0){
         // 離脱禁止通達(FALSEの場合は進行しない）
         if(Union_App_Parent_EntryBlock( _get_unionwork(wk) )){
@@ -1904,7 +1902,7 @@ static int Record_ForceEndWait( GURU2RC_WORK *wk, int seq )
   // 通信同期待ち
 //  CommTimingSyncStart(COMM_GURU2_TIMINGSYNC_NO);
   GFL_NETHANDLE *pNet = GFL_NET_HANDLE_GetCurrentHandle();
-  GFL_NET_TimingSyncStart(pNet, COMM_GURU2_TIMINGSYNC_NO);
+  GFL_NET_HANDLE_TimeSyncStart(pNet, COMM_GURU2_TIMINGSYNC_NO,WB_NET_GURUGURU);
 
   wk->seq = RECORD_MODE_FORCE_END_SYNCHRONIZE;
 
@@ -1927,7 +1925,7 @@ static int Record_ForceEndSynchronize( GURU2RC_WORK *wk, int seq )
 {
   GFL_NETHANDLE *pNet = GFL_NET_HANDLE_GetCurrentHandle();
 
-  if(GFL_NET_IsTimingSync(pNet, COMM_GURU2_TIMINGSYNC_NO)){
+  if(GFL_NET_HANDLE_IsTimeSync(pNet, COMM_GURU2_TIMINGSYNC_NO,WB_NET_GURUGURU)){
     GFL_NET_SetAutoErrorCheck(FALSE);
     OS_Printf("終了時同期成功\n");
     // ワイプフェード開始
@@ -2412,7 +2410,8 @@ static BOOL NameCheckPrint( GFL_BMPWIN *win, int frame, PRINTSYS_LSB color, GURU
       PRINTSYS_PrintColor( GFL_BMPWIN_GetBmp(win), 5+13*5, 1+i*NAME_PRINT_HABA, id_str, 
                             wk->font, PRINTSYS_LSB_Make(2,3,0) );
       // ID文字列を解放
-      GFL_STR_DeleteBuffer(id_str);
+      GFL_STR_DeleteBuffer( id_str );
+      GFL_STR_DeleteBuffer( tmp_str );
     }
   }
   GFL_BMPWIN_MakeTransWindow( win );
@@ -2959,9 +2958,9 @@ static int _get_key_trg( void )
   int key = GFL_UI_KEY_GetTrg();
 
   // タッチTRGでもAボタン情報を追加
-  if( GFL_UI_TP_GetTrg() ){
-    key |= PAD_BUTTON_A;
-  }
+  //if( GFL_UI_TP_GetTrg() ){
+  //  key |= PAD_BUTTON_DECIDE;
+  //}
 
   return key;
 }
