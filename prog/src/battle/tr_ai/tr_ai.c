@@ -58,12 +58,12 @@ typedef struct{
 
   u8        damage_loss[ PTL_WAZA_MAX ];
                     //ここから上は、AIチェックのたびにクリアする
-  u16       use_waza[ BTL_POS_MAX ][ PTL_WAZA_MAX ]; //使用した技をストックしていく
-                                                            //（基本見た技しか知らないようにするため）
-  u8        look_tokusei[ BTL_FRONT_POKE_MAX ];    //見た特性を保持
+  u16       use_waza[ BTL_POS_MAX ][ PTL_WAZA_MAX ];  //使用した技をストックしていく
+                                                      //（基本見た技しか知らないようにするため）
+  u8        look_tokusei[ BTL_FRONT_POKE_MAX ];       //見た特性を保持
 
-  u16       have_item[2][4];    //トレーナーの持ちアイテム
-  u8        have_item_cnt[2];   //トレーナーの持ちアイテム数
+  u16       have_item[2][4];      //トレーナーの持ちアイテム
+  u8        have_item_cnt[2];     //トレーナーの持ちアイテム数
   BtlPokePos  atk_btl_poke_pos;   //攻撃側ポケモンのクライアントID
   BtlPokePos  def_btl_poke_pos;   //防御側ポケモンのクライアントID
 
@@ -180,6 +180,8 @@ static  VMCMD_RESULT  AI_IF_POKESICK( VMHANDLE* vmh, void* context_work );
 static  VMCMD_RESULT  AI_IFN_POKESICK( VMHANDLE* vmh, void* context_work );
 static  VMCMD_RESULT  AI_IF_WAZASICK( VMHANDLE* vmh, void* context_work );
 static  VMCMD_RESULT  AI_IFN_WAZASICK( VMHANDLE* vmh, void* context_work );
+static  VMCMD_RESULT  AI_IF_DOKUDOKU( VMHANDLE* vmh, void* context_work );
+static  VMCMD_RESULT  AI_IFN_DOKUDOKU( VMHANDLE* vmh, void* context_work );
 static  VMCMD_RESULT  AI_IF_CONTFLG( VMHANDLE* vmh, void* context_work );
 static  VMCMD_RESULT  AI_IFN_CONTFLG( VMHANDLE* vmh, void* context_work );
 static  VMCMD_RESULT  AI_IF_SIDEEFF( VMHANDLE* vmh, void* context_work );
@@ -320,6 +322,8 @@ static const VMCMD_FUNC tr_ai_command_table[]={
   AI_IFN_POKESICK,
   AI_IF_WAZASICK,
   AI_IFN_WAZASICK,
+  AI_IF_DOKUDOKU,
+  AI_IFN_DOKUDOKU,
   AI_IF_CONTFLG,
   AI_IFN_CONTFLG,
   AI_IF_SIDEEFF,
@@ -938,12 +942,31 @@ static  void  ai_if_wazasick( VMHANDLE* vmh, TR_AI_WORK* tr_ai_work, BranchCond 
 }
 
 //------------------------------------------------------------
+//  ポケモンがどくどくにかかっているかチェックして分岐
+//------------------------------------------------------------
+static  VMCMD_RESULT  AI_IF_DOKUDOKU( VMHANDLE* vmh, void* context_work )
+{
+  TR_AI_WORK* tr_ai_work = (TR_AI_WORK*)context_work;
+
+  ai_if_moudoku( vmh, tr_ai_work, COND_EQUAL );
+
+  return tr_ai_work->vmcmd_result;
+}
+static  VMCMD_RESULT  AI_IFN_DOKUDOKU( VMHANDLE* vmh, void* context_work )
+{
+  TR_AI_WORK* tr_ai_work = (TR_AI_WORK*)context_work;
+
+  ai_if_moudoku( vmh, tr_ai_work, COND_NOTEQUAL );
+
+  return tr_ai_work->vmcmd_result;
+}
+
+//------------------------------------------------------------
 //  ポケモンが「もうどく」にかかっているかをチェックして分岐
 //------------------------------------------------------------
 static  void  ai_if_moudoku( VMHANDLE* vmh, TR_AI_WORK* tr_ai_work, BranchCond cond )
 {
   int side  = ( int )VMGetU32( vmh );
-  WazaSick  value = ( WazaSick )VMGetU32( vmh );
   int adrs  = ( int )VMGetU32( vmh );
   BtlPokePos  pos = get_poke_pos( tr_ai_work, side );
   const BTL_POKEPARAM* bpp = get_bpp( tr_ai_work, pos );
