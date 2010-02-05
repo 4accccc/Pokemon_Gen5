@@ -41,9 +41,10 @@ enum {
 	NARC_zukan_gra_list_listbtn_bgd_NSCR = 27,
 	NARC_zukan_gra_list_listbtn_bgu_NSCR = 28,
 	NARC_zukan_gra_list_listframe_NSCR = 29,
-	NARC_zukan_gra_list_listtitle_bgu_NSCR = 30,
-	NARC_zukan_gra_list_list_hate_NANR = 31,
-	NARC_zukan_gra_list_list_objd_NANR = 32
+	NARC_zukan_gra_list_listframe2_NSCR = 30,
+	NARC_zukan_gra_list_listtitle_bgu_NSCR = 31,
+	NARC_zukan_gra_list_list_hate_NANR = 32,
+	NARC_zukan_gra_list_list_objd_NANR = 33
 };
 
 /* NARC_ZUKAN_GRA_NAIX_ */
