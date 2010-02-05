@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2010-01-13T15:07:32"/>
+	<create user="matsumiya" host="W00224" date="2010-02-05T22:33:29"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="1283" top="392" right="1988" bottom="1020" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -347,7 +347,7 @@
 		<language name="JPN_KANJI" width="256">マメパト『しゅるるるわ！！</language>
 	</row>
 
-	<row id="msg_c06r0201_pilot_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_c06r0201_pilot_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">パイロット</attribute>
@@ -362,10 +362,10 @@
 この　管制塔の　おかげさ[BE:01:ページ切り替え（クリア）]
 だから　おれは　知っている！
 トレーナーが　正しく　導けば[BE:00:ページ切り替え（行送り）]
-ポケモンは　安心して　闘える</language>
+ポケモンは　安心して　戦える！</language>
 	</row>
 
-	<row id="msg_c06r0201_middleman2_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_c06r0201_middleman2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">太ったおじさん</attribute>
@@ -377,7 +377,7 @@
 いまも　心のなかに　あるのさ</language>
 	</row>
 
-	<row id="msg_c06r0201_veteranw_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_c06r0201_veteranw_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・仮メッセージ
 ・アイテム入手処理</comment>
@@ -387,7 +387,7 @@
 		<language name="JPN_KANJI" width="256">これを　どうぞ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c06r0201_veteranw_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_c06r0201_veteranw_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・アイテム入手後</comment>
 		<language name="JPN" width="256">その　わざマシンは……
@@ -396,15 +396,15 @@
 以下　解説予定</language>
 	</row>
 
-	<row id="msg_c06r0201_infomationw_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_c06r0201_infomationw_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♀
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">INFOMATIONW
 汎用受付♀</attribute>
-		<language name="JPN" width="256">こんちには！[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">こんにちは！[BE:01:ページ切り替え（クリア）]
 すばやく　たくさん　おとどけ！
 フキヨセ　カーゴ　サービス　です</language>
-		<language name="JPN_KANJI" width="256">こんちには！[BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">こんにちは！[BE:01:ページ切り替え（クリア）]
 すばやく　たくさん　おとどけ！
 フキヨセ　カーゴ　サービス　です</language>
 	</row>
