@@ -6557,7 +6557,7 @@ static void common_delayAttack( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
       eff_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_POSEFF_ADD, pokeID );
       eff_param->effect = BTL_POSEFF_DELAY_ATTACK;
       eff_param->pos = targetPos;
-      eff_param->param[0] = 1;
+      eff_param->param[0] = 2;
       eff_param->param[1] = BTL_EVENT_FACTOR_GetSubID( myHandle );
       eff_param->param_cnt = 2;
 
@@ -6565,6 +6565,7 @@ static void common_delayAttack( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
       msg_param->header.failSkipFlag = TRUE;
       HANDEX_STR_Setup( &msg_param->str, BTL_STRTYPE_SET, strID );
       HANDEX_STR_AddArg( &msg_param->str, pokeID );
+
     }
   }
 }

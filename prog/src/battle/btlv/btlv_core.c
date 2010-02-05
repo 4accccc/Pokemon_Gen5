@@ -1091,6 +1091,21 @@ void BTLV_ITEMSELECT_Start( BTLV_CORE* wk, u8 bagMode, u8 energy, u8 reserved_en
     wk->plistData.pfd = BTLV_EFFECT_GetPfd();
     wk->plistData.time_out_flg = FALSE;
 
+  //「さしおさえ」で道具を使用できないポケモンを指定
+    {
+      const BTL_PARTY* party = BTL_CLIENT_GetParty( wk->myClient );
+      const BTL_POKEPARAM* bpp;
+      u32 i, members = BTL_PARTY_GetMemberCount( party );
+
+      for(i=0; i<members; ++i){
+        bpp = BTL_PARTY_GetMemberDataConst( party, i );
+        wk->plistData.skill_item_use[ i ] = BPP_CheckSick( bpp, WAZASICK_SASIOSAE );
+      }
+      for( ; i<NELEMS(wk->plistData.skill_item_use); ++i){
+        wk->plistData.skill_item_use[ i ] = 0;  // 0=使用可 / 1=使用不可
+      }
+    }
+
     wk->selectItemSeq = 1;
   }
 }

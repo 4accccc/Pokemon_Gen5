@@ -48,17 +48,17 @@ typedef struct {
 
   BAG_CURSOR* bagcursor;  ///< バッグカーソルの管理構造体ポインタ
 
-	BOOL time_out_flg;		// 強制終了フラグ TRUE = 強制終了　※バトル側がリアルタイムで変更します
+  BOOL time_out_flg;    // 強制終了フラグ TRUE = 強制終了　※バトル側がリアルタイムで変更します
 
 
   u32 skill_item_use; // 技で使用不可
   s32 client_no;    // クライアントNo
 
-  u8  enc_double;			// 野生2vs2でボールが投げられない場合は１
-  u8  waza_vanish;	 // 相手が「そらをとぶ」などで見えない場合は１
-  u8  waza_migawari;	// 相手が「みがわり」を使用している場合は１
-  u8  ret_page;			 // 使用したアイテムのポケット
-  u8 * cursor_flg;   // カーソル表示フラグ
+  u8  enc_double;     // 野生2vs2でボールが投げられない場合は１
+  u8  waza_vanish;    // 相手が「そらをとぶ」などで見えない場合は１
+  u8  waza_migawari;  // 相手が「みがわり」を使用している場合は１
+  u8  ret_page;       // 使用したアイテムのポケット
+  u8 * cursor_flg;    // カーソル表示フラグ
 
   s16 item_pos[BATTLE_BAG_POKE_MAX];  // アイテム位置
   s16 item_scr[BATTLE_BAG_POKE_MAX];  // アイテムスクロールカウンタ
