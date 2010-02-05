@@ -251,12 +251,11 @@ static void APP_EXCEPTION_Main( APP_EXCEPTION_WORK* wk );
 // 遊覧船下画面
 //-----------------------------------------------------------
 #define C_CRUISER_POS_FLASH_SYNC (100) ///< 更新間隔
-#define C_CRUISER_POS_NUM ( 13 ) ///< 遊覧船のマーカー座標数
 
 //--------------------------------------------------------------
 ///	座標テーブル
 //==============================================================
-static const GFL_CLACTPOS g_c_cruiser_postbl[ C_CRUISER_POS_NUM ] = 
+static const GFL_CLACTPOS g_c_cruiser_postbl[] = 
 {
   { 17*8,  18*8, },
   { 20*8,  13*8, },
@@ -1043,7 +1042,7 @@ static void EXP_C_CRUISER_Main( APP_EXCEPTION_WORK* wk )
   EXP_C_CRUISER_WORK* uwk = wk->userwork;
   
   frame = DEMO3D_ENGINE_GetNowFrame( wk->engine ) >> FX32_SHIFT;
-  if( uwk->pos_id < C_CRUISER_POS_NUM )
+  if( uwk->pos_id < NELEMS(g_c_cruiser_postbl) )
 
   {
     if( uwk->pos_id * C_CRUISER_POS_FLASH_SYNC <= frame )
@@ -1060,7 +1059,7 @@ static void EXP_C_CRUISER_Main( APP_EXCEPTION_WORK* wk )
       uwk->pos_id++;
 
       // 終了判定
-      if( uwk->pos_id == C_CRUISER_POS_NUM )
+      if( uwk->pos_id == NELEMS(g_c_cruiser_postbl) )
       {
         // 非表示に
         GFL_CLACT_WK_SetDrawEnable( uwk->clwk_marker, FALSE );
