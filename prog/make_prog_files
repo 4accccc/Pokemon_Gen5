@@ -1642,6 +1642,10 @@ SRCS_OVERLAY_ZUKAN_LIST = app/zukan/list/zukanlist.c \
                           app/zukan/list/zknlist_ui.c \
                           app/zukan/list/zknlist_bgwfrm.c
 
+# }ŠÓŒŸõ
+#===> SRCS_OVERLAY_ZUKAN_LIST
+SRCS_OVERLAY_ZUKAN_SEARCH = app/zukan/search/zukan_search_engine.c
+
 # }ŠÓ
 #===> SRCS_OVERLAY_ZUKAN_TOROKU
 #===> SRCS_OVERLAY_ZUKAN_LIST

@@ -60,9 +60,12 @@ STEP;
 #define POKE_SIZE_MAX    (96.0f)
 
 // パーティクルのフレームとポケモンアニメーションのフレームを連携させる
-#define PARTICLE_BURST_FRAME   (72)
-#define PARTICLE_LAST_FRAME    (82)
-
+#define PARTICLE_BURST_FRAME   (200)  // 0～201フレームまであり、202フレームからなし。
+#define PARTICLE_LAST_FRAME    (210)  // case STEP_EGG_DEMO: work->wait_count++; で足し込んだ後のwait_countの値が
+                                      // 202のときは既にタマゴが消えていないといけない。
+                                      // データの24フレーム目からヒビの絵になるとき、
+                                      // case STEP_EGG_DEMO: work->wait_count++; で足し込んだ後のwait_countの値が
+                                      // 24だったら、その時点で画面に表示されている絵はヒビの絵になっている。
 
 //=============================================================================
 /**
@@ -151,13 +154,21 @@ static const PARTICLE_PLAY_DATA particle_play_data_tbl[] =
 #else
 static const PARTICLE_PLAY_DATA particle_play_data_tbl[] =
 {
-  {                      23,     PARTICLE_SPA_FILE_0,        0 },  // タマゴの小さな殻が少し飛ぶ
-  {                      67,     PARTICLE_SPA_FILE_0,        1 },  // タマゴの小さな殻が大きく飛ぶ
-  {    PARTICLE_BURST_FRAME,     PARTICLE_SPA_FILE_0,        2 },  // タマゴの大きな殻が放射状に激しく飛ぶ
+  {                   78 -3,     PARTICLE_SPA_FILE_0,        0 },  // タマゴの小さな殻が少し飛ぶ
+  {                  132 -3,     PARTICLE_SPA_FILE_0,        1 },  // タマゴの小さな殻が大きく飛ぶ
+  { PARTICLE_BURST_FRAME -1,     PARTICLE_SPA_FILE_0,        2 },  // タマゴの大きな殻が放射状に激しく飛ぶ
   {  PARTICLE_LAST_FRAME -5,     PARTICLE_SPA_FILE_0,        3 },  // 黄色の星キラキラ
   {     PARTICLE_LAST_FRAME,     PARTICLE_SPA_FILE_0,        3 },  // 黄色の星キラキラ
 };
 #endif
+
+//   0 ヒビなし
+//  24 ヒビ小開始
+//  28 ヒビ小拡大
+//  78 ヒビ中開始
+//  82 ヒビ中拡大
+// 132 ヒビ大開始
+// 202 = 0
 
 
 //-------------------------------------
