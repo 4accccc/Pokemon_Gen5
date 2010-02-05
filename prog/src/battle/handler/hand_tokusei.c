@@ -2309,8 +2309,9 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_AmeukeZara( u32* numElems )
  */
 static void common_weather_recover( BTL_SVFLOW_WORK* flowWk, u8 pokeID, BtlWeather weather )
 {
-  if( BTL_EVENTVAR_GetValue(BTL_EVAR_WEATHER) == weather )
-  {
+  if( (BTL_EVENTVAR_GetValue(BTL_EVAR_WEATHER) == weather)
+  &&  (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
+  ){
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
     BTL_HANDEX_PARAM_RECOVER_HP* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RECOVER_HP, pokeID );
     param->header.tokwin_flag = TRUE;
