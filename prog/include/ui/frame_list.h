@@ -21,11 +21,13 @@
 //============================================================================================
 
 // リスト動作結果
-#define	FRAMELIST_RET_CURSOR_ON		( 0xfffffff8 )		// カーソル表示
-#define	FRAMELIST_RET_MOVE				( 0xfffffff9 )		// カーソル移動
-#define	FRAMELIST_RET_SCROLL			( 0xfffffffa )		// スクロール通常
-#define	FRAMELIST_RET_RAIL				( 0xfffffffb )		// レールスクロール
-#define	FRAMELIST_RET_SLIDE				( 0xfffffffc )		// スライドスクロール
+#define	FRAMELIST_RET_CURSOR_ON		( 0xfffffff6 )		// カーソル表示
+#define	FRAMELIST_RET_MOVE				( 0xfffffff7 )		// カーソル移動
+#define	FRAMELIST_RET_SCROLL			( 0xfffffff8 )		// スクロール通常
+#define	FRAMELIST_RET_RAIL				( 0xfffffff9 )		// レールスクロール
+#define	FRAMELIST_RET_SLIDE				( 0xfffffffa )		// スライドスクロール
+#define	FRAMELIST_RET_PAGE_UP			( 0xfffffffb )		// １ページ上へ
+#define	FRAMELIST_RET_PAGE_DOWN		( 0xfffffffc )		// １ページ下へ
 #define	FRAMELIST_RET_JUMP_TOP		( 0xfffffffd )		// リスト最上部へジャンプ
 #define	FRAMELIST_RET_JUMP_BOTTOM	( 0xfffffffe )		// リスト最下部へジャンプ
 #define	FRAMELIST_RET_NONE				( 0xffffffff )		// 動作なし
@@ -58,8 +60,8 @@ typedef enum {
 typedef struct {
 	// ワーク, 項目位置, PRINT_UTIL, 表示Ｙ座標, 描画先
 	void (*draw)(void*,u32,PRINT_UTIL*,s16,BOOL);		// 描画処理
-	// ワーク, カーソル位置
-	void (*move)(void*,u32);												// 移動処理
+	// ワーク, リスト位置, フラグ（初期化時FALSE）
+	void (*move)(void*,u32,BOOL);										// 移動処理
 	// ワーク, スクロール値
 	void (*scroll)(void*,s8);												// スクロール時
 }FRAMELIST_CALLBACK;
@@ -201,6 +203,51 @@ extern PRINT_QUE * FRAMELIST_GetPrintQue( FRAMELIST_WORK * wk );
  */
 //--------------------------------------------------------------------------------------------
 extern u32 FRAMELIST_GetItemParam( FRAMELIST_WORK * wk, u32 itemIdx );
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		リスト位置取得
+ *
+ * @param		wk				ワーク
+ *
+ * @return	リスト位置
+ */
+//--------------------------------------------------------------------------------------------
+extern u32 FRAMELIST_GetListPos( FRAMELIST_WORK * wk );
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		カーソル位置取得
+ *
+ * @param		wk				ワーク
+ *
+ * @return	項目パラメータ
+ */
+//--------------------------------------------------------------------------------------------
+extern u32 FRAMELIST_GetCursorPos( FRAMELIST_WORK * wk );
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		リストスクロールカウンタを取得
+ *
+ * @param		wk		ワーク
+ *
+ * @return	スクロールカウンタ
+ */
+//--------------------------------------------------------------------------------------------
+extern u32 FRAMELIST_GetScrollCount( FRAMELIST_WORK * wk );
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		リストを下にスクロールできるか
+ *
+ * @param		wk		ワーク
+ *
+ * @retval	"TRUE = 可"
+ * @retval	"FALSE = 不可"
+ */
+//--------------------------------------------------------------------------------------------
+extern BOOL FRAMELIST_CheckScrollMax( FRAMELIST_WORK * wk );
 
 //--------------------------------------------------------------------------------------------
 /**

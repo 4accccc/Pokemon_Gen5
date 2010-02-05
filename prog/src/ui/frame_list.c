@@ -16,6 +16,7 @@
 #include "system/bgwinfrm.h"
 #include "system/blink_palanm.h"
 #include "system/scroll_bar.h"
+#include "sound/pm_sndsys.h"
 
 #include "ui/frame_list.h"
 
@@ -81,9 +82,12 @@ struct _FRAMELIST_WORK {
 	u8	listBgScrollMax;		// ＢＧスクロール回数
 	u8	listBgScrollCount;	// ＢＧスクロールカウンタ
 
+	BOOL scrollSE;					// スクロール中のＳＥ再生フラグ
+
 	BOOL autoScroll;				// 自動スクロールフラグ
 
 	GFL_UI_TP_HITTBL	railHit[2];		// レール移動用タッチテーブル
+	u8	railHitPos;									// レールタッチテーブル位置
 	u8	railTop;										// レール最上部のＹ座標
 	u8	railBottom;									// レール最下部のＹ座標
 
@@ -112,7 +116,8 @@ enum {
 
 // コマンド
 enum {
-	COMMAND_CURSOR_MOVE = 0,				// カーソル移動
+	COMMAND_CURSOR_ON = 0,					// カーソル表示
+	COMMAND_CURSOR_MOVE,						// カーソル移動
 
 	COMMAND_SCROLL_UP,							// スクロール：上
 	COMMAND_SCROLL_DOWN,						// スクロール：下
@@ -144,13 +149,13 @@ enum {
 //============================================================================================
 //	プロトタイプ宣言
 //============================================================================================
-static void InitListDraw( FRAMELIST_WORK * wk );
+static void InitListDraw( FRAMELIST_WORK * wk, BOOL flg );
 static void InitListData( FRAMELIST_WORK * wk );
 
 static u32 MoveListMain( FRAMELIST_WORK * wk );
 static void SetListScrollSpeed( FRAMELIST_WORK * wk );
 
-static void InitListScroll( FRAMELIST_WORK * wk, s8 vec, u8 max, s16 next );
+static void InitListScroll( FRAMELIST_WORK * wk, s8 vec, u8 max, s16 next, BOOL se );
 static BOOL MainListScroll( FRAMELIST_WORK * wk );
 
 static void InitRailMove( FRAMELIST_WORK * wk, int pos );
@@ -421,6 +426,66 @@ u32 FRAMELIST_GetItemParam( FRAMELIST_WORK * wk, u32 itemIdx )
 
 //--------------------------------------------------------------------------------------------
 /**
+ * @brief		リスト位置取得
+ *
+ * @param		wk				ワーク
+ *
+ * @return	リスト位置
+ */
+//--------------------------------------------------------------------------------------------
+u32 FRAMELIST_GetListPos( FRAMELIST_WORK * wk )
+{
+	return ( wk->listPos + wk->listScroll );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		カーソル位置取得
+ *
+ * @param		wk				ワーク
+ *
+ * @return	項目パラメータ
+ */
+//--------------------------------------------------------------------------------------------
+u32 FRAMELIST_GetCursorPos( FRAMELIST_WORK * wk )
+{
+	return wk->listPos;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		リストスクロールカウンタを取得
+ *
+ * @param		wk		ワーク
+ *
+ * @return	スクロールカウンタ
+ */
+//--------------------------------------------------------------------------------------------
+u32 FRAMELIST_GetScrollCount( FRAMELIST_WORK * wk )
+{
+	return wk->listScroll;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		リストを下にスクロールできるか
+ *
+ * @param		wk		ワーク
+ *
+ * @retval	"TRUE = 可"
+ * @retval	"FALSE = 不可"
+ */
+//--------------------------------------------------------------------------------------------
+BOOL FRAMELIST_CheckScrollMax( FRAMELIST_WORK * wk )
+{
+	if( wk->listScroll < wk->listScrollMax ){
+		return TRUE;
+	}
+	return FALSE;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
  * @brief		ＢＧフレームリスト初期描画
  *
  * @param		wk		ワーク
@@ -433,7 +498,7 @@ BOOL FRAMELIST_Init( FRAMELIST_WORK * wk )
 	switch( wk->mainSeq ){
 	case 0:
 		InitListData( wk );
-		InitListDraw( wk );
+		InitListDraw( wk, FALSE );
 		wk->mainSeq++;
 		break;
 
@@ -550,7 +615,7 @@ static void InitListData( FRAMELIST_WORK * wk )
 	}
 }
 
-static void InitListDraw( FRAMELIST_WORK * wk )
+static void InitListDraw( FRAMELIST_WORK * wk, BOOL flg )
 {
 	s16	pos;
 	s8	py;
@@ -617,7 +682,7 @@ static void InitListDraw( FRAMELIST_WORK * wk )
 	wk->putFrameMaxSub = wk->putFrameSub;
 
 	ChangeCursorPosPalette( wk, wk->listPos, PALCHG_NONE );
-	wk->hed.cbFunc->move( wk->hed.cbWork, wk->listPos+wk->listScroll );
+	wk->hed.cbFunc->move( wk->hed.cbWork, wk->listPos+wk->listScroll, flg );
 }
 
 
@@ -665,6 +730,7 @@ static int MoveListTouch( FRAMELIST_WORK * wk )
 		return COMMAND_SLIDE;
 
 	case FRAMELIST_TOUCH_PARAM_RAIL:					// レール
+		wk->railHitPos = ret;
 		wk->listOldPos = wk->listPos;
 //		wk->listPos = 0;
 		return COMMAND_RAIL;
@@ -725,7 +791,8 @@ static int MoveListKey( FRAMELIST_WORK * wk )
 		if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH ){
 			GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
 			wk->listOldPos = PALCHG_NONE;
-			return COMMAND_CURSOR_MOVE;	// カーソル移動
+			wk->listWait = KEYWAIT_LIST_MOVE;
+			return COMMAND_CURSOR_ON;	// カーソル表示
 		}
 	}
 
@@ -826,18 +893,28 @@ static u32 MoveListMain( FRAMELIST_WORK * wk )
 	}
 
 	switch( ret ){
-	case COMMAND_CURSOR_MOVE:			// カーソル移動
+	case COMMAND_CURSOR_ON:				// カーソル表示
+		PMSND_PlaySE( SEQ_SE_SELECT1 );
 		ChangeCursorPosPalette( wk, wk->listPos, wk->listOldPos );
-		wk->hed.cbFunc->move( wk->hed.cbWork, wk->listPos+wk->listScroll );
+		wk->hed.cbFunc->move( wk->hed.cbWork, wk->listPos+wk->listScroll, TRUE );
+		wk->mainSeq = MAINSEQ_WAIT;
+		return FRAMELIST_RET_CURSOR_ON;
+
+	case COMMAND_CURSOR_MOVE:			// カーソル移動
+		PMSND_PlaySE( SEQ_SE_SELECT1 );
+		ChangeCursorPosPalette( wk, wk->listPos, wk->listOldPos );
+		wk->hed.cbFunc->move( wk->hed.cbWork, wk->listPos+wk->listScroll, TRUE );
 		wk->mainSeq = MAINSEQ_WAIT;
 		return FRAMELIST_RET_MOVE;
 
 	case COMMAND_SCROLL_UP:				// スクロール：上
-		InitListScroll( wk, -wk->hed.scrollSpeed[wk->keyRepPos], 1, MAINSEQ_WAIT );
+//		PMSND_PlaySE( SEQ_SE_SELECT1 );
+		InitListScroll( wk, -wk->hed.scrollSpeed[wk->keyRepPos], 1, MAINSEQ_WAIT, TRUE );
 		return FRAMELIST_RET_SCROLL;
 
 	case COMMAND_SCROLL_DOWN:			// スクロール：下
-		InitListScroll( wk, wk->hed.scrollSpeed[wk->keyRepPos], 1, MAINSEQ_WAIT );
+//		PMSND_PlaySE( SEQ_SE_SELECT1 );
+		InitListScroll( wk, wk->hed.scrollSpeed[wk->keyRepPos], 1, MAINSEQ_WAIT, TRUE );
 		return FRAMELIST_RET_SCROLL;
 
 	case COMMAND_SCROLL_UP_1P:		// スクロール：１ページ上
@@ -849,9 +926,10 @@ static u32 MoveListMain( FRAMELIST_WORK * wk )
 				cnt = wk->listScroll;
 			}
 			ChangeCursorPosPalette( wk, PALCHG_NONE, wk->listOldPos );
-			InitListScroll( wk, -wk->hed.scrollSpeed[0], cnt, MAINSEQ_WAIT );
+			InitListScroll( wk, -wk->hed.scrollSpeed[0], cnt, MAINSEQ_WAIT, FALSE );
 		}
-		return FRAMELIST_RET_SCROLL;
+		PMSND_PlaySE( SEQ_SE_SELECT1 );
+		return FRAMELIST_RET_PAGE_UP;
 
 	case COMMAND_SCROLL_DOWN_1P:	// スクロール：１ページ下
 		{
@@ -862,40 +940,46 @@ static u32 MoveListMain( FRAMELIST_WORK * wk )
 				cnt = wk->listScrollMax - wk->listScroll;
 			}
 			ChangeCursorPosPalette( wk, PALCHG_NONE, wk->listOldPos );
-			InitListScroll( wk, wk->hed.scrollSpeed[0], cnt, MAINSEQ_WAIT );
+			InitListScroll( wk, wk->hed.scrollSpeed[0], cnt, MAINSEQ_WAIT, FALSE );
 		}
-		return FRAMELIST_RET_SCROLL;
+		PMSND_PlaySE( SEQ_SE_SELECT1 );
+		return FRAMELIST_RET_PAGE_DOWN;
 
 	case COMMAND_LIST_TOP:				// リスト一番上まで移動
 		wk->listPos = 0;
 		wk->listScroll = 0;
-		InitListDraw( wk );
+		InitListDraw( wk, TRUE );
 //		wk->hed.cbFunc->move( wk->hed.cbWork, wk->listPos+wk->listScroll );
+		PMSND_PlaySE( SEQ_SE_SELECT1 );
 		return FRAMELIST_RET_JUMP_TOP;
 
 	case COMMAND_LIST_BOTTOM:			// リスト一番下まで移動
 		wk->listPos = wk->listPosMax-1;
 		wk->listScroll = wk->listScrollMax;
-		InitListDraw( wk );
+		InitListDraw( wk, TRUE );
 //		wk->hed.cbFunc->move( wk->hed.cbWork, wk->listPos+wk->listScroll );
+		PMSND_PlaySE( SEQ_SE_SELECT1 );
 		return FRAMELIST_RET_JUMP_BOTTOM;
 
 	case COMMAND_RAIL:						// レール移動
 		ChangeCursorPosPalette( wk, PALCHG_NONE, wk->listOldPos );
 //		wk->hed.cbFunc->move( wk->hed.cbWork, wk->listPos+wk->listScroll );
-		InitRailMove( wk, ret );
+		InitRailMove( wk, wk->railHitPos );
+		PMSND_PlaySE( SEQ_SE_SYS_06 );
 		return FRAMELIST_RET_RAIL;
 
 	case COMMAND_SLIDE:
 		ChangeCursorPosPalette( wk, PALCHG_NONE, wk->listOldPos );
-		wk->hed.cbFunc->move( wk->hed.cbWork, wk->listPos+wk->listScroll );
+		wk->hed.cbFunc->move( wk->hed.cbWork, wk->listPos+wk->listScroll, TRUE );
 		InitSlideMove( wk, wk->listPos );
+		PMSND_PlaySE( SEQ_SE_SYS_06 );
 		return FRAMELIST_RET_SLIDE;
 
 	case COMMAND_SELECT:					// 選択
 		if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH ){
+			PMSND_PlaySE( SEQ_SE_SELECT1 );
 			ChangeCursorPosPalette( wk, wk->listPos, wk->listOldPos );
-			wk->hed.cbFunc->move( wk->hed.cbWork, wk->listPos+wk->listScroll );
+			wk->hed.cbFunc->move( wk->hed.cbWork, wk->listPos+wk->listScroll, TRUE );
 		}
 		return wk->listPos;
 
@@ -948,7 +1032,7 @@ static u32 GetListScrollCount( FRAMELIST_WORK * wk, s8 speed )
 	return ( wk->listScrollMax - wk->listScroll );
 }
 
-static void InitListScroll( FRAMELIST_WORK * wk, s8 vec, u8 max, s16 next )
+static void InitListScroll( FRAMELIST_WORK * wk, s8 vec, u8 max, s16 next, BOOL se )
 {
 	wk->listBgScrollSpeed = vec;
 	wk->listBgScrollMax   = max;
@@ -956,12 +1040,8 @@ static void InitListScroll( FRAMELIST_WORK * wk, s8 vec, u8 max, s16 next )
 
 	wk->nextSeq = next;
 	wk->mainSeq = MAINSEQ_SCROLL;
-/*
-	s8	listBgScoll;				// ＢＧスクロールカウンタ
-	s8	listBgScrollSpeed;	// ＢＧスクロール速度
-	u8	listBgScrollCount;	// ＢＧスクロール速度
-*/
 
+	wk->scrollSE = se;
 }
 
 static const u8 AutoScrollCount[] = {
@@ -1009,7 +1089,7 @@ static BOOL MainListScroll( FRAMELIST_WORK * wk )
 				if( ret != GFL_UI_TP_HIT_NONE ){
 					if( wk->hed.touch[ret].prm == FRAMELIST_TOUCH_PARAM_SLIDE ){
 						wk->listPos = ret;
-						wk->hed.cbFunc->move( wk->hed.cbWork, wk->listPos+wk->listScroll );
+						wk->hed.cbFunc->move( wk->hed.cbWork, wk->listPos+wk->listScroll, TRUE );
 						wk->mainSeq = wk->nextSeq;
 						return FALSE;
 					}
@@ -1049,7 +1129,15 @@ static BOOL MainListScroll( FRAMELIST_WORK * wk )
 			DrawListItemSub( wk, wk->listScroll-1, GetItemFramePosY(wk,1) );
 			wk->putFrameSub = GetNextFrameNum( wk->putFrameSub, wk->putFrameMaxSub, 1 );
 		}
-		wk->hed.cbFunc->move( wk->hed.cbWork, wk->listPos+wk->listScroll );
+		wk->hed.cbFunc->move( wk->hed.cbWork, wk->listPos+wk->listScroll, TRUE );
+
+		if( wk->scrollSE == TRUE ){
+			if( wk->nextSeq == MAINSEQ_SLIDE || wk->nextSeq == MAINSEQ_RAIL ){
+				PMSND_PlaySE( SEQ_SE_SYS_06 );
+			}else{
+				PMSND_PlaySE( SEQ_SE_SELECT1 );
+			}
+		}
 	}
 
 	wk->listBgScoll += wk->listBgScrollSpeed;
@@ -1063,6 +1151,7 @@ static BOOL MainListScroll( FRAMELIST_WORK * wk )
 
 	return TRUE;
 }
+
 
 
 //--------------------------------------------------------------------------------------------
@@ -1110,22 +1199,6 @@ static void InitRailMove( FRAMELIST_WORK * wk, int pos )
 
 static u32 GetRailScroll( FRAMELIST_WORK * wk )
 {
-/*
-	u32	x, y;
-
-	GFL_UI_TP_GetPointCont( &x, &y );
-
-	if( y < wk->railTop ){
-		y = wk->railTop;
-	}else if( y > wk->railBottom ){
-		y = wk->railBottom;
-	}
-	y -= wk->railTop;
-
-	y = ( ( (wk->listScrollMax+1) << 8 ) / ( wk->railBottom - wk->railTop ) * y ) >> 8;
-
-	return y;
-*/
 	u32	x, y;
 
 	GFL_UI_TP_GetPointCont( &x, &y );
@@ -1144,30 +1217,6 @@ static u32 GetRailScroll( FRAMELIST_WORK * wk )
 //--------------------------------------------------------------------------------------------
 u32 FRAMELIST_GetScrollBarPY( FRAMELIST_WORK * wk )
 {
-/*
-	u32	py;
-	u8	ty, by;
-	u8	i;
-
-	i = 0;
-	while( 1 ){
-		if( wk->hed.touch[i].tbl.rect.top == GFL_UI_TP_HIT_END ){
-			return 0;
-		}
-		if( wk->hed.touch[i].prm == FRAMELIST_TOUCH_PARAM_RAIL ){
-			ty = wk->hed.touch[i].tbl.rect.top;
-			by = wk->hed.touch[i].tbl.rect.bottom;
-			break;
-		}
-		i++;
-	}
-
-	barSY /= 2;
-	py = by - ty - barSY;
-	py = ( ( py << 8 ) / ( wk->listScrollMax + 1 ) * wk->listScroll ) >> 8;
-
-	return ( ty + py + barSY );
-*/
 	u8	ty, by;
 	u8	i;
 
@@ -1205,10 +1254,10 @@ static BOOL MainRailMove( FRAMELIST_WORK * wk )
 
 	if( wk->listScroll > scroll ){
 		wk->listScroll = scroll+max;
-		InitListScroll( wk, -wk->hed.scrollSpeed[0], max, MAINSEQ_RAIL );
+		InitListScroll( wk, -wk->hed.scrollSpeed[0], max, MAINSEQ_RAIL, TRUE );
 	}else if( wk->listScroll < scroll ){
 		wk->listScroll = scroll-max;
-		InitListScroll( wk, wk->hed.scrollSpeed[0], max, MAINSEQ_RAIL );
+		InitListScroll( wk, wk->hed.scrollSpeed[0], max, MAINSEQ_RAIL, TRUE );
 	}
 
 	return TRUE;
@@ -1282,7 +1331,7 @@ static BOOL MainSlideMove( FRAMELIST_WORK * wk )
 			}
 
 			if( speed != 0 ){
-				InitListScroll( wk, speed, cnt, MAINSEQ_SLIDE );
+				InitListScroll( wk, speed, cnt, MAINSEQ_SLIDE, TRUE );
 				wk->slidePos = ret;
 				return TRUE;
 			}
@@ -1305,7 +1354,7 @@ static BOOL MainSlideMove( FRAMELIST_WORK * wk )
 			if( cntMax < cnt ){
 				cnt = cntMax;
 			}
-			InitListScroll( wk, speed, cnt, MAINSEQ_SLIDE );
+			InitListScroll( wk, speed, cnt, MAINSEQ_SLIDE, TRUE );
 			wk->slidePos = ret;
 			return TRUE;
 		}
