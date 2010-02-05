@@ -1039,6 +1039,10 @@ static void seltgt_init_setup_work( SEL_TARGET_WORK* stw, BTLV_SCD* wk )
 
   BTL_Printf("stw basePoke=%d, basePos=%d\n", BPP_GetID(wk->bpp), basePos);
 
+  // 「のろい」は自分がゴーストタイプを持っているかどうかで対象範囲が異なる
+  if( waza == WAZANO_NOROI ){
+    target = (BPP_IsMatchType(wk->bpp, POKETYPE_GHOST))? WAZA_TARGET_OTHER_SELECT : WAZA_TARGET_USER;
+  }
 
   switch( target ){
   case WAZA_TARGET_OTHER_SELECT:        ///< 自分以外の１体（選択）
