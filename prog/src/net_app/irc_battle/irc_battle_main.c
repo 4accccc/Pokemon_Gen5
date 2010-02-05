@@ -351,7 +351,7 @@ static GFL_PROC_RESULT IRC_BATTLE_ProcMain( GFL_PROC * proc, int * seq , void *p
     if( WIPE_SYS_EndCheck() == TRUE )
     {
       GFL_NETHANDLE *selfHandle = GFL_NET_HANDLE_GetCurrentHandle();
-      GFL_NET_TimingSyncStart( selfHandle , IBT_POKELIST_END );
+      GFL_NET_HANDLE_TimeSyncStart( selfHandle , IBT_POKELIST_END , WB_NET_IRC_BATTLE );
       work->state = IBS_SELECT_POKE_TIMMING;
     }
     break;
@@ -359,7 +359,7 @@ static GFL_PROC_RESULT IRC_BATTLE_ProcMain( GFL_PROC * proc, int * seq , void *p
   case IBS_SELECT_POKE_TIMMING:
     {
       GFL_NETHANDLE *selfHandle = GFL_NET_HANDLE_GetCurrentHandle();
-      const BOOL ret = GFL_NET_IsTimingSync( selfHandle , IBT_POKELIST_END );
+      const BOOL ret = GFL_NET_HANDLE_IsTimeSync( selfHandle , IBT_POKELIST_END , WB_NET_IRC_BATTLE );
       if( ret == TRUE )
       {
         work->state = IBS_START_BATTLE;
@@ -377,7 +377,7 @@ static GFL_PROC_RESULT IRC_BATTLE_ProcMain( GFL_PROC * proc, int * seq , void *p
     if( IRC_BATTLE_IsFinishMessage( work ) == TRUE )
     {
       GFL_NETHANDLE *selfHandle = GFL_NET_HANDLE_GetCurrentHandle();
-      GFL_NET_TimingSyncStart( selfHandle , IBT_BATTLE_START );
+      GFL_NET_HANDLE_TimeSyncStart( selfHandle , IBT_BATTLE_START , WB_NET_IRC_BATTLE );
       IRC_BATTLE_ShowMessage( work , IRC_BATTLE_MSG_WAIT_COMM );
       //IRC_BATTLE_ShowMessage( work , IRC_BATTLE_MSG_04 );
       work->state = IBS_START_BATTLE_TIMMING;
@@ -387,7 +387,7 @@ static GFL_PROC_RESULT IRC_BATTLE_ProcMain( GFL_PROC * proc, int * seq , void *p
   case IBS_START_BATTLE_TIMMING:
     {
       GFL_NETHANDLE *selfHandle = GFL_NET_HANDLE_GetCurrentHandle();
-      const BOOL ret = GFL_NET_IsTimingSync( selfHandle , IBT_BATTLE_START );
+      const BOOL ret = GFL_NET_HANDLE_IsTimeSync( selfHandle , IBT_BATTLE_START , WB_NET_IRC_BATTLE );
       if( ret == TRUE )
       {
         OS_TPrintf("Battle!!\n");
@@ -430,7 +430,7 @@ static GFL_PROC_RESULT IRC_BATTLE_ProcMain( GFL_PROC * proc, int * seq , void *p
     if( WIPE_SYS_EndCheck() == TRUE )
     {
       GFL_NETHANDLE *selfHandle = GFL_NET_HANDLE_GetCurrentHandle();
-      GFL_NET_TimingSyncStart( selfHandle , IBT_BATTLE_END );
+      GFL_NET_HANDLE_TimeSyncStart( selfHandle , IBT_BATTLE_END , WB_NET_IRC_BATTLE );
       work->state = IBS_BATTLE_TIMMING;
     }
     break;
@@ -438,7 +438,7 @@ static GFL_PROC_RESULT IRC_BATTLE_ProcMain( GFL_PROC * proc, int * seq , void *p
   case IBS_BATTLE_TIMMING:  //“¯Šú‘Ò‚¿
     {
       GFL_NETHANDLE *selfHandle = GFL_NET_HANDLE_GetCurrentHandle();
-      const BOOL ret = GFL_NET_IsTimingSync( selfHandle , IBT_BATTLE_END );
+      const BOOL ret = GFL_NET_HANDLE_IsTimeSync( selfHandle , IBT_BATTLE_END , WB_NET_IRC_BATTLE );
       if( ret == TRUE )
       {
         work->state = IBS_DRAW_RESULT;

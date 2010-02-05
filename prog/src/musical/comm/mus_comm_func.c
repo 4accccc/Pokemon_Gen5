@@ -588,14 +588,14 @@ const BOOL MUS_COMM_SetCommGameState( MUS_COMM_WORK *work , MUS_COMM_GAME_STATE 
 void MUS_COMM_SendTimingCommand( MUS_COMM_WORK *work , const u8 no )
 {
   GFL_NETHANDLE *selfHandle = GFL_NET_HANDLE_GetCurrentHandle();
-  GFL_NET_TimingSyncStart( selfHandle , no );
+  GFL_NET_HANDLE_TimeSyncStart( selfHandle , no , WB_NET_MUSICAL );
   ARI_TPrintf("MusComm Send timming command[%d]\n",no);
 }
 
 const BOOL MUS_COMM_CheckTimingCommand( MUS_COMM_WORK *work , const u8 no )
 {
   GFL_NETHANDLE *selfHandle = GFL_NET_HANDLE_GetCurrentHandle();
-  if( GFL_NET_IsTimingSync( selfHandle , no ) == TRUE )
+  if( GFL_NET_HANDLE_IsTimeSync( selfHandle , no , WB_NET_MUSICAL ) == TRUE )
   {
     ARI_TPrintf("MusComm Sync timming command[%d]\n",no);
     return TRUE;

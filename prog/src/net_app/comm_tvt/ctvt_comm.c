@@ -409,14 +409,14 @@ void CTVT_COMM_Main( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
     {
       GFL_NETHANDLE *selfHandle = GFL_NET_HANDLE_GetCurrentHandle();
       GFL_NET_AddCommandTable( GFL_NET_CMD_COMM_TVT , CTVT_COMM_RecvTable , NELEMS(CTVT_COMM_RecvTable) , commWork );
-      GFL_NET_TimingSyncStart( selfHandle , CTVT_COMM_ADD_COMMAND_SYNC );
+      GFL_NET_HANDLE_TimeSyncStart( selfHandle , CTVT_COMM_ADD_COMMAND_SYNC , WB_NET_COMM_TVT );
       commWork->state = CCS_ADD_COMMAND_SYNC_WAIT;
     }
     break;
   case CCS_ADD_COMMAND_SYNC_WAIT:
     {
       GFL_NETHANDLE *selfHandle = GFL_NET_HANDLE_GetCurrentHandle();
-      if( GFL_NET_IsTimingSync( selfHandle , CTVT_COMM_ADD_COMMAND_SYNC ) == TRUE )
+      if( GFL_NET_HANDLE_IsTimeSync( selfHandle , CTVT_COMM_ADD_COMMAND_SYNC , WB_NET_COMM_TVT ) == TRUE )
       {
         commWork->state = CCS_CONNECT;
       }
@@ -471,7 +471,7 @@ void CTVT_COMM_Main( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
   case CCS_RELEASE_COMMAND:
     {
       GFL_NETHANDLE *selfHandle = GFL_NET_HANDLE_GetCurrentHandle();
-      GFL_NET_TimingSyncStart( selfHandle , CTVT_COMM_RELEASE_COMMAND_SYNC );
+      GFL_NET_HANDLE_TimeSyncStart( selfHandle , CTVT_COMM_RELEASE_COMMAND_SYNC , WB_NET_COMM_TVT );
       commWork->state = CCS_RELEASE_COMMAND_SYNC_WAIT;
     }
     break;
@@ -479,7 +479,7 @@ void CTVT_COMM_Main( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
   case CCS_RELEASE_COMMAND_SYNC_WAIT:
     {
       GFL_NETHANDLE *selfHandle = GFL_NET_HANDLE_GetCurrentHandle();
-      if( GFL_NET_IsTimingSync( selfHandle , CTVT_COMM_RELEASE_COMMAND_SYNC ) == TRUE )
+      if( GFL_NET_HANDLE_IsTimeSync( selfHandle , CTVT_COMM_RELEASE_COMMAND_SYNC , WB_NET_COMM_TVT ) == TRUE )
       {
         GFL_NET_DelCommandTable( GFL_NET_CMD_COMM_TVT );
         commWork->state = CCS_FINISH;
@@ -1382,13 +1382,13 @@ static u8*  CTVT_COMM_Post_DrawBuff_Buff( int netID, void* pWork , int size )
 void CTVT_COMM_SendTimingCommnad( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork , const u8 number )
 {
   GFL_NETHANDLE *selfHandle = GFL_NET_HANDLE_GetCurrentHandle();
-  GFL_NET_TimingSyncStart( selfHandle , number );
+  GFL_NET_HANDLE_TimeSyncStart( selfHandle , number , WB_NET_COMM_TVT );
 }
 
 const BOOL CTVT_COMM_CheckTimingCommnad( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork , const u8 number )
 {
   GFL_NETHANDLE *selfHandle = GFL_NET_HANDLE_GetCurrentHandle();
-  return GFL_NET_IsTimingSync( selfHandle , number );
+  return GFL_NET_HANDLE_IsTimeSync( selfHandle , number , WB_NET_COMM_TVT );
 }
 
 #pragma mark [>outer func

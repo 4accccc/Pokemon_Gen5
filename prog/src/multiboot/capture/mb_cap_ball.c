@@ -637,7 +637,6 @@ static void MB_CAP_BALL_StateFlying(MB_CAPTURE_WORK *capWork , MB_CAP_BALL *ball
     //高さ拡縮処理
     //文字演出のためサイズを2倍にしてるのでデフォは半分
     fx16 size = (ballWork->height/128) + FX16_HALF;
-    OS_FPrintf(3,"[%.2f]\n",FX_FX32_TO_F32(ballWork->height));
     GFL_BBD_SetObjectSiz( bbdSys , ballWork->objIdx , &size , &size );
   }
   
