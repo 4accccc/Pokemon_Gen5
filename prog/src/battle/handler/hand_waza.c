@@ -378,7 +378,7 @@ static void handler_Gaman( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, 
 static void handler_Gaman_WazaMsg( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Gaman_Target( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Gaman_Damage( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
-static void handler_Gamen_ExeCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_Gaman_ExeCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Gaman_Fail( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void gaman_ReleaseStick( BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static u32 gaman_getTotalDamage( const BTL_POKEPARAM* bpp );
@@ -4917,7 +4917,7 @@ static const BtlEventHandlerTable*  ADD_Gaman( u32* numElems )
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_WAZA_EXE_START,            handler_Gaman          }, //
     { BTL_EVENT_REQWAZA_MSG,               handler_Gaman_WazaMsg  },
-    { BTL_EVENT_WAZA_EXECUTE_CHECK_2ND,    handler_Gamen_ExeCheck },
+    { BTL_EVENT_WAZA_EXECUTE_CHECK_2ND,    handler_Gaman_ExeCheck },
     { BTL_EVENT_DECIDE_TARGET,             handler_Gaman_Target   },
     { BTL_EVENT_WAZA_DMG_PROC1,            handler_Gaman_Damage   },
     { BTL_EVENT_WAZA_EXECUTE_FAIL,         handler_Gaman_Fail     },
@@ -5013,7 +5013,7 @@ static void handler_Gaman_Damage( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
 //    gaman_ReleaseStick( flowWk, pokeID, work );
   }
 }
-static void handler_Gamen_ExeCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+static void handler_Gaman_ExeCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID)
   &&  (work[0] >= GAMAN_STATE_3RD)

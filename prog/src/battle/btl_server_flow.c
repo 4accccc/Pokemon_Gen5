@@ -4557,6 +4557,9 @@ static void scPut_WazaExecuteFailMsg( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, W
   case SV_WAZAFAIL_JURYOKU:
     SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_JyuryokuWazaFail, pokeID, waza );
     break;
+  case SV_WAZAFAIL_TOKUSEI:
+    // とくせいの場合、各ハンドラに任せる
+    break;
   default:
     SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_WazaFail, pokeID );
     break;
@@ -8792,7 +8795,7 @@ static void scEvent_CheckWazaExeFail( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* 
   BTL_EVENTVAR_Push();
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID, BPP_GetID(bpp) );
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_WAZAID, waza );
-    BTL_EVENTVAR_SetValue( BTL_EVAR_FAIL_CAUSE, cause );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_FAIL_CAUSE, cause );
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_WAZA_EXECUTE_FAIL );
   BTL_EVENTVAR_Pop();
 }
