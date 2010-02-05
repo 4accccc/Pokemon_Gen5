@@ -199,18 +199,10 @@ void CloseArcHandle( CALENDER* calender )
 WEATHER_NO GetWeatherNo_today( const CALENDER* calender, u16 zoneID )
 {
   int month, day;
-  OSTick startTick, endTick;
-
-  startTick = OS_GetTick();
 
   // 日付を取得
   month = EVTIME_GetMonth( calender->gameData );
   day   = EVTIME_GetDay( calender->gameData );
-  OS_TFPrintf( 3, "date = %d/%d\n", month, day );
-
-  endTick = OS_GetTick();
-
-  OS_TFPrintf( 3, "rtc get = %d\n", endTick - startTick );
 
   // 今日の天気を返す
   return GetWeatherNo( calender, zoneID, month, day );
@@ -232,9 +224,6 @@ WEATHER_NO GetWeatherNo( const CALENDER* calender, u16 zoneID, u8 month, u8 day 
 {
   u8 weather;
   u16 annualIndex, dateIndex;
-  OSTick startTick, endTick, indexTick;
-
-  startTick = OS_GetTick();
 
   // 年間データのインデックス取得
   annualIndex = GetAnnualWeatherDataIndex( calender, zoneID );
@@ -249,15 +238,9 @@ WEATHER_NO GetWeatherNo( const CALENDER* calender, u16 zoneID, u8 month, u8 day 
   // 指定日の天気データのインデックス
   dateIndex = annualIndex + GetDateIndex( month, day );
 
-  indexTick = OS_GetTick();
-
   // 天気を取得
   GFL_ARC_LoadDataOfsByHandle( calender->arcHandle, NARC_calender_weather_data_bin, 
                                dateIndex, sizeof(weather), &weather );
-  endTick = OS_GetTick();
-
-  OS_TFPrintf( 3, "ref index = %d\n", indexTick - startTick );
-  OS_TFPrintf( 3, "end = %d\n", endTick - startTick );
   return weather;
 }
 
