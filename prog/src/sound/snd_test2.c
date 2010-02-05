@@ -177,11 +177,13 @@ static const u8 bmpwinNoStDat[NOIDX_MAX][4] = { //px, py, sx, sy
  * @brief ソフトウエアキーボード設定
  */
 //------------------------------------------------------------------
+#if 0
 static const GFL_SKB_SETUP skbData= {
   GFL_SKB_STRLEN_MAX, GFL_SKB_STRTYPE_SJIS,
   GFL_SKB_MODE_HIRAGANA, TRUE, PAD_BUTTON_START,
   GFL_DISPUT_BGID_M1, GFL_DISPUT_PALID_14, GFL_DISPUT_PALID_15,
 };
+#endif
 
 //------------------------------------------------------------------
 /**
@@ -380,10 +382,10 @@ typedef struct {
   int             seq;
 
   GFL_SNDVIEWER*  gflSndViewer;
-  GFL_SKB*        gflSkb;
+  //GFL_SKB*        gflSkb;
   BOOL            gflSkbSw;
 
-  void*           skbStrBuf;
+  //void*           skbStrBuf;
 
   GFL_TCB*        g2dVintr;
 
@@ -451,7 +453,7 @@ static void SoundWorkInitialize(SOUNDTEST_WORK* sw)
 {
   int i;
 
-  sw->skbStrBuf = GFL_SKB_CreateSjisCodeBuffer(sw->heapID);
+  //sw->skbStrBuf = GFL_SKB_CreateSjisCodeBuffer(sw->heapID);
   sw->seq = 0;
 
   sw->bgmPauseSw = FALSE;
@@ -504,7 +506,7 @@ static void SoundWorkFinalize(SOUNDTEST_WORK* sw)
   GFL_STR_DeleteBuffer(sw->setNoBuffer);
   for(i=0; i<NAMEIDX_MAX; i++){ GFL_STR_DeleteBuffer(sw->setName[i]); }
 
-  GFL_SKB_DeleteSjisCodeBuffer(sw->skbStrBuf);
+  //GFL_SKB_DeleteSjisCodeBuffer(sw->skbStrBuf);
 
   if(sw->voiceReserveFlag == TRUE){
     PMVOICE_PlayerHeapRelease();
