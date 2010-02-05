@@ -1,3 +1,4 @@
+#if 0
 //============================================================================================
 /**
  * @file		zknlist_bgwfrm.h
@@ -42,3 +43,4 @@ extern void ZKNLISTBGWFRM_PutPokeList( ZKNLISTMAIN_WORK * wk, u32 idx, s32 listP
 extern void ZKNLISTBGWFRM_PutScrollList( ZKNLISTMAIN_WORK * wk, u32 idx, u32 mv );
 
 extern void ZKNLISTBGWFRM_PutScrollListSub( ZKNLISTMAIN_WORK * wk, u32 idx, u32 mv );
+#endif

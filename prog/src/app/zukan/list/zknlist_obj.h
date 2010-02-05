@@ -91,6 +91,18 @@ extern void ZKNLISTOBJ_SetAutoAnm( ZKNLISTMAIN_WORK * wk, u32 id, u32 anm );
 
 //--------------------------------------------------------------------------------------------
 /**
+ * @brief		セルアクターアニメ取得
+ *
+ * @param		wk		図鑑リストワーク
+ * @param		id		OBJ ID
+ *
+ * @return	アニメ番号
+ */
+//--------------------------------------------------------------------------------------------
+extern u32 ZKNLISTOBJ_GetAnm( ZKNLISTMAIN_WORK * wk, u32 id );
+
+//--------------------------------------------------------------------------------------------
+/**
  * @brief		セルアクターアニメ状態取得
  *
  * @param		wk		図鑑リストワーク
@@ -230,8 +242,23 @@ extern void ZKNLISTOBJ_InitScrollList( ZKNLISTMAIN_WORK * wk );
 
 extern void ZKNLISTOBJ_ChgListPosAnm( ZKNLISTMAIN_WORK * wk, u32 pos, BOOL flg );
 
+extern u32 ZKNLISTOBJ_GetChgPokeIconIndex( ZKNLISTMAIN_WORK * wk, BOOL disp );
+
+extern void ZKNLISTOBJ_PutPokeList2( ZKNLISTMAIN_WORK * wk, u16 mons, s16 py, BOOL disp );
+
+extern void ZKNLISTOBJ_PutScrollList2( ZKNLISTMAIN_WORK * wk, s8 mv );
+
+extern void ZKNLISTOBJ_SetPutPokeIconFlag( ZKNLISTMAIN_WORK * wk );
+extern void ZKNLISTOBJ_VanishJumpPokeIcon( ZKNLISTMAIN_WORK * wk );
+
+extern void ZKNLISTOBJ_ChangePokeIconAnime( ZKNLISTMAIN_WORK * wk, u32 pos );
+
+
 extern void ZKNLISTOBJ_SetScrollBar( ZKNLISTMAIN_WORK * wk, u32 py );
 
 extern u32 ZKNLISTOBJ_GetListScrollBarPos( ZKNLISTMAIN_WORK * wk );
 
 extern void ZKNLISTOBJ_SetListScrollBarPos( ZKNLISTMAIN_WORK * wk );
+
+
+extern void ZKNLISTOBJ_SetListPageArrowAnime( ZKNLISTMAIN_WORK * wk, BOOL anm );

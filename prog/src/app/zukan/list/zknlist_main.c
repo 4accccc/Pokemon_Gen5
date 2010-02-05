@@ -12,6 +12,8 @@
 
 #include "arc_def.h"
 #include "system/gfl_use.h"
+#include "sound/pm_sndsys.h"
+#include "pokeicon/pokeicon.h"
 #include "print/global_msg.h"
 #include "font/font.naix"
 #include "app/app_menu_common.h"
@@ -22,6 +24,7 @@
 #include "zknlist_bmp.h"
 #include "zknlist_obj.h"
 #include "zknlist_bgwfrm.h"
+#include "zknlist_snd_def.h"
 #include "zukan_gra.naix"
 
 
@@ -396,13 +399,6 @@ void ZKNLISTMAIN_ExitMsg( ZKNLISTMAIN_WORK * wk )
 }
 
 
-#define	LIST_MONS_MASK		( 0x0fffffff )
-#define	LIST_INFO_MASK		( 0xf0000000 )
-#define	LIST_INFO_SHIFT		( 28 )
-
-#define	SET_LIST_PARAM(p,m)	( ( p << LIST_INFO_SHIFT ) | m )
-#define	GET_LIST_MONS(a)		( a & LIST_MONS_MASK )
-#define	GET_LIST_INFO(a)		( ( a & LIST_INFO_MASK ) >> LIST_INFO_SHIFT )
 
 enum {
 	LIST_INFO_MONS_NONE = 0,
@@ -420,8 +416,195 @@ enum {
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
+static void ListCallBack_Draw( void * work, u32 itemNum, PRINT_UTIL * util, s16 py, BOOL disp );
+static void ListCallBack_Move( void * work, u32 listPos, BOOL flg );
+static void ListCallBack_Scroll( void * work, s8 mv );
+
+static const FRAMELIST_CALLBACK	FRMListCallBack = {
+	ListCallBack_Draw,
+	ListCallBack_Move,
+	ListCallBack_Scroll,
+};
+
+static const FRAMELIST_TOUCH_DATA TouchHitTbl[] =
+{
+	{ {   0,  23, 128, 231 }, FRAMELIST_TOUCH_PARAM_SLIDE },		// 00: ポケモンアイコン
+	{ {  24,  47, 128, 231 }, FRAMELIST_TOUCH_PARAM_SLIDE },		// 01: ポケモンアイコン
+	{ {  48,  71, 128, 231 }, FRAMELIST_TOUCH_PARAM_SLIDE },		// 02: ポケモンアイコン
+	{ {  72,  95, 128, 231 }, FRAMELIST_TOUCH_PARAM_SLIDE },		// 03: ポケモンアイコン
+	{ {  96, 119, 128, 231 }, FRAMELIST_TOUCH_PARAM_SLIDE },		// 04: ポケモンアイコン
+	{ { 120, 143, 128, 231 }, FRAMELIST_TOUCH_PARAM_SLIDE },		// 05: ポケモンアイコン
+	{ { 144, 167, 128, 231 }, FRAMELIST_TOUCH_PARAM_SLIDE },		// 06: ポケモンアイコン
+
+	{ {   8, 159, 232, 255 }, FRAMELIST_TOUCH_PARAM_RAIL },					// 07: レール
+
+	{ { 168, 191, 136, 159 }, FRAMELIST_TOUCH_PARAM_PAGE_UP },			// 08: 左
+	{ { 168, 191, 160, 183 }, FRAMELIST_TOUCH_PARAM_PAGE_DOWN },		// 09: 右
+
+	{ { GFL_UI_TP_HIT_END, 0, 0, 0 }, 0 },
+};
+
+static const FRAMELIST_HEADER	ListHeader = {
+	GFL_BG_FRAME2_M,							// 下画面ＢＧ
+	GFL_BG_FRAME2_S,							// 上画面ＢＧ
+
+	ZKNLISTMAIN_LIST_PX,					// 項目フレーム表示開始Ｘ座標
+	ZKNLISTMAIN_LIST_PY,					// 項目フレーム表示開始Ｙ座標
+	ZKNLISTMAIN_LIST_SX,					// 項目フレーム表示Ｘサイズ
+	ZKNLISTMAIN_LIST_SY,					// 項目フレーム表示Ｙサイズ
+
+	3,							// フレーム内に表示するBMPWINの表示Ｘ座標
+	0,							// フレーム内に表示するBMPWINの表示Ｙ座標
+	11,							// フレーム内に表示するBMPWINの表示Ｘサイズ
+	3,							// フレーム内に表示するBMPWINの表示Ｙサイズ
+	1,							// フレーム内に表示するBMPWINのパレット
+
+	{ 24, 12, 8, 6, 4, 3 },		// スクロール速度 [0] = 最速
+
+	3,							// 選択項目のパレット
+
+	8,							// スクロールバーのＹサイズ
+
+	0,							// 項目登録数
+	2,							// 背景登録数
+
+	0,							// 初期位置
+	7,							// カーソル移動範囲
+	0,							// 初期スクロール値
+
+	TouchHitTbl,			// タッチデータ
+
+	&FRMListCallBack,	// コールバック関数
+	NULL,
+};
+
+static void ListCallBack_Draw( void * work, u32 itemNum, PRINT_UTIL * util, s16 py, BOOL disp )
+{
+	ZKNLISTMAIN_WORK * wk;
+	u32	prm;
+	u32	obj;
+
+	wk = work;
+
+	prm = FRAMELIST_GetItemParam( wk->lwk, itemNum );
+
+	ZKNLISTBMP_PutPokeList2( wk, util, wk->name[itemNum], GET_LIST_MONS(prm) );
+
+	if( GET_LIST_INFO(prm) != 0 ){
+		ZKNLISTOBJ_PutPokeList2( wk, GET_LIST_MONS(prm), py, disp );
+	}
+}
+
+static void ListCallBack_Move( void * work, u32 listPos, BOOL flg )
+{
+	ZKNLISTMAIN_WORK * wk;
+	u32	prm;
+
+	wk = work;
+
+	prm = FRAMELIST_GetItemParam( wk->lwk, listPos );
+//	OS_Printf( "info = %d, mons = %d\n", GET_LIST_INFO(prm), GET_LIST_MONS(prm) );
+
+	if( GET_LIST_INFO(prm) != 0 ){
+		ZKNLISTOBJ_SetPokeGra( wk, GET_LIST_MONS(prm), 0, 0, 0 );
+	}else{
+		ZKNLISTOBJ_SetPokeGra( wk, 0, 0, 0, 0 );
+	}
+	ZKNLISTOBJ_ChangePokeIconAnime( wk, listPos-FRAMELIST_GetScrollCount(wk->lwk) );
+	ZKNLISTOBJ_SetScrollBar( wk, FRAMELIST_GetScrollBarPY(wk->lwk) );
+
+/*
+	if( flg == TRUE ){
+		PMSND_PlaySE( ZKNLIST_SE_MOVE );
+	}
+*/
+}
+
+static void ListCallBack_Scroll( void * work, s8 mv )
+{
+	ZKNLISTMAIN_WORK * wk;
+
+	wk = work;
+
+	ZKNLISTOBJ_PutScrollList2( wk, mv*-1 );
+	ZKNLISTOBJ_ChangePokeIconAnime( wk, FRAMELIST_GetCursorPos(wk->lwk) );
+
+	ZKNLISTOBJ_SetScrollBar( wk, FRAMELIST_GetScrollBarPY(wk->lwk) );
+	ZKNLISTOBJ_SetListPageArrowAnime( wk, TRUE );
+
+//	PMSND_PlaySE( ZKNLIST_SE_SCROLL );
+}
+
+
 void ZKNLISTMAIN_MakeList( ZKNLISTMAIN_WORK * wk )
 {
+	ARCHANDLE * ah = GFL_ARC_OpenDataHandle( ARCID_ZUKAN_GRA, HEAPID_ZUKAN_LIST_L );
+
+	// 点滅アニメ作成
+//	wk->blink = BLINKPALANM_Create( 3*16, 16, GFL_BG_FRAME2_M, HEAPID_ZUKAN_LIST );
+//	BLINKPALANM_SetPalBufferArcHDL( wk->blink, ah, NARC_zukan_gra_list_list_bgd_NCLR, 3*16, 2*16 );
+
+	// リストワーク作成
+	{
+		FRAMELIST_HEADER	hed;
+
+		hed = ListHeader;
+		hed.itemMax    = MONSNO_END;
+		hed.initPos    = 0;
+		hed.initScroll = 4;
+		hed.cbWork     = wk;
+
+		wk->lwk = FRAMELIST_Create( &hed, HEAPID_ZUKAN_LIST );
+	}
+
+	// 項目背景設定
+	FRAMELIST_LoadFrameGraphicAH( wk->lwk, ah, NARC_zukan_gra_list_listframe_NSCR, FALSE, 0 );
+	FRAMELIST_LoadFrameGraphicAH( wk->lwk, ah, NARC_zukan_gra_list_listframe2_NSCR, FALSE, 1 );
+
+	// 点滅アニメパレット設定
+	FRAMELIST_LoadBlinkPalette( wk->lwk, ah, NARC_zukan_gra_list_list_bgd_NCLR, 2, 3 );
+
+	GFL_ARC_CloseDataHandle( ah );
+
+	{	// リストパラメータ設定
+		u32	i;
+
+		for( i=1; i<=MONSNO_END; i++ ){
+//		for( i=1; i<=20; i++ ){
+			if( ( i % 3 ) == 0 ){
+				FRAMELIST_AddItem( wk->lwk, 1, SET_LIST_PARAM(LIST_INFO_MONS_NONE,i) );
+			}else{
+				FRAMELIST_AddItem( wk->lwk, 0, SET_LIST_PARAM(i%3,i) );
+
+				// 見つけた数
+				wk->seeNum++;
+				// 捕まえた数
+				if( ( i % 3 ) == 2 ){
+					wk->getNum++;
+				}
+			}
+		}
+	}
+
+	{	// 名前文字列取得
+		u32	i;
+
+		for( i=1; i<=MONSNO_END; i++ ){
+			if( ( i % 3 ) == 0 ){
+				wk->name[i-1] = GFL_MSG_CreateString( wk->mman, str_name_01 );
+			}else{
+				STRBUF * srcStr = GFL_MSG_CreateString( GlobalMsg_PokeName, i );
+				wk->name[i-1] = GFL_STR_CreateCopyBuffer( srcStr, HEAPID_ZUKAN_LIST );
+				GFL_STR_DeleteBuffer( srcStr );
+			}
+		}
+	}
+
+
+//	FRAMELIST_Init( wk->lwk );
+
+
+/*
 	STRBUF * srcStr;
 	STRBUF * cpyStr;
 	u32	i;
@@ -453,6 +636,7 @@ void ZKNLISTMAIN_MakeList( ZKNLISTMAIN_WORK * wk )
 	ZKNLISTMAIN_InitList( wk->list, 0, 7, 0, wk, ListCallBack );
 
 	ZKNLISTMAIN_InitListPut( wk );
+*/
 }
 
 //--------------------------------------------------------------------------------------------
@@ -466,19 +650,32 @@ void ZKNLISTMAIN_MakeList( ZKNLISTMAIN_WORK * wk )
 //--------------------------------------------------------------------------------------------
 void ZKNLISTMAIN_FreeList( ZKNLISTMAIN_WORK * wk )
 {
-	ZKNLISTMAIN_ExitList( wk->list );
+	u32	i;
+
+	FRAMELIST_Exit( wk->lwk );
+
+	// 名前削除
+	for( i=1; i<=MONSNO_END; i++ ){
+		GFL_STR_DeleteBuffer( wk->name[i-1] );
+	}
+
+//	BLINKPALANM_Exit( wk->blink );
+//	ZKNLISTMAIN_ExitList( wk->list );
 }
 
+/*
 u32 ZKNLISTMAIN_GetListMons( ZUKAN_LIST_WORK * wk, u32 pos )
 {
 	return GET_LIST_MONS( ZKNLISTMAIN_GetListParam(wk,pos) );
 }
-
+*/
+/*
 u32 ZKNLISTMAIN_GetListInfo( ZUKAN_LIST_WORK * wk, u32 pos )
 {
 	return GET_LIST_INFO( ZKNLISTMAIN_GetListParam(wk,pos) );
 }
-
+*/
+/*
 static void PutListOne( ZKNLISTMAIN_WORK * wk, u32 idx, s32 listPos )
 {
 	ZKNLISTBMP_PutPokeList( wk, ZKNLISTBMP_WINIDX_NAME_M1+idx, listPos );
@@ -902,3 +1099,4 @@ u32 ZKNLISTMAIN_SetListDirect( ZUKAN_LIST_WORK * wk, s16 pos, s16 mv, BOOL autoF
 
 	return ZKNLISTMAIN_LIST_MOVE_NONE;
 }
+*/

@@ -26,8 +26,8 @@
 // タッチ座標テーブル
 static const GFL_UI_TP_HITTBL TouchHitTbl[] =
 {
-	{   0, 167, 128, 247 },		// 00: リスト
-	{   8, 159, 248, 255 },		// 01: レール
+//	{   0, 167, 128, 247 },		// 00: リスト
+//	{   8, 159, 248, 255 },		// 01: レール
 
 	{   0,  95,   0,  95 },		// 02: ポケモン正面絵
 
@@ -41,8 +41,8 @@ static const GFL_UI_TP_HITTBL TouchHitTbl[] =
 
 	{ 168, 191,   0,  71 },		// 10: スタート
 	{ 168, 191,  72, 135 },		// 11: セレクト
-	{ 168, 191, 136, 159 },		// 12: 左
-	{ 168, 191, 160, 183 },		// 13: 右
+//	{ 168, 191, 136, 159 },		// 12: 左
+//	{ 168, 191, 160, 183 },		// 13: 右
 	{ 168, 191, 184, 207 },		// 14: Ｙ
 	{ 168, 191, 208, 231 },		// 15: Ｘ
 	{ 168, 191, 232, 255 },		// 16: 戻る
@@ -69,9 +69,11 @@ int ZKNLISUI_ListMain( ZKNLISTMAIN_WORK * wk )
 		return ret;
 	}
 
+/*
 	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE ){
-		return ZKNLISTUI_ID_ICON1;
+		return ZKNLISTUI_ID_POKE;
 	}
+*/
 
 	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL ){
 		return ZKNLISTUI_ID_RETURN;
@@ -96,7 +98,7 @@ int ZKNLISUI_ListMain( ZKNLISTMAIN_WORK * wk )
 	return ret;
 }
 
-
+/*
 BOOL ZKNLISTUI_CheckRailHit( u32 * x, u32 * y )
 {
 	if( GFL_UI_TP_HitCont( RailHitTbl ) != GFL_UI_TP_HIT_NONE ){
@@ -114,3 +116,4 @@ BOOL ZKNLISTUI_CheckListHit( u32 * x, u32 * y )
 	}
 	return FALSE;
 }
+*/

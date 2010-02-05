@@ -233,12 +233,10 @@ void ZKNLISTOBJ_SetAutoAnm( ZKNLISTMAIN_WORK * wk, u32 id, u32 anm )
  * @return	アニメ番号
  */
 //--------------------------------------------------------------------------------------------
-/*
 u32 ZKNLISTOBJ_GetAnm( ZKNLISTMAIN_WORK * wk, u32 id )
 {
 	return GFL_CLACT_WK_GetAnmSeq( wk->clwk[id] );
 }
-*/
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -690,6 +688,7 @@ void ZKNLISTOBJ_SetPokeGra( ZKNLISTMAIN_WORK * wk, u16 mons, u8 form, u8 sex, u8
 	wk->pokeGraFlag ^= 1;
 }
 
+/*
 void ZKNLISTOBJ_PutListPosPokeGra( ZKNLISTMAIN_WORK * wk, s16 pos )
 {
 	u16	mons;
@@ -701,6 +700,7 @@ void ZKNLISTOBJ_PutListPosPokeGra( ZKNLISTMAIN_WORK * wk, s16 pos )
 	}
 	ZKNLISTOBJ_SetPokeGra( wk, mons, 0, 0, 0 );
 }
+*/
 
 
 //============================================================================================
@@ -808,6 +808,7 @@ void ZKNLISTOBJ_ScrollPokeIcon( ZKNLISTMAIN_WORK * wk, s16 mv )
 	}
 }
 
+/*
 void ZKNLISTOBJ_PutPokeList( ZKNLISTMAIN_WORK * wk, u32 objIdx, s32 listPos, BOOL disp )
 {
 	if( listPos < 0 ){
@@ -823,7 +824,8 @@ void ZKNLISTOBJ_PutPokeList( ZKNLISTMAIN_WORK * wk, u32 objIdx, s32 listPos, BOO
 	}
 	ZKNLISTOBJ_SetAutoAnm( wk, objIdx, POKEICON_ANM_DEATH );
 }
-
+*/
+/*
 void ZKNLISTOBJ_PutScrollList( ZKNLISTMAIN_WORK * wk, u32 idx, u32 mv )
 {
 	if( mv == ZKNLISTBGWFRM_LISTPUT_UP ){
@@ -838,7 +840,8 @@ void ZKNLISTOBJ_PutScrollList( ZKNLISTMAIN_WORK * wk, u32 idx, u32 mv )
 			wk, ZKNLISTOBJ_IDX_POKEICON_S+idx, POKEICON_PX, POKEICON_PY+POKEICON_SY*8, CLSYS_DRAW_SUB );
 	}
 }
-
+*/
+/*
 void ZKNLISTOBJ_InitScrollList( ZKNLISTMAIN_WORK * wk )
 {
 	u32	i;
@@ -852,6 +855,7 @@ void ZKNLISTOBJ_InitScrollList( ZKNLISTMAIN_WORK * wk )
 			wk, ZKNLISTOBJ_IDX_POKEICON_S+i, POKEICON_PX, POKEICON_PY+POKEICON_SY*(i+1), CLSYS_DRAW_SUB );
 	}
 }
+*/
 
 void ZKNLISTOBJ_ChgListPosAnm( ZKNLISTMAIN_WORK * wk, u32 pos, BOOL flg )
 {
@@ -876,6 +880,142 @@ void ZKNLISTOBJ_ChgListPosAnm( ZKNLISTMAIN_WORK * wk, u32 pos, BOOL flg )
 }
 
 
+
+
+u32 ZKNLISTOBJ_GetChgPokeIconIndex( ZKNLISTMAIN_WORK * wk, BOOL disp )
+{
+	u32	i;
+
+	if( disp == TRUE ){
+		for( i=ZKNLISTOBJ_IDX_POKEICON; i<ZKNLISTOBJ_IDX_POKEICON+ZKNLISTOBJ_MAIN_POKEICON_MAX; i++ ){
+			if( ZKNLISTOBJ_CheckVanish( wk, i ) == FALSE ){
+				return i;
+			}
+		}
+	}else{
+		for( i=ZKNLISTOBJ_IDX_POKEICON_S; i<ZKNLISTOBJ_IDX_POKEICON_S+ZKNLISTOBJ_SUB_POKEICON_MAX; i++ ){
+			if( ZKNLISTOBJ_CheckVanish( wk, i ) == FALSE ){
+				return i;
+			}
+		}
+	}
+
+	return 0;
+}
+
+void ZKNLISTOBJ_PutPokeList2( ZKNLISTMAIN_WORK * wk, u16 mons, s16 py, BOOL disp )
+{
+	u32	obj = ZKNLISTOBJ_GetChgPokeIconIndex( wk, disp );
+
+	ZKNLISTOBJ_ChgPokeIcon( wk, obj, mons, 0, disp );
+	ZKNLISTOBJ_SetVanish( wk, obj, TRUE );
+	ZKNLISTOBJ_SetAutoAnm( wk, obj, POKEICON_ANM_DEATH );
+
+	if( disp == TRUE ){
+		ZKNLISTOBJ_SetPos( wk, obj, POKEICON_PX, py+POKEICON_PY, CLSYS_DRAW_MAIN );
+	}else{
+		ZKNLISTOBJ_SetPos( wk, obj, POKEICON_PX, py+POKEICON_PY, CLSYS_DRAW_SUB );
+	}
+}
+
+void ZKNLISTOBJ_PutScrollList2( ZKNLISTMAIN_WORK * wk, s8 mv )
+{
+	u32	i;
+	s16	x, y;
+
+	for( i=ZKNLISTOBJ_IDX_POKEICON; i<ZKNLISTOBJ_IDX_POKEICON+ZKNLISTOBJ_MAIN_POKEICON_MAX; i++ ){
+		if( ZKNLISTOBJ_CheckVanish( wk, i ) == FALSE ){
+			continue;
+		}
+		ZKNLISTOBJ_GetPos( wk, i, &x, &y, CLSYS_DRAW_MAIN );
+		ZKNLISTOBJ_SetPos( wk, i, x, y+mv, CLSYS_DRAW_MAIN );
+
+		if( (y+mv) <= -16 || (y+mv) >= 200 ){
+			ZKNLISTOBJ_SetVanish( wk, i, FALSE );
+		}
+	}
+	for( i=ZKNLISTOBJ_IDX_POKEICON_S; i<ZKNLISTOBJ_IDX_POKEICON_S+ZKNLISTOBJ_SUB_POKEICON_MAX; i++ ){
+		if( ZKNLISTOBJ_CheckVanish( wk, i ) == FALSE ){
+			continue;
+		}
+		ZKNLISTOBJ_GetPos( wk, i, &x, &y, CLSYS_DRAW_SUB );
+		ZKNLISTOBJ_SetPos( wk, i, x, y+mv, CLSYS_DRAW_SUB );
+
+		if( (y+mv) <= -16 || (y+mv) >= 200 ){
+			ZKNLISTOBJ_SetVanish( wk, i, FALSE );
+		}
+	}
+}
+
+void ZKNLISTOBJ_SetPutPokeIconFlag( ZKNLISTMAIN_WORK * wk )
+{
+	u32	i;
+
+	wk->iconPutMain = 0;
+	wk->iconPutSub = 0;
+
+	for( i=ZKNLISTOBJ_IDX_POKEICON; i<ZKNLISTOBJ_IDX_POKEICON+ZKNLISTOBJ_MAIN_POKEICON_MAX; i++ ){
+		if( ZKNLISTOBJ_CheckVanish( wk, i ) == FALSE ){
+			continue;
+		}
+		wk->iconPutMain |= (1<<(i-ZKNLISTOBJ_IDX_POKEICON));
+	}
+	for( i=ZKNLISTOBJ_IDX_POKEICON_S; i<ZKNLISTOBJ_IDX_POKEICON_S+ZKNLISTOBJ_SUB_POKEICON_MAX; i++ ){
+		if( ZKNLISTOBJ_CheckVanish( wk, i ) == FALSE ){
+			continue;
+		}
+		wk->iconPutSub |= (1<<(i-ZKNLISTOBJ_IDX_POKEICON_S));
+	}
+}
+
+void ZKNLISTOBJ_VanishJumpPokeIcon( ZKNLISTMAIN_WORK * wk )
+{
+	u32	i;
+
+	for( i=ZKNLISTOBJ_IDX_POKEICON; i<ZKNLISTOBJ_IDX_POKEICON+ZKNLISTOBJ_MAIN_POKEICON_MAX; i++ ){
+		if( wk->iconPutMain & (1<<(i-ZKNLISTOBJ_IDX_POKEICON)) ){
+			ZKNLISTOBJ_SetVanish( wk, i, FALSE );
+		}
+	}
+	for( i=ZKNLISTOBJ_IDX_POKEICON_S; i<ZKNLISTOBJ_IDX_POKEICON_S+ZKNLISTOBJ_SUB_POKEICON_MAX; i++ ){
+		if( wk->iconPutSub & (1<<(i-ZKNLISTOBJ_IDX_POKEICON_S)) ){
+			ZKNLISTOBJ_SetVanish( wk, i, FALSE );
+		}
+	}
+
+	wk->iconPutMain = 0;
+	wk->iconPutSub = 0;
+}
+
+void ZKNLISTOBJ_ChangePokeIconAnime( ZKNLISTMAIN_WORK * wk, u32 pos )
+{
+	u32	i;
+	s16	x, y;
+
+	pos = POKEICON_PY + POKEICON_SY * pos;
+
+	for( i=ZKNLISTOBJ_IDX_POKEICON; i<ZKNLISTOBJ_IDX_POKEICON+ZKNLISTOBJ_MAIN_POKEICON_MAX; i++ ){
+		if( ZKNLISTOBJ_CheckVanish( wk, i ) == FALSE ){
+			ZKNLISTOBJ_SetAutoAnm( wk, i, POKEICON_ANM_DEATH );
+			continue;
+		}
+		ZKNLISTOBJ_GetPos( wk, i, &x, &y, CLSYS_DRAW_MAIN );
+		if( pos == y ){
+			if( ZKNLISTOBJ_GetAnm(wk,i) != POKEICON_ANM_HPMAX ){
+				ZKNLISTOBJ_SetAutoAnm( wk, i, POKEICON_ANM_HPMAX );
+			}
+		}else{
+			ZKNLISTOBJ_SetAutoAnm( wk, i, POKEICON_ANM_DEATH );
+		}
+	}
+}
+
+
+
+
+
+
+
 // スクロールバー
 void ZKNLISTOBJ_SetScrollBar( ZKNLISTMAIN_WORK * wk, u32 py )
 {
@@ -887,6 +1027,7 @@ void ZKNLISTOBJ_SetScrollBar( ZKNLISTMAIN_WORK * wk, u32 py )
 	ZKNLISTOBJ_SetPos( wk, ZKNLISTOBJ_IDX_SCROLL_BAR, SCROLL_BAR_PX, py, CLSYS_DRAW_MAIN );
 }
 
+/*
 u32 ZKNLISTOBJ_GetListScrollBarPos( ZKNLISTMAIN_WORK * wk )
 {
 	u32	max;
@@ -907,7 +1048,8 @@ u32 ZKNLISTOBJ_GetListScrollBarPos( ZKNLISTMAIN_WORK * wk )
 
 	return cnt;
 }
-
+*/
+/*
 void ZKNLISTOBJ_SetListScrollBarPos( ZKNLISTMAIN_WORK * wk )
 {
 	u32	max;
@@ -926,4 +1068,27 @@ void ZKNLISTOBJ_SetListScrollBarPos( ZKNLISTMAIN_WORK * wk )
 	}
 
 	ZKNLISTOBJ_SetPos( wk, ZKNLISTOBJ_IDX_SCROLL_BAR, SCROLL_BAR_PX, y, CLSYS_DRAW_MAIN );
+}
+*/
+
+void ZKNLISTOBJ_SetListPageArrowAnime( ZKNLISTMAIN_WORK * wk, BOOL anm )
+{
+//	if( ZKNLISTOBJ_CheckAnm( wk, ZKNLISTOBJ_IDX_TB_LEFT ) == FALSE || anm == FALSE ){
+	if( ZKNLISTOBJ_GetAnm(wk,ZKNLISTOBJ_IDX_TB_LEFT) != APP_COMMON_BARICON_CURSOR_LEFT_ON ||
+			anm == FALSE ){
+		if( FRAMELIST_GetScrollCount( wk->lwk ) == 0 ){
+			ZKNLISTOBJ_SetAutoAnm( wk, ZKNLISTOBJ_IDX_TB_LEFT, APP_COMMON_BARICON_CURSOR_LEFT_OFF );
+		}else{
+			ZKNLISTOBJ_SetAutoAnm( wk, ZKNLISTOBJ_IDX_TB_LEFT, APP_COMMON_BARICON_CURSOR_LEFT );
+		}
+	}
+//	if( ZKNLISTOBJ_CheckAnm( wk, ZKNLISTOBJ_IDX_TB_RIGHT ) == FALSE || anm == FALSE ){
+	if( ZKNLISTOBJ_GetAnm(wk,ZKNLISTOBJ_IDX_TB_RIGHT) != APP_COMMON_BARICON_CURSOR_RIGHT_ON ||
+			anm == FALSE ){
+		if( FRAMELIST_CheckScrollMax( wk->lwk ) == FALSE ){
+			ZKNLISTOBJ_SetAutoAnm( wk, ZKNLISTOBJ_IDX_TB_RIGHT, APP_COMMON_BARICON_CURSOR_RIGHT_OFF );
+		}else{
+			ZKNLISTOBJ_SetAutoAnm( wk, ZKNLISTOBJ_IDX_TB_RIGHT, APP_COMMON_BARICON_CURSOR_RIGHT );
+		}
+	}
 }

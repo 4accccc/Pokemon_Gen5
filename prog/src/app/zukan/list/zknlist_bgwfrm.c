@@ -1,3 +1,4 @@
+#if 0
 //============================================================================================
 /**
  * @file		zknlist_bgwfrm.c
@@ -39,7 +40,7 @@ void ZKNLISTBGWFRM_Init( ZKNLISTMAIN_WORK * wk )
 
 	wk->wfrm = BGWINFRM_Create(
 							BGWINFRM_TRANS_VBLANK, ZKNLISTBGWFRM_IDX_MAX, HEAPID_ZUKAN_LIST );
-
+/*
 	for( i=0; i<ZKNLISTBGWFRM_IDX_MAX; i++ ){
 		BGWINFRM_Add(
 			wk->wfrm, i, GFL_BMPWIN_GetFrame(wk->win[i].win), BGWFRM_NAME_SX, BGWFRM_NAME_SY );
@@ -47,11 +48,12 @@ void ZKNLISTBGWFRM_Init( ZKNLISTMAIN_WORK * wk )
 	}
 
 	CreateNameFrame( wk );
+*/
 }
 
 void ZKNLISTBGWFRM_Exit( ZKNLISTMAIN_WORK * wk )
 {
-	DeleteNameFrame( wk );
+//	DeleteNameFrame( wk );
 	BGWINFRM_Exit( wk->wfrm );
 }
 
@@ -178,3 +180,4 @@ void ZKNLISTBGWFRM_PutScrollListSub( ZKNLISTMAIN_WORK * wk, u32 idx, u32 mv )
 	GFL_BG_LoadScreenV_Req( frm );
 }
 
+#endif

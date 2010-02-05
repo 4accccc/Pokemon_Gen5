@@ -179,8 +179,15 @@ static GFL_PROC_RESULT ZukanProc_End( GFL_PROC * proc, int * seq, void * pwk, vo
 
 static int MainSeq_CallList( ZUKAN_MAIN_WORK * wk )
 {
+	ZUKANLIST_DATA * list;
+
 	wk->work = GFL_HEAP_AllocMemory( HEAPID_ZUKAN_SYS, sizeof(ZUKANLIST_DATA) );
+	list = wk->work;
+
+	list->gamedata = wk->prm->gamedata;
+
 	GFL_PROC_SysCallProc( FS_OVERLAY_ID(zukan_list), &ZUKANLIST_ProcData, wk->work );
+
 	return SEQ_LIST_END;
 }
 

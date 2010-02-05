@@ -340,12 +340,14 @@ static GFL_PROC_RESULT MainProcMain( GFL_PROC * proc, int * seq, void * pwk, voi
 
 
 	case MAIN_SEQ_ZUKAN_CALL:
+		wk->zkn_data.gamedata = wk->gamedata;
 		wk->zkn_data.callMode = ZUKAN_MODE_LIST;
 		GFL_PROC_SysCallProc( FS_OVERLAY_ID(zukan), &ZUKAN_ProcData, &wk->zkn_data );
 		wk->main_seq = MAIN_SEQ_END;
 		break;
 
 	case MAIN_SEQ_ZKNLIST_CALL:
+		wk->zkn_data.gamedata = wk->gamedata;
 		wk->zkn_data.callMode = ZUKAN_MODE_LIST;
 		GFL_PROC_SysCallProc( FS_OVERLAY_ID(zukan), &ZUKAN_ProcData, &wk->zkn_data );
 		wk->main_seq = MAIN_SEQ_END;
