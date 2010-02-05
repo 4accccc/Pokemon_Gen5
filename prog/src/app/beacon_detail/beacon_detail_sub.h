@@ -16,4 +16,8 @@
  */
 extern void BeaconDetail_InitialDraw( BEACON_DETAIL_WORK* wk );
 
+/*
+ *  @brief  ビーコン詳細画面　入力取得
+ */
+extern int BeaconDetail_InputCheck( BEACON_DETAIL_WORK* wk );
 

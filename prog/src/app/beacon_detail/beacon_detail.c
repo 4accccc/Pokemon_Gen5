@@ -108,6 +108,7 @@ static GFL_PROC_RESULT BeaconDetailProc_Exit( GFL_PROC *proc, int *seq, void *pw
 
 
 static int seq_Main( BEACON_DETAIL_WORK* wk );
+static int seq_EffWait( BEACON_DETAIL_WORK* wk );
 static int seq_FadeIn( BEACON_DETAIL_WORK* wk );
 static int seq_FadeOut( BEACON_DETAIL_WORK* wk );
 
@@ -267,6 +268,9 @@ static GFL_PROC_RESULT BeaconDetailProc_Main( GFL_PROC *proc, int *seq, void *pw
 { 
 	BEACON_DETAIL_WORK* wk = mywk;
 
+  //タッチバーメイン処理
+	_sub_TouchBarMain( wk->touchbar );
+  
   switch(*seq){
   case SEQ_FADEIN:
     *seq = seq_FadeIn( wk );
@@ -274,12 +278,16 @@ static GFL_PROC_RESULT BeaconDetailProc_Main( GFL_PROC *proc, int *seq, void *pw
   case SEQ_MAIN:
     *seq = seq_Main( wk );
     break;
+  case SEQ_EFF_WAIT:
+    *seq = seq_EffWait( wk );
+    break;
   case SEQ_FADEOUT:
     *seq = seq_FadeOut( wk );
     break;
   case SEQ_EXIT:
     return GFL_PROC_RES_FINISH;
   }
+  GFL_TCBL_Main( wk->pTcbSys );
 
 	//PRINT_QUE
 	PRINTSYS_QUE_Main( wk->print_que );
@@ -301,15 +309,25 @@ static GFL_PROC_RESULT BeaconDetailProc_Main( GFL_PROC *proc, int *seq, void *pw
  */
 static int seq_Main( BEACON_DETAIL_WORK* wk )
 {
+#if 0
   // デバッグボタンでアプリ終了
   if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
   {
     return SEQ_FADEOUT;
   }
-	
-  //タッチバーメイン処理
-	_sub_TouchBarMain( wk->touchbar );
+#endif
 
+  return BeaconDetail_InputCheck( wk );
+}
+
+/*
+ *  @brief  エフェクト待ち
+ */
+static int seq_EffWait( BEACON_DETAIL_WORK* wk )
+{
+  if( wk->eff_task_ct ){
+    return SEQ_EFF_WAIT;
+  }
   return SEQ_MAIN;
 }
 
@@ -495,6 +513,9 @@ static void _sub_BGResInit( BEACON_DETAIL_WORK* wk, HEAPID heapID )
 						BG_FRAME_WIN02_S, 0, 0, TRUE, heapID );		
 	GFL_ARCHDL_UTIL_TransVramScreen(	wk->handle, NARC_beacon_status_bdetail_bgu02_lz_nscr,
 						BG_FRAME_BASE_S, 0, 0, TRUE, heapID );		
+
+  GFL_BG_ChangeScreenPalette( BG_FRAME_WIN02_S, 0, 0, 32, 24, PLTID_BG_WIN02_S);
+	GFL_BG_LoadScreenReq( BG_FRAME_WIN02_S );
 	
   //	----- 下画面 -----
 	GFL_ARCHDL_UTIL_TransVramBgCharacter(	wk->handle, NARC_beacon_status_bdetail_bgd_lz_ncgr,
@@ -908,7 +929,8 @@ static void _sub_BeaconWinInit( BEACON_DETAIL_WORK* wk )
       PLTID_BG_PMS_S, BEACON_WIN_MAX ,wk->heapID );
   PMS_DRAW_SetNullColorPallet( wk->pms_draw, FCOL_WIN_BASE2);
   PMS_DRAW_SetPrintColor( wk->pms_draw, FCOL_WIN02 );
-  
+  PMS_DRAW_SetCLWKAutoScrollFlag( wk->pms_draw, TRUE ); 
+
   {
     int i,j;
     PMS_DATA pms;
@@ -936,9 +958,13 @@ static void _sub_BeaconWinInit( BEACON_DETAIL_WORK* wk )
           BMP_RECORD_PAL+i, BMP_RECORD_PX, BMP_RECORD_PY, BMP_RECORD_SX, BMP_RECORD_SY );
     
       bp->cTrainer = act_Add( wk, clunit, &wk->objResTrainer[i],
-                        ACT_TRAINER_PX, ACT_TRAINER_PY, 0, 0, ACT_TRAINER_BGPRI+i );
+                        ACT_TRAINER_PX, ACT_TRAINER_PY, 0, 1, ACT_TRAINER_BGPRI+i );
+      GFL_CLACT_WK_SetObjMode( bp->cTrainer, GX_OAM_MODE_XLU );
+      GFL_CLACT_WK_SetDrawEnable( bp->cTrainer, FALSE );
       bp->cRank = act_Add( wk, clunit, &wk->objResNormal,
                         ACT_RANK_PX, ACT_RANK_PY, ACTANM_RANK05, 0, ACT_TRAINER_BGPRI+i );
+      GFL_CLACT_WK_SetObjMode( bp->cRank, GX_OAM_MODE_XLU );
+      GFL_CLACT_WK_SetDrawEnable( bp->cRank, FALSE );
     }
   }
 }
