@@ -4578,6 +4578,7 @@
     _ASM_GET_TEMOTI_POKE_TYPE ret_wk1, ret_wk2, pos
 
     .macro  _ASM_GET_TEMOTI_POKE_TYPE ret_wk1, ret_wk2, pos
+    .short  EV_SEQ_GET_TEMOTI_POKE_TYPE
     .short  \ret_wk1
     .short  \ret_wk2
     .short  \pos
