@@ -6557,7 +6557,7 @@ static void common_delayAttack( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
       eff_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_POSEFF_ADD, pokeID );
       eff_param->effect = BTL_POSEFF_DELAY_ATTACK;
       eff_param->pos = targetPos;
-      eff_param->param[0] = 2;
+      eff_param->param[0] = BTL_SVFTOOL_GetTurnCount( flowWk ) + 2;
       eff_param->param[1] = BTL_EVENT_FACTOR_GetSubID( myHandle );
       eff_param->param_cnt = 2;
 

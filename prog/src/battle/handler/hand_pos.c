@@ -298,34 +298,29 @@ static const BtlEventHandlerTable* ADD_POS_DelayAttack( u32* numElems )
 // ターンチェックハンドラ
 static void handler_pos_DelayAttack( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokePos, int* work )
 {
-  u8 targetPokeID = BTL_SVFTOOL_PokePosToPokeID( flowWk, pokePos );
+  enum {
+    WORKIDX_TURN = 0,
+    WORKIDX_WAZAID,
+  };
 
-  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == targetPokeID )
+  u8 turnCnt = BTL_SVFTOOL_GetTurnCount( flowWk );
+  if( turnCnt >= work[WORKIDX_TURN] )
   {
-    enum {
-      WORKIDX_TURN = 0,
-      WORKIDX_WAZAID,
-    };
+    BTL_HANDEX_PARAM_DELAY_WAZADMG* param;
+    BTL_HANDEX_PARAM_MESSAGE* msg_param;
 
-    if( work[WORKIDX_TURN] == 0 )
-    {
-      BTL_HANDEX_PARAM_DELAY_WAZADMG* param;
-      BTL_HANDEX_PARAM_MESSAGE* msg_param;
+    u8 targetPokeID = BTL_SVFTOOL_PokePosToPokeID( flowWk, pokePos );
 
-      msg_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, work[WORKIDX_USER_POKEID] );
-      HANDEX_STR_Setup( &msg_param->str, BTL_STRTYPE_SET, BTL_STRID_SET_DelayAttack );
-      HANDEX_STR_AddArg( &msg_param->str, targetPokeID );
-      HANDEX_STR_AddArg( &msg_param->str, work[ WORKIDX_WAZAID ] );
+    msg_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, work[WORKIDX_USER_POKEID] );
+    HANDEX_STR_Setup( &msg_param->str, BTL_STRTYPE_SET, BTL_STRID_SET_DelayAttack );
+    HANDEX_STR_AddArg( &msg_param->str, targetPokeID );
+    HANDEX_STR_AddArg( &msg_param->str, work[ WORKIDX_WAZAID ] );
 
-      param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_DELAY_WAZADMG, work[WORKIDX_USER_POKEID] );
-      param->attackerPokeID = work[ WORKIDX_USER_POKEID ];
-      param->targetPokeID = targetPokeID;
-      param->wazaID = work[ WORKIDX_WAZAID ];
-      BTL_EVENT_FACTOR_Remove( myHandle );
-    }
-    else{
-      work[WORKIDX_TURN]--;
-    }
+    param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_DELAY_WAZADMG, work[WORKIDX_USER_POKEID] );
+    param->attackerPokeID = work[ WORKIDX_USER_POKEID ];
+    param->targetPokeID = targetPokeID;
+    param->wazaID = work[ WORKIDX_WAZAID ];
+    BTL_EVENT_FACTOR_Remove( myHandle );
   }
 }
 //--------------------------------------------------------------------------------------
