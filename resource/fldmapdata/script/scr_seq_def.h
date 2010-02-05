@@ -2536,9 +2536,10 @@
   * の流れが必要な場面でのみ使用してください。
  */
 //--------------------------------------------------------------
-#define _START_TEMP_EVENT_BGM( no )  _ASM_START_TEMP_EVENT_BGM
+#define _START_TEMP_EVENT_BGM( no ) \
+        _ASM_START_TEMP_EVENT_BGM no
 
-  .macro  _ASM_START_TEMP_EVENT_BGM
+  .macro  _ASM_START_TEMP_EVENT_BGM no
   .short  EV_SEQ_START_TEMP_EVENT_BGM
   .short  \no
   .endm
