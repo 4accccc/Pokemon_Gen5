@@ -29,6 +29,21 @@ typedef enum
   _ARROW_FRIEND_D,
 } _ARROW_TYPE;
 
+typedef enum
+{
+  _CROSSCUR_TYPE_MAINUP,
+  _CROSSCUR_TYPE_MAINDOWN,
+  _CROSSCUR_TYPE_ANY1,
+  _CROSSCUR_TYPE_ANY2,
+  _CROSSCUR_TYPE_ANY3,
+  _CROSSCUR_TYPE_ANY4,
+  _CROSSCUR_TYPE_FRIEND1,
+  _CROSSCUR_TYPE_FRIEND2,
+  _CROSSCUR_TYPE_FRIEND3,
+  _CROSSCUR_TYPE_FRIEND4,
+  _CROSSCUR_TYPE_NONE,
+} CROSSCUR_TYPE;
+
 
 //Å®ç¿ïW
 #define _ARROW_LEVEL_XU  (12)
@@ -72,7 +87,7 @@ extern void GTSNEGO_MESSAGE_DispMyChange(GTSNEGO_MESSAGE_WORK* pWork,int no);
 extern void GTSNEGO_MESSAGE_DispFriendChange(GTSNEGO_MESSAGE_WORK* pWork,int no);
 extern void GTSNEGO_MESSAGE_DeleteDispLevel(GTSNEGO_MESSAGE_WORK* pWork);
 
-extern APP_TASKMENU_WORK* GTSNEGO_MESSAGE_SearchButtonStart(GTSNEGO_MESSAGE_WORK* pWork,int msgno);
+extern APP_TASKMENU_WIN_WORK* GTSNEGO_MESSAGE_SearchButtonStart(GTSNEGO_MESSAGE_WORK* pWork,int msgno);
 
 
 extern GTSNEGO_DISP_WORK* GTSNEGO_DISP_Init(HEAPID id, GAMEDATA* pGameData);
@@ -84,6 +99,9 @@ extern void GTSNEGO_DISP_LevelInputFree(GTSNEGO_DISP_WORK* pWork);
 extern TOUCHBAR_WORK* GTSNEGO_DISP_GetTouchWork(GTSNEGO_DISP_WORK* pWork);
 extern void GTSNEGO_DISP_FriendSelectInit(GTSNEGO_DISP_WORK* pWork, GTSNEGO_MESSAGE_WORK* pMessageWork);
 extern void GTSNEGO_DISP_FriendSelectFree(GTSNEGO_DISP_WORK* pWork);
+extern void GTSNEGO_DISP_CrossIconDisp(GTSNEGO_DISP_WORK* pWork,APP_TASKMENU_WIN_WORK* pAppWin , CROSSCUR_TYPE type);
+
+
 //extern void GTSNEGO_MESSAGE_PlateDisp(GTSNEGO_MESSAGE_WORK* pWork, MYSTATUS* pMyStatus, int index );
 extern void GTSNEGO_MESSAGE_FriendListPlateDisp(GTSNEGO_MESSAGE_WORK* pMessageWork);
 

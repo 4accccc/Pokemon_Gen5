@@ -117,6 +117,7 @@ struct _GTSNEGO_MESSAGE_WORK {
 
   APP_TASKMENU_ITEMWORK appitem[_SUBMENU_LISTMAX];
 	APP_TASKMENU_RES* pAppTaskRes;
+  
 //  int windowNum;
   HEAPID heapID;
   
@@ -629,8 +630,9 @@ void GTSNEGO_MESSAGE_DeleteDispLevel(GTSNEGO_MESSAGE_WORK* pWork)
 
 
 
-APP_TASKMENU_WORK* GTSNEGO_MESSAGE_SearchButtonStart(GTSNEGO_MESSAGE_WORK* pWork,int msgno)
+APP_TASKMENU_WIN_WORK* GTSNEGO_MESSAGE_SearchButtonStart(GTSNEGO_MESSAGE_WORK* pWork,int msgno)
 {
+#if 0
   int i;
   APP_TASKMENU_INITWORK appinit;
   APP_TASKMENU_WORK* pAppTask;
@@ -649,7 +651,20 @@ APP_TASKMENU_WORK* GTSNEGO_MESSAGE_SearchButtonStart(GTSNEGO_MESSAGE_WORK* pWork
   pWork->appitem[0].msgColor = PRINTSYS_LSB_Make( 0xe,0xf,0);
   pAppTask = APP_TASKMENU_OpenMenu(&appinit,pWork->pAppTaskRes);
   GFL_STR_DeleteBuffer(pWork->appitem[0].str);
-  return pAppTask;
+#endif
+  APP_TASKMENU_WIN_WORK* pAppWin;
+
+
+  pWork->appitem[0].str = GFL_STR_CreateBuffer(100, pWork->heapID);
+  GFL_MSG_GetString(pWork->pMsgData, msgno, pWork->appitem[0].str);
+  pWork->appitem[0].msgColor = APP_TASKMENU_ITEM_MSGCOLOR;
+  pWork->appitem[0].type = APP_TASKMENU_WIN_TYPE_NORMAL;
+  pAppWin =APP_TASKMENU_WIN_Create( pWork->pAppTaskRes,
+                                           pWork->appitem, 16-4, 24-3, 10, pWork->heapID);
+
+  GFL_STR_DeleteBuffer(pWork->appitem[0].str);
+  
+  return pAppWin;
 }
 
 
@@ -681,4 +696,7 @@ void GTSNEGO_MESSAGE_FriendListPlateDisp(GTSNEGO_MESSAGE_WORK* pMessageWork)
 #endif
 
 }
+
+
+
 

@@ -78,7 +78,20 @@ struct _GTSNEGO_DISP_WORK {
   int bgscroll;
   int listmax;
   GAMEDATA* pGameData;
+
+  GFL_CLWK* crossIcon;
+
 };
+
+
+typedef struct{
+  u16 no;
+  u8 x;
+  u8 y;
+} CROSSCUR_STRUCT;
+
+
+
 
 static GFL_DISP_VRAM _defVBTbl = {
   GX_VRAM_BG_128_A,				// メイン2DエンジンのBG
@@ -132,6 +145,7 @@ static void _SetArrow(GTSNEGO_DISP_WORK* pWork,int x,int y,BOOL bRight);
 static void _ArrowRelease(GTSNEGO_DISP_WORK* pWork);
 static void _FriendListPlateDisp(GTSNEGO_DISP_WORK* pWork, GTSNEGO_MESSAGE_WORK* pMessageWork);
 static void _DebugDataCreate(GTSNEGO_DISP_WORK* pWork);
+static void _CreateCrossIcon(GTSNEGO_DISP_WORK* pWork);
 
 
 #define SCROLL_HEIGHT_SINGLE (48)   ///１パネルの高さ
@@ -165,7 +179,7 @@ GTSNEGO_DISP_WORK* GTSNEGO_DISP_Init(HEAPID id, GAMEDATA* pGameData)
   dispInit(pWork);
   pWork->g3dVintr = GFUser_VIntr_CreateTCB( _VBlank, (void*)pWork, 0 );
 
-
+  _CreateCrossIcon(pWork);
   
   _TOUCHBAR_Init(pWork);
 
@@ -382,7 +396,7 @@ static void dispInit(GTSNEGO_DISP_WORK* pWork)
                               FALSE , CLSYS_DRAW_SUB , pWork->heapID );
     pWork->cellRes[PLT_NEGOOBJ] =
       GFL_CLGRP_PLTT_RegisterEx(
-        p_handle ,NARC_gtsnego_nego_obj_NCLR , CLSYS_DRAW_SUB ,    0, 0, 3, pWork->heapID  );
+        p_handle ,NARC_gtsnego_nego_obj_NCLR , CLSYS_DRAW_SUB ,    0, 0, 6, pWork->heapID  );
     pWork->cellRes[ANM_NEGOOBJ] =
       GFL_CLGRP_CELLANIM_Register(
         p_handle , NARC_gtsnego_nego_obj_NCER, NARC_gtsnego_nego_obj_NANR , pWork->heapID  );
@@ -492,6 +506,77 @@ static void _TOUCHBAR_Init(GTSNEGO_DISP_WORK* pWork)
 TOUCHBAR_WORK* GTSNEGO_DISP_GetTouchWork(GTSNEGO_DISP_WORK* pWork)
 {
   return pWork->pTouchWork;
+}
+
+
+static void _CreateCrossIcon(GTSNEGO_DISP_WORK* pWork)
+{
+  GFL_CLWK_DATA cellInitData;
+
+  cellInitData.pos_x = 0;
+  cellInitData.pos_y = 0;
+  cellInitData.anmseq = 0;
+  cellInitData.softpri = 0;
+  cellInitData.bgpri = 1;
+  pWork->crossIcon = GFL_CLACT_WK_Create( pWork->cellUnit ,
+                                          pWork->cellRes[CHAR_NEGOOBJ],
+                                          pWork->cellRes[PLT_NEGOOBJ],
+                                          pWork->cellRes[ANM_NEGOOBJ],
+                                          &cellInitData ,CLSYS_DRAW_SUB , pWork->heapID );
+  GFL_CLACT_WK_SetAutoAnmFlag( pWork->crossIcon , TRUE );
+  GFL_CLACT_WK_SetDrawEnable( pWork->crossIcon, FALSE );
+}
+
+
+static CROSSCUR_STRUCT crosspos[]=
+{
+  5, 128, 64,
+  5, 128, 64+6*8,
+  6, 128+8*5, 8*7,
+  7, 128+8*5, 8*12,
+  7, 128+8*5, 8*17,
+  0,0,0,
+  8, 128, 8*6,
+  8, 128, 8*6*2,
+  8, 128, 8*6*3,
+  0,0,0,
+};
+
+
+void GTSNEGO_DISP_CrossIconDisp(GTSNEGO_DISP_WORK* pWork,APP_TASKMENU_WIN_WORK* pAppWin , CROSSCUR_TYPE type)
+{
+  switch(type){
+  case _CROSSCUR_TYPE_NONE:
+    GFL_CLACT_WK_SetDrawEnable( pWork->crossIcon, FALSE );
+    break;
+  case _CROSSCUR_TYPE_ANY4:
+  case _CROSSCUR_TYPE_FRIEND4:
+    GFL_CLACT_WK_SetDrawEnable( pWork->crossIcon, FALSE );
+    if(pAppWin){
+      APP_TASKMENU_WIN_SetActive( pAppWin, TRUE );
+    }
+    break;
+  case _CROSSCUR_TYPE_ANY1:
+  case _CROSSCUR_TYPE_ANY2:
+  case _CROSSCUR_TYPE_ANY3:
+  case _CROSSCUR_TYPE_FRIEND1:
+  case _CROSSCUR_TYPE_FRIEND2:
+  case _CROSSCUR_TYPE_FRIEND3:
+    if(pAppWin){
+      APP_TASKMENU_WIN_SetActive( pAppWin, FALSE );
+    }
+    //break;
+  default:
+    {
+      GFL_CLACTPOS pos;
+      pos.x = crosspos[type].x;
+      pos.y = crosspos[type].y;
+      GFL_CLACT_WK_SetPos(pWork->crossIcon, &pos, CLSYS_DRAW_SUB);
+      GFL_CLACT_WK_SetAnmSeq(pWork->crossIcon, crosspos[type].no);
+      GFL_CLACT_WK_SetDrawEnable( pWork->crossIcon, TRUE );
+    }
+    break;
+  }
 }
 
 
@@ -649,3 +734,5 @@ static void _DebugDataCreate(GTSNEGO_DISP_WORK* pWork)
 
 
 #endif
+
+
