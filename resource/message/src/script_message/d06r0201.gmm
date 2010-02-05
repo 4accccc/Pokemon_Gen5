@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2010-01-13T12:39:33"/>
+	<create user="matsumiya" host="W00224" date="2010-02-05T21:24:36"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -330,7 +330,7 @@
 		</language>
 	</columns>
 
-	<dialog left="13" top="242" right="718" bottom="862" maximized="no" rayout="Vertical2">
+	<dialog left="1523" top="295" right="2228" bottom="915" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -338,7 +338,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -359,90 +359,108 @@
 	</lock>
 
 
-	<row id="msg_d06r0201_boss_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_d06r0201_gold1_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・どちらに話しかけても、このメッセージから開始
+・続けてgold2_01</comment>
+		<attribute name="キャラ指定">MIDDLEMAN</attribute>
+		<language name="JPN" width="256">やあやあ　わたしは
+きんのたま　おじさん　あに！▼</language>
+		<language name="JPN_KANJI" width="256">やあやあ　わたしは
+きんのたま　おじさん　兄！▼</language>
+	</row>
+
+	<row id="msg_d06r0201_gold2_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
 		<comment>♂
 ・
-・はい/いいえの選択肢
-　はい→msg_d06r0201_boss_02
-　いいえ→msg_d06r0201_boss_03</comment>
-		<attribute name="キャラ指定">N</attribute>
-		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]かれは　なにをおもって　ボクに
-ここでまつよう　たのんだのだろう▼
-キミと　であっても
-なにも　うまれなど　しないのに……▼
-さて　いつも　いっしょに　いることで
-ポケモンたち　への▽
-あいじょうが　めばえる……▽
-いまも　そう　おもいこんでいるかい？[BE:09:速度コントロール:0]</language>
-		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]彼は　何を思って　ボクに
-ここで待つよう　頼んだのだろう▼
-キミと　出会っても
-何も　生まれなど　しないのに……▼
-さて　いつも　一緒に　いることで
-ポケモンへの　愛情が　芽生える……▽
-今も　そう　思いこんでいるかい？[BE:09:速度コントロール:0]</language>
+・続けてgold1_02</comment>
+		<attribute name="キャラ指定">MIDDLEMAN</attribute>
+		<language name="JPN" width="256">そして　わたしは
+きんのたま　おじさん　おとうと！▼</language>
+		<language name="JPN_KANJI" width="256">そして　わたしは
+きんのたま　おじさん　弟！▼</language>
 	</row>
 
-	<row id="msg_d06r0201_boss_02" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
-		<comment>♂
-・はい選択時
-　続けてmsg_d06r0201_boss_04表示</comment>
-		<attribute name="キャラ指定">N</attribute>
-		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]……そう　しんじていないと
-こころが　ゆらぐから　かい？[BE:09:速度コントロール:0]▼</language>
-		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]……そう　信じていないと
-心が　揺らぐから　かい？[BE:09:速度コントロール:0]▼</language>
-	</row>
-
-	<row id="msg_d06r0201_boss_03" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
-		<comment>♂
-・いいえ選択時
-　続けてmsg_d06r0201_boss_04表示</comment>
-		<attribute name="キャラ指定">N</attribute>
-		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]そうか……
-いがいと　さめているんだな[BE:09:速度コントロール:0]▼</language>
-		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]ふうん……
-意外と　冷めているんだな[BE:09:速度コントロール:0]▼</language>
-	</row>
-
-	<row id="msg_d06r0201_boss_04" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_d06r0201_gold1_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・アイテム入手処理
-・入手後、続けてmsg_d06r0201_boss_05</comment>
-		<attribute name="キャラ指定">N</attribute>
-		<language name="JPN" width="256">[BE:09:速度コントロール:1]……まあいい　キミは
-まだ　たびを　つづけるべきだね▼
-トレーナーとして　ポケモンをつかう
-じぶんは　まちがっていると▽
-こころの　そこから　りかいするまで！▼
-そのためにも
-さあ　これを　つかえ！[BE:09:速度コントロール:0]▼</language>
-		<language name="JPN_KANJI" width="256">[BE:09:速度コントロール:1]……まあいい　キミは
-まだ　旅を続けるべきだね▼
-トレーナーとして　ポケモンを使う
-自分は　間違っていると▽
-心の底から　理解するまで！▼
-そのためにも
-さあ　これを　使え！[BE:09:速度コントロール:0]▼</language>
+・続けてgold2_02</comment>
+		<attribute name="キャラ指定">MIDDLEMAN</attribute>
+		<language name="JPN" width="256">やってきたね　よくきたね！
+きみに　これを　あげちゃうよ！▼</language>
+		<language name="JPN_KANJI" width="256">やってきたね　よくきたね！
+きみに　これを　あげちゃうよ！▼</language>
 	</row>
 
-	<row id="msg_d06r0201_boss_05" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_d06r0201_gold2_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
 		<comment>♂
-・d06r0101出口前のposイベント発動まで
-　繰り返し表示</comment>
+・アイテム入手処理</comment>
+		<attribute name="キャラ指定">MIDDLEMAN</attribute>
+		<language name="JPN" width="256">わたしも　これを　あげちゃうよ！▼</language>
+		<language name="JPN_KANJI" width="256">わたしも　これを　あげちゃうよ！▼</language>
+	</row>
+
+	<row id="msg_d06r0201_gold1_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・アイテム入手後</comment>
+		<attribute name="キャラ指定">MIDDLEMAN</attribute>
+		<language name="JPN" width="256">それは　おじさんの　きんのたま！
+ゆうこうに　かつよう　してくれ！▼
+なんたって　おとうとより　すごい
+おじさんの　きんのたま　だからね！</language>
+		<language name="JPN_KANJI" width="256">それは　おじさんの　きんのたま！
+有効に　活用してくれ！▼
+なんたって　弟より　すごい
+おじさんの　きんのたま　だからね！</language>
+	</row>
+
+	<row id="msg_d06r0201_gold2_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>♂
+・アイテム入手後</comment>
+		<attribute name="キャラ指定">MIDDLEMAN</attribute>
+		<language name="JPN" width="256">それは　おじさんの　きんのたま！
+ゆうこうに　かつよう　してくれ！▼
+なんたって　あにより　りっぱな
+おじさんの　きんのたま　だからね！</language>
+		<language name="JPN_KANJI" width="256">それは　おじさんの　きんのたま！
+有効に　活用してくれ！▼
+なんたって　兄より　立派な
+おじさんの　きんのたま　だからね！</language>
+	</row>
+
+	<row id="msg_d06r0201_boss_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">N</attribute>
-		<language name="JPN" width="256">[BE:09:速度コントロール:1]ボクに　ここでまつよう
-たのみこんだ　おとこが　つくったものだ▼
-それを　もっていれば
-うかんでいる　いしを　おせる▼
-さあ　いきたまえ
-じぶんじしんを　ひてい　するために[BE:09:速度コントロール:0]</language>
-		<language name="JPN_KANJI" width="256">[BE:09:速度コントロール:1]ボクに　ここで待つよう
-頼み込んだ　男が　つくったものだ▼
-それを持っていれば
-浮かんでいる石を　押せる▼
-さあ　行きたまえ
-自分自身を　否定するために[BE:09:速度コントロール:0]</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
+	</row>
+
+	<row id="msg_d06r0201_boss_02" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
+		<attribute name="キャラ指定">N</attribute>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
+	</row>
+
+	<row id="msg_d06r0201_boss_03" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
+		<attribute name="キャラ指定">N</attribute>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
+	</row>
+
+	<row id="msg_d06r0201_boss_04" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
+		<attribute name="キャラ指定">N</attribute>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
+	</row>
+
+	<row id="msg_d06r0201_boss_05" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
+		<attribute name="キャラ指定">N</attribute>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<flowchart-group-list>
