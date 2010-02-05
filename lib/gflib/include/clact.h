@@ -21,6 +21,8 @@
  *	                        GFL_CLACT_WK_SetAnmIndexを追加
  *	@data   2009.09.08    Element(アニメーション結果情報)を取得するインターフェースを追加
  *	@data   2009.09.30    キャラクタ、パレット再転送関数を作成
+ *	@data   2010.1.27    アニメーションコールバックを設定
+ *	@data   2010.2.5    OAMAttr単位のカリング作成　GFL_CLACT_USERREND_SetOAMAttrCulling　
  *	                      
  *
  */
@@ -1749,6 +1751,27 @@ extern void GFL_CLACT_USERREND_SetSurfaceType( GFL_CLSYS_REND* p_rend, u32 idx, 
  */
 //-----------------------------------------------------------------------------
 extern CLSYS_DRAW_TYPE GFL_CLACT_USERREND_GetSurfaceType( const GFL_CLSYS_REND* cp_rend, u32 idx );
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ユーザー定義レンダラーシステム　OAMAttr単位のカリング設定
+ *	        描画負荷に注意！
+ *
+ *	@param	p_rend			ユーザー定義レンダラーシステム
+ *	@param	flag        TRUE:ON FALSE：OFF
+ */
+//-----------------------------------------------------------------------------
+extern void GFL_CLACT_USERREND_SetOAMAttrCulling( GFL_CLSYS_REND* p_rend, BOOL flag );
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ユーザー定義レンダラーシステム　OAMAttr単位のカリング設定取得
+ *
+ *	@param	cp_rend			ユーザー定義レンダラーシステム
+ *
+ *	@retval TRUE    ON	
+ *	@retval FALSE   OFF
+ */
+//-----------------------------------------------------------------------------
+extern BOOL GFL_CLACT_USERREND_GetOAMAttrCulling( const GFL_CLSYS_REND* cp_rend );
 
 
 #ifdef __cplusplus
