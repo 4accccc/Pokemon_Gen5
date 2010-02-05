@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-02T22:05:39"/>
+	<create user="masafumi_saitou" host="W00225" date="2010-02-05T00:04:26"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,15 +263,15 @@
 		</language>
 	</columns>
 
-	<dialog left="1447" top="308" right="2149" bottom="929" maximized="no" rayout="Vertical2">
+	<dialog left="6" top="97" right="711" bottom="717" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="790" top="142" right="1263" bottom="540" visible="yes"/>
-		<band id="0" index="1" style="0000" width="527"/>
+		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="540"/>
+		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="694"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<band id="4" index="0" style="0000" width="697"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -351,16 +351,23 @@
 	<row id="msg_r05_champion_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・GRIDX=360、GRIDZ=435~439
-　チャンピオン、下を向いて（初期配置：？向き）
-・続けてblack_03</comment>
+　チャンピオン、下を向いて（初期配置：左向き）
+・続けてchampion_01_01</comment>
 		<attribute name="キャラ指定">チャンピオン</attribute>
 		<language name="JPN" width="256">？？？『おお！
-カミツレでは　ないか！▼
-フェスティバルは　いいのう
-じんせいは　たのしまねばな！▼</language>
+カミツレでは　ないか！▼</language>
 		<language name="JPN_KANJI" width="256">？？？『おお！
-カミツレでは　ないか！▼
-フェスティバルは　いいのう
+カミツレでは　ないか！▼</language>
+	</row>
+
+	<row id="msg_r05_champion_01_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・カミツレの前に移動してメッセージ表示
+・続けてblack_03</comment>
+		<attribute name="キャラ指定">チャンピオン</attribute>
+		<language name="JPN" width="256">？？？『フェスティバルは　いいのう
+じんせいは　たのしまねばな！▼</language>
+		<language name="JPN_KANJI" width="256">？？？『フェスティバルは　いいのう
 人生は　楽しまねばな！▼</language>
 	</row>
 
@@ -699,22 +706,6 @@
 もっと　つよくなる　そのために……！▼</language>
 		<language name="JPN_KANJI" width="256">チェレン『さあ　行こう
 もっと　強くなる……　そのために！▼</language>
-	</row>
-
-	<row id="msg_r05_black_10" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>削除予定</comment>
-		<attribute name="キャラ指定">ライバル
-友達♂</attribute>
-		<language name="JPN" width="256">no data</language>
-		<language name="JPN_KANJI" width="256">no data</language>
-	</row>
-
-	<row id="msg_r05_black_11" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>削除予定</comment>
-		<attribute name="キャラ指定">ライバル
-友達♂</attribute>
-		<language name="JPN" width="256">no data</language>
-		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_r05_cameraman_01" text-color=",,,,,#ff0000,,,,,,,,,,,,,">
