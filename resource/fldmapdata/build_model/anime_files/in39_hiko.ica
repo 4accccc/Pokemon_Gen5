@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+
+<ica version="1.6.0">
+
+<head>
+	<create user="fujiwara_maiko" host="W00194" date="2010-02-05T18:26:43" source="m_ncastle02_00_00.mb"/>
+	<title>Character Animation Data for NINTENDO NITRO-System</title>
+	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+</head>
+
+<body>
+
+<node_anm_info
+	frame_size="61"
+	scaling_rule="standard"
+	magnify="1.000000"
+	tool_start_frame="0"
+	tool_end_frame="60"
+	interpolation="frame"
+	compress_node="merge" node_size="1 1"
+	frame_step_mode="1"
+	tolerance_scale="0.100000"
+	tolerance_rotate="0.100000"
+	tolerance_translate="0.100000"
+/>
+
+<node_scale_data size="1">
+	1.000000
+</node_scale_data>
+
+<node_rotate_data size="62">
+	0.000000 0.000000 6.000000 12.000000 18.000000 24.000000 30.000000 36.000000 42.000000 48.000000
+	54.000000 60.000000 66.000000 72.000000 78.000000 84.000000 90.000000 96.000000 102.000000 108.000000
+	114.000000 120.000000 126.000000 132.000000 138.000000 144.000000 150.000000 156.000000 162.000000 168.000000
+	174.000000 -180.000000 -174.000000 -168.000000 -162.000000 -156.000000 -150.000000 -144.000000 -138.000000 -132.000000
+	-126.000000 -120.000000 -114.000000 -108.000000 -102.000000 -96.000000 -90.000000 -84.000000 -78.000000 -72.000000
+	-66.000000 -60.000000 -54.000000 -48.000000 -42.000000 -36.000000 -30.000000 -24.000000 -18.000000 -12.000000
+	-6.000000 0.000000
+</node_rotate_data>
+
+<node_translate_data size="1">
+	0.000000
+</node_translate_data>
+
+<node_anm_array size="1">
+	<node_anm index="0">
+		<scale_x frame_step="1" data_size="1" data_head="0"/>
+		<scale_y frame_step="1" data_size="1" data_head="0"/>
+		<scale_z frame_step="1" data_size="1" data_head="0"/>
+		<rotate_x frame_step="1" data_size="1" data_head="0"/>
+		<rotate_y frame_step="1" data_size="61" data_head="1"/>
+		<rotate_z frame_step="1" data_size="1" data_head="0"/>
+		<translate_x frame_step="1" data_size="1" data_head="0"/>
+		<translate_y frame_step="1" data_size="1" data_head="0"/>
+		<translate_z frame_step="1" data_size="1" data_head="0"/>
+	</node_anm>
+</node_anm_array>
+
+</body>
+
+</ica>

@@ -130,3 +130,5 @@
 "nsbmdfiles/elevator01.nsbmd"
 "nsbmdfiles/in55_globbe.nsbmd"
 "nsbmdfiles/door_h5_in.nsbmd"
+"nsbmdfiles/in39_den.nsbmd"
+"nsbmdfiles/in39_hiko.nsbmd"

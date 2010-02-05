@@ -1820,7 +1820,9 @@ DEP_TEXSET_IMD_INDOOR039 = \
 	$(SRCDIR)/warp01.imd \
 	$(SRCDIR)/warp02.imd \
 	$(SRCDIR)/warp03.imd \
-	$(SRCDIR)/shelf06.imd
+	$(SRCDIR)/shelf06.imd \
+	$(SRCDIR)/in39_den.imd \
+	$(SRCDIR)/in39_hiko.imd
 
 texset/indoor039.imd: $(DEP_TEXSET_IMD_INDOOR039) texset/tmp/indoor039.list
 	$(TEXMAG) -q -n -o $@ -S texset/tmp/indoor039.list
