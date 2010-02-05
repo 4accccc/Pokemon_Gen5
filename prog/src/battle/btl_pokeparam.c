@@ -510,6 +510,16 @@ PokeTypePair BPP_GetPokeType( const BTL_POKEPARAM* bpp )
   return typePair;
 }
 
+//=============================================================================================
+/**
+ * ポケモンが持つ２タイプに、指定タイプが含まれているか判定
+ *
+ * @param   bpp
+ * @param   type
+ *
+ * @retval  BOOL    含まれていればTRUE
+ */
+//=============================================================================================
 BOOL BPP_IsMatchType( const BTL_POKEPARAM* bpp, PokeType type )
 {
   if( type != POKETYPE_NULL )
