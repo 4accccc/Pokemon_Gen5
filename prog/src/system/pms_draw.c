@@ -39,6 +39,7 @@ typedef struct {
   int           pre_scrcnt_y; ///< 前フレームのBGスクロールカウンタ
   u32           b_useflag:1;
   u32           b_visible:1;
+  u32           padding:30;
   BOOL          b_clwk_deco[PMS_WORD_MAX]; ///< CLWKデコメ判定フラグ
 } PMS_DRAW_UNIT;
 
@@ -954,7 +955,7 @@ static void _unit_visible_set( PMS_DRAW_UNIT* unit, BOOL is_visible )
   } 
 	GFL_BG_LoadScreenV_Req( GFL_BMPWIN_GetFrame(unit->print_util.win) );
   
-  // 画像非表示
+  // 画像表示切り替え
   {
     int i;
     for( i=0; i<PMS_WORD_MAX; i++ )
