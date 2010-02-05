@@ -96,8 +96,8 @@ typedef u16   PMS_WORD;
  */
 //------------------------------------------------------
 typedef struct {
-  u16       sentence_type;      ///< 文章タイプ
-  u16       sentence_id;      ///< タイプ内ID
+  u16       sentence_type;      ///< 文章タイプ ※すれちがい通信でデータを利用するため、上限は3bitです。
+  u16       sentence_id;      ///< タイプ内ID ※すれちがい通信でデータを利用するため、上限は5bitです。
   PMS_WORD  word[PMS_WORD_MAX];   ///< 単語ID
 }PMS_DATA;
 
