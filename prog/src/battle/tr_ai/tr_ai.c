@@ -280,6 +280,7 @@ static  void  ai_if_rnd( VMHANDLE* vmh, TR_AI_WORK* tr_ai_work, BranchCond cond 
 static  void  ai_if_hp( VMHANDLE* vmh, TR_AI_WORK* tr_ai_work, BranchCond cond );
 static  void  ai_if_pokesick( VMHANDLE* vmh, TR_AI_WORK* tr_ai_work, BranchCond cond );
 static  void  ai_if_wazasick( VMHANDLE* vmh, TR_AI_WORK* tr_ai_work, BranchCond cond );
+static  void  ai_if_moudoku( VMHANDLE* vmh, TR_AI_WORK* tr_ai_work, BranchCond cond );
 static  void  ai_if_contflg( VMHANDLE* vmh, TR_AI_WORK* tr_ai_work, BranchCond cond );
 static  void  ai_if_sideeff( VMHANDLE* vmh, TR_AI_WORK* tr_ai_work, BranchCond cond );
 static  void  ai_if( VMHANDLE* vmh, TR_AI_WORK* tr_ai_work, BranchCond cond );
@@ -937,6 +938,29 @@ static  void  ai_if_wazasick( VMHANDLE* vmh, TR_AI_WORK* tr_ai_work, BranchCond 
 }
 
 //------------------------------------------------------------
+//  ポケモンが「もうどく」にかかっているかをチェックして分岐
+//------------------------------------------------------------
+static  void  ai_if_moudoku( VMHANDLE* vmh, TR_AI_WORK* tr_ai_work, BranchCond cond )
+{
+  int side  = ( int )VMGetU32( vmh );
+  WazaSick  value = ( WazaSick )VMGetU32( vmh );
+  int adrs  = ( int )VMGetU32( vmh );
+  BtlPokePos  pos = get_poke_pos( tr_ai_work, side );
+  const BTL_POKEPARAM* bpp = get_bpp( tr_ai_work, pos );
+  BOOL result = FALSE;
+
+  if( BPP_CheckSick(bpp, WAZASICK_DOKU) )
+  {
+     BPP_SICK_CONT cont = BPP_GetSickCont( bpp, WAZASICK_DOKU );
+     if( BPP_SICKCONT_IsMoudokuCont(cont) ){
+      result = TRUE;
+    }
+  }
+
+  branch_act( vmh, cond, result, TRUE, adrs );
+}
+
+//------------------------------------------------------------
 //  ポケモンが何らかの状態異常(CONTFLG)にかかっているかチェックして分岐
 //------------------------------------------------------------
 static  VMCMD_RESULT  AI_IF_CONTFLG( VMHANDLE* vmh, void* context_work )
@@ -1278,11 +1302,11 @@ static  VMCMD_RESULT  AI_COMP_POWER( VMHANDLE* vmh, void* context_work )
     int src_pow = WAZADATA_GetPower( tr_ai_work->waza_no );
 
     if( src_pow == 0 )
-    { 
+    {
       tr_ai_work->calc_work = COMP_POWER_NONE;
     }
     else
-    { 
+    {
       tr_ai_work->calc_work = COMP_POWER_TOP;
 
       for( i = 0 ; i < BPP_WAZA_GetCount( tr_ai_work->atk_bpp ) ; i++ )
