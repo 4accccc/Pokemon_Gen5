@@ -512,7 +512,16 @@ static void DrawBlAct_DrawAlwaysAnime( MMDL *mmdl )
   actSys = MMDL_BLACTCONT_GetBbdActSys( MMDL_GetBlActCont(mmdl) );
   dir = blact_GetDrawDir( mmdl );
   
-  anm_id = DRAW_STA_WALK_16F * DIR_MAX4;
+  {
+    const OBJCODE_PARAM *prm = MMDLSYS_GetOBJCodeParam(
+        MMDL_GetMMdlSys(mmdl), MMDL_GetOBJCode(mmdl) );
+    if( prm->draw_proc_no == MMDL_DRAWPROCNO_BLAACTALWAYSANIME_32 ){
+      anm_id = DRAW_STA_WALK_32F * DIR_MAX4;
+    }else{
+      anm_id = DRAW_STA_WALK_16F * DIR_MAX4;
+    }
+  }
+
   anm_id += dir;
   
   if( work->anmcnt.set_anm_dir != dir ){ //•ûŒüXV

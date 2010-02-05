@@ -13,16 +13,17 @@
 #define PROC_BLACT 2 //汎用ビルボードアクター
 #define PROC_CYCLEHERO 3 //自転車自機専用
 #define PROC_SWIMHERO 4 //波乗り自機専用
-#define PROC_BLACT_ALANM 5 //汎用ビルボードアクター常にアニメ
+#define PROC_BLACT_ALANM16 5 //汎用ビルボードアクター常に16フレーム移動アニメ
 #define PROC_HERO_ITEMGET 6 //自機アイテムゲット
 #define PROC_HERO_PCAZUKE 7 //自機PC預け
-#define PROC_BLACT_ONEANMLOOP 8 //一パターンループアニメ
+#define PROC_BLACT_ONELOOP 8 //一パターンループアニメ
 #define PROC_PCWOMAN 9 //PC姉
 #define PROC_POKE 10 //連れ歩きポケモン
 #define PROC_POKE_FLY 11 //連れ歩きポケモン 浮遊演出
 #define PROC_MODEL 12 //ポリゴンモデル
 #define PROC_FISHINGHERO 13 //釣り自機専用
 #define PROC_YUREHERO 14 //尾瀬揺れ自機
+#define PROC_BLACT_ALANM32 15 //汎用ビルボードアクター常に32フレーム移動アニメ
 
 //FOOTMARK 足跡種類で指定するシンボルです。
 #define FOOTMARK_NON 0 //足跡無し

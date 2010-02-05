@@ -30,13 +30,14 @@ const MMDL_DRAW_PROC_LIST * const
   &DATA_MMDL_DRAWPROCLIST_ItemGetHero, //自機アイテムゲット
   &DATA_MMDL_DRAWPROCLIST_PCAzukeHero, //自機PC預け
   &DATA_MMDL_DRAWPROCLIST_BlActOnePatternLoop, //ビルボード1パターンアニメ
-//  &DATA_MMDL_DRAWPROCLIST_BlActOnePattern, //ビルボード1パターンアニメ
+//&DATA_MMDL_DRAWPROCLIST_BlActOnePattern, //ビルボード1パターンアニメ
   &DATA_MMDL_DRAWPROCLIST_BlActPCWoman, //PCお姉さん
   &DATA_MMDL_DRAWPROCLIST_TsurePoke, //連れ歩きポケモン
   &DATA_MMDL_DRAWPROCLIST_TsurePoke, //連れ歩きポケモン(上下アニメスピード1/2 関数内で分岐してます)
   &DATA_MMDL_DRAWPROCLIST_Model, //モデル描画
   &DATA_MMDL_DRAWPROCLIST_FishingHero, //釣り自機
   &DATA_MMDL_DRAWPROCLIST_YureHero, //揺れ自機
+  &DATA_MMDL_DRAWPROCLIST_BlActAlwaysAnime, //通常ビルボード＋常にアニメ
 };
 
 //======================================================================
