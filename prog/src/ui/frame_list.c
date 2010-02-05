@@ -397,95 +397,6 @@ void FRAMELIST_LoadBlinkPalette( FRAMELIST_WORK * wk, ARCHANDLE * ah, u32 dataId
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		プリントキュー取得
- *
- * @param		wk				ワーク
- *
- * @return	プリントキュー
- */
-//--------------------------------------------------------------------------------------------
-PRINT_QUE * FRAMELIST_GetPrintQue( FRAMELIST_WORK * wk )
-{
-	return wk->que;
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * @brief		項目パラメータ取得
- *
- * @param		wk				ワーク
- * @param		itemIdx		項目インデックス
- *
- * @return	項目パラメータ
- */
-//--------------------------------------------------------------------------------------------
-u32 FRAMELIST_GetItemParam( FRAMELIST_WORK * wk, u32 itemIdx )
-{
-	return wk->item[itemIdx].param;
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * @brief		リスト位置取得
- *
- * @param		wk				ワーク
- *
- * @return	リスト位置
- */
-//--------------------------------------------------------------------------------------------
-u32 FRAMELIST_GetListPos( FRAMELIST_WORK * wk )
-{
-	return ( wk->listPos + wk->listScroll );
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * @brief		カーソル位置取得
- *
- * @param		wk				ワーク
- *
- * @return	項目パラメータ
- */
-//--------------------------------------------------------------------------------------------
-u32 FRAMELIST_GetCursorPos( FRAMELIST_WORK * wk )
-{
-	return wk->listPos;
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * @brief		リストスクロールカウンタを取得
- *
- * @param		wk		ワーク
- *
- * @return	スクロールカウンタ
- */
-//--------------------------------------------------------------------------------------------
-u32 FRAMELIST_GetScrollCount( FRAMELIST_WORK * wk )
-{
-	return wk->listScroll;
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * @brief		リストを下にスクロールできるか
- *
- * @param		wk		ワーク
- *
- * @retval	"TRUE = 可"
- * @retval	"FALSE = 不可"
- */
-//--------------------------------------------------------------------------------------------
-BOOL FRAMELIST_CheckScrollMax( FRAMELIST_WORK * wk )
-{
-	if( wk->listScroll < wk->listScrollMax ){
-		return TRUE;
-	}
-	return FALSE;
-}
-
-//--------------------------------------------------------------------------------------------
-/**
  * @brief		ＢＧフレームリスト初期描画
  *
  * @param		wk		ワーク
@@ -972,12 +883,12 @@ static u32 MoveListMain( FRAMELIST_WORK * wk )
 		ChangeCursorPosPalette( wk, PALCHG_NONE, wk->listOldPos );
 		wk->hed.cbFunc->move( wk->hed.cbWork, wk->listPos+wk->listScroll, TRUE );
 		InitSlideMove( wk, wk->listPos );
-		PMSND_PlaySE( SEQ_SE_SYS_06 );
+//		PMSND_PlaySE( SEQ_SE_SYS_06 );
 		return FRAMELIST_RET_SLIDE;
 
 	case COMMAND_SELECT:					// 選択
 		if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH ){
-			PMSND_PlaySE( SEQ_SE_SELECT1 );
+//			PMSND_PlaySE( SEQ_SE_DECIDE1 );
 			ChangeCursorPosPalette( wk, wk->listPos, wk->listOldPos );
 			wk->hed.cbFunc->move( wk->hed.cbWork, wk->listPos+wk->listScroll, TRUE );
 		}
@@ -1554,7 +1465,18 @@ static BOOL DrawListItemSub( FRAMELIST_WORK * wk, s32 pos, s8 py )
 	return FALSE;
 }
 
-static void ChangePosPalette( FRAMELIST_WORK * wk, u16 pos, u16 pal )
+//--------------------------------------------------------------------------------------------
+/**
+ * 指定位置の項目のパレットを変更	
+ *
+ * @param		wk		ワーク
+ * @param		pos		カーソル位置
+ * @param		pal		パレット番号
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+void FRAMELIST_ChangePosPalette( FRAMELIST_WORK * wk, u16 pos, u16 pal )
 {
 	s16	py;
 	u16	i;
@@ -1581,11 +1503,11 @@ static void ChangeCursorPosPalette( FRAMELIST_WORK * wk, u16 now, u16 old )
 {
 	if( old < wk->listPosMax ){
 		u16 * scrn = wk->wfrmGra[wk->item[wk->listScroll+old].type].scrn;
-		ChangePosPalette( wk, old, scrn[0] >> 12 );
+		FRAMELIST_ChangePosPalette( wk, old, scrn[0] >> 12 );
 	}
 	if( now < wk->listPosMax && GFL_UI_CheckTouchOrKey() == GFL_APP_END_KEY ){
 		BLINKPALANM_InitAnimeCount( wk->blink );
-		ChangePosPalette( wk, now, wk->hed.selPal );
+		FRAMELIST_ChangePosPalette( wk, now, wk->hed.selPal );
 	}
 }
 
@@ -1607,3 +1529,113 @@ static void CallBack_Dummy( void * work, u32 itemNum, PRINT_UTIL * util, s16 py,
 //	OS_Printf( "call back\n" );
 }
 */
+
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		プリントキュー取得
+ *
+ * @param		wk				ワーク
+ *
+ * @return	プリントキュー
+ */
+//--------------------------------------------------------------------------------------------
+PRINT_QUE * FRAMELIST_GetPrintQue( FRAMELIST_WORK * wk )
+{
+	return wk->que;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		項目パラメータ取得
+ *
+ * @param		wk				ワーク
+ * @param		itemIdx		項目インデックス
+ *
+ * @return	項目パラメータ
+ */
+//--------------------------------------------------------------------------------------------
+u32 FRAMELIST_GetItemParam( FRAMELIST_WORK * wk, u32 itemIdx )
+{
+	return wk->item[itemIdx].param;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		リスト位置取得
+ *
+ * @param		wk				ワーク
+ *
+ * @return	リスト位置
+ */
+//--------------------------------------------------------------------------------------------
+u32 FRAMELIST_GetListPos( FRAMELIST_WORK * wk )
+{
+	return ( wk->listPos + wk->listScroll );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		カーソル位置取得
+ *
+ * @param		wk				ワーク
+ *
+ * @return	項目パラメータ
+ */
+//--------------------------------------------------------------------------------------------
+u32 FRAMELIST_GetCursorPos( FRAMELIST_WORK * wk )
+{
+	return wk->listPos;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		リストスクロールカウンタを取得
+ *
+ * @param		wk		ワーク
+ *
+ * @return	スクロールカウンタ
+ */
+//--------------------------------------------------------------------------------------------
+u32 FRAMELIST_GetScrollCount( FRAMELIST_WORK * wk )
+{
+	return wk->listScroll;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		リストを下にスクロールできるか
+ *
+ * @param		wk		ワーク
+ *
+ * @retval	"TRUE = 可"
+ * @retval	"FALSE = 不可"
+ */
+//--------------------------------------------------------------------------------------------
+BOOL FRAMELIST_CheckScrollMax( FRAMELIST_WORK * wk )
+{
+	if( wk->listScroll < wk->listScrollMax ){
+		return TRUE;
+	}
+	return FALSE;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		カーソル位置を設定
+ *
+ * @param		wk					ワーク
+ * @param		pos					カーソル位置
+ *
+ * @return	none
+ *
+ *	コールバック[move]が呼ばれます
+ */
+//--------------------------------------------------------------------------------------------
+void FRAMELIST_SetCursorPos( FRAMELIST_WORK * wk, u32 pos )
+{
+	wk->listOldPos = wk->listPos;
+	wk->listPos = pos;
+	ChangeCursorPosPalette( wk, wk->listPos, wk->listOldPos );
+	wk->hed.cbFunc->move( wk->hed.cbWork, wk->listPos+wk->listScroll, TRUE );
+}
