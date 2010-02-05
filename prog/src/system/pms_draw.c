@@ -37,7 +37,8 @@ typedef struct {
   GFL_CLWK*     clwk[PMS_WORD_MAX];
   int           pre_scrcnt_x; ///< 前フレームのBGスクロールカウンタ
   int           pre_scrcnt_y; ///< 前フレームのBGスクロールカウンタ
-  BOOL          b_useflag;
+  u32           b_useflag:1;
+  u32           b_visible:1;
   BOOL          b_clwk_deco[PMS_WORD_MAX]; ///< CLWKデコメ判定フラグ
 } PMS_DRAW_UNIT;
 
@@ -389,6 +390,7 @@ void PMS_DRAW_Copy( PMS_DRAW_WORK* wk, u8 id_src, u8 id_dst )
   // @TODO CLACTとBMPWINを保持しておいて構造体を丸ごとコピーするほうが保守性が高い。
   dst->print_util.transReq = src->print_util.transReq;
   dst->b_useflag = src->b_useflag;
+  dst->b_visible = src->b_visible;
   for( i=0; i<PMS_WORD_MAX; i++ )
   {
     dst->b_clwk_deco[i] = src->b_clwk_deco[i];
@@ -716,7 +718,7 @@ static BOOL _unit_main( PMS_DRAW_UNIT* unit, PRINT_QUE* que, BOOL is_clwk_auto_s
   doing = !PRINT_UTIL_Trans( &unit->print_util, que );
 
   // 表示が終了していればデコメアクター表示
-  if( doing == FALSE )
+  if( doing == FALSE && unit->b_visible )
   {
     int i;
     for( i=0; i<PMS_WORD_MAX; i++ )
@@ -885,6 +887,7 @@ static void _unit_print( PMS_DRAW_UNIT* unit, PRINT_QUE* print_que, GFL_FONT* fo
 	GFL_BG_LoadScreenV_Req( GFL_BMPWIN_GetFrame(unit->print_util.win) );
 
   unit->b_useflag = TRUE;
+  unit->b_visible = TRUE;
 }
 
 //-----------------------------------------------------------------------------
@@ -924,6 +927,7 @@ static void _unit_clear( PMS_DRAW_UNIT* unit, BOOL is_trans )
   unit->pre_scrcnt_y = 0;
 
   unit->b_useflag = FALSE;
+  unit->b_visible = FALSE;
 }
 
 //-----------------------------------------------------------------------------
@@ -938,6 +942,8 @@ static void _unit_clear( PMS_DRAW_UNIT* unit, BOOL is_trans )
 static void _unit_visible_set( PMS_DRAW_UNIT* unit, BOOL is_visible )
 {
   GF_ASSERT( unit->b_useflag == TRUE );
+
+  unit->b_visible = is_visible;
 
   // スクリーン転送
   if( is_visible ){
