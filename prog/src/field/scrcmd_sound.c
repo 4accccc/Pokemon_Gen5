@@ -228,17 +228,11 @@ VMCMD_RESULT EvCmdPlayTempEventBGM( VMHANDLE *core, void *wk )
   GAMEDATA*         gdata = GAMESYSTEM_GetGameData( gsys );
   FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
   SCRIPT_WORK*         sc = SCRCMD_WORK_GetScriptWork( work );
+  u16            soundIdx = SCRCMD_GetVMWorkValue( core, work );
+  GMEVENT* event;
 
-  {
-    GMEVENT* event;
-    u16 zoneID;
-    u32 soundIdx;
-
-    zoneID   = FIELDMAP_GetZoneID( fieldmap );
-    soundIdx = FSND_GetFieldBGM( gdata, zoneID );
-    event    = EVENT_FSND_PushPlayNextBGM( gsys, soundIdx, FSND_FADE_SHORT, FSND_FADE_NONE );
-    SCRIPT_CallEvent( sc, event );
-  }
+  event = EVENT_FSND_PushPlayNextBGM( gsys, soundIdx, FSND_FADE_SHORT, FSND_FADE_NONE );
+  SCRIPT_CallEvent( sc, event );
   return VMCMD_RESULT_SUSPEND;
 }
 
