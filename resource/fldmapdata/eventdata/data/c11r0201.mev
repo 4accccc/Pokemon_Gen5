@@ -1,5 +1,5 @@
 #event data
-#save date:2010/02/03 15:08:24
+#save date:2010/02/05 11:57:55
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c11r0201.wms
 #SECTION START:OBJ_EVENT
@@ -53,7 +53,7 @@ MV_DOWN
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
-0
+FV_UN_GTSFRIEND_00
 #Event Script Name
 SCRID_UN_WKOBJCODE00
 #Direction Type Number
@@ -84,7 +84,7 @@ MV_RND
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
-0
+FV_UN_GTSFRIEND_01
 #Event Script Name
 SCRID_UN_WKOBJCODE01
 #Direction Type Number
@@ -115,7 +115,7 @@ MV_RIGHT
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
-0
+FV_UN_GTSFRIEND_02
 #Event Script Name
 SCRID_UN_WKOBJCODE02
 #Direction Type Number
@@ -146,7 +146,7 @@ MV_RIGHT
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
-0
+FV_UN_GTSFRIEND_03
 #Event Script Name
 SCRID_UN_WKOBJCODE03
 #Direction Type Number
@@ -177,7 +177,7 @@ MV_LEFT
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
-0
+FV_UN_GTSFRIEND_04
 #Event Script Name
 SCRID_UN_WKOBJCODE04
 #Direction Type Number
