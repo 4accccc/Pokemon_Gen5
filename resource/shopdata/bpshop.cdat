@@ -1,0 +1,48 @@
+//====================================================================
+// @file  bpshop.cdat
+// @brief BPショップデータ
+//
+// ●bp_item.xlsをresource/shopdata/でコンバートして出力しています
+//
+//====================================================================
+
+// BPショップ１号
+static const u16 BP_shop1[][2] = {
+		{ ITEM_KIAINOTASUKI,	20, },
+		{ ITEM_PINTORENZU,	21, },
+		{ ITEM_METARUKOOTO,	24, },
+		{ ITEM_TOKENAIKOORI,	25, },
+		{ ITEM_TABENOKOSI,	26, },
+		{ ITEM_KIAINOTASUKI,	28, },
+		{ ITEM_NOROINOOHUDA,	35, },
+		{ ITEM_AOIBANDANA,	42, },
+};
+#define BP_SHOP1_MAX	(NELEMS(BP_shop1))
+
+// BP技ショップ１号
+static const u16 BP_waza1[][2] = {
+		{ ITEM_WAZAMASIN54,	52, },
+		{ ITEM_WAZAMASIN53,	53, },
+		{ ITEM_WAZAMASIN52,	54, },
+		{ ITEM_WAZAMASIN51,	55, },
+		{ ITEM_WAZAMASIN20,	56, },
+		{ ITEM_WAZAMASIN21,	57, },
+		{ ITEM_WAZAMASIN02,	58, },
+		{ ITEM_WAZAMASIN20,	10, },
+};
+#define BP_WAZA1_MAX	(NELEMS(BP_waza1))
+
+
+
+// 一括アクセス用配列定義
+static const u16 *bp_shop_data_table[]={
+	BP_shop1,
+	BP_waza1,
+};
+
+
+// 各ショップ販売最大数取得用
+static const u8 bp_shop_itemnum_table[]={
+	BP_SHOP1_MAX,
+	BP_WAZA1_MAX,
+};

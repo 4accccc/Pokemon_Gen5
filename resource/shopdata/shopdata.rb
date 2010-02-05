@@ -5,7 +5,7 @@
 # itemym.hとfs_item.csvを読み込んでショップデータを作成します。
 #
 # ex)
-# ruby shopdata.rb fs_item.csv itemsym.h > fs_item.cdat
+# ruby shopdata.rb fs_item.csv itemsym.h > fs_item.cdat fs_item_index.h
 #
 # @data   09.10.19
 # @author mori
