@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="masafumi_saitou" host="W00225" date="2010-02-05T00:04:26"/>
+	<create user="matsumiya" host="W00224" date="2010-02-05T18:30:23"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -330,7 +330,7 @@
 カミツレ</attribute>
 		<language name="JPN" width="256">カミツレ『おそいから　みにくれば
 あなたたち　しりあい　なのね▼
-そうして　たかめあっててるんだ
+そうして　たかめあっているんだ
 なるほど　つよくなるわけね▼</language>
 		<language name="JPN_KANJI" width="256">カミツレ『遅いから　みにくれば
 あなたたち　知り合い　なのね▼
@@ -492,9 +492,8 @@
 
 	<row id="msg_r05_champion_05" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
-・メッセージ表示後
-　男の子、女の子、移動
-・続けてblack_07</comment>
+・続けて
+　上を向いて</comment>
 		<attribute name="キャラ指定">チャンピオン</attribute>
 		<language name="JPN" width="256">わたしは　いろんな　ひとたちに
 ポケモンを　すきに　なってもらう▼
@@ -512,6 +511,18 @@
 少しは　わかって　もらえるかもな▼
 どうかね
 マルチバトルを　してみないかね？▼</language>
+	</row>
+
+	<row id="msg_r05_champion_05_01" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+		<comment>♂
+・メッセージ表示後
+　男の子、女の子、移動
+・続けてblack_07</comment>
+		<attribute name="キャラ指定">チャンピオン</attribute>
+		<language name="JPN" width="256">おーい　おまえたち
+ちょっと　おいで▼</language>
+		<language name="JPN_KANJI" width="256">おーい　おまえたち
+ちょっと　おいで▼</language>
 	</row>
 
 	<row id="msg_r05_black_07" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
