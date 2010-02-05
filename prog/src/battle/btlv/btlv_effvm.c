@@ -4062,7 +4062,7 @@ static VMCMD_RESULT EFFVM_INIT_EMITTER_CIRCLE_MOVE( VMHANDLE *vmh, void *context
 
   beecmw->center_pos.y += offset_y;
 
-  if( GFL_PTC_CreateEmitterCallback( bevw->ptc[ ptc_no ], index, &EFFVM_InitEmitterPos, beecmw ) == PTC_NON_CREATE_EMITTER )
+  if( GFL_PTC_CreateEmitterCallback( bevw->ptc[ ptc_no ], index, &EFFVM_InitEmitterCircleMove, beecmw ) == PTC_NON_CREATE_EMITTER )
   { 
     GFL_HEAP_FreeMemory( beecmw );
   }
