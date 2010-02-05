@@ -44,13 +44,13 @@
 #include "demo/demo3d.h"
 
 #include "message.naix"
+#include "townmap_gra.naix"
 
 #include "demo3d_engine.h"
 
 //=============================================================================
 // 下記defineをコメントアウトすると、機能を取り除けます
 //=============================================================================
-//#define DEMO3D_BG
 //#define DEMO3D_INFOWIN
 //#define DEMO3D_TOUCHBAR
 //#define DEMO3D_TASKMENU
@@ -97,6 +97,9 @@ enum
 	//メインOBJ
 	PLTID_OBJ_TOUCHBAR_M	= 0, // 3本使用
 	PLTID_OBJ_TOWNMAP_M	= 14,		
+
+  //サブOBJ
+  PLTID_OBJ_COMMON_S = 0,
 };
 
 //=============================================================================
@@ -132,6 +135,7 @@ struct _APP_EXCEPTION_WORK {
   const DEMO3D_ENGINE_WORK* engine;
   //[PRIVATE]
   const APP_EXCEPTION_FUNC_SET* p_funcset;
+  void *userwork;
 };
 
 //--------------------------------------------------------------
@@ -206,13 +210,6 @@ static GFL_PROC_RESULT Demo3DProc_Init( GFL_PROC *proc, int *seq, void *pwk, voi
 static GFL_PROC_RESULT Demo3DProc_Main( GFL_PROC *proc, int *seq, void *pwk, void *mywk );
 static GFL_PROC_RESULT Demo3DProc_Exit( GFL_PROC *proc, int *seq, void *pwk, void *mywk );
 
-//-------------------------------------
-///	汎用処理ユーティリティ
-//=====================================
-#ifdef  Demo3D_BG
-static void Demo3D_BG_LoadResource( DEMO3D_BG_WORK* wk, HEAPID heapID );
-#endif // DEMO3D_BG
-
 #ifdef DEMO3D_INFOWIN
 //-------------------------------------
 ///	INFOWIN
@@ -253,6 +250,39 @@ static void APP_EXCEPTION_Main( APP_EXCEPTION_WORK* wk );
 //-----------------------------------------------------------
 // 遊覧船下画面
 //-----------------------------------------------------------
+#define C_CRUISER_POS_FLASH_SYNC (100) ///< 更新間隔
+#define C_CRUISER_POS_NUM ( 13 ) ///< 遊覧船のマーカー座標数
+
+//--------------------------------------------------------------
+///	座標テーブル
+//==============================================================
+static const GFL_CLACTPOS g_c_cruiser_postbl[ C_CRUISER_POS_NUM ] = 
+{
+  { 17*8,  18*8, },
+  { 20*8,  13*8, },
+  { 20*8,  11*8, },
+  { 20*8,  9*8, },
+  { 20*8,  7*8, },
+  { 20*8,  5*8, },
+  { 13*8,  5*8, },
+  { 13*8,  7*8, },
+  { 13*8,  9*8, },
+  { 13*8,  11*8, },
+  { 13*8,  13*8, },
+  { 13*8,  15*8, },
+  { 13*8,  17*8, },
+};
+
+//--------------------------------------------------------------
+///	遊覧船用ワーク(例外処理のユーザーワーク)
+//==============================================================
+typedef struct {
+  u8 pos_id;
+  u8 padding[3];
+  UI_EASY_CLWK_RES clwk_res;
+  GFL_CLWK* clwk_marker;
+} EXP_C_CRUISER_WORK;
+
 static void EXP_C_CRUISER_Init( APP_EXCEPTION_WORK* wk );
 static void EXP_C_CRUISER_Main( APP_EXCEPTION_WORK* wk );
 static void EXP_C_CRUISER_End( APP_EXCEPTION_WORK* wk );
@@ -328,11 +358,6 @@ static GFL_PROC_RESULT Demo3DProc_Init( GFL_PROC *proc, int *seq, void *pwk, voi
 	//PRINT_QUE作成
 	wk->print_que		= PRINTSYS_QUE_Create( wk->heapID );
 
-#ifdef DEMO3D_BG
-	//BGリソース読み込み
-	Demo3D_BG_LoadResource( &wk->wk_bg, wk->heapID );
-#endif // DEMO3D_BG
-
   //3D 初期化
   wk->engine = Demo3D_ENGINE_Init( wk->graphic, param->demo_id, param->start_frame, wk->heapID );
 
@@ -355,7 +380,7 @@ static GFL_PROC_RESULT Demo3DProc_Init( GFL_PROC *proc, int *seq, void *pwk, voi
 	wk->menu			= Demo3D_TASKMENU_Init( wk->menu_res, wk->msg, wk->heapID );
 #endif //DEMO3D_TASKMENU
 
-  // @TODO とりあえずBG/OBJを非表示 
+  // BG/OBJを非表示にしておく
   GFL_BG_SetVisible( BG_FRAME_BACK_S, VISIBLE_OFF );
   GFL_BG_SetVisible( BG_FRAME_TEXT_S, VISIBLE_OFF );
   GFL_BG_SetVisible( BG_FRAME_BACK_M, VISIBLE_OFF );
@@ -531,46 +556,6 @@ static GFL_PROC_RESULT Demo3DProc_Main( GFL_PROC *proc, int *seq, void *pwk, voi
  *								static関数
  */
 //=============================================================================
-
-#ifdef DEMO3D_BG
-//-----------------------------------------------------------------------------
-/**
- *	@brief  BG管理モジュール リソース読み込み
- *
- *	@param	DEMO3D_BG_WORK* wk BG管理ワーク
- *	@param	heapID  ヒープID 
- *
- *	@retval none
- */
-//-----------------------------------------------------------------------------
-static void Demo3D_BG_LoadResource( DEMO3D_BG_WORK* wk, HEAPID heapID )
-{
-  //@TODO とりあえずマイクテストのリソース
-	ARCHANDLE	*handle;
-
-	handle	= GFL_ARC_OpenDataHandle( ARCID_MICTEST_GRA, heapID );
-
-	// 上下画面ＢＧパレット転送
-	GFL_ARCHDL_UTIL_TransVramPalette( handle, NARC_mictest_back_bg_down_NCLR, PALTYPE_MAIN_BG, PLTID_BG_BACK_M, 0x20, heapID );
-	GFL_ARCHDL_UTIL_TransVramPalette( handle, NARC_mictest_back_bg_up_NCLR, PALTYPE_SUB_BG, PLTID_BG_BACK_S, 0x20, heapID );
-	
-  //	----- 下画面 -----
-	GFL_ARCHDL_UTIL_TransVramBgCharacter(	handle, NARC_mictest_back_bg_down_NCGR,
-						BG_FRAME_BACK_S, 0, 0, 0, heapID );
-	GFL_ARCHDL_UTIL_TransVramScreen(	handle, NARC_mictest_back_bg_down_NSCR,
-						BG_FRAME_BACK_S, 0, 0, 0, heapID );	
-
-	//	----- 上画面 -----
-	GFL_ARCHDL_UTIL_TransVramBgCharacter(	handle, NARC_mictest_back_bg_up_NCGR,
-						BG_FRAME_BACK_M, 0, 0, 0, heapID );
-	GFL_ARCHDL_UTIL_TransVramScreen(	handle, NARC_mictest_back_bg_up_NSCR,
-						BG_FRAME_BACK_M, 0, 0, 0, heapID );		
-
-	GFL_ARC_CloseDataHandle( handle );
-}
-#endif // DEMO3D_BG
-
-
 
 
 #ifdef DEMO3D_INFOWIN
@@ -967,18 +952,142 @@ static void APP_EXCEPTION_Main( APP_EXCEPTION_WORK* wk )
 // 遊覧船 下画面
 //-----------------------------------------------------------------------------
 
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  BG管理モジュール リソース読み込み
+ *
+ *	@param	DEMO3D_BG_WORK* wk BG管理ワーク
+ *	@param	heapID  ヒープID 
+ *
+ *	@retval none
+ */
+//-----------------------------------------------------------------------------
+static void _C_CRUISER_LoadBG( HEAPID heapID )
+{
+	ARCHANDLE	*handle;
+
+	handle	= GFL_ARC_OpenDataHandle( ARCID_TOWNMAP_GRAPHIC, heapID );
+
+	GFL_ARCHDL_UTIL_TransVramPalette( handle, NARC_townmap_gra_tmap_ship_NCLR,
+      PALTYPE_SUB_BG, PLTID_BG_BACK_S, 0, heapID );
+	
+  GFL_ARCHDL_UTIL_TransVramBgCharacter(	handle, NARC_townmap_gra_tmap_ship_NCGR,
+						BG_FRAME_BACK_S, 0, 0, 0, heapID );
+	GFL_ARCHDL_UTIL_TransVramScreen(	handle, NARC_townmap_gra_tmap_ship_NSCR,
+						BG_FRAME_BACK_S, 0, 0, 0, heapID );	
+
+	GFL_ARC_CloseDataHandle( handle );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  例外処理 遊覧船 初期化
+ *
+ *	@param	APP_EXCEPTION_WORK* wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
 static void EXP_C_CRUISER_Init( APP_EXCEPTION_WORK* wk )
 {
+  EXP_C_CRUISER_WORK* uwk;
 
+  wk->userwork = GFL_HEAP_AllocClearMemory( wk->heapID, sizeof(EXP_C_CRUISER_WORK) );
+  
+  uwk = wk->userwork;
+
+  _C_CRUISER_LoadBG( wk->heapID );
+
+  {
+    GFL_CLUNIT* clunit;
+    UI_EASY_CLWK_RES_PARAM prm;
+
+    clunit	= DEMO3D_GRAPHIC_GetClunit( wk->graphic );
+
+    prm.draw_type = CLSYS_DRAW_SUB;
+    prm.comp_flg  = UI_EASY_CLWK_RES_COMP_NONE;
+    prm.arc_id    = ARCID_TOWNMAP_GRAPHIC;
+    prm.pltt_id   = NARC_townmap_gra_tmap_ship_obj_NCLR;
+    prm.ncg_id    = NARC_townmap_gra_tmap_ship_obj_NCGR;
+    prm.cell_id   = NARC_townmap_gra_tmap_ship_obj_NCER;
+    prm.anm_id    = NARC_townmap_gra_tmap_ship_obj_NANR;
+    prm.pltt_line = PLTID_OBJ_COMMON_S;
+    prm.pltt_src_ofs = 0;
+    prm.pltt_src_num = 1;
+
+    UI_EASY_CLWK_LoadResource( &uwk->clwk_res, &prm, clunit, wk->heapID );
+
+    uwk->clwk_marker = UI_EASY_CLWK_CreateCLWK( &uwk->clwk_res, clunit, 40, 40, 0, wk->heapID );
+      
+    GFL_CLACT_WK_SetDrawEnable( uwk->clwk_marker, TRUE );
+    GFL_CLACT_WK_SetAutoAnmFlag( uwk->clwk_marker, TRUE );
+
+  }
+	
+  GFL_BG_SetVisible( BG_FRAME_BACK_S, VISIBLE_ON );
+  GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
 }
 
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  例外処理 遊覧船 主処理
+ *
+ *	@param	APP_EXCEPTION_WORK* wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
 static void EXP_C_CRUISER_Main( APP_EXCEPTION_WORK* wk )
 {
-  DEMO3D_ENGINE_GetNowFrame( wk->engine );
+  int frame;
+  EXP_C_CRUISER_WORK* uwk = wk->userwork;
+  
+  frame = DEMO3D_ENGINE_GetNowFrame( wk->engine ) >> FX32_SHIFT;
+  if( uwk->pos_id < C_CRUISER_POS_NUM )
+
+  {
+    if( uwk->pos_id * C_CRUISER_POS_FLASH_SYNC <= frame )
+    {
+      // 座標更新
+      GFL_CLACT_WK_SetPos( uwk->clwk_marker, &g_c_cruiser_postbl[ uwk->pos_id ], CLSYS_DRAW_SUB );
+      GFL_CLACT_WK_SetAnmFrame( uwk->clwk_marker, 0 );
+
+      OS_TPrintf("frame=%d marker pos_id=%d x=%d, y=%d\n", 
+          frame, uwk->pos_id, 
+          g_c_cruiser_postbl[uwk->pos_id].x,
+          g_c_cruiser_postbl[uwk->pos_id].y );
+
+      uwk->pos_id++;
+
+      // 終了判定
+      if( uwk->pos_id == C_CRUISER_POS_NUM )
+      {
+        // 非表示に
+        GFL_CLACT_WK_SetDrawEnable( uwk->clwk_marker, FALSE );
+        OS_TPrintf("marker visible off \n");
+      }
+    }
+  }
+
 }
 
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  例外処理 遊覧船 解放処理
+ *
+ *	@param	APP_EXCEPTION_WORK* wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
 static void EXP_C_CRUISER_End( APP_EXCEPTION_WORK* wk )
 {
+  EXP_C_CRUISER_WORK* uwk = wk->userwork;
 
+  // OBJリソース開放
+  UI_EASY_CLWK_UnLoadResource( &uwk->clwk_res );
+
+  // ユーザーワーク解放
+  GFL_HEAP_FreeMemory( wk->userwork );
 }
 

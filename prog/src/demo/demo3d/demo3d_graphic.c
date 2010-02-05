@@ -41,28 +41,41 @@
 //-------------------------------------
 ///	バンク設定
 //=====================================
-//------------------------------------------------------------------------------------------------------------------------
-// ■メモ
-//
-// 2画面連結表示でVRAM-C,Dを使うことを考慮して外してある。
-// 必要であれば、連結表示を使うときのVRAM設定と使わない時のVRAM設定を分けることは可能。
-// ただその場合、現状デモ毎のデータは demo3d_engine.c の中で管理してしまっているため、依存関係について考える必要あり。
-//------------------------------------------------------------------------------------------------------------------------
-static const GFL_DISP_VRAM sc_vramSetTable =
+static const GFL_DISP_VRAM sc_vramSetTable[2] =
 {
-	GX_VRAM_BG_64_E,						// メイン2DエンジンのBG
-	GX_VRAM_BGEXTPLTT_NONE,     // メイン2DエンジンのBG拡張パレット
-	GX_VRAM_SUB_BG_32_H,				// サブ2DエンジンのBG
-	GX_VRAM_SUB_BGEXTPLTT_NONE, // サブ2DエンジンのBG拡張パレット
-	GX_VRAM_OBJ_128_B,					// メイン2DエンジンのOBJ
-	GX_VRAM_OBJEXTPLTT_NONE,		// メイン2DエンジンのOBJ拡張パレット
-	GX_VRAM_SUB_OBJ_16_I,	      // サブ2DエンジンのOBJ
-	GX_VRAM_SUB_OBJEXTPLTT_NONE,// サブ2DエンジンのOBJ拡張パレット
-	GX_VRAM_TEX_0_A,						// テクスチャイメージスロット
-	GX_VRAM_TEXPLTT_0_F,				// テクスチャパレットスロット
-	GX_OBJVRAMMODE_CHAR_1D_128K,// メイン画面OBJマッピングモード		
-	GX_OBJVRAMMODE_CHAR_1D_32K,// サブ画面OBJマッピングモード
+  // 通常時の設定
+  {
+    GX_VRAM_BG_64_E,						// メイン2DエンジンのBG
+    GX_VRAM_BGEXTPLTT_NONE,     // メイン2DエンジンのBG拡張パレット
+    GX_VRAM_SUB_BG_128_C,				// サブ2DエンジンのBG
+    GX_VRAM_SUB_BGEXTPLTT_NONE, // サブ2DエンジンのBG拡張パレット
+    GX_VRAM_OBJ_128_B,					// メイン2DエンジンのOBJ
+    GX_VRAM_OBJEXTPLTT_NONE,		// メイン2DエンジンのOBJ拡張パレット
+    GX_VRAM_SUB_OBJ_128_D,	      // サブ2DエンジンのOBJ
+    GX_VRAM_SUB_OBJEXTPLTT_NONE,// サブ2DエンジンのOBJ拡張パレット
+    GX_VRAM_TEX_0_A,						// テクスチャイメージスロット
+    GX_VRAM_TEXPLTT_0_F,				// テクスチャパレットスロット
+    GX_OBJVRAMMODE_CHAR_1D_128K,// メイン画面OBJマッピングモード		
+    GX_OBJVRAMMODE_CHAR_1D_32K,// サブ画面OBJマッピングモード
+  },
+  // 2画面3Dモードの設定
+  // キャプチャにVRAM-C,Dを使うことを考慮して外してある。
+  {
+    GX_VRAM_BG_64_E,						// メイン2DエンジンのBG
+    GX_VRAM_BGEXTPLTT_NONE,     // メイン2DエンジンのBG拡張パレット
+    GX_VRAM_SUB_BG_32_H,				// サブ2DエンジンのBG
+    GX_VRAM_SUB_BGEXTPLTT_NONE, // サブ2DエンジンのBG拡張パレット
+    GX_VRAM_OBJ_128_B,					// メイン2DエンジンのOBJ
+    GX_VRAM_OBJEXTPLTT_NONE,		// メイン2DエンジンのOBJ拡張パレット
+    GX_VRAM_SUB_OBJ_16_I,	      // サブ2DエンジンのOBJ
+    GX_VRAM_SUB_OBJEXTPLTT_NONE,// サブ2DエンジンのOBJ拡張パレット
+    GX_VRAM_TEX_0_A,						// テクスチャイメージスロット
+    GX_VRAM_TEXPLTT_0_F,				// テクスチャパレットスロット
+    GX_OBJVRAMMODE_CHAR_1D_128K,// メイン画面OBJマッピングモード		
+    GX_OBJVRAMMODE_CHAR_1D_32K,// サブ画面OBJマッピングモード
+  },
 };
+
 
 //=============================================================================
 /**
@@ -164,8 +177,8 @@ static const struct
 		GFL_BG_FRAME2_S,	//設定するフレーム
 		{
 			0, 0, 0x800, 0,	//X,Y,ｽｸﾘｰﾝﾊﾞｯﾌｧ、ｽｸﾘｰﾝｵﾌｾｯﾄ
-			GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,	//ｽｸﾘｰﾝｻｲｽﾞ、ｶﾗｰﾓｰﾄﾞ
-			GX_BG_SCRBASE_0x2000, GX_BG_CHARBASE_0x10000, GFL_BG_CHRSIZ_256x256,
+			GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_256,	//ｽｸﾘｰﾝｻｲｽﾞ、ｶﾗｰﾓｰﾄﾞ
+			GX_BG_SCRBASE_0x2000, GX_BG_CHARBASE_0x10000, GFL_BG_CHRSIZ256_256x256,
 			GX_BG_EXTPLTT_01, 2, 0, 0, FALSE//拡張ﾊﾟﾚｯﾄｽﾛｯﾄ、表示優先度、ｴﾘｱｵｰﾊﾞｰ、ﾀﾞﾐｰ、ﾓｻﾞｲｸﾌﾗｸﾞ
 		},
 		GFL_BG_MODE_TEXT,//BGの種類
@@ -403,7 +416,7 @@ DEMO3D_GRAPHIC_WORK * DEMO3D_GRAPHIC_Init( int display_select, DEMO3D_ID demo_id
 	GFL_DISP_ClearVRAM( 0 );
 
 	//VRAMバンク設定
-	GFL_DISP_SetBank( &sc_vramSetTable );
+	GFL_DISP_SetBank( &sc_vramSetTable[ p_wk->is_double ] );
 
 	//ディスプレイON
 	GFL_DISP_SetDispSelect( display_select );
@@ -422,15 +435,15 @@ DEMO3D_GRAPHIC_WORK * DEMO3D_GRAPHIC_Init( int display_select, DEMO3D_ID demo_id
   if( p_wk->is_double == FALSE )
   {
     GRAPHIC_BG_Init( &p_wk->bg, heapID );
-    GRAPHIC_OBJ_Init( &p_wk->obj, &sc_vramSetTable, heapID );
+    GRAPHIC_OBJ_Init( &p_wk->obj, &sc_vramSetTable[0], heapID );
+
+    //VBlankTask登録
+    p_wk->p_vblank_task	= GFUser_VIntr_CreateTCB(Graphic_VBlankTask, p_wk, 0 );
   }
 
 #ifdef GRAPHIC_G3D_USE
 	GRAPHIC_G3D_Init( &p_wk->g3d, heapID );
 #endif //GRAPHIC_G3D_USE
-
-	//VBlankTask登録
-	p_wk->p_vblank_task	= GFUser_VIntr_CreateTCB(Graphic_VBlankTask, p_wk, 0 );
 
 	return p_wk;
 }
@@ -443,8 +456,11 @@ DEMO3D_GRAPHIC_WORK * DEMO3D_GRAPHIC_Init( int display_select, DEMO3D_ID demo_id
 //-----------------------------------------------------------------------------
 void DEMO3D_GRAPHIC_Exit( DEMO3D_GRAPHIC_WORK *p_wk )
 {	
-	//VBLANKTask消去
-	GFL_TCB_DeleteTask( p_wk->p_vblank_task );
+  if( p_wk->is_double == FALSE )
+  {
+    //VBLANKTask消去
+    GFL_TCB_DeleteTask( p_wk->p_vblank_task );
+  }
 
 	//モジュール破棄
 #ifdef GRAPHIC_G3D_USE
