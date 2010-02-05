@@ -10,7 +10,8 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_c11r0101.h"
-  //.include  "c11r0101.h"
+  .include  "c11r0201_def.h"  //for reserve
+  .include  "c11r0101.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -27,12 +28,20 @@ _EVENT_DATA     ev_c11r0101_boy01
 _EVENT_DATA     ev_c11r0101_dancer01
 _EVENT_DATA     ev_c11r0101_policeman01
 _EVENT_DATA     ev_c11r0101_pos01
+_EVENT_DATA     ev_reserve_c11r0101
+_EVENT_DATA_END
 
 /**************************************************************/
 /*            ZONE_CHANGE_LABEL                               */
 /**************************************************************/
 //ev_zone_c11r0101:
 //  _END
+
+/************************************************************/
+/*			予約スクリプト：エレベータから出てくる					*/
+/************************************************************/
+EVENT_START	ev_reserve_c11r0101
+EVENT_END
 
 /**************************************************************/
 /*            受付1                                            */
@@ -52,8 +61,12 @@ EVENT_START ev_c11r0101_reception01
     //「こちらへ」
     _BALLOONWIN_TALKOBJ_MSG( msg_reception01_02 )
     _BALLOONWIN_CLOSE()
+    
     //アニメ
+    _CALL player_in_anm
 
+    //予約スクリプト マップチェンジ後、エレベータから出てくるスクリプトを起動する
+		_RESERVE_SCRIPT( SCRID_RESERVE_C11R0201 )
     //マップチェンジ
     _MAP_CHANGE( ZONE_ID_C11R0201, 10, 5, DIR_DOWN )
   ELSE
@@ -114,5 +127,46 @@ EVENT_END
 
 
 
+//アニメ
+player_in_anm:
+  //受付開ける
+  _OBJ_ANIME( UN_ENTRANCE_RECEPTION_01, anm_reception_open )
+	_OBJ_ANIME_WAIT()
+  //自機移動
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_move_elev )
+	_OBJ_ANIME_WAIT()
 
+  //エレベータ開く
+
+  //自機絵エレベータに入る
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_move_elev_in )
+	_OBJ_ANIME_WAIT()
+
+  //エレベータ閉まる
+
+_RET
+
+
+//--------------------------------------------------------------------
+//受付開ける
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_reception_open
+	_ANIME_DATA	AC_WALK_U_8F,1
+  _ANIME_DATA	AC_WALK_L_8F,1
+  _ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//エレベーター前まで移動
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_move_elev
+	_ANIME_DATA	AC_WALK_U_8F,5
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//エレベーターにはいる
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_move_elev_in
+	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	ACMD_END,0
 

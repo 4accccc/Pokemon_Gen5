@@ -11,6 +11,7 @@
   .include  "scr_seq_def.h"
   .include  "msg_c11r0201.h"
   .include  "c11r0201.h"
+  .include  "c11r0101_def.h"  //for reserve
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -26,7 +27,8 @@ _EVENT_DATA		ev_un_wkobjcode01
 _EVENT_DATA		ev_un_wkobjcode02
 _EVENT_DATA		ev_un_wkobjcode03
 _EVENT_DATA		ev_un_wkobjcode04
-
+_EVENT_DATA   ev_un_elevator
+_EVENT_DATA   ev_reserve_c11r0201
 _EVENT_DATA_END
 
 //------------------------------注意--------------------------------//
@@ -39,6 +41,7 @@ _EVENT_DATA_END
 /*            ZONE_CHANGE_LABEL                               */
 /**************************************************************/
 ev_zone_c11r0201:
+  DEFINE_LOCAL GTSFriendNum
   //可変OBJの決定
   //※定員（5名）未満の場合であっても定員数の処理は行うことにする
   //処理内部で、部屋人数以上のインデックッスの場合はOBJCHRWORK～には定数が入るようにしてある
@@ -47,15 +50,58 @@ ev_zone_c11r0201:
   _UN_GET_ROOM_OBJ_CODE( 2, OBJCHRWORK2 )
   _UN_GET_ROOM_OBJ_CODE( 3, OBJCHRWORK3 )
   _UN_GET_ROOM_OBJ_CODE( 4, OBJCHRWORK4 )
+
+  //可変OBJを一度全部非表示設定にする
+  _FLAG_SET( FV_UN_GTSFRIEND_00 )
+	_FLAG_SET( FV_UN_GTSFRIEND_01 )
+	_FLAG_SET( FV_UN_GTSFRIEND_02 )
+	_FLAG_SET( FV_UN_GTSFRIEND_03 )
+  _FLAG_SET( FV_UN_GTSFRIEND_04 )
+
+  //OBJ数取得
+  _UN_GET_ROOM_OBJ_NUM( GTSFriendNum )
+
+  //必要な人数だけ表示状態を回復
+  IF $GTSFriendNum > 0 THEN           //1人はいる
+    _FLAG_RESET( FV_UN_GTSFRIEND_00 )
+  ENDIF
+  IF $GTSFriendNum > 1 THEN           //2人はいる
+    _FLAG_RESET( FV_UN_GTSFRIEND_01 )
+  ENDIF
+  IF $GTSFriendNum > 2 THEN           //3人はいる
+    _FLAG_RESET( FV_UN_GTSFRIEND_02 )
+  ENDIF
+  IF $GTSFriendNum > 3 THEN           //4人はいる
+    _FLAG_RESET( FV_UN_GTSFRIEND_03 )
+  ENDIF
+  IF $GTSFriendNum > 4 THEN           //5人いる
+    _FLAG_RESET( FV_UN_GTSFRIEND_04 )
+  ENDIF
   _END
 
+/************************************************************/
+/*			予約スクリプト：エレベータから出てくる		    			*/
+/************************************************************/
+EVENT_START	ev_reserve_c11r0201
+EVENT_END
+  
 /**************************************************************/
-/*		エレベーターの近くの人										  */
+/*		エレベーター	                      									  */
+/**************************************************************/
+EVENT_START		ev_un_elevator
+EVENT_END
+
+/**************************************************************/
+/*		エレベーターの近くの人										              */
 /**************************************************************/
 EVENT_START		ev_un_room_talker
   DEFINE_LOCAL	NpcNum
   DEFINE_LOCAL	TalkerMsg
-  $NpcNum = 0   //todo
+
+  _TALK_OBJ_START()
+  
+  //部屋の人数を取得
+  _UN_GET_ROOM_OBJ_NUM( NpcNum )
   //お客いるか？
   IF $NpcNum != 0 THEN
     //「客おるで」
@@ -119,6 +165,24 @@ EVENT_END
 /*  可変オブジェ共通                        */
 //--------------------------------------------------------------
 ev_wkobjcommon:
+  DEFINE_LOCAL	TalkMsg
+  _TALK_OBJ_START()
   //話したことあるか？
+  _UN_CHK_TALK_FLG( LOCALWORK0, SCWK_ANSWER )
+  IF $SCWK_ANSWER == TRUE THEN
+    //初回メッセージ消化フラグON
+    _UN_SET_TALK_FLG( LOCALWORK0 )
+    //初回メッセージ
+    _UN_GET_ROOM_OBJ_MSG(LOCALWORK0, TRUE, TalkMsg)
+    _BALLOONWIN_TALKOBJ_MSG( TalkMsg )
+    _BALLOONWIN_CLOSE()
+  ENDIF
+  //メッセージ取得
+  _UN_GET_ROOM_OBJ_MSG(LOCALWORK0, FALSE, TalkMsg)
+  
+  _BALLOONWIN_TALKOBJ_MSG( TalkMsg )
+  _LAST_KEYWAIT()
+  _BALLOONWIN_CLOSE()
+
   _RET  
 
