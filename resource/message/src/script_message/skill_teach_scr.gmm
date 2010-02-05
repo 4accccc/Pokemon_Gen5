@@ -1,0 +1,896 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<?xml-stylesheet type="text/xsl" href="" ?>
+
+<gmml version="4.5">
+
+<head>
+	<create user="tamada" host="W00139" date="2010-02-05T16:48:24"/>
+	<generator name="MessageEditor" version="4.9.2.5"/>
+</head>
+
+<body language="japanese">
+	<color>
+		<list entry="0" r="00" g="00" b="00" a="FF"/>
+		<list entry="1" r="FF" g="00" b="00" a="FF"/>
+		<list entry="2" r="00" g="00" b="FF" a="FF"/>
+		<list entry="3" r="00" g="8C" b="00" a="FF"/>
+	</color>
+
+	<tag-table>
+		<group entry="0" japanese="タググループ" english="タググループ">
+		</group>
+
+		<group entry="1" japanese="ポケモンＷＢ（単語）" english="PokemonDP" color="#c0c0c0">
+			<tag entry="00" japanese="トレーナー名" english="トレーナー名" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="01" japanese="ポケモン種族名" english="ポケモン種族名" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ポケモンの名前。
+ピカチュウとかフシギダネとか。</comment>
+				<comment language="english">ポケモンの名前。
+ピカチュウとかフシギダネとか。</comment>
+			</tag>
+			<tag entry="02" japanese="ポケモンニックネーム" english="ポケモンニックネーム" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ポケモンのニックネーム</comment>
+				<comment language="english">ポケモンのニックネーム</comment>
+			</tag>
+			<tag entry="03" japanese="ポケモンタイプ" english="ポケモンタイプ" view="EP" width="48" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">みず、くさ、ほのお…とか。</comment>
+				<comment language="english">みず、くさ、ほのお…とか。</comment>
+			</tag>
+			<tag entry="04" japanese="ポケモン分類" english="ポケモン分類" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">「DNAポケモン」など。</comment>
+				<comment language="english">「DNAポケモン」など。</comment>
+			</tag>
+			<tag entry="05" japanese="マップ名" english="マップ名" view="EP" width="120" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="06" japanese="とくせい名" english="とくせい名" view="EP" width="84" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="07" japanese="わざ名" english="わざ名" view="EP" width="84" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="08" japanese="せいかく" english="せいかく" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="09" japanese="どうぐ名" english="どうぐ名" view="EP" width="96" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="10" japanese="グッズ名" english="グッズ名" view="EP" length="8" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="11" japanese="ボックス名" english="ボックス名" view="EP" width="96" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="13" japanese="ステータス名" english="ステータス名" view="EP" width="74" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">たいりょく、こうげきりょく、ぼうぎょりょく、とくこう、とくぼう、すばやさ、かいひりつ、めいちゅう</comment>
+				<comment language="english">たいりょく、こうげきりょく、ぼうぎょりょく、とくこう、とくぼう、すばやさ、かいひりつ、めいちゅう</comment>
+			</tag>
+			<tag entry="14" japanese="トレーナー種別名" english="トレーナー種別名" view="EP" width="120" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">「たんぱんこぞう」「エリートトレーナー」など</comment>
+				<comment language="english">「たんぱんこぞう」「エリートトレーナー」など</comment>
+			</tag>
+			<tag entry="17" japanese="特殊状態名" english="特殊状態名" view="EP" width="48" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ポケモンの特殊状態です。</comment>
+				<comment language="english">ポケモンの特殊状態です。</comment>
+			</tag>
+			<tag entry="18" japanese="バッグのポケット名" english="バッグのポケット名" view="EP" width="132" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">バッグのポケットの名前。「ポケット」の部分も含む。</comment>
+				<comment language="english">バッグのポケットの名前。「ポケット」の部分も含む。</comment>
+			</tag>
+			<tag entry="26" japanese="カップ名" english="カップ名" view="EP" width="72" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">対戦のレギュレーション名</comment>
+				<comment language="english">対戦のレギュレーション名</comment>
+			</tag>
+			<tag entry="28" japanese="簡易会話単語" english="簡易会話単語" view="EP" width="84" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="31" japanese="アクセサリー名" english="アクセサリー名" view="EP" width="96" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ポケモンにつけるアクセサリー</comment>
+				<comment language="english">ポケモンにつけるアクセサリー</comment>
+			</tag>
+			<tag entry="32" japanese="ジム名" english="ジム名" view="EP" width="72" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="33" japanese="時間帯" english="時間帯" view="EP" width="48" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ぼうけんノートなどで使う</comment>
+				<comment language="english">ぼうけんノートなどで使う</comment>
+			</tag>
+			<tag entry="34" japanese="コンテスト名称" english="コンテスト名称" view="EP" width="120" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">コンテストのジャンル
+「○○○○○コンテスト」</comment>
+				<comment language="english">コンテストのジャンル
+「○○○○○コンテスト」</comment>
+			</tag>
+			<tag entry="35" japanese="コンテストランク" english="コンテストランク" view="EP" width="84" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">○○○○ランク
+「ランク」も含む</comment>
+				<comment language="english">○○○○ランク
+「ランク」も含む</comment>
+			</tag>
+			<tag entry="36" japanese="国名" english="国名" view="EP" width="216" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">プレイヤーが入力する、自分が住んでいる国名</comment>
+				<comment language="english">プレイヤーが入力する、自分が住んでいる国名</comment>
+			</tag>
+			<tag entry="37" japanese="地域名" english="地域名" view="EP" width="216" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">プレイヤーが入力する、自分が住んでいる地域名</comment>
+				<comment language="english">プレイヤーが入力する、自分が住んでいる地域名</comment>
+			</tag>
+			<tag entry="39" japanese="リボンの名前" english="リボンの名前" view="EP" width="168" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">リボンの名前</comment>
+				<comment language="english">リボンの名前</comment>
+			</tag>
+			<tag entry="40" japanese="広場ミニゲーム" english="広場ミニゲーム" view="EP" width="120" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">WiFi広場のミニゲーム名</comment>
+				<comment language="english">WiFi広場のミニゲーム名</comment>
+			</tag>
+			<tag entry="41" japanese="広場イベント名" english="広場イベント名" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">WiFi広場イベント名</comment>
+				<comment language="english">WiFi広場イベント名</comment>
+			</tag>
+			<tag entry="42" japanese="広場アイテム名" english="広場アイテム名" view="EP" width="120" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">WiFi広場のアイテム名</comment>
+				<comment language="english">WiFi広場のアイテム名</comment>
+			</tag>
+			<tag entry="43" japanese="日本の挨拶" english="日本の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">日本の挨拶</comment>
+				<comment language="english">日本の挨拶</comment>
+			</tag>
+			<tag entry="44" japanese="英語の挨拶" english="英語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">英語の挨拶</comment>
+				<comment language="english">英語の挨拶</comment>
+			</tag>
+			<tag entry="45" japanese="フランス語の挨拶" english="フランス語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">フランス語の挨拶</comment>
+				<comment language="english">フランス語の挨拶</comment>
+			</tag>
+			<tag entry="46" japanese="ドイツ語の挨拶" english="ドイツ語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ドイツ語の挨拶</comment>
+				<comment language="english">ドイツ語の挨拶</comment>
+			</tag>
+			<tag entry="47" japanese="イタリア語の挨拶" english="イタリア語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">イタリア語の挨拶</comment>
+				<comment language="english">イタリア語の挨拶</comment>
+			</tag>
+			<tag entry="48" japanese="スペイン語の挨拶" english="スペイン語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">スペイン語の挨拶</comment>
+				<comment language="english">スペイン語の挨拶</comment>
+			</tag>
+		</group>
+
+		<group entry="2" japanese="ポケモンＷＢ（数値）" english="ポケモンＷＢ（数値）" color="#c0c0c0">
+			<tag entry="00" japanese="１桁" english="１桁" view="EP" width="8" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="01" japanese="２桁" english="２桁" view="EP" width="16" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="02" japanese="３桁" english="３桁" view="EP" width="24" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="03" japanese="４桁" english="４桁" view="EP" width="32" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="04" japanese="５桁" english="５桁" view="EP" width="40" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="05" japanese="６桁" english="６桁" view="EP" width="48" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">
+</comment>
+				<comment language="english">
+</comment>
+			</tag>
+			<tag entry="06" japanese="７桁" english="７桁" view="EP" width="56" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="07" japanese="８桁" english="８桁" view="EP" width="64" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+		</group>
+
+		<group entry="189" japanese="汎用コントロール" english="汎用コントロール" color="#c0c0c0">
+			<tag entry="00" japanese="カラー変更" english="カラー変更" view="EP" length="0" line="1">
+				<parameter number="0" japanese="文字色番号" english="文字色番号" type="int8"/>
+				<parameter number="1" japanese="影色番号" english="影色番号" type="int8"/>
+				<parameter number="2" japanese="背景色番号" english="背景色番号" type="int8"/>
+				<comment language="japanese">システムのカラータグより細かい設定が可能な低レベル版。
+ほとんどの場合、システムタグを使えば問題ないと思います。</comment>
+				<comment language="english">システムのカラータグより細かい設定が可能な低レベル版。
+ほとんどの場合、システムタグを使えば問題ないと思います。</comment>
+			</tag>
+			<tag entry="01" japanese="カラー変更リセット" english="カラー変更リセット" view="EP" length="0" line="1"/>
+			<tag entry="02" japanese="Ｘセンタリング" english="Ｘセンタリング" view="EP" length="0" line="1"/>
+			<tag entry="03" japanese="Ｘ右寄せ" english="Ｘ右寄せ" view="EP" length="0" line="1">
+				<parameter number="0" japanese="右スペース" english="右スペース" type="int8"/>
+				<comment language="japanese">当該行の文字列を
+ウィンドウ内で右寄せします。</comment>
+				<comment language="english">当該行の文字列を
+ウィンドウ内で右寄せします。</comment>
+			</tag>
+		</group>
+
+		<group entry="190" japanese="動的コントロール" english="Word" color="#c0c0c0">
+			<tag entry="00" japanese="ページ切り替え（行送り）" english="ページ切り替え（行送り）" view="EP" length="0" line="1"/>
+			<tag entry="01" japanese="ページ切り替え（クリア）" english="ページ切り替え（クリア）" view="EP" length="0" line="1"/>
+			<tag entry="02" japanese="ウェイト変更（単発）" english="ウェイト変更（単発）" view="EP" length="0" line="1">
+				<parameter number="0" japanese="フレーム数" english="フレーム数" type="int16"/>
+			</tag>
+			<tag entry="03" japanese="ウェイト変更（継続）" english="ウェイト変更（継続）" view="EP" length="0" line="1">
+				<parameter number="0" japanese="フレーム数" english="フレーム数" type="int16"/>
+			</tag>
+			<tag entry="04" japanese="ウェイトリセット" english="ウェイトリセット" view="EP" length="0" line="1"/>
+			<tag entry="05" japanese="コールバック引数変更（単発）" english="コールバック引数変更（単発）" view="EP" length="0" line="1">
+				<parameter number="0" japanese="引数" english="引数" type="int16"/>
+			</tag>
+			<tag entry="06" japanese="コールバック引数変更（継続）" english="コールバック引数変更（継続）" view="EP" length="0" line="1">
+				<parameter number="0" japanese="引数" english="引数" type="int16"/>
+			</tag>
+			<tag entry="07" japanese="コールバック引数リセット" english="コールバック引数リセット" view="EP" length="0" line="1"/>
+			<tag entry="08" japanese="描画領域クリア" english="描画領域クリア" view="EP" length="0" line="1"/>
+		</group>
+
+		<group entry="254" japanese="文字列展開" english="Word">
+		</group>
+
+		<set japanese="500%" english="500%" value="FF:01:サイズ:500"/>
+		<set japanese="400%" english="400%" value="FF:01:サイズ:400"/>
+		<set japanese="300%" english="300%" value="FF:01:サイズ:300"/>
+		<set japanese="200%" english="200%" value="FF:01:サイズ:200"/>
+		<set japanese="150%" english="150%" value="FF:01:サイズ:150"/>
+		<set japanese="100%" english="100%" value="FF:01:サイズ:100"/>
+		<set japanese="75%" english="75%" value="FF:01:サイズ:75"/>
+		<set japanese="50%" english="50%" value="FF:01:サイズ:50"/>
+		<set japanese="カラーデフォルト" english="Black" value="FF:00:色:0"/>
+		<set japanese="カラー１" english="Red" value="FF:00:色:1"/>
+		<set japanese="カラー２" english="Green" value="FF:00:色:2"/>
+		<set japanese="カラー３" english="Blue" value="FF:00:色:3"/>
+	</tag-table>
+
+	<columns>
+		<id position="0" width="176"/>
+		<group default=" 0:デフォルト" position="-1" width="100">
+			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
+		</group>
+		<number position="-1" width="100"/>
+		<comment position="4" width="339"/>
+		<erase position="-1" width="100"/>
+		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
+		</attribute>
+		<language japanese="JPN" english="JPN">
+			<message position="2" width="274"/>
+			<font default=" 0:large" position="5" width="109">
+				<list entry="0" file="W:\font\large.nftr"/>
+				<list entry="1" file="W:\font\small.nftr"/>
+			</font>
+			<size position="-1" width="100"/>
+			<space position="-1" width="100"/>
+			<width position="7" width="70"/>
+			<line position="-1" width="100"/>
+		</language>
+		<language japanese="JPN_KANJI" english="JPN_KANJI">
+			<message position="3" width="246"/>
+			<font default=" 0:large" position="6" width="106">
+				<list entry="0" file="W:\font\large.nftr"/>
+				<list entry="1" file="W:\font\small.nftr"/>
+			</font>
+			<size position="-1" width="100"/>
+			<space position="-1" width="100"/>
+			<width position="8" width="75"/>
+			<line position="-1" width="100"/>
+		</language>
+	</columns>
+
+	<dialog left="23" top="241" right="726" bottom="861" maximized="no" rayout="Vertical2">
+		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
+		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
+		<band id="0" index="1" style="0000" width="528"/>
+		<band id="1" index="2" style="0000" width="165"/>
+		<band id="2" index="3" style="0000" width="540"/>
+		<band id="3" index="4" style="0000" width="153"/>
+		<band id="4" index="0" style="0000" width="695"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
+		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
+		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
+	</dialog>
+
+	<output default="デフォルト">
+		<target japanese="デフォルト" english="default" endian="big" encoding="Shift_JIS" letter-list-encoding="Shift_JIS" header-file-encoding="Shift_JIS" language="JPN">
+			<struct name="JMSMesgEntry" id="" message="mesgOffset">
+			</struct>
+			<entry sort="id" id-block="no" flowlabel-block="no"/>
+			<header divide="no" id-prefix="JMS_" query-prefix="JMS_QUERY_" flownode-prefix="JMS_FLOWNODE_" id="" struct="" query=""/>
+		</target>
+	</output>
+
+
+	<lock>
+		<operation add_message="no" header_setting="no" tag_setting="no" output_setting="no" display="no" sort="no" flowchart_window="no"/>
+	</lock>
+
+
+	<row id="msg_skillteach_dragon_01b">
+		<comment>♂：ドラゴン技教え
+・はい／いいえの選択肢表示
+　はいを選択
+　→おぼえられるポケモンが……
+　　・いる　→dragon_05
+　　・いるが不可　→dragon_03
+　　・いない→dragon_04
+　いいえ→dragon_02
+
+・条件あり
+　なつき度最高を満たしていれば何匹でも覚える
+　技名「りゅうせいぐん」</comment>
+		<attribute name="キャラ指定">ジムリーダー
+シャガ</attribute>
+		<language name="JPN" width="256">シャガ『きみが　のぞむなら
+きみの　ポケモンに▽
+ドラゴンタイプ　さいきょうの▽
+わざを　おしえても　よい▼
+さて　ポケモンに
+わざを　おぼえさせるかね？▼</language>
+		<language name="JPN_KANJI" width="256">シャガ『きみが　望むなら
+きみの　ポケモンに▽
+ドラゴンタイプ　最強の▽
+技を　教えても　よい▼
+さて　ポケモンに
+技を　覚えさせるかね？▼</language>
+	</row>
+
+	<row id="msg_skillteach_dragon_02b">
+		<comment>♂：ドラゴン技教え
+・いいえを選択</comment>
+		<attribute name="キャラ指定">ジムリーダー
+シャガ</attribute>
+		<language name="JPN" width="256">よろしい
+きが　むいたなら　また　きたまえ</language>
+		<language name="JPN_KANJI" width="256">よろしい
+気が　むいたなら　また　来たまえ</language>
+	</row>
+
+	<row id="msg_skillteach_dragon_03b">
+		<comment>♂：ドラゴン技教え
+・はいを選択
+　覚えられるポケモンがいるが
+　なつき度がＭＡＸではない
+・選択画面で選んだ場合も</comment>
+		<attribute name="キャラ指定">ジムリーダー
+シャガ</attribute>
+		<language name="JPN" width="256">フム……▼
+きみが　つれている　ポケモンは
+わざを　おぼえることは　できる▼
+だが　その　ポケモンは　まだ
+きみに　かんぜんに　なついていない▼
+それでは　この　わざを
+おぼえさせる　わけには　いかない</language>
+		<language name="JPN_KANJI" width="256">フム……▼
+きみが　連れている　ポケモンは
+技を　覚えることは　できる▼
+だが　その　ポケモンは　まだ
+きみに　完全に　なついていない▼
+それでは　この　技を
+覚えさせる　わけには　いかない</language>
+	</row>
+
+	<row id="msg_skillteach_dragon_04b">
+		<comment>♂：ドラゴン技教え
+・はいを選択
+　だが覚えられるポケモンがいない</comment>
+		<attribute name="キャラ指定">ジムリーダー
+シャガ</attribute>
+		<language name="JPN" width="256">なるほど……▼
+だが　きみが　つれている　なかに
+わざを　おぼえられる▽
+ポケモンは　いないようだね</language>
+		<language name="JPN_KANJI" width="256">なるほど……▼
+だが　きみが　連れている　中に
+技を　覚えられる▽
+ポケモンは　いないようだね</language>
+	</row>
+
+	<row id="msg_skillteach_dragon_05b">
+		<comment>♂：ドラゴン技教え
+・はいを選択
+　覚えられるポケモンがいる
+・メッセージ表示後、ポケモン選択画面に</comment>
+		<attribute name="キャラ指定">ジムリーダー
+シャガ</attribute>
+		<language name="JPN" width="256">どの　ポケモンに
+わざを　おぼえさせるのかね？▼</language>
+		<language name="JPN_KANJI" width="256">どの　ポケモンに
+技を　覚えさせるのかね？▼</language>
+	</row>
+
+	<row id="msg_skillteach_dragon_06b">
+		<comment>♂：ドラゴン技教え
+・ポケモン選択後
+　おぼえられない</comment>
+		<attribute name="キャラ指定">ジムリーダー
+シャガ</attribute>
+		<language name="JPN" width="256">もうしわけないのだが……▼
+その　ポケモンでは
+この　わざは　おぼえられない</language>
+		<language name="JPN_KANJI" width="256">申し訳ないのだが……▼
+その　ポケモンでは
+この　技は　覚えられない</language>
+	</row>
+
+	<row id="msg_skillteach_dragon_07b">
+		<comment>♂：ドラゴン技教え
+・ポケモン選択時にタマゴ選択</comment>
+		<attribute name="キャラ指定">ジムリーダー
+シャガ</attribute>
+		<language name="JPN" width="256">フム……▼
+タマゴに　わざを　おぼえさせるのは
+わたしにも　むずかしいな</language>
+		<language name="JPN_KANJI" width="256">フム……▼
+タマゴに　技を　覚えさせるのは
+わたしにも　難しいな</language>
+	</row>
+
+	<row id="msg_skillteach_dragon_08b">
+		<comment>♂：ドラゴン技教え
+・ポケモン選択後、すでに習得済み
+・0＝技名</comment>
+		<attribute name="キャラ指定">ジムリーダー
+シャガ</attribute>
+		<language name="JPN" width="256">ふむ……　その　ポケモンは
+すでに　[1:07:わざ名:0]を　おぼえているが</language>
+		<language name="JPN_KANJI" width="256">ふむ……　その　ポケモンは
+すでに　[1:07:わざ名:0]を　覚えているが</language>
+	</row>
+
+	<row id="msg_skillteach_dragon_09b">
+		<comment>♂：ドラゴン技教え
+・msg_skillteach_system_06表示後
+　フィールドにもどると、このメッセージ表示
+・以降はmsg_skillteach_dragon_01表示</comment>
+		<attribute name="キャラ指定">ジムリーダー
+シャガ</attribute>
+		<language name="JPN" width="256">シャガ『りゅうせいぐんの　いりょくは
+すさまじいが　つかうと　じぶんの▽
+とくしゅこうげきも　さげてしまうぞ</language>
+		<language name="JPN_KANJI" width="256">シャガ『りゅうせいぐんの　威力は
+すさまじいが　使うと　自分の▽
+特殊攻撃も　下げてしまうぞ</language>
+	</row>
+
+	<row id="msg_skillteach_dragon_10" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+		<comment>ドラゴン技教え
+・技選択画面
+・0＝ポケモン名</comment>
+		<attribute name="キャラ指定">システム</attribute>
+		<language name="JPN" width="256">[1:07:わざ名:0]に　わざを
+おぼえさせるのを　あきらめますか？</language>
+		<language name="JPN_KANJI" width="256">[1:07:わざ名:0]に　わざを
+おぼえさせるのを　あきらめますか？</language>
+	</row>
+
+	<row id="msg_skillteach_system_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>ドラゴン技教え
+・0＝ポケモン名
+・1＝技名</comment>
+		<attribute name="キャラ指定">システム</attribute>
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]は　あたらしく
+[1:07:わざ名:1]を　おぼえた！</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]は　新しく
+[1:07:わざ名:1]を　覚えた！</language>
+	</row>
+
+	<row id="msg_skillteach_system_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>ドラゴン技教え
+・0＝ポケモン名
+・1＝技名</comment>
+		<attribute name="キャラ指定">システム</attribute>
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]は　あたらしく
+[1:07:わざ名:1]を　おぼえたい……！▼
+しかし　[1:02:ポケモンニックネーム:0]は
+すでに　わざを　４つ　おぼえている！▼
+[1:07:わざ名:1]の　かわりに
+ほかの　わざを　わすれさせますか？</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]は　新しく
+[1:07:わざ名:1]を　覚えたい……！▼
+しかし　[1:02:ポケモンニックネーム:0]は
+すでに　わざを　４つ　覚えている！▼
+[1:07:わざ名:1]の　かわりに
+他の　技を　忘れさせますか？</language>
+	</row>
+
+	<row id="msg_skillteach_system_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>ドラゴン技教え
+・0＝技名</comment>
+		<attribute name="キャラ指定">システム</attribute>
+		<language name="JPN" width="256">それでは　[1:07:わざ名:0]を
+おぼえさせるのを　あきらめますか？</language>
+		<language name="JPN_KANJI" width="256">それでは　[1:07:わざ名:1]を
+覚えさせるのを　あきらめますか？</language>
+	</row>
+
+	<row id="msg_skillteach_system_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>ドラゴン技教え
+・0＝ポケモン名
+・1＝技名</comment>
+		<attribute name="キャラ指定">システム</attribute>
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]は　[1:07:わざ名:1]を
+おぼえずに　おわった！</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]は　[1:07:わざ名:1]を
+覚えずに　終わった！</language>
+	</row>
+
+	<row id="msg_skillteach_system_05" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+		<comment>ドラゴン技教え
+・0＝技名
+・はい/いいえの選択肢表示
+　はい　→16 いいえ→13</comment>
+		<attribute name="キャラ指定">システム</attribute>
+		<language name="JPN" width="256">[1:07:わざ名:0]を
+わすれさせて　よろしいですね？</language>
+		<language name="JPN_KANJI" width="256">[1:07:わざ名:0]を
+忘れさせて　よろしいですね？</language>
+	</row>
+
+	<row id="msg_skillteach_system_06" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>ドラゴン技教え
+・0＝ポケモン名
+・1＝技名
+・2＝技名</comment>
+		<attribute name="キャラ指定">システム</attribute>
+		<language name="JPN" width="256">１　２の　……ポカン！▼
+[1:02:ポケモンニックネーム:0]は　[1:07:わざ名:1]の
+つかいかたを　きれいに　わすれた！▼
+そして……！▼
+[1:01:ポケモン種族名:0]は　あたらしく
+[1:07:わざ名:2]を　おぼえた！</language>
+		<language name="JPN_KANJI" width="256">１　２の　……ポカン！▼
+[1:01:ポケモン種族名:0]は　[1:07:わざ名:1]の
+使い方を　きれいに　忘れた！▼
+そして……！▼
+[1:02:ポケモンニックネーム:0]は　新しく
+[1:07:わざ名:2]を　覚えた！</language>
+	</row>
+
+	<row id="msg_skillteach_dragon_01w">
+		<comment>♂：ドラゴン技教え
+・はい／いいえの選択肢表示
+　はいを選択
+　→おぼえられるポケモンが……
+　　・いる　→dragon_05
+　　・いるが不可　→dragon_03
+　　・いない→dragon_04
+　いいえ→dragon_02
+
+・条件あり
+　なつき度最高を満たしていれば何匹でも覚える
+　技名「りゅうせいぐん」</comment>
+		<attribute name="キャラ指定">ジムリーダー
+アイリス</attribute>
+		<language name="JPN" width="256">アイリス『ねえねえ！
+よければ　きみの　ポケモンに▽
+ドラゴンタイプ　さいきょうの　わざ▽
+あたしが　おしえてあげる！！▼
+どうする？　ポケモンに
+わざを　おぼえさせてあげる？▼</language>
+		<language name="JPN_KANJI" width="256">アイリス『ねえねえ！
+よければ　きみの　ポケモンに▽
+ドラゴンタイプ　さいきょうの　わざ▽
+あたしが　おしえてあげる！！▼
+どうする？　ポケモンに
+わざを　おぼえさせてあげる？▼</language>
+	</row>
+
+	<row id="msg_skillteach_dragon_02w">
+		<comment>♂：ドラゴン技教え
+・いいえを選択</comment>
+		<attribute name="キャラ指定">ジムリーダー
+アイリス</attribute>
+		<language name="JPN" width="256">はーい！　それじゃあ
+きがむいたら　またきてね！！</language>
+		<language name="JPN_KANJI" width="256">はーい！　それじゃあ
+きがむいたら　またきてね！！</language>
+	</row>
+
+	<row id="msg_skillteach_dragon_03w">
+		<comment>♂：ドラゴン技教え
+・はいを選択
+　覚えられるポケモンがいるが
+　なつき度がＭＡＸではない
+・選択画面で選んだ場合も</comment>
+		<attribute name="キャラ指定">ジムリーダー
+アイリス</attribute>
+		<language name="JPN" width="256">どれどれ……▼
+きみが　つれている　ポケモンは
+わざを　おぼえることは　できるけど▼
+その　ポケモン……　まだ
+きみに　かんぜんに　なついてないよね▼
+それだと　この　わざを
+おぼえさせるのは　むずかしいなあ</language>
+		<language name="JPN_KANJI" width="256">どれどれ……▼
+きみが　つれている　ポケモンは
+わざを　おぼえることは　できるけど▼
+その　ポケモン……　まだ
+きみに　かんぜんに　なついてないよね▼
+それだと　この　わざを
+おぼえさせるのは　むずかしいなあ</language>
+	</row>
+
+	<row id="msg_skillteach_dragon_04w">
+		<comment>♂：ドラゴン技教え
+・はいを選択
+　だが覚えられるポケモンがいない</comment>
+		<attribute name="キャラ指定">ジムリーダー
+アイリス</attribute>
+		<language name="JPN" width="256">えーっと▼
+きみが　つれている　なかに
+わざを　おぼえられる▽
+ポケモン　いないみたい……</language>
+		<language name="JPN_KANJI" width="256">えーっと▼
+きみが　つれている　なかに
+わざを　おぼえられる▽
+ポケモン　いないみたい……</language>
+	</row>
+
+	<row id="msg_skillteach_dragon_05w">
+		<comment>♂：ドラゴン技教え
+・はいを選択
+　覚えられるポケモンがいる
+・メッセージ表示後、ポケモン選択画面に</comment>
+		<attribute name="キャラ指定">ジムリーダー
+アイリス</attribute>
+		<language name="JPN" width="256">どの　ポケモンに
+わざを　おぼえさせるの？▼</language>
+		<language name="JPN_KANJI" width="256">どの　ポケモンに
+わざを　おぼえさせるの？▼</language>
+	</row>
+
+	<row id="msg_skillteach_dragon_06w">
+		<comment>♂：ドラゴン技教え
+・ポケモン選択後
+　おぼえられない</comment>
+		<attribute name="キャラ指定">ジムリーダー
+アイリス</attribute>
+		<language name="JPN" width="256">うーん　ごめんね……▼
+その　ポケモンでは
+この　わざ　おぼえられないよ……</language>
+		<language name="JPN_KANJI" width="256">うーん　ごめんね……▼
+その　ポケモンでは
+この　わざ　おぼえられないよ……</language>
+	</row>
+
+	<row id="msg_skillteach_dragon_07w">
+		<comment>♂：ドラゴン技教え
+・ポケモン選択時にタマゴ選択</comment>
+		<attribute name="キャラ指定">ジムリーダー
+アイリス</attribute>
+		<language name="JPN" width="256">エーッ！▼
+タマゴに　わざを　おぼえさせるの？
+じゃあ　ちょっと　がんばってみるね▼
+……　……　……
+……　……　……▼
+ごめん……
+ちょっと　ムリみたい……</language>
+		<language name="JPN_KANJI" width="256">エーッ！▼
+タマゴに　わざを　おぼえさせるの？
+じゃあ　ちょっと　がんばってみるね▼
+……　……　……
+……　……　……▼
+ごめん……
+ちょっと　ムリみたい……</language>
+	</row>
+
+	<row id="msg_skillteach_dragon_08w">
+		<comment>♂：ドラゴン技教え
+・ポケモン選択後、すでに習得済み
+・0＝技名</comment>
+		<attribute name="キャラ指定">ジムリーダー
+アイリス</attribute>
+		<language name="JPN" width="256">どれどれ？　その　ポケモン
+すでに　[1:07:わざ名:0]を　おぼえているよ？</language>
+		<language name="JPN_KANJI" width="256">どれどれ？　その　ポケモン
+すでに　[1:07:わざ名:0]を　おぼえているよ？</language>
+	</row>
+
+	<row id="msg_skillteach_dragon_09w">
+		<comment>♂：ドラゴン技教え
+・msg_skillteach_system_06表示後
+　フィールドにもどると、このメッセージ表示
+・以降はmsg_skillteach_dragon_01表示</comment>
+		<attribute name="キャラ指定">ジムリーダー
+アイリス</attribute>
+		<language name="JPN" width="256">アイリス『りゅうせいぐんの　いりょくは
+ものすごーく　すごいんだけど！▼
+つかったあとは　じぶんの
+とくしゅこうげきも　さがっちゃうんだ</language>
+		<language name="JPN_KANJI" width="256">アイリス『りゅうせいぐんの　いりょくは
+ものすごーく　すごいんだけど！▼
+つかったあとは　じぶんの
+とくしゅこうげきも　さがっちゃうんだ</language>
+	</row>
+
+	<row id="msg_skillteach_powerful_01">
+		<comment>♂：究極技教え
+・初めての会話
+・はい/いいえの選択肢表示
+　はい　→03
+　いいえ→04</comment>
+		<attribute name="キャラ指定">OLDMAN</attribute>
+		<language name="JPN" width="256">つよさを　もとめて
+こんなところまで　きおったか▼
+……よろしい▼
+その　ねついに　こたえて
+これぞ！　という　わざを　おしえよう▼
+きゅうきょくの　わざ！
+おぬしの　ポケモンに　おしえるのか？</language>
+		<language name="JPN_KANJI" width="256">強さを　求めて
+こんなところまで　来おったか▼
+……よろしい▼
+その　熱意に　応えて
+これぞ！　という　技を　教えよう▼
+究極の　技！
+おぬしの　ポケモンに　教えるのか？</language>
+	</row>
+
+	<row id="msg_skillteach_powerful_02">
+		<comment>♂：究極技教え
+・２回目以降の会話
+　あるいは技を習得したあと
+・はい/いいえの選択肢表示
+　はい　→03
+　いいえ→04</comment>
+		<language name="JPN" width="256">きゅうきょくの　わざ！
+おぬしの　ポケモンに　おしえるのか？</language>
+		<language name="JPN_KANJI" width="256">究極の　技！
+おぬしの　ポケモンに　教えるのか？</language>
+	</row>
+
+	<row id="msg_skillteach_powerful_03" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,,">
+		<comment>♂：究極技教え
+・手持ちに対象ポケモンがいない場合</comment>
+		<language name="JPN" width="256">おぬしの　つれている　ポケモンでは
+おぼえられんぞ！▼
+はりがみを　よむのじゃ！　カッ！！</language>
+		<language name="JPN_KANJI" width="256">おぬしの　つれている　ポケモンでは
+覚えられんぞ！▼
+張り紙を　読むのじゃ！　カッ！！
+</language>
+	</row>
+
+	<row id="msg_skillteach_powerful_04">
+		<comment>♂：究極技教え
+・いいえ選択時</comment>
+		<language name="JPN" width="256">ふむう　それも　よかろう……
+きがむけば　また　あしを　はこべよ</language>
+		<language name="JPN_KANJI" width="256">ふむう　それも　よかろう……
+気が向けば　また　足を運べよ</language>
+	</row>
+
+	<row id="msg_skillteach_powerful_05">
+		<comment>・ポケモン選択
+　最初から覚えられないポケモン→06
+　タマゴ→07
+　なつき度たりない→08
+　すでに技を習得済み→09
+
+・覚えられるポケモンを選択
+　炎タイプ→10
+　水タイプ→11
+　草タイプ→12</comment>
+		<language name="JPN" width="256">では　どの　ポケモンに
+わざを　おぼえさせるのじゃ？</language>
+		<language name="JPN_KANJI" width="256">では　どの　ポケモンに
+技を　覚えさせるのじゃ？</language>
+	</row>
+
+	<row id="msg_skillteach_powerful_06">
+		<comment>・最初から覚えられないポケモンを選択</comment>
+		<language name="JPN" width="256">その　ポケモンでは　おぼえられんぞ！
+はりがみを　よむのじゃ！　カッ！！</language>
+		<language name="JPN_KANJI" width="256">その　ポケモンでは　覚えられんぞ！
+張り紙を　読むのじゃ！　カッ！！</language>
+	</row>
+
+	<row id="msg_skillteach_powerful_07">
+		<comment>・タマゴ選択</comment>
+		<language name="JPN" width="256">タマゴに　わざを　おしえることは
+わしとて　ふかのうじゃ！　カッ！！</language>
+		<language name="JPN_KANJI" width="256">タマゴに　技を　教えることは
+わしとて　不可能じゃ！　カッ！！</language>
+	</row>
+
+	<row id="msg_skillteach_powerful_08">
+		<comment>・なつき度がたりないポケモンを選択</comment>
+		<language name="JPN" width="256">おぬしと　ポケモンの　きずなが
+たりておらぬぞ！　カッ！！</language>
+		<language name="JPN_KANJI" width="256">おぬしと　ポケモンの　きずなが
+足りておらぬぞ！　カッ！！</language>
+	</row>
+
+	<row id="msg_skillteach_powerful_09">
+		<comment>・すでに技を習得済みのポケモンを選択</comment>
+		<language name="JPN" width="256">その　ポケモンは　すでに
+わざを　おぼえているぞ　カッ！！</language>
+		<language name="JPN_KANJI" width="256">その　ポケモンは　すでに
+技を　覚えているぞ　カッ！！</language>
+	</row>
+
+	<row id="msg_skillteach_powerful_10">
+		<comment>・習得ＯＫで炎ポケモン選択
+・はい/いいえの選択肢表示
+　はい（わざ３つ以下）→13
+　はい（わざ４つ）→14
+　いいえ→04
+
+・0＝ポケモン名</comment>
+		<language name="JPN" width="256">[1:01:ポケモン種族名:0]に　[1:07:わざ名:1]を
+おぼえさせるのじゃな！　カッ！！</language>
+		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:0]に　[1:07:わざ名:1]を
+覚えさせるのじゃな！　カッ！！</language>
+	</row>
+
+	<row id="msg_skillteach_poster_01">
+		<comment>ＢＧメッセージ
+・今後WBの最初3匹（の進化系)を追加</comment>
+		<attribute name="キャラ指定">ポスター</attribute>
+		<language name="JPN" width="256">ここに　しるした　ポケモンに
+きゅうきょくの　わざを　おしえる！▼
+もえる　ほのおの　ポケモン
+　リザードン　バクフーン▽
+　バシャーモ　ゴウカザル▽
+　？？？？？▼
+たゆたう　みずの　ポケモン
+　カメックス　オーダイル▽
+　ラグラージ　エンペルト▽
+　？？？？？▼
+しずかな　くさの　ポケモン
+　フシギバナ　メガニウム▽
+　ジュカイン　ドダイトス▽
+　？？？？？</language>
+		<language name="JPN_KANJI" width="256">ここに　記した　ポケモンに
+究極の　技を　教える！▼
+燃える　炎の　ポケモン
+　リザードン　バクフーン▽
+　バシャーモ　ゴウカザル▽
+　？？？？？▼
+たゆたう　水の　ポケモン
+　カメックス　オーダイル▽
+　ラグラージ　エンペルト▽
+　？？？？？▼
+静かな　草の　ポケモン
+　フシギバナ　メガニウム▽
+　ジュカイン　ドダイトス▽
+　？？？？？</language>
+	</row>
+
+	<flowchart-group-list>
+		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
+	</flowchart-group-list>
+</body>
+
+</gmml>
