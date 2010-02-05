@@ -1751,7 +1751,7 @@ BOOL BPP_CheckSick( const BTL_POKEPARAM* bpp, WazaSick sickType )
  * @retval  u8
  */
 //=============================================================================================
-u8 BPP_GetSickParam( const BTL_POKEPARAM* pp, WazaSick sick )
+u16 BPP_GetSickParam( const BTL_POKEPARAM* pp, WazaSick sick )
 {
   GF_ASSERT(sick < NELEMS(pp->sickCont));
 

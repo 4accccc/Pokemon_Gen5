@@ -340,7 +340,7 @@ extern void BPP_ReflectExpAdd( BTL_POKEPARAM* bpp );
 
 extern BOOL BPP_CheckSick( const BTL_POKEPARAM* pp, WazaSick sickType );
 extern PokeSick BPP_GetPokeSick( const BTL_POKEPARAM* pp );
-extern u8 BPP_GetSickParam( const BTL_POKEPARAM* pp, WazaSick sick );
+extern u16 BPP_GetSickParam( const BTL_POKEPARAM* pp, WazaSick sick );
 extern int  BPP_CalcSickDamage( const BTL_POKEPARAM* pp, WazaSick sickID );
 extern BPP_SICK_CONT BPP_GetSickCont( const BTL_POKEPARAM* bpp, WazaSick sick );
 extern u8 BPP_GetSickTurnCount( const BTL_POKEPARAM* bpp, WazaSick sick );
