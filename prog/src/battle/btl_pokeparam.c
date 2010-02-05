@@ -24,9 +24,6 @@
 /* Consts                                                                   */
 /*--------------------------------------------------------------------------*/
 enum {
-  RANK_STATUS_MIN = BPP_RANK_STATUS_MIN,
-  RANK_STATUS_MAX = BPP_RANK_STATUS_MAX,
-  RANK_STATUS_DEF = BPP_RANK_STATUS_DEFAULT,
 
   RANK_CRITICAL_MIN = 0,
   RANK_CRITICAL_MAX = 4,
@@ -366,44 +363,44 @@ static void Effrank_Init( BPP_VARIABLE_PARAM* rank )
 }
 static void Effrank_Reset( BPP_VARIABLE_PARAM* rank )
 {
-  rank->attack = RANK_STATUS_DEF;
-  rank->defence = RANK_STATUS_DEF;
-  rank->sp_attack = RANK_STATUS_DEF;
-  rank->sp_defence = RANK_STATUS_DEF;
-  rank->agility = RANK_STATUS_DEF;
-  rank->hit = RANK_STATUS_DEF;
-  rank->avoid = RANK_STATUS_DEF;
+  rank->attack = BPP_RANK_STATUS_DEFAULT;
+  rank->defence = BPP_RANK_STATUS_DEFAULT;
+  rank->sp_attack = BPP_RANK_STATUS_DEFAULT;
+  rank->sp_defence = BPP_RANK_STATUS_DEFAULT;
+  rank->agility = BPP_RANK_STATUS_DEFAULT;
+  rank->hit = BPP_RANK_STATUS_DEFAULT;
+  rank->avoid = BPP_RANK_STATUS_DEFAULT;
 }
 static BOOL Effrank_Recover( BPP_VARIABLE_PARAM* rank )
 {
   BOOL fEffective = FALSE;
 
-  if( rank->attack < RANK_STATUS_DEF ){
-    rank->attack = RANK_STATUS_DEF;
+  if( rank->attack < BPP_RANK_STATUS_DEFAULT ){
+    rank->attack = BPP_RANK_STATUS_DEFAULT;
     fEffective = TRUE;
   };
-  if( rank->defence < RANK_STATUS_DEF ){
-    rank->defence = RANK_STATUS_DEF;
+  if( rank->defence < BPP_RANK_STATUS_DEFAULT ){
+    rank->defence = BPP_RANK_STATUS_DEFAULT;
     fEffective = TRUE;
   }
-  if( rank->sp_attack < RANK_STATUS_DEF ){
-    rank->sp_attack = RANK_STATUS_DEF;
+  if( rank->sp_attack < BPP_RANK_STATUS_DEFAULT ){
+    rank->sp_attack = BPP_RANK_STATUS_DEFAULT;
     fEffective = TRUE;
   }
-  if( rank->sp_defence < RANK_STATUS_DEF ){
-    rank->sp_defence = RANK_STATUS_DEF;
+  if( rank->sp_defence < BPP_RANK_STATUS_DEFAULT ){
+    rank->sp_defence = BPP_RANK_STATUS_DEFAULT;
     fEffective = TRUE;
   }
-  if( rank->agility < RANK_STATUS_DEF ){
-    rank->agility = RANK_STATUS_DEF;
+  if( rank->agility < BPP_RANK_STATUS_DEFAULT ){
+    rank->agility = BPP_RANK_STATUS_DEFAULT;
     fEffective = TRUE;
   }
-  if( rank->hit < RANK_STATUS_DEF ){
-    rank->hit = RANK_STATUS_DEF;
+  if( rank->hit < BPP_RANK_STATUS_DEFAULT ){
+    rank->hit = BPP_RANK_STATUS_DEFAULT;
     fEffective = TRUE;
   }
-  if( rank->avoid < RANK_STATUS_DEF ){
-    rank->avoid = RANK_STATUS_DEF;
+  if( rank->avoid < BPP_RANK_STATUS_DEFAULT ){
+    rank->avoid = BPP_RANK_STATUS_DEFAULT;
     fEffective = TRUE;
   }
 
@@ -595,8 +592,8 @@ int BPP_GetValue_Base( const BTL_POKEPARAM* bpp, BppValueID vid )
   case BPP_SP_DEFENCE:        return bpp->baseParam.sp_defence;
   case BPP_AGILITY:           return bpp->baseParam.agility;
 
-  case BPP_HIT_RATIO:         return RANK_STATUS_DEF;
-  case BPP_AVOID_RATIO:       return RANK_STATUS_DEF;
+  case BPP_HIT_RATIO:         return BPP_RANK_STATUS_DEFAULT;
+  case BPP_AVOID_RATIO:       return BPP_RANK_STATUS_DEFAULT;
 
   default:
     return BPP_GetValue( bpp, vid );
@@ -699,10 +696,10 @@ int BPP_GetValue_Critical( const BTL_POKEPARAM* bpp, BppValueID vid )
   vid = ConvertValueID( bpp, vid_org );
 
   switch( vid ){
-  case BPP_ATTACK:     fFlatParam = (bpp->varyParam.attack < RANK_STATUS_DEF); break;
-  case BPP_SP_ATTACK:  fFlatParam = (bpp->varyParam.sp_attack < RANK_STATUS_DEF); break;
-  case BPP_DEFENCE:    fFlatParam = (bpp->varyParam.defence > RANK_STATUS_DEF); break;
-  case BPP_SP_DEFENCE: fFlatParam = (bpp->varyParam.sp_defence > RANK_STATUS_DEF); break;
+  case BPP_ATTACK:     fFlatParam = (bpp->varyParam.attack < BPP_RANK_STATUS_DEFAULT); break;
+  case BPP_SP_ATTACK:  fFlatParam = (bpp->varyParam.sp_attack < BPP_RANK_STATUS_DEFAULT); break;
+  case BPP_DEFENCE:    fFlatParam = (bpp->varyParam.defence > BPP_RANK_STATUS_DEFAULT); break;
+  case BPP_SP_DEFENCE: fFlatParam = (bpp->varyParam.sp_defence > BPP_RANK_STATUS_DEFAULT); break;
 
   default:
     break;
@@ -934,8 +931,8 @@ static const s8* getRankVaryStatusConst( const BTL_POKEPARAM* bpp, BppValueID ty
 {
   const s8* ptr;
 
-  *min = RANK_STATUS_MIN;
-  *max = RANK_STATUS_MAX;
+  *min = BPP_RANK_STATUS_MIN;
+  *max = BPP_RANK_STATUS_MAX;
 
   switch( type ) {
   case BPP_ATTACK:      ptr = &bpp->varyParam.attack; break;
@@ -1029,13 +1026,13 @@ int BPP_RankEffectDownLimit( const BTL_POKEPARAM* bpp, BppValueID rankType )
 //=============================================================================================
 BOOL BPP_IsRankEffectDowned( const BTL_POKEPARAM* bpp )
 {
-  if( bpp->varyParam.attack < RANK_STATUS_DEF ){ return TRUE; }
-  if( bpp->varyParam.defence  < RANK_STATUS_DEF ){ return TRUE; }
-  if( bpp->varyParam.sp_attack  < RANK_STATUS_DEF ){ return TRUE; }
-  if( bpp->varyParam.sp_defence  < RANK_STATUS_DEF ){ return TRUE; }
-  if( bpp->varyParam.agility  < RANK_STATUS_DEF ){ return TRUE; }
-  if( bpp->varyParam.hit  < RANK_STATUS_DEF ){ return TRUE; }
-  if( bpp->varyParam.avoid  < RANK_STATUS_DEF ){ return TRUE; }
+  if( bpp->varyParam.attack < BPP_RANK_STATUS_DEFAULT ){ return TRUE; }
+  if( bpp->varyParam.defence  < BPP_RANK_STATUS_DEFAULT ){ return TRUE; }
+  if( bpp->varyParam.sp_attack  < BPP_RANK_STATUS_DEFAULT ){ return TRUE; }
+  if( bpp->varyParam.sp_defence  < BPP_RANK_STATUS_DEFAULT ){ return TRUE; }
+  if( bpp->varyParam.agility  < BPP_RANK_STATUS_DEFAULT ){ return TRUE; }
+  if( bpp->varyParam.hit  < BPP_RANK_STATUS_DEFAULT ){ return TRUE; }
+  if( bpp->varyParam.avoid  < BPP_RANK_STATUS_DEFAULT ){ return TRUE; }
   return FALSE;
 }
 
@@ -1053,7 +1050,7 @@ BOOL BPP_IsRankEffectDowned( const BTL_POKEPARAM* bpp )
 u8 BPP_RankUp( BTL_POKEPARAM* bpp, BppValueID rankType, u8 volume )
 {
   s8 *ptr;
-  s8 max = RANK_STATUS_MAX;
+  s8 max = BPP_RANK_STATUS_MAX;
 
   switch( rankType ){
   case BPP_ATTACK:      ptr = &bpp->varyParam.attack; break;
@@ -1094,7 +1091,7 @@ u8 BPP_RankUp( BTL_POKEPARAM* bpp, BppValueID rankType, u8 volume )
 u8 BPP_RankDown( BTL_POKEPARAM* bpp, BppValueID rankType, u8 volume )
 {
   s8 *ptr;
-  s8 min = RANK_STATUS_MIN;
+  s8 min = BPP_RANK_STATUS_MIN;
 
   switch( rankType ){
   case BPP_ATTACK:       ptr = &bpp->varyParam.attack; break;
@@ -1133,8 +1130,8 @@ u8 BPP_RankDown( BTL_POKEPARAM* bpp, BppValueID rankType, u8 volume )
 void BPP_RankSet( BTL_POKEPARAM* pp, BppValueID rankType, u8 value )
 {
   s8 *ptr;
-  u8 min = RANK_STATUS_MIN;
-  u8 max = RANK_STATUS_MAX;
+  u8 min = BPP_RANK_STATUS_MIN;
+  u8 max = BPP_RANK_STATUS_MAX;
 
   switch( rankType ){
   case BPP_ATTACK:        ptr = &pp->varyParam.attack; break;

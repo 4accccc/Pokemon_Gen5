@@ -430,6 +430,8 @@ typedef struct {
  s8 sp_attack;
  s8 sp_defence;
  s8 agility;
+ s8 hit_ratio;
+ s8 avoid_ratio;
 }BTL_HANDEX_PARAM_SET_RANK;
 
 /**

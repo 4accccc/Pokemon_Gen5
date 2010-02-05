@@ -2295,12 +2295,14 @@ static void handler_Hakidasu_Done( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
     }
 
     rank_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_SET_RANK, pokeID );
-    rank_param->pokeID     = pokeID;
-    rank_param->attack     = BPP_GetValue( bpp, BPP_ATTACK_RANK );
-    rank_param->defence    = def_rank;
-    rank_param->sp_attack  = BPP_GetValue( bpp, BPP_SP_ATTACK_RANK );
-    rank_param->sp_defence = spdef_rank;
-    rank_param->agility    = BPP_GetValue( bpp, BPP_AGILITY_RANK );
+    rank_param->pokeID      = pokeID;
+    rank_param->attack      = BPP_GetValue( bpp, BPP_ATTACK_RANK );
+    rank_param->defence     = def_rank;
+    rank_param->sp_attack   = BPP_GetValue( bpp, BPP_SP_ATTACK_RANK );
+    rank_param->sp_defence  = spdef_rank;
+    rank_param->agility     = BPP_GetValue( bpp, BPP_AGILITY_RANK );
+    rank_param->hit_ratio   = BPP_GetValue( bpp, BPP_HIT_RATIO );
+    rank_param->avoid_ratio = BPP_GetValue( bpp, BPP_AVOID_RATIO );
 
     counter_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_COUNTER, pokeID );
     counter_param->pokeID = pokeID;
@@ -5877,12 +5879,14 @@ static void handler_JikoAnji( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
     BTL_HANDEX_PARAM_MESSAGE* msg_param;
 
     rank_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_SET_RANK, pokeID );
-    rank_param->pokeID = pokeID;
-    rank_param->attack     = BPP_GetValue( target, BPP_ATTACK_RANK );
-    rank_param->defence    = BPP_GetValue( target, BPP_DEFENCE_RANK );
-    rank_param->sp_attack  = BPP_GetValue( target, BPP_SP_ATTACK_RANK );
-    rank_param->sp_defence = BPP_GetValue( target, BPP_SP_DEFENCE_RANK );
-    rank_param->agility    = BPP_GetValue( target, BPP_AGILITY_RANK );
+    rank_param->pokeID      = pokeID;
+    rank_param->attack      = BPP_GetValue( target, BPP_ATTACK_RANK );
+    rank_param->defence     = BPP_GetValue( target, BPP_DEFENCE_RANK );
+    rank_param->sp_attack   = BPP_GetValue( target, BPP_SP_ATTACK_RANK );
+    rank_param->sp_defence  = BPP_GetValue( target, BPP_SP_DEFENCE_RANK );
+    rank_param->agility     = BPP_GetValue( target, BPP_AGILITY_RANK );
+    rank_param->hit_ratio   = BPP_GetValue( target, BPP_HIT_RATIO );
+    rank_param->avoid_ratio = BPP_GetValue( target, BPP_AVOID_RATIO );
 
 
     msg_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
@@ -5916,20 +5920,24 @@ static void handler_HeartSwap( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
     BTL_HANDEX_PARAM_MESSAGE* msg_param;
 
     rank_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_SET_RANK, pokeID );
-    rank_param->pokeID = pokeID;
-    rank_param->attack     = BPP_GetValue( target, BPP_ATTACK_RANK );
-    rank_param->defence    = BPP_GetValue( target, BPP_DEFENCE_RANK );
-    rank_param->sp_attack  = BPP_GetValue( target, BPP_SP_ATTACK_RANK );
-    rank_param->sp_defence = BPP_GetValue( target, BPP_SP_DEFENCE_RANK );
-    rank_param->agility    = BPP_GetValue( target, BPP_AGILITY_RANK );
+    rank_param->pokeID      = pokeID;
+    rank_param->attack      = BPP_GetValue( target, BPP_ATTACK_RANK );
+    rank_param->defence     = BPP_GetValue( target, BPP_DEFENCE_RANK );
+    rank_param->sp_attack   = BPP_GetValue( target, BPP_SP_ATTACK_RANK );
+    rank_param->sp_defence  = BPP_GetValue( target, BPP_SP_DEFENCE_RANK );
+    rank_param->agility     = BPP_GetValue( target, BPP_AGILITY_RANK );
+    rank_param->hit_ratio   = BPP_GetValue( target, BPP_HIT_RATIO );
+    rank_param->avoid_ratio = BPP_GetValue( target, BPP_AVOID_RATIO );
 
     rank_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_SET_RANK, pokeID );
-    rank_param->pokeID = target_pokeID;
-    rank_param->attack     = BPP_GetValue( self, BPP_ATTACK_RANK );
-    rank_param->defence    = BPP_GetValue( self, BPP_DEFENCE_RANK );
-    rank_param->sp_attack  = BPP_GetValue( self, BPP_SP_ATTACK_RANK );
-    rank_param->sp_defence = BPP_GetValue( self, BPP_SP_DEFENCE_RANK );
-    rank_param->agility    = BPP_GetValue( self, BPP_AGILITY_RANK );
+    rank_param->pokeID      = target_pokeID;
+    rank_param->attack      = BPP_GetValue( self, BPP_ATTACK_RANK );
+    rank_param->defence     = BPP_GetValue( self, BPP_DEFENCE_RANK );
+    rank_param->sp_attack   = BPP_GetValue( self, BPP_SP_ATTACK_RANK );
+    rank_param->sp_defence  = BPP_GetValue( self, BPP_SP_DEFENCE_RANK );
+    rank_param->agility     = BPP_GetValue( self, BPP_AGILITY_RANK );
+    rank_param->hit_ratio   = BPP_GetValue( self, BPP_HIT_RATIO );
+    rank_param->avoid_ratio = BPP_GetValue( self, BPP_AVOID_RATIO );
 
     msg_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
     HANDEX_STR_Setup( &msg_param->str, BTL_STRTYPE_SET, BTL_STRID_SET_HeartSwap );
@@ -5962,19 +5970,23 @@ static void handler_PowerSwap( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
 
     rank_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_SET_RANK, pokeID );
     rank_param->pokeID = pokeID;
-    rank_param->attack     = BPP_GetValue( target, BPP_ATTACK_RANK );
-    rank_param->sp_attack  = BPP_GetValue( target, BPP_SP_ATTACK_RANK );
-    rank_param->defence    = BPP_GetValue( self,   BPP_DEFENCE_RANK );
-    rank_param->sp_defence = BPP_GetValue( self,   BPP_SP_DEFENCE_RANK );
-    rank_param->agility    = BPP_GetValue( self,   BPP_AGILITY_RANK );
+    rank_param->attack      = BPP_GetValue( target, BPP_ATTACK_RANK );
+    rank_param->sp_attack   = BPP_GetValue( target, BPP_SP_ATTACK_RANK );
+    rank_param->defence     = BPP_GetValue( self,   BPP_DEFENCE_RANK );
+    rank_param->sp_defence  = BPP_GetValue( self,   BPP_SP_DEFENCE_RANK );
+    rank_param->agility     = BPP_GetValue( self,   BPP_AGILITY_RANK );
+    rank_param->hit_ratio   = BPP_GetValue( self,   BPP_HIT_RATIO );
+    rank_param->avoid_ratio = BPP_GetValue( self,   BPP_AVOID_RATIO );
 
     rank_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_SET_RANK, pokeID );
-    rank_param->pokeID = target_pokeID;
-    rank_param->attack     = BPP_GetValue( self,   BPP_ATTACK_RANK );
-    rank_param->sp_attack  = BPP_GetValue( self,   BPP_SP_ATTACK_RANK );
-    rank_param->defence    = BPP_GetValue( target, BPP_DEFENCE_RANK );
-    rank_param->sp_defence = BPP_GetValue( target, BPP_SP_DEFENCE_RANK );
-    rank_param->agility    = BPP_GetValue( target, BPP_AGILITY_RANK );
+    rank_param->pokeID      = target_pokeID;
+    rank_param->attack      = BPP_GetValue( self,   BPP_ATTACK_RANK );
+    rank_param->sp_attack   = BPP_GetValue( self,   BPP_SP_ATTACK_RANK );
+    rank_param->defence     = BPP_GetValue( target, BPP_DEFENCE_RANK );
+    rank_param->sp_defence  = BPP_GetValue( target, BPP_SP_DEFENCE_RANK );
+    rank_param->agility     = BPP_GetValue( target, BPP_AGILITY_RANK );
+    rank_param->hit_ratio   = BPP_GetValue( target, BPP_HIT_RATIO );
+    rank_param->avoid_ratio = BPP_GetValue( target, BPP_AVOID_RATIO );
 
     msg_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
     HANDEX_STR_Setup( &msg_param->str, BTL_STRTYPE_SET, BTL_STRID_SET_PowerSwap );
@@ -6006,20 +6018,24 @@ static void handler_GuardSwap( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
     BTL_HANDEX_PARAM_MESSAGE* msg_param;
 
     rank_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_SET_RANK, pokeID );
-    rank_param->pokeID = pokeID;
-    rank_param->attack     = BPP_GetValue( self,   BPP_ATTACK_RANK );
-    rank_param->sp_attack  = BPP_GetValue( self,   BPP_SP_ATTACK_RANK );
-    rank_param->defence    = BPP_GetValue( target, BPP_DEFENCE_RANK );
-    rank_param->sp_defence = BPP_GetValue( target, BPP_SP_DEFENCE_RANK );
-    rank_param->agility    = BPP_GetValue( self,   BPP_AGILITY_RANK );
+    rank_param->pokeID      = pokeID;
+    rank_param->attack      = BPP_GetValue( self,   BPP_ATTACK_RANK );
+    rank_param->sp_attack   = BPP_GetValue( self,   BPP_SP_ATTACK_RANK );
+    rank_param->defence     = BPP_GetValue( target, BPP_DEFENCE_RANK );
+    rank_param->sp_defence  = BPP_GetValue( target, BPP_SP_DEFENCE_RANK );
+    rank_param->agility     = BPP_GetValue( self,   BPP_AGILITY_RANK );
+    rank_param->hit_ratio   = BPP_GetValue( self,   BPP_HIT_RATIO );
+    rank_param->avoid_ratio = BPP_GetValue( self,   BPP_AVOID_RATIO );
 
     rank_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_SET_RANK, pokeID );
-    rank_param->pokeID = target_pokeID;
-    rank_param->attack     = BPP_GetValue( target, BPP_ATTACK_RANK );
-    rank_param->sp_attack  = BPP_GetValue( target, BPP_SP_ATTACK_RANK );
-    rank_param->defence    = BPP_GetValue( self,   BPP_DEFENCE_RANK );
-    rank_param->sp_defence = BPP_GetValue( self,   BPP_SP_DEFENCE_RANK );
-    rank_param->agility    = BPP_GetValue( target, BPP_AGILITY_RANK );
+    rank_param->pokeID      = target_pokeID;
+    rank_param->attack      = BPP_GetValue( target, BPP_ATTACK_RANK );
+    rank_param->sp_attack   = BPP_GetValue( target, BPP_SP_ATTACK_RANK );
+    rank_param->defence     = BPP_GetValue( self,   BPP_DEFENCE_RANK );
+    rank_param->sp_defence  = BPP_GetValue( self,   BPP_SP_DEFENCE_RANK );
+    rank_param->agility     = BPP_GetValue( target, BPP_AGILITY_RANK );
+    rank_param->hit_ratio   = BPP_GetValue( target, BPP_HIT_RATIO );
+    rank_param->avoid_ratio = BPP_GetValue( target, BPP_AVOID_RATIO );
 
     msg_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
     HANDEX_STR_Setup( &msg_param->str, BTL_STRTYPE_SET, BTL_STRID_SET_GuardSwap );
