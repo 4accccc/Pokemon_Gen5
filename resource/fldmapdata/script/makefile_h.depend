@@ -1485,3 +1485,27 @@ wc10r0101_def.h: wc10r0101.ev
 c11r0201_def.h: c11r0201.ev
 	$(EV_DEF) c11r0201.ev $(SCR_OFFS_ID_H)
 
+palace03_def.h: palace03.ev
+	$(EV_DEF) palace03.ev $(SCR_OFFS_ID_H)
+
+palace04_def.h: palace04.ev
+	$(EV_DEF) palace04.ev $(SCR_OFFS_ID_H)
+
+palace05_def.h: palace05.ev
+	$(EV_DEF) palace05.ev $(SCR_OFFS_ID_H)
+
+palace06_def.h: palace06.ev
+	$(EV_DEF) palace06.ev $(SCR_OFFS_ID_H)
+
+palace07_def.h: palace07.ev
+	$(EV_DEF) palace07.ev $(SCR_OFFS_ID_H)
+
+palace08_def.h: palace08.ev
+	$(EV_DEF) palace08.ev $(SCR_OFFS_ID_H)
+
+palace09_def.h: palace09.ev
+	$(EV_DEF) palace09.ev $(SCR_OFFS_ID_H)
+
+palace10_def.h: palace10.ev
+	$(EV_DEF) palace10.ev $(SCR_OFFS_ID_H)
+

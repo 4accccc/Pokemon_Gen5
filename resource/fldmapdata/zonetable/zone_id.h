@@ -462,6 +462,14 @@
 #define ZONE_ID_WC10PCR0101      (458)
 #define ZONE_ID_WC10R0101        (459)
 #define ZONE_ID_C11R0201         (460)
-#define ZONE_ID_MAX	(461)
+#define ZONE_ID_PALACE03         (461)
+#define ZONE_ID_PALACE04         (462)
+#define ZONE_ID_PALACE05         (463)
+#define ZONE_ID_PALACE06         (464)
+#define ZONE_ID_PALACE07         (465)
+#define ZONE_ID_PALACE08         (466)
+#define ZONE_ID_PALACE09         (467)
+#define ZONE_ID_PALACE10         (468)
+#define ZONE_ID_MAX	(469)
 #endif // __ZONE_ID_H__
 

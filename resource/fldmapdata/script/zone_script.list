@@ -922,5 +922,21 @@ SCRIPTFILES += \
 	sp_wc10r0101.ev \
 	c11r0201.ev \
 	sp_c11r0201.ev \
+	palace03.ev \
+	sp_palace03.ev \
+	palace04.ev \
+	sp_palace04.ev \
+	palace05.ev \
+	sp_palace05.ev \
+	palace06.ev \
+	sp_palace06.ev \
+	palace07.ev \
+	sp_palace07.ev \
+	palace08.ev \
+	sp_palace08.ev \
+	palace09.ev \
+	sp_palace09.ev \
+	palace10.ev \
+	sp_palace10.ev \
 
 #é©ìÆê∂ê¨ÉtÉ@ÉCÉã zone_script.list ññîˆ

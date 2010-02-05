@@ -1,0 +1,5 @@
+#../data/palace04.mev
+../tmp/palace04.bin:../data/palace04.mev $(UNIQ_SCRIPTHEADER) ../tmp/palace04.h 
+	@echo ../data/palace04.mev
+	@ruby make_binary.rb $< $(UNIQ_SCRIPTHEADER) ../tmp/palace04.h 
+
