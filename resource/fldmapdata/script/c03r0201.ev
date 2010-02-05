@@ -174,12 +174,7 @@ EVENT_START		ev_c03r0201_clown_01
 						_BALLOONWIN_CLOSE()
 						
 						//アイテム入手処理
-						DEFINE_LOCAL LWK_ITEM_RET
-						_ADD_ITEM( ITEM_KIZUGUSURI , 1 ,  LWK_ITEM_RET )
-						//アイテム入手SE
-						_ME_PLAY( SEQ_ME_ITEM )
-						_ME_WAIT()
-						//【仮】アイテム入手メッセージ
+						_ITEM_EVENT_KEYWAIT ( ITEM_ORENNOMI , 1  )
 						
 						//また明日も来てね
 						_BALLOONWIN_OBJMSG( msg_c03r0201_juggling_03 ,C03R0201_CLOWN_01)
