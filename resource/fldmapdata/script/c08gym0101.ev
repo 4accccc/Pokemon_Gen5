@@ -232,9 +232,9 @@ EVENT_END
 /************************************************************/
 EVENT_START	ev_pos_c08gym0101_f2_03
 
-	//[100122斉藤]！マーク表示
-//	_OBJ_ANIME( TR_C08GYM0101_F2_03,anm_c08r0101_tr_gyoe )
-//	_OBJ_ANIME_WAIT()
+
+	_OBJ_ANIME( TR_C08GYM0101_F2_03,anm_c08r0101_tr_gyoe )
+	_OBJ_ANIME_WAIT()
 
 	//視線曲PLAY
 	 _TRAINER_BGM_SET( TRID_VETERANM_04 )
@@ -254,8 +254,7 @@ EVENT_START	ev_pos_c08gym0101_f2_03
 	//結果チェック
 	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
 	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
-			
-			//[100122斉藤]トレーナー勝利の処理がメッセージ表示の後にきていたので修正。
+
 			_TRAINER_WIN()
 			
 			//トレーナーメッセージ
@@ -281,7 +280,7 @@ EVENT_END
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
-//	【仮】トレーナー接近
+//	トレーナー接近
 //--------------------------------------------------------------
 	_ANIME_LABEL	anm_c08r0101_tr_com
 	_ANIME_DATA	AC_WALK_U_8F,2
