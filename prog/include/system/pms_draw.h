@@ -126,6 +126,18 @@ extern BOOL PMS_DRAW_IsPrintEnd( PMS_DRAW_WORK* wk );
 extern void PMS_DRAW_Clear( PMS_DRAW_WORK* wk, u8 id, BOOL is_trans );
 //-----------------------------------------------------------------------------
 /**
+ *	@brief  指定IDの表示|非表示切替
+ *
+ *	@param	PMS_DRAW_WORK* wk ワーク
+ *	@param	id 表示ユニット管理ID
+ *	@param	is_visible TRUE：表示
+ *
+ *	@retval none
+ */
+//-----------------------------------------------------------------------------
+extern void PMS_DRAW_VisibleSet( PMS_DRAW_WORK* wk, u8 id, BOOL is_visible );
+//-----------------------------------------------------------------------------
+/**
  *	@brief  指定表示ユニットが表示中かどうかを返す
  *
  *	@param	PMS_DRAW_WORK* wk ワーク

@@ -89,6 +89,7 @@ static void _unit_exit( PMS_DRAW_UNIT* unit );
 static BOOL _unit_main( PMS_DRAW_UNIT* unit, PRINT_QUE* que, BOOL is_clwk_auto_scroll );
 static void _unit_print( PMS_DRAW_UNIT* unit, PRINT_QUE* print_que, GFL_FONT* font, GFL_BMPWIN* win, PMS_DATA* pms, GFL_POINT* offset, PRINTSYS_LSB print_color, u8 null_color, HEAPID heap_id );
 static void _unit_clear( PMS_DRAW_UNIT* unit, BOOL is_trans );
+static void _unit_visible_set( PMS_DRAW_UNIT* unit, BOOL is_visible );
 static CLSYS_DRAW_TYPE BGFrameToVramType( u8 frame );
 
 //=============================================================================
@@ -286,6 +287,27 @@ void PMS_DRAW_Clear( PMS_DRAW_WORK* wk, u8 id, BOOL is_trans )
   GF_ASSERT( id < wk->unit_num );
   
   _unit_clear( &wk->unit[id], is_trans );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  指定IDの表示|非表示切替
+ *
+ *	@param	PMS_DRAW_WORK* wk ワーク
+ *	@param	id 表示ユニット管理ID
+ *	@param	is_visible TRUE：表示
+ *
+ *	@retval none
+ */
+//-----------------------------------------------------------------------------
+void PMS_DRAW_VisibleSet( PMS_DRAW_WORK* wk, u8 id, BOOL is_visible )
+{ 
+  PMS_DRAW_UNIT* unit;
+
+  GF_ASSERT( wk );
+  GF_ASSERT( id < wk->unit_num );
+  
+  _unit_visible_set( &wk->unit[id], is_visible );
 }
 
 //-----------------------------------------------------------------------------
@@ -898,8 +920,44 @@ static void _unit_clear( PMS_DRAW_UNIT* unit, BOOL is_trans )
       unit->b_clwk_deco[i] = FALSE;
     }
   }
+  unit->pre_scrcnt_x = 0;
+  unit->pre_scrcnt_y = 0;
 
   unit->b_useflag = FALSE;
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  表示ユニット 表示|非表示切替
+ *
+ *	@param	PMS_DRAW_UNIT* unit 
+ *
+ *	@retval none
+ */
+//-----------------------------------------------------------------------------
+static void _unit_visible_set( PMS_DRAW_UNIT* unit, BOOL is_visible )
+{
+  GF_ASSERT( unit->b_useflag == TRUE );
+
+  // スクリーン転送
+  if( is_visible ){
+	  GFL_BMPWIN_MakeScreen( unit->print_util.win );
+  }else{
+    // スクリーンをクリアして即時転送
+	  GFL_BMPWIN_ClearScreen( unit->print_util.win );
+  } 
+	GFL_BG_LoadScreenV_Req( GFL_BMPWIN_GetFrame(unit->print_util.win) );
+  
+  // 画像非表示
+  {
+    int i;
+    for( i=0; i<PMS_WORD_MAX; i++ )
+    {
+      if( unit->b_clwk_deco[i] ){
+        GFL_CLACT_WK_SetDrawEnable( unit->clwk[i], is_visible );
+      }
+    }
+  }
 }
 
 //-----------------------------------------------------------------------------
