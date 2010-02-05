@@ -52,7 +52,7 @@
 #include "savedata/symbol_save.h"
 #include "savedata/my_pms_data.h"
 #include "savedata/battle_examination.h"
-#include "savedata/anketo_save.h"
+#include "savedata/questionnaire_save.h"
 #include "savedata/un_savedata.h"
 
 //==============================================================================
@@ -412,9 +412,9 @@ static const GFL_SAVEDATA_TABLE SaveDataTbl_Normal[] = {
     (FUNC_INIT_WORK)MYPMS_Init,
   },
   { //すれ違いアンケート
-    GMDATA_ID_ANKETO,
-    (FUNC_GET_SIZE)AnketoSave_GetWorkSize,
-    (FUNC_INIT_WORK)AnketoSave_WorkInit,
+    GMDATA_ID_QUESTIONNAIRE,
+    (FUNC_GET_SIZE)QuestionnaireSave_GetWorkSize,
+    (FUNC_INIT_WORK)QuestionnaireSave_WorkInit,
   },
   { //国連
     GMDATA_ID_UNSV,
