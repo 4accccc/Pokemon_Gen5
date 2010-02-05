@@ -279,9 +279,9 @@ typedef struct {
   u8 is_end;
   u8 is_add;
   
-  GFL_PTC_PTR     ptc;
-  u8              spa_work[ PARTICLE_LIB_HEAP_SIZE ];
-  u8  spa_num;
+  GFL_PTC_PTR ptc;
+  u8          spa_work[ PARTICLE_LIB_HEAP_SIZE ];
+  u8          spa_num;
 
 } COMM_BTL_DEMO_G3D_WORK;
 
@@ -2150,6 +2150,8 @@ static void TRAINER_UNIT_DrawTrainerName( TRAINER_UNIT* unit, GFL_FONT *font )
     // —ˆ—
     GFL_FONTSYS_SetColor( 0x4, 0x4, 0x4 );
   }
+
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(unit->win_name) , 0 );
 
   PRINTSYS_Print( GFL_BMPWIN_GetBmp(unit->win_name), 0, 0, unit->str_trname, font );
   PRINTSYS_Print( GFL_BMPWIN_GetBmp(unit->win_name), 0, 1, unit->str_trname, font );
