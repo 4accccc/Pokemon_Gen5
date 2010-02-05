@@ -13,39 +13,10 @@
 #include "item/item.h"
 #include "gamesystem/msgspeed.h"
 #include "waza_tool/wazadata.h"
+#include "waza_tool/wazano_def.h"
 #include "system/bmp_winframe.h"
 #include "poke_tool/gauge_tool.h"
 #include "app/app_menu_common.h"
-
-/*ª[GS_CONVERT_TAG]*/
-//#include "system/procsys.h"
-/*ª[GS_CONVERT_TAG]*/
-/*
-#include "system/palanm.h"
-#include "system/window.h"
-#include "system/fontproc.h"
-#include "system/msgdata.h"
-#include "system/numfont.h"
-#include "system/wordset.h"
-#include "system/pmfprint.h"
-#include "system/buflen.h"
-*/
-//#include "system/clact_tool.h"
-/*ª[GS_CONVERT_TAG]*/
-/*
-#include "msgdata/msg.naix"
-#include "msgdata/msg_b_plist.h"
-#include "battle/battle_common.h"
-#include "battle/fight_tool.h"
-#include "battle/wazano_def.h"
-#include "poketool/pokeparty.h"
-#include "contest/contest.h"
-#include "contest/con_tool.h"
-#include "itemtool/item.h"
-#include "application/app_tool.h"
-#include "application/p_status.h"
-#include "b_app_tool.h"
-*/
 
 #include "msg/msg_b_plist.h"
 
@@ -3368,11 +3339,23 @@ void BattlePokeList_ItemUseSkillErrMsgSet( BPLIST_WORK * wk )
   dat = wk->dat;
   pp  = BattleWorkPokemonParamGet( dat->bw, dat->client_no, dat->list_row[dat->sel_poke] );
   str = GFL_MSG_CreateString( wk->mman, mes_b_plist_m20 );
+
   WORDSET_RegisterPokeNickName( wk->wset, 0, pp );
   WORDSET_RegisterWazaName( wk->wset, 1, WAZANO_SASIOSAE );
   WORDSET_ExpandStr( wk->wset, wk->msg_buf, str );
   GFL_STR_DeleteBuffer( str );
 */
+  BPL_POKEDATA * pd;
+  BPLIST_DATA * dat;
+  STRBUF * str;
+
+  dat = wk->dat;
+  pd  = &wk->poke[ BPLISTMAIN_GetListRow(wk,dat->sel_poke) ];
+  str = GFL_MSG_CreateString( wk->mman, mes_b_plist_m20 );
+  WORDSET_RegisterPokeNickName( wk->wset, 0, pd->pp );
+  WORDSET_RegisterWazaName( wk->wset, 1, WAZANO_SASIOSAE );
+  WORDSET_ExpandStr( wk->wset, wk->msg_buf, str );
+  GFL_STR_DeleteBuffer( str );
 }
 
 

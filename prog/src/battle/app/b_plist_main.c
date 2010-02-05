@@ -856,6 +856,16 @@ static int BPL_PokeItemUse( BPLIST_WORK * wk )
     return SEQ_BPL_MSG_WAIT;
   }
 
+  // ‚³‚µ‚¨‚³‚¦‚Åg—p•s‰Â
+  if( dat->skill_item_use[ BPLISTMAIN_GetListRow(wk,dat->sel_poke) ] != 0 ){
+    BattlePokeList_ItemUseSkillErrMsgSet( wk );
+    BattlePokeList_TalkMsgSet( wk );
+    wk->dat->sel_poke = BPL_SEL_EXIT;
+    wk->ret_seq = SEQ_BPL_ENDSET;
+		SetSelPosCancel( wk );
+    return SEQ_BPL_MSG_WAIT;
+  }
+
   // ‚P‚Â‚Ì‹Z‚ÌPP‰ñ•œ
   if( ITEM_GetParam( dat->item, ITEM_PRM_PP_RCV, dat->heap ) != 0 &&
       ITEM_GetParam( dat->item, ITEM_PRM_ALL_PP_RCV, dat->heap ) == 0 ){
