@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-02T21:34:52"/>
+	<create user="matsumiya" host="W00224" date="2010-02-05T22:53:03"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,7 +307,7 @@
 		</language>
 	</columns>
 
-	<dialog left="25" top="274" right="730" bottom="894" maximized="no" rayout="Vertical2">
+	<dialog left="1291" top="262" right="1996" bottom="890" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -315,7 +315,7 @@
 		<band id="2" index="3" style="0000" width="540"/>
 		<band id="3" index="4" style="0000" width="155"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -426,7 +426,6 @@
 		<comment>♂
 ・ポケモン図鑑に
 　フォルムチェンジ確認機能（仮）追加予定
-（この処理は暫定）
 ・続けてmsg_c06_hakase1_07</comment>
 		<attribute name="キャラクター">博士１（父）</attribute>
 		<language name="JPN" width="256">では　であいを　きねんして
@@ -437,17 +436,28 @@
 パワーアップ！　だな[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c06_hakase1_07" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c06_hakase1_07" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
-・続けてmsg_c06_leader6_01
-（この処理は暫定）</comment>
+・アイテム入手処理
+　No001「マスターボール」
+・続けてmsg_c06_leader6_01</comment>
 		<attribute name="キャラクター">博士１（父）</attribute>
 		<language name="JPN" width="256">アララギ『よし！　これで
-ポケモンの　みた　すがたなら[BE:00:ページ切り替え（行送り）]
-いつでも　みられるように　なったぞ！[BE:01:ページ切り替え（クリア）]</language>
+みた　ポケモンの　すがたなら[BE:00:ページ切り替え（行送り）]
+いつでも　みられるように　なったぞ！[BE:01:ページ切り替え（クリア）]
+そうだな
+これも　プレゼント　しようかね！▼
+こいつは　マスターボール！▼
+どんな　ポケモンでも
+ぜったいに　つかまえられるんだよ！▼</language>
 		<language name="JPN_KANJI" width="256">アララギ『よし！　これで
-ポケモンの　みた　すがたなら[BE:00:ページ切り替え（行送り）]
-いつでも　みられるように　なったぞ！[BE:01:ページ切り替え（クリア）]</language>
+みた　ポケモンの　姿なら[BE:00:ページ切り替え（行送り）]
+いつでも　みられるように　なったぞ！[BE:01:ページ切り替え（クリア）]
+そうだな
+これも　プレゼント　しようかね！▼
+こいつは　マスターボール！▼
+どんな　ポケモンでも
+絶対に　捕まえられるんだよ！▼</language>
 	</row>
 
 	<row id="msg_c06_leader6_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
