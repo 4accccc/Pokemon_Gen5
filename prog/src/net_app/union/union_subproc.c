@@ -32,6 +32,7 @@
 #include "net_app/union_app.h"
 #include "union_comm_command.h"
 #include "net_app/guru2.h"
+#include "net_app/oekaki.h"
 
 
 //==============================================================================
@@ -70,6 +71,7 @@ FS_EXTERN_OVERLAY(poke_status);
 FS_EXTERN_OVERLAY(pokemon_trade);
 FS_EXTERN_OVERLAY(app_mail);
 FS_EXTERN_OVERLAY(guru2);
+FS_EXTERN_OVERLAY(oekaki);
 
 
 //==============================================================================
@@ -606,12 +608,14 @@ static BOOL SubEvent_Minigame(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys, FIELD
 	case _SEQ_MINIGAME_PROC:
     OS_TPrintf("ミニゲームPROC呼び出し\n");
     if(situ->play_category == UNION_PLAY_CATEGORY_PICTURE){
-  		//GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(pokelist), &PokeList_ProcData, plist);
+  	  PICTURE_PARENT_WORK *picpwk = subproc->parent_work;
+  	  picpwk->uniapp = unisys->alloc.uniapp;
+  	  GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(oekaki), &OekakiProcData, picpwk);
   	}
   	else{ //UNION_PLAY_CATEGORY_GURUGURU
   	  GURUGURU_PARENT_WORK *gurupwk = subproc->parent_work;
   	  gurupwk->uniapp = unisys->alloc.uniapp;
-  	  //GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(guru2), &Guru2ProcData, gurupwk);
+  	  GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(guru2), &Guru2ProcData, gurupwk);
     }
 		(*seq) ++;
 		break;

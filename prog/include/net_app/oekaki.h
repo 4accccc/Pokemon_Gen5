@@ -26,4 +26,7 @@ typedef struct{
   u32 *view;
 }OEKAKI_PARAM;
 
+// PROC_DATA
+extern const GFL_PROC_DATA OekakiProcData;
+
 #endif

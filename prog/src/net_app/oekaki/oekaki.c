@@ -169,6 +169,18 @@ static OEKAKI_FUNC_TABLE FuncTable[]={
 };
 
 
+//--------------------------------------------------------------------------------------------
+/**
+ * ‚¨ŠG‚©‚«PROCDATA
+ */
+//--------------------------------------------------------------------------------------------
+const GFL_PROC_DATA OekakiProcData = {
+  OekakiProc_Init,
+  OekakiProc_Main,
+  OekakiProc_End,
+};
+
+
 #ifdef VIRTUAL_CONNECT_LIMIT
 static void CommStateSetLimitNum( OEKAKI_WORK *wk, int num)
 {

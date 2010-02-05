@@ -2505,7 +2505,12 @@ static BOOL OneselfSeq_MinigameUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATIO
   case _SEQ_SUBPROC_SET:
     if(UnionMsg_TalkStream_Check(unisys) == TRUE){
       if(situ->union_status == UNION_STATUS_PICTURE){
-        UnionSubProc_EventSet(unisys, UNION_SUBPROC_ID_PICTURE, NULL);
+        PICTURE_PARENT_WORK *picpwk;
+
+        picpwk = GFL_HEAP_AllocClearMemory(HEAPID_UNION, sizeof(PICTURE_PARENT_WORK));
+        picpwk->gamedata = unisys->uniparent->game_data;
+        unisys->parent_work = picpwk;
+        UnionSubProc_EventSet(unisys, UNION_SUBPROC_ID_PICTURE, picpwk);
       }
       else{ //UNION_STATUS_GURUGURU
         GURUGURU_PARENT_WORK *gurupwk;
