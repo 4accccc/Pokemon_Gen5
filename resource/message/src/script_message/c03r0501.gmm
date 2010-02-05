@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2010-01-20T14:26:11"/>
+	<create user="matsumiya" host="W00224" date="2010-02-05T22:42:08"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,9 +263,9 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="1300" top="372" right="2005" bottom="992" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
+		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="543"/>
@@ -292,20 +292,85 @@
 	</lock>
 
 
-	<row id="msg_c03r0501_middlewoman_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c03r0501_middlewoman2_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
-・相性チェックのデータがない</comment>
+・フィーリングチェックのデータがない</comment>
 		<attribute name="キャラ指定">MIDDLEWOMAN2</attribute>
-		<language name="JPN" width="256">相性チェック</language>
-		<language name="JPN_KANJI" width="256">相性チェック</language>
+		<language name="JPN" width="256">わたしは
+フィーリングうらないし▼
+よのなか　Ｃギアを　つかって
+フィーリングチェックを　している▽
+ひとが　おおいんですってね</language>
+		<language name="JPN_KANJI" width="256">わたしは
+フィーリングうらないし▼
+よのなか　Ｃギアを　つかって
+フィーリングチェックを　している▽
+ひとが　おおいんですってね</language>
 	</row>
 
-	<row id="msg_c03r0501_middlewoman_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c03r0501_middlewoman2_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
 		<comment>♀
-・相性チェックのデータがある</comment>
+・フィーリングチェックのデータがある
+・はい/いいえの選択肢
+　はい→middlewoman2_03
+　いいえ→middlewoman2_04
+・データが1つしかないとき
+　→middlewoman2_05</comment>
 		<attribute name="キャラ指定">MIDDLEWOMAN2</attribute>
-		<language name="JPN" width="256">相性チェック</language>
-		<language name="JPN_KANJI" width="256">相性チェック</language>
+		<language name="JPN" width="256">わたしは
+フィーリングうらないし▼
+フィーリングチェックの　せいせきから
+あなたの　きょうの　ラッキーマンを▽
+ずばっと　あてちゃうわ！▼
+どう　あなた
+うらない　してみる？</language>
+		<language name="JPN_KANJI" width="256">わたしは
+フィーリングうらないし▼
+フィーリングチェックの　せいせきから
+あなたの　きょうの　ラッキーマンを▽
+ずばっと　あてちゃうわ！▼
+どう　あなた
+うらない　してみる？</language>
+	</row>
+
+	<row id="msg_c03r0501_middlewoman2_03" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+		<comment>♀
+・はい選択時</comment>
+		<attribute name="キャラ指定">MIDDLEWOMAN2</attribute>
+		<language name="JPN" width="256">きょうの　あなたが　とんでもなく
+ハッピーに　すごせる　ひとは……▼
+ずばり　[1:00:トレーナー名:0]ね！</language>
+		<language name="JPN_KANJI" width="256">きょうの　あなたが　とんでもなく
+ハッピーに　すごせる　ひとは……▼
+ずばり　[1:00:トレーナー名:0]ね！</language>
+	</row>
+
+	<row id="msg_c03r0501_middlewoman2_04" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+		<comment>♀
+・いいえ選択時</comment>
+		<attribute name="キャラ指定">MIDDLEWOMAN2</attribute>
+		<language name="JPN" width="256">あら　えんりょ　しなくていいのよ
+タダで　うらなってあげるのに</language>
+		<language name="JPN_KANJI" width="256">あら　えんりょ　しなくていいのよ
+タダで　うらなってあげるのに</language>
+	</row>
+
+	<row id="msg_c03r0501_middlewoman2_05" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+		<comment>♀
+・データが1つしかないとき</comment>
+		<attribute name="キャラ指定">MIDDLEWOMAN2</attribute>
+		<language name="JPN" width="256">きょうの　あなたが　とんでもなく
+ハッピーに　すごせる　ひとは……▼
+あら　[1:00:トレーナー名:0]さん　としか
+フィーリングチェックを　していないのね▼
+いろんな　ひとと
+フィーリングチェックを　すると　いいわ！</language>
+		<language name="JPN_KANJI" width="256">きょうの　あなたが　とんでもなく
+ハッピーに　すごせる　ひとは……▼
+あら　[1:00:トレーナー名:0]さん　としか
+フィーリングチェックを　していないのね▼
+いろんな　ひとと
+フィーリングチェックを　すると　いいわ！</language>
 	</row>
 
 	<row id="msg_c03r0501_mountain_01">
