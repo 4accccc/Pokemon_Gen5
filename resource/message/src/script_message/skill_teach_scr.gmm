@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tamada" host="W00139" date="2010-02-05T16:48:24"/>
+	<create user="matsumiya" host="W00224" date="2010-02-06T12:22:21"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -484,7 +484,7 @@
 	</row>
 
 	<row id="msg_skillteach_dragon_10" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,,#c0c0c0,,,,,,">
-		<comment>ドラゴン技教え
+		<comment>技教え
 ・技選択画面
 ・0＝ポケモン名</comment>
 		<attribute name="キャラ指定">システム</attribute>
@@ -495,7 +495,7 @@
 	</row>
 
 	<row id="msg_skillteach_system_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>ドラゴン技教え
+		<comment>技教え
 ・0＝ポケモン名
 ・1＝技名</comment>
 		<attribute name="キャラ指定">システム</attribute>
@@ -506,7 +506,7 @@
 	</row>
 
 	<row id="msg_skillteach_system_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>ドラゴン技教え
+		<comment>技教え
 ・0＝ポケモン名
 ・1＝技名</comment>
 		<attribute name="キャラ指定">システム</attribute>
@@ -525,7 +525,7 @@
 	</row>
 
 	<row id="msg_skillteach_system_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>ドラゴン技教え
+		<comment>技教え
 ・0＝技名</comment>
 		<attribute name="キャラ指定">システム</attribute>
 		<language name="JPN" width="256">それでは　[1:07:わざ名:0]を
@@ -535,7 +535,7 @@
 	</row>
 
 	<row id="msg_skillteach_system_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>ドラゴン技教え
+		<comment>技教え
 ・0＝ポケモン名
 ・1＝技名</comment>
 		<attribute name="キャラ指定">システム</attribute>
@@ -546,7 +546,7 @@
 	</row>
 
 	<row id="msg_skillteach_system_05" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
-		<comment>ドラゴン技教え
+		<comment>技教え
 ・0＝技名
 ・はい/いいえの選択肢表示
 　はい　→16 いいえ→13</comment>
@@ -558,7 +558,7 @@
 	</row>
 
 	<row id="msg_skillteach_system_06" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>ドラゴン技教え
+		<comment>技教え
 ・0＝ポケモン名
 ・1＝技名
 ・2＝技名</comment>
@@ -764,6 +764,7 @@
 ・はい/いいえの選択肢表示
 　はい　→03
 　いいえ→04</comment>
+		<attribute name="キャラ指定">OLDMAN</attribute>
 		<language name="JPN" width="256">きゅうきょくの　わざ！
 おぬしの　ポケモンに　おしえるのか？</language>
 		<language name="JPN_KANJI" width="256">究極の　技！
@@ -773,6 +774,7 @@
 	<row id="msg_skillteach_powerful_03" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,,">
 		<comment>♂：究極技教え
 ・手持ちに対象ポケモンがいない場合</comment>
+		<attribute name="キャラ指定">OLDMAN</attribute>
 		<language name="JPN" width="256">おぬしの　つれている　ポケモンでは
 おぼえられんぞ！▼
 はりがみを　よむのじゃ！　カッ！！</language>
@@ -785,6 +787,7 @@
 	<row id="msg_skillteach_powerful_04">
 		<comment>♂：究極技教え
 ・いいえ選択時</comment>
+		<attribute name="キャラ指定">OLDMAN</attribute>
 		<language name="JPN" width="256">ふむう　それも　よかろう……
 きがむけば　また　あしを　はこべよ</language>
 		<language name="JPN_KANJI" width="256">ふむう　それも　よかろう……
@@ -802,6 +805,7 @@
 　炎タイプ→10
 　水タイプ→11
 　草タイプ→12</comment>
+		<attribute name="キャラ指定">OLDMAN</attribute>
 		<language name="JPN" width="256">では　どの　ポケモンに
 わざを　おぼえさせるのじゃ？</language>
 		<language name="JPN_KANJI" width="256">では　どの　ポケモンに
@@ -810,6 +814,7 @@
 
 	<row id="msg_skillteach_powerful_06">
 		<comment>・最初から覚えられないポケモンを選択</comment>
+		<attribute name="キャラ指定">OLDMAN</attribute>
 		<language name="JPN" width="256">その　ポケモンでは　おぼえられんぞ！
 はりがみを　よむのじゃ！　カッ！！</language>
 		<language name="JPN_KANJI" width="256">その　ポケモンでは　覚えられんぞ！
@@ -818,6 +823,7 @@
 
 	<row id="msg_skillteach_powerful_07">
 		<comment>・タマゴ選択</comment>
+		<attribute name="キャラ指定">OLDMAN</attribute>
 		<language name="JPN" width="256">タマゴに　わざを　おしえることは
 わしとて　ふかのうじゃ！　カッ！！</language>
 		<language name="JPN_KANJI" width="256">タマゴに　技を　教えることは
@@ -826,6 +832,7 @@
 
 	<row id="msg_skillteach_powerful_08">
 		<comment>・なつき度がたりないポケモンを選択</comment>
+		<attribute name="キャラ指定">OLDMAN</attribute>
 		<language name="JPN" width="256">おぬしと　ポケモンの　きずなが
 たりておらぬぞ！　カッ！！</language>
 		<language name="JPN_KANJI" width="256">おぬしと　ポケモンの　きずなが
@@ -834,6 +841,7 @@
 
 	<row id="msg_skillteach_powerful_09">
 		<comment>・すでに技を習得済みのポケモンを選択</comment>
+		<attribute name="キャラ指定">OLDMAN</attribute>
 		<language name="JPN" width="256">その　ポケモンは　すでに
 わざを　おぼえているぞ　カッ！！</language>
 		<language name="JPN_KANJI" width="256">その　ポケモンは　すでに
@@ -848,6 +856,7 @@
 　いいえ→04
 
 ・0＝ポケモン名</comment>
+		<attribute name="キャラ指定">OLDMAN</attribute>
 		<language name="JPN" width="256">[1:01:ポケモン種族名:0]に　[1:07:わざ名:1]を
 おぼえさせるのじゃな！　カッ！！</language>
 		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:0]に　[1:07:わざ名:1]を
