@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00185" date="2010-01-14T21:54:06"/>
+	<create user="ohmori" host="W00223" date="2010-02-06T19:08:15"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -300,38 +300,62 @@
 	</row>
 
 	<row id="plwc10_01_01">
-		<language name="JPN" width="256">おれBCに　いくんだ　いいだろ〜</language>
-		<language name="JPN_KANJI" width="256">おれBCに　いくんだ　いいだろ〜</language>
+		<language name="JPN" width="256">テスト『じつはブラックシティに　ひっこすんだ！
+エキサイティングな　せいかつが　おくれるぜ！</language>
+		<language name="JPN_KANJI" width="256">テスト『じつはブラックシティに　ひっこすんだ！
+エキサイティングな　せいかつが　おくれるぜ！</language>
 	</row>
 
 	<row id="plwc10_01_02">
-		<language name="JPN" width="256">つまんない　BCにいきたいな…</language>
-		<language name="JPN_KANJI" width="256">つまんない　BCにいきたいな…</language>
+		<language name="JPN" width="256">テスト『しげきがなくて　つまんない……
+だれかブラックシティに　つれてってくれないかな</language>
+		<language name="JPN_KANJI" width="256">テスト『しげきがなくて　つまんない……
+だれかブラックシティに　つれてってくれないかな</language>
 	</row>
 
 	<row id="plwc10_01_03">
-		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
-		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN" width="256">テスト『はぁ　そっちの
+ブラックシティは　たのしそうだな……▽
+おれも　いってみたいぜ</language>
+		<language name="JPN_KANJI" width="256">テスト『はぁ　そっちの
+ブラックシティは　たのしそうだな……▽
+おれも　いってみたいぜ</language>
 	</row>
 
 	<row id="plwc10_01_04">
-		<language name="JPN" width="256">BCへ　つれてって！</language>
-		<language name="JPN_KANJI" width="256">BCへ　つれてって！</language>
+		<language name="JPN" width="256">テスト『さいきん　しげきがなくて
+つまんない……▼
+なあ　よかったら　おれを
+ブラックシティに　つれてって　くれないか！？</language>
+		<language name="JPN_KANJI" width="256">テスト『さいきん　しげきがなくて
+つまんない……▼
+なあ　よかったら　おれを
+ブラックシティに　つれてって　くれないか！？</language>
 	</row>
 
 	<row id="plwc10_01_05">
-		<language name="JPN" width="256">そとに　つれだしてよー！</language>
-		<language name="JPN_KANJI" width="256">そとに　つれだしてよー！</language>
+		<language name="JPN" width="256">えー！？
+つれてって　くれよー！</language>
+		<language name="JPN_KANJI" width="256">えー！？
+つれてって　くれよー！</language>
 	</row>
 
 	<row id="plwc10_01_06">
-		<language name="JPN" width="256">やっぱり　べつのBCヘいくね！</language>
-		<language name="JPN_KANJI" width="256">やっぱり　べつのBCヘいくね！</language>
+		<language name="JPN" width="256">ん！？　ちょっとまって
+おれやっぱり　べつのひとに　ついていくぜ</language>
+		<language name="JPN_KANJI" width="256">ん！？　ちょっとまって
+おれやっぱり　べつのひとに　ついていくぜ</language>
 	</row>
 
 	<row id="plwc10_01_07">
-		<language name="JPN" width="256">うーん　やっぱりかんがえなおす！</language>
-		<language name="JPN_KANJI" width="256">うーん　やっぱりかんがえなおす！</language>
+		<language name="JPN" width="256">やった！　ありがとう！
+ひとあし　さきに　いってるぜ！▼
+また　ブラックシティで　あおうな
+エキサイティングだぜ！！</language>
+		<language name="JPN_KANJI" width="256">やった！　ありがとう！
+ひとあし　さきに　いってるぜ！▼
+また　ブラックシティで　あおうな
+エキサイティングだぜ！！</language>
 	</row>
 
 	<row id="plwc10_01_08">

@@ -8,4 +8,4 @@
 //-------------------------------------
 ///	èoåªëäëŒílÇÃç≈ëÂíl
 //=====================================
-#define FIELD_WFBC_HIT_PERCENT_MAX  ( 51 )
+#define FIELD_WFBC_HIT_PERCENT_MAX  ( 149 )

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00185" date="2010-01-14T21:54:06"/>
+	<create user="ohmori" host="W00223" date="2010-02-06T19:47:44"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -300,38 +300,62 @@
 	</row>
 
 	<row id="plwc10_01_01">
-		<language name="JPN" width="256">おれBCに　いくんだ　いいだろ〜</language>
-		<language name="JPN_KANJI" width="256">おれBCに　いくんだ　いいだろ〜</language>
+		<language name="JPN" width="256">テスト『じつはブラックシティに　ひっこすんだ！
+エキサイティングな　せいかつが　おくれるぜ！</language>
+		<language name="JPN_KANJI" width="256">テスト『じつはブラックシティに　ひっこすんだ！
+エキサイティングな　せいかつが　おくれるぜ！</language>
 	</row>
 
 	<row id="plwc10_01_02">
-		<language name="JPN" width="256">つまんない　BCにいきたいな…</language>
-		<language name="JPN_KANJI" width="256">つまんない　BCにいきたいな…</language>
+		<language name="JPN" width="256">テスト『しげきがなくて　つまんない……
+だれかブラックシティに　つれてってくれないかな</language>
+		<language name="JPN_KANJI" width="256">テスト『しげきがなくて　つまんない……
+だれかブラックシティに　つれてってくれないかな</language>
 	</row>
 
 	<row id="plwc10_01_03">
-		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
-		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN" width="256">テスト『はぁ　そっちの
+ブラックシティは　たのしそうだな……▽
+おれも　いってみたいぜ</language>
+		<language name="JPN_KANJI" width="256">テスト『はぁ　そっちの
+ブラックシティは　たのしそうだな……▽
+おれも　いってみたいぜ</language>
 	</row>
 
 	<row id="plwc10_01_04">
-		<language name="JPN" width="256">BCへ　つれてって！</language>
-		<language name="JPN_KANJI" width="256">BCへ　つれてって！</language>
+		<language name="JPN" width="256">テスト『さいきん　しげきがなくて
+つまんない……▼
+なあ　よかったら　おれを
+ブラックシティに　つれてって　くれないか！？</language>
+		<language name="JPN_KANJI" width="256">テスト『さいきん　しげきがなくて
+つまんない……▼
+なあ　よかったら　おれを
+ブラックシティに　つれてって　くれないか！？</language>
 	</row>
 
 	<row id="plwc10_01_05">
-		<language name="JPN" width="256">そとに　つれだしてよー！</language>
-		<language name="JPN_KANJI" width="256">そとに　つれだしてよー！</language>
+		<language name="JPN" width="256">えー！？
+つれてって　くれよー！</language>
+		<language name="JPN_KANJI" width="256">えー！？
+つれてって　くれよー！</language>
 	</row>
 
 	<row id="plwc10_01_06">
-		<language name="JPN" width="256">やっぱり　べつのBCヘいくね！</language>
-		<language name="JPN_KANJI" width="256">やっぱり　べつのBCヘいくね！</language>
+		<language name="JPN" width="256">ん！？　ちょっとまって
+おれやっぱり　べつのひとに　ついていくぜ</language>
+		<language name="JPN_KANJI" width="256">ん！？　ちょっとまって
+おれやっぱり　べつのひとに　ついていくぜ</language>
 	</row>
 
 	<row id="plwc10_01_07">
-		<language name="JPN" width="256">うーん　やっぱりかんがえなおす！</language>
-		<language name="JPN_KANJI" width="256">うーん　やっぱりかんがえなおす！</language>
+		<language name="JPN" width="256">やった！　ありがとう！
+ひとあし　さきに　いってるぜ！▼
+また　ブラックシティで　あおうな
+エキサイティングだぜ！！</language>
+		<language name="JPN_KANJI" width="256">やった！　ありがとう！
+ひとあし　さきに　いってるぜ！▼
+また　ブラックシティで　あおうな
+エキサイティングだぜ！！</language>
 	</row>
 
 	<row id="plwc10_01_08">
@@ -350,8 +374,8 @@
 	</row>
 
 	<row id="plwc10_02_03">
-		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
-		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN" width="256">そっちにまち　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまち　たのしそうだな…</language>
 	</row>
 
 	<row id="plwc10_02_04">
@@ -390,8 +414,8 @@
 	</row>
 
 	<row id="plwc10_03_03">
-		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
-		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN" width="256">そっちにまち　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまち　たのしそうだな…</language>
 	</row>
 
 	<row id="plwc10_03_04">
@@ -430,8 +454,8 @@
 	</row>
 
 	<row id="plwc10_04_03">
-		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
-		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN" width="256">そっちにまち　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまち　たのしそうだな…</language>
 	</row>
 
 	<row id="plwc10_04_04">
@@ -470,8 +494,8 @@
 	</row>
 
 	<row id="plwc10_05_03">
-		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
-		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN" width="256">そっちにまち　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまち　たのしそうだな…</language>
 	</row>
 
 	<row id="plwc10_05_04">
@@ -510,8 +534,8 @@
 	</row>
 
 	<row id="plwc10_06_03">
-		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
-		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN" width="256">そっちにまち　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまち　たのしそうだな…</language>
 	</row>
 
 	<row id="plwc10_06_04">
@@ -550,8 +574,8 @@
 	</row>
 
 	<row id="plwc10_07_03">
-		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
-		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN" width="256">そっちにまち　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまち　たのしそうだな…</language>
 	</row>
 
 	<row id="plwc10_07_04">
@@ -590,8 +614,8 @@
 	</row>
 
 	<row id="plwc10_08_03">
-		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
-		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN" width="256">そっちにまち　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまち　たのしそうだな…</language>
 	</row>
 
 	<row id="plwc10_08_04">
@@ -630,8 +654,8 @@
 	</row>
 
 	<row id="plwc10_09_03">
-		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
-		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN" width="256">そっちにまち　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまち　たのしそうだな…</language>
 	</row>
 
 	<row id="plwc10_09_04">
@@ -670,8 +694,8 @@
 	</row>
 
 	<row id="plwc10_10_03">
-		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
-		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN" width="256">そっちにまち　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまち　たのしそうだな…</language>
 	</row>
 
 	<row id="plwc10_10_04">
@@ -710,8 +734,8 @@
 	</row>
 
 	<row id="plwc10_11_03">
-		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
-		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN" width="256">そっちにまち　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまち　たのしそうだな…</language>
 	</row>
 
 	<row id="plwc10_11_04">
@@ -750,8 +774,8 @@
 	</row>
 
 	<row id="plwc10_12_03">
-		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
-		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN" width="256">そっちにまち　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまち　たのしそうだな…</language>
 	</row>
 
 	<row id="plwc10_12_04">
@@ -790,8 +814,8 @@
 	</row>
 
 	<row id="plwc10_13_03">
-		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
-		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN" width="256">そっちにまち　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまち　たのしそうだな…</language>
 	</row>
 
 	<row id="plwc10_13_04">
@@ -830,8 +854,8 @@
 	</row>
 
 	<row id="plwc10_14_03">
-		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
-		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN" width="256">そっちにまち　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまち　たのしそうだな…</language>
 	</row>
 
 	<row id="plwc10_14_04">
@@ -870,8 +894,8 @@
 	</row>
 
 	<row id="plwc10_15_03">
-		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
-		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN" width="256">そっちにまち　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまち　たのしそうだな…</language>
 	</row>
 
 	<row id="plwc10_15_04">
@@ -910,8 +934,8 @@
 	</row>
 
 	<row id="plwc10_16_03">
-		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
-		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN" width="256">そっちにまち　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまち　たのしそうだな…</language>
 	</row>
 
 	<row id="plwc10_16_04">
@@ -950,8 +974,8 @@
 	</row>
 
 	<row id="plwc10_17_03">
-		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
-		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN" width="256">そっちにまち　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまち　たのしそうだな…</language>
 	</row>
 
 	<row id="plwc10_17_04">
@@ -990,8 +1014,8 @@
 	</row>
 
 	<row id="plwc10_18_03">
-		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
-		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN" width="256">そっちにまち　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまち　たのしそうだな…</language>
 	</row>
 
 	<row id="plwc10_18_04">
@@ -1030,8 +1054,8 @@
 	</row>
 
 	<row id="plwc10_19_03">
-		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
-		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN" width="256">そっちにまち　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまち　たのしそうだな…</language>
 	</row>
 
 	<row id="plwc10_19_04">
@@ -1070,8 +1094,8 @@
 	</row>
 
 	<row id="plwc10_20_03">
-		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
-		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN" width="256">そっちにまち　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまち　たのしそうだな…</language>
 	</row>
 
 	<row id="plwc10_20_04">
@@ -1110,8 +1134,8 @@
 	</row>
 
 	<row id="plwc10_21_03">
-		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
-		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN" width="256">そっちにまち　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまち　たのしそうだな…</language>
 	</row>
 
 	<row id="plwc10_21_04">
@@ -1150,8 +1174,8 @@
 	</row>
 
 	<row id="plwc10_22_03">
-		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
-		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN" width="256">そっちにまち　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまち　たのしそうだな…</language>
 	</row>
 
 	<row id="plwc10_22_04">
@@ -1190,8 +1214,8 @@
 	</row>
 
 	<row id="plwc10_23_03">
-		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
-		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN" width="256">そっちにまち　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまち　たのしそうだな…</language>
 	</row>
 
 	<row id="plwc10_23_04">
@@ -1230,8 +1254,8 @@
 	</row>
 
 	<row id="plwc10_24_03">
-		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
-		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN" width="256">そっちにまち　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまち　たのしそうだな…</language>
 	</row>
 
 	<row id="plwc10_24_04">
@@ -1270,8 +1294,8 @@
 	</row>
 
 	<row id="plwc10_25_03">
-		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
-		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN" width="256">そっちにまち　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまち　たのしそうだな…</language>
 	</row>
 
 	<row id="plwc10_25_04">
@@ -1310,8 +1334,8 @@
 	</row>
 
 	<row id="plwc10_26_03">
-		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
-		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN" width="256">そっちにまち　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまち　たのしそうだな…</language>
 	</row>
 
 	<row id="plwc10_26_04">
@@ -1350,8 +1374,8 @@
 	</row>
 
 	<row id="plwc10_27_03">
-		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
-		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN" width="256">そっちにまち　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまち　たのしそうだな…</language>
 	</row>
 
 	<row id="plwc10_27_04">
@@ -1390,8 +1414,8 @@
 	</row>
 
 	<row id="plwc10_28_03">
-		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
-		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN" width="256">そっちにまち　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまち　たのしそうだな…</language>
 	</row>
 
 	<row id="plwc10_28_04">
@@ -1430,8 +1454,8 @@
 	</row>
 
 	<row id="plwc10_29_03">
-		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
-		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN" width="256">そっちにまち　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまち　たのしそうだな…</language>
 	</row>
 
 	<row id="plwc10_29_04">
@@ -1470,8 +1494,8 @@
 	</row>
 
 	<row id="plwc10_30_03">
-		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
-		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN" width="256">そっちにまち　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまち　たのしそうだな…</language>
 	</row>
 
 	<row id="plwc10_30_04">
@@ -1500,38 +1524,66 @@
 	</row>
 
 	<row id="plbc10_01_01">
-		<language name="JPN" width="256">おれWFに　いくんだ　いいだろ〜</language>
-		<language name="JPN_KANJI" width="256">おれWFに　いくんだ　いいだろ〜</language>
+		<language name="JPN" width="256">テスト『ふふ　おれじつは
+ホワイトフォレストに　ひっこすんだ！▽
+こんな　ピリピリしたせいかつ　さよならだぜ！</language>
+		<language name="JPN_KANJI" width="256">テスト『ふふ　おれじつは
+ホワイトフォレストに　ひっこすんだ！▽
+こんな　ピリピリしたせいかつ　さよならだぜ！</language>
 	</row>
 
 	<row id="plbc10_01_02">
-		<language name="JPN" width="256">つまんない　WFにいきたいな…</language>
-		<language name="JPN_KANJI" width="256">つまんない　WFにいきたいな…</language>
+		<language name="JPN" width="256">テスト『さいきん　ひますぎて
+つまんない……▼
+だれか　ホワイトフォレストに
+つれてって　くれないかな</language>
+		<language name="JPN_KANJI" width="256">テスト『さいきん　ひますぎて
+つまんない……▼
+だれか　ホワイトフォレストに
+つれてって　くれないかな</language>
 	</row>
 
 	<row id="plbc10_01_03">
-		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
-		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN" width="256">テスト『そっちの　ホワイトフォレストは
+きもちよさそうだな……▽
+おれも　いってみたいぜ</language>
+		<language name="JPN_KANJI" width="256">テスト『そっちの　ホワイトフォレストは
+きもちよさそうだな……▽
+おれも　いってみたいぜ</language>
 	</row>
 
 	<row id="plbc10_01_04">
-		<language name="JPN" width="256">WFへ　つれてって！</language>
-		<language name="JPN_KANJI" width="256">WFへ　つれてって！</language>
+		<language name="JPN" width="256">テスト『さいきん　つまんない……▼
+なあ　よかったら　おれを
+ブラックシティに　つれてって　くれないか！？</language>
+		<language name="JPN_KANJI" width="256">テスト『さいきん　つまんない……▼
+なあ　よかったら　おれを
+ブラックシティに　つれてって　くれないか！？</language>
 	</row>
 
 	<row id="plbc10_01_05">
-		<language name="JPN" width="256">そとに　つれだしてよー！</language>
-		<language name="JPN_KANJI" width="256">そとに　つれだしてよー！</language>
+		<language name="JPN" width="256">えー！？
+つれてって　くれよー！</language>
+		<language name="JPN_KANJI" width="256">えー！？
+つれてって　くれよー！</language>
 	</row>
 
 	<row id="plbc10_01_06">
-		<language name="JPN" width="256">やっぱり　べつのWFヘいくね！</language>
-		<language name="JPN_KANJI" width="256">やっぱり　べつのWFヘいくね！</language>
+		<language name="JPN" width="256">ん！？　ちょっとまって
+おれやっぱり　べつのひとに　ついていくぜ</language>
+		<language name="JPN_KANJI" width="256">ん！？　ちょっとまって
+おれやっぱり　べつのひとに　ついていくぜ</language>
 	</row>
 
 	<row id="plbc10_01_07">
-		<language name="JPN" width="256">うーん　やっぱりかんがえなおす！</language>
-		<language name="JPN_KANJI" width="256">うーん　やっぱりかんがえなおす！</language>
+		<language name="JPN" width="256">やった！　ありがとう！
+ひとあし　さきに　いってるぜ！▼
+また　ホワイトフォレストで　あそうな
+リフレッシュだぜ！</language>
+		<language name="JPN_KANJI" width="256">やった！　ありがとう！
+ひとあし　さきに　いってるぜ！▼
+また　ホワイトフォレストで　あそうな
+リフレッシュだぜ！</language>
 	</row>
 
 	<row id="plbc10_01_08">
@@ -1550,8 +1602,8 @@
 	</row>
 
 	<row id="plbc10_02_03">
-		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
-		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN" width="256">そっちにまち　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまち　たのしそうだな…</language>
 	</row>
 
 	<row id="plbc10_02_04">
@@ -1590,8 +1642,8 @@
 	</row>
 
 	<row id="plbc10_03_03">
-		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
-		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN" width="256">そっちにまち　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまち　たのしそうだな…</language>
 	</row>
 
 	<row id="plbc10_03_04">
@@ -1630,8 +1682,8 @@
 	</row>
 
 	<row id="plbc10_04_03">
-		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
-		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN" width="256">そっちにまち　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまち　たのしそうだな…</language>
 	</row>
 
 	<row id="plbc10_04_04">
@@ -1670,8 +1722,8 @@
 	</row>
 
 	<row id="plbc10_05_03">
-		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
-		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN" width="256">そっちにまち　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまち　たのしそうだな…</language>
 	</row>
 
 	<row id="plbc10_05_04">
@@ -1710,8 +1762,8 @@
 	</row>
 
 	<row id="plbc10_06_03">
-		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
-		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN" width="256">そっちにまち　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまち　たのしそうだな…</language>
 	</row>
 
 	<row id="plbc10_06_04">
@@ -1750,8 +1802,8 @@
 	</row>
 
 	<row id="plbc10_07_03">
-		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
-		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN" width="256">そっちにまち　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまち　たのしそうだな…</language>
 	</row>
 
 	<row id="plbc10_07_04">
@@ -1790,8 +1842,8 @@
 	</row>
 
 	<row id="plbc10_08_03">
-		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
-		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN" width="256">そっちにまち　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまち　たのしそうだな…</language>
 	</row>
 
 	<row id="plbc10_08_04">
@@ -1830,8 +1882,8 @@
 	</row>
 
 	<row id="plbc10_09_03">
-		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
-		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN" width="256">そっちにまち　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまち　たのしそうだな…</language>
 	</row>
 
 	<row id="plbc10_09_04">
@@ -1870,8 +1922,8 @@
 	</row>
 
 	<row id="plbc10_10_03">
-		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
-		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN" width="256">そっちにまち　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまち　たのしそうだな…</language>
 	</row>
 
 	<row id="plbc10_10_04">
@@ -1910,8 +1962,8 @@
 	</row>
 
 	<row id="plbc10_11_03">
-		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
-		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN" width="256">そっちにまち　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまち　たのしそうだな…</language>
 	</row>
 
 	<row id="plbc10_11_04">
@@ -1950,8 +2002,8 @@
 	</row>
 
 	<row id="plbc10_12_03">
-		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
-		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN" width="256">そっちにまち　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまち　たのしそうだな…</language>
 	</row>
 
 	<row id="plbc10_12_04">
@@ -1990,8 +2042,8 @@
 	</row>
 
 	<row id="plbc10_13_03">
-		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
-		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN" width="256">そっちにまち　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまち　たのしそうだな…</language>
 	</row>
 
 	<row id="plbc10_13_04">
@@ -2030,8 +2082,8 @@
 	</row>
 
 	<row id="plbc10_14_03">
-		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
-		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN" width="256">そっちにまち　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまち　たのしそうだな…</language>
 	</row>
 
 	<row id="plbc10_14_04">
@@ -2070,8 +2122,8 @@
 	</row>
 
 	<row id="plbc10_15_03">
-		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
-		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN" width="256">そっちにまち　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまち　たのしそうだな…</language>
 	</row>
 
 	<row id="plbc10_15_04">
@@ -2110,8 +2162,8 @@
 	</row>
 
 	<row id="plbc10_16_03">
-		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
-		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN" width="256">そっちにまち　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまち　たのしそうだな…</language>
 	</row>
 
 	<row id="plbc10_16_04">
@@ -2150,8 +2202,8 @@
 	</row>
 
 	<row id="plbc10_17_03">
-		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
-		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN" width="256">そっちにまち　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまち　たのしそうだな…</language>
 	</row>
 
 	<row id="plbc10_17_04">
@@ -2190,8 +2242,8 @@
 	</row>
 
 	<row id="plbc10_18_03">
-		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
-		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN" width="256">そっちにまち　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまち　たのしそうだな…</language>
 	</row>
 
 	<row id="plbc10_18_04">
@@ -2230,8 +2282,8 @@
 	</row>
 
 	<row id="plbc10_19_03">
-		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
-		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN" width="256">そっちにまち　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまち　たのしそうだな…</language>
 	</row>
 
 	<row id="plbc10_19_04">
@@ -2270,8 +2322,8 @@
 	</row>
 
 	<row id="plbc10_20_03">
-		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
-		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN" width="256">そっちにまち　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまち　たのしそうだな…</language>
 	</row>
 
 	<row id="plbc10_20_04">
@@ -2310,8 +2362,8 @@
 	</row>
 
 	<row id="plbc10_21_03">
-		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
-		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN" width="256">そっちにまち　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまち　たのしそうだな…</language>
 	</row>
 
 	<row id="plbc10_21_04">
@@ -2350,8 +2402,8 @@
 	</row>
 
 	<row id="plbc10_22_03">
-		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
-		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN" width="256">そっちにまち　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまち　たのしそうだな…</language>
 	</row>
 
 	<row id="plbc10_22_04">
@@ -2390,8 +2442,8 @@
 	</row>
 
 	<row id="plbc10_23_03">
-		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
-		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN" width="256">そっちにまち　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまち　たのしそうだな…</language>
 	</row>
 
 	<row id="plbc10_23_04">
@@ -2430,8 +2482,8 @@
 	</row>
 
 	<row id="plbc10_24_03">
-		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
-		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN" width="256">そっちにまち　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまち　たのしそうだな…</language>
 	</row>
 
 	<row id="plbc10_24_04">
@@ -2470,8 +2522,8 @@
 	</row>
 
 	<row id="plbc10_25_03">
-		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
-		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN" width="256">そっちにまち　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまち　たのしそうだな…</language>
 	</row>
 
 	<row id="plbc10_25_04">
@@ -2510,8 +2562,8 @@
 	</row>
 
 	<row id="plbc10_26_03">
-		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
-		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN" width="256">そっちにまち　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまち　たのしそうだな…</language>
 	</row>
 
 	<row id="plbc10_26_04">
@@ -2550,8 +2602,8 @@
 	</row>
 
 	<row id="plbc10_27_03">
-		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
-		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN" width="256">そっちにまち　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまち　たのしそうだな…</language>
 	</row>
 
 	<row id="plbc10_27_04">
@@ -2590,8 +2642,8 @@
 	</row>
 
 	<row id="plbc10_28_03">
-		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
-		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN" width="256">そっちにまち　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまち　たのしそうだな…</language>
 	</row>
 
 	<row id="plbc10_28_04">
@@ -2630,8 +2682,8 @@
 	</row>
 
 	<row id="plbc10_29_03">
-		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
-		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN" width="256">そっちにまち　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまち　たのしそうだな…</language>
 	</row>
 
 	<row id="plbc10_29_04">
@@ -2670,8 +2722,8 @@
 	</row>
 
 	<row id="plbc10_30_03">
-		<language name="JPN" width="256">そっちにまちに　たのしそうだな…</language>
-		<language name="JPN_KANJI" width="256">そっちにまちに　たのしそうだな…</language>
+		<language name="JPN" width="256">そっちにまち　たのしそうだな…</language>
+		<language name="JPN_KANJI" width="256">そっちにまち　たのしそうだな…</language>
 	</row>
 
 	<row id="plbc10_30_04">

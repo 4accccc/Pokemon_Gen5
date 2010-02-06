@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00185" date="2010-01-14T22:00:34"/>
+	<create user="ohmori" host="W00223" date="2010-02-06T19:19:00"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -367,23 +367,35 @@
 	</row>
 
 	<row id="bc10_01_01">
-		<language name="JPN" width="256">たたかおうぜ！</language>
-		<language name="JPN_KANJI" width="256">たたかおうぜ！</language>
+		<language name="JPN" width="256">テスト『おれが　このブラックシティで
+いちばんつよい！▽
+それを　しょうめい　してやるぜ！▼</language>
+		<language name="JPN_KANJI" width="256">テスト『おれが　このブラックシティで
+いちばんつよい！▽
+それを　しょうめい　してやるぜ！▼</language>
 	</row>
 
 	<row id="bc10_01_02">
-		<language name="JPN" width="256">まけたぜ…</language>
-		<language name="JPN_KANJI" width="256">まけたぜ…</language>
+		<language name="JPN" width="256">まけたぜ……
+おれが　いちばんじゃ　ないのか</language>
+		<language name="JPN_KANJI" width="256">まけたぜ……
+おれが　いちばんじゃ　ないのか</language>
 	</row>
 
 	<row id="bc10_01_03">
-		<language name="JPN" width="256">WFヘ　いってみたいな…</language>
-		<language name="JPN_KANJI" width="256">WFヘ　いってみたいな…</language>
+		<language name="JPN" width="256">うーん　このまちも
+さわがしくなってきたな▼
+ホワイトフォレストで
+しずかに　くらすのもいいな</language>
+		<language name="JPN_KANJI" width="256">う〜ん　このまちも　さわがしくなってきたな
+ホワイトフォレストで　しずかに　くらすのもいいな</language>
 	</row>
 
 	<row id="bc10_01_04">
-		<language name="JPN" width="256">BCは　さいこうだぜ！</language>
-		<language name="JPN_KANJI" width="256">BCは　さいこうだぜ！</language>
+		<language name="JPN" width="256">やっぱり　ブラックシティは
+エキサイティングで　たのしいぜ！</language>
+		<language name="JPN_KANJI" width="256">やっぱり　ブラックシティは
+エキサイティングで　たのしいぜ！</language>
 	</row>
 
 	<row id="bc10_02_01">
