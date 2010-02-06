@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-09-18T16:36:50"/>
+	<create user="matsumiya" host="W00224" date="2010-02-06T14:18:40"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="172"/>
+		<comment position="4" width="224"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="1291" top="262" right="1996" bottom="890" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,12 +292,19 @@
 	</lock>
 
 
-	<row id="msg_r03r0201_oldwoman1_01" back-color="#404040,,,,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>・育て屋用のgmmは
+	<row id="msg_r03r0201_badman_01">
+		<comment>♂
+・育て屋用のgmmは
 　sodateya.gmm参照</comment>
-		<attribute name="キャラ指定">OLDWOMAN1</attribute>
-		<language name="JPN" width="256">test</language>
-		<language name="JPN_KANJI" width="256">test</language>
+		<attribute name="キャラ指定">BADMAN</attribute>
+		<language name="JPN" width="256">そだてて　もらっていた
+ポケモンを　ひきとったらよ▼
+あずけたときに　おぼえていたのと
+ちがう　わざを　おぼえてたぜ！</language>
+		<language name="JPN_KANJI" width="256">育てて　もらっていた
+ポケモンを　引き取ったらよ▼
+あずけたときに　覚えていたのと
+違う　技を　覚えてたぜ！</language>
 	</row>
 
 	<flowchart-group-list>
