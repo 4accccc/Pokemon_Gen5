@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-02T14:31:51"/>
+	<create user="matsumiya" host="W00224" date="2010-02-06T13:11:09"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="38" top="214" right="743" bottom="834" maximized="no" rayout="Vertical2">
+	<dialog left="1440" top="268" right="2145" bottom="888" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -450,9 +450,9 @@
 ・表示後、画面上方向に移動
 　画面外に消えると、主人公操作可能に</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">……じいさん　さきに　いったからさ
+		<language name="JPN" width="256">……アデクさん　さきに　いったからさ
 いそぐぜ[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">……じいさん　先に行ったからさ
+		<language name="JPN_KANJI" width="256">……アデクさん　先に行ったからさ
 急ぐぜ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
@@ -618,41 +618,19 @@
 ばしょにも　すすめるらしいね！</language>
 	</row>
 
-	<row id="msg_d03r0101_sunglasses_05" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+	<row id="msg_d03r0101_backpackerm_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
 		<comment>♂
-・sunglasses_04表示後に続けて
-・「じてんしゃ」入手処理</comment>
-		<attribute name="キャラ指定">SUNGLASSES
-サングラス</attribute>
-		<language name="JPN" width="256">はあ　たすかったよ！[BE:01:ページ切り替え（クリア）]
-じてんしゃで　さばくを　おうだんして
-いせきを　みにいこうと　したけれど[BE:01:ページ切り替え（クリア）]
-タイヤに　すなが　からまって
-スピードが　ちっとも　でないんだよね[BE:01:ページ切り替え（クリア）]
-せっかく　かったのに
-まったく　のっていない　じてんしゃ[BE:00:ページ切り替え（行送り）]
-もったいないから　きみに　あげよう！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">はあ　助かったよ！[BE:01:ページ切り替え（クリア）]
-じてんしゃで　砂漠を　横断し
-遺跡見物に　行こうと　したけれど[BE:01:ページ切り替え（クリア）]
-タイヤに　砂が　絡まって
-スピードが　ちっとも　でないんだよね[BE:01:ページ切り替え（クリア）]
-せっかく　買ったのに
-まったく　乗っていない　じてんしゃ[BE:00:ページ切り替え（行送り）]
-もったいないから　君に　あげよう！[BE:01:ページ切り替え（クリア）]</language>
-	</row>
-
-	<row id="msg_d03r0101_sunglasses_06" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・メッセージ表示後、遺跡方面にダッシュ</comment>
-		<attribute name="キャラ指定">SUNGLASSES
-サングラス</attribute>
-		<language name="JPN" width="256">では　わたしは
-いせきに　いこうと　おもう！[BE:00:ページ切り替え（行送り）]
-アデュー！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">では　わたしは
-遺跡に　行こうと　思う！[BE:00:ページ切り替え（行送り）]
-アデュー！[BE:01:ページ切り替え（クリア）]</language>
+・すごい端に配置してくれれば</comment>
+		<attribute name="キャラ指定">BACKPACKERM
+バックパッカ-♂</attribute>
+		<language name="JPN" width="256">おお！　すなのうみ！　ここは
+ゴーゴーゴーグル　いらないんですね▼
+あ　わたくし　はるばる
+ホウエンから　やってきたんです！</language>
+		<language name="JPN_KANJI" width="256">おお！　砂の海！　ここは
+ゴーゴーゴーグル　いらないんですね▼
+あ　わたくし　はるばる
+ホウエンから　やって来たんです！</language>
 	</row>
 
 	<flowchart-group-list>
