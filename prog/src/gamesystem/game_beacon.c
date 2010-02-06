@@ -79,15 +79,53 @@ static void BeaconInfo_Set(GAMEBEACON_SYSTEM *bsys, const GAMEBEACON_INFO *info)
 static GAMEBEACON_INFO * BeaconInfo_Get(GAMEBEACON_SYSTEM *bsys, int log_no);
 static void SendBeacon_Init(GAMEBEACON_SEND_MANAGER *send, GAMEDATA * gamedata);
 static void SendBeacon_SetCommon(GAMEBEACON_SEND_MANAGER *send);
-static void GAMEBEACON_Set_ThanksRecvCount(u16 count);
-static void GAMEBEACON_Set_SuretigaiCount(u16 count);
-static void _Set_Details_BattleWildPoke(u16 monsno);
-static void _Set_Details_BattleSpPoke(u16 monsno);
-static void _Set_Details_BattleTrainer(u16 tr_no);
-static void _Set_Details_BattleLeader(u16 tr_no);
-static void _Set_Details_BattleBigFour(u16 tr_no);
-static void _Set_Details_BattleChampion(u16 tr_no);
-static void _Set_Details_Walk(void);
+static void GAMEBEACON_Set_ThanksRecvCount(u32 count);
+static void GAMEBEACON_Set_SuretigaiCount(u32 count);
+
+void BEACONINFO_Set_BattleWildPokeStart(GAMEBEACON_INFO *info, u16 monsno);
+void BEACONINFO_Set_BattleWildPokeVictory(GAMEBEACON_INFO *info, u16 monsno);
+void BEACONINFO_Set_BattleSpPokeStart(GAMEBEACON_INFO *info, u16 monsno);
+void BEACONINFO_Set_BattleSpPokeVictory(GAMEBEACON_INFO *info, u16 monsno);
+void BEACONINFO_Set_BattleTrainerStart(GAMEBEACON_INFO *info, u16 tr_no);
+void BEACONINFO_Set_BattleTrainerVictory(GAMEBEACON_INFO *info, u16 tr_no);
+void BEACONINFO_Set_BattleLeaderStart(GAMEBEACON_INFO *info, u16 tr_no);
+void BEACONINFO_Set_BattleLeaderVictory(GAMEBEACON_INFO *info, u16 tr_no);
+void BEACONINFO_Set_BattleBigFourStart(GAMEBEACON_INFO *info, u16 tr_no);
+void BEACONINFO_Set_BattleBigFourVictory(GAMEBEACON_INFO *info, u16 tr_no);
+void BEACONINFO_Set_BattleChampionStart(GAMEBEACON_INFO *info, u16 tr_no);
+void BEACONINFO_Set_BattleChampionVictory(GAMEBEACON_INFO *info, u16 tr_no);
+void BEACONINFO_Set_PokemonGet(GAMEBEACON_INFO *info, u16 monsno);
+void BEACONINFO_Set_SpecialPokemonGet(GAMEBEACON_INFO *info, u16 monsno);
+void BEACONINFO_Set_PokemonLevelUp(GAMEBEACON_INFO *info, const STRBUF *nickname);
+void BEACONINFO_Set_PokemonEvolution(GAMEBEACON_INFO *info, u16 monsno, const STRBUF *nickname);
+void BEACONINFO_Set_GPower(GAMEBEACON_INFO *info, GPOWER_ID g_power_id);
+void BEACONINFO_Set_SpItemGet(GAMEBEACON_INFO *info, u16 item);
+void BEACONINFO_Set_PlayTime(GAMEBEACON_INFO *info, u32 hour);
+void BEACONINFO_Set_ZukanComplete(GAMEBEACON_INFO *info);
+void BEACONINFO_Set_ThankyouOver(GAMEBEACON_INFO *info, u32 thankyou_count);
+void BEACONINFO_Set_UnionIn(GAMEBEACON_INFO *info);
+#ifdef PM_DEBUG
+void BEACONINFO_Set_DistributionPoke(GAMEBEACON_INFO *info, u16 monsno);
+void BEACONINFO_Set_DistributionItem(GAMEBEACON_INFO *info, u16 item);
+void BEACONINFO_Set_DistributionEtc(GAMEBEACON_INFO *info);
+#endif
+void BEACONINFO_Set_Thankyou(GAMEBEACON_INFO *info, GAMEDATA *gamedata, u32 target_trainer_id);
+void BEACONINFO_Set_ZoneChange(GAMEBEACON_INFO *info, ZONEID zone_id);
+void BEACONINFO_Set_ThanksRecvCount(GAMEBEACON_INFO *info, u32 count);
+void BEACONINFO_Set_SuretigaiCount(GAMEBEACON_INFO *info, u32 count);
+
+void BEACONINFO_Set_Details_BattleWildPoke(GAMEBEACON_INFO *info, u16 monsno);
+void BEACONINFO_Set_Details_BattleSpPoke(GAMEBEACON_INFO *info, u16 monsno);
+void BEACONINFO_Set_Details_BattleTrainer(GAMEBEACON_INFO *info, u16 tr_no);
+void BEACONINFO_Set_Details_BattleLeader(GAMEBEACON_INFO *info, u16 tr_no);
+void BEACONINFO_Set_Details_BattleBigFour(GAMEBEACON_INFO *info, u16 tr_no);
+void BEACONINFO_Set_Details_BattleChampion(GAMEBEACON_INFO *info, u16 tr_no);
+void BEACONINFO_Set_Details_Walk(GAMEBEACON_INFO *info);
+void BEACONINFO_Set_Details_IntroductionPms(GAMEBEACON_INFO *info, const PMS_DATA *pms);
+
+#ifdef PM_DEBUG
+GAMEBEACON_INFO * DEBUG_SendBeaconInfo_GetPtr(void);
+#endif
 
 
 //==============================================================================
@@ -501,7 +539,7 @@ static void SendBeacon_Init(GAMEBEACON_SEND_MANAGER *send, GAMEDATA * gamedata)
   }
   
   //詳細情報
-  _Set_Details_Walk();
+  BEACONINFO_Set_Details_Walk(info);
 
   //行動パラメータ
   info->action.action_no = GAMEBEACON_ACTION_NULL;
@@ -577,20 +615,40 @@ u32 GAMEBEACON_GetMsgID(const GAMEBEACON_INFO *info)
 //==============================================================================
 //==================================================================
 /**
- * ビーコンセット：野生のポケモンと対戦を開始しました
+ * 送信ビーコンセット：野生のポケモンと対戦を開始しました
  * @param   monsno   ポケモン番号
  */
 //==================================================================
 void GAMEBEACON_Set_BattleWildPokeStart(u16 monsno)
 {
-  GAMEBEACON_SEND_MANAGER *send = &GameBeaconSys->send;
+  BEACONINFO_Set_BattleWildPokeStart(&GameBeaconSys->send.info, monsno);
+  SendBeacon_SetCommon(&GameBeaconSys->send);
+}
+
+//==================================================================
+/**
+ * ビーコンセット：野生のポケモンと対戦を開始しました
+ * @param   monsno   ポケモン番号
+ */
+//==================================================================
+void BEACONINFO_Set_BattleWildPokeStart(GAMEBEACON_INFO *info, u16 monsno)
+{
+  info->action.action_no = GAMEBEACON_ACTION_BATTLE_WILD_POKE_START;
+  info->action.monsno = monsno;
   
-  send->info.action.action_no = GAMEBEACON_ACTION_BATTLE_WILD_POKE_START;
-  send->info.action.monsno = monsno;
-  
-  _Set_Details_BattleWildPoke(monsno);
-  
-  SendBeacon_SetCommon(send);
+  BEACONINFO_Set_Details_BattleWildPoke(info, monsno);
+}
+
+//==================================================================
+/**
+ * 送信ビーコンセット：野生のポケモンとの対戦に勝利しました
+ * @param   monsno   ポケモン番号
+ */
+//==================================================================
+void GAMEBEACON_Set_BattleWildPokeVictory(u16 monsno)
+{
+  BEACONINFO_Set_BattleWildPokeVictory(&GameBeaconSys->send.info, monsno);
+  SendBeacon_SetCommon(&GameBeaconSys->send);
 }
 
 //==================================================================
@@ -599,16 +657,24 @@ void GAMEBEACON_Set_BattleWildPokeStart(u16 monsno)
  * @param   monsno   ポケモン番号
  */
 //==================================================================
-void GAMEBEACON_Set_BattleWildPokeVictory(u16 monsno)
+void BEACONINFO_Set_BattleWildPokeVictory(GAMEBEACON_INFO *info, u16 monsno)
 {
-  GAMEBEACON_SEND_MANAGER *send = &GameBeaconSys->send;
-  
-  send->info.action.action_no = GAMEBEACON_ACTION_BATTLE_WILD_POKE_VICTORY;
-  send->info.action.monsno = monsno;
+  info->action.action_no = GAMEBEACON_ACTION_BATTLE_WILD_POKE_VICTORY;
+  info->action.monsno = monsno;
 
-  _Set_Details_Walk();
+  BEACONINFO_Set_Details_Walk(info);
+}
 
-  SendBeacon_SetCommon(send);
+//==================================================================
+/**
+ * 送信ビーコンセット：特別なポケモンと対戦を開始しました
+ * @param   tr_no   ポケモン番号
+ */
+//==================================================================
+void GAMEBEACON_Set_BattleSpPokeStart(u16 monsno)
+{
+  BEACONINFO_Set_BattleSpPokeStart(&GameBeaconSys->send.info, monsno);
+  SendBeacon_SetCommon(&GameBeaconSys->send);
 }
 
 //==================================================================
@@ -617,16 +683,24 @@ void GAMEBEACON_Set_BattleWildPokeVictory(u16 monsno)
  * @param   tr_no   ポケモン番号
  */
 //==================================================================
-void GAMEBEACON_Set_BattleSpPokeStart(u16 monsno)
+void BEACONINFO_Set_BattleSpPokeStart(GAMEBEACON_INFO *info, u16 monsno)
 {
-  GAMEBEACON_SEND_MANAGER *send = &GameBeaconSys->send;
-  
-  send->info.action.action_no = GAMEBEACON_ACTION_BATTLE_SP_POKE_START;
-  send->info.action.monsno = monsno;
+  info->action.action_no = GAMEBEACON_ACTION_BATTLE_SP_POKE_START;
+  info->action.monsno = monsno;
 
-  _Set_Details_BattleSpPoke(monsno);
+  BEACONINFO_Set_Details_BattleSpPoke(info, monsno);
+}
 
-  SendBeacon_SetCommon(send);
+//==================================================================
+/**
+ * 送信ビーコンセット：特別なポケモンとの対戦に勝利しました
+ * @param   monsno   ポケモン番号
+ */
+//==================================================================
+void GAMEBEACON_Set_BattleSpPokeVictory(u16 monsno)
+{
+  BEACONINFO_Set_BattleSpPokeVictory(&GameBeaconSys->send.info, monsno);
+  SendBeacon_SetCommon(&GameBeaconSys->send);
 }
 
 //==================================================================
@@ -635,16 +709,24 @@ void GAMEBEACON_Set_BattleSpPokeStart(u16 monsno)
  * @param   monsno   ポケモン番号
  */
 //==================================================================
-void GAMEBEACON_Set_BattleSpPokeVictory(u16 monsno)
+void BEACONINFO_Set_BattleSpPokeVictory(GAMEBEACON_INFO *info, u16 monsno)
 {
-  GAMEBEACON_SEND_MANAGER *send = &GameBeaconSys->send;
+  info->action.action_no = GAMEBEACON_ACTION_BATTLE_SP_POKE_VICTORY;
+  info->action.monsno = monsno;
   
-  send->info.action.action_no = GAMEBEACON_ACTION_BATTLE_SP_POKE_VICTORY;
-  send->info.action.monsno = monsno;
-  
-  _Set_Details_Walk();
+  BEACONINFO_Set_Details_Walk(info);
+}
 
-  SendBeacon_SetCommon(send);
+//==================================================================
+/**
+ * 送信ビーコンセット：トレーナーと対戦を開始しました
+ * @param   tr_no   トレーナー番号
+ */
+//==================================================================
+void GAMEBEACON_Set_BattleTrainerStart(u16 tr_no)
+{
+  BEACONINFO_Set_BattleTrainerStart(&GameBeaconSys->send.info, tr_no);
+  SendBeacon_SetCommon(&GameBeaconSys->send);
 }
 
 //==================================================================
@@ -653,16 +735,24 @@ void GAMEBEACON_Set_BattleSpPokeVictory(u16 monsno)
  * @param   tr_no   トレーナー番号
  */
 //==================================================================
-void GAMEBEACON_Set_BattleTrainerStart(u16 tr_no)
+void BEACONINFO_Set_BattleTrainerStart(GAMEBEACON_INFO *info, u16 tr_no)
 {
-  GAMEBEACON_SEND_MANAGER *send = &GameBeaconSys->send;
-  
-  send->info.action.action_no = GAMEBEACON_ACTION_BATTLE_TRAINER_START;
-  send->info.action.tr_no = tr_no;
+  info->action.action_no = GAMEBEACON_ACTION_BATTLE_TRAINER_START;
+  info->action.tr_no = tr_no;
 
-  _Set_Details_BattleTrainer(tr_no);
+  BEACONINFO_Set_Details_BattleTrainer(info, tr_no);
+}
 
-  SendBeacon_SetCommon(send);
+//==================================================================
+/**
+ * 送信ビーコンセット：トレーナーとの対戦に勝利しました
+ * @param   tr_no   トレーナー番号
+ */
+//==================================================================
+void GAMEBEACON_Set_BattleTrainerVictory(u16 tr_no)
+{
+  BEACONINFO_Set_BattleTrainerVictory(&GameBeaconSys->send.info, tr_no);
+  SendBeacon_SetCommon(&GameBeaconSys->send);
 }
 
 //==================================================================
@@ -671,34 +761,50 @@ void GAMEBEACON_Set_BattleTrainerStart(u16 tr_no)
  * @param   tr_no   トレーナー番号
  */
 //==================================================================
-void GAMEBEACON_Set_BattleTrainerVictory(u16 tr_no)
+void BEACONINFO_Set_BattleTrainerVictory(GAMEBEACON_INFO *info, u16 tr_no)
 {
-  GAMEBEACON_SEND_MANAGER *send = &GameBeaconSys->send;
-  
-  send->info.action.action_no = GAMEBEACON_ACTION_BATTLE_TRAINER_VICTORY;
-  send->info.action.tr_no = tr_no;
+  info->action.action_no = GAMEBEACON_ACTION_BATTLE_TRAINER_VICTORY;
+  info->action.tr_no = tr_no;
 
-  _Set_Details_Walk();
-
-  SendBeacon_SetCommon(send);
+  BEACONINFO_Set_Details_Walk(info);
 }
 
 //==================================================================
 /**
- * ビーコンセット：ジムリーダーと対戦を開始しました
+ * 送信ビーコンセット：ジムリーダーと対戦を開始しました
  * @param   tr_no   トレーナー番号
  */
 //==================================================================
 void GAMEBEACON_Set_BattleLeaderStart(u16 tr_no)
 {
-  GAMEBEACON_SEND_MANAGER *send = &GameBeaconSys->send;
-  
-  send->info.action.action_no = GAMEBEACON_ACTION_BATTLE_LEADER_START;
-  send->info.action.tr_no = tr_no;
+  BEACONINFO_Set_BattleLeaderStart(&GameBeaconSys->send.info, tr_no);
+  SendBeacon_SetCommon(&GameBeaconSys->send);
+}
 
-  _Set_Details_BattleLeader(tr_no);
+//==================================================================
+/**
+ * ビーコンセット：トレーナーとの対戦に勝利しました
+ * @param   tr_no   トレーナー番号
+ */
+//==================================================================
+void BEACONINFO_Set_BattleLeaderStart(GAMEBEACON_INFO *info, u16 tr_no)
+{
+  info->action.action_no = GAMEBEACON_ACTION_BATTLE_LEADER_START;
+  info->action.tr_no = tr_no;
 
-  SendBeacon_SetCommon(send);
+  BEACONINFO_Set_Details_BattleLeader(info, tr_no);
+}
+
+//==================================================================
+/**
+ * 送信ビーコンセット：ジムリーダーとの対戦に勝利しました
+ * @param   tr_no   トレーナー番号
+ */
+//==================================================================
+void GAMEBEACON_Set_BattleLeaderVictory(u16 tr_no)
+{
+  BEACONINFO_Set_BattleLeaderVictory(&GameBeaconSys->send.info, tr_no);
+  SendBeacon_SetCommon(&GameBeaconSys->send);
 }
 
 //==================================================================
@@ -707,16 +813,24 @@ void GAMEBEACON_Set_BattleLeaderStart(u16 tr_no)
  * @param   tr_no   トレーナー番号
  */
 //==================================================================
-void GAMEBEACON_Set_BattleLeaderVictory(u16 tr_no)
+void BEACONINFO_Set_BattleLeaderVictory(GAMEBEACON_INFO *info, u16 tr_no)
 {
-  GAMEBEACON_SEND_MANAGER *send = &GameBeaconSys->send;
-  
-  send->info.action.action_no = GAMEBEACON_ACTION_BATTLE_LEADER_VICTORY;
-  send->info.action.tr_no = tr_no;
+  info->action.action_no = GAMEBEACON_ACTION_BATTLE_LEADER_VICTORY;
+  info->action.tr_no = tr_no;
 
-  _Set_Details_Walk();
+  BEACONINFO_Set_Details_Walk(info);
+}
 
-  SendBeacon_SetCommon(send);
+//==================================================================
+/**
+ * 送信ビーコンセット：四天王と対戦を開始しました
+ * @param   tr_no   トレーナー番号
+ */
+//==================================================================
+void GAMEBEACON_Set_BattleBigFourStart(u16 tr_no)
+{
+  BEACONINFO_Set_BattleBigFourStart(&GameBeaconSys->send.info, tr_no);
+  SendBeacon_SetCommon(&GameBeaconSys->send);
 }
 
 //==================================================================
@@ -725,16 +839,24 @@ void GAMEBEACON_Set_BattleLeaderVictory(u16 tr_no)
  * @param   tr_no   トレーナー番号
  */
 //==================================================================
-void GAMEBEACON_Set_BattleBigFourStart(u16 tr_no)
+void BEACONINFO_Set_BattleBigFourStart(GAMEBEACON_INFO *info, u16 tr_no)
 {
-  GAMEBEACON_SEND_MANAGER *send = &GameBeaconSys->send;
-  
-  send->info.action.action_no = GAMEBEACON_ACTION_BATTLE_BIGFOUR_START;
-  send->info.action.tr_no = tr_no;
+  info->action.action_no = GAMEBEACON_ACTION_BATTLE_BIGFOUR_START;
+  info->action.tr_no = tr_no;
 
-  _Set_Details_BattleBigFour(tr_no);
+  BEACONINFO_Set_Details_BattleBigFour(info, tr_no);
+}
 
-  SendBeacon_SetCommon(send);
+//==================================================================
+/**
+ * 送信ビーコンセット：四天王との対戦に勝利しました
+ * @param   tr_no   トレーナー番号
+ */
+//==================================================================
+void GAMEBEACON_Set_BattleBigFourVictory(u16 tr_no)
+{
+  BEACONINFO_Set_BattleBigFourVictory(&GameBeaconSys->send.info, tr_no);
+  SendBeacon_SetCommon(&GameBeaconSys->send);
 }
 
 //==================================================================
@@ -743,16 +865,24 @@ void GAMEBEACON_Set_BattleBigFourStart(u16 tr_no)
  * @param   tr_no   トレーナー番号
  */
 //==================================================================
-void GAMEBEACON_Set_BattleBigFourVictory(u16 tr_no)
+void BEACONINFO_Set_BattleBigFourVictory(GAMEBEACON_INFO *info, u16 tr_no)
 {
-  GAMEBEACON_SEND_MANAGER *send = &GameBeaconSys->send;
-  
-  send->info.action.action_no = GAMEBEACON_ACTION_BATTLE_BIGFOUR_VICTORY;
-  send->info.action.tr_no = tr_no;
+  info->action.action_no = GAMEBEACON_ACTION_BATTLE_BIGFOUR_VICTORY;
+  info->action.tr_no = tr_no;
 
-  _Set_Details_Walk();
+  BEACONINFO_Set_Details_Walk(info);
+}
 
-  SendBeacon_SetCommon(send);
+//==================================================================
+/**
+ * 送信ビーコンセット：チャンピオンと対戦を開始しました
+ * @param   tr_no   トレーナー番号
+ */
+//==================================================================
+void GAMEBEACON_Set_BattleChampionStart(u16 tr_no)
+{
+  BEACONINFO_Set_BattleChampionStart(&GameBeaconSys->send.info, tr_no);
+  SendBeacon_SetCommon(&GameBeaconSys->send);
 }
 
 //==================================================================
@@ -761,16 +891,24 @@ void GAMEBEACON_Set_BattleBigFourVictory(u16 tr_no)
  * @param   tr_no   トレーナー番号
  */
 //==================================================================
-void GAMEBEACON_Set_BattleChampionStart(u16 tr_no)
+void BEACONINFO_Set_BattleChampionStart(GAMEBEACON_INFO *info, u16 tr_no)
 {
-  GAMEBEACON_SEND_MANAGER *send = &GameBeaconSys->send;
-  
-  send->info.action.action_no = GAMEBEACON_ACTION_BATTLE_CHAMPION_START;
-  send->info.action.tr_no = tr_no;
+  info->action.action_no = GAMEBEACON_ACTION_BATTLE_CHAMPION_START;
+  info->action.tr_no = tr_no;
 
-  _Set_Details_BattleChampion(tr_no);
+  BEACONINFO_Set_Details_BattleChampion(info, tr_no);
+}
 
-  SendBeacon_SetCommon(send);
+//==================================================================
+/**
+ * 送信ビーコンセット：チャンピオンとの対戦に勝利しました
+ * @param   tr_no   トレーナー番号
+ */
+//==================================================================
+void GAMEBEACON_Set_BattleChampionVictory(u16 tr_no)
+{
+  BEACONINFO_Set_BattleChampionVictory(&GameBeaconSys->send.info, tr_no);
+  SendBeacon_SetCommon(&GameBeaconSys->send);
 }
 
 //==================================================================
@@ -779,16 +917,25 @@ void GAMEBEACON_Set_BattleChampionStart(u16 tr_no)
  * @param   tr_no   トレーナー番号
  */
 //==================================================================
-void GAMEBEACON_Set_BattleChampionVictory(u16 tr_no)
+void BEACONINFO_Set_BattleChampionVictory(GAMEBEACON_INFO *info, u16 tr_no)
 {
-  GAMEBEACON_SEND_MANAGER *send = &GameBeaconSys->send;
-  
-  send->info.action.action_no = GAMEBEACON_ACTION_BATTLE_CHAMPION_VICTORY;
-  send->info.action.tr_no = tr_no;
+  info->action.action_no = GAMEBEACON_ACTION_BATTLE_CHAMPION_VICTORY;
+  info->action.tr_no = tr_no;
 
-  _Set_Details_Walk();
+  BEACONINFO_Set_Details_Walk(info);
+}
 
-  SendBeacon_SetCommon(send);
+//==================================================================
+/**
+ * 送信ビーコンセット：ポケモン捕獲
+ *
+ * @param   monsno    ポケモン番号
+ */
+//==================================================================
+void GAMEBEACON_Set_PokemonGet(u16 monsno)
+{
+  BEACONINFO_Set_PokemonGet(&GameBeaconSys->send.info, monsno);
+  SendBeacon_SetCommon(&GameBeaconSys->send);
 }
 
 //==================================================================
@@ -798,16 +945,25 @@ void GAMEBEACON_Set_BattleChampionVictory(u16 tr_no)
  * @param   monsno    ポケモン番号
  */
 //==================================================================
-void GAMEBEACON_Set_PokemonGet(u16 monsno)
+void BEACONINFO_Set_PokemonGet(GAMEBEACON_INFO *info, u16 monsno)
 {
-  GAMEBEACON_SEND_MANAGER *send = &GameBeaconSys->send;
-  
-  send->info.action.action_no = GAMEBEACON_ACTION_POKE_GET;
-  send->info.action.monsno = monsno;
+  info->action.action_no = GAMEBEACON_ACTION_POKE_GET;
+  info->action.monsno = monsno;
 
-  _Set_Details_Walk();
+  BEACONINFO_Set_Details_Walk(info);
+}
 
-  SendBeacon_SetCommon(send);
+//==================================================================
+/**
+ * 送信ビーコンセット：特別なポケモン捕獲
+ *
+ * @param   monsno    ポケモン番号
+ */
+//==================================================================
+void GAMEBEACON_Set_SpecialPokemonGet(u16 monsno)
+{
+  BEACONINFO_Set_SpecialPokemonGet(&GameBeaconSys->send.info, monsno);
+  SendBeacon_SetCommon(&GameBeaconSys->send);
 }
 
 //==================================================================
@@ -817,16 +973,12 @@ void GAMEBEACON_Set_PokemonGet(u16 monsno)
  * @param   monsno    ポケモン番号
  */
 //==================================================================
-void GAMEBEACON_Set_SpecialPokemonGet(u16 monsno)
+void BEACONINFO_Set_SpecialPokemonGet(GAMEBEACON_INFO *info, u16 monsno)
 {
-  GAMEBEACON_SEND_MANAGER *send = &GameBeaconSys->send;
-  
-  send->info.action.action_no = GAMEBEACON_ACTION_POKE_GET;
-  send->info.action.monsno = monsno;
+  info->action.action_no = GAMEBEACON_ACTION_POKE_GET;
+  info->action.monsno = monsno;
 
-  _Set_Details_Walk();
-
-  SendBeacon_SetCommon(send);
+  BEACONINFO_Set_Details_Walk(info);
 }
 
 //--------------------------------------------------------------
@@ -857,21 +1009,44 @@ static void _StrbufNicknameCopy(const STRBUF *nickname, STRCODE *dest_nickname)
 
 //==================================================================
 /**
- * ビーコンセット：ポケモンレベルアップ
+ * 送信ビーコンセット：ポケモンレベルアップ
  *
  * @param   nickname		対象ポケモンのニックネーム
  */
 //==================================================================
 void GAMEBEACON_Set_PokemonLevelUp(const STRBUF *nickname)
 {
-  GAMEBEACON_SEND_MANAGER *send = &GameBeaconSys->send;
-  
-  send->info.action.action_no = GAMEBEACON_ACTION_POKE_LVUP;
-  _StrbufNicknameCopy(nickname, send->info.action.normal.nickname);
+  BEACONINFO_Set_PokemonLevelUp(&GameBeaconSys->send.info, nickname);
+  SendBeacon_SetCommon(&GameBeaconSys->send);
+}
 
-  _Set_Details_Walk();
+//==================================================================
+/**
+ * ビーコンセット：ポケモンレベルアップ
+ *
+ * @param   nickname		対象ポケモンのニックネーム
+ */
+//==================================================================
+void BEACONINFO_Set_PokemonLevelUp(GAMEBEACON_INFO *info, const STRBUF *nickname)
+{
+  info->action.action_no = GAMEBEACON_ACTION_POKE_LVUP;
+  _StrbufNicknameCopy(nickname, info->action.normal.nickname);
 
-  SendBeacon_SetCommon(send);
+  BEACONINFO_Set_Details_Walk(info);
+}
+
+//==================================================================
+/**
+ * 送信ビーコンセット：ポケモン進化
+ *
+ * @param   monsno  		対象ポケモンのポケモン番号
+ * @param   nickname		対象ポケモンのニックネーム
+ */
+//==================================================================
+void GAMEBEACON_Set_PokemonEvolution(u16 monsno, const STRBUF *nickname)
+{
+  BEACONINFO_Set_PokemonEvolution(&GameBeaconSys->send.info, monsno, nickname);
+  SendBeacon_SetCommon(&GameBeaconSys->send);
 }
 
 //==================================================================
@@ -882,17 +1057,26 @@ void GAMEBEACON_Set_PokemonLevelUp(const STRBUF *nickname)
  * @param   nickname		対象ポケモンのニックネーム
  */
 //==================================================================
-void GAMEBEACON_Set_PokemonEvolution(u16 monsno, const STRBUF *nickname)
+void BEACONINFO_Set_PokemonEvolution(GAMEBEACON_INFO *info, u16 monsno, const STRBUF *nickname)
 {
-  GAMEBEACON_SEND_MANAGER *send = &GameBeaconSys->send;
-  
-  send->info.action.action_no = GAMEBEACON_ACTION_POKE_EVOLUTION;
-  send->info.action.monsno = monsno;
-  _StrbufNicknameCopy(nickname, send->info.action.normal.nickname);
+  info->action.action_no = GAMEBEACON_ACTION_POKE_EVOLUTION;
+  info->action.monsno = monsno;
+  _StrbufNicknameCopy(nickname, info->action.normal.nickname);
 
-  _Set_Details_Walk();
+  BEACONINFO_Set_Details_Walk(info);
+}
 
-  SendBeacon_SetCommon(send);
+//==================================================================
+/**
+ * 送信Gパワー発動
+ *
+ * @param   g_power_id		GパワーID
+ */
+//==================================================================
+void GAMEBEACON_Set_GPower(GPOWER_ID g_power_id)
+{
+  BEACONINFO_Set_GPower(&GameBeaconSys->send.info, g_power_id);
+  SendBeacon_SetCommon(&GameBeaconSys->send);
 }
 
 //==================================================================
@@ -902,16 +1086,25 @@ void GAMEBEACON_Set_PokemonEvolution(u16 monsno, const STRBUF *nickname)
  * @param   g_power_id		GパワーID
  */
 //==================================================================
-void GAMEBEACON_Set_GPower(GPOWER_ID g_power_id)
+void BEACONINFO_Set_GPower(GAMEBEACON_INFO *info, GPOWER_ID g_power_id)
 {
-  GAMEBEACON_SEND_MANAGER *send = &GameBeaconSys->send;
-  
-  send->info.action.action_no = GAMEBEACON_ACTION_GPOWER;
-  send->info.g_power_id = g_power_id;
+  info->action.action_no = GAMEBEACON_ACTION_GPOWER;
+  info->g_power_id = g_power_id;
 
-  _Set_Details_Walk();
+  BEACONINFO_Set_Details_Walk(info);
+}
 
-  SendBeacon_SetCommon(send);
+//==================================================================
+/**
+ * 送信ビーコンセット：貴重品をプレイヤーが入手
+ *
+ * @param   item		アイテム番号
+ */
+//==================================================================
+void GAMEBEACON_Set_SpItemGet(u16 item)
+{
+  BEACONINFO_Set_SpItemGet(&GameBeaconSys->send.info, item);
+  SendBeacon_SetCommon(&GameBeaconSys->send);
 }
 
 //==================================================================
@@ -921,16 +1114,25 @@ void GAMEBEACON_Set_GPower(GPOWER_ID g_power_id)
  * @param   item		アイテム番号
  */
 //==================================================================
-void GAMEBEACON_Set_SpItemGet(u16 item)
+void BEACONINFO_Set_SpItemGet(GAMEBEACON_INFO *info, u16 item)
 {
-  GAMEBEACON_SEND_MANAGER *send = &GameBeaconSys->send;
+  info->action.action_no = GAMEBEACON_ACTION_SP_ITEM_GET;
+  info->action.itemno = item;
 
-  send->info.action.action_no = GAMEBEACON_ACTION_SP_ITEM_GET;
-  send->info.action.itemno = item;
+  BEACONINFO_Set_Details_Walk(info);
+}
 
-  _Set_Details_Walk();
-
-  SendBeacon_SetCommon(send);
+//==================================================================
+/**
+ * 送信ビーコンセット：プレイヤーのプレイ時間が規定数を超えた
+ *
+ * @param   hour    時
+ */
+//==================================================================
+void GAMEBEACON_Set_PlayTime(u32 hour)
+{
+  BEACONINFO_Set_PlayTime(&GameBeaconSys->send.info, hour);
+  SendBeacon_SetCommon(&GameBeaconSys->send);
 }
 
 //==================================================================
@@ -940,16 +1142,23 @@ void GAMEBEACON_Set_SpItemGet(u16 item)
  * @param   hour    時
  */
 //==================================================================
-void GAMEBEACON_Set_PlayTime(u32 hour)
+void BEACONINFO_Set_PlayTime(GAMEBEACON_INFO *info, u32 hour)
 {
-  GAMEBEACON_SEND_MANAGER *send = &GameBeaconSys->send;
+  info->action.action_no = GAMEBEACON_ACTION_PLAYTIME;
+  info->action.hour = hour;
 
-  send->info.action.action_no = GAMEBEACON_ACTION_PLAYTIME;
-  send->info.action.hour = hour;
+  BEACONINFO_Set_Details_Walk(info);
+}
 
-  _Set_Details_Walk();
-
-  SendBeacon_SetCommon(send);
+//==================================================================
+/**
+ * 送信ビーコンセット：ポケモン図鑑が完成
+ */
+//==================================================================
+void GAMEBEACON_Set_ZukanComplete(void)
+{
+  BEACONINFO_Set_ZukanComplete(&GameBeaconSys->send.info);
+  SendBeacon_SetCommon(&GameBeaconSys->send);
 }
 
 //==================================================================
@@ -957,15 +1166,23 @@ void GAMEBEACON_Set_PlayTime(u32 hour)
  * ビーコンセット：ポケモン図鑑が完成
  */
 //==================================================================
-void GAMEBEACON_Set_ZukanComplete(void)
+void BEACONINFO_Set_ZukanComplete(GAMEBEACON_INFO *info)
 {
-  GAMEBEACON_SEND_MANAGER *send = &GameBeaconSys->send;
+  info->action.action_no = GAMEBEACON_ACTION_ZUKAN_COMPLETE;
 
-  send->info.action.action_no = GAMEBEACON_ACTION_ZUKAN_COMPLETE;
+  BEACONINFO_Set_Details_Walk(info);
+}
 
-  _Set_Details_Walk();
-
-  SendBeacon_SetCommon(send);
+//==================================================================
+/**
+ * 送信ビーコンセット：お礼を受けた回数が規定数を超えた
+ * @param   thankyou_count	お礼回数
+ */
+//==================================================================
+void GAMEBEACON_Set_ThankyouOver(u32 thankyou_count)
+{
+  BEACONINFO_Set_ThankyouOver(&GameBeaconSys->send.info, thankyou_count);
+  SendBeacon_SetCommon(&GameBeaconSys->send);
 }
 
 //==================================================================
@@ -974,16 +1191,23 @@ void GAMEBEACON_Set_ZukanComplete(void)
  * @param   thankyou_count	お礼回数
  */
 //==================================================================
-void GAMEBEACON_Set_ThankyouOver(u32 thankyou_count)
+void BEACONINFO_Set_ThankyouOver(GAMEBEACON_INFO *info, u32 thankyou_count)
 {
-  GAMEBEACON_SEND_MANAGER *send = &GameBeaconSys->send;
+  info->action.action_no = GAMEBEACON_ACTION_THANKYOU_OVER;
+  info->action.thankyou_count = thankyou_count;
 
-  send->info.action.action_no = GAMEBEACON_ACTION_THANKYOU_OVER;
-  send->info.action.thankyou_count = thankyou_count;
+  BEACONINFO_Set_Details_Walk(info);
+}
 
-  _Set_Details_Walk();
-
-  SendBeacon_SetCommon(send);
+//==================================================================
+/**
+ * 送信ビーコンセット：ユニオンルーム入室
+ */
+//==================================================================
+void GAMEBEACON_Set_UnionIn(void)
+{
+  BEACONINFO_Set_UnionIn(&GameBeaconSys->send.info);
+  SendBeacon_SetCommon(&GameBeaconSys->send);
 }
 
 //==================================================================
@@ -991,18 +1215,27 @@ void GAMEBEACON_Set_ThankyouOver(u32 thankyou_count)
  * ビーコンセット：ユニオンルーム入室
  */
 //==================================================================
-void GAMEBEACON_Set_UnionIn(void)
+void BEACONINFO_Set_UnionIn(GAMEBEACON_INFO *info)
 {
-  GAMEBEACON_SEND_MANAGER *send = &GameBeaconSys->send;
-  
-  send->info.action.action_no = GAMEBEACON_ACTION_UNION_IN;
+  info->action.action_no = GAMEBEACON_ACTION_UNION_IN;
 
-  _Set_Details_Walk();
-
-  SendBeacon_SetCommon(send);
+  BEACONINFO_Set_Details_Walk(info);
 }
 
 #ifdef PM_DEBUG //イベント用の配布ROMでしか発信はしないのでテスト用
+//==================================================================
+/**
+ * 送信ビーコンセット：ダウンロード配信(ポケモン)実施中
+ *
+ * @param   monsno		ポケモン番号
+ */
+//==================================================================
+void GAMEBEACON_Set_DistributionPoke(u16 monsno)
+{
+  BEACONINFO_Set_DistributionPoke(&GameBeaconSys->send.info, monsno);
+  SendBeacon_SetCommon(&GameBeaconSys->send);
+}
+
 //==================================================================
 /**
  * ビーコンセット：ダウンロード配信(ポケモン)実施中
@@ -1010,17 +1243,26 @@ void GAMEBEACON_Set_UnionIn(void)
  * @param   monsno		ポケモン番号
  */
 //==================================================================
-void GAMEBEACON_Set_DistributionPoke(u16 monsno)
+void BEACONINFO_Set_DistributionPoke(GAMEBEACON_INFO *info, u16 monsno)
 {
-  GAMEBEACON_SEND_MANAGER *send = &GameBeaconSys->send;
+  info->action.action_no = GAMEBEACON_ACTION_DISTRIBUTION_POKE;
+  info->action.distribution.monsno = monsno;
+  info->action.distribution.magic_key = MAGIC_KEY_DISTRIBUTION_POKE;
 
-  send->info.action.action_no = GAMEBEACON_ACTION_DISTRIBUTION_POKE;
-  send->info.action.distribution.monsno = monsno;
-  send->info.action.distribution.magic_key = MAGIC_KEY_DISTRIBUTION_POKE;
+  BEACONINFO_Set_Details_Walk(info);
+}
 
-  _Set_Details_Walk();
-
-  SendBeacon_SetCommon(send);
+//==================================================================
+/**
+ * 送信ビーコンセット：ダウンロード配信(アイテム)実施中
+ *
+ * @param   item		アイテム番号
+ */
+//==================================================================
+void GAMEBEACON_Set_DistributionItem(u16 item)
+{
+  BEACONINFO_Set_DistributionItem(&GameBeaconSys->send.info, item);
+  SendBeacon_SetCommon(&GameBeaconSys->send);
 }
 
 //==================================================================
@@ -1030,17 +1272,24 @@ void GAMEBEACON_Set_DistributionPoke(u16 monsno)
  * @param   item		アイテム番号
  */
 //==================================================================
-void GAMEBEACON_Set_DistributionItem(u16 item)
+void BEACONINFO_Set_DistributionItem(GAMEBEACON_INFO *info, u16 item)
 {
-  GAMEBEACON_SEND_MANAGER *send = &GameBeaconSys->send;
+  info->action.action_no = GAMEBEACON_ACTION_DISTRIBUTION_ITEM;
+  info->action.distribution.itemno = item;
+  info->action.distribution.magic_key = MAGIC_KEY_DISTRIBUTION_ITEM;
 
-  send->info.action.action_no = GAMEBEACON_ACTION_DISTRIBUTION_ITEM;
-  send->info.action.distribution.itemno = item;
-  send->info.action.distribution.magic_key = MAGIC_KEY_DISTRIBUTION_ITEM;
+  BEACONINFO_Set_Details_Walk(info);
+}
 
-  _Set_Details_Walk();
-
-  SendBeacon_SetCommon(send);
+//==================================================================
+/**
+ * 送信ビーコンセット：ダウンロード配信(その他)実施中
+ */
+//==================================================================
+void GAMEBEACON_Set_DistributionEtc(void)
+{
+  BEACONINFO_Set_DistributionEtc(&GameBeaconSys->send.info);
+  SendBeacon_SetCommon(&GameBeaconSys->send);
 }
 
 //==================================================================
@@ -1048,18 +1297,28 @@ void GAMEBEACON_Set_DistributionItem(u16 item)
  * ビーコンセット：ダウンロード配信(その他)実施中
  */
 //==================================================================
-void GAMEBEACON_Set_DistributionEtc(void)
+void BEACONINFO_Set_DistributionEtc(GAMEBEACON_INFO *info)
 {
-  GAMEBEACON_SEND_MANAGER *send = &GameBeaconSys->send;
+  info->action.action_no = GAMEBEACON_ACTION_DISTRIBUTION_ETC;
+  info->action.distribution.magic_key = MAGIC_KEY_DISTRIBUTION_ETC;
 
-  send->info.action.action_no = GAMEBEACON_ACTION_DISTRIBUTION_ETC;
-  send->info.action.distribution.magic_key = MAGIC_KEY_DISTRIBUTION_ETC;
-
-  _Set_Details_Walk();
-
-  SendBeacon_SetCommon(send);
+  BEACONINFO_Set_Details_Walk(info);
 }
 #endif  //PM_DEBUG
+
+//==================================================================
+/**
+ * 送信ビーコンセット：「ありがとう！」
+ *
+ * @param   gamedata		
+ * @param   target_trainer_id   お礼をする相手のトレーナーID
+ */
+//==================================================================
+void GAMEBEACON_Set_Thankyou(GAMEDATA *gamedata, u32 target_trainer_id)
+{
+  BEACONINFO_Set_Thankyou(&GameBeaconSys->send.info, gamedata, target_trainer_id);
+  SendBeacon_SetCommon(&GameBeaconSys->send);
+}
 
 //==================================================================
 /**
@@ -1069,57 +1328,27 @@ void GAMEBEACON_Set_DistributionEtc(void)
  * @param   target_trainer_id   お礼をする相手のトレーナーID
  */
 //==================================================================
-void GAMEBEACON_Set_Thankyou(GAMEDATA *gamedata, u32 target_trainer_id)
+void BEACONINFO_Set_Thankyou(GAMEBEACON_INFO *info, GAMEDATA *gamedata, u32 target_trainer_id)
 {
-  GAMEBEACON_SEND_MANAGER *send = &GameBeaconSys->send;
   const MISC *misc = SaveData_GetMisc( GAMEDATA_GetSaveControlWork(gamedata) );
 
   STRTOOL_Copy(MISC_CrossComm_GetSelfIntroduction(misc), 
-    send->info.action.thankyou_message, GAMEBEACON_THANKYOU_MESSAGE_LEN);
-  send->info.action.action_no = GAMEBEACON_ACTION_THANKYOU;
-  send->info.action.target_trainer_id = target_trainer_id;
-}
-
-#if 0 // 不要になった 2010.01.27(水)
-//==================================================================
-/**
- * ビーコンセット：ユニオンルーム退室
- */
-//==================================================================
-void GAMEBEACON_Set_UnionOut(void)
-{
-  GAMEBEACON_SEND_MANAGER *send = &GameBeaconSys->send;
-  
-  send->info.action.action_no = GAMEBEACON_ACTION_UNION_OUT;
-  SendBeacon_SetCommon(send);
+    info->action.thankyou_message, GAMEBEACON_THANKYOU_MESSAGE_LEN);
+  info->action.action_no = GAMEBEACON_ACTION_THANKYOU;
+  info->action.target_trainer_id = target_trainer_id;
 }
 
 //==================================================================
 /**
- * ビーコンセット：「おめでとう！」
+ * 送信その他セット：ゾーン切り替え
+ *
+ * @param   zone_id   現在地
  */
 //==================================================================
-void GAMEBEACON_Set_Congratulations(void)
+void GAMEBEACON_Set_ZoneChange(ZONEID zone_id)
 {
-  GAMEBEACON_SEND_MANAGER *send = &GameBeaconSys->send;
-  
-  send->info.action.action_no = GAMEBEACON_ACTION_CONGRATULATIONS;
-  SendBeacon_SetCommon(send);
+  BEACONINFO_Set_ZoneChange(&GameBeaconSys->send.info, zone_id);
 }
-
-//==================================================================
-/**
- * ビーコンセット：エンカウント率ダウン
- */
-//==================================================================
-void GAMEBEACON_Set_EncountDown(void)
-{
-  GAMEBEACON_SEND_MANAGER *send = &GameBeaconSys->send;
-  
-  send->info.action.action_no = GAMEBEACON_ACTION_ENCOUNT_DOWN;
-  SendBeacon_SetCommon(send);
-}
-#endif
 
 //==================================================================
 /**
@@ -1128,13 +1357,23 @@ void GAMEBEACON_Set_EncountDown(void)
  * @param   zone_id   現在地
  */
 //==================================================================
-void GAMEBEACON_Set_ZoneChange(ZONEID zone_id)
+void BEACONINFO_Set_ZoneChange(GAMEBEACON_INFO *info, ZONEID zone_id)
 {
-  GAMEBEACON_SEND_MANAGER *send = &GameBeaconSys->send;
-  
-  send->info.zone_id = zone_id;
-  send->info.details.details_no = GAMEBEACON_DETAILS_NO_WALK;
-  _Set_Details_Walk();
+  info->zone_id = zone_id;
+  info->details.details_no = GAMEBEACON_DETAILS_NO_WALK;
+  BEACONINFO_Set_Details_Walk(info);
+}
+
+//==================================================================
+/**
+ * 送信その他セット：お礼を受けた回数
+ *
+ * @param   count		
+ */
+//==================================================================
+static void GAMEBEACON_Set_ThanksRecvCount(u32 count)
+{
+  BEACONINFO_Set_ThanksRecvCount(&GameBeaconSys->send.info, count);
 }
 
 //==================================================================
@@ -1144,11 +1383,21 @@ void GAMEBEACON_Set_ZoneChange(ZONEID zone_id)
  * @param   count		
  */
 //==================================================================
-static void GAMEBEACON_Set_ThanksRecvCount(u16 count)
+void BEACONINFO_Set_ThanksRecvCount(GAMEBEACON_INFO *info, u32 count)
 {
-  GAMEBEACON_SEND_MANAGER *send = &GameBeaconSys->send;
+  info->thanks_recv_count = count;
+}
 
-  send->info.thanks_recv_count = count;
+//==================================================================
+/**
+ * 送信その他セット：すれ違った人数
+ *
+ * @param   count		
+ */
+//==================================================================
+static void GAMEBEACON_Set_SuretigaiCount(u32 count)
+{
+  BEACONINFO_Set_SuretigaiCount(&GameBeaconSys->send.info, count);
 }
 
 //==================================================================
@@ -1158,25 +1407,24 @@ static void GAMEBEACON_Set_ThanksRecvCount(u16 count)
  * @param   count		
  */
 //==================================================================
-static void GAMEBEACON_Set_SuretigaiCount(u16 count)
+void BEACONINFO_Set_SuretigaiCount(GAMEBEACON_INFO *info, u32 count)
 {
-  GAMEBEACON_SEND_MANAGER *send = &GameBeaconSys->send;
-
-  send->info.suretigai_count = count;
+  info->suretigai_count = count;
 }
 
+//==============================================================================
+//  詳細パラメータ
+//==============================================================================
 //--------------------------------------------------------------
 /**
  * 詳細セット：野生のポケモンと対戦中
  * @param   monsno		ポケモン番号
  */
 //--------------------------------------------------------------
-static void _Set_Details_BattleWildPoke(u16 monsno)
+void BEACONINFO_Set_Details_BattleWildPoke(GAMEBEACON_INFO *info, u16 monsno)
 {
-  GAMEBEACON_SEND_MANAGER *send = &GameBeaconSys->send;
-  
-  send->info.details.details_no = GAMEBEACON_DETAILS_NO_BATTLE_WILD_POKE;
-  send->info.details.battle_monsno = monsno;
+  info->details.details_no = GAMEBEACON_DETAILS_NO_BATTLE_WILD_POKE;
+  info->details.battle_monsno = monsno;
 }
 
 //--------------------------------------------------------------
@@ -1185,12 +1433,10 @@ static void _Set_Details_BattleWildPoke(u16 monsno)
  * @param   monsno		ポケモン番号
  */
 //--------------------------------------------------------------
-static void _Set_Details_BattleSpPoke(u16 monsno)
+void BEACONINFO_Set_Details_BattleSpPoke(GAMEBEACON_INFO *info, u16 monsno)
 {
-  GAMEBEACON_SEND_MANAGER *send = &GameBeaconSys->send;
-  
-  send->info.details.details_no = GAMEBEACON_DETAILS_NO_BATTLE_SP_POKE;
-  send->info.details.battle_monsno = monsno;
+  info->details.details_no = GAMEBEACON_DETAILS_NO_BATTLE_SP_POKE;
+  info->details.battle_monsno = monsno;
 }
 
 //--------------------------------------------------------------
@@ -1199,12 +1445,10 @@ static void _Set_Details_BattleSpPoke(u16 monsno)
  * @param   tr_no		トレーナー番号
  */
 //--------------------------------------------------------------
-static void _Set_Details_BattleTrainer(u16 tr_no)
+void BEACONINFO_Set_Details_BattleTrainer(GAMEBEACON_INFO *info, u16 tr_no)
 {
-  GAMEBEACON_SEND_MANAGER *send = &GameBeaconSys->send;
-  
-  send->info.details.details_no = GAMEBEACON_DETAILS_NO_BATTLE_TRAINER;
-  send->info.details.battle_trainer = tr_no;
+  info->details.details_no = GAMEBEACON_DETAILS_NO_BATTLE_TRAINER;
+  info->details.battle_trainer = tr_no;
 }
 
 //--------------------------------------------------------------
@@ -1213,12 +1457,10 @@ static void _Set_Details_BattleTrainer(u16 tr_no)
  * @param   tr_no		トレーナー番号
  */
 //--------------------------------------------------------------
-static void _Set_Details_BattleLeader(u16 tr_no)
+void BEACONINFO_Set_Details_BattleLeader(GAMEBEACON_INFO *info, u16 tr_no)
 {
-  GAMEBEACON_SEND_MANAGER *send = &GameBeaconSys->send;
-  
-  send->info.details.details_no = GAMEBEACON_DETAILS_NO_BATTLE_JIMLEADER;
-  send->info.details.battle_trainer = tr_no;
+  info->details.details_no = GAMEBEACON_DETAILS_NO_BATTLE_JIMLEADER;
+  info->details.battle_trainer = tr_no;
 }
 
 //--------------------------------------------------------------
@@ -1227,12 +1469,10 @@ static void _Set_Details_BattleLeader(u16 tr_no)
  * @param   tr_no		トレーナー番号
  */
 //--------------------------------------------------------------
-static void _Set_Details_BattleBigFour(u16 tr_no)
+void BEACONINFO_Set_Details_BattleBigFour(GAMEBEACON_INFO *info, u16 tr_no)
 {
-  GAMEBEACON_SEND_MANAGER *send = &GameBeaconSys->send;
-  
-  send->info.details.details_no = GAMEBEACON_DETAILS_NO_BATTLE_BIGFOUR;
-  send->info.details.battle_trainer = tr_no;
+  info->details.details_no = GAMEBEACON_DETAILS_NO_BATTLE_BIGFOUR;
+  info->details.battle_trainer = tr_no;
 }
 
 //--------------------------------------------------------------
@@ -1241,12 +1481,10 @@ static void _Set_Details_BattleBigFour(u16 tr_no)
  * @param   tr_no		トレーナー番号
  */
 //--------------------------------------------------------------
-static void _Set_Details_BattleChampion(u16 tr_no)
+void BEACONINFO_Set_Details_BattleChampion(GAMEBEACON_INFO *info, u16 tr_no)
 {
-  GAMEBEACON_SEND_MANAGER *send = &GameBeaconSys->send;
-  
-  send->info.details.details_no = GAMEBEACON_DETAILS_NO_BATTLE_CHAMPION;
-  send->info.details.battle_trainer = tr_no;
+  info->details.details_no = GAMEBEACON_DETAILS_NO_BATTLE_CHAMPION;
+  info->details.battle_trainer = tr_no;
 }
 
 //--------------------------------------------------------------
@@ -1254,11 +1492,9 @@ static void _Set_Details_BattleChampion(u16 tr_no)
  * 「街、道路、ダンジョン」を移動中
  */
 //--------------------------------------------------------------
-static void _Set_Details_Walk(void)
+void BEACONINFO_Set_Details_Walk(GAMEBEACON_INFO *info)
 {
-  GAMEBEACON_SEND_MANAGER *send = &GameBeaconSys->send;
-  
-  send->info.details.details_no = GAMEBEACON_DETAILS_NO_WALK;
+  info->details.details_no = GAMEBEACON_DETAILS_NO_WALK;
   //ZONE_IDはGAMEBEACON_Set_ZoneChangeを使用して別にセットしてもらう。
   //ここでは詳細Noを移動中に戻すことで、最後にセットしていた
   //GAMEBEACON_Set_ZoneChangeのゾーンIDが表示されるようにしている
@@ -1274,7 +1510,7 @@ static void _Set_Details_Walk(void)
  * @param   pms		簡易会話データへのポインタ
  */
 //==================================================================
-void GAMEBEACON_Set_Details_IntroductionPms(const PMS_DATA *pms)
+void BEACONINFO_Set_Details_IntroductionPms(GAMEBEACON_INFO *info, const PMS_DATA *pms)
 {
   GAMEBEACON_SEND_MANAGER *send = &GameBeaconSys->send;
   
@@ -1283,3 +1519,31 @@ void GAMEBEACON_Set_Details_IntroductionPms(const PMS_DATA *pms)
   send->info.details.word[0] = pms->word[0];
   send->info.details.word[1] = pms->word[1];
 }
+
+//==================================================================
+/**
+ * 送信ビーコン詳細セット：自己紹介簡易会話
+ *
+ * @param   pms		簡易会話データへのポインタ
+ */
+//==================================================================
+void GAMEBEACON_Set_Details_IntroductionPms(const PMS_DATA *pms)
+{
+  BEACONINFO_Set_Details_IntroductionPms(&GameBeaconSys->send.info, pms);
+}
+
+#ifdef PM_DEBUG
+//==================================================================
+/**
+ * デバッグ用：自分の送信ビーコン情報バッファのポインタを取得する
+ * @retval  GAMEBEACON_INFO *		自分の送信ビーコン情報バッファへのポインタ
+ */
+//==================================================================
+GAMEBEACON_INFO * DEBUG_SendBeaconInfo_GetPtr(void)
+{
+  GF_ASSERT(GameBeaconSys != NULL);
+  return &GameBeaconSys->send.info;
+}
+
+#endif  //PM_DEBUG
+

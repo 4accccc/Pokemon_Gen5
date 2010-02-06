@@ -125,45 +125,6 @@ struct _GAMEBEACON_INFO{
 };
 
 
-#ifdef PM_DEBUG
-#if 0
-//==================================================================
-/**
- * @brief   デバッグ用のビーコン情報セット構造体
- */
-//==================================================================
-typedef struct{
-  u8 nation;                               ///<国コード
-  u8 area;                                 ///<地域コード
-  
-  u32 suretigai_count:17;                  ///<すれ違い人数
-  u32 g_power_id:8;                        ///<発動しているGパワーID(GPOWER_ID_xxx)
-  u32 pm_version:7;
-
-  u16 zone_id:10;                          ///<現在地
-  u16 sex:1;                               ///<性別
-  u16 language:5;                          ///<PM_LANG
-
-  u32 townmap_tbl_index:7;                 ///<タウンマップでの座標テーブルIndex
-  u32 trainer_view:3;                      ///<ユニオンルームでの見た目
-  u32 research_team_rank:3;                ///<調査隊ランク(RESEARCH_TEAM_RANK)
-  u32           :14;
-  u32 favorite_color_index:4;              ///<本体情報の色(Index)
-  u32 thanks_recv_count:17;                ///<お礼を受けた回数
-  
-  u16 trainer_id;                          ///<トレーナーID
-  
-  STRCODE name[PERSON_NAME_SIZE + EOM_SIZE];  ///<トレーナー名(!! EOM除く !!)
-
-  STRCODE self_introduction[GAMEBEACON_SELFINTRODUCTION_MESSAGE_LEN + EOM]; ///<自己紹介メッセージ
-
-  GAMEBEACON_INFO_DETAILS details;
-  GAMEBEACON_INFO_ACTION action;
-}DEBUG_SET_GAMEBEACON_INFO_ACTION;
-#endif
-#endif
-
-
 
 //==================================================================
 /**
