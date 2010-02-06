@@ -60,7 +60,7 @@ typedef struct{
   s8 start_log;                       ///<ログのチェーン開始位置
   s8 end_log;                         ///<ログのチェーン終端位置
   s8 log_num;                         ///<ログ件数
-  u8 padding;
+  u8 new_entry;                       ///<TRUE:新しい人物とすれ違った
 }GAMEBEACON_SYSTEM;
 
 
@@ -336,6 +336,7 @@ BOOL GAMEBEACON_SetRecvBeacon(const GAMEBEACON_INFO *info)
   }
   else{
     BeaconInfo_Set(bsys, info);
+    bsys->new_entry = TRUE;
     bsys->log_count++;
     OS_TPrintf("セット完了 %d件目\n", bsys->log_count);
   }
@@ -606,6 +607,42 @@ u32 GAMEBEACON_GetMsgID(const GAMEBEACON_INFO *info)
   return msg_beacon_001 + info->action.action_no - GAMEBEACON_ACTION_SEARCH;
 }
 
+
+//==============================================================================
+//
+//  アンケート
+//
+//==============================================================================
+//==================================================================
+/**
+ * 新しい人物とすれ違ったかを取得する
+ *
+ * @retval  BOOL		TRUE:新しい人物とすれ違った　　FALSE:すれ違っていない
+ */
+//==================================================================
+BOOL GAMEBEACON_Get_NewEntry(void)
+{
+  int new_entry;
+  
+  if(GameBeaconSys == NULL){
+    return FALSE;
+  }
+  new_entry = GameBeaconSys->new_entry;
+  GameBeaconSys->new_entry = FALSE;
+  return new_entry;
+}
+
+//==================================================================
+/**
+ * デバッグ用：強制で新しい人物とすれ違ったフラグを立てる
+ */
+//==================================================================
+#ifdef PM_DEBUG
+void DEBUG_GAMEBEACON_Set_NewEntry(void)
+{
+  GameBeaconSys->new_entry = TRUE;
+}
+#endif
 
 
 //==============================================================================

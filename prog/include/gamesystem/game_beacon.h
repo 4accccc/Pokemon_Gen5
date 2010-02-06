@@ -153,6 +153,14 @@ extern void GAMEBEACON_Set_ZoneChange(ZONEID zone_id);
 extern void GAMEBEACON_Set_Details_IntroductionPms(const PMS_DATA *pms);
 
 //--------------------------------------------------------------
+//  アンケート
+//--------------------------------------------------------------
+extern BOOL GAMEBEACON_Get_NewEntry(void);
+#ifdef PM_DEBUG
+extern void DEBUG_GAMEBEACON_Set_NewEntry(void);
+#endif
+
+//--------------------------------------------------------------
 //  削除予定
 //--------------------------------------------------------------
 extern u32 GAMEBEACON_GetMsgID(const GAMEBEACON_INFO *info);
