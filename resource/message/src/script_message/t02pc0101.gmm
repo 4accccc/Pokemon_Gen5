@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-03T12:23:51"/>
+	<create user="matsumiya" host="W00224" date="2010-02-06T14:04:37"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1338" top="282" right="2043" bottom="902" maximized="no" rayout="Vertical2">
+	<dialog left="1291" top="262" right="1996" bottom="890" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -327,7 +327,7 @@
 		<language name="JPN" width="256">アララギ『ポケモンセンターの
 すごい　ところ！▼
 それは　なんと！
-ポケモンの　かいふくが　できること！▼
+ポケモンの　かいふくが　できること！▽
 しかも　タダ　なの！▼
 トレーナーの　みかた　だよねー！▼
 ほら　[1:00:トレーナー名:0]も
@@ -335,7 +335,7 @@
 		<language name="JPN_KANJI" width="256">アララギ『ポケモンセンターの
 すごい　ところ！▼
 それは　なんと！
-ポケモンの　回復が　できること！▼
+ポケモンの　回復が　できること！▽
 しかも　無料なの！▼
 トレーナーの　味方だよねー！▼
 ほら　[1:00:トレーナー名:0]も
