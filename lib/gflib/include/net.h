@@ -969,6 +969,12 @@ extern u16 GFL_NET_SystemGetCurrentID(void);
  */
 //--------------------------------------------------------------
 extern void GFL_NET_ChangeInitStruct(const GFLNetInitializeStruct* pNetInit);
+//--------------------------------------------------------------
+/**
+ * @brief   エラーになった時にユーザーコールバックを消去する
+ */
+//--------------------------------------------------------------
+extern void GFL_NET_DeleteInitializeCallback(void);
 //----------------------------------------------------------------
 /**
  * @brief   wifi接続したかどうかを設定する
