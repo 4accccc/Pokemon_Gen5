@@ -969,7 +969,7 @@ static void _stateProcess(u16 bitmap)
 	GFL_NETWL* pNetWL = _pNetWL;
 
 
-  if((state != WH_SYSSTATE_CONNECT_FAIL) && (WH_SYSSTATE_ERROR!= state)){
+  if(!pNetWL->bErrorState){
     _funcBconDataChange();      // ビーコンの中身を書き換え中
   }
 	if(pNetWL->errCheckBitmap == _NOT_INIT_BITMAP){
