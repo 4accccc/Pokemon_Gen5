@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-04T19:07:58"/>
+	<create user="matsumiya" host="W00224" date="2010-02-06T14:24:51"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -330,7 +330,7 @@
 		</language>
 	</columns>
 
-	<dialog left="5" top="223" right="711" bottom="843" maximized="no" rayout="Vertical2">
+	<dialog left="1502" top="267" right="2208" bottom="887" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="531"/>
@@ -591,24 +591,24 @@
 		<attribute name="キャラ指定">ライバル</attribute>
 		<language name="JPN" width="256">チェレン『[1:00:トレーナー名:0]！▼
 Ｎのこと
-いって　ぶっとばしてこいよ！▼
-おまえと！
-おまえの　ポケモンで！！</language>
+ぶっとばしてくれッ！！▼
+きみと！
+きみの　ポケモンで！！</language>
 		<language name="JPN_KANJI" width="256">チェレン『[1:00:トレーナー名:0]！▼
 Ｎのこと
-いって　ぶっとばしてこいよ！▼
-おまえと！
-おまえの　ポケモンで！！</language>
+ぶっとばしてくれッ！！▼
+きみと！
+きみの　ポケモンで！！</language>
 	</row>
 
 	<row id="msg_c09r0501_black_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・クリアまで繰り返し</comment>
 		<attribute name="キャラ指定">ライバル</attribute>
-		<language name="JPN" width="256">チェレン『……じーさんのことは
-オレが　めんどう　みておくから</language>
-		<language name="JPN_KANJI" width="256">チェレン『……じーさんのことは
-オレが　めんどう　みておくから</language>
+		<language name="JPN" width="256">チェレン『……アデクさんのことは
+ぼくが　めんどう　みておくから</language>
+		<language name="JPN_KANJI" width="256">チェレン『……アデクさんのことは
+ぼくが　めんどう　みておくから</language>
 	</row>
 
 	<row id="msg_c09r0501_champion_04">

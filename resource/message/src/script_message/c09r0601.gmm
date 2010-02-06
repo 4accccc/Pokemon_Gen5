@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-11-30T21:35:50"/>
+	<create user="matsumiya" host="W00224" date="2010-02-06T14:27:08"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,11 +292,9 @@
 	</lock>
 
 
-	<row id="msg_c09r0601_champion_01">
-		<comment>♂
-・</comment>
-		<attribute name="キャラ指定">チャンピオン
-アデク</attribute>
+	<row id="msg_mapscript_dummy">
+		<comment>？？？</comment>
+		<attribute name="キャラ指定">？？？</attribute>
 		<language name="JPN" width="256">テストメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
