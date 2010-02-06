@@ -169,7 +169,7 @@
 #define WK_SCENE_C03                     16557 /* 0x40ad ヒウンシティ：イベント用ワーク */
 #define WK_SCENE_R15R0301                16558 /* 0x40ae パルパーク：イベント用ワーク */
 #define WK_SCENE_C03P07                  16559 /* 0x40af ヒウンシティ（ジム前通り）：イベント用ワーク */
-		/* not used 16560(0x40b0) */
+#define WK_SCENE_C11GATE                 16560 /* 0x40b0 国連（内部）：ゲート係員用のイベントワーク */
 #define WK_SCENE_C03R0301                16561 /* 0x40b1 ヒウンシティ（バトルカンパニーF1）：イベント用ワーク */
 #define WK_SCENE_C03R1301_SUNGLASSES     16562 /* 0x40b2 ヒウンシティ（お金持ちの家１F）：ボディチェックイベント用ワーク */
 
