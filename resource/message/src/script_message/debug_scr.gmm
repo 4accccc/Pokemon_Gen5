@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="masafumi_saitou" host="W00178" date="2010-01-07T13:27:41"/>
+	<create user="masafumi_saitou" host="W00225" date="2010-02-06T13:48:26"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="124"/>
+		<comment position="4" width="156"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -405,6 +405,38 @@
 	<row id="msg_debug_masafumi_07" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
 		<language name="JPN" width="256">勝利フラグ</language>
 		<language name="JPN_KANJI" width="256">勝利フラグ</language>
+	</row>
+
+	<row id="msg_debug_masafumi_08" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
+		<language name="JPN" width="256">チャンピオン部屋</language>
+		<language name="JPN_KANJI" width="256">チャンピオン部屋</language>
+	</row>
+
+	<row id="msg_debug_masafumi_09" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
+		<language name="JPN" width="256">T01全イベント</language>
+		<language name="JPN_KANJI" width="256">T01全イベント</language>
+	</row>
+
+	<row id="msg_debug_04" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+		<comment>～～へ移動</comment>
+		<language name="JPN" width="256">ジャンプ</language>
+		<language name="JPN_KANJI" width="256">ジャンプ</language>
+	</row>
+
+	<row id="msg_debug_05" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+		<comment>～～のイベントをOFFにする</comment>
+		<language name="JPN" width="256">イベントOFF</language>
+		<language name="JPN_KANJI" width="256">イベントOFF</language>
+	</row>
+
+	<row id="msg_debug_06" back-color="#ffffff,,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="256">もどる</language>
+		<language name="JPN_KANJI" width="256">もどる</language>
+	</row>
+
+	<row id="msg_debug_07" back-color="#ffffff,,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="256">マップ差し替え</language>
+		<language name="JPN_KANJI" width="256">マップ差し替え</language>
 	</row>
 
 	<flowchart-group-list>

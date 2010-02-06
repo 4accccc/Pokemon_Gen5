@@ -138,6 +138,8 @@ EVENT_START ev_debug_masafumi
 		_BMPMENU_MAKE_LIST( msg_debug_01, 1 )	//テスト01
 		_BMPMENU_MAKE_LIST( msg_debug_02, 2 )	//テスト02
 		_BMPMENU_MAKE_LIST( msg_debug_03, 3 )	//テスト03
+		_BMPMENU_MAKE_LIST( msg_debug_05, 4 )	//イベントＯＦＦ
+		_BMPMENU_MAKE_LIST( msg_debug_07, 5 )	//マップ差し替え
 		_BMPMENU_MAKE_LIST( msg_debug_00, 10 )	//やめる
 		//メニュー表示
 		_BMPMENU_START()
@@ -166,25 +168,6 @@ EVENT_START ev_debug_masafumi
 			ENDIF
 			
 		ELSIF $SCWK_TEMP1 == 2 THEN
-			//T01の初回イベントを全部OFF
-			//図鑑入手イベント終わった状態にする
-			$WK_SCENE_T01R0401 = 1
-			_FLAG_SET( FV_T01R0401_HAKASE )
-			_FLAG_SET( FV_T01R0401_RIVAL )
-			_FLAG_SET( FV_T01R0401_SUPPORT )
-			//サポート初回イベント終わった
-			$WK_SCENE_T01R0201 = 1
-			_FLAG_SET( FV_T01R0201_SUPPORT )
-			_FLAG_RESET( FV_T01_SUPPORT )
-			//主人公宅の初回イベント終わった
-			$WK_SCENE_T01R0101 = 1
-			_FLAG_SET( FV_T01R0101_FRIENDS )
-			_FLAG_SET( FV_T01R0102_BALL00 )
-			_FLAG_SET( FV_T01R0102_BALL01 )
-			_FLAG_SET( FV_T01R0102_BALL02 )
-			$WK_SCENE_T01R0102 = 2
-			_FLAG_SET( FV_T01R0102_RIVAL )
-			_FLAG_SET( FV_T01R0102_SUPPORT )
 			
 			//マップマトリクスの差し替え全部ON
 			_CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_01, TRUE, TRUE )
@@ -196,27 +179,21 @@ EVENT_START ev_debug_masafumi
 		ELSIF $SCWK_TEMP1 == 3 THEN
 			$SCWK_TEMP0 = 555
 //			_MAP_CHANGE( ZONE_ID_T01R0102, 4, 5, DIR_DOWN )
-
+			
 			//R05ライバルPOSイベント有効
 			$WK_SCENE_R05 = 1
 			_FLAG_SET( FV_R05_RIVAL )
 			_FLAG_SET( FV_R05_LEADER4 )
 			_MAP_CHANGE( ZONE_ID_R05, 374, 438, DIR_DOWN )
-
-/*			//C04サポートパパイベント開始
-			$WK_SCENE_C04 = 2
-			_FLAG_RESET( FV_C04_SUPPORT_01 )
-			_FLAG_RESET( FV_C04_SUPPORTPAPA_01 )
-			_MAP_CHANGE( ZONE_ID_C04, 433, 434, DIR_DOWN )
-*/
-
-/*
-			//POSイベント有効
-			$WK_SCENE_C04 = 0
-			//したっぱ＆育て屋じいさんを表示
-			_FLAG_RESET( FV_C04_HAKAI_01 )
-*/
-
+			
+		ELSIF $SCWK_TEMP1 == 4 THEN
+			_CALL	ev_event_off
+ 			$SCWK_TEMP0 = 555
+			 
+		ELSIF $SCWK_TEMP1 == 5 THEN
+			_CALL	ev_change_mapmatrix
+			$SCWK_TEMP0 = 555
+			 
 		ELSE
 			$SCWK_TEMP0 = 555
 		ENDIF
@@ -225,13 +202,14 @@ EVENT_START ev_debug_masafumi
 	
 EVENT_END
 
-//四天王部屋デバッグメニュー
+
+//四天王部屋デバッグメニュー------------------------------------
 ev_bigfour_menu:
 	//メニュー作成
 	_BMPMENU_INIT_EX( 1, 1, 0, 1, SCWK_ANSWER )
 	//リスト追加
 	_BMPMENU_MAKE_LIST( msg_debug_masafumi_07, 0 )	//勝利フラグ
-	_BMPMENU_MAKE_LIST( msg_debug_01, 1 )	//テスト01（階段前にジャンプ（アニメチェック用）
+	_BMPMENU_MAKE_LIST( msg_debug_04, 1 )	//ジャンプ ※階段前にジャンプ（アニメチェック用）
 	_BMPMENU_MAKE_LIST( msg_debug_00, 10 )	//やめる
 	//メニュー表示
 	_BMPMENU_START()
@@ -287,6 +265,60 @@ ev_bigfour_menu:
 
 _RET
 
+
+//イベントＯＦＦ-----------------------------------------------
+ev_event_off:
+	//メニュー作成
+	_BMPMENU_INIT_EX( 1, 1, 0, 1, SCWK_ANSWER )
+	//リスト追加
+	_BMPMENU_MAKE_LIST( msg_debug_masafumi_08, 0 )	//チャンピオン部屋
+	_BMPMENU_MAKE_LIST( msg_debug_masafumi_09, 1 )	//Ｔ01全イベント
+	_BMPMENU_MAKE_LIST( msg_debug_00, 10 )	//やめる
+	//メニュー表示
+	_BMPMENU_START()
+	
+	IF $SCWK_ANSWER == 0 THEN
+		//チャンピオン部屋のＮとのイベントを無効にする
+		$WK_SCENE_C09R0501 = 1
+		_FLAG_SET( FV_C09R0501_BOSS_01 )
+		_FLAG_SET( FV_C09R0501_CHAMPION_01 )
+		_MAP_CHANGE( ZONE_ID_C09R0501, 16, 18, DIR_UP )
+		
+	ELSIF $SCWK_ANSWER == 1 THEN
+		//T01の初回イベントを全部OFF
+		//図鑑入手イベント終わった状態にする
+		$WK_SCENE_T01R0401 = 1
+		_FLAG_SET( FV_T01R0401_HAKASE )
+		_FLAG_SET( FV_T01R0401_RIVAL )
+		_FLAG_SET( FV_T01R0401_SUPPORT )
+		//サポート初回イベント終わった
+		$WK_SCENE_T01R0201 = 1
+		_FLAG_SET( FV_T01R0201_SUPPORT )
+		_FLAG_RESET( FV_T01_SUPPORT )
+		//主人公宅の初回イベント終わった
+		$WK_SCENE_T01R0101 = 1
+		_FLAG_SET( FV_T01R0101_FRIENDS )
+		_FLAG_SET( FV_T01R0102_BALL00 )
+		_FLAG_SET( FV_T01R0102_BALL01 )
+		_FLAG_SET( FV_T01R0102_BALL02 )
+		$WK_SCENE_T01R0102 = 2
+		_FLAG_SET( FV_T01R0102_RIVAL )
+		_FLAG_SET( FV_T01R0102_SUPPORT )
+		
+	ENDIF
+	
+_RET
+
+
+//マップ差し替え-----------------------------------------------
+ev_change_mapmatrix:
+	//マップマトリクスの差し替え全部ON
+	_CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_01, TRUE, TRUE )
+	_CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_02, TRUE, TRUE )
+	_CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_04, TRUE, TRUE )
+	_CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_05, TRUE, TRUE )
+	_CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_06, TRUE, TRUE )
+_RET
 
 
 /**************************************************************/
@@ -509,7 +541,9 @@ EVENT_START ev_debug_common
 		//リスト追加
 		_BMPMENU_MAKE_LIST( msg_debug_common_00, 0 )	//ゲームクリア
 		_BMPMENU_MAKE_LIST( msg_debug_common_01, 1 )	//ジムバッジ全部
-		_BMPMENU_MAKE_LIST( msg_debug_00, 3 )	//やめる
+		_BMPMENU_MAKE_LIST( msg_debug_05, 80 )	//イベントＯＦＦ
+		_BMPMENU_MAKE_LIST( msg_debug_07, 90 )	//マップ差し替え
+		_BMPMENU_MAKE_LIST( msg_debug_00, 100 )	//やめる
 		//メニュー表示
 		_BMPMENU_START()
 		
@@ -528,8 +562,18 @@ EVENT_START ev_debug_common
 			_SET_BADGE_FLAG( BADGE_ID_07 )
 			_SET_BADGE_FLAG( BADGE_ID_08 )
 			
-		ELSE
+		ELSIF $SCWK_ANSWER == 80 THEN
+			//イベントＯＦＦ
+			_CALL	ev_event_off
+			$SCWK_TEMP0 = 555
 			
+		ELSIF $SCWK_ANSWER == 90 THEN
+			//マップ差し替え
+			_CALL	ev_change_mapmatrix
+			$SCWK_TEMP0 = 555
+			
+		ELSE
+			//やめる
 			$SCWK_TEMP0 = 555
 			
 		ENDIF
