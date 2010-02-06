@@ -3,7 +3,7 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="lee_hyunjung" host="W00154A" date="2010-02-02T13:02:12"/>
+	<create user="lee_hyunjung" host="W00154A" date="2010-02-05T13:42:48"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="NNS_3DMaterialEditor" version="2.8.0.20050620"/>
 </head>
@@ -29,8 +29,231 @@
 
 <box_test pos_scale="0" xyz="-0.500000 -0.500000 -0.500000" whd="1.000000 1.000000 1.000000"/>
 
-<tex_image_array size="14">
-	<tex_image index="0" name="clsm_yuka01"
+<tex_image_array size="18">
+	<tex_image index="0" name="black"
+		width="8" height="8" original_width="8" original_height="8"
+		format="palette4"
+		color0_mode="color"
+		palette_name="black_pl"
+		path="C:/home/wb_data3d/field/in43/chip/tex/black.tga"
+	>
+		<bitmap size="8">
+			0000 0000 0000 0000 0000 0000 0000 0000
+		</bitmap>
+	</tex_image>
+	<tex_image index="1" name="clsm_kabe01"
+		width="32" height="64" original_width="32" original_height="64"
+		format="palette256"
+		color0_mode="color"
+		palette_name="clsm_kabe01_pl"
+		path="C:/home/wb_data3d/field/in43/chip/tex/clsm_kabe01.tga"
+	>
+		<bitmap size="1024">
+			1313 1313 1313 1313 1313 1313 1313 1313
+			1313 1313 1313 1313 1313 1313 1313 1313
+			1313 1313 1313 1313 1313 1313 1313 1313
+			1313 1313 1313 1313 1313 1313 1313 1313
+			1313 1313 1313 1313 1313 1313 1313 1313
+			1313 1313 1313 1313 1313 1313 1313 1313
+			1313 1313 1313 1313 1313 1313 1313 1313
+			1313 1313 1313 1313 1313 1313 1313 1313
+			1313 1313 1313 1313 1313 1313 1313 1313
+			1313 1313 1313 1313 1313 1313 1313 1313
+			1313 1313 1313 1313 1313 1313 1313 1313
+			1313 1313 1313 1313 1313 1313 1313 1313
+			1313 1313 1313 1313 1313 1313 1313 1313
+			1313 1313 1313 1313 1313 1313 1313 1313
+			1313 1313 1313 1313 1313 1313 1313 1313
+			1313 1313 1313 1313 1313 1313 1313 1313
+			1313 1313 1313 1313 1313 1313 1313 1313
+			1313 1313 1313 1313 1313 1313 1313 1313
+			1010 1010 1010 1010 1010 1010 1010 1010
+			1010 1010 1010 1010 1010 1010 1010 1010
+			1212 1212 1212 1212 1212 1212 1212 1212
+			1212 1212 1212 1212 1212 1212 1212 1212
+			1212 1212 1212 1212 1212 1212 1212 1212
+			1212 1212 1212 1212 1212 1212 1212 1212
+			1010 1010 1010 1010 1010 1010 1010 1010
+			1010 1010 1010 1010 1010 1010 1010 1010
+			1010 1010 1010 1010 1010 1010 1010 1010
+			1010 1010 1010 1010 1010 1010 1010 1010
+			1010 1010 1010 1010 1010 1010 1010 1010
+			1010 1010 1010 1010 1010 1010 1010 1010
+			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
+			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
+			0d0d 0d0d 0d0d 0d0d 0d0d 0d0d 0d0d 0d0d
+			0d0d 0d0d 0d0d 0d0d 0d0d 0d0d 0d0d 0d0d
+			0404 0404 0404 0404 0404 0404 0404 0404
+			0404 0404 0404 0404 0404 0404 0404 0404
+			0404 0404 0404 0404 0404 0e0e 0e0e 0e0e
+			0e0e 0e0e 0e0e 0404 0404 0404 0404 0404
+			0404 0404 0404 0404 0e04 1111 1111 1111
+			1111 1111 1111 040e 0404 0404 0404 0404
+			0303 0303 0303 0303 0e03 1111 1111 1111
+			1111 1111 1111 030e 0303 0303 0303 0303
+			0505 0505 0505 0505 0305 0e0e 0e0e 0e0e
+			0e0e 0e0e 0e0e 0503 0505 0505 0505 0505
+			0505 0505 0505 0505 0505 0303 0303 0303
+			0303 0303 0303 0505 0505 0505 0505 0505
+			0505 0505 0505 0505 0505 0505 0505 0505
+			0505 0505 0505 0505 0505 0505 0505 0505
+			0505 0505 0505 0505 0505 0505 0505 0505
+			0505 0505 0505 0505 0505 0505 0505 0505
+			0505 0100 0500 0505 0005 0001 0505 0505
+			0505 0005 0001 0505 0505 0100 0500 0505
+			0505 0401 0501 0505 0105 0104 0505 0505
+			0505 0105 0104 0505 0505 0401 0501 0505
+			0505 0100 0500 0505 0005 0001 0505 0505
+			0505 0005 0001 0505 0505 0100 0500 0505
+			0505 0505 0505 0505 0505 0505 0505 0505
+			0505 0505 0505 0505 0505 0505 0505 0505
+			0505 0505 0505 0505 0505 0505 0505 0505
+			0505 0505 0505 0505 0505 0505 0505 0505
+			0505 0401 0501 0505 0105 0104 0505 0505
+			0505 0105 0104 0505 0505 0401 0501 0505
+			0505 0604 0504 0505 0405 0406 0505 0505
+			0505 0405 0406 0505 0505 0604 0504 0505
+			0505 0401 0501 0505 0105 0104 0505 0505
+			0505 0105 0104 0505 0505 0401 0501 0505
+			0505 0505 0505 0505 0505 0505 0505 0505
+			0505 0505 0505 0505 0505 0505 0505 0505
+			0505 0505 0505 0505 0505 0505 0505 0505
+			0505 0505 0505 0505 0505 0505 0505 0505
+			0505 0401 0501 0505 0105 0104 0505 0505
+			0505 0105 0104 0505 0505 0401 0501 0505
+			0505 0204 0504 0505 0405 0402 0505 0505
+			0505 0405 0402 0505 0505 0204 0504 0505
+			0505 0401 0501 0505 0105 0104 0505 0505
+			0505 0105 0104 0505 0505 0401 0501 0505
+			0505 0505 0505 0505 0505 0505 0505 0505
+			0505 0505 0505 0505 0505 0505 0505 0505
+			0505 0505 0505 0505 0505 0505 0505 0505
+			0505 0505 0505 0505 0505 0505 0505 0505
+			0404 0404 0404 0404 0404 0404 0404 0404
+			0404 0404 0404 0404 0404 0404 0404 0404
+			0505 0505 0505 0505 0505 0505 0505 0505
+			0505 0505 0505 0505 0505 0505 0505 0505
+			0909 0909 0909 0909 0909 0909 0909 0909
+			0909 0909 0909 0909 0909 0909 0909 0909
+			0707 0707 0707 0707 0707 0707 0707 0707
+			0707 0707 0707 0707 0707 0707 0707 0707
+			0707 0707 0707 0707 0707 0707 0707 0707
+			0707 0707 0707 0707 0707 0707 0707 0707
+			0505 0505 0505 0505 0505 0505 0505 0505
+			0505 0505 0505 0505 0505 0505 0505 0505
+			0404 0404 0404 0404 0404 0404 0404 0404
+			0404 0404 0404 0404 0404 0404 0404 0404
+			0404 0404 0404 0404 0404 0404 0404 0404
+			0404 0404 0404 0404 0404 0404 0404 0404
+			0202 0202 0202 0202 0202 0202 0202 0202
+			0202 0202 0202 0202 0202 0202 0202 0202
+			0a0a 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a
+			0a0a 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a
+			0b0b 0b0b 0b0b 0b0b 0b0b 0b0b 0b0b 0b0b
+			0b0b 0b0b 0b0b 0b0b 0b0b 0b0b 0b0b 0b0b
+			0b0b 0b0b 0b0b 0b0b 0b0b 0b0b 0b0b 0b0b
+			0b0b 0b0b 0b0b 0b0b 0b0b 0b0b 0b0b 0b0b
+			0c0c 0c0c 0c0c 0c0c 0c0c 0c0c 0c0c 0c0c
+			0c0c 0c0c 0c0c 0c0c 0c0c 0c0c 0c0c 0c0c
+			0c0c 0c0c 0c0c 0c0c 0c0c 0c0c 0c0c 0c0c
+			0c0c 0c0c 0c0c 0c0c 0c0c 0c0c 0c0c 0c0c
+			0c0c 0c0c 0c0c 0c0c 0c0c 0c0c 0c0c 0c0c
+			0c0c 0c0c 0c0c 0c0c 0c0c 0c0c 0c0c 0c0c
+			0b0b 0b0b 0b0b 0b0b 0b0b 0b0b 0b0b 0b0b
+			0b0b 0b0b 0b0b 0b0b 0b0b 0b0b 0b0b 0b0b
+			0a0a 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a
+			0a0a 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a
+			0808 0808 0808 0808 0808 0808 0808 0808
+			0808 0808 0808 0808 0808 0808 0808 0808
+			0808 0808 0808 0808 0808 0808 0808 0808
+			0808 0808 0808 0808 0808 0808 0808 0808
+			0808 0808 0808 0808 0808 0808 0808 0808
+			0808 0808 0808 0808 0808 0808 0808 0808
+			0808 0808 0808 0808 0808 0808 0808 0808
+			0808 0808 0808 0808 0808 0808 0808 0808
+			0808 0808 0808 0808 0808 0808 0808 0808
+			0808 0808 0808 0808 0808 0808 0808 0808
+			0808 0808 0808 0808 0808 0808 0808 0808
+			0808 0808 0808 0808 0808 0808 0808 0808
+			0808 0808 0808 0808 0808 0808 0808 0808
+			0808 0808 0808 0808 0808 0808 0808 0808
+		</bitmap>
+	</tex_image>
+	<tex_image index="2" name="clsm_kabe02"
+		width="32" height="64" original_width="32" original_height="64"
+		format="palette16"
+		color0_mode="color"
+		palette_name="clsm_kabe02_pl"
+		path="C:/home/wb_data3d/field/in43/chip/tex/clsm_kabe02.tga"
+	>
+		<bitmap size="512">
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			cccc cccc cccc cccc cccc cccc cccc cccc
+			bbbb bbbb bbbb bbbb bbbb bbbb bbbb bbbb
+			0333 3413 3333 3033 3341 3333 1303 3334
+			0333 3413 3333 3033 3341 3333 1303 3334
+			0333 3413 3333 3033 3341 3333 1303 3334
+			0222 2413 2222 3022 2241 2222 1302 2224
+			3444 4541 4444 1344 4454 4444 4134 4445
+			3444 4541 4444 1344 4454 4444 4134 4445
+			3444 4541 4444 1344 4454 4444 4134 4445
+			3444 4541 4444 1344 4454 4444 4134 4445
+			3444 4541 4444 1344 4454 4444 4134 4445
+			3444 4541 4444 1344 4454 4444 4134 4445
+			3444 4541 4444 1344 4454 4444 4134 4445
+			3444 4541 4444 1344 4454 4444 4134 4445
+			3444 4541 4444 1344 4454 4444 4134 4445
+			3444 4541 4444 1344 4454 4444 4134 4445
+			3444 4541 4444 1344 4454 4444 4134 4445
+			3444 4541 4444 1344 4454 4444 4134 4445
+			3444 4541 4444 1344 4454 4444 4134 4445
+			3444 4541 4444 1344 4454 4444 4134 4445
+			3444 4541 4444 1344 4454 4444 4134 4445
+			3444 4541 4444 1344 4454 4444 4134 4445
+			3444 4541 4444 1344 4454 4444 4134 4445
+			3444 4541 4444 1344 4454 4444 4134 4445
+			3444 4541 4444 1344 4454 4444 4134 4445
+			3333 3333 3333 3333 3333 3333 3333 3333
+			4444 4444 4444 4444 4444 4444 4444 4444
+			7777 7777 7777 7777 7777 7777 7777 7777
+			5555 5555 5555 5555 5555 5555 5555 5555
+			5555 5555 5555 5555 5555 5555 5555 5555
+			4444 4444 4444 4444 4444 4444 4444 4444
+			3333 3333 3333 3333 3333 3333 3333 3333
+			3333 3333 3333 3333 3333 3333 3333 3333
+			0000 0000 0000 0000 0000 0000 0000 0000
+			8888 8888 8888 8888 8888 8888 8888 8888
+			9999 9999 9999 9999 9999 9999 9999 9999
+			9999 9999 9999 9999 9999 9999 9999 9999
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			9999 9999 9999 9999 9999 9999 9999 9999
+			8888 8888 8888 8888 8888 8888 8888 8888
+			6666 6666 6666 6666 6666 6666 6666 6666
+			6666 6666 6666 6666 6666 6666 6666 6666
+			6666 6666 6666 6666 6666 6666 6666 6666
+			6666 6666 6666 6666 6666 6666 6666 6666
+			6666 6666 6666 6666 6666 6666 6666 6666
+			6666 6666 6666 6666 6666 6666 6666 6666
+			6666 6666 6666 6666 6666 6666 6666 6666
+		</bitmap>
+	</tex_image>
+	<tex_image index="3" name="clsm_yuka01"
 		width="16" height="16" original_width="16" original_height="16"
 		format="palette4"
 		color0_mode="color"
@@ -44,7 +267,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="1" name="clsm_yuka02"
+	<tex_image index="4" name="clsm_yuka02"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
 		color0_mode="transparency"
@@ -52,41 +275,41 @@
 		path="C:/home/wb_data3d/field/in43/chip/tex/clsm_yuka02.tga"
 	>
 		<bitmap size="256">
-			0043 0000 0000 0000 0000 0000 0000 0000
-			0043 0000 0000 0000 0000 0000 0000 0000
-			0043 0000 0000 0000 0000 0000 0000 0000
-			0043 0000 0000 0000 0000 0000 0000 0000
-			0043 0000 0000 0000 0000 0000 0000 0000
-			0043 0000 0000 0000 0000 0000 0000 0000
-			0043 0000 0000 0000 0000 0000 0000 0000
-			0043 0000 0000 0000 0000 0000 0000 0000
-			0043 0000 0000 0000 0000 0000 0000 0000
-			0043 0000 0000 0000 0000 0000 0000 0000
-			4443 0014 0000 0000 0000 0000 0000 0000
-			3333 4433 0001 0000 0000 0000 0000 0000
-			3333 3333 0143 0000 0000 0000 0000 0000
-			4443 3334 4333 0001 0000 0000 0000 0000
-			0043 4410 3333 0043 0000 0000 0000 0000
-			0043 0000 3341 0233 0000 0000 0000 0000
-			0043 0000 4100 2333 0000 0000 0000 0000
-			0043 0000 0000 3334 0002 0000 0000 0000
-			0043 0000 0000 3340 0043 0000 0000 0000
-			0043 0000 0000 3400 0133 0000 0000 0000
-			0043 0000 0000 4000 0433 0000 0000 0000
-			0043 0000 0000 1000 1333 0000 0000 0000
-			1433 0000 0000 0000 4334 0000 0000 0000
-			3333 0014 0000 0000 3331 0001 0000 0000
-			3333 0433 0000 0000 3340 0004 0000 0000
-			3444 4333 0000 0000 3340 0004 0000 0000
-			1000 3334 0001 0000 3310 0013 0000 0000
-			0000 3340 0004 0000 3400 0043 0000 0000
-			0000 3310 0013 0000 3400 0043 0000 0000
-			0000 3400 0043 0000 3400 0043 0000 0000
-			0000 3400 0043 0000 3400 0043 0000 0000
-			0000 3400 0043 0000 3400 0043 0000 0000
+			0023 0000 0000 0000 0000 0000 0000 0000
+			0023 0000 0000 0000 0000 0000 0000 0000
+			0023 0000 0000 0000 0000 0000 0000 0000
+			0023 0000 0000 0000 0000 0000 0000 0000
+			0023 0000 0000 0000 0000 0000 0000 0000
+			0023 0000 0000 0000 0000 0000 0000 0000
+			0023 0000 0000 0000 0000 0000 0000 0000
+			0023 0000 0000 0000 0000 0000 0000 0000
+			0023 0000 0000 0000 0000 0000 0000 0000
+			0023 0000 0000 0000 0000 0000 0000 0000
+			2223 0012 0000 0000 0000 0000 0000 0000
+			3333 2233 0001 0000 0000 0000 0000 0000
+			3333 3333 0123 0000 0000 0000 0000 0000
+			2223 3332 2333 0001 0000 0000 0000 0000
+			0023 2210 3333 0023 0000 0000 0000 0000
+			0023 0000 3321 0233 0000 0000 0000 0000
+			0023 0000 2100 2333 0000 0000 0000 0000
+			0023 0000 0000 3332 0002 0000 0000 0000
+			0023 0000 0000 3320 0023 0000 0000 0000
+			0023 0000 0000 3200 0133 0000 0000 0000
+			0023 0000 0000 2000 0233 0000 0000 0000
+			0023 0000 0000 1000 1333 0000 0000 0000
+			1233 0000 0000 0000 2332 0000 0000 0000
+			3333 0012 0000 0000 3331 0001 0000 0000
+			3333 0233 0000 0000 3320 0002 0000 0000
+			3222 2333 0000 0000 3320 0002 0000 0000
+			1000 3332 0001 0000 3310 0013 0000 0000
+			0000 3320 0002 0000 3200 0023 0000 0000
+			0000 3310 0013 0000 3200 0023 0000 0000
+			0000 3200 0023 0000 3200 0023 0000 0000
+			0000 3200 0023 0000 3200 0023 0000 0000
+			0000 3200 0023 0000 3200 0023 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="2" name="clsm_yuka03"
+	<tex_image index="5" name="clsm_yuka03"
 		width="16" height="32" original_width="16" original_height="32"
 		format="palette4"
 		color0_mode="transparency"
@@ -94,17 +317,17 @@
 		path="C:/home/wb_data3d/field/in43/chip/tex/clsm_yuka03.tga"
 	>
 		<bitmap size="64">
-			0000 0000 0000 0000 5555 5555 aaaa aaaa
-			aaaa aaaa bfff fffe b000 000e b000 000e
-			b000 000e b000 000e b000 000e b000 000e
-			b000 000e b000 000e b000 000e b000 000e
+			0000 0000 0000 0000 5555 5555 ffff ffff
+			ffff ffff eaaa aaab e000 000b e000 000b
+			e000 000b e000 000b e000 000b e000 000b
+			e000 000b e000 000b e000 000b e000 000b
 			0000 0000 0000 0000 0000 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="3" name="clsm_yuka04"
+	<tex_image index="6" name="clsm_yuka04"
 		width="16" height="16" original_width="16" original_height="16"
 		format="palette4"
 		color0_mode="transparency"
@@ -114,11 +337,11 @@
 		<bitmap size="32">
 			0000 0000 0000 0000 0000 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 5555 5555 aaaa aaaa
-			aaaa aaaa ffff ffff 0000 0000 0000 0000
+			0000 0000 0000 0000 5555 5555 ffff ffff
+			ffff ffff aaaa aaaa 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="4" name="clsm_yuka05"
+	<tex_image index="7" name="clsm_yuka05"
 		width="16" height="16" original_width="16" original_height="16"
 		format="palette4"
 		color0_mode="transparency"
@@ -126,13 +349,13 @@
 		path="C:/home/wb_data3d/field/in43/chip/tex/clsm_yuka05.tga"
 	>
 		<bitmap size="32">
-			0000 0000 00a0 0000 0258 0000 0258 0000
-			0258 0000 0258 0000 0258 0000 0258 0000
-			0258 0000 0258 0000 0258 0000 0258 0000
-			0258 0000 0258 0000 00a0 0000 0000 0000
+			0000 0000 0050 0000 01a4 0000 01a4 0000
+			01a4 0000 01a4 0000 01a4 0000 01a4 0000
+			01a4 0000 01a4 0000 01a4 0000 01a4 0000
+			01a4 0000 01a4 0000 0050 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="5" name="clsm_yuka06"
+	<tex_image index="8" name="clsm_yuka06"
 		width="16" height="16" original_width="16" original_height="16"
 		format="palette4"
 		color0_mode="color"
@@ -140,13 +363,13 @@
 		path="C:/home/wb_data3d/field/in43/chip/tex/clsm_yuka06.tga"
 	>
 		<bitmap size="32">
-			5555 5555 aaa5 5aaa 0009 6000 0009 6000
-			0009 6000 0009 6000 0009 6000 0009 6000
-			0009 6000 0009 6000 0009 6000 0009 6000
-			0009 6000 0009 6000 aaa5 5aaa 5555 5555
+			0000 0000 5550 0555 aaa4 1aaa aaa4 1aaa
+			aaa4 1aaa aaa4 1aaa aaa4 1aaa aaa4 1aaa
+			aaa4 1aaa aaa4 1aaa aaa4 1aaa aaa4 1aaa
+			aaa4 1aaa aaa4 1aaa 5550 0555 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="6" name="clsm_yuka07"
+	<tex_image index="9" name="clsm_yuka07"
 		width="16" height="16" original_width="16" original_height="16"
 		format="palette16"
 		color0_mode="transparency"
@@ -164,7 +387,7 @@
 			3340 0013 0000 0000 3400 0013 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="7" name="d_mat01"
+	<tex_image index="10" name="d_mat01"
 		width="16" height="16" original_width="16" original_height="16"
 		format="palette4"
 		color0_mode="color"
@@ -178,7 +401,7 @@
 			55aa 0000 aaaa aaaa aaaa aaaa aaaa aaaa
 		</bitmap>
 	</tex_image>
-	<tex_image index="8" name="m_pc09"
+	<tex_image index="11" name="m_pc09"
 		width="16" height="32" original_width="16" original_height="32"
 		format="palette16"
 		color0_mode="color"
@@ -204,7 +427,7 @@
 			dddd dddd dddd dddd dddd dddd dddd dddd
 		</bitmap>
 	</tex_image>
-	<tex_image index="9" name="m_pc15"
+	<tex_image index="12" name="m_pc15"
 		width="16" height="16" original_width="16" original_height="16"
 		format="palette16"
 		color0_mode="transparency"
@@ -222,51 +445,58 @@
 			2b7a 4441 1444 a7b2 598a 3332 2333 a895
 		</bitmap>
 	</tex_image>
-	<tex_image index="10" name="m_pc16"
+	<tex_image index="13" name="m_pc16"
 		width="16" height="32" original_width="16" original_height="32"
 		format="palette16"
 		color0_mode="transparency"
 		palette_name="m_pc16"
-		path="C:/mayadata/m_pc/tex/m_pc16.tga"
+		path="C:/home/wb_data3d/field/in43/chip/tex/m_pc16.tga"
 	>
 		<bitmap size="128">
 			0000 0000 0000 0000 0000 0000 0000 0000
-			8888 8888 8888 8888 9999 9999 9999 9999
-			6666 6666 6666 6666 6666 6666 6666 6666
-			bbbb bbbb bbbb bbbb 5555 5555 5555 5555
-			4444 4444 4444 4444 2111 1111 1112 1121
-			2111 1111 1112 1121 2111 1111 1112 1121
-			2111 1111 1112 1121 2222 2222 2222 2222
-			2111 1111 1112 1121 2111 1111 1112 1121
-			2111 1111 1112 1121 2111 1111 1112 1121
-			2222 2222 2222 2222 2111 1111 1112 1121
-			2111 1111 1112 1121 2111 1111 1112 1121
-			2111 1111 1112 1121 3333 3333 3333 3333
-			5555 5555 5555 5555 bbbb bbbb bbbb bbbb
-			6666 6666 6666 6666 7777 7777 7777 7777
-			aaaa aaaa aaaa aaaa 0000 0000 0000 0000
+			4444 4444 4444 4444 6666 6666 6666 6666
+			3333 3333 3333 3333 3333 3333 3333 3333
+			5555 5555 5555 5555 7777 7777 7777 7777
+			8888 8888 8888 8888 abbb bbbb bbba bbab
+			abbb bbbb bbba bbab abbb bbbb bbba bbab
+			abbb bbbb bbba bbab aaaa aaaa aaaa aaaa
+			abbb bbbb bbba bbab abbb bbbb bbba bbab
+			abbb bbbb bbba bbab abbb bbbb bbba bbab
+			aaaa aaaa aaaa aaaa abbb bbbb bbba bbab
+			abbb bbbb bbba bbab abbb bbbb bbba bbab
+			abbb bbbb bbba bbab 9999 9999 9999 9999
+			7777 7777 7777 7777 5555 5555 5555 5555
+			3333 3333 3333 3333 2222 2222 2222 2222
+			1111 1111 1111 1111 0000 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="11" name="m_pc17"
+	<tex_image index="14" name="m_pc17"
 		width="16" height="16" original_width="16" original_height="16"
-		format="palette16"
-		color0_mode="transparency"
+		format="a5i3"
 		palette_name="m_pc17"
-		path="C:/mayadata/m_pc/tex/m_pc17.tga"
+		path="C:/home/wb_data3d/field/in43/chip/tex/m_pc17.tga"
 	>
-		<bitmap size="64">
-			0000 0000 0000 0000 4000 4333 0005 0000
-			1140 3311 0433 0000 1114 1111 4333 0000
-			2221 1111 3331 0004 2222 1122 3311 0053
-			2222 1222 3111 0043 2222 1222 3111 0043
-			2222 1222 3111 0043 2222 1222 3111 0043
-			2222 1122 3311 0053 2221 1111 3331 0004
-			1114 1111 4333 0000 1140 3311 0433 0000
-			4000 4333 0005 0000 0000 0000 0000 0000
+		<bitmap size="128">
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0300 7333 7373 3073 0000 0000 0000
+			0300 7131 d1d1 bbd3 bbbb 3073 0000 0000
+			3103 d171 d1d1 d1d1 c3d3 73c3 0030 0000
+			d201 f2f2 d1f1 d1d1 d3d1 c3c3 3073 0000
+			f202 f2f2 f2f2 d1f1 d1d1 bbd3 73bb 0030
+			f202 f2f2 f2f2 f1f2 d1d1 d3d1 bbc3 0070
+			f202 f2f2 f2f2 f1f2 d1d1 d3d1 bbbb 0070
+			f202 f2f2 f2f2 f1f2 d1d1 d3d1 bbbb 0070
+			f202 f2f2 f2f2 f1f2 d1d1 d3d1 bbbb 0070
+			f202 f2f2 f2f2 d1f1 d1d1 bbd3 73bb 0030
+			d201 f2f2 d1f1 d1d1 d3d1 bbbb 3073 0000
+			3103 d171 d1d1 d1d1 bbd3 73c3 0030 0000
+			0300 7131 d1d1 bbd3 bbbb 3073 0000 0000
+			0000 0300 7333 7373 3073 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="12" name="m_pc18"
+	<tex_image index="15" name="m_pc18"
 		width="16" height="32" original_width="16" original_height="32"
 		format="palette16"
 		color0_mode="color"
@@ -292,81 +522,110 @@
 			ffff ffff ffff ffff ffff ffff ffff ffff
 		</bitmap>
 	</tex_image>
-	<tex_image index="13" name="m_pc21"
+	<tex_image index="16" name="m_pc21"
 		width="16" height="32" original_width="16" original_height="32"
 		format="palette16"
 		color0_mode="transparency"
 		palette_name="m_pc21"
-		path="C:/mayadata/m_pc/tex/m_pc21.tga"
+		path="C:/home/wb_data3d/field/in43/chip/tex/m_pc21.tga"
 	>
 		<bitmap size="128">
 			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 aaaa aaaa aaaa 9000 bbb8 bbbb bbbb
-			c700 8889 8888 8888 c700 8889 8888 8888
-			c700 9889 dddc dddd c700 c889 555d 5555
-			c700 d889 4445 4444 c700 d889 1145 1211
-			c700 d889 1145 1211 c700 d889 1145 1211
-			c700 d889 1145 1211 c700 d889 2245 2222
-			c700 d889 1145 1211 c700 d889 1145 1211
-			c700 d889 1145 1211 c700 d889 1145 1211
-			c700 d889 2245 2222 c700 d889 1145 1211
-			c700 d889 1145 1211 c700 d889 1145 1211
-			c700 d889 1145 1211 c700 d889 3345 3333
-			c700 c889 555d 5555 c700 9889 dddc dddd
-			c700 8889 8888 8888 6700 9999 9999 9999
-			7000 ccc6 cccc cccc 0000 0000 0000 0000
+			0000 6666 6666 6666 2000 8883 8888 8888
+			1500 3332 3333 3333 1500 3332 3333 3333
+			1500 2332 7771 7777 1500 1332 9997 9999
+			1500 7332 aaa9 aaaa 1500 7332 dda9 dcdd
+			1500 7332 dda9 dcdd 1500 7332 dda9 dcdd
+			1500 7332 dda9 dcdd 1500 7332 cca9 cccc
+			1500 7332 dda9 dcdd 1500 7332 dda9 dcdd
+			1500 7332 dda9 dcdd 1500 7332 dda9 dcdd
+			1500 7332 cca9 cccc 1500 7332 dda9 dcdd
+			1500 7332 dda9 dcdd 1500 7332 dda9 dcdd
+			1500 7332 dda9 dcdd 1500 7332 bba9 bbbb
+			1500 1332 9997 9999 1500 2332 7771 7777
+			1500 3332 3333 3333 4500 2222 2222 2222
+			5000 1114 1111 1111 0000 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
+		</bitmap>
+	</tex_image>
+	<tex_image index="17" name="union_yuka01"
+		width="16" height="16" original_width="16" original_height="16"
+		format="palette4"
+		color0_mode="color"
+		palette_name="union_yuka01_pl"
+		path="C:/home/wb_data3d/field/in43/chip/tex/union_yuka01.tga"
+	>
+		<bitmap size="32">
+			5555 5555 0001 4000 0001 4000 0001 4000
+			0001 4000 0001 4000 0001 4000 0001 4000
+			0001 4000 0001 4000 0001 4000 0001 4000
+			0001 4000 0001 4000 0001 4000 5555 5555
 		</bitmap>
 	</tex_image>
 </tex_image_array>
 
-<tex_palette_array size="14">
-	<tex_palette index="0" name="clsm_yuka01_pl" color_size="4">
+<tex_palette_array size="18">
+	<tex_palette index="0" name="black_pl" color_size="4">
+		0000 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="1" name="clsm_kabe01_pl" color_size="24">
+		0d1e 153b 1912 191c 1939 195f 1d35 21bf
+		2507 261f 356a 3d8b 41ac 5ad6 6263 6317
+		6b7a 7704 7bfe 7fff 7fff 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="2" name="clsm_kabe02_pl" color_size="16">
+		10f6 153b 191c 1939 195f 21bf 2507 261f
+		356a 3d8b 41ac 5ad6 6317 6b7a 7bfe 7fff
+	</tex_palette>
+	<tex_palette index="3" name="clsm_yuka01_pl" color_size="4">
 		7371 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="1" name="clsm_yuka02_pl" color_size="8">
+	<tex_palette index="4" name="clsm_yuka02_pl" color_size="8">
+		0000 67b2 67d4 6bf8 7fff 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="5" name="clsm_yuka03_pl" color_size="4">
+		0000 67b2 67d4 6bf8
+	</tex_palette>
+	<tex_palette index="6" name="clsm_yuka04_pl" color_size="4">
+		0000 67b2 67d4 6bf8
+	</tex_palette>
+	<tex_palette index="7" name="clsm_yuka05_pl" color_size="4">
+		0000 67d4 6bf8 7fff
+	</tex_palette>
+	<tex_palette index="8" name="clsm_yuka06_pl" color_size="4">
+		636f 6790 67d4 7fff
+	</tex_palette>
+	<tex_palette index="9" name="clsm_yuka07_pl" color_size="8">
 		7371 7794 7fd8 7ffb 7bd7 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="2" name="clsm_yuka03_pl" color_size="4">
-		7371 7794 7ffb 7bd7
-	</tex_palette>
-	<tex_palette index="3" name="clsm_yuka04_pl" color_size="4">
-		7371 7794 7ffb 7bd7
-	</tex_palette>
-	<tex_palette index="4" name="clsm_yuka05_pl" color_size="4">
-		7371 7ffb 7bd7 7fff
-	</tex_palette>
-	<tex_palette index="5" name="clsm_yuka06_pl" color_size="4">
-		7fb2 7371 7b92 7fff
-	</tex_palette>
-	<tex_palette index="6" name="clsm_yuka07_pl" color_size="8">
-		7371 7794 7fd8 7ffb 7bd7 7fff 7fff 7fff
-	</tex_palette>
-	<tex_palette index="7" name="d_mat01" color_size="4">
+	<tex_palette index="10" name="d_mat01" color_size="4">
 		191e 1cfa 2531 7fff
 	</tex_palette>
-	<tex_palette index="8" name="m_pc09" color_size="16">
+	<tex_palette index="11" name="m_pc09" color_size="16">
 		5f47 4aa7 678a 6fd1 7bf7 167e 1a5c 1e5b
 		2238 21f5 1db3 35d0 2d8d 2109 7fff 7fff
 	</tex_palette>
-	<tex_palette index="9" name="m_pc15" color_size="16">
+	<tex_palette index="12" name="m_pc15" color_size="16">
 		368e 373a 26b6 439d 4fdf 1e32 158f 19f3
 		31cf 6319 2d8d 73be 7fff 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="10" name="m_pc16" color_size="16">
-		7fff 4bd7 4bb7 4775 3ad3 256d 0cd7 0cd2
-		193b 217d 0cae 1d0b 7fff 7fff 7fff 7fff
+	<tex_palette index="13" name="m_pc16" color_size="16">
+		0000 0d0e 0d72 0db7 1a1b 1d0b 225d 256d
+		3ad3 4775 4bb7 4bd7 7fff 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="11" name="m_pc17" color_size="8">
+	<tex_palette index="14" name="m_pc17" color_size="8">
 		368e 63be 73ff 539d 4b3b 46d9 7fff 7fff
 	</tex_palette>
-	<tex_palette index="12" name="m_pc18" color_size="16">
+	<tex_palette index="15" name="m_pc18" color_size="16">
 		5f47 4aa7 5708 678a 6fd1 7bf7 3293 167e
 		15f8 15b4 2238 36de 431f 35d0 2d8d 2109
 	</tex_palette>
-	<tex_palette index="13" name="m_pc21" color_size="16">
-		7fff 4bd7 4bb6 4775 3ad3 256d 19b3 2238
-		0cd7 0cd2 193b 217d 0cae 1d0b 7fff 7fff
+	<tex_palette index="16" name="m_pc21" color_size="16">
+		0000 0d0e 0d72 0db7 10d0 1514 1a1b 1d0b
+		225d 256d 3ad3 4775 4bb6 4bd7 7fff 7fff
+	</tex_palette>
+	<tex_palette index="17" name="union_yuka01_pl" color_size="4">
+		636f 6790 7fff 7fff
 	</tex_palette>
 </tex_palette_array>
 
@@ -475,7 +734,7 @@
 
 <ex_nns_3dme>
 	<ex_model_info scene_name="デフォルトシーン" disp_pos="0.000000 60.000000"/>
-	<ex_tex_image_array size="14">
+	<ex_tex_image_array size="18">
 		<ex_tex_image index="0" disp_pos="0.000000 0.000000"/>
 		<ex_tex_image index="1" disp_pos="0.000000 0.000000"/>
 		<ex_tex_image index="2" disp_pos="0.000000 0.000000"/>
@@ -490,8 +749,12 @@
 		<ex_tex_image index="11" disp_pos="0.000000 0.000000"/>
 		<ex_tex_image index="12" disp_pos="0.000000 0.000000"/>
 		<ex_tex_image index="13" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="14" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="15" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="16" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="17" disp_pos="0.000000 0.000000"/>
 	</ex_tex_image_array>
-	<ex_tex_palette_array size="14">
+	<ex_tex_palette_array size="18">
 		<ex_tex_palette index="0" disp_pos="0.000000 0.000000"/>
 		<ex_tex_palette index="1" disp_pos="0.000000 0.000000"/>
 		<ex_tex_palette index="2" disp_pos="0.000000 0.000000"/>
@@ -506,6 +769,10 @@
 		<ex_tex_palette index="11" disp_pos="0.000000 0.000000"/>
 		<ex_tex_palette index="12" disp_pos="0.000000 0.000000"/>
 		<ex_tex_palette index="13" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="14" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="15" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="16" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="17" disp_pos="0.000000 0.000000"/>
 	</ex_tex_palette_array>
 	<ex_material_array size="1">
 		<ex_material index="0" disp_pos="0.000000 240.000000"/>

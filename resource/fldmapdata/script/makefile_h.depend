@@ -21,6 +21,9 @@ eggevent_scr_def.h: eggevent_scr.ev
 poke_waza_def.h: poke_waza.ev
 	$(EV_DEF) poke_waza.ev $(SCR_OFFS_ID_H)
 
+skill_teach_scr_def.h: skill_teach_scr.ev
+	$(EV_DEF) skill_teach_scr.ev $(SCR_OFFS_ID_H)
+
 bg_attr_def.h: bg_attr.ev
 	$(EV_DEF) bg_attr.ev $(SCR_OFFS_ID_H)
 
