@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-05T22:53:03"/>
+	<create user="matsumiya" host="W00224" date="2010-02-06T16:14:13"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,7 +307,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1291" top="262" right="1996" bottom="890" maximized="no" rayout="Vertical2">
+	<dialog left="1290" top="199" right="1995" bottom="827" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -696,6 +696,82 @@
 そうです！　自分のことを
 ポケモンの子供と　いい[BE:00:ページ切り替え（行送り）]
 奇跡を　起こす　あの人です</language>
+	</row>
+
+	<row id="msg_c06_boy2_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・msg_c06r0101_boy2_01表示後にセットされる
+　アイテム（暫定でわざましん０１）を入手すると登場し
+　主人公に隣接してメッセージ表示
+・続けてbabygirl_01</comment>
+		<attribute name="キャラクター">BOY2</attribute>
+		<language name="JPN" width="256">あー！　ぼくらの
+たからもの　とったあ！！▼</language>
+		<language name="JPN_KANJI" width="256">あー！　ぼくらの
+たからもの　とったあ！！▼</language>
+	</row>
+
+	<row id="msg_c06_babygirl_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・続けて
+　主人公♂→boy2_02
+　主人公♀→boy2_03</comment>
+		<attribute name="キャラクター">BABYGIRL</attribute>
+		<language name="JPN" width="256">とったあ！！▼</language>
+		<language name="JPN_KANJI" width="256">とったあ！！▼</language>
+	</row>
+
+	<row id="msg_c06_boy2_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・続けてbabygirl_02</comment>
+		<attribute name="キャラクター">BOY2</attribute>
+		<language name="JPN" width="256">なんてね▼
+ぼくら　ポケモン　もってないし
+それまで　その　わざマシンを
+かくしておく　つもりだったんだ▼
+だけど　もったいないから
+おにいちゃん　つかって　いいよ▼</language>
+		<language name="JPN_KANJI" width="256">なんてね▼
+ぼくら　ポケモン　もってないし
+それまで　その　わざマシンを
+かくしておく　つもりだったんだ▼
+だけど　もったいないから
+おにいちゃん　つかって　いいよ▼</language>
+	</row>
+
+	<row id="msg_c06_boy2_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・続けてbabygirl_02</comment>
+		<attribute name="キャラクター">BOY2</attribute>
+		<language name="JPN" width="256">なんてね▼
+ぼくら　ポケモン　もってないし
+それまで　その　わざマシンを
+かくしておく　つもりだったんだ▼
+だけど　もったいないから
+おねえちゃん　つかって　いいよ▼</language>
+		<language name="JPN_KANJI" width="256">なんてね▼
+ぼくら　ポケモン　もってないし
+それまで　その　わざマシンを
+かくしておく　つもりだったんだ▼
+だけど　もったいないから
+おねえちゃん　つかって　いいよ▼</language>
+	</row>
+
+	<row id="msg_c06_babygirl_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・続けてboy2_04</comment>
+		<attribute name="キャラクター">BABYGIRL</attribute>
+		<language name="JPN" width="256">つかって　いーよー！！▼</language>
+		<language name="JPN_KANJI" width="256">つかって　いーよー！！▼</language>
+	</row>
+
+	<row id="msg_c06_boy2_04" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・メッセージ表示後、動作モデル退場
+　画面外に消えると主人公操作可能に</comment>
+		<attribute name="キャラクター">BOY2</attribute>
+		<language name="JPN" width="256">じゃあね！　バイバイ！！▼</language>
+		<language name="JPN_KANJI" width="256">じゃあね！　バイバイ！！▼</language>
 	</row>
 
 	<row id="msg_c06_sign1_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
