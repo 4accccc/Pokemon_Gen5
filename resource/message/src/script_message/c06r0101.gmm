@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-05T22:34:12"/>
+	<create user="matsumiya" host="W00224" date="2010-02-06T15:59:50"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,14 +263,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1460" top="257" right="2153" bottom="872" maximized="no" rayout="Vertical2">
+	<dialog left="1291" top="262" right="1996" bottom="890" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
-		<band id="0" index="1" style="0000" width="518"/>
+		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="531"/>
+		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="685"/>
+		<band id="4" index="0" style="0000" width="697"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,16 +292,69 @@
 	</lock>
 
 
+	<row id="msg_c06r0101_middleman2_01" text-color="#000000,,,#ff0000,,#000000,,,,,,,,,,,,,">
+		<comment>♂
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">太ったおじさん</attribute>
+		<language name="JPN" width="256">かっそうろの　まわりに
+たくさんの　ビニルハウス！▼
+とれたてやさいを　あっ！　というまに
+がいこくへ　はこべるって　もんだ！</language>
+		<language name="JPN_KANJI" width="256">滑走路の　周りに
+たくさんの　ビニルハウス！▼
+採れたて野菜を　あっ！　という間に
+外国へ　輸送できるって　もんだ！</language>
+	</row>
+
+	<row id="msg_c06r0101_babygirl_01" text-color="#000000,,,#ff0000,,#000000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・アイテム入手前</comment>
+		<attribute name="キャラ指定">BABYGIRL</attribute>
+		<language name="JPN" width="256">かっそーろ！　かっそーろ！
+かっそーろに　わざマシン！</language>
+		<language name="JPN_KANJI" width="256">かっそーろ！　かっそーろ！
+かっそーろに　わざマシン！</language>
+	</row>
+
+	<row id="msg_c06r0101_babygirl_02" text-color="#000000,,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・アイテム入手後</comment>
+		<attribute name="キャラ指定">BABYGIRL</attribute>
+		<language name="JPN" width="256">かっそーろ！　かっそーろ！
+あそこで　かけっこ　たのしいの！▼
+ねーねー　いちばん　かけっこが
+はやい　ポケモンって　なにかなー？</language>
+		<language name="JPN_KANJI" width="256">かっそーろ！　かっそーろ！
+あそこで　かけっこ　たのしいの！▼
+ねーねー　いちばん　かけっこが
+はやい　ポケモンって　なにかなー？</language>
+	</row>
+
+	<row id="msg_c06r0101_boy2_01" text-color="#000000,,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♂
+・アイテム入手前
+・このメッセージ表示後
+　c06にアイテム配置処理</comment>
+		<attribute name="キャラ指定">BOY2</attribute>
+		<language name="JPN" width="256">かっそうろの　はしっこに
+ぼくらの　たからものを　うめたんだ！</language>
+		<language name="JPN_KANJI" width="256">かっそうろの　はしっこに
+ぼくらの　宝物を　埋めたんだ！</language>
+	</row>
+
+	<row id="msg_c06r0101_boy2_02" text-color="#000000,,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♂
+・アイテム入手後</comment>
+		<attribute name="キャラ指定">BOY2</attribute>
+		<language name="JPN" width="256">ぼくらの　わざマシン
+たいせつに　つかってよね！</language>
+		<language name="JPN_KANJI" width="256">ぼくらの　わざマシン
+大切に　使ってよね！</language>
+	</row>
+
 	<row id="msg_c06r0101_pilot_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">パイロット</attribute>
-		<language name="JPN" width="256">no data</language>
-		<language name="JPN_KANJI" width="256">no data</language>
-	</row>
-
-	<row id="msg_c06r0101_middleman2_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>削除ラベル</comment>
-		<attribute name="キャラ指定">太ったおじさん</attribute>
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
@@ -316,6 +369,8 @@
 
 	<row id="msg_c06r0101_veteranw_02" text-color="#ffffff,,,#ffffff,,#ffffff,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>削除ラベル</comment>
+		<attribute name="キャラ指定">VETERANW
+ベテラン♀</attribute>
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
