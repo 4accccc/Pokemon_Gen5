@@ -137,6 +137,18 @@ NAMEIN_KEYMAP_HANDLE * NAMEIN_KEYMAP_HANDLE_Alloc( HEAPID heapID )
     for( i = 0; i < NAMEIN_KEYMAPTYPE_MAX; i++ )
     { 
       p_wk->p_data[i] = NAMEIN_KEYMAP_Alloc( i, heapID );
+
+#ifdef PM_DEBUG
+      //太陽のマークチェック
+      if( i == NAMEIN_KEYMAPTYPE_KIGOU )
+      { 
+        NAGI_Printf( "太陽の文字コード 0x%x\n", NAMEIN_KEYMAP_GetStr( p_wk->p_data[i], 0, 4 ) );
+        NAGI_Printf( "曇の文字コード 0x%x\n", NAMEIN_KEYMAP_GetStr( p_wk->p_data[i], 1, 4 ) );
+        NAGI_Printf( "雨の文字コード 0x%x\n", NAMEIN_KEYMAP_GetStr( p_wk->p_data[i], 2, 4 ) );
+        NAGI_Printf( "雪の文字コード 0x%x\n", NAMEIN_KEYMAP_GetStr( p_wk->p_data[i], 3, 4 ) );
+      }
+#endif //PM_DEBUG
+
     }
   }
 

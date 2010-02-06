@@ -1,8 +1,9 @@
+#!/usr/bin/perl
 #[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
 #
 #
 #	@file		namein_keymap_conv.pl
-#	@brief	���O���͉�ʂŃL�[�z��G�N�Z���̃R���o�[�^
+#	@brief	名前入力画面でキー配列エクセルのコンバータ
 #	@author	Toru=Nagihashi
 #	@data		2009.10.8
 #]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
@@ -11,27 +12,29 @@
 #					grobal
 #
 #=============================================================================
-#�G�N�Z���R���o�[�^
+use utf8;
+
+#エクセルコンバータ
 $EXCEL_CONV_EXE			=	$ENV{"PROJECT_ROOT"}."/tools/exceltool/ExcelSeetConv.exe";
 
-#�G�N�Z���f�[�^
-@NAMEIN_XLS_DATA		= ();		#�G�N�Z���f�[�^�̃f�[�^�{��
+#エクセルデータ
+@NAMEIN_XLS_DATA		= ();		#エクセルデータのデータ本体
 
-#��������f�[�^��
-$OUTPUTNAME_DATA		= "";		#�t�@�C�����{�g���q.dat
-$TEMPORARY_FILENAME	= "temp.dat"; #�G���R�[�h�p�e���|����
-$TEMP_BODY_FILENAME	= "body.dat"; #�����p�p�e���|����
-$TEMP_HEADER_FILENAME	= "header.dat"; #�����p�e���|����
+#生成するデータ名
+$OUTPUTNAME_DATA		= "";		#ファイル名＋拡張子.dat
+$TEMPORARY_FILENAME	= "temp.dat"; #エンコード用テンポラリ
+$TEMP_BODY_FILENAME	= "body.dat"; #合成用用テンポラリ
+$TEMP_HEADER_FILENAME	= "header.dat"; #合成用テンポラリ
 
-#�擾�����f�[�^
-$DATA_WIDTH					=	0;		#�f�[�^��
-$DATA_HEIGHT				=	0;		#�f�[�^����
+#取得したデータ
+$DATA_WIDTH					=	0;		#データ幅
+$DATA_HEIGHT				=	0;		#データ高さ
 
-@DATA_STR						= ();		#������
-$DATA_LENGTH				= 0;		#������
+@DATA_STR						= ();		#文字列
+$DATA_LENGTH				= 0;		#文字列長
 
-#�G���[�f�[�^
-$DATA_ERROR_VALUE		= "��";	#�g��Ȃ��������G���[�l�Ƃ��Ĉ���
+#エラーデータ
+$DATA_ERROR_VALUE		= "※";	#使わない文字をエラー値として扱う
 
 #=============================================================================
 #
@@ -39,7 +42,7 @@ $DATA_ERROR_VALUE		= "��";	#�g��Ȃ��������G���[�l�Ƃ��Ĉ���
 #
 #=============================================================================
 #-------------------------------------
-#	�G���[
+#	エラー
 #=====================================
 if( @ARGV < 1 )
 {
@@ -48,12 +51,12 @@ if( @ARGV < 1 )
 	exit(1);
 }
 #-------------------------------------
-#	�G�N�Z���f�[�^�R���o�[�g
+#	エクセルデータコンバート
 #=====================================
-&EXCEL_GetData( $ARGV[0], "data", \@NAMEIN_XLS_DATA );
+&EXCEL_GetDataUnicode( $ARGV[0], "data", \@NAMEIN_XLS_DATA );
 
 #-------------------------------------
-#	�f�[�^���擾
+#	データを取得
 #=====================================
 $is_row_start	= 0;
 $is_col_start	= 0;
@@ -62,17 +65,23 @@ $col_cnt	= 0;
 foreach $line ( @NAMEIN_XLS_DATA )
 {
 	$line	=~ s/\r\n//g;
-	@word	= split( /,/, $line );
+	@word	= split( /\t/, $line );
 
-	#�f�[�^�͈�
+  #print "\n";
+  #foreach $data ( @word )
+  #{
+  #  print Encode::encode("shiftjis", $data ); # UTF8フラグを落す
+  #}
+
+	#データ範囲
 	if( $word[0] eq "#start" )
 	{
 		@TAG_WORD	= @word;
 		$is_row_start	= 1;
 
-		#�f�[�^�����擾
+		#データ幅を取得
 		for( $col_cnt = 0; $TAG_WORD[ $col_cnt ] ne "#end_col"; $col_cnt++ ){}
-		$DATA_WIDTH		= $col_cnt - 1;	##start�̓f�[�^���Ɋ܂܂�Ȃ��̂�-1
+		$DATA_WIDTH		= $col_cnt - 1;	##startはデータ長に含まれないので-1
 
 		next;
 	}
@@ -80,39 +89,38 @@ foreach $line ( @NAMEIN_XLS_DATA )
 	{
 		$is_row_start	= 0;
 
-		#�f�[�^�������擾
+		#データ高さを取得
 		$DATA_HEIGHT	= $row_cnt;
 	}
 
-
-	#�f�[�^�擾
+	#データ取得
 	if( $is_row_start == 1 )
 	{
 		$row_cnt++;
 		for( my $i = 0; $i < @TAG_WORD; $i++ ) 
 		{
-			#�^�O�ƃf�[�^���擾
+			#タグとデータを取得
 			my $tag	= $TAG_WORD[$i];
 			my $w		= $word[$i];
 
-			#�s�J�n
+			#行開始
 			if( $tag eq "#start" )
 			{
 				$is_col_start	= 1;
 				next;
 			}
-			#�s�I��
+			#行終了
 			elsif( $tag eq "#end_col" )
 			{
 				$is_col_start	= 0;
 			}
 
-			#�s�J�n�`�s�I���܂œ����̃o�b�t�@���󂯎��
+			#行開始～行終了まで内部のバッファを受け取る
 			if( $is_col_start )
 			{
 				&UndefAssert( $w );
 	
-				#�g�p���Ȃ��l��������A�G���[�l
+				#使用しない値だったら、エラー値
 				if( $w eq "NONE" )
 				{
 					push( @DATA_STR, $DATA_ERROR_VALUE );
@@ -128,31 +136,33 @@ foreach $line ( @NAMEIN_XLS_DATA )
 }
 
 #-------------------------------------
-#	�f�o�b�O�v�����g
+#	デバッグプリント
 #=====================================
 if(1)
 {
 	print( "DEBUG_PRINT_START\n" );
-	print( "�f�[�^��".$DATA_WIDTH	."\n" );
-	print( "�f�[�^����".$DATA_HEIGHT	."\n" );
-	print( "������".$DATA_LENGTH	."\n" );
+	print( "data w".$DATA_WIDTH	."\n" );
+	print( "data h".$DATA_HEIGHT	."\n" );
+	print( "data L".$DATA_LENGTH	."\n" );
 	for( my $i = 0; $i < $DATA_LENGTH; $i++ )
 	{
-		print( "STR=".$DATA_STR[$i]."\n" );
+		print( "STR=" );
+    print Encode::encode("shiftjis", $DATA_STR[$i] ); # UTF8フラグを落す 
+    print "\n";
 	}
 }
 
 #-------------------------------------
-#	�A�E�g�v�b�g��
+#	アウトプット名
 #=====================================
 $OUTPUTNAME_DATA	= $ARGV[0];
 $OUTPUTNAME_DATA	=~ s/\.xls/\.dat/g;
 
 #-------------------------------------
-#	�f�[�^��
+#	データ化
 #=====================================
 #-------------------------------------
-#	�w�b�_��������
+#	ヘッダ書き込み
 #=====================================
 open( FILEOUT, ">$TEMP_HEADER_FILENAME" );
 binmode( FILEOUT );
@@ -160,33 +170,33 @@ print( FILEOUT pack( "S", $DATA_WIDTH ) );
 print( FILEOUT pack( "S", $DATA_HEIGHT ) );
 close( FILEOUT ); 
 #-------------------------------------
-#	�{�f�B��������
+#	ボディ書き込み
 #=====================================
 open( FILEOUT, ">$TEMP_BODY_FILENAME" );
 for( my $i = 0; $i < $DATA_LENGTH; $i++ )
 {
-	print( FILEOUT $DATA_STR[$i] );
+	print( FILEOUT Encode::encode("UTF16LE",$DATA_STR[$i]) );
 }
 close( FILEOUT ); 
 #-------------------------------------
-#	UTF16LE�R���o�[�g
+#	UTF16LEコンバート
 #=====================================
-&EnocdeUnicode( $TEMP_BODY_FILENAME, $TEMPORARY_FILENAME );
-unlink $TEMP_BODY_FILENAME;
-rename $TEMPORARY_FILENAME, $TEMP_BODY_FILENAME;
+#&EnocdeUnicode( $TEMP_BODY_FILENAME, $TEMPORARY_FILENAME );
+#unlink $TEMP_BODY_FILENAME;
+#rename $TEMPORARY_FILENAME, $TEMP_BODY_FILENAME;
 
 #-------------------------------------
-#	�f�[�^�̃w�b�_�A�{�f�B����
+#	データのヘッダ、ボディ合成
 #=====================================
 open( HEADER, "<$TEMP_HEADER_FILENAME");
 open( BODY, "<$TEMP_BODY_FILENAME");
 open( MAIN, ">$OUTPUTNAME_DATA");
-#�w�b�_��������
+#ヘッダ書き込み
 while( my $data = <HEADER> ) 
 {
 	print MAIN $data;
 }
-#�{�f�B��������
+#ボディ書き込み
 while( my $data = <BODY> ) 
 {
 	print MAIN $data;
@@ -200,7 +210,7 @@ unlink $TEMP_BODY_FILENAME;
 
 
 #-------------------------------------
-#	����I��
+#	正常終了
 #=====================================
 exit(0);
 
@@ -211,17 +221,17 @@ exit(0);
 #
 #============================================================================
 #-------------------------------------
-#	@brief	�G�N�Z���f�[�^���J���}��؂�œǂݍ���
-#	@param	�t�@�C�����X�J���[
-#	@param	�V�[�g���X�J���[
-#	@param	�i�[����̃o�b�t�@�i�z��̃��t�@�����X\@buff�j
+#	@brief	エクセルデータをカンマ区切りで読み込み
+#	@param	ファイル名スカラー
+#	@param	シート名スカラー
+#	@param	格納するのバッファ（配列のリファレンス\@buff）
 #=====================================
 sub EXCEL_GetData
 {
 	my( $filename, $sheetname, $buff ) = @_;
 	my( $EXCEL_DEFDATA_FILE_NAME );
 
-	#��{���V�[�g���R���o�[�g
+	#基本情報シートをコンバート
 	$EXCEL_DEFDATA_FILE_NAME = "def_data.txt";
 	system( $EXCEL_CONV_EXE.' -o '.$EXCEL_DEFDATA_FILE_NAME.' -n '. $sheetname.' -s csv '.$filename );
 
@@ -232,25 +242,58 @@ sub EXCEL_GetData
 	system( 'rm '.$EXCEL_DEFDATA_FILE_NAME );
 }
 #-------------------------------------
-#	@brief	�t�@�C���ǂݍ���
-#	@param	�t�@�C�����X�J���[
-#	@param	�i�[����̃o�b�t�@�i�z��̃��t�@�����X\@buff�j
+#	@brief	エクセルデータをユニコードトして読み込み
+#	@param	ファイル名スカラー
+#	@param	シート名スカラー
+#	@param	格納するのバッファ（配列のリファレンス\@buff）
+#=====================================
+sub EXCEL_GetDataUnicode
+{
+	my( $filename, $sheetname, $buff ) = @_;
+	my( $EXCEL_DEFDATA_FILE_NAME );
+
+	#基本情報シートをコンバート
+	$EXCEL_DEFDATA_FILE_NAME = "def_data.txt";
+	system( $EXCEL_CONV_EXE.' -o '.$EXCEL_DEFDATA_FILE_NAME.' -n '. $sheetname.' -s unicode '.$filename );
+
+	open( EXCEL_DEF_FILEIN, "<:encoding(UTF-16LE)", $EXCEL_DEFDATA_FILE_NAME );
+	@$buff = <EXCEL_DEF_FILEIN>;
+	close( EXCEL_DEF_FILEIN );
+
+  #unicodeのファイルを読み込んできたので戦闘にBOMがついているので削除
+#  $line	=~ s/\r\n//g;
+#  $$buff[0];
+  substr($$buff[0], 0, 1) = "";
+  print $$buff[0];
+
+#  foreach $data ( @$buff )
+#	{
+  #   print Encode::encode("shiftjis", $data ); # UTF8フラグを落す
+  #}
+
+	system( 'rm '.$EXCEL_DEFDATA_FILE_NAME );
+}
+
+#-------------------------------------
+#	@brief	ファイル読み込み
+#	@param	ファイル名スカラー
+#	@param	格納するのバッファ（配列のリファレンス\@buff）
 #=====================================
 sub FILE_GetData
 {
 	my( $filename, $buff ) = @_;
 
-	#��{���V�[�g���R���o�[�g
+	#基本情報シートをコンバート
 	open( FILEIN, $filename );
 	@$buff = <FILEIN>;
 	close( FILEIN );
 }
 
 #-------------------------------------
-#	@brief	��`�̐��l���擾
-#	@param	��`���X�J���[
-#	@param	��`�����������t�@�C���̃o�b�t�@�i���t�@�����X\@buff�j
-#	@retval	���l
+#	@brief	定義の数値を取得
+#	@param	定義名スカラー
+#	@param	定義名が入ったファイルのバッファ（リファレンス\@buff）
+#	@retval	数値
 #=====================================
 sub GetTypeNumber
 {
@@ -270,10 +313,10 @@ sub GetTypeNumber
 	exit(1);
 }
 #-------------------------------------
-#	@brief	�z��̖��O�ƈ�v�����C���f�b�N�X��Ԃ�
-#	@param	���O
-#	@param	�z��i���t�@�����X\@buff�j
-#	@retval	���l
+#	@brief	配列の名前と一致したインデックスを返す
+#	@param	名前
+#	@param	配列（リファレンス\@buff）
+#	@retval	数値
 #=====================================
 sub GetArrayNumber
 {
@@ -295,22 +338,22 @@ sub GetArrayNumber
 }
 
 #-------------------------------------
-#	@brief	���ݒ�`�F�b�N
-#	@param	�l
+#	@brief	未設定チェック
+#	@param	値
 #=====================================
 sub UndefAssert
 {
 	my( $val )	= @_;
 	if( $val eq "" )
 	{
-		print ( "���ݒ�ł�\n" );
+		print ( "未設定です\n" );
 		exit(1);
 	}
 }
 #-------------------------------------
-#	@brif �t�@�C�����������ʂ�UTF-16�ɃG���R�[�h
-#	@param	���̃t�@�C����
-#	@param	�G���R�[�h��̃t�@�C����
+#	@brif ファイルを自動判別しUTF-16にエンコード
+#	@param	元のファイル名
+#	@param	エンコード後のファイル名
 #=====================================
 sub EnocdeUnicode 
 {
@@ -320,7 +363,7 @@ sub EnocdeUnicode
 if( 0 )
 {
 	use Encode qw(from_to);
-	use Encode::Guess qw/euc-jp shift-jis/;	#UTF8�͎�������
+	use Encode::Guess qw/euc-jp shift-jis/;	#UTF8は自動判別
 
 	open IN, "<$src";
 	open OUT, ">$dst";
@@ -328,10 +371,10 @@ if( 0 )
 
 	my $guess = Encode::Guess::guess_encoding($content);
 	unless(ref $guess){
-		# ���ʎ��s
-		die('Encode�Ɏ��s���܂����B���ʂł��܂��� guess:' . $guess);
+		# 判別失敗
+		die('Encodeに失敗しました。判別できません guess:' . $guess);
 	}else{
-		# ���ʐ���
+		# 判別成功
 		$contents = $guess->decode($content);
 		$contents = Encode::encode("UTF-16LE", $content);
 

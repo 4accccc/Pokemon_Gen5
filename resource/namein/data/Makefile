@@ -18,6 +18,8 @@ targetname = namein_data
 #------------------------------------------------------------------------------
 TARGETDIR_ARC	= $(PROJECT_ARCDIR)
 
+XLS2TAB		= ruby $(PROJECT_ROOT)/tools/exceltool/xls2xml/tab_out_sheet.rb -t
+
 #------------------------------------------------------------------------------
 #※サブディレクトリでもMakeしたい場合、ここにディレクトリ名を書く
 #------------------------------------------------------------------------------
@@ -39,6 +41,7 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 
 keymap_%.dat: keymap_%.xls
 	perl namein_keymap_conv.pl $<
+#	ruby namein_keymap_conv.rb $< $(subst .xls,.dat,$<)
 
 change_%.dat: change_%.xls
 	perl namein_change_conv.pl $<
