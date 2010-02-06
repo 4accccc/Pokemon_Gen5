@@ -3,7 +3,7 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="lee_hyunjung" host="W00154A" date="2010-02-03T12:51:56"/>
+	<create user="lee_hyunjung" host="W00154A" date="2010-02-05T14:22:25"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="NNS_3DMaterialEditor" version="2.8.0.20050620"/>
 </head>
@@ -775,13 +775,14 @@
 	</tex_image>
 	<tex_image index="39" name="m_h03_10"
 		width="8" height="8" original_width="8" original_height="8"
-		format="palette4"
+		format="palette16"
 		color0_mode="color"
 		palette_name="m_h03_10_pl"
 		path="C:/home/wb_data3d/field/in01/chip/tex/m_h03_10.tga"
 	>
-		<bitmap size="8">
-			bffe 6aab 155b 155b 155b 155b 155b 4006
+		<bitmap size="16">
+			0000 0000 0000 0000 1100 0111 2100 0122
+			2100 0122 2100 0122 1100 0111 0000 0000
 		</bitmap>
 	</tex_image>
 	<tex_image index="40" name="m_nsch01_01"
@@ -1784,8 +1785,8 @@
 	<tex_palette index="38" name="m_h03_08_pl" color_size="4">
 		2e12 2e54 3275 3696
 	</tex_palette>
-	<tex_palette index="39" name="m_h03_10_pl" color_size="4">
-		5b17 5f39 677b 6f9c
+	<tex_palette index="39" name="m_h03_10_pl" color_size="8">
+		29af 2dd0 31f1 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="40" name="m_nsch01_01_pl" color_size="8">
 		0000 3636 46ba 531c 5694 7fff 7fff 7fff
