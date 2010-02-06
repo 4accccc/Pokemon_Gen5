@@ -1,5 +1,5 @@
 #event data
-#save date:2010/02/05 11:04:15
+#save date:2010/02/06 20:56:06
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c11r0101.wms
 #SECTION START:OBJ_EVENT
@@ -55,7 +55,7 @@ EV_TYPE_NORMAL
 #Flag Name
 0
 #Event Script Name
-SCRID_DUMMY
+SCRID_C11R0101_RECEPTION02
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
@@ -86,7 +86,7 @@ EV_TYPE_NORMAL
 #Flag Name
 0
 #Event Script Name
-SCRID_DUMMY
+SCRID_C11R0101_RECEPTION03
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
@@ -117,7 +117,7 @@ EV_TYPE_NORMAL
 #Flag Name
 0
 #Event Script Name
-SCRID_DUMMY
+SCRID_C11R0101_BACKPACKERM01
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
@@ -142,15 +142,15 @@ UN_ENTRANCE_POLICEMAN_01
 #OBJ CODE Number
 POLICEMAN
 #MOVE CODE Number
-MV_RND
+MV_LEFT
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
 0
 #Event Script Name
-SCRID_DUMMY
+SCRID_C11R0101_POLICEMAN01
 #Direction Type Number
-DIR_DOWN
+DIR_LEFT
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -164,7 +164,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-56 0 8
+40 0 8
 #event number: 5
 #type
 1
@@ -179,7 +179,7 @@ EV_TYPE_NORMAL
 #Flag Name
 0
 #Event Script Name
-SCRID_DUMMY
+SCRID_C11R0101_BOY01
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
@@ -210,7 +210,7 @@ EV_TYPE_NORMAL
 #Flag Name
 0
 #Event Script Name
-SCRID_DUMMY
+SCRID_C11R0101_DANCER01
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
@@ -226,7 +226,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--88 0 -56
+-72 0 -24
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
@@ -246,7 +246,24 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
+1
+#event number: 0
+#Pos Event Label
+POSID_GATE
+#Pos Script Name
+SCRID_C11R0101_POS01
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+WK_SCENE_C11GATE
+#Event Trigger Work Value
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+24 0 -40
+#size
+1 1
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
