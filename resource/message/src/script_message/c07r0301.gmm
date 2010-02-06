@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-25T16:12:49"/>
+	<create user="matsumiya" host="W00224" date="2010-02-06T14:02:36"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="1352" top="282" right="2057" bottom="902" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -307,7 +307,7 @@
 アンド　メイク　ロケットだん！[BE:00:ページ切り替え（行送り）]
 そう　ちかいましたー！[BE:01:ページ切り替え（クリア）]
 でも　ゴー　ホームして
-けっこん　したら
+けっこん　したら▽
 それどころじゃ　ないでーす[BE:01:ページ切り替え（クリア）]
 オー！
 しあわせ　ファミリー　ばんざーい！</language>
@@ -320,7 +320,7 @@
 アンド　メイク　ロケットだん！[BE:00:ページ切り替え（行送り）]
 そう　ちかいましたー！[BE:01:ページ切り替え（クリア）]
 でも　ゴー　ホームして
-けっこん　したら
+けっこん　したら▽
 それどころじゃ　ないでーす[BE:01:ページ切り替え（クリア）]
 オー！
 しあわせ　ファミリー　ばんざーい！</language>
@@ -330,19 +330,15 @@
 		<comment>♂</comment>
 		<attribute name="キャラ指定">BOY3</attribute>
 		<language name="JPN" width="256">とうちゃん　むかし　がいこくで
-しごとを　してたんだ！[BE:01:ページ切り替え（クリア）]
-だから　はなしかた
-ユニーク　なんだよ！</language>
+かっこいい　しごとを　してたんだ！</language>
 		<language name="JPN_KANJI" width="256">とうちゃん　むかし　がいこくで
-しごとを　してたんだ！[BE:01:ページ切り替え（クリア）]
-だから　はなしかた
-ユニーク　なんだよ！</language>
+かっこいい　しごとを　してたんだ！</language>
 	</row>
 
-	<row id="msg_c07r0301_woman3_01">
+	<row id="msg_c07r0301_woman3_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・アイテム入手処理
-　No000「いかりまんじゅう」入手</comment>
+　No504「いかりまんじゅう」入手</comment>
 		<attribute name="キャラ指定">WOMAN3</attribute>
 		<language name="JPN" width="256">いらっしゃい！[BE:01:ページ切り替え（クリア）]
 そうだ！　だんなの　むかしの
@@ -354,9 +350,10 @@
 たくさん　あるから　わけてあげる[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c07r0301_woman3_02">
+	<row id="msg_c07r0301_woman3_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・アイテム入手後</comment>
+		<attribute name="キャラ指定">WOMAN3</attribute>
 		<language name="JPN" width="256">その　いかりまんじゅう　って
 だんなの　むかしの　しごとなかまが[BE:01:ページ切り替え（クリア）]
 すきだった　たべもの　なんだって</language>
