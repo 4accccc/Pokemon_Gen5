@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-04T12:51:09"/>
+	<create user="matsumiya" host="W00224" date="2010-02-06T16:13:26"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -555,22 +555,6 @@
 
 	<row id="msg_wheel_spring_m_05" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>春：主人公性別が♂
-・トレーナー戦に敗北
-・メッセージ表示後、回復処理をし
-　観覧車に乗りデモへ</comment>
-		<attribute name="キャラ指定">GIRL4</attribute>
-		<language name="JPN" width="256">かてちゃった？▼
-ああん　あなたの　ポケモン
-げんきに　してあげるから▽
-いっしょに　のりましょ▼</language>
-		<language name="JPN_KANJI" width="256">かてちゃった？▼
-ああん　あなたの　ポケモン
-げんきに　してあげるから▽
-いっしょに　のりましょ▼</language>
-	</row>
-
-	<row id="msg_wheel_spring_m_06" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
-		<comment>春：主人公性別が♂
 ・観覧車デモ終了後
 　日付が変わるまで繰り返し</comment>
 		<attribute name="キャラ指定">GIRL4</attribute>
@@ -635,22 +619,6 @@
 
 	<row id="msg_wheel_spring_f_05" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
 		<comment>春：主人公性別が♀
-・トレーナー戦に敗北
-・メッセージ表示後、回復処理をし
-　観覧車に乗りデモへ</comment>
-		<attribute name="キャラ指定">BOY4</attribute>
-		<language name="JPN" width="256">かてちゃった？▼
-ああん　あなたの　ポケモン
-げんきに　してあげるから▽
-いっしょに　のりましょ▼</language>
-		<language name="JPN_KANJI" width="256">かてちゃった？▼
-ああん　あなたの　ポケモン
-げんきに　してあげるから▽
-いっしょに　のりましょ▼</language>
-	</row>
-
-	<row id="msg_wheel_spring_f_06" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
-		<comment>春：主人公性別が♀
 ・観覧車デモ終了後
 　日付が変わるまで繰り返し</comment>
 		<attribute name="キャラ指定">BOY4</attribute>
@@ -708,22 +676,6 @@
 	</row>
 
 	<row id="msg_wheel_summer_m_05" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
-		<comment>夏：主人公性別が♂
-・トレーナー戦に敗北
-・メッセージ表示後、回復処理をし
-　観覧車に乗りデモへ</comment>
-		<attribute name="キャラ指定">GIRL2</attribute>
-		<language name="JPN" width="256">かてちゃった？▼
-ああん　あなたの　ポケモン
-げんきに　してあげるから▽
-いっしょに　のりましょ▼</language>
-		<language name="JPN_KANJI" width="256">かてちゃった？▼
-ああん　あなたの　ポケモン
-げんきに　してあげるから▽
-いっしょに　のりましょ▼</language>
-	</row>
-
-	<row id="msg_wheel_summer_m_06" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>夏：主人公性別が♂
 ・観覧車デモ終了後
 　日付が変わるまで繰り返し</comment>
@@ -789,22 +741,6 @@
 
 	<row id="msg_wheel_summer_f_05" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
 		<comment>夏：主人公性別が♀
-・トレーナー戦に敗北
-・メッセージ表示後、回復処理をし
-　観覧車に乗りデモへ</comment>
-		<attribute name="キャラ指定">WAITER</attribute>
-		<language name="JPN" width="256">かてちゃった？▼
-ああん　あなたの　ポケモン
-げんきに　してあげるから▽
-いっしょに　のりましょ▼</language>
-		<language name="JPN_KANJI" width="256">かてちゃった？▼
-ああん　あなたの　ポケモン
-げんきに　してあげるから▽
-いっしょに　のりましょ▼</language>
-	</row>
-
-	<row id="msg_wheel_summer_f_06" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
-		<comment>夏：主人公性別が♀
 ・観覧車デモ終了後
 　日付が変わるまで繰り返し</comment>
 		<attribute name="キャラ指定">WAITER</attribute>
@@ -862,22 +798,6 @@
 	</row>
 
 	<row id="msg_wheel_fall_m_05" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
-		<comment>秋：主人公性別が♂
-・トレーナー戦に敗北
-・メッセージ表示後、回復処理をし
-　観覧車に乗りデモへ</comment>
-		<attribute name="キャラ指定">OL</attribute>
-		<language name="JPN" width="256">かてちゃった？▼
-ああん　あなたの　ポケモン
-げんきに　してあげるから▽
-いっしょに　のりましょ▼</language>
-		<language name="JPN_KANJI" width="256">かてちゃった？▼
-ああん　あなたの　ポケモン
-げんきに　してあげるから▽
-いっしょに　のりましょ▼</language>
-	</row>
-
-	<row id="msg_wheel_fall_m_06" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>秋：主人公性別が♂
 ・観覧車デモ終了後
 　日付が変わるまで繰り返し</comment>
@@ -943,22 +863,6 @@
 
 	<row id="msg_wheel_fall_f_05" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
 		<comment>秋：主人公性別が♀
-・トレーナー戦に敗北
-・メッセージ表示後、回復処理をし
-　観覧車に乗りデモへ</comment>
-		<attribute name="キャラ指定">BUSINESSMAN</attribute>
-		<language name="JPN" width="256">かてちゃった？▼
-ああん　あなたの　ポケモン
-げんきに　してあげるから▽
-いっしょに　のりましょ▼</language>
-		<language name="JPN_KANJI" width="256">かてちゃった？▼
-ああん　あなたの　ポケモン
-げんきに　してあげるから▽
-いっしょに　のりましょ▼</language>
-	</row>
-
-	<row id="msg_wheel_fall_f_06" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
-		<comment>秋：主人公性別が♀
 ・観覧車デモ終了後
 　日付が変わるまで繰り返し</comment>
 		<attribute name="キャラ指定">BUSINESSMAN</attribute>
@@ -1016,22 +920,6 @@
 	</row>
 
 	<row id="msg_wheel_winter_m_05" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
-		<comment>冬：主人公性別が♂
-・トレーナー戦に敗北
-・メッセージ表示後、回復処理をし
-　観覧車に乗りデモへ</comment>
-		<attribute name="キャラ指定">TRAINERW</attribute>
-		<language name="JPN" width="256">かてちゃった？▼
-ああん　あなたの　ポケモン
-げんきに　してあげるから▽
-いっしょに　のりましょ▼</language>
-		<language name="JPN_KANJI" width="256">かてちゃった？▼
-ああん　あなたの　ポケモン
-げんきに　してあげるから▽
-いっしょに　のりましょ▼</language>
-	</row>
-
-	<row id="msg_wheel_winter_m_06" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>冬：主人公性別が♂
 ・観覧車デモ終了後
 　日付が変わるまで繰り返し</comment>
@@ -1096,22 +984,6 @@
 	</row>
 
 	<row id="msg_wheel_winter_f_05" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
-		<comment>冬：主人公性別が♀
-・トレーナー戦に敗北
-・メッセージ表示後、回復処理をし
-　観覧車に乗りデモへ</comment>
-		<attribute name="キャラ指定">TRAINERM</attribute>
-		<language name="JPN" width="256">かてちゃった？▼
-ああん　あなたの　ポケモン
-げんきに　してあげるから▽
-いっしょに　のりましょ▼</language>
-		<language name="JPN_KANJI" width="256">かてちゃった？▼
-ああん　あなたの　ポケモン
-げんきに　してあげるから▽
-いっしょに　のりましょ▼</language>
-	</row>
-
-	<row id="msg_wheel_winter_f_06" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
 		<comment>冬：主人公性別が♀
 ・観覧車デモ終了後
 　日付が変わるまで繰り返し</comment>
