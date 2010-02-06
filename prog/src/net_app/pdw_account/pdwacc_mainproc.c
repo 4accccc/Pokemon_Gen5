@@ -98,10 +98,12 @@ static GFL_PROC_RESULT PDWACCProc_Main( GFL_PROC * proc, int * seq, void * pwk, 
     break;
 
   case _WIFI_ACCOUNT:
-    pWork->pwdaccWork.gameData = pWork->gameData;
-    pWork->pwdaccWork.heapID = pWork->heapID;
-    
-    GFL_PROC_SysCallProc(FS_OVERLAY_ID(pdw_acc), &PDW_ACC_ProcData, &pWork->pwdaccWork);
+    if(pWork->login.result!=WIFILOGIN_RESULT_CANCEL){
+      pWork->pwdaccWork.gameData = pWork->gameData;
+      pWork->pwdaccWork.heapID = pWork->heapID;
+      
+      GFL_PROC_SysCallProc(FS_OVERLAY_ID(pdw_acc), &PDW_ACC_ProcData, &pWork->pwdaccWork);
+    }
     pWork->state++;
     break;
 

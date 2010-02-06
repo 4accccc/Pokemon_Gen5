@@ -130,7 +130,7 @@ struct _PDWACC_MESSAGE_WORK {
 
   APP_TASKMENU_ITEMWORK appitem[_SUBMENU_LISTMAX];
   APP_TASKMENU_RES* pAppTaskRes;
-//  int windowNum;
+  //  int windowNum;
   HEAPID heapID;
 
 };
@@ -197,7 +197,7 @@ void PDWACC_MESSAGE_End(PDWACC_MESSAGE_WORK* pWork)
                            GFL_ARCUTIL_TRANSINFO_GetSize(pWork->bgchar2S));
   _ButtonSafeDelete(pWork);
 
-//  PDWACC_MESSAGE_ButtonWindowDelete(pWork);
+  //  PDWACC_MESSAGE_ButtonWindowDelete(pWork);
 
   GFL_FONTSYS_SetDefaultColor();
   GFL_MSG_Delete( pWork->pMsgData );
@@ -532,16 +532,60 @@ void PDWACC_MESSAGE_NoMessageDisp(PDWACC_MESSAGE_WORK* pWork,u64 code)
 {
   GFL_BMPWIN* pwin;
   int i;
-  STRCODE buff[]={0x30,0x31,0x32,0x33,0x34,0x35,0x36,0x37,0x38,0x39,0x41,0x42,0x43,0x44,0x45,0x46};
+  //  STRCODE buff[]={0x30,0x31,0x32,0x33,0x34,0x35,0x36,0x37,0x38,0x39,0x41,0x42,0x43,0x44,0x45,0x46};
+  // STRCODE buff2[]="ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+  STRCODE buff2[]={
+    65,	//A
+    66,	//B
+    67,	//C
+    68,	//D
+    69,	//E
+    70,	//F
+    71,	//G
+    72,	//H
+    //73,	//I
+    74,	//J
+    75,	//K
+    76,	//L
+    77,	//M
+    78,	//N
+    //79,	//O
+    80,	//P
+    81,	//Q
+    82,	//R
+    83,	//S
+    84,	//T
+    85,	//U
+    86,	//V
+    87,	//W
+    88,	//X
+    89,	//Y
+    90,	//Z
+    //48,	//0
+    //49,	//1
+    50,	//2
+    51,	//3
+    52,	//4
+    53,	//5
+    54,	//6
+    55,	//7
+    56,	//8
+    57,	//9
+  };
+
+  u64 moji=code;
+  u16 word;
+
   STRCODE disp[13*sizeof(STRCODE)];
 
   GFL_STD_MemFill(disp,0xff,sizeof(disp));
-  for(i=0;i<12;i++){
-    u64 moji = (code >> (i*4)) & 0xf;
-    disp[i]=buff[moji];
+  for(i = 0; i < 10 ; i++){
+    word = moji & 0x1f;
+    moji = moji >> 5;
+    disp[i]=buff2[word];
   }
   GFL_STR_SetStringCode(pWork->pStrBuf,disp);
-  
+
   //GFL_MSG_GetString( pWork->pMsgData, msgid, pWork->pStrBuf );
 
   if(pWork->noDispWin==NULL){
@@ -562,7 +606,7 @@ void PDWACC_MESSAGE_NoMessageDisp(PDWACC_MESSAGE_WORK* pWork,u64 code)
   GFL_BMPWIN_TransVramCharacter(pwin);
   GFL_BMPWIN_MakeScreen(pwin);
 
-  
+
   if(pWork->noTitleDispWin==NULL){
     pWork->noTitleDispWin = GFL_BMPWIN_Create(
       _MESSAGE_NO_FRAME ,
