@@ -969,9 +969,7 @@ static void _stateProcess(u16 bitmap)
 	GFL_NETWL* pNetWL = _pNetWL;
 
 
-  if(!pNetWL->bErrorState){
-    _funcBconDataChange();      // ビーコンの中身を書き換え中
-  }
+  _funcBconDataChange();      // ビーコンの中身を書き換え中
 	if(pNetWL->errCheckBitmap == _NOT_INIT_BITMAP){
 		pNetWL->errCheckBitmap = bitmap;  // このときの接続人数を保持
 	}
