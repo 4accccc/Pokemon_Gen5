@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-06T14:26:44"/>
+	<create user="matsumiya" host="W00224" date="2010-02-06T15:16:54"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -229,13 +229,13 @@
 	</tag-table>
 
 	<columns>
-		<id position="0" width="152"/>
+		<id position="0" width="164"/>
 		<group default=" 0:デフォルト" position="-1" width="100">
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="124"/>
+		<comment position="4" width="265"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -263,14 +263,14 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="1411" top="211" right="2115" bottom="830" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="1" style="0000" width="530"/>
+		<band id="0" index="1" style="0000" width="529"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="543"/>
+		<band id="2" index="3" style="0000" width="542"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="697"/>
+		<band id="4" index="0" style="0000" width="696"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,13 +292,96 @@
 	</lock>
 
 
-	<row id="msg_c09r0701_champion_01">
+	<row id="msg_c09r0701_champion_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
-・</comment>
-		<attribute name="キャラ指定">チャンピオン
+・初回
+・続けて、主人公のほうを向いて
+　主人公♂→champion_02
+　主人公♀→champion_03</comment>
+		<attribute name="キャラ指定">CHAMPION
 アデク</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">アデク『……ここが
+でんどういりの　へや▼
+まことの　つよさ
+こころからの　やさしさを　もつ▽
+トレーナーと　ポケモンを▽
+れきしに　のこすための　ばしょ▼</language>
+		<language name="JPN_KANJI" width="256">アデク『……ここが
+殿堂入りの　部屋▼
+真の　強さ
+心からの　優しさを　もつ▽
+トレーナーと　ポケモンを▽
+歴史に　残すための　場所▼</language>
+	</row>
+
+	<row id="msg_c09r0701_champion_02" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♂
+・2回目以降
+・続けて、主人公のほうを向いて
+　主人公♂→champion_02
+　主人公♀→champion_03</comment>
+		<attribute name="キャラ指定">CHAMPION
+アデク</attribute>
+		<language name="JPN" width="256">アデク『……なんど　きても
+きざまれた　なまえの　かずかずに▽
+みが　ひきしまるな▼</language>
+		<language name="JPN_KANJI" width="256">アデク『……何度　来ても
+刻まれた　名前の数々に▽
+身が　引き締まるな▼</language>
+	</row>
+
+	<row id="msg_c09r0701_champion_03" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♂
+・続けてchampion_05
+・0＝主人公名</comment>
+		<attribute name="キャラ指定">CHAMPION
+アデク</attribute>
+		<language name="JPN" width="256">さてと
+[1:03:ポケモンタイプ:0]くん▼</language>
+		<language name="JPN_KANJI" width="256">さてと
+[1:03:ポケモンタイプ:0]くん▼</language>
+	</row>
+
+	<row id="msg_c09r0701_champion_04" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♂
+・続けてchampion_05
+・0＝主人公名</comment>
+		<attribute name="キャラ指定">CHAMPION
+アデク</attribute>
+		<language name="JPN" width="256">さてと
+[1:03:ポケモンタイプ:0]さん▼</language>
+		<language name="JPN_KANJI" width="256">さてと
+[1:03:ポケモンタイプ:0]さん▼</language>
+	</row>
+
+	<row id="msg_c09r0701_champion_05" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♂
+・メッセージ後、殿堂入りの演出
+・そしてスタッフロールへ</comment>
+		<attribute name="キャラ指定">CHAMPION
+アデク</attribute>
+		<language name="JPN" width="256">この　でんどういりの　へやに
+きみたちの　なまえを　きざもう！▼
+なまえと　ともに　のこす
+たびの　おもいで▽
+たたかいの　れきし！▼
+すべてが　これからの　きみを　より
+つよくする　ささえと　なるように！▼
+では　きみと！▼
+ともに　たたかった
+パートナーの　ポケモンを！▽
+この　マシンに　きろく　する！▼</language>
+		<language name="JPN_KANJI" width="256">この　殿堂入りの　部屋に
+君たちの　名前を　きざもう！▼
+名前と　共に　残す
+旅の　思い出▽
+戦いの　歴史！▼
+すべてが　これからの　君を　より
+強くする　支えと　なるように！▼
+では　君と！▼
+共に　戦った
+パートナーの　ポケモンを！▽
+この　マシンに　記録する！▼</language>
 	</row>
 
 	<flowchart-group-list>
