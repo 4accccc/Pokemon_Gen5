@@ -17,7 +17,7 @@ targetname = townmap_data
 #※コピー先へのパスを書く（通常はPROJECT_ARCDIRでよい）
 #------------------------------------------------------------------------------
 TARGETDIR_ARC	= $(PROJECT_ARCDIR)#アーカイブ用
-TARGETDIR_H		= $(PROJECT_ROOT)/prog/src/app/townmap#ヘッダ用
+TARGETDIR_H		= $(PROJECT_ROOT)/prog/include/app#ヘッダ用
 
 #------------------------------------------------------------------------------
 #※サブディレクトリでもMakeしたい場合、ここにディレクトリ名を書く

@@ -1388,10 +1388,17 @@ static RETURNFUNC_RESULT FMenuReturnProc_TrainerCard(PROCLINK_WORK* wk,void* par
 static void * FMenuCallProc_TownMap(PROCLINK_WORK* wk, u32 param, EVENT_PROCLINK_CALL_TYPE pre, const void* pre_param_adrs )
 { 
   TOWNMAP_PARAM*  town_param;
+
   town_param              = GFL_HEAP_AllocClearMemory( HEAPID_PROC , sizeof(TOWNMAP_PARAM) );
   town_param->mode        = TOWNMAP_MODE_MAP;
-  town_param->p_gamesys = wk->param->gsys;
-
+  town_param->p_gamesys   = wk->param->gsys;
+  {
+    GAMEDATA    *p_gamedata = GAMESYSTEM_GetGameData( wk->param->gsys );
+    PLAYER_WORK *p_player   = GAMEDATA_GetMyPlayerWork( p_gamedata );
+    p_gamedata  = GAMESYSTEM_GetGameData( wk->param->gsys );
+    town_param->zoneID      = PLAYERWORK_getZoneID(p_player);
+    town_param->escapeID    = GAMEDATA_GetEscapeLocation( p_gamedata )->zone_id;
+  }
 
   if( wk->param->call == EVENT_PROCLINK_CALL_POKELIST )
   { 

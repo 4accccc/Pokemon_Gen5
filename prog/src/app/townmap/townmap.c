@@ -28,7 +28,7 @@
 #include "print/gf_font.h"
 #include "print/printsys.h"
 #include "field/zonedata.h"
-#include "townmap_data_sys.h"
+#include "app/townmap_data_sys.h"
 #include "ui/touchbar.h"	//タッチバー
 
 //mine
@@ -2519,7 +2519,7 @@ static const PLACE_DATA *PLACE_GetDataByZoneID( const PLACE_WORK *cp_wk, u16 zon
 		for( i = 0; i < cp_wk->data_num; i++ )
 		{	
 			cp_data	= &cp_wk->p_place[i];
-			if( escapeID == PLACEDATA_GetParam( cp_data, TOWNMAP_DATA_PARAM_ESCAPE_ZONE_ID ) )
+			if( escapeID == PLACEDATA_GetParam( cp_data, TOWNMAP_DATA_PARAM_ZONE_ID ) )
 			{
 				return cp_data;
 			}

@@ -598,7 +598,8 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         savedata/intrude_save_field.c \
         field/intrude_secret_item.c \
         field/united_nations.c \
-        field/scrcmd_un.c
+        field/scrcmd_un.c \
+        field/field_townmap.c
 
 # フィールド天気
 #===> SRCS_OVERLAY_FIELDMAP

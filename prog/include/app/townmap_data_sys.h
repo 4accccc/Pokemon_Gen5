@@ -22,7 +22,7 @@
 typedef enum 
 {
 	TOWNMAP_DATA_PARAM_ZONE_ID,
-	TOWNMAP_DATA_PARAM_ESCAPE_ZONE_ID,
+	TOWNMAP_DATA_PARAM_ZONE_SEARCH, //いらないかも
 	TOWNMAP_DATA_PARAM_POS_X,
 	TOWNMAP_DATA_PARAM_POS_Y,
 	TOWNMAP_DATA_PARAM_CURSOR_X,
@@ -67,3 +67,7 @@ extern TOWNMAP_DATA *TOWNMAP_DATA_Alloc( HEAPID heapID );
 extern void TOWNMAP_DATA_Free( TOWNMAP_DATA *p_wk );
 
 extern u16 TOWNMAP_DATA_GetParam( const TOWNMAP_DATA *cp_wk, u16 idx, TOWNMAP_DATA_PARAM param );
+
+//field_townmap.hのFIELD_TOWNMAP_GetRootZoneID関数で得たZONEIDを以下に渡すと
+//上記タウンマップデータのidxを返す
+extern u16 TOWNMAP_DATA_SearchRootZoneID( const TOWNMAP_DATA *cp_wk, u16 zoneID );

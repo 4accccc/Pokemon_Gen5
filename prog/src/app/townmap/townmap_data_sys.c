@@ -16,7 +16,7 @@
 #include "townmap_data.naix"
 
 //mine
-#include "townmap_data_sys.h"
+#include "app/townmap_data_sys.h"
 //=============================================================================
 /**
  *					定数宣言
@@ -102,4 +102,29 @@ u16 TOWNMAP_DATA_GetParam( const TOWNMAP_DATA *cp_wk, u16 idx, TOWNMAP_DATA_PARA
 
 		return cp_data->param[ param ];
 	}
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  field_townmap.hのFIELD_TOWNMAP_GetRootZoneID関数で得た
+ *	ZONEIDを以下に渡すと上記タウンマップデータのidxを返す
+ *
+ *	@param	const TOWNMAP_DATA *cp_wk   ワーク
+ *	@param	zoneID                      タウンマップで使用する用のID
+ *
+ *	@return タウンマップデータのインデックス
+ */
+//-----------------------------------------------------------------------------
+u16 TOWNMAP_DATA_SearchRootZoneID( const TOWNMAP_DATA *cp_wk, u16 zoneID )
+{ 
+  int i;
+  for( i = 0; i < TOWNMAP_DATA_MAX; i++ )
+  { 
+    if( TOWNMAP_DATA_GetParam( cp_wk, i, TOWNMAP_DATA_PARAM_ZONE_ID ) )
+    { 
+      return i;
+    }
+  }
+
+  GF_ASSERT_MSG( 0, "見つかりません %d\n", zoneID );
+  return 0;
 }
