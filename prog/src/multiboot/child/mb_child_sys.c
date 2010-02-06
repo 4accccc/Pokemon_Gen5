@@ -625,7 +625,7 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
   case MCS_DIPS_NEXT_GAME_CONFIRM:
     if( MB_MSG_CheckPrintStreamIsFinish(work->msgWork) == TRUE )
     {
-      MB_MSG_DispYesNo( work->msgWork );
+      MB_MSG_DispYesNo( work->msgWork , MMYT_UP );
       work->state = MCS_WAIT_NEXT_GAME_CONFIRM;
     }
     break;

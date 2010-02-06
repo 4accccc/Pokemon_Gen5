@@ -191,6 +191,7 @@ static const u16 JumpZoneID_ListTbl[] = {
 #if defined(DEBUG_ONLY_FOR_ariizumi_nobuhiko) | defined(DEBUG_ONLY_FOR_iwao_kazumasa)
   ZONE_ID_C04R0201,
   ZONE_ID_C04R0202,
+  ZONE_ID_R15R0301,
 #endif
 };
 

@@ -3125,7 +3125,7 @@ static void WH_StateOutInitialize(void *arg)
 	// システム状態をアイドリング（待機中）に変更。
 	WH_ChangeSysState(WH_SYSSTATE_IDLE);
 #endif
-	WM_SetLifeTime(_setLifeCallback,0xffff, 0xffff, 0xffff, 0xffff);
+	WM_SetLifeTime(_setLifeCallback,0xffff, 40, 5, 40);
 	// 次の状態をセットしないので、ここでシーケンスはいったん終了です。
 	// この状態で WH_Connect が呼ばれると接続作業に移行します。
 	if(_pWmInfo->callback)

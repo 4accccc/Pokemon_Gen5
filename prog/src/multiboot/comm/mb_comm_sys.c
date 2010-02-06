@@ -100,6 +100,7 @@ struct _MB_COMM_WORK
   u16    isPermitFirstSave:1;
   u16    isPermitSecondSave:1;
   u16    isPermitFinishSave:1;
+  u16    isInitLowerData:1;
   
   u8      saveWaitCnt;
 };
@@ -137,6 +138,7 @@ MB_COMM_WORK* MB_COMM_CreateSystem( const HEAPID heapId )
   commWork->heapId = heapId;
   commWork->state = MCS_NONE;
   commWork->initData = NULL;
+  commWork->isInitLowerData = FALSE;
 
   commWork->childState = MCCS_NONE;
   commWork->newChildState = MCCS_NONE;
@@ -154,6 +156,11 @@ void MB_COMM_DeleteSystem( MB_COMM_WORK* commWork )
   {
     GFL_HEAP_FreeMemory( commWork->initData );
   }
+  if( commWork->isInitLowerData == TRUE )
+  {
+    GFL_NET_LDATA_ExitSystem();
+  }
+
   GFL_HEAP_FreeMemory( commWork->pppPackData );
   GFL_HEAP_FreeMemory( commWork );
 }
@@ -195,6 +202,7 @@ void MB_COMM_UpdateSystem( MB_COMM_WORK* commWork )
       if( GFL_NET_IsSendEnable( handle ) == TRUE )
       {
         commWork->state = MCS_CONNECT;
+        GFL_NET_SetNoChildErrorCheck( TRUE );
       }
     }
     break;
@@ -276,7 +284,8 @@ void MB_COMM_InitComm( MB_COMM_WORK* commWork )
   commWork->isPermitFirstSave = FALSE;
   commWork->isPermitSecondSave = FALSE;
   commWork->isPermitFinishSave = FALSE;
-  
+  commWork->isInitLowerData = TRUE;
+
   GFL_NET_LDATA_InitSystem( commWork->heapId );
 }
 
@@ -287,6 +296,7 @@ void MB_COMM_ExitComm( MB_COMM_WORK* commWork )
 {
   GFL_NET_Exit(NULL);
   GFL_NET_LDATA_ExitSystem();
+  commWork->isInitLowerData = FALSE;
 }
 
 //--------------------------------------------------------------

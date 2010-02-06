@@ -90,8 +90,15 @@ MB_MSG_WORK* MB_MSG_MessageInit( HEAPID heapId , const u8 frame ,const u8 selFra
   msgWork->msgHandle = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL , ARCID_MESSAGE_MB , datId , msgWork->heapId );
 
   BmpWinFrame_GraphicSet( frame , MB_MSG_MSGWIN_CGX , MB_MSG_PLT_MAIN_MSGWIN , 0 , msgWork->heapId );
+  if( frame < GFL_BG_FRAME0_S )
+  {
+    GFL_ARC_UTIL_TransVramPalette( ARCID_FONT , FILE_FONT_PLT_MB , PALTYPE_MAIN_BG , MB_MSG_PLT_MAIN_FONT*0x20, 16*2, msgWork->heapId );
+  }
+  else
+  {
+    GFL_ARC_UTIL_TransVramPalette( ARCID_FONT , FILE_FONT_PLT_MB , PALTYPE_SUB_BG , MB_MSG_PLT_MAIN_FONT*0x20, 16*2, msgWork->heapId );
+  }
 
-  GFL_ARC_UTIL_TransVramPalette( ARCID_FONT , FILE_FONT_PLT_MB , PALTYPE_MAIN_BG , MB_MSG_PLT_MAIN_FONT*0x20, 16*2, msgWork->heapId );
   GFL_FONTSYS_SetDefaultColor();
   
   msgWork->tcblSys = GFL_TCBL_Init( msgWork->heapId , msgWork->heapId , 3 , 0x100 );
@@ -273,6 +280,17 @@ void MB_MSG_MessageCreateWindow( MB_MSG_WORK *msgWork , MB_MSG_WIN_TYPE type )
                                         MB_MSG_PLT_MAIN_FONT ,
                                         GFL_BMP_CHRAREA_GET_B );
       break;
+
+    case MMWT_2LINE_UP:   //‰æ–Êã‚Qs
+      msgWork->msgWin = GFL_BMPWIN_Create( msgWork->frame , 
+                                        MB_MSG_MSGWIN_SEL_L_LEFT , 
+                                        MB_MSG_MSGWIN_SEL_L_TOP_U ,
+                                        MB_MSG_MSGWIN_SEL_L_WIDTH , 
+                                        MB_MSG_MSGWIN_SEL_L_HEIGHT , 
+                                        MB_MSG_PLT_MAIN_FONT ,
+                                        GFL_BMP_CHRAREA_GET_B );
+      break;
+
     }
     msgWork->type = type;
   }
@@ -427,7 +445,7 @@ void MB_MSG_MessageWordsetName( MB_MSG_WORK *msgWork , const u32 bufId , MYSTATU
 //--------------------------------------------------------------------------
 //  ‘I‘ðŽˆ•\Ž¦
 //--------------------------------------------------------------------------
-void MB_MSG_DispYesNo( MB_MSG_WORK *msgWork )
+void MB_MSG_DispYesNo( MB_MSG_WORK *msgWork , const MB_MSG_YESNO_TYPE type )
 {
   APP_TASKMENU_ITEMWORK itemWork[2];
   APP_TASKMENU_INITWORK initWork;
@@ -443,34 +461,21 @@ void MB_MSG_DispYesNo( MB_MSG_WORK *msgWork )
   initWork.itemNum = 2;
   initWork.itemWork = itemWork;
   initWork.posType = ATPT_LEFT_UP;
-  initWork.charPosX = MB_MSG_YESNO_X;
-  initWork.charPosY = MB_MSG_YESNO_Y;
-  initWork.w = APP_TASKMENU_PLATE_WIDTH_YN_WIN;
-  initWork.h = APP_TASKMENU_PLATE_HEIGHT_YN_WIN;
-
-  msgWork->yesNoWork = APP_TASKMENU_OpenMenu( &initWork, msgWork->takmenures );
-  
-  GFL_STR_DeleteBuffer( itemWork[0].str );
-  GFL_STR_DeleteBuffer( itemWork[1].str );
-}
-void MB_MSG_DispYesNo_Select( MB_MSG_WORK *msgWork )
-{
-  APP_TASKMENU_ITEMWORK itemWork[2];
-  APP_TASKMENU_INITWORK initWork;
-  
-  itemWork[0].str = GFL_MSG_CreateString( msgWork->msgHandle , MSG_MB_CHILD_SYS_01 );
-  itemWork[1].str = GFL_MSG_CreateString( msgWork->msgHandle , MSG_MB_CHILD_SYS_02 );
-  itemWork[0].msgColor = MB_MSG_YESNO_COLOR;
-  itemWork[1].msgColor = MB_MSG_YESNO_COLOR;
-  itemWork[0].type = APP_TASKMENU_WIN_TYPE_NORMAL;
-  itemWork[1].type = APP_TASKMENU_WIN_TYPE_NORMAL;
-
-  initWork.heapId = msgWork->heapId;
-  initWork.itemNum = 2;
-  initWork.itemWork = itemWork;
-  initWork.posType = ATPT_LEFT_UP;
-  initWork.charPosX = MB_MSG_YESNO_SEL_X;
-  initWork.charPosY = MB_MSG_YESNO_SEL_Y;
+  switch( type )
+  {
+  case MMYT_UP:
+    initWork.charPosX = MB_MSG_YESNO_X;
+    initWork.charPosY = MB_MSG_YESNO_Y_UP;
+    break;
+  case MMYT_MID:
+    initWork.charPosX = MB_MSG_YESNO_SEL_X;
+    initWork.charPosY = MB_MSG_YESNO_SEL_Y;
+    break;
+  case MMYT_DOWN:
+    initWork.charPosX = MB_MSG_YESNO_X;
+    initWork.charPosY = MB_MSG_YESNO_Y_DOWN;
+    break;
+  }
   initWork.w = APP_TASKMENU_PLATE_WIDTH_YN_WIN;
   initWork.h = APP_TASKMENU_PLATE_HEIGHT_YN_WIN;
 

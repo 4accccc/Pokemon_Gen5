@@ -11,6 +11,7 @@
 #include <gflib.h>
 #include "system/main.h"
 #include "system/gfl_use.h"
+#include "system/net_err.h"
 #include "gamesystem/msgspeed.h"
 #include "net/wih.h"
 #include "print/printsys.h"
@@ -107,6 +108,15 @@ typedef enum
   
 }MB_PARENT_SUB_STATE;
 
+typedef enum
+{
+  MPCS_NONE,
+  MPCS_INIT,
+  MPCS_WAIT_MSG,
+  MPCS_WAIT_CONFIRM,
+  MPCS_END,
+}MB_PARENT_CONFIRM_STATE;
+
 
 //======================================================================
 //  typedef struct
@@ -117,9 +127,11 @@ typedef struct
   HEAPID heapId;
   MB_PARENT_INIT_WORK *initWork;
   MB_COMM_WORK *commWork;
+  BOOL         isNetErr;
   
   MB_PARENT_STATE state;
   u8              subState;
+  u8              confirmState;
   u8              saveWaitCnt;
   BOOL            isSendGameData;
   BOOL            isSendRom;
@@ -163,6 +175,7 @@ static const GFL_DISP_VRAM vramBank = {
 static void MB_PARENT_Init( MB_PARENT_WORK *work );
 static void MB_PARENT_Term( MB_PARENT_WORK *work );
 static const BOOL MB_PARENT_Main( MB_PARENT_WORK *work );
+static void MB_PARENT_VBlank( void );
 
 static void MB_PARENT_InitGraphic( MB_PARENT_WORK *work );
 static void MB_PARENT_TermGraphic( MB_PARENT_WORK *work );
@@ -190,7 +203,7 @@ static void MB_PARENT_Init( MB_PARENT_WORK *work )
   
   MB_PARENT_InitGraphic( work );
   MB_PARENT_LoadResource( work );
-  work->msgWork = MB_MSG_MessageInit( work->heapId , MB_PARENT_FRAME_MSG , MB_PARENT_FRAME_SUB_MSG , FILE_MSGID_MB , FALSE );
+  work->msgWork = MB_MSG_MessageInit( work->heapId , MB_PARENT_FRAME_SUB_MSG , MB_PARENT_FRAME_SUB_MSG , FILE_MSGID_MB , FALSE );
   MB_MSG_MessageCreateWindow( work->msgWork , MMWT_NORMAL );
   
   work->commWork = MB_COMM_CreateSystem( work->heapId );
@@ -202,6 +215,8 @@ static void MB_PARENT_Init( MB_PARENT_WORK *work )
     work->miscSave = SaveData_GetMisc( svWork );
     MISC_SetPalparkFinishState( work->miscSave , PALPARK_FINISH_NORMAL );
   }
+  
+  GFUser_SetVIntrFunc( MB_PARENT_VBlank );
 }
 
 //--------------------------------------------------------------
@@ -209,6 +224,9 @@ static void MB_PARENT_Init( MB_PARENT_WORK *work )
 //--------------------------------------------------------------
 static void MB_PARENT_Term( MB_PARENT_WORK *work )
 {
+
+  GFUser_ResetVIntrFunc();
+
   if( work->gameData != NULL )
   {
     GFL_HEAP_FreeMemory( work->gameData );
@@ -225,6 +243,13 @@ static void MB_PARENT_Term( MB_PARENT_WORK *work )
 static const BOOL MB_PARENT_Main( MB_PARENT_WORK *work )
 {
   MB_COMM_UpdateSystem( work->commWork );
+
+  if( work->isNetErr == TRUE &&
+      work->state != MPS_FADEOUT &&
+      work->state != MPS_WAIT_FADEOUT )
+  {
+    work->state = MPS_FADEOUT;
+  }
 
   switch( work->state )
   {
@@ -429,17 +454,28 @@ static const BOOL MB_PARENT_Main( MB_PARENT_WORK *work )
     }
     break;
   }
-
+  
   MB_MSG_MessageMain( work->msgWork );
   
-  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_START &&
-      GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT )
-  {
-    return TRUE;
-  }
   return FALSE;
 }
 
+static void MB_PARENT_VBlank( void )
+{
+  static u8 cnt = 0;
+  if( cnt > 1 )
+  {
+    cnt = 0;
+    GFL_BG_SetScroll( MB_PARENT_FRAME_BG , GFL_BG_SCROLL_X_DEC , 1 );
+    GFL_BG_SetScroll( MB_PARENT_FRAME_BG , GFL_BG_SCROLL_Y_DEC , 1 );
+    GFL_BG_SetScroll( MB_PARENT_FRAME_SUB_BG , GFL_BG_SCROLL_X_DEC , 1 );
+    GFL_BG_SetScroll( MB_PARENT_FRAME_SUB_BG , GFL_BG_SCROLL_Y_DEC , 1 );
+  }
+  else
+  {
+    cnt++;
+  }
+}
 
 //--------------------------------------------------------------
 //  グラフィック系初期化
@@ -580,6 +616,7 @@ static void MP_PARENT_SendImage_Init( MB_PARENT_WORK *work )
   u16 titleLen,infoLen;
   
   work->subState = MPSS_SEND_IMAGE_INIT_COMM;
+  work->confirmState = MPCS_NONE;
   work->romTitleStr = GFL_HEAP_AllocClearMemory( work->heapId , MB_GAME_NAME_LENGTH*2 );
   work->romInfoStr = GFL_HEAP_AllocClearMemory( work->heapId , MB_GAME_INTRO_LENGTH*2 );
   MB_MSG_MessageCreateWordset( work->msgWork );
@@ -733,7 +770,14 @@ static void MP_PARENT_SendImage_MBPInit( MB_PARENT_WORK *work )
 
 static void MP_PARENT_SendImage_MBPMain( MB_PARENT_WORK *work )
 {
+  static u16 befState = 0;
   const u16 mbpState = MBP_GetState();
+
+  if( befState != mbpState )
+  {
+    OS_TFPrintf(2,"MBState[%d]->[%d]\n",befState,mbpState);
+    befState = mbpState;
+  }
 
   //以下サンプル流用
   switch (MBP_GetState())
@@ -747,22 +791,39 @@ static void MP_PARENT_SendImage_MBPMain( MB_PARENT_WORK *work )
     // 子機からのエントリー受付中
   case MBP_STATE_ENTRY:
     {
-      if ( GFL_UI_KEY_GetTrg() == PAD_BUTTON_B )
+      if( work->confirmState == MPCS_NONE )
       {
-        // Bボタンでマルチブートキャンセル
-        MISC_SetPalparkFinishState( work->miscSave , PALPARK_FINISH_CANCEL );
-        MBP_Cancel();
-        break;
-      }
-      // エントリー中の子機が一台でも存在すれば開始可能とする
-      if (MBP_GetChildBmp(MBP_BMPTYPE_ENTRY) ||
-          MBP_GetChildBmp(MBP_BMPTYPE_DOWNLOADING) ||
-          MBP_GetChildBmp(MBP_BMPTYPE_BOOTABLE))
-      {
-        //子機が来たらとりあえず始めてしまう
+        if ( GFL_UI_KEY_GetTrg() == PAD_BUTTON_B )
         {
-          // ダウンロード開始
-          MBP_StartDownloadAll();
+          // Bボタンでマルチブートキャンセル
+          work->confirmState = MPCS_INIT;
+          //MISC_SetPalparkFinishState( work->miscSave , PALPARK_FINISH_CANCEL );
+          //MBP_Cancel();
+          break;
+        }
+        //子機がくれば自動でDLが始まる。キャンセル時ステート移行で再接続が
+        //できなくなってしまうのでリブートチェックをここでやる。
+        // エントリー中の子機が一台でも存在すれば開始可能とする
+        /*
+        if (MBP_GetChildBmp(MBP_BMPTYPE_ENTRY) ||
+            MBP_GetChildBmp(MBP_BMPTYPE_DOWNLOADING) ||
+            MBP_GetChildBmp(MBP_BMPTYPE_BOOTABLE))
+        {
+          //子機が来たらとりあえず始めてしまう
+          {
+            OS_TPrintf("[%d][%d][%d]\n",MBP_GetChildBmp(MBP_BMPTYPE_ENTRY)
+                                       ,MBP_GetChildBmp(MBP_BMPTYPE_DOWNLOADING)
+                                       ,MBP_GetChildBmp(MBP_BMPTYPE_BOOTABLE));
+            // ダウンロード開始
+            //MBP_StartDownloadAll();
+            //MBP_StartDownload(1);
+          }
+        }
+        */
+        if (MBP_IsBootableAll())
+        {
+          // ブート開始
+          MBP_StartRebootAll();
         }
       }
     }
@@ -772,6 +833,14 @@ static void MP_PARENT_SendImage_MBPMain( MB_PARENT_WORK *work )
     // プログラム配信処理
   case MBP_STATE_DATASENDING:
     {
+      //ここは来ない！
+      if ( GFL_UI_KEY_GetTrg() == PAD_BUTTON_B )
+      {
+        // Bボタンでマルチブートキャンセル
+        MISC_SetPalparkFinishState( work->miscSave , PALPARK_FINISH_CANCEL );
+        MBP_Cancel();
+        break;
+      }
       // 全員がダウンロード完了しているならばスタート可能.
       if (MBP_IsBootableAll())
       {
@@ -834,6 +903,47 @@ static void MP_PARENT_SendImage_MBPMain( MB_PARENT_WORK *work )
     break;
   }
   
+  switch( work->confirmState )
+  {
+  case MPCS_INIT:
+    MB_MSG_MessageHide( work->msgWork );
+    MB_MSG_MessageCreateWindow( work->msgWork , MMWT_2LINE_UP );
+    MB_MSG_MessageDisp( work->msgWork , MSG_MB_PAERNT_10 , MSGSPEED_GetWait() );
+    work->confirmState = MPCS_WAIT_MSG;
+    break;
+  case MPCS_WAIT_MSG:
+    if( MB_MSG_CheckPrintStreamIsFinish( work->msgWork ) == TRUE )
+    {
+      MB_MSG_DispYesNo( work->msgWork , MMYT_UP );
+      work->confirmState = MPCS_WAIT_CONFIRM;
+    }
+    break;
+  case MPCS_WAIT_CONFIRM:
+    {
+      const MB_MSG_YESNO_RET ret = MB_MSG_UpdateYesNo( work->msgWork );
+      if( ret == MMYR_RET1 )
+      {
+        GF_ASSERT_MSG( MBP_GetState() == MBP_STATE_ENTRY , "state is not[MBP_STATE_ENTRY][%d]!!!\n",MBP_GetState() );
+        MISC_SetPalparkFinishState( work->miscSave , PALPARK_FINISH_CANCEL );
+        MBP_Cancel();
+        work->confirmState = MPCS_END;
+      }
+      else
+      if( ret == MMYR_RET2 )
+      {
+        MB_MSG_ClearYesNo( work->msgWork );
+        MB_MSG_MessageHide( work->msgWork );
+        
+        MB_MSG_MessageCreateWindow( work->msgWork , MMWT_NORMAL );
+        MB_MSG_MessageCreateWordset( work->msgWork );
+        MB_MSG_MessageWordsetName( work->msgWork , 0 , GAMEDATA_GetMyStatus(work->initWork->gameData) );
+        MB_MSG_MessageDisp( work->msgWork , MSG_MB_PAERNT_01 , MSGSPEED_GetWait() );
+        MB_MSG_MessageDeleteWordset( work->msgWork );
+        work->confirmState = MPCS_NONE;
+      }
+    }
+    break;
+  }
 }
 
 static BOOL MP_PARENT_WhCallBack( BOOL bResult )
@@ -841,6 +951,7 @@ static BOOL MP_PARENT_WhCallBack( BOOL bResult )
   WhCallBackFlg = TRUE;
   return TRUE;
 }
+
 
 
 #pragma mark [>save func
@@ -1036,6 +1147,7 @@ static GFL_PROC_RESULT MB_PARENT_ProcInit( GFL_PROC * proc, int * seq , void *pw
   }
   work->heapId = HEAPID_MULTIBOOT;
   work->initWork = initWork;
+  work->isNetErr = FALSE;
   
   MB_PARENT_Init( work );
   
@@ -1074,6 +1186,14 @@ static GFL_PROC_RESULT MB_PARENT_ProcMain( GFL_PROC * proc, int * seq , void *pw
   {
     return GFL_PROC_RES_FINISH;
   }
+  
+  if( NetErr_App_CheckError() != NET_ERR_CHECK_NONE &&
+      work->isNetErr == FALSE )
+  {
+    NetErr_App_ReqErrorDisp();
+    work->isNetErr = TRUE;
+  }
+  
   return GFL_PROC_RES_CONTINUE;
 }
 

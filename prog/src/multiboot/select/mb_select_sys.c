@@ -1367,7 +1367,7 @@ static void MB_SELECT_UpdateInitComfirm( MB_SELECT_WORK *work )
     MB_MSG_MessageCreateWindow( work->msgWork , MMWT_1LINE );
     MB_MSG_MessageDispNoWait( work->msgWork , MSG_MB_CHILD_SEL_05 );
     
-    MB_MSG_DispYesNo_Select( work->msgWork );
+    MB_MSG_DispYesNo( work->msgWork , MMYT_MID );
     work->state = MSS_CONFIRM_WAIT;
   }
   

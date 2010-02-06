@@ -36,13 +36,15 @@
 #define MB_MSG_MSGWIN_SEL_HEIGHT (2)
 #define MB_MSG_MSGWIN_SEL_WIDTH  (30)
 
-#define MB_MSG_MSGWIN_SEL_L_TOP    (19)
+#define MB_MSG_MSGWIN_SEL_L_TOP    (19) //下用
+#define MB_MSG_MSGWIN_SEL_L_TOP_U  (1)  //上用
 #define MB_MSG_MSGWIN_SEL_L_LEFT   (1)
 #define MB_MSG_MSGWIN_SEL_L_HEIGHT (4)
 #define MB_MSG_MSGWIN_SEL_L_WIDTH  (30)
 
 #define MB_MSG_YESNO_X ( 32-APP_TASKMENU_PLATE_WIDTH_YN_WIN )
-#define MB_MSG_YESNO_Y ( 24-APP_TASKMENU_PLATE_HEIGHT*2 )
+#define MB_MSG_YESNO_Y_DOWN ( 24-APP_TASKMENU_PLATE_HEIGHT*2 )
+#define MB_MSG_YESNO_Y_UP ( 6 )
 #define MB_MSG_YESNO_COLOR (APP_TASKMENU_ITEM_MSGCOLOR)
 //選択画面用
 #define MB_MSG_YESNO_SEL_X ( 24 )
@@ -59,6 +61,8 @@ typedef enum
   MMWT_1LINE,   //画面下１行
   MMWT_2LINE,   //画面下２行
 
+  MMWT_2LINE_UP,   //画面上２行
+
   MMWT_2LINE_TALK,   //画面下２行(会話WIN
 }MB_MSG_WIN_TYPE;
 
@@ -68,6 +72,14 @@ typedef enum
   MMYR_RET1,  //上のほう
   MMYR_RET2,  //下のほう
 }MB_MSG_YESNO_RET;
+
+typedef enum
+{
+  MMYT_UP,
+  MMYT_MID,
+  MMYT_DOWN,
+  
+}MB_MSG_YESNO_TYPE;
 
 //======================================================================
 //	typedef struct
@@ -90,8 +102,7 @@ extern void MB_MSG_MessageHide( MB_MSG_WORK *work );
 extern void MB_MSG_MessageCreateWordset( MB_MSG_WORK *work );
 extern void MB_MSG_MessageDeleteWordset( MB_MSG_WORK *work );
 extern void MB_MSG_MessageWordsetName( MB_MSG_WORK *msgWork , const u32 bufId , MYSTATUS *myStatus);
-extern void MB_MSG_DispYesNo( MB_MSG_WORK *work );
-extern void MB_MSG_DispYesNo_Select( MB_MSG_WORK *msgWork );
+extern void MB_MSG_DispYesNo( MB_MSG_WORK *work , const MB_MSG_YESNO_TYPE type );
 extern void MB_MSG_ClearYesNo( MB_MSG_WORK *msgWork );
 extern const MB_MSG_YESNO_RET MB_MSG_UpdateYesNo( MB_MSG_WORK *work );
 
