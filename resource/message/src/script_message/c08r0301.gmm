@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-02T12:46:06"/>
+	<create user="matsumiya" host="W00224" date="2010-02-06T13:33:21"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -404,8 +404,9 @@
 参加したく　なるのよね！</language>
 	</row>
 
-	<row id="msg_c08r0301_girl4_01">
-		<comment>♀</comment>
+	<row id="msg_c08r0301_girl4_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♀
+・仮メッセージ</comment>
 		<attribute name="キャラ指定">GIRL4
 お嬢様</attribute>
 		<language name="JPN" width="256">ミュージカルの　グッズは　なんでも
