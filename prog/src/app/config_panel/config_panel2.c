@@ -610,7 +610,10 @@ static BOOL MSGWND_IsEndMsg( MSGWND_WORK* p_wk );
 static void APPBAR_Init( APPBAR_WORK *p_wk, GFL_CLUNIT *p_clunit, GFL_FONT *p_font, PRINT_QUE *p_que, GFL_MSGDATA *p_msg, APP_TASKMENU_RES *p_res, GAMEDATA *p_gdata,HEAPID heapID );
 static void APPBAR_Exit( APPBAR_WORK *p_wk );
 static void APPBAR_Main( APPBAR_WORK *p_wk, const UI_WORK *cp_ui, const SCROLL_WORK *cp_scroll );
+static void APPBAR_MoveMain( APPBAR_WORK *p_wk );
 static BOOL APPBAR_IsDecide( const APPBAR_WORK *cp_wk, APPBAR_WIN_LIST *p_select );
+static BOOL APPBAR_IsWaitEffect( const APPBAR_WORK *cp_wk );
+static void APPBAR_StopEffect( APPBAR_WORK *p_wk );
 static void APPBAR_ReWrite( APPBAR_WORK *p_wk, HEAPID heapID );
 //-------------------------------------
 /// SCROLL
@@ -1376,6 +1379,9 @@ static GFL_PROC_RESULT CONFIG_PROC_Main( GFL_PROC *p_proc,int *p_seq, void *p_pa
 
   //タスク
   GFL_TCBL_Main( p_wk->p_tcbl );
+
+  //アプリバー
+  APPBAR_MoveMain( &p_wk->appbar );
 
   //終了
   if( SEQ_IsEnd( &p_wk->seq ) )
@@ -2583,8 +2589,17 @@ static void APPBAR_Main( APPBAR_WORK *p_wk, const UI_WORK *cp_ui, const SCROLL_W
   CONFIG_LIST select;
   BOOL is_update  = FALSE;
 
-  //入力取得
-  input = UI_GetInput( cp_ui );
+
+  //決定時は入力できない
+  if( p_wk->is_decide )
+  { 
+    input = UI_INPUT_NONE;
+  }
+  else
+  { 
+    //入力取得
+    input = UI_GetInput( cp_ui );
+  }
 
   //スクロールの選択取得
   select  = SCROLL_GetSelect( cp_scroll );
@@ -2686,15 +2701,6 @@ static void APPBAR_Main( APPBAR_WORK *p_wk, const UI_WORK *cp_ui, const SCROLL_W
     }
   }
 
-  //モジュールメイン実行
-  {
-    int i;
-    for( i = 0; i < APPBAR_WIN_MAX-1; i++ )
-    {
-      APP_TASKMENU_WIN_Update( p_wk->p_win[i] );
-    }
-  }
-
   //タッチバーメイン
   TOUCHBAR_Main( p_wk->p_touch );
 
@@ -2729,6 +2735,24 @@ static void APPBAR_Main( APPBAR_WORK *p_wk, const UI_WORK *cp_ui, const SCROLL_W
 }
 //----------------------------------------------------------------------------
 /**
+ *	@brief  動作メイン
+ *
+ *	@param	APPBAR_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void APPBAR_MoveMain( APPBAR_WORK *p_wk )
+{ 
+  //モジュールメイン実行
+  {
+    int i;
+    for( i = 0; i < APPBAR_WIN_MAX-1; i++ )
+    {
+      APP_TASKMENU_WIN_Update( p_wk->p_win[i] );
+    }
+  }
+}
+//----------------------------------------------------------------------------
+/**
  *  @brief  APPBARの選択決定取得
  *
  *  @param  const APPBAR_WORK *cp_wk  ワーク
@@ -2743,9 +2767,46 @@ static BOOL APPBAR_IsDecide( const APPBAR_WORK *cp_wk, APPBAR_WIN_LIST *p_select
   {
     *p_select = cp_wk->select;
   }
-
   return cp_wk->is_decide;
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  演出待ち
+ *
+ *	@param	const APPBAR_WORK *cp_wkt   ワーク
+ *
+ *	@return TRUEで演出終了  FALSEで演出中
+ */
+//-----------------------------------------------------------------------------
+static BOOL APPBAR_IsWaitEffect( const APPBAR_WORK *cp_wk )
+{ 
+  BOOL ret  = TRUE;
+  if( cp_wk->is_decide && cp_wk->select != APPBAR_WIN_NULL )
+  { 
+    ret = APP_TASKMENU_WIN_IsFinish( cp_wk->p_win[cp_wk->select] );
+  }
+  return ret;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  演出を消す
+ *
+ *	@param	APPBAR_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void APPBAR_StopEffect( APPBAR_WORK *p_wk )
+{ 
+  {
+    int i;
+    for( i = 0; i < APPBAR_WIN_MAX-1; i++ )
+    {
+      APP_TASKMENU_WIN_SetDecide( p_wk->p_win[i], FALSE );
+      APP_TASKMENU_WIN_SetActive( p_wk->p_win[i], FALSE );
+    }
+  }
+}
+
 //----------------------------------------------------------------------------
 /**
  *  @brief  再描画
@@ -4052,7 +4113,12 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
   CONFIG_WORK *p_wk = p_param;
 
   //モジュールメイン
-  SCROLL_Main( &p_wk->scroll, &p_wk->ui, &p_wk->info, &p_wk->graphic, &p_wk->appbar );
+
+  //決定していないときに動く
+  if( !APPBAR_IsDecide( &p_wk->appbar, NULL ) )
+  {
+    SCROLL_Main( &p_wk->scroll, &p_wk->ui, &p_wk->info, &p_wk->graphic, &p_wk->appbar );
+  }
   APPBAR_Main(  &p_wk->appbar, &p_wk->ui, &p_wk->scroll );
   UI_Main( &p_wk->ui );
 
@@ -4061,30 +4127,35 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
     APPBAR_WIN_LIST select;
     if( APPBAR_IsDecide( &p_wk->appbar, &select ) )
     {
-      switch( select )
-      {
-      case APPBAR_WIN_DECIDE:
-        SEQ_SetNext( p_seqwk, SEQFUNC_SetNowConfig );
-        break;
+      if( APPBAR_IsWaitEffect( &p_wk->appbar ) )
+      { 
 
-      case APPBAR_WIN_EXIT:
-        p_wk->p_param->is_exit  = TRUE;
-        /* fallthrough */
-      case APPBAR_WIN_CANCEL:
+        switch( select )
         {
-          CONFIG_PARAM  now;
-          SCROLL_GetConfigParam( &p_wk->scroll, &now );
-          //今の設定が前の設定と違うならば、最終確認画面を出す
-          if( CONFIGPARAM_Compare( &p_wk->pre, &now ) )
+        case APPBAR_WIN_DECIDE:
+          SEQ_SetNext( p_seqwk, SEQFUNC_SetNowConfig );
+          break;
+
+        case APPBAR_WIN_EXIT:
+          p_wk->p_param->is_exit  = TRUE;
+          /* fallthrough */
+        case APPBAR_WIN_CANCEL:
           {
-            SEQ_SetNext( p_seqwk, SEQFUNC_SetPreConfig );
+            CONFIG_PARAM  now;
+            SCROLL_GetConfigParam( &p_wk->scroll, &now );
+            //今の設定が前の設定と違うならば、最終確認画面を出す
+            if( CONFIGPARAM_Compare( &p_wk->pre, &now ) )
+            {
+              SEQ_SetNext( p_seqwk, SEQFUNC_SetPreConfig );
+            }
+            else
+            {
+              APPBAR_StopEffect( &p_wk->appbar );
+              SEQ_SetNext( p_seqwk, SEQFUNC_Decide );
+            }
           }
-          else
-          {
-            SEQ_SetNext( p_seqwk, SEQFUNC_Decide );
-          }
+          break;
         }
-        break;
       }
     }
   }
