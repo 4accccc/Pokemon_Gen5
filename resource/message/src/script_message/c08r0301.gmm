@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-06T13:33:21"/>
+	<create user="matsumiya" host="W00224" date="2010-02-06T13:44:12"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="145" top="221" right="850" bottom="841" maximized="no" rayout="Vertical2">
+	<dialog left="1407" top="337" right="2112" bottom="957" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -404,15 +404,22 @@
 参加したく　なるのよね！</language>
 	</row>
 
-	<row id="msg_c08r0301_girl4_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
-		<comment>♀
-・仮メッセージ</comment>
+	<row id="msg_c08r0301_girl4_01" text-color=",,,#000000,,,,,,,,,,,,,,,">
+		<comment>♀</comment>
 		<attribute name="キャラ指定">GIRL4
 お嬢様</attribute>
-		<language name="JPN" width="256">ミュージカルの　グッズは　なんでも
-２００しゅるい　ぐらい　あるそうよ</language>
-		<language name="JPN_KANJI" width="256">ミュージカルの　グッズは　なんでも
-２００種類ぐらい　あるそうよ</language>
+		<language name="JPN" width="256">１３４……　１３５……▼
+ああん！　はなしかけるから
+すうじ　とんじゃった！▼
+ミュージカルの　グッズを
+かぞえていたんだけど　ざっと▽
+２００しゅるい　ぐらい　あるかも</language>
+		<language name="JPN_KANJI" width="256">１３４……　１３５……▼
+ああん！　話しかけるから
+数字　とんじゃった！▼
+ミュージカルの　グッズを
+数えていたんだけど　ざっと▽
+２００種類　ぐらい　あるかも</language>
 	</row>
 
 	<flowchart-group-list>
