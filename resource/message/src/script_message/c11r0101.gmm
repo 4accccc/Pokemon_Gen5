@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="hozumi_yukiko" host="W00211" date="2010-02-06T21:01:20"/>
+	<create user="hozumi_yukiko" host="W00211" date="2010-02-06T21:38:12"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,8 +271,8 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
-		<edit entry="1" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
 	</dialog>
@@ -302,17 +302,11 @@
 	<row id="msg_reception01_01">
 		<attribute name="キャラ指定">受付嬢１</attribute>
 		<language name="JPN" width="256">こんにちわ！
-こくれんへ　ようこそ！▽
+こくれんへ　ようこそ！▼
 フロアに　いどうしますか？▼</language>
 		<language name="JPN_KANJI" width="256">こんにちわ！
-国連へ　ようこそ！▽
+国連へ　ようこそ！▼
 フロアに　移動しますか？▼</language>
-	</row>
-
-	<row id="msg_reception01_01a">
-		<attribute name="キャラ指定">受付嬢１</attribute>
-		<language name="JPN" width="256">いきさきの　フロアを　えらんでください</language>
-		<language name="JPN_KANJI" width="256">行き先の　フロアを　選んでください</language>
 	</row>
 
 	<row id="msg_reception01_02">
@@ -520,6 +514,12 @@
 ボディチェックをするぞ</language>
 		<language name="JPN_KANJI" width="256">なんだ　観光客か？
 ボディチェックをするぞ</language>
+	</row>
+
+	<row id="msg_reception01_01a">
+		<attribute name="キャラ指定">受付嬢１</attribute>
+		<language name="JPN" width="256">いきさきの　フロアを　えらんでください</language>
+		<language name="JPN_KANJI" width="256">行き先の　フロアを　選んでください</language>
 	</row>
 
 	<flowchart-group-list>
