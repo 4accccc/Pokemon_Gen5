@@ -145,7 +145,8 @@ SUBDIRS	=	wmi \
 			face_up \
 			batt_rec_gra \
 			sea_temple \
-			egg_demo
+			egg_demo \
+			kokuren
 
 include $(RESOURCE_MACRO)
 
