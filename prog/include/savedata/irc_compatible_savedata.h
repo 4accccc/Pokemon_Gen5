@@ -59,18 +59,13 @@ extern u32 IRC_COMPATIBLE_SV_GetSex( const IRC_COMPATIBLE_SAVEDATA *cp_sv, u32 r
 extern u32 IRC_COMPATIBLE_SV_GetBirthMonth( const IRC_COMPATIBLE_SAVEDATA *cp_sv, u32 rank );
 extern u32 IRC_COMPATIBLE_SV_GetBirthDay( const IRC_COMPATIBLE_SAVEDATA *cp_sv, u32 rank );
 extern u8	IRC_COMPATIBLE_SV_GetNewRank( const IRC_COMPATIBLE_SAVEDATA *cp_sv );
-extern u8 IRC_COMPATIBLE_SV_GetBioRhythm( const IRC_COMPATIBLE_SAVEDATA *cp_sv, u32 rank );
-extern u32 IRC_COMPATIBLE_SV_GetBestBioRhythm( const IRC_COMPATIBLE_SAVEDATA *cp_sv, u8 player_birth_month, u8 player_birth_day );
-
-inline BOOL IRC_COMPATIBLE_SV_IsEmpty( const IRC_COMPATIBLE_SAVEDATA *cp_sv )
-{ 
-  return IRC_COMPATIBLE_SV_GetRankNum( cp_sv ) == 0;
-}
+extern u8 IRC_COMPATIBLE_SV_GetBioRhythm( const IRC_COMPATIBLE_SAVEDATA *cp_sv, u32 rank, const RTCDate * cp_now_date );
+extern u32 IRC_COMPATIBLE_SV_GetBestBioRhythm( const IRC_COMPATIBLE_SAVEDATA *cp_sv, u8 player_birth_month, u8 player_birth_day, const RTCDate * cp_now_date );
 
 //-------------------------------------
 ///	irc_compatible.cでのみ使うprivate関数
 //=====================================
-extern u8 Irc_Compatible_SV_CalcBioRhythm( u8 month, u8 day );
+extern u8 Irc_Compatible_SV_CalcBioRhythm( u8 birth_month, u8 birth_day, const RTCDate * cp_now_date );
 
 //-------------------------------------
 ///	データ設定関数

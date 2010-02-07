@@ -1295,5 +1295,7 @@ static u32 MATH_GetMostOnebit( u32 x, u8 bit )
 #include "system/rtc_tool.h"
 static u32 RULE_CalcBioRhythm( const COMPATIBLE_STATUS *cp_status )
 { 
-  return Irc_Compatible_SV_CalcBioRhythm( cp_status->barth_month, cp_status->barth_day );
+  RTCDate date;
+  GFL_RTC_GetDate( &date );
+  return Irc_Compatible_SV_CalcBioRhythm( cp_status->barth_month, cp_status->barth_day, &date );
 }

@@ -220,11 +220,12 @@ u8	IRC_COMPATIBLE_SV_GetNewRank( const IRC_COMPATIBLE_SAVEDATA *cp_sv )
  *
  *	@param	const IRC_COMPATIBLE_SAVEDATA *cp_sv  セーブ
  *	@param	rank                                  順位
+ *	@param  cp_now_date Irc_Compatible_SV_CalcBioRhythmの説明を参照
  *
  *	@return 0～100の値
  */
 //-----------------------------------------------------------------------------
-u8 IRC_COMPATIBLE_SV_GetBioRhythm( const IRC_COMPATIBLE_SAVEDATA *cp_sv, u32 rank )
+u8 IRC_COMPATIBLE_SV_GetBioRhythm( const IRC_COMPATIBLE_SAVEDATA *cp_sv, u32 rank, const RTCDate * cp_now_date )
 { 
   u8 month, day;
 
@@ -232,7 +233,7 @@ u8 IRC_COMPATIBLE_SV_GetBioRhythm( const IRC_COMPATIBLE_SAVEDATA *cp_sv, u32 ran
 
   month  = IRC_COMPATIBLE_SV_GetBirthMonth( cp_sv, rank );
   day    = IRC_COMPATIBLE_SV_GetBirthDay( cp_sv, rank ); 
-  return Irc_Compatible_SV_CalcBioRhythm( month, day );
+  return Irc_Compatible_SV_CalcBioRhythm( month, day, cp_now_date );
 }
 //----------------------------------------------------------------------------
 /**
@@ -241,14 +242,15 @@ u8 IRC_COMPATIBLE_SV_GetBioRhythm( const IRC_COMPATIBLE_SAVEDATA *cp_sv, u32 ran
  *	@param	const IRC_COMPATIBLE_SAVEDATA *cp_sv  セーブ
  *	@param	player_birth_month                    プレイヤーの誕生月
  *	@param	player_birth_day                      プレイヤーの誕生日
+ *	@param  cp_now_date Irc_Compatible_SV_CalcBioRhythmの説明を参照
  *
  *	@return 一番自分とバイオリズムが合っている人の順位
  */
 //-----------------------------------------------------------------------------
-u32 IRC_COMPATIBLE_SV_GetBestBioRhythm( const IRC_COMPATIBLE_SAVEDATA *cp_sv, u8 player_birth_month, u8 player_birth_day )
+u32 IRC_COMPATIBLE_SV_GetBestBioRhythm( const IRC_COMPATIBLE_SAVEDATA *cp_sv, u8 player_birth_month, u8 player_birth_day, const RTCDate * cp_now_date )
 { 
   const u32 max         = IRC_COMPATIBLE_SV_GetRankNum( cp_sv );
-  const u32 player_bio  = Irc_Compatible_SV_CalcBioRhythm( player_birth_month, player_birth_day );
+  const u32 player_bio  = Irc_Compatible_SV_CalcBioRhythm( player_birth_month, player_birth_day, cp_now_date );
 
   int i;
   u32 best_idx  = 0;
@@ -257,7 +259,7 @@ u32 IRC_COMPATIBLE_SV_GetBestBioRhythm( const IRC_COMPATIBLE_SAVEDATA *cp_sv, u8
 
   for( i = 0; i < max; i++ )
   { 
-    dif = MATH_IAbs( (s32)IRC_COMPATIBLE_SV_GetBioRhythm( cp_sv, i ) - (s32)player_bio );
+    dif = MATH_IAbs( (s32)IRC_COMPATIBLE_SV_GetBioRhythm( cp_sv, i, cp_now_date ) - (s32)player_bio );
 
     if( best_dif > dif )
     { 
@@ -274,11 +276,14 @@ u32 IRC_COMPATIBLE_SV_GetBestBioRhythm( const IRC_COMPATIBLE_SAVEDATA *cp_sv, u8
  *
  *	@param	month 月
  *	@param	day   日
+ *	@param  cp_now_date イベント用時刻とDS内時刻の両方を渡せるように
+ *	                    イベント内で使うときはev_time.hのRTCを
+ *	                    イベント外で使うときはGFL_RTC_GetDateを外で使用して渡す
  *
  *	@return 0～100の値
  */
 //-----------------------------------------------------------------------------
-u8 Irc_Compatible_SV_CalcBioRhythm( u8 month, u8 day )
+u8 Irc_Compatible_SV_CalcBioRhythm( u8 birth_month, u8 birth_day, const RTCDate * cp_now_date )
 { 
   enum
   { 
@@ -293,12 +298,11 @@ u8 Irc_Compatible_SV_CalcBioRhythm( u8 month, u8 day )
 
   //今日までの総日数を計算（年が取れないので、一年だけとする）
   { 
-    RTCDate date;
-    GFL_RTC_GetDate( &date );
+    RTCDate date  = *cp_now_date;
     now_days  = GFL_RTC_GetDaysOffset(&date);
 
-    date.month  = month;
-    date.day    = day;
+    date.month  = birth_month;
+    date.day    = birth_day;
     days        = GFL_RTC_GetDaysOffset(&date);
   }
 

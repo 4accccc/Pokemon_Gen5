@@ -10,6 +10,7 @@
 #include <gflib.h>
 #include "system/gfl_use.h"
 #include "system/vm_cmd.h"
+#include "system/main.h"
 
 #include "gamesystem/gamesystem.h"
 #include "gamesystem/game_event.h"
@@ -24,6 +25,8 @@
 
 #include "ev_time.h"
 
+#include "savedata/irc_compatible_savedata.h"
+
 //======================================================================
 //======================================================================
 //--------------------------------------------------------------
@@ -35,15 +38,39 @@ VMCMD_RESULT EvCmdSetFeelingCheckName( VMHANDLE * core, void * wk )
 {
   SCRCMD_WORK *work = wk;
   GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
-  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-  WORDSET *wordset    = SCRIPT_GetWordSet( sc );
+  SAVE_CONTROL_WORK* p_sv_ctrl  = GAMEDATA_GetSaveControlWork( gdata );
+  IRC_COMPATIBLE_SAVEDATA * p_sv  = IRC_COMPATIBLE_SV_GetSavedata( p_sv_ctrl );
   
-  const RTCDate * EVTIME_GetRTCDate( gdata );
-  u16 set_pos = SCRCMD_GetVMWorkValue( core, work );
-  u32 sex = PM_MALE;
-  //STRBUF * word = GFL_STR_CreateBuffer(...)
-  //WORDSET_RegisterWord( wordset, set_pos, word, sex, TRUE, PM_LANG );
-  //GFL_STR_DeleteBuffer( word );
+  u32 sex;
+  const STRCODE *cp_name;
+  u32 rank;
+
+
+  GF_ASSERT_MSG( IRC_COMPATIBLE_SV_GetRankNum( p_sv ), "誰とも相性チェックをしていません\n" );
+
+  //プレイヤーのデータを作成し、仲良しの人のインデックスを取り出す
+  { 
+    const RTCDate *cp_date  = EVTIME_GetRTCDate( gdata );
+    OSOwnerInfo info;
+    OS_GetOwnerInfo( &info );
+    rank  = IRC_COMPATIBLE_SV_GetBestBioRhythm( p_sv, 
+        info.birthday.month, info.birthday.day, cp_date );
+  }
+
+  //インデックスから仲良しの人のデータを取り出す
+  sex     = IRC_COMPATIBLE_SV_GetSex( p_sv, rank );
+  cp_name = IRC_COMPATIBLE_SV_GetPlayerName( p_sv, rank );
+
+
+  //WORDSETに設定
+  { 
+    SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+    WORDSET *wordset    = SCRIPT_GetWordSet( sc );
+    u16 set_pos = SCRCMD_GetVMWorkValue( core, work );
+    STRBUF * word = GFL_STR_CreateBuffer( IRC_COMPATIBLE_SV_DATA_NAME_LEN, GFL_HEAP_LOWID( GFL_HEAPID_APP ) );
+    WORDSET_RegisterWord( wordset, set_pos, word, sex, TRUE, PM_LANG );
+    GFL_STR_DeleteBuffer( word );
+  }
 
   return VMCMD_RESULT_CONTINUE;
 }
@@ -57,10 +84,12 @@ VMCMD_RESULT EvCmdGetFeelingCheckCount( VMHANDLE * core, void * wk )
 {
   SCRCMD_WORK *work = wk;
   GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
-
   u16 * ret_wk = SCRCMD_GetVMWork( core, work );
+  SAVE_CONTROL_WORK* p_sv_ctrl  = GAMEDATA_GetSaveControlWork( gdata );
+  IRC_COMPATIBLE_SAVEDATA * p_sv  = IRC_COMPATIBLE_SV_GetSavedata( p_sv_ctrl );
 
-  *ret_wk = 0;  //ここに相性チェックの人数を入れる
+  //ランキング入りしている人を返す
+  *ret_wk = IRC_COMPATIBLE_SV_GetRankNum( p_sv );
 
   return VMCMD_RESULT_CONTINUE;
 }
