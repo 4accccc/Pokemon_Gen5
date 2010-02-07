@@ -973,6 +973,13 @@ class BgEventData < EventData
   end
 
   def dumpHeader output
+    incguard = "ZONE_#{@zonename.upcase}_EVB_H"
+    output.puts "//‚±‚Ìƒtƒ@ƒCƒ‹‚Í#{@path}‚©‚çŽ©“®¶¬‚³‚ê‚Ü‚µ‚½"
+    output.puts "#ifndef #{incguard}"
+    output.puts "#define #{incguard}"
+    output.puts ""
+    @bgs.each{|item| item.dumpHeader( output ) }
+    output.puts "\n#endif //#{incguard}\n"
   end
 
   def getIncludeHeader header
