@@ -325,23 +325,25 @@ void WT_PRINT_Main( WT_PRINT *wk )
 BOOL GF_MSG_PrintEndCheck( WT_PRINT *setup )
 {
   int i;
+  BOOL ret = TRUE;
+
   for( i = 0; i < WT_PRINT_BUFF_MAX; i++ )
   {
 
-    if( setup->stream[i] != NULL )
+    if( setup->stream[i] )
     {
-      if( PRINTSYS_PrintStreamGetState(setup->stream[i]) == PRINTSTREAM_STATE_DONE )
+      if( PRINTSYS_PrintStreamGetState(setup->stream[i]) != PRINTSTREAM_STATE_DONE )
       {
-        return FALSE;
+        ret &= FALSE;
       }
-      else
-      {
-        return TRUE;
-      }
+    }
+    else
+    { 
+      ret &= TRUE;
     }
   }
 
-  return FALSE;
+  return ret;
 }
 
 //----------------------------------------------------------------------------
@@ -411,3 +413,31 @@ void GF_STR_PrintColor( GFL_BMPWIN *bmpwin, u8 font_idx, STRBUF *str, int x, int
   p_one->use  = TRUE;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ストリームなどを一括消去
+ *
+ *	@param	WT_PRINT *wk  ワーク
+ */
+//-----------------------------------------------------------------------------
+void WT_PRINT_ClearBuffer( WT_PRINT *wk )
+{ 
+  {
+    int i;
+    WT_PRINT_QUE  *p_one;
+    for( i = 0; i < WT_PRINT_BUFF_MAX; i++ )
+    {
+      p_one = &wk->one[i];
+      if( p_one->use )
+      {
+        p_one->use  = FALSE;
+      }
+
+      if( wk->stream[i] != NULL )
+      {
+        PRINTSYS_PrintStreamDelete( wk->stream[i] );
+        wk->stream[i] = NULL;
+      }
+    }
+  }
+}

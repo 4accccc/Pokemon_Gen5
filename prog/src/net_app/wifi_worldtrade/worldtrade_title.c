@@ -136,14 +136,13 @@ int WorldTrade_Title_Init(WORLDTRADE_WORK *wk, int seq)
 	SetCellActor(wk);
 
 	// 通信状態を確認してアイコンの表示を変える
-    WorldTrade_WifiIconAdd( wk );
+  WorldTrade_WifiIconAdd( wk );
 
 	// メニューの項目を描画
 	TitleMenuPrint( wk );
 
 	// サウンドデータロード(フィールド)
 	//Snd_DataSetByScene( SND_SCENE_FIELD, SEQ_BLD_BLD_GTC, 1 );
-
 
 
 	Snd_DataSetByScene( SND_SCENE_WIFI_WORLD_TRADE, SEQ_GS_BLD_GTC, 1 );
@@ -661,6 +660,9 @@ static void BmpWinDelete( WORLDTRADE_WORK *wk )
 {
 	int i;
 
+  //BMPを消す前に残ったストリームを消去
+  WT_PRINT_ClearBuffer( &wk->print );
+
 	GFL_BMPWIN_Delete( wk->ExplainWin );
 	OS_Printf("説明ウインドウ解放\n");
 
@@ -738,7 +740,6 @@ static int SubSeq_Opening( WORLDTRADE_WORK *wk)
 {
 	// 主人公降りてくるデモが終わるのを待つ
 	if(wk->demo_end){
-
 		GFL_DISP_GX_SetVisibleControl(  GX_PLANEMASK_BG0, VISIBLE_OFF );	//メイン画面OBJ面ＯＮ
 		GFL_DISP_GX_SetVisibleControl(  GX_PLANEMASK_BG1, VISIBLE_OFF );	//メイン画面OBJ面ＯＮ
 		GFL_DISP_GX_SetVisibleControl(  GX_PLANEMASK_BG2, VISIBLE_OFF );	//メイン画面OBJ面ＯＮ
@@ -1346,9 +1347,8 @@ void WorldTrade_BmpWinPrint( GFL_BMPWIN *win, GFL_MSGDATA *msgman, int font, int
 //==============================================================================
 void WorldTrade_SubLcdBgGraphicSet( WORLDTRADE_WORK *wk  )
 {
-
 	// 下画面ＢＧパレット転送
-	GFL_ARC_UTIL_TransVramPalette(    ARCID_WORLDTRADE_GRA, NARC_worldtrade_traderoom_nclr, PALTYPE_SUB_BG,  0, 16*16*2,  HEAPID_WORLDTRADE);
+	GFL_ARC_UTIL_TransVramPalette( ARCID_WORLDTRADE_GRA, NARC_worldtrade_traderoom_nclr, PALTYPE_SUB_BG,  0, 16*16*2,  HEAPID_WORLDTRADE);
 
 	// サブ画面BG1キャラ転送
 	GFL_ARC_UTIL_TransVramBgCharacter( ARCID_WORLDTRADE_GRA, NARC_worldtrade_traderoom_lz_ncgr,  GFL_BG_FRAME1_S, 0, 32*21*0x40, 1, HEAPID_WORLDTRADE);

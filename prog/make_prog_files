@@ -1324,6 +1324,7 @@ SRCS_OVERLAY_MATSUDA_DEBUG  = test/matsuda/d_matsu.c \
 
 #wifiGTS
 #===> SRCS_OVERLAY_DPW_COMMON
+#===> SRCS_OVERLAY_WIFI_LOGIN
 SRCS_OVERLAY_WORLDTRADE	= net_app/wifi_worldtrade/worldtrade.c \
 													net_app/wifi_worldtrade/worldtrade_box.c \
 													net_app/wifi_worldtrade/worldtrade_demo.c \

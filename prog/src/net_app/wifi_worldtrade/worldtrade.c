@@ -45,7 +45,7 @@
 #include "poke_icon.naix"
 
 #define BRIGHT_VAL  (-7)          ///< パッシブ状態のための半透明率
-
+FS_EXTERN_OVERLAY(dpw_common);
 //============================================================================================
 //  定数定義
 //============================================================================================
@@ -75,7 +75,6 @@ static void SetCursor_Pos( GFL_CLWK* act, int x, int y );
 static void RecordMessagePrint( WORLDTRADE_WORK *wk, int msgno, int wait );
 static void FreeFunc(DWCAllocType name, void* ptr,  u32 size);
 static void *AllocFunc( DWCAllocType name, u32   size, int align );
-static void InitDpw( void *heapPtr, NNSFndHeapHandle heapHandle, DWCAllocEx alloc, DWCFreeEx free  );
 static void InitCLACT( WORLDTRADE_WORK *wk );
 static void FreeCLACT( WORLDTRADE_WORK *wk );
 static void ServerWaitTimeFunc( WORLDTRADE_WORK *wk );
@@ -83,10 +82,6 @@ static void BoxPokeNumGet( WORLDTRADE_WORK *wk );
 static void WorldTrade_SelBoxCallback( SELBOX_WORK* sbox, u8 cur_pos, void* work, SBOX_CB_MODE mode);
 static void WorldTrade_WndSetting(void);
 
-static void NET_InitCallback( void *wk_adrs );
-static BOOL NET_IsInit( const WORLDTRADE_WORK *wk );
-
-static NNSFndHeapHandle _wtHeapHandle;
 
 
 //============================================================================================
@@ -135,8 +130,9 @@ static GFL_PROC_RESULT WorldTradeProc_Init( GFL_PROC * proc, int * seq, void * p
 {
   WORLDTRADE_WORK * wk;
 
-  switch(*seq){
-  case 0:
+  GFL_OVERLAY_Load( FS_OVERLAY_ID(dpw_common) );
+
+
 #ifdef PM_DEBUG
     GFL_HEAP_GetHeapFreeSize( GFL_HEAPID_SYSTEM );
     GFL_HEAP_GetHeapFreeSize( GFL_HEAPID_APP );
@@ -194,16 +190,13 @@ static GFL_PROC_RESULT WorldTradeProc_Init( GFL_PROC * proc, int * seq, void * p
     WIPE_ResetBrightness( WIPE_DISP_SUB );
 #endif
 
-//  //  GFL_UI_TP_Init();           // タッチパネルシステム初期化
-//  //  InitTPNoBuff(2);
-
 
     // ワーク初期化
     InitWork( wk, param );
 
     WorldTrade_InitSystem( wk );
 
-    WirelessIconEasy();
+    //WirelessIconEasy();
 
     // サウンドデータロード(フィールド)
     Snd_DataSetByScene( SND_SCENE_FIELD, SEQ_BLD_BLD_GTC, 1 );
@@ -212,81 +205,10 @@ static GFL_PROC_RESULT WorldTradeProc_Init( GFL_PROC * proc, int * seq, void * p
     // プラチナで、マップの曲と、画面の曲が変更になったので、
     // 画面から、フィールドに戻る時のためにシーンを変更
 
-    // DWCライブラリ（Wifi）に渡すためのワーク領域を確保
-    wk->heapPtr    = GFL_HEAP_AllocMemory(HEAPID_WORLDTRADE, MYDWC_HEAPSIZE + 32);
-    wk->heapHandle = NNS_FndCreateExpHeap( (void *)( ((u32)wk->heapPtr + 31) / 32 * 32 ), MYDWC_HEAPSIZE);
-
-    *seq = 1;
-    break;
-
-  case 1:
-#if 0
-    DwcOverlayStart();
-
-    DpwCommonOverlayStart();
-#else
-    {
-      //WIFIのオーバーレイを起動させるだけなので、
-      //ほぼデータなし
-      static const GFLNetInitializeStruct net_init =
-      {
-        NULL,
-        0,
-        NULL,
-        NULL,
-        NULL,
-        NULL,
-        NULL,
-        NULL,
-        NULL,
-        NULL,
-        NULL,
-        NULL,
-        NULL,
-#if GFL_NET_WIFI
-        NULL,
-        NULL,
-        NULL,
-        NULL,
-        NULL,
-        MYDWC_HEAPSIZE,
-        TRUE,         //デバッグ用サーバにつなぐかどうか
-#endif  //GFL_NET_WIFI
-        0x444,  //ggid  DP=0x333,RANGER=0x178,WII=0x346
-        GFL_HEAPID_APP,
-        HEAPID_NETWORK,
-        HEAPID_WIFI,
-        HEAPID_IRC,
-        GFL_WICON_POSX,GFL_WICON_POSY,        // 通信アイコンXY位置
-        _MAXNUM,     // 最大接続人数
-        _MAXSIZE,  //最大送信バイト数
-        _BCON_GET_NUM,    // 最大ビーコン収集数
-        TRUE,
-        FALSE,
-        GFL_NET_TYPE_WIFI_GTS,
-        TRUE,
-        WB_NET_WIFIGTS,
-#if GFL_NET_IRC
-        IRC_TIMEOUT_STANDARD,
-#endif  //GFL_NET_IRC
-    0,//MP親最大サイズ 512まで
-    0,//dummy
-      };
-      GFL_NET_Init( &net_init, NET_InitCallback, work );
-    }
-#endif
-
-
     // 会話ウインドウのタッチON
     MsgPrintTouchPanelFlagSet( MSG_TP_ON );
 
-
-    (*seq) = SEQ_INIT_DPW;
-
     return GFL_PROC_RES_FINISH;
-    break;
-  }
-  return GFL_PROC_RES_CONTINUE;
 }
 
 //--------------------------------------------------------------------------------------------
@@ -305,7 +227,7 @@ static GFL_PROC_RESULT WorldTradeProc_Main( GFL_PROC * proc, int * seq, void * p
   WORLDTRADE_WORK * wk  = work;
 
   //EXITして内部でオーバーレイが解放されるまで呼べる
-  if( *seq < SEQ_OUT )
+  if( GFL_NET_IsInit() )
   {
     // 受信強度リンクを反映させる
     DWC_UpdateConnection();
@@ -321,15 +243,6 @@ static GFL_PROC_RESULT WorldTradeProc_Main( GFL_PROC * proc, int * seq, void * p
 
   switch( *seq ){
   // サブ処理初期化
-  case SEQ_INIT_DPW:
-    //InitDpw(wk->heapPtr, wk->heapHandle, AllocFunc, FreeFunc );
-    if(NET_IsInit(wk)){
-      _wtHeapHandle = wk->heapHandle;
-      // wifiメモリ管理関数呼び出し
-      //DWC_SetMemFunc( AllocFunc, FreeFunc );
-      *seq = SEQ_INIT;
-    }
-    break;
   case SEQ_INIT:
     *seq = (*SubProcessTable[wk->sub_process][0])(wk, *seq);
     WorldTrade_WndSetting();
@@ -371,16 +284,11 @@ static GFL_PROC_RESULT WorldTradeProc_Main( GFL_PROC * proc, int * seq, void * p
 
   // 世界交換終了処理
   case SEQ_OUT:
-    GFL_NET_Exit(NULL);
     *seq  = SEQ_EXIT;
     break;
 
   case SEQ_EXIT:
-    if( GFL_NET_IsExit() )
-    {
-      return GFL_PROC_RES_FINISH;
-    }
-    break;
+    return GFL_PROC_RES_FINISH;
   }
   ServerWaitTimeFunc( wk );
   BoxPokeNumGet( wk );
@@ -423,7 +331,7 @@ static GFL_PROC_RESULT WorldTradeProc_End( GFL_PROC * proc, int * seq, void * pa
 #endif
 
   // セルアクターリソース解放
-  WirelessIconEasyEnd();
+  //WirelessIconEasyEnd();
 
 
 
@@ -465,9 +373,9 @@ static GFL_PROC_RESULT WorldTradeProc_End( GFL_PROC * proc, int * seq, void * pa
   WT_PRINT_Exit( &wk->print );
 
 
-  GFL_TCB_DeleteTask( wk->vblank_task );
-
   GFL_HEAP_DeleteHeap( HEAPID_WORLDTRADE );
+
+  GFL_OVERLAY_Unload( FS_OVERLAY_ID(dpw_common) );
 
   return GFL_PROC_RES_FINISH;
 }
@@ -574,7 +482,6 @@ static void InitWork( WORLDTRADE_WORK *wk, WORLDTRADE_PARAM *param )
   wk->timeWaitWork             = NULL;
 
   wk->country_code       = 0;
-  wk->is_net_init       = FALSE;
 }
 
 //------------------------------------------------------------------
@@ -1092,72 +999,6 @@ void WorldTrade_CLACT_PosChangeSub( GFL_CLWK* act, int x, int y )
 }
 
 
-/*---------------------------------------------------------------------------*
-  メモリ確保関数
- *---------------------------------------------------------------------------*/
-static void *AllocFunc( DWCAllocType name, u32   size, int align )
-{
-#pragma unused( name )
-    void * ptr;
-    OSIntrMode old;
-    old = OS_DisableInterrupts();
-    ptr = NNS_FndAllocFromExpHeapEx( _wtHeapHandle, size, align );
-    OS_RestoreInterrupts( old );
-    if(ptr == NULL){
-  }
-
-    return ptr;
-}
-
-/*---------------------------------------------------------------------------*
-  メモリ開放関数
- *---------------------------------------------------------------------------*/
-static void FreeFunc(DWCAllocType name, void* ptr,  u32 size)
-{
-#pragma unused( name, size )
-    OSIntrMode old;
-
-    if ( !ptr ) return;
-    old = OS_DisableInterrupts();
-    NNS_FndFreeToExpHeap( _wtHeapHandle, ptr );
-    OS_RestoreInterrupts( old );
-}
-
-
-
-//------------------------------------------------------------------
-/**
- * @brief   NitroDpw_Tr初期化
- *
- * @param   heapPtr   ヒープに割り当てるメモリバッファ
- * @param   headHandle  NNSからもらうヒープハンドル
- * @param   alloc   アローケーターのハンドル
- * @param   free    アロケーターの解放ハンドル
- *
- * @retval  none
- */
-//------------------------------------------------------------------
-static void InitDpw( void *heapPtr, NNSFndHeapHandle heapHandle, DWCAllocEx alloc, DWCFreeEx free  )
-{
-
-
-  _wtHeapHandle = heapHandle;
-
-  // イクニューモン転送
-//  CommVRAMDInitialize();
-
-  // wifiメモリ管理関数呼び出し
-  //DWC_SetMemFunc( alloc, free );
-
-  ;
-
-}
-
-
-
-
-
-
 //==============================================================================
 /**
  * @brief   WIFI接続状況取得
@@ -1305,7 +1146,7 @@ static void InitCLACT( WORLDTRADE_WORK *wk )
 static void FreeCLACT( WORLDTRADE_WORK *wk )
 {
   int i;
-
+  GFL_TCB_DeleteTask( wk->vblank_task );
 
   // ユニオンＯＢＪグラフィックデータ解放
   FreeFieldObjData( wk );
@@ -1550,32 +1391,5 @@ void WorldTrade_ExitSystem( WORLDTRADE_WORK *wk )
   GXS_SetVisibleWnd(GX_WNDMASK_NONE);
 
 
-}
-
-//----------------------------------------------------------------------------
-/**
- *  @brief  netの初期化終了コールバック
- *
- *  @param  void *wk_adrs   ワークアドレス
- */
-//-----------------------------------------------------------------------------
-static void NET_InitCallback( void *wk_adrs )
-{
-  WORLDTRADE_WORK * wk  = wk_adrs;
-  wk->is_net_init = TRUE;
-}
-
-//----------------------------------------------------------------------------
-/**
- *  @brief  netの初期化終了したかどうか
- *
- *  @param  const WORLDTRADE_WORK *wk   ワーク
- *
- *  @return TRUEならば初期化終了  FALSEならばまだ
- */
-//-----------------------------------------------------------------------------
-static BOOL NET_IsInit( const WORLDTRADE_WORK *wk )
-{
-  return wk->is_net_init;
 }
 

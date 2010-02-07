@@ -2648,6 +2648,7 @@ static BOOL debugMenuCallProc_WifiGts( DEBUG_MENU_EVENT_WORK *p_wk )
     p_gts->gts.config           = SaveData_GetConfig(p_gts->gts.savedata);
     p_gts->gts.record           = SaveData_GetRecord(p_gts->gts.savedata);
     p_gts->gts.myitem           = NULL;
+    p_gts->gts.gamesys          = p_gamesys;
     
     p_gts->gts.zukanmode        = 0;
     p_gts->gts.profileId        = WifiList_GetMyGSID( p_gts->gts.wifilist );

@@ -391,3 +391,4 @@ extern void GF_STR_PrintSimple( GFL_BMPWIN *bmpwin, u8 font_idx, STRBUF *str, in
 extern void GF_STR_PrintColor( GFL_BMPWIN *bmpwin, u8 font_idx, STRBUF *str, int x, int y, int put_type, PRINTSYS_LSB color, WT_PRINT *setup );
 
 
+extern void WT_PRINT_ClearBuffer( WT_PRINT *wk );

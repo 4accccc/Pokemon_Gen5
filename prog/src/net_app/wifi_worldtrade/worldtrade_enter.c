@@ -26,6 +26,7 @@
 #include "savedata/wifilist.h"
 //#include "savedata/zukanwork.h"
 //TODO
+#include "net_app/wifi_login.h"
 
 
 #include "net_app/worldtrade.h"
@@ -50,11 +51,6 @@
 //	プロトタイプ宣言
 //============================================================================================
 /*** 関数プロトタイプ ***/
-static void BgInit( void );
-static void BgExit( void );
-static void BgGraphicSet( WORLDTRADE_WORK * wk );
-static void BmpWinInit( WORLDTRADE_WORK *wk );
-static void BmpWinDelete( WORLDTRADE_WORK *wk );
 static void InitWork( WORLDTRADE_WORK *wk );
 static void FreeWork( WORLDTRADE_WORK *wk );
 static void _systemMessagePrint( WORLDTRADE_WORK *wk, int msgno );
@@ -87,6 +83,8 @@ static int Enter_WifiConnectionLogin( WORLDTRADE_WORK *wk );
 static int Enter_WifiConnectionLoginWait( WORLDTRADE_WORK *wk );
 static int Enter_DwcErrorPrint( WORLDTRADE_WORK *wk );
 static int Enter_ErrorPadWait( WORLDTRADE_WORK *wk );
+static int Enter_Wifilogin_start( WORLDTRADE_WORK *wk );
+static int Enter_Wifilogin_wait( WORLDTRADE_WORK *wk );
 
 
 static int printCommonFunc( GFL_BMPWIN *win, STRBUF *strbuf, int x, int flag, PRINTSYS_LSB color, int font, WT_PRINT *print );
@@ -119,6 +117,9 @@ enum{
 	
 	ENTER_DWC_ERROR_PRINT,
 	ENTER_ERROR_PAD_WAIT,
+
+  ENTER_WIFILOGIN_PROC_START,
+	ENTER_WIFILOGIN_PROC_WAIT,
 };
 
 static int (*Functable[])( WORLDTRADE_WORK *wk ) = {
@@ -149,6 +150,9 @@ static int (*Functable[])( WORLDTRADE_WORK *wk ) = {
 
 	Enter_DwcErrorPrint,		// ENTER_DWC_ERROR_PRINT
 	Enter_ErrorPadWait,			// ENTER_ERROR_PAD_WAIT
+
+  Enter_Wifilogin_start, //ENTER_WIFILOGIN_PROC_START,
+	Enter_Wifilogin_wait, //ENTER_WIFILOGIN_PROC_WAIT,
 };
 
 
@@ -182,6 +186,8 @@ enum{
 int WorldTrade_Enter_Init(WORLDTRADE_WORK *wk, int seq)
 {
 
+  WorldTrade_ExitSystem( wk );
+
 	// ワーク初期化
 	InitWork( wk );
 
@@ -195,26 +201,6 @@ int WorldTrade_Enter_Init(WORLDTRADE_WORK *wk, int seq)
 	OS_Printf( "******************** worldtrade_enter.c [172] MS ********************\n" );
 #endif
 
-	// BG設定
-	BgInit();
-
-	// BGグラフィック転送
-	BgGraphicSet( wk );
-
-	// BMPWIN確保
-	BmpWinInit( wk );
-
-
-	// BG面表示ON
-	GFL_DISP_GX_SetVisibleControl(  GX_PLANEMASK_BG0, VISIBLE_ON );
-	GFL_DISP_GX_SetVisibleControl(  GX_PLANEMASK_BG1, VISIBLE_ON );
-	GFL_DISP_GX_SetVisibleControl(  GX_PLANEMASK_BG2, VISIBLE_OFF );
-	GFL_DISP_GX_SetVisibleControl(  GX_PLANEMASK_BG3, VISIBLE_OFF );
-	GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG0, VISIBLE_ON );
-	GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG1, VISIBLE_ON );
-	GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG2, VISIBLE_OFF );
-	GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG3, VISIBLE_OFF );
-	
 
     // 通信エラー管理のために通信ルーチンをON
 //    CommStateWifiDPWStart( wk->param->savedata );
@@ -222,14 +208,16 @@ int WorldTrade_Enter_Init(WORLDTRADE_WORK *wk, int seq)
 //	WorldTrade_WifiIconAdd( wk );  //2768
 	
 
+  //@todo
+#if 0
 	if(!DWC_CheckInet()){
 		// 初回wifi接続の際は無条件で接続に
 		if(wk->param->connect){
 		    // 通信エラー管理のために通信ルーチンをON
 		    //CommStateWifiDPWStart( wk->param->savedata );
 			// WIFIせつぞくを開始
-			Enter_MessagePrint( wk, wk->LobbyMsgManager, msg_wifilobby_002, 1, 0x0f0f );
-			WorldTrade_SetNextSeq( wk, ENTER_MES_WAIT, ENTER_INTERNET_CONNECT );
+			//Enter_MessagePrint( wk, wk->LobbyMsgManager, msg_wifilobby_002, 1, 0x0f0f );
+			wk->subprocess_seq  = ENTER_INTERNET_CONNECT;
 			WorldTrade_TimeIconAdd(wk);
 		}else{
 			//sys_SleepOK(SLEEPTYPE_COMM);// スリープ禁止を解除。実際に通信する時にこちら側でNGにする
@@ -240,6 +228,16 @@ int WorldTrade_Enter_Init(WORLDTRADE_WORK *wk, int seq)
 	    //CommStateWifiDPWStart( wk->param->savedata );
 		wk->subprocess_seq = ENTER_FORCE_END_START;
 	}
+#else
+  if( !GFL_NET_IsInit() )
+  { 
+    wk->subprocess_seq = ENTER_WIFILOGIN_PROC_START;
+  }
+  else
+  { 
+    wk->subprocess_seq = ENTER_INTERNET_CONNECT;
+  }
+#endif
 	return SEQ_FADEIN;
 }
 //==============================================================================
@@ -264,8 +262,6 @@ int WorldTrade_Enter_Main(WORLDTRADE_WORK *wk, int seq)
 		wk->local_wait = 0;
 	}
 
-	ConnectBGPalAnm_Main(&wk->cbp);
-
 	return ret;
 }
 
@@ -282,14 +278,9 @@ int WorldTrade_Enter_Main(WORLDTRADE_WORK *wk, int seq)
 //==============================================================================
 int WorldTrade_Enter_End(WORLDTRADE_WORK *wk, int seq)
 {
-	ConnectBGPalAnm_End(&wk->cbp);
-
 	FreeWork( wk );
-	
-	BmpWinDelete( wk );
-	
-	BgExit();
-	ConnectBGPalAnm_OccSet(&wk->cbp, FALSE);
+
+  WorldTrade_InitSystem( wk );
 
 	// 次のサブプロセスを設定する
 	WorldTrade_SubProcessUpdate( wk );
@@ -305,232 +296,6 @@ int WorldTrade_Enter_End(WORLDTRADE_WORK *wk, int seq)
 	return SEQ_INIT;
 }
 
-
-//--------------------------------------------------------------------------------------------
-/**
- * BG設定
- *
- * @param	ini		BGLデータ
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-static void BgInit( void )
-{
-
-	// メイン画面テキスト面
-	{	
-		GFL_BG_BGCNT_HEADER TextBgCntDat = {
-			0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-			GX_BG_SCRBASE_0xf800, GX_BG_CHARBASE_0x00000, GX_BG_EXTPLTT_01,
-			0, 0, 0, FALSE
-		};
-		GFL_BG_SetBGControl( GFL_BG_FRAME0_M, &TextBgCntDat, GFL_BG_MODE_TEXT );
-		GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG0, VISIBLE_OFF );
-		GFL_BG_ClearScreen( GFL_BG_FRAME0_M );
-	}
-
-	// メイン画面背景面
-	{	
-		GFL_BG_BGCNT_HEADER TextBgCntDat = {
-			0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-			GX_BG_SCRBASE_0xf000, GX_BG_CHARBASE_0x08000, GX_BG_EXTPLTT_01,
-			1, 0, 0, FALSE
-		};
-		GFL_BG_SetBGControl( GFL_BG_FRAME1_M, &TextBgCntDat, GFL_BG_MODE_TEXT );
-		GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG1, VISIBLE_OFF );
-	}
-
-	// サブ画面文字版0
-	{	
-		GFL_BG_BGCNT_HEADER TextBgCntDat = {
-			0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-			GX_BG_SCRBASE_0xf000, GX_BG_CHARBASE_0x10000, GX_BG_EXTPLTT_01,
-			0, 0, 0, FALSE
-		};
-		GFL_BG_SetBGControl( GFL_BG_FRAME0_S, &TextBgCntDat, GFL_BG_MODE_TEXT );
-		GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG0, VISIBLE_OFF );
-		GFL_BG_ClearScreen( GFL_BG_FRAME0_S );
-
-	}
-
-
-	// サブ画面背景
-	{	
-		GFL_BG_BGCNT_HEADER TextBgCntDat = {
-			0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-			GX_BG_SCRBASE_0xd800, GX_BG_CHARBASE_0x08000, GX_BG_EXTPLTT_01,
-			2, 0, 0, FALSE
-		};
-		GFL_BG_SetBGControl( GFL_BG_FRAME1_S, &TextBgCntDat, GFL_BG_MODE_TEXT );
-		GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG1, VISIBLE_OFF );
-	}
-
-
-	GFL_BG_SetClearCharacter( GFL_BG_FRAME0_M, 32, 0, HEAPID_WORLDTRADE );
-	GFL_BG_SetClearCharacter( GFL_BG_FRAME0_S, 32, 0, HEAPID_WORLDTRADE );
-
-	GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_OFF );	//サブ画面OBJ面ＯＮ
-
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * BG解放
- *
- * @param	ini		BGLデータ
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-static void BgExit( void )
-{
-	GFL_BG_FreeBGControl( GFL_BG_FRAME1_S );
-	GFL_BG_FreeBGControl( GFL_BG_FRAME0_S );
-	GFL_BG_FreeBGControl( GFL_BG_FRAME1_M );
-	GFL_BG_FreeBGControl( GFL_BG_FRAME0_M );
-
-}
-
-
-//--------------------------------------------------------------------------------------------
-/**
- * グラフィックデータセット
- *
- * @param	wk		ポケモンリスト画面のワーク
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-static void BgGraphicSet( WORLDTRADE_WORK * wk )
-{
-	ARCHANDLE* p_handle;
-
-	p_handle = GFL_ARC_OpenDataHandle( ARCID_WIFIP2PMATCH, HEAPID_WORLDTRADE );
-
-	// 上下画面ＢＧパレット転送
-	GFL_ARCHDL_UTIL_TransVramPalette(    p_handle, NARC_wifip2pmatch_conect_NCLR, PALTYPE_MAIN_BG, 0, 0,  HEAPID_WORLDTRADE);
-	GFL_ARCHDL_UTIL_TransVramPalette(    p_handle, NARC_wifip2pmatch_conect_NCLR, PALTYPE_SUB_BG,  0, 0,  HEAPID_WORLDTRADE);
-	
-	// 会話フォントパレット転送
-	TalkFontPaletteLoad( PALTYPE_MAIN_BG, WORLDTRADE_TALKFONT_PAL*0x20, HEAPID_WORLDTRADE );
-	TalkFontPaletteLoad( PALTYPE_SUB_BG,  WORLDTRADE_TALKFONT_PAL*0x20, HEAPID_WORLDTRADE );
-
-	// 会話ウインドウグラフィック転送
-	BmpWinFrame_GraphicSet(	GFL_BG_FRAME0_M, WORLDTRADE_MESFRAME_CHR, 
-						WORLDTRADE_MESFRAME_PAL,  CONFIG_GetWindowType(wk->param->config), HEAPID_WORLDTRADE );
-
-	BmpWinFrame_GraphicSet(	GFL_BG_FRAME0_M, WORLDTRADE_MENUFRAME_CHR,
-						WORLDTRADE_MENUFRAME_PAL, 0, HEAPID_WORLDTRADE );
-
-
-
-
-	// メイン画面BG1キャラ転送
-	GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_wifip2pmatch_conect_NCGR, GFL_BG_FRAME1_M, 0, 0, 0, HEAPID_WORLDTRADE);
-
-	// メイン画面BG1スクリーン転送
-	GFL_ARCHDL_UTIL_TransVramScreen(   p_handle, NARC_wifip2pmatch_conect_01_NSCR, GFL_BG_FRAME1_M, 0, 32*24*2, 0, HEAPID_WORLDTRADE);
-
-
-
-	// サブ画面BG1キャラ転送
-	GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_wifip2pmatch_conect_sub_NCGR, GFL_BG_FRAME1_S, 0, 0, 0, HEAPID_WORLDTRADE);
-
-	// サブ画面BG1スクリーン転送
-	GFL_ARCHDL_UTIL_TransVramScreen(   p_handle, NARC_wifip2pmatch_conect_sub_NSCR, GFL_BG_FRAME1_S, 0, 32*24*2, 0, HEAPID_WORLDTRADE);
-
-	GFL_BG_SetBackGroundColor( GFL_BG_FRAME0_M, 0 );
-	GFL_BG_SetBackGroundColor( GFL_BG_FRAME0_S, 0 );
-
-	//Wifi接続BGパレットアニメシステム初期化
-	ConnectBGPalAnm_Init(&wk->cbp, p_handle, 
-		NARC_wifip2pmatch_conect_anm_NCLR, HEAPID_WORLDTRADE);
-
-
-	GFL_ARC_CloseDataHandle( p_handle );
-
-}
-
-#define SUB_TEXT_X		(  4 )
-#define SUB_TEXT_Y		(  4 )
-#define SUB_TEXT_SX		( 23 )
-#define SUB_TEXT_SY		( 16 )
-
-
-#define SUB_NUMBER_X	( 20 )
-#define SUB_NUMBER_Y	( 21 )
-#define SUB_NUMBER_SX	( 10 )
-#define SUB_NUMBER_SY	(  2 )
-
-#define CONNECT_TEXT_X	(  4 )
-#define CONNECT_TEXT_Y	(  1 )
-#define CONNECT_TEXT_SX	( 24 )
-#define CONNECT_TEXT_SY	(  2 )
-
-#define TALK_MESSAGE_OFFSET	 ( WORLDTRADE_MENUFRAME_CHR + MENU_WIN_CGX_SIZ )
-#define ERROR_MESSAGE_OFFSET ( TALK_MESSAGE_OFFSET   + TALK_WIN_SX*TALK_WIN_SY )
-#define TITLE_MESSAGE_OFFSET ( ERROR_MESSAGE_OFFSET  + SUB_TEXT_SX*SUB_TEXT_SY )
-#define YESNO_OFFSET 		 ( TITLE_MESSAGE_OFFSET  + CONNECT_TEXT_SX*CONNECT_TEXT_SY )
-//------------------------------------------------------------------
-/**
- * BMPWIN処理（文字パネルにフォント描画）
- *
- * @param   wk		GTS画面ワーク
- *
- * @retval  none		
- */
-//------------------------------------------------------------------
-static void BmpWinInit( WORLDTRADE_WORK *wk )
-{
-	// ---------- メイン画面 ------------------
-
-	// BG0面BMPWIN(エラー説明)ウインドウ確保・描画
-	wk->SubWin	= GFL_BMPWIN_CreateFixPos( GFL_BG_FRAME0_M,
-	SUB_TEXT_X, SUB_TEXT_Y, SUB_TEXT_SX, SUB_TEXT_SY, WORLDTRADE_TALKFONT_PAL, ERROR_MESSAGE_OFFSET );
-
-	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->SubWin), 0x0000 );
-	GFL_BMPWIN_MakeTransWindow_VBlank( wk->SubWin );
-
-	// BG0面BMPWIN(タイトル)ウインドウ確保・描画
-	wk->TitleWin	= GFL_BMPWIN_CreateFixPos( GFL_BG_FRAME0_M,
-	CONNECT_TEXT_X, CONNECT_TEXT_Y, CONNECT_TEXT_SX, CONNECT_TEXT_SY, WORLDTRADE_TALKFONT_PAL, TITLE_MESSAGE_OFFSET );
-
-	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->TitleWin), 0x0000 );
-	WorldTrade_TalkPrint( wk->TitleWin, wk->TitleString, 0, 1, 1, PRINTSYS_LSB_Make(15,14,0), &wk->print );
-	GFL_BMPWIN_MakeTransWindow_VBlank( wk->TitleWin );
-
-	// ----------- サブ画面名前表示BMP確保 ------------------
-	// BG0面BMP（会話ウインドウ）確保
-	wk->MsgWin	= GFL_BMPWIN_CreateFixPos( GFL_BG_FRAME0_M,
-		TALK_WIN_X, 
-		TALK_WIN_Y, 
-		TALK_WIN_SX, 
-		TALK_WIN_SY, WORLDTRADE_TALKFONT_PAL,  TALK_MESSAGE_OFFSET );
-	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MsgWin), 0x0000 );
-	GFL_BMPWIN_MakeTransWindow_VBlank( wk->MsgWin );
-
-}	
-
-//------------------------------------------------------------------
-/**
- * @brief   確保したBMPWINを解放
- *
- * @param   wk		GTS画面ワーク
- *
- * @retval  none
- */
-//------------------------------------------------------------------
-static void BmpWinDelete( WORLDTRADE_WORK *wk )
-{
-	
-	GFL_BMPWIN_Delete( wk->MsgWin );
-	GFL_BMPWIN_Delete( wk->TitleWin );
-	GFL_BMPWIN_Delete( wk->SubWin );
-
-
-}
-
 //------------------------------------------------------------------
 /**
  * 世界交換ワーク初期化
@@ -542,13 +307,7 @@ static void BmpWinDelete( WORLDTRADE_WORK *wk )
 //------------------------------------------------------------------
 static void InitWork( WORLDTRADE_WORK *wk )
 {
-
-	// 文字列バッファ作成
-	wk->TalkString  = GFL_STR_CreateBuffer( TALK_MESSAGE_BUF_NUM, HEAPID_WORLDTRADE );
-	wk->ErrorString = GFL_STR_CreateBuffer( DWC_ERROR_BUF_NUM,    HEAPID_WORLDTRADE );
-	wk->TitleString = GFL_MSG_CreateString( wk->MsgManager, msg_gtc_01_032 );
-
-
+  wk->procsys = GFL_PROC_LOCAL_boot( HEAPID_WORLDTRADE );
 }
 
 
@@ -563,11 +322,7 @@ static void InitWork( WORLDTRADE_WORK *wk )
 //------------------------------------------------------------------
 static void FreeWork( WORLDTRADE_WORK *wk )
 {
-
-	GFL_STR_DeleteBuffer( wk->TitleString ); 
-	GFL_STR_DeleteBuffer( wk->ErrorString ); 
-	GFL_STR_DeleteBuffer( wk->TalkString ); 
-
+  GFL_PROC_LOCAL_Exit( wk->procsys );
 }
 
 
@@ -592,8 +347,11 @@ static void FreeWork( WORLDTRADE_WORK *wk )
 static int Enter_Start( WORLDTRADE_WORK *wk)
 {
 	// WIFIコネクションに接続しますか？
-	Enter_MessagePrint( wk, wk->SystemMsgManager, dwc_message_0002, 1, 0x0f0f );
-	WorldTrade_SetNextSeq( wk, ENTER_MES_WAIT_YESNO_START, ENTER_CONNECT_YESNO_SELECT );
+  wk->subprocess_seq  = ENTER_INTERNET_CONNECT; //YES
+#if 0 //NO
+			WorldTrade_SubProcessChange( wk, WORLDTRADE_ENTER, 0 );
+			wk->subprocess_seq  = ENTER_END;
+#endif
 
 	wk->boxSearchFlag = 1;
 
@@ -629,6 +387,7 @@ static int Enter_Start( WORLDTRADE_WORK *wk)
  * @retval  int		サブシーケンス
  */
 //------------------------------------------------------------------
+//@delete
 static int Enter_ConnectYesNoSelect( WORLDTRADE_WORK *wk )
 {
 //	int ret = BmpYesNoSelectMain( wk->YesNoMenuWork, HEAPID_WORLDTRADE );
@@ -637,8 +396,8 @@ static int Enter_ConnectYesNoSelect( WORLDTRADE_WORK *wk )
 	if(ret==TOUCH_SW_RET_YES){
 			// WIFIせつぞくを開始
 			TOUCH_SW_FreeWork( wk->tss );
-			Enter_MessagePrint( wk, wk->LobbyMsgManager, msg_wifilobby_002, 1, 0x0f0f );
-			WorldTrade_SetNextSeq( wk, ENTER_MES_WAIT, ENTER_INTERNET_CONNECT );
+			//Enter_MessagePrint( wk, wk->LobbyMsgManager, msg_wifilobby_002, 1, 0x0f0f );
+			wk->subprocess_seq  = ENTER_INTERNET_CONNECT;
 			WorldTrade_TimeIconAdd(wk);
 	}else if(ret==TOUCH_SW_RET_NO){
 			// 終了
@@ -652,23 +411,6 @@ static int Enter_ConnectYesNoSelect( WORLDTRADE_WORK *wk )
 			wk->subprocess_seq  = ENTER_END;
 	}
 
-#if 0
-	if(ret!=BMPMENU_NULL){
-		if(ret==BMPMENU_CANCEL){
-			// 終了
-		    CommStateWifiDPWEnd();
-			WorldTrade_SubProcessChange( wk, WORLDTRADE_ENTER, 0 );
-			wk->subprocess_seq  = ENTER_END;
-
-		}else{
-			// WIFIせつぞくを開始
-			Enter_MessagePrint( wk, wk->LobbyMsgManager, msg_wifilobby_002, 1, 0x0f0f );
-			WorldTrade_SetNextSeq( wk, ENTER_MES_WAIT, ENTER_INTERNET_CONNECT );
-			WorldTrade_TimeIconAdd(wk);
-
-		}
-	}
-#endif
 	return SEQ_MAIN;
 	
 }
@@ -682,11 +424,39 @@ static int Enter_ConnectYesNoSelect( WORLDTRADE_WORK *wk )
  * @retval  int		サブシーケンス
  */
 //------------------------------------------------------------------
+//@todo
 static int Enter_EndStart( WORLDTRADE_WORK *wk ) 
 {
-	// 接続を終了しますか？
-	Enter_MessagePrint( wk, wk->MsgManager, msg_gtc_01_008, 1, 0x0f0f );
-	WorldTrade_SetNextSeq( wk, ENTER_MES_WAIT_YESNO_START, ENTER_END_YESNO_SELECT );
+
+  //YES
+  if( 1 )
+  { 
+    if(!DWC_CheckInet()){		
+      // 接続を開始しますか？
+      wk->subprocess_seq  = ENTER_START;
+    }else{
+      //				 WorldTrade_SubProcessChange( wk, WORLDTRADE_TITLE, 0 );
+      //				wk->subprocess_seq  = ENTER_END;
+
+      // 既に接続済みなら
+      // サーバーチェックの後タイトルメニューへ
+      WorldTrade_SubProcessChange( wk, WORLDTRADE_UPLOAD, MODE_SERVER_CHECK );
+      wk->sub_returnprocess = WORLDTRADE_TITLE;
+      wk->subprocess_seq    = ENTER_END;
+
+    }
+
+    //NO
+  }else if( 0 ){
+    // WIFIせつぞくを終了
+    if(DWC_CheckInet()){		
+      DWC_CleanupInet();
+    }
+    // 通信エラー管理のために通信ルーチンをOFF
+    //CommStateWifiDPWEnd();
+    WorldTrade_SubProcessChange( wk, WORLDTRADE_ENTER, 0 );
+    wk->subprocess_seq  = ENTER_END;
+  }
 
 	return SEQ_MAIN;
 }
@@ -700,6 +470,7 @@ static int Enter_EndStart( WORLDTRADE_WORK *wk )
  * @retval  int		サブシーケンス
  */
 //------------------------------------------------------------------
+//@delete
 static int Enter_EndYesNoSelect( WORLDTRADE_WORK *wk )
 {
 #if 1
@@ -781,9 +552,7 @@ static int Enter_EndYesNoSelect( WORLDTRADE_WORK *wk )
 static int Enter_ForceEndStart( WORLDTRADE_WORK *wk ) 
 {
 	// 接続を終了します
-	Enter_MessagePrint( wk, wk->SystemMsgManager, dwc_message_0011, 1, 0x0f0f );
-	WorldTrade_SetNextSeq( wk, ENTER_MES_WAIT, ENTER_FORCE_END );
-
+  wk->subprocess_seq  = ENTER_FORCE_END;
 	return SEQ_MAIN;
 }
 
@@ -821,8 +590,10 @@ static int Enter_ForceEnd( WORLDTRADE_WORK *wk )
 //------------------------------------------------------------------
 static int Enter_ForceEndMessage( WORLDTRADE_WORK *wk )
 {
-	Enter_MessagePrint( wk, wk->SystemMsgManager, dwc_message_0012, 1, 0x0f0f );
-	WorldTrade_SetNextSeq( wk, ENTER_MES_WAIT_1_SECOND, ENTER_END );
+	//Enter_MessagePrint( wk, wk->SystemMsgManager, dwc_message_0012, 1, 0x0f0f );
+	//WorldTrade_SetNextSeq( wk, ENTER_MES_WAIT_1_SECOND, ENTER_END );
+
+	wk->subprocess_seq  = ENTER_END;
 		
 	return SEQ_MAIN;
 }
@@ -1353,6 +1124,52 @@ static int Enter_ErrorPadWait( WORLDTRADE_WORK *wk )
 	return SEQ_MAIN;
 }
 
+//------------------------------------------------------------------
+/**
+ * @brief   WIFILOGINのPROCを呼ぶ
+ *
+ * @param   wk		GTS画面ワーク
+ *
+ * @retval  int		サブシーケンス
+ */
+//------------------------------------------------------------------
+static int Enter_Wifilogin_start( WORLDTRADE_WORK *wk )
+{ 
+  WIFILOGIN_PARAM *param;
+  wk->sub_proc_wk = GFL_HEAP_AllocMemory( HEAPID_WORLDTRADE, sizeof(WIFILOGIN_PARAM) );
+  GFL_STD_MemClear( wk->sub_proc_wk, sizeof(WIFILOGIN_PARAM) );
+  param = wk->sub_proc_wk;
+  param->gamedata     = GAMESYSTEM_GetGameData(wk->param->gamesys);
+  param->bg           = WIFILOGIN_BG_NORMAL;
+  param->display      = WIFILOGIN_DISPLAY_UP;
+
+  GFL_PROC_LOCAL_CallProc( wk->procsys, FS_OVERLAY_ID(wifi_login), 
+      &WiFiLogin_ProcData, wk->sub_proc_wk );
+
+  wk->subprocess_seq = ENTER_WIFILOGIN_PROC_WAIT;
+
+	return SEQ_MAIN;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief   WIFILOGINのPROC待ち
+ *
+ * @param   wk		GTS画面ワーク
+ *
+ * @retval  int		サブシーケンス
+ */
+//------------------------------------------------------------------
+static int Enter_Wifilogin_wait( WORLDTRADE_WORK *wk )
+{ 
+  if( GFL_PROC_MAIN_NULL == GFL_PROC_LOCAL_Main( wk->procsys ) )
+  { 
+    wk->subprocess_seq = ENTER_START;
+  }
+
+	return SEQ_MAIN;
+}
+
 
 //------------------------------------------------------------------
 /**
@@ -1380,25 +1197,6 @@ static int Enter_End( WORLDTRADE_WORK *wk)
 	
 	return SEQ_FADEOUT;
 }
-#if 0
-//------------------------------------------------------------------
-/**
- * @brief   はい・いいえ
- *
- * @param   wk		GTS画面ワーク
- *
- * @retval  int		サブシーケンス
- */
-//------------------------------------------------------------------
-static int Enter_YesNo( WORLDTRADE_WORK *wk)
-{
-	wk->tss = WorldTrade_TouchWinYesNoMake( WORLDTRADE_YESNO_PY2, YESNO_OFFSET, 8, 0 );
-	wk->subprocess_seq = wk->subprocess_nextseq;
-//	wk->subprocess_seq = ENTER_YESNO_SELECT;
-
-	return SEQ_MAIN;
-}
-#endif
 
 //------------------------------------------------------------------
 /**
@@ -1494,9 +1292,9 @@ static int Enter_ServerServiceError( WORLDTRADE_WORK *wk )
 		break;
 	}
 	// エラー表示
-	Enter_MessagePrint( wk, wk->MsgManager, msgno, 1, 0x0f0f );
-	WorldTrade_SetNextSeq( wk, ENTER_MES_WAIT, ENTER_SERVER_SERVICE_END );
-
+  // @todo
+	//Enter_MessagePrint( wk, wk->MsgManager, msgno, 1, 0x0f0f );
+  wk->subprocess_seq  = ENTER_SERVER_SERVICE_END;
 	OS_TPrintf("Error発生\n");
 
 	return SEQ_MAIN;
@@ -1515,25 +1313,25 @@ static int Enter_ServerServiceEnd( WORLDTRADE_WORK *wk )
 {
 	switch(wk->local_seq){
 	case 0:
-		Enter_MessagePrint( wk, wk->MsgManager, msg_gtc_cleanup_000, 1, 0x0f0f );
+		//Enter_MessagePrint( wk, wk->MsgManager, msg_gtc_cleanup_000, 1, 0x0f0f );
 		wk->local_seq++;
 		break;
 	case 1:
-		if( GF_MSG_PrintEndCheck( &wk->print )==0){
+		//if( GF_MSG_PrintEndCheck( &wk->print )==0){
 		    // 通信エラー管理のために通信ルーチンをOFF
 		    //CommStateWifiDPWEnd();
 		    DWC_CleanupInet();
 			wk->local_seq++;
-		}
+	//	}
 		break;
 	case 2:
-		Enter_MessagePrint( wk, wk->MsgManager, msg_gtc_cleanup_001, 1, 0x0f0f );
+		//Enter_MessagePrint( wk, wk->MsgManager, msg_gtc_cleanup_001, 1, 0x0f0f );
 		wk->local_seq++;
 		break;
 	case 3:
-		if(GF_MSG_PrintEndCheck( &wk->print )==0){
+	//	if(GF_MSG_PrintEndCheck( &wk->print )==0){
 			wk->local_seq++;
-		}
+	//	}
 		break;
 	default:
 		wk->local_wait++;
@@ -1556,6 +1354,7 @@ static int Enter_ServerServiceEnd( WORLDTRADE_WORK *wk )
  * @retval  int		サブシーケンス
  */
 //------------------------------------------------------------------
+//@delete
 static int Enter_MessageWait( WORLDTRADE_WORK *wk )
 {
 	if( GF_MSG_PrintEndCheck( &wk->print )==0){
@@ -1598,7 +1397,7 @@ static int Enter_MessageWait1Second( WORLDTRADE_WORK *wk )
 static int Enter_MessageWaitYesNoStart(WORLDTRADE_WORK *wk)
 {
 	if( GF_MSG_PrintEndCheck( &wk->print )==0){
-		wk->tss = WorldTrade_TouchWinYesNoMake(WORLDTRADE_YESNO_PY2, YESNO_OFFSET, 8, 0 );
+		//wk->tss = WorldTrade_TouchWinYesNoMake(WORLDTRADE_YESNO_PY2, YESNO_OFFSET, 8, 0 );
 		wk->subprocess_seq = wk->subprocess_nextseq;
 	}
 	return SEQ_MAIN;
@@ -1638,7 +1437,7 @@ void Enter_MessagePrint( WORLDTRADE_WORK *wk, GFL_MSGDATA *msgman, int msgno, in
 }
 
 
-	
+
 
 
 

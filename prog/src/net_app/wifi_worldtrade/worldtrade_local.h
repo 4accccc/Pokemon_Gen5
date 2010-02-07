@@ -36,7 +36,6 @@
 
 // Proc_Mainシーケンス定義
 enum {
-	SEQ_INIT_DPW=0,
 	SEQ_INIT,
 	SEQ_FADEIN,
 	SEQ_MAIN,
@@ -385,7 +384,7 @@ typedef struct _WORLDTRADE_WORK{
 	NNSFndHeapHandle heapHandle;						///< heapPtrを32バイトアライメントに合わせたポインタ
 	DWCInetControl   stConnCtrl;						///< DWC接続ワーク
 
-	GFL_PROC			*proc;								///< スタータス呼び出し用サブプロセスデータ
+	GFL_PROCSYS			*procsys;					    ///< サブプロセス用
 	PSTATUS_DATA	 statusParam;						///< スタータス呼び出し用パラメータ
 	DEMO_TRADE_PARAM tradeDemoParam;					///< 交換デモパラメータ
 	SHINKA_WORK		 *shinkaWork;						///< 通信進化デモ用ワーク
@@ -529,11 +528,11 @@ typedef struct _WORLDTRADE_WORK{
 	GFL_TCBSYS* tcbsys;										///< PMDS_taskがなくなったので自前で用意
 	void * task_wk;												///< タスク用ワーク
 	void * task_wk_area;									///< タスクワーク作成用エリア
-	BOOL	is_net_init;										///< NET_Initをしたかどうか
 	WT_PRINT	print;
 	GFL_G3D_CAMERA    * camera;						///< MCSSでポケモン表示するための正射影カメラ
 	MCSS_SYS_WORK *mcssSys;								///< MCSS本体
 	MCSS_WORK     *pokeMcss;							///< 一匹分
+  void * sub_proc_wk;                   ///< WIFILOGINやデモなどサブプロセスのワーク
 
 #ifdef PM_DEBUG
 	int 					frame;									//
