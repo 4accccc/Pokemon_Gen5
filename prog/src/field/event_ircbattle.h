@@ -16,6 +16,7 @@
 #include "field/fieldmap.h"
 #include "net_app/pokemontrade.h"
 #include "net_app/irc_compatible.h"
+#include "include/demo/comm_btl_demo.h"
 
 typedef struct _EVENT_IRCBATTLE_WORK EVENT_IRCBATTLE_WORK;
 
@@ -47,6 +48,8 @@ struct _EVENT_IRCBATTLE_WORK{
   int debugseq;
 #endif
   BATTLE_SETUP_PARAM* para;
+  COMM_BTL_DEMO_PARAM demo_prm;
+  //COMM_BATTLE_CALL_PROC_PARAM callprm;
 };
 
 

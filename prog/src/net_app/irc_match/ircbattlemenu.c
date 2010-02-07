@@ -107,10 +107,13 @@ FS_EXTERN_OVERLAY(ircbattlematch);
 typedef enum
 {
   PLT_DS,
+  PLT_OBJ,
   PLT_RESOURCE_MAX,
   CHAR_DS = PLT_RESOURCE_MAX,
+  CHAR_OBJ,
   CHAR_RESOURCE_MAX,
   ANM_DS = CHAR_RESOURCE_MAX,
+  ANM_OBJ,
   ANM_RESOURCE_MAX,
   CEL_RESOURCE_MAX,
 } _CELL_RESOURCE_TYPE;
@@ -123,6 +126,7 @@ typedef enum
 } _CELL_WK_ENUM;
 
 
+
 //--------------------------------------------
 // 内部ワーク
 //--------------------------------------------
@@ -133,6 +137,7 @@ enum _BATTLETYPE_SELECT {
   _SELECTBT_TRI,
   _SELECTBT_ROTATE,
   _SELECTBT_EXIT,
+   _SELECTBT_MAX,
 };
 
 
@@ -142,7 +147,8 @@ enum _IBMODE_SELECT {
 	_SELECTMODE_COMPATIBLE,	//相性チェック
   _SELECTMODE_FRIENDCODE,
   _SELECTMODE_EXIT,
-  _SELECTMODE_BATTLE2,
+  _SELECTMODE_MAX,
+  _SELECTMODE_BATTLE2 = _SELECTMODE_MAX,
   _SELECTMODE_POKE_CHANGE2,
 };
 
@@ -150,6 +156,7 @@ enum _IBMODE_ENTRY {
   _ENTRYNUM_DOUBLE = 0,
   _ENTRYNUM_FOUR,
   _ENTRYNUM_EXIT,
+   _ENTRYNUM_MAX,
 };
 
 enum _IBMODE_CHANGE {
@@ -191,7 +198,8 @@ struct _IRC_BATTLE_MENU {
   GFL_CLUNIT	*cellUnit;
   u32 cellRes[CEL_RESOURCE_MAX];
   GFL_CLWK* curIcon[_CELL_DISP_NUM];
-
+  GFL_CLWK* buttonObj[_SELECTMODE_MAX];
+  
   int yoffset;
   GFL_BMPWIN* infoDispWin;
   PRINT_STREAM* pStream;
@@ -235,6 +243,9 @@ static void _modeSelectBattleTypeInit(IRC_BATTLE_MENU* pWork);
 static void _buttonWindowDelete(IRC_BATTLE_MENU* pWork);
 static void _touchScreenChange(IRC_BATTLE_MENU* pWork,int no);
 static void _ReturnButtonStart(IRC_BATTLE_MENU* pWork);
+static void _CreateButtonObj2(IRC_BATTLE_MENU* pWork);
+static void _CreateButtonObj3(IRC_BATTLE_MENU* pWork);
+static void _CreateButtonObj(IRC_BATTLE_MENU* pWork);
 
 
 
@@ -331,7 +342,7 @@ static void _createSubBg(IRC_BATTLE_MENU* pWork)
     GFL_BG_BGCNT_HEADER TextBgCntDat = {
       0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
       GX_BG_SCRBASE_0xf000, GX_BG_CHARBASE_0x08000, 0x8000,GX_BG_EXTPLTT_01,
-      1, 0, 0, FALSE
+      0, 0, 0, FALSE
       };
 
     GFL_BG_SetBGControl(
@@ -698,7 +709,7 @@ static void _modeSelectMenuInit(IRC_BATTLE_MENU* pWork)
 	int aMsgBuff[]={IRCBTL_STR_01,IRCBTL_STR_02,IRCBTL_STR_15,IRCBTL_STR_14};
 
   _touchScreenChange( pWork, NARC_cg_comm_comm_ir_btn_NSCR);
-  
+  _CreateButtonObj(pWork);
 	_buttonWindowCreate(NELEMS(aMsgBuff), aMsgBuff, pWork, wind_irmain);
 
 	pWork->pButton = GFL_BMN_Create( btn_irmain, _BttnCallBack, pWork,  pWork->heapID );
@@ -763,12 +774,31 @@ static void _modeFadeoutStart(IRC_BATTLE_MENU* pWork)
  */
 //------------------------------------------------------------------------------
 
-static void _modeAppWinFlash(IRC_BATTLE_MENU* pWork)
+
+static void _modeAppWinFlashCallback(u32 param, fx32 currentFrame )
 {
-  if( _flashDispAndCheck( pWork , Btn_PalettePos) ){
-    _CHANGE_STATE(pWork,_modeFadeoutStart);        // 終わり
+  IRC_BATTLE_MENU* pWork = (IRC_BATTLE_MENU*)param;
+  {
+    if(WIRELESSSAVE_ON == CONFIG_GetWirelessSaveMode(SaveData_GetConfig(IrcBattle_GetSAVE_CONTROL_WORK(pWork->dbw)))){
+      _CHANGE_STATE(pWork, _modeReportInit);
+    }
+    else if(pWork->selectType == EVENTIRCBTL_ENTRYMODE_TRADE ||
+       pWork->selectType == EVENTIRCBTL_ENTRYMODE_COMPATIBLE ||
+       pWork->selectType == EVENTIRCBTL_ENTRYMODE_FRIEND ||
+       pWork->selectType ==  EVENTIRCBTL_ENTRYMODE_EXIT){
+      _CHANGE_STATE(pWork, _modeFadeoutStart);
+    }
+    else{
+      _CHANGE_STATE(pWork, _modeSelectEntryNumInit);        // 人数確認
+    }
   }
 }
+
+static void _modeButtonFlash2(IRC_BATTLE_MENU* pWork)
+{
+}
+
+
 
 //------------------------------------------------------------------------------
 /**
@@ -779,20 +809,17 @@ static void _modeAppWinFlash(IRC_BATTLE_MENU* pWork)
 
 static void _modeButtonFlash(IRC_BATTLE_MENU* pWork)
 {
-  if( _flashDispAndCheck( pWork , Btn_PalettePos) ){
+  GFL_CLWK_ANM_CALLBACK cbwk;
 
-    if(WIRELESSSAVE_ON == CONFIG_GetWirelessSaveMode(SaveData_GetConfig(IrcBattle_GetSAVE_CONTROL_WORK(pWork->dbw)))){
-      _CHANGE_STATE(pWork, _modeReportInit);
-    }
-    else if(pWork->selectType == EVENTIRCBTL_ENTRYMODE_TRADE ||
-       pWork->selectType == EVENTIRCBTL_ENTRYMODE_COMPATIBLE ||
-       pWork->selectType == EVENTIRCBTL_ENTRYMODE_FRIEND){
-      _CHANGE_STATE(pWork, _modeFadeoutStart);
-    }
-    else{
-      _CHANGE_STATE(pWork, _modeSelectEntryNumInit);        // 人数確認
-    }
-  }
+  cbwk.callback_type = CLWK_ANM_CALLBACK_TYPE_LAST_FRM ;  // CLWK_ANM_CALLBACK_TYPE
+  cbwk.param = (u32)pWork;          // コールバックワーク
+  cbwk.p_func = _modeAppWinFlashCallback; // コールバック関数
+  GFL_CLACT_WK_SetAutoAnmFlag(pWork->buttonObj[pWork->bttnid],TRUE);
+  GFL_CLACT_WK_StartAnmCallBack( pWork->buttonObj[pWork->bttnid], &cbwk );
+  GFL_CLACT_WK_StartAnm( pWork->buttonObj[pWork->bttnid] );
+  
+  _CHANGE_STATE(pWork,_modeButtonFlash2);
+
 }
 
 
@@ -838,7 +865,7 @@ static BOOL _modeSelectMenuButtonCallback(int bttnid,IRC_BATTLE_MENU* pWork)
 		PMSND_PlaySystemSE(SEQ_SE_CANCEL1);
 //    APP_TASKMENU_WIN_SetDecide(pWork->pAppWin, TRUE);
     pWork->selectType = EVENTIRCBTL_ENTRYMODE_EXIT;
-    _CHANGE_STATE(pWork,_modeAppWinFlash);        // 終わり
+    _CHANGE_STATE(pWork,_modeButtonFlash);        // 終わり
     break;
   default:
     break;
@@ -874,6 +901,9 @@ static void _modeSelectEntryNumInit(IRC_BATTLE_MENU* pWork)
 {
   int aMsgBuff[]={IRCBTL_STR_04,IRCBTL_STR_05};
 
+
+  _CreateButtonObj2(pWork);
+
   _touchScreenChange( pWork, NARC_cg_comm_comm_vs1_btn_NSCR);
 
   _buttonWindowCreate(2, aMsgBuff, pWork, wind_irvs1);
@@ -888,6 +918,29 @@ static void _modeSelectEntryNumInit(IRC_BATTLE_MENU* pWork)
 }
 
 
+
+
+
+static void _modeAppWinFlashCallback2(u32 param, fx32 currentFrame )
+{
+  IRC_BATTLE_MENU* pWork = (IRC_BATTLE_MENU*)param;
+
+  if(pWork->selectType == EVENTIRCBTL_ENTRYMODE_MULTH){
+    _CHANGE_STATE(pWork, _modeFadeoutStart);
+  }
+  else{
+    _CHANGE_STATE(pWork, _modeSelectBattleTypeInit);        // バトルモード
+  }
+}
+
+
+static void _modeSelectEntryButtonFlash2(IRC_BATTLE_MENU* pWork)
+{
+}
+
+
+
+
 //------------------------------------------------------------------------------
 /**
  * @brief   モードセレクト画面タッチ処理 タッチした際に画面が点滅
@@ -897,15 +950,22 @@ static void _modeSelectEntryNumInit(IRC_BATTLE_MENU* pWork)
 
 static void _modeSelectEntryButtonFlash(IRC_BATTLE_MENU* pWork)
 {
-  if( _flashDispAndCheck( pWork, Btn_PaletteSelectEntry) ){
+  int i=0;
+  GFL_CLWK_ANM_CALLBACK cbwk;
 
-    if(pWork->selectType == EVENTIRCBTL_ENTRYMODE_MULTH){
-      _CHANGE_STATE(pWork, _modeFadeoutStart);
-    }
-    else{
-      _CHANGE_STATE(pWork, _modeSelectBattleTypeInit);        // バトルモード
-    }
+  if(pWork->selectType == EVENTIRCBTL_ENTRYMODE_MULTH){
+    i=1;
   }
+
+  
+  cbwk.callback_type = CLWK_ANM_CALLBACK_TYPE_LAST_FRM;  // CLWK_ANM_CALLBACK_TYPE
+  cbwk.param = (u32)pWork;          // コールバックワーク
+  cbwk.p_func = _modeAppWinFlashCallback2; // コールバック関数
+  GFL_CLACT_WK_SetAutoAnmFlag(pWork->buttonObj[i],TRUE);
+  GFL_CLACT_WK_StartAnmCallBack( pWork->buttonObj[i], &cbwk );
+  GFL_CLACT_WK_StartAnm( pWork->buttonObj[i] );
+
+  _CHANGE_STATE(pWork, _modeSelectEntryButtonFlash2);
 }
 
 //------------------------------------------------------------------------------
@@ -969,6 +1029,7 @@ static void _modeSelectBattleTypeInit(IRC_BATTLE_MENU* pWork)
 {
   int aMsgBuff[]={IRCBTL_STR_06,IRCBTL_STR_07,IRCBTL_STR_08,IRCBTL_STR_32};
 
+  _CreateButtonObj3(pWork);
   _touchScreenChange( pWork, NARC_cg_comm_comm_vs2_btn_NSCR);
 
   _buttonWindowCreate(4,aMsgBuff,pWork,wind_irvs2);
@@ -982,6 +1043,19 @@ static void _modeSelectBattleTypeInit(IRC_BATTLE_MENU* pWork)
 
 }
 
+
+static void _modeSelectBattleTypeButtonCallback2(u32 param, fx32 currentFrame )
+{
+  IRC_BATTLE_MENU* pWork = (IRC_BATTLE_MENU*)param;
+
+  _CHANGE_STATE(pWork, _modeFadeoutStart);
+}
+
+static void _modeSelectBattleTypeButtonFlash2(IRC_BATTLE_MENU* pWork)
+{
+}
+
+
 //------------------------------------------------------------------------------
 /**
  * @brief   モードセレクト画面タッチ処理 タッチした際に画面が点滅
@@ -991,9 +1065,35 @@ static void _modeSelectBattleTypeInit(IRC_BATTLE_MENU* pWork)
 
 static void _modeSelectBattleTypeButtonFlash(IRC_BATTLE_MENU* pWork)
 {
-  if( _flashDispAndCheck( pWork, Btn_PaletteSelectBattle) ){
-    _CHANGE_STATE(pWork, _modeFadeoutStart);
+int i;
+  GFL_CLWK_ANM_CALLBACK cbwk;
+
+  switch( pWork->selectType)
+  {
+  case EVENTIRCBTL_ENTRYMODE_SINGLE:
+    i = 0;
+    break;
+  case EVENTIRCBTL_ENTRYMODE_DOUBLE:
+    i = 1;
+    break;
+  case EVENTIRCBTL_ENTRYMODE_TRADE:
+    i = 2;
+    break;
+  case EVENTIRCBTL_ENTRYMODE_MULTH:
+    i = 3;
+    break;
+  default:
+    i = 4;
+    break;
   }
+
+  cbwk.callback_type = CLWK_ANM_CALLBACK_TYPE_LAST_FRM ;  // CLWK_ANM_CALLBACK_TYPE
+  cbwk.param = (u32)pWork;          // コールバックワーク
+  cbwk.p_func = _modeSelectBattleTypeButtonCallback2; // コールバック関数
+  GFL_CLACT_WK_SetAutoAnmFlag(pWork->buttonObj[i],TRUE);
+  GFL_CLACT_WK_StartAnmCallBack( pWork->buttonObj[i], &cbwk );
+  GFL_CLACT_WK_StartAnm( pWork->buttonObj[i] );
+  _CHANGE_STATE(pWork,_modeSelectBattleTypeButtonFlash2);
 }
 
 
@@ -1050,9 +1150,8 @@ static BOOL _modeSelectBattleTypeButtonCallback(int bttnid,IRC_BATTLE_MENU* pWor
     break;
   case _SELECTBT_EXIT:
     PMSND_PlaySystemSE(SEQ_SE_CANCEL1);
-//    APP_TASKMENU_WIN_SetDecide(pWork->pAppWin, TRUE);
     pWork->selectType = EVENTIRCBTL_ENTRYMODE_EXIT;
-    _CHANGE_STATE(pWork,_modeAppWinFlash3);        // 終わり
+    _CHANGE_STATE(pWork,_modeSelectBattleTypeButtonFlash);        // 終わり
 
   default:
     break;
@@ -1086,7 +1185,7 @@ static void _modeSelectEntryNumWait(IRC_BATTLE_MENU* pWork)
 static void _CLACT_SetResource(IRC_BATTLE_MENU* pWork)
 {
   int i=0;
-
+  {
   ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_IRCBATTLE, pWork->heapID );
 
   pWork->cellRes[CHAR_DS] =
@@ -1099,8 +1198,126 @@ static void _CLACT_SetResource(IRC_BATTLE_MENU* pWork)
     GFL_CLGRP_CELLANIM_Register(
       p_handle , NARC_ircbattle_ir_ani_NCER, NARC_ircbattle_ir_ani_NANR , pWork->heapID  );
   GFL_ARC_CloseDataHandle(p_handle);
+  }
 
+  {
+    ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_CG_COMM, pWork->heapID );
+    pWork->cellRes[CHAR_OBJ] =
+      GFL_CLGRP_CGR_Register( p_handle , NARC_cg_comm_comm_btn_NCGR ,
+                              FALSE , CLSYS_DRAW_SUB , pWork->heapID );
+    pWork->cellRes[PLT_OBJ] =
+      GFL_CLGRP_PLTT_RegisterEx(
+        p_handle ,NARC_cg_comm_comm_btn_NCLR , CLSYS_DRAW_SUB ,    0, 0, 10, pWork->heapID  );
+    pWork->cellRes[ANM_OBJ] =
+      GFL_CLGRP_CELLANIM_Register(
+        p_handle , NARC_cg_comm_comm_btn_NCER, NARC_cg_comm_comm_btn_NANR , pWork->heapID  );
+    
+		GFL_ARC_CloseDataHandle(p_handle);
+	}
 }
+
+
+static void _RemoveButtonObj(IRC_BATTLE_MENU* pWork)
+{
+  int i;
+  
+  for(i=0;i<_SELECTMODE_MAX;i++){
+    if(pWork->buttonObj[i]){
+      GFL_CLACT_WK_Remove(pWork->buttonObj[i]);
+      pWork->buttonObj[i]=NULL;
+    }
+  }
+}
+
+
+//最初のボタン
+static void _CreateButtonObj(IRC_BATTLE_MENU* pWork)
+{
+  int i;
+  u8 buffx[]={ 128,    128,128,    128,     224};
+  u8 buffy[]={ 192/2 , 192/2,192/2 , 192/2, 177};
+  u8 buttonno[]={2,1,3,4, 0};
+
+  _RemoveButtonObj(pWork);
+
+  for(i=0;i<_SELECTMODE_MAX;i++){
+    GFL_CLWK_DATA cellInitData;
+    cellInitData.pos_x = buffx[i];
+    cellInitData.pos_y = buffy[i];
+    cellInitData.anmseq = buttonno[i];
+    cellInitData.softpri = 0;
+    cellInitData.bgpri = 1;
+    pWork->buttonObj[i] = GFL_CLACT_WK_Create( pWork->cellUnit ,
+                                               pWork->cellRes[CHAR_OBJ],
+                                               pWork->cellRes[PLT_OBJ],
+                                               pWork->cellRes[ANM_OBJ],
+                                               &cellInitData ,CLSYS_DRAW_SUB , pWork->heapID );
+    GFL_CLACT_WK_SetAutoAnmFlag( pWork->buttonObj[i] , FALSE );
+    GFL_CLACT_WK_SetDrawEnable( pWork->buttonObj[i], TRUE );
+  }
+}
+
+
+
+///人数モード選択
+static void _CreateButtonObj2(IRC_BATTLE_MENU* pWork)
+{
+  int i;
+  u8 buffx[]={ 128,    128,     224};
+  u8 buffy[]={ 64+8 , 64+8+40+8 ,  177};
+  u8 buttonno[]={9, 10, 0};
+
+  _RemoveButtonObj(pWork);
+
+  
+  for(i=0;i<_ENTRYNUM_MAX;i++){
+    GFL_CLWK_DATA cellInitData;
+
+    cellInitData.pos_x = buffx[i];
+    cellInitData.pos_y = buffy[i];
+    cellInitData.anmseq = buttonno[i];
+    cellInitData.softpri = 0;
+    cellInitData.bgpri = 1;
+    pWork->buttonObj[i] = GFL_CLACT_WK_Create( pWork->cellUnit ,
+                                               pWork->cellRes[CHAR_OBJ],
+                                               pWork->cellRes[PLT_OBJ],
+                                               pWork->cellRes[ANM_OBJ],
+                                               &cellInitData ,CLSYS_DRAW_SUB , pWork->heapID );
+    GFL_CLACT_WK_SetAutoAnmFlag( pWork->buttonObj[i] , FALSE );
+    GFL_CLACT_WK_SetDrawEnable( pWork->buttonObj[i], TRUE );
+  }
+}
+
+
+
+///バトルのモード選択
+static void _CreateButtonObj3(IRC_BATTLE_MENU* pWork)
+{
+  int i;
+  u8 buffx[]={ 128,    128,  128,    128,     224};
+  u8 buffy[]={ 64-40 , 64 , 64+40 , 64+40*2, 177};
+  u8 buttonno[]={5, 6, 7, 8, 0};
+
+  _RemoveButtonObj(pWork);
+  
+  for(i=0;i<_SELECTBT_MAX;i++){
+    GFL_CLWK_DATA cellInitData;
+
+    cellInitData.pos_x = buffx[i];
+    cellInitData.pos_y = buffy[i];
+    cellInitData.anmseq = buttonno[i];
+    cellInitData.softpri = 0;
+    cellInitData.bgpri = 1;
+    pWork->buttonObj[i] = GFL_CLACT_WK_Create( pWork->cellUnit ,
+                                               pWork->cellRes[CHAR_OBJ],
+                                               pWork->cellRes[PLT_OBJ],
+                                               pWork->cellRes[ANM_OBJ],
+                                               &cellInitData ,CLSYS_DRAW_SUB , pWork->heapID );
+    GFL_CLACT_WK_SetAutoAnmFlag( pWork->buttonObj[i] , FALSE );
+    GFL_CLACT_WK_SetDrawEnable( pWork->buttonObj[i], TRUE );
+  }
+}
+
 
 static void _CLACT_SetAnim(IRC_BATTLE_MENU* pWork,int x,int y,int no,int anm)
 {  
@@ -1133,7 +1350,13 @@ static void _CLACT_SetAnim(IRC_BATTLE_MENU* pWork,int x,int y,int no,int anm)
 static void _CLACT_Release(IRC_BATTLE_MENU* pWork)
 {
   int i=0;
-   
+
+  for(i = 0 ; i < _SELECTMODE_MAX ;i++){
+    if(pWork->buttonObj[i]!=NULL){
+      GFL_CLACT_WK_Remove(pWork->buttonObj[i]);
+      pWork->buttonObj[i]=NULL;
+    }
+  }
   for(i = 0 ; i < _CELL_DISP_NUM ;i++){
     if(pWork->curIcon[i]!=NULL){
       GFL_CLACT_WK_Remove(pWork->curIcon[i]);
@@ -1471,7 +1694,9 @@ static GFL_PROC_RESULT IrcBattleMenuProcInit( GFL_PROC * proc, int * seq, void *
 
     _CLACT_SetAnim(pWork,88,72,CELL_IRWAVE1,NANR_ir_ani_CellAnime3);
     _CLACT_SetAnim(pWork,168,110,CELL_IRWAVE2,NANR_ir_ani_CellAnime2);
-    
+
+//    _CreateButtonObj(pWork);
+      
 		WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEIN , WIPE_TYPE_FADEIN , 
 									WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
 		_CHANGE_STATE(pWork,_modeSelectMenuInit);
@@ -1482,6 +1707,7 @@ static GFL_PROC_RESULT IrcBattleMenuProcInit( GFL_PROC * proc, int * seq, void *
 
   }
   GFL_DISP_GX_SetVisibleControlDirect( GX_PLANEMASK_BG0|GX_PLANEMASK_BG1|GX_PLANEMASK_OBJ );
+  GFL_DISP_GXS_SetVisibleControlDirect( GX_PLANEMASK_BG0|GX_PLANEMASK_BG1|GX_PLANEMASK_BG2|GX_PLANEMASK_OBJ );
   
   return GFL_PROC_RES_FINISH;
 }

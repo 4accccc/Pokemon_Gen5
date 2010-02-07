@@ -767,7 +767,7 @@ static int CommChildRecvStart(MYSTERYGIFT_WORK *wk)
 	if(wk->comm_type == MYSTERYCOMM_TYPE_DIRECT)
 	{
 		GFL_NETHANDLE *netHandle = GFL_NET_HANDLE_GetCurrentHandle();
-		GFL_NET_TimingSyncStart(netHandle,MYSTERYGIFT_SYNC_CODE);
+//		GFL_NET_TimingSyncStart(netHandle,MYSTERYGIFT_SYNC_CODE);
 		return MYSTERYGIFT_SEQ_REQEST_CHILD;
 	} else {
 		return MYSTERYGIFT_SEQ_AGB_RECV_CHECK_CHILD;
@@ -3345,7 +3345,7 @@ static GFL_PROC_RESULT MysteryGiftProc_Main(GFL_PROC * proc, int * seq , void *p
 			if(sys.trg & PAD_BUTTON_DECIDE){
 	Snd_SePlay(SEQ_SE_DP_SELECT);
 	//	wk->sync_wait = 1;
-	CommTimingSyncStart(MYSTERYGIFT_SYNC_CODE);
+//	CommTimingSyncStart(MYSTERYGIFT_SYNC_CODE);
 	*seq = MYSTERYGIFT_SEQ_SYNC_CHILD_TIMING;
 #ifdef DEBUG_ONLY_FOR_mituhara
 	OS_Printf("送信開始\n");
@@ -3527,7 +3527,7 @@ static GFL_PROC_RESULT MysteryGiftProc_Main(GFL_PROC * proc, int * seq , void *p
 		// セーブ完了待ち
 		if(MysteryLib_GetSaveStatus() == MYSTERYLIB_SEQ_SAVE_LAST){
 			// 親機と同期を取る
-			GFL_NET_TimingSyncStart(selfHandle,MYSTERYGIFT_SYNC_CODE2);
+//			GFL_NET_TimingSyncStart(selfHandle,MYSTERYGIFT_SYNC_CODE2);
 			*seq = MYSTERYGIFT_SEQ_RECV_WAIT_CHILD30;
 			wk->sync_wait = 120;	// タイムアウト用カウンタ
 

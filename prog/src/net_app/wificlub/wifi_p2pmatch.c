@@ -5194,7 +5194,7 @@ static int _parentModeCallMenuYesNo( WIFIP2PMATCH_WORK *wk, int seq )
 
 
         GFL_STD_MemClear(&wk->matchGameMode,sizeof(wk->matchGameMode));
-        GFL_NET_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle() ,_TIMING_GAME_CHECK2);
+        GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle() ,_TIMING_GAME_CHECK2,WB_NET_WIFICLUB);
         wk->bRetryBattle = FALSE;
         _CHANGESTATE(wk,WIFIP2PMATCH_MODE_CALL_SEND);
       }
@@ -5367,7 +5367,7 @@ static int _parentModeCallMenuSend( WIFIP2PMATCH_WORK *wk, int seq )
 {
   if(_connectingErrFunc(wk)){
   }
-  else if(GFL_NET_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_GAME_CHECK2)){
+  else if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_GAME_CHECK2, WB_NET_WIFICLUB)){
     //    else if(CommIsTimingSync(_TIMING_GAME_CHECK2)){
     u16 status = _WifiMyStatusGet( wk, wk->pMatch );
     u16 gamemode = _WifiMyGameModeGet( wk, wk->pMatch );
@@ -5405,7 +5405,7 @@ static int _parentModeCallMenuCheck( WIFIP2PMATCH_WORK *wk, int seq )
     NET_PRINT("_parentModeCallMenuCheck %d %d\n",wk->matchGameMode[id], gamemode);
 
     if(wk->matchGameMode[id] == gamemode){
-      GFL_NET_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle() ,_TIMING_GAME_START);
+      GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle() ,_TIMING_GAME_START,WB_NET_WIFICLUB);
       _CHANGESTATE(wk,WIFIP2PMATCH_MODE_MYSTATUS_WAIT);
     }
     else{  // 異なるステートを選択した場合
@@ -5432,12 +5432,12 @@ static int _parentModeCallMyStatusWait( WIFIP2PMATCH_WORK *wk, int seq )
 
   if(_connectingErrFunc(wk)){
   }
-  else if(GFL_NET_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_GAME_START)){
+  else if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_GAME_START, WB_NET_WIFICLUB)){
     //   CommInfoSendPokeData();    //@@OO
     GFL_NET_SetAutoErrorCheck(TRUE);
     GFL_NET_SetNoChildErrorCheck(TRUE);
 
-    GFL_NET_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle() ,_TIMING_GAME_START2);
+    GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle() ,_TIMING_GAME_START2,WB_NET_WIFICLUB);
     _CHANGESTATE(wk,WIFIP2PMATCH_MODE_CALL_WAIT);
   }
   return seq;
@@ -5472,7 +5472,7 @@ static int _parentModeCallMenuWait( WIFIP2PMATCH_WORK *wk, int seq )
 
   if(_connectingErrFunc(wk)){
   }
-  else if(GFL_NET_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_GAME_START2)
+  else if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_GAME_START2,WB_NET_WIFICLUB)
           && (_parent_MsgEndCheck( wk ) == TRUE) ){   // メッセージの終了も待つように変更 08.06.01  tomoya
     GFL_NET_DWC_FriendAutoInputCheck( WifiList_GetDwcDataPtr(GAMEDATA_GetWiFiList(wk->pGameData), 0));
 
@@ -5708,7 +5708,7 @@ static int _exitEnd( WIFIP2PMATCH_WORK *wk, int seq )
 
 static int _nextBattleYesNo( WIFIP2PMATCH_WORK *wk, int seq )
 {
-  if(GFL_NET_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_BATTLE_END)==FALSE){
+  if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_BATTLE_END,WB_NET_WIFICLUB)==FALSE){
     return seq;
   }
   // 通信同期中に電源を切られたら、ずっと同期待ちしてしまうので、通信同期後にオートエラーチェックを

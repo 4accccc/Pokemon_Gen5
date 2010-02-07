@@ -13,6 +13,8 @@
 #include "arc_def.h"
 #include "net_app/gsync.h"
 
+#include "debug/debugwin_sys.h"
+
 #include "infowin/infowin.h"
 
 #include "system/main.h"
@@ -49,14 +51,25 @@ FS_EXTERN_OVERLAY(ui_common);
 typedef enum
 {
   PLT_NEGOOBJ,  
+  PLT_MENUBAR,  
   PLT_RESOURCE_MAX,
   CHAR_NEGOOBJ = PLT_RESOURCE_MAX,
+  CHAR_MENUBAR,
   CHAR_RESOURCE_MAX,
   ANM_NEGOOBJ = CHAR_RESOURCE_MAX,
+  ANM_MENUBAR,
   ANM_RESOURCE_MAX,
   CEL_RESOURCE_MAX,
 } _CELL_RESOURCE_TYPE;
 
+
+typedef enum
+{
+_SCROLLBAR_OAM_TITLEP,
+_SCROLLBAR_OAM_BAR,
+_SCROLLBAR_OAM_CHIP,
+_SCROLLBAR_OAM_NUM
+} _SCROLLBAR_OAM_TYPE;
 
 #define _CELL_DISP_NUM (12)
 
@@ -76,11 +89,16 @@ struct _GTSNEGO_DISP_WORK {
   BLINKPALANM_WORK* pBlinkUnder;
   BOOL bgscrollRenew;
   int bgscroll;
-  int listmax;
+  int bgscrollType;
+  int bgscrollPos;
+//  int listmax;
+//  int curpos;
+ // int oamlistpos;
   GAMEDATA* pGameData;
 
   GFL_CLWK* crossIcon;
-
+  GFL_CLWK* menubarObj;
+  GFL_CLWK* scrollbarOAM[_SCROLLBAR_OAM_NUM];
 };
 
 
@@ -146,10 +164,11 @@ static void _ArrowRelease(GTSNEGO_DISP_WORK* pWork);
 static void _FriendListPlateDisp(GTSNEGO_DISP_WORK* pWork, GTSNEGO_MESSAGE_WORK* pMessageWork);
 static void _DebugDataCreate(GTSNEGO_DISP_WORK* pWork);
 static void _CreateCrossIcon(GTSNEGO_DISP_WORK* pWork);
+static void _CreateMenuBarObj(GTSNEGO_DISP_WORK* pWork);
 
-
-#define SCROLL_HEIGHT_SINGLE (48)   ///１パネルの高さ
-#define SCROLL_HEIGHT_DEFAULT (-24);
+static void _PanelScrollMain(GTSNEGO_DISP_WORK* pWork);
+static void _CreateScrollBarObj(GTSNEGO_DISP_WORK* pWork);
+static void _DeleteScrollBarObj(GTSNEGO_DISP_WORK* pWork);
 
 
 
@@ -188,6 +207,7 @@ GTSNEGO_DISP_WORK* GTSNEGO_DISP_Init(HEAPID id, GAMEDATA* pGameData)
 #if DEBUG_ONLY_FOR_ohno
   _DebugDataCreate(pWork);
 #endif
+  _CreateMenuBarObj(pWork);
   
   return pWork;
 }
@@ -205,11 +225,17 @@ void GTSNEGO_DISP_Main(GTSNEGO_DISP_WORK* pWork)
 
 void GTSNEGO_DISP_End(GTSNEGO_DISP_WORK* pWork)
 {
+  GFL_CLACT_WK_Remove(pWork->crossIcon);
+  GFL_CLACT_WK_Remove(pWork->menubarObj);
 
+  
   _ArrowRelease(pWork);
   GFL_CLGRP_PLTT_Release(pWork->cellRes[PLT_NEGOOBJ] );
   GFL_CLGRP_CGR_Release(pWork->cellRes[CHAR_NEGOOBJ] );
   GFL_CLGRP_CELLANIM_Release(pWork->cellRes[ANM_NEGOOBJ] );
+  GFL_CLGRP_PLTT_Release(pWork->cellRes[PLT_MENUBAR] );
+  GFL_CLGRP_CGR_Release(pWork->cellRes[CHAR_MENUBAR] );
+  GFL_CLGRP_CELLANIM_Release(pWork->cellRes[ANM_MENUBAR] );
   
 
   GFL_TCB_DeleteTask( pWork->g3dVintr );
@@ -269,8 +295,8 @@ static void settingSubBgControl(GTSNEGO_DISP_WORK* pWork)
   {
     int frame = GFL_BG_FRAME0_S;
     GFL_BG_BGCNT_HEADER TextBgCntDat = {
-      0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0xf800, GX_BG_CHARBASE_0x00000, 0x8000,GX_BG_EXTPLTT_01,
+      0, 0, 0x1000, 0, GFL_BG_SCRSIZ_256x512, GX_BG_COLORMODE_16,
+      GX_BG_SCRBASE_0xd000, GX_BG_CHARBASE_0x00000, 0x8000,GX_BG_EXTPLTT_01,
       2, 0, 0, FALSE
       };
 
@@ -284,7 +310,7 @@ static void settingSubBgControl(GTSNEGO_DISP_WORK* pWork)
     GFL_BG_BGCNT_HEADER TextBgCntDat = {
       0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
       GX_BG_SCRBASE_0xf000, GX_BG_CHARBASE_0x08000, 0x8000,GX_BG_EXTPLTT_01,
-      1, 0, 0, FALSE
+      0, 0, 0, FALSE
       };
 
     GFL_BG_SetBGControl(
@@ -298,9 +324,9 @@ static void settingSubBgControl(GTSNEGO_DISP_WORK* pWork)
   {
     int frame = GFL_BG_FRAME2_S;
     GFL_BG_BGCNT_HEADER TextBgCntDat = {
-      0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+      0, 0, 0x1000, 0, GFL_BG_SCRSIZ_256x512, GX_BG_COLORMODE_16,
       GX_BG_SCRBASE_0xe000, GX_BG_CHARBASE_0x10000, 0x8000,GX_BG_EXTPLTT_01,
-      0, 0, 0, FALSE
+      1, 0, 0, FALSE
       };
 
     GFL_BG_SetBGControl(
@@ -315,7 +341,7 @@ static void settingSubBgControl(GTSNEGO_DISP_WORK* pWork)
     int frame = GFL_BG_FRAME3_S;
     GFL_BG_BGCNT_HEADER TextBgCntDat = {
       0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0xe800, GX_BG_CHARBASE_0x18000, 0x8000,GX_BG_EXTPLTT_01,
+      GX_BG_SCRBASE_0xf800, GX_BG_CHARBASE_0x18000, 0x8000,GX_BG_EXTPLTT_01,
       3, 0, 0, FALSE
       };
     GFL_BG_SetBGControl(
@@ -338,13 +364,13 @@ static void	_VBlank( GFL_TCB *tcb, void *work )
   GTSNEGO_DISP_WORK *pWork=work;
 
   GFL_CLACT_SYS_VBlankFunc();	//セルアクターVBlank
-#if 0
+
   if(pWork->bgscrollRenew){
-    GFL_BG_SetScroll(GFL_BG_FRAME0_S,GFL_BG_SCROLL_Y_SET, (pWork->bgscroll + SCROLL_HEIGHT_DEFAULT)%SCROLL_HEIGHT_SINGLE);
-    GFL_BG_SetScroll(GFL_BG_FRAME2_S,GFL_BG_SCROLL_Y_SET, (pWork->bgscroll + SCROLL_HEIGHT_DEFAULT)%SCROLL_HEIGHT_SINGLE);
-    pWork->bgscrollRenew=FALSE;
+    GFL_BG_SetScroll(GFL_BG_FRAME0_S, GFL_BG_SCROLL_Y_SET, (pWork->bgscroll + SCROLL_HEIGHT_DEFAULT));
+    GFL_BG_SetScroll(GFL_BG_FRAME2_S, GFL_BG_SCROLL_Y_SET, (pWork->bgscroll + SCROLL_HEIGHT_DEFAULT));
+    pWork->bgscrollRenew = FALSE;
   }
-#endif
+
 }
 
 static void dispInit(GTSNEGO_DISP_WORK* pWork)
@@ -402,6 +428,16 @@ static void dispInit(GTSNEGO_DISP_WORK* pWork)
         p_handle , NARC_gtsnego_nego_obj_NCER, NARC_gtsnego_nego_obj_NANR , pWork->heapID  );
 
 
+    pWork->cellRes[CHAR_MENUBAR] =
+      GFL_CLGRP_CGR_Register( p_handle , NARC_gtsnego_menu_bar_NCGR ,
+                              FALSE , CLSYS_DRAW_SUB , pWork->heapID );
+    pWork->cellRes[PLT_MENUBAR] =
+      GFL_CLGRP_PLTT_RegisterEx(
+        p_handle ,NARC_gtsnego_menu_bar_NCLR , CLSYS_DRAW_SUB ,    0x20*6, 0, 1, pWork->heapID  );
+    pWork->cellRes[ANM_MENUBAR] =
+      GFL_CLGRP_CELLANIM_Register(
+        p_handle , NARC_gtsnego_menubar_NCER, NARC_gtsnego_menubar_NANR , pWork->heapID  );
+    
     pWork->pBlink = BLINKPALANM_Create(0,16,GFL_BG_FRAME0_M,pWork->heapID);
     BLINKPALANM_SetPalBufferArcHDL(pWork->pBlink,p_handle,NARC_gtsnego_nego_back_NCLR,0,16 );
 
@@ -517,7 +553,7 @@ static void _CreateCrossIcon(GTSNEGO_DISP_WORK* pWork)
   cellInitData.pos_y = 0;
   cellInitData.anmseq = 0;
   cellInitData.softpri = 0;
-  cellInitData.bgpri = 1;
+  cellInitData.bgpri = 2;
   pWork->crossIcon = GFL_CLACT_WK_Create( pWork->cellUnit ,
                                           pWork->cellRes[CHAR_NEGOOBJ],
                                           pWork->cellRes[PLT_NEGOOBJ],
@@ -647,7 +683,8 @@ void GTSNEGO_DISP_FriendSelectInit(GTSNEGO_DISP_WORK* pWork, GTSNEGO_MESSAGE_WOR
     
     GFL_ARC_CloseDataHandle(p_handle);
 	}
-  pWork->bgscroll = 0;
+ // pWork->bgscroll = 0;
+  pWork->bgscrollRenew=TRUE;
 
 //  _FriendListPlateDisp(pWork, pMessageWork);
 }
@@ -687,27 +724,42 @@ void GTSNEGO_DISP_FriendSelectFree(GTSNEGO_DISP_WORK* pWork)
  */
 //-----------------------------------------------------------------------------
 
-static BOOL _FriendListDownChk(GTSNEGO_DISP_WORK* pWork)
+BOOL GTSNEGO_DISP_FriendListDownChk(GTSNEGO_DISP_WORK* pWork, SCROLLPANELCURSOR* pCur)
 {
   BOOL bChange = FALSE;
-#if 0  
 
-  if((pWork->curpos==4) && ((pWork->oamlistpos+7) < pWork->listmax)){
+  if(pCur->curpos < 2){
+    pCur->curpos++;
+  }
+  else if((pCur->curpos==2) && ((pCur->oamlistpos+3) < pCur->listmax)){
     //カーソルはそのままでリストが移動
-    pWork->oamlistpos++;
+    pCur->oamlistpos++;
     bChange = TRUE;
   }
-  else if((pWork->curpos==4) && ((pWork->curpos+1) < pWork->listmax)){
-    //リストの終端まで来たのでカーソルが移動
-    pWork->curpos++;
+  return bChange;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	上キーが押された時の処理
+ *	@param	GTSNEGO_DISP_WORK
+ *	@return	none
+ */
+//-----------------------------------------------------------------------------
+
+BOOL GTSNEGO_DISP_FriendListUpChk(GTSNEGO_DISP_WORK* pWork, SCROLLPANELCURSOR* pCur)
+{
+  BOOL bChange = FALSE;
+
+  if(pCur->curpos > 0){
+    pCur->curpos--;
+  }
+  else if((pCur->curpos==0) && (pCur->oamlistpos!=-1)){
+    //カーソルはそのままでリストが移動
+    pCur->oamlistpos--;
     bChange = TRUE;
   }
-  else if((pWork->curpos!=5) && ((pWork->curpos+1) < pWork->listmax)){
-    //リストの終端まで来たのでカーソルが移動
-    pWork->curpos++;
-    bChange = TRUE;
-  }
-#endif
+
   return bChange;
 }
 
@@ -724,15 +776,143 @@ static BOOL _FriendListDownChk(GTSNEGO_DISP_WORK* pWork)
 static void _DebugDataCreate(GTSNEGO_DISP_WORK* pWork)
 {
   int i;
-  MYSTATUS* pMyStatus = MyStatus_AllocWork(pWork->heapID);
 
   for(i = 0; i < WIFI_NEGOTIATION_DATAMAX;i++){
+    MYSTATUS* pMyStatus = MyStatus_AllocWork(pWork->heapID);
+    MyStatus_SetProfileID(pMyStatus,12+i);
+    MyStatus_SetID(pMyStatus,12+i);
+    MyStatus_SetMyNationArea(pMyStatus,1+i,1);
     WIFI_NEGOTIATION_SV_SetFriend(GAMEDATA_GetWifiNegotiation(pWork->pGameData),pMyStatus);
+    GFL_HEAP_FreeMemory(pMyStatus);
   }
-  GFL_HEAP_FreeMemory(pMyStatus);
 }
 
 
 #endif
 
 
+static void _CreateMenuBarObj(GTSNEGO_DISP_WORK* pWork)
+{
+  GFL_CLWK_DATA cellInitData;
+
+  cellInitData.pos_x = 128;
+  cellInitData.pos_y = 192+8;
+  cellInitData.anmseq = 0;
+  cellInitData.softpri = 1;
+  cellInitData.bgpri = 1;
+  pWork->menubarObj = GFL_CLACT_WK_Create( pWork->cellUnit ,
+                                          pWork->cellRes[CHAR_MENUBAR],
+                                          pWork->cellRes[PLT_MENUBAR],
+                                          pWork->cellRes[ANM_MENUBAR],
+                                          &cellInitData ,CLSYS_DRAW_SUB , pWork->heapID );
+  GFL_CLACT_WK_SetAutoAnmFlag( pWork->menubarObj , TRUE );
+  GFL_CLACT_WK_SetDrawEnable( pWork->menubarObj, TRUE );
+}
+
+
+
+static void _CreateScrollBarObj(GTSNEGO_DISP_WORK* pWork)
+{
+  GFL_CLWK_DATA cellInitData;
+  int i;
+  u16 buffx[]={250,250,128};
+  u16 buffy[]={192/2,192/2,16};
+  u16 oamno[]={4,9,10};
+
+
+  for(i=0;i< _SCROLLBAR_OAM_NUM;i++){
+    cellInitData.pos_x = buffx[i];
+    cellInitData.pos_y = buffy[i];
+    cellInitData.anmseq = oamno[i];
+    cellInitData.softpri = i;
+    cellInitData.bgpri = 0;
+    pWork->scrollbarOAM[i] = GFL_CLACT_WK_Create( pWork->cellUnit ,
+                                                  pWork->cellRes[CHAR_NEGOOBJ],
+                                                  pWork->cellRes[PLT_NEGOOBJ],
+                                                  pWork->cellRes[ANM_NEGOOBJ],
+                                                  &cellInitData ,CLSYS_DRAW_SUB , pWork->heapID );
+    GFL_CLACT_WK_SetAutoAnmFlag( pWork->scrollbarOAM[i] , TRUE );
+    GFL_CLACT_WK_SetDrawEnable( pWork->scrollbarOAM[i], TRUE );
+  }
+
+}
+
+
+static void _DeleteScrollBarObj(GTSNEGO_DISP_WORK* pWork)
+{
+  int i;
+  for(i=0;i< _SCROLLBAR_OAM_NUM;i++){
+    GFL_CLACT_WK_Remove(pWork->scrollbarOAM[i]);
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	下に１つスクロールする処理開始
+ *	@param	POKEMON_TRADE_WORK
+ *	@return	none
+ */
+//-----------------------------------------------------------------------------
+
+
+void GTSNEGO_DISP_PanelScrollStart(GTSNEGO_DISP_WORK* pWork,int scrollType)
+{
+  pWork->bgscrollType = scrollType;
+  if(pWork->bgscrollType == PANEL_DOWNSCROLL_){
+    pWork->bgscrollPos = pWork->bgscroll+48;
+  }
+  else if(pWork->bgscrollType == PANEL_UPSCROLL_){
+    pWork->bgscrollPos = pWork->bgscroll-48;
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	下に１つスクロールする処理開始
+ *	@param	POKEMON_TRADE_WORK
+ *	@return	none
+ */
+//-----------------------------------------------------------------------------
+
+
+int GTSNEGO_DISP_PanelScrollMain(GTSNEGO_DISP_WORK* pWork)
+{
+  u8 ret = PANEL_NONESCROLL_;
+  
+  if(pWork->bgscrollType == PANEL_DOWNSCROLL_){
+    pWork->bgscroll+=8;
+    if(pWork->bgscrollPos==pWork->bgscroll){
+      ret = pWork->bgscrollType;
+      pWork->bgscrollType = PANEL_NONESCROLL_;
+      pWork->bgscroll-=SCROLL_HEIGHT_SINGLE;
+    }
+    pWork->bgscrollRenew=TRUE;
+  }
+  if(pWork->bgscrollType == PANEL_UPSCROLL_){
+    pWork->bgscroll-=8;
+    if(pWork->bgscrollPos==pWork->bgscroll){
+      ret = pWork->bgscrollType;
+      pWork->bgscrollType = PANEL_NONESCROLL_;
+      pWork->bgscroll+=SCROLL_HEIGHT_SINGLE;
+    }
+    pWork->bgscrollRenew=TRUE;
+  }
+  return ret;
+}
+
+
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	スクロールリセット
+ *	@param	GTSNEGO_DISP_WORK
+ *	@return	none
+ */
+//-----------------------------------------------------------------------------
+
+void GTSNEGO_DISP_ScrollReset(GTSNEGO_DISP_WORK* pWork)
+{
+  GFL_BG_SetScroll(GFL_BG_FRAME0_S, GFL_BG_SCROLL_Y_SET, 0);
+  GFL_BG_SetScroll(GFL_BG_FRAME2_S, GFL_BG_SCROLL_Y_SET, 0);
+}

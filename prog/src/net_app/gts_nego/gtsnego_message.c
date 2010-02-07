@@ -13,6 +13,9 @@
 #include "arc_def.h"
 #include "net_app/gsync.h"
 
+#include "debug/debugwin_sys.h"
+#include "test/debug_pause.h"
+
 #include "infowin/infowin.h"
 #include "system/main.h"
 #include "system/wipe.h"
@@ -42,7 +45,7 @@
 // 画面構成定義
 //--------------------------------------------
 #define _WINDOW_MAXNUM (4)   //ウインドウのパターン数
-#define _MESSAGE_BUF_NUM	( 200*2 )
+#define _MESSAGE_BUF_NUM	( 240 )
 #define _SUBMENU_LISTMAX (2)
 
 #define _BUTTON_WIN_CENTERX (16)   // 真ん中
@@ -105,11 +108,14 @@ struct _GTSNEGO_MESSAGE_WORK {
   WORDSET *pWordSet;								// メッセージ展開用ワークマネージャー
   GFL_FONT* pFontHandle;
   STRBUF* pStrBuf;
+  STRBUF* pExStrBuf;
   int msgidx[_MESSAGE_INDEX_MAX];
 
   GFL_BMPWIN* infoDispWin;
   GFL_BMPWIN* systemDispWin;
   GFL_BMPWIN* mainDispWin[_BMP_WINDOW_NUM];
+  
+  GFL_BMPWIN* MyStatusDispWin[SCROLL_PANEL_NUM];
 
   PRINT_STREAM* pStream;
 	GFL_TCBLSYS *pMsgTcblSys;
@@ -143,8 +149,10 @@ GTSNEGO_MESSAGE_WORK* GTSNEGO_MESSAGE_Init(HEAPID id,int msg_dat)
   pWork->pMsgTcblSys = GFL_TCBL_Init( pWork->heapID , pWork->heapID , 1 , 0 );
   pWork->SysMsgQue = PRINTSYS_QUE_Create( pWork->heapID );
   pWork->pStrBuf = GFL_STR_CreateBuffer( _MESSAGE_BUF_NUM, pWork->heapID );
+  pWork->pExStrBuf = GFL_STR_CreateBuffer( _MESSAGE_BUF_NUM, pWork->heapID );
   pWork->pFontHandle = GFL_FONT_Create( ARCID_FONT , NARC_font_large_gftr , GFL_FONT_LOADTYPE_FILE , FALSE , pWork->heapID );
   pWork->pMsgData = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, msg_dat, pWork->heapID );
+  pWork->pWordSet    = WORDSET_CreateEx( 6, 64,pWork->heapID );
 
   pWork->pAppTaskRes =
     APP_TASKMENU_RES_Create( GFL_BG_FRAME1_S, _SUBLIST_NORMAL_PAL,
@@ -158,6 +166,11 @@ GTSNEGO_MESSAGE_WORK* GTSNEGO_MESSAGE_Init(HEAPID id,int msg_dat)
 																0x20*_BUTTON_MSG_PAL, 0x20, pWork->heapID);
 	GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_MAIN_BG,
 																0x20*_BUTTON_MSG_PAL, 0x20, pWork->heapID);
+
+#if DEBUG_ONLY_FOR_ohno
+  DEBUGWIN_InitProc( GFL_BG_FRAME1_M , pWork->pFontHandle );
+  DEBUG_PAUSE_SetEnable( TRUE );
+#endif
   
   return pWork;
 }
@@ -187,7 +200,9 @@ void GTSNEGO_MESSAGE_End(GTSNEGO_MESSAGE_WORK* pWork)
   GFL_MSG_Delete( pWork->pMsgData );
   GFL_FONT_Delete(pWork->pFontHandle);
   GFL_STR_DeleteBuffer(pWork->pStrBuf);
+  GFL_STR_DeleteBuffer(pWork->pExStrBuf);
 
+  WORDSET_Delete(pWork->pWordSet );
   APP_TASKMENU_RES_Delete( pWork->pAppTaskRes );
   GFL_TCBL_Exit(pWork->pMsgTcblSys);
   PRINTSYS_QUE_Clear(pWork->SysMsgQue);
@@ -654,7 +669,6 @@ APP_TASKMENU_WIN_WORK* GTSNEGO_MESSAGE_SearchButtonStart(GTSNEGO_MESSAGE_WORK* p
 #endif
   APP_TASKMENU_WIN_WORK* pAppWin;
 
-
   pWork->appitem[0].str = GFL_STR_CreateBuffer(100, pWork->heapID);
   GFL_MSG_GetString(pWork->pMsgData, msgno, pWork->appitem[0].str);
   pWork->appitem[0].msgColor = APP_TASKMENU_ITEM_MSGCOLOR;
@@ -669,6 +683,72 @@ APP_TASKMENU_WIN_WORK* GTSNEGO_MESSAGE_SearchButtonStart(GTSNEGO_MESSAGE_WORK* p
 
 
 
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	順番にMYSTATUSを得る
+ *	@param	POKEMON_TRADE_WORK
+ *	@return	none
+ */
+//-----------------------------------------------------------------------------
+
+static MYSTATUS* _getMyStatus(GTSNEGO_MESSAGE_WORK* pWork, GAMEDATA* pGameData, int index)
+{
+  int i, j, count;
+  MYSTATUS* pMyStatus;
+
+  GF_ASSERT(index < WIFI_NEGOTIATION_DATAMAX);
+  count = WIFI_NEGOTIATION_SV_GetCount(GAMEDATA_GetWifiNegotiation(pGameData));
+
+  j = count - 1 - index;
+  if(j<0){
+    j+=WIFI_NEGOTIATION_DATAMAX;
+  }
+  j = j % WIFI_NEGOTIATION_DATAMAX;
+  pMyStatus = WIFI_NEGOTIATION_SV_GetMyStatus(GAMEDATA_GetWifiNegotiation(pGameData), j);
+  return pMyStatus;
+}
+
+
+
+
+
+static int _PrintMyStatusDisp(GTSNEGO_MESSAGE_WORK* pWork,MYSTATUS* pMyStatus, int i)
+{
+  GFL_BMPWIN* pwin;
+
+  if(pWork->MyStatusDispWin[ i ]==NULL){
+    pWork->MyStatusDispWin[i] = GFL_BMPWIN_Create(
+      GFL_BG_FRAME2_S , 7 , i * 6 + 1, 22 , 4 ,  _BUTTON_MSG_PAL , GFL_BMP_CHRAREA_GET_B );
+  }
+  pwin = pWork->MyStatusDispWin[i];
+  GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pwin), 0);
+
+  GFL_STR_ClearBuffer(pWork->pExStrBuf);
+  GFL_STR_ClearBuffer(pWork->pStrBuf);
+
+  WORDSET_RegisterPlayerName( pWork->pWordSet, 0, pMyStatus );
+  WORDSET_RegisterNumber(pWork->pWordSet, 1, MyStatus_GetID_Low(pMyStatus),
+                         5, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT);
+  WORDSET_RegisterCountryName( pWork->pWordSet, 2, MyStatus_GetMyNation(pMyStatus));
+ // WORDSET_RegisterLocalPlaceName( pWork->pWordSet, 3, MyStatus_GetMyNation(pMyStatus),MyStatus_GetMyArea(pMyStatus));
+
+  OS_TPrintf("-->%x \n",&pWork->pExStrBuf);
+
+  GFL_MSG_GetString( pWork->pMsgData, GTSNEGO_033, pWork->pExStrBuf );
+  WORDSET_ExpandStr( pWork->pWordSet, pWork->pStrBuf, pWork->pExStrBuf  );
+
+  GFL_FONTSYS_SetColor(15, 14, 0);
+  
+  PRINTSYS_Print(GFL_BMPWIN_GetBmp(pwin) ,0, 0, pWork->pStrBuf, pWork->pFontHandle );
+  GFL_BMPWIN_TransVramCharacter(pwin);
+  GFL_BMPWIN_MakeScreen(pwin);
+  return 0;
+}
+
+
+
 //----------------------------------------------------------------------------
 /**
  *	@brief	フレンド選択初期化
@@ -677,26 +757,110 @@ APP_TASKMENU_WIN_WORK* GTSNEGO_MESSAGE_SearchButtonStart(GTSNEGO_MESSAGE_WORK* p
  */
 //-----------------------------------------------------------------------------
 
-void GTSNEGO_MESSAGE_FriendListPlateDisp(GTSNEGO_MESSAGE_WORK* pMessageWork)
+void GTSNEGO_MESSAGE_FriendListPlateDisp(GTSNEGO_MESSAGE_WORK* pWork,GAMEDATA* pGameData)
 {
   int i, j, count;
   MYSTATUS* pMyStatus;
-#if 0  
 
-  count = WIFI_NEGOTIATION_SV_GetCount();
-
-  for(i = 0 ; i < 4; i++){
-    j = count - 1 - i;
-    pMyStatus = WIFI_NEGOTIATION_SV_GetMyStatus(GAMEDATA_GetWifiNegotiation(pWork->pGameData),
-                                                j % WIFI_NEGOTIATION_DATAMAX);
+  for(i = 0 ; i < 3; i++){
+    pMyStatus = _getMyStatus(pWork,pGameData,i);
     if(pMyStatus){
-        GTSNEGO_MESSAGE_PlateDisp(pMessageWork, pMyStatus, i);
+      _PrintMyStatusDisp(pWork, pMyStatus, i+2);
     }
   }
-#endif
+}
 
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	フレンドリストのダウンスタート
+ *	@param	POKEMON_TRADE_WORK
+ *	@return	none
+ */
+//-----------------------------------------------------------------------------
+
+void GTSNEGO_MESSAGE_FriendListDownStart(GTSNEGO_MESSAGE_WORK* pWork,GAMEDATA* pGameData, int no)
+{
+  MYSTATUS* pMyStatus;
+  pMyStatus = _getMyStatus(pWork,pGameData,no);
+  _PrintMyStatusDisp(pWork, pMyStatus, SCROLL_PANEL_NUM-1);
+  GFL_BG_LoadScreenV_Req(GFL_BG_FRAME2_S);
 }
 
 
 
+void GTSNEGO_MESSAGE_FriendListDownEnd(GTSNEGO_MESSAGE_WORK* pWork)
+{
+  int i;
+
+  //一番上を消す
+  if(pWork->MyStatusDispWin[0]){
+    GFL_BMPWIN_Delete(pWork->MyStatusDispWin[0]);
+    pWork->MyStatusDispWin[0]=NULL;
+  }
+  for(i = 1 ; i < SCROLL_PANEL_NUM ; i++){  //場所スライド
+    if(pWork->MyStatusDispWin[ i ]){
+      int y = GFL_BMPWIN_GetPosY( pWork->MyStatusDispWin[ i ] );
+      GFL_BMPWIN_SetPosY( pWork->MyStatusDispWin[ i ], y - (SCROLL_HEIGHT_SINGLE/8) );
+      GFL_BMPWIN_MakeScreen(pWork->MyStatusDispWin[ i ]);
+    }
+  }
+  GFL_BG_LoadScreenV_Req(GFL_BG_FRAME2_S);
+  //バッファ移動
+  pWork->MyStatusDispWin[ 0 ] = pWork->MyStatusDispWin[ 1 ];
+  pWork->MyStatusDispWin[ 1 ] = pWork->MyStatusDispWin[ 2 ];
+  pWork->MyStatusDispWin[ 2 ] = pWork->MyStatusDispWin[ 3 ];
+  pWork->MyStatusDispWin[ 3 ] = pWork->MyStatusDispWin[ 4 ];
+  pWork->MyStatusDispWin[ 4 ] = pWork->MyStatusDispWin[ 5 ];
+  pWork->MyStatusDispWin[ 5 ] = NULL;
+
+
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	フレンドリストのアップスタート
+ *	@param	POKEMON_TRADE_WORK
+ *	@return	none
+ */
+//-----------------------------------------------------------------------------
+
+void GTSNEGO_MESSAGE_FriendListUpStart(GTSNEGO_MESSAGE_WORK* pWork,GAMEDATA* pGameData, int no)
+{
+  MYSTATUS* pMyStatus;
+  pMyStatus = _getMyStatus(pWork,pGameData,no);
+  _PrintMyStatusDisp(pWork, pMyStatus, 0);
+  GFL_BG_LoadScreenV_Req(GFL_BG_FRAME2_S);
+}
+
+
+
+void GTSNEGO_MESSAGE_FriendListUpEnd(GTSNEGO_MESSAGE_WORK* pWork)
+{
+  int i;
+
+  //一番下を消す
+  if(pWork->MyStatusDispWin[5]){
+    GFL_BMPWIN_Delete(pWork->MyStatusDispWin[5]);
+    pWork->MyStatusDispWin[5]=NULL;
+  }
+  for(i = 0 ; i < SCROLL_PANEL_NUM ; i++){  //場所スライド
+    if(pWork->MyStatusDispWin[ i ]){
+      int y = GFL_BMPWIN_GetPosY( pWork->MyStatusDispWin[ i ] );
+      GFL_BMPWIN_SetPosY( pWork->MyStatusDispWin[ i ], y + (SCROLL_HEIGHT_SINGLE/8) );
+      GFL_BMPWIN_MakeScreen(pWork->MyStatusDispWin[ i ]);
+    }
+  }
+  GFL_BG_LoadScreenV_Req(GFL_BG_FRAME2_S);
+  //バッファ移動
+  pWork->MyStatusDispWin[ 5 ] = pWork->MyStatusDispWin[ 4 ];
+  pWork->MyStatusDispWin[ 4 ] = pWork->MyStatusDispWin[ 3 ];
+  pWork->MyStatusDispWin[ 3 ] = pWork->MyStatusDispWin[ 2 ];
+  pWork->MyStatusDispWin[ 2 ] = pWork->MyStatusDispWin[ 1 ];
+  pWork->MyStatusDispWin[ 1 ] = pWork->MyStatusDispWin[ 0 ];
+  pWork->MyStatusDispWin[ 0 ] = NULL;
+
+
+}
 

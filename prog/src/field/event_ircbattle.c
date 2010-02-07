@@ -39,6 +39,8 @@
 #include "poke_tool/pokeparty.h"
 #include "poke_tool/poke_tool.h"
 #include "savedata/battle_box_save.h"
+#include "field/event_battle_call.h"
+
 //============================================================================================
 //============================================================================================
 
@@ -182,17 +184,17 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
     {
       GFL_OVERLAY_Load( FS_OVERLAY_ID( battle ) );
       GFL_NET_AddCommandTable(GFL_NET_CMD_BATTLE, BtlRecvFuncTable, BTL_NETFUNCTBL_ELEMS, NULL);
-      GFL_NET_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),_LOCALMATCHNO);
+      GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),_LOCALMATCHNO, WB_NET_IRCBATTLE);
       (*seq) ++;
     }
     break;
   case _TIMING_SYNC_CALL_BATTLE:
-    if(GFL_NET_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(),_LOCALMATCHNO)){
+    if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),_LOCALMATCHNO, WB_NET_IRCBATTLE)){
       (*seq) ++;
     }
     break;
   case _PLAY_EVENT_BGM: 
-    GMEVENT_CallEvent(event, EVENT_FSND_PushPlayNextBGM( gsys, dbw->para->musicDefault, FSND_FADE_SHORT, FSND_FADE_NONE ) );
+//    GMEVENT_CallEvent(event, EVENT_FSND_PushPlayNextBGM( gsys, dbw->para->musicDefault, FSND_FADE_SHORT, FSND_FADE_NONE ) );
     dbw->push=TRUE;
     (*seq) ++;
     break;
@@ -222,9 +224,21 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
       break;
     }
     BATTLE_PARAM_SetPokeParty( dbw->para, dbw->pParty, BTL_CLIENT_PLAYER );
-
-    GAMESYSTEM_CallProc(gsys, NO_OVERLAY_ID, &BtlProcData, dbw->para);
-//    GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 1);
+    {
+#if 0
+      int i;
+      for( i=0;i<2;i++){
+        dbw->demo_prm.trainer_data[i].party = dbw->pParty;
+        dbw->demo_prm.trainer_data[i].mystatus = GAMEDATA_GetMyStatusPlayer( GAMESYSTEM_GetGameData( gsys ),i );
+      }
+      GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle ) );
+      GMEVENT_CallEvent( event, EVENT_CommBattle(gsys, dbw->para, &dbw->demo_prm) );
+#else
+      GAMESYSTEM_CallProc(gsys, NO_OVERLAY_ID, &BtlProcData, dbw->para);
+#endif
+    }
+   
+    //    GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 1);
     (*seq)++;
     break;
   case _WAIT_BATTLE:

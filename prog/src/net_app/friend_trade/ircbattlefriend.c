@@ -158,7 +158,7 @@ static void _recvMystatus(const int netID, const int size, const void* pData, vo
 
 static void _sendTimingCheck(IRC_BATTLE_FRIEND* pWork)
 {
-  if(GFL_NET_HANDLE_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_ENDNO)){
+  if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_ENDNO,WB_NET_IRCBATTLE)){
     _CHANGE_STATE(pWork,NULL);
   }
 }
@@ -172,7 +172,7 @@ static void _sendTimingCheck(IRC_BATTLE_FRIEND* pWork)
 
 static void _sendTiming(IRC_BATTLE_FRIEND* pWork)
 {
-  GFL_NET_HANDLE_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_ENDNO);
+  GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_ENDNO,WB_NET_IRCBATTLE);
   _CHANGE_STATE(pWork,_sendTimingCheck);
 }
 

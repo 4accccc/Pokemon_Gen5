@@ -140,6 +140,7 @@ typedef struct tagGameMatchExtKeys
 } GameMatchExtKeys;
 
 
+
 struct _GTSNEGO_WORK {
   StateFunc* state;      ///< ハンドルのプログラム状態
   TouchFunc* touch;
@@ -168,7 +169,7 @@ struct _GTSNEGO_WORK {
   int friendChageType;  //相手に交換してもらいたいタイプ
   int chageLevel;    // ポケモンレベル範囲
   s32 profileID;
-  int listmax;
+  SCROLLPANELCURSOR scrollPanelCursor;
   CROSSCUR_TYPE key1;  //メイン
   CROSSCUR_TYPE key2;  //だれでも用
   CROSSCUR_TYPE key3;  //まちあわせよう
@@ -437,12 +438,7 @@ static void _LevelKeyCallback(BOOL bRight,GTSNEGO_WORK* pWork)
 
 static void _timingCheck2( GTSNEGO_WORK *pWork )
 {
-  if(GFL_NET_HANDLE_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(),_NO3)){
-
-
-
-
-
+  if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),_NO3, WB_NET_GTSNEGO)){
     _CHANGE_STATE(pWork,NULL);
   }
 }
@@ -458,7 +454,7 @@ static void _timingCheck2( GTSNEGO_WORK *pWork )
 
 static void _statussendCheck( GTSNEGO_WORK *pWork )
 {
-  GFL_NET_HANDLE_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),_NO3);
+  GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),_NO3, WB_NET_GTSNEGO);
   _CHANGE_STATE(pWork,_timingCheck2);
 }
 
@@ -493,7 +489,7 @@ static void _infosendCheck( GTSNEGO_WORK *pWork )
 
 static void _timingCheck( GTSNEGO_WORK *pWork )
 {
-  if(GFL_NET_HANDLE_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(),_NO2)){
+  if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),_NO2, WB_NET_GTSNEGO)){
       EVENT_GTSNEGO_WORK* pEv=pWork->dbw;
     if(GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),_NETCMD_INFOSEND, sizeof(EVENT_GTSNEGO_USER_DATA),&pEv->aUser[0])){
       _CHANGE_STATE(pWork,_infosendCheck);
@@ -528,7 +524,7 @@ static void _friendGreeState( GTSNEGO_WORK *pWork )
     pParent->aUser[0].selectType = pWork->changeMode;
     {
     }
-    GFL_NET_HANDLE_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),_NO2);
+    GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),_NO2, WB_NET_GTSNEGO);
     
     _CHANGE_STATE(pWork,_timingCheck);
   }
@@ -857,11 +853,18 @@ static void _levelSelect( GTSNEGO_WORK *pWork )
 static void _friendSelectWait( GTSNEGO_WORK *pWork )
 {
   BOOL bHit=FALSE;
+  int scrollType;
+  
   if(!GTSNEGO_MESSAGE_InfoMessageEndCheck(pWork->pMessageWork)){
     return;
   }
-
-
+  scrollType = GTSNEGO_DISP_PanelScrollMain(pWork->pDispWork);
+  if( PANEL_UPSCROLL_ == scrollType){
+    GTSNEGO_MESSAGE_FriendListUpEnd(pWork->pMessageWork);
+  }
+  else if( PANEL_DOWNSCROLL_ == scrollType){
+    GTSNEGO_MESSAGE_FriendListDownEnd(pWork->pMessageWork);
+  }
 
 
   if(GFL_UI_KEY_GetTrg() == PAD_KEY_UP){
@@ -870,7 +873,14 @@ static void _friendSelectWait( GTSNEGO_WORK *pWork )
       pWork->keyMode=TRUE;
     }
     else{
-      if(pWork->key3 != _CROSSCUR_TYPE_FRIEND1){
+      if( GTSNEGO_DISP_FriendListUpChk(pWork->pDispWork, &pWork->scrollPanelCursor)){
+        GTSNEGO_DISP_PanelScrollStart(pWork->pDispWork,PANEL_UPSCROLL_);
+        if(pWork->scrollPanelCursor.oamlistpos - 2 >= 0){
+          GTSNEGO_MESSAGE_FriendListDownStart(pWork->pMessageWork, pWork->pGameData,
+                                              pWork->scrollPanelCursor.oamlistpos - 2);
+        }
+      }
+      else if(pWork->key3 != _CROSSCUR_TYPE_FRIEND1){
         pWork->key3--;
       }
     }
@@ -881,7 +891,12 @@ static void _friendSelectWait( GTSNEGO_WORK *pWork )
       pWork->keyMode=TRUE;
     }
     else{
-      if(pWork->key3 != _CROSSCUR_TYPE_FRIEND4){
+      if( GTSNEGO_DISP_FriendListDownChk(pWork->pDispWork, &pWork->scrollPanelCursor)){
+        GTSNEGO_DISP_PanelScrollStart(pWork->pDispWork,PANEL_DOWNSCROLL_);
+        GTSNEGO_MESSAGE_FriendListDownStart(pWork->pMessageWork, pWork->pGameData,
+                                            pWork->scrollPanelCursor.oamlistpos + 3);
+      }
+      else if(pWork->key3 != _CROSSCUR_TYPE_FRIEND4){
         pWork->key3++;
       }
     }
@@ -917,10 +932,25 @@ static void _friendSelectWait( GTSNEGO_WORK *pWork )
 
 static void _friendSelect( GTSNEGO_WORK *pWork )
 {
+  int a = WIFI_NEGOTIATION_SV_GetFriendNum(GAMEDATA_GetWifiNegotiation(pWork->pGameData));
+  
+  if(a==0){
+    GTSNEGO_MESSAGE_InfoMessageDisp(pWork->pMessageWork,GTSNEGO_034);
+    _CHANGE_STATE(pWork,_modeSelectMenuWait);
+    return;
+  }
+  pWork->scrollPanelCursor.listmax = a;
+  
+  if(pWork->keyMode){
+    GTSNEGO_DISP_CrossIconDisp(pWork->pDispWork,NULL, pWork->key3);
+  }
+
   GTSNEGO_MESSAGE_DispClear(pWork->pMessageWork);
 
   GTSNEGO_DISP_FriendSelectInit(pWork->pDispWork,pWork->pMessageWork);
-
+  
+  GTSNEGO_MESSAGE_FriendListPlateDisp(pWork->pMessageWork,pWork->pGameData);
+  
   pWork->pAppWin=  GTSNEGO_MESSAGE_SearchButtonStart(pWork->pMessageWork,GTSNEGO_032);
 
   _CHANGE_STATE(pWork,_friendSelectWait);
@@ -957,7 +987,7 @@ static void _connectionStart(GTSNEGO_WORK* pWork)
 
 static void _modeSelectMenuInit(GTSNEGO_WORK* pWork)
 {
-
+  GTSNEGO_DISP_ScrollReset(pWork->pDispWork);
   if(pWork->keyMode){
     GTSNEGO_DISP_CrossIconDisp(pWork->pDispWork,NULL, pWork->key1);
   }
@@ -990,7 +1020,6 @@ static void _modeSelectMenuWait(GTSNEGO_WORK* pWork)
       _CHANGE_STATE(pWork,_levelSelect);
     }
     else{
-      GTSNEGO_DISP_CrossIconDisp(pWork->pDispWork,NULL, pWork->key3);
       _CHANGE_STATE(pWork,_friendSelect);
     }
     return;
@@ -1067,17 +1096,6 @@ static GFL_PROC_RESULT GameSyncMenuProcInit( GFL_PROC * proc, int * seq, void * 
     GFL_NET_AddCommandTable(GFL_NET_CMD_GTSNEGO,_PacketTbl,NELEMS(_PacketTbl), pWork);
   }
 
-  {
-    int i;
-
-    pWork->listmax = 0;
-    for(i=0;i< WIFI_NEGOTIATION_DATAMAX;i++){
-      MYSTATUS* pMyStatus = WIFI_NEGOTIATION_SV_GetMyStatus(GAMEDATA_GetWifiNegotiation(pWork->pGameData), i);
-      if(pMyStatus){
-        pWork->listmax++;
-      }
-    }
-  }
 
   WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEIN , WIPE_TYPE_FADEIN ,
                   WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );

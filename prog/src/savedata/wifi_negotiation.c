@@ -87,6 +87,7 @@ void WIFI_NEGOTIATION_SV_SetFriend(WIFI_NEGOTIATION_SAVEDATA* pSV,const MYSTATUS
     pSV->count = 0;
   }
   MyStatus_Copy(pMyStatus, &pSV->aMyStatus[pSV->count]);
+  OS_TPrintf("登録 %d\n",pSV->count);
   pSV->count++;  //繰り返し保存
 }
 
@@ -162,6 +163,26 @@ BOOL WIFI_NEGOTIATION_SV_IsCheckFriend(WIFI_NEGOTIATION_SAVEDATA* pSV,s32 profil
 int WIFI_NEGOTIATION_SV_GetCount(WIFI_NEGOTIATION_SAVEDATA* pSV)
 {
   return pSV->count;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief   Wi-Fiネゴシエーション用ともだちデータ有効数を返す
+ * @param   WIFI_NEGOTIATION_SAVEDATAポインタ
+ * @param   index インデックス WIFI_NEGOTIATION_DATAMAXまで
+ * @return	人数
+ */
+//--------------------------------------------------------------------------------------------
+s32 WIFI_NEGOTIATION_SV_GetFriendNum(WIFI_NEGOTIATION_SAVEDATA* pSV)
+{
+  int i=0,j=0;
+
+  for(i=0;i<WIFI_NEGOTIATION_DATAMAX;i++){
+    if(MyStatus_GetProfileID(&pSV->aMyStatus[ i ])!=0){
+      j++;
+    }
+  }
+  return j;
 }
 
 

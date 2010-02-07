@@ -927,11 +927,6 @@ SRCS_OVERLAY_POKELIST = app/pokelist/pokelist.c \
 		app/pokelist/plist_battle.c
 
 
-# 交換画面
-#===> SRCS_OVERLAY_POKELIST
-SRCS_OVERLAY_TRADE  = trade/trade.c \
-        trade/trade_main.c
-
 # バトル->フィールド復帰
 #===> SRCS_OVERLAY_TAYA_DEBUG
 #===> SRCS_OVERLAY_SOGABE_DEBUG

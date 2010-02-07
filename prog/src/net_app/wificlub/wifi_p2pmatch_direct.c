@@ -1076,7 +1076,7 @@ static int _playerDirectBattleStart4( WIFIP2PMATCH_WORK *wk, int seq )
   if(GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(),GFL_NET_SENDID_ALLUSER,
                         CNM_WFP2PMF_POPEPARTY, PokeParty_GetWorkSize(),
                         wk->pParentWork->pPokeParty[id], FALSE, FALSE, TRUE)){
-    GFL_NET_HANDLE_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_POKEPARTY_END);
+    GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_POKEPARTY_END,WB_NET_WIFICLUB);
       _CHANGESTATE(wk, WIFIP2PMATCH_PLAYERDIRECT_BATTLE_START5);
   }
   return seq;
@@ -1092,7 +1092,7 @@ static int _playerDirectBattleStart4( WIFIP2PMATCH_WORK *wk, int seq )
 
 static int _playerDirectBattleStart5( WIFIP2PMATCH_WORK *wk, int seq )
 {
-  if(GFL_NET_HANDLE_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(), _TIMING_POKEPARTY_END)){
+  if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(), _TIMING_POKEPARTY_END,WB_NET_WIFICLUB )){
     _CHANGESTATE(wk, WIFIP2PMATCH_PLAYERDIRECT_BATTLE_START6);
   }
   return seq;

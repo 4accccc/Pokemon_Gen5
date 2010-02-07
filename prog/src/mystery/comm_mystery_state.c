@@ -337,7 +337,7 @@ static void _mysteryChildSendName(void)
 	_pCommStateM->recv_flag = 0;
 	//FIXME “K‹X’u‚«Š·‚¦
 //	CommInfoSendPokeData();
-	GFL_NET_TimingSyncStart(selfHandle,MYSTERYGIFT_SYNC_CODE);
+//	GFL_NET_TimingSyncStart(selfHandle,MYSTERYGIFT_SYNC_CODE);
 	_CHANGE_STATE(_mysteryChildWaiting, 0);
 }
 

@@ -182,10 +182,11 @@ struct _C_GEAR_WORK {
   u32 objRes[3];  //CLACTリソース
 
   GFL_CLUNIT *cellUnit;
-  GFL_CLWK  *cellSelect[C_GEAR_PANEL_WIDTH*C_GEAR_PANEL_HEIGHT];
+  GFL_CLWK  *cellSelect[C_GEAR_PANEL_WIDTH * C_GEAR_PANEL_HEIGHT];
   GFL_CLWK  *cellCursor[_CLACT_TIMEPARTS_MAX];
   GFL_CLWK  *cellType[_CLACT_TYPE_MAX];
   GFL_CLWK  *cellCross[_CLACT_CROSS_MAX];
+  GFL_CLWK  *cellRadar;
   u8 crossColor[_CLACT_CROSS_MAX]; //すれ違いカラー -1してつかう
 
   GFL_CLWK  *cellMove;
@@ -628,6 +629,25 @@ static int _gearPanelTypeNum(C_GEAR_WORK* pWork, CGEAR_PANELTYPE_ENUM type)
   }
   return i;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1123,7 +1143,7 @@ static void _gearObjCreate(C_GEAR_WORK* pWork)
     GFL_CLWK_DATA cellInitData;
     //セルの生成
     cellInitData.pos_x = xbuff[i];
-    cellInitData.pos_y = 18;
+    cellInitData.pos_y = 22;
     cellInitData.anmseq = anmbuff[i];
     if(NANR_c_gear_obj_CellAnime_batt1==cellInitData.anmseq){
       if( OS_IsRunOnTwl() ){//DSIなら
@@ -1212,6 +1232,24 @@ static void _gearCrossObjCreate(C_GEAR_WORK* pWork)
     //pWork->crossColor[i]=i+1;
   }
 
+  {
+    GFL_CLWK_DATA cellInitData;
+    //セルの生成
+
+    cellInitData.pos_x = 40;
+    cellInitData.pos_y = 170;
+    cellInitData.anmseq = NANR_c_gear_obj_CellAnime_radar;
+    cellInitData.softpri = 0;
+    cellInitData.bgpri = 0;
+    pWork->cellRadar = GFL_CLACT_WK_Create( pWork->cellUnit ,
+                                               pWork->objRes[_CLACT_CHR],
+                                               pWork->objRes[_CLACT_PLT],
+                                               pWork->objRes[_CLACT_ANM],
+                                               &cellInitData ,
+                                               CLSYS_DEFREND_SUB,
+                                               pWork->heapID );
+    GFL_CLACT_WK_SetDrawEnable( pWork->cellRadar, TRUE );
+  }
 }
 
 
@@ -1292,7 +1330,9 @@ static void _gearCrossObjDelete(C_GEAR_WORK* pWork)
     GFL_CLACT_WK_Remove(pWork->cellCross[i]);
     pWork->cellCross[i] = NULL;
   }
-
+    GFL_CLACT_WK_Remove(  pWork->cellRadar);
+  pWork->cellRadar=NULL;
+  
 }
 
 
@@ -1703,6 +1743,7 @@ void CGEAR_Main( C_GEAR_WORK* pWork,BOOL bAction )
     state(pWork);
   }
   _gearCrossObjMain(pWork);
+    GFL_CLACT_SYS_Main();
 
 }
 

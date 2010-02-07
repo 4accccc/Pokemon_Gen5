@@ -735,7 +735,7 @@ void POKEMONTRADE_PROC_FadeoutStart(POKEMON_TRADE_WORK* pWork)
 
 static void _sendTimingCheck(POKEMON_TRADE_WORK* pWork)
 {
-  if(GFL_NET_HANDLE_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_ENDNO)){
+  if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_ENDNO,WB_NET_TRADE_SERVICEID)){
     pWork->pParentWork->ret = POKEMONTRADE_MOVE_END;
     _CHANGE_STATE(pWork,NULL);
   }
@@ -750,7 +750,7 @@ static void _sendTimingCheck(POKEMON_TRADE_WORK* pWork)
 
 static void _sendTiming(POKEMON_TRADE_WORK* pWork)
 {
-  GFL_NET_HANDLE_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_ENDNO);
+  GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_ENDNO,WB_NET_TRADE_SERVICEID);
   _CHANGE_STATE(pWork,_sendTimingCheck);
 }
 
@@ -1281,7 +1281,7 @@ static void _changeTimingDemoStart(POKEMON_TRADE_WORK* pWork)
   BOOL bMode = POKEMONTRADEPROC_IsNetworkMode(pWork);
 
   if(bMode){
-    if(!GFL_NET_HANDLE_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_TRADEDEMO_START)){
+    if(!GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_TRADEDEMO_START,WB_NET_TRADE_SERVICEID)){
       return;
     }
   }
@@ -1318,7 +1318,7 @@ static void _changeWaitState(POKEMON_TRADE_WORK* pWork)
   case _NETCMD_CHANGE_POKEMON:
     if(pWork->userNetCommand[targetID]==_NETCMD_CHANGE_POKEMON){
       if(POKEMONTRADEPROC_IsNetworkMode(pWork)){
-        GFL_NET_HANDLE_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_TRADEDEMO_START);
+        GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_TRADEDEMO_START,WB_NET_TRADE_SERVICEID);
       }
       _CHANGE_STATE(pWork, _changeTimingDemoStart);
     }

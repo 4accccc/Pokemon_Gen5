@@ -19,6 +19,14 @@ typedef struct _GTSNEGO_DISP_WORK  GTSNEGO_DISP_WORK;
 #define GTSNEGO_YESNOTYPE_SYS  (1)
 
 
+// スクロールするパネルのカーソルの管理
+typedef struct{
+  int listmax;
+  int curpos;
+  int oamlistpos;
+} SCROLLPANELCURSOR;
+
+
 typedef enum
 {
   _ARROW_LEVEL_U,
@@ -43,6 +51,15 @@ typedef enum
   _CROSSCUR_TYPE_FRIEND4,
   _CROSSCUR_TYPE_NONE,
 } CROSSCUR_TYPE;
+
+
+typedef enum
+{
+  PANEL_NONESCROLL_,
+  PANEL_UPSCROLL_,
+  PANEL_DOWNSCROLL_,
+} PANEL_SCROLL_TYPE_;
+
 
 
 //→座標
@@ -100,8 +117,24 @@ extern TOUCHBAR_WORK* GTSNEGO_DISP_GetTouchWork(GTSNEGO_DISP_WORK* pWork);
 extern void GTSNEGO_DISP_FriendSelectInit(GTSNEGO_DISP_WORK* pWork, GTSNEGO_MESSAGE_WORK* pMessageWork);
 extern void GTSNEGO_DISP_FriendSelectFree(GTSNEGO_DISP_WORK* pWork);
 extern void GTSNEGO_DISP_CrossIconDisp(GTSNEGO_DISP_WORK* pWork,APP_TASKMENU_WIN_WORK* pAppWin , CROSSCUR_TYPE type);
+extern BOOL GTSNEGO_DISP_FriendListDownChk(GTSNEGO_DISP_WORK* pWork, SCROLLPANELCURSOR* pCur);
+extern BOOL GTSNEGO_DISP_FriendListUpChk(GTSNEGO_DISP_WORK* pWork, SCROLLPANELCURSOR* pCur);
+extern void GTSNEGO_DISP_ScrollReset(GTSNEGO_DISP_WORK* pWork);
+extern void GTSNEGO_DISP_PanelScrollStart(GTSNEGO_DISP_WORK* pWork,int scrollType);
+extern int GTSNEGO_DISP_PanelScrollMain(GTSNEGO_DISP_WORK* pWork);
+
 
 
 //extern void GTSNEGO_MESSAGE_PlateDisp(GTSNEGO_MESSAGE_WORK* pWork, MYSTATUS* pMyStatus, int index );
-extern void GTSNEGO_MESSAGE_FriendListPlateDisp(GTSNEGO_MESSAGE_WORK* pMessageWork);
+extern void GTSNEGO_MESSAGE_FriendListPlateDisp(GTSNEGO_MESSAGE_WORK* pWork,GAMEDATA* pGameData);
+extern void GTSNEGO_MESSAGE_FriendListDownStart(GTSNEGO_MESSAGE_WORK* pWork,GAMEDATA* pGameData, int no);
+extern void GTSNEGO_MESSAGE_FriendListDownEnd(GTSNEGO_MESSAGE_WORK* pWork);
+extern void GTSNEGO_MESSAGE_FriendListUpStart(GTSNEGO_MESSAGE_WORK* pWork,GAMEDATA* pGameData, int no);
+extern void GTSNEGO_MESSAGE_FriendListUpEnd(GTSNEGO_MESSAGE_WORK* pWork);
+
+
+
+#define SCROLL_HEIGHT_SINGLE (48)   ///１パネルの高さ
+#define SCROLL_HEIGHT_DEFAULT (24+SCROLL_HEIGHT_SINGLE*1) 
+#define SCROLL_PANEL_NUM (6)   ///パネルの数
 

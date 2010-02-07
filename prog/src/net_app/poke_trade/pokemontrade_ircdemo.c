@@ -277,7 +277,7 @@ static void _changeDemo_ModelT1(POKEMON_TRADE_WORK* pWork)
   }
 
   if(POKEMONTRADEPROC_IsNetworkMode(pWork)){
-    GFL_NET_HANDLE_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_ANIMEEND);
+    GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_ANIMEEND,WB_NET_TRADE_SERVICEID);
     _CHANGE_STATE(pWork,_changeDemo_ModelT2);
   }
   else{
@@ -287,7 +287,7 @@ static void _changeDemo_ModelT1(POKEMON_TRADE_WORK* pWork)
 
 static void _changeDemo_ModelT2(POKEMON_TRADE_WORK* pWork)
 {
-  if(GFL_NET_HANDLE_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_ANIMEEND)){
+  if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_ANIMEEND,WB_NET_TRADE_SERVICEID)){
     _CHANGE_STATE(pWork,_changeDemo_ModelTrade0);
   }
 

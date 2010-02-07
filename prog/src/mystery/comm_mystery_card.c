@@ -1588,7 +1588,7 @@ static void SelectCursor(MYSTERYCARD_WORK *wk, int connect, int *seq)
 	if(mark == 1){
 		Snd_SePlay(SEQ_SE_DP_SELECT);
 		// データの送信開始
-		CommTimingSyncStart(MYSTERYGIFT_SYNC_CODE);
+//		CommTimingSyncStart(MYSTERYGIFT_SYNC_CODE);
 		wk->sync_wait = 1;
 		*seq = MYSTERYCARD_SEQ_SEND_WAITSYNC;
 		MysteryCardCreateWindow(wk, &wk->msgwin, MYSTERYCARD_INDEX_LASTWIN, MYSTERYCARD_MENU_BASE);
@@ -1881,7 +1881,7 @@ static PROC_RESULT MysteryCardProc_Main(PROC * proc, int * seq)
 	case MYSTERYCARD_SEQ_SEND_SAVEDATA:
 		// 最後の１セクタ以外がセーブできたら子機と同期を取る
 		if(MysteryLib_GetSaveStatus() == MYSTERYLIB_SEQ_SAVE_LAST){
-			CommTimingSyncStart(MYSTERYGIFT_SYNC_CODE2);
+//			CommTimingSyncStart(MYSTERYGIFT_SYNC_CODE2);
 			*seq = MYSTERYCARD_SEQ_LAST_SAVE_WAIT;
 		}
 		break;

@@ -315,7 +315,7 @@ static BOOL _NetTestParent(void* pCtl)
   DEBUG_OHNO_CONTROL* pDOC = pCtl;
 
   if(GFL_NET_GetConnectNum()==4){
-    GFL_NET_HANDLE_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle() ,15);
+    GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle() ,15,WB_NET_DEBUG_OHNO_SERVICEID);
     _CHANGE_STATE( NetTestRecvTiming );
   }
   return FALSE;
@@ -338,7 +338,7 @@ static BOOL _NetTestChild2(void* pCtl)
   if(GFL_NET_HANDLE_IsNegotiation( GFL_NET_HANDLE_GetCurrentHandle() ) ){
     int id = 1 - GFL_NET_HANDLE_GetNetHandleID( GFL_NET_HANDLE_GetCurrentHandle());
     if(GFL_NET_HANDLE_IsNegotiation( GFL_NET_GetNetHandle(id) ) ){
-      GFL_NET_HANDLE_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle() ,15);
+      GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle() ,15,WB_NET_DEBUG_OHNO_SERVICEID);
       _CHANGE_STATE( NetTestRecvTiming );
     }
   }
@@ -369,7 +369,7 @@ static BOOL NetTestRecvTiming(void* pCtl)
 {
   DEBUG_OHNO_CONTROL* pDOC = pCtl;
 
-  if(GFL_NET_HANDLE_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(),15)){
+  if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),15, WB_NET_DEBUG_OHNO_SERVICEID)){
     NET_PRINT("TIMOK\n");
     _CHANGE_STATE( NetTestMoveStart );
   }
@@ -384,7 +384,7 @@ static BOOL _TimingTest(void* pCtl);
 static BOOL _TimingTestNext(void* pCtl)
 {
   DEBUG_OHNO_CONTROL* pDOC = pCtl;
-  if(GFL_NET_HANDLE_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(),debugTiming)){
+  if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),debugTiming, WB_NET_DEBUG_OHNO_SERVICEID)){
     NET_PRINT("TIMOK %d\n",debugTiming);
     debugTiming++;
     _CHANGE_STATE( _TimingTest );
@@ -397,7 +397,7 @@ static BOOL _TimingTestNext(void* pCtl)
 static BOOL _TimingTest(void* pCtl)
 {
   DEBUG_OHNO_CONTROL* pDOC = pCtl;
-  GFL_NET_HANDLE_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle() ,debugTiming);
+  GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle() ,debugTiming,WB_NET_DEBUG_OHNO_SERVICEID);
 
   GF_ASSERT(!GFL_NET_IsError());
 

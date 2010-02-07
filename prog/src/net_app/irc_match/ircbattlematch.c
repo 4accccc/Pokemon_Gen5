@@ -604,7 +604,7 @@ static void _modeCheckStart31(IRC_BATTLE_MATCH* pWork)
 
 static void _modeCheckStart2(IRC_BATTLE_MATCH* pWork)
 {
-  if(GFL_NET_HANDLE_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(),_TIMINGNO_CS)){
+  if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),_TIMINGNO_CS,WB_NET_IRCBATTLE)){
     _CHANGE_STATE(pWork,_modeCheckStart31);
   }
 }
@@ -621,7 +621,7 @@ static void _modeCheckStart2(IRC_BATTLE_MATCH* pWork)
 static void _modeCheckStart(IRC_BATTLE_MATCH* pWork)
 {
   GFL_NET_AddCommandTable(GFL_NET_CMD_IRCBATTLE, _PacketTbl, NELEMS(_PacketTbl), pWork);
-  GFL_NET_HANDLE_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),_TIMINGNO_CS);
+  GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),_TIMINGNO_CS, WB_NET_IRCBATTLE);
   _CHANGE_STATE(pWork,_modeCheckStart2);
 }
 
