@@ -83,17 +83,16 @@ typedef struct{
 
 ///パワーデータ
 typedef struct{
-  u8 no;                  ///<パワー番号
   u8 level_w;             ///<必要Whiteレベル
   u8 level_b;             ///<必要Blackレベル
-  u8 time;                ///<継続時間(分)
-
   u16 point;              ///<使用ポイント
-  u16 msg_id_title;       ///<パワー項目msg_id
 
+  u16 msg_id_title;       ///<パワー項目msg_id
   u16 msg_id_explain;     ///<パワー説明msg_id
+
+  u16 data;               ///<効果データ
   u8 type;                ///<効果系統
-  u8 data;                ///<効果データ
+  u8 time;                ///<継続時間(分)
 }POWER_CONV_DATA;
 
 //--------------------------------------------------------------
