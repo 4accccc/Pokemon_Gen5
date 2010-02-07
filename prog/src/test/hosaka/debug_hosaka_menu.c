@@ -15,6 +15,7 @@
  */
 //=============================================================================
 //static BOOL TESTMODE_ITEM_SelectIntro( TESTMODE_WORK *work , const int idx );
+static BOOL TESTMODE_ITEM_SelectUNSelect( TESTMODE_WORK* work, const int idx );
 static BOOL TESTMODE_ITEM_SelectCmmBtlDemoEnd( TESTMODE_WORK* work, const int idx );
 static BOOL TESTMODE_ITEM_SelectCmmBtlDemoEndMulti( TESTMODE_WORK* work, const int idx );
 static BOOL TESTMODE_ITEM_SelectCmmBtlDemoStart( TESTMODE_WORK* work, const int idx );
@@ -26,6 +27,7 @@ static BOOL TESTMODE_ITEM_SelectMicTest( TESTMODE_WORK *work , const int idx );
 static TESTMODE_MENU_LIST menuHosaka[] = 
 {
 //	{L"イントロデモ",TESTMODE_ITEM_SelectIntro },
+  {L"国連フロア選択",TESTMODE_ITEM_SelectUNSelect},
   {L"通信バトル後デモ",TESTMODE_ITEM_SelectCmmBtlDemoEnd},
   {L"通信バトル後マルチ",TESTMODE_ITEM_SelectCmmBtlDemoEndMulti},
   {L"通信バトル前デモ",TESTMODE_ITEM_SelectCmmBtlDemoStart},
@@ -41,6 +43,16 @@ static TESTMODE_MENU_LIST menuHosaka[] =
  *								static関数
  */
 //=============================================================================
+#include "app/un_select.h"
+
+static BOOL TESTMODE_ITEM_SelectUNSelect( TESTMODE_WORK* work, const int idx )
+{
+  UN_SELECT_PARAM* initParam = GFL_HEAP_AllocClearMemory( GFL_HEAPID_APP, sizeof(UN_SELECT_PARAM) );
+
+	TESTMODE_COMMAND_ChangeProc(work, FS_OVERLAY_ID(un_select), &UNSelectProcData, initParam);
+
+  return TRUE;
+}
 
 #if 0
 // イントロデモ
