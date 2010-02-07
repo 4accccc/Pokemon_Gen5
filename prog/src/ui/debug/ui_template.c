@@ -717,25 +717,38 @@ static GFL_PROC_RESULT UITemplateProc_Main( GFL_PROC *proc, int *seq, void *pwk,
 static void UITemplate_BG_LoadResource( UI_TEMPLATE_BG_WORK* wk, HEAPID heapID )
 {
   //@TODO とりあえずマイクテストのリソース
+  enum
+  {
+    RES_ARC = ARCID_MICTEST_GRA,
+
+    RES_PAL_S_SIZE = 0x20,
+    RES_PAL_M_SIZE = 0x20,
+
+    RES_PAL_S_ID = NARC_mictest_back_bg_up_NCLR,
+    RES_CHR_S_ID = NARC_mictest_back_bg_up_NCGR,
+    RES_SCR_S_ID = NARC_mictest_back_bg_up_NSCR,
+
+    RES_PAL_M_ID = NARC_mictest_back_bg_down_NCLR,
+    RES_CHR_M_ID = NARC_mictest_back_bg_down_NCGR,
+    RES_SCR_M_ID = NARC_mictest_back_bg_down_NSCR,
+
+  };
+
 	ARCHANDLE	*handle;
 
-	handle	= GFL_ARC_OpenDataHandle( ARCID_MICTEST_GRA, heapID );
+	handle	= GFL_ARC_OpenDataHandle( RES_ARC, heapID );
 
 	// 上下画面ＢＧパレット転送
-	GFL_ARCHDL_UTIL_TransVramPalette( handle, NARC_mictest_back_bg_down_NCLR, PALTYPE_MAIN_BG, PLTID_BG_BACK_M, 0x20, heapID );
-	GFL_ARCHDL_UTIL_TransVramPalette( handle, NARC_mictest_back_bg_up_NCLR, PALTYPE_SUB_BG, PLTID_BG_BACK_S, 0x20, heapID );
+	GFL_ARCHDL_UTIL_TransVramPalette( handle, RES_PAL_M_ID, PALTYPE_MAIN_BG, PLTID_BG_BACK_M, RES_PAL_M_SIZE, heapID );
+	GFL_ARCHDL_UTIL_TransVramPalette( handle, RES_PAL_S_ID, PALTYPE_SUB_BG,  PLTID_BG_BACK_S, RES_PAL_S_SIZE, heapID );
 	
-  //	----- 下画面 -----
-	GFL_ARCHDL_UTIL_TransVramBgCharacter(	handle, NARC_mictest_back_bg_down_NCGR,
-						BG_FRAME_BACK_S, 0, 0, 0, heapID );
-	GFL_ARCHDL_UTIL_TransVramScreen(	handle, NARC_mictest_back_bg_down_NSCR,
-						BG_FRAME_BACK_S, 0, 0, 0, heapID );	
+  //	----- SUB -----
+	GFL_ARCHDL_UTIL_TransVramBgCharacter(	handle, RES_CHR_S_ID, BG_FRAME_BACK_S, 0, 0, 0, heapID );
+	GFL_ARCHDL_UTIL_TransVramScreen(      handle, RES_SCR_S_ID,	BG_FRAME_BACK_S, 0, 0, 0, heapID );	
 
-	//	----- 上画面 -----
-	GFL_ARCHDL_UTIL_TransVramBgCharacter(	handle, NARC_mictest_back_bg_up_NCGR,
-						BG_FRAME_BACK_M, 0, 0, 0, heapID );
-	GFL_ARCHDL_UTIL_TransVramScreen(	handle, NARC_mictest_back_bg_up_NSCR,
-						BG_FRAME_BACK_M, 0, 0, 0, heapID );		
+	//	----- MAIN -----
+	GFL_ARCHDL_UTIL_TransVramBgCharacter(	handle, RES_CHR_M_ID, BG_FRAME_BACK_M, 0, 0, 0, heapID );
+	GFL_ARCHDL_UTIL_TransVramScreen(      handle, RES_SCR_M_ID, BG_FRAME_BACK_M, 0, 0, 0, heapID );		
 
 	GFL_ARC_CloseDataHandle( handle );
 }
