@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsuda" host="W00142" date="2009-11-20T18:10:30"/>
+	<create user="matsuda" host="W00142" date="2010-02-07T16:14:24"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -260,7 +260,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1396" top="257" right="2101" bottom="885" maximized="no" rayout="Vertical2">
+	<dialog left="75" top="206" right="780" bottom="834" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="238" right="1280" bottom="862" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -288,164 +288,751 @@
 	</lock>
 
 
-	<row id="plc_power_s_01" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
-		<language name="JPN" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
-		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
+	<row id="plc_power_s_01">
+		<language name="JPN" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+		<language name="JPN_KANJI" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
 	</row>
 
-	<row id="plc_power_s_02" back-color="#ffff80,,,,,,,,,,,,,,,,,">
-		<language name="JPN" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
-		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
+	<row id="plc_power_s_02">
+		<language name="JPN" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+		<language name="JPN_KANJI" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
 	</row>
 
-	<row id="plc_power_s_03" back-color="#ffff80,,,,,,,,,,,,,,,,,">
-		<language name="JPN" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
-		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
+	<row id="plc_power_s_03">
+		<language name="JPN" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+		<language name="JPN_KANJI" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
 	</row>
 
-	<row id="plc_power_s_04" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
-		<language name="JPN" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
-		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
+	<row id="plc_power_s_04">
+		<language name="JPN" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+		<language name="JPN_KANJI" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
 	</row>
 
-	<row id="plc_power_s_05" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
-		<language name="JPN" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
-		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
+	<row id="plc_power_s_05">
+		<language name="JPN" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+		<language name="JPN_KANJI" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
 	</row>
 
-	<row id="plc_power_s_06" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
-		<language name="JPN" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
-		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
+	<row id="plc_power_s_06">
+		<language name="JPN" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+		<language name="JPN_KANJI" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
 	</row>
 
 	<row id="plc_power_s_07">
-		<language name="JPN" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
-		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
+		<language name="JPN" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+		<language name="JPN_KANJI" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
 	</row>
 
 	<row id="plc_power_s_08">
-		<language name="JPN" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
-		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
+		<language name="JPN" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+		<language name="JPN_KANJI" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
 	</row>
 
 	<row id="plc_power_s_09">
-		<language name="JPN" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
-		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
+		<language name="JPN" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+		<language name="JPN_KANJI" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
 	</row>
 
 	<row id="plc_power_s_10">
-		<language name="JPN" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
-		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
+		<language name="JPN" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+		<language name="JPN_KANJI" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
 	</row>
 
-	<row id="plc_power_s_11" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
-		<language name="JPN" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
-		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
+	<row id="plc_power_s_11">
+		<language name="JPN" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+		<language name="JPN_KANJI" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
 	</row>
 
-	<row id="plc_power_s_12" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
-		<language name="JPN" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
-		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
+	<row id="plc_power_s_12">
+		<language name="JPN" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+		<language name="JPN_KANJI" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
 	</row>
 
-	<row id="plc_power_s_13" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
-		<language name="JPN" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
-		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
+	<row id="plc_power_s_13">
+		<language name="JPN" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+		<language name="JPN_KANJI" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
 	</row>
 
-	<row id="plc_power_s_14" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
-		<language name="JPN" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
-		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
+	<row id="plc_power_s_14">
+		<language name="JPN" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+		<language name="JPN_KANJI" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
 	</row>
 
 	<row id="plc_power_s_15">
-		<language name="JPN" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
-		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
+		<language name="JPN" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+		<language name="JPN_KANJI" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
 	</row>
 
 	<row id="plc_power_s_16">
-		<language name="JPN" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
-		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
+		<language name="JPN" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+		<language name="JPN_KANJI" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
 	</row>
 
 	<row id="plc_power_s_17">
-		<language name="JPN" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
-		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
+		<language name="JPN" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+		<language name="JPN_KANJI" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
 	</row>
 
 	<row id="plc_power_s_18">
-		<language name="JPN" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
-		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
+		<language name="JPN" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+		<language name="JPN_KANJI" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
 	</row>
 
-	<row id="plc_power_s_19" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
-		<language name="JPN" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
-		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
+	<row id="plc_power_s_19">
+		<language name="JPN" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+		<language name="JPN_KANJI" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
 	</row>
 
-	<row id="plc_power_s_20" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
-		<language name="JPN" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
-		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
+	<row id="plc_power_s_20">
+		<language name="JPN" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+		<language name="JPN_KANJI" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
 	</row>
 
-	<row id="plc_power_s_21" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
-		<language name="JPN" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
-		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
+	<row id="plc_power_s_21">
+		<language name="JPN" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+		<language name="JPN_KANJI" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
 	</row>
 
-	<row id="plc_power_s_22" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
-		<language name="JPN" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
-		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
+	<row id="plc_power_s_22">
+		<language name="JPN" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+		<language name="JPN_KANJI" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
 	</row>
 
 	<row id="plc_power_s_23">
-		<language name="JPN" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
-		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
+		<language name="JPN" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+		<language name="JPN_KANJI" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
 	</row>
 
-	<row id="plc_power_s_24" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
-		<language name="JPN" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
-		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
+	<row id="plc_power_s_24">
+		<language name="JPN" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+		<language name="JPN_KANJI" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
 	</row>
 
-	<row id="plc_power_s_25" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
-		<language name="JPN" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
-		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
+	<row id="plc_power_s_25">
+		<language name="JPN" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+		<language name="JPN_KANJI" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
 	</row>
 
-	<row id="plc_power_s_26" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
-		<language name="JPN" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
-		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
+	<row id="plc_power_s_26">
+		<language name="JPN" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+		<language name="JPN_KANJI" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
 	</row>
 
-	<row id="plc_power_s_27" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
-		<language name="JPN" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
-		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
+	<row id="plc_power_s_27">
+		<language name="JPN" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+		<language name="JPN_KANJI" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
 	</row>
 
 	<row id="plc_power_s_28">
-		<language name="JPN" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
-		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
+		<language name="JPN" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+		<language name="JPN_KANJI" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
 	</row>
 
-	<row id="plc_power_s_29" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
-		<language name="JPN" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
-		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
+	<row id="plc_power_s_29">
+		<language name="JPN" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+		<language name="JPN_KANJI" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
 	</row>
 
-	<row id="plc_power_s_30" back-color="#ffff80,,,,,,,,,,,,,,,,,">
-		<language name="JPN" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
-		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
+	<row id="plc_power_s_30">
+		<language name="JPN" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+		<language name="JPN_KANJI" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
 	</row>
 
-	<row id="plc_power_s_31" back-color="#ffff80,,,,,,,,,,,,,,,,,">
-		<language name="JPN" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
-		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
+	<row id="plc_power_s_31">
+		<language name="JPN" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+		<language name="JPN_KANJI" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
 	</row>
 
-	<row id="plc_power_s_32" back-color="#ffff80,,,,,,,,,,,,,,,,,">
-		<language name="JPN" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
-		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
+	<row id="plc_power_s_32">
+		<language name="JPN" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+		<language name="JPN_KANJI" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+	</row>
+
+	<row id="plc_power_s_33">
+		<language name="JPN" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+		<language name="JPN_KANJI" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+	</row>
+
+	<row id="plc_power_s_34">
+		<language name="JPN" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+		<language name="JPN_KANJI" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+	</row>
+
+	<row id="plc_power_s_35">
+		<language name="JPN" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+		<language name="JPN_KANJI" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+	</row>
+
+	<row id="plc_power_s_36">
+		<language name="JPN" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+		<language name="JPN_KANJI" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+	</row>
+
+	<row id="plc_power_s_37">
+		<language name="JPN" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+		<language name="JPN_KANJI" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+	</row>
+
+	<row id="plc_power_s_38">
+		<language name="JPN" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+		<language name="JPN_KANJI" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+	</row>
+
+	<row id="plc_power_s_39">
+		<language name="JPN" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+		<language name="JPN_KANJI" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+	</row>
+
+	<row id="plc_power_s_40">
+		<language name="JPN" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+		<language name="JPN_KANJI" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+	</row>
+
+	<row id="plc_power_s_41">
+		<language name="JPN" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+		<language name="JPN_KANJI" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+	</row>
+
+	<row id="plc_power_s_42">
+		<language name="JPN" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+		<language name="JPN_KANJI" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+	</row>
+
+	<row id="plc_power_s_43">
+		<language name="JPN" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+		<language name="JPN_KANJI" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+	</row>
+
+	<row id="plc_power_s_44">
+		<language name="JPN" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+		<language name="JPN_KANJI" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+	</row>
+
+	<row id="plc_power_s_45">
+		<language name="JPN" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+		<language name="JPN_KANJI" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+	</row>
+
+	<row id="plc_power_s_46">
+		<language name="JPN" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+		<language name="JPN_KANJI" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+	</row>
+
+	<row id="plc_power_s_47">
+		<language name="JPN" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+		<language name="JPN_KANJI" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+	</row>
+
+	<row id="plc_power_s_48">
+		<language name="JPN" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+		<language name="JPN_KANJI" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+	</row>
+
+	<row id="plc_power_s_49">
+		<language name="JPN" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+		<language name="JPN_KANJI" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+	</row>
+
+	<row id="plc_power_s_50">
+		<language name="JPN" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+		<language name="JPN_KANJI" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+	</row>
+
+	<row id="plc_power_s_51">
+		<language name="JPN" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+		<language name="JPN_KANJI" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+	</row>
+
+	<row id="plc_power_s_52">
+		<language name="JPN" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+		<language name="JPN_KANJI" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+	</row>
+
+	<row id="plc_power_s_53">
+		<language name="JPN" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+		<language name="JPN_KANJI" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+	</row>
+
+	<row id="plc_power_s_54">
+		<language name="JPN" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+		<language name="JPN_KANJI" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+	</row>
+
+	<row id="plc_power_s_55">
+		<language name="JPN" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+		<language name="JPN_KANJI" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+	</row>
+
+	<row id="plc_power_s_56">
+		<language name="JPN" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+		<language name="JPN_KANJI" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+	</row>
+
+	<row id="plc_power_s_57">
+		<language name="JPN" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+		<language name="JPN_KANJI" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+	</row>
+
+	<row id="plc_power_s_58">
+		<language name="JPN" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+		<language name="JPN_KANJI" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+	</row>
+
+	<row id="plc_power_s_59">
+		<language name="JPN" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+		<language name="JPN_KANJI" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+	</row>
+
+	<row id="plc_power_s_60">
+		<language name="JPN" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+		<language name="JPN_KANJI" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+	</row>
+
+	<row id="plc_power_s_61">
+		<language name="JPN" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+		<language name="JPN_KANJI" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+	</row>
+
+	<row id="plc_power_s_62">
+		<language name="JPN" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+		<language name="JPN_KANJI" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+	</row>
+
+	<row id="plc_power_s_63">
+		<language name="JPN" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+		<language name="JPN_KANJI" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+	</row>
+
+	<row id="plc_power_s_64">
+		<language name="JPN" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+		<language name="JPN_KANJI" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+	</row>
+
+	<row id="plc_power_s_65">
+		<language name="JPN" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+		<language name="JPN_KANJI" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+	</row>
+
+	<row id="plc_power_s_66">
+		<language name="JPN" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+		<language name="JPN_KANJI" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+	</row>
+
+	<row id="plc_power_s_67">
+		<language name="JPN" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+		<language name="JPN_KANJI" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+	</row>
+
+	<row id="plc_power_s_68">
+		<language name="JPN" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+		<language name="JPN_KANJI" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+	</row>
+
+	<row id="plc_power_s_69">
+		<language name="JPN" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+		<language name="JPN_KANJI" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+	</row>
+
+	<row id="plc_power_s_70">
+		<language name="JPN" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+		<language name="JPN_KANJI" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+	</row>
+
+	<row id="plc_power_s_71">
+		<language name="JPN" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+		<language name="JPN_KANJI" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+	</row>
+
+	<row id="plc_power_s_72">
+		<language name="JPN" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+		<language name="JPN_KANJI" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+	</row>
+
+	<row id="plc_power_s_73">
+		<language name="JPN" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+		<language name="JPN_KANJI" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+	</row>
+
+	<row id="plc_power_s_74">
+		<language name="JPN" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+		<language name="JPN_KANJI" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+	</row>
+
+	<row id="plc_power_s_75">
+		<language name="JPN" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+		<language name="JPN_KANJI" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+	</row>
+
+	<row id="plc_power_s_76">
+		<language name="JPN" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+		<language name="JPN_KANJI" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+	</row>
+
+	<row id="plc_power_s_77">
+		<language name="JPN" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+		<language name="JPN_KANJI" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+	</row>
+
+	<row id="plc_power_s_78">
+		<language name="JPN" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+		<language name="JPN_KANJI" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+	</row>
+
+	<row id="plc_power_s_79">
+		<language name="JPN" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+		<language name="JPN_KANJI" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+	</row>
+
+	<row id="plc_power_s_80">
+		<language name="JPN" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+		<language name="JPN_KANJI" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+	</row>
+
+	<row id="plc_power_s_81">
+		<language name="JPN" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+		<language name="JPN_KANJI" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+	</row>
+
+	<row id="plc_power_s_82">
+		<language name="JPN" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+		<language name="JPN_KANJI" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+	</row>
+
+	<row id="plc_power_s_83">
+		<language name="JPN" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
+		<language name="JPN_KANJI" width="256">こうもくせつめい
+３ぎょう
+ひょうじ</language>
 	</row>
 
 	<flowchart-group-list>

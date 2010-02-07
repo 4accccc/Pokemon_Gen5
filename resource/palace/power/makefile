@@ -60,6 +60,7 @@ ITEM_H		= itemsym.h
 FIELDCOMM_DIR		= ../../../prog/src/field/field_comm/
 MISSION_TYPES_H		= mission_types.h
 
+FIELDINC_DIR		= ../../../prog/include/field/
 
 
 
@@ -85,6 +86,7 @@ subdir:
 
 # narc のコピーだけ実行する
 $(TARGETDIR)/$(targetname).narc: $(targetname).narc
+	$(COPY)	gpower_id.h $(FIELDINC_DIR)gpower_id.h
 	$(COPY) $(targetname).narc $(TARGETDIR)
 	$(COPY) $(targetname).naix $(TARGETDIR) 
 
@@ -119,7 +121,7 @@ $(MISSION_TYPES_H): $(FIELDCOMM_DIR)$(MISSION_TYPES_H)
 	$(COPY)	$(FIELDCOMM_DIR)$(MISSION_TYPES_H) $(MISSION_TYPES_H)
 
 $(DATATXT):	$(DATAFILE) $(ZONEID_H) $(MSG_POWER_H) $(MSG_POWER_EXPLAIN_H) $(FLDMMDL_CODE_H) $(ITEM_H) $(MISSION_TYPES_H)
-	$(XLS2TAB) -c -n 4 $(DATAFILE) > $(DATATXT)
+	$(XLS2TAB) -c -n 6 $(DATAFILE) > $(DATATXT)
 
 #%.bin: %.c
 #power_data.bin: power_data.cdat
@@ -153,6 +155,7 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
 	rm -f $(MISSION_TYPES_H)
 	rm -f $(MISSION_TYPES_H)
 	rm -f *.csv
+	rm -f gpower_id.h
 	rm -f power_data.elf
 	rm -f power_data.bin
 endif

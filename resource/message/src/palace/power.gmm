@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsuda" host="W00142" date="2009-11-20T18:09:49"/>
+	<create user="matsuda" host="W00142" date="2010-02-07T16:11:18"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -260,7 +260,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1396" top="257" right="2101" bottom="885" maximized="no" rayout="Vertical2">
+	<dialog left="31" top="148" right="736" bottom="776" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="238" right="1280" bottom="862" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -288,164 +288,419 @@
 	</lock>
 
 
-	<row id="plc_power_01" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
-		<language name="JPN" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
-		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
+	<row id="plc_power_01">
+		<language name="JPN" width="256">そうぐうパワー　＋</language>
+		<language name="JPN_KANJI" width="256">そうぐうパワー　＋</language>
 	</row>
 
-	<row id="plc_power_02" back-color="#ffff80,,,,,,,,,,,,,,,,,">
-		<language name="JPN" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
-		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
+	<row id="plc_power_02">
+		<language name="JPN" width="256">そうぐうパワー　＋＋</language>
+		<language name="JPN_KANJI" width="256">そうぐうパワー　＋＋</language>
 	</row>
 
-	<row id="plc_power_03" back-color="#ffff80,,,,,,,,,,,,,,,,,">
-		<language name="JPN" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
-		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
+	<row id="plc_power_03">
+		<language name="JPN" width="256">そうぐうパワー　＋＋＋</language>
+		<language name="JPN_KANJI" width="256">そうぐうパワー　＋＋＋</language>
 	</row>
 
-	<row id="plc_power_04" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
-		<language name="JPN" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
-		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
+	<row id="plc_power_04">
+		<language name="JPN" width="256">そうぐうパワー　ー</language>
+		<language name="JPN_KANJI" width="256">そうぐうパワー　ー</language>
 	</row>
 
-	<row id="plc_power_05" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
-		<language name="JPN" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
-		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
+	<row id="plc_power_05">
+		<language name="JPN" width="256">そうぐうパワー　ーー</language>
+		<language name="JPN_KANJI" width="256">そうぐうパワー　ーー</language>
 	</row>
 
-	<row id="plc_power_06" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
-		<language name="JPN" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
-		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
+	<row id="plc_power_06">
+		<language name="JPN" width="256">そうぐうパワー　ーーー</language>
+		<language name="JPN_KANJI" width="256">そうぐうパワー　ーーー</language>
 	</row>
 
 	<row id="plc_power_07">
-		<language name="JPN" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
-		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
+		<language name="JPN" width="256">たまごふかパワー　＋</language>
+		<language name="JPN_KANJI" width="256">たまごふかパワー　＋</language>
 	</row>
 
 	<row id="plc_power_08">
-		<language name="JPN" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
-		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
+		<language name="JPN" width="256">たまごふかパワー　＋＋</language>
+		<language name="JPN_KANJI" width="256">たまごふかパワー　＋＋</language>
 	</row>
 
 	<row id="plc_power_09">
-		<language name="JPN" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
-		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
+		<language name="JPN" width="256">たまごふかパワー　＋＋＋</language>
+		<language name="JPN_KANJI" width="256">たまごふかパワー　＋＋＋</language>
 	</row>
 
 	<row id="plc_power_10">
-		<language name="JPN" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
-		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
+		<language name="JPN" width="256">なつきパワー　＋</language>
+		<language name="JPN_KANJI" width="256">なつきパワー　＋</language>
 	</row>
 
-	<row id="plc_power_11" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
-		<language name="JPN" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
-		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
+	<row id="plc_power_11">
+		<language name="JPN" width="256">なつきパワー　＋＋</language>
+		<language name="JPN_KANJI" width="256">なつきパワー　＋＋</language>
 	</row>
 
-	<row id="plc_power_12" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
-		<language name="JPN" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
-		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
+	<row id="plc_power_12">
+		<language name="JPN" width="256">なつきパワー　＋＋＋</language>
+		<language name="JPN_KANJI" width="256">なつきパワー　＋＋＋</language>
 	</row>
 
-	<row id="plc_power_13" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
-		<language name="JPN" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
-		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
+	<row id="plc_power_13">
+		<language name="JPN" width="256">やすうりパワー　１０％オフ</language>
+		<language name="JPN_KANJI" width="256">やすうりパワー　１０％オフ</language>
 	</row>
 
-	<row id="plc_power_14" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
-		<language name="JPN" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
-		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
+	<row id="plc_power_14">
+		<language name="JPN" width="256">やすうりパワー　２５％オフ</language>
+		<language name="JPN_KANJI" width="256">やすうりパワー　２５％オフ</language>
 	</row>
 
 	<row id="plc_power_15">
-		<language name="JPN" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
-		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
+		<language name="JPN" width="256">やすうりパワー　５０％オフ</language>
+		<language name="JPN_KANJI" width="256">やすうりパワー　５０％オフ</language>
 	</row>
 
 	<row id="plc_power_16">
-		<language name="JPN" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
-		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
+		<language name="JPN" width="256">はっせいパワー　A</language>
+		<language name="JPN_KANJI" width="256">はっせいパワー　A</language>
 	</row>
 
 	<row id="plc_power_17">
-		<language name="JPN" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
-		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
+		<language name="JPN" width="256">はっせいパワー　B</language>
+		<language name="JPN_KANJI" width="256">はっせいパワー　B</language>
 	</row>
 
 	<row id="plc_power_18">
-		<language name="JPN" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
-		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
+		<language name="JPN" width="256">はっせいパワー　C</language>
+		<language name="JPN_KANJI" width="256">はっせいパワー　C</language>
 	</row>
 
-	<row id="plc_power_19" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
-		<language name="JPN" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
-		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
+	<row id="plc_power_19">
+		<language name="JPN" width="256">はっせいパワー　D</language>
+		<language name="JPN_KANJI" width="256">はっせいパワー　D</language>
 	</row>
 
-	<row id="plc_power_20" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
-		<language name="JPN" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
-		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
+	<row id="plc_power_20">
+		<language name="JPN" width="256">はっせいパワー　E</language>
+		<language name="JPN_KANJI" width="256">はっせいパワー　E</language>
 	</row>
 
-	<row id="plc_power_21" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
-		<language name="JPN" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
-		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
+	<row id="plc_power_21">
+		<language name="JPN" width="256">はっせいパワー　F</language>
+		<language name="JPN_KANJI" width="256">はっせいパワー　F</language>
 	</row>
 
-	<row id="plc_power_22" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
-		<language name="JPN" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
-		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
+	<row id="plc_power_22">
+		<language name="JPN" width="256">はっせいパワー　G</language>
+		<language name="JPN_KANJI" width="256">はっせいパワー　G</language>
 	</row>
 
 	<row id="plc_power_23">
-		<language name="JPN" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
-		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
+		<language name="JPN" width="256">はっせいパワー　H</language>
+		<language name="JPN_KANJI" width="256">はっせいパワー　H</language>
 	</row>
 
-	<row id="plc_power_24" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
-		<language name="JPN" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
-		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
+	<row id="plc_power_24">
+		<language name="JPN" width="256">はっせいパワー　I</language>
+		<language name="JPN_KANJI" width="256">はっせいパワー　I</language>
 	</row>
 
-	<row id="plc_power_25" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
-		<language name="JPN" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
-		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
+	<row id="plc_power_25">
+		<language name="JPN" width="256">はっせいパワー　J</language>
+		<language name="JPN_KANJI" width="256">はっせいパワー　J</language>
 	</row>
 
-	<row id="plc_power_26" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
-		<language name="JPN" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
-		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
+	<row id="plc_power_26">
+		<language name="JPN" width="256">はっせいパワー　K</language>
+		<language name="JPN_KANJI" width="256">はっせいパワー　K</language>
 	</row>
 
-	<row id="plc_power_27" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
-		<language name="JPN" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
-		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
+	<row id="plc_power_27">
+		<language name="JPN" width="256">はっせいパワー　L</language>
+		<language name="JPN_KANJI" width="256">はっせいパワー　L</language>
 	</row>
 
 	<row id="plc_power_28">
-		<language name="JPN" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
-		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
+		<language name="JPN" width="256">はっせいパワー　M</language>
+		<language name="JPN_KANJI" width="256">はっせいパワー　M</language>
 	</row>
 
-	<row id="plc_power_29" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
-		<language name="JPN" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
-		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
+	<row id="plc_power_29">
+		<language name="JPN" width="256">はっせいパワー　N</language>
+		<language name="JPN_KANJI" width="256">はっせいパワー　N</language>
 	</row>
 
-	<row id="plc_power_30" back-color="#ffff80,,,,,,,,,,,,,,,,,">
-		<language name="JPN" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
-		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
+	<row id="plc_power_30">
+		<language name="JPN" width="256">はっせいパワー　O</language>
+		<language name="JPN_KANJI" width="256">はっせいパワー　O</language>
 	</row>
 
-	<row id="plc_power_31" back-color="#ffff80,,,,,,,,,,,,,,,,,">
-		<language name="JPN" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
-		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
+	<row id="plc_power_31">
+		<language name="JPN" width="256">はっせいパワー　P</language>
+		<language name="JPN_KANJI" width="256">はっせいパワー　P</language>
 	</row>
 
-	<row id="plc_power_32" back-color="#ffff80,,,,,,,,,,,,,,,,,">
-		<language name="JPN" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
-		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:0]が　せいそくする</language>
+	<row id="plc_power_32">
+		<language name="JPN" width="256">はっせいパワー　Q</language>
+		<language name="JPN_KANJI" width="256">はっせいパワー　Q</language>
+	</row>
+
+	<row id="plc_power_33">
+		<language name="JPN" width="256">はっせいパワー　R</language>
+		<language name="JPN_KANJI" width="256">はっせいパワー　R</language>
+	</row>
+
+	<row id="plc_power_34">
+		<language name="JPN" width="256">はっせいパワー　S</language>
+		<language name="JPN_KANJI" width="256">はっせいパワー　S</language>
+	</row>
+
+	<row id="plc_power_35">
+		<language name="JPN" width="256">はっせいパワー　T</language>
+		<language name="JPN_KANJI" width="256">はっせいパワー　T</language>
+	</row>
+
+	<row id="plc_power_36">
+		<language name="JPN" width="256">はっせいパワー　U</language>
+		<language name="JPN_KANJI" width="256">はっせいパワー　U</language>
+	</row>
+
+	<row id="plc_power_37">
+		<language name="JPN" width="256">はっせいパワー　V</language>
+		<language name="JPN_KANJI" width="256">はっせいパワー　V</language>
+	</row>
+
+	<row id="plc_power_38">
+		<language name="JPN" width="256">はっせいパワー　W</language>
+		<language name="JPN_KANJI" width="256">はっせいパワー　W</language>
+	</row>
+
+	<row id="plc_power_39">
+		<language name="JPN" width="256">はっせいパワー　X</language>
+		<language name="JPN_KANJI" width="256">はっせいパワー　X</language>
+	</row>
+
+	<row id="plc_power_40">
+		<language name="JPN" width="256">はっせいパワー　Y</language>
+		<language name="JPN_KANJI" width="256">はっせいパワー　Y</language>
+	</row>
+
+	<row id="plc_power_41">
+		<language name="JPN" width="256">はっせいパワー　Z</language>
+		<language name="JPN_KANJI" width="256">はっせいパワー　Z</language>
+	</row>
+
+	<row id="plc_power_42">
+		<language name="JPN" width="256">HPかいふくパワー　＋</language>
+		<language name="JPN_KANJI" width="256">HPかいふくパワー　＋</language>
+	</row>
+
+	<row id="plc_power_43">
+		<language name="JPN" width="256">HPかいふくパワー　＋＋</language>
+		<language name="JPN_KANJI" width="256">HPかいふくパワー　＋＋</language>
+	</row>
+
+	<row id="plc_power_44">
+		<language name="JPN" width="256">HPかいふくパワー　＋＋＋</language>
+		<language name="JPN_KANJI" width="256">HPかいふくパワー　＋＋＋</language>
+	</row>
+
+	<row id="plc_power_45">
+		<language name="JPN" width="256">PPかいふくパワー　＋</language>
+		<language name="JPN_KANJI" width="256">PPかいふくパワー　＋</language>
+	</row>
+
+	<row id="plc_power_46">
+		<language name="JPN" width="256">PPかいふくパワー　＋＋</language>
+		<language name="JPN_KANJI" width="256">PPかいふくパワー　＋＋</language>
+	</row>
+
+	<row id="plc_power_47">
+		<language name="JPN" width="256">PPかいふくパワー　＋＋＋</language>
+		<language name="JPN_KANJI" width="256">PPかいふくパワー　＋＋＋</language>
+	</row>
+
+	<row id="plc_power_48">
+		<language name="JPN" width="256">けいけんちパワー　＋</language>
+		<language name="JPN_KANJI" width="256">けいけんちパワー　＋</language>
+	</row>
+
+	<row id="plc_power_49">
+		<language name="JPN" width="256">けいけんちパワー　＋＋</language>
+		<language name="JPN_KANJI" width="256">けいけんちパワー　＋＋</language>
+	</row>
+
+	<row id="plc_power_50">
+		<language name="JPN" width="256">けいけんちパワー　＋＋＋</language>
+		<language name="JPN_KANJI" width="256">けいけんちパワー　＋＋＋</language>
+	</row>
+
+	<row id="plc_power_51">
+		<language name="JPN" width="256">けいけんちパワー　-</language>
+		<language name="JPN_KANJI" width="256">けいけんちパワー　-</language>
+	</row>
+
+	<row id="plc_power_52">
+		<language name="JPN" width="256">けいけんちパワー　--</language>
+		<language name="JPN_KANJI" width="256">けいけんちパワー　--</language>
+	</row>
+
+	<row id="plc_power_53">
+		<language name="JPN" width="256">けいけんちパワー　---</language>
+		<language name="JPN_KANJI" width="256">けいけんちパワー　---</language>
+	</row>
+
+	<row id="plc_power_54">
+		<language name="JPN" width="256">おこづかいパワー　＋</language>
+		<language name="JPN_KANJI" width="256">おこづかいパワー　＋</language>
+	</row>
+
+	<row id="plc_power_55">
+		<language name="JPN" width="256">おこづかいパワー　＋＋</language>
+		<language name="JPN_KANJI" width="256">おこづかいパワー　＋＋</language>
+	</row>
+
+	<row id="plc_power_56">
+		<language name="JPN" width="256">おこづかいパワー　＋＋＋</language>
+		<language name="JPN_KANJI" width="256">おこづかいパワー　＋＋＋</language>
+	</row>
+
+	<row id="plc_power_57">
+		<language name="JPN" width="256">ほかくパワー　＋</language>
+		<language name="JPN_KANJI" width="256">ほかくパワー　＋</language>
+	</row>
+
+	<row id="plc_power_58">
+		<language name="JPN" width="256">ほかくパワー　＋＋</language>
+		<language name="JPN_KANJI" width="256">ほかくパワー　＋＋</language>
+	</row>
+
+	<row id="plc_power_59">
+		<language name="JPN" width="256">ほかくパワー　＋＋＋</language>
+		<language name="JPN_KANJI" width="256">ほかくパワー　＋＋＋</language>
+	</row>
+
+	<row id="plc_power_60">
+		<language name="JPN" width="256">はいふパワー 1</language>
+		<language name="JPN_KANJI" width="256">はいふパワー 1</language>
+	</row>
+
+	<row id="plc_power_61">
+		<language name="JPN" width="256">はいふパワー 2</language>
+		<language name="JPN_KANJI" width="256">はいふパワー 2</language>
+	</row>
+
+	<row id="plc_power_62">
+		<language name="JPN" width="256">はいふパワー 3</language>
+		<language name="JPN_KANJI" width="256">はいふパワー 3</language>
+	</row>
+
+	<row id="plc_power_63">
+		<language name="JPN" width="256">はいふパワー 4</language>
+		<language name="JPN_KANJI" width="256">はいふパワー 4</language>
+	</row>
+
+	<row id="plc_power_64">
+		<language name="JPN" width="256">はいふパワー 5</language>
+		<language name="JPN_KANJI" width="256">はいふパワー 5</language>
+	</row>
+
+	<row id="plc_power_65">
+		<language name="JPN" width="256">はいふパワー 6</language>
+		<language name="JPN_KANJI" width="256">はいふパワー 6</language>
+	</row>
+
+	<row id="plc_power_66">
+		<language name="JPN" width="256">はいふパワー 1</language>
+		<language name="JPN_KANJI" width="256">はいふパワー 1</language>
+	</row>
+
+	<row id="plc_power_67">
+		<language name="JPN" width="256">はいふパワー 2</language>
+		<language name="JPN_KANJI" width="256">はいふパワー 2</language>
+	</row>
+
+	<row id="plc_power_68">
+		<language name="JPN" width="256">はいふパワー 3</language>
+		<language name="JPN_KANJI" width="256">はいふパワー 3</language>
+	</row>
+
+	<row id="plc_power_69">
+		<language name="JPN" width="256">はいふパワー 4</language>
+		<language name="JPN_KANJI" width="256">はいふパワー 4</language>
+	</row>
+
+	<row id="plc_power_70">
+		<language name="JPN" width="256">はいふパワー 5</language>
+		<language name="JPN_KANJI" width="256">はいふパワー 5</language>
+	</row>
+
+	<row id="plc_power_71">
+		<language name="JPN" width="256">はいふパワー 6</language>
+		<language name="JPN_KANJI" width="256">はいふパワー 6</language>
+	</row>
+
+	<row id="plc_power_72">
+		<language name="JPN" width="256">はいふパワー 1</language>
+		<language name="JPN_KANJI" width="256">はいふパワー 1</language>
+	</row>
+
+	<row id="plc_power_73">
+		<language name="JPN" width="256">はいふパワー 2</language>
+		<language name="JPN_KANJI" width="256">はいふパワー 2</language>
+	</row>
+
+	<row id="plc_power_74">
+		<language name="JPN" width="256">はいふパワー 3</language>
+		<language name="JPN_KANJI" width="256">はいふパワー 3</language>
+	</row>
+
+	<row id="plc_power_75">
+		<language name="JPN" width="256">はいふパワー 4</language>
+		<language name="JPN_KANJI" width="256">はいふパワー 4</language>
+	</row>
+
+	<row id="plc_power_76">
+		<language name="JPN" width="256">はいふパワー 5</language>
+		<language name="JPN_KANJI" width="256">はいふパワー 5</language>
+	</row>
+
+	<row id="plc_power_77">
+		<language name="JPN" width="256">はいふパワー 6</language>
+		<language name="JPN_KANJI" width="256">はいふパワー 6</language>
+	</row>
+
+	<row id="plc_power_78">
+		<language name="JPN" width="256">はいふパワー 1</language>
+		<language name="JPN_KANJI" width="256">はいふパワー 1</language>
+	</row>
+
+	<row id="plc_power_79">
+		<language name="JPN" width="256">はいふパワー 2</language>
+		<language name="JPN_KANJI" width="256">はいふパワー 2</language>
+	</row>
+
+	<row id="plc_power_80">
+		<language name="JPN" width="256">はいふパワー 3</language>
+		<language name="JPN_KANJI" width="256">はいふパワー 3</language>
+	</row>
+
+	<row id="plc_power_81">
+		<language name="JPN" width="256">はいふパワー 4</language>
+		<language name="JPN_KANJI" width="256">はいふパワー 4</language>
+	</row>
+
+	<row id="plc_power_82">
+		<language name="JPN" width="256">はいふパワー 5</language>
+		<language name="JPN_KANJI" width="256">はいふパワー 5</language>
+	</row>
+
+	<row id="plc_power_83">
+		<language name="JPN" width="256">はいふパワー 6</language>
+		<language name="JPN_KANJI" width="256">はいふパワー 6</language>
 	</row>
 
 	<flowchart-group-list>
