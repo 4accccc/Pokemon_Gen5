@@ -15,3 +15,9 @@
 #define WC10R0101_BOY3_01                  3
 
 #endif //ZONE_WC10R0101_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/wc10r0101.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_WC10R0101_EVB_H
+#define ZONE_WC10R0101_EVB_H
+
+
+#endif //ZONE_WC10R0101_EVB_H

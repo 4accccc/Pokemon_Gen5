@@ -14,3 +14,9 @@
 #define D08R0901_BOSS_01                   2
 
 #endif //ZONE_D08R0901_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d08r0901.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_D08R0901_EVB_H
+#define ZONE_D08R0901_EVB_H
+
+
+#endif //ZONE_D08R0901_EVB_H

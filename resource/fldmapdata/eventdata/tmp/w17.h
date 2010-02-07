@@ -10,3 +10,9 @@
 
 
 #endif //ZONE_W17_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/w17.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_W17_EVB_H
+#define ZONE_W17_EVB_H
+
+
+#endif //ZONE_W17_EVB_H

@@ -10,3 +10,9 @@
 
 
 #endif //ZONE_PALACE08_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/palace08.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_PALACE08_EVB_H
+#define ZONE_PALACE08_EVB_H
+
+
+#endif //ZONE_PALACE08_EVB_H

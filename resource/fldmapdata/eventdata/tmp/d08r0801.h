@@ -17,3 +17,9 @@
 #define D08R0801_HAKAIM_02                 4
 
 #endif //ZONE_D08R0801_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d08r0801.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_D08R0801_EVB_H
+#define ZONE_D08R0801_EVB_H
+
+
+#endif //ZONE_D08R0801_EVB_H

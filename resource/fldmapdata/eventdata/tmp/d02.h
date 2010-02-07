@@ -13,3 +13,10 @@
 #define D02_LEADER3_01                     1
 
 #endif //ZONE_D02_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d02.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_D02_EVB_H
+#define ZONE_D02_EVB_H
+
+#define BGID_D02_ROCK_01                  0
+
+#endif //ZONE_D02_EVB_H

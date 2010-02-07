@@ -20,3 +20,9 @@
 #define D08R0101_NONE_04                   7
 
 #endif //ZONE_D08R0101_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d08r0101.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_D08R0101_EVB_H
+#define ZONE_D08R0101_EVB_H
+
+
+#endif //ZONE_D08R0101_EVB_H

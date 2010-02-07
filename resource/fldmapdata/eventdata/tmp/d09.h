@@ -32,3 +32,9 @@
 #define D09_FLD_ITEM_05                    4
 
 #endif //ZONE_D09_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d09.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_D09_EVB_H
+#define ZONE_D09_EVB_H
+
+
+#endif //ZONE_D09_EVB_H

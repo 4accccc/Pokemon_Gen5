@@ -16,3 +16,9 @@
 #define T02R0401_MAN2_01                   2
 
 #endif //ZONE_T02R0401_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/t02r0401.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_T02R0401_EVB_H
+#define ZONE_T02R0401_EVB_H
+
+
+#endif //ZONE_T02R0401_EVB_H

@@ -10,3 +10,9 @@
 
 
 #endif //ZONE_GT_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/gt.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_GT_EVB_H
+#define ZONE_GT_EVB_H
+
+
+#endif //ZONE_GT_EVB_H

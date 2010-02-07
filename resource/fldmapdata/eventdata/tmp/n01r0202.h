@@ -11,3 +11,9 @@
 
 
 #endif //ZONE_N01R0202_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/n01r0202.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_N01R0202_EVB_H
+#define ZONE_N01R0202_EVB_H
+
+
+#endif //ZONE_N01R0202_EVB_H

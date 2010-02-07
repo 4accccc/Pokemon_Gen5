@@ -17,3 +17,9 @@
 #define T01R0201_SUPPORT_01                2
 
 #endif //ZONE_T01R0201_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/t01r0201.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_T01R0201_EVB_H
+#define ZONE_T01R0201_EVB_H
+
+
+#endif //ZONE_T01R0201_EVB_H

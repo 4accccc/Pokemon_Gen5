@@ -13,3 +13,9 @@
 #define D06_LEADER5_01                     1
 
 #endif //ZONE_D06_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d06.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_D06_EVB_H
+#define ZONE_D06_EVB_H
+
+
+#endif //ZONE_D06_EVB_H

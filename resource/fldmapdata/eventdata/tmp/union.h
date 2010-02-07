@@ -11,3 +11,9 @@
 #define UNION_GUIDE_01                     0
 
 #endif //ZONE_UNION_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/union.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_UNION_EVB_H
+#define ZONE_UNION_EVB_H
+
+
+#endif //ZONE_UNION_EVB_H

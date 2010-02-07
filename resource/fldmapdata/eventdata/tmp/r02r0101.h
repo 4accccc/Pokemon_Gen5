@@ -13,3 +13,10 @@
 #define R02R0101_WOMAN1                    0
 
 #endif //ZONE_R02R0101_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/r02r0101.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_R02R0101_EVB_H
+#define ZONE_R02R0101_EVB_H
+
+#define BG_R02R0101_BOARD_01              0
+
+#endif //ZONE_R02R0101_EVB_H

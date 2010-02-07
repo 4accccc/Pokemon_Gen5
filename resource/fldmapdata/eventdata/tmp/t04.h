@@ -14,3 +14,9 @@
 
 
 #endif //ZONE_T04_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/t04.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_T04_EVB_H
+#define ZONE_T04_EVB_H
+
+
+#endif //ZONE_T04_EVB_H

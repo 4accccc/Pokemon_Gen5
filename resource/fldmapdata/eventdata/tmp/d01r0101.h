@@ -27,3 +27,9 @@
 #define D01R0101_ITEM_01                  13
 
 #endif //ZONE_D01R0101_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d01r0101.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_D01R0101_EVB_H
+#define ZONE_D01R0101_EVB_H
+
+
+#endif //ZONE_D01R0101_EVB_H

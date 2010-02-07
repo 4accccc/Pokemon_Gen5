@@ -13,3 +13,9 @@
 #define TR_VETERANM_02                     0
 
 #endif //ZONE_D09R1301_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d09r1301.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_D09R1301_EVB_H
+#define ZONE_D09R1301_EVB_H
+
+
+#endif //ZONE_D09R1301_EVB_H

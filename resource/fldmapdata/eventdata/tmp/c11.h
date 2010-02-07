@@ -11,3 +11,9 @@
 
 
 #endif //ZONE_C11_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c11.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_C11_EVB_H
+#define ZONE_C11_EVB_H
+
+
+#endif //ZONE_C11_EVB_H

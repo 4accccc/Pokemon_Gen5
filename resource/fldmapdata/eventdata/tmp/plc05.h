@@ -15,3 +15,9 @@
 #define PLC05_MAN04_01                     3
 
 #endif //ZONE_PLC05_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/plc05.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_PLC05_EVB_H
+#define ZONE_PLC05_EVB_H
+
+
+#endif //ZONE_PLC05_EVB_H

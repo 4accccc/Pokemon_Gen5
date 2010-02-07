@@ -12,3 +12,9 @@
 
 
 #endif //ZONE_R15R0201_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/r15r0201.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_R15R0201_EVB_H
+#define ZONE_R15R0201_EVB_H
+
+
+#endif //ZONE_R15R0201_EVB_H

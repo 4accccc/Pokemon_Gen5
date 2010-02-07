@@ -15,3 +15,9 @@
 #define N01R0502_RIVAL_01                  3
 
 #endif //ZONE_N01R0502_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/n01r0502.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_N01R0502_EVB_H
+#define ZONE_N01R0502_EVB_H
+
+
+#endif //ZONE_N01R0502_EVB_H

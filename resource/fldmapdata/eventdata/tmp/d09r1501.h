@@ -11,3 +11,9 @@
 
 
 #endif //ZONE_D09R1501_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d09r1501.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_D09R1501_EVB_H
+#define ZONE_D09R1501_EVB_H
+
+
+#endif //ZONE_D09R1501_EVB_H

@@ -17,3 +17,9 @@
 #define T01R0101_RIVAL_01                  2
 
 #endif //ZONE_T01R0101_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/t01r0101.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_T01R0101_EVB_H
+#define ZONE_T01R0101_EVB_H
+
+
+#endif //ZONE_T01R0101_EVB_H

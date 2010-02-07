@@ -28,3 +28,12 @@
 #define R05_MAN2_01                       15
 
 #endif //ZONE_R05_EVC_H
+//Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r05.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
+#ifndef ZONE_R05_EVB_H
+#define ZONE_R05_EVB_H
+
+#define BGID_R05_BOARD_01                 0
+#define BGID_R05_BOARD_03                 1
+#define BGID_R05_BOARD_02                 2
+
+#endif //ZONE_R05_EVB_H

@@ -14,3 +14,9 @@
 #define R03R0201_SODATEYA_GRANDMA          0
 
 #endif //ZONE_R03R0201_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/r03r0201.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_R03R0201_EVB_H
+#define ZONE_R03R0201_EVB_H
+
+
+#endif //ZONE_R03R0201_EVB_H

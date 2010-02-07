@@ -13,3 +13,9 @@
 
 
 #endif //ZONE_R15_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/r15.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_R15_EVB_H
+#define ZONE_R15_EVB_H
+
+
+#endif //ZONE_R15_EVB_H

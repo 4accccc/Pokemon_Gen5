@@ -11,3 +11,10 @@
 
 
 #endif //ZONE_D07_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d07.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_D07_EVB_H
+#define ZONE_D07_EVB_H
+
+#define D07_BOARD_01                      0
+
+#endif //ZONE_D07_EVB_H

@@ -14,3 +14,10 @@
 #define H01R0201_WOMAN2_01                 1
 
 #endif //ZONE_H01R0201_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/h01r0201.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_H01R0201_EVB_H
+#define ZONE_H01R0201_EVB_H
+
+#define BG_H01R0201_BOARD_01              0
+
+#endif //ZONE_H01R0201_EVB_H

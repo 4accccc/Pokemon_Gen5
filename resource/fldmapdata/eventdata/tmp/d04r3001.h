@@ -10,3 +10,9 @@
 
 
 #endif //ZONE_D04R3001_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d04r3001.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_D04R3001_EVB_H
+#define ZONE_D04R3001_EVB_H
+
+
+#endif //ZONE_D04R3001_EVB_H

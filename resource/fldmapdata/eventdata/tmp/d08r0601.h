@@ -18,3 +18,9 @@
 #define D08R0601_HAKAIW_02                 5
 
 #endif //ZONE_D08R0601_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d08r0601.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_D08R0601_EVB_H
+#define ZONE_D08R0601_EVB_H
+
+
+#endif //ZONE_D08R0601_EVB_H

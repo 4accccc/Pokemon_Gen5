@@ -13,3 +13,10 @@
 #define D03_MIDDLEMAN1_01                  1
 
 #endif //ZONE_D03_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d03.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_D03_EVB_H
+#define ZONE_D03_EVB_H
+
+#define BGID_D03_SIGN1_01                 0
+
+#endif //ZONE_D03_EVB_H

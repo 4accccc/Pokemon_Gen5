@@ -40,3 +40,12 @@
 #define R03_POKE4_01                      25
 
 #endif //ZONE_R03_EVC_H
+//Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r03.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
+#ifndef ZONE_R03_EVB_H
+#define ZONE_R03_EVB_H
+
+#define R03_BOARD_01                      0
+#define R03_BOARD_03                      1
+#define R03_BOARD_02                      2
+
+#endif //ZONE_R03_EVB_H

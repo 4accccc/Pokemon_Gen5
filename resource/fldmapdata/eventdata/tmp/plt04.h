@@ -14,3 +14,9 @@
 #define PLT04_MAN04_01                     3
 
 #endif //ZONE_PLT04_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/plt04.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_PLT04_EVB_H
+#define ZONE_PLT04_EVB_H
+
+
+#endif //ZONE_PLT04_EVB_H

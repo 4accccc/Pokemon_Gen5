@@ -12,3 +12,9 @@
 
 
 #endif //ZONE_D04R3201_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d04r3201.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_D04R3201_EVB_H
+#define ZONE_D04R3201_EVB_H
+
+
+#endif //ZONE_D04R3201_EVB_H

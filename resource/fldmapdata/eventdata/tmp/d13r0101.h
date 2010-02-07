@@ -10,3 +10,9 @@
 
 
 #endif //ZONE_D13R0101_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d13r0101.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_D13R0101_EVB_H
+#define ZONE_D13R0101_EVB_H
+
+
+#endif //ZONE_D13R0101_EVB_H

@@ -11,3 +11,10 @@
 
 
 #endif //ZONE_T01R0202_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/t01r0202.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_T01R0202_EVB_H
+#define ZONE_T01R0202_EVB_H
+
+#define BG_T01R0202_PC_01                 0
+
+#endif //ZONE_T01R0202_EVB_H

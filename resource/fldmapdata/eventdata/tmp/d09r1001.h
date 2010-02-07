@@ -15,3 +15,9 @@
 #define D09R1001_ROCK_01                   1
 
 #endif //ZONE_D09R1001_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d09r1001.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_D09R1001_EVB_H
+#define ZONE_D09R1001_EVB_H
+
+
+#endif //ZONE_D09R1001_EVB_H

@@ -10,3 +10,9 @@
 
 
 #endif //ZONE_D12_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d12.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_D12_EVB_H
+#define ZONE_D12_EVB_H
+
+
+#endif //ZONE_D12_EVB_H

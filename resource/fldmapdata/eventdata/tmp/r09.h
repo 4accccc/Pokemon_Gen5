@@ -21,3 +21,12 @@
 #define TR_BADTEAM_01_2                    6
 
 #endif //ZONE_R09_EVC_H
+//Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r09.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
+#ifndef ZONE_R09_EVB_H
+#define ZONE_R09_EVB_H
+
+#define BG_R09_SIGN2_01                   0
+#define BG_R09_SIGN1_01                   1
+#define BG_R09_SIGN3_01                   2
+
+#endif //ZONE_R09_EVB_H

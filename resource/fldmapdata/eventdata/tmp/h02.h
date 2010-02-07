@@ -12,3 +12,9 @@
 
 
 #endif //ZONE_H02_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/h02.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_H02_EVB_H
+#define ZONE_H02_EVB_H
+
+
+#endif //ZONE_H02_EVB_H

@@ -41,3 +41,10 @@
 #define D02R0101_SAGE5_01                 27
 
 #endif //ZONE_D02R0101_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d02r0101.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_D02R0101_EVB_H
+#define ZONE_D02R0101_EVB_H
+
+#define BGID_D02R0101_STONE_01            0
+
+#endif //ZONE_D02R0101_EVB_H

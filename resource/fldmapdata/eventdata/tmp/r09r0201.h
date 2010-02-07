@@ -17,3 +17,9 @@
 #define R09R0201_WOMAN3_01                 4
 
 #endif //ZONE_R09R0201_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/r09r0201.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_R09R0201_EVB_H
+#define ZONE_R09R0201_EVB_H
+
+
+#endif //ZONE_R09R0201_EVB_H

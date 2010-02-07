@@ -10,3 +10,9 @@
 
 
 #endif //ZONE_PLR06_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/plr06.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_PLR06_EVB_H
+#define ZONE_PLR06_EVB_H
+
+
+#endif //ZONE_PLR06_EVB_H

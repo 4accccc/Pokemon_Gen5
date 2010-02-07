@@ -18,3 +18,9 @@
 #define R06R0202_ROCK_06                   5
 
 #endif //ZONE_R06R0202_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/r06r0202.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_R06R0202_EVB_H
+#define ZONE_R06R0202_EVB_H
+
+
+#endif //ZONE_R06R0202_EVB_H

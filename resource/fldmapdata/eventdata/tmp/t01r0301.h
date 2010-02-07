@@ -16,3 +16,9 @@
 #define T01R0301_MIDDLEWOMAN2_01           1
 
 #endif //ZONE_T01R0301_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/t01r0301.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_T01R0301_EVB_H
+#define ZONE_T01R0301_EVB_H
+
+
+#endif //ZONE_T01R0301_EVB_H

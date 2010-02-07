@@ -16,3 +16,9 @@
 #define D08_LEADER7_01                     4
 
 #endif //ZONE_D08_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d08.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_D08_EVB_H
+#define ZONE_D08_EVB_H
+
+
+#endif //ZONE_D08_EVB_H

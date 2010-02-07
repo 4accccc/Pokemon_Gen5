@@ -15,3 +15,9 @@
 #define R15R0301_ASSISTANTW_02             3
 
 #endif //ZONE_R15R0301_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/r15r0301.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_R15R0301_EVB_H
+#define ZONE_R15R0301_EVB_H
+
+
+#endif //ZONE_R15R0301_EVB_H

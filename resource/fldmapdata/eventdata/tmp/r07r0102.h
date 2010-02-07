@@ -17,3 +17,9 @@
 #define TR_BADMAN_01                       4
 
 #endif //ZONE_R07R0102_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/r07r0102.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_R07R0102_EVB_H
+#define ZONE_R07R0102_EVB_H
+
+
+#endif //ZONE_R07R0102_EVB_H

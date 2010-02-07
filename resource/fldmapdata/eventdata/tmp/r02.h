@@ -25,3 +25,12 @@
 #define R02_FLD_ITEM_05                   13
 
 #endif //ZONE_R02_EVC_H
+//Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r02.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
+#ifndef ZONE_R02_EVB_H
+#define ZONE_R02_EVB_H
+
+#define BG_R02_BOARD1_01                  0
+#define BG_R02_BOARD2_01                  1
+#define BG_R02_BOARD3_01                  2
+
+#endif //ZONE_R02_EVB_H

@@ -17,3 +17,9 @@
 #define D06R0101_HAKASE2_01                1
 
 #endif //ZONE_D06R0101_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d06r0101.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_D06R0101_EVB_H
+#define ZONE_D06R0101_EVB_H
+
+
+#endif //ZONE_D06R0101_EVB_H

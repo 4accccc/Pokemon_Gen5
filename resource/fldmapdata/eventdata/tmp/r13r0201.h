@@ -10,3 +10,10 @@
 
 
 #endif //ZONE_R13R0201_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/r13r0201.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_R13R0201_EVB_H
+#define ZONE_R13R0201_EVB_H
+
+#define BG_R13R0201_BOARD_01              0
+
+#endif //ZONE_R13R0201_EVB_H

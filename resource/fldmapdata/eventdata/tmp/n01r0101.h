@@ -26,3 +26,9 @@
 #define N01R0101_LEADER8B_01              13
 
 #endif //ZONE_N01R0101_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/n01r0101.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_N01R0101_EVB_H
+#define ZONE_N01R0101_EVB_H
+
+
+#endif //ZONE_N01R0101_EVB_H

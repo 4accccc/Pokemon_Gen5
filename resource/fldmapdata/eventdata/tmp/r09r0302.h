@@ -14,3 +14,9 @@
 #define TR_ELITEW_08                       1
 
 #endif //ZONE_R09R0302_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/r09r0302.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_R09R0302_EVB_H
+#define ZONE_R09R0302_EVB_H
+
+
+#endif //ZONE_R09R0302_EVB_H

@@ -10,3 +10,9 @@
 
 
 #endif //ZONE_PALACETEST_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/palacetest.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_PALACETEST_EVB_H
+#define ZONE_PALACETEST_EVB_H
+
+
+#endif //ZONE_PALACETEST_EVB_H

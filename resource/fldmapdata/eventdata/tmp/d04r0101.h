@@ -18,3 +18,9 @@
 #define D04R0101_BACKPACKERW_01            4
 
 #endif //ZONE_D04R0101_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d04r0101.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_D04R0101_EVB_H
+#define ZONE_D04R0101_EVB_H
+
+
+#endif //ZONE_D04R0101_EVB_H

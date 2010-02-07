@@ -19,3 +19,9 @@
 #define TR_MOUNT_07                        6
 
 #endif //ZONE_R06R0201_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/r06r0201.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_R06R0201_EVB_H
+#define ZONE_R06R0201_EVB_H
+
+
+#endif //ZONE_R06R0201_EVB_H

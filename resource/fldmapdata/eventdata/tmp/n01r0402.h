@@ -11,3 +11,11 @@
 
 
 #endif //ZONE_N01R0402_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/n01r0402.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_N01R0402_EVB_H
+#define ZONE_N01R0402_EVB_H
+
+#define BG_N01R0402_GOODS_01l             0
+#define BG_N01R0402_GOODS_01r             1
+
+#endif //ZONE_N01R0402_EVB_H

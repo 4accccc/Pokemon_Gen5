@@ -20,3 +20,9 @@
 #define H03_HAKAIW_03                      7
 
 #endif //ZONE_H03_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/h03.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_H03_EVB_H
+#define ZONE_H03_EVB_H
+
+
+#endif //ZONE_H03_EVB_H

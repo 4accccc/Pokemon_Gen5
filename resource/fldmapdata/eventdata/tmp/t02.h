@@ -45,3 +45,11 @@
 #define T02_BOODLE_01A                    28
 
 #endif //ZONE_T02_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/t02.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_T02_EVB_H
+#define ZONE_T02_EVB_H
+
+#define T02_SIGN1_01                      0
+#define T02_SIGN2_01                      1
+
+#endif //ZONE_T02_EVB_H

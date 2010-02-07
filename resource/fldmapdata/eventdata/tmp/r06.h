@@ -22,3 +22,12 @@
 #define TR_SCIENTISTW_04                   8
 
 #endif //ZONE_R06_EVC_H
+//Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r06.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
+#ifndef ZONE_R06_EVB_H
+#define ZONE_R06_EVB_H
+
+#define BG_R06_SIGN1_01                   0
+#define BG_R06_SIGN2_01                   1
+#define BG_R06_SIGN4_01                   2
+
+#endif //ZONE_R06_EVB_H

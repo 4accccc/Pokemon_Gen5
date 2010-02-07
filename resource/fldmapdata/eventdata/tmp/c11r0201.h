@@ -16,3 +16,10 @@
 #define UN_WKOBJCODE04                     5
 
 #endif //ZONE_C11R0201_EVC_H
+//Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c11r0201.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
+#ifndef ZONE_C11R0201_EVB_H
+#define ZONE_C11R0201_EVB_H
+
+#define BGID_ELEVATOR                     0
+
+#endif //ZONE_C11R0201_EVB_H

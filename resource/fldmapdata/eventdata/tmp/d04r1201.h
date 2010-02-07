@@ -12,3 +12,9 @@
 
 
 #endif //ZONE_D04R1201_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d04r1201.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_D04R1201_EVB_H
+#define ZONE_D04R1201_EVB_H
+
+
+#endif //ZONE_D04R1201_EVB_H

@@ -20,3 +20,9 @@
 #define TR_VETERANW_01                     7
 
 #endif //ZONE_R10_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/r10.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_R10_EVB_H
+#define ZONE_R10_EVB_H
+
+
+#endif //ZONE_R10_EVB_H

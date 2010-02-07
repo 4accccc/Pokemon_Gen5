@@ -15,3 +15,10 @@
 #define H01R0101_OL_01                     2
 
 #endif //ZONE_H01R0101_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/h01r0101.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_H01R0101_EVB_H
+#define ZONE_H01R0101_EVB_H
+
+#define BG_H01R0101_BOARD_01              0
+
+#endif //ZONE_H01R0101_EVB_H

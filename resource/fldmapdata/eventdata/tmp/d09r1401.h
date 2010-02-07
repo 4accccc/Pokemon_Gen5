@@ -13,3 +13,9 @@
 
 
 #endif //ZONE_D09R1401_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d09r1401.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_D09R1401_EVB_H
+#define ZONE_D09R1401_EVB_H
+
+
+#endif //ZONE_D09R1401_EVB_H

@@ -10,3 +10,9 @@
 
 
 #endif //ZONE_CLOSSEUM_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/closseum.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_CLOSSEUM_EVB_H
+#define ZONE_CLOSSEUM_EVB_H
+
+
+#endif //ZONE_CLOSSEUM_EVB_H

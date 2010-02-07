@@ -22,3 +22,9 @@
 #define WC10_OLDMAN1_01                    7
 
 #endif //ZONE_WC10_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/wc10.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_WC10_EVB_H
+#define ZONE_WC10_EVB_H
+
+
+#endif //ZONE_WC10_EVB_H

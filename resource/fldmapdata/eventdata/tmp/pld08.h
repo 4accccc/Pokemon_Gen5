@@ -10,3 +10,9 @@
 
 
 #endif //ZONE_PLD08_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/pld08.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_PLD08_EVB_H
+#define ZONE_PLD08_EVB_H
+
+
+#endif //ZONE_PLD08_EVB_H

@@ -13,3 +13,9 @@
 #define R10R0501_VETERANM                  0
 
 #endif //ZONE_R10R0501_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/r10r0501.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_R10R0501_EVB_H
+#define ZONE_R10R0501_EVB_H
+
+
+#endif //ZONE_R10R0501_EVB_H

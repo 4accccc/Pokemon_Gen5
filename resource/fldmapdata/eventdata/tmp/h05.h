@@ -12,3 +12,9 @@
 
 
 #endif //ZONE_H05_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/h05.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_H05_EVB_H
+#define ZONE_H05_EVB_H
+
+
+#endif //ZONE_H05_EVB_H

@@ -18,3 +18,9 @@
 #define UN_ENTRANCE_DANCER_01              6
 
 #endif //ZONE_C11R0101_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c11r0101.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_C11R0101_EVB_H
+#define ZONE_C11R0101_EVB_H
+
+
+#endif //ZONE_C11R0101_EVB_H

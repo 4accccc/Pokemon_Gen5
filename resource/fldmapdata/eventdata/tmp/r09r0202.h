@@ -12,3 +12,10 @@
 #define R09R0202_CLEANINGM_01              0
 
 #endif //ZONE_R09R0202_EVC_H
+//Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r09r0202.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
+#ifndef ZONE_R09R0202_EVB_H
+#define ZONE_R09R0202_EVB_H
+
+#define BG_ROTOM_CHANGE                   0
+
+#endif //ZONE_R09R0202_EVB_H

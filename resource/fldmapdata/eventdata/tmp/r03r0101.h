@@ -18,3 +18,9 @@
 #define R03R0101_BABYGIRL1                 4
 
 #endif //ZONE_R03R0101_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/r03r0101.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_R03R0101_EVB_H
+#define ZONE_R03R0101_EVB_H
+
+
+#endif //ZONE_R03R0101_EVB_H

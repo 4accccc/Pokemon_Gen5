@@ -12,3 +12,10 @@
 
 
 #endif //ZONE_R14R0101_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/r14r0101.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_R14R0101_EVB_H
+#define ZONE_R14R0101_EVB_H
+
+#define BG_R14R0101_BOARD_01              0
+
+#endif //ZONE_R14R0101_EVB_H

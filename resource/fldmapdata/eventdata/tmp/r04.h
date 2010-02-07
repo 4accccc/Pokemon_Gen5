@@ -29,3 +29,9 @@
 #define R04_RIVAL_01                      14
 
 #endif //ZONE_R04_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/r04.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_R04_EVB_H
+#define ZONE_R04_EVB_H
+
+
+#endif //ZONE_R04_EVB_H

@@ -12,3 +12,9 @@
 
 
 #endif //ZONE_PLH04_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/plh04.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_PLH04_EVB_H
+#define ZONE_PLH04_EVB_H
+
+
+#endif //ZONE_PLH04_EVB_H

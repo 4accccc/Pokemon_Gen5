@@ -10,3 +10,9 @@
 
 
 #endif //ZONE_R18_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/r18.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_R18_EVB_H
+#define ZONE_R18_EVB_H
+
+
+#endif //ZONE_R18_EVB_H

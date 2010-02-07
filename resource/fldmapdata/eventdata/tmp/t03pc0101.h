@@ -11,3 +11,9 @@
 
 
 #endif //ZONE_T03PC0101_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/t03pc0101.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_T03PC0101_EVB_H
+#define ZONE_T03PC0101_EVB_H
+
+
+#endif //ZONE_T03PC0101_EVB_H

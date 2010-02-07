@@ -12,3 +12,9 @@
 
 
 #endif //ZONE_PLR09_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/plr09.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_PLR09_EVB_H
+#define ZONE_PLR09_EVB_H
+
+
+#endif //ZONE_PLR09_EVB_H

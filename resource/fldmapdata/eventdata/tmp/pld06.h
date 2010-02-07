@@ -11,3 +11,9 @@
 
 
 #endif //ZONE_PLD06_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/pld06.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_PLD06_EVB_H
+#define ZONE_PLD06_EVB_H
+
+
+#endif //ZONE_PLD06_EVB_H

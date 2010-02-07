@@ -14,3 +14,9 @@
 #define D03R0201_BOY3_01                   1
 
 #endif //ZONE_D03R0201_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d03r0201.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_D03R0201_EVB_H
+#define ZONE_D03R0201_EVB_H
+
+
+#endif //ZONE_D03R0201_EVB_H
