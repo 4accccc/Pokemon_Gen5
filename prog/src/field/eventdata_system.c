@@ -63,6 +63,7 @@ struct _EVDATA_SYS {
 
   ARCHANDLE * eventHandle;
   ARCHANDLE * encountHandle;
+  ARCHANDLE * scriptHandle;
 	u16 now_zone_id;
 	u16 bg_count;
 	u16 npc_count;
@@ -152,6 +153,7 @@ EVENTDATA_SYSTEM * EVENTDATA_SYS_Create(HEAPID heapID)
 	EVENTDATA_SYSTEM * evdata = GFL_HEAP_AllocClearMemory(heapID, sizeof(EVENTDATA_SYSTEM));
   evdata->eventHandle = GFL_ARC_OpenDataHandle( ARCID_FLD_EVENTDATA, heapID );
   evdata->encountHandle = GFL_ARC_OpenDataHandle( ARCID_ENCOUNT, heapID );
+  evdata->scriptHandle = GFL_ARC_OpenDataHandle( ARCID_SCRSEQ, heapID );
 	return evdata;
 }
 
@@ -161,6 +163,7 @@ void EVENTDATA_SYS_Delete(EVENTDATA_SYSTEM * evdata)
 {
   GFL_ARC_CloseDataHandle( evdata->eventHandle );
   GFL_ARC_CloseDataHandle( evdata->encountHandle );
+  GFL_ARC_CloseDataHandle( evdata->scriptHandle );
 	GFL_HEAP_FreeMemory(evdata);
 }
 
@@ -517,10 +520,15 @@ void EVENTDATA_SYS_DelConnectEventIdx( EVENTDATA_SYSTEM * evdata, u16 idx )
 static void loadSpecialScriptData( EVENTDATA_SYSTEM * evdata, u16 zone_id )
 {
   u16 sp_scr_id = ZONEDATA_GetSpScriptArcID( zone_id );
-  if ( SCRDEBUGGER_ReadSpecialScriptFile( sp_scr_id, evdata->spscr_buffer, SPSCR_DATA_SIZE ) == FALSE)
+#ifdef  PM_DEBUG
+  if ( SCRDEBUGGER_ReadSpecialScriptFile( sp_scr_id, evdata->spscr_buffer, SPSCR_DATA_SIZE ) == TRUE)
   {
-    GFL_ARC_LoadData(evdata->spscr_buffer, ARCID_SCRSEQ,  sp_scr_id );
+    return;
   }
+#endif
+
+  GFL_ARC_LoadDataOfsByHandle(
+      evdata->scriptHandle, sp_scr_id, 0, SPSCR_DATA_SIZE, evdata->spscr_buffer );
 }
 
 //------------------------------------------------------------------
