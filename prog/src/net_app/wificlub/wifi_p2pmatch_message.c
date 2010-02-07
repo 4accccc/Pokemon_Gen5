@@ -968,16 +968,16 @@ static void FreeMessageWork( WIFIP2PMATCH_WORK *wk )
   GFL_STR_DeleteBuffer( wk->TitleString );
   GFL_STR_DeleteBuffer( wk->TalkString );
   GFL_STR_DeleteBuffer( wk->pTemp );
+  if(wk->pStream){
+    PRINTSYS_PrintStreamDelete( wk->pStream );
+    wk->pStream=NULL;
+  }
 
   GFL_STR_DeleteBuffer(wk->pExpStrBuf);
   GFL_TCBL_Exit(wk->pMsgTcblSys);
   PRINTSYS_QUE_Clear(wk->SysMsgQue);
   PRINTSYS_QUE_Delete(wk->SysMsgQue);
   wk->SysMsgQue=NULL;
-  if(wk->pStream){
-    PRINTSYS_PrintStreamDelete( wk->pStream );
-    wk->pStream=NULL;
-  }
 }
 
 

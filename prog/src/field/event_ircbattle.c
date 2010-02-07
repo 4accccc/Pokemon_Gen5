@@ -397,17 +397,17 @@ GMEVENT* EVENT_IrcBattle(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,GMEVENT *
   dbw->para =BATTLE_PARAM_Create(HEAPID_PROC);
 
   bxsv = BATTLE_BOX_SAVE_GetBattleBoxSave(dbw->ctrl);
-  dbw->pParty = PokeParty_AllocPartyWork( HEAPID_PROC );  ///< プレイヤーのパーティ
 
-#if 0
-  if(!BATTLE_BOX_SAVE_IsIn(bxsv)){
-    dbw->pParty = PokeParty_AllocPartyWork( HEAPID_PROC );  ///< プレイヤーのパーティ
-    PokeParty_Copy(GAMEDATA_GetMyPokemon(GAMESYSTEM_GetGameData(gsys)), dbw->pParty);
+  {
+    dbw->pParty= PokeParty_AllocPartyWork( HEAPID_PROC );
+
+    if(!BATTLE_BOX_SAVE_IsIn(bxsv)){
+      PokeParty_Copy(GAMEDATA_GetMyPokemon(GAMESYSTEM_GetGameData(gsys)), dbw->pParty);
+    }
+    else{
+      PokeParty_Copy(BATTLE_BOX_SAVE_MakePokeParty( bxsv, HEAPID_PROC ), dbw->pParty);
+    }
   }
-  else{
-    dbw->pParty  = BATTLE_BOX_SAVE_MakePokeParty( bxsv, HEAPID_PROC );
-  }
-#endif
   return event;
 }
 

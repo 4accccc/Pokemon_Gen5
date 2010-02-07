@@ -34,6 +34,8 @@
 #include "net_app/wifi_login.h"
 
 #include "app/pokelist.h"
+#include "include/demo/comm_btl_demo.h"
+#include "field/event_battle_call.h"
 
 //#include "net_app/balloon.h"
 
@@ -76,6 +78,8 @@ typedef struct{
   GAMESYS_WORK * gsys;
   WIFILOGIN_PARAM     login;
   BATTLE_SETUP_PARAM para;
+  COMM_BTL_DEMO_PARAM demo_prm;
+  COMM_BATTLE_CALL_PROC_PARAM prm;
   POKEPARTY* pPokeParty;   //バトルに渡すPokeParty
   int seq;
   u16* ret;
@@ -297,7 +301,6 @@ static GFL_PROC_RESULT WifiClubProcMain( GFL_PROC * proc, int * seq, void * pwk,
     {
       _pokeListWorkOut(ep2p,GAMESYSTEM_GetGameData(pClub->gsys),ep2p->seq );
       
-      _pokmeonListWorkFree(ep2p);      // ポケモンリストが終わったら要らない
       GFL_OVERLAY_Load( FS_OVERLAY_ID( battle ) );
       GFL_NET_AddCommandTable(GFL_NET_CMD_BATTLE, BtlRecvFuncTable, BTL_NETFUNCTBL_ELEMS, NULL);
       GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),_LOCALMATCHNO,WB_NET_WIFICLUB);
@@ -315,13 +318,35 @@ static GFL_PROC_RESULT WifiClubProcMain( GFL_PROC * proc, int * seq, void * pwk,
     PMSND_PlayBGM(ep2p->para.musicDefault);
 
     GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 1);
+#if 0
     GAMESYSTEM_CallProc(ep2p->gsys, NO_OVERLAY_ID, &BtlProcData, &ep2p->para);
+#else
+    {
+      int i;
+
+      ep2p->demo_prm.type = COMM_BTL_DEMO_TYPE_NORMAL_START;
+
+      for( i=0;i<2;i++){
+        ep2p->demo_prm.trainer_data[i].mystatus = GAMEDATA_GetMyStatusPlayer( GAMESYSTEM_GetGameData( gsys ),i );
+        ep2p->demo_prm.trainer_data[i].party = ep2p->pMatchParam->pPokeParty[i];
+      }
+      {
+        ep2p->prm.gdata = GAMESYSTEM_GetGameData(pClub->gsys);
+        ep2p->prm.btl_setup_prm = &ep2p->para;
+        ep2p->prm.demo_prm = &ep2p->demo_prm;
+        GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle ) );
+        GAMESYSTEM_CallProc(ep2p->gsys, NO_OVERLAY_ID, &CommBattleCommProcData, &ep2p->prm);
+      }
+    }
+#endif
     //        GFL_PROC_SysCallProc(NO_OVERLAY_ID, GMEVENT_Sub_BattleProc, battle_param);
     ep2p->seq++;
     break;
   case P2P_BATTLE_END:
+    _pokmeonListWorkFree(ep2p);      // 
+
     ep2p->seq = P2P_MATCH_BOARD;
-    GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle ) );
+//    GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle ) );
     break;
   case P2P_TRADE:
     ep2p->aPokeTr.ret = POKEMONTRADE_MOVE_START;

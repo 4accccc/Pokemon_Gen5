@@ -48,9 +48,8 @@
 #define _WORK_HEAPSIZE (0x1000)  // 調整が必要
 
 // サウンドが出来るまでの仮想
-#define _SE_DESIDE (0)
-#define _SE_CANCEL (0)
-static void Snd_SePlay(int a){}
+#define _SE_DESIDE (SEQ_SE_SYS_69)
+#define _SE_CANCEL (SEQ_SE_SYS_70)
 
 FS_EXTERN_OVERLAY(ircbattlematch);
 
@@ -837,32 +836,32 @@ static BOOL _modeSelectMenuButtonCallback(int bttnid,IRC_BATTLE_MENU* pWork)
   switch( bttnid ){
   case _SELECTMODE_BATTLE:
   case _SELECTMODE_BATTLE2:
-		PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
+		PMSND_PlaySystemSE(_SE_DESIDE);
     _CHANGE_STATE(pWork,_modeButtonFlash);
     pWork->selectType = EVENTIRCBTL_ENTRYMODE_SINGLE;
     ret = TRUE;
     break;
   case _SELECTMODE_POKE_CHANGE:
   case _SELECTMODE_POKE_CHANGE2:
-		PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
+		PMSND_PlaySystemSE(_SE_DESIDE);
     pWork->selectType = EVENTIRCBTL_ENTRYMODE_TRADE;
     _CHANGE_STATE(pWork,_modeButtonFlash);
     ret = TRUE;
     break;
 	case _SELECTMODE_COMPATIBLE:
-		PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
+		PMSND_PlaySystemSE(_SE_DESIDE);
     pWork->selectType = EVENTIRCBTL_ENTRYMODE_COMPATIBLE;
     _CHANGE_STATE(pWork,_modeButtonFlash);
     ret = TRUE;
     break;
   case _SELECTMODE_FRIENDCODE:
-		PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
+		PMSND_PlaySystemSE(_SE_DESIDE);
     pWork->selectType = EVENTIRCBTL_ENTRYMODE_FRIEND;
     _CHANGE_STATE(pWork,_modeButtonFlash);
     ret = TRUE;
     break;
   case _SELECTMODE_EXIT:
-		PMSND_PlaySystemSE(SEQ_SE_CANCEL1);
+		PMSND_PlaySystemSE(_SE_CANCEL);
 //    APP_TASKMENU_WIN_SetDecide(pWork->pAppWin, TRUE);
     pWork->selectType = EVENTIRCBTL_ENTRYMODE_EXIT;
     _CHANGE_STATE(pWork,_modeButtonFlash);        // 終わり
@@ -995,18 +994,18 @@ static BOOL _modeSelectEntryNumButtonCallback(int bttnid,IRC_BATTLE_MENU* pWork)
   pWork->bttnid = bttnid;
   switch(bttnid){
   case _ENTRYNUM_DOUBLE:
-		PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
+		PMSND_PlaySystemSE(_SE_DESIDE);
     _CHANGE_STATE(pWork,_modeSelectEntryButtonFlash);
     ret = TRUE;
     break;
   case _ENTRYNUM_FOUR:
-		PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
+		PMSND_PlaySystemSE(_SE_DESIDE);
     pWork->selectType = EVENTIRCBTL_ENTRYMODE_MULTH;
     _CHANGE_STATE(pWork,_modeSelectEntryButtonFlash);
     ret = TRUE;
     break;
   case _ENTRYNUM_EXIT:
-		PMSND_PlaySystemSE(SEQ_SE_CANCEL1);
+		PMSND_PlaySystemSE(_SE_CANCEL);
 //    APP_TASKMENU_WIN_SetDecide(pWork->pAppWin, TRUE);
     pWork->selectType = EVENTIRCBTL_ENTRYMODE_EXIT;
     _CHANGE_STATE(pWork,_modeAppWinFlash2);        // 終わり
@@ -1125,31 +1124,31 @@ static BOOL _modeSelectBattleTypeButtonCallback(int bttnid,IRC_BATTLE_MENU* pWor
     
   switch(bttnid){
   case _SELECTBT_SINGLE:
-		PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
+		PMSND_PlaySystemSE(_SE_DESIDE);
     pWork->selectType = EVENTIRCBTL_ENTRYMODE_SINGLE;
     _CHANGE_STATE(pWork,_modeSelectBattleTypeButtonFlash);
     ret=TRUE;
     break;
   case _SELECTBT_DOUBLE:
-		PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
+		PMSND_PlaySystemSE(_SE_DESIDE);
     pWork->selectType = EVENTIRCBTL_ENTRYMODE_DOUBLE;
     _CHANGE_STATE(pWork,_modeSelectBattleTypeButtonFlash);
     ret=TRUE;
     break;
   case _SELECTBT_TRI:
-		PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
+		PMSND_PlaySystemSE(_SE_DESIDE);
     pWork->selectType = EVENTIRCBTL_ENTRYMODE_TRI;
     _CHANGE_STATE(pWork,_modeSelectBattleTypeButtonFlash);
     ret=TRUE;
     break;
   case _SELECTBT_ROTATE:
-		PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
+		PMSND_PlaySystemSE(_SE_DESIDE);
     pWork->selectType = EVENTIRCBTL_ENTRYMODE_ROTATE;
     _CHANGE_STATE(pWork,_modeSelectBattleTypeButtonFlash);
     ret=TRUE;
     break;
   case _SELECTBT_EXIT:
-    PMSND_PlaySystemSE(SEQ_SE_CANCEL1);
+    PMSND_PlaySystemSE(_SE_CANCEL);
     pWork->selectType = EVENTIRCBTL_ENTRYMODE_EXIT;
     _CHANGE_STATE(pWork,_modeSelectBattleTypeButtonFlash);        // 終わり
 

@@ -656,7 +656,7 @@ static GFL_DISP_VRAM _defVBTbl = {
 };
 
 #ifdef WFP2P_DEBUG  // l‚ğ‚¢‚Á‚Ï‚¢o‚·
-#define WFP2PM_MANY_OBJ
+//#define WFP2PM_MANY_OBJ
 #endif
 
 

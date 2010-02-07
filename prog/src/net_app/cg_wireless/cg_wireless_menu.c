@@ -76,10 +76,8 @@ typedef enum
 #endif
 #define _WORK_HEAPSIZE (0x1000)  // 調整が必要
 
-// サウンドが出来るまでの仮想
-#define _SE_DESIDE (0)
-#define _SE_CANCEL (0)
-static void Snd_SePlay(int a){}
+#define _SE_DESIDE (SEQ_SE_SYS_69)
+#define _SE_CANCEL (SEQ_SE_SYS_70)
 
 
 //--------------------------------------------
@@ -763,7 +761,7 @@ static BOOL _modeSelectMenuButtonCallback(int bttnid,CG_WIRELESS_MENU* pWork)
     {
       GAME_COMM_SYS_PTR pComm = GAMESYSTEM_GetGameCommSysPtr(pWork->gsys);
       pWork->selectType = CG_WIRELESS_RETURNMODE_PALACE;
-      PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
+      PMSND_PlaySystemSE(_SE_DESIDE);
       _CHANGE_STATE(pWork,_modeAppWinFlash);
     }
     break;
@@ -792,11 +790,11 @@ static BOOL _modeSelectMenuButtonCallback(int bttnid,CG_WIRELESS_MENU* pWork)
         }
       }
     }
-    PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
+    PMSND_PlaySystemSE(_SE_DESIDE);
     _CHANGE_STATE(pWork,_modeAppWinFlash);
     break;
   case _SELECTMODE_EXIT:
-		PMSND_PlaySystemSE(SEQ_SE_CANCEL1);
+		PMSND_PlaySystemSE(_SE_CANCEL);
 //    APP_TASKMENU_WIN_SetDecide(pWork->pAppWin, TRUE);
     pWork->selectType = CG_WIRELESS_RETURNMODE_NONE;
     _CHANGE_STATE(pWork,_modeAppWinFlash);        // 終わり
