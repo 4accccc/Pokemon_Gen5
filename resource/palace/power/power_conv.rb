@@ -113,8 +113,9 @@ end
 =end
 def DataConv()
   for i in 0..PowerData.size-1
-    if(PowerData[i].type == "1" || PowerData[i].type == "2" || PowerData[i].type == "3" \
-        || PowerData[i].type == "9" || PowerData[i].type == "10" || PowerData[i].type == "11")
+    if(PowerData[i].type == "ENCOUNT_UP" || PowerData[i].type == "ENCOUNT_DOWN" \
+        || PowerData[i].type == "HATCH_UP" || PowerData[i].type == "EXP_UP" \
+        || PowerData[i].type == "EXP_DOWN" || PowerData[i].type == "MONEY_UP")
       num = PowerData[i].data.to_f;
       num *= 100; #小数を整数に変換する(100倍の固定小数)
       PowerData[i].data = (0x100 * num / 100).to_i;  #下位8bit固定小数にさらに変換
@@ -165,7 +166,7 @@ def DataFileOutput()
       file.printf("\t\t%s,\t\t//msg_id_title\n", PowerData[i].msg_id_title);
       file.printf("\t\t%s,\t\t//msg_id_explain\n", PowerData[i].msg_id_explain);
       file.printf("\t\t%s,\t\t//data\n", PowerData[i].data);
-      file.printf("\t\t%s,\t\t//type\n", PowerData[i].type);
+      file.printf("\t\tGPOWER_TYPE_%s,\t\t//type\n", PowerData[i].type);
       file.printf("\t\t%s,\t\t//time\n", PowerData[i].time);
       file.printf("\t},\n");
     end
@@ -184,16 +185,16 @@ def DataFileOutput()
     file.printf("\tGPOWER_ID_NULL = GPOWER_ID_MAX,\t\t//Gパワーが発動していない\n");
     file.printf("}GPOWER_ID;\n\n");
     
-    file.printf("\n\n//効果系統\n");
+    file.printf("\n\n//効果系統　　!!出力元データによってenumの並びが変わる場合があります!!\n");
     file.printf("typedef enum{\n");
-    file.printf("\tGPOWER_TYPE_NULL,\n");
     for i in 0..POWER_TYPE_ARRAY_MAX
       if(PowerType[i] == "NULL")
         break;
       end
-      file.printf("\tGPOWER_TYPE_%s,\n", PowerType[i]);
+      file.printf("\tGPOWER_TYPE_%s,\t\t//%d\n", PowerType[i], i);
     end
-    file.printf("\tGPOWER_TYPE_MAX,\n");
+    file.printf("\n\tGPOWER_TYPE_MAX,\n");
+    file.printf("\tGPOWER_TYPE_NULL = GPOWER_TYPE_MAX,\n");
     file.printf("}GPOWER_TYPE;\n\n");
   }
   

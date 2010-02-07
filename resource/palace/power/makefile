@@ -129,7 +129,7 @@ power_data.bin: $(DATATXT)
 	@ruby power_conv.rb $(DATATXT) 
 	@echo "power data convert"
 	@echo "//" > temp.c
-	@cat sdk_header.h $(ZONEID_H) $(MSG_POWER_H) $(MSG_POWER_EXPLAIN_H) $(FLDMMDL_CODE_H) $(ITEM_H) $(MISSION_TYPES_H) power_data.cdat |unix2dos > temp.c
+	@cat sdk_header.h $(ZONEID_H) $(MSG_POWER_H) $(MSG_POWER_EXPLAIN_H) $(FLDMMDL_CODE_H) $(ITEM_H) $(MISSION_TYPES_H) gpower_id.h power_data.cdat |unix2dos > temp.c
 	@$(CC) $(INCLUDES) $(INCPATH)  -c temp.c -MD -o temp.o
 	@$(MWLD) -dis -o power_data.elf temp.o
 	@$(ELF2BIN) power_data.elf
