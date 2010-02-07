@@ -85,7 +85,7 @@ subdir:
 	@$(MAKE_SUBDIR)
 
 # narc のコピーだけ実行する
-$(TARGETDIR)/$(targetname).narc: $(targetname).narc
+$(TARGETDIR)/$(targetname).narc: $(targetname).narc gpower_id.h
 	$(COPY)	gpower_id.h $(FIELDINC_DIR)gpower_id.h
 	$(COPY) $(targetname).narc $(TARGETDIR)
 	$(COPY) $(targetname).naix $(TARGETDIR) 
