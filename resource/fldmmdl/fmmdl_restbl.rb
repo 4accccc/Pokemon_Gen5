@@ -346,7 +346,7 @@ end
 # 戻り値 RET_TRUE=リソースを追加した。
 #=======================================================================
 def conv_drawtype_blact(
-  file_listcsv, no, dir_res, sel_res, flag_dummy,
+  fname_listcsv, file_listcsv, no, dir_res, sel_res, flag_dummy,
   file_prmcsv_ncgimd,
   file_make_ncgimd, dir_res_ncgimd, path_conv_ncgimd,
   buf_imdtex, buf_ncgimd )
@@ -446,8 +446,8 @@ def conv_drawtype_blact(
   
   file_make_ncgimd.printf( "#%s\n", imdname )
   file_make_ncgimd.printf(
-    "%s: %s %s %s\n\t@echo convert ncg_imd %s\n\t@ruby %s %s %s %s %s %s %s\n\n",
-    imdpath, ncgpath, nclpath, dmyimdpath,
+    "%s: %s %s %s %s\n\t@echo convert ncg_imd %s\n\t@ruby %s %s %s %s %s %s %s\n\n",
+    imdpath, ncgpath, nclpath, dmyimdpath, fname_listcsv,
     name,
     path_conv_ncgimd, ncgpath, dir_res, dmyimdpath, 
     param['str_width'], param['str_height'], param['str_count'] )
@@ -734,7 +734,7 @@ loop{
     #現状無し
   when "DRAWTYPE_BLACT"
     ret = conv_drawtype_blact(
-      file_listcsv, no, dir_res, sel_res, flag_dummy,
+      fname_listcsv, file_listcsv, no, dir_res, sel_res, flag_dummy,
       file_prmcsv_ncgimd,
       file_make_ncgimd, dir_res_ncgimd, path_conv_ncgimd,
       buf_imdtex, buf_ncgimd )
@@ -782,7 +782,7 @@ loop{
     #現状無し
   when "DRAWTYPE_BLACT"
     ret = conv_drawtype_blact(
-      file_listcsv_poke, no, dir_res, sel_res, flag_dummy,
+      fname_listcsv, file_listcsv_poke, no, dir_res, sel_res, flag_dummy,
       file_prmcsv_ncgimd,
       file_make_ncgimd,
       dir_res_ncgimd + "\/pokemon\/",
