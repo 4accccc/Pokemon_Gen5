@@ -52,3 +52,11 @@ extern u16 EVENTDATA_CheckTalkBGEventRailLocation(
 extern u16 EVENTDATA_CheckTalkBoardEventRailLocation(
     const EVENTDATA_SYSTEM *evdata, EVENTWORK *evwork,
     const RAIL_LOCATION *pos, u16 talk_dir );
+
+
+extern void EVENTDATA_MoveConnectData(
+    EVENTDATA_SYSTEM * evdata, u16 exit_id, u16 gx, u16 gy, u16 gz );
+extern void EVENTDATA_MoveBGData(
+    EVENTDATA_SYSTEM * evdata, u16 bg_id, u16 gx, u16 gy, u16 gz );
+
+
