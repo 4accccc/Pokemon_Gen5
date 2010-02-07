@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwao_kazumasa" host="W00203" date="2010-02-04T13:03:50"/>
+	<create user="matsumiya" host="W00224" date="2010-02-07T15:56:04"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,15 +263,15 @@
 		</language>
 	</columns>
 
-	<dialog left="2077" top="532" right="2371" bottom="1160" maximized="no" rayout="Vertical2">
+	<dialog left="1290" top="199" right="1995" bottom="827" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="445"/>
-		<band id="1" index="2" style="0000" width="286"/>
+		<band id="1" index="2" style="0000" width="250"/>
 		<band id="2" index="3" style="0000" width="286"/>
-		<band id="3" index="4" style="0000" width="286"/>
-		<band id="4" index="0" style="0000" width="591"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<band id="3" index="4" style="0000" width="409"/>
+		<band id="4" index="0" style="0000" width="697"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -730,14 +730,14 @@
 		<comment>♀
 ・</comment>
 		<attribute name="キャラ指定">ＬＡＤＹ
-＝セレブその１</attribute>
+＝お金持ちその１</attribute>
 		<language name="JPN" width="256">じぶんで　いうのも　なんだけど
-セレブなのね　あたしたち▼
-で　セレブといえば　ミュージカル
+おかねもち　なのね　あたしたち▼
+で　おかねもち　といえば　ミュージカル
 いわゆる　たしなみって　やつね</language>
 		<language name="JPN_KANJI" width="256">自分で　いうのも　なんだけど
-セレブなのね　あたしたち▼
-で　セレブといえば　ミュージカル
+お金持ちなのね　あたしたち▼
+で　お金持ちといえば　ミュージカル
 いわゆる　たしなみって　やつね</language>
 	</row>
 
@@ -745,7 +745,7 @@
 		<comment>♂
 ・参加回数＝0</comment>
 		<attribute name="キャラ指定">GENTLEMAN
-＝セレブその２</attribute>
+＝お金持ちその２</attribute>
 		<language name="JPN" width="256">すばらしい！　ポケモンを
 みりょくてきに　ドレスアップできる▽
 トレーナーは　じつに　すばらしい！</language>
@@ -758,7 +758,7 @@
 		<comment>♂
 ・参加回数＝1</comment>
 		<attribute name="キャラ指定">GENTLEMAN
-＝セレブその２</attribute>
+＝お金持ちその２</attribute>
 		<language name="JPN" width="256">きみの　ポケモンは　すばらしいね
 いつも　みているんだよ▼
 これからも　われわれを
@@ -773,15 +773,15 @@
 		<comment>♂
 ・参加回数＝5</comment>
 		<attribute name="キャラ指定">GENTLEMAN
-＝セレブその２</attribute>
+＝お金持ちその２</attribute>
 		<language name="JPN" width="256">きみが　さんかする　えんもくは
 すべて　みさせて　もらっている！▼
-セレブな　わたしから　みても
+お金持ちな　わたしから　みても
 じつに　すばらしい！▽
 ごくじょうの　エンターテイメントだ！</language>
 		<language name="JPN_KANJI" width="256">きみが　参加する　演目は
 すべて　みさせて　もらっている！▼
-セレブな　わたしから　みても
+お金持ちな　わたしから　みても
 じつに　すばらしい！▽
 極上の　エンターテイメントだ！</language>
 	</row>
