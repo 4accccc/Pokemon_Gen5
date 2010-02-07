@@ -446,8 +446,9 @@ def conv_drawtype_blact(
   
   file_make_ncgimd.printf( "#%s\n", imdname )
   file_make_ncgimd.printf(
-    "%s: %s %s\n\t@echo convert ncg_imd %s\n\t@ruby %s %s %s %s %s %s %s\n\n",
-    imdpath, ncgpath, nclpath, name,
+    "%s: %s %s %s\n\t@echo convert ncg_imd %s\n\t@ruby %s %s %s %s %s %s %s\n\n",
+    imdpath, ncgpath, nclpath, dmyimdpath,
+    name,
     path_conv_ncgimd, ncgpath, dir_res, dmyimdpath, 
     param['str_width'], param['str_height'], param['str_count'] )
   return RET_TRUE
