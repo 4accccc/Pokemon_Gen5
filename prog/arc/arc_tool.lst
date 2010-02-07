@@ -273,4 +273,5 @@
   ARCID_EGG_DEMO "egg_demo_particle.narc"  # タマゴ孵化デモのデータ
   ARCID_FLD_SEA_TEMPLE "fieldmap/field_sea_temple.narc"  # 海底神殿グラフィック
   ARCID_OEKAKI  "oekaki.narc" #おえかきボード
+  ARCID_UN_SELECT_GRA "un_select_gra.narc" #国連フロア選択
 
