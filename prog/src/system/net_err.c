@@ -18,7 +18,6 @@
 #include "print\wordset.h"
 #include "print\printsys.h"
 #include "print\gf_font.h"
-#include "message.naix"
 #include "font/font.naix"
 #include "msg\msg_net_err.h"
 
@@ -26,6 +25,9 @@
 #include <dwc.h>
 #include "net/dwc_rap.h"
 #include "msg\msg_wifi_system.h"
+#include "message.naix"
+#else
+#include "message_dl.naix"
 #endif //MULTI_BOOT_MAKE
 
 //==============================================================================
@@ -701,7 +703,6 @@ static void Local_ErrMessagePrint(void)
       OS_TPrintf("エラーメッセージ %d \n",msgno);
     }
     else
-#endif
     { 
       //その他の場合
       WORDSET_RegisterNumber( wordset, 0, nes->error, 5, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
@@ -726,6 +727,16 @@ static void Local_ErrMessagePrint(void)
         msgno = 1;
       }
     }
+#else
+    {
+      //マルチブートでは常に電源を切ってもらう
+      WORDSET_RegisterNumber( wordset, 0, nes->error, 5, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+      mm = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, 
+          ARCID_MESSAGE, NARC_message_dl_net_err_dat, HEAPID_NET_TEMP);
+      msgno = 1;
+      
+    }
+#endif
 
 
 

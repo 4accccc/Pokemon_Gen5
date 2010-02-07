@@ -58,6 +58,8 @@ MB_DATA_WORK* MB_DATA_InitSystem( int heapID )
 
   dataWork->mainSeq = 0;
   dataWork->subSeq   = 0;
+  dataWork->pData = NULL;
+  dataWork->pDataMirror  = NULL;
   dataWork->pBoxData = NULL;
   dataWork->pItemData = NULL;
   dataWork->errorState = DES_NONE;
@@ -114,8 +116,14 @@ MB_DATA_WORK* MB_DATA_InitSystem( int heapID )
 //ŠJ•ú
 void  MB_DATA_TermSystem( MB_DATA_WORK *dataWork )
 {
-  GFL_HEAP_FreeMemory( dataWork->pData );
-  GFL_HEAP_FreeMemory( dataWork->pDataMirror );
+  if( dataWork->pData != NULL )
+  {
+    GFL_HEAP_FreeMemory( dataWork->pData );
+  }
+  if( dataWork->pDataMirror != NULL )
+  {
+    GFL_HEAP_FreeMemory( dataWork->pDataMirror );
+  }
   GFL_HEAP_FreeMemory( dataWork );
 }
 

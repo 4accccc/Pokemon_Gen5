@@ -183,7 +183,12 @@ static  void  GameInit(void)
 {
   /* ユーザーレベルで必要な初期化をここに記述する */
 
-//	GFL_NET_DebugPrintOn();
+	// 通信のデバッグプリントを行う定義
+#ifdef PM_DEBUG
+#if defined(DEBUG_ONLY_FOR_ohno)||defined(DEBUG_ONLY_FOR_toru_nagihashi)||defined(DEBUG_ONLY_FOR_ariizumi_nobuhiko)
+	//GFL_NET_DebugPrintOn();
+#endif
+#endif  //PM_DEBUG
   // 通信ブート処理 VBlank割り込み後に行うためここに記述
   GFL_NET_Boot( GFL_HEAPID_APP, FatalError_Disp, GFL_HEAPID_APP, GFL_HEAPID_APP );
   /* 起動プロセスの設定 */

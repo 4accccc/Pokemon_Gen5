@@ -15,6 +15,7 @@
 #include "print/wordset.h"
 #include "sound/pm_sndsys.h"
 #include "system/wipe.h"
+#include "system/net_err.h"
 
 #include "arc_def.h"
 #include "mb_child_gra.naix"
@@ -141,6 +142,8 @@ typedef struct
   MB_SELECT_INIT_WORK selInitWork;
   MB_CAPTURE_INIT_WORK capInitWork;
   
+  BOOL isNetErr;
+  
 }MB_CHILD_WORK;
 
 
@@ -159,6 +162,7 @@ static void MB_CHILD_SetupBgFunc( const GFL_BG_BGCNT_HEADER *bgCont , u8 bgPlane
 static void MB_CHILD_LoadResource( MB_CHILD_WORK *work );
 
 static void MB_CHILD_DataConvert( MB_CHILD_WORK *work );
+static const BOOL MB_CHILD_ErrCheck( MB_CHILD_WORK *work );
 
 static void MB_CHILD_SaveInit( MB_CHILD_WORK *work );
 static void MB_CHILD_SaveTerm( MB_CHILD_WORK *work );
@@ -188,7 +192,7 @@ static void MB_CHILD_Init( MB_CHILD_WORK *work )
 {
   u8 i,j;
   work->state = MCS_FADEIN;
-  work->msgWork = NULL;
+  work->dataWork = NULL;
 
   MB_CHILD_InitGraphic( work );
   MB_CHILD_LoadResource( work );
@@ -201,6 +205,7 @@ static void MB_CHILD_Init( MB_CHILD_WORK *work )
                                      FALSE ,
                                      work->heapId );
                                      
+  work->isNetErr = FALSE;
   PMSND_InitMultiBoot( work->sndData );
   
   work->procSys = GFL_PROC_LOCAL_boot( work->heapId );
@@ -237,6 +242,11 @@ static void MB_CHILD_Term( MB_CHILD_WORK *work )
   PMSND_Exit();
   GFL_HEAP_FreeMemory( work->sndData );
   MB_COMM_DeleteSystem( work->commWork );
+
+  if( work->dataWork != NULL )
+  {
+    MB_DATA_TermSystem( work->dataWork );
+  }
 
   MB_MSG_MessageTerm( work->msgWork );
   MB_CHILD_TermGraphic( work );
@@ -369,6 +379,7 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
   case MCS_DATA_CONV:
     MB_CHILD_DataConvert( work );
     work->state = MCS_SELECT_FADEOUT;
+    MB_CHILD_ErrCheck( work );
     break;
   
   //--------------------------------------------------------
@@ -459,6 +470,7 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
     {
       work->state = MCS_CAPTURE_FADEOUT;
     }
+    MB_CHILD_ErrCheck( work );
     break;
 
   //--------------------------------------------------------
@@ -822,6 +834,22 @@ static void MB_CHILD_DataConvert( MB_CHILD_WORK *work )
   }
 }
 
+//--------------------------------------------------------------
+//  エラーのチェック
+//--------------------------------------------------------------
+static const BOOL MB_CHILD_ErrCheck( MB_CHILD_WORK *work )
+{
+  if( NetErr_App_CheckError() != NET_ERR_CHECK_NONE &&
+      work->isNetErr == FALSE )
+  {
+    NetErr_App_ReqErrorDisp();
+    work->isNetErr = TRUE;
+    work->state = MCS_FADEOUT;
+    return TRUE;
+  }
+  return FALSE;
+}
+
 #pragma mark [>save func
 //--------------------------------------------------------------
 //  セーブ初期化
@@ -992,6 +1020,8 @@ static GFL_PROC_RESULT MB_CHILD_ProcTerm( GFL_PROC * proc, int * seq , void *pwk
   GFL_PROC_FreeWork( proc );
   GFL_HEAP_DeleteHeap( HEAPID_MULTIBOOT );
 
+  NetErr_DispCall();
+  
   return GFL_PROC_RES_FINISH;
 }
 
