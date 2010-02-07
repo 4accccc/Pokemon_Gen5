@@ -1,4 +1,4 @@
-//======================================================================
+
 /**
  *
  * @file  event_debug_menu.c
@@ -108,7 +108,6 @@ FS_EXTERN_OVERLAY( d_iwasawa );
 //  typedef struct
 //======================================================================
 
-
 //======================================================================
 //  proto
 //======================================================================
@@ -197,6 +196,8 @@ static BOOL debugMenuCallProc_EncEffList( DEBUG_MENU_EVENT_WORK *wk );
 
 static BOOL debugMenuCallProc_DebugMakeUNData( DEBUG_MENU_EVENT_WORK *p_wk );
 
+static BOOL debugMenuCallProc_BSubway( DEBUG_MENU_EVENT_WORK *wk );
+
 //======================================================================
 //  デバッグメニューリスト
 //======================================================================
@@ -260,8 +261,8 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
   { DEBUG_FIELD_ENCEFF, debugMenuCallProc_EncEffList },
   { DEBUG_FIELD_MAKE_EGG,   debugMenuCallProc_MakeEgg },
   { DEBUG_FIELD_MAKE_UNDATA,   debugMenuCallProc_DebugMakeUNData },
+  { DEBUG_FIELD_BSW_00, debugMenuCallProc_BSubway },
 };
-
 
 //--------------------------------------------------------------
 /// メニューヘッダー
@@ -4527,3 +4528,140 @@ static GMEVENT_RESULT debugMenuMakeUNData( GMEVENT *p_event, int *p_seq, void *p
   return GMEVENT_RES_CONTINUE ;
 }
 
+//======================================================================
+//  デバッグメニュー　バトルサブウェイ
+//======================================================================
+//--------------------------------------------------------------
+/// DEBUG_BSUBWAY_EVENT_WORK
+//--------------------------------------------------------------
+typedef struct
+{
+  int seq_no;
+  HEAPID heapID;
+  GAMESYS_WORK *gmSys;
+  GMEVENT *gmEvent;
+  FIELDMAP_WORK *fieldWork;
+  GFL_MSGDATA *msgData;
+  FLDMENUFUNC *menuFunc;
+}DEBUG_BSUBWAY_EVENT_WORK;
+
+static const FLDMENUFUNC_HEADER DATA_DebugMenuList_BSubway =
+{
+  1,    //リスト項目数
+  6,    //表示最大項目数
+  0,    //ラベル表示Ｘ座標
+  13,   //項目表示Ｘ座標
+  0,    //カーソル表示Ｘ座標
+  0,    //表示Ｙ座標
+  1,    //表示文字色
+  15,   //表示背景色
+  2,    //表示文字影色
+  0,    //文字間隔Ｘ
+  1,    //文字間隔Ｙ
+  FLDMENUFUNC_SKIP_LRKEY, //ページスキップタイプ
+  12,   //文字サイズX(ドット
+  12,   //文字サイズY(ドット
+  0,    //表示座標X キャラ単位
+  0,    //表示座標Y キャラ単位
+  0,    //表示サイズX キャラ単位
+  0,    //表示サイズY キャラ単位
+};
+
+static const FLDMENUFUNC_LIST DATA_BSubwayMenuList[] =
+{
+  { DEBUG_FIELD_BSW_01, (void*)ZONE_ID_C04R0102 },
+  { DEBUG_FIELD_BSW_02, (void*)ZONE_ID_C04R0104 },
+  { DEBUG_FIELD_BSW_03, (void*)ZONE_ID_C04R0106 },
+  { DEBUG_FIELD_BSW_04, (void*)ZONE_ID_C04R0108 },
+  { DEBUG_FIELD_BSW_05, (void*)ZONE_ID_C04R0103 },
+  { DEBUG_FIELD_BSW_06, (void*)ZONE_ID_C04R0105 },
+  { DEBUG_FIELD_BSW_07, (void*)ZONE_ID_C04R0107 },
+  { DEBUG_FIELD_BSW_08, (void*)ZONE_ID_C04R0110 },
+  { DEBUG_FIELD_BSW_09, (void*)ZONE_ID_C04R0111 },
+};
+
+#define DEBUG_BSUBWAY_LIST_MAX ( NELEMS(DATA_BSubwayMenuList) )
+
+static const DEBUG_MENU_INITIALIZER DebugBSubwayMenuData = {
+  NARC_message_d_field_dat,
+  DEBUG_BSUBWAY_LIST_MAX,
+  DATA_BSubwayMenuList,
+  &DATA_DebugMenuList_BSubway,
+  1, 1, 15, 12,
+  NULL,
+  NULL
+};
+
+//--------------------------------------------------------------
+/**
+ * イベント：バトルサブウェイデバッグメニュー
+ * @param event GMEVENT
+ * @param seq   シーケンス
+ * @param wk    event work
+ * @retval  GMEVENT_RESULT
+ */
+//--------------------------------------------------------------
+static GMEVENT_RESULT debugMenuBSubwayEvent(
+    GMEVENT *event, int *seq, void *wk )
+{
+  DEBUG_BSUBWAY_EVENT_WORK  *work = wk;
+
+  switch( (*seq) ){
+  case 0:
+    work->menuFunc = DEBUGFLDMENU_Init(
+        work->fieldWork, work->heapID,  &DebugBSubwayMenuData );
+    (*seq)++;
+    break;
+  case 1:
+    {
+      u32 ret;
+      ret = FLDMENUFUNC_ProcMenu( work->menuFunc );
+      
+      if( ret == FLDMENUFUNC_NULL ){  //操作無し
+        break;
+      }
+      
+      FLDMENUFUNC_DeleteMenu( work->menuFunc );
+      
+      if( ret == FLDMENUFUNC_CANCEL ){  //キャンセル
+        return( GMEVENT_RES_FINISH );
+      }
+      
+      GMEVENT_CallEvent( event, DEBUG_EVENT_QuickChangeMapDefaultPos(
+          work->gmSys, work->fieldWork, ret ) );
+      (*seq)++;
+    }
+    break;
+  case 2:
+    return GMEVENT_RES_FINISH;
+  }
+  
+  return( GMEVENT_RES_CONTINUE );
+}
+
+//--------------------------------------------------------------
+/**
+ *
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+static BOOL debugMenuCallProc_BSubway( DEBUG_MENU_EVENT_WORK *wk )
+{
+  GAMESYS_WORK *gsys = wk->gmSys;
+  GMEVENT *event = wk->gmEvent;
+  HEAPID heapID = wk->heapID;
+  FIELDMAP_WORK *fieldWork = wk->fieldWork;
+  DEBUG_WEATERLIST_EVENT_WORK *work;
+  
+  GMEVENT_Change( event,
+    debugMenuBSubwayEvent, sizeof(DEBUG_BSUBWAY_EVENT_WORK) );
+  work = GMEVENT_GetEventWork( event );
+  GFL_STD_MemClear( work, sizeof(DEBUG_BSUBWAY_EVENT_WORK) );
+
+  work->gmSys = gsys;
+  work->gmEvent = event;
+  work->heapID = heapID;
+  work->fieldWork = fieldWork;
+  return( TRUE );
+}

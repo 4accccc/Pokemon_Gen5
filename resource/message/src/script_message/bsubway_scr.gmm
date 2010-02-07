@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="kagaya" host="W00143" date="2010-02-04T23:51:52"/>
+	<create user="kagaya" host="W00143" date="2010-02-07T18:41:11"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -361,12 +361,8 @@
 	</row>
 
 	<row id="msg_bsw_scr_07">
-		<language name="JPN" width="256">バトルサブウェイに　ようこそ！[BE:01:ページ切り替え（クリア）]
-こちらでは　スーパーWifiトレインの
-じょうしゃを　ごあんない　しております</language>
-		<language name="JPN_KANJI" width="256">バトルサブウェイに　ようこそ！[BE:01:ページ切り替え（クリア）]
-こちらでは　スーパーWifiトレインの
-じょうしゃを　ごあんない　しております</language>
+		<language name="JPN" width="256">test</language>
+		<language name="JPN_KANJI" width="256">test</language>
 	</row>
 
 	<row id="msg_bsw_scr_08">
@@ -433,8 +429,8 @@
 	</row>
 
 	<row id="msg_bsw_scr_20">
-		<language name="JPN" width="256">スーパーWifiトレインにじょうしゃしますか</language>
-		<language name="JPN_KANJI" width="256">スーパーWifiトレインにじょうしゃしますか</language>
+		<language name="JPN" width="256">test</language>
+		<language name="JPN_KANJI" width="256">test</language>
 	</row>
 
 	<row id="msg_bsw_scr_21">
@@ -520,10 +516,8 @@
 	</row>
 
 	<row id="msg_bsw_scr_31">
-		<language name="JPN" width="256">それでは　スーパーWifiトレインへ
-ごじょうしゃ　ください！</language>
-		<language name="JPN_KANJI" width="256">それでは　スーパーWifiトレインへ
-ごじょうしゃ　ください！</language>
+		<language name="JPN" width="256">test</language>
+		<language name="JPN_KANJI" width="256">test</language>
 	</row>
 
 	<row id="msg_bsw_scr_32">

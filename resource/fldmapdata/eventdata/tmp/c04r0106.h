@@ -9,6 +9,7 @@
 #ifndef ZONE_C04R0106_EVC_H
 #define ZONE_C04R0106_EVC_H
 
+#define C04R0106_RECEIPT                   0
 
 #endif //ZONE_C04R0106_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c04r0106.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

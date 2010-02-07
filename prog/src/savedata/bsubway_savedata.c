@@ -675,6 +675,34 @@ u8 BSUBWAY_SCOREDATA_GetWifiRank( const BSUBWAY_SCOREDATA *bsw_score )
   return( bsw_score->wifi_rank );
 }
 
+//--------------------------------------------------------------
+/**
+ *  @brief  スコアデータ　Wifi連続敗戦カウント操作
+ *  @return  操作後のカウント
+ */
+//--------------------------------------------------------------
+u8 BSUBWAY_SCOREDATA_SetWifiLoseCount(
+    BSUBWAY_SCOREDATA *bsw_score, BSWAY_SETMODE mode )
+{
+  switch(mode){
+  case BSWAY_SETMODE_reset:
+    bsw_score->wifi_lose = 0;
+    bsw_score->wifi_lose_f = 0;
+    break;
+  case BSWAY_SETMODE_inc:
+    if( bsw_score->wifi_lose_f ){
+      //連続敗戦中
+      bsw_score->wifi_lose += 1;
+    }else{
+      bsw_score->wifi_lose = 1;
+      bsw_score->wifi_lose_f = 1;
+    }
+    break;
+  }
+  //get
+  return bsw_score->wifi_lose;
+}
+
 //======================================================================
 //  wb null
 //======================================================================

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="genya_hosaka" host="W00159" date="2010-02-04T20:56:30"/>
+	<create user="kagaya" host="W00143" date="2010-02-07T19:31:47"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1175,6 +1175,56 @@ allocable (0x[2:07:８桁:5])</language>
 	<row id="DEBUG_FIELD_MAKE_UNDATA">
 		<language name="JPN" width="160">こくれんデータさくせい</language>
 		<language name="JPN_KANJI" width="160">国連データ作成</language>
+	</row>
+
+	<row id="DEBUG_FIELD_BSW_00">
+		<language name="JPN" width="160">バトルサブウェイ</language>
+		<language name="JPN_KANJI" width="160">バトルサブウェイ</language>
+	</row>
+
+	<row id="DEBUG_FIELD_BSW_01">
+		<language name="JPN" width="160">シングルトレイン</language>
+		<language name="JPN_KANJI" width="160">シングルトレイン</language>
+	</row>
+
+	<row id="DEBUG_FIELD_BSW_02">
+		<language name="JPN" width="160">ダブルトレイン</language>
+		<language name="JPN_KANJI" width="160">ダブルトレイン</language>
+	</row>
+
+	<row id="DEBUG_FIELD_BSW_03">
+		<language name="JPN" width="160">マルチトレイン</language>
+		<language name="JPN_KANJI" width="160">マルチトレイン</language>
+	</row>
+
+	<row id="DEBUG_FIELD_BSW_04">
+		<language name="JPN" width="160">WiFiトレイン</language>
+		<language name="JPN_KANJI" width="160">WiFiトレイン</language>
+	</row>
+
+	<row id="DEBUG_FIELD_BSW_05">
+		<language name="JPN" width="160">Ｓシングルトレイン</language>
+		<language name="JPN_KANJI" width="160">Ｓシングルトレイン</language>
+	</row>
+
+	<row id="DEBUG_FIELD_BSW_06">
+		<language name="JPN" width="160">Ｓダブルトレイン</language>
+		<language name="JPN_KANJI" width="160">Ｓダブルトレイン</language>
+	</row>
+
+	<row id="DEBUG_FIELD_BSW_07">
+		<language name="JPN" width="160">Ｓマルチトレイン</language>
+		<language name="JPN_KANJI" width="160">Ｓマルチトレイン</language>
+	</row>
+
+	<row id="DEBUG_FIELD_BSW_08">
+		<language name="JPN" width="160">しゃない</language>
+		<language name="JPN_KANJI" width="160">しゃない</language>
+	</row>
+
+	<row id="DEBUG_FIELD_BSW_09">
+		<language name="JPN" width="160">ホーム</language>
+		<language name="JPN_KANJI" width="160">ホーム</language>
 	</row>
 
 	<flowchart-group-list>

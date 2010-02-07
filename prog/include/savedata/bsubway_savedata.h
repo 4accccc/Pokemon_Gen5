@@ -240,6 +240,8 @@ extern void BSUBWAY_SCOREDATA_IncWifiRank( BSUBWAY_SCOREDATA *bsw_score );
 extern void BSUBWAY_SCOREDATA_DecWifiRank( BSUBWAY_SCOREDATA *bsw_score );
 extern u8 BSUBWAY_SCOREDATA_GetWifiRank(
     const BSUBWAY_SCOREDATA *bsw_score );
+extern u8 BSUBWAY_SCOREDATA_SetWifiLoseCount(
+    BSUBWAY_SCOREDATA *bsw_score, BSWAY_SETMODE mode );
 
 #define BSUBWAY_SCOREDATA_GetRenshouCount(a,b) \
   BSUBWAY_SCOREDATA_GetRenshou(a,b)

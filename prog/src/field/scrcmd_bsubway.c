@@ -321,37 +321,20 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
         BSWAY_SCOREDATA_FLAG_SUPPORT_ENCOUNT_END,
         BSWAY_SETMODE_set );
     break;
-  //Wifiランクダウン
-  case BSWTOOL_WIFI_RANK_DOWN:
-    #if 0
-    *ret_wk = TowerScr_SetWifiRank(NULL,core->fsys->savedata,2);
-    #else
-    GF_ASSERT( 0 && "BSWTOOL_WIFI_RANK_DOWN WB未作成" );
-    #endif
-    break;
-  //Wifiランク取得
-  case BSWTOOL_GET_WIFI_RANK:
-    #if 0
-    *ret_wk = TowerScr_SetWifiRank(NULL,core->fsys->savedata,0);
-    #else
-    GF_ASSERT( 0 && "BSWTOOL_GET_WIFI_RANK WB未作成" );
-    #endif
-    break;
   //Wifiアップロードフラグをセット
   case BSWTOOL_SET_WIFI_UPLOAD_FLAG:
-    #if 0
-    TowerScrTools_SetWifiUploadFlag(core->fsys->savedata,param);
-    #else
-    GF_ASSERT( 0 && "BSWTOOL_SET_WIFI_UPLOAD_FLAG WB未作成" );
-    #endif
+    if( param0 == 0 ){ //リセット
+      BSUBWAY_SCOREDATA_SetFlag( scoreData,
+          BSWAY_SCOREDATA_FLAG_WIFI_UPLOAD, BSWAY_SETMODE_reset );
+    }else{ //セット
+      BSUBWAY_SCOREDATA_SetFlag( scoreData,
+          BSWAY_SCOREDATA_FLAG_WIFI_UPLOAD, BSWAY_SETMODE_set );
+    }
     break;
   //Wifiアップロードフラグを取得
   case BSWTOOL_GET_WIFI_UPLOAD_FLAG:
-    #if 0
-    *ret_wk = TowerScrTools_GetWifiUploadFlag(core->fsys->savedata);
-    #else
-    GF_ASSERT( 0 && "BSWTOOL_GET_WIFI_UPLOAD_FLAG WB未作成" );
-    #endif
+    *ret_wk = BSUBWAY_SCOREDATA_SetFlag(
+          scoreData, BSWAY_SCOREDATA_FLAG_WIFI_UPLOAD, BSWAY_SETMODE_get );
     break;
   //Wifi接続
   case BSWTOOL_WIFI_CONNECT:
@@ -515,6 +498,16 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
     }else{
       *ret_wk = FALSE;
     }
+    break;
+  //Wifiランクダウン
+  case BSWSUB_WIFI_RANK_DOWN:
+    *ret_wk = BSUBWAY_SCRWORK_SetWifiRank(
+            bsw_scr, gsys, BSWAY_SETMODE_dec );
+    break;
+  //Wifiランク取得
+  case BSWSUB_GET_WIFI_RANK:
+    *ret_wk = BSUBWAY_SCRWORK_SetWifiRank(
+            bsw_scr, gsys, BSWAY_SETMODE_get );
     break;
   //----ワーク依存　通信関連
   //通信開始
