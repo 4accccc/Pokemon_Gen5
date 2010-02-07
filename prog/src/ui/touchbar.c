@@ -132,6 +132,8 @@ static void ICON_SetKey( ICON_WORK *p_wk, u32 key );
 static u32 ICON_GetKey( const ICON_WORK *cp_wk );
 static void ICON_SetFlip( ICON_WORK *p_wk, BOOL is_flip );
 static BOOL ICON_GetFlip( const ICON_WORK *cp_wk );
+static void ICON_SetBGPriority( ICON_WORK *p_wk, u8 bg_prio );
+static u8 ICON_GetBGPriority( const ICON_WORK *p_wk );
 static void Icon_PushFuncNormal( ICON_WORK *p_wk );
 static void Icon_PushFuncFlip( ICON_WORK *p_wk );
 
@@ -432,6 +434,24 @@ void TOUCHBAR_SetVisibleAll( TOUCHBAR_WORK *p_wk, BOOL is_visible )
 		ICON_SetVisible( &p_wk->icon[ i ], is_visible );
 	}
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	TOUCHBAR	全てのアイコンのBGプライオリティを設定
+ *
+ *	@param	TOUCHBAR_WORK *p_wk	ワーク
+ *	@param	bg_prio						BGプライオリティ
+ */
+//-----------------------------------------------------------------------------
+void TOUCHBAR_SetBGPriorityAll( TOUCHBAR_WORK* p_wk, u8 bg_prio )
+{
+	int i;
+	for( i = 0; i < p_wk->tbl_len; i++ )
+	{	
+		ICON_SetBGPriority( &p_wk->icon[ i ], bg_prio );
+	}
+}
+
 //----------------------------------------------------------------------------
 /**
  *	@brief	TOUCHBAR	アイコンのアクティブ設定
@@ -530,6 +550,7 @@ void TOUCHBAR_SetSE( TOUCHBAR_WORK *p_wk, TOUCHBAR_ICON icon, u32 se )
 	//設定
 	ICON_SetSE( p_icon, se );
 }
+
 //----------------------------------------------------------------------------
 /**
  *	@brief	TOUCHBAR	アイコンのSEを取得
@@ -1165,6 +1186,34 @@ static void ICON_SetFlip( ICON_WORK *p_wk, BOOL is_flip )
 static BOOL ICON_GetFlip( const ICON_WORK *cp_wk )
 {	
 	return cp_wk->now_anmseq	== cp_wk->data.push_anmseq;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ICON	BGプライオリティ設定
+ *
+ *	@param	ICON_WORK *p_wk	ワーク
+ *	@param	bg_prio						BGプライオリティ
+ *
+ */
+//-----------------------------------------------------------------------------
+static void ICON_SetBGPriority( ICON_WORK *p_wk, u8 bg_prio )
+{
+  GF_ASSERT(p_wk);
+  GFL_CLACT_WK_SetBgPri( p_wk->p_clwk, bg_prio );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ICON	BGプライオリティ取得
+ *
+ *	@param	const ICON_WORK *cp_wk ワーク
+ *
+ *	@return	BGプライオリティ
+ */
+//-----------------------------------------------------------------------------
+static u8 ICON_GetBGPriority( const ICON_WORK *p_wk )
+{
+  GF_ASSERT(p_wk);
+  return GFL_CLACT_WK_GetBgPri( p_wk->p_clwk );
 }
 //----------------------------------------------------------------------------
 /**
