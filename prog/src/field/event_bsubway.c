@@ -106,7 +106,6 @@ static GMEVENT_RESULT ev_SelectPokeList( GMEVENT *event, int *seq, void *wk )
     (*seq)++;
     break;
   case 5:
-    
     return( GMEVENT_RES_FINISH );
   }
   
@@ -157,7 +156,6 @@ GMEVENT * BSUBWAY_EVENT_SetSelectPokeList(
       type = PL_TYPE_DOUBLE;
       break;
     case BSWAY_MODE_MULTI:
-    case BSWAY_MODE_COMM_MULTI:
       reg = REG_SUBWAY_MALTI;
       type = PL_TYPE_MULTI;
       break;
@@ -326,3 +324,326 @@ GMEVENT * BSUBWAY_EVENT_TrainerBeforeMsg(
   return( event );
 }
 
+//======================================================================
+//  バトルサブウェイ wifi
+//======================================================================
+#if 0
+///Wifiイベントワーク
+typedef struct _BTWR_WIFI_EVENT
+{
+	int	ret_val;
+	int	seq;
+	WBTOWER_PARAM*	app_wk;
+	u16**			scr_ret_wk;
+	u16				scr_ret_wkno;
+	u16	mode;
+	u16	dpw_code;
+}BTWR_WIFI_EVENT;
+
+typedef enum
+{
+	BTWR_WIFI_CONNECT_CALL,
+	BTWR_WIFI_CONNECT_WAIT,
+	BTWR_WIFI_EV_EXIT,
+};
+
+//--------------------------------------------------------------
+/// EVENT_WORK_WIFI_CONNECT
+//--------------------------------------------------------------
+typedef struct
+{
+  int seq_no;
+  u16 mode;
+  u16 ret_wk_no;
+  u16 dpw_code;
+
+  GAMESYS_WORK *gsys;
+  BSUBWAY_SCRWORK *bsw_scr;
+}EVENT_WORK_WIFI_CONNECT;
+
+/**
+ *	@brief	バトルタワー　WiFiコネクト呼び出し
+ */
+static int BtlTower_WifiConnectCall(
+    BTWR_WIFI_EVENT* wk, FIELDSYS_WORK* fsys )
+{
+	SAVEDATA* sv;
+  
+	if( mydwc_checkMyGSID() ){
+		wk->app_wk = Field_WifiBattleTowerConnect_SetProc(
+        fsys,wk->mode,wk->dpw_code);
+		return BTWR_WIFI_CONNECT_WAIT;
+	}else{
+		wk->ret_val = WIFI_BTOWER_RESULT_CANCEL;
+		return BTWR_WIFI_EV_EXIT;
+	}
+}
+
+/**
+ *	@brief	バトルタワー　WiFiコネクト終了待ち
+ */
+static int BtlTower_WifiConnectWait(BTWR_WIFI_EVENT* wk,FIELDSYS_WORK* fsys)
+{
+	u8	i;
+	WBTOWER_PARAM	*param;
+
+	// サブプロセス終了待ち
+	if( FieldEvent_Cmd_WaitSubProcEnd(fsys) ) {
+		return BTWR_WIFI_CONNECT_WAIT;
+	}
+//	param = (WBTOWER_PARAM*)wk->app_wk;
+
+	//ステータスを取得
+	wk->ret_val = wk->app_wk->result;//param->result;
+	OS_Printf("wifi_ret_val = %d,%d\n",wk->app_wk->result,wk->ret_val);
+	//メモリ解放
+	sys_FreeMemoryEz(wk->app_wk);
+	return BTWR_WIFI_EV_EXIT;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief	ゲームイベントコントローラ　WiFi接続
+ * @param	ev	GMEVENT_CONTROL *
+ * @retval	BOOL	TRUE=イベント終了
+ */
+//--------------------------------------------------------------
+static GMEVENT_RESULT BtlTowerEv_WifiConnect(
+    GMEVENT *event, int *seq, void *work )
+{
+	u16	*buf16;
+	BTWR_WIFI_EVENT *wk = work;
+  
+	switch( (*seq) ){
+	case BTWR_WIFI_CONNECT_CALL:
+		(*seq) = BtlTower_WifiConnectCall(wk,fsys);
+		break;
+	case BTWR_WIFI_CONNECT_WAIT:
+		(*seq) = BtlTower_WifiConnectWait(wk,fsys);
+		break;
+	case BTWR_WIFI_EV_EXIT:
+		//戻り値指定
+		buf16 = GetEventWorkAdrs(fsys,wk->scr_ret_wkno);//*(wk->scr_ret_wk);
+		OS_Printf("wifi_ret_val = %d\n",wk->ret_val);
+		*buf16 = wk->ret_val;
+	  return GMEVENT_RES_FINISH;
+	}
+  
+	return GMEVENT_RES_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief	WiFi接続　サブイベント呼び出し
+ * @param	event	GMEVENT_CONTROL*
+ * @param	mode	接続モード
+ * @param	ret_wk_no	返り値を返すワークID
+ * @param	dpw_code	DPW_INIT_PROCが返した返り値
+ * @retval  nothing
+ */
+//--------------------------------------------------------------
+void EventCmd_BTowerWifiCall(
+    GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap,
+    GMEVENT *m_event, u16 mode, u16 ret_wk_no, u16 dpw_code )
+{
+  GMEVENT *event;
+	BTWR_WIFI_EVENT *wk;
+  
+  event = GMEVENT_Create( gsys, NULL,
+      BtlTowerEv_WifiConnect, sizeof(BTWR_WIFI_EVENT) );
+
+  wk = GMEVENT_GetEventWork( event );
+	wk->mode = mode;
+	wk->dpw_code = dpw_code;
+	wk->scr_ret_wkno = ret_wk_no;
+}
+#endif
+
+#if 0
+//==============================================================================
+/**
+ * $brief   WIFIバトルタワー接続画面を呼び出す
+ *
+ * @param   fsys		
+ *
+ * @retval  none		
+ */
+//==============================================================================
+static void * Field_WifiBattleTowerConnect_SetProc( FIELDSYS_WORK *fsys, int mode, int connect )
+{
+	WBTOWER_PARAM *param;
+	FS_EXTERN_OVERLAY(dpw_tower);
+  
+  WIFILOGIN_PARAM *p_param;
+  
+  work->p_sub_wk = GFL_HEAP_AllocClearMemory(
+      HEAPID_PROC, sizeof(WIFILOGIN_PARAM) );
+  
+  p_param = work->p_sub_wk;
+  p_param->gamedata = GAMESYSTEM_GetGameData( gsys );
+  
+  GAMESYSTEM_CallProc( gsys, FS_OVERLAY_ID(wifi_login),
+      &WiFiLogin_ProcData, work->p_sub_wk );
+  
+  (*seq)++;
+  break;
+  
+  if( GAMESYSTEM_IsProcExist(gsys) == GFL_PROC_MAIN_NULL ){
+    WIFILOGIN_PARAM *p_param = work->p_sub_wk;
+    
+    if( p_param->result == WIFILOGIN_RESULT_LOGIN ){ 
+      (*seq)++;
+    }else if( p_param->result == WIFILOGIN_RESULT_CANCEL )
+      { 
+        (*seq)  = _WAIT_NET_END;
+      }
+      GFL_HEAP_FreeMemory( work->p_sub_wk );
+    }
+    
+    p_param = work->
+
+	// プロセス定義データ
+	const PROC_DATA WBTowerProcData = {
+		WBTowerProc_Init,
+		WBTowerProc_Main,
+		WBTowerProc_End,
+		FS_OVERLAY_ID(dpw_tower),
+	};
+	
+
+	param = sys_AllocMemoryLo(HEAPID_WORLD, sizeof(WBTOWER_PARAM));
+  
+	param->btowerscore   = SaveData_GetTowerScoreData(fsys->savedata);
+	param->wifitowerdata = SaveData_GetTowerWifiData(fsys->savedata);
+	param->systemdata    = SaveData_GetSystemData(fsys->savedata);
+	param->config        = SaveData_GetConfig(fsys->savedata);
+	param->MyUserData    = WifiList_GetMyUserInfo( SaveData_GetWifiListData(fsys->savedata) );
+	param->savedata      = fsys->savedata;
+	param->profileId     = mydwc_getMyGSID(SaveData_GetWifiListData(fsys->savedata));
+	param->mode          = mode;	// btower.h参照
+	param->connect       = connect;
+
+#if 1
+	//プラチナBTS 通信 090
+	//原因：resultの初期化が行われていない
+	//
+	//DPの時は、resultに適当な値が入っていたので、
+	//スクリプトでWIFI_BTOWER_RESULT_SUCCESSの分岐に引っかからなかった。
+	//
+	//WBTOWER_PARAMを0クリアすると、何があるかわからないので、resultのみキャンセルを代入
+	param->result		= WIFI_BTOWER_RESULT_CANCEL;
+#endif
+
+	GameSystem_StartSubProc(fsys,  &WBTowerProcData, param );
+	return (void*)param;
+} 
+
+//--------------------------------------------------------------
+/**
+ * @brief	バトルタワー　WiFiコネクト呼び出し
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+static int call_WifiConnect( EVENT_WORK_WIFI_CONNECT *wk )
+{
+	if( mydwc_checkMyGSID() == TRUE ){
+    /*
+		wk->app_wk = Field_WifiBattleTowerConnect_SetProc(
+        fsys,wk->mode,wk->dpw_code);
+		return BTWR_WIFI_CONNECT_WAIT;
+    */
+	}
+  
+  wk->ret_val = WIFI_BTOWER_RESULT_CANCEL;
+	return BTWR_WIFI_EV_EXIT;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief	ゲームイベントコントローラ　WiFi接続
+ * @param	ev	GMEVENT_CONTROL *
+ * @retval	BOOL	TRUE=イベント終了
+ */
+//--------------------------------------------------------------
+static GMEVENT_RESULT ev_WifiConnect( GMEVENT *ev, int *seq, void *wk )
+{
+	u16	*buf16;
+  EVENT_WORK_WIFI_CONNECT *work = wk;
+  
+	switch( (*seq) ){
+  case 0:
+    if( mydwc_checkMyGSID() == FALSE ){ //error
+      work->ret_val = WIFI_BTOWER_RESULT_CANCEL;
+      (*seq) = exit;
+      break;
+    }
+    //FALL THROUGH	
+  case 1:
+    if( GAME_COMM_NO_NULL == GameCommSys_BootCheck(
+          GAMESYSTEM_GetGameCommSysPtr(gsys)) ){
+      work->fieldmap = NULL; //クローズしたら使用禁止！
+      (*seq)++;
+    }
+    break;
+  case 2:
+    GAMESYSTEM_CallProc( gsys, FS_OVERLAY_ID(wifi_login),
+        &WiFiLogin_ProcData, &dbw->login );
+    (*seq)++;
+    break;
+  case 3:
+    if( GAMESYSTEM_IsProcExists(gsys) == GFL_PROC_MAIN_NULL ){
+      if( work->login.result == WIFILOGIN_RESULT_LOGIN ){ 
+        (*seq)++;
+      }else{ 
+        (*seq) = _WAIT_NET_END;
+      }
+    }
+    break;
+  case 4:
+    //タワーデータ処理へ
+    (*seq)++;
+    break;
+  case 5:
+    //タワーデータ処理終了待ち
+    if( GAMESYSTEM_IsProcExists(gsys) == GFL_PROC_MAIN_NULL ){
+      (*seq)++;
+      dbw->aPokeTr.ret = POKEMONTRADE_MOVE_START;
+    }
+    break;
+	case 6:
+		//戻り値指定
+		buf16 = GetEventWorkAdrs(fsys,wk->scr_ret_wkno);//*(wk->scr_ret_wk);
+		OS_Printf("wifi_ret_val = %d\n",wk->ret_val);
+		*buf16 = wk->ret_val;
+		sys_FreeMemoryEz(wk);
+		return TRUE;
+	}
+	return FALSE;
+}
+
+
+//--------------------------------------------------------------
+/**
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+GMEVENT * BSUBWAY_EVENT_SetWifiConnect(
+    BSUWBAY_SCRWORK *bsw_scr, GAMESYS_WORK *gsys,
+    u16 mode, u16 ret_wk_no, u16 dpw_code )
+{
+  GMEVENT *event;
+  EVENT_WORK_WIFI_CONNECT *work;
+  
+  event = GMEVENT_Create( gsys, NULL,
+      NULL, sizeof(EVENT_WORK_WIFI_CONNECT) );
+  
+  work = GMEVENT_GetEventWork( event );
+  work->gsys = gsys;
+  work->bsw_scr = bsw_scr;
+  work->mode = mode;
+  work->ret_wk_no = ret_wk_no;
+  work->dpw_code = dpw_code;
+}
+#endif

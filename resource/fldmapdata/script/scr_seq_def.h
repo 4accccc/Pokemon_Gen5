@@ -7000,13 +7000,14 @@
  * @param ret_wk åãâ äiî[êÊ
  */
 //--------------------------------------------------------------
-#define _BSUBWAY_TOOL( cmd, param, ret_wk ) \
-    _ASM_BSUBWAY_TOOL cmd, param, ret_wk
+#define _BSUBWAY_TOOL( cmd, param0, param1, ret_wk ) \
+    _ASM_BSUBWAY_TOOL cmd, param0, param1, ret_wk
 
-  .macro  _ASM_BSUBWAY_TOOL cmd, param, ret_wk
+  .macro  _ASM_BSUBWAY_TOOL cmd, param0, param1, ret_wk
   .short  EV_SEQ_BSUBWAY_TOOL
   .short \cmd
-  .short \param
+  .short \param0
+  .short \param1
   .short \ret_wk
   .endm
 

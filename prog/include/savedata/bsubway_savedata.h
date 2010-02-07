@@ -47,7 +47,7 @@ typedef enum
   BSWAY_PLAYDATA_ID_pare_itemfix,
   BSWAY_PLAYDATA_ID_trainer,
   BSWAY_PLAYDATA_ID_partner,
-  BSWAY_PLAYDATA_ID_stage,
+  BSWAY_PLAYDATA_ID_use_battle_box,
   BSWAY_PLAYDATA_ID_MAX,
 }BSWAY_PLAYDATA_ID;
 
@@ -133,7 +133,10 @@ typedef enum
   BSWAY_PLAYMODE_MULTI, //マルチ
   BSWAY_PLAYMODE_COMM_MULTI, //通信マルチ
   BSWAY_PLAYMODE_WIFI, //Wifi
-  BSWAY_PLAYMODE_WIFI_MULTI, //Wifiマルチ
+  BSWAY_PLAYMODE_S_SINGLE, //スーパーシングル
+  BSWAY_PLAYMODE_S_DOUBLE, //スーパーダブル
+  BSWAY_PLAYMODE_S_MULTI, //スーパーマルチ
+  BSWAY_PLAYMODE_S_COMM_MULTI, //スーパー通信マルチ
   BSWAY_PLAYMODE_MAX,
 }BSWAY_PLAYMODE;
 
@@ -194,10 +197,6 @@ extern void BSUBWAY_PLAYDATA_ResetRoundNo( BSUBWAY_PLAYDATA *bsw_play );
 extern void BSUBWAY_PLAYDATA_IncRoundNo( BSUBWAY_PLAYDATA *bsw_play );
 extern void BSUBWAY_PLAYDATA_SetRoundNo( BSUBWAY_PLAYDATA *bsw_play, u8 round );
 extern u16 BSUBWAY_PLAYDATA_GetRoundNo( const BSUBWAY_PLAYDATA *bsw_play );
-extern void BSUBWAY_PLAYDATA_ResetStageNo( BSUBWAY_PLAYDATA *bsw_play );
-extern void BSUBWAY_PLAYDATA_IncStageNo( BSUBWAY_PLAYDATA *bsw_play );
-extern void BSUBWAY_PLAYDATA_SetStageNo( BSUBWAY_PLAYDATA *bsw_play, u16 stage );
-extern u16 BSUBWAY_PLAYDATA_GetStageNo( const BSUBWAY_PLAYDATA *bsw_play );
 
 //BSUBWAY_SCOREDATA
 extern int BSUBWAY_SCOREDATA_GetWorkSize( void );
@@ -222,6 +221,11 @@ extern void BSUBWAY_SCOREDATA_SetRenshouMax(
     BSUBWAY_SCOREDATA *bsw_score, BSWAY_PLAYMODE mode, u16 count );
 extern void BSUBWAY_SCOREDATA_UpdateRenshouMax(
     BSUBWAY_SCOREDATA *bsw_score, BSWAY_PLAYMODE mode, u16 count );
+extern void BSUBWAY_SCOREDATA_ResetStageNo( BSUBWAY_SCOREDATA *bsw_score, BSWAY_PLAYMODE mode );
+extern void BSUBWAY_SCOREDATA_IncStageNo( BSUBWAY_SCOREDATA *bsw_score, BSWAY_PLAYMODE mode );
+extern void BSUBWAY_SCOREDATA_SetStageNo( BSUBWAY_SCOREDATA *bsw_score, BSWAY_PLAYMODE mode, u16 stage );
+extern u16 BSUBWAY_SCOREDATA_GetStageNo( const BSUBWAY_SCOREDATA *bsw_score, BSWAY_PLAYMODE mode );
+
 #if 0
 extern void BSUBWAY_SCOREDATA_IncStageCount(
     BSUBWAY_SCOREDATA *bsw_score, BSWAY_PLAYMODE mode );

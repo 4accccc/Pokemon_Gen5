@@ -31,6 +31,7 @@ extern BSUBWAY_SCRWORK * BSUBWAY_SCRWORK_CreateWork(
     GAMESYS_WORK *gsys, u16 init, u16 playmode );
 extern void BSUBWAY_SCRWORK_ReleaseWork(
     GAMESYS_WORK *gsys, BSUBWAY_SCRWORK *bsw_scr );
+extern void BSUBWAY_SCRWORK_ChangeCommMultiMode( BSUBWAY_SCRWORK *bsw_scr );
 extern void BSUBWAY_SCRWORK_SaveRestPlayData( BSUBWAY_SCRWORK *bsw_scr );
 extern void BSUBWAY_SCRWORK_LoadPokemonMember(
     BSUBWAY_SCRWORK *bsw_scr, GAMESYS_WORK *gsys );
@@ -47,8 +48,8 @@ extern void BSUBWAY_SCRWORK_ChoiceBattlePartner( BSUBWAY_SCRWORK *bsw_scr );
 extern u16 BSUBWAY_SCRWORK_GetTrainerOBJCode( BSUBWAY_SCRWORK *bsw_scr, u16 idx );
 
 //bsubway_comm.h
-extern void BSUBWAY_COMM_AddCommandTable( BSUBWAY_SCRWORK *bsw_scr );
-extern void BSUBWAY_COMM_DeleteCommandTable( BSUBWAY_SCRWORK *bsw_scr );
+extern void BSUBWAY_COMM_Init( BSUBWAY_SCRWORK *bsw_scr );
+extern void BSUBWAY_COMM_Exit( BSUBWAY_SCRWORK *bsw_scr );
 
 extern void BSUBWAY_COMM_TimingSyncStart( u8 no );
 extern BOOL BSUBWAY_COMM_IsTimingSync( u8 no );
@@ -65,6 +66,9 @@ extern void BSUBWAY_SCRWORK_CommSendTrainerData( BSUBWAY_SCRWORK *bsw_scr );
 extern void BSUBWAY_SCRWORK_CommSendRetireSelect(
     BSUBWAY_SCRWORK *bsw_scr, u16 retire );
 extern BOOL BSUBWAY_SCRWORK_CommSendData(
-    BSUBWAY_SCRWORK *bsw_scr, u16 mode, u16 param, GAMEDATA *gdata );
+    BSUBWAY_SCRWORK *bsw_scr, u16 mode, u16 param );
+extern void BSUBWAY_SCRWORK_CommRecieveDataStart(
+    BSUBWAY_SCRWORK *bsw_scr, u8 comm_mode );
+extern BOOL BSUBWAY_SCRWORK_CommRecieveData( BSUBWAY_SCRWORK *bsw_scr, u16 *ret_buf );
 extern BOOL BSUBWAY_SCRWORK_CommFrWiFiCounterTowerSendBufTrainerData(
     BSUBWAY_SCRWORK *bsw_scr );

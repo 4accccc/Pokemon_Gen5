@@ -34,7 +34,7 @@
 #include "bsubway_scrwork.h"
 #include "savedata/bsubway_savedata.h"
 
-#include "../mystery/fntequ.h"
+//#include "../mystery/fntequ.h"
 
 #define __BSUBWAY_FLD_H_GLOBAL
 #include "bsubway_tr.h"
@@ -396,11 +396,12 @@ BATTLE_SETUP_PARAM * BSUBWAY_SCRWORK_CreateBattleParam(
   case BSWAY_MODE_DOUBLE:
   case BSWAY_MODE_MULTI:
   case BSWAY_MODE_COMM_MULTI:
-  case BSWAY_MODE_WIFI_MULTI:
     dst->rule = BTL_RULE_DOUBLE;
     break;
+  default:
+    GF_ASSERT( 0 );
   }
-
+  
   { //トレーナーデータ確保
     dst->tr_data[BTL_CLIENT_PLAYER] = create_BSP_TRAINER_DATA( HEAPID_PROC );
     dst->tr_data[BTL_CLIENT_ENEMY1] = create_BSP_TRAINER_DATA( HEAPID_PROC );
@@ -732,9 +733,9 @@ u16 BSUBWAY_SCRWORK_GetTrainerNo(
   OS_Printf( "round = %d\n", round );
 
   //タワータイクーンはシングルのみ
-  if( play_mode==BSWAY_MODE_SINGLE ){
+  if( play_mode == BSWAY_MODE_SINGLE ){
     //タワータイクーン1回目
-    if((stage==2)&&(round==6)){
+    if( (stage==2) && (round==6) ){
       return TOWER_MASTER_FIRST;
     }
     //タワータイクーン2回目
@@ -742,9 +743,9 @@ u16 BSUBWAY_SCRWORK_GetTrainerNo(
       return TOWER_MASTER_SECOND;
     }
   }
-
+  
   if(stage<7){
-    if(round==(7-1)){
+    if(round==(6)){
       no=(TrainerNoRangeTable2[stage][1]-TrainerNoRangeTable2[stage][0])+1;
 //      no=TrainerNoRangeTable2[stage][0]+(gf_rand()%no);
       no= TrainerNoRangeTable2[stage][0]+(get_Rand(wk)%no);
@@ -1273,12 +1274,12 @@ static void get_PokemonRomData(
 //--------------------------------------------------------------
 static STRCODE * PM_strcpy( STRCODE* to_str, const STRCODE* from_str )
 {
-  while( *from_str != EOM_ ){
+  while( *from_str != GFL_STR_GetEOMCode() ){
     *to_str = *from_str;
     to_str++;
     from_str++;
   }
-  *to_str = EOM_;
+  *to_str = GFL_STR_GetEOMCode();
   return to_str;
 }
 

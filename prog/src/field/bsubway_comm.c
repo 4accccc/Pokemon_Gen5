@@ -45,6 +45,11 @@ enum
 //======================================================================
 //  proto
 //======================================================================
+static void * get_BeaconData( void *pWork );
+static int get_BeaconSize( void *pWork );
+static BOOL check_ConnectService(
+    GameServiceID GameServiceID1, GameServiceID GameServiceID2 );
+
 static void commCmd_RecvBufPlayerData(
     int netID, const int size, const void *pData,
     void *pWork, GFL_NETHANDLE *pNetHandle );
@@ -56,7 +61,7 @@ static void commCmd_FrWiFiCounterTowerRecvBufRetireSelect(
     void *pWork, GFL_NETHANDLE *pNetHandle );
 
 //======================================================================
-//  通信コマンドテーブル
+//  通信データ
 //======================================================================
 //--------------------------------------------------------------
 //  通信コマンドテーブル
@@ -76,65 +81,132 @@ static const NetRecvFuncTable data_RecvFuncTbl[FC_BSUBWAY_MAX] = {
 */
 
 //--------------------------------------------------------------
-//
+/// 通信初期化データ
 //--------------------------------------------------------------
-/*
-static const GFLNetInitializeStruct aGFLNetInit = {
-	Union_CommPacketTbl,  // 受信関数テーブル
-	UNION_CMD_NUM,  			// 受信テーブル要素数
-	NULL,		///< ハードで接続した時に呼ばれる
-	NULL,		///< ネゴシエーション完了時にコール
-	NULL,		// ユーザー同士が交換するデータのポインタ取得関数
-	NULL,		// ユーザー同士が交換するデータのサイズ取得関数
-	UnionComm_GetBeaconData,		// ビーコンデータ取得関数  
-	UnionComm_GetBeaconSize,		// ビーコンデータサイズ取得関数 
-	UnionComm_CheckConnectService,		// ビーコンのサービスを比較して繋いで良いかどうか判断する
-	NULL,		// 通信不能なエラーが起こった場合呼ばれる
-	NULL,		//FatalError
-	NULL,		// 通信切断時に呼ばれる関数(終了時
-	NULL,		// オート接続で親になった場合
+static const GFLNetInitializeStruct data_NetInit = {
+  data_RecvFuncTbl, // 受信関数テーブル
+  FC_BSUBWAY_MAX, // 受信テーブル要素数
+  NULL, // ハードで接続した時に呼ばれる
+  NULL, // ネゴシエーション完了時にコール
+  NULL, // ユーザー同士が交換するデータのポインタ取得関数
+  NULL, // ユーザー同士が交換するデータのサイズ取得関数
+  get_BeaconData, // ビーコンデータ取得関数  
+  get_BeaconSize, // ビーコンデータサイズ取得関数 
+  check_ConnectService, //ビーコンサービスを比較し繋いで良いかどうか判断
+  NULL,    // 通信不能なエラーが起こった場合呼ばれる
+  NULL,    //FatalError
+  NULL,    // 通信切断時に呼ばれる関数(終了時
+  NULL,    // オート接続で親になった場合
   
 #if GFL_NET_WIFI
-	NULL,		///< wifi接続時に自分のデータをセーブする必要がある場合に呼ばれる関数
-	NULL,		///< wifi接続時にフレンドコードの入れ替えを行う必要がある場合呼ばれる関数
-	NULL,		///< wifiフレンドリスト削除コールバック
-	NULL,		///< DWC形式の友達リスト	
-	NULL,		///< DWCのユーザデータ（自分のデータ）
-	0,			///< DWCへのHEAPサイズ
-	TRUE,		///< デバック用サーバにつなぐかどうか
+  NULL, // wifi接続時に自分のデータをセーブする必要がある場合に呼ばれる関数
+  NULL, // wifi接続時にフレンドコードの入れ替えを行う必要がある場合呼ばれる関数
+  NULL, // wifiフレンドリスト削除コールバック
+  NULL, // DWC形式の友達リスト  
+  NULL, // DWCのユーザデータ（自分のデータ）
+  0, ///< DWCへのHEAPサイズ
+  TRUE, // デバック用サーバにつなぐかどうか
 #endif  //GFL_NET_WIFI
   
-	0x999,		//ggid  DP=0x333,RANGER=0x178,WII=0x346 <-適当なのを
-	GFL_HEAPID_APP,		//元になるheapid
-	HEAPID_NETWORK + HEAPDIR_MASK,		//通信用にcreateされるHEAPID
-	HEAPID_WIFI + HEAPDIR_MASK,		//wifi用にcreateされるHEAPID
-	HEAPID_NETWORK + HEAPDIR_MASK,		//
-	
-  GFL_WICON_POSX,GFL_WICON_POSY,	// 通信アイコンXY位置
-  2,      //_MAXNUM,	//最大接続人数 自分含めた値
+  0x999,  //ggid  DP=0x333,RANGER=0x178,WII=0x346 <-適当なのを
+  GFL_HEAPID_APP, //元になるheapid
+  HEAPID_NETWORK + HEAPDIR_MASK,    //通信用にcreateされるHEAPID
+  HEAPID_WIFI + HEAPDIR_MASK,    //wifi用にcreateされるHEAPID
+  HEAPID_NETWORK + HEAPDIR_MASK,    //
   
-	NET_SEND_SIZE_STANDARD, //NET_SEND_SIZE_STANDARD,     //_MAXSIZE,	//最大送信バイト数
+  GFL_WICON_POSX, GFL_WICON_POSY,  // 通信アイコンXY位置
+  2, //_MAXNUM,  //最大接続人数 自分含めた値
   
-	8,  // 最大ビーコン収集数
+  NET_SEND_SIZE_STANDARD, //最大送信バイト数
   
-	TRUE,		// CRC計算
-	FALSE,		// MP通信＝親子型通信モードかどうか
-	GFL_NET_TYPE_WIRELESS,		//通信タイプの指定
-	FALSE,		// 親が再度初期化した場合、つながらないようにする場合TRUE
-	
-  WB_NET_BSUBWAY,	//GameServiceID
+  8,  // 最大ビーコン収集数
+  
+  TRUE,    // CRC計算
+  FALSE,    // MP通信＝親子型通信モードかどうか
+  GFL_NET_TYPE_WIRELESS,    //通信タイプの指定
+  FALSE,    // 親が再度初期化した場合、つながらないようにする場合TRUE
+  
+  WB_NET_BSUBWAY,  //GameServiceID
 
 #if GFL_NET_IRC
-	IRC_TIMEOUT_STANDARD,	// 赤外線タイムアウト時間
+  IRC_TIMEOUT_STANDARD,  // 赤外線タイムアウト時間
 #endif
-    0,//MP親最大サイズ 512まで
-    0,//dummy
+  0,//MP親最大サイズ 512まで
+  0,//dummy
 };
-*/
 
 //======================================================================
-//  バトルサブウェイ　通信関連
+//  バトルサブウェイ　通信初期化関連
 //======================================================================
+//--------------------------------------------------------------
+/**
+ * バトルサブウェイ用通信初期化
+ * @param bsw_scr BSUBWAY_SCRWORK
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void BSUBWAY_COMM_Init( BSUBWAY_SCRWORK *bsw_scr )
+{
+  GFL_NET_Init( &data_NetInit, NULL, bsw_scr );
+}
+
+//--------------------------------------------------------------
+/**
+ * バトルサブウェイ用通信終了
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+void BSUBWAY_COMM_Exit( BSUBWAY_SCRWORK *bsw_scr )
+{
+  GFL_NET_Exit( NULL );
+}
+
+//--------------------------------------------------------------
+/**
+ * ビーコン取得関数
+ * @param pWork 通信用ワーク
+ * @retval void* ビーコンデータ
+ */
+//--------------------------------------------------------------
+static void * get_BeaconData( void *pWork )
+{
+  BSUBWAY_SCRWORK *bsw_scr = pWork;
+  COMM_ENTRY_BEACON *bcon = &bsw_scr->commBeaconData;
+  GAMEDATA *gdata = bsw_scr->gdata;
+   
+  MyStatus_Copy( GAMEDATA_GetMyStatus(gdata), &bcon->mystatus );
+  OS_GetMacAddress( bcon->mac_address );
+  return( bcon );
+}
+
+//--------------------------------------------------------------
+/**
+ * ビーコンサイズ取得関数
+ * @param pWork 通信用ワーク
+ * @retval int ビーコンサイズ
+ */
+//--------------------------------------------------------------
+static int get_BeaconSize( void *pWork )
+{
+  return( sizeof(COMM_ENTRY_BEACON) );
+}
+
+//--------------------------------------------------------------
+/**
+ * ビーコンのサービスを比較して繋いで良いかどうか判断する
+ * @param   GameServiceID1    サービスID１
+ * @param   GameServiceID2    サービスID２
+ * @retval  BOOL    TRUE:接続OK　　FALSE:接続NG
+ */
+//--------------------------------------------------------------
+static BOOL check_ConnectService(
+    GameServiceID GameServiceID1, GameServiceID GameServiceID2 )
+{
+  return( GameServiceID1 == GameServiceID2 );
+}
+
+#if 0
 //--------------------------------------------------------------
 /**
  * バトルサブウェイ用通信コマンドテーブルを追加
@@ -159,7 +231,11 @@ void BSUBWAY_COMM_DeleteCommandTable( BSUBWAY_SCRWORK *bsw_scr )
 {
   GFL_NET_DelCommandTable( GFL_NET_CMD_BSUBWAY );
 }
+#endif
 
+//======================================================================
+//  バトルサブエウィ　通信同期
+//======================================================================
 //--------------------------------------------------------------
 /**
  * バトルサブウェイ用通信同期開始
@@ -260,7 +336,7 @@ u16 BSUBWAY_SCRWORK_CommReciveTrainerData(
 
 //--------------------------------------------------------------
 /**
- * @brief  バトルサブウェイ　送られてきたリタイアするかどうかの結果を受け取る
+ * @brief バトルサブウェイ 送られてきたリタイアするかどうかの結果を受け取る
  * @param bsw_scr BSUBWAY_SCRWORK
  * @param recv_buf 受信データバッファ
  * @retval  0  リタイアしない
@@ -307,7 +383,8 @@ void BSUBWAY_SCRWORK_CommSendPlayerData(
   //ここはBTWR_MODE_COMM_MULTI専用
   OS_Printf( "bsw_scr->play_mode = %d\n", bsw_scr->play_mode );
 
-  bsw_scr->send_buf[3] = BSUBWAY_PLAYDATA_GetStageNo( bsw_scr->playData );
+  bsw_scr->send_buf[3] = BSUBWAY_SCOREDATA_GetStageNo(
+      bsw_scr->scoreData, bsw_scr->play_mode  );
 }
 
 //--------------------------------------------------------------
@@ -347,11 +424,11 @@ void BSUBWAY_SCRWORK_CommSendRetireSelect(
  */
 //--------------------------------------------------------------
 BOOL BSUBWAY_SCRWORK_CommSendData(
-    BSUBWAY_SCRWORK *bsw_scr, u16 mode, u16 param, GAMEDATA *gdata )
+    BSUBWAY_SCRWORK *bsw_scr, u16 mode, u16 param )
 {
   int command,size;
-  const MYSTATUS* my;
-   
+  GAMEDATA *gdata  = bsw_scr->gdata;
+  
   OS_Printf( "通信マルチデータ送信\n" );
   
   switch( mode ){
@@ -372,7 +449,7 @@ BOOL BSUBWAY_SCRWORK_CommSendData(
   OS_Printf( ">>btwr send = %d,%d,%d\n",
       bsw_scr->send_buf[0], bsw_scr->send_buf[1], bsw_scr->send_buf[2] );
   
-  BSUBWAY_COMM_AddCommandTable( bsw_scr );
+//  BSUBWAY_COMM_AddCommandTable( bsw_scr );
   
   size = BSWAY_SIO_BUF_LEN;
   
@@ -383,6 +460,50 @@ BOOL BSUBWAY_SCRWORK_CommSendData(
   
   return( FALSE );
 }
+
+//--------------------------------------------------------------
+/**
+ * バトルサブウェイ　データ受信開始
+ * @param bsw_scr BSUBWAY_SCRWORK
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void BSUBWAY_SCRWORK_CommRecieveDataStart(
+    BSUBWAY_SCRWORK *bsw_scr, u8 comm_mode )
+{
+  bsw_scr->comm_mode = comm_mode;
+}
+
+//--------------------------------------------------------------
+/**
+ * バトルサブウェイ　データ受信
+ * @param bsw_scr BSUBWAY_SCRWORK
+ * @retval BOOL TRUE=受信完了
+ */
+//--------------------------------------------------------------
+BOOL BSUBWAY_SCRWORK_CommRecieveData( BSUBWAY_SCRWORK *bsw_scr, u16 *ret_buf )
+{
+  u8 check_num;
+
+  if( bsw_scr->comm_mode == BSWAY_COMM_TR_DATA ){
+    check_num = 1;
+  }else{
+    check_num = 2;
+  }
+  
+  if( bsw_scr->comm_recieve_count == check_num ){
+    bsw_scr->comm_recieve_count = 0;
+
+    if( ret_buf != NULL ){
+      *ret_buf = bsw_scr->comm_check_work;
+    }
+    
+    return( TRUE );
+  }
+  
+  return( FALSE );
+}
+
 
 #if 0
 BOOL BSUBWAY_SCRWORK_CommSendData(
@@ -556,7 +677,7 @@ static void commCmd_RecvBufPlayerData(
   
   ret = 0;
   num = 0;
-  bsw_scr->recieve_count++;
+  bsw_scr->comm_recieve_count++;
   
   //自分のデータは受け取らない
   if( GFL_NET_SystemGetCurrentID() == netID ){
@@ -584,7 +705,7 @@ static void commCmd_RecvBufPlayerData(
     ret += 2;
   }
   
-  bsw_scr->check_work = ret;
+  bsw_scr->comm_check_work = ret;
 }
 
 //--------------------------------------------------------------
@@ -610,8 +731,10 @@ static void commCmd_FrWiFiCounterTowerRecvBufTrainerData(
   OS_Printf( "自分id = %d\n", GFL_NET_SystemGetCurrentID() );
   
   num = 0;
-  bsw_scr->recieve_count++;
-  OS_Printf( "bsw_scr->recieve_count = %d\n", bsw_scr->recieve_count );
+  bsw_scr->comm_recieve_count++;
+
+  OS_Printf( "bsw_scr->comm_recieve_count = %d\n",
+      bsw_scr->comm_recieve_count );
   
   //自分のデータは受け取らない
   if( GFL_NET_SystemGetCurrentID() == netID ){
@@ -662,8 +785,8 @@ static void commCmd_FrWiFiCounterTowerRecvBufRetireSelect(
   OS_Printf( "id_no = %d\n", netID );
   
   num = 0;
-  bsw_scr->check_work = 0;
-  bsw_scr->recieve_count++;
+  bsw_scr->comm_check_work = 0;
+  bsw_scr->comm_recieve_count++;
 
   //自分のデータは受け取らない
   if( GFL_NET_SystemGetCurrentID() == netID ){
@@ -674,6 +797,6 @@ static void commCmd_FrWiFiCounterTowerRecvBufRetireSelect(
       bsw_scr->retire_f, recv_buf[0] );
   
   if( bsw_scr->retire_f || recv_buf[0] ){
-    bsw_scr->check_work = 1;
+    bsw_scr->comm_check_work = 1;
   }
 }

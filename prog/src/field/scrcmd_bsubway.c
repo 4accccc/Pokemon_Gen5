@@ -49,6 +49,7 @@
 static BOOL evCommTimingSync( VMHANDLE *core, void *wk );
 static BOOL evCommEntryMenuPerent( VMHANDLE *core, void *wk );
 static BOOL evCommEntryMenuChild( VMHANDLE *core, void *wk );
+static BOOL evCommRecvData( VMHANDLE *core, void *wk );
 
 static BOOL bsway_CheckEntryPokeNum(
     u16 num, GAMESYS_WORK *gsys, BOOL item_flag );
@@ -105,7 +106,7 @@ VMCMD_RESULT EvCmdBSubwayWorkClear( VMHANDLE* core, void *wk )
  *  @return 0
  */
 //--------------------------------------------------------------
-VMCMD_RESULT EvCmdBSubwayWorkRelease(VMHANDLE* core, void *wk )
+VMCMD_RESULT EvCmdBSubwayWorkRelease( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
@@ -145,12 +146,14 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
       save, GMDATA_ID_BSUBWAY_SCOREDATA );
   FIELDMAP_WORK *fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
   u16 com_id = VMGetU16( core );
-  u16 param = SCRCMD_GetVMWorkValue( core, work );
+  u16 param0 = SCRCMD_GetVMWorkValue( core, work );
+  u16 param1 = SCRCMD_GetVMWorkValue( core, work );
   u16 retwk_id = VMGetU16( core );
   u16 *ret_wk = SCRIPT_GetEventWork( sc, gdata, retwk_id );
   
   if( bsw_scr == NULL && //バグチェック　ワーク依存コマンド
-      com_id >= BSWSUB_START && com_id < BSWSUB_END ){
+      (com_id >= BSWSUB_START_NO && com_id < BSWSUB_END_NO) ||
+      (com_id >= BSWSUB_COMM_START_NO && com_id < BSWSUB_COMM_END_NO) ){
     GF_ASSERT( 0 );
     return( VMCMD_RESULT_CONTINUE );
   }
@@ -198,11 +201,11 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
     break;
   //手持ちポケモン数チェック
   case BSWTOOL_CHK_ENTRY_POKE_NUM:
-    if( param == 0 ){
+    if( param0 == 0 ){
       GF_ASSERT( bsw_scr != NULL );
       *ret_wk = bsway_CheckEntryPokeNum( bsw_scr->member_num, gsys, 1 );
     }else{
-      *ret_wk = bsway_CheckEntryPokeNum( param, gsys, 1 );
+      *ret_wk = bsway_CheckEntryPokeNum( param0, gsys, 1 );
     }
     break;
   //セーブされているか
@@ -233,7 +236,7 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
     break;
   //連勝数取得
   case BSWTOOL_GET_RENSHOU_CNT:
-    *ret_wk = BSUBWAY_SCOREDATA_GetRenshou( scoreData, param );
+    *ret_wk = BSUBWAY_SCOREDATA_GetRenshou( scoreData, param0 );
     if( (s16)(*ret_wk) < 0 ){ 
       *ret_wk = 0;
     }
@@ -258,7 +261,7 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
   //レギュレーションチェック
   case BSWTOOL_CHK_REGULATION:
     *ret_wk = 0; //ok
-    if( bsway_CheckRegulation(param,gsys) == FALSE ){
+    if( bsway_CheckRegulation(param0,gsys) == FALSE ){
       *ret_wk = 1;
     }
     break;
@@ -269,7 +272,7 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
     break;
   //現在ラウンド数取得
   case BSWTOOL_GET_NOW_ROUND:
-    *ret_wk = BSUBWAY_PLAYDATA_GetRoundNo( playData );
+    *ret_wk = BSUBWAY_PLAYDATA_GetRoundNo( playData ) + 1;
     break;
   //ラウンド数増加
   case BSWTOOL_INC_ROUND:
@@ -280,29 +283,30 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
   //次のラウンド数取得
   case BSWTOOL_GET_NEXT_ROUND:
     *ret_wk = BSUBWAY_PLAYDATA_GetRoundNo( bsw_scr->playData ) + 1;
+    (*ret_wk) += 1;
     break;
   //ボスクリア済みフラグ取得
   case BSWTOOL_GET_BOSS_CLEAR_FLAG:
     *ret_wk = BSUBWAY_SCOREDATA_SetFlag( scoreData,
-        BSWAY_SCOREDATA_FLAG_BOSS_CLEAR_SINGLE + param,
+        BSWAY_SCOREDATA_FLAG_BOSS_CLEAR_SINGLE + param0,
         BSWAY_SETMODE_get );
     break;
   //スーパーボスクリア済みフラグ取得
-   case BSWTOOL_GET_S_BOSS_CLEAR_FLAG:
+  case BSWTOOL_GET_S_BOSS_CLEAR_FLAG:
     *ret_wk = BSUBWAY_SCOREDATA_SetFlag( scoreData,
-        BSWAY_SCOREDATA_FLAG_BOSS_CLEAR_SINGLE + param,
+        BSWAY_SCOREDATA_FLAG_BOSS_CLEAR_SINGLE + param0,
         BSWAY_SETMODE_get );
     break;
   //ボスクリア済みフラグセット
   case BSWTOOL_SET_BOSS_CLEAR_FLAG:
     *ret_wk = BSUBWAY_SCOREDATA_SetFlag( scoreData,
-        BSWAY_SCOREDATA_FLAG_BOSS_CLEAR_SINGLE + param,
+        BSWAY_SCOREDATA_FLAG_BOSS_CLEAR_SINGLE + param0,
         BSWAY_SETMODE_set );
     break;
   //スーパーボスクリア済みフラグ取得
-   case BSWTOOL_SET_S_BOSS_CLEAR_FLAG:
+  case BSWTOOL_SET_S_BOSS_CLEAR_FLAG:
     *ret_wk = BSUBWAY_SCOREDATA_SetFlag( scoreData,
-        BSWAY_SCOREDATA_FLAG_BOSS_CLEAR_SINGLE + param,
+        BSWAY_SCOREDATA_FLAG_BOSS_CLEAR_SINGLE + param0,
         BSWAY_SETMODE_set );
     break;
   //サポート遭遇フラグ取得
@@ -425,7 +429,7 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
     break;
   //敵トレーナーOBJコード取得
   case BSWSUB_GET_ENEMY_OBJ:
-    *ret_wk = BSUBWAY_SCRWORK_GetTrainerOBJCode( bsw_scr, param );
+    *ret_wk = BSUBWAY_SCRWORK_GetTrainerOBJCode( bsw_scr, param0 );
     break;
   //バトル呼び出し
 	case BSWSUB_LOCAL_BTL_CALL:
@@ -438,7 +442,7 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
     break;
   //ボスクリアフラグをセット
   case BSWSUB_SET_BOSS_CLEAR_FLAG:
-    bsw_scr->boss_f = param;
+    bsw_scr->boss_f = param0;
     break;
   //ボスクリアフラグを取得
   case BSWSUB_GET_BOSS_CLEAR_FLAG:
@@ -450,7 +454,7 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
     break;
   //パートナー番号セット
   case BSWSUB_SET_PARTNER_NO:
-    bsw_scr->partner = param;
+    bsw_scr->partner = param0;
     break;
   //パートナー番号取得
   case BSWSUB_GET_PARTNER_NO:
@@ -462,7 +466,7 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
     break;
   //選択ポケモン番号取得
   case BSWSUB_GET_SELPOKE_IDX:
-    *ret_wk = bsw_scr->member[param];
+    *ret_wk = bsw_scr->member[param0];
     break;
   //(BTS通信142)変更の対象
   case BSWSUB_WIFI_RANK_UP:
@@ -479,7 +483,7 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
   //トレーナー対戦前メッセージ表示
   case BSWSUB_TRAINER_BEFORE_MSG:
     SCRIPT_CallEvent(
-        sc, BSUBWAY_EVENT_TrainerBeforeMsg(bsw_scr,gsys,param) );
+        sc, BSUBWAY_EVENT_TrainerBeforeMsg(bsw_scr,gsys,param0) );
     return( VMCMD_RESULT_SUSPEND );
   //ゲームクリア時のプレイデータをセーブ
   case BSWSUB_SAVE_GAMECLEAR:
@@ -489,17 +493,41 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
   case BSWSUB_LOAD_POKEMON_MEMBER:
     BSUBWAY_SCRWORK_LoadPokemonMember( bsw_scr, gsys );
     break;
-  //スーパーモードセット
-  case BSWSUB_SET_SUPER_MODE:
-    bsw_scr->super_mode = 1;
+  //バトルボックス使用するか
+  case BSWSUB_SET_USE_BBOX:
+    {
+      u8 buf = param0;
+      BSUBWAY_PLAYDATA_SetData( playData,
+          BSWAY_PLAYDATA_ID_use_battle_box, &buf );
+    }
     break;
-  //スーパーモードかどうか
-  case BSWSUB_CHECK_SUPER_MODE:
-    *ret_wk = bsw_scr->super_mode;
+  //通信マルチモードにワークを変更
+  case BSWSUB_CHG_WORK_COMM_MULTI_MODE:
+    BSUBWAY_SCRWORK_ChangeCommMultiMode( bsw_scr );
+    break;
+  //スーパーモードか
+  case BSWSUB_CHK_S_MODE:
+    if( play_mode == BSWAY_MODE_S_SINGLE ||
+        play_mode == BSWAY_MODE_S_DOUBLE ||
+        play_mode == BSWAY_MODE_S_MULTI ||
+        play_mode == BSWAY_MODE_S_COMM_MULTI ){
+      *ret_wk = TRUE;
+    }else{
+      *ret_wk = FALSE;
+    }
+    break;
+  //----ワーク依存　通信関連
+  //通信開始
+  case BSWSUB_COMM_START:
+    BSUBWAY_COMM_Init( bsw_scr );
+    break;
+  //通信終了
+  case BSWSUB_COMM_END:
+    BSUBWAY_COMM_Exit( bsw_scr );
     break;
   //通信同期
   case BSWSUB_COMM_TIMSYNC:
-    bsw_scr->comm_timing_no = param;
+    bsw_scr->comm_timing_no = param0;
     BSUBWAY_COMM_TimingSyncStart( bsw_scr->comm_timing_no );
     VMCMD_SetWait( core, evCommTimingSync );
     return( VMCMD_RESULT_SUSPEND );
@@ -529,19 +557,18 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
     return( VMCMD_RESULT_SUSPEND );
   //通信データ送信
   case BSWSUB_COMM_SEND_BUF:
-    GF_ASSERT( 0 );
+    BSUBWAY_SCRWORK_CommSendData( bsw_scr, param0, param1 );
     break;
   //通信データ受信
   case BSWSUB_COMM_RECV_BUF:
-    GF_ASSERT( 0 );
+    BSUBWAY_SCRWORK_CommRecieveDataStart( bsw_scr, param0 );
+    bsw_scr->ret_work_id = retwk_id;
+    VMCMD_SetWait( core, evCommRecvData );
+    return( VMCMD_RESULT_SUSPEND );
     break;
   //自分の通信IDを取得
   case BSWSUB_COMM_GET_CURRENT_ID:
-    GF_ASSERT( 0 );
-    break;
-  //通信終了
-  case BSWSUB_COMM_MULTI_SIO_END:
-    GF_ASSERT( 0 );
+    *ret_wk = GFL_NET_SystemGetCurrentID();
     break;
   //未対応コマンドエラー
   default:
@@ -674,6 +701,29 @@ static BOOL evCommEntryMenuChild( VMHANDLE *core, void *wk )
   if( entry_ret != COMM_ENTRY_RESULT_NULL ){
     CommEntryMenu_Exit( bsw_scr->pCommEntryMenu );
     bsw_scr->pCommEntryMenu = NULL;
+  }
+  
+  return( FALSE );
+}
+
+//--------------------------------------------------------------
+/**
+ * 通信受信待ち
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+static BOOL evCommRecvData( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK *gsys = SCRIPT_GetGameSysWork( sc );
+  GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
+  BSUBWAY_SCRWORK *bsw_scr = GAMEDATA_GetBSubwayScrWork( gdata );
+  u16 *ret_wk = SCRIPT_GetEventWork( sc, gdata, bsw_scr->ret_work_id );
+  
+  if( BSUBWAY_SCRWORK_CommRecieveData(bsw_scr,ret_wk) == TRUE ){
+    return( TRUE );
   }
   
   return( FALSE );

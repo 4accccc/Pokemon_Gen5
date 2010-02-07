@@ -60,9 +60,8 @@ struct _TAG_BSUBWAY_SCRWORK
   u8 retire_f:1;  ///<リタイアフラグ
   u8 prize_f:1;  ///<ご褒美フラグ
   u8 partner:3;  ///<パートナーNo
-  u8 super_mode:1; ///<スーパーモード
-  u8 padding0:7; ///<ビット余り
-  u8 padding1; ///<ビット余り
+  u8 padding0; ///<余り
+  u8 padding1; ///<余り
   
   u16 pare_poke[2];  ///<通信マルチパートナーが持つポケモンNo
   
@@ -78,6 +77,7 @@ struct _TAG_BSUBWAY_SCRWORK
   
   LOCATION now_location; //現在のロケーション
   
+  GAMEDATA *gdata; ///<GAMEDATA
   BSUBWAY_PLAYDATA *playData;  ///<セーブデータへのポインタ
   BSUBWAY_SCOREDATA *scoreData;  ///<セーブデータへのポインタ
   
@@ -87,22 +87,32 @@ struct _TAG_BSUBWAY_SCRWORK
   
   //対戦相手データ格納場所
   BSUBWAY_PARTNER_DATA  tr_data[2];
+ 	
+  //5人衆抽選データ格納場所
+	BSUBWAY_PARTNER_DATA five_data[BSWAY_FIVE_NUM];
+  
+	//5人衆抽選ポケモンパラメータ格納場所
+	BSUBWAY_PAREPOKE_PARAM five_poke[BSWAY_FIVE_NUM];
+
+	//5人衆抽選ポケモンアイテムfixフラグ
+	u8 five_item[BSWAY_FIVE_NUM]; 
   
   u16  send_buf[35];  //通信用データバッファ
   u16  recv_buf[35];  //通信用データバッファ
   
+  COMM_ENTRY_BEACON commBeaconData; //ビーコンデータ
   COMM_ENTRY_MENU_PTR pCommEntryMenu; //通信マルチ参加メニュー
   u16 *pCommEntryResult; //通信マルチ参加メニュー結果格納先
+  u8  comm_recieve_count; //受信カウント
+  u8  comm_mode; //通信モード
+  u8  first_btl_flag;    //初戦をおこなったかフラグ
+  u8  comm_timing_no; //通信タイミング番号
+  u16 comm_check_work;
+  u16 ret_work_id;
   
   //プラチナで追加
 //  int winlose_flag; //(LOCATION_WORKを消して、そこに入れることも可能？)
 // void *p_work; //(LOCATION_WORKを消して、そこに入れることも可能？)
-  u8  recieve_count;
-  u8  comm_mode;
-  u8  first_btl_flag;    //初戦をおこなったかフラグ
-  u8  comm_timing_no;
-  u16  check_work;
-  u16  ret_wkno;
 };
 
 #endif  //__SUBWAY_SCRWORK_H__

@@ -81,12 +81,11 @@ BSUBWAY_SCRWORK * BSUBWAY_SCRWORK_CreateWork(
   bsw_scr->heapID = HEAPID_PROC;
   bsw_scr->magicNo = BSUBWAY_SCRWORK_MAGIC;
   
+  bsw_scr->gdata = gdata;
   bsw_scr->my_sex = MyStatus_GetMySex( mystatus );
   
   bsw_scr->playData = SaveControl_DataPtrGet(
       save, GMDATA_ID_BSUBWAY_PLAYDATA );
-  bsw_scr->scoreData = SaveControl_DataPtrGet(
-      save, GMDATA_ID_BSUBWAY_SCOREDATA );
   
   BSUBWAY_PLAYDATA_SetSaveFlag( bsw_scr->playData, FALSE ); //セーブなしに
   
@@ -109,11 +108,11 @@ BSUBWAY_SCRWORK * BSUBWAY_SCRWORK_CreateWork(
     
     BSUBWAY_PLAYDATA_Init( bsw_scr->playData ); //プレイデータ初期化
     BSUBWAY_PLAYDATA_ResetRoundNo( bsw_scr->playData );
-    BSUBWAY_PLAYDATA_ResetStageNo( bsw_scr->playData );
+    
     buf8 = bsw_scr->play_mode; //プレイモード
+    
     BSUBWAY_PLAYDATA_SetData(
         bsw_scr->playData, BSWAY_PLAYDATA_ID_playmode, &buf8 );
-    BSUBWAY_SCOREDATA_ResetRenshou( bsw_scr->scoreData, buf8 );
   }else{ //続き
     bsw_scr->play_mode = (u8)BSUBWAY_PLAYDATA_GetData(
         bsw_scr->playData, BSWAY_PLAYDATA_ID_playmode, NULL );
@@ -127,19 +126,23 @@ BSUBWAY_SCRWORK * BSUBWAY_SCRWORK_CreateWork(
     BSUBWAY_PLAYDATA_GetData( bsw_scr->playData,
         BSWAY_PLAYDATA_ID_trainer, bsw_scr->trainer);
     
-    #if 0 //wb null
     if( bsw_scr->play_mode == BSWAY_MODE_MULTI ){
-      wk->partner = (u8)TowerPlayData_Get(
-          wk->playSave,BSWAY_PSD_partner,NULL);
+      bsw_scr->partner = (u8)BSUBWAY_PLAYDATA_GetData(
+          bsw_scr->playData, BSWAY_PLAYDATA_ID_partner, NULL );
+      
       //パートナートレーナーデータ再生成
-      TowerPlayData_Get(wk->playSave,
-          BSWAY_PSD_pare_poke,&(wk->five_poke[wk->partner]));
-      BSUBWAY_SCRWORK_MakePartnerRomData(wk,&wk->five_data[wk->partner],
-        TOWER_FIVE_FIRST+wk->partner,
-        TowerPlayData_Get(wk->playSave,BSWAY_PSD_pare_itemfix,NULL),
-        &(wk->five_poke[wk->partner]),wk->heapID);
+      BSUBWAY_PLAYDATA_GetData( bsw_scr->playData,
+          BSWAY_PLAYDATA_ID_pare_poke,
+          &(bsw_scr->five_poke[bsw_scr->partner]) );
+      
+      BSUBWAY_SCRWORK_MakePartnerRomData(
+          bsw_scr, &bsw_scr->five_data[bsw_scr->partner],
+        BSUBWAY_FIVE_FIRST + bsw_scr->partner,
+        BSUBWAY_PLAYDATA_GetData(bsw_scr->playData,
+          BSWAY_PLAYDATA_ID_pare_itemfix, NULL ),
+        &(bsw_scr->five_poke[bsw_scr->partner]),
+        bsw_scr->heapID );
     }
-    #endif
   }
   
 #if 0 //wb null
@@ -153,7 +156,7 @@ BSUBWAY_SCRWORK * BSUBWAY_SCRWORK_CreateWork(
     OS_Printf( "** stage = %d\n", TowerScoreData_SetStage(wk->scoreSave,
                               BSWAY_MODE_WIFI_MULTI,BSWAY_DATA_get) );
   }
-
+  
   OS_Printf( "stage = %d\n", wk->stage );
   return wk;
 #endif
@@ -182,6 +185,18 @@ void BSUBWAY_SCRWORK_ReleaseWork(
     GAMEDATA_SetBSubwayScrWork( gdata, NULL );
   }
 }
+
+//--------------------------------------------------------------
+/**
+ * BSUBWAY_SCRWORK　通信マルチモードへ変更する
+ * @param bsw_scr BSUBWAY_SCRWORK
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void BSUBWAY_SCRWORK_ChangeCommMultiMode( BSUBWAY_SCRWORK *bsw_scr )
+{
+}
+
 
 //--------------------------------------------------------------
 /**
@@ -215,17 +230,15 @@ void BSUBWAY_SCRWORK_SaveRestPlayData( BSUBWAY_SCRWORK *bsw_scr )
   //セーブフラグを有効状態にリセット
   BSUBWAY_PLAYDATA_SetSaveFlag( bsw_scr->playData, TRUE );
   
-  if( bsw_scr->play_mode == BSWAY_MODE_MULTI ){
-    //AIマルチモードならパートナーを覚えておく
-    #if 0 //wb null
+  //AIマルチモードならパートナーを覚えておく
+  if( bsw_scr->play_mode == BSWAY_MODE_COMM_MULTI ){
     buf8[0] = bsw_scr->partner;
     BSUBWAY_PLAYDATA_SetData(
         bsw_scr->playData, BSWAY_PLAYDATA_ID_partner, buf8 );
     BSUBWAY_PLAYDATA_SetData( bsw_scr->playData,
         BSWAY_PLAYDATA_ID_pare_poke,
         &(bsw_scr->five_poke[bsw_scr->partner]) );
-    #endif
-
+    
     //アイテムが固定だったかどうか憶えておく
     #if 0 //wb null
     BSUBWAY_PLAYDATA_SetData( bsw_scr->playData,
@@ -301,18 +314,14 @@ void BSUBWAY_SCRWORK_SaveGameClearPlayData( BSUBWAY_SCRWORK *bsw_scr )
         bsw_scr->playData, BSWAY_PLAYDATA_ID_partner, buf8 );
   
     //パートナーのポケモンパラメータを憶えておく
-    #if 0 //wb null
     BSUBWAY_PLAYDATA_SetData( bsw_scr->playData,
         BSWAY_PLAYDATA_ID_pare_poke,
         &(bsw_scr->five_poke[bsw_scr->partner]) );
-    #endif
     
     //アイテムが固定だったかどうか憶えておく
-    #if 0 //wb null
     BSUBWAY_PLAYDATA_SetData( bsw_scr->playData,
         BSWAY_PLAYDATA_ID_pare_itemfix,
         &(bsw_scr->five_item[bsw_scr->partner]) );
-    #endif
   }
 }
 
@@ -342,7 +351,7 @@ u16 BSUBWAY_SCRWORK_SetNGScore( GAMESYS_WORK *gsys )
   
   //現在の周回数リセット
   BSUBWAY_PLAYDATA_ResetRoundNo( playData );
-  BSUBWAY_PLAYDATA_ResetStageNo( playData );
+  BSUBWAY_SCOREDATA_ResetStageNo( scoreData, play_mode );
   
   //レコード挑戦中フラグを落とす
   BSUBWAY_SCOREDATA_SetFlag( scoreData,
@@ -351,13 +360,6 @@ u16 BSUBWAY_SCRWORK_SetNGScore( GAMESYS_WORK *gsys )
   
   //連勝記録クリア
   BSUBWAY_SCOREDATA_ResetRenshou( scoreData, play_mode );
-
-  #if 0 //wb null
-  if( play_mode != BSWAY_MODE_WIFI ){
-    //プレイランダムシードをひとつ強制で進める
-    BtlTower_UpdatePlayRndSeed(savedata);
-  }
-  #endif
   
   return play_mode;  
 }
@@ -383,7 +385,7 @@ void BSUBWAY_SCRWORK_SetLoseScore(
   
   //周回数リセット
   BSUBWAY_PLAYDATA_ResetRoundNo( bsw_scr->playData );
-  BSUBWAY_PLAYDATA_ResetStageNo( bsw_scr->playData );
+  BSUBWAY_SCOREDATA_ResetStageNo( bsw_scr->scoreData, play_mode );
 }
 
 #if 0 //wb null
@@ -523,7 +525,8 @@ u16  BSUBWAY_SCRWORK_AddBattlePoint( BSUBWAY_SCRWORK *bsw_scr )
     u8 rank = BSUBWAY_SCOREDATA_GetWifiRank( bsw_scr->scoreData );
     point = bpoint_wifi[rank];
   }else{ //周回数ごと
-    u16 stage = BSUBWAY_PLAYDATA_GetStageNo( bsw_scr->playData );
+    u16 stage = BSUBWAY_SCOREDATA_GetStageNo(
+        bsw_scr->scoreData, bsw_scr->play_mode );
     
     if( bsw_scr->boss_f ){
       point = BTLPOINT_VAL_BSUBWAY_LEADER;
@@ -549,34 +552,37 @@ u16  BSUBWAY_SCRWORK_AddBattlePoint( BSUBWAY_SCRWORK *bsw_scr )
  * @retval nothing
  */
 //--------------------------------------------------------------
-void BSUBWAY_SCRWORK_SetBtlTrainerNo( BSUBWAY_SCRWORK *wk )
+void BSUBWAY_SCRWORK_SetBtlTrainerNo( BSUBWAY_SCRWORK *bsw_scr )
 {
   int i;
   u8 play_mode;
   u16 no,stage,round;
   
-  play_mode = wk->play_mode;
-  stage = BSUBWAY_PLAYDATA_GetStageNo( wk->playData );
+  play_mode = bsw_scr->play_mode;
+  stage = BSUBWAY_SCOREDATA_GetStageNo( bsw_scr->scoreData, play_mode );
   
   if( play_mode == BSWAY_MODE_MULTI || play_mode == BSWAY_MODE_COMM_MULTI ){
-    if( play_mode == BSWAY_MODE_COMM_MULTI && stage < wk->pare_stage_no ){
-      stage = wk->pare_stage_no;  //通信時には周回数の多いほうで抽選
+    if( play_mode == BSWAY_MODE_COMM_MULTI ){
+      if( stage < bsw_scr->pare_stage_no ){
+        stage = bsw_scr->pare_stage_no;  //通信時には周回数の多いほうで抽選
+      }
     }
     
     for( i = 0; i < BSUBWAY_STOCK_TRAINER_MAX; i++ ){
       do{
-        no = BSUBWAY_SCRWORK_GetTrainerNo( wk, stage, i/2, play_mode );
-      }while( is_ConflictTrainer(wk->trainer,no,i) );
+        no = BSUBWAY_SCRWORK_GetTrainerNo( bsw_scr, stage, i/2, play_mode );
+      }while( is_ConflictTrainer(bsw_scr->trainer,no,i) );
       
-      wk->trainer[i] = no;
+      bsw_scr->trainer[i] = no;
     }
   }else{
     for( i = 0; i < (BSUBWAY_STOCK_TRAINER_MAX/2); i++ ){
       do{
-        no = BSUBWAY_SCRWORK_GetTrainerNo( wk, stage, i, wk->play_mode );
-      }while( is_ConflictTrainer(wk->trainer,no,i) );
+        no = BSUBWAY_SCRWORK_GetTrainerNo(
+            bsw_scr, stage, i, bsw_scr->play_mode );
+      }while( is_ConflictTrainer(bsw_scr->trainer,no,i) );
       
-      wk->trainer[i] = no;
+      bsw_scr->trainer[i] = no;
     }
   }
 }
@@ -631,11 +637,13 @@ BOOL BSUBWAY_SCRWORK_GetEntryPoke( BSUBWAY_SCRWORK *bsw_scr, GAMESYS_WORK *gsys 
 BOOL BSUBWAY_SCRWORK_IsClear( BSUBWAY_SCRWORK *bsw_scr )
 {
   if( bsw_scr->clear_f == FALSE ){
-    if( BSUBWAY_PLAYDATA_GetRoundNo(bsw_scr->playData) > BSWAY_CLEAR_WINCNT ){
-      bsw_scr->clear_f = 1; //クリアフラグon
-    }else{
+    u32 round = BSUBWAY_PLAYDATA_GetRoundNo( bsw_scr->playData );
+    
+    if( round < BSWAY_CLEAR_WINCNT ){
       return( FALSE );
     }
+    
+    bsw_scr->clear_f = 1; //クリアフラグon
   }
   
   return( TRUE );
@@ -655,9 +663,14 @@ void BSUBWAY_SCRWORK_SetClearScore(
   u32 ret = 0;
   u16 before,after,chg_flg,play_mode;
   play_mode = bsw_scr->play_mode;
-  BSUBWAY_SCOREDATA_UpdateRenshouMax( bsw_scr->scoreData, //最大連勝数更新
-      play_mode, BSUBWAY_SCOREDATA_GetRenshou(bsw_scr->scoreData,play_mode) );
-  BSUBWAY_PLAYDATA_IncStageNo( bsw_scr->playData ); //周回数プラス
+
+  //最大連勝数更新
+  BSUBWAY_SCOREDATA_UpdateRenshouMax(
+      bsw_scr->scoreData, play_mode,
+      BSUBWAY_SCOREDATA_GetRenshou(bsw_scr->scoreData,play_mode) );
+  
+  //周回数プラス
+  BSUBWAY_SCOREDATA_IncStageNo( bsw_scr->scoreData, play_mode );
 }
 
 //--------------------------------------------------------------
@@ -674,7 +687,7 @@ void BSUBWAY_SCRWORK_ChoiceBattlePartner( BSUBWAY_SCRWORK *bsw_scr )
   u16 monsno[2];
   u16 itemno[2];
    
-  round = BSUBWAY_PLAYDATA_GetRoundNo( bsw_scr->playData ) - 1; //1org
+  round = BSUBWAY_PLAYDATA_GetRoundNo( bsw_scr->playData );
   
   switch( bsw_scr->play_mode ){
   case BSWAY_MODE_WIFI:
@@ -685,7 +698,6 @@ void BSUBWAY_SCRWORK_ChoiceBattlePartner( BSUBWAY_SCRWORK *bsw_scr )
     #endif
     break;
   case BSWAY_MODE_MULTI:
-  case BSWAY_MODE_COMM_MULTI:
     BSUBWAY_SCRWORK_MakeRomTrainerData(
         bsw_scr, &(bsw_scr->tr_data[0]),
         bsw_scr->trainer[round*2+0],
@@ -745,9 +757,10 @@ static u8 get_MemberNum( u16 mode )
     return 4;
   case BSWAY_MODE_MULTI:
   case BSWAY_MODE_COMM_MULTI:
-  case BSWAY_MODE_WIFI_MULTI:
+//  case BSWAY_MODE_WIFI_MULTI:
     return 2;
   }
+  GF_ASSERT( 0 );
   return 0;
 }
 

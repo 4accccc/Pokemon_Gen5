@@ -39,17 +39,14 @@ SDK_COMPILER_ASSERT(sizeof(BSUBWAY_WIFI_PLAYER) == 228);
 //--------------------------------------------------------------
 struct _BSUBWAY_PLAYDATA
 {
-  u8 itemfix_f  :1;  ///<固定アイテムかどうかのフラグ
-  u8 saved_f    :1;  ///<セーブ済みかどうか
-  u8 play_mode  :3;  ///<現在どこにチャレンジ中か?
-  u8 partner    :3;  ///<現在誰と組んでいるか?
-  u8 speceial_mode:1; ///<スペシャルモードか？
-  u8 padding_bit:7; ///<余り
-  u8 padding[2]; ///<余り２
-  
+  u16 itemfix_f  :1;  ///<固定アイテムかどうかのフラグ
+  u16 saved_f    :1;  ///<セーブ済みかどうか
+  u16 play_mode  :3;  ///<現在どこにチャレンジ中か?
+  u16 partner    :3;  ///<現在誰と組んでいるか?
+  u16 use_battle_box:1; ///<バトルボックスを使用するか
+  u16 padding_bit:7; ///<余り
   u8 wifi_rec_down;    ///<勝ち抜きまでに倒されたポケモン数
   u8 round;  ///<バトルサブウェイ ラウンド数
-  u16 stage; ///<バトルサブウェイ ステージ数　周回数
   
   u16  wifi_rec_turn;    ///<勝ち抜きにかかったターン数
   u16  wifi_rec_damage;  ///<勝ち抜きまでに受けたダメージ数
@@ -112,10 +109,13 @@ struct _BSUBWAY_SCOREDATA
   u16 renshou[BSWAY_PLAYMODE_MAX];
   u16 renshou_max[BSWAY_PLAYMODE_MAX];
   
+  //ステージ数記録
+  u16 stage[BSWAY_PLAYMODE_MAX];
+  
   //WiFiチャレンジデータ
   u16  wifi_score;  ///<WiFi成績
   u8  padding[2];
-
+  
   //WiFiポケモンデータストック
   struct _BSUBWAY_POKEMON  wifi_poke[3];
   //トレーナーロード用シングルデータストック
@@ -218,8 +218,8 @@ u32 BSUBWAY_PLAYDATA_GetData(
     return 0;
   case BSWAY_PLAYDATA_ID_partner:
     return bsw_play->partner;
-  case BSWAY_PLAYDATA_ID_stage:
-    return (u32)bsw_play->stage;
+  case BSWAY_PLAYDATA_ID_use_battle_box:
+    return bsw_play->use_battle_box;
   default:
     GF_ASSERT( 0 );
   }
@@ -277,8 +277,8 @@ void BSUBWAY_PLAYDATA_SetData(
   case BSWAY_PLAYDATA_ID_partner:
     bsw_play->partner = buf8[0];
     break;
-  case BSWAY_PLAYDATA_ID_stage:
-    bsw_play->stage = buf16[0];
+  case BSWAY_PLAYDATA_ID_use_battle_box:
+    bsw_play->use_battle_box = buf8[0];
     break;
   default:
     GF_ASSERT( 0 );
@@ -359,62 +359,6 @@ void BSUBWAY_PLAYDATA_SetRoundNo( BSUBWAY_PLAYDATA *bsw_play, u8 round )
 u16 BSUBWAY_PLAYDATA_GetRoundNo( const BSUBWAY_PLAYDATA *bsw_play )
 {
   u16 buf = BSUBWAY_PLAYDATA_GetData( bsw_play, BSWAY_PLAYDATA_ID_round, NULL );
-  return( buf );
-}
-
-//--------------------------------------------------------------
-/**
- * プレイデータ　ステージ数リセット
- * @param bsw_play BSUBWAY_PLAYDATA
- * @retval nothing
- */
-//--------------------------------------------------------------
-void BSUBWAY_PLAYDATA_ResetStageNo( BSUBWAY_PLAYDATA *bsw_play )
-{
-  u16 buf = 1;
-  BSUBWAY_PLAYDATA_SetData( bsw_play, BSWAY_PLAYDATA_ID_stage, &buf );
-}
-
-//--------------------------------------------------------------
-/**
- * プレイデータ　ステージ数増加
- * @param bsw_play BSUBWAY_PLAYDATA
- * @retval nothing
- */
-//--------------------------------------------------------------
-void BSUBWAY_PLAYDATA_IncStageNo( BSUBWAY_PLAYDATA *bsw_play )
-{
-  u16 buf = BSUBWAY_PLAYDATA_GetData(
-      bsw_play, BSWAY_PLAYDATA_ID_stage, NULL );
-  if( buf < 9999 ){
-    buf++;
-  }
-  BSUBWAY_PLAYDATA_SetData( bsw_play, BSWAY_PLAYDATA_ID_stage, &buf );
-}
-
-//--------------------------------------------------------------
-/**
- * プレイデータ　ステージ数セット
- * @param bsw_play BSUBWAY_PLAYDATA
- * @retval nothing
- */
-//--------------------------------------------------------------
-void BSUBWAY_PLAYDATA_SetStageNo( BSUBWAY_PLAYDATA *bsw_play, u16 stage )
-{
-  BSUBWAY_PLAYDATA_SetData( bsw_play, BSWAY_PLAYDATA_ID_stage, &stage );
-}
-
-//--------------------------------------------------------------
-/**
- * プレイデータ　ステージ数取得
- * @param bsw_play BSUBWAY_PLAYDATA
- * @retval nothing
- */
-//--------------------------------------------------------------
-u16 BSUBWAY_PLAYDATA_GetStageNo( const BSUBWAY_PLAYDATA *bsw_play )
-{
-  u16 buf = BSUBWAY_PLAYDATA_GetData(
-      bsw_play, BSWAY_PLAYDATA_ID_stage, NULL );
   return( buf );
 }
 
@@ -594,48 +538,59 @@ void BSUBWAY_SCOREDATA_UpdateRenshouMax(
   }
 }
 
-#if 0
 //--------------------------------------------------------------
 /**
- * スコアデータ 周回数増加
- * @param bsw_score BSUBWAY_SCOREDATA
+ * スコアデータ　ステージ数リセット
+ * @param bsw_play BSUBWAY_SCOREDATA
  * @retval nothing
  */
 //--------------------------------------------------------------
-void BSUBWAY_SCOREDATA_IncStageCount(
+void BSUBWAY_SCOREDATA_ResetStageNo(
     BSUBWAY_SCOREDATA *bsw_score, BSWAY_PLAYMODE mode )
 {
-  if( bsw_score->stage_count[mode] < 65534 ){
-    bsw_score->stage_count[mode]++;
+  bsw_score->stage[mode] = 0;
+}
+
+//--------------------------------------------------------------
+/**
+ * スコアデータ　ステージ数増加
+ * @param bsw_play BSUBWAY_SCOREDATA
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void BSUBWAY_SCOREDATA_IncStageNo(
+    BSUBWAY_SCOREDATA *bsw_score, BSWAY_PLAYMODE mode )
+{
+  if( bsw_score->stage[mode] < 0xffff ){
+    bsw_score->stage[mode]++;
   }
 }
 
 //--------------------------------------------------------------
 /**
- * スコアデータ 周回数リセット
- * @param bsw_score BSUBWAY_SCOREDATA
+ * スコアデータ　ステージ数セット
+ * @param bsw_play BSUBWAY_SCOREDATA
  * @retval nothing
  */
 //--------------------------------------------------------------
-void BSUBWAY_SCOREDATA_ResetStageCount(
-    BSUBWAY_SCOREDATA *bsw_score, BSWAY_PLAYMODE mode )
+void BSUBWAY_SCOREDATA_SetStageNo(
+    BSUBWAY_SCOREDATA *bsw_score, BSWAY_PLAYMODE mode, u16 stage )
 {
-  bsw_score->stage_count[mode] = 0;
+  bsw_score->stage[mode] = stage;
 }
 
 //--------------------------------------------------------------
 /**
- * スコアデータ 周回数取得
- * @param bsw_score BSUBWAY_SCOREDATA
- * @retval u16 周回数
+ * スコアデータ　ステージ数取得
+ * @param bsw_play BSUBWAY_SCOREDATA
+ * @retval nothing
  */
 //--------------------------------------------------------------
-u16 BSUBWAY_SCOREDATA_GetStageCount(
+u16 BSUBWAY_SCOREDATA_GetStageNo(
     const BSUBWAY_SCOREDATA *bsw_score, BSWAY_PLAYMODE mode )
 {
-  return( bsw_score->stage_count[mode] );
+  return( bsw_score->stage[mode] );
 }
-#endif
 
 //--------------------------------------------------------------
 /**

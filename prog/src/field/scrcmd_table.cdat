@@ -608,12 +608,12 @@
   NO_CMD()
   
   //バトルサブウェイ関連
-  DEF_CMD( NULL, EV_SEQ_BSUBWAY_APP_CALL )
   DEF_CMD( EvCmdBSubwayWorkClear, EV_SEQ_BSUBWAY_WORK_CLEAR )
   DEF_CMD( EvCmdBSubwayWorkCreate, EV_SEQ_BSUBWAY_WORK_CREATE )
   DEF_CMD( EvCmdBSubwayWorkRelease, EV_SEQ_BSUBWAY_WORK_RELEASE )
-  
   DEF_CMD( EvCmdBSubwayTool, EV_SEQ_BSUBWAY_TOOL )
+  
+  NO_CMD()
   NO_CMD()
   NO_CMD()
   NO_CMD()
