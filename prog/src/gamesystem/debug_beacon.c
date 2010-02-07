@@ -55,7 +55,7 @@ extern void BEACONINFO_Set_DistributionItem(GAMEBEACON_INFO *info, u16 item);
 extern void BEACONINFO_Set_DistributionEtc(GAMEBEACON_INFO *info);
 #endif
 extern void BEACONINFO_Set_Thankyou(GAMEBEACON_INFO *info, GAMEDATA *gamedata, u32 target_trainer_id);
-extern void BEACONINFO_Set_ZoneChange(GAMEBEACON_INFO *info, ZONEID zone_id);
+extern void BEACONINFO_Set_ZoneChange(GAMEBEACON_INFO *info, ZONEID zone_id, const GAMEDATA *cp_gamedata);
 extern void BEACONINFO_Set_ThanksRecvCount(GAMEBEACON_INFO *info, u32 count);
 extern void BEACONINFO_Set_SuretigaiCount(GAMEBEACON_INFO *info, u32 count);
 
@@ -93,7 +93,7 @@ static const DEBUG_GAMEBEACON_INFO DebugBeaconTbl[] = {
     ZONE_ID_C02,                  //現在地
     PM_MALE,                      //性別
     LANG_SPAIN,                   //PM_LANG
-    1,                            //タウンマップでの座標テーブルIndex
+    ZONE_ID_C02,                  //タウンマップ用のROOT_ZONE_ID
     5,                            //ユニオンルームでの見た目(０～１５)
     RESEARCH_TEAM_RANK_1,         //調査隊ランク
     8,                            //本体情報の色(Index) ０～１５
@@ -116,7 +116,7 @@ static const DEBUG_GAMEBEACON_INFO DebugBeaconTbl[] = {
     ZONE_ID_C02GYM0101,           //現在地
     PM_FEMALE,                    //性別
     LANG_JAPAN,                   //PM_LANG
-    0,                            //タウンマップでの座標テーブルIndex
+    ZONE_ID_C02,                  //タウンマップ用のROOT_ZONE_ID
     9,                            //ユニオンルームでの見た目(０～１５)
     RESEARCH_TEAM_RANK_3,         //調査隊ランク
     15,                           //本体情報の色(Index) ０～１５
@@ -233,7 +233,7 @@ void DebugRecvBuf_BeaconSet(const DEBUG_GAMEBEACON_INFO *debuginfo, const DEBUG_
   _SetDebugBeaconInfo(&info, debuginfo, debugaction);
 
   //受信バッファへセット
-  info.send_counter = GFUser_GetPublicRand0(0xff); //カウンターがずれるようランダムで毎回取得
+  info.send_counter = GFUser_GetPublicRand0(32); //カウンターがずれるようランダムで毎回取得
   if(GAMEBEACON_SetRecvBeacon(&info) == FALSE){
     info.send_counter++; //ランダムが被る可能性があるので失敗の場合はカウンタを進めてもう一回
     GAMEBEACON_SetRecvBeacon(&info);
@@ -268,6 +268,7 @@ static void _SetDebugBeaconInfo(GAMEBEACON_INFO *info, const DEBUG_GAMEBEACON_IN
   info->research_team_rank = debuginfo->research_team_rank;
   info->thanks_recv_count = debuginfo->thanks_recv_count;
   info->suretigai_count = debuginfo->suretigai_count;
+  info->townmap_root_zone_id = debuginfo->townmap_root_zone_id;
   
   BEACONINFO_Set_Details_IntroductionPms(info, &debuginfo->pmsdata);
   

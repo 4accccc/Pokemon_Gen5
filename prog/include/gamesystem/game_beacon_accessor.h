@@ -49,6 +49,7 @@ extern u8 GAMEBEACON_Get_Sex(const GAMEBEACON_INFO *info);
 extern void GAMEBEACON_Get_PlayTime(const GAMEBEACON_INFO *info, u16 *dest_hour, u16 *dest_min);
 extern GPOWER_ID GAMEBEACON_Get_GPowerID(const GAMEBEACON_INFO *info);
 extern u16 GAMEBEACON_Get_ZoneID(const GAMEBEACON_INFO *info);
+extern u16 GAMEBEACON_Get_TownmapRootZoneID(const GAMEBEACON_INFO *info);
 extern u32 GAMEBEACON_Get_ThanksRecvCount(const GAMEBEACON_INFO *info);
 extern u32 GAMEBEACON_Get_SuretigaiCount(const GAMEBEACON_INFO *info);
 extern void GAMEBEACON_Get_SelfIntroduction(const GAMEBEACON_INFO *info, STRBUF *dest);

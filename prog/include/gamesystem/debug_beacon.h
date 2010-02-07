@@ -36,7 +36,7 @@ typedef struct{
   u8 sex;                               ///<性別
   u8 language;                          ///<PM_LANG
 
-  u8 townmap_tbl_index;                 ///<タウンマップでの座標テーブルIndex
+  u16 townmap_root_zone_id;             ///<タウンマップ用のROOT_ZONE_ID
   u8 trainer_view;                      ///<ユニオンルームでの見た目(０～１５）
   u8 research_team_rank;                ///<調査隊ランク(RESEARCH_TEAM_RANK)
   u8 favorite_color_index;              ///<本体情報の色(Index) ０～１５

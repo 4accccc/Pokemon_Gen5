@@ -15,6 +15,7 @@
 #include "savedata/misc.h"
 #include "net/net_whpipe.h"
 #include "savedata/my_pms_data.h"
+#include "app/townmap_util.h"
 
 
 //==============================================================================
@@ -110,7 +111,7 @@ void BEACONINFO_Set_DistributionItem(GAMEBEACON_INFO *info, u16 item);
 void BEACONINFO_Set_DistributionEtc(GAMEBEACON_INFO *info);
 #endif
 void BEACONINFO_Set_Thankyou(GAMEBEACON_INFO *info, GAMEDATA *gamedata, u32 target_trainer_id);
-void BEACONINFO_Set_ZoneChange(GAMEBEACON_INFO *info, ZONEID zone_id);
+void BEACONINFO_Set_ZoneChange(GAMEBEACON_INFO *info, ZONEID zone_id, const GAMEDATA *cp_gamedata);
 void BEACONINFO_Set_ThanksRecvCount(GAMEBEACON_INFO *info, u32 count);
 void BEACONINFO_Set_SuretigaiCount(GAMEBEACON_INFO *info, u32 count);
 
@@ -499,6 +500,7 @@ static void SendBeacon_Init(GAMEBEACON_SEND_MANAGER *send, GAMEDATA * gamedata)
   
   info->version_bit = 0xffff; //全バージョン指定
   info->zone_id = PLAYERWORK_getZoneID(GAMEDATA_GetMyPlayerWork(gamedata));
+  info->townmap_root_zone_id = TOWNMAP_UTIL_GetRootZoneID(gamedata, info->zone_id);
   info->g_power_id = GPOWER_ID_NULL;
   info->trainer_id = MyStatus_GetID_Low(myst);
   info->favorite_color_index = owner_info.favoriteColor;
@@ -1382,9 +1384,9 @@ void BEACONINFO_Set_Thankyou(GAMEBEACON_INFO *info, GAMEDATA *gamedata, u32 targ
  * @param   zone_id   現在地
  */
 //==================================================================
-void GAMEBEACON_Set_ZoneChange(ZONEID zone_id)
+void GAMEBEACON_Set_ZoneChange(ZONEID zone_id, const GAMEDATA *cp_gamedata)
 {
-  BEACONINFO_Set_ZoneChange(&GameBeaconSys->send.info, zone_id);
+  BEACONINFO_Set_ZoneChange(&GameBeaconSys->send.info, zone_id, cp_gamedata);
 }
 
 //==================================================================
@@ -1394,9 +1396,10 @@ void GAMEBEACON_Set_ZoneChange(ZONEID zone_id)
  * @param   zone_id   現在地
  */
 //==================================================================
-void BEACONINFO_Set_ZoneChange(GAMEBEACON_INFO *info, ZONEID zone_id)
+void BEACONINFO_Set_ZoneChange(GAMEBEACON_INFO *info, ZONEID zone_id, const GAMEDATA *cp_gamedata)
 {
   info->zone_id = zone_id;
+  info->townmap_root_zone_id = TOWNMAP_UTIL_GetRootZoneID(cp_gamedata, zone_id);
   info->details.details_no = GAMEBEACON_DETAILS_NO_WALK;
   BEACONINFO_Set_Details_Walk(info);
 }

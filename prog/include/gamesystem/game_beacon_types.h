@@ -94,18 +94,18 @@ typedef struct{
 //==================================================================
 struct _GAMEBEACON_INFO{
   u8 version_bit;                          ///<受信可能なPM_VERSIONをbit指定
-  u8 send_counter;                         ///<送信No(同じデータの無視判定に使用)
   u8 nation;                               ///<国コード
   u8 area;                                 ///<地域コード
+  u8 g_power_id:7;                         ///<発動しているGパワーID(GPOWER_ID_xxx)
+  u8 sex:1;                                ///<性別
   
   u32 suretigai_count:17;                  ///<すれ違い人数
   u32 zone_id:10;                          ///<現在地
   u32 language:5;                          ///<PM_LANG
   
   u32 thanks_recv_count:17;                ///<お礼を受けた回数
-  u32 g_power_id:7;                        ///<発動しているGパワーID(GPOWER_ID_xxx)
-  u32 townmap_tbl_index:7;                 ///<タウンマップでの座標テーブルIndex
-  u32 sex:1;                               ///<性別
+  u32 send_counter:5;                      ///<送信No(同じデータの無視判定に使用)
+  u32 townmap_root_zone_id:10;             ///<タウンマップでの座標テーブルIndex
 
   u32 pm_version:6;
   u32 trainer_view:3;                      ///<ユニオンルームでの見た目

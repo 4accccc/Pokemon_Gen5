@@ -149,7 +149,7 @@ extern void GAMEBEACON_Set_DistributionEtc(void);
 extern void GAMEBEACON_Set_Thankyou(GAMEDATA *gamedata, u32 target_trainer_id);
 
 //=====詳細パラメータセット
-extern void GAMEBEACON_Set_ZoneChange(ZONEID zone_id);
+extern void GAMEBEACON_Set_ZoneChange(ZONEID zone_id, const GAMEDATA *cp_gamedata);
 extern void GAMEBEACON_Set_Details_IntroductionPms(const PMS_DATA *pms);
 
 //--------------------------------------------------------------

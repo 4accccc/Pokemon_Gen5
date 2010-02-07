@@ -516,6 +516,18 @@ u16 GAMEBEACON_Get_ZoneID(const GAMEBEACON_INFO *info)
 
 //==================================================================
 /**
+ * タウンマップ用のROOT_ZONE_IDを取得
+ * @param   info		ビーコン情報へのポインタ
+ * @retval  u16		  現在地
+ */
+//==================================================================
+u16 GAMEBEACON_Get_TownmapRootZoneID(const GAMEBEACON_INFO *info)
+{
+  return info->townmap_root_zone_id;
+}
+
+//==================================================================
+/**
  * お礼を受けた回数を取得
  * @param   info		ビーコン情報へのポインタ
  * @retval  u32		  お礼を受けた回数
