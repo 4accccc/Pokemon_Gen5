@@ -67,6 +67,9 @@
 //アプリ共通素材
 #include "app/app_menu_common.h"
 
+// サウンド
+#include "sound/pm_sndsys.h"
+
 //アーカイブ
 #include "arc_def.h"
 
