@@ -1,7 +1,7 @@
 //[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
 /**
  *
- *	@file		field_townmap.h
+ *	@file		townmap_util.h
  *	@brief  タウンマップ処理共通ルーチン
  *	@author	Toru=Nagihashi
  *	@date		2010.02.06
@@ -12,7 +12,7 @@
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 //lib
 #include <gflib.h>
-#include "field_townmap.h"
+#include "app/townmap_util.h"
 #include "field/zonedata.h"
 
 //=============================================================================
@@ -39,26 +39,23 @@
  *	        （例えば、ZONEID_C01GYM0101はC01のジムなので
  *	        ZONEID_C01が返ってきます）
  *
- *	@param	const GAMEDATA *cp_gamedata ゲームデータ
+ *	@param	const GAMEDATA *cp_gamedata ゲームデータ  (エスケープロケーション取得用)
+ *	@param  now_zoneID
  *
  *	@return 元になるZONEID
  */
 //-----------------------------------------------------------------------------
-u16 FIELD_TOWNMAP_GetRootZoneID( const GAMEDATA *cp_gamedata )
+u16 TOWNMAP_UTIL_GetRootZoneID( const GAMEDATA* cp_gamedata, u16 now_zoneID )
 {
-  u16 zoneID;
   PLAYER_WORK *p_player;
 #ifdef DEBUG_ONLY_FOR_toru_nagihashi
 #warning( TODO:add zoneID check!! )
 #endif //DEBUG_ONLY_FOR_toru_nagihashi
-  
-  p_player   = GAMEDATA_GetMyPlayerWork( (GAMEDATA*)cp_gamedata );
-  zoneID  = PLAYERWORK_getZoneID(p_player);
 
-  if( ZONEDATA_IsFieldMatrixID( zoneID ) )
+  if( ZONEDATA_IsFieldMatrixID( now_zoneID ) )
   { 
     //フィールドにいる状態
-    return zoneID;
+    return now_zoneID;
   }
   else
   { 

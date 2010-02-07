@@ -1,7 +1,7 @@
 //[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
 /**
  *
- *	@file		field_townmap.h
+ *	@file		townmap_util.h
  *	@brief  タウンマップ処理共通ルーチン
  *	@author	Toru=Nagihashi
  *	@date		2010.02.06
@@ -11,6 +11,7 @@
  */
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 #pragma once
+
 #include "gamesystem/game_data.h"
 
 //=============================================================================
@@ -30,4 +31,4 @@
  *					外部公開
 */
 //=============================================================================
-extern u16 FIELD_TOWNMAP_GetRootZoneID( const GAMEDATA *cp_gamedata );
+extern u16 TOWNMAP_UTIL_GetRootZoneID( const GAMEDATA* cp_gamedata, u16 now_zoneID );
