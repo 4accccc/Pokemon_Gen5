@@ -202,7 +202,7 @@ static void MB_SELECT_Init( MB_SELECT_WORK *work )
   MB_SELECT_InitGraphic( work );
   MB_SELECT_LoadResource( work , arcHandle );
   MB_SELECT_InitCell( work );
-
+  
 #ifndef MULTI_BOOT_MAKE
   work->msgWork = MB_MSG_MessageInit( work->heapId , MB_SELECT_FRAME_MSG , MB_SELECT_FRAME_MSG , NARC_message_multiboot_child_dat , TRUE );
 #else
@@ -277,7 +277,6 @@ static void MB_SELECT_Init( MB_SELECT_WORK *work )
   work->exitWaitCell = NULL;
   
   GFL_ARC_CloseDataHandle( arcHandle );
-  
 }
 
 //--------------------------------------------------------------
@@ -589,11 +588,34 @@ static void MB_SELECT_LoadResource( MB_SELECT_WORK *work , ARCHANDLE *arcHandle 
     const DLPLAY_CARD_TYPE type = work->initWork->cardType;
     work->iconArcHandle = MB_ICON_GetArcHandle( work->heapId , type );
     OS_TPrintf("[%d]\n",GFL_ARC_GetDataFileCntByHandle(work->iconArcHandle));
-    work->cellResIdx[MSCR_PLT_POKEICON] = GFL_CLGRP_PLTT_RegisterComp( work->iconArcHandle , 
-                                MB_ICON_GetPltResId( type ) , 
-                                CLSYS_DRAW_MAIN , 
-                                MB_SEL_PLT_OBJ_POKEICON*32 , 
-                                work->heapId  );
+    if( type == CARD_TYPE_DUMMY )
+    {
+      work->cellResIdx[MSCR_PLT_POKEICON] = GFL_CLGRP_PLTT_RegisterComp( work->iconArcHandle , 
+                                  MB_ICON_GetPltResId( type ) , 
+                                  CLSYS_DRAW_MAIN , 
+                                  MB_SEL_PLT_OBJ_POKEICON*32 , 
+                                  work->heapId  );
+    }
+    else
+    {
+      
+      work->cellResIdx[MSCR_PLT_POKEICON] = GFL_CLGRP_PLTT_Register( work->iconArcHandle , 
+                                  MB_ICON_GetPltResId( type ) , 
+                                  CLSYS_DRAW_MAIN , 
+                                  MB_SEL_PLT_OBJ_POKEICON*32 , 
+                                  work->heapId  );
+      
+      /*
+      void* loadPtr = GFL_ARC_LoadDataAllocByHandle(  work->iconArcHandle ,
+                              MB_ICON_GetPltResId( type ),
+                              GFL_HEAP_LOWID(work->heapId) );
+      NNSG2dPaletteData*  palData;
+      GF_ASSERT_MSG( 0 , "Test[%d][%d]\n", GFL_ARC_GetDataFileCntByHandle(work->iconArcHandle)
+                                     , GFL_ARC_GetDataSizeByHandle(work->iconArcHandle,MB_ICON_GetPltResId( type )) );
+      NNS_G2dGetUnpackedPaletteData( loadPtr, &palData );
+      GF_ASSERT_MSG( 0 , "Test[%d]\n",palData->szByte );
+      */
+    }
     work->cellResIdx[MSCR_ANM_POKEICON] = GFL_CLGRP_CELLANIM_Register( work->iconArcHandle , 
                                 MB_ICON_GetCellResId( type ) , 
                                 MB_ICON_GetAnmResId( type ), 

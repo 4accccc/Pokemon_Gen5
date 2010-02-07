@@ -127,6 +127,67 @@ void CTRDG_Init(void)
 }
 
 
+
+
+// 複製 ROM アーカイブ構造体。
+typedef struct MyRomArchive
+{
+    FSArchive   arc[1];
+    u32         default_dma_no;
+    u32         card_lock_id;
+}
+MyRomArchive;
+
+// 非同期のROM読み込みが完了したときの処理。
+static void MyRom_OnReadDone(void *arc)
+{
+    // アーカイブへ完了通知。
+    FS_NotifyArchiveAsyncEnd((FSArchive *)arc, FS_RESULT_SUCCESS);
+}
+
+// FSからアーカイブへのリードアクセスコールバック。
+static FSResult MyRom_ReadCallback(FSArchive *arc, void *dst, u32 src, u32 len)
+{
+    MyRomArchive *const p_rom = (MyRomArchive *)arc;
+    CARD_ReadRomAsync(p_rom->default_dma_no,
+                      (const void *)(FS_GetArchiveBase(arc) + src), dst, len,
+                      MyRom_OnReadDone, arc);
+    return FS_RESULT_PROC_ASYNC;
+}
+
+// FSからアーカイブへのライトコールバック。
+// ユーザプロシージャでFS_RESULT_UNSUPPORTEDを返すので呼ばれない。
+static FSResult MyRom_WriteDummyCallback(FSArchive *arc, const void *src, u32 dst, u32 len)
+{
+    (void)arc;
+    (void)src;
+    (void)dst;
+    (void)len;
+    return FS_RESULT_FAILURE;
+}
+
+// ユーザプロシージャ。
+// 最初のコマンド開始前から最後のコマンド完了後までROMをロック。
+// ライト操作はサポート外として応答する。
+// それ以外はデフォルトの動作。
+static FSResult MyRom_ArchiveProc(FSFile *file, FSCommandType cmd)
+{
+    MyRomArchive *const p_rom = (MyRomArchive *) FS_GetAttachedArchive(file);
+    switch (cmd)
+    {
+    case FS_COMMAND_ACTIVATE:
+        CARD_LockRom((u16)p_rom->card_lock_id);
+        return FS_RESULT_SUCCESS;
+    case FS_COMMAND_IDLE:
+        CARD_UnlockRom((u16)p_rom->card_lock_id);
+        return FS_RESULT_SUCCESS;
+    case FS_COMMAND_WRITEFILE:
+        return FS_RESULT_UNSUPPORTED;
+    default:
+        return FS_RESULT_PROC_UNKNOWN;
+    }
+}
+
 static void MachineSystem_MbInitFile(void)
 {
   u32 file_table_size;
@@ -141,40 +202,41 @@ static void MachineSystem_MbInitFile(void)
   FS_Init(FS_DMA_NUMBER);
   multi_p->boot_type = MB_TYPE_MULTIBOOT;	/* MULTIBOOTフラグを再セットする */
 
-#if 0
-  if (!FS_IsAvailable())
   {
-      OS_TPanic("no archive to replace!");
-  }
-  else
-  {
-    static const char name[] = "rom";
-    static const int name_len = sizeof(name) - 1;
-    const CARDRomHeader* header;
-    FSArchive *rom;
+    const u32 base = 0;
+    const CARDRomRegion *fnt = &((CARDRomHeader*)CARD_GetRomHeader())->fnt;
+    const CARDRomRegion *fat = &((CARDRomHeader*)CARD_GetRomHeader())->fat;
+    const char *name = "rom";
+
+    static MyRomArchive newRom;
+
+    FSArchive *oldROM = FS_FindArchive("rom", 3);
+    if (oldROM) 
     {
-      CARDRomHeader * const arg_buffer = (CARDRomHeader *)0x027FF000/*HW_MAIN_MEM_SHARED*/;
-      CARDRomHeader * const app_header = (CARDRomHeader *)HW_ROM_HEADER_BUF;
-      CARDRomHeader * const org_header = (CARDRomHeader *)HW_CARD_ROM_HEADER;
-      if (arg_buffer->game_code == 0)
-      {
-        // ROMヘッダの内容を退避領域にコピーします。
-        CARD_Init();
-        MI_CpuCopy8(app_header, arg_buffer, HW_CARD_ROM_HEADER_SIZE);
-        MI_CpuCopy8(app_header, org_header, HW_CARD_ROM_HEADER_SIZE);
-        /*
-         * この時点でarg_buffer->game_code はNITROカードのイニシャルコードそのものが入っている
-         */
-      }
-      header = arg_buffer;
+      FS_UnloadArchive(oldROM);
+      // FS_ReleaseArchiveName(oldROM);
     }
-    rom = FS_FindArchive(name, name_len);
-    rom->fat = header->fat.offset;
-    rom->fat_size = header->fat.length;
-    rom->fnt = header->fnt.offset;
-    rom->fnt_size = header->fnt.length;
+    
+    FS_InitArchive(newRom.arc);
+    newRom.default_dma_no = FS_DMA_NUMBER;
+    newRom.card_lock_id = (u32)OS_GetLockID();
+    if (!FS_RegisterArchiveName(newRom.arc, name, (u32)STD_GetStringLength(name)))
+    {
+      OS_TPanic("error! FS_RegisterArchiveName(%s) failed.\n", name);
+    }
+    else
+    {
+      FS_SetArchiveProc(newRom.arc, MyRom_ArchiveProc,
+                        FS_ARCHIVE_PROC_WRITEFILE | FS_ARCHIVE_PROC_ACTIVATE | FS_ARCHIVE_PROC_IDLE);
+      if (!FS_LoadArchive(newRom.arc, base,
+                        fat->offset, fat->length, fnt->offset, fnt->length,
+                        MyRom_ReadCallback, MyRom_WriteDummyCallback))
+      {
+          OS_TPanic("error! FS_LoadArchive() failed.\n");
+      }
+    }
   }
-#endif
+
   {
     //実験
     //OSBootInfo *bootInfo = ((OSBootInfo *)HW_WM_BOOT_BUF);

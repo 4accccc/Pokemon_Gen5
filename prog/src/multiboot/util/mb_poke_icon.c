@@ -21,7 +21,7 @@
 
 #include "pokeicon/pokeicon.h"
 
-#define USE_DUMMY_ICON (1)
+#define USE_DUMMY_ICON (0)
 
 //======================================================================
 //	define
@@ -62,7 +62,7 @@ ARCHANDLE* MB_ICON_GetArcHandle( HEAPID heapId , const DLPLAY_CARD_TYPE cardType
   switch( cardType )
   {
   case CARD_TYPE_DP:   //ダイアモンド＆パール
-    arcHandle = GFL_ARC_OpenDataHandleByFilePath("poketool/icongra/poke_icon.narc",heapId);
+    arcHandle = GFL_ARC_OpenDataHandleByFilePath("rom:/poketool/icongra/poke_icon.narc",heapId);
     break;
   case CARD_TYPE_PT:   //プラチナ
 #if 0
@@ -80,7 +80,7 @@ ARCHANDLE* MB_ICON_GetArcHandle( HEAPID heapId , const DLPLAY_CARD_TYPE cardType
         FS_ReadDirectory( &file , &info[i] );
       }
       GF_ASSERT_MSG( 0 , "[%d][%d]\n[%s]\n[%s]\n[%s]\n"
-                          , ret , result
+                          , ret , resurt
                           ,info[0].longname 
                           ,info[1].longname 
                           ,info[2].longname );
@@ -96,17 +96,19 @@ ARCHANDLE* MB_ICON_GetArcHandle( HEAPID heapId , const DLPLAY_CARD_TYPE cardType
       
       FS_InitFile( &file );
       FS_GetPathName( &file, name2 , 128 );
-      ret = FS_OpenFile( &file, "poketool/icongra/pl_poke_icon.narc" );
+      ret = FS_OpenDirectory( &file , "rom:/poketool/icongra/" , 0 );
+      GF_ASSERT_MSG( ret , "Dis Open is Failue!!\nErrorCode[%d][%d]\n[%s][%s]\n",resurt,FS_GetResultCode(&file),name2,name);
+      ret = FS_OpenFile( &file, "rom:/poketool/icongra/pl_poke_icon.narc" );
       resurt = FS_GetResultCode(&file);
       FS_GetPathName( &file, name , 128 );
-      GF_ASSERT_MSG( ret , "Arc Open is failue!!\nErrorCode[%d][%d]\n[%s][%s]\n",resurt,FS_GetResultCode(&file),name2,name);
+      GF_ASSERT_MSG( 0 , "Arc Open is [%d]!!\nErrorCode[%d][%d]\n[%s][%s]\n",ret,resurt,FS_GetResultCode(&file),name2,name);
       
     }
 #endif
-    arcHandle = GFL_ARC_OpenDataHandleByFilePath("poketool/icongra/pl_poke_icon.narc",heapId);
+    arcHandle = GFL_ARC_OpenDataHandleByFilePath("rom:/poketool/icongra/pl_poke_icon.narc",heapId);
     break;
   case CARD_TYPE_GS:   //ゴールド＆シルバー
-    arcHandle = GFL_ARC_OpenDataHandleByFilePath("a/0/1/8",heapId);
+    arcHandle = GFL_ARC_OpenDataHandleByFilePath("rom:/a/0/2/0",heapId);
     break;
   case CARD_TYPE_DUMMY:  //MBテストダミー
     arcHandle = GFL_ARC_OpenDataHandle(ARCID_MB_SELECT,heapId);
