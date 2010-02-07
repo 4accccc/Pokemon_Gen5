@@ -1030,6 +1030,41 @@ BOOL CONNECTDATA_IsClosedExit( const CONNECT_DATA * connect )
     || ( connect->link_exit_id == EXIT_ID_NONE );
 }
 
+//-----------------------------------------------------------------------------
+/**
+ * @brief BGイベントの移動
+ * @param evdata
+ * @param bg_id
+ * @param gx
+ * @param gy
+ * @param gz
+ */
+//-----------------------------------------------------------------------------
+void EVENTDATA_MoveConnectData( EVENTDATA_SYSTEM * evdata, u16 exit_id, u16 gx, u16 gy, u16 gz )
+{
+  CONNECT_DATA * p_data;
+
+  if ( evdata->connect_count < exit_id || evdata->connect_data == NULL )
+  {
+    GF_ASSERT( 0 );
+    return;
+  }
+  p_data = ( CONNECT_DATA *)&evdata->connect_data[exit_id];
+  if ( p_data->pos_type == EVENTDATA_POSTYPE_GRID )
+  {
+    CONNECT_DATA_GPOS * p_gpos;
+    p_gpos = (CONNECT_DATA_GPOS *)p_data->pos_buf; 
+    p_gpos->x = gx * FIELD_CONST_GRID_SIZE;
+    p_gpos->y = gy * FIELD_CONST_GRID_SIZE;
+    p_gpos->z = gz * FIELD_CONST_GRID_SIZE;
+  }
+  else
+  {
+    GF_ASSERT_MSG( 0, "Connect Event の変更はレールに対応していません!" );
+  }
+}
+
+
 //============================================================================================
 //		動作モデル関連
 //============================================================================================
@@ -1525,7 +1560,39 @@ void EVENTDATA_GetPosEventCenterRailLocation( const POS_EVENT_DATA * data, RAIL_
 }
 
 
+//-----------------------------------------------------------------------------
+/**
+ * @brief BGイベントの移動
+ * @param evdata
+ * @param bg_id
+ * @param gx
+ * @param gy
+ * @param gz
+ */
+//-----------------------------------------------------------------------------
+void EVENTDATA_MoveBGData( EVENTDATA_SYSTEM * evdata, u16 bg_id, u16 gx, u16 gy, u16 gz )
+{
+  BG_TALK_DATA * p_data;
 
+  if ( evdata->bg_count < bg_id || evdata->bg_data == NULL )
+  {
+    GF_ASSERT( 0 );
+    return;
+  }
+  p_data = ( BG_TALK_DATA *) &evdata->bg_data[bg_id];
+  if ( p_data->pos_type == EVENTDATA_POSTYPE_GRID )
+  {
+    BG_TALK_DATA_GPOS* p_gpos;
+    p_gpos = (BG_TALK_DATA_GPOS*)p_data->pos_buf; 
+    p_gpos->gx = gx;
+    p_gpos->gz = gz;
+    p_gpos->height = FIELD_CONST_GRID_SIZE * gy;
+  }
+  else
+  {
+    GF_ASSERT_MSG( 0, "BG Event の移動はレールに対応していません!" );
+  }
+}
 
 
 

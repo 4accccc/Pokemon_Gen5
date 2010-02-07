@@ -80,6 +80,7 @@
 #include "scrcmd_seatemple.h"
 #include "scrcmd_feeling_check.h"
 #include "scrcmd_un.h"
+#include "scrcmd_sxy.h"
 
 #include "../../../resource/fldmapdata/script/usescript.h"
 
