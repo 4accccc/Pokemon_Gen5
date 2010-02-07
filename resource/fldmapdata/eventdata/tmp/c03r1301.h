@@ -14,3 +14,9 @@
 #define C03R1301_LADY_01                   2
 
 #endif //ZONE_C03R1301_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c03r1301.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_C03R1301_EVB_H
+#define ZONE_C03R1301_EVB_H
+
+
+#endif //ZONE_C03R1301_EVB_H

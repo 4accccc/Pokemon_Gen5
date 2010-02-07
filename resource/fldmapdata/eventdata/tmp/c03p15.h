@@ -13,3 +13,9 @@
 #define C03P15_GENTLEMAN_01                1
 
 #endif //ZONE_C03P15_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c03p15.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_C03P15_EVB_H
+#define ZONE_C03P15_EVB_H
+
+
+#endif //ZONE_C03P15_EVB_H

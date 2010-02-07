@@ -14,3 +14,9 @@
 #define C03R1001_POKE_01                   2
 
 #endif //ZONE_C03R1001_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c03r1001.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_C03R1001_EVB_H
+#define ZONE_C03R1001_EVB_H
+
+
+#endif //ZONE_C03R1001_EVB_H

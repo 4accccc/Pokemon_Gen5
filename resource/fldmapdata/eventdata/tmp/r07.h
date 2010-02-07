@@ -19,3 +19,14 @@
 #define R07_TREE_01                        7
 
 #endif //ZONE_R07_EVC_H
+//Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r07.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
+#ifndef ZONE_R07_EVB_H
+#define ZONE_R07_EVB_H
+
+#define R07_BOARD_03                      0
+#define R07_BOARD_02                      1
+#define R07_BOARD_01                      2
+#define R07_HIDE_ITEM_00                  3
+#define R07_HIDE_ITEM_01                  4
+
+#endif //ZONE_R07_EVB_H

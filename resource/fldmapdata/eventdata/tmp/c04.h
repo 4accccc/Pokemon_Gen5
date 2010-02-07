@@ -35,3 +35,15 @@
 #define C04_SUPPORTPAPA_01                12
 
 #endif //ZONE_C04_EVC_H
+//Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c04.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
+#ifndef ZONE_C04_EVB_H
+#define ZONE_C04_EVB_H
+
+#define BGID_C04_BOARD_03                 0
+#define BGID_C04_BOARD_02                 1
+#define BGID_C04_BOARD_05                 2
+#define BGID_C04_BOARD_01                 3
+#define BGID_C04_BOARD_04                 4
+#define BGID_C04_BOARD_06                 5
+
+#endif //ZONE_C04_EVB_H

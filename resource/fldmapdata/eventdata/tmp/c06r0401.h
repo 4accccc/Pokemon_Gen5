@@ -15,3 +15,9 @@
 #define C06R0401_OLDWOMAN1_01              1
 
 #endif //ZONE_C06R0401_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c06r0401.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_C06R0401_EVB_H
+#define ZONE_C06R0401_EVB_H
+
+
+#endif //ZONE_C06R0401_EVB_H

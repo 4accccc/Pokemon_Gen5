@@ -16,3 +16,9 @@
 #define C06R0501_POKE4_01                  2
 
 #endif //ZONE_C06R0501_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c06r0501.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_C06R0501_EVB_H
+#define ZONE_C06R0501_EVB_H
+
+
+#endif //ZONE_C06R0501_EVB_H

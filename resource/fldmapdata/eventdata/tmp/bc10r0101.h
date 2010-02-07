@@ -11,3 +11,9 @@
 
 
 #endif //ZONE_BC10R0101_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/bc10r0101.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_BC10R0101_EVB_H
+#define ZONE_BC10R0101_EVB_H
+
+
+#endif //ZONE_BC10R0101_EVB_H

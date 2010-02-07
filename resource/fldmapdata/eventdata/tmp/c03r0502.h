@@ -10,3 +10,9 @@
 
 
 #endif //ZONE_C03R0502_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c03r0502.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_C03R0502_EVB_H
+#define ZONE_C03R0502_EVB_H
+
+
+#endif //ZONE_C03R0502_EVB_H

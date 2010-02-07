@@ -12,3 +12,9 @@
 #define C05R0201_OLDMAN1                   0
 
 #endif //ZONE_C05R0201_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c05r0201.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_C05R0201_EVB_H
+#define ZONE_C05R0201_EVB_H
+
+
+#endif //ZONE_C05R0201_EVB_H

@@ -19,3 +19,9 @@
 #define C05R0501_VETERANW_01               7
 
 #endif //ZONE_C05R0501_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c05r0501.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_C05R0501_EVB_H
+#define ZONE_C05R0501_EVB_H
+
+
+#endif //ZONE_C05R0501_EVB_H

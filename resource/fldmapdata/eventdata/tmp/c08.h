@@ -32,3 +32,9 @@
 #define C08_WOMAN2_01                     12
 
 #endif //ZONE_C08_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c08.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_C08_EVB_H
+#define ZONE_C08_EVB_H
+
+
+#endif //ZONE_C08_EVB_H

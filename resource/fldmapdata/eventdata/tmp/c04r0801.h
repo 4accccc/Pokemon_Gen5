@@ -13,3 +13,10 @@
 #define C04R0801_TRAINERW_01               0
 
 #endif //ZONE_C04R0801_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c04r0801.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_C04R0801_EVB_H
+#define ZONE_C04R0801_EVB_H
+
+#define BG_C04R0801_BOARD_01              0
+
+#endif //ZONE_C04R0801_EVB_H

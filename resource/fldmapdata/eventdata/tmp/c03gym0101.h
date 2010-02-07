@@ -24,3 +24,11 @@
 #define TR_JUGGLING_02                    12
 
 #endif //ZONE_C03GYM0101_EVC_H
+//Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c03gym0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
+#ifndef ZONE_C03GYM0101_EVB_H
+#define ZONE_C03GYM0101_EVB_H
+
+#define BG_C03GYM0101_STATUE_01           0
+#define BG_C03GYM0101_STATUE_02           1
+
+#endif //ZONE_C03GYM0101_EVB_H

@@ -20,3 +20,11 @@
 #define TR_WAITRESS_01                     8
 
 #endif //ZONE_C01GYM0101_EVC_H
+//Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c01gym0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
+#ifndef ZONE_C01GYM0101_EVB_H
+#define ZONE_C01GYM0101_EVB_H
+
+#define C01GYM0101_POKEZOU_01             0
+#define C01GYM0101_POKEZOU_02             1
+
+#endif //ZONE_C01GYM0101_EVB_H

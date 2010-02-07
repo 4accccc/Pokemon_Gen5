@@ -17,3 +17,9 @@
 #define C06R301_GIRL1_01                   3
 
 #endif //ZONE_C06R0301_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c06r0301.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_C06R0301_EVB_H
+#define ZONE_C06R0301_EVB_H
+
+
+#endif //ZONE_C06R0301_EVB_H

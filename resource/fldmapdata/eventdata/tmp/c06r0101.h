@@ -13,3 +13,9 @@
 
 
 #endif //ZONE_C06R0101_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c06r0101.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_C06R0101_EVB_H
+#define ZONE_C06R0101_EVB_H
+
+
+#endif //ZONE_C06R0101_EVB_H

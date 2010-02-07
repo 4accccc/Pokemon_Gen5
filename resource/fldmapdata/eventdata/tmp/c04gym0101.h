@@ -17,3 +17,11 @@
 #define C04GYM0101_LEADER4_01              5
 
 #endif //ZONE_C04GYM0101_EVC_H
+//Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c04gym0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
+#ifndef ZONE_C04GYM0101_EVB_H
+#define ZONE_C04GYM0101_EVB_H
+
+#define BGID_C04GYM0101_STATUE_02         0
+#define BGID_C04GYM0101_STATUE_01         1
+
+#endif //ZONE_C04GYM0101_EVB_H

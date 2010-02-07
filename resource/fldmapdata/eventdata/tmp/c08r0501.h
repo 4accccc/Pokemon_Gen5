@@ -12,3 +12,10 @@
 
 
 #endif //ZONE_C08R0501_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c08r0501.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_C08R0501_EVB_H
+#define ZONE_C08R0501_EVB_H
+
+#define BG_C08R0501_BOARD_01              0
+
+#endif //ZONE_C08R0501_EVB_H

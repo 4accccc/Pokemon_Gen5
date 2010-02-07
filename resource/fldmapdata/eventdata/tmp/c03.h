@@ -46,3 +46,9 @@
 #define C03_LEADER3_01                    11
 
 #endif //ZONE_C03_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c03.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_C03_EVB_H
+#define ZONE_C03_EVB_H
+
+
+#endif //ZONE_C03_EVB_H

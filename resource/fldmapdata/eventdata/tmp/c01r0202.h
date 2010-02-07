@@ -14,3 +14,9 @@
 #define C01R0202_WOMAN3_01                 2
 
 #endif //ZONE_C01R0202_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c01r0202.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_C01R0202_EVB_H
+#define ZONE_C01R0202_EVB_H
+
+
+#endif //ZONE_C01R0202_EVB_H

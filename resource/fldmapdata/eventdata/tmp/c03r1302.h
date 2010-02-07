@@ -19,3 +19,9 @@
 #define C03R1302_TRAINERW_01               8
 
 #endif //ZONE_C03R1302_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c03r1302.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_C03R1302_EVB_H
+#define ZONE_C03R1302_EVB_H
+
+
+#endif //ZONE_C03R1302_EVB_H

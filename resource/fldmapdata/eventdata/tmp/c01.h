@@ -29,3 +29,12 @@
 #define C01_BABYGIRL1_01                  11
 
 #endif //ZONE_C01_EVC_H
+//Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c01.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
+#ifndef ZONE_C01_EVB_H
+#define ZONE_C01_EVB_H
+
+#define BGID_C01_SIGN1_01                 0
+#define BGID_C01_SIGN2_01                 1
+#define BGID_C01_SIGN3_01                 2
+
+#endif //ZONE_C01_EVB_H

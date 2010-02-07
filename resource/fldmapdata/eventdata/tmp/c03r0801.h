@@ -65,3 +65,9 @@
 #define C03R0801_WKOBJCODE10_01           24
 
 #endif //ZONE_C03R0801_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c03r0801.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_C03R0801_EVB_H
+#define ZONE_C03R0801_EVB_H
+
+
+#endif //ZONE_C03R0801_EVB_H

@@ -21,3 +21,9 @@
 #define C06R0201_MIDDLEMAN2_01             7
 
 #endif //ZONE_C06R0201_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c06r0201.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_C06R0201_EVB_H
+#define ZONE_C06R0201_EVB_H
+
+
+#endif //ZONE_C06R0201_EVB_H

@@ -20,3 +20,9 @@
 #define C02PC0101_SHOPM1_02                8
 
 #endif //ZONE_C02PC0101_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c02pc0101.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_C02PC0101_EVB_H
+#define ZONE_C02PC0101_EVB_H
+
+
+#endif //ZONE_C02PC0101_EVB_H

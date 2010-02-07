@@ -13,3 +13,9 @@
 
 
 #endif //ZONE_C03P12_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c03p12.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_C03P12_EVB_H
+#define ZONE_C03P12_EVB_H
+
+
+#endif //ZONE_C03P12_EVB_H

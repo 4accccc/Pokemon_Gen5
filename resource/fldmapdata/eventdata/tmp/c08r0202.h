@@ -10,3 +10,9 @@
 
 
 #endif //ZONE_C08R0202_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c08r0202.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_C08R0202_EVB_H
+#define ZONE_C08R0202_EVB_H
+
+
+#endif //ZONE_C08R0202_EVB_H

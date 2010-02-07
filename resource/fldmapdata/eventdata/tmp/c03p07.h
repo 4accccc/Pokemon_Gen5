@@ -15,3 +15,9 @@
 #define C03P07_TRAINERW_01                 1
 
 #endif //ZONE_C03P07_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c03p07.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_C03P07_EVB_H
+#define ZONE_C03P07_EVB_H
+
+
+#endif //ZONE_C03P07_EVB_H

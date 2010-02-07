@@ -26,3 +26,10 @@
 #define C06_HAKASE1_01                     7
 
 #endif //ZONE_C06_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c06.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_C06_EVB_H
+#define ZONE_C06_EVB_H
+
+#define BG_C06_SIGN1_01                   0
+
+#endif //ZONE_C06_EVB_H

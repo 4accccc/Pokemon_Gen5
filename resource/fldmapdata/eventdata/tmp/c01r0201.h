@@ -15,3 +15,9 @@
 #define C01R0201_BIGMAN_01                 2
 
 #endif //ZONE_C01R0201_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c01r0201.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_C01R0201_EVB_H
+#define ZONE_C01R0201_EVB_H
+
+
+#endif //ZONE_C01R0201_EVB_H

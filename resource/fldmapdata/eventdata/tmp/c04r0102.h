@@ -12,3 +12,9 @@
 #define C04R0102_RECEIPT                   0
 
 #endif //ZONE_C04R0102_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c04r0102.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_C04R0102_EVB_H
+#define ZONE_C04R0102_EVB_H
+
+
+#endif //ZONE_C04R0102_EVB_H

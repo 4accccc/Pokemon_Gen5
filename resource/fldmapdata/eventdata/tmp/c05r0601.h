@@ -20,3 +20,9 @@
 #define C05R0601_TRAINERW_01               6
 
 #endif //ZONE_C05R0601_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c05r0601.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_C05R0601_EVB_H
+#define ZONE_C05R0601_EVB_H
+
+
+#endif //ZONE_C05R0601_EVB_H

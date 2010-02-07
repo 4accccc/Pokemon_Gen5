@@ -36,3 +36,9 @@
 #define C02_LEADER02_02                   13
 
 #endif //ZONE_C02_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c02.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_C02_EVB_H
+#define ZONE_C02_EVB_H
+
+
+#endif //ZONE_C02_EVB_H

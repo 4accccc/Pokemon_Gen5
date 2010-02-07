@@ -13,3 +13,9 @@
 #define TR_C03R0303_SCIENTISTM_03          2
 
 #endif //ZONE_C03R0303_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c03r0303.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_C03R0303_EVB_H
+#define ZONE_C03R0303_EVB_H
+
+
+#endif //ZONE_C03R0303_EVB_H

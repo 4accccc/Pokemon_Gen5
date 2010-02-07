@@ -25,3 +25,9 @@
 #define BC10R0401_SHOPM1_05               13
 
 #endif //ZONE_BC10R0401_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/bc10r0401.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_BC10R0401_EVB_H
+#define ZONE_BC10R0401_EVB_H
+
+
+#endif //ZONE_BC10R0401_EVB_H

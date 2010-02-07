@@ -10,3 +10,9 @@
 
 
 #endif //ZONE_BCWFTEST_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/bcwftest.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_BCWFTEST_EVB_H
+#define ZONE_BCWFTEST_EVB_H
+
+
+#endif //ZONE_BCWFTEST_EVB_H

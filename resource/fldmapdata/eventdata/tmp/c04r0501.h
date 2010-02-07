@@ -15,3 +15,9 @@
 #define C04R0501_MIDDLEMAN2_01             2
 
 #endif //ZONE_C04R0501_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c04r0501.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_C04R0501_EVB_H
+#define ZONE_C04R0501_EVB_H
+
+
+#endif //ZONE_C04R0501_EVB_H

@@ -1,5 +1,5 @@
 #event data
-#save date:2009/12/21 13:32:34
+#save date:2010/02/07 17:57:01
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\t01r0102.wms
 #SECTION START:OBJ_EVENT
@@ -177,7 +177,7 @@ EVENTDATA_POSTYPE_GRID
 8
 #event number: 0
 #Bg Event Label
-BGID_T01R0102_TV
+BGID_T01R0102_TV2
 #Bg Event Type
 BG_TALK_TYPE_NORMAL
 #Bg Event Reaction Direction ID
@@ -190,7 +190,7 @@ EVENTDATA_POSTYPE_GRID
 -184 0 216
 #event number: 1
 #Bg Event Label
-BGID_T01R0102_TV
+BGID_T01R0102_TV1
 #Bg Event Type
 BG_TALK_TYPE_NORMAL
 #Bg Event Reaction Direction ID
@@ -203,7 +203,7 @@ EVENTDATA_POSTYPE_GRID
 -200 0 216
 #event number: 2
 #Bg Event Label
-BGID_T01R0102_TV
+BGID_T01R0102_TV3
 #Bg Event Type
 BG_TALK_TYPE_NORMAL
 #Bg Event Reaction Direction ID
@@ -229,7 +229,7 @@ EVENTDATA_POSTYPE_GRID
 -232 0 120
 #event number: 4
 #Bg Event Label
-BGID_T01R0102_BED
+BGID_T01R0102_BED1
 #Bg Event Type
 BG_TALK_TYPE_NORMAL
 #Bg Event Reaction Direction ID
@@ -242,7 +242,7 @@ EVENTDATA_POSTYPE_GRID
 -120 0 136
 #event number: 5
 #Bg Event Label
-BGID_T01R0102_BED
+BGID_T01R0102_BED3
 #Bg Event Type
 BG_TALK_TYPE_NORMAL
 #Bg Event Reaction Direction ID
@@ -255,7 +255,7 @@ EVENTDATA_POSTYPE_GRID
 -120 0 120
 #event number: 6
 #Bg Event Label
-BGID_T01R0102_BED
+BGID_T01R0102_BED2
 #Bg Event Type
 BG_TALK_TYPE_NORMAL
 #Bg Event Reaction Direction ID

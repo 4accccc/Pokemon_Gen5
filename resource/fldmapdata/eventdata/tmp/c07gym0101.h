@@ -28,3 +28,11 @@
 #define TR_KARATE_06                      16
 
 #endif //ZONE_C07GYM0101_EVC_H
+//Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c07gym0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
+#ifndef ZONE_C07GYM0101_EVB_H
+#define ZONE_C07GYM0101_EVB_H
+
+#define BG_C07GYM0101_STATUE_01           0
+#define BG_C07GYM0101_STATUE_02           1
+
+#endif //ZONE_C07GYM0101_EVB_H

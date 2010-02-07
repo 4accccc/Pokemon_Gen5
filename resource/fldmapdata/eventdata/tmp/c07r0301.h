@@ -16,3 +16,9 @@
 #define C07R0301_BOY3_01                   2
 
 #endif //ZONE_C07R0301_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c07r0301.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_C07R0301_EVB_H
+#define ZONE_C07R0301_EVB_H
+
+
+#endif //ZONE_C07R0301_EVB_H

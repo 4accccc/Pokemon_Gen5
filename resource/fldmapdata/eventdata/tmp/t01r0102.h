@@ -16,3 +16,17 @@
 #define T01R0102_SUPPORT_01                4
 
 #endif //ZONE_T01R0102_EVC_H
+//Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/t01r0102.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
+#ifndef ZONE_T01R0102_EVB_H
+#define ZONE_T01R0102_EVB_H
+
+#define BGID_T01R0102_TV2                 0
+#define BGID_T01R0102_TV1                 1
+#define BGID_T01R0102_TV3                 2
+#define BGID_T01R0102_PC                  3
+#define BGID_T01R0102_BED1                4
+#define BGID_T01R0102_BED3                5
+#define BGID_T01R0102_BED2                6
+#define BGID_T01R0102_GAME                7
+
+#endif //ZONE_T01R0102_EVB_H

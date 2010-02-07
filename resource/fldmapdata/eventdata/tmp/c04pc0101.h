@@ -20,3 +20,9 @@
 #define C04PC0101_CONNECT_02               8
 
 #endif //ZONE_C04PC0101_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c04pc0101.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_C04PC0101_EVB_H
+#define ZONE_C04PC0101_EVB_H
+
+
+#endif //ZONE_C04PC0101_EVB_H

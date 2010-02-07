@@ -14,3 +14,10 @@
 #define C03R0601_INFOMATIONW_01            1
 
 #endif //ZONE_C03R0601_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c03r0601.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_C03R0601_EVB_H
+#define ZONE_C03R0601_EVB_H
+
+#define BG_C03R0601_BOARD_01              0
+
+#endif //ZONE_C03R0601_EVB_H

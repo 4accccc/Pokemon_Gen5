@@ -17,3 +17,9 @@
 #define C04P01_BOSS_01                     4
 
 #endif //ZONE_C04P01_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c04p01.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_C04P01_EVB_H
+#define ZONE_C04P01_EVB_H
+
+
+#endif //ZONE_C04P01_EVB_H

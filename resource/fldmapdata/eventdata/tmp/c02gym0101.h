@@ -23,3 +23,17 @@
 #define C02GYM0101_FOSSIL                 10
 
 #endif //ZONE_C02GYM0101_EVC_H
+//Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c02gym0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
+#ifndef ZONE_C02GYM0101_EVB_H
+#define ZONE_C02GYM0101_EVB_H
+
+#define BG_C02GYM0101_PLATE_01            0
+#define BG_C02GYM0101_PLATE_02            1
+#define BG_C02GYM0101_PLATE_07            2
+#define BG_C02GYM0101_PLATE_03            3
+#define BG_C02GYM0101_PLATE_04            4
+#define BG_C02GYM0101_PLATE_05            5
+#define BG_C02GYM0101_PLATE_06            6
+#define BG_DEOX_CHANGE_01                 7
+
+#endif //ZONE_C02GYM0101_EVB_H

@@ -12,3 +12,9 @@
 #define C04R0110_TRAINER                   1
 
 #endif //ZONE_C04R0110_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c04r0110.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_C04R0110_EVB_H
+#define ZONE_C04R0110_EVB_H
+
+
+#endif //ZONE_C04R0110_EVB_H

@@ -16,3 +16,9 @@
 #define C01R0101_INVENTOR_01               3
 
 #endif //ZONE_C01R0101_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c01r0101.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_C01R0101_EVB_H
+#define ZONE_C01R0101_EVB_H
+
+
+#endif //ZONE_C01R0101_EVB_H

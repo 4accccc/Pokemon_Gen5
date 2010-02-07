@@ -19,3 +19,9 @@
 #define C01PC0101_CONNECT_00               7
 
 #endif //ZONE_C01PC0101_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c01pc0101.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_C01PC0101_EVB_H
+#define ZONE_C01PC0101_EVB_H
+
+
+#endif //ZONE_C01PC0101_EVB_H

@@ -21,3 +21,9 @@
 #define C06PC0101_SHOPM_02                 7
 
 #endif //ZONE_C06PC0101_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c06pc0101.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_C06PC0101_EVB_H
+#define ZONE_C06PC0101_EVB_H
+
+
+#endif //ZONE_C06PC0101_EVB_H

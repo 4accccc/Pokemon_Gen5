@@ -14,3 +14,9 @@
 #define C07R0101_OLDMAN_01                 0
 
 #endif //ZONE_C07R0101_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c07r0101.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_C07R0101_EVB_H
+#define ZONE_C07R0101_EVB_H
+
+
+#endif //ZONE_C07R0101_EVB_H

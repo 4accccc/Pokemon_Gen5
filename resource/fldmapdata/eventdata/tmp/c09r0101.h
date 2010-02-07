@@ -12,3 +12,9 @@
 #define C09R0101_BIGFOUR1_01               0
 
 #endif //ZONE_C09R0101_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c09r0101.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_C09R0101_EVB_H
+#define ZONE_C09R0101_EVB_H
+
+
+#endif //ZONE_C09R0101_EVB_H

@@ -17,3 +17,9 @@
 #define C03CT_BUSINESSMAN_03               4
 
 #endif //ZONE_C03P05_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c03p05.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_C03P05_EVB_H
+#define ZONE_C03P05_EVB_H
+
+
+#endif //ZONE_C03P05_EVB_H

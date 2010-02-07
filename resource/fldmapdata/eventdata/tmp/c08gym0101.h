@@ -23,3 +23,9 @@
 #define TR_C08GYM0101_F2_03                9
 
 #endif //ZONE_C08GYM0101_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c08gym0101.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_C08GYM0101_EVB_H
+#define ZONE_C08GYM0101_EVB_H
+
+
+#endif //ZONE_C08GYM0101_EVB_H

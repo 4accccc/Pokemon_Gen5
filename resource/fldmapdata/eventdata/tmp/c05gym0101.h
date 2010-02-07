@@ -36,3 +36,35 @@
 #define C05GYM0101_STOPPER_04             25
 
 #endif //ZONE_C05GYM0101_EVC_H
+//Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c05gym0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
+#ifndef ZONE_C05GYM0101_EVB_H
+#define ZONE_C05GYM0101_EVB_H
+
+#define C05GYM0101_LIFT_00U_B1            0
+#define C05GYM0101_LIFT_00D_B1            1
+#define C05GYM0101_LIFT_00U_B2            2
+#define C05GYM0101_LIFT_00D_B2            3
+#define C05GYM0101_LIFT_01U_B2            4
+#define C05GYM0101_LIFT_01D_B2            5
+#define C05GYM0101_LIFT_01U_B1            6
+#define C05GYM0101_LIFT_01D_B1            7
+#define C05GYM0101_LIFT_02U_B2            8
+#define C05GYM0101_LIFT_02D_B2            9
+#define C05GYM0101_LIFT_02D_B3           10
+#define C05GYM0101_LIFT_02U_B3           11
+#define C05GYM0101_LIFT_03U_B2           12
+#define C05GYM0101_LIFT_03D_B2           13
+#define C05GYM0101_LIFT_03U_B3           14
+#define C05GYM0101_LIFT_03D_B3           15
+#define C05GYM0101_LIFT_04U_B3           16
+#define C05GYM0101_LIFT_04D_B3           17
+#define C05GYM0101_LIFT_04U_B1           18
+#define C05GYM0101_LIFT_04D_B1           19
+#define C05GYM0101_LIFT_05U_B1           20
+#define C05GYM0101_LIFT_05D_B1           21
+#define C05GYM0101_LIFT_05U_B4           22
+#define C05GYM0101_LIFT_05D_B4           23
+#define C05GYM0101_EXITLIFT_00U          24
+#define C05GYM0101_EXITLIFT_00D          25
+
+#endif //ZONE_C05GYM0101_EVB_H

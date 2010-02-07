@@ -30,3 +30,10 @@
 #define C07_BOY1_01                       12
 
 #endif //ZONE_C07_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c07.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_C07_EVB_H
+#define ZONE_C07_EVB_H
+
+#define C07_BOARD_01                      0
+
+#endif //ZONE_C07_EVB_H

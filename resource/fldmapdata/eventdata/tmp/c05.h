@@ -37,3 +37,11 @@
 #define C05_BUSINESSMAN_01                14
 
 #endif //ZONE_C05_EVC_H
+//Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c05.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
+#ifndef ZONE_C05_EVB_H
+#define ZONE_C05_EVB_H
+
+#define C05_BOARD_01                      0
+#define C05_BOARD_02                      1
+
+#endif //ZONE_C05_EVB_H

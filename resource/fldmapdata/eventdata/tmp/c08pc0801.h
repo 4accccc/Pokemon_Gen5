@@ -12,3 +12,9 @@
 #define C08PC0801_SHOPM1_02                1
 
 #endif //ZONE_C08PC0801_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c08pc0801.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_C08PC0801_EVB_H
+#define ZONE_C08PC0801_EVB_H
+
+
+#endif //ZONE_C08PC0801_EVB_H

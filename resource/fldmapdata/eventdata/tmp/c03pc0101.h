@@ -19,3 +19,9 @@
 #define C03PC0101_SHOPM1_02                7
 
 #endif //ZONE_C03PC0101_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c03pc0101.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_C03PC0101_EVB_H
+#define ZONE_C03PC0101_EVB_H
+
+
+#endif //ZONE_C03PC0101_EVB_H

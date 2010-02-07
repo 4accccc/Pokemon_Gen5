@@ -14,3 +14,9 @@
 #define C08R0301_GIRL4_01                  2
 
 #endif //ZONE_C08R0301_EVC_H
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c08r0301.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
+#ifndef ZONE_C08R0301_EVB_H
+#define ZONE_C08R0301_EVB_H
+
+
+#endif //ZONE_C08R0301_EVB_H

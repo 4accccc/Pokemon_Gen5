@@ -20,3 +20,11 @@
 #define TR_WORKER2_11                      6
 
 #endif //ZONE_C06GYM0101_EVC_H
+//Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c06gym0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
+#ifndef ZONE_C06GYM0101_EVB_H
+#define ZONE_C06GYM0101_EVB_H
+
+#define BGID_C06GYM0101_POKEZOU_01        0
+#define BGID_C06GYM0101_POKEZOU_02        1
+
+#endif //ZONE_C06GYM0101_EVB_H
