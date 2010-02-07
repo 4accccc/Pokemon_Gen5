@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-15T21:36:03"/>
+	<create user="matsumiya" host="W00224" date="2010-02-07T14:43:23"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_d08r0101_hakase1_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_d08r0101_hakase1_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・d08でmsg_d08_white_07表示後</comment>
 		<attribute name="キャラ指定">博士父</attribute>
@@ -304,7 +304,7 @@
 娘に　調べさせるか[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_d08r0101_leader7_01w">
+	<row id="msg_d08r0101_leader7_01w" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・d08でmsg_d08_white_07表示後
 ・WHITEver</comment>
@@ -320,7 +320,7 @@
 眠りから　さますとは……</language>
 	</row>
 
-	<row id="msg_d08r0101_leader7_01b">
+	<row id="msg_d08r0101_leader7_01b" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・d08でmsg_d08_white_07表示後
 ・BLACKver</comment>

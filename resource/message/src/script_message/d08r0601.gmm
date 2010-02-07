@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-02T14:50:38"/>
+	<create user="matsumiya" host="W00224" date="2010-02-07T14:51:36"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="952" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="1504" top="303" right="2208" bottom="923" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="529"/>
@@ -299,12 +299,12 @@
 　→
 ・続けてeader7_01</comment>
 		<attribute name="キャラ指定">ライバル</attribute>
-		<language name="JPN" width="256">チェレン『……まってたぜ[BE:01:ページ切り替え（クリア）]
-オレも　ハチクさんも
-ざこの　あいてで　ヘトヘトなんだよ[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">チェレン『……待ってたぜ[BE:01:ページ切り替え（クリア）]
-オレも　ハチクさんも
-雑魚の　相手で　ヘトヘトなんだよ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">チェレン『……まってたよ[BE:01:ページ切り替え（クリア）]
+ぼくも　ハチクさんも
+ざこの　あいてで　ちょっとね……[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">チェレン『……待ってたよ[BE:01:ページ切り替え（クリア）]
+ぼくも　ハチクさんも
+雑魚の　相手で　ちょっとね……[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_d08r0601_leader7_01">
@@ -327,14 +327,14 @@
 ・応じてプラズマ団も移動して
 　先のフロアに進めるように</comment>
 		<attribute name="キャラ指定">ライバル</attribute>
-		<language name="JPN" width="256">チェレン『でだ！　いまから
+		<language name="JPN" width="256">チェレン『そこでだよ！　いまから
 ハチクさんと　みちを　ひらくからさ[BE:01:ページ切り替え（クリア）]
 [1:00:トレーナー名:0]！
-おまえが　さきに　すすめ！！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">チェレン『でだ！　今から
+きみが　さきに　すすめ！！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">チェレン『そこでだよ！　今から
 ハチクさんと　道を　開くからさ[BE:01:ページ切り替え（クリア）]
 [1:00:トレーナー名:0]！
-おまえが　先に　進め！！[BE:01:ページ切り替え（クリア）]</language>
+きみが　先に　進め！！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_d08r0601_black_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -343,8 +343,8 @@
 		<attribute name="キャラ指定">ライバル</attribute>
 		<language name="JPN" width="256">チェレン『どいつも　こいつも
 おんなじ　ポケモンばかり　じゃん！</language>
-		<language name="JPN_KANJI" width="256">チェレン『どいつも　こいつも
-おんなじ　ポケモンばかり　じゃん！</language>
+		<language name="JPN_KANJI" width="256">チェレン『……この　ひとたち
+どうして　こんなに　がんばれるんだ！？</language>
 	</row>
 
 	<row id="msg_d08r0601_leader7_02">
