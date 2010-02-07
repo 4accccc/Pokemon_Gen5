@@ -148,17 +148,21 @@ static void _ircPreConnect(IRC_BATTLE_MATCH* pWork);
 static void _BttnCallBack( u32 bttnid, u32 event, void* p_work );
 static BOOL _cancelButtonCallback(int bttnid,IRC_BATTLE_MATCH* pWork);
 static void _RecvMyStatusData(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
+static void _RecvPokePartyData(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
+static u8* _getPokePartyBuff(int netID, void* pWork, int size);
 
 
 ///通信コマンド
 typedef enum {
   _NETCMD_TYPESEND = GFL_NET_CMD_IRCBATTLE,
   _NETCMD_MYSTATUSSEND,
+  _NETCMD_POKEPARTY_SEND,
 } _BATTLEIRC_SENDCMD;
 
 
 #define _TIMINGNO_CS (120)
 #define _TIMINGNO_DS (121)
+#define _TIMINGNO_POKEP (122)
 
 //--------------------------------------------
 // 内部ワーク
@@ -167,6 +171,7 @@ typedef enum {
 static const NetRecvFuncTable _PacketTbl[] = {
   {_RecvModeCheckData,          NULL},  ///_NETCMD_TYPESEND
   {_RecvMyStatusData,          NULL},  ///_NETCMD_MYSTATUSSEND
+  {_RecvPokePartyData,       _getPokePartyBuff},  ///_NETCMD_POKEPARTY_SEND
 };
 
 #define _MAXNUM   (2)         // 最大接続人数
@@ -235,7 +240,7 @@ struct _IRC_BATTLE_MATCH {
   BMPMENU_WORK* pYesNoWork;
   //    GAMESYS_WORK *gameSys_;
   //    FIELD_MAIN_WORK *fieldWork_;
-
+  
   GFL_TCB *g3dVintr; //3D用vIntrTaskハンドル
   GFL_CLUNIT	*cellUnit;
   u32 cellRes[CEL_RESOURCE_MAX];
@@ -566,11 +571,50 @@ static void _RecvMyStatusData(const int netID, const int size, const void* pData
 
 }
 
+//--------------------------------------------------------------
+/**
+ * @brief   POKEPARTY受信関数 _NETCMD_POKEPARTY_SEND
+ * @param   netID      送ってきたID
+ * @param   size       パケットサイズ
+ * @param   pData      データ
+ * @param   pWork      ワークエリア
+ * @param   pHandle    受け取る側の通信ハンドル
+ * @retval  none
+ */
+//--------------------------------------------------------------
+static void _RecvPokePartyData(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle)
+{
+  // すでにバッファに入っている
+}
+
+static u8* _getPokePartyBuff(int netID, void* pWk, int size)
+{
+  IRC_BATTLE_MATCH* pWork = pWk;
+  if(netID >= 0 && netID < 4){
+    return (u8*)pWork->pBattleWork->pNetParty[netID];
+  }
+  return NULL;
+}
+
+
+
+static void _modeCheckStart5(IRC_BATTLE_MATCH* pWork)
+{
+ if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),_TIMINGNO_POKEP, WB_NET_IRCBATTLE)){
+   _CHANGE_STATE(pWork,_modeFadeoutStart);
+  }
+}
+
 
 static void _modeCheckStart4(IRC_BATTLE_MATCH* pWork)
 {
   if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),_TIMINGNO_DS, WB_NET_IRCBATTLE)){
-    _CHANGE_STATE(pWork,_modeFadeoutStart);
+    if(GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(), GFL_NET_SENDID_ALLUSER, _NETCMD_POKEPARTY_SEND,
+                        PokeParty_GetWorkSize(), pWork->pBattleWork->pParty,
+                          FALSE,FALSE,TRUE)){
+      GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),_TIMINGNO_POKEP,WB_NET_IRCBATTLE);
+      _CHANGE_STATE(pWork,_modeCheckStart5);
+    }
   }
 }
 

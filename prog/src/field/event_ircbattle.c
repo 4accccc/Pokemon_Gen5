@@ -193,7 +193,8 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
       (*seq) ++;
     }
     break;
-  case _PLAY_EVENT_BGM: 
+  case _PLAY_EVENT_BGM:
+    //@todo 尾畑君に質問する
 //    GMEVENT_CallEvent(event, EVENT_FSND_PushPlayNextBGM( gsys, dbw->para->musicDefault, FSND_FADE_SHORT, FSND_FADE_NONE ) );
     dbw->push=TRUE;
     (*seq) ++;
@@ -201,18 +202,23 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
   case _CALL_BATTLE:
     switch(dbw->selectType){
     case EVENTIRCBTL_ENTRYMODE_SINGLE:
+      dbw->demo_prm.type = COMM_BTL_DEMO_TYPE_NORMAL_START;
       BTL_SETUP_Single_Comm( dbw->para , dbw->gamedata , GFL_NET_HANDLE_GetCurrentHandle() , BTL_COMM_DS, HEAPID_PROC );
       break;
     case EVENTIRCBTL_ENTRYMODE_DOUBLE:
+      dbw->demo_prm.type = COMM_BTL_DEMO_TYPE_NORMAL_START;
       BTL_SETUP_Double_Comm( dbw->para , dbw->gamedata , GFL_NET_HANDLE_GetCurrentHandle() , BTL_COMM_DS, HEAPID_PROC );
       break;
     case EVENTIRCBTL_ENTRYMODE_TRI:
+      dbw->demo_prm.type = COMM_BTL_DEMO_TYPE_NORMAL_START;
       BTL_SETUP_Triple_Comm( dbw->para , dbw->gamedata , GFL_NET_HANDLE_GetCurrentHandle() , BTL_COMM_DS, HEAPID_PROC );
       break;
     case EVENTIRCBTL_ENTRYMODE_ROTATE:
+      dbw->demo_prm.type = COMM_BTL_DEMO_TYPE_NORMAL_START;
       BTL_SETUP_Rotation_Comm( dbw->para , dbw->gamedata , GFL_NET_HANDLE_GetCurrentHandle() , BTL_COMM_DS, HEAPID_PROC );
       break;
     case EVENTIRCBTL_ENTRYMODE_MULTH:
+      dbw->demo_prm.type = COMM_BTL_DEMO_TYPE_MULTI_START;
       BTL_SETUP_Multi_Comm( dbw->para , dbw->gamedata , GFL_NET_HANDLE_GetCurrentHandle(),
                             BTL_COMM_DS, GFL_NET_GetNetID( GFL_NET_HANDLE_GetCurrentHandle() ), HEAPID_PROC );
       dbw->para->multiMode = 1;
@@ -225,10 +231,10 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
     }
     BATTLE_PARAM_SetPokeParty( dbw->para, dbw->pParty, BTL_CLIENT_PLAYER );
     {
-#if 0
+#if 1
       int i;
-      for( i=0;i<2;i++){
-        dbw->demo_prm.trainer_data[i].party = dbw->pParty;
+      for( i=0;i<4;i++){
+        dbw->demo_prm.trainer_data[i].party = dbw->pNetParty[i];
         dbw->demo_prm.trainer_data[i].mystatus = GAMEDATA_GetMyStatusPlayer( GAMESYSTEM_GetGameData( gsys ),i );
       }
       GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle ) );
@@ -246,7 +252,7 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
       break;
     }
     NET_PRINT("バトル完了 event_ircbattle\n");
-    GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle ) );
+  //  GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle ) );
     (*seq) = _CALL_NET_END;
     break;
   case _CALL_IRCBATTLE_FRIEND:  //  ともだちコード交換
@@ -399,9 +405,14 @@ GMEVENT* EVENT_IrcBattle(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,GMEVENT *
   bxsv = BATTLE_BOX_SAVE_GetBattleBoxSave(dbw->ctrl);
 
   {
-    dbw->pParty= PokeParty_AllocPartyWork( HEAPID_PROC );
+    int i;
+    for(i=0;i<4;i++){
+      dbw->pNetParty[i] = PokeParty_AllocPartyWork( HEAPID_PROC );
+    }
+    dbw->pParty = PokeParty_AllocPartyWork( HEAPID_PROC );
 
     if(!BATTLE_BOX_SAVE_IsIn(bxsv)){
+      NET_PRINT("てもち\n");
       PokeParty_Copy(GAMEDATA_GetMyPokemon(GAMESYSTEM_GetGameData(gsys)), dbw->pParty);
     }
     else{
@@ -415,6 +426,10 @@ GMEVENT* EVENT_IrcBattle(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,GMEVENT *
 static void _battleParaFree(EVENT_IRCBATTLE_WORK *dbw)
 {
   
+  int i;
+  for(i=0;i<4;i++){
+    GFL_HEAP_FreeMemory(dbw->pNetParty[i]);
+  }
   GFL_HEAP_FreeMemory(dbw->pParty);
   BATTLE_PARAM_Delete(dbw->para);
 }
