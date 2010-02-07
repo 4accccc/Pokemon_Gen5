@@ -13,20 +13,18 @@
 #include "system/gfl_use.h"
 #include "system/main.h"
 
+#include "system/bmp_winframe.h" // for BmpWinFrame_
+
 // 簡易会話表示システム
 #include "system/pms_draw.h"
 
-//テクスチャをOAMに転送
-#include "system/nsbtx_to_clwk.h"
+#include "gamesystem/msgspeed.h"  // for MSGSPEED_GetWait
 
-//FONT
+// 文字列関連
 #include "print/gf_font.h"
-#include "font/font.naix"
-
-//PRINT_QUE
-#include "print/printsys.h"
-
 #include "print/wordset.h"
+#include "print/printsys.h"
+#include "font/font.naix"
 
 //INFOWIN
 #include "infowin/infowin.h"
@@ -37,32 +35,14 @@
 //簡易CLWK読み込み＆開放ユーティリティー
 #include "ui/ui_easy_clwk.h"
 
-//マップモデルのnsbtx
-#include "fieldmap/fldmmdl_mdlres.naix"
-
 //タッチバー
 #include "ui/touchbar.h"
 
-//ポケパラ、ポケモンNO
-#include "poke_tool/poke_tool.h"
-#include "poke_tool/monsno_def.h"
-
-//ポケアイコン
-#include "pokeicon/pokeicon.h"
-
-//MCSS
-#include "system/mcss.h"
-#include "system/mcss_tool.h"
+// シーンコントローラー
+#include "ui/ui_scene.h"
 
 //タスクメニュー
 #include "app/app_taskmenu.h"
-
-//どうぐアイコン
-#include "item/item.h"
-#include "item_icon.naix"
-
-//ポケモンBG,OBJ読みこみ
-#include "system/poke2dgra.h"
 
 //アプリ共通素材
 #include "app/app_menu_common.h"
@@ -73,9 +53,11 @@
 //外部公開
 #include "app/un_select.h"
 
-
 #include "message.naix"
 #include "un_select_gra.naix"	// アーカイブ
+
+// サウンド
+#include "sound/pm_sndsys.h"
 
 //@TODO
 #include "msg/msg_mictest.h"  // GMM
@@ -84,7 +66,6 @@
 // 下記defineをコメントアウトすると、機能を取り除けます
 //=============================================================================
 #define UN_SELECT_TOUCHBAR
-#define UN_SELECT_TASKMENU
 
 FS_EXTERN_OVERLAY(ui_common);
 
@@ -104,9 +85,10 @@ enum
 //=====================================
 enum
 {	
-	BG_FRAME_BAR_M	= GFL_BG_FRAME1_M,
-	BG_FRAME_POKE_M	= GFL_BG_FRAME2_M,
+	BG_FRAME_MENU_M	= GFL_BG_FRAME1_M,
+	BG_FRAME_TEXT_M	= GFL_BG_FRAME2_M,
 	BG_FRAME_BACK_M	= GFL_BG_FRAME3_M,
+
 	BG_FRAME_BACK_S	= GFL_BG_FRAME2_S,
   BG_FRAME_TEXT_S = GFL_BG_FRAME0_S, 
 };
@@ -117,7 +99,7 @@ enum
 {	
 	//メインBG
 	PLTID_BG_BACK_M				= 0,
-	PLTID_BG_POKE_M				= 1,
+	PLTID_BG_TEXT_M				= 1,
 	PLTID_BG_TASKMENU_M		= 11,
 	PLTID_BG_TOUCHBAR_M		= 13,
 	PLTID_BG_INFOWIN_M		= 15,
@@ -151,6 +133,26 @@ typedef struct
 	int dummy;
 } UN_SELECT_BG_WORK;
 
+typedef struct
+{ 
+  //[IN]
+  HEAPID heapID;
+  //[PRIVATE]
+  GFL_TCBLSYS   *tcblsys;     ///< タスクシステム
+  GFL_MSGDATA   *msghandle;   ///< メッセージハンドル
+	GFL_FONT			*font;        ///< フォント
+	PRINT_QUE			*print_que;   ///< プリントキュー
+  WORDSET       *wordset;     ///< ワードセット
+
+  STRBUF        *strbuf;
+  STRBUF        *exp_strbuf;
+
+  // ストリーム再生
+  PRINT_STREAM* print_stream;
+  GFL_BMPWIN    *win_talk;
+
+} UN_SELECT_MSG_WORK;
+
 //--------------------------------------------------------------
 ///	メインワーク
 //==============================================================
@@ -171,29 +173,68 @@ typedef struct
 	u32												ncl_btn;
 	u32												nce_btn;
 #endif //UN_SELECT_TOUCHBAR
-
-	//フォント
-	GFL_FONT									*font;
-
-	//プリントキュー
-	PRINT_QUE									*print_que;
-	GFL_MSGDATA								*msg;
-
-#ifdef UN_SELECT_TASKMENU
-	//タスクメニュー
+	
+  //タスクメニュー
 	APP_TASKMENU_RES					*menu_res;
 	APP_TASKMENU_WORK					*menu;
-#endif //UN_SELECT_TASKMENU
+
+  UI_SCENE_CNT_PTR cntScene;
+
+  UN_SELECT_PARAM* pwk;
+
+  UN_SELECT_MSG_WORK* wk_msg;
 
 } UN_SELECT_MAIN_WORK;
 
-
 //=============================================================================
 /**
- *							データ定義
+ *							シーン定義
  */
 //=============================================================================
 
+// フロア選択
+static BOOL SceneSelectFloor_Init( UI_SCENE_CNT_PTR cnt, void* work );
+static BOOL SceneSelectFloor_Main( UI_SCENE_CNT_PTR cnt, void* work );
+static BOOL SceneSelectFloor_End( UI_SCENE_CNT_PTR cnt, void* work );
+
+// 確認画面
+static BOOL SceneConfirm_Init( UI_SCENE_CNT_PTR cnt, void* work );
+static BOOL SceneConfirm_Main( UI_SCENE_CNT_PTR cnt, void* work );
+static BOOL SceneConfirm_End( UI_SCENE_CNT_PTR cnt, void* work );
+
+//--------------------------------------------------------------
+///	SceneID
+//==============================================================
+typedef enum
+{ 
+  UNS_SCENE_ID_SELECT_FLOOR = 0,  ///< フロア選択
+  UNS_SCENE_ID_CONFIRM,           ///< 確認画面
+
+  UNS_SCENE_ID_MAX,
+} UNS_SCENE_ID;
+
+//--------------------------------------------------------------
+///	SceneFunc
+//==============================================================
+static const UI_SCENE_FUNC_SET c_scene_func_tbl[ UNS_SCENE_ID_MAX ] = 
+{
+  // UNS_SCENE_ID_SELECT_FLOOR
+  {
+    SceneSelectFloor_Init,
+    NULL,
+    SceneSelectFloor_Main,
+    NULL,
+    SceneSelectFloor_End,
+  },
+  // UNS_SCENE_ID_CONFIRM
+  {
+    SceneConfirm_Init,
+    NULL,
+    SceneConfirm_Main,
+    NULL,
+    SceneConfirm_End,
+  },
+};
 
 //=============================================================================
 /**
@@ -220,16 +261,27 @@ static void UNSelect_TOUCHBAR_Exit( TOUCHBAR_WORK	*touchbar );
 static void UNSelect_TOUCHBAR_Main( TOUCHBAR_WORK	*touchbar );
 #endif //UN_SELECT_TOUCHBAR
 
-#ifdef UN_SELECT_TASKMENU
 //-------------------------------------
 ///	リストシステムはい、いいえ
 //=====================================
 static APP_TASKMENU_WORK * UNSelect_TASKMENU_Init( APP_TASKMENU_RES *menu_res, GFL_MSGDATA *msg, HEAPID heapID );
 static void UNSelect_TASKMENU_Exit( APP_TASKMENU_WORK *menu );
 static void UNSelect_TASKMENU_Main( APP_TASKMENU_WORK *menu );
-#endif //UN_SELECT_TASKMENU
 
+//-------------------------------------
+// メッセージ管理モジュール
+//=====================================
+static UN_SELECT_MSG_WORK* MSG_Create( HEAPID heapID );
+static void MSG_Delete( UN_SELECT_MSG_WORK* wk );
+static void MSG_Main( UN_SELECT_MSG_WORK* wk );
+static void MSG_SetPrint( UN_SELECT_MSG_WORK* wk, int str_id );
+static BOOL MSG_PrintProc( UN_SELECT_MSG_WORK* wk );
+static GFL_FONT* MSG_GetFont( UN_SELECT_MSG_WORK* wk );
+static PRINT_QUE* MSG_GetPrintQue( UN_SELECT_MSG_WORK* wk );
+
+// PROTOTYPE
 static UN_SELECT_MAIN_WORK* proc_init( GFL_PROC* proc, UN_SELECT_PARAM* prm );
+static void param_out_data( UN_SELECT_MAIN_WORK* wk );
 
 //=============================================================================
 /**
@@ -309,26 +361,21 @@ static GFL_PROC_RESULT UNSelectProc_Exit( GFL_PROC *proc, int *seq, void *pwk, v
   {
      return GFL_PROC_RES_CONTINUE;
   }
+  
+  // シーンコントーラ削除
+  UI_SCENE_CNT_Delete( wk->cntScene );
 
-#ifdef UN_SELECT_TASKMENU
+  // メッセージ消去
+  MSG_Delete( wk->wk_msg );
+
 	//TASKMENUシステム＆リソース破棄
 	UNSelect_TASKMENU_Exit( wk->menu );
 	APP_TASKMENU_RES_Delete( wk->menu_res );	
-#endif //UN_SELECT_TASKMENU
 
 #ifdef UN_SELECT_TOUCHBAR
 	//タッチバー
 	UNSelect_TOUCHBAR_Exit( wk->touchbar );
 #endif //UN_SELECT_TOUCHBAR
-
-	//メッセージ破棄
-	GFL_MSG_Delete( wk->msg );
-
-	//PRINT_QUE
-	PRINTSYS_QUE_Delete( wk->print_que );
-
-	//FONT
-	GFL_FONT_Delete( wk->font );
 
 	//描画設定破棄
 	UN_SELECT_GRAPHIC_Exit( wk->graphic );
@@ -339,6 +386,8 @@ static GFL_PROC_RESULT UNSelectProc_Exit( GFL_PROC *proc, int *seq, void *pwk, v
 
 	//オーバーレイ破棄
 	GFL_OVERLAY_Unload( FS_OVERLAY_ID(ui_common));
+
+  HOSAKA_Printf(" PROC終了！ \n");
 
   return GFL_PROC_RES_FINISH;
 }
@@ -357,27 +406,20 @@ static GFL_PROC_RESULT UNSelectProc_Exit( GFL_PROC *proc, int *seq, void *pwk, v
 static GFL_PROC_RESULT UNSelectProc_Main( GFL_PROC *proc, int *seq, void *pwk, void *mywk )
 { 
 	UN_SELECT_MAIN_WORK* wk = mywk;
-
-  // デバッグボタンでアプリ終了
-  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DEBUG )
+  
+  // SCENE
+  if( UI_SCENE_CNT_Main( wk->cntScene ) )
   {
-    // フェードアウト リクエスト
-    GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, 1 );
     return GFL_PROC_RES_FINISH;
   }
+
+  // メッセージ主処理
+  MSG_Main( wk->wk_msg );
 
 #ifdef UN_SELECT_TOUCHBAR
 	//タッチバーメイン処理
 	UNSelect_TOUCHBAR_Main( wk->touchbar );
 #endif //UN_SELECT_TOUCHBAR
-
-#ifdef UN_SELECT_TASKMENU
-	//タスクメニューメイン処理
-	UNSelect_TASKMENU_Main( wk->menu );
-#endif //UN_SELECT_TASKMENU
-
-	//PRINT_QUE
-	PRINTSYS_QUE_Main( wk->print_que );
 
 	//2D描画
 	UN_SELECT_GRAPHIC_2D_Draw( wk->graphic );
@@ -474,7 +516,7 @@ static TOUCHBAR_WORK * UNSelect_TOUCHBAR_Init( GFL_CLUNIT *clunit, HEAPID heapID
 	touchbar_setup.p_item		= touchbar_icon_tbl;				//上の窓情報
 	touchbar_setup.item_num	= NELEMS(touchbar_icon_tbl);//いくつ窓があるか
 	touchbar_setup.p_unit		= clunit;										//OBJ読み込みのためのCLUNIT
-	touchbar_setup.bar_frm	= BG_FRAME_BAR_M;						//BG読み込みのためのBG面
+	touchbar_setup.bar_frm	= BG_FRAME_MENU_M;						//BG読み込みのためのBG面
 	touchbar_setup.bg_plt		= PLTID_BG_TOUCHBAR_M;			//BGﾊﾟﾚｯﾄ
 	touchbar_setup.obj_plt	= PLTID_OBJ_TOUCHBAR_M;			//OBJﾊﾟﾚｯﾄ
 	touchbar_setup.mapping	= APP_COMMON_MAPPING_128K;	//マッピングモード
@@ -506,7 +548,6 @@ static void UNSelect_TOUCHBAR_Main( TOUCHBAR_WORK	*touchbar )
 }
 #endif //UN_SELECT_TOUCHBAR
 
-#ifdef UN_SELECT_TASKMENU
 //----------------------------------------------------------------------------
 /**
  *	@brief	TASKMENUの初期化
@@ -518,7 +559,7 @@ static APP_TASKMENU_WORK * UNSelect_TASKMENU_Init( APP_TASKMENU_RES *menu_res, G
 {	
 	int i;
 	APP_TASKMENU_INITWORK	init;
-	APP_TASKMENU_ITEMWORK	item[3];
+	APP_TASKMENU_ITEMWORK	item[2];
 	APP_TASKMENU_WORK			*menu;	
 
 	//窓の設定
@@ -572,8 +613,251 @@ static void UNSelect_TASKMENU_Main( APP_TASKMENU_WORK *menu )
 {	
 	APP_TASKMENU_UpdateMenu( menu );
 }
-#endif //UN_SELECT_TASKMENU
 
+
+
+//=============================================================================
+//
+//
+// メッセージ管理クラス
+//
+//
+//=============================================================================
+enum
+{ 
+  STRBUF_SIZE = 1600,
+};
+
+#define MSG_SKIP_BTN (PAD_BUTTON_A|PAD_BUTTON_B)
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  メッセージ管理クラス 生成
+ *
+ *	@param	HEAPID heapID 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static UN_SELECT_MSG_WORK* MSG_Create( HEAPID heapID )
+{
+  UN_SELECT_MSG_WORK* wk;
+
+  // メモリ アロック
+  wk = GFL_HEAP_AllocClearMemory( heapID, sizeof( UN_SELECT_MSG_WORK ) );
+
+  // メンバ初期化
+  wk->heapID = heapID;
+  
+  // ワードセット生成
+  wk->wordset = WORDSET_Create( heapID );
+
+	//メッセージ
+	wk->msghandle = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, 
+			NARC_message_mictest_dat, heapID );
+  //@TODO マイクテストのリソース
+
+	//PRINT_QUE作成
+	wk->print_que		= PRINTSYS_QUE_Create( heapID );
+
+	//フォント作成
+	wk->font			= GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr,
+												GFL_FONT_LOADTYPE_FILE, FALSE, heapID );
+
+  // STRBU 生成
+  wk->strbuf      = GFL_STR_CreateBuffer( STRBUF_SIZE, heapID );
+  wk->exp_strbuf  = GFL_STR_CreateBuffer( STRBUF_SIZE, heapID );
+
+  wk->tcblsys = GFL_TCBL_Init( heapID, heapID, 1, 0 );
+  
+  // ウィンドウ生成
+  wk->win_talk = GFL_BMPWIN_Create( BG_FRAME_TEXT_M, 1, 19, 30, 4, PLTID_BG_TEXT_M, GFL_BMP_CHRAREA_GET_B );
+  
+  // フレーム生成
+  BmpWinFrame_Write( wk->win_talk, WINDOW_TRANS_OFF, 1, GFL_BMPWIN_GetPalette(wk->win_talk) );
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->win_talk), 0x0 );
+
+  GFL_BMPWIN_MakeTransWindow( wk->win_talk );
+
+  return wk;
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  メッセージ管理クラス 破棄
+ *
+ *	@param	UN_SELECT_MSG_WORK* wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void MSG_Delete( UN_SELECT_MSG_WORK* wk )
+{
+  // BMPWIN 破棄
+  GFL_BMPWIN_Delete( wk->win_talk );
+  // STRBUF 破棄
+  GFL_STR_DeleteBuffer( wk->strbuf );
+  GFL_STR_DeleteBuffer( wk->exp_strbuf );
+	//メッセージ破棄
+	GFL_MSG_Delete( wk->msghandle );
+	//PRINT_QUE
+	PRINTSYS_QUE_Delete( wk->print_que );
+	//FONT
+	GFL_FONT_Delete( wk->font );
+  // TCBL
+  GFL_TCBL_Exit( wk->tcblsys );
+  // ワードセット 破棄
+  WORDSET_Delete( wk->wordset );
+
+  // メモリ破棄
+  GFL_HEAP_FreeMemory( wk );
+}
+
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  メッセージ管理クラス 主処理
+ *
+ *	@param	UN_SELECT_MSG_WORK* wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void MSG_Main( UN_SELECT_MSG_WORK* wk )
+{
+	PRINTSYS_QUE_Main( wk->print_que );
+  
+  GFL_TCBL_Main( wk->tcblsys );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  メッセージ管理クラス メッセージプリント リクエスト
+ *
+ *	@param	UN_SELECT_MSG_WORK* wk
+ *	@param	str_id 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void MSG_SetPrint( UN_SELECT_MSG_WORK* wk, int str_id )
+{
+  const u8 clear_color = 15;
+  GFL_BMPWIN* win;
+  int msgspeed;
+  
+  msgspeed  = MSGSPEED_GetWait();
+  win       = wk->win_talk;
+  
+  GFL_BMP_Clear(GFL_BMPWIN_GetBmp(win), clear_color);
+  GFL_FONTSYS_SetColor(1, 2, clear_color);
+
+  GFL_MSG_GetString( wk->msghandle, str_id, wk->strbuf );
+
+#ifdef PM_DEBUG
+  GFL_STR_CheckBufferValid( wk->strbuf ); ///< 破損チェック
+#endif
+  
+  WORDSET_ExpandStr( wk->wordset, wk->exp_strbuf, wk->strbuf );
+
+#ifdef PM_DEBUG
+  GFL_STR_CheckBufferValid( wk->strbuf ); ///< 破損チェック
+#endif
+
+  wk->print_stream = PRINTSYS_PrintStream( win, 4, 0, wk->exp_strbuf, wk->font, msgspeed,
+                                           wk->tcblsys, 0xffff, wk->heapID, clear_color );
+
+  // @TODO 必要ない？
+  { 
+    GFL_BMPWIN_TransVramCharacter( win );
+    GFL_BMPWIN_MakeScreen( win );
+    GFL_BG_LoadScreenV_Req( GFL_BMPWIN_GetFrame(win) );
+  }
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  メッセージ管理クラス メッセージ処理
+ *
+ *	@param	UN_SELECT_MSG_WORK* wk 
+ *
+ *	@retval TRUE:プリント終了
+ */
+//-----------------------------------------------------------------------------
+static BOOL MSG_PrintProc( UN_SELECT_MSG_WORK* wk )
+{
+  PRINTSTREAM_STATE state;
+
+//  HOSAKA_Printf("print state= %d \n", state );
+
+  if( wk->print_stream )
+  {
+    state = PRINTSYS_PrintStreamGetState( wk->print_stream );
+
+    switch( state )
+    {
+    case PRINTSTREAM_STATE_DONE : // 終了
+      PRINTSYS_PrintStreamDelete( wk->print_stream );
+      wk->print_stream = NULL;
+      return TRUE;
+
+    case PRINTSTREAM_STATE_PAUSE : // 一時停止中
+      // キー入力待ち
+      if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_DECIDE || (  GFL_UI_KEY_GetTrg() == PAD_BUTTON_CANCEL ) || GFL_UI_TP_GetTrg() )
+      {
+        PRINTSYS_PrintStreamReleasePause( wk->print_stream );
+        GFL_SOUND_PlaySE( SEQ_SE_DECIDE1 );
+      }
+      break;
+
+    case PRINTSTREAM_STATE_RUNNING :  // 実行中
+      // メッセージスキップ
+      if( (GFL_UI_KEY_GetCont() & MSG_SKIP_BTN) || GFL_UI_TP_GetCont() )
+      {
+        PRINTSYS_PrintStreamShortWait( wk->print_stream, 0 );
+      }
+      break;
+
+    default : GF_ASSERT(0);
+    }
+
+    return FALSE;
+  }
+
+  return FALSE;
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief
+ *
+ *	@param	UN_SELECT_MSG_WORK* wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static GFL_FONT* MSG_GetFont( UN_SELECT_MSG_WORK* wk )
+{
+  GF_ASSERT(wk);
+
+  return wk->font;
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief
+ *
+ *	@param	UN_SELECT_MSG_WORK* wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static PRINT_QUE* MSG_GetPrintQue( UN_SELECT_MSG_WORK* wk )
+{
+  GF_ASSERT(wk);
+
+  return wk->print_que;
+}
 
 //-----------------------------------------------------------------------------
 /**
@@ -599,20 +883,18 @@ static UN_SELECT_MAIN_WORK* proc_init( GFL_PROC* proc, UN_SELECT_PARAM* prm )
 
   // 初期化
   wk->heapID = HEAPID_UN_SELECT;
+  wk->pwk = prm;
 	
 	//描画設定初期化
 	wk->graphic	= UN_SELECT_GRAPHIC_Init( GX_DISP_SELECT_SUB_MAIN, wk->heapID );
 
-	//フォント作成
-	wk->font			= GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr,
-												GFL_FONT_LOADTYPE_FILE, FALSE, wk->heapID );
-
-	//メッセージ
-	wk->msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, 
-			NARC_message_mictest_dat, wk->heapID );
-
-	//PRINT_QUE作成
-	wk->print_que		= PRINTSYS_QUE_Create( wk->heapID );
+  // メッセージ生成
+  wk->wk_msg = MSG_Create( wk->heapID );
+  
+  // シーンコントローラ作成
+  wk->cntScene = UI_SCENE_CNT_Create( 
+      wk->heapID, c_scene_func_tbl, UNS_SCENE_ID_MAX, 
+      UNS_SCENE_ID_SELECT_FLOOR, wk );
 
 	//BGリソース読み込み
 	UNSelect_BG_LoadResource( &wk->wk_bg, wk->heapID );
@@ -625,12 +907,169 @@ static UN_SELECT_MAIN_WORK* proc_init( GFL_PROC* proc, UN_SELECT_PARAM* prm )
 	}
 #endif //UN_SELECT_TOUCHBAR
 
-#ifdef UN_SELECT_TASKMENU
 	//TASKMENUリソース読み込み＆初期化
-	wk->menu_res	= APP_TASKMENU_RES_Create( BG_FRAME_BAR_M, PLTID_BG_TASKMENU_M, wk->font, wk->print_que, wk->heapID );
-	wk->menu			= UNSelect_TASKMENU_Init( wk->menu_res, wk->msg, wk->heapID );
-#endif //UN_SELECT_TASKMENU
+	wk->menu_res	= APP_TASKMENU_RES_Create( BG_FRAME_MENU_M, PLTID_BG_TASKMENU_M,
+      MSG_GetFont( wk->wk_msg ),
+      MSG_GetPrintQue( wk->wk_msg ),
+      wk->heapID );
 
   return wk;
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  選択結果吐き出し
+ *
+ *	@param	UN_SELECT_MAIN_WORK* wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void param_out_data( UN_SELECT_MAIN_WORK* wk )
+{
+  GF_ASSERT(wk);
+  GF_ASSERT(wk->pwk);
+  
+  //@TODO 
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  SCENE フロア選択 初期化処理
+ *
+ *	@param	UI_SCENE_CNT_PTR cnt
+ *	@param	work 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static BOOL SceneSelectFloor_Init( UI_SCENE_CNT_PTR cnt, void* work )
+{
+  UN_SELECT_MAIN_WORK* wk = work;
+
+  return TRUE;
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  SCENE フロア選択 主処理
+ *
+ *	@param	UI_SCENE_CNT_PTR cnt
+ *	@param	work 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static BOOL SceneSelectFloor_Main( UI_SCENE_CNT_PTR cnt, void* work )
+{
+  UN_SELECT_MAIN_WORK* wk = work;
+
+  // フロア選択処理
+  // @TODO
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
+  {
+    UI_SCENE_CNT_SetNextScene( cnt, UNS_SCENE_ID_CONFIRM );
+    return TRUE;
+  }
+
+  return FALSE;
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  SCENE フロア選択 後処理
+ *
+ *	@param	UI_SCENE_CNT_PTR cnt
+ *	@param	work 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static BOOL SceneSelectFloor_End( UI_SCENE_CNT_PTR cnt, void* work )
+{
+  UN_SELECT_MAIN_WORK* wk = work;
+
+  return TRUE;
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  SCENE 確認画面 初期化処理
+ *
+ *	@param	UI_SCENE_CNT_PTR cnt
+ *	@param	work 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static BOOL SceneConfirm_Init( UI_SCENE_CNT_PTR cnt, void* work )
+{
+  UN_SELECT_MAIN_WORK* wk = work;
+
+	wk->menu = UNSelect_TASKMENU_Init( wk->menu_res, wk->wk_msg->msghandle, wk->heapID );
+
+  return TRUE;
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  SCENE 確認画面 主処理
+ *
+ *	@param	UI_SCENE_CNT_PTR cnt
+ *	@param	work 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static BOOL SceneConfirm_Main( UI_SCENE_CNT_PTR cnt, void* work )
+{
+  UN_SELECT_MAIN_WORK* wk = work;
+
+	//タスクメニューメイン処理
+	UNSelect_TASKMENU_Main( wk->menu );
+
+  if( APP_TASKMENU_IsFinish( wk->menu ) )
+  {
+    u8 pos = APP_TASKMENU_GetCursorPos( wk->menu );
+
+    switch( pos )
+    {
+    case 0 :
+      // データ吐き出し
+      param_out_data( wk );
+      // フェードアウト リクエスト
+      GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, 1 );
+      // 終了
+      UI_SCENE_CNT_SetNextScene( cnt, UI_SCENE_ID_END );
+      break;
+    case 1 :
+      // 選択画面に戻る
+      UNSelect_TASKMENU_Exit( wk->menu );
+      UI_SCENE_CNT_SetNextScene( cnt, UNS_SCENE_ID_SELECT_FLOOR );
+      break;
+    default : GF_ASSERT(0);
+    }
+
+    return TRUE;
+  }
+
+  return FALSE;
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  SCENE 確認画面 後処理
+ *
+ *	@param	UI_SCENE_CNT_PTR cnt
+ *	@param	work 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static BOOL SceneConfirm_End( UI_SCENE_CNT_PTR cnt, void* work )
+{
+  UN_SELECT_MAIN_WORK* wk = work;
+
+  return TRUE;
 }
 
