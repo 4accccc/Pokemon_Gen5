@@ -185,6 +185,7 @@ extern TOUCHBAR_ICON TOUCHBAR_GetTouch( const TOUCHBAR_WORK *cp_wk );
 //=====================================
 extern void TOUCHBAR_SetActiveAll( TOUCHBAR_WORK *p_wk, BOOL is_active );
 extern void TOUCHBAR_SetVisibleAll( TOUCHBAR_WORK *p_wk, BOOL is_visible );
+extern void TOUCHBAR_SetBGPriorityAll( TOUCHBAR_WORK* p_wk, u8 bg_prio );
 
 //=============================================================================
 /**
