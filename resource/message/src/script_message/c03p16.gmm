@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="suginaka_katsunori" host="W00227" date="2010-02-08T20:45:58"/>
+	<create user="matsumiya" host="W00224" date="2010-02-08T22:43:23"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -335,15 +335,15 @@
 仮OBJです</attribute>
 		<language name="JPN" width="256">ロイヤルイッシュごう　じまんの
 かんぱんでは　けしきを　たのしめます[BE:01:ページ切り替え（クリア）]
-きゃくしつないには　しょうぶずきな
+きゃくしつには　しょうぶずきな
 トレーナーたちが　あつまっております[BE:01:ページ切り替え（クリア）]
 ぜひ　けしきも　しょうぶも
 おたのしみ　ください[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ロイヤルイッシュ号　自慢の　甲板では
 景色を　楽しむことが　できます！[BE:01:ページ切り替え（クリア）]
-客室内には　勝負が好きな
+客室には　勝負が好きな
 トレーナーたちが　集まって　おります[BE:01:ページ切り替え（クリア）]
-是非　景色も　勝負も
+ぜひ　景色も　勝負も
 お楽しみ　ください[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
@@ -354,9 +354,9 @@
 		<attribute name="キャラ指定">WAITRESS
 仮OBJです</attribute>
 		<language name="JPN" width="256">ロイヤルイッシュごう　に
-おのりに　なられますか？[BE:01:ページ切り替え（クリア）]</language>
+おのりに　なられますか？</language>
 		<language name="JPN_KANJI" width="256">ロイヤルイッシュ号に
-お乗りに　なられますか？[BE:01:ページ切り替え（クリア）]</language>
+お乗りに　なられますか？</language>
 	</row>
 
 	<row id="msg_c03p16_cabinguide_05">
@@ -402,7 +402,7 @@ C03R0801へマップ移動</comment>
 		<language name="JPN" width="256">ほんじつの　しゅっこうは
 しゅうりょう　いたしました[BE:00:ページ切り替え（行送り）]
 また　あす　おこしくださいませ[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">本日の　出港は　終了　いたしました
+		<language name="JPN_KANJI" width="256">本日の　出港は　終了いたしました
 また　明日　お越しくださいませ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
