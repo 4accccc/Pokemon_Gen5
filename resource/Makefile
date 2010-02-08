@@ -146,6 +146,7 @@ SUBDIRS	=	wmi \
 			batt_rec_gra \
 			sea_temple \
 			egg_demo \
+			research_radar \
 			kokuren
 
 include $(RESOURCE_MACRO)
