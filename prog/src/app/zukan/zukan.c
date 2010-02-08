@@ -185,6 +185,7 @@ static int MainSeq_CallList( ZUKAN_MAIN_WORK * wk )
 	list = wk->work;
 
 	list->gamedata = wk->prm->gamedata;
+	list->savedata = wk->prm->savedata;
 
 	GFL_PROC_SysCallProc( FS_OVERLAY_ID(zukan_list), &ZUKANLIST_ProcData, wk->work );
 
@@ -230,3 +231,4 @@ static int MainSeq_EndList( ZUKAN_MAIN_WORK * wk )
 
 	return ret;
 }
+

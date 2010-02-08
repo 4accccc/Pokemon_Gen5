@@ -100,8 +100,8 @@ extern u16 ZUKANSAVE_GetLocalPokeGetCount(const ZUKAN_SAVEDATA * zs);
 extern u16 ZUKANSAVE_GetLocalPokeSeeCount(const ZUKAN_SAVEDATA * zs);
 
 // ポケモン見た登録・ポケモン捕まえた登録
-extern void ZUKANSAVE_SetPokeSee(ZUKAN_SAVEDATA * zs, const POKEMON_PARAM * pp);
-extern void ZUKANSAVE_SetPokeGet(ZUKAN_SAVEDATA * zs, const POKEMON_PARAM * pp);
+extern void ZUKANSAVE_SetPokeSee(ZUKAN_SAVEDATA * zs, POKEMON_PARAM * pp);
+extern void ZUKANSAVE_SetPokeGet(ZUKAN_SAVEDATA * zs, POKEMON_PARAM * pp);
 
 // ゼンコク図鑑持っているときー＞全国用の各数字を返す
 // イッシュ図鑑しかもっていないときー＞イッシュ図鑑用の各数字を返す
@@ -153,6 +153,13 @@ extern void ZUKANSAVE_SetTextVersionUpMasterFlag( ZUKAN_SAVEDATA * zs );
 extern BOOL ZUKANSAVE_GetTextVersionUpMasterFlag(const ZUKAN_SAVEDATA * zs);
 
 extern void ZUKANSAVE_Copy(const ZUKAN_SAVEDATA * from, ZUKAN_SAVEDATA * to);
+
+
+extern u32	ZUKANSAVE_GetFormMax( u16 mons );
+extern BOOL ZUKANSAVE_CheckPokeSeeForm( const ZUKAN_SAVEDATA * zw, u16 monsno, int sex, int rare, int form );
+extern void ZUKANSAVE_SetDrawData( ZUKAN_SAVEDATA * zw, u16 mons, u32 sex, BOOL rare, u32 form );
+extern BOOL ZUKANSAVE_CheckForm( ZUKAN_SAVEDATA * zw, u16 mons, u32 sex, BOOL rare, u32 form );
+extern void ZUKANSAVE_GetDrawData( ZUKAN_SAVEDATA * zw, u16 mons, u32 * sex, BOOL * rare, u32 * form, HEAPID heapID );
 
 
 //----------------------------------------------------------

@@ -18,9 +18,11 @@
 //============================================================================================
 
 typedef struct {
-  GAMEDATA * gamedata;	// ゲームデータ
-	u16	retMode;					// 終了モード
-	u16	retMons;					// 選択ポケモン
+  GAMEDATA * gamedata;				// ゲームデータ
+	ZUKAN_SAVEDATA * savedata;	// 図鑑セーブデータ
+
+	u16	retMode;								// 終了モード
+	u16	retMons;								// 選択ポケモン
 }ZUKANLIST_DATA;
 
 // 終了モード

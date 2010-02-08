@@ -11,6 +11,7 @@
 #pragma	once
 
 #include "gamesystem/game_data.h"
+#include "savedata/zukan_savedata.h"
 
 
 //============================================================================================
@@ -18,7 +19,8 @@
 //============================================================================================
 typedef struct {
 	// [ in ]
-  GAMEDATA * gamedata;	// ゲームデータ
+  GAMEDATA * gamedata;				// ゲームデータ
+	ZUKAN_SAVEDATA * savedata;	// 図鑑セーブデータ
 
 	u16	callMode;					// 呼び出しモード
 

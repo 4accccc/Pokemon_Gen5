@@ -1023,6 +1023,7 @@ static void * FMenuCallProc_Zukan(PROCLINK_WORK* wk, u32 param, EVENT_PROCLINK_C
   ZUKAN_PARAM * prm = GFL_HEAP_AllocMemory( HEAPID_PROC, sizeof(ZUKAN_PARAM) );
 
 	prm->gamedata = GAMESYSTEM_GetGameData( wk->param->gsys );
+	prm->savedata = GAMEDATA_GetZukanSave( prm->gamedata );
   prm->callMode = ZUKAN_MODE_LIST;
 
   return prm;

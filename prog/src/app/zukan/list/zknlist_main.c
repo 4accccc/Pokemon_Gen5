@@ -540,10 +540,6 @@ void ZKNLISTMAIN_MakeList( ZKNLISTMAIN_WORK * wk )
 {
 	ARCHANDLE * ah = GFL_ARC_OpenDataHandle( ARCID_ZUKAN_GRA, HEAPID_ZUKAN_LIST_L );
 
-	// 点滅アニメ作成
-//	wk->blink = BLINKPALANM_Create( 3*16, 16, GFL_BG_FRAME2_M, HEAPID_ZUKAN_LIST );
-//	BLINKPALANM_SetPalBufferArcHDL( wk->blink, ah, NARC_zukan_gra_list_list_bgd_NCLR, 3*16, 2*16 );
-
 	// リストワーク作成
 	{
 		FRAMELIST_HEADER	hed;
@@ -569,19 +565,12 @@ void ZKNLISTMAIN_MakeList( ZKNLISTMAIN_WORK * wk )
 	{	// リストパラメータ設定
 		u32	i;
 
-		for( i=1; i<=MONSNO_END; i++ ){
-//		for( i=1; i<=20; i++ ){
+//		for( i=1; i<=MONSNO_END; i++ ){
+		for( i=1; i<=3; i++ ){
 			if( ( i % 3 ) == 0 ){
 				FRAMELIST_AddItem( wk->lwk, 1, SET_LIST_PARAM(LIST_INFO_MONS_NONE,i) );
 			}else{
 				FRAMELIST_AddItem( wk->lwk, 0, SET_LIST_PARAM(i%3,i) );
-
-				// 見つけた数
-				wk->seeNum++;
-				// 捕まえた数
-				if( ( i % 3 ) == 2 ){
-					wk->getNum++;
-				}
 			}
 		}
 	}
@@ -600,43 +589,21 @@ void ZKNLISTMAIN_MakeList( ZKNLISTMAIN_WORK * wk )
 		}
 	}
 
-
-//	FRAMELIST_Init( wk->lwk );
-
+/*
+	// 見つけた数
+	wk->seeNum = ;
+	// 捕まえた数
+	wk->getNum = ;
+*/
 
 /*
-	STRBUF * srcStr;
-	STRBUF * cpyStr;
-	u32	i;
+extern u16 ZUKANSAVE_GetPokeGetCount(const ZUKAN_SAVEDATA * zs);
+extern u16 ZUKANSAVE_GetPokeSeeCount(const ZUKAN_SAVEDATA * zs);
 
-	wk->list = ZKNLISTMAIN_CreateList( MONSNO_END, HEAPID_ZUKAN_LIST );
-
-	// 仮です。
-	for( i=1; i<=MONSNO_END; i++ ){
-//	for( i=1; i<=4; i++ ){
-//	for( i=1; i<=12; i++ ){
-		if( ( i % 3 ) == 0 ){
-			srcStr = GFL_MSG_CreateString( wk->mman, str_name_01 );
-			ZKNLISTMAIN_AddListData( wk->list, srcStr, SET_LIST_PARAM(LIST_INFO_MONS_NONE,i) );
-		}else{
-			srcStr = GFL_MSG_CreateString( GlobalMsg_PokeName, i );
-			cpyStr = GFL_STR_CreateCopyBuffer( srcStr, HEAPID_ZUKAN_LIST );
-			GFL_STR_DeleteBuffer( srcStr );
-			ZKNLISTMAIN_AddListData( wk->list, cpyStr, SET_LIST_PARAM(i%3,i) );
-
-			// 見つけた数
-			wk->seeNum++;
-			// 捕まえた数
-			if( ( i % 3 ) == 2 ){
-				wk->getNum++;
-			}
-		}
-	}
-
-	ZKNLISTMAIN_InitList( wk->list, 0, 7, 0, wk, ListCallBack );
-
-	ZKNLISTMAIN_InitListPut( wk );
+extern u16 ZUKANSAVE_GetLocalPokeGetCount(const ZUKAN_SAVEDATA * zs);
+extern u16 ZUKANSAVE_GetLocalPokeSeeCount(const ZUKAN_SAVEDATA * zs);
 */
+
 }
 
 //--------------------------------------------------------------------------------------------
