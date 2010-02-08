@@ -16,6 +16,7 @@
 #include "print/global_msg.h"
 #include "sound/pm_sndsys.h"
 #include "system/wipe.h"
+#include "system/net_err.h"
 #include "app/app_menu_common.h"
 #include "poke_tool/monsno_def.h"
 
@@ -108,6 +109,7 @@ struct _MB_SELECT_WORK
   ARCHANDLE *iconArcHandle;
   
   MB_SELECT_STATE  state;
+  BOOL isNetErr;
   
   u8         boxPage;
   u16        changePageCnt;
@@ -269,6 +271,7 @@ static void MB_SELECT_Init( MB_SELECT_WORK *work )
     work->initWork->selectPoke[i][0] = 0xFF;
     work->initWork->selectPoke[i][1] = 0xFF;
   }
+  work->isNetErr = FALSE;
   work->state = MSS_FADEIN;
   work->pageMoveDir = MSD_NONE;
   work->boxPage = 0;
@@ -1609,6 +1612,13 @@ static GFL_PROC_RESULT MB_SELECT_ProcMain( GFL_PROC * proc, int * seq , void *pw
 {
   MB_SELECT_WORK *work = mywk;
   const BOOL ret = MB_SELECT_Main( work );
+
+  if( NetErr_App_CheckError() != NET_ERR_CHECK_NONE &&
+      work->isNetErr == FALSE )
+  {
+    work->isNetErr = TRUE;
+    work->state = MSS_FADEOUT;
+  }
   
   if( ret == TRUE )
   {

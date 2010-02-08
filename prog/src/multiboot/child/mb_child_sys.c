@@ -162,7 +162,7 @@ static void MB_CHILD_SetupBgFunc( const GFL_BG_BGCNT_HEADER *bgCont , u8 bgPlane
 static void MB_CHILD_LoadResource( MB_CHILD_WORK *work );
 
 static void MB_CHILD_DataConvert( MB_CHILD_WORK *work );
-static const BOOL MB_CHILD_ErrCheck( MB_CHILD_WORK *work );
+static const BOOL MB_CHILD_ErrCheck( MB_CHILD_WORK *work , const BOOL noFade );
 
 static void MB_CHILD_SaveInit( MB_CHILD_WORK *work );
 static void MB_CHILD_SaveTerm( MB_CHILD_WORK *work );
@@ -319,10 +319,13 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
     break;
   
   case MCS_WAIT_CONNECT:
-    if( MB_COMM_IsPostInitData( work->commWork ) == TRUE )
+    if( MB_CHILD_ErrCheck( work , FALSE ) == FALSE )
     {
-      work->initData = MB_COMM_GetInitData( work->commWork );
-      work->state = MCS_CHECK_ROM;
+      if( MB_COMM_IsPostInitData( work->commWork ) == TRUE )
+      {
+        work->initData = MB_COMM_GetInitData( work->commWork );
+        work->state = MCS_CHECK_ROM;
+      }
     }
     break;
   case MCS_CHECK_ROM:
@@ -379,7 +382,7 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
   case MCS_DATA_CONV:
     MB_CHILD_DataConvert( work );
     work->state = MCS_SELECT_FADEOUT;
-    MB_CHILD_ErrCheck( work );
+    MB_CHILD_ErrCheck( work , FALSE );
     break;
   
   //--------------------------------------------------------
@@ -439,7 +442,7 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
     work->msgWork = MB_MSG_MessageInit( work->heapId , MB_CHILD_FRAME_MSG , MB_CHILD_FRAME_SUB_MSG , FILE_MSGID_MB , FALSE );
     MB_MSG_MessageCreateWindow( work->msgWork , MMWT_NORMAL );
     MB_MSG_MessageDispNoWait( work->msgWork , MSG_MB_CHILD_03 );
-
+    MB_CHILD_ErrCheck( work , TRUE );
     break;
     
   case MCS_SELECT_FADEIN:
@@ -470,7 +473,7 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
     {
       work->state = MCS_CAPTURE_FADEOUT;
     }
-    MB_CHILD_ErrCheck( work );
+    MB_CHILD_ErrCheck( work , FALSE );
     break;
 
   //--------------------------------------------------------
@@ -530,12 +533,14 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
   case MCS_CAPTURE_TERM:
     work->state = MCS_CAPTURE_FADEIN;
 
+    GFL_ARC_CloseDataHandle( work->capInitWork.arcHandle );
     PMSND_InitMultiBoot( work->sndData );
     MB_CHILD_InitGraphic( work );
     MB_CHILD_LoadResource( work );
     work->msgWork = MB_MSG_MessageInit( work->heapId , MB_CHILD_FRAME_MSG , MB_CHILD_FRAME_SUB_MSG , FILE_MSGID_MB , FALSE );
     MB_MSG_MessageCreateWindow( work->msgWork , MMWT_NORMAL );
 
+    MB_CHILD_ErrCheck( work , TRUE );
     break;
     
   case MCS_CAPTURE_FADEIN:
@@ -599,27 +604,35 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
     break;
     
   case MCS_TRANS_POKE_SEND:
-    if( MB_COMM_Send_PokeData( work->commWork ) == TRUE )
+    if( MB_CHILD_ErrCheck( work , FALSE ) == FALSE )
     {
-      work->state = MCS_SAVE_INIT;
+      if( MB_COMM_Send_PokeData( work->commWork ) == TRUE )
+      {
+        work->state = MCS_SAVE_INIT;
+      }
     }
     break;
 
   case MCS_SAVE_INIT:
-    if( MB_COMM_IsPost_PostPoke( work->commWork ) == TRUE )
+    if( MB_CHILD_ErrCheck( work , FALSE ) == FALSE )
     {
-      MB_CHILD_SaveInit( work );
-      work->state = MCS_SAVE_MAIN;
-      work->subState = MCSS_SAVE_WAIT_SAVE_INIT;
+      if( MB_COMM_IsPost_PostPoke( work->commWork ) == TRUE )
+      {
+        MB_CHILD_SaveInit( work );
+        work->state = MCS_SAVE_MAIN;
+        work->subState = MCSS_SAVE_WAIT_SAVE_INIT;
+      }
     }
     break;
 
   case MCS_SAVE_MAIN:
     MB_CHILD_SaveMain( work );
+    MB_CHILD_ErrCheck( work , FALSE );
     break;
 
   case MCS_SAVE_TERM:
     MB_CHILD_SaveTerm( work );
+    MB_CHILD_ErrCheck( work , FALSE );
     break;
 
   case MCS_SAVE_FINISH_WAIT:
@@ -640,6 +653,7 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
       MB_MSG_DispYesNo( work->msgWork , MMYT_UP );
       work->state = MCS_WAIT_NEXT_GAME_CONFIRM;
     }
+    MB_CHILD_ErrCheck( work , FALSE );
     break;
   case MCS_WAIT_NEXT_GAME_CONFIRM:
     {
@@ -660,6 +674,7 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
         MB_MSG_ClearYesNo( work->msgWork );
       }
     }
+    MB_CHILD_ErrCheck( work , FALSE );
     break;
   
   case MCS_WAIT_EXIT_COMM:
@@ -837,14 +852,21 @@ static void MB_CHILD_DataConvert( MB_CHILD_WORK *work )
 //--------------------------------------------------------------
 //  エラーのチェック
 //--------------------------------------------------------------
-static const BOOL MB_CHILD_ErrCheck( MB_CHILD_WORK *work )
+static const BOOL MB_CHILD_ErrCheck( MB_CHILD_WORK *work , const BOOL noFade )
 {
   if( NetErr_App_CheckError() != NET_ERR_CHECK_NONE &&
       work->isNetErr == FALSE )
   {
     NetErr_App_ReqErrorDisp();
     work->isNetErr = TRUE;
-    work->state = MCS_FADEOUT;
+    if( noFade == FALSE )
+    {
+      work->state = MCS_FADEOUT;
+    }
+    else
+    {
+      work->state = MCS_WAIT_FADEOUT;
+    }
     return TRUE;
   }
   return FALSE;

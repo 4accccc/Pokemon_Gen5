@@ -15,6 +15,7 @@
 #include "sound/pm_sndsys.h"
 #include "system/wipe.h"
 #include "system/bmp_winframe.h"
+#include "system/net_err.h"
 
 #include "arc_def.h"
 #include "mb_capture_gra.naix"
@@ -80,6 +81,7 @@ struct _MB_CAPTURE_WORK
   MB_CAPTURE_INIT_WORK *initWork;
   
   MB_CAPTURE_STATE  state;
+  BOOL isNetErr;
   
   GFL_G3D_CAMERA    *camera;
   GFL_BBD_SYS     *bbdSys;
@@ -191,6 +193,7 @@ static void MB_CAPTURE_TermDebug( MB_CAPTURE_WORK *work );
 static void MB_CAPTURE_Init( MB_CAPTURE_WORK *work )
 {
   u8 i;
+  work->isNetErr = FALSE;
   work->state = MSS_FADEIN;
   
   work->sndData = GFL_ARCHDL_UTIL_Load( work->initWork->arcHandle ,
@@ -1476,6 +1479,14 @@ static GFL_PROC_RESULT MB_CAPTURE_ProcMain( GFL_PROC * proc, int * seq , void *p
 {
   MB_CAPTURE_WORK *work = mywk;
   const BOOL ret = MB_CAPTURE_Main( work );
+  
+  if( NetErr_App_CheckError() != NET_ERR_CHECK_NONE &&
+      work->isNetErr == FALSE )
+  {
+    work->isNetErr = TRUE;
+    work->state = MSS_FADEOUT;
+    OS_TPrintf("ÉGÉâÅ[î≠ê∂ÅI\n");
+  }
   
   if( ret == TRUE )
   {
