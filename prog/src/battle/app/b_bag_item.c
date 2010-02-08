@@ -218,6 +218,14 @@ void BattleBag_ShooterPocketInit( BBAG_WORK * wk )
 	wk->scr_max[0] = (wk->item_max[0]-1) / 6;
 }
 
+void BattleBag_GetDemoPocketInit( BBAG_WORK * wk )
+{
+	wk->pocket[2][0].id = ITEM_MONSUTAABOORU;
+	wk->pocket[2][0].no = 30;
+	wk->item_max[2] = 1;
+	wk->scr_max[2] = 0;
+}
+
 //--------------------------------------------------------------------------------------------
 /**
  * 指定位置にアイテムがあるか

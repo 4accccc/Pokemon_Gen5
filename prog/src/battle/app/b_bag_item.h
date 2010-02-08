@@ -50,6 +50,8 @@ extern void BattleBag_PocketInit( BBAG_WORK * wk );
 
 extern void BattleBag_ShooterPocketInit( BBAG_WORK * wk );
 
+extern void BattleBag_GetDemoPocketInit( BBAG_WORK * wk );
+
 //--------------------------------------------------------------------------------------------
 /**
  * 指定位置にアイテムがあるか

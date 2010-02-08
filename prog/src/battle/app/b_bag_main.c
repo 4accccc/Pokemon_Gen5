@@ -370,7 +370,11 @@ static int BBAG_SeqInit( BBAG_WORK * wk )
 //  wk->poke_id = (u8)MYITEM_BattleBagPocketPagePosGet( wk->cur );
   wk->poke_id = 0;
 
-  BattleBag_PocketInit( wk );
+  if( wk->dat->mode == BBAG_MODE_GETDEMO ){
+		BattleBag_GetDemoPocketInit( wk );
+	}else{
+	  BattleBag_PocketInit( wk );
+	}
 
   BattleBag_BmpInit( wk );
   BattleBag_BmpWrite( wk, wk->page );
