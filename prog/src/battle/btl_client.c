@@ -1616,7 +1616,7 @@ static BOOL is_unselectable_waza( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, Waza
     u8 fuinPokeID = BTL_FIELD_GetDependPokeID( BTL_FLDEFF_FUIN );
     u8 myPokeID = BPP_GetID( bpp );
     BTL_Printf("‚Ó‚¤‚¢‚ñŽÀŽ{’†\n");
-    if( myPokeID != fuinPokeID )
+    if( !BTL_MAINUTIL_IsFriendPokeID(myPokeID, fuinPokeID) )
     {
       const BTL_POKEPARAM* fuinPoke = BTL_POKECON_GetPokeParam( wk->pokeCon, fuinPokeID );
       BTL_Printf("Ž©•ª‚Í‚Ó‚¤‚¢‚ñƒ|ƒP‚¶‚á‚ ‚è‚Ü‚¹‚ñ\n");

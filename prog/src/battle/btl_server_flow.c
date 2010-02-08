@@ -8719,7 +8719,8 @@ static SV_WazaFailCause scEvent_CheckWazaExecute2ND( BTL_SVFLOW_WORK* wk, BTL_PO
     if( BTL_FIELD_CheckEffect(BTL_FLDEFF_FUIN) )
     {
       u8 dependPokeID = BTL_FIELD_GetDependPokeID( BTL_FLDEFF_FUIN );
-      if( BPP_GetID(attacker) != dependPokeID )
+      u8 atkPokeID = BPP_GetID( attacker );
+      if( !BTL_MAINUTIL_IsFriendPokeID(atkPokeID, dependPokeID) )
       {
         const BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, dependPokeID );
         if( BPP_WAZA_SearchIdx(bpp, waza) != PTL_WAZA_MAX ){

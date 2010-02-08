@@ -466,10 +466,10 @@ void BTLV_SCU_StartBtlIn( BTLV_SCU* wk )
   case BTL_RULE_ROTATION:
     // ゲーム内トレーナー
     if( competitor != BTL_COMPETITOR_COMM ){
-      BTL_UTIL_SetupProc( &wk->proc, wk, NULL, btlin_trainer_double );
+      BTL_UTIL_SetupProc( &wk->proc, wk, NULL, btlin_trainer_triple );
     // 通信対戦
     }else{
-      BTL_UTIL_SetupProc( &wk->proc, wk, NULL, btlin_comm_double );
+      BTL_UTIL_SetupProc( &wk->proc, wk, NULL, btlin_comm_triple );
     }
     break;
   }
@@ -652,7 +652,7 @@ static BOOL btlin_wild_single( int* seq, void* wk_adrs )
     {
       BtlCompetitor  competitor = BTL_MAIN_GetCompetitor( wk->mainModule );
       const MYSTATUS* status = BTL_MAIN_GetPlayerStatus( wk->mainModule );
-      if( competitor == BTL_COMPETITOR_DEMO_CAPTURE ){ 
+      if( competitor == BTL_COMPETITOR_DEMO_CAPTURE ){
         BTLV_EFFECT_Add( BTLEFF_SINGLE_ENCOUNT_2_ARARAGI );
       }
       else if( MyStatus_GetMySex(status) == PM_MALE ){
