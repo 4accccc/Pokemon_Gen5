@@ -12,6 +12,7 @@
 #define ZONE_R03R0201_EVC_H
 
 #define R03R0201_SODATEYA_GRANDMA          0
+#define R03R0201_BADMAN_01                 1
 
 #endif //ZONE_R03R0201_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/r03r0201.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
