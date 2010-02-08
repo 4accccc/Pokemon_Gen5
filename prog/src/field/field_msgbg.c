@@ -3249,9 +3249,9 @@ FLDBGWIN * FLDBGWIN_Add( FLDMSGBG *fmb, FLDBGWIN_TYPE type )
   
   {
     GFL_BMP_DATA *bmp;
-
+    
     bgWin->bmpwin = GFL_BMPWIN_Create( fmb->bgFrame,
-        2, 19, 27, 4, PANO_FONT_TALKMSGWIN, GFL_BMP_CHRAREA_GET_B );
+        2, 19, 27, 4, PANO_BGWIN, GFL_BMP_CHRAREA_GET_B );
     bgWin->bmp_new = GFL_BMP_Create(
         27, 4, GFL_BMP_16_COLOR, fmb->heapID );
     bgWin->bmp_old = GFL_BMP_Create(
