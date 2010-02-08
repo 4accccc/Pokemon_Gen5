@@ -441,24 +441,14 @@ void BTL_SICKEVENT_CheckNotEffectByType( BTL_SVFLOW_WORK* flowWk, const BTL_POKE
       }
     }
   }
-}
-/**-------------------------------------------------------------
- * 相性計算ハンドラ
- *------------------------------------------------------------*/
-void BTL_SICKEVENT_CheckDamageAffinity(  BTL_SVFLOW_WORK* flowWk, const BTL_POKEPARAM* defender )
-{
-  // 「みやぶる」状態の時、効果無しのワザを等倍ヒットに変換
-  if( BPP_CheckSick(defender, WAZASICK_MIYABURU) )
-  {
-    BPP_SICK_CONT cont = BPP_GetSickCont( defender, WAZASICK_MIYABURU );
-    PokeType type = BPP_SICKCONT_GetParam( cont );
-    if( BPP_IsMatchType(defender, type) ){
-      BtlTypeAff aff = BTL_EVENTVAR_GetValue( BTL_EVAR_TYPEAFF );
-      if( aff == BTL_TYPEAFF_0 ){
-        BTL_EVENTVAR_RewriteValue( BTL_EVAR_TYPEAFF, BTL_TYPEAFF_100 );
-      }
+
+  // 「ねをはる」状態なら、地面ワザが等倍
+  if( BPP_CheckSick(defender, WAZASICK_NEWOHARU) ){
+    if( BTL_EVENTVAR_GetValue(BTL_EVAR_WAZA_TYPE) == POKETYPE_JIMEN ){
+      BTL_EVENTVAR_RewriteValue( BTL_EVAR_FLAT_FLAG, TRUE );
     }
   }
+
 }
 /**-------------------------------------------------------------
  * 飛行フラグチェックハンドラ

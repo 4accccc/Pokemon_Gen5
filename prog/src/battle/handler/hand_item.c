@@ -329,6 +329,7 @@ static void handler_Kongoudama( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
 static const BtlEventHandlerTable* HAND_ADD_ITEM_KuroiTekkyuu( u32* numElems );
 static void handler_KuroiTekkyuu_Agility( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_KuroiTekkyuu_CheckFly( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_KuroiTekkyuu_CheckAff( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable* HAND_ADD_ITEM_SinkanoKiseki( u32* numElems );
 static void handler_SinkanoKiseki( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable* HAND_ADD_ITEM_GotugotuMet( u32* numElems );
@@ -4103,6 +4104,7 @@ static const BtlEventHandlerTable* HAND_ADD_ITEM_KuroiTekkyuu( u32* numElems )
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_CALC_AGILITY,     handler_KuroiTekkyuu_Agility  },  // すばやさ計算ハンドラ
     { BTL_EVENT_CHECK_FLYING,     handler_KuroiTekkyuu_CheckFly },  // ふゆうチェックハンドラ
+    { BTL_EVENT_CHECK_AFFINITY,   handler_KuroiTekkyuu_CheckAff },  // 相性チェックハンドラ
 
   };
   *numElems = NELEMS( HandlerTable );
@@ -4124,7 +4126,14 @@ static void handler_KuroiTekkyuu_CheckFly( BTL_EVENT_FACTOR* myHandle, BTL_SVFLO
     BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_FLAG, TRUE );
   }
 }
-
+// 相性チェックハンドラ
+static void handler_KuroiTekkyuu_CheckAff( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) == pokeID )
+  {
+    BTL_EVENTVAR_RewriteValue( BTL_EVAR_FLAT_FLAG, TRUE );
+  }
+}
 
 //------------------------------------------------------------------------------
 /**

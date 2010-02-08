@@ -21,7 +21,6 @@ BOOL BTL_SICK_MakeDefaultCureMsg( WazaSick sickID, BPP_SICK_CONT cont, const BTL
   u16 itemID, BTL_HANDEX_STR_PARAMS* str );
 
 extern void BTL_SICKEVENT_CheckNotEffectByType( BTL_SVFLOW_WORK* flowWk, const BTL_POKEPARAM* defender );
-extern void BTL_SICKEVENT_CheckDamageAffinity(  BTL_SVFLOW_WORK* flowWk, const BTL_POKEPARAM* defender );
 extern void BTL_SICKEVENT_CheckFlying(  BTL_SVFLOW_WORK* flowWk, const BTL_POKEPARAM* defender );
 extern void BTL_SICKEVENT_CheckPushOutFail( BTL_SVFLOW_WORK* flowWk, const BTL_POKEPARAM* bpp );
 extern void BTL_SICKEVENT_CheckHitRatio( BTL_SVFLOW_WORK* flowWk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender );

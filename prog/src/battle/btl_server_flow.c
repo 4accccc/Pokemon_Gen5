@@ -9426,7 +9426,7 @@ static BtlTypeAff scProc_checkWazaDamageAffinity( BTL_SVFLOW_WORK* wk,
     return BTL_TYPEAFF_100;
   }
 
-  // 飛行状態のポケモンに地面ワザは効果がない
+  // ふゆう状態のポケモンに地面ワザは効果がない
   if( wazaParam->wazaType == POKETYPE_JIMEN )
   {
     scproc_CheckFlying( wk, defender );
