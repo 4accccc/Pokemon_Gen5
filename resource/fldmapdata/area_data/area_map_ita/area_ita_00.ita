@@ -3,7 +3,7 @@
 <ita version="1.6.0">
 
 <head>
-	<create user="fuchino" host="W00152" date="2010-01-13T20:47:45" source="area_ita_00_100113.mb"/>
+	<create user="fuchino" host="W00152" date="2010-02-06T23:13:07" source="area_ita_00_100206.mb"/>
 	<title>Texture SRT Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
@@ -328,14 +328,14 @@
 		<tex_translate_s frame_step="1" data_size="1" data_head="0"/>
 		<tex_translate_t frame_step="1" data_size="240" data_head="1920"/>
 	</tex_srt_anm>
-	<tex_srt_anm index="11" material_name="kawa01b_2">
+	<tex_srt_anm index="11" material_name="kawa01b_1">
 		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
 		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
 		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
 		<tex_translate_s frame_step="1" data_size="1" data_head="0"/>
 		<tex_translate_t frame_step="1" data_size="240" data_head="1920"/>
 	</tex_srt_anm>
-	<tex_srt_anm index="12" material_name="kawa01b_3">
+	<tex_srt_anm index="12" material_name="kawa01b_2">
 		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
 		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
 		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
