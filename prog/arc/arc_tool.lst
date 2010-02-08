@@ -275,3 +275,4 @@
   ARCID_OEKAKI  "oekaki.narc" #おえかきボード
   ARCID_RESEARCH_RADAR "research_radar.narc"  # 調査レーダー
   ARCID_UN_SELECT_GRA "un_select_gra.narc" #国連フロア選択
+  ARCID_POKEVOICE_PARAM "pokevoice_param.narc" #ポケモン鳴き声パラメータ
