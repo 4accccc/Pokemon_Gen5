@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-06T12:22:21"/>
+	<create user="matsumiya" host="W00224" date="2010-02-08T15:46:18"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,7 +307,7 @@
 		</language>
 	</columns>
 
-	<dialog left="23" top="241" right="726" bottom="861" maximized="no" rayout="Vertical2">
+	<dialog left="1496" top="260" right="2199" bottom="880" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="528"/>
@@ -345,7 +345,6 @@
 　　・いるが不可　→dragon_03
 　　・いない→dragon_04
 　いいえ→dragon_02
-
 ・条件あり
 　なつき度最高を満たしていれば何匹でも覚える
 　技名「りゅうせいぐん」</comment>
@@ -586,7 +585,6 @@
 　　・いるが不可　→dragon_03
 　　・いない→dragon_04
 　いいえ→dragon_02
-
 ・条件あり
 　なつき度最高を満たしていれば何匹でも覚える
 　技名「りゅうせいぐん」</comment>
@@ -775,13 +773,12 @@
 		<comment>♂：究極技教え
 ・手持ちに対象ポケモンがいない場合</comment>
 		<attribute name="キャラ指定">OLDMAN</attribute>
-		<language name="JPN" width="256">おぬしの　つれている　ポケモンでは
-おぼえられんぞ！▼
+		<language name="JPN" width="256">おぬしの　つれている
+ポケモンでは　おぼえられんぞ！▼
 はりがみを　よむのじゃ！　カッ！！</language>
-		<language name="JPN_KANJI" width="256">おぬしの　つれている　ポケモンでは
-覚えられんぞ！▼
-張り紙を　読むのじゃ！　カッ！！
-</language>
+		<language name="JPN_KANJI" width="256">おぬしの　つれている
+ポケモンでは　覚えられんぞ！▼
+張り紙を　読むのじゃ！　カッ！！</language>
 	</row>
 
 	<row id="msg_skillteach_powerful_04">
@@ -800,7 +797,6 @@
 　タマゴ→07
 　なつき度たりない→08
 　すでに技を習得済み→09
-
 ・覚えられるポケモンを選択
 　炎タイプ→10
 　水タイプ→11
@@ -851,10 +847,9 @@
 	<row id="msg_skillteach_powerful_10">
 		<comment>・習得ＯＫで炎ポケモン選択
 ・はい/いいえの選択肢表示
-　はい（わざ３つ以下）→13
-　はい（わざ４つ）→14
+　はい（わざ３つ以下）→system_01
+　はい（わざ４つ）→system_02
 　いいえ→04
-
 ・0＝ポケモン名</comment>
 		<attribute name="キャラ指定">OLDMAN</attribute>
 		<language name="JPN" width="256">[1:01:ポケモン種族名:0]に　[1:07:わざ名:1]を
@@ -863,7 +858,7 @@
 覚えさせるのじゃな！　カッ！！</language>
 	</row>
 
-	<row id="msg_skillteach_poster_01">
+	<row id="msg_skillteach_poster_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>ＢＧメッセージ
 ・今後WBの最初3匹（の進化系)を追加</comment>
 		<attribute name="キャラ指定">ポスター</attribute>
@@ -895,6 +890,157 @@
 　フシギバナ　メガニウム▽
 　ジュカイン　ドダイトス▽
 　？？？？？</language>
+	</row>
+
+	<row id="msg_skillteach_coalescence_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂：合体技教え
+・初めての会話
+・はい/いいえの選択肢表示
+　はい　→03
+　いいえ→04
+
+・0~2=wbpm551.552.553
+・3~5=wbpm554.555.556
+・6~8=wbpm557.558.559</comment>
+		<attribute name="キャラ指定">TRAINERM</attribute>
+		<language name="JPN" width="256">きみ　きみ！▼
+[1:01:ポケモン種族名:0]　[1:01:ポケモン種族名:1]　[1:01:ポケモン種族名:2]▼
+[1:01:ポケモン種族名:3]　[1:01:ポケモン種族名:4]　[1:01:ポケモン種族名:5]▼
+[1:01:ポケモン種族名:6]　[1:01:ポケモン種族名:7]　[1:01:ポケモン種族名:8]▼
+いま　ゆうた　どれかの　ポケモンが
+きみに　なついとったら▼
+とくべつな　わざ……
+がったいわざを　おしえてあげるで？</language>
+		<language name="JPN_KANJI" width="256">きみ　きみ！▼
+[1:01:ポケモン種族名:0]　[1:01:ポケモン種族名:1]　[1:01:ポケモン種族名:2]▼
+[1:01:ポケモン種族名:3]　[1:01:ポケモン種族名:4]　[1:01:ポケモン種族名:5]▼
+[1:01:ポケモン種族名:6]　[1:01:ポケモン種族名:7]　[1:01:ポケモン種族名:8]▼
+いま　ゆうた　どれかの　ポケモンが
+きみに　なついとったら▼
+特別な　技……
+合体技を　教えてあげるで？</language>
+	</row>
+
+	<row id="msg_skillteach_coalescence_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂：合体技教え
+・２回目以降の会話
+　あるいは技を習得したあと
+・はい/いいえの選択肢表示
+　はい　→03
+　いいえ→04</comment>
+		<attribute name="キャラ指定">TRAINERM</attribute>
+		<language name="JPN" width="256">とくべつな　わざ……
+がったいわざを　おしえてあげよか？</language>
+		<language name="JPN_KANJI" width="256">特別な　技……
+合体技を　教えてあげよか？</language>
+	</row>
+
+	<row id="msg_skillteach_coalescence_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂：合体技教え
+・手持ちに対象ポケモンがいない場合</comment>
+		<attribute name="キャラ指定">TRAINERM</attribute>
+		<language name="JPN" width="256">きみが　いっしょにおる　ポケモンに
+おしえられる　わざは　あらへんで</language>
+		<language name="JPN_KANJI" width="256">きみが　一緒におる　ポケモンに
+教えられる　技は　あらへんで</language>
+	</row>
+
+	<row id="msg_skillteach_coalescence_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂：合体技教え
+・いいえ選択時</comment>
+		<attribute name="キャラ指定">TRAINERM</attribute>
+		<language name="JPN" width="256">そうかいな……
+ほな　また　きてな</language>
+		<language name="JPN_KANJI" width="256">そうかいな……
+ほな　また　来てな</language>
+	</row>
+
+	<row id="msg_skillteach_coalescence_05" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・ポケモン選択
+　最初から覚えられないポケモン→06
+　タマゴ→07
+　なつき度たりない→08
+　すでに技を習得済み→09
+・覚えられるポケモンを選択→10</comment>
+		<attribute name="キャラ指定">TRAINERM</attribute>
+		<language name="JPN" width="256">ほな　どの　ポケモンに
+わざを　おぼえさせるん？</language>
+		<language name="JPN_KANJI" width="256">ほな　どの　ポケモンに
+技を　覚えさせるん？</language>
+	</row>
+
+	<row id="msg_skillteach_coalescence_06" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・最初から覚えられないポケモンを選択</comment>
+		<attribute name="キャラ指定">TRAINERM</attribute>
+		<language name="JPN" width="256">その　ポケモンは
+とくべつな　わざを　おぼえへんよ▼
+どの　ポケモンが　おぼえるかは
+ごめんやけど　はりがみを　よんでみて</language>
+		<language name="JPN_KANJI" width="256">その　ポケモンは
+特別な　技を　覚えへんよ▼
+どの　ポケモンが　覚えるかは
+ごめんやけど　張り紙を　読んでみて</language>
+	</row>
+
+	<row id="msg_skillteach_coalescence_07" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・タマゴ選択</comment>
+		<attribute name="キャラ指定">TRAINERM</attribute>
+		<language name="JPN" width="256">タマゴに　わざを　おしえるの？
+きみ　ムチャ　いうなあ！</language>
+		<language name="JPN_KANJI" width="256">タマゴに　わざを　おしえるの？
+きみ　ムチャ　いうなあ！</language>
+	</row>
+
+	<row id="msg_skillteach_coalescence_08" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・なつき度がたりないポケモンを選択</comment>
+		<attribute name="キャラ指定">TRAINERM</attribute>
+		<language name="JPN" width="256">そのポケモン……　まだ
+きみ　なついてへん　みたいやな</language>
+		<language name="JPN_KANJI" width="256">そのポケモン……　まだ
+きみ　なついてへん　みたいやな</language>
+	</row>
+
+	<row id="msg_skillteach_coalescence_09" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・すでに技を習得済みのポケモンを選択</comment>
+		<attribute name="キャラ指定">TRAINERM</attribute>
+		<language name="JPN" width="256">その　ポケモンやけど　もう
+とくべつな　わざ　おぼえてるやん！</language>
+		<language name="JPN_KANJI" width="256">その　ポケモンやけど　もう
+特別な技　覚えてるやん！</language>
+	</row>
+
+	<row id="msg_skillteach_coalescence_10" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・習得ＯＫで炎ポケモン選択
+・はい/いいえの選択肢表示
+　はい（わざ３つ以下）→system_01
+　はい（わざ４つ）→system_02
+　いいえ→04
+・0＝ポケモン名</comment>
+		<attribute name="キャラ指定">TRAINERM</attribute>
+		<language name="JPN" width="256">[1:01:ポケモン種族名:0]に　[1:07:わざ名:1]を
+おぼえさせるんか？</language>
+		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:0]に　[1:07:わざ名:1]を
+覚えさせるんか？</language>
+	</row>
+
+	<row id="msg_skillteach_coalescence_11" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>ＢＧメッセージ
+・今後WBの最初3匹（の進化系)を追加</comment>
+		<attribute name="キャラ指定">TRAINERM</attribute>
+		<language name="JPN" width="256">わいの　おきにいり　ポケモン▼
+[1:01:ポケモン種族名:0]　[1:01:ポケモン種族名:1]　[1:01:ポケモン種族名:2]▼
+[1:01:ポケモン種族名:3]　[1:01:ポケモン種族名:4]　[1:01:ポケモン種族名:5]▼
+[1:01:ポケモン種族名:6]　[1:01:ポケモン種族名:7]　[1:01:ポケモン種族名:8]▼
+こいつらに　とくべつな　わざ……
+がったいわざを　おしえる……！▽
+それが　わいの　ちかい　や！</language>
+		<language name="JPN_KANJI" width="256">わいの　おきにいり　ポケモン▼
+[1:01:ポケモン種族名:0]　[1:01:ポケモン種族名:1]　[1:01:ポケモン種族名:2]▼
+[1:01:ポケモン種族名:3]　[1:01:ポケモン種族名:4]　[1:01:ポケモン種族名:5]▼
+[1:01:ポケモン種族名:6]　[1:01:ポケモン種族名:7]　[1:01:ポケモン種族名:8]▼
+こいつらに　特別な　技……
+合体技を　教える……！▽
+それが　わいの　誓い　や！</language>
 	</row>
 
 	<flowchart-group-list>
