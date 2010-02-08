@@ -16,9 +16,9 @@
  * @brief	データＩＮＤＥＸ有効範囲
  */
 //------------------------------------------------------------------
-#define PMVOICE_START	(BANK_PV001)
-#define PMVOICE_END		(WAVE_ARC_PV492_SKY)
-#define PMVOICE_POKE001	(PMVOICE_START)
+#define PMVOICE_START			(BANK_PV001)
+#define PMVOICE_END				(WAVE_ARC_PV492_SKY)
+#define PMVOICE_POKE001		(PMVOICE_START)
 
 //------------------------------------------------------------------
 /**
@@ -49,7 +49,7 @@ extern void	PMV_GetVoiceWaveIdx( u32, u32, u32* );
  * @brief	波形データカスタマイズコールバック
  */
 //============================================================================================
-extern BOOL	PMV_CustomVoiceWave( u32, u32, u32, void**, u32*, int*, int* );
+extern BOOL	PMV_CustomVoiceWave( u32, u32, u32, void**, u32*, int*, int*, s8* );
 
 //============================================================================================
 /**

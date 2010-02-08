@@ -22,13 +22,17 @@
 //	サンプリングデータ用定義
 //
 //==============================================================================================
+//通常
+#define VOICE_VOLUME_DEFAULT	(120)			//seq設定(sound_data.sarc)内(PV_VOL)を参照
+#define VOICE_RATE_DEFAULT		(13379)		//サンプリングレート
+
 // ぺラップ
-#define PERAP_SAMPLING_RATE		(2000)			//サンプリングレート
+#define PERAP_SAMPLING_RATE		(2000)		//サンプリングレート
 #define PERAP_SAMPLING_TIME		(1)				//サンプリング時間
 #define PERAP_SAMPLING_SIZE		(PERAP_SAMPLING_RATE * PERAP_SAMPLING_TIME)	//データ量
 
-#define PERAP_WAVE_SPD			(32768)			//再生スピード(１倍速)
-#define PERAP_WAVE_SPDRAND		(8192)			//再生スピードのランダム
+#define PERAP_WAVE_SPD				(32768)		//再生スピード(１倍速)
+#define PERAP_WAVE_SPDRAND		(8192)		//再生スピードのランダム
 extern PERAPVOICE * SaveData_GetPerapVoice(SAVE_CONTROL_WORK * sv);
 //============================================================================================
 /**
@@ -67,15 +71,20 @@ void PMV_GetVoiceWaveIdx(	u32 pokeNo, 		// [in]ポケモンナンバー
  *
  */
 //============================================================================================
-BOOL PMV_CustomVoiceWave(	u32 pokeNo,			// [in]ポケモンナンバー
-							u32 pokeFormNo,		// [in]ポケモンフォームナンバー
-							u32 userParam,		// [in]ユーザーパラメーター
-							void** wave,		// [out]波形データ
-							u32* size,			// [out]波形サイズ(MAX 26000)
-							int* rate,			// [out]波形再生レート
-							int* speed )		// [out]波形再生スピード
+BOOL PMV_CustomVoiceWave(	u32			pokeNo,			// [in]ポケモンナンバー
+													u32			pokeFormNo,	// [in]ポケモンフォームナンバー
+													u32			userParam,	// [in]ユーザーパラメーター
+													void**	wave,				// [out]波形データ
+													u32*		size,				// [out]波形サイズ(MAX 26000)
+													int*		rate,				// [out]波形再生レート
+													int*		speed,			// [out]波形再生スピード
+													s8*			volume)			// [out]再生ボリューム
 {
 	PMV_REF* pmvRef;
+
+	//ボリューム＆サンプリングレート設定
+	*volume = VOICE_VOLUME_DEFAULT;
+	*rate		= VOICE_RATE_DEFAULT;
 
 	if( userParam == NULL ){ return FALSE; }	// 既存waveのみ使用
 
