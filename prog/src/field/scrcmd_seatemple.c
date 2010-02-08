@@ -47,65 +47,57 @@ enum
 //=====================================
 enum {
   // リソース数
-  MODEL_RES_LIGHT_MODEL = 0,
-  MODEL_RES_LIGHT_SHADOW,
-  MODEL_RES_HAICHI,
-  MODEL_RES_LIGHT_MODEL2,
-  MODEL_RES_LIGHT_SHADOW2,
-  MODEL_RES_LIGHT_ITA,
-  MODEL_RES_HAICHI_ITA,
-  MODEL_RES_LIGHT_ITA2,
+  MODEL_RES_OBON_A = 0,
+  MODEL_RES_OBON_B,
+  MODEL_RES_OBON_C,
+  MODEL_RES_OBON_ITA_A,
+  MODEL_RES_OBON_ITA_B,
+  MODEL_RES_OBON_ITA_C,
   MODEL_RES_MAX,
 
   // モデル数
-  MODEL_MODEL_LIGHT = 0,
-  MODEL_MODEL_LIGHT_SHADOW,
-  MODEL_MODEL_HAICHI,
-  MODEL_MODEL_LIGHT2,
-  MODEL_MODEL_LIGHT_SHADOW2,
+  MODEL_MODEL_OBON_A = 0,
+  MODEL_MODEL_OBON_B,
+  MODEL_MODEL_OBON_C,
   MODEL_MODEL_MAX,
 
   // アニメ数
-  MODEL_ANIME_LIGHT = 0,
-  MODEL_ANIME_HAICHI,
-  MODEL_ANIME_LIGHT2,
+  MODEL_ANIME_OBON_A = 0,
+  MODEL_ANIME_OBON_B,
+  MODEL_ANIME_OBON_C,
   MODEL_ANIME_MAX,
 } ;
 
 static const u32 sc_MODEL_RES_TBL[MODEL_RES_MAX] = 
 {
-  NARC_field_sea_temple_sea_light_nsbmd,
-  NARC_field_sea_temple_sea_shodow_nsbmd,
-  NARC_field_sea_temple_sea_haichi_nsbmd,
-  NARC_field_sea_temple_sea_light_2_nsbmd,
-  NARC_field_sea_temple_sea_light_shadow_2_nsbmd,
-  NARC_field_sea_temple_sea_light_nsbta,
-  NARC_field_sea_temple_sea_haichi_nsbta,
-  NARC_field_sea_temple_sea_light_2_nsbta,
+  NARC_field_sea_temple_sea_obon_a_nsbmd,
+  NARC_field_sea_temple_sea_obon_b_nsbmd,
+  NARC_field_sea_temple_sea_obon_c_nsbmd,
+  NARC_field_sea_temple_sea_obon_a_nsbta,
+  NARC_field_sea_temple_sea_obon_b_nsbta,
+  NARC_field_sea_temple_sea_obon_c_nsbta,
 };
 
 static const u32 sc_MODEL_MODEL_RES[MODEL_MODEL_MAX] = 
 {
-  MODEL_RES_LIGHT_MODEL,
-  MODEL_RES_LIGHT_SHADOW,
-  MODEL_RES_HAICHI,
-  MODEL_RES_LIGHT_MODEL2,
-  MODEL_RES_LIGHT_SHADOW2,
+  MODEL_RES_OBON_A,
+  MODEL_RES_OBON_B,
+  MODEL_RES_OBON_C,
 };
 
 
 static const u32 sc_MODEL_ANM_RES[MODEL_ANIME_MAX] = 
 {
-  MODEL_RES_LIGHT_ITA,
-  MODEL_RES_HAICHI_ITA,
-  MODEL_RES_LIGHT_ITA2,
+  MODEL_RES_OBON_ITA_A,
+  MODEL_RES_OBON_ITA_B,
+  MODEL_RES_OBON_ITA_C,
 };
 
 static const u32 sc_MODEL_ANM_RND[MODEL_ANIME_MAX] = 
 {
-  MODEL_MODEL_LIGHT,
-  MODEL_MODEL_HAICHI,
-  MODEL_MODEL_LIGHT2,
+  MODEL_MODEL_OBON_A,
+  MODEL_MODEL_OBON_B,
+  MODEL_MODEL_OBON_C,
 };
 
 
@@ -141,7 +133,6 @@ typedef struct {
   GFL_G3D_OBJ* p_obj[MODEL_MODEL_MAX];
 
 #ifdef PM_DEBUG
-  u8 DEBUG_print_shodow;
   u8 DEBUG_print_haichi;
 #endif
 
@@ -249,9 +240,9 @@ static void SEATEMPLE_Create(FLDMAPFUNC_WORK* p_funcwk, FIELDMAP_WORK* p_fieldma
   
 
   // ライトモデルのほうだけ、アニメーションON
-  GFL_G3D_OBJECT_EnableAnime( p_wk->p_obj[ MODEL_MODEL_LIGHT ], MODEL_ANIME_LIGHT );
-  GFL_G3D_OBJECT_EnableAnime( p_wk->p_obj[ MODEL_MODEL_HAICHI ], MODEL_ANIME_HAICHI );
-  GFL_G3D_OBJECT_EnableAnime( p_wk->p_obj[ MODEL_MODEL_LIGHT2 ], MODEL_ANIME_LIGHT2 );
+  GFL_G3D_OBJECT_EnableAnime( p_wk->p_obj[ MODEL_MODEL_OBON_A ], MODEL_ANIME_OBON_A );
+  GFL_G3D_OBJECT_EnableAnime( p_wk->p_obj[ MODEL_MODEL_OBON_B ], MODEL_ANIME_OBON_B );
+  GFL_G3D_OBJECT_EnableAnime( p_wk->p_obj[ MODEL_MODEL_OBON_C ], MODEL_ANIME_OBON_C );
 
   // マニュアルソートに変更
   // field_camera内でも操作しているのでタイミングに注意！
@@ -262,7 +253,6 @@ static void SEATEMPLE_Create(FLDMAPFUNC_WORK* p_funcwk, FIELDMAP_WORK* p_fieldma
 
 #ifdef PM_DEBUG
   p_wk->DEBUG_print_haichi = TRUE;
-  p_wk->DEBUG_print_shodow = 0;
 #endif
 }
 
@@ -321,16 +311,12 @@ static void SEATEMPLE_Update(FLDMAPFUNC_WORK* p_funcwk, FIELDMAP_WORK* p_fieldma
   SEATEMPLE_WK* p_wk = p_work;
 
   // 
-  GFL_G3D_OBJECT_LoopAnimeFrame( p_wk->p_obj[ MODEL_MODEL_LIGHT ], MODEL_ANIME_LIGHT, FX32_CONST(0.2) );
-  GFL_G3D_OBJECT_LoopAnimeFrame( p_wk->p_obj[ MODEL_MODEL_HAICHI ], MODEL_ANIME_HAICHI, FX32_ONE );
-  GFL_G3D_OBJECT_LoopAnimeFrame( p_wk->p_obj[ MODEL_MODEL_LIGHT2 ], MODEL_ANIME_LIGHT2, FX32_HALF );
+  GFL_G3D_OBJECT_LoopAnimeFrame( p_wk->p_obj[ MODEL_MODEL_OBON_A ], MODEL_ANIME_OBON_A, FX32_ONE );
+  GFL_G3D_OBJECT_LoopAnimeFrame( p_wk->p_obj[ MODEL_MODEL_OBON_B ], MODEL_ANIME_OBON_B, FX32_ONE );
+  GFL_G3D_OBJECT_LoopAnimeFrame( p_wk->p_obj[ MODEL_MODEL_OBON_C ], MODEL_ANIME_OBON_C, FX32_ONE );
 
 #ifdef PM_DEBUG
-  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y )
-  {
-    p_wk->DEBUG_print_shodow = (p_wk->DEBUG_print_shodow + 1) % MODEL_SHADOW_TYPE_MAX;
-  }
-  else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_L )
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_L )
   {
     if(p_wk->DEBUG_print_haichi){
       p_wk->DEBUG_print_haichi = FALSE;
@@ -351,30 +337,12 @@ static void SEATEMPLE_3DWrite(FLDMAPFUNC_WORK* p_funcwk, FIELDMAP_WORK* p_fieldm
   SEATEMPLE_WK* p_wk = p_work;
 
 #ifdef PM_DEBUG
-  if( p_wk->DEBUG_print_shodow == MODEL_SHADOW_TYPE_1 )
-  {
-    // Shadowボリューム後本ポリゴン描画
-    GFL_G3D_DRAW_DrawObject( p_wk->p_obj[MODEL_MODEL_LIGHT_SHADOW], &sc_DRAWPARAM );
-    GFL_G3D_DRAW_DrawObject( p_wk->p_obj[MODEL_MODEL_LIGHT], &sc_DRAWPARAM );
-  }
-  else if( p_wk->DEBUG_print_shodow == MODEL_SHADOW_TYPE_2 )
-  {
-    // Shadowボリューム後本ポリゴン描画
-    GFL_G3D_DRAW_DrawObject( p_wk->p_obj[MODEL_MODEL_LIGHT_SHADOW2], &sc_DRAWPARAM );
-    GFL_G3D_DRAW_DrawObject( p_wk->p_obj[MODEL_MODEL_LIGHT2], &sc_DRAWPARAM );
-  }
-#else
-    // Shadowボリューム後本ポリゴン描画
-    GFL_G3D_DRAW_DrawObject( p_wk->p_obj[MODEL_MODEL_LIGHT_SHADOW2], &sc_DRAWPARAM );
-    GFL_G3D_DRAW_DrawObject( p_wk->p_obj[MODEL_MODEL_LIGHT2], &sc_DRAWPARAM );
-#endif
-
-#ifdef PM_DEBUG
   if( p_wk->DEBUG_print_haichi )
 #endif
   {
-    // 配置
-    GFL_G3D_DRAW_DrawObject( p_wk->p_obj[MODEL_MODEL_HAICHI], &sc_DRAWPARAM );
+    GFL_G3D_DRAW_DrawObject( p_wk->p_obj[MODEL_MODEL_OBON_A], &sc_DRAWPARAM );
+    GFL_G3D_DRAW_DrawObject( p_wk->p_obj[MODEL_MODEL_OBON_B], &sc_DRAWPARAM );
+    GFL_G3D_DRAW_DrawObject( p_wk->p_obj[MODEL_MODEL_OBON_C], &sc_DRAWPARAM );
   }
 }
 
