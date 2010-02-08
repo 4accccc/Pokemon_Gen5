@@ -172,6 +172,9 @@ typedef enum {
   DBGSTR_POSPOKE_In,
   DBGSTR_DEADREC_Add,
 
+  DBGSTR_Item_PinchReactItem,
+  DBGSTR_Item_PinchReactOn,
+
 
   DBGSTR_val_comma,
   DBGSTR_done,

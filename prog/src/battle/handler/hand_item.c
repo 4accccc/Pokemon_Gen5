@@ -1401,20 +1401,23 @@ static const BtlEventHandlerTable* HAND_ADD_ITEM_SanNomi( u32* numElems )
 }
 static void handler_SanNomi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
-  if( !BPP_CONTFLAG_Get(bpp, BPP_CONTFLG_KIAIDAME) )
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
-    BTL_HANDEX_PARAM_SET_CONTFLAG* param;
-    BTL_HANDEX_PARAM_MESSAGE* msg_param;
+    const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
+    if( !BPP_CONTFLAG_Get(bpp, BPP_CONTFLG_KIAIDAME) )
+    {
+      BTL_HANDEX_PARAM_SET_CONTFLAG* param;
+      BTL_HANDEX_PARAM_MESSAGE* msg_param;
 
-    param = (BTL_HANDEX_PARAM_SET_CONTFLAG*)BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_SET_CONTFLAG, pokeID );
-    param->pokeID = pokeID;
-    param->flag = BPP_CONTFLG_KIAIDAME;
+      param = (BTL_HANDEX_PARAM_SET_CONTFLAG*)BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_SET_CONTFLAG, pokeID );
+      param->pokeID = pokeID;
+      param->flag = BPP_CONTFLG_KIAIDAME;
 
-    msg_param = (BTL_HANDEX_PARAM_MESSAGE*)BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
-    HANDEX_STR_Setup( &msg_param->str, BTL_STRTYPE_SET, BTL_STRID_SET_UseItem_Rankup_Critical );
-    HANDEX_STR_AddArg( &msg_param->str, pokeID );
-    HANDEX_STR_AddArg( &msg_param->str, BTL_EVENT_FACTOR_GetSubID(myHandle) );
+      msg_param = (BTL_HANDEX_PARAM_MESSAGE*)BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
+      HANDEX_STR_Setup( &msg_param->str, BTL_STRTYPE_SET, BTL_STRID_SET_UseItem_Rankup_Critical );
+      HANDEX_STR_AddArg( &msg_param->str, pokeID );
+      HANDEX_STR_AddArg( &msg_param->str, BTL_EVENT_FACTOR_GetSubID(myHandle) );
+    }
   }
 }
 static void handler_SanNomi_Tmp( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
@@ -1927,10 +1930,15 @@ static void common_DamageReactCore( BTL_SVFLOW_WORK* flowWk, u8 pokeID, u8 n )
 
   {
     u32 hp = BPP_GetValue( bpp, BPP_HP );
+
+    BTL_N_Printf( DBGSTR_Item_PinchReactItem, pokeID, BPP_GetValue(bpp,BPP_MAX_HP), hp, n);
+
     if( hp <= BTL_CALC_QuotMaxHP(bpp, n) ){
-      BTL_Printf("Å‘åHP=%d, Œ»HP=%d, n=%d ... ”½‰ž‚ ‚è\n", BPP_GetValue(bpp,BPP_MAX_HP), hp, n);
+      BTL_N_PrintfSimple( DBGSTR_Item_PinchReactOn );
       BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_USE_ITEM, pokeID );
     }
+
+    BTL_N_PrintfSimple( DBGSTR_LF );
   }
 }
 //------------------------------------------------------------------------------

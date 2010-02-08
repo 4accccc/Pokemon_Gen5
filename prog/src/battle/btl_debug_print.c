@@ -211,6 +211,8 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_DEADREC_Add:              return " 死亡記録 ターン%d件目 ... pokeID=%d\n";
 
   case DBGSTR_SCU_RelivePokeAct:        return "Pos[%d]=Vpos[%d] ポケ(%d)が生き返り\n";
+  case DBGSTR_Item_PinchReactItem:      return "PokeID=%d, 最大HP=%d, 現HP=%d, n=%d ... ";
+  case DBGSTR_Item_PinchReactOn:        return "反応あり";
 
 
 
