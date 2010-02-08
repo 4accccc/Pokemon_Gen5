@@ -1925,17 +1925,17 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_Fumin( u32* numElems )
 // ポケモン系状態異常処理ハンドラ
 static void handler_MagumaNoYoroi_PokeSick( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  work[0] = common_GuardWazaSick( flowWk, pokeID, POKESICK_YAKEDO );
+  work[0] = common_GuardWazaSick( flowWk, pokeID, POKESICK_KOORI );
 }
 // とくせい書き換えハンドラ＆メンバー入場ハンドラ
 static void handler_MagumaNoYoroi_Wake( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  common_TokuseiWake_CureSick( flowWk, pokeID, POKESICK_YAKEDO );
+  common_TokuseiWake_CureSick( flowWk, pokeID, POKESICK_KOORI );
 }
 // アクション終了毎ハンドラ
 static void handler_MagumaNoYoroi_ActEnd( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  common_TokuseiWake_CureSickCore( flowWk, pokeID, POKESICK_YAKEDO );
+  common_TokuseiWake_CureSickCore( flowWk, pokeID, POKESICK_KOORI );
 }
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_MagumaNoYoroi( u32* numElems )
 {
