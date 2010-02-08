@@ -241,7 +241,7 @@ static GFL_PROC_RESULT CommBattleCallProc_Main(  GFL_PROC *proc, int *seq, void*
           bcw->demo_prm->result = COMM_BTL_DEMO_RESULT_WIN;
           break;
         case BTL_RESULT_LOSE :
-#if PM_DEBUG
+#ifdef PM_DEBUG
         case BTL_RESULT_RUN : //@TODO 一時的なフォロー。将来的にはWIN/LOSE/DRAWしか入ってこなくなるはず
 #endif
           bcw->demo_prm->result = COMM_BTL_DEMO_RESULT_LOSE;
