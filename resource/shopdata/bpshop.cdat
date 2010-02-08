@@ -7,7 +7,7 @@
 //====================================================================
 
 // BPショップ１号
-static const u16 BP_shop1[][2] = {
+static const SHOP_ITEM BP_shop1[] = {
 		{ ITEM_KIAINOTASUKI,	20, },
 		{ ITEM_PINTORENZU,	21, },
 		{ ITEM_METARUKOOTO,	24, },
@@ -20,7 +20,7 @@ static const u16 BP_shop1[][2] = {
 #define BP_SHOP1_MAX	(NELEMS(BP_shop1))
 
 // BP技ショップ１号
-static const u16 BP_waza1[][2] = {
+static const SHOP_ITEM BP_waza1[] = {
 		{ ITEM_WAZAMASIN54,	52, },
 		{ ITEM_WAZAMASIN53,	53, },
 		{ ITEM_WAZAMASIN52,	54, },
@@ -35,7 +35,7 @@ static const u16 BP_waza1[][2] = {
 
 
 // 一括アクセス用配列定義
-static const u16 *bp_shop_data_table[]={
+static const SHOP_ITEM *bp_shop_data_table[]={
 	BP_shop1,
 	BP_waza1,
 };

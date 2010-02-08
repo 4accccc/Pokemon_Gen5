@@ -12,7 +12,6 @@ static const u16 fs_stage1[] = {
 		ITEM_KIZUGUSURI,
 		ITEM_DOKUKESI,
 		ITEM_MAHINAOSI,
-		0xffff,
 };
 #define FS_STAGE1_MAX	(NELEMS(fs_stage1))
 
@@ -28,7 +27,6 @@ static const u16 fs_stage2[] = {
 		ITEM_KOORINAOSI,
 		ITEM_ANANUKENOHIMO,
 		ITEM_MUSIYOKESUPUREE,
-		0xffff,
 };
 #define FS_STAGE2_MAX	(NELEMS(fs_stage2))
 
@@ -47,7 +45,6 @@ static const u16 fs_stage3[] = {
 		ITEM_SUUPAABOORU,
 		ITEM_GENKINOKAKERA,
 		ITEM_SIRUBAASUPUREE,
-		0xffff,
 };
 #define FS_STAGE3_MAX	(NELEMS(fs_stage3))
 
@@ -70,7 +67,6 @@ static const u16 fs_stage4[] = {
 		ITEM_SUGOIKIZUGUSURI,
 		ITEM_NANDEMONAOSI,
 		ITEM_GOORUDOSUPUREE,
-		0xffff,
 };
 #define FS_STAGE4_MAX	(NELEMS(fs_stage4))
 
@@ -94,7 +90,6 @@ static const u16 fs_stage5[] = {
 		ITEM_NANDEMONAOSI,
 		ITEM_GOORUDOSUPUREE,
 		ITEM_MANTANNOKUSURI,
-		0xffff,
 };
 #define FS_STAGE5_MAX	(NELEMS(fs_stage5))
 
@@ -119,70 +114,63 @@ static const u16 fs_stage6[] = {
 		ITEM_GOORUDOSUPUREE,
 		ITEM_MANTANNOKUSURI,
 		ITEM_KAIHUKUNOKUSURI,
-		0xffff,
 };
 #define FS_STAGE6_MAX	(NELEMS(fs_stage6))
 
 // タウン１
 static const u16 t02_fs[] = {
 		ITEM_EAMEERU,
-		0xffff,
 };
 #define T02_FS_MAX	(NELEMS(t02_fs))
 
 // シティ１
 static const u16 c01_fs[] = {
-		ITEM_EAMEERU,
-		0xffff,
+		ITEM_WAZAMASIN01,
+		ITEM_WAZAMASIN02,
+		ITEM_WAZAMASIN03,
+		ITEM_WAZAMASIN04,
 };
 #define C01_FS_MAX	(NELEMS(c01_fs))
 
 // シティ２
 static const u16 c02_fs[] = {
 		ITEM_EAMEERU,
-		0xffff,
 };
 #define C02_FS_MAX	(NELEMS(c02_fs))
 
 // シティ３
 static const u16 c03_fs[] = {
 		ITEM_EAMEERU,
-		0xffff,
 };
 #define C03_FS_MAX	(NELEMS(c03_fs))
 
 // シティ４
 static const u16 c04_fs[] = {
 		ITEM_EAMEERU,
-		0xffff,
 };
 #define C04_FS_MAX	(NELEMS(c04_fs))
 
 // シティ５
 static const u16 c05_fs[] = {
 		ITEM_EAMEERU,
-		0xffff,
 };
 #define C05_FS_MAX	(NELEMS(c05_fs))
 
 // シティ６
 static const u16 c06_fs[] = {
 		ITEM_EAMEERU,
-		0xffff,
 };
 #define C06_FS_MAX	(NELEMS(c06_fs))
 
 // シティ７
 static const u16 c07_fs[] = {
 		ITEM_EAMEERU,
-		0xffff,
 };
 #define C07_FS_MAX	(NELEMS(c07_fs))
 
 // シティ８
 static const u16 c08_fs[] = {
 		ITEM_EAMEERU,
-		0xffff,
 };
 #define C08_FS_MAX	(NELEMS(c08_fs))
 

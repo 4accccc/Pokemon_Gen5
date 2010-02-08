@@ -47,20 +47,20 @@ CSVCVTR	= $(PROJECT_ROOT)/tools/exceltool/xls2xml/tab_out.rb
 #------------------------------------------------------------------------------
 #	make do-build ルール
 #------------------------------------------------------------------------------
-do-build:	subdir $(TARGETDIR)/$(targetname).cdat
+do-build:	subdir $(TARGETDIR)/$(targetname).cdat bpshop.cdat
 
 subdir:
 	@$(MAKE_SUBDIR)
 
 # cdat のコピーだけ実行する
-$(TARGETDIR)/$(targetname).cdat: $(targetname).cdat
+$(TARGETDIR)/$(targetname).cdat: $(targetname).cdat bpshop.cdat
 	$(COPY) $(targetname).cdat $(TARGETDIR)
 	$(COPY) bpshop.cdat $(TARGETDIR)
 
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 # コピー先のnarcが古い場合実行する
-$(targetname).cdat: fs_item.xls
+$(targetname).cdat: fs_item.xls bp_item.xls
 #	$(COPY) $(PROJECT_PROGDIR)include/item/itemsym.h ./itemsym.h
 	ruby $(CSVCVTR) -c fs_item.xls >fs_item.csv
 	ruby shopdata.rb fs_item.csv itemsym.h $(targetname).cdat $(targetname)_index.h

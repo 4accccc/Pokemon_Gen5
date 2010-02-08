@@ -97,7 +97,7 @@ reader.each { |row|
 
 		#新しいデータ定義の宣言
 		outbuf += sprintf( "// %s\n", row[0] )
-		outbuf += sprintf( "static const SHOP_ITEM %s[][2] = {\n", row[1].to_s )
+		outbuf += sprintf( "static const SHOP_ITEM %s[] = {\n", row[1].to_s )
 		namelist << row[1].to_s
 		closeflag = 1
 		lastnamebuf = row[1].to_s

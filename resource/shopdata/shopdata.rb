@@ -95,9 +95,7 @@ reader.each { |row|
 
 	# どうぐデータ出力
 	(row.length-2).times{|i|
-		if row[i+2]==nil then
-			outbuf += sprintf("\t\t0xffff,\n")
-		else
+		if row[i+2]!=nil then
 			if hash[row[i+2].to_s]!=nil then
 				outbuf += sprintf("\t\t%s,\n", hash[row[i+2].to_s])
 			else
